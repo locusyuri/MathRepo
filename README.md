@@ -18,3 +18,11 @@
 ## 6 反例
 <span style='color:#434343;background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);border-radius:7px;box-shadow: 1px 1px 30px 5px rgb(204, 204, 204, 0.52);font-family:Monotype Corsiva;font-size:2em;'>Counter-Example :</span>
 
+## 7 强调
+**强调**
+
+## 8 重点
+==重点==
+
+## 9 关键词
+<span style="background:#d2cbff">关键词</span>
