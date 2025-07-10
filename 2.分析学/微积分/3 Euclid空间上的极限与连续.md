@@ -125,7 +125,7 @@ $2^\circ$ 若$E$为闭集,则$E$的一切聚点属于$E$,即$\forall x\in E^c$,$
 
 <span style='color:#434343;background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);border-radius:7px;box-shadow: 1px 1px 30px 5px rgb(204, 204, 204, 0.52);font-family:Monotype Corsiva;font-size:2em;'>Proof :</span>
 
-## 3 实数系基本定理(推广)
+## 3 实数系基本定理的推广
 >实数系基本定理可推广到多维Euclid空间中的有:
 ><span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Theorem:闭集套定理</span>
 >设$\{ S_{k} \}$为$\mathbb{R}^n$中的非空闭集序列,满足$S_{1}\supset S_{2}\supset\dots S_{k}\supset\dots$以及$\lim_\limits{ k \to \infty }\mathrm{diam}S_{k}=\lim_\limits{ k \to \infty }\sup\{ \lvert \boldsymbol{x-y} \rvert:\forall \boldsymbol{x,y}\in S_{k} \}$,则$\exists!\boldsymbol{a}\in \bigcap\limits_{k=1}^\infty S_{k}$
@@ -147,14 +147,22 @@ $2^\circ$ 若$E$为闭集,则$E$的一切聚点属于$E$,即$\forall x\in E^c$,$
 >2)(**Heine-Borel有限覆盖定理**)$S$是紧集
 >3)(**列紧性定理**)$S$是自列紧集
 
+<span style='color:#434343;background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);border-radius:7px;box-shadow: 1px 1px 30px 5px rgb(204, 204, 204, 0.52);font-family:Monotype Corsiva;font-size:2em;'>Proof :</span>
+![image.png](https://locus622.oss-cn-beijing.aliyuncs.com/img/202505311823031.png)
+![image.png](https://locus622.oss-cn-beijing.aliyuncs.com/img/202505311824144.png)
+
 
 # 多元函数的极限
 
 
 # 多元函数的连续性
-><span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Theorem</span>
+><span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Lemma</span>
 >连续映射将紧集映射成紧集
->
+
+<span style='color:#434343;background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);border-radius:7px;box-shadow: 1px 1px 30px 5px rgb(204, 204, 204, 0.52);font-family:Monotype Corsiva;font-size:2em;'>Proof :</span>
+![image.png](https://locus622.oss-cn-beijing.aliyuncs.com/img/202505311824159.png)
+
+
 ><span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Theorem:有界性定理</span>
 >设$K$为$\mathbb{R}^n$中紧集,$f$是$K$上的连续函数,则$f$在$K$上有界
 >
@@ -176,11 +184,16 @@ $2^\circ$ 若$E$为闭集,则$E$的一切聚点属于$E$,即$\forall x\in E^c$,$
 > 设$S$为$\mathbb{R}^n$中点集,若连续映射$\boldsymbol{\gamma}:[0,1]\to \mathbb{R}^n$的值域全部落在$S$中,即满足$\boldsymbol{\gamma}([0,1])\subset S$,则称$\boldsymbol{\gamma}$为$S$中的道路,$\boldsymbol{\gamma}(0),\boldsymbol{\gamma}(1)$分别称为道路的起点与终点.
 > 若$S$中的任意两点$x,y$之间,都存在$S$中以$x$为起点,$y$为终点的道路,则称$S$为道路连通的,或称$S$为连通集.
 > 
-> <span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Theorem</span>
+> <span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Lemma</span>
 > 连续映射将连通集映射成连通集
-> 
+
+<span style='color:#434343;background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);border-radius:7px;box-shadow: 1px 1px 30px 5px rgb(204, 204, 204, 0.52);font-family:Monotype Corsiva;font-size:2em;'>Proof :</span>
+![image.png](https://locus622.oss-cn-beijing.aliyuncs.com/img/202505311825248.png)
+
+
 > <span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Theorem:介值定理</span>
 > 设$K$为$\mathbb{R}^n$中紧集,$f$是$K$上的连续函数,则$f$在$K$上必能取到最大值和最小值之间的一切值,即$f$的值域是闭区间$[m,M]$
 > <span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Corollary</span>
 > 
+
 
