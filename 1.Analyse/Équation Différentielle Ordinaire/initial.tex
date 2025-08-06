@@ -1,0 +1,402 @@
+\documentclass[11pt]{elegantbook}
+
+\title{Équation Différentielle Ordinaire} % 这里放置书名
+% \subtitle{Subtitle} % 这里放置副标题
+
+\author{MonoCat} % 这里放置作者名
+\date{July, 2025} % 这里放置日期
+\version{0.1} % 这里放置版本号
+% \institute{Elegant\LaTeX{} Program} % 这里放置机构名
+% \bioinfo{Custom Key}{Custom Value} % 这里放置自定义信息
+
+% \extrainfo{extra information} % 这里放置额外信息，将显示在最下方中央
+
+\setcounter{tocdepth}{2} % 设置目录深度
+\setcounter{secnumdepth}{2} % 设置章节编号深度
+
+
+% \logo{logo-blue.png} % 这里放置封面logo，默认从figure目录下寻找
+% \cover{LogiqueMathematique.png} % 这里放置封面图片，默认从figure目录下寻找
+
+% modify the color in the middle of titlepage
+\definecolor{customcolor}{RGB}{32,178,170} % 自定义颜色
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect} % 保护命令参数不被 LaTeX 解析器过早处理，允许在某些特殊环境中使用脆弱命令（fragile commands）。
+\usepackage{xeCJK} % 使用 xeCJK 包支持中文
+
+
+% ===== 开始文档 =====
+\begin{document}
+
+\maketitle %生成文档的标题页，根据之前定义的标题信息（如标题、作者、日期等）自动创建一个格式化的标题页
+
+% === 前言部分 ===
+\frontmatter        % 开始前言，页码为 i, ii, iii...
+\tableofcontents    % 目录 (页码: i, ii)
+% \listoffigures      % 图表目录 (页码: iii)
+% \listoftables       % 表格目录 (页码: iv)
+
+\chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
+This is the preface of the book...
+
+\textcolor{red}{\bfseries Alert} Throught this text, we focus exclusively on real-valued differential equations, 
+where all quantities are assumed to be real unless stated otherwise. 
+% \chapter{Acknowledgments}  % 致谢（无编号）
+% I would like to thank...
+% === 正文部分 ===
+\mainmatter         % 开始正文，页码从 1 重新开始
+
+\chapter{Introduction} % 这里放置章节标题
+\section{Classification of Differential Equations} % 这里放置小节标题
+An equation involving one dependent variable and its derivatives with respect to one or more independent variables 
+is called a \textbf{differential equation}.
+Differential equations can be classified according to the following criteria:
+%% 
+\begin{leftbarTitle}{Number of Independent Variables}\end{leftbarTitle}
+An \textbf{ordinary differential equation(ODE)} is defined as an equation of the following form:
+\begin{equation}\label{eq:plain ODE}
+F\left( x, y, \frac{\mathrm{d}y}{\mathrm{d}x}, \frac{\mathrm{d}^2y}{\mathrm{d}x^2}, \ldots, \frac{\mathrm{d}^ny}{\mathrm{d}x^n} \right) = 0,\quad n \in \mathbb{N},
+\end{equation}
+or, using the prime notation for derivatives,
+\begin{equation*}
+F\left( x, y, y', y'', \ldots, y^{(n)} \right) = 0,\quad n \in \mathbb{N}.
+\end{equation*}
+If there are two or more independent variables, the equation is called a \textbf{partial differential equation(PDE)}.
+%% 
+\begin{leftbarTitle}{Order}\end{leftbarTitle}
+The order of a differential equation is the order of the highest derivative present in the equation.
+\begin{itemize}
+    \item A first-order equation has the form $ F(x, y, y') = 0 $.
+    \item A second-order equation has the form $ F(x, y, y', y'') = 0 $.
+    \item Higher-order equations involve derivatives of order three or more.
+\end{itemize}
+%%
+\begin{note}
+    Crucially, the order tells you how many initial conditions are needed to find a unique solution.
+\end{note}
+%%
+\begin{leftbarTitle}{Linearity}\end{leftbarTitle}
+An $n$-th order differential equation is linear if it can be written in the form: 
+\begin{equation*}
+    a_n(x)y^{(n)} + a_{n-1}(x)y^{(n-1)} + \dots + a_1(x)y' + a_0(x)y = g(x)
+\end{equation*}
+where the coefficients $a_{i}(x)$ and the term $g(x)$ depend only on the independent variable $x$.
+Otherwise, it is nonlinear.
+%%
+\begin{note}
+    Specially, for the aforementioned equation, if $g(x) = 0$, it is called \textbf{homogeneous},
+    and \textbf{non-homogeneous} otherwise.
+\end{note}
+
+\section{Solution to a Ordinary Differential Equation}
+\begin{leftbarTitle}{Particular and General Solutions}\end{leftbarTitle}
+Let $J$ be an interval in $\mathbb{R}$. 
+A function $y=\phi(x)$ defined on the interval $J$ is called a solution to equation~\eqref{eq:plain ODE} if it satisfies: 
+\[
+F(x, \phi(x), \phi'(x), \phi''(x), \dots, \phi^{(n)}(x)) = 0 \quad x \in J. 
+\]
+The interval $J$ is then called the interval of existence of the solution $y = \phi(x)$.
+
+Generally speaking, 
+the solution to equation~\eqref{eq:plain ODE} contains one or more arbitrary constants, 
+the determination of which depends on other conditions that the solution must satisfy. 
+If a solution to a differential equation does not contain any arbitrary constants, 
+it is called a \textbf{particular solution} of the differential equation.
+
+Suppose $y = \phi(x; c_{1}, c_{2}, \cdots, c_{n})$ is a solution to equation~\eqref{eq:plain ODE}, 
+where $c_{1}, c_{2}, \ldots, c_{n}$ are arbitrary constants. 
+If $c_{1}, c_{2}, \ldots, c_{n}$ are mutually independent, 
+then $y = \phi(x; c_{1}, c_{2}, \ldots, c_{n})$ is called the \textbf{general solution} to equation~\eqref{eq:plain ODE}. 
+Here, "mutually independent" means that the Jacobian determinant is non-zero: 
+\[
+\det \frac{\partial(\phi, \phi', \dots, \phi^{(n-1)})}{\partial(c_1, c_2, \dots, c_n)} \neq 0, \quad x \in J.
+\]
+When all the arbitrary constants in the general solution are determined, 
+one obtains a particular solution to the differential equation.
+
+\begin{leftbarTitle}{Initial Conditions, Explicit and Implicit Solutions}\end{leftbarTitle}
+Let $y = \phi(x)$ be a solution to equation~\eqref{eq:plain ODE} that also satisfies 
+\begin{equation}\label{eq:initial conditions}
+    \phi(x_0) = y_0, \quad \phi'(x_0) = y_0', \dots, \quad \phi^{(n-1)}(x_0) = y_0^{(n-1)}.
+\end{equation}
+The conditions~\eqref{eq:initial conditions} are called the initial conditions for equation~\eqref{eq:plain ODE}, 
+and $y = \phi(x)$ is called the solution to equation~\eqref{eq:plain ODE} satisfying the initial conditions~\eqref{eq:initial conditions}.
+
+A function $y = \phi(x)$ that turns the differential equation~\eqref{eq:plain ODE} into an identity is called an 
+\textbf{(explicit) solution} to the equation. 
+If a solution $y = \phi(x)$ to the differential equation~\eqref{eq:plain ODE} is determined 
+by the relation $\Phi(x, y) = 0$, then $\Phi(x, y) = 0$ is called an \textbf{implicit solution} to the differential equation~\eqref{eq:plain ODE}. 
+An implicit solution is also called an "integral". 
+
+\begin{leftbarTitle}{Integral Curve and Direction Field}\end{leftbarTitle}
+Consider the first-order differential equation:
+\begin{equation}\label{eq:first order ODE}
+    \frac{dy}{dx} = f(x,y),
+\end{equation}
+where $f$ is continuous in a planar region $G$. 
+Suppose 
+\[
+y = \phi(x), \quad x \in J
+\] 
+is a solution to this equation, where $J \subset \mathbb{R}$ is an interval. 
+Then the set of points in the plane 
+\[
+\Gamma = { (x,y) | y = \phi(x), x \in J }
+\]
+is a differentiable curve in the plane. 
+This curve is called a solution curve or an \textbf{integral curve}.
+
+Let $(x_0, y_0) \in \Gamma$. 
+The slope of the tangent line to the curve $\Gamma$ at this point is 
+\[
+\phi'(x_{0}) = f(x_{0}, y_{0}).
+\]
+Therefore, the equation of the tangent line is 
+\[
+    y - y_0 = f(x_0, y_0)(x - x_0).
+\]
+This implies that even without knowing the explicit expression for $\phi$, 
+we can obtain the slope and equation of the tangent line to the solution curve 
+at a given point from equation~\eqref{eq:first order ODE}. 
+
+\begin{remark}
+    Note that in a small neighborhood of a point on a differentiable curve, 
+    the tangent line can be seen as a first-order approximation of the curve. 
+    Utilizing this viewpoint, one can obtain an approximate solution to the differential equation. 
+    In fact, this is the fundamental idea behind Euler's method.
+\end{remark}
+
+At each point $P$ in the region $G$, 
+we can draw a short line segment $l(P)$ with slope $f(P)$. 
+We call $l(P)$ the line element of equation~\eqref{eq:first order ODE} at point $P$. 
+The region $G$ together with the entire collection of these line elements is called 
+the lineal \textbf{linear element field} or \textbf{direction field} for equation~\eqref{eq:first order ODE}.
+
+\begin{theorem}
+    A necessary and sufficient condition for a continuously differentiable curve 
+    $\Gamma = \{ (x,y) | y = \psi(x), x \in J \}$ in the plane 
+    to be an integral curve of equation~\eqref{eq:first order ODE} is that 
+    for every point $(x, y)$ on the curve $\Gamma$, 
+    its tangent line at that point coincides with the line element determined 
+    by equation~\eqref{eq:first order ODE} at that point.
+\end{theorem}
+
+\begin{proof}
+    The necessity follows from the preceding discussion. 
+    We now prove the sufficiency. 
+    For any point $(x, y) = (x, \psi(x))$ on the curve $\Gamma$, 
+    the slope of the tangent line to $\Gamma$ at this point is $\psi'(x)$. 
+    By the condition of the theorem, we have $\psi'(x) = f(x, y)$. 
+    Since $(x, y)$ is an arbitrary point on the curve, it follows that $y = \psi(x)$ is a solution to equation~\eqref{eq:first order ODE}. 
+\end{proof}
+
+\chapter{First Order Equations}
+\section{Exact Equations}
+\begin{definition}{Exact Equations}
+An equation of the form
+\begin{equation}\label{eq:symmetric form}
+    M(x,y) \, \mathrm{d}x + N(x,y) \, \mathrm{d}y = 0
+\end{equation}
+is called the symmetric form of a first-order differential equation.
+
+If there exists a continuously differentiable function $u(x,y)$ such that
+\[
+\mathrm{d}u(x,y) = M(x,y) \, \mathrm{d}x + N(x,y) \, \mathrm{d}y,
+\]
+then equation~\eqref{eq:symmetric form} is said to be an \textbf{exact equation} or a \textbf{total differential equation}.
+
+It follows that, when equation~\eqref{eq:symmetric form} is exact, it can be rewritten as
+\[
+\mathrm{d}u(x,y) = 0,
+\]
+which implies
+\begin{equation}\label{general integral}
+    u(x,y) = c,
+\end{equation}
+where $c$ is an arbitrary constant. Equation~\eqref{general integral} is called the \textbf{general integral} of equation~\eqref{eq:symmetric form}.
+\end{definition}
+\begin{remark}
+    It should be noted that, strictly speaking, 
+    equation~\eqref{eq:symmetric form} is not a differential equation. 
+    However, expressing a first-order differential equation in the form of \eqref{eq:symmetric form} is extremely convenient for analysis.
+    This formulation does not necessarily require $y$ to be expressed as a function of $x$. 
+    For the sake of simplicity in description, we often refer to the symmetric form~\eqref{eq:symmetric form} as a differential equation, too.
+\end{remark}
+
+\begin{theorem}
+    Let the functions \(M(x, y)\) and \(N(x, y)\) be continuous in a simply connected domain \(D \subset \mathbb{R}^2\), 
+    and suppose their first-order partial derivatives \(\frac{\partial M}{\partial y}\) and \(\frac{\partial N}{\partial x}\) are also continuous. 
+    Then a necessary and sufficient condition for equation~\eqref{eq:symmetric form} to be exact is
+    \[
+    \frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}
+    \]
+    in the domain \(D\). 
+    When this condition holds, for any \((x_0, y_0), (x, y) \in D\), a general integral of equation~\eqref{eq:symmetric form} is given by
+    \[
+    \int_{\gamma} M(x, y)dx + N(x, y)dy = c,
+    \]
+    where \(\gamma\) is any curve composed of finitely many smooth segments within \(D\) 
+    connecting \((x_0, y_0)\) and \((x, y)\), and \(c\) is an arbitrary constant.
+\end{theorem}
+\begin{proof}
+    
+\end{proof}
+
+\section{Separable Equations}
+\begin{definition}{Separable Equations}
+    If the functions \(M(x, y)\) and \(N(x, y)\) in Equation~\eqref{eq:symmetric form} can both be written as 
+    the product of a function of \(x\) and a function of \(y\), that is,
+    \[
+    M(x, y) = M_1(x) M_2(y), \quad N(x, y) = N_1(x) N_2(y),
+    \]
+    then equation~\eqref{eq:symmetric form} is called a separable equation.
+
+    When equation~\eqref{eq:symmetric form} is a separable equation, it can be written as
+    \begin{equation}\label{eq:separable form}
+        M_1(x) M_2(y) \, \mathrm{d}x + N_1(x) N_2(y) \, \mathrm{d}y = 0.  
+    \end{equation}
+\end{definition}
+
+\section{Homogeneous Equations}
+\begin{definition}\label{def:homogeneous equations}
+    A first-order differential equation 
+    \begin{equation*}
+        M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y = 0
+    \end{equation*}
+    is called a \textbf{homogeneous equation} if both \(M\) and \(N\) are homogeneous functions
+    \footnote{
+        A function \(f(x, y)\) is called a homogeneous function of degree \(n\) 
+        if it satisfies the condition \(f(tx, ty) = t^n f(x, y)\) for all \(t > 0\).
+        }
+    of the same degree \(n\).    
+\end{definition}
+
+\begin{example}
+    A function \(f(x, y)\) is called a quasihomogeneous function of degree \(d\) with generalized weights if
+    \[
+    f(t^\alpha s x, t^\beta s y) = t^{ds} f(x, y),
+    \]
+    where \(t > 0\), \(\alpha\) and \(\beta\) are positive constants with \(\alpha + \beta = 1\), and \(s \in \mathbb{R}\). 
+    Here, \(\alpha\) and \(\beta\) are called the weights of \(x\) and \(y\), respectively.
+    Consider the differential equation
+    \[
+    M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y = 0,
+    \]
+    where \(M(x, y)\) and \(N(x, y)\) are quasihomogeneous functions of degree \(d_0\) and \(d_1\) 
+    with weights \(\alpha\) and \(\beta\) for \(x\) and \(y\), respectively.
+    Proposition: When \(d_0 = d_1 + \beta - \alpha\) the equation can be solved by elementary integration method.
+\end{example}
+\section{Linear Equations}
+\begin{definition}{First-Order Linear Equations}
+    A \textbf{first-order linear equation} is an equation of the form
+    \begin{equation}\label{eq:first order linear equation}
+        \frac{\mathrm{d}y}{\mathrm{d}x} + p(x) y = q(x),
+    \end{equation}
+    where \(p(x)\) and \(q(x)\) are continuous functions on the interval \((a, b)\).
+    In Equation~\eqref{eq:first order linear equation}, when \(q(x) \equiv  0\), we obtain
+    \begin{equation*}
+        \frac{\mathrm{d}y}{\mathrm{d}x} + p(x) y = 0,
+    \end{equation*}
+    which is called a \textbf{first-order homogeneous linear equation} corresponding to Equation~\eqref{eq:first order linear equation}.
+    Otherwise, it is called a first-order non-homogeneous linear equation.
+\end{definition}
+\begin{note}
+    It should be noted that the definition of a homogeneous equation here \emph{differs} from that in the previous section.
+\end{note}
+
+\begin{definition}{Bernoulli's Equation}
+    A first-order differential equation of the form
+    \begin{equation*}
+        \frac{\mathrm{d}y}{\mathrm{d}x} + p(x) y = q(x) y^n,\quad n \neq 0, 1,
+    \end{equation*}
+    where \(n\) is a real number and \(p(x)\) and \(q(x)\) are continuous functions on the interval \((a, b)\), 
+    is called a \textbf{Bernoulli's equation}.
+    
+\end{definition}
+
+\section{Integrating Factors}
+\begin{definition}{Integrating Factors}
+    An \textbf{integrating factor} for a first-order differential equation of the form
+    \begin{equation}\label{eq:integrating factor equation}
+        M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y = 0
+    \end{equation}
+    is a differentiable function \(\mu(x, y)\) such that when multiplied by the equation:
+    \[
+    \mu(x, y) M(x, y) \, \mathrm{d}x + \mu(x, y) N(x, y) \, \mathrm{d}y = 0,
+    \]
+    it becomes an exact equation.
+    Id est, there exists a function \(\Phi(x, y)\) such that
+    \[
+       \mu(x, y) M(x, y) \, \mathrm{d}x + \mu(x, y) N(x, y) \, \mathrm{d}y = \mathrm{d}\Phi(x, y).
+    \]
+    If such functions \(\mu(x, y)\) and \(\Phi(x, y)\) exist, and \(\Phi(x, y)\) is smooth, then
+    \[
+    \frac{\partial(\mu M)}{\partial y} = \frac{\partial(\mu N)}{\partial x}\left( = \frac{\partial^2 \Phi}{\partial x \partial y} \right).
+    \]
+    In this case, \(\mu(x, y)\) is called an integrating factor for equation~\eqref{eq:integrating factor equation}.
+\end{definition}
+
+
+\section{Implicit Equations}
+This section discusses the problem of solving the first-order implicit differential equations,
+\begin{equation}\label{eq:implicit ODE}
+F(x, y, y') = 0
+\end{equation}
+where \(F\) is a continuously differentiable function. 
+A so-called implicit differential equation is one in which \(y'\) does not have an explicit solution, 
+that is, the equation cannot be written in the form \(y' = f(x, y)\).
+
+\begin{leftbarTitle}{Differentiation Method}\end{leftbarTitle}
+Suppose that Equation~\eqref{eq:implicit ODE} can be solved for \(y\), that is,
+\begin{equation}\label{eq:differentiation method}
+    y = f(x, p),\quad p = \frac{dy}{dx},
+\end{equation}
+where \(f(x, p)\) is a continuously differentiable function.
+
+Differentiating both sides of \(y = f(x, p)\) with respect to \(x\), we obtain
+\[
+p = \frac{dy}{dx} = \frac{\partial f}{\partial x} + \frac{\partial f}{\partial p} \frac{dp}{dx},
+\]
+that is,
+\begin{equation*}
+\frac{\partial f}{\partial p} \frac{dp}{dx} = p - \frac{\partial f}{\partial x}.
+\end{equation*}
+
+This is a first-order differential equation in the variables \(x\), \(p\), \(\frac{dp}{dx}\). 
+If a solution \(p = p(x)\) can be found, then Equation~\eqref{eq:differentiation method} yields a solution
+\[
+y = f(x, p(x)).
+\]
+\begin{leftbarTitle}{Parametric Method}\end{leftbarTitle}
+In general, Equation~\eqref{eq:implicit ODE} represents a surface in the \((x, y, p)\)-space. 
+Therefore, the solution can be obtained using a parametric representation of the surface. 
+Suppose the parametric form of the surface described by Equation~\eqref{eq:implicit ODE} is
+\[
+x = x(u, v),\quad y = y(u, v),\quad p = p(u, v) = y'.
+\]
+Note that
+\[
+dy = p \; \mathrm{d}x,
+\]
+thus we obtain
+\[
+y_u' \mathrm{d}u + y_v' \mathrm{d}v = p(u, v)(x_u' \mathrm{d}u + x_v' \mathrm{d}v).
+\]
+This is an explicit differential equation in the variables \(u\) and \(v\). Suppose it admits a solution
+\[
+v = v(u, c),
+\]
+where \(c\) is a constant, then Equation~\eqref{eq:implicit ODE} has a solution
+\[
+x = x(u, v(u, c)),\quad y = y(u, v(u, c)).
+\]
+
+\chapter{Existence and Uniqueness Theorem}
+
+
+\begin{thebibliography}{99} 
+\bibitem{en1} 作者, Title1, Journal1, Year1. \emph{ This is an example of a reference.}
+\bibitem{en2} Author2, Title2, Journal2, Year2. \emph{ This is another example of a reference.}
+\end{thebibliography}
+
+\end{document}

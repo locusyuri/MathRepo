@@ -1,0 +1,142 @@
+\documentclass[11pt]{elegantbook}
+
+\title{Tutoriel \LaTeX} % 这里放置书名
+% \subtitle{Subtitle} % 这里放置副标题
+
+\author{CatMono} % 这里放置作者名
+\date{July, 2025} % 这里放置日期
+\version{0.1} % 这里放置版本号
+% \institute{Elegant\LaTeX{} Program} % 这里放置机构名
+% \bioinfo{Custom Key}{Custom Value} % 这里放置自定义信息
+
+% \extrainfo{extra information} % 这里放置额外信息，将显示在最下方中央
+
+\setcounter{tocdepth}{2} % 设置目录深度
+\setcounter{secnumdepth}{2} % 设置章节编号深度
+
+
+% \logo{logo-blue.png} % 这里放置封面logo，默认从figure目录下寻找
+% \cover{LogiqueMathematique.png} % 这里放置封面图片，默认从figure目录下寻找
+
+% modify the color in the middle of titlepage
+\definecolor{customcolor}{RGB}{32,178,170} % 自定义颜色
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect} % 保护命令参数不被 LaTeX 解析器过早处理，允许在某些特殊环境中使用脆弱命令（fragile commands）。
+\usepackage{xeCJK} % 使用 xeCJK 包支持中文
+\usepackage{multirow} % 使用 multirow 包支持表格中跨行合并单元格
+\usepackage{diagbox} % 使用 diagbox 包支持表格中斜线分割单元格
+\usepackage{pdflscape} % 使用 pdflscape 包支持横向页面布局
+
+
+% ===== 开始文档 =====
+\begin{document}
+
+\maketitle %生成文档的标题页，根据之前定义的标题信息（如标题、作者、日期等）自动创建一个格式化的标题页
+
+% === 前言部分 ===
+\frontmatter        % 开始前言，页码为 i, ii, iii...
+\tableofcontents    % 目录 (页码: i, ii)
+% \listoffigures      % 图表目录 (页码: iii)
+% \listoftables       % 表格目录 (页码: iv)
+
+% \chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
+% This is the preface of the book...
+
+% \chapter{Acknowledgments}  % 致谢（无编号）
+% I would like to thank...
+% === 正文部分 ===
+\mainmatter         % 开始正文，页码从 1 重新开始
+
+\chapter{Document Structure} % 这里放置章节标题
+
+\chapter{Typesetting and Formatting}
+
+\section{Text Formatting}
+
+\begin{leftbarTitle}{Font Size}\end{leftbarTitle} 
+\tiny  tiny \(<\)
+\scriptsize  scriptsize \(<\)
+\footnotesize  footnotesize \(<\)
+\small  small \(<\)
+\normalsize  normalsize \(<\)
+\large  large \(<\)
+\Large  Large \(<\)
+\LARGE  LARGE \(<\)
+\huge  huge \(<\)
+\Huge Huge 
+
+\normalsize % 恢复默认大小
+
+\begin{note}
+    \begin{enumerate}
+        \item Use these commands directly in the \textbf{main text, tables, or formulas} to change the font size.
+        \item Each command affects the text that follows it, until another font size command is encountered or the environment ends.
+        \item \lstinline|\normalsize| is the default font size and can be used to restore the normal size.
+    \end{enumerate}
+\end{note}
+
+
+
+\chapter{Mathematical Formulas and Environments}
+
+
+\section{Multi-line and complex math environments}
+Math mode in~\LaTeX~is divided into inline math mode (such as \lstinline|$...$,\(...\)| , 
+suitable for inserting short formulas within the text) and display math mode 
+(such as \lstinline|$$...$$,\[...\],displaymath| or environments like \lstinline|equation|, 
+used for independently centered and longer or more important formulas). 
+It is recommended to use \lstinline|\(...\)| and \lstinline|\[...\]|, and not to use \lstinline|$$...$$|.
+
+A few common environments for multi-line and complex formulas are listed below.
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\diagbox{}{} & \textbf{Environment} & \textbf{Alignment} & \textbf{Usage} & \textbf{Remark} \\
+\hline
+\multirow{4}{*}{\rotatebox{90}{Standalone}} 
+    & align      & \checkmark & Multiline equation alignment &{\scriptsize Each line numbered \textbf{independently}} \\
+\cline{2-5}
+    & gather     &            & {\scriptsize Centered arrangement of multiline equations}         &  \\
+\cline{2-5}
+    & multline   &            & Long equations, line breaks& {\scriptsize First line left-aligned, last line right-aligned} \\
+\cline{2-5}
+    & equation   &            & {\scriptsize Multi-line alignment for a \textbf{single formula}}& Overall numbering \\
+\hline
+\multirow{2}{*}{\rotatebox{90}{Sub}} 
+    & aligned    & \checkmark & {\scriptsize Local alignment (inside another math env)} & Used in equation, align, gather \\
+\cline{2-5}
+    & cases      & \checkmark & Piecewise functions        & One \& each case  \\
+\cline{2-5}
+    & split      & \checkmark & Split a long equation       & Used within equation \\
+\hline
+\end{tabular}
+
+\begin{note}
+    \begin{enumerate}
+        \item \lstinline|equation*,align*,gather*,multline*| are used for unnumbered equations.
+        \item Since \lstinline|equation|, \lstinline|split|, and \lstinline|aligned| are used for multi-line alignment of a single equation, 
+        and \lstinline|cases| is for an entire piecewise function, \textbf{none of them support page breaks}.
+        \item All of these environments come from the amsmath package; 
+        environments such as \lstinline|eqnarray| and \lstinline|array| are not recommended for use.
+        \item Sub-environments must be used within the standalone environments.
+    \end{enumerate}
+\end{note}
+
+
+
+\chapter{Figures and Tables}
+
+\chapter{Citations and Indexing}
+
+\chapter{Packages and Customization}
+
+\chapter{Templates}
+
+\chapter{Appendices}
+
+\begin{thebibliography}{99} 
+\bibitem{en1} 作者, Title1, Journal1, Year1. \emph{ This is an example of a reference.}
+\bibitem{en2} Author2, Title2, Journal2, Year2. \emph{ This is another example of a reference.}
+\end{thebibliography}
+
+\end{document}

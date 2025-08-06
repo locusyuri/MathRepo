@@ -1,0 +1,57 @@
+\documentclass[11pt]{elegantbook}
+
+\title{BookName} % 这里放置书名
+\subtitle{Subtitle} % 这里放置副标题
+
+\author{AuthorName} % 这里放置作者名
+\date{July, 2025} % 这里放置日期
+\version{0.1} % 这里放置版本号
+\institute{Elegant\LaTeX{} Program} % 这里放置机构名
+\bioinfo{Custom Key}{Custom Value} % 这里放置自定义信息
+
+\extrainfo{extra information} % 这里放置额外信息，将显示在最下方中央
+
+\setcounter{tocdepth}{3} % 设置目录深度
+\setcounter{secnumdepth}{3} % 设置章节编号深度
+
+
+\logo{logo-blue.png} % 这里放置封面logo，默认从figure目录下寻找
+\cover{LogiqueMathematique.png} % 这里放置封面图片，默认从figure目录下寻找
+
+% modify the color in the middle of titlepage
+\definecolor{customcolor}{RGB}{32,178,170} % 自定义颜色
+\colorlet{coverlinecolor}{customcolor}
+\usepackage{cprotect} % 保护命令参数不被 LaTeX 解析器过早处理，允许在某些特殊环境中使用脆弱命令（fragile commands）。
+\usepackage{xeCJK} % 使用 xeCJK 包支持中文
+
+
+% ===== 开始文档 =====
+\begin{document}
+
+\maketitle %生成文档的标题页，根据之前定义的标题信息（如标题、作者、日期等）自动创建一个格式化的标题页
+
+% === 前言部分 ===
+\frontmatter        % 开始前言，页码为 i, ii, iii...
+\tableofcontents    % 目录 (页码: i, ii)
+% \listoffigures      % 图表目录 (页码: iii)
+% \listoftables       % 表格目录 (页码: iv)
+
+\chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
+This is the preface of the book...
+
+\chapter{Acknowledgments}  % 致谢（无编号）
+I would like to thank...
+% === 正文部分 ===
+\mainmatter         % 开始正文，页码从 1 重新开始
+
+\chapter{Chapter Title} % 这里放置章节标题
+\section{Section Title} % 这里放置小节标题
+\subsection{Subsection Title} % 这里放置子小节标题
+
+
+\begin{thebibliography}{99} 
+\bibitem{en1} 作者, Title1, Journal1, Year1. \emph{ This is an example of a reference.}
+\bibitem{en2} Author2, Title2, Journal2, Year2. \emph{ This is another example of a reference.}
+\end{thebibliography}
+
+\end{document}

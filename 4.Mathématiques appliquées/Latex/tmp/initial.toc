@@ -1,0 +1,10 @@
+\contentsline {chapter}{\numberline {1}Document Structure}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Typesetting and Formatting}{2}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Text Formatting}{2}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Mathematical Formulas and Environments}{3}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Multi-line and complex math environments}{3}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Figures and Tables}{4}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Citations and Indexing}{5}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Packages and Customization}{6}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Templates}{7}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Appendices}{8}{chapter.8}%

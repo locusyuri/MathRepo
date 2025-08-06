@@ -1,0 +1,59 @@
+\contentsline {chapter}{Preface}{iii}{chapter*.2}%
+\contentsline {chapter}{\numberline {1}Determinants}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Section Title}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Subsection Title}{1}{subsection.1.1.1}%
+\contentsline {chapter}{\numberline {2}Systems of Linear Equations}{2}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Matrices}{3}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Linear Spaces}{4}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Linear Spaces over the Field \(\mathbb {F}\)}{4}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Linear Spaces}{4}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Dimension, Basis, and Coordinates}{4}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Basis Transformation and Coordinate Transformation}{4}{subsection.4.1.3}%
+\contentsline {section}{\numberline {4.2}Subspaces}{4}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Linear Subspaces}{4}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Intersection and Sum of Subspaces}{4}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Dimension Formula}{4}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Direct Sum of Subspaces}{4}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Isomorphisms}{4}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Quotient Spaces}{4}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Linear Mappings}{5}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Linear Mappings and Their Computation}{5}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Definition of Linear Mappings}{5}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Existence and Uniqueness of Linear Mappings}{5}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Operations of Linear Mappings}{5}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}Special Linear Transformations}{5}{subsection.5.1.4}%
+\contentsline {section}{\numberline {5.2}Kernel and Image of Linear Mappings}{5}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Matrix Representation of Linear Mappings}{5}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Linear Functions and Dual Spaces }{5}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Diagonalization}{6}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Similarity of Matrices}{6}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Eigenvectors and Diagonalization}{6}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Eigenvalues and Eigenvectors}{6}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Necessary and Sufficient Conditions for Diagonalization}{6}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Space Decomposition and Diagonalization}{6}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Invariant Subspace}{6}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Hamilton-Cayley Theorem}{6}{subsection.6.3.2}%
+\contentsline {section}{\numberline {6.4}Least Squares and Diagonalization}{6}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Jordan Forms}{7}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Polynomial Matrices}{7}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Invariant Factors}{7}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Rational Canonical Form}{7}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Elementary Divisors}{7}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Jordan Canonical Form}{7}{section.7.5}%
+\contentsline {chapter}{\numberline {8}Quadratic Forms}{8}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Quadratic Forms and Their Standard Forms}{8}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Canonical Forms}{8}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Definite Quadratic Forms}{8}{section.8.3}%
+\contentsline {chapter}{\numberline {9}Inner Product Spaces}{9}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Bilinear Forms}{9}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Real Inner Product Spaces}{9}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Metric Matrices and Standard Orthonormal Bases}{9}{section.9.3}%
+\contentsline {section}{\numberline {9.4}Isomorphism of Real Inner Product Spaces}{9}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Orthogonal Completion and Orthogonal Projection}{9}{section.9.5}%
+\contentsline {subsection}{\numberline {9.5.1}Orthogonal Completion}{9}{subsection.9.5.1}%
+\contentsline {subsection}{\numberline {9.5.2}Least Squares Method}{9}{subsection.9.5.2}%
+\contentsline {section}{\numberline {9.6}Orthogonal Transformations and Symmetric Transformations}{9}{section.9.6}%
+\contentsline {subsection}{\numberline {9.6.1}Orthogonal Transformations}{9}{subsection.9.6.1}%
+\contentsline {subsection}{\numberline {9.6.2}Symmetric Transformations}{9}{subsection.9.6.2}%
+\contentsline {section}{\numberline {9.7}Unitary Spaces and Unitary Transformations}{9}{section.9.7}%
+\contentsline {section}{\numberline {9.8}Symplectic Spaces}{9}{section.9.8}%
