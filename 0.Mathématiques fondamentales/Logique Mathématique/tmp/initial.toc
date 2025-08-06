@@ -1,5 +1,6 @@
 \contentsline {chapter}{Preface}{ii}{chapter*.2}%
-\contentsline {chapter}{Acknowledgments}{iii}{chapter*.3}%
-\contentsline {chapter}{\numberline {1}Chapter Title}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Section Title}{1}{section.1.1}%
-\contentsline {subsection}{\numberline {1.1.1}Subsection Title}{1}{subsection.1.1.1}%
+\contentsline {chapter}{\numberline {1}The Propositional Calculus}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Propositional Connectives and Truth Tables}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Propositional Calculus}{2}{section.1.2}%
+\contentsline {chapter}{\numberline {2}First-Order Logic}{3}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Second-Order Logic}{4}{chapter.3}%

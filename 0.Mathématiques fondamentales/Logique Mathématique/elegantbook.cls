@@ -9,6 +9,7 @@
 % % !Mode:: "TeX:UTF-8"
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{elegantbook}[2022/12/31 v4.5 ElegantBook document class]
+\RequirePackage{fontawesome5}
 
 
 %%%
@@ -1222,23 +1223,48 @@
   \par\ignorespacesafterend}
 
 \newenvironment{note}{
-  \par\noindent\makebox[-3pt][r]{
-    \scriptsize\color{red!90}\textdbend\quad}
+  \par\noindent\makebox[5pt][c]{
+    \tiny\color{red!90}\textdbend\quad}
     \textbf{\color{second}\notename} \citshape}{\par}
 
+% \newenvironment{proof}{
+%   \par\noindent\textbf{\color{second}\proofname\;}
+%   \color{black!90}\cfs}{
+%   \hfill\ensuremath{\blacksquare} % 使用qed黑色框
+%   % \hfill$\Box$\quad
+%   \par}
 \newenvironment{proof}{
-  \par\noindent\textbf{\color{second}\proofname\;}
+  \par\noindent
+  \makebox[5pt][c]{\normalsize\color{blue!60}\faPenFancy\quad}
+  \textbf{\Large\color{blue!60}\cursivetitle\proofname\;} 
   \color{black!90}\cfs}{
-  % \hfill\ensuremath{\blacksquare} % 使用qed黑色框
-  % \hfill$\Box$\quad
-  \par}
+  \hfill\ensuremath{\blacksquare} % 使用qed黑色框
+  \citshape}{\par}
 
-\newenvironment{solution}{\par\noindent\textbf{\color{main}\solutionname} \citshape}{\par}
+\newenvironment{solution}{
+  \par\noindent
+  \makebox[5pt][c]{\normalsize\color{blue!60}\faPencil*\quad}
+  \textbf{\Large\color{blue!60}\cursivetitle\solutionname\;} 
+  \color{black!90}\cfs}{
+  \hfill$\Box$ % 使用空心黑色框
+  \citshape}{\par}
+
+% \newenvironment{solution}{\par\noindent\textbf{\color{main}\solutionname} \citshape}{\par}
 \newenvironment{remark}{\noindent\textbf{\color{second}\remarkname}\remarkfont}{\par}
 \newenvironment{assumption}{\par\noindent\textbf{\color{third}\assumptionname} \citshape}{\par}
 \newenvironment{conclusion}{\par\noindent\textbf{\color{third}\conclusionname} \citshape}{\par}
 \newenvironment{property}{\par\noindent\textbf{\color{third}\propertyname} \citshape}{\par}
 \newenvironment{custom}[1]{\par\noindent\textbf{\color{third} #1} \citshape}{\par}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{MyPink}{HTML}{BE1453}
+% \newenvironment{leftbarTitle}[1]{\par\noindent\textcolor{MyPink}{¶~~~\lstinline|#1|}\par}
+\newenvironment{leftbarTitle}[1]{
+  \par\noindent
+  \makebox[-2pt][r]{
+    \normalsize\color{MyPink}\faParagraph\quad}
+    \textbf{\color{MyPink}\ttfamily#1}}{\par}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{multicol}
 \tcbset{

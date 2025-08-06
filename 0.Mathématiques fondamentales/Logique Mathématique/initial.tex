@@ -3,8 +3,8 @@
 \title{BookName} % 这里放置书名
 \subtitle{Subtitle} % 这里放置副标题
 
-\author{AuthorName} % 这里放置作者名
-\date{July, 2025} % 这里放置日期
+\author{CatMono} % 这里放置作者名
+\date{August, 2025} % 这里放置日期
 \version{0.1} % 这里放置版本号
 \institute{Elegant\LaTeX{} Program} % 这里放置机构名
 \bioinfo{Custom Key}{Custom Value} % 这里放置自定义信息
@@ -15,8 +15,8 @@
 \setcounter{secnumdepth}{3} % 设置章节编号深度
 
 
-\logo{logo-blue.png} % 这里放置封面logo，默认从figure目录下寻找
-\cover{LogiqueMathematique.png} % 这里放置封面图片，默认从figure目录下寻找
+% \logo{} % 这里放置封面logo，默认从figure目录下寻找
+% \cover{} % 这里放置封面图片，默认从figure目录下寻找
 
 % modify the color in the middle of titlepage
 \definecolor{customcolor}{RGB}{32,178,170} % 自定义颜色
@@ -39,14 +39,127 @@
 \chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
 This is the preface of the book...
 
-\chapter{Acknowledgments}  % 致谢（无编号）
-I would like to thank...
+% \chapter{Acknowledgments}  % 致谢（无编号）
+% I would like to thank...
 % === 正文部分 ===
 \mainmatter         % 开始正文，页码从 1 重新开始
 
-\chapter{Chapter Title} % 这里放置章节标题
-\section{Section Title} % 这里放置小节标题
-\subsection{Subsection Title} % 这里放置子小节标题
+\chapter{The Propositional Calculus} % 这里放置章节标题
+\section{Propositional Connectives and Truth Tables} % 这里放置小节标题
+A proposition is a statement whose truth value can be determined 
+(represented by 1 for true and 0 for false\footnote{
+The set of logical truth values can be represented in various ways,
+such as \(\{T, F\}\), \(\{\top, \bot\}\), or \(\{\text{True}, \text{False}\}\).
+\(\{ 0,1 \}\) is applied in this book for simplicity.
+}), 
+and a proposition is either true or false (within the framework of classical binary logic). 
+We use lowercase letters such as \(p,q,r\cdots\), to denote propositions.
+
+There are five commonly used propositional connectives:
+\begin{leftbarTitle}{Negation}\end{leftbarTitle}
+If \(p\) is a proposition, then the \textbf{negation} of \(p\) is denoted by \(\neg p\), 
+which is true if and only if \(p\) is false.
+Its truth table is as follows:
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+$p$ & $\neg p$ \\ % 表头横线
+\midrule
+0 & 1  \\ % 第一行
+1 & 0  \\ % 第二行
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{leftbarTitle}{Conjunction}\end{leftbarTitle}
+The \textbf{conjunction} of two propositions \(p\) and \(q\) is denoted by \(p \land q\),
+which is true if and only if both \(p\) and \(q\) are true.
+Its truth table is as follows:
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+$p$ & $q$ & $p \land q$ \\ % 表头横线
+\midrule
+0 & 0 & 0 \\ % 第一行
+0 & 1 & 0 \\ % 第二行
+1 & 0 & 0 \\ % 第三行
+1 & 1 & 1 \\ % 第四行
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{leftbarTitle}{Disjunction}\end{leftbarTitle}
+The \textbf{disjunction} of two propositions \(p\) and \(q\) is denoted by \(p \lor q\),
+which is true if and only if at least one of \(p\) or \(q\) is true.
+Its truth table is as follows:
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+$p$ & $q$ & $p \lor q$ \\ % 表头横线
+\midrule
+0 & 0 & 0 \\ % 第一行
+0 & 1 & 1 \\ % 第二行
+1 & 0 & 1 \\ % 第三行
+1 & 1 & 1 \\ % 第四行
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{leftbarTitle}{Implication}\end{leftbarTitle}
+Proposition \(p\) \textbf{implies} \(q\), namely "if \(p\), then \(q\)", is denoted by \(p \to q\),
+which is false if and only if \(p\) is true and \(q\) is false.
+Its truth table is as follows:
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+$p$ & $q$ & $p \to q$ \\ % 表头横线
+\midrule
+0 & 0 & 1 \\ % 第一行
+0 & 1 & 1 \\ % 第二行
+1 & 0 & 0 \\ % 第三行
+1 & 1 & 1 \\ % 第四行
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{leftbarTitle}{Biconditional}\end{leftbarTitle}
+The \textbf{biconditional} of two propositions \(p\) and \(q\) is denoted by \(p \leftrightarrow q\),
+which is true if and only if \(p\) and \(q\) have the same truth value.
+Its truth table is as follows:
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+$p$ & $q$ & $p \leftrightarrow q$ \\ % 表头横线
+\midrule
+0 & 0 & 1 \\ % 第一行
+0 & 1 & 0 \\ % 第二行
+1 & 0 & 0 \\ % 第三行
+1 & 1 & 1 \\ % 第四行
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Propositional Calculus}
+Propositional calculus is a formal system \(\mathcal{L} = \left( \mathrm{A}, \mathrm{\Omega}, \mathrm{Z}, \mathrm{I} \right) \),
+whose formulas are constructed as follows:
+\begin{description}
+    \item[\({\mathrm{A}}\)]  The infinite set consisting of propositional variables or constants.
+    \item[\({\mathrm{\Omega}}\)]  The infinite set consisting of logical connectives\footnote{
+        It is divided into the following mutually disjoint subsets:
+        \[
+        \Omega = \Omega_{0} \cup \Omega_{1} \cup \Omega_{2} \cup \cdots \cup \Omega_{m},
+        \]
+        where \(\Omega_{j}\) is the set of \(j\)-ary logical connectives(operators).
+        In general, \(\Omega_{0}=\{ 0,1 \}\), \(\Omega_{1}=\{ \neg \}\), 
+        \(\Omega_{2}=\{ \land, \lor, \to, \leftrightarrow \}\).
+    }.
+    \item[\({\mathrm{Z}}\)]  The infinite set consisting of inference rules.
+    \item[\({\mathrm{I}}\)]  The infinite set consisting of axioms(start point).
+\end{description}
+
+\chapter{First-Order Logic}
+
+\chapter{Second-Order Logic}
 
 
 \begin{thebibliography}{99} 
