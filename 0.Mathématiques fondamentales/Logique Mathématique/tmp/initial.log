@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  6 AUG 2025 21:54
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  8 AUG 2025 09:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1451,22 +1451,42 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
 ]
 
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 160.
+(Font)              scaled to size 10.0pt on input line 190.
 [2]
+Overfull \hbox (10.17255pt too wide) in paragraph at lines 193--207
+\TU/Alegreya(0)/m/n/10.95 from the preceding two axioms, and that the last three axioms can be replaced by the single sentence $\OML/cmm/m/it/10.95 C$$C$$N$$p$$N$$q$$$\TU/Alegreya(0)/m/n/10.95 q$\OML/cmm/m/it/10.95 p$
+ []
+
+
+
+[3]
+Overfull \hbox (11.96538pt too wide) in paragraph at lines 274--281
+[][] 
+ []
+
+
+LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
+(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 283.
+
+
+
+[4]
+
+[5]
 Chapter 2.
 
 
-[3
+[6
 
 ]
 Chapter 3.
 
 
-[4
+[7
 
 ]
 
-[5
+[8
 
 ] (./tmp/initial.aux)
  ***********
@@ -1475,10 +1495,13 @@ L3 programming layer <2022/08/05>
  ***********
 
 
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 6269E53040FC3C48CB22DC1ADB1BD903;1047.
+(rerunfilecheck)             Checksum: 1D23DF317D2B211EA4AE10C66BD97C95;2350.
 
 Package biblatex Warning: Please (re)run Biber on the file:
 (biblatex)                initial
@@ -1489,12 +1512,12 @@ Package logreq Info: Writing requests to 'initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45800 strings out of 473831
- 951016 string characters out of 5733137
- 1971088 words of memory out of 5000000
- 68048 multiletter control sequences out of 15000+600000
- 568746 words of font info for 153 fonts, out of 8000000 for 9000
+ 45972 strings out of 473831
+ 955104 string characters out of 5733137
+ 1987464 words of memory out of 5000000
+ 68213 multiletter control sequences out of 15000+600000
+ 568794 words of font info for 159 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,12n,108p,692b,803s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,12n,108p,692b,1340s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (8 pages).
+Output written on ./tmp/initial.pdf (11 pages).

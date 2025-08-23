@@ -27,3 +27,5 @@ This is a repository for mathematical notes. The directory structure is as follo
 
 ---
 # Notations
+
+
