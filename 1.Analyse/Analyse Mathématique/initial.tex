@@ -45,8 +45,82 @@ This is the preface of the book...
 \mainmatter         % 开始正文，页码从 1 重新开始
 
 \chapter{Preliminaries} % 这里放置章节标题
-\section{Section Title} % 这里放置小节标题
-\subsection{Subsection Title} % 这里放置子小节标题
+\section{Trigonometric Formulas} % 这里放置小节标题
+% Trigonometric identities and formulas (Academic English LaTeX)
+
+% Product-to-Sum (Product to Sum and Difference)
+\textbf{Product-to-Sum Formulas:}
+\begin{align*}
+\sin\alpha \cos\beta &= \frac{1}{2} \left[ \sin(\alpha + \beta) + \sin(\alpha - \beta) \right] \\
+\cos\alpha \sin\beta &= \frac{1}{2} \left[ \sin(\alpha + \beta) - \sin(\alpha - \beta) \right] \\
+\cos\alpha \cos\beta &= \frac{1}{2} \left[ \cos(\alpha + \beta) + \cos(\alpha - \beta) \right] \\
+\sin\alpha \sin\beta &= -\frac{1}{2} \left[ \cos(\alpha + \beta) - \cos(\alpha - \beta) \right]
+\end{align*}
+
+% Sum and Difference Formulas
+\textbf{Sum and Difference Formulas:}
+\begin{align*}
+\sin(\alpha + \beta) &= \sin\alpha \cos\beta + \cos\alpha \sin\beta \\
+\sin(\alpha - \beta) &= \sin\alpha \cos\beta - \cos\alpha \sin\beta \\
+\cos(\alpha + \beta) &= \cos\alpha \cos\beta - \sin\alpha \sin\beta \\
+\cos(\alpha - \beta) &= \cos\alpha \cos\beta + \sin\alpha \sin\beta
+\end{align*}
+
+% Sum-to-Product (Sum and Difference to Product)
+\textbf{Sum-to-Product Formulas:}
+\begin{align*}
+\sin\alpha + \sin\beta &= 2 \sin\left( \frac{\alpha + \beta}{2} \right) \cos\left( \frac{\alpha - \beta}{2} \right) \\
+\sin\alpha - \sin\beta &= 2 \sin\left( \frac{\alpha - \beta}{2} \right) \cos\left( \frac{\alpha + \beta}{2} \right) \\
+\cos\alpha + \cos\beta &= 2 \cos\left( \frac{\alpha + \beta}{2} \right) \cos\left( \frac{\alpha - \beta}{2} \right) \\
+\cos\alpha - \cos\beta &= -2 \sin\left( \frac{\alpha + \beta}{2} \right) \sin\left( \frac{\alpha - \beta}{2} \right)
+\end{align*}
+
+% Double Angle Formulas
+\textbf{Double Angle Formulas:}
+\begin{align*}
+\sin 2\alpha &= 2\sin\alpha \cos\alpha \\
+\cos 2\alpha &= \cos^2\alpha - \sin^2\alpha = 2\cos^2\alpha - 1 = 1 - 2\sin^2\alpha \\
+\tan 2\alpha &= \frac{2\tan\alpha}{1 - \tan^2\alpha}
+\end{align*}
+
+% Half Angle Formulas
+\textbf{Half Angle Formulas:}
+\begin{align*}
+\sin \frac{\alpha}{2} &= \pm \sqrt{ \frac{1 - \cos\alpha}{2} } \\
+\cos \frac{\alpha}{2} &= \pm \sqrt{ \frac{1 + \cos\alpha}{2} } \\
+\tan \frac{\alpha}{2} &= \frac{1 - \cos\alpha}{\sin\alpha} = \frac{\sin\alpha}{1 + \cos\alpha}
+\end{align*}
+
+% Power-Reducing Formulas
+\textbf{Power-Reducing Formulas:}
+\begin{align*}
+\sin^2\alpha &= \frac{1 - \cos 2\alpha}{2} \\
+\cos^2\alpha &= \frac{1 + \cos 2\alpha}{2}
+\end{align*}
+
+% Angle Decomposition Formulas
+\textbf{Angle Decomposition Formulas:}
+\begin{align*}
+\sin^2\alpha - \sin^2\beta &= \sin(\alpha + \beta) \sin(\alpha - \beta) \\
+\cos^2\alpha - \sin^2\beta &= \cos(\alpha + \beta) \cos(\alpha - \beta)
+\end{align*}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{img/triangle.png}
+\end{figure}
+
+% Geometric remarks
+\begin{remark}
+    \begin{itemize}
+        \item On the gray triangle, the sum of the squares of the two numbers above is equal to the square of the number below,
+            for instance, \(\tan^{2} x + 1 = \sec^{2}x\)
+        \item The three trigonometric functions in the clockwise direction have the following properties: 
+            $\tan x = \frac{\sin x}{\cos x}$, etc.
+    \end{itemize}
+\end{remark}
+
+
 
 \chapter{Limits of Sequences and Continuity of Real Number System} 
 \section{Limits of Sequences}
@@ -80,87 +154,90 @@ This is the preface of the book...
 
 \chapter{Multivariable Differential Calculus}
 \section{Directional Derivatives and Total Differential}
+\begin{leftbarTitle}{Directional Derivative}\end{leftbarTitle}
 \begin{definition}{Directional Derivative}
     Let \(U\subset \mathbb{R}^n\) be an open set, \(f: U\to \mathbb{R}^{1}\),
-    \(\boldsymbol{e}\) is a unit vector in \(\mathbb{R}^{n}\), \(\boldsymbol{x}^{0}\in U\). Define
+    \(\mathbf{e}\) is a unit vector in \(\mathbb{R}^{n}\), \(\mathbf{x}^{0}\in U\). Define
     \[
-    u(t) = f(\boldsymbol{x}^{0} + t\boldsymbol{e}).
+    u(t) = f(\mathbf{x}^{0} + t\mathbf{e}).
     \]
     If the derivative of \(u\) at \(t=0\) 
     \[ 
         u'(0) = \lim_{t \to 0} \frac{u(t) - u(0)}{t} = 
-        \lim_{t \to 0} \frac{f(\boldsymbol{x}^{0} + t\boldsymbol{e}) - f(\boldsymbol{x}^{0})}{t} 
+        \lim_{t \to 0} \frac{f(\mathbf{x}^{0} + t\mathbf{e}) - f(\mathbf{x}^{0})}{t} 
     \] 
     exists and is finite, 
-    it is called the \textbf{directional derivative} of \(f\) at \(\boldsymbol{x}_{0}\) in the direction \(\boldsymbol{e}\), 
-    denoted by \(\frac{\partial f}{\partial \boldsymbol{e}}(\boldsymbol{x}_{0})\). 
-    It is the rate of change of \(f\) at \(\boldsymbol{x}_{0}\) in the direction \(\boldsymbol{e}\).
+    it is called the \textbf{directional derivative} of \(f\) at \(\mathbf{x}_{0}\) in the direction \(\mathbf{e}\), 
+    denoted by \(\frac{\partial f}{\partial \mathbf{e}}(\mathbf{x}_{0})\). 
+    It is the rate of change of \(f\) at \(\mathbf{x}_{0}\) in the direction \(\mathbf{e}\).
 \end{definition}
 
-Consider the following set of unit coordinate vectors: \(\boldsymbol{e}_{1},\boldsymbol{e}_{2},\cdots,\boldsymbol{e}_{n}\).
-For a function \( f \), the directional derivative of \( f \) at the point \( \boldsymbol{x}_{0} \) in the direction of \( \boldsymbol{e}_{i} \) 
-is called the \( i \)th first-order \textbf{partial derivative} of \( f \) at \(\boldsymbol{x}^{0}\), denoted by
+Consider the following set of unit coordinate vectors: \(\mathbf{e}_{1},\mathbf{e}_{2},\cdots,\mathbf{e}_{n}\).
+Let \(\mathbf{e}_{i}=\left( 0, 0, \cdots, 0, 1, 0, \cdots, 0 \right)  \) denote the standard orthonormal basis 
+in \(\mathbb{R}^{n}\), where the 1 appears in the \(i\)-th position. That is,
 \[
-\frac{\partial f}{\partial x_i}(\boldsymbol{x}^{0}) \quad \text{or} \quad \mathrm{D}_i f(\boldsymbol{x}^{0}).
+    \langle \mathbf{e}_{i}, \mathbf{e}_{j} \rangle = \delta_{i j} = \begin{cases}
+    1, & i = j, \\
+    0, & i \neq j.
+    \end{cases}
+\]
+For a function \( f \), the directional derivative of \( f \) at the point \( \mathbf{x}_{0} \) 
+in the direction of \( \mathbf{e}_{i} \) 
+is called the \( i \)th first-order \textbf{partial derivative} of \( f \) at \(\mathbf{x}^{0}\), denoted by
+\[
+\frac{\partial f}{\partial x_i}(\mathbf{x}^{0}) \quad \text{or} 
+\quad \mathrm{D}_i f(\mathbf{x}^{0})  \quad \text{or} 
+\quad f_{x_i}(\mathbf{x}^{0}) \quad (i = 1, 2, \cdots, n).
 \]
 \( \mathrm{D}_i = \frac{\partial}{\partial x_i} \) is called the \( i \)th partial differential operator (\( i = 1, 2, \cdots, n \)).
 
 \begin{note}
-    Let \(\boldsymbol{e}\) be a direction, then \(\|-\boldsymbol{e}\| = \|\boldsymbol{e}\| = 1\), 
-    which implies that \(-\boldsymbol{e}\) is also a direction. At this point, we have:
+    Let \(\mathbf{e}\) be a direction, then \(\|-\mathbf{e}\| = \|\mathbf{e}\| = 1\), 
+    which implies that \(-\mathbf{e}\) is also a direction. At this point, we have:
     \[
-    \frac{\partial f}{\partial (-\boldsymbol{e})}(\boldsymbol{x}^{0}) = -\frac{\partial f}{\partial \boldsymbol{e}}(\boldsymbol{x}^{0}).
+    \frac{\partial f}{\partial (-\mathbf{e})}(\mathbf{x}^{0}) = -\frac{\partial f}{\partial \mathbf{e}}(\mathbf{x}^{0}).
     \]
 \end{note}
 
-If the first-order partial derivative of \(f\), \(\frac{\partial f}{\partial x_i}\), 
-itself possesses partial derivatives, then the second-order partial derivative of \(f\) is defined, 
-and is denoted as follows:
-\[
-f_{x_i x_j} = \frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial}{\partial x_j} \left( \frac{\partial f}{\partial x_i} \right), 
-\quad f_{x_i x_i} = \frac{\partial^2 f}{\partial x_i^2} = \frac{\partial}{\partial x_i} \left( \frac{\partial f}{\partial x_i} \right), 
-\quad i, j = 1, 2, \dots, n.
-\]
 
-Similarly, higher-order partial derivatives of order \(3,4,\cdots m,\cdots\) can be defined.
 
 \begin{definition}{Jacobian Matrix (Gradient)}
     Let
     \[
-    \boldsymbol{J}f(\boldsymbol{x}) = (\mathrm{D}_1 f(\boldsymbol{x}), \mathrm{D}_2 f(\boldsymbol{x}), \dots, \mathrm{D}_n f(\boldsymbol{x})),
+    \mathbf{J}f(\mathbf{x}) = (\mathrm{D}_1 f(\mathbf{x}), \mathrm{D}_2 f(\mathbf{x}), \dots, \mathrm{D}_n f(\mathbf{x})),
     \]
-    which is called the \textbf{Jacobian matrix} of the function \( f \) at the point \( \boldsymbol{x} \), 
+    which is called the \textbf{Jacobian matrix} of the function \( f \) at the point \( \mathbf{x} \), 
     (a \( 1 \times n \) matrix) whose counterpart is the first-order derivative of a single-variable function.
 
-    Henceforth, we represent the point \(\boldsymbol{x}\) in \( \mathbb{R}^n \) 
-    and its increments \(\boldsymbol{h}\) as column vectors.
+    Henceforth, we represent the point \(\mathbf{x}\) in \( \mathbb{R}^n \) 
+    and its increments \(\mathbf{h}\) as column vectors.
     In this way, the differential of the function can be expressed using matrix multiplication as follows:
     \[
-    \mathrm{d}f(\boldsymbol{x}^{0})(\boldsymbol{\Delta x}) = \boldsymbol{J}f(\boldsymbol{x}^{0}) \boldsymbol{\Delta x}.
+    \mathrm{d}f(\mathbf{x}^{0})(\mathbf{\Delta x}) = \mathbf{J}f(\mathbf{x}^{0}) \mathbf{\Delta x}.
     \]
     The Jacobian matrix of the function \( f \) is also frequently denoted as 
-    \(\boldsymbol{\mathrm{grad}}\,f\) (or \(\nabla f\)), that is,
+    \(\mathbf{\mathrm{grad}}\,f\) (or \(\nabla f\)), that is,
     \[
-    \boldsymbol{\mathrm{grad}}\,f(\boldsymbol{x}) = \boldsymbol{J}f(\boldsymbol{x}),
+    \mathbf{\mathrm{grad}}\,f(\mathbf{x}) = \mathbf{J}f(\mathbf{x}),
     \]
     which is called the \textbf{gradient} of the scalar function \( f \).
 \end{definition}
 
-
+\begin{leftbarTitle}{Total Differential}\end{leftbarTitle}
 \begin{definition}{Total Differential}
-    Let \(U\subset \mathbb{R}^n\) be an open set, \(f: U\to \mathbb{R}^{1}\), \(\boldsymbol{x}^{0}\in U\),
-    \(\boldsymbol{\Delta x}=\left( \Delta x_{1},\Delta x_{2},\cdots,\Delta x_{n} \right) \in \mathbb{R}^{n}\). If
+    Let \(U\subset \mathbb{R}^n\) be an open set, \(f: U\to \mathbb{R}^{1}\), \(\mathbf{x}^{0}\in U\),
+    \(\mathbf{\Delta x}=\left( \Delta x_{1},\Delta x_{2},\cdots,\Delta x_{n} \right) \in \mathbb{R}^{n}\). If
     \[
-    f(\boldsymbol{x}^{0} + \boldsymbol{\Delta x}) - f(\boldsymbol{x}^{0}) = 
-    \sum_{i=1}^n A_{i} \Delta x_{i} + o(\|\boldsymbol{\Delta x}\|) \qquad (\|\boldsymbol{\Delta x}\| \to 0),
+    f(\mathbf{x}^{0} + \mathbf{\Delta x}) - f(\mathbf{x}^{0}) = 
+    \sum_{i=1}^n A_{i} \Delta x_{i} + o(\|\mathbf{\Delta x}\|) \qquad (\|\mathbf{\Delta x}\| \to 0),
     \]
-    where \(A_{1}, A_{2}, \dots, A_{n}\) are constants independent of \(\boldsymbol{\Delta x}\), 
-    then the function \(f\) is said to be \textbf{differentiable} at the point \(\boldsymbol{x}^{0}\), 
+    where \(A_{1}, A_{2}, \dots, A_{n}\) are constants independent of \(\mathbf{\Delta x}\), 
+    then the function \(f\) is said to be \textbf{differentiable} at the point \(\mathbf{x}^{0}\), 
     and the linear main part \(\sum_{i=1}^n A_{i} \Delta x_{i}\) is called the \textbf{total differential} 
-    of \(f\) at \(\boldsymbol{x}^{0}\), 
+    of \(f\) at \(\mathbf{x}^{0}\), 
     denoted as
     \[
-    df(\boldsymbol{x}^{0})(\boldsymbol{\Delta x}) = \sum_{i=1}^n A_{i} \Delta x_{i}.
+    df(\mathbf{x}^{0})(\mathbf{\Delta x}) = \sum_{i=1}^n A_{i} \Delta x_{i}.
     \]
     If \(f\) is differentiable at every point in the open set \(U\), 
     then \(f\) is called a differentiable function on \(U\).    
@@ -168,13 +245,13 @@ Similarly, higher-order partial derivatives of order \(3,4,\cdots m,\cdots\) can
 
 \begin{theorem}{Conditions of Differentiability}
     \begin{description}
-        \item[Necessary Condition] If an \(n\)-variable function \(f\) is differentiable at the point \(\boldsymbol{x}_{0}\), 
-        then \(f\) is continuous at \(\boldsymbol{x}^{0}\) and 
-        possesses first-order partial derivatives \(\frac{\partial f}{\partial x_{i}}(\boldsymbol{x}^{0})\) 
-        at \(\boldsymbol{x}^{0}\) for \(i = 1, 2, \dots, n\), and
+        \item[Necessary Condition] If an \(n\)-variable function \(f\) is differentiable at the point \(\mathbf{x}_{0}\), 
+        then \(f\) is continuous at \(\mathbf{x}^{0}\) and 
+        possesses first-order partial derivatives \(\frac{\partial f}{\partial x_{i}}(\mathbf{x}^{0})\) 
+        at \(\mathbf{x}^{0}\) for \(i = 1, 2, \dots, n\), and
         \[
-        \boldsymbol{A} = \left( A_{1}, A_{2}, \dots, A_{n} \right)  = \boldsymbol{J}f(\boldsymbol{x}^{0}) = 
-        \left(\mathrm{D}_{1}f(\boldsymbol{x}^{0}), \mathrm{D}_{2}f(\boldsymbol{x}^{0}), \dots, \mathrm{D}_{n}f(\boldsymbol{x}^{0}) \right).
+        \mathbf{A} = \left( A_{1}, A_{2}, \dots, A_{n} \right)  = \mathbf{J}f(\mathbf{x}^{0}) = 
+        \left(\mathrm{D}_{1}f(\mathbf{x}^{0}), \mathrm{D}_{2}f(\mathbf{x}^{0}), \dots, \mathrm{D}_{n}f(\mathbf{x}^{0}) \right).
         \]\footnote{
             It is referred to as the total differential formula, and the more common form is
             \[
@@ -183,14 +260,75 @@ Similarly, higher-order partial derivatives of order \(3,4,\cdots m,\cdots\) can
             \]
         }
         However, the converse is not true.
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \item[Sufficient Condition] Let \(U \subset \mathbb{R}^n\) be an open set, 
-        and let \(f: U \to \mathbb{R}^1\) be an \(n\)-variable function. If \(\boldsymbol{J}f = \left( \mathrm{D}_{1}f, \mathrm{D}_{2}f, \dots, \mathrm{D}_{n}f \right)\) 
-        is continuous at \(\boldsymbol{x}^{0}\) 
-        (i.e., \(\frac{\partial f}{\partial x_{i}}\) is continuous at \(\boldsymbol{x}^{0}\) for \(i = 1, 2, \dots, n\)), 
-        then \(f\) is differentiable at \(\boldsymbol{x}^{0}\). 
+        and let \(f: U \to \mathbb{R}^1\) be an \(n\)-variable function. 
+        If \(\mathbf{J}f = \left( \mathrm{D}_{1}f, \mathrm{D}_{2}f, \dots, \mathrm{D}_{n}f \right)\) 
+        is continuous at \(\mathbf{x}^{0}\) 
+        (i.e., \(\frac{\partial f}{\partial x_{i}}\) is continuous at \(\mathbf{x}^{0}\) for \(i = 1, 2, \dots, n\)), 
+        then \(f\) is differentiable at \(\mathbf{x}^{0}\).
         However, the converse is not necessarily true.
     \end{description}    
 \end{theorem}
+
+\begin{note}
+    \begin{itemize}
+        \item The continuity of the derivative function at \(\mathbf{x}^{0}\) implies that 
+            the original function \(f\) is differentiable in some neighborhood of \(\mathbf{x}^{0}\).
+        \item In fact, this condition can be relaxed to require that one partial derivative exists at the point, 
+            while the remaining \(n-1\) partial derivative functions are continuous at that point.
+    \end{itemize}
+\end{note}
+
+\begin{proof}
+    Taking a function of three variables as an example.
+
+    Assume the \(3\)-ary function \(f: \mathbb{R}^3 \to \mathbb{R}\) meets:
+    \begin{enumerate}
+        \item There exists \(f_{z}(x_{0},y_{0},z_{0})\). 
+        \item The partial derivative functions \(f_{x}(x,y,z)\) and \(f_{y}(x,y,z)\) are continuous at \((x_{0},y_{0},z_{0})\),
+            i.e. there are partial derivatives in some neighborhood of \((x_{0},y_{0},z_{0})\).
+    \end{enumerate}
+    Consider the total increment of \(f\) at the point \((x_{0},y_{0},z_{0})\):
+    \begin{align*}
+        \Delta f 
+        &= \underbrace{\left[ f(x_0 + \Delta x, y_0 + \Delta y, z_0 + \Delta z) - f(x_0, y_0 + \Delta y, z_0 + \Delta z) \right]}_{I_1}\\
+        &+ \underbrace{\left[ f(x_0, y_0 + \Delta y, z_0 + \Delta z) - f(x_0, y_0, z_0 + \Delta z) \right]}_{I_2}\\
+        &+ \underbrace{\left[ f(x_0, y_0, z_0 + \Delta z) - f(x_0, y_0, z_0) \right]}_{I_3}.
+    \end{align*}
+    For \(I_{1}, I_{2}\), by the Lagrange's Mean Value Theorem of unary functions, 
+    there exist \(\theta_{1}, \theta_{2} \in (0,1)\) such that
+    \begin{gather*}
+        I_{1}=f_{x}(x_{0}+\theta_{1}\Delta x,y_{0}+\Delta y,z_{0}+\Delta z)\Delta x,\\
+        I_{2}=f_{y}(x_{0},y_{0}+\theta_{2}\Delta y,z_{0}+\Delta z)\Delta y.
+    \end{gather*}
+    Then by the continuity of the their partial derivatives at \((x_{0},y_{0},z_{0})\), we have
+    \[
+        \lim_{\Delta x, \Delta y, \Delta z \to 0} I_{1} = f_{x}(x_{0},y_{0},z_{0})\Delta x, \quad
+        \lim_{\Delta x, \Delta y, \Delta z \to 0} I_{2} = f_{y}(x_{0},y_{0},z_{0})\Delta y.
+    \]
+    They can be expressed in terms of infinitesimals(\(\rho = \sqrt{\Delta x^2 + \Delta y^2 + \Delta z^2}\)):
+    \begin{align*}
+        I_{1}=f_{x}(x_{0},y_{0},z_{0})\Delta x + \alpha_{1}\Delta x, \quad \alpha_{1}\to 0(\rho\to 0),\\
+        I_{2}=f_{y}(x_{0},y_{0},z_{0})\Delta y + \alpha_{2}\Delta y, \quad \alpha_{2}\to 0(\rho\to 0).
+    \end{align*}
+    For \(I_{3}\), by the definition of the partial derivative \(f_{z}(x,y,z)\) at \((x_{0},y_{0},z_{0})\), we have
+    \[
+        I_{3}=f_{z}(x_{0},y_{0},z_{0})\Delta z + \alpha_{3}\Delta z, \quad \alpha_{3}\to 0(\rho\to 0).
+    \]
+    Accordingly, 
+    \begin{align*}
+        \Delta f &= I_{1} + I_{2} + I_{3} \\
+        &= \left[ f_{x}(x_{0},y_{0},z_{0})\Delta x + \alpha_{1}\Delta x \right] + \left[ f_{y}(x_{0},y_{0},z_{0})\Delta y + \alpha_{2}\Delta y \right] + \left[ f_{z}(x_{0},y_{0},z_{0})\Delta z + \alpha_{3}\Delta z \right] \\
+        &= f_{x}(x_{0},y_{0},z_{0})\Delta x + f_{y}(x_{0},y_{0},z_{0})\Delta y + f_{z}(x_{0},y_{0},z_{0})\Delta z + \left[ \alpha_{1}\Delta x + \alpha_{2}\Delta y + \alpha_{3}\Delta z \right].
+    \end{align*}
+    Apparently, 
+    \[
+        \lim_{\rho \to 0} \frac{\alpha_{1}\Delta x + \alpha_{2}\Delta y + \alpha_{3}\Delta z}{\rho} = 0,
+    \]
+    i.e. \(\alpha_{1}\Delta x + \alpha_{2}\Delta y + \alpha_{3}\Delta z = o(\rho)\). 
+    Therefore, \(f(x,y,z)\) is differentiable at \((x_{0},y_{0},z_{0})\), which completes the proof.
+\end{proof}
 
 \begin{note}{(At some point)}
     \begin{enumerate}
@@ -212,7 +350,241 @@ Similarly, higher-order partial derivatives of order \(3,4,\cdots m,\cdots\) can
 \end{note}
 
 
+\begin{leftbarTitle}{Higher-Order Partial Derivatives and Differential}\end{leftbarTitle}
+If the first-order partial derivative of \(f\), \(\frac{\partial f}{\partial x_i}\), 
+itself possesses partial derivatives, then the second-order partial derivative of \(f\) is defined, 
+and is denoted as follows(the first is also called the mixed partial derivative):
+\[
+f_{x_i x_j} = \frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial}{\partial x_j} \left( \frac{\partial f}{\partial x_i} \right), 
+\quad f_{x_i x_i} = \frac{\partial^2 f}{\partial x_i^2} = \frac{\partial}{\partial x_i} \left( \frac{\partial f}{\partial x_i} \right), 
+\quad i, j = 1, 2, \dots, n.
+\]
 
+Similarly, higher-order partial derivatives of order \(3,4,\cdots m,\cdots\) can be defined.
+
+The following theorem provides the conditions under which mixed partial derivatives are equal.
+
+\begin{theorem}{Conditions for Equality of Mixed Partial Derivatives}
+    \begin{enumerate}\label{thm:condition_equality}
+        \item Let $U \subset \mathbb{R}^2$ be an open set, and $f: U \to \mathbb{R}$ be a function of two variables. 
+            If $f_{xy}$ and $f_{yx}$ are continuous at $(x_0, y_0) \in U$, then
+            \[
+            f_{xy}(x_0, y_0) = f_{yx}(x_0, y_0).
+            \]
+        \item Let \(U \subset \mathbb{R}^n\) be an open set, and \(f: U \to \mathbb{R}\) be a function of \(n\) variables. 
+            If \(f\) has partial derivatives up to order \(k\) in \(D\), 
+            and all of them are continuous at \(\mathbf{x}^{0} = (x_1^0, x_2^0, \ldots, x_n^0) \in U\), then
+                \[
+                \frac{\partial^l f}{\partial x_{i_1} \partial x_{i_2} \cdots \partial x_{i_l}}(\mathbf{x}^{0}) 
+                = \frac{\partial^l f}{\partial x_{i_2} \partial x_{i_1} \cdots \partial x_{i_l}}(\mathbf{x}^{0}) 
+                = \cdots 
+                = \frac{\partial^l f}{\partial x_{i_l} \partial x_{i_l - 1} \cdots \partial x_{i_1}}(\mathbf{x}^{0}),
+                \]
+            that is, the order of taking partial derivatives \(l ( \leq k )\) does not affect the result.\footnote{
+                If the condition "\(f_{xy}\) and \(f_{yx}\) are continuous at \((x_0, y_0)\)",
+                is not satisfied, then the conclusion "\(f_{xy}(x_0, y_0) = f_{yx}(x_0, y_0)\)" does not necessarily hold.
+            }
+    \end{enumerate}
+\end{theorem}
+
+
+\begin{proof}
+    When $k \neq 0, h \neq 0$, define
+    \[
+        \varphi(y) = f(x_0 + h, y) - f(x_0, y),
+    \]
+    and
+    \[
+        \psi(x) = f(x, y_0 + k) - f(x, y_0).
+    \]
+    Applying the Lagrange Mean Value Theorem, we have
+    \[
+        \begin{aligned}
+            &[f(x_0 + h, y_0 + k) - f(x_0, y_0 + k)] - [f(x_0 + h, y_0) - f(x_0, y_0)] \\
+            =& \varphi(y_0 + k) - \varphi(y_0) \\
+            =& \varphi'(y_0 + \theta_1 k) k \\
+            =& [f_y(x_0 + h, y_0 + \theta_1 k) - f_y(x_0, y_0 + \theta_1 k)] k \\
+            =& f_{yx}(x_0 + \theta_2 h, y_0 + \theta_1 k) h k, \quad 0 < \theta_1, \theta_2 < 1.
+        \end{aligned}
+    \]
+    On the other hand,
+    \[
+        \begin{aligned}
+            &[f(x_0 + h, y_0 + k) - f(x_0, y_0 + k)] - [f(x_0 + h, y_0) - f(x_0, y_0)] \\
+            =& [f(x_0 + h, y_0 + k) - f(x_0 + h, y_0)] - [f(x_0, y_0 + k) - f(x_0, y_0)] \\
+            =& \psi(x_0 + h) - \psi(x_0) \\
+            =& \psi'(x_0 + \theta_3 h) h \\
+            =& [f_x(x_0 + \theta_{3}h, y_0 + k) - f_x(x_0 + \theta_{3}h, y_0)] h \\
+            =& f_{xy}(x_0 + \theta_3 h, y_0 + \theta_4 k) h k, \quad 0 < \theta_3, \theta_4 < 1.
+        \end{aligned}
+    \]
+    Therefore,
+    \[
+    f_{xy}(x_0 + \theta_3 h, y_0 + \theta_4 k) = f_{yx}(x_0 + \theta_2 h, y_0 + \theta_1 k).
+    \]
+    Since $f_{xy}$ and $f_{yx}$ are continuous at $(x_0, y_0)$, letting $h \to 0, k \to 0$, we obtain
+    \[
+    f_{xy}(x_0, y_0) = f_{yx}(x_0, y_0).
+    \]
+    By applying ~\ref{thm:condition_equality} and the principle of mathematical induction, one can immediately derive the following result.
+\end{proof}
+
+Suppose \(z=f(x,y)\) has continuous partial derivatives in the domain \(U\subset \mathbb{R}^2\). 
+Then \(z\) is differentiable, and
+\[
+    \mathrm{d}z = \frac{\partial z}{\partial x} \mathrm{d}x + \frac{\partial z}{\partial y} \mathrm{d}y.
+\]
+If \(z\) also has continuous second-order partial derivatives, 
+then \(\frac{\partial z}{\partial x}\) and \(\frac{\partial z}{\partial y}\) are also differentiable, 
+and thus \(\mathrm{d}z\) is differentiable. 
+We call the differential of \(\mathrm{d}z\) the second-order differential of \(z\), denoted as
+\[
+    \mathrm{d}^2z = \mathrm{d}(\mathrm{d}z).
+\]
+In general, based on the \(k\)-th order differential \(\mathrm{d}^kz\) of \(z\), 
+its \((k+1)\)-th order differential (if it exists) is defined as
+\[
+    \mathrm{d}^{k+1}z = \mathrm{d}(\mathrm{d}^kz), \quad k = 1, 2, \cdots .
+\]
+Due to the fact that for the independent variables \( x \) and \( y \), we always have
+\[
+    \mathrm{d}^2 x = \mathrm{d}(\mathrm{d}x) = 0, \qquad \mathrm{d}^2 y = \mathrm{d}(\mathrm{d}y) = 0,
+\]
+the second-order differential of \( z = f(x, y) \) is given by
+\begin{align*}
+    \mathrm{d}^2 z &= \mathrm{d}(\mathrm{d}z) 
+        = \mathrm{d}\left( \frac{\partial z}{\partial x} \mathrm{d}x + \frac{\partial z}{\partial y} \mathrm{d}y \right) \\
+    &= \mathrm{d}\left( \frac{\partial z}{\partial x} \right) \mathrm{d}x + \frac{\partial z}{\partial x} \mathrm{d}^2 x 
+        + \mathrm{d}\left( \frac{\partial z}{\partial y} \right) \mathrm{d}y + \frac{\partial z}{\partial y} \mathrm{d}^2 y\\
+    &= \left( \frac{\partial^2 z}{\partial x^2} \mathrm{d}x + \frac{\partial^2 z}{\partial x \partial y} \mathrm{d}y \right) \mathrm{d}x
+        + \left( \frac{\partial^2 z}{\partial y \partial x} \mathrm{d}x + \frac{\partial^2 z}{\partial y^2} \mathrm{d}y \right) \mathrm{d}y\\
+    &= \frac{\partial^2 z}{\partial x^2} (\mathrm{d}x)^2 + 2 \frac{\partial^2 z}{\partial x \partial y} \mathrm{d}x \mathrm{d}y + \frac{\partial^2 z}{\partial y^2} (\mathrm{d}y)^2,
+\end{align*}
+where \( (\mathrm{d}x)^2 \) and \( (\mathrm{d}y)^2 \) denote \( \mathrm{d}^2 x \) and \( \mathrm{d}^2 y \) respectively.
+If we treat \( \frac{\partial}{\partial x} \), \( \frac{\partial}{\partial y} \) as operators for partial differentiation 
+and define
+\[
+    \left( \frac{\partial}{\partial x} \right)^2 = \frac{\partial^2}{\partial x^2}, \quad
+    \left( \frac{\partial}{\partial y} \right)^2 = \frac{\partial^2}{\partial y^2}, \quad
+    \left( \frac{\partial}{\partial x} \frac{\partial}{\partial y} \right) = \frac{\partial^2}{\partial x \partial y},
+\]
+then the formulas for the first and second differentials can be written as
+\[
+    \mathrm{d}z = \left( \mathrm{d}x \frac{\partial}{\partial x} + \mathrm{d}y \frac{\partial}{\partial y} \right) z,
+\]
+\[
+    \mathrm{d}^2 z = \left( \mathrm{d}x \frac{\partial}{\partial x} + \mathrm{d}y \frac{\partial}{\partial y} \right)^2 z.
+\]
+Similarly, we define
+\[
+    \left( \frac{\partial}{\partial x} \right)^p
+    \left( \frac{\partial}{\partial y} \right)^q
+    = \frac{\partial^{p+q}}{\partial x^p \partial y^q}
+    = \frac{\partial^q}{\partial y^q}
+    \left( \frac{\partial}{\partial x} \right)^p,
+    \quad (p, q = 1, 2, \dots)
+\]
+It is easy to use mathematical induction to prove the formula for higher-order differentials:
+\[
+    \mathrm{d}^k z = \left( \mathrm{d}x \frac{\partial}{\partial x} + \mathrm{d}y \frac{\partial}{\partial y} \right)^k z, 
+    \quad k = 1, 2, \cdots.
+\]
+For an \( n \)-variable function \( u = f(x_1, x_2, \dots, x_n) \), higher-order differentials can be similarly defined, and the following holds:
+\[
+    \mathrm{d}^k u 
+    = \left( \mathrm{d}x_1 \frac{\partial}{\partial x_1} + \mathrm{d}x_2 \frac{\partial}{\partial x_2} 
+    + \cdots + \mathrm{d}x_n \frac{\partial}{\partial x_n} \right)^k u, \quad k = 1, 2, \dots.
+\]
+
+
+\begin{leftbarTitle}{Derivatives of Vector-Valued Functions}\end{leftbarTitle}
+Consider an $n$-dimensional vector-valued function defined on a domain $U \subset \mathbb{R}^n$:
+\begin{gather*}
+    f: U \to \mathbb{R}^m, \\ 
+    \mathbf{x} \mapsto \mathbf{y} = f(\mathbf{x})
+\end{gather*}
+Expressed in coordinate vector form:
+\[
+    \mathbf{y} =
+    \begin{pmatrix}
+    y_1 \\ y_2 \\ \vdots \\ y_m
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+    f_1(x_1, x_2, \dots, x_n) \\
+    f_2(x_1, x_2, \dots, x_n) \\
+    \vdots \\
+    f_m(x_1, x_2, \dots, x_n)
+    \end{pmatrix},
+    \qquad \mathbf{x} = \begin{pmatrix} 
+    x_1 \\ x_2 \\ \vdots \\ x_n 
+    \end{pmatrix}  \in U
+\]
+
+\begin{enumerate}
+    \item  If each component function $f_i(x_1, x_2, \dots, x_n)$ ($i=1,2,\dots,m$) is partially differentiable at $\mathbf{x}^0$, 
+        then the vector-valued function $\mathbf{f}$ is differentiable at $\mathbf{x}^0$, and we define the matrix
+        \[
+            \left( \frac{\partial f}{\partial x_j} (\mathbf{x}^0) \right)_{m \times n}
+            =
+            \begin{pmatrix}
+            \frac{\partial f_1}{\partial x_1}(\mathbf{x}^0) & \frac{\partial f_1}{\partial x_2}(\mathbf{x}^0) & \cdots & \frac{\partial f_1}{\partial x_n}(\mathbf{x}^0) \\
+            \frac{\partial f_2}{\partial x_1}(\mathbf{x}^0) & \frac{\partial f_2}{\partial x_2}(\mathbf{x}^0) & \cdots & \frac{\partial f_2}{\partial x_n}(\mathbf{x}^0) \\
+            \vdots & \vdots & \ddots & \vdots \\
+            \frac{\partial f_m}{\partial x_1}(\mathbf{x}^0) & \frac{\partial f_m}{\partial x_2}(\mathbf{x}^0) & \cdots & \frac{\partial f_m}{\partial x_n}(\mathbf{x}^0)
+            \end{pmatrix}
+        \]
+
+        This matrix is called the Jacobian matrix of $\mathbf{f}$ at $\mathbf{x}^0$, 
+        denoted by $f'(\mathbf{x}^0)$ (or $\mathrm{D}f(\mathbf{x}^0)$, $\mathbf{J}_f(\mathbf{x}^0)$).
+
+        For the special case $m=1$, i.e., $n$-variable scalar function $z=f(x_1,x_2,\dots,x_n)$, 
+        the derivative at $\mathbf{x}^0$ is
+        \[
+            f'(\mathbf{x}^0) = 
+            \left( 
+                \frac{\partial f}{\partial x_1}(\mathbf{x}^0), \frac{\partial f}{\partial x_2}(\mathbf{x}^0), 
+                \cdots, \frac{\partial f}{\partial x_n}(\mathbf{x}^0) 
+            \right)
+        \]
+        If the vector-valued function $\mathbf{f}$ is differentiable at every point in $U$, 
+        then $\mathbf{f}$ is said to be differentiable on $U$, and the corresponding relationship is
+        \[
+        \mathbf{x} \in U \mapsto f'(\mathbf{x}) = J_f(\mathbf{x})
+        \]
+        where $f'(\mathbf{x})$ (or $\mathrm{D}f(\mathbf{x})$, $\mathbf{J}_f(\mathbf{x})$) 
+        denotes the derivative of $\mathbf{f}$ at $\mathbf{x}$ in $U$.
+    \item  If every component function $f_i(x_1, x_2, \dots, x_n)$ $(i=1,2,\dots,m)$ of $\mathbf{f}$ 
+        has continuous partial derivatives at $\mathbf{x}^0$, 
+        then every element of the Jacobian matrix of $\mathbf{f}$ is continuous at $\mathbf{x}^0$. 
+        In this case, $\mathbf{f}$ is said to have a continuous derivative at $\mathbf{x}^0$ as a vector-valued function.
+        
+        If the derivative of a vector-valued function $\mathbf{f}$ is continuous at every point in $U$, 
+        then $\mathbf{f}$ is said to have a continuous derivative on $U$.
+    \item  If there exists an $m \times n$ matrix $A$ that depends only on $\mathbf{x}^0$ (and not on $\Delta \mathbf{x}$), 
+        such that in the neighborhood of $\mathbf{x}^0$,
+        \[
+        \Delta \mathbf{y} = f(\mathbf{x}^0 + \Delta \mathbf{x}) - f(\mathbf{x}^0) = A \Delta \mathbf{x} + o(\|\Delta \mathbf{x}\|)
+        \]
+        (where $\Delta \mathbf{x} = (\Delta x_1, \Delta x_2, \dots, \Delta x_n)^T$ is a column vector and 
+        $\|\Delta \mathbf{x}\|$ denotes its norm), 
+        then $f$ is said to be differentiable at $\mathbf{x}^0$ as a vector-valued function, 
+        and $A\Delta \mathbf{x}$ is called the differential of $f$ at $\mathbf{x}^0$, denoted as $\mathrm{d}\mathbf{y}$. 
+        If we denote $\Delta \mathbf{x}$ by 
+        $\mathrm{d}\mathbf{x}$ ($\mathrm{d}\mathbf{x} = (\mathrm{d}x_1, \mathrm{d}x_2, \dots, \mathrm{d}x_n)^T$), then
+        \[
+            \mathrm{d}\mathbf{y} = A\,\mathrm{d}\mathbf{x}.
+        \]
+
+        If the vector-valued function $\mathbf{f}$ is differentiable at every point in $U$, 
+        then $\mathbf{f}$ is said to be differentiable on $U$.
+\end{enumerate}
+
+Combining the above three points, we obtain the following unified statement:
+
+A vector-valued function \(\mathbf{f}\) is continuous, differentiable, 
+and has derivatives if and only if each of its coordinate component functions 
+\(f_i(x_1, x_2, \dots, x_n)\) (\(i = 1, 2, \dots, m\)) is continuous, differentiable, and has derivatives.
 
 \chapter{Multiple Integrals}
 
