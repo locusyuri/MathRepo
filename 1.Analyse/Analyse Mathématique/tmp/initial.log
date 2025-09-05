@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  2 SEP 2025 22:30
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  5 SEP 2025 11:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1486,24 +1486,24 @@ Chapter 7.
 ]
 Chapter 8.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 188.
+(Font)              scaled to size 8.0pt on input line 218.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 188.
+(Font)              scaled to size 6.0pt on input line 218.
 
 
 [9
 
 ]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 255.
+(Font)              scaled to size 8.0pt on input line 285.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 261.
+(Font)              scaled to size 9.0pt on input line 291.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 261.
+(Font)              scaled to size 6.0pt on input line 291.
 
 
 LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
-(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 283.
+(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 313.
 
 
 
@@ -1516,14 +1516,16 @@ LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
 [13]
 
 [14]
+
+[15]
 Chapter 9.
 
 
-[15
+[16
 
 ]
 
-[16
+[17
 
 ] (./tmp/initial.aux)
  ***********
@@ -1535,18 +1537,18 @@ L3 programming layer <2022/08/05>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 34D15585522D2153D29028B91ED25CCB;4464.
+(rerunfilecheck)             Checksum: 2FB8879E2ACEE68107AB970047B9D940;5113.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45994 strings out of 473831
- 955492 string characters out of 5733137
- 1985898 words of memory out of 5000000
- 68227 multiletter control sequences out of 15000+600000
+ 45996 strings out of 473831
+ 955550 string characters out of 5733137
+ 1986569 words of memory out of 5000000
+ 68229 multiletter control sequences out of 15000+600000
  570599 words of font info for 166 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,15n,108p,692b,1340s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (19 pages).
+Output written on ./tmp/initial.pdf (20 pages).

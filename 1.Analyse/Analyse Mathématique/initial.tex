@@ -123,13 +123,43 @@ This is the preface of the book...
 
 
 \chapter{Limits of Sequences and Continuity of Real Number System} 
-\section{Limits of Sequences}
+\section{Convergent Sequences}
+\begin{leftbarTitle}{Convergent Sequences}\end{leftbarTitle}
 
-\section{Criteria for Convergence}
+\begin{leftbarTitle}{Properties of Convergent Sequences}\end{leftbarTitle}
 
-\section{Substitution}
+\begin{leftbarTitle}{Cauchy Proposition and Fitting Method}\end{leftbarTitle}
 
-\section{Continuity of Real Number System}
+
+\section{Indeterminate Form}
+\begin{leftbarTitle}{Infinitely Large Quantities and Infinitesimal Quantities}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Indeterminate Forms}\end{leftbarTitle}
+
+\section{Subsequences}
+\begin{leftbarTitle}{Subsequences}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Upper Limits and Lower Limits}\end{leftbarTitle}
+
+
+\section{Proposition on The Continuity of Real Numbers}
+\begin{leftbarTitle}{Dedkind Cut}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Least Supremum Property}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Monotone Convergence Theorem}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Bolzano-Weierstrass Theorem}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Nested Interval Theorem}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Cauchy Criterion for Sequences}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Heine-Borel Theorem}\end{leftbarTitle}
+
+
+
+
 
 \chapter{Limits and Continuity of Functions}
 \section{Limits of Functions}
@@ -497,7 +527,8 @@ For an \( n \)-variable function \( u = f(x_1, x_2, \dots, x_n) \), higher-order
 \]
 
 
-\begin{leftbarTitle}{Derivatives of Vector-Valued Functions}\end{leftbarTitle}
+
+\section{Differential of Vector-Valued Functions}
 Consider an $n$-dimensional vector-valued function defined on a domain $U \subset \mathbb{R}^n$:
 \begin{gather*}
     f: U \to \mathbb{R}^m, \\ 
@@ -585,6 +616,59 @@ Combining the above three points, we obtain the following unified statement:
 A vector-valued function \(\mathbf{f}\) is continuous, differentiable, 
 and has derivatives if and only if each of its coordinate component functions 
 \(f_i(x_1, x_2, \dots, x_n)\) (\(i = 1, 2, \dots, m\)) is continuous, differentiable, and has derivatives.
+
+
+\section{Derivatives of Composite Mappings (Chain Rule)}
+Let \( U \subset \mathbb{R}^l \) and \( V \subset \mathbb{R}^n \) be open sets, and let 
+\[
+\mathbf{g}: U \to V \quad \text{and} \quad \mathbf{f}: V \to \mathbb{R}^m
+\]
+be mappings. If \( \mathbf{g} \) is derivative at \( \mathbf{u}^{0} \in U \) 
+and \( \mathbf{f} \) is differentiable at \( \mathbf{x}^{0} = \mathbf{g}(\mathbf{u}^{0}) \), 
+then the composite mapping \( \mathbf{f} \circ \mathbf{g} \) is differentiable at \( \mathbf{u}^{0} \), and:
+\[
+\mathbf{J}(\mathbf{f} \circ \mathbf{g})(\mathbf{u}^{0}) = 
+\mathbf{J}\mathbf{f}(\mathbf{x}^{0}) \mathbf{J}\mathbf{g}(\mathbf{u}^{0}).
+\]
+
+\begin{note}
+    \begin{enumerate}
+        \item  outer differentiable + inner derivative = total derivative
+        \item  outer differentiable + inner differentiable = total differentiable
+        \item  
+    \end{enumerate}
+\end{note}
+
+Specially, define \( z = f(x, y), (x,y)\subset D_{f}\subset \mathbb{R}^{2} \), 
+\(\mathbf{g}:D_{g}\to \mathbb{R}^{2}, (u,v)\mapsto (x(u,v), y(u,v))\), 
+and \(g(D_{g})\subset D_{f}\), 
+then we have composite function
+\[
+z = f \circ \mathbf{g} = f\left[x(u,v), y(u,v)\right],\quad (u,v)\in D_{g}.
+\]
+\[
+\mathbb{R}^{2}\xrightarrow{\mathbf{g}:\text{derivative}}\mathbb{R}^{2}\xrightarrow{f:\text{differentiable}}\mathbb{R}
+\]
+If \(\mathbf{g}\) is derivative at \((u_{0}, v_{0})\in D_{g}\), 
+and \(f\) is differentiable at \((x_{0}, y_{0}) = \mathbf{g}(u_{0}, v_{0})\), 
+then \(z = f \circ \mathbf{g}\) is differentiable at \((u_{0}, v_{0})\), and at the point,
+\[
+    \begin{bmatrix} 
+        \frac{\partial z}{\partial u}   & \frac{\partial z}{\partial v} 
+    \end{bmatrix} 
+    =
+    \begin{bmatrix}
+        \frac{\partial z}{\partial x} & \frac{\partial z}{\partial y}
+    \end{bmatrix}
+    \begin{bmatrix} 
+        \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
+        \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v}
+    \end{bmatrix} 
+\]
+
+\begin{proof}
+    
+\end{proof}
 
 \chapter{Multiple Integrals}
 
