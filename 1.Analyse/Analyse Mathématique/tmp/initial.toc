@@ -1,24 +1,34 @@
-\contentsline {chapter}{Preface}{ii}{chapter*.2}%
+\contentsline {chapter}{Preface}{iii}{chapter*.2}%
 \contentsline {chapter}{\numberline {1}Preliminaries}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Trigonometric Formulas}{1}{section.1.1}%
 \contentsline {chapter}{\numberline {2}Limits of Sequences and Continuity of Real Number System}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Convergent Sequences}{3}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Indeterminate Form}{3}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Subsequences}{3}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Proposition on The Continuity of Real Numbers}{3}{section.2.4}%
-\contentsline {chapter}{\numberline {3}Limits and Continuity of Functions}{4}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Limits of Functions}{4}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Continuous Functions}{4}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Infinitesimal and Infinite Quantities}{4}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Continuous Functions on Closed Intervals}{4}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Period Three Implies Chaos}{4}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Functional Equations}{4}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Series of Numbers}{5}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Series of Functions}{6}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Power Series}{7}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Limits and Continuity in Euclidean Spaces}{8}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Multivariable Differential Calculus}{9}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Directional Derivatives and Total Differential}{9}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Differential of Vector-Valued Functions}{13}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Derivatives of Composite Mappings (Chain Rule)}{15}{section.8.3}%
-\contentsline {chapter}{\numberline {9}Multiple Integrals}{16}{chapter.9}%
+\contentsline {section}{\numberline {2.3}Subsequences}{4}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Proposition on The Continuity of Real Numbers}{4}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Limits and Continuity of Functions}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Limits of Functions}{5}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Continuous Functions}{5}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Infinitesimal and Infinite Quantities}{5}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Continuous Functions on Closed Intervals}{5}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Period Three Implies Chaos}{5}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Functional Equations}{5}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Differential}{6}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Differential and Derivative}{6}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Higher-Order Derivatives}{6}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Differential Mean Value Theorems}{6}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Theorems and Applications concerning Derivatives}{6}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Taylor's Theorem}{7}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Applications of Taylor's Theorem}{7}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Integral}{8}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Series of Numbers}{9}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Series of Functions}{10}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Power Series}{11}{chapter.8}%
+\contentsline {chapter}{\numberline {9}Limits and Continuity in Euclidean Spaces}{12}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Continuous Mappings}{12}{section.9.1}%
+\contentsline {chapter}{\numberline {10}Multi-variable Differential Calculus}{13}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Directional Derivatives and Total Differential}{13}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Differential of Vector-Valued Functions}{18}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Derivatives of Composite Mappings (Chain Rule)}{19}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Mean Value Theorem and Taylor's Formula}{19}{section.10.4}%
+\contentsline {chapter}{\numberline {11}Multiple Integrals}{21}{chapter.11}%

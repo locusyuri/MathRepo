@@ -128,13 +128,79 @@ This is the preface of the book...
 
 \begin{leftbarTitle}{Properties of Convergent Sequences}\end{leftbarTitle}
 
-\begin{leftbarTitle}{Cauchy Proposition and Fitting Method}\end{leftbarTitle}
+
+
+\begin{leftbarTitle}{Cauchy's Proposition and Fitting Method}\end{leftbarTitle}
+\begin{proposition}{Cauchy's Proposition}
+    Let \(\lim_{n \to \infty} x_n = l\), then:
+    \[
+        \lim_{n \to \infty} \frac{x_{1}+x_{2}+ \cdots +x_{n}}{n} = l.
+    \]
+\end{proposition}
+
+\begin{note}
+    \begin{enumerate}
+        \item In the proposition, \(l\) can be \(+\infty\) or \(-\infty\).
+        \item Let \(\lim_{n \to \infty} x_n = l\), then:
+            \[
+                \lim_{n \to \infty}\frac{x_{1}+x_{2}+ \cdots +x_{n}}{n}
+                =\lim_{n \to \infty} \sqrt[n]{x_{1} x_{2} \cdots x_{n}} 
+                =\lim_{n \to \infty} \frac{n}{\frac{1}{x_{1}} + \frac{1}{x_{2}} + \cdots + \frac{1}{x_{n}}}
+                = l.
+            \]
+    \end{enumerate}
+\end{note}
+
+It can be proved directly by Stolz's theorem.
+On top of that, it can also be proved by the \textbf{fitting method}.
+\begin{proof}
+    
+\end{proof}
+
+\begin{remark}
+    To prove \(\lim_{n \to \infty} x_n = A\), 
+    the key is to show that \(|x_n - A|\) can be arbitrarily small. 
+    For this purpose, it is generally recommended to simplify the expression of \(x_n\) as much as possible. 
+    However, in some cases, \(A\) can also be transformed into a form similar to \(x_n\). 
+    This method is called the fitting method. 
+    The core idea behind the method of fitting is to appropriately divide into units of \(1\) for analysis.
+\end{remark}
+
 
 
 \section{Indeterminate Form}
 \begin{leftbarTitle}{Infinitely Large Quantities and Infinitesimal Quantities}\end{leftbarTitle}
 
 \begin{leftbarTitle}{Indeterminate Forms}\end{leftbarTitle}
+
+\begin{theorem}{Stolz's Theorem}
+    \begin{description}
+        \item[Type \(\frac{0}{0}\)] Let \(\{a_n\}, \{b_n\}\) be two infinitesimal sequences, 
+            where \(\{a_n\}\) is also a strictly monotonic decreasing sequence. If  
+            \[
+            \lim_{n \to \infty} \frac{b_{n+1} - b_n}{a_{n+1} - a_n} = l \, (\text{finite or } \pm\infty),
+            \]  
+            then  
+            \[
+            \lim_{n \to \infty} \frac{a_n}{b_n} = l.
+            \] 
+        \item[Type \(\frac{\text{*}}{\infty}\)] Let \(\{a_n\}\) be a strictly monotonic increasing sequence 
+            of divergent large quantities. If  
+            \[
+            \lim_{n \to \infty} \frac{b_{n+1} - b_n}{a_{n+1} - a_n} = l \, (\text{finite or } \pm\infty),
+            \]  
+            then  
+            \[
+            \lim_{n \to \infty} \frac{a_n}{b_n} = l.
+            \]
+    \end{description}
+\end{theorem}
+\begin{note}
+    \begin{enumerate}
+        \item The inverse proposition of Stolz's Theorem does not hold.
+        \item If \(a_1\) is an undefined infinite quantity \(\infty\), Stolz's Theorem does not hold.
+    \end{enumerate}
+\end{note}
 
 \section{Subsequences}
 \begin{leftbarTitle}{Subsequences}\end{leftbarTitle}
@@ -174,6 +240,71 @@ This is the preface of the book...
 
 \section{Functional Equations}
 
+\chapter{Differential}
+\section{Differential and Derivative}
+
+\section{Higher-Order Derivatives}
+
+\section{Differential Mean Value Theorems}
+\begin{definition}{Extremum}
+    Let \(f(x)\) is defined on \((a,b)\), \(x_{0}\in (a,b)\).
+    If there exists \(U(x_{0}, \delta)\subset (a,b)\) such that \(f(x)\leqslant f(x_{0})\) on it,
+    then \(x_{0}\) is called a local maximum point of \(f\),
+    and \(f(x_{0})\) is referred to as the corresponding local maximum value.
+
+    The definition of the minimum value is analogous.
+\end{definition}
+
+\begin{lemma}{Fermat's Lemma}
+    If \(f\) is differentiable at \(x_{0}\) which is a local extremum, then \(f'(x_{0}) = 0\).
+\end{lemma}
+
+\begin{theorem}{Rolle's Theorem}
+    If \(f\in C[a,b], f\in D(a,b)\) and \(f(a) = f(b)\), then there exists \(\xi\in (a,b)\) such that \(f'(\xi) = 0\).
+
+    \underline{\textbf{Enhanced Version:}}If \(f\in D(a,b)\)(finite or infinite interval), 
+    and \(\lim_{x \to a^{+}} f(x) = \lim_{x \to b^{-}} f(x) \) , 
+    then there exists \(\xi\in (a,b)\) such that \(f'(\xi) = 0\).
+\end{theorem}
+
+\begin{theorem}{Lagrange's Mean Value Theorem}
+    If \(f\in C[a,b], f\in D(a,b)\), then there exists \(\xi\in (a,b)\) such that
+    \[
+        f'(\xi) = \frac{f(b) - f(a)}{b - a}.
+    \]
+\end{theorem}
+
+\begin{theorem}{Cauchy's Mean Value Theorem}
+    If \(f,g\in C[a,b], f,g\in D(a,b)\) and \(g'(x) \neq 0\) for all \(x\in (a,b)\), 
+    then there exists \(\xi\in (a,b)\) such that
+    \[
+        \frac{f'(\xi)}{g'(\xi)} = \frac{f(b) - f(a)}{g(b) - g(a)}.
+    \]
+\end{theorem}
+
+
+
+\section{Theorems and Applications concerning Derivatives}
+
+\begin{theorem}{Darboux's Intermediate Value Theorem for Derivatives}
+    If \(f(x)\in D[a,b]\), and \(f'_{+}(a)\cdot f'_{-}(b)<0\),
+    then there at least exists \(\xi\in (a,b)\) such that \(f'(\xi) = 0\).
+\end{theorem}
+
+\begin{theorem}{Theorem on the Limit of Derivatives}
+    If \(f(x)\in C(U(x_{0})),\mathring{D}(U(x_{0}))\), and \(\lim_{x \to x_{0}} f'(x) = A\),
+    then \(f\) is differentiable at \(x_{0}\) and \(f'(x_{0}) = A\).
+\end{theorem}
+\begin{remark}
+    In fact, \(\lim_{x \to x_{0}} f'(x) = A\) has already been shown to imply that \(f\in \mathring{D}(U(x_{0}))\).
+\end{remark}
+
+\section{Taylor's Theorem}
+
+\section{Applications of Taylor's Theorem}
+
+\chapter{Integral}
+
 \chapter{Series of Numbers}
 
 \chapter{Series of Functions}
@@ -182,7 +313,37 @@ This is the preface of the book...
 
 \chapter{Limits and Continuity in Euclidean Spaces}
 
-\chapter{Multivariable Differential Calculus}
+\section{Continuous Mappings}
+\begin{leftbarTitle}{Continuous Mappings on Compact Sets}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Continuous Mappings on Connected Sets}\end{leftbarTitle}
+\begin{definition}{Connected Set}
+    Let \(S\) be a set of points in \(\mathbb{R}^n\). 
+    If a continuous mapping 
+    \[
+        \gamma: [0, 1] \to \mathbb{R}^n
+    \]
+    satisfies that the range of \(\gamma([0, 1])\) lies entirely within \(S\), 
+    we call \(\gamma\) a \textbf{path} in \(S\), 
+    where \(\gamma(0)\) and \(\gamma(1)\) are referred to as the starting point and ending point of the path, respectively.  
+    
+    If for any two points \(\mathbf{x}, \mathbf{y} \in S\), 
+    there exists a path in \(S\) with \(\mathbf{x}\) as the starting point and \(\mathbf{y}\) as the ending point, 
+    \(S\) is called path-connected, or equivalently, \(S\) is called a \textbf{connected set}.  
+    
+    A connected open set is called an \textbf{(open) region}. The closure of an (open) region is referred to as a closed region.
+\end{definition}
+
+\begin{remark}
+    Intuitively, this means that any two points in \(S\) can be connected 
+    by a curve lying entirely within \(S\). 
+    Clearly, a connected subset of \(\mathbb{R}\) is an interval, 
+    and a connected subset of \(\mathbb{R}\) is compact if and only if it is a closed interval.
+\end{remark}
+
+
+
+\chapter{Multi-variable Differential Calculus}
 \section{Directional Derivatives and Total Differential}
 \begin{leftbarTitle}{Directional Derivative}\end{leftbarTitle}
 \begin{definition}{Directional Derivative}
@@ -197,9 +358,9 @@ This is the preface of the book...
         \lim_{t \to 0} \frac{f(\mathbf{x}^{0} + t\mathbf{e}) - f(\mathbf{x}^{0})}{t} 
     \] 
     exists and is finite, 
-    it is called the \textbf{directional derivative} of \(f\) at \(\mathbf{x}_{0}\) in the direction \(\mathbf{e}\), 
-    denoted by \(\frac{\partial f}{\partial \mathbf{e}}(\mathbf{x}_{0})\). 
-    It is the rate of change of \(f\) at \(\mathbf{x}_{0}\) in the direction \(\mathbf{e}\).
+    it is called the \textbf{directional derivative} of \(f\) at \(\mathbf{x}^{0}\) in the direction \(\mathbf{e}\), 
+    denoted by \(\frac{\partial f}{\partial \mathbf{e}}(\mathbf{x}^{0})\). 
+    It is the rate of change of \(f\) at \(\mathbf{x}^{0}\) in the direction \(\mathbf{e}\).
 \end{definition}
 
 Consider the following set of unit coordinate vectors: \(\mathbf{e}_{1},\mathbf{e}_{2},\cdots,\mathbf{e}_{n}\).
@@ -221,6 +382,17 @@ is called the \( i \)th first-order \textbf{partial derivative} of \( f \) at \(
 \]
 \( \mathrm{D}_i = \frac{\partial}{\partial x_i} \) is called the \( i \)th partial differential operator (\( i = 1, 2, \cdots, n \)).
 
+Let \(\mathbf{e}_{i}=\sum_{i=0}^{n} \mathbf{e}_{i}\cos\alpha\) be a unit vector, 
+where \(\sum_{i=0}^{n} \cos^2\alpha = 1\).
+If \(\frac{\partial f}{\partial x_{i}}\) is continuous at \(\mathbf{x}^0\), 
+then the directional derivative of \(f\) at \(\mathbf{x}^0\) along the direction \(\mathbf{e}\) is given by:
+\[
+\frac{\partial f}{\partial \mathbf{e}}(\mathbf{x}^0) = \sum_{i=1}^n \frac{\partial f}{\partial x_i}(\mathbf{x}^0) \cos \alpha_i.
+\]
+
+This is the formula for \textbf{expressing a directional derivative using partial derivatives}.
+
+
 \begin{note}
     Let \(\mathbf{e}\) be a direction, then \(\|-\mathbf{e}\| = \|\mathbf{e}\| = 1\), 
     which implies that \(-\mathbf{e}\) is also a direction. At this point, we have:
@@ -234,7 +406,7 @@ is called the \( i \)th first-order \textbf{partial derivative} of \( f \) at \(
 \begin{definition}{Jacobian Matrix (Gradient)}
     Let
     \[
-    \mathbf{J}f(\mathbf{x}) = (\mathrm{D}_1 f(\mathbf{x}), \mathrm{D}_2 f(\mathbf{x}), \dots, \mathrm{D}_n f(\mathbf{x})),
+    Jf(\mathbf{x}) = (\mathrm{D}_1 f(\mathbf{x}), \mathrm{D}_2 f(\mathbf{x}), \dots, \mathrm{D}_n f(\mathbf{x})),
     \]
     which is called the \textbf{Jacobian matrix} of the function \( f \) at the point \( \mathbf{x} \), 
     (a \( 1 \times n \) matrix) whose counterpart is the first-order derivative of a single-variable function.
@@ -243,15 +415,17 @@ is called the \( i \)th first-order \textbf{partial derivative} of \( f \) at \(
     and its increments \(\mathbf{h}\) as column vectors.
     In this way, the differential of the function can be expressed using matrix multiplication as follows:
     \[
-    \mathrm{d}f(\mathbf{x}^{0})(\mathbf{\Delta x}) = \mathbf{J}f(\mathbf{x}^{0}) \mathbf{\Delta x}.
+    \mathrm{d}f(\mathbf{x}^{0})(\mathbf{\Delta x}) = Jf(\mathbf{x}^{0}) \mathbf{\Delta x}.
     \]
     The Jacobian matrix of the function \( f \) is also frequently denoted as 
-    \(\mathbf{\mathrm{grad}}\,f\) (or \(\nabla f\)), that is,
+    \(\mathrm{grad}\,f\) (or \(\nabla f\)), that is,
     \[
-    \mathbf{\mathrm{grad}}\,f(\mathbf{x}) = \mathbf{J}f(\mathbf{x}),
+    \mathrm{grad}\,f(\mathbf{x}) = Jf(\mathbf{x}),
     \]
     which is called the \textbf{gradient} of the scalar function \( f \).
 \end{definition}
+
+
 
 \begin{leftbarTitle}{Total Differential}\end{leftbarTitle}
 \begin{definition}{Total Differential}
@@ -280,7 +454,7 @@ is called the \( i \)th first-order \textbf{partial derivative} of \( f \) at \(
         possesses first-order partial derivatives \(\frac{\partial f}{\partial x_{i}}(\mathbf{x}^{0})\) 
         at \(\mathbf{x}^{0}\) for \(i = 1, 2, \dots, n\), and
         \[
-        \mathbf{A} = \left( A_{1}, A_{2}, \dots, A_{n} \right)  = \mathbf{J}f(\mathbf{x}^{0}) = 
+        \mathbf{A} = \left( A_{1}, A_{2}, \dots, A_{n} \right)  = Jf(\mathbf{x}^{0}) = 
         \left(\mathrm{D}_{1}f(\mathbf{x}^{0}), \mathrm{D}_{2}f(\mathbf{x}^{0}), \dots, \mathrm{D}_{n}f(\mathbf{x}^{0}) \right).
         \]\footnote{
             It is referred to as the total differential formula, and the more common form is
@@ -293,7 +467,7 @@ is called the \( i \)th first-order \textbf{partial derivative} of \( f \) at \(
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \item[Sufficient Condition] Let \(U \subset \mathbb{R}^n\) be an open set, 
         and let \(f: U \to \mathbb{R}^1\) be an \(n\)-variable function. 
-        If \(\mathbf{J}f = \left( \mathrm{D}_{1}f, \mathrm{D}_{2}f, \dots, \mathrm{D}_{n}f \right)\) 
+        If \(Jf = \left( \mathrm{D}_{1}f, \mathrm{D}_{2}f, \dots, \mathrm{D}_{n}f \right)\) 
         is continuous at \(\mathbf{x}^{0}\) 
         (i.e., \(\frac{\partial f}{\partial x_{i}}\) is continuous at \(\mathbf{x}^{0}\) for \(i = 1, 2, \dots, n\)), 
         then \(f\) is differentiable at \(\mathbf{x}^{0}\).
@@ -567,7 +741,7 @@ Expressed in coordinate vector form:
         \]
 
         This matrix is called the Jacobian matrix of $\mathbf{f}$ at $\mathbf{x}^0$, 
-        denoted by $f'(\mathbf{x}^0)$ (or $\mathrm{D}f(\mathbf{x}^0)$, $\mathbf{J}_f(\mathbf{x}^0)$).
+        denoted by $f'(\mathbf{x}^0)$ (or $\mathrm{D}f(\mathbf{x}^0)$, $J_f(\mathbf{x}^0)$).
 
         For the special case $m=1$, i.e., $n$-variable scalar function $z=f(x_1,x_2,\dots,x_n)$, 
         the derivative at $\mathbf{x}^0$ is
@@ -583,7 +757,7 @@ Expressed in coordinate vector form:
         \[
         \mathbf{x} \in U \mapsto f'(\mathbf{x}) = J_f(\mathbf{x})
         \]
-        where $f'(\mathbf{x})$ (or $\mathrm{D}f(\mathbf{x})$, $\mathbf{J}_f(\mathbf{x})$) 
+        where $f'(\mathbf{x})$ (or $\mathrm{D}f(\mathbf{x})$, $J_f(\mathbf{x})$) 
         denotes the derivative of $\mathbf{f}$ at $\mathbf{x}$ in $U$.
     \item  If every component function $f_i(x_1, x_2, \dots, x_n)$ $(i=1,2,\dots,m)$ of $\mathbf{f}$ 
         has continuous partial derivatives at $\mathbf{x}^0$, 
@@ -627,8 +801,8 @@ be mappings. If \( \mathbf{g} \) is derivative at \( \mathbf{u}^{0} \in U \)
 and \( \mathbf{f} \) is differentiable at \( \mathbf{x}^{0} = \mathbf{g}(\mathbf{u}^{0}) \), 
 then the composite mapping \( \mathbf{f} \circ \mathbf{g} \) is differentiable at \( \mathbf{u}^{0} \), and:
 \[
-\mathbf{J}(\mathbf{f} \circ \mathbf{g})(\mathbf{u}^{0}) = 
-\mathbf{J}\mathbf{f}(\mathbf{x}^{0}) \mathbf{J}\mathbf{g}(\mathbf{u}^{0}).
+J(\mathbf{f} \circ \mathbf{g})(\mathbf{u}^{0}) = 
+J\mathbf{f}(\mathbf{x}^{0}) J\mathbf{g}(\mathbf{u}^{0}).
 \]
 
 \begin{note}
@@ -669,6 +843,94 @@ then \(z = f \circ \mathbf{g}\) is differentiable at \((u_{0}, v_{0})\), and at 
 \begin{proof}
     
 \end{proof}
+
+\section{Mean Value Theorem and Taylor's Formula}
+
+\begin{definition}{Convex Region}
+    Let \(D \subseteq \mathbb{R}^n\) be a region. 
+    If every line segment connecting any two points \(\mathbf{x}_0, \mathbf{x}_1 \in D\) 
+    (denoted by \(\overline{\mathbf{x}_0 \mathbf{x}_1}\))
+    is entirely contained in \(D\), i.e., for any \(\lambda \in [0, 1]\), we have  
+    \[
+    \mathbf{x}_0 + \lambda (\mathbf{x}_1 - \mathbf{x}_0) \in D,
+    \]
+    then \(D\) is called a convex region.
+\end{definition}
+
+\begin{theorem}{Lagrange's Mean Value Theorem}
+    Let \(f\) be \underline{differentiable} on \underline{a convex region} \(D \subseteq \mathbb{R}^n\). 
+    For any two points \(\mathbf{a}, \mathbf{b} \in D\), 
+    there exists a point \(\mathbf{\xi}\in \overline{\mathbf{a} \mathbf{b}}\)
+    such that:  
+    \[
+    f(\mathbf{b}) - f(\mathbf{a}) = Jf(\mathbf{\xi})(\mathbf{b} - \mathbf{a}).
+    \]
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{theorem}
+    Let \(D\) be a region in \(\mathbb{R}^n\). If for any \(\mathbf{x} \in D\), we have  
+    \[
+    Jf(\mathbf{x}) = 0,
+    \]
+    then \(f\) is constant on \(D\).
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{theorem}{Taylor's Formula}
+    \begin{description}
+        \item[Lagrange's Remainder]  Let \(D \subseteq \mathbb{R}^n\) be a convex region, 
+            and let \(f: D \to \mathbb{R}\) have \(m+1\) continuous partial derivatives. 
+            For \(\mathbf{x}^0 = (x_1^0, x_2^0, \dots, x_n^0) \in D\) and \(\mathbf{x} = (x_1, x_2, \dots, x_n) \in D\), 
+            there exists \(\mathbf{\xi} \in \overline{\mathbf{x}^0 \mathbf{x}}\) such that:  
+            \[
+            f(\mathbf{x}) = f(\mathbf{x}^0) 
+            + \sum_{k=1}^m \frac{1}{k!} \left( \sum_{i=1}^n (x_i - x_i^0) \frac{\partial}{\partial x_i} \right)^k f(\mathbf{x}^0) 
+            + \frac{1}{(m+1)!} \left( \sum_{i=1}^n (x_i - x_i^0) \frac{\partial}{\partial x_i} \right)^{m+1} f(\mathbf{\xi}).
+            \]
+        \item[Peano's Remainder] Let \(D \subseteq \mathbb{R}^n\) be a convex region, 
+            and let \(f: D \to \mathbb{R}\) have \(m\) continuous partial derivatives. 
+            Then:
+            \[
+            f(\mathbf{x}) = f(\mathbf{x}^0) 
+            + \sum_{k=1}^m \frac{1}{k!} \sum_{i_1, i_2, \dots, i_k=1}^n 
+            \frac{\partial^k f}{\partial x_{i_1} \partial x_{i_2} \dots \partial x_{i_k}}(\mathbf{x}^0) 
+            \prod_{j=1}^{k} (x_{i_j} - x_{i_j}^0) 
+            + R_m(\mathbf{x} - \mathbf{x}^0),
+            \]
+            where \(R_m(\mathbf{x} - \mathbf{x}^0) = O(\|\mathbf{x} - \mathbf{x}^0\|^{m+1})\) or \(o(\|\mathbf{x} - \mathbf{x}^0\|^{m})\), as \(\|\mathbf{x} - \mathbf{x}^0\| \to 0\).
+
+    \end{description}
+\end{theorem}
+
+In applications, particularly important is the expression of the first three terms in Taylor's formula, which is given as
+(let \(x_1 - x_1^0\) be denoted by \(\Delta x_1\), and similarly for other variables;
+\(\Delta \mathbf{x} = (\Delta x_1, \Delta x_2, \dots, \Delta x_n)\)):
+\[
+    f(\mathbf{x}) = f(\mathbf{x}^0) + Jf(\mathbf{x}^0)(\Delta\mathbf{x})
+    + \frac{1}{2!}(\Delta\mathbf{x})Hf(\mathbf{x}^0)(\Delta \mathbf{x})^{\mathrm{T}}+ \cdots,
+\]
+where the matrix
+\[
+Hf(\mathbf{x}^0) =
+\begin{bmatrix}
+\frac{\partial^2 f}{\partial x_1^2} & \frac{\partial^2 f}{\partial x_1 \partial x_2} 
+    & \cdots & \frac{\partial^2 f}{\partial x_1 \partial x_n} \\
+\frac{\partial^2 f}{\partial x_2 \partial x_1} & \frac{\partial^2 f}{\partial x_2^2} 
+    & \cdots & \frac{\partial^2 f}{\partial x_2 \partial x_n} \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial^2 f}{\partial x_n \partial x_1} & \frac{\partial^2 f}{\partial x_n \partial x_2} 
+    & \cdots & \frac{\partial^2 f}{\partial x_n^2}
+\end{bmatrix}_{\mathbf{x}^0}
+\]
+is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times n\) symmetric matrix.
+
 
 \chapter{Multiple Integrals}
 
