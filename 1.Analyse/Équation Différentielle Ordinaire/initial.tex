@@ -39,7 +39,7 @@
 \chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
 This is the preface of the book...
 
-\textcolor{red}{\bfseries Alert} Throught this text, we focus exclusively on real-valued differential equations, 
+\textcolor{red}{\bfseries Alert} Through this text, we focus exclusively on real-valued differential equations, 
 where all quantities are assumed to be real unless stated otherwise. 
 % \chapter{Acknowledgments}  % 致谢（无编号）
 % I would like to thank...
@@ -253,8 +253,13 @@ where $c$ is an arbitrary constant. Equation~\eqref{general integral} is called 
 
     When equation~\eqref{eq:symmetric form} is a separable equation, it can be written as
     \begin{equation}\label{eq:separable form}
-        M_1(x) M_2(y) \, \mathrm{d}x + N_1(x) N_2(y) \, \mathrm{d}y = 0.  
+        M_1(x) M_2(y) \, \mathrm{d}x + N_1(x) N_2(y) \, \mathrm{d}y = 0,
     \end{equation}
+    or more conveniently as
+    \begin{equation}\label{eq:separable form 2}
+        \frac{\mathrm{d}y}{\mathrm{d}x} = f(x)g(y) \left(= -\frac{M_1(x)}{N_1(x)} \cdot \frac{N_2(y)}{M_2(y)}\right).
+    \end{equation}
+
 \end{definition}
 
 \section{Homogeneous Equations}
@@ -269,7 +274,128 @@ where $c$ is an arbitrary constant. Equation~\eqref{general integral} is called 
         if it satisfies the condition \(f(tx, ty) = t^n f(x, y)\) for all \(t > 0\).
         }
     of the same degree \(n\).    
+    In other words, for the equation
+    \[
+        \frac{\mathrm{d}y}{\mathrm{d}x} = f(x, y), 
+    \]
+    \(f(x,y)\) can be rewritten as \(g\left(\frac{y}{x}\right)\).
 \end{definition}
+
+
+The equation  
+\begin{equation}\label{eq:Second kind separable equation}
+    \frac{dy}{dx} = f\left(\frac{a_1x + b_1y + c_1}{a_2x + b_2y + c_2}\right) 
+\end{equation}
+can be transformed into a separable equation via variable change, 
+where \(a_1, a_2, b_1, b_2, c_1, c_2\) are constants. 
+
+\begin{itemize}
+    \item  When \(c_1 = c_2 = 0\), the equation becomes:  
+        \[
+        \frac{dy}{dx} = f\left(\frac{a_1 + b_1 \frac{y}{x}}{a_2 + b_2 \frac{y}{x}}\right) = g\left(\frac{y}{x}\right).
+        \]
+        Let
+        \[
+        u = \frac{y}{x}, \text{ namely } y = ux. 
+        \]
+        Differentiating both sides with respect to \(x\), we get:
+        \[
+        \frac{dy}{dx} = x \frac{du}{dx} + u.
+        \]
+        Substituting the results into original equation and simplifying, we obtain:
+        \[
+        \frac{du}{dx} = \frac{g(u) - u}{x},
+        \]
+        which is a separable equation. 
+        It can be solved easily. 
+        Then, substituting \(u = \frac{y}{x}\) back, the solution is derived.
+    \item When \(c_1, c_2\) are not entirely zero, the right-hand side of ~\eqref{eq:Second kind separable equation} 
+        consists of linear polynomials of \(x\) and \(y\). Therefore:
+        \[
+        \begin{cases}\label{eq gp:two lines}
+        a_1x + b_1y + c_1 = 0, \\
+        a_2x + b_2y + c_2 = 0,
+        \end{cases}
+        \]
+        represents two intersecting straight lines on the \(Oxy\) plane. For the coefficient determinant of the system:
+        \[
+        \begin{vmatrix}
+        a_1 & b_1 \\
+        a_2 & b_2
+        \end{vmatrix},
+        \]
+        two cases are analyzed:
+        \begin{enumerate}
+            \item  If \(\begin{vmatrix} a_1 & b_1 \\ a_2 & b_2 \end{vmatrix} \neq 0\), 
+                then \(\frac{a_1}{a_2} \neq \frac{b_1}{b_2}\), 
+                indicating that the two lines intersect at a unique point \((\alpha, \beta)\) on the \(Oxy\) plane. 
+                Let:
+                \[
+                \begin{cases}
+                X = x - \alpha, \\
+                Y = y - \beta,
+                \end{cases}
+                \]
+                then~\eqref{eq gp:two lines} becomes:
+                \[
+                \begin{cases}
+                a_1X + b_1Y = 0, \\
+                a_2X + b_2Y = 0.
+                \end{cases}
+                \]
+                Substituting into~\ref{eq:Second kind separable equation}, it simplifies to:
+                \[
+                \frac{dY}{dX} 
+                = f\left(\frac{a_1 + b_1 \frac{Y}{X}}{a_2 + b_2 \frac{Y}{X}}\right) 
+                = g\left(\frac{Y}{X}\right).
+                \]
+                This is a homogeneous differential equation. 
+                Solving it by substitution and reverting back to the original variables 
+                yields the solution to equation~\ref{eq:Second kind separable equation}.
+            \item When \(\begin{vmatrix} a_1 & b_1 \\ a_2 & b_2 \end{vmatrix} = 0\). 
+                To ensure this system holds, there are three possible scenarios:
+                \begin{enumerate}
+                    \item  If \(a_1 = b_1 = 0\),~\ref{eq:Second kind separable equation} becomes:
+                        \[
+                        \frac{dy}{dx} = f\left(\frac{c_1}{a_2x + b_2y + c_2}\right),
+                        \]
+                        and when \(a_2 = b_2 = 0\), it becomes:
+                        \[
+                        \frac{dy}{dx} = f\left(\frac{a_1x + b_1y + c_1}{c_2}\right).
+                        \]
+                        In this case, 
+                        let
+                        \[
+                        u = \frac{a_1x + b_1y + c_1}{c_2}.
+                        \]
+                        Then it can be transformed into a separable equation.
+                    \item  If \(b_1 = b_2 = 0\), ~\ref{eq:Second kind separable equation} transforms into:
+                        \[
+                        \frac{dy}{dx} = f\left(\frac{a_1x + c_1}{a_2x + c_2}\right),
+                        \]
+                        and
+                        \[
+                        \frac{dy}{dx} = f\left(\frac{b_1y + c_1}{b_2y + c_2}\right),
+                        \]
+                        when \(a_1 = a_2 = 0\). 
+                    \item If \(\frac{a_1}{a_2} = \frac{b_1}{b_2} = k\), let \(u = a_2x + b_2y\). In this case:
+                        \begin{gather*}
+                            \frac{du}{dx} = a_2 + b_2 \frac{\mathrm{d}y}{\mathrm{d}x} \\
+                            f\left( \frac{k(a_2x + b_2y) + c_1}{(a_2x + b_2y) + c_2} \right) 
+                                = f\left( \frac{ku + c_1}{u + c_2} \right) = g(u)
+                        \end{gather*}
+                        which simplifies to:
+                        \[
+                        \frac{du}{dx} = a_2 + b_2 g(u).
+                        \]
+                \end{enumerate}
+        \end{enumerate}
+\end{itemize}
+
+
+
+
+
 
 \begin{example}
     A function \(f(x, y)\) is called a quasihomogeneous function of degree \(d\) with generalized weights if

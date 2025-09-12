@@ -130,8 +130,8 @@ This is the preface of the book...
 
 
 
-\begin{leftbarTitle}{Cauchy's Proposition and Fitting Method}\end{leftbarTitle}
-\begin{proposition}{Cauchy's Proposition}
+\begin{leftbarTitle}{Cauchy Proposition and Fitting Method}\end{leftbarTitle}
+\begin{proposition}{Cauchy Proposition}\label{prop:Cauchy Proposition}
     Let \(\lim_{n \to \infty} x_n = l\), then:
     \[
         \lim_{n \to \infty} \frac{x_{1}+x_{2}+ \cdots +x_{n}}{n} = l.
@@ -151,8 +151,9 @@ This is the preface of the book...
     \end{enumerate}
 \end{note}
 
-It can be proved directly by Stolz's theorem.
+It can be proved directly by Stolz theorem~\ref{thm:Stolz Theorem}.
 On top of that, it can also be proved by the \textbf{fitting method}.
+
 \begin{proof}
     
 \end{proof}
@@ -173,7 +174,7 @@ On top of that, it can also be proved by the \textbf{fitting method}.
 
 \begin{leftbarTitle}{Indeterminate Forms}\end{leftbarTitle}
 
-\begin{theorem}{Stolz's Theorem}
+\begin{theorem}{Stolz-Cesàro theorem}\label{thm:Stolz Theorem}
     \begin{description}
         \item[Type \(\frac{0}{0}\)] Let \(\{a_n\}, \{b_n\}\) be two infinitesimal sequences, 
             where \(\{a_n\}\) is also a strictly monotonic decreasing sequence. If  
@@ -198,9 +199,44 @@ On top of that, it can also be proved by the \textbf{fitting method}.
 \begin{note}
     \begin{enumerate}
         \item The inverse proposition of Stolz's Theorem does not hold.
-        \item If \(a_1\) is an undefined infinite quantity \(\infty\), Stolz's Theorem does not hold.
+        \item If \(a_1\) is an undefined infinite quantity \(\infty\), Stolz Theorem does not hold.
     \end{enumerate}
 \end{note}
+
+\begin{theorem}{Silverman-Toeplitz Theorem}\label{thm:Toeplitz Theorem}
+    Let
+    \[
+        \begin{bmatrix}
+        y_1 \\ y_2 \\ \vdots \\ y_n \\ \vdots
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+        a_{11} & 0 & \cdots & 0 \\
+        a_{21} & a_{22} & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        a_{n1} & a_{n2} & \cdots & a_{nn} \\
+        \vdots & \vdots &        & \vdots \\
+        \end{bmatrix}
+        \begin{bmatrix}
+        x_1 \\  x_2 \\  \vdots \\   x_n \\ \vdots
+        \end{bmatrix},
+    \]
+    where the infinite triangular matrix satisfies:
+    \begin{enumerate}
+        \item \(\forall j, \lim_{n \to \infty} a_{nj} = 0.\)(Every column sequence converges to \(0\).)
+        \item \(\sup_{i\in \mathbb{N}} \sum_{j=1}^{i} \left| a_{ij} \right| < \infty.\)(The absolute row sums are bounded.)
+    \end{enumerate}
+    And \(\lim_{n \to \infty} x_n = l\).
+    We denote \(y_{n}\) as the weighted sum sequence: \(y_{n} = \sum_{j=1}^n a_{nj} x_j\).
+    Then the following results hold:
+    \begin{enumerate}
+        \item If \(l=0\), then  \(\lim_{n \to \infty} y_n = 0\).
+        \item If \(l \neq 0\) and \(\lim_{n \to \infty}\sum_{j=1}^{n} a_{ij}=1 \), then \(\lim_{n \to \infty} y_n = l\).
+    \end{enumerate}
+\end{theorem}
+
+
+
 
 \section{Subsequences}
 \begin{leftbarTitle}{Subsequences}\end{leftbarTitle}
@@ -208,10 +244,10 @@ On top of that, it can also be proved by the \textbf{fitting method}.
 \begin{leftbarTitle}{Upper Limits and Lower Limits}\end{leftbarTitle}
 
 
-\section{Proposition on The Continuity of Real Numbers}
-\begin{leftbarTitle}{Dedkind Cut}\end{leftbarTitle}
+\section{Completeness of The Real Numbers}
+\begin{leftbarTitle}{Dedkind Completeness}\end{leftbarTitle}
 
-\begin{leftbarTitle}{Least Supremum Property}\end{leftbarTitle}
+\begin{leftbarTitle}{Least Upper Bound Property}\end{leftbarTitle}
 
 \begin{leftbarTitle}{Monotone Convergence Theorem}\end{leftbarTitle}
 
@@ -219,24 +255,119 @@ On top of that, it can also be proved by the \textbf{fitting method}.
 
 \begin{leftbarTitle}{Nested Interval Theorem}\end{leftbarTitle}
 
-\begin{leftbarTitle}{Cauchy Criterion for Sequences}\end{leftbarTitle}
+\begin{leftbarTitle}{Cauchy Completeness}\end{leftbarTitle}
+\begin{definition}{Cauchy Sequence}
+    A sequence \(\{x_n\}\) is called a \textbf{Cauchy sequence} if for any \(\varepsilon > 0\), 
+    there exists a positive integer \(N\) such that when \(m,n > N\), 
+    \[
+        \left|x_n - x_m\right| < \varepsilon.
+    \]
+\end{definition}
+
+\begin{theorem}{Cauchy Convergence Criterion for Sequences}\label{thm:Cauchy Convergence Criterion for Sequences}
+    A sequence \(\{x_n\}\) converges if and only if it is a Cauchy sequence.
+\end{theorem}
+
 
 \begin{leftbarTitle}{Heine-Borel Theorem}\end{leftbarTitle}
 
+\section{Iterative Sequences}
+Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}) = x_{0}\).
 
+\begin{theorem}{Banach Fixed-Point Theorem (Contraction Mapping Theorem)}\label{thm:Banach Fixed-Point Theorem}
+    There exists a contraction mapping (in~\ref{def:Lipschitz Continuity}) \(f\) on an interval \(I\),
+    which admits a unique fixed point \(x^{*}\in I\).
+    Furthermore, \(x^{*}\) can be found as follows:
+    start with an arbitrary point \(x_{0}\in I\) and define the iterative sequence
+    \(x_{n+1}=f(x_n)\) for \(n=0,1,2,\cdots\).
+    Then \(\lim_{n \to \infty} x_n = x^{*}\).
+\end{theorem}
+
+\begin{remark}
+    The following inequalities are equivalent and describe the speed of convergence:  
+    \begin{gather*}
+        \left| x_{n} - x^{*} \right|  \leqslant \frac{L^{n}}{1-L} \left| x_{1} - x_{0} \right|, \\
+        \left| x_{n+1} - x^{*} \right| \leqslant \frac{L}{1-L} \left| x_{n+1} - x_{n} \right|, \\
+        \left| x_{n+1} - x^{*} \right| \leqslant L \left| x_{n} - x^{*} \right|.
+    \end{gather*}
+    Any such value of \(L<1\) is the Lipschitz constant for \(f\), 
+    and the smallest one is sometimes called \textbf{the best Lipschitz constant} of \(L\).
+\end{remark}
 
 
 
 \chapter{Limits and Continuity of Functions}
 \section{Limits of Functions}
+\begin{leftbarTitle}{Definition of Limit}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Limits of Functions and Sequences}\end{leftbarTitle}
+\begin{theorem}{Heine Theorem}\label{thm:Heine Theorem}
+    Let \(f\) be a function defined on a deleted neighborhood \(\mathring{U}(x_{0})\) of \(x_{0}\).
+    The following two statements are equivalent:
+    \begin{enumerate}
+        \item \(\lim_{x \to x_{0}} f(x) = A\).
+        \item For any sequence \(\{x_n\}\subset \mathring{U}(x_{0})\) with \(\lim_{n \to \infty} x_n = x_0\),
+            we have \(\lim_{n \to \infty} f(x_n) = A\) for the sequence \(\{f(x_n)\}\).
+    \end{enumerate}
+\end{theorem}
 
 \section{Continuous Functions}
 
 \section{Infinitesimal and Infinite Quantities}
 
 \section{Continuous Functions on Closed Intervals}
+\begin{leftbarTitle}{Concerning Theorems}\end{leftbarTitle}
+
+
+\begin{theorem}{The Bolzano-Cauchy Intermediate-Value Theorem}\label{thm:Indeterminate Value Theorem}
+
+\end{theorem}
+
+\begin{theorem}{Zero Point Existence Theorem}\label{thm:Zero Point Existence Theorem}
+
+\end{theorem}
+
+\begin{leftbarTitle}{Uniform Continuity and Lipschitz Continuity}\end{leftbarTitle}
+
+\begin{definition}{Uniform Continuity}
+    
+\end{definition}
+
+\begin{theorem}{Uniform Continuity Theorem}
+    
+\end{theorem}
+
+
+\begin{theorem}{Cantor's Theorem}
+    
+\end{theorem}
+
+
+\begin{definition}{Lipschitz Continuity}\label{def:Lipschitz Continuity}
+    If there exists a constant \(L > 0\) such that for any \(x_1, x_2 \in I\), 
+    \[
+        \left| f(x_{1}) - f(x_{2}) \right| \leq L \left| x_{1} - x_{2} \right|,
+    \]
+    then \(f\) is called \textbf{Lipschitz continuous} on \(I\).
+
+    Specially, if \(L < 1\), then \(f\) is called a \textbf{contraction mapping} on \(I\).
+\end{definition}
+
+\begin{remark}
+    \begin{itemize}
+        \item If \(f\) is Lipschitz continuous on \(I\), then \(f\) is uniformly continuous on \(I\).
+            (\(\forall \varepsilon > 0\), just let \(\delta = \frac{\varepsilon}{L}\))
+        \item If \(f\) is uniformly continuous on \(I\), then \(f\) is continuous on \(I\).
+        \item The converse of the above two statements does not hold.
+    \end{itemize}
+\end{remark}
+
+
+
 
 \section{Period Three Implies Chaos}
+
+
 
 \section{Functional Equations}
 
@@ -299,13 +430,37 @@ On top of that, it can also be proved by the \textbf{fitting method}.
     In fact, \(\lim_{x \to x_{0}} f'(x) = A\) has already been shown to imply that \(f\in \mathring{D}(U(x_{0}))\).
 \end{remark}
 
-\section{Taylor's Theorem}
+\section{Taylor Theorem}
 
-\section{Applications of Taylor's Theorem}
+\section{Applications of Taylor Theorem}
 
 \chapter{Integral}
 
-\chapter{Series of Numbers}
+\chapter{Numerical Series}
+\section{Convergence of Numerical Series}
+
+\section{Positive Term Series}
+
+\section{General Term Series}
+\begin{leftbarTitle}{Cauchy Convergence Criterion for Series}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Alternative Series}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Abel-Dirichlet Test}\end{leftbarTitle}
+
+\begin{theorem}{Abel Transform (Discrete Integration by Parts/Summation by Parts)}\label{thm:Abel Transform}
+    Let \(\{a_n\}, \{b_n\}\) be two sequences, then for any \(n\in \mathbb{N}^{+}\),
+    \[
+        \sum_{k=1}^{n} a_k b_k = a_n B_n + \sum_{k=1}^{n-1} (a_{k+1} - a_{k})B_k,
+    \]
+    where \(B_n = \sum_{k=1}^{n} b_k\).
+\end{theorem}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth, angle=180]{img/AbelTransform.jpg}
+\end{figure}
+
 
 \chapter{Series of Functions}
 
@@ -425,6 +580,18 @@ This is the formula for \textbf{expressing a directional derivative using partia
     which is called the \textbf{gradient} of the scalar function \( f \).
 \end{definition}
 
+\begin{note}
+    Let \(U \subset \mathbb{R}^n\) be an open set, and \(\mathbf{f}: U \to \mathbb{R}^m\) be a \(C^k\) mapping:  
+    \begin{itemize}
+        \item \(k = 0\), \(\mathbf{f}\) is a continuous mapping;
+        \item \(0 < k < +\infty\), \(f_i\) has continuous partial derivatives up to order \(k\), \(i = 1, 2, \dots, m\);
+        \item \(k = +\infty\), \(f_i\) has continuous partial derivatives of all orders, \(i = 1, 2, \dots, m\);
+        \item \(k = \omega\), \(f_i\) is really analytic, i.e., 
+            in the neighborhood of any point \(\mathbf{x}^0 = (x_1^0, x_2^0, \dots, x_n^0) \in U\), 
+            \(f_i\) can be expanded into a convergent (\(n\)-dimensional) power series, \(i = 1, 2, \dots, m\).
+    \end{itemize}
+    Let \(C^k(U, \mathbb{R}^m)\) denote the totality of \(C^k\) mappings from \(U\) to \(\mathbb{R}^m\).
+\end{note}
 
 
 \begin{leftbarTitle}{Total Differential}\end{leftbarTitle}
@@ -857,7 +1024,7 @@ then \(z = f \circ \mathbf{g}\) is differentiable at \((u_{0}, v_{0})\), and at 
     then \(D\) is called a convex region.
 \end{definition}
 
-\begin{theorem}{Lagrange's Mean Value Theorem}
+\begin{theorem}{Lagrange's Mean Value Theorem}\label{thm:Multi_Lagrange}
     Let \(f\) be \underline{differentiable} on \underline{a convex region} \(D \subseteq \mathbb{R}^n\). 
     For any two points \(\mathbf{a}, \mathbf{b} \in D\), 
     there exists a point \(\mathbf{\xi}\in \overline{\mathbf{a} \mathbf{b}}\)
@@ -932,6 +1099,142 @@ Hf(\mathbf{x}^0) =
 is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times n\) symmetric matrix.
 
 
+\section{Implicit Function Theorem}
+
+\begin{theorem}{Implicit Function Theorem}
+    Let \(U \subset \mathbb{R}^{n+1}\) be an open set, and \(F: U \to \mathbb{R}\) be an \(n+1\)-variable function. If:  
+    \begin{enumerate}
+        \item \(F \in C^k(U, \mathbb{R})\), where \(1 \leq k \leq +\infty\);
+        \item \(F(\mathbf{x}^0, y^0) = 0\), 
+            where \(\mathbf{x}^0 = (x_1^0, x_2^0, \dots, x_n^0) \in \mathbb{R}^n\), \(y^0 \in \mathbb{R}\), 
+            and \((\mathbf{x}^0, y^0) \in U\) 
+            (i.e., the equation \(F(\mathbf{x}, y) = 0\) has a solution \((\mathbf{x}^0, y^0)\));
+        \item \(F'_y(\mathbf{x}^0, y^0) \neq 0\).
+    \end{enumerate}
+
+    Then there exists an open interval \(I \times J\) containing \((\mathbf{x}^0, y^0)\) 
+    (\(I\) being an open interval in \(\mathbb{R}^n\) containing \(\mathbf{x}^0\), 
+    and \(J\) being an open interval in \(\mathbb{R}\) containing \(y^0\)), 
+    as shown in Fig.~\ref{fig:ImplicitFunction}, such that:  
+    \begin{enumerate}
+        \item \(\forall x \in I\), the equation \(F(\mathbf{x}, y) = 0\) has a unique solution \(y = f(\mathbf{x})\), 
+            where \(f: I \to J\) is an \(n\)-variable function 
+            (called the \textbf{implicit function} \(f\), hidden within the equation \(F(\mathbf{x}, f(\mathbf{x})) = 0\), 
+            though not necessarily explicitly expressed);
+        \item \(y^0 = f(\mathbf{x}^0)\);
+        \item \(f \in C^k(I, \mathbb{R})\);
+        \item When \(x \in I\), 
+            \(\frac{\partial f}{\partial x_i} = \frac{\partial y}{\partial x_i} = -\frac{F_x(\mathbf{x}, y)}{F_y(\mathbf{x}, y)}\), 
+            \(i = 1, 2, \dots, n\), where \(y = f(x)\).
+    \end{enumerate}
+\end{theorem}  
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/ImplicitFunction.png}
+    \caption{Implicit Function}
+    \label{fig:ImplicitFunction}
+\end{figure}
+
+\begin{proof}
+    Only the single-variable implicit function theorem is proved; 
+    the multi-variable case can be derived using mathematical induction.
+    
+    Without loss of generality, assume \(F_y(x^0, y^0) > 0\).
+
+    First, prove the \underline{existence of the implicit function}.  
+    From the continuity of \(F_y(x^{0}, y^{0}) > 0\) and \(F_y(x, y)\), 
+    it is known that there exist closed rectangle:
+    \[
+    D^* = \{(x, y) \mid |x - x_0| \leq \alpha, |y - y_0| \leq \beta\} \subset U,
+    \]
+    where the following holds:
+    \[
+    F_y(x, y) > 0.
+    \]
+    Thus, for fixed \(x_0\), the function \(F(x^{0}, y)\) is strictly monotonically increasing 
+    within \([y^{0} - \beta, y^{0} + \beta]\). Furthermore, since:
+    \[
+    F(x^{0}, y^{0}) = 0,
+    \]
+    it follows that:
+    \[
+    F(x^{0}, y^{0} - \beta) < 0, \quad F(x^{0}, y^{0} + \beta) > 0.
+    \]
+    Due to the continuity of \(F(x, y)\) within \(D^*\), there exists \(\rho > 0\) such that along the line segment:
+    \[
+    x = x^{0} + \rho, \, y = y^{0} + \beta,
+    \]
+    we have \(F(x, y) > 0\), and along the line segment:
+    \[
+    x = x^{0} + \rho, \, y = y^{0} - \beta,
+    \]
+    we have \(F(x, y) < 0\).
+    Therefore, for any point \(\bar{x} \in (x^{0} - \rho, x^{0} + \rho)\), treat \(F(x, y)\) as a single-variable function of \(y\). 
+    Within \([y^{0} - \beta, y^{0} + \beta]\), this function is continuous. From the previous discussion, we know:
+    \[
+    F(\bar{x}, y^{0} - \beta) < 0, \quad F(\bar{x}, y^{0} + \beta) > 0.
+    \]
+    According to the zero point existence theorem~\ref{thm:Zero Point Existence Theorem}, 
+    there must exist a unique \(\bar{y} \in [y^{0} - \beta, y^{0} + \beta]\) 
+    such that \(F(\bar{x}, \bar{y}) = 0\). 
+    Furthermore, because \(F_y(x, y) > 0\) within \(D^*\), this \(\bar{y}\) is unique.
+    Denote the corresponding relationship as \(\bar{y} = f(\bar{x})\), 
+    then the function \(y = f(x)\) is defined within \((x^{0} - \rho, x^{0} + \rho)\), 
+    satisfying \(F(x, f(x)) = 0\), and clearly:
+    \[
+    y^{0} = f(x^{0}).
+    \]
+
+    Further proving \underline{the continuity of the implicit function} \(y = f(x)\) on \((x^{0} - \rho, x^{0} + \rho)\):  
+    Let \(\bar{x} \in (x^{0} - \rho, x^{0} + \rho)\) be any point. 
+    For any given \(\varepsilon > 0\) (\(\varepsilon\) being sufficiently small), 
+    since \(F(\bar{x}, \bar{y}) = 0\) (\(\bar{y} = f(\bar{x})\)), from the previous discussion we know:  
+    \[
+    F(\bar{x}, \bar{y} - \varepsilon) < 0, \quad F(\bar{x}, \bar{y} + \varepsilon) > 0.
+    \]
+    Furthermore, due to the continuity of \(F(x, y)\) on \(D^*\), there exists \(\delta > 0\) such that:  
+    \[
+    F(x, \bar{y} - \varepsilon) < 0, \quad F(x, \bar{y} + \varepsilon) > 0, \quad \text{when} \quad x \in O(x^{0}, \delta).
+    \]
+    By reasoning similar to the previous discussion, 
+    it can be obtained that when \(x \in O(x^{0}, \delta)\), 
+    the corresponding implicit function value must satisfy \(f(x) \in (\bar{y} - \varepsilon, \bar{y} + \varepsilon)\), i.e.,  
+    \[
+    \left|f(x) - f(x^{0})\right| < \varepsilon.
+    \]
+    This implies that \(y = f(x)\) is continuous on \((x^{0} - \rho, x^{0} + \rho)\).  
+
+    Finally, prove the \underline{differentiability} of \(y = f(x)\) on \((x^{0} - \rho, x^{0} + \rho)\):  
+    Let \(\bar{x} \in (x^{0} - \rho, x^{0} + \rho)\) be any point. 
+    Take \(\Delta x\) sufficiently small such that \(\bar{x} = x + \Delta x \in (x^{0} - \rho, x^{0} + \rho)\). 
+    Denote \(\bar{y} = f(\bar{x})\) and \(\bar{y} + \Delta y = f(\bar{x})\). Clearly,  
+    \[
+    F(\bar{x}, \bar{y}) = 0 \quad \text{and} \quad F(\bar{x}, \bar{y} + \Delta y) = 0.
+    \]
+    Using the multi-variable function's mean value theorem~\ref{thm:Multi_Lagrange}, we obtain:  
+    \begin{align*}
+        0   &= F(\bar{x}, \bar{y} + \Delta y) - F(\bar{x}, \bar{y}) \\
+            &= F_x(\bar{x} + \theta \Delta x, \bar{y} + \theta \Delta y) \Delta x + F_y(\bar{x} + \theta \Delta x, \bar{y} + \theta \Delta y) \Delta y,
+    \end{align*}
+    where \(0 < \theta < 1\).  
+    Note that \(F_y \neq 0\) on \(D^*\), hence:  
+    \[
+    \frac{\Delta y}{\Delta x} = 
+        -\frac{F_x(\bar{x} + \theta \Delta x, \bar{y} + \theta \Delta y)}{F_y(\bar{x} + \theta \Delta x, \bar{y} + \theta \Delta y)}.
+    \]
+    Let \(\Delta x \to 0\). Considering the continuity of \(F_x\) and \(F_y\), we obtain:  
+    \[
+    \frac{dy}{dx} \Big|_{x = \bar{x}} = -\frac{F_x(\bar{x}, \bar{y})}{F_y(\bar{x}, \bar{y})}.
+    \]
+    Thus:  
+    \[
+    f'(\bar{x}) = -\frac{F_x(\bar{x}, \bar{y})}{F_y(\bar{x}, \bar{y})}.
+    \]
+
+    The proof is complete.
+\end{proof}
+
+
 \chapter{Multiple Integrals}
 
 
@@ -946,6 +1249,7 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
 \bibitem{6} 谢惠民, 恽自求, 易法槐, 钱定边. \emph{数学分析习题课讲义}. 第二版. 高等教育出版社, 2019.
 \bibitem{7} Walter Rudin. \emph{Principles of Mathematical Analysis}. Third Edition. McGraw-Hill, 1976.
 \bibitem{8} 菲赫金哥尔茨. \emph{微积分学教程}. 第八版. 高等教育出版社, 2006.
+\bibitem{9} Wikipedia. \url{https://en.wikipedia.org/wiki/}.
 \end{thebibliography}
 
 \end{document}
