@@ -1250,10 +1250,17 @@
   \citshape}{\par}
 
 % \newenvironment{solution}{\par\noindent\textbf{\color{main}\solutionname} \citshape}{\par}
-\newenvironment{remark}{\noindent\textbf{\color{second}\remarkname}\remarkfont}{\par}
+\newenvironment{remark}{\noindent\textbf{\color{second}\faDeviantart\remarkname}\remarkfont}{\par}
 \newenvironment{assumption}{\par\noindent\textbf{\color{third}\assumptionname} \citshape}{\par}
 \newenvironment{conclusion}{\par\noindent\textbf{\color{third}\conclusionname} \citshape}{\par}
-\newenvironment{property}{\par\noindent\textbf{\color{third}\propertyname} \citshape}{\par}
+% \newenvironment{property}{\par\noindent\textbf{\color{third}\faPaperclip\propertyname} \citshape}{\par}
+% \newenvironment{property}{\par\noindent\makebox[5pt][c]{\color{third}\faPaperclip\propertyname}}{\par}
+\newenvironment{property}{
+  \par\noindent\makebox[5pt][c]{
+    \tiny\color{third}\faPaperclip\quad}
+    \textbf{\color{third}\propertyname} \citshape}{\par}
+
+\newenvironment{caution}{\par\noindent\textbf{\color{red!90}\faExclamationTriangle Caution} \citshape}{\par}
 \newenvironment{custom}[1]{\par\noindent\textbf{\color{third} #1} \citshape}{\par}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

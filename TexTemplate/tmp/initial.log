@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  13 SEP 2025 21:54
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  13 SEP 2025 19:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -7,11 +7,7 @@ entering extended mode
 (./initial.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
-(../../TexTemplate/elegantbook.cls
-
-LaTeX Warning: You have requested document class `../../TexTemplate/elegantbook',
-               but the document class provides `elegantbook'.
-
+(./elegantbook.cls
 Document Class: elegantbook 2022/12/31 v4.5 ElegantBook document class
 (c:/texlive/2025/texmf-dist/tex/latex/fontawesome5/fontawesome5.sty (c:/texlive/2025/texmf-dist/tex/latex/l3kernel/expl3.sty
 Package: expl3 2025-01-18 L3 programming layer (loader) 
@@ -1177,7 +1173,7 @@ Package tocloft Info: The document has chapter divisions on input line 51.
 \cfttabnumwidth=\skip138
 )
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 10.95pt on input line 1551.
+(Font)              scaled to size 10.95pt on input line 1545.
 ) (c:/texlive/2025/texmf-dist/tex/latex/cprotect/cprotect.sty
 Package: cprotect 2011/01/27 v1.0e (Bruno Le Floch)
  (c:/texlive/2025/texmf-dist/tex/latex/bigfoot/suffix.sty
@@ -1271,27 +1267,27 @@ Package xeCJK Warning: Fandol is being set as the default font for CJK text.
 (./tmp/initial.aux)
 \openout1 = `initial.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-Package hyperref Info: Link coloring ON on input line 29.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+Package hyperref Info: Link coloring ON on input line 30.
  (./tmp/initial.out) (./tmp/initial.out)
 \@outlinefile=\write8
 \openout8 = `initial.out'.
@@ -1361,10 +1357,10 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'initial.bbl' not found.
 
 No file initial.bbl.
-Package biblatex Info: Reference section=0 on input line 29.
-Package biblatex Info: Reference segment=0 on input line 29.
+Package biblatex Info: Reference section=0 on input line 30.
+Package biblatex Info: Reference segment=0 on input line 30.
 \c@lstlisting=\count563
-Package hyperref Info: Option `pageanchor' set `false' on input line 31.
+Package hyperref Info: Option `pageanchor' set `false' on input line 32.
 *geometry* verbose mode - [ newgeometry ] result:
 * driver: xetex
 * paper: a4paper
@@ -1400,46 +1396,42 @@ Package hyperref Info: Option `pageanchor' set `false' on input line 31.
 File: example-image.pdf Graphic file (type pdf)
 <use example-image.pdf>
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 24.88pt on input line 31.
-LaTeX Font Info:    Trying to load font information for U+rsfs on input line 31.
+(Font)              scaled to size 24.88pt on input line 32.
+LaTeX Font Info:    Trying to load font information for U+rsfs on input line 32.
 (c:/texlive/2025/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 31.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 32.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 31.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 32.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 14.4pt on input line 31.
+(Font)              scaled to size 14.4pt on input line 32.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 10.95pt on input line 31.
+(Font)              scaled to size 10.95pt on input line 32.
 
 
 [1
 
 
 
-] (./tmp/initial.toc
-
-[1
-
-
-
-])
+] (./tmp/initial.toc)
 \tf@toc=\write9
 \openout9 = `initial.toc'.
 
 
 
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 39.
-[2]
+[1
 
-[3
+
+
+]
+
+[2
 
 ]
 Chapter 1.
@@ -1450,107 +1442,26 @@ Chapter 1.
 
 ]
 
-[2]
-Chapter 2.
-
-
-[3
-
-]
-Chapter 3.
-
-
-[4
-
-]
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 262.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 273.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 273.
-
-
-[5]
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
-(Font)              scaled to size 10.95pt on input line 298.
-
-
-[6]
-Chapter 4.
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\(' on input line 310.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\)' on input line 310.
-
-
-
-[7
-
-]
-Chapter 5.
-
-
-[8
-
-]
-Chapter 6.
-
-
-[9
-
-]
-Chapter 7.
-
-
-[10
-
-]
-Chapter 8.
-
-
-[11
-
-]
-Chapter 9.
-
-
-[12
-
-]
-
-[13
+[2
 
 ] (./tmp/initial.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 63FD8A1A2A1D6E6167ADD53E1566700F;13546.
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                initial
-(biblatex)                and rerun LaTeX afterwards.
-
+(rerunfilecheck)             Checksum: C4E38B936412CF5E344EB7772DF6BC14;521.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45972 strings out of 473831
- 955106 string characters out of 5733137
- 1999375 words of memory out of 5000000
- 68211 multiletter control sequences out of 15000+600000
- 569637 words of font info for 165 fonts, out of 8000000 for 9000
+ 45757 strings out of 473831
+ 949859 string characters out of 5733137
+ 1960468 words of memory out of 5000000
+ 68022 multiletter control sequences out of 15000+600000
+ 566155 words of font info for 133 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,11n,108p,692b,803s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (17 pages).
+Output written on ./tmp/initial.pdf (5 pages).

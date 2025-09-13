@@ -1,4 +1,4 @@
-\documentclass[11pt]{elegantbook}
+\documentclass[11pt]{../../TexTemplate/elegantbook} % 这里是文档类，默认使用 elegantbook
 
 \title{Algèbre Linéaire} % 这里放置书名
 % \subtitle{Subtitle} % 这里放置副标题
@@ -45,12 +45,266 @@ This is the preface of the book...
 \mainmatter         % 开始正文，页码从 1 重新开始
 
 \chapter{Determinants} % 这里放置章节标题
-\section{Section Title} % 这里放置小节标题
-\subsection{Subsection Title} % 这里放置子小节标题
+\section{Special Determinants} % 这里放置小节标题
+\begin{definition}{Vandermonde Determinant}
+    The Vandermonde determinant is defined as
+    \[
+    V_n = \begin{vmatrix}
+    1 & 1 & 1 & \cdots & 1 \\
+    x_1 & x_2 & x_3 & \cdots & x_n \\
+    x_1^2 & x_2^2 & x_3^2 & \cdots & x_n^2 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    x_1^{n-1} & x_2^{n-1} & x_3^{n-1} & \cdots & x_n^{n-1}
+    \end{vmatrix}
+    \]
+    where \( x_1, x_2, \ldots, x_n \) are distinct variables.
+\end{definition}
+
+The value of the Vandermonde determinant is given by
+\[
+V_n = \prod_{1 \leq i < j \leq n} (x_j - x_i).
+\]  
+
+\begin{definition}{Arrow Determinant}
+    The Arrow determinant (\(\nwarrow\)) is defined as
+    \[
+    A_n = \begin{vmatrix}
+    a_{11} & a_{12} & a_{13} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & 0 & \cdots & 0 \\
+    a_{31} & 0 & a_{33} & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    a_{n1} & 0 & 0 & \cdots & a_{nn}
+    \end{vmatrix}.
+    \]
+
+    The value of the Arrow determinant is given by
+    \[
+    A_n = \left( a_{11}- \sum_{k=2}^{n} \frac{a_{1k}a_{k1}}{a_{kk}}  \right)\prod_{k=2}^{n} a_{kk}.
+    \]
+\end{definition}
+
+From the first column sequentially, subtract \( \frac{a_{21}}{a_{22}} \) times the second column, \(\cdots\), 
+\( \frac{a_{n1}}{a_{nn}} \) times the \( n \)-th column, so that the first column becomes:
+\[
+\begin{bmatrix}
+a_{11} - \sum\limits_{k=2}^n \frac{a_{1k}a_{k1}}{a_{kk}} &
+0 &
+0 &
+\vdots &
+0
+\end{bmatrix}^{\mathrm{T}}.
+\]
+Then expand along the first column.
+
+\begin{definition}{Two-Triangular Determinant}
+    If the determinant satisfies 
+    \[ 
+    a_{ij} = \begin{cases} 
+    a, & i < j, \\ 
+    x_{i}, & i = j, \\ 
+    b, & i > j,
+    \end{cases} 
+    \], 
+    then \( D_{n} \) is called a two-triangular determinant.
+\end{definition}
+
+The value of the two-triangular determinant is given by
+\[
+\begin{vmatrix}
+x_{1} & a & a & \dots & a \\
+b & x_{2} & a & \dots & a \\
+b & b & x_{3} & \dots & a \\
+\vdots & \vdots & \vdots & & \vdots \\
+b & b & b & \dots & x_{n}
+\end{vmatrix}
+=
+\begin{cases}
+\left[ x_{1} + a \sum\limits^{n}_{k=2} \frac{x_{1}-a}{x_{k}-a} \right] \cdot \prod\limits^{n}_{k=2} (x_{k}-a), & a = b \\
+(x_{n}-b) D_{n-1} + \prod\limits^{n-1}_{k=1} (x_{k}-a), & a \neq b 
+\end{cases}
+\]
+
 
 \chapter{Systems of Linear Equations}
 
 \chapter{Matrices}
+\section{Basic Operations}
+\begin{leftbarTitle}{Addition}\end{leftbarTitle}
+\begin{leftbarTitle}{Scalar Multiplication}\end{leftbarTitle}
+\begin{leftbarTitle}{Transpose}\end{leftbarTitle}
+\begin{leftbarTitle}{Matrix Multiplication}\end{leftbarTitle}
+
+\begin{theorem}{Cauchy-Binet Formula}
+    Let \( A = (a_{ij})_{m \times n} \) and \( B = (b_{ij})_{n \times m} \):  
+    \begin{enumerate}
+        \item If \( m > n \), then \( |AB| = 0 \);
+        \item If \( m \leq n \), then \( |AB| \) is equal to 
+        the sum of products of all \( m \)-step minors of \( A \) and 
+        the corresponding \( m \)-step minors of \( B \), that is:
+        \[
+        |AB| = \sum_{1 \leq v_1 < v_2 < \dots < v_m \leq n} 
+        \begin{vmatrix}
+        A\begin{pmatrix}
+        1, 2, \dots, m \\
+        v_1, v_2, \dots, v_m
+        \end{pmatrix}
+        \end{vmatrix}
+        \cdot 
+        \begin{vmatrix}
+        B\begin{pmatrix}
+        v_1, v_2, \dots, v_m \\
+        1, 2, \dots, m
+        \end{pmatrix}
+        \end{vmatrix}.
+        \]
+    \end{enumerate}
+\end{theorem}
+
+
+
+
+
+\section{Matrix Equivalence}
+
+\section{Special Matrices}
+
+\section{Inverse Matrix}
+\begin{leftbarTitle}{Inverse Matrix and Its Operations}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Equivalent Propositions and Method of Inversion}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Generalized Inverse}\end{leftbarTitle}
+
+\section{Block Matrix}
+
+\begin{theorem}{Determinant Reduction Formula}
+    Let \(A_{m\times m}, B_{m\times n}, C_{n\times m}, D_{n\times n}\) be matrices. Then:
+    \begin{enumerate}
+        \item If \( A \) is invertible, then:
+            \[
+            \begin{vmatrix}
+            A & B \\
+            C & D
+            \end{vmatrix}
+            = |A| \cdot |D - CA^{-1}B|.
+            \]
+        \item If \( D \) is invertible, then:
+            \[
+            \begin{vmatrix}
+            A & B \\
+            C & D
+            \end{vmatrix}
+            = |D| \cdot |A - BD^{-1}C|.
+            \]
+        \item If both \( A \) and \( D \) are invertible, then:
+            \[
+            |D| \cdot |A - BD^{-1}C| = |A| \cdot |D - CA^{-1}B|.
+            \]
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    The mnemonic is: 
+    For \( \begin{vmatrix} A & B \\ C & D \end{vmatrix} \), for example, if \( A \) is invertible, 
+    one factor is \( |A| \), and the other factor is \( D \) (the diagonal element of \( A \)) minus 
+    the product of the other three terms arranged clockwise, where the middle one is the inverse matrix.
+\end{remark}
+
+
+
+
+\section{Operations of Rank}
+\begin{proposition}
+    The matrices \( A \) and \( B \) in the following operations do not need to be square matrices; 
+    they only need to be compatible for multiplication or addition.
+    \begin{description}
+        \item [1. Addition]
+        \[
+        \operatorname{rank}(A + B) \leqslant \operatorname{rank}(A) + \operatorname{rank}(B).
+        \]
+        \item [2. Multiplication]
+        \[
+        \operatorname{rank}(AB) \leqslant \operatorname{rank}(A), \quad \operatorname{rank}(AB) \leqslant \operatorname{rank}(B).
+        \]
+        \item[2.1. Sylvester's Inequality]
+        \[
+        \operatorname{rank}(AB) \geqslant \operatorname{rank}(A) + \operatorname{rank}(B) - n \quad (A_{s \times n}, B_{n \times m}).
+        \]
+        Specially, if \( AB = O \), then:
+        \[
+        \operatorname{rank}(A) + \operatorname{rank}(B) \leqslant n.
+        \]
+
+        \item[2.2. Frobenius Inequality]
+        \[
+        \operatorname{rank}(ABC) \geqslant \operatorname{rank}(AB) + \operatorname{rank}(BC) - \operatorname{rank}(B).
+        \]
+
+        \item [3. Transpose]
+        \[
+        \operatorname{rank}(AA^T) = \operatorname{rank}(A^TA) = \operatorname{rank}(A) = \operatorname{rank}(A^T).
+        \]
+
+        \item [4. Inverse]
+        \[
+        \operatorname{rank}(A) = \operatorname{rank}(A^{-1}) = n.
+        \]
+    \end{description}
+\end{proposition}
+
+\section{Low-Rank Update}
+Due to all the row and column vectors of a rank-\(1\) matrix are linearly dependent,
+it can be expressed as the outer product of two non-zero vectors;
+in other words, a rank-\(1\) matrix can be expressed as \( \alpha \beta^T \),
+where \( \alpha \) and \( \beta \) are non-zero column vectors.
+
+Based on the decomposition \( A = \alpha \beta^T \), the matrix of rank-\(1\) has simplified calculation rules:
+\begin{property}
+    \begin{description}
+        \item [Exponentiation]  
+        For any positive integer \( k \geq 1 \),
+        \[
+        A^k = (\beta^T\alpha)^{k-1} \cdot A,
+        \]
+        where \( \beta^T\alpha \) is a constant (the inner product of vectors).
+        \item [Rank Transmission]  
+        If \( B \) is any matrix, then:
+        \[
+        \operatorname{rank}(AB) \leq 1 \quad \text{and} \quad \operatorname{rank}(BA) \leq 1,
+        \]
+        (rank 1 matrices multiplied by arbitrary matrices result in ranks not exceeding 1).
+    \end{description}
+\end{property}
+
+
+
+\begin{theorem}{Sherman-Morrison Formula}
+    If \( A\in \mathbb{R}^{n\times n} \) is an invertible matrix, 
+    and \( \alpha, \beta\in \mathbb{R}^n \) are column vectors, 
+    then \( A + \alpha \beta^T \) is invertible if and only if \( 1 + \beta^T A^{-1} \alpha \neq 0 \). 
+    In this case, the inverse of \( A + \alpha \beta^T \) is given by:
+    \[
+    \left(A + \alpha \beta^T\right)^{-1} = A^{-1} - \frac{A^{-1} \alpha \beta^T A^{-1}}{1 + \beta^T A^{-1} \alpha},
+    \]
+    where \(\alpha\beta^{\mathrm{T}}\) is the outer product of \(\alpha\) and \(\beta\).
+\end{theorem}
+
+\begin{note}
+    Combining the properties of determinants, 
+    we can derive the determinant version of the Sherman-Morrison formula:
+    \[
+    \left|A + \alpha \beta^T\right| = |A| \cdot \left(1 + \beta^T A^{-1} \alpha\right),
+    \]
+    which is known as the \textbf{matrix determinant lemma}.
+
+    The theorem can also be stated in terms of the adjugate matrix of \( A \):
+    \[
+    \det(A + uv^T) = \det(A) + v^T \operatorname{adj}(A) u,
+    \]
+    in which case it applies whether or not the matrix \( A \) is invertible.
+\end{note}
+
+
 
 \chapter{Linear Spaces}
 \section{Linear Spaces over the Field \(\mathbb{F}\)}
@@ -156,6 +410,7 @@ This is the preface of the book...
 \bibitem{ch2} 谢启鸿, 姚慕生, 吴泉水, \emph{ 高等代数学 (4th edition) }, 复旦大学出版社, 2022.
 \bibitem{ch3} 王萼芳, 石生明 \emph{ 高等代数 (5th edition) }, 高等教育出版社, 2019.
 \bibitem{ch4} 樊启斌, \emph{ 高等代数典型问题与方法 (1st edition) }, 高等教育出版社, 2021.
+\bibitem{9} Wikipedia. \url{https://en.wikipedia.org/wiki/}.
 \end{thebibliography}
 
 \end{document}
