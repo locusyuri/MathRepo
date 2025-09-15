@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  13 SEP 2025 21:43
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  15 SEP 2025 21:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1483,6 +1483,8 @@ Chapter 3.
 
 [7]
 Chapter 4.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 8.0pt on input line 381.
 
 
 [8
@@ -1497,77 +1499,101 @@ Chapter 5.
 
 ]
 Chapter 6.
-File: img/AbelTransform.jpg Graphic file (type bmp)
-<img/AbelTransform.jpg>
+
+Overfull \hbox (8.11948pt too wide) in paragraph at lines 658--662
+[]\TU/Alegreya(0)/m/it/10.95 Let $[]$ denote the set of Darboux upper sums and $[]$ denote the set of Darboux lower sums. For any $[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 P[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 2 []\OML/cmm/m/it/10.95 ; []\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 P[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 2
+ []
+
 
 
 [11
 
 ]
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
+(Font)              scaled to size 10.95pt on input line 666.
+
+
+[12]
+
+[13]
 Chapter 7.
-
-
-[12
-
-]
-Chapter 8.
-
-
-[13
-
-]
-Chapter 9.
 
 
 [14
 
 ]
-Chapter 10.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 534.
+Chapter 8.
+File: img/AbelTransform.jpg Graphic file (type bmp)
+<img/AbelTransform.jpg>
 
 
 [15
 
 ]
+Chapter 9.
+
+
+[16
+
+]
+Chapter 10.
+
+
+[17
+
+]
+Chapter 11.
+
+
+[18
+
+]
+Chapter 12.
+
+
+[19
+
+]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 626.
+(Font)              scaled to size 8.0pt on input line 958.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 632.
+(Font)              scaled to size 9.0pt on input line 964.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 632.
+(Font)              scaled to size 6.0pt on input line 964.
 
-
-[16]
-
-[17]
-
-[18]
-
-[19]
 
 [20]
 
 [21]
 
 [22]
-File: img/ImplicitFunction.png Graphic file (type bmp)
-<img/ImplicitFunction.png>
-
 
 [23]
 
 [24]
 
 [25]
-Chapter 11.
+
+[26]
+File: img/ImplicitFunction.png Graphic file (type bmp)
+<img/ImplicitFunction.png>
 
 
-[26
+[27]
+
+[28]
+
+[29]
+
+[30]
+Chapter 13.
+
+
+[31
 
 ]
 
-[27
+[32
 
 ] (./tmp/initial.aux)
  ***********
@@ -1579,18 +1605,18 @@ L3 programming layer <2022/08/05>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 1CAF96B1A753AF71945553247FDA37CF;8124.
+(rerunfilecheck)             Checksum: 9D3FBC8E579651894B9EC1895FB62509;10610.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46122 strings out of 473831
- 958337 string characters out of 5733137
- 1998616 words of memory out of 5000000
- 68342 multiletter control sequences out of 15000+600000
- 570655 words of font info for 173 fonts, out of 8000000 for 9000
+ 46164 strings out of 473831
+ 959082 string characters out of 5733137
+ 2001246 words of memory out of 5000000
+ 68375 multiletter control sequences out of 15000+600000
+ 572512 words of font info for 181 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,15n,108p,692b,1342s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (31 pages).
+Output written on ./tmp/initial.pdf (36 pages).

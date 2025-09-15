@@ -16,24 +16,35 @@
 \contentsline {section}{\numberline {3.6}Functional Equations}{7}{section.3.6}%
 \contentsline {chapter}{\numberline {4}Differential}{8}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Differential and Derivative}{8}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Higher-Order Derivatives}{8}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Differential Mean Value Theorems}{8}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Theorems and Applications concerning Derivatives}{8}{section.4.4}%
+\contentsline {section}{\numberline {4.2}Higher-Order Derivatives}{9}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Differential Mean Value Theorems}{9}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Theorems and Applications concerning Derivatives}{9}{section.4.4}%
 \contentsline {section}{\numberline {4.5}Taylor Theorem}{9}{section.4.5}%
 \contentsline {section}{\numberline {4.6}Applications of Taylor Theorem}{9}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Integral}{10}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Numerical Series}{11}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Convergence of Numerical Series}{11}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Positive Term Series}{11}{section.6.2}%
-\contentsline {section}{\numberline {6.3}General Term Series}{11}{section.6.3}%
-\contentsline {chapter}{\numberline {7}Series of Functions}{12}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Power Series}{13}{chapter.8}%
-\contentsline {chapter}{\numberline {9}Limits and Continuity in Euclidean Spaces}{14}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Continuous Mappings}{14}{section.9.1}%
-\contentsline {chapter}{\numberline {10}Multi-variable Differential Calculus}{15}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Directional Derivatives and Total Differential}{15}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Differential of Vector-Valued Functions}{20}{section.10.2}%
-\contentsline {section}{\numberline {10.3}Derivatives of Composite Mappings (Chain Rule)}{21}{section.10.3}%
-\contentsline {section}{\numberline {10.4}Mean Value Theorem and Taylor's Formula}{21}{section.10.4}%
-\contentsline {section}{\numberline {10.5}Implicit Function Theorem}{23}{section.10.5}%
-\contentsline {chapter}{\numberline {11}Multiple Integrals}{26}{chapter.11}%
+\contentsline {chapter}{\numberline {5}Indefinite Integral}{10}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Two Common Integration Methods}{10}{section.5.1}%
+\contentsline {chapter}{\numberline {6}Definite Integral}{11}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Riemann Integral}{11}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Integrability Criteria}{12}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Properties of Definite Integrals}{13}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Fundamental Theorem of Calculus}{13}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Calculation of Definite Integrals}{13}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Integral Inequalities}{13}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Applications of Definite Integrals}{13}{section.6.7}%
+\contentsline {chapter}{\numberline {7}Improper Integral}{14}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Numerical Series}{15}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Convergence of Numerical Series}{15}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Positive Term Series}{15}{section.8.2}%
+\contentsline {section}{\numberline {8.3}General Term Series}{15}{section.8.3}%
+\contentsline {chapter}{\numberline {9}Series of Functions}{16}{chapter.9}%
+\contentsline {chapter}{\numberline {10}Power Series}{17}{chapter.10}%
+\contentsline {chapter}{\numberline {11}Limits and Continuity in Euclidean Spaces}{18}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Continuous Mappings}{18}{section.11.1}%
+\contentsline {chapter}{\numberline {12}Multi-variable Differential Calculus}{19}{chapter.12}%
+\contentsline {section}{\numberline {12.1}Directional Derivatives and Total Differential}{19}{section.12.1}%
+\contentsline {section}{\numberline {12.2}Differential of Vector-Valued Functions}{24}{section.12.2}%
+\contentsline {section}{\numberline {12.3}Derivatives of Composite Mappings (Chain Rule)}{25}{section.12.3}%
+\contentsline {section}{\numberline {12.4}Mean Value Theorem and Taylor's Formula}{25}{section.12.4}%
+\contentsline {section}{\numberline {12.5}Implicit Function Theorem}{27}{section.12.5}%
+\contentsline {section}{\numberline {12.6}Applications of Multi-Variable Differential Calculus}{29}{section.12.6}%
+\contentsline {chapter}{\numberline {13}Multiple Integrals}{31}{chapter.13}%

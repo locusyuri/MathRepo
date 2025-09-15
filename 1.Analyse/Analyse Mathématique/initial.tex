@@ -374,6 +374,86 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 \chapter{Differential}
 \section{Differential and Derivative}
 
+\begin{leftbarTitle}{Basic Differential Rules and Formulas}\end{leftbarTitle}
+\[
+\begin{array}{|c|c|c|}
+\hline
+ & \textbf{Derivative Rules} & \textbf{Differential Rules} \\
+\hline
+\text{Linear Combination} & (c_{1}f+c_{2}g)' = c_{1}f' + c_{2}g' & 
+    \mathrm{d}(c_{1}f+c_{2}g) = c_{1}\mathrm{d}f + c_{2}\mathrm{d}g \\
+\hline
+\text{Product Rule} & (fg)' = f'g + fg' & \mathrm{d}(fg) = g\mathrm{d}f + f\mathrm{d}g \\
+\hline
+\text{Quotient Rule} & \left( \frac{f}{g} \right)' = \frac{f'g - fg'}{g^2} & 
+    \mathrm{d}\left( \frac{f}{g} \right) = \frac{g\mathrm{d}f - f\mathrm{d}g}{g^2} \\
+\hline
+\text{Inverse Function} & [f^{-1}(y)]' = \frac{1}{f'(x)} & \mathrm{d}x = \frac{\mathrm{d}y}{f'(x)} = [f^{-1}(y)]'\mathrm{d}y \\
+\hline
+\text{Chain Rule} & [f(g(x))]' = f'(u)g'(x) & \mathrm{d}[f(g(x))] = f'(u)g'(x)\mathrm{d}x \\
+\hline
+\end{array}
+\]
+
+
+
+\[
+\begin{array}{|c|c|}
+\hline
+\textbf{Derivative} & \textbf{Differential} \\
+\hline
+(C)'=0 & \mathrm{d}(C)=0\cdot \mathrm{d}x=0 \\
+\hline
+(x^\alpha)'=\alpha x^{\alpha-1} & \mathrm{d}(x^\alpha)=\alpha x^{\alpha-1}\mathrm{d}x \\
+\hline
+\hline
+(\sin x)'=\cos x & \mathrm{d}(\sin x)=\cos x\mathrm{d}x \\
+\hline
+(\cos x)'=-\sin x & \mathrm{d}(\cos x)=-\sin x\mathrm{d}x \\
+\hline
+(\tan x)'=\sec^2x & \mathrm{d}(\tan x)=\sec^2x\mathrm{d}x \\
+\hline
+(\cot x)'=-\csc^2x & \mathrm{d}(\cot x)=-\csc^2x\mathrm{d}x \\
+\hline
+(\sec x)'=\tan x\sec x & \mathrm{d}(\sec x)=\tan x\sec x\mathrm{d}x \\
+\hline
+(\csc x)'=-\cot x\csc x & \mathrm{d}(\csc x)=-\cot x\csc x\mathrm{d}x \\
+\hline
+(\arcsin x)'=\frac{1}{\sqrt{1-x^2}} & \mathrm{d}(\arcsin x)=\frac{1}{\sqrt{1-x^2}}\mathrm{d}x \\
+\hline
+(\arccos x)'=-\frac{1}{\sqrt{1-x^2}} & \mathrm{d}(\arccos x)=-\frac{1}{\sqrt{1-x^2}}\mathrm{d}x \\
+\hline
+(\arctan x)'=\frac{1}{1+x^2} & \mathrm{d}(\arctan x)=\frac{1}{1+x^2}\mathrm{d}x \\
+\hline
+(\mathrm{arccot} x)'=-\frac{1}{1+x^2} & \mathrm{d}(\mathrm{arccot} x)=-\frac{1}{1+x^2}\mathrm{d}x \\
+\hline
+\hline
+(a^x)'=\ln a\cdot a^x, \, (e^x)'=e^x & \mathrm{d}(a^x)=\ln a\cdot a^x\mathrm{d}x, \, \mathrm{d}(e^x)=e^x\mathrm{d}x \\
+\hline
+(\log_{a}x)'=\frac{1}{x\ln a}, \, (\ln x)'=\frac{1}{x} & \mathrm{d}(\log_{a}x)=\frac{1}{x\ln a}\mathrm{d}x, \, \mathrm{d}(\ln x)=\frac{1}{x}\mathrm{d}x \\
+\hline
+\hline
+(\mathrm{sh}\,x)'=\mathrm{ch}\,x & \mathrm{d}(\mathrm{sh}\,x)=\mathrm{ch}\,x\mathrm{d}x \\
+\hline
+(\mathrm{ch}\,x)'=\mathrm{sh}\,x & \mathrm{d}(\mathrm{ch}\,x)=\mathrm{sh}\,x\mathrm{d}x \\
+\hline
+(\mathrm{th}\,x)'=\mathrm{sech}^2\,x & \mathrm{d}(\mathrm{th}\,x)=\mathrm{sech}^2\,x\mathrm{d}x \\
+\hline
+(\mathrm{cth}\,x)'=-\mathrm{csch}^2\,x & \mathrm{d}(\mathrm{cth}\,x)=-\mathrm{csch}^2\,x\mathrm{d}x \\
+\hline
+(\mathrm{arcsh}\,x)'=\frac{1}{\sqrt{1+x^2}} & \mathrm{d}(\mathrm{arcsh}\,x)=\frac{1}{\sqrt{1+x^2}}\mathrm{d}x \\
+\hline
+(\mathrm{arcch}\,x)'=\frac{1}{\sqrt{x^2-1}} & \mathrm{d}(\mathrm{arcch}\,x)=\frac{1}{\sqrt{x^2-1}}\mathrm{d}x \\
+\hline
+(\mathrm{arcth}\,x)'=(\mathrm{arccth}\,x)'=\frac{1}{1-x^2} & 
+    \mathrm{d}(\mathrm{arcth}\,x)=\mathrm{d}(\mathrm{arccth}\,x)=\frac{1}{1-x^2}\mathrm{d}x \\
+\hline
+\hline
+\ln(x+\sqrt{x^2+a^2})'=\frac{1}{\sqrt{x^2+a^2}} & \mathrm{d}[\ln(x+\sqrt{x^2+a^2})]=\frac{\mathrm{d}x}{\sqrt{x^2+a^2}} \\
+\hline
+\end{array}
+\]
+
 \section{Higher-Order Derivatives}
 
 \section{Differential Mean Value Theorems}
@@ -434,7 +514,259 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 
 \section{Applications of Taylor Theorem}
 
-\chapter{Integral}
+\chapter{Indefinite Integral}
+
+\section{Two Common Integration Methods}
+\begin{leftbarTitle}{Integration Methods}\end{leftbarTitle}
+\begin{definition}{Integration by Parts}
+    Let \( u(x) \) and \( v(x) \) be two differentiable functions,
+    and at least one of them has an antiderivative.
+    Then the integration by parts formula states that:
+    \[
+        \int u(x) \, \mathrm{d}v(x) = u(x)v(x) - \int v(x) \, \mathrm{d}u(x).
+    \]
+\end{definition}
+
+
+\begin{leftbarTitle}{Basic Integration Formulas}\end{leftbarTitle}
+\[
+\begin{array}{|c|c|}
+\hline
+\textbf{Integral} & \textbf{Result} \\
+\hline
+\int a \, \mathrm{d}x & ax + C \quad (a \text{ is constant}) \\
+\hline
+\int x^n \, \mathrm{d}x & \frac{x^{n+1}}{n+1} + C \quad (n \neq -1) \\
+\hline
+\int \frac{1}{x} \, \mathrm{d}x & \ln|x| + C \\
+\hline
+\int e^x \, \mathrm{d}x & e^x + C \\
+\hline
+\int a^x \, \mathrm{d}x & \frac{a^x}{\ln a} + C \quad (a > 0, a \neq 1) \\
+\hline
+\hline
+\int \sin x \, \mathrm{d}x & -\cos x + C \\
+\hline
+\int \cos x \, \mathrm{d}x & \sin x + C \\
+\hline
+\int \tan x \, \mathrm{d}x & -\ln|\cos x| + C \\
+\hline
+\int \cot x \, \mathrm{d}x & \ln|\sin x| + C \\
+\hline
+\int \sec x \, \mathrm{d}x & \ln|\sec x + \tan x| + C \\
+\hline
+\int \csc x \, \mathrm{d}x & \ln|\csc x - \cot x| + C \\
+\hline
+\int \sec x \tan x \, \mathrm{d}x & \sec x + C \\
+\hline
+\int \csc x \cot x \, \mathrm{d}x & -\csc x + C \\
+\hline
+\int \sec^2 x \, \mathrm{d}x & \tan x + C \\
+\hline
+\int \csc^2 x \, \mathrm{d}x & -\cot x + C \\
+\hline
+\hline
+\int \frac{1}{\sqrt{a^{2}-x^2}} \, \mathrm{d}x & \arcsin \left( \frac{x}{a} \right) + C \\
+\hline
+\int \frac{-1}{\sqrt{a^{2}-x^2}} \, \mathrm{d}x & \arccos \left( \frac{x}{a} \right) + C \\
+\hline
+\int \frac{1}{a^{2}+x^2} \, \mathrm{d}x & \arctan \left( \frac{x}{a} \right) + C \\
+\hline
+\int \frac{-1}{a^{2}+x^2} \, \mathrm{d}x & \text{arccot } \left( \frac{x}{a} \right) + C \\
+\hline
+\int \frac{1}{\sqrt{x^2+a^{2}}} \, \mathrm{d}x & \ln|x + \sqrt{x^2+a^{2}}| + C \\
+\hline
+\int \frac{1}{\sqrt{x^2-a^{2}}} \, \mathrm{d}x & \ln|x + \sqrt{x^2-a^{2}}| + C \quad (x > a \text{ or } x < -a) \\
+\hline
+\hline
+\int \sinh x \, \mathrm{d}x & \cosh x + C \\
+\hline
+\int \cosh x \, \mathrm{d}x & \sinh x + C \\
+\hline
+\end{array}
+\]
+
+
+\chapter{Definite Integral}
+\section{Riemann Integral}
+\begin{leftbarTitle}{Riemann Integral}\end{leftbarTitle}
+\begin{definition}{Riemann Integral}
+    Let \( f(x) \) be a bounded function defined on \( [a, b] \). 
+    Take any set of division points \( \{x_i\}_{i=0}^n \) on \( [a, b] \) 
+    to form a partition \( P: a = x_0 < x_1 < \dots < x_n = b \), 
+    and choose arbitrary points \( \xi_i \in [x_{i-1}, x_i] \). 
+    Denote the length of the sub-interval \( [x_{i-1}, x_i] \) 
+    as \( \Delta x_i = x_i - x_{i-1} \), 
+    and let \( \lambda = \max\limits_{1 \leqslant i \leqslant n} (\Delta x_i) \). 
+    If the limit  
+    \[
+    \lim_{\lambda \to 0} \sum_{i=1}^n f(\xi_i) \Delta x_i
+    \]  
+    exists as \( \lambda \to 0 \), 
+    and the limit is independent of the partition \( P \) and 
+    the choice of \( \xi_i \), 
+    then \( f(x) \) is said to be \textbf{Riemann integrable} on \( [a, b] \).
+
+    The summation  
+    \[
+    S_n = \sum_{i=1}^n f(\xi_i) \Delta x_i
+    \]  
+    is called the Riemann sum, 
+    and its limit \( I \) is called the definite integral of \( f(x) \) on \( [a, b] \), 
+    denoted as:  
+    \[
+    I = \int_a^b f(x) \, \mathrm{d}x,
+    \]  
+    where \( a \) and \( b \) are called the lower and upper limits of the definite integral, respectively.
+
+    Alternatively, it can also be expressed as:  
+    \[
+    \exists I, \forall \varepsilon > 0, \exists \delta > 0, \text{s.t.} \forall P
+    (\lambda = \max\limits_{1 \leqslant i \leqslant n} (\Delta x_i) < \delta), \forall \{\xi_i\}:
+    \left| \sum_{i=1}^n f(\xi_i) \Delta x_i - I \right| < \varepsilon.
+    \] 
+    Then \( f(x) \) is said to be Riemann integrable on \( [a, b] \), 
+    and \( I \) is the definite integral of \( f(x) \) on \( [a, b] \).
+\end{definition}
+
+\begin{remark}
+    Partition \(\to\) Intermediate points \(\to\) Summation \(\to\) Take the limit.
+\end{remark}
+
+\begin{leftbarTitle}{Darboux Sum}\end{leftbarTitle}
+\begin{definition}{Darboux Sum}
+    Let the supremum and infimum of \( f(x) \) on \( [a, b] \) be \( M \) and \( m \), respectively. 
+    Clearly, \( m \leqslant f(x) \leqslant M \).
+    Let the supremum and infimum of \( f(x) \) on \( [x_{i-1}, x_i] \) 
+    be \( M_i \) and \( m_i \) (\( i = 1, 2, \dots, n \)), respectively, i.e.,  
+    \[
+    M_i = \sup\{ f(x) \mid x \in [x_{i-1}, x_i] \}, \quad m_i = \inf\{ f(x) \mid x \in [x_{i-1}, x_i] \}.
+    \]
+
+    After fixing the partition \( P \), define the sums:  
+    \[
+    \bar{S}(P) = \sum_{i=1}^n M_i \Delta x_i, \quad \underline{S}(P) = \sum_{i=1}^n m_i \Delta x_i,
+    \]  
+    which are called the Darboux upper sum and Darboux lower sum corresponding to the partition \( P \), respectively.
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+    \item \( \underline{S}(P) \leqslant \sum_{i=1}^n f(\xi_i) \Delta x_i \leqslant \bar{S}(P) \).
+    \item If a new partition is formed by adding division points to the original partition, 
+        the upper sum does not increase, and the lower sum does not decrease.
+    \item Let \( \boldsymbol{\bar{S}} \) denote the set of Darboux upper sums 
+        and \( \boldsymbol{\underline{S}} \) denote the set of Darboux lower sums. 
+        For any \( \bar{S}(P_1) \in \boldsymbol{\bar{S}}, \underline{S}(P_2) \in \boldsymbol{\underline{S}} \), 
+        it always holds that:  
+        \[
+        m(b-a) \leqslant \underline{S}(P_2) \leqslant \bar{S}(P_1) \leqslant M(b-a).
+        \]
+    \item Let \( L = \inf\{ \bar{S}(P) \mid \bar{S}(P) \in \boldsymbol{\bar{S}} \}, l = \sup\{ \underline{S}(P) \mid \underline{S}(P) \in \boldsymbol{\underline{S}} \} \), which are called the upper integral and lower integral, respectively. It always holds that: \( l \leqslant L \).
+    \item \textbf{Darboux's Theorem}: For any \( f(x) \in B[a, b] \), it always holds that:  
+        \[
+        \lim_{\lambda \to 0} \bar{S}(P) = L, \quad \lim_{\lambda \to 0} \underline{S}(P) = l.
+        \]
+\end{enumerate}
+\end{property}
+
+
+\begin{leftbarTitle}{Riemann-Stieltjes Integral}\end{leftbarTitle}
+\begin{definition}{Riemann-Stieltjes Integral}
+    Let \( \alpha \) be a bounded, monotonically increasing function on \( [a, b] \). 
+    For every partition \( P \) of \( [a, b] \), let \( \Delta \alpha_i = \alpha(x_i) - \alpha(x_{i-1}) \) 
+    (clearly \( \Delta \alpha_i \geqslant 0 \)).
+    For a bounded real function \( f(x) \) on \( [a, b] \), define the Stieltjes upper sum and lower sum as:  
+    \[
+    \bar{S}(P, \alpha) = \sum_{i=1}^n M_i \Delta \alpha_i, \quad \underline{S}(P, \alpha) = \sum_{i=1}^n m_i \Delta \alpha_i,
+    \]  
+    and define the upper and lower integrals as:  
+    \[
+    L = \inf\{ \bar{S}(P, \alpha) \mid \bar{S}(P, \alpha) \in \boldsymbol{\bar{S}} \}, \quad l = \sup\{ \underline{S}(P, \alpha) \mid \underline{S}(P, \alpha) \in \boldsymbol{\underline{S}} \},
+    \]  
+    where \( \boldsymbol{\bar{S}, \underline{S}} \) are the sets of Stieltjes upper and lower sums respectively.
+
+    If \( L = l \), then:  
+    \[
+    \int_{a}^b f(x) \, \mathrm{d}\alpha(x) = L = l,
+    \]  
+    and \( f(x) \) is said to be \textbf{Riemann-Stieltjes integrable} on \( [a, b] \) with respect to \( \alpha \), 
+    or simply Stieltjes integrable.
+\end{definition}
+
+When \( \alpha(x) = x \), this reduces to the Riemann integral. 
+However, in general, \( \alpha(x) \) does not even need to be continuous.
+
+The properties of Darboux sums also apply to Stieltjes sums.
+
+\section{Integrability Criteria}
+\begin{leftbarTitle}{Common Integrability Criteria}\end{leftbarTitle}
+\begin{theorem}{Integrability Criterion}
+    A bounded function \( f(x) \) is Riemann integrable on \( [a, b] \) if and only if:
+    \begin{itemize}
+        \item  The upper and lower integrals are equal, i.e.,
+            \[
+            \forall P(\lambda = \max_{1 \leqslant i \leqslant n}(\Delta x_{i}) < \delta): 
+                \lim_{\lambda \to 0} \bar{S}(P) = L = l = \lim_{\lambda \to 0} \underline{S}(P).
+            \]
+        \item  Let \( \omega_{i} = M_{i} - m_{i} \) be the oscillation of \( f(x) \) on \( [x_{i-1}, x_{i}] \). Then:
+            The limit of the sum of oscillations is zero, i.e.,
+            \[
+            \forall P(\lambda = \max_{1 \leqslant i \leqslant n}(\Delta x_{i}) < \delta): 
+            \lim_{\lambda \to 0} \sum_{i=1}^{n} \omega_{i} \Delta x_{i} = 0.
+            \]
+            \begin{description}
+                \item [Corollary 1] Continuous functions on closed intervals are necessarily integrable.
+                \item [Corollary 2] Monotonic functions on closed intervals are necessarily integrable.
+            \end{description}
+        \item For all \( \varepsilon > 0 \), there exists a partition \( P \) such that:
+            \[
+            \sum\limits_{i=1}^{n} \omega_{i} \Delta x_{i} < \varepsilon.
+            \]
+            \begin{description}
+                \item [Corollary 1] The total length of intervals where oscillation \( \omega \) 
+                    cannot be arbitrarily small can be made arbitrarily small, i.e.,
+                    \[
+                    \forall \varepsilon, \eta > 0, \exists P,\text{s.t.} \sum_{\omega\geqslant \eta} \Delta x_{i} < \varepsilon.
+                    \]
+                \item [Corollary 2] Bounded functions with only finitely many discontinuities on closed intervals 
+                    are necessarily integrable.
+            \end{description}
+    \end{itemize}
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{leftbarTitle}{Lesbesgue's Theorem}\end{leftbarTitle}
+
+\begin{theorem}{Lesbesgue's Theorem}
+    
+\end{theorem}
+
+
+\section{Properties of Definite Integrals}
+\begin{leftbarTitle}{Properties of Riemann Integrals}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Integrability of Composite Functions}\end{leftbarTitle}
+
+
+\section{Fundamental Theorem of Calculus}
+\begin{leftbarTitle}{Newton-Leibniz Formula}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Riemann Lemma}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Common Questions concerning Integrals}\end{leftbarTitle}
+
+\section{Calculation of Definite Integrals}
+
+\section{Integral Inequalities}
+
+\section{Applications of Definite Integrals}
+
+\chapter{Improper Integral}
+
 
 \chapter{Numerical Series}
 \section{Convergence of Numerical Series}
@@ -1233,6 +1565,110 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
 
     The proof is complete.
 \end{proof}
+
+\begin{theorem}{Implicit Mapping Theorem}
+    Let \( U \subset \mathbb{R}^{n+m} \) be an open set, and \( \mathbf{F}: U \to \mathbb{R}^m \) be a mapping. If:
+    \begin{enumerate}
+        \item \( \mathbf{F} \in C^k(U, \mathbb{R}^m) \), \( 1 \leq k \leq \infty \);
+        \item \( \mathbf{F}(\mathbf{x}^0, \mathbf{y}^0) = 0 \), 
+            where \( \mathbf{x}^0 = (x_1, x_2, \dots, x_n) \), \( \mathbf{y}^0 = (y_1, y_2, \dots, y_m) \), 
+            \( (\mathbf{x}^0, \mathbf{y}^0) \in U \) 
+            (implying \( \mathbf{F}(\mathbf{x}, \mathbf{y}) = \mathbf{0} \) 
+            has a solution at \( (\mathbf{x}^0, \mathbf{y}^0) \));
+        \item The determinant
+        \[
+        \det
+        \begin{pmatrix}
+            \frac{\partial F_1}{\partial y_1} & \cdots & \frac{\partial F_1}{\partial y_m} \\
+            \vdots & \ddots & \vdots \\
+            \frac{\partial F_m}{\partial y_1} & \cdots & \frac{\partial F_m}{\partial y_m}
+        \end{pmatrix}_{(\mathbf{x}^0, \mathbf{y}^0)}
+        = \det J_{\mathbf{y}} \mathbf{F}(\mathbf{x}^0, \mathbf{y}^0) \neq 0,
+        \]
+    \end{enumerate}
+    then there exists an open neighborhood \( I \times J \subset U \subset \mathbb{R}^{n+m} \) 
+    containing \( (\mathbf{x}^0, \mathbf{y}^0) \), such that:
+    \begin{enumerate}
+        \item For all \( \mathbf{x} \in I \), the system \( \mathbf{F}(\mathbf{x}, \mathbf{y}) = \mathbf{0} \) 
+            has a unique solution \( \mathbf{y} = \mathbf{f}(\mathbf{x}) \), 
+            where \( \mathbf{f}: I \to J \) is a mapping 
+            (called \( \mathbf{f} \) the implicit function hidden in 
+            \( \mathbf{F}(\mathbf{x}, \mathbf{f}(\mathbf{x})) = \mathbf{0} \));
+        \item \( \mathbf{y}^0 = \mathbf{f}(\mathbf{x}^0) \);
+        \item \( \mathbf{f} \in C^k(I, \mathbb{R}^m) \);
+        \item For \( x \in I \),
+        \[
+        J_{\mathbf{f}}(x) = 
+            - (J_{\mathbf{y}} \mathbf{F}(\mathbf{x}, \mathbf{f}(x)))^{-1} J_{\mathbf{x}} \mathbf{F}(\mathbf{x}, \mathbf{f}(x))
+        = -
+        \begin{pmatrix}
+            \frac{\partial F_1}{\partial y_1} & \cdots & \frac{\partial F_1}{\partial y_m} \\
+            \vdots & \ddots & \vdots \\
+            \frac{\partial F_m}{\partial y_1} & \cdots & \frac{\partial F_m}{\partial y_m}
+        \end{pmatrix}^{-1}
+        \begin{pmatrix}
+            \frac{\partial F_1}{\partial x_1} & \cdots & \frac{\partial F_1}{\partial x_n} \\
+            \vdots & \ddots & \vdots \\
+            \frac{\partial F_m}{\partial x_1} & \cdots & \frac{\partial F_m}{\partial x_n}
+        \end{pmatrix},
+        \]
+    \end{enumerate}
+    where \( \mathbf{y} = \mathbf{f}(\mathbf{x}) \).
+\end{theorem}
+
+\section{Applications of Multi-Variable Differential Calculus}
+\begin{leftbarTitle}{Surface and Tangent Space}\end{leftbarTitle}
+\begin{definition}{Parameterization of Surface}
+    Let \( \Delta \) be an open subset in \( \mathbb{R}^s \), 
+    and \( \mathbf{x}: \Delta \to \mathbb{R}^n \) be a mapping, 
+    where \( \mathbf{u} = (u_1, u_2, \dots, u_s) \to \mathbf{x}(\mathbf{u}) = 
+    (x_1(u_1, u_2, \dots, u_s), x_2(u_1, u_2, \dots, u_s), \dots, x_n(u_1, u_2, \dots, u_s)) \). 
+    Then \( M = \mathbf{x}(\Delta) = \{ \mathbf{x}(\mathbf{u}) \mid \mathbf{u} \in \Delta \} \) 
+    is called an \( s \)-dimensional surface, and \( \mathbf{x}(\mathbf{u}) \) 
+    is referred to as the parameterization of \( M \). 
+    When \( \mathbf{x}(\mathbf{u}) \in C^k \) (\( k \geq 0 \)), 
+    \( \mathbf{x} \) or \( M \) is called an \( s \)-dimensional \( C^k \) surface. 
+    
+    If \( \mathbf{x} \in C^k \) (\( k \geq 1 \)), \( \mathbf{x} \) or \( M \) 
+    is called an \( s \)-dimensional \( C^k \) smooth surface. When
+    \[
+    \operatorname{rank}(x'_1(\mathbf{u}^0), x'_2(\mathbf{u}^0), \dots, x'_s(\mathbf{u}^0)) = 
+    \operatorname{rank}
+    \begin{pmatrix}
+    \frac{\partial x_1}{\partial u_1} & \cdots & \frac{\partial x_1}{\partial u_s} \\
+    \vdots & \ddots & \vdots \\
+    \frac{\partial x_n}{\partial u_1} & \cdots & \frac{\partial x_n}{\partial u_s}
+    \end{pmatrix}_{\mathbf{u}^0}
+    = s,
+    \]
+    we call \( \mathbf{u}^0 \) or \( \mathbf{x}(\mathbf{u}^0) \) a regular point of the surface \( M \). 
+    Otherwise, it is called a singular point. 
+    Every point that is a regular point of the surface is referred to as an \( s \)-dimensional \( C^k \) regular surface. 
+    At such points, \( \{x'_1, \dots, x'_s\} \) are linearly independent.
+\end{definition}
+
+When \( s = 1 \), \( t \) represents the parameter, a one-dimensional surface is commonly referred to as a curve. 
+Considering a \( C^k \) (\( k \geq 1 \)) curve \( \mathbf{x}(t) \), we have:
+\[
+\mathbf{x}'(t) = \left( x_{1}'(t), x_{2}'(t), \cdots, x_{n}'(t) \right) .
+\]
+If \( t \) is a regular point, then 
+\( \operatorname{rank}(\mathbf{x}'(t)) = \text{rank}(x'_1(t), x'_2(t), \dots, x'_n(t)) = 1 \); 
+this is equivalent to \( \mathbf{x}'(t) \neq 0 \), which means \( x'_1(t), x'_2(t), \dots, x'_n(t) \) are not all zero.
+
+We refer to \( \mathbf{x}'(t) \) as the tangent vector of the curve \( \mathbf{x}(t) \) at point \( t \). 
+When \( t \) varies, a tangent vector field along the curve \( \mathbf{x}(t) \) is obtained. 
+If \( \mathbf{x}(t) \) is a regular curve, 
+\( \frac{\mathbf{x}'(t)}{\|\mathbf{x}'(t)\|} \) is the unit tangent vector field along the curve \( \mathbf{x}(t) \). 
+It should be emphasized that \( \mathbf{x}'(t) \) or \( \frac{\mathbf{x}'(t)}{\|\mathbf{x}'(t)\|} \) 
+always points outward from point \( t \).
+
+\begin{definition}{Tangent Vector}
+\end{definition}
+
+\begin{leftbarTitle}{Unconditional Extremum}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Conditional Extremum}\end{leftbarTitle}
 
 
 \chapter{Multiple Integrals}
