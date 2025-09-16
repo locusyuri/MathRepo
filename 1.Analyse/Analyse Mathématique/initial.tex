@@ -120,7 +120,40 @@ This is the preface of the book...
     \end{itemize}
 \end{remark}
 
+\section{Factorial Power}
+\begin{definition}
+    Rising factorials and falling factorials can be expressed in multiple notations.
 
+    The Pochhammer symbol, introduced by Leo August Pochhammer, is one of the commonly used notations, 
+    represented as \( x^{(n)} \) or \( (x)_n \).
+
+    Ronald Graham, Donald Ervin Knuth, and Oren Patashnik introduced the symbols 
+    \( x^{\bar{n}} \) and \( x^{\underline{n}} \) in their book \textit{Concrete Mathematics}.
+
+    \paragraph{Definitions:}
+    \begin{itemize}
+        \item \textbf{Rising factorial:}
+        \[
+        x^{\bar{n}} = x(x+1)(x+2)\dots(x+n-1) = \frac{(x+n-1)!}{(x-1)!}.
+        \]
+        \item \textbf{Falling factorial:}
+        \[
+        x^{\underline{n}} = x(x-1)(x-2)\dots(x-n+1) = \frac{x!}{(x-n)!}.
+        \]
+    \end{itemize}
+
+    \paragraph{Relationships:}
+    \begin{itemize}
+        \item Relationship between rising and falling factorials:
+        \[
+        x^{\bar{n}} = (x+n-1)^{\underline{n}}.
+        \]
+        \item Relationship with factorial:
+        \[
+        1^{\bar{n}} = n^{\underline{n}} = n!.
+        \]
+    \end{itemize}
+\end{definition}
 
 \chapter{Limits of Sequences and Continuity of Real Number System} 
 \section{Convergent Sequences}
@@ -748,12 +781,153 @@ The properties of Darboux sums also apply to Stieltjes sums.
 
 \section{Properties of Definite Integrals}
 \begin{leftbarTitle}{Properties of Riemann Integrals}\end{leftbarTitle}
+\begin{property}
+    \begin{description}
+        \item [Linearity] Let \( f(x), g(x) \in R[a, b] \), and \( k_1, k_2 \) are constants. 
+            Then the function \( k_1 f(x) + k_2 g(x) \in R[a, b] \), and:
+            \[
+            \int_{a}^b [k_1 f(x) + k_2 g(x)] \mathrm{d}x = k_1 \int_{a}^b f(x) \mathrm{d}x + k_2 \int_{a}^b g(x) \mathrm{d}x.
+            \]
+        \item[Multiplicative Integrability] Let \( f(x), g(x) \in R[a, b] \), and \( k_1, k_2 \). 
+            Then \( f(x) \cdot g(x) \in R[a, b] \). In general, 
+            \[
+            \int_{a}^b f(x) g(x) \mathrm{d}x \neq \left( \int_{a}^b f(x) \mathrm{d}x \right) \cdot \left( \int_{a}^b g(x) \mathrm{d}x \right).
+            \]
+        \item[Monotonicity] Let \( f(x), g(x) \in R[a, b] \), 
+            and \( f(x) \geqslant g(x) \) (or \( f(x) > g(x) \)) on \( [a, b] \). Then:
+            \[
+            \int_{a}^b f(x) \mathrm{d}x \geqslant \int_{a}^b g(x) \mathrm{d}x \quad \left( \int_{a}^b f(x) \mathrm{d}x > \int_{a}^b g(x) \mathrm{d}x \right).
+            \]
+            \begin{description}
+                \item[Corollary 1] If \( f(x) \in C[a, b], f(x) \geqslant 0, f(x) \not\equiv 0 \), then:
+                    \[
+                    \int_{a}^{b} f(x) \, \mathrm{d}x > 0.
+                    \]
+                \item[Corollary 2] If \( f(x) \in R[a, b], f(x) > 0 \), then:
+                    \[
+                    \int_{a}^{b} f(x) \, \mathrm{d}x > 0.
+                    \]
+            \end{description}
+        \item[Absolute Value Integrability] Let \( f(x) \in R[a, b] \). Then \( |f(x)| \in R[a, b] \), and:
+            \[
+            \left| \int_{a}^b f(x) \mathrm{d}x \right| \leqslant \int_{a}^b |f(x)| \mathrm{d}x.
+            \]
+            The inverse statement of this property is not true.
+        \item[Additivity Over Intervals] Let \( f(x) \in R[a, b] \). 
+            For any point \( c \in [a, b] \), \( f(x) \) is integrable on \( [a, b] \) and \( [c, d] \). 
+            Conversely, if \( f \in R[a, c] \cup [c, b] \), then \( f(x) \) is integrable on \( [a, b] \), and:
+            \[
+            \int_{a}^b f(x) \mathrm{d}x = \int_{a}^c f(x) \mathrm{d}x + \int_{c}^b f(x) \mathrm{d}x.
+            \]
+    \end{description}
+\end{property}
+
+\begin{theorem}{Integral Mean Value Theorem}
+    \begin{description}
+        \item[First Integral Mean Value Theorem ] Let \( f(x), g(x) \in R[a, b] \), 
+            and \( g(x) \) does not change sign on \( [a, b] \). Then there exists \( \eta \in [m, M] \) such that:
+            \[
+            \int_{a}^b f(x)g(x) \mathrm{d}x = \eta \int_{a}^b g(x) \mathrm{d}x,
+            \]
+            where \( m, M \) represent the infimum and supremum of \( f(x) \) on \( [a, b] \), respectively.
+
+            In particular, if \( f(x) \in C[a, b] \), then there exists \( \xi \in [a, b] \) such that:
+            \[
+            \int_{a}^b f(x)g(x) \mathrm{d}x = f(\xi) \int_{a}^b g(x) \mathrm{d}x.
+            \]
+
+            A special case arises when \( f(x) \in C[a, b] \) and \( g(x) \equiv 1 \), then:
+            \[
+            \int_{a}^{b} f(x)g(x) \mathrm{d}x = f(\xi) \int_{a}^{b} g(x) \mathrm{d}x.
+            \]
+            \begin{description}
+                \item[Corollary] If \( f(x) \in C[a, b] \), then there exists \( \xi \in (a, b) \) such that:
+                    \[
+                    \int_{a}^b f(x)g(x) \mathrm{d}x = f(\xi) \int_{a}^b g(x) \mathrm{d}x.
+                    \]
+            \end{description} 
+        \item[Second Integral Mean Value Theorem (Bonnet Formula)] Let \( f(x) \in R[a, b] \),
+            \begin{itemize}
+            \item If \( g(x) \) is decreasing on \( [a, b] \) and \( g(x) \geqslant 0 \) (\( x \in [a, b] \)):
+            \[
+            \exists \xi \in [a, b]: \quad \int_{a}^{b} f(x)g(x) \mathrm{d}x = g(a)\int_{a}^{\xi} f(x) \mathrm{d}x.
+            \]
+            \item If \( g(x) \) is increasing on \( [a, b] \) and \( g(x) \geqslant 0 \) (\( x \in [a, b] \)):
+            \[
+            \exists \eta \in [a, b]: \quad \int_{a}^{b} f(x)g(x) \mathrm{d}x = g(b)\int_{\eta}^{b} f(x) \mathrm{d}x.
+            \]
+            \end{itemize}
+            The general form is:
+            Let \( f(x) \in R[a, b] \), and \( g(x) \) be a monotonic function. Then:
+            \[
+            \exists \xi \in [a, b], \quad \int_{a}^{b} f(x)g(x) \mathrm{d}x = g(a)\int_{a}^{\xi} f(x) \mathrm{d}x + g(b)\int_{\xi}^{b} f(x) \mathrm{d}x.
+            \]
+    \end{description}
+\end{theorem}
+
+\begin{note}
+    For the first integral mean value theorem, 
+    \begin{itemize}
+        \item If \( f(x) \in C[a, b] \) is replaced with \( f(x) \in R[a, b] \), the conclusion does not hold.
+        \item If \( f(x) \in R[a, b] \) and \( \int f(x)\mathrm{d}x \) exists, the conclusion holds.
+    \end{itemize}
+\end{note}
+
 
 \begin{leftbarTitle}{Integrability of Composite Functions}\end{leftbarTitle}
+
+\begin{description}
+    \item [Outer Continuity, Inner Integrability] Let \( f(x) \in R[a, b] \), \( A \leqslant f(x) \leqslant B \), 
+        and \( g(u) \in C[A, B] \). Then the composite function \( g(f(x)) \in R[a, b] \).
+    \item [Outer Integrability, Inner Continuity] In this case, the composite function may not be integrable.
+
+    \item [Both Inner and Outer Integrability] In this case, the composite function may not be integrable. 
+        In fact, even if both the inner and outer functions are not integrable, the composite function may still be integrable.
+\end{description}
+
 
 
 \section{Fundamental Theorem of Calculus}
 \begin{leftbarTitle}{Newton-Leibniz Formula}\end{leftbarTitle}
+\begin{definition}{Variable Limit Integrals}
+    Let \( f(x) \in R[a, b] \). Define:
+    \[
+    F(x) = \int_{a}^{x} f(t) \, \mathrm{d}t \quad \text{and} \quad F(x) = \int_{x}^{b} f(t) \, \mathrm{d}t,
+    \]
+    which are referred to as the variable upper limit integral and variable lower limit integral, respectively.
+\end{definition}
+
+\begin{property}
+    \begin{description}
+        \item [Continuity of Antiderivative]  \( F(x) \in C[a, b] \) (The variable upper limit integral satisfies the 
+            Lipschitz condition and is uniformly continuous on the closed interval).
+        \item [Fundamental Theorem of Calculus] Let \( x_0 \in [a, b] \) be a point where \( f(x) \) is continuous. Then:
+            \[
+            F'(x_0) = f(x_0).
+            \]
+        \item [Existence of Antiderivatives] If \( f(x) \in C[a, b] \), then \( F(x) \in D[a, b] \) and \( F'(x) = f(x) \).
+    \end{description}
+\end{property}
+
+
+\begin{remark}
+        Differentiation can reduce the smoothness of functions (the original function may be differentiable, 
+        while the derivative may have second-type discontinuities), whereas integration can improve smoothness.
+\end{remark}
+
+\begin{theorem}{Newton-Leibniz Formula}
+    Let \( f(x) \in C[a, b] \), and \( F(x) \) be an antiderivative of \( f(x) \) on \( [a, b] \). Then:
+    \[
+    \int_{a}^{b} f(x) \, \mathrm{d}x = F(b) - F(a).
+    \]
+
+    \textbf{Generalized Newton-Leibniz Formula}
+    Let \( f(x) \in R[a, b] \), \( F(x) \in C[a, b] \), and \( F'(x) = f(x) \) holds except for finitely many points. 
+    Then:
+    \[
+    \int_{a}^{b} f(x) \, \mathrm{d}x = F(b) - F(a).
+    \]
+\end{theorem}
 
 \begin{leftbarTitle}{Riemann Lemma}\end{leftbarTitle}
 
@@ -763,20 +937,439 @@ The properties of Darboux sums also apply to Stieltjes sums.
 
 \section{Integral Inequalities}
 
+\begin{theorem}{Integral Inequalities}
+    \begin{description}
+        \item[Hadamard Inequality] Let \( f(x) \) be a convex function on \( (a, b) \). 
+            Then for any pair \( x_1, x_2 \in (a, b) \) with \( x_1 < x_2 \), we have:
+            \[
+            f\left( \frac{x_1 + x_2}{2} \right) \leqslant \frac{1}{x_2 - x_1} \int_{x_1}^{x_2} f(t) \, \mathrm{d}t \leqslant \frac{f(x_1) + f(x_2)}{2}.
+            \]
+
+        \item[Schwarz Inequality] Let \( f(x), g(x) \in R[a, b] \). Then:
+            \[
+            \left( \int_{a}^{b} f(x)g(x) \, \mathrm{d}x \right)^2 \leqslant \int_{a}^{b} f^2(x) \, \mathrm{d}x \int_{a}^{b} g^2(x) \, \mathrm{d}x.
+            \]
+
+        \item[Hölder Inequality] Let \( f(x), g(x) \in R[a, b] \), and \( p, q \) are conjugate numbers 
+            (i.e., \( p > 0, q > 0, \frac{1}{p} + \frac{1}{q} = 1 \)). Then:
+            \[
+            \int_{a}^{b} |f(x)g(x)| \, \mathrm{d}x \leqslant \left( \int_{a}^{b} |f(x)|^p \, \mathrm{d}x \right)^{\frac{1}{p}} \left( \int_{a}^{b} |g(x)|^q \, \mathrm{d}x \right)^{\frac{1}{q}}.
+            \]
+
+        \item[Young Inequality] Let \( y = f(x) \in C[0, +\infty) \), strictly increasing, 
+            and \( f(0) = 0 \). Denote its inverse function as \( x = f^{-1}(y) \). Then:
+            \[
+            \int_{0}^{a} f(x) \, \mathrm{d}x + \int_{0}^{b} f^{-1}(y) \, \mathrm{d}y \geqslant ab \quad (a > 0, b > 0).
+            \]
+
+        \item[Minkowski Inequality] Let \( f(x), g(x) \in R[a, b] \). Then:
+            \[
+            \left\{ \int_{a}^{b} [f(x) + g(x)]^2 \, \mathrm{d}x \right\}^{\frac{1}{2}} \leqslant \left[ \int_{a}^{b} f^2(x) \, \mathrm{d}x \right]^{\frac{1}{2}} + \left[ \int_{a}^{b} g^2(x) \, \mathrm{d}x \right]^{\frac{1}{2}}.
+            \]
+
+        \item[Chebyshev Inequality] Let \( f(x), g(x) \) be similarly ordered functions, 
+                i.e., \( \forall x_1, x_2: (f(x_1) - f(x_2))(g(x_1) - g(x_2)) \geqslant 0 \). Then:
+                \[
+                \int_{a}^{b} f(x) \, \mathrm{d}x \int_{a}^{b} g(x) \, \mathrm{d}x \leqslant (b - a) \int_{a}^{b} f(x)g(x) \, \mathrm{d}x.
+                \]
+
+            \textbf{Discrete Form} Let sequences \( \{a_n\}, \{b_n\} \) be similarly ordered, 
+                i.e., \( \forall i, j: (a_i - a_j)(b_i - b_j) \geqslant 0 \). Then:
+                \[
+                \left( \sum\limits_{i=1}^{n} a_i \right) \left( \sum\limits_{i=1}^{n} b_i \right) \leqslant n \sum\limits_{i=1}^{n} a_i b_i.
+                \]
+            If the sequences are oppositely ordered, the inequality reverses.
+    \end{description}
+\end{theorem}
+
 \section{Applications of Definite Integrals}
+\begin{leftbarTitle}{Arc Length}\end{leftbarTitle}
 
+\begin{leftbarTitle}{Curvature}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Polar Coordinate System}\end{leftbarTitle}
+\footnotesize
+\begin{tabular}{|p{2cm}|c|c|c|}
+\hline
+Category & Explicit Cartesian Equation & Parametric Cartesian Equation & Polar Equation \\ 
+\hline
+{\small Equation} &
+\( y = f(x), x \in [a, b] \) &
+\( 
+\begin{cases}
+x = x(t), t \in [T_1, T_2], \\
+y = y(t),
+\end{cases}
+\) &
+\( r = r(\theta), \theta \in [\alpha, \beta] \) \\ \hline
+
+{\small Area of Plane Shape} &
+\( \int_{a}^b f(x) \, \mathrm{d}x \) &
+\( \int_{T_1}^{T_2} |y(t)x'(t)| \, \mathrm{d}t \) &
+\( \frac{1}{2} \int_{\alpha}^{\beta} r^2(\theta) \, \mathrm{d}\theta \) \\ \hline
+
+{\small Infinitesimal Arc Length} &
+\( \mathrm{d}l = \sqrt{1 + [f'(x)]^2} \, \mathrm{d}x \) &
+\( \mathrm{d}l = \sqrt{[x'(t)]^2 + [y'(t)]^2} \, \mathrm{d}t \) &
+\( \mathrm{d}l = \sqrt{r^2(\theta) + r'^2(\theta)} \, \mathrm{d}\theta \) \\ \hline
+
+{\small Curve Length} &
+\( \int_{a}^b \sqrt{1 + [f'(x)]^2} \, \mathrm{d}x \) &
+\( \int_{T_1}^{T_2} \sqrt{[x'(t)]^2 + [y'(t)]^2} \, \mathrm{d}t \) &
+\( \int_{\alpha}^{\beta} \sqrt{r^2(\theta) + r'^2(\theta)} \, \mathrm{d}\theta \) \\ \hline
+
+{\small Volume of Solid of Revolution} &
+\( \pi \int_{a}^b [f(x)]^2 \, \mathrm{d}x \) &
+\( \pi \int_{T_1}^{T_2} y^2(t)x'(t) \, \mathrm{d}t \) &
+\( \frac{2}{3} \pi \int_{\alpha}^{\beta} r^3(\theta) \sin\theta \, \mathrm{d}\theta \) \\ \hline
+
+{\small Surface Area of Solid of Revolution} &
+\( 2\pi \int_{a}^b f(x) \sqrt{1 + [f'(x)]^2} \, \mathrm{d}x \) &
+\( 2\pi \int_{T_1}^{T_2} y(t) \sqrt{[x'(t)]^2 + [y'(t)]^2} \, \mathrm{d}t \) &
+\( 2\pi \int_{\alpha}^{\beta} r(\theta)\sin\theta \sqrt{r^2(\theta) + r'^2(\theta)} \, \mathrm{d}\theta \) \\ \hline
+\end{tabular}
+\normalsize
 \chapter{Improper Integral}
+\section{Infinite and Defective Integrals}
 
+\section{Convergence Tests for Improper Integrals}
+
+\begin{definition}{Absolute and Conditional Convergence}
+    Let \( f(x) \in R[a, A] \subset [a, +\infty) \), and suppose \( \int_{a}^{+\infty} |f(x)| \, \mathrm{d}x \) converges. 
+    Then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) is said to be \textbf{absolutely convergent} 
+    (or \( f(x) \) is \textbf{absolutely integrable} on \( [a, +\infty) \)).
+
+    If \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) converges but is not absolutely convergent, 
+    then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) is said to be \textbf{conditionally convergent}.
+\end{definition}
+
+\begin{leftbarTitle}{Infinite Integrals}\end{leftbarTitle}
+\begin{theorem}{Cauchy Convergence Criterion for Infinite Integrals}
+    The necessary and sufficient condition for the convergence of 
+    the infinite integral \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) is:
+    \[
+    \forall \varepsilon > 0, \exists A_0 > \max\{ a, 0 \}, \forall A', A'' > A_0 : 
+    \left| \int_{a}^{A'} f(x) \, \mathrm{d}x - \int_{a}^{A''} f(x) \, \mathrm{d}x \right| 
+    = \left| \int_{A'}^{A''} f(x) \, \mathrm{d}x \right| < \varepsilon.
+    \]
+\end{theorem}
+From this, we can conclude that if \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) is absolutely convergent, 
+then it must be convergent.
+
+\begin{theorem}{Comparison Test for Infinite Integrals}
+\begin{description}
+    \item[Comparison Test] Let \( f(x), g(x) \) be functions defined on \( [a, +\infty) \), 
+        and suppose \( f(x) \leq K g(x) \) (where \( K \) is a positive constant). Then:
+    \begin{enumerate}[label=\roman*)]
+        \item If \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) converges, 
+            then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) also converges.
+        \item If \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) diverges, 
+            then \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) also diverges.
+    \end{enumerate}
+
+    \item[Limit Form] Let \( f(x), g(x) > 0 \) be functions defined on \( [a, +\infty) \), and suppose:
+    \[
+    \lim_{x \to +\infty} \frac{f(x)}{g(x)} = l.
+    \]
+    Then:
+    \begin{enumerate}[label=\roman*)]
+        \item If \( 0 < l < +\infty \), and \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) converges, 
+            then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) also converges.
+        \item If \( 0 < l < +\infty \), and \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) diverges, 
+            then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) also diverges.
+        \item If \( l = +\infty \), \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) 
+            and \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) both converge or both diverge.
+    \end{enumerate}
+
+    \item[Comparison with \( p \)-Integrals] Let \( f(x) > 0 \) be defined on \( [a, +\infty) \), and suppose:
+    \[
+    \frac{f(x)}{x^p} \leq \frac{K}{x^p}, \quad \text{where } p > 0.
+    \]
+    Then:
+    \begin{enumerate}[label=\roman*)]
+        \item If \( p > 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) converges.
+        \item If \( p \leq 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) diverges.
+    \end{enumerate}
+
+    \item[Limit Form] Let \( f(x) > 0 \) be defined on \( [a, +\infty) \), and suppose:
+    \[
+    \lim_{x \to +\infty} x^p f(x) = l, \quad \text{where } l > 0.
+    \]
+    Then:
+    \begin{enumerate}[label=\roman*)]
+        \item If \( p > 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) converges.
+        \item If \( p \leq 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) diverges.
+    \end{enumerate}
+\end{description}
+\end{theorem}
+
+\begin{theorem}{Abel-Dirichlet Test}
+    The infinite integral \( \int_{a}^{+\infty} f(x)g(x) \, \mathrm{d}x \) converges 
+    if either of the following two conditions is satisfied:
+    \begin{description}
+        \item [Abel] \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) converges, 
+            and \( g(x) \) is monotonic and bounded on \( [a, +\infty) \).
+        \item [Dirichlet] \( F(A) = \int_{a}^{A} f(x) \, \mathrm{d}x \) is bounded on \( [a, +\infty) \), 
+            \( g(x) \) is monotonic on \( [a, +\infty) \), in the meanwhile \( \lim_{x \to +\infty} g(x) = 0 \).
+    \end{description}
+\end{theorem}
+
+
+\begin{leftbarTitle}{Defective Integrals}\end{leftbarTitle}
+
+\section{Special Integrals}
+\begin{leftbarTitle}{Definite Integrals}\end{leftbarTitle}
+\begin{description}
+    \item[Dirichlet Integral] 
+        \[
+        \int_{0}^{\pi} \frac{\sin \left( n+\frac{1}{2} \right)x }{\sin \frac{x}{2}} \, \mathrm{d}x = \pi,\quad n \in \mathbb{N},
+        \]
+        where integrand \(D_{n}(x)\) is called the Dirichlet kernel. 
+    \item[Fejèr Integral]
+        \[
+        \int_{0}^{\pi} \left( \frac{\sin \frac{n x}{2}}{\sin \frac{x}{2}} \right)^2 \, \mathrm{d}x = n\pi, \quad n \in \mathbb{N},
+        \] 
+\end{description}
+\begin{leftbarTitle}{Improper Integrals}\end{leftbarTitle}
+\begin{description}
+    \item[Euler Integral]
+        \[
+        \int_{0}^{\frac{\pi}{2}} \ln \sin x \, \mathrm{d}x= - \frac{\pi}{2} \ln 2.
+        \]
+    \item[Froullani Integral]
+        \[
+        \int_{0}^{+\infty} \frac{f(ax) - f(bx)}{x} \, \mathrm{d}x = [f(0) - f(+\infty)] \ln \frac{b}{a}, \quad a, b > 0,
+        \]
+        where \( f(x) \) is continuous on \( (0, +\infty) \), and both limits \( f(0) \) and \( f(+\infty) \) exist.
+    \item[Dirichlet Integral]
+        \[
+        \int_{0}^{+\infty} \frac{\sin x}{x} \, \mathrm{d}x = \frac{\pi}{2}.
+        \]
+    \item[Euler-Poisson Integral]
+        \[
+        \int_{0}^{+\infty} e^{-x^2} \, \mathrm{d}x = \frac{\sqrt{\pi}}{2}.
+        \]
+    \item[Poisson Integral]
+        \[
+        \int_{-\pi}^{\pi} \frac{1-r^2}{1-2r\cos x+r^2} \, \mathrm{d}x,\quad(0<r<1)
+        \]
+    \item [Special Integral]
+    \[
+    \int_{0}^{+ \infty} \frac{1}{1+x^a\sin^bx} \, \mathrm{d}x \quad (a > b, b > 0 \text{and even})
+    \]
+\end{description}
+
+
+\section{Common Questions}
 
 \chapter{Numerical Series}
 \section{Convergence of Numerical Series}
 
-\section{Positive Term Series}
+\section{Positive Term Series and Its Convergence Tests}
+\begin{definition}{Positive Term Series}
+    If all terms of the series \( \sum_{n=1}^{\infty} x_n \) are non-negative real numbers, 
+    i.e., \( x_n \geqslant 0 \) (\( x_n > 0 \)), \( n = 1, 2, \dots \), 
+    then this series is called a \textbf{positive term series} (or strictly positive term series).
+\end{definition}
 
-\section{General Term Series}
+\begin{note}
+    The positive term series converges if and only if the partial sums of the sequence are bounded. 
+    If the partial sums are unbounded, the series must diverge to \( +\infty \).
+\end{note}
+
+\begin{leftbarTitle}{Comparison Test}\end{leftbarTitle}
+\begin{theorem}{Comparison Test}
+    Let \( \sum_{n=1}^{\infty} a_n \) and \( \sum_{n=1}^{\infty} b_n \) be positive term series. 
+    If \( \exists N \in \mathbb{N}, \text{ s.t. } \forall n > N: a_n \leqslant b_n \), then:
+    \begin{enumerate}
+        \item If \( \sum_{n=1}^{\infty} b_n \) converges, then \( \sum_{n=1}^{\infty} a_n \) also converges.
+        \item If \( \sum_{n=1}^{\infty} a_n \) diverges, then \( \sum_{n=1}^{\infty} b_n \) also diverges.
+    \end{enumerate}
+
+    \textbf{Limit Form}
+    Let \( \sum_{n=1}^{\infty} a_n \) and \( \sum_{n=1}^{\infty} b_n \) be positive term series, 
+    and suppose \( \lim_{n \to \infty} \frac{a_n}{b_n} \) exists. Then:
+
+    \begin{enumerate}
+        \item If \( 0 < l < +\infty \), \( \sum_{n=1}^{\infty} a_n \) and \( \sum_{n=1}^{\infty} b_n \) 
+            have the same convergence or divergence behavior.
+        \item If \( l = 0 \), \( \sum_{n=1}^{\infty} b_n \) converges, 
+            then \( \sum_{n=1}^{\infty} a_n \) also converges.
+        \item If \( l = +\infty \), \( \sum_{n=1}^{\infty} b_n \) diverges, 
+            then \( \sum_{n=1}^{\infty} a_n \) also diverges.
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+\begin{description}
+    \item[Cauchy Test] Let \( \sum_{n=1}^{\infty} a_n \) be a positive term series.
+        \begin{enumerate}
+            \item If \( \exists q \in [0,1), \text{ s.t. } \sqrt[n]{a_n} \leqslant 
+            q < 1 \quad (n \geqslant N, N \in \mathbb{N}) \), then the series converges.
+            \item If \( \sqrt[n]{a_n} \geqslant 1 \) for infinitely many \( n \), then the series diverges.
+        \end{enumerate}
+        \textbf{Limit Form} Let \( \sum_{n=1}^{\infty} a_n \) be a positive term series, 
+        and suppose \( \varlimsup_{n \to +\infty} \sqrt[n]{a_n} = r \). Then:
+        \begin{enumerate}
+            \item If \( 0 \leqslant r < 1 \), the series \( \sum_{n=1}^{\infty} a_n \) converges.
+            \item If \( r > 1 \), the series \( \sum_{n=1}^{\infty} a_n \) diverges.
+            \item If \( r = 1 \), the test fails.
+        \end{enumerate}
+
+    \item[D'Alembert Test] Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series.
+        \begin{enumerate}
+            \item If \( \exists q \in [0,1), \text{ s.t. } \frac{a_{n+1}}{a_n} \leqslant 
+            q < 1 \quad (n \geqslant N, N \in \mathbb{N}) \), then the series converges.
+            \item If \( \frac{a_{n+1}}{a_n} \geqslant 1 \quad (n \geqslant N, N \in \mathbb{N}) \), 
+            then the series diverges.
+        \end{enumerate}
+        \textbf{Limit Form}
+        Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series. Then:
+        \begin{enumerate}
+            \item If \( \varlimsup_{n \to +\infty} \frac{a_{n+1}}{a_n} = r \in (0,1) \), the series converges.
+            \item If \( \varliminf_{n \to +\infty} \frac{a_{n+1}}{a_n} = r' > 1 \), the series diverges.
+            \item If \( r = 1 \) or \( r' = 1 \), the test fails.
+        \end{enumerate}
+    
+    \item[Raabe Test] Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series.
+        \begin{enumerate}
+            \item If \( \exists r > 1, \exists N_0 \in \mathbb{N} \text{ s.t. } 
+                \forall n > N_0: n \left( \frac{a_n}{a_{n+1}} - 1 \right) \geqslant r \), 
+                then the series converges.
+            \item If \( \exists N_0 \in \mathbb{N}, \text{ s.t. } \forall n > N_0: 
+                n \left( \frac{a_n}{a_{n+1}} - 1 \right) \leqslant 1 \), then the series diverges.
+        \end{enumerate}
+        \textbf{Limit Form}
+        Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series. Then:
+        \begin{enumerate}
+            \item If \( \varliminf_{n \to +\infty} n \left( \frac{a_n}{a_{n+1}} - 1 \right) = l > 1 \), the series converges.
+            \item If \( \varlimsup_{n \to +\infty} n \left( \frac{a_n}{a_{n+1}} - 1 \right) = l' < 1 \), the series diverges.
+            \item If \( l = 1 \) or \( l' = 1 \), the test fails.
+        \end{enumerate}
+
+    \item[Bertrand Test] Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series.
+        \begin{enumerate}
+            \item If \( \varliminf_{n \to +\infty} \ln n \left[ n \left( \frac{a_n}{a_{n+1}} - 1 \right) \right] = l > 1 \), 
+                the series converges.
+            \item If \( \varlimsup_{n \to +\infty} \ln n \left[ n \left( \frac{a_n}{a_{n+1}} - 1 \right) \right] = l' < 1 \), 
+                the series diverges.
+            \item If \( l = 1 \) or \( l' = 1 \), the test fails.
+        \end{enumerate}
+
+    \item [Gauss Test] Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series, and suppose:
+        \[
+        \frac{a_n}{a_{n+1}} = 1 + \frac{1}{n} + \frac{\delta}{n \ln n} + o\left( \frac{1}{n \ln n} \right), \quad (n \to +\infty).
+        \]
+        Then:
+        \begin{enumerate}
+            \item If \( \delta > 1 \), the series converges.
+            \item If \( \delta < 1 \), the series diverges.
+            \item If \( \delta = 1 \), the criterion fails.
+        \end{enumerate}
+
+        \textbf{Generalized Form}
+        Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series, and suppose:
+        \[
+        \frac{a_n}{a_{n+1}} = 1 + \frac{1}{n} + \frac{\delta_n}{n \ln n} + o\left( \frac{1}{n \ln n} \right), 
+        \quad (n \to +\infty).
+        \]
+        If \( \lim_{n \to \infty} \delta_n = \delta \in \mathbb{R} \), then:
+        \begin{enumerate}
+            \item If \( \delta > 1 \), the series converges.
+            \item If \( \delta < 1 \), the series diverges.
+            \item If \( \delta = 1 \), the criterion fails.
+        \end{enumerate}
+\end{description}
+\end{theorem}
+
+\begin{note}
+    The Bertrand test can be refined by considering series such as:
+    \[
+    \sum_{n=3}^{\infty} \frac{1}{n \ln n (\ln \ln n)^p}, 
+    \quad \sum_{n=9}^{\infty} \frac{1}{n \ln n \ln \ln n (\ln \ln n)^p}, 
+    \cdots
+    \]
+    These refinements are collectively known as the Bertrand test.
+\end{note}
+
+\begin{remark}
+    All the aforementioned criteria are derived from the Comparison Criterion.
+    \begin{itemize}
+        \item By comparing positive term series with the geometric series (or equal ratio series), 
+            the Cauchy Criterion and d'Alembert Criterion are derived.
+        \item By comparing positive term series with the slower-converging series 
+            \( \sum_{n=1}^{\infty} \frac{1}{n^\alpha} \) (\( \alpha > 1 \)), the Raabe Criterion is derived.
+        \item By comparing positive term series with the even slower-converging series 
+            \( \sum_{n=1}^{\infty} \frac{1}{n \ln^\alpha n} \) (\( \alpha > 1 \)), the Gauss Criterion is derived.
+    \end{itemize}
+    \textbf{General Observation}
+    The slower the convergence of the series used for comparison, the more precise the derived criterion.
+\end{remark}
+
+
+
+
+
+
+\begin{leftbarTitle}{Integral Test}\end{leftbarTitle}
+\begin{theorem}{Cauchy Integral Test}
+    Let \( f(x) \) be defined on \( [a, +\infty) \), 
+    where \( f(x) \geqslant 0 \), and \( f(x) \) is Riemann integrable on any finite interval \( [a, A] \).
+
+    Consider a monotonic increasing sequence \( \{ a_n \} \) such that \( a = a_1 < a_2 < \dots < a_n < \dots \), and let:
+    \[
+    u_n = \int_{a_n}^{a_{n+1}} f(x) \, \mathrm{d}x.
+    \]
+
+    Then the improper integral \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) 
+    and the positive term series \( \sum_{n=1}^{\infty} u_n \) converge or diverge to \( +\infty \) simultaneously. 
+    Moreover:
+    \[
+    \int_{a}^{+\infty} f(x) \, \mathrm{d}x 
+    = \sum_{n=1}^{\infty} u_n 
+    = \sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) \, \mathrm{d}x.
+    \]
+\end{theorem}
+
+\begin{leftbarTitle}{Other Tests}\end{leftbarTitle}
+\begin{theorem}{Cauchy Condensation Test}
+    Let \( \{ a_n \} \) be a monotonically decreasing sequence of positive numbers. 
+    Then the positive term series \( \sum_{n=1}^{\infty} a_n \) converges if and only if the condensed series:
+    \[
+    \sum_{n=0}^{\infty} 2^n a_{2^n} = a_1 + 2a_2 + 4a_4 + \dots + 2^n a_{2^n} + \dots
+    \]
+    converges.
+\end{theorem}
+
+
+\section{General Term Series and Its Convergence Tests}
 \begin{leftbarTitle}{Cauchy Convergence Criterion for Series}\end{leftbarTitle}
+\begin{theorem}{Cauchy Convergence Criterion for Series}
+    The necessary and sufficient condition for the convergence of the series \( \sum_{n=1}^{\infty} x_n \) is:
+    \[
+    \forall \varepsilon > 0, \exists N \in \mathbb{N}, \forall m, n > N : 
+    \left| x_{n+1} + x_{n+2} + \cdots +x_{m} \right| = \left| \sum_{k=n+1}^{m} x_k \right| < \varepsilon.
+    \]
+\end{theorem}
+
 
 \begin{leftbarTitle}{Alternative Series}\end{leftbarTitle}
+\begin{definition}{Alternative Series}
+    A series of the form:
+    \[
+    \sum_{n=1}^{\infty}x_{n} = 
+    \sum_{n=1}^{\infty} (-1)^{n-1} u_n\quad (u_{n}>0),
+    \]
+    is called an \textbf{alternative series}.
+
+    Moreover, if \( u_n \) is a monotonically decreasing sequence and \( \lim_{n \to \infty} u_n = 0 \), 
+    then the series is called a \textbf{Leibniz series}.
+\end{definition}
+
+\begin{theorem}{Leibniz Test}
+    Leibniz series converges.
+\end{theorem}
+
 
 \begin{leftbarTitle}{Abel-Dirichlet Test}\end{leftbarTitle}
 
@@ -793,6 +1386,62 @@ The properties of Darboux sums also apply to Stieltjes sums.
     \includegraphics[width=0.5\textwidth, angle=180]{img/AbelTransform.jpg}
 \end{figure}
 
+\begin{lemma}{Abel Lemma (Discrete Second Integral Mean Value Theorem)}
+    Let \(\{a_n\}, \{b_n\}\) be two sequences, if \(\{a_n\}\) is a monotonic sequence 
+    and \(\{B_k\} = \sum_{k=1}^{n} b_k\) is a bounded sequence with bound \(M\),
+    then for any \(p\in \mathbb{N}^{+}\),
+    \[
+        \left| \sum_{k=1}^{p} a_k b_k \right| \leq M \left( |a_{1}| + 2|a_{p}| \right) .
+    \]
+\end{lemma}
+
+\begin{theorem}{Abel-Dirichlet Test}
+    The series \(\sum_{n=1}^{\infty} a_n b_n\) converges if one of the following two conditions is satisfied:
+    \begin{description}
+        \item[Abel] \(\{a_n\}\) is a bounded monotonic sequence and \(\sum_{n=1}^{\infty} b_n\) converges.
+        \item[Dirichlet]  \(\{a_n\}\) is a monotonic sequence, \(\lim_{n \to \infty} a_n = 0\),
+            and the partial sums \(B_n = \sum_{k=1}^{n} b_k\) are bounded.       
+    \end{description}
+\end{theorem}
+
+\section{Absolute and Conditional Convergence of Series}
+\begin{definition}{Absolute and Conditional Convergence of Series}
+    If the series \( \sum_{n=1}^{\infty} |x_n| \) converges, 
+    then the series \( \sum_{n=1}^{\infty} x_n \) is said to be \textbf{absolutely convergent}.
+
+    If the series \( \sum_{n=1}^{\infty} x_n \) converges but is not absolutely convergent, 
+    then the series \( \sum_{n=1}^{\infty} x_n \) is said to be \textbf{conditionally convergent}.
+\end{definition}
+
+\section{Comparison of Convergence Speed of Series}
+The series \( \sum_{n=1}^{\infty} a_n \) is said to converge faster than the series \( \sum_{n=1}^{\infty} b_n \) if:
+\[
+\lim_{n \to \infty} \frac{a_n}{b_n} = 0.
+\]
+
+\begin{theorem}{Du Bois-Reymond Theorem}
+    For a given convergent positive term series \( \sum_{n=1}^{\infty} a_n \), there always exists a convergent strictly positive term series \( \sum_{n=1}^{\infty} b_n \) such that:
+    \[
+    \lim_{n \to \infty} \frac{a_n}{b_n} = 0.
+    \]
+\end{theorem}
+
+\begin{theorem}{Abel Theorem}
+    For a given divergent positive term series \( \sum_{n=1}^{\infty} a_n \), there always exists a divergent positive term series \( \sum_{n=1}^{\infty} b_n \) such that:
+    \[
+    \lim_{n \to \infty} \frac{a_n}{b_n} = 0.
+    \]
+\end{theorem}
+
+\begin{remark}
+    The above two theorems imply that the slowest converging positive term series \underline{does not} exist.
+\end{remark}
+
+
+
+\section{Infinite Products}
+
+\section{Special Series}
 
 \chapter{Series of Functions}
 

@@ -1,50 +1,61 @@
 \contentsline {chapter}{Preface}{iii}{chapter*.2}%
 \contentsline {chapter}{\numberline {1}Preliminaries}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Trigonometric Formulas}{1}{section.1.1}%
-\contentsline {chapter}{\numberline {2}Limits of Sequences and Continuity of Real Number System}{3}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Convergent Sequences}{3}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Indeterminate Form}{3}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Subsequences}{4}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Completeness of The Real Numbers}{4}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Iterative Sequences}{5}{section.2.5}%
-\contentsline {chapter}{\numberline {3}Limits and Continuity of Functions}{6}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Limits of Functions}{6}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Continuous Functions}{6}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Infinitesimal and Infinite Quantities}{6}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Continuous Functions on Closed Intervals}{6}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Period Three Implies Chaos}{7}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Functional Equations}{7}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Differential}{8}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Differential and Derivative}{8}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Higher-Order Derivatives}{9}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Differential Mean Value Theorems}{9}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Theorems and Applications concerning Derivatives}{9}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Taylor Theorem}{9}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Applications of Taylor Theorem}{9}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Indefinite Integral}{10}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Two Common Integration Methods}{10}{section.5.1}%
-\contentsline {chapter}{\numberline {6}Definite Integral}{11}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Riemann Integral}{11}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Integrability Criteria}{12}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Properties of Definite Integrals}{13}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Fundamental Theorem of Calculus}{13}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Calculation of Definite Integrals}{13}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Integral Inequalities}{13}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Applications of Definite Integrals}{13}{section.6.7}%
-\contentsline {chapter}{\numberline {7}Improper Integral}{14}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Numerical Series}{15}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Convergence of Numerical Series}{15}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Positive Term Series}{15}{section.8.2}%
-\contentsline {section}{\numberline {8.3}General Term Series}{15}{section.8.3}%
-\contentsline {chapter}{\numberline {9}Series of Functions}{16}{chapter.9}%
-\contentsline {chapter}{\numberline {10}Power Series}{17}{chapter.10}%
-\contentsline {chapter}{\numberline {11}Limits and Continuity in Euclidean Spaces}{18}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Continuous Mappings}{18}{section.11.1}%
-\contentsline {chapter}{\numberline {12}Multi-variable Differential Calculus}{19}{chapter.12}%
-\contentsline {section}{\numberline {12.1}Directional Derivatives and Total Differential}{19}{section.12.1}%
-\contentsline {section}{\numberline {12.2}Differential of Vector-Valued Functions}{24}{section.12.2}%
-\contentsline {section}{\numberline {12.3}Derivatives of Composite Mappings (Chain Rule)}{25}{section.12.3}%
-\contentsline {section}{\numberline {12.4}Mean Value Theorem and Taylor's Formula}{25}{section.12.4}%
-\contentsline {section}{\numberline {12.5}Implicit Function Theorem}{27}{section.12.5}%
-\contentsline {section}{\numberline {12.6}Applications of Multi-Variable Differential Calculus}{29}{section.12.6}%
-\contentsline {chapter}{\numberline {13}Multiple Integrals}{31}{chapter.13}%
+\contentsline {section}{\numberline {1.2}Factorial Power}{2}{section.1.2}%
+\contentsline {paragraph}{Definitions:}{2}{tcb@cnt@definition.1.1}%
+\contentsline {paragraph}{Relationships:}{2}{tcb@cnt@definition.1.1}%
+\contentsline {chapter}{\numberline {2}Limits of Sequences and Continuity of Real Number System}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Convergent Sequences}{4}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Indeterminate Form}{4}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Subsequences}{5}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Completeness of The Real Numbers}{5}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Iterative Sequences}{6}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Limits and Continuity of Functions}{7}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Limits of Functions}{7}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Continuous Functions}{7}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Infinitesimal and Infinite Quantities}{7}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Continuous Functions on Closed Intervals}{7}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Period Three Implies Chaos}{8}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Functional Equations}{8}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Differential}{9}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Differential and Derivative}{9}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Higher-Order Derivatives}{10}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Differential Mean Value Theorems}{10}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Theorems and Applications concerning Derivatives}{10}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Taylor Theorem}{10}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Applications of Taylor Theorem}{10}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Indefinite Integral}{11}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Two Common Integration Methods}{11}{section.5.1}%
+\contentsline {chapter}{\numberline {6}Definite Integral}{12}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Riemann Integral}{12}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Integrability Criteria}{13}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Properties of Definite Integrals}{14}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Fundamental Theorem of Calculus}{15}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Calculation of Definite Integrals}{16}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Integral Inequalities}{16}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Applications of Definite Integrals}{17}{section.6.7}%
+\contentsline {chapter}{\numberline {7}Improper Integral}{18}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Infinite and Defective Integrals}{18}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Convergence Tests for Improper Integrals}{18}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Special Integrals}{19}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Common Questions}{20}{section.7.4}%
+\contentsline {chapter}{\numberline {8}Numerical Series}{21}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Convergence of Numerical Series}{21}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Positive Term Series and Its Convergence Tests}{21}{section.8.2}%
+\contentsline {section}{\numberline {8.3}General Term Series and Its Convergence Tests}{23}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Absolute and Conditional Convergence of Series}{25}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Comparison of Convergence Speed of Series}{25}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Infinite Products}{25}{section.8.6}%
+\contentsline {section}{\numberline {8.7}Special Series}{25}{section.8.7}%
+\contentsline {chapter}{\numberline {9}Series of Functions}{26}{chapter.9}%
+\contentsline {chapter}{\numberline {10}Power Series}{27}{chapter.10}%
+\contentsline {chapter}{\numberline {11}Limits and Continuity in Euclidean Spaces}{28}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Continuous Mappings}{28}{section.11.1}%
+\contentsline {chapter}{\numberline {12}Multi-variable Differential Calculus}{29}{chapter.12}%
+\contentsline {section}{\numberline {12.1}Directional Derivatives and Total Differential}{29}{section.12.1}%
+\contentsline {section}{\numberline {12.2}Differential of Vector-Valued Functions}{35}{section.12.2}%
+\contentsline {section}{\numberline {12.3}Derivatives of Composite Mappings (Chain Rule)}{36}{section.12.3}%
+\contentsline {section}{\numberline {12.4}Mean Value Theorem and Taylor's Formula}{37}{section.12.4}%
+\contentsline {section}{\numberline {12.5}Implicit Function Theorem}{38}{section.12.5}%
+\contentsline {section}{\numberline {12.6}Applications of Multi-Variable Differential Calculus}{41}{section.12.6}%
+\contentsline {chapter}{\numberline {13}Multiple Integrals}{42}{chapter.13}%
