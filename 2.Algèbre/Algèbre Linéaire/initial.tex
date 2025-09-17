@@ -45,6 +45,17 @@ This is the preface of the book...
 \mainmatter         % 开始正文，页码从 1 重新开始
 
 \chapter{Determinants} % 这里放置章节标题
+\section{Permutations} % 排列
+
+\section{Determinant and Its Properties} % 行列式及其性质
+
+\section{Expanding by Rows (Columns)} % 按行（列）展开
+\begin{leftbarTitle}{Expanding by One Row}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Cramer's Rule}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Expanding by \(k\) Rows}\end{leftbarTitle}
+
 \section{Special Determinants} % 这里放置小节标题
 \begin{definition}{Vandermonde Determinant}
     The Vandermonde determinant is defined as
@@ -125,7 +136,56 @@ b & b & b & \dots & x_{n}
 \]
 
 
-\chapter{Systems of Linear Equations}
+\chapter{System of Linear Equations}
+\begin{definition}{System of Linear Equations}
+    A system of linear equations is a collection of one or more linear equations involving the same set of variables. 
+    For example, a system of \( m \) linear equations in \( n \) variables can be written as:
+    \[
+    \begin{cases}
+    a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1 \\
+    a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = b_2 \\
+    \vdots \\
+    a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n = b_m
+    \end{cases}
+    \]
+    where \( x_1, x_2, \ldots, x_n \) are the variables, \( a_{ij} \) are the coefficients, and \( b_i \) are the constants.
+
+    A solution to the system is an ordered set of values for the variables that satisfies all equations simultaneously.
+    If two systems have the same solution set, they are called equivalent systems, 
+    whose relationship are equivalence.
+\end{definition}
+
+\section{Elimination Method}
+\section{Linear Space}
+\begin{definition}{Linear Space over Field \(F\)}
+    Let \( V \) be a non-empty set, and \( F \) be a field.
+    If the following two operations (binary mapping) are defined on \( V \):
+    \begin{description}
+        \item [Vector addition] For any \( \alpha, \beta \in V \), 
+            there exists \( \gamma \in V \) such that \( \gamma = \alpha + \beta \).
+        \item [Scalar multiplication] For any \( \alpha \in V \) and \( c \in F \), 
+            there exists \( \gamma \in V \) such that \( \gamma = c \cdot \alpha \).
+    \end{description}
+    and the following axioms are satisfied (for any \( \alpha, \beta, \gamma \in V \) and \( k, l \in F \)):
+    \begin{description}
+        \item [A1. Commutativity of Addition] \( \alpha + \beta = \beta + \alpha \).
+        \item [A2. Associativity of Addition] \( (\alpha + \beta) + \gamma = \alpha + (\beta + \gamma) \).
+        \item [A3. Existence of Additive Identity] There exists an element \( 0 \in V \) such that 
+            \( \alpha + 0 = 0 + \alpha = \alpha \).
+        \item [A4. Existence of Additive Inverse] There exists an element 
+            \( -\alpha \in V \) such that \( \alpha + (-\alpha) = (-\alpha) + \alpha = 0 \).
+        \item [M1. Compatibility of Scalar Multiplication with Field Multiplication] \( k(l\alpha) = (kl)\alpha\).
+        \item [M2. Identity Element of Scalar Multiplication] \( 1\cdot\alpha = \alpha\), where \( 1\) is the multiplicative identity in \( F\).
+        \item [D1. Distributivity of Scalar Multiplication with respect to Vector Addition] 
+            \( k(\alpha + \beta) = k\alpha + k\beta\).
+        \item [D2. Distributivity of Scalar Multiplication with respect to Field Addition] \( (k+l)\alpha = k\alpha + l\alpha\).
+    \end{description}
+    Then \( V \) is called a linear space (or vector space) over the field \( F \).
+\end{definition}
+
+
+\section{Matrix Representation of Systems of Linear Equations}
+
 
 \chapter{Matrices}
 \section{Basic Operations}

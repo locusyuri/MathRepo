@@ -24,6 +24,11 @@
 \usepackage{cprotect} % 保护命令参数不被 LaTeX 解析器过早处理，允许在某些特殊环境中使用脆弱命令（fragile commands）。
 \usepackage{xeCJK} % 使用 xeCJK 包支持中文
 
+% 表格颜色
+\usepackage{colortbl}
+\usepackage{xcolor}
+
+
 
 % ===== 开始文档 =====
 \begin{document}
@@ -437,9 +442,8 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 \hline
 (C)'=0 & \mathrm{d}(C)=0\cdot \mathrm{d}x=0 \\
 \hline
-(x^\alpha)'=\alpha x^{\alpha-1} & \mathrm{d}(x^\alpha)=\alpha x^{\alpha-1}\mathrm{d}x \\
-\hline
-\hline
+(x^\alpha)'=\alpha x^{\alpha-1} & \mathrm{d}(x^\alpha)=\alpha x^{\alpha-1}\mathrm{d}x \\ \hline
+\rowcolor{gray!30} & \\ \hline
 (\sin x)'=\cos x & \mathrm{d}(\sin x)=\cos x\mathrm{d}x \\
 \hline
 (\cos x)'=-\sin x & \mathrm{d}(\cos x)=-\sin x\mathrm{d}x \\
@@ -463,9 +467,8 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 \hline
 (a^x)'=\ln a\cdot a^x, \, (e^x)'=e^x & \mathrm{d}(a^x)=\ln a\cdot a^x\mathrm{d}x, \, \mathrm{d}(e^x)=e^x\mathrm{d}x \\
 \hline
-(\log_{a}x)'=\frac{1}{x\ln a}, \, (\ln x)'=\frac{1}{x} & \mathrm{d}(\log_{a}x)=\frac{1}{x\ln a}\mathrm{d}x, \, \mathrm{d}(\ln x)=\frac{1}{x}\mathrm{d}x \\
-\hline
-\hline
+(\log_{a}x)'=\frac{1}{x\ln a}, \, (\ln x)'=\frac{1}{x} & \mathrm{d}(\log_{a}x)=\frac{1}{x\ln a}\mathrm{d}x, \, \mathrm{d}(\ln x)=\frac{1}{x}\mathrm{d}x \\ \hline
+\rowcolor{gray!30} & \\ \hline
 (\mathrm{sh}\,x)'=\mathrm{ch}\,x & \mathrm{d}(\mathrm{sh}\,x)=\mathrm{ch}\,x\mathrm{d}x \\
 \hline
 (\mathrm{ch}\,x)'=\mathrm{sh}\,x & \mathrm{d}(\mathrm{ch}\,x)=\mathrm{sh}\,x\mathrm{d}x \\
@@ -479,9 +482,8 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 (\mathrm{arcch}\,x)'=\frac{1}{\sqrt{x^2-1}} & \mathrm{d}(\mathrm{arcch}\,x)=\frac{1}{\sqrt{x^2-1}}\mathrm{d}x \\
 \hline
 (\mathrm{arcth}\,x)'=(\mathrm{arccth}\,x)'=\frac{1}{1-x^2} & 
-    \mathrm{d}(\mathrm{arcth}\,x)=\mathrm{d}(\mathrm{arccth}\,x)=\frac{1}{1-x^2}\mathrm{d}x \\
-\hline
-\hline
+    \mathrm{d}(\mathrm{arcth}\,x)=\mathrm{d}(\mathrm{arccth}\,x)=\frac{1}{1-x^2}\mathrm{d}x \\ \hline
+\rowcolor{gray!30} & \\ \hline
 \ln(x+\sqrt{x^2+a^2})'=\frac{1}{\sqrt{x^2+a^2}} & \mathrm{d}[\ln(x+\sqrt{x^2+a^2})]=\frac{\mathrm{d}x}{\sqrt{x^2+a^2}} \\
 \hline
 \end{array}
@@ -575,17 +577,12 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 \hline
 \int e^x \, \mathrm{d}x & e^x + C \\
 \hline
-\int a^x \, \mathrm{d}x & \frac{a^x}{\ln a} + C \quad (a > 0, a \neq 1) \\
-\hline
-\hline
-\int \sin x \, \mathrm{d}x & -\cos x + C \\
-\hline
-\int \cos x \, \mathrm{d}x & \sin x + C \\
-\hline
-\int \tan x \, \mathrm{d}x & -\ln|\cos x| + C \\
-\hline
-\int \cot x \, \mathrm{d}x & \ln|\sin x| + C \\
-\hline
+\int a^x \, \mathrm{d}x & \frac{a^x}{\ln a} + C \quad (a > 0, a \neq 1) \\ \hline
+\rowcolor{gray!30} & \\ \hline
+\int \sin x \, \mathrm{d}x & -\cos x + C \\ \hline
+\int \cos x \, \mathrm{d}x & \sin x + C \\ \hline
+\int \tan x \, \mathrm{d}x & -\ln|\cos x| + C \\ \hline
+\int \cot x \, \mathrm{d}x & \ln|\sin x| + C \\ \hline
 \int \sec x \, \mathrm{d}x & \ln|\sec x + \tan x| + C \\
 \hline
 \int \csc x \, \mathrm{d}x & \ln|\csc x - \cot x| + C \\
@@ -596,22 +593,20 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 \hline
 \int \sec^2 x \, \mathrm{d}x & \tan x + C \\
 \hline
-\int \csc^2 x \, \mathrm{d}x & -\cot x + C \\
-\hline
-\hline
+\int \csc^2 x \, \mathrm{d}x & -\cot x + C \\ \hline
+\rowcolor{gray!30} & \\ \hline
 \int \frac{1}{\sqrt{a^{2}-x^2}} \, \mathrm{d}x & \arcsin \left( \frac{x}{a} \right) + C \\
 \hline
 \int \frac{-1}{\sqrt{a^{2}-x^2}} \, \mathrm{d}x & \arccos \left( \frac{x}{a} \right) + C \\
 \hline
-\int \frac{1}{a^{2}+x^2} \, \mathrm{d}x & \arctan \left( \frac{x}{a} \right) + C \\
+\int \frac{1}{a^{2}+x^2} \, \mathrm{d}x & \frac{1}{a}\arctan \left( \frac{x}{a} \right) + C \\
 \hline
-\int \frac{-1}{a^{2}+x^2} \, \mathrm{d}x & \text{arccot } \left( \frac{x}{a} \right) + C \\
+\int \frac{-1}{a^{2}+x^2} \, \mathrm{d}x &\frac{1}{a}\mathrm{arccot } \left( \frac{x}{a} \right) + C \\
 \hline
 \int \frac{1}{\sqrt{x^2+a^{2}}} \, \mathrm{d}x & \ln|x + \sqrt{x^2+a^{2}}| + C \\
 \hline
-\int \frac{1}{\sqrt{x^2-a^{2}}} \, \mathrm{d}x & \ln|x + \sqrt{x^2-a^{2}}| + C \quad (x > a \text{ or } x < -a) \\
-\hline
-\hline
+\int \frac{1}{\sqrt{x^2-a^{2}}} \, \mathrm{d}x & \ln|x + \sqrt{x^2-a^{2}}| + C \quad (x > a \text{ or } x < -a) \\ \hline
+\rowcolor{gray!30} & \\ \hline
 \int \sinh x \, \mathrm{d}x & \cosh x + C \\
 \hline
 \int \cosh x \, \mathrm{d}x & \sinh x + C \\
@@ -906,6 +901,11 @@ The properties of Darboux sums also apply to Stieltjes sums.
             F'(x_0) = f(x_0).
             \]
         \item [Existence of Antiderivatives] If \( f(x) \in C[a, b] \), then \( F(x) \in D[a, b] \) and \( F'(x) = f(x) \).
+        \item [Rule of Derivation] If \( F(x) = \int_{u(x)}^{v(x)} f(t) \, \mathrm{d}t \), then:
+            \[
+            F'(x) = f(v(x))v'(x) - f(u(x))u'(x).
+            \]
+            In fact, the formula is the simplified version of the \textbf{Leibniz's law}.
     \end{description}
 \end{property}
 
@@ -928,6 +928,8 @@ The properties of Darboux sums also apply to Stieltjes sums.
     \int_{a}^{b} f(x) \, \mathrm{d}x = F(b) - F(a).
     \]
 \end{theorem}
+
+
 
 \begin{leftbarTitle}{Riemann Lemma}\end{leftbarTitle}
 
@@ -992,8 +994,9 @@ The properties of Darboux sums also apply to Stieltjes sums.
 \begin{tabular}{|p{2cm}|c|c|c|}
 \hline
 Category & Explicit Cartesian Equation & Parametric Cartesian Equation & Polar Equation \\ 
+
 \hline
-{\small Equation} &
+\centering {\small Equation} &
 \( y = f(x), x \in [a, b] \) &
 \( 
 \begin{cases}
@@ -1001,29 +1004,34 @@ x = x(t), t \in [T_1, T_2], \\
 y = y(t),
 \end{cases}
 \) &
-\( r = r(\theta), \theta \in [\alpha, \beta] \) \\ \hline
+\( r = r(\theta), \theta \in [\alpha, \beta] \) \\ 
 
-{\small Area of Plane Shape} &
+\hline
+\centering {\small Area of Plane Shape} &
 \( \int_{a}^b f(x) \, \mathrm{d}x \) &
 \( \int_{T_1}^{T_2} |y(t)x'(t)| \, \mathrm{d}t \) &
-\( \frac{1}{2} \int_{\alpha}^{\beta} r^2(\theta) \, \mathrm{d}\theta \) \\ \hline
+\( \frac{1}{2} \int_{\alpha}^{\beta} r^2(\theta) \, \mathrm{d}\theta \) \\ 
 
-{\small Infinitesimal Arc Length} &
+\hline
+\centering {\small Infinitesimal Arc Length} &
 \( \mathrm{d}l = \sqrt{1 + [f'(x)]^2} \, \mathrm{d}x \) &
 \( \mathrm{d}l = \sqrt{[x'(t)]^2 + [y'(t)]^2} \, \mathrm{d}t \) &
-\( \mathrm{d}l = \sqrt{r^2(\theta) + r'^2(\theta)} \, \mathrm{d}\theta \) \\ \hline
+\( \mathrm{d}l = \sqrt{r^2(\theta) + r'^2(\theta)} \, \mathrm{d}\theta \) \\ 
 
-{\small Curve Length} &
+\hline
+\centering {\small Curve Length} &
 \( \int_{a}^b \sqrt{1 + [f'(x)]^2} \, \mathrm{d}x \) &
 \( \int_{T_1}^{T_2} \sqrt{[x'(t)]^2 + [y'(t)]^2} \, \mathrm{d}t \) &
-\( \int_{\alpha}^{\beta} \sqrt{r^2(\theta) + r'^2(\theta)} \, \mathrm{d}\theta \) \\ \hline
+\( \int_{\alpha}^{\beta} \sqrt{r^2(\theta) + r'^2(\theta)} \, \mathrm{d}\theta \) \\ 
 
-{\small Volume of Solid of Revolution} &
+\hline
+\centering {\small Volume of Solid of Revolution} &
 \( \pi \int_{a}^b [f(x)]^2 \, \mathrm{d}x \) &
 \( \pi \int_{T_1}^{T_2} y^2(t)x'(t) \, \mathrm{d}t \) &
-\( \frac{2}{3} \pi \int_{\alpha}^{\beta} r^3(\theta) \sin\theta \, \mathrm{d}\theta \) \\ \hline
+\( \frac{2}{3} \pi \int_{\alpha}^{\beta} r^3(\theta) \sin\theta \, \mathrm{d}\theta \) \\ 
 
-{\small Surface Area of Solid of Revolution} &
+\hline
+\centering {\small Surface Area of Solid of Revolution} &
 \( 2\pi \int_{a}^b f(x) \sqrt{1 + [f'(x)]^2} \, \mathrm{d}x \) &
 \( 2\pi \int_{T_1}^{T_2} y(t) \sqrt{[x'(t)]^2 + [y'(t)]^2} \, \mathrm{d}t \) &
 \( 2\pi \int_{\alpha}^{\beta} r(\theta)\sin\theta \sqrt{r^2(\theta) + r'^2(\theta)} \, \mathrm{d}\theta \) \\ \hline
