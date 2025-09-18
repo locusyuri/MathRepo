@@ -9,10 +9,12 @@
 		"Lipschitz",
 		"Patashnik",
 		"Pochhammer",
+		"Pointwise",
 		"quasihomogeneous",
 		"Stieltjes",
 		"Stolz",
 		"supremum",
+		"termwise",
 		"Vandermonde"
 	]
 }

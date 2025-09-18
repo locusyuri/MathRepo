@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  17 SEP 2025 21:42
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  18 SEP 2025 21:50
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1570,37 +1570,57 @@ Chapter 9.
 [26
 
 ]
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 1523--1526
+[]\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
+ []
+
+
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 1549--1552
+[]\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
+ []
+
+
+
+[27]
+Overfull \hbox (0.43546pt too wide) in paragraph at lines 1572--1575
+\TU/Alegreya(0)/m/n/10.95 meaning that $[]$ (also known as the
+ []
+
+
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 1576--1578
+[]\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
+ []
+
+
+
+[28]
+
+[29]
+
+[30]
 Chapter 10.
 
 
-[27
+[31
 
 ]
 Chapter 11.
 
 
-[28
+[32
 
 ]
 Chapter 12.
 
 
-[29
+[33
 
 ]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 1615.
+(Font)              scaled to size 8.0pt on input line 1881.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 1621.
+(Font)              scaled to size 6.0pt on input line 1887.
 
-
-[30]
-
-[31]
-
-[32]
-
-[33]
 
 [34]
 
@@ -1609,9 +1629,6 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
 [36]
 
 [37]
-File: img/ImplicitFunction.png Graphic file (type bmp)
-<img/ImplicitFunction.png>
-
 
 [38]
 
@@ -1620,14 +1637,25 @@ File: img/ImplicitFunction.png Graphic file (type bmp)
 [40]
 
 [41]
+File: img/ImplicitFunction.png Graphic file (type bmp)
+<img/ImplicitFunction.png>
+
+
+[42]
+
+[43]
+
+[44]
+
+[45]
 Chapter 13.
 
 
-[42
+[46
 
 ]
 
-[43
+[47
 
 ] (./tmp/initial.aux)
  ***********
@@ -1639,18 +1667,18 @@ L3 programming layer <2022/08/05>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: F6C002322458F62855F185C1D10E1188;12843.
+(rerunfilecheck)             Checksum: 7A31C8ED2357D50364C979C7FEE882E1;14280.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46223 strings out of 473831
- 960138 string characters out of 5733137
- 2005827 words of memory out of 5000000
- 68433 multiletter control sequences out of 15000+600000
+ 46238 strings out of 473831
+ 960378 string characters out of 5733137
+ 2007333 words of memory out of 5000000
+ 68448 multiletter control sequences out of 15000+600000
  572520 words of font info for 182 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,15n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (47 pages).
+Output written on ./tmp/initial.pdf (51 pages).

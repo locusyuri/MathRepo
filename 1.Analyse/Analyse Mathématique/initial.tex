@@ -1452,8 +1452,274 @@ The series \( \sum_{n=1}^{\infty} a_n \) is said to converge faster than the ser
 \section{Special Series}
 
 \chapter{Series of Functions}
+\section{Pointwise and Uniform Convergence}
+\begin{leftbarTitle}{Pointwise Convergence}\end{leftbarTitle}
+\begin{definition}{Function Term Series}
+    Let \( u_n(x) \) (\( n = 1, 2, 3, \dots \)) be a sequence of functions with a common domain \( E \). 
+    The sum of these infinitely many functions \( u_1(x) + u_2(x) + \dots + u_n(x) + \dots \) 
+    is called a \textbf{function term series}, denoted as:
+    \[
+    \sum_{n=1}^{\infty} u_n(x).
+    \]
+
+    For any fixed point \( x_0 \in E \), if the numerical series \( \sum_{n=1}^{\infty} u_n(x_0) \) converges, 
+    then the function term series \( \sum_{n=1}^{\infty} u_n(x) \) is said to 
+    converge at \( x_0 \), or equivalently, \( x_0 \) is called 
+    a \textbf{convergence point} of \( \sum_{n=1}^{\infty} u_n(x) \).
+
+    The set of all convergence points is called the \textbf{domain of convergence} of \( \sum_{n=1}^{\infty} u_n(x) \).
+\end{definition}
+
+\begin{definition}{Pointwise Convergence}
+    Let the domain of convergence of the function term series \( \sum_{n=1}^\infty u_n(x) \) be \( D \subset E \). 
+    Then \( \sum_{n=1}^\infty u_n(x) \) defines a function \( S(x) \) on the set \( D \), where:
+    \[
+    S(x) = \sum_{n=1}^\infty u_n(x), \quad x \in D.
+    \]
+    The function \( S(x) \) is called the \textbf{sum function} of the series, 
+    and \( \sum_{n=1}^\infty u_n(x) \) is said to \textbf{converge pointwise} to \( S(x) \) on \( D \).
+\end{definition}
+
+Define the \textbf{partial sum function} of the series as:
+\[
+S_n(x) = \sum_{k=1}^n u_k(x).
+\]
+It is evident that the set of all \( x \) for which \( \{ S_n(x) \} \) converges is precisely \( D \). 
+Therefore, on \( D \), we have:
+\[
+S(x) = \lim_{n \to \infty} S_n(x) = \lim_{n \to \infty} \sum_{k=1}^n u_k(x).
+\]
+Conversely, if a sequence of functions \( \{ S_n(x) \} \) (\( x \in E \)) is given, we can define:
+\[
+\begin{cases}
+u_1(x) = S_1(x), \\
+u_{n+1}(x) = S_{n+1}(x) - S_n(x), \quad n = 1, 2, \dots
+\end{cases}
+\]
+to obtain the corresponding function term series.
+
+Thus, the convergence behavior of a function term series and the corresponding sequence 
+of partial sum functions is essentially the same.
+
+However, it is important to note that the pointwise convergence has certain limitations.
+
+\begin{description}
+    \item[Continuity]
+    The sum of finitely many continuous functions satisfies additive continuity:
+    \[
+    \lim_{x \to x_0} [u_1(x) + u_2(x) + \dots + u_n(x)] 
+    = \lim_{x \to x_0} u_1(x) + \lim_{x \to x_0} u_2(x) + \dots + \lim_{x \to x_0} u_n(x).
+    \]
+
+    If this property can be extended to infinitely many functions, that is:
+    If \( u_n(x) \) is continuous on \( D \), the sum function \( S(x) = \sum_{n=1}^\infty u_n(x) \) 
+    is also continuous on \( D \). Moreover:
+    \[
+    \lim_{x \to x_0} \sum_{n=1}^\infty u_n(x) = \sum_{n=1}^\infty \lim_{x \to x_0} u_n(x),
+    \]
+    meaning that \underline{the limit operation and infinite summation can be interchanged}
+    (also known as the fact that function term series can be evaluated termwise).
+
+    For the sequence of partial sums \( \{ S_n(x) \} \), 
+    the corresponding conclusion is that the limit function 
+    \( S(x) = \lim_{n \to \infty} S_n(x) \) is also continuous on \( D \), and:
+    \[
+    \lim_{x \to x_0} \lim_{n \to \infty} S_n(x) = \lim_{n \to \infty} \lim_{x \to x_0} S_n(x),
+    \]
+    meaning that the two limit operations can be interchanged.
+
+    Unfortunately, in the case of pointwise convergence, this property \textcolor{red!70}{does not hold}.
+
+    \item[Derivability]
+    The sum of finitely many differentiable functions satisfies additive differentiability:
+    \[
+    \frac{\mathrm{d}}{\mathrm{d}x} [u_1(x) + u_2(x) + \dots + u_n(x)] 
+    = \frac{\mathrm{d}}{\mathrm{d}x} u_1(x) + \frac{\mathrm{d}}{\mathrm{d}x} u_2(x) + \dots + \frac{\mathrm{d}}{\mathrm{d}x} u_n(x).
+    \]
+
+    If this property can be extended to infinitely many functions, that is:
+    If \( u_n(x) \) is differentiable on \( D \), 
+    the sum function \( S(x) = \sum_{n=1}^\infty u_n(x) \) is also differentiable on \( D \). Moreover:
+    \[
+    \frac{\mathrm{d}}{\mathrm{d}x} \sum_{n=1}^\infty u_n(x) = \sum_{n=1}^\infty \frac{\mathrm{d}}{\mathrm{d}x} u_n(x),
+    \]
+    meaning that \underline{the differentiation operation and infinite summation can be interchanged }
+    (also known as the fact that function term series can be differentiated termwise).
+
+    For the sequence of partial sums \( \{ S_n(x) \} \), 
+    the corresponding conclusion is that the limit function 
+    \( S(x) = \lim_{n \to \infty} S_n(x) \) is also differentiable on \( D \), and:
+    \[
+    \frac{\mathrm{d}}{\mathrm{d}x} \lim_{n \to \infty} S_n(x) = \lim_{n \to \infty} \frac{\mathrm{d}}{\mathrm{d}x} S_n(x),
+    \]
+    meaning that the two operations can be interchanged.
+
+    Unfortunately, in the case of pointwise convergence, this property \textcolor{red!70}{does not hold}.
+
+
+    \item[Integrability]
+    The sum of finitely many integrable functions satisfies additive integrability:
+    \[
+    \int_a^b [u_1(x) + u_2(x) + \dots + u_n(x)] \, \mathrm{d}x 
+    = \int_a^b u_1(x) \, \mathrm{d}x + \int_a^b u_2(x) \, \mathrm{d}x + \dots + \int_a^b u_n(x) \, \mathrm{d}x.
+    \]
+
+    If this property can be extended to infinitely many functions, that is:
+    If \( u_n(x) \) is integrable on \( [a, b] \subset D \), 
+    the sum function \( S(x) = \sum_{n=1}^\infty u_n(x) \) is also integrable on \( [a, b] \subset D \). Moreover:
+    \[
+    \int_a^b \sum_{n=1}^\infty u_n(x) \, \mathrm{d}x = \sum_{n=1}^\infty \int_a^b u_n(x) \, \mathrm{d}x,
+    \]
+    meaning that \underline{the integration operation and infinite summation can be interchanged }
+    (also known as the fact that function term series can be integrated termwise).
+
+    For the sequence of partial sums \( \{ S_n(x) \} \), 
+    the corresponding conclusion is that the limit function \( S(x) = \lim_{n \to \infty} S_n(x) \) is also integrable on \( [a, b] \subset D \), and:
+    \[
+    \int_a^b \lim_{n \to \infty} S_n(x) \, \mathrm{d}x = \lim_{n \to \infty} \int_a^b S_n(x) \, \mathrm{d}x,
+    \]
+    meaning that the two operations can be interchanged.
+
+    Unfortunately, in the case of pointwise convergence, this property \textcolor{red!70}{does not hold}.
+\end{description}
+
+
+\begin{leftbarTitle}{Uniform Convergence}\end{leftbarTitle}
+\begin{definition}{Uniform Convergence}
+    Let \( \{ S_n(x) \} (x \in D) \) be a sequence of functions. If:
+    \[
+    \forall \varepsilon > 0, \exists N(\varepsilon) \in \mathbb{N}^+, \forall n > N(\varepsilon): 
+    |S_n(x) - S(x)| < \varepsilon \quad (\forall x \in D),
+    \]
+    then \( \{ S_n \} \) is said to \textbf{converge uniformly} to \( S(x) \) on \( D \), denoted as:
+    \[
+    S_n(x) \mathop{\rightrightarrows}\limits^{D} S(x).
+    \]
+
+    If the partial sum sequence \( \{ S_n(x) \} \) of the function term series 
+    \( \sum_{n=1}^\infty u_n(x) (x \in D) \) converges uniformly to \( S(x) \) on \( D \), 
+    then \( \sum_{n=1}^\infty u_n(x) \) is said to converge uniformly to \( S(x) \) on \( D \).
+\end{definition}
+Obviously, if the partial sum sequence \( \{ S_n(x) \} \) of \( \sum_{n=1}^\infty u_n(x) \) satisfies:
+\[
+S_n(x) \mathop{\rightrightarrows}\limits^{D} S(x),
+\]
+then:
+\[
+u_n(x) \mathop{\rightrightarrows}\limits^{D} 0.
+\]
+
+\begin{theorem}{Cauchy Criterion for Uniform Convergence}
+    The necessary and sufficient condition for the sequence of functions \( \{ S_n(x) \} \) to converge uniformly on \( D \) is:
+    \[
+    \forall \varepsilon > 0, \exists N \in \mathbb{N}^*, \forall m > n > N: 
+    |S_m(x) - S_n(x)| < \varepsilon \quad (\forall x \in D).
+    \]
+
+    Correspondingly, the necessary and sufficient condition for the function term series 
+    \( \sum_{n=1}^\infty u_n(x) \) to converge uniformly on \( D \) is:
+    \[
+    \forall \varepsilon > 0, \exists N \in \mathbb{N}^*, \forall m > n > N: 
+    \left| \sum_{i=n+1}^m u_i(x) \right| < \varepsilon \quad (\forall x \in D).
+    \]
+\end{theorem}
+
+\begin{theorem}{Necessary and Sufficient Condition for Uniform Convergence}
+    Let \( \{ S_n(x) \} \) converge pointwise to \( S(x) \) on \( D \). 
+    The necessary and sufficient conditions for \( S_n(x) \mathop{\rightrightarrows}\limits^{D} S(x) \) are:
+    \begin{enumerate}
+        \item  
+            \[
+            \lim_{n \to \infty} d(S_n, S) = \lim_{n \to \infty} \sup_{x \in D} |S_n(x) - S(x)| = 0.
+            \]
+        \item For any sequence \( \{ x_n \} \) where \( x_n \in D \), the following holds:
+            \[
+            \lim_{n \to \infty} \big(S_n(x_n) - S(x_n)\big) = 0.
+            \]
+    \end{enumerate}
+\end{theorem}
+
+With the concept of uniform convergence, the flaws of pointwise convergence can be remedied,
+and the following properties can be established:
+\begin{property}
+    \begin{description}
+        \item  [Continuity]
+            Let \( f_n(x) \mathop{\rightrightarrows}\limits^{I \subset \mathbb{R}} f(x) \). 
+            If \( f_n(x) \) is continuous at \( x_0 \in I \) for \( n = 1, 2, 3, \dots \), 
+            then \( f(x) \) is also continuous at \( x_0 \). 
+
+            In particular, if \( f_n(x) \in C(I) \), then \( f(x) \in C(I) \).
+
+            \textbf{Termwise Limit} If \( \sum_{n=1}^\infty u_n(x) \mathop{\rightrightarrows}\limits^{I \subset \mathbb{R}} S(x) \) 
+            and \( u_n(x) \in C(I) \), then the sum function \( S(x) \in C(I) \).
+        \item  [Integrability]
+            Let \( f_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} f(x) \). 
+            If \( f_n(x) \in R[a, b] \), then \( f(x) \in R[a, b] \), and:
+            \[
+            \lim_{n \to \infty} \int_a^b f_n(x) \, \mathrm{d}x = \int_a^b \lim_{n \to \infty} f_n(x) \, \mathrm{d}x = \int_a^b f(x) \, \mathrm{d}x.
+            \]
+
+            \textbf{Termwise Integration:} If \( \sum_{n=1}^\infty u_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} S(x) \) 
+            and \( u_n(x) \in R[a, b] \), then \( S(x) \in R[a, b] \).
+
+        \item [Differentiability]
+            Let \( f'_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} \sigma(x) \). 
+            If there exists \( x_0 \in [a, b] \) such that:
+            \[
+            \lim_{n \to \infty} f_n(x_0) = a,
+            \]
+            then there exists a function \( f(x) \) such that \( f_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} f(x) \) 
+            and \( f'(x) = \sigma(x) \).
+            
+            \textbf{Termwise Differentiation} If 
+            \( \sum_{n=1}^\infty u'_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} \sigma(x) \) 
+            and there exists \( x_0 \in [a, b] \) such that:
+            \[
+            \sum_{n=1}^\infty u_n(x_0) \to a,
+            \]
+            then there exists a function \( S(x) \) such that 
+            \( \sum_{n=1}^\infty u_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} S(x) \) and \( S'(x) = \sigma(x) \).
+
+            \textbf{Corollary} Obviously, if we add the condition \( f'_n(x) \in C[a, b] \), the conclusion still holds, 
+            and the proof becomes simpler.
+    \end{description}
+\end{property}
+
+\begin{note}
+    Since continuity and differentiability are both local properties, 
+    it suffices to have \textbf{internally closed uniform convergence} of \( (a, b) \) 
+    to ensure that \( f(x) \) is continuous/differentiable.
+\end{note}
+
+
+\begin{leftbarTitle}{Quasi-Uniform Convergence}\end{leftbarTitle}
+\begin{definition}{Quasi-Uniform Convergence}
+    The sequence of functions \( \{ S_n(x) \} \) is said to \textbf{converge quasi-uniformly}
+    on the interval \( [a, b] \) 
+    if it converges pointwise to \( S(x) \) on \( [a, b] \), and the following condition is satisfied:
+    \[
+    \forall \varepsilon > 0, \forall N \in \mathbb{N}^*, \exists N_0 > N,
+    \text{ s.t. } \forall x \in [a, b], \exists n_x \in [N, N_0] \; 
+    (n_x \in \mathbb{N}^*): |S_{n_x}(x) - S(x)| < \varepsilon.
+    \]    
+\end{definition}
+
+
+\section{Uniform Convergence Tests}
+\begin{leftbarTitle}{Weierstrass Test (M-Test)}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Abel-Dirichlet Test}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Dini Theorem}\end{leftbarTitle}
+
+\section{Special Cases}
 
 \chapter{Power Series}
+\section{Power Series and Its Convergence Radius}
+
+\section{Expanding Functions into Power Series}
+
+\section{Smooth Appropriation of Functions}
 
 \chapter{Limits and Continuity in Euclidean Spaces}
 
