@@ -1624,7 +1624,7 @@ u_n(x) \mathop{\rightrightarrows}\limits^{D} 0.
     \]
 \end{theorem}
 
-\begin{theorem}{Necessary and Sufficient Condition for Uniform Convergence}
+\begin{theorem}{Necessary and Sufficient Conditions for Uniform Convergence}
     Let \( \{ S_n(x) \} \) converge pointwise to \( S(x) \) on \( D \). 
     The necessary and sufficient conditions for \( S_n(x) \mathop{\rightrightarrows}\limits^{D} S(x) \) are:
     \begin{enumerate}
@@ -2595,6 +2595,437 @@ always points outward from point \( t \).
 
 
 \chapter{Multiple Integrals}
+\section{Multiple Integrals on Bounded Closed Regions}
+\begin{leftbarTitle}{Definition of Multiple Integral}\end{leftbarTitle}
+
+Initially, we define the double integral on a closed interval.
+\begin{definition}{Double Integral on a Closed Interval}
+    Let \( I = [a, b] \times [c, d] \) be a closed interval in \( \mathbb{R}^2 \), 
+    (i.e., each boundary is parallel to the coordinate axes). Partition \( [a, b] \):
+    \[
+    T_x: a = x_0 < x_1 < \cdots < x_n = b.
+    \]
+    Partition \( [c, d] \):
+    \[
+    T_y: c = y_0 < y_1 < \cdots < y_m = d.
+    \]
+    Two sets of parallel lines \( x = x_i \, (i = 0, 1, \ldots, n) \) and \( y = y_j \, (j = 0, 1, \ldots, m) \) 
+    divide \( I \) into \( n \times m \) subrectangles:
+    \[
+    [x_{i-1}, x_i] \times [y_{j-1}, y_j], \quad i = 1, \ldots, n, \, j = 1, \ldots, m.
+    \]
+
+    The union of these \( k \) subrectangles forms a partition \( T = T_x \times T_y = \{ I_1, I_2, \ldots, I_k \} \). 
+    For each \( \xi^i \in I_i \, (i = 1, 2, \ldots, k) \), define the \textbf{Riemann sum} (also called a sum of integrals) as:
+    \[
+    \sum_{i=1}^k f(\boldsymbol{\xi}^i) v(I_i),
+    \]
+    where \( v(I_i) \) is the area of the rectangle \( I_i \), i.e., the product of its length and width. Denote:
+    \[
+    \lambda = \max(\text{diam}(I_1), \text{diam}(I_2), \ldots, \text{diam}(I_k)),
+    \]
+    where \( \text{diam}(I) \) is the diagonal length of the rectangle \( I \), 
+    and \( \lambda \) is called the modulus or width of the partition \( T \). 
+    The points 
+    \( \boldsymbol{\xi} = (\boldsymbol{\xi}^1, \boldsymbol{\xi}^2, \ldots, \boldsymbol{\xi}^k) 
+    \in I_1 \times I_2 \times \cdots \times I_k \) 
+    are called sampling points for the Riemann sum.
+
+    If there exists \( J \in \mathbb{R} \), such that \( \forall \varepsilon > 0 \), there exists \( \delta > 0 \), 
+    such that when \( \lambda < \delta \), for all \( \boldsymbol{\xi} \in I_1 \times I_2 \times \cdots \times I_k \), we have:
+    \[
+    \left| \sum_{i=1}^k f(\boldsymbol{\xi}^i) v(I_i) - J \right| < \varepsilon,
+    \]
+    then \( f \) is said to be Riemann integrable on \( I \), and:
+    \[
+    J = \lim_{\lambda \to 0} \sum_{i=1}^k f(\boldsymbol{\xi}^i) v(I_i) =: 
+    \iint_I f(x, y) \, \mathrm{d}x \mathrm{d}y \quad \text{or} \quad \int_I f \, \mathrm{d}v \quad \text{or} \quad \int_{I} f.
+    \]
+
+    The function \( f \) is said to have a double integral on \( I \), or simply \( f \) is integrable on \( I \). 
+    Here \( f \) is called the integrand, \( I \) is called the integration region, 
+    and \( \mathrm{d}v = \mathrm{d}x \mathrm{d}y \) is called the integration element.
+\end{definition}
+
+The defined double integral possesses properties similar to those of single-variable integrals.
+
+On the basis of the above definition, we can extend it to the case of a bounded set.
+
+\begin{definition}{Double Integral on a Bounded Set}
+    Let \( \Omega \subset \mathbb{R}^2 \) be a bounded set, and \( f: \Omega \to \mathbb{R} \) a two-dimensional function. 
+    Define:
+    \[
+    f_\Omega(\mathbf{x}) = f_\Omega(x, y) =
+    \begin{cases} 
+    f(x, y), & \text{if } \mathbf{x} = (x, y) \in \Omega, \\
+    0, & \text{if } \mathbf{x} = (x, y) \not\in \Omega,
+    \end{cases}
+    \]
+    and call this the \textbf{zero extension} of \( f \). 
+    For any closed interval \( I \supset \Omega \), if \( f_\Omega \) is Riemann integrable on \( I \), 
+    then \( f \) is said to be \textbf{Riemann integrable} on \( \Omega \) (abbreviated as integrable). 
+    The integral of \( f \) on \( \Omega \), denoted as:
+    \[
+    \iint_\Omega f(x, y) \, \mathrm{d}x \mathrm{d}y = 
+    \int_\Omega f \, \mathrm{dV} = \int_{\Omega} f = \int_{\Omega} f_\Omega = 
+    \iint_I f_\Omega(x, y) \, \mathrm{d}x \mathrm{d}y,
+    \]
+    represents the Riemann integral of \( f \) on \( \Omega \).
+\end{definition}
+
+In above definition, the integral \( \int_\Omega f \) is independent of the choice of 
+the closed interval \( I \) containing \( \Omega \) (this confirms the consistency of the definition).
+
+It is worth noting that all the definitions and properties of double integrals 
+can be extended to triple integrals and higher-dimensional integrals without excessive inconvenience.
+
+\begin{leftbarTitle}{Necessary and Sufficient Conditions for Integrability}\end{leftbarTitle}
+
+\begin{definition}{Set with Zero Area and Set with Zero Measure (Null Set)}
+    Let \( A \subset \mathbb{R}^2 \). If for any \( \varepsilon > 0 \), 
+    there exist \underline{finitely many} closed intervals \( I_1, I_2, \dots, I_k \) such that:
+    \[
+    \bigcup_{i=1}^k I_i \supset A, \quad \text{and} \quad \sum_{i=1}^k v(I_i) < \varepsilon,
+    \]
+    then \( A \) is called a \textbf{set with zero area}.
+
+    Let \( A \subset \mathbb{R}^2 \). If for any \( \varepsilon > 0 \), 
+    there exist at most \underline{countably many} closed intervals \( I_1, I_2, \dots, I_k, \dots \) such that:
+    \[
+    \bigcup_{i=1}^\infty I_i \supset A, \quad \text{and} \quad \sum_{i=1}^\infty v(I_i) < \varepsilon,
+    \]
+    then \( A \) is called a \textbf{set with zero measure (null set)}.
+\end{definition}
+
+\begin{definition}{Set with Finite Area}
+    Let \( \Omega \subset \mathbb{R}^2 \) be a bounded set. 
+    If the constant function \( 1 \) is integrable on \( \Omega \), 
+    then \( \Omega \) is called a \textbf{set with finite area}, and the area of \( \Omega \) is defined as:
+    \[
+    v(\Omega) = \int_\Omega 1 = \iint_\Omega \mathrm{d}x \mathrm{d}y = \int_I 1_\Omega.
+    \]
+
+\end{definition}
+
+Obviously, \(\Omega\) is a set with zero area if and only if \(\Omega\) has finite area, 
+and \(v(\Omega) = \int_\Omega 1 = 0\).
+
+
+\section{Properties and Calculation of Multiple Integrals}
+
+\begin{leftbarTitle}{Reduction of Double Integral to Iterated Integral}\end{leftbarTitle}
+
+\begin{theorem}{Reduction of Double Integral to Iterated Integral on a Closed Interval}\label{thm:Reduction of Double Integral to Iterated Integral on a Closed Interval}
+    Let \( f \) be integrable on the closed interval \( I = [a, b] \times [c, d] \). 
+    If \( \forall x \in [a, b] \), the function \( f(x, \cdot) \) is integrable on \( [c, d] \), then:
+    \[
+    \iint_I f = \int_a^b \left( \int_c^d f(x, y) \, \mathrm{d}y \right) \mathrm{d}x
+    =: \int_{a}^{b}\mathrm{d}x\int_{c}^{d}f(x,y)\,\mathrm{d}y.
+    \]
+
+    Similarly, if \( \forall y \in [c, d] \), the function \( f(\cdot, y) \) is integrable on \( [a, b] \), then:
+    \[
+    \iint_I f = \int_c^d \left( \int_a^b f(x, y) \, \mathrm{d}x \right) \mathrm{d}y
+    =: \int_{c}^{d}\mathrm{d}y\int_{a}^{b}f(x,y)\,\mathrm{d}x.
+    \]
+\end{theorem}
+
+On the basis of the above theorem, we can extend it to the case of a bounded region.
+
+\begin{theorem}{Reduction of Double Integral to Iterated Integral on a Bounded Set}
+    Let \( \Omega \subset \mathbb{R}^2 \) be a set with infinite area, 
+    and \( f: \Omega \to \mathbb{R} \) be bounded and continuous
+    ~(\ref{fig:Double Integral on a Bounded Set}). 
+    Denote the vertical projection of \( \Omega \) onto the \( x \)-axis as:
+    \[
+    I = \{ x \in \mathbb{R} \mid \exists y, \text{ s.t. } (x, y) \in \Omega \}.
+    \]
+
+    If \( \forall x \in I \), let \( \Omega_x = \{ y \in \mathbb{R} \mid (x, y) \in \Omega \} \) 
+    be an interval (possibly reducing to a single point), then:
+    \[
+    \int_\Omega f = \int_I \mathrm{d}y \int_{\Omega_x} f(x, y) \, \mathrm{d}x.
+    \]
+
+    Similarly, denote the vertical projection of \( \Omega \) onto the \( y \)-axis as:
+    \[
+    J = \{ y \in \mathbb{R} \mid \exists x, \text{ s.t. } (x, y) \in \Omega \}.
+    \]
+
+    If \( \forall y \in J \), let \( \Omega_y = \{ x \in \mathbb{R} \mid (x, y) \in \Omega \} \) be an interval (possibly reducing to a single point), then:
+    \[
+    \int_\Omega f = \int_J \mathrm{d}y \int_{\Omega_y} f(x, y) \, \mathrm{d}x.
+    \]
+\end{theorem}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/IntegralImg.png}
+    \caption{Double Integral on a Bounded Set}
+    \label{fig:Double Integral on a Bounded Set}
+\end{figure}
+
+Specially, Let:
+\[
+\Omega = \{ (x, y) \in \mathbb{R}^2 \mid y_1(x) \leq y \leq y_2(x), \, a \leq x \leq b \},
+\]
+where the functions \( y_1 \) and \( y_2 \) are continuous on \( [a, b] \)~(\ref{fig:Double Integral on a Bounded Set}) 
+and the function \( f \) is integrable on \( \Omega \). If \( \forall x \in [a, b] \), the single-variable integral:
+\[
+\int_{y_1(x)}^{y_2(x)} f(x, y) \, \mathrm{d}y
+\]
+exists, then:
+\[
+\int_\Omega f = \int_a^b \mathrm{d}x \int_{y_1(x)}^{y_2(x)} f(x, y) \, \mathrm{d}y.
+\]
+This area called the \textbf{type X region}, similarly, we can define the \textbf{type Y region}.
+
+
+According to~\ref{thm:Reduction of Double Integral to Iterated Integral on a Closed Interval},
+we can derive the formula of multiplicative property for double integral.
+
+\begin{theorem}{Formula of Multiplicative Property for Double Integral}
+    Let \( f \in C([a, b]) \), \( g \in C([c, d]) \). 
+    Then the function \( h(x, y) = f(x) g(y) \) is integrable on the closed interval \( I = [a, b] \times [c, d] \), 
+    and:
+    \[
+    \iint_I h(x, y) \, \mathrm{d}x \mathrm{d}y = \left( \int_a^b f(x) \, \mathrm{d}x \right) 
+    \left( \int_c^d g(y) \, \mathrm{d}y \right).
+    \]
+\end{theorem}
+
+\begin{example}
+    Let \(p(x)\in R[a,b],p(x)>0,x\in [a,b]\), the monotonicity of \(f(x), g(x)\) is same,
+    prove that
+    \[
+    \int_{a}^{b}p(x)f(x)\mathrm{d}x \int_{a}^{b}p(x)g(x)\mathrm{d}x
+    \leqslant  \int_{a}^{b}p(x)\mathrm{d}x \int_{a}^{b}p(x)f(x)g(x)\mathrm{d}x
+    \]
+\end{example}
+\begin{proof}
+    Let
+    \[
+    I = \int_{a}^{b}p(x)\mathrm{d}x \int_{a}^{b}p(x)f(x)g(x)\mathrm{d}x
+        - \int_{a}^{b}p(x)f(x)\mathrm{d}x \int_{a}^{b}p(x)g(x)\mathrm{d}x,
+    \]
+    then
+    \[
+    I = \int_{a}^{b}\int_{a}^{b}p(x)p(y)g(y)(f(x)-f(y))\mathrm{d}x\mathrm{d}y,
+    \]
+    similarly,
+    \[
+    I = \int_{a}^{b}\int_{a}^{b}p(x)p(y)g(x)(f(x)-f(y))\mathrm{d}x\mathrm{d}y.
+    \]
+    Then 
+    \[
+    2I = \int_{a}^{b}\int_{a}^{b}p(x)p(y)(g(y)-g(x))(f(x)-f(y))\mathrm{d}x\mathrm{d}y \geqslant  0,
+    \]
+    which implies
+    \[
+    I \geqslant  0.
+    \]
+    The proof is complete.
+\end{proof}
+
+\begin{leftbarTitle}{Calculation of Triple Integrals}\end{leftbarTitle}
+\begin{example}\label{eg:Triple Integral of Cone}
+    Calculating \(I = \iiint_{ \Omega }z^{2}\mathrm{d}x\mathrm{d}y\mathrm{d}z\),
+    where \(\Omega\) is the cone defined by \(z^{2} = \frac{h^{2}}{R^{2}}(x^{2}+y^{2})\) 
+    and \(z = h\)~(\ref{fig:Cone}).
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.5\textwidth]{img/cone.png}
+        \caption{Cone Example.}
+        \label{fig:Cone}
+    \end{figure}
+\end{example}
+
+\begin{example}\label{eg:Project Method Example}
+    Calculating \(I = \iiint_{ \Omega }xy\mathrm{d}x\mathrm{d}y\mathrm{d}z\),
+    where \(\Omega\) is the region defined 
+    by \(0 \leqslant z \leqslant xy, 0\leqslant y \leqslant 1-x, 0\leqslant x \leqslant 1\)
+    ~(\ref{fig:Project Method Example}).
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.5\textwidth]{img/project_method_example.png}
+        \caption{Project Method Example.}
+        \label{fig:Project Method Example}
+    \end{figure}
+\end{example}
+
+\vspace{1cm}
+With the help of examples above, we can derive two methods for calculating triple integrals.
+
+\begin{description}
+\item[First 2 then 1 (Section Method)] 
+Fix one variable (e.g., \(z\)), first perform a double integral over the other two variables (e.g., \(x,y\)) 
+on the "section region" corresponding to the fixed variable, 
+and then perform a definite integral over the fixed variable (\(z\)) within its range of values.
+
+This method is convenient when the area of the section region is easy to calculate, 
+or when the integrand is only related to the "later-integrated variable" (e.g., only related to \(z\)).
+
+In the example~\ref{eg:Triple Integral of Cone}, the following steps are taken:
+\begin{enumerate}
+    \item Determine the range of z: \(z \in [0, h]\). 
+    \item Determine the section region \(D_z\): 
+        For a fixed \(z\), \(D_z\) is the region on the \(xy\)-plane satisfying \(\frac{h^2}{R^2}(x^2 + y^2) \leq z^2\), 
+        which is a circle with radius \(\frac{R}{h}z\).
+    \item Split the integral: \(I = \int_{0}^{h} \left( \iint_{D_z} z^2 \,\mathrm{d}x\mathrm{d}y \right) \,\mathrm{d}z\). 
+        Since \(z^2\) is independent of \(x\) and \(y\), it can be factored out:
+        \(I = \int_{0}^{h} z^2 \left( \iint_{D_z} \,\mathrm{d}x\mathrm{d}y \right) dz\).
+    \item Calculate the double integral (area of the section): 
+        \(\iint_{D_z} \,\mathrm{d}x\mathrm{d}y = \pi \left( \frac{R}{h}z \right)^2 = \pi \frac{R^2}{h^2} z^2\).
+    \item Calculate the definite integral: 
+        \(I = \int_{0}^{h} z^2 \cdot \pi \frac{R^2}{h^2} z^2 \,\mathrm{d}z = \frac{\pi R^2 h^3}{5}\).
+\end{enumerate}
+
+\item[First 1 then 2 (Project Method)]
+Fix two variables (e.g., \(x,y\)), first perform a definite integral over the third variable (e.g., \(z\)) 
+on the "vertical line segment" corresponding to the fixed variables, 
+and then perform a double integral over the fixed two variables ( \(x,y\)) on their "projection region. 
+
+This method is convenient when the projection region of the integral region on 
+a certain coordinate plane (e.g., \(xy\)-plane) is easy to determine, 
+and the upper and lower limits of a single variable (e.g., \(z\)) can 
+be easily expressed by the other two variables.
+
+In the example~\ref{eg:Project Method Example}, the following steps are taken:
+\begin{enumerate}
+    \item Determine the projection region \(D_{xy}\):\(D_{xy}\) is the region on the \(xy\)-plane 
+        bounded by \(x + y \leq 1\), \(x \geq 0\), and \(y \geq 0\), 
+        which can be expressed as \(0 \leq x \leq 1\) and \(0 \leq y \leq 1 - x\).
+    \item Determine the range of \(z\): \(z \in [0, xy]\) (since \(z\) is bounded below by \(z = 0\) and above by \(z = xy\)).
+    \item Split the integral: 
+    \item 
+        \[
+        I = \iint_{D_{xy}}\, \left( \int_{0}^{xy} xy \mathrm{d}z \right)  \mathrm{d}x \mathrm{d}y,
+        \]
+        split the double integral on \(D_{xy}\) as:
+        \(I = \int_{0}^{1} \, \mathrm{d}x \int_{0}^{1 - x} \, \mathrm{d}y  \int_{0}^{xy} xy \, \mathrm{d}z\).
+        (Since \(xy\) is independent of \(z\), it can be factored out without affecting the integral:
+        \(I = \int_{0}^{1} \, \mathrm{d}x \int_{0}^{1 - x} xy \, \mathrm{d}y  \int_{0}^{xy} \, \mathrm{d}z\).)
+    \item Calculate the inner integral (with respect to \(z\)):
+        \(\int_{0}^{xy} xy \, dz = xy \cdot \int_{0}^{xy} dz 
+        = xy \cdot \left. z \right|_{0}^{xy} = xy \cdot xy = x^2 y^2\).
+    \item Calculate the middle integral (with respect to \(y\)):
+        Substitute the result of the inner integral,
+        \[
+        \int_{0}^{1 - x} x^2 y^2 \, dy 
+        = x^2 \cdot \left. \frac{y^3}{3} \right|_{0}^{1 - x} = \frac{x^2 (1 - x)^3}{3}.
+        \]
+    \item Calculate the outer integral (with respect to \(x\)):Substitute the result of the middle integral:
+        \begin{align*}
+            \int_{0}^{1} \frac{x^2 (1 - x)^3}{3} \, dx &= \frac{1}{3} \int_{0}^{1} (x^2 - 3x^3 + 3x^4 - x^5) \, dx \\
+            &= \frac{1}{3} \left( \left. \frac{x^3}{3} - \frac{3x^4}{4} + \frac{3x^5}{5} - \frac{x^6}{6} \right|_{0}^{1} \right) \\
+            &= \frac{1}{3} \left( \frac{1}{3} - \frac{3}{4} + \frac{3}{5} - \frac{1}{6} \right) \\
+            &= \frac{1}{180}.
+        \end{align*}
+\end{enumerate}
+\end{description}
+
+
+
+\section{Variable Substitution in Multiple Integrals}
+\begin{theorem}{Variable Substitution in Double Integral}
+    Let \( \Omega \subset \mathbb{R}^2 \) be an open set, and let the mapping:
+    \[
+    \mathbf{F}: \Omega \to \mathbb{R}^2, \quad (u, v) \mapsto \mathbf{F}(u, v) = (x(u, v), y(u, v))
+    \]
+    satisfy the following conditions:
+    \begin{enumerate}
+        \item \( \mathbf{F} \in C^1(\Omega, \mathbb{R}^2) \);
+        \item \( \frac{\partial (x, y)}{\partial (u, v)} 
+            = \det J\mathbf{F}(u, v) = \det J\mathbf{F}(\mathbf{p}) \neq 0, \quad \mathbf{p} = (u, v) \in \Omega \);
+        \item \( \mathbf{F} \) is injective.
+    \end{enumerate}
+
+    If the set \( \Delta \) is a set with finite area and 
+    \( \overline{\Delta} \subset \Omega \), and \( f \) is continuous on \( \mathbf{F}(\Omega) \), 
+    then \( \mathbf{F}(\Delta) \) is also a set with finite area, and:
+    \[
+    \iint_{\mathbf{F}(\Delta)} f = \iint_{\Delta} f \circ \mathbf{F} \left| \det J\mathbf{F} \right|,
+    \]
+    i.e.,
+    \[
+    \iint_{F(\Delta)} f(x, y) \, \mathrm{d}x \mathrm{d}y = 
+    \iint_{\Delta} f(x(u, v), y(u, v)) \left| \frac{\partial (x, y)}{\partial (u, v)} \right| \, \mathrm{d}u \mathrm{d}v.
+    \]
+\end{theorem}
+
+For triple and higher-dimensional integrals, the variable substitution theorem is similar to the above theorem.
+
+\vspace{0.7cm}
+Some common variable substitutions in multiple integrals are as follows:
+\begin{description}
+\item[Polar Coordinates]
+\[
+\begin{cases} 
+    x = r \cos \theta, \\ 
+    y = r \sin \theta,
+\end{cases}
+\qquad
+\begin{cases} 
+    r = \sqrt{x^2 + y^2},\quad r\geqslant 0 \\ 
+    \theta = \arctan\left(\frac{y}{x}\right)\quad x\neq 0, \theta\in [0, 2\pi].
+\end{cases}
+\]
+and
+\[
+\frac{\partial (x,y)}{\partial (r,\theta)} = r.
+\]
+
+\item[Cylindrical Coordinate System]
+\[
+\begin{cases} 
+    x = r \cos \theta, \\ 
+    y = r \sin \theta, \\
+    z = z,
+\end{cases}
+\qquad
+\begin{cases} 
+    r = \sqrt{x^2 + y^2},\quad r\geqslant 0 \\ 
+    \theta = \arctan\left(\frac{y}{x}\right)\quad x\neq 0, \theta\in [0, 2\pi], \\
+    z = z.
+\end{cases}
+\]
+and
+\[
+\frac{\partial (x,y,z)}{\partial (r,\theta,\varphi)} = r.
+\]
+
+\item[Spherical Coordinate System]
+\[
+\begin{cases} 
+    x = r \sin \varphi \cos \theta, \\ 
+    y = r \sin \varphi \sin \theta, \\
+    z = r \cos \varphi,
+\end{cases}
+\qquad
+\begin{cases} 
+    r = \sqrt{x^2 + y^2 + z^2},\quad r\geqslant 0 \\ 
+    \varphi = \arccos\left(\frac{z}{r}\right)\quad r\neq 0, \varphi\in [0, \pi], \\
+    \theta = \arctan\left(\frac{y}{x}\right)\quad x\neq 0, \theta\in [0, 2\pi].
+\end{cases}
+\]
+and
+\[
+\frac{\partial (x,y,z)}{\partial (r,\theta,\varphi)} = r^2 \sin \varphi.
+\]
+
+\end{description}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{img/coordinate.png}
+    \caption{Cylindrical and Spherical Coordinate Systems}
+\end{figure}
+
+
+
+
+\section{Improper Multiple Integrals}
+
+\section{Differential Forms}
+
 
 
 

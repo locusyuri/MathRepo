@@ -183,8 +183,207 @@ b & b & b & \dots & x_{n}
     Then \( V \) is called a linear space (or vector space) over the field \( F \).
 \end{definition}
 
+\begin{remark}
+    In the definition of linear space, \textbf{A1. Commutativity of Addition} can be derived from the other axioms,
+    so it is not strictly necessary to include it as an axiom.
+\end{remark}
 
-\section{Matrix Representation of Systems of Linear Equations}
+\vspace{0.7cm}
+Give some examples of linear spaces:
+\begin{enumerate}
+    \item The ring of univariate polynomials \( P[x] \) over the number field \( P \), 
+        with the usual polynomial addition and scalar multiplication by elements from \( P \), 
+        forms a linear space over the number field \( P \). 
+        If we consider only polynomials of degree less than \( n \), along with the zero polynomial, 
+        this also forms a linear space over \( P \), denoted as \( P[x]_n \).
+        
+    \item The set of all positive real numbers \( \mathbb{R}^+ \), with addition and scalar multiplication defined as:
+        \[
+        a \oplus b = ab, \quad k \circ a = a^k,
+        \]
+        forms a linear space over the number field \( \mathbb{R} \).
+    
+    \item The set of all real-valued functions, 
+        under function addition and scalar multiplication by elements from \( \mathbb{R} \), 
+        forms a linear space over the field \( \mathbb{R} \).
+    
+    \item The field \( P \) itself, under its own addition and multiplication, forms a linear space over itself.
+    
+    \item The set of all \(n\)-dimensional vectors (ordered \( n \)-tuples of elements from \( P \))
+        over the number field \( P \),
+        with the usual vector addition and scalar multiplication, 
+        forms a linear space over the number field \( P \).
+\end{enumerate}
+
+\vspace{0.7cm}
+In this section, we primarily examine linear spaces consisting of n-dimensional vectors over the real number field \( \mathbb{R} \).
+As a matter of fact, all elements of a linear space can be called vectors,
+and the definitions and properties of vectors in \( \mathbb{R}^n \) can be generalized to any linear space.
+
+
+\begin{leftbarTitle}{Linear Independence}\end{leftbarTitle}
+\begin{definition}{Linear Combination}
+    Let \( V \) be a linear space over the field \( F \), 
+    and let \( \alpha_1, \alpha_2, \ldots, \alpha_n \in V \).
+    For any scalars \( k_1, k_2, \ldots, k_n \in F \), the vector
+    \[
+    \beta = k_1\alpha_1 + k_2\alpha_2 + \cdots + k_n\alpha_n
+    \]
+    is called a \textbf{linear combination} of the vectors \( \alpha_1, \alpha_2, \ldots, \alpha_n \)
+    (we also say that \( \beta \) is linearly expressed by \( \alpha_1, \alpha_2, \ldots, \alpha_n \)),
+    where \( k_i \) are called the coefficients of the linear combination.
+\end{definition}
+
+{Linear Representation and Equivalence of Vector Groups}
+
+If every vector \( \alpha_i \) (\( i = 1, 2, \dots, t \)) in the vector group 
+\( \alpha_1, \alpha_2, \dots, \alpha_t \) can be linearly expressed by the vector group 
+\( \beta_1, \beta_2, \dots, \beta_s \), then the vector group 
+\( \alpha_1, \alpha_2, \dots, \alpha_t \) is said to be linearly expressed by the vector group 
+\( \beta_1, \beta_2, \dots, \beta_s \).
+
+If two vector groups can be linearly expressed by each other, 
+they are said to be \textbf{equivalent}.
+
+\begin{remark}
+    Linear representation can be used to identify redundant equations in a system of linear equations. 
+    In a system of linear equations, if one equation can be linearly expressed by other equations, 
+    then through elementary transformations, the corresponding row in the matrix can be reduced to a row of zeros.
+
+    If two vector groups are equivalent, then their corresponding systems of linear equations are equivalent.
+\end{remark}
+
+\begin{definition}{Linear Dependence and Independence of Vector Groups}
+    A vector group \( \alpha_1, \alpha_2, \dots, \alpha_t (t \geq 2) \) is said to be \textbf{linearly dependent} 
+    if there exists a vector in the group that can be linearly expressed by the other vectors. 
+    
+    Another equivalent definition is:
+    A vector group \( \alpha_1, \alpha_2, \dots, \alpha_t (t \geq 1) \) is linearly dependent 
+    if there exist \underline{not all zero} scalars \( k_1, k_2, \dots, k_t \) in the field \( F \) such that:
+    \[
+    k_1 \alpha_1 + k_2 \alpha_2 + \dots + k_t \alpha_t = 0.
+    \]
+
+    Conversely, a vector group \( \alpha_1, \alpha_2, \dots, \alpha_t (t \geq 1) \) is \textbf{linearly independent} if:
+    the fact that
+    \[
+    k_1 \alpha_1 + k_2 \alpha_2 + \dots + k_t \alpha_t = 0
+    \]
+    implies:
+    \[
+    k_1 = k_2 = \dots = k_t = 0.
+    \]    
+\end{definition}
+
+\begin{note}
+    If a subset of a vector group is linearly dependent, then the entire vector group is linearly dependent.
+    If a vector group is linearly independent, then any non-empty subset of the group is also linearly independent.
+    (\textbf{Partial dependence implies overall dependence; overall independence implies partial independence.})
+    
+    Particularly, since two proportional vectors are linearly dependent, a linearly independent vector group cannot contain two proportional vectors.
+\end{note}
+
+A few propositions about linear dependence and independence are given below:
+\begin{proposition}
+\begin{enumerate}
+    \item Generally, for a vector group \( \alpha_i = (a_{i1}, a_{i2}, \dots, a_{in}), \, i = 1, 2, \dots, s \), 
+        the necessary and sufficient condition for linear dependence is that the equation:
+        \[
+        x_1 \alpha_1 + x_2 \alpha_2 + \dots + x_s \alpha_s = 0
+        \]
+        or the homogeneous system of linear equations:
+        \[
+        \begin{cases}
+        a_{11}x_1 + a_{21}x_2 + \dots + a_{s1}x_s = 0 \\
+        a_{12}x_1 + a_{22}x_2 + \dots + a_{s2}x_s = 0 \\
+        \vdots \\
+        a_{1n}x_1 + a_{2n}x_2 + \dots + a_{sn}x_s = 0
+        \end{cases}
+        \]
+        has a non-zero solution.
+
+    \item  If a vector group \( \alpha_i = (a_{i1}, a_{i2}, \dots, a_{in}), \, i = 1, 2, \dots, s \) 
+        is linearly independent, then adding one component to each vector to form an \( n+1 \)-dimensional 
+        vector group \( \beta_i = (a_{i1}, a_{i2}, \dots, a_{in}, a_{i,n+1}), \, i = 1, 2, \dots, s \), 
+        will also be linearly independent.
+
+    \item For two vector groups \( \alpha_1, \alpha_2, \dots, \alpha_r \) and \( \beta_1, \beta_2, \dots, \beta_s \),
+        if the former can be linearly expressed by the latter:
+        \begin{enumerate}[label=\roman*.]
+            \item and \( r > s \), then the former is linearly dependent.
+            \item and \( \alpha_1, \alpha_2, \dots, \alpha_r \) is linearly independent, then \( r \leqslant s \).
+        \end{enumerate}
+
+    \item Any \( n+1 \) \( n \)-dimensional vectors must be linearly dependent.
+    
+    \item Two equivalent linearly independent vector groups must contain the same number of vectors.
+
+    \item If a vector group \( \alpha_1, \alpha_2, \dots, \alpha_r \) is linearly independent, 
+        and adding a vector \( \beta \) to form the vector group \( \alpha_1, \alpha_2, \dots, \alpha_r, \beta \) 
+        makes it linearly dependent, then \( \beta \) can be uniquely expressed as a linear combination of 
+        \( \alpha_1, \alpha_2, \dots, \alpha_r \).
+
+    \item If a vector \( \beta \) can be linearly expressed by a vector group \( \alpha_1, \alpha_2, \dots, \alpha_r \), 
+        then \( \alpha_1, \alpha_2, \dots, \alpha_r \) is linearly independent
+        if and only if the expression for \( \beta \) is unique.
+\end{enumerate}
+\end{proposition}
+
+\begin{leftbarTitle}{Dimension, Basis, and Coordinates}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Linear Subspaces}\end{leftbarTitle}
+
+
+\section{Rank of Vector Groups and Matrices}
+\begin{leftbarTitle}{Maximal Linearly Independent Group and Rank of Vector Groups}\end{leftbarTitle}
+\begin{definition}{Maximal Linearly Independent Group}
+    A subset of a vector group is called a \textbf{maximal linearly independent group} if:
+    \begin{enumerate}
+        \item The subset itself is linearly independent.
+        \item Adding any vector (if available) from the vector group to this subset makes the new subset linearly dependent.
+    \end{enumerate}
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+    \item The maximal linearly independent group is not unique; 
+        any maximal linearly independent group is equivalent to the original vector group.
+    \item All maximal linearly independent groups of a vector group contain the same number of vectors.
+\end{enumerate}
+\end{property}
+
+\begin{definition}{Rank of Vector Groups}
+    The number of vectors contained in the maximal linearly independent group of a vector group 
+    is called the \textbf{rank} of the vector group.
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+    \item A vector group is linearly independent if and only if its rank is equal to the number of vectors it contains.
+
+    \item Equivalent vector groups have the same rank, but vector groups with the same rank are not necessarily equivalent.
+
+    \item If rank of a vector group is \( r \), 
+        then any \( r \) linearly independent vectors from the group form a maximal linearly independent group.
+
+    \item A vector group containing non-zero vectors always has a maximal linearly independent group, 
+        and any linearly independent subset of vectors can be expanded into a maximal linearly independent group.
+
+    \item If vector group (I) can be linearly expressed by vector group (II), then the rank of (I) does not exceed the rank of (II).
+\end{enumerate}
+\end{property}
+
+
+
+
+\begin{leftbarTitle}{Rank of Matrices}\end{leftbarTitle}
+
+\section{Solution to Linear Systems}
+\begin{leftbarTitle}{Necessary and Sufficient Conditions for the Existence of Solutions}\end{leftbarTitle}
+
+\begin{leftbarTitle}{The Structure of Solutions to Homogeneous Linear Systems}\end{leftbarTitle}
+
+\begin{leftbarTitle}{The Structure of Solutions to Nonhomogeneous Linear Systems}\end{leftbarTitle}
 
 
 \chapter{Matrices}
