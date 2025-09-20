@@ -11,6 +11,8 @@
 \ProvidesClass{elegantbook}[2022/12/31 v4.5 ElegantBook document class]
 \RequirePackage{fontawesome5}
 
+% \RequirePackage{pgfornament} % 用于创建图案
+
 
 %%%
 \RequirePackage{kvoptions}
@@ -1340,10 +1342,18 @@
   \fancyhead[R]{\color{structurecolor}\cnormal\rightmark}
 \fi
 
+
+% % 将页眉线换成花纹
+% \renewcommand{\headrule}{%
+%   \color{structurecolor}
+%   \begin{tikzpicture}[remember picture, overlay]
+%     \node[anchor=south west] at (0,0) {\pgfornament[scale=0.1, width=\textwidth, color=structurecolor]{88}};
+%   \end{tikzpicture}
+% }
 \renewcommand{\headrule}{\color{structurecolor}\hrule width\textwidth}
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{1pt}
-% \renewcommand{\headrule}{}
+%% \renewcommand{\headrule}{}
 \fancypagestyle{plain}{\renewcommand{\headrulewidth}{0pt}\fancyhf{}\renewcommand{\headrule}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection\, #1}{}}
 \renewcommand{\chaptermark}[1]{\markboth{\xchaptertitle\, #1}{}}

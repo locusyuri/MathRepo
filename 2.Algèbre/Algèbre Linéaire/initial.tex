@@ -381,10 +381,70 @@ A few propositions about linear dependence and independence are given below:
 \section{Solution to Linear Systems}
 \begin{leftbarTitle}{Necessary and Sufficient Conditions for the Existence of Solutions}\end{leftbarTitle}
 
-\begin{leftbarTitle}{The Structure of Solutions to Homogeneous Linear Systems}\end{leftbarTitle}
+\begin{leftbarTitle}{The Structure of Solutions to Homogeneous Systems of Linear Equations}\end{leftbarTitle}
+For a homogeneous system of linear equations, 
+it is evident that the linear combination of solutions is still a solution to the system. 
+Thus, the concept of a \textbf{fundamental system of solutions} is introduced.
+
+\begin{definition}{Fundamental System of Solutions}
+    The homogeneous system of linear equations:
+    \[
+    \begin{cases}
+    a_{11}x_{1} + a_{12}x_{2} + \dots + a_{1n}x_{n} = 0 \\
+    a_{21}x_{1} + a_{22}x_{2} + \dots + a_{2n}x_{n} = 0 \\
+    \vdots \\
+    a_{s1}x_{1} + a_{s2}x_{2} + \dots + a_{sn}x_{n} = 0
+    \end{cases}
+    \]
+    (or in matrix form \( AX = O \))
+    has a set of solutions \( \eta_{1}, \eta_{2}, \dots, \eta_{t} \), which is called a \textbf{fundamental system of solutions}, 
+    if:
+    \begin{enumerate}
+        \item Any solution of the system can be expressed as a linear combination of \( \eta_{1}, \eta_{2}, \dots, \eta_{t} \).
+        \item \( \eta_{1}, \eta_{2}, \dots, \eta_{t} \) are linearly independent\footnote{
+            ensuring there are no redundant solutions in the fundamental system of solutions
+        }.
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    This definition is similar to the maximal linearly independent group of a vector group. 
+    In fact, the fundamental solution set is a maximal linearly independent group of the solution vector group. 
+    Therefore, the number of solutions it contains equals its rank.
+\end{remark}
+
+
+\vspace{0.7cm}
+All solutions of a homogeneous system of linear equations (\( AX = O \)) form a linear space (solution space),
+whose basis is the fundamental system of solutions.
+Dimension of solution space is \( n - r(A) \) (where \( n \) is the number of variables, 
+and \( r(A) \) is the rank of the coefficient matrix \( A \)). 
+Thus, a fundamental system of solutions contains exactly \( n - r(A) \) solutions.
+    
+
+
 
 \begin{leftbarTitle}{The Structure of Solutions to Nonhomogeneous Linear Systems}\end{leftbarTitle}
+The homogeneous system of linear equations \( AX = O \) is called the \textbf{derived system} of 
+the nonhomogeneous system \( AX = B \).
 
+It can be easily proven that:
+\begin{itemize}
+    \item The difference between two solutions of \( AX = B \) is a solution of its derived system \( AX = 0 \).
+    \item The sum of a solution of \( AX = B \) and a solution of \( AX = 0 \) is still a solution of \( AX = B \).
+\end{itemize}
+
+\vspace{0.7cm}
+If \( \gamma_{0} \) is a particular solution of \( AX = B \), 
+then any solution \( \gamma \) of \( AX = B \) can be expressed as:
+\[
+\gamma = \gamma_{0} + \eta,
+\]
+where \( \eta \) is a solution of \( AX = 0 \).
+
+Thus, for any particular solution \( \gamma_{0} \) of \( AX = B \), 
+when \( \eta \) takes all the solutions of its derived system \( AX = 0 \), 
+the above formula provides all the solutions of \( AX = B \).
 
 \chapter{Matrices}
 \section{Basic Operations}
@@ -392,6 +452,19 @@ A few propositions about linear dependence and independence are given below:
 \begin{leftbarTitle}{Scalar Multiplication}\end{leftbarTitle}
 \begin{leftbarTitle}{Transpose}\end{leftbarTitle}
 \begin{leftbarTitle}{Matrix Multiplication}\end{leftbarTitle}
+
+\begin{theorem}{Determinant of a Product}
+    For square matrices \( A \) and \( B \) of the same order, 
+    the determinant of their product is equal to the product of their determinants:
+    \[
+    |AB| = |A| \cdot |B|.
+    \]
+
+    It can be easily extended to multiple matrices:
+    \[
+    |A_1 A_2 \cdots A_k| = |A_1| \cdot |A_2| \cdots |A_k|.
+    \]
+\end{theorem}
 
 \begin{theorem}{Cauchy-Binet Formula}
     Let \( A = (a_{ij})_{m \times n} \) and \( B = (b_{ij})_{n \times m} \):  
@@ -422,10 +495,68 @@ A few propositions about linear dependence and independence are given below:
 
 
 
+\begin{leftbarTitle}{Matrix Equivalence}\end{leftbarTitle}
+\begin{definition}{Matrix Equivalence}
+    Two matrices \( A \) and \( B \) are said to be \textbf{equivalent}, 
+    denoted as \( A \cong B \),
+    if they can be transformed into one another by a combination of elementary row and column operations.
+\end{definition}
 
-\section{Matrix Equivalence}
+\begin{note}
+    Obviously, two matrices are equivalent if and only if they have the same rank.
+\end{note}
+
+\begin{definition}{Canonical Form of Matrix Equivalence}
+    For any matrix \( A \) with rank \( r \), 
+    it can be equivalent to the matrix
+    \[
+    J_r = \begin{pmatrix}
+    I_r & O \\
+    O & O
+    \end{pmatrix}_{m \times n},
+    \]
+    which is called the \textbf{canonical form} of matrix equivalence.
+\end{definition}
+
+
 
 \section{Special Matrices}
+\begin{leftbarTitle}{Diagonal Matrix}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Fundamental Matrix}\end{leftbarTitle}
+\begin{definition}{Fundamental Matrix}
+    \(E_{ij}\) is called a \textbf{fundamental matrix} if the element in the \(i\)-th row and \(j\)-th column is 1,
+    and all other elements are 0.
+\end{definition}
+
+\begin{property}
+    
+\end{property}
+
+\begin{leftbarTitle}{Triangular Matrix}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Elementary Matrix}\end{leftbarTitle}
+\begin{definition}{Elementary Matrix}
+    An \textbf{elementary matrix} is obtained by performing a single elementary row operation on an identity matrix \(E\).
+    There are three types of elementary matrices (also hold for column operations):
+    \begin{description}
+        \item [Row swapping] Interchanges rows \(i\) and \(j\) of \(E\): \(P(i,j)\).
+        \item [Row scaling] Multiplies row \(i\) of \(E\) by a non-zero scalar \(c\): \(P(i(c))\).
+        \item [Row addition] Adds \(k\) times row \(j\) to row \(i\) of \(E\): \(P(i,j(k))\).
+    \end{description}
+\end{definition}
+
+\begin{note}
+    It can be proven that \(P(i,j)\) can be implemented by a sequence of \(P(i(c))\) and \(P(i,j(k))\) operations.
+\end{note}
+
+\begin{leftbarTitle}{Symmetric Matrix}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Circulant-Shift Permutation Matrix}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Nilpotent Matrix}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Row Full Rank Matrix}\end{leftbarTitle}
 
 \section{Inverse Matrix}
 \begin{leftbarTitle}{Inverse Matrix and Its Operations}\end{leftbarTitle}
@@ -507,6 +638,11 @@ A few propositions about linear dependence and independence are given below:
         \item [4. Inverse]
         \[
         \operatorname{rank}(A) = \operatorname{rank}(A^{-1}) = n.
+        \]
+
+        \item[5. Block Matrix]
+        \[
+        \operatorname{rank}\begin{pmatrix} A & O \\ O & D \end{pmatrix} = \operatorname{rank}(A) + \operatorname{rank}(D).
         \]
     \end{description}
 \end{proposition}

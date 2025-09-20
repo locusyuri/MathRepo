@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  20 SEP 2025 11:11
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  20 SEP 2025 16:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1466,69 +1466,77 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 [4]
 
 [5]
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 8.0pt on input line 404.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
+(Font)              scaled to size 8.0pt on input line 404.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 9.0pt on input line 406.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
+(Font)              scaled to size 6.0pt on input line 406.
+
 
 [6]
+
+[7]
 Chapter 3.
 
 
-[7
+[8
 
 ]
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 532.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 532.
-
-
-[8]
 
 [9]
+
+[10]
+
+[11]
 Chapter 4.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\(' on input line 569.
+(hyperref)                removing `\(' on input line 705.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\)' on input line 569.
+(hyperref)                removing `\)' on input line 705.
 
-
-
-[10
-
-]
-Chapter 5.
-
-
-[11
-
-]
-Chapter 6.
 
 
 [12
 
 ]
-Chapter 7.
+Chapter 5.
 
 
 [13
 
 ]
-Chapter 8.
+Chapter 6.
 
 
 [14
 
 ]
-Chapter 9.
+Chapter 7.
 
 
 [15
 
 ]
+Chapter 8.
+
 
 [16
+
+]
+Chapter 9.
+
+
+[17
+
+]
+
+[18
 
 ] (./tmp/initial.aux)
  ***********
@@ -1536,18 +1544,18 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: F0A1600494A312E498774C7EFD15C162;14929.
+(rerunfilecheck)             Checksum: 5E39F7C2A669EEF4498CE767118AAA91;14759.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45994 strings out of 473831
- 955585 string characters out of 5733137
- 1995838 words of memory out of 5000000
- 68231 multiletter control sequences out of 15000+600000
- 569653 words of font info for 167 fonts, out of 8000000 for 9000
+ 46049 strings out of 473831
+ 956636 string characters out of 5733137
+ 1996657 words of memory out of 5000000
+ 68278 multiletter control sequences out of 15000+600000
+ 572188 words of font info for 180 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (20 pages).
+Output written on ./tmp/initial.pdf (22 pages).
