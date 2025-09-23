@@ -4,6 +4,7 @@
 		"antiderivative",
 		"Antiderivatives",
 		"bivariate",
+		"cokernel",
 		"Coprime",
 		"Darboux",
 		"infimum",
@@ -18,6 +19,7 @@
 		"subrectangles",
 		"supremum",
 		"termwise",
+		"unital",
 		"Vandermonde"
 	]
 }

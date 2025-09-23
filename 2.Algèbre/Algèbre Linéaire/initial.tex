@@ -330,8 +330,52 @@ A few propositions about linear dependence and independence are given below:
 \end{proposition}
 
 \begin{leftbarTitle}{Dimension, Basis, and Coordinates}\end{leftbarTitle}
+\begin{definition}{Dimension}
+    If a linear space \( V \) over field \(F\) contains \(n\) vectors that are linearly independent,
+    but any more than \(n\) vectors are linearly dependent, 
+    then \( V \) is called an \( n \)-dimensional linear space,
+    noted as \( \dim V_{F} = n \), simplified as \( \dim V = n \) when the field is clear from context.
+
+    If a linear space does contain as many vectors that are linearly independent as you wish, 
+    it is called an infinite-dimensional linear space.
+\end{definition}
+
+\begin{definition}{Basis and Coordinates}
+    In an \( n \)-dimensional linear space \( V \), 
+    if \( \alpha_1, \alpha_2, \dots, \alpha_n \) are \( n \) linearly independent vectors in \( V \),
+    then they form a \textbf{basis} of \( V \).
+
+    Any vector \( \alpha \in V \) can be uniquely expressed as a linear combination of the basis vectors:
+    \[
+    \alpha = k_1\alpha_1 + k_2\alpha_2 + \dots + k_n\alpha_n,
+    \]
+    where \( k_1, k_2, \dots, k_n \in F \) are called the \textbf{coordinates} of \( \alpha \) with respect to the basis 
+    \( \alpha_1, \alpha_2, \dots, \alpha_n \).
+\end{definition}
+
+The definition leads to a theorem that is easy to see:
+If there are \( n \) linearly independent vectors in a linear space \( V \),
+and any vector in \( V \) can be expressed as a linear combination of these \( n \) vectors,
+then these \( n \) vectors form a basis of \( V \), and \( V \) is an \( n \)-dimensional linear space.
+
 
 \begin{leftbarTitle}{Linear Subspaces}\end{leftbarTitle}
+\begin{definition}{Linear Subspace}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( W \subseteq V \) be a non-empty subset of \( V \).
+    If \( W \) itself is a linear space under the same addition and scalar multiplication as in \( V \),
+    then \( W \) is called a \textbf{linear subspace} of \( V \).
+    
+    Zero Subspace and whole space \( V \) itself are called trivial subspaces of \( V \).
+\end{definition}
+
+It can be easily derived that:
+Let \(W\) be a non-empty subset of a linear space \(V\).
+Then \(W\) is a linear subspace of \(V\) if and only if:
+\begin{enumerate}
+    \item For any \( \alpha, \beta \in W \), \( \alpha + \beta \in W \).
+    \item For any \( \alpha \in W \) and \( k \in F \), \( k\alpha \in W \).
+\end{enumerate}
 
 
 \section{Rank of Vector Groups and Matrices}
@@ -702,23 +746,75 @@ Based on the decomposition \( A = \alpha \beta^T \), the matrix of rank-\(1\) ha
 
 
 \chapter{Linear Spaces}
-\section{Linear Spaces over the Field \(\mathbb{F}\)}
+\section{Linear Spaces and Their Bases}
 
-\subsection{Linear Spaces}
+\begin{leftbarTitle}{Basis Transformation and Coordinate Transformation}\end{leftbarTitle}
 
-\subsection{Dimension, Basis, and Coordinates}
-
-\subsection{Basis Transformation and Coordinate Transformation}
 
 \section{Subspaces}
+\begin{leftbarTitle}{Intersection and Sum of Subspaces}\end{leftbarTitle}
+\begin{definition}{Intersection and Sum of Subspaces}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( V_1, V_2 \subseteq V \) be two subspaces of \( V \).
+    The \textbf{intersection} of \( V_1 \) and \( V_2 \) is defined as:
+    \[
+    V_1 \cap V_2 = \{ \alpha | \alpha \in V_1 \text{ and } \alpha \in V_2 \}.
+    \]
+    The \textbf{sum} of \( V_1 \) and \( V_2 \) is defined as:
+    \[
+    V_1 + V_2 = \{ \alpha | \alpha = \alpha_1 + \alpha_2, 
+    \alpha_1 \in V_1, \alpha_2 \in V_2 \}.
+    \]
+\end{definition}
 
-\subsection{Linear Subspaces}
+If \( V_1 \) and \( V_2 \) are two subspaces of \( V \), 
+then both their intersection \( V_1 \cap V_2 \) and their sum \( V_1 + V_2 \) are also subspaces of \( V \).
+Simultaneously, \( V_{1}+V_{2} \) is the smallest subspace of \( V \) 
+that contains both \( V_1 \) and \( V_2 \) (\(V_{1}\cup V_{2}\)).
 
-\subsection{Intersection and Sum of Subspaces}
+\begin{leftbarTitle}{Dimension Formula}\end{leftbarTitle}
+\begin{proposition}
+    In a finite-dimensional linear space \( V \),
+    \[
+    L(\alpha_1, \alpha_2, \dots, \alpha_s) + L(\beta_1, \beta_2, \dots, \beta_t) = 
+    L(\alpha_1, \alpha_2, \dots, \alpha_s, \beta_1, \beta_2, \dots, \beta_t).
+    \]
+\end{proposition}
 
-\subsection{Dimension Formula}
+\begin{theorem}{Dimension Formula}
+    Let \( V \) be a finite-dimensional linear space over field \( F \), 
+    and let \( V_1, V_2 \subseteq V \) be two subspaces of \( V \). Then:
+    \[
+    \dim(V_1) + \dim(V_2) = \dim(V_1 + V_2) + \dim(V_1 \cap V_2).
+    \]
+    
+\end{theorem}
 
-\subsection{Direct Sum of Subspaces}
+\begin{leftbarTitle}{Direct Sum of Subspaces}\end{leftbarTitle}
+\begin{definition}{Direct Sum of Subspaces}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( V_1, V_2 \subseteq V \) be two subspaces of \( V \).
+    If any vector \( \alpha \in V_1 + V_2 \) can be uniquely expressed as:
+    \[
+    \alpha = \alpha_1 + \alpha_2, \quad \alpha_1 \in V_1, \alpha_2 \in V_2,
+    \]
+    then \( V_1 + V_2 \) is called the \textbf{direct sum} of \( V_1 \) and \( V_2 \),
+    denoted as \( V_1 \oplus V_2 \).
+\end{definition}
+
+\begin{proposition}
+    The necessary and sufficient condition for \( V_1 + V_2 \) to be a direct sum is:
+    \begin{enumerate}
+        \item \(0 = 0 + 0\) (the zero vector can only be expressed as the sum of two zero vectors); 
+        \item \( V_1 \cap V_2 = \{0\} \) (the intersection of the two subspaces is only the zero vector);
+        \item \(\operatorname{dim}(V_{1}+V_{2})=\operatorname{dim}(V_{1})+\operatorname{dim}(V_{2})\),
+            or equivalently, \(\operatorname{dim}(V_{1} \cap V_{2})=0\).
+        \item Any bases of \( V_1 \) and \( V_2 \) together form a basis of \( V_1 + V_2 \).
+    \end{enumerate}
+\end{proposition}
+
+
+
 
 \section{Isomorphisms}
 
@@ -726,19 +822,282 @@ Based on the decomposition \( A = \alpha \beta^T \), the matrix of rank-\(1\) ha
 
 \chapter{Linear Mappings}
 \section{Linear Mappings and Their Computation}
-\subsection{Definition of Linear Mappings}
+\begin{leftbarTitle}{Definition of Linear Mappings}\end{leftbarTitle}
+\begin{definition}{Linear Mapping}
+    Let \( V \) and \( V' \) be linear spaces over field \( F \).
+    A mapping \( \mathcal{A}: V \to V' \) is called a \textbf{linear mapping} if:
+    \[
+    \mathcal{A}(\alpha + \beta) = \mathcal{A}\alpha + \mathcal{A}\beta, \quad \forall \alpha, \beta \in V,
+    \]
+    and
+    \[
+    \mathcal{A}(k\alpha) = k\mathcal{A}\alpha, \quad \forall \alpha \in V, k \in F.
+    \]
 
-\subsection{Existence and Uniqueness of Linear Mappings}
+    If \( V = V' \), then \( \mathcal{A} \) is called a \textbf{linear transformation} of \( V \).
+    The linear mapping from \( V \) over field \( F \) to \(F\) is called a \textbf{linear function} on \( V \).
+\end{definition}
 
-\subsection{Operations of Linear Mappings}
+\begin{remark}
+    The field naturally constitutes a one-dimensional linear space over itself, 
+    so a linear function is a special case of a linear mapping.
+\end{remark}
 
-\subsection{Special Linear Transformations}
+
+\begin{remark}
+    The set of all linear mappings from $V$ to $V'$ over the field $F$ is denoted by $\mathrm{Hom}(V,V')$ or $\mathcal{L}(V,V')$.
+
+    The set of all linear transformations is denoted by $\mathrm{Hom}(V)$, $\mathcal{L}(V)$, or $\mathrm{End}(V)$.
+
+    The set of all $m \times n$ matrices over the number field $P$ is denoted by \(M_{m \times n}(P)\) or \(P^{m\times n}\).
+\end{remark}
+
+
+\begin{leftbarTitle}{Existence and Uniqueness of Linear Mappings}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Operations of Linear Mappings}\end{leftbarTitle}
+In the following, all linear spaces are over the field \(F\).
+\begin{description}
+    \item[Addition] 
+        Let \(\mathcal{A}, \mathcal{B} \in \mathrm{Hom}(V,V')\). 
+        The sum of \(\mathcal{A}\) and \(\mathcal{B}\), denoted \(\mathcal{A+B}\), is defined by:
+        \[
+        (\mathcal{A+B})(\alpha) = \mathcal{A}(\alpha) + \mathcal{B}(\alpha), \quad \forall \alpha \in V.
+        \]
+        The sum of linear maps is still a linear map, i.e., \(\mathcal{A+B} \in \mathrm{Hom}(V,V')\).
+        \begin{enumerate}
+            \item \textbf{Commutativity:} \(\mathcal{A+B = B+A}\),
+            \item \textbf{Associativity:} \(\mathcal{(A+B)+C = A+(B+C)}\),
+            \item \textbf{Additive Identity:} The zero map \(\mathcal{0}\) satisfies \(\mathcal{A+0 = A}\),
+            \item \textbf{Additive Inverse:} For every \(\mathcal{A}\), the additive inverse \(-\mathcal{A}\) 
+                satisfies \(\mathcal{A+(-A) = 0}\).
+        \end{enumerate}
+
+    \item[Scalar Multiplication] 
+        Let \(k \in F\) and \(\mathcal{A} \in \mathrm{Hom}(V,V')\). The scalar product \(k \mathcal{A}\) is defined by:
+        \[
+        (k\mathcal{A})(\alpha) = k \mathcal{A}(\alpha), \quad \forall \alpha \in V.
+        \]
+        Scalar multiplication of a linear map is still a linear map, i.e., \(k \mathcal{A} \in \mathrm{Hom}(V,V')\).
+        \begin{enumerate}
+            \item \textbf{Unit Identity:} \(1 \cdot \mathcal{A} = \mathcal{A}\),
+            \item \textbf{Associativity of Scalars:} \((kl)\mathcal{A} = k(l\mathcal{A})\),
+            \item \textbf{Distributive Properties:}
+            \begin{align*}
+                k(\mathcal{A+B}) &= k\mathcal{A} + k\mathcal{B}, \\
+                (k+l)\mathcal{A} &= k\mathcal{A} + l\mathcal{A}.
+            \end{align*}
+        \end{enumerate}
+    \item[Multiplication (Composition of Linear Maps)]
+        Let \(\mathcal{A} \in \mathrm{Hom}(V',W)\) and \(\mathcal{B} \in \mathrm{Hom}(U,V')\). 
+        The product (composition) of \(\mathcal{A}\) and \(\mathcal{B}\), denoted \(\mathcal{AB}\), is defined by:
+        \[
+        (\mathcal{AB})(\alpha) = \mathcal{A}(\mathcal{B}(\alpha)), \quad \forall \alpha \in U.
+        \]
+        The composition of linear maps is still a linear map, i.e., \(\mathcal{AB} \in \mathrm{Hom}(U,W)\).
+        \begin{enumerate}
+            \item \textbf{Associativity of Composition:} \((\mathcal{AB})\mathcal{C} = \mathcal{A}(\mathcal{BC})\),
+            \item \textbf{Distributive Properties:}
+            \begin{align*}
+                \mathcal{A}(\mathcal{B+C}) &= \mathcal{AB + AC}, \\
+                (\mathcal{A+B})\mathcal{C} &= \mathcal{AC+BC},
+            \end{align*}
+            \item \textbf{Non-Commutativity:} In general, \(\mathcal{AB} \neq \mathcal{BA}\),
+            \item \textbf{Identity Transformation:} The identity transformation \(\mathcal{E}\) satisfies:
+            \[
+            \mathcal{EA} = \mathcal{AE} = \mathcal{A}, \quad \forall \mathcal{A} \in \mathrm{Hom}(V).
+            \]
+        \end{enumerate}
+\end{description}
+
+
+\vspace{0.7cm}
+Let \(V\) and \(V'\) be vector spaces over the field \(F\).
+\begin{enumerate}
+    \item The collection of all linear mappings from \(V\) to \(V'\), denoted by \(\mathrm{Hom}(V,V')\), 
+        under the addition and scalar multiplication defined above, forms a linear space over the field \(F\).
+    
+    \item The collection of all linear transformations on \(V\), denoted by \(\mathrm{Hom}(V)\), 
+        under the addition and composition of maps defined above, forms a unital ring. 
+        In this case, it is referred to as the \textbf{endomorphism ring} and is denoted by \(\mathrm{End}(V)\).
+\end{enumerate}
+
+
+\begin{definition}{Algebra over a Field}
+    Let \(V\) be a linear space over the field \(F\) 
+    equipped with an additional binary operation from \(V\times V\) to \(V\), denoted by \(\cdot\).
+    Then \(V\) is called an \textbf{algebra over the field \(F\)} if
+    (forall \(\alpha, \beta, \gamma \in V\) and \(k, l \in F\)):
+    \begin{description}
+        \item [Right Distributivity] \((\alpha + \beta) \cdot \gamma = \alpha \cdot \gamma + \beta \cdot \gamma\);
+        \item [Left Distributivity] \(\gamma \cdot (\alpha + \beta) = \gamma \cdot \alpha + \gamma \cdot \beta\);
+        \item [Compatibility with Scalar Multiplication] \((k\alpha)\cdot(l \beta) = kl(\alpha \cdot \beta)\).
+    \end{description}
+\end{definition}
+\begin{remark}
+    The left and right distributivity conditions can be combined into a single condition:
+    \(V\) forms a unital ring under the addition and scalar multiplication.
+\end{remark}
+
+It is evident that \(\mathrm{Hom}(V)\) is an algebra over the field \(F\).
+
 
 \section{Kernel and Image of Linear Mappings}
+\begin{definition}{Kernel and Image of Linear Mappings}
+    Let \( V \) and \( V' \) be linear spaces over field \( F \), 
+    and let \( \mathcal{A}: V \to V' \) be a linear mapping. 
+    The \textbf{kernel} of \( \mathcal{A} \) is defined as:
+    \[
+    \operatorname{Ker}(\mathcal{A}) = \{ \alpha | \alpha \in V, \mathcal{A}(\alpha) = 0 \}.
+    \]
+    The \textbf{image} of \( \mathcal{A} \) is defined as:
+    \[
+    \operatorname{Im}(\mathcal{A}) = \{ \beta | \beta = \mathcal{A}(\alpha), 
+    \alpha \in V, \beta \in V' \}.
+    \]
+    They can be also denoted as \( \mathcal{A}^{-1}(0) \) and \( \mathcal{A}(V) \) respectively.
+
+    The rank of \( \operatorname{Im}(\mathcal{A} \) is called the \textbf{rank} of \( \mathcal{A} \);
+    the dimension of \( \operatorname{Ker}\mathcal{A} \) is called the \textbf{nullity} of \( \mathcal{A} \).
+\end{definition}
+
+\begin{property}
+    
+\end{property}
+
+
+\begin{theorem}{Rank-Nullity Theorem}
+    Let \( V \) and \( V' \) be finite-dimensional linear spaces over field \( F \), 
+    and let \( \mathcal{A}: V \to V' \) be a linear mapping. Then:
+    \[
+    \dim(\operatorname{Ker}\mathcal{A}) + \dim(\operatorname{Im}\mathcal{A}) = \dim(V).
+    \]
+\end{theorem}
+
+
+\begin{definition}{Cokernel}
+    Let \( V \) and \( V' \) be linear spaces over field \( F \), 
+    and let \( \mathcal{A}: V \to V' \) be a linear mapping. 
+    The \textbf{cokernel} of \( \mathcal{A} \) is defined as the quotient space:
+    \[
+    \operatorname{Coker}(\mathcal{A}) = V' / \operatorname{Im}(\mathcal{A}),
+    \]
+    denoted as \( \operatorname{Coker}(\mathcal{A}) \).
+\end{definition}
 
 \section{Matrix Representation of Linear Mappings}
+Let \( V \) and \( V' \) be finite-dimensional linear spaces over field \( F \), 
+\(\operatorname{dim}(V) = n\) and \(\operatorname{dim}(V') = m\),
+and let \( \mathcal{A}: V \to V' \) be a linear mapping.
+Let \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) be a basis of \( V \),
+and \( \{\eta_1, \eta_2, \dots, \eta_m\} \) be a basis of \( V' \).
+Then the image of each basis vector of \( V \) under \( \mathcal{A} \) can be expressed as the basis vectors of \( V' \):
+\[
+\begin{cases} 
+    \mathcal{A}(\varepsilon_1) = a_{11}\eta_{1}+a_{21}\eta_{2}+\cdots+a_{m1}\eta_{m},   \\ 
+    \mathcal{A}(\varepsilon_i) = a_{12}\eta_{1}+a_{22}\eta_{2}+\cdots+a_{m2}\eta_{m},   \\
+    \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\vdots \\
+    \mathcal{A}(\varepsilon_n) = a_{1n}\eta_{1}+a_{2n}\eta_{2}+\cdots+a_{mn}\eta_{m}.
+\end{cases}
+\]
+It can be expressed in matrix form as:
+\[
+\mathcal{A}(\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n) = 
+(\mathcal{A}\varepsilon_1, \mathcal{A}\varepsilon_2, \dots, \mathcal{A}\varepsilon_n) =
+(\eta_1, \eta_2, \dots, \eta_m)A,
+\]
+where
+\[A = (a_{ij})_{m \times n} =
+\begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{pmatrix}.
+\]
+The matrix \( A \) is called the \textbf{matrix representation} of the linear mapping \( \mathcal{A} \)
+under the bases \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) of \( V \) 
+and \( \{\eta_1, \eta_2, \dots, \eta_m\} \) of \( V' \).
 
-\section{Linear Functions and Dual Spaces }
+\vspace{0.7cm}
+
+
+\section{Special Linear Transformations}
+Some common linear transformations include:
+\begin{description}
+    \item[Identity Transformation] The identity transformation \( \mathcal{E} \) on \( V \) is defined by:
+        \[
+        \mathcal{E}(\alpha) = \alpha, \quad \forall \alpha \in V.
+        \]
+
+    \item[Zero Transformation] The zero transformation \( \mathcal{O} \) from \( V \) to \( V' \) is defined by:
+    \[
+    \mathcal{O}(\alpha) = 0, \quad \forall \alpha \in V.
+    \]
+
+    \item[Scalar Transformation] For a fixed scalar \( k \in F \), 
+        the scalar transformation \( \mathcal{K} \) on \( V \) is defined by:
+        \[
+        \mathcal{K}(\alpha) = k\alpha, \quad \forall \alpha \in V.
+        \]
+        When \( k = 1 \), it is the identity transformation; 
+        when \( k = 0 \), it is the zero transformation. 
+
+    \item[Spin Axis Transformation] 
+        The vectors on a plane form a two-dimensional linear space over real number field \( \mathbb{R} \).
+        Rotate the plane counterclockwise by an angle \( \theta \) around the origin, 
+        then the transformation of any vector on the plane is a linear transformation,
+        denoted by \( \mathcal{P}_{\theta}\).
+        Similarly, in three-dimensional space, rotating around a fixed axis by an angle \( \theta \) 
+        also defines a linear transformation.
+\end{description}
+
+\vspace{0.7cm}
+And some special linear transformations are given as follows:
+\begin{definition}{Idempotent Transformation}
+    A linear transformation \( \mathcal{A} \) on \( V \) is called an \textbf{idempotent transformation} if:
+    \[
+    \mathcal{A}^2 = \mathcal{A}.
+    \]
+\end{definition}
+
+Two linear transformations \( \mathcal{A} \) and \( \mathcal{B} \) on \( V \) are called \textbf{orthogonal} if:
+\[
+\mathcal{A} \mathcal{B} = \mathcal{B} \mathcal{A} = \mathcal{O}.
+\]
+
+With the definitions above, we can define the projection transformation as follows:
+\begin{definition}{Projection Transformation}
+    Let \( V \) be a linear space over field \( F \),
+    and let \( U, W \subseteq V \) be two subspaces of \( V \) such that \( V = U \oplus W \).
+    For all \( \alpha \in V \), there exist unique \( \alpha_1 \in U \) and \( \alpha_2 \in W \) such that:
+    \[
+    \alpha = \alpha_1 + \alpha_2.
+    \]
+    Let
+    \[ 
+        \mathcal{P}_{U}: 
+        \begin{aligned}
+        &V \to V \\
+        &\alpha \mapsto \alpha_1
+        \end{aligned}
+    \] 
+    then \( \mathcal{P}_{U} \) is called the \textbf{projection} onto \( U \) along \( W \),
+    which is a linear transformation on \( V \).
+    Similarly, the projection onto \( W \) along \( U \) can be defined.
+\end{definition}
+\( \mathcal{P}_{U}\) satisfies and uniquely satisfies:
+\[
+\mathcal{P}_{U}( \alpha ) = 
+\begin{cases} 
+    \alpha, & \alpha \in U, \\ 
+    0, & \alpha \in W .
+\end{cases}
+\]
+
+
+
+\section{Linear Functions and Dual Spaces}
 
 
 
