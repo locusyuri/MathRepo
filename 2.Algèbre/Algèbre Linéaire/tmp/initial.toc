@@ -29,33 +29,27 @@
 \contentsline {section}{\numberline {5.5}Linear Functions and Dual Spaces}{18}{section.5.5}%
 \contentsline {chapter}{\numberline {6}Diagonalization}{19}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Similarity of Matrices}{19}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Eigenvectors and Diagonalization}{19}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Eigenvalues and Eigenvectors}{19}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Necessary and Sufficient Conditions for Diagonalization}{19}{subsection.6.2.2}%
-\contentsline {section}{\numberline {6.3}Space Decomposition and Diagonalization}{19}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Invariant Subspace}{19}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Hamilton-Cayley Theorem}{19}{subsection.6.3.2}%
-\contentsline {section}{\numberline {6.4}Least Squares and Diagonalization}{19}{section.6.4}%
-\contentsline {chapter}{\numberline {7}Jordan Forms}{20}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Polynomial Matrices}{20}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Invariant Factors}{20}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Rational Canonical Form}{20}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Elementary Divisors}{20}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Jordan Canonical Form}{20}{section.7.5}%
-\contentsline {chapter}{\numberline {8}Quadratic Forms}{21}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Quadratic Forms and Their Standard Forms}{21}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Canonical Forms}{21}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Definite Quadratic Forms}{21}{section.8.3}%
-\contentsline {chapter}{\numberline {9}Inner Product Spaces}{22}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Bilinear Forms}{22}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Real Inner Product Spaces}{22}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Metric Matrices and Standard Orthonormal Bases}{22}{section.9.3}%
-\contentsline {section}{\numberline {9.4}Isomorphism of Real Inner Product Spaces}{22}{section.9.4}%
-\contentsline {section}{\numberline {9.5}Orthogonal Completion and Orthogonal Projection}{22}{section.9.5}%
-\contentsline {subsection}{\numberline {9.5.1}Orthogonal Completion}{22}{subsection.9.5.1}%
-\contentsline {subsection}{\numberline {9.5.2}Least Squares Method}{22}{subsection.9.5.2}%
-\contentsline {section}{\numberline {9.6}Orthogonal Transformations and Symmetric Transformations}{22}{section.9.6}%
-\contentsline {subsection}{\numberline {9.6.1}Orthogonal Transformations}{22}{subsection.9.6.1}%
-\contentsline {subsection}{\numberline {9.6.2}Symmetric Transformations}{22}{subsection.9.6.2}%
-\contentsline {section}{\numberline {9.7}Unitary Spaces and Unitary Transformations}{22}{section.9.7}%
-\contentsline {section}{\numberline {9.8}Symplectic Spaces}{22}{section.9.8}%
+\contentsline {section}{\numberline {6.2}Eigenvectors and Eigenvalues}{19}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Space Decomposition}{19}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Minimal Polynomial}{20}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Diagonalization}{20}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Special Matrices (Linear Transformations) and Their Diagonalization}{20}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Jordan Forms}{21}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Polynomial Matrices}{21}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Invariant Factors}{21}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Rational Canonical Form}{21}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Elementary Divisors}{21}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Jordan Canonical Form}{21}{section.7.5}%
+\contentsline {chapter}{\numberline {8}Quadratic Forms}{22}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Quadratic Forms and Their Standard Forms}{22}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Canonical Forms}{22}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Definite Quadratic Forms}{22}{section.8.3}%
+\contentsline {chapter}{\numberline {9}Inner Product Spaces}{23}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Bilinear Forms}{23}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Real Inner Product Spaces}{23}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Metric Matrices and Standard Orthonormal Bases}{23}{section.9.3}%
+\contentsline {section}{\numberline {9.4}Isomorphism of Real Inner Product Spaces}{24}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Orthogonal Completion and Orthogonal Projection}{24}{section.9.5}%
+\contentsline {section}{\numberline {9.6}Orthogonal Transformations and Symmetric Transformations}{24}{section.9.6}%
+\contentsline {section}{\numberline {9.7}Unitary Spaces and Unitary Transformations}{24}{section.9.7}%
+\contentsline {section}{\numberline {9.8}Symplectic Spaces}{24}{section.9.8}%

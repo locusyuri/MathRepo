@@ -1103,21 +1103,103 @@ With the definitions above, we can define the projection transformation as follo
 
 \chapter{Diagonalization}
 \section{Similarity of Matrices}
-\section{Eigenvectors and Diagonalization}
-\subsection{Eigenvalues and Eigenvectors}
+\section{Eigenvectors and Eigenvalues}
+\begin{definition}{Eigenvalues and Eigenvectors}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}: V \to V \) be a linear transformation on \( V \).
+    A non-zero vector \( \xi \in V \) is called an \textbf{eigenvector} of \( \mathcal{A} \)
+    if there exists a scalar \( \lambda \in F \) such that:
+    \[
+    \mathcal{A}(\xi) = \lambda \xi.
+    \]
+    The scalar \( \lambda \) is called the \textbf{eigenvalue} corresponding to the eigenvector \( \xi \).
+    
+    From the perspective of matrices,
+    let \( A \in F^{n \times n} \) be a square matrix over field \( F \).
+    A non-zero vector \( x \in F^n \) is called an \textbf{eigenvector} of \( A \)
+    if there exists a scalar \( \lambda \in F \) such that:
+    \[
+    A x = \lambda x.
+    \]
+    The scalar \( \lambda \) is called the \textbf{eigenvalue} corresponding to the eigenvector \( x \).
+\end{definition}
 
-\subsection{Necessary and Sufficient Conditions for Diagonalization}
-\begin{leftbarTitle}{Geometric Multiplicity of Eigenvectors}\end{leftbarTitle}
-\begin{leftbarTitle}{Algebraic Multiplicity}\end{leftbarTitle}
+\begin{definition}{Eigenpolynomial}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}: V \to V \) be a linear transformation on \( V \).
+    The polynomial
+    \[
+    f(\lambda) = |\lambda E - A| = \begin{vmatrix}
+        \lambda - a_{11} & -a_{12} & \cdots & -a_{1n} \\
+        -a_{21} & \lambda - a_{22} & \cdots & -a_{2n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        -a_{n1} & -a_{n2} & \cdots & \lambda - a_{nn}
+    \end{vmatrix}
+    \]
+    is called the \textbf{eigenpolynomial} (or characteristic polynomial) of \( A \),
+    where \( A = (a_{ij})_{n\times n} \) is the matrix representation of \( \mathcal{A} \)
+    under some basis of \( V \), and \( E \) is the identity matrix.
+\end{definition}
 
 
-\section{Space Decomposition and Diagonalization}
+\begin{definition}{Eigen-Subspace}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}: V \to V \) be a linear transformation on \( V \).
+    For an eigenvalue \( \lambda \) of \( \mathcal{A} \), 
+    the set of all eigenvectors corresponding to \( \lambda \) \underline{along with the zero vector}:
+    \[
+    V_{\lambda} = \{ \alpha | \alpha \in V, \mathcal{A}(\alpha) = \lambda \alpha \} = 
+    \operatorname{Ker}(\mathcal{A} - \lambda \mathcal{E}),
+    \]
+    is called the \textbf{eigen-subspace} (or eigenspace) corresponding to the eigenvalue \( \lambda \).
+    It is evident that \( V_{\lambda} \) is a subspace of \( V \)
+    and solution space of the equation system \( ( \lambda E - \mathcal{A})X = 0 \).
+\end{definition}
 
-\subsection{Invariant Subspace}
 
-\subsection{Hamilton-Cayley Theorem}
 
-\section{Least Squares and Diagonalization}
+
+\section{Space Decomposition}
+
+\begin{leftbarTitle}{Invariant Subspace}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Hamilton-Cayley Theorem}\end{leftbarTitle}
+
+\section{Minimal Polynomial}
+
+\section{Diagonalization}
+\begin{lemma}
+    Eigenvectors corresponding to distinct eigenvalues are linearly independent.
+
+    Furthermore, if a linear transformation \( \mathcal{A} \) on a linear space \( V \)
+    has \( k \) distinct eigenvalues \( \lambda_1, \lambda_2, \dots, \lambda_k \),
+    and \( \alpha_{i1}, \alpha_{i2}, \dots, \alpha_{ir_{i}} \) (\(i = 1, 2, \dots, k\)) 
+    are the corresponding \underline{linearly independent} eigenvectors of \( \lambda_i \),
+    then the set of vectors
+    \[
+    \{ \alpha_{ij} | i = 1, 2, \dots, k, j = 1, 2, \dots, r_i \}
+    \]
+    is linearly independent.
+\end{lemma}
+
+\begin{theorem}
+    Let \( V \) be an \( n \)-dimensional linear space over field \( F \),
+    and let \( \mathcal{A}: V \to V \) be a linear transformation on \( V \).
+    Then the following statements are equivalent:
+    \begin{enumerate}
+        \item \( \mathcal{A} \) is diagonalizable, i.e., there exists a basis of \( V \)
+            such that the matrix representation of \( \mathcal{A} \) under this basis is a diagonal matrix;
+        \item There are \( n \) linearly independent eigenvectors (\( \xi_{1}, \xi_{2}, \cdots, \xi_{n} \)) of \( \mathcal{A} \);
+        \item The eigenpolynomial of \( \mathcal{A} \) has \( n \) roots (counting multiplicities) in field \( F \),
+            and for each eigenvalue, the geometric multiplicity equals the algebraic multiplicity;
+        \item \( V \) has a basis consisting entirely of eigenvectors of \( \mathcal{A} \);
+        \item \( V = V_{\lambda_1} \oplus V_{\lambda_2} \oplus \cdots \oplus V_{\lambda_k} \),
+            where \( \lambda_1, \lambda_2, \dots, \lambda_k \) are the distinct eigenvalues of \( \mathcal{A} \).
+    \end{enumerate}
+\end{theorem}
+
+\section{Special Matrices (Linear Transformations) and Their Diagonalization}
+
 
 \chapter{Jordan Forms}
 \section{Polynomial Matrices}
@@ -1134,26 +1216,117 @@ With the definitions above, we can define the projection transformation as follo
 \section{Quadratic Forms and Their Standard Forms}
 \section{Canonical Forms}
 \section{Definite Quadratic Forms}
+\begin{definition}{Positive Definite Quadratic Form}
+    A real quadratic form \( f( x_{1}, x_{2}, \cdots, x_{n})=X^{\mathrm{T}}AX \) is called \textbf{positive definite} if:
+    \[
+    f( x_{1}, x_{2}, \cdots, x_{n}) > 0, \quad \forall X \neq 0.
+    \]
+    And \( A \) is called a \textbf{positive definite matrix}.
+\end{definition}
 
+\begin{theorem}{Sufficient and Necessary Condition for Positive Definiteness}
+    A real quadratic form \( f( x_{1}, x_{2}, \cdots, x_{n})=X^{\mathrm{T}}AX \) is positive definite if and only if:
+    \begin{enumerate}
+        \item The positive inertia index of \( f \) is \( n \);
+        \item \(A\) is congruent to the identity matrix \( E \);
+        \item All eigenvalues of \( A \) are positive;
+        \item All leading principal minors\footnote{
+            The leading principal minors of a matrix are the determinants of 
+            the top-left \( k \times k \) submatrices for \( k = 1, 2, \ldots, n \).
+        } of \( A \) are positive.
+    \end{enumerate}
+    
+\end{theorem}
 
 \chapter{Inner Product Spaces}
 \section{Bilinear Forms}
+\begin{definition}{Bilinear Form}
+    Let \( V \) be a linear space over field \( F \).
+    A function \( f: V \times V \to F \) is called a \textbf{bilinear form} on \( V \) if:
+    \begin{enumerate}
+        \item For any fixed \( \beta \in V \), the function \( f(\cdot, \beta): V \to F \) defined by
+            \( f(\alpha, \beta) \) is a linear function on \( V \);
+        \item For any fixed \( \alpha \in V \), the function \( f(\alpha, \cdot): V \to F \) defined by
+            \( f(\alpha, \beta) \) is a linear function on \( V \).
+    \end{enumerate}
+    
+\end{definition}
 
 \section{Real Inner Product Spaces}
+\begin{definition}{Real Inner Product Space}
+    A \textbf{real inner product space} is a real linear space \( V \) 
+    equipped with a function \( (\cdot, \cdot): V \times V \to \mathbb{R} \) 
+    satisfying the following properties:
+    \begin{description}
+        \item [Positivity] \( (\alpha, \alpha) \geq 0, \quad \forall \alpha \in V\),
+            and \( (\alpha, \alpha) = 0 \) if and only if \( \alpha = 0 \);
+        \item [Symmetry] \( (\alpha, \beta) = (\beta, \alpha), \quad \forall \alpha, \beta \in V\);
+        \item [Linearity in the First Argument] 
+            \( (k_1\alpha_1 + k_2\alpha_2, \beta) = k_1(\alpha_1, \beta) + k_2(\alpha_2, \beta), 
+            \quad \forall k_1, k_2 \in \mathbb{R}, 
+            \alpha_1, \alpha_2, \beta \in V. \)
+    \end{description}
+    The function \( (\cdot, \cdot) \) is called the (real) inner product on \( V \).
+
+    Real inner product spaces with finite dimensions are called \textbf{Euclidean spaces}. 
+\end{definition}
 
 \section{Metric Matrices and Standard Orthonormal Bases}
+\begin{definition}{Gram Matrix}
+    Let \( V \) be a \(n\)-dimensional Euclidean space, 
+    and let \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) be a basis of \( V \).
+    The matrix
+    \[
+    G = ((\varepsilon_i, \varepsilon_j))_{n \times n} =
+    \begin{pmatrix}
+        (\varepsilon_1, \varepsilon_1) & (\varepsilon_1, \varepsilon_2) & \cdots & (\varepsilon_1, \varepsilon_n) \\
+        (\varepsilon_2, \varepsilon_1) & (\varepsilon_2, \varepsilon_2) & \cdots & (\varepsilon_2, \varepsilon_n) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        (\varepsilon_n, \varepsilon_1) & (\varepsilon_n, \varepsilon_2) & \cdots & (\varepsilon_n, \varepsilon_n)
+    \end{pmatrix}
+    \]
+    is called the \textbf{Gram matrix} (or metric matrix) of the inner product on \( V \)
+    under the basis \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \).
+\end{definition}
+
+For all vectors
+\begin{gather*}
+    \alpha = x_{1}\varepsilon_{1}+x_{2}\varepsilon_{2}+\cdots+x_{n}\varepsilon_{n},  \\
+    \beta = y_{1}\varepsilon_{1}+y_{2}\varepsilon_{2}+\cdots+y_{n}\varepsilon_{n} \in V ,
+\end{gather*}
+since \(( \alpha, \beta)=\sum_{i=1}^{n} \sum_{j=1}^{n}  (\varepsilon_i, \varepsilon_j)x_{i}y_{j} \), 
+it can be expressed in matrix form as:
+\[
+( \alpha, \beta) = X^{\mathrm{T}} G Y, \quad
+X = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}, \quad
+Y = \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix}.
+\]
+
 
 \section{Isomorphism of Real Inner Product Spaces}
 
 \section{Orthogonal Completion and Orthogonal Projection}
-\subsection{Orthogonal Completion}
+\begin{leftbarTitle}{Orthogonal Completion}\end{leftbarTitle}
 
-\subsection{Least Squares Method}
+\begin{leftbarTitle}{Least Squares Method}\end{leftbarTitle}
+
 
 \section{Orthogonal Transformations and Symmetric Transformations}
-\subsection{Orthogonal Transformations}
+\begin{leftbarTitle}{Orthogonal Transformations}\end{leftbarTitle}
+\begin{leftbarTitle}{Symmetric Transformations}\end{leftbarTitle}
+\begin{definition}{Symmetric Transformation}
+    Let \( V \) be a real inner product space, 
+    and let \( \mathcal{A}: V \to V \) be a linear transformation on \( V \).
+    If
+    \[
+    (\mathcal{A}\alpha, \beta) = (\alpha, \mathcal{A}\beta), \quad \forall \alpha, \beta \in V,
+    \]
+    then \( \mathcal{A} \) is called a \textbf{symmetric transformation} on \( V \).
+\end{definition}
 
-\subsection{Symmetric Transformations}
+\begin{lemma}
+    
+\end{lemma}
 
 \section{Unitary Spaces and Unitary Transformations}
 
