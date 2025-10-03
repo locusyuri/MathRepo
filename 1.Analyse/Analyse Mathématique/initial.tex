@@ -42,7 +42,34 @@
 % \listoftables       % 表格目录 (页码: iv)
 
 \chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
-This is the preface of the book...
+For an interval \(I\), a open interval \((a, b)\) and a closed interval \([a, b]\),
+we denote \(C(I)\), \(C(a, b)\) and \(C[a, b]\)
+as the set of continuous \underline{univariate} functions on \(I\), \((a, b)\) and \([a, b]\) respectively.
+Similarly, the following notations are used:
+
+\[
+\begin{array}{cc}
+\toprule
+\text{Notation} & \text{Meaning} \\
+\hline
+D(I) & \text{Set of derivative (differential) functions on } I \\
+D(a, b) & \text{Set of derivative (differential) functions on } (a, b) \\
+D[a, b] & \text{Set of derivative (differential) functions on } [a, b] \\
+D^{k}(I) & \text{Set of } k\text{-th order derivative (differential) functions on } I \\
+\bottomrule
+\end{array}
+\]
+
+Let \(U \subset \mathbb{R}^n\) be an open set, and \(\mathbf{f}: U \to \mathbb{R}^m\) be a \(C^k\) mapping:  
+\begin{itemize}
+    \item \(k = 0\), \(\mathbf{f}\) is a continuous mapping;
+    \item \(0 < k < +\infty\), \(f_i\) has continuous partial derivatives up to order \(k\), \(i = 1, 2, \dots, m\);
+    \item \(k = +\infty\), \(f_i\) has continuous partial derivatives of all orders, \(i = 1, 2, \dots, m\);
+    \item \(k = \omega\), \(f_i\) is really analytic, i.e., 
+        in the neighborhood of any point \(\mathbf{x}^0 = (x_1^0, x_2^0, \dots, x_n^0) \in U\), 
+        \(f_i\) can be expanded into a convergent (\(n\)-dimensional) power series, \(i = 1, 2, \dots, m\).
+\end{itemize}
+Let \(C^k(U, \mathbb{R}^m)\) denote the set of \(C^k\) mappings from \(U\) to \(\mathbb{R}^m\).
 
 % \chapter{Acknowledgments}  % 致谢（无编号）
 % I would like to thank...
@@ -492,13 +519,13 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 \section{Higher-Order Derivatives}
 
 \section{Differential Mean Value Theorems}
-\begin{definition}{Extremum}
+\begin{definition}{Argmax and Argmin}
     Let \(f(x)\) is defined on \((a,b)\), \(x_{0}\in (a,b)\).
     If there exists \(U(x_{0}, \delta)\subset (a,b)\) such that \(f(x)\leqslant f(x_{0})\) on it,
-    then \(x_{0}\) is called a local maximum point of \(f\),
-    and \(f(x_{0})\) is referred to as the corresponding local maximum value.
+    then \(x_{0}\) is called a arguments of the maxima point of \(f\),
+    and \(f(x_{0})\) is referred to as the corresponding arguments of the maxima (abbreviated arg max or argmax).
 
-    The definition of the minimum value is analogous.
+    The definition of the argmin is analogous.
 \end{definition}
 
 \begin{lemma}{Fermat's Lemma}
@@ -570,7 +597,7 @@ The following types of problems commonly appear in proofs related to intermediat
 
 
 
-\section{Theorems and Applications concerning Derivatives}
+\section{Theorems about Derivatives}
 
 \begin{theorem}{Darboux's Intermediate Value Theorem for Derivatives}
     If \(f(x)\in D[a,b]\), and \(f'_{+}(a)\cdot f'_{-}(b)<0\),
@@ -586,8 +613,104 @@ The following types of problems commonly appear in proofs related to intermediat
 \end{remark}
 
 \section{Taylor Theorem}
+\begin{leftbarTitle}{L'Hôpital's Rule}\end{leftbarTitle}
 
-\section{Applications of Taylor Theorem}
+\begin{leftbarTitle}{Taylor Formula}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Macklaurin Formula}\end{leftbarTitle}
+
+
+\section{Properties of Functions}
+\begin{leftbarTitle}{Monotonicity and Convexity}\end{leftbarTitle}
+\begin{definition}{Convex Function}
+    A function \(f\) is called \textbf{convex} on an interval \(I\) if for any \(x_1, x_2 \in I\) and 
+    \(t \in [0,1]\), the following inequality holds:
+    \[
+        f(t x_1 + (1-t)x_2) \leq t f(x_1) + (1-t)f(x_2).
+    \]
+    If the inequality is strict for \(x_1 \neq x_2\) and \(t \in (0,1)\), 
+    then \(f\) is called \textbf{strictly convex} on \(I\).
+
+    Conversely, if the inequality is reversed, then \(f\) is called \textbf{concave} or \textbf{concave down} on \(I\).
+\end{definition}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/ConvexFunction.png}
+\end{figure}
+
+\begin{theorem}
+    Mark above definition as Definition 1, give the following statements:
+    \begin{enumerate}
+        \setcounter{enumi}{1} % 设置计数器，从 2 开始
+        \item (\textbf{Jensen Definition}) A function \(f\) is called convex on an interval \(I\) 
+            if for any \(x_1, x_2 \in I\):
+            \[
+                f\left( \frac{x_1 + x_2}{2} \right) \leq \frac{f(x_1) + f(x_2)}{2}.
+            \]
+        \item A function \(f\) is called convex on an interval \(I\) 
+            if for any \(x_1, x_2, \cdots, x_n \in I\):
+            \[
+                f\left( \frac{x_1 + x_2 + \cdots + x_n}{n} \right) \leq \frac{f(x_1) + f(x_2) + \cdots + f(x_n)}{n}.
+            \]
+        \item A function \(f\) is called convex on an interval \(I\) 
+            if the tangent line at any point lies below the graph of the function.
+    \end{enumerate}
+    Then,
+    \begin{itemize}
+        \item Definitions 2 and 3 are equivalent. 
+        \item When \(f\) is continuous, Definition 1, 2, 3 is equivalent.
+        \item When \(f\) is differentiable, all four definitions are equivalent.
+    \end{itemize}
+\end{theorem}
+
+
+\begin{theorem}{Jensen Inequality}
+    If \(f\) is convex on an interval \(I\), 
+    then for any \(x_1, x_2, \cdots, x_n \in I\) and any \(t_1, t_2, \cdots, t_n > 0\) 
+    such that \(t_1 + t_2 + \cdots + t_n = 1\),
+    the following inequality holds:
+    \[
+        f(t_1 x_1 + t_2 x_2 + \cdots + t_n x_n) \leq t_1 f(x_1) + t_2 f(x_2) + \cdots + t_n f(x_n).
+    \]
+
+    Specially, when \(t_1 = t_2 = \cdots = t_n = \frac{1}{n}\), it reduces to Definition 3.
+\end{theorem}
+
+
+Next, we present derivative-based criteria for monotonicity and convexity:
+\begin{theorem}
+    \begin{enumerate}
+        \item If \(f \in D(I)\), then \(f\) is increasing (decreasing) on \(I\) 
+            if and only if \(f'(x) \geq 0\) (\(f'(x) \leq 0\)) for all \(x \in I\). 
+        \item If \(f \in D^{(2)}(I)\), then \(f\) is convex (concave) on \(I\) 
+            if and only if \(f''(x) \geq 0\) (\(f''(x) \leq 0\)) for all \(x \in I\).
+    \end{enumerate}
+\end{theorem}
+
+\begin{note}
+    If \(f'(x) > 0\) (\(f''(x) > 0\)) for all \(x \in I\), then \(f\) is strictly increasing (convex) on \(I\).
+    Even though the condition weakens to holding except at finitely many points,
+    the conclusion of strict monotonicity (convexity) still holds.
+    For example, \(f(x) = x^3\) is strictly increasing on \(\mathbb{R}\)
+    despite \(f'(0) = 0\).
+\end{note}
+
+
+\begin{leftbarTitle}{Argmax and Argmin}\end{leftbarTitle}
+
+
+\begin{leftbarTitle}{Asymptote}\end{leftbarTitle}
+
+
+
+
+
+
+
+\section{Applications}
+
+
+
 
 \chapter{Indefinite Integral}
 
@@ -598,10 +721,24 @@ The following types of problems commonly appear in proofs related to intermediat
     and at least one of them has an antiderivative.
     Then the integration by parts formula states that:
     \[
-        \int u(x) \, \mathrm{d}v(x) = u(x)v(x) - \int v(x) \, \mathrm{d}u(x).
+        \int u \, \mathrm{d}v = uv - \int v \, \mathrm{d}u.
     \]
 \end{definition}
 
+\begin{definition}{Substitution Method}
+\end{definition}
+
+Some common substitutions are as follows:
+\begin{description}
+    \item[Trigonometric Substitution] When restoring variables, auxiliary right triangles is often utilized.
+        \begin{description}
+            \item[Sine] \( \sqrt{a^2 - x^2} \): \( x = a \sin t \) or \( x = a \cos t \)
+            \item[Tangent] \( \sqrt{a^2 + x^2} \): \( x = a \tan t \) or \( x = a \sinh t \)
+            \item[Secant] \( \sqrt{x^2 - a^2} \): \( x = a \sec t \) or \( x = a \cosh t \)
+        \end{description}
+    \item[Irreational Substitution]
+    \item[Reciprocal Substitution]
+\end{description}
 
 \begin{leftbarTitle}{Basic Integration Formulas}\end{leftbarTitle}
 \[
@@ -971,11 +1108,23 @@ The properties of Darboux sums also apply to Stieltjes sums.
 
 
 
-\begin{leftbarTitle}{Riemann Lemma}\end{leftbarTitle}
-
 \begin{leftbarTitle}{Common Questions concerning Integrals}\end{leftbarTitle}
 
 \section{Calculation of Definite Integrals}
+
+\begin{lemma}{Riemann Lemma}
+    Let \( f(x) \in R[a, b] \), \( g(x) \) has a period \( T \) and \( g(x) \in [0, T] \),
+    then:
+    \[
+    \lim_{p \to +\infty}\int_{a}^{b} f(x)g(px) \, \mathrm{d}x 
+    = \int_{a}^{b} f(x) \, \mathrm{d}x \cdot \frac{1}{T} \int_{0}^{T} g(t) \, \mathrm{d}t.
+    \]
+    A special case is when \( g(x) = \sin x \) or \( g(x) = \cos x \), then:
+    \[
+    \lim_{p \to +\infty}\int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x 
+    = \int_{a}^{b} f(x)\cos(px) \, \mathrm{d}x.
+    \]
+\end{lemma}
 
 \section{Integral Inequalities}
 
@@ -1026,8 +1175,51 @@ The properties of Darboux sums also apply to Stieltjes sums.
 
 \section{Applications of Definite Integrals}
 \begin{leftbarTitle}{Arc Length}\end{leftbarTitle}
+\begin{definition}{Arc Length}
+    Let \(C = \overset{\frown}{AB}\) be a curve on the \(\mathbb{R}^{2}\) plane\footnote{
+        Or in \(\mathbb{R}^{3}\) space, even in a higher-dimensional Euclidean space.
+    },
+    take any partition \( A = P_{0}, P_{1}, \ldots, P_{n} = B \),
+    which divides the curve \(C\) into \(n\) segments, denoted as \(T\).
+    Then connect every two adjacent points \(P_{i-1}\) and \(P_{i}\) with a straight line segment,
+    obtaining \(n\) chords \(\overline{P_{i-1}P_{i}}\)(\(i=1, 2, \ldots, n\)),
+    which in turn form an inscribed polygonal line \(C\).
+    Let 
+    \[
+    \|T\| = \max_{1 \leq i \leq n} \|P_{i-1}P_{i}\|, \quad s_{T}= \sum_{i=1}^{n} \|P_{i-1}P_{i}\|.
+    \]
+    If the limit
+    \[
+    \lim_{\|T\| \to 0} s_{T} = s,
+    \] 
+    namely, 
+    \[
+    \forall \varepsilon > 0, \exists \delta > 0, \text{s.t.} \forall T(\|T\| < \delta): |s_{T} - s| < \varepsilon,
+    \]
+    and the limit is independent of the choice of partition \(T\),
+    then \(C\) is said to be rectifiable, and the limit \(s\) is called the arc length of the curve \(C\).
+\end{definition}
+
+\begin{theorem}{Sufficient Condition for Rectifiability of Curves}
+    Let the curve \(C\) in \(\mathbb{R}^{2}\) be given by the parametric equations 
+    \[
+    (x, y) = (x(t), y(t)), \quad t \in [\alpha, \beta],
+    \] 
+    and let it be a \(C^{1}\) smooth regular curve\footnote{
+        I.e., \(x(t)\) and \(y(t)\) are continuously differentiable, and \(x'^{2}(t) + y'^{2}(t) \neq 0\); 
+        a curve \(C\) satisfying this condition is called a regular point.
+        Also see Definition~\ref{def:Parameterization of Surface}
+    }
+    Then \(C\) is rectifiable, 
+    and its arc length is 
+    \[
+    s = \int_{\alpha}^{\beta} \sqrt{x'^{2}(t) + y'^{2}(t)} \, \mathrm{d}t.
+    \]
+\end{theorem}
 
 \begin{leftbarTitle}{Curvature}\end{leftbarTitle}
+\begin{definition}{Curvature}
+\end{definition}
 
 \begin{leftbarTitle}{Polar Coordinate System}\end{leftbarTitle}
 \footnotesize
@@ -1875,18 +2067,6 @@ This is the formula for \textbf{expressing a directional derivative using partia
     which is called the \textbf{gradient} of the scalar function \( f \).
 \end{definition}
 
-\begin{note}
-    Let \(U \subset \mathbb{R}^n\) be an open set, and \(\mathbf{f}: U \to \mathbb{R}^m\) be a \(C^k\) mapping:  
-    \begin{itemize}
-        \item \(k = 0\), \(\mathbf{f}\) is a continuous mapping;
-        \item \(0 < k < +\infty\), \(f_i\) has continuous partial derivatives up to order \(k\), \(i = 1, 2, \dots, m\);
-        \item \(k = +\infty\), \(f_i\) has continuous partial derivatives of all orders, \(i = 1, 2, \dots, m\);
-        \item \(k = \omega\), \(f_i\) is really analytic, i.e., 
-            in the neighborhood of any point \(\mathbf{x}^0 = (x_1^0, x_2^0, \dots, x_n^0) \in U\), 
-            \(f_i\) can be expanded into a convergent (\(n\)-dimensional) power series, \(i = 1, 2, \dots, m\).
-    \end{itemize}
-    Let \(C^k(U, \mathbb{R}^m)\) denote the totality of \(C^k\) mappings from \(U\) to \(\mathbb{R}^m\).
-\end{note}
 
 
 \begin{leftbarTitle}{Total Differential}\end{leftbarTitle}
@@ -2581,7 +2761,7 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
 
 \section{Applications of Multi-Variable Differential Calculus}
 \begin{leftbarTitle}{Surface and Tangent Space}\end{leftbarTitle}
-\begin{definition}{Parameterization of Surface}
+\begin{definition}{Parameterization of Surface}\label{def:Parameterization of Surface}
     Let \( \Delta \) be an open subset in \( \mathbb{R}^s \), 
     and \( \mathbf{x}: \Delta \to \mathbb{R}^n \) be a mapping, 
     where \( \mathbf{u} = (u_1, u_2, \dots, u_s) \to \mathbf{x}(\mathbf{u}) = 
@@ -2593,7 +2773,7 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
     \( \mathbf{x} \) or \( M \) is called an \( s \)-dimensional \( C^k \) surface. 
     
     If \( \mathbf{x} \in C^k \) (\( k \geq 1 \)), \( \mathbf{x} \) or \( M \) 
-    is called an \( s \)-dimensional \( C^k \) smooth surface. When
+    is called an \textbf{\( s \)-dimensional \( C^k \) smooth surface}. When
     \[
     \operatorname{rank}(x'_1(\mathbf{u}^0), x'_2(\mathbf{u}^0), \dots, x'_s(\mathbf{u}^0)) = 
     \operatorname{rank}
@@ -2604,9 +2784,9 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
     \end{pmatrix}_{\mathbf{u}^0}
     = s,
     \]
-    we call \( \mathbf{u}^0 \) or \( \mathbf{x}(\mathbf{u}^0) \) a regular point of the surface \( M \). 
+    we call \( \mathbf{u}^0 \) or \( \mathbf{x}(\mathbf{u}^0) \) a \textbf{regular point} of the surface \( M \). 
     Otherwise, it is called a singular point. 
-    Every point that is a regular point of the surface is referred to as an \( s \)-dimensional \( C^k \) regular surface. 
+    Every point that is a regular point of the surface is referred to as an \textbf{\( s \)-dimensional \( C^k \) regular surface}. 
     At such points, \( \{x'_1, \dots, x'_s\} \) are linearly independent.
 \end{definition}
 
