@@ -37,12 +37,19 @@
 % \listoftables       % 表格目录 (页码: iv)
 
 \chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
-This is the preface of the book...
+The set of all $m \times n$ matrices over the number field $P$ is denoted by \(M_{m \times n}(P)\) or \(P^{m \times n}\). 
+Similarly, the set of all linear mappings from $V$ to $V'$ over the field $F$ 
+is represented by \(\mathrm{Hom}(V,V')\) or \(\mathcal{L}(V,V')\). 
+Furthermore, when considering the set of all linear transformations, 
+it is commonly denoted by \(\mathrm{Hom}(V)\), \(\mathcal{L}(V)\), or \(\mathrm{End}(V)\).
 
-% \chapter{Acknowledgments}  % 致谢（无编号）
+
+    % \chapter{Acknowledgments}  % 致谢（无编号）
 % I would like to thank...
 % === 正文部分 ===
 \mainmatter         % 开始正文，页码从 1 重新开始
+
+\chapter{Preliminaries} 
 
 \chapter{Determinants} % 这里放置章节标题
 \section{Permutations} % 排列
@@ -564,8 +571,56 @@ the above formula provides all the solutions of \( AX = B \).
 
 
 
-\section{Special Matrices}
+\section{Special Square Matrices}
 \begin{leftbarTitle}{Diagonal Matrix}\end{leftbarTitle}
+\begin{definition}{Diagonal Matrix}
+    A matrix \( A = (a_{ij})_{n \times n} \) is called a \textbf{diagonal matrix} if:
+    \[
+    a_{ij} = 0, \quad i \neq j,
+    \]
+    denoted as:
+    \[
+    A = \mathrm{diag}(a_{11}, a_{22}, \dots, a_{nn}).
+    \]
+
+    If 
+    \[
+    a_{i,n+1-i} = 0, \quad i = 1, 2, \dots, n,
+    \]
+    then \( A \) is called an \textbf{skew-diagonal matrix},
+    denoted as:
+    \[
+    A = \mathrm{sdiag}(a_{1n}, a_{2,n-1}, \dots, a_{n1}).
+    \]
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item The sum, difference, and product of two diagonal matrices of the same order are still diagonal matrices.
+        \item Multiplying a matrix \(A\) on the left (right) by a diagonal matrix is equivalent to 
+            multiplying the corresponding rows (columns) of \(A\) by the diagonal elements of the diagonal matrix.
+        \item 
+            \[
+            \mathrm{diag}(a_{1}, a_{2}, \dots, a_{n})^{-1} = 
+            \mathrm{diag}\left( \frac{1}{a_{1}}, \frac{1}{a_{2}}, \dots, \frac{1}{a_{n}} \right),
+            \] 
+            \[
+            \mathrm{sdiag}(a_{1}, a_{2}, \dots, a_{n})^{-1} = 
+            \mathrm{sdiag}\left( \frac{1}{a_{n}}, \frac{1}{a_{n-1}}, \dots, \frac{1}{a_{1}} \right);
+            \]
+            \[
+            \begin{bmatrix} A & O \\ O & C \\\end{bmatrix}^{-1} =
+            \begin{bmatrix} A^{-1} & O \\ O & C^{-1} \\\end{bmatrix},
+            \]
+            \[
+            \begin{bmatrix} O & B \\ D & O \\\end{bmatrix}^{-1} =
+            \begin{bmatrix} O & D^{-1} \\ B^{-1} & O \\\end{bmatrix}.
+            \]
+    \end{enumerate} 
+\end{property}
+
+
+
 
 \begin{leftbarTitle}{Fundamental Matrix}\end{leftbarTitle}
 \begin{definition}{Fundamental Matrix}
@@ -574,10 +629,67 @@ the above formula provides all the solutions of \( AX = B \).
 \end{definition}
 
 \begin{property}
-    
+    \begin{enumerate}
+        \item Multiplying a matrix \(A\) on the left (right) by a fundamental matrix is equivalent to 
+            moving the \(j\)-th row (column) of \(A\) to the \(i\)-th position, 
+            with all other entries in the resulting matrix being zero; 
+        \item If \(A\) is commutative with all fundamental matrices, then \(A\) is a scalar matrix.
+    \end{enumerate}
 \end{property}
 
 \begin{leftbarTitle}{Triangular Matrix}\end{leftbarTitle}
+\begin{definition}{Triangular Matrix}
+    A matrix \( A = (a_{ij})_{n \times n} \) is called an \textbf{upper triangular matrix} if:
+    \[
+    a_{ij} = 0, \quad i > j,
+    \]
+    denoted as:
+    \[
+    A = 
+    \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    0 & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \cdots & a_{nn}
+    \end{pmatrix}.
+    \]
+
+    Similarly, if:
+    \[
+    a_{ij} = 0, \quad i < j,
+    \]
+    then \( A \) is called a \textbf{lower triangular matrix},
+    denoted as:
+    \[
+    A = 
+    \begin{pmatrix}
+    a_{11} & 0 & \cdots & 0 \\
+    a_{21} & a_{22} & \cdots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{n1} & a_{n2} & \cdots & a_{nn}
+    \end{pmatrix}.
+    \]
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item The sum, difference, and product of two upper (lower) triangular matrices of the same order 
+            are still upper (lower) triangular matrices. 
+        \item For all square matrix \(A\), \(A\) can be expressed as the sum of 
+            an upper triangular matrix and a lower triangular matrix:
+            \[
+            A = \frac{A + A^T}{2} + \frac{A - A^T}{2}.
+            \]
+        \item (\textbf{\(LU\) Decomposition}) If all leading principal minors of a square matrix \(A\) are non-zero, 
+            then \(A\) can be uniquely decomposed into the product of a lower triangular matrix \(L\) 
+            (with all diagonal elements equal to 1) and an invertible upper triangular matrix \(U\):
+            \[
+            A = LU.
+            \]
+            The converse is also true.
+    \end{enumerate}
+\end{property}
+
 
 \begin{leftbarTitle}{Elementary Matrix}\end{leftbarTitle}
 \begin{definition}{Elementary Matrix}
@@ -595,12 +707,121 @@ the above formula provides all the solutions of \( AX = B \).
 \end{note}
 
 \begin{leftbarTitle}{Symmetric Matrix}\end{leftbarTitle}
+\begin{definition}{Symmetric Matrix}
+    A matrix \( A = (a_{ij})_{n \times n} \) is called a \textbf{symmetric matrix} if:
+    \[
+    a_{ij} = a_{ji}, \quad i, j = 1, 2, \dots, n,
+    \]
+    or equivalently:
+    \[
+    A = A^T.
+    \]
+    
+    Similarly, if:
+    \[
+    A = -A^T,
+    \]
+    then \( A \) is called a \textbf{skew-symmetric matrix}.
+\end{definition}
 
-\begin{leftbarTitle}{Circulant-Shift Permutation Matrix}\end{leftbarTitle}
+\begin{property}
+    \begin{enumerate}
+        \item The linear combination of two symmetric (skew-symmetric) matrices of the same order 
+            are still symmetric (skew-symmetric) matrices. 
+        \item For any square matrix \(A\), \(A\) can be expressed as the sum of 
+            a symmetric matrix and a skew-symmetric matrix:
+            \[
+            A = \frac{A + A^T}{2} + \frac{A - A^T}{2}.
+            \]
+        \item The determinant of an odd-order skew-symmetric matrix is zero; 
+            the determinant of an even-order skew-symmetric matrix is a perfect square,
+            and its rank is even. 
+    \end{enumerate}
+\end{property}
+
+
+\begin{leftbarTitle}{Circulant Matrix}\end{leftbarTitle}
+Let 
+\[
+C = 
+\begin{bmatrix} 
+    0 & 1 & 0 & 0 & \cdots & 0 \\ 
+    0 & 0 & 1 & 0 & \cdots & 0 \\ 
+    \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\ 
+    0 & 0 & 0 & 0 & \cdots & 1 \\
+    1 & 0 & 0 & 0 & \cdots & 0
+\end{bmatrix},
+\]
+it is called a \textbf{circulant-shift matrix}.
+
+The matrix \(C\) performs specific cyclic operations when multiplied by another matrix:
+\begin{description}
+    \item [Left multiplication] Multiplying a matrix \(A\) from the left by \(C\) (\(CA\)) 
+        is equivalent to cyclically shifting the rows of \(A\) upwards by one position. 
+        The first row of \(A\) moves to the last row.
+    \item [Right multiplication] Multiplying a matrix \(A\) from the right by \(C\) (\(AC\)) 
+        is equivalent to cyclically shifting the columns of \(A\) to the right by one position. 
+        The last column of \(A\) moves to the first column.
+\end{description}
+
+\begin{definition}{Circulant Matrix}
+    A matrix \(A\) is called a \textbf{circulant matrix} if it can be expressed as:
+    \[
+    A = 
+    \begin{bmatrix} 
+        a_0 & a_1 & a_2 & \cdots & a_{n-1} \\ 
+        a_{n-1} & a_0 & a_1 & \cdots & a_{n-2} \\ 
+        a_{n-2} & a_{n-1} & a_0 & \cdots & a_{n-3} \\ 
+        \vdots & \vdots & \vdots & \ddots & \vdots \\ 
+        a_1 & a_2 & a_3 & \cdots & a_0
+    \end{bmatrix},
+    \]
+    which is constructed such that each row is obtained by cyclically shifting 
+    the elements of the first row one position to the right.
+
+    It can also be expressed as:
+    \[
+    A = a_0 E + a_1 C + a_2 C^2 + \cdots + a_{n-1} C^{n-1} = \sum_{i=0}^{n-1} a_i C^i,
+    \]
+    where \(E\) is the identity matrix and \(C\) is the circulant-shift matrix.
+\end{definition}
+
 
 \begin{leftbarTitle}{Nilpotent Matrix}\end{leftbarTitle}
+\begin{definition}{Nilpotent Matrix}
+    A square matrix \(A\) is called a \textbf{nilpotent matrix} if there exists \(l\in \mathbb{N}_{+}\) such that:
+    \[
+    A^l = O,
+    \]
+    where \(O\) is the zero matrix.
+    The smallest such \(l\) is called the \textbf{nilpotent index} of the nilpotent matrix \(A\).
+\end{definition}
 
-\begin{leftbarTitle}{Row Full Rank Matrix}\end{leftbarTitle}
+\begin{proposition}
+    \begin{enumerate}
+        \item A triangular matrix is nilpotent if and only if all its diagonal elements are zero. 
+        \item If a \(n\)-order triangular matrix is nilpotent, then its nilpotent index \(l\) must satisfy \(l \leq n\).
+    \end{enumerate}
+\end{proposition}
+
+
+\begin{leftbarTitle}{Full Row Rank Matrix}\end{leftbarTitle}
+\begin{definition}{Full Row Rank Matrix}
+    A matrix \(A\) is called a \textbf{full row rank matrix} if its row vectors are linearly independent.
+    Similarly, if its column vectors are linearly independent, 
+    then \(A\) is called a \textbf{full column rank matrix}.
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item \(A_{m\times n}\) is a full row rank matrix if and only if 
+            there exists an invertible matrix \(Q_{n\times n}\) such that 
+            \[A = \begin{bmatrix} E_{m} & O \end{bmatrix}Q.\]
+        \item \(A_{m\times n}\) is a full column rank matrix if and only if 
+            there exists an invertible matrix \(P_{m\times m}\) such that 
+            \[A = P\begin{bmatrix} E_{n} \\ O \end{bmatrix}.\]
+    \end{enumerate}
+\end{property}
 
 \section{Inverse Matrix}
 \begin{leftbarTitle}{Inverse Matrix and Its Operations}\end{leftbarTitle}
@@ -743,6 +964,26 @@ Based on the decomposition \( A = \alpha \beta^T \), the matrix of rank-\(1\) ha
     in which case it applies whether or not the matrix \( A \) is invertible.
 \end{note}
 
+\vspace{0.7cm}
+Replace \( \alpha, \beta\) with general matrices \( U, V \in \mathbb{R}^{n\times k} \),
+we can extend the Sherman-Morrison formula to the Woodbury matrix identity:
+\begin{theorem}{Woodbury Matrix Identity}
+    If \( A\in \mathbb{R}^{n\times n} \) is an invertible matrix, 
+    \(C\in \mathbb{R}^{k\times k}\) is also an invertible matrix, 
+    and \( U, V\in \mathbb{R}^{n\times k} \) are matrices, 
+    then \( A + UCV^T \) is invertible if and only if \( C^{-1} + V^T A^{-1} U \) is invertible. 
+    In this case, the inverse of \( A + UCV^T \) is given by:
+    \[
+    \left(A + UCV^T\right)^{-1} = A^{-1} - A^{-1} U \left(C^{-1} + V^T A^{-1} U\right)^{-1} V^T A^{-1}.
+    \]
+\end{theorem}
+
+Without loss of generality, let \( A, C \) be conformable identity matrices,
+i.e., \( A = E_n \) and \( C = E_k \). Then the Woodbury matrix identity simplifies to:
+\[
+\left(E_n + UV^T\right)^{-1} = E_n - U \left(E_k + V^T U\right)^{-1} V^T.
+\]
+This form is particularly useful in applications involving low-rank updates to identity matrices.
 
 
 \chapter{Linear Spaces}
@@ -820,6 +1061,33 @@ that contains both \( V_1 \) and \( V_2 \) (\(V_{1}\cup V_{2}\)).
 
 \section{Quotient Spaces}
 
+\section{Special Linear Spaces}
+\begin{leftbarTitle}{Commutative Spaces}\end{leftbarTitle}
+Let \( A \) is an \( n \)-order matrix over number field \( P \).
+It is obvious that the set of all matrices satisfying \( AX = XA \) is a subspace of \( M_{n \times n}(P) \),
+denoted as \( C(A) \).
+
+\begin{property}
+    \begin{enumerate}
+        \item For any \( n \)-order matrix \( A, B \), 
+            if \( A \) is similar to \( B \) (\(A \sim B\)), 
+            then \( C(A) \) is isomorphic to \( C(B) \) (\(C(A) \cong C(B)\)),
+            further \( \dim(C(A)) = \dim(C(B)) \).
+    \end{enumerate}    
+\end{property}
+
+\begin{example}
+    Find the dimension and a basis of the \( C(A) \) where:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(A\) is \(3\)-order matrix over number field \(P\), and \(A\) has three distinct eigenvalues.
+        \item 
+            \[
+            A = 
+            \begin{pmatrix} 1 & 0 & 4 \\ 0 & 1 & 2 \\ 0 & 1 & 2 \\\end{pmatrix}
+            \]
+    \end{enumerate}
+\end{example}
+
 \chapter{Linear Mappings}
 \section{Linear Mappings and Their Computation}
 \begin{leftbarTitle}{Definition of Linear Mappings}\end{leftbarTitle}
@@ -844,13 +1112,6 @@ that contains both \( V_1 \) and \( V_2 \) (\(V_{1}\cup V_{2}\)).
 \end{remark}
 
 
-\begin{remark}
-    The set of all linear mappings from $V$ to $V'$ over the field $F$ is denoted by $\mathrm{Hom}(V,V')$ or $\mathcal{L}(V,V')$.
-
-    The set of all linear transformations is denoted by $\mathrm{Hom}(V)$, $\mathcal{L}(V)$, or $\mathrm{End}(V)$.
-
-    The set of all $m \times n$ matrices over the number field $P$ is denoted by \(M_{m \times n}(P)\) or \(P^{m\times n}\).
-\end{remark}
 
 
 \begin{leftbarTitle}{Existence and Uniqueness of Linear Mappings}\end{leftbarTitle}
@@ -1106,7 +1367,7 @@ With the definitions above, we can define the projection transformation as follo
 \section{Eigenvectors and Eigenvalues}
 \begin{definition}{Eigenvalues and Eigenvectors}
     Let \( V \) be a linear space over field \( F \), 
-    and let \( \mathcal{A}: V \to V \) be a linear transformation on \( V \).
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
     A non-zero vector \( \xi \in V \) is called an \textbf{eigenvector} of \( \mathcal{A} \)
     if there exists a scalar \( \lambda \in F \) such that:
     \[
@@ -1126,7 +1387,7 @@ With the definitions above, we can define the projection transformation as follo
 
 \begin{definition}{Eigenpolynomial}
     Let \( V \) be a linear space over field \( F \), 
-    and let \( \mathcal{A}: V \to V \) be a linear transformation on \( V \).
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
     The polynomial
     \[
     f(\lambda) = |\lambda E - A| = \begin{vmatrix}
@@ -1144,7 +1405,7 @@ With the definitions above, we can define the projection transformation as follo
 
 \begin{definition}{Eigen-Subspace}
     Let \( V \) be a linear space over field \( F \), 
-    and let \( \mathcal{A}: V \to V \) be a linear transformation on \( V \).
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
     For an eigenvalue \( \lambda \) of \( \mathcal{A} \), 
     the set of all eigenvectors corresponding to \( \lambda \) \underline{along with the zero vector}:
     \[
@@ -1162,10 +1423,148 @@ With the definitions above, we can define the projection transformation as follo
 \section{Space Decomposition}
 
 \begin{leftbarTitle}{Invariant Subspace}\end{leftbarTitle}
+\begin{definition}{Invariant Subspace}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    A subspace \( W \subseteq V \) is called an \textbf{invariant subspace} of \( V \)
+    under the linear transformation \( \mathcal{A} \) if:
+    \[
+    \mathcal{A}(\alpha) \subseteq W, \quad \forall \alpha \in W,
+    \]
+    simplified as \( \mathcal{A} \)-subspace.
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item The zero subspace \( \{0\} \) and the entire space \( V \) are invariant subspaces of \( V \) 
+            under any linear transformation \( \mathcal{A} \), which are called trivial invariant subspaces. 
+        \item Let \( \mathcal{A}, \mathcal{B} \in \operatorname{Hom}(V) \). 
+            If \( \mathcal{A}, \mathcal{B} \) is commutative (\( \mathcal{AB} = \mathcal{BA} \)), 
+            then \( \operatorname{Ker}(\mathcal{A}) \), \( \operatorname{Im}(\mathcal{A}) \) and 
+            eigenspace of \( \mathcal{A} \) are both invariant subspaces of \( V \) under \( \mathcal{B} \).
+        \item Any subspace of scalar transformation is an invariant subspace.
+        \item The intersection and sum of any two invariant subspaces are also invariant subspaces.
+    \end{enumerate}
+\end{property}
+
+\begin{proposition}
+    Let \( V \) be a linear space over field \( F \), and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    \( W = \langle \xi \rangle \quad (\xi\neq 0)\), the subspace of \( V \) is \( \mathcal{A} \)-subspace if and only if 
+    \( \xi \) is an eigenvector of \( \mathcal{A} \).
+\end{proposition}
+
+\begin{theorem}
+    Let \( V \) be a \(n\)-dimensional linear space over field \( F \), and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    \begin{enumerate}
+        \item Let \( W \) be a nontrivial \( \mathcal{A} \)-subspace,
+            take a basis \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_r\} \) of \( W \),
+            and extend it to a basis \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) of \( V \).
+            Then the matrix representation of \( \mathcal{A} \) under this basis takes the block upper triangular form:
+            \[
+            \begin{pmatrix}
+                A & B \\
+                O & C
+            \end{pmatrix}
+            \]
+            where:
+            \begin{itemize}
+                \item \( A \) is the matrix representation of \( \mathcal{A} \) restricted to \( W \) (i.e., \( \mathcal{A}|_W \)) 
+                    under the basis \(\varepsilon_1, \dots, \varepsilon_r\),
+                \item \( C \) is the matrix representation of \( \widetilde{\mathcal{A}} \), 
+                    the linear transformation on the quotient space \( V/W \) induced by \( \mathcal{A} \), 
+                    under the basis \(\varepsilon_{r+1} + W, \dots, \varepsilon_n + W\).
+            \end{itemize}
+            Let the characteristic polynomials of \( \mathcal{A} \), \( \mathcal{A}|_W \), and \( \widetilde{\mathcal{A}} \) 
+            be \( f(\lambda) \), \( f_1(\lambda) \), and \( f_2(\lambda) \), respectively. Then:
+            \[ 
+            f(\lambda) = f_1(\lambda) f_2(\lambda).
+            \]
+    
+        \item Let the matrix representation of \( \mathcal{A} \) under a basis 
+            \(\varepsilon_1, \varepsilon_2, \dots, \varepsilon_r, \varepsilon_{r+1}, \dots, \varepsilon_n\) 
+            of \( V \) take the block upper triangular form:
+            \[
+            \mathcal{A} = 
+            \begin{pmatrix}
+            A & B \\
+            O & C
+            \end{pmatrix}.
+            \]
+            Define \( W = \langle \varepsilon_1, \dots, \varepsilon_r \rangle \). 
+            Then \( W \) is an \( \mathcal{A} \)-subspace, 
+            and the matrix representation of \( \mathcal{A}|_W \)
+            under the basis \(\varepsilon_1, \dots, \varepsilon_r\) is given by \( A \).
+        
+        \item The matrix representation of \( \mathcal{A} \) under a basis of \( V \) 
+            is a block diagonal form 
+            \[
+            \begin{pmatrix}
+                A_1 & O & \cdots & O \\
+                O & A_2 & \cdots & O \\
+                \vdots & \vdots & \ddots & \vdots \\
+                O & O & \cdots & A_s
+            \end{pmatrix}
+            \]
+            if and only if \( V \) can be decomposed into a direct sum of nontrivial \( \mathcal{A} \)-subspaces (\(W_{i}\)):
+            \[
+            V = W_1 \oplus W_2 \oplus \dots \oplus W_s,
+            \]
+            then \( A_i \) represents the matrix form of \( \mathcal{A}|{W_i} \) under a basis of \( W_i \).
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}
+    Let \( V \) be a linear space over field \( F \) (finite or infinite dimensional), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    On \(F[x]\), 
+    \[
+    f(x) = f_{1}(x)f_{2}(x)\cdots f_{s}(x),
+    \]
+    where \( f_{i}(x) \) are pairwise coprime polynomials.
+    Then
+    \[
+    \operatorname{Ker}f(\mathcal{A}) 
+    = \operatorname{Ker}f_{1}(\mathcal{A}) \oplus 
+    \operatorname{Ker}f_{2}(\mathcal{A}) \oplus \cdots \oplus \operatorname{Ker}f_{s}(\mathcal{A}).
+    \]
+\end{proposition}
+
+
 
 \begin{leftbarTitle}{Hamilton-Cayley Theorem}\end{leftbarTitle}
+\begin{theorem}{Hamilton-Cayley Theorem}
+    Let \( V \) be an \( n \)-dimensional linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    Let \( A \) be the matrix representation of \( \mathcal{A} \) under some basis of \( V \),
+    and let \( f(\lambda) = |\lambda E - A| \) be the characteristic polynomial of \( A \).
+    Then:
+    \[
+    f(\mathcal{A}) = 0.
+    \]
+\end{theorem}
+
+\begin{definition}{Root Subspaces}
+\end{definition}
+
 
 \section{Minimal Polynomial}
+\begin{definition}{Minimal Polynomial}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    A polynomial \( f(\lambda) \) is called an \textbf{annihilating polynomial} of \( \mathcal{A} \) if:
+    \[
+    f(\mathcal{A}) = 0.
+    \]
+
+    The monic polynomial \( m(\lambda) \) of least degree such that:
+    \[
+    m(\mathcal{A}) = 0,
+    \]
+    is called the \textbf{minimal polynomial} of \( \mathcal{A} \).
+
+    It is similar for a square matrix \( A \in F^{n \times n} \).
+\end{definition}
+
 
 \section{Diagonalization}
 \begin{lemma}
@@ -1184,21 +1583,34 @@ With the definitions above, we can define the projection transformation as follo
 
 \begin{theorem}
     Let \( V \) be an \( n \)-dimensional linear space over field \( F \),
-    and let \( \mathcal{A}: V \to V \) be a linear transformation on \( V \).
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
     Then the following statements are equivalent:
     \begin{enumerate}
         \item \( \mathcal{A} \) is diagonalizable, i.e., there exists a basis of \( V \)
             such that the matrix representation of \( \mathcal{A} \) under this basis is a diagonal matrix;
         \item There are \( n \) linearly independent eigenvectors (\( \xi_{1}, \xi_{2}, \cdots, \xi_{n} \)) of \( \mathcal{A} \);
-        \item The eigenpolynomial of \( \mathcal{A} \) has \( n \) roots (counting multiplicities) in field \( F \),
-            and for each eigenvalue, the geometric multiplicity equals the algebraic multiplicity;
-        \item \( V \) has a basis consisting entirely of eigenvectors of \( \mathcal{A} \);
+        \item For each eigenvalue of \( \mathcal{A} \), the geometric multiplicity\footnote{
+            The geometric multiplicity of an eigenvalue is the dimension of its corresponding eigenspace,
+            i.e. the number of linearly independent eigenvectors associated with that eigenvalue.
+        } equals the algebraic multiplicity\footnote{
+            The algebraic multiplicity of an eigenvalue is 
+            the number of times it appears as a root of the characteristic polynomial.
+        };
         \item \( V = V_{\lambda_1} \oplus V_{\lambda_2} \oplus \cdots \oplus V_{\lambda_k} \),
-            where \( \lambda_1, \lambda_2, \dots, \lambda_k \) are the distinct eigenvalues of \( \mathcal{A} \).
+            where \( \lambda_1, \lambda_2, \dots, \lambda_k \) are the \underline{distinct} eigenvalues of \( \mathcal{A} \).
+        \item The minimal polynomial\footnote{
+            Since the minimal polynomial is the monic polynomial with least degree 
+            of all annihilating polynomials of \( \mathcal{A} \),
+            the condition also holds for any annihilating polynomial of \( \mathcal{A} \).
+        } of \( \mathcal{A} \) has not repeated roots, 
+            i.e. it can be factored into \underline{distinct} linear factors over field \( F \):
+            \[
+            m(\lambda) = (\lambda - \lambda_1)(\lambda - \lambda_2) \cdots (\lambda - \lambda_k).
+            \]
     \end{enumerate}
 \end{theorem}
 
-\section{Special Matrices (Linear Transformations) and Their Diagonalization}
+\section{Diagonalization of Special Matrices}
 
 
 \chapter{Jordan Forms}
@@ -1207,6 +1619,56 @@ With the definitions above, we can define the projection transformation as follo
 \section{Invariant Factors}
 
 \section{Rational Canonical Form}
+\begin{definition}{Companion Matrix}
+    The Frobenius companion matrix of the monic polynomial
+    \[
+    p(x) = x^n + a_{n-1}x^{n-1} + \cdots + a_1 x + a_0
+    \]
+    is the square matrix defined as follows:
+    \[
+    C(p) = \begin{pmatrix}
+    0 & 0 & \cdots & 0 & -a_0 \\
+    1 & 0 & \cdots & 0 & -a_1 \\
+    0 & 1 & \cdots & 0 & -a_2 \\
+    \vdots & \vdots & \ddots & \vdots & \vdots \\
+    0 & 0 & \cdots & 1 & -a_{n-1}
+    \end{pmatrix}.
+    \]
+\end{definition}
+
+Some authors use the transpose of this matrix, \(C(p)^{T}\), 
+which is more convenient for some purposes such as linear recurrence relations.
+
+\(C(p)\) is defined from the coefficients of \(p(x)\), 
+while the characteristic polynomial as well as the minimal polynomial of \(C(p)\) are equal to \(p(x)\). 
+In this sense, the matrix \(C(p)\) and the polynomial \(p(x)\) are "companions".
+
+\begin{property}
+    \begin{enumerate}
+        \item The characteristic polynomial and minimal polynomial of \( C(p) \) is \( p(x) \) (monic).
+        \item  
+        \item 
+    \end{enumerate}
+\end{property}
+
+\begin{definition}{Frobenius Normal Form (Rational Canonical Form)}
+    Let \( V \) be an \( n \)-dimensional linear space over field \( F \),
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    If there exists a basis of \( V \) such that the matrix representation of \( \mathcal{A} \) under this basis is:
+    \[
+    F = 
+    \begin{pmatrix}
+        C(p_1) & 0 & \cdots & 0 \\
+        0 & C(p_2) & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & C(p_s)
+    \end{pmatrix},
+    \]
+    where \( p_1, p_2, \dots, p_s \) are monic polynomials over field \( F \) such that
+    \( p_1 | p_2 | \cdots | p_s \),
+    then \( F \) is called the \textbf{Frobenius normal form} (or rational canonical form) of \( \mathcal{A} \).
+\end{definition}
+
 
 \section{Elementary Divisors}
 
@@ -1316,17 +1778,59 @@ Y = \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix}.
 \begin{leftbarTitle}{Symmetric Transformations}\end{leftbarTitle}
 \begin{definition}{Symmetric Transformation}
     Let \( V \) be a real inner product space, 
-    and let \( \mathcal{A}: V \to V \) be a linear transformation on \( V \).
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
     If
     \[
     (\mathcal{A}\alpha, \beta) = (\alpha, \mathcal{A}\beta), \quad \forall \alpha, \beta \in V,
     \]
     then \( \mathcal{A} \) is called a \textbf{symmetric transformation} on \( V \).
 \end{definition}
+Obviously, symmetric transformations are linear transformations.
 
 \begin{lemma}
-    
+    \begin{enumerate}
+        \item If \( A \) is real symmetric matrix, then \( A \) has and only has \( n \) real eigenvalues (counting multiplicities). 
+        \item Let \(V\) be a \(n\)-dimensional Euclidean space, 
+            then any linear transformation \( \mathcal{A}: V \to V \) is symmetric if and only if
+            there exists a standard orthonormal basis of \( V \) such that 
+            the matrix representation of \( \mathcal{A} \) under this basis is a symmetric matrix.
+        \item If \( \mathcal{A} \) is a symmetric transformation on a real inner product space \( V \),
+            then if \(W\) is an invariant subspace of \( V \) under \( \mathcal{A} \),
+            then its orthogonal complement \( W^{\perp} \) is also an invariant subspace of \( V \) under \( \mathcal{A} \).
+        \item If \(A\) is a symmetric transformation on a Euclidean space \( V \),
+            then eigenvectors corresponding to distinct eigenvalues are definitely orthogonal.
+    \end{enumerate}
 \end{lemma}
+
+\begin{theorem}{Orthogonal Diagonalization of Symmetric Transformations}
+    Let \( V \) be a \( n \)-dimensional Euclidean space, 
+    and let \( \mathcal{A}: V \to V \) be a symmetric transformation on \( V \).
+    Then there exists a standard orthonormal basis of \( V \) such that 
+    the matrix representation of \( \mathcal{A} \) under this basis is a diagonal matrix.
+    
+    From the perspective of matrices,
+    let \( A \in \mathbb{R}^{n \times n} \) be a real symmetric matrix.
+    Then there exists an orthogonal matrix \( T \) such that:
+    \[
+    T^{-1} A T = T^{\mathrm{T}} A T = \Lambda = 
+        \begin{pmatrix}
+        \lambda_1 & 0 & \cdots & 0 \\
+        0 & \lambda_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \lambda_n
+        \end{pmatrix},
+    \]
+    where \( \lambda_1, \lambda_2, \dots, \lambda_n \) are the eigenvalues of \( A \).
+\end{theorem}
+
+\begin{note}
+    According to the theorem above,
+    for all real quadratic forms \( f(x_1, x_2, \dots, x_n) = X^{\mathrm{T}} A X \),
+    there exists an orthogonal transformation \( X = T Y \) such that:
+    \[
+    f(x_1, x_2, \dots, x_n) = Y^{\mathrm{T}} \Lambda Y = \sum_{i=1}^{n} \lambda_i y_i^2.
+    \]
+\end{note}
 
 \section{Unitary Spaces and Unitary Transformations}
 

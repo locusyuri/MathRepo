@@ -4,6 +4,8 @@
 		"antiderivative",
 		"Antiderivatives",
 		"bivariate",
+		"bmatrix",
+		"circulant",
 		"cokernel",
 		"Coprime",
 		"Darboux",
@@ -11,13 +13,18 @@
 		"eigen",
 		"eigenpolynomial",
 		"eigenspace",
+		"Frobenius",
 		"infimum",
 		"injective",
 		"Lipschitz",
+		"monic",
+		"nilpotent",
 		"Patashnik",
+		"pmatrix",
 		"Pochhammer",
 		"Pointwise",
 		"quasihomogeneous",
+		"Rolle's",
 		"Stieltjes",
 		"Stolz",
 		"submatrices",
@@ -25,6 +32,7 @@
 		"supremum",
 		"termwise",
 		"unital",
-		"Vandermonde"
+		"Vandermonde",
+		"Woodbury"
 	]
 }

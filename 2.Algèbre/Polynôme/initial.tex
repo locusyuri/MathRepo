@@ -88,7 +88,7 @@ This is the preface of the book...
             if \( h(x) \mid f(x) \) and \( h(x) \mid g(x) \), then \( h(x) \mid d(x) \).
     \end{enumerate}
     The greatest common divisor of \( f(x) \) and \( g(x) \), 
-    whose leading coefficient is 1, is denoted as \( \left(f(x), g(x)\right) \).
+    whose leading coefficient is \(1\) (also called \textbf{monic}), is denoted as \( \left(f(x), g(x)\right) \).
 \end{definition}
 
 \begin{property}
@@ -137,7 +137,7 @@ This is the preface of the book...
         \item If \( p(x) \mid f(x)g(x) \), then either \( p(x) \mid f(x) \) or \( p(x) \mid g(x) \).
     \end{enumerate}
 
-    Similarly, \( p(x) \), with a leading coefficient of 1 and degree greater than 0, 
+    Similarly, monic polynomial \( p(x) \), with degree greater than \(0\), 
     is a power of an irreducible polynomial over the field \( P \)
     if and only if for all \( f(x), g(x) \in P[x] \),
     \begin{enumerate}
@@ -157,6 +157,72 @@ This is the preface of the book...
 \begin{lemma}{Gauss's Lemma}
     The product of two primitive polynomials is also a primitive polynomial.
 \end{lemma}
+
+\section{Root of Unity}
+\begin{definition}{Root of Unity}
+    Let \( P \) be a number field and \( n \in \mathbb{N}^{*} \). 
+    An element \( \omega \in P \) is called an \( n \)-th root of unity 
+    if it satisfies the equation \( x^n - 1 = 0 \), i.e., \( \omega^n = 1 \).
+\end{definition}
+
+Unless otherwise specified, the roots of unity may be taken to be complex numbers, 
+and in this case, the \( n \)-th roots of unity are
+\[
+\omega_k = \exp{\frac{2k\pi i}{n}} = \cos\left(\frac{2k\pi}{n}\right) + i\sin\left(\frac{2k\pi}{n}\right), 
+\quad k = 0, 1, \ldots, n-1.
+\]
+
+Obviously, the modulus of each \( n \)-th root of unity is 1, i.e., \( |\omega_k| = 1 \),
+and they are evenly distributed on the unit circle in the complex plane,
+with an angle of \( \frac{2\pi}{n} \) between adjacent roots.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/Visualisation_complex_number_roots.png}
+\end{figure}
+
+\begin{property}
+    \begin{enumerate}
+        \item The \( n \)-th roots of unity form a \underline{cyclic group} under multiplication, 
+            with \( \omega = \exp{\frac{2\pi i}{n}} \) as a generator.
+    \end{enumerate}
+\end{property}
+
+\begin{proposition}{Formulas for Sums and Differences of Powers}
+    For \(n \in \mathbb{N^+}\) and \(n\) being odd:
+    \[
+    a^n + b^n = (a+b)\big(a^{n-1}b^0 - a^{n-2}b^1 + a^{n-3}b^2 - \cdots - a^1b^{n-2} + a^0b^{n-1}\big).
+    \]
+    When \(n\) is even, there is no general formula for the \(n\)-th power sum.
+
+    For \(n \in \mathbb{N^+}\):
+    \[
+    a^n - b^n = (a-b)\big(a^{n-1}b^0 + a^{n-2}b^1 + a^{n-3}b^2 + \cdots + a^0b^{n-1}\big).
+    \]
+
+    Commonly used special cases:
+    \[
+    a^2 - b^2 = (a+b)(a-b).
+    \]
+    \[
+    a^3 + b^3 = (a+b)(a^2 - ab + b^2), \quad a^3 - b^3 = (a-b)(a^2 + ab + b^2).
+    \]
+    \[
+    \begin{aligned}
+    a^4 - b^4 &= (a^2 + b^2)(a^2 - b^2) = (a^2 + b^2)(a+b)(a-b), \\
+    &= (a-b)(a^3 + a^2b + ab^2 + b^3).
+    \end{aligned}
+    \]
+    When \(b=1\),
+    \[
+    x^n + 1 = (x+1)\big(x^{n-1} - x^{n-2} + x^{n-3} - \cdots + x - 1\big), \quad n \in \mathbb{N^+}, \, n \text{ is odd}.
+    \]
+    \[
+    x^n - 1 = (x-1)\big(x^{n-1} + x^{n-2} + x^{n-3} + \cdots + x + 1\big), \quad n \in \mathbb{N^+}.
+    \]
+\end{proposition}
+
+
 
 \chapter{Integral Polynomials and Rational Polynomials}
 

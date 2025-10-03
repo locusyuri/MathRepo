@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  29 SEP 2025 21:53
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  3 OCT 2025 11:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1449,68 +1449,68 @@ Chapter 1.
 
 
 ]
-
-[2]
 Chapter 2.
 
 
-[3
+[2
+
+]
+
+[3]
+Chapter 3.
+
+
+[4
 
 ]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 278.
+(Font)              scaled to size 6.0pt on input line 285.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
-(Font)              scaled to size 10.95pt on input line 281.
+(Font)              scaled to size 10.95pt on input line 288.
 
-
-[4]
 
 [5]
 
 [6]
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 448.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 448.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 450.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 450.
-
 
 [7]
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 8.0pt on input line 455.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
+(Font)              scaled to size 8.0pt on input line 455.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 9.0pt on input line 457.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
+(Font)              scaled to size 6.0pt on input line 457.
+
 
 [8]
-Chapter 3.
+
+[9]
+Chapter 4.
 
 
-[9
+[10
 
 ]
-
-[10]
 
 [11]
 
 [12]
-Chapter 4.
 
-
-[13
-
-]
+[13]
 
 [14]
+
+[15]
+
+[16]
 Chapter 5.
 
 
-[15
+[17
 
 ]
-
-[16]
-
-[17]
 
 [18]
 Chapter 6.
@@ -1521,28 +1521,53 @@ Chapter 6.
 ]
 
 [20]
+
+[21]
+
+[22]
 Chapter 7.
-
-
-[21
-
-]
-Chapter 8.
-
-
-[22
-
-]
-Chapter 9.
 
 
 [23
 
 ]
+Underfull \hbox (badness 1178) in paragraph at lines 1459--1463
+[]\TU/GaramondPremrPro-Disp(0)/m/n/10.95 Let $\OML/cmm/m/it/10.95 W$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 be a nontrivial $\OMS/cmsy/m/n/10.95 A$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 -subspace, take a basis $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 "[]; "[]; [] ; "[]\OMS/cmsy/m/n/10.95 g$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 of $\OML/cmm/m/it/10.95 W$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 , and extend it to a basis
+ []
+
+
 
 [24]
 
-[25
+[25]
+
+[26]
+Chapter 8.
+
+
+[27
+
+]
+
+[28]
+Chapter 9.
+
+
+[29
+
+]
+Chapter 10.
+
+
+[30
+
+]
+
+[31]
+
+[32]
+
+[33
 
 ] (./tmp/initial.aux)
  ***********
@@ -1550,18 +1575,18 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 9411165DDB49957E2146C860074477C5;10779.
+(rerunfilecheck)             Checksum: 1DB2FC7DE4F5723A59B9E720E5ED8AB0;11013.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46088 strings out of 473831
- 957503 string characters out of 5733137
- 1994518 words of memory out of 5000000
- 68319 multiletter control sequences out of 15000+600000
- 569101 words of font info for 167 fonts, out of 8000000 for 9000
+ 46133 strings out of 473831
+ 958299 string characters out of 5733137
+ 1994775 words of memory out of 5000000
+ 68363 multiletter control sequences out of 15000+600000
+ 569109 words of font info for 168 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (29 pages).
+Output written on ./tmp/initial.pdf (37 pages).

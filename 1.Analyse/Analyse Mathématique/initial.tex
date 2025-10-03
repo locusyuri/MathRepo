@@ -529,6 +529,46 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 \end{theorem}
 
 
+\vspace{0.7cm}
+\begin{note}
+The following types of problems commonly appear in proofs related to intermediate values in differential calculus:
+\begin{enumerate}
+    \item Prove the existence of a point \(\xi\) such that \(F(\xi, f(\xi), f'(\xi)) = 0\).
+        Problems of this type generally involve constructing auxiliary functions and applying Rolle's theorem. 
+        The commonly used auxiliary functions include:
+        \[
+        \begin{aligned}
+        \xi f'(\xi) + f(\xi) &= 0, \quad x f(x), \\
+        \xi f'(\xi) + nf(\xi) &= 0, \quad x^n f(x), \\
+        \xi f'(\xi) - f(\xi) &= 0, \quad e^x f(x), \\
+        f'(\xi) + \lambda f(\xi) &= 0, \quad e^{-x} f(x), \\
+        f'(\xi) + f(\xi) &= 0, \quad x^n f(x), \\
+        f'(\xi) - f(\xi) &= 0, \quad x f(x). \\
+        \end{aligned}
+        \]
+    
+    \item Prove the existence of two points \(\xi, \eta\) (i.e., two intermediate values) 
+        such that \(F(\xi, f(\xi), f'(\xi), \eta, f(\eta), f'(\eta)) = 0\).
+        These problems can be divided into the following categories:
+        \begin{description}
+            \item [\(\xi \neq \eta\)] Problems of this type usually occur in the same interval \([a, b]\) and 
+                employ theorems of \underline{double} differentiation intermediate values 
+                such as the Lagrange mean value theorem or Cauchy's mean value theorem. 
+                The specific choice of auxiliary functions often includes terms like \(\xi\) and 
+                other variables determined after \underline{decomposition}.
+            \item [\(\xi = \eta\)] Such problems cannot occur within the same interval \([a, b]\). 
+                They use double differentiation mean value theorems by \underline{splitting} \([a, b]\) into 
+                two intervals \([a,c]\) and \([c,b]\), 
+                applying the Lagrange mean value theorem separately to each interval. 
+                Here, the \underline{selection} of \(\xi\) and \(\eta\) is key.
+        \end{description}
+
+    \item As a rule, when conditions in a theorem involve additional constraints about \underline{higher-order} derivatives, 
+        it is necessary to use Taylor's intermediate value theorem.
+\end{enumerate}
+\end{note}
+
+
 
 \section{Theorems and Applications concerning Derivatives}
 
