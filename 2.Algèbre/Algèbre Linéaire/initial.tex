@@ -1364,6 +1364,74 @@ With the definitions above, we can define the projection transformation as follo
 
 \chapter{Diagonalization}
 \section{Similarity of Matrices}
+\begin{definition}{Similar Matrices}
+    Let \( A, B \in F^{n \times n} \) be two square matrices over field \( F \).
+    If there exists an invertible matrix \( P \in F^{n \times n} \) such that:
+    \[
+    B = P^{-1} A P,
+    \]
+    then \( A \) is said to be \textbf{similar} to \( B \), denoted as \( A \sim B \),
+    and \( B \) is called a \textbf{similarity transformation} of \( A \).
+\end{definition}
+
+\begin{definition}{Trace}
+    Let \( A = (a_{ij})_{n \times n} \in F^{n \times n} \) be a square matrix over field \( F \).
+    The sum of the diagonal elements of \( A \):
+    \[
+    \operatorname{tr}(A) = a_{11} + a_{22} + \cdots + a_{nn},
+    \]
+    is called the \textbf{trace} of \( A \).
+\end{definition}
+
+Obviously, similarity is an equivalence relation on the set of square matrices of the same order,
+i.e, it satisfies reflexivity, symmetry, and transitivity.
+
+It is easy to verify that the arithmetic properties of traces hold, for any \( A, B \in F^{n \times n}, k \in F \):
+\begin{gather*}
+    \operatorname{tr}(A + B) = \operatorname{tr}(A) + \operatorname{tr}(B), \\
+    \operatorname{tr}(kA) = k \operatorname{tr}(A), \\
+    \operatorname{tr}(AB) = \operatorname{tr}(BA).
+\end{gather*}
+From the third property, it can be derived that the trace of an \(n\times n\) matrix is a commutative quantity 
+extracted from the non-commutativity of matrix multiplication.
+
+In the meanwhile, we have the arithmetic properties of similarity, if \(B_{1} = P^{-1} A_{1} P, B_{2} = P^{-1} A_{2} P\):
+\begin{gather*}
+    B_{1} + B_{2} = P^{-1}(A_{1} + A_{2})P, \\
+    B_{1} B_{2} = P^{-1}(A_{1} A_{2})P, \\
+    B_{1}^{k} = P^{-1} A_{1}^{k} P, \quad k = 1, 2, \dots
+\end{gather*}
+The third property is called the \textbf{similarity invariance of matrix powers}.
+From it, we can derive some important applications:
+\begin{description}
+    \item[Eigenvalue invariance] Matrix similarity guarantees the preservation of eigenvalues. 
+        Therefore, if \(A\) and \(B\) are similar matrices, then the eigenvalues of \(A^k\) and \(B^k\) are also identical. 
+        For any eigenvalue \( \lambda \): If \( \lambda \) is an eigenvalue of \( A \), 
+        then \( \lambda^k \) is an eigenvalue of \( A^k \) (the power corresponds to the operation).
+    \item[The result of diagonalization is invariant] If a matrix \( A \) is diagonalizable, that is, 
+        there exists an invertible matrix \( P \) and a diagonal matrix \( D \) 
+        such that \( A = P^{-1} D P \), then: \( A^k = P^{-1} D^k P \). 
+        In other words, calculating \( A^k \) after diagonalization becomes simple. 
+        You only need to perform the power operation on the diagonal matrix \( D \), 
+        and then transform the result back to the original basis by a similarity transformation.
+    \item[The Convenience of Jordan Form] Even if a matrix \( A \) is not diagonalizable, 
+        it can still be similar to a Jordan form matrix \( J \). 
+        In this case: \( A^k = P^{-1} J^k P \), 
+        where the calculation of \( J^k \) can still be done block by block on the Jordan blocks. 
+        This property is extremely important when dealing with powers of non-diagonalizable matrices.
+    \item[Generalization of Matrix Functions] The power relations of matrices can be used to derive operations of matrix functions. 
+        For example, the exponential function of a matrix is defined as \(e^{A} = \sum_{k=0}^{\infty} \frac{A^{k}}{k!} \). 
+        If \( B = P^{-1}AP \), then: \( e^{B} = P^{-1}e^{A}P \). 
+        Similarly, other matrix functions (such as logarithm, power functions, etc.) also possess similar properties.
+\end{description}
+
+\vspace{0.7cm}
+In summary, the determinant, rank, and trace of a matrix are invariants\footnote{
+    And also include the characteristic polynomial, eigenvalues, and eigenvectors in next section.
+} under similarity relations, 
+and are collectively referred to as \textbf{similarity invariants}.
+
+
 \section{Eigenvectors and Eigenvalues}
 \begin{definition}{Eigenvalues and Eigenvectors}
     Let \( V \) be a linear space over field \( F \), 
@@ -1402,6 +1470,27 @@ With the definitions above, we can define the projection transformation as follo
     under some basis of \( V \), and \( E \) is the identity matrix.
 \end{definition}
 
+\begin{remark}
+    For example, in \(P[x]_{n}\quad (n>1)\), the eigenpolynomial of linear transformation \( \mathcal{D} \) (derivation)
+    is \( f(\lambda) = \lambda^n \).
+\end{remark}
+
+The roots of the eigenpolynomial $\lvert \lambda E-A \rvert$ correspond to the eigenvalues of $A$; 
+the non-zero solutions to the homogeneous system of equations $(\lambda_{0}E-A)x=0$ 
+correspond to the eigenvectors belonging to the eigenvalue $\lambda_{0}$.
+It is easy to verify that the eigenpolynomial as well as the eigenvalues, eigenvectors is invariant under similarity relations.
+
+
+\begin{proposition}
+    Let \( A \in F^{n \times n} \), the eigenpolynomial of \( A \) is \( f(\lambda) = |\lambda E - A| \).
+    Then \( f(\lambda) \) is a monic polynomial of degree \( n \):
+    \[
+    f(\lambda) = \lambda^n - \operatorname{tr}(A)\lambda^{n-1} + \cdots + (-1)^n |A|,
+    \]
+    where the coefficient of \( \lambda^{n-k}\quad(1 \leqslant k < n) \) is 
+    the sum of all \( k \)-order principal minors of \( A \) multiplied by \( (-1)^k \).  
+\end{proposition}
+
 
 \begin{definition}{Eigen-Subspace}
     Let \( V \) be a linear space over field \( F \), 
@@ -1417,8 +1506,26 @@ With the definitions above, we can define the projection transformation as follo
     and solution space of the equation system \( ( \lambda E - \mathcal{A})X = 0 \).
 \end{definition}
 
+\begin{definition}{Geometric and Algebraic Multiplicity of Eigenvalues}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    For an eigenvalue \( \lambda \) of \( \mathcal{A} \):
+    \begin{itemize}
+        \item The dimension of the eigen-subspace \( V_{\lambda} = \operatorname{Ker}(\mathcal{A} - \lambda \mathcal{E}) \)
+            is called the \textbf{geometric multiplicity} of the eigenvalue \( \lambda \).
+        \item The multiplicity of \( \lambda \) as a root of the eigenpolynomial \( f(\lambda) = |\lambda E - A| \)
+            is called the \textbf{algebraic multiplicity} of the eigenvalue \( \lambda \).
+    \end{itemize}
+\end{definition}
 
-
+\begin{property}
+    For an eigenvalue \( \lambda \) of \( \mathcal{A} \),
+    let \( g(\lambda) \) and \( a(\lambda) \) be the geometric and algebraic multiplicities of \( \lambda \), respectively.
+    Then:
+    \[
+    1 \leqslant g(\lambda) \leqslant a(\lambda) \leqslant n.
+    \]
+\end{property}
 
 \section{Space Decomposition}
 
@@ -1589,13 +1696,7 @@ With the definitions above, we can define the projection transformation as follo
         \item \( \mathcal{A} \) is diagonalizable, i.e., there exists a basis of \( V \)
             such that the matrix representation of \( \mathcal{A} \) under this basis is a diagonal matrix;
         \item There are \( n \) linearly independent eigenvectors (\( \xi_{1}, \xi_{2}, \cdots, \xi_{n} \)) of \( \mathcal{A} \);
-        \item For each eigenvalue of \( \mathcal{A} \), the geometric multiplicity\footnote{
-            The geometric multiplicity of an eigenvalue is the dimension of its corresponding eigenspace,
-            i.e. the number of linearly independent eigenvectors associated with that eigenvalue.
-        } equals the algebraic multiplicity\footnote{
-            The algebraic multiplicity of an eigenvalue is 
-            the number of times it appears as a root of the characteristic polynomial.
-        };
+        \item For each eigenvalue of \( \mathcal{A} \), the geometric multiplicity equals the algebraic multiplicity;
         \item \( V = V_{\lambda_1} \oplus V_{\lambda_2} \oplus \cdots \oplus V_{\lambda_k} \),
             where \( \lambda_1, \lambda_2, \dots, \lambda_k \) are the \underline{distinct} eigenvalues of \( \mathcal{A} \).
         \item The minimal polynomial\footnote{

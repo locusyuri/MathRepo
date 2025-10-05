@@ -31,27 +31,27 @@
 \contentsline {section}{\numberline {6.5}Linear Functions and Dual Spaces}{22}{section.6.5}%
 \contentsline {chapter}{\numberline {7}Diagonalization}{23}{chapter.7}%
 \contentsline {section}{\numberline {7.1}Similarity of Matrices}{23}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Eigenvectors and Eigenvalues}{23}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Space Decomposition}{23}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Minimal Polynomial}{25}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Diagonalization}{25}{section.7.5}%
-\contentsline {section}{\numberline {7.6}Diagonalization of Special Matrices}{26}{section.7.6}%
-\contentsline {chapter}{\numberline {8}Jordan Forms}{27}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Polynomial Matrices}{27}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Invariant Factors}{27}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Rational Canonical Form}{27}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Elementary Divisors}{28}{section.8.4}%
-\contentsline {section}{\numberline {8.5}Jordan Canonical Form}{28}{section.8.5}%
-\contentsline {chapter}{\numberline {9}Quadratic Forms}{29}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Quadratic Forms and Their Standard Forms}{29}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Canonical Forms}{29}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Definite Quadratic Forms}{29}{section.9.3}%
-\contentsline {chapter}{\numberline {10}Inner Product Spaces}{30}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Bilinear Forms}{30}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Real Inner Product Spaces}{30}{section.10.2}%
-\contentsline {section}{\numberline {10.3}Metric Matrices and Standard Orthonormal Bases}{30}{section.10.3}%
-\contentsline {section}{\numberline {10.4}Isomorphism of Real Inner Product Spaces}{31}{section.10.4}%
-\contentsline {section}{\numberline {10.5}Orthogonal Completion and Orthogonal Projection}{31}{section.10.5}%
-\contentsline {section}{\numberline {10.6}Orthogonal Transformations and Symmetric Transformations}{31}{section.10.6}%
-\contentsline {section}{\numberline {10.7}Unitary Spaces and Unitary Transformations}{32}{section.10.7}%
-\contentsline {section}{\numberline {10.8}Symplectic Spaces}{32}{section.10.8}%
+\contentsline {section}{\numberline {7.2}Eigenvectors and Eigenvalues}{24}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Space Decomposition}{25}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Minimal Polynomial}{27}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Diagonalization}{27}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Diagonalization of Special Matrices}{28}{section.7.6}%
+\contentsline {chapter}{\numberline {8}Jordan Forms}{29}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Polynomial Matrices}{29}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Invariant Factors}{29}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Rational Canonical Form}{29}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Elementary Divisors}{30}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Jordan Canonical Form}{30}{section.8.5}%
+\contentsline {chapter}{\numberline {9}Quadratic Forms}{31}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Quadratic Forms and Their Standard Forms}{31}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Canonical Forms}{31}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Definite Quadratic Forms}{31}{section.9.3}%
+\contentsline {chapter}{\numberline {10}Inner Product Spaces}{32}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Bilinear Forms}{32}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Real Inner Product Spaces}{32}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Metric Matrices and Standard Orthonormal Bases}{32}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Isomorphism of Real Inner Product Spaces}{33}{section.10.4}%
+\contentsline {section}{\numberline {10.5}Orthogonal Completion and Orthogonal Projection}{33}{section.10.5}%
+\contentsline {section}{\numberline {10.6}Orthogonal Transformations and Symmetric Transformations}{33}{section.10.6}%
+\contentsline {section}{\numberline {10.7}Unitary Spaces and Unitary Transformations}{34}{section.10.7}%
+\contentsline {section}{\numberline {10.8}Symplectic Spaces}{34}{section.10.8}%

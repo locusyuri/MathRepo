@@ -518,6 +518,41 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 
 \section{Higher-Order Derivatives}
 
+Some useful formulas of higher-order derivatives:
+\begin{gather*}
+    (a^{x})^{(n)} = (\ln a)^n a^x,\\
+    (\sin \alpha x)^{(n)} = \alpha^n \sin\left(\alpha x + \frac{n\pi}{2}\right), \\
+    (\cos \alpha x)^{(n)} = \alpha^n \cos\left(\alpha x + \frac{n\pi}{2}\right),\\
+    (\ln x)^{(n)} = \frac{(-1)^{n-1}(n-1)!}{x^n}, \\ 
+    (x^\alpha)^{(n)} = \alpha(\alpha-1)\cdots(\alpha-n+1)x^{\alpha-n}.
+\end{gather*}
+
+In order to obtain the higher-order derivative of two or more functions' linear combination and product,
+we need to use the following theorems.
+
+\begin{theorem}{Linear Operation of Higher-Order Derivatives}
+    If \(f,g\in D^{(n)}(I)\), then for any constants \(c_{1}, c_{2}\in \mathbb{R}\),
+    \[
+        (c_{1}f + c_{2}g)^{(n)} = c_{1}f^{(n)} + c_{2}g^{(n)}.
+    \]
+\end{theorem}
+
+\begin{theorem}{Leibniz's Formula}
+    If \(f,g\in D^{(n)}(I)\), then
+    \[
+        (fg)^{(n)} = \sum_{k=0}^{n} \binom{n}{k} f^{(k)} g^{(n-k)}.
+    \]
+\end{theorem}
+
+\begin{caution}
+    Note the distinction: 
+    \begin{itemize}
+        \item \(\mathrm{d}x^2\) represents the square of the differential of the independent variable, i.e., \((\mathrm{d}x)^2\);
+        \item \(\mathrm{d}^2x\) represents the second differential of the independent variable, \(\mathrm{d}(\mathrm{d}x)\);
+        \item \(\mathrm{d}(x^2)\) represents the differential of \(x^2\), which is \(2x\mathrm{d}x\).
+    \end{itemize}
+\end{caution}
+
 \section{Differential Mean Value Theorems}
 \begin{definition}{Argmax and Argmin}
     Let \(f(x)\) is defined on \((a,b)\), \(x_{0}\in (a,b)\).
@@ -527,6 +562,7 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 
     The definition of the argmin is analogous.
 \end{definition}
+
 
 \begin{lemma}{Fermat's Lemma}
     If \(f\) is differentiable at \(x_{0}\) which is a local extremum, then \(f'(x_{0}) = 0\).
@@ -617,7 +653,86 @@ The following types of problems commonly appear in proofs related to intermediat
 
 \begin{leftbarTitle}{Taylor Formula}\end{leftbarTitle}
 
-\begin{leftbarTitle}{Macklaurin Formula}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Maclaurin Formula}\end{leftbarTitle}
+\begin{lemma}
+    If \(f(x)\) has \(n+2\) derivatives in some neighborhood of \(x_{0}\), 
+    then the derivative of its \(n+1\)th degree Taylor polynomial 
+    is exactly the \(n\)th degree Taylor polynomial of \(f'(x)\).
+\end{lemma}
+
+Taylor formula at \(x_{0} = 0\) is called the \textbf{Maclaurin formula}.
+Some common Maclaurin formulas are as follows:
+\begin{gather*}
+    e^{x} = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots + \frac{x^n}{n!} + o(x^n), \\
+    \ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \cdots + (-1)^{n-1}\frac{x^n}{n} + o(x^n), \\
+\end{gather*}
+\begin{gather*}
+    \sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots + (-1)^{n-1}\frac{x^{2n-1}}{(2n-1)!} + o(x^{2n}), \\
+    \cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots + (-1)^{n}\frac{x^{2n}}{(2n)!} + o(x^{2n+1}), \\
+\end{gather*}
+\begin{gather*}
+    \arctan x = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots + (-1)^{n-1}\frac{x^{2n-1}}{2n-1} + o(x^{2n}), \\
+    \arcsin x = x + \frac{1}{2}\frac{x^3}{3} + \frac{1\cdot 3}{2\cdot 4}\frac{x^5}{5} + \cdots + 
+        \frac{(2n-1)!!}{(2n)!!}\frac{x^{2n+1}}{2n+1} + o(x^{2n+2}). \\
+\end{gather*}
+Specially, 
+\[
+(1+x)^{\alpha} = \sum_{k=0}^{\alpha} \binom{\alpha}{k} x^k + o(x^{n}),
+\]
+\begin{itemize}
+    \item if \(\alpha = n\in \mathbb{N}^{+}\), that is Newton's binomial formula 
+        \((1+x)^n = 1 + \binom{n}{1}x + \binom{n}{2}x^2 + \cdots + \binom{n}{n}x^n\); 
+    \item if \(\alpha = \frac{1}{2}\), then
+        \((1+x)^{\frac{1}{2}} = 1 + \frac{1}{2}x - \frac{1}{8}x^2 + \cdots\);
+    \item if \(\alpha = -1\), then
+        \((1+x)^{-1} = 1 - x + x^2 - x^3 + \cdots\);
+    \item if \(\alpha = -\frac{1}{2}\), then
+        \((1+x)^{-\frac{1}{2}} = 1 - \frac{1}{2}x + \frac{3}{8}x^2 - \cdots\).
+\end{itemize}
+
+\begin{leftbarTitle}{Euler and Bernoulli Numbers}\end{leftbarTitle}
+\begin{definition}{Euler Numbers}
+    The Euler numbers \(E_n\) are defined by the Taylor series expansion of the secant function:
+    \[
+        \operatorname{sech} x = \frac{2}{e^x + e^{-x}} = \sum_{n=0}^{\infty} E_n \frac{x^n}{n!}.
+    \]
+    The odd-indexed Euler numbers are all zero. 
+    The even-indexed ones have alternating signs. Some values are:
+    \[
+        E_0 = 1, \quad E_2 = -1, \quad E_4 = 5, \quad E_6 = -61, \quad E_8 = 1385.
+    \]
+\end{definition}
+
+\begin{definition}{Bernoulli Numbers}
+    The Bernoulli numbers \(B_n\) are defined by the Taylor series expansion of the function \(\frac{x}{e^x - 1}\):
+    \[
+        \frac{x}{e^x - 1} = \sum_{n=0}^{\infty} B_n \frac{x^n}{n!}.
+    \]
+    Some values are:
+    \[
+        B_0 = 1, \quad B_2 = \frac{1}{6}, \quad B_4 = -\frac{1}{30}, \quad B_6 = \frac{1}{42}, \quad B_8 = -\frac{1}{30}.
+    \]
+    Notably, all odd-indexed Bernoulli numbers (except \(B_1 = -\frac{1}{2}\)) are zero.
+\end{definition}
+
+\begin{remark}
+    Euler and Bernoulli numbers are widely used in number theory, combinatorics, and numerical analysis.
+    For example, in the infinite series:
+    \[
+    \sum_{n=1}^{\infty}  \frac{1}{n^{2k}} = (-1)^{k-1} \frac{(2\pi)^{2k}}{2(2k)!} B_{2k},\quad k \in \mathbb{N}^{+},
+    \]
+    when \(k=1\), it gives the famous Basel problem result:
+    \[
+    \sum_{n=1}^{\infty}  \frac{1}{n^{2}} = \frac{\pi^2}{6}.
+    \]
+\end{remark}
+
+With the help of Bernoulli numbers, we have
+\[
+\tan x = \sum_{n=0}^{\infty} \frac{B_{2n}}{2n} \frac{x^{2n}}{(2n)!} = 
+x + \frac{x^3}{3} + \frac{2}{15}x^5 + \cdots.
+\]
 
 
 \section{Properties of Functions}
@@ -736,8 +851,15 @@ Some common substitutions are as follows:
             \item[Tangent] \( \sqrt{a^2 + x^2} \): \( x = a \tan t \) or \( x = a \sinh t \)
             \item[Secant] \( \sqrt{x^2 - a^2} \): \( x = a \sec t \) or \( x = a \cosh t \)
         \end{description}
-    \item[Irreational Substitution]
-    \item[Reciprocal Substitution]
+    \item[Irreational Substitution] 
+        \begin{itemize}
+            \item If the integrand contains \( \sqrt[n]{x} \),
+                one can use the substitution \( t = \sqrt[n]{x} \) to simplify the expression.
+            \item If the integrand contains \( \sqrt[n]{\frac{\alpha x + \beta}{\gamma x + \delta}} \),
+                one can use the substitution \( t = \sqrt[n]{\frac{\alpha x + \beta}{\gamma x + \delta}} \) to simplify the expression.
+        \end{itemize}
+    \item[Reciprocal Substitution] If the degree of the numerator is lower than that of the denominator according to \(x\) 
+        one can use the substitution \( x = \frac{1}{t} \) to reduce the degree.
 \end{description}
 
 \begin{leftbarTitle}{Basic Integration Formulas}\end{leftbarTitle}
@@ -1680,6 +1802,39 @@ The series \( \sum_{n=1}^{\infty} a_n \) is said to converge faster than the ser
 
 
 \section{Infinite Products}
+\begin{leftbarTitle}{Infinite Products}\end{leftbarTitle}
+
+
+\begin{leftbarTitle}{Two Formulas}\end{leftbarTitle}
+\begin{theorem}{Wallis Formula}
+    \[
+    \lim_{n \to \infty} \frac{1}{2n+1} \left[ \frac{(2n)!!}{(2n-1)!!} \right]^{2}  = \frac{\pi}{2}.
+    \]
+    Equivalently (\(n\to +\infty\)),
+    \begin{gather*}
+        \frac{(2n)!!}{(2n-1)!!} \sim \sqrt{\pi n}, \\
+        \frac{(n!)^{2}2^{2n}}{(2n)!} \sim \sqrt{\pi n}.
+    \end{gather*}
+\end{theorem}
+
+
+\begin{theorem}{Stirling Formula}
+    \[
+    n! = \sqrt{2\pi n} \left( \frac{n}{e} \right)^n 
+    \left( 1 + \frac{1}{12n} - \frac{1}{288n^2} + \frac{139}{51840n^3} - \frac{571}{2488320n^4} + \cdots 
+    + \frac{B_{2n}}{2k(2k-1) n^{k}} + \cdots  \right),
+    \]
+    where \( B_{2k} \) are Bernoulli numbers of order \( 2k \).
+    Simplified form:
+    \[
+    n! \sim \sqrt{2\pi n} \left( \frac{n}{e} \right)^{n} \quad (n \to +\infty),
+    \]
+    or
+    \[
+    n! = \sqrt{2\pi n} \left( \frac{n}{e} \right)^{n} e^{\theta_n}, \quad \frac{1}{12n+1} < \theta_n < \frac{1}{12n}.
+    \]
+\end{theorem}
+
 
 \section{Special Series}
 
@@ -3246,7 +3401,7 @@ and
 
 \section{Differential Forms}
 
-
+\chapter{Curvilinear Integrals and Surface Integrals}
 
 
 
