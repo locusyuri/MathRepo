@@ -21,6 +21,7 @@ This is a repository for mathematical notes. The directory structure is as follo
 
 
 ## 3.Géométrie
+- [Géométrie Analytique](./3.Géométrie/Géométrie%20Analytique/tmp/initial.pdf)
 
 
 ## 4.Mathématiques appliquées
