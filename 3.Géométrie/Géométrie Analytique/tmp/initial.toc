@@ -11,14 +11,15 @@
 \contentsline {chapter}{\numberline {4}Planes and Space Lines}{4}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Equations of Planes}{4}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Linear Equations}{5}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Relative Positions of Points, Lines and Planes}{5}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Pencil of Planes and Lines}{5}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Common Surfaces}{6}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Cylinder Surfaces}{6}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Cone Surfaces}{6}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Surfaces of Revolution}{6}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Quadric Surfaces}{6}{section.5.4}%
-\contentsline {chapter}{\numberline {6}Conic Sections}{7}{chapter.6}%
-\contentsline {section}{\numberline {6.1}General Equation of Conic Sections}{7}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Conic Sections and Lines}{7}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Simplification of Conic Equations}{7}{section.6.3}%
+\contentsline {section}{\numberline {4.3}Relative Positions of Points, Lines and Planes}{7}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Pencil of Planes and Lines}{7}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Common Surfaces}{8}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Cylinder Surfaces}{8}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Cone Surfaces}{9}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Surfaces of Revolution}{10}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Quadric Surfaces}{12}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Ruled Surfaces}{12}{section.5.5}%
+\contentsline {chapter}{\numberline {6}Conic Sections}{13}{chapter.6}%
+\contentsline {section}{\numberline {6.1}General Equation of Conic Sections}{13}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Conic Sections and Lines}{13}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Simplification of Conic Equations}{13}{section.6.3}%

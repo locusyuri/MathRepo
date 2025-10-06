@@ -1,8 +1,8 @@
 \documentclass[11pt]{elegantbook}
 % \documentclass{11pt}{../../TexTemplate/elegantbook} % 这里是文档类，默认使用 elegantbook
-
+\documentclass{article}
 \title{BookName} % 这里放置书名
-% \subtitle{Subtitle} % 这里放置副标题
+\subtitle{Subtitle} % 这里放置副标题
 
 \author{CatMono} % 这里放置作者名
 \date{July, 2025} % 这里放置日期
@@ -24,7 +24,7 @@
 \colorlet{coverlinecolor}{customcolor}
 \usepackage{cprotect} % 保护命令参数不被 LaTeX 解析器过早处理，允许在某些特殊环境中使用脆弱命令（fragile commands）。
 \usepackage{xeCJK} % 使用 xeCJK 包支持中文
-
+\usepackage{amsmath} % 使用 amsmath 包支持数学公式
 
 % ===== 开始文档 =====
 \begin{document}
@@ -48,6 +48,7 @@ This is the preface of the book...
 \chapter{Chapter Title} % 这里放置章节标题
 \section{Section Title} % 这里放置小节标题
 \subsection{Subsection Title} % 这里放置子小节标题
+aaaaaaaa
 
 
 \begin{thebibliography}{99} 
