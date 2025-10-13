@@ -18,8 +18,9 @@
 \contentsline {section}{\numberline {5.2}Cone Surfaces}{9}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Surfaces of Revolution}{10}{section.5.3}%
 \contentsline {section}{\numberline {5.4}Quadric Surfaces}{12}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Ruled Surfaces}{12}{section.5.5}%
-\contentsline {chapter}{\numberline {6}Conic Sections}{13}{chapter.6}%
-\contentsline {section}{\numberline {6.1}General Equation of Conic Sections}{13}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Conic Sections and Lines}{13}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Simplification of Conic Equations}{13}{section.6.3}%
+\contentsline {section}{\numberline {5.5}Ruled Surfaces}{16}{section.5.5}%
+\contentsline {chapter}{\numberline {6}Conic Sections}{18}{chapter.6}%
+\contentsline {section}{\numberline {6.1}General Equation of Conic Sections}{18}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Conic Sections and Lines}{18}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Simplification of Conic Equations}{18}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Quadric Surfaces}{19}{chapter.7}%

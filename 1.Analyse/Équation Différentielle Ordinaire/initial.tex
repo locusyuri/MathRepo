@@ -119,8 +119,10 @@ Let $y = \phi(x)$ be a solution to equation~\eqref{eq:plain ODE} that also satis
 \begin{equation}\label{eq:initial conditions}
     \phi(x_0) = y_0, \quad \phi'(x_0) = y_0', \dots, \quad \phi^{(n-1)}(x_0) = y_0^{(n-1)}.
 \end{equation}
-The conditions~\eqref{eq:initial conditions} are called the initial conditions for equation~\eqref{eq:plain ODE}, 
-and $y = \phi(x)$ is called the solution to equation~\eqref{eq:plain ODE} satisfying the initial conditions~\eqref{eq:initial conditions}.
+The conditions~\eqref{eq:initial conditions} are called the \textbf{initial conditions} for equation~\eqref{eq:plain ODE}, 
+and $y = \phi(x)$ is called the solution to equation~\eqref{eq:plain ODE} 
+satisfying the initial conditions~\eqref{eq:initial conditions}.
+Such initial value problems are often referred to as \textbf{Cauchy problems}.
 
 A function $y = \phi(x)$ that turns the differential equation~\eqref{eq:plain ODE} into an identity is called an 
 \textbf{(explicit) solution} to the equation. 
@@ -669,8 +671,62 @@ x = x(u, v(u, c)),\quad y = y(u, v(u, c)).
 \]
 
 \chapter{Existence and Uniqueness Theorem}
+\section{Picard-Lindelöf Theorem}
+\begin{theorem}{Bellman-Gronwall Inequality}
+    Let \(f(x), g(x)\) be continuous functions on the interval \([a, b]\),
+    \(g(x) \geqslant  0\), and \(c\) be a non-negative constant.
+    If
+    \[
+    f(x) \leqslant  c + \int_{a}^{x} f(t) g(t) \, dt,
+    \]
+    then
+    \[
+    f(x) \leqslant  c \exp\left(\int_{a}^{x} g(t) \, dt\right).
+    \]
+\end{theorem}
 
+For a Cauchy problem:
+\begin{equation}\label{eq:Cauchy problem}
+\begin{cases}
+    \frac{\mathrm{d}y}{\mathrm{d}x} = f(x, y), \\
+    y(x_0) = y_0,
+\end{cases}
+\end{equation}
+give the existence and uniqueness theorem.
 
+\begin{leftbarTitle}{Picard-Lindelöf Theorem}\end{leftbarTitle}
+\begin{theorem}{Picard-Lindelöf Theorem}
+    In the Cauchy problem~\eqref{eq:Cauchy problem},
+    let \(D\) be a closed rectangle in the \(xy\)-plane: 
+    \[
+    D = [x_{0}-a, x_{0}+a] \times [y_{0}-b, y_{0}+b]
+    \].
+    If the function \(f(x, y)\) satisfies the following two conditions:
+    \begin{enumerate}
+        \item \(f(x, y)\) is continuous in \(D\).
+        \item \(f(x, y)\) satisfies the Lipschitz condition with respect to \(y\) in \(D\), 
+            i.e., there exists a constant \(L > 0\) such that for any \((x, y_1), (x, y_2) \in D\),
+            \[
+            |f(x, y_1) - f(x, y_2)| \leqslant  L |y_1 - y_2|.
+            \]
+    \end{enumerate}
+    Then there exists a unique solution \(y = \varphi(x)\) (\(\varphi(x_0) = y_0\)) to the Cauchy problem~\eqref{eq:Cauchy problem}
+    in the interval \([x_{0}-h, x_{0}+h]\), where
+    \[
+    h = \min\left\{a, \frac{b}{M}\right\}, M = \max_{(x, y) \in D} |f(x, y)|.
+    \]
+\end{theorem}
+
+\begin{proposition}
+    
+\end{proposition}
+
+\begin{leftbarTitle}{Peano Theorem and Osgood Theorem}\end{leftbarTitle}
+In regard to the solutions for the Cauchy problem~\eqref{eq:Cauchy problem},
+we have the following two theorems, which are weaker than the Picard-Lindelöf theorem:
+
+\begin{definition}{Osgood Condition}
+\end{definition}
 
 
 \begin{thebibliography}{99} 

@@ -12,7 +12,7 @@ This is a repository for mathematical notes. The directory structure is as follo
 
 ## 1.Analyse
 - [Analyse Mathématique](./1.Analyse/Analyse%20Mathématique/tmp/initial.pdf)
-
+- [Analyse de Fourier](./1.Analyse/Analyse%20de%20Fourier/tmp/initial.pdf)
 - [Équation Différentielle Ordinaire](./1.Analyse/Équation%20Différentielle%20Ordinaire/tmp/initial.pdf)
 
 ## 2.Algèbre

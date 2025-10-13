@@ -438,7 +438,7 @@ Some special cases of surfaces of revolution:
 
 \noindent Rotate ellipse
 \[
-\Gamma: \begin{cases} \frac{x_{2}}{a^{2}} + \frac{y_{2}}{b^{2}} = 1,\quad(a>b) \\ z = 0, \end{cases}
+\Gamma: \begin{cases} \frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} = 1,\quad(a>b) \\ z = 0, \end{cases}
 \]
 \begin{itemize}
     \item around \(x\)-axis (long axis): \( \frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} + \frac{z^{2}}{b^{2}} = 1\) (prolate spheroid) 
@@ -499,8 +499,206 @@ around \(z\)-axis: \((x^{2}+y^{2}+z^{2}+b^{2}-a^{2})^{2}=4b^{2}(x^{2}+y^{2})\) (
 
 
 \section{Quadric Surfaces}
+\begin{leftbarTitle}{Ellipsoids}\end{leftbarTitle}
+In space rectangular Cartesian coordinates, 
+the surface represented by the equation   
+\[ 
+\frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} + \frac{z^{2}}{c^{2}} = 1\quad  (  a  ,  b  ,  c  >  0  )  
+\] 
+is called an ellipsoid or an ellipsoidal surface, 
+and the equation is called the standard equation. 
+
+The parametric equations of the ellipsoid are: 
+\[
+\begin{cases}
+x = a \cos \theta \cos \psi \\
+y = b \cos \theta \sin \psi \\
+z = c \sin \theta
+\end{cases}
+\quad   -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2},\quad 0 \leq \psi \leq 2\pi.
+\]
+
+Any ellipsoid with two equal axes is necessarily a spheroid, 
+and an ellipsoid with three equal axes is a sphere. 
+
+The surface can be studied by \textbf{the method of parallel sections}, i.e., 
+by using the cross-sections of parallel planes to study the shape of the surface. 
+
+Use a set of parallel planes \(z=h\) to section the ellipsoid~(\ref{fig:Ellipsoid1}), i.e., 
+\[
+\{ (x,y,z) | F(x,y,z) = 0 \} = 
+\bigcup_{-h \leq z \leq h} \{ (x,y) | \frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} = 1 - \frac{h^{2}}{c^{2}}\}.
+\]      
+Obviously, when \(|h| = c\) , the section is a point; 
+when \(|h| < c\) , the section is an ellipse. 
+The other two methods of sectioning are similar.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/Ellipsoid.png}
+    \caption{Ellipsoid.}
+    \label{fig:Ellipsoid1}
+\end{figure}
+
+\begin{leftbarTitle}{Hyperboloids}\end{leftbarTitle}
+In space rectangular Cartesian coordinates, 
+the surface represented by the equation
+\[
+\frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} - \frac{z^{2}}{c^{2}} = 1\quad (a,b,c > 0)
+\]
+is called a one-sheet hyperboloid.
+
+\begin{enumerate}[label=\roman*.]
+    \item Use a set of parallel planes \(z=h\) to section the one-sheet hyperboloid~(\ref{fig:OneSheetHyperboloid}), i.e.,
+        \[
+        \{ (x,y,z) | F(x,y,z) = 0 \} = 
+        \bigcup_{-\infty < z < \infty} \{ (x,y) | \frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} = 1 + \frac{h^{2}}{c^{2}}\}.
+        \]
+        The section is always an ellipse.
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.2\textwidth]{img/one-sheet-hyperboloid1.png}
+            \caption{One-sheet hyperboloid.}
+            \label{fig:OneSheetHyperboloid}
+        \end{figure}
+    \item Use a set of parallel planes \(y=h\) to section the one-sheet hyperboloid~(\ref{fig:OneSheetHyperboloid2}), 
+        the section is
+        \[
+        \begin{cases} \frac{x^{2}}{a^{2}} + \frac{z^{2}}{c^{2}} = 1 - \frac{h^{2}}{b^{2}}, \\ y=h.  \end{cases}
+        \]
+        When \(|h| < b\), the section is a hyperbola;\newline
+        when \(|h| = b\), the section is two parallel lines, i.e., 
+        \[
+        \begin{cases} \frac{x}{a}\pm \frac{z}{c} = 0, \\ y=b ,\end{cases}
+        \text{or}
+        \begin{cases} \frac{x}{a}\pm \frac{z}{c} = 0, \\ y=-b ;\end{cases}
+        \]
+        when \(|h| > b\), the section is a hyperbola.
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.5\textwidth]{img/one-sheet-hyperboloid2.png}
+            \caption{One-sheet hyperboloid.}
+            \label{fig:OneSheetHyperboloid2}
+        \end{figure}
+\end{enumerate}
+
+In space rectangular Cartesian coordinates, 
+the surface represented by the equation
+\[
+\frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} - \frac{z^{2}}{c^{2}} = -1\quad (a,b,c > 0)
+\]
+is called a two-sheet hyperboloid.
+
+\vspace{0.7cm}
+Use a set of parallel planes \(z=h\) (\(|h|\geqslant c\)) to section the two-sheet hyperboloid~(\ref{fig:TwoSheetHyperboloid}), 
+the section is
+\[
+\begin{cases} \frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} = 1 + \frac{h^{2}}{c^{2}}, \\ z=h. \end{cases}
+\]
+When \(|h| > c\), the section is an ellipse;\newline
+when \(|h| = c\), the section is a point.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.2\textwidth]{img/two-sheet-hyperbloid.png}
+    \caption{Two-sheet hyperboloid.}
+    \label{fig:TwoSheetHyperboloid}
+\end{figure}
+
+\begin{leftbarTitle}{Paraboloids}\end{leftbarTitle}
+In space rectangular Cartesian coordinates, 
+the surface represented by the equation
+\[
+\frac{x^{2}}{a^{2}} + \frac{y^{2}}{b^{2}} = 2z\quad (a,b > 0)
+\]
+is called an elliptic paraboloid.
+\begin{enumerate}[label=\roman*.]
+    \item Use a set of parallel planes \(z=h\) (\(h\geqslant 0\)) to section the elliptic paraboloid.
+        When \(h>0\), the section is an ellipse;\newline
+        when \(h=0\), the section is a point.
+    \item Use a set of parallel planes \(y=h\) to section the elliptic paraboloid~(\ref{fig:EllipticParaboloid}),
+        the section is a parabola, whose equation is
+        \[
+        \begin{cases} x^{2} = 2a^{2}(z-\frac{h}{2b^{2}}), \\ y=h. \end{cases}
+        \]
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.3\textwidth]{img/elliptic-paraboloid.png}
+            \caption{Elliptic paraboloid.}
+            \label{fig:EllipticParaboloid}
+        \end{figure}
+\end{enumerate}
+
+\vspace{0.7cm}
+In space rectangular Cartesian coordinates, 
+the surface represented by the equation
+\[
+\frac{x^{2}}{a^{2}} - \frac{y^{2}}{b^{2}} = 2z\quad (a,b > 0)
+\]
+is called a hyperbolic paraboloid, or a saddle surface.
+\begin{enumerate}
+    \item Use a set of parallel planes \(z=h\) to section the hyperbolic paraboloid~(\ref{fig:HyperbolicParaboloid1}).
+        When \(h\neq 0\), the section is a hyperbola
+        \[
+        \begin{cases} \frac{x^{2}}{2a^{2}h} - \frac{y^{2}}{2b^{2}h} = 1, \\ z=h; \end{cases}
+        \]
+        and if \(h>0\), the real axis of hyperbola is parallel to the \(x\)-axis;
+        if \(h<0\), the real axis of hyperbola is parallel to the \(y\)-axis;\newline
+        when \(h=0\), the section is two lines intersecting at the origin, i.e.,
+        \[
+        \begin{cases} \frac{x}{a}\pm \frac{y}{b} = 0, \\ z=0. \end{cases}
+        \]
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.3\textwidth]{img/hyperbolic-paraboloid1.png}
+            \caption{Hyperbolic paraboloid.}
+            \label{fig:HyperbolicParaboloid1}
+        \end{figure} 
+    \item Use a set of parallel planes \(y=h\) to section the hyperbolic paraboloid~(\ref{fig:HyperbolicParaboloid2}),
+        the section is a parabola, whose equation is
+        \[
+        \begin{cases} x^{2} = 2a^{2}(z+\frac{h}{2b^{2}}), \\ y=h. \end{cases}
+        \]
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.3\textwidth]{img/hyperbolic-paraboloid2.png}
+            \caption{Hyperbolic paraboloid section.}
+            \label{fig:HyperbolicParaboloid2}
+        \end{figure}
+\end{enumerate}
 
 \section{Ruled Surfaces}
+\begin{definition}{Ruled Surface}
+    In space, the surface generated by a family of straight lines is called a \textbf{ruled surface},
+    such a family of straight lines is called a family of \textbf{straight generatrices} of the surface.
+\end{definition}
+
+\begin{proposition}
+    \begin{enumerate}
+        \item One-sheet hyperboloid and hyperbolic paraboloid are ruled surfaces. 
+        \item For any point on a one-sheet hyperboloid or hyperbolic paraboloid, 
+            there is exactly one straight line from each of the two families of straight generatrices 
+            that passes through the point.
+        \item Any two straight generatrices from different families on a hyperboloid of one sheet must be coplanar, 
+            while any two straight generatrices from different families on a hyperbolic paraboloid must intersect.
+        \item Any two straight generatrices of the same family on a one-sheet hyperboloid or a hyperbolic paraboloid 
+            are always skew lines, 
+            and all straight generatrices of the same family on a hyperbolic paraboloid are parallel to the same plane.
+    \end{enumerate}
+\end{proposition}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/ruled-surface1.png}
+    \caption{One-sheet hyperboloid.}
+    \label{fig:RuledSurface1}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/ruled-surface2.png}
+    \caption{Hyperbolic paraboloid.}
+    \label{fig:RuledSurface2}
+\end{figure}
+
 
 \chapter{Conic Sections}
 \section{General Equation of Conic Sections}
@@ -514,6 +712,7 @@ around \(z\)-axis: \((x^{2}+y^{2}+z^{2}+b^{2}-a^{2})^{2}=4b^{2}(x^{2}+y^{2})\) (
 
 \section{Simplification of Conic Equations}
 
+\chapter{Quadric Surfaces}
 
 
 

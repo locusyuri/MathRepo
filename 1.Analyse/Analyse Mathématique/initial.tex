@@ -411,7 +411,7 @@ Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}
 \begin{definition}{Lipschitz Continuity}\label{def:Lipschitz Continuity}
     If there exists a constant \(L > 0\) such that for any \(x_1, x_2 \in I\), 
     \[
-        \left| f(x_{1}) - f(x_{2}) \right| \leq L \left| x_{1} - x_{2} \right|,
+        \left| f(x_{1}) - f(x_{2}) \right| \leqslant L \left| x_{1} - x_{2} \right|,
     \]
     then \(f\) is called \textbf{Lipschitz continuous} on \(I\).
 
@@ -741,7 +741,7 @@ x + \frac{x^3}{3} + \frac{2}{15}x^5 + \cdots.
     A function \(f\) is called \textbf{convex} on an interval \(I\) if for any \(x_1, x_2 \in I\) and 
     \(t \in [0,1]\), the following inequality holds:
     \[
-        f(t x_1 + (1-t)x_2) \leq t f(x_1) + (1-t)f(x_2).
+        f(t x_1 + (1-t)x_2) \leqslant t f(x_1) + (1-t)f(x_2).
     \]
     If the inequality is strict for \(x_1 \neq x_2\) and \(t \in (0,1)\), 
     then \(f\) is called \textbf{strictly convex} on \(I\).
@@ -760,12 +760,12 @@ x + \frac{x^3}{3} + \frac{2}{15}x^5 + \cdots.
         \item (\textbf{Jensen Definition}) A function \(f\) is called convex on an interval \(I\) 
             if for any \(x_1, x_2 \in I\):
             \[
-                f\left( \frac{x_1 + x_2}{2} \right) \leq \frac{f(x_1) + f(x_2)}{2}.
+                f\left( \frac{x_1 + x_2}{2} \right) \leqslant \frac{f(x_1) + f(x_2)}{2}.
             \]
         \item A function \(f\) is called convex on an interval \(I\) 
             if for any \(x_1, x_2, \cdots, x_n \in I\):
             \[
-                f\left( \frac{x_1 + x_2 + \cdots + x_n}{n} \right) \leq \frac{f(x_1) + f(x_2) + \cdots + f(x_n)}{n}.
+                f\left( \frac{x_1 + x_2 + \cdots + x_n}{n} \right) \leqslant \frac{f(x_1) + f(x_2) + \cdots + f(x_n)}{n}.
             \]
         \item A function \(f\) is called convex on an interval \(I\) 
             if the tangent line at any point lies below the graph of the function.
@@ -785,7 +785,7 @@ x + \frac{x^3}{3} + \frac{2}{15}x^5 + \cdots.
     such that \(t_1 + t_2 + \cdots + t_n = 1\),
     the following inequality holds:
     \[
-        f(t_1 x_1 + t_2 x_2 + \cdots + t_n x_n) \leq t_1 f(x_1) + t_2 f(x_2) + \cdots + t_n f(x_n).
+        f(t_1 x_1 + t_2 x_2 + \cdots + t_n x_n) \leqslant t_1 f(x_1) + t_2 f(x_2) + \cdots + t_n f(x_n).
     \]
 
     Specially, when \(t_1 = t_2 = \cdots = t_n = \frac{1}{n}\), it reduces to Definition 3.
@@ -796,9 +796,9 @@ Next, we present derivative-based criteria for monotonicity and convexity:
 \begin{theorem}
     \begin{enumerate}
         \item If \(f \in D(I)\), then \(f\) is increasing (decreasing) on \(I\) 
-            if and only if \(f'(x) \geq 0\) (\(f'(x) \leq 0\)) for all \(x \in I\). 
+            if and only if \(f'(x) \geq 0\) (\(f'(x) \leqslant 0\)) for all \(x \in I\). 
         \item If \(f \in D^{(2)}(I)\), then \(f\) is convex (concave) on \(I\) 
-            if and only if \(f''(x) \geq 0\) (\(f''(x) \leq 0\)) for all \(x \in I\).
+            if and only if \(f''(x) \geq 0\) (\(f''(x) \leqslant 0\)) for all \(x \in I\).
     \end{enumerate}
 \end{theorem}
 
@@ -1308,7 +1308,7 @@ The properties of Darboux sums also apply to Stieltjes sums.
     which in turn form an inscribed polygonal line \(C\).
     Let 
     \[
-    \|T\| = \max_{1 \leq i \leq n} \|P_{i-1}P_{i}\|, \quad s_{T}= \sum_{i=1}^{n} \|P_{i-1}P_{i}\|.
+    \|T\| = \max_{1 \leqslant i \leqslant n} \|P_{i-1}P_{i}\|, \quad s_{T}= \sum_{i=1}^{n} \|P_{i-1}P_{i}\|.
     \]
     If the limit
     \[
@@ -1421,7 +1421,7 @@ then it must be convergent.
 \begin{theorem}{Comparison Test for Infinite Integrals}
 \begin{description}
     \item[Comparison Test] Let \( f(x), g(x) \) be functions defined on \( [a, +\infty) \), 
-        and suppose \( f(x) \leq K g(x) \) (where \( K \) is a positive constant). Then:
+        and suppose \( f(x) \leqslant K g(x) \) (where \( K \) is a positive constant). Then:
     \begin{enumerate}[label=\roman*)]
         \item If \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) converges, 
             then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) also converges.
@@ -1445,12 +1445,12 @@ then it must be convergent.
 
     \item[Comparison with \( p \)-Integrals] Let \( f(x) > 0 \) be defined on \( [a, +\infty) \), and suppose:
     \[
-    \frac{f(x)}{x^p} \leq \frac{K}{x^p}, \quad \text{where } p > 0.
+    \frac{f(x)}{x^p} \leqslant \frac{K}{x^p}, \quad \text{where } p > 0.
     \]
     Then:
     \begin{enumerate}[label=\roman*)]
         \item If \( p > 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) converges.
-        \item If \( p \leq 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) diverges.
+        \item If \( p \leqslant 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) diverges.
     \end{enumerate}
 
     \item[Limit Form] Let \( f(x) > 0 \) be defined on \( [a, +\infty) \), and suppose:
@@ -1460,7 +1460,7 @@ then it must be convergent.
     Then:
     \begin{enumerate}[label=\roman*)]
         \item If \( p > 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) converges.
-        \item If \( p \leq 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) diverges.
+        \item If \( p \leqslant 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) diverges.
     \end{enumerate}
 \end{description}
 \end{theorem}
@@ -1753,7 +1753,7 @@ then it must be convergent.
     and \(\{B_k\} = \sum_{k=1}^{n} b_k\) is a bounded sequence with bound \(M\),
     then for any \(p\in \mathbb{N}^{+}\),
     \[
-        \left| \sum_{k=1}^{p} a_k b_k \right| \leq M \left( |a_{1}| + 2|a_{p}| \right) .
+        \left| \sum_{k=1}^{p} a_k b_k \right| \leqslant M \left( |a_{1}| + 2|a_{p}| \right) .
     \]
 \end{lemma}
 
@@ -2094,10 +2094,51 @@ and the following properties can be established:
 
 \section{Uniform Convergence Tests}
 \begin{leftbarTitle}{Weierstrass Test (M-Test)}\end{leftbarTitle}
+\begin{theorem}{Weierstrass Test (M-Test)}
+    If there exists a convergent positive term series \( \sum_{n=1}^{\infty} a_n \) such that:
+    \[
+    |u_n(x)| \leqslant a_n, \quad \forall x \in E, n = 1, 2, 3, \dots
+    \]
+    then the function term series \( \sum_{n=1}^{\infty} u_n(x) \) converges uniformly on \( E \).
+
+    The positive term series \( \sum_{n=1}^{\infty} a_n \) 
+    is called a \textbf{majorant series} of \( \sum_{n=1}^{\infty} u_n(x) \).
+
+    If replace the convergent positive term series \( \sum_{n=1}^{\infty} a_n \)
+    with a uniform convergent series of functions \( \sum_{n=1}^{\infty} a_n(x) \),
+    the conclusion still holds. 
+\end{theorem}
+
 
 \begin{leftbarTitle}{Abel-Dirichlet Test}\end{leftbarTitle}
+\begin{theorem}{Abel-Dirichlet Test}
+    If the series of functions \( \sum_{n=1}^{\infty} a_n(x) b_n(x) \) (\(x \in E\)) satisfies 
+    at least one of the following two conditions, then it converges uniformly on \( E \).
+    \begin{description}
+        \item[Abel] \( \{ a_n(x_{0}) \} \) (\(\forall x_{0} \in E\)) is monotonic
+            and the series of functions \( \{ a_n(x) \} \) is bounded uniformly on \( E \).
+            Simultaneously, the series \( \sum_{n=1}^{\infty} b_n(x) \) converges uniformly on \( E \).
+        \item[Dirichlet] \( \{ a_n(x_{0}) \} \) (\(\forall x_{0} \in E\)) is a monotonic and 
+            and \( a_n(x) \to 0 \) uniformly convergent on \( E \) with limit \(0\).
+            Simultaneously, the partial sums \( B_n(x) = \sum_{k=1}^{n} b_k(x) \) are uniformly bounded on \( E \).
+    \end{description}
+\end{theorem}
 
 \begin{leftbarTitle}{Dini Theorem}\end{leftbarTitle}
+\begin{theorem}{Dini Theorem}
+    Let the sequence of functions \( \{ S_n(x) \} \) converges pointwise to \( S(x) \) on the closed interval \( [a, b] \),
+    if
+    \begin{enumerate}
+        \item \( S_n(x) \in C[a, b] \) (\( n = 1, 2, 3, \dots \)); 
+        \item \( S(x) \in C[a, b] \);
+        \item \(\{ S_{n}(x_{0}) \}\) (\(\forall x_{0} \in [a, b]\)) is monotonic;
+    \end{enumerate}
+    then \( S_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} S(x) \).
+\end{theorem}
+
+\begin{remark}
+    Removing the condition of monotonicity, the Arzelà-Borel theorem (~\ref{thm:}) becomes the result of quasi-uniform convergence.
+\end{remark}
 
 \section{Special Cases}
 
@@ -2381,7 +2422,7 @@ The following theorem provides the conditions under which mixed partial derivati
                 = \cdots 
                 = \frac{\partial^l f}{\partial x_{i_l} \partial x_{i_l - 1} \cdots \partial x_{i_1}}(\mathbf{x}^{0}),
                 \]
-            that is, the order of taking partial derivatives \(l ( \leq k )\) does not affect the result.\footnote{
+            that is, the order of taking partial derivatives \(l ( \leqslant k )\) does not affect the result.\footnote{
                 If the condition "\(f_{xy}\) and \(f_{yx}\) are continuous at \((x_0, y_0)\)",
                 is not satisfied, then the conclusion "\(f_{xy}(x_0, y_0) = f_{yx}(x_0, y_0)\)" does not necessarily hold.
             }
@@ -2734,7 +2775,7 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
 \begin{theorem}{Implicit Function Theorem}
     Let \(U \subset \mathbb{R}^{n+1}\) be an open set, and \(F: U \to \mathbb{R}\) be an \(n+1\)-variable function. If:  
     \begin{enumerate}
-        \item \(F \in C^k(U, \mathbb{R})\), where \(1 \leq k \leq +\infty\);
+        \item \(F \in C^k(U, \mathbb{R})\), where \(1 \leqslant k \leqslant +\infty\);
         \item \(F(\mathbf{x}^0, y^0) = 0\), 
             where \(\mathbf{x}^0 = (x_1^0, x_2^0, \dots, x_n^0) \in \mathbb{R}^n\), \(y^0 \in \mathbb{R}\), 
             and \((\mathbf{x}^0, y^0) \in U\) 
@@ -2775,7 +2816,7 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
     From the continuity of \(F_y(x^{0}, y^{0}) > 0\) and \(F_y(x, y)\), 
     it is known that there exist closed rectangle:
     \[
-    D^* = \{(x, y) \mid |x - x_0| \leq \alpha, |y - y_0| \leq \beta\} \subset U,
+    D^* = \{(x, y) \mid |x - x_0| \leqslant \alpha, |y - y_0| \leqslant \beta\} \subset U,
     \]
     where the following holds:
     \[
@@ -2867,7 +2908,7 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
 \begin{theorem}{Implicit Mapping Theorem}
     Let \( U \subset \mathbb{R}^{n+m} \) be an open set, and \( \mathbf{F}: U \to \mathbb{R}^m \) be a mapping. If:
     \begin{enumerate}
-        \item \( \mathbf{F} \in C^k(U, \mathbb{R}^m) \), \( 1 \leq k \leq \infty \);
+        \item \( \mathbf{F} \in C^k(U, \mathbb{R}^m) \), \( 1 \leqslant k \leqslant \infty \);
         \item \( \mathbf{F}(\mathbf{x}^0, \mathbf{y}^0) = 0 \), 
             where \( \mathbf{x}^0 = (x_1, x_2, \dots, x_n) \), \( \mathbf{y}^0 = (y_1, y_2, \dots, y_m) \), 
             \( (\mathbf{x}^0, \mathbf{y}^0) \in U \) 
@@ -3141,7 +3182,7 @@ On the basis of the above theorem, we can extend it to the case of a bounded reg
 
 Specially, Let:
 \[
-\Omega = \{ (x, y) \in \mathbb{R}^2 \mid y_1(x) \leq y \leq y_2(x), \, a \leq x \leq b \},
+\Omega = \{ (x, y) \in \mathbb{R}^2 \mid y_1(x) \leqslant y \leqslant y_2(x), \, a \leqslant x \leqslant b \},
 \]
 where the functions \( y_1 \) and \( y_2 \) are continuous on \( [a, b] \)~(\ref{fig:Double Integral on a Bounded Set}) 
 and the function \( f \) is integrable on \( \Omega \). If \( \forall x \in [a, b] \), the single-variable integral:
@@ -3243,7 +3284,7 @@ In the example~\ref{eg:Triple Integral of Cone}, the following steps are taken:
 \begin{enumerate}
     \item Determine the range of z: \(z \in [0, h]\). 
     \item Determine the section region \(D_z\): 
-        For a fixed \(z\), \(D_z\) is the region on the \(xy\)-plane satisfying \(\frac{h^2}{R^2}(x^2 + y^2) \leq z^2\), 
+        For a fixed \(z\), \(D_z\) is the region on the \(xy\)-plane satisfying \(\frac{h^2}{R^2}(x^2 + y^2) \leqslant z^2\), 
         which is a circle with radius \(\frac{R}{h}z\).
     \item Split the integral: \(I = \int_{0}^{h} \left( \iint_{D_z} z^2 \,\mathrm{d}x\mathrm{d}y \right) \,\mathrm{d}z\). 
         Since \(z^2\) is independent of \(x\) and \(y\), it can be factored out:
@@ -3267,8 +3308,8 @@ be easily expressed by the other two variables.
 In the example~\ref{eg:Project Method Example}, the following steps are taken:
 \begin{enumerate}
     \item Determine the projection region \(D_{xy}\):\(D_{xy}\) is the region on the \(xy\)-plane 
-        bounded by \(x + y \leq 1\), \(x \geq 0\), and \(y \geq 0\), 
-        which can be expressed as \(0 \leq x \leq 1\) and \(0 \leq y \leq 1 - x\).
+        bounded by \(x + y \leqslant 1\), \(x \geq 0\), and \(y \geq 0\), 
+        which can be expressed as \(0 \leqslant x \leqslant 1\) and \(0 \leqslant y \leqslant 1 - x\).
     \item Determine the range of \(z\): \(z \in [0, xy]\) (since \(z\) is bounded below by \(z = 0\) and above by \(z = xy\)).
     \item Split the integral: 
     \item 
@@ -3390,7 +3431,7 @@ and
 \end{description}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1.0\textwidth]{img/coordinate.png}
+    \includegraphics[width=0.8\textwidth]{img/coordinate.png}
     \caption{Cylindrical and Spherical Coordinate Systems}
 \end{figure}
 
@@ -3401,7 +3442,85 @@ and
 
 \section{Differential Forms}
 
-\chapter{Curvilinear Integrals and Surface Integrals}
+\chapter{Line Integrals and Surface Integrals}
+\section{Line Integrals and Surface Integrals of scalar fields}
+\begin{leftbarTitle}{Line Integral of Scalar Field}\end{leftbarTitle}
+\begin{definition}{Line Integral of Scalar Field}
+    Let \(L\) is a rectifiable continuous curve in \(\mathbb{R}^3\), whose endpoints are \(A\) and \(B\),
+    and \(f(x, y, z)\) is bounded on \(L\).
+    Partition \(L\) into \(n\) segments by points \(A = P_0, P_1, \ldots, P_n = B\),
+    and select a point \(\boldsymbol{\xi}_{i}\) on each segment \(P_{i-1}P_i\) (\(i = 1, 2, \ldots, n\)).
+    Remark that the length of segment \(P_{i-1}P_i\) is \(\Delta s_i\) (\(i=1,2,\cdots n\)),
+    and make the sum:
+    \[
+    \sum_{i=1}^{n} f(\boldsymbol{\xi}_i) \Delta s_i.
+    \]
+    If when \( \lambda \) (the length of the longest segment) tends to \(0\),
+    the above sum tends to a limit \(I\) independent of the partition and the choice of points \(\boldsymbol{\xi}_i\),
+    then \(I\) is called the \textbf{line integral of the scalar field \(f\) along the curve \(L\)},
+    denoted as:
+    \[
+    \int_{L} f \, \mathrm{d}s.
+    \]
+    That is,
+    \[
+    I = \int_{L} f(\boldsymbol{\xi}) \, \mathrm{d}s =
+    \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\boldsymbol{\xi}_i) \Delta s_i.
+    \]
+\end{definition}
+
+\begin{theorem}
+    Let \(L\) be a \(C^{1}\) smooth regular curve parameterized by \(\mathbf{x}(t) = (x(t), y(t), z(t)), t \in [\alpha, \beta]\),
+    and \(f\) be continuous on \(L\).
+    Then:
+    \[
+    \int_{L} f \, \mathrm{d}s = \int_{\alpha}^{\beta} f(\mathbf{x}(t)) \|\mathbf{x}'(t)\| \, \mathrm{d}t.
+    = \int_{\alpha}^{\beta} f(x(t), y(t), z(t)) \sqrt{(x'(t))^2 + (y'(t))^2 + (z'(t))^2} \, \mathrm{d}t.
+    \]
+\end{theorem}
+
+\begin{leftbarTitle}{Surface Theory}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Surface Integrals of Scalar Fields}\end{leftbarTitle}
+\begin{definition}{Surface Integral of Scalar Field}
+    Let \(\Sigma\) be a piecewise smooth surface in \(\mathbb{R}^3\),
+    and \(f(x, y, z)\) be bounded on \(\Sigma\).
+    Partition \(\Sigma\) into \(n\) small pieces \(\Delta\Sigma_1, \Delta\Sigma_2, \ldots, \Delta\Sigma_n\)
+    with smooth curve webs,
+    and select a point \(\boldsymbol{\xi}_i\) on each piece \(\Delta\Sigma_i\) (\(i = 1, 2, \ldots, n\)).
+    Remark that the area of piece \(\Delta\Sigma_i\) is \(\Delta S_i\) (\(i=1,2,\cdots n\)),
+    and make the sum:
+    \[
+    \sum_{i=1}^{n} f(\boldsymbol{\xi}_i) \Delta S_i.
+    \]
+    If when \( \lambda \) (the area of the largest piece) tends to \(0\),
+    the above sum tends to a limit \(I\) independent of the partition and the choice of points \(\boldsymbol{\xi}_i\),
+    then \(I\) is called the \textbf{surface integral of the scalar field \(f\) over the surface \(\Sigma\)},
+    denoted as:
+    \[
+    \iint_{\Sigma} f \, \mathrm{d}S.
+    \]
+    That is,
+    \[
+    I = \iint_{\Sigma} f(\boldsymbol{\xi}) \, \mathrm{d}S =
+    \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\boldsymbol{\xi}_i) \Delta S_i.
+    \]
+    
+\end{definition}
+
+
+\section{Orientation of Curves and Surfaces}
+
+\section{Line Integrals and Surface Integrals of vector fields}
+
+\section{Stokes' Formula}
+
+\section{Exterior Differentiation}
+
+\section{Introduction to Field Theory}
+
+\chapter{Improper Integrals with Variable Parameters}
+
 
 
 

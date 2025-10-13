@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  6 OCT 2025 20:46
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  13 OCT 2025 20:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1530,16 +1530,69 @@ File: img/circle.png Graphic file (type bmp)
 
 
 [12]
+File: img/Ellipsoid.png Graphic file (type bmp)
+<img/Ellipsoid.png>
+File: img/one-sheet-hyperboloid1.png Graphic file (type bmp)
+<img/one-sheet-hyperboloid1.png>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: img/one-sheet-hyperboloid2.png Graphic file (type bmp)
+<img/one-sheet-hyperboloid2.png>
+
+
+[13]
+File: img/two-sheet-hyperbloid.png Graphic file (type bmp)
+<img/two-sheet-hyperbloid.png>
+
+
+[14]
+File: img/elliptic-paraboloid.png Graphic file (type bmp)
+<img/elliptic-paraboloid.png>
+File: img/hyperbolic-paraboloid1.png Graphic file (type bmp)
+<img/hyperbolic-paraboloid1.png>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+
+[15]
+File: img/hyperbolic-paraboloid2.png Graphic file (type bmp)
+<img/hyperbolic-paraboloid2.png>
+File: img/ruled-surface1.png Graphic file (type bmp)
+<img/ruled-surface1.png>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: img/ruled-surface2.png Graphic file (type bmp)
+<img/ruled-surface2.png>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+
+[16]
+
+[17]
 Chapter 6.
 File: img/ConicRelation.png Graphic file (type bmp)
 <img/ConicRelation.png>
 
 
-[13
+[18
+
+]
+Chapter 7.
+
+
+[19
 
 ]
 
-[14
+[20
 
 ] (./tmp/initial.aux)
  ***********
@@ -1547,18 +1600,18 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 14EA949BF714FCD8A1490FAA6C517255;4481.
+(rerunfilecheck)             Checksum: F7B0EE90D3F981BED488E2EB843D3154;4620.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46071 strings out of 473831
- 957324 string characters out of 5733137
- 1981598 words of memory out of 5000000
- 68307 multiletter control sequences out of 15000+600000
+ 46169 strings out of 473831
+ 960229 string characters out of 5733137
+ 1982251 words of memory out of 5000000
+ 68396 multiletter control sequences out of 15000+600000
  567423 words of font info for 148 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (17 pages).
+Output written on ./tmp/initial.pdf (23 pages).
