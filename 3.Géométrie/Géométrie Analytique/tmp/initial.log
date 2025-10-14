@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  13 OCT 2025 20:14
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  14 OCT 2025 21:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1481,13 +1481,24 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
 [5]
 
 [6]
+File: img/deviation.png Graphic file (type bmp)
+<img/deviation.png>
+
 
 [7]
+File: img/CommonPerp.png Graphic file (type bmp)
+<img/CommonPerp.png>
+
+
+[8]
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 387.
+
+
+[9]
 Chapter 5.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 303.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 303.
+(Font)              scaled to size 8.0pt on input line 418.
 File: img/Cylinder.png Graphic file (type bmp)
 <img/Cylinder.png>
 
@@ -1495,11 +1506,11 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[8
+[10
 
 ]
 
-[9]
+[11]
 File: img/Revolution.png Graphic file (type bmp)
 <img/Revolution.png>
 
@@ -1508,7 +1519,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[10]
+[12]
 File: img/ellipse.png Graphic file (type bmp)
 <img/ellipse.png>
 File: img/hyperbola.png Graphic file (type bmp)
@@ -1524,12 +1535,12 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[11]
+[13]
 File: img/circle.png Graphic file (type bmp)
 <img/circle.png>
 
 
-[12]
+[14]
 File: img/Ellipsoid.png Graphic file (type bmp)
 <img/Ellipsoid.png>
 File: img/one-sheet-hyperboloid1.png Graphic file (type bmp)
@@ -1542,12 +1553,12 @@ File: img/one-sheet-hyperboloid2.png Graphic file (type bmp)
 <img/one-sheet-hyperboloid2.png>
 
 
-[13]
+[15]
 File: img/two-sheet-hyperbloid.png Graphic file (type bmp)
 <img/two-sheet-hyperbloid.png>
 
 
-[14]
+[16]
 File: img/elliptic-paraboloid.png Graphic file (type bmp)
 <img/elliptic-paraboloid.png>
 File: img/hyperbolic-paraboloid1.png Graphic file (type bmp)
@@ -1558,7 +1569,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[15]
+[17]
 File: img/hyperbolic-paraboloid2.png Graphic file (type bmp)
 <img/hyperbolic-paraboloid2.png>
 File: img/ruled-surface1.png Graphic file (type bmp)
@@ -1574,25 +1585,25 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[16]
+[18]
 
-[17]
+[19]
 Chapter 6.
 File: img/ConicRelation.png Graphic file (type bmp)
 <img/ConicRelation.png>
 
 
-[18
+[20
 
 ]
 Chapter 7.
 
 
-[19
+[21
 
 ]
 
-[20
+[22
 
 ] (./tmp/initial.aux)
  ***********
@@ -1606,12 +1617,12 @@ Package logreq Info: Writing requests to 'initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46169 strings out of 473831
- 960229 string characters out of 5733137
- 1982251 words of memory out of 5000000
- 68396 multiletter control sequences out of 15000+600000
- 567423 words of font info for 148 fonts, out of 8000000 for 9000
+ 46203 strings out of 473831
+ 961029 string characters out of 5733137
+ 1982389 words of memory out of 5000000
+ 68426 multiletter control sequences out of 15000+600000
+ 567431 words of font info for 149 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (23 pages).
+Output written on ./tmp/initial.pdf (25 pages).

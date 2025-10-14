@@ -38,7 +38,7 @@
 % \listoftables       % 表格目录 (页码: iv)
 
 \chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
-This is the preface of the book...
+Without other remarks, this book is based on the \(\mathbb{R}^{3}\) space.
 
 % \chapter{Acknowledgments}  % 致谢（无编号）
 % I would like to thank...
@@ -281,6 +281,121 @@ and perpendicular to the \(xOz\) and \(yOz\) coordinate planes.
 
 
 \section{Relative Positions of Points, Lines and Planes}
+\begin{leftbarTitle}{Points and Lines}\end{leftbarTitle}
+There are only two possible relative positions between a point and a line:
+the point is either on the line or it is not.
+This can be determined by simply checking if the coordinates of the point satisfy the line's equation.
+
+When the point \(M_{0}(X_{0}, Y_{0}, Z_{0})\) is not on the line
+\[
+l: \frac{x - X_{1}}{X} = \frac{y - Y_{1}}{Y} = \frac{z - Z_{1}}{Z},
+\]
+the distance from the point to the line is given by:
+\[
+d = \frac{|(\vec{M_{1}M_{0}}, \mathbf{v})|}{|\mathbf{v}|},
+\]
+where \(\vec{M_{1}M_{0}} = (X_{0} - X_{1}, Y_{0} - Y_{1}, Z_{0} - Z_{1})\),
+\(M_{1}(X_{1}, Y_{1}, Z_{1})\) is a point on the line,
+\(\mathbf{v}\) is the direction vector of the line.
+
+
+
+\begin{leftbarTitle}{Points and Planes}\end{leftbarTitle}
+The relative position between a point and a plane 
+can be determined by checking if the coordinates of the point satisfy the plane's equation.
+The distance is given below.
+
+\begin{definition}{Deviation}
+    From point \(M_{0} = (X_{0}, Y_{0}, Z_{0})\), 
+    a perpendicular is drawn to the plane \(A x + B y + C z + D = 0\) with the foot of the perpendicular being \(Q\)
+    ~(Fig \ref{fig:DeviationOfPointFromPlane}). 
+    The projection of the vector \(\vec{QM_{0}}\) onto the unit normal vector \(\mathbf{n}_{0}\) of the plane 
+    is called the \textbf{deviation} of point \(M_{0}\) from the plane, 
+    denoted as: 
+    \[
+    \delta = \mathrm{Pr}_{\mathbf{n}_{0}} \vec{QM_{0}}.
+    \]
+\end{definition}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/deviation.png}
+    \caption{Deviation of a Point from a Plane.}
+    \label{fig:DeviationOfPointFromPlane}
+\end{figure}
+
+Obviously, the absolute value of the deviation is equal to the distance from the point to the plane.
+The deviation can be calculated using the formula:
+\begin{align*}
+    \delta &= \mathbf{n}_{0} \cdot \vec{OM_{0}} - |\vec{OP}|\\ 
+    &= X_{0}\cos \alpha + Y_{0}\cos \beta + Z_{0}\cos \gamma - |\vec{OP}| \\
+    &= \lambda (A X_{0} + B Y_{0} + C Z_{0} + D) \\
+    &= \pm \frac{A X_{0} + B Y_{0} + C Z_{0} + D}{\sqrt{A^2 + B^2 + C^2}}.
+\end{align*}
+For points on the same side of a plane, the deviation signs are the same; 
+for points on opposite sides, the signs are different; 
+if the deviation is \(0\), the point lies on the plane.
+
+
+\begin{leftbarTitle}{Lines and Lines}\end{leftbarTitle}
+For two lines in space
+\begin{gather*}
+    l_{1}: \frac{x - x_{1}}{X_{1}} = \frac{y - y_{1}}{Y_{1}} = \frac{z - z_{1}}{Z_{1}}, \\
+    l_{2}: \frac{x - x_{2}}{X_{2}} = \frac{y - y_{2}}{Y_{2}} = \frac{z - z_{2}}{Z_{2}}.
+\end{gather*}
+Relative positions can be classified into four cases:
+\begin{description}
+    \item[Skew] 
+    \[\Delta = \begin{vmatrix}
+        x_{2} - x_{1} & y_{2} - y_{1} & z_{2} - z_{1} \\
+        X_{1} & Y_{1} & Z_{1} \\
+        X_{2} & Y_{2} & Z_{2} \\
+    \end{vmatrix} \neq 0
+    \]
+    \item[Intersecting] \(\Delta = 0, X_{1}:Y_{1}:Z_{1}\neq X_{2}:Y_{2}:Z_{2}\)
+    \item[Parallel] \(X_{1}:Y_{1}:Z_{1} = X_{2}:Y_{2}:Z_{2} \neq (x_{2}-x_{1}): (y_{2}-y_{1}): (z_{2}-z_{1})\)
+    \item[Coincident] \(X_{1}:Y_{1}:Z_{1} = X_{2}:Y_{2}:Z_{2} = (x_{2}-x_{1}): (y_{2}-y_{1}): (z_{2}-z_{1})\)
+\end{description}
+
+\begin{definition}{Common Perpendicular}
+    The line that is perpendicular and intersects two skew lines is called 
+    the \textbf{common perpendicular} of the two skew lines, 
+    and the length of the segment between the two points of intersection is called the length of the common perpendicular.    
+\end{definition}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/CommonPerp.png}
+    \caption{Common Perpendicular of Two Skew Lines.}
+    \label{fig:CommonPerpendicular}
+\end{figure}
+The length of the common perpendicular between two skew lines is given by:
+\[
+d = \frac{|(\vec{M_{1}M_{2}}, \mathbf{v_{1}}, \mathbf{v_{2}})|}{|\mathbf{v_{1}} \times \mathbf{v_{2}}|}.
+\]
+The common perpendicular can be seen as the intersection of two planes:
+\begin{gather*}
+    \pi_{1}: (\mathbf{r} - \vec{OM_{1}}, \mathbf{v}_{1}, \mathbf{v}_{1}\times \mathbf{v}_{2}) = 0, \\
+    \pi_{2}: (\mathbf{r} - \vec{OM_{2}}, \mathbf{v}_{2}, \mathbf{v}_{1}\times \mathbf{v}_{2}) = 0.
+\end{gather*}
+Since the equation of the common perpendicular is:
+\[
+\begin{cases} \det\begin{pmatrix}x-x_{1}&y-y_{1}&z-z_{1}\\X_{1}&Y_{1}&Z_{1}\\X&Y&Z\end{pmatrix}=0,  \\ 
+    \det\begin{pmatrix}x-x_{2}&y-y_{2}&z-z_{2}\\X_{2}&Y_{2}&Z_{2}\\X&Y&Z\end{pmatrix}=0,
+\end{cases}
+\]
+where \((X, Y, Z) = \mathbf{v_{1}} \times \mathbf{v_{2}}\).
+
+\begin{property}
+    \begin{itemize}
+        \item The common perpendicular to two skew lines exists and is unique.
+        \item The length of the common perpendicular segment between two skew lines is the distance between them.
+    \end{itemize}
+\end{property}
+
+
+\begin{leftbarTitle}{Lines and Planes}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Planes and Planes}\end{leftbarTitle}
+
 
 \section{Pencil of Planes and Lines}
 

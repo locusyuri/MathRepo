@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  13 OCT 2025 21:58
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  14 OCT 2025 21:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1496,7 +1496,11 @@ Chapter 3.
 
 ]
 
-[13
+[13]
+
+[14]
+
+[15
 
 ] (./tmp/initial.aux)
  ***********
@@ -1508,18 +1512,18 @@ L3 programming layer <2022/08/05>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 57CC0FA7881A5D7C94D2F207CA814C30;2394.
+(rerunfilecheck)             Checksum: C6C7C4F559D1BC1AE3AB09C9DE810F75;2866.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46028 strings out of 473831
- 956514 string characters out of 5733137
- 1982513 words of memory out of 5000000
- 68261 multiletter control sequences out of 15000+600000
+ 46038 strings out of 473831
+ 956677 string characters out of 5733137
+ 1987007 words of memory out of 5000000
+ 68271 multiletter control sequences out of 15000+600000
  569085 words of font info for 165 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,12n,108p,692b,1340s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (16 pages).
+Output written on ./tmp/initial.pdf (18 pages).

@@ -11,3 +11,5 @@
 \contentsline {section}{\numberline {2.6}Implicit Equations}{10}{section.2.6}%
 \contentsline {chapter}{\numberline {3}Existence and Uniqueness Theorem}{12}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Picard-Lindelöf Theorem}{12}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Continuation of the Solution}{13}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Singular Solutions and Envelopes}{14}{section.3.3}%
