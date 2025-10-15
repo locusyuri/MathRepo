@@ -1280,7 +1280,7 @@ The properties of Darboux sums also apply to Stieltjes sums.
             \left\{ \int_{a}^{b} [f(x) + g(x)]^2 \, \mathrm{d}x \right\}^{\frac{1}{2}} \leqslant \left[ \int_{a}^{b} f^2(x) \, \mathrm{d}x \right]^{\frac{1}{2}} + \left[ \int_{a}^{b} g^2(x) \, \mathrm{d}x \right]^{\frac{1}{2}}.
             \]
 
-        \item[Chebyshev Inequality] Let \( f(x), g(x) \) be similarly ordered functions, 
+        \item[Чебышёв Inequality] Let \( f(x), g(x) \) be similarly ordered functions, 
                 i.e., \( \forall x_1, x_2: (f(x_1) - f(x_2))(g(x_1) - g(x_2)) \geqslant 0 \). Then:
                 \[
                 \int_{a}^{b} f(x) \, \mathrm{d}x \int_{a}^{b} g(x) \, \mathrm{d}x \leqslant (b - a) \int_{a}^{b} f(x)g(x) \, \mathrm{d}x.
@@ -1618,7 +1618,7 @@ then it must be convergent.
             \item If \( l = 1 \) or \( l' = 1 \), the test fails.
         \end{enumerate}
 
-    \item [Gauss Test] Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series, and suppose:
+    \item [Gauß Test] Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series, and suppose:
         \[
         \frac{a_n}{a_{n+1}} = 1 + \frac{1}{n} + \frac{\delta}{n \ln n} + o\left( \frac{1}{n \ln n} \right), \quad (n \to +\infty).
         \]
@@ -1662,7 +1662,7 @@ then it must be convergent.
         \item By comparing positive term series with the slower-converging series 
             \( \sum_{n=1}^{\infty} \frac{1}{n^\alpha} \) (\( \alpha > 1 \)), the Raabe Criterion is derived.
         \item By comparing positive term series with the even slower-converging series 
-            \( \sum_{n=1}^{\infty} \frac{1}{n \ln^\alpha n} \) (\( \alpha > 1 \)), the Gauss Criterion is derived.
+            \( \sum_{n=1}^{\infty} \frac{1}{n \ln^\alpha n} \) (\( \alpha > 1 \)), the Gauß Criterion is derived.
     \end{itemize}
     \textbf{General Observation}
     The slower the convergence of the series used for comparison, the more precise the derived criterion.
@@ -3440,7 +3440,6 @@ and
 
 \section{Improper Multiple Integrals}
 
-\section{Differential Forms}
 
 \chapter{Line Integrals and Surface Integrals}
 \section{Line Integrals and Surface Integrals of scalar fields}
@@ -3505,17 +3504,213 @@ and
     I = \iint_{\Sigma} f(\boldsymbol{\xi}) \, \mathrm{d}S =
     \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\boldsymbol{\xi}_i) \Delta S_i.
     \]
-    
 \end{definition}
+
+\begin{theorem}
+    Let \(\Sigma\) be a piecewise smooth closed surface parameterized by 
+    \(\mathbf{r}(u, v) = (x(u, v), y(u, v), z(u, v)), (u, v) \in D\),
+    and \(f\) be continuous on \(\Sigma\).
+    \(x, y, z\) have continuous first-order partial derivatives with respect to \(u\) and \(v\) on \(D\),
+    and according Jacobian matrix 
+    \[
+    J = \begin{pmatrix}
+        \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
+        \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} \\
+        \frac{\partial z}{\partial u} & \frac{\partial z}{\partial v}
+    \end{pmatrix}
+    \]
+    is of full rank.
+    Then:
+    \[
+    \iint_{\Sigma} f \, \mathrm{d}S = \iint_{D} f(\mathbf{r}(u, v)) 
+    \left\| \frac{\partial \mathbf{r}}{\partial u} \times \frac{\partial \mathbf{r}}{\partial v} \right\| \, \mathrm{d}u \mathrm{d}v
+    = \iint_{D} f(x(u, v), y(u, v), z(u, v)) 
+    \sqrt{EG-F^{2}} \, \mathrm{d}u \mathrm{d}v,
+    \]
+    where
+    \begin{align*}
+        &E = \mathbf{r}_{u} \cdot \mathbf{r}_{u} = x_{u}^2 + y_{u}^2 + z_{u}^2, \\        
+        &F = \mathbf{r}_{u} \cdot \mathbf{r}_{v} = x_{u} x_{v} + y_{u} y_{v} + z_{u} z_{v}, \\
+        &G = \mathbf{r}_{v} \cdot \mathbf{r}_{v} = x_{v}^2 + y_{v}^2 + z_{v}^2,
+    \end{align*}
+    and it is called the Gauß coefficients of the surface \(\Sigma\).
+\end{theorem}
+
+\section{Differential Form and Exterior Differentiation}
+\begin{definition}{Differential Form}
+    Let \(\mathrm{d}x_{i}, \mathrm{d}x_{j}\) be differentials of independent variables \(x_{i}, x_{j}\),
+    take \(\mathbb{R}^{3}\) as an example,
+    \begin{align*}
+        &\text{0-form: } f(x, y, z), \\
+        &\text{1-form: } \omega = P(x, y, z)\mathrm{d}x + Q(x, y, z)\mathrm{d}y + R(x, y, z)\mathrm{d}z, \\
+        &\text{2-form: } \omega = P(x, y, z)\mathrm{d}y \wedge \mathrm{d}z + Q(x, y, z)\mathrm{d}z \wedge \mathrm{d}x + R(x, y, z)\mathrm{d}x \wedge \mathrm{d}y, \\
+        &\text{3-form: } \omega = f(x, y, z)\mathrm{d}x \wedge \mathrm{d}y \wedge \mathrm{d}z, \\
+        &\text{k-form: } \omega = \sum_{1 \leqslant i_{1} < i_{2} < \cdots < i_{k} \leqslant n}
+            f_{i_{1} i_{2} \cdots i_{k}}(x_{1}, x_{2}, \cdots, x_{n})
+            \mathrm{d}x_{i_{1}} \wedge \mathrm{d}x_{i_{2}} \wedge \cdots \wedge \mathrm{d}x_{i_{k}}, \quad k = 0, 1, \ldots, n.
+    \end{align*}
+    Here, \(\wedge\) is called the wedge product, which satisfies:
+    \begin{enumerate}
+        \item Skew symmetric: \(\mathrm{d}x_{i} \wedge \mathrm{d}x_{j} = -\mathrm{d}x_{j} \wedge \mathrm{d}x_{i}\), 
+        \item Associative: \((\mathrm{d}x_{i} \wedge \mathrm{d}x_{j}) \wedge \mathrm{d}x_{k} = \mathrm{d}x_{i} \wedge (\mathrm{d}x_{j} \wedge \mathrm{d}x_{k})\),
+        \item In a fixed dimension, the wedge product of k-forms becomes zero (as higher forms are not defined), 
+            for example, in \(3\)-dimensional space, a \(4\)-form is equal to 0.
+    \end{enumerate}
+    Differential form is a skew symmetric tensor on vector field.
+\end{definition}
+
+\begin{definition}{Exterior Differentiation}
+    Let \(\omega\) be a \(k\)-form on \(\mathbb{R}^{n}\),
+    \[
+    \omega = \sum_{1 \leqslant i_{1} < i_{2} < \cdots < i_{k} \leqslant n}
+        f_{i_{1} i_{2} \cdots i_{k}}(x_{1}, x_{2}, \cdots, x_{n})
+        \mathrm{d}x_{i_{1}} \wedge \mathrm{d}x_{i_{2}} \wedge \cdots \wedge \mathrm{d}x_{i_{k}},
+    \]
+    where \(f_{i_{1} i_{2} \cdots i_{k}}\) are functions with continuous first-order partial derivatives.
+    The exterior differentiation of \(\omega\) is defined as:
+    \[
+    \mathrm{d}\omega = \sum_{1 \leqslant i_{1} < i_{2} < \cdots < i_{k} \leqslant n}
+        \mathrm{d}f_{i_{1} i_{2} \cdots i_{k}}(x_{1}, x_{2}, \cdots, x_{n})
+        \wedge \mathrm{d}x_{i_{1}} \wedge \mathrm{d}x_{i_{2}} \wedge \cdots \wedge \mathrm{d}x_{i_{k}},
+    \]
+    where
+    \[
+    \mathrm{d}f = \frac{\partial f}{\partial x_1}\mathrm{d}x_1 + 
+    \frac{\partial f}{\partial x_2}\mathrm{d}x_2 + 
+    \cdots + 
+    \frac{\partial f}{\partial x_n}\mathrm{d}x_n.
+    \]
+    Note that the exterior differentiation of a \(k\)-form is a \(k+1\)-form.
+\end{definition}
+\begin{property}
+    \begin{description}
+        \item[Linearity] \(\mathrm{d}(\alpha \omega+ \beta \eta) = \alpha \mathrm{d}\omega + \beta \mathrm{d}\eta\),
+        where \(\alpha, \beta\) are constants.
+        \item[Leibniz Rule] \(\mathrm{d}(\omega \wedge \eta) = \mathrm{d}\omega \wedge \eta + (-1)^{k} \omega \wedge \mathrm{d}\eta\),
+        where \(\omega\) is a \(k\)-form.
+        \item[Nilpotency] \(\mathrm{d}(\mathrm{d}\omega) = 0\).
+    \end{description}
+\end{property}
 
 
 \section{Orientation of Curves and Surfaces}
 
-\section{Line Integrals and Surface Integrals of vector fields}
+\section{Line Integrals and Surface Integrals of Vector Fields}
+\begin{leftbarTitle}{Line Integral of Vector Field}\end{leftbarTitle}
+\begin{definition}{Line Integral of Vector Field}
+    Let \(\vec{L}\) be a orientated smooth curve in \(\mathbb{R}^3\),
+    whose endpoints are \(A\) and \(B\).
+    Take unit tangent vector \(\boldsymbol{\tau}=(\cos\alpha, \cos\beta, \cos\gamma)\) 
+    at each point of \(\vec{L}\), making it consistent with the orientation of \(\vec{L}\).
+    Let \(\mathbf{f}(x, y, z) = P(x, y, z)\mathbf{i} + Q(x, y, z)\mathbf{j} + R(x, y, z)\mathbf{k}\) 
+    be a vector-valued function on \(\vec{L}\), then 
+    \[
+    \int_{\vec{L}} \mathbf{f} \cdot \boldsymbol{\tau} \mathrm{d}\mathbf{s} =
+    \int_{\vec{L}} \left[P \cos\alpha + Q \cos\beta + R \cos\gamma\right] \, \mathrm{d}s
+    \]
+    is called the \textbf{line integral of the vector field \(\mathbf{f}\) along the oriented curve \(\vec{L}\)}
+    (if the right-hand side exists).
+\end{definition}
+Consider a differential arc length element \( \mathrm{d}s \) at a point \((x, y, z)\) on the curve \( L \). 
+We form the vector \( \mathrm{d}\mathbf{s} = \boldsymbol{\tau} \mathrm{d}s \), 
+where \( \boldsymbol{\tau} = (\cos\alpha, \cos\beta, \cos\gamma) \) represents 
+the unit tangent vector of curve \( L \) at \((x, y, z)\), pointing along the direction of \( L \). 
+The projection of \( \mathrm{d}s \) onto the \( x \)-axis is given by \(\cos\alpha \, \mathrm{d}s\). 
+Therefore, we denote:
+\[
+\mathrm{d}x = \cos\alpha \, \mathrm{d}s, \quad \mathrm{d}y = \cos\beta \, \mathrm{d}s, \quad 
+\mathrm{d}z = \cos\gamma \, \mathrm{d}s.
+\]
+Thus, the second type of line integral can be expressed as:
+\[
+\int_{\vec{L}} \mathbf{f} \cdot \boldsymbol{\tau} \mathrm{d}s = \int_{\vec{L}} \mathbf{f} \, \mathrm{d} \mathbf{s} 
+= \int_{\vec{L}} P(x, y, z) \mathrm{d}x + Q(x, y, z) \mathrm{d}y + R(x, y, z) \mathrm{d}z.
+\]
+This line integral is also referred to as the integral of the \(1\)-form:
+\[
+\omega = P(x, y, z) \mathrm{d}x + Q(x, y, z) \mathrm{d}y + R(x, y, z) \mathrm{d}z.
+\]
+The second type of line integral of \( \omega \) along the curve \( L \) is denoted as:
+\[
+\int_{\vec{L}} \omega.
+\]
+
+\begin{theorem}
+    Let \(\vec{L}\) be a \(C^{1}\) smooth regular oriented curve parameterized by 
+    \(\mathbf{x}(t) = (x(t), y(t), z(t)), t \in [\alpha, \beta]\),
+    and \(\mathbf{f} = P\mathbf{i} + Q\mathbf{j} + R\mathbf{k}\) be continuous on \(\vec{L}\).
+    Then:
+    \begin{gather*}
+    \int_{\vec{L}} \mathbf{f} \cdot \boldsymbol{\tau} \mathrm{d}s =
+    \int_{\alpha}^{\beta} \mathbf{f}(\mathbf{x}(t)) \cdot \mathbf{x}'(t) \, \mathrm{d}t \\
+    = \int_{\alpha}^{\beta} [P(x(t), y(t), z(t)) x'(t) + Q(x(t), y(t), z(t)) y'(t) + R(x(t), y(t), z(t)) z'(t)] \, \mathrm{d}t.
+    \end{gather*}
+\end{theorem}
+\begin{leftbarTitle}{Surface Integral of Vector Field}\end{leftbarTitle}
+\begin{definition}{Surface Integral of Vector Field}
+    Let \(\vec{\Sigma}\) be an orientated smooth surface in \(\mathbb{R}^3\),
+    and \(\mathbf{f}(x, y, z) = P(x, y, z)\mathbf{i} + Q(x, y, z)\mathbf{j} + R(x, y, z)\mathbf{k}\) 
+    be a vector-valued function on \(\vec{\Sigma}\).
+    Each point appoints a unit normal vector \(\mathbf{n}=(\cos\alpha, \cos\beta, \cos\gamma)\).
+    Then 
+    \[
+    \iint_{\vec{\Sigma}} \mathbf{f} \cdot \mathbf{n} \mathrm{d}S =
+    \iint_{\vec{\Sigma}} \left[P \cos\alpha + Q \cos\beta + R \cos\gamma\right] \, \mathrm{d}S
+    \]
+    is called the \textbf{surface integral of the vector field \(\mathbf{f}\) over the oriented surface \(\vec{\Sigma}\)}
+    (if the right-hand side exists).
+\end{definition}
+Consider a differential area element \( \mathrm{d}S \) at a point \((x, y, z)\) on the surface \( \Sigma \). 
+We form the vector \( \mathrm{d}\mathbf{S} = \mathbf{n} \mathrm{d}S \), 
+where \( \mathbf{n} = (\cos\alpha, \cos\beta, \cos\gamma) \) represents
+the unit normal vector of surface \( \Sigma \) at \((x, y, z)\),
+pointing along the orientation of \( \Sigma \).
+The projection of \( \mathrm{d}S \) onto the \( x \)-axis is given by \(\cos\alpha \, \mathbf{\mathrm{d}}S\). 
+Therefore, we denote:
+\[
+\mathrm{d}y \wedge \mathrm{d}z = \cos\alpha \, \mathrm{d}S, \quad \mathrm{d}z \wedge \mathrm{d}x = \cos\beta \, \mathrm{d}S, \quad 
+\mathrm{d}x \wedge \mathrm{d}y = \cos\gamma \, \mathrm{d}S.
+\]
+Thus, the surface integral can be expressed as:
+\[
+\iint_{\vec{\Sigma}} \mathbf{f} \cdot \mathbf{n} \mathrm{d}S = 
+\iint_{\vec{\Sigma}} P \mathrm{d}y \wedge \mathrm{d}z + Q \mathrm{d}z \wedge \mathrm{d}x + R \mathrm{d}x \wedge \mathrm{d}y
+= \iint_{\vec{\Sigma}} P \mathrm{d}y\mathrm{d}z + Q \mathrm{d}z\mathrm{d}x + R \mathrm{d}x\mathrm{d}y,
+\]
+where \(\mathrm{d}y\mathrm{d}z\) is the simplified notation for \(\mathrm{d}y \wedge \mathrm{d}z\), etc.
+This surface integral is also referred to as the integral of the \(2\)-form:
+\[
+\omega = P(x, y, z) \mathrm{d}y \wedge \mathrm{d}z + Q(x, y, z) \mathrm{d}z \wedge \mathrm{d}x + R(x, y, z) \mathrm{d}x \wedge \mathrm{d}y.
+\]
+The second type of surface integral of \( \omega \) over the surface \( \Sigma \) is denoted as:
+\[
+\iint_{\vec{\Sigma}} \omega.
+\]
+
+\begin{theorem}
+    Let \(\vec{\Sigma}\) be a smooth oriented surface parameterized by 
+    \(\mathbf{r}(u, v) = (x(u, v), y(u, v), z(u, v)), (u, v) \in D\),
+    where \(D\) is a closed region with piecewise smooth boundary in \(uv\)-plane,
+    and \(\mathbf{f} = P\mathbf{i} + Q\mathbf{j} + R\mathbf{k}\) be continuous on \(\vec{\Sigma}\).
+    \(x, y, z\) have continuous first-order partial derivatives with respect to \(u\) and \(v\) on \(D\),
+    and according Jacobian matrix is of full rank.
+    Then:
+    \begin{align*}
+        &\iint_{\vec{\Sigma}} \mathbf{f} \cdot \mathbf{n} \mathrm{d}S \\
+        =&\iint_{\vec{\Sigma}} [P \cos\alpha + Q \cos\beta + R \cos\gamma] \, \mathrm{d}S \\
+        =& \iint_{D} \mathbf{f}(\mathbf{r}(u, v)) \cdot \left( \frac{\partial \mathbf{r}}{\partial u} \times \frac{\partial \mathbf{r}}{\partial v} \right) \, \mathrm{d}u \mathrm{d}v \\
+        =& \pm \iint_{D} \bigg[P(x(u, v), y(u, v), z(u, v)) \cdot \frac{\partial (y, z)}{\partial (u, v)} 
+        + Q(x(u, v), y(u, v), z(u, v)) \cdot \frac{\partial (z, x)}{\partial (u, v)} \\
+        &+ R(x(u, v), y(u, v), z(u, v)) \cdot \frac{\partial (x, y)}{\partial (u, v)}\bigg] \, \mathrm{d}u \mathrm{d}v,
+    \end{align*}
+    where the sign \(\pm\) depends on whether the orientation of \(\vec{\Sigma}\) is consistent with
+    the direction of \(\frac{\partial \mathbf{r}}{\partial u} \times \frac{\partial \mathbf{r}}{\partial v}\).
+\end{theorem}
+
+
 
 \section{Stokes' Formula}
 
-\section{Exterior Differentiation}
 
 \section{Introduction to Field Theory}
 

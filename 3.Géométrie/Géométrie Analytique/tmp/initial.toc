@@ -12,15 +12,15 @@
 \contentsline {section}{\numberline {4.1}Equations of Planes}{4}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Linear Equations}{5}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Relative Positions of Points, Lines and Planes}{7}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Pencil of Planes and Lines}{9}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Common Surfaces}{10}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Cylinder Surfaces}{10}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Cone Surfaces}{11}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Surfaces of Revolution}{12}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Quadric Surfaces}{14}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Ruled Surfaces}{18}{section.5.5}%
-\contentsline {chapter}{\numberline {6}Conic Sections}{20}{chapter.6}%
-\contentsline {section}{\numberline {6.1}General Equation of Conic Sections}{20}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Conic Sections and Lines}{20}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Simplification of Conic Equations}{20}{section.6.3}%
-\contentsline {chapter}{\numberline {7}Quadric Surfaces}{21}{chapter.7}%
+\contentsline {section}{\numberline {4.4}Pencil of Planes and Lines}{10}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Common Surfaces}{11}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Cylinder Surfaces}{11}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Cone Surfaces}{12}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Surfaces of Revolution}{13}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Quadric Surfaces}{15}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Ruled Surfaces}{19}{section.5.5}%
+\contentsline {chapter}{\numberline {6}Conic Sections}{21}{chapter.6}%
+\contentsline {section}{\numberline {6.1}General Equation of Conic Sections}{21}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Conic Sections and Lines}{21}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Simplification of Conic Equations}{21}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Quadric Surfaces}{22}{chapter.7}%

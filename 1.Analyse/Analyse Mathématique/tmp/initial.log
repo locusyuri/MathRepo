@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  13 OCT 2025 21:22
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  15 OCT 2025 10:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1542,11 +1542,6 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 [20]
 
 [21]
-Underfull \hbox (badness 5726) in paragraph at lines 1283--1285
-[]\TU/GaramondPremrPro-Disp(0)/m/n/10.95 Let $\OML/cmm/m/it/10.95 f\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 ; g\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 be similarly ordered functions, i.e., $\OMS/cmsy/m/n/10.95 8\OML/cmm/m/it/10.95 x[]; x[] \OT1/cmr/m/n/10.95 : (\OML/cmm/m/it/10.95 f\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 ^^@
- []
-
-
 
 [22]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
@@ -1731,14 +1726,20 @@ Chapter 14.
 ]
 
 [63]
+
+[64]
+
+[65]
+
+[66]
 Chapter 15.
 
 
-[64
+[67
 
 ]
 
-[65
+[68
 
 ] (./tmp/initial.aux)
  ***********
@@ -1753,18 +1754,18 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 0AF2353C457DA8123033D559797E5071;17785.
+(rerunfilecheck)             Checksum: AC9DAEACB7209D1DD77DC3F98EC25EC7;17727.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46362 strings out of 473831
- 963018 string characters out of 5733137
- 2011502 words of memory out of 5000000
- 68566 multiletter control sequences out of 15000+600000
+ 46377 strings out of 473831
+ 963273 string characters out of 5733137
+ 2011434 words of memory out of 5000000
+ 68581 multiletter control sequences out of 15000+600000
  572528 words of font info for 183 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,15n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (70 pages).
+Output written on ./tmp/initial.pdf (73 pages).

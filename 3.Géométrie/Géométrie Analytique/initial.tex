@@ -393,11 +393,99 @@ where \((X, Y, Z) = \mathbf{v_{1}} \times \mathbf{v_{2}}\).
 
 
 \begin{leftbarTitle}{Lines and Planes}\end{leftbarTitle}
+\begin{proposition}
+    Let plane \(\pi: A x + B y + C z + D = 0\),
+    and vector \(\mathbf{v} = (X, Y, Z)\).
+    Then \(\mathbf{v}\) is parallel to the plane \(\pi\) if and only if
+    \[
+    AX + BY + CZ = 0.
+    \]
+\end{proposition}
+
+The relative positions between a line 
+\[
+l: \frac{x-x_{0}}{X} = \frac{y-y_{0}}{Y} = \frac{z-z_{0}}{Z}
+\] 
+and a plane
+\[
+\pi: A x + B y + C z + D = 0
+\]
+can be classified into three cases:
+\begin{description}
+    \item[Intersecting] \(A X + B Y + C Z \neq 0\);
+    \item[Parallel] \(A X + B Y + C Z = 0, A x_{0} + B y_{0} + C z_{0} \neq 0\);
+    \item[Coincident] \(A X + B Y + C Z + D = 0, A x_{0} + B y_{0} + C z_{0} + D = 0\).
+\end{description}
+
+\begin{remark}
+    In fact, combining the two equations, we have 
+    \[
+    (AX+BY+CZ)t=-(Ax_{0}+By_{0}+Cz_{0}+D).
+    \]
+    When \(AX+BY+CZ\ne0\), there is a unique solution, i.e., they intersect; \newline
+    when \(AX+BY+CZ=0,Ax_{0}+By_{0}+Cz_{0}+D\ne0\), there is no solution, i.e., they are parallel; \newline
+    when \(AX+BY+CZ=0,Ax_{0}+By_{0}+Cz_{0}+D=0\), there are infinitely many solutions, i.e., the line lies on the plane.
+\end{remark}
+
+\begin{definition}{Angle between a Line and a Plane}
+    The angle between a line and a plane is the acute angle formed by the line and its projection on the plane; 
+    when the line is perpendicular to the plane, it is perpendicular to all lines on the plane.
+\end{definition}
 
 \begin{leftbarTitle}{Planes and Planes}\end{leftbarTitle}
+The relative positions between two planes
+\begin{gather*}
+    \pi_{1}: A_{1} x + B_{1} y + C_{1} z + D_{1} = 0, \\
+    \pi_{2}: A_{2} x + B_{2} y + C_{2} z + D_{2} = 0,
+\end{gather*}
+can be classified into three cases:
+\begin{description}
+    \item[Intersecting] \(A_{1} : B_{1} : C_{1} \neq A_{2} : B_{2} : C_{2}\);
+    \item[Parallel] \(\frac{A_{1}}{A_{2}}=\frac{B_{1}}{B_{2}}=\frac{C_{1}}{C_{2}}\neq \frac{D_{1}}{D_{2}}\);
+    \item[Coincident] \(\frac{A_{1}}{A_{2}}=\frac{B_{1}}{B_{2}}=\frac{C_{1}}{C_{2}}=\frac{D_{1}}{D_{2}}\).
+\end{description}
+In Cartesian coordinates, since their normal vectors are 
+\(\mathbf{n_{1}} = (A_{1}, B_{1}, C_{1})\) and \(\mathbf{n_{2}} = (A_{2}, B_{2}, C_{2})\), 
+the angle \(\theta\) between two planes is given by:
+\[
+\cos \theta = \frac{\mathbf{n_{1}} \cdot \mathbf{n_{2}}}{\|\mathbf{n_{1}}\| \|\mathbf{n_{2}}\|} = \frac{A_{1}A_{2} + B_{1}B_{2} + C_{1}C_{2}}{\sqrt{A_{1}^{2} + B_{1}^{2} + C_{1}^{2}} \sqrt{A_{2}^{2} + B_{2}^{2} + C_{2}^{2}}}.
+\]
+Obviously, the necessary and sufficient condition for two planes to be perpendicular is: 
+\[
+A_{1}A_{2} + B_{1}B_{2} + C_{1}C_{2} = 0.
+\]
 
 
 \section{Pencil of Planes and Lines}
+\begin{definition}{Pencil of Planes}
+    The set of all planes in space that pass through the same straight line is called an \textbf{axial plane pencil}, 
+    and that straight line is called the axis of the pencil. 
+    The set of all planes in space that are parallel to the same plane is called a \textbf{parallel plane pencil}.
+\end{definition}
+
+\begin{theorem}
+    For two planes
+    \begin{gather*}
+        \pi_{1}: A_{1} x + B_{1} y + C_{1} z + D_{1} = 0, \\
+        \pi_{2}: A_{2} x + B_{2} y + C_{2} z + D_{2} = 0,
+    \end{gather*}
+    \begin{enumerate}
+        \item if \(\pi_{1}\) and \(\pi_{2}\) intersect in a line \(l\), 
+            then the equation of the axial plane pencil with axis \(l\) can be expressed as:
+            \[
+            \lambda (A_{1} x + B_{1} y + C_{1} z + D_{1}) + \mu (A_{2} x + B_{2} y + C_{2} z + D_{2}) = 0,
+            \]
+            where \(\lambda, \mu \in \mathbb{R}\) are not both zero. 
+        \item if \(\pi_{1}\) and \(\pi_{2}\) are parallel, i.e., \(A_{1} : B_{1} : C_{1} = A_{2} : B_{2} : C_{2}\),
+            then the equation of the parallel plane pencil parallel to \(\pi_{1}\) and \(\pi_{2}\) can be expressed as:
+            \[
+            \lambda (A_{1} x + B_{1} y + C_{1} z + D_{1}) + \mu (A_{2} x + B_{2} y + C_{2} z + D_{2}) = 0,
+            \]
+            where \(\lambda, \mu \in \mathbb{R}\) are not both zero
+            and \(-\mu:\lambda \neq A_{1}:A_{2} = B_{1}:B_{2} = C_{1}:C_{2}\).
+    \end{enumerate}
+\end{theorem}
+
 
 \chapter{Common Surfaces}
 \section{Cylinder Surfaces}
@@ -832,8 +920,9 @@ is called a hyperbolic paraboloid, or a saddle surface.
 
 
 \begin{thebibliography}{99} 
-\bibitem{en1} 作者, Title1, Journal1, Year1. \emph{ This is an example of a reference.}
-\bibitem{en2} Author2, Title2, Journal2, Year2. \emph{ This is another example of a reference.}
+\bibitem{en1} 吕林根, 许子道. \emph{解析几何 (5th edition) }. 高等教育出版社, 2019.
+\bibitem{en2} 丘维声. \emph{解析几何 (3rd edition) }. 北京大学出版社, 2015.
+\bibitem{en3} 吕林根. \emph{解析几何学习辅导书 (5th edition) }. 高等教育出版社, 2020.
 \end{thebibliography}
 
 \end{document}
