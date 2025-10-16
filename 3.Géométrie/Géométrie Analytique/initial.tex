@@ -67,12 +67,115 @@ Without other remarks, this book is based on the \(\mathbb{R}^{3}\) space.
 
 \section{Products of Vectors} % 向量的积
 \begin{leftbarTitle}{Inner Product (Dot Product)}\end{leftbarTitle} % 点积
+\begin{definition}{Inner Product}
+    For two vectors \(\mathbf{a}\) and \(\mathbf{b}\), the \textbf{inner product} (or \textbf{dot product}) is defined as:
+    \[
+    \mathbf{a} \cdot \mathbf{b} = |\mathbf{a}| |\mathbf{b}| \cos \theta,
+    \]
+    where \(\theta\) is the angle between the two vectors.
+\end{definition}
+Obviously, \(\mathbf{a}\) and \(\mathbf{b}\) are perpendicular if and only if \(\mathbf{a} \cdot \mathbf{b} = 0\).
 
 \begin{leftbarTitle}{Outer Product (Cross Product)}\end{leftbarTitle} % 叉积
+\begin{definition}{Outer Product}
+    For two vectors \(\mathbf{a}\) and \(\mathbf{b}\), the \textbf{outer product} (or \textbf{cross product}) is defined as:
+    \[
+    \mathbf{a} \times \mathbf{b} = |\mathbf{a}| |\mathbf{b}| \sin \theta \, \mathbf{n},
+    \]
+    where \(\theta\) is the angle between the two vectors, and \(\mathbf{n}\) is a unit vector perpendicular 
+    to both \(\mathbf{a}\) and \(\mathbf{b}\),
+    following the right-hand rule, i.e., \(\mathbf{a}, \mathbf{b}, \mathbf{n}\) form a right-handed system.
+\end{definition}
+
+In Cartesian coordinates, if \(\mathbf{a} = (x_{1}, y_{1}, z_{1})\) and \(\mathbf{b} = (x_{2}, y_{2}, z_{2})\),
+then
+\[
+\mathbf{a} \times \mathbf{b} =
+\begin{vmatrix}
+\mathbf{i} & \mathbf{j} & \mathbf{k} \\
+x_{1} & y_{1} & z_{1} \\
+x_{2} & y_{2} & z_{2}
+\end{vmatrix} =
+(y_{1}z_{2} - z_{1}y_{2}, z_{1}x_{2} - x_{1}z_{2}, x_{1}y_{2} - y_{1}x_{2}),
+\]
+where \(\mathbf{i}, \mathbf{j}, \mathbf{k}\) are the unit vectors along the \(x\), \(y\), and \(z\) axes respectively.
+
 
 \begin{leftbarTitle}{Mixed Product}\end{leftbarTitle} % 混合积
+\begin{definition}{Mixed Product}
+    For three vectors \(\mathbf{a}, \mathbf{b}, \mathbf{c}\), the \textbf{mixed product} is defined as:
+    \[
+    (\mathbf{a}, \mathbf{b}, \mathbf{c}) = (\mathbf{a} \times \mathbf{b}) \cdot \mathbf{c},
+    \]
+    also denoted as \((\mathbf{a}\mathbf{b}\mathbf{c})\).
+\end{definition}
+
+\begin{property}
+    Cyclic permutation of the three factors of mixed product does not change its value; 
+    swapping any two factors changes the sign:
+    \[
+    (\mathbf{a}, \mathbf{b}, \mathbf{c}) = (\mathbf{b}, \mathbf{c}, \mathbf{a}) 
+    = (\mathbf{c}, \mathbf{a}, \mathbf{b}) = -(\mathbf{b}, \mathbf{a}, \mathbf{c}) 
+    = -(\mathbf{a}, \mathbf{c}, \mathbf{b}) = -(\mathbf{c}, \mathbf{b}, \mathbf{a}).
+    \]
+\end{property}
+
+The absolute value of the mixed product represents the volume of the parallelepiped formed by the three vectors.
+In Cartesian coordinates, if \(\mathbf{a} = (x_{1}, y_{1}, z_{1})\), \(\mathbf{b} = (x_{2}, y_{2}, z_{2})\),
+and \(\mathbf{c} = (x_{3}, y_{3}, z_{3})\), then
+\[
+(\mathbf{a}, \mathbf{b}, \mathbf{c}) =
+\begin{vmatrix}
+    x_{1} & y_{1} & z_{1} \\
+    x_{2} & y_{2} & z_{2} \\
+    x_{3} & y_{3} & z_{3}
+\end{vmatrix}.
+\]
+\(\mathbf{a}, \mathbf{b}, \mathbf{c}\) are coplanar if and only if \((\mathbf{a}, \mathbf{b}, \mathbf{c}) = 0\).
+
+
 
 \begin{leftbarTitle}{Double Cross Product}\end{leftbarTitle} % 双重叉积
+\begin{definition}{Double Cross Product}
+    For three vectors \(\mathbf{a}, \mathbf{b}, \mathbf{c}\), the \textbf{double cross product} is defined as:
+    \[
+    \mathbf{a} \times (\mathbf{b} \times \mathbf{c}).
+    \]
+\end{definition}
+\begin{property}
+    The double cross product satisfies the following identity:
+    \[
+    \mathbf{a} \times (\mathbf{b} \times \mathbf{c}) = (\mathbf{a} \cdot \mathbf{c})\mathbf{b} - (\mathbf{a} \cdot \mathbf{b})\mathbf{c}
+    \]
+    or
+    \[
+    (\mathbf{a} \times \mathbf{b}) \times \mathbf{c} = (\mathbf{c} \cdot \mathbf{a})\mathbf{b} - (\mathbf{c} \cdot \mathbf{b})\mathbf{a}.
+    \]
+\end{property}
+
+\begin{theorem}{Lagrange Identity}
+    For any four vectors \(\mathbf{a}, \mathbf{b}, \mathbf{c}, \mathbf{d}\), the following identity holds:
+    \[
+    (\mathbf{a} \times \mathbf{b}) \cdot (\mathbf{c} \times \mathbf{d}) = 
+    (\mathbf{a} \cdot \mathbf{c})(\mathbf{b} \cdot \mathbf{d}) - (\mathbf{a} \cdot \mathbf{d})(\mathbf{b} \cdot \mathbf{c})
+    = \begin{vmatrix}
+        \mathbf{a} \cdot \mathbf{c} & \mathbf{a} \cdot \mathbf{d} \\
+        \mathbf{b} \cdot \mathbf{c} & \mathbf{b} \cdot \mathbf{d}
+    \end{vmatrix}.
+    \]
+    Specially, when \(\mathbf{a} = \mathbf{c}\) and \(\mathbf{b} = \mathbf{d}\), we have:
+    \[
+    |\mathbf{a} \times \mathbf{b}|^{2} = |\mathbf{a}|^{2}|\mathbf{b}|^{2} - (\mathbf{a} \cdot \mathbf{b})^{2}.
+    \]
+\end{theorem}
+
+\begin{theorem}{Jacobi Identity}
+    For any three vectors \(\mathbf{a}, \mathbf{b}, \mathbf{c}\), the following identity holds:
+    \[
+    \mathbf{a} \times (\mathbf{b} \times \mathbf{c}) + \mathbf{b} \times (\mathbf{c} \times \mathbf{a}) + \mathbf{c} \times (\mathbf{a} \times \mathbf{b}) = 0.
+    \]
+\end{theorem}
+
 
 \section{Linear Independence}
 

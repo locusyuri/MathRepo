@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  15 OCT 2025 21:58
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  16 OCT 2025 20:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1179,4 +1179,454 @@ Package tocloft Info: The document has chapter divisions on input line 51.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
 (Font)              scaled to size 10.95pt on input line 1561.
 ) (c:/texlive/2025/texmf-dist/tex/latex/cprotect/cprotect.sty
-Package: cprotect 2011/01/27 v1.0e (Bruno L
+Package: cprotect 2011/01/27 v1.0e (Bruno Le Floch)
+ (c:/texlive/2025/texmf-dist/tex/latex/bigfoot/suffix.sty
+Package: suffix 2006/07/15 1.5a Variant command support
+)
+\CPT@WriteOut=\write7
+\c@CPT@WriteCount=\count547
+\c@CPT@numB=\count548
+\CPT@commandatend@toks=\toks47
+) (c:/texlive/2025/texmf-dist/tex/xelatex/xecjk/xeCJK.sty
+Package: xeCJK 2022/08/05 v3.9.1 Typesetting CJK scripts with XeLaTeX
+ (c:/texlive/2025/texmf-dist/tex/latex/ctex/ctexhook.sty
+Package: ctexhook 2022/07/14 v2.5.10 Document and package hooks (CTEX)
+) (c:/texlive/2025/texmf-dist/tex/latex/l3packages/xtemplate/xtemplate.sty
+Package: xtemplate 2024-08-16 L3 Experimental prototype document functions
+)
+\l__xeCJK_tmp_int=\count549
+\l__xeCJK_tmp_box=\box135
+\l__xeCJK_tmp_dim=\dimen324
+\l__xeCJK_tmp_skip=\skip139
+\g__xeCJK_space_factor_int=\count550
+\l__xeCJK_begin_int=\count551
+\l__xeCJK_end_int=\count552
+\c__xeCJK_CJK_class_int=\XeTeXcharclass1
+\c__xeCJK_FullLeft_class_int=\XeTeXcharclass2
+\c__xeCJK_FullRight_class_int=\XeTeXcharclass3
+\c__xeCJK_HalfLeft_class_int=\XeTeXcharclass4
+\c__xeCJK_HalfRight_class_int=\XeTeXcharclass5
+\c__xeCJK_NormalSpace_class_int=\XeTeXcharclass6
+\c__xeCJK_CM_class_int=\XeTeXcharclass7
+\c__xeCJK_HangulJamo_class_int=\XeTeXcharclass8
+\l__xeCJK_last_skip=\skip140
+\c__xeCJK_none_node=\count553
+\g__xeCJK_node_int=\count554
+\c__xeCJK_CJK_node_dim=\dimen325
+\c__xeCJK_CJK-space_node_dim=\dimen326
+\c__xeCJK_default_node_dim=\dimen327
+\c__xeCJK_CJK-widow_node_dim=\dimen328
+\c__xeCJK_normalspace_node_dim=\dimen329
+\c__xeCJK_default-space_node_skip=\skip141
+\l__xeCJK_ccglue_skip=\skip142
+\l__xeCJK_ecglue_skip=\skip143
+\l__xeCJK_punct_kern_skip=\skip144
+\l__xeCJK_indent_box=\box136
+\l__xeCJK_last_penalty_int=\count555
+\l__xeCJK_last_bound_dim=\dimen330
+\l__xeCJK_last_kern_dim=\dimen331
+\l__xeCJK_widow_penalty_int=\count556
+
+LaTeX template Info: Declaring template type 'xeCJK/punctuation' taking 0
+(template)           argument(s) on line 2396.
+
+\l__xeCJK_fixed_punct_width_dim=\dimen332
+\l__xeCJK_mixed_punct_width_dim=\dimen333
+\l__xeCJK_middle_punct_width_dim=\dimen334
+\l__xeCJK_fixed_margin_width_dim=\dimen335
+\l__xeCJK_mixed_margin_width_dim=\dimen336
+\l__xeCJK_middle_margin_width_dim=\dimen337
+\l__xeCJK_bound_punct_width_dim=\dimen338
+\l__xeCJK_bound_margin_width_dim=\dimen339
+\l__xeCJK_margin_minimum_dim=\dimen340
+\l__xeCJK_kerning_total_width_dim=\dimen341
+\l__xeCJK_same_align_margin_dim=\dimen342
+\l__xeCJK_different_align_margin_dim=\dimen343
+\l__xeCJK_kerning_margin_width_dim=\dimen344
+\l__xeCJK_kerning_margin_minimum_dim=\dimen345
+\l__xeCJK_bound_dim=\dimen346
+\l__xeCJK_reverse_bound_dim=\dimen347
+\l__xeCJK_margin_dim=\dimen348
+\l__xeCJK_minimum_bound_dim=\dimen349
+\l__xeCJK_kerning_margin_dim=\dimen350
+\g__xeCJK_family_int=\count557
+\l__xeCJK_fam_int=\count558
+\g__xeCJK_fam_allocation_int=\count559
+\l__xeCJK_verb_case_int=\count560
+\l__xeCJK_verb_exspace_skip=\skip145
+ (c:/texlive/2025/texmf-dist/tex/xelatex/xecjk/xeCJK-listings.sty
+Package: xeCJK-listings 2022/08/05 v3.9.1 xeCJK patch file for listings
+\l__xeCJK_listings_max_char_int=\count561
+\l__xeCJK_listings_flag_int=\count562
+) (c:/texlive/2025/texmf-dist/tex/xelatex/xecjk/xeCJK.cfg
+File: xeCJK.cfg 2022/08/05 v3.9.1 Configuration file for xeCJK package
+)) (c:/texlive/2025/texmf-dist/tex/latex/extarrows/extarrows.sty
+Package: extarrows 2020/03/12 v1.2.0 Some extensible arrows
+)
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... none found.
+
+
+Package xeCJK Warning: Fandol is being set as the default font for CJK text.
+(xeCJK)                Please make sure it has been properly installed.
+
+(./tmp/initial.aux)
+\openout1 = `initial.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+Package hyperref Info: Link coloring ON on input line 30.
+ (./tmp/initial.out) (./tmp/initial.out)
+\@outlinefile=\write8
+\openout8 = `initial.out'.
+
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
+*geometry* verbose mode - [ preamble ] result:
+* driver: xetex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(56.9055pt, 483.69687pt, 56.9055pt)
+* v-part:(T,H,B)=(72.26997pt, 700.5069pt, 72.26997pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=483.69687pt
+* \textheight=700.5069pt
+* \oddsidemargin=-15.36449pt
+* \evensidemargin=-15.36449pt
+* \topmargin=-73.12352pt
+* \headheight=61.74242pt
+* \headsep=11.38109pt
+* \topskip=11.0pt
+* \footskip=34.1433pt
+* \marginparwidth=53.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: listings package is loaded.
+Package caption Info: End \AtBeginDocument code.
+(c:/texlive/2025/texmf-dist/tex/latex/footmisc/footmisc.sty
+Package: footmisc 2024/12/24 v6.0g a miscellany of footnote facilities
+\FN@temptoken=\toks48
+\footnotemargin=\dimen351
+\@outputbox@depth=\dimen352
+Package footmisc Info: Declaring symbol style bringhurst on input line 699.
+Package footmisc Info: Declaring symbol style chicago on input line 707.
+Package footmisc Info: Declaring symbol style wiley on input line 716.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 727.
+Package footmisc Info: Declaring symbol style lamport* on input line 747.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 768.
+)
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+ (c:/texlive/2025/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2024/03/21 v3.20 biblatex localization (PK/MW)
+)
+Package biblatex Info: XeTeX detected.
+(biblatex)             Assuming input encoding 'utf8'.
+Package biblatex Info: Automatic encoding selection.
+(biblatex)             Assuming data encoding 'utf8'.
+\openout5 = `initial.bcf'.
+
+Package biblatex Info: Trying to load bibliographic data...
+Package biblatex Info: ... file 'initial.bbl' not found.
+
+No file initial.bbl.
+Package biblatex Info: Reference section=0 on input line 30.
+Package biblatex Info: Reference segment=0 on input line 30.
+\c@lstlisting=\count563
+Package hyperref Info: Option `pageanchor' set `false' on input line 32.
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: xetex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(0.0pt, 597.50787pt, 0.0pt)
+* v-part:(T,H,B)=(0.0pt, 845.04684pt, 0.0pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=597.50787pt
+* \textheight=845.04684pt
+* \oddsidemargin=-72.26999pt
+* \evensidemargin=-72.26999pt
+* \topmargin=-145.3935pt
+* \headheight=61.74242pt
+* \headsep=11.38109pt
+* \topskip=11.0pt
+* \footskip=34.1433pt
+* \marginparwidth=53.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+File: example-image.pdf Graphic file (type pdf)
+<use example-image.pdf>
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
+(Font)              scaled to size 24.88pt on input line 32.
+LaTeX Font Info:    Trying to load font information for U+rsfs on input line 32.
+(c:/texlive/2025/texmf-dist/tex/latex/jknapltx/ursfs.fd
+File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
+)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 32.
+ (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 32.
+ (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
+(Font)              scaled to size 14.4pt on input line 32.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
+(Font)              scaled to size 10.95pt on input line 32.
+
+
+[1
+
+
+
+] (./tmp/initial.toc)
+\tf@toc=\write9
+\openout9 = `initial.toc'.
+
+
+
+[1
+
+
+
+]
+
+[2
+
+]
+Chapter 1.
+
+
+[1
+
+
+]
+Chapter 2.
+
+
+[2
+
+]
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 113.
+
+
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 10.0pt on input line 182.
+[3]
+Chapter 3.
+
+
+[4
+
+]
+Chapter 4.
+
+Overfull \hbox (11.755pt too wide) in paragraph at lines 252--255
+[]\TU/Alegreya(0)/m/n/10.95 If plane intersects the three coordinate axes at $\OML/cmm/m/it/10.95 M[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X[]; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0)$\TU/Alegreya(0)/m/n/10.95 , $\OML/cmm/m/it/10.95 M[]\OT1/cmr/m/n/10.95 (0\OML/cmm/m/it/10.95 ; Y[]; \OT1/cmr/m/n/10.95 0)$\TU/Alegreya(0)/m/n/10.95 , $\OML/cmm/m/it/10.95 M[]\OT1/cmr/m/n/10.95 (0\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ; Z[]\OT1/cmr/m/n/10.95 )$ \TU/Alegreya(0)/m/n/10.95 (where $\OML/cmm/m/it/10.95 X[]; Y[]; Z[] \OMS/cmsy/m/n/10.95 6\OT1/cmr/m/n/10.95 =
+ []
+
+
+
+[5
+
+]
+Overfull \hbox (7.11337pt too wide) in paragraph at lines 289--293
+\TU/Alegreya(0)/m/n/10.95 If a perpendicular is drawn from the origin to the plane, with the foot of the perpendicular being $\OML/cmm/m/it/10.95 M[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 X[]; Y[]; Z[]\OT1/cmr/m/n/10.95 )$\TU/Alegreya(0)/m/n/10.95 ,
+ []
+
+
+
+[6]
+
+[7]
+File: img/deviation.png Graphic file (type bmp)
+<img/deviation.png>
+
+
+[8]
+File: img/CommonPerp.png Graphic file (type bmp)
+<img/CommonPerp.png>
+
+
+[9]
+
+[10]
+
+[11]
+Chapter 5.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 8.0pt on input line 612.
+File: img/Cylinder.png Graphic file (type bmp)
+<img/Cylinder.png>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+
+[12
+
+]
+
+[13]
+File: img/Revolution.png Graphic file (type bmp)
+<img/Revolution.png>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+
+[14]
+File: img/ellipse.png Graphic file (type bmp)
+<img/ellipse.png>
+File: img/hyperbola.png Graphic file (type bmp)
+<img/hyperbola.png>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: img/parabola.png Graphic file (type bmp)
+<img/parabola.png>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+
+[15]
+File: img/circle.png Graphic file (type bmp)
+<img/circle.png>
+
+
+[16]
+File: img/Ellipsoid.png Graphic file (type bmp)
+<img/Ellipsoid.png>
+File: img/one-sheet-hyperboloid1.png Graphic file (type bmp)
+<img/one-sheet-hyperboloid1.png>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: img/one-sheet-hyperboloid2.png Graphic file (type bmp)
+<img/one-sheet-hyperboloid2.png>
+
+
+[17]
+File: img/two-sheet-hyperbloid.png Graphic file (type bmp)
+<img/two-sheet-hyperbloid.png>
+
+
+[18]
+File: img/elliptic-paraboloid.png Graphic file (type bmp)
+<img/elliptic-paraboloid.png>
+File: img/hyperbolic-paraboloid1.png Graphic file (type bmp)
+<img/hyperbolic-paraboloid1.png>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+
+[19]
+File: img/hyperbolic-paraboloid2.png Graphic file (type bmp)
+<img/hyperbolic-paraboloid2.png>
+File: img/ruled-surface1.png Graphic file (type bmp)
+<img/ruled-surface1.png>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: img/ruled-surface2.png Graphic file (type bmp)
+<img/ruled-surface2.png>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+
+[20]
+
+[21]
+Chapter 6.
+File: img/ConicRelation.png Graphic file (type bmp)
+<img/ConicRelation.png>
+
+
+[22
+
+]
+Chapter 7.
+
+
+[23
+
+]
+
+[24
+
+] (./tmp/initial.aux)
+ ***********
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2022/08/05>
+ ***********
+Package rerunfilecheck Info: File `initial.out' has not changed.
+(rerunfilecheck)             Checksum: F7B0EE90D3F981BED488E2EB843D3154;4620.
+Package logreq Info: Writing requests to 'initial.run.xml'.
+\openout1 = `initial.run.xml'.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 46240 strings out of 473831
+ 961819 string characters out of 5733137
+ 1985414 words of memory out of 5000000
+ 68459 multiletter control sequences out of 15000+600000
+ 567455 words of font info for 152 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on ./tmp/initial.pdf (27 pages).
