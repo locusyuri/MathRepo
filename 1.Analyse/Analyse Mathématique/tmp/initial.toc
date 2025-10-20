@@ -3,7 +3,8 @@
 \contentsline {section}{\numberline {1.1}Trigonometric Formulas}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Factorial Power}{2}{section.1.2}%
 \contentsline {paragraph}{Definitions:}{2}{tcb@cnt@definition.1.1}%
-\contentsline {paragraph}{Relationships:}{2}{tcb@cnt@definition.1.1}%
+\contentsline {paragraph}{Relationships:}{3}{tcb@cnt@definition.1.1}%
+\contentsline {section}{\numberline {1.3}Combination}{3}{section.1.3}%
 \contentsline {chapter}{\numberline {2}Limits of Sequences and Continuity of Real Number System}{4}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Convergent Sequences}{4}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Indeterminate Form}{4}{section.2.2}%
@@ -31,50 +32,51 @@
 \contentsline {section}{\numberline {6.1}Riemann Integral}{18}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Integrability Criteria}{19}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Properties of Definite Integrals}{20}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Fundamental Theorem of Calculus}{21}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Calculation of Definite Integrals}{22}{section.6.5}%
+\contentsline {section}{\numberline {6.4}Fundamental Theorem of Calculus}{22}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Calculation of Definite Integrals}{23}{section.6.5}%
 \contentsline {section}{\numberline {6.6}Integral Inequalities}{23}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Applications of Definite Integrals}{23}{section.6.7}%
-\contentsline {chapter}{\numberline {7}Improper Integral}{25}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Infinite and Defective Integrals}{25}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Convergence Tests for Improper Integrals}{25}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Special Integrals}{26}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Common Questions}{27}{section.7.4}%
-\contentsline {chapter}{\numberline {8}Numerical Series}{28}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Convergence of Numerical Series}{28}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Positive Term Series and Its Convergence Tests}{28}{section.8.2}%
-\contentsline {section}{\numberline {8.3}General Term Series and Its Convergence Tests}{30}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Absolute and Conditional Convergence of Series}{32}{section.8.4}%
-\contentsline {section}{\numberline {8.5}Comparison of Convergence Speed of Series}{32}{section.8.5}%
-\contentsline {section}{\numberline {8.6}Infinite Products}{32}{section.8.6}%
-\contentsline {section}{\numberline {8.7}Special Series}{33}{section.8.7}%
-\contentsline {chapter}{\numberline {9}Series of Functions}{34}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Pointwise and Uniform Convergence}{34}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Uniform Convergence Tests}{38}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Special Cases}{38}{section.9.3}%
-\contentsline {chapter}{\numberline {10}Power Series}{39}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Power Series and Its Convergence Radius}{39}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Expanding Functions into Power Series}{39}{section.10.2}%
-\contentsline {section}{\numberline {10.3}Smooth Appropriation of Functions}{39}{section.10.3}%
-\contentsline {chapter}{\numberline {11}Limits and Continuity in Euclidean Spaces}{40}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Continuous Mappings}{40}{section.11.1}%
-\contentsline {chapter}{\numberline {12}Multi-variable Differential Calculus}{41}{chapter.12}%
-\contentsline {section}{\numberline {12.1}Directional Derivatives and Total Differential}{41}{section.12.1}%
-\contentsline {section}{\numberline {12.2}Differential of Vector-Valued Functions}{46}{section.12.2}%
-\contentsline {section}{\numberline {12.3}Derivatives of Composite Mappings (Chain Rule)}{48}{section.12.3}%
-\contentsline {section}{\numberline {12.4}Mean Value Theorem and Taylor's Formula}{48}{section.12.4}%
-\contentsline {section}{\numberline {12.5}Implicit Function Theorem}{50}{section.12.5}%
-\contentsline {section}{\numberline {12.6}Applications of Multi-Variable Differential Calculus}{53}{section.12.6}%
-\contentsline {chapter}{\numberline {13}Multiple Integrals}{54}{chapter.13}%
-\contentsline {section}{\numberline {13.1}Multiple Integrals on Bounded Closed Regions}{54}{section.13.1}%
-\contentsline {section}{\numberline {13.2}Properties and Calculation of Multiple Integrals}{55}{section.13.2}%
-\contentsline {section}{\numberline {13.3}Variable Substitution in Multiple Integrals}{60}{section.13.3}%
-\contentsline {section}{\numberline {13.4}Improper Multiple Integrals}{61}{section.13.4}%
-\contentsline {chapter}{\numberline {14}Line Integrals and Surface Integrals}{62}{chapter.14}%
-\contentsline {section}{\numberline {14.1}Line Integrals and Surface Integrals of scalar fields}{62}{section.14.1}%
-\contentsline {section}{\numberline {14.2}Differential Form and Exterior Differentiation}{63}{section.14.2}%
-\contentsline {section}{\numberline {14.3}Orientation of Curves and Surfaces}{64}{section.14.3}%
-\contentsline {section}{\numberline {14.4}Line Integrals and Surface Integrals of Vector Fields}{64}{section.14.4}%
-\contentsline {section}{\numberline {14.5}Stokes' Formula}{67}{section.14.5}%
-\contentsline {section}{\numberline {14.6}Introduction to Field Theory}{69}{section.14.6}%
-\contentsline {chapter}{\numberline {15}Improper Integrals with Variable Parameters}{70}{chapter.15}%
+\contentsline {section}{\numberline {6.7}Applications of Definite Integrals}{24}{section.6.7}%
+\contentsline {chapter}{\numberline {7}Improper Integral}{26}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Infinite and Defective Integrals}{26}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Convergence Tests for Improper Integrals}{26}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Special Integrals}{27}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Common Questions}{28}{section.7.4}%
+\contentsline {chapter}{\numberline {8}Numerical Series}{29}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Convergence of Numerical Series}{29}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Positive Term Series and Its Convergence Tests}{29}{section.8.2}%
+\contentsline {section}{\numberline {8.3}General Term Series and Its Convergence Tests}{31}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Absolute and Conditional Convergence of Series}{33}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Comparison of Convergence Speed of Series}{33}{section.8.5}%
+\contentsline {section}{\numberline {8.6}Infinite Products}{33}{section.8.6}%
+\contentsline {section}{\numberline {8.7}Special Series}{34}{section.8.7}%
+\contentsline {chapter}{\numberline {9}Series of Functions}{35}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Pointwise and Uniform Convergence}{35}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Uniform Convergence Tests}{39}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Special Cases}{39}{section.9.3}%
+\contentsline {chapter}{\numberline {10}Power Series}{40}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Power Series and Its Convergence Radius}{40}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Expanding Functions into Power Series}{40}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Smooth Appropriation of Functions}{40}{section.10.3}%
+\contentsline {chapter}{\numberline {11}Limits and Continuity in Euclidean Spaces}{41}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Continuous Mappings}{41}{section.11.1}%
+\contentsline {chapter}{\numberline {12}Multi-variable Differential Calculus}{42}{chapter.12}%
+\contentsline {section}{\numberline {12.1}Directional Derivatives and Total Differential}{42}{section.12.1}%
+\contentsline {section}{\numberline {12.2}Differential of Vector-Valued Functions}{47}{section.12.2}%
+\contentsline {section}{\numberline {12.3}Derivatives of Composite Mappings (Chain Rule)}{49}{section.12.3}%
+\contentsline {section}{\numberline {12.4}Mean Value Theorem and Taylor's Formula}{49}{section.12.4}%
+\contentsline {section}{\numberline {12.5}Implicit Function Theorem}{51}{section.12.5}%
+\contentsline {section}{\numberline {12.6}Applications of Multi-Variable Differential Calculus}{54}{section.12.6}%
+\contentsline {chapter}{\numberline {13}Multiple Integrals}{55}{chapter.13}%
+\contentsline {section}{\numberline {13.1}Multiple Integrals on Bounded Closed Regions}{55}{section.13.1}%
+\contentsline {section}{\numberline {13.2}Properties and Calculation of Multiple Integrals}{56}{section.13.2}%
+\contentsline {section}{\numberline {13.3}Variable Substitution in Multiple Integrals}{61}{section.13.3}%
+\contentsline {section}{\numberline {13.4}Improper Multiple Integrals}{62}{section.13.4}%
+\contentsline {chapter}{\numberline {14}Line Integrals and Surface Integrals}{63}{chapter.14}%
+\contentsline {section}{\numberline {14.1}Line Integrals and Surface Integrals of scalar fields}{63}{section.14.1}%
+\contentsline {section}{\numberline {14.2}Differential Form and Exterior Differentiation}{64}{section.14.2}%
+\contentsline {section}{\numberline {14.3}Orientation of Curves and Surfaces}{65}{section.14.3}%
+\contentsline {section}{\numberline {14.4}Line Integrals and Surface Integrals of Vector Fields}{65}{section.14.4}%
+\contentsline {section}{\numberline {14.5}Stokes' Formula}{68}{section.14.5}%
+\contentsline {section}{\numberline {14.6}Closed and Exact Differential Forms}{71}{section.14.6}%
+\contentsline {section}{\numberline {14.7}Introduction to Field Theory}{71}{section.14.7}%
+\contentsline {chapter}{\numberline {15}Improper Integrals with Variable Parameters}{72}{chapter.15}%

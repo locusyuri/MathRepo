@@ -139,6 +139,14 @@ Let \(C^k(U, \mathbb{R}^m)\) denote the set of \(C^k\) mappings from \(U\) to \(
 \cos^2\alpha - \sin^2\beta &= \cos(\alpha + \beta) \cos(\alpha - \beta)
 \end{align*}
 
+% 万能公式
+\textbf{Universal Formulas:} (let \(t = \tan(\alpha/2)\))
+\begin{align*}
+\sin\alpha &= \frac{2t}{1 + t^2} \\
+\cos\alpha &= \frac{1 - t^2}{1 + t^2} \\
+\tan\alpha &= \frac{2t}{1 - t^2}
+\end{align*}
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.4\textwidth]{img/triangle.png}
@@ -188,6 +196,33 @@ Let \(C^k(U, \mathbb{R}^m)\) denote the set of \(C^k\) mappings from \(U\) to \(
         \]
     \end{itemize}
 \end{definition}
+
+\section{Combination}
+\begin{definition}{Combination}
+    The number of ways to choose \(k\) elements from a set of \(n\) distinct elements, 
+    denoted as \(\mathrm{C}_{n}^{k}\) or \(\binom{n}{k}\), is given by:
+    \[
+        \mathrm{C}_{n}^{k} = \binom{n}{k} = \frac{n!}{k!(n-k)!}.
+    \]
+\end{definition}
+
+\begin{property}
+    \begin{align*}
+        &\mathrm{C}_{n}^{k} = \frac{\mathrm{A}_{n}^{k}}{k!} = \frac{n!}{(n-k)!k!} \\
+        &\mathrm{C}_{n}^{k} = \mathrm{C}_{n}^{n-k} \\
+        &\mathrm{C}_{n}^{k} = \mathrm{C}_{n-1}^{k-1} + \mathrm{C}_{n-1}^{k}
+    \end{align*}
+\end{property}
+
+\begin{remark}
+    The third property can be understood that to choose \(k\) elements from \(n+1\), 
+    you can first take one element \(A\): 
+    \begin{enumerate}
+        \item  The number of ways that include \(A\) is \(\mathrm{C}_{n}^{k-1}\); 
+        \item  The number of ways that do not include \(A\) is \(\mathrm{C}_{n}^{k}\).
+    \end{enumerate}
+\end{remark}
+
 
 \chapter{Limits of Sequences and Continuity of Real Number System} 
 \section{Convergent Sequences}
@@ -1069,9 +1104,45 @@ The properties of Darboux sums also apply to Stieltjes sums.
 \end{proof}
 
 \begin{leftbarTitle}{Lesbesgue's Theorem}\end{leftbarTitle}
+\begin{definition}{Null Set}
+    A set \( E \subset \mathbb{R} \) is called a \textbf{null set} (or measure zero set) 
+    if for any \( \varepsilon > 0 \), there exists a countable collection of open intervals 
+    \( \{ I_{n}|n \in \mathbb{N}^{*} \} \) such that:
+    \[
+    E \subset \bigcup_{i=1}^{\infty} I_{n} \quad \text{and} \quad \sum_{i=1}^{\infty} |I_{n}| < \varepsilon.
+    \]
+\end{definition}
+If some property holds for all \( x \in A \) except for a null set \( E \subset A \),
+we say that the property holds \textbf{almost everywhere} on \( A \).
+
+\begin{lemma}
+    \begin{enumerate}
+        \item Let \( \omega \) be the oscillation of bounded function \( f(x) \) on \( [a, b] \), then:
+            \[
+            \omega = \sup \{ f(y_{1}) - f(y_{0}) \mid y_{0}, y_{1} \in [a, b] \}  .
+            \]
+        \item \(f(x)\) is continuous at point \( x_{0} \) if and only if 
+            the oscillation of \( f(x) \) at \( x_{0} \) is zero, i.e., \( \omega_{f}(x_{0}) = 0 \).
+        \item Let \(D(f)\) be the set of discontinuities of bounded function \( f(x) \) on \( [a, b] \). 
+            For \(\delta > 0\), denote \(D_{\delta}= \{ x \in [a,b] \mid \omega_{f}(x) \geqslant \delta \}\).
+            Then 
+            \[
+            D(f) = \bigcup_{n=1}^{\infty} D_{\frac{1}{n}}.
+            \]
+        \item If there exists a series of open intervals \( (\alpha_{j}, \beta_{j}) \) (\( j = 1, 2, \cdots \)) 
+            such that \(D(f) \subset \bigcup_{j=1}^{\infty} (\alpha_{j}, \beta_{j})\), 
+            and let \(K = [a,b]\setminus \bigcup_{j=1}^{\infty} (\alpha_{j}, \beta_{j})\).
+            Then:
+            \[
+            \forall \varepsilon > 0, \exists \delta > 0, \text{s.t.} \forall x \in K, y \in [a,b] (|x - y| < \delta):
+            |f(x) - f(y)| < \varepsilon.
+            \]
+    \end{enumerate}
+\end{lemma}
 
 \begin{theorem}{Lesbesgue's Theorem}
-    
+    Let \(f(x)\in B[a,b]\), then \(f(x)\) is Riemann integrable on \([a,b]\) if and only if 
+    \(f(x)\) is continuous almost everywhere on \([a,b]\).
 \end{theorem}
 
 
@@ -3912,6 +3983,18 @@ over the boundary of region \(\overset{\rightharpoonup}{M}\), then we have the f
     \]
     where \(\overset{\rightharpoonup}{\partial M}\) is the induced orientation of \(\overset{\rightharpoonup}{M}\).
 \end{theorem}
+
+\section{Closed and Exact Differential Forms}
+\begin{definition}{Closed and Exact Differential Forms}
+    Let \(U \subset \mathbb{R}^{n}\) be an open set and \(\omega\) be a \(C^{r}(r\geqslant 1)\) \(k\)-form on \(U\).
+    \begin{enumerate}
+        \item If \(\mathrm{d}\omega = 0\), then \(\omega\) is called a \textbf{closed form}.
+        \item If there exists a \(C^{r+1}\) \((k-1)\)-form \(\eta\) such that \(\omega = \mathrm{d}\eta\),
+            then \(\omega\) is called an \textbf{exact differential form}.
+    \end{enumerate}
+\end{definition}
+
+
 
 \section{Introduction to Field Theory}
 
