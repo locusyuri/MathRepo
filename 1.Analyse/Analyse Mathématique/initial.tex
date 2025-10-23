@@ -139,14 +139,6 @@ Let \(C^k(U, \mathbb{R}^m)\) denote the set of \(C^k\) mappings from \(U\) to \(
 \cos^2\alpha - \sin^2\beta &= \cos(\alpha + \beta) \cos(\alpha - \beta)
 \end{align*}
 
-% 万能公式
-\textbf{Universal Formulas:} (let \(t = \tan(\alpha/2)\))
-\begin{align*}
-\sin\alpha &= \frac{2t}{1 + t^2} \\
-\cos\alpha &= \frac{1 - t^2}{1 + t^2} \\
-\tan\alpha &= \frac{2t}{1 - t^2}
-\end{align*}
-
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.4\textwidth]{img/triangle.png}
@@ -161,6 +153,57 @@ Let \(C^k(U, \mathbb{R}^m)\) denote the set of \(C^k\) mappings from \(U\) to \(
             $\tan x = \frac{\sin x}{\cos x}$, etc.
     \end{itemize}
 \end{remark}
+
+\section{Common Inequalities}
+\begin{theorem}{Power Mean Inequality}
+    For positive real numbers \(a_1, a_2, \dots, a_n > 0\), define the power mean of order \(p\) as:
+    \[
+    M_{p}(a_1, a_2, \dots, a_n) = 
+    \begin{cases} 
+        \left( \frac{a_1^p + a_2^p + \cdots + a_n^p}{n} \right)^{\frac{1}{p}}, & p \neq 0 \\ 
+        \lim_{p \to 0} M_{p}(a_1, a_2, \dots, a_n) = \sqrt[n]{a_1 a_2 \cdots a_n}, & p = 0 .
+    \end{cases}
+    \]
+    Specially, when \(p \to 0\), it is the \textbf{geometric mean} (G)
+    \[
+    G = \sqrt[n]{a_1 a_2 \cdots a_n};
+    \]
+    when \(p = 1\), it is the \textbf{arithmetic mean} (A)
+    \[
+    A = \frac{a_1 + a_2 + \cdots + a_n}{n};
+    \]
+    when \(p = 2\), it is the \textbf{quadratic mean} (Q)
+    \[
+    Q = \sqrt{\frac{a_1^2 + a_2^2 + \cdots + a_n^2}{n}};
+    \]
+    when \(p = -1\), it is the \textbf{harmonic mean} (H)
+    \[
+    H = \frac{n}{\frac{1}{a_1} + \frac{1}{a_2} + \cdots + \frac{1}{a_n}}.
+    \]
+    The following inequalities hold:
+    \[
+    \cdots \leqslant M_{-2} \leqslant M_{-1} \leqslant M_{0} \leqslant M_{1} \leqslant M_{2} \leqslant \cdots.
+    \]
+    Thus, we have:
+    \[
+    H \leqslant G \leqslant A \leqslant Q.
+    \]
+\end{theorem}
+Let the \textbf{logarithmic mean} of \(a\) and \(b\) be defined as:
+\[
+L(a, b) = \frac{a-b}{\ln a - \ln b} \quad (a \neq b, a, b > 0),
+\]
+then we have:
+\[
+G(a, b) \leqslant L(a, b) \leqslant A(a, b).
+\]
+
+\vspace{0.7cm}
+Other common inequalities:
+\begin{gather*}
+    \frac{x}{1+x} < \ln(1+x) < x, \quad x > 0; \\
+\end{gather*}
+
 
 \section{Factorial Power}
 \begin{definition}
@@ -1321,6 +1364,20 @@ we say that the property holds \textbf{almost everywhere} on \( A \).
     \]
 \end{lemma}
 
+
+\begin{example}
+    Prove the ignition formula (Wallis formula) with recursion method:
+    \[
+    \int_{0}^{\frac{\pi}{2}} \sin^{n} x \, \mathrm{d}x 
+    = \int_{0}^{\frac{\pi}{2}} \cos^{n} x \, \mathrm{d}x
+    = \begin{cases}
+    \frac{(n-1)!!}{n!!} \cdot \frac{\pi}{2}, & n \text{ is even}; \\
+    \frac{(n-1)!!}{n!!}, & n \text{ is odd}.
+    \end{cases}
+    \]
+\end{example}
+
+
 \section{Integral Inequalities}
 
 \begin{theorem}{Integral Inequalities}
@@ -1552,6 +1609,20 @@ then it must be convergent.
 
 \begin{leftbarTitle}{Defective Integrals}\end{leftbarTitle}
 
+
+\begin{leftbarTitle}{Examples}\end{leftbarTitle}
+\begin{example}
+    Discuss the convergence of the following improper integrals:
+    \begin{enumerate}
+        \item \[ \int_{0}^{+\infty} \frac{\sin x}{x^p} \, \mathrm{d}x \]
+        \item \[ \int_{0}^{+\infty} \frac{\sin x}{x^p + \sin x} \, \mathrm{d}x \]
+        \item \[ \int_{0}^{1} \frac{1}{x^p \ln x} \, \mathrm{d}x \]
+        \item \[ \int_{0}^{+\infty} \frac{1}{x^p}\sin \frac{1}{x} \, \mathrm{d}x \]
+    \end{enumerate}
+\end{example}
+
+
+
 \section{Special Integrals}
 \begin{leftbarTitle}{Definite Integrals}\end{leftbarTitle}
 \begin{description}
@@ -1592,10 +1663,37 @@ then it must be convergent.
     \[
     \int_{0}^{+ \infty} \frac{1}{1+x^a\sin^bx} \, \mathrm{d}x \quad (a > b, b > 0 \text{and even})
     \]
+    When \( a = 6, b = 2\), the figure is shown as Fig~\ref{fig:graph of the special integral}.
 \end{description}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/xsinx.png}
+    \caption{Graph of \( y = \frac{1}{1 + x^6 \sin^2 x} \)}
+    \label{fig:graph of the special integral}
+\end{figure}
 
 
 \section{Common Questions}
+\begin{leftbarTitle}{Square Integrable}\end{leftbarTitle}
+\begin{definition}{Square Integrable Function}
+    If \( f(x) \in R[a, +\infty) \) and \( \int_{a}^{+\infty} [f(x)]^2 \, \mathrm{d}x \) converges, 
+    then \( f(x) \) is called a \textbf{square integrable function} on \( [a, +\infty) \).
+    For defective integrals, the definition is similar.
+\end{definition}
+
+\begin{property}
+    
+\end{property}
+
+\begin{leftbarTitle}{Properties of the Integrand of the Convergent Infinite Integral at Infinity}\end{leftbarTitle}
+For the infinite integral
+\[
+\int_{0}^{+\infty} \frac{1}{1 + x^6 \sin^2 x} \, \mathrm{d}x,
+\]
+whose integrand is shown in Fig~\ref{fig:graph of the special integral}, 
+we can deduce that even if the integral converges, \(f(+\infty)\) is not necessarily equal to \(0\). 
+Moreover, it is possible that \(\varlimsup_{x \to +\infty} f(x) = +\infty\).
 
 \chapter{Numerical Series}
 \section{Convergence of Numerical Series}
@@ -1910,6 +2008,34 @@ The series \( \sum_{n=1}^{\infty} a_n \) is said to converge faster than the ser
 
 
 \section{Special Series}
+\begin{description}
+    \item[Geometric Series] 
+        \[
+        \sum_{n=0}^{\infty} q^n = \frac{1}{1-q},
+        \]
+        it converges when \( |q| < 1 \), diverges otherwise.
+    \item[Telescoping Series]
+        \[
+        \sum_{n=1}^{\infty} (a_n - a_{n+1}) = a_1 - \lim_{n \to \infty} a_{n+1},
+        \]
+        it converges when \( \lim_{n \to \infty} a_n \) exists, diverges otherwise.
+    \item[\(p\)-Series/Hyperharmonic Series]
+        \[
+        \sum_{n=1}^{\infty} \frac{1}{n^p},
+        \]
+        it converges when \( p > 1 \), diverges otherwise.
+    \item[\(q\)-Series]
+        \[
+        \sum_{n=1}^{\infty} \frac{1}{n (\ln n)^q},
+        \]
+        it converges when \( q > 1 \), diverges otherwise.
+    \item[Generalized \(q\)-Series]
+        \[
+        \sum_{n=3}^{\infty} \frac{1}{n \ln n (\ln \ln n)\cdots (\ln^{(k-1)} n) (\ln^{(k)} n)^q},
+        \]
+        where \( \ln^{(k)} n \) denotes the \( k \)-th iterated logarithm,
+        it converges when \( q > 1 \), diverges otherwise.        
+\end{description}
 
 \chapter{Series of Functions}
 \section{Pointwise and Uniform Convergence}
@@ -1988,7 +2114,7 @@ However, it is important to note that the pointwise convergence has certain limi
     \]
     meaning that the two limit operations can be interchanged.
 
-    Unfortunately, in the case of pointwise convergence, this property \textcolor{red!70}{does not hold}.
+    Unfortunately, in the case of pointwise convergence, this property \underline{does not hold}.
 
     \item[Derivability]
     The sum of finitely many differentiable functions satisfies additive differentiability:
@@ -2014,7 +2140,7 @@ However, it is important to note that the pointwise convergence has certain limi
     \]
     meaning that the two operations can be interchanged.
 
-    Unfortunately, in the case of pointwise convergence, this property \textcolor{red!70}{does not hold}.
+    Unfortunately, in the case of pointwise convergence, this property \underline{does not hold}.
 
 
     \item[Integrability]
@@ -2040,7 +2166,7 @@ However, it is important to note that the pointwise convergence has certain limi
     \]
     meaning that the two operations can be interchanged.
 
-    Unfortunately, in the case of pointwise convergence, this property \textcolor{red!70}{does not hold}.
+    Unfortunately, in the case of pointwise convergence, this property \underline{does not hold}.
 \end{description}
 
 
@@ -3998,9 +4124,118 @@ over the boundary of region \(\overset{\rightharpoonup}{M}\), then we have the f
 
 \section{Introduction to Field Theory}
 
-\chapter{Improper Integrals with Variable Parameters}
+\chapter{Integrals with Variable Parameters}
+\section{Definite Integrals with Variable Parameters}
+\begin{definition}{Definite Integral with Variable Parameters}
+    Let \(f(x, y)\) be defined on \([a, b] \times [c, d]\).
+    For each fixed \(y \in [c, d]\), if the definite integral
+    \[
+    I(y) = \int_{a}^{b} f(x, y) \, \mathrm{d}x
+    \]
+    exists, then \(I(y)\) is called a \textbf{definite integral with variable parameter \(y\)}.
+\end{definition}
 
+\section{Improper Integrals with Variable Parameters}
+There are two types of improper integrals with variable parameters: 
+on infinite interval and with unbounded integrand.
+Here we only give the definition of improper integrals on infinite interval with variable parameters.
 
+\begin{definition}{Improper Integral with Variable Parameters}
+    Let \(f(x, y)\) be defined on \([a, +\infty) \times [c, d]\).
+    For some fixed \(y_{0} \in [c, d]\), if the improper integral
+    \(
+    I(y_{0}) = \int_{a}^{+\infty} f(x, y_{0}) \, \mathrm{d}x
+    \)
+    converges, then \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\) is called convergent at \(y_{0}\),
+    and \(y_{0}\) is called its convergence point.
+    
+    Let the set of all convergence points be \(E\),
+    then \(E\) is the domain of definition of the improper integral with variable parameters
+    \[
+    I(y) = \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x,
+    \]
+    also called the convergence domain of the improper integral \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\).
+\end{definition}
+
+\begin{leftbarTitle}{Uniform Convergence and Its Tests}\end{leftbarTitle}
+\begin{definition}{Uniform Convergence of Improper Integrals with Variable Parameters}
+    Let \(f(x, y)\) be defined on \([a, +\infty) \times [c, d]\),
+    where \([c, d]\) is the convergence domain of the improper integral
+    \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\).
+    If for every \(\varepsilon > 0\), there exists a number \(A_{0} > a\) independent of \(y\),
+    such that for all \(A > A_{0}\) and for all \(y \in [c, d]\),
+    \[
+    \left| \int_{a}^{A} f(x, y) \, \mathrm{d}x - I(y) \right| = \left| \int_{A}^{+\infty} f(x, y) \, \mathrm{d}x \right| < \varepsilon,
+    \]
+    then the improper integral \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\)
+    is said to be \textbf{uniformly convergent} on \([c, d]\).
+\end{definition}
+
+\begin{theorem}{Cauchy Criterion for Uniform Convergence of Improper Integrals with Variable Parameters}
+    Let \(f(x, y)\) be defined on \([a, +\infty) \times [c, d]\),
+    where \([c, d]\) is the convergence domain of the improper integral
+    \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\).
+    The improper integral \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\)
+    is uniformly convergent on \([c, d]\) if and only if
+    for every \(\varepsilon > 0\), there exists a number \(A_{0} > a\) independent of \(y\),
+    such that for all \(A_{1}, A_{2} > A_{0}\) and for all \(y \in [c, d]\),
+    \[
+    \left| \int_{A_{1}}^{A_{2}} f(x, y) \, \mathrm{d}x \right| < \varepsilon.
+    \]
+\end{theorem}
+
+\begin{leftbarTitle}{Analysis Properties of Uniform Convergence}\end{leftbarTitle}
+\begin{lemma}
+    
+\end{lemma}
+
+\begin{theorem}{Uniform Convergence and Continuity}
+    Let \(f(x, y)\) be continuous on \([a, +\infty) \times [c, d]\),
+    and \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\)
+    is uniformly convergent on \([c, d]\) with respect to \(y\), then:
+    \begin{enumerate}
+        \item 
+        \[
+        I(y) = \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x
+        \] 
+        is continuous on \([c, d]\), i.e.,
+        \[
+        \lim_{y\to y_0} \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x
+        = \int_{a}^{+\infty} \lim_{y\to y_0} f(x, y) \, \mathrm{d}x,
+        \quad y_0 \in [c, d],
+        \]
+        that is, the limit and the integral can be interchanged.
+        \item 
+        \[
+        \int_{c}^{d} \mathrm{d}y \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x
+        = \int_{a}^{+\infty} \mathrm{d}x \int_{c}^{d} f(x, y) \, \mathrm{d}y,
+        \]
+        that is, the order of integration can be interchanged.
+    \end{enumerate}
+\end{theorem}
+
+When \([c, d]\) is replaced by \([c, +\infty)\), the above theorem fails,
+but we have the following theorem.
+\begin{theorem}
+    
+\end{theorem}
+
+\vspace{0.7cm}
+\begin{theorem}{Uniform Convergence and Differentiation}
+    On the region \(D = [a, +\infty] \times [c, d]\), if the following conditions are satisfied:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(\frac{\partial }{\partial y}f(x, y) \in C(D)\);
+        \item \(\int_{a}^{+\infty} \frac{\partial }{\partial y}f(x, y) \, \mathrm{d}x\) converges uniformly 
+            with respect to \(y\) on \([c, d]\);
+        \item There exists a point \(y_{0} \in [c, d]\), such that \(\int_{a}^{+\infty} f(x, y_{0}) \, \mathrm{d}x\) converges;
+        \item For any \([\alpha, \beta]\subset [a, +\infty)\), \(\int_{\alpha}^{\beta} f(x, y) \, \mathrm{d}x\) exists.
+    \end{enumerate}
+    Then \(I(y) = \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\) is differentiable on \([c, d]\), and
+    \[
+    \frac{\mathrm{d}}{\mathrm{d}y} \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x =
+    \int_{a}^{+\infty} \frac{\partial }{\partial y} f(x, y) \, \mathrm{d}x.
+    \]
+\end{theorem}
 
 
 \begin{thebibliography}{99} 
