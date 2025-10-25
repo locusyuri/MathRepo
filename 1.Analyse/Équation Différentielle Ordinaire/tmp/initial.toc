@@ -13,3 +13,8 @@
 \contentsline {section}{\numberline {3.1}Picard-Lindelöf Theorem}{12}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Continuation of the Solution}{13}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Singular Solutions and Envelopes}{14}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Dependency of Solutions on Initial Data}{14}{section.3.4}%
+\contentsline {chapter}{\numberline {4}System of First-Order Linear Equations}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}System of First-Order Linear Equations}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}General Theory of Homogeneous Linear Systems}{16}{section.4.2}%
+\contentsline {section}{\numberline {4.3}General Theory of Non-Homogeneous Linear Systems}{18}{section.4.3}%

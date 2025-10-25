@@ -803,7 +803,240 @@ we have the following two theorems, which are weaker than the Picard-Lindelöf t
 
 \section{Singular Solutions and Envelopes}
 
+\section{Dependency of Solutions on Initial Data}
 
+\chapter{System of First-Order Linear Equations}
+\section{System of First-Order Linear Equations}
+System of first-order equations with \(n\) variables is of the form:
+\begin{equation}\label{eq:system of first-order linear equations}
+    \begin{cases}
+        \frac{\mathrm{d}y_1}{\mathrm{d}x} = f_1(x, y_1, y_2, \ldots, y_n), \\
+        \frac{\mathrm{d}y_2}{\mathrm{d}x} = f_2(x, y_1, y_2, \ldots, y_n), \\
+        \quad\vdots \\
+        \frac{\mathrm{d}y_n}{\mathrm{d}x} = f_n(x, y_1, y_2, \ldots, y_n).
+    \end{cases}
+\end{equation}
+If the right-hand side of each equation in system~\eqref{eq:system of first-order linear equations}
+does not include explicitly \(x\), then the system is called \textbf{autonomous}.
+
+The solution to system~\eqref{eq:system of first-order linear equations} is an \(n\)-tuple of functions
+\[y_1 = \varphi_1(x), y_2 = \varphi_2(x), \ldots, y_n = \varphi_n(x),\]
+which satisfy all equations in system~\eqref{eq:system of first-order linear equations} simultaneously.
+
+Solution containing arbitrary constants \(C_{1}, C_{2}, \ldots, C_{n}\)
+\[
+\begin{cases} 
+    y_{1}=\varphi_{1}(x, C_{1}, C_{2}, \ldots, C_{n}),\\ 
+    y_{2}=\varphi_{2}(x, C_{1}, C_{2}, \ldots, C_{n}), \\ 
+    \quad\vdots \\ 
+    y_{n}=\varphi_{n}(x, C_{1}, C_{2}, \ldots, C_{n}) 
+\end{cases}
+\]
+is called the \textbf{general solution} of system~\eqref{eq:system of first-order linear equations}.
+If general solution satisfies 
+\[
+\begin{cases} 
+    \Phi_{1}(x, y_{1}, \cdots, y_{n}, C_{1}, \cdots, C_{n})=0, \\ 
+    \Phi_{2}(x, y_{1}, \cdots, y_{n}, C_{1}, \cdots, C_{n})=0, \\ 
+    \quad\vdots \\ 
+    \Phi_{n}(x, y_{1}, \cdots, y_{n}, C_{1}, \cdots, C_{n})=0,
+\end{cases}
+\]
+then it is called the \textbf{general integral} of system~\eqref{eq:system of first-order linear equations}.
+
+\vspace{0.7cm}
+For convenience, we rewrite system~\eqref{eq:system of first-order linear equations} in matrix form:
+\begin{equation}\label{eq:matrix form of system of first-order linear equations}
+    \frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{F}(x, \mathbf{Y}),
+\end{equation}
+and autonomous system as:
+\begin{equation}\label{eq:matrix form of autonomous system of first-order linear equations}
+    \frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{F}(\mathbf{Y}),
+\end{equation}
+and Cauchy problem for system~\eqref{eq:matrix form of system of first-order linear equations} as:
+\begin{equation}\label{eq:Cauchy problem for system of first-order linear equations}
+\begin{cases}
+    \frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{F}(x, \mathbf{Y}), \\
+    \mathbf{Y}(x_{0}) = \mathbf{Y}_{0},
+\end{cases}
+\end{equation}
+where 
+\[
+\mathbf{Y} = \begin{bmatrix} y_{1} \\ y_{2} \\ \vdots \\ y_{n} \end{bmatrix}, \quad
+\mathbf{F}(x, \mathbf{Y}) = 
+\begin{bmatrix} f_{1}(x, y_{1}, y_{2}, \ldots, y_{n}) \\ f_{2}(x, y_{1}, y_{2}, \ldots, y_{n}) \\ 
+    \vdots \\ f_{n}(x, y_{1}, y_{2}, \ldots, y_{n}) 
+\end{bmatrix},
+\quad
+\frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = 
+\begin{bmatrix} 
+    \frac{\mathrm{d}y_{1}}{\mathrm{d}x} \\ \frac{\mathrm{d}y_{2}}{\mathrm{d}x} \\ \vdots \\ \frac{\mathrm{d}y_{n}}{\mathrm{d}x} 
+\end{bmatrix}.
+\]
+With these notations, from the perspective of form, 
+the system of first-order linear equations is similar to first-order equations.
+
+\vspace{0.7cm}
+In system~\eqref{eq:system of first-order linear equations},
+if \(f_{i}(x, y_{1}, y_{2}, \ldots, y_{n})\) is a linear function of \(y_{1}, y_{2}, \ldots, y_{n}\), 
+i.e., it can be rewritten as:
+\[
+\begin{cases} 
+    \frac{\mathrm{d}y_{1}}{\mathrm{d}x} = a_{11}(x)y_{1} + a_{12}(x)y_{2} + \cdots + a_{1n}(x)y_{n} + f_{1}(x), \\ 
+    \frac{\mathrm{d}y_{2}}{\mathrm{d}x} = a_{21}(x)y_{1} + a_{22}(x)y_{2} + \cdots + a_{2n}(x)y_{n} + f_{2}(x), \\ 
+    \quad\vdots \\ 
+    \frac{\mathrm{d}y_{n}}{\mathrm{d}x} = a_{n1}(x)y_{1} + a_{n2}(x)y_{2} + \cdots + a_{nn}(x)y_{n} + f_{n}(x).
+\end{cases}
+\]
+It is called a \textbf{system of first-order linear equations}.
+\(a_{ij}(x)\) and \(f_{i}(x)\) are always assumed to be continuous on some interval \(I \subset \mathbb{R}\), 
+where \(i, j = 1, 2, \ldots, n\).
+
+For convenience, we rewrite the system of first-order linear equations in matrix form:
+\begin{equation}\label{eq:matrix form of system of first-order linear equations - linear}
+    \frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{A}(x) \mathbf{Y} + \mathbf{F}(x),
+\end{equation}
+where
+\[
+\mathbf{A}(x) = 
+\begin{bmatrix} 
+    a_{11}(x) & a_{12}(x) & \cdots & a_{1n}(x) \\ 
+    a_{21}(x) & a_{22}(x) & \cdots & a_{2n}(x) \\ 
+    \vdots & \vdots & \ddots & \vdots \\ 
+    a_{n1}(x) & a_{n2}(x) & \cdots & a_{nn}(x)
+\end{bmatrix}, \quad
+\mathbf{F}(x) =
+\begin{bmatrix}
+    f_{1}(x) \\ f_{2}(x) \\ \vdots \\ f_{n}(x)
+\end{bmatrix}.
+\]
+On the interval \(I\), if \(\mathbf{F}(x) \equiv \mathbf{0}\), that is,
+\begin{equation}\label{eq:matrix form of system of first-order linear equations - linear and homogeneous}
+\frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{A}(x) \mathbf{Y}
+\end{equation}
+then system~\eqref{eq:matrix form of system of first-order linear equations - linear} is called a \textbf{homogeneous system},
+otherwise, it is called a \textbf{non-homogeneous system}.
+
+\vspace{0.7cm}
+
+
+\section{General Theory of Homogeneous Linear Systems}
+Similar to linear homogeneous systems of algebraic equations,
+the linear combination of solutions to homogeneous linear systems of differential equations
+is still a solution to the system.
+\begin{proposition}
+    If \(\mathbf{Y}_{1}(x)\) and \(\mathbf{Y}_{2}(x)\) are two solutions to the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
+    then any linear combination of them
+    \[
+    \mathbf{Y}(x) = C_{1} \mathbf{Y}_{1}(x) + C_{2} \mathbf{Y}_{2}(x),
+    \]
+    where \(C_{1}\) and \(C_{2}\) are arbitrary constants, is also a solution to the system.
+
+    Three or more solutions also have this property.
+\end{proposition}
+With this proposition, it is easy to verify that the set of all solutions to 
+the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous}
+forms a linear space. And similarly, linear independence of solutions can be defined.
+Then we can introduce the concept of fundamental solution matrix.
+
+\begin{definition}{Fundamental Solution Matrix}
+    Let \(\mathbf{Y}_{1}(x), \mathbf{Y}_{2}(x), \ldots, \mathbf{Y}_{n}(x)\) be \(n\) linearly independent solutions to 
+    the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous}.
+    Then the matrix
+    \[
+    \mathbf{\Phi}(x) = 
+    \begin{pmatrix}
+        \mathbf{Y}_{1}(x) & \mathbf{Y}_{2}(x) & \cdots & \mathbf{Y}_{n}(x) \\
+    \end{pmatrix}
+    = 
+    \begin{pmatrix}
+        y_{11}(x) & y_{12}(x) & \cdots & y_{1n}(x) \\
+        y_{21}(x) & y_{22}(x) & \cdots & y_{2n}(x) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        y_{n1}(x) & y_{n2}(x) & \cdots & y_{nn}(x)
+    \end{pmatrix}
+    \]
+    is called a \textbf{fundamental solution matrix} of the system.
+
+    Simultaneously, such a set of solutions is called a \textbf{fundamental solution system}.
+\end{definition}
+
+\begin{leftbarTitle}{Criteria for Linear Dependence}\end{leftbarTitle}
+Given \(n\) vector functions with \(n\) components each:
+
+\begin{equation}\label{VectorFunctionGroup}
+    \mathbf{Y}_{1}(x), \mathbf{Y}_{2}(x), \ldots, \mathbf{Y}_{n}(x),
+\end{equation}
+criteria for their linear independence on the definition interval \(I\) is provided by the following theorem.
+\begin{theorem}{Wronskian Determinant Theorem}
+    For vector functions~\eqref{VectorFunctionGroup},
+    let
+    \[
+    W(x) = \det
+    \begin{pmatrix}
+        y_{11}(x) & y_{12}(x) & \cdots & y_{1n}(x) \\
+        y_{21}(x) & y_{22}(x) & \cdots & y_{2n}(x) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        y_{n1}(x) & y_{n2}(x) & \cdots & y_{nn}(x)
+    \end{pmatrix}
+    \]
+    be their Wronskian determinant.
+    Then, if~\eqref{VectorFunctionGroup} are linearly dependent on \(I\), then \(W(x) \equiv 0\) for all \(x \in I\);
+\end{theorem}
+Furthermore, if~\eqref{VectorFunctionGroup} are solutions to 
+the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
+then the following conclusion holds:
+\begin{theorem}
+    If ~\eqref{VectorFunctionGroup} are linearly independent solutions to 
+    the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
+    then \(W(x) \not\equiv 0\) for all \(x \in I\).
+\end{theorem}
+
+As for the relation between the solutions and the coefficient,
+we have the following theorem.
+\begin{theorem}{Liouville's Formula}
+    Let \(\mathbf{Y}_{1}(x), \mathbf{Y}_{2}(x), \ldots, \mathbf{Y}_{n}(x)\) be \(n\) solutions to 
+    the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
+    and \(W(x)\) be their Wronskian determinant.
+    Then
+    \[
+    W(x) = W(x_{0}) \exp\left(\int_{x_{0}}^{x} \mathrm{tr}(\mathbf{A}(t)) \, dt\right),
+    \]
+    where \(\mathrm{tr}(\mathbf{A}(t))\) is the trace of matrix \(\mathbf{A}(t)\).
+\end{theorem}
+
+\begin{leftbarTitle}{Solution Space}\end{leftbarTitle}
+With the above conclusions, we can give the existence of fundamental solution systems.
+\begin{theorem}
+    The fundamental solution system to 
+    the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous}
+    does exist.
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+General solution can be also derived.
+\begin{theorem}
+    If \(\mathbf{Y}_{1}(x), \mathbf{Y}_{2}(x), \ldots, \mathbf{Y}_{n}(x)\) is a fundamental solution system to 
+    the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
+    then the \textbf{general solution} to the system is given by:
+    \[
+    \mathbf{Y}(x) = C_{1} \mathbf{Y}_{1}(x) + C_{2} \mathbf{Y}_{2}(x) + \cdots + C_{n} \mathbf{Y}_{n}(x),
+    \]
+    where \(C_{1}, C_{2}, \ldots, C_{n}\) are arbitrary constants.
+\end{theorem}
+\begin{proof}
+    
+\end{proof}
+
+Therefore, the number of linearly independent solutions to
+the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous}
+can be not exceed \(n\),
+and the solution space of the system is an \(n\)-dimensional linear space.
+
+\section{General Theory of Non-Homogeneous Linear Systems}
 
 \begin{thebibliography}{99} 
 \bibitem{1} 柳彬. \emph{常微分方程 (1th edition) }. 北京大学出版社, 2021.

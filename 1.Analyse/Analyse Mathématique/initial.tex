@@ -4193,7 +4193,7 @@ Here we only give the definition of improper integrals on infinite interval with
     Let \(f(x, y)\) be continuous on \([a, +\infty) \times [c, d]\),
     and \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\)
     is uniformly convergent on \([c, d]\) with respect to \(y\), then:
-    \begin{enumerate}
+    \begin{enumerate}[label=(\roman*)]
         \item 
         \[
         I(y) = \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x
@@ -4217,8 +4217,43 @@ Here we only give the definition of improper integrals on infinite interval with
 When \([c, d]\) is replaced by \([c, +\infty)\), the above theorem fails,
 but we have the following theorem.
 \begin{theorem}
-    
+    On the region \(D = [a, +\infty) \times [c, +\infty)\),
+    \begin{enumerate}
+        % 无穷积分与无穷积分可交换
+        \item if \(f(x, y)\) satisfies: 
+        \begin{enumerate}
+            \item \(f(x, y)\in C(D)\);
+            \item \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\) internally closed uniformly converges with respect to \(y\);
+                \(\int_{c}^{+\infty} f(x, y) \, \mathrm{d}y\) internally closed uniformly converges with respect to \(x\);
+            \item One of the two integrals \(\int_{a}^{+\infty} \mathrm{d}x \int_{c}^{+\infty} |f(x, y)| \, \mathrm{d}y\)
+                or \(\int_{c}^{+\infty} \mathrm{d}y \int_{a}^{+\infty} |f(x, y)| \, \mathrm{d}x\) converges;
+        \end{enumerate}
+        then
+        \[
+        \int_{c}^{+\infty} \, \mathrm{d}y\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x = 
+        \int_{a}^{+\infty} \, \mathrm{d}x\int_{c}^{+\infty} f(x, y) \, \mathrm{d}y
+        \]
+        % 非负函数的无穷积分与无穷积分可交换
+        \item if \(f(x, y)\) satisfies:
+        \begin{enumerate}
+            \item \(f(x, y)\in C(D)\) and \(f(x)\geqslant 0\) on \(D\);
+            \item \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x \in C[c, +\infty)\);
+                \(\int_{c}^{+\infty} f(x, y) \, \mathrm{d}y \in C[a,+\infty)\);
+            \item One of the two integrals \(\int_{a}^{+\infty} \mathrm{d}x \int_{c}^{+\infty} f(x, y) \, \mathrm{d}y\)
+                or \(\int_{c}^{+\infty} \mathrm{d}y \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\) converges;
+        \end{enumerate}
+        then
+        \[
+        \int_{c}^{+\infty} \, \mathrm{d}y\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x = 
+        \int_{a}^{+\infty} \, \mathrm{d}x\int_{c}^{+\infty} f(x, y) \, \mathrm{d}y
+        \]
+    \end{enumerate}
 \end{theorem}
+
+\begin{remark}
+    One of the two integrals exists implies the other exists as well as the equality holds.
+\end{remark}
+
 
 \vspace{0.7cm}
 \begin{theorem}{Uniform Convergence and Differentiation}

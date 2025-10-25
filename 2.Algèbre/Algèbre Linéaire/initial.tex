@@ -241,16 +241,18 @@ and the definitions and properties of vectors in \( \mathbb{R}^n \) can be gener
     where \( k_i \) are called the coefficients of the linear combination.
 \end{definition}
 
-{Linear Representation and Equivalence of Vector Groups}
+\begin{definition}{Linear Representation and Equivalence of Vector Groups}
+    If every vector \( \alpha_i \) (\( i = 1, 2, \dots, t \)) in the vector group 
+    \( \alpha_1, \alpha_2, \dots, \alpha_t \) can be linearly expressed by the vector group 
+    \( \beta_1, \beta_2, \dots, \beta_s \), then the vector group 
+    \( \alpha_1, \alpha_2, \dots, \alpha_t \) is said to be linearly expressed by the vector group 
+    \( \beta_1, \beta_2, \dots, \beta_s \).
 
-If every vector \( \alpha_i \) (\( i = 1, 2, \dots, t \)) in the vector group 
-\( \alpha_1, \alpha_2, \dots, \alpha_t \) can be linearly expressed by the vector group 
-\( \beta_1, \beta_2, \dots, \beta_s \), then the vector group 
-\( \alpha_1, \alpha_2, \dots, \alpha_t \) is said to be linearly expressed by the vector group 
-\( \beta_1, \beta_2, \dots, \beta_s \).
+    If two vector groups can be linearly expressed by each other, 
+    they are said to be \textbf{equivalent}.
+\end{definition}
 
-If two vector groups can be linearly expressed by each other, 
-they are said to be \textbf{equivalent}.
+
 
 \begin{remark}
     Linear representation can be used to identify redundant equations in a system of linear equations. 
@@ -428,11 +430,48 @@ Then \(W\) is a linear subspace of \(V\) if and only if:
 
 
 \begin{leftbarTitle}{Rank of Matrices}\end{leftbarTitle}
+\begin{definition}{Rank of Matrices}
+    The row rank of a matrix is defined as the rank of its row vectors;
+    the column rank of a matrix is defined as the rank of its column vectors. 
+    The rank of a matrix is defined as the highest order of its non-zero minors.
+\end{definition}
+
+\begin{theorem}
+    The row rank and column rank of any matrix are equal.
+\end{theorem}
+
+\begin{property}
+    \begin{enumerate}
+        \item Elementary row and column transformations do not change the rank of a matrix.
+        \item The rank of a matrix is equal to the number of non-zero rows in the row (column) echelon form of the matrix 
+            obtained by elementary row (column) operations.
+        \item Elementary row (column) operations do not alter the linear relationships among column (row) vectors.
+        \item For a square matrix \(\left( a_{ij} \right)_{n\times n} \), its row vectors (or column vectors) are 
+            linearly independent if and only if its determinant \( \det(a_{ij}) \neq 0 \).
+    \end{enumerate}
+\end{property}
+The third property gives a method to find the maximal linearly independent group of row (or column) vectors of a matrix,
+take the column vectors as an example:
+\begin{enumerate}
+    \item Transform the matrix into its row echelon form (REF) or reduced row echelon form (RREF) using elementary row operations.
+        For example, for a matrix \( \left( \alpha_{1}, \alpha_{2}, \alpha_{3}, \alpha_{4}, \alpha_{5} \right) \),
+        its REF is shown below:
+        \[
+        \begin{pmatrix}
+        a_{11} & a_{12} & 0 & 0 & 0 \\
+        0 & 0 & a_{23} & 0 & 0 \\
+        0 & 0 & 0 & 0 & a_{35} \\
+        \end{pmatrix}.
+        \]
+    \item Identify the leading 1s (pivots) in each row. The columns containing these pivots correspond to the maximal linearly independent group of row vectors.
+        In this example, \(\alpha_{1}, \alpha_{3}, \alpha_{5}\) form a maximal linearly independent group.
+\end{enumerate}
+
 
 \section{Solution to Linear Systems}
 \begin{leftbarTitle}{Necessary and Sufficient Conditions for the Existence of Solutions}\end{leftbarTitle}
 
-\begin{leftbarTitle}{The Structure of Solutions to Homogeneous Systems of Linear Equations}\end{leftbarTitle}
+\begin{leftbarTitle}{The Structure of Solutions to Homogeneous Systems}\end{leftbarTitle}
 For a homogeneous system of linear equations, 
 it is evident that the linear combination of solutions is still a solution to the system. 
 Thus, the concept of a \textbf{fundamental system of solutions} is introduced.
@@ -630,9 +669,18 @@ the above formula provides all the solutions of \( AX = B \).
 
 \begin{property}
     \begin{enumerate}
-        \item Multiplying a matrix \(A\) on the left (right) by a fundamental matrix is equivalent to 
-            moving the \(j\)-th row (column) of \(A\) to the \(i\)-th position, 
+        \item Multiplying a matrix \(A\) on the left by a fundamental matrix is equivalent to 
+            moving the \(j\)-th row of \(A\) to the \(i\)-th position, 
             with all other entries in the resulting matrix being zero; 
+            multiplying \(A\) on the right by a fundamental matrix is equivalent to 
+            moving the \(i\)-th column of \(A\) to the \(j\)-th position, 
+            with all other entries in the resulting matrix being zero.\footnote{
+                The mnemonic is:
+                \[
+                \text{moves row: }E_{i\leftarrow j}A;\qquad
+                \text{moves column: }AE_{i\rightarrow j};
+                \]
+            }
         \item If \(A\) is commutative with all fundamental matrices, then \(A\) is a scalar matrix.
     \end{enumerate}
 \end{property}
@@ -734,8 +782,7 @@ the above formula provides all the solutions of \( AX = B \).
             A = \frac{A + A^T}{2} + \frac{A - A^T}{2}.
             \]
         \item The determinant of an odd-order skew-symmetric matrix is zero; 
-            the determinant of an even-order skew-symmetric matrix is a perfect square,
-            and its rank is even. 
+            the rank of a skew-symmetric matrix is even. 
     \end{enumerate}
 \end{property}
 
@@ -862,7 +909,7 @@ The matrix \(C\) performs specific cyclic operations when multiplied by another 
     The mnemonic is: 
     For \( \begin{vmatrix} A & B \\ C & D \end{vmatrix} \), for example, if \( A \) is invertible, 
     one factor is \( |A| \), and the other factor is \( D \) (the diagonal element of \( A \)) minus 
-    the product of the other three terms arranged clockwise, where the middle one is the inverse matrix.
+    the product of the other three terms arranged \underline{clockwise}, where the middle one is the inverse matrix.
 \end{remark}
 
 
@@ -873,8 +920,23 @@ The matrix \(C\) performs specific cyclic operations when multiplied by another 
     The matrices \( A \) and \( B \) in the following operations do not need to be square matrices; 
     they only need to be compatible for multiplication or addition.
     \begin{description}
-        \item [1. Addition]
+        \item [1. Addition]\footnote{
+            Actually, on the basis of dimension formula (Thm~\ref{thm:dimension_formula}),
+            let \( \mathcal{R}(A) \) and \( \mathcal{R}(B) \) be the column spaces of matrices \( A \) and \( B \) respectively,
+            then:
+            \[
+            \operatorname{dim}(\mathcal{R}(A) + \mathcal{R}(B)) = 
+            \operatorname{dim}(\mathcal{R}(A)) + \operatorname{dim}(\mathcal{R}(B)) - 
+            \operatorname{dim}(\mathcal{R}(A) \cap \mathcal{R}(B)),
+            \]
+            i.e.,
+            \[
+            \operatorname{rank}(A + B) = \operatorname{rank}(A) + \operatorname{rank}(B) - 
+            \operatorname{dim}(\mathcal{R}(A) \cap \mathcal{R}(B)).
+            \]
+        }
         \[
+        \left| \operatorname{rank}(A) - \operatorname{rank}(B) \right| \leqslant 
         \operatorname{rank}(A + B) \leqslant \operatorname{rank}(A) + \operatorname{rank}(B).
         \]
         \item [2. Multiplication]
@@ -912,7 +974,7 @@ The matrix \(C\) performs specific cyclic operations when multiplied by another 
     \end{description}
 \end{proposition}
 
-\section{Low-Rank Update}
+\section{Low-Rank Corrections}
 Due to all the row and column vectors of a rank-\(1\) matrix are linearly dependent,
 it can be expressed as the outer product of two non-zero vectors;
 in other words, a rank-\(1\) matrix can be expressed as \( \alpha \beta^T \),
@@ -1022,7 +1084,7 @@ that contains both \( V_1 \) and \( V_2 \) (\(V_{1}\cup V_{2}\)).
     \]
 \end{proposition}
 
-\begin{theorem}{Dimension Formula}
+\begin{theorem}{Dimension Formula}\label{thm:dimension_formula}
     Let \( V \) be a finite-dimensional linear space over field \( F \), 
     and let \( V_1, V_2 \subseteq V \) be two subspaces of \( V \). Then:
     \[
@@ -1480,7 +1542,8 @@ the non-zero solutions to the homogeneous system of equations $(\lambda_{0}E-A)x
 correspond to the eigenvectors belonging to the eigenvalue $\lambda_{0}$.
 It is easy to verify that the eigenpolynomial as well as the eigenvalues, eigenvectors is invariant under similarity relations.
 
-
+\vspace{0.7cm}
+The following proposition summarizes the properties of the eigenpolynomial:
 \begin{proposition}
     Let \( A \in F^{n \times n} \), the eigenpolynomial of \( A \) is \( f(\lambda) = |\lambda E - A| \).
     Then \( f(\lambda) \) is a monic polynomial of degree \( n \):
@@ -1491,7 +1554,7 @@ It is easy to verify that the eigenpolynomial as well as the eigenvalues, eigenv
     the sum of all \( k \)-order principal minors of \( A \) multiplied by \( (-1)^k \).  
 \end{proposition}
 
-
+\begin{leftbarTitle}{Multiplicity and Eigen-Subspaces}\end{leftbarTitle}
 \begin{definition}{Eigen-Subspace}
     Let \( V \) be a linear space over field \( F \), 
     and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
@@ -1526,6 +1589,27 @@ It is easy to verify that the eigenpolynomial as well as the eigenvalues, eigenv
     1 \leqslant g(\lambda) \leqslant a(\lambda) \leqslant n.
     \]
 \end{property}
+
+\begin{leftbarTitle}{Estimation of Eigenvalues}\end{leftbarTitle}
+\begin{theorem}{Gershgorin Circle Theorem}
+    Let \( A = (a_{ij})_{n \times n} \in C^{n \times n} \) be a square matrix over complex number field \( C \).
+    For each \( i = 1, 2, \dots, n \), define
+    \[
+    R_i = \sum_{\substack{j=1 \\ j \neq i}}^{n} |a_{ij}|,
+    C_i = \sum_{\substack{j=1 \\ j \neq i}}^{n} |a_{ji}|,
+    \]
+    and
+    \[
+    S_{i} = \{ z \in \mathbb{C} | |z - a_{ii}| \leqslant R_i \},
+    G_{i} = \{ z \in \mathbb{C} | |z - a_{ii}| \leqslant C_i \},
+    \]
+    as Gershgorin row circle and column circle, respectively.
+    Then all eigenvalues of \( A \) lie within the union of these \( n \) circles:
+    \[
+    \bigcup_{i=1}^{n} S_{i} \cup G_{i}.
+    \]
+\end{theorem}
+
 
 \section{Space Decomposition}
 
@@ -1794,6 +1878,50 @@ In this sense, the matrix \(C(p)\) and the polynomial \(p(x)\) are "companions".
 
 \chapter{Quadratic Forms}
 \section{Quadratic Forms and Their Standard Forms}
+\begin{definition}{Quadratic Form}
+    Let \(P\) be a number field, a quadratic homogeneous polynomial in \( n \) variables over \( P \)\footnote{
+        That is, the coefficients of the polynomial belong to the field \( P \).
+    }:
+    \begin{align*}
+        f( x_{1}, x_{2}, \cdots, x_{n}) &= \sum_{i=1}^{n} \sum_{j=1}^{n} a_{ij} x_{i} x_{j} \\
+    &= a_{11}x_{1}^{2} + 2a_{12}x_{1}x_{2} + \cdots + 2a_{1n}x_{1}x_{n} + a_{22}x_{2}^{2} + \cdots + 2a_{2n}x_{2}x_{n} + \cdots + a_{nn}x_{n}^{2},
+    \end{align*}
+    is called a \textbf{quadratic form} in \( n \) variables over field \( P \).
+
+    It can be expressed in matrix form as:
+    \[
+    f( x_{1}, x_{2}, \cdots, x_{n}) = X^{\mathrm{T}} A X,
+    \]
+    where 
+    \[
+    X = \begin{pmatrix}
+        x_{1} \\
+        x_{2} \\
+        \vdots \\
+        x_{n}
+    \end{pmatrix}, \quad
+    A = (a_{ij})_{n \times n}, \quad a_{ij} = a_{ji} \quad (1 \leqslant i, j \leqslant n).
+    \]
+\end{definition}
+It is easy to verify that the matrix \( A \) of a quadratic form is symmetric.
+\begin{note}
+    In fact, for any square matrix \( B \)\footnote{
+        For a skew-symmetric matrix \( S \) (\( S^{T} = -S \)),
+        \[
+        X^{T} S X = - (X^{T} S X)^{T} = - X^{T} S^{T} X = - X^{T} S X \implies X^{T} S X = 0.
+        \]
+    }, we have:
+    \begin{align*}
+        X^{T}BX &= X^{T}\left( \frac{B + B^{T}}{2} \right)X + X^{T}\left( \frac{B - B^{T}}{2} \right)X \\
+        &= X^{T}\left( \frac{B + B^{T}}{2} \right)X + 0 \\
+        &= X^{T}\left( \frac{B + B^{T}}{2} \right)X.
+    \end{align*}
+    It shows that any quadratic form can be represented by a symmetric matrix.
+\end{note}
+
+
+
+
 \section{Canonical Forms}
 \section{Definite Quadratic Forms}
 \begin{definition}{Positive Definite Quadratic Form}
@@ -1955,10 +2083,10 @@ Obviously, symmetric transformations are linear transformations.
 \section{Symplectic Spaces}
 
 \begin{thebibliography}{99} 
-\bibitem{ch1} 丘维声, \emph{ 高等代数 (2nd edition) }, 清华大学出版社, 2019. 
-\bibitem{ch2} 谢启鸿, 姚慕生, 吴泉水, \emph{ 高等代数学 (4th edition) }, 复旦大学出版社, 2022.
-\bibitem{ch3} 王萼芳, 石生明 \emph{ 高等代数 (5th edition) }, 高等教育出版社, 2019.
-\bibitem{ch4} 樊启斌, \emph{ 高等代数典型问题与方法 (1st edition) }, 高等教育出版社, 2021.
+\bibitem{ch1} 丘维声. \emph{ 高等代数 (2nd edition) }, 清华大学出版社, 2019. 
+\bibitem{ch2} 谢启鸿, 姚慕生, 吴泉水. \emph{ 高等代数学 (4th edition) }, 复旦大学出版社, 2022.
+\bibitem{ch3} 王萼芳, 石生明. \emph{ 高等代数 (5th edition) }, 高等教育出版社, 2019.
+\bibitem{ch4} 樊启斌. \emph{ 高等代数典型问题与方法 (1st edition) }, 高等教育出版社, 2021.
 \bibitem{9} Wikipedia. \url{https://en.wikipedia.org/wiki/}.
 \end{thebibliography}
 

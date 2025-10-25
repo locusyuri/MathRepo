@@ -20,6 +20,7 @@
 		"Frobenius",
 		"Gauß",
 		"generatrices",
+		"Gershgorin",
 		"infimum",
 		"injective",
 		"Lindelöf",
@@ -35,6 +36,7 @@
 		"Pointwise",
 		"quasihomogeneous",
 		"Rolle's",
+		"RREF",
 		"Stieltjes",
 		"Stolz",
 		"submatrices",
@@ -44,6 +46,7 @@
 		"uncontinuable",
 		"unital",
 		"Vandermonde",
-		"Woodbury"
+		"Woodbury",
+		"Wronskian"
 	]
 }
