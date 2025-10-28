@@ -8,24 +8,24 @@
 This is a repository for mathematical notes. The directory structure is as follows:
 
 ## 0.Mathématiques fondamentales
-- [Logique Mathématique](./0.Mathématiques%20fondamentales/Logique%20Mathématique/tmp/initial.pdf)
+- [Logique Mathématique | 數理邏輯](./0.Mathématiques%20fondamentales/Logique%20Mathématique/tmp/initial.pdf)
 
 ## 1.Analyse
-- [Analyse Mathématique](./1.Analyse/Analyse%20Mathématique/tmp/initial.pdf)
-- [Analyse de Fourier](./1.Analyse/Analyse%20de%20Fourier/tmp/initial.pdf)
-- [Équation Différentielle Ordinaire](./1.Analyse/Équation%20Différentielle%20Ordinaire/tmp/initial.pdf)
+- [Analyse Mathématique | 數學分析](./1.Analyse/Analyse%20Mathématique/tmp/initial.pdf)
+- [Analyse de Fourier | 傅立葉分析](./1.Analyse/Analyse%20de%20Fourier/tmp/initial.pdf)
+- [Équation Différentielle Ordinaire | 常微分方程](./1.Analyse/Équation%20Différentielle%20Ordinaire/tmp/initial.pdf)
 
 ## 2.Algèbre
-- [Algèbre Linéaire](./2.Algèbre/Algèbre%20Linéaire/tmp/initial.pdf)
-- [Polynôme](./2.Algèbre/Polynôme/tmp/initial.pdf)
+- [Algèbre Linéaire | 線性代數](./2.Algèbre/Algèbre%20Linéaire/tmp/initial.pdf)
+- [Polynôme | 多項式](./2.Algèbre/Polynôme/tmp/initial.pdf)
 
 
 ## 3.Géométrie
-- [Géométrie Analytique](./3.Géométrie/Géométrie%20Analytique/tmp/initial.pdf)
+- [Géométrie Analytique | 解析幾何](./3.Géométrie/Géométrie%20Analytique/tmp/initial.pdf)
 
 
 ## 4.Mathématiques appliquées
-- [Latex](./4.Mathématiques%20appliquées/Latex/tmp/initial.pdf)
+- [Latex | Latex 教程](./4.Mathématiques%20appliquées/Latex/tmp/initial.pdf)
 
 ---
 # Notations
