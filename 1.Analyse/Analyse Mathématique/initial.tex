@@ -1350,19 +1350,6 @@ we say that the property holds \textbf{almost everywhere} on \( A \).
 
 \section{Calculation of Definite Integrals}
 
-\begin{lemma}{Riemann Lemma}
-    Let \( f(x) \in R[a, b] \), \( g(x) \) has a period \( T \) and \( g(x) \in [0, T] \),
-    then:
-    \[
-    \lim_{p \to +\infty}\int_{a}^{b} f(x)g(px) \, \mathrm{d}x 
-    = \int_{a}^{b} f(x) \, \mathrm{d}x \cdot \frac{1}{T} \int_{0}^{T} g(t) \, \mathrm{d}t.
-    \]
-    A special case is when \( g(x) = \sin x \) or \( g(x) = \cos x \), then:
-    \[
-    \lim_{p \to +\infty}\int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x 
-    = \int_{a}^{b} f(x)\cos(px) \, \mathrm{d}x.
-    \]
-\end{lemma}
 
 
 \begin{example}
@@ -2250,21 +2237,19 @@ and the following properties can be established:
 
         \item [Differentiability]
             Let \( f'_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} \sigma(x) \). 
-            If there exists \( x_0 \in [a, b] \) such that:
-            \[
-            \lim_{n \to \infty} f_n(x_0) = a,
+            If there exists \( x_0 \in [a, b] \) such that:\(\lim_{n \to \infty} f_n(x_0) = a\),
+            then there exists a function \( f(x) \) such that 
+            \[ 
+            f_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} f(x) \text{ and } f'(x) = \sigma(x).
             \]
-            then there exists a function \( f(x) \) such that \( f_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} f(x) \) 
-            and \( f'(x) = \sigma(x) \).
             
             \textbf{Termwise Differentiation} If 
             \( \sum_{n=1}^\infty u'_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} \sigma(x) \) 
-            and there exists \( x_0 \in [a, b] \) such that:
-            \[
-            \sum_{n=1}^\infty u_n(x_0) \to a,
-            \]
+            and there exists \( x_0 \in [a, b] \) such that: \(\sum_{n=1}^\infty u_n(x_0) \to a\),
             then there exists a function \( S(x) \) such that 
-            \( \sum_{n=1}^\infty u_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} S(x) \) and \( S'(x) = \sigma(x) \).
+            \[ 
+            \sum_{n=1}^\infty u_n(x) \mathop{\rightrightarrows}\limits^{[a, b]} S(x) \text{ and } S'(x) = \sigma(x).
+            \]
 
             \textbf{Corollary} Obviously, if we add the condition \( f'_n(x) \in C[a, b] \), the conclusion still holds, 
             and the proof becomes simpler.
@@ -4271,6 +4256,26 @@ but we have the following theorem.
     \int_{a}^{+\infty} \frac{\partial }{\partial y} f(x, y) \, \mathrm{d}x.
     \]
 \end{theorem}
+
+\begin{example}
+    Compute Dirichlet's integral:
+    \[
+    I = \int_{0}^{+\infty} \frac{\sin x}{x} \, \mathrm{d}x.
+    \]
+\end{example}
+\begin{solution}
+
+\end{solution}
+
+
+\section{Euler Integrals}
+\begin{leftbarTitle}{Beta Function}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Gamma Function}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Relation between Beta and Gamma Functions}\end{leftbarTitle}
+
+
 
 
 \begin{thebibliography}{99} 

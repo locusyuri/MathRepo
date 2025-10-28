@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  25 OCT 2025 21:09
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  28 OCT 2025 21:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1540,7 +1540,7 @@ Chapter 7.
 [25]
 
 [26]
-Underfull \hbox (badness 1178) in paragraph at lines 1650--1654
+Underfull \hbox (badness 1178) in paragraph at lines 1662--1666
 []\TU/GaramondPremrPro-Disp(0)/m/n/10.95 Let $\OML/cmm/m/it/10.95 W$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 be a nontrivial $\OMS/cmsy/m/n/10.95 A$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 -subspace, take a basis $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 "[]; "[]; [] ; "[]\OMS/cmsy/m/n/10.95 g$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 of $\OML/cmm/m/it/10.95 W$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 , and extend it to a basis
  []
 
@@ -1551,34 +1551,36 @@ Underfull \hbox (badness 1178) in paragraph at lines 1650--1654
 [28]
 
 [29]
+
+[30]
 Chapter 8.
 
 
-[30
+[31
 
 ]
 
-[31]
+[32]
 Chapter 9.
 
 
-[32
+[33
 
 ]
 
-[33]
+[34]
 Chapter 10.
 
 
-[34
+[35
 
 ]
 
-[35]
-
 [36]
 
-[37
+[37]
+
+[38
 
 ] (./tmp/initial.aux)
  ***********
@@ -1592,12 +1594,12 @@ Package logreq Info: Writing requests to 'initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46155 strings out of 473831
- 958729 string characters out of 5733137
- 1994845 words of memory out of 5000000
- 68384 multiletter control sequences out of 15000+600000
+ 46163 strings out of 473831
+ 958887 string characters out of 5733137
+ 1996955 words of memory out of 5000000
+ 68392 multiletter control sequences out of 15000+600000
  569117 words of font info for 169 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (41 pages).
+Output written on ./tmp/initial.pdf (42 pages).

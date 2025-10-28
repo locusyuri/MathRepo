@@ -83,3 +83,4 @@
 \contentsline {chapter}{\numberline {15}Integrals with Variable Parameters}{74}{chapter.15}%
 \contentsline {section}{\numberline {15.1}Definite Integrals with Variable Parameters}{74}{section.15.1}%
 \contentsline {section}{\numberline {15.2}Improper Integrals with Variable Parameters}{74}{section.15.2}%
+\contentsline {section}{\numberline {15.3}Euler Integrals}{76}{section.15.3}%

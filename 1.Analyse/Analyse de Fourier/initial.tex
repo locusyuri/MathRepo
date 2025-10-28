@@ -43,13 +43,43 @@ This is the preface of the book...
 % === 正文部分 ===
 \mainmatter         % 开始正文，页码从 1 重新开始
 
-\chapter{Chapter Title} % 这里放置章节标题
+\chapter{Fourier Series} % 这里放置章节标题
+\section{Fourier Expansion}
 
 
+
+\chapter{Convergence of Fourier Series} % 傅里叶级数的收敛性
+\section{Mean Convergence} % 均方收敛
+
+\begin{lemma}{Riemann-Lebesgue Lemma}
+    Let \( f(x) \in R[a, b] \), \( g(x) \) has a period \( T \) and \( g(x) \in R[0, T] \),
+    then:
+    \[
+    \lim_{p \to +\infty}\int_{a}^{b} f(x)g(px) \, \mathrm{d}x 
+    = \int_{a}^{b} f(x) \, \mathrm{d}x \cdot \frac{1}{T} \int_{0}^{T} g(t) \, \mathrm{d}t.
+    \]
+    A special case is when \( g(x) = \sin x \) or \( g(x) = \cos x \), then:
+    \[
+    \lim_{p \to +\infty}\int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x 
+    = \int_{a}^{b} f(x)\cos(px) \, \mathrm{d}x = 0.
+    \]
+\end{lemma}
+
+
+
+\section{Pointwise Convergence} % 点值收敛
+
+\chapter{Fourier Transform on \(\mathbb{R}\)} % R1 上的傅里叶变换
+
+\chapter{Fourier Transform on \(\mathbb{R}^n\)} % Rn 上的傅里叶变换
+
+\chapter{Finite Fourier Analysis} % 有限傅里叶分析
+
+\chapter{Dirichlet Theorem} % Dirichlet 定理
 
 
 \begin{thebibliography}{99} 
-\bibitem{en1} 作者, Title1, Journal1, Year1. \emph{ This is an example of a reference.}
+\bibitem{en1} Elias M. Stein, Rami Shakarchi. \emph{Fourier Analysis: An Introduction}. Princeton University Press, 2016.
 \bibitem{en2} Author2, Title2, Journal2, Year2. \emph{ This is another example of a reference.}
 \end{thebibliography}
 

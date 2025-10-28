@@ -16,5 +16,6 @@
 \contentsline {section}{\numberline {3.4}Dependency of Solutions on Initial Data}{14}{section.3.4}%
 \contentsline {chapter}{\numberline {4}System of First-Order Linear Equations}{15}{chapter.4}%
 \contentsline {section}{\numberline {4.1}System of First-Order Linear Equations}{15}{section.4.1}%
-\contentsline {section}{\numberline {4.2}General Theory of Homogeneous Linear Systems}{16}{section.4.2}%
-\contentsline {section}{\numberline {4.3}General Theory of Non-Homogeneous Linear Systems}{18}{section.4.3}%
+\contentsline {section}{\numberline {4.2}General Theory of Homogeneous Linear Systems}{17}{section.4.2}%
+\contentsline {section}{\numberline {4.3}General Theory of Non-Homogeneous Linear Systems}{19}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Solution to Constant Coefficient Linear Systems}{20}{section.4.4}%

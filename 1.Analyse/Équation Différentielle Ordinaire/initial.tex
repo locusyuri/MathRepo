@@ -699,8 +699,8 @@ give the existence and uniqueness theorem.
     In the Cauchy problem~\eqref{eq:Cauchy problem},
     let \(D\) be a closed rectangle in the \(xy\)-plane: 
     \[
-    D = [x_{0}-a, x_{0}+a] \times [y_{0}-b, y_{0}+b]
-    \].
+    D = [x_{0}-a, x_{0}+a] \times [y_{0}-b, y_{0}+b].
+    \]
     If the function \(f(x, y)\) satisfies the following two conditions:
     \begin{enumerate}
         \item \(f(x, y)\) is continuous in \(D\).
@@ -807,6 +807,7 @@ we have the following two theorems, which are weaker than the Picard-Lindelöf t
 
 \chapter{System of First-Order Linear Equations}
 \section{System of First-Order Linear Equations}
+\begin{leftbarTitle}{Common Forms}\end{leftbarTitle}
 System of first-order equations with \(n\) variables is of the form:
 \begin{equation}\label{eq:system of first-order linear equations}
     \begin{cases}
@@ -917,8 +918,31 @@ On the interval \(I\), if \(\mathbf{F}(x) \equiv \mathbf{0}\), that is,
 then system~\eqref{eq:matrix form of system of first-order linear equations - linear} is called a \textbf{homogeneous system},
 otherwise, it is called a \textbf{non-homogeneous system}.
 
-\vspace{0.7cm}
+\begin{leftbarTitle}{General Theory}\end{leftbarTitle}
 
+\begin{theorem}{Existence and Uniqueness Theorem for System of First-Order Linear Equations}
+    \label{thm:existence and uniqueness theorem for system of first-order linear equations}
+    In the Cauchy problem~\eqref{eq:Cauchy problem for system of first-order linear equations},
+    let \(D\) be a closed region in the \(\mathbb{R}^{n+1}\):
+    \[
+    D = [x_{0}-a, x_{0}+a] \times [\mathbf{Y}_{0}-b, \mathbf{Y}_{0}+b].
+    \]
+    If the function \(\mathbf{F}(x, \mathbf{Y})\) satisfies the following two conditions:
+    \begin{enumerate}
+        \item \(\mathbf{F}(x, \mathbf{Y})\) is continuous in \(D\).
+        \item \(\mathbf{F}(x, \mathbf{Y})\) satisfies the Lipschitz condition with respect to \(\mathbf{Y}\) in \(D\), 
+            i.e., there exists a constant \(L > 0\) such that for any \((x, \mathbf{Y}_{1}), (x, \mathbf{Y}_{2}) \in D\),
+            \[
+            \|\mathbf{F}(x, \mathbf{Y}_{1}) - \mathbf{F}(x, \mathbf{Y}_{2})\| \leqslant  L \|\mathbf{Y}_{1} - \mathbf{Y}_{2}\|.
+            \]
+    \end{enumerate}
+    Then there exists a unique solution \(\mathbf{Y} = \mathbf{\Phi}(x)\) (\(\mathbf{\Phi}(x_0) = \mathbf{Y}_0\))
+    to the Cauchy problem~\eqref{eq:Cauchy problem for system of first-order linear equations}
+    in the interval \([x_{0}-h, x_{0}+h]\), where
+    \[
+    h = \min\{a, \frac{b}{M}\}, \quad M = \max_{(x, \mathbf{Y}) \in D} \|\mathbf{F}(x, \mathbf{Y})\|.
+    \]
+\end{theorem}
 
 \section{General Theory of Homogeneous Linear Systems}
 Similar to linear homogeneous systems of algebraic equations,
@@ -991,6 +1015,13 @@ then the following conclusion holds:
     the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
     then \(W(x) \not\equiv 0\) for all \(x \in I\).
 \end{theorem}
+Combine the above two theorems, we have the following corollary:
+\begin{corollary}{Criterion for Linear Independence}\label{corollary:criterion for linear independence}
+    For vector functions~\eqref{VectorFunctionGroup},
+    if their Wronskian determinant \(W(x_{0}) \neq  0\) for some \(x_{0} \in I\),
+    then they are linearly independent on \(I\).
+\end{corollary}
+
 
 As for the relation between the solutions and the coefficient,
 we have the following theorem.
@@ -1014,18 +1045,43 @@ With the above conclusions, we can give the existence of fundamental solution sy
 \end{theorem}
 
 \begin{proof}
-    
+    Due to the existence and uniqueness theorem for system of first-order linear equations
+    (Theorem~\ref{thm:existence and uniqueness theorem for system of first-order linear equations}),
+    for initial conditions
+    \begin{equation}\label{eq:initial conditions for fundamental solution system}
+        \mathbf{Y}_{1}(x_{0}) = \begin{pmatrix} 1 \\ 0  \\ \vdots \\ 0 \end{pmatrix} ,
+        \mathbf{Y}_{2}(x_{0}) = \begin{pmatrix} 0 \\ 1  \\ \vdots \\ 0 \end{pmatrix} ,
+        \cdots,
+        \mathbf{Y}_{n}(x_{0}) = \begin{pmatrix} 0 \\ 0  \\ \vdots \\ 1 \end{pmatrix} ,
+        \quad x_{0} \in I,
+    \end{equation}
+    there exist \(n\) solutions \(\mathbf{Y}_{1}(x), \mathbf{Y}_{2}(x), \ldots, \mathbf{Y}_{n}(x)\) to 
+    the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous}.
+    Their Wronskian determinant at \(x = x_{0}\) is
+    \[
+    W(x_{0}) = \begin{vmatrix}1 & 0 & \cdots & 0 \\ 0 & 1 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & 1 \end{vmatrix} = 1 \neq 0.
+    \]
+    Therefore, by the criterion for linear independence (Corollary~\ref{corollary:criterion for linear independence}),
+    \(\mathbf{Y}_{1}(x), \mathbf{Y}_{2}(x), \ldots, \mathbf{Y}_{n}(x)\) are linearly independent on \(I\),
+    i.e., they form a fundamental solution system to
+    the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous}.
 \end{proof}
 
-General solution can be also derived.
-\begin{theorem}
+Fundamental solution systems satisfying~\eqref{eq:initial conditions for fundamental solution system}
+are called \textbf{standard fundamental systems}, 
+and their fundamental solution matrices are called \textbf{standard fundamental solution matrices}.
+Obviously, standard fundamental solution matrices is identity matrix at \(x = x_{0}\).
+
+Then, general solution can be also derived.
+\begin{theorem}{General Solution to Homogeneous Linear Systems}\label{theorem:general solution to homogeneous linear systems}
     If \(\mathbf{Y}_{1}(x), \mathbf{Y}_{2}(x), \ldots, \mathbf{Y}_{n}(x)\) is a fundamental solution system to 
     the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
     then the \textbf{general solution} to the system is given by:
     \[
-    \mathbf{Y}(x) = C_{1} \mathbf{Y}_{1}(x) + C_{2} \mathbf{Y}_{2}(x) + \cdots + C_{n} \mathbf{Y}_{n}(x),
+    \mathbf{Y}(x) = C_{1} \mathbf{Y}_{1}(x) + C_{2} \mathbf{Y}_{2}(x) + \cdots + C_{n} \mathbf{Y}_{n}(x) 
+    = \mathbf{\Phi}(x) \mathbf{C},
     \]
-    where \(C_{1}, C_{2}, \ldots, C_{n}\) are arbitrary constants.
+    where \(C_{1}, C_{2}, \ldots, C_{n}\) are arbitrary constants, and \(\mathbf{\Phi}(x)\) is the fundamental matrix solution.
 \end{theorem}
 \begin{proof}
     
@@ -1037,6 +1093,93 @@ can be not exceed \(n\),
 and the solution space of the system is an \(n\)-dimensional linear space.
 
 \section{General Theory of Non-Homogeneous Linear Systems}
+For the non-homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear},
+similar to linear systems of algebraic equations,
+we have the following conclusion:
+\begin{itemize}
+    \item The difference between any two solutions to
+    the non-homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear}
+    is a solution to the corresponding homogeneous linear 
+    system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous}. 
+    \item If \(\tilde{\mathbf{Y}}(x)\) is a particular solution to 
+    the non-homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear}, 
+    then
+    \[
+    \mathbf{Y}(x) = \mathbf{Y}_{0}(x) + \tilde{\mathbf{Y}}(x),
+    \]
+    is still a solution to the system,
+    where \(\mathbf{Y}_{0}(x)\) is the general solution to the
+    corresponding homogeneous linear 
+    system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous}.
+\end{itemize}
+
+Then we can give the general solution to
+the non-homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear}.
+\begin{theorem}{General Solution to Non-Homogeneous Linear Systems}\label{theorem:general solution to non-homogeneous linear systems}
+    If \(\mathbf{Y}_{1}(x), \mathbf{Y}_{2}(x), \ldots, \mathbf{Y}_{n}(x)\) is a fundamental solution system to 
+    the corresponding homogeneous linear 
+    system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
+    then the general solution to the non-homogeneous linear 
+    system~\eqref{eq:matrix form of system of first-order linear equations - linear} is given by:
+    \[
+    \mathbf{Y}(x) = C_{1} \mathbf{Y}_{1}(x) + C_{2} \mathbf{Y}_{2}(x) + \cdots + C_{n} \mathbf{Y}_{n}(x) + \tilde{\mathbf{Y}}(x),
+    \]
+    where \(\tilde{\mathbf{Y}}(x)\) is a particular solution to the non-homogeneous linear 
+    system~\eqref{eq:matrix form of system of first-order linear equations - linear}.
+\end{theorem}
+
+For non-homogeneous linear systems, method of variation of constants can also be used to find particular solutions.
+According to Theorem~\ref{theorem:general solution to homogeneous linear systems},
+the general solution to the corresponding homogeneous linear system is given by:
+\[
+\mathbf{Y}(x) = \mathbf{\Phi}(x) \mathbf{C},
+\]
+where \(\mathbf{\Phi}(x)\) is the fundamental matrix solution,
+and \(\mathbf{C}=\begin{pmatrix} C_{1} & C_{2} & \cdots & C_{n} \end{pmatrix}^{\mathrm{T}}\) is a constant vector.
+Now find a particular solution to the non-homogeneous linear system in the form:
+\[
+\mathbf{Y}(x) = \mathbf{\Phi}(x) \mathbf{C}(x),
+\]
+where \(\mathbf{C}(x)=\begin{pmatrix} C_{1}(x) & C_{2}(x) & \cdots & C_{n}(x) \end{pmatrix}^{\mathrm{T}}\) 
+is a vector function to be determined.
+Substituting it into the non-homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear},
+we have:
+\begin{equation}\label{eq:variation of constants - step 1}
+    \mathbf{\Phi}(x) \frac{\mathrm{d}\mathbf{C}}{\mathrm{d}x} = \mathbf{F}(x).
+\end{equation}
+Since \(\mathbf{\Phi}(x)\) is invertible, we obtain:
+\begin{equation}\label{eq:variation of constants - step 2}
+    \frac{\mathrm{d}\mathbf{C}}{\mathrm{d}x} = \mathbf{\Phi}^{-1}(x) \mathbf{F}(x).
+\end{equation}
+Integrating both sides of Equation~\eqref{eq:variation of constants - step 2}, we have:
+\begin{equation}\label{eq:variation of constants - step 3}
+    \mathbf{C}(x) = \int_{x_{0}}^{x} \mathbf{\Phi}^{-1}(t) \mathbf{F}(t) \, \mathrm{d}t,
+\end{equation}
+where \(x_{0}\) is an arbitrary constant.
+Then substituting Equation~\eqref{eq:variation of constants - step 3} into
+\(\mathbf{Y}(x) = \mathbf{\Phi}(x) \mathbf{C}(x)\), 
+we obtain a particular solution to the non-homogeneous linear 
+system~\eqref{eq:matrix form of system of first-order linear equations - linear}:
+\begin{equation}\label{eq:particular solution by variation of constants}
+    \tilde{\mathbf{Y}}(x) = \mathbf{\Phi}(x) \int_{x_{0}}^{x} \mathbf{\Phi}^{-1}(t) \mathbf{F}(t) \, \mathrm{d}t.
+\end{equation}
+
+\begin{remark}
+    If \(\mathbf{\Phi}(x)^{-1}\) is difficult to compute,
+    we can use~\eqref{eq:variation of constants - step 1} directly to find \(\frac{\mathrm{d}\mathbf{C}}{\mathrm{d}x}\).
+\end{remark}
+
+
+\section{Solution to Constant Coefficient Linear Systems}
+For autonomous linear systems with constant coefficients:
+\begin{equation}\label{eq:constant coefficient linear system}
+    \frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{A} \mathbf{Y},
+\end{equation}
+we can use the Jordan canonical form or the matrix exponential to find the fundamental matrix solution.
+In this section, we introduce the Jordan canonical form method.
+
+
+
 
 \begin{thebibliography}{99} 
 \bibitem{1} 柳彬. \emph{常微分方程 (1th edition) }. 北京大学出版社, 2021.

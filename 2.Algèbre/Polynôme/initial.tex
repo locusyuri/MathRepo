@@ -46,6 +46,7 @@ This is the preface of the book...
 
 \chapter{Preliminaries} % 这里放置章节标题
 
+
 \chapter{Univariate Polynomial Ring}
 \section{Univariate Polynomials}
 
@@ -158,6 +159,22 @@ This is the preface of the book...
     The product of two primitive polynomials is also a primitive polynomial.
 \end{lemma}
 
+\section{Relation between Roots and Coefficients}
+\begin{theorem}{Vièta's Formulas}
+    Let \( f(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0 \) 
+    be a polynomial of degree \( n \) over field \( P \), 
+    and let its \( n \) roots (counting multiplicities) be \( r_1, r_2, \ldots, r_n \) in an extension field of \( P \). 
+    Then the following relations hold:
+    \[
+    \begin{aligned}
+    &r_1 + r_2 + \cdots + r_n = -\frac{a_{n-1}}{a_n}, \\
+    &r_1 r_2 + r_1 r_3 + \cdots + r_{n-1} r_n = \frac{a_{n-2}}{a_n}, \\
+    &\vdots \\
+    &r_1 r_2 \cdots r_n = (-1)^n \frac{a_0}{a_n}.
+    \end{aligned}
+    \]
+\end{theorem}
+
 \section{Root of Unity}
 \begin{definition}{Root of Unity}
     Let \( P \) be a number field and \( n \in \mathbb{N}^{*} \). 
@@ -224,11 +241,68 @@ with an angle of \( \frac{2\pi}{n} \) between adjacent roots.
 
 
 
-\chapter{Integral Polynomials and Rational Polynomials}
 
 
-\begin{thebibliography}{99} 
-\bibitem{en1} 作者, Title1, Journal1, Year1. \emph{ This is an example of a reference.}
+
+\chapter{Integral Valued Polynomials}
+
+
+
+\section{Lagrange Interpolation Polynomial}
+
+\chapter{Multivariate Polynomial}
+\section{Symmetric Polynomial}
+\begin{definition}{Symmetric Polynomial}
+    A polynomial \( f(x_1, x_2, \ldots, x_n) \) in \( n \) variables is called a \textbf{symmetric polynomial} 
+    if it remains unchanged under any permutation of its variables. 
+    In other words, for any permutation \( \sigma \) of the set \( \{1, 2, \ldots, n\} \),
+    the following holds:
+    \[
+    f(x_{\sigma(1)}, x_{\sigma(2)}, \ldots, x_{\sigma(n)}) = f(x_1, x_2, \ldots, x_n).
+    \]
+\end{definition}
+Some common symmetric polynomials include:
+\begin{description}
+    \item[Elementary Symmetric Polynomials:] 
+        \[
+        e_k(x_1, x_2, \ldots, x_n) = \sum_{1 \leq i_1 < i_2 < \cdots < i_k \leq n} x_{i_1} x_{i_2} \cdots x_{i_k}, 
+        \quad k = 1, 2, \ldots, n.
+        \]
+        That is,
+        \begin{align*}
+            &e_{0} = 1, \\
+            &e_{1} = x_{1} + x_{2} + \cdots + x_{n}, \\
+            &e_{2} = \sum_{1 \leq i < j \leq n} x_{i} x_{j}, \\
+            &\vdots \\
+            &e_{n} = x_{1} x_{2} \cdots x_{n}, \\
+            &e_{k} = 0, \quad k > n.
+        \end{align*}
+    \item[Power Sum Symmetric Polynomials:] 
+        \[
+        p_k(x_1, x_2, \ldots, x_n) = x_1^k + x_2^k + \cdots + x_n^k, 
+        \quad k = 1, 2, \ldots.
+        \]
+    \item[Complete Homogeneous Symmetric Polynomials:] 
+        \[
+        h_k(x_1, x_2, \ldots, x_n) = \sum_{i_1 + i_2 + \cdots + i_n = k} x_1^{i_1} x_2^{i_2} \cdots x_n^{i_n}, 
+        \quad k = 1, 2, \ldots.
+        \]
+\end{description}
+
+
+
+\begin{theorem}{Newton's Identities}
+    For \( k \geq 1 \), the following relations hold between the elementary symmetric polynomials \( e_k \) 
+    and the power sum symmetric polynomials \( p_k \):
+    \[
+    k e_k = \sum_{i=1}^{k} (-1)^{i-1} e_{k-i} p_i,
+    \]
+    where \( e_0 = 1 \) and \( e_k = 0 \) for \( k > n \).
+\end{theorem}
+
+
+\begin{thebibliography}{99}
+\bibitem{en1} 南秀全, 黄振国. \emph{多项式理论}. 哈尔滨工业大学出版社, 2016.
 \bibitem{en2} Author2, Title2, Journal2, Year2. \emph{ This is another example of a reference.}
 \end{thebibliography}
 

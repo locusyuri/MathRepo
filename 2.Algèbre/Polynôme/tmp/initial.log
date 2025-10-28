@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  1 OCT 2025 21:26
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  28 OCT 2025 21:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1443,7 +1443,7 @@ Chapter 1.
 ]
 Chapter 2.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
-(Font)              scaled to size 10.95pt on input line 77.
+(Font)              scaled to size 10.95pt on input line 78.
 
 
 [2
@@ -1451,29 +1451,35 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 ]
 
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 122.
+(Font)              scaled to size 10.0pt on input line 123.
 [3]
 Chapter 3.
-File: img/Visualisation_complex_number_roots.png Graphic file (type bmp)
-<img/Visualisation_complex_number_roots.png>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 
 
 [4
 
 ]
+File: img/Visualisation_complex_number_roots.png Graphic file (type bmp)
+<img/Visualisation_complex_number_roots.png>
+
 
 [5]
+
+[6]
 Chapter 4.
 
 
-[6
+[7
+
+]
+Chapter 5.
+
+
+[8
 
 ]
 
-[7
+[9
 
 ] (./tmp/initial.aux)
  ***********
@@ -1481,18 +1487,18 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: B9DAEC8960F645DAFD74E4C45A90C6D7;2279.
+(rerunfilecheck)             Checksum: 21BA37436D421325CF4D669F8B2E5E32;3069.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45932 strings out of 473831
- 954440 string characters out of 5733137
- 1987359 words of memory out of 5000000
- 68179 multiletter control sequences out of 15000+600000
- 566243 words of font info for 144 fonts, out of 8000000 for 9000
+ 45952 strings out of 473831
+ 954920 string characters out of 5733137
+ 1989208 words of memory out of 5000000
+ 68198 multiletter control sequences out of 15000+600000
+ 566251 words of font info for 145 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,11n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (10 pages).
+Output written on ./tmp/initial.pdf (12 pages).
