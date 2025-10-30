@@ -122,7 +122,7 @@ Then expand along the first column.
     x_{i}, & i = j, \\ 
     b, & i > j,
     \end{cases} 
-    \], 
+    \]
     then \( D_{n} \) is called a two-triangular determinant.
 \end{definition}
 
@@ -319,8 +319,13 @@ A few propositions about linear dependence and independence are given below:
     \item For two vector groups \( \alpha_1, \alpha_2, \dots, \alpha_r \) and \( \beta_1, \beta_2, \dots, \beta_s \),
         if the former can be linearly expressed by the latter:
         \begin{enumerate}[label=\roman*.]
-            \item and \( r > s \), then the former is linearly dependent.
-            \item and \( \alpha_1, \alpha_2, \dots, \alpha_r \) is linearly independent, then \( r \leqslant s \).
+            \item if \( r > s \), then the former is linearly dependent.
+            \item if \( \alpha_1, \alpha_2, \dots, \alpha_r \) is linearly independent, then \( r \leqslant s \);
+                and there exists a subset of \( \beta_1, \beta_2, \dots, \beta_s \) (without loss of generality, 
+                assume it comprises the first \(r\) vectors, \( \beta_1, \beta_2, \dots, \beta_r \)),
+                it can be replaced by \( \alpha_1, \alpha_2, \dots, \alpha_r \) to form a new vector group
+                \( \alpha_1, \alpha_2, \dots, \alpha_r, \beta_{r+1}, \beta_{r+2}, \dots, \beta_s \),
+                which is equivalent to \( \beta_1, \beta_2, \dots, \beta_s \) (This is \textbf{the Steinitz replacement principle}).
         \end{enumerate}
 
     \item Any \( n+1 \) \( n \)-dimensional vectors must be linearly dependent.
@@ -543,6 +548,9 @@ the above formula provides all the solutions of \( AX = B \).
 \begin{leftbarTitle}{Transpose}\end{leftbarTitle}
 \begin{leftbarTitle}{Matrix Multiplication}\end{leftbarTitle}
 
+
+
+\begin{leftbarTitle}{Operations of Determinants}\end{leftbarTitle}
 \begin{theorem}{Determinant of a Product}
     For square matrices \( A \) and \( B \) of the same order, 
     the determinant of their product is equal to the product of their determinants:
@@ -879,7 +887,26 @@ The matrix \(C\) performs specific cyclic operations when multiplied by another 
 
 \section{Block Matrix}
 
-\begin{theorem}{Determinant Reduction Formula}
+
+
+\begin{definition}{Kronecker Product}
+    Let \( A = (a_{ij})_{m \times n} \) and \( B = (b_{ij})_{p \times q} \) be two matrices. 
+    The \textbf{Kronecker product} of \( A \) and \( B \), denoted as \( A \otimes B \), 
+    is defined as the block matrix:
+    \[
+    A \otimes B = 
+    \begin{pmatrix}
+    a_{11}B & a_{12}B & \cdots & a_{1n}B \\
+    a_{21}B & a_{22}B & \cdots & a_{2n}B \\
+    \vdots & \vdots & & \vdots \\
+    a_{m1}B & a_{m2}B & \cdots & a_{mn}B
+    \end{pmatrix}_{mp \times nq}.
+    \]
+\end{definition}
+
+
+\begin{leftbarTitle}{Common Conclusions}\end{leftbarTitle}
+\begin{theorem}{Determinant Reduction Formula}\label{thm:determinant_reduction_formula}
     Let \(A_{m\times m}, B_{m\times n}, C_{n\times m}, D_{n\times n}\) be matrices. Then:
     \begin{enumerate}
         \item If \( A \) is invertible, then:
@@ -913,7 +940,7 @@ The matrix \(C\) performs specific cyclic operations when multiplied by another 
 \end{remark}
 
 
-
+\section{Matrix Functions}
 
 \section{Operations of Rank}
 \begin{proposition}
@@ -1177,6 +1204,21 @@ denoted as \( C(A) \).
 
 
 \begin{leftbarTitle}{Existence and Uniqueness of Linear Mappings}\end{leftbarTitle}
+\begin{theorem}{Existence and Uniqueness of Linear Mappings (Linear Extension Theorem)}
+    Let \( V \) and \( V' \) be linear spaces over field \( F \),
+    and let \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) be a basis of \( V \).
+    For any set of vectors \( \{\alpha_1, \alpha_2, \dots, \alpha_n\} \subseteq V' \),
+    there exists a unique linear mapping
+    \[
+    \mathcal{A}: V \to V', \quad 
+    \alpha = \sum_{i=1}^{n} x_i \varepsilon_i \mapsto \mathcal{A}(\alpha) = \sum_{i=1}^{n} x_i \alpha_i
+    \] 
+    such that:
+    \[
+    \mathcal{A}(\varepsilon_i) = \alpha_i, \quad i = 1, 2, \dots, n.
+    \]
+    
+\end{theorem}
 
 \begin{leftbarTitle}{Operations of Linear Mappings}\end{leftbarTitle}
 In the following, all linear spaces are over the field \(F\).
@@ -1280,7 +1322,7 @@ It is evident that \(\mathrm{Hom}(V)\) is an algebra over the field \(F\).
     \]
     They can be also denoted as \( \mathcal{A}^{-1}(0) \) and \( \mathcal{A}(V) \) respectively.
 
-    The rank of \( \operatorname{Im}(\mathcal{A} \) is called the \textbf{rank} of \( \mathcal{A} \);
+    The rank of \( \operatorname{Im}(\mathcal{A}) \) is called the \textbf{rank} of \( \mathcal{A} \);
     the dimension of \( \operatorname{Ker}\mathcal{A} \) is called the \textbf{nullity} of \( \mathcal{A} \).
 \end{definition}
 
@@ -1488,8 +1530,9 @@ From it, we can derive some important applications:
 \end{description}
 
 \vspace{0.7cm}
-In summary, the determinant, rank, and trace of a matrix are invariants\footnote{
-    And also include the characteristic polynomial, eigenvalues, and eigenvectors in next section.
+In summary, the \underline{determinant}, \underline{rank}, and \underline{trace} of a matrix are invariants\footnote{
+    And also include the \underline{characteristic polynomial}, \underline{eigenvalues}, and \underline{eigenvectors} 
+    in next section.
 } under similarity relations, 
 and are collectively referred to as \textbf{similarity invariants}.
 
@@ -1565,6 +1608,23 @@ The following proposition summarizes the properties of the eigenpolynomial:
     where the coefficient of \( \lambda^{n-k}\quad(1 \leqslant k < n) \) is 
     the sum of all \( k \)-order principal minors of \( A \) multiplied by \( (-1)^k \).  
 \end{proposition}
+\begin{note}
+    Combine Vièta's formulas with the proposition above,
+    we can derive that:
+    \begin{enumerate}
+        \item The sum of the eigenvalues (counting multiplicities) is equal to the trace of the matrix:
+        \[
+        \sum \lambda_{i} = \operatorname{tr}(A). 
+        \]
+        \item The product of the eigenvalues (counting multiplicities) is equal to the determinant of the matrix:
+        \[
+        \prod \lambda_{i} = \det A.
+        \]
+    \end{enumerate}
+\end{note}
+
+
+
 
 \begin{leftbarTitle}{Multiplicity and Eigen-Subspaces}\end{leftbarTitle}
 \begin{definition}{Eigen-Subspace}
@@ -1603,28 +1663,26 @@ The following proposition summarizes the properties of the eigenpolynomial:
 \end{property}
 
 \begin{leftbarTitle}{Estimation of Eigenvalues}\end{leftbarTitle}
-\begin{theorem}{Gershgorin Circle Theorem}
-    Let \( A = (a_{ij})_{n \times n} \in C^{n \times n} \) be a square matrix over complex number field \( C \).
-    For each \( i = 1, 2, \dots, n \), define
+\begin{theorem}{Gerschgorin Disks First Theorem}
+    Let \( A = (a_{ij})_{n \times n}\) be a square matrix over complex number field \( C \).
+    Then all eigenvalues of \( A \) are located within the following circular disks in the complex plane:
     \[
-    R_i = \sum_{\substack{j=1 \\ j \neq i}}^{n} |a_{ij}|,
-    C_i = \sum_{\substack{j=1 \\ j \neq i}}^{n} |a_{ji}|,
+    |z - a_{ii}| \leq R_i, \quad 1 \leq i \leq n,
     \]
-    and
-    \[
-    S_{i} = \{ z \in \mathbb{C} | |z - a_{ii}| \leqslant R_i \},
-    G_{i} = \{ z \in \mathbb{C} | |z - a_{ii}| \leqslant C_i \},
-    \]
-    as Gershgorin row circle and column circle, respectively.
-    Then all eigenvalues of \( A \) lie within the union of these \( n \) circles:
-    \[
-    \bigcup_{i=1}^{n} S_{i} \cup G_{i}.
-    \]
+    where \(R_i = |a_{i1}| + \dots + |a_{i,i-1}| + |a_{i,i+1}| + \dots + |a_{in}|\).
+\end{theorem}
+
+\begin{theorem}{Gerschgorin Disks Second Theorem}
+    If the \(n\) Gerschgorin disks of the \(n\)-order matrix \(A\) form \(k\) connected regions,
+    and one of the connected regions contains \(k\) Gerschgorin disks, 
+    then there are exactly \(k\) eigenvalues located in this connected region (if the eigenvalues are repeated, 
+    the count includes multiplicities).
 \end{theorem}
 
 
 \section{Space Decomposition}
-
+Studying linear transformations through invariant subspaces is a commonly used method, 
+as it reduces problems on the whole space to problems on lower-dimensional subspaces.
 \begin{leftbarTitle}{Invariant Subspace}\end{leftbarTitle}
 \begin{definition}{Invariant Subspace}
     Let \( V \) be a linear space over field \( F \), 
@@ -1815,7 +1873,12 @@ The following proposition summarizes the properties of the eigenpolynomial:
         \item \( \mathcal{A} \) is diagonalizable, i.e., there exists a basis of \( V \)
             such that the matrix representation of \( \mathcal{A} \) under this basis is a diagonal matrix;
         \item There are \( n \) linearly independent eigenvectors (\( \xi_{1}, \xi_{2}, \cdots, \xi_{n} \)) of \( \mathcal{A} \);
-        \item For each eigenvalue of \( \mathcal{A} \), the geometric multiplicity equals the algebraic multiplicity;
+        \item For each eigenvalue of \( \mathcal{A} \), the geometric multiplicity equals the algebraic multiplicity;\footnote{
+            This condition is often called for any eigenvalue of \( \mathcal{A} \), 
+            it has \textbf{complete set of eigenvectors}.
+            It also can be restated as: 
+            the sum of the dimensions of all eigen-subspaces equals \( n \).
+        }
         \item \( V = V_{\lambda_1} \oplus V_{\lambda_2} \oplus \cdots \oplus V_{\lambda_k} \),
             where \( \lambda_1, \lambda_2, \dots, \lambda_k \) are the \underline{distinct} eigenvalues of \( \mathcal{A} \).
         \item The minimal polynomial\footnote{
@@ -1848,6 +1911,21 @@ The following proposition summarizes the properties of the eigenpolynomial:
 \begin{leftbarTitle}{Frobenius Matrix}\end{leftbarTitle}
 
 \begin{leftbarTitle}{Jordan Block}\end{leftbarTitle}
+
+\section{Simultaneous Characteristics Induced by Commutativity of Multiplication}
+In this section, we will explore the properties of matrices and linear transformations under 
+similarity relations induced by the commutativity of multiplication operations. 
+We refer to these properties as \textbf{simultaneous characteristics}. The discussion will proceed in five steps.
+
+\begin{leftbarTitle}{Eigenspaces are mutually Invariant Subspaces}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Shared Eigenvectors}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Simultaneous Upper Triangularization}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Simultaneous Diagonalization}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Generalization in Multiple Cases}\end{leftbarTitle}
 
 
 \chapter{Jordan Forms}
@@ -1906,6 +1984,20 @@ In this sense, the matrix \(C(p)\) and the polynomial \(p(x)\) are "companions".
     then \( F \) is called the \textbf{Frobenius normal form} (or rational canonical form) of \( \mathcal{A} \).
 \end{definition}
 
+\begin{leftbarTitle}{Geometric Interpretation}\end{leftbarTitle} % Rational 标准型的几何解释
+\begin{definition}{Cyclic Subspace}
+    Let \( V \) be a linear space over field \( F \),
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    For any vector \(0 \neq \xi \in V \), the subspace
+    \[
+    C(\mathcal{A}, \xi) = \langle \xi, \mathcal{A}(\xi), \mathcal{A}^{2}(\xi), \ldots \rangle
+    \]
+    is called the \textbf{cyclic subspace} generated by \( \xi \) under the linear transformation \( \mathcal{A} \).
+
+    If \(C(\mathcal{A}, \xi) = V\), then \( C \) is called a \textbf{cyclic space}.
+\end{definition}
+Obviously, \( C(\mathcal{A}, \xi) \) is the smallest \( \mathcal{A} \)-subspace containing \( \xi \).
+
 
 \section{Elementary Divisors}
 
@@ -1943,6 +2035,9 @@ C(\mathcal{A}-\lambda_{s}\mathcal{E}, \xi_{s}),
 \]
 where cyclic subspace \( C(\mathcal{A}-\lambda_{i}\mathcal{E}, \xi_{i}) \) one-to-one corresponds to 
 a Jordan block \( J_{r_{i}}(\lambda_{i}) \), which is geometric interpretation of Jordan canonical form.
+
+
+\begin{leftbarTitle}{Finding Transition Matrices}\end{leftbarTitle}
 
 \chapter{Quadratic Forms}
 \section{Quadratic Forms and Their Standard Forms}

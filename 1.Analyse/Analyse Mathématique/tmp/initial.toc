@@ -67,20 +67,20 @@
 \contentsline {section}{\numberline {12.4}Mean Value Theorem and Taylor's Formula}{51}{section.12.4}%
 \contentsline {section}{\numberline {12.5}Implicit Function Theorem}{53}{section.12.5}%
 \contentsline {section}{\numberline {12.6}Applications of Multi-Variable Differential Calculus}{56}{section.12.6}%
-\contentsline {chapter}{\numberline {13}Multiple Integrals}{57}{chapter.13}%
-\contentsline {section}{\numberline {13.1}Multiple Integrals on Bounded Closed Regions}{57}{section.13.1}%
-\contentsline {section}{\numberline {13.2}Properties and Calculation of Multiple Integrals}{58}{section.13.2}%
-\contentsline {section}{\numberline {13.3}Variable Substitution in Multiple Integrals}{63}{section.13.3}%
-\contentsline {section}{\numberline {13.4}Improper Multiple Integrals}{64}{section.13.4}%
-\contentsline {chapter}{\numberline {14}Line Integrals and Surface Integrals}{65}{chapter.14}%
-\contentsline {section}{\numberline {14.1}Line Integrals and Surface Integrals of scalar fields}{65}{section.14.1}%
-\contentsline {section}{\numberline {14.2}Differential Form and Exterior Differentiation}{66}{section.14.2}%
-\contentsline {section}{\numberline {14.3}Orientation of Curves and Surfaces}{67}{section.14.3}%
-\contentsline {section}{\numberline {14.4}Line Integrals and Surface Integrals of Vector Fields}{67}{section.14.4}%
-\contentsline {section}{\numberline {14.5}Stokes' Formula}{70}{section.14.5}%
-\contentsline {section}{\numberline {14.6}Closed and Exact Differential Forms}{73}{section.14.6}%
-\contentsline {section}{\numberline {14.7}Introduction to Field Theory}{73}{section.14.7}%
-\contentsline {chapter}{\numberline {15}Integrals with Variable Parameters}{74}{chapter.15}%
-\contentsline {section}{\numberline {15.1}Definite Integrals with Variable Parameters}{74}{section.15.1}%
-\contentsline {section}{\numberline {15.2}Improper Integrals with Variable Parameters}{74}{section.15.2}%
-\contentsline {section}{\numberline {15.3}Euler Integrals}{76}{section.15.3}%
+\contentsline {chapter}{\numberline {13}Multiple Integrals}{58}{chapter.13}%
+\contentsline {section}{\numberline {13.1}Multiple Integrals on Bounded Closed Regions}{58}{section.13.1}%
+\contentsline {section}{\numberline {13.2}Properties and Calculation of Multiple Integrals}{59}{section.13.2}%
+\contentsline {section}{\numberline {13.3}Variable Substitution in Multiple Integrals}{64}{section.13.3}%
+\contentsline {section}{\numberline {13.4}Improper Multiple Integrals}{65}{section.13.4}%
+\contentsline {chapter}{\numberline {14}Line Integrals and Surface Integrals}{66}{chapter.14}%
+\contentsline {section}{\numberline {14.1}Line Integrals and Surface Integrals of scalar fields}{66}{section.14.1}%
+\contentsline {section}{\numberline {14.2}Differential Form and Exterior Differentiation}{67}{section.14.2}%
+\contentsline {section}{\numberline {14.3}Orientation of Curves and Surfaces}{68}{section.14.3}%
+\contentsline {section}{\numberline {14.4}Line Integrals and Surface Integrals of Vector Fields}{68}{section.14.4}%
+\contentsline {section}{\numberline {14.5}Stokes' Formula}{71}{section.14.5}%
+\contentsline {section}{\numberline {14.6}Closed and Exact Differential Forms}{74}{section.14.6}%
+\contentsline {section}{\numberline {14.7}Introduction to Field Theory}{74}{section.14.7}%
+\contentsline {chapter}{\numberline {15}Integrals with Variable Parameters}{75}{chapter.15}%
+\contentsline {section}{\numberline {15.1}Definite Integrals with Variable Parameters}{75}{section.15.1}%
+\contentsline {section}{\numberline {15.2}Improper Integrals with Variable Parameters}{75}{section.15.2}%
+\contentsline {section}{\numberline {15.3}Euler Integrals}{77}{section.15.3}%

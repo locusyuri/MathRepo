@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  28 OCT 2025 21:53
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  30 OCT 2025 21:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1474,17 +1474,17 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 [6]
 
 [7]
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 494.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 494.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 496.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 496.
-
 
 [8]
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 8.0pt on input line 499.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
+(Font)              scaled to size 8.0pt on input line 499.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 9.0pt on input line 501.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
+(Font)              scaled to size 6.0pt on input line 501.
+
 
 [9]
 Chapter 4.
@@ -1494,7 +1494,7 @@ Chapter 4.
 
 ]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 683.
+(Font)              scaled to size 5.0pt on input line 691.
 
 
 [11]
@@ -1540,7 +1540,7 @@ Chapter 7.
 [25]
 
 [26]
-Underfull \hbox (badness 1178) in paragraph at lines 1662--1666
+Underfull \hbox (badness 1178) in paragraph at lines 1720--1724
 []\TU/GaramondPremrPro-Disp(0)/m/n/10.95 Let $\OML/cmm/m/it/10.95 W$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 be a nontrivial $\OMS/cmsy/m/n/10.95 A$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 -subspace, take a basis $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 "[]; "[]; [] ; "[]\OMS/cmsy/m/n/10.95 g$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 of $\OML/cmm/m/it/10.95 W$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 , and extend it to a basis
  []
 
@@ -1549,6 +1549,9 @@ Underfull \hbox (badness 1178) in paragraph at lines 1662--1666
 [27]
 
 [28]
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
+(Font)              scaled to size 9.0pt on input line 1881.
+
 
 [29]
 
@@ -1588,17 +1591,17 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 619AA231D8B762D6EFD49A9A07A06709;11038.
+(rerunfilecheck)             Checksum: 6323D78159A6A77D7B504138E016113C;11648.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46163 strings out of 473831
- 958887 string characters out of 5733137
- 1996955 words of memory out of 5000000
- 68392 multiletter control sequences out of 15000+600000
- 569117 words of font info for 169 fonts, out of 8000000 for 9000
+ 46175 strings out of 473831
+ 959155 string characters out of 5733137
+ 2001635 words of memory out of 5000000
+ 68403 multiletter control sequences out of 15000+600000
+ 569125 words of font info for 170 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 

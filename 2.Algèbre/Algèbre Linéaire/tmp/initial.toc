@@ -15,8 +15,9 @@
 \contentsline {section}{\numberline {4.2}Special Square Matrices}{10}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Inverse Matrix}{14}{section.4.3}%
 \contentsline {section}{\numberline {4.4}Block Matrix}{14}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Operations of Rank}{15}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Low-Rank Corrections}{16}{section.4.6}%
+\contentsline {section}{\numberline {4.5}Matrix Functions}{15}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Operations of Rank}{15}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Low-Rank Corrections}{16}{section.4.7}%
 \contentsline {chapter}{\numberline {5}Linear Spaces}{18}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Linear Spaces and Their Bases}{18}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Subspaces}{18}{section.5.2}%
@@ -27,7 +28,7 @@
 \contentsline {section}{\numberline {6.1}Linear Mappings and Their Computation}{20}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Kernel and Image of Linear Mappings}{21}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Matrix Representation of Linear Mappings}{22}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Special Linear Transformations}{22}{section.6.4}%
+\contentsline {section}{\numberline {6.4}Special Linear Transformations}{23}{section.6.4}%
 \contentsline {section}{\numberline {6.5}Linear Functions and Dual Spaces}{23}{section.6.5}%
 \contentsline {chapter}{\numberline {7}Diagonalization}{24}{chapter.7}%
 \contentsline {section}{\numberline {7.1}Similarity of Matrices}{24}{section.7.1}%
@@ -35,7 +36,8 @@
 \contentsline {section}{\numberline {7.3}Space Decomposition}{27}{section.7.3}%
 \contentsline {section}{\numberline {7.4}Minimal Polynomial}{29}{section.7.4}%
 \contentsline {section}{\numberline {7.5}Diagonalization}{29}{section.7.5}%
-\contentsline {section}{\numberline {7.6}Diagonalization of Special Matrices}{29}{section.7.6}%
+\contentsline {section}{\numberline {7.6}Diagonalization of Special Matrices}{30}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Simultaneous Characteristics Induced by Commutativity of Multiplication}{30}{section.7.7}%
 \contentsline {chapter}{\numberline {8}Jordan Forms}{31}{chapter.8}%
 \contentsline {section}{\numberline {8.1}Polynomial Matrices}{31}{section.8.1}%
 \contentsline {section}{\numberline {8.2}Invariant Factors}{31}{section.8.2}%

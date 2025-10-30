@@ -828,6 +828,9 @@ x + \frac{x^3}{3} + \frac{2}{15}x^5 + \cdots.
 
     Conversely, if the inequality is reversed, then \(f\) is called \textbf{concave} or \textbf{concave down} on \(I\).
 \end{definition}
+A related concept is that of \textbf{inflection points}:
+a point on the graph of a function at which the concavity changes.
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{img/ConvexFunction.png}
@@ -871,7 +874,7 @@ x + \frac{x^3}{3} + \frac{2}{15}x^5 + \cdots.
     Specially, when \(t_1 = t_2 = \cdots = t_n = \frac{1}{n}\), it reduces to Definition 3.
 \end{theorem}
 
-
+\vspace{0.7cm}
 Next, we present derivative-based criteria for monotonicity and convexity:
 \begin{theorem}
     \begin{enumerate}
@@ -891,7 +894,18 @@ Next, we present derivative-based criteria for monotonicity and convexity:
 \end{note}
 
 
+
 \begin{leftbarTitle}{Argmax and Argmin}\end{leftbarTitle}
+
+\begin{definition}{Stationary Point}
+    Stationary points are points where the first derivative of a function is \underline{zero or non-existent}.
+\end{definition}
+Stationary points can be classified into three types:
+\begin{description}
+    \item[Argmax and argmin points] Points where the function attains its maximum or minimum values.
+    \item[Inflection points] Points where the function changes concavity.
+    \item[Trivial points] Points that are neither local maxima nor local minima.
+\end{description}
 
 
 \begin{leftbarTitle}{Asymptote}\end{leftbarTitle}
@@ -3192,6 +3206,33 @@ always points outward from point \( t \).
 \begin{leftbarTitle}{Unconditional Extremum}\end{leftbarTitle}
 
 \begin{leftbarTitle}{Conditional Extremum}\end{leftbarTitle}
+\begin{definition}{Conditional Extremum}
+    Let \( f: D \to \mathbb{R} \) be a function with \(n+m\) variables defined on a open set \( D \subseteq \mathbb{R}^{n+m} \), 
+    and let \(\mathbf{\Phi}: D \to \mathbb{R}^m\) be a mapping, \( M=\{ \mathbf{x} \in D \mid \mathbf{\Phi}(\mathbf{x}) = 0 \} \).
+    If there exists \( \mathbf{x}^0 \in M \) satisfying the constraints such that:  
+    \[
+    f(\mathbf{x}^0) \leq f(\mathbf{x}) \quad (\text{or } f(\mathbf{x}^0) \geq f(\mathbf{x})),
+    \]
+    for all \( \mathbf{x} \in M \) that also satisfy the constraints, 
+    then \( f \) is said to have a conditional minimum (or maximum) at point \( \mathbf{x}^0 \) under the given constraints.
+\end{definition}
+
+\begin{theorem}{Lagrange Multiplier Method}
+    Let \( f: D \to \mathbb{R} \) be a function with \( n+m \) variables defined on an open set \( D \subseteq \mathbb{R}^{n+m} \), 
+    and let \( \mathbf{\Phi}: D \to \mathbb{R}^m \) be a mapping, 
+    \( M = \{ \mathbf{x} \in D \mid \mathbf{\Phi}(\mathbf{x}) = 0 \} \). 
+    If:
+    \begin{enumerate}
+        \item \(f \in C^1(D,\mathbb{R}), \mathbf{\Phi} \in C^1(D,\mathbb{R}^m)\);
+        \item \(\operatorname{rank}(J\mathbf{\Phi}(\mathbf{x}^0)) = m\);
+        \item \(\mathbf{x}^{0}\) is a conditional extremum point of \(f\) on \(M\);
+    \end{enumerate}
+    then there exist \(\lambda_1, \lambda_2, \dots, \lambda_m \in \mathbb{R}\), such that:
+    \[
+    \nabla f(\mathbf{x}^0) + \sum_{i=1}^m \lambda_i \nabla \Phi_i(\mathbf{x}^0) = 0.
+    \]
+\end{theorem}
+
 
 
 \chapter{Multiple Integrals}
@@ -3970,15 +4011,19 @@ along the boundary of region \(\overset{\rightharpoonup}{M}\), then we have the 
 \begin{theorem}{Green's Theorem}
     Let \(\overset{\rightharpoonup}{M}\) be an orientated closed region in \(\mathbb{R}^{2}\),
     and \(\omega = P\mathrm{d}x + Q \mathrm{d}y \in C^{1}(M)\).
-    If \(\overset{\rightharpoonup}{\partial M}\) can not only be split into finitely many first regions in Fig~\ref{fig:SpecialRegion1}
-    (non-overlapping, no shared interior points),
-    but also into finitely many second regions in Fig~\ref{fig:SpecialRegion1} (non-overlapping, no shared interior points),
+    If \(\overset{\rightharpoonup}{\partial M}\) can be split into finitely many first and second regions 
+    in Fig~\ref{fig:SpecialRegion1} simultaneously (non-overlapping, no shared interior points),
     then:
     \[
     \oint_{\overset{\rightharpoonup}{\partial M}} P \, \mathrm{d}x + Q \, \mathrm{d}y = 
     \iint_{\overset{\rightharpoonup}{M}} \left( \frac{\partial Q}{\partial x} - 
-    \frac{\partial P}{\partial y} \right) \, \mathrm{d}x \wedge \mathrm{d}y,
-    \]
+    \frac{\partial P}{\partial y} \right) \, \mathrm{d}x \wedge \mathrm{d}y =
+        \iint_{M} \left( \frac{\partial Q}{\partial x} - 
+    \frac{\partial P}{\partial y} \right) \, \mathrm{d}x \mathrm{d}y,
+    \]\footnote{
+        Note that \(\mathrm{d}x \wedge \mathrm{d}y \) is directed area element, 
+        while \(\mathrm{d}x \mathrm{d}y\) is unsigned area element.
+    }
     or equivalently,
     \[
     \oint_{\overset{\rightharpoonup}{\partial M}} \omega = \iint_{\overset{\rightharpoonup}{M}} \mathrm{d}\omega,
@@ -4037,11 +4082,9 @@ over the boundary of region \(\overset{\rightharpoonup}{M}\), then we have the f
     Let \(\overset{\rightharpoonup}{M}\) be an orientated closed region in \(\mathbb{R}^{3}\),
     and \(\omega = P\mathrm{d}y \wedge \mathrm{d}z + Q \mathrm{d}z \wedge \mathrm{d}x 
     + R \mathrm{d}x \wedge \mathrm{d}y \in C^{1}(M)\).
-    If \(\overset{\rightharpoonup}{\partial M}\) can not only be split into finitely many first surfaces 
-    in Fig~\ref{fig:SpecialRegion2}
-    (non-overlapping, no shared interior points),
-    but also into finitely many second surfaces in Fig~\ref{fig:SpecialRegion2} (non-overlapping, no shared interior points),
-    and into finitely many third surfaces in Fig~\ref{fig:SpecialRegion2} (non-overlapping, no shared interior points),
+    If \(\overset{\rightharpoonup}{\partial M}\) can be split into finitely many first, second and third regions
+    in Fig~\ref{fig:SpecialRegion1} simultaneously (non-overlapping, no shared interior points),
+    then:
     then:
     \[
     \oiint_{\overset{\rightharpoonup}{\partial M}} P \, \mathrm{d}y \wedge \mathrm{d}z + Q \, \mathrm{d}z \wedge \mathrm{d}x + R \, \mathrm{d}x \wedge \mathrm{d}y = 
