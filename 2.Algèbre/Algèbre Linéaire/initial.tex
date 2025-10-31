@@ -1930,10 +1930,90 @@ We refer to these properties as \textbf{simultaneous characteristics}. The discu
 
 \chapter{Jordan Forms}
 \section{Polynomial Matrices}
+\begin{definition}{Polynomial Matrix}
+    A matrix in the form:
+    \[
+    A(\lambda) = 
+    \begin{pmatrix}
+        a_{11}(\lambda) & a_{12}(\lambda) & \cdots & a_{1n}(\lambda) \\
+        a_{21}(\lambda) & a_{22}(\lambda) & \cdots & a_{2n}(\lambda) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        a_{m1}(\lambda) & a_{m2}(\lambda) & \cdots & a_{mn}(\lambda)
+    \end{pmatrix},
+    \]
+    is called a \textbf{polynomial matrix} over \( F \),
+    where each \( a_{ij}(\lambda) \in F[\lambda] \) is a polynomial in variable \( \lambda \) over field \( F \).
+\end{definition}
+Similar to ordinary matrices,
+polynomial matrices can also perform addition, multiplication, scalar multiplication, transposition, and taking determinants.
+\begin{caution}
+    \(A (\lambda)\) is invertible if and only if \( |A(\lambda)| \) is a \underline{non-zero constant},
+    it is worth noting that this is non-zero constant, not just any non-zero polynomial.
+\end{caution}
 
-\section{Invariant Factors}
+\begin{definition}{Equivalent Polynomial Matrices}
+    Let \( A(\lambda) \in F[\lambda]^{m \times n} \) and \( B(\lambda) \in F[\lambda]^{m \times n} \) be two polynomial matrices.
+    If they can be transformed into each other through a series of elementary row and column operations,
+    then they are called \textbf{equivalent polynomial matrices}, denoted as \( A(\lambda) \cong B(\lambda) \).
+\end{definition}
+\begin{note}
+    Obviously, \( A(\lambda) \cong B(\lambda) \) if and only if 
+    their ranks are equal: \( \operatorname{rank} A(\lambda) = \operatorname{rank} B(\lambda) \).
+\end{note}
 
-\section{Rational Canonical Form}
+\begin{definition}{Canonical Form of Polynomial Matrices}
+    Let \( A(\lambda) \in F[\lambda]^{m \times n} \) be a polynomial matrix with rank \( r \geqslant 1 \).
+    If \( A(\lambda) \) is equivalent to the following polynomial matrix:
+    \[
+    \begin{pmatrix}
+        d_1(\lambda) & 0 & \cdots & 0 & 0 & \cdots & 0 \\
+        0 & d_2(\lambda) & \cdots & 0 & 0 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & d_r(\lambda) & 0 & \cdots & 0 \\
+        0 & 0 & \cdots & 0 & 0 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & 0 & 0 & \cdots & 0
+    \end{pmatrix},
+    \]
+    where \( d_1(\lambda), d_2(\lambda), \dots, d_r(\lambda) \) are monic polynomials over field \( F \)
+    such that \( d_1(\lambda) | d_2(\lambda) | \cdots | d_r(\lambda) \),
+    then this polynomial matrix is called the \textbf{canonical form} of \( A(\lambda) \).
+\end{definition}
+It is easy to verify that the canonical form of polynomial matrices exists and is unique up to the order of the invariant divisors.
+
+
+\section{Invariant Divisors and Rational Canonical Form}
+\begin{leftbarTitle}{Invariant Divisors}\end{leftbarTitle}
+\begin{definition}{\(k\) Order Determinant Divisor}
+    Let \( A(\lambda) \in F[\lambda]^{m \times n} \) be a polynomial matrix.
+    The monic greatest common divisor of all \( k \)-order minors of \( A(\lambda) \) 
+    is called the \textbf{\( k \) order determinant divisor} of \( A(\lambda) \),
+    denoted as \( D_k(\lambda) \).
+\end{definition}
+
+\begin{definition}{Invariant Divisors}
+    Let \( A(\lambda) \in F[\lambda]^{m \times n} \) be a polynomial matrix,
+    and let \( D_1(\lambda), D_2(\lambda), \dots, D_r(\lambda) \) be its \( 1, 2, \dots, r \) order determinant divisors,
+    where \( r = \operatorname{rank} A(\lambda) \).
+    The polynomials
+    \[
+    d_1(\lambda) = D_1(\lambda), \quad
+    d_2(\lambda) = \frac{D_2(\lambda)}{D_1(\lambda)}, \quad
+    \dots, \quad
+    d_r(\lambda) = \frac{D_r(\lambda)}{D_{r-1}(\lambda)}
+    \]
+    are called the \textbf{invariant divisors} of \( A(\lambda) \).
+\end{definition}
+\begin{note}
+    In fact, for the canonical form of equivalent polynomial matrices,
+    \[
+    \operatorname{diag}\{ d_{1}(\lambda), d_{2}(\lambda), \ldots, d_{r}(\lambda), 0, \ldots, 0 \},
+    \]
+    the invariant divisors are just the non-zero diagonal elements of the canonical form.
+\end{note}
+
+
+\begin{leftbarTitle}{Rational Canonical Form}\end{leftbarTitle}
 \begin{definition}{Companion Matrix}
     The Frobenius companion matrix of the monic polynomial
     \[
@@ -1999,9 +2079,11 @@ In this sense, the matrix \(C(p)\) and the polynomial \(p(x)\) are "companions".
 Obviously, \( C(\mathcal{A}, \xi) \) is the smallest \( \mathcal{A} \)-subspace containing \( \xi \).
 
 
-\section{Elementary Divisors}
+\section{Elementary Divisors and Jordan Canonical Form}
+\begin{leftbarTitle}{Elementary Divisors}\end{leftbarTitle}
 
-\section{Jordan Canonical Form}
+\begin{leftbarTitle}{Jordan Canonical Form}\end{leftbarTitle}
+
 
 \begin{lemma}\label{lemma:nilpotent_jordan_form}
     Let \( V \) be a linear space over complex number field \( F \), 
@@ -2037,7 +2119,15 @@ where cyclic subspace \( C(\mathcal{A}-\lambda_{i}\mathcal{E}, \xi_{i}) \) one-t
 a Jordan block \( J_{r_{i}}(\lambda_{i}) \), which is geometric interpretation of Jordan canonical form.
 
 
+\section{Finding Jordan Canonical Form and Transition Matrices}
+\begin{leftbarTitle}{Finding Jordan Canonical Form}\end{leftbarTitle}
+
+
 \begin{leftbarTitle}{Finding Transition Matrices}\end{leftbarTitle}
+
+\section{Complete Set of Invariant Quantities for Matrix Similarity}
+
+
 
 \chapter{Quadratic Forms}
 \section{Quadratic Forms and Their Standard Forms}

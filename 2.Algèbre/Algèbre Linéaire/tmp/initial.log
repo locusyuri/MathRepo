@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  30 OCT 2025 21:09
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  31 OCT 2025 11:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1564,15 +1564,11 @@ Chapter 8.
 ]
 
 [32]
-Chapter 9.
 
-
-[33
-
-]
+[33]
 
 [34]
-Chapter 10.
+Chapter 9.
 
 
 [35
@@ -1580,10 +1576,18 @@ Chapter 10.
 ]
 
 [36]
+Chapter 10.
 
-[37]
 
-[38
+[37
+
+]
+
+[38]
+
+[39]
+
+[40
 
 ] (./tmp/initial.aux)
  ***********
@@ -1591,18 +1595,18 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 6323D78159A6A77D7B504138E016113C;11648.
+(rerunfilecheck)             Checksum: 067B85DF995B513187EE08B790112029;12309.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46175 strings out of 473831
- 959155 string characters out of 5733137
- 2001635 words of memory out of 5000000
- 68403 multiletter control sequences out of 15000+600000
+ 46189 strings out of 473831
+ 959420 string characters out of 5733137
+ 2003320 words of memory out of 5000000
+ 68416 multiletter control sequences out of 15000+600000
  569125 words of font info for 170 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (42 pages).
+Output written on ./tmp/initial.pdf (44 pages).

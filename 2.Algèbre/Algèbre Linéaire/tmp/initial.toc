@@ -40,20 +40,20 @@
 \contentsline {section}{\numberline {7.7}Simultaneous Characteristics Induced by Commutativity of Multiplication}{30}{section.7.7}%
 \contentsline {chapter}{\numberline {8}Jordan Forms}{31}{chapter.8}%
 \contentsline {section}{\numberline {8.1}Polynomial Matrices}{31}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Invariant Factors}{31}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Rational Canonical Form}{31}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Elementary Divisors}{32}{section.8.4}%
-\contentsline {section}{\numberline {8.5}Jordan Canonical Form}{32}{section.8.5}%
-\contentsline {chapter}{\numberline {9}Quadratic Forms}{33}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Quadratic Forms and Their Standard Forms}{33}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Canonical Forms}{34}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Definite Quadratic Forms}{34}{section.9.3}%
-\contentsline {chapter}{\numberline {10}Inner Product Spaces}{35}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Bilinear Forms}{35}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Real Inner Product Spaces}{35}{section.10.2}%
-\contentsline {section}{\numberline {10.3}Metric Matrices and Standard Orthonormal Bases}{35}{section.10.3}%
-\contentsline {section}{\numberline {10.4}Isomorphism of Real Inner Product Spaces}{36}{section.10.4}%
-\contentsline {section}{\numberline {10.5}Orthogonal Completion and Orthogonal Projection}{36}{section.10.5}%
-\contentsline {section}{\numberline {10.6}Orthogonal Transformations and Symmetric Transformations}{36}{section.10.6}%
-\contentsline {section}{\numberline {10.7}Unitary Spaces and Unitary Transformations}{37}{section.10.7}%
-\contentsline {section}{\numberline {10.8}Symplectic Spaces}{37}{section.10.8}%
+\contentsline {section}{\numberline {8.2}Invariant Divisors and Rational Canonical Form}{32}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Elementary Divisors and Jordan Canonical Form}{33}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Finding Jordan Canonical Form and Transition Matrices}{34}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Complete Set of Invariant Quantities for Matrix Similarity}{34}{section.8.5}%
+\contentsline {chapter}{\numberline {9}Quadratic Forms}{35}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Quadratic Forms and Their Standard Forms}{35}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Canonical Forms}{36}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Definite Quadratic Forms}{36}{section.9.3}%
+\contentsline {chapter}{\numberline {10}Inner Product Spaces}{37}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Bilinear Forms}{37}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Real Inner Product Spaces}{37}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Metric Matrices and Standard Orthonormal Bases}{37}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Isomorphism of Real Inner Product Spaces}{38}{section.10.4}%
+\contentsline {section}{\numberline {10.5}Orthogonal Completion and Orthogonal Projection}{38}{section.10.5}%
+\contentsline {section}{\numberline {10.6}Orthogonal Transformations and Symmetric Transformations}{38}{section.10.6}%
+\contentsline {section}{\numberline {10.7}Unitary Spaces and Unitary Transformations}{39}{section.10.7}%
+\contentsline {section}{\numberline {10.8}Symplectic Spaces}{39}{section.10.8}%
