@@ -843,7 +843,7 @@ C =
     1 & 0 & 0 & 0 & \cdots & 0
 \end{bmatrix},
 \]
-it is called a \textbf{circulant-shift matrix}.
+it is called a \textbf{cyclic shift matrix}.
 
 The matrix \(C\) performs specific cyclic operations when multiplied by another matrix:
 \begin{description}
@@ -874,7 +874,7 @@ The matrix \(C\) performs specific cyclic operations when multiplied by another 
     \[
     A = a_0 E + a_1 C + a_2 C^2 + \cdots + a_{n-1} C^{n-1} = \sum_{i=0}^{n-1} a_i C^i,
     \]
-    where \(E\) is the identity matrix and \(C\) is the circulant-shift matrix.
+    where \(E\) is the identity matrix and \(C\) is the cyclic shift matrix.
 \end{definition}
 
 
@@ -1712,7 +1712,8 @@ The following proposition summarizes the properties of the eigenpolynomial:
     V_{\lambda} = \{ \alpha | \alpha \in V, \mathcal{A}(\alpha) = \lambda \alpha \} = 
     \operatorname{Ker}(\mathcal{A} - \lambda \mathcal{E}),
     \]
-    is called the \textbf{eigenspace} (or eigenspace) corresponding to the eigenvalue \( \lambda \).
+    is called the \textbf{eigenspace} (or eigenspace) corresponding to the eigenvalue \( \lambda \),
+    denoted as \( E_{\lambda} \).
     It is evident that \( V_{\lambda} \) is a subspace of \( V \)
     and solution space of the equation system \( ( \lambda E - \mathcal{A})X = 0 \).
 \end{definition}
@@ -1937,7 +1938,7 @@ Similarly, generalized kernel and image can be defined.
 
 \vspace{0.7cm}
 
-\begin{theorem}{Space Decomposition Theorem}\label{theorem:space_decomposition}
+\begin{theorem}{Root Space Decomposition Theorem}\label{theorem:space_decomposition}
     Let \( V \) be an \( n \)-dimensional linear space over field \( F \), 
     and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
     If the characteristic polynomial of \( \mathcal{A} \) can be factored into linear factors over \( F \):
@@ -1998,23 +1999,220 @@ Similarly, generalized kernel and image can be defined.
 \end{theorem}
 
 \section{Diagonalization of Special Matrices}
+In this section, we will discuss the diagonalization of several special types of matrices.
+Let \(V\) be a linear space over field \( F \) (without specific statements, it can be \underline{infinite} dimensional),
+and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+\(A\) is the matrix representation of \( \mathcal{A} \) under some basis of \( V \).
+
+Since the isomorphism between linear transformations and square matrices,
+the following special matrices can also be understood as special linear transformations.
+
+\begin{remark}
+    Some properties mentioned below require \(V\) to be finite dimensional
+    or \(F\) to be a number field 
+    (commonly used are real number field \( \mathbb{R} \) or complex number field \( \mathbb{C} \)).
+
+    In fact, in some cases, the constraints on \(F\) (being a number field) can be relaxed to
+    the characteristic of \(F\) is not \(2\).
+\end{remark}
+
 \begin{leftbarTitle}{Invertible Matrix}\end{leftbarTitle}
+Let \(A\) be an invertible matrix.
+
+\begin{enumerate}
+    \item \(0\) is not an eigenvalue of \(A\); the converse proposition is also true.
+    \item If \(\lambda\) is an eigenvalue of \(A\), then \(\frac{1}{\lambda}\) is an eigenvalue of \(A^{-1}\);
+        and if \(\xi\) is an eigenvector of \(A\) corresponding to \(\lambda\),
+        then \(\xi\) is also an eigenvector of \(A^{-1}\) corresponding to \(\frac{1}{\lambda}\).
+    \item (When \(F\) is number field) If \(A\) is diagonalizable, then \(A^{-1}\) is also diagonalizable.
+\end{enumerate}
+
 
 \begin{leftbarTitle}{Idempotent Matrix}\end{leftbarTitle}
+Let \(A\) be an idempotent matrix, i.e., \(A^2 = A\).
+
+\begin{enumerate}
+    \item Any eigenvalue of \(A\) is either \(0\) or \(1\).
+    \item (\(V\) is finite dimensional) \(A\) is diagonalizable, and
+        \[
+        V = E_{1} \oplus E_{0} = \operatorname{Ker}(A-E) \oplus \operatorname{Ker}(A-0\cdot E) 
+        = \operatorname{Im}(A)\oplus \operatorname{Ker}(A) 
+        \]
+    \item (When \(F\) is number field, and \(V\) is finite dimensional) The rank of \(A\) equals the trace of \(A\):
+        \[
+        \operatorname{rank}(A) = \operatorname{tr}(A).
+        \]
+\end{enumerate}
 
 \begin{leftbarTitle}{Nilpotent Matrix}\end{leftbarTitle}
+Let \(A\) be a nilpotent matrix, i.e., there exists a positive integer \(k\) such that \(A^k = 0\).
+The smallest such \(k\) is called the index of nilpotency of \(A\).
 
-\begin{leftbarTitle}{Convolution Matrix}\end{leftbarTitle}
+\begin{enumerate}
+    \item All eigenvalues of \(A\) are \(0\).
+    \item (\(V\) is finite dimensional) \(A\) is diagonalizable if and only if \(A = 0\), i.e., \(k=1\).
+\end{enumerate}
+
+
+\begin{leftbarTitle}{Involution Matrix}\end{leftbarTitle}
+Let \(V\) be finite dimensional, \(F\) be number field, and let \(A\) be an involution matrix, i.e., \(A^2 = E\).
+In geometry, an involution typically corresponds to a "reflection" or "symmetry" operation,
+since \(A^{2}=E\) implies that \(A=A^{-1}\).
+
+\begin{enumerate}
+    \item All eigenvalues of \(A\) are either \(1\) or \(-1\).
+    \item \(A\) is diagonalizable, and
+        \[
+        V = E_{1} \oplus E_{-1} = \operatorname{Ker}(A-E) \oplus \operatorname{Ker}(A+E).
+        \]
+\end{enumerate}
 
 \begin{leftbarTitle}{\(1\) Matrix}\end{leftbarTitle}
+Let \(F\) be rational field \( \mathbb{Q} \), and let \(A\) be a \(1\) matrix, i.e., all entries of \(A\) are \(1\).
+Denote
+\[
+1_{n} = \begin{pmatrix}
+    1 \\
+    1 \\
+    \vdots\\
+    1 
+\end{pmatrix}_{n \times 1}.
+\]
+
+\begin{enumerate}
+    \item All eigenvalues of \(A\) are either \(n\) (algebraic multiplicity is \(1\)) or \(0\) (algebraic multiplicity is \(n-1\)).
+    \item The set of eigenvector corresponding to eigenvalue \(n\) is 
+        \[
+        \{ k 1_{n} | k \in \mathbb{Q}, k \neq 0 \};
+        \]
+        the set of eigenvectors corresponding to eigenvalue \(0\) is 
+        \[
+        \{ k_{1}\eta_{1}+ k_{2}\eta_{2} + \cdots + k_{n-1}\eta_{n-1} | k_{1}, k_{2}, \ldots, k_{n-1} \in \mathbb{Q} 
+        \text{ and not all zero } \},
+        \]
+        where 
+        \[
+        \eta_{1} = \begin{pmatrix}
+            1 \\
+            -1 \\
+            0 \\
+            \vdots \\
+            0
+        \end{pmatrix}, \quad
+        \eta_{2} = \begin{pmatrix}
+            1 \\
+            0 \\
+            -1 \\
+            \vdots \\
+            0
+        \end{pmatrix}, \quad
+        \ldots, \quad
+        \eta_{n-1} = \begin{pmatrix}
+            1 \\
+            0 \\
+            0 \\
+            \vdots \\
+            -1
+        \end{pmatrix}.
+        \]
+    \item \(A\) is diagonalizable.
+\end{enumerate}
+
+It is worth noting that \(\frac{1}{n}A\) is an idempotent orthonormal projection matrix.
+
+
+\begin{leftbarTitle}{Cyclic Shift Matrix}\end{leftbarTitle}
+Let \(F\) be complex number field \( \mathbb{C} \), and let \(A\) be a cyclic shift matrix, i.e.,
+\[
+A = \begin{pmatrix} 
+    \varepsilon_{n} & \varepsilon_{1} & \varepsilon_{2} & \cdots & \varepsilon_{n-1}
+\end{pmatrix} 
+= \begin{pmatrix}
+    0 & 1 & 0 & \cdots & 0 \\
+    0 & 0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 1 \\
+    1 & 0 & 0 & \cdots & 0
+\end{pmatrix}.
+\]
+All of its properties are closely related to the discrete fourier transform (DFT) and the roots of unity.
+
+\begin{enumerate}
+    \item The eigenvalues of \(A\) are the \(n\)-th roots of unity 
+        \(\omega^{(k)} = \exp\left(\frac{2\pi i k}{n}\right)\) for \(k = 0, 1, \ldots, n-1\).
+    \item The eigenvector corresponding to the eigenvalue 
+        \(\omega^{(k)} = \exp\left(\frac{2\pi i k}{n}\right)\) is 
+        \[
+        \xi^{(k)} =
+        \begin{pmatrix}
+            \left(\omega^{(k)}\right)^{0} \\
+            \left(\omega^{(k)}\right)^{1} \\
+            \left(\omega^{(k)}\right)^{2} \\
+            \vdots \\
+            \left(\omega^{(k)}\right)^{n-1}
+        \end{pmatrix}.
+        \]
+        These eigenvectors \(\xi^{(0)}, \xi^{(1)}, \ldots, \xi^{(n-1)}\) 
+        are precisely the columns of the DFT matrix (or columns after a simple conjugate and scaling).
+    \item \(A\) is diagonalizable. Furthermore, it can be unitarily diagonalized.
+\end{enumerate}
+
 
 \begin{leftbarTitle}{Circulant Matrix}\end{leftbarTitle}
+Let \(F\) be complex number field \( \mathbb{C} \), and let \(A\) be a circulant matrix, i.e.,
+\[
+A = \begin{pmatrix}
+    a_0 & a_1 & a_{2} & \cdots & a_{n-1} \\
+    a_{n-1} & a_0 & a_{1} & \cdots & a_{n-2} \\
+    a_{n-2} & a_{n-1} & a_0 & \cdots & a_3 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    a_{1} & a_{2} & a_{3} & \cdots & a_0
+\end{pmatrix} = f( C ) =
+a_{0}E + a_{1}C + a_{2}C^{2} + \cdots + a_{n-1}C^{n-1},
+\]
+where \(C\) is the cyclic shift matrix.
+
+\begin{enumerate}
+    \item The eigenvalues of \(A\) are given by:
+        \[
+        \lambda_{k} = f(\omega^{(k)}) = a_{0} + a_{1}\omega^{(k)} + a_{2}(\omega^{(k)})^{2} + \cdots + a_{n-1}(\omega^{(k)})^{n-1},
+        \]
+        where \(\omega^{(k)} = \exp\left(\frac{2\pi i k}{n}\right)\) for \(k = 0, 1, \ldots, n-1\)
+        \footnote{
+            That is, the eigenvalues of a circulant matrix are the discrete Fourier transform of 
+            its first row vector \(\left( a_{0}, a_{1}, \ldots, a_{n-1} \right) \) 
+            (possibly differing by a constant factor and a conjugate, depending on the specific definition of the DFT).
+        }.
+    \item The eigenvector corresponding to the eigenvalue 
+        \(\lambda_{k} = f(\omega^{(k)})\) is 
+        \[
+        \xi^{(k)} =
+        \begin{pmatrix}
+            \left(\omega^{(k)}\right)^{0} \\
+            \left(\omega^{(k)}\right)^{1} \\
+            \left(\omega^{(k)}\right)^{2} \\
+            \vdots \\
+            \left(\omega^{(k)}\right)^{n-1}
+        \end{pmatrix}.
+        \]
+        It means that circulant matrices share the same set of eigenvectors as the cyclic shift matrix.
+    \item \(A\) is diagonalizable. Furthermore, it can be unitarily diagonalized by the \underline{same} DFT matrix.
+\end{enumerate}
 
 \begin{leftbarTitle}{Triangular Matrix}\end{leftbarTitle}
+Let \(F\) be number field, and let \(A\) be a upper triangular matrix: 
+\[
+A =\left( a_{ij} \right) _{n \times n}, \quad a_{ij} = 0, \quad \forall i > j.
+\]
 
-\begin{leftbarTitle}{Frobenius Matrix}\end{leftbarTitle}
+\begin{enumerate}
+    \item The eigenvalues of \(A\) are the diagonal entries \(a_{ii}\) for \(i = 1, 2, \ldots, n\).
+    \item If all diagonal entries \(a_{ii}\) are distinct, then \(A\) is diagonalizable.
+        However, if there are repeated diagonal entries, \(A\) may be or not be diagonalizable.
+    \item If all diagonal entries \(a_{ii}\) are equal, and there exists some non-zero entry above the diagonal,
+        then \(A\) is not diagonalizable.
+\end{enumerate}
 
-\begin{leftbarTitle}{Jordan Block}\end{leftbarTitle}
 
 \section{Simultaneous Characteristics Induced by Commutativity of Multiplication}
 In this section, we will explore the properties of matrices and linear transformations under 
@@ -2065,7 +2263,7 @@ polynomial matrices can also perform addition, multiplication, scalar multiplica
     their ranks are equal: \( \operatorname{rank} A(\lambda) = \operatorname{rank} B(\lambda) \).
 \end{note}
 
-\begin{definition}{Canonical Form of Polynomial Matrices}
+\begin{definition}{Smith Normal Form (Canonical Form of Polynomial Matrices)}
     Let \( A(\lambda) \in F[\lambda]^{m \times n} \) be a polynomial matrix with rank \( r \geqslant 1 \).
     If \( A(\lambda) \) is equivalent to the following polynomial matrix:
     \[
@@ -2081,9 +2279,10 @@ polynomial matrices can also perform addition, multiplication, scalar multiplica
     \]
     where \( d_1(\lambda), d_2(\lambda), \dots, d_r(\lambda) \) are monic polynomials over field \( F \)
     such that \( d_1(\lambda) | d_2(\lambda) | \cdots | d_r(\lambda) \),
-    then this polynomial matrix is called the \textbf{canonical form} of \( A(\lambda) \).
+    then this polynomial matrix is called the \textbf{Smith normal form} of \( A(\lambda) \).
 \end{definition}
-It is easy to verify that the canonical form of polynomial matrices exists and is unique up to the order of the invariant divisors.
+It is easy to verify that the Smith normal form of polynomial matrices exists and 
+is unique up to the order of the invariant divisors.
 
 
 \section{Invariant Divisors and Rational Canonical Form}
@@ -2295,7 +2494,7 @@ Obviously, \( r_1 + r_2 + \cdots + r_k = n \) and the characteristic polynomial 
 \[
 f(x) = (x - \lambda_1)^{r_1} (x - \lambda_2)^{r_2} \cdots (x - \lambda_k)^{r_k}.
 \]
-According to the space decomposition theorem (\ref{theorem:space_decomposition}),
+According to the root space decomposition theorem (\ref{theorem:space_decomposition}),
 \[
 V = V_{\lambda_1}^{(r_1)} \oplus V_{\lambda_2}^{(r_2)} \oplus \cdots \oplus V_{\lambda_k}^{(r_k)},
 \]
@@ -2353,6 +2552,20 @@ which contradicts \(\operatorname{deg} p(x) <  n = \deg f(x)\) and \(p(x)\neq 0\
 
 \section{Elementary Divisors and Jordan Canonical Form}
 \begin{leftbarTitle}{Elementary Divisors}\end{leftbarTitle}
+\begin{definition}{Elementary Divisors}
+    Let \( A(\lambda) \in F[\lambda]^{m \times n} \) be a polynomial matrix,
+    and let \( d_1(\lambda), d_2(\lambda), \dots, d_r(\lambda) \) be its invariant divisors,
+    where \( r = \operatorname{rank} A(\lambda) \).
+    If the factorization of each invariant divisor into irreducible polynomials over field \( F \) is:
+    \[
+    d_i(\lambda) = p_{i1}(\lambda)^{k_{i1}} p_{i2}(\lambda)^{k_{i2}} \cdots p_{is_i}(\lambda)^{k_{is_i}},
+    \]
+    then the polynomials
+    \[
+    p_{ij}(\lambda)^{k_{ij}}, \quad i = 1, 2, \dots, r; \quad j = 1, 2, \dots, s_i
+    \]
+    are called the \textbf{elementary divisors} of \( A(\lambda) \).
+\end{definition}
 
 \begin{leftbarTitle}{Jordan Canonical Form}\end{leftbarTitle}
 
@@ -2504,7 +2717,25 @@ It is easy to verify that the matrix \( A \) of a quadratic form is symmetric.
     Real inner product spaces with finite dimensions are called \textbf{Euclidean spaces}. 
 \end{definition}
 
+Some concepts in real inner product spaces can be derived:
+\begin{description}
+    \item[Distance] The distance between two vectors \( \alpha, \beta \in V \) is defined as:
+    \[
+    d(\alpha, \beta) = \| \alpha - \beta \|
+    \]
+    \item[Angle] The angle \( \theta \) between two non-zero vectors \( \alpha, \beta \in V \) is defined using the inner product:
+    \[
+    \cos \theta = \frac{(\alpha, \beta)}{\|\alpha\| \|\beta\|}, 0 \leq \theta \leq \pi.
+    \]
+    \item[Orthogonality] Two vectors \( \alpha, \beta \in V \) are said to be orthogonal if:
+    \[
+    (\alpha, \beta) = 0,
+    \]
+    denoted as \( \alpha \perp \beta \).
+\end{description}
+
 \section{Metric Matrices and Standard Orthonormal Bases}
+\begin{leftbarTitle}{Metric Matrices}\end{leftbarTitle}
 \begin{definition}{Gram Matrix}
     Let \( V \) be a \(n\)-dimensional Euclidean space, 
     and let \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) be a basis of \( V \).
@@ -2534,6 +2765,96 @@ it can be expressed in matrix form as:
 X = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}, \quad
 Y = \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix}.
 \]
+
+\begin{property}
+    \begin{enumerate}
+        \item Gram matrix \( G \) is symmetric; 
+        \item \( G \) is positive semi-definite;
+        \item In \(V\), Gram matrices under different bases are congruent;
+        \item \(|G|\geqslant 0\), equality holds if and only if the basis is linearly dependent.
+    \end{enumerate}
+\end{property}
+
+\begin{leftbarTitle}{Standard Orthonormal Bases}\end{leftbarTitle}
+\begin{definition}{Orthonormal Vector Set and Standard Orthonormal Basis}
+    Let \( V \) be a \(n\)-dimensional real inner product space.
+    A set of non-zero vectors \( \{ \varepsilon_1, \varepsilon_2, \dots, \varepsilon_n \} \) in \( V \) 
+    is called an \textbf{orthonormal vector set} if they are pairwise orthogonal.
+
+    A orthonormal vector set with \( n \) vectors is called a \textbf{orthonormal basis} of \( V \).
+    Orthonormal basis made up of unit vectors is called a \textbf{standard orthonormal basis} of \( V \).
+\end{definition}
+
+\begin{property}
+    In \(n\)-dimensional Euclidean space, 
+    \begin{enumerate}
+        \item Orthonormal vector set is linearly independent;
+        \item A set of basis is standard orthonormal basis if and only if its Gram matrix is the identity matrix;
+        \item Standard orthonormal basis always exists.
+        \item Any orthonormal vector set can be extended to a standard orthonormal basis.
+    \end{enumerate}
+\end{property}
+In \(n\)-dimensional Euclidean space, let \( \{ \varepsilon_1, \varepsilon_2, \dots, \varepsilon_n \} \) 
+be a standard orthonormal basis, then
+\begin{itemize}
+    \item for all \(\alpha \in V:\alpha = \sum_{i=1}^{n} (\alpha, \varepsilon_i) \varepsilon_i\), 
+        which is called the \textbf{Fourier expansion} of vector \( \alpha \) under the basis;
+    \item if the coordinates of \(\alpha, \beta\) under this basis are
+        \[
+        X = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}, \quad
+        Y = \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix},
+        \]
+        then
+        \[
+        (\alpha, \beta) = X^{\mathrm{T}} Y = \sum_{i=1}^{n} x_i y_i.
+        \]
+\end{itemize}
+
+\begin{definition}{Orthonormal Matrix}
+    A square matrix \( T \in \mathbb{R}^{n \times n} \) is called an \textbf{orthonormal matrix} if:
+    \[
+    T^{\mathrm{T}} T = T T^{\mathrm{T}} = E,
+    \]
+    where \( E \) is the identity matrix of order \( n \).
+\end{definition}
+Let \( V \) be a \(n\)-dimensional Euclidean space,
+\(\varepsilon_{1}, \varepsilon_{2},\cdots, \varepsilon_{n}\) and \(\eta_{1}, \eta_{2},\cdots, \eta_{n}\)
+be standard orthonormal bases of \( V \), and let \( T \) be the transition matrix between them,
+i.e., 
+\[
+(\eta_{1}, \eta_{2}, \cdots, \eta_{n}) = (\varepsilon_{1}, \varepsilon_{2}, \cdots, \varepsilon_{n}) T.
+\]
+Then 
+\begin{enumerate}
+    \item \(T\) is an orthonormal matrix; 
+    \item \(T\) is upper triangular matrix;
+\end{enumerate}
+
+\begin{theorem}
+    Let \(\varepsilon_{1}, \varepsilon_{2},\cdots, \varepsilon_{n}\) be a standard orthonormal basis of 
+    \(n\)-dimensional Euclidean space \( V \), and
+    \[
+    (\eta_{1}, \eta_{2}, \cdots, \eta_{n}) = (\varepsilon_{1}, \varepsilon_{2}, \cdots, \varepsilon_{n}) T.
+    \]
+    Then \( \eta_{1}, \eta_{2},\cdots, \eta_{n} \) is a standard orthonormal basis of \( V \)
+    if and only if \( T \) is an orthonormal matrix.
+\end{theorem}
+
+
+\begin{leftbarTitle}{Gram-Schmidt Process}\end{leftbarTitle}
+\begin{theorem}
+    For any basis \( \{ \varepsilon_1, \varepsilon_2, \dots, \varepsilon_n \} \) of \(n\)-dimensional Euclidean space \( V \),
+    there exists a standard orthonormal basis \( \{ \eta_1, \eta_2, \dots, \eta_n \} \) such that:
+    \[
+    \langle \varepsilon_1, \varepsilon_2, \dots, \varepsilon_k \rangle
+    = \langle \eta_1, \eta_2, \dots, \eta_k \rangle, \quad k = 1, 2, \dots, n.
+    \]
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
 
 
 \section{Isomorphism of Real Inner Product Spaces}

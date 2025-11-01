@@ -721,11 +721,14 @@ The following types of problems commonly appear in proofs related to intermediat
 \end{theorem}
 
 \begin{theorem}{Theorem on the Limit of Derivatives}
-    If \(f(x)\in C(U(x_{0})),\mathring{D}(U(x_{0}))\), and \(\lim_{x \to x_{0}} f'(x) = A\),
+    If \(f(x)\in C(U(x_{0})),D(\mathring{U}(x_{0}))\), and \(\lim_{x \to x_{0}} f'(x) = A\),
     then \(f\) is differentiable at \(x_{0}\) and \(f'(x_{0}) = A\).
 \end{theorem}
 \begin{remark}
-    In fact, \(\lim_{x \to x_{0}} f'(x) = A\) has already been shown to imply that \(f\in \mathring{D}(U(x_{0}))\).
+    In fact, \(\lim_{x \to x_{0}} f'(x) = A\) has already been shown to imply that \(f\in D(\mathring{U}(x_{0}))\).
+
+    The mnemonic for this theorem is:
+    Continuous function + limit of derivative \(\Rightarrow\) derivative at the point.
 \end{remark}
 
 \section{Taylor Theorem}

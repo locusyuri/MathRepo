@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  30 OCT 2025 20:23
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  1 NOV 2025 15:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1533,7 +1533,7 @@ Chapter 5.
 [18]
 Chapter 6.
 
-Overfull \hbox (8.11948pt too wide) in paragraph at lines 1079--1083
+Overfull \hbox (8.11948pt too wide) in paragraph at lines 1082--1086
 []\TU/Alegreya(0)/m/it/10.95 Let $[]$ denote the set of Darboux upper sums and $[]$ denote the set of Darboux lower sums. For any $[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 P[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 2 []\OML/cmm/m/it/10.95 ; []\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 P[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 2
  []
 
@@ -1543,7 +1543,7 @@ Overfull \hbox (8.11948pt too wide) in paragraph at lines 1079--1083
 
 ]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
-(Font)              scaled to size 10.95pt on input line 1087.
+(Font)              scaled to size 10.95pt on input line 1090.
 
 
 [20]
@@ -1556,15 +1556,15 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 
 [24]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 1432.
+(Font)              scaled to size 8.0pt on input line 1435.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 1434.
+(Font)              scaled to size 9.0pt on input line 1437.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 1434.
+(Font)              scaled to size 6.0pt on input line 1437.
 
 
 [25]
-Overfull \hbox (16.76514pt too wide) in paragraph at lines 1479--1525
+Overfull \hbox (16.76514pt too wide) in paragraph at lines 1482--1528
 [][] 
  []
 
@@ -1611,24 +1611,24 @@ Chapter 9.
 [37
 
 ]
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2110--2113
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 2113--2116
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
 
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2136--2139
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 2139--2142
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
 
 
 [38]
-Overfull \hbox (0.43546pt too wide) in paragraph at lines 2159--2162
+Overfull \hbox (0.43546pt too wide) in paragraph at lines 2162--2165
 \TU/Alegreya(0)/m/n/10.95 meaning that $[]$ (also known as the
  []
 
 
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2163--2165
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 2166--2168
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
@@ -1637,12 +1637,12 @@ Overfull \hbox (0.88506pt too wide) in paragraph at lines 2163--2165
 [39]
 
 [40]
-Underfull \hbox (badness 2050) in paragraph at lines 2305--2308
+Underfull \hbox (badness 2050) in paragraph at lines 2308--2311
 []\TU/GaramondPremrPro-Disp(0)/m/n/10.95 If replace the convergent positive term series $[][] \OML/cmm/m/it/10.95 a[]$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 with a uniform convergent series of functions
  []
 
 
-LaTeX Warning: Reference `thm:' on page 41 undefined on input line 2338.
+LaTeX Warning: Reference `thm:' on page 41 undefined on input line 2341.
 
 
 

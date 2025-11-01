@@ -37,23 +37,23 @@
 \contentsline {section}{\numberline {7.4}Space Decomposition}{29}{section.7.4}%
 \contentsline {section}{\numberline {7.5}Diagonalization}{32}{section.7.5}%
 \contentsline {section}{\numberline {7.6}Diagonalization of Special Matrices}{32}{section.7.6}%
-\contentsline {section}{\numberline {7.7}Simultaneous Characteristics Induced by Commutativity of Multiplication}{33}{section.7.7}%
-\contentsline {chapter}{\numberline {8}Jordan Forms}{34}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Polynomial Matrices}{34}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Invariant Divisors and Rational Canonical Form}{35}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Elementary Divisors and Jordan Canonical Form}{38}{section.8.3}%
-\contentsline {section}{\numberline {8.4}Finding Jordan Canonical Form and Transition Matrices}{39}{section.8.4}%
-\contentsline {section}{\numberline {8.5}Complete Set of Invariant Quantities for Matrix Similarity}{39}{section.8.5}%
-\contentsline {chapter}{\numberline {9}Quadratic Forms}{40}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Quadratic Forms and Their Standard Forms}{40}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Canonical Forms}{41}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Definite Quadratic Forms}{41}{section.9.3}%
-\contentsline {chapter}{\numberline {10}Inner Product Spaces}{42}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Bilinear Forms}{42}{section.10.1}%
-\contentsline {section}{\numberline {10.2}Real Inner Product Spaces}{42}{section.10.2}%
-\contentsline {section}{\numberline {10.3}Metric Matrices and Standard Orthonormal Bases}{42}{section.10.3}%
-\contentsline {section}{\numberline {10.4}Isomorphism of Real Inner Product Spaces}{43}{section.10.4}%
-\contentsline {section}{\numberline {10.5}Orthogonal Completion and Orthogonal Projection}{43}{section.10.5}%
-\contentsline {section}{\numberline {10.6}Orthogonal Transformations and Symmetric Transformations}{43}{section.10.6}%
-\contentsline {section}{\numberline {10.7}Unitary Spaces and Unitary Transformations}{44}{section.10.7}%
-\contentsline {section}{\numberline {10.8}Symplectic Spaces}{44}{section.10.8}%
+\contentsline {section}{\numberline {7.7}Simultaneous Characteristics Induced by Commutativity of Multiplication}{35}{section.7.7}%
+\contentsline {chapter}{\numberline {8}Jordan Forms}{36}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Polynomial Matrices}{36}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Invariant Divisors and Rational Canonical Form}{37}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Elementary Divisors and Jordan Canonical Form}{40}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Finding Jordan Canonical Form and Transition Matrices}{41}{section.8.4}%
+\contentsline {section}{\numberline {8.5}Complete Set of Invariant Quantities for Matrix Similarity}{41}{section.8.5}%
+\contentsline {chapter}{\numberline {9}Quadratic Forms}{42}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Quadratic Forms and Their Standard Forms}{42}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Canonical Forms}{43}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Definite Quadratic Forms}{43}{section.9.3}%
+\contentsline {chapter}{\numberline {10}Inner Product Spaces}{44}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Bilinear Forms}{44}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Real Inner Product Spaces}{44}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Metric Matrices and Standard Orthonormal Bases}{44}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Isomorphism of Real Inner Product Spaces}{46}{section.10.4}%
+\contentsline {section}{\numberline {10.5}Orthogonal Completion and Orthogonal Projection}{46}{section.10.5}%
+\contentsline {section}{\numberline {10.6}Orthogonal Transformations and Symmetric Transformations}{46}{section.10.6}%
+\contentsline {section}{\numberline {10.7}Unitary Spaces and Unitary Transformations}{47}{section.10.7}%
+\contentsline {section}{\numberline {10.8}Symplectic Spaces}{47}{section.10.8}%
