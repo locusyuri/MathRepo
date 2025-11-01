@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  31 OCT 2025 11:22
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  1 NOV 2025 11:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1471,33 +1471,38 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 (Font)              scaled to size 10.95pt on input line 290.
 
 
+LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
+(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 344.
+
+
+
 [6]
 
 [7]
 
 [8]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 499.
+(Font)              scaled to size 8.0pt on input line 535.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 499.
+(Font)              scaled to size 8.0pt on input line 535.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 501.
+(Font)              scaled to size 9.0pt on input line 537.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 501.
+(Font)              scaled to size 6.0pt on input line 537.
 
 
 [9]
+
+[10]
 Chapter 4.
 
 
-[10
+[11
 
 ]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 691.
+(Font)              scaled to size 5.0pt on input line 727.
 
-
-[11]
 
 [12]
 
@@ -1510,103 +1515,122 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
 [16]
 
 [17]
+
+[18]
 Chapter 5.
 
 
-[18
+[19
 
 ]
 
-[19]
+[20]
 Chapter 6.
 
 
-[20
+[21
 
 ]
-
-[21]
 
 [22]
 
 [23]
+
+[24]
+
+[25]
 Chapter 7.
 
 
-[24
+[26
 
 ]
 
-[25]
+[27]
 
-[26]
-Underfull \hbox (badness 1178) in paragraph at lines 1720--1724
+[28]
+
+[29]
+Underfull \hbox (badness 1178) in paragraph at lines 1819--1823
 []\TU/GaramondPremrPro-Disp(0)/m/n/10.95 Let $\OML/cmm/m/it/10.95 W$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 be a nontrivial $\OMS/cmsy/m/n/10.95 A$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 -subspace, take a basis $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 "[]; "[]; [] ; "[]\OMS/cmsy/m/n/10.95 g$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 of $\OML/cmm/m/it/10.95 W$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 , and extend it to a basis
  []
 
 
 
-[27]
-
-[28]
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 9.0pt on input line 1881.
-
-
-[29]
-
 [30]
-Chapter 8.
 
+[31]
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
+(Font)              scaled to size 9.0pt on input line 1985.
 
-[31
-
-]
 
 [32]
 
 [33]
-
-[34]
-Chapter 9.
+Chapter 8.
 
 
-[35
+[34
 
 ]
+
+[35]
+Overfull \hbox (4.3104pt too wide) in paragraph at lines 2192--2201
+\TU/Alegreya(0)/m/n/10.95 bination of $\OML/cmm/m/it/10.95 ^^X; \OMS/cmsy/m/n/10.95 A\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^X\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 ; [] ; \OMS/cmsy/m/n/10.95 A[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^X\OT1/cmr/m/n/10.95 )$\TU/Alegreya(0)/m/n/10.95 . Therefore, $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 ^^X; \OMS/cmsy/m/n/10.95 A\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^X\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 ; [] ; \OMS/cmsy/m/n/10.95 A[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^X\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$ \TU/Alegreya(0)/m/n/10.95 is a basis of $\OML/cmm/m/it/10.95 C\OT1/cmr/m/n/10.95 (\OMS/cmsy/m/n/10.95 A\OML/cmm/m/it/10.95 ; ^^X\OT1/cmr/m/n/10.95 )$ \TU/Alegreya(0)/m/n/10.95 and $[] \OML/cmm/m/it/10.95 C\OT1/cmr/m/n/10.95 (\OMS/cmsy/m/n/10.95 A\OML/cmm/m/it/10.95 ; ^^X\OT1/cmr/m/n/10.95 ) =
+ []
+
+
 
 [36]
-Chapter 10.
 
-
-[37
-
-]
+[37]
 
 [38]
 
 [39]
+Chapter 9.
+
 
 [40
+
+]
+
+[41]
+Chapter 10.
+
+
+[42
+
+]
+
+[43]
+
+[44]
+
+[45
 
 ] (./tmp/initial.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 067B85DF995B513187EE08B790112029;12309.
+(rerunfilecheck)             Checksum: 5DDA6C9C28F26115C094990E6616CB04;12309.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46189 strings out of 473831
- 959420 string characters out of 5733137
- 2003320 words of memory out of 5000000
- 68416 multiletter control sequences out of 15000+600000
- 569125 words of font info for 170 fonts, out of 8000000 for 9000
+ 46204 strings out of 473831
+ 959763 string characters out of 5733137
+ 1999371 words of memory out of 5000000
+ 68429 multiletter control sequences out of 15000+600000
+ 569133 words of font info for 171 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (44 pages).
+Output written on ./tmp/initial.pdf (49 pages).

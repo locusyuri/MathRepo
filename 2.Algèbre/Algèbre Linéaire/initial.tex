@@ -293,7 +293,7 @@ and the definitions and properties of vectors in \( \mathbb{R}^n \) can be gener
 \end{note}
 
 A few propositions about linear dependence and independence are given below:
-\begin{proposition}
+\begin{proposition}\label{proposition:properties_of_linear_independence}
 \begin{enumerate}
     \item Generally, for a vector group \( \alpha_i = (a_{i1}, a_{i2}, \dots, a_{in}), \, i = 1, 2, \dots, s \), 
         the necessary and sufficient condition for linear dependence is that the equation:
@@ -332,16 +332,52 @@ A few propositions about linear dependence and independence are given below:
     
     \item Two equivalent linearly independent vector groups must contain the same number of vectors.
 
-    \item If a vector group \( \alpha_1, \alpha_2, \dots, \alpha_r \) is linearly independent, 
-        and adding a vector \( \beta \) to form the vector group \( \alpha_1, \alpha_2, \dots, \alpha_r, \beta \) 
-        makes it linearly dependent, then \( \beta \) can be uniquely expressed as a linear combination of 
-        \( \alpha_1, \alpha_2, \dots, \alpha_r \).
-
+    \item Let vector group \( \alpha_1, \alpha_2, \dots, \alpha_r \) be linearly independent,     
+        and \(\beta\) be another vector.
+        Then, either \( \beta \) can be uniquely linearly expressed by \( \alpha_1, \alpha_2, \dots, \alpha_r \),
+        or the vector group \( \alpha_1, \alpha_2, \dots, \alpha_r, \beta \) is linearly independent.
     \item If a vector \( \beta \) can be linearly expressed by a vector group \( \alpha_1, \alpha_2, \dots, \alpha_r \), 
         then \( \alpha_1, \alpha_2, \dots, \alpha_r \) is linearly independent
         if and only if the expression for \( \beta \) is unique.
 \end{enumerate}
 \end{proposition}
+\begin{proof}
+
+{\color{blue!60}\textbf{1.}}
+
+{\color{blue!60}\textbf{2.}}
+
+{\color{blue!60}\textbf{6.}} If \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r}, \beta \) is linearly independent, 
+then conclusion holds naturally. 
+\newline Now suppose \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r}, \beta \) is linearly dependent, 
+that is, there exist not all zero scalars \( k_{1}, k_{2}, \dots, k_{r}, k \) such that:
+\[
+k_{1}\alpha_{1} + k_{2}\alpha_{2} + \dots + k_{r}\alpha_{r} + k\beta = 0.
+\]
+If \( k = 0 \), then \( k_{1}\alpha_{1} + k_{2}\alpha_{2} + \dots + k_{r}\alpha_{r} = 0 \)
+(not all \( k_{i} \) are zero), which contradicts the linear independence of \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r} \).
+\newline Thus, \( k \neq 0 \), and we have:
+\[
+\beta = -\frac{k_{1}}{k}\alpha_{1} - \frac{k_{2}}{k}\alpha_{2} - \dots - \frac{k_{r}}{k}\alpha_{r}.
+\]
+The expression for \( \beta \) is obtained. 
+\newline Now, suppose there exists another expression:
+\[
+\beta = l_{1}\alpha_{1} + l_{2}\alpha_{2} + \dots + l_{r}\alpha_{r}.
+\]
+Subtracting the two expressions yields:
+\[
+\left( l_{1} + \frac{k_{1}}{k} \right)\alpha_{1} + \left( l_{2} + \frac{k_{2}}{k} \right)\alpha_{2} 
++ \dots + \left( l_{r} + \frac{k_{r}}{k} \right)\alpha_{r} = 0.
+\]
+Due to the linear independence of \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r} \), we have:
+\[
+l_{1} + \frac{k_{1}}{k} = 0, \quad l_{2} + \frac{k_{2}}{k} = 0, \quad \dots, \quad l_{r} + \frac{k_{r}}{k} = 0,
+\]
+which implies \( l_{i} = -\frac{k_{i}}{k} \) for \( i = 1, 2, \dots, r \).
+Thus, the expression for \( \beta \) is unique.
+\end{proof}
+
 
 \begin{leftbarTitle}{Dimension, Basis, and Coordinates}\end{leftbarTitle}
 \begin{definition}{Dimension}
@@ -1350,6 +1386,46 @@ It is evident that \(\mathrm{Hom}(V)\) is an algebra over the field \(F\).
     denoted as \( \operatorname{Coker}(\mathcal{A}) \).
 \end{definition}
 
+\begin{leftbarTitle}{Ascending Chain of Subspaces}\end{leftbarTitle}
+\begin{definition}{Ascending Chain of Subspaces}
+    Let \( V \) be a finite-dimensional linear space over field \( F \), 
+    and let \( \mathcal{A} \in \operatorname{Hom}(V) \).
+    For \( k = 1, 2, 3, \cdots\), define:
+    \[
+    V_{k} = \operatorname{Ker}(\mathcal{A}^{k}) = \{ \alpha \in V | \mathcal{A}^{k}(\alpha) = 0 \},
+    \] 
+    then the sequence of subspaces:
+    \[
+    V_{1} \subseteq V_{2} \subseteq \cdots \subseteq V_{k} \subseteq \cdots
+    \]
+    is called the \textbf{ascending chain of subspaces} induced by \( \mathcal{A} \).
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item The dimensions of these subspaces are non-decreasing:
+            \[
+            \dim(V_{1}) \leq \dim(V_{2}) \leq \cdots \leq \dim(V_{k}) \leq \cdots
+            \]
+        \item Since \(V\) is finite-dimensional, there exists a positive integer \( k_0 \) such that:
+            \[
+            \dim(V_{k_0}) = \dim(V_{k_0 + 1}) = \cdots
+            \]
+            Consequently, for all \( k \geq k_0 \):
+            \[
+            V_{k} = V_{k_0},
+            \]
+            that is, the ascending chain stabilizes at \( V_{k_0} \).
+        \item This \( k_0 \) is precisely a stability index for the corresponding linear operator 
+            (for example, an upper bound on the degree of its annihilating polynomial or
+            a restriction on the size of its Jordan blocks).
+    \end{enumerate}
+\end{property}
+\begin{remark}
+    In some cases, the stability index \( k_0 \) can be equal to the dimension of the space \( V \).
+    For instance, \( \mathcal{A} \) is a nilpotent or all eigenvalues of \( \mathcal{A} \) are zero.
+\end{remark}
+
 \section{Matrix Representation of Linear Mappings}
 Let \( V \) and \( V' \) be finite-dimensional linear spaces over field \( F \), 
 \(\operatorname{dim}(V) = n\) and \(\operatorname{dim}(V') = m\),
@@ -1626,8 +1702,8 @@ The following proposition summarizes the properties of the eigenpolynomial:
 
 
 
-\begin{leftbarTitle}{Multiplicity and Eigen-Subspaces}\end{leftbarTitle}
-\begin{definition}{Eigen-Subspace}
+\begin{leftbarTitle}{Multiplicity and Eigenspaces}\end{leftbarTitle}
+\begin{definition}{Eigenspace}
     Let \( V \) be a linear space over field \( F \), 
     and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
     For an eigenvalue \( \lambda \) of \( \mathcal{A} \), 
@@ -1636,7 +1712,7 @@ The following proposition summarizes the properties of the eigenpolynomial:
     V_{\lambda} = \{ \alpha | \alpha \in V, \mathcal{A}(\alpha) = \lambda \alpha \} = 
     \operatorname{Ker}(\mathcal{A} - \lambda \mathcal{E}),
     \]
-    is called the \textbf{eigen-subspace} (or eigenspace) corresponding to the eigenvalue \( \lambda \).
+    is called the \textbf{eigenspace} (or eigenspace) corresponding to the eigenvalue \( \lambda \).
     It is evident that \( V_{\lambda} \) is a subspace of \( V \)
     and solution space of the equation system \( ( \lambda E - \mathcal{A})X = 0 \).
 \end{definition}
@@ -1646,7 +1722,7 @@ The following proposition summarizes the properties of the eigenpolynomial:
     and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
     For an eigenvalue \( \lambda \) of \( \mathcal{A} \):
     \begin{itemize}
-        \item The dimension of the eigen-subspace \( V_{\lambda} = \operatorname{Ker}(\mathcal{A} - \lambda \mathcal{E}) \)
+        \item The dimension of the eigenspace \( V_{\lambda} = \operatorname{Ker}(\mathcal{A} - \lambda \mathcal{E}) \)
             is called the \textbf{geometric multiplicity} of the eigenvalue \( \lambda \).
         \item The multiplicity of \( \lambda \) as a root of the eigenpolynomial \( f(\lambda) = |\lambda E - A| \)
             is called the \textbf{algebraic multiplicity} of the eigenvalue \( \lambda \).
@@ -1679,6 +1755,23 @@ The following proposition summarizes the properties of the eigenpolynomial:
     the count includes multiplicities).
 \end{theorem}
 
+\section{Minimal Polynomial}
+\begin{definition}{Minimal Polynomial}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    A polynomial \( f(\lambda) \) is called an \textbf{annihilating polynomial} of \( \mathcal{A} \) if:
+    \[
+    f(\mathcal{A}) = 0.
+    \]
+
+    The monic polynomial \( m(\lambda) \) of least degree such that:
+    \[
+    m(\mathcal{A}) = 0,
+    \]
+    is called the \textbf{minimal polynomial} of \( \mathcal{A} \).
+
+    It is similar for a square matrix \( A \in F^{n \times n} \).
+\end{definition}
 
 \section{Space Decomposition}
 Studying linear transformations through invariant subspaces is a commonly used method, 
@@ -1694,6 +1787,12 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
     \]
     simplified as \( \mathcal{A} \)-subspace.
 \end{definition}
+
+\begin{remark}
+    Kernel and image of \( \mathcal{A} \),
+    as well as eigenspaces (including generalized eigenspaces), cyclic subspaces,
+    are both invariant subspaces of \( V \) under \( \mathcal{A} \).
+\end{remark}
 
 \begin{property}
     \begin{enumerate}
@@ -1803,6 +1902,14 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
     f(\mathcal{A}) = 0.
     \]
 \end{theorem}
+\begin{note}
+    The Hamilton-Cayley theorem states that characteristic polynomial of a linear transformation
+    annihilates the transformation itself.
+
+    In fact, characteristic polynomial is a special case of annihilating polynomial,
+    and it is one of the highest degree annihilating polynomials.
+    It can be divided exactly by the minimal polynomial of \( \mathcal{A} \).
+\end{note}
 
 \begin{definition}{Root Subspaces}
     Let \( V \) be a linear space over field \( F \), 
@@ -1816,6 +1923,19 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
     is called the \textbf{root subspace} (or generalized eigenspace) of order \( r \)
     corresponding to the eigenvalue \( \lambda \).
 \end{definition}
+\begin{remark}
+    Here, \(r\) has two kinds of equivalent definitions:
+    \begin{enumerate}
+        \item \(r\) is the smallest positive integer such that 
+            \((\mathcal{A} - \lambda \mathcal{E})^{r}(\alpha) = 0\);
+        \item \(r\) is the algebraic multiplicity of the eigenvalue \( \lambda \).
+    \end{enumerate}
+    All vectors in the root subspace are annihilated by the operator raised to the \(r\)-th power, 
+    and the minimal such \(r\) is precisely the algebraic multiplicity.
+\end{remark}
+Similarly, generalized kernel and image can be defined.
+
+\vspace{0.7cm}
 
 \begin{theorem}{Space Decomposition Theorem}\label{theorem:space_decomposition}
     Let \( V \) be an \( n \)-dimensional linear space over field \( F \), 
@@ -1831,23 +1951,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 \end{theorem}
 
 
-\section{Minimal Polynomial}
-\begin{definition}{Minimal Polynomial}
-    Let \( V \) be a linear space over field \( F \), 
-    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
-    A polynomial \( f(\lambda) \) is called an \textbf{annihilating polynomial} of \( \mathcal{A} \) if:
-    \[
-    f(\mathcal{A}) = 0.
-    \]
 
-    The monic polynomial \( m(\lambda) \) of least degree such that:
-    \[
-    m(\mathcal{A}) = 0,
-    \]
-    is called the \textbf{minimal polynomial} of \( \mathcal{A} \).
-
-    It is similar for a square matrix \( A \in F^{n \times n} \).
-\end{definition}
 
 
 \section{Diagonalization}
@@ -1877,7 +1981,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
             This condition is often called for any eigenvalue of \( \mathcal{A} \), 
             it has \textbf{complete set of eigenvectors}.
             It also can be restated as: 
-            the sum of the dimensions of all eigen-subspaces equals \( n \).
+            the sum of the dimensions of all eigenspaces equals \( n \).
         }
         \item \( V = V_{\lambda_1} \oplus V_{\lambda_2} \oplus \cdots \oplus V_{\lambda_k} \),
             where \( \lambda_1, \lambda_2, \dots, \lambda_k \) are the \underline{distinct} eigenvalues of \( \mathcal{A} \).
@@ -2068,15 +2172,183 @@ In this sense, the matrix \(C(p)\) and the polynomial \(p(x)\) are "companions".
 \begin{definition}{Cyclic Subspace}
     Let \( V \) be a linear space over field \( F \),
     and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
-    For any vector \(0 \neq \xi \in V \), the subspace
+    For a vector \(0 \neq \xi \in V \), the subspace
     \[
     C(\mathcal{A}, \xi) = \langle \xi, \mathcal{A}(\xi), \mathcal{A}^{2}(\xi), \ldots \rangle
+    = \{ f(\mathcal{A})(\xi) | f(x) \in F[x] \}
     \]
     is called the \textbf{cyclic subspace} generated by \( \xi \) under the linear transformation \( \mathcal{A} \).
 
     If \(C(\mathcal{A}, \xi) = V\), then \( C \) is called a \textbf{cyclic space}.
 \end{definition}
 Obviously, \( C(\mathcal{A}, \xi) \) is the smallest \( \mathcal{A} \)-subspace containing \( \xi \).
+
+\begin{property}
+    If \(\operatorname{dim} C(\mathcal{A}, \xi) = r\), 
+    then \(\{ \xi, \mathcal{A}(\xi), \ldots, \mathcal{A}^{r-1}(\xi) \}\) is a basis of \( C(\mathcal{A}, \xi) \).
+\end{property}
+\begin{proof}
+
+    Let \(k_{0}=\max \{ k \in \mathbb{N}^{*}|\xi, \mathcal{A}(\xi), \ldots, \mathcal{A}^{k-1}(\xi) 
+    \text{ is linearly independent} \}  \),
+    then according to properties of linear independence (\ref{proposition:properties_of_linear_independence}-6)
+    and mathematical induction, we can prove that
+    for any \( k \geqslant k_{0} \), \( \mathcal{A}^{k}\) is a linear combination of
+    \( \xi, \mathcal{A}(\xi), \ldots, \mathcal{A}^{k_{0}-1}(\xi) \).
+    Therefore, \( \{ \xi, \mathcal{A}(\xi), \ldots, \mathcal{A}^{k_{0}-1}(\xi) \} \) is a basis of \( C(\mathcal{A}, \xi) \)
+    and \( \operatorname{dim} C(\mathcal{A}, \xi) = k_{0} \).
+\end{proof}
+
+
+\vspace{0.7cm}
+Next, we will show that the sufficient and necessary conditions for cyclic subspace and cyclic space.
+\begin{proposition}
+    Let \(V_{1}\) be \(\mathcal{A}\)-subspace of linear space \(V\) over field \(F\),
+    then \(V_{1}\) is a cyclic subspace if and only if
+    the matrix representation of \(\mathcal{A}|_{V_{1}}\) under some basis of \(V_{1}\) is a companion matrix.
+\end{proposition}
+
+Generally, let the set of invariant divisors of \(\mathcal{A}\) be denoted as
+\[
+\{ 1, \cdots, 1, d_{1}(x), d_{2}(x), \ldots, d_{k}(x) \},
+\]
+where \( d_{i}(x) \) are monic polynomials in \( F[x] \) such that
+\[
+d_{1}(x) | d_{2}(x) | \cdots | d_{k}(x).
+\]
+Then according to theory of rational canonical form,
+there exists a basis of \( V \) such that the matrix representation of \( \mathcal{A} \) under this basis is:
+\[
+C=\operatorname{diag}\{ C(d_{1}), C(d_{2}), \ldots, C(d_{k}) \}.
+\]
+Combining with the above proposition,
+we can conclude that there exists a decomposition of \( V \) into a direct sum of cyclic subspaces:
+\[
+V = \bigoplus_{i=1}^{k} C(\mathcal{A}, \xi_{i}),
+\]
+such that the matrix representation of \( \mathcal{A}|_{C(\mathcal{A}, \xi_{i})} \)
+under the basis \( \{ \xi_{i}, \mathcal{A}(\xi_{i}), \ldots, \mathcal{A}^{r_{i}-1}(\xi_{i}) \} \)
+is the companion matrix \( C(d_{i}) \),
+where \( r_{i} = \operatorname{dim} C(\mathcal{A}, \xi_{i}) \).
+
+This is the geometric interpretation of rational canonical form.
+
+\begin{proposition}
+    Let \( V \) be an \( n \)-dimensional linear space over field \( F \),
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    The following statements are equivalent:
+    \begin{enumerate}
+        \item There exists a vector \( \xi \in V \) such that \(\{ \xi, \mathcal{A}(\xi), \ldots, \mathcal{A}^{n-1}(\xi) \}\) 
+            is a basis of \( V \), i.e., \( V \) is a cyclic space generated by \( \xi \);
+        \item For any eigenvalue \( \lambda \) of \( \mathcal{A} \),
+            the geometric multiplicity is \( 1 \);
+        \item The characteristic polynomial of \( \mathcal{A} \) is equal to the minimal polynomial of \( \mathcal{A} \).
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+
+{\color{blue!60}\textbf{1}\(\Rightarrow\)\textbf{2}}
+There exists a vector \( \xi \in V \) such that \(\{ \xi, \mathcal{A}(\xi), \ldots, \mathcal{A}^{n-1}(\xi) \}\) 
+is a basis of \( V \). 
+The matrix representation of \( \mathcal{A} \) under this basis is a companion matrix,
+\[
+C(p) = \begin{pmatrix}
+0 & 0 & \cdots & 0 & -a_0 \\
+1 & 0 & \cdots & 0 & -a_1 \\
+0 & 1 & \cdots & 0 & -a_2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & 1 & -a_{n-1}
+\end{pmatrix}.
+\]
+For any \(c \in F\), we have
+\[
+cE - C(p) = \begin{pmatrix}
+c & 0 & \cdots & 0 & a_0 \\
+-1 & c & \cdots & 0 & a_1 \\
+0 & -1 & \cdots & 0 & a_2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & \cdots & c & a_{n-1}
+\end{pmatrix}.
+\]
+The minor of order \( n-1 \) in the bottom left corner is non-zero,
+thus the rank of \( cE - C(p) \) is at least \( n-1 \).
+\newline Therefore, the solution space of the equation
+\[
+(cE - C(p))X = 0
+\]
+is \(n-\operatorname{rank}(cE - C(p))\leqslant 1\).
+For any eigenvalue \( \lambda \) of \( \mathcal{A} \),
+\[
+(\lambda E - C(p))X = 0
+\]
+has non-zero solutions definitely, thus its solution space is \(\geqslant 1\).
+\newline Hence, the dimension of solution space of the equation
+\[
+(\lambda E - C(p))X = 0
+\]
+is exactly \( 1 \),i.e., the geometric multiplicity of eigenvalue \( \lambda \) is \( 1 \).
+
+{\color{blue!60}\textbf{2}\(\Rightarrow\)\textbf{1}}
+Let the distinct eigenvalues of \( \mathcal{A} \) be \( \lambda_1, \lambda_2, \dots, \lambda_k \),
+and let the algebraic multiplicities of these eigenvalues be \( r_1, r_2, \dots, r_k \), respectively.
+Obviously, \( r_1 + r_2 + \cdots + r_k = n \) and the characteristic polynomial of \( \mathcal{A} \) is
+\[
+f(x) = (x - \lambda_1)^{r_1} (x - \lambda_2)^{r_2} \cdots (x - \lambda_k)^{r_k}.
+\]
+According to the space decomposition theorem (\ref{theorem:space_decomposition}),
+\[
+V = V_{\lambda_1}^{(r_1)} \oplus V_{\lambda_2}^{(r_2)} \oplus \cdots \oplus V_{\lambda_k}^{(r_k)},
+\]
+where \( V_{\lambda_i}^{(r_i)}\) is the root subspace of order \( r_i \) corresponding to eigenvalue \( \lambda_i \),
+which is an \( \mathcal{A} \)-subspace of dimension \( r_i \) apparently.
+\newline Since the geometric multiplicity of eigenvalue \( \lambda_i \) is \( 1 \),
+the Jordan canonical form of \( \mathcal{A}|_{V_{\lambda_i}^{(r_i)}} \) is
+\[
+J_{r_i}(\lambda_i) = \begin{pmatrix}
+\lambda_i & 1 & 0 & \cdots & 0 \\
+0 & \lambda_i & 1 & \cdots & 0 \\
+0 & 0 & \lambda_i & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+0 & 0 & 0 & \cdots & \lambda_i
+\end{pmatrix}_{r_i \times r_i}.
+\]
+Since the equivalence between Jordan block and cyclic space,
+there exists \(\alpha_{i}\in V_{\lambda_i}^{(r_i)}\) such that
+\[
+J_{r_i}(\lambda_i) = C(\mathcal{A}, \alpha_{i}) 
+= \langle \alpha_{i}, (\mathcal{A} - \lambda_i \mathcal{E})(\alpha_{i}), \ldots, 
+(\mathcal{A} - \lambda_i \mathcal{E})^{r_i - 1}(\alpha_{i}) \rangle,
+\]
+that is, \((\mathcal{A} - \lambda_i \mathcal{E})^{r_i - 1}(\alpha_{i}) \neq 0\).
+\newline Let \(\alpha = \alpha_{1} + \alpha_{2} + \cdots + \alpha_{k}\),
+then we will prove that \(\{ \alpha, \mathcal{A}(\alpha), \ldots, \mathcal{A}^{n-1}(\alpha) \}\)
+is a basis of \( V \).
+\newline If not, they are linearly dependent.
+Then there exist \( p(x) \in F[x] \), \(\operatorname{deg} p(x) \leqslant  n-1\), such that
+\[
+p(\mathcal{A})(\alpha) = 0.
+\]
+Since \(V_{\lambda_i}^{(r_i)}\) is an \( \mathcal{A} \)-subspace, we have 
+\(p(\mathcal{A})(\alpha) \in V_{\lambda_i}^{(r_i)}\).
+\newline Since 
+\[
+0 = p(\mathcal{A})(\alpha) = p(\mathcal{A})(\alpha_{1}) + p(\mathcal{A})(\alpha_{2}) + \cdots + p(\mathcal{A})(\alpha_{k}),
+\]
+we have \(p(\mathcal{A})(\alpha_{i}) = 0\) for all \(i\).
+\newline Since \((\mathcal{A} - \lambda_i \mathcal{E})^{r_i - 1}(\alpha_{i}) \neq 0\),
+\((x - \lambda_i)^{r_i}\) is the minimal degree monic polynomial of \(\mathcal{A}\) annihilating \(\alpha_{i}\),
+thus 
+\[
+(x - \lambda_i)^{r_i} | p(x).
+\] 
+Since when \(i\neq j\), \((x - \lambda_i)\) and \((x - \lambda_j)\) are coprime,
+we have
+\[
+(x - \lambda_1)^{r_1} (x - \lambda_2)^{r_2} \cdots (x - \lambda_k)^{r_k} | p(x),
+\]
+i.e., \( f(x) | p(x) \),
+which contradicts \(\operatorname{deg} p(x) <  n = \deg f(x)\) and \(p(x)\neq 0\).
+\end{proof}
 
 
 \section{Elementary Divisors and Jordan Canonical Form}
