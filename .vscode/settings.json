@@ -40,6 +40,7 @@
 		"quasihomogeneous",
 		"Rolle's",
 		"RREF",
+		"Schwarz",
 		"Steinitz",
 		"Stieltjes",
 		"Stolz",
@@ -53,6 +54,7 @@
 		"Vandermonde",
 		"Vièta's",
 		"Woodbury",
-		"Wronskian"
+		"Wronskian",
+		"Буняко́вский"
 	]
 }

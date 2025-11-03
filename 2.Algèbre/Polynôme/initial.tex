@@ -155,9 +155,47 @@ This is the preface of the book...
     i.e., \( (a_n, a_{n-1}, \ldots, a_1, a_0) = \pm 1 \).
 \end{definition}
 
-\begin{lemma}{Gauss's Lemma}
+\begin{lemma}{Gauß's Lemma}
     The product of two primitive polynomials is also a primitive polynomial.
 \end{lemma}
+With the help of Gauß's lemma, we can establish the following important theorem:
+\begin{theorem}
+    If a polynomial \( f(x) \) with integer coefficients is reducible over the field of rational numbers \( \mathbb{Q} \), 
+    then it is also reducible over the ring of integers \( \mathbb{Z} \).
+\end{theorem}
+A corollary can be derived from this theorem:
+\begin{corollary}
+    Let \(f(x), g(x) \in \mathbb{Z}[x]\) be two polynomials, and \(g(x)\) is primitive. 
+    If \(f(x) = g(x)h(x)\), where \(h(x) \in \mathbb{Q}[x]\), 
+    then \(h(x) \in \mathbb{Z}[x]\).
+\end{corollary}
+
+\begin{leftbarTitle}{Searching and Judging of Rational Roots}\end{leftbarTitle}
+Now we can use the following theorem to search for rational roots of polynomials with integer coefficients:
+\begin{theorem}{Rational Root Theorem}
+    Let \( f(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0 \) 
+    be a polynomial with integer coefficients. 
+    If \( \frac{r}{s} \) (in lowest terms) is a rational root of \( f(x) \), 
+    then \( r\mid a_{0} \) and \( s \mid a_n \).
+
+    Obviously, if \( f(x) \) is monic, then any rational root must be an integer divisor of \( a_0 \).
+\end{theorem}
+
+Next, we can use the following theorem to judge whether a polynomial with integer coefficients is 
+irreducible over the field of rational numbers:
+\begin{theorem}{Eisenstein's Criterion}
+    Let \( f(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0 \) 
+    be a polynomial with integer coefficients. 
+    If there exists a prime number \( p \) such that:
+    \begin{enumerate}
+        \item \( p \nmid a_n \);
+        \item \( p \mid a_i \) for all \( i = 0, 1, \ldots, n-1 \);
+        \item \( p^2 \nmid a_0 \);
+    \end{enumerate}
+    then \( f(x) \) is \underline{irreducible} over the field of rational numbers \( \mathbb{Q} \).
+\end{theorem}
+
+
 
 \section{Relation between Roots and Coefficients}
 \begin{theorem}{Vièta's Formulas}
@@ -174,6 +212,19 @@ This is the preface of the book...
     \end{aligned}
     \]
 \end{theorem}
+Using symmetric polynomial notation (\ref{def:symmetric_polynomial}), Vièta's formulas can be expressed as:
+\begin{align*}
+    \sigma_1(r_1, r_2, \ldots, r_n) &= -\frac{a_{n-1}}{a_n}, \\
+    \sigma_2(r_1, r_2, \ldots, r_n) &= \frac{a_{n-2}}{a_n}, \\
+    &\vdots \\
+    \sigma_n(r_1, r_2, \ldots, r_n) &= (-1)^n \frac{a_0}{a_n},
+\end{align*}
+that is,
+\[
+    \sigma_i(r_1, r_2, \ldots, r_n) = (-1)^{i} \frac{a_{n-i}}{a_n}, \quad i = 1, 2, \ldots, n.
+\]
+
+
 
 \section{Root of Unity}
 \begin{definition}{Root of Unity}
@@ -252,7 +303,7 @@ with an angle of \( \frac{2\pi}{n} \) between adjacent roots.
 
 \chapter{Multivariate Polynomial}
 \section{Symmetric Polynomial}
-\begin{definition}{Symmetric Polynomial}
+\begin{definition}{Symmetric Polynomial}\label{def:symmetric_polynomial}
     A polynomial \( f(x_1, x_2, \ldots, x_n) \) in \( n \) variables is called a \textbf{symmetric polynomial} 
     if it remains unchanged under any permutation of its variables. 
     In other words, for any permutation \( \sigma \) of the set \( \{1, 2, \ldots, n\} \),
@@ -265,17 +316,17 @@ Some common symmetric polynomials include:
 \begin{description}
     \item[Elementary Symmetric Polynomials:] 
         \[
-        e_k(x_1, x_2, \ldots, x_n) = \sum_{1 \leq i_1 < i_2 < \cdots < i_k \leq n} x_{i_1} x_{i_2} \cdots x_{i_k}, 
+        \sigma_k(x_1, x_2, \ldots, x_n) = \sum_{1 \leq i_1 < i_2 < \cdots < i_k \leq n} x_{i_1} x_{i_2} \cdots x_{i_k}, 
         \quad k = 1, 2, \ldots, n.
         \]
         That is,
         \begin{align*}
-            &e_{0} = 1, \\
-            &e_{1} = x_{1} + x_{2} + \cdots + x_{n}, \\
-            &e_{2} = \sum_{1 \leq i < j \leq n} x_{i} x_{j}, \\
+            &\sigma_{0} = 1, \\
+            &\sigma_{1} = x_{1} + x_{2} + \cdots + x_{n}, \\
+            &\sigma_{2} = \sum_{1 \leq i < j \leq n} x_{i} x_{j}, \\
             &\vdots \\
-            &e_{n} = x_{1} x_{2} \cdots x_{n}, \\
-            &e_{k} = 0, \quad k > n.
+            &\sigma_{n} = x_{1} x_{2} \cdots x_{n}, \\
+            &\sigma_{k} = 0, \quad k > n.
         \end{align*}
     \item[Power Sum Symmetric Polynomials:] 
         \[
@@ -292,18 +343,17 @@ Some common symmetric polynomials include:
 
 
 \begin{theorem}{Newton's Identities}
-    For \( k \geq 1 \), the following relations hold between the elementary symmetric polynomials \( e_k \) 
+    For \( k \geq 1 \), the following relations hold between the elementary symmetric polynomials \( \sigma_k \) 
     and the power sum symmetric polynomials \( p_k \):
     \[
-    k e_k = \sum_{i=1}^{k} (-1)^{i-1} e_{k-i} p_i,
+    k \sigma_k = \sum_{i=1}^{k} (-1)^{i-1} \sigma_{k-i} p_i.
     \]
-    where \( e_0 = 1 \) and \( e_k = 0 \) for \( k > n \).
 \end{theorem}
 
 
 \begin{thebibliography}{99}
 \bibitem{en1} 南秀全, 黄振国. \emph{多项式理论}. 哈尔滨工业大学出版社, 2016.
-\bibitem{en2} Author2, Title2, Journal2, Year2. \emph{ This is another example of a reference.}
+\bibitem{ch3} 王萼芳, 石生明. \emph{ 高等代数 (5th edition) }, 高等教育出版社, 2019.
 \end{thebibliography}
 
 \end{document}
