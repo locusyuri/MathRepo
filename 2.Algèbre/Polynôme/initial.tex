@@ -1,4 +1,4 @@
-\documentclass[11pt]{elegantbook}
+\documentclass[11pt]{../../TexTemplate/elegantbook}
 
 \title{Polynôme} % 这里放置书名
 % \subtitle{Subtitle} % 这里放置副标题
@@ -23,6 +23,7 @@
 \colorlet{coverlinecolor}{customcolor}
 \usepackage{cprotect} % 保护命令参数不被 LaTeX 解析器过早处理，允许在某些特殊环境中使用脆弱命令（fragile commands）。
 \usepackage{xeCJK} % 使用 xeCJK 包支持中文
+\usepackage{biblatex}
 
 
 % ===== 开始文档 =====
@@ -119,6 +120,7 @@ This is the preface of the book...
 
 \section{Least Common Multiple}
 
+\section{Opposite Polynomials}
 
 \chapter{Factorization and Roots}
 
@@ -314,7 +316,7 @@ with an angle of \( \frac{2\pi}{n} \) between adjacent roots.
 \end{definition}
 Some common symmetric polynomials include:
 \begin{description}
-    \item[Elementary Symmetric Polynomials:] 
+    \item[Elementary Symmetric Polynomials] 
         \[
         \sigma_k(x_1, x_2, \ldots, x_n) = \sum_{1 \leq i_1 < i_2 < \cdots < i_k \leq n} x_{i_1} x_{i_2} \cdots x_{i_k}, 
         \quad k = 1, 2, \ldots, n.
@@ -328,12 +330,13 @@ Some common symmetric polynomials include:
             &\sigma_{n} = x_{1} x_{2} \cdots x_{n}, \\
             &\sigma_{k} = 0, \quad k > n.
         \end{align*}
-    \item[Power Sum Symmetric Polynomials:] 
+        Any symmetric polynomial can be expressed as a polynomial in elementary symmetric polynomials.
+    \item[Power Sum Symmetric Polynomials] 
         \[
         p_k(x_1, x_2, \ldots, x_n) = x_1^k + x_2^k + \cdots + x_n^k, 
         \quad k = 1, 2, \ldots.
         \]
-    \item[Complete Homogeneous Symmetric Polynomials:] 
+    \item[Complete Homogeneous Symmetric Polynomials] 
         \[
         h_k(x_1, x_2, \ldots, x_n) = \sum_{i_1 + i_2 + \cdots + i_n = k} x_1^{i_1} x_2^{i_2} \cdots x_n^{i_n}, 
         \quad k = 1, 2, \ldots.
@@ -350,10 +353,213 @@ Some common symmetric polynomials include:
     \]
 \end{theorem}
 
+We introduce some notations for convenience, where \(f\) can be any function of \(n\) variables,
+not necessarily be polynomials:
+\begin{description}
+    \item[Cyclic Sum] Perform a cyclic shift on all variables in an expression, then sum the resulting terms:
+        \[
+        \sum_{\text{cyc}} f(x_1, x_2, \ldots, x_n) = \sum_{i=1}^{n} f(x_i, x_{i+1}, \ldots, x_{i+n-1}),
+        \]
+        where the indices are taken modulo \( n \).
+        
+        For example, 
+        \[
+        \sum_{\text{cyc}}\frac{a}{b+c}  = \frac{a}{b+c} + \frac{b}{c+a} + \frac{c}{a+b} \geq \frac{3}{2},
+        \]
+        which is called Nesbitt's inequality, to be proved later.
+    \item[Symmetric Sum] Sum over all distinct permutations of the variables in an expression:
+        \[
+        \sum_{\text{sym}} f(x_1, x_2, \ldots, x_n) = \sum_{\sigma \in S_n} f(x_{\sigma(1)}, x_{\sigma(2)}, \ldots, x_{\sigma(n)}),
+        \]
+        where \( S_n \) is the set of all permutations of \( n \) elements.
+        
+        For example,
+        \[
+        \sum_{\text{sym}} a^{3} = a^{3} + b^{3} + c^{3}, \quad 
+        \sum_{\text{sym}} a^{2}b = a^{2}b + a^{2}c + b^{2}a + b^{2}c + c^{2}a + c^{2}b.
+        \]
+\end{description}
+
+\section{Symmetric Inequalities}
+\begin{definition}{Symmetric Inequality}
+    An inequality \( f(x_1, x_2, \ldots, x_n) \geq g(x_1, x_2, \ldots, x_n) \) is called a \textbf{symmetric inequality} 
+    if the polynomial \( f(x_1, x_2, \ldots, x_n) \) and \( g(x_1, x_2, \ldots, x_n) \) are symmetric polynomials.
+\end{definition}
+
+\begin{leftbarTitle}{Power Mean Inequality}\end{leftbarTitle}
+\begin{theorem}{Power Mean Inequality}
+    For positive real numbers \(a_1, a_2, \dots, a_n > 0\), define the power mean of order \(p\) as:
+    \[
+    M_{p}(a_1, a_2, \dots, a_n) = 
+    \begin{cases} 
+        \left( \frac{a_1^p + a_2^p + \cdots + a_n^p}{n} \right)^{\frac{1}{p}}, & p \neq 0 \\ 
+        \lim_{p \to 0} M_{p}(a_1, a_2, \dots, a_n) = \sqrt[n]{a_1 a_2 \cdots a_n}, & p = 0 .
+    \end{cases}
+    \]
+    Specially, when \(p \to 0\), it is the \textbf{geometric mean} (G)
+    \[
+    G = \sqrt[n]{a_1 a_2 \cdots a_n};
+    \]
+    when \(p = 1\), it is the \textbf{arithmetic mean} (A)
+    \[
+    A = \frac{a_1 + a_2 + \cdots + a_n}{n};
+    \]
+    when \(p = 2\), it is the \textbf{quadratic mean} (Q)
+    \[
+    Q = \sqrt{\frac{a_1^2 + a_2^2 + \cdots + a_n^2}{n}};
+    \]
+    when \(p = -1\), it is the \textbf{harmonic mean} (H)
+    \[
+    H = \frac{n}{\frac{1}{a_1} + \frac{1}{a_2} + \cdots + \frac{1}{a_n}}.
+    \]
+    The following inequalities hold:
+    \[
+    \cdots \leqslant M_{-2} \leqslant M_{-1} \leqslant M_{0} \leqslant M_{1} \leqslant M_{2} \leqslant \cdots.
+    \]
+    Thus, we have:
+    \[
+    H \leqslant G \leqslant A \leqslant Q.
+    \]
+\end{theorem}
+% n=2时, 幂均不等式链中可以插入对数均值
+When \(n=2\), in the chain of power mean inequalities, we can insert the \textbf{logarithmic mean}:
+logarithmic mean of \(a\) and \(b\) is defined as:
+\[
+L(a, b) = \frac{a-b}{\ln a - \ln b} \quad (a \neq b, a, b > 0),
+\]
+then we have:
+\[
+G(a, b) \leqslant L(a, b) \leqslant A(a, b).
+\]
+
+\begin{leftbarTitle}{Schur Inequality}\end{leftbarTitle}
+\begin{theorem}{Schur Inequality}
+    For non-negative real numbers \( a, b, c \geq 0 \) and a real number \( r \geq 0 \), the following inequality holds:
+    \[
+    a^{r}(a - b)(a - c) + b^{r}(b - c)(b - a) + c^{r}(c - a)(c - b) \geq 0.
+    \]
+
+    When \( r = 1 \), the following well-known special case can be derived:
+    \[
+    a^{3} + b^{3} + c^{3} + 3abc \geq ab(a + b) + bc(b + c) + ca(c + a).
+    \]
+\end{theorem}
+
+\begin{leftbarTitle}{Muirhead Inequality}\end{leftbarTitle}
+This part mainly references~\cite{3}.
+
+\begin{definition}{Convex Hull}
+    Let \(V\) be a linear space over the field \( \mathbb{R} \), for a set \(X\),
+    % 所有包含X的凸集的交集被称为X的凸包
+    the \textbf{convex hull} of \(X\) is defined as the intersection of all convex sets containing \(X\):
+    \[
+    S := \bigcap_{X \subseteq K \subseteq V} K, \quad \text{where } K \text{ is a convex set}.
+    \]
+\end{definition}
+For an \(n\)-dimensional vector \( \alpha = (a_1, a_2, \ldots, a_n) \),
+define \(\alpha_{[j]},1\leqslant j\leqslant n\) is the \(j\)-th item of \(\alpha\) 
+after sorting \(a_1, a_2, \ldots, a_n\) in descending order, i.e.,
+\[
+a_{[1]} \geqslant a_{[2]} \geqslant \cdots \geqslant a_{[n]}.
+\]
+Then we can obtain 
+\[
+a_{\downarrow} = (a_{[1]}, a_{[2]}, \cdots, a_{[n]}).
+\]
+
+% S_n为{1,2,...n}中元素的全排列(共n!种)组成的集合
+Define \(S_{n}\) be the set of all permutations of the set \(\{1, 2, \ldots, n\}\),
+then we define the convex hull of \(\alpha\) as:
+\[
+H(\alpha) = \{ b_{\tau(1)}, b_{\tau(2)}, \ldots, b_{\tau(n)} | \tau \in S_{n} \}.
+\]
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{img/convex_hull.png}
+    \caption{Relation graph of convex hull in \(\mathbb{R}^3\).}
+    \label{fig:convex_hull}
+\end{figure}
+
+\begin{theorem}{Muirhead Inequality}
+    For \(\alpha = (a_{1}, a_{2}, \ldots, a_{n}), \beta = (b_{1}, b_{2}, \ldots, b_{n}) \in \mathbb{R}^{n}\),
+    and \(\alpha \in H(\beta)\)\footnote{
+        It is often called \textbf{Muirhead's condition} that \(\alpha \in H(\beta)\).
+    }, then for positive numbers \(x_{1}, x_{2}, \ldots, x_{n} > 0\), the following inequality holds:
+    \[
+    \sum_{\sigma \in S_{n}} x^{a_{1}}_{\sigma(1)}x^{a_{2}}_{\sigma(2)}\cdots x^{a_{n}}_{\sigma(n)} \leqslant  
+    \sum_{\sigma \in S_{n}} x^{b_{1}}_{\sigma(1)}x^{b_{2}}_{\sigma(2)}\cdots x^{b_{n}}_{\sigma(n)},
+    \]
+    where \(\sum_{\sigma \in S_{n}}\) denotes summation over all permutations \(\sigma\) in \(S_{n}\).
+
+    The equality holds if and only if \(x_{1} = x_{2} = \cdots = x_{n}\) or \(\alpha_{\downarrow} = \beta_{\downarrow}\).
+\end{theorem}
+
+Since Muirhead's condition is difficult to verify directly, we derive the following conditions.
+\begin{definition}{Majorization} % 盖
+    For \(\alpha = (a_{1}, a_{2}, \ldots, a_{n}), \beta = (b_{1}, b_{2}, \ldots, b_{n}) \in \mathbb{R}^{n}\),
+    if the following conditions hold:
+    \begin{enumerate}
+        \item \(a_{[1]} + a_{[2]} + \cdots + a_{[n]} = b_{[1]} + b_{[2]} + \cdots + b_{[n]}\);
+        \item For all \(k = 1, 2, \ldots, n-1\),
+            \[
+            a_{[1]} + a_{[2]} + \cdots + a_{[k]} \leqslant b_{[1]} + b_{[2]} + \cdots + b_{[k]};
+            \]
+    \end{enumerate}
+    then we say that \(\beta\) majorizes \(\alpha\), denoted as \(\alpha \prec \beta\).
+\end{definition}
+
+\begin{definition}{Doubly Stochastic Matrix} % 双重随机矩阵
+    An \(n \times n\) matrix \(P = (p_{ij})\) is called a \textbf{doubly stochastic matrix} 
+    if the sum of each row and the sum of each column both equal \(1\).
+\end{definition}
+
+Now we can give two equivalent conditions:
+\begin{theorem}
+    In the same conditions as Muirhead's inequality, the following two statements are equivalent to \(\alpha \prec \beta\):
+    \begin{enumerate}
+        \item There exists a doubly stochastic matrix \(D\) such that \(\alpha = D\beta\).
+        \item \(\alpha \in H(\beta)\).
+    \end{enumerate}
+\end{theorem}
+
+
+\begin{example}
+    \textbf{Nesbitt's Inequality}
+    For positive real numbers \(a, b, c > 0\), the following inequality holds:
+    \[
+    \sum_{\text{cyc}}\frac{a}{b+c}  = \frac{a}{b+c} + \frac{b}{c+a} + \frac{c}{a+b} \geq \frac{3}{2}.
+    \]
+\end{example}
+
+\begin{proof}
+    % 通分并交叉相乘
+    By finding a common denominator and cross-multiplying, we have:
+    \[
+    2\sum_{\text{cyc}} a(a+b)(a+c) \geqslant  3(a+b)(b+c)(c+a),
+    \]
+    which is equivalent to
+    \[
+    \sum_{\text{sym}} a^{3} \geqslant \sum_{\text{sym}} a^{2}b.
+    \]
+    Note that \((3,0,0) \succ (2,1,0)\),
+    thus by Muirhead's inequality, the above inequality holds.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
 
 \begin{thebibliography}{99}
 \bibitem{en1} 南秀全, 黄振国. \emph{多项式理论}. 哈尔滨工业大学出版社, 2016.
 \bibitem{ch3} 王萼芳, 石生明. \emph{ 高等代数 (5th edition) }, 高等教育出版社, 2019.
+\bibitem{3} 陈柏宇, 张福春. \emph{ Muirhead 不等式 }, 数学传播-38卷2期, pp.41-58, 2019.
 \end{thebibliography}
 
 \end{document}

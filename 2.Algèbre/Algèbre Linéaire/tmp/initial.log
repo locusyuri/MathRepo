@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  3 NOV 2025 21:36
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  4 NOV 2025 20:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1629,7 +1629,9 @@ Underfull \hbox (badness 2753) in paragraph at lines 2988--2990
 
 [52]
 
-[53
+[53]
+
+[54
 
 ] (./tmp/initial.aux)
  ***********
@@ -1647,12 +1649,12 @@ Package logreq Info: Writing requests to 'initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46244 strings out of 473831
- 960443 string characters out of 5733137
+ 46246 strings out of 473831
+ 960496 string characters out of 5733137
  1999318 words of memory out of 5000000
- 68469 multiletter control sequences out of 15000+600000
+ 68470 multiletter control sequences out of 15000+600000
  569133 words of font info for 171 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (57 pages).
+Output written on ./tmp/initial.pdf (58 pages).

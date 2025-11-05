@@ -155,51 +155,8 @@ Let \(C^k(U, \mathbb{R}^m)\) denote the set of \(C^k\) mappings from \(U\) to \(
 \end{remark}
 
 \section{Common Inequalities}
-\begin{theorem}{Power Mean Inequality}
-    For positive real numbers \(a_1, a_2, \dots, a_n > 0\), define the power mean of order \(p\) as:
-    \[
-    M_{p}(a_1, a_2, \dots, a_n) = 
-    \begin{cases} 
-        \left( \frac{a_1^p + a_2^p + \cdots + a_n^p}{n} \right)^{\frac{1}{p}}, & p \neq 0 \\ 
-        \lim_{p \to 0} M_{p}(a_1, a_2, \dots, a_n) = \sqrt[n]{a_1 a_2 \cdots a_n}, & p = 0 .
-    \end{cases}
-    \]
-    Specially, when \(p \to 0\), it is the \textbf{geometric mean} (G)
-    \[
-    G = \sqrt[n]{a_1 a_2 \cdots a_n};
-    \]
-    when \(p = 1\), it is the \textbf{arithmetic mean} (A)
-    \[
-    A = \frac{a_1 + a_2 + \cdots + a_n}{n};
-    \]
-    when \(p = 2\), it is the \textbf{quadratic mean} (Q)
-    \[
-    Q = \sqrt{\frac{a_1^2 + a_2^2 + \cdots + a_n^2}{n}};
-    \]
-    when \(p = -1\), it is the \textbf{harmonic mean} (H)
-    \[
-    H = \frac{n}{\frac{1}{a_1} + \frac{1}{a_2} + \cdots + \frac{1}{a_n}}.
-    \]
-    The following inequalities hold:
-    \[
-    \cdots \leqslant M_{-2} \leqslant M_{-1} \leqslant M_{0} \leqslant M_{1} \leqslant M_{2} \leqslant \cdots.
-    \]
-    Thus, we have:
-    \[
-    H \leqslant G \leqslant A \leqslant Q.
-    \]
-\end{theorem}
-Let the \textbf{logarithmic mean} of \(a\) and \(b\) be defined as:
-\[
-L(a, b) = \frac{a-b}{\ln a - \ln b} \quad (a \neq b, a, b > 0),
-\]
-then we have:
-\[
-G(a, b) \leqslant L(a, b) \leqslant A(a, b).
-\]
 
-\vspace{0.7cm}
-Other common inequalities:
+Some common inequalities:
 \begin{gather*}
     \frac{x}{1+x} < \ln(1+x) < x, \quad x > 0; \\
 \end{gather*}
@@ -1429,6 +1386,42 @@ we say that the property holds \textbf{almost everywhere} on \( A \).
     \end{description}
 \end{theorem}
 
+
+\begin{example}
+    Let \(f(t)\) be convex on \([0,1]\), prove that:
+    \[
+    \int_{0}^{1} t(1-t)f(t) \, \mathrm{d}t \leqslant \frac{1}{3}\int_{0}^{1} \left( t^{3}+(1-t)^{3} \right)  f(t) \, \mathrm{d}t.
+    \]
+\end{example}
+\begin{proof}
+    Since \(f(t)\) is convex on \([0,1]\), for any \(t \in (0,1)\), we have:
+    \[
+    t = (1-t)(tx)+t(1-x+tx),
+    \]
+    then 
+    \[
+    f(t) \leqslant (1-t)f(tx) + t f(1 - x + tx).
+    \]
+    Integrating both sides from \(0\) to \(1\) with respect to \(x\), we get:
+    \[
+    f(t) \leqslant (1-t) \int_{0}^{1} f(tx) \, \mathrm{d}x + t \int_{0}^{1} f(1 - x + tx) \, \mathrm{d}x
+    = \frac{1-t}{t}\int_{0}^{t}f(x)\mathrm{d}x+\frac{t}{1-t}\int_{t}^{1}f(x)\mathrm{d}x.
+    \]
+    Multiplying both sides by \(t(1-t)\) and integrating from \(0\) to \(1\) with respect to \(t\), we have:
+    \[
+    \int_{0}^{1} t(1-t) f(t) \, \mathrm{d}t \leqslant 
+    \int_{0}^{1} \left[(1-t)^{2} \int_{0}^{t} f(x) \, \mathrm{d}x\right] \, \mathrm{d}t 
+    + \int_{0}^{1} t^{2} \left[\int_{t}^{1} f(x) \, \mathrm{d}x\right] \, \mathrm{d}t.
+    \]
+    Change the order of integration in the right side:
+    \[
+    \int_{0}^{1} \left[(1-t)^{2} \int_{0}^{t} f(x) \, \mathrm{d}x\right] \, \mathrm{d}t 
+    + \int_{0}^{1} t^{2} \left[\int_{t}^{1} f(x) \, \mathrm{d}x\right] \, \mathrm{d}t
+    = \frac{1}{3}\int_{0}^{1} \left( t^{3}+(1-t)^{3} \right)  f(t) \, \mathrm{d}t.
+    \]
+    Thus, the desired inequality is proven.
+\end{proof}
+
 \section{Applications of Definite Integrals}
 \begin{leftbarTitle}{Arc Length}\end{leftbarTitle}
 \begin{definition}{Arc Length}
@@ -2349,6 +2342,45 @@ and the following properties can be established:
 \section{Expanding Functions into Power Series}
 
 \section{Smooth Appropriation of Functions}
+First, we use continuous functions to approximate Riemann integrable functions
+and smooth functions to approximate continuous functions, respectively.
+\begin{theorem}
+    Let \( f(x) \in R[a, b] \). For any \( \varepsilon > 0 \), 
+    there exists a function \( g(x) \in C[a, b] \) such that:
+    \[
+    \int_{a}^{b}|f(x) - g(x)| < \varepsilon.
+    \]
+\end{theorem}
+
+\begin{theorem}
+    Let \( f(x) \in C[a, b] \). For any \( \varepsilon > 0 \), 
+    there exists a function \( g(x) \in C^{\infty}[a, b] \) such that:
+    \[
+    |f(x) - g(x)| < \varepsilon, \quad \forall x \in [a, b].
+    \]
+\end{theorem}
+
+Then, Weierstrass approximation theorem is stated as follows:
+\begin{theorem}{Weierstrass First Approximation Theorem}
+    Let \( f(x) \in C[a, b] \). For any \( \varepsilon > 0 \), 
+    there exists a polynomial \( P(x) \) such that:
+    \[
+    |f(x) - P(x)| < \varepsilon, \quad \forall x \in [a, b].
+    \]
+\end{theorem}
+
+\begin{theorem}{Weierstrass Second Approximation Theorem}
+    Let \(f(x)\) be a continuous periodic function with period \(2\pi\). For any \( \varepsilon > 0 \), 
+    there exists a trigonometric polynomial sequence
+    \[
+    \{ T_{n}(x)=\frac{A_{0}}{2} + \sum_{k=1}^{n} A_{k} \cos(kx) + B_{k} \sin(kx) \}
+    \]
+    such that:
+    \[
+    T_{n}(x) \mathop{\rightrightarrows} f(x).
+    \]
+\end{theorem}
+
 
 \chapter{Limits and Continuity in Euclidean Spaces}
 
@@ -4316,12 +4348,108 @@ but we have the following theorem.
 
 \section{Euler Integrals}
 \begin{leftbarTitle}{Beta Function}\end{leftbarTitle}
+% 两种形式的 Beta 函数
+Beta function can be defined in the following equivalent forms:
+\begin{enumerate}
+    \item For \(p>0, q>0\):
+    \[
+    B(p, q) = \int_{0}^{1} t^{p-1} (1-t)^{q-1} \, \mathrm{d}t.
+    \]
+    \item Via substitution \(t = \frac{u}{1+u}\):
+    \[
+    B(p, q) = \int_{0}^{+\infty} \frac{u^{p-1}}{(1+u)^{p+q}} \, \mathrm{d}u.
+    \]
+    \item Via substitution \(t = \sin^{2}\theta\):
+    \[
+    B(p, q) = 2\int_{0}^{\frac{\pi}{2}} \sin^{2p-1}\theta \cos^{2q-1}\theta \, \mathrm{d}\theta.
+    \]
+    Then we have:
+    \[
+    B(\frac{1}{2}, \frac{1}{2}) = \pi, \quad B(\frac{3}{2}, \frac{1}{2}) = \frac{\pi}{2}, \quad B(1, 1) = 1.
+    \]
+\end{enumerate}
+
+\begin{property}
+    \begin{description}
+        \item[Continuity] \(B(p, q)\in C(U)\), where \(U = \{(p, q) | p>0, q>0\}\).
+        \item[Symmetry] \(B(p, q) = B(q, p)\).
+        \item[Recurrence Relation] \(B(p, q) = \frac{q-1}{p+q-1} B(p, q-1)\) for \(p>0,q>1\).
+    \end{description}
+\end{property}
+
 
 \begin{leftbarTitle}{Gamma Function}\end{leftbarTitle}
+Gamma function can be defined in the following equivalent forms:
+\begin{enumerate}
+    \item For \(s>0\):
+    \[
+    \Gamma(s) = \int_{0}^{+\infty} x^{s-1} e^{-x} \, \mathrm{d}x.
+    \]
+    \item Via the limit:
+    \[
+    \Gamma(s) = \lim_{n\to\infty} \frac{n!}{s(s+1)(s+2)\cdots(s+n)}.
+    \]
+    \item Via substitution \(x = t^{2}\):
+    \[
+    \Gamma(s) = \frac{1}{2} \int_{0}^{+\infty} t^{2s-1} e^{-t^{2}} \, \mathrm{d}t.
+    \]
+    Then we have:
+    \[
+    \Gamma(\frac{1}{2}) = \sqrt{\pi}, \quad \Gamma(\frac{3}{2}) = \frac{\sqrt{\pi}}{2}, \quad \Gamma(1) = 1.
+    \]
+\end{enumerate}
+
+
+\begin{property}
+    \begin{description}
+        \item[Continuity] \(\Gamma(s)\in C(0, +\infty)\).
+        \item[Recurrence Relation] \(\Gamma(s+1) = s \Gamma(s)\) for \(s>0\).
+    \end{description}
+\end{property}
+
+Gamma function can be \underline{extended} to the whole complex plane except for non-positive integers,
+where it has simple poles.
+
+
 
 \begin{leftbarTitle}{Relation between Beta and Gamma Functions}\end{leftbarTitle}
+\begin{theorem}
+    There holds the following relation between Beta and Gamma functions:
+    \[
+    B(p, q) = \frac{\Gamma(p) \Gamma(q)}{\Gamma(p+q)}, \quad p>0, q>0.
+    \]
+\end{theorem}
+
+Next, we give three important formulas about Gamma function,
+which can be extended to the complex domain as well.
+
+\begin{theorem}{Legendre's Duplication Formula}
+    For \(s > 0\), there holds:
+    \[
+    \Gamma(s) \Gamma(s + \frac{1}{2}) = \frac{\sqrt{\pi}}{2^{2s-1}} \Gamma(2s).
+    \]    
+\end{theorem}
 
 
+\begin{theorem}{Reflection Formula} % 余元公式
+    For \(0 < s < 1\), there holds:
+    \[
+    \Gamma(s) \Gamma(1 - s) = \frac{\pi}{\sin \pi s}.
+    \]
+\end{theorem}
+
+\begin{theorem}{Stirling's Formula}
+    \[
+    \Gamma(s+1) = \sqrt{2 \pi s} \left( \frac{s}{e} \right)^{s} \exp\left( \frac{\theta}{12s} \right),
+    \]
+    where \(0 < \theta < 1\).
+
+    Specially, when \(s = n \in \mathbb{N}\),
+    \[
+    \Gamma(n+1) = n! = \sqrt{2 \pi n} \left( \frac{n}{e} \right)^{n} \exp\left( \frac{\theta}{12n} \right),
+    \]
+    where \(0 < \theta < 1\).
+\end{theorem}
 
 
 \begin{thebibliography}{99} 

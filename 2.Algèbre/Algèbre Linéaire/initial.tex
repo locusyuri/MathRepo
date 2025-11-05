@@ -2997,7 +2997,70 @@ Then
     
 \end{proof}
 
+\vspace{0.7cm}
+\begin{example}
+    Let \(n\geqslant 2\), \(A\) is an \(n\)-order real symmetric matrix.
+    \(\alpha=(a_{1},a_{2},\ldots,a_{n})^{\mathrm{T}}, \beta=(b_{1},b_{2},\ldots,b_{n})^{\mathrm{T}}\),
+    which are two eigenvectors of \(A\) corresponding to different eigenvalues \(\lambda_{1}, \lambda_{2}\) respectively.
+    Let 
+    \[
+    B = \begin{pmatrix} 
+        a_{1}+b_{1} & a_{1}+b_{2} & \cdots & a_{1}+b_{n} \\
+        a_{2}+b_{1} & a_{2}+b_{2} & \cdots & a_{2}+b_{n} \\
+        \vdots & \vdots & \ddots & \vdots \\ 
+        a_{n}+b_{1} & a_{n}+b_{2} & \cdots & a_{n}+b_{n} 
+    \end{pmatrix},
+    \]
+    find all eigenvalues of matrix \(B\).
+\end{example}
 
+\begin{solution}
+    Let \(\xi_{1}=\frac{\alpha}{\|\alpha\|}, \xi_{2}=\frac{\beta}{\|\beta\|}\),
+    and \(S_{a}=\sum_{i=1}^{n}a_{i}, S_{b}=\sum_{i=1}^{n}b_{i}\).
+    \newline It is easy to see that \(\xi_{1}, \xi_{2}\) are orthonormal unit vectors.
+    \newline Extend \(\{\xi_{1}, \xi_{2}\}\) to an orthonormal basis \(\{\xi_{1}, \xi_{2}, \ldots, \xi_{n}\}\) of \(\mathbb{R}^{n}\).
+    \newline Let \(P=(\xi_{1}, \xi_{2}, \ldots, \xi_{n})\), then \(P\) is an orthonormal matrix.
+    \newline \(B\) can be expressed as: 
+    \[
+    B = \alpha e^{\mathrm{T}} + e \beta^{\mathrm{T}},
+    \]
+    where \(e=(1,1,\ldots,1)^{\mathrm{T}}\).
+    \newline Therefore,
+    \[
+    P^{-1}BP = P^{\mathrm{T}}BP = \begin{pmatrix} 
+        \xi_{1}^{\mathrm{T}} \\ \xi_{2}^{\mathrm{T}} \\ \vdots \\ \xi_{n}^{\mathrm{T}} 
+    \end{pmatrix} 
+    \begin{pmatrix} 
+        B \xi_{1} & B \xi_{2} & \cdots & B \xi_{n}
+    \end{pmatrix}.
+    \]
+    Since 
+    \[
+    B\xi_{1} = (\alpha e^{\mathrm{T}} + e \beta^{\mathrm{T}}) \frac{a_{1}}{\|\alpha\|} = 
+    \frac{\alpha(e^{\mathrm{T}}\alpha)}{\|\alpha\|} + \frac{e(\beta^{\mathrm{T}}\alpha)}{\|\alpha\|} =
+    \frac{S_{a}}{\|\alpha\|} \alpha + 0 = S_{a} \|\alpha\| \xi_{1},
+    \]
+    and similarly, \(B\xi_{2} = S_{b} \|\beta\| \xi_{2}\).
+    For \(k\geqslant 3\), we have
+    \[
+    B\xi_{k} = (\alpha e^{\mathrm{T}} + e \beta^{\mathrm{T}}) \xi_{k} = 
+    \alpha (e^{\mathrm{T}} \xi_{k}) + e (\beta^{\mathrm{T}} \xi_{k}) = 0 + 0 = 0.
+    \]
+    Then 
+    \[
+    P^{\mathrm{T}}BP = \begin{pmatrix} 
+        S_{a}  & 0 & 0 & \cdots & 0 \\
+        0 & S_{b} & 0 & \cdots & 0 \\
+        0 & 0 & 0 & \cdots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & 0 & \cdots & 0
+    \end{pmatrix}.
+    \]
+    Therefore, the eigenvalues of matrix \(B\) are:
+    \[
+    \lambda_{1} = S_{a}, \quad \lambda_{2} = S_{b}, \quad \lambda_{3} = 0, \quad \ldots, \quad \lambda_{n} = 0.
+    \]
+\end{solution}
 
 \section{Isomorphism of Real Inner Product Spaces}
 
