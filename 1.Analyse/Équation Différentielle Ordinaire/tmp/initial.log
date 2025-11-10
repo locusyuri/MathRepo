@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  28 OCT 2025 20:20
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  10 NOV 2025 21:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1440,9 +1440,9 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
 ]
 Chapter 1.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 74.
+(Font)              scaled to size 6.0pt on input line 70.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
-(Font)              scaled to size 10.95pt on input line 87.
+(Font)              scaled to size 10.95pt on input line 83.
 
 
 [1
@@ -1451,12 +1451,12 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 ]
 
 LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
-(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 186.
+(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 182.
 
 
 
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 194.
+(Font)              scaled to size 10.0pt on input line 190.
 [2]
 
 [3]
@@ -1469,13 +1469,13 @@ Chapter 2.
 
 [5]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 336.
+(Font)              scaled to size 8.0pt on input line 332.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 336.
+(Font)              scaled to size 8.0pt on input line 332.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 339.
+(Font)              scaled to size 9.0pt on input line 335.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 339.
+(Font)              scaled to size 6.0pt on input line 335.
 
 
 [6]
@@ -1516,7 +1516,21 @@ Chapter 4.
 
 [20]
 
-[21
+[21]
+Chapter 5.
+
+
+[22
+
+]
+Chapter 6.
+
+
+[23
+
+]
+
+[24
 
 ] (./tmp/initial.aux)
  ***********
@@ -1528,18 +1542,18 @@ L3 programming layer <2022/08/05>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: EEB2421C7378E1A2B4FD6C8CD34B5CAD;4661.
+(rerunfilecheck)             Checksum: 68FC59784EB7A0D878682A391C3B54B9;6825.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46088 strings out of 473831
- 958145 string characters out of 5733137
- 1993140 words of memory out of 5000000
- 68318 multiletter control sequences out of 15000+600000
+ 46101 strings out of 473831
+ 958477 string characters out of 5733137
+ 1997639 words of memory out of 5000000
+ 68331 multiletter control sequences out of 15000+600000
  570014 words of font info for 168 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,12n,108p,692b,1340s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,17n,108p,692b,1340s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (24 pages).
+Output written on ./tmp/initial.pdf (27 pages).

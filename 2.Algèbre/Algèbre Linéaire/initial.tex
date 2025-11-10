@@ -343,11 +343,11 @@ A few propositions about linear dependence and independence are given below:
 \end{proposition}
 \begin{proof}
 
-{\color{blue!60}\textbf{1.}}
+{\color{violet!80}\textbf{1.}}
 
-{\color{blue!60}\textbf{2.}}
+{\color{violet!80}\textbf{2.}}
 
-{\color{blue!60}\textbf{6.}} If \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r}, \beta \) is linearly independent, 
+{\color{violet!80}\textbf{6.}} If \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r}, \beta \) is linearly independent, 
 then conclusion holds naturally. 
 \newline Now suppose \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r}, \beta \) is linearly dependent, 
 that is, there exist not all zero scalars \( k_{1}, k_{2}, \dots, k_{r}, k \) such that:
@@ -426,6 +426,21 @@ Then \(W\) is a linear subspace of \(V\) if and only if:
     \item For any \( \alpha, \beta \in W \), \( \alpha + \beta \in W \).
     \item For any \( \alpha \in W \) and \( k \in F \), \( k\alpha \in W \).
 \end{enumerate}
+
+% 张成的子空间
+\begin{definition}{Span of Vectors}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \alpha_1, \alpha_2, \dots, \alpha_s \in V \).
+    The set of all linear combinations of \( \alpha_1, \alpha_2, \dots, \alpha_s \):
+    \[
+    W = \{ k_1\alpha_1 + k_2\alpha_2 + \dots + k_s\alpha_s \mid k_1, k_2, \dots, k_s \in F \}
+    \]
+    is called the \textbf{span} of the vectors \( \alpha_1, \alpha_2, \dots, \alpha_s \),
+    denoted as \( W = \mathrm{span}\{\alpha_1, \alpha_2, \dots, \alpha_s\} \) 
+    or simply \( W = \langle \alpha_1, \alpha_2, \dots, \alpha_s \rangle \)\footnote{
+        Sometimes the notation \( L(\alpha_1, \alpha_2, \dots, \alpha_s) \) is also used.
+    }.
+\end{definition}
 
 
 \section{Rank of Vector Groups and Matrices}
@@ -895,6 +910,22 @@ The matrix \(C\) performs specific cyclic operations when multiplied by another 
     \end{enumerate}
 \end{proposition}
 
+Some special nilpotent matrices:
+\begin{itemize}
+    \item 
+        \[
+        A_{n} = \begin{pmatrix} 
+            0 & 1 & 0 & \cdots & 0 \\ 
+            0 & 0 & 1 & \cdots & 0 \\
+            \vdots & \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & 0 & \cdots & 1 \\
+            0 & 0 & 0 & \cdots & 0
+        \end{pmatrix}_{n \times n},
+        \]
+        is a nilpotent matrix with nilpotent index $n$.
+    \item  
+    \item 
+\end{itemize}
 
 \begin{leftbarTitle}{Full Row Rank Matrix}\end{leftbarTitle}
 \begin{definition}{Full Row Rank Matrix}
@@ -1142,8 +1173,8 @@ that contains both \( V_1 \) and \( V_2 \) (\(V_{1}\cup V_{2}\)).
 \begin{proposition}
     In a finite-dimensional linear space \( V \),
     \[
-    L(\alpha_1, \alpha_2, \dots, \alpha_s) + L(\beta_1, \beta_2, \dots, \beta_t) = 
-    L(\alpha_1, \alpha_2, \dots, \alpha_s, \beta_1, \beta_2, \dots, \beta_t).
+    \langle \alpha_1, \alpha_2, \dots, \alpha_s \rangle + \langle \beta_1, \beta_2, \dots, \beta_t \rangle = 
+    \langle \alpha_1, \alpha_2, \dots, \alpha_s, \beta_1, \beta_2, \dots, \beta_t \rangle.
     \]
 \end{proposition}
 
@@ -2507,7 +2538,7 @@ This is the geometric interpretation of rational canonical form.
 \end{proposition}
 \begin{proof}
 
-{\color{blue!60}\textbf{1}\(\Rightarrow\)\textbf{2}}
+{\color{violet!80}\textbf{1}\(\Rightarrow\)\textbf{2}}
 There exists a vector \( \xi \in V \) such that \(\{ \xi, \mathcal{A}(\xi), \ldots, \mathcal{A}^{n-1}(\xi) \}\) 
 is a basis of \( V \). 
 The matrix representation of \( \mathcal{A} \) under this basis is a companion matrix,
@@ -2548,7 +2579,7 @@ has non-zero solutions definitely, thus its solution space is \(\geqslant 1\).
 \]
 is exactly \( 1 \),i.e., the geometric multiplicity of eigenvalue \( \lambda \) is \( 1 \).
 
-{\color{blue!60}\textbf{2}\(\Rightarrow\)\textbf{1}}
+{\color{violet!80}\textbf{2}\(\Rightarrow\)\textbf{1}}
 Let the distinct eigenvalues of \( \mathcal{A} \) be \( \lambda_1, \lambda_2, \dots, \lambda_k \),
 and let the algebraic multiplicities of these eigenvalues be \( r_1, r_2, \dots, r_k \), respectively.
 Obviously, \( r_1 + r_2 + \cdots + r_k = n \) and the characteristic polynomial of \( \mathcal{A} \) is

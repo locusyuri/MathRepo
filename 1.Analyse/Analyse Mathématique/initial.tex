@@ -2453,12 +2453,12 @@ is called the \( i \)th first-order \textbf{partial derivative} of \( f \) at \(
 \]
 \( \mathrm{D}_i = \frac{\partial}{\partial x_i} \) is called the \( i \)th partial differential operator (\( i = 1, 2, \cdots, n \)).
 
-Let \(\mathbf{e}_{i}=\sum_{i=0}^{n} \mathbf{e}_{i}\cos\alpha\) be a unit vector, 
-where \(\sum_{i=0}^{n} \cos^2\alpha = 1\).
+Let \(\mathbf{e}_{i}=\sum_{i=0}^{n} \mathbf{e}_{i}\cos\alpha_{i}\) be a unit vector, 
+where \(\sum_{i=0}^{n} \cos^2\alpha_{i} = 1\).
 If \(\frac{\partial f}{\partial x_{i}}\) is continuous at \(\mathbf{x}^0\), 
 then the directional derivative of \(f\) at \(\mathbf{x}^0\) along the direction \(\mathbf{e}\) is given by:
 \[
-\frac{\partial f}{\partial \mathbf{e}}(\mathbf{x}^0) = \sum_{i=1}^n \frac{\partial f}{\partial x_i}(\mathbf{x}^0) \cos \alpha_i.
+\frac{\partial f}{\partial \mathbf{e}}(\mathbf{x}^0) = \sum_{i=1}^n \frac{\partial f}{\partial x_i}(\mathbf{x}^0) \cos \alpha_{i}.
 \]
 
 This is the formula for \textbf{expressing a directional derivative using partial derivatives}.
@@ -2491,7 +2491,7 @@ This is the formula for \textbf{expressing a directional derivative using partia
     The Jacobian matrix of the function \( f \) is also frequently denoted as 
     \(\mathrm{grad}\,f\) (or \(\nabla f\)), that is,
     \[
-    \mathrm{grad}\,f(\mathbf{x}) = Jf(\mathbf{x}),
+    \nabla f(\mathbf{x}) =\mathrm{grad}\,f(\mathbf{x}) = Jf(\mathbf{x}),
     \]
     which is called the \textbf{gradient} of the scalar function \( f \).
 \end{definition}
@@ -2550,8 +2550,8 @@ This is the formula for \textbf{expressing a directional derivative using partia
     \begin{itemize}
         \item The continuity of the derivative function at \(\mathbf{x}^{0}\) implies that 
             the original function \(f\) is differentiable in some neighborhood of \(\mathbf{x}^{0}\).
-        \item In fact, this condition can be relaxed to require that one partial derivative exists at the point, 
-            while the remaining \(n-1\) partial derivative functions are continuous at that point.
+        \item In fact, this condition can be relaxed to require that \underline{one partial derivative exists at the point}, 
+            \underline{while the remaining \(n-1\)} \underline{partial derivative functions are continuous at that point}.
     \end{itemize}
 \end{note}
 
@@ -2607,25 +2607,42 @@ This is the formula for \textbf{expressing a directional derivative using partia
 
 \begin{note}{(At some point)}
     \begin{enumerate}
-        \item  Differentiable
-            \begin{itemize}
-                \item \(\implies\) Continuous
-                \item \(\implies\) Partial derivatives exist: \(\mathrm{D}_{\vec{u}}=\nabla f\cdot\vec{u}\)
-            \end{itemize}
-        \item  Directional Derivative
-            \begin{itemize}
-                \item All directional derivatives exist \(\not\implies\) differentiable or continuous.
-                \item All directional derivatives exist and are equal \(\not\implies\) differentiable.
-            \end{itemize}
-        \item  Partial Derivative
-        \begin{itemize}
-            \item  The continuity and existence of directional/partial derivatives are mutually exclusive.
-        \end{itemize}
+        % 偏导数存在, 未必连续
+        \item The existence of partial derivatives at a point does not necessarily imply their continuity at that point.
+            A classic counterexample is:
+            \[
+            f(x,y) = \begin{cases}
+            \frac{xy}{x^2 + y^2}, & (x,y) \neq (0,0), \\
+            0, & (x,y) = (0,0).
+            \end{cases}
+            \]
+            Here, \(f_x(0,0) = 0\) and \(f_y(0,0) = 0\), but \(f_x(x,y)\) and \(f_y(x,y)\) are not continuous at \((0,0)\).
+        % 邻域偏导数有界, 必定连续
+        \item If the partial derivatives exist and are bounded in a neighborhood of a point, 
+            then they are continuous at that point.
+        % 一点连续且所有方向导数存在, 不一定可微
+        \item Even if all directional derivatives exist at a point and the function is continuous at that point, 
+            it does not necessarily imply that the function is differentiable at that point.
+            A classic counterexample is:
+            \[
+            f(x,y) = \begin{cases}
+            \frac{x^3}{x^2 + y^2}, & (x,y) \neq (0,0), \\
+            0, & (x,y) = (0,0).
+            \end{cases}
+            \]
+            Here, all directional derivatives of \(f\) exist at \((0,0)\), 
+            and \(f\) is continuous at \((0,0)\), but \(f\) is not differentiable at \((0,0)\).
+            Another counterexample is:
+            \[
+            f(x,y) = \sqrt{|xy|},
+            \]
+            which is continuous at \((0,0)\) and has all directional derivatives equal to \(0\) at \((0,0)\),
+            but is not differentiable at \((0,0)\).
     \end{enumerate}
 \end{note}
 
-
-\begin{leftbarTitle}{Higher-Order Partial Derivatives and Differential}\end{leftbarTitle}
+\section{Higher-Order Partial Derivatives and Differentiability}
+\begin{leftbarTitle}{Higher-Order Partial Derivatives}\end{leftbarTitle}
 If the first-order partial derivative of \(f\), \(\frac{\partial f}{\partial x_i}\), 
 itself possesses partial derivatives, then the second-order partial derivative of \(f\) is defined, 
 and is denoted as follows(the first is also called the mixed partial derivative):
@@ -2641,6 +2658,9 @@ The following theorem provides the conditions under which mixed partial derivati
 
 \begin{theorem}{Conditions for Equality of Mixed Partial Derivatives}
     \begin{enumerate}\label{thm:condition_equality}
+        % 先给出一个较强的条件以及它的n维推广
+        \item First, we present a stronger condition and its \(n\)-dimensional generalization.
+        \begin{itemize}
         \item Let $U \subset \mathbb{R}^2$ be an open set, and $f: U \to \mathbb{R}$ be a function of two variables. 
             If $f_{xy}$ and $f_{yx}$ are continuous at $(x_0, y_0) \in U$, then
             \[
@@ -2659,11 +2679,30 @@ The following theorem provides the conditions under which mixed partial derivati
                 If the condition "\(f_{xy}\) and \(f_{yx}\) are continuous at \((x_0, y_0)\)",
                 is not satisfied, then the conclusion "\(f_{xy}(x_0, y_0) = f_{yx}(x_0, y_0)\)" does not necessarily hold.
             }
+        \end{itemize}
+        % 再给出一个较弱的条件及它的n维推广
+        \item Then we present a weaker condition and its \(n\)-dimensional generalization.
+        \begin{itemize}
+        \item Let $U \subset \mathbb{R}^2$ be an open set, and $f: U \to \mathbb{R}$ be a function of two variables. 
+            If the partial derivatives $f_{x}, f_{y}$ and $f_{xy}$ exist in some neighborhood of $(x_0, y_0) \in U$, 
+            and \(f_{xy}\) is continuous at $(x_0, y_0)$, then \(f_{yx}\) also exists at \((x_0, y_0)\), and
+            \[
+            f_{yx}(x_0, y_0) = f_{xy}(x_0, y_0).
+            \]
+        \item Let \(U \subset \mathbb{R}^n\) be an open set, and \(f: U \to \mathbb{R}\) be a function of \(n\) variables. 
+            If the partial derivatives $f_{x_i}, f_{x_j}$ and \(f_{x_{i}x_{j}}\) exist in some neighborhood of 
+            \(\mathbf{x}^{0} = (x_1^0, x_2^0, \ldots, x_n^0) \in U\), 
+            and \(f_{x_{i}x_{j}}\) is continuous at \(\mathbf{x}^{0}\), then \(f_{x_j x_i}\) exist at \(\mathbf{x}^{0}\), and
+            \[
+            f_{x_j x_i}(\mathbf{x}^{0}) = f_{x_i x_j}(\mathbf{x}^{0}).
+            \]
+        \end{itemize}
     \end{enumerate}
 \end{theorem}
 
 
 \begin{proof}
+{\color{violet!80}\textbf{1.}}
     When $k \neq 0, h \neq 0$, define
     \[
         \varphi(y) = f(x_0 + h, y) - f(x_0, y),
@@ -2701,9 +2740,14 @@ The following theorem provides the conditions under which mixed partial derivati
     \[
     f_{xy}(x_0, y_0) = f_{yx}(x_0, y_0).
     \]
-    By applying ~\ref{thm:condition_equality} and the principle of mathematical induction, one can immediately derive the following result.
+    By applying ~\ref{thm:condition_equality} and the principle of mathematical induction, 
+    one can immediately derive the following result.
+
+{\color{violet!80}\textbf{2.}}
+
 \end{proof}
 
+\begin{leftbarTitle}{Higher-Order Differentiability}\end{leftbarTitle}
 Suppose \(z=f(x,y)\) has continuous partial derivatives in the domain \(U\subset \mathbb{R}^2\). 
 Then \(z\) is differentiable, and
 \[
@@ -2880,7 +2924,6 @@ J\mathbf{f}(\mathbf{x}^{0}) J\mathbf{g}(\mathbf{u}^{0}).
     \begin{enumerate}
         \item  outer differentiable + inner derivative = total derivative
         \item  outer differentiable + inner differentiable = total differentiable
-        \item  
     \end{enumerate}
 \end{note}
 
@@ -3004,8 +3047,8 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
 
 
 \section{Implicit Function Theorem}
-
-\begin{theorem}{Implicit Function Theorem}
+\begin{leftbarTitle}{Implicit Mapping}\end{leftbarTitle}
+\begin{theorem}{Implicit Function Theorem}\label{thm:Implicit Function Theorem}
     Let \(U \subset \mathbb{R}^{n+1}\) be an open set, and \(F: U \to \mathbb{R}\) be an \(n+1\)-variable function. If:  
     \begin{enumerate}
         \item \(F \in C^k(U, \mathbb{R})\), where \(1 \leqslant k \leqslant +\infty\);
@@ -3138,7 +3181,7 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
     The proof is complete.
 \end{proof}
 
-\begin{theorem}{Implicit Mapping Theorem}
+\begin{theorem}{Implicit Mapping Theorem}\label{thm:Implicit Mapping Theorem}
     Let \( U \subset \mathbb{R}^{n+m} \) be an open set, and \( \mathbf{F}: U \to \mathbb{R}^m \) be a mapping. If:
     \begin{enumerate}
         \item \( \mathbf{F} \in C^k(U, \mathbb{R}^m) \), \( 1 \leqslant k \leqslant \infty \);
@@ -3170,8 +3213,8 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
         \item \( \mathbf{f} \in C^k(I, \mathbb{R}^m) \);
         \item For \( x \in I \),
         \[
-        J_{\mathbf{f}}(x) = 
-            - (J_{\mathbf{y}} \mathbf{F}(\mathbf{x}, \mathbf{f}(x)))^{-1} J_{\mathbf{x}} \mathbf{F}(\mathbf{x}, \mathbf{f}(x))
+        J\mathbf{f} = 
+            - (J_{\mathbf{y}} \mathbf{F})^{-1} J_{\mathbf{x}} \mathbf{F}
         = -
         \begin{pmatrix}
             \frac{\partial F_1}{\partial y_1} & \cdots & \frac{\partial F_1}{\partial y_m} \\
@@ -3188,8 +3231,77 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
     where \( \mathbf{y} = \mathbf{f}(\mathbf{x}) \).
 \end{theorem}
 
+\begin{example}
+    \[
+    \begin{cases}
+        x = x(z), \\
+        y = y(z),
+    \end{cases}
+    \]
+    is an mapping solved from the implicit function defined by the equations:
+    \[
+    \begin{cases}
+        F(y-z, x+z) = 0, &  \\
+        G(\frac{y}{z}, xz) = 0, &  \\
+    \end{cases}
+    \]
+    where \(F, G \in C^1\).
+    Find \(\frac{\mathrm{d}x}{\mathrm{d}z}\) and \(\frac{\mathrm{d}y}{\mathrm{d}z}\).
+\end{example}
+\begin{remark}
+    % 用 F_{1} 表示 F 对第一个位置的变量求偏导, 它等价于F(u, v) 中的 F_{u}, 其他类似
+    Here, we use \(F_{1}\) to represent the partial derivative of \(F\) with respect to its first variable, 
+    which is equivalent to \(F_{u}\) in \(F(u, v)\).
+    Other notations follow similarly.
+\end{remark}
+
+\begin{solution}
+
+{\color{violet!80}\textbf{Method 1: Direct Derivative}}
+Derivative both sides of the equations with respect to \(z\):
+\begin{gather*}
+    F_{1}(y' - 1) + F_{2}(x' + 1) = 0, \\
+    G_{1}(\frac{y'z - y}{z^2}) + G_{2}(x'z + x) = 0.
+\end{gather*}
+Solve the above equations to get:
+\begin{gather*}
+    \frac{\mathrm{d}x}{\mathrm{d}z} = 
+    \frac{zG_{1}(F_{1}-F_{2})-F_{1}(yG_{1}-xz^{2}G_{2})}{z(F_{2}G_{1}F_{1}G_{2}z^{2})}, \\
+    \frac{\mathrm{d}y}{\mathrm{d}z} =  
+    \frac{F_{2}(yG_{1}-xz^{2}G_{2})-G_{2}z^{3}(F_{1}-F_{2})}{z(F_{2}G_{1}-F_{1}G_{2}z^{2})}.
+\end{gather*}
+
+{\color{violet!80}\textbf{Method 2: Implicit Function Theorem}}
+By the implicit function theorem, we have:
+\begin{align*}
+    \begin{pmatrix}
+    \frac{\mathrm{d}x}{\mathrm{d}z} \\
+    \frac{\mathrm{d}y}{\mathrm{d}z}
+\end{pmatrix}
+&= - 
+\begin{pmatrix}
+    \frac{\partial F}{\partial x} & \frac{\partial F}{\partial y} \\
+    \frac{\partial G}{\partial x} & \frac{\partial G}{\partial y}
+\end{pmatrix}^{-1}
+\begin{pmatrix}
+    \frac{\partial F}{\partial z} \\
+    \frac{\partial G}{\partial z}
+\end{pmatrix} \\
+&= 
+\begin{pmatrix} 
+    \frac{zG_{1}(F_{1}-F_{2})-F_{1}(yG_{1}-xz^{2}G_{2})}{z(F_{2}G_{1}-F_{1}G_{2}z^{2})} \\
+    \frac{F_{2}(yG_{1}-xz^{2}G_{2})-G_{2}z^{3}(F_{1}-F_{2})}{z(F_{2}G_{1}-F_{1}G_{2}z^{2})}
+\end{pmatrix}.
+\end{align*}
+\end{solution}
+
+\begin{leftbarTitle}{Inverse Mapping}\end{leftbarTitle}
+\begin{theorem}{Inverse Mapping Theorem}\label{thm:Inverse Mapping Theorem}
+    
+\end{theorem}
+
 \section{Applications of Multi-Variable Differential Calculus}
-\begin{leftbarTitle}{Surface and Tangent Space}\end{leftbarTitle}
+\begin{leftbarTitle}{Tangent Space and Normal Space}\end{leftbarTitle}
 \begin{definition}{Parameterization of Surface}\label{def:Parameterization of Surface}
     Let \( \Delta \) be an open subset in \( \mathbb{R}^s \), 
     and \( \mathbf{x}: \Delta \to \mathbb{R}^n \) be a mapping, 
@@ -3235,8 +3347,153 @@ If \( \mathbf{x}(t) \) is a regular curve,
 It should be emphasized that \( \mathbf{x}'(t) \) or \( \frac{\mathbf{x}'(t)}{\|\mathbf{x}'(t)\|} \) 
 always points outward from point \( t \).
 
-\begin{definition}{Tangent Vector}
+\vspace{0.7cm}
+% 切空间与法空间
+\begin{definition}{Tangent Space and Normal Space}
+    \(M\) is an \(s\)-dimensional smooth surface in \(\mathbb{R}^n\) defined above,
+    and \(\mathbf{u}^{0}\) is a regular point of \(M\).
+    The \textbf{tangent space} of \(M\) at point \(\mathbf{x}(\mathbf{u}^{0})\) is the linear space spanned 
+    by \(s\) tangent vectors:
+    \[
+    T_{\mathbf{u}^{0}}M = \operatorname{span}\{ x'_{1}(\mathbf{u}^{0}), x'_{2}(\mathbf{u}^{0}), \dots, x'_{s}(\mathbf{u}^{0}) \}.
+    \]
+    Accordingly, the \textbf{normal space} of \(M\) at point \(\mathbf{x}(\mathbf{u}^{0})\) is 
+    the orthogonal complement of the tangent space:
+    \[
+    N_{\mathbf{u}^{0}}M = (T_{\mathbf{u}^{0}}M)^{\perp}.
+    \]
 \end{definition}
+% 给出特殊情况的几个切空间法空间表达式
+Some special cases of tangent space and normal space expressions are given below:
+\begin{enumerate}
+    % 三维空间中的曲线: 切线与法平面
+    \item When \( n = 3, s = 1 \), \( M \) is a curve in three-dimensional space. 
+        \begin{enumerate}
+            \item If the curve is parameterized as 
+                \[
+                \mathbf{r}(t) = (x(t), y(t), z(t)), \quad t \in I \subseteq \mathbb{R}.
+                \]
+                At the regular point \( \mathbf{r}(t^{0})= (x(t^{0}), y(t^{0}), z(t^{0})) \), the tangent line and normal plane are:
+                \[
+                T_{t^{0}}M = \operatorname{span}\{ \mathbf{r}'(t^{0}) \}: \frac{x-x(t^{0})}{x'(t^{0})} 
+                    = \frac{y-y(t^{0})}{y'(t^{0})} = \frac{z-z(t^{0})}{z'(t^{0})},
+                \]
+                \begin{align*}
+                    N_{t^{0}}M:\quad &x'(t^{0})(x-x(t^{0})) + y'(t^{0})(y-y(t^{0})) + z'(t^{0})(z-z(t^{0})) = 0 \\
+                    \Leftrightarrow& \mathbf{r}'(t^{0}) \cdot (\mathbf{r} - \mathbf{r}(t^{0})) = 0.
+                \end{align*}
+            \item If the curve is described by:
+                \[
+                \begin{cases}
+                    F(x, y, z) = 0, \\
+                    G(x, y, z) = 0,
+                \end{cases}
+                \]
+                and the regular point is \( \mathbf{x}^{0} = (x^{0}, y^{0}, z^{0}) \).
+                \newline For the Jacobian matrix:
+                \[
+                    J = 
+                    \begin{pmatrix}
+                        F_x(\mathbf{x}^{0}) & F_y(\mathbf{x}^{0}) & F_z(\mathbf{x}^{0}) \\
+                        G_x(\mathbf{x}^{0}) & G_y(\mathbf{x}^{0}) & G_z(\mathbf{x}^{0})
+                    \end{pmatrix},
+                \]
+                since \(\operatorname{rank}J = 2\), without loss of generality, assume:
+                \[
+                \frac{\partial (F, G)}{\partial (y, z)} =
+                \begin{vmatrix}
+                    F_y(\mathbf{x}^{0}) & F_z(\mathbf{x}^{0}) \\
+                    G_y(\mathbf{x}^{0}) & G_z(\mathbf{x}^{0})
+                \end{vmatrix} \neq 0.
+                \]
+                By the implicit mapping theorem (\ref{thm:Implicit Mapping Theorem}), we can express:
+                \[
+                y = f(x), \quad z = g(x), \quad x \in U(x^{0}) \subseteq \mathbb{R}.
+                \]
+                Then 
+                \[
+                f'(x^{0}) = \frac{\frac{\partial (F, G)}{\partial (z, x)}(\mathbf{x}^{0})}
+                {\frac{\partial (F, G)}{\partial (y, z)}(\mathbf{x}^{0})}, \quad
+                g'(x^{0}) = \frac{\frac{\partial (F, G)}{\partial (x, y)}(\mathbf{x}^{0})}
+                {\frac{\partial (F, G)}{\partial (y, z)}(\mathbf{x}^{0})}.
+                \]
+                Therefore, the tangent line and normal plane at point \(\mathbf{x}^{0}\) are:
+                \begin{gather*}
+                    T_{x^{0}}M: \quad
+                    \frac{x - x^{0}}{1} = \frac{y - y^{0}}{f'(x^{0})} = \frac{z - z^{0}}{g'(x^{0})} 
+                    \Leftrightarrow \frac{x-x^{0}}{\frac{\partial (F, G)}{\partial (y, z)}(\mathbf{x}^{0})} 
+                    = \frac{y - y^{0}}{\frac{\partial (F, G)}{\partial (z, x)}(\mathbf{x}^{0})}
+                    = \frac{z - z^{0}}{\frac{\partial (F, G)}{\partial (x, y)}(\mathbf{x}^{0})}, \\
+                    N_{x^{0}}M: \quad
+                    \frac{\partial (F, G)}{\partial (y, z)}(\mathbf{x}^{0})(x - x^{0}) +
+                    \frac{\partial (F, G)}{\partial (z, x)}(\mathbf{x}^{0})(y - y^{0}) +
+                    \frac{\partial (F, G)}{\partial (x, y)}(\mathbf{x}^{0})(z - z^{0}) = 0.
+                \end{gather*}
+        \end{enumerate}
+        
+    % 三维空间中的曲面: 切平面与法线
+    \item When \( n = 3, s = 2 \), \( M \) is a surface in three-dimensional space. 
+        \begin{enumerate}
+                        \item If the surface can be described explicitly as:
+                \[
+                z = f(x, y), \quad (x, y) \in D \subseteq \mathbb{R}^2,
+                \]
+                at the regular point \( \overline{\mathbf{x}}^{0} = (x^{0}, y^{0}, z^{0}) \) (\(\mathbf{x}^{0}=(x^{0}, y^{0})\)), 
+                the tangent plane and normal line are:
+                \begin{gather*}
+                    T_{\mathbf{x}^{0}}M: \quad z - z^{0} = f_x(\mathbf{x}^{0})(x - x^{0}) + f_y(\mathbf{x}^{0})(y - y^{0}), \\
+                    N_{\mathbf{x}^{0}}M: \quad \frac{x - x^{0}}{f_x(\mathbf{x}^{0})} 
+                    = \frac{y - y^{0}}{f_y(\mathbf{x}^{0})} = \frac{z - z^{0}}{-1}.
+                \end{gather*}
+            
+            \item If the surface is parameterized as 
+                \[
+                \mathbf{r}(u, v) = (x(u, v), y(u, v), z(u, v)), \quad (u, v) \in D \subseteq \mathbb{R}^2,
+                \]
+                at the regular point \( \mathbf{x}^{0} = (x^{0}, y^{0}, z^{0}) \) . 
+                \newline For the Jacobian matrix:
+                \[
+                J = 
+                \begin{pmatrix}
+                    x_{u}(\mathbf{x}^{0}) & x_{v}(\mathbf{x}^{0})  \\
+                    y_{u}(\mathbf{x}^{0}) & y_{v}(\mathbf{x}^{0})  \\
+                    z_{u}(\mathbf{x}^{0}) & z_{v}(\mathbf{x}^{0})
+                \end{pmatrix},
+                \]
+                since \(\operatorname{rank}J = 2\), without loss of generality, assume:
+                \[
+                \frac{\partial (x, y)}{\partial (u, v)}(\mathbf{x}^{0}) = 
+                \begin{vmatrix}
+                    x_{u}(\mathbf{x}^{0}) & x_{v}(\mathbf{x}^{0}) \\
+                    y_{u}(\mathbf{x}^{0}) & y_{v}(\mathbf{x}^{0})
+                \end{vmatrix} \neq 0.
+                \]
+                By the inverse mapping theorem (\ref{thm:Inverse Mapping Theorem}), we can determine
+                the inverse mapping of
+                \[
+                \begin{cases} x=x(u,v), &  \\ y=y(u,v), &  \end{cases}
+                \]
+                in a neighborhood of point \(\mathbf{x}^{0}\):
+                \[
+                \begin{cases} u = u(x, y), &  \\ v = v(x, y), &  \end{cases}
+                \]
+                where \(u^{0} = u(x^{0}, y^{0})\), \(v^{0} = v(x^{0}, y^{0})\).
+                Then we obtain the explicit representation of the surface:
+                \[
+                z = z(u(x, y), v(x, y)) = f(x, y), \quad (x, y) \in U(x^{0}, y^{0}) \subseteq \mathbb{R}^2.
+                \]
+                Therefore, the tangent plane and normal line at point \(\mathbf{x}^{0}\) are:
+                \begin{gather*}
+                    T_{\mathbf{x}^{0}}M: \quad 
+                    \left. \frac{\partial (y,z)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}\left( x- x^{0} \right)
+                    + \left. \frac{\partial (z,x)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}\left( y- y^{0} \right)
+                    + \left. \frac{\partial (x,y)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}\left( z- z^{0} \right) = 0, \\
+                    N_{\mathbf{x}^{0}}M: \quad \frac{x - x^{0}}{\left. \frac{\partial (y,z)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}}
+                    = \frac{y - y^{0}}{\left. \frac{\partial (z,x)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}}
+                    = \frac{z - z^{0}}{\left. \frac{\partial (x,y)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}}.
+                \end{gather*}
+        \end{enumerate}
+\end{enumerate}
 
 \begin{leftbarTitle}{Unconditional Extremum}\end{leftbarTitle}
 

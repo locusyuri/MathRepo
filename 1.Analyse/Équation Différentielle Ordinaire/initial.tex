@@ -37,10 +37,6 @@
 % \listoftables       % 表格目录 (页码: iv)
 
 \chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
-This is the preface of the book...
-
-\textcolor{red}{\bfseries Alert} Through this text, we focus exclusively on real-valued differential equations, 
-where all quantities are assumed to be real unless stated otherwise. 
 % \chapter{Acknowledgments}  % 致谢（无编号）
 % I would like to thank...
 % === 正文部分 ===
@@ -1175,11 +1171,130 @@ For autonomous linear systems with constant coefficients:
 \begin{equation}\label{eq:constant coefficient linear system}
     \frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{A} \mathbf{Y},
 \end{equation}
-we can use the Jordan canonical form or the matrix exponential to find the fundamental matrix solution.
-In this section, we introduce the Jordan canonical form method.
+we have the following conclusion:
+\begin{theorem}
+    Matrix exponential function \(\Phi(x)=e^{\mathbf{A}x}\) is a fundamental solution matrix to
+    the homogeneous linear system~\eqref{eq:constant coefficient linear system}.
+\end{theorem}
+For according non-homogeneous linear systems with constant coefficients:
+\begin{equation}\label{eq:constant coefficient non-homogeneous linear system}
+    \frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{A} \mathbf{Y} + \mathbf{F}(x),
+\end{equation}
+we can also use method of variation of constants to find particular solutions.
+\begin{theorem}
+    The general solution to the non-homogeneous linear system~\eqref{eq:constant coefficient non-homogeneous linear system} 
+    is given by:
+    \[
+    \mathbf{Y}(x) = e^{\mathbf{A}x}\mathbf{C} + \int_{x_0}^{x} e^{\mathbf{A}(x-s)} \mathbf{F}(s) \, \mathrm{d}s,
+    \]
+    where $\mathbf{C}$ is a constant vector.
+    The solution satisfying the initial condition \(\mathbf{Y}(x_{0}) = \mathbf{Y}_{0}\) is given by:
+    \[
+    \mathbf{Y}(x) = e^{\mathbf{A}(x - x_{0})} \mathbf{Y}_{0} + \int_{x_0}^{x} e^{\mathbf{A}(x-s)} \mathbf{F}(s) \, \mathrm{d}s.
+    \]
+\end{theorem}
+% 我们面对的问题是: e^Ax 是否可以用初等函数的有限形式表示出来? 如果可以, 如何表示?
+The problem we confront is: 
+Can \(e^{\mathbf{A}x}\) be expressed in a finite form of elementary functions? If so, how can it be expressed?
+
+In fact, if \(\mathbf{A}\) is an \(n\)-order Jordan block, i.e.,
+\begin{align*}
+    \mathbf{A} &=
+\begin{pmatrix}
+    \lambda & 1 & 0 & \cdots & 0 \\
+    0 & \lambda & 1 & \cdots & 0 \\
+    0 & 0 & \lambda & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \lambda
+\end{pmatrix}_{n \times n} = 
+\begin{pmatrix} 
+    \lambda & 0 & 0 & \cdots & 0 \\
+    0 & \lambda & 0 & \cdots & 0 \\
+    0 & 0 & \lambda & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & \lambda
+\end{pmatrix} + 
+\begin{pmatrix}
+    0 & 1 & 0 & \cdots & 0 \\
+    0 & 0 & 1 & \cdots & 0 \\
+    0 & 0 & 0 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 0
+\end{pmatrix} \\
+&=:
+\operatorname{diag}(\lambda, \lambda, \ldots, \lambda) + \mathbf{Z}_{n},
+\end{align*}
+then we have:
+\begin{equation}\label{eq:matrix exponential of Jordan block}
+\begin{aligned}
+    e^{\mathbf{A}x} &= e^{\operatorname{diag}(\lambda, \lambda, \ldots, \lambda)x + \mathbf{Z}_{n}x} 
+    = e^{\operatorname{diag}(\lambda, \lambda, \ldots, \lambda)x} \cdot e^{\mathbf{Z}_{n}x} \\
+    &= e^{\lambda x} \cdot \left( \mathbf{E} + \frac{\mathbf{Z}_{n}x}{1!} + \frac{(\mathbf{Z}_{n}x)^{2}}{2!} + \cdots + \frac{(\mathbf{Z}_{n}x)^{n-1}}{(n-1)!} \right) \\
+    &= e^{\lambda x} \cdot
+    \begin{pmatrix}
+        1 & x & \frac{x^{2}}{2!} & \cdots & \frac{x^{n-1}}{(n-1)!} \\
+        0 & 1 & x & \cdots & \frac{x^{n-2}}{(n-2)!} \\
+        0 & 0 & 1 & \cdots & \frac{x^{n-3}}{(n-3)!} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & 0 & \cdots & 1
+    \end{pmatrix}_{n\times n}.
+\end{aligned}
+\end{equation}
+And Jordan canonical form can be deemed as a block diagonal matrix composed of Jordan blocks.
+Therefore, if we can compute the Jordan canonical form of matrix \(\mathbf{A}\),
+then we can express \(e^{\mathbf{A}x}\) in a finite form of elementary functions.
+
+According to the theory of Jordan canonical form,
+for any \(n\)-order square matrix \(\mathbf{A} \in M_{n}(\mathbb{C})\),
+there exists an invertible matrix \(\mathbf{P} \in M_{n}(\mathbb{C})\) such that
+\[
+\mathbf{P}^{-1} \mathbf{A} \mathbf{P} = \mathbf{J},
+\]
+where \(\mathbf{J}\) is the Jordan canonical form of \(\mathbf{A}\),
+\[
+\mathbf{J} = \operatorname{diag}(\mathbf{J}_{1}, \mathbf{J}_{2}, \ldots, \mathbf{J}_{k}),
+\]
+and \(\mathbf{J}_{i}\) is a Jordan block corresponding to eigenvalue \(\lambda_{i}\) of \(\mathbf{A}\).
+Then we have:
+\begin{equation}\label{eq:matrix exponential by Jordan form}
+    e^{\mathbf{A}x} = e^{\mathbf{P} \mathbf{J} \mathbf{P}^{-1} x} = \mathbf{P} e^{\mathbf{J} x} \mathbf{P}^{-1}
+    = \mathbf{P} \operatorname{diag} \left( e^{\mathbf{J}_{1} x}, e^{\mathbf{J}_{2} x}, \ldots, 
+    e^{\mathbf{J}_{k} x} \right) \mathbf{P}^{-1}.
+\end{equation}
+
+However, computing the Jordan canonical form and transition matrix is not always easy.
+Note that \(e^{\mathbf{A}x}\) is a fundamental solution matrix to
+the homogeneous linear system~\eqref{eq:constant coefficient linear system},
+since \(\mathbf{P}\) is invertible,
+\(e^{\mathbf{A}x}\mathbf{P}\) 
+is also a fundamental solution matrix to~\eqref{eq:constant coefficient linear system}.
+Then according to \eqref{eq:matrix exponential by Jordan form},
+\(\mathbf{P}e^{\mathbf{J}x}\) is also a fundamental solution matrix to~\eqref{eq:constant coefficient linear system}.
+
+By~\eqref{eq:matrix exponential of Jordan block},
+we can utilize method of undetermined coefficients to find
+\(n\) linearly independent solution matrix to~\eqref{eq:constant coefficient linear system}.
+% 下面按 A 是否有重特征根分类讨论
+In the following, we classify the discussion based on whether \(\mathbf{A}\) has repeated eigenvalues.
+
+% A 无重特征根
+\begin{leftbarTitle}{Distinct Eigenvalues}\end{leftbarTitle}
+
+% A 有重特征根
+\begin{leftbarTitle}{Repeated Eigenvalues}\end{leftbarTitle}
 
 
+\section{Periodic Coefficient Linear Differential Equation Systems} % 周期系数线性微分方程组
 
+\chapter{System of Higher-Order Linear Equations}
+\section{General Theory of Higher-Order Linear Equations}
+
+\section{Solution to Constant Coefficient Homogeneous Linear Equations}
+
+\section{Solution to Constant Coefficient Non-Homogeneous Linear Equations}
+
+\chapter{Boundary Value Problems} % 边值问题
+\section{Sturm-Liouville Problems} % 斯特姆-刘维尔问题
 
 \begin{thebibliography}{99} 
 \bibitem{1} 柳彬. \emph{常微分方程 (1th edition) }. 北京大学出版社, 2021.

@@ -432,18 +432,7 @@ then we have:
 G(a, b) \leqslant L(a, b) \leqslant A(a, b).
 \]
 
-\begin{leftbarTitle}{Schur Inequality}\end{leftbarTitle}
-\begin{theorem}{Schur Inequality}
-    For non-negative real numbers \( a, b, c \geq 0 \) and a real number \( r \geq 0 \), the following inequality holds:
-    \[
-    a^{r}(a - b)(a - c) + b^{r}(b - c)(b - a) + c^{r}(c - a)(c - b) \geq 0.
-    \]
 
-    When \( r = 1 \), the following well-known special case can be derived:
-    \[
-    a^{3} + b^{3} + c^{3} + 3abc \geq ab(a + b) + bc(b + c) + ca(c + a).
-    \]
-\end{theorem}
 
 \begin{leftbarTitle}{Muirhead Inequality}\end{leftbarTitle}
 This part mainly references~\cite{3}.
@@ -522,14 +511,26 @@ Now we can give two equivalent conditions:
     \end{enumerate}
 \end{theorem}
 
+\vspace{0.7cm}
+With Muirhead's inequality, we can prove many symmetric inequalities easily.
+\begin{proposition}{Schur Inequality}
+    For non-negative real numbers \( a, b, c \geq 0 \) and a real number \( r \geq 0 \), the following inequality holds:
+    \[
+    a^{r}(a - b)(a - c) + b^{r}(b - c)(b - a) + c^{r}(c - a)(c - b) \geq 0.
+    \]
 
-\begin{example}
-    \textbf{Nesbitt's Inequality}
+    When \( r = 1 \), the following well-known special case can be derived:
+    \[
+    a^{3} + b^{3} + c^{3} + 3abc \geq ab(a + b) + bc(b + c) + ca(c + a).
+    \]
+\end{proposition}
+
+\begin{proposition}{Nesbitt's Inequality}
     For positive real numbers \(a, b, c > 0\), the following inequality holds:
     \[
     \sum_{\text{cyc}}\frac{a}{b+c}  = \frac{a}{b+c} + \frac{b}{c+a} + \frac{c}{a+b} \geq \frac{3}{2}.
     \]
-\end{example}
+\end{proposition}
 
 \begin{proof}
     % 通分并交叉相乘
