@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  10 NOV 2025 20:11
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  11 NOV 2025 20:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1553,123 +1553,119 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 [22]
 
 [23]
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 1428.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 1430.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 1430.
+(Font)              scaled to size 9.0pt on input line 1429.
 
-
-[24]
-Overfull \hbox (16.76514pt too wide) in paragraph at lines 1475--1521
+Overfull \hbox (16.76514pt too wide) in paragraph at lines 1430--1476
 [][] 
  []
 
 
 
-[25]
+[24]
 Chapter 7.
 
 
-[26
+[25
 
 ]
 
-[27]
+[26]
 File: img/xsinx.png Graphic file (type bmp)
 <img/xsinx.png>
 
 
-[28]
+[27]
 
-[29]
+[28]
 Chapter 8.
 
 
-[30
+[29
 
 ]
 
-[31]
+[30]
 
-[32]
+[31]
 File: img/AbelTransform.jpg Graphic file (type bmp)
 <img/AbelTransform.jpg>
 
 
+[32]
+
 [33]
 
 [34]
-
-[35]
 Chapter 9.
 
 
-[36
+[35
 
 ]
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2106--2109
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 2061--2064
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
 
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2132--2135
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 2087--2090
+[]\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
+ []
+
+
+
+[36]
+Overfull \hbox (0.43546pt too wide) in paragraph at lines 2110--2113
+\TU/Alegreya(0)/m/n/10.95 meaning that $[]$ (also known as the
+ []
+
+
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 2114--2116
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
 
 
 [37]
-Overfull \hbox (0.43546pt too wide) in paragraph at lines 2155--2158
-\TU/Alegreya(0)/m/n/10.95 meaning that $[]$ (also known as the
- []
-
-
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2159--2161
-[]\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
- []
-
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
+(Font)              scaled to size 8.0pt on input line 2208.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
+(Font)              scaled to size 6.0pt on input line 2208.
 
 
 [38]
-
-[39]
-Underfull \hbox (badness 2050) in paragraph at lines 2301--2304
+Underfull \hbox (badness 2050) in paragraph at lines 2256--2259
 []\TU/GaramondPremrPro-Disp(0)/m/n/10.95 If replace the convergent positive term series $[][] \OML/cmm/m/it/10.95 a[]$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 with a uniform convergent series of functions
  []
 
 
-LaTeX Warning: Reference `thm:' on page 40 undefined on input line 2334.
+LaTeX Warning: Reference `thm:' on page 39 undefined on input line 2289.
 
 
 
-[40]
+[39]
 Chapter 10.
 
 
-[41
+[40
 
 ]
 Chapter 11.
 
 
-[42
+[41
 
 ]
 Chapter 12.
 
 
-[43
+[42
 
 ]
 
+[43]
+
 [44]
-Overfull \hbox (6.63669pt too wide) in paragraph at lines 2553--2555
-[]\TU/Alegreya(0)/m/it/10.95 In fact, this condition can be relaxed to require that $[]$, $[]$
- []
-
-
 
 [45]
 
@@ -1684,11 +1680,15 @@ Overfull \hbox (6.63669pt too wide) in paragraph at lines 2553--2555
 [50]
 
 [51]
-
-[52]
 File: img/ImplicitFunction.png Graphic file (type bmp)
 <img/ImplicitFunction.png>
 
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+
+[52]
 
 [53]
 
@@ -1699,25 +1699,19 @@ File: img/ImplicitFunction.png Graphic file (type bmp)
 [56]
 
 [57]
-
-[58]
-
-[59]
-
-[60]
 Chapter 13.
 
 
-[61
+[58
 
 ]
 
-[62]
+[59]
 File: img/IntegralImg.png Graphic file (type bmp)
 <img/IntegralImg.png>
 
 
-[63]
+[60]
 File: img/cone.png Graphic file (type bmp)
 <img/cone.png>
 
@@ -1731,47 +1725,57 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
+[61]
+
+[62]
+
+[63]
+
 [64]
-
-[65]
-
-[66]
-
-[67]
 File: img/coordinate.png Graphic file (type bmp)
 <img/coordinate.png>
 
 
-[68]
+[65]
 Chapter 14.
 
 
-[69
+[66
 
 ]
 
-[70]
+[67]
+
+[68]
+
+[69]
+Chapter 15.
+
+
+[70
+
+]
 
 [71]
 
 [72]
 
 [73]
+
+[74]
 File: img/SpecialRegion1.png Graphic file (type bmp)
 <img/SpecialRegion1.png>
 
 
-[74]
+[75]
 File: img/SpecialRegion2.png Graphic file (type bmp)
 <img/SpecialRegion2.png>
 
 
-[75]
-
 [76]
 
 [77]
-Chapter 15.
+Chapter 16.
 
 
 [78
@@ -1799,16 +1803,16 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: EC8A41047C65F8DD71730F501B1840A2;19407.
+(rerunfilecheck)             Checksum: ADD40CBC04B122EDC479511803425840;19517.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46561 strings out of 473831
- 966634 string characters out of 5733137
- 2013768 words of memory out of 5000000
- 68751 multiletter control sequences out of 15000+600000
+ 46577 strings out of 473831
+ 966947 string characters out of 5733137
+ 2013943 words of memory out of 5000000
+ 68767 multiletter control sequences out of 15000+600000
  572879 words of font info for 190 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s

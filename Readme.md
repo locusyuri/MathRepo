@@ -5,31 +5,33 @@
 ------
 
 # Structure | 目錄結構
-This is a repository for mathematical notes. The directory structure is as follows:
+This is a repository for mathematical notes. The directory structure is as follows
+(folders with ~~strike through~~ are under construction):
 
 ## 0.Mathématiques fondamentales | 基礎數學
 - [Logique Mathématique | 數理邏輯](./0.Mathématiques%20fondamentales/Logique%20Mathématique/tmp/initial.pdf)
-- [Principe de Comptage | 計數原理]()
-- [Théorie des Ensembles | 集合論]()
-- [Théorie des Graphes | 圖論]()
-- [Théorie des Nombres | 數論]()
+- ~~[Principe de Comptage | 計數原理]()~~
+- ~~[Théorie des Ensembles | 集合論]()~~
+- ~~[Théorie des Graphes | 圖論]()~~
+- ~~[Théorie des Nombres | 數論]()~~
 
 
 ## 1.Analyse | 分析學
 - [Analyse de Fourier | 傅立葉分析](./1.Analyse/Analyse%20de%20Fourier/tmp/initial.pdf)
 - [Analyse Mathématique | 數學分析](./1.Analyse/Analyse%20Mathématique/tmp/initial.pdf)
 - [Équation Différentielle Ordinaire | 常微分方程](./1.Analyse/Équation%20Différentielle%20Ordinaire/tmp/initial.pdf)
+- ~~[Théorie des Champs | 場論]()~~
 
 ## 2.Algèbre | 代數學
-- [Algèbre Abstraite | 抽象代數]()
+- ~~[Algèbre Abstraite | 抽象代數]()~~
 - [Algèbre Linéaire | 線性代數](./2.Algèbre/Algèbre%20Linéaire/tmp/initial.pdf)
 - [Polynôme | 多項式](./2.Algèbre/Polynôme/tmp/initial.pdf)
 
 
 ## 3.Géométrie | 幾何學
 - [Géométrie Analytique | 解析幾何](./3.Géométrie/Géométrie%20Analytique/tmp/initial.pdf)
-- [Topologie Algébrique  | 代數拓撲]()
-- [Topologie Générale | 点集拓撲]()
+- ~~[Topologie Algébrique  | 代數拓撲]()~~
+- ~~[Topologie Générale | 點集拓撲]()~~
 
 
 ## 4.Mathématiques appliquées | 應用數學
@@ -47,6 +49,8 @@ This is a repository for mathematical notes. The directory structure is as follo
 ## F
 ## G
 ## H
+- Homogeneous Function (齊次函數) | Analyse Mathématique - Section 12.4: Derivatives of Composite Mappings (Chain Rule)
+
 ## I
 ## J
 ## K
