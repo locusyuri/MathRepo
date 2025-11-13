@@ -1279,10 +1279,97 @@ In the following, we classify the discussion based on whether \(\mathbf{A}\) has
 
 % A 无重特征根
 \begin{leftbarTitle}{Distinct Eigenvalues}\end{leftbarTitle}
+\begin{theorem}
+    Let \(\lambda_{1}, \lambda_{2}, \ldots, \lambda_{n}\) be \(n\) distinct eigenvalues of matrix \(\mathbf{A}\),
+    then the fundamental solution matrix to 
+    the homogeneous linear system~\eqref{eq:constant coefficient linear system} is given by:
+    \[
+    \Phi(x) =
+    \begin{pmatrix}
+        e^{\lambda_{1} x} \mathbf{\xi}_{1} & e^{\lambda_{2} x} \mathbf{\xi}_{2} & \cdots & e^{\lambda_{n} x} \mathbf{\xi}_{n}
+    \end{pmatrix},
+    \]
+    where \(\mathbf{\xi}_{i}\) is the eigenvector corresponding to eigenvalue \(\lambda_{i}\) of 
+    matrix \(\mathbf{A}\) (\(i = 1, 2, \ldots, n\)).
+\end{theorem}
 
 % A 有重特征根
 \begin{leftbarTitle}{Repeated Eigenvalues}\end{leftbarTitle}
+Assume that \(\lambda_{1}, \lambda_{2}, \cdots, \lambda_{s}\) are all distinct eigenvalues of matrix \(\mathbf{A}\),
+with algebraic multiplicities \(n_{1}, n_{2}, \ldots, n_{s}\) respectively,
+where \(n_{1} + n_{2} + \cdots + n_{s} = n\).
+Note that the fundamental solution matrix \(e^{\mathbf{A}x} \mathbf{P}= \mathbf{P}e^{\mathbf{J}x}\), 
+hence in the expression of \(\mathbf{P}e^{\mathbf{J}x}\),
+all column vectors corresponding to the eigenvalue \(\lambda_{j}\) have the form:
+\begin{equation}\label{eq:solution form for repeated eigenvalue}
+    \mathbf{Y} = e^{\lambda_{j} x} 
+    \left[ \xi_{0} + \frac{x}{1!}\xi_{1} + \frac{x^2}{2!}\xi_{2} + \cdots + \frac{x^{n_j - 1}}{(n_j - 1)!}\xi_{n_j - 1} \right],
+\end{equation}
+where \(\xi_{0}, \xi_{1}, \ldots, \xi_{n_j - 1}\) are constant vectors.
 
+
+\begin{lemma}
+    Let \(\lambda_{j}\) be an eigenvalue of matrix \(\mathbf{A}\) with algebraic multiplicity \(n_{j}\),
+    then~\eqref{eq:constant coefficient linear system} has non-zero solutions of 
+    the form~\eqref{eq:solution form for repeated eigenvalue}
+    if and only if
+    \(\xi_{0}\) is a non-zero solution to
+    \begin{equation}\label{eq:generalized eigenvector equation}
+        (\mathbf{A} - \lambda_{j} \mathbf{E})^{n_{j}} \xi_{0} = 0,
+    \end{equation}
+    and \(\xi_{1}, \xi_{2}, \ldots, \xi_{n_j - 1}\) satisfy the following chain of equations:
+    \begin{equation}\label{eq:generalized eigenvector chain}    
+        \begin{cases}
+            \xi_{1} = (\mathbf{A} - \lambda_{j} \mathbf{E}) \xi_{0}, \\
+            \xi_{2} = (\mathbf{A} - \lambda_{j} \mathbf{E})^{2} \xi_{1}, \\
+            \vdots \\
+            \xi_{n_j - 1} = (\mathbf{A} - \lambda_{j} \mathbf{E})^{n_{j} - 1} \xi_{0}.
+        \end{cases}
+    \end{equation}
+\end{lemma}
+
+\begin{lemma}
+    Under the same conditions as above,
+    denote the linear space of all constant vectors of \(n\) degrees as \(V\),
+    then
+    \begin{enumerate}
+        \item The subspace of \(V\) 
+            \[
+            V_{j} = \{ \xi \in V \mid (\mathbf{A} - \lambda_{j} \mathbf{E})^{n_{j}} \xi = 0 \},\quad j=1, 2, \ldots, s
+            \]
+            is invariant under \(\mathbf{A}\).
+        \item There exists a direct sum decomposition of \(V\):
+            \[
+            V = V_{1} \oplus V_{2} \oplus \cdots \oplus V_{s}.
+            \]
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}
+    Under the same conditions as above,
+    the fundamental solution matrix to 
+    the homogeneous linear system~\eqref{eq:constant coefficient linear system} is given by:
+    \[
+    \Phi(x) =
+    \begin{pmatrix}
+        e^{\lambda_{1}x} \mathbf{P}_{1}^{(1)}(x) & 
+        e^{\lambda_{2}x} \mathbf{P}_{2}^{(2)}(x) & 
+        \cdots & e^{\lambda_{s}x} \mathbf{P}_{s}^{(s)}(x)
+    \end{pmatrix},
+    \]
+    where for each \(j = 1, 2, \ldots, s\),
+    \[
+    \mathbf{P}_{j}^{(j)}(x) =
+        \xi_{j0}^{(i)} + \frac{x}{1!} \xi_{j1}^{(i)} + \frac{x^{2}}{2!} \xi_{j2}^{(i)} + 
+        \cdots + \frac{x^{n_j - 1}}{(n_j - 1)!} \xi_{j, n_j - 1}^{(i)},
+    \]
+    which is the \(j\)-th vector polynomial corresponding to eigenvalue \(\lambda_{i}\) 
+    (\(i = 1, 2, \ldots, n_{j};j = 1, 2, \ldots, n_{i}\)).
+    \(\xi_{10}^{(i)}, \cdots, \xi_{n_{i}0}^{(i)}\) is \(n_{i}\) linearly independent solutions to
+    ~\eqref{eq:generalized eigenvector equation},
+    and the other \(\xi_{jl}^{(i)}\) (\(j = 1, 2, \ldots, n_{i}; l = 1, 2, \ldots, n_{j} - 1\))
+    is obtained by replacing corresponding \(\xi_{j0}^{(i)}\) with \(\xi_{0}\) in~\eqref{eq:generalized eigenvector chain}.
+\end{theorem}
 
 \section{Periodic Coefficient Linear Differential Equation Systems} % 周期系数线性微分方程组
 

@@ -19,10 +19,10 @@
 \contentsline {section}{\numberline {4.2}General Theory of Homogeneous Linear Systems}{17}{section.4.2}%
 \contentsline {section}{\numberline {4.3}General Theory of Non-Homogeneous Linear Systems}{19}{section.4.3}%
 \contentsline {section}{\numberline {4.4}Solution to Constant Coefficient Linear Systems}{20}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Periodic Coefficient Linear Differential Equation Systems}{21}{section.4.5}%
-\contentsline {chapter}{\numberline {5}System of Higher-Order Linear Equations}{22}{chapter.5}%
-\contentsline {section}{\numberline {5.1}General Theory of Higher-Order Linear Equations}{22}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Solution to Constant Coefficient Homogeneous Linear Equations}{22}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Solution to Constant Coefficient Non-Homogeneous Linear Equations}{22}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Boundary Value Problems}{23}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Sturm-Liouville Problems}{23}{section.6.1}%
+\contentsline {section}{\numberline {4.5}Periodic Coefficient Linear Differential Equation Systems}{22}{section.4.5}%
+\contentsline {chapter}{\numberline {5}System of Higher-Order Linear Equations}{23}{chapter.5}%
+\contentsline {section}{\numberline {5.1}General Theory of Higher-Order Linear Equations}{23}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Solution to Constant Coefficient Homogeneous Linear Equations}{23}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Solution to Constant Coefficient Non-Homogeneous Linear Equations}{23}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Boundary Value Problems}{24}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Sturm-Liouville Problems}{24}{section.6.1}%

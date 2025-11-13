@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  11 NOV 2025 20:36
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  13 NOV 2025 21:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1274,27 +1274,27 @@ Package xeCJK Warning: Fandol is being set as the default font for CJK text.
 (./tmp/initial.aux)
 \openout1 = `initial.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-Package hyperref Info: Link coloring ON on input line 36.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+Package hyperref Info: Link coloring ON on input line 38.
  (./tmp/initial.out) (./tmp/initial.out)
 \@outlinefile=\write8
 \openout8 = `initial.out'.
@@ -1364,10 +1364,10 @@ Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'initial.bbl' not found.
 
 No file initial.bbl.
-Package biblatex Info: Reference section=0 on input line 36.
-Package biblatex Info: Reference segment=0 on input line 36.
+Package biblatex Info: Reference section=0 on input line 38.
+Package biblatex Info: Reference segment=0 on input line 38.
 \c@lstlisting=\count563
-Package hyperref Info: Option `pageanchor' set `false' on input line 38.
+Package hyperref Info: Option `pageanchor' set `false' on input line 40.
 *geometry* verbose mode - [ newgeometry ] result:
 * driver: xetex
 * paper: a4paper
@@ -1403,27 +1403,27 @@ Package hyperref Info: Option `pageanchor' set `false' on input line 38.
 File: example-image.pdf Graphic file (type pdf)
 <use example-image.pdf>
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 24.88pt on input line 38.
-LaTeX Font Info:    Trying to load font information for U+rsfs on input line 38.
+(Font)              scaled to size 24.88pt on input line 40.
+LaTeX Font Info:    Trying to load font information for U+rsfs on input line 40.
 (c:/texlive/2025/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 38.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 40.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 38.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 40.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for U+esint on input line 38.
+LaTeX Font Info:    Trying to load font information for U+esint on input line 40.
  (c:/texlive/2025/texmf-dist/tex/latex/esint/uesint.fd
 File: uesint.fd 
 )
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 14.4pt on input line 38.
+(Font)              scaled to size 14.4pt on input line 40.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 10.95pt on input line 38.
+(Font)              scaled to size 10.95pt on input line 40.
 
 
 [1
@@ -1448,9 +1448,9 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
 
 [3]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 55.
+(Font)              scaled to size 8.0pt on input line 57.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 55.
+(Font)              scaled to size 6.0pt on input line 57.
 
 
 [4
@@ -1473,12 +1473,12 @@ File: img/triangle.png Graphic file (type bmp)
 Chapter 2.
 
 LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
-(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 259.
+(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 261.
 
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 8.0pt on input line 290.
+(Font)              scaled to size 8.0pt on input line 292.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 6.0pt on input line 290.
+(Font)              scaled to size 6.0pt on input line 292.
 
 
 [4
@@ -1531,7 +1531,7 @@ Chapter 5.
 [17]
 Chapter 6.
 
-Overfull \hbox (8.11948pt too wide) in paragraph at lines 1039--1043
+Overfull \hbox (8.11948pt too wide) in paragraph at lines 1041--1045
 []\TU/Alegreya(0)/m/it/10.95 Let $[]$ denote the set of Darboux upper sums and $[]$ denote the set of Darboux lower sums. For any $[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 P[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 2 []\OML/cmm/m/it/10.95 ; []\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 P[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 2
  []
 
@@ -1541,7 +1541,7 @@ Overfull \hbox (8.11948pt too wide) in paragraph at lines 1039--1043
 
 ]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
-(Font)              scaled to size 10.95pt on input line 1047.
+(Font)              scaled to size 10.95pt on input line 1049.
 
 
 [19]
@@ -1554,9 +1554,9 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 
 [23]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 1429.
+(Font)              scaled to size 9.0pt on input line 1431.
 
-Overfull \hbox (16.76514pt too wide) in paragraph at lines 1430--1476
+Overfull \hbox (16.76514pt too wide) in paragraph at lines 1432--1478
 [][] 
  []
 
@@ -1603,24 +1603,24 @@ Chapter 9.
 [35
 
 ]
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2061--2064
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 2063--2066
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
 
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2087--2090
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 2089--2092
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
 
 
 [36]
-Overfull \hbox (0.43546pt too wide) in paragraph at lines 2110--2113
+Overfull \hbox (0.43546pt too wide) in paragraph at lines 2112--2115
 \TU/Alegreya(0)/m/n/10.95 meaning that $[]$ (also known as the
  []
 
 
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2114--2116
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 2116--2118
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
@@ -1628,18 +1628,18 @@ Overfull \hbox (0.88506pt too wide) in paragraph at lines 2114--2116
 
 [37]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 2208.
+(Font)              scaled to size 8.0pt on input line 2210.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 2208.
+(Font)              scaled to size 6.0pt on input line 2210.
 
 
 [38]
-Underfull \hbox (badness 2050) in paragraph at lines 2256--2259
+Underfull \hbox (badness 2050) in paragraph at lines 2258--2261
 []\TU/GaramondPremrPro-Disp(0)/m/n/10.95 If replace the convergent positive term series $[][] \OML/cmm/m/it/10.95 a[]$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 with a uniform convergent series of functions
  []
 
 
-LaTeX Warning: Reference `thm:' on page 39 undefined on input line 2289.
+LaTeX Warning: Reference `thm:' on page 39 undefined on input line 2291.
 
 
 
@@ -1749,46 +1749,52 @@ Chapter 14.
 [68]
 
 [69]
-Chapter 15.
 
-
-[70
-
-]
+[70]
 
 [71]
 
 [72]
+Chapter 15.
 
-[73]
+
+[73
+
+]
 
 [74]
-File: img/SpecialRegion1.png Graphic file (type bmp)
-<img/SpecialRegion1.png>
-
 
 [75]
-File: img/SpecialRegion2.png Graphic file (type bmp)
-<img/SpecialRegion2.png>
-
 
 [76]
 
 [77]
-Chapter 16.
+File: img/SpecialRegion1.png Graphic file (type bmp)
+<img/SpecialRegion1.png>
 
 
-[78
+[78]
+File: img/SpecialRegion2.png Graphic file (type bmp)
+<img/SpecialRegion2.png>
 
-]
 
 [79]
 
 [80]
+Chapter 16.
 
-[81]
 
-[82
+[81
+
+]
+
+[82]
+
+[83]
+
+[84]
+
+[85
 
 ] (./tmp/initial.aux)
  ***********
@@ -1803,18 +1809,18 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: ADD40CBC04B122EDC479511803425840;19517.
+(rerunfilecheck)             Checksum: D0F9F289ABF84CC944BCB116430500F6;20038.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46577 strings out of 473831
- 966947 string characters out of 5733137
- 2013943 words of memory out of 5000000
- 68767 multiletter control sequences out of 15000+600000
+ 46601 strings out of 473831
+ 968604 string characters out of 5733137
+ 2014494 words of memory out of 5000000
+ 68791 multiletter control sequences out of 15000+600000
  572879 words of font info for 190 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (87 pages).
+Output written on ./tmp/initial.pdf (90 pages).
