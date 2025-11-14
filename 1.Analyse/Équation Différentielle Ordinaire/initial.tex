@@ -1166,7 +1166,7 @@ system~\eqref{eq:matrix form of system of first-order linear equations - linear}
 \end{remark}
 
 
-\section{Solution to Constant Coefficient Linear Systems}
+\section{Solution to Constant Coefficient Homogeneous Linear Systems}
 For autonomous linear systems with constant coefficients:
 \begin{equation}\label{eq:constant coefficient linear system}
     \frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{A} \mathbf{Y},
@@ -1193,6 +1193,8 @@ we can also use method of variation of constants to find particular solutions.
     \mathbf{Y}(x) = e^{\mathbf{A}(x - x_{0})} \mathbf{Y}_{0} + \int_{x_0}^{x} e^{\mathbf{A}(x-s)} \mathbf{F}(s) \, \mathrm{d}s.
     \]
 \end{theorem}
+
+\vspace{0.7cm}
 % 我们面对的问题是: e^Ax 是否可以用初等函数的有限形式表示出来? 如果可以, 如何表示?
 The problem we confront is: 
 Can \(e^{\mathbf{A}x}\) be expressed in a finite form of elementary functions? If so, how can it be expressed?
@@ -1286,12 +1288,29 @@ In the following, we classify the discussion based on whether \(\mathbf{A}\) has
     \[
     \Phi(x) =
     \begin{pmatrix}
-        e^{\lambda_{1} x} \mathbf{\xi}_{1} & e^{\lambda_{2} x} \mathbf{\xi}_{2} & \cdots & e^{\lambda_{n} x} \mathbf{\xi}_{n}
+        e^{\lambda_{1} x} \boldsymbol{\xi}_{1} & e^{\lambda_{2} x} \boldsymbol{\xi}_{2} & \cdots & e^{\lambda_{n} x} \boldsymbol{\xi}_{n}
     \end{pmatrix},
     \]
-    where \(\mathbf{\xi}_{i}\) is the eigenvector corresponding to eigenvalue \(\lambda_{i}\) of 
+    where \(\boldsymbol{\xi}_{i}\) is the eigenvector corresponding to eigenvalue \(\lambda_{i}\) of 
     matrix \(\mathbf{A}\) (\(i = 1, 2, \ldots, n\)).
 \end{theorem}
+% 复特征值
+If there is a complex eigenvalue \(\lambda=\alpha+ \beta i\) (\(\beta \neq 0\)) of matrix \(\mathbf{A}\),
+then its complex conjugate \(\bar{\lambda}=\alpha - \beta i\) is also an eigenvalue of \(\mathbf{A}\).
+And their corresponding eigenvectors are also complex conjugates of each other, i.e. \(\boldsymbol{\xi}, \bar{\boldsymbol{\xi}}\).
+At this time, the pair of conjugate eigenvalues and eigenvectors will produce a complex solution:
+\begin{align*}
+    \mathbf{Y} &= e^{\lambda x} \boldsymbol{\xi} = e^{\alpha x} \left[ \cos(\beta x) + i \sin(\beta x) \right] (\boldsymbol{\xi}_{1} + i \boldsymbol{\xi}_{2})  \\
+    & = e^{\alpha x} \left[ \left( \cos(\beta x) \boldsymbol{\xi}_{1} - \sin(\beta x) \boldsymbol{\xi}_{2} \right) 
+    + i \left( \sin(\beta x) \boldsymbol{\xi}_{1} + \cos(\beta x) \boldsymbol{\xi}_{2} \right) \right].
+\end{align*}
+Since the equation~\eqref{eq:constant coefficient linear system} is linear, 
+the real and imaginary parts of this complex solution are each real solutions to the original equation. 
+Thus, we obtain two linearly independent real solutions:
+\begin{gather*}
+    \mathbf{Y}_{1} = e^{\alpha x} \left( \cos(\beta x) \boldsymbol{\xi}_{1} - \sin(\beta x) \boldsymbol{\xi}_{2} \right), \\
+    \mathbf{Y}_{2} = e^{\alpha x} \left( \sin(\beta x) \boldsymbol{\xi}_{1} + \cos(\beta x) \boldsymbol{\xi}_{2} \right).
+\end{gather*}
 
 % A 有重特征根
 \begin{leftbarTitle}{Repeated Eigenvalues}\end{leftbarTitle}
@@ -1303,7 +1322,7 @@ hence in the expression of \(\mathbf{P}e^{\mathbf{J}x}\),
 all column vectors corresponding to the eigenvalue \(\lambda_{j}\) have the form:
 \begin{equation}\label{eq:solution form for repeated eigenvalue}
     \mathbf{Y} = e^{\lambda_{j} x} 
-    \left[ \xi_{0} + \frac{x}{1!}\xi_{1} + \frac{x^2}{2!}\xi_{2} + \cdots + \frac{x^{n_j - 1}}{(n_j - 1)!}\xi_{n_j - 1} \right],
+    \left[ \boldsymbol{\xi}_{0} + \frac{x}{1!}\boldsymbol{\xi}_{1} + \frac{x^2}{2!}\boldsymbol{\xi}_{2} + \cdots + \frac{x^{n_j - 1}}{(n_j - 1)!}\boldsymbol{\xi}_{n_j - 1} \right],
 \end{equation}
 where \(\xi_{0}, \xi_{1}, \ldots, \xi_{n_j - 1}\) are constant vectors.
 
@@ -1313,17 +1332,22 @@ where \(\xi_{0}, \xi_{1}, \ldots, \xi_{n_j - 1}\) are constant vectors.
     then~\eqref{eq:constant coefficient linear system} has non-zero solutions of 
     the form~\eqref{eq:solution form for repeated eigenvalue}
     if and only if
-    \(\xi_{0}\) is a non-zero solution to
+    \(\boldsymbol{\xi}_{0}\) is a non-zero solution to
     \begin{equation}\label{eq:generalized eigenvector equation}
-        (\mathbf{A} - \lambda_{j} \mathbf{E})^{n_{j}} \xi_{0} = 0,
+        (\mathbf{A} - \lambda_{j} \mathbf{E})^{n_{j}} \boldsymbol{\xi} = 0,
     \end{equation}
-    and \(\xi_{1}, \xi_{2}, \ldots, \xi_{n_j - 1}\) satisfy the following chain of equations:
+    and \(\boldsymbol{\xi}_{1}, \boldsymbol{\xi}_{2}, \ldots, \boldsymbol{\xi}_{n_j - 1}\) 
+    satisfy the following chain of generalized eigenvector equations\footnote{
+        In fact, \(\boldsymbol{\xi}_{n_{j}-1}\) is the true eigenvector corresponding to eigenvalue \(\lambda_{j}\),
+        and \(\boldsymbol{\xi}_{0}, \boldsymbol{\xi}_{1}, \ldots, \boldsymbol{\xi}_{n_{j}-2}\) 
+        are generalized eigenvectors of orders \(n_{j}, n_{j}-1, \ldots, 2\) respectively.
+    }:
     \begin{equation}\label{eq:generalized eigenvector chain}    
         \begin{cases}
-            \xi_{1} = (\mathbf{A} - \lambda_{j} \mathbf{E}) \xi_{0}, \\
-            \xi_{2} = (\mathbf{A} - \lambda_{j} \mathbf{E})^{2} \xi_{1}, \\
+            \boldsymbol{\xi}_{1} = (\mathbf{A} - \lambda_{j} \mathbf{E}) \boldsymbol{\xi}_{0}, \\
+            \boldsymbol{\xi}_{2} = (\mathbf{A} - \lambda_{j} \mathbf{E}) \boldsymbol{\xi}_{1}, \\
             \vdots \\
-            \xi_{n_j - 1} = (\mathbf{A} - \lambda_{j} \mathbf{E})^{n_{j} - 1} \xi_{0}.
+            \boldsymbol{\xi}_{n_j - 1} = (\mathbf{A} - \lambda_{j} \mathbf{E}) \boldsymbol{\xi}_{n_{j}-2}.
         \end{cases}
     \end{equation}
 \end{lemma}
@@ -1360,21 +1384,122 @@ where \(\xi_{0}, \xi_{1}, \ldots, \xi_{n_j - 1}\) are constant vectors.
     where for each \(j = 1, 2, \ldots, s\),
     \[
     \mathbf{P}_{j}^{(j)}(x) =
-        \xi_{j0}^{(i)} + \frac{x}{1!} \xi_{j1}^{(i)} + \frac{x^{2}}{2!} \xi_{j2}^{(i)} + 
-        \cdots + \frac{x^{n_j - 1}}{(n_j - 1)!} \xi_{j, n_j - 1}^{(i)},
+        \boldsymbol{\xi}_{j0}^{(i)} + \frac{x}{1!} \boldsymbol{\xi}_{j1}^{(i)} + \frac{x^{2}}{2!} \boldsymbol{\xi}_{j2}^{(i)} + 
+        \cdots + \frac{x^{n_j - 1}}{(n_j - 1)!} \boldsymbol{\xi}_{j, n_j - 1}^{(i)},
     \]
     which is the \(j\)-th vector polynomial corresponding to eigenvalue \(\lambda_{i}\) 
     (\(i = 1, 2, \ldots, n_{j};j = 1, 2, \ldots, n_{i}\)).
-    \(\xi_{10}^{(i)}, \cdots, \xi_{n_{i}0}^{(i)}\) is \(n_{i}\) linearly independent solutions to
+    \(\boldsymbol{\xi}_{10}^{(i)}, \cdots, \boldsymbol{\xi}_{n_{i}0}^{(i)}\) is \(n_{i}\) linearly independent solutions to
     ~\eqref{eq:generalized eigenvector equation},
-    and the other \(\xi_{jl}^{(i)}\) (\(j = 1, 2, \ldots, n_{i}; l = 1, 2, \ldots, n_{j} - 1\))
-    is obtained by replacing corresponding \(\xi_{j0}^{(i)}\) with \(\xi_{0}\) in~\eqref{eq:generalized eigenvector chain}.
+    and the other \(\boldsymbol{\xi}_{jl}^{(i)}\) (\(j = 1, 2, \ldots, n_{i}; l = 1, 2, \ldots, n_{j} - 1\))
+    is obtained by replacing corresponding \(\boldsymbol{\xi}_{j0}^{(i)}\) with \(\boldsymbol{\xi}_{0}\) in~\eqref{eq:generalized eigenvector chain}.
 \end{theorem}
+
+
+
+\vspace{0.7cm}
+Let us summarize the method from an overall perspective.
+
+When there exist repeated eigenvalues, let \(k\) be the algebraic multiplicity of eigenvalue \(\lambda\).
+The core issue is: 
+\newline \underline{can we find \(k\) linearly independent eigenvectors 
+for this eigenvalue \(\lambda\) that has been repeated \(k\) times?}\footnote{
+    As a matter of fact, the method above has already contained the following two cases. 
+    But for clarity, we explicitly state them here.
+}
+\begin{itemize}
+    \item If we can, that is \(\text{AM} = \text{GM}\)\footnote{
+        \(\text{AM}\) refers to algebraic multiplicity,
+        \(\text{GM}\) refers to geometric multiplicity.
+    }, and we say the corresponding eigenvalue is complete;
+    \item If not, that is \(\text{AM} > \text{GM}\), and we say the corresponding eigenvalue is defective.
+        We can only find \(\text{GM}<\text{AM}=k\) linearly independent eigenvectors,
+        yet there are still \(k - \text{GM}\) solutions missing.
+        In fact, these missing solutions are just the generalized eigenvectors.
+\end{itemize}
+Now we discuss the two cases separately.
+\begin{description}
+    \item[Complete] 
+        If eigenvalue \(\lambda\) is complete,
+        then we can find \(k\) linearly independent eigenvectors 
+        \(\boldsymbol{\xi}_{1}, \boldsymbol{\xi}_{2}, \ldots, \boldsymbol{\xi}_{k}\)
+        corresponding to eigenvalue \(\lambda\).
+        Thus, we can directly write out \(k\) linearly independent solutions:
+        \[
+        \mathbf{Y}_{1} = e^{\lambda x} \boldsymbol{\xi}_{1}, \quad
+        \mathbf{Y}_{2} = e^{\lambda x} \boldsymbol{\xi}_{2}, \quad
+        \ldots, \quad
+        \mathbf{Y}_{k} = e^{\lambda x} \boldsymbol{\xi}_{k}.
+        \]
+    \item[Defective] 
+        When we cannot find enough eigenvectors, 
+        we need to look for so-called generalized eigenvectors to supplement the missing solutions.
+        Assume that we have found only \(m < k\) linearly independent eigenvectors
+        \(\boldsymbol{\xi}_{1}, \boldsymbol{\xi}_{2}, \ldots, \boldsymbol{\xi}_{m}\),
+        i.e., \(\text{GM} = m < k = \text{AM}\).
+        Then for each eigenvector \(\boldsymbol{\xi}_{i}\) (\(i = 1, 2, \ldots, m\)),
+        we can find a chain of generalized eigenvectors:
+        \[
+        \boldsymbol{\xi}_{i}, \boldsymbol{\xi}_{i}^{(1)}, \boldsymbol{\xi}_{i}^{(2)}, \ldots, \boldsymbol{\xi}_{i}^{(t_{i})},
+        \]
+        where \(t_{i}\) is the length of the chain corresponding to eigenvector \(\boldsymbol{\xi}_{i}\),
+        and these generalized eigenvectors satisfy:
+        \[
+        \begin{cases}
+            (\mathbf{A} - \lambda \mathbf{E}) \boldsymbol{\xi}_{i}^{(1)} = \boldsymbol{\xi}_{i}, \\
+            (\mathbf{A} - \lambda \mathbf{E}) \boldsymbol{\xi}_{i}^{(2)} = \boldsymbol{\xi}_{i}^{(1)}, \\
+            \vdots \\
+            (\mathbf{A} - \lambda \mathbf{E}) \boldsymbol{\xi}_{i}^{(t_{i})} = \boldsymbol{\xi}_{i}^{(t_{i}-1)},
+        \end{cases}
+        \]
+        they will contribute \(t_{i} + 1\) linearly independent solutions\footnote{
+            Here, \(\boldsymbol{\xi}_{i}\) is the true eigenvector,
+            and \(\boldsymbol{\xi}_{i}^{(1)}, \boldsymbol{\xi}_{i}^{(2)}, \ldots, \boldsymbol{\xi}_{i}^{(t_{i})}\)
+            are generalized eigenvectors of orders \(2, 3, \ldots, t_{i} + 1\) respectively.
+            % 不同于之前的编号方式 (自顶向下), 这里采用自底向上的编号方式, 方便理解.
+            Different from the previous numbering method (\underline{top-down}), 
+            here we use a \underline{bottom-up} numbering method for better understanding.
+        }.
+        Note that the total number of vectors in all chains is:
+        \[
+        t_{1} + t_{2} + \cdots + t_{m} + m = k.
+        \]
+        Then we can write out \(k\) linearly independent solutions:
+        \[
+        \begin{aligned}
+            & \mathbf{Y}_{i} = e^{\lambda x} \boldsymbol{\xi}_{i}, \\
+            & \mathbf{Y}_{i}^{(1)} = e^{\lambda x} \left( x \boldsymbol{\xi}_{i} + \boldsymbol{\xi}_{i}^{(1)} \right), \\
+            & \mathbf{Y}_{i}^{(2)} = e^{\lambda x} \left( \frac{x^{2}}{2!} \boldsymbol{\xi}_{i} + x \boldsymbol{\xi}_{i}^{(1)} + \boldsymbol{\xi}_{i}^{(2)} \right), \\
+            & \vdots \\
+            & \mathbf{Y}_{i}^{(t_{i})} = e^{\lambda x} \left( \frac{x^{t_{i}}}{t_{i}!} \boldsymbol{\xi}_{i} + \frac{x^{t_{i}-1}}{(t_{i}-1)!} \boldsymbol{\xi}_{i}^{(1)} + 
+            \cdots + x \boldsymbol{\xi}_{i}^{(t_{i}-1)} + \boldsymbol{\xi}_{i}^{(t_{i})} \right),
+        \end{aligned}
+        \]
+        for each \(i = 1, 2, \ldots, m\).
+\end{description}
+
+
+
+
 
 \section{Periodic Coefficient Linear Differential Equation Systems} % 周期系数线性微分方程组
 
 \chapter{System of Higher-Order Linear Equations}
+This chapter mainly discusses the theory and solution methods of higher-order linear differential equations,
+with the following general forms:
+\begin{equation}\label{eq:higher-order linear equation - non-homogeneous}
+    \frac{\mathrm{d}^{n}y}{\mathrm{d}x^{n}} + p_{1}(x) \frac{\mathrm{d}^{n-1}y}{\mathrm{d}x^{n-1}} 
+    + \cdots + p_{n-1}(x) \frac{\mathrm{d}y}{\mathrm{d}x} + p_{n}(x) y = f(x).
+\end{equation}
+When \(f(x) \equiv 0\), it reduces to the homogeneous case:
+\begin{equation}\label{eq:higher-order linear equation - homogeneous}
+    \frac{\mathrm{d}^{n}y}{\mathrm{d}x^{n}} + p_{1}(x) \frac{\mathrm{d}^{n-1}y}{\mathrm{d}x^{n-1}} 
+    + \cdots + p_{n-1}(x) \frac{\mathrm{d}y}{\mathrm{d}x} + p_{n}(x) y = 0,
+\end{equation}
+
+
 \section{General Theory of Higher-Order Linear Equations}
+
 
 \section{Solution to Constant Coefficient Homogeneous Linear Equations}
 
