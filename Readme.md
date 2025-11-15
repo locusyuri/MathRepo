@@ -20,7 +20,7 @@ This is a repository for mathematical notes. The directory structure is as follo
 - [Analyse de Fourier | 傅立葉分析](./1.Analyse/Analyse%20de%20Fourier/tmp/initial.pdf)
 - [Analyse Mathématique | 數學分析](./1.Analyse/Analyse%20Mathématique/tmp/initial.pdf)
 - [Équation Différentielle Ordinaire | 常微分方程](./1.Analyse/Équation%20Différentielle%20Ordinaire/tmp/initial.pdf)
-- ~~[Théorie des Champs | 場論]()~~
+
 
 ## 2.Algèbre | 代數學
 - ~~[Algèbre Abstraite | 抽象代數]()~~
@@ -36,6 +36,7 @@ This is a repository for mathematical notes. The directory structure is as follo
 
 ## 4.Mathématiques appliquées | 應用數學
 - [Latex | Latex 教程](./4.Mathématiques%20appliquées/Latex/tmp/initial.pdf)
+- ~~[Théorie des Champs | 場論]()~~
 
 
 ---

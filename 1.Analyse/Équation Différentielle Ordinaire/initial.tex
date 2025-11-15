@@ -1496,14 +1496,258 @@ When \(f(x) \equiv 0\), it reduces to the homogeneous case:
     \frac{\mathrm{d}^{n}y}{\mathrm{d}x^{n}} + p_{1}(x) \frac{\mathrm{d}^{n-1}y}{\mathrm{d}x^{n-1}} 
     + \cdots + p_{n-1}(x) \frac{\mathrm{d}y}{\mathrm{d}x} + p_{n}(x) y = 0,
 \end{equation}
+In the equation~\eqref{eq:higher-order linear equation - non-homogeneous},
+let 
+\[
+\frac{\mathrm{d}y}{\mathrm{d}x}=y_{1}, \frac{\mathrm{d}^2 y}{\mathrm{d}x^2}=y_{2}, \ldots, 
+\frac{\mathrm{d}^{n-1}y}{\mathrm{d}x^{n-1}}=y_{n-1},
+\]
+then we can transform it into a system of first-order linear differential equations:
+\begin{equation*}
+    \frac{\mathrm{d}}{\mathrm{d}x}
+    \begin{pmatrix}
+        y \\ y_{1} \\ y_{2} \\ \vdots \\ y_{n-1}
+    \end{pmatrix} =
+    \begin{pmatrix}
+        0 & 1 & 0 & \cdots & 0 \\
+        0 & 0 & 1 & \cdots & 0 \\
+        0 & 0 & 0 & \cdots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        -p_{n}(x) & -p_{n-1}(x) & -p_{n-2}(x) & \cdots & -p_{1}(x)
+    \end{pmatrix}
+    \begin{pmatrix}
+        y \\ y_{1} \\ y_{2} \\ \vdots \\ y_{n-1}
+    \end{pmatrix} +
+    \begin{pmatrix}
+        0 \\ 0 \\ 0 \\ \vdots \\ f(x)
+    \end{pmatrix}.
+\end{equation*}
+It is equivalent to the matrix form:
+\begin{equation}\label{eq:matrix form of higher-order linear equation}
+    \frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{A}(x) \mathbf{Y} + \mathbf{F}(x).
+\end{equation}\footnote{
+    Denote 
+    \[
+    f(\lambda) = \lambda^{n} + p_{1}(x) \lambda^{n-1} + \cdots + p_{n-1}(x) \lambda + p_{n}(x),
+    \]
+    then \(\mathbf{A}(x)\) is just the companion matrix of polynomial \(f(\lambda)\).
+}
+The initial conditions can be expressed as:
+\[
+\mathbf{Y}(x_{0}) = \mathbf{Y}_{0}.
+\]
+
+\vspace{0.7cm}
+% 为了将一阶线性微分方程组的理论和方法迁移到高阶线性微分方程中, 我们有以下引理.
+To extend the theory and methods of first-order linear systems of differential equations to 
+higher-order linear differential equations, we have the following lemma.
+\begin{lemma}
+    The equation~\eqref{eq:higher-order linear equation - non-homogeneous}
+    is equivalent to the equation system~\eqref{eq:matrix form of higher-order linear equation}.
+    
+    That is, if \(y(x)\) is a solution to~\eqref{eq:higher-order linear equation - non-homogeneous},
+    then \(\mathbf{Y}(x) = \begin{pmatrix} y & y^{(1)} & y^{(2)} & \cdots & y^{(n-1)} \end{pmatrix}^{\mathrm{T}}\)
+    is a solution to~\eqref{eq:matrix form of higher-order linear equation};
+    conversely, if \(\mathbf{Y}(x) = \begin{pmatrix} y & y^{(1)} & y^{(2)} & \cdots & y^{(n-1)} \end{pmatrix}^{\mathrm{T}}\)
+    is a solution to~\eqref{eq:matrix form of higher-order linear equation},
+    then \(y(x)\) is a solution to~\eqref{eq:higher-order linear equation - non-homogeneous}.
+\end{lemma}
+
+And we have the following existence and uniqueness theorem for
+the initial value problem of higher-order linear differential equations.
+\begin{theorem}
+    The solution \(y(x)\) to the higher-order linear differential equation
+    ~\eqref{eq:higher-order linear equation - non-homogeneous}
+    which satisfies the initial condition
+    \[
+    y(x_{0}) = y_{0}, \quad y'(x_{0}) = y_{1,0}, \quad y''(x_{0}) = y_{2,0}, \quad \ldots, \quad y^{(n-1)}(x_{0}) = y_{n-1,0},
+    \]
+    exists and is unique on the interval \(I\),
+    where \(p_{1}(x), p_{2}(x), \ldots, p_{n}(x), f(x)\) are continuous on \(I\),
+    and \(x_{0} \in I\).
+\end{theorem}
 
 
 \section{General Theory of Higher-Order Linear Equations}
+Similar to first-order linear systems of differential equations,
+we can define Wronskian determinant as follows:
+\[
+W(x) =
+\begin{vmatrix}
+    y_{1}(x) & y_{2}(x) & \cdots & y_{n}(x) \\
+    y_{1}'(x) & y_{2}'(x) & \cdots & y_{n}'(x) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    y_{1}^{(n-1)}(x) & y_{2}^{(n-1)}(x) & \cdots & y_{n}^{(n-1)}(x)
+\end{vmatrix},
+\]
+where \(y_{i}(x)\in D^{(n-1)}(I)\), \(i = 1, 2, \ldots, n\).
+Then we have the following conclusions:
+\begin{theorem}{Linear Independence Criterion}
+    The functions \(y_{1}(x), y_{2}(x), \ldots, y_{n}(x)\) are linearly independent (dependent) on interval \(I\)
+    if and only if there exists \(x_{0} \in I\) such that \(W(x_{0}) \neq 0\) (\(W(x_{0}) = 0\)).
+\end{theorem}
+Let \(y_{1}(x), y_{2}(x), \ldots, y_{n}(x)\) be \(n\) linearly independent solutions to
+the homogeneous equation~\eqref{eq:higher-order linear equation - homogeneous},
+then we can also derive the Liouville formula for Wronskian determinant:
+\[
+W(x) = W(x_{0}) e^{-\int_{x_{0}}^{x} p_{1}(s) \, \mathrm{d}s}.
+\]
+
+\vspace{0.7cm}
+Here, we give the general solution of the higher-order linear differential equation.
+\begin{theorem}{General Solution of Higher-Order Linear Equations}\label{thm:general solution of higher-order linear equations}
+    Let \(y_{1}(x), y_{2}(x), \ldots, y_{n}(x)\) be \(n\) linearly independent solutions to
+    the homogeneous equation~\eqref{eq:higher-order linear equation - homogeneous},
+    then the general solution to the non-homogeneous equation~\eqref{eq:higher-order linear equation - non-homogeneous}
+    is given by:
+    \[
+    y(x) = C_{1} y_{1}(x) + C_{2} y_{2}(x) + \cdots + C_{n} y_{n}(x) + y_{p}(x),
+    \]
+    where \(C_{1}, C_{2}, \ldots, C_{n}\) are arbitrary constants,
+    and 
+    \[
+    y_{p}(x) = \sum_{i=1}^{n} y_{i}(x) \int \frac{W_{i}(x)}{W(x)} f(x) \, \mathrm{d}x,
+    \]
+    is a particular solution to
+    the non-homogeneous equation~\eqref{eq:higher-order linear equation - non-homogeneous},
+    where \(W(x)\) is the Wronskian determinant of
+    \(y_{1}(x), y_{2}(x), \ldots, y_{n}(x)\),
+    % W(x) 的第n行第i列的代数余子式
+    and \(W_{i}(x)\) is the algebraic cofactor of the element in the \(n\)-th row and \(i\)-th column of \(W(x)\).
+\end{theorem}
+
+\begin{example}
+    Let \(y=\phi(x)\) is a known particular solution to the homogeneous equation:
+    \[
+    y'' + p(x) y' + q(x) y = 0,
+    \]
+    where \(p(x), q(x) \in C(a, b)\) and \(\phi(x) \neq 0\) on \((a, b)\).
+    Prove that the general solution to the above equation is given by:
+    \[
+    y = C \phi(x) + \phi(x) \int \frac{e^{-\int p(x) \, \mathrm{d}x}}{\phi^{2}(x)} \, \mathrm{d}x,
+    \]
+    where \(C\) is an arbitrary constant.
+\end{example}
 
 
 \section{Solution to Constant Coefficient Homogeneous Linear Equations}
+From this section onward, we focus on higher-order linear differential equations with constant coefficients.
+For the constant coefficient linear differential equations:
+\begin{equation}\label{eq:constant coefficient homogeneous linear equation}
+    \frac{\mathrm{d} \mathbf{Y}}{\mathrm{d}x} = \mathbf{A} \mathbf{Y},
+\end{equation}
+and
+\begin{equation}\label{eq:constant coefficient non-homogeneous linear equation}
+    \frac{\mathrm{d} \mathbf{Y}}{\mathrm{d}x} = \mathbf{A} \mathbf{Y} + \mathbf{F}(x),
+\end{equation}
+Then we introduce the differential operator \(L_{n}\):
+\[
+L_{n} = \frac{\mathrm{d}^{n}}{\mathrm{d}x^{n}} + a_{1} \frac{\mathrm{d}^{n-1}}{\mathrm{d}x^{n-1}} + \cdots 
++ a_{n-1} \frac{\mathrm{d}}{\mathrm{d}x} + a_{n},
+\]
+where \(a_{1}, a_{2}, \ldots, a_{n}\) are constants.
+Then the constant coefficient linear differential equation can be expressed as:
+\[
+L_{n} y = 0, \quad L_{n} y = f(x).
+\]
 
-\section{Solution to Constant Coefficient Non-Homogeneous Linear Equations}
+According to the properties of companion matrix,
+the characteristic polynomial of matrix \(\mathbf{A}\) is just
+\[
+f(\lambda) = \lambda^{n} + a_{1} \lambda^{n-1} + \cdots + a_{n-1} \lambda + a_{n}.
+\]
+Then we have the following theorem:
+\begin{theorem}
+    Let \(\lambda_{1}, \lambda_{2}, \ldots, \lambda_{s}\) be all distinct roots of the characteristic polynomial \(f(\lambda)\),
+    with algebraic multiplicities \(n_{1}, n_{2}, \ldots, n_{s}\) respectively,
+    where \(n_{1} + n_{2} + \cdots + n_{s} = n\).
+    Then the fundamental solution set to the homogeneous equation
+    ~\eqref{eq:constant coefficient homogeneous linear equation} is given by:
+    \[
+    \begin{aligned}
+        & e^{\lambda_{1} x}, x e^{\lambda_{1} x}, x^{2} e^{\lambda_{1} x}, \ldots, x^{n_{1}-1} e^{\lambda_{1} x}, \\
+        & e^{\lambda_{2} x}, x e^{\lambda_{2} x}, x^{2} e^{\lambda_{2} x}, \ldots, x^{n_{2}-1} e^{\lambda_{2} x}, \\
+        & \vdots \\
+        & e^{\lambda_{s} x}, x e^{\lambda_{s} x}, x^{2} e^{\lambda_{s} x}, \ldots, x^{n_{s}-1} e^{\lambda_{s} x}.
+    \end{aligned}
+    \]
+\end{theorem}
+
+\section{Method of Undetermined Coefficients} 
+% 待定系数法求解常系数非齐次线性方程
+Theorem~\ref{thm:general solution of higher-order linear equations} has given the general solution to
+the non-homogeneous equation~\eqref{eq:constant coefficient non-homogeneous linear equation}.
+However, it is often difficult to calculate, especially when the order \(n\) is large.
+
+In fact, there are mainly four methods to find particular solutions to
+the non-homogeneous equation~\eqref{eq:constant coefficient non-homogeneous linear equation}:
+\begin{description}
+    \item[Method of Variation of Constants] 
+        This method is the most general and can be applied to any form of \(f(t)\).
+        However, it often involves complex calculations, including matrix inversion.
+    \item[Method of Undetermined Coefficients] 
+        This method is simpler in computation but only applicable when \(f(t)\) has a specific form.
+    \item[Laplace Transform Method] 
+        This method is systematic and particularly suitable for initial-value problems.
+        However, it requires the computation of inverse Laplace transforms.
+    \item[Matrix Exponential Method] 
+        This method provides an elegant theoretical framework for solving first-order matrix equations.
+\end{description}
+
+
+\vspace{0.7cm}
+In this section, we introduce the method of undetermined coefficients to find
+a particular solution to the non-homogeneous equation~\eqref{eq:constant coefficient non-homogeneous linear equation}.
+This method is applicable when \(f(x)\) (\(\mathbf{F}(x) = \begin{pmatrix} 0 & 0 & 0 & \cdots & f(x) \end{pmatrix}^{\mathrm{T}} \)) 
+contains functions such as polynomials, exponentials, sines, cosines, or their finite sums and products.
+
+First, we introduce the superposition principle:
+\begin{lemma}{Superposition Principle}
+    If \(y_{p1}(x)\) and \(y_{p2}(x)\) are particular solutions to
+    the non-homogeneous equations:
+    \[
+    L_{n} y = f_{1}(x), \quad L_{n} y = f_{2}(x),
+    \]
+    respectively,
+    then \(y_{p}(x) = y_{p1}(x) + y_{p2}(x)\) is a particular solution to
+    the non-homogeneous equation:
+    \[
+    L_{n} y = f_{1}(x) + f_{2}(x).
+    \]
+\end{lemma}
+\begin{remark}
+    % 叠加原理实际上就是线性算子的线性可加性. 而微分算子实际上就是 C^k (或者更一般的 L^p) 空间上的线性映射.
+    The superposition principle is essentially the differential additivity of linear operators,
+    while the differential operator is essentially a linear mapping on the space \(C^{k}\) 
+    (or more generally \(L^{p}\)).
+\end{remark}
+
+Then we can discuss how to construct particular solutions based on the form of \(f(x)\).
+\begin{theorem}
+    For the non-homogeneous equation~\eqref{eq:constant coefficient non-homogeneous linear equation},
+    if \(f(x)\) has the form:
+    \[
+    f(x) = e^{\alpha x} \left[ P_{m}(x) \cos(\beta x) + Q_{m}(x) \sin(\beta x) \right],
+    \]
+    where \(P_{m}(x)\) and \(Q_{m}(x)\) are polynomials with degree at most \(m\)
+    (at least one of them has degree exactly \(m\)),
+    then a particular solution to~\eqref{eq:constant coefficient non-homogeneous linear equation} is given by:
+    \[
+    y_{p}(x) = x^{k} e^{\alpha x} \left[ R_{m}(x) \cos(\beta x) + S_{m}(x) \sin(\beta x) \right],
+    \]
+    where \(R_{m}(x)\) and \(S_{m}(x)\) are polynomials with degree at most \(m\),
+    and \(k\) is determined as the following collision rule:
+    \begin{itemize}
+        \item If \(\alpha + \beta i\) is not a root of the characteristic polynomial \(f(\lambda)\),
+            then \(k = 0\);
+        \item If \(\alpha + \beta i\) is a root of \(f(\lambda)\) with algebraic multiplicity \(k\),
+            then \(k\) takes that value.
+    \end{itemize}
+\end{theorem}
+
+\section{Laplace Transform Method}
+
+
 
 \chapter{Boundary Value Problems} % 边值问题
 \section{Sturm-Liouville Problems} % 斯特姆-刘维尔问题

@@ -21,8 +21,8 @@
 \contentsline {section}{\numberline {4.4}Solution to Constant Coefficient Homogeneous Linear Systems}{20}{section.4.4}%
 \contentsline {section}{\numberline {4.5}Periodic Coefficient Linear Differential Equation Systems}{24}{section.4.5}%
 \contentsline {chapter}{\numberline {5}System of Higher-Order Linear Equations}{25}{chapter.5}%
-\contentsline {section}{\numberline {5.1}General Theory of Higher-Order Linear Equations}{25}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Solution to Constant Coefficient Homogeneous Linear Equations}{25}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Solution to Constant Coefficient Non-Homogeneous Linear Equations}{25}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Boundary Value Problems}{26}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Sturm-Liouville Problems}{26}{section.6.1}%
+\contentsline {section}{\numberline {5.1}General Theory of Higher-Order Linear Equations}{26}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Solution to Constant Coefficient Homogeneous Linear Equations}{27}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Method of Undetermined Coefficients}{27}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Boundary Value Problems}{29}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Sturm-Liouville Problems}{29}{section.6.1}%
