@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  1 NOV 2025 16:08
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  18 NOV 2025 21:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1440,50 +1440,86 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
 ]
 Chapter 1.
 
-LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
-(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 51.
-
-
 
 [1
 
 
 ]
+Chapter 2.
 
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 158.
-[2]
 
-[3]
+[2
 
-[4]
+]
+Chapter 3.
 
-[5]
+
+[3
+
+]
+Chapter 4.
+
+
+[4
+
+]
+Chapter 5.
+
+
+[5
+
+]
+Chapter 6.
+
 
 [6
+
+]
+Chapter 7.
+
+
+[7
+
+]
+Chapter 8.
+
+
+[8
+
+]
+Chapter 9.
+
+
+[9
+
+]
+Chapter 10.
+
+
+[10
+
+]
+
+[11
 
 ] (./tmp/initial.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
-
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 36D3C47F9A7471524423C78B33737077;1170.
+(rerunfilecheck)             Checksum: 5AA06EAFC40040CEE19DEA936CC3B78D;2347.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45809 strings out of 473831
- 953136 string characters out of 5733137
- 1970266 words of memory out of 5000000
- 68069 multiletter control sequences out of 15000+600000
- 566171 words of font info for 135 fonts, out of 8000000 for 9000
+ 45849 strings out of 473831
+ 952164 string characters out of 5733137
+ 1972549 words of memory out of 5000000
+ 68113 multiletter control sequences out of 15000+600000
+ 566155 words of font info for 133 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,12n,108p,692b,803s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,11n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (9 pages).
+Output written on ./tmp/initial.pdf (14 pages).
