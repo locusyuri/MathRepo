@@ -323,16 +323,29 @@ U(x, y) = \int \omega^1.
 \end{theorem}
 
 \section{Homogeneous Equations}
+\begin{definition}{Homogeneous Functions}
+    A function \(f(x, y)\) is called a \textbf{homogeneous function} of degree \(n\) 
+    if it satisfies the condition:
+    \[
+    f(tx, ty) = t^n f(x, y)
+    \]
+    for all \(t > 0\).
+    
+    A function \(f(x, y)\) is called a \textbf{quasihomogeneous function} of degree \(d\) with generalized weights if
+    \[
+    f(t^\alpha s x, t^\beta s y) = t^{ds} f(x, y),
+    \]
+    where \(t > 0\), \(\alpha\) and \(\beta\) are positive constants with \(\alpha + \beta = 1\), and \(s \in \mathbb{R}\). 
+    Here, \(\alpha\) and \(\beta\) are called the weights of \(x\) and \(y\), respectively.
+\end{definition}
+
+
 \begin{definition}\label{def:homogeneous equations}
     A first-order differential equation 
     \begin{equation*}
         M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y = 0
     \end{equation*}
     is called a \textbf{homogeneous equation} if both \(M\) and \(N\) are homogeneous functions
-    \footnote{
-        A function \(f(x, y)\) is called a homogeneous function of degree \(n\) 
-        if it satisfies the condition \(f(tx, ty) = t^n f(x, y)\) for all \(t > 0\).
-        }
     of the same degree \(n\).    
     In other words, for the equation
     \[
@@ -458,12 +471,6 @@ where \(a_1, a_2, b_1, b_2, c_1, c_2\) are constants.
 
 
 \begin{example}
-    A function \(f(x, y)\) is called a quasihomogeneous function of degree \(d\) with generalized weights if
-    \[
-    f(t^\alpha s x, t^\beta s y) = t^{ds} f(x, y),
-    \]
-    where \(t > 0\), \(\alpha\) and \(\beta\) are positive constants with \(\alpha + \beta = 1\), and \(s \in \mathbb{R}\). 
-    Here, \(\alpha\) and \(\beta\) are called the weights of \(x\) and \(y\), respectively.
     Consider the differential equation
     \[
     M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y = 0,
@@ -1751,6 +1758,147 @@ Then we can discuss how to construct particular solutions based on the form of \
 
 \chapter{Boundary Value Problems} % 边值问题
 \section{Sturm-Liouville Problems} % 斯特姆-刘维尔问题
+
+\chapter{Qualitative and Stability Theory} % 定性与稳定性理论
+
+\section{Ляпунов Stability} % Lyapunov 稳定性
+\begin{leftbarTitle}{Lyapunov Stability}\end{leftbarTitle}
+
+Consider the autonomous system:
+\begin{equation}\label{eq:autonomous system Lyapunov}
+    \frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = \mathbf{f}(t, \mathbf{x}),
+\end{equation}
+where \(\mathbf{f}(t, \mathbf{x})\) is continuous for \(\mathbf{x} \in D \subset \mathbb{R}^{n}\) 
+and \(t \in (-\infty, +\infty)\),
+and satisfies the local Lipschitz condition with respect to \(\mathbf{x}\).
+
+Let the unique solution to~\eqref{eq:autonomous system Lyapunov}
+with initial condition \(t_{0}, \mathbf{x}_{1}\) be denoted as \(\mathbf{x}= \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1})\).
+The other solutions are denoted as \(\mathbf{x} = \mathbf{x}(t, t_{0}, \mathbf{x}_{0})\).
+
+\begin{definition}{Stability in the Sense of Ляпунов}
+    The solution \(\mathbf{x} = \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1})\) to~\eqref{eq:autonomous system Lyapunov}
+    is said to be \textbf{stable in the sense of Ляпунов} (simplified as stable),
+    if for any \(\varepsilon > 0\) and \(t_{0}\geqslant 0\),
+    there exists a \(\delta = \delta(\varepsilon, t_{0}) > 0\),
+    such that when \(\|\mathbf{x}_{0} - \mathbf{x}_{1}\| < \delta\),
+    it holds that
+    \[
+    \|\mathbf{x}(t, t_{0}, \mathbf{x}_{0}) - \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1})\| < \varepsilon,
+    \]
+    for all \(t \geqslant  t_{0}\).
+
+    If \(\mathbf{x} = \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1})\) is stable, 
+    and there exists \(\delta_{1}\in (0, \delta]\) such that when \(\|\mathbf{x}_{0} - \mathbf{x}_{1}\| < \delta_{1}\),
+    it holds that
+    \[
+    \lim_{t \to +\infty} \|\mathbf{x}(t, t_{0}, \mathbf{x}_{0}) - \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1})\| = 0,
+    \]
+    then \(\mathbf{x} = \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1})\) is said to be \textbf{asymptotically stable}.
+
+    If \(\mathbf{x} = \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1})\) is asymptotically stable,
+    and there exists \(\delta_{2}\in (0, \delta_{1}], \alpha, \beta\) such that 
+    when \(\|\mathbf{x}_{0} - \mathbf{x}_{1}\| < \delta_{2}\),
+    it holds that
+    \[
+    \|\mathbf{x}(t, t_{0}, \mathbf{x}_{0}) - \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1})\| \leqslant 
+    \alpha \|\mathbf{x}_{0} - \mathbf{x}_{1}\| e^{-\beta (t - t_{0})},
+    \]
+    for all \(t \geqslant t_{0}\),
+    then \(\mathbf{x} = \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1})\) is said to be \textbf{exponentially stable}.
+\end{definition}
+
+By substitution
+\[
+\mathbf{y} = \mathbf{x}(t, t_{0}, \mathbf{x}_{0}) - \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1}),
+\]
+we have
+\begin{align*}
+    \frac{\mathrm{d} \mathbf{y}}{\mathrm{d}t} = & \frac{\mathrm{d} \mathbf{x}}{\mathrm{d}t} - \frac{\mathrm{d} \boldsymbol{\phi}}{\mathrm{d}t} \\
+    = & \mathbf{f}(t, \mathbf{x}) - \mathbf{f}(t, \boldsymbol{\phi}) \\
+    = & \mathbf{f}(t, \mathbf{y} + \boldsymbol{\phi}) - \mathbf{f}(t, \boldsymbol{\phi}) \\
+    := & \mathbf{F}(t, \mathbf{y}),
+\end{align*}
+then the system~\eqref{eq:autonomous system Lyapunov} can be transformed into:
+\begin{equation}\label{eq:transformed system Lyapunov}
+    \frac{\mathrm{d} \mathbf{y}}{\mathrm{d}t} = \mathbf{F}(t, \mathbf{y}).
+\end{equation}
+Then the stability of solution \(\mathbf{x} = \boldsymbol{\phi}(t, t_{0}, \mathbf{x}_{1})\)
+to~\eqref{eq:autonomous system Lyapunov} is \underline{equivalent to the stability of the zero solution}
+to~\eqref{eq:transformed system Lyapunov}.
+
+Without loss of generality, we only discuss the stability of the zero solution \(\mathbf{x} = \mathbf{0}\)
+to the autonomous system~\eqref{eq:autonomous system Lyapunov},
+and assume that \(\mathbf{f}(t, \mathbf{0}) \equiv \mathbf{0}\).
+The following definition is derived:
+\begin{definition}{Stability of the Zero Solution}
+    The zero solution \(\mathbf{x} = \mathbf{0}\) to~\eqref{eq:autonomous system Lyapunov}
+    is said to be \textbf{stable} if for any \(\varepsilon > 0\) and \(t_{0} \geqslant 0\),
+    there exists a \(\delta = \delta(\varepsilon, t_{0}) > 0\),
+    such that when \(\|\mathbf{x}_{0}\| < \delta\),
+    it holds that
+    \[
+    \|\mathbf{x}(t, t_{0}, \mathbf{x}_{0})\| < \varepsilon,
+    \]
+    for all \(t \geqslant t_{0}\).
+
+    If \(\mathbf{x} = \mathbf{0}\) is stable, 
+    and there exists \(\delta_{1}\in (0, \delta]\) such that when \(\|\mathbf{x}_{0}\| < \delta_{1}\),
+    it holds that
+    \[
+    \lim_{t \to +\infty} \|\mathbf{x}(t, t_{0}, \mathbf{x}_{0})\| = 0,
+    \]
+    then \(\mathbf{x} = \mathbf{0}\) is said to be \textbf{asymptotically stable}.
+
+    If \(\mathbf{x} = \mathbf{0}\) is asymptotically stable,
+    and there exists \(\delta_{2}\in (0, \delta_{1}], \alpha, \beta\) such that 
+    when \(\|\mathbf{x}_{0}\| < \delta_{2}\),
+    it holds that
+    \[
+    \|\mathbf{x}(t, t_{0}, \mathbf{x}_{0})\| \leqslant 
+    \alpha \|\mathbf{x}_{0}\| e^{-\beta (t - t_{0})},
+    \]
+    for all \(t \geqslant t_{0}\),
+    then \(\mathbf{x} = \mathbf{0}\) is said to be \textbf{exponentially stable}.
+\end{definition}
+
+\begin{leftbarTitle}{Lyapunov Second Method}\end{leftbarTitle} % Lyapunov 第二方法
+Ляпунов established two methods for studying the stability of solutions to differential equations:
+\newline The first method is based on the series solutions of differential equations,
+which is often difficult to apply in practice.
+\newline The second method, known as the Ляпунов second method,
+relies on constructing a special scalar function, called the Ляпунов function,
+to analyze the stability of solutions without explicitly solving the differential equations,
+which is also called the direct method of Ляпунов.
+
+For convenience, we only consider autonomous system:
+\begin{equation}\label{eq:autonomous system Lyapunov 2}
+    \frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = \mathbf{f}(\mathbf{x}),\quad \mathbf{x}\in G \subset \mathbb{R}^{n},
+\end{equation}
+where \(\mathbf{f}(\mathbf{x})\) is continuous in \(G\)
+and satisfies the local Lipschitz condition with respect to \(\mathbf{x}\),
+and \(\mathbf{f}(\mathbf{0}) = \mathbf{0}\).
+
+\begin{definition}{Ляпунов Function}
+    A scalar function \(V(\mathbf{x}): G \to \mathbb{R}\) is called a \textbf{Ляпунов function},
+    if it satisfies the following conditions:
+    \begin{itemize}
+        \item \(V(\mathbf{0}) = 0\);
+        \item \(V(\mathbf{x}), \nabla V(\mathbf{x})\) are continuous in \(G\).
+    \end{itemize}
+    If \(V(\mathbf{x}) > 0 (<0)\) for all \(\mathbf{x} \in G \setminus \{\mathbf{0}\}\),
+    then \(V(\mathbf{x})\) is called a \textbf{positive/negative definite Ляпунов function};
+    if \(V(\mathbf{x}) \geqslant 0 (\leqslant 0)\) for all \(\mathbf{x} \in G_{1} \subseteq G\),
+    then \(V(\mathbf{x})\) is called a \textbf{positive/negative semi-definite Ляпунов function};
+    otherwise, it is called an \textbf{indefinite Ляпунов function}.
+\end{definition}
+
+
+
+
+
+
+
 
 \begin{thebibliography}{99} 
 \bibitem{1} 柳彬. \emph{常微分方程 (1th edition) }. 北京大学出版社, 2021.

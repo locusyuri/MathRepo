@@ -49,7 +49,7 @@ This is a repository for mathematical notes. The directory structure is as follo
 ## F
 ## G
 ## H
-- Homogeneous Function (齊次函數) | Analyse Mathématique - Section 12.4: Derivatives of Composite Mappings (Chain Rule)
+- Homogeneous Function (齊次函數) | Équation Différentielle Ordinaire - Section 2.3: Homogeneous Equations
 
 ## I
 ## J

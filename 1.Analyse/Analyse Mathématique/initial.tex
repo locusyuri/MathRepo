@@ -2880,13 +2880,6 @@ As an important application of the chain rule, we have the following theorem on 
 
 \vspace{0.7cm}
 Another important application is homogeneous functions.
-\begin{definition}{Homogeneous Function}
-    A function \(f(x_1, x_2, \dots, x_n)\) is called a homogeneous function of degree \(m\) 
-    if for any scalar \(t > 0\), it satisfies
-    \[
-    f(tx_1, tx_2, \dots, tx_n) = t^m f(x_1, x_2, \dots, x_n).
-    \]
-\end{definition}
 
 \begin{proposition}
     The following statements can be generalized for \(n\) variables:
@@ -2909,6 +2902,15 @@ Another important application is homogeneous functions.
             are homogeneous functions of degree \(m-1\).
     \end{enumerate}
 \end{proposition}
+
+\begin{example}
+    Let \(f(x, y)\) be a differential function on \(\mathbb{R}^2\),
+    and satisfy the equation
+    \[
+    x \frac{\mathrm{d}f}{\mathrm{d}x} + y \frac{\mathrm{d}f}{\mathrm{d}y} = 0,
+    \]
+    prove that \(f(x, y)\) is always constant.
+\end{example}
 
 \section{Mean Value Theorem and Taylor's Formula}
 \begin{leftbarTitle}{Mean Value Theorem}\end{leftbarTitle}
@@ -3309,6 +3311,16 @@ By the implicit function theorem, we have:
 \end{align*}
 \end{solution}
 
+\begin{example}
+    Let \(u(x, y)\) is a function solved from the implicit function defined by the equation:
+    \[
+    \begin{cases} u=f(x, y, z, t), \\ g(y, z, t)=0,\\ h(z, t)=0 ,\end{cases}
+    \]
+    where \(f, g, h \in C^1\).
+    Find \(\frac{\partial u}{\partial y}\).
+\end{example}
+
+
 \begin{leftbarTitle}{Inverse Mapping}\end{leftbarTitle} % 逆映射定理
 \begin{theorem}{Local Inverse Mapping Theorem}\label{thm:Local Inverse Mapping Theorem} % 局部逆映射定理
     Let \( U \subset \mathbb{R}^n \) be an open set, and \( \mathbf{f}: U \to \mathbb{R}^n \) be a mapping. If:
@@ -3350,6 +3362,18 @@ then a global inverse mapping theorem can be established.
     belongs to \( C^k(\mathbf{f}(U), \mathbb{R}^n) \).
 \end{theorem}
 
+\begin{example}
+    Here are substitutions:
+    \[
+    x=t, y=\frac{t}{1+tu}, z=\frac{t}{1+tv}.
+    \]
+    Transform the following equation to the form of dependent variables \(v\) and independent variables \(t, u\):
+    \[
+    x^{2} \frac{\partial z}{\partial x} + y^{2} \frac{\partial z}{\partial y} = z^{2}.
+    \]
+\end{example}
+
+
 \section{Extremum of Multi-variable Functions}
 
 \begin{leftbarTitle}{Unconditional Extremum}\end{leftbarTitle}
@@ -3386,9 +3410,22 @@ then a global inverse mapping theorem can be established.
 
 \chapter{Multiple Integrals}
 \section{Multiple Integrals on Bounded Closed Regions}
-\begin{leftbarTitle}{Definition of Multiple Integral}\end{leftbarTitle}
+\underline{How to define a region with measurable area?} % 怎么定义可求面积的区域?
+Generally speaking, there are two approaches to define regions with measurable area:
+\begin{enumerate}
+    \item Consider the integral over a closed rectangle, 
+        and then extend it to a bounded closed region within the rectangle
+        with the help of characteristic functions;
+    \item Define that a bounded closed region \(D\) is measurable if 
+        \(\forall \varepsilon > 0\), there exist two polygonal regions \(\Sigma_1\) and \(\Sigma_2\)
+        consisting of finite rectangles, such that \(\Sigma_{1}\subset D \subset \Sigma_{2}\) 
+        and the area of \(\Sigma_2 \setminus \Sigma_1\) is less than \(\varepsilon\).
+\end{enumerate}
 
-Initially, we define the double integral on a closed interval.
+\begin{leftbarTitle}{Definition of Multiple Integral}\end{leftbarTitle}
+Here, we introduce the definition of double integrals using the first approach.
+
+Initially, we define the double integral on a closed interval (rectangle).
 \begin{definition}{Double Integral on a Closed Interval}
     Let \( I = [a, b] \times [c, d] \) be a closed interval in \( \mathbb{R}^2 \), 
     (i.e., each boundary is parallel to the coordinate axes). Partition \( [a, b] \):
@@ -3451,7 +3488,7 @@ On the basis of the above definition, we can extend it to the case of a bounded 
     0, & \text{if } \mathbf{x} = (x, y) \not\in \Omega,
     \end{cases}
     \]
-    and call this the \textbf{zero extension} of \( f \). 
+    and call this the \textbf{zero extension} (or \textbf{characteristic function}) of \( f \). 
     For any closed interval \( I \supset \Omega \), if \( f_\Omega \) is Riemann integrable on \( I \), 
     then \( f \) is said to be \textbf{Riemann integrable} on \( \Omega \) (abbreviated as integrable). 
     The integral of \( f \) on \( \Omega \), denoted as:
@@ -3467,9 +3504,9 @@ In above definition, the integral \( \int_\Omega f \) is independent of the choi
 the closed interval \( I \) containing \( \Omega \) (this confirms the consistency of the definition).
 
 It is worth noting that all the definitions and properties of double integrals 
-can be extended to triple integrals and higher-dimensional integrals without excessive inconvenience.
+can be \underline{extended} to triple integrals and higher-dimensional integrals without excessive inconvenience.
 
-\begin{leftbarTitle}{Necessary and Sufficient Conditions for Integrability}\end{leftbarTitle}
+\begin{leftbarTitle}{About the Second Approach}\end{leftbarTitle}
 
 \begin{definition}{Set with Zero Area and Set with Zero Measure (Null Set)}
     Let \( A \subset \mathbb{R}^2 \). If for any \( \varepsilon > 0 \), 
@@ -3494,12 +3531,25 @@ can be extended to triple integrals and higher-dimensional integrals without exc
     \[
     v(\Omega) = \int_\Omega 1 = \iint_\Omega \mathrm{d}x \mathrm{d}y = \int_I 1_\Omega.
     \]
-
 \end{definition}
 
 Obviously, \(\Omega\) is a set with zero area if and only if \(\Omega\) has finite area, 
 and \(v(\Omega) = \int_\Omega 1 = 0\).
 
+\begin{proposition}
+    A bounded closed region \(\Omega \subset \mathbb{R}^2\) is measurable if and only if
+    its boundary \(\partial \Omega\) is a set with zero area.
+\end{proposition}
+In the definition of multiple integrals derived from the second approach,
+the key point is the division \(T\) of the bounded closed region \(\Omega\) 
+into two polygonal regions \(\Sigma_1\) and \(\Sigma_2\).
+With above statements, we can see that the division \(T\) is implemented by
+infinitely many curves net with zero area.
+
+
+
+
+\begin{leftbarTitle}{Necessary and Sufficient Conditions for Integrability}\end{leftbarTitle}
 
 \section{Properties and Calculation of Multiple Integrals}
 
@@ -3507,18 +3557,26 @@ and \(v(\Omega) = \int_\Omega 1 = 0\).
 
 \begin{theorem}{Reduction of Double Integral to Iterated Integral on a Closed Interval}\label{thm:Reduction of Double Integral to Iterated Integral on a Closed Interval}
     Let \( f \) be integrable on the closed interval \( I = [a, b] \times [c, d] \). 
-    If \( \forall x \in [a, b] \), the function \( f(x, \cdot) \) is integrable on \( [c, d] \), then:
+    
+    If \( \forall x \in [a, b] \), the integral \(\phi(x)=\int_c^d f(x,y)\,\mathrm{d}y\) exists,
+    then \( \phi \) is integrable on \( [a, b] \), and:
     \[
     \iint_I f = \int_a^b \left( \int_c^d f(x, y) \, \mathrm{d}y \right) \mathrm{d}x
     =: \int_{a}^{b}\mathrm{d}x\int_{c}^{d}f(x,y)\,\mathrm{d}y.
     \]
 
-    Similarly, if \( \forall y \in [c, d] \), the function \( f(\cdot, y) \) is integrable on \( [a, b] \), then:
+    Similarly, if \( \forall y \in [c, d] \), the integral \(\psi(y)=\int_a^b f(x,y)\,\mathrm{d}x\) exists,
+    then \( \psi \) is integrable on \( [c, d] \), and:
     \[
     \iint_I f = \int_c^d \left( \int_a^b f(x, y) \, \mathrm{d}x \right) \mathrm{d}y
     =: \int_{c}^{d}\mathrm{d}y\int_{a}^{b}f(x,y)\,\mathrm{d}x.
     \]
 \end{theorem}
+\begin{note}
+    That is, if \(f\in C(I)\), then two iterated integrals above all exist, 
+    and they are equal to the double integral of \(f\) on \(I\) (they can exchange the order of integration).
+\end{note}
+
 
 On the basis of the above theorem, we can extend it to the case of a bounded region.
 
@@ -3830,6 +3888,39 @@ and
 
 
 \section{Improper Multiple Integrals}
+Improper multiple integrals can be also classified into two types, infinite integrals and defective integrals.
+
+\begin{definition}{Infinite Multiple Integral}
+    Let \( D \subset \mathbb{R}^2 \) be an unbounded region,
+    whose boundary consists of finite or countably many smooth curves, 
+    and \( f: D \to \mathbb{R} \) be a function,
+    which is integrable on any measurable bounded closed set \( D' \subset D \). 
+    If there exists an increasing sequence of bounded closed regions \( \{ D_k \} \) such that:
+    \[
+    D_1 \subset D_2 \subset \cdots \subset D_k \subset \cdots, 
+    \quad \bigcup_{k=1}^{\infty} D_k = D,
+    \]
+    which is called an \textbf{exhaustion} of \( D \),
+    and for each \( k \), the integral \( I(D_k) = \iint_{D_k} f \) exists, 
+    and the limit:
+    \[
+    I = \lim_{k\to\infty} I(D_k)
+    \]
+    exists, then \( I \) is called the \textbf{improper multiple integral} of \( f \) on \( D \), denoted as:
+    \[
+    I = \iint_{D} f = \lim_{k\to\infty} \iint_{D_k} f.
+    \]
+\end{definition}
+\begin{remark}
+    There are also other ways to define improper multiple integrals,
+    such as using limit definitions based on distance to infinity.
+    They are equivalent to the above definition.
+\end{remark}
+
+\begin{theorem}
+    Improper multiple integral is integrable if and only if it is absolutely integrable.
+\end{theorem}
+
 
 
 \chapter{Introduction to Surface Theory} % 曲面论导论
@@ -4090,9 +4181,10 @@ Define:
 \begin{align*}
     &E(u, v) := \mathrm{I}_{p}(\mathbf{r}_{u}, \mathbf{r}_{u}) = \mathbf{r}_{u} \cdot \mathbf{r}_{u} = \| \mathbf{r}_{u} \|^2, \\
     &F(u, v) := \mathrm{I}_{p}(\mathbf{r}_{u}, \mathbf{r}_{v}) = \mathbf{r}_{u} \cdot \mathbf{r}_{v}, \\
-    &G(u, v) := \mathrm{I}_{p}(\mathbf{r}_{v}, \mathbf{r}_{v}) = \mathbf{r}_{v} \cdot \mathbf{r}_{v} = \| \mathbf{r}_{v} \|^2.
+    &G(u, v) := \mathrm{I}_{p}(\mathbf{r}_{v}, \mathbf{r}_{v}) = \mathbf{r}_{v} \cdot \mathbf{r}_{v} = \| \mathbf{r}_{v} \|^2,
 \end{align*}
-Then the matrix representation of the first fundamental form \(\mathrm{I}_{p}\) under the basis \(\{\mathbf{r}'_{u}, \mathbf{r}'_{v}\}\) is:
+which are called the \textbf{Gauß coefficients}.
+\newline Then the matrix representation of the first fundamental form \(\mathrm{I}_{p}\) under the basis \(\{\mathbf{r}'_{u}, \mathbf{r}'_{v}\}\) is:
 \[
 \mathrm{I}_{p} =
 \begin{pmatrix}
@@ -4299,6 +4391,7 @@ Some special cases of curvature are given below:
 
 \section{Oriented Surface} % 定向曲面
 
+
 \chapter{Line Integrals and Surface Integrals}
 \section{Line Integrals and Surface Integrals of scalar fields}
 \begin{leftbarTitle}{Line Integral of Scalar Field}\end{leftbarTitle}
@@ -4335,6 +4428,11 @@ Some special cases of curvature are given below:
     = \int_{\alpha}^{\beta} f(x(t), y(t), z(t)) \sqrt{(x'(t))^2 + (y'(t))^2 + (z'(t))^2} \, \mathrm{d}t.
     \]
 \end{theorem}
+Specially, if the plane curve \(L\) is given by \(y = y(x), x \in [a, b]\),
+then:
+\[
+\int_{L} f \, \mathrm{d}s = \int_{a}^{b} f(x, y(x)) \sqrt{1 + (y'(x))^2} \, \mathrm{d}x.
+\]
 
 
 \begin{leftbarTitle}{Surface Integrals of Scalar Fields}\end{leftbarTitle}
@@ -4384,14 +4482,15 @@ Some special cases of curvature are given below:
     = \iint_{D} f(x(u, v), y(u, v), z(u, v)) 
     \sqrt{EG-F^{2}} \, \mathrm{d}u \mathrm{d}v,
     \]
-    where
-    \begin{align*}
-        &E = \mathbf{r}_{u} \cdot \mathbf{r}_{u} = x_{u}^2 + y_{u}^2 + z_{u}^2, \\        
-        &F = \mathbf{r}_{u} \cdot \mathbf{r}_{v} = x_{u} x_{v} + y_{u} y_{v} + z_{u} z_{v}, \\
-        &G = \mathbf{r}_{v} \cdot \mathbf{r}_{v} = x_{v}^2 + y_{v}^2 + z_{v}^2,
-    \end{align*}
-    and it is called the Gauß coefficients of the surface \(\Sigma\).
+    where \(E, G, F\) are the Gauß coefficients of the surface \(\Sigma\).
 \end{theorem}
+Specially, if the surface \(\Sigma\) is given by \(z = z(x, y), (x, y) \in D\),
+then:
+\[
+\iint_{\Sigma} f \, \mathrm{d}S = 
+\iint_{D} f(x, y, z(x, y)) 
+\sqrt{1 + \left(\frac{\partial z}{\partial x}\right)^2 + \left(\frac{\partial z}{\partial y}\right)^2} \, \mathrm{d}x \mathrm{d}y.
+\]
 
 \section{Differential Form and Exterior Differentiation}
 Let \(\mathrm{d}x_{i}, \mathrm{d}x_{j}\) be differentials of independent variables \(x_{i}, x_{j}\).
@@ -4523,6 +4622,13 @@ The second type of line integral of \( \omega \) along the curve \( L \) is deno
     = \int_{\alpha}^{\beta} [P(x(t), y(t), z(t)) x'(t) + Q(x(t), y(t), z(t)) y'(t) + R(x(t), y(t), z(t)) z'(t)] \, \mathrm{d}t.
     \end{gather*}
 \end{theorem}
+Specially, if the plane curve \(\overset{\rightharpoonup}{L}\) is given by \(y = y(x), x: a \to b\),
+then:
+\[
+\int_{\overset{\rightharpoonup}{L}} \mathbf{f} \cdot \boldsymbol{\tau} \mathrm{d}s = 
+\int_{a}^{b} \mathbf{f}(x, y(x)) \cdot (1, y'(x)) \sqrt{1 + (y'(x))^2} \, \mathrm{d}x.
+\]
+
 \begin{leftbarTitle}{Surface Integral of Vector Field}\end{leftbarTitle}
 \begin{definition}{Surface Integral of Vector Field}
     Let \(\overset{\rightharpoonup}{\Sigma}\) be an orientated smooth surface in \(\mathbb{R}^3\),
@@ -4583,6 +4689,15 @@ The second type of surface integral of \( \omega \) over the surface \( \Sigma \
     where the sign \(\pm\) depends on whether the orientation of \(\overset{\rightharpoonup}{\Sigma}\) is consistent with
     the direction of \(\frac{\partial \mathbf{r}}{\partial u} \times \frac{\partial \mathbf{r}}{\partial v}\).
 \end{theorem}
+Specially, if the surface \(\overset{\rightharpoonup}{\Sigma}\) is given by \(z = z(x, y), (x, y) \in D_{xy}\),
+where \(D_{xy}\) is a closed region with piecewise smooth boundary in \(xy\)-plane,
+and \(R(x,y,z)\) is continuous on \(D_{xy}\),
+then:
+\[
+\iint_{\overset{\rightharpoonup}{\Sigma}} R(x, y, z) \mathrm{d}x \mathrm{d}y = 
+\pm \iint_{D_{xy}} R(x, y, z(x, y)) \, \mathrm{d}x \mathrm{d}y,
+\]
+where the sign \(\pm\) depends on whether the orientation of \(\overset{\rightharpoonup}{\Sigma}\) is upward or downward.
 
 
 
@@ -4763,8 +4878,66 @@ over the boundary of region \(\overset{\rightharpoonup}{M}\), then we have the f
     \end{enumerate}
 \end{definition}
 
+\begin{theorem}{Necessary Condition for Exactness}
+    Let \(U \subset \mathbb{R}^{n}\) be an open set and \(\omega\) be a \(C^{1}\) \(k\)-form on \(U\).
+    If \(\omega\) is exact, then \(\omega\) is closed.
+    The converse is not necessarily true.
+\end{theorem}
+
+\vspace{0.7cm}
+We only discuss the case of \(1\)-forms in \(\mathbb{R}^{2}\) below.
+
+Let \(\omega = P(x, y) \mathrm{d}x + Q(x, y) \mathrm{d}y\) be a \(C^{1}\) \(1\)-form on an open set \(U \subset \mathbb{R}^{2}\).
+For any points \(A, B \in U\), a piecewise smooth simple closed curve on \(U\)
+is called a \textbf{path} from \(A\) to \(B\) if it starts at \(A\) and ends at \(B\). 
+
+For any path \(\overset{\rightharpoonup}{L}\) from \(A\) to \(B\),
+if 
+\[
+\int_{\overset{\rightharpoonup}{L}} \omega = \int_{A}^{B} \omega,
+\]
+where the right-hand side is independent of the choice of path \(\overset{\rightharpoonup}{L}\),
+then the line integral of \(\omega\) is said to be \textbf{path-independent} on \(U\).
+
+\begin{theorem}
+    Let \(U\in \mathbb{R}^{2}\) is a simply connected open region,
+    and \(\omega = P(x, y) \mathrm{d}x + Q(x, y) \mathrm{d}y\) be a \(C^{1}\) \(1\)-form on \(U\).
+    Then the following statements are equivalent:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(\omega\) is exact on \(U\), i.e., there exists a \(C^{2}\) function \(F(x, y)\) on \(U\),
+            such that
+            \[
+            \mathrm{d}F = \omega = P \, \mathrm{d}x + Q \, \mathrm{d}y.
+            \]
+            At this time, \(F(x, y)\) is called a \textbf{potential function} of \(\omega\) on \(U\)
+            and 
+            \[
+            F(x, y) = \int_{(x_{0}, y_{0})}^{(x, y)} \omega + C
+            = \int_{x_{0}}^{x} P(t, y_{0}) \, \mathrm{d}t + \int_{y_{0}}^{y} Q(x, s) \, \mathrm{d}s + C,
+            \]
+            where \((x_{0}, y_{0})\) is a fixed point in \(U\) and \(C\) is an arbitrary constant.
+        \item \(\omega\) is closed on \(U\), i.e.,
+            \[
+                \frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}.
+            \] 
+        \item The line integral of \(\omega\) is path-independent on \(U\).
+        \item For any piecewise smooth simple closed curve \(\overset{\rightharpoonup}{L}\) on \(U\),
+            \[
+            \oint_{\overset{\rightharpoonup}{L}} \omega = 0.
+            \]
+    \end{enumerate}
+\end{theorem}
 
 
+\begin{example}
+    Calculate
+    \[
+    I = \oint_{\overset{\rightharpoonup}{C}} \frac{\cos(\mathbf{r},\mathbf{n})}{r} \, \mathrm{d}s,
+    \]
+    where \(\overset{\rightharpoonup}{C}\) is piecewise smooth simple closed curve,
+    \(\mathbf{r}=(x,y)\), \(r=\|\mathbf{r}\|=\sqrt{x^2 + y^2}\),
+    and \(\mathbf{n}\) is the unit outward normal vector of \(\overset{\rightharpoonup}{C}\).
+\end{example}
 
 \chapter{Integrals with Variable Parameters}
 \section{Definite Integrals with Variable Parameters}

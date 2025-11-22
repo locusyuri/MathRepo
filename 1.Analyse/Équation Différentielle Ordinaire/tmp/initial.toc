@@ -24,5 +24,8 @@
 \contentsline {section}{\numberline {5.1}General Theory of Higher-Order Linear Equations}{26}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Solution to Constant Coefficient Homogeneous Linear Equations}{27}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Method of Undetermined Coefficients}{27}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Laplace Transform Method}{28}{section.5.4}%
 \contentsline {chapter}{\numberline {6}Boundary Value Problems}{29}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Sturm-Liouville Problems}{29}{section.6.1}%
+\contentsline {chapter}{\numberline {7}Qualitative and Stability Theory}{30}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Ляпунов Stability}{30}{section.7.1}%
