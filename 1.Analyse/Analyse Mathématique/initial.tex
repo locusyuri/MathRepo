@@ -49,7 +49,10 @@
 For an interval \(I\), a open interval \((a, b)\) and a closed interval \([a, b]\),
 we denote \(C(I)\), \(C(a, b)\) and \(C[a, b]\)
 as the set of continuous \underline{univariate} functions on \(I\), \((a, b)\) and \([a, b]\) respectively.
-Similarly, the following notations are used:
+Similarly, the following notations are used\footnote{
+    Other notations include: \(R[a,b]\) (denoting Riemann integrable functions on \([a,b]\)),
+    \(B[a,b]\) (denoting bounded functions on \([a,b]\)), etc.
+}:
 
 \[
 \begin{array}{cc}
@@ -74,6 +77,11 @@ Let \(U \subset \mathbb{R}^n\) be an open set, and \(\mathbf{f}: U \to \mathbb{R
         \(f_i\) can be expanded into a convergent (\(n\)-dimensional) power series, \(i = 1, 2, \dots, m\).
 \end{itemize}
 Let \(C^k(U, \mathbb{R}^m)\) denote the set of \(C^k\) mappings from \(U\) to \(\mathbb{R}^m\).
+
+% 有时, 我们用下标 \(i\) 来表示对第i个变量的偏导数
+Sometimes, we use subscripts \(i\) to denote the partial derivative with respect to the \(i\)-th variable,
+for example, for function \(f(x^{2}+y^{2}+z^{2},xyz)\), \(f_{2}:=\frac{\partial f}{\partial (xyz)}\),
+and similarly for higher-order partial derivatives, e.g., \(f_{12} := \frac{\partial^2 f(u, v)}{\partial v \partial u}\).
 
 % \chapter{Acknowledgments}  % 致谢（无编号）
 % I would like to thank...
@@ -155,6 +163,16 @@ Let \(C^k(U, \mathbb{R}^m)\) denote the set of \(C^k\) mappings from \(U\) to \(
             $\tan x = \frac{\sin x}{\cos x}$, etc.
     \end{itemize}
 \end{remark}
+
+\begin{theorem}{Weierstrass Substitution (All-Powerful Formula)}
+    Let \(t = \tan \frac{x}{2}\), then:
+    \begin{align*}
+        &\sin x = \frac{2t}{1+t^2}, \\
+        &\cos x = \frac{1-t^2}{1+t^2}, \\
+        &\mathrm{d}x = \frac{2}{1+t^2} \mathrm{d}t.
+    \end{align*}
+\end{theorem}
+
 
 \section{Common Inequalities}
 
@@ -2480,17 +2498,17 @@ This is the formula for \textbf{expressing a directional derivative using partia
         \item[Necessary Condition] If an \(n\)-variable function \(f\) is differentiable at the point \(\mathbf{x}_{0}\), 
         then \(f\) is continuous at \(\mathbf{x}^{0}\) and 
         possesses first-order partial derivatives \(\frac{\partial f}{\partial x_{i}}(\mathbf{x}^{0})\) 
-        at \(\mathbf{x}^{0}\) for \(i = 1, 2, \dots, n\), and
-        \[
-        \mathbf{A} = \left( A_{1}, A_{2}, \dots, A_{n} \right)  = Jf(\mathbf{x}^{0}) = 
-        \left(\mathrm{D}_{1}f(\mathbf{x}^{0}), \mathrm{D}_{2}f(\mathbf{x}^{0}), \dots, \mathrm{D}_{n}f(\mathbf{x}^{0}) \right).
-        \]\footnote{
+        at \(\mathbf{x}^{0}\) for \(i = 1, 2, \dots, n\), and\footnote{
             It is referred to as the total differential formula, and the more common form is
             \[
                 \mathrm{d}f(x_{0},y_{0})=
                 \frac{\partial f}{\partial x}(x_{0},y_{0})\,\mathrm{d}x+\frac{\partial f}{\partial y}(x_{0},y_{0})\,\mathrm{d}y.
             \]
         }
+        \[
+        \mathbf{A} = \left( A_{1}, A_{2}, \dots, A_{n} \right)  = Jf(\mathbf{x}^{0}) = 
+        \left(\mathrm{D}_{1}f(\mathbf{x}^{0}), \mathrm{D}_{2}f(\mathbf{x}^{0}), \dots, \mathrm{D}_{n}f(\mathbf{x}^{0}) \right).
+        \]
         However, the converse is not true.
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \item[Sufficient Condition] Let \(U \subset \mathbb{R}^n\) be an open set, 
@@ -2502,6 +2520,7 @@ This is the formula for \textbf{expressing a directional derivative using partia
             In fact, this condition can be relaxed to require that one partial derivative exists at the point, 
             while the remaining \(n-1\) partial derivative functions are continuous at that point.
         }.
+
         However, the converse is not necessarily true.
     \end{description}    
 \end{theorem}
@@ -2512,7 +2531,7 @@ This is the formula for \textbf{expressing a directional derivative using partia
 \end{note}
 
 \begin{proof}
-    Taking a function of three variables as an example.
+    Taking the function of three variables as an example.
 
     Assume the \(3\)-ary function \(f: \mathbb{R}^3 \to \mathbb{R}\) meets:
     \begin{enumerate}
@@ -2596,6 +2615,30 @@ This is the formula for \textbf{expressing a directional derivative using partia
             but is not differentiable at \((0,0)\).
     \end{enumerate}
 \end{note}
+
+\begin{proof}
+    Take the function of two variables as an example.
+    Assume the bivariate function \(f: \mathbb{R}^2 \to \mathbb{R}\) meets:
+    \(\frac{\partial f}{\partial x}\) and \(\frac{\partial f}{\partial y}\) exist and are bounded
+    in some neighborhood of \((x_{0},y_{0})\).
+
+    Consider the total increment of \(f\) at the point \((x_{0},y_{0})\):
+    \begin{align*}
+        \Delta f 
+        &= \left[ f(x_0 + \Delta x, y_0 + \Delta y) - f(x_0, y_0 + \Delta y) \right]\\
+        &+ \left[ f(x_0, y_0 + \Delta y) - f(x_0, y_0) \right].
+    \end{align*}
+    By the Lagrange's Mean Value Theorem of unary functions, there exist \(\theta_{1}, \theta_{2} \in (0,1)\) such that
+    \begin{gather*}
+        \Delta f = f_{x}(x_{0}+\theta_{1}\Delta x,y_{0}+\Delta y)\Delta x + f_{y}(x_{0},y_{0}+\theta_{2}\Delta y)\Delta y.
+    \end{gather*}
+    Since \(\frac{\partial f}{\partial x}\) and \(\frac{\partial f}{\partial y}\) are bounded 
+    in some neighborhood of \((x_{0},y_{0})\),
+    \[
+    \lim_{(\Delta x, \Delta y) \to (0,0)} \Delta f = 0,
+    \]
+    i.e. \(f(x,y)\) is continuous at \((x_{0},y_{0})\), which completes the proof.
+\end{proof}
 
 \section{Higher-Order Partial Derivatives and Differentiability}
 \begin{leftbarTitle}{Higher-Order Partial Derivatives}\end{leftbarTitle}
@@ -2847,7 +2890,8 @@ then \(z = f \circ \mathbf{g}\) is differentiable at \((u_{0}, v_{0})\), and at 
 \end{proof}
 
 \begin{leftbarTitle}{Applications}\end{leftbarTitle}
-As an important application of the chain rule, we have the following theorem on the differentiation of determinants.
+As an important application of the chain rule, we have the following theorem on the \underline{differentiation of} 
+\underline{determinants}.
 % 行列式求导
 \begin{theorem}
     For 
@@ -2879,7 +2923,7 @@ As an important application of the chain rule, we have the following theorem on 
 \end{theorem}
 
 \vspace{0.7cm}
-Another important application is homogeneous functions.
+Another important application is \underline{homogeneous functions}.
 
 \begin{proposition}
     The following statements can be generalized for \(n\) variables:
@@ -2888,7 +2932,7 @@ Another important application is homogeneous functions.
             \[
             x \frac{\partial f}{\partial x} + y \frac{\partial f}{\partial y} = m f(x, y).
             \]
-        \item Let \(f(x, y)\in C^{2}\) of degree \(m\), then
+        \item Let \(f(x, y)\in C^{2}\) be a homogeneous function of degree \(m\), then
             \[
             \left( x \frac{\partial}{\partial x} + y \frac{\partial}{\partial y} \right)^2 f(x, y) = m(m-1) f(x, y),
             \]
@@ -2898,8 +2942,13 @@ Another important application is homogeneous functions.
             x^2 \frac{\partial^2}{\partial x^2} + 2xy \frac{\partial^2}{\partial x \partial y} + y^2 \frac{\partial^2}{\partial y^2},
             \]
             which is just a formal notation, not an operator multiplication.
-        \item Let \(f(x, y)\in C^{2}\) of degree \(m\), then \(f_{x}(x, y), f_{y}(x, y)\) 
+        \item Let \(f(x, y)\in C^{2}\) be a homogeneous function of degree \(m\), then \(f_{x}(x, y), f_{y}(x, y)\) 
             are homogeneous functions of degree \(m-1\).
+        \item Let \(f(x, y)\in C(\mathbb{R}^{2}\setminus \{(0,0)\})\) be a homogeneous function of degree \(m\), then 
+            \[
+            \left| f(x,y) \right| \leqslant C \rho^{m}, \quad \rho = \sqrt{x^2 + y^2},
+            \]
+            where \(C = \max_{\rho=1} |f(x,y)|\).
     \end{enumerate}
 \end{proposition}
 
@@ -3045,7 +3094,7 @@ Hf(\mathbf{x}^0) =
     & \cdots & \frac{\partial^2 f}{\partial x_n^2}
 \end{bmatrix}_{\mathbf{x}^0}
 \]
-is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times n\) symmetric matrix.
+is called the \textbf{Hessian matrix} of the function \(f\).
 
 
 \section{Implicit Function Theorem}
@@ -3273,7 +3322,7 @@ is called the \textbf{Hessian matrix} of the function \(f\). It is an \(n \times
 
 \begin{solution}
 
-{\color{violet!80}\textbf{Method 1: Direct Derivative}}
+\noindent{\color{violet!80}\textbf{Method 1: Direct Derivative}}
 Derivative both sides of the equations with respect to \(z\):
 \begin{gather*}
     F_{1}(y' - 1) + F_{2}(x' + 1) = 0, \\
@@ -3287,7 +3336,7 @@ Solve the above equations to get:
     \frac{F_{2}(yG_{1}-xz^{2}G_{2})-G_{2}z^{3}(F_{1}-F_{2})}{z(F_{2}G_{1}-F_{1}G_{2}z^{2})}.
 \end{gather*}
 
-{\color{violet!80}\textbf{Method 2: Implicit Function Theorem}}
+\noindent{\color{violet!80}\textbf{Method 2: Implicit Function Theorem}}
 By the implicit function theorem, we have:
 \begin{align*}
     \begin{pmatrix}
@@ -3316,9 +3365,57 @@ By the implicit function theorem, we have:
     \[
     \begin{cases} u=f(x, y, z, t), \\ g(y, z, t)=0,\\ h(z, t)=0 ,\end{cases}
     \]
-    where \(f, g, h \in C^1\).
+    where \(f, g, h \in C^1\) and \(\frac{\partial(g, h)}{\partial(z, t)} \neq 0\).
     Find \(\frac{\partial u}{\partial y}\).
 \end{example}
+\begin{solution}
+    
+\noindent{\color{violet!80}\textbf{Method 1.}}{\color{violet!80}}
+    Since \(\frac{\partial(g, h)}{\partial(z, t)} \neq 0\),
+    and \(g, h \in C^1\), \(g(y, z, t)=0, h(z, t)=0\),
+    by the implicit mapping theorem~\ref{thm:Implicit Mapping Theorem},
+    we can express \(z\) and \(t\) as functions of \(y\):
+    \[
+    \begin{cases}
+        z = z(y), \\
+        t = t(y).
+    \end{cases}
+    \]
+    Derivative both sides with respect to \(y\):
+    \begin{gather*}
+        g_{y} + g_{z} \frac{\mathrm{d}z}{\mathrm{d}y} + g_{t} \frac{\mathrm{d}t}{\mathrm{d}y} = 0, \\
+        h_{z} \frac{\mathrm{d}z}{\mathrm{d}y} + h_{t} \frac{\mathrm{d}t}{\mathrm{d}y} = 0.
+    \end{gather*}
+    And \(u\) is a function of \(x\) and \(y\): \(u = u(x, y) = f(x, y, z(y), t(y))\).
+    Thus:
+    \[
+    \frac{\partial u}{\partial y} = f_{2} + f_{3} \frac{\mathrm{d}z}{\mathrm{d}y} + f_{4} \frac{\mathrm{d}t}{\mathrm{d}y}.
+    \]
+    Solve the above equations to get:
+    \[
+    \frac{\partial u}{\partial y} = 
+    f_{y} - g_{y}(f_{z} h_{t} - f_{t} h_{z}) \left( \frac{\partial(g, h)}{\partial(z, t)} \right)^{-1}.
+    \]
+    
+\noindent{\color{violet!80}\textbf{Method 2.}}{\color{violet!80}}
+Considering
+\[
+\begin{cases} F(x, y, z, t, u)=u-f(x,y,z,t)=0, \\ g(y,z,t)=0, \\h(z,t)=0.  \end{cases}
+\]
+Since \(\frac{\partial(F,g,h)}{\partial(u,z,t)}=\frac{\partial(g,h)}{\partial(z,t)}\neq0\),
+by the implicit mapping theorem~\ref{thm:Implicit Mapping Theorem},
+we have
+\[
+\begin{cases} u=u(x,y),  \\ z=z(x,y), \\ t=t(x,y).  \end{cases}
+\]
+Derivative both sides with respect to \(y\):
+\begin{gather*}
+    u_{y} -f_{y} - f_{z} z_{y} - f_{t} t_{y} = 0, \\
+    g_{y} + g_{z} z_{y} + g_{t} t_{y} = 0, \\
+    h_{z} z_{y} + h_{t} t_{y} = 0.
+\end{gather*}
+Solve the above equations to get the same result.
+\end{solution}
 
 
 \begin{leftbarTitle}{Inverse Mapping}\end{leftbarTitle} % 逆映射定理
@@ -3377,6 +3474,22 @@ then a global inverse mapping theorem can be established.
 \section{Extremum of Multi-variable Functions}
 
 \begin{leftbarTitle}{Unconditional Extremum}\end{leftbarTitle}
+
+
+\begin{proposition}{Fermat's Three Villiges Problem} % 费马三村问题
+    There are three villages located at points \(A\), \(B\), and \(C\) on a flat plane.
+    A supply station needs to be established at point \(P\) on the plane,
+    such that the total distance from \(P\) to the three villages \(A\), \(B\), and \(C\) is minimized.
+    Such a point \(P\) is called the Fermat point of triangle \(ABC\),
+    which can be determined as follows:
+    \begin{enumerate}
+        \item If any angle of triangle \(ABC\) is greater than or equal to \(120^{\circ}\),
+            then the Fermat point is the vertex of that angle.
+        \item If all angles of triangle \(ABC\) are less than \(120^{\circ}\),
+            then the Fermat point \(P\) is located inside triangle \(ABC\),
+            and the angles between the segments \(PA\), \(PB\), and \(PC\) are all equal to \(120^{\circ}\).
+    \end{enumerate}
+\end{proposition}
 
 \begin{leftbarTitle}{Conditional Extremum}\end{leftbarTitle}
 \begin{definition}{Conditional Extremum}
@@ -3551,7 +3664,13 @@ infinitely many curves net with zero area.
 
 \begin{leftbarTitle}{Necessary and Sufficient Conditions for Integrability}\end{leftbarTitle}
 
-\section{Properties and Calculation of Multiple Integrals}
+\begin{proposition}
+    Let non-negative function \(f\in R(D)\),
+    then \(\iint_{D}f(x,y)\mathrm{d}x\mathrm{d}y=0\) if and only if
+    for any continuous points \((x,y)\in D\), \(f(x,y)=0\).
+\end{proposition}
+
+\section{Properties of Multiple Integrals}
 
 \begin{leftbarTitle}{Reduction of Double Integral to Iterated Integral}\end{leftbarTitle}
 
@@ -3674,7 +3793,105 @@ we can derive the formula of multiplicative property for double integral.
     The proof is complete.
 \end{proof}
 
-\begin{leftbarTitle}{Calculation of Triple Integrals}\end{leftbarTitle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Calculation of Multiple Integrals} % 多重积分的计算
+\begin{leftbarTitle}{Variable Substitution in Multiple Integrals}\end{leftbarTitle} % 多重积分中的变量替换
+\begin{theorem}{Variable Substitution in Double Integral}
+    Let \( \Omega \subset \mathbb{R}^2 \) be an open set, and let the mapping:
+    \[
+    \mathbf{F}: \Omega \to \mathbb{R}^2, \quad (u, v) \mapsto \mathbf{F}(u, v) = (x(u, v), y(u, v))
+    \]
+    satisfy the following conditions:
+    \begin{enumerate}
+        \item \( \mathbf{F} \in C^1(\Omega, \mathbb{R}^2) \);
+        \item \( \frac{\partial (x, y)}{\partial (u, v)} 
+            = \det J\mathbf{F}(u, v) = \det J\mathbf{F}(\mathbf{p}) \neq 0, \quad \mathbf{p} = (u, v) \in \Omega \);
+        \item \( \mathbf{F} \) is injective.
+    \end{enumerate}
+
+    If the set \( \Delta \) is a set with finite area and 
+    \( \overline{\Delta} \subset \Omega \), and \( f \) is continuous on \( \mathbf{F}(\Omega) \), 
+    then \( \mathbf{F}(\Delta) \) is also a set with finite area, and:
+    \[
+    \iint_{\mathbf{F}(\Delta)} f = \iint_{\Delta} f \circ \mathbf{F} \left| \det J\mathbf{F} \right|,
+    \]
+    i.e.,
+    \[
+    \iint_{F(\Delta)} f(x, y) \, \mathrm{d}x \mathrm{d}y = 
+    \iint_{\Delta} f(x(u, v), y(u, v)) \left| \frac{\partial (x, y)}{\partial (u, v)} \right| \, \mathrm{d}u \mathrm{d}v.
+    \]
+\end{theorem}
+
+For triple and higher-dimensional integrals, the variable substitution theorem is similar to the above theorem.
+
+\vspace{0.7cm}
+Some common variable substitutions in multiple integrals are as follows:
+\begin{description}
+\item[Polar Coordinates]
+\[
+\begin{cases} 
+    x = r \cos \theta, \\ 
+    y = r \sin \theta,
+\end{cases}
+\qquad
+\begin{cases} 
+    r = \sqrt{x^2 + y^2},\quad r\geqslant 0 \\ 
+    \theta = \arctan\left(\frac{y}{x}\right)\quad x\neq 0, \theta\in [0, 2\pi].
+\end{cases}
+\]
+and
+\[
+\frac{\partial (x,y)}{\partial (r,\theta)} = r.
+\]
+
+\item[Cylindrical Coordinate System]
+\[
+\begin{cases} 
+    x = r \cos \theta, \\ 
+    y = r \sin \theta, \\
+    z = z,
+\end{cases}
+\qquad
+\begin{cases} 
+    r = \sqrt{x^2 + y^2},\quad r\geqslant 0 \\ 
+    \theta = \arctan\left(\frac{y}{x}\right)\quad x\neq 0, \theta\in [0, 2\pi], \\
+    z = z.
+\end{cases}
+\]
+and
+\[
+\frac{\partial (x,y,z)}{\partial (r,\theta,\varphi)} = r.
+\]
+
+\item[Spherical Coordinate System]
+\[
+\begin{cases} 
+    x = r \sin \varphi \cos \theta, \\ 
+    y = r \sin \varphi \sin \theta, \\
+    z = r \cos \varphi,
+\end{cases}
+\qquad
+\begin{cases} 
+    r = \sqrt{x^2 + y^2 + z^2},\quad r\geqslant 0 \\ 
+    \varphi = \arccos\left(\frac{z}{r}\right)\quad r\neq 0, \varphi\in [0, \pi], \\
+    \theta = \arctan\left(\frac{y}{x}\right)\quad x\neq 0, \theta\in [0, 2\pi].
+\end{cases}
+\]
+and
+\[
+\frac{\partial (x,y,z)}{\partial (r,\theta,\varphi)} = r^2 \sin \varphi.
+\]
+
+\end{description}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/coordinate.png}
+    \caption{Cylindrical and Spherical Coordinate Systems}
+\end{figure}
+
+
+
+\begin{leftbarTitle}{Calculation of Triple Integrals}\end{leftbarTitle} % 三重积分的计算
 \begin{example}\label{eg:Triple Integral of Cone}
     Calculating \(I = \iiint_{ \Omega }z^{2}\mathrm{d}x\mathrm{d}y\mathrm{d}z\),
     where \(\Omega\) is the cone defined by \(z^{2} = \frac{h^{2}}{R^{2}}(x^{2}+y^{2})\) 
@@ -3788,100 +4005,14 @@ Some tips for choosing between the two methods (take the above two examples as r
     \bottomrule
 \end{tabular}
 
-
-
-\section{Variable Substitution in Multiple Integrals}
-\begin{theorem}{Variable Substitution in Double Integral}
-    Let \( \Omega \subset \mathbb{R}^2 \) be an open set, and let the mapping:
-    \[
-    \mathbf{F}: \Omega \to \mathbb{R}^2, \quad (u, v) \mapsto \mathbf{F}(u, v) = (x(u, v), y(u, v))
-    \]
-    satisfy the following conditions:
-    \begin{enumerate}
-        \item \( \mathbf{F} \in C^1(\Omega, \mathbb{R}^2) \);
-        \item \( \frac{\partial (x, y)}{\partial (u, v)} 
-            = \det J\mathbf{F}(u, v) = \det J\mathbf{F}(\mathbf{p}) \neq 0, \quad \mathbf{p} = (u, v) \in \Omega \);
-        \item \( \mathbf{F} \) is injective.
-    \end{enumerate}
-
-    If the set \( \Delta \) is a set with finite area and 
-    \( \overline{\Delta} \subset \Omega \), and \( f \) is continuous on \( \mathbf{F}(\Omega) \), 
-    then \( \mathbf{F}(\Delta) \) is also a set with finite area, and:
-    \[
-    \iint_{\mathbf{F}(\Delta)} f = \iint_{\Delta} f \circ \mathbf{F} \left| \det J\mathbf{F} \right|,
-    \]
-    i.e.,
-    \[
-    \iint_{F(\Delta)} f(x, y) \, \mathrm{d}x \mathrm{d}y = 
-    \iint_{\Delta} f(x(u, v), y(u, v)) \left| \frac{\partial (x, y)}{\partial (u, v)} \right| \, \mathrm{d}u \mathrm{d}v.
-    \]
-\end{theorem}
-
-For triple and higher-dimensional integrals, the variable substitution theorem is similar to the above theorem.
-
 \vspace{0.7cm}
-Some common variable substitutions in multiple integrals are as follows:
-\begin{description}
-\item[Polar Coordinates]
-\[
-\begin{cases} 
-    x = r \cos \theta, \\ 
-    y = r \sin \theta,
-\end{cases}
-\qquad
-\begin{cases} 
-    r = \sqrt{x^2 + y^2},\quad r\geqslant 0 \\ 
-    \theta = \arctan\left(\frac{y}{x}\right)\quad x\neq 0, \theta\in [0, 2\pi].
-\end{cases}
-\]
-and
-\[
-\frac{\partial (x,y)}{\partial (r,\theta)} = r.
-\]
-
-\item[Cylindrical Coordinate System]
-\[
-\begin{cases} 
-    x = r \cos \theta, \\ 
-    y = r \sin \theta, \\
-    z = z,
-\end{cases}
-\qquad
-\begin{cases} 
-    r = \sqrt{x^2 + y^2},\quad r\geqslant 0 \\ 
-    \theta = \arctan\left(\frac{y}{x}\right)\quad x\neq 0, \theta\in [0, 2\pi], \\
-    z = z.
-\end{cases}
-\]
-and
-\[
-\frac{\partial (x,y,z)}{\partial (r,\theta,\varphi)} = r.
-\]
-
-\item[Spherical Coordinate System]
-\[
-\begin{cases} 
-    x = r \sin \varphi \cos \theta, \\ 
-    y = r \sin \varphi \sin \theta, \\
-    z = r \cos \varphi,
-\end{cases}
-\qquad
-\begin{cases} 
-    r = \sqrt{x^2 + y^2 + z^2},\quad r\geqslant 0 \\ 
-    \varphi = \arccos\left(\frac{z}{r}\right)\quad r\neq 0, \varphi\in [0, \pi], \\
-    \theta = \arctan\left(\frac{y}{x}\right)\quad x\neq 0, \theta\in [0, 2\pi].
-\end{cases}
-\]
-and
-\[
-\frac{\partial (x,y,z)}{\partial (r,\theta,\varphi)} = r^2 \sin \varphi.
-\]
-
-\end{description}
+\begin{example}
+    Find the volume of region bounded by the half \textbf{Viviani's curve}:
+    sphere \(x^{2}+y^{2}+z^{2}\leqslant a^{2}\) and cylinder \(x^{2}+y^{2}\leqslant ax\) (\(a>0\)).
+\end{example}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/coordinate.png}
-    \caption{Cylindrical and Spherical Coordinate Systems}
+    \includegraphics[width=0.4\textwidth]{img/viviani.png}
 \end{figure}
 
 
@@ -3921,6 +4052,16 @@ Improper multiple integrals can be also classified into two types, infinite inte
     Improper multiple integral is integrable if and only if it is absolutely integrable.
 \end{theorem}
 
+\begin{example}
+    Calculate
+    \[
+    \iint_{\mathbb{R}^2} e^{-(x^2+y^2)} \, \mathrm{d}x \mathrm{d}y,
+    \]
+    and find the value of Poisson integral
+    \[
+    \int_{-\infty}^{+\infty} e^{-x^2} \, \mathrm{d}x.
+    \]
+\end{example}
 
 
 \chapter{Introduction to Surface Theory} % 曲面论导论
@@ -4950,6 +5091,8 @@ then the line integral of \(\omega\) is said to be \textbf{path-independent} on 
     exists, then \(I(y)\) is called a \textbf{definite integral with variable parameter \(y\)}.
 \end{definition}
 
+\section{Elliptic Integrals} % 椭圆积分
+
 \section{Improper Integrals with Variable Parameters}
 There are two types of improper integrals with variable parameters: 
 on infinite interval and with unbounded integrand.
@@ -4999,7 +5142,7 @@ Here we only give the definition of improper integrals on infinite interval with
     \]
 \end{theorem}
 
-\begin{leftbarTitle}{Analysis Properties of Uniform Convergence}\end{leftbarTitle}
+\section{Analysis Properties of Uniform Convergence} % 一致收敛的分析性质 
 \begin{lemma}
     
 \end{lemma}
@@ -5088,6 +5231,35 @@ but we have the following theorem.
 \end{theorem}
 
 \begin{example}
+    Let 
+    \[
+    F(a) = \int_{0}^{+\infty} \frac{1}{t}(1-e^{-at})\cos bt \, \mathrm{d}t, \quad b\neq 0.
+    \]
+    \begin{enumerate}
+        \item Prove that \(F(a)\in C[0,+\infty)\cap D(0,+\infty)\) 
+        \item Find the expression of \(F(a)\).
+    \end{enumerate}
+\end{example}
+
+\begin{leftbarTitle}{Imbedding Method}\end{leftbarTitle} % 嵌入法
+If \(I=\int_{a}^{b}f(x)\mathrm{d}x\) is difficult to calculate directly,
+we can introduce a parameter \(y\) and consider the integral
+\[
+I(y)=\int_{a}^{b}f(x,y)\mathrm{d}x,
+\]
+and let \(I=I(y_0)\) for some specific \(y_0\).
+If we can calculate \(I(y)\) and then take \(y=y_0\),
+then we can get the value of \(I\).
+This method is called \textbf{imbedding method}.
+
+\begin{example}
+    Compute the integral:
+    \[
+    I = \int_{0}^{1} \frac{\ln(1+x)}{1+x^{2}} \, \mathrm{d}x.
+    \]
+\end{example}
+
+\begin{example}
     Compute Dirichlet's integral:
     \[
     I = \int_{0}^{+\infty} \frac{\sin x}{x} \, \mathrm{d}x.
@@ -5109,7 +5281,8 @@ Beta function can be defined in the following equivalent forms:
     \]
     \item Via substitution \(t = \frac{u}{1+u}\):
     \[
-    B(p, q) = \int_{0}^{+\infty} \frac{u^{p-1}}{(1+u)^{p+q}} \, \mathrm{d}u.
+    B(p, q) = \int_{0}^{+\infty} \frac{u^{p-1}}{(1+u)^{p+q}} \, \mathrm{d}u = 
+    \int_{0}^{+\infty} \frac{u^{q-1}}{(1+u)^{p+q}} \, \mathrm{d}u.
     \]
     \item Via substitution \(t = \sin^{2}\theta\):
     \[
@@ -5174,6 +5347,16 @@ where it has simple poles.
 
 Next, we give three important formulas about Gamma function,
 which can be extended to the complex domain as well.
+\begin{theorem}{Bohr-Mollerup Theorem}
+    The Gamma function is the unique function defined on \((0, +\infty)\)
+    satisfying the following three conditions:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(f(x)>0\) and \(f(1) = 1\);
+        \item \(f(x+1) = x f(x)\) for all \(x > 0\);
+        \item \(\ln f(x)\) is convex on \((0, +\infty)\).
+    \end{enumerate}
+    
+\end{theorem}
 
 \begin{theorem}{Legendre's Duplication Formula}
     For \(s > 0\), there holds:
@@ -5203,6 +5386,13 @@ which can be extended to the complex domain as well.
     where \(0 < \theta < 1\).
 \end{theorem}
 
+\begin{example}
+    Prove the integral form of Riemann \(\zeta\) function:
+    \[
+    \zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s} 
+    = \frac{1}{\Gamma(s)} \int_{0}^{+\infty} \frac{x^{s-1}}{e^{x}-1} \, \mathrm{d}x, \quad s > 1.
+    \]
+\end{example}
 
 \begin{thebibliography}{99} 
 \bibitem{1} 徐森林, 薛春华. \emph{数学分析 (1st edition) }. 清华大学出版社, 2005.

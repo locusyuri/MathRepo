@@ -9,7 +9,7 @@ This is a repository for mathematical notes. The directory structure is as follo
 (folders with ~~strike through~~ are under construction):
 
 ## 1.Analyse | 分析學
-- [Analyse de Fourier | 傅立葉分析](./1.Analyse/Analyse%20de%20Fourier/tmp/initial.pdf)
+- [Analyse Harmonique | 調和分析](./1.Analyse/Analyse%20Harmonique/tmp/initial.pdf)
 - [Analyse Mathématique | 數學分析](./1.Analyse/Analyse%20Mathématique/tmp/initial.pdf)
 - [Équation Différentielle Ordinaire | 常微分方程](./1.Analyse/Équation%20Différentielle%20Ordinaire/tmp/initial.pdf)
 
