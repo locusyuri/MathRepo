@@ -43,12 +43,14 @@ This is a repository for mathematical notes. The directory structure is as follo
 ## A
 
 ## B
+- Banach Space (巴拿赫空間) | 
 ## C
 ## D
 ## E
 ## F
 ## G
 ## H
+- Hilbert Space (希爾伯特空間) |
 - Homogeneous Function (齊次函數) | Équation Différentielle Ordinaire - Section 2.3: Homogeneous Equations
 
 ## I

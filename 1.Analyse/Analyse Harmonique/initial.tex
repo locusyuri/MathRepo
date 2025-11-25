@@ -43,13 +43,119 @@ This is the preface of the book...
 % === 正文部分 ===
 \mainmatter         % 开始正文，页码从 1 重新开始
 
-\chapter{Fourier Series} % 这里放置章节标题
-\section{Fourier Expansion}
+\chapter{Classical Fourier Series} % 古典傅里叶级数
+In this chapter, we will explore the Fourier series in such function space:
+\begin{description}
+    \item[Set and Field] The linear space we are working on is the set of all integrable 
+        (in the \underline{Riemann sense})\footnote{
+            For common integral, it should be Riemann integral;
+            for defective integral, it should be \underline{absolute Riemann integral}.
+            For convenience, we just say Riemann integral in this context.
+        } 
+        complex-valued periodic functions defined on \([-\pi, \pi]\)\footnote{
+            It can be also defined on interval \([-T, T]\),
+            but we choose \([- \pi, \pi]\) for simplicity.
+        }, equipped with the usual addition and scalar multiplication of functions.
+        We denote it as \( \mathcal{R}[-\pi, \pi] \) that is a infinite-dimensional linear space.
+        The field of scalars is the set of complex numbers \( \mathbb{C} \).
+    \item[Inner Product] For any two functions \( f(x), g(x) \) in this space, we define their inner product as:
+        \[
+        \langle f, g \rangle = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) \overline{g(x)} \, \mathrm{d}x,
+        \]
+        where \(\frac{1}{2\pi}\) is a normalization factor.
+    \item[Norm] The norm induced by this inner product is given by:
+        \[
+        \| f \| = \sqrt{\langle f, f \rangle} = \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(x)|^2 \, \mathrm{d}x \right)^{\frac{1}{2}}.
+        \]
+\end{description}
+In fact, we often assume that the functions are always piecewise continuous or piecewise smooth on \([-\pi, \pi]\),
+which is the most common case in engineering.
+
+\begin{leftbarTitle}{Function Defined on the Unit Circle}\end{leftbarTitle} % 引入圆周上的函数
+For a periodic function \( f(x): \mathbb{R}\to \mathbb{C} \) with period \( 2\pi \),
+we can explore it from the perspective of complex exponential functions on the unit circle in the complex plane.
+Let 
+\[
+\mathbb{T} = \{ z \in \mathbb{C} : |z| = 1 \},
+\]
+which is one-dimensional torus, also known as the unit circle in the complex plane.
+
+For any \( \theta \in \mathbb{R} \), we can define:
+\[
+f(\theta) = F(e^{i\theta}),
+\]
+where \( F: \mathbb{T} \to \mathbb{C} \) is a \textbf{function defined on the unit circle}.
+Thus, we can study the periodic function \( f(x) \) by analyzing the function \( F(z) \) on the unit circle \( \mathbb{T} \).
+From the perspective of algebra, the set of all such functions \( F(z) \) forms a function space over the unit circle,
+which is \underline{isomorphic} to the space of periodic functions \( f(x) \) with period \( 2\pi \).
+
+By introducing \(\mathbb{T}\) that is a compact manifold without boundary in fact,
+we can not only eliminate the hassles of endpoints but also simplify many discussions.
+Furthermore, since \(\mathbb{T}\) is a multiplicative group of complex numbers,
+% 我们能更好地理解傅里叶级数的本质: 紧致阿贝尔群上的对偶理论
+we can better understand the essence of Fourier series: the duality theory on compact Abelian groups.
 
 
 
-\chapter{Convergence of Fourier Series} % 傅里叶级数的收敛性
-\section{Mean Convergence} % 均方收敛
+\section{Fourier Coefficients} % 傅里叶系数
+\begin{theorem}
+    \[
+    \mathcal{E} = \{ e^{inx} : n \in \mathbb{Z} \}
+    \]
+    or in real form:
+    \[
+    \{ 1, \cos x, \sin x, \cos 2x, \sin 2x, \ldots \}
+    \]
+    is an orthonormal basis of the inner product space \( \mathcal{R}[-\pi, \pi] \).
+\end{theorem}
+
+\begin{definition}
+    The Fourier coefficients \(\hat{f}(n)\) of a function \( f(x) \in \mathcal{R}[-\pi, \pi] \) is the 
+    projection of \( f(x) \) onto the basis function \( e^{inx} \):
+    \[
+    \hat{f}(n) = \langle f, e^{inx} \rangle = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-inx} \, \mathrm{d}x, \quad n \in \mathbb{Z}.
+    \]
+
+    Hence, the Fourier series of \( f(x) \) is given by:
+    \[
+    f(x) \sim \sum_{n=-\infty}^{+\infty} \hat{f}(n) e^{inx},
+    \]
+    or in real form:
+    \[
+    f(x) \sim \frac{a_0}{2} + \sum_{n=1}^{+\infty} \left[ a_n \cos(nx) + b_n \sin(nx) \right],
+    \]
+    where 
+    \begin{align*}
+    &a_{0} = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \, \mathrm{d}x, \\
+    &a_{n} = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) \, \mathrm{d}x, \\ 
+    &b_{n} = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) \, \mathrm{d}x, \quad n = 1, 2, \ldots
+    \end{align*}
+    and the symbol "\(\sim\)" indicates that the right-hand side is the Fourier series representation of \( f(x) \).
+\end{definition}
+% 扩展到任一周期
+It can be easily extended to any periodic function with period \( 2T \) by the substitution \( x = \frac{\pi}{T} t \):
+\[
+f(x) \sim \sum_{n=-\infty}^{+\infty} \hat{f}(n) e^{i n \frac{\pi}{T} x},
+\]
+or in real form:
+\[
+f(x) \sim \frac{a_0}{2} + 
+\sum_{n=1}^{+\infty} \left[ a_n \cos\left(n \frac{\pi}{T} x\right) + b_n \sin\left(n \frac{\pi}{T} x\right) \right].
+\]
+
+\vspace{0.7cm}
+% 正弦级数与余弦级数
+When \( f(x) \) is an even function, all sine terms vanish, and the Fourier series reduces to a cosine series:
+\[
+f(x) \sim \frac{a_0}{2} + \sum_{n=1}^{+\infty} a_n \cos(nx).
+\]
+When \( f(x) \) is an odd function, all cosine terms vanish, and the Fourier series reduces to a sine series:
+\[
+f(x) \sim \sum_{n=1}^{+\infty} b_n \sin(nx).
+\]
+
+\section{Convergence of Fourier Series} % 傅里叶级数的收敛性
+
 
 \begin{lemma}{Riemann-Lebesgue Lemma}
     Let \( f(x) \in R[a, b] \), \( g(x) \) has a period \( T \) and \( g(x) \in R[0, T] \),
@@ -66,20 +172,21 @@ This is the preface of the book...
 \end{lemma}
 
 
+\chapter{Cesàro Summation} % Cesàro 求和法
 
-\section{Pointwise Convergence} % 点值收敛
+\chapter{Modern Fourier Series} % 现代傅里叶级数(Lebesgue 傅里叶级数)
 
-\chapter{Fourier Transform on \(\mathbb{R}\)} % R1 上的傅里叶变换
+\chapter{Fourier Transform} % 傅里叶变换
 
-\chapter{Fourier Transform on \(\mathbb{R}^n\)} % Rn 上的傅里叶变换
+\chapter{Sobolev Spaces} % Sobolev 空间
 
-\chapter{Finite Fourier Analysis} % 有限傅里叶分析
 
-\chapter{Dirichlet Theorem} % Dirichlet 定理
+
 
 
 \begin{thebibliography}{99} 
 \bibitem{en1} Elias M. Stein, Rami Shakarchi. \emph{Fourier Analysis: An Introduction}. Princeton University Press, 2016.
+\bibitem{ch1} 于品海. \emph{Fourier 分析}.
 \bibitem{en2} Author2, Title2, Journal2, Year2. \emph{ This is another example of a reference.}
 \end{thebibliography}
 

@@ -1,5 +1,6 @@
 {
 	"cSpell.words": [
+		"Abelian",
 		"adjugate",
 		"antiderivative",
 		"Antiderivatives",
@@ -9,6 +10,7 @@
 		"bivariate",
 		"bmatrix",
 		"Borel",
+		"Cesàro",
 		"circulant",
 		"cofactor",
 		"cokernel",
@@ -51,6 +53,7 @@
 		"RREF",
 		"Schwarz",
 		"semidefinite",
+		"Sobolev",
 		"Steinitz",
 		"Stieltjes",
 		"Stolz",
