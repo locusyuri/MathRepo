@@ -1,0 +1,171 @@
+\chapter{Limits of Sequences and Continuity of Real Number System} % 序列极限与实数系连续性
+\section{Convergent Sequences}
+\begin{leftbarTitle}{Convergent Sequences}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Properties of Convergent Sequences}\end{leftbarTitle}
+
+
+
+\begin{leftbarTitle}{Cauchy Proposition and Fitting Method}\end{leftbarTitle}
+\begin{proposition}{Cauchy Proposition}\label{prop:Cauchy Proposition}
+    Let \(\lim_{n \to \infty} x_n = l\), then:
+    \[
+        \lim_{n \to \infty} \frac{x_{1}+x_{2}+ \cdots +x_{n}}{n} = l.
+    \]
+\end{proposition}
+
+\begin{note}
+    \begin{enumerate}
+        \item In the proposition, \(l\) can be \(+\infty\) or \(-\infty\).
+        \item Let \(\lim_{n \to \infty} x_n = l\), then:
+            \[
+                \lim_{n \to \infty}\frac{x_{1}+x_{2}+ \cdots +x_{n}}{n}
+                =\lim_{n \to \infty} \sqrt[n]{x_{1} x_{2} \cdots x_{n}} 
+                =\lim_{n \to \infty} \frac{n}{\frac{1}{x_{1}} + \frac{1}{x_{2}} + \cdots + \frac{1}{x_{n}}}
+                = l.
+            \]
+    \end{enumerate}
+\end{note}
+
+It can be proved directly by Stolz theorem~\ref{thm:Stolz Theorem}.
+On top of that, it can also be proved by the \textbf{fitting method}.
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{remark}
+    To prove \(\lim_{n \to \infty} x_n = A\), 
+    the key is to show that \(|x_n - A|\) can be arbitrarily small. 
+    For this purpose, it is generally recommended to simplify the expression of \(x_n\) as much as possible. 
+    However, in some cases, \(A\) can also be transformed into a form similar to \(x_n\). 
+    This method is called the fitting method. 
+    The core idea behind the method of fitting is to appropriately divide into units of \(1\) for analysis.
+\end{remark}
+
+
+
+\section{Indeterminate Form}
+\begin{leftbarTitle}{Infinitely Large Quantities and Infinitesimal Quantities}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Indeterminate Forms}\end{leftbarTitle}
+
+\begin{theorem}{Stolz-Cesàro theorem}\label{thm:Stolz Theorem}
+    \begin{description}
+        \item[Type \(\frac{0}{0}\)] Let \(\{a_n\}, \{b_n\}\) be two infinitesimal sequences, 
+            where \(\{a_n\}\) is also a strictly monotonic decreasing sequence. If  
+            \[
+            \lim_{n \to \infty} \frac{b_{n+1} - b_n}{a_{n+1} - a_n} = l \, (\text{finite or } \pm\infty),
+            \]  
+            then  
+            \[
+            \lim_{n \to \infty} \frac{a_n}{b_n} = l.
+            \] 
+        \item[Type \(\frac{\text{*}}{\infty}\)] Let \(\{a_n\}\) be a strictly monotonic increasing sequence 
+            of divergent large quantities. If  
+            \[
+            \lim_{n \to \infty} \frac{b_{n+1} - b_n}{a_{n+1} - a_n} = l \, (\text{finite or } \pm\infty),
+            \]  
+            then  
+            \[
+            \lim_{n \to \infty} \frac{a_n}{b_n} = l.
+            \]
+    \end{description}
+\end{theorem}
+\begin{note}
+    \begin{enumerate}
+        \item The inverse proposition of Stolz's Theorem does not hold.
+        \item If \(a_1\) is an undefined infinite quantity \(\infty\), Stolz Theorem does not hold.
+    \end{enumerate}
+\end{note}
+
+\begin{theorem}{Silverman-Toeplitz Theorem}\label{thm:Toeplitz Theorem}
+    Let
+    \[
+        \begin{bmatrix}
+        y_1 \\ y_2 \\ \vdots \\ y_n \\ \vdots
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+        a_{11} & 0 & \cdots & 0 \\
+        a_{21} & a_{22} & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        a_{n1} & a_{n2} & \cdots & a_{nn} \\
+        \vdots & \vdots &        & \vdots \\
+        \end{bmatrix}
+        \begin{bmatrix}
+        x_1 \\  x_2 \\  \vdots \\   x_n \\ \vdots
+        \end{bmatrix},
+    \]
+    where the infinite triangular matrix satisfies:
+    \begin{enumerate}
+        \item \(\forall j, \lim_{n \to \infty} a_{nj} = 0.\)(Every column sequence converges to \(0\).)
+        \item \(\sup_{i\in \mathbb{N}} \sum_{j=1}^{i} \left| a_{ij} \right| < \infty.\)(The absolute row sums are bounded.)
+    \end{enumerate}
+    And \(\lim_{n \to \infty} x_n = l\).
+    We denote \(y_{n}\) as the weighted sum sequence: \(y_{n} = \sum_{j=1}^n a_{nj} x_j\).
+    Then the following results hold:
+    \begin{enumerate}
+        \item If \(l=0\), then  \(\lim_{n \to \infty} y_n = 0\).
+        \item If \(l \neq 0\) and \(\lim_{n \to \infty}\sum_{j=1}^{n} a_{ij}=1 \), then \(\lim_{n \to \infty} y_n = l\).
+    \end{enumerate}
+\end{theorem}
+
+
+
+
+\section{Subsequences}
+\begin{leftbarTitle}{Subsequences}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Upper Limits and Lower Limits}\end{leftbarTitle}
+
+
+\section{Completeness of The Real Numbers}
+\begin{leftbarTitle}{Dedkind Completeness}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Least Upper Bound Property}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Monotone Convergence Theorem}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Bolzano-Weierstrass Theorem}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Nested Interval Theorem}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Cauchy Completeness}\end{leftbarTitle}
+\begin{definition}{Cauchy Sequence}
+    A sequence \(\{x_n\}\) is called a \textbf{Cauchy sequence} if for any \(\varepsilon > 0\), 
+    there exists a positive integer \(N\) such that when \(m,n > N\), 
+    \[
+        \left|x_n - x_m\right| < \varepsilon.
+    \]
+\end{definition}
+
+\begin{theorem}{Cauchy Convergence Criterion for Sequences}\label{thm:Cauchy Convergence Criterion for Sequences}
+    A sequence \(\{x_n\}\) converges if and only if it is a Cauchy sequence.
+\end{theorem}
+
+
+\begin{leftbarTitle}{Heine-Borel Theorem}\end{leftbarTitle}
+
+\section{Iterative Sequences}
+Formally, \(x_{0}\) is a \textbf{fixed point} of the function \(f\) if \(f(x_{0}) = x_{0}\).
+
+\begin{theorem}{Banach Fixed-Point Theorem (Contraction Mapping Theorem)}\label{thm:Banach Fixed-Point Theorem}
+    There exists a contraction mapping (in~\ref{def:Lipschitz Continuity}) \(f\) on an interval \(I\),
+    which admits a unique fixed point \(x^{*}\in I\).
+    Furthermore, \(x^{*}\) can be found as follows:
+    start with an arbitrary point \(x_{0}\in I\) and define the iterative sequence
+    \(x_{n+1}=f(x_n)\) for \(n=0,1,2,\cdots\).
+    Then \(\lim_{n \to \infty} x_n = x^{*}\).
+\end{theorem}
+
+\begin{remark}
+    The following inequalities are equivalent and describe the speed of convergence:  
+    \begin{gather*}
+        \left| x_{n} - x^{*} \right|  \leqslant \frac{L^{n}}{1-L} \left| x_{1} - x_{0} \right|, \\
+        \left| x_{n+1} - x^{*} \right| \leqslant \frac{L}{1-L} \left| x_{n+1} - x_{n} \right|, \\
+        \left| x_{n+1} - x^{*} \right| \leqslant L \left| x_{n} - x^{*} \right|.
+    \end{gather*}
+    Any such value of \(L<1\) is the Lipschitz constant for \(f\), 
+    and the smallest one is sometimes called \textbf{the best Lipschitz constant} of \(L\).
+\end{remark}

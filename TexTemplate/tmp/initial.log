@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  13 OCT 2025 20:58
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  4 DEC 2025 21:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1433,35 +1433,36 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
 
 [2
 
-]
-Chapter 1.
-
+] (./chapters/chap01.tex) (./chapters/chap02.tex) (./chapters/chap03.tex) (./chapters/chap04.tex) (./chapters/chap05.tex) (./chapters/chap06.tex)
 
 [1
 
-
-]
-
-[2
 
 ] (./tmp/initial.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
-Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: C4E38B936412CF5E344EB7772DF6BC14;521.
+
+
+Package rerunfilecheck Warning: File `initial.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `initial.out':
+(rerunfilecheck)             Before: C4E38B936412CF5E344EB7772DF6BC14;521
+(rerunfilecheck)             After:  D322331F6DCA31653F6B96244E67FF24;78.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45757 strings out of 473831
- 949859 string characters out of 5733137
+ 45784 strings out of 473831
+ 950393 string characters out of 5733137
  1960505 words of memory out of 5000000
- 68022 multiletter control sequences out of 15000+600000
- 566155 words of font info for 133 fonts, out of 8000000 for 9000
+ 68032 multiletter control sequences out of 15000+600000
+ 566139 words of font info for 131 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,11n,108p,692b,803s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (5 pages).
+Output written on ./tmp/initial.pdf (4 pages).

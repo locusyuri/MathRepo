@@ -1,0 +1,44 @@
+\chapter{Power Series} % 幂级数
+\section{Power Series and Its Convergence Radius}
+
+\section{Expanding Functions into Power Series}
+
+\section{Smooth Appropriation of Functions}
+First, we use continuous functions to approximate Riemann integrable functions
+and smooth functions to approximate continuous functions, respectively.
+\begin{theorem}
+    Let \( f(x) \in R[a, b] \). For any \( \varepsilon > 0 \), 
+    there exists a function \( g(x) \in C[a, b] \) such that:
+    \[
+    \int_{a}^{b}|f(x) - g(x)| < \varepsilon.
+    \]
+\end{theorem}
+
+\begin{theorem}
+    Let \( f(x) \in C[a, b] \). For any \( \varepsilon > 0 \), 
+    there exists a function \( g(x) \in C^{\infty}[a, b] \) such that:
+    \[
+    |f(x) - g(x)| < \varepsilon, \quad \forall x \in [a, b].
+    \]
+\end{theorem}
+
+Then, Weierstrass approximation theorem is stated as follows:
+\begin{theorem}{Weierstrass First Approximation Theorem}
+    Let \( f(x) \in C[a, b] \). For any \( \varepsilon > 0 \), 
+    there exists a polynomial \( P(x) \) such that:
+    \[
+    |f(x) - P(x)| < \varepsilon, \quad \forall x \in [a, b].
+    \]
+\end{theorem}
+
+\begin{theorem}{Weierstrass Second Approximation Theorem}
+    Let \(f(x)\) be a continuous periodic function with period \(2\pi\). For any \( \varepsilon > 0 \), 
+    there exists a trigonometric polynomial sequence
+    \[
+    \{ T_{n}(x)=\frac{A_{0}}{2} + \sum_{k=1}^{n} A_{k} \cos(kx) + B_{k} \sin(kx) \}
+    \]
+    such that:
+    \[
+    T_{n}(x) \mathop{\rightrightarrows} f(x).
+    \]
+\end{theorem}

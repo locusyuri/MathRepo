@@ -1,0 +1,313 @@
+\chapter{Integrals with Variable Parameters} % 变参积分
+\section{Definite Integrals with Variable Parameters}
+\begin{definition}{Definite Integral with Variable Parameters}
+    Let \(f(x, y)\) be defined on \([a, b] \times [c, d]\).
+    For each fixed \(y \in [c, d]\), if the definite integral
+    \[
+    I(y) = \int_{a}^{b} f(x, y) \, \mathrm{d}x
+    \]
+    exists, then \(I(y)\) is called a \textbf{definite integral with variable parameter \(y\)}.
+\end{definition}
+
+\section{Elliptic Integrals} % 椭圆积分
+
+\section{Improper Integrals with Variable Parameters}
+There are two types of improper integrals with variable parameters: 
+on infinite interval and with unbounded integrand.
+Here we only give the definition of improper integrals on infinite interval with variable parameters.
+
+\begin{definition}{Improper Integral with Variable Parameters}
+    Let \(f(x, y)\) be defined on \([a, +\infty) \times [c, d]\).
+    For some fixed \(y_{0} \in [c, d]\), if the improper integral
+    \(
+    I(y_{0}) = \int_{a}^{+\infty} f(x, y_{0}) \, \mathrm{d}x
+    \)
+    converges, then \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\) is called convergent at \(y_{0}\),
+    and \(y_{0}\) is called its convergence point.
+    
+    Let the set of all convergence points be \(E\),
+    then \(E\) is the domain of definition of the improper integral with variable parameters
+    \[
+    I(y) = \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x,
+    \]
+    also called the convergence domain of the improper integral \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\).
+\end{definition}
+
+\begin{leftbarTitle}{Uniform Convergence and Its Tests}\end{leftbarTitle}
+\begin{definition}{Uniform Convergence of Improper Integrals with Variable Parameters}
+    Let \(f(x, y)\) be defined on \([a, +\infty) \times [c, d]\),
+    where \([c, d]\) is the convergence domain of the improper integral
+    \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\).
+    If for every \(\varepsilon > 0\), there exists a number \(A_{0} > a\) independent of \(y\),
+    such that for all \(A > A_{0}\) and for all \(y \in [c, d]\),
+    \[
+    \left| \int_{a}^{A} f(x, y) \, \mathrm{d}x - I(y) \right| = \left| \int_{A}^{+\infty} f(x, y) \, \mathrm{d}x \right| < \varepsilon,
+    \]
+    then the improper integral \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\)
+    is said to be \textbf{uniformly convergent} on \([c, d]\).
+\end{definition}
+
+\begin{theorem}{Cauchy Criterion for Uniform Convergence of Improper Integrals with Variable Parameters}
+    Let \(f(x, y)\) be defined on \([a, +\infty) \times [c, d]\),
+    where \([c, d]\) is the convergence domain of the improper integral
+    \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\).
+    The improper integral \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\)
+    is uniformly convergent on \([c, d]\) if and only if
+    for every \(\varepsilon > 0\), there exists a number \(A_{0} > a\) independent of \(y\),
+    such that for all \(A_{1}, A_{2} > A_{0}\) and for all \(y \in [c, d]\),
+    \[
+    \left| \int_{A_{1}}^{A_{2}} f(x, y) \, \mathrm{d}x \right| < \varepsilon.
+    \]
+\end{theorem}
+
+\section{Analysis Properties of Uniform Convergence} % 一致收敛的分析性质 
+\begin{lemma}
+    
+\end{lemma}
+
+\begin{theorem}{Uniform Convergence and Continuity}
+    Let \(f(x, y)\) be continuous on \([a, +\infty) \times [c, d]\),
+    and \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\)
+    is uniformly convergent on \([c, d]\) with respect to \(y\), then:
+    \begin{enumerate}[label=(\roman*)]
+        \item 
+        \[
+        I(y) = \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x
+        \] 
+        is continuous on \([c, d]\), i.e.,
+        \[
+        \lim_{y\to y_0} \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x
+        = \int_{a}^{+\infty} \lim_{y\to y_0} f(x, y) \, \mathrm{d}x,
+        \quad y_0 \in [c, d],
+        \]
+        that is, the limit and the integral can be interchanged.
+        \item 
+        \[
+        \int_{c}^{d} \mathrm{d}y \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x
+        = \int_{a}^{+\infty} \mathrm{d}x \int_{c}^{d} f(x, y) \, \mathrm{d}y,
+        \]
+        that is, the order of integration can be interchanged.
+    \end{enumerate}
+\end{theorem}
+
+When \([c, d]\) is replaced by \([c, +\infty)\), the above theorem fails,
+but we have the following theorem.
+\begin{theorem}
+    On the region \(D = [a, +\infty) \times [c, +\infty)\),
+    \begin{enumerate}
+        % 无穷积分与无穷积分可交换
+        \item if \(f(x, y)\) satisfies: 
+        \begin{enumerate}
+            \item \(f(x, y)\in C(D)\);
+            \item \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\) internally closed uniformly converges with respect to \(y\);
+                \(\int_{c}^{+\infty} f(x, y) \, \mathrm{d}y\) internally closed uniformly converges with respect to \(x\);
+            \item One of the two integrals \(\int_{a}^{+\infty} \mathrm{d}x \int_{c}^{+\infty} |f(x, y)| \, \mathrm{d}y\)
+                or \(\int_{c}^{+\infty} \mathrm{d}y \int_{a}^{+\infty} |f(x, y)| \, \mathrm{d}x\) converges;
+        \end{enumerate}
+        then
+        \[
+        \int_{c}^{+\infty} \, \mathrm{d}y\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x = 
+        \int_{a}^{+\infty} \, \mathrm{d}x\int_{c}^{+\infty} f(x, y) \, \mathrm{d}y
+        \]
+        % 非负函数的无穷积分与无穷积分可交换
+        \item if \(f(x, y)\) satisfies:
+        \begin{enumerate}
+            \item \(f(x, y)\in C(D)\) and \(f(x)\geqslant 0\) on \(D\);
+            \item \(\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x \in C[c, +\infty)\);
+                \(\int_{c}^{+\infty} f(x, y) \, \mathrm{d}y \in C[a,+\infty)\);
+            \item One of the two integrals \(\int_{a}^{+\infty} \mathrm{d}x \int_{c}^{+\infty} f(x, y) \, \mathrm{d}y\)
+                or \(\int_{c}^{+\infty} \mathrm{d}y \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\) converges;
+        \end{enumerate}
+        then
+        \[
+        \int_{c}^{+\infty} \, \mathrm{d}y\int_{a}^{+\infty} f(x, y) \, \mathrm{d}x = 
+        \int_{a}^{+\infty} \, \mathrm{d}x\int_{c}^{+\infty} f(x, y) \, \mathrm{d}y
+        \]
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    One of the two integrals exists implies the other exists as well as the equality holds.
+\end{remark}
+
+
+\vspace{0.7cm}
+\begin{theorem}{Uniform Convergence and Differentiation}
+    On the region \(D = [a, +\infty] \times [c, d]\), if the following conditions are satisfied:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(\frac{\partial }{\partial y}f(x, y) \in C(D)\);
+        \item \(\int_{a}^{+\infty} \frac{\partial }{\partial y}f(x, y) \, \mathrm{d}x\) converges uniformly 
+            with respect to \(y\) on \([c, d]\);
+        \item There exists a point \(y_{0} \in [c, d]\), such that \(\int_{a}^{+\infty} f(x, y_{0}) \, \mathrm{d}x\) converges;
+        \item For any \([\alpha, \beta]\subset [a, +\infty)\), \(\int_{\alpha}^{\beta} f(x, y) \, \mathrm{d}x\) exists.
+    \end{enumerate}
+    Then \(I(y) = \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x\) is differentiable on \([c, d]\), and
+    \[
+    \frac{\mathrm{d}}{\mathrm{d}y} \int_{a}^{+\infty} f(x, y) \, \mathrm{d}x =
+    \int_{a}^{+\infty} \frac{\partial }{\partial y} f(x, y) \, \mathrm{d}x.
+    \]
+\end{theorem}
+
+\begin{example}
+    Let 
+    \[
+    F(a) = \int_{0}^{+\infty} \frac{1}{t}(1-e^{-at})\cos bt \, \mathrm{d}t, \quad b\neq 0.
+    \]
+    \begin{enumerate}
+        \item Prove that \(F(a)\in C[0,+\infty)\cap D(0,+\infty)\) 
+        \item Find the expression of \(F(a)\).
+    \end{enumerate}
+\end{example}
+
+\begin{leftbarTitle}{Imbedding Method}\end{leftbarTitle} % 嵌入法
+If \(I=\int_{a}^{b}f(x)\mathrm{d}x\) is difficult to calculate directly,
+we can introduce a parameter \(y\) and consider the integral
+\[
+I(y)=\int_{a}^{b}f(x,y)\mathrm{d}x,
+\]
+and let \(I=I(y_0)\) for some specific \(y_0\).
+If we can calculate \(I(y)\) and then take \(y=y_0\),
+then we can get the value of \(I\).
+This method is called \textbf{imbedding method}.
+
+\begin{example}
+    Compute the integral:
+    \[
+    I = \int_{0}^{1} \frac{\ln(1+x)}{1+x^{2}} \, \mathrm{d}x.
+    \]
+\end{example}
+
+\begin{example}
+    Compute Dirichlet's integral:
+    \[
+    I = \int_{0}^{+\infty} \frac{\sin x}{x} \, \mathrm{d}x.
+    \]
+\end{example}
+\begin{solution}
+
+\end{solution}
+
+
+\section{Euler Integrals}
+\begin{leftbarTitle}{Beta Function}\end{leftbarTitle}
+% 两种形式的 Beta 函数
+Beta function can be defined in the following equivalent forms:
+\begin{enumerate}
+    \item For \(p>0, q>0\):
+    \[
+    B(p, q) = \int_{0}^{1} t^{p-1} (1-t)^{q-1} \, \mathrm{d}t.
+    \]
+    \item Via substitution \(t = \frac{u}{1+u}\):
+    \[
+    B(p, q) = \int_{0}^{+\infty} \frac{u^{p-1}}{(1+u)^{p+q}} \, \mathrm{d}u = 
+    \int_{0}^{+\infty} \frac{u^{q-1}}{(1+u)^{p+q}} \, \mathrm{d}u.
+    \]
+    \item Via substitution \(t = \sin^{2}\theta\):
+    \[
+    B(p, q) = 2\int_{0}^{\frac{\pi}{2}} \sin^{2p-1}\theta \cos^{2q-1}\theta \, \mathrm{d}\theta.
+    \]
+    Then we have:
+    \[
+    B(\frac{1}{2}, \frac{1}{2}) = \pi, \quad B(\frac{3}{2}, \frac{1}{2}) = \frac{\pi}{2}, \quad B(1, 1) = 1.
+    \]
+\end{enumerate}
+
+\begin{property}
+    \begin{description}
+        \item[Continuity] \(B(p, q)\in C(U)\), where \(U = \{(p, q) | p>0, q>0\}\).
+        \item[Symmetry] \(B(p, q) = B(q, p)\).
+        \item[Recurrence Relation] \(B(p, q) = \frac{q-1}{p+q-1} B(p, q-1)\) for \(p>0,q>1\).
+    \end{description}
+\end{property}
+
+
+\begin{leftbarTitle}{Gamma Function}\end{leftbarTitle}
+Gamma function can be defined in the following equivalent forms:
+\begin{enumerate}
+    \item For \(s>0\):
+    \[
+    \Gamma(s) = \int_{0}^{+\infty} x^{s-1} e^{-x} \, \mathrm{d}x.
+    \]
+    \item Via the limit:
+    \[
+    \Gamma(s) = \lim_{n\to\infty} \frac{n!}{s(s+1)(s+2)\cdots(s+n)}.
+    \]
+    \item Via substitution \(x = t^{2}\):
+    \[
+    \Gamma(s) = \frac{1}{2} \int_{0}^{+\infty} t^{2s-1} e^{-t^{2}} \, \mathrm{d}t.
+    \]
+    Then we have:
+    \[
+    \Gamma(\frac{1}{2}) = \sqrt{\pi}, \quad \Gamma(\frac{3}{2}) = \frac{\sqrt{\pi}}{2}, \quad \Gamma(1) = 1.
+    \]
+\end{enumerate}
+
+
+\begin{property}
+    \begin{description}
+        \item[Continuity] \(\Gamma(s)\in C(0, +\infty)\).
+        \item[Recurrence Relation] \(\Gamma(s+1) = s \Gamma(s)\) for \(s>0\).
+    \end{description}
+\end{property}
+
+Gamma function can be \underline{extended} to the whole complex plane except for non-positive integers,
+where it has simple poles.
+
+
+
+\begin{leftbarTitle}{Relation between Beta and Gamma Functions}\end{leftbarTitle}
+\begin{theorem}
+    There holds the following relation between Beta and Gamma functions:
+    \[
+    B(p, q) = \frac{\Gamma(p) \Gamma(q)}{\Gamma(p+q)}, \quad p>0, q>0.
+    \]
+\end{theorem}
+
+Next, we give three important formulas about Gamma function,
+which can be extended to the complex domain as well.
+\begin{theorem}{Bohr-Mollerup Theorem}
+    The Gamma function is the unique function defined on \((0, +\infty)\)
+    satisfying the following three conditions:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(f(x)>0\) and \(f(1) = 1\);
+        \item \(f(x+1) = x f(x)\) for all \(x > 0\);
+        \item \(\ln f(x)\) is convex on \((0, +\infty)\).
+    \end{enumerate}
+    
+\end{theorem}
+
+\begin{theorem}{Legendre's Duplication Formula}
+    For \(s > 0\), there holds:
+    \[
+    \Gamma(s) \Gamma(s + \frac{1}{2}) = \frac{\sqrt{\pi}}{2^{2s-1}} \Gamma(2s).
+    \]    
+\end{theorem}
+
+
+\begin{theorem}{Reflection Formula} % 余元公式
+    For \(0 < s < 1\), there holds:
+    \[
+    \Gamma(s) \Gamma(1 - s) = \frac{\pi}{\sin \pi s}.
+    \]
+\end{theorem}
+
+\begin{theorem}{Stirling's Formula}
+    \[
+    \Gamma(s+1) = \sqrt{2 \pi s} \left( \frac{s}{e} \right)^{s} \exp\left( \frac{\theta}{12s} \right),
+    \]
+    where \(0 < \theta < 1\).
+
+    Specially, when \(s = n \in \mathbb{N}\),
+    \[
+    \Gamma(n+1) = n! = \sqrt{2 \pi n} \left( \frac{n}{e} \right)^{n} \exp\left( \frac{\theta}{12n} \right),
+    \]
+    where \(0 < \theta < 1\).
+\end{theorem}
+
+\begin{example}
+    Prove the integral form of Riemann \(\zeta\) function:
+    \[
+    \zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s} 
+    = \frac{1}{\Gamma(s)} \int_{0}^{+\infty} \frac{x^{s-1}}{e^{x}-1} \, \mathrm{d}x, \quad s > 1.
+    \]
+\end{example}

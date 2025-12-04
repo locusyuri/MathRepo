@@ -1,0 +1,90 @@
+\chapter{Determinants} % 行列式
+\section{Permutations} % 排列
+
+\section{Determinant and Its Properties} % 行列式及其性质
+
+\section{Expanding by Rows (Columns)} % 按行（列）展开
+\begin{leftbarTitle}{Expanding by One Row}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Cramer's Rule}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Expanding by \(k\) Rows}\end{leftbarTitle}
+
+\section{Special Determinants} % 这里放置小节标题
+\begin{definition}{Vandermonde Determinant}
+    The Vandermonde determinant is defined as
+    \[
+    V_n = \begin{vmatrix}
+    1 & 1 & 1 & \cdots & 1 \\
+    x_1 & x_2 & x_3 & \cdots & x_n \\
+    x_1^2 & x_2^2 & x_3^2 & \cdots & x_n^2 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    x_1^{n-1} & x_2^{n-1} & x_3^{n-1} & \cdots & x_n^{n-1}
+    \end{vmatrix}
+    \]
+    where \( x_1, x_2, \ldots, x_n \) are distinct variables.
+\end{definition}
+
+The value of the Vandermonde determinant is given by
+\[
+V_n = \prod_{1 \leq i < j \leq n} (x_j - x_i).
+\]  
+
+\begin{definition}{Arrow Determinant}
+    The Arrow determinant (\(\nwarrow\)) is defined as
+    \[
+    A_n = \begin{vmatrix}
+    a_{11} & a_{12} & a_{13} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & 0 & \cdots & 0 \\
+    a_{31} & 0 & a_{33} & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    a_{n1} & 0 & 0 & \cdots & a_{nn}
+    \end{vmatrix}.
+    \]
+
+    The value of the Arrow determinant is given by
+    \[
+    A_n = \left( a_{11}- \sum_{k=2}^{n} \frac{a_{1k}a_{k1}}{a_{kk}}  \right)\prod_{k=2}^{n} a_{kk}.
+    \]
+\end{definition}
+
+From the first column sequentially, subtract \( \frac{a_{21}}{a_{22}} \) times the second column, \(\cdots\), 
+\( \frac{a_{n1}}{a_{nn}} \) times the \( n \)-th column, so that the first column becomes:
+\[
+\begin{bmatrix}
+a_{11} - \sum\limits_{k=2}^n \frac{a_{1k}a_{k1}}{a_{kk}} &
+0 &
+0 &
+\vdots &
+0
+\end{bmatrix}^{\mathrm{T}}.
+\]
+Then expand along the first column.
+
+\begin{definition}{Two-Triangular Determinant}
+    If the determinant satisfies 
+    \[ 
+    a_{ij} = \begin{cases} 
+    a, & i < j, \\ 
+    x_{i}, & i = j, \\ 
+    b, & i > j,
+    \end{cases} 
+    \]
+    then \( D_{n} \) is called a two-triangular determinant.
+\end{definition}
+
+The value of the two-triangular determinant is given by
+\[
+\begin{vmatrix}
+x_{1} & a & a & \dots & a \\
+b & x_{2} & a & \dots & a \\
+b & b & x_{3} & \dots & a \\
+\vdots & \vdots & \vdots & & \vdots \\
+b & b & b & \dots & x_{n}
+\end{vmatrix}
+=
+\begin{cases}
+\left[ x_{1} + a \sum\limits^{n}_{k=2} \frac{x_{1}-a}{x_{k}-a} \right] \cdot \prod\limits^{n}_{k=2} (x_{k}-a), & a = b \\
+(x_{n}-b) D_{n-1} + \prod\limits^{n-1}_{k=1} (x_{k}-a), & a \neq b 
+\end{cases}
+\]

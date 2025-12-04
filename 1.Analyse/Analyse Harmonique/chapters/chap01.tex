@@ -1,0 +1,341 @@
+\chapter{Classical Fourier Series} % 古典傅里叶级数
+In this chapter, we will explore the Fourier series in such function space:
+\begin{description}
+    \item[Set and Field] The linear space we are working on is the set of all integrable 
+        (in the \underline{Riemann sense})\footnote{
+            For common integral, it should be Riemann integral;
+            for defective integral, it should be \underline{absolute Riemann integral}.
+            For convenience, we just say Riemann integral in this context.
+        } 
+        complex-valued periodic functions defined on \([-\pi, \pi]\)\footnote{
+            It can be also defined on interval \([-T, T]\),
+            but we choose \([- \pi, \pi]\) for simplicity.
+        }, equipped with the usual addition and scalar multiplication of functions.
+        We denote it as \( \mathcal{R}[-\pi, \pi] \) that is a infinite-dimensional linear space.
+        The field of scalars is the set of complex numbers \( \mathbb{C} \).
+    \item[Inner Product] For any two functions \( f(x), g(x) \) in this space, we define their inner product as:
+        \[
+        \langle f, g \rangle = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) \overline{g(x)} \, \mathrm{d}x,
+        \]
+        where \(\frac{1}{2\pi}\) is a normalization factor.
+    \item[Norm] The norm induced by this inner product is given by:
+        \[
+        \| f \| = \sqrt{\langle f, f \rangle} = \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} |f(x)|^2 \, \mathrm{d}x \right)^{\frac{1}{2}}.
+        \]
+\end{description}
+In fact, we often assume that the functions are always piecewise continuous or piecewise smooth on \([-\pi, \pi]\),
+which is the most common case in engineering.
+
+\begin{leftbarTitle}{Function Defined on the Unit Circle}\end{leftbarTitle} % 引入圆周上的函数
+For a periodic function \( f(x): \mathbb{R}\to \mathbb{C} \) with period \( 2\pi \),
+we can explore it from the perspective of complex exponential functions on the unit circle in the complex plane.
+Let 
+\[
+\mathbb{T} = \{ z \in \mathbb{C} : |z| = 1 \},
+\]
+which is one-dimensional torus, also known as the unit circle in the complex plane.
+
+For any \( \theta \in \mathbb{R} \), we can define:
+\[
+f(\theta) = F(e^{i\theta}),
+\]
+where \( F: \mathbb{T} \to \mathbb{C} \) is a \textbf{function defined on the unit circle}.
+Thus, we can study the periodic function \( f(x) \) by analyzing the function \( F(z) \) on the unit circle \( \mathbb{T} \).
+From the perspective of algebra, the set of all such functions \( F(z) \) forms a function space over the unit circle,
+which is \underline{isomorphic} to the space of periodic functions \( f(x) \) with period \( 2\pi \).
+
+By introducing \(\mathbb{T}\) that is a compact manifold without boundary in fact,
+we can not only eliminate the hassles of endpoints but also simplify many discussions.
+Furthermore, since \(\mathbb{T}\) is a multiplicative group of complex numbers,
+% 我们能更好地理解傅里叶级数的本质: 紧致阿贝尔群上的对偶理论
+we can better understand the essence of Fourier series: the duality theory on compact Abelian groups.
+
+
+
+\section{Fourier Coefficients} % 傅里叶系数
+\begin{theorem}
+    \[
+    \mathcal{E} = \{ e^{inx} : n \in \mathbb{Z} \}
+    \]
+    or in real form:
+    \[
+    \{ 1, \cos x, \sin x, \cos 2x, \sin 2x, \ldots \}
+    \]
+    is an orthonormal basis of the inner product space \( \mathcal{R}[-\pi, \pi] \).
+\end{theorem}
+
+\begin{definition}
+    The Fourier coefficients \(\hat{f}(n)\) of a function \( f(x) \in \mathcal{R}[-\pi, \pi] \) is the 
+    projection of \( f(x) \) onto the basis function \( e^{inx} \):
+    \[
+    \hat{f}(n) = \langle f, e^{inx} \rangle = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x) e^{-inx} \, \mathrm{d}x, \quad n \in \mathbb{Z},
+    \]
+    that is called Euler-Fourier formula.
+
+    Hence, the Fourier series of \( f(x) \) is given by:
+    \[
+    f(x) \sim \sum_{n=-\infty}^{+\infty} \hat{f}(n) e^{inx},
+    \]
+    or in real form:
+    \[
+    f(x) \sim \frac{a_0}{2} + \sum_{n=1}^{+\infty} \left[ a_n \cos(nx) + b_n \sin(nx) \right],
+    \]
+    where 
+    \begin{align*}
+    &a_{0} = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \, \mathrm{d}x, \\
+    &a_{n} = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) \, \mathrm{d}x, \\ 
+    &b_{n} = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) \, \mathrm{d}x, \quad n = 1, 2, \ldots
+    \end{align*}
+    and the symbol "\(\sim\)" indicates that the right-hand side is the Fourier series representation of \( f(x) \).
+\end{definition}
+% 扩展到任一周期
+It can be easily extended to any periodic function with period \( 2T \) by the substitution \( x = \frac{\pi}{T} t \):
+\[
+f(x) \sim \sum_{n=-\infty}^{+\infty} \hat{f}(n) e^{i n \frac{\pi}{T} x},
+\]
+or in real form:
+\[
+f(x) \sim \frac{a_0}{2} + 
+\sum_{n=1}^{+\infty} \left[ a_n \cos\left(n \frac{\pi}{T} x\right) + b_n \sin\left(n \frac{\pi}{T} x\right) \right].
+\]
+
+\vspace{0.7cm}
+% 正弦级数与余弦级数
+When \( f(x) \) is an even function, all sine terms vanish, and the Fourier series reduces to a cosine series:
+\[
+f(x) \sim \frac{a_0}{2} + \sum_{n=1}^{+\infty} a_n \cos(nx).
+\]
+When \( f(x) \) is an odd function, all cosine terms vanish, and the Fourier series reduces to a sine series:
+\[
+f(x) \sim \sum_{n=1}^{+\infty} b_n \sin(nx).
+\]
+
+\section{The Dirichlet Kernel} % 狄利克雷核
+\begin{leftbarTitle}{Convolution}\end{leftbarTitle}
+\begin{definition}{Convolution} % 卷积
+    For two functions \( f(x), g(x) \) defined on \(\mathbb{T}\),
+    their convolution \( f * g \) is defined as:
+    \[
+    (f * g)(x) = \int_{-\infty}^{+\infty} f(t) g(x - t) \, \mathrm{d}t.
+    \]
+\end{definition}
+
+\begin{remark}
+    % 从物理直观的角度, 卷积是一种“加权平均”或“滤波”。$g(t)$ 是权重函数（核），它在 $x$ 点附近这种“滑动窗口”内对 $f$ 进行取样平均。
+    From a physically intuitive perspective, convolution is a form of "weighted averaging" or "filtering".
+    Here, \( g(t) \) serves as the weight function (kernel), 
+    which samples and averages \( f \) within a "sliding window" around the point \( x \).
+\end{remark}
+
+\begin{property}
+    \begin{description}
+        \item[Symmetry] \( f * g = g * f \).
+    \end{description}
+\end{property}
+
+\begin{theorem}{Convolution Theorem}
+    Under suitable conditions the Fourier transform of a convolution of two functions (or signals) 
+    is the product of their Fourier transforms,
+    \[
+    \widehat{f * g}(n) = \hat{f}(n) \cdot \hat{g}(n).
+    \]
+
+    In other words, the convolution in one domain corresponds to the product in another domain, 
+    for example, the convolution in the time domain corresponds to the product in the frequency domain.
+\end{theorem}
+
+\begin{leftbarTitle}{Dirichlet Kernel}\end{leftbarTitle}
+For partial sum of the first \( N \) terms of the Fourier series of \( f(x) \):
+\[
+S_{N}(f; x) = \sum_{n=-N}^{N} \hat{f}(n) e^{inx} = \frac{a_{0}}{2} + \sum_{n=1}^{N} \left[ a_n \cos(nx) + b_n \sin(nx) \right],
+\]
+in order to study its convergence, we can transform it into integral form by convolution theorem:
+\[
+S_{N}(f; x) = f * D_{N},
+\]
+where 
+\[
+D_{N}(x)=\sum_{n=-N}^{N} e^{inx} = \sum_{n=1}^{N} 2\cos(nx) + 1 = 
+\frac{\sin\left( \frac{2N+1}{2} x \right)}{\sin\left( \frac{x}{2} \right)},
+\]
+is called the \textbf{Dirichlet kernel}.
+
+Dirichlet kernel possesses the following important properties:
+\begin{description}
+    \item[Evenness] \( D_{N}(-x) = D_{N}(x) \).
+    \item[Normalization] 
+    \[
+    \frac{1}{2\pi} \int_{-\pi}^{\pi} D_{N}(x) \, \mathrm{d}x = 1.
+    \]
+\end{description}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/Dirichlet_kernels.png}
+    \caption{Dirichlet kernels for various values of \( N \).}
+    \label{fig:Dirichlet_kernels}
+\end{figure}
+However, \( D_{N}(x) \) is like water waves, with both positive and negative values. 
+This means that during convolution (weighted averaging), positive and negative offsets may lead to extremely unstable results.
+For example, for integral mean of the absolute value of the Dirichlet kernel,
+which is called the \textbf{Lebesgue constant}:
+\[
+L_{n} := \frac{1}{2\pi} \int_{-\pi}^{\pi} |D_{N}(x)| \, \mathrm{d}x \approx \frac{4}{\pi^{2}} \ln N, \quad (N \to +\infty).
+\]
+It is precisely because the absolute integral of \(D_{N}(x)\) tends to infinity 
+that it is a "bad kernel function". 
+It amplifies errors, causing \underline{the Fourier series of a continuous function to potentially diverge}.
+
+\vspace{0.7cm}
+With the help of convolution theorem, we have:
+\begin{align*}
+    S_{N}(f; x) &= \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) D_{N}(x - t) \, \mathrm{d}t\\
+    & \xlongequal{\text{Let } u = t - x} \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x + u) D_{N}(-u) \, \mathrm{d}u \\
+    & \xlongequal{D_{N}(-u) = D_{N}(u)} \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x + u) D_{N}(u) \, \mathrm{d}u \\
+    & \xlongequal{\text{Divide by } 2} \frac{1}{2\pi} \int_{0}^{\pi} \left[ f(x + u) + f(x - u) \right] D_{N}(u) \, \mathrm{d}u.
+\end{align*}
+Then the convergence of \( S_{N}(f; x) \) can be analyzed through the properties of the last integral 
+that is called the \textbf{Dirichlet integral}.
+
+Since the normalization property of Dirichlet kernel, we can analyze the difference between 
+\( S_{N}(f; x) \) and any a function \( \sigma(x) \):
+\[
+S_{N}(f; x) - \sigma(x) = \frac{1}{2\pi} \int_{0}^{\pi} \left[ f(x + u) + f(x - u) - 2\sigma(x) \right] D_{N}(u) \, \mathrm{d}u.
+\]
+Denote \(\varphi_{\sigma}(u, x) = f(x + u) + f(x - u) - 2\sigma(x)\),
+then the convergence of \( S_{N}(f; x) \) to \( \sigma(x) \) is equivalent to:
+\[
+\lim_{N \to +\infty} \int_{0}^{\pi} \varphi_{\sigma}(u, x) D_{N}(u) \, \mathrm{d}u = 0.
+\]
+
+\begin{leftbarTitle}{Localization Theorem}\end{leftbarTitle}
+First, we need the following important lemma:
+\begin{lemma}{Riemann-Lebesgue Lemma}
+    Let \( f(x) \in R[a, b] \), \( g(x) \) has a period \( T \) and \( g(x) \in R[0, T] \),
+    then:
+    \[
+    \lim_{p \to +\infty}\int_{a}^{b} f(x)g(px) \, \mathrm{d}x 
+    = \int_{a}^{b} f(x) \, \mathrm{d}x \cdot \frac{1}{T} \int_{0}^{T} g(t) \, \mathrm{d}t.
+    \]
+    A special case is when \( g(x) = \sin x \) or \( g(x) = \cos x \), then:
+    \[
+    \lim_{p \to +\infty}\int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x 
+    = \int_{a}^{b} f(x)\cos(px) \, \mathrm{d}x = 0.
+    \]
+\end{lemma}
+\begin{proof}
+    
+    \noindent{\color{violet!80}\textbf{Special case.}}{\color{violet!80}}
+    Prove for \( g(x) = \sin x \), the case for \( g(x) = \cos x \) is similar.
+    
+    If \(f(x)\in B[a,b]\), i.e., \(f(x)\) is integrable in the common Riemann sense on \([a,b]\).
+    Then there exists \(M>0\) such that \(|f(x)|\leqslant  M\) for all \(x\in[a,b]\).
+    Denote \(n=[\sqrt{p}]\), then when \(p\to +\infty\), we have \(n\to +\infty\).
+    \newline Divide the interval \([a,b]\) into \(n\) subintervals of equal length:
+    \[
+        a = x_0 < x_1 < x_2 < \cdots < x_n = b,
+    \]
+    and let \(\omega_{i}\) be the oscillation of \(f(x)\) on the \(i\)-th subinterval \([x_{i-1}, x_i]\).
+    \newline By the integrability theory, 
+    \[
+    \lim_{n \to \infty}\sum_{i=1}^{n} \omega_i\Delta x_{i} = 0.
+    \]
+    And we have: 
+    \[
+    \left| \int_{x_{i-1}}^{x_{i}}\sin(px) \, \mathrm{d}x \right|< \frac{2}{p},\quad 
+    \left| \sin(px) \right|\leqslant 1.
+    \]
+    Then we can estimate:
+    \begin{align*}
+        \left| \int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x \right| 
+        & = \left| \sum_{i=1}^{n} \int_{x_{i-1}}^{x_{i}} f(x)\sin(px) \, \mathrm{d}x \right| \\
+        & \leqslant \left| \sum_{i=1}^{n} \int_{x_{i-1}}^{x_{i}} \left( f(x)-f(x_{i}) \right)\sin(px) \, \mathrm{d}x \right| 
+        + \left| \sum_{i=1}^{n} \int_{x_{i-1}}^{x_{i}} f(x_{i})\sin(px) \, \mathrm{d}x \right| \\
+        & \leqslant \sum_{i=1}^{n} \omega_i \Delta x_i 
+        + \sum_{i=1}^{n} \int_{x_{i-1}}^{x_{i}} \left| f(x_{i}) \right| \left| \sin(px) \right|   \, \mathrm{d}x \\
+        & \leqslant \sum_{i=1}^{n} \omega_i \Delta x_i + M \cdot n \cdot \frac{2}{p} \to 0, \quad (p \to +\infty).
+    \end{align*}
+    Thus, \(\lim_{p \to \infty}\int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x = 0\).
+
+    If \(f(x)\not\in B[a,b]\), i.e., \(f(x)\) is absolutely integrable in the improper Riemann sense on \([a,b]\).
+    Without loss of generality, assume that \(f(x)\) is defective at point \(b\).
+    Then 
+    \[
+    \forall \varepsilon > 0, \exists \delta > 0, \forall \eta \in (0, \delta): 
+    \int_{b-\eta}^{b} |f(x)| \, \mathrm{d}x < \frac{\varepsilon}{2}.
+    \]
+    Fix such \(\eta\), then \(f(x)\in R[a,b-\eta]\).
+    According to the previous discussion, there exists \(P>0\), such that when \(p>P\):
+    \[
+    \left| \int_{a}^{b-\eta} f(x)\sin(px) \, \mathrm{d}x \right| < \frac{\varepsilon}{2}.
+    \]
+    Then we have:
+    \begin{align*}
+        \left| \int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x \right| 
+        & \leqslant \left| \int_{a}^{b-\eta} f(x)\sin(px) \, \mathrm{d}x \right| 
+        + \left| \int_{b-\eta}^{b} f(x)\sin(px) \, \mathrm{d}x \right| \\
+        & < \frac{\varepsilon}{2} + \int_{b-\eta}^{b} |f(x)| \, \mathrm{d}x < \varepsilon.
+    \end{align*}
+    Thus, \(\lim_{p \to \infty}\int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x = 0\).
+
+    In summary, regardless of whether \(f(x)\) is integrable in the common Riemann sense or 
+    absolutely integrable in the improper Riemann sense, 
+    we have proved the special case of Riemann-Lebesgue Lemma.
+\end{proof}
+
+Then we can state Riemann's Localization Theorem:
+\begin{theorem}{Riemann's Localization Theorem}
+    The convergence or divergence of the Fourier series of a function \( f(x) \) 
+    at a given point \( x \) depends only on the behavior of \( f(x) \) in 
+    an arbitrarily small neighborhood of \( x \).
+\end{theorem}
+\begin{proof}
+    
+\end{proof}
+
+\vspace{0.7cm}
+Since the oscillation of \(D_{N}(x)\) is so severe that it causes poor convergence, is there a way to "smooth it out"?
+In fact, we can use \textbf{Cesàro summation} and \textbf{Fejér kernel} to achieve this goal, 
+which will be discussed in the next chapter.
+
+\section{Pointwise Convergence Tests} % 逐点收敛性判别法
+In this section, we will discuss several important convergence tests from coarse to fine for Fourier series.
+
+\begin{definition}{Bounded Variation} % 有界变差
+    A function \( f(x) \) is said to be of bounded variation on the interval \([a, b]\),
+    if there exists a constant \( M > 0 \), such that for any partition \( P = \{ x_0, x_1, \ldots, x_n \} \) of \([a, b]\):
+    \[
+    V_{a}^{b}(f) = \sum_{i=1}^{n} |f(x_i) - f(x_{i-1})| \leq M.
+    \]
+    The quantity \( V_{a}^{b}(f) \) is called the total variation of \( f(x) \) on \([a, b]\).
+    We denote this as \( f \in BV[a, b] \).
+\end{definition}
+
+\begin{definition}{Hölder condition}
+    There exists a constant \( L > 0 \) and \( \alpha \in (0, 1] \),
+    such that for all sufficiently small \( \delta \):
+    \[
+    |f(x\pm u) - f(x)| \leqslant  L u^\alpha, \quad 0 < u < \delta,
+    \]
+    then \(f\) satisfies \(\alpha\)-order \textbf{Hölder condition} at point \( x \),
+    denoted as \(f \in \text{Lip}_\alpha(x)\).
+    When \(\alpha = 1\), it is called \textbf{Lipschitz condition}.
+\end{definition}
+
+\begin{theorem} 
+    Let \( f(x) \in \mathcal{R}[-\pi, \pi] \), and satisfies one of the following conditions,
+    then the Fourier series of \( f(x) \) converges to \( \frac{f(x+)+f(x-)}{2} \) at every point \( x \):
+    \begin{description}
+        \item[Lipschitz's Test] If \(f \in \text{Lip}_\alpha(x)\).
+
+        \item[Dini's Test] There exists a \( \delta > 0 \), such that:
+            \[
+            \int_{0}^{\delta} \frac{|f(x + u) + f(x - u) - 2S|}{u} \, \mathrm{d}u < +\infty,
+            \]
+            where \( S = \frac{f(x+) + f(x-)}{2} \).
+
+        \item[Dirichlet-Jordan Test] If \( f(x) \) is of bounded variation in a neighborhood of point \( x \),
+            i.e., there exists a \( \delta > 0 \), such that \( f \in BV(x - \delta, x + \delta) \).
+    \end{description}
+\end{theorem}
+
+\section{Analytical properties of Fourier series} % Fourier 级数的分析性质

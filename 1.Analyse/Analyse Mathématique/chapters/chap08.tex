@@ -1,0 +1,341 @@
+\chapter{Numerical Series} % 数项级数
+\section{Convergence of Numerical Series}
+
+\section{Positive Term Series and Its Convergence Tests}
+\begin{definition}{Positive Term Series}
+    If all terms of the series \( \sum_{n=1}^{\infty} x_n \) are non-negative real numbers, 
+    i.e., \( x_n \geqslant 0 \) (\( x_n > 0 \)), \( n = 1, 2, \dots \), 
+    then this series is called a \textbf{positive term series} (or strictly positive term series).
+\end{definition}
+
+\begin{note}
+    The positive term series converges if and only if the partial sums of the sequence are bounded. 
+    If the partial sums are unbounded, the series must diverge to \( +\infty \).
+\end{note}
+
+\begin{leftbarTitle}{Comparison Test}\end{leftbarTitle}
+\begin{theorem}{Comparison Test}
+    Let \( \sum_{n=1}^{\infty} a_n \) and \( \sum_{n=1}^{\infty} b_n \) be positive term series. 
+    If \( \exists N \in \mathbb{N}, \text{ s.t. } \forall n > N: a_n \leqslant b_n \), then:
+    \begin{enumerate}
+        \item If \( \sum_{n=1}^{\infty} b_n \) converges, then \( \sum_{n=1}^{\infty} a_n \) also converges.
+        \item If \( \sum_{n=1}^{\infty} a_n \) diverges, then \( \sum_{n=1}^{\infty} b_n \) also diverges.
+    \end{enumerate}
+
+    \textbf{Limit Form}
+    Let \( \sum_{n=1}^{\infty} a_n \) and \( \sum_{n=1}^{\infty} b_n \) be positive term series, 
+    and suppose \( \lim_{n \to \infty} \frac{a_n}{b_n} \) exists. Then:
+
+    \begin{enumerate}
+        \item If \( 0 < l < +\infty \), \( \sum_{n=1}^{\infty} a_n \) and \( \sum_{n=1}^{\infty} b_n \) 
+            have the same convergence or divergence behavior.
+        \item If \( l = 0 \), \( \sum_{n=1}^{\infty} b_n \) converges, 
+            then \( \sum_{n=1}^{\infty} a_n \) also converges.
+        \item If \( l = +\infty \), \( \sum_{n=1}^{\infty} b_n \) diverges, 
+            then \( \sum_{n=1}^{\infty} a_n \) also diverges.
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+\begin{description}
+    \item[Cauchy Test] Let \( \sum_{n=1}^{\infty} a_n \) be a positive term series.
+        \begin{enumerate}
+            \item If \( \exists q \in [0,1), \text{ s.t. } \sqrt[n]{a_n} \leqslant 
+            q < 1 \quad (n \geqslant N, N \in \mathbb{N}) \), then the series converges.
+            \item If \( \sqrt[n]{a_n} \geqslant 1 \) for infinitely many \( n \), then the series diverges.
+        \end{enumerate}
+        \textbf{Limit Form} Let \( \sum_{n=1}^{\infty} a_n \) be a positive term series, 
+        and suppose \( \varlimsup_{n \to +\infty} \sqrt[n]{a_n} = r \). Then:
+        \begin{enumerate}
+            \item If \( 0 \leqslant r < 1 \), the series \( \sum_{n=1}^{\infty} a_n \) converges.
+            \item If \( r > 1 \), the series \( \sum_{n=1}^{\infty} a_n \) diverges.
+            \item If \( r = 1 \), the test fails.
+        \end{enumerate}
+
+    \item[D'Alembert Test] Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series.
+        \begin{enumerate}
+            \item If \( \exists q \in [0,1), \text{ s.t. } \frac{a_{n+1}}{a_n} \leqslant 
+            q < 1 \quad (n \geqslant N, N \in \mathbb{N}) \), then the series converges.
+            \item If \( \frac{a_{n+1}}{a_n} \geqslant 1 \quad (n \geqslant N, N \in \mathbb{N}) \), 
+            then the series diverges.
+        \end{enumerate}
+        \textbf{Limit Form}
+        Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series. Then:
+        \begin{enumerate}
+            \item If \( \varlimsup_{n \to +\infty} \frac{a_{n+1}}{a_n} = r \in (0,1) \), the series converges.
+            \item If \( \varliminf_{n \to +\infty} \frac{a_{n+1}}{a_n} = r' > 1 \), the series diverges.
+            \item If \( r = 1 \) or \( r' = 1 \), the test fails.
+        \end{enumerate}
+    
+    \item[Raabe Test] Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series.
+        \begin{enumerate}
+            \item If \( \exists r > 1, \exists N_0 \in \mathbb{N} \text{ s.t. } 
+                \forall n > N_0: n \left( \frac{a_n}{a_{n+1}} - 1 \right) \geqslant r \), 
+                then the series converges.
+            \item If \( \exists N_0 \in \mathbb{N}, \text{ s.t. } \forall n > N_0: 
+                n \left( \frac{a_n}{a_{n+1}} - 1 \right) \leqslant 1 \), then the series diverges.
+        \end{enumerate}
+        \textbf{Limit Form}
+        Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series. Then:
+        \begin{enumerate}
+            \item If \( \varliminf_{n \to +\infty} n \left( \frac{a_n}{a_{n+1}} - 1 \right) = l > 1 \), the series converges.
+            \item If \( \varlimsup_{n \to +\infty} n \left( \frac{a_n}{a_{n+1}} - 1 \right) = l' < 1 \), the series diverges.
+            \item If \( l = 1 \) or \( l' = 1 \), the test fails.
+        \end{enumerate}
+
+    \item[Bertrand Test] Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series.
+        \begin{enumerate}
+            \item If \( \varliminf_{n \to +\infty} \ln n \left[ n \left( \frac{a_n}{a_{n+1}} - 1 \right) \right] = l > 1 \), 
+                the series converges.
+            \item If \( \varlimsup_{n \to +\infty} \ln n \left[ n \left( \frac{a_n}{a_{n+1}} - 1 \right) \right] = l' < 1 \), 
+                the series diverges.
+            \item If \( l = 1 \) or \( l' = 1 \), the test fails.
+        \end{enumerate}
+
+    \item [Gauß Test] Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series, and suppose:
+        \[
+        \frac{a_n}{a_{n+1}} = 1 + \frac{1}{n} + \frac{\delta}{n \ln n} + o\left( \frac{1}{n \ln n} \right), \quad (n \to +\infty).
+        \]
+        Then:
+        \begin{enumerate}
+            \item If \( \delta > 1 \), the series converges.
+            \item If \( \delta < 1 \), the series diverges.
+            \item If \( \delta = 1 \), the criterion fails.
+        \end{enumerate}
+
+        \textbf{Generalized Form}
+        Let \( \sum_{n=1}^{\infty} a_n \) be a strictly positive term series, and suppose:
+        \[
+        \frac{a_n}{a_{n+1}} = 1 + \frac{1}{n} + \frac{\delta_n}{n \ln n} + o\left( \frac{1}{n \ln n} \right), 
+        \quad (n \to +\infty).
+        \]
+        If \( \lim_{n \to \infty} \delta_n = \delta \in \mathbb{R} \), then:
+        \begin{enumerate}
+            \item If \( \delta > 1 \), the series converges.
+            \item If \( \delta < 1 \), the series diverges.
+            \item If \( \delta = 1 \), the criterion fails.
+        \end{enumerate}
+\end{description}
+\end{theorem}
+
+\begin{note}
+    The Bertrand test can be refined by considering series such as:
+    \[
+    \sum_{n=3}^{\infty} \frac{1}{n \ln n (\ln \ln n)^p}, 
+    \quad \sum_{n=9}^{\infty} \frac{1}{n \ln n \ln \ln n (\ln \ln n)^p}, 
+    \cdots
+    \]
+    These refinements are collectively known as the Bertrand test.
+\end{note}
+
+\begin{remark}
+    All the aforementioned criteria are derived from the Comparison Criterion.
+    \begin{itemize}
+        \item By comparing positive term series with the geometric series (or equal ratio series), 
+            the Cauchy Criterion and d'Alembert Criterion are derived.
+        \item By comparing positive term series with the slower-converging series 
+            \( \sum_{n=1}^{\infty} \frac{1}{n^\alpha} \) (\( \alpha > 1 \)), the Raabe Criterion is derived.
+        \item By comparing positive term series with the even slower-converging series 
+            \( \sum_{n=1}^{\infty} \frac{1}{n \ln^\alpha n} \) (\( \alpha > 1 \)), the Gauß Criterion is derived.
+    \end{itemize}
+    \textbf{General Observation}
+    The slower the convergence of the series used for comparison, the more precise the derived criterion.
+\end{remark}
+
+
+
+
+
+
+\begin{leftbarTitle}{Integral Test}\end{leftbarTitle}
+\begin{theorem}{Cauchy Integral Test}
+    Let \( f(x) \) be defined on \( [a, +\infty) \), 
+    where \( f(x) \geqslant 0 \), and \( f(x) \) is Riemann integrable on any finite interval \( [a, A] \).
+
+    Consider a monotonic increasing sequence \( \{ a_n \} \) such that \( a = a_1 < a_2 < \dots < a_n < \dots \), and let:
+    \[
+    u_n = \int_{a_n}^{a_{n+1}} f(x) \, \mathrm{d}x.
+    \]
+
+    Then the improper integral \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) 
+    and the positive term series \( \sum_{n=1}^{\infty} u_n \) converge or diverge to \( +\infty \) simultaneously. 
+    Moreover:
+    \[
+    \int_{a}^{+\infty} f(x) \, \mathrm{d}x 
+    = \sum_{n=1}^{\infty} u_n 
+    = \sum_{n=1}^{\infty} \int_{a_n}^{a_{n+1}} f(x) \, \mathrm{d}x.
+    \]
+\end{theorem}
+
+\begin{leftbarTitle}{Other Tests}\end{leftbarTitle}
+\begin{theorem}{Cauchy Condensation Test}
+    Let \( \{ a_n \} \) be a monotonically decreasing sequence of positive numbers. 
+    Then the positive term series \( \sum_{n=1}^{\infty} a_n \) converges if and only if the condensed series:
+    \[
+    \sum_{n=0}^{\infty} 2^n a_{2^n} = a_1 + 2a_2 + 4a_4 + \dots + 2^n a_{2^n} + \dots
+    \]
+    converges.
+\end{theorem}
+
+
+\section{General Term Series and Its Convergence Tests}
+\begin{leftbarTitle}{Cauchy Convergence Criterion for Series}\end{leftbarTitle}
+\begin{theorem}{Cauchy Convergence Criterion for Series}
+    The necessary and sufficient condition for the convergence of the series \( \sum_{n=1}^{\infty} x_n \) is:
+    \[
+    \forall \varepsilon > 0, \exists N \in \mathbb{N}, \forall m, n > N : 
+    \left| x_{n+1} + x_{n+2} + \cdots +x_{m} \right| = \left| \sum_{k=n+1}^{m} x_k \right| < \varepsilon.
+    \]
+\end{theorem}
+
+
+\begin{leftbarTitle}{Alternative Series}\end{leftbarTitle}
+\begin{definition}{Alternative Series}
+    A series of the form:
+    \[
+    \sum_{n=1}^{\infty}x_{n} = 
+    \sum_{n=1}^{\infty} (-1)^{n-1} u_n\quad (u_{n}>0),
+    \]
+    is called an \textbf{alternative series}.
+
+    Moreover, if \( u_n \) is a monotonically decreasing sequence and \( \lim_{n \to \infty} u_n = 0 \), 
+    then the series is called a \textbf{Leibniz series}.
+\end{definition}
+
+\begin{theorem}{Leibniz Test}
+    Leibniz series converges.
+\end{theorem}
+
+
+\begin{leftbarTitle}{Abel-Dirichlet Test}\end{leftbarTitle}
+
+\begin{theorem}{Abel Transform (Discrete Integration by Parts/Summation by Parts)}\label{thm:Abel Transform}
+    Let \(\{a_n\}, \{b_n\}\) be two sequences, then for any \(n\in \mathbb{N}^{+}\),
+    \[
+        \sum_{k=1}^{n} a_k b_k = a_n B_n + \sum_{k=1}^{n-1} (a_{k+1} - a_{k})B_k,
+    \]
+    where \(B_n = \sum_{k=1}^{n} b_k\).
+\end{theorem}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth, angle=180]{img/AbelTransform.jpg}
+\end{figure}
+
+\begin{lemma}{Abel Lemma (Discrete Second Integral Mean Value Theorem)}
+    Let \(\{a_n\}, \{b_n\}\) be two sequences, if \(\{a_n\}\) is a monotonic sequence 
+    and \(\{B_k\} = \sum_{k=1}^{n} b_k\) is a bounded sequence with bound \(M\),
+    then for any \(p\in \mathbb{N}^{+}\),
+    \[
+        \left| \sum_{k=1}^{p} a_k b_k \right| \leqslant M \left( |a_{1}| + 2|a_{p}| \right) .
+    \]
+\end{lemma}
+
+\begin{theorem}{Abel-Dirichlet Test}
+    The series \(\sum_{n=1}^{\infty} a_n b_n\) converges if one of the following two conditions is satisfied:
+    \begin{description}
+        \item[Abel] \(\{a_n\}\) is a bounded monotonic sequence and \(\sum_{n=1}^{\infty} b_n\) converges.
+        \item[Dirichlet]  \(\{a_n\}\) is a monotonic sequence, \(\lim_{n \to \infty} a_n = 0\),
+            and the partial sums \(B_n = \sum_{k=1}^{n} b_k\) are bounded.       
+    \end{description}
+\end{theorem}
+
+\section{Absolute and Conditional Convergence of Series}
+\begin{definition}{Absolute and Conditional Convergence of Series}
+    If the series \( \sum_{n=1}^{\infty} |x_n| \) converges, 
+    then the series \( \sum_{n=1}^{\infty} x_n \) is said to be \textbf{absolutely convergent}.
+
+    If the series \( \sum_{n=1}^{\infty} x_n \) converges but is not absolutely convergent, 
+    then the series \( \sum_{n=1}^{\infty} x_n \) is said to be \textbf{conditionally convergent}.
+\end{definition}
+
+\section{Comparison of Convergence Speed of Series}
+The series \( \sum_{n=1}^{\infty} a_n \) is said to converge faster than the series \( \sum_{n=1}^{\infty} b_n \) if:
+\[
+\lim_{n \to \infty} \frac{a_n}{b_n} = 0.
+\]
+
+\begin{theorem}{Du Bois-Reymond Theorem}
+    For a given convergent positive term series \( \sum_{n=1}^{\infty} a_n \), there always exists a convergent strictly positive term series \( \sum_{n=1}^{\infty} b_n \) such that:
+    \[
+    \lim_{n \to \infty} \frac{a_n}{b_n} = 0.
+    \]
+\end{theorem}
+
+\begin{theorem}{Abel Theorem}
+    For a given divergent positive term series \( \sum_{n=1}^{\infty} a_n \), there always exists a divergent positive term series \( \sum_{n=1}^{\infty} b_n \) such that:
+    \[
+    \lim_{n \to \infty} \frac{a_n}{b_n} = 0.
+    \]
+\end{theorem}
+
+\begin{remark}
+    The above two theorems imply that the slowest converging positive term series \underline{does not} exist.
+\end{remark}
+
+
+
+\section{Infinite Products}
+\begin{leftbarTitle}{Infinite Products}\end{leftbarTitle}
+
+
+\begin{leftbarTitle}{Two Formulas}\end{leftbarTitle}
+\begin{theorem}{Wallis Formula}
+    \[
+    \lim_{n \to \infty} \frac{1}{2n+1} \left[ \frac{(2n)!!}{(2n-1)!!} \right]^{2}  = \frac{\pi}{2}.
+    \]
+    Equivalently (\(n\to +\infty\)),
+    \begin{gather*}
+        \frac{(2n)!!}{(2n-1)!!} \sim \sqrt{\pi n}, \\
+        \frac{(n!)^{2}2^{2n}}{(2n)!} \sim \sqrt{\pi n}.
+    \end{gather*}
+\end{theorem}
+
+
+\begin{theorem}{Stirling Formula}
+    \[
+    n! = \sqrt{2\pi n} \left( \frac{n}{e} \right)^n 
+    \left( 1 + \frac{1}{12n} - \frac{1}{288n^2} + \frac{139}{51840n^3} - \frac{571}{2488320n^4} + \cdots 
+    + \frac{B_{2n}}{2k(2k-1) n^{k}} + \cdots  \right),
+    \]
+    where \( B_{2k} \) are Bernoulli numbers of order \( 2k \).
+    Simplified form:
+    \[
+    n! \sim \sqrt{2\pi n} \left( \frac{n}{e} \right)^{n} \quad (n \to +\infty),
+    \]
+    or
+    \[
+    n! = \sqrt{2\pi n} \left( \frac{n}{e} \right)^{n} e^{\theta_n}, \quad \frac{1}{12n+1} < \theta_n < \frac{1}{12n}.
+    \]
+\end{theorem}
+
+
+\section{Special Series}
+\begin{description}
+    \item[Geometric Series] 
+        \[
+        \sum_{n=0}^{\infty} q^n = \frac{1}{1-q},
+        \]
+        it converges when \( |q| < 1 \), diverges otherwise.
+    \item[Telescoping Series]
+        \[
+        \sum_{n=1}^{\infty} (a_n - a_{n+1}) = a_1 - \lim_{n \to \infty} a_{n+1},
+        \]
+        it converges when \( \lim_{n \to \infty} a_n \) exists, diverges otherwise.
+    \item[\(p\)-Series/Hyperharmonic Series]
+        \[
+        \sum_{n=1}^{\infty} \frac{1}{n^p},
+        \]
+        it converges when \( p > 1 \), diverges otherwise.
+    \item[\(q\)-Series]
+        \[
+        \sum_{n=1}^{\infty} \frac{1}{n (\ln n)^q},
+        \]
+        it converges when \( q > 1 \), diverges otherwise.
+    \item[Generalized \(q\)-Series]
+        \[
+        \sum_{n=3}^{\infty} \frac{1}{n \ln n (\ln \ln n)\cdots (\ln^{(k-1)} n) (\ln^{(k)} n)^q},
+        \]
+        where \( \ln^{(k)} n \) denotes the \( k \)-th iterated logarithm,
+        it converges when \( q > 1 \), diverges otherwise.        
+\end{description}

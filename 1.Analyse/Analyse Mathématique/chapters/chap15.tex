@@ -1,0 +1,546 @@
+\chapter{Line Integrals and Surface Integrals} % 曲线积分与曲面积分
+\section{Line Integrals and Surface Integrals of scalar fields}
+\begin{leftbarTitle}{Line Integral of Scalar Field}\end{leftbarTitle}
+\begin{definition}{Line Integral of Scalar Field}
+    Let \(L\) is a rectifiable continuous curve in \(\mathbb{R}^3\), whose endpoints are \(A\) and \(B\),
+    and \(f(x, y, z)\) is bounded on \(L\).
+    Partition \(L\) into \(n\) segments by points \(A = P_0, P_1, \ldots, P_n = B\),
+    and select a point \(\boldsymbol{\xi}_{i}\) on each segment \(P_{i-1}P_i\) (\(i = 1, 2, \ldots, n\)).
+    Remark that the length of segment \(P_{i-1}P_i\) is \(\Delta s_i\) (\(i=1,2,\cdots n\)),
+    and make the sum:
+    \[
+    \sum_{i=1}^{n} f(\boldsymbol{\xi}_i) \Delta s_i.
+    \]
+    If when \( \lambda \) (the length of the longest segment) tends to \(0\),
+    the above sum tends to a limit \(I\) independent of the partition and the choice of points \(\boldsymbol{\xi}_i\),
+    then \(I\) is called the \textbf{line integral of the scalar field \(f\) along the curve \(L\)},
+    denoted as:
+    \[
+    \int_{L} f \, \mathrm{d}s.
+    \]
+    That is,
+    \[
+    I = \int_{L} f(\boldsymbol{\xi}) \, \mathrm{d}s =
+    \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\boldsymbol{\xi}_i) \Delta s_i.
+    \]
+\end{definition}
+
+\begin{theorem}
+    Let \(L\) be a \(C^{1}\) smooth regular curve parameterized by \(\mathbf{x}(t) = (x(t), y(t), z(t)), t \in [\alpha, \beta]\),
+    and \(f\) be continuous on \(L\).
+    Then:
+    \[
+    \int_{L} f \, \mathrm{d}s = \int_{\alpha}^{\beta} f(\mathbf{x}(t)) \|\mathbf{x}'(t)\| \, \mathrm{d}t.
+    = \int_{\alpha}^{\beta} f(x(t), y(t), z(t)) \sqrt{(x'(t))^2 + (y'(t))^2 + (z'(t))^2} \, \mathrm{d}t.
+    \]
+\end{theorem}
+Specially, if the plane curve \(L\) is given by \(y = y(x), x \in [a, b]\),
+then:
+\[
+\int_{L} f \, \mathrm{d}s = \int_{a}^{b} f(x, y(x)) \sqrt{1 + (y'(x))^2} \, \mathrm{d}x.
+\]
+
+
+\begin{leftbarTitle}{Surface Integrals of Scalar Fields}\end{leftbarTitle}
+\begin{definition}{Surface Integral of Scalar Field}
+    Let \(\Sigma\) be a piecewise smooth surface in \(\mathbb{R}^3\),
+    and \(f(x, y, z)\) be bounded on \(\Sigma\).
+    Partition \(\Sigma\) into \(n\) small pieces \(\Delta\Sigma_1, \Delta\Sigma_2, \ldots, \Delta\Sigma_n\)
+    with smooth curve webs,
+    and select a point \(\boldsymbol{\xi}_i\) on each piece \(\Delta\Sigma_i\) (\(i = 1, 2, \ldots, n\)).
+    Remark that the area of piece \(\Delta\Sigma_i\) is \(\Delta S_i\) (\(i=1,2,\cdots n\)),
+    and make the sum:
+    \[
+    \sum_{i=1}^{n} f(\boldsymbol{\xi}_i) \Delta S_i.
+    \]
+    If when \( \lambda \) (the area of the largest piece) tends to \(0\),
+    the above sum tends to a limit \(I\) independent of the partition and the choice of points \(\boldsymbol{\xi}_i\),
+    then \(I\) is called the \textbf{surface integral of the scalar field \(f\) over the surface \(\Sigma\)},
+    denoted as:
+    \[
+    \iint_{\Sigma} f \, \mathrm{d}S.
+    \]
+    That is,
+    \[
+    I = \iint_{\Sigma} f(\boldsymbol{\xi}) \, \mathrm{d}S =
+    \lim_{\lambda \to 0} \sum_{i=1}^{n} f(\boldsymbol{\xi}_i) \Delta S_i.
+    \]
+\end{definition}
+
+\begin{theorem}
+    Let \(\Sigma\) be a piecewise smooth closed surface parameterized by 
+    \(\mathbf{r}(u, v) = (x(u, v), y(u, v), z(u, v)), (u, v) \in D\),
+    and \(f\) be continuous on \(\Sigma\).
+    \(x, y, z\) have continuous first-order partial derivatives with respect to \(u\) and \(v\) on \(D\),
+    and according Jacobian matrix 
+    \[
+    J = \begin{pmatrix}
+        \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
+        \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} \\
+        \frac{\partial z}{\partial u} & \frac{\partial z}{\partial v}
+    \end{pmatrix}
+    \]
+    is of full rank.
+    Then:
+    \[
+    \iint_{\Sigma} f \, \mathrm{d}S = \iint_{D} f(\mathbf{r}(u, v)) 
+    \left\| \frac{\partial \mathbf{r}}{\partial u} \times \frac{\partial \mathbf{r}}{\partial v} \right\| \, \mathrm{d}u \mathrm{d}v
+    = \iint_{D} f(x(u, v), y(u, v), z(u, v)) 
+    \sqrt{EG-F^{2}} \, \mathrm{d}u \mathrm{d}v,
+    \]
+    where \(E, G, F\) are the Gauß coefficients of the surface \(\Sigma\).
+\end{theorem}
+Specially, if the surface \(\Sigma\) is given by \(z = z(x, y), (x, y) \in D\),
+then:
+\[
+\iint_{\Sigma} f \, \mathrm{d}S = 
+\iint_{D} f(x, y, z(x, y)) 
+\sqrt{1 + \left(\frac{\partial z}{\partial x}\right)^2 + \left(\frac{\partial z}{\partial y}\right)^2} \, \mathrm{d}x \mathrm{d}y.
+\]
+
+\section{Differential Form and Exterior Differentiation}
+Let \(\mathrm{d}x_{i}, \mathrm{d}x_{j}\) be differentials of independent variables \(x_{i}, x_{j}\).
+
+In \(\mathbb{R}^{1}\):
+\begin{align*}
+    &\text{0-form: } f(x), \\
+    &\text{1-form: } \omega = f(x)\mathrm{d}x, \\
+    &\text{k-form (\(k\geqslant 2\)): } \omega = \sum_{1 \leqslant i_{1} < i_{2} < \cdots < i_{k} \leqslant n}
+        f_{i_{1} i_{2} \cdots i_{k}}(x_{1}, x_{2}, \cdots, x_{n})
+        \mathrm{d}x_{i_{1}} \wedge \mathrm{d}x_{i_{2}} \wedge \cdots \wedge \mathrm{d}x_{i_{k}} = 0.
+\end{align*}
+
+In \(\mathbb{R}^{2}\):
+\begin{align*}
+    &\text{0-form: } f(x, y), \\
+    &\text{1-form: } \omega = P(x, y)\mathrm{d}x + Q(x, y)\mathrm{d}y, \\
+    &\text{2-form: } \omega = f(x, y)\mathrm{d}x \wedge \mathrm{d}y, \\
+    &\text{k-form (\(k\geqslant 3\)): } \omega = \sum_{1 \leqslant i_{1} < i_{2} < \cdots < i_{k} \leqslant n}
+        f_{i_{1} i_{2} \cdots i_{k}}(x_{1}, x_{2}, \cdots, x_{n})
+        \mathrm{d}x_{i_{1}} \wedge \mathrm{d}x_{i_{2}} \wedge \cdots \wedge \mathrm{d}x_{i_{k}} = 0.
+\end{align*}
+
+In \(\mathbb{R}^{3}\):
+\begin{align*}
+    &\text{0-form: } f(x, y, z), \\
+    &\text{1-form: } \omega = P(x, y, z)\mathrm{d}x + Q(x, y, z)\mathrm{d}y + R(x, y, z)\mathrm{d}z, \\
+    &\text{2-form: } \omega = P(x, y, z)\mathrm{d}y \wedge \mathrm{d}z + Q(x, y, z)\mathrm{d}z \wedge \mathrm{d}x + R(x, y, z)\mathrm{d}x \wedge \mathrm{d}y, \\
+    &\text{3-form: } \omega = f(x, y, z)\mathrm{d}x \wedge \mathrm{d}y \wedge \mathrm{d}z, \\
+    &\text{k-form (\(k\geqslant 4\)): } \omega = \sum_{1 \leqslant i_{1} < i_{2} < \cdots < i_{k} \leqslant n}
+        f_{i_{1} i_{2} \cdots i_{k}}(x_{1}, x_{2}, \cdots, x_{n})
+        \mathrm{d}x_{i_{1}} \wedge \mathrm{d}x_{i_{2}} \wedge \cdots \wedge \mathrm{d}x_{i_{k}} = 0.
+\end{align*}
+
+Here, \(\wedge\) is called the \textbf{wedge product}, which satisfies:
+\begin{enumerate}
+    \item Skew symmetric: \(\mathrm{d}x_{i} \wedge \mathrm{d}x_{j} = -\mathrm{d}x_{j} \wedge \mathrm{d}x_{i}\), 
+    \item Associative: \((\mathrm{d}x_{i} \wedge \mathrm{d}x_{j}) \wedge \mathrm{d}x_{k} = \mathrm{d}x_{i} \wedge (\mathrm{d}x_{j} \wedge \mathrm{d}x_{k})\),
+    \item In a fixed dimension, the wedge product of k-forms becomes zero (as higher forms are not defined), 
+        for example, in \(3\)-dimensional space, a \(4\)-form is equal to \(0\).
+\end{enumerate}
+\textbf{Differential form} is a skew symmetric tensor on vector field.
+
+
+\begin{definition}{Exterior Differentiation}
+    Let \(\omega\) be a \(k\)-form on \(\mathbb{R}^{n}\),
+    \[
+    \omega = \sum_{1 \leqslant i_{1} < i_{2} < \cdots < i_{k} \leqslant n}
+        f_{i_{1} i_{2} \cdots i_{k}}(x_{1}, x_{2}, \cdots, x_{n})
+        \mathrm{d}x_{i_{1}} \wedge \mathrm{d}x_{i_{2}} \wedge \cdots \wedge \mathrm{d}x_{i_{k}},
+    \]
+    where \(f_{i_{1} i_{2} \cdots i_{k}}\) are functions with continuous first-order partial derivatives.
+    The exterior differentiation of \(\omega\) is defined as:
+    \[
+    \mathrm{d}\omega = \sum_{1 \leqslant i_{1} < i_{2} < \cdots < i_{k} \leqslant n}
+        \mathrm{d}f_{i_{1} i_{2} \cdots i_{k}}(x_{1}, x_{2}, \cdots, x_{n})
+        \wedge \mathrm{d}x_{i_{1}} \wedge \mathrm{d}x_{i_{2}} \wedge \cdots \wedge \mathrm{d}x_{i_{k}},
+    \]
+    where
+    \[
+    \mathrm{d}f = \frac{\partial f}{\partial x_1}\mathrm{d}x_1 + 
+    \frac{\partial f}{\partial x_2}\mathrm{d}x_2 + 
+    \cdots + 
+    \frac{\partial f}{\partial x_n}\mathrm{d}x_n.
+    \]
+    Note that the exterior differentiation of a \(k\)-form is a \(k+1\)-form.
+\end{definition}
+\begin{property}
+    \begin{description}
+        \item[Linearity] \(\mathrm{d}(\alpha \omega+ \beta \eta) = \alpha \mathrm{d}\omega + \beta \mathrm{d}\eta\),
+        where \(\alpha, \beta\) are constants.
+        \item[Leibniz Rule] \(\mathrm{d}(\omega \wedge \eta) = \mathrm{d}\omega \wedge \eta + (-1)^{k} \omega \wedge \mathrm{d}\eta\),
+        where \(\omega\) is a \(k\)-form.
+        \item[Nilpotency] \(\mathrm{d}(\mathrm{d}\omega) = 0\).
+    \end{description}
+\end{property}
+
+
+
+
+\section{Line Integrals and Surface Integrals of Vector Fields}
+\begin{leftbarTitle}{Line Integral of Vector Field}\end{leftbarTitle}
+\begin{definition}{Line Integral of Vector Field}
+    Let \(\overset{\rightharpoonup}{L}\) be a orientated smooth curve in \(\mathbb{R}^3\),
+    whose endpoints are \(A\) and \(B\).
+    Take unit tangent vector \(\boldsymbol{\tau}=(\cos\alpha, \cos\beta, \cos\gamma)\) 
+    at each point of \(\overset{\rightharpoonup}{L}\), making it consistent with the orientation of \(\overset{\rightharpoonup}{L}\).
+    Let \(\mathbf{f}(x, y, z) = P(x, y, z)\mathbf{i} + Q(x, y, z)\mathbf{j} + R(x, y, z)\mathbf{k}\) 
+    be a vector-valued function on \(\overset{\rightharpoonup}{L}\), then 
+    \[
+    \int_{\overset{\rightharpoonup}{L}} \mathbf{f} \cdot \boldsymbol{\tau} \mathrm{d}\mathbf{s} =
+    \int_{\overset{\rightharpoonup}{L}} \left[P \cos\alpha + Q \cos\beta + R \cos\gamma\right] \, \mathrm{d}s
+    \]
+    is called the \textbf{line integral of the vector field \(\mathbf{f}\) along the oriented curve \(\overset{\rightharpoonup}{L}\)}
+    (if the right-hand side exists).
+\end{definition}
+Consider a differential arc length element \( \mathrm{d}s \) at a point \((x, y, z)\) on the curve \( L \). 
+We form the vector \( \mathrm{d}\mathbf{s} = \boldsymbol{\tau} \mathrm{d}s \), 
+where \( \boldsymbol{\tau} = (\cos\alpha, \cos\beta, \cos\gamma) \) represents 
+the unit tangent vector of curve \( L \) at \((x, y, z)\), pointing along the direction of \( L \). 
+The projection of \( \mathrm{d}s \) onto the \( x \)-axis is given by \(\cos\alpha \, \mathrm{d}s\). 
+Therefore, we denote:
+\[
+\mathrm{d}x = \cos\alpha \, \mathrm{d}s, \quad \mathrm{d}y = \cos\beta \, \mathrm{d}s, \quad 
+\mathrm{d}z = \cos\gamma \, \mathrm{d}s.
+\]
+Thus, the second type of line integral can be expressed as:
+\[
+\int_{\overset{\rightharpoonup}{L}} \mathbf{f} \cdot \boldsymbol{\tau} \mathrm{d}s = \int_{\overset{\rightharpoonup}{L}} \mathbf{f} \, \mathrm{d} \mathbf{s} 
+= \int_{\overset{\rightharpoonup}{L}} P(x, y, z) \mathrm{d}x + Q(x, y, z) \mathrm{d}y + R(x, y, z) \mathrm{d}z.
+\]
+This line integral is also referred to as the integral of the \(1\)-form:
+\[
+\omega = P(x, y, z) \mathrm{d}x + Q(x, y, z) \mathrm{d}y + R(x, y, z) \mathrm{d}z.
+\]
+The second type of line integral of \( \omega \) along the curve \( L \) is denoted as:
+\[
+\int_{\overset{\rightharpoonup}{L}} \omega.
+\]
+
+\begin{theorem}
+    Let \(\overset{\rightharpoonup}{L}\) be a \(C^{1}\) smooth regular oriented curve parameterized by 
+    \(\mathbf{x}(t) = (x(t), y(t), z(t)), t \in [\alpha, \beta]\),
+    and \(\mathbf{f} = P\mathbf{i} + Q\mathbf{j} + R\mathbf{k}\) be continuous on \(\overset{\rightharpoonup}{L}\).
+    Then:
+    \begin{gather*}
+    \int_{\overset{\rightharpoonup}{L}} \mathbf{f} \cdot \boldsymbol{\tau} \mathrm{d}s =
+    \int_{\alpha}^{\beta} \mathbf{f}(\mathbf{x}(t)) \cdot \mathbf{x}'(t) \, \mathrm{d}t \\
+    = \int_{\alpha}^{\beta} [P(x(t), y(t), z(t)) x'(t) + Q(x(t), y(t), z(t)) y'(t) + R(x(t), y(t), z(t)) z'(t)] \, \mathrm{d}t.
+    \end{gather*}
+\end{theorem}
+Specially, if the plane curve \(\overset{\rightharpoonup}{L}\) is given by \(y = y(x), x: a \to b\),
+then:
+\[
+\int_{\overset{\rightharpoonup}{L}} \mathbf{f} \cdot \boldsymbol{\tau} \mathrm{d}s = 
+\int_{a}^{b} \mathbf{f}(x, y(x)) \cdot (1, y'(x)) \sqrt{1 + (y'(x))^2} \, \mathrm{d}x.
+\]
+
+\begin{leftbarTitle}{Surface Integral of Vector Field}\end{leftbarTitle}
+\begin{definition}{Surface Integral of Vector Field}
+    Let \(\overset{\rightharpoonup}{\Sigma}\) be an orientated smooth surface in \(\mathbb{R}^3\),
+    and \(\mathbf{f}(x, y, z) = P(x, y, z)\mathbf{i} + Q(x, y, z)\mathbf{j} + R(x, y, z)\mathbf{k}\) 
+    be a vector-valued function on \(\overset{\rightharpoonup}{\Sigma}\).
+    Each point appoints a unit normal vector \(\mathbf{n}=(\cos\alpha, \cos\beta, \cos\gamma)\).
+    Then 
+    \[
+    \iint_{\overset{\rightharpoonup}{\Sigma}} \mathbf{f} \cdot \mathbf{n} \mathrm{d}S =
+    \iint_{\overset{\rightharpoonup}{\Sigma}} \left[P \cos\alpha + Q \cos\beta + R \cos\gamma\right] \, \mathrm{d}S
+    \]
+    is called the \textbf{surface integral of the vector field \(\mathbf{f}\) over the oriented surface \(\overset{\rightharpoonup}{\Sigma}\)}
+    (if the right-hand side exists).
+\end{definition}
+Consider a differential area element \( \mathrm{d}S \) at a point \((x, y, z)\) on the surface \( \Sigma \). 
+We form the vector \( \mathrm{d}\mathbf{S} = \mathbf{n} \mathrm{d}S \), 
+where \( \mathbf{n} = (\cos\alpha, \cos\beta, \cos\gamma) \) represents
+the unit normal vector of surface \( \Sigma \) at \((x, y, z)\),
+pointing along the orientation of \( \Sigma \).
+The projection of \( \mathrm{d}S \) onto the \( x \)-axis is given by \(\cos\alpha \, \mathbf{\mathrm{d}}S\). 
+Therefore, we denote:
+\[
+\mathrm{d}y \wedge \mathrm{d}z = \cos\alpha \, \mathrm{d}S, \quad \mathrm{d}z \wedge \mathrm{d}x = \cos\beta \, \mathrm{d}S, \quad 
+\mathrm{d}x \wedge \mathrm{d}y = \cos\gamma \, \mathrm{d}S.
+\]
+Thus, the surface integral can be expressed as:
+\[
+\iint_{\overset{\rightharpoonup}{\Sigma}} \mathbf{f} \cdot \mathbf{n} \mathrm{d}S = 
+\iint_{\overset{\rightharpoonup}{\Sigma}} P \mathrm{d}y \wedge \mathrm{d}z + Q \mathrm{d}z \wedge \mathrm{d}x + R \mathrm{d}x \wedge \mathrm{d}y
+= \iint_{\Sigma} P \mathrm{d}y\mathrm{d}z + Q \mathrm{d}z\mathrm{d}x + R \mathrm{d}x\mathrm{d}y,
+\]
+where \(\mathrm{d}y\mathrm{d}z\) is the simplified notation for \(\mathrm{d}y \wedge \mathrm{d}z\), etc.
+This surface integral is also referred to as the integral of the \(2\)-form:
+\[
+\omega = P(x, y, z) \mathrm{d}y \wedge \mathrm{d}z + Q(x, y, z) \mathrm{d}z \wedge \mathrm{d}x + R(x, y, z) \mathrm{d}x \wedge \mathrm{d}y.
+\]
+The second type of surface integral of \( \omega \) over the surface \( \Sigma \) is denoted as:
+\[
+\iint_{\overset{\rightharpoonup}{\Sigma}} \omega.
+\]
+
+\begin{theorem}
+    Let \(\overset{\rightharpoonup}{\Sigma}\) be a smooth oriented surface parameterized by 
+    \(\mathbf{r}(u, v) = (x(u, v), y(u, v), z(u, v)), (u, v) \in D\),
+    where \(D\) is a closed region with piecewise smooth boundary in \(uv\)-plane,
+    and \(\mathbf{f} = P\mathbf{i} + Q\mathbf{j} + R\mathbf{k}\) be continuous on \(\overset{\rightharpoonup}{\Sigma}\).
+    \(x, y, z\) have continuous first-order partial derivatives with respect to \(u\) and \(v\) on \(D\),
+    and according Jacobian matrix is of full rank.
+    Then:
+    \begin{align*}
+        &\iint_{\overset{\rightharpoonup}{\Sigma}} \mathbf{f} \cdot \mathbf{n} \mathrm{d}S \\
+        =&\iint_{\overset{\rightharpoonup}{\Sigma}} [P \cos\alpha + Q \cos\beta + R \cos\gamma] \, \mathrm{d}S \\
+        =& \iint_{D} \mathbf{f}(\mathbf{r}(u, v)) \cdot \left( \frac{\partial \mathbf{r}}{\partial u} \times \frac{\partial \mathbf{r}}{\partial v} \right) \, \mathrm{d}u \mathrm{d}v \\
+        =& \pm \iint_{D} \bigg[P(x(u, v), y(u, v), z(u, v)) \cdot \frac{\partial (y, z)}{\partial (u, v)} 
+        + Q(x(u, v), y(u, v), z(u, v)) \cdot \frac{\partial (z, x)}{\partial (u, v)} \\
+        &+ R(x(u, v), y(u, v), z(u, v)) \cdot \frac{\partial (x, y)}{\partial (u, v)}\bigg] \, \mathrm{d}u \mathrm{d}v,
+    \end{align*}
+    where the sign \(\pm\) depends on whether the orientation of \(\overset{\rightharpoonup}{\Sigma}\) is consistent with
+    the direction of \(\frac{\partial \mathbf{r}}{\partial u} \times \frac{\partial \mathbf{r}}{\partial v}\).
+\end{theorem}
+Specially, if the surface \(\overset{\rightharpoonup}{\Sigma}\) is given by \(z = z(x, y), (x, y) \in D_{xy}\),
+where \(D_{xy}\) is a closed region with piecewise smooth boundary in \(xy\)-plane,
+and \(R(x,y,z)\) is continuous on \(D_{xy}\),
+then:
+\[
+\iint_{\overset{\rightharpoonup}{\Sigma}} R(x, y, z) \mathrm{d}x \mathrm{d}y = 
+\pm \iint_{D_{xy}} R(x, y, z(x, y)) \, \mathrm{d}x \mathrm{d}y,
+\]
+where the sign \(\pm\) depends on whether the orientation of \(\overset{\rightharpoonup}{\Sigma}\) is upward or downward.
+
+
+
+\section{Stokes' Formula}
+\begin{leftbarTitle}{Newton-Leibniz Formula}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Green's Formula}\end{leftbarTitle}
+Consider two kinds of special orientated closed regions in \(xy\)-plane as shown in Figure \ref{fig:SpecialRegion1}.
+As for the first region \(\overset{\rightharpoonup}{M}\), it consists of four orientated curves:
+\begin{description}
+    \item[\(\overset{\rightharpoonup}{C_1}\)] \(y = \varphi_{1}(x), x \in [a, b]\),
+    \item[\(\overset{\rightharpoonup}{C_2}\)] \(x = b, y \in [\varphi_{1}(b), \varphi_{2}(b)]\), can be reduced to a point,
+    \item[\(\overset{\rightharpoonup}{C_3}\)] \(y = \varphi_{2}(x), x \in [a, b]\),
+    \item[\(\overset{\rightharpoonup}{C_4}\)] \(x = a, y \in [\varphi_{1}(a), \varphi_{2}(a)]\), can be reduced to a point.
+\end{description}
+The second region is similar.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/SpecialRegion1.png}
+    \caption{Two special orientated closed regions.}
+    \label{fig:SpecialRegion1}
+\end{figure}
+
+Denote \(\oint_{\overset{\rightharpoonup}{\partial M}}\) as the line integral 
+along the boundary of region \(\overset{\rightharpoonup}{M}\), then we have the following lemma.
+\begin{lemma}
+    \begin{enumerate}
+        \item Let \(\overset{\rightharpoonup}{\partial M}\) be the first region in Fig~\ref{fig:SpecialRegion1},
+            \(P(x, y) \in C^{1}(M)\), then:
+            \[
+            \oint_{\overset{\rightharpoonup}{\partial M}} P \, \mathrm{d}x = -\iint_{\overset{\rightharpoonup}{M}} \frac{\partial P}{\partial y} \, \mathrm{d}x \wedge \mathrm{d}y,
+            \] 
+        \item Let \(\overset{\rightharpoonup}{\partial M}\) be the second region in Fig~\ref{fig:SpecialRegion1},
+            \(Q(x, y) \in C^{1}(M)\), then:
+            \[
+            \oint_{\overset{\rightharpoonup}{\partial M}} Q \, \mathrm{d}y = \iint_{\overset{\rightharpoonup}{M}} \frac{\partial Q}{\partial x} \, \mathrm{d}x \wedge \mathrm{d}y.
+            \]
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}{Green's Theorem}
+    Let \(\overset{\rightharpoonup}{M}\) be an orientated closed region in \(\mathbb{R}^{2}\),
+    and \(\omega = P\mathrm{d}x + Q \mathrm{d}y \in C^{1}(M)\).
+    If \(\overset{\rightharpoonup}{\partial M}\) can be split into finitely many first and second regions 
+    in Fig~\ref{fig:SpecialRegion1} simultaneously (non-overlapping, no shared interior points),
+    then:
+    \[
+    \oint_{\overset{\rightharpoonup}{\partial M}} P \, \mathrm{d}x + Q \, \mathrm{d}y = 
+    \iint_{\overset{\rightharpoonup}{M}} \left( \frac{\partial Q}{\partial x} - 
+    \frac{\partial P}{\partial y} \right) \, \mathrm{d}x \wedge \mathrm{d}y =
+        \iint_{M} \left( \frac{\partial Q}{\partial x} - 
+    \frac{\partial P}{\partial y} \right) \, \mathrm{d}x \mathrm{d}y,
+    \]\footnote{
+        Note that \(\mathrm{d}x \wedge \mathrm{d}y \) is directed area element, 
+        while \(\mathrm{d}x \mathrm{d}y\) is unsigned area element.
+    }
+    or equivalently,
+    \[
+    \oint_{\overset{\rightharpoonup}{\partial M}} \omega = \iint_{\overset{\rightharpoonup}{M}} \mathrm{d}\omega,
+    \]
+    where \(\overset{\rightharpoonup}{\partial M}\) is the induced orientation of \(\overset{\rightharpoonup}{M}\).
+\end{theorem}
+
+
+\begin{leftbarTitle}{Gauß's Formula}\end{leftbarTitle}
+Consider three kinds of special orientated closed surfaces in \(\mathbb{R}^{3}\) as shown in Figure \ref{fig:SpecialRegion2}.
+As for the first surface \(\overset{\rightharpoonup}{M}\)
+($\overset{\rightharpoonup}{M}$ adopts a positive orientation (right-hand system), 
+and $\overset{\rightharpoonup}{\partial M}$ adopts the outward normal orientation), 
+it consists of three orientated surfaces:
+\begin{description}
+    \item[\(\overset{\rightharpoonup}{\Sigma_1}\)] \(z = \varphi_{1}(x, y), (x, y) \in \Delta_{1}\),
+    \item[\(\overset{\rightharpoonup}{\Sigma_2}\)] \(z = \varphi_{2}(x, y), (x, y) \in \Delta_{1}\),
+    \item[\(\overset{\rightharpoonup}{\Sigma_3}\)] A cylindrical taking \(\partial \Delta_1\) as the directrix,
+        with the generatrix paralleling to the \(Oz\)-axis. 
+        Of course, it can also be reduced as a closed curve.
+\end{description}
+The second and third surfaces are similar.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/SpecialRegion2.png}
+    \caption{Three special orientated closed surfaces (only the first two are shown).}
+    \label{fig:SpecialRegion2}
+\end{figure}
+
+Denote \(\oiint_{\overset{\rightharpoonup}{\partial M}}\) as the surface integral
+over the boundary of region \(\overset{\rightharpoonup}{M}\), then we have the following lemma.
+\begin{lemma}
+    \begin{enumerate}
+        \item Let \(\overset{\rightharpoonup}{\partial M}\) be the first surface in Fig~\ref{fig:SpecialRegion2},
+            \(R(x, y, z) \in C^{1}(M)\), then:
+            \[
+            \oiint_{\overset{\rightharpoonup}{\partial M}} R \, \mathrm{d}x \wedge \mathrm{d}y = 
+            \iiint_{\overset{\rightharpoonup}{M}} \frac{\partial R}{\partial z} \, \mathrm{d}x \wedge \mathrm{d}y \wedge \mathrm{d}z,
+            \] 
+        \item Let \(\overset{\rightharpoonup}{\partial M}\) be the second surface in Fig~\ref{fig:SpecialRegion2},
+            \(P(x, y, z) \in C^{1}(M)\), then:
+            \[
+            \oiint_{\overset{\rightharpoonup}{\partial M}} P \, \mathrm{d}y \wedge \mathrm{d}z = 
+            \iiint_{\overset{\rightharpoonup}{M}} \frac{\partial P}{\partial x} \, \mathrm{d}x \wedge \mathrm{d}y \wedge \mathrm{d}z,
+            \]
+        \item Let \(\overset{\rightharpoonup}{\partial M}\) be the third surface in Fig~\ref{fig:SpecialRegion2},
+            \(Q(x, y, z) \in C^{1}(M)\), then:
+            \[
+            \oiint_{\overset{\rightharpoonup}{\partial M}} Q \, \mathrm{d}z \wedge \mathrm{d}x = 
+            \iiint_{\overset{\rightharpoonup}{M}} \frac{\partial Q}{\partial y} \, \mathrm{d}x \wedge \mathrm{d}y \wedge \mathrm{d}z.
+            \]
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}{Gauß's Theorem}
+    Let \(\overset{\rightharpoonup}{M}\) be an orientated closed region in \(\mathbb{R}^{3}\),
+    and \(\omega = P\mathrm{d}y \wedge \mathrm{d}z + Q \mathrm{d}z \wedge \mathrm{d}x 
+    + R \mathrm{d}x \wedge \mathrm{d}y \in C^{1}(M)\).
+    If \(\overset{\rightharpoonup}{\partial M}\) can be split into finitely many first, second and third regions
+    in Fig~\ref{fig:SpecialRegion1} simultaneously (non-overlapping, no shared interior points),
+    then:
+    then:
+    \[
+    \oiint_{\overset{\rightharpoonup}{\partial M}} P \, \mathrm{d}y \wedge \mathrm{d}z + Q \, \mathrm{d}z \wedge \mathrm{d}x + R \, \mathrm{d}x \wedge \mathrm{d}y = 
+    \iiint_{\overset{\rightharpoonup}{M}} \left( 
+        \frac{\partial P}{\partial x} + 
+        \frac{\partial Q}{\partial y} + 
+        \frac{\partial R}{\partial z} 
+    \right) \, \mathrm{d}x \wedge \mathrm{d}y \wedge \mathrm{d}z,
+    \]
+    or equivalently,
+    \[
+    \oiint_{\overset{\rightharpoonup}{\partial M}} \omega = 
+    \iiint_{\overset{\rightharpoonup}{M}} \mathrm{d}\omega,
+    \]
+    where \(\overset{\rightharpoonup}{\partial M}\) is the induced orientation of \(\overset{\rightharpoonup}{M}\).
+\end{theorem}
+
+
+\begin{leftbarTitle}{Stokes' Formula}\end{leftbarTitle}
+\begin{theorem}{Stokes' Theorem}
+    Let \(\overset{\rightharpoonup}{M}\) be an orientated smooth surface in \(\mathbb{R}^{3}\)
+    with boundary \(\overset{\rightharpoonup}{\partial M}\),
+    and \(\omega = P\mathrm{d}x + Q \mathrm{d}y + R \mathrm{d}z \in C^{1}(\Sigma)\).
+    Then:
+    \begin{align*}
+        &\oint_{\overset{\rightharpoonup}{\partial M}} P \, \mathrm{d}x + Q \, \mathrm{d}y + R \, \mathrm{d}z\\
+        =& \iint_{\overset{\rightharpoonup}{M}} \left( 
+            \frac{\partial R}{\partial y} - \frac{\partial Q}{\partial z}
+        \right) \, \mathrm{d}y \wedge \mathrm{d}z +
+        \left( 
+            \frac{\partial P}{\partial z} - \frac{\partial R}{\partial x}
+        \right) \, \mathrm{d}z \wedge \mathrm{d}x +
+        \left(
+            \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}
+        \right) \, \mathrm{d}x \wedge \mathrm{d}y \\
+        =& \iint_{\overset{\rightharpoonup}{M}} 
+            \begin{vmatrix}\mathrm{d}y \wedge \mathrm{d}z&\mathrm{d}z \wedge \mathrm{d}x& \mathrm{d}x \wedge \mathrm{d}y\\
+            \frac{\partial }{\partial x}&\frac{\partial }{\partial y}&\frac{\partial }{\partial z}\\
+            P&Q&R            
+            \end{vmatrix}\\
+        =&\iint_{\overset{\rightharpoonup}{M}} 
+        \begin{vmatrix}\cos\alpha&\cos\beta&\cos\gamma \\
+        \frac{\partial }{\partial x}&\frac{\partial }{\partial y}&\frac{\partial }{\partial z}\\
+        P&Q&R
+        \end{vmatrix} \mathrm{d}S,
+    \end{align*}
+    or equivalently,
+    \[
+    \oint_{\overset{\rightharpoonup}{\partial M}} \omega = \iint_{\overset{\rightharpoonup}{M}} \mathrm{d}\omega,
+    \]
+    where \(\overset{\rightharpoonup}{\partial M}\) is the induced orientation of \(\overset{\rightharpoonup}{M}\).
+\end{theorem}
+
+\section{Closed and Exact Differential Forms}
+\begin{definition}{Closed and Exact Differential Forms}
+    Let \(U \subset \mathbb{R}^{n}\) be an open set and \(\omega\) be a \(C^{r}(r\geqslant 1)\) \(k\)-form on \(U\).
+    \begin{enumerate}
+        \item If \(\mathrm{d}\omega = 0\), then \(\omega\) is called a \textbf{closed form}.
+        \item If there exists a \(C^{r+1}\) \((k-1)\)-form \(\eta\) such that \(\omega = \mathrm{d}\eta\),
+            then \(\omega\) is called an \textbf{exact differential form}.
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}{Necessary Condition for Exactness}
+    Let \(U \subset \mathbb{R}^{n}\) be an open set and \(\omega\) be a \(C^{1}\) \(k\)-form on \(U\).
+    If \(\omega\) is exact, then \(\omega\) is closed.
+    The converse is not necessarily true.
+\end{theorem}
+
+\vspace{0.7cm}
+We only discuss the case of \(1\)-forms in \(\mathbb{R}^{2}\) below.
+
+Let \(\omega = P(x, y) \mathrm{d}x + Q(x, y) \mathrm{d}y\) be a \(C^{1}\) \(1\)-form on an open set \(U \subset \mathbb{R}^{2}\).
+For any points \(A, B \in U\), a piecewise smooth simple closed curve on \(U\)
+is called a \textbf{path} from \(A\) to \(B\) if it starts at \(A\) and ends at \(B\). 
+
+For any path \(\overset{\rightharpoonup}{L}\) from \(A\) to \(B\),
+if 
+\[
+\int_{\overset{\rightharpoonup}{L}} \omega = \int_{A}^{B} \omega,
+\]
+where the right-hand side is independent of the choice of path \(\overset{\rightharpoonup}{L}\),
+then the line integral of \(\omega\) is said to be \textbf{path-independent} on \(U\).
+
+\begin{theorem}
+    Let \(U\in \mathbb{R}^{2}\) is a simply connected open region,
+    and \(\omega = P(x, y) \mathrm{d}x + Q(x, y) \mathrm{d}y\) be a \(C^{1}\) \(1\)-form on \(U\).
+    Then the following statements are equivalent:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(\omega\) is exact on \(U\), i.e., there exists a \(C^{2}\) function \(F(x, y)\) on \(U\),
+            such that
+            \[
+            \mathrm{d}F = \omega = P \, \mathrm{d}x + Q \, \mathrm{d}y.
+            \]
+            At this time, \(F(x, y)\) is called a \textbf{potential function} of \(\omega\) on \(U\)
+            and 
+            \[
+            F(x, y) = \int_{(x_{0}, y_{0})}^{(x, y)} \omega + C
+            = \int_{x_{0}}^{x} P(t, y_{0}) \, \mathrm{d}t + \int_{y_{0}}^{y} Q(x, s) \, \mathrm{d}s + C,
+            \]
+            where \((x_{0}, y_{0})\) is a fixed point in \(U\) and \(C\) is an arbitrary constant.
+        \item \(\omega\) is closed on \(U\), i.e.,
+            \[
+                \frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}.
+            \] 
+        \item The line integral of \(\omega\) is path-independent on \(U\).
+        \item For any piecewise smooth simple closed curve \(\overset{\rightharpoonup}{L}\) on \(U\),
+            \[
+            \oint_{\overset{\rightharpoonup}{L}} \omega = 0.
+            \]
+    \end{enumerate}
+\end{theorem}
+
+
+\begin{example}
+    Calculate
+    \[
+    I = \oint_{\overset{\rightharpoonup}{C}} \frac{\cos(\mathbf{r},\mathbf{n})}{r} \, \mathrm{d}s,
+    \]
+    where \(\overset{\rightharpoonup}{C}\) is piecewise smooth simple closed curve,
+    \(\mathbf{r}=(x,y)\), \(r=\|\mathbf{r}\|=\sqrt{x^2 + y^2}\),
+    and \(\mathbf{n}\) is the unit outward normal vector of \(\overset{\rightharpoonup}{C}\).
+\end{example}

@@ -1,0 +1,549 @@
+\chapter{Matrices} % 矩阵
+\section{Basic Operations}
+\begin{leftbarTitle}{Addition}\end{leftbarTitle}
+\begin{leftbarTitle}{Scalar Multiplication}\end{leftbarTitle}
+\begin{leftbarTitle}{Transpose}\end{leftbarTitle}
+\begin{leftbarTitle}{Matrix Multiplication}\end{leftbarTitle}
+
+
+
+\begin{leftbarTitle}{Operations of Determinants}\end{leftbarTitle}
+\begin{theorem}{Determinant of a Product}
+    For square matrices \( A \) and \( B \) of the same order, 
+    the determinant of their product is equal to the product of their determinants:
+    \[
+    |AB| = |A| \cdot |B|.
+    \]
+
+    It can be easily extended to multiple matrices:
+    \[
+    |A_1 A_2 \cdots A_k| = |A_1| \cdot |A_2| \cdots |A_k|.
+    \]
+\end{theorem}
+
+\begin{theorem}{Cauchy-Binet Formula}
+    Let \( A = (a_{ij})_{m \times n} \) and \( B = (b_{ij})_{n \times m} \):  
+    \begin{enumerate}
+        \item If \( m > n \), then \( |AB| = 0 \);
+        \item If \( m \leq n \), then \( |AB| \) is equal to 
+        the sum of products of all \( m \)-step minors of \( A \) and 
+        the corresponding \( m \)-step minors of \( B \), that is:
+        \[
+        |AB| = \sum_{1 \leq v_1 < v_2 < \dots < v_m \leq n} 
+        \begin{vmatrix}
+        A\begin{pmatrix}
+        1, 2, \dots, m \\
+        v_1, v_2, \dots, v_m
+        \end{pmatrix}
+        \end{vmatrix}
+        \cdot 
+        \begin{vmatrix}
+        B\begin{pmatrix}
+        v_1, v_2, \dots, v_m \\
+        1, 2, \dots, m
+        \end{pmatrix}
+        \end{vmatrix}.
+        \]
+    \end{enumerate}
+\end{theorem}
+
+
+
+
+\begin{leftbarTitle}{Matrix Equivalence}\end{leftbarTitle}
+\begin{definition}{Matrix Equivalence}
+    Two matrices \( A \) and \( B \) are said to be \textbf{equivalent}, 
+    denoted as \( A \cong B \),
+    if they can be transformed into one another by a combination of elementary row and column operations.
+\end{definition}
+
+\begin{note}
+    Obviously, two matrices are equivalent if and only if they have the same rank.
+\end{note}
+
+\begin{definition}{Canonical Form of Matrix Equivalence}
+    For any matrix \( A \) with rank \( r \), 
+    it can be equivalent to the matrix
+    \[
+    J_r = \begin{pmatrix}
+    I_r & O \\
+    O & O
+    \end{pmatrix}_{m \times n},
+    \]
+    which is called the \textbf{canonical form} of matrix equivalence.
+\end{definition}
+
+
+
+\section{Special Square Matrices}
+\begin{leftbarTitle}{Diagonal Matrix}\end{leftbarTitle}
+\begin{definition}{Diagonal Matrix}
+    A matrix \( A = (a_{ij})_{n \times n} \) is called a \textbf{diagonal matrix} if:
+    \[
+    a_{ij} = 0, \quad i \neq j,
+    \]
+    denoted as:
+    \[
+    A = \mathrm{diag}(a_{11}, a_{22}, \dots, a_{nn}).
+    \]
+
+    If 
+    \[
+    a_{i,n+1-i} = 0, \quad i = 1, 2, \dots, n,
+    \]
+    then \( A \) is called an \textbf{skew-diagonal matrix},
+    denoted as:
+    \[
+    A = \mathrm{sdiag}(a_{1n}, a_{2,n-1}, \dots, a_{n1}).
+    \]
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item The sum, difference, and product of two diagonal matrices of the same order are still diagonal matrices.
+        \item Multiplying a matrix \(A\) on the left (right) by a diagonal matrix is equivalent to 
+            multiplying the corresponding rows (columns) of \(A\) by the diagonal elements of the diagonal matrix.
+        \item 
+            \[
+            \mathrm{diag}(a_{1}, a_{2}, \dots, a_{n})^{-1} = 
+            \mathrm{diag}\left( \frac{1}{a_{1}}, \frac{1}{a_{2}}, \dots, \frac{1}{a_{n}} \right),
+            \] 
+            \[
+            \mathrm{sdiag}(a_{1}, a_{2}, \dots, a_{n})^{-1} = 
+            \mathrm{sdiag}\left( \frac{1}{a_{n}}, \frac{1}{a_{n-1}}, \dots, \frac{1}{a_{1}} \right);
+            \]
+            \[
+            \begin{bmatrix} A & O \\ O & C \\\end{bmatrix}^{-1} =
+            \begin{bmatrix} A^{-1} & O \\ O & C^{-1} \\\end{bmatrix},
+            \]
+            \[
+            \begin{bmatrix} O & B \\ D & O \\\end{bmatrix}^{-1} =
+            \begin{bmatrix} O & D^{-1} \\ B^{-1} & O \\\end{bmatrix}.
+            \]
+    \end{enumerate} 
+\end{property}
+
+
+
+
+\begin{leftbarTitle}{Fundamental Matrix}\end{leftbarTitle}
+\begin{definition}{Fundamental Matrix}
+    \(E_{ij}\) is called a \textbf{fundamental matrix} if the element in the \(i\)-th row and \(j\)-th column is 1,
+    and all other elements are 0.
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item Multiplying a matrix \(A\) on the left by a fundamental matrix is equivalent to 
+            moving the \(j\)-th row of \(A\) to the \(i\)-th position, 
+            with all other entries in the resulting matrix being zero; 
+            multiplying \(A\) on the right by a fundamental matrix is equivalent to 
+            moving the \(i\)-th column of \(A\) to the \(j\)-th position, 
+            with all other entries in the resulting matrix being zero.\footnote{
+                The mnemonic is:
+                \[
+                \text{moves row: }E_{i\leftarrow j}A;\qquad
+                \text{moves column: }AE_{i\rightarrow j};
+                \]
+            }
+        \item If \(A\) is commutative with all fundamental matrices, then \(A\) is a scalar matrix.
+    \end{enumerate}
+\end{property}
+
+\begin{leftbarTitle}{Triangular Matrix}\end{leftbarTitle}
+\begin{definition}{Triangular Matrix}
+    A matrix \( A = (a_{ij})_{n \times n} \) is called an \textbf{upper triangular matrix} if:
+    \[
+    a_{ij} = 0, \quad i > j,
+    \]
+    denoted as:
+    \[
+    A = 
+    \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    0 & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \cdots & a_{nn}
+    \end{pmatrix}.
+    \]
+
+    Similarly, if:
+    \[
+    a_{ij} = 0, \quad i < j,
+    \]
+    then \( A \) is called a \textbf{lower triangular matrix},
+    denoted as:
+    \[
+    A = 
+    \begin{pmatrix}
+    a_{11} & 0 & \cdots & 0 \\
+    a_{21} & a_{22} & \cdots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{n1} & a_{n2} & \cdots & a_{nn}
+    \end{pmatrix}.
+    \]
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item The sum, difference, and product of two upper (lower) triangular matrices of the same order 
+            are still upper (lower) triangular matrices. 
+        \item For all square matrix \(A\), \(A\) can be expressed as the sum of 
+            an upper triangular matrix and a lower triangular matrix:
+            \[
+            A = \frac{A + A^T}{2} + \frac{A - A^T}{2}.
+            \]
+        \item (\textbf{\(LU\) Decomposition}) If all leading principal minors of a square matrix \(A\) are non-zero, 
+            then \(A\) can be uniquely decomposed into the product of a lower triangular matrix \(L\) 
+            (with all diagonal elements equal to 1) and an invertible upper triangular matrix \(U\):
+            \[
+            A = LU.
+            \]
+            The converse is also true.
+    \end{enumerate}
+\end{property}
+
+
+\begin{leftbarTitle}{Elementary Matrix}\end{leftbarTitle}
+\begin{definition}{Elementary Matrix}
+    An \textbf{elementary matrix} is obtained by performing a single elementary row operation on an identity matrix \(E\).
+    There are three types of elementary matrices (also hold for column operations):
+    \begin{description}
+        \item [Row swapping] Interchanges rows \(i\) and \(j\) of \(E\): \(P(i,j)\).
+        \item [Row scaling] Multiplies row \(i\) of \(E\) by a non-zero scalar \(c\): \(P(i(c))\).
+        \item [Row addition] Adds \(k\) times row \(j\) to row \(i\) of \(E\): \(P(i,j(k))\).
+    \end{description}
+\end{definition}
+
+\begin{note}
+    It can be proven that \(P(i,j)\) can be implemented by a sequence of \(P(i(c))\) and \(P(i,j(k))\) operations.
+\end{note}
+
+\begin{leftbarTitle}{Symmetric Matrix}\end{leftbarTitle}
+\begin{definition}{Symmetric Matrix}
+    A matrix \( A = (a_{ij})_{n \times n} \) is called a \textbf{symmetric matrix} if:
+    \[
+    a_{ij} = a_{ji}, \quad i, j = 1, 2, \dots, n,
+    \]
+    or equivalently:
+    \[
+    A = A^T.
+    \]
+    
+    Similarly, if:
+    \[
+    A = -A^T,
+    \]
+    then \( A \) is called a \textbf{skew-symmetric matrix}.
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item The linear combination of two symmetric (skew-symmetric) matrices of the same order 
+            are still symmetric (skew-symmetric) matrices. 
+        \item For any square matrix \(A\), \(A\) can be expressed as the sum of 
+            a symmetric matrix and a skew-symmetric matrix:
+            \[
+            A = \frac{A + A^T}{2} + \frac{A - A^T}{2}.
+            \]
+        \item The determinant of an odd-order skew-symmetric matrix is zero; 
+            the rank of a skew-symmetric matrix is even. 
+    \end{enumerate}
+\end{property}
+
+
+\begin{leftbarTitle}{Circulant Matrix}\end{leftbarTitle}
+Let 
+\[
+C = 
+\begin{bmatrix} 
+    0 & 1 & 0 & 0 & \cdots & 0 \\ 
+    0 & 0 & 1 & 0 & \cdots & 0 \\ 
+    \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\ 
+    0 & 0 & 0 & 0 & \cdots & 1 \\
+    1 & 0 & 0 & 0 & \cdots & 0
+\end{bmatrix},
+\]
+it is called a \textbf{cyclic shift matrix}.
+
+The matrix \(C\) performs specific cyclic operations when multiplied by another matrix:
+\begin{description}
+    \item [Left multiplication] Multiplying a matrix \(A\) from the left by \(C\) (\(CA\)) 
+        is equivalent to cyclically shifting the rows of \(A\) upwards by one position. 
+        The first row of \(A\) moves to the last row.
+    \item [Right multiplication] Multiplying a matrix \(A\) from the right by \(C\) (\(AC\)) 
+        is equivalent to cyclically shifting the columns of \(A\) to the right by one position. 
+        The last column of \(A\) moves to the first column.
+\end{description}
+
+\begin{definition}{Circulant Matrix}
+    A matrix \(A\) is called a \textbf{circulant matrix} if it can be expressed as:
+    \[
+    A = 
+    \begin{bmatrix} 
+        a_0 & a_1 & a_2 & \cdots & a_{n-1} \\ 
+        a_{n-1} & a_0 & a_1 & \cdots & a_{n-2} \\ 
+        a_{n-2} & a_{n-1} & a_0 & \cdots & a_{n-3} \\ 
+        \vdots & \vdots & \vdots & \ddots & \vdots \\ 
+        a_1 & a_2 & a_3 & \cdots & a_0
+    \end{bmatrix},
+    \]
+    which is constructed such that each row is obtained by cyclically shifting 
+    the elements of the first row one position to the right.
+
+    It can also be expressed as:
+    \[
+    A = a_0 E + a_1 C + a_2 C^2 + \cdots + a_{n-1} C^{n-1} = \sum_{i=0}^{n-1} a_i C^i,
+    \]
+    where \(E\) is the identity matrix and \(C\) is the cyclic shift matrix.
+\end{definition}
+
+
+\begin{leftbarTitle}{Nilpotent Matrix}\end{leftbarTitle}
+\begin{definition}{Nilpotent Matrix}
+    A square matrix \(A\) is called a \textbf{nilpotent matrix} if there exists \(l\in \mathbb{N}_{+}\) such that:
+    \[
+    A^l = O,
+    \]
+    where \(O\) is the zero matrix.
+    The smallest such \(l\) is called the \textbf{nilpotent index} of the nilpotent matrix \(A\).
+\end{definition}
+
+\begin{proposition}
+    \begin{enumerate}
+        \item A triangular matrix is nilpotent if and only if all its diagonal elements are zero. 
+        \item If a \(n\)-order triangular matrix is nilpotent, then its nilpotent index \(l\) must satisfy \(l \leq n\).
+    \end{enumerate}
+\end{proposition}
+
+Some special nilpotent matrices:
+\begin{itemize}
+    \item 
+        \[
+        A_{n} = \begin{pmatrix} 
+            0 & 1 & 0 & \cdots & 0 \\ 
+            0 & 0 & 1 & \cdots & 0 \\
+            \vdots & \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & 0 & \cdots & 1 \\
+            0 & 0 & 0 & \cdots & 0
+        \end{pmatrix}_{n \times n},
+        \]
+        is a nilpotent matrix with nilpotent index $n$.
+    \item  
+    \item 
+\end{itemize}
+
+\begin{leftbarTitle}{Full Row Rank Matrix}\end{leftbarTitle}
+\begin{definition}{Full Row Rank Matrix}
+    A matrix \(A\) is called a \textbf{full row rank matrix} if its row vectors are linearly independent.
+    Similarly, if its column vectors are linearly independent, 
+    then \(A\) is called a \textbf{full column rank matrix}.
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item \(A_{m\times n}\) is a full row rank matrix if and only if 
+            there exists an invertible matrix \(Q_{n\times n}\) such that 
+            \[A = \begin{bmatrix} E_{m} & O \end{bmatrix}Q.\]
+        \item \(A_{m\times n}\) is a full column rank matrix if and only if 
+            there exists an invertible matrix \(P_{m\times m}\) such that 
+            \[A = P\begin{bmatrix} E_{n} \\ O \end{bmatrix}.\]
+    \end{enumerate}
+\end{property}
+
+\section{Inverse Matrix}
+\begin{leftbarTitle}{Inverse Matrix and Its Operations}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Equivalent Propositions and Method of Inversion}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Generalized Inverse}\end{leftbarTitle}
+
+\section{Block Matrix}
+
+
+
+\begin{definition}{Kronecker Product}
+    Let \( A = (a_{ij})_{m \times n} \) and \( B = (b_{ij})_{p \times q} \) be two matrices. 
+    The \textbf{Kronecker product} of \( A \) and \( B \), denoted as \( A \otimes B \), 
+    is defined as the block matrix:
+    \[
+    A \otimes B = 
+    \begin{pmatrix}
+    a_{11}B & a_{12}B & \cdots & a_{1n}B \\
+    a_{21}B & a_{22}B & \cdots & a_{2n}B \\
+    \vdots & \vdots & & \vdots \\
+    a_{m1}B & a_{m2}B & \cdots & a_{mn}B
+    \end{pmatrix}_{mp \times nq}.
+    \]
+\end{definition}
+
+
+\begin{leftbarTitle}{Common Conclusions}\end{leftbarTitle}
+\begin{theorem}{Determinant Reduction Formula}\label{thm:determinant_reduction_formula}
+    Let \(A_{m\times m}, B_{m\times n}, C_{n\times m}, D_{n\times n}\) be matrices. Then:
+    \begin{enumerate}
+        \item If \( A \) is invertible, then:
+            \[
+            \begin{vmatrix}
+            A & B \\
+            C & D
+            \end{vmatrix}
+            = |A| \cdot |D - CA^{-1}B|.
+            \]
+        \item If \( D \) is invertible, then:
+            \[
+            \begin{vmatrix}
+            A & B \\
+            C & D
+            \end{vmatrix}
+            = |D| \cdot |A - BD^{-1}C|.
+            \]
+        \item If both \( A \) and \( D \) are invertible, then:
+            \[
+            |D| \cdot |A - BD^{-1}C| = |A| \cdot |D - CA^{-1}B|.
+            \]
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    The mnemonic is: 
+    For \( \begin{vmatrix} A & B \\ C & D \end{vmatrix} \), for example, if \( A \) is invertible, 
+    one factor is \( |A| \), and the other factor is \( D \) (the diagonal element of \( A \)) minus 
+    the product of the other three terms arranged \underline{clockwise}, where the middle one is the inverse matrix.
+\end{remark}
+
+
+\section{Matrix Functions}
+
+\section{Operations of Rank}
+\begin{proposition}
+    The matrices \( A \) and \( B \) in the following operations do not need to be square matrices; 
+    they only need to be compatible for multiplication or addition.
+    \begin{description}
+        \item [1. Addition]\footnote{
+            Actually, on the basis of dimension formula (Thm~\ref{thm:dimension_formula}),
+            let \( \mathcal{R}(A) \) and \( \mathcal{R}(B) \) be the column spaces of matrices \( A \) and \( B \) respectively,
+            then:
+            \[
+            \operatorname{dim}(\mathcal{R}(A) + \mathcal{R}(B)) = 
+            \operatorname{dim}(\mathcal{R}(A)) + \operatorname{dim}(\mathcal{R}(B)) - 
+            \operatorname{dim}(\mathcal{R}(A) \cap \mathcal{R}(B)),
+            \]
+            i.e.,
+            \[
+            \operatorname{rank}(A + B) = \operatorname{rank}(A) + \operatorname{rank}(B) - 
+            \operatorname{dim}(\mathcal{R}(A) \cap \mathcal{R}(B)).
+            \]
+        }
+        \[
+        \left| \operatorname{rank}(A) - \operatorname{rank}(B) \right| \leqslant 
+        \operatorname{rank}(A + B) \leqslant \operatorname{rank}(A) + \operatorname{rank}(B).
+        \]
+        \item [2. Multiplication]
+        \[
+        \operatorname{rank}(AB) \leqslant \operatorname{rank}(A), \quad \operatorname{rank}(AB) \leqslant \operatorname{rank}(B).
+        \]
+        \item[2.1. Sylvester's Inequality]
+        \[
+        \operatorname{rank}(AB) \geqslant \operatorname{rank}(A) + \operatorname{rank}(B) - n \quad (A_{s \times n}, B_{n \times m}).
+        \]
+        Specially, if \( AB = O \), then:
+        \[
+        \operatorname{rank}(A) + \operatorname{rank}(B) \leqslant n.
+        \]
+
+        \item[2.2. Frobenius Inequality]
+        \[
+        \operatorname{rank}(ABC) \geqslant \operatorname{rank}(AB) + \operatorname{rank}(BC) - \operatorname{rank}(B).
+        \]
+
+        \item [3. Transpose]
+        \[
+        \operatorname{rank}(AA^T) = \operatorname{rank}(A^TA) = \operatorname{rank}(A) = \operatorname{rank}(A^T).
+        \]
+
+        \item [4. Inverse]
+        \[
+        \operatorname{rank}(A) = \operatorname{rank}(A^{-1}) = n.
+        \]
+
+        \item[5. Block Matrix]
+        \[
+        \operatorname{rank}\begin{pmatrix} A & O \\ O & D \end{pmatrix} = \operatorname{rank}(A) + \operatorname{rank}(D).
+        \]
+    \end{description}
+\end{proposition}
+
+\section{Low-Rank Corrections}
+Due to all the row and column vectors of a rank-\(1\) matrix are linearly dependent,
+it can be expressed as the outer product of two non-zero vectors;
+in other words, a rank-\(1\) matrix can be expressed as \( \alpha \beta^T \),
+where \( \alpha \) and \( \beta \) are non-zero column vectors.
+
+Based on the decomposition \( A = \alpha \beta^T \), the matrix of rank-\(1\) has simplified calculation rules:
+\begin{property}
+    \begin{description}
+        \item [Exponentiation]  
+        For any positive integer \( k \geq 1 \),
+        \[
+        A^k = (\beta^T\alpha)^{k-1} \cdot A,
+        \]
+        where \( \beta^T\alpha \) is a constant (the inner product of vectors).
+        \item [Rank Transmission]  
+        If \( B \) is any matrix, then:
+        \[
+        \operatorname{rank}(AB) \leq 1 \quad \text{and} \quad \operatorname{rank}(BA) \leq 1,
+        \]
+        (rank 1 matrices multiplied by arbitrary matrices result in ranks not exceeding 1).
+    \end{description}
+\end{property}
+
+
+
+\begin{theorem}{Sherman-Morrison Formula}
+    If \( A\in \mathbb{R}^{n\times n} \) is an invertible matrix, 
+    and \( \alpha, \beta\in \mathbb{R}^n \) are column vectors, 
+    then \( A + \alpha \beta^T \) is invertible if and only if \( 1 + \beta^T A^{-1} \alpha \neq 0 \). 
+    In this case, the inverse of \( A + \alpha \beta^T \) is given by:
+    \[
+    \left(A + \alpha \beta^T\right)^{-1} = A^{-1} - \frac{A^{-1} \alpha \beta^T A^{-1}}{1 + \beta^T A^{-1} \alpha},
+    \]
+    where \(\alpha\beta^{\mathrm{T}}\) is the outer product of \(\alpha\) and \(\beta\).
+\end{theorem}
+
+\begin{note}
+    Combining the properties of determinants, 
+    we can derive the determinant version of the Sherman-Morrison formula:
+    \[
+    \left|A + \alpha \beta^T\right| = |A| \cdot \left(1 + \beta^T A^{-1} \alpha\right),
+    \]
+    which is known as the \textbf{matrix determinant lemma}.
+
+    The theorem can also be stated in terms of the adjugate matrix of \( A \):
+    \[
+    \det(A + uv^T) = \det(A) + v^T \operatorname{adj}(A) u,
+    \]
+    in which case it applies whether or not the matrix \( A \) is invertible.
+\end{note}
+
+\vspace{0.7cm}
+Replace \( \alpha, \beta\) with general matrices \( U, V \in \mathbb{R}^{n\times k} \),
+we can extend the Sherman-Morrison formula to the Woodbury matrix identity:
+\begin{theorem}{Woodbury Matrix Identity}
+    If \( A\in \mathbb{R}^{n\times n} \) is an invertible matrix, 
+    \(C\in \mathbb{R}^{k\times k}\) is also an invertible matrix, 
+    and \( U, V\in \mathbb{R}^{n\times k} \) are matrices, 
+    then \( A + UCV^T \) is invertible if and only if \( C^{-1} + V^T A^{-1} U \) is invertible. 
+    In this case, the inverse of \( A + UCV^T \) is given by:
+    \[
+    \left(A + UCV^T\right)^{-1} = A^{-1} - A^{-1} U \left(C^{-1} + V^T A^{-1} U\right)^{-1} V^T A^{-1}.
+    \]
+\end{theorem}
+
+Without loss of generality, let \( A, C \) be conformable identity matrices,
+i.e., \( A = E_n \) and \( C = E_k \). Then the Woodbury matrix identity simplifies to:
+\[
+\left(E_n + UV^T\right)^{-1} = E_n - U \left(E_k + V^T U\right)^{-1} V^T.
+\]
+This form is particularly useful in applications involving low-rank updates to identity matrices.
+

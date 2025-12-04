@@ -1,0 +1,69 @@
+\chapter{Quadratic Forms} % 二次型
+\section{Quadratic Forms and Their Standard Forms}
+\begin{definition}{Quadratic Form}
+    Let \(P\) be a number field, a quadratic homogeneous polynomial in \( n \) variables over \( P \)\footnote{
+        That is, the coefficients of the polynomial belong to the field \( P \).
+    }:
+    \begin{align*}
+        f( x_{1}, x_{2}, \cdots, x_{n}) &= \sum_{i=1}^{n} \sum_{j=1}^{n} a_{ij} x_{i} x_{j} \\
+    &= a_{11}x_{1}^{2} + 2a_{12}x_{1}x_{2} + \cdots + 2a_{1n}x_{1}x_{n} + a_{22}x_{2}^{2} + \cdots + 2a_{2n}x_{2}x_{n} + \cdots + a_{nn}x_{n}^{2},
+    \end{align*}
+    is called a \textbf{quadratic form} in \( n \) variables over field \( P \).
+
+    It can be expressed in matrix form as:
+    \[
+    f( x_{1}, x_{2}, \cdots, x_{n}) = X^{\mathrm{T}} A X,
+    \]
+    where 
+    \[
+    X = \begin{pmatrix}
+        x_{1} \\
+        x_{2} \\
+        \vdots \\
+        x_{n}
+    \end{pmatrix}, \quad
+    A = (a_{ij})_{n \times n}, \quad a_{ij} = a_{ji} \quad (1 \leqslant i, j \leqslant n).
+    \]
+\end{definition}
+It is easy to verify that the matrix \( A \) of a quadratic form is symmetric.
+\begin{note}
+    In fact, for any square matrix \( B \)\footnote{
+        For a skew-symmetric matrix \( S \) (\( S^{T} = -S \)),
+        \[
+        X^{T} S X = - (X^{T} S X)^{T} = - X^{T} S^{T} X = - X^{T} S X \implies X^{T} S X = 0.
+        \]
+    }, we have:
+    \begin{align*}
+        X^{T}BX &= X^{T}\left( \frac{B + B^{T}}{2} \right)X + X^{T}\left( \frac{B - B^{T}}{2} \right)X \\
+        &= X^{T}\left( \frac{B + B^{T}}{2} \right)X + 0 \\
+        &= X^{T}\left( \frac{B + B^{T}}{2} \right)X.
+    \end{align*}
+    It shows that any quadratic form can be represented by a symmetric matrix.
+\end{note}
+
+
+
+
+\section{Canonical Forms}
+\section{Definite Quadratic Forms}
+\begin{definition}{Positive Definite Quadratic Form}
+    A real quadratic form \( f( x_{1}, x_{2}, \cdots, x_{n})=X^{\mathrm{T}}AX \) is called \textbf{positive definite} if:
+    \[
+    f( x_{1}, x_{2}, \cdots, x_{n}) > 0, \quad \forall X \neq 0.
+    \]
+    And \( A \) is called a \textbf{positive definite matrix}.
+\end{definition}
+
+\begin{theorem}{Sufficient and Necessary Condition for Positive Definiteness}
+    A real quadratic form \( f( x_{1}, x_{2}, \cdots, x_{n})=X^{\mathrm{T}}AX \) is positive definite if and only if:
+    \begin{enumerate}
+        \item The positive inertia index of \( f \) is \( n \);
+        \item \(A\) is congruent to the identity matrix \( E \);
+        \item All eigenvalues of \( A \) are positive;
+        \item All leading principal minors\footnote{
+            The leading principal minors of a matrix are the determinants of 
+            the top-left \( k \times k \) submatrices for \( k = 1, 2, \ldots, n \).
+        } of \( A \) are positive.
+    \end{enumerate}
+    
+\end{theorem}

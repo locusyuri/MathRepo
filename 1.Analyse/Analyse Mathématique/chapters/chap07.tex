@@ -1,0 +1,173 @@
+\chapter{Improper Integral} % 反常积分
+\section{Infinite and Defective Integrals}
+
+\section{Convergence Tests for Improper Integrals}
+
+\begin{definition}{Absolute and Conditional Convergence}
+    Let \( f(x) \in R[a, A] \subset [a, +\infty) \), and suppose \( \int_{a}^{+\infty} |f(x)| \, \mathrm{d}x \) converges. 
+    Then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) is said to be \textbf{absolutely convergent} 
+    (or \( f(x) \) is \textbf{absolutely integrable} on \( [a, +\infty) \)).
+
+    If \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) converges but is not absolutely convergent, 
+    then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) is said to be \textbf{conditionally convergent}.
+\end{definition}
+
+\begin{leftbarTitle}{Infinite Integrals}\end{leftbarTitle}
+\begin{theorem}{Cauchy Convergence Criterion for Infinite Integrals}
+    The necessary and sufficient condition for the convergence of 
+    the infinite integral \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) is:
+    \[
+    \forall \varepsilon > 0, \exists A_0 > \max\{ a, 0 \}, \forall A', A'' > A_0 : 
+    \left| \int_{a}^{A'} f(x) \, \mathrm{d}x - \int_{a}^{A''} f(x) \, \mathrm{d}x \right| 
+    = \left| \int_{A'}^{A''} f(x) \, \mathrm{d}x \right| < \varepsilon.
+    \]
+\end{theorem}
+From this, we can conclude that if \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) is absolutely convergent, 
+then it must be convergent.
+
+\begin{theorem}{Comparison Test for Infinite Integrals}
+\begin{description}
+    \item[Comparison Test] Let \( f(x), g(x) \) be functions defined on \( [a, +\infty) \), 
+        and suppose \( f(x) \leqslant K g(x) \) (where \( K \) is a positive constant). Then:
+    \begin{enumerate}[label=\roman*)]
+        \item If \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) converges, 
+            then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) also converges.
+        \item If \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) diverges, 
+            then \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) also diverges.
+    \end{enumerate}
+
+    \item[Limit Form] Let \( f(x), g(x) > 0 \) be functions defined on \( [a, +\infty) \), and suppose:
+    \[
+    \lim_{x \to +\infty} \frac{f(x)}{g(x)} = l.
+    \]
+    Then:
+    \begin{enumerate}[label=\roman*)]
+        \item If \( 0 < l < +\infty \), and \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) converges, 
+            then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) also converges.
+        \item If \( 0 < l < +\infty \), and \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) diverges, 
+            then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) also diverges.
+        \item If \( l = +\infty \), \( \int_{a}^{+\infty} g(x) \, \mathrm{d}x \) 
+            and \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) both converge or both diverge.
+    \end{enumerate}
+
+    \item[Comparison with \( p \)-Integrals] Let \( f(x) > 0 \) be defined on \( [a, +\infty) \), and suppose:
+    \[
+    \frac{f(x)}{x^p} \leqslant \frac{K}{x^p}, \quad \text{where } p > 0.
+    \]
+    Then:
+    \begin{enumerate}[label=\roman*)]
+        \item If \( p > 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) converges.
+        \item If \( p \leqslant 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) diverges.
+    \end{enumerate}
+
+    \item[Limit Form] Let \( f(x) > 0 \) be defined on \( [a, +\infty) \), and suppose:
+    \[
+    \lim_{x \to +\infty} x^p f(x) = l, \quad \text{where } l > 0.
+    \]
+    Then:
+    \begin{enumerate}[label=\roman*)]
+        \item If \( p > 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) converges.
+        \item If \( p \leqslant 1 \), then \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) diverges.
+    \end{enumerate}
+\end{description}
+\end{theorem}
+
+\begin{theorem}{Abel-Dirichlet Test}
+    The infinite integral \( \int_{a}^{+\infty} f(x)g(x) \, \mathrm{d}x \) converges 
+    if either of the following two conditions is satisfied:
+    \begin{description}
+        \item [Abel] \( \int_{a}^{+\infty} f(x) \, \mathrm{d}x \) converges, 
+            and \( g(x) \) is monotonic and bounded on \( [a, +\infty) \).
+        \item [Dirichlet] \( F(A) = \int_{a}^{A} f(x) \, \mathrm{d}x \) is bounded on \( [a, +\infty) \), 
+            \( g(x) \) is monotonic on \( [a, +\infty) \), in the meanwhile \( \lim_{x \to +\infty} g(x) = 0 \).
+    \end{description}
+\end{theorem}
+
+
+\begin{leftbarTitle}{Defective Integrals}\end{leftbarTitle}
+
+
+\begin{leftbarTitle}{Examples}\end{leftbarTitle}
+\begin{example}
+    Discuss the convergence of the following improper integrals:
+    \begin{enumerate}
+        \item \[ \int_{0}^{+\infty} \frac{\sin x}{x^p} \, \mathrm{d}x \]
+        \item \[ \int_{0}^{+\infty} \frac{\sin x}{x^p + \sin x} \, \mathrm{d}x \]
+        \item \[ \int_{0}^{1} \frac{1}{x^p \ln x} \, \mathrm{d}x \]
+        \item \[ \int_{0}^{+\infty} \frac{1}{x^p}\sin \frac{1}{x} \, \mathrm{d}x \]
+    \end{enumerate}
+\end{example}
+
+
+
+\section{Special Integrals}
+\begin{leftbarTitle}{Definite Integrals}\end{leftbarTitle}
+\begin{description}
+    \item[Dirichlet Integral] 
+        \[
+        \int_{0}^{\pi} \frac{\sin \left( n+\frac{1}{2} \right)x }{\sin \frac{x}{2}} \, \mathrm{d}x = \pi,\quad n \in \mathbb{N},
+        \]
+        where integrand \(D_{n}(x)\) is called the Dirichlet kernel. 
+    \item[Fejèr Integral]
+        \[
+        \int_{0}^{\pi} \left( \frac{\sin \frac{n x}{2}}{\sin \frac{x}{2}} \right)^2 \, \mathrm{d}x = n\pi, \quad n \in \mathbb{N},
+        \] 
+\end{description}
+\begin{leftbarTitle}{Improper Integrals}\end{leftbarTitle}
+\begin{description}
+    \item[Euler Integral]
+        \[
+        \int_{0}^{\frac{\pi}{2}} \ln \sin x \, \mathrm{d}x= - \frac{\pi}{2} \ln 2.
+        \]
+    \item[Froullani Integral]
+        \[
+        \int_{0}^{+\infty} \frac{f(ax) - f(bx)}{x} \, \mathrm{d}x = [f(0) - f(+\infty)] \ln \frac{b}{a}, \quad a, b > 0,
+        \]
+        where \( f(x) \) is continuous on \( (0, +\infty) \), and both limits \( f(0) \) and \( f(+\infty) \) exist.
+    \item[Dirichlet Integral]
+        \[
+        \int_{0}^{+\infty} \frac{\sin x}{x} \, \mathrm{d}x = \frac{\pi}{2}.
+        \]
+    \item[Euler-Poisson Integral]
+        \[
+        \int_{0}^{+\infty} e^{-x^2} \, \mathrm{d}x = \frac{\sqrt{\pi}}{2}.
+        \]
+    \item[Poisson Integral]
+        \[
+        \int_{-\pi}^{\pi} \frac{1-r^2}{1-2r\cos x+r^2} \, \mathrm{d}x,\quad(0<r<1)
+        \]
+    \item [Special Integral]
+    \[
+    \int_{0}^{+ \infty} \frac{1}{1+x^a\sin^bx} \, \mathrm{d}x \quad (a > b, b > 0 \text{and even})
+    \]
+    When \( a = 6, b = 2\), the figure is shown as Fig~\ref{fig:graph of the special integral}.
+\end{description}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/xsinx.png}
+    \caption{Graph of \( y = \frac{1}{1 + x^6 \sin^2 x} \)}
+    \label{fig:graph of the special integral}
+\end{figure}
+
+
+\section{Common Questions}
+\begin{leftbarTitle}{Square Integrable}\end{leftbarTitle}
+\begin{definition}{Square Integrable Function}
+    If \( f(x) \in R[a, +\infty) \) and \( \int_{a}^{+\infty} [f(x)]^2 \, \mathrm{d}x \) converges, 
+    then \( f(x) \) is called a \textbf{square integrable function} on \( [a, +\infty) \).
+    For defective integrals, the definition is similar.
+\end{definition}
+
+\begin{property}
+    
+\end{property}
+
+\begin{leftbarTitle}{Properties of the Integrand of the Convergent Infinite Integral at Infinity}\end{leftbarTitle}
+For the infinite integral
+\[
+\int_{0}^{+\infty} \frac{1}{1 + x^6 \sin^2 x} \, \mathrm{d}x,
+\]
+whose integrand is shown in Fig~\ref{fig:graph of the special integral}, 
+we can deduce that even if the integral converges, \(f(+\infty)\) is not necessarily equal to \(0\). 
+Moreover, it is possible that \(\varlimsup_{x \to +\infty} f(x) = +\infty\).

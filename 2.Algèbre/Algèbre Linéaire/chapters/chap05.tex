@@ -1,0 +1,101 @@
+\chapter{Linear Spaces} % 线性空间
+\section{Linear Spaces and Their Bases}
+
+\begin{leftbarTitle}{Basis Transformation and Coordinate Transformation}\end{leftbarTitle}
+
+
+\section{Subspaces}
+\begin{leftbarTitle}{Intersection and Sum of Subspaces}\end{leftbarTitle}
+\begin{definition}{Intersection and Sum of Subspaces}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( V_1, V_2 \subseteq V \) be two subspaces of \( V \).
+    The \textbf{intersection} of \( V_1 \) and \( V_2 \) is defined as:
+    \[
+    V_1 \cap V_2 = \{ \alpha | \alpha \in V_1 \text{ and } \alpha \in V_2 \}.
+    \]
+    The \textbf{sum} of \( V_1 \) and \( V_2 \) is defined as:
+    \[
+    V_1 + V_2 = \{ \alpha | \alpha = \alpha_1 + \alpha_2, 
+    \alpha_1 \in V_1, \alpha_2 \in V_2 \}.
+    \]
+\end{definition}
+
+If \( V_1 \) and \( V_2 \) are two subspaces of \( V \), 
+then both their intersection \( V_1 \cap V_2 \) and their sum \( V_1 + V_2 \) are also subspaces of \( V \).
+Simultaneously, \( V_{1}+V_{2} \) is the smallest subspace of \( V \) 
+that contains both \( V_1 \) and \( V_2 \) (\(V_{1}\cup V_{2}\)).
+
+\begin{leftbarTitle}{Dimension Formula}\end{leftbarTitle}
+\begin{proposition}
+    In a finite-dimensional linear space \( V \),
+    \[
+    \langle \alpha_1, \alpha_2, \dots, \alpha_s \rangle + \langle \beta_1, \beta_2, \dots, \beta_t \rangle = 
+    \langle \alpha_1, \alpha_2, \dots, \alpha_s, \beta_1, \beta_2, \dots, \beta_t \rangle.
+    \]
+\end{proposition}
+
+\begin{theorem}{Dimension Formula}\label{thm:dimension_formula}
+    Let \( V \) be a finite-dimensional linear space over field \( F \), 
+    and let \( V_1, V_2 \subseteq V \) be two subspaces of \( V \). Then:
+    \[
+    \dim(V_1) + \dim(V_2) = \dim(V_1 + V_2) + \dim(V_1 \cap V_2).
+    \]
+    
+\end{theorem}
+
+\begin{leftbarTitle}{Direct Sum of Subspaces}\end{leftbarTitle}
+\begin{definition}{Direct Sum of Subspaces}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( V_1, V_2 \subseteq V \) be two subspaces of \( V \).
+    If any vector \( \alpha \in V_1 + V_2 \) can be uniquely expressed as:
+    \[
+    \alpha = \alpha_1 + \alpha_2, \quad \alpha_1 \in V_1, \alpha_2 \in V_2,
+    \]
+    then \( V_1 + V_2 \) is called the \textbf{direct sum} of \( V_1 \) and \( V_2 \),
+    denoted as \( V_1 \oplus V_2 \).
+\end{definition}
+
+\begin{proposition}
+    The necessary and sufficient condition for \( V_1 + V_2 \) to be a direct sum is:
+    \begin{enumerate}
+        \item \(0 = 0 + 0\) (the zero vector can only be expressed as the sum of two zero vectors); 
+        \item \( V_1 \cap V_2 = \{0\} \) (the intersection of the two subspaces is only the zero vector);
+        \item \(\operatorname{dim}(V_{1}+V_{2})=\operatorname{dim}(V_{1})+\operatorname{dim}(V_{2})\),
+            or equivalently, \(\operatorname{dim}(V_{1} \cap V_{2})=0\).
+        \item Any bases of \( V_1 \) and \( V_2 \) together form a basis of \( V_1 + V_2 \).
+    \end{enumerate}
+\end{proposition}
+
+
+
+
+\section{Isomorphisms}
+
+\section{Quotient Spaces}
+
+\section{Special Linear Spaces}
+\begin{leftbarTitle}{Commutative Spaces}\end{leftbarTitle}
+Let \( A \) is an \( n \)-order matrix over number field \( P \).
+It is obvious that the set of all matrices satisfying \( AX = XA \) is a subspace of \( M_{n \times n}(P) \),
+denoted as \( C(A) \).
+
+\begin{property}
+    \begin{enumerate}
+        \item For any \( n \)-order matrix \( A, B \), 
+            if \( A \) is similar to \( B \) (\(A \sim B\)), 
+            then \( C(A) \) is isomorphic to \( C(B) \) (\(C(A) \cong C(B)\)),
+            further \( \dim(C(A)) = \dim(C(B)) \).
+    \end{enumerate}    
+\end{property}
+
+\begin{example}
+    Find the dimension and a basis of the \( C(A) \) where:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(A\) is \(3\)-order matrix over number field \(P\), and \(A\) has three distinct eigenvalues.
+        \item 
+            \[
+            A = 
+            \begin{pmatrix} 1 & 0 & 4 \\ 0 & 1 & 2 \\ 0 & 1 & 2 \\\end{pmatrix}
+            \]
+    \end{enumerate}
+\end{example}

@@ -1,0 +1,85 @@
+\chapter{Indefinite Integral} % 不定积分
+
+\section{Two Common Integration Methods}
+\begin{leftbarTitle}{Integration Methods}\end{leftbarTitle}
+\begin{definition}{Integration by Parts}
+    Let \( u(x) \) and \( v(x) \) be two differentiable functions,
+    and at least one of them has an antiderivative.
+    Then the integration by parts formula states that:
+    \[
+        \int u \, \mathrm{d}v = uv - \int v \, \mathrm{d}u.
+    \]
+\end{definition}
+
+\begin{definition}{Substitution Method}
+\end{definition}
+
+Some common substitutions are as follows:
+\begin{description}
+    \item[Trigonometric Substitution] When restoring variables, auxiliary right triangles is often utilized.
+        \begin{description}
+            \item[Sine] \( \sqrt{a^2 - x^2} \): \( x = a \sin t \) or \( x = a \cos t \)
+            \item[Tangent] \( \sqrt{a^2 + x^2} \): \( x = a \tan t \) or \( x = a \sinh t \)
+            \item[Secant] \( \sqrt{x^2 - a^2} \): \( x = a \sec t \) or \( x = a \cosh t \)
+        \end{description}
+    \item[Irreational Substitution] 
+        \begin{itemize}
+            \item If the integrand contains \( \sqrt[n]{x} \),
+                one can use the substitution \( t = \sqrt[n]{x} \) to simplify the expression.
+            \item If the integrand contains \( \sqrt[n]{\frac{\alpha x + \beta}{\gamma x + \delta}} \),
+                one can use the substitution \( t = \sqrt[n]{\frac{\alpha x + \beta}{\gamma x + \delta}} \) to simplify the expression.
+        \end{itemize}
+    \item[Reciprocal Substitution] If the degree of the numerator is lower than that of the denominator according to \(x\) 
+        one can use the substitution \( x = \frac{1}{t} \) to reduce the degree.
+\end{description}
+
+\begin{leftbarTitle}{Basic Integration Formulas}\end{leftbarTitle}
+\[
+\begin{array}{|c|c|}
+\hline
+\textbf{Integral} & \textbf{Result} \\
+\hline
+\int a \, \mathrm{d}x & ax + C \quad (a \text{ is constant}) \\
+\hline
+\int x^n \, \mathrm{d}x & \frac{x^{n+1}}{n+1} + C \quad (n \neq -1) \\
+\hline
+\int \frac{1}{x} \, \mathrm{d}x & \ln|x| + C \\
+\hline
+\int e^x \, \mathrm{d}x & e^x + C \\
+\hline
+\int a^x \, \mathrm{d}x & \frac{a^x}{\ln a} + C \quad (a > 0, a \neq 1) \\ \hline
+\rowcolor{gray!30} & \\ \hline
+\int \sin x \, \mathrm{d}x & -\cos x + C \\ \hline
+\int \cos x \, \mathrm{d}x & \sin x + C \\ \hline
+\int \tan x \, \mathrm{d}x & -\ln|\cos x| + C \\ \hline
+\int \cot x \, \mathrm{d}x & \ln|\sin x| + C \\ \hline
+\int \sec x \, \mathrm{d}x & \ln|\sec x + \tan x| + C \\
+\hline
+\int \csc x \, \mathrm{d}x & \ln|\csc x - \cot x| + C \\
+\hline
+\int \sec x \tan x \, \mathrm{d}x & \sec x + C \\
+\hline
+\int \csc x \cot x \, \mathrm{d}x & -\csc x + C \\
+\hline
+\int \sec^2 x \, \mathrm{d}x & \tan x + C \\
+\hline
+\int \csc^2 x \, \mathrm{d}x & -\cot x + C \\ \hline
+\rowcolor{gray!30} & \\ \hline
+\int \frac{1}{\sqrt{a^{2}-x^2}} \, \mathrm{d}x & \arcsin \left( \frac{x}{a} \right) + C \\
+\hline
+\int \frac{-1}{\sqrt{a^{2}-x^2}} \, \mathrm{d}x & \arccos \left( \frac{x}{a} \right) + C \\
+\hline
+\int \frac{1}{a^{2}+x^2} \, \mathrm{d}x & \frac{1}{a}\arctan \left( \frac{x}{a} \right) + C \\
+\hline
+\int \frac{-1}{a^{2}+x^2} \, \mathrm{d}x &\frac{1}{a}\mathrm{arccot } \left( \frac{x}{a} \right) + C \\
+\hline
+\int \frac{1}{\sqrt{x^2+a^{2}}} \, \mathrm{d}x & \ln|x + \sqrt{x^2+a^{2}}| + C \\
+\hline
+\int \frac{1}{\sqrt{x^2-a^{2}}} \, \mathrm{d}x & \ln|x + \sqrt{x^2-a^{2}}| + C \quad (x > a \text{ or } x < -a) \\ \hline
+\rowcolor{gray!30} & \\ \hline
+\int \sinh x \, \mathrm{d}x & \cosh x + C \\
+\hline
+\int \cosh x \, \mathrm{d}x & \sinh x + C \\
+\hline
+\end{array}
+\]

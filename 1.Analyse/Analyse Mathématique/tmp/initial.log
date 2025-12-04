@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  24 NOV 2025 21:05
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  4 DEC 2025 22:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1457,7 +1457,7 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
 
 [4
 
-]
+] (./chapters/chap01.tex
 Chapter 1.
 
 
@@ -1469,25 +1469,25 @@ File: img/triangle.png Graphic file (type bmp)
 <img/triangle.png>
 
 
-[2]
+[2]) (./chapters/chap02.tex
 
 [3]
 Chapter 2.
 
 LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
-(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 279.
+(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 33.
 
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 8.0pt on input line 310.
+(Font)              scaled to size 8.0pt on input line 64.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 6.0pt on input line 310.
+(Font)              scaled to size 6.0pt on input line 64.
 
 
 [4
 
 ]
 
-[5]
+[5]) (./chapters/chap03.tex
 
 [6]
 Chapter 3.
@@ -1495,7 +1495,7 @@ Chapter 3.
 
 [7
 
-]
+]) (./chapters/chap04.tex
 
 [8]
 Chapter 4.
@@ -1520,7 +1520,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [13]
 
-[14]
+[14]) (./chapters/chap05.tex
 
 [15]
 Chapter 5.
@@ -1528,12 +1528,12 @@ Chapter 5.
 
 [16
 
-]
+]) (./chapters/chap06.tex
 
 [17]
 Chapter 6.
 
-Overfull \hbox (8.11948pt too wide) in paragraph at lines 1059--1063
+Overfull \hbox (8.11948pt too wide) in paragraph at lines 69--73
 []\TU/Alegreya(0)/m/it/10.95 Let $[]$ denote the set of Darboux upper sums and $[]$ denote the set of Darboux lower sums. For any $[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 P[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 2 []\OML/cmm/m/it/10.95 ; []\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 P[]\OT1/cmr/m/n/10.95 ) \OMS/cmsy/m/n/10.95 2
  []
 
@@ -1543,7 +1543,7 @@ Overfull \hbox (8.11948pt too wide) in paragraph at lines 1059--1063
 
 ]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
-(Font)              scaled to size 10.95pt on input line 1067.
+(Font)              scaled to size 10.95pt on input line 77.
 
 
 [19]
@@ -1554,9 +1554,14 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 
 [22]
 
-[23]
-Overfull \hbox (16.76514pt too wide) in paragraph at lines 1450--1496
-[][] 
+[23]) (./chapters/chap07.tex
+Overfull \hbox (16.76514pt too wide) in paragraph at lines 460--1
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 460--1
+
  []
 
 
@@ -1574,7 +1579,7 @@ File: img/xsinx.png Graphic file (type bmp)
 <img/xsinx.png>
 
 
-[27]
+[27]) (./chapters/chap08.tex
 
 [28]
 Chapter 8.
@@ -1593,7 +1598,7 @@ File: img/AbelTransform.jpg Graphic file (type bmp)
 
 [32]
 
-[33]
+[33]) (./chapters/chap09.tex
 
 [34]
 Chapter 9.
@@ -1602,24 +1607,24 @@ Chapter 9.
 [35
 
 ]
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2081--2084
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 70--73
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
 
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2107--2110
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 96--99
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
 
 
 [36]
-Overfull \hbox (0.43546pt too wide) in paragraph at lines 2130--2133
+Overfull \hbox (0.43546pt too wide) in paragraph at lines 119--122
 \TU/Alegreya(0)/m/n/10.95 meaning that $[]$ (also known as the
  []
 
 
-Overfull \hbox (0.88506pt too wide) in paragraph at lines 2134--2136
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 123--125
 []\TU/Alegreya(0)/m/n/10.95 For the sequence of partial sums $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 S[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$\TU/Alegreya(0)/m/n/10.95 , the corresponding conclusion is that the limit function $\OML/cmm/m/it/10.95 S\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x\OT1/cmr/m/n/10.95 ) =
  []
 
@@ -1627,30 +1632,30 @@ Overfull \hbox (0.88506pt too wide) in paragraph at lines 2134--2136
 
 [37]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 2228.
+(Font)              scaled to size 8.0pt on input line 217.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 2228.
+(Font)              scaled to size 6.0pt on input line 217.
 
 
 [38]
-Underfull \hbox (badness 2050) in paragraph at lines 2276--2279
+Underfull \hbox (badness 2050) in paragraph at lines 265--268
 []\TU/GaramondPremrPro-Disp(0)/m/n/10.95 If replace the convergent positive term series $[][] \OML/cmm/m/it/10.95 a[]$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 with a uniform convergent series of functions
  []
 
 
-LaTeX Warning: Reference `thm:' on page 39 undefined on input line 2309.
+LaTeX Warning: Reference `thm:' on page 39 undefined on input line 298.
 
-
+) (./chapters/chap10.tex
 
 [39]
 Chapter 10.
-
+) (./chapters/chap11.tex
 
 [40
 
 ]
 Chapter 11.
-
+) (./chapters/chap12.tex
 
 [41
 
@@ -1695,7 +1700,7 @@ File: img/ImplicitFunction.png Graphic file (type bmp)
 
 [57]
 
-[58]
+[58]) (./chapters/chap13.tex
 
 [59]
 Chapter 13.
@@ -1735,13 +1740,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [66]
 
 LaTeX Font Warning: Font shape `TU/Bembo(0)/b/n' undefined
-(Font)              using `TU/Bembo(0)/m/n' instead on input line 4010.
+(Font)              using `TU/Bembo(0)/m/n' instead on input line 484.
 
 File: img/viviani.png Graphic file (type bmp)
 <img/viviani.png>
 
 
-[67]
+[67]) (./chapters/chap14.tex
 
 [68]
 Chapter 14.
@@ -1761,7 +1766,7 @@ Chapter 14.
 
 [74]
 
-[75]
+[75]) (./chapters/chap15.tex
 
 [76]
 Chapter 15.
@@ -1791,7 +1796,7 @@ File: img/SpecialRegion2.png Graphic file (type bmp)
 
 [84]
 
-[85]
+[85]) (./chapters/chap16.tex
 
 [86]
 Chapter 16.
@@ -1805,7 +1810,7 @@ Chapter 16.
 
 [89]
 
-[90]
+[90])
 
 [91]
 
@@ -1830,10 +1835,10 @@ Package logreq Info: Writing requests to 'initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46634 strings out of 473831
- 969194 string characters out of 5733137
+ 46731 strings out of 473831
+ 971251 string characters out of 5733137
  2014813 words of memory out of 5000000
- 68823 multiletter control sequences out of 15000+600000
+ 68871 multiletter control sequences out of 15000+600000
  572879 words of font info for 190 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1340s stack positions out of 10000i,1000n,20000p,200000b,200000s

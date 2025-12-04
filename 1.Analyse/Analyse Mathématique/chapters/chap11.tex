@@ -1,0 +1,30 @@
+\chapter{Limits and Continuity in Euclidean Spaces} % Euclidean Spaces 上的极限与连续性
+
+\section{Continuous Mappings}
+\begin{leftbarTitle}{Continuous Mappings on Compact Sets}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Continuous Mappings on Connected Sets}\end{leftbarTitle}
+\begin{definition}{Connected Set}
+    Let \(S\) be a set of points in \(\mathbb{R}^n\). 
+    If a continuous mapping 
+    \[
+        \gamma: [0, 1] \to \mathbb{R}^n
+    \]
+    satisfies that the range of \(\gamma([0, 1])\) lies entirely within \(S\), 
+    we call \(\gamma\) a \textbf{path} in \(S\), 
+    where \(\gamma(0)\) and \(\gamma(1)\) are referred to as the starting point and ending point of the path, respectively.  
+    
+    If for any two points \(\mathbf{x}, \mathbf{y} \in S\), 
+    there exists a path in \(S\) with \(\mathbf{x}\) as the starting point and \(\mathbf{y}\) as the ending point, 
+    \(S\) is called path-connected, or equivalently, \(S\) is called a \textbf{connected set}.  
+    
+    A connected open set is called an \textbf{(open) region}. The closure of an (open) region is referred to as a closed region.
+\end{definition}
+
+\begin{remark}
+    Intuitively, this means that any two points in \(S\) can be connected 
+    by a curve lying entirely within \(S\). 
+    Clearly, a connected subset of \(\mathbb{R}\) is an interval, 
+    and a connected subset of \(\mathbb{R}\) is compact if and only if it is a closed interval.
+\end{remark}
+

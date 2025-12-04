@@ -1,0 +1,467 @@
+\chapter{Introduction to Surface Theory} % 曲面论导论
+\section{Parameterization of Surface} % 参数化曲面
+
+\begin{definition}{Parameterization of Surface}\label{def:Parameterization of Surface}
+    Let \( \Delta \) be an open subset in \( \mathbb{R}^s \), 
+    and \( \mathbf{r}: \Delta \to \mathbb{R}^n \) be a mapping, 
+    where \( \mathbf{u} = (u_1, u_2, \dots, u_s) \to \mathbf{x}(\mathbf{u}) = 
+    (x_1(u_1, u_2, \dots, u_s), x_2(u_1, u_2, \dots, u_s), \dots, x_n(u_1, u_2, \dots, u_s)) \). 
+    Then \( M = \mathbf{r}(\Delta) = \{ \mathbf{r}(\mathbf{u}) \mid \mathbf{u} \in \Delta \} \) 
+    is called an \( s \)-dimensional \textbf{surface (patch)}, and \( \mathbf{r}(\mathbf{u}) \) 
+    is referred to as the parameterization of \( M \). 
+    
+    When \( \mathbf{r}(\mathbf{u}) \in C^k \) (\( k \geq 0 \)), 
+    \( \mathbf{r} \) or \( M \) is called an \( s \)-dimensional \( C^k \) surface. 
+    
+    If \( \mathbf{r} \in C^k \) (\( k \geq 1 \)), \( \mathbf{r} \) or \( M \) 
+    is called an \textbf{\( s \)-dimensional \( C^k \) smooth surface}. 
+    
+    When
+    \[
+    \operatorname{rank}(r'_1(\mathbf{u}^0), r'_2(\mathbf{u}^0), \dots, r'_s(\mathbf{u}^0)) = 
+    \operatorname{rank}
+    \begin{pmatrix}
+    \frac{\partial r_1}{\partial u_1} & \cdots & \frac{\partial r_1}{\partial u_s} \\
+    \vdots & \ddots & \vdots \\
+    \frac{\partial r_n}{\partial u_1} & \cdots & \frac{\partial r_n}{\partial u_s}
+    \end{pmatrix}_{\mathbf{u}^0}
+    = s,
+    \]
+    we call \( \mathbf{u}^0 \) or \( \mathbf{r}(\mathbf{u}^0) \) a \textbf{regular point} of the surface \( M \). 
+    Otherwise, it is called a singular point. 
+    
+    Every point that is a regular point of the surface is referred to as an \textbf{\( s \)-dimensional \( C^k \) regular surface}. 
+    
+    At regular points, \( \{r'_1, \dots, r'_s\} \) are linearly independent.
+\end{definition}
+
+When \( s = 1 \), \( t \) represents the parameter, a one-dimensional surface is commonly referred to as a curve. 
+Considering a \( C^k \) (\( k \geq 1 \)) curve \( \mathbf{r}(t) \), we have:
+\[
+\mathbf{r}'(t) = \left( r_{1}'(t), r_{2}'(t), \cdots, r_{n}'(t) \right) .
+\]
+If \( t \) is a regular point, then 
+\( \operatorname{rank}(\mathbf{r}'(t)) = \text{rank}(r'_1(t), r'_2(t), \dots, r'_n(t)) = 1 \); 
+this is equivalent to \( \mathbf{r}'(t) \neq 0 \), which means \( r'_1(t), r'_2(t), \dots, r'_n(t) \) are not all zero.
+
+We refer to \( \mathbf{r}'(t) \) as the tangent vector of the curve \( \mathbf{r}(t) \) at point \( t \). 
+When \( t \) varies, a tangent vector field along the curve \( \mathbf{r}(t) \) is obtained. 
+If \( \mathbf{r}(t) \) is a regular curve, 
+\( \frac{\mathbf{r}'(t)}{\|\mathbf{r}'(t)\|} \) is the unit tangent vector field along the curve \( \mathbf{r}(t) \). 
+It should be emphasized that \( \mathbf{r}'(t) \) or \( \frac{\mathbf{r}'(t)}{\|\mathbf{r}'(t)\|} \) 
+always points outward from point \( t \).
+
+
+\section{Tangent Space and Normal Space} % 切空间与法空间
+% 切空间与法空间
+\begin{definition}{Tangent Space and Normal Space}
+    \(M\) is an \(s\)-dimensional smooth surface in \(\mathbb{R}^n\) defined above,
+    and \(\mathbf{u}^{0}\) is a regular point of \(M\).
+    The \textbf{tangent space} of \(M\) at point \(\mathbf{r}(\mathbf{u}^{0})\) is the linear space spanned 
+    by \(s\) tangent vectors:
+    \[
+    T_{\mathbf{u}^{0}}M = \operatorname{span}\{ r'_{1}(\mathbf{u}^{0}), r'_{2}(\mathbf{u}^{0}), \dots, r'_{s}(\mathbf{u}^{0}) \}.
+    \]
+    Accordingly, the \textbf{normal space} of \(M\) at point \(\mathbf{r}(\mathbf{u}^{0})\) is 
+    the orthogonal complement of the tangent space:
+    \[
+    N_{\mathbf{u}^{0}}M = (T_{\mathbf{u}^{0}}M)^{\perp}.
+    \]
+\end{definition}
+% 给出特殊情况的几个切空间法空间表达式
+Some special cases of tangent space and normal space expressions are given below:
+\begin{leftbarTitle}{Curve}\end{leftbarTitle}
+When \( n = 3, s = 1 \), \( M \) is a curve in three-dimensional space. 
+% 三维空间中的曲线: 切线与法平面
+\begin{enumerate}
+    \item If the curve is parameterized as 
+        \[
+        \mathbf{r}(t) = (x(t), y(t), z(t)), \quad t \in I \subseteq \mathbb{R}.
+        \]
+        At the regular point \( \mathbf{r}(t^{0})= (x(t^{0}), y(t^{0}), z(t^{0})) \), the tangent line and normal plane are:
+        \[
+        T_{t^{0}}M = \operatorname{span}\{ \mathbf{r}'(t^{0}) \}: \frac{x-x(t^{0})}{x'(t^{0})} 
+            = \frac{y-y(t^{0})}{y'(t^{0})} = \frac{z-z(t^{0})}{z'(t^{0})},
+        \]
+        \begin{align*}
+            N_{t^{0}}M:\quad &x'(t^{0})(x-x(t^{0})) + y'(t^{0})(y-y(t^{0})) + z'(t^{0})(z-z(t^{0})) = 0 \\
+            \Leftrightarrow& \mathbf{r}'(t^{0}) \cdot (\mathbf{r} - \mathbf{r}(t^{0})) = 0.
+        \end{align*}
+    \item If the curve is described by:
+        \[
+        \begin{cases}
+            F(x, y, z) = 0, \\
+            G(x, y, z) = 0,
+        \end{cases}
+        \]
+        and the regular point is \( \mathbf{x}^{0} = (x^{0}, y^{0}, z^{0}) \).
+        \newline For the Jacobian matrix:
+        \[
+            J = 
+            \begin{pmatrix}
+                F_x(\mathbf{x}^{0}) & F_y(\mathbf{x}^{0}) & F_z(\mathbf{x}^{0}) \\
+                G_x(\mathbf{x}^{0}) & G_y(\mathbf{x}^{0}) & G_z(\mathbf{x}^{0})
+            \end{pmatrix},
+        \]
+        since \(\operatorname{rank}J = 2\), without loss of generality, assume:
+        \[
+        \frac{\partial (F, G)}{\partial (y, z)} =
+        \begin{vmatrix}
+            F_y(\mathbf{x}^{0}) & F_z(\mathbf{x}^{0}) \\
+            G_y(\mathbf{x}^{0}) & G_z(\mathbf{x}^{0})
+        \end{vmatrix} \neq 0.
+        \]
+        By the implicit mapping theorem (\ref{thm:Implicit Mapping Theorem}), we can express:
+        \[
+        y = f(x), \quad z = g(x), \quad x \in U(x^{0}) \subseteq \mathbb{R}.
+        \]
+        Then 
+        \[
+        f'(x^{0}) = \frac{\frac{\partial (F, G)}{\partial (z, x)}(\mathbf{x}^{0})}
+        {\frac{\partial (F, G)}{\partial (y, z)}(\mathbf{x}^{0})}, \quad
+        g'(x^{0}) = \frac{\frac{\partial (F, G)}{\partial (x, y)}(\mathbf{x}^{0})}
+        {\frac{\partial (F, G)}{\partial (y, z)}(\mathbf{x}^{0})}.
+        \]
+        Therefore, the tangent line and normal plane at point \(\mathbf{x}^{0}\) are:
+        \begin{gather*}
+            T_{x^{0}}M: \quad
+            \frac{x - x^{0}}{1} = \frac{y - y^{0}}{f'(x^{0})} = \frac{z - z^{0}}{g'(x^{0})} 
+            \Leftrightarrow \frac{x-x^{0}}{\frac{\partial (F, G)}{\partial (y, z)}(\mathbf{x}^{0})} 
+            = \frac{y - y^{0}}{\frac{\partial (F, G)}{\partial (z, x)}(\mathbf{x}^{0})}
+            = \frac{z - z^{0}}{\frac{\partial (F, G)}{\partial (x, y)}(\mathbf{x}^{0})}, \\
+            N_{x^{0}}M: \quad
+            \frac{\partial (F, G)}{\partial (y, z)}(\mathbf{x}^{0})(x - x^{0}) +
+            \frac{\partial (F, G)}{\partial (z, x)}(\mathbf{x}^{0})(y - y^{0}) +
+            \frac{\partial (F, G)}{\partial (x, y)}(\mathbf{x}^{0})(z - z^{0}) = 0.
+        \end{gather*}
+\end{enumerate}
+
+\begin{leftbarTitle}{Surface}\end{leftbarTitle}
+% 三维空间中的曲面: 切平面与法线
+When \( n = 3, s = 2 \), \( M \) is a surface in three-dimensional space. 
+\begin{enumerate}
+    \item If the surface can be described explicitly as:
+        \[
+        z = f(x, y), \quad (x, y) \in D \subseteq \mathbb{R}^2,
+        \]
+        at the regular point \( \overline{\mathbf{x}}^{0} = (x^{0}, y^{0}, z^{0}) \) (\(\mathbf{x}^{0}=(x^{0}, y^{0})\)), 
+        the tangent plane and normal line are:
+        \begin{gather*}
+            T_{\mathbf{x}^{0}}M: \quad z - z^{0} = f_x(\mathbf{x}^{0})(x - x^{0}) + f_y(\mathbf{x}^{0})(y - y^{0}), \\
+            N_{\mathbf{x}^{0}}M: \quad \frac{x - x^{0}}{f_x(\mathbf{x}^{0})} 
+            = \frac{y - y^{0}}{f_y(\mathbf{x}^{0})} = \frac{z - z^{0}}{-1},
+        \end{gather*}
+        where the expression of \(T_{\mathbf{x}^{0}}M\) is derived from 
+        the total differential of \(z = f(x, y)\) at point \(\mathbf{x}^{0}\):
+        \[
+        \mathrm{d}z = f_x(\mathbf{x}^{0}) \mathrm{d}x + f_y(\mathbf{x}^{0}) \mathrm{d}y.
+        \]
+
+    \item If the surface is parameterized as 
+        \[
+        \mathbf{r}(u, v) = (x(u, v), y(u, v), z(u, v)), \quad (u, v) \in D \subseteq \mathbb{R}^2,
+        \]
+        at the regular point \( \mathbf{x}^{0} = (x^{0}, y^{0}, z^{0}) \) . 
+        \newline For the Jacobian matrix:
+        \[
+        J = 
+        \begin{pmatrix}
+            x_{u}(\mathbf{x}^{0}) & x_{v}(\mathbf{x}^{0})  \\
+            y_{u}(\mathbf{x}^{0}) & y_{v}(\mathbf{x}^{0})  \\
+            z_{u}(\mathbf{x}^{0}) & z_{v}(\mathbf{x}^{0})
+        \end{pmatrix},
+        \]
+        since \(\operatorname{rank}J = 2\), without loss of generality, assume:
+        \[
+        \frac{\partial (x, y)}{\partial (u, v)}(\mathbf{x}^{0}) = 
+        \begin{vmatrix}
+            x_{u}(\mathbf{x}^{0}) & x_{v}(\mathbf{x}^{0}) \\
+            y_{u}(\mathbf{x}^{0}) & y_{v}(\mathbf{x}^{0})
+        \end{vmatrix} \neq 0.
+        \]
+        By the inverse mapping theorem (\ref{thm:Inverse Mapping Theorem}), we can determine
+        the inverse mapping of
+        \[
+        \begin{cases} x=x(u,v), &  \\ y=y(u,v), &  \end{cases}
+        \]
+        in a neighborhood of point \(\mathbf{x}^{0}\):
+        \[
+        \begin{cases} u = u(x, y), &  \\ v = v(x, y), &  \end{cases}
+        \]
+        where \(u^{0} = u(x^{0}, y^{0})\), \(v^{0} = v(x^{0}, y^{0})\).
+        Then we obtain the explicit representation of the surface:
+        \[
+        z = z(u(x, y), v(x, y)) = f(x, y), \quad (x, y) \in U(x^{0}, y^{0}) \subseteq \mathbb{R}^2.
+        \]
+        Therefore, the tangent plane and normal line at point \(\mathbf{x}^{0}\) are:
+        \begin{gather*}
+            T_{\mathbf{x}^{0}}M: \quad 
+            \left. \frac{\partial (y,z)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}\left( x- x^{0} \right)
+            + \left. \frac{\partial (z,x)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}\left( y- y^{0} \right)
+            + \left. \frac{\partial (x,y)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}\left( z- z^{0} \right) = 0, \\
+            N_{\mathbf{x}^{0}}M: \quad \frac{x - x^{0}}{\left. \frac{\partial (y,z)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}}
+            = \frac{y - y^{0}}{\left. \frac{\partial (z,x)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}}
+            = \frac{z - z^{0}}{\left. \frac{\partial (x,y)}{\partial (u,v)} \right|_{\left(u^{0}, v^{0}\right)}}.
+        \end{gather*}
+\end{enumerate}
+
+
+
+
+\section{Intrinsic Geometry} % 内在几何
+This two sections will introduce the first and second fundamental forms of surfaces,
+which can be all generalized to higher-dimensional manifolds;
+here, we only discuss the case of two-dimensional surfaces in three-dimensional space.
+
+Let \(\Delta \in \mathbb{R}^{2}\) be an open set,
+and \(\mathbf{r}:\Delta \to \mathbb{R}^{3}\) be a \(C^{k}\) (\(k\geqslant 2\)) smooth regular surface parameterization,
+\(M = \mathbf{r}(\Delta)\),
+where \(\mathbf{u} = (u, v) \to \mathbf{r}(u, v) = (x(u, v), y(u, v), z(u, v))\).
+We can obtain that:
+\begin{enumerate}
+    \item \(\mathbf{r}\in C^{k}(\Delta, \mathbb{R}^{3})\);
+    \item For any \(p=(u, v) \in \Delta\),
+        \(\operatorname{rank}(\mathbf{r}'_{u}(u, v), \mathbf{r}'_{v}(u, v)) = 2\),
+        that is, \(\mathbf{r}'_{u}(u, v)\) and \(\mathbf{r}'_{v}(u, v)\) are linearly independent,
+        where
+        \[
+        \mathbf{r}'_{u}(u, v) = \left( \frac{\partial x}{\partial u}, 
+        \frac{\partial y}{\partial u}, \frac{\partial z}{\partial u} \right), \quad
+        \mathbf{r}'_{v}(u, v) = \left( \frac{\partial x}{\partial v}, 
+        \frac{\partial y}{\partial v}, \frac{\partial z}{\partial v} \right).
+        \]
+\end{enumerate}
+At this time, the tangent space \(T_{p}M = \operatorname{span}(\mathbf{r}'_{u}(u, v), \mathbf{r}'_{v}(u, v))\),
+which is a subspace of \(\mathbb{R}^{3}\).
+Hence, it inherits the inner product from \(\mathbb{R}^{3}\).
+
+The first fundamental form is the metric that a surface inherits from its ambient Euclidean space \(\mathbb{R}^{3}\). 
+It is essentially a symmetric positive-definite bilinear form defined on the tangent space, 
+which allows us to \underline{measure lengths, angles, and areas on the surface}.
+
+\begin{definition}{The First Fundamental Form}
+    In the above conditions,
+    for any point \(p = (u, v) \in \Delta\),
+    the \textbf{first fundamental form} of the surface \(M\) at point \(p\) is defined as:
+    for any tangent vector \(\mathbf{w}_{1}, \mathbf{w}_{2} \in T_{p}M\),
+    \[
+    \mathrm{I}_{p}(\mathbf{w}_{1}, \mathbf{w}_{2}) := \mathbf{w}_{1} \cdot \mathbf{w}_{2},
+    \]
+    which is a symmetric positive-definite bilinear form on the tangent space \(T_{p}M\).
+    This form is also called the \textbf{Riemann metric} of \textbf{metric tensor}, denoted as \(\mathrm{I}_{p}\) or \(g_{p}\).
+\end{definition}
+For convenience, we express \(\mathrm{I}_{p}\) in the basis \(\{\mathbf{r}'_{u}, \mathbf{r}'_{v}\}\) 
+of the tangent space \(T_{p}M\).
+Define:
+\begin{align*}
+    &E(u, v) := \mathrm{I}_{p}(\mathbf{r}_{u}, \mathbf{r}_{u}) = \mathbf{r}_{u} \cdot \mathbf{r}_{u} = \| \mathbf{r}_{u} \|^2, \\
+    &F(u, v) := \mathrm{I}_{p}(\mathbf{r}_{u}, \mathbf{r}_{v}) = \mathbf{r}_{u} \cdot \mathbf{r}_{v}, \\
+    &G(u, v) := \mathrm{I}_{p}(\mathbf{r}_{v}, \mathbf{r}_{v}) = \mathbf{r}_{v} \cdot \mathbf{r}_{v} = \| \mathbf{r}_{v} \|^2,
+\end{align*}
+which are called the \textbf{Gauß coefficients}.
+\newline Then the matrix representation of the first fundamental form \(\mathrm{I}_{p}\) under the basis \(\{\mathbf{r}'_{u}, \mathbf{r}'_{v}\}\) is:
+\[
+\mathrm{I}_{p} =
+\begin{pmatrix}
+    E & F \\
+    F & G
+\end{pmatrix},
+\]
+which is symmetric and positive-definite.
+
+The quadratic form corresponding to this bilinear form is also commonly called the first fundamental form, 
+denoted as  \(\mathrm{d}s^{2}\). 
+For a tangent vector \(\mathbf{w}\in T_{p}S\), it represents the square of the length of that vector:
+\[
+\mathrm{d}s^{2} := \mathrm{I}_{p}(\mathbf{w}, \mathbf{w}) = \| \mathbf{w} \|^{2}.
+\]
+If \(\mathbf{w}\) is the tangent vector to the curve \(\gamma(t)=\mathbf{r}(u(t), v(t))\), 
+given by \(\gamma'(t)=\mathbf{r}_{u}u'(t)+\mathbf{r}_{v}v'(t)\), 
+then \(\mathrm{d}s^{2}\) is conventionally written as: 
+\[
+\mathrm{d}s^{2} = E \, \mathrm{d}u^{2} + 2F \, \mathrm{d}u \, \mathrm{d}v + G \, \mathrm{d}v^{2}.
+\]
+Here,\(\mathrm{d}u\) and \(\mathrm{d}v\) are the coordinates under the basis \(\{ \mathrm{d}u, \mathrm{d}v \}\) , 
+representing the components of the tangent vector \((u', v')\). 
+This is a long-standing notation, and strictly speaking, 
+it represents the value of the quadratic form on the vector \((u', v')\).
+
+
+
+
+\begin{leftbarTitle}{Arc Length}\end{leftbarTitle} % 弧长
+\begin{definition}{Arc Length}
+    Let \(C = \overset{\frown}{AB}\) be a curve on the \(\mathbb{R}^{2}\) plane\footnote{
+        Or in \(\mathbb{R}^{3}\) space, even in a higher-dimensional Euclidean space.
+    },
+    take any partition \( A = P_{0}, P_{1}, \ldots, P_{n} = B \),
+    which divides the curve \(C\) into \(n\) segments, denoted as \(T\).
+    Then connect every two adjacent points \(P_{i-1}\) and \(P_{i}\) with a straight line segment,
+    obtaining \(n\) chords \(\overline{P_{i-1}P_{i}}\)(\(i=1, 2, \ldots, n\)),
+    which in turn form an inscribed polygonal line \(C\).
+    Let 
+    \[
+    \|T\| = \max_{1 \leqslant i \leqslant n} \|P_{i-1}P_{i}\|, \quad s_{T}= \sum_{i=1}^{n} \|P_{i-1}P_{i}\|.
+    \]
+    If the limit
+    \[
+    \lim_{\|T\| \to 0} s_{T} = s,
+    \] 
+    namely, 
+    \[
+    \forall \varepsilon > 0, \exists \delta > 0, \text{s.t.} \forall T(\|T\| < \delta): |s_{T} - s| < \varepsilon,
+    \]
+    and the limit is independent of the choice of partition \(T\),
+    then \(C\) is said to be rectifiable, and the limit \(s\) is called the arc length of the curve \(C\).
+\end{definition}
+
+\begin{theorem}{Sufficient Condition for Rectifiability of Curves}
+    Let the curve \(C\) in \(\mathbb{R}^{2}\) be given by the parametric equations 
+    \[
+    (x, y) = (x(t), y(t)), \quad t \in [\alpha, \beta],
+    \] 
+    and let it be a \(C^{1}\) smooth regular curve\footnote{
+        I.e., \(x(t)\) and \(y(t)\) are continuously differentiable, and \(x'^{2}(t) + y'^{2}(t) \neq 0\); 
+        a curve \(C\) satisfying this condition is called a regular point.
+        Also see Definition~\ref{def:Parameterization of Surface}
+    }
+    Then \(C\) is rectifiable, 
+    and its arc length is 
+    \[
+    s = \int_{\alpha}^{\beta} \sqrt{x'^{2}(t) + y'^{2}(t)} \, \mathrm{d}t.
+    \]
+\end{theorem}
+
+\begin{leftbarTitle}{Area}\end{leftbarTitle} % 面积
+
+
+
+\section{Extrinsic Geometry} % 外在几何
+The second fundamental form is a symmetric bilinear form defined on the tangent space 
+that measures the change in the normal vector of a surface, 
+thereby describing the \underline{extrinsic curvature} of the surface relative to its ambient space \(\mathbb{R}^3\).
+
+On the regular surface patch \(M\) defined in the beginning of last section, 
+we can define a continuous unit normal vector field \(\mathbf{n}: M \to \mathbb{S}^2\), 
+where \(\mathbb{S}^2\) is the unit sphere in \(\mathbb{R}^3\):
+\[
+\mathbf{n}(p) = \frac{\mathbf{r}_u \times \mathbf{r}_v}{\|\mathbf{r}_u \times \mathbf{r}_v\|}(p).
+\]
+This mapping \(\mathbf{n}\) from the surface to the unit sphere is called the \textbf{Gauß map}. 
+The second fundamental form is defined by studying the differential of the Gauß map.
+
+\begin{definition}{The Second Fundamental Form}
+    Under the above conditions,
+    for any point \(p = (u, v) \in \Delta\),
+    the \textbf{second fundamental form} of the surface \(M\) at point \(p\) is 
+    a symmetric bilinear form on the tangent space \(T_{p}M\),
+    which is defined as:
+    for any tangent vector \(\mathbf{w}_{1}, \mathbf{w}_{2} \in T_{p}M\),
+    \[
+    \mathrm{II}_{p}(\mathbf{w}_{1}, \mathbf{w}_{2}) := -\mathrm{d}_{p}\mathbf{n}(\mathbf{w}_{1}) \cdot \mathbf{w}_{2},
+    \]\footnote{ 
+        About the formula,
+        \begin{itemize}
+            \item since \(\mathbf{n}(p)\) is a unit vector, \(T_{\mathbf{n}(p)}\mathbb{S}^{2}\) is 
+                the plane orthogonal to \(\mathbf{n}(p)\),
+                and \(T_{p}M\) itself is also orthogonal to  \(\mathbf{n}(p)\), 
+                it follows that  \(\mathrm{d}_{p}\mathbf{n}(\mathbf{w}_1)\)  and  \(\mathbf{w}_2\)  lie in the same plane, 
+                and their dot product is well-defined.
+            \item the negative sign in this definition is a convention, 
+                which makes the principal curvatures of a convex surface (like a sphere) positive.
+        \end{itemize}
+    }
+    where \(\mathrm{d}_{p}\mathbf{n}: T_{p}M \to T_{\mathbf{n}(p)}\mathbb{S}^{2}\) is the differential (or Jacobian)
+    of the Gauß map at point \(p\).
+
+    The linear operator associated with \(\mathrm{d}_{p}\mathbf{n}\), defined as  
+    \(W_{p}(\mathbf{w}) = -\mathrm{d}_{p}\mathbf{n}(\mathbf{w})\), 
+    is called the Weingarten map or shape operator, 
+    and it is a linear operator from  \(T_{p}M\)  to itself. Therefore, the second fundamental form can also be written as:
+    \[
+    \mathrm{II}_{p}(\mathbf{w}_{1}, \mathbf{w}_{2}) = W_{p}(\mathbf{w}_{1}) \cdot \mathbf{w}_{2}.
+    \]
+\end{definition}
+For convenience, we express \(\mathrm{II}_{p}\) in the basis \(\{\mathbf{r}'_{u}, \mathbf{r}'_{v}\}\) of 
+the tangent space \(T_{p}M\).
+Define:
+\begin{align*}
+    &L(u, v):=\mathrm{II}_{p}(\mathbf{r}_{u}, \mathbf{r}_{u}) = 
+    W_{p}(\mathbf{r}_{u}) \cdot \mathbf{r}_{u} = \mathbf{r}_{uu} \cdot \mathbf{n}; \\
+    &M(u, v):=\mathrm{II}_{p}(\mathbf{r}_{u}, \mathbf{r}_{v}) = 
+    W_{p}(\mathbf{r}_{u}) \cdot \mathbf{r}_{v} = \mathbf{r}_{uv} \cdot \mathbf{n}; \\
+    &N(u, v):=\mathrm{II}_{p}(\mathbf{r}_{v}, \mathbf{r}_{v}) = 
+    W_{p}(\mathbf{r}_{v}) \cdot \mathbf{r}_{v} = \mathbf{r}_{vv} \cdot \mathbf{n}.
+\end{align*}
+Then the matrix representation of the second fundamental form \(\mathrm{II}_{p}\) 
+under the basis \(\{\mathbf{r}'_{u}, \mathbf{r}'_{v}\}\) is:
+\[
+\mathrm{II}_{p} =
+\begin{pmatrix}
+    L & M \\
+    M & N
+\end{pmatrix},
+\]
+which is symmetric, but not necessarily positive-definite.
+And its sign reflects the way the surface is curved. 
+
+The associated second fundamental form, also denoted by \(\mathrm{II}\), is an expression for the normal curvature:
+\[
+\mathrm{II} = L \, \mathrm{d}u^2 + 2M \, \mathrm{d}u \, \mathrm{d}v + N \, \mathrm{d}v^2.
+\]
+For a unit tangent vector  \(\mathbf{w} \in T_{p}M\), 
+the value of  \(\mathrm{II}_{p}(\mathbf{w}, \mathbf{w})\)  
+is the normal curvature of the surface in the direction of  \(\mathbf{w}\), denoted \(k_n(\mathbf{w})\).
+
+\begin{leftbarTitle}{Curvature}\end{leftbarTitle}
+Curvature is a mathematical quantity describing the "bending" degree of a geometric object, 
+such as a curve or a surface. 
+
+The meaning of curvature varies for geometric objects of different dimensions: 
+\begin{itemize}
+    \item Curvature on a curve: Describes the degree to which the curve deviates from a straight line.
+    \item Description of curvature by a surface: Is more complex, involving directionality—the bending of 
+        a surface can be completely different in different directions. 
+\end{itemize}
+The curvature of a surface is usually classified into the following typical types: 
+normal curvature, principal curvatures, mean curvature, Gaussian curvature, etc.
+
+\begin{definition}{Curvature of Curve}
+    Let \(C\) be a \(C^{2}\) smooth regular curve in \(\mathbb{R}^{3}\),
+    parameterized by arc length \(t\):
+    \[
+    \mathbf{r}(t) = (x(t), y(t), z(t)), \quad t \in [a, b].
+    \]
+    The unit tangent vector of the curve at point \(t\) is:
+    \[
+    \mathbf{T}(t) = \mathbf{r}'(t) = (x'(t), y'(t), z'(t)).
+    \]
+    The \textbf{curvature} of the curve at point \(t\) is defined as the magnitude of the derivative of the unit tangent vector with respect to arc length:
+    \[
+    \kappa(t) = \left\| \frac{\mathrm{d}\mathbf{T}(t)}{\mathrm{d}t} \right\| = 
+    \frac{\|\mathbf{r}'(t) \times \mathbf{r}''(t)\|}{\|\mathbf{r}'(t)\|^3}.
+    \]
+    Geometrically, curvature measures how quickly the curve changes direction at point \(t\).
+
+    If the best-fit circle is found based on the tangent and normal at a certain point, 
+    the radius of this circle is called the radius of curvature \(R\), 
+    and the curvature is its reciprocal: 
+    \[
+    \kappa = \frac{1}{R}.
+    \] 
+    This fitted circle is called the \textbf{osculating circle} of the curve at that point. % 渐屈圆
+\end{definition}
+Some special cases of curvature are given below:
+\begin{enumerate}
+    \item For a plane curve given by \(y = f(x)\), the curvature at point \(x\) is:
+        \[
+        \kappa(x) = \frac{|f''(x)|}{(1 + (f'(x))^2)^{3/2}}.
+        \]
+    \item For a circle with radius \(R\), the curvature is constant:
+        \[
+        \kappa = \frac{1}{R}.
+        \]
+\end{enumerate}
+
+
+\section{Oriented Surface} % 定向曲面

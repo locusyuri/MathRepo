@@ -1,0 +1,388 @@
+\chapter{Linear Mappings} % 线性映射
+\section{Linear Mappings and Their Computation}
+\begin{leftbarTitle}{Definition of Linear Mappings}\end{leftbarTitle}
+\begin{definition}{Linear Mapping}
+    Let \( V \) and \( V' \) be linear spaces over field \( F \).
+    A mapping \( \mathcal{A}: V \to V' \) is called a \textbf{linear mapping} if:
+    \[
+    \mathcal{A}(\alpha + \beta) = \mathcal{A}\alpha + \mathcal{A}\beta, \quad \forall \alpha, \beta \in V,
+    \]
+    and
+    \[
+    \mathcal{A}(k\alpha) = k\mathcal{A}\alpha, \quad \forall \alpha \in V, k \in F.
+    \]
+
+    If \( V = V' \), then \( \mathcal{A} \) is called a \textbf{linear transformation} of \( V \).
+    The linear mapping from \( V \) over field \( F \) to \(F\) is called a \textbf{linear function} on \( V \).
+\end{definition}
+
+\begin{remark}
+    The field naturally constitutes a one-dimensional linear space over itself, 
+    so a linear function is a special case of a linear mapping.
+\end{remark}
+
+
+
+
+\begin{leftbarTitle}{Existence and Uniqueness of Linear Mappings}\end{leftbarTitle}
+\begin{theorem}{Existence and Uniqueness of Linear Mappings (Linear Extension Theorem)}
+    Let \( V \) and \( V' \) be linear spaces over field \( F \),
+    and let \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) be a basis of \( V \).
+    For any set of vectors \( \{\alpha_1, \alpha_2, \dots, \alpha_n\} \subseteq V' \),
+    there exists a unique linear mapping
+    \[
+    \mathcal{A}: V \to V', \quad 
+    \alpha = \sum_{i=1}^{n} x_i \varepsilon_i \mapsto \mathcal{A}(\alpha) = \sum_{i=1}^{n} x_i \alpha_i
+    \] 
+    such that:
+    \[
+    \mathcal{A}(\varepsilon_i) = \alpha_i, \quad i = 1, 2, \dots, n.
+    \]
+    
+\end{theorem}
+
+\begin{leftbarTitle}{Operations of Linear Mappings}\end{leftbarTitle}
+In the following, all linear spaces are over the field \(F\).
+\begin{description}
+    \item[Addition] 
+        Let \(\mathcal{A}, \mathcal{B} \in \mathrm{Hom}(V,V')\). 
+        The sum of \(\mathcal{A}\) and \(\mathcal{B}\), denoted \(\mathcal{A+B}\), is defined by:
+        \[
+        (\mathcal{A+B})(\alpha) = \mathcal{A}(\alpha) + \mathcal{B}(\alpha), \quad \forall \alpha \in V.
+        \]
+        The sum of linear maps is still a linear map, i.e., \(\mathcal{A+B} \in \mathrm{Hom}(V,V')\).
+        \begin{enumerate}
+            \item \textbf{Commutativity:} \(\mathcal{A+B = B+A}\),
+            \item \textbf{Associativity:} \(\mathcal{(A+B)+C = A+(B+C)}\),
+            \item \textbf{Additive Identity:} The zero map \(\mathcal{0}\) satisfies \(\mathcal{A+0 = A}\),
+            \item \textbf{Additive Inverse:} For every \(\mathcal{A}\), the additive inverse \(-\mathcal{A}\) 
+                satisfies \(\mathcal{A+(-A) = 0}\).
+        \end{enumerate}
+
+    \item[Scalar Multiplication] 
+        Let \(k \in F\) and \(\mathcal{A} \in \mathrm{Hom}(V,V')\). The scalar product \(k \mathcal{A}\) is defined by:
+        \[
+        (k\mathcal{A})(\alpha) = k \mathcal{A}(\alpha), \quad \forall \alpha \in V.
+        \]
+        Scalar multiplication of a linear map is still a linear map, i.e., \(k \mathcal{A} \in \mathrm{Hom}(V,V')\).
+        \begin{enumerate}
+            \item \textbf{Unit Identity:} \(1 \cdot \mathcal{A} = \mathcal{A}\),
+            \item \textbf{Associativity of Scalars:} \((kl)\mathcal{A} = k(l\mathcal{A})\),
+            \item \textbf{Distributive Properties:}
+            \begin{align*}
+                k(\mathcal{A+B}) &= k\mathcal{A} + k\mathcal{B}, \\
+                (k+l)\mathcal{A} &= k\mathcal{A} + l\mathcal{A}.
+            \end{align*}
+        \end{enumerate}
+    \item[Multiplication (Composition of Linear Maps)]
+        Let \(\mathcal{A} \in \mathrm{Hom}(V',W)\) and \(\mathcal{B} \in \mathrm{Hom}(U,V')\). 
+        The product (composition) of \(\mathcal{A}\) and \(\mathcal{B}\), denoted \(\mathcal{AB}\), is defined by:
+        \[
+        (\mathcal{AB})(\alpha) = \mathcal{A}(\mathcal{B}(\alpha)), \quad \forall \alpha \in U.
+        \]
+        The composition of linear maps is still a linear map, i.e., \(\mathcal{AB} \in \mathrm{Hom}(U,W)\).
+        \begin{enumerate}
+            \item \textbf{Associativity of Composition:} \((\mathcal{AB})\mathcal{C} = \mathcal{A}(\mathcal{BC})\),
+            \item \textbf{Distributive Properties:}
+            \begin{align*}
+                \mathcal{A}(\mathcal{B+C}) &= \mathcal{AB + AC}, \\
+                (\mathcal{A+B})\mathcal{C} &= \mathcal{AC+BC},
+            \end{align*}
+            \item \textbf{Non-Commutativity:} In general, \(\mathcal{AB} \neq \mathcal{BA}\),
+            \item \textbf{Identity Transformation:} The identity transformation \(\mathcal{E}\) satisfies:
+            \[
+            \mathcal{EA} = \mathcal{AE} = \mathcal{A}, \quad \forall \mathcal{A} \in \mathrm{Hom}(V).
+            \]
+        \end{enumerate}
+\end{description}
+
+
+\vspace{0.7cm}
+Let \(V\) and \(V'\) be vector spaces over the field \(F\).
+\begin{enumerate}
+    \item The collection of all linear mappings from \(V\) to \(V'\), denoted by \(\mathrm{Hom}(V,V')\), 
+        under the addition and scalar multiplication defined above, forms a linear space over the field \(F\).
+    
+    \item The collection of all linear transformations on \(V\), denoted by \(\mathrm{Hom}(V)\), 
+        under the addition and composition of maps defined above, forms a unital ring. 
+        In this case, it is referred to as the \textbf{endomorphism ring} and is denoted by \(\mathrm{End}(V)\).
+\end{enumerate}
+
+
+\begin{definition}{Algebra over a Field}
+    Let \(V\) be a linear space over the field \(F\) 
+    equipped with an additional binary operation from \(V\times V\) to \(V\), denoted by \(\cdot\).
+    Then \(V\) is called an \textbf{algebra over the field \(F\)} if
+    (forall \(\alpha, \beta, \gamma \in V\) and \(k, l \in F\)):
+    \begin{description}
+        \item [Right Distributivity] \((\alpha + \beta) \cdot \gamma = \alpha \cdot \gamma + \beta \cdot \gamma\);
+        \item [Left Distributivity] \(\gamma \cdot (\alpha + \beta) = \gamma \cdot \alpha + \gamma \cdot \beta\);
+        \item [Compatibility with Scalar Multiplication] \((k\alpha)\cdot(l \beta) = kl(\alpha \cdot \beta)\).
+    \end{description}
+\end{definition}
+\begin{remark}
+    The left and right distributivity conditions can be combined into a single condition:
+    \(V\) forms a unital ring under the addition and scalar multiplication.
+\end{remark}
+
+It is evident that \(\mathrm{Hom}(V)\) is an algebra over the field \(F\).
+
+
+\section{Kernel and Image of Linear Mappings}
+\begin{definition}{Kernel and Image of Linear Mappings}
+    Let \( V \) and \( V' \) be linear spaces over field \( F \), 
+    and let \( \mathcal{A}: V \to V' \) be a linear mapping. 
+    The \textbf{kernel} of \( \mathcal{A} \) is defined as:
+    \[
+    \operatorname{Ker}(\mathcal{A}) = \{ \alpha | \alpha \in V, \mathcal{A}(\alpha) = 0 \}.
+    \]
+    The \textbf{image} of \( \mathcal{A} \) is defined as:
+    \[
+    \operatorname{Im}(\mathcal{A}) = \{ \beta | \beta = \mathcal{A}(\alpha), 
+    \alpha \in V, \beta \in V' \}.
+    \]
+    They can be also denoted as \( \mathcal{A}^{-1}(0) \) and \( \mathcal{A}(V) \) respectively.
+
+    The rank of \( \operatorname{Im}(\mathcal{A}) \) is called the \textbf{rank} of \( \mathcal{A} \);
+    the dimension of \( \operatorname{Ker}\mathcal{A} \) is called the \textbf{nullity} of \( \mathcal{A} \).
+\end{definition}
+
+\begin{property}
+    
+\end{property}
+
+
+\begin{theorem}{Rank-Nullity Theorem}
+    Let \( V \) and \( V' \) be finite-dimensional linear spaces over field \( F \), 
+    and let \( \mathcal{A}: V \to V' \) be a linear mapping. Then:
+    \[
+    \dim(\operatorname{Ker}\mathcal{A}) + \dim(\operatorname{Im}\mathcal{A}) = \dim(V).
+    \]
+\end{theorem}
+
+
+\begin{definition}{Cokernel}
+    Let \( V \) and \( V' \) be linear spaces over field \( F \), 
+    and let \( \mathcal{A}: V \to V' \) be a linear mapping. 
+    The \textbf{cokernel} of \( \mathcal{A} \) is defined as the quotient space:
+    \[
+    \operatorname{Coker}(\mathcal{A}) = V' / \operatorname{Im}(\mathcal{A}),
+    \]
+    denoted as \( \operatorname{Coker}(\mathcal{A}) \).
+\end{definition}
+
+\begin{leftbarTitle}{Ascending Chain of Subspaces}\end{leftbarTitle}
+\begin{definition}{Ascending Chain of Subspaces}
+    Let \( V \) be a finite-dimensional linear space over field \( F \), 
+    and let \( \mathcal{A} \in \operatorname{Hom}(V) \).
+    For \( k = 1, 2, 3, \cdots\), define:
+    \[
+    V_{k} = \operatorname{Ker}(\mathcal{A}^{k}) = \{ \alpha \in V | \mathcal{A}^{k}(\alpha) = 0 \},
+    \] 
+    then the sequence of subspaces:
+    \[
+    V_{1} \subseteq V_{2} \subseteq \cdots \subseteq V_{k} \subseteq \cdots
+    \]
+    is called the \textbf{ascending chain of subspaces} induced by \( \mathcal{A} \).
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item The dimensions of these subspaces are non-decreasing:
+            \[
+            \dim(V_{1}) \leq \dim(V_{2}) \leq \cdots \leq \dim(V_{k}) \leq \cdots
+            \]
+        \item Since \(V\) is finite-dimensional, there exists a positive integer \( k_0 \) such that:
+            \[
+            \dim(V_{k_0}) = \dim(V_{k_0 + 1}) = \cdots
+            \]
+            Consequently, for all \( k \geq k_0 \):
+            \[
+            V_{k} = V_{k_0},
+            \]
+            that is, the ascending chain stabilizes at \( V_{k_0} \).
+        \item This \( k_0 \) is precisely a stability index for the corresponding linear operator 
+            (for example, an upper bound on the degree of its annihilating polynomial or
+            a restriction on the size of its Jordan blocks).
+    \end{enumerate}
+\end{property}
+\begin{remark}
+    In some cases, the stability index \( k_0 \) can be equal to the dimension of the space \( V \).
+    For instance, \( \mathcal{A} \) is a nilpotent or all eigenvalues of \( \mathcal{A} \) are zero.
+\end{remark}
+
+\section{Matrix Representation of Linear Mappings}
+Let \( V \) and \( V' \) be finite-dimensional linear spaces over field \( F \), 
+\(\operatorname{dim}(V) = n\) and \(\operatorname{dim}(V') = m\),
+and let \( \mathcal{A}: V \to V' \) be a linear mapping.
+Let \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) be a basis of \( V \),
+and \( \{\eta_1, \eta_2, \dots, \eta_m\} \) be a basis of \( V' \).
+Then the image of each basis vector of \( V \) under \( \mathcal{A} \) can be expressed as the basis vectors of \( V' \):
+\[
+\begin{cases} 
+    \mathcal{A}(\varepsilon_1) = a_{11}\eta_{1}+a_{21}\eta_{2}+\cdots+a_{m1}\eta_{m},   \\ 
+    \mathcal{A}(\varepsilon_i) = a_{12}\eta_{1}+a_{22}\eta_{2}+\cdots+a_{m2}\eta_{m},   \\
+    \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\vdots \\
+    \mathcal{A}(\varepsilon_n) = a_{1n}\eta_{1}+a_{2n}\eta_{2}+\cdots+a_{mn}\eta_{m}.
+\end{cases}
+\]
+It can be expressed in matrix form as:
+\[
+\mathcal{A}(\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n) = 
+(\mathcal{A}\varepsilon_1, \mathcal{A}\varepsilon_2, \dots, \mathcal{A}\varepsilon_n) =
+(\eta_1, \eta_2, \dots, \eta_m)A,
+\]
+where
+\[A = (a_{ij})_{m \times n} =
+\begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{pmatrix}.
+\]
+The matrix \( A \) is called the \textbf{matrix representation} of the linear mapping \( \mathcal{A} \)
+under the bases \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) of \( V \) 
+and \( \{\eta_1, \eta_2, \dots, \eta_m\} \) of \( V' \).
+
+\vspace{0.7cm}
+\begin{example}
+    Let \(A, B\in M_{s\times n}(F)\). 
+    Prove that homogeneous linear systems with \(n\) variables \(AX=0\) and \(BX=0\) have the same solution space
+    if and only if there exists an invertible matrix \(P\in M_{s\times s}(F)\) such that \(B=PA\).
+\end{example}
+\begin{proof}
+    
+\end{proof}
+
+\section{Special Linear Transformations}
+\begin{leftbarTitle}{Common Linear Transformations}\end{leftbarTitle}
+Some common linear transformations include:
+\begin{description}
+    \item[Identity Transformation] The identity transformation \( \mathcal{E} \) on \( V \) is defined by:
+        \[
+        \mathcal{E}(\alpha) = \alpha, \quad \forall \alpha \in V.
+        \]
+
+    \item[Zero Transformation] The zero transformation \( \mathcal{O} \) from \( V \) to \( V' \) is defined by:
+    \[
+    \mathcal{O}(\alpha) = 0, \quad \forall \alpha \in V.
+    \]
+
+    \item[Scalar Transformation] For a fixed scalar \( k \in F \), 
+        the scalar transformation \( \mathcal{K} \) on \( V \) is defined by:
+        \[
+        \mathcal{K}(\alpha) = k\alpha, \quad \forall \alpha \in V.
+        \]
+        When \( k = 1 \), it is the identity transformation; 
+        when \( k = 0 \), it is the zero transformation. 
+
+    \item[Spin Axis Transformation] 
+        The vectors on a plane form a two-dimensional linear space over real number field \( \mathbb{R} \).
+        Rotate the plane counterclockwise by an angle \( \theta \) around the origin, 
+        then the transformation of any vector on the plane is a linear transformation,
+        denoted by \( \mathcal{P}_{\theta}\).
+        Similarly, in three-dimensional space, rotating around a fixed axis by an angle \( \theta \) 
+        also defines a linear transformation.
+\end{description}
+
+\begin{leftbarTitle}{Idempotent and Projection Transformations}\end{leftbarTitle}
+\begin{definition}{Idempotent Transformation}
+    A linear transformation \( \mathcal{A} \) on \( V \) is called an \textbf{idempotent transformation} if:
+    \[
+    \mathcal{A}^2 = \mathcal{A}.
+    \]
+\end{definition}
+
+Two linear transformations \( \mathcal{A} \) and \( \mathcal{B} \) on \( V \) are called \textbf{orthogonal} if:
+\[
+\mathcal{A} \mathcal{B} = \mathcal{B} \mathcal{A} = \mathcal{O}.
+\]
+
+With the definitions above, we can define the projection transformation as follows:
+\begin{definition}{Projection Transformation}
+    Let \( V \) be a linear space over field \( F \),
+    and let \( U, W \subseteq V \) be two subspaces of \( V \) such that \( V = U \oplus W \).
+    For all \( \alpha \in V \), there exist unique \( \alpha_1 \in U \) and \( \alpha_2 \in W \) such that:
+    \[
+    \alpha = \alpha_1 + \alpha_2.
+    \]
+    Let
+    \[ 
+        \mathcal{P}_{U}: 
+        \begin{aligned}
+        &V \to V \\
+        &\alpha \mapsto \alpha_1
+        \end{aligned}
+    \] 
+    then \( \mathcal{P}_{U} \) is called the \textbf{projection} onto \( U \) along \( W \),
+    which is a linear transformation on \( V \).
+    Similarly, the projection onto \( W \) along \( U \) can be defined.
+\end{definition}
+\( \mathcal{P}_{U}\) satisfies and uniquely satisfies:
+\[
+\mathcal{P}_{U}( \alpha ) = 
+\begin{cases} 
+    \alpha, & \alpha \in U, \\ 
+    0, & \alpha \in W .
+\end{cases}
+\]
+
+In fact, the projection transformation is equivalent to the idempotent transformation.
+\begin{proposition}
+    Let \( V \) be a linear space over field \( F \).
+    \begin{enumerate}
+        \item Let \( U, W \subseteq V \) be two subspaces of \( V \) such that \( V = U \oplus W \).
+            Then the projection \( \mathcal{P}_{U} \) onto \( U \) along \( W \) 
+            and the projection \( \mathcal{P}_{W} \) onto \( W \) along \( U \) are orthogonal idempotent transformations,
+            and their sum is the identity transformation:
+            \[
+            \mathcal{P}_{U} \mathcal{P}_{W} = \mathcal{P}_{W} \mathcal{P}_{U} = \mathcal{O}, \quad
+            \mathcal{P}_{U}^{2} = \mathcal{P}_{U}, \quad
+            \mathcal{P}_{W}^{2} = \mathcal{P}_{W}, \quad
+            \mathcal{P}_{U} + \mathcal{P}_{W} = \mathcal{E}.
+            \]
+        \item Let \(\mathcal{A}, \mathcal{B} \in \operatorname{Hom}(V)\) be two linear transformations.
+            If \(\mathcal{A}\) and \(\mathcal{B}\) are orthogonal idempotent transformations 
+            satisfying \(\mathcal{A} + \mathcal{B} = \mathcal{E}\),
+            then \(V = \operatorname{Im}(\mathcal{A}) \oplus \operatorname{Im}(\mathcal{B})\),
+            and 
+            \[
+            \mathcal{A} = \mathcal{P}_{\operatorname{Im}(\mathcal{B})}\left( \operatorname{Im}(\mathcal{A}) \right) , \quad
+            \mathcal{B} = \mathcal{P}_{\operatorname{Im}(\mathcal{A})}\left( \operatorname{Im}(\mathcal{B}) \right).
+            \]
+    \end{enumerate}
+\end{proposition}
+
+\begin{leftbarTitle}{Other Propositions about Special Linear Transformations}\end{leftbarTitle}
+\begin{proposition}
+    Let \( V \) be a linear space over field \( F \),
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    \begin{enumerate}
+        \item \(\mathcal{A}\) is an idempotent transformation if and only if 
+        \[
+        \operatorname{rank}(\mathcal{A}) + \operatorname{rank}( \mathcal{E} - \mathcal{A} ) = \dim(V).
+        \]
+        \item \(\mathcal{A}\) is an involutional transformation if and only if 
+        \[
+        \operatorname{rank}(\mathcal{A}) + \operatorname{rank}( \mathcal{E} - \mathcal{A} ) = \dim(V).
+        \]
+    \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+    Let \( V \) be a linear space over field \( F \),
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    Then the following statements are equivalent:
+    \begin{enumerate}
+        \item \(\mathcal{A}\) is invertible; 
+        \item if \(\varepsilon_{1}, \varepsilon_{2},\cdots, \varepsilon_{n}\) are a basis of \(V\),
+            then \(\mathcal{A}\varepsilon_{1}, \mathcal{A}\varepsilon_{2},\cdots, \mathcal{A}\varepsilon_{n}\) 
+            are also a basis of \(V\);
+        \item if \(\alpha\neq 0\), then \(\mathcal{A}\alpha \neq 0\);
+        \item if \(V = V_{1} \oplus V_{2}\), then \(V = \mathcal{A}V_{1} \oplus \mathcal{A}V_{2}\);
+    \end{enumerate}
+\end{proposition}
+
+
+\section{Linear Functions and Dual Spaces}

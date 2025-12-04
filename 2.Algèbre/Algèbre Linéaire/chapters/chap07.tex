@@ -1,0 +1,685 @@
+\chapter{Diagonalization} % 对角化
+\section{Similarity of Matrices}
+\begin{definition}{Similar Matrices}
+    Let \( A, B \in F^{n \times n} \) be two square matrices over field \( F \).
+    If there exists an invertible matrix \( P \in F^{n \times n} \) such that:
+    \[
+    B = P^{-1} A P,
+    \]
+    then \( A \) is said to be \textbf{similar} to \( B \), denoted as \( A \sim B \),
+    and \( B \) is called a \textbf{similarity transformation} of \( A \).
+\end{definition}
+
+\begin{definition}{Trace}
+    Let \( A = (a_{ij})_{n \times n} \in F^{n \times n} \) be a square matrix over field \( F \).
+    The sum of the diagonal elements of \( A \):
+    \[
+    \operatorname{tr}(A) = a_{11} + a_{22} + \cdots + a_{nn},
+    \]
+    is called the \textbf{trace} of \( A \).
+\end{definition}
+
+Obviously, similarity is an equivalence relation on the set of square matrices of the same order,
+i.e, it satisfies reflexivity, symmetry, and transitivity.
+
+It is easy to verify that the arithmetic properties of traces hold, for any \( A, B \in F^{n \times n}, k \in F \):
+\begin{gather*}
+    \operatorname{tr}(A + B) = \operatorname{tr}(A) + \operatorname{tr}(B), \\
+    \operatorname{tr}(kA) = k \operatorname{tr}(A), \\
+    \operatorname{tr}(AB) = \operatorname{tr}(BA).
+\end{gather*}
+From the third property, it can be derived that the trace of an \(n\times n\) matrix is a commutative quantity 
+extracted from the non-commutativity of matrix multiplication.
+
+In the meanwhile, we have the arithmetic properties of similarity, if \(B_{1} = P^{-1} A_{1} P, B_{2} = P^{-1} A_{2} P\):
+\begin{gather*}
+    B_{1} + B_{2} = P^{-1}(A_{1} + A_{2})P, \\
+    B_{1} B_{2} = P^{-1}(A_{1} A_{2})P, \\
+    B_{1}^{k} = P^{-1} A_{1}^{k} P, \quad k = 1, 2, \dots
+\end{gather*}
+The third property is called the \textbf{similarity invariance of matrix powers}.
+From it, we can derive some important applications:
+\begin{description}
+    \item[Eigenvalue invariance] Matrix similarity guarantees the preservation of eigenvalues. 
+        Therefore, if \(A\) and \(B\) are similar matrices, then the eigenvalues of \(A^k\) and \(B^k\) are also identical. 
+        For any eigenvalue \( \lambda \): If \( \lambda \) is an eigenvalue of \( A \), 
+        then \( \lambda^k \) is an eigenvalue of \( A^k \) (the power corresponds to the operation).
+    \item[The result of diagonalization is invariant] If a matrix \( A \) is diagonalizable, that is, 
+        there exists an invertible matrix \( P \) and a diagonal matrix \( D \) 
+        such that \( A = P^{-1} D P \), then: \( A^k = P^{-1} D^k P \). 
+        In other words, calculating \( A^k \) after diagonalization becomes simple. 
+        You only need to perform the power operation on the diagonal matrix \( D \), 
+        and then transform the result back to the original basis by a similarity transformation.
+    \item[The Convenience of Jordan Form] Even if a matrix \( A \) is not diagonalizable, 
+        it can still be similar to a Jordan form matrix \( J \). 
+        In this case: \( A^k = P^{-1} J^k P \), 
+        where the calculation of \( J^k \) can still be done block by block on the Jordan blocks. 
+        This property is extremely important when dealing with powers of non-diagonalizable matrices.
+    \item[Generalization of Matrix Functions] The power relations of matrices can be used to derive operations of matrix functions. 
+        For example, the exponential function of a matrix is defined as \(e^{A} = \sum_{k=0}^{\infty} \frac{A^{k}}{k!} \). 
+        If \( B = P^{-1}AP \), then: \( e^{B} = P^{-1}e^{A}P \). 
+        Similarly, other matrix functions (such as logarithm, power functions, etc.) also possess similar properties.
+\end{description}
+
+\vspace{0.7cm}
+In summary, the \underline{determinant}, \underline{rank}, and \underline{trace} of a matrix are invariants\footnote{
+    And also include the \underline{characteristic polynomial}, \underline{eigenvalues}, and \underline{eigenvectors} 
+    in next section.
+} under similarity relations, 
+and are collectively referred to as \textbf{similarity invariants}.
+
+
+\section{Eigenvectors and Eigenvalues}
+\begin{definition}{Eigenvalues and Eigenvectors}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    A non-zero vector \( \xi \in V \) is called an \textbf{eigenvector} of \( \mathcal{A} \)
+    if there exists a scalar \( \lambda \in F \) such that:
+    \[
+    \mathcal{A}(\xi) = \lambda \xi.
+    \]
+    The scalar \( \lambda \) is called the \textbf{eigenvalue} corresponding to the eigenvector \( \xi \).
+    
+    From the perspective of matrices,
+    let \( A \in F^{n \times n} \) be a square matrix over field \( F \).
+    A non-zero vector \( x \in F^n \) is called an \textbf{eigenvector} of \( A \)
+    if there exists a scalar \( \lambda \in F \) such that:
+    \[
+    A x = \lambda x.
+    \]
+    The scalar \( \lambda \) is called the \textbf{eigenvalue} corresponding to the eigenvector \( x \).
+\end{definition}
+
+According to the definition of eigenvalues and eigenvectors,
+if \( \lambda \) is an eigenvalue of \( A \), \(\xi\) is an eigenvector corresponding to \( \lambda \),
+then eigenvalue of some specific functions of \( A \) can be derived as follows (eigenvector remains the same):
+\begin{itemize}
+    \item \(A + kE\): eigenvalue is \( \lambda + k \);
+    \item \(kA\): eigenvalue is \( k\lambda \);
+    \item \(A^m\), \(m \in \mathbb{N}^{*}\): eigenvalue is \( \lambda^m \);
+    \item \(A^{-1}\): eigenvalue is \( \frac{1}{\lambda} \);
+    \item \(f(A)\), where \(f(x)\) is a polynomial: eigenvalue is \( f(\lambda) \).
+\end{itemize}
+
+
+\begin{definition}{Eigenpolynomial}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    The polynomial
+    \[
+    f(\lambda) = |\lambda E - A| = \begin{vmatrix}
+        \lambda - a_{11} & -a_{12} & \cdots & -a_{1n} \\
+        -a_{21} & \lambda - a_{22} & \cdots & -a_{2n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        -a_{n1} & -a_{n2} & \cdots & \lambda - a_{nn}
+    \end{vmatrix}
+    \]
+    is called the \textbf{eigenpolynomial} (or characteristic polynomial) of \( A \),
+    where \( A = (a_{ij})_{n\times n} \) is the matrix representation of \( \mathcal{A} \)
+    under some basis of \( V \), and \( E \) is the identity matrix.
+\end{definition}
+
+\begin{remark}
+    For example, in \(P[x]_{n}\quad (n>1)\), the eigenpolynomial of linear transformation \( \mathcal{D} \) (derivation)
+    is \( f(\lambda) = \lambda^n \).
+\end{remark}
+
+The roots of the eigenpolynomial $\lvert \lambda E-A \rvert$ correspond to the eigenvalues of $A$; 
+the non-zero solutions to the homogeneous system of equations $(\lambda_{0}E-A)x=0$ 
+correspond to the eigenvectors belonging to the eigenvalue $\lambda_{0}$.
+It is easy to verify that the eigenpolynomial as well as the eigenvalues, eigenvectors is invariant under similarity relations.
+
+\vspace{0.7cm}
+The following proposition summarizes the properties of the eigenpolynomial:
+\begin{proposition}
+    Let \( A \in F^{n \times n} \), the eigenpolynomial of \( A \) is \( f(\lambda) = |\lambda E - A| \).
+    Then \( f(\lambda) \) is a monic polynomial of degree \( n \):
+    \[
+    f(\lambda) = \lambda^n - \operatorname{tr}(A)\lambda^{n-1} + \cdots + (-1)^n |A|,
+    \]
+    where the coefficient of \( \lambda^{n-k}\quad(1 \leqslant k < n) \) is 
+    the sum of all \( k \)-order principal minors of \( A \) multiplied by \( (-1)^k \).  
+\end{proposition}
+\begin{note}
+    Combine Vièta's formulas with the proposition above,
+    we can derive that:
+    \begin{enumerate}
+        \item The sum of the eigenvalues (counting multiplicities) is equal to the trace of the matrix:
+        \[
+        \sum \lambda_{i} = \operatorname{tr}(A). 
+        \]
+        \item The product of the eigenvalues (counting multiplicities) is equal to the determinant of the matrix:
+        \[
+        \prod \lambda_{i} = \det A.
+        \]
+    \end{enumerate}
+\end{note}
+
+
+
+
+\begin{leftbarTitle}{Multiplicity and Eigenspaces}\end{leftbarTitle}
+\begin{definition}{Eigenspace}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    For an eigenvalue \( \lambda \) of \( \mathcal{A} \), 
+    the set of all eigenvectors corresponding to \( \lambda \) \underline{along with the zero vector}:
+    \[
+    V_{\lambda} = \{ \alpha | \alpha \in V, \mathcal{A}(\alpha) = \lambda \alpha \} = 
+    \operatorname{Ker}(\mathcal{A} - \lambda \mathcal{E}),
+    \]
+    is called the \textbf{eigenspace} (or eigenspace) corresponding to the eigenvalue \( \lambda \),
+    denoted as \( E_{\lambda} \).
+    It is evident that \( V_{\lambda} \) is a subspace of \( V \)
+    and solution space of the equation system \( ( \lambda E - \mathcal{A})X = 0 \).
+\end{definition}
+
+\begin{definition}{Geometric and Algebraic Multiplicity of Eigenvalues}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    For an eigenvalue \( \lambda \) of \( \mathcal{A} \):
+    \begin{itemize}
+        \item The dimension of the eigenspace \( V_{\lambda} = \operatorname{Ker}(\mathcal{A} - \lambda \mathcal{E}) \)
+            is called the \textbf{geometric multiplicity} of the eigenvalue \( \lambda \).
+        \item The multiplicity of \( \lambda \) as a root of the eigenpolynomial \( f(\lambda) = |\lambda E - A| \)
+            is called the \textbf{algebraic multiplicity} of the eigenvalue \( \lambda \).
+    \end{itemize}
+\end{definition}
+
+\begin{property}
+    For an eigenvalue \( \lambda \) of \( \mathcal{A} \),
+    let \( g(\lambda) \) and \( a(\lambda) \) be the geometric and algebraic multiplicities of \( \lambda \), respectively.
+    Then:
+    \[
+    1 \leqslant g(\lambda) \leqslant a(\lambda) \leqslant n.
+    \]
+\end{property}
+
+\begin{leftbarTitle}{Estimation of Eigenvalues}\end{leftbarTitle}
+\begin{theorem}{Gerschgorin Disks First Theorem}
+    Let \( A = (a_{ij})_{n \times n}\) be a square matrix over complex number field \( C \).
+    Then all eigenvalues of \( A \) are located within the following circular disks in the complex plane:
+    \[
+    |z - a_{ii}| \leq R_i, \quad 1 \leq i \leq n,
+    \]
+    where \(R_i = |a_{i1}| + \dots + |a_{i,i-1}| + |a_{i,i+1}| + \dots + |a_{in}|\).
+\end{theorem}
+
+\begin{theorem}{Gerschgorin Disks Second Theorem}
+    If the \(n\) Gerschgorin disks of the \(n\)-order matrix \(A\) form \(k\) connected regions,
+    and one of the connected regions contains \(k\) Gerschgorin disks, 
+    then there are exactly \(k\) eigenvalues located in this connected region (if the eigenvalues are repeated, 
+    the count includes multiplicities).
+\end{theorem}
+
+\section{Minimal Polynomial}
+\begin{definition}{Minimal Polynomial}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    A polynomial \( f(\lambda) \) is called an \textbf{annihilating polynomial} of \( \mathcal{A} \) if:
+    \[
+    f(\mathcal{A}) = 0.
+    \]
+
+    The monic polynomial \( m(\lambda) \) of least degree such that:
+    \[
+    m(\mathcal{A}) = 0,
+    \]
+    is called the \textbf{minimal polynomial} of \( \mathcal{A} \).
+
+    It is similar for a square matrix \( A \in F^{n \times n} \).
+\end{definition}
+
+\section{Space Decomposition}
+Studying linear transformations through invariant subspaces is a commonly used method, 
+as it reduces problems on the whole space to problems on lower-dimensional subspaces.
+\begin{leftbarTitle}{Invariant Subspace}\end{leftbarTitle}
+\begin{definition}{Invariant Subspace}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    A subspace \( W \subseteq V \) is called an \textbf{invariant subspace} of \( V \)
+    under the linear transformation \( \mathcal{A} \) if:
+    \[
+    \mathcal{A}(\alpha) \subseteq W, \quad \forall \alpha \in W,
+    \]
+    simplified as \( \mathcal{A} \)-subspace.
+\end{definition}
+
+\begin{remark}
+    Kernel and image of \( \mathcal{A} \),
+    as well as eigenspaces (including generalized eigenspaces), cyclic subspaces,
+    are both invariant subspaces of \( V \) under \( \mathcal{A} \).
+\end{remark}
+
+\begin{property}
+    \begin{enumerate}
+        \item The zero subspace \( \{0\} \) and the entire space \( V \) are invariant subspaces of \( V \) 
+            under any linear transformation \( \mathcal{A} \), which are called trivial invariant subspaces. 
+        \item Let \( \mathcal{A}, \mathcal{B} \in \operatorname{Hom}(V) \). 
+            If \( \mathcal{A}, \mathcal{B} \) is commutative (\( \mathcal{AB} = \mathcal{BA} \)), 
+            then \( \operatorname{Ker}(\mathcal{A}) \), \( \operatorname{Im}(\mathcal{A}) \) and 
+            eigenspace of \( \mathcal{A} \) are both invariant subspaces of \( V \) under \( \mathcal{B} \).
+        \item Any subspace of scalar transformation is an invariant subspace.
+        \item The intersection and sum of any two invariant subspaces are also invariant subspaces.
+    \end{enumerate}
+\end{property}
+
+\begin{proposition}
+    Let \( V \) be a linear space over field \( F \), and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    \( W = \langle \xi \rangle \quad (\xi\neq 0)\), the subspace of \( V \) is \( \mathcal{A} \)-subspace if and only if 
+    \( \xi \) is an eigenvector of \( \mathcal{A} \).
+\end{proposition}
+
+\begin{theorem}
+    Let \( V \) be a \(n\)-dimensional linear space over field \( F \), and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    \begin{enumerate}
+        \item Let \( W \) be a nontrivial \( \mathcal{A} \)-subspace,
+            take a basis \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_r\} \) of \( W \),
+            and extend it to a basis \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) of \( V \).
+            Then the matrix representation of \( \mathcal{A} \) under this basis takes the block upper triangular form:
+            \[
+            \begin{pmatrix}
+                A & B \\
+                O & C
+            \end{pmatrix}
+            \]
+            where:
+            \begin{itemize}
+                \item \( A \) is the matrix representation of \( \mathcal{A} \) restricted to \( W \) (i.e., \( \mathcal{A}|_W \)) 
+                    under the basis \(\varepsilon_1, \dots, \varepsilon_r\),
+                \item \( C \) is the matrix representation of \( \widetilde{\mathcal{A}} \), 
+                    the linear transformation on the quotient space \( V/W \) induced by \( \mathcal{A} \), 
+                    under the basis \(\varepsilon_{r+1} + W, \dots, \varepsilon_n + W\).
+            \end{itemize}
+            Let the characteristic polynomials of \( \mathcal{A} \), \( \mathcal{A}|_W \), and \( \widetilde{\mathcal{A}} \) 
+            be \( f(\lambda) \), \( f_1(\lambda) \), and \( f_2(\lambda) \), respectively. Then:
+            \[ 
+            f(\lambda) = f_1(\lambda) f_2(\lambda).
+            \]
+    
+        \item Let the matrix representation of \( \mathcal{A} \) under a basis 
+            \(\varepsilon_1, \varepsilon_2, \dots, \varepsilon_r, \varepsilon_{r+1}, \dots, \varepsilon_n\) 
+            of \( V \) take the block upper triangular form:
+            \[
+            \mathcal{A} = 
+            \begin{pmatrix}
+            A & B \\
+            O & C
+            \end{pmatrix}.
+            \]
+            Define \( W = \langle \varepsilon_1, \dots, \varepsilon_r \rangle \). 
+            Then \( W \) is an \( \mathcal{A} \)-subspace, 
+            and the matrix representation of \( \mathcal{A}|_W \)
+            under the basis \(\varepsilon_1, \dots, \varepsilon_r\) is given by \( A \).
+        
+        \item The matrix representation of \( \mathcal{A} \) under a basis of \( V \) 
+            is a block diagonal form 
+            \[
+            \begin{pmatrix}
+                A_1 & O & \cdots & O \\
+                O & A_2 & \cdots & O \\
+                \vdots & \vdots & \ddots & \vdots \\
+                O & O & \cdots & A_s
+            \end{pmatrix}
+            \]
+            if and only if \( V \) can be decomposed into a direct sum of nontrivial \( \mathcal{A} \)-subspaces (\(W_{i}\)):
+            \[
+            V = W_1 \oplus W_2 \oplus \dots \oplus W_s,
+            \]
+            then \( A_i \) represents the matrix form of \( \mathcal{A}|{W_i} \) under a basis of \( W_i \).
+    \end{enumerate}
+\end{theorem}
+
+\begin{proposition}
+    Let \( V \) be a linear space over field \( F \) (finite or infinite dimensional), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    On \(F[x]\), 
+    \[
+    f(x) = f_{1}(x)f_{2}(x)\cdots f_{s}(x),
+    \]
+    where \( f_{i}(x) \) are pairwise coprime polynomials.
+    Then
+    \[
+    \operatorname{Ker}f(\mathcal{A}) 
+    = \operatorname{Ker}f_{1}(\mathcal{A}) \oplus 
+    \operatorname{Ker}f_{2}(\mathcal{A}) \oplus \cdots \oplus \operatorname{Ker}f_{s}(\mathcal{A}).
+    \]
+\end{proposition}
+
+
+
+\begin{leftbarTitle}{Hamilton-Cayley Theorem}\end{leftbarTitle}
+\begin{theorem}{Hamilton-Cayley Theorem}
+    Let \( V \) be an \( n \)-dimensional linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    Let \( A \) be the matrix representation of \( \mathcal{A} \) under some basis of \( V \),
+    and let \( f(\lambda) = |\lambda E - A| \) be the characteristic polynomial of \( A \).
+    Then:
+    \[
+    f(\mathcal{A}) = 0.
+    \]
+\end{theorem}
+\begin{note}
+    The Hamilton-Cayley theorem states that characteristic polynomial of a linear transformation
+    annihilates the transformation itself.
+
+    In fact, characteristic polynomial is a special case of annihilating polynomial,
+    and it is one of the highest degree annihilating polynomials.
+    It can be divided exactly by the minimal polynomial of \( \mathcal{A} \).
+\end{note}
+
+\begin{definition}{Root Subspaces}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    For an eigenvalue \( \lambda \) of \( \mathcal{A} \),
+    the set
+    \[
+    V_{\lambda}^{(r)} = \operatorname{Ker}(\mathcal{A} - \lambda \mathcal{E})^{r} = 
+    \{ \alpha | \alpha \in V, (\mathcal{A} - \lambda \mathcal{E})^{r}(\alpha) = 0 \},
+    \]
+    is called the \textbf{root subspace} (or generalized eigenspace) of order \( r \)\footnote{
+        Here, \(r\) has two kinds of equivalent definitions:
+        \begin{enumerate}
+            \item \(r\) is the smallest positive integer such that 
+                \((\mathcal{A} - \lambda \mathcal{E})^{r}(\alpha) = 0\);
+            \item \(r\) is the algebraic multiplicity of the eigenvalue \( \lambda \).
+        \end{enumerate}
+        All vectors in the root subspace are annihilated by the operator raised to the \(r\)-th power, 
+        and the minimal such \(r\) is precisely the algebraic multiplicity.
+    }
+    corresponding to the eigenvalue \( \lambda \).
+\end{definition}
+Similarly, generalized kernel and image can be defined.
+
+\vspace{0.7cm}
+
+\begin{theorem}{Root Space Decomposition Theorem}\label{theorem:space_decomposition}
+    Let \( V \) be an \( n \)-dimensional linear space over field \( F \), 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    If the characteristic polynomial of \( \mathcal{A} \) can be factored into linear factors over \( F \):
+    \[
+    f(\lambda) = ( \lambda - \lambda_1)^{r_1} ( \lambda - \lambda_2)^{r_2} \cdots ( \lambda - \lambda_k)^{r_k},
+    \]
+    then \(V\) can be decomposed into a direct sum of root subspaces:
+    \[
+    V = V_{\lambda_1}^{(r_1)} \oplus V_{\lambda_2}^{(r_2)} \oplus \cdots \oplus V_{\lambda_k}^{(r_k)}.
+    \]
+\end{theorem}
+
+
+
+
+
+\section{Diagonalization}
+\begin{lemma}
+    Eigenvectors corresponding to distinct eigenvalues are linearly independent.
+
+    Furthermore, if a linear transformation \( \mathcal{A} \) on a linear space \( V \)
+    has \( k \) distinct eigenvalues \( \lambda_1, \lambda_2, \dots, \lambda_k \),
+    and \( \alpha_{i1}, \alpha_{i2}, \dots, \alpha_{ir_{i}} \) (\(i = 1, 2, \dots, k\)) 
+    are the corresponding \underline{linearly independent} eigenvectors of \( \lambda_i \),
+    then the set of vectors
+    \[
+    \{ \alpha_{ij} | i = 1, 2, \dots, k, j = 1, 2, \dots, r_i \}
+    \]
+    is linearly independent.
+\end{lemma}
+
+\begin{theorem}
+    Let \( V \) be an \( n \)-dimensional linear space over field \( F \),
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    Then the following statements are equivalent:
+    \begin{enumerate}
+        \item \( \mathcal{A} \) is diagonalizable, i.e., there exists a basis of \( V \)
+            such that the matrix representation of \( \mathcal{A} \) under this basis is a diagonal matrix;
+        \item There are \( n \) linearly independent eigenvectors (\( \xi_{1}, \xi_{2}, \cdots, \xi_{n} \)) of \( \mathcal{A} \);
+        \item For each eigenvalue of \( \mathcal{A} \), the geometric multiplicity equals the algebraic multiplicity;\footnote{
+            This condition is often called for any eigenvalue of \( \mathcal{A} \), 
+            it has \textbf{complete set of eigenvectors}.
+            It also can be restated as: 
+            the sum of the dimensions of all eigenspaces equals \( n \).
+        }
+        \item \( V = V_{\lambda_1} \oplus V_{\lambda_2} \oplus \cdots \oplus V_{\lambda_k} \),
+            where \( \lambda_1, \lambda_2, \dots, \lambda_k \) are the \underline{distinct} eigenvalues of \( \mathcal{A} \).
+        \item The minimal polynomial\footnote{
+            Since the minimal polynomial is the monic polynomial with least degree 
+            of all annihilating polynomials of \( \mathcal{A} \),
+            the condition also holds for any annihilating polynomial of \( \mathcal{A} \).
+        } of \( \mathcal{A} \) has not repeated roots, 
+            i.e. it can be factored into \underline{distinct} linear factors over field \( F \):
+            \[
+            m(\lambda) = (\lambda - \lambda_1)(\lambda - \lambda_2) \cdots (\lambda - \lambda_k).
+            \]
+    \end{enumerate}
+\end{theorem}
+
+\section{Diagonalization of Special Matrices}
+In this section, we will discuss the diagonalization of several special types of matrices.
+Let \(V\) be a linear space over field \( F \) (without specific statements, it can be \underline{infinite} dimensional),
+and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+\(A\) is the matrix representation of \( \mathcal{A} \) under some basis of \( V \).
+
+Since the isomorphism between linear transformations and square matrices,
+the following special matrices can also be understood as special linear transformations.
+
+\begin{remark}
+    Some properties mentioned below require \(V\) to be finite dimensional
+    or \(F\) to be a number field 
+    (commonly used are real number field \( \mathbb{R} \) or complex number field \( \mathbb{C} \)).
+
+    In fact, in some cases, the constraints on \(F\) (being a number field) can be relaxed to
+    the characteristic of \(F\) is not \(2\).
+\end{remark}
+
+\begin{leftbarTitle}{Invertible Matrix}\end{leftbarTitle}
+Let \(A\) be an invertible matrix.
+
+\begin{enumerate}
+    \item \(0\) is not an eigenvalue of \(A\); the converse proposition is also true.
+    \item If \(\lambda\) is an eigenvalue of \(A\), then \(\frac{1}{\lambda}\) is an eigenvalue of \(A^{-1}\);
+        and if \(\xi\) is an eigenvector of \(A\) corresponding to \(\lambda\),
+        then \(\xi\) is also an eigenvector of \(A^{-1}\) corresponding to \(\frac{1}{\lambda}\).
+    \item (When \(F\) is number field) If \(A\) is diagonalizable, then \(A^{-1}\) is also diagonalizable.
+\end{enumerate}
+
+
+\begin{leftbarTitle}{Idempotent Matrix}\end{leftbarTitle}
+Let \(A\) be an idempotent matrix, i.e., \(A^2 = A\).
+
+\begin{enumerate}
+    \item Any eigenvalue of \(A\) is either \(0\) or \(1\).
+    \item (\(V\) is finite dimensional) \(A\) is diagonalizable, and
+        \[
+        V = E_{1} \oplus E_{0} = \operatorname{Ker}(A-E) \oplus \operatorname{Ker}(A-0\cdot E) 
+        = \operatorname{Im}(A)\oplus \operatorname{Ker}(A) 
+        \]
+    \item (When \(F\) is number field, and \(V\) is finite dimensional) The rank of \(A\) equals the trace of \(A\):
+        \[
+        \operatorname{rank}(A) = \operatorname{tr}(A).
+        \]
+\end{enumerate}
+
+\begin{leftbarTitle}{Nilpotent Matrix}\end{leftbarTitle}
+Let \(A\) be a nilpotent matrix, i.e., there exists a positive integer \(k\) such that \(A^k = 0\).
+The smallest such \(k\) is called the index of nilpotency of \(A\).
+
+\begin{enumerate}
+    \item All eigenvalues of \(A\) are \(0\).
+    \item (\(V\) is finite dimensional) \(A\) is diagonalizable if and only if \(A = 0\), i.e., \(k=1\).
+\end{enumerate}
+
+
+\begin{leftbarTitle}{Involution Matrix}\end{leftbarTitle}
+Let \(V\) be finite dimensional, \(F\) be number field, and let \(A\) be an involution matrix, i.e., \(A^2 = E\).
+In geometry, an involution typically corresponds to a "reflection" or "symmetry" operation,
+since \(A^{2}=E\) implies that \(A=A^{-1}\).
+
+\begin{enumerate}
+    \item All eigenvalues of \(A\) are either \(1\) or \(-1\).
+    \item \(A\) is diagonalizable, and
+        \[
+        V = E_{1} \oplus E_{-1} = \operatorname{Ker}(A-E) \oplus \operatorname{Ker}(A+E).
+        \]
+\end{enumerate}
+
+\begin{leftbarTitle}{\(1\) Matrix}\end{leftbarTitle}
+Let \(F\) be rational field \( \mathbb{Q} \), and let \(A\) be a \(1\) matrix, i.e., all entries of \(A\) are \(1\).
+Denote
+\[
+1_{n} = \begin{pmatrix}
+    1 \\
+    1 \\
+    \vdots\\
+    1 
+\end{pmatrix}_{n \times 1}.
+\]
+
+\begin{enumerate}
+    \item All eigenvalues of \(A\) are either \(n\) (algebraic multiplicity is \(1\)) or \(0\) (algebraic multiplicity is \(n-1\)).
+    \item The set of eigenvector corresponding to eigenvalue \(n\) is 
+        \[
+        \{ k 1_{n} | k \in \mathbb{Q}, k \neq 0 \};
+        \]
+        the set of eigenvectors corresponding to eigenvalue \(0\) is 
+        \[
+        \{ k_{1}\eta_{1}+ k_{2}\eta_{2} + \cdots + k_{n-1}\eta_{n-1} | k_{1}, k_{2}, \ldots, k_{n-1} \in \mathbb{Q} 
+        \text{ and not all zero } \},
+        \]
+        where 
+        \[
+        \eta_{1} = \begin{pmatrix}
+            1 \\
+            -1 \\
+            0 \\
+            \vdots \\
+            0
+        \end{pmatrix}, \quad
+        \eta_{2} = \begin{pmatrix}
+            1 \\
+            0 \\
+            -1 \\
+            \vdots \\
+            0
+        \end{pmatrix}, \quad
+        \ldots, \quad
+        \eta_{n-1} = \begin{pmatrix}
+            1 \\
+            0 \\
+            0 \\
+            \vdots \\
+            -1
+        \end{pmatrix}.
+        \]
+    \item \(A\) is diagonalizable.
+\end{enumerate}
+
+It is worth noting that \(\frac{1}{n}A\) is an idempotent orthonormal projection matrix.
+
+
+\begin{leftbarTitle}{Cyclic Shift Matrix}\end{leftbarTitle}
+Let \(F\) be complex number field \( \mathbb{C} \), and let \(A\) be a cyclic shift matrix, i.e.,
+\[
+A = \begin{pmatrix} 
+    \varepsilon_{n} & \varepsilon_{1} & \varepsilon_{2} & \cdots & \varepsilon_{n-1}
+\end{pmatrix} 
+= \begin{pmatrix}
+    0 & 1 & 0 & \cdots & 0 \\
+    0 & 0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & 1 \\
+    1 & 0 & 0 & \cdots & 0
+\end{pmatrix}.
+\]
+All of its properties are closely related to the discrete fourier transform (DFT) and the roots of unity.
+
+\begin{enumerate}
+    \item The eigenvalues of \(A\) are the \(n\)-th roots of unity 
+        \(\omega^{(k)} = \exp\left(\frac{2\pi i k}{n}\right)\) for \(k = 0, 1, \ldots, n-1\).
+    \item The eigenvector corresponding to the eigenvalue 
+        \(\omega^{(k)} = \exp\left(\frac{2\pi i k}{n}\right)\) is 
+        \[
+        \xi^{(k)} =
+        \begin{pmatrix}
+            \left(\omega^{(k)}\right)^{0} \\
+            \left(\omega^{(k)}\right)^{1} \\
+            \left(\omega^{(k)}\right)^{2} \\
+            \vdots \\
+            \left(\omega^{(k)}\right)^{n-1}
+        \end{pmatrix}.
+        \]
+        These eigenvectors \(\xi^{(0)}, \xi^{(1)}, \ldots, \xi^{(n-1)}\) 
+        are precisely the columns of the DFT matrix (or columns after a simple conjugate and scaling).
+    \item \(A\) is diagonalizable. Furthermore, it can be unitarily diagonalized.
+\end{enumerate}
+
+
+\begin{leftbarTitle}{Circulant Matrix}\end{leftbarTitle}
+Let \(F\) be complex number field \( \mathbb{C} \), and let \(A\) be a circulant matrix, i.e.,
+\[
+A = \begin{pmatrix}
+    a_0 & a_1 & a_{2} & \cdots & a_{n-1} \\
+    a_{n-1} & a_0 & a_{1} & \cdots & a_{n-2} \\
+    a_{n-2} & a_{n-1} & a_0 & \cdots & a_3 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    a_{1} & a_{2} & a_{3} & \cdots & a_0
+\end{pmatrix} = f( C ) =
+a_{0}E + a_{1}C + a_{2}C^{2} + \cdots + a_{n-1}C^{n-1},
+\]
+where \(C\) is the cyclic shift matrix.
+
+\begin{enumerate}
+    \item The eigenvalues of \(A\) are given by:
+        \[
+        \lambda_{k} = f(\omega^{(k)}) = a_{0} + a_{1}\omega^{(k)} + a_{2}(\omega^{(k)})^{2} + \cdots + a_{n-1}(\omega^{(k)})^{n-1},
+        \]
+        where \(\omega^{(k)} = \exp\left(\frac{2\pi i k}{n}\right)\) for \(k = 0, 1, \ldots, n-1\)
+        \footnote{
+            That is, the eigenvalues of a circulant matrix are the discrete Fourier transform of 
+            its first row vector \(\left( a_{0}, a_{1}, \ldots, a_{n-1} \right) \) 
+            (possibly differing by a constant factor and a conjugate, depending on the specific definition of the DFT).
+        }.
+    \item The eigenvector corresponding to the eigenvalue 
+        \(\lambda_{k} = f(\omega^{(k)})\) is 
+        \[
+        \xi^{(k)} =
+        \begin{pmatrix}
+            \left(\omega^{(k)}\right)^{0} \\
+            \left(\omega^{(k)}\right)^{1} \\
+            \left(\omega^{(k)}\right)^{2} \\
+            \vdots \\
+            \left(\omega^{(k)}\right)^{n-1}
+        \end{pmatrix}.
+        \]
+        It means that circulant matrices share the same set of eigenvectors as the cyclic shift matrix.
+    \item \(A\) is diagonalizable. Furthermore, it can be unitarily diagonalized by the \underline{same} DFT matrix.
+\end{enumerate}
+
+\begin{leftbarTitle}{Triangular Matrix}\end{leftbarTitle}
+Let \(F\) be number field, and let \(A\) be a upper triangular matrix: 
+\[
+A =\left( a_{ij} \right) _{n \times n}, \quad a_{ij} = 0, \quad \forall i > j.
+\]
+
+\begin{enumerate}
+    \item The eigenvalues of \(A\) are the diagonal entries \(a_{ii}\) for \(i = 1, 2, \ldots, n\).
+    \item If all diagonal entries \(a_{ii}\) are distinct, then \(A\) is diagonalizable.
+        However, if there are repeated diagonal entries, \(A\) may be or not be diagonalizable.
+    \item If all diagonal entries \(a_{ii}\) are equal, and there exists some non-zero entry above the diagonal,
+        then \(A\) is not diagonalizable.
+\end{enumerate}
+
+
+\section{Simultaneous Characteristics Induced by Commutativity of Multiplication}
+In this section, we will explore the properties of matrices and linear transformations under 
+similarity relations induced by the commutativity of multiplication operations. 
+We refer to these properties as \textbf{simultaneous characteristics}. The discussion will proceed in five steps.
+
+\begin{leftbarTitle}{Eigenspaces are mutually Invariant Subspaces}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Shared Eigenvectors}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Simultaneous Upper Triangularization}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Simultaneous Diagonalization}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Generalization in Multiple Cases}\end{leftbarTitle}

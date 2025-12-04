@@ -1,0 +1,406 @@
+\chapter{Differential} % 微分学
+\section{Differential and Derivative}
+
+\begin{leftbarTitle}{Basic Differential Rules and Formulas}\end{leftbarTitle}
+\[
+\begin{array}{|c|c|c|}
+\hline
+ & \textbf{Derivative Rules} & \textbf{Differential Rules} \\
+\hline
+\text{Linear Combination} & (c_{1}f+c_{2}g)' = c_{1}f' + c_{2}g' & 
+    \mathrm{d}(c_{1}f+c_{2}g) = c_{1}\mathrm{d}f + c_{2}\mathrm{d}g \\
+\hline
+\text{Product Rule} & (fg)' = f'g + fg' & \mathrm{d}(fg) = g\mathrm{d}f + f\mathrm{d}g \\
+\hline
+\text{Quotient Rule} & \left( \frac{f}{g} \right)' = \frac{f'g - fg'}{g^2} & 
+    \mathrm{d}\left( \frac{f}{g} \right) = \frac{g\mathrm{d}f - f\mathrm{d}g}{g^2} \\
+\hline
+\text{Inverse Function} & [f^{-1}(y)]' = \frac{1}{f'(x)} & \mathrm{d}x = \frac{\mathrm{d}y}{f'(x)} = [f^{-1}(y)]'\mathrm{d}y \\
+\hline
+\text{Chain Rule} & [f(g(x))]' = f'(u)g'(x) & \mathrm{d}[f(g(x))] = f'(u)g'(x)\mathrm{d}x \\
+\hline
+\end{array}
+\]
+
+
+
+\[
+\begin{array}{|c|c|}
+\hline
+\textbf{Derivative} & \textbf{Differential} \\
+\hline
+(C)'=0 & \mathrm{d}(C)=0\cdot \mathrm{d}x=0 \\
+\hline
+(x^\alpha)'=\alpha x^{\alpha-1} & \mathrm{d}(x^\alpha)=\alpha x^{\alpha-1}\mathrm{d}x \\ \hline
+\rowcolor{gray!30} & \\ \hline
+(\sin x)'=\cos x & \mathrm{d}(\sin x)=\cos x\mathrm{d}x \\
+\hline
+(\cos x)'=-\sin x & \mathrm{d}(\cos x)=-\sin x\mathrm{d}x \\
+\hline
+(\tan x)'=\sec^2x & \mathrm{d}(\tan x)=\sec^2x\mathrm{d}x \\
+\hline
+(\cot x)'=-\csc^2x & \mathrm{d}(\cot x)=-\csc^2x\mathrm{d}x \\
+\hline
+(\sec x)'=\tan x\sec x & \mathrm{d}(\sec x)=\tan x\sec x\mathrm{d}x \\
+\hline
+(\csc x)'=-\cot x\csc x & \mathrm{d}(\csc x)=-\cot x\csc x\mathrm{d}x \\
+\hline
+(\arcsin x)'=\frac{1}{\sqrt{1-x^2}} & \mathrm{d}(\arcsin x)=\frac{1}{\sqrt{1-x^2}}\mathrm{d}x \\
+\hline
+(\arccos x)'=-\frac{1}{\sqrt{1-x^2}} & \mathrm{d}(\arccos x)=-\frac{1}{\sqrt{1-x^2}}\mathrm{d}x \\
+\hline
+(\arctan x)'=\frac{1}{1+x^2} & \mathrm{d}(\arctan x)=\frac{1}{1+x^2}\mathrm{d}x \\
+\hline
+(\mathrm{arccot} x)'=-\frac{1}{1+x^2} & \mathrm{d}(\mathrm{arccot} x)=-\frac{1}{1+x^2}\mathrm{d}x \\
+\hline
+\hline
+(a^x)'=\ln a\cdot a^x, \, (e^x)'=e^x & \mathrm{d}(a^x)=\ln a\cdot a^x\mathrm{d}x, \, \mathrm{d}(e^x)=e^x\mathrm{d}x \\
+\hline
+(\log_{a}x)'=\frac{1}{x\ln a}, \, (\ln x)'=\frac{1}{x} & \mathrm{d}(\log_{a}x)=\frac{1}{x\ln a}\mathrm{d}x, \, \mathrm{d}(\ln x)=\frac{1}{x}\mathrm{d}x \\ \hline
+\rowcolor{gray!30} & \\ \hline
+(\mathrm{sh}\,x)'=\mathrm{ch}\,x & \mathrm{d}(\mathrm{sh}\,x)=\mathrm{ch}\,x\mathrm{d}x \\
+\hline
+(\mathrm{ch}\,x)'=\mathrm{sh}\,x & \mathrm{d}(\mathrm{ch}\,x)=\mathrm{sh}\,x\mathrm{d}x \\
+\hline
+(\mathrm{th}\,x)'=\mathrm{sech}^2\,x & \mathrm{d}(\mathrm{th}\,x)=\mathrm{sech}^2\,x\mathrm{d}x \\
+\hline
+(\mathrm{cth}\,x)'=-\mathrm{csch}^2\,x & \mathrm{d}(\mathrm{cth}\,x)=-\mathrm{csch}^2\,x\mathrm{d}x \\
+\hline
+(\mathrm{arcsh}\,x)'=\frac{1}{\sqrt{1+x^2}} & \mathrm{d}(\mathrm{arcsh}\,x)=\frac{1}{\sqrt{1+x^2}}\mathrm{d}x \\
+\hline
+(\mathrm{arcch}\,x)'=\frac{1}{\sqrt{x^2-1}} & \mathrm{d}(\mathrm{arcch}\,x)=\frac{1}{\sqrt{x^2-1}}\mathrm{d}x \\
+\hline
+(\mathrm{arcth}\,x)'=(\mathrm{arccth}\,x)'=\frac{1}{1-x^2} & 
+    \mathrm{d}(\mathrm{arcth}\,x)=\mathrm{d}(\mathrm{arccth}\,x)=\frac{1}{1-x^2}\mathrm{d}x \\ \hline
+\rowcolor{gray!30} & \\ \hline
+\ln(x+\sqrt{x^2+a^2})'=\frac{1}{\sqrt{x^2+a^2}} & \mathrm{d}[\ln(x+\sqrt{x^2+a^2})]=\frac{\mathrm{d}x}{\sqrt{x^2+a^2}} \\
+\hline
+\end{array}
+\]
+
+\section{Higher-Order Derivatives}
+
+Some useful formulas of higher-order derivatives:
+\begin{gather*}
+    (a^{x})^{(n)} = (\ln a)^n a^x,\\
+    (\sin \alpha x)^{(n)} = \alpha^n \sin\left(\alpha x + \frac{n\pi}{2}\right), \\
+    (\cos \alpha x)^{(n)} = \alpha^n \cos\left(\alpha x + \frac{n\pi}{2}\right),\\
+    (\ln x)^{(n)} = \frac{(-1)^{n-1}(n-1)!}{x^n}, \\ 
+    (x^\alpha)^{(n)} = \alpha(\alpha-1)\cdots(\alpha-n+1)x^{\alpha-n}.
+\end{gather*}
+
+In order to obtain the higher-order derivative of two or more functions' linear combination and product,
+we need to use the following theorems.
+
+\begin{theorem}{Linear Operation of Higher-Order Derivatives}
+    If \(f,g\in D^{(n)}(I)\), then for any constants \(c_{1}, c_{2}\in \mathbb{R}\),
+    \[
+        (c_{1}f + c_{2}g)^{(n)} = c_{1}f^{(n)} + c_{2}g^{(n)}.
+    \]
+\end{theorem}
+
+\begin{theorem}{Leibniz's Formula}
+    If \(f,g\in D^{(n)}(I)\), then
+    \[
+        (fg)^{(n)} = \sum_{k=0}^{n} \binom{n}{k} f^{(k)} g^{(n-k)}.
+    \]
+\end{theorem}
+
+\begin{caution}
+    Note the distinction: 
+    \begin{itemize}
+        \item \(\mathrm{d}x^2\) represents the square of the differential of the independent variable, i.e., \((\mathrm{d}x)^2\);
+        \item \(\mathrm{d}^2x\) represents the second differential of the independent variable, \(\mathrm{d}(\mathrm{d}x)\);
+        \item \(\mathrm{d}(x^2)\) represents the differential of \(x^2\), which is \(2x\mathrm{d}x\).
+    \end{itemize}
+\end{caution}
+
+\section{Differential Mean Value Theorems}
+\begin{definition}{Argmax and Argmin}
+    Let \(f(x)\) is defined on \((a,b)\), \(x_{0}\in (a,b)\).
+    If there exists \(U(x_{0}, \delta)\subset (a,b)\) such that \(f(x)\leqslant f(x_{0})\) on it,
+    then \(x_{0}\) is called a arguments of the maxima point of \(f\),
+    and \(f(x_{0})\) is referred to as the corresponding arguments of the maxima (abbreviated arg max or argmax).
+
+    The definition of the argmin is analogous.
+\end{definition}
+
+
+\begin{lemma}{Fermat's Lemma}
+    If \(f\) is differentiable at \(x_{0}\) which is a local extremum, then \(f'(x_{0}) = 0\).
+\end{lemma}
+
+\begin{theorem}{Rolle's Theorem}
+    If \(f\in C[a,b], f\in D(a,b)\) and \(f(a) = f(b)\), then there exists \(\xi\in (a,b)\) such that \(f'(\xi) = 0\).
+
+    \underline{\textbf{Enhanced Version:}}If \(f\in D(a,b)\)(finite or infinite interval), 
+    and \(\lim_{x \to a^{+}} f(x) = \lim_{x \to b^{-}} f(x) \) , 
+    then there exists \(\xi\in (a,b)\) such that \(f'(\xi) = 0\).
+\end{theorem}
+
+\begin{theorem}{Lagrange's Mean Value Theorem}
+    If \(f\in C[a,b], f\in D(a,b)\), then there exists \(\xi\in (a,b)\) such that
+    \[
+        f'(\xi) = \frac{f(b) - f(a)}{b - a}.
+    \]
+\end{theorem}
+
+\begin{theorem}{Cauchy's Mean Value Theorem}
+    If \(f,g\in C[a,b], f,g\in D(a,b)\) and \(g'(x) \neq 0\) for all \(x\in (a,b)\), 
+    then there exists \(\xi\in (a,b)\) such that
+    \[
+        \frac{f'(\xi)}{g'(\xi)} = \frac{f(b) - f(a)}{g(b) - g(a)}.
+    \]
+\end{theorem}
+
+
+\vspace{0.7cm}
+\begin{note}
+The following types of problems commonly appear in proofs related to intermediate values in differential calculus:
+\begin{enumerate}
+    \item Prove the existence of a point \(\xi\) such that \(F(\xi, f(\xi), f'(\xi)) = 0\).
+        Problems of this type generally involve constructing auxiliary functions and applying Rolle's theorem. 
+        The commonly used auxiliary functions include:
+        \[
+        \begin{aligned}
+        \xi f'(\xi) + f(\xi) &= 0, \quad x f(x), \\
+        \xi f'(\xi) + nf(\xi) &= 0, \quad x^n f(x), \\
+        \xi f'(\xi) - f(\xi) &= 0, \quad e^x f(x), \\
+        f'(\xi) + \lambda f(\xi) &= 0, \quad e^{-x} f(x), \\
+        f'(\xi) + f(\xi) &= 0, \quad x^n f(x), \\
+        f'(\xi) - f(\xi) &= 0, \quad x f(x). \\
+        \end{aligned}
+        \]
+    
+    \item Prove the existence of two points \(\xi, \eta\) (i.e., two intermediate values) 
+        such that \(F(\xi, f(\xi), f'(\xi), \eta, f(\eta), f'(\eta)) = 0\).
+        These problems can be divided into the following categories:
+        \begin{description}
+            \item [\(\xi \neq \eta\)] Problems of this type usually occur in the same interval \([a, b]\) and 
+                employ theorems of \underline{double} differentiation intermediate values 
+                such as the Lagrange mean value theorem or Cauchy's mean value theorem. 
+                The specific choice of auxiliary functions often includes terms like \(\xi\) and 
+                other variables determined after \underline{decomposition}.
+            \item [\(\xi = \eta\)] Such problems cannot occur within the same interval \([a, b]\). 
+                They use double differentiation mean value theorems by \underline{splitting} \([a, b]\) into 
+                two intervals \([a,c]\) and \([c,b]\), 
+                applying the Lagrange mean value theorem separately to each interval. 
+                Here, the \underline{selection} of \(\xi\) and \(\eta\) is key.
+        \end{description}
+
+    \item As a rule, when conditions in a theorem involve additional constraints about \underline{higher-order} derivatives, 
+        it is necessary to use Taylor's intermediate value theorem.
+\end{enumerate}
+\end{note}
+
+
+
+\section{Theorems about Derivatives}
+
+\begin{theorem}{Darboux's Intermediate Value Theorem for Derivatives}
+    If \(f(x)\in D[a,b]\), and \(f'_{+}(a)\cdot f'_{-}(b)<0\),
+    then there at least exists \(\xi\in (a,b)\) such that \(f'(\xi) = 0\).
+\end{theorem}
+
+\begin{theorem}{Theorem on the Limit of Derivatives}
+    If \(f(x)\in C(U(x_{0})),D(\mathring{U}(x_{0}))\), and \(\lim_{x \to x_{0}} f'(x) = A\),
+    then \(f\) is differentiable at \(x_{0}\) and \(f'(x_{0}) = A\).
+\end{theorem}
+\begin{remark}
+    In fact, \(\lim_{x \to x_{0}} f'(x) = A\) has already been shown to imply that \(f\in D(\mathring{U}(x_{0}))\).
+
+    The mnemonic for this theorem is:
+    Continuous function + limit of derivative \(\Rightarrow\) derivative at the point.
+\end{remark}
+
+\section{Taylor Theorem}
+\begin{leftbarTitle}{L'Hôpital's Rule}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Taylor Formula}\end{leftbarTitle}
+
+
+\begin{leftbarTitle}{Maclaurin Formula}\end{leftbarTitle}
+\begin{lemma}
+    If \(f(x)\) has \(n+2\) derivatives in some neighborhood of \(x_{0}\), 
+    then the derivative of its \(n+1\)th degree Taylor polynomial 
+    is exactly the \(n\)th degree Taylor polynomial of \(f'(x)\).
+\end{lemma}
+
+Taylor formula at \(x_{0} = 0\) is called the \textbf{Maclaurin formula}.
+Some common Maclaurin formulas are as follows:
+\begin{gather*}
+    e^{x} = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots + \frac{x^n}{n!} + o(x^n), \\
+    \ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \cdots + (-1)^{n-1}\frac{x^n}{n} + o(x^n), \\
+\end{gather*}
+\begin{gather*}
+    \sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots + (-1)^{n-1}\frac{x^{2n-1}}{(2n-1)!} + o(x^{2n}), \\
+    \cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots + (-1)^{n}\frac{x^{2n}}{(2n)!} + o(x^{2n+1}), \\
+\end{gather*}
+\begin{gather*}
+    \arctan x = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots + (-1)^{n-1}\frac{x^{2n-1}}{2n-1} + o(x^{2n}), \\
+    \arcsin x = x + \frac{1}{2}\frac{x^3}{3} + \frac{1\cdot 3}{2\cdot 4}\frac{x^5}{5} + \cdots + 
+        \frac{(2n-1)!!}{(2n)!!}\frac{x^{2n+1}}{2n+1} + o(x^{2n+2}). \\
+\end{gather*}
+Specially, 
+\[
+(1+x)^{\alpha} = \sum_{k=0}^{\alpha} \binom{\alpha}{k} x^k + o(x^{n}),
+\]
+\begin{itemize}
+    \item if \(\alpha = n\in \mathbb{N}^{+}\), that is Newton's binomial formula 
+        \((1+x)^n = 1 + \binom{n}{1}x + \binom{n}{2}x^2 + \cdots + \binom{n}{n}x^n\); 
+    \item if \(\alpha = \frac{1}{2}\), then
+        \((1+x)^{\frac{1}{2}} = 1 + \frac{1}{2}x - \frac{1}{8}x^2 + \cdots\);
+    \item if \(\alpha = -1\), then
+        \((1+x)^{-1} = 1 - x + x^2 - x^3 + \cdots\);
+    \item if \(\alpha = -\frac{1}{2}\), then
+        \((1+x)^{-\frac{1}{2}} = 1 - \frac{1}{2}x + \frac{3}{8}x^2 - \cdots\).
+\end{itemize}
+
+\begin{leftbarTitle}{Euler and Bernoulli Numbers}\end{leftbarTitle}
+\begin{definition}{Euler Numbers}
+    The Euler numbers \(E_n\) are defined by the Taylor series expansion of the secant function:
+    \[
+        \operatorname{sech} x = \frac{2}{e^x + e^{-x}} = \sum_{n=0}^{\infty} E_n \frac{x^n}{n!}.
+    \]
+    The odd-indexed Euler numbers are all zero. 
+    The even-indexed ones have alternating signs. Some values are:
+    \[
+        E_0 = 1, \quad E_2 = -1, \quad E_4 = 5, \quad E_6 = -61, \quad E_8 = 1385.
+    \]
+\end{definition}
+
+\begin{definition}{Bernoulli Numbers}
+    The Bernoulli numbers \(B_n\) are defined by the Taylor series expansion of the function \(\frac{x}{e^x - 1}\):
+    \[
+        \frac{x}{e^x - 1} = \sum_{n=0}^{\infty} B_n \frac{x^n}{n!}.
+    \]
+    Some values are:
+    \[
+        B_0 = 1, \quad B_2 = \frac{1}{6}, \quad B_4 = -\frac{1}{30}, \quad B_6 = \frac{1}{42}, \quad B_8 = -\frac{1}{30}.
+    \]
+    Notably, all odd-indexed Bernoulli numbers (except \(B_1 = -\frac{1}{2}\)) are zero.
+\end{definition}
+
+\begin{remark}
+    Euler and Bernoulli numbers are widely used in number theory, combinatorics, and numerical analysis.
+    For example, in the infinite series:
+    \[
+    \sum_{n=1}^{\infty}  \frac{1}{n^{2k}} = (-1)^{k-1} \frac{(2\pi)^{2k}}{2(2k)!} B_{2k},\quad k \in \mathbb{N}^{+},
+    \]
+    when \(k=1\), it gives the famous Basel problem result:
+    \[
+    \sum_{n=1}^{\infty}  \frac{1}{n^{2}} = \frac{\pi^2}{6}.
+    \]
+\end{remark}
+
+With the help of Bernoulli numbers, we have
+\[
+\tan x = \sum_{n=0}^{\infty} \frac{B_{2n}}{2n} \frac{x^{2n}}{(2n)!} = 
+x + \frac{x^3}{3} + \frac{2}{15}x^5 + \cdots.
+\]
+
+
+\section{Properties of Functions}
+\begin{leftbarTitle}{Monotonicity and Convexity}\end{leftbarTitle}
+\begin{definition}{Convex Function}
+    A function \(f\) is called \textbf{convex} on an interval \(I\) if for any \(x_1, x_2 \in I\) and 
+    \(t \in [0,1]\), the following inequality holds:
+    \[
+        f(t x_1 + (1-t)x_2) \leqslant t f(x_1) + (1-t)f(x_2).
+    \]
+    If the inequality is strict for \(x_1 \neq x_2\) and \(t \in (0,1)\), 
+    then \(f\) is called \textbf{strictly convex} on \(I\).
+
+    Conversely, if the inequality is reversed, then \(f\) is called \textbf{concave} or \textbf{concave down} on \(I\).
+\end{definition}
+A related concept is that of \textbf{inflection points}:
+a point on the graph of a function at which the concavity changes.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/ConvexFunction.png}
+\end{figure}
+
+\begin{theorem}
+    Mark above definition as Definition 1, give the following statements:
+    \begin{enumerate}
+        \setcounter{enumi}{1} % 设置计数器，从 2 开始
+        \item (\textbf{Jensen Definition}) A function \(f\) is called convex on an interval \(I\) 
+            if for any \(x_1, x_2 \in I\):
+            \[
+                f\left( \frac{x_1 + x_2}{2} \right) \leqslant \frac{f(x_1) + f(x_2)}{2}.
+            \]
+        \item A function \(f\) is called convex on an interval \(I\) 
+            if for any \(x_1, x_2, \cdots, x_n \in I\):
+            \[
+                f\left( \frac{x_1 + x_2 + \cdots + x_n}{n} \right) \leqslant \frac{f(x_1) + f(x_2) + \cdots + f(x_n)}{n}.
+            \]
+        \item A function \(f\) is called convex on an interval \(I\) 
+            if the tangent line at any point lies below the graph of the function.
+    \end{enumerate}
+    Then,
+    \begin{itemize}
+        \item Definitions 2 and 3 are equivalent. 
+        \item When \(f\) is continuous, Definition 1, 2, 3 is equivalent.
+        \item When \(f\) is differentiable, all four definitions are equivalent.
+    \end{itemize}
+\end{theorem}
+
+
+\begin{theorem}{Jensen Inequality}
+    If \(f\) is convex on an interval \(I\), 
+    then for any \(x_1, x_2, \cdots, x_n \in I\) and any \(t_1, t_2, \cdots, t_n > 0\) 
+    such that \(t_1 + t_2 + \cdots + t_n = 1\),
+    the following inequality holds:
+    \[
+        f(t_1 x_1 + t_2 x_2 + \cdots + t_n x_n) \leqslant t_1 f(x_1) + t_2 f(x_2) + \cdots + t_n f(x_n).
+    \]
+
+    Specially, when \(t_1 = t_2 = \cdots = t_n = \frac{1}{n}\), it reduces to Definition 3.
+\end{theorem}
+
+\vspace{0.7cm}
+Next, we present derivative-based criteria for monotonicity and convexity:
+\begin{theorem}
+    \begin{enumerate}
+        \item If \(f \in D(I)\), then \(f\) is increasing (decreasing) on \(I\) 
+            if and only if \(f'(x) \geq 0\) (\(f'(x) \leqslant 0\)) for all \(x \in I\). 
+        \item If \(f \in D^{(2)}(I)\), then \(f\) is convex (concave) on \(I\) 
+            if and only if \(f''(x) \geq 0\) (\(f''(x) \leqslant 0\)) for all \(x \in I\).
+    \end{enumerate}
+\end{theorem}
+
+\begin{note}
+    If \(f'(x) > 0\) (\(f''(x) > 0\)) for all \(x \in I\), then \(f\) is strictly increasing (convex) on \(I\).
+    Even though the condition weakens to holding except at finitely many points,
+    the conclusion of strict monotonicity (convexity) still holds.
+    For example, \(f(x) = x^3\) is strictly increasing on \(\mathbb{R}\)
+    despite \(f'(0) = 0\).
+\end{note}
+
+
+
+\begin{leftbarTitle}{Argmax and Argmin}\end{leftbarTitle}
+
+\begin{definition}{Stationary Point}
+    Stationary points are points where the first derivative of a function is \underline{zero or non-existent}.
+\end{definition}
+Stationary points can be classified into three types:
+\begin{description}
+    \item[Argmax and argmin points] Points where the function attains its maximum or minimum values.
+    \item[Inflection points] Points where the function changes concavity.
+    \item[Trivial points] Points that are neither local maxima nor local minima.
+\end{description}
+
+
+\begin{leftbarTitle}{Asymptote}\end{leftbarTitle}
+
+
+
+
+
+
+
+\section{Applications}
+
+

@@ -1,0 +1,568 @@
+\chapter{Inner Product Spaces} % 内积空间
+\section{Bilinear Forms}
+\begin{definition}{Bilinear Form}
+    Let \( V \) be a linear space over field \( F \).
+    A function \( f: V \times V \to F \) is called a \textbf{bilinear form} on \( V \) if:
+    \begin{enumerate}
+        \item For any fixed \( \beta \in V \), the function \( f(\cdot, \beta): V \to F \) defined by
+            \( f(\alpha, \beta) \) is a linear function on \( V \);
+        \item For any fixed \( \alpha \in V \), the function \( f(\alpha, \cdot): V \to F \) defined by
+            \( f(\alpha, \beta) \) is a linear function on \( V \).
+    \end{enumerate}
+    
+\end{definition}
+
+\section{Real Inner Product Spaces}
+\begin{definition}{Real Inner Product Space}
+    A \textbf{real inner product space} is a real linear space \( V \) 
+    equipped with a function \( (\cdot, \cdot): V \times V \to \mathbb{R} \) 
+    satisfying the following properties:
+    \begin{description}
+        \item [Positivity] \( (\alpha, \alpha) \geq 0, \quad \forall \alpha \in V\),
+            and \( (\alpha, \alpha) = 0 \) if and only if \( \alpha = 0 \);
+        \item [Symmetry] \( (\alpha, \beta) = (\beta, \alpha), \quad \forall \alpha, \beta \in V\);
+        \item [Linearity in the First Argument] 
+            \( (k_1\alpha_1 + k_2\alpha_2, \beta) = k_1(\alpha_1, \beta) + k_2(\alpha_2, \beta), 
+            \quad \forall k_1, k_2 \in \mathbb{R}, 
+            \alpha_1, \alpha_2, \beta \in V. \)
+    \end{description}
+    The function \( (\cdot, \cdot) \) is called the (real) \textbf{inner product}\footnote{
+        The inner product can be also defined as a positive-definite bilinear form.
+    } on \( V \).
+
+    Real inner product spaces with finite dimensions are called \textbf{Euclidean spaces}. 
+\end{definition}
+
+
+\begin{definition}{Normed Linear Space}
+    A real \textbf{normed linear space} is a real linear space \( V \) 
+    equipped with a function \( \| \cdot \|: V \to \mathbb{R} \) 
+    satisfying the following properties\footnote{
+        Similarly, the definition of norm can be given in complex linear spaces.
+    }:
+    \begin{description}
+        \item [Positivity] \( \| \alpha \| \geq 0, \quad \forall \alpha \in V\),
+            and \( \| \alpha \| = 0 \) if and only if \( \alpha = 0 \);
+        \item [Homogeneity] \( \| k\alpha \| = |k| \|\alpha\|, 
+            \quad \forall k \in \mathbb{R}, \alpha \in V; \)
+        \item [Triangle Inequality] \( \| \alpha + \beta \| \leq \|\alpha\| + \|\beta\|, 
+            \quad \forall \alpha, \beta \in V. \)
+    \end{description}
+    The function \( \| \cdot \| \) is called the (vector) \textbf{norm}\footnote{
+        If replace positivity with semi-positivity in the above definition,
+        i.e., \( \| \alpha \| \geq 0, \quad \forall \alpha \in V\),
+        then we get the definition of \textbf{semi-norm}.
+    } on \( V \).
+\end{definition}
+
+In Euclidean spaces, the norm can be induced by the inner product:
+\[
+\| \alpha \| = (\alpha, \alpha)^{\frac{1}{2}}, \quad \forall \alpha \in V,
+\]
+which is called the \textbf{Euclidean norm}.
+
+\begin{remark}
+    The definition of Euclidean space can be also derived from normed linear space
+    or metric space.
+\end{remark}
+\vspace{0.7cm}
+\begin{theorem}{Cauchy-Буняко́вский-Schwarz Inequality}
+    Let \( V \) be an inner product space\footnote{
+        It \underline{does not} require in real inner product spaces.
+    }.
+    For any vectors \( \alpha, \beta \in V \), the following inequality holds:
+    \[
+    |(\alpha, \beta)| \leq \|\alpha\| \|\beta\|,
+    \]
+    with equality if and only if \( \alpha \) and \( \beta \) are linearly dependent.
+\end{theorem}
+
+\begin{note}
+    \begin{enumerate}
+        \item In linear space \(\mathbb{R}^{n}\), for vectors \( \alpha, \beta \in \mathbb{R}^{n} \), 
+            define the inner product as:
+            \[
+            (\alpha, \beta) = \alpha^{\mathrm{T}} \beta = \sum_{i=1}^{n} x_{i} y_{i},
+            \]
+            then \(\mathbb{R}^{n}\) forms a Euclidean space, called the \textbf{standard Euclidean space}.
+            We still denote it as \(\mathbb{R}^{n}\) without confusion.
+
+            In this case, Cauchy-Буняко́вский-Schwarz inequality becomes:
+            \[
+            \left| \sum_{i=1}^{n} x_{i} y_{i} \right| \leqslant
+            \left( \sum_{i=1}^{n} x_{i}^{2} \right)^{\frac{1}{2}}
+            \left( \sum_{i=1}^{n} y_{i}^{2} \right)^{\frac{1}{2}}.
+            \]
+
+        \item In \(C[a, b]\), which is the linear space of continuous real-valued functions on interval \([a, b]\),
+            for functions \( f(x), g(x) \in C[a, b] \),
+            define the inner product as:
+            \[
+            (f, g) = \int_{a}^{b} f(x) g(x) \, \mathrm{d}x,
+            \]
+            then \(C[a, b]\) forms a Euclidean space.
+
+            In this case, Cauchy-Буняко́вский-Schwarz inequality becomes:
+            \[
+            \left| \int_{a}^{b} f(x) g(x) \, \mathrm{d}x \right| \leqslant
+            \left( \int_{a}^{b} f^{2}(x) \, \mathrm{d}x \right)^{\frac{1}{2}}
+            \left( \int_{a}^{b} g^{2}(x) \, \mathrm{d}x \right)^{\frac{1}{2}}.
+            \]
+    \end{enumerate}
+\end{note}
+
+\vspace{0.7cm}
+Some concepts in real inner product spaces can be derived:
+\begin{description}
+    \item[Distance] The distance between two vectors \( \alpha, \beta \in V \) is defined as:
+    \[
+    d(\alpha, \beta) = \| \alpha - \beta \|
+    \]
+    \item[Angle] The angle \( \theta \) between two non-zero vectors \( \alpha, \beta \in V \) is defined using the inner product:
+    \[
+    \cos \theta = \frac{(\alpha, \beta)}{\|\alpha\| \|\beta\|}, 0 \leq \theta \leq \pi.
+    \]
+    \item[Orthogonality] Two vectors \( \alpha, \beta \in V \) are said to be orthogonal if:
+    \[
+    (\alpha, \beta) = 0,
+    \]
+    denoted as \( \alpha \perp \beta \).
+\end{description}
+
+\section{Metric Matrices and Orthonormal Bases} % 度量矩阵与标准正交基
+\begin{leftbarTitle}{Metric Matrices}\end{leftbarTitle}
+\begin{definition}{Gram Matrix}
+    Let \( V \) be a \(n\)-dimensional Euclidean space, 
+    and let \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \) be a basis of \( V \).
+    The matrix
+    \[
+    G = ((\varepsilon_i, \varepsilon_j))_{n \times n} =
+    \begin{pmatrix}
+        (\varepsilon_1, \varepsilon_1) & (\varepsilon_1, \varepsilon_2) & \cdots & (\varepsilon_1, \varepsilon_n) \\
+        (\varepsilon_2, \varepsilon_1) & (\varepsilon_2, \varepsilon_2) & \cdots & (\varepsilon_2, \varepsilon_n) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        (\varepsilon_n, \varepsilon_1) & (\varepsilon_n, \varepsilon_2) & \cdots & (\varepsilon_n, \varepsilon_n)
+    \end{pmatrix}
+    \]
+    is called the \textbf{Gram matrix} (or metric matrix) of the inner product on \( V \)
+    under the basis \( \{\varepsilon_1, \varepsilon_2, \dots, \varepsilon_n\} \).
+\end{definition}
+
+For all vectors
+\begin{gather*}
+    \alpha = x_{1}\varepsilon_{1}+x_{2}\varepsilon_{2}+\cdots+x_{n}\varepsilon_{n},  \\
+    \beta = y_{1}\varepsilon_{1}+y_{2}\varepsilon_{2}+\cdots+y_{n}\varepsilon_{n} \in V ,
+\end{gather*}
+since \(( \alpha, \beta)=\sum_{i=1}^{n} \sum_{j=1}^{n}  (\varepsilon_i, \varepsilon_j)x_{i}y_{j} \), 
+it can be expressed in matrix form as:
+\[
+( \alpha, \beta) = X^{\mathrm{T}} G Y, \quad
+X = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}, \quad
+Y = \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix}.
+\]
+
+\begin{property}
+    \begin{enumerate}
+        \item Gram matrix \( G \) is symmetric; 
+        \item \( G \) is positive semi-definite;
+        \item In \(V\), Gram matrices under different bases are congruent;
+        \item \(|G|\geqslant 0\), equality holds if and only if the basis is linearly dependent.
+    \end{enumerate}
+\end{property}
+
+\begin{leftbarTitle}{Orthonormal Bases}\end{leftbarTitle}
+\begin{definition}{Orthonormal Vector Set and Orthonormal Basis}
+    Let \( V \) be a \(n\)-dimensional real inner product space.
+    A set of non-zero vectors \( \{ \varepsilon_1, \varepsilon_2, \dots, \varepsilon_n \} \) in \( V \) 
+    is called an \textbf{orthonormal vector set} if they are pairwise orthogonal.
+
+    A orthonormal vector set with \( n \) vectors is called a \textbf{orthonormal basis} of \( V \).
+    Orthonormal basis made up of unit vectors is called a \textbf{orthonormal basis} of \( V \).
+\end{definition}
+
+\begin{property}
+    In \(n\)-dimensional Euclidean space, 
+    \begin{enumerate}
+        \item Orthonormal vector set is linearly independent;
+        \item A set of basis is orthonormal basis if and only if its Gram matrix is the identity matrix;
+        \item Standard orthonormal basis always exists.
+        \item Any orthonormal vector set can be extended to a orthonormal basis.
+    \end{enumerate}
+\end{property}
+In \(n\)-dimensional Euclidean space, let \( \{ \varepsilon_1, \varepsilon_2, \dots, \varepsilon_n \} \) 
+be a orthonormal basis, then
+\begin{itemize}
+    \item for all \(\alpha \in V:\alpha = \sum_{i=1}^{n} (\alpha, \varepsilon_i) \varepsilon_i\), 
+        which is called the \textbf{Fourier expansion} of vector \( \alpha \) under the basis;
+    \item if the coordinates of \(\alpha, \beta\) under this basis are
+        \[
+        X = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}, \quad
+        Y = \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{pmatrix},
+        \]
+        then
+        \[
+        (\alpha, \beta) = X^{\mathrm{T}} Y = \sum_{i=1}^{n} x_i y_i.
+        \]
+\end{itemize}
+
+\begin{definition}{Orthonormal Matrix}
+    A square matrix \( T \in \mathbb{R}^{n \times n} \) is called an \textbf{orthonormal matrix} if:
+    \[
+    T^{\mathrm{T}} T = T T^{\mathrm{T}} = E,
+    \]
+    where \( E \) is the identity matrix of order \( n \).
+\end{definition}
+Let \( V \) be a \(n\)-dimensional Euclidean space,
+\(\varepsilon_{1}, \varepsilon_{2},\cdots, \varepsilon_{n}\) and \(\eta_{1}, \eta_{2},\cdots, \eta_{n}\)
+be orthonormal bases of \( V \), and let \( T \) be the transition matrix between them,
+i.e., 
+\[
+(\eta_{1}, \eta_{2}, \cdots, \eta_{n}) = (\varepsilon_{1}, \varepsilon_{2}, \cdots, \varepsilon_{n}) T.
+\]
+Then 
+\begin{enumerate}
+    \item \(T\) is an orthonormal matrix; 
+    \item \(T\) is upper triangular matrix;
+\end{enumerate}
+
+\begin{theorem}
+    Let \(\varepsilon_{1}, \varepsilon_{2},\cdots, \varepsilon_{n}\) be a orthonormal basis of 
+    \(n\)-dimensional Euclidean space \( V \), and
+    \[
+    (\eta_{1}, \eta_{2}, \cdots, \eta_{n}) = (\varepsilon_{1}, \varepsilon_{2}, \cdots, \varepsilon_{n}) T.
+    \]
+    Then \( \eta_{1}, \eta_{2},\cdots, \eta_{n} \) is a orthonormal basis of \( V \)
+    if and only if \( T \) is an orthonormal matrix.
+\end{theorem}
+
+
+\begin{leftbarTitle}{Gram-Schmidt Process}\end{leftbarTitle}
+\begin{theorem}
+    For any basis \( \{ \varepsilon_1, \varepsilon_2, \dots, \varepsilon_n \} \) of \(n\)-dimensional Euclidean space \( V \),
+    there exists a orthonormal basis \( \{ \eta_1, \eta_2, \dots, \eta_n \} \) such that:
+    \[
+    \langle \varepsilon_1, \varepsilon_2, \dots, \varepsilon_k \rangle
+    = \langle \eta_1, \eta_2, \dots, \eta_k \rangle, \quad k = 1, 2, \dots, n.
+    \]
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+\vspace{0.7cm}
+\begin{example}
+    Let \(n\geqslant 2\), \(A\) is an \(n\)-order real symmetric matrix.
+    \(\alpha=(a_{1},a_{2},\ldots,a_{n})^{\mathrm{T}}, \beta=(b_{1},b_{2},\ldots,b_{n})^{\mathrm{T}}\),
+    which are two eigenvectors of \(A\) corresponding to different eigenvalues \(\lambda_{1}, \lambda_{2}\) respectively.
+    Let 
+    \[
+    B = \begin{pmatrix} 
+        a_{1}+b_{1} & a_{1}+b_{2} & \cdots & a_{1}+b_{n} \\
+        a_{2}+b_{1} & a_{2}+b_{2} & \cdots & a_{2}+b_{n} \\
+        \vdots & \vdots & \ddots & \vdots \\ 
+        a_{n}+b_{1} & a_{n}+b_{2} & \cdots & a_{n}+b_{n} 
+    \end{pmatrix},
+    \]
+    find all eigenvalues of matrix \(B\).
+\end{example}
+
+\begin{solution}
+    Let \(\xi_{1}=\frac{\alpha}{\|\alpha\|}, \xi_{2}=\frac{\beta}{\|\beta\|}\),
+    and \(S_{a}=\sum_{i=1}^{n}a_{i}, S_{b}=\sum_{i=1}^{n}b_{i}\).
+    \newline It is easy to see that \(\xi_{1}, \xi_{2}\) are orthonormal unit vectors.
+    \newline Extend \(\{\xi_{1}, \xi_{2}\}\) to an orthonormal basis \(\{\xi_{1}, \xi_{2}, \ldots, \xi_{n}\}\) of \(\mathbb{R}^{n}\).
+    \newline Let \(P=(\xi_{1}, \xi_{2}, \ldots, \xi_{n})\), then \(P\) is an orthonormal matrix.
+    \newline \(B\) can be expressed as: 
+    \[
+    B = \alpha e^{\mathrm{T}} + e \beta^{\mathrm{T}},
+    \]
+    where \(e=(1,1,\ldots,1)^{\mathrm{T}}\).
+    \newline Therefore,
+    \[
+    P^{-1}BP = P^{\mathrm{T}}BP = \begin{pmatrix} 
+        \xi_{1}^{\mathrm{T}} \\ \xi_{2}^{\mathrm{T}} \\ \vdots \\ \xi_{n}^{\mathrm{T}} 
+    \end{pmatrix} 
+    \begin{pmatrix} 
+        B \xi_{1} & B \xi_{2} & \cdots & B \xi_{n}
+    \end{pmatrix}.
+    \]
+    Since 
+    \[
+    B\xi_{1} = (\alpha e^{\mathrm{T}} + e \beta^{\mathrm{T}}) \frac{a_{1}}{\|\alpha\|} = 
+    \frac{\alpha(e^{\mathrm{T}}\alpha)}{\|\alpha\|} + \frac{e(\beta^{\mathrm{T}}\alpha)}{\|\alpha\|} =
+    \frac{S_{a}}{\|\alpha\|} \alpha + 0 = S_{a} \|\alpha\| \xi_{1},
+    \]
+    and similarly, \(B\xi_{2} = S_{b} \|\beta\| \xi_{2}\).
+    For \(k\geqslant 3\), we have
+    \[
+    B\xi_{k} = (\alpha e^{\mathrm{T}} + e \beta^{\mathrm{T}}) \xi_{k} = 
+    \alpha (e^{\mathrm{T}} \xi_{k}) + e (\beta^{\mathrm{T}} \xi_{k}) = 0 + 0 = 0.
+    \]
+    Then 
+    \[
+    P^{\mathrm{T}}BP = \begin{pmatrix} 
+        S_{a}  & 0 & 0 & \cdots & 0 \\
+        0 & S_{b} & 0 & \cdots & 0 \\
+        0 & 0 & 0 & \cdots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & 0 & \cdots & 0
+    \end{pmatrix}.
+    \]
+    Therefore, the eigenvalues of matrix \(B\) are:
+    \[
+    \lambda_{1} = S_{a}, \quad \lambda_{2} = S_{b}, \quad \lambda_{3} = 0, \quad \ldots, \quad \lambda_{n} = 0.
+    \]
+\end{solution}
+
+\section{Isomorphism of Real Inner Product Spaces}
+
+\section{Orthogonal Completion and Orthogonal Projection}
+\begin{leftbarTitle}{Orthogonal Completion}\end{leftbarTitle}
+\begin{definition}{Orthogonal Complement}
+    Let \( V \) be a real inner product space, and let \( W \) be a subspace of \( V \).
+    The set
+    \[
+    W^{\perp} = \{ \alpha \in V \mid (\alpha, \beta) = 0, \quad \forall \beta \in W \}
+    \]
+    is called the \textbf{orthogonal complement}\footnote{
+        Another equivalent definition is:
+        \[
+        W^{\perp} \perp W \text{ and } V = W + W^{\perp}.
+        \]
+    } of \( W \) in \( V \),
+    and \( W^{\perp} \) is also a subspace of \( V \), called the \textbf{orthogonal subspace} of \( W \) in \( V \).
+\end{definition}
+\begin{property}
+    \begin{enumerate}
+        \item There exists a unique orthogonal complement \( W^{\perp} \) of \( W \) in Euclidean space \( V \);
+        \item \(W \oplus W^{\perp} = V\);
+        \item \(\left( W^{\perp} \right)^{\perp} = W\)
+        \item \(\left( V_{1}+V_{2} \right)^{\perp} = V_{1}^{\perp} \cap V_{2}^{\perp}, \quad 
+            \left( V_{1} \cap V_{2} \right)^{\perp} = V_{1}^{\perp} + V_{2}^{\perp} \),
+            where \( V_{1}, V_{2} \) are subspaces of \( V \).
+    \end{enumerate}
+\end{property}
+
+
+\begin{leftbarTitle}{Least Squares Method}\end{leftbarTitle}
+\begin{definition}{Orthogonal Projection}
+    Let \( V \) be a real inner product space, 
+    and let \( W \) be a subspace of \( V \).
+    For any vector \( \alpha \in V \),
+    if there exists a vector \( \beta \in W \) such that:
+    \[
+    \alpha - \beta \in W^{\perp},
+    \]
+    then \( \beta \) is called the \textbf{orthogonal projection} of \( \alpha \) onto \( W \),
+    denoted as \( \beta = \operatorname{proj}_{W} \alpha \).
+\end{definition}
+
+% 最佳逼近元
+\begin{definition}{Best Approximation Element}
+    Let \( V \) be a real inner product space, 
+    and let \( W \) be a subspace of \( V \).
+    For any vector \( \alpha \in V \),
+    if there exists a vector \( \beta \in W \) such that:
+    \[
+    \| \alpha - \beta \| = \min_{\gamma \in W} \| \alpha - \gamma \|,
+    \]
+    then \( \beta \) is called the \textbf{best approximation element} of \( \alpha \) in \( W \).
+\end{definition}
+
+\begin{property}
+    In Euclidean space \( V \), let \( W \) be an \(n\)-dimensional subspace of \( V \).
+    Take an orthogonal basis \( \{ \varepsilon_1, \varepsilon_2, \dots, \varepsilon_n \} \) of \( W \).
+    \begin{enumerate}
+        \item For any vector \( \alpha \in V \),
+            the orthogonal projection of \( \alpha \) onto \( W \) exists and is unique,
+            and it is also the best approximation element of \( \alpha \) in \( W \);
+        \item The orthogonal projection of \( \alpha \) onto \( W \) can be expressed as:
+            \[
+            \operatorname{proj}_{W} \alpha = 
+            \sum_{i=1}^{n} \frac{(\alpha, \varepsilon_i)}{(\varepsilon_i, \varepsilon_i)} \varepsilon_i
+            =: \sum_{i=1}^{n} c_{i} \varepsilon_i.
+            \]
+        \item The remainder of the orthogonal projection satisfies:
+            \[
+            \| \alpha - \operatorname{proj}_{W} \alpha \|^{2} = \| \alpha \|^{2} - \| \operatorname{proj}_{W} \alpha \|^{2}
+            = \| \alpha \|^{2} - \sum_{i=1}^{n} c_{i}^{2} \|\varepsilon_i\|^{2} .
+            \]
+    \end{enumerate}
+\end{property}
+
+\section{Orthogonal Transformations and Symmetric Transformations}
+\begin{leftbarTitle}{Orthogonal Transformations}\end{leftbarTitle}
+\begin{leftbarTitle}{Symmetric Transformations}\end{leftbarTitle}
+\begin{definition}{Symmetric Transformation}
+    Let \( V \) be a real inner product space, 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    If
+    \[
+    (\mathcal{A}\alpha, \beta) = (\alpha, \mathcal{A}\beta), \quad \forall \alpha, \beta \in V,
+    \]
+    then \( \mathcal{A} \) is called a \textbf{symmetric transformation} on \( V \).
+\end{definition}
+Obviously, symmetric transformations are linear transformations.
+
+\begin{lemma}
+    \begin{enumerate}
+        \item If \( A \) is real symmetric matrix, then \( A \) has and only has \( n \) real eigenvalues (counting multiplicities). 
+        \item Let \(V\) be a \(n\)-dimensional Euclidean space, 
+            then any linear transformation \( \mathcal{A}: V \to V \) is symmetric if and only if
+            there exists a orthonormal basis of \( V \) such that 
+            the matrix representation of \( \mathcal{A} \) under this basis is a symmetric matrix.
+        \item If \( \mathcal{A} \) is a symmetric transformation on a real inner product space \( V \),
+            then if \(W\) is an invariant subspace of \( V \) under \( \mathcal{A} \),
+            then its orthogonal complement \( W^{\perp} \) is also an invariant subspace of \( V \) under \( \mathcal{A} \).
+        \item If \(A\) is a symmetric transformation on a Euclidean space \( V \),
+            then eigenvectors corresponding to distinct eigenvalues are definitely orthogonal.
+    \end{enumerate}
+\end{lemma}
+
+\begin{theorem}{Orthogonal Diagonalization of Symmetric Transformations}
+    Let \( V \) be a \( n \)-dimensional Euclidean space, 
+    and let \( \mathcal{A}: V \to V \) be a symmetric transformation on \( V \).
+    Then there exists a orthonormal basis of \( V \) such that 
+    the matrix representation of \( \mathcal{A} \) under this basis is a diagonal matrix.
+    
+    From the perspective of matrices,
+    let \( A \in \mathbb{R}^{n \times n} \) be a real symmetric matrix.
+    Then there exists an orthogonal matrix \( T \) such that:
+    \[
+    T^{-1} A T = T^{\mathrm{T}} A T = \Lambda = 
+        \begin{pmatrix}
+        \lambda_1 & 0 & \cdots & 0 \\
+        0 & \lambda_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \lambda_n
+        \end{pmatrix},
+    \]
+    where \( \lambda_1, \lambda_2, \dots, \lambda_n \) are the eigenvalues of \( A \).
+\end{theorem}
+
+\begin{note}
+    According to the theorem above,
+    for all real quadratic forms \( f(x_1, x_2, \dots, x_n) = X^{\mathrm{T}} A X \),
+    there exists an orthogonal transformation \( X = T Y \) such that:
+    \[
+    f(x_1, x_2, \dots, x_n) = Y^{\mathrm{T}} \Lambda Y = \sum_{i=1}^{n} \lambda_i y_i^2.
+    \]
+\end{note}
+
+\section{Unitary Spaces and Normal Transformations}
+\begin{leftbarTitle}{Unitary Spaces}\end{leftbarTitle}
+\begin{definition}{Complex Inner Product Space}
+    A \textbf{complex inner product space} is a complex linear space \( V \) 
+    equipped with a function \( (\cdot, \cdot): V \times V \to \mathbb{C} \) 
+    satisfying the following properties:
+    \begin{description}
+        \item [Positivity] \( (\alpha, \alpha) \geq 0, \quad \forall \alpha \in V\),
+            and \( (\alpha, \alpha) = 0 \) if and only if \( \alpha = 0 \);
+        \item [Conjugate Symmetry (Hermitian)] \( (\alpha, \beta) = \overline{(\beta, \alpha)}, \quad \forall \alpha, \beta \in V\);
+        \item [Linearity in the First Argument] 
+            \( (k_1\alpha_1 + k_2\alpha_2, \beta) = k_1(\alpha_1, \beta) + k_2(\alpha_2, \beta), 
+            \quad \forall k_1, k_2 \in \mathbb{C}, 
+            \alpha_1, \alpha_2, \beta \in V. \)
+    \end{description}
+    The function \( (\cdot, \cdot) \) is called the (complex) \textbf{inner product} on \( V \).
+
+    Complex inner product spaces with finite dimensions are called \textbf{unitary spaces}.
+\end{definition}
+The norm in unitary spaces can be also induced by the inner product:
+\[
+\| \alpha \| = (\alpha, \alpha)^{\frac{1}{2}}, \quad \forall \alpha \in V.
+\]
+
+
+
+
+\begin{leftbarTitle}{Normal Transformation and Diagonalization}\end{leftbarTitle}
+Define the conjugate transpose (Hermitian adjoint) of a complex matrix \( A \in \mathbb{C}^{m \times n} \) as:
+\[
+A^{\dagger} = \overline{A}^{\mathrm{T}}.
+\]
+Similarly, for a linear transformation \( \mathcal{A} \in \operatorname{Hom}(V) \) on a complex inner product space \( V \),
+the \textbf{adjoint transformation} \( \mathcal{A}^{\dagger} \) of \( \mathcal{A} \) is defined as: % 伴随变换
+\[
+(\mathcal{A}\alpha, \beta) = (\alpha, \mathcal{A}^{\dagger}\beta), \quad \forall \alpha, \beta \in V.
+\]
+
+\begin{definition}{Normal Transformation and Normal Matrix}
+    Let \( V \) be a complex inner product space, 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    If
+    \[
+    \mathcal{A} \mathcal{A}^{\dagger} = \mathcal{A}^{\dagger} \mathcal{A},
+    \]
+    then \( \mathcal{A} \) is called a \textbf{normal transformation} on \( V \).
+
+    A square matrix \( A \in \mathbb{C}^{n \times n} \) is called a \textbf{normal matrix} if:
+    \[
+    A A^{\dagger} = A^{\dagger} A.
+    \]
+\end{definition}
+
+
+\begin{theorem}
+    Let \(\mathcal{A}\) be a normal transformation on a unitary space \( V \).
+    Then there exists an orthonormal basis of \( V \) such that
+    the matrix representation of \( \mathcal{A} \) under this basis is a diagonal matrix.
+
+    From the perspective of matrices,
+    let \( A \in \mathbb{C}^{n \times n} \) be a normal matrix.
+    Then there exists a unitary matrix \( U \) such that:
+    \[
+    U^{-1} A U = U^{\dagger} A U = \Lambda = 
+        \begin{pmatrix}
+        \lambda_1 & 0 & \cdots & 0 \\
+        0 & \lambda_2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & \lambda_n
+        \end{pmatrix},
+    \]
+    where \( \lambda_1, \lambda_2, \dots, \lambda_n \) are the eigenvalues of \( A \).
+\end{theorem}
+
+\begin{leftbarTitle}{Special Normal Transformation}\end{leftbarTitle}
+\begin{definition}{Unitary Transformation and Unitary Matrix}
+    Let \( V \) be a complex inner product space, 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    If
+    \[
+    \mathcal{A}^{\dagger} = \mathcal{A}^{-1}, \quad \text{or} \quad
+    (\mathcal{A}\alpha, \mathcal{A}\beta) = (\alpha, \beta), \quad \forall \alpha, \beta \in V,
+    \]
+    then \( \mathcal{A} \) is called a \textbf{unitary transformation} on \( V \).
+
+    A square matrix \( A \in \mathbb{C}^{n \times n} \) is called a \textbf{unitary matrix} if:
+    \[
+    A^{\dagger} = A^{-1},\quad \text{or} \quad A A^{\dagger} = A^{\dagger} A = E.
+    \]
+\end{definition}
+Obviously, unitary transformations are generalizations of orthogonal transformations in real inner product spaces.
+
+
+\begin{definition}{Hermitian Transformation and Hermitian Matrix}
+    Let \( V \) be a complex inner product space, 
+    and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
+    If
+    \[
+    (\mathcal{A}\alpha, \beta) = (\alpha, \mathcal{A}\beta), \quad \forall \alpha, \beta \in V,
+    \]
+    then \( \mathcal{A} \) is called a \textbf{Hermitian transformation} on \( V \).
+
+    A square matrix \( A \in \mathbb{C}^{n \times n} \) is called a \textbf{Hermitian matrix} if:
+    \[
+    A^{\dagger} = A.
+    \]
+\end{definition}
+Obviously, Hermitian transformations are generalizations of symmetric transformations in real inner product spaces.
+
+
+
+
+
+
+
+\section{Symplectic Spaces}

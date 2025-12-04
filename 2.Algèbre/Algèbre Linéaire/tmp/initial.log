@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  10 NOV 2025 21:06
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  4 DEC 2025 22:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1441,9 +1441,9 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
 
 [3
 
-]
+] (./chapters/chap01.tex
 Chapter 1.
-
+) (./chapters/chap02.tex
 
 [1
 
@@ -1454,7 +1454,7 @@ Chapter 2.
 
 [2
 
-]
+]) (./chapters/chap03.tex
 
 [3]
 Chapter 3.
@@ -1466,13 +1466,13 @@ Chapter 3.
 
 [5]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 287.
+(Font)              scaled to size 6.0pt on input line 142.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
-(Font)              scaled to size 10.95pt on input line 290.
+(Font)              scaled to size 10.95pt on input line 145.
 
 
 LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
-(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 344.
+(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 199.
 
 
 
@@ -1480,18 +1480,18 @@ LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
 
 [7]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 440.
+(Font)              scaled to size 8.0pt on input line 295.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 440.
+(Font)              scaled to size 8.0pt on input line 295.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 442.
+(Font)              scaled to size 9.0pt on input line 297.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 442.
+(Font)              scaled to size 6.0pt on input line 297.
 
 
 [8]
 
-[9]
+[9]) (./chapters/chap04.tex
 
 [10]
 Chapter 4.
@@ -1501,7 +1501,7 @@ Chapter 4.
 
 ]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 742.
+(Font)              scaled to size 5.0pt on input line 148.
 
 
 [12]
@@ -1514,7 +1514,7 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
 
 [16]
 
-[17]
+[17]) (./chapters/chap05.tex
 
 [18]
 Chapter 5.
@@ -1522,7 +1522,7 @@ Chapter 5.
 
 [19
 
-]
+]) (./chapters/chap06.tex
 
 [20]
 Chapter 6.
@@ -1538,7 +1538,7 @@ Chapter 6.
 
 [24]
 
-[25]
+[25]) (./chapters/chap07.tex
 
 [26]
 Chapter 7.
@@ -1553,7 +1553,7 @@ Chapter 7.
 [29]
 
 [30]
-Underfull \hbox (badness 1178) in paragraph at lines 1913--1917
+Underfull \hbox (badness 1178) in paragraph at lines 276--280
 []\TU/GaramondPremrPro-Disp(0)/m/n/10.95 Let $\OML/cmm/m/it/10.95 W$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 be a nontrivial $\OMS/cmsy/m/n/10.95 A$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 -subspace, take a basis $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 "[]; "[]; [] ; "[]\OMS/cmsy/m/n/10.95 g$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 of $\OML/cmm/m/it/10.95 W$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 , and extend it to a basis
  []
 
@@ -1563,14 +1563,14 @@ Underfull \hbox (badness 1178) in paragraph at lines 1913--1917
 
 [32]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 9.0pt on input line 2078.
+(Font)              scaled to size 9.0pt on input line 441.
 
 
 [33]
 
 [34]
 
-[35]
+[35]) (./chapters/chap08.tex
 
 [36]
 Chapter 8.
@@ -1581,7 +1581,7 @@ Chapter 8.
 ]
 
 [38]
-Overfull \hbox (4.3104pt too wide) in paragraph at lines 2483--2492
+Overfull \hbox (4.3104pt too wide) in paragraph at lines 159--168
 \TU/Alegreya(0)/m/n/10.95 bination of $\OML/cmm/m/it/10.95 ^^X; \OMS/cmsy/m/n/10.95 A\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^X\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 ; [] ; \OMS/cmsy/m/n/10.95 A[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^X\OT1/cmr/m/n/10.95 )$\TU/Alegreya(0)/m/n/10.95 . Therefore, $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 ^^X; \OMS/cmsy/m/n/10.95 A\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^X\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 ; [] ; \OMS/cmsy/m/n/10.95 A[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 ^^X\OT1/cmr/m/n/10.95 )\OMS/cmsy/m/n/10.95 g$ \TU/Alegreya(0)/m/n/10.95 is a basis of $\OML/cmm/m/it/10.95 C\OT1/cmr/m/n/10.95 (\OMS/cmsy/m/n/10.95 A\OML/cmm/m/it/10.95 ; ^^X\OT1/cmr/m/n/10.95 )$ \TU/Alegreya(0)/m/n/10.95 and $[] \OML/cmm/m/it/10.95 C\OT1/cmr/m/n/10.95 (\OMS/cmsy/m/n/10.95 A\OML/cmm/m/it/10.95 ; ^^X\OT1/cmr/m/n/10.95 ) =
  []
 
@@ -1591,7 +1591,7 @@ Overfull \hbox (4.3104pt too wide) in paragraph at lines 2483--2492
 
 [40]
 
-[41]
+[41]) (./chapters/chap09.tex
 
 [42]
 Chapter 9.
@@ -1599,7 +1599,7 @@ Chapter 9.
 
 [43
 
-]
+]) (./chapters/chap10.tex
 
 [44]
 Chapter 10.
@@ -1613,7 +1613,7 @@ Missing character: There is no ́ (U+0301) in font Monotype Corsiva/OT:language=
 [46]
 
 [47]
-Underfull \hbox (badness 2753) in paragraph at lines 3019--3021
+Underfull \hbox (badness 2753) in paragraph at lines 241--243
 []\TU/GaramondPremrPro-Disp(0)/m/n/10.95 For any basis $\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/10.95 "[]; "[]; [] ; "[]\OMS/cmsy/m/n/10.95 g$ \TU/GaramondPremrPro-Disp(0)/m/n/10.95 of $\OML/cmm/m/it/10.95 n$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 -dimensional Euclidean space $\OML/cmm/m/it/10.95 V$\TU/GaramondPremrPro-Disp(0)/m/n/10.95 , there exists a orthonormal basis
  []
 
@@ -1625,7 +1625,7 @@ Underfull \hbox (badness 2753) in paragraph at lines 3019--3021
 
 [50]
 
-[51]
+[51])
 
 [52]
 
@@ -1649,10 +1649,10 @@ Package logreq Info: Writing requests to 'initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46249 strings out of 473831
- 960546 string characters out of 5733137
- 1999318 words of memory out of 5000000
- 68473 multiletter control sequences out of 15000+600000
+ 46311 strings out of 473831
+ 961839 string characters out of 5733137
+ 1999342 words of memory out of 5000000
+ 68504 multiletter control sequences out of 15000+600000
  569133 words of font info for 171 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s

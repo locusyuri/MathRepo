@@ -1,0 +1,448 @@
+\chapter{System of Linear Equations} % 线性方程组
+\begin{definition}{System of Linear Equations}
+    A system of linear equations is a collection of one or more linear equations involving the same set of variables. 
+    For example, a system of \( m \) linear equations in \( n \) variables can be written as:
+    \[
+    \begin{cases}
+    a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1 \\
+    a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = b_2 \\
+    \vdots \\
+    a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n = b_m
+    \end{cases}
+    \]
+    where \( x_1, x_2, \ldots, x_n \) are the variables, \( a_{ij} \) are the coefficients, and \( b_i \) are the constants.
+
+    A solution to the system is an ordered set of values for the variables that satisfies all equations simultaneously.
+    If two systems have the same solution set, they are called equivalent systems, 
+    whose relationship are equivalence.
+\end{definition}
+
+\section{Elimination Method}
+\section{Linear Space}
+\begin{definition}{Linear Space over Field \(F\)}
+    Let \( V \) be a non-empty set, and \( F \) be a field.
+    If the following two operations (binary mapping) are defined on \( V \):
+    \begin{description}
+        \item [Vector addition] For any \( \alpha, \beta \in V \), 
+            there exists \( \gamma \in V \) such that \( \gamma = \alpha + \beta \).
+        \item [Scalar multiplication] For any \( \alpha \in V \) and \( c \in F \), 
+            there exists \( \gamma \in V \) such that \( \gamma = c \cdot \alpha \).
+    \end{description}
+    and the following axioms are satisfied (for any \( \alpha, \beta, \gamma \in V \) and \( k, l \in F \)):
+    \begin{description}
+        \item [A1. Commutativity of Addition] \( \alpha + \beta = \beta + \alpha \).
+        \item [A2. Associativity of Addition] \( (\alpha + \beta) + \gamma = \alpha + (\beta + \gamma) \).
+        \item [A3. Existence of Additive Identity] There exists an element \( 0 \in V \) such that 
+            \( \alpha + 0 = 0 + \alpha = \alpha \).
+        \item [A4. Existence of Additive Inverse] There exists an element 
+            \( -\alpha \in V \) such that \( \alpha + (-\alpha) = (-\alpha) + \alpha = 0 \).
+        \item [M1. Compatibility of Scalar Multiplication with Field Multiplication] \( k(l\alpha) = (kl)\alpha\).
+        \item [M2. Identity Element of Scalar Multiplication] \( 1\cdot\alpha = \alpha\), where \( 1\) is the multiplicative identity in \( F\).
+        \item [D1. Distributivity of Scalar Multiplication with respect to Vector Addition] 
+            \( k(\alpha + \beta) = k\alpha + k\beta\).
+        \item [D2. Distributivity of Scalar Multiplication with respect to Field Addition] \( (k+l)\alpha = k\alpha + l\alpha\).
+    \end{description}
+    Then \( V \) is called a linear space (or vector space) over the field \( F \).
+\end{definition}
+
+\begin{remark}
+    In the definition of linear space, \textbf{A1. Commutativity of Addition} can be derived from the other axioms,
+    so it is not strictly necessary to include it as an axiom.
+\end{remark}
+
+\vspace{0.7cm}
+Give some examples of linear spaces:
+\begin{enumerate}
+    \item The ring of univariate polynomials \( P[x] \) over the number field \( P \), 
+        with the usual polynomial addition and scalar multiplication by elements from \( P \), 
+        forms a linear space over the number field \( P \). 
+        If we consider only polynomials of degree less than \( n \), along with the zero polynomial, 
+        this also forms a linear space over \( P \), denoted as \( P[x]_n \).
+        
+    \item The set of all positive real numbers \( \mathbb{R}^+ \), with addition and scalar multiplication defined as:
+        \[
+        a \oplus b = ab, \quad k \circ a = a^k,
+        \]
+        forms a linear space over the number field \( \mathbb{R} \).
+    
+    \item The set of all real-valued functions, 
+        under function addition and scalar multiplication by elements from \( \mathbb{R} \), 
+        forms a linear space over the field \( \mathbb{R} \).
+    
+    \item The field \( P \) itself, under its own addition and multiplication, forms a linear space over itself.
+    
+    \item The set of all \(n\)-dimensional vectors (ordered \( n \)-tuples of elements from \( P \))
+        over the number field \( P \),
+        with the usual vector addition and scalar multiplication, 
+        forms a linear space over the number field \( P \).
+\end{enumerate}
+
+\vspace{0.7cm}
+In this section, we primarily examine linear spaces consisting of n-dimensional vectors over the real number field \( \mathbb{R} \).
+As a matter of fact, all elements of a linear space can be called vectors,
+and the definitions and properties of vectors in \( \mathbb{R}^n \) can be generalized to any linear space.
+
+
+\begin{leftbarTitle}{Linear Independence}\end{leftbarTitle}
+\begin{definition}{Linear Combination}
+    Let \( V \) be a linear space over the field \( F \), 
+    and let \( \alpha_1, \alpha_2, \ldots, \alpha_n \in V \).
+    For any scalars \( k_1, k_2, \ldots, k_n \in F \), the vector
+    \[
+    \beta = k_1\alpha_1 + k_2\alpha_2 + \cdots + k_n\alpha_n
+    \]
+    is called a \textbf{linear combination} of the vectors \( \alpha_1, \alpha_2, \ldots, \alpha_n \)
+    (we also say that \( \beta \) is linearly expressed by \( \alpha_1, \alpha_2, \ldots, \alpha_n \)),
+    where \( k_i \) are called the coefficients of the linear combination.
+\end{definition}
+
+\begin{definition}{Linear Representation and Equivalence of Vector Groups}
+    If every vector \( \alpha_i \) (\( i = 1, 2, \dots, t \)) in the vector group 
+    \( \alpha_1, \alpha_2, \dots, \alpha_t \) can be linearly expressed by the vector group 
+    \( \beta_1, \beta_2, \dots, \beta_s \), then the vector group 
+    \( \alpha_1, \alpha_2, \dots, \alpha_t \) is said to be linearly expressed by the vector group 
+    \( \beta_1, \beta_2, \dots, \beta_s \).
+
+    If two vector groups can be linearly expressed by each other, 
+    they are said to be \textbf{equivalent}.
+\end{definition}
+
+
+
+\begin{remark}
+    Linear representation can be used to identify redundant equations in a system of linear equations. 
+    In a system of linear equations, if one equation can be linearly expressed by other equations, 
+    then through elementary transformations, the corresponding row in the matrix can be reduced to a row of zeros.
+
+    If two vector groups are equivalent, then their corresponding systems of linear equations are equivalent.
+\end{remark}
+
+\begin{definition}{Linear Dependence and Independence of Vector Groups}
+    A vector group \( \alpha_1, \alpha_2, \dots, \alpha_t (t \geq 2) \) is said to be \textbf{linearly dependent} 
+    if there exists a vector in the group that can be linearly expressed by the other vectors. 
+    
+    Another equivalent definition is:
+    A vector group \( \alpha_1, \alpha_2, \dots, \alpha_t (t \geq 1) \) is linearly dependent 
+    if there exist \underline{not all zero} scalars \( k_1, k_2, \dots, k_t \) in the field \( F \) such that:
+    \[
+    k_1 \alpha_1 + k_2 \alpha_2 + \dots + k_t \alpha_t = 0.
+    \]
+
+    Conversely, a vector group \( \alpha_1, \alpha_2, \dots, \alpha_t (t \geq 1) \) is \textbf{linearly independent} if:
+    the fact that
+    \[
+    k_1 \alpha_1 + k_2 \alpha_2 + \dots + k_t \alpha_t = 0
+    \]
+    implies:
+    \[
+    k_1 = k_2 = \dots = k_t = 0.
+    \]    
+\end{definition}
+
+\begin{note}
+    If a subset of a vector group is linearly dependent, then the entire vector group is linearly dependent.
+    If a vector group is linearly independent, then any non-empty subset of the group is also linearly independent.
+    (\textbf{Partial dependence implies overall dependence; overall independence implies partial independence.})
+    
+    Particularly, since two proportional vectors are linearly dependent, a linearly independent vector group cannot contain two proportional vectors.
+\end{note}
+
+A few propositions about linear dependence and independence are given below:
+\begin{proposition}\label{proposition:properties_of_linear_independence}
+\begin{enumerate}
+    \item Generally, for a vector group \( \alpha_i = (a_{i1}, a_{i2}, \dots, a_{in}), \, i = 1, 2, \dots, s \), 
+        the necessary and sufficient condition for linear dependence is that the equation:
+        \[
+        x_1 \alpha_1 + x_2 \alpha_2 + \dots + x_s \alpha_s = 0
+        \]
+        or the homogeneous system of linear equations:
+        \[
+        \begin{cases}
+        a_{11}x_1 + a_{21}x_2 + \dots + a_{s1}x_s = 0 \\
+        a_{12}x_1 + a_{22}x_2 + \dots + a_{s2}x_s = 0 \\
+        \vdots \\
+        a_{1n}x_1 + a_{2n}x_2 + \dots + a_{sn}x_s = 0
+        \end{cases}
+        \]
+        has a non-zero solution.
+
+    \item  If a vector group \( \alpha_i = (a_{i1}, a_{i2}, \dots, a_{in}), \, i = 1, 2, \dots, s \) 
+        is linearly independent, then adding one component to each vector to form an \( n+1 \)-dimensional 
+        vector group \( \beta_i = (a_{i1}, a_{i2}, \dots, a_{in}, a_{i,n+1}), \, i = 1, 2, \dots, s \), 
+        will also be linearly independent.
+
+    \item For two vector groups \( \alpha_1, \alpha_2, \dots, \alpha_r \) and \( \beta_1, \beta_2, \dots, \beta_s \),
+        if the former can be linearly expressed by the latter:
+        \begin{enumerate}[label=\roman*.]
+            \item if \( r > s \), then the former is linearly dependent.
+            \item if \( \alpha_1, \alpha_2, \dots, \alpha_r \) is linearly independent, then \( r \leqslant s \);
+                and there exists a subset of \( \beta_1, \beta_2, \dots, \beta_s \) (without loss of generality, 
+                assume it comprises the first \(r\) vectors, \( \beta_1, \beta_2, \dots, \beta_r \)),
+                it can be replaced by \( \alpha_1, \alpha_2, \dots, \alpha_r \) to form a new vector group
+                \( \alpha_1, \alpha_2, \dots, \alpha_r, \beta_{r+1}, \beta_{r+2}, \dots, \beta_s \),
+                which is equivalent to \( \beta_1, \beta_2, \dots, \beta_s \) (This is \textbf{the Steinitz replacement principle}).
+        \end{enumerate}
+
+    \item Any \( n+1 \) \( n \)-dimensional vectors must be linearly dependent.
+    
+    \item Two equivalent linearly independent vector groups must contain the same number of vectors.
+
+    \item Let vector group \( \alpha_1, \alpha_2, \dots, \alpha_r \) be linearly independent,     
+        and \(\beta\) be another vector.
+        Then, either \( \beta \) can be uniquely linearly expressed by \( \alpha_1, \alpha_2, \dots, \alpha_r \),
+        or the vector group \( \alpha_1, \alpha_2, \dots, \alpha_r, \beta \) is linearly independent.
+    \item If a vector \( \beta \) can be linearly expressed by a vector group \( \alpha_1, \alpha_2, \dots, \alpha_r \), 
+        then \( \alpha_1, \alpha_2, \dots, \alpha_r \) is linearly independent
+        if and only if the expression for \( \beta \) is unique.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+
+{\color{violet!80}\textbf{1.}}
+
+{\color{violet!80}\textbf{2.}}
+
+{\color{violet!80}\textbf{6.}} If \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r}, \beta \) is linearly independent, 
+then conclusion holds naturally. 
+\newline Now suppose \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r}, \beta \) is linearly dependent, 
+that is, there exist not all zero scalars \( k_{1}, k_{2}, \dots, k_{r}, k \) such that:
+\[
+k_{1}\alpha_{1} + k_{2}\alpha_{2} + \dots + k_{r}\alpha_{r} + k\beta = 0.
+\]
+If \( k = 0 \), then \( k_{1}\alpha_{1} + k_{2}\alpha_{2} + \dots + k_{r}\alpha_{r} = 0 \)
+(not all \( k_{i} \) are zero), which contradicts the linear independence of \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r} \).
+\newline Thus, \( k \neq 0 \), and we have:
+\[
+\beta = -\frac{k_{1}}{k}\alpha_{1} - \frac{k_{2}}{k}\alpha_{2} - \dots - \frac{k_{r}}{k}\alpha_{r}.
+\]
+The expression for \( \beta \) is obtained. 
+\newline Now, suppose there exists another expression:
+\[
+\beta = l_{1}\alpha_{1} + l_{2}\alpha_{2} + \dots + l_{r}\alpha_{r}.
+\]
+Subtracting the two expressions yields:
+\[
+\left( l_{1} + \frac{k_{1}}{k} \right)\alpha_{1} + \left( l_{2} + \frac{k_{2}}{k} \right)\alpha_{2} 
++ \dots + \left( l_{r} + \frac{k_{r}}{k} \right)\alpha_{r} = 0.
+\]
+Due to the linear independence of \( \alpha_{1}, \alpha_{2}, \dots, \alpha_{r} \), we have:
+\[
+l_{1} + \frac{k_{1}}{k} = 0, \quad l_{2} + \frac{k_{2}}{k} = 0, \quad \dots, \quad l_{r} + \frac{k_{r}}{k} = 0,
+\]
+which implies \( l_{i} = -\frac{k_{i}}{k} \) for \( i = 1, 2, \dots, r \).
+Thus, the expression for \( \beta \) is unique.
+\end{proof}
+
+
+\begin{leftbarTitle}{Dimension, Basis, and Coordinates}\end{leftbarTitle}
+\begin{definition}{Dimension}
+    If a linear space \( V \) over field \(F\) contains \(n\) vectors that are linearly independent,
+    but any more than \(n\) vectors are linearly dependent, 
+    then \( V \) is called an \( n \)-dimensional linear space,
+    noted as \( \dim V_{F} = n \), simplified as \( \dim V = n \) when the field is clear from context.
+
+    If a linear space does contain as many vectors that are linearly independent as you wish, 
+    it is called an infinite-dimensional linear space.
+\end{definition}
+
+\begin{definition}{Basis and Coordinates}
+    In an \( n \)-dimensional linear space \( V \), 
+    if \( \alpha_1, \alpha_2, \dots, \alpha_n \) are \( n \) linearly independent vectors in \( V \),
+    then they form a \textbf{basis} of \( V \).
+
+    Any vector \( \alpha \in V \) can be uniquely expressed as a linear combination of the basis vectors:
+    \[
+    \alpha = k_1\alpha_1 + k_2\alpha_2 + \dots + k_n\alpha_n,
+    \]
+    where \( k_1, k_2, \dots, k_n \in F \) are called the \textbf{coordinates} of \( \alpha \) with respect to the basis 
+    \( \alpha_1, \alpha_2, \dots, \alpha_n \).
+\end{definition}
+
+The definition leads to a theorem that is easy to see:
+If there are \( n \) linearly independent vectors in a linear space \( V \),
+and any vector in \( V \) can be expressed as a linear combination of these \( n \) vectors,
+then these \( n \) vectors form a basis of \( V \), and \( V \) is an \( n \)-dimensional linear space.
+
+
+\begin{leftbarTitle}{Linear Subspaces}\end{leftbarTitle}
+\begin{definition}{Linear Subspace}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( W \subseteq V \) be a non-empty subset of \( V \).
+    If \( W \) itself is a linear space under the same addition and scalar multiplication as in \( V \),
+    then \( W \) is called a \textbf{linear subspace} of \( V \).
+    
+    Zero Subspace and whole space \( V \) itself are called trivial subspaces of \( V \).
+\end{definition}
+
+It can be easily derived that:
+Let \(W\) be a non-empty subset of a linear space \(V\).
+Then \(W\) is a linear subspace of \(V\) if and only if:
+\begin{enumerate}
+    \item For any \( \alpha, \beta \in W \), \( \alpha + \beta \in W \).
+    \item For any \( \alpha \in W \) and \( k \in F \), \( k\alpha \in W \).
+\end{enumerate}
+
+% 张成的子空间
+\begin{definition}{Span of Vectors}
+    Let \( V \) be a linear space over field \( F \), 
+    and let \( \alpha_1, \alpha_2, \dots, \alpha_s \in V \).
+    The set of all linear combinations of \( \alpha_1, \alpha_2, \dots, \alpha_s \):
+    \[
+    W = \{ k_1\alpha_1 + k_2\alpha_2 + \dots + k_s\alpha_s \mid k_1, k_2, \dots, k_s \in F \}
+    \]
+    is called the \textbf{span} of the vectors \( \alpha_1, \alpha_2, \dots, \alpha_s \),
+    denoted as \( W = \mathrm{span}\{\alpha_1, \alpha_2, \dots, \alpha_s\} \) 
+    or simply \( W = \langle \alpha_1, \alpha_2, \dots, \alpha_s \rangle \)\footnote{
+        Sometimes the notation \( L(\alpha_1, \alpha_2, \dots, \alpha_s) \) is also used.
+    }.
+\end{definition}
+
+
+\section{Rank of Vector Groups and Matrices}
+\begin{leftbarTitle}{Maximal Linearly Independent Group and Rank of Vector Groups}\end{leftbarTitle}
+\begin{definition}{Maximal Linearly Independent Group}
+    A subset of a vector group is called a \textbf{maximal linearly independent group} if:
+    \begin{enumerate}
+        \item The subset itself is linearly independent.
+        \item Adding any vector (if available) from the vector group to this subset makes the new subset linearly dependent.
+    \end{enumerate}
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+    \item The maximal linearly independent group is not unique; 
+        any maximal linearly independent group is equivalent to the original vector group.
+    \item All maximal linearly independent groups of a vector group contain the same number of vectors.
+\end{enumerate}
+\end{property}
+
+\begin{definition}{Rank of Vector Groups}
+    The number of vectors contained in the maximal linearly independent group of a vector group 
+    is called the \textbf{rank} of the vector group.
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+    \item A vector group is linearly independent if and only if its rank is equal to the number of vectors it contains.
+
+    \item Equivalent vector groups have the same rank, but vector groups with the same rank are not necessarily equivalent.
+
+    \item If rank of a vector group is \( r \), 
+        then any \( r \) linearly independent vectors from the group form a maximal linearly independent group.
+
+    \item A vector group containing non-zero vectors always has a maximal linearly independent group, 
+        and any linearly independent subset of vectors can be expanded into a maximal linearly independent group.
+
+    \item If vector group (I) can be linearly expressed by vector group (II), then the rank of (I) does not exceed the rank of (II).
+\end{enumerate}
+\end{property}
+
+
+
+
+\begin{leftbarTitle}{Rank of Matrices}\end{leftbarTitle}
+\begin{definition}{Rank of Matrices}
+    The row rank of a matrix is defined as the rank of its row vectors;
+    the column rank of a matrix is defined as the rank of its column vectors. 
+    The rank of a matrix is defined as the highest order of its non-zero minors.
+\end{definition}
+
+\begin{theorem}
+    The row rank and column rank of any matrix are equal.
+\end{theorem}
+
+\begin{property}
+    \begin{enumerate}
+        \item Elementary row and column transformations do not change the rank of a matrix.
+        \item The rank of a matrix is equal to the number of non-zero rows in the row (column) echelon form of the matrix 
+            obtained by elementary row (column) operations.
+        \item Elementary row (column) operations do not alter the linear relationships among column (row) vectors.
+        \item For a square matrix \(\left( a_{ij} \right)_{n\times n} \), its row vectors (or column vectors) are 
+            linearly independent if and only if its determinant \( \det(a_{ij}) \neq 0 \).
+    \end{enumerate}
+\end{property}
+The third property gives a method to find the maximal linearly independent group of row (or column) vectors of a matrix,
+take the column vectors as an example:
+\begin{enumerate}
+    \item Transform the matrix into its row echelon form (REF) or reduced row echelon form (RREF) using elementary row operations.
+        For example, for a matrix \( \left( \alpha_{1}, \alpha_{2}, \alpha_{3}, \alpha_{4}, \alpha_{5} \right) \),
+        its REF is shown below:
+        \[
+        \begin{pmatrix}
+        a_{11} & a_{12} & 0 & 0 & 0 \\
+        0 & 0 & a_{23} & 0 & 0 \\
+        0 & 0 & 0 & 0 & a_{35} \\
+        \end{pmatrix}.
+        \]
+    \item Identify the leading 1s (pivots) in each row. The columns containing these pivots correspond to the maximal linearly independent group of row vectors.
+        In this example, \(\alpha_{1}, \alpha_{3}, \alpha_{5}\) form a maximal linearly independent group.
+\end{enumerate}
+
+
+\section{Solution to Linear Systems}
+\begin{leftbarTitle}{Necessary and Sufficient Conditions for the Existence of Solutions}\end{leftbarTitle}
+
+\begin{leftbarTitle}{The Structure of Solutions to Homogeneous Systems}\end{leftbarTitle}
+For a homogeneous system of linear equations, 
+it is evident that the linear combination of solutions is still a solution to the system. 
+Thus, the concept of a \textbf{fundamental system of solutions} is introduced.
+
+\begin{definition}{Fundamental System of Solutions}
+    The homogeneous system of linear equations:
+    \[
+    \begin{cases}
+    a_{11}x_{1} + a_{12}x_{2} + \dots + a_{1n}x_{n} = 0 \\
+    a_{21}x_{1} + a_{22}x_{2} + \dots + a_{2n}x_{n} = 0 \\
+    \vdots \\
+    a_{s1}x_{1} + a_{s2}x_{2} + \dots + a_{sn}x_{n} = 0
+    \end{cases}
+    \]
+    (or in matrix form \( AX = O \))
+    has a set of solutions \( \eta_{1}, \eta_{2}, \dots, \eta_{t} \), which is called a \textbf{fundamental system of solutions}, 
+    if:
+    \begin{enumerate}
+        \item Any solution of the system can be expressed as a linear combination of \( \eta_{1}, \eta_{2}, \dots, \eta_{t} \).
+        \item \( \eta_{1}, \eta_{2}, \dots, \eta_{t} \) are linearly independent\footnote{
+            ensuring there are no redundant solutions in the fundamental system of solutions
+        }.
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    This definition is similar to the maximal linearly independent group of a vector group. 
+    In fact, the fundamental solution set is a maximal linearly independent group of the solution vector group. 
+    Therefore, the number of solutions it contains equals its rank.
+\end{remark}
+
+
+\vspace{0.7cm}
+All solutions of a homogeneous system of linear equations (\( AX = O \)) form a linear space (solution space),
+whose basis is the fundamental system of solutions.
+Dimension of solution space is \( n - r(A) \) (where \( n \) is the number of variables, 
+and \( r(A) \) is the rank of the coefficient matrix \( A \)). 
+Thus, a fundamental system of solutions contains exactly \( n - r(A) \) solutions.
+    
+
+
+
+\begin{leftbarTitle}{The Structure of Solutions to Nonhomogeneous Linear Systems}\end{leftbarTitle}
+The homogeneous system of linear equations \( AX = O \) is called the \textbf{derived system} of 
+the nonhomogeneous system \( AX = B \).
+
+It can be easily proven that:
+\begin{itemize}
+    \item The difference between two solutions of \( AX = B \) is a solution of its derived system \( AX = 0 \).
+    \item The sum of a solution of \( AX = B \) and a solution of \( AX = 0 \) is still a solution of \( AX = B \).
+\end{itemize}
+
+\vspace{0.7cm}
+If \( \gamma_{0} \) is a particular solution of \( AX = B \), 
+then any solution \( \gamma \) of \( AX = B \) can be expressed as:
+\[
+\gamma = \gamma_{0} + \eta,
+\]
+where \( \eta \) is a solution of \( AX = 0 \).
+
+Thus, for any particular solution \( \gamma_{0} \) of \( AX = B \), 
+when \( \eta \) takes all the solutions of its derived system \( AX = 0 \), 
+the above formula provides all the solutions of \( AX = B \).

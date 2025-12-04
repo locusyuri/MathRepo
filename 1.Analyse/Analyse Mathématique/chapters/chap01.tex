@@ -1,0 +1,154 @@
+\chapter{Preliminaries} % 预备知识
+\section{Trigonometric Formulas} % 这里放置小节标题
+% Trigonometric identities and formulas (Academic English LaTeX)
+
+% Product-to-Sum (Product to Sum and Difference)
+\textbf{Product-to-Sum Formulas:}
+\begin{align*}
+\sin\alpha \cos\beta &= \frac{1}{2} \left[ \sin(\alpha + \beta) + \sin(\alpha - \beta) \right] \\
+\cos\alpha \sin\beta &= \frac{1}{2} \left[ \sin(\alpha + \beta) - \sin(\alpha - \beta) \right] \\
+\cos\alpha \cos\beta &= \frac{1}{2} \left[ \cos(\alpha + \beta) + \cos(\alpha - \beta) \right] \\
+\sin\alpha \sin\beta &= -\frac{1}{2} \left[ \cos(\alpha + \beta) - \cos(\alpha - \beta) \right]
+\end{align*}
+
+% Sum and Difference Formulas
+\textbf{Sum and Difference Formulas:}
+\begin{align*}
+\sin(\alpha + \beta) &= \sin\alpha \cos\beta + \cos\alpha \sin\beta \\
+\sin(\alpha - \beta) &= \sin\alpha \cos\beta - \cos\alpha \sin\beta \\
+\cos(\alpha + \beta) &= \cos\alpha \cos\beta - \sin\alpha \sin\beta \\
+\cos(\alpha - \beta) &= \cos\alpha \cos\beta + \sin\alpha \sin\beta
+\end{align*}
+
+% Sum-to-Product (Sum and Difference to Product)
+\textbf{Sum-to-Product Formulas:}
+\begin{align*}
+\sin\alpha + \sin\beta &= 2 \sin\left( \frac{\alpha + \beta}{2} \right) \cos\left( \frac{\alpha - \beta}{2} \right) \\
+\sin\alpha - \sin\beta &= 2 \sin\left( \frac{\alpha - \beta}{2} \right) \cos\left( \frac{\alpha + \beta}{2} \right) \\
+\cos\alpha + \cos\beta &= 2 \cos\left( \frac{\alpha + \beta}{2} \right) \cos\left( \frac{\alpha - \beta}{2} \right) \\
+\cos\alpha - \cos\beta &= -2 \sin\left( \frac{\alpha + \beta}{2} \right) \sin\left( \frac{\alpha - \beta}{2} \right)
+\end{align*}
+
+% Double Angle Formulas
+\textbf{Double Angle Formulas:}
+\begin{align*}
+\sin 2\alpha &= 2\sin\alpha \cos\alpha \\
+\cos 2\alpha &= \cos^2\alpha - \sin^2\alpha = 2\cos^2\alpha - 1 = 1 - 2\sin^2\alpha \\
+\tan 2\alpha &= \frac{2\tan\alpha}{1 - \tan^2\alpha}
+\end{align*}
+
+% Half Angle Formulas
+\textbf{Half Angle Formulas:}
+\begin{align*}
+\sin \frac{\alpha}{2} &= \pm \sqrt{ \frac{1 - \cos\alpha}{2} } \\
+\cos \frac{\alpha}{2} &= \pm \sqrt{ \frac{1 + \cos\alpha}{2} } \\
+\tan \frac{\alpha}{2} &= \frac{1 - \cos\alpha}{\sin\alpha} = \frac{\sin\alpha}{1 + \cos\alpha}
+\end{align*}
+
+% Power-Reducing Formulas
+\textbf{Power-Reducing Formulas:}
+\begin{align*}
+\sin^2\alpha &= \frac{1 - \cos 2\alpha}{2} \\
+\cos^2\alpha &= \frac{1 + \cos 2\alpha}{2}
+\end{align*}
+
+% Angle Decomposition Formulas
+\textbf{Angle Decomposition Formulas:}
+\begin{align*}
+\sin^2\alpha - \sin^2\beta &= \sin(\alpha + \beta) \sin(\alpha - \beta) \\
+\cos^2\alpha - \sin^2\beta &= \cos(\alpha + \beta) \cos(\alpha - \beta)
+\end{align*}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{img/triangle.png}
+\end{figure}
+
+% Geometric remarks
+\begin{remark}
+    \begin{itemize}
+        \item On the gray triangle, the sum of the squares of the two numbers above is equal to the square of the number below,
+            for instance, \(\tan^{2} x + 1 = \sec^{2}x\)
+        \item The three trigonometric functions in the clockwise direction have the following properties: 
+            $\tan x = \frac{\sin x}{\cos x}$, etc.
+    \end{itemize}
+\end{remark}
+
+\begin{theorem}{Weierstrass Substitution (All-Powerful Formula)}
+    Let \(t = \tan \frac{x}{2}\), then:
+    \begin{align*}
+        &\sin x = \frac{2t}{1+t^2}, \\
+        &\cos x = \frac{1-t^2}{1+t^2}, \\
+        &\mathrm{d}x = \frac{2}{1+t^2} \mathrm{d}t.
+    \end{align*}
+\end{theorem}
+
+
+\section{Common Inequalities}
+
+Some common inequalities:
+\begin{gather*}
+    \frac{x}{1+x} < \ln(1+x) < x, \quad x > 0; \\
+\end{gather*}
+
+
+\section{Factorial Power}
+\begin{definition}
+    Rising factorials and falling factorials can be expressed in multiple notations.
+
+    The Pochhammer symbol, introduced by Leo August Pochhammer, is one of the commonly used notations, 
+    represented as \( x^{(n)} \) or \( (x)_n \).
+
+    Ronald Graham, Donald Ervin Knuth, and Oren Patashnik introduced the symbols 
+    \( x^{\bar{n}} \) and \( x^{\underline{n}} \) in their book \textit{Concrete Mathematics}.
+
+    \paragraph{Definitions:}
+    \begin{itemize}
+        \item \textbf{Rising factorial:}
+        \[
+        x^{\bar{n}} = x(x+1)(x+2)\dots(x+n-1) = \frac{(x+n-1)!}{(x-1)!}.
+        \]
+        \item \textbf{Falling factorial:}
+        \[
+        x^{\underline{n}} = x(x-1)(x-2)\dots(x-n+1) = \frac{x!}{(x-n)!}.
+        \]
+    \end{itemize}
+
+    \paragraph{Relationships:}
+    \begin{itemize}
+        \item Relationship between rising and falling factorials:
+        \[
+        x^{\bar{n}} = (x+n-1)^{\underline{n}}.
+        \]
+        \item Relationship with factorial:
+        \[
+        1^{\bar{n}} = n^{\underline{n}} = n!.
+        \]
+    \end{itemize}
+\end{definition}
+
+\section{Combination}
+\begin{definition}{Combination}
+    The number of ways to choose \(k\) elements from a set of \(n\) distinct elements, 
+    denoted as \(\mathrm{C}_{n}^{k}\) or \(\binom{n}{k}\), is given by:
+    \[
+        \mathrm{C}_{n}^{k} = \binom{n}{k} = \frac{n!}{k!(n-k)!}.
+    \]
+\end{definition}
+
+\begin{property}
+    \begin{align*}
+        &\mathrm{C}_{n}^{k} = \frac{\mathrm{A}_{n}^{k}}{k!} = \frac{n!}{(n-k)!k!} \\
+        &\mathrm{C}_{n}^{k} = \mathrm{C}_{n}^{n-k} \\
+        &\mathrm{C}_{n}^{k} = \mathrm{C}_{n-1}^{k-1} + \mathrm{C}_{n-1}^{k}
+    \end{align*}
+\end{property}
+
+\begin{remark}
+    The third property can be understood that to choose \(k\) elements from \(n+1\), 
+    you can first take one element \(A\): 
+    \begin{enumerate}
+        \item  The number of ways that include \(A\) is \(\mathrm{C}_{n}^{k-1}\); 
+        \item  The number of ways that do not include \(A\) is \(\mathrm{C}_{n}^{k}\).
+    \end{enumerate}
+\end{remark}

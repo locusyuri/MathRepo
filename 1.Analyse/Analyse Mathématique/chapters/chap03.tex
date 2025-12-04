@@ -1,0 +1,74 @@
+\chapter{Limits and Continuity of Functions} % 函数的极限与连续性
+\section{Limits of Functions}
+\begin{leftbarTitle}{Definition of Limit}\end{leftbarTitle}
+
+\begin{leftbarTitle}{Limits of Functions and Sequences}\end{leftbarTitle}
+\begin{theorem}{Heine Theorem}\label{thm:Heine Theorem}
+    Let \(f\) be a function defined on a deleted neighborhood \(\mathring{U}(x_{0})\) of \(x_{0}\).
+    The following two statements are equivalent:
+    \begin{enumerate}
+        \item \(\lim_{x \to x_{0}} f(x) = A\).
+        \item For any sequence \(\{x_n\}\subset \mathring{U}(x_{0})\) with \(\lim_{n \to \infty} x_n = x_0\),
+            we have \(\lim_{n \to \infty} f(x_n) = A\) for the sequence \(\{f(x_n)\}\).
+    \end{enumerate}
+\end{theorem}
+
+\section{Continuous Functions}
+
+\section{Infinitesimal and Infinite Quantities}
+
+\section{Continuous Functions on Closed Intervals}
+\begin{leftbarTitle}{Concerning Theorems}\end{leftbarTitle}
+
+
+\begin{theorem}{The Bolzano-Cauchy Intermediate-Value Theorem}\label{thm:Indeterminate Value Theorem}
+
+\end{theorem}
+
+\begin{theorem}{Zero Point Existence Theorem}\label{thm:Zero Point Existence Theorem}
+
+\end{theorem}
+
+\begin{leftbarTitle}{Uniform Continuity and Lipschitz Continuity}\end{leftbarTitle}
+
+\begin{definition}{Uniform Continuity}
+    
+\end{definition}
+
+\begin{theorem}{Uniform Continuity Theorem}
+    
+\end{theorem}
+
+
+\begin{theorem}{Cantor's Theorem}
+    
+\end{theorem}
+
+
+\begin{definition}{Lipschitz Continuity}\label{def:Lipschitz Continuity}
+    If there exists a constant \(L > 0\) such that for any \(x_1, x_2 \in I\), 
+    \[
+        \left| f(x_{1}) - f(x_{2}) \right| \leqslant L \left| x_{1} - x_{2} \right|,
+    \]
+    then \(f\) is called \textbf{Lipschitz continuous} on \(I\).
+
+    Specially, if \(L < 1\), then \(f\) is called a \textbf{contraction mapping} on \(I\).
+\end{definition}
+
+\begin{remark}
+    \begin{itemize}
+        \item If \(f\) is Lipschitz continuous on \(I\), then \(f\) is uniformly continuous on \(I\).
+            (\(\forall \varepsilon > 0\), just let \(\delta = \frac{\varepsilon}{L}\))
+        \item If \(f\) is uniformly continuous on \(I\), then \(f\) is continuous on \(I\).
+        \item The converse of the above two statements does not hold.
+    \end{itemize}
+\end{remark}
+
+
+
+
+\section{Period Three Implies Chaos}
+
+
+
+\section{Functional Equations}
