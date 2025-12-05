@@ -1,1 +1,131 @@
 \chapter{Cesàro Summation} % Cesàro 求和法
+\section{Cesàro Summation and Fejér Kernel} % Cesàro 求和与 Fejér 核
+Until now, when we discuss the convergence of series \(\sum_{n=1}^{\infty}a_{n} \), 
+the convergence of partial sums \( S_{N} = \sum_{n=1}^{N} a_{n} \) as \( N \to \infty \) is considered de facto.
+The definition is put forward by Cauchy in 1821.
+However, there are other ways to define the convergence of series.
+Here we introduce Cesàro summation, which is a method to assign sums to some divergent series\footnote{
+    By Cauchy proposition (see \emph{Analyse Mathématique - Section 2.1: Convergent Sequences}),
+    if \(\lim_{n \to \infty} x_n = l\), then \(\lim_{n \to \infty} \frac{x_{1}+x_{2}+ \cdots +x_{n}}{n} = l\).
+    That is, the Cesàro sum of a convergent series is equal to its Cauchy sum.
+}.
+\begin{definition}{Cesàro Summation}
+    A series \( \sum_{n=1}^{\infty} a_{n} \) is said to be Cesàro summable to \( S \) 
+    if the arithmetical average \(\sigma_{k}\) of its partial sums converges to \( S \), i.e.,
+    \[
+    \lim_{k \to \infty} \sigma_{k} = S,
+    \]
+    where
+    \[
+    \sigma_{k} = \frac{S_{1} + S_{2} + \cdots + S_{k}}{k}.
+    \]
+\end{definition}
+
+Due to 
+\[
+S_{N}(f; x) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x - t) D_{N}(t) \, \mathrm{d}t,
+\]
+then
+\begin{align*}
+    \sigma_{N}(f; x) &= \frac{1}{N} \sum_{k=0}^{N-1} S_{k}(f; x) \\
+    &= \frac{1}{N} \sum_{k=0}^{N-1} \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x - t) D_{k}(t) \, \mathrm{d}t \\
+    &= \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x - t) \left( \frac{1}{N} \sum_{k=0}^{N-1} D_{k}(t) \right) \mathrm{d}t \\
+    &= \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x - t) F_{N}(t) \, \mathrm{d}t,
+\end{align*}
+where 
+\[
+F_{N}(t) = \frac{1}{N} \sum_{k=0}^{N-1} D_{k}(t) = \frac{1}{N} \left( \frac{\sin \frac{N t}{2}}{\sin \frac{t}{2}} \right)^{2},
+\]
+is called the \textbf{Fejér kernel}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/Fejér_kernels.png}
+    \caption{Fejér kernels \( F_{N}(t) \) for \( N = 2, 4, 6, 8, 10 \).}
+    \label{fig:Fejér kernels}
+\end{figure}
+Fejér kernel has the following excellent properties:
+\begin{property}
+    \begin{description}
+        \item[Positivity] For any integer \( N \) and real number \( t \), \( F_{N}(t) \geqslant  0 \).
+            This property significantly distinguishes Fejér kernel from Dirichlet kernel.
+        \item[Normalization] For any integer \( N \),
+        \[
+            \frac{1}{2\pi} \int_{-\pi}^{\pi} F_{N}(t) \, \mathrm{d}t = 1.
+        \]
+        \item[Concentration] For any \( \delta \in (0, \pi) \),
+        \[
+            \lim_{N \to \infty} \int_{\delta}^{\pi} F_{N}(t) \, \mathrm{d}t = 0.
+        \]
+        \item[Bounded] Its \(L^{1}\) norm is bounded:
+        \[
+        \frac{1}{2\pi} \int_{-\pi}^{\pi} \left| F_{N}(t) \right| \, \mathrm{d}t = 1.
+        \]
+        Distinct from Dirichlet kernel, whose \(L^{1}\) norm grows logarithmically with \(N\):
+        \[
+        \frac{1}{2\pi} \int_{-\pi}^{\pi} \left| D_{N}(t) \right| \, \mathrm{d}t \sim \frac{4}{\pi^{2}} \log N.
+        \]
+    \end{description}
+\end{property}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{cll}
+\toprule
+\textbf{Property}       & \textbf{Dirichlet Kernel ($D_N$)}                & \textbf{Fejér Kernel ($K_N$)}        \\ 
+\toprule
+Corresponding operation & Partial sum $S_N$ (truncation)                  & Cesàro sum $\sigma_N$ (averaging)                      \\ 
+\hline
+Formula feature         & $\frac{\sin\left((N+\frac{1}{2})x\right)}{2\sin\left(\frac{x}{2}\right)}$ (1st-order) 
+& $\frac{1}{N}\left(\frac{\sin\left(\frac{(N+1)x}{2}\right)}{\sin\left(\frac{x}{2}\right)}\right)^2$ (square) \\ 
+\hline
+Positivity             & Violent oscillations (positive \& negative)     & Non-negative everywhere ($\geqslant  0$)                      \\ 
+\hline
+$L^1$ Norm              & $\ln N \to \infty$ (divergent)                  & $= 1$ (bounded)                                       \\ 
+\hline
+If \(f\in C\)    & May diverge            & Uniform convergence          \\ 
+\hline
+Role                    & Projection operator                             & Approximation operator                                \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% 有着这样一个"好核", 我们能发展出以下定理:
+With such a "good kernel", we can develop the following theorem:
+\begin{theorem}{Fejér Theorem}
+    If \( f(x) \) is a continuous function defined on \(\mathbb{T}\),
+    then its Cesàro means \( \sigma_{N}(f; x) \) converge uniformly to \( f(x) \) on \(\mathbb{T}\), i.e.,
+    \[
+        \lim_{N \to \infty} \sup_{x \in \mathbb{T}} \left| \sigma_{N}(f; x) - f(x) \right| = 0.
+    \]
+
+    The generalized version is:
+    if \(f(x)\in \mathcal{R}[-\pi, \pi]\), and \(f\) has left and right limits at point \(x_{0}\in [-\pi, \pi]\),
+    then its Cesàro means \(\sigma_{N}(f; x_{0})\) converge to the average of the left and right limits, i.e.,
+    \[
+        \lim_{N \to \infty} \sigma_{N}(f; x_{0}) = \frac{f(x_{0}^{+}) + f(x_{0}^{-})}{2}.
+    \]
+\end{theorem}
+
+\begin{remark}
+    It means that as long as \(f\) is integrable or absolutely integrable,
+    and has left and right limits at point \(x_{0}\),
+    then its Fourier series converges in Cesàro sense at \(x_{0}\).
+
+    Compared with various convergence tests of Fourier series in previous chapter,
+    Fejér theorem is brief and to the point.
+\end{remark}
+
+With Fejér theorem, we can obtain that 
+the trigonometric polynomials are dense in the continuous function space $C(\mathbb{T})$.
+and the Weierstrass second approximation theorem\footnote{
+    The Weierstrass second approximation theorem states that
+    any continuous function defined on a closed interval can be uniformly approximated
+    by polynomials to any desired degree of accuracy.
+    Refer to \emph{Analyse Mathématique - Section 10.3: Smooth Appropriation of Functions} for details.
+}
+can be proved easily.
+
+
+\section{Equidistribution} % 等分布问题

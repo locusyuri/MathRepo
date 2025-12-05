@@ -134,13 +134,17 @@ D_{N}(x)=\sum_{n=-N}^{N} e^{inx} = \sum_{n=1}^{N} 2\cos(nx) + 1 =
 is called the \textbf{Dirichlet kernel}.
 
 Dirichlet kernel possesses the following important properties:
-\begin{description}
-    \item[Evenness] \( D_{N}(-x) = D_{N}(x) \).
-    \item[Normalization] 
-    \[
-    \frac{1}{2\pi} \int_{-\pi}^{\pi} D_{N}(x) \, \mathrm{d}x = 1.
-    \]
-\end{description}
+
+\begin{property}
+    \begin{description}
+        \item[Evenness] \[ D_{N}(-x) = D_{N}(x). \]
+        \item[Normalization] 
+            \[
+            \frac{1}{2\pi} \int_{-\pi}^{\pi} D_{N}(x) \, \mathrm{d}x = 1.
+            \]
+    \end{description}
+\end{property}
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{img/Dirichlet_kernels.png}
@@ -233,7 +237,7 @@ and we have the following general conclusion:
 
 \begin{leftbarTitle}{Localization Theorem}\end{leftbarTitle}
 First, we need the following important lemma:
-\begin{lemma}{Riemann-Lebesgue Lemma}
+\begin{lemma}{Riemann-Lebesgue Lemma}\label{lem:Riemann-Lebesgue}
     Let \( f(x) \in R[a, b] \), \( g(x) \) has a period \( T \) and \( g(x) \in R[0, T] \),
     then:
     \[
@@ -359,4 +363,205 @@ In this section, we will discuss several important convergence tests from coarse
     \end{description}
 \end{theorem}
 
-\section{Analytical properties of Fourier series} % Fourier 级数的分析性质
+
+
+\begin{leftbarTitle}{Gibbs Phenomenon}\end{leftbarTitle} % 吉布斯现象
+When a function \( f(x) \) has jump discontinuities,
+its Fourier series converges to the midpoint of the jump at the discontinuity point.
+However, near the discontinuity, the Fourier series exhibits oscillations that overshoot and undershoot
+the function's actual values.
+This phenomenon is known as the \textbf{Gibbs phenomenon}.
+
+For example, for a square wave function \(f(x)\) with period \( 2\pi \):
+\[
+f(x) = \begin{cases}
+    -1, & x \in [-\pi, 0) \\
+    1, & x \in (0, \pi],
+\end{cases} \qquad
+f(x) \sim \frac{4}{\pi} \sum_{n=0}^{+\infty} \frac{\sin((2n+1)x)}{2n+1}.
+\]
+Using Dirichlet-Jordan test, \(f(x)\in BV\),
+then we can show that the Fourier series of \(f(x)\) converges to:
+\[
+\begin{cases}
+    f(x), & x \text{ is continuous} \\
+    \frac{f(x+) + f(x-)}{2}, & x \text{ is discontinuous}.
+\end{cases}
+\]
+Regarding the partial sum of the \(N\)-term Fourier series \(S_{N}(f; x)\),
+it will exhibit significant overshoot near the discontinuity points (Fig.~\ref{fig:gibbs}). 
+Even if more sine terms are used, this approximation error will only converge to a limit of 
+approximately \(9\%\) of the jump height, 
+although the infinite Fourier series will eventually converge almost everywhere.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{img/Gibbs.png}
+    \caption{Gibbs phenomenon of square wave near a jump discontinuity.}
+    \label{fig:gibbs}
+\end{figure}
+
+% 这个现象在信号处理中是一个重要的考虑因素，因为它会导致高频噪声和振铃效应。
+This phenomenon is an important consideration in signal processing,
+as it can cause high-frequency noise and ringing effects.
+
+\section{Properties of Fourier series} % Fourier 级数的性质
+By Riemann-Lebesgue lemma (\ref{lem:Riemann-Lebesgue}), 
+we have the following important conclusion of Fourier coefficients directly:
+\begin{proposition}
+    Let \( f(x) \in \mathcal{R}[-\pi, \pi] \),
+    then its Fourier coefficients satisfy:
+    \[
+    \lim_{|n| \to +\infty} \hat{f}(n) = 0.
+    \]
+
+    In real form, it is equivalent to:
+    \[
+    \lim_{n \to +\infty} a_n = 0, \quad \lim_{n \to +\infty} b_n = 0.
+    \]
+\end{proposition}
+And we give a theoretical property, used as a fallback option.
+\begin{theorem}{Uniqueness Theorem}
+    If \( f(x), g(x) \in \mathcal{R}[-\pi, \pi] \) have the same Fourier coefficients,
+    i.e., \( \hat{f}(n) = \hat{g}(n) \) for all \( n \in \mathbb{Z} \),
+    then \( f(x) = g(x) \) almost everywhere on \([- \pi, \pi]\).
+\end{theorem}
+
+\begin{leftbarTitle}{Analytical Properties}\end{leftbarTitle} % 分析性质
+\begin{theorem}{Termwise Integration}
+    If \( f(x) \in \mathcal{R}[-\pi, \pi] \) with Fourier series:
+    \[
+    f(x) \sim \frac{a_0}{2} + \sum_{n=1}^{+\infty} \left[ a_n \cos(nx) + b_n \sin(nx) \right],
+    \]
+    then its integral also has a Fourier series obtained by termwise integration:
+    \[
+    \int_{c}^{x} f(t) \, \mathrm{d}t = \int_{c}^{x} \frac{a_0}{2} \, \mathrm{d}t + \sum_{n=1}^{+\infty} 
+    \int_{c}^{x} \left[ a_n \cos(nt) + b_n \sin(nt) \right] \, \mathrm{d}t, \quad c, x \in [-\pi, \pi].
+    \]
+\end{theorem}
+
+\begin{note}
+    Note that after termwise integration, the resulting Fourier series converges on \([- \pi, \pi]\)
+    (\(\sim\) to \(=\)).
+    This is because integration smooths out the function, reducing oscillations and improving convergence behavior.
+\end{note}
+
+\begin{proof}
+    Here, we only prove the case that \(f(x)\) has finitely many discontinuities of the first kind on \([- \pi, \pi]\).
+\end{proof}
+
+
+\begin{theorem}{Termwise Differentiation}
+    If \( f(x) \in \mathcal{R}[-\pi, \pi] \) with Fourier series:
+    \[
+    f(x) \sim \frac{a_0}{2} + \sum_{n=1}^{+\infty} \left[ a_n \cos(nx) + b_n \sin(nx) \right],
+    \]
+    and if \( f(x) \) is piecewise smooth on \([- \pi, \pi]\),
+    then its derivative also has a Fourier series obtained by termwise differentiation:
+    \[
+    f'(x) \sim \sum_{n=1}^{+\infty} \left[ -n a_n \sin(nx) + n b_n \cos(nx) \right].
+    \]
+\end{theorem}
+
+\begin{leftbarTitle}{Smoothness and Decay Rate}\end{leftbarTitle}
+The smoother and less angular a function is, 
+its Fourier coefficients decay more rapidly (with fewer high-frequency components). 
+The rougher a function is (with jumps), 
+the more high-frequency components it has (and the slower the coefficients decay).
+
+% 光滑性与衰减速度的表格
+\begin{table}[h]
+    \centering
+    \begin{tabular}{cc}
+        \toprule
+        \textbf{Function Smoothness} & \textbf{Fourier Coefficient Decay Rate}\\
+        \toprule
+        \(f\in \mathcal{R}[-\pi, \pi]\) & \(\hat{f}(n)\to 0\) (slowest) \\
+        \hline
+        \(f\) has jump discontinuities & \( \hat{f}(n) \sim O\left( \frac{1}{n} \right) \) \\
+        \hline
+        \(f\) is continuous but not differentiable & \( \hat{f}(n) \sim O\left( \frac{1}{n^2} \right) \) \\
+        \hline
+        \(f\in C^{k}\) & \( \hat{f}(n) \sim O\left( \frac{1}{n^{k+1}} \right) \) \\
+        \hline
+        Analytic Function & Exponential Decay (\(O(e^{-c|n|})\)) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{leftbarTitle}{Parseval's Identity}\end{leftbarTitle}
+\begin{theorem}{Square Approximation Property of Fourier Series} % Fourier 级数的平方逼近性质
+    Let \(f(x)\in \mathcal{R}[-\pi, \pi]\), and \(W\) be an \(N\)-degree subspace of \(\mathcal{R}[-\pi, \pi]\),
+    then the best approximation of \(f(x)\) in \(W\) is just given by its Fourier series partial sum \(S_{N}(f; x)\):
+    \[
+    S_{N}(f; x) = \sum_{n=-N}^{N} \hat{f}(n) e^{inx} = \frac{a_0}{2} + \sum_{n=1}^{N} \left[ a_n \cos(nx) + b_n \sin(nx) \right].
+    \]
+    And the remainder \( E_{N}(f; x) = f(x) - S_{N}(f; x) \) satisfies\footnote{
+        Refer to \emph{Algèbre Linéaire - Section 10.5: Orthogonal Completion and Orthogonal Projection}.
+    }:
+    \[
+    \| E_{N}(f; x) \|^2 = \| f \|^2 - \sum_{n=-N}^{N} |\hat{f}(n)|^2
+    = \frac{1}{\pi}\int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x - \left[ \frac{a_0^2}{2} + \sum_{n=1}^{N} (a_n^2 + b_n^2) \right].
+    \]
+\end{theorem}
+
+\begin{theorem}{Bessel's Inequality} % 贝塞尔不等式
+    Let \( f(x) \in \mathcal{R}[-\pi, \pi] \) with Fourier coefficients \( \hat{f}(n) \),
+    then for any integer \( N \geqslant 0 \):
+    \[
+    \sum_{n=-N}^{N} |\hat{f}(n)|^2 \leqslant \| f \|^2,
+    \]
+    or in real form:
+    \[
+    \frac{a_0^2}{2} + \sum_{n=1}^{N} (a_n^2 + b_n^2) \leqslant \frac{1}{\pi} \int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x.
+    \]
+\end{theorem}
+
+\begin{theorem}{Parseval's Identity} % Parseval 恒等式
+    Let \( f(x) \in \mathcal{R}[-\pi, \pi] \) with Fourier coefficients \( \hat{f}(n) \),
+    then:
+    \[
+    \sum_{n=-\infty}^{+\infty} |\hat{f}(n)|^2 = \| f \|^2,
+    \]
+    or in real form:
+    \[
+    \frac{a_0^2}{2} + \sum_{n=1}^{+\infty} (a_n^2 + b_n^2) = \frac{1}{\pi} \int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x.
+    \]
+
+    The generalized form is:
+    \[
+    \sum_{n=-\infty}^{+\infty} \hat{f}(n) \overline{\hat{g}(n)} = \langle f, g \rangle,
+    \]
+    or in real form:
+    \[
+    \frac{a_0 c_0}{2} + \sum_{n=1}^{+\infty} (a_n c_n + b_n d_n) = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) g(x) \, \mathrm{d}x,
+    \]
+    where \( g(x) \in \mathcal{R}[-\pi, \pi] \) with Fourier coefficients \( \hat{g}(n) \),
+    \[
+    g(x) \sim \frac{c_0}{2} + \sum_{n=1}^{+\infty} \left[ c_n \cos(nx) + d_n \sin(nx) \right].
+    \]
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{theorem}{Wirtinger Inequality} % Wirtinger 不等式
+    Let \( f(x)\in C^{1}[-\pi, \pi] \),
+    and satisfies:
+    \[
+    \int_{-\pi}^{\pi} f(x) \, \mathrm{d}x = 0, f(-\pi) = f(\pi),
+    \]
+    then:
+    \[
+    \int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x \leqslant \int_{-\pi}^{\pi} f'^{2}(x) \, \mathrm{d}x,
+    \]
+    with equality if and only if \( f(x) = A \cos x + B \sin x \) for some constants \( A, B \in \mathbb{R} \).
+\end{theorem}
+
+\begin{theorem}{Poincaré Inequality} % Poincaré 不等式
+\end{theorem}
+
+\begin{theorem}{Friedrichs Inequality} % Friedrichs 不等式
+    
+\end{theorem}
+
