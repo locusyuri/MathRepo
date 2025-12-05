@@ -77,17 +77,18 @@
 \contentsline {section}{\numberline {14.1}Parameterization of Surface}{69}{section.14.1}%
 \contentsline {section}{\numberline {14.2}Tangent Space and Normal Space}{69}{section.14.2}%
 \contentsline {section}{\numberline {14.3}Intrinsic Geometry}{72}{section.14.3}%
-\contentsline {section}{\numberline {14.4}Extrinsic Geometry}{74}{section.14.4}%
-\contentsline {section}{\numberline {14.5}Oriented Surface}{76}{section.14.5}%
-\contentsline {chapter}{\numberline {15}Line Integrals and Surface Integrals}{77}{chapter.15}%
-\contentsline {section}{\numberline {15.1}Line Integrals and Surface Integrals of scalar fields}{77}{section.15.1}%
-\contentsline {section}{\numberline {15.2}Differential Form and Exterior Differentiation}{78}{section.15.2}%
-\contentsline {section}{\numberline {15.3}Line Integrals and Surface Integrals of Vector Fields}{80}{section.15.3}%
-\contentsline {section}{\numberline {15.4}Stokes' Formula}{82}{section.15.4}%
-\contentsline {section}{\numberline {15.5}Closed and Exact Differential Forms}{85}{section.15.5}%
-\contentsline {chapter}{\numberline {16}Integrals with Variable Parameters}{87}{chapter.16}%
-\contentsline {section}{\numberline {16.1}Definite Integrals with Variable Parameters}{87}{section.16.1}%
-\contentsline {section}{\numberline {16.2}Elliptic Integrals}{87}{section.16.2}%
-\contentsline {section}{\numberline {16.3}Improper Integrals with Variable Parameters}{87}{section.16.3}%
-\contentsline {section}{\numberline {16.4}Analysis Properties of Uniform Convergence}{88}{section.16.4}%
-\contentsline {section}{\numberline {16.5}Euler Integrals}{90}{section.16.5}%
+\contentsline {section}{\numberline {14.4}Extrinsic Geometry}{75}{section.14.4}%
+\contentsline {section}{\numberline {14.5}Oriented Surface}{77}{section.14.5}%
+\contentsline {section}{\numberline {14.6}Bounded Variation Functions}{77}{section.14.6}%
+\contentsline {chapter}{\numberline {15}Line Integrals and Surface Integrals}{79}{chapter.15}%
+\contentsline {section}{\numberline {15.1}Line Integrals and Surface Integrals of scalar fields}{79}{section.15.1}%
+\contentsline {section}{\numberline {15.2}Differential Form and Exterior Differentiation}{80}{section.15.2}%
+\contentsline {section}{\numberline {15.3}Line Integrals and Surface Integrals of Vector Fields}{82}{section.15.3}%
+\contentsline {section}{\numberline {15.4}Stokes' Formula}{84}{section.15.4}%
+\contentsline {section}{\numberline {15.5}Closed and Exact Differential Forms}{87}{section.15.5}%
+\contentsline {chapter}{\numberline {16}Integrals with Variable Parameters}{89}{chapter.16}%
+\contentsline {section}{\numberline {16.1}Definite Integrals with Variable Parameters}{89}{section.16.1}%
+\contentsline {section}{\numberline {16.2}Elliptic Integrals}{89}{section.16.2}%
+\contentsline {section}{\numberline {16.3}Improper Integrals with Variable Parameters}{89}{section.16.3}%
+\contentsline {section}{\numberline {16.4}Analysis Properties of Uniform Convergence}{90}{section.16.4}%
+\contentsline {section}{\numberline {16.5}Euler Integrals}{92}{section.16.5}%

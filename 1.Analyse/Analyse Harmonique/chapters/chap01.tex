@@ -111,48 +111,21 @@ f(x) \sim \sum_{n=1}^{+\infty} b_n \sin(nx).
 \]
 
 \section{The Dirichlet Kernel} % 狄利克雷核
-\begin{leftbarTitle}{Convolution}\end{leftbarTitle}
-\begin{definition}{Convolution} % 卷积
-    For two functions \( f(x), g(x) \) defined on \(\mathbb{T}\),
-    their convolution \( f * g \) is defined as:
-    \[
-    (f * g)(x) = \int_{-\infty}^{+\infty} f(t) g(x - t) \, \mathrm{d}t.
-    \]
-\end{definition}
-
-\begin{remark}
-    % 从物理直观的角度, 卷积是一种“加权平均”或“滤波”。$g(t)$ 是权重函数（核），它在 $x$ 点附近这种“滑动窗口”内对 $f$ 进行取样平均。
-    From a physically intuitive perspective, convolution is a form of "weighted averaging" or "filtering".
-    Here, \( g(t) \) serves as the weight function (kernel), 
-    which samples and averages \( f \) within a "sliding window" around the point \( x \).
-\end{remark}
-
-\begin{property}
-    \begin{description}
-        \item[Symmetry] \( f * g = g * f \).
-    \end{description}
-\end{property}
-
-\begin{theorem}{Convolution Theorem}
-    Under suitable conditions the Fourier transform of a convolution of two functions (or signals) 
-    is the product of their Fourier transforms,
-    \[
-    \widehat{f * g}(n) = \hat{f}(n) \cdot \hat{g}(n).
-    \]
-
-    In other words, the convolution in one domain corresponds to the product in another domain, 
-    for example, the convolution in the time domain corresponds to the product in the frequency domain.
-\end{theorem}
 
 \begin{leftbarTitle}{Dirichlet Kernel}\end{leftbarTitle}
 For partial sum of the first \( N \) terms of the Fourier series of \( f(x) \):
 \[
 S_{N}(f; x) = \sum_{n=-N}^{N} \hat{f}(n) e^{inx} = \frac{a_{0}}{2} + \sum_{n=1}^{N} \left[ a_n \cos(nx) + b_n \sin(nx) \right],
 \]
-in order to study its convergence, we can transform it into integral form by convolution theorem:
-\[
-S_{N}(f; x) = f * D_{N},
-\]
+in order to study its convergence, we can transform it into integral form.
+By Euler-Fourier formula, we have:
+\begin{align*}
+    S_{N}(f; x) 
+    & = \sum_{n=-N}^{N} \hat{f}(n) e^{inx} \\
+    & = \sum_{n=-N}^{N} \left( \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) e^{-int} \, \mathrm{d}t \right) e^{inx} \\
+    & = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) \left( \sum_{n=-N}^{N} e^{in(x - t)} \right) \, \mathrm{d}t \\
+    & = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) D_{N}(x - t) \, \mathrm{d}t,
+\end{align*}
 where 
 \[
 D_{N}(x)=\sum_{n=-N}^{N} e^{inx} = \sum_{n=1}^{N} 2\cos(nx) + 1 = 
@@ -206,6 +179,57 @@ then the convergence of \( S_{N}(f; x) \) to \( \sigma(x) \) is equivalent to:
 \[
 \lim_{N \to +\infty} \int_{0}^{\pi} \varphi_{\sigma}(u, x) D_{N}(u) \, \mathrm{d}u = 0.
 \]
+
+\begin{leftbarTitle}{Convolution}\end{leftbarTitle}
+\begin{definition}{Convolution} % 卷积
+    For two functions \( f(x), g(x) \) defined on \(\mathbb{R}\),
+    their convolution \( f * g \) is defined as:
+    \[
+    (f * g)(x) = \int_{-\infty}^{+\infty} f(t) g(x - t) \, \mathrm{d}t.
+    \]
+
+    Specially, if the functions are periodically defined on a finite interval \(\mathbb{T}\) with period \( 2\pi \),
+    then the convolution is defined as:
+    \[
+    (f * g)(x) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) g(x - t) \, \mathrm{d}t.
+    \]
+    Here, \(\frac{1}{2\pi}\) is a normalization factor.
+\end{definition}
+
+\begin{remark}
+    % 从物理直观的角度, 卷积是一种“加权平均”或“滤波”。$g(t)$ 是权重函数（核），它在 $x$ 点附近这种“滑动窗口”内对 $f$ 进行取样平均。
+    From a physically intuitive perspective, convolution is a form of "weighted averaging" or "filtering".
+    Here, \( g(t) \) serves as the weight function (kernel), 
+    which samples and averages \( f \) within a "sliding window" around the point \( x \).
+\end{remark}
+
+\begin{property}
+    \begin{description}
+        \item[Commutativity] \( f * g = g * f \). % 交换律
+        \item[Associativity] \( f * (g * h) = (f * g) * h \). % 结合律
+        \item[Distributivity] \( f * (g + h) = f * g + f * h \). % 分配律
+        \item[Translation Invariance] \( (T_a f) * g = T_a (f * g) \), where \( (T_a f)(x) = f(x - a) \). % 平移不变性
+    \end{description}
+\end{property}
+
+\vspace{0.7cm}
+With the definition of convolution, we can rewrite the partial sum of Fourier series as:
+\[
+S_{N}(f; x) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(t) D_{N}(x - t) \, \mathrm{d}t = (f * D_{N})(x).
+\]
+Actually, this is a special case of convolution theorem,
+and we have the following general conclusion:
+
+\begin{theorem}{Convolution Theorem}
+    Under suitable conditions the Fourier coefficients of a convolution of two functions (or signals) 
+    is the product of their Fourier coefficients,
+    \[
+    \widehat{f * g}(n) = \hat{f}(n) \cdot \hat{g}(n).
+    \]
+
+    In other words, the convolution in one domain corresponds to the product in another domain, 
+    for example, the convolution in the time domain corresponds to the product in the frequency domain.
+\end{theorem}
 
 \begin{leftbarTitle}{Localization Theorem}\end{leftbarTitle}
 First, we need the following important lemma:
@@ -300,16 +324,6 @@ which will be discussed in the next chapter.
 \section{Pointwise Convergence Tests} % 逐点收敛性判别法
 In this section, we will discuss several important convergence tests from coarse to fine for Fourier series.
 
-\begin{definition}{Bounded Variation} % 有界变差
-    A function \( f(x) \) is said to be of bounded variation on the interval \([a, b]\),
-    if there exists a constant \( M > 0 \), such that for any partition \( P = \{ x_0, x_1, \ldots, x_n \} \) of \([a, b]\):
-    \[
-    V_{a}^{b}(f) = \sum_{i=1}^{n} |f(x_i) - f(x_{i-1})| \leq M.
-    \]
-    The quantity \( V_{a}^{b}(f) \) is called the total variation of \( f(x) \) on \([a, b]\).
-    We denote this as \( f \in BV[a, b] \).
-\end{definition}
-
 \begin{definition}{Hölder condition}
     There exists a constant \( L > 0 \) and \( \alpha \in (0, 1] \),
     such that for all sufficiently small \( \delta \):
@@ -326,6 +340,13 @@ In this section, we will discuss several important convergence tests from coarse
     then the Fourier series of \( f(x) \) converges to \( \frac{f(x+)+f(x-)}{2} \) at every point \( x \):
     \begin{description}
         \item[Lipschitz's Test] If \(f \in \text{Lip}_\alpha(x)\).
+
+            Since the condition is not easy to verify directly, we can use the following sufficient condition:
+            the two quasi-uniliteral derivatives of \(f\) at point \(x\) exist, i.e.,
+            \[
+            \lim_{h \to 0^+} \frac{f(x\pm h) - f(x\pm )}{h} 
+            \]
+            exist finitely.
 
         \item[Dini's Test] There exists a \( \delta > 0 \), such that:
             \[

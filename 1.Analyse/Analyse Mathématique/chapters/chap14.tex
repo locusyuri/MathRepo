@@ -333,8 +333,68 @@ it represents the value of the quadratic form on the vector \((u', v')\).
 \end{theorem}
 
 \begin{leftbarTitle}{Area}\end{leftbarTitle} % 面积
+For convenience, we study the area of a surface patch \(M\) parameterized by \(\mathbf{r}(u, v): \Delta \to \mathbb{R}^3\)
+over the domain \(\Delta \subseteq \mathbb{R}^{2}\).
 
+% 尝试用内接多边形曲面定义面积, 但是 Schwarz 的反例说明该定义不成立
+Similar to the definition of arc length,
+we try to define the area of surface patch \(M\) by approximating it with inscribed polygonal surfaces.
+However, this definition does not hold, as demonstrated by Schwarz's counterexample
+that is called \textbf{Schwartz's lantern} vividly.
+% 在这个反例中, 我们能得到圆周率等于 4 的错误结论
 
+In this counterexample, we can obtain the incorrect conclusion that \(\pi = 4\).
+Here is a brief description of the construction of Schwartz's lantern:
+
+Consider a cylinder with height \(1\) and base radius \(\frac{1}{2}\) (the left in Fig.~\ref{fig:Schwartz's lantern}).
+Its lateral surface area is \(2\pi rh = 2\pi \times \frac{1}{2} \times 1 = \pi\).
+
+Divide the cylinder into four equal cylinders, and place seven equally spaced red dots on each circle 
+(the middle in Fig.~\ref{fig:Schwartz's lantern}).
+Then connect these red dots to form a polygonal surface (the right in Fig.~\ref{fig:Schwartz's lantern}).
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/Schwartz1.png}
+    \caption{Schwartz's lantern construction on a cylinder.}
+    \label{fig:Schwartz's lantern}
+\end{figure}
+This particular lantern has \(4\) horizontal triangular bands, 
+and on each level there are \(7\) equally spaced red dots, 
+which can be expressed as \(b = 4, p = 7\).
+
+To obtain increasingly precise approximations of the cylindrical lanterns, 
+simply increase the number of bands and points
+(Fig.~\ref{fig:More precise approximations of Schwartz's lantern}).
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Schwartz2.png}
+    \caption{More precise approximations of Schwartz's lantern.}
+    \label{fig:More precise approximations of Schwartz's lantern}
+\end{figure}
+
+In fact, we can assign particular values to \(b\) and \(p\)
+to make the area of the polygonal surface approach any value greater than \(\pi\),
+\[
+A(b, p) = \frac{bp}{2} \sin\frac{\pi}{p} \sqrt{\left( \frac{2}{b} \right)^2 + \left( \sin\frac{\pi}{p} \right)^2}.
+\]
+
+\vspace{0.7cm}
+???????????????????????????????????????????????????????????????????
+
+We derive the area of \(M\) using the first fundamental form.
+Consider a small rectangle \(\Delta u \times \Delta v\) in the parameter domain \(\Delta\),
+which is mapped to a small parallelogram on the surface \(M\) by the parameterization \(\mathbf{r}(u, v)\).
+The two adjacent sides of this parallelogram can be approximated by the tangent vectors:
+\[\mathbf{r}_{u} \Delta u, \quad \mathbf{r}_{v} \Delta v.\]
+The area of this parallelogram is given by the magnitude of the cross product of these two vectors:
+\[\|\mathbf{r}_{u} \times \mathbf{r}_{v}\| \Delta u \Delta v.\]
+Using the properties of the dot product and the first fundamental form, we have:
+\[\|\mathbf{r}_{u} \times \mathbf{r}_{v}\| = \sqrt{EG - F^{2}}.\]
+Therefore, the area element \(\mathrm{d}A\) on the surface \(M\) is:
+\[\mathrm{d}A = \sqrt{EG - F^{2}} \,\mathrm{d}u \, \mathrm{d}v.\]
+Integrating over the entire parameter domain \(\Delta\), we obtain the total area of the surface patch \(M\):
+\[\text{Area}(M) = \iint_{\Delta} \sqrt{EG - F^{2}} \,\mathrm{d}u \, \mathrm{d}v.\]
+???????????????????????????????????????????????????????????????????
 
 \section{Extrinsic Geometry} % 外在几何
 The second fundamental form is a symmetric bilinear form defined on the tangent space 
@@ -465,3 +525,73 @@ Some special cases of curvature are given below:
 
 
 \section{Oriented Surface} % 定向曲面
+
+\section{Bounded Variation Functions} % 有界变差函数
+\begin{definition}{Bounded Variation}
+    Let \(f: [a, b] \to \mathbb{R}\) be a real-valued function defined on the closed interval \([a, b]\).
+    For any partition \(P = \{ x_0, x_1, \ldots, x_n \}\) of \([a, b]\) with \(a = x_0 < x_1 < \cdots < x_n = b\),
+    define the variation of \(f\) on the partition \(P\) as:
+    \[
+    V(f, P) = \sum_{i=1}^{n} |f(x_i) - f(x_{i-1})|.
+    \]
+    The total variation of \(f\) on \([a, b]\) is defined as:
+    \[
+    V_a^b(f) = \sup_{P} V(f, P),
+    \]
+    where the supremum is taken over all possible partitions \(P\) of \([a, b]\).
+    If \(V_a^b(f) < \infty\), then \(f\) is said to be of \textbf{bounded variation} on \([a, b]\),
+    denoted as \(f \in BV[a, b]\).
+\end{definition}
+\begin{property}
+    \begin{enumerate}
+        \item \(BV[a, b]\subset B[a, b]\)
+        \item For any \(f, g\in BV[a, b]\), 
+            and any scalars \(\alpha, \beta \in \mathbb{R}\), 
+            the linear combination \(\alpha f + \beta g \in BV[a, b]\),
+            and 
+            \[
+            V_a^b(\alpha f + \beta g) \leqslant |\alpha| V_a^b(f) + |\beta| V_a^b(g).
+            \]
+            Specially, if \(|g(x)|\geqslant \sigma > 0\), then \(\frac{f(x)}{g(x)} \in BV[a, b]\).
+        \item 
+    \end{enumerate}
+\end{property}
+
+Some common bounded variation functions include:
+\begin{description}
+    \item[Monotonic Functions] Any monotonic function on a closed interval is of bounded variation,
+        and \(V_a^b(f) = |f(b) - f(a)|\).
+    \item[Piecewise Monotonic Functions] Functions that are monotonic on each subinterval of a finite partition of \([a, b]\)
+        are also of bounded variation.
+    \item[Lipschitz Continuous Functions] Any Lipschitz continuous function on \([a, b]\) is of bounded variation.
+    \item[Functions with Finite Discontinuities] Functions that have only a finite number of jump discontinuities on \([a, b]\)
+        are of bounded variation.
+    \item[Absolutely Continuous Functions] Any absolutely continuous function on \([a, b]\) is of bounded variation.
+\end{description}
+
+
+\begin{theorem}{Jordan Decomposition Theorem} % Jordan 分解定理
+    \(f\in BV[a, b]\) if and only if there exist two monotonic increasing functions
+    \(g(x),  h(x) : [a, b] \to \mathbb{R}\), such that:
+    \[
+    f(x) = g(x) - h(x).
+    \]
+\end{theorem}
+
+\vspace{0.7cm}
+Bounded variation functions have important applications,
+for example, in harmonic analysis, the Fourier series of bounded variation functions 
+converge pointwise.
+Other typical applications are as follows:
+\begin{leftbarTitle}{Rectifiable Curves}\end{leftbarTitle} % 可求长曲线
+\begin{theorem}{Jordan's Theorem on Rectifiable Curves}
+    A curve \(C\) in \(\mathbb{R}^{2}\) defined by the parametric equations
+    \[
+    (x, y) = (x(t), y(t)), \quad t \in [a, b],
+    \]
+    is rectifiable if and only if both \(x(t)\) and \(y(t)\) are of bounded variation on \([a, b]\).
+\end{theorem}
+
+\begin{leftbarTitle}{Stieltjes Integral}\end{leftbarTitle} % Stieltjes 积分
+
+

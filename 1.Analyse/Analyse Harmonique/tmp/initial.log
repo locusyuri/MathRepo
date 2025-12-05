@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  4 DEC 2025 21:47
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  5 DEC 2025 18:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1470,7 +1470,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [4]
 
 LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
-(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 225.
+(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 249.
 
 
 
@@ -1522,10 +1522,10 @@ Package logreq Info: Writing requests to 'initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46066 strings out of 473831
- 957364 string characters out of 5733137
- 1983498 words of memory out of 5000000
- 68278 multiletter control sequences out of 15000+600000
+ 46062 strings out of 473831
+ 957297 string characters out of 5733137
+ 1977501 words of memory out of 5000000
+ 68274 multiletter control sequences out of 15000+600000
  568818 words of font info for 162 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,16n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s

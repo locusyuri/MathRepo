@@ -2,7 +2,7 @@
 \contentsline {chapter}{\numberline {1}Classical Fourier Series}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Fourier Coefficients}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}The Dirichlet Kernel}{3}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Pointwise Convergence Tests}{6}{section.1.3}%
+\contentsline {section}{\numberline {1.3}Pointwise Convergence Tests}{7}{section.1.3}%
 \contentsline {section}{\numberline {1.4}Analytical properties of Fourier series}{7}{section.1.4}%
 \contentsline {chapter}{\numberline {2}Cesàro Summation}{8}{chapter.2}%
 \contentsline {chapter}{\numberline {3}Modern Fourier Series}{9}{chapter.3}%
