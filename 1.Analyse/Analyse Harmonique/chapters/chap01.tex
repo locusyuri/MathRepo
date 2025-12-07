@@ -364,6 +364,57 @@ In this section, we will discuss several important convergence tests from coarse
 \end{theorem}
 
 
+\begin{example}\label{ex:1}
+    Let \(f(x)\) be a \(2\pi\)-periodic function defined as:
+    \[
+    f(x) = \begin{cases}
+        x, & x \in [-\pi, \pi), \\
+        -\pi, & x =\pi.
+    \end{cases}
+    \]
+    Find its Fourier series and \(1-\frac{1}{3}+\frac{1}{5}-\frac{1}{7}+\cdots\).
+\end{example}
+\begin{solution}
+    By Euler-Fourier formula, we have:
+    \begin{align*}
+        & a_0 = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \, \mathrm{d}x = 0, \\
+        & a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) \, \mathrm{d}x 
+        = \frac{1}{\pi} \left[ \left.x \cdot \frac{\sin(nx)}{n} \right|_{-\pi}^{\pi} 
+        - \int_{-\pi}^{\pi} \frac{\sin(nx)}{n} \, \mathrm{d}x \right] = 0, \\
+        & b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) \, \mathrm{d}x 
+        = \frac{1}{\pi} \left[ \left.-x \cdot \frac{\cos(nx)}{n} \right|_{-\pi}^{\pi} + \int_{-\pi}^{\pi} \frac{\cos(nx)}{n} \, \mathrm{d}x \right] 
+        = \frac{2(-1)^{n+1}}{n}.
+    \end{align*}
+    Thus, the Fourier series of \(f(x)\) is:
+    \[
+    f(x) \sim \sum_{n=1}^{+\infty} (-1)^{n+1}\frac{2}{n} \sin(nx).
+    \]
+    Since \(f(x)\in BV[-\pi, \pi]\), by Dirichlet-Jordan test,
+    its Fourier series converges to \(f(x)\) at every continuous point \(x\) 
+    and to \(\frac{f(x+)+f(x-)}{2}\) at every discontinuous point \(x\).
+    \newline Then
+    \[
+    x = f(x) = \sum_{n=1}^{+\infty} (-1)^{n+1}\frac{2}{n} \sin(nx), \quad x \in (-\pi, \pi).
+    \]
+    Furthermore,
+    \begin{align*}
+        \tilde{f}(x) = 
+        &\begin{cases} f(x), &x\neq 2k\pi+\pi,  \\ \frac{f(\pi+)+f(\pi-)}{2}, &x= 2k\pi+\pi, \end{cases} \\
+        &= \begin{cases} f(x), & x \in (2k\pi - \pi, 2k\pi + \pi), \\ \frac{-\pi+\pi}{2}=0, & x = 2k\pi + \pi, \end{cases}\\
+        & = \sum_{n=1}^{+\infty} (-1)^{n+1}\frac{2}{n} \sin(nx),
+    \end{align*}
+    where \(k\in \mathbb{Z}, x\in \mathbb{R}\).
+    \newline Let \(x = \frac{\pi}{2}\), then we have:
+    \[
+    \frac{\pi}{2} = \sum_{n=1}^{+\infty} (-1)^{n+1}\frac{2}{n} \sin\left( n \cdot \frac{\pi}{2} \right),
+    \]
+    \[
+    \frac{\pi}{4} = \sum_{n=1}^{+\infty} (-1)^{n+1} \frac{1}{n} \sin\left( n \cdot \frac{\pi}{2} \right)=
+    \sum_{n=1}^{+\infty} (-1)^{2n+2} \frac{1}{2n+1} \sin\left( (2n+1) \cdot \frac{\pi}{2} \right) = 
+    1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \cdots. 
+    \]
+\end{solution}
+
 
 \begin{leftbarTitle}{Gibbs Phenomenon}\end{leftbarTitle} % 吉布斯现象
 When a function \( f(x) \) has jump discontinuities,

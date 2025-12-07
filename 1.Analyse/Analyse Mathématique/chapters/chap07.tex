@@ -154,20 +154,63 @@ then it must be convergent.
 \section{Common Questions}
 \begin{leftbarTitle}{Square Integrable}\end{leftbarTitle}
 \begin{definition}{Square Integrable Function}
-    If \( f(x) \in R[a, +\infty) \) and \( \int_{a}^{+\infty} [f(x)]^2 \, \mathrm{d}x \) converges, 
+    If \(f(x) \in R[a, +\infty)\), and
+    \[ 
+    \int_{a}^{+\infty} f^{2}(x) \, \mathrm{d}x 
+    \] 
+    converges, 
     then \( f(x) \) is called a \textbf{square integrable function} on \( [a, +\infty) \).
     For defective integrals, the definition is similar.
 \end{definition}
 
-\begin{property}
-    
-\end{property}
+For unary functions, the relationship of integrability between \(f(x), |f(x)|, f^{2}(x)\) is as follows:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/rela.png}
+    \caption{Relationship between integrability, absolute integrability, and square integrability.}
+    \label{fig:relationship of integrability}
+\end{figure}
+
+Some examples are as follows:
+\begin{description}
+    \item[\(f\not\to f^{2}\)] For infinite integral, define
+        \[
+        f(x) = 
+        \begin{cases} n^{2}, &n\leqslant x< n+ \frac{1}{n^{4}},\quad n=1,2,\cdots,  \\
+            0, & n+\frac{1}{n^{4}} \leqslant x < n+1,\quad n=1,2,\cdots. \end{cases}
+        \]
+        Then 
+        \[
+        \int_{1}^{+\infty} f(x) \, \mathrm{d}x = \sum_{n=1}^{\infty} n^{2} \cdot \frac{1}{n^{4}} = 
+        \sum_{n=1}^{\infty} \frac{1}{n^{2}} < +\infty,
+        \]
+        but
+        \[
+        \int_{1}^{+\infty} f^{2}(x) \, \mathrm{d}x = \sum_{n=1}^{\infty} n^{4} \cdot \frac{1}{n^{4}} = 
+        \sum_{n=1}^{\infty} 1 = +\infty.
+        \]
+
+        For defective integral, let
+        \[
+        f(x) = \frac{1}{\sqrt{x}}, x\in (0, 1].
+        \]
+        Then
+        \[
+        \int_{0}^{1} f(x) \, \mathrm{d}x = \int_{0}^{1} \frac{1}{\sqrt{x}} \, \mathrm{d}x = 2 < +\infty,
+        \]
+        but
+        \[
+        \int_{0}^{1} f^{2}(x) \, \mathrm{d}x = \int_{0}^{1} \frac{1}{x} \, \mathrm{d}x = +\infty.
+        \]
+    \item[\(|f|\not\to f^{2}\)] 
+\end{description}
+
 
 \begin{leftbarTitle}{Properties of the Integrand of the Convergent Infinite Integral at Infinity}\end{leftbarTitle}
 For the infinite integral
 \[
 \int_{0}^{+\infty} \frac{1}{1 + x^6 \sin^2 x} \, \mathrm{d}x,
 \]
-whose integrand is shown in Fig~\ref{fig:graph of the special integral}, 
+whose integrand is shown in Fig.~\ref{fig:graph of the special integral}, 
 we can deduce that even if the integral converges, \(f(+\infty)\) is not necessarily equal to \(0\). 
 Moreover, it is possible that \(\varlimsup_{x \to +\infty} f(x) = +\infty\).

@@ -1,4 +1,16 @@
 \chapter{Cesàro Summation} % Cesàro 求和法
+In the previous chapter, we denote \(\mathcal{R}[-\pi, \pi]\) as the set of all Riemann integrable or
+absolutely Riemann integrable functions on \([-\pi, \pi]\).
+Now, for convenience, we introduce the notation \(\overline{\mathcal{R}}[-\pi, \pi]\) as the set of all 
+Riemann integrable or square Riemann integrable functions on \([-\pi, \pi]\).
+Since for defective integral, the square integrability implies absolute integrability,
+we have
+\[
+\mathcal{R}^{2}[-\pi, \pi] \subset \mathcal{R}[-\pi, \pi].
+\]
+
+
+
 \section{Cesàro Summation and Fejér Kernel} % Cesàro 求和与 Fejér 核
 Until now, when we discuss the convergence of series \(\sum_{n=1}^{\infty}a_{n} \), 
 the convergence of partial sums \( S_{N} = \sum_{n=1}^{N} a_{n} \) as \( N \to \infty \) is considered de facto.
@@ -127,5 +139,56 @@ and the Weierstrass second approximation theorem\footnote{
 }
 can be proved easily.
 
+\section{Square mean Convergence} % 平方平均收敛
+\begin{definition}{Square mean Convergence}
+    A sequence of functions \( f_{n}(x) \) is said to converge to \( f(x) \)
+    in the square mean (or \( L^{2} \)) sense on interval \([a, b]\),
+    if
+    \[
+    \lim_{n \to \infty} \| f_{n} - f \|^{2} = 
+    \lim_{n \to \infty} \int_{a}^{b} | f_{n}(x) - f(x) |^{2} \, \mathrm{d}x = 0.
+    \]
+\end{definition}
+
+\begin{theorem}
+    If \(f(x)\in \mathcal{R}^{2}[-\pi, \pi]\),
+    then its Fourier series converges to \(f(x)\) in the square mean sense on \([-\pi, \pi]\), i.e.,
+    \[
+        \lim_{N \to \infty} \int_{-\pi}^{\pi} | f(x) - S_{N}(f; x) |^{2} \, \mathrm{d}x = 0.
+    \]
+\end{theorem}
+
+
+\begin{example}
+    Proof:
+    \begin{enumerate}
+        \item \[\sum_{n=1}^{\infty} \frac{1}{n^{2}} = \frac{\pi^{2}}{6}; \]  
+        \item \[\sum_{n=1}^{\infty} \frac{1}{(2n-1)^{2}} = \frac{\pi^{2}}{8}; \]
+        \item \[\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^{2}} = \frac{\pi^{2}}{12}; \]
+        \item \[\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^{4}} = \frac{7\pi^{4}}{720}; \]
+        \item \[\sum_{n=1}^{\infty} \frac{1}{n^{4}} = \frac{\pi^{4}}{90}. \]
+    \end{enumerate}
+\end{example}
+\begin{proof}
+    
+    \noindent{\color{violet!80}\textbf{1.}}{\color{violet!80}}
+    By~\ref{ex:1},
+    \[
+    x = 2 \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n} \sin nx, \quad x \in (-\pi, \pi).
+    \]
+    Using Parseval's identity, we have
+    \[
+    4 \sum_{n=1}^{\infty} \frac{1}{n^{2}} = \frac{1}{\pi} \int_{-\pi}^{\pi} x^{2} \, \mathrm{d}x = \frac{2\pi^{2}}{3},
+    \]
+    i.e.,
+    \[
+    \sum_{n=1}^{\infty} \frac{1}{n^{2}} = \frac{\pi^{2}}{6}.
+    \]
+
+    \noindent{\color{violet!80}\textbf{2.}}{\color{violet!80}}
+\end{proof}
 
 \section{Equidistribution} % 等分布问题
+
+
+\section{Poisson Kernel} % Poisson 核
