@@ -18,7 +18,7 @@ This is a repository for mathematical notes. The directory structure is as follo
 - [Algèbre Abstraite | 抽象代數](./2.Algèbre/Algèbre%20Abstraite/tmp/initial.pdf)
 - [Algèbre Linéaire | 線性代數](./2.Algèbre/Algèbre%20Linéaire/tmp/initial.pdf)
 - [Polynôme | 多項式](./2.Algèbre/Polynôme/tmp/initial.pdf)
-
+- [Théorie des Nombres | 數論](./2.Algèbre/Théorie%20des%20Nombres/tmp/initial.pdf)
 
 
 ## 3.Géométrie | 幾何學
@@ -31,7 +31,6 @@ This is a repository for mathematical notes. The directory structure is as follo
 - [Logique Mathématique | 數理邏輯](./4.Mathématiques%20discrètes/Logique%20Mathématique/tmp/initial.pdf)
 - [Théorie des Ensembles | 集合論](./4.Mathématiques%20discrètes/Théorie%20des%20Ensembles/tmp/initial.pdf)
 - [Théorie des Graphes | 圖論](./4.Mathématiques%20discrètes/Théorie%20des%20Graphes/tmp/initial.pdf)
-- [Théorie des Nombres | 數論](./4.Mathématiques%20discrètes/Théorie%20des%20Nombres/tmp/initial.pdf)
 
 ## 5.Mathématiques appliquées | 應用數學
 - [Latex | Latex 教程](./5.Mathématiques%20appliquées/Latex/tmp/initial.pdf)
