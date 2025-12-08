@@ -57,11 +57,21 @@ we can better understand the essence of Fourier series: the duality theory on co
     \[
     \mathcal{E} = \{ e^{inx} : n \in \mathbb{Z} \}
     \]
-    or in real form:
+    is an orthonormal basis of the inner product space \( \mathcal{R}[-\pi, \pi] \).
+
+    In real form,
     \[
     \{ 1, \cos x, \sin x, \cos 2x, \sin 2x, \ldots \}
     \]
-    is an orthonormal basis of the inner product space \( \mathcal{R}[-\pi, \pi] \).
+    is also an orthogonal basis\footnote{
+        Note that this set is orthogonal but not orthonormal,
+        for
+        \[
+        \langle 1, 1 \rangle = 1, \quad \langle \cos nx, \cos nx \rangle = \langle \sin nx, 
+        \sin nx \rangle = \frac{1}{2}, \quad n \in \mathbb{N}.
+        \] 
+        To make it orthonormal, each function should be normalized by the appropriate factor.
+    } of the inner product space \( \mathcal{R}[-\pi, \pi] \).
 \end{theorem}
 
 \begin{definition}
@@ -88,6 +98,22 @@ we can better understand the essence of Fourier series: the duality theory on co
     \end{align*}
     and the symbol "\(\sim\)" indicates that the right-hand side is the Fourier series representation of \( f(x) \).
 \end{definition}
+\begin{note}
+    Utilizing Euler formula:
+    \[
+    \cos nx = \frac{e^{inx} + e^{-inx}}{2}, \quad \sin nx = \frac{e^{inx} - e^{-inx}}{2i},
+    \]
+    we can easily derive the relationship between Fourier coefficients in complex form and real form:
+    \[
+    \hat{f}(0) = \frac{a_0}{2}, \quad \hat{f}(n) = \frac{a_n - i b_n}{2}, 
+    \quad \hat{f}(-n) = \frac{a_n + i b_n}{2}, \quad n = 1, 2, \ldots
+    \]
+    \[
+    a_{0} = 2\hat{f}(0), \quad a_{n} = \hat{f}(n) + \hat{f}(-n) = 2\mathrm{Re} \hat{f}(n), \quad
+    b_{n} = i \left[ \hat{f}(n) - \hat{f}(-n) \right] = -2\mathrm{Im} \hat{f}(n), \quad n = 1, 2, \ldots
+    \]
+\end{note}
+
 % 扩展到任一周期
 It can be easily extended to any periodic function with period \( 2T \) by the substitution \( x = \frac{\pi}{T} t \):
 \[

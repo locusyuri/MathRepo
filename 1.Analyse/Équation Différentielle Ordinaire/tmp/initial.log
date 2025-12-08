@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  24 NOV 2025 19:17
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  8 DEC 2025 16:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1437,12 +1437,12 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
 
 [2
 
-]
+] (./chapters/chap01.tex
 Chapter 1.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 70.
+(Font)              scaled to size 6.0pt on input line 26.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
-(Font)              scaled to size 10.95pt on input line 83.
+(Font)              scaled to size 10.95pt on input line 39.
 
 
 [1
@@ -1451,12 +1451,12 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 ]
 
 LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
-(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 182.
+(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 138.
 
-
+) (./chapters/chap02.tex
 
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 190.
+(Font)              scaled to size 10.0pt on input line 1.
 [2]
 
 [3]
@@ -1469,7 +1469,7 @@ Chapter 2.
 
 [5]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 372.
+(Font)              scaled to size 8.0pt on input line 183.
 
 
 [6]
@@ -1480,7 +1480,7 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
 
 [9]
 
-[10]
+[10]) (./chapters/chap03.tex
 
 [11]
 Chapter 3.
@@ -1488,7 +1488,7 @@ Chapter 3.
 
 [12
 
-]
+]) (./chapters/chap04.tex
 
 [13]
 
@@ -1511,24 +1511,24 @@ Chapter 4.
 [20]
 
 [21]
-Overfull \hbox (20.88719pt too wide) in paragraph at lines 1324--1330
+Overfull \hbox (20.88719pt too wide) in paragraph at lines 514--520
 []\TU/Alegreya(0)/m/n/10.95 Assume that $\OML/cmm/m/it/10.95 ^^U[]; ^^U[]; []  ; ^^U[]$ \TU/Alegreya(0)/m/n/10.95 are all distinct eigenvalues of matrix $\OT1/cmr/bx/n/10.95 A$\TU/Alegreya(0)/m/n/10.95 , with algebraic multiplicities $\OML/cmm/m/it/10.95 n[]; n[]; [] ; n[]$
  []
 
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 1347.
+(Font)              scaled to size 8.0pt on input line 537.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 1351.
+(Font)              scaled to size 9.0pt on input line 541.
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 1351.
+(Font)              scaled to size 6.0pt on input line 541.
 
 
 [22]
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 1421.
+(Font)              scaled to size 5.0pt on input line 611.
 
 
-[23]
+[23]) (./chapters/chap05.tex
 
 [24]
 Chapter 5.
@@ -1540,11 +1540,11 @@ Chapter 5.
 
 [26]
 
-[27]
+[27]) (./chapters/chap06.tex
 
 [28]
 Chapter 6.
-
+) (./chapters/chap07.tex
 
 [29
 
@@ -1563,11 +1563,17 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[31]
+[31]) (./chapters/chap08.tex
 
 [32]
+Chapter 8.
+)
 
 [33
+
+]
+
+[34
 
 ] (./tmp/initial.aux)
  ***********
@@ -1579,18 +1585,18 @@ L3 programming layer <2022/08/05>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 9720FD0107BCBEC20120CB34237B9E14;7715.
+(rerunfilecheck)             Checksum: E07057C880431BE152C1EA07AF54C888;7990.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46197 strings out of 473831
- 960390 string characters out of 5733137
- 2001634 words of memory out of 5000000
- 68410 multiletter control sequences out of 15000+600000
+ 46246 strings out of 473831
+ 961423 string characters out of 5733137
+ 2001929 words of memory out of 5000000
+ 68434 multiletter control sequences out of 15000+600000
  573708 words of font info for 182 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,17n,108p,692b,1340s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (36 pages).
+Output written on ./tmp/initial.pdf (37 pages).

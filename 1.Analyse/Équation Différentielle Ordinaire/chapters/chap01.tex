@@ -1,0 +1,145 @@
+\chapter{Introduction} % 导论
+\section{Classification of Differential Equations} % 这里放置小节标题
+An equation involving one dependent variable and its derivatives with respect to one or more independent variables 
+is called a \textbf{differential equation}.
+Differential equations can be classified according to the following criteria:
+%% 
+\begin{leftbarTitle}{Number of Independent Variables}\end{leftbarTitle}
+An \textbf{ordinary differential equation(ODE)} is defined as an equation of the following form:
+\begin{equation}\label{eq:plain ODE}
+F\left( x, y, \frac{\mathrm{d}y}{\mathrm{d}x}, \frac{\mathrm{d}^2y}{\mathrm{d}x^2}, \ldots, \frac{\mathrm{d}^ny}{\mathrm{d}x^n} \right) = 0,\quad n \in \mathbb{N},
+\end{equation}
+or, using the prime notation for derivatives,
+\begin{equation*}
+F\left( x, y, y', y'', \ldots, y^{(n)} \right) = 0,\quad n \in \mathbb{N}.
+\end{equation*}
+If there are two or more independent variables, the equation is called a \textbf{partial differential equation(PDE)}.
+%% 
+\begin{leftbarTitle}{Order}\end{leftbarTitle}
+The order of a differential equation is the order of the highest derivative present in the equation.
+\begin{itemize}
+    \item A first-order equation has the form $ F(x, y, y') = 0 $.
+    \item A second-order equation has the form $ F(x, y, y', y'') = 0 $.
+    \item Higher-order equations involve derivatives of order three or more.
+\end{itemize}
+%%
+\begin{note}
+    Crucially, the order tells you how many initial conditions are needed to find a unique solution.
+\end{note}
+%%
+\begin{leftbarTitle}{Linearity}\end{leftbarTitle}
+An $n$-th order differential equation is linear if it can be written in the form: 
+\begin{equation*}
+    a_n(x)y^{(n)} + a_{n-1}(x)y^{(n-1)} + \dots + a_1(x)y' + a_0(x)y = g(x)
+\end{equation*}
+where the coefficients $a_{i}(x)$ and the term $g(x)$ depend only on the independent variable $x$.
+Otherwise, it is nonlinear.
+%%
+\begin{note}
+    Specially, for the aforementioned equation, if $g(x) = 0$, it is called \textbf{homogeneous},
+    and \textbf{non-homogeneous} otherwise.
+\end{note}
+
+\section{Solution to a Ordinary Differential Equation}
+\begin{leftbarTitle}{Particular and General Solutions}\end{leftbarTitle}
+Let $J$ be an interval in $\mathbb{R}$. 
+A function $y=\phi(x)$ defined on the interval $J$ is called a solution to equation~\eqref{eq:plain ODE} if it satisfies: 
+\[
+F(x, \phi(x), \phi'(x), \phi''(x), \dots, \phi^{(n)}(x)) = 0 \quad x \in J. 
+\]
+The interval $J$ is then called the interval of existence of the solution $y = \phi(x)$.
+
+Generally speaking, 
+the solution to equation~\eqref{eq:plain ODE} contains one or more arbitrary constants, 
+the determination of which depends on other conditions that the solution must satisfy. 
+If a solution to a differential equation does not contain any arbitrary constants, 
+it is called a \textbf{particular solution} of the differential equation.
+
+Suppose $y = \phi(x; c_{1}, c_{2}, \cdots, c_{n})$ is a solution to equation~\eqref{eq:plain ODE}, 
+where $c_{1}, c_{2}, \ldots, c_{n}$ are arbitrary constants. 
+If $c_{1}, c_{2}, \ldots, c_{n}$ are mutually independent, 
+then $y = \phi(x; c_{1}, c_{2}, \ldots, c_{n})$ is called the \textbf{general solution} to equation~\eqref{eq:plain ODE}. 
+Here, "mutually independent" means that the Jacobian determinant is non-zero: 
+\[
+\det \frac{\partial(\phi, \phi', \dots, \phi^{(n-1)})}{\partial(c_1, c_2, \dots, c_n)} \neq 0, \quad x \in J.
+\]
+When all the arbitrary constants in the general solution are determined, 
+one obtains a particular solution to the differential equation.
+
+\begin{leftbarTitle}{Initial Conditions, Explicit and Implicit Solutions}\end{leftbarTitle}
+Let $y = \phi(x)$ be a solution to equation~\eqref{eq:plain ODE} that also satisfies 
+\begin{equation}\label{eq:initial conditions}
+    \phi(x_0) = y_0, \quad \phi'(x_0) = y_0', \dots, \quad \phi^{(n-1)}(x_0) = y_0^{(n-1)}.
+\end{equation}
+The conditions~\eqref{eq:initial conditions} are called the \textbf{initial conditions} for equation~\eqref{eq:plain ODE}, 
+and $y = \phi(x)$ is called the solution to equation~\eqref{eq:plain ODE} 
+satisfying the initial conditions~\eqref{eq:initial conditions}.
+Such initial value problems are often referred to as \textbf{Cauchy problems}.
+
+A function $y = \phi(x)$ that turns the differential equation~\eqref{eq:plain ODE} into an identity is called an 
+\textbf{(explicit) solution} to the equation. 
+If a solution $y = \phi(x)$ to the differential equation~\eqref{eq:plain ODE} is determined 
+by the relation $\Phi(x, y) = 0$, then $\Phi(x, y) = 0$ is called an \textbf{implicit solution} to the differential equation~\eqref{eq:plain ODE}. 
+An implicit solution is also called an "integral". 
+
+\begin{leftbarTitle}{Integral Curve and Direction Field}\end{leftbarTitle}
+Consider the first-order differential equation:
+\begin{equation}\label{eq:first order ODE}
+    \frac{dy}{dx} = f(x,y),
+\end{equation}
+where $f$ is continuous in a planar region $G$. 
+Suppose 
+\[
+y = \phi(x), \quad x \in J
+\] 
+is a solution to this equation, where $J \subset \mathbb{R}$ is an interval. 
+Then the set of points in the plane 
+\[
+\Gamma = { (x,y) | y = \phi(x), x \in J }
+\]
+is a differentiable curve in the plane. 
+This curve is called a solution curve or an \textbf{integral curve}.
+
+Let $(x_0, y_0) \in \Gamma$. 
+The slope of the tangent line to the curve $\Gamma$ at this point is 
+\[
+\phi'(x_{0}) = f(x_{0}, y_{0}).
+\]
+Therefore, the equation of the tangent line is 
+\[
+    y - y_0 = f(x_0, y_0)(x - x_0).
+\]
+This implies that even without knowing the explicit expression for $\phi$, 
+we can obtain the slope and equation of the tangent line to the solution curve 
+at a given point from equation~\eqref{eq:first order ODE}. 
+
+\begin{remark}
+    Note that in a small neighborhood of a point on a differentiable curve, 
+    the tangent line can be seen as a first-order approximation of the curve. 
+    Utilizing this viewpoint, one can obtain an approximate solution to the differential equation. 
+    In fact, this is the fundamental idea behind Euler's method.
+\end{remark}
+
+At each point $P$ in the region $G$, 
+we can draw a short line segment $l(P)$ with slope $f(P)$. 
+We call $l(P)$ the line element of equation~\eqref{eq:first order ODE} at point $P$. 
+The region $G$ together with the entire collection of these line elements is called 
+the lineal \textbf{linear element field} or \textbf{direction field} for equation~\eqref{eq:first order ODE}.
+
+\begin{theorem}
+    A necessary and sufficient condition for a continuously differentiable curve 
+    $\Gamma = \{ (x,y) | y = \psi(x), x \in J \}$ in the plane 
+    to be an integral curve of equation~\eqref{eq:first order ODE} is that 
+    for every point $(x, y)$ on the curve $\Gamma$, 
+    its tangent line at that point coincides with the line element determined 
+    by equation~\eqref{eq:first order ODE} at that point.
+\end{theorem}
+
+\begin{proof}
+    The necessity follows from the preceding discussion. 
+    We now prove the sufficiency. 
+    For any point $(x, y) = (x, \psi(x))$ on the curve $\Gamma$, 
+    the slope of the tangent line to $\Gamma$ at this point is $\psi'(x)$. 
+    By the condition of the theorem, we have $\psi'(x) = f(x, y)$. 
+    Since $(x, y)$ is an arbitrary point on the curve, it follows that $y = \psi(x)$ is a solution to equation~\eqref{eq:first order ODE}. 
+\end{proof}

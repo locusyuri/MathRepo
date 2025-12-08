@@ -1,0 +1,485 @@
+
+\chapter{First Order Equations} % 一阶方程
+\section{Exact Equations}
+\begin{definition}{Exact Equations}
+An equation of the form
+\begin{equation}\label{eq:symmetric form}
+    M(x,y) \, \mathrm{d}x + N(x,y) \, \mathrm{d}y = 0
+\end{equation}
+is called the symmetric form of a first-order differential equation.
+
+If there exists a continuously differentiable function $u(x,y)$ such that
+\[
+\mathrm{d}U(x,y) = M(x,y) \, \mathrm{d}x + N(x,y) \, \mathrm{d}y,
+\]
+then equation~\eqref{eq:symmetric form} is said to be an \textbf{exact equation} or a \textbf{total differential equation}.
+
+It follows that, when equation~\eqref{eq:symmetric form} is exact, it can be rewritten as
+\[
+\mathrm{d}(U(x,y)) = 0,
+\]
+which implies
+\begin{equation}\label{general integral}
+    U(x,y) = c,
+\end{equation}
+where $c$ is an arbitrary constant. Equation~\eqref{general integral} is called the \textbf{general integral} of equation~\eqref{eq:symmetric form}.
+\end{definition}
+\begin{remark}
+    It should be noted that, strictly speaking, 
+    equation~\eqref{eq:symmetric form} is not a differential equation. 
+    However, expressing a first-order differential equation in the form of \eqref{eq:symmetric form} is extremely convenient for analysis.
+    This formulation does not necessarily require $y$ to be expressed as a function of $x$. 
+    For the sake of simplicity in description, we often refer to the symmetric form~\eqref{eq:symmetric form} as a differential equation, too.
+\end{remark}
+
+\begin{theorem}
+    Let the functions \(M(x, y)\) and \(N(x, y)\) be continuous in a simply connected domain \(D \subset \mathbb{R}^2\), 
+    and suppose their first-order partial derivatives \(\frac{\partial M}{\partial y}\) and \(\frac{\partial N}{\partial x}\) are also continuous. 
+    Then a necessary and sufficient condition for equation~\eqref{eq:symmetric form} to be exact is
+    \[
+    \frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}
+    \]
+    in the domain \(D\). 
+    When this condition holds, for any \((x_0, y_0), (x, y) \in D\), a general integral of equation~\eqref{eq:symmetric form} is given by
+    \[
+    \int_{\gamma} M(x, y)dx + N(x, y)dy = c,
+    \]
+    where \(\gamma\) is any curve composed of finitely many smooth segments within \(D\) 
+    connecting \((x_0, y_0)\) and \((x, y)\), and \(c\) is an arbitrary constant.
+\end{theorem}
+\begin{proof}
+    
+\end{proof}
+
+The aforementioned proof also serves as a method for determining the bivariate function $U(x, y)$ 
+that satisfies specific conditions. In addition to this approach, 
+there exist two simpler methods for solving $U(x, y)$.
+
+\begin{description}
+    \item [Utilizing Curve Integrals to Solve $U(x, y)$] 
+
+
+    \item [Term Combination Method]
+        Utilizing the properties of bivariate differential functions, 
+        we combine the terms of the differential equation into a full differential form. 
+        This method requires familiarity with some simple bivariate differential functions, such as:
+        \begin{gather*}
+            y\mathrm{d}x + x\mathrm{d}y = \mathrm{d}(xy), \\
+            \frac{y\mathrm{d}x-x\mathrm{d}y}{y^{2}} = \mathrm{d}\left(\frac{x}{y}\right), \\
+            \frac{-y\mathrm{d}x+x\mathrm{d}y}{x^{2}} = \mathrm{d}\left(\frac{y}{x}\right), \\
+            \frac{1}{x}\mathrm{d}x + \frac{1}{y}\mathrm{d}y = \frac{y\mathrm{d}x+x\mathrm{d}y}{xy} = \mathrm{d}(\ln |xy|), \\
+            \frac{1}{x}\mathrm{d}x - \frac{1}{y}\mathrm{d}y = \frac{y\mathrm{d}x-x\mathrm{d}y}{xy} = \mathrm{d}(\ln |\frac{x}{y}|), \\
+            \frac{y\mathrm{d}x-x\mathrm{d}y}{x^{2}-y^{2}} = \frac{1}{2}\mathrm{d}\left(\ln \left|\frac{x-y}{x+y}\right|\right), \\
+            \frac{y\mathrm{d}x+x\mathrm{d}y}{x^{2}+y^{2}} = \mathrm{d}\left(\arctan \frac{y}{x}\right), \\
+            \frac{y\mathrm{d}x-x\mathrm{d}y}{x^{2}+y^{2}} = \mathrm{d}\left( \operatorname{arccot} \frac{y}{x} \right).
+        \end{gather*}
+\end{description}
+
+
+\vspace{0.7cm}
+The theory above can also be rewritten in differential form:
+
+Let:
+\[
+\omega^1 = M(x, y) \, dx + N(x, y) \, dy.
+\]
+The differential form \( \omega^1 \) is said to be \textbf{closed} if \( \mathrm{d}\omega^1 = 0 \). 
+It is called \textbf{exact} if there exists a function \( U(x, y) \) such that \( \omega^1 = \mathrm{d}U(x, y) \). 
+By the Poincaré theorem, it can be concluded that on \( \mathbb{R}^2 \), 
+a first-order differential form is exact if and only if it is closed.
+Note that:
+\[
+\mathrm{d}\omega^1 = \left( \frac{\partial N}{\partial x} - \frac{\partial M}{\partial y} \right) \mathrm{d}x \wedge \mathrm{d}y.
+\]
+Clearly, \( \mathrm{d}\omega^1 = 0 \) holds if and only if:
+\[
+\frac{\partial N}{\partial x} = \frac{\partial M}{\partial y}.
+\]
+Under this condition, the expression for the function \( U(x, y) \) is:
+\[
+U(x, y) = \int \omega^1.
+\]
+
+
+\section{Separable Equations}
+\begin{definition}{Separable Equations}
+    If the functions \(M(x, y)\) and \(N(x, y)\) in Equation~\eqref{eq:symmetric form} can both be written as 
+    the product of a function of \(x\) and a function of \(y\), that is,
+    \[
+    M(x, y) = M_1(x) M_2(y), \quad N(x, y) = N_1(x) N_2(y),
+    \]
+    then equation~\eqref{eq:symmetric form} is called a separable equation.
+
+    When equation~\eqref{eq:symmetric form} is a separable equation, it can be written as
+    \begin{equation}\label{eq:separable form}
+        M_1(x) M_2(y) \, \mathrm{d}x + N_1(x) N_2(y) \, \mathrm{d}y = 0,
+    \end{equation}
+    or more conveniently as
+    \begin{equation}\label{eq:separable form 2}
+        \frac{\mathrm{d}y}{\mathrm{d}x} = f(x)g(y) \left(= -\frac{M_1(x)}{N_1(x)} \cdot \frac{N_2(y)}{M_2(y)}\right).
+    \end{equation}
+\end{definition}
+
+\begin{theorem}{Solutions to Separable Equations}
+    All the solutions to the separable equation~\eqref{eq:separable form} are given by:
+    \[
+    \int_{x_{0}}^{x}  \frac{M_{1}(t)}{N_{1}(t)}\mathrm{d}t + \int_{y_{0}}^{y} \frac{N_{2}(s)}{M_{2}(s)}\mathrm{d}s = c,
+    \]
+    and 
+    \begin{gather*}
+        y \equiv b_{i}, \quad i = 1, 2, \ldots, m, 
+        x \equiv a_{j}, \quad j = 1, 2, \ldots, n,
+    \end{gather*}
+    where \(M_{2}(b_{i})=0\quad(i=1,2,\ldots,m)\) and \(N_{1}(a_{j})=0\quad(j=1,2,\ldots,n)\), \(c\) is arbitrary constant.
+\end{theorem}
+
+\section{Homogeneous Equations}
+\begin{definition}{Homogeneous Functions}
+    A function \(f(x, y)\) is called a \textbf{homogeneous function} of degree \(n\) 
+    if it satisfies the condition:
+    \[
+    f(tx, ty) = t^n f(x, y)
+    \]
+    for all \(t > 0\).
+    
+    A function \(f(x, y)\) is called a \textbf{quasihomogeneous function} of degree \(d\) with generalized weights if
+    \[
+    f(t^\alpha s x, t^\beta s y) = t^{ds} f(x, y),
+    \]
+    where \(t > 0\), \(\alpha\) and \(\beta\) are positive constants with \(\alpha + \beta = 1\), and \(s \in \mathbb{R}\). 
+    Here, \(\alpha\) and \(\beta\) are called the weights of \(x\) and \(y\), respectively.
+\end{definition}
+
+
+\begin{definition}\label{def:homogeneous equations}
+    A first-order differential equation 
+    \begin{equation*}
+        M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y = 0
+    \end{equation*}
+    is called a \textbf{homogeneous equation} if both \(M\) and \(N\) are homogeneous functions
+    of the same degree \(n\).    
+    In other words, for the equation
+    \[
+        \frac{\mathrm{d}y}{\mathrm{d}x} = f(x, y), 
+    \]
+    \(f(x,y)\) can be rewritten as \(g\left(\frac{y}{x}\right)\).
+\end{definition}
+
+
+The equation  
+\begin{equation}\label{eq:Second kind separable equation}
+    \frac{dy}{dx} = f\left(\frac{a_1x + b_1y + c_1}{a_2x + b_2y + c_2}\right) 
+\end{equation}
+can be transformed into a separable equation via variable change, 
+where \(a_1, a_2, b_1, b_2, c_1, c_2\) are constants. 
+
+\begin{itemize}
+    \item  When \(c_1 = c_2 = 0\), the equation becomes:  
+        \[
+        \frac{dy}{dx} = f\left(\frac{a_1 + b_1 \frac{y}{x}}{a_2 + b_2 \frac{y}{x}}\right) = g\left(\frac{y}{x}\right).
+        \]
+        Let
+        \[
+        u = \frac{y}{x}, \text{ namely } y = ux. 
+        \]
+        Differentiating both sides with respect to \(x\), we get:
+        \[
+        \frac{dy}{dx} = x \frac{du}{dx} + u.
+        \]
+        Substituting the results into original equation and simplifying, we obtain:
+        \[
+        \frac{du}{dx} = \frac{g(u) - u}{x},
+        \]
+        which is a separable equation. 
+        It can be solved easily. 
+        Then, substituting \(u = \frac{y}{x}\) back, the solution is derived.
+    \item When \(c_1, c_2\) are not entirely zero, the right-hand side of ~\eqref{eq:Second kind separable equation} 
+        consists of linear polynomials of \(x\) and \(y\). Therefore:
+        \[
+        \begin{cases}\label{eq gp:two lines}
+        a_1x + b_1y + c_1 = 0, \\
+        a_2x + b_2y + c_2 = 0,
+        \end{cases}
+        \]
+        represents two intersecting straight lines on the \(Oxy\) plane. For the coefficient determinant of the system:
+        \[
+        \begin{vmatrix}
+        a_1 & b_1 \\
+        a_2 & b_2
+        \end{vmatrix},
+        \]
+        two cases are analyzed:
+        \begin{enumerate}
+            \item  If \(\begin{vmatrix} a_1 & b_1 \\ a_2 & b_2 \end{vmatrix} \neq 0\), 
+                then \(\frac{a_1}{a_2} \neq \frac{b_1}{b_2}\), 
+                indicating that the two lines intersect at a unique point \((\alpha, \beta)\) on the \(Oxy\) plane. 
+                Let:
+                \[
+                \begin{cases}
+                X = x - \alpha, \\
+                Y = y - \beta,
+                \end{cases}
+                \]
+                then~\eqref{eq gp:two lines} becomes:
+                \[
+                \begin{cases}
+                a_1X + b_1Y = 0, \\
+                a_2X + b_2Y = 0.
+                \end{cases}
+                \]
+                Substituting into~\ref{eq:Second kind separable equation}, it simplifies to:
+                \[
+                \frac{dY}{dX} 
+                = f\left(\frac{a_1 + b_1 \frac{Y}{X}}{a_2 + b_2 \frac{Y}{X}}\right) 
+                = g\left(\frac{Y}{X}\right).
+                \]
+                This is a homogeneous differential equation. 
+                Solving it by substitution and reverting back to the original variables 
+                yields the solution to equation~\ref{eq:Second kind separable equation}.
+            \item When \(\begin{vmatrix} a_1 & b_1 \\ a_2 & b_2 \end{vmatrix} = 0\). 
+                To ensure this system holds, there are three possible scenarios:
+                \begin{enumerate}
+                    \item  If \(a_1 = b_1 = 0\),~\ref{eq:Second kind separable equation} becomes:
+                        \[
+                        \frac{dy}{dx} = f\left(\frac{c_1}{a_2x + b_2y + c_2}\right),
+                        \]
+                        and when \(a_2 = b_2 = 0\), it becomes:
+                        \[
+                        \frac{dy}{dx} = f\left(\frac{a_1x + b_1y + c_1}{c_2}\right).
+                        \]
+                        In this case, 
+                        let
+                        \[
+                        u = \frac{a_1x + b_1y + c_1}{c_2}.
+                        \]
+                        Then it can be transformed into a separable equation.
+                    \item  If \(b_1 = b_2 = 0\), ~\ref{eq:Second kind separable equation} transforms into:
+                        \[
+                        \frac{dy}{dx} = f\left(\frac{a_1x + c_1}{a_2x + c_2}\right),
+                        \]
+                        and
+                        \[
+                        \frac{dy}{dx} = f\left(\frac{b_1y + c_1}{b_2y + c_2}\right),
+                        \]
+                        when \(a_1 = a_2 = 0\). 
+                    \item If \(\frac{a_1}{a_2} = \frac{b_1}{b_2} = k\), let \(u = a_2x + b_2y\). In this case:
+                        \begin{gather*}
+                            \frac{du}{dx} = a_2 + b_2 \frac{\mathrm{d}y}{\mathrm{d}x} \\
+                            f\left( \frac{k(a_2x + b_2y) + c_1}{(a_2x + b_2y) + c_2} \right) 
+                                = f\left( \frac{ku + c_1}{u + c_2} \right) = g(u)
+                        \end{gather*}
+                        which simplifies to:
+                        \[
+                        \frac{du}{dx} = a_2 + b_2 g(u).
+                        \]
+                \end{enumerate}
+        \end{enumerate}
+\end{itemize}
+
+
+
+
+
+
+\begin{example}
+    Consider the differential equation
+    \[
+    M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y = 0,
+    \]
+    where \(M(x, y)\) and \(N(x, y)\) are quasihomogeneous functions of degree \(d_0\) and \(d_1\) 
+    with weights \(\alpha\) and \(\beta\) for \(x\) and \(y\), respectively.
+    Proposition: When \(d_0 = d_1 + \beta - \alpha\) the equation can be solved by elementary integration method.
+\end{example}
+\section{Linear Equations}
+\begin{definition}{First-Order Linear Equations}
+    A \textbf{first-order linear equation} is an equation of the form
+    \begin{equation}\label{eq:first order linear equation}
+        \frac{\mathrm{d}y}{\mathrm{d}x} + p(x) y = q(x),
+    \end{equation}
+    where \(p(x)\) and \(q(x)\) are continuous functions on the interval \((a, b)\).
+    In Equation~\eqref{eq:first order linear equation}, when \(q(x) \equiv  0\), we obtain
+    \begin{equation}\label{eq:first order homogeneous linear equation}
+        \frac{\mathrm{d}y}{\mathrm{d}x} + p(x) y = 0,
+    \end{equation}
+    which is called a \textbf{first-order homogeneous linear equation} corresponding to Equation~\eqref{eq:first order linear equation}.
+    Otherwise, it is called a first-order non-homogeneous linear equation.
+\end{definition}
+\begin{note}
+    It should be noted that the definition of a homogeneous equation here \emph{differs} from that in the previous section.
+\end{note}
+
+Firstly, we solve the first-order homogeneous linear equation.
+Equation~\ref{eq:first order homogeneous linear equation} is separable, 
+thus its general solution is given by:
+\[
+y = ce^{-\int p(x) \, \mathrm{d}x},
+\]
+where \(c\) is an arbitrary constant.
+
+Since ~\ref{eq:first order homogeneous linear equation} is a special case of ~\ref{eq:first order linear equation},
+the general solution of ~\ref{eq:first order linear equation} can be expressed as:
+\[
+y = c(x) e^{-\int p(x) \, \mathrm{d}x},
+\]
+substituting it into ~\ref{eq:first order linear equation} yields:
+\[
+y = e^{-\int p(x) \, \mathrm{d}x} \left( c + \int q(x) e^{\int p(x) \, \mathrm{d}x} \, \mathrm{d}x \right).
+\]
+
+This method of solving first-order linear equations is known as the \textbf{method of variation of constants}.
+
+
+\begin{definition}{Bernoulli's Equation}
+    A first-order differential equation of the form
+    \begin{equation*}
+        \frac{\mathrm{d}y}{\mathrm{d}x} + p(x) y = q(x) y^n,\quad n \neq 0, 1,
+    \end{equation*}
+    where \(n\) is a real number and \(p(x)\) and \(q(x)\) are continuous functions on the interval \((a, b)\), 
+    is called a \textbf{Bernoulli's equation}.
+\end{definition}
+Bernoulli's equation can be transformed into a first-order linear equation by the substitution:
+\[z = y^{1-n}.\]
+Differentiating both sides with respect to \(x\) gives:
+\[\frac{\mathrm{d}z}{\mathrm{d}x} = (1-n) y^{-n} \frac{\mathrm{d}y}{\mathrm{d}x}.\]
+Substituting \(\frac{\mathrm{d}y}{\mathrm{d}x}\) from Bernoulli's equation into the above expression yields:
+\[\frac{\mathrm{d}z}{\mathrm{d}x} = (1-n) \left( -p(x) z + q(x) \right).\]
+This is a first-order linear equation in \(z\), which can be solved using the method for first-order linear equations.
+
+\section{Integrating Factors}
+\begin{definition}{Integrating Factors}
+    An \textbf{integrating factor} for a first-order differential equation of the form
+    \begin{equation}\label{eq:integrating factor equation}
+        M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y = 0
+    \end{equation}
+    is a differentiable function \(\mu(x, y)\) such that when multiplied by the equation:
+    \[
+    \mu(x, y) M(x, y) \, \mathrm{d}x + \mu(x, y) N(x, y) \, \mathrm{d}y = 0,
+    \]
+    it becomes an exact equation.
+    Id est, there exists a function \(\Phi(x, y)\) such that
+    \[
+    \mu(x, y) M(x, y) \, \mathrm{d}x + \mu(x, y) N(x, y) \, \mathrm{d}y = \mathrm{d}U(x, y).
+    \]
+    If such functions \(\mu(x, y)\) and \(U(x, y)\) exist, and \(U(x, y)\) is smooth, then
+    \begin{equation}\label{eq:integrating factor condition}
+        \frac{\partial(\mu M)}{\partial y} = \frac{\partial(\mu N)}{\partial x}
+        \left( = \frac{\partial^2 U}{\partial x \partial y} \right).
+    \end{equation}
+    In this case, \(\mu(x, y)\) is called an integrating factor for equation~\eqref{eq:integrating factor equation}.
+\end{definition}
+According to Equation~\eqref{eq:integrating factor condition}, 
+finding an integrating factor \(\mu(x, y)\) for equation~\eqref{eq:integrating factor equation}
+is equivalent to solving the partial differential equation:
+\begin{equation}\label{eq:integrating factor PDE}
+    \frac{\partial \mu}{\partial x} N - \frac{\partial \mu}{\partial y} M 
+    = \left( \frac{\partial M}{\partial y} - \frac{\partial N}{\partial x} \right) \mu.
+\end{equation}
+
+\begin{theorem}
+\begin{enumerate}
+    \item For the partial differential equation~\ref{eq:integrating factor PDE} 
+        to have a solution $\mu(x)$ that depends only on $x$, the necessary and sufficient condition is:
+
+        The function $G$ defined below must depend only on $x$:
+        \[
+        G = -\frac{1}{N(x, y)}\left( \frac{\partial N}{\partial x} - \frac{\partial M}{\partial y} \right) .
+        \]
+
+        In this case, we have:
+        \[
+        \mu(x) = e^{\int_{x_0}^{x} G(t) \, dt}.
+        \]
+    
+    \item 
+        For the partial differential equation~\ref{eq:integrating factor PDE} 
+        to have a solution $\mu(y)$ that depends only on $y$, 
+        the necessary and sufficient condition is:
+
+        The function $H$ defined below must depend only on $y$:
+        \[
+        H = \frac{1}{M(x, y)}\left( \frac{\partial N}{\partial x} - \frac{\partial M}{\partial y} \right) .
+        \]
+
+        In this case, we have:
+        \[
+        \mu(y) = e^{\int_{y_0}^{y} H(s) \, ds}.
+        \]
+
+    \item 
+        For equation~\ref{eq:integrating factor equation} to have an integrating factor of the form 
+        $\mu = \mu(\phi(x, y))$, the necessary condition is:
+        \[
+        \frac{1}{\frac{\partial \phi}{\partial x} N - \frac{\partial \phi}{\partial y} M} 
+        \left( \frac{\partial M}{\partial y} - \frac{\partial N}{\partial x} \right) 
+        = f(\phi(x, y)),
+        \]
+        where \(f\) is a certain univariate function.
+\end{enumerate}
+\end{theorem}
+
+
+\begin{theorem}
+    Let the functions \(P(x, y)\), \(Q(x, y)\), \(\mu_1(x, y)\), and \(\mu_2(x, y)\) be continuously differentiable. 
+    Suppose \(\mu_1(x, y)\) and \(\mu_2(x, y)\) are integrating factors for equation~\eqref{eq:integrating factor equation}, 
+    and the ratio \(\frac{\mu_1(x, y)}{\mu_2(x, y)}\) is not a constant. 
+    Then: 
+    \[
+    \frac{\mu_1(x, y)}{\mu_2(x, y)} = c
+    \]
+    is a general solution to the equation, where \(c\) is an arbitrary constant.
+\end{theorem}
+
+
+\section{Implicit Equations}
+This section discusses the problem of solving the first-order implicit differential equations,
+\begin{equation}\label{eq:implicit ODE}
+F(x, y, y') = 0
+\end{equation}
+where \(F\) is a continuously differentiable function. 
+A so-called implicit differential equation is one in which \(y'\) does not have an explicit solution, 
+that is, the equation cannot be written in the form \(y' = f(x, y)\).
+
+\begin{leftbarTitle}{Differentiation Method}\end{leftbarTitle}
+Suppose that Equation~\eqref{eq:implicit ODE} can be solved for \(y\), that is,
+\begin{equation}\label{eq:differentiation method}
+    y = f(x, p),\quad p = \frac{dy}{dx},
+\end{equation}
+where \(f(x, p)\) is a continuously differentiable function.
+
+Differentiating both sides of \(y = f(x, p)\) with respect to \(x\), we obtain
+\[
+p = \frac{dy}{dx} = \frac{\partial f}{\partial x} + \frac{\partial f}{\partial p} \frac{dp}{dx},
+\]
+that is,
+\begin{equation*}
+\frac{\partial f}{\partial p} \frac{dp}{dx} = p - \frac{\partial f}{\partial x}.
+\end{equation*}
+
+This is a first-order differential equation in the variables \(x\), \(p\), \(\frac{dp}{dx}\). 
+If a solution \(p = p(x)\) can be found, then Equation~\eqref{eq:differentiation method} yields a solution
+\[
+y = f(x, p(x)).
+\]
+\begin{leftbarTitle}{Parametric Method}\end{leftbarTitle}
+In general, Equation~\eqref{eq:implicit ODE} represents a surface in the \((x, y, p)\)-space. 
+Therefore, the solution can be obtained using a parametric representation of the surface. 
+Suppose the parametric form of the surface described by Equation~\eqref{eq:implicit ODE} is
+\[
+x = x(u, v),\quad y = y(u, v),\quad p = p(u, v) = y'.
+\]
+Note that
+\[
+dy = p \; \mathrm{d}x,
+\]
+thus we obtain
+\[
+y_u' \mathrm{d}u + y_v' \mathrm{d}v = p(u, v)(x_u' \mathrm{d}u + x_v' \mathrm{d}v).
+\]
+This is an explicit differential equation in the variables \(u\) and \(v\). Suppose it admits a solution
+\[
+v = v(u, c),
+\]
+where \(c\) is a constant, then Equation~\eqref{eq:implicit ODE} has a solution
+\[
+x = x(u, v(u, c)),\quad y = y(u, v(u, c)).
+\]

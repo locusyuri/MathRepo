@@ -1,0 +1,210 @@
+\chapter{Nonlinear Equations and Stability} % 非线性方程与稳定性
+\section{The Phase Plane} % 相平面
+We are concerned with systems of two simultaneous differential equations of the form:
+\begin{equation}\label{eq:phase plane system}
+    \begin{cases}
+        \frac{\mathrm{d}x}{\mathrm{d}t} = F(x, y), \\
+        \frac{\mathrm{d}y}{\mathrm{d}t} = G(x, y).
+    \end{cases}
+\end{equation}
+Assume that the functions \(F\) and \(G\) are continuous and have continuous partial derivatives in
+some domain \(D\) of the \(xy\)-plane. 
+
+If \((x_{0}, y_{0})\) is a point in this domain, then by existence and uniqueness theorem
+(\ref{thm:existence and uniqueness theorem for system of first-order linear equations})
+there exists a unique solution \(x=x(t), y=y(t)\) of the system~\eqref{eq:phase plane system} 
+satisfying the initial conditions
+\[
+x(t_{0}) = x_{0}, \quad y(t_{0}) = y_{0}.
+\]
+The solution is defined in some time interval \(I\) that contains the point \(t_{0}\).
+Frequently, we will write the above initial value problem in the vector form
+\begin{equation}\label{eq:vector form of phase plane system}
+    \frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = \mathbf{f}(\mathbf{x}),\quad
+    \mathbf{x}(t_{0}) = \mathbf{x}^{0},
+\end{equation}
+where \(\mathbf{x} = \begin{pmatrix} x & y \end{pmatrix}^{\mathrm{T}}\),
+\(\mathbf{f}(\mathbf{x}) = \begin{pmatrix} F(x, y) & G(x, y) \end{pmatrix}^{\mathrm{T}}\),
+and \(\mathbf{x}^{0} = \begin{pmatrix} x_{0} & y_{0} \end{pmatrix}^{\mathrm{T}}\).
+
+\begin{remark}
+    Observe that the functions \(F\) and \(G\) in equations~\ref{eq:phase plane system} 
+    do not depend on the independent variable \(t\), but only on the dependent variables \(x\) and \(y\). 
+    A system with this property is said to be \textbf{autonomous}. 
+\end{remark}
+
+Value range \(D\) of \(\mathbf{x}\) is called the \textbf{phase space} of the system~\eqref{eq:vector form of phase plane system}.
+Each solution \(\mathbf{x} = \mathbf{x}(t)\) of~\eqref{eq:vector form of phase plane system}
+determines a curve in the phase space, called a \textbf{phase trajectory} or \textbf{orbit} of the system.
+Drawing all the typical trajectories of the system (representing different initial conditions) on the same phase plane, 
+with arrows indicating the direction of flow, creates a \textbf{phase portrait}. % 相图
+In fact, the orbit of a solution \(\mathbf{x} = \mathbf{x}(t)\) on the phase plane
+is just the projection of its integral curve in the three-dimensional space \((t, x, y)\)
+onto the \(xy\)-plane.
+
+The points, if any, where \(\mathbf{f}(\mathbf{x}) = \mathbf{0}\) are called 
+\textbf{equilibrium points} or \textbf{critical points} or \textbf{singular points} of the system.
+
+
+
+\section{Ляпунов Stability} % Lyapunov 稳定性
+\begin{leftbarTitle}{Lyapunov Stability}\end{leftbarTitle}
+
+Consider the differential equations system:
+\begin{equation}\label{eq:differential equations system Lyapunov}
+    \frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = \mathbf{f}(t, \mathbf{x}),
+\end{equation}
+where \(\mathbf{f}(t, \mathbf{x})\) is continuous for \(\mathbf{x} \in D \subset \mathbb{R}^{n}\) 
+and \(t \in (-\infty, +\infty)\),
+and satisfies the local Lipschitz condition with respect to \(\mathbf{x}\).
+
+Let the unique solution to~\eqref{eq:differential equations system Lyapunov}
+with initial condition \((t_{0}, \mathbf{x}_{0})\) (\(\mathbf{x}_{0}=\mathbf{x}(t_{0})\)) 
+be denoted as \(\mathbf{x}= \mathbf{x}(t; t_{0}, \mathbf{x}_{0})\)
+and \(\mathbf{x} = \boldsymbol{\phi}(t)\) be also a solution to~\eqref{eq:differential equations system Lyapunov}.
+
+\begin{definition}{Stability in the Sense of Ляпунов}
+    The solution \(\mathbf{x} = \boldsymbol{\phi}(t)\) to~\eqref{eq:differential equations system Lyapunov}
+    is said to be \textbf{stable in the sense of Ляпунов} (simplified as stable),
+    if for any \(\varepsilon > 0\) and \(t_{0}\geqslant 0\),
+    there exists a \(\delta = \delta(\varepsilon, t_{0}) > 0\),
+    such that when \(\|\mathbf{x}_{0} - \boldsymbol{\phi}(t_{0})\| < \delta\),
+    it holds that
+    \[
+    \|\mathbf{x}(t; t_{0}, \mathbf{x}_{0}) - \boldsymbol{\phi}(t)\| < \varepsilon,
+    \]
+    for all \(t \geqslant  t_{0}\).
+
+    If \(\mathbf{x} = \boldsymbol{\phi}(t)\) is stable, 
+    and there exists \(\delta_{1}\in (0, \delta]\) such that when \(\|\mathbf{x}_{0} - \boldsymbol{\phi}(t_{0})\| < \delta_{1}\),
+    it holds that
+    \[
+    \lim_{t \to +\infty} \|\mathbf{x}(t; t_{0}, \mathbf{x}_{0}) - \boldsymbol{\phi}(t)\| = 0,
+    \]
+    then \(\mathbf{x} = \boldsymbol{\phi}(t)\) is said to be \textbf{asymptotically stable}.
+
+    If \(\mathbf{x} = \boldsymbol{\phi}(t)\) is asymptotically stable,
+    and there exists \(\delta_{2}\in (0, \delta_{1}], \alpha, \beta\) such that 
+    when \(\|\mathbf{x}_{0} - \boldsymbol{\phi}(t_{0})\| < \delta_{2}\),
+    it holds that
+    \[
+    \|\mathbf{x}(t; t_{0}, \mathbf{x}_{0}) - \boldsymbol{\phi}(t)\| \leqslant 
+    \alpha \|\mathbf{x}_{0} - \boldsymbol{\phi}(t_{0})\| e^{-\beta (t - t_{0})},
+    \]
+    for all \(t \geqslant t_{0}\),
+    then \(\mathbf{x} = \boldsymbol{\phi}(t)\) is said to be \textbf{exponentially stable}.
+\end{definition}
+
+By substitution
+\[
+\mathbf{y} = \mathbf{x}(t; t_{0}, \mathbf{x}_{0}) - \boldsymbol{\phi}(t),
+\]
+we have
+\begin{align*}
+    \frac{\mathrm{d} \mathbf{y}}{\mathrm{d}t} = & \frac{\mathrm{d} \mathbf{x}}{\mathrm{d}t} - \frac{\mathrm{d} \boldsymbol{\phi}}{\mathrm{d}t} \\
+    = & \mathbf{f}(t, \mathbf{x}) - \mathbf{f}(t, \boldsymbol{\phi}) \\
+    = & \mathbf{f}(t, \mathbf{y} + \boldsymbol{\phi}) - \mathbf{f}(t, \boldsymbol{\phi}) \\
+    := & \mathbf{F}(t, \mathbf{y}),
+\end{align*}
+then the system~\eqref{eq:differential equations system Lyapunov} can be transformed into:
+\begin{equation}\label{eq:transformed system Lyapunov}
+    \frac{\mathrm{d} \mathbf{y}}{\mathrm{d}t} = \mathbf{F}(t, \mathbf{y}).
+\end{equation}
+Then the stability of solution \(\mathbf{x} = \boldsymbol{\phi}(t; t_{0}, \mathbf{x}_{1})\)
+to~\eqref{eq:differential equations system Lyapunov} is \underline{equivalent to the stability of the zero solution}
+to~\eqref{eq:transformed system Lyapunov}.
+
+Without loss of generality, we only discuss the stability of the zero solution \(\mathbf{x} = \mathbf{0}\)
+to the autonomous system~\eqref{eq:differential equations system Lyapunov},
+and assume that \(\mathbf{f}(t, \mathbf{0}) \equiv \mathbf{0}\).
+The following definition is derived:
+\begin{definition}{Stability of the Zero Solution}
+    The zero solution \(\mathbf{x} = \mathbf{0}\) to~\eqref{eq:differential equations system Lyapunov}
+    is said to be \textbf{stable} if for any \(\varepsilon > 0\) and \(t_{0} \geqslant 0\),
+    there exists a \(\delta = \delta(\varepsilon, t_{0}) > 0\),
+    such that when \(\|\mathbf{x}_{0}\| < \delta\),
+    it holds that
+    \[
+    \|\mathbf{x}(t; t_{0}, \mathbf{x}_{0})\| < \varepsilon,
+    \]
+    for all \(t \geqslant t_{0}\).
+
+    If \(\mathbf{x} = \mathbf{0}\) is stable, 
+    and there exists \(\delta_{1}\in (0, \delta]\) such that when \(\|\mathbf{x}_{0}\| < \delta_{1}\),
+    it holds that
+    \[
+    \lim_{t \to +\infty} \|\mathbf{x}(t; t_{0}, \mathbf{x}_{0})\| = 0,
+    \]
+    then \(\mathbf{x} = \mathbf{0}\) is said to be \textbf{asymptotically stable}.
+
+    If \(\mathbf{x} = \mathbf{0}\) is asymptotically stable,
+    and there exists \(\delta_{2}\in (0, \delta_{1}], \alpha, \beta\) such that 
+    when \(\|\mathbf{x}_{0}\| < \delta_{2}\),
+    it holds that
+    \[
+    \|\mathbf{x}(t; t_{0}, \mathbf{x}_{0})\| \leqslant 
+    \alpha \|\mathbf{x}_{0}\| e^{-\beta (t - t_{0})},
+    \]
+    for all \(t \geqslant t_{0}\),
+    then \(\mathbf{x} = \mathbf{0}\) is said to be \textbf{exponentially stable}.
+\end{definition}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/stable.png}
+\end{figure}
+
+\section{Ляпунов Second Method} % Lyapunov 第二方法
+Ляпунов established two methods for studying the stability of solutions to differential equations:
+\newline The first method is based on the series solutions of differential equations,
+which is often difficult to apply in practice.
+\newline The second method, known as the Ляпунов second method,
+relies on constructing a special scalar function, called the Ляпунов function,
+to analyze the stability of solutions without explicitly solving the differential equations,
+which is also called the direct method of Ляпунов.
+
+For convenience, we only consider autonomous system:
+\begin{equation}\label{eq:autonomous system Lyapunov}
+    \frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = \mathbf{f}(\mathbf{x}),\quad \mathbf{x}\in G \subset \mathbb{R}^{n},
+\end{equation}
+where \(\mathbf{f}(\mathbf{x})\) is continuous in \(G\)
+and satisfies the local Lipschitz condition with respect to \(\mathbf{x}\),
+and \(\mathbf{f}(\mathbf{0}) = \mathbf{0}\).
+
+\begin{definition}{Ляпунов Function}
+    A scalar function \(V(\mathbf{x}): G \to \mathbb{R}\) is called a \textbf{Ляпунов function},
+    if it satisfies the following conditions:
+    \begin{itemize}
+        \item \(V(\mathbf{0}) = 0\);
+        \item \(V(\mathbf{x}), \nabla V(\mathbf{x})\) are continuous in \(G\).
+    \end{itemize}
+    In \(G_{1} \subseteq G\),
+    If \(V(\mathbf{x}) > 0 (<0)\) for all \(\mathbf{x}\) except \(\mathbf{0}\),
+    then \(V(\mathbf{x})\) is called a \textbf{positive/negative definite};
+    if \(V(\mathbf{x}) \geqslant 0 (\leqslant 0)\) for all \(\mathbf{x}\),
+    then \(V(\mathbf{x})\) is called a \textbf{positive/negative semidefinite};
+    otherwise, it is called an \textbf{indefinite}.
+\end{definition}
+
+
+\begin{theorem}{Ляпунов Stability Theorem}
+    For the autonomous system~\eqref{eq:autonomous system Lyapunov},
+    let \(V(\mathbf{x})\) be a Ляпунов function in \(G\),
+    and its total derivative along the trajectories of~\eqref{eq:autonomous system Lyapunov} is given by:
+    \[
+    \dot{V}(\mathbf{x}) = \nabla V(\mathbf{x}) \cdot \mathbf{f}(\mathbf{x}) 
+    = \sum_{i=1}^{n}\frac{\partial V}{\partial x_i} f_i(\mathbf{x}).
+    \]
+    Then:
+    \begin{description}
+        \item[Stability Theorem] if \(V(\mathbf{x})\) is positive definite
+            and \(\dot{V}(\mathbf{x})\) is negative semidefinite in \(G\),
+            then the zero solution \(\mathbf{x} = \mathbf{0}\) is stable.
+        \item[Asymptotically Stability Theorem] if \(V(\mathbf{x})\) is positive definite
+            and \(\dot{V}(\mathbf{x})\) is negative definite in \(G\),
+            then the zero solution \(\mathbf{x} = \mathbf{0}\) is asymptotically stable.
+        \item[Unstability Theorem] if \(V(\mathbf{x})\) is positive definite
+            and \(\dot{V}(\mathbf{x})\) is positive definite in \(G\),
+            then the zero solution \(\mathbf{x} = \mathbf{0}\) is unstable.
+    \end{description}
+\end{theorem}
