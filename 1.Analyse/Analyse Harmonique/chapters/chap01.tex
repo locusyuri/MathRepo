@@ -305,7 +305,7 @@ First, we need the following important lemma:
         & \leqslant \left| \sum_{i=1}^{n} \int_{x_{i-1}}^{x_{i}} \left( f(x)-f(x_{i}) \right)\sin(px) \, \mathrm{d}x \right| 
         + \left| \sum_{i=1}^{n} \int_{x_{i-1}}^{x_{i}} f(x_{i})\sin(px) \, \mathrm{d}x \right| \\
         & \leqslant \sum_{i=1}^{n} \omega_i \Delta x_i 
-        + \sum_{i=1}^{n} \int_{x_{i-1}}^{x_{i}} \left| f(x_{i}) \right| \left| \sin(px) \right|   \, \mathrm{d}x \\
+        + M\sum_{i=1}^{n}\left| \int_{x_{i-1}}^{x_{i}} \sin(px)  \, \mathrm{d}x \right| \\
         & \leqslant \sum_{i=1}^{n} \omega_i \Delta x_i + M \cdot n \cdot \frac{2}{p} \to 0, \quad (p \to +\infty).
     \end{align*}
     Thus, \(\lim_{p \to \infty}\int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x = 0\).
@@ -338,12 +338,30 @@ First, we need the following important lemma:
 
 Then we can state Riemann's Localization Theorem:
 \begin{theorem}{Riemann's Localization Theorem}
-    The convergence or divergence of the Fourier series of a function \( f(x) \) 
+    The convergence or divergence of the Fourier series of a function \( f(x)\in  \mathcal{R}[-\pi, \pi]\) 
     at a given point \( x \) depends only on the behavior of \( f(x) \) in 
     an arbitrarily small neighborhood of \( x \).
 \end{theorem}
 \begin{proof}
-    
+    For any given \(\delta > 0\), since \(f(x)\in \mathcal{R}[-\pi, \pi]\),
+    \(\frac{f(x+u)+f(x-u)}{\sin \frac{u}{2}}\in \mathcal{R}[\delta, \pi]\).
+    \newline Then by Riemann-Lebesgue lemma (\ref{lem:Riemann-Lebesgue}), we have:
+    \[
+    \lim_{N \to \infty} \int_{\delta}^{\pi} 
+    \left[ f(x + u) + f(x - u) \right] \frac{\sin \left( N + \frac{1}{2} \right) u}{\sin \frac{u}{2}} \, \mathrm{d}u = 0.
+    \]
+    Thus, divided the integral interval of \(S_{N}(f; x)\) into \([0, \delta]\) and \([\delta, \pi]\), that is:
+    \[
+    S_{N}(f; x) = \frac{1}{2\pi} \int_{0}^{\delta} \left[ f(x + u) + f(x - u) \right] D_{N}(u) \, \mathrm{d}u
+    + \frac{1}{2\pi} \int_{\delta}^{\pi} 
+    \left[ f(x + u) + f(x - u) \right] \frac{\sin \left( N + \frac{1}{2} \right) u}{\sin \frac{u}{2}} \, \mathrm{d}u.
+    \]
+    When \(N \to +\infty\), the second term tends to zero, i.e.,
+    the convergence of \(S_{N}(f; x)\) only depends on the first term:
+    \[
+    \lim_{N \to +\infty} S_{N}(f; x) = \lim_{N \to +\infty} \frac{1}{2\pi} \int_{0}^{\delta}
+    \left[ f(x + u) + f(x - u) \right] D_{N}(u) \, \mathrm{d}u.
+    \]
 \end{proof}
 
 \vspace{0.7cm}
@@ -365,9 +383,72 @@ In this section, we will discuss several important convergence tests from coarse
     When \(\alpha = 1\), it is called \textbf{Lipschitz condition}.
 \end{definition}
 
+\begin{lemma}{Dirichlet's Lemma}
+    Let \(f(x)\) be monotonic on \([0, \delta]\), then:
+    \[
+    \lim_{p \to \infty} \int_{0}^{\delta} \frac{f(u)-f(0+)}{u} \sin(pu) \, \mathrm{d}u = 0.
+    \]
+\end{lemma}
+\begin{proof}
+    Without loss of generality, assume that \(f(x)\) is increasing on \([0, \delta]\),
+    then for any \( \varepsilon \), there exists a \( \eta \in (0, \delta) \), such that:
+    \[
+    0 \leqslant f(u) - f(0+) < \varepsilon, \quad u \in (0, \eta].
+    \]
+    Divide the integral into two parts:
+    \begin{align*}
+        & \int_{0}^{\delta} \frac{f(u)-f(0+)}{u} \sin(pu) \, \mathrm{d}u  \\
+        =& \int_{0}^{\eta} \frac{f(u)-f(0+)}{u} \sin(pu) \, \mathrm{d}u 
+        + \int_{\eta}^{\delta} \frac{f(u)-f(0+)}{u} \sin(pu) \, \mathrm{d}u.
+    \end{align*}
+
+    For the first term, by integral second mean value theorem,
+    there exists \(\xi \in [0, \eta]\),
+    \begin{align*}
+        \left| \int_{0}^{\eta} \frac{f(u)-f(0+)}{u} \sin(pu) \, \mathrm{d}u \right| 
+        &=
+        [f(\eta) - f(0+)] \left| \int_{\xi}^{\eta} \frac{\sin (pu)}{u} \,  \mathrm{d}u \right| \\
+        & \leqslant 
+        \varepsilon \left| \int_{\xi}^{\eta} \frac{\sin (pu)}{u} \,  \mathrm{d}u \right| \\
+        & = 
+        \left| \int_{p\xi}^{p\eta} \frac{\sin u}{u} \,  \mathrm{d}u \right| \varepsilon
+    \end{align*}
+    Since 
+    \[
+    \int_{0}^{+\infty} \frac{\sin u}{u} \,  \mathrm{d}u = \frac{\pi}{2},
+    \]
+    there exists a constant \(M > 0\), such that:
+    \[
+    \left| \int_{p\xi}^{p\eta} \frac{\sin u}{u} \,  \mathrm{d}u \right| < M,
+    \]
+    that is,
+    \[
+    \left| \int_{0}^{\eta} \frac{f(u)-f(0+)}{u} \sin(pu) \, \mathrm{d}u \right| < M \varepsilon.
+    \]
+
+    For the second term, since \(\frac{f(u)-f(0+)}{u}\in \mathcal{R}[\eta,\delta]\),
+    by Riemann-Lebesgue lemma (\ref{lem:Riemann-Lebesgue}), 
+    there exists a \(P > 0\), such that when \(p > P\):
+    \[
+    \left| \int_{\eta}^{\delta} \frac{f(u)-f(0+)}{u} \sin(pu) \, \mathrm{d}u \right| < \varepsilon.
+    \]
+
+    In summary, the conclusion holds.
+\end{proof}
+\begin{note}
+    \begin{itemize}
+        \item There is an equivalent form of Dirichlet's lemma:
+        \[
+        \lim_{p \to \infty} \int_{0}^{\delta} f(u) \frac{\sin (pu)}{u} \, \mathrm{d}u = \frac{\pi}{2} f(0+).
+        \] 
+        \item If \(f(x)\) is a piecewise monotonic bounded function,
+        then Dirichlet's lemma still holds.
+    \end{itemize}
+\end{note}
+
 \begin{theorem} 
     Let \( f(x) \in \mathcal{R}[-\pi, \pi] \), and satisfies one of the following conditions,
-    then the Fourier series of \( f(x) \) converges to \( \frac{f(x+)+f(x-)}{2} \) at every point \( x \):
+    then the Fourier series of \( f(x) \) converges to \( \frac{f(x+)+f(x-)}{2} \) at point \( x \):
     \begin{description}
         \item[Lipschitz's Test] If \(f \in \text{Lip}_\alpha(x)\).
 
@@ -384,7 +465,7 @@ In this section, we will discuss several important convergence tests from coarse
             \]
             where \( S = \frac{f(x+) + f(x-)}{2} \).
 
-        \item[Dirichlet-Jordan Test] If \( f(x) \) is of bounded variation in a neighborhood of point \( x \),
+        \item[Dirichlet-Jordan Test] If \( f(x) \) is of bounded variation on some neighborhood of point \( x \),
             i.e., there exists a \( \delta > 0 \), such that \( f \in BV(x - \delta, x + \delta) \).
     \end{description}
 \end{theorem}
@@ -564,81 +645,4 @@ the more high-frequency components it has (and the slower the coefficients decay
         \bottomrule
     \end{tabular}
 \end{table}
-
-\begin{leftbarTitle}{Parseval's Identity}\end{leftbarTitle}
-\begin{theorem}{Square Approximation Property of Fourier Series} % Fourier 级数的平方逼近性质
-    Let \(f(x)\in \mathcal{R}[-\pi, \pi]\), and \(W\) be an \(N\)-degree subspace of \(\mathcal{R}[-\pi, \pi]\),
-    then the best approximation of \(f(x)\) in \(W\) is just given by its Fourier series partial sum \(S_{N}(f; x)\):
-    \[
-    S_{N}(f; x) = \sum_{n=-N}^{N} \hat{f}(n) e^{inx} = \frac{a_0}{2} + \sum_{n=1}^{N} \left[ a_n \cos(nx) + b_n \sin(nx) \right].
-    \]
-    And the remainder \( E_{N}(f; x) = f(x) - S_{N}(f; x) \) satisfies\footnote{
-        Refer to \emph{Algèbre Linéaire - Section 10.5: Orthogonal Completion and Orthogonal Projection}.
-    }:
-    \[
-    \| E_{N}(f; x) \|^2 = \| f \|^2 - \sum_{n=-N}^{N} |\hat{f}(n)|^2
-    = \frac{1}{\pi}\int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x - \left[ \frac{a_0^2}{2} + \sum_{n=1}^{N} (a_n^2 + b_n^2) \right].
-    \]
-\end{theorem}
-
-\begin{theorem}{Bessel's Inequality} % 贝塞尔不等式
-    Let \( f(x) \in \mathcal{R}[-\pi, \pi] \) with Fourier coefficients \( \hat{f}(n) \),
-    then for any integer \( N \geqslant 0 \):
-    \[
-    \sum_{n=-N}^{N} |\hat{f}(n)|^2 \leqslant \| f \|^2,
-    \]
-    or in real form:
-    \[
-    \frac{a_0^2}{2} + \sum_{n=1}^{N} (a_n^2 + b_n^2) \leqslant \frac{1}{\pi} \int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x.
-    \]
-\end{theorem}
-
-\begin{theorem}{Parseval's Identity} % Parseval 恒等式
-    Let \( f(x) \in \mathcal{R}[-\pi, \pi] \) with Fourier coefficients \( \hat{f}(n) \),
-    then:
-    \[
-    \sum_{n=-\infty}^{+\infty} |\hat{f}(n)|^2 = \| f \|^2,
-    \]
-    or in real form:
-    \[
-    \frac{a_0^2}{2} + \sum_{n=1}^{+\infty} (a_n^2 + b_n^2) = \frac{1}{\pi} \int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x.
-    \]
-
-    The generalized form is:
-    \[
-    \sum_{n=-\infty}^{+\infty} \hat{f}(n) \overline{\hat{g}(n)} = \langle f, g \rangle,
-    \]
-    or in real form:
-    \[
-    \frac{a_0 c_0}{2} + \sum_{n=1}^{+\infty} (a_n c_n + b_n d_n) = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) g(x) \, \mathrm{d}x,
-    \]
-    where \( g(x) \in \mathcal{R}[-\pi, \pi] \) with Fourier coefficients \( \hat{g}(n) \),
-    \[
-    g(x) \sim \frac{c_0}{2} + \sum_{n=1}^{+\infty} \left[ c_n \cos(nx) + d_n \sin(nx) \right].
-    \]
-\end{theorem}
-
-\begin{proof}
-    
-\end{proof}
-
-\begin{theorem}{Wirtinger Inequality} % Wirtinger 不等式
-    Let \( f(x)\in C^{1}[-\pi, \pi] \),
-    and satisfies:
-    \[
-    \int_{-\pi}^{\pi} f(x) \, \mathrm{d}x = 0, f(-\pi) = f(\pi),
-    \]
-    then:
-    \[
-    \int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x \leqslant \int_{-\pi}^{\pi} f'^{2}(x) \, \mathrm{d}x,
-    \]
-    with equality if and only if \( f(x) = A \cos x + B \sin x \) for some constants \( A, B \in \mathbb{R} \).
-\end{theorem}
-
-\begin{theorem}{Poincaré Inequality} % Poincaré 不等式
-\end{theorem}
-
-\begin{theorem}{Friedrichs Inequality} % Friedrichs 不等式
-    
-\end{theorem}
 

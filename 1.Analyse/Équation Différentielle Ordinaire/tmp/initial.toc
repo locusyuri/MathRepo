@@ -1,4 +1,4 @@
-\contentsline {chapter}{Preface}{ii}{chapter*.2}%
+\contentsline {chapter}{Preface}{iii}{chapter*.2}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Classification of Differential Equations}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Solution to a Ordinary Differential Equation}{1}{section.1.2}%
@@ -31,4 +31,8 @@
 \contentsline {section}{\numberline {7.1}The Phase Plane}{30}{section.7.1}%
 \contentsline {section}{\numberline {7.2}Ляпунов Stability}{30}{section.7.2}%
 \contentsline {section}{\numberline {7.3}Ляпунов Second Method}{32}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Critical Points and Limit Cycles}{32}{section.7.4}%
 \contentsline {chapter}{\numberline {8}First-Order Partial Differential Equations}{33}{chapter.8}%
+\contentsline {section}{\numberline {8.1}First Integrals}{33}{section.8.1}%
+\contentsline {section}{\numberline {8.2}First-Order Linear Homogeneous Partial Differential Equations}{33}{section.8.2}%
+\contentsline {section}{\numberline {8.3}First-Order Quasi-Linear Nonhomogeneous Partial Differential Equations}{33}{section.8.3}%

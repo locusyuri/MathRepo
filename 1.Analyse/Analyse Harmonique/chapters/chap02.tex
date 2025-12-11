@@ -1,7 +1,7 @@
 \chapter{Cesàro Summation} % Cesàro 求和法
 In the previous chapter, we denote \(\mathcal{R}[-\pi, \pi]\) as the linear space whose elements are
 all Riemann integrable or absolutely Riemann integrable functions on \([-\pi, \pi]\).
-Now, for convenience, we introduce the notation \(\overline{\mathcal{R}}[-\pi, \pi]\) as the linear space whose elements are
+Now, for convenience, we introduce the notation \(\mathcal{R}^{2}[-\pi, \pi]\) as the linear space whose elements are
 all Riemann integrable or square Riemann integrable functions on \([-\pi, \pi]\).
 Since for defective integral, the square integrability implies absolute integrability,
 we have
@@ -140,7 +140,86 @@ and the Weierstrass second approximation theorem\footnote{
 can be proved easily.
 
 \section{Square mean Convergence} % 平方平均收敛
-\begin{definition}{Square mean Convergence}
+\begin{leftbarTitle}{Parseval's Identity}\end{leftbarTitle}
+\begin{theorem}{Square Approximation Property of Fourier Series} % Fourier 级数的平方逼近性质
+    Let \(f(x)\in \mathcal{R}^{2}[-\pi, \pi]\), and \(W\) be an \(N\)-degree subspace of \(\mathcal{R}^{2}[-\pi, \pi]\),
+    then the best approximation of \(f(x)\) in \(W\) is just given by its Fourier series partial sum \(S_{N}(f; x)\):
+    \[
+    S_{N}(f; x) = \sum_{n=-N}^{N} \hat{f}(n) e^{inx} = \frac{a_0}{2} + \sum_{n=1}^{N} \left[ a_n \cos(nx) + b_n \sin(nx) \right].
+    \]
+    And the remainder \( E_{N}(f; x) = f(x) - S_{N}(f; x) \) satisfies\footnote{
+        Refer to \emph{Algèbre Linéaire - Section 10.5: Orthogonal Completion and Orthogonal Projection}.
+    }:
+    \[
+    \| E_{N}(f; x) \|^2 = \| f \|^2 - \sum_{n=-N}^{N} |\hat{f}(n)|^2
+    = \frac{1}{\pi}\int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x - \left[ \frac{a_0^2}{2} + \sum_{n=1}^{N} (a_n^2 + b_n^2) \right].
+    \]
+\end{theorem}
+
+\begin{theorem}{Bessel's Inequality} % 贝塞尔不等式
+    Let \( f(x) \in \mathcal{R}^{2}[-\pi, \pi] \) with Fourier coefficients \( \hat{f}(n) \),
+    then for any integer \( N \geqslant 0 \):
+    \[
+    \sum_{n=-N}^{N} |\hat{f}(n)|^2 \leqslant \| f \|^2,
+    \]
+    or in real form:
+    \[
+    \frac{a_0^2}{2} + \sum_{n=1}^{N} (a_n^2 + b_n^2) \leqslant \frac{1}{\pi} \int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x.
+    \]
+\end{theorem}
+
+\begin{theorem}{Parseval's Identity} % Parseval 恒等式
+    Let \( f(x) \in \mathcal{R}^{2}[-\pi, \pi] \) with Fourier coefficients \( \hat{f}(n) \),
+    then:
+    \[
+    \sum_{n=-\infty}^{+\infty} |\hat{f}(n)|^2 = \| f \|^2,
+    \]
+    or in real form:
+    \[
+    \frac{a_0^2}{2} + \sum_{n=1}^{+\infty} (a_n^2 + b_n^2) = \frac{1}{\pi} \int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x.
+    \]
+
+    The generalized form is:
+    \[
+    \sum_{n=-\infty}^{+\infty} \hat{f}(n) \overline{\hat{g}(n)} = \langle f, g \rangle,
+    \]
+    or in real form:
+    \[
+    \frac{a_0 c_0}{2} + \sum_{n=1}^{+\infty} (a_n c_n + b_n d_n) = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) g(x) \, \mathrm{d}x,
+    \]
+    where \( g(x) \in \mathcal{R}^{2}[-\pi, \pi] \) with Fourier coefficients \( \hat{g}(n) \),
+    \[
+    g(x) \sim \frac{c_0}{2} + \sum_{n=1}^{+\infty} \left[ c_n \cos(nx) + d_n \sin(nx) \right].
+    \]
+\end{theorem}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{theorem}{Wirtinger Inequality} % Wirtinger 不等式
+    Let \( f(x)\in C^{1}[-\pi, \pi] \),
+    and satisfies:
+    \[
+    \int_{-\pi}^{\pi} f(x) \, \mathrm{d}x = 0, f(-\pi) = f(\pi),
+    \]
+    then:
+    \[
+    \int_{-\pi}^{\pi} f^{2}(x) \, \mathrm{d}x \leqslant \int_{-\pi}^{\pi} f'^{2}(x) \, \mathrm{d}x,
+    \]
+    with equality if and only if \( f(x) = A \cos x + B \sin x \) for some constants \( A, B \in \mathbb{R} \).
+\end{theorem}
+
+\begin{theorem}{Poincaré Inequality} % Poincaré 不等式
+\end{theorem}
+
+\begin{theorem}{Friedrichs Inequality} % Friedrichs 不等式
+    
+\end{theorem}
+
+
+\begin{leftbarTitle}{Square Mean Convergence}\end{leftbarTitle}
+\begin{definition}{Square Mean Convergence}
     A sequence of functions \( f_{n}(x) \) is said to converge to \( f(x) \)
     in the square mean (or \( L^{2} \)) sense on interval \([a, b]\),
     if

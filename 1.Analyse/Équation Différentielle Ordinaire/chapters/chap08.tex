@@ -1,1 +1,43 @@
 \chapter{First-Order Partial Differential Equations} % 一阶偏微分方程
+
+\section{First Integrals} % 首次积分
+
+\section{First-Order Linear Homogeneous Partial Differential Equations} % 一阶线性齐次偏微分方程
+In this section, we discuss the method of characteristics for 
+solving first-order linear homogeneous partial differential equations.
+Consider the general form of such an equation:
+\begin{equation}\label{eq:first-order-linear-homogeneous-pde}
+    X_{1}(x_1, x_2, \ldots, x_n) \frac{\partial z}{\partial x_1} +
+    X_{2}(x_1, x_2, \ldots, x_n) \frac{\partial z}{\partial x_2} +
+    \cdots +
+    X_{n}(x_1, x_2, \ldots, x_n) \frac{\partial z}{\partial x_n} = 0,
+\end{equation}
+or simply,
+\[
+    \sum_{i=1}^{n} X_{i}(x_1, x_2, \ldots, x_n) \frac{\partial z}{\partial x_i} = 0.
+\]
+
+
+\begin{theorem}
+    \(z = \varphi(x_{1}, x_{2}, \cdots, x_{n})\) is the solution of equation \eqref{eq:first-order-linear-homogeneous-pde}
+    if and only if \(\varphi\) is the first integral of the characteristic system
+    \[
+        \frac{dx_{1}}{X_{1}} = \frac{dx_{2}}{X_{2}} = \cdots = \frac{dx_{n}}{X_{n}}.
+    \]
+\end{theorem}
+
+\begin{theorem}
+    If \(\varphi_{i}(x_{1}, x_{2}, \cdots, x_{n})\) \((i = 1, 2, \cdots, n-1)\) are \(n-1\) 
+    independent first integrals of the characteristic system
+    \[
+        \frac{dx_{1}}{X_{1}} = \frac{dx_{2}}{X_{2}} = \cdots = \frac{dx_{n}}{X_{n}},
+    \]
+    then the general solution of equation \eqref{eq:first-order-linear-homogeneous-pde} is given by
+    \[
+        \Phi(\varphi_{1}, \varphi_{2}, \cdots, \varphi_{n-1}) = 0,
+    \]
+    where \(\Phi\) is an arbitrary function of \(n-1\) variables.
+\end{theorem}
+
+\section{First-Order Quasi-Linear Nonhomogeneous Partial Differential Equations} % 一阶拟线性非齐次偏微分方程
+
