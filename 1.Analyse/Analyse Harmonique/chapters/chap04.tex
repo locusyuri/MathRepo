@@ -1,3 +1,160 @@
 \chapter{Fourier Transform} % 傅里叶变换
+\section{Introduction to Fourier Transform} % 傅里叶变换引入
+\begin{leftbarTitle}{From Periodic to Non-Periodic Functions}\end{leftbarTitle} % 从周期函数到非周期函数
+Until now, we have only discussed Fourier series for periodic functions.
+To extend the idea of Fourier series to non-periodic functions,
+we consider the limit as the period \(T \to \infty\).
+In this limit, the discrete frequencies of the Fourier series become continuous, 
+leading to the definition of the Fourier transform.
+
+For a function \(f(x)\) with period \(T\), its Fourier series representation is given by
+\[
+f_{T}(x) = \sum_{n=-\infty}^{\infty} \left[ \frac{1}{2T} \int_{-T}^{T} f(x) e^{-i \frac{\pi n}{T} x} \, \mathrm{d}x \right]
+e^{i \frac{\pi n}{T} x}.
+\]
+Define the frequency variable \(\omega_{n} = \frac{n}{2T}\), 
+and the frequency increment \(\Delta \omega = \omega_{n+1}- \omega_{n} = \frac{1}{2T}\).
+Then we can rewrite the Fourier series as
+\[
+f_{T}(x) = \sum_{n=-\infty}^{\infty} \left[ \int_{-T}^{T} f(x) e^{-i 2 \pi \omega_{n} x} \, \mathrm{d}x \right] 
+e^{i 2 \pi \omega_{n} x} \Delta \omega.
+\]
+Let \(T\to \infty\), we have \(\Delta \omega \to 0\) and the sum becomes an integral:
+\[
+f(x) = \int_{-\infty}^{\infty} \left[ \int_{-\infty}^{\infty} f(t) e^{-i 2 \pi \omega t} \, \mathrm{d}t \right] 
+e^{i 2 \pi \omega x} \, \mathrm{d}\omega.
+\]
+Naturally, we define the Fourier transform and its inverse as follows.
+\begin{definition}{Fourier Transform and Inverse Fourier Transform} % 傅里叶变换与反变换的定义
+    The \textbf{Fourier transform} of a function \(f(x)\) is defined as
+    \[
+    \hat{f}(\omega) = \mathcal{F}[f](\omega) = \int_{-\infty}^{\infty} f(x) e^{-i \omega x} \, \mathrm{d}x.
+    \]
+    The \textbf{inverse Fourier transform} is given by
+    \[
+    f(x) = \mathcal{F}^{-1}[\hat{f}](x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} \hat{f}(\omega) e^{i \omega x} \, \mathrm{d}\omega.
+    \]
+\end{definition}
+\begin{remark}
+    The definition of \(\omega_{n}\) above leads to the difference of \(2\pi\) in the exponent compared to the classical definition.
+\end{remark}
+
+\begin{leftbarTitle}{Poisson Summation Formula}\end{leftbarTitle} % Poisson 求和公式
+
+\section{Schwartz Space} % 速降空间: Schwartz Space
+\begin{definition}{Schwartz Space} % 速降空间的定义
+    The \textbf{Schwartz space} \(\mathcal{S}(\mathbb{R})\) is the set of 
+    all infinitely differentiable functions \(f: \mathbb{R} \to \mathbb{C}\)
+    such that for every pair of non-negative integers \(m, n\),
+    \[
+    \sup_{x \in \mathbb{R}} |x^{m} f^{(n)}(x)| < \infty.
+    \]
+    In other words, functions in \(\mathcal{S}(\mathbb{R})\) and 
+    all their derivatives decay faster than any polynomial as \(|x| \to \infty\).
+\end{definition}
+
+\section{Basic Properties} % 傅里叶变换的基本性质
+\begin{property}
+    \begin{description}
+        \item[Linearity] For any functions \(f, g \in \mathcal{S}(\mathbb{R})\) and scalars \(a, b \in \mathbb{C}\),
+            \[
+            \mathcal{F}[a f + b g] = a \mathcal{F}[f] + b \mathcal{F}[g].
+            \]
+        \item[Translation] For any function \(f \in \mathcal{S}(\mathbb{R})\) and \(x_{0} \in \mathbb{R}\),
+            \[
+            \mathcal{F}[f(x - x_{0})](\omega) = e^{-i \omega x_{0}} \hat{f}(\omega).
+            \]
+        \item[Scaling] For any function \(f \in \mathcal{S}(\mathbb{R})\) and \(a \in \mathbb{R} \setminus \{0\}\),
+            \[
+            \mathcal{F}[f(ax)](\omega) = \frac{1}{|a|} \hat{f}\left( \frac{\omega}{a} \right).
+            \]
+        \item[Differentiation] For any function \(f \in \mathcal{S}(\mathbb{R})\),
+            \[
+            \mathcal{F}\left[ \frac{\mathrm{d}^{n} f}{\mathrm{d} x^{n}} \right](\omega) = (i \omega)^{n} \hat{f}(\omega).
+            \]
+        \item[Integration] 
+    \end{description}
+\end{property}
+
+
+
+\begin{leftbarTitle}{Convolution}\end{leftbarTitle} % 多种形式的卷积
+
+\section{Fourier Inversion Theorem} % Fourier 反演定理
+
+\section{The Dichotomy} % $L^1$ 与 $L^2$ 理论的二分 (The Dichotomy)
+
+\section{Heisenberg's Uncertainty Principle} % 海森堡不确定性原理
+
+\begin{theorem}{Heisenberg's Uncertainty Principle} % 海森堡不确定性原理
+    For any function \(f \in \mathcal{S}(\mathbb{R})\),
+    \[
+    \left( \int_{-\infty}^{\infty} x^{2} |f(x)|^{2} \, \mathrm{d}x \right)
+    \left( \int_{-\infty}^{\infty} \omega^{2} |\hat{f}(\omega)|^{2} \, \mathrm{d}\omega \right)
+    \geq \frac{1}{4} \left( \int_{-\infty}^{\infty} |f(x)|^{2} \, \mathrm{d}x \right)^{2}.
+    \]
+    Equality holds if and only if \(f(x)\) is a Gaussian function of the form
+    \(f(x) = A e^{-a x^{2}}\) for some constants \(A \in \mathbb{C}\) and \(a > 0\).
+\end{theorem}
 
 \section{Laplace Transform} % 拉普拉斯变换
+Fourier transform requires the function to be integrable over the entire real line,
+which may not hold for functions that grow exponentially.
+To handle such functions, we introduce the Laplace transform, defined as follows.
+\begin{definition}{Laplace Transform} % 拉普拉斯变换
+    The \textbf{Laplace transform} of a function \(f(t)\) defined for \(t \geq 0\) is given by
+    \[
+    \mathcal{L}[f](s) = \int_{0}^{\infty} f(t) e^{-s t} \, \mathrm{d}t,
+    \]
+    where \(s\) is a complex variable.
+\end{definition}
+
+\begin{theorem}{Existence of Laplace Transform} % 拉普拉斯变换存在性定理
+    If there exist constants \(M, s_{0} > 0\) such that \(|f(t)| \leq M e^{s_{0} t}\) for all \(t \geq 0\),
+    then the Laplace transform \(\mathcal{L}[f](s)\) exists for all \(s\) with \(\mathrm{Re}(s) > s_{0}\).
+
+    
+\end{theorem}
+
+\begin{property}
+    \begin{description}
+        \item[Linearity] For any functions \(f, g\) and scalars \(a, b\),
+            \[
+            \mathcal{L}[a f + b g](s) = a \mathcal{L}[f](s) + b \mathcal{L}[g](s).
+            \]
+        \item[Derivative] For any function \(f\) with appropriate growth conditions,
+            \[
+            \mathcal{L}\left[ \frac{\mathrm{d} f}{\mathrm{d} t} \right](s) = s \mathcal{L}[f](s) - f(0).
+            \]
+            Or more generally,
+            \[
+            \mathcal{L}\left[ \frac{\mathrm{d}^{n} f}{\mathrm{d} t^{n}} \right](s) = 
+            s^{n} \mathcal{L}[f](s) - \sum_{k=0}^{n-1} s^{n-1-k} f^{(k)}(0).
+            \]
+    \end{description}
+\end{property}
+
+Some common Laplace transforms are listed in the following table.
+\begin{table}[h]
+    \centering
+    \begin{tabular}{cc}
+        \toprule
+        \(f(t)\) & \(\mathcal{L}[f](s)\) \\
+        \toprule
+        \(1\) & \(\frac{1}{s}\) \\ 
+        \(t^{n}\) & \(\frac{n!}{s^{n+1}}\) \\ 
+        \(e^{a t}\) & \(\frac{1}{s - a}\) \\ 
+        \(t^{n} e^{a t}\) & \(\frac{n!}{(s - a)^{n+1}}\) \\ 
+        \(\sin(\omega t)\) & \(\frac{\omega}{s^{2} + \omega^{2}}\) \\ 
+        \(\cos(\omega t)\) & \(\frac{s}{s^{2} + \omega^{2}}\) \\ 
+        \(\sinh(\omega t)\) & \(\frac{\omega}{s^{2} - \omega^{2}}\) \\ 
+        \(\cosh(\omega t)\) & \(\frac{s}{s^{2} - \omega^{2}}\) \\ 
+        \(t^{n}e^{a t} \sin(\omega t)\) & \(\) \\ 
+        \(t^{n}e^{a t} \cos(\omega t)\) & \(\) \\
+        \bottomrule
+    \end{tabular}
+    \caption{Common Laplace Transforms}
+    \label{tab:laplace transforms}
+\end{table}
+
+\section{Fast Fourier Transform} % 快速 Fourier 变换

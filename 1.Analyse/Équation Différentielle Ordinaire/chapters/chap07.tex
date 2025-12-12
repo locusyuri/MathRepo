@@ -210,6 +210,7 @@ and \(\mathbf{f}(\mathbf{0}) = \mathbf{0}\).
 \end{theorem}
 
 \section{Critical Points and Limit Cycles} % 平面奇点与极限环
+\begin{leftbarTitle}{Classification of Critical Points}\end{leftbarTitle}
 For plane system~\eqref{eq:phase plane system},
 a critical point \((x_{0}, y_{0})\) is called a \textbf{primary critical point}
 if \(\det A \neq 0\), where
@@ -248,33 +249,142 @@ there are three cases for \(J\):
         but arrows point outward); ;
         \begin{figure}[h]
             \centering
-            \includegraphics[width=0.6\textwidth]{img/node.png}
-            \caption{Stable node.}
+            \includegraphics[width=0.4\textwidth]{img/node.png}
+            \caption{Trajectories in the phase plane when the origin is a stable node with \(\lambda_{1}<\lambda_{2} < 0\).
+            The solid black and dashed black curves show the fundamental solutions \(\boldsymbol{\xi}^{(1)}e^{\lambda_1 t}\) 
+            and \(\boldsymbol{\xi}^{(2)}e^{\lambda_2 t}\), respectively.}
             \label{fig:stable node}
         \end{figure}
 
         if \(\lambda_{1}\lambda_{2} < 0\),
-        then the critical point is a \textbf{saddle point} (always unstable).
+        then the critical point is a \textbf{saddle point} (always unstable~\ref{fig:saddle point}).
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.4\textwidth]{img/saddle.png}
+            \caption{Trajectories in the phase plane when the origin is a saddle point with \(\lambda_{1}>0, \lambda_{2} < 0\).}
+            \label{fig:saddle point}
+        \end{figure}
 
-    \item[Duplicate real eigenvalue]
-        \[
-        J = \begin{pmatrix} \lambda & 0 \\ 0 & \lambda \end{pmatrix} \text{ or }
-        J = \begin{pmatrix} \lambda & 1 \\ 0 & \lambda \end{pmatrix};
-        \]
-        if \(J\) is diagonal,
-        then the critical point is a \textbf{star node} (stable if \(\lambda < 0\),
-        unstable if \(\lambda > 0\));
-        if \(J\) is non-diagonal,
-        then the critical point is an \textbf{improper node} (stable if \(\lambda < 0\),
-        unstable if \(\lambda > 0\)).
-
-    \item[Complex conjugate eigenvalues]
-        \[
-        J = \begin{pmatrix} \alpha & \beta \\ -\beta & \alpha \end{pmatrix},\quad \beta > 0;
-        \]
-        if \(\alpha = 0\),
-        then the critical point is a \textbf{center} (always stable);
-        if \(\alpha \neq 0\),
-        then the critical point is a \textbf{focus} (stable if \(\alpha < 0\),
-        unstable if \(\alpha > 0\)).
+    \item[Equal real eigenvalue] By the algebraic and geometric multiplicities of \(\lambda\),
+        there are two subcases:
+        \begin{description}
+            \item[Diagonal]
+                \[
+                J = \begin{pmatrix} \lambda & 0 \\ 0 & \lambda \end{pmatrix};
+                \]
+                In this case, the general solution of the linearized system is
+                \[
+                \mathbf{x}(t) = e^{\lambda t} \left[ C_{1} \boldsymbol{\xi}^{(1)} + C_{2} \boldsymbol{\xi}^{(2)} \right].
+                \]
+                The critical point is called a \textbf{proper node} or \textbf{star node}
+                (stable if \(\lambda < 0\)~\ref{fig:star node}, unstable if \(\lambda > 0\)).
+                \begin{figure}[h]
+                    \centering
+                    \includegraphics[width=0.6\textwidth]{img/star.png}
+                    \caption{(a) Trajectories in the phase plane when the origin is a stable star node with \(\lambda < 0\).
+                    (b) and (c) show the corresponding component plots \(x(t)\) and \(y(t)\) versus \(t\).}
+                    \label{fig:star node}
+                \end{figure}
+            \item[Non-diagonal] 
+                \[
+                J = \begin{pmatrix} \lambda & 1 \\ 0 & \lambda \end{pmatrix}.
+                \]
+                In this case, the general solution of the linearized system is
+                \[
+                \mathbf{x}(t) = e^{\lambda t} \left[ C_{1} \boldsymbol{\xi} + C_{2} \left( \boldsymbol{\xi}t 
+                + \boldsymbol{\eta} \right) \right],
+                \]
+                where \(\boldsymbol{\xi}\) is the eigenvector corresponding to \(\lambda\),
+                and \(\boldsymbol{\eta}\) is the generalized eigenvector satisfying
+                \[
+                (A - \lambda I) \boldsymbol{\eta} = \boldsymbol{\xi}.
+                \]
+                The critical point is called an \textbf{improper node} or \textbf{degenerate node}
+                (stable if \(\lambda < 0\)~\ref{fig:improper node}, unstable if \(\lambda > 0\)).
+                \begin{figure}[h]
+                    \centering
+                    \includegraphics[width=0.6\textwidth]{img/degenerated.png}
+                    \caption{(a) The phase plane for an improper node with \(\lambda < 0\) and 
+                    one independent eigenvector \(\boldsymbol{\xi}\).
+                    (b) The phase plane for an improper node with the same \(\lambda\) and
+                    eigenvector \(\boldsymbol{\xi}\) but a different generalized eigenvector \(\boldsymbol{\eta}\).}
+                    \label{fig:improper node}
+                \end{figure}
+        \end{description}
+    \item[Complex conjugate eigenvalues] By the real part of \(\lambda = \alpha \pm i \beta\),
+        there are two subcases:
+        \begin{description}
+            \item[With non-zero real part]
+                \[
+                J = \begin{pmatrix} \alpha & \beta \\ -\beta & \alpha \end{pmatrix},\quad \beta > 0;
+                \]
+                In this case, the general solution of the linearized system is
+                \[
+                \mathbf{x}(t) = e^{\alpha t} \left[ C_{1} \begin{pmatrix} \cos \beta t \\ -\sin \beta t \end{pmatrix}
+                + C_{2} \begin{pmatrix} \sin \beta t \\ \cos \beta t \end{pmatrix} \right].
+                \]
+                if \(\alpha < 0\),
+                then the critical point is a \textbf{spiral sink} (stable~\ref{fig:spiral});
+                if \(\alpha > 0\),
+                then the critical point is a \textbf{spiral source} (unstable~\ref{fig:spiral}).
+                \begin{figure}[h]
+                    \centering
+                    \includegraphics[width=0.6\textwidth]{img/spiral.png}
+                    \caption{Trajectories in the phase plane for a linear system with eigenvalues \(\alpha \pm i \beta\),
+                    where (a) \(\alpha < 0\) (spiral sink) and (b) \(\alpha > 0\) (spiral source).}
+                    \label{fig:spiral}
+                \end{figure}
+            \item[Pure imaginary]
+                \[
+                J = \begin{pmatrix} 0 & \beta \\ -\beta & 0 \end{pmatrix},\quad \beta > 0;
+                \]
+                In this case, the general solution of the linearized system is
+                \[
+                \mathbf{x}(t) = C_{1} \begin{pmatrix} \cos \beta t \\ -\sin \beta t \end{pmatrix}
+                + C_{2} \begin{pmatrix} \sin \beta t \\ \cos \beta t \end{pmatrix}.
+                \]
+                The critical point is called a \textbf{center} (always stable~\ref{fig:center}).
+                \begin{figure}[h]
+                    \centering
+                    \includegraphics[width=0.6\textwidth]{img/center.png}
+                    \caption{(a) Trajectories in the phase plane when the linear system has purely imaginary eigenvalues 
+                    \(\pm i \beta\), representing a center.
+                    (b) and (c) show the corresponding component plots \(x(t)\) and \(y(t)\) versus \(t\).}
+                    \label{fig:center}
+                \end{figure}
+        \end{description}
 \end{description}
+
+The following table summarizes the classification of primary critical points:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Eigenvalues & Critical Point & Stability & Phase Portrait \\
+        \hline
+        \(\lambda_{1}, \lambda_{2} < 0\) real distinct & Nodal Sink & Asymptotically stable & \ref{fig:stable node} \\
+        \hline
+        \(\lambda_{1}, \lambda_{2} > 0\) real distinct & Nodal Source & Unstable & Opposite of \ref{fig:stable node} \\
+        \hline
+        \(\lambda_{1} > 0, \lambda_{2} < 0\) real distinct & Saddle Point & Unstable & \ref{fig:saddle point} \\
+        \hline
+        \(\lambda < 0\) real equal diagonal & Star Node & Asymptotically stable & \ref{fig:star node} \\
+        \hline
+        \(\lambda > 0\) real equal diagonal & Star Node & Unstable & Opposite of \ref{fig:star node} \\
+        \hline
+        \(\lambda < 0\) real equal non-diagonal & Improper Node & Asymptotically stable & \ref{fig:improper node} \\
+        \hline
+        \(\lambda > 0\) real equal non-diagonal & Improper Node & Unstable & Opposite of \ref{fig:improper node} \\
+        \hline
+        \(\alpha < 0 \pm i \beta\) complex conjugate & Spiral Sink & Asymptotically stable & \ref{fig:spiral}(a) \\
+        \hline
+        \(\alpha > 0 \pm i \beta\) complex conjugate & Spiral Source & Unstable & \ref{fig:spiral}(b) \\
+        \hline
+        \(\pm i \beta\) pure imaginary & Center & Stable & \ref{fig:center} \\
+        \hline
+    \end{tabular}
+    \caption{Classification of Primary Critical Points}
+    \label{table:classification of primary critical points}
+\end{table}
+
+\begin{leftbarTitle}{Limit Cycles}\end{leftbarTitle}
