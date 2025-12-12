@@ -43,7 +43,7 @@ is just the projection of its integral curve in the three-dimensional space \((t
 onto the \(xy\)-plane.
 
 The points, if any, where \(\mathbf{f}(\mathbf{x}) = \mathbf{0}\) are called 
-\textbf{equilibrium points} or \textbf{critical points} or \textbf{singular points} of the system.
+\textbf{critical points} (or \textbf{equilibrium points}, or \textbf{singular points}) of the system.
 
 
 
@@ -210,4 +210,71 @@ and \(\mathbf{f}(\mathbf{0}) = \mathbf{0}\).
 \end{theorem}
 
 \section{Critical Points and Limit Cycles} % 平面奇点与极限环
+For plane system~\eqref{eq:phase plane system},
+a critical point \((x_{0}, y_{0})\) is called a \textbf{primary critical point}
+if \(\det A \neq 0\), where
+\[
+A = \begin{pmatrix}
+\frac{\partial F}{\partial x} & \frac{\partial F}{\partial y} \\
+\frac{\partial G}{\partial x} & \frac{\partial G}{\partial y}
+\end{pmatrix}_{(x_{0}, y_{0})}.
+\]
+The classification of primary critical points is completely subject to the eigenvalues of matrix \(A\)
+(Hartman-Grobman theorem). 
 
+For an eigenvalue \(\lambda\) of matrix \(A\), we are concerned with its three properties:
+\begin{itemize}
+    \item real part: \(\mathrm{Re}(\lambda)\), if \(\mathrm{Re}(\lambda) < 0 (>0)\), 
+        then the critical point is attracting (repelling) along the corresponding eigenvector direction;
+    \item imaginary part: \(\mathrm{Im}(\lambda)\);
+    \item multiplicity: algebraic multiplicity and geometric multiplicity.
+\end{itemize}
+
+By the Jordan canonical form of matrix, \(A\sim J\), where
+there are three cases for \(J\):
+\begin{description}
+    \item[Distinct real eigenvalues] 
+        \[
+        J = \begin{pmatrix} \lambda_{1} & 0 \\ 0 & \lambda_{2} \end{pmatrix};
+        \]
+        In this case, the general solution of the linearized system is
+        \[
+        \mathbf{x}(t) = C_{1} e^{\lambda_{1} t} \boldsymbol{\xi}^{(1)} + C_{2} e^{\lambda_{2} t} \boldsymbol{\xi}^{(2)},
+        \]
+        if \(\lambda_{1}\lambda_{2} > 0\),
+        then the critical point is a \textbf{node}
+        (stable if \(\lambda_{1}, \lambda_{2} < 0\) (\textbf{nodal sink}~\ref{fig:stable node}),
+        unstable if \(\lambda_{1}, \lambda_{2} > 0\)) (\textbf{nodal source}, the same pattern as~\ref{fig:stable node} 
+        but arrows point outward); ;
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.6\textwidth]{img/node.png}
+            \caption{Stable node.}
+            \label{fig:stable node}
+        \end{figure}
+
+        if \(\lambda_{1}\lambda_{2} < 0\),
+        then the critical point is a \textbf{saddle point} (always unstable).
+
+    \item[Duplicate real eigenvalue]
+        \[
+        J = \begin{pmatrix} \lambda & 0 \\ 0 & \lambda \end{pmatrix} \text{ or }
+        J = \begin{pmatrix} \lambda & 1 \\ 0 & \lambda \end{pmatrix};
+        \]
+        if \(J\) is diagonal,
+        then the critical point is a \textbf{star node} (stable if \(\lambda < 0\),
+        unstable if \(\lambda > 0\));
+        if \(J\) is non-diagonal,
+        then the critical point is an \textbf{improper node} (stable if \(\lambda < 0\),
+        unstable if \(\lambda > 0\)).
+
+    \item[Complex conjugate eigenvalues]
+        \[
+        J = \begin{pmatrix} \alpha & \beta \\ -\beta & \alpha \end{pmatrix},\quad \beta > 0;
+        \]
+        if \(\alpha = 0\),
+        then the critical point is a \textbf{center} (always stable);
+        if \(\alpha \neq 0\),
+        then the critical point is a \textbf{focus} (stable if \(\alpha < 0\),
+        unstable if \(\alpha > 0\)).
+\end{description}

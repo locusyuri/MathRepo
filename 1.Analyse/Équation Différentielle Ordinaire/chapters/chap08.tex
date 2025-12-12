@@ -1,5 +1,39 @@
 \chapter{First-Order Partial Differential Equations} % 一阶偏微分方程
 
+\section{Characteristics Method} % 特征线解法
+Consider the general form of a first-order quasi-linear PDE with two independent variables:
+\begin{equation}\label{eq:general-quasi-linear-pde}
+    a(x,y,u) \frac{\partial u}{\partial x} + b(x,y,u) \frac{\partial u}{\partial y} = c(x,y,u),
+\end{equation}
+where \(u=u(x,y)\) is the unknown function, and \(a\), \(b\), and \(c\) are given functions, with \(a\) and \(b\) not both zero.
+
+The left side of the equation~\eqref{eq:general-quasi-linear-pde} can be regarded as the dot product of 
+vector field \((a,b)\) and the gradient vector of \(u\), which is the directional derivative of \(u\) in the direction of \((a,b)\):
+\[
+    a \frac{\partial u}{\partial x} + b \frac{\partial u}{\partial y} = \nabla u \cdot (a,b).
+\]
+The equation indicates that at every point \((x, y, u)\), the directional derivative on \((a,b)\) is equal to \(c\). 
+This leads us to introduce parameters \(t\), constructing curves in the space \((x(t), y(t), u(t))\), 
+such that its tangent direction is perpendicular to \((a,b,c)\) are parallel. Such curves are called \textbf{characteristic curves}.
+
+Along these characteristic curves, the following system of ordinary differential equations holds:
+\[
+\frac{\mathrm{d}x}{dt} = a(x,y,u), \quad
+\frac{\mathrm{d}y}{dt} = b(x,y,u), \quad    
+\frac{\mathrm{d}u}{dt} = c(x,y,u).
+\]
+This is a three-variable autonomous ODE system. 
+If \((x, y)\) is regarded as a point on the independent variable plane, 
+then the first two equations determine the projection of the characteristic curve on the plane, 
+which is called the \textbf{characteristic baseline}.
+Along these characteristic curves, ordinary PDE reduces to 
+\[
+\frac{\mathrm{d}u}{dt} = c(x,y,u),
+\]
+which is just the third equation of the characteristic system.
+Therefore, solving the PDE reduces to solving the characteristic system of ODEs.
+
+
 \section{First Integrals} % 首次积分
 
 \section{First-Order Linear Homogeneous Partial Differential Equations} % 一阶线性齐次偏微分方程
