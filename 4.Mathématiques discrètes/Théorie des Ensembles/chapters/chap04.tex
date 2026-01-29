@@ -1,0 +1,112 @@
+\chapter{Ordinals} % 序数
+\section{Order}
+\begin{definition}{Preordered Set} % 预序集
+    A \textbf{preordered set} is a set \(P\) together with a binary relation \(\preceq\) 
+    that is reflexive and transitive.
+\end{definition}
+
+\begin{definition}{Partially Ordered Set (Poset)} % 偏序集
+    A \textbf{partially ordered set} (or \textbf{poset}) is a set \(P\) together with a binary relation \(\preceq\) 
+    that is reflexive, antisymmetric, and transitive.
+    The relation \(\preceq\) is called a \textbf{partial order} on \(P\).
+    
+    Sometimes, \(\prec\) is called a \textbf{strict partial order} on \(P\) if it is irreflexive, antisymmetric, and transitive.
+\end{definition}
+
+\begin{definition}{Totally Ordered Set (Chain)} % 全序集
+    A \textbf{totally ordered set} (or \textbf{chain}) is a poset \(P\) such that for every \(a, b \in P\), 
+    either \(a \preceq b\) or \(b \preceq a\), that is, any two elements are comparable.
+\end{definition}
+
+\begin{definition}{Well-Ordered Set} % 良序集
+    A \textbf{well-ordered set} is a totally ordered set \(P\) such that every non-empty subset of \(P\) 
+    has a least element.
+\end{definition}
+
+Here is a table summarizing the different types of relations:
+
+\begin{table}[h!]
+    \centering
+    \caption{Types of Relations}
+    \label{tab:relation_types}
+    \begin{tabular}{ccccccc}
+        \toprule
+        Binary Relation & Reflexive & Symmetric 
+        & Antisymmetric & Transitive & Connected & Well-founded \\
+        \toprule
+        Equivalence & \checkmark &  \checkmark &  & \checkmark &  &  \\
+        Preorder & \checkmark & & & \checkmark & & \\
+        Partial Order & \checkmark  &  & \checkmark & \checkmark &  &  \\
+        Total Order & \checkmark  &  & \checkmark & \checkmark & \checkmark &  \\
+        Well-Order & \checkmark  &  & \checkmark & \checkmark & \checkmark & \checkmark \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Ordinal Numbers} % 序数
+\begin{definition}{Transitive Set} % 传递集
+    A set \(A\) is called \textbf{transitive} if every element of \(A\) is also a subset of \(A\), 
+    i.e., \((\forall x \in A)\, (x \subseteq A)\).
+\end{definition}
+
+\begin{definition}{Ordinal} % 序数
+    A set \(\alpha\) is an ordinal number (an \textbf{ordinal}) 
+    if it is transitive and well-ordered by the membership relation \(\in\).
+
+    All ordinals form a proper class denoted by \(\mathrm{Ord}\).
+\end{definition}
+
+Ordinals can be classified into three types:
+\begin{description}
+    \item[Zero] The empty set \(\emptyset\) is the only ordinal that is neither a successor nor a limit.
+    \item[Successor Ordinal] An ordinal \(\alpha\) is a \textbf{successor ordinal} 
+        if there exists an ordinal \(\beta\) such that \(\alpha = \beta + 1 = \beta \cup \{\beta\}\).
+    \item[Limit Ordinal] An ordinal \(\lambda\) is a \textbf{limit ordinal} 
+        if it is nonzero and not a successor, i.e., \(\lambda = \bigcup_{\beta < \lambda} \beta\).
+\end{description}
+
+
+\begin{definition}{Natural Number} % 自然数
+    Denote the least nonzero limit ordinal by \(\omega\) (or \(\mathbb{N}\)).
+    The ordinals less than \(\omega\) are called \textbf{finite numbers}, or \textbf{natural numbers}.
+    Specially,
+    \[
+        0 = \emptyset, \quad 1 = \{0\}, \quad 2 = \{0, 1\}, \quad 3 = \{0, 1, 2\}, \quad \ldots
+    \]
+    A set \(X\) is finite if there is a one-to-one mapping of \(X\) onto some \(n\in \mathbb{N}\).
+    \(X\) is infinite if it is not finite.
+\end{definition}
+
+\section{Induction and Recursion} % 归纳与递归
+\begin{theorem}{Transfinite Induction} % 超限归纳法
+    Let \(C\) be a class of ordinals and assume that:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(0 \in C\).
+        \item If \(\alpha \in C\), then \(\alpha + 1 \in C\).
+        \item If \(\lambda\) is an nonzero limit ordinal and \((\forall \beta < \lambda)\, \beta \in C\), 
+            then \(\lambda \in C\).
+    \end{enumerate}
+    Then \(C = \mathrm{Ord}\).
+\end{theorem}
+
+\begin{theorem}{Transfinite Recursion} % 超限递归法
+    Let \(F\) be a class function that assigns to each ordinal \(\alpha\) 
+    an element \(F(\alpha, g)\), where \(g\) is a function with domain \(\alpha\).
+    Then there exists a unique class function \(G\) with domain \(\mathrm{Ord}\) 
+    such that for every ordinal \(\alpha\),
+    \[
+        G(\alpha) = F(\alpha, G \upharpoonright \alpha),
+    \]
+    where \(G \upharpoonright \alpha\) is the restriction of \(G\) to the domain \(\alpha\).
+\end{theorem}
+
+\section{Ordinal Arithmetic} % 序数运算
+
+\begin{theorem}{Cantor's Normal Form} % 康托尔正规形式
+    Every ordinal \(\alpha > 0\) can be uniquely expressed in the form
+    \[
+        \alpha = \omega^{\beta_1} \cdot c_1 + \omega^{\beta_2} \cdot c_2 + \cdots + \omega^{\beta_n} \cdot c_n,
+    \]
+    where \(n\) is a positive integer, \(c_1, c_2, \ldots, c_n\) are positive integers, 
+    and \(\beta_1 > \beta_2 > \cdots > \beta_n\) are ordinals.
+\end{theorem}

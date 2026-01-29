@@ -32,9 +32,12 @@ This is a repository for mathematical notes. The directory structure is as follo
 - [Théorie des Ensembles | 集合論](./4.Mathématiques%20discrètes/Théorie%20des%20Ensembles/tmp/initial.pdf)
 - [Théorie des Graphes | 圖論](./4.Mathématiques%20discrètes/Théorie%20des%20Graphes/tmp/initial.pdf)
 
-## 5.Mathématiques appliquées | 應用數學
-- [Latex | Latex 教程](./5.Mathématiques%20appliquées/Latex/tmp/initial.pdf)
-- [Théorie des Champs | 場論](./5.Mathématiques%20appliquées/Théorie%20des%20Champs/tmp/initial.pdf)
+## 5.Statistiques | 統計學
+
+
+## 6.Mathématiques appliquées | 應用數學
+- [Latex | Latex 教程](./6.Mathématiques%20appliquées/Latex/tmp/initial.pdf)
+- [Théorie des Champs | 場論](./6.Mathématiques%20appliquées/Théorie%20des%20Champs/tmp/initial.pdf)
 
 
 ---

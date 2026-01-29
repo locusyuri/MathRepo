@@ -1,9 +1,9 @@
 \documentclass[11pt]{../../TexTemplate/elegantbook} % 这里是文档类，默认使用 elegantbook
-\title{Analyse de Fourier} % 这里放置书名
+\title{Théorie des Ensembles} % 集合论
 % \subtitle{Subtitle} % 这里放置副标题
 
 \author{CatMono} % 这里放置作者名
-\date{November, 2025} % 这里放置日期
+\date{January, 2026} % 这里放置日期
 \version{0.1} % 这里放置版本号
 % \institute{Elegant\LaTeX{} Program} % 这里放置机构名
 % \bioinfo{Custom Key}{Custom Value} % 这里放置自定义信息
@@ -14,8 +14,8 @@
 \setcounter{secnumdepth}{2} % 设置章节编号深度
 
 
-% \logo{logo-blue.png} % 这里放置封面logo，默认从figure目录下寻找
-% \cover{LogiqueMathematique.png} % 这里放置封面图片，默认从figure目录下寻找
+% \logo{} % 这里放置封面logo，默认从figure目录下寻找
+% \cover{./fig/Théorie des Ensembles.png} % 这里放置封面图片，默认从figure目录下寻找
 
 % modify the color in the middle of titlepage
 \definecolor{customcolor}{RGB}{32,178,170} % 自定义颜色
@@ -36,46 +36,31 @@
 % \listoftables       % 表格目录 (页码: iv)
 
 \chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
-This is the preface of the book...
+Some notations are used throughout this book:
+\begin{itemize}
+    \item \(\mathbb{N}\): Set of natural numbers (including 0).
+    \item \(\mathbb{N}^* / \mathbb{N}_{+}\): Set of natural numbers (excluding 0).
+    \item \(\mathbb{Z}\): Set of integers.
+    \item \(\mathbb{Q}\): Set of rational numbers.
+    \item \(\mathbb{R}\): Set of real numbers.
+    \item \(\mathcal{P}(A)\): Power set of set \(A\).
+    \item \(|A|\): Cardinality of set \(A\).
+\end{itemize}
 
 % \chapter{Acknowledgments}  % 致谢（无编号）
 % I would like to thank...
 % === 正文部分 ===
 \mainmatter         % 开始正文，页码从 1 重新开始
 
-\chapter{Fourier Series} % 这里放置章节标题
-\section{Fourier Expansion}
 
-
-
-\chapter{Convergence of Fourier Series} % 傅里叶级数的收敛性
-\section{Mean Convergence} % 均方收敛
-
-\begin{lemma}{Riemann-Lebesgue Lemma}
-    Let \( f(x) \in R[a, b] \), \( g(x) \) has a period \( T \) and \( g(x) \in R[0, T] \),
-    then:
-    \[
-    \lim_{p \to +\infty}\int_{a}^{b} f(x)g(px) \, \mathrm{d}x 
-    = \int_{a}^{b} f(x) \, \mathrm{d}x \cdot \frac{1}{T} \int_{0}^{T} g(t) \, \mathrm{d}t.
-    \]
-    A special case is when \( g(x) = \sin x \) or \( g(x) = \cos x \), then:
-    \[
-    \lim_{p \to +\infty}\int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x 
-    = \int_{a}^{b} f(x)\cos(px) \, \mathrm{d}x = 0.
-    \]
-\end{lemma}
-
-
-
-\section{Pointwise Convergence} % 点值收敛
-
-\chapter{Fourier Transform on \(\mathbb{R}\)} % R1 上的傅里叶变换
-
-\chapter{Fourier Transform on \(\mathbb{R}^n\)} % Rn 上的傅里叶变换
-
-\chapter{Finite Fourier Analysis} % 有限傅里叶分析
-
-\chapter{Dirichlet Theorem} % Dirichlet 定理
+\input{chapters/chap01.tex} % 朴素集合论
+\input{chapters/chap02.tex} % ZFC 公理化集合论
+% \input{chapters/chap03.tex} % 选择公理
+\input{chapters/chap04.tex} % 序数
+\input{chapters/chap05.tex} % 基数
+\input{chapters/chap06.tex} % 实数
+\input{chapters/chap07.tex} % 特殊集合类
+\input{chapters/chap08.tex} % 滤子与布尔代数
 
 
 \begin{thebibliography}{99} 

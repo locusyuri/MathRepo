@@ -1,0 +1,128 @@
+\chapter{Naive Set Theory} % 朴素集合论
+\section{Sets and Their Operations} % 集合及其运算
+
+
+\begin{definition}{Power Set} % 幂集
+    Let \(X\) be a set. 
+    The \textbf{power set} of \(X\), denoted by \(\mathscr{P}(X)\), 
+    is defined as the set of all subsets of \(X\):
+    \[
+        \mathscr{P}(X) = \{A \mid A \subseteq X\}.
+    \]
+    
+\end{definition}
+
+\section{Relations and Mappings} % 关系与映射
+\begin{leftbarTitle}{Relations}\end{leftbarTitle}
+\begin{definition}{Cartesian Product} % 笛卡尔积
+    Let \(X\) and \(Y\) be two sets. 
+    The \textbf{Cartesian product} (or direct product) of \(X\) and \(Y\), denoted by \(X \times Y\), 
+    is defined as the set of all ordered pairs \((x, y)\) where \(x \in X\) and \(y \in Y\):
+    \[
+        X \times Y = \{(x, y) \mid x \in X, y \in Y\}.
+    \]
+    The Cartesian product can be extended to finitely many sets.
+    \newline The Cartesian product of \(X\) and itself \(n\) times is denoted by \(X^n\):
+\end{definition}
+
+\begin{definition}{Relation} % 关系
+    Let \(X\) and \(Y\) be two sets. 
+    A \textbf{relation} \(R\) from \(X\) to \(Y\) is a subset of the Cartesian product \(X \times Y\):
+    \[
+        R \subseteq X \times Y.
+    \]
+    If \((x, y) \in R\), we say that \(x\) is related to \(y\) by the relation \(R\), denoted by \(xRy\).
+
+    If \(A \subseteq X\), then the subset of \(Y\) defined by
+    \[
+        R(A) = \{y \in Y \mid \exists x \in A, (x, y) \in R\}
+    \]
+    is called the \textbf{image} of \(A\) under the relation \(R\).
+    \(R(X)\) is called the \textbf{range} of the relation \(R\).
+\end{definition}
+There are several special types of relations:
+\begin{description}
+    \item[Empty relation] The empty set \(\emptyset\) is a relation from \(X\) to \(Y\).
+    \item[Total relation] The Cartesian product \(X \times Y\) is a relation from \(X\) to \(Y\).
+    \item[Identity relation] The relation \(I_X = \{(x, x) \mid x \in X\}\) is called the \textbf{identity relation} on \(X\).
+\end{description}
+
+
+When studying binary relations, we often focus on whether they have some special properties. 
+For a binary relation \(R\) on a set \(X\), we define the following special properties:
+\begin{description}
+    \item[Reflexive] \((\forall  x \in X)\, xRx\).
+    \item[Irreflexive] \((\forall x \in X)\, \neg xRx\).
+    \item[Symmetric] \((\forall x, y \in X)\, (xRy \Leftrightarrow yRx)\).
+    \item[Antisymmetric] \((\forall x, y \in X)\, (xRy \wedge yRx) \implies x = y\).
+    \item[Transitive] \((\forall x, y, z \in X)\, (xRy \wedge yRz) \implies xRz\).
+    \item[Connected (Total)] \((\forall x, y \in X)\, x\neq y \implies (xRy \vee yRx)\).
+    \item[Well-founded] \((\exists x\in X \neq \emptyset)\,(\forall y \in X\setminus \{x\})\, \neg(yRx)\).
+    \item[Transitive of incomparability] 
+        \((\forall x, y, z \in X)\, (\neg(xRy \vee yRx) \wedge \neg(yRz \vee zRy)) \implies \neg(xRz \vee zRx)\).
+\end{description}
+
+Then we can define the equivalence relations based on these properties:
+\begin{definition}{Equivalence Relation} % 等价关系
+    A binary relation \(R\) on a set \(X\) is called an \textbf{equivalence relation} 
+    if it is reflexive, symmetric, and transitive.
+\end{definition}
+
+
+\begin{leftbarTitle}{Mappings}\end{leftbarTitle}
+\begin{definition}{Mapping (Function)} % 映射
+    A \textbf{mapping} (or function) \(f\) from a set \(X\) to a set \(Y\) is a relation 
+    such that for every \(x \in X\), there exists a unique \(y \in Y\) such that \((x, y) \in f\).
+    We denote this by \(f: X \to Y\) and write \(f(x) = y\).
+
+    The set \(X\) is called the \textbf{domain} of \(f\), and the set \(Y\) is called the \textbf{codomain} of \(f\).
+    \newline The set \(f(X) = \{f(x) \mid x \in X\}\) is called the \textbf{image} of \(f\).
+\end{definition}
+There are several special types of mappings:
+\begin{description}
+    \item[Identity mapping] The mapping \(\mathrm{id}_X: X \to X\) defined by \(\mathrm{id}_X(x) = x\) for all \(x \in X\) 
+        is called the \textbf{identity mapping} on \(X\).
+    \item[Constant mapping] A mapping \(f: X \to Y\) is called a \textbf{constant mapping} 
+        if there exists a fixed element \(y_0 \in Y\) such that \(f(x) = y_0\) for all \(x \in X\).
+\end{description}
+Mappings can be classified based on their behavior:
+\begin{description}
+    \item[Injective (One-to-One):] A mapping \(f: X \to Y\) is \textbf{injective} 
+        if for every \(x_1, x_2 \in X\), \(f(x_1) = f(x_2)\) implies \(x_1 = x_2\).
+    \item[Surjective (Onto):] A mapping \(f: X \to Y\) is \textbf{surjective} 
+        if for every \(y \in Y\), there exists an \(x \in X\) such that \(f(x) = y\).
+    \item[Bijective:] A mapping \(f: X \to Y\) is \textbf{bijective} 
+        if it is both injective and surjective.
+\end{description}
+
+For \(A\subseteq X\), let
+\[
+\chi_A(x) =
+\begin{cases} 
+    1, & x\in A \\
+    0, & x \notin A ,
+\end{cases}
+\]
+be the \textbf{characteristic function} of set \(A\).
+
+
+\begin{definition}{Inverse Mapping and Composition Mappings} % 逆映射和复合映射
+    Let \(f: X \to Y\) be a bijective mapping. 
+    The \textbf{inverse mapping} of \(f\), denoted by \(f^{-1}: Y \to X\), 
+    is defined by \(f^{-1}(y) = x\) if and only if \(f(x) = y\).
+    
+    Let \(f: X \to Y\) and \(g: Y \to Z\) be two mappings. 
+    The \textbf{composition mapping} of \(f\) and \(g\), denoted by \(g \circ f: X \to Z\), 
+    is defined by \((g \circ f)(x) = g(f(x))\) for all \(x \in X\).
+\end{definition}
+
+\begin{definition}{Restriction and Extension} % 限制与延拓
+    Let \(f: X \to Y\) be a mapping, and let \(A \subseteq X\).
+    The \textbf{restriction} of \(f\) to \(A\), denoted by \(f|_A\), 
+    is the mapping from \(A\) to \(Y\) defined by \(f|_A(x) = f(x)\) for all \(x \in A\).
+
+    Conversely, if \(g: A \to Y\) is a mapping and \(A \subseteq X\),
+    an \textbf{extension} of \(g\) to \(X\) is a mapping \(f: X \to Y\) such that \(f|_A = g\).
+\end{definition}
+
+

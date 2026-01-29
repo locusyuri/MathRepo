@@ -1,0 +1,60 @@
+\chapter{Zermelo-Fraenkel Set Theory} % 公理化集合论
+\section{Axioms of ZFC} % ZFC 公理
+\begin{definition}{Zermelo-Fraenkel Set Theory with Choice (ZFC)} % ZFC 公理化集合论
+    Zermelo-Fraenkel Set Theory with Choice (ZFC) is a formal system that provides a foundation for much of modern mathematics. 
+    It consists of a set of axioms that describe the properties and behavior of sets.
+    
+    The axioms of ZFC are as follows:
+    \begin{description}
+        \item[Axiom of Extensionality] Two sets are equal (are the same set) if they have the same elements.
+            \[
+                \forall A \forall B \, ( \forall x (x \in A \Leftrightarrow x \in B) \Rightarrow A = B )
+            \]
+        \item[Axiom of Regularity (Foundation)] Every non-empty set \(A\) contains an element that is disjoint from \(A\).
+            \[
+                \forall A \, ( A \neq \emptyset \Rightarrow \exists B (B \in A \wedge B \cap A = \emptyset) )
+            \]
+        \item[Axiom Schema of Specification (Separation)] For any set \(A\) and any property \(P(x)\), 
+            there exists a subset \(B\) of \(A\) containing exactly those elements of \(A\) that satisfy the property \(P(x)\).
+            \[
+                \forall A \, \exists B \, \forall x \, (x \in B \Leftrightarrow (x \in A \wedge P(x)))
+            \]
+        \item[Axiom of Pairing] For any two sets \(A\) and \(B\), there exists a set \(C\) 
+            that contains exactly \(A\) and \(B\) as elements.
+            \[
+                \forall A \forall B \, \exists C \, \forall x \, (x \in C \Leftrightarrow (x = A \vee x = B))
+            \]
+        \item[Axiom of Union] For any set \(A\), there exists a set \(B\) 
+            that contains exactly the elements of the elements of \(A\).
+            \[
+                \forall A \, \exists B \, \forall x \, (x \in B \Leftrightarrow \exists C (C \in A \wedge x \in C))
+            \]
+        \item[Axiom Schema of Replacement] For any set \(A\) and any definable function \(F\), 
+            there exists a set \(B\) that contains exactly the images of the elements of \(A\) under \(F\).
+            \[
+                \forall A \, \exists B \, \forall y \, (y \in B \Leftrightarrow \exists x (x \in A \wedge y = F(x)))
+            \]
+        \item[Axiom of Infinity] There exists a set \(A\) that contains the empty set and is 
+            closed under the operation of taking the successor.
+            \[
+                \exists A \, (\emptyset \in A \wedge \forall x (x \in A \Rightarrow x \cup \{x\} \in A))
+            \]
+        \item[Axiom of Power Set] For any set \(A\), there exists a set \(B\) 
+            that contains exactly the subsets of \(A\).
+            \[
+                \forall A \, \exists B \, \forall C \, (C \in B \Leftrightarrow C \subseteq A)
+            \]
+        \item[Axiom of Choice] For any set \(A\) of non-empty sets, there exists a choice function \(f\) 
+            that selects exactly one element from each set in \(A\).
+            \[
+                \forall A \, ( \forall B \in A \, B \neq \emptyset \Rightarrow \exists f : 
+                A \to \bigcup A \, \forall B \in A \, (f(B) \in B) )
+            \]
+    \end{description}
+    
+\end{definition}
+
+\section{Axiom of Choice} % 选择公理
+
+
+\section{Von Neumann-Bernays-Gödel Set Theory} % NBG 公理

@@ -1,0 +1,162 @@
+\chapter{Real Numbers} % 实数
+\section{Construction of Real Numbers and the Cardinality of the Continuum} % 实数构造与连续统基数
+
+\section{Point Sets in Euclidean Space} % Euclid 空间中的点集
+In this section, we explore the point sets in Euclidean space.
+Furthermore, these concepts can be generalized to metric spaces and topological spaces.
+
+\begin{definition}{Diameter and Bounded Set} % 直径与有界集
+    Let \(A\) be a subset of the Euclidean space \(\mathbb{R}^n\). 
+    The \textbf{diameter} of set \(A\) is defined as
+    \[
+        \mathrm{diam}(A) = \sup \{d(x, y) \mid x, y \in A\},
+    \]
+    where \(d(x, y)\) denotes the Euclidean distance between points \(x\) and \(y\).
+    
+    A set \(A\) is called \textbf{bounded} if there exists a real number \(M > 0\) such that
+    \[
+        d(x, y) < M, \quad \forall x, y \in A.
+    \]
+    
+    Let \(x_{0}\in \mathbb{R}^{n}, \delta>0\), the set
+    \[
+        B\left(x_{0}, \delta\right)=\left\{x \in \mathbb{R}^{n} \mid d\left(x, x_{0}\right)<\delta\right\}
+    \]
+    is called the \textbf{open ball} (or \textbf{neighborhood}) with center \(x_{0}\) and radius \(\delta\)\footnote{
+        It can be also denoted as \(N(x_0, \delta)\) or \(U(x_0, \delta)\).
+        % 当delta不需要被强调时, 也可以简写为 \(B(x_0)\).
+        When \(\delta\) does not need to be emphasized, it can also be abbreviated as \(B(x_0)\).
+    }.
+    Similarly, the closed ball can be defined as
+    \[
+        \bar{B}\left(x_{0}, \delta\right)=\left\{x \in \mathbb{R}^{n} \mid d\left(x, x_{0}\right) \leq \delta\right\}.
+    \]
+
+    Let \(a_{i},b_{i}\) (\(i=1,2,\ldots,n\)) be real numbers with \(a_{i} < b_{i}\), the set
+    \[
+        \prod_{i=1}^n [a_i, b_i] = \{(x_1, x_2, \ldots, x_n) \in 
+        \mathbb{R}^n \mid a_i \leq x_i \leq b_i \text{ for all } i=1,2,\ldots,n \}
+    \]
+    is called a \textbf{rectangle} (or \textbf{box}) in \(\mathbb{R}^n\).
+    If all the edge lengths are equal, i.e., \(b_i - a_i = c\) for some constant \(c > 0\) and for all \(i\), 
+    then the rectangle is called a \textbf{cube} with side length \(c\).
+    Similarly, we can define the open rectangle (or open box) as
+    \[
+        \prod_{i=1}^n (a_i, b_i) = \{(x_1, x_2, \ldots, x_n) \in 
+        \mathbb{R}^n \mid a_i < x_i < b_i \text{ for all } i=1,2,\ldots,n \}.
+    \]
+    Rectangles are often denoted by \(I, J, \ldots\) and their volumes by \(|I|, |J|, \ldots\).
+\end{definition}
+
+\begin{definition}{Limit}
+    Let \(\{x_k\}\) be a sequence in \(\mathbb{R}^n\) and \(x \in \mathbb{R}^n\). 
+    We say that \(\{x_k\}\) \textbf{converges} to \(x\), or \(x\) is the \textbf{limit} of the sequence \(\{x_k\}\), 
+    if for every \(\varepsilon > 0\), there exists a natural number \(N\) such that
+    \[
+        d(x_k, x) < \varepsilon, \quad \forall k > N.
+    \]
+    In this case, we write
+    \[
+        \lim_{k \to \infty} x_k = x.
+    \]
+\end{definition}
+
+\begin{leftbarTitle}{Classification of Points}\end{leftbarTitle} % 点的分类
+\begin{definition}{Classification of Points} % 点的分类
+    Let \(E\) be a subset of the Euclidean space \(\mathbb{R}^n\).
+    Points in \(\mathbb{R}^n\) can be classified based on their relationship to set \(E\):
+    \begin{description}
+        \item[Interior Point] A point \(x \in E\) is called an \textbf{interior point} of set \(E\) 
+            if there exists \(U(x)\) such that \(U(x) \subseteq E\).
+        \item[Exterior Point] A point \(x \in \mathbb{R}^n \setminus E\) is called an \textbf{exterior point} of set \(E\) 
+            if there exists \(U(x)\) such that \(U(x) \subseteq \mathbb{R}^n \setminus E \), or equivalently, 
+            \(U(x) \cap E = \emptyset\).
+        \item[Boundary Point] A point \(x \in \mathbb{R}^n\) is called a \textbf{boundary point} of set \(E\) 
+            if for every \(U(x)\), the set \(U(x)\) contains points in both \(E\) and \(\mathbb{R}^n \setminus E\).
+        \item[Accumulation Point (Limit Point)] A point \(x \in \mathbb{R}^n\) is called an 
+            \textbf{accumulation point} (or \textbf{limit point}) of set \(E\) if for every \(U(x)\), 
+            the set \(U(x)\) contains at least one point of \(E\) different from \(x\)\footnote{
+                Obviously, only infinite sets can have accumulation points.
+                % 事实上, 在这里, 邻域中包含一点(相异)与包含无穷多点是等价的.
+                In fact, here, containing at least one (distinct) point in the neighborhood is equivalent to 
+                containing infinitely many points.
+            }.
+        \item[Isolated Point] A point \(x \in E\) is called an \textbf{isolated point} of set \(E\) 
+            if \(x\) is not an accumulation point of \(E\), i.e., there exists \(U(x)\) such that
+            \(U(x) \cap E = \{x\}\).
+    \end{description}
+\end{definition}
+
+% 任何点 \(x \in \mathbb{R}^n\) 都可以被唯一地分类为下列三类之一:
+Any point \(x \in \mathbb{R}^n\) can be uniquely classified into one of the following three categories:
+\[
+\begin{cases}
+\text{Interior Point} & \text{if } \exists U(x) \subseteq E; \\
+\text{Boundary Point} & \text{if } \forall U(x) \cap (\mathbb{R}^n \setminus E) \neq \emptyset; \\
+\text{Exterior Point} & \text{if } \exists U(x) \subseteq \mathbb{R}^n \setminus E; \\
+\end{cases}
+\]
+% 或是唯一地分类为下列三类之一:
+Or it can be uniquely classified into one of the following three categories:
+\[
+\begin{cases}
+\text{Accumulation Point} & \text{if } \forall U(x) \cap (E \setminus \{x\}) \neq \emptyset; \\
+\text{Isolated Point} & \text{if } \exists U(x) \cap E = \{x\}; \\
+\text{Exterior Point} & \text{if } \exists U(x) \cap E = \emptyset; \\
+\end{cases}
+\]
+
+\begin{definition}
+    Let \(E\) be a subset of the Euclidean space \(\mathbb{R}^n\).
+    \begin{description}
+        \item[Derived Set] The \textbf{derived set} of \(E\), denoted by \(E'\), 
+            is the set of all accumulation points of \(E\).
+        \item[Interior] The \textbf{interior} of set \(E\), denoted by \(\mathrm{int}(E)\), or \(\mathring{E}\), 
+            is the set of all interior points of \(E\).
+        \item[Boundary] The \textbf{boundary} of set \(E\), denoted by \(\partial E\), 
+            is the set of all boundary points of \(E\), or equivalently, \(\partial E = \bar{E} \setminus \mathring{E}\).
+        \item[Closure] The \textbf{closure} of set \(E\), denoted by \(\bar{E}\), 
+            is the union of \(E\) and its accumulation points, i.e., \(\bar{E} = E \cup E'\).
+    \end{description}
+\end{definition}
+
+\begin{property}
+    \begin{itemize}
+        \item \(\left( \mathring{E} \right)^{c}  = \overline{E^c},\quad \left( \overline{E} \right)^{c} = \mathring{E^c}\);
+        \item Let \(A \subseteq B\), then \(A' \subseteq B'\), \(\mathring{A} \subseteq \mathring{B}\) 
+            and \(\overline{A} \subseteq \overline{B}\);
+        \item \((A \cup B)' = A' \cup B'\).
+    \end{itemize}
+\end{property}
+
+
+
+\begin{note}
+    % 度量空间中, 可以给出聚点的另一定义, 即: 点 \(x\) 是集合 \(E\) 的聚点, 当且仅当它是某一\(E\)中点列的极限.
+    In a metric space, an alternative definition of accumulation point can be given:
+    A point \(x\) is an accumulation point of set \(E\) if and only if it is the limit of some sequence of points in \(E\).
+\end{note}
+
+\begin{remark}
+    % 通过把欧氏距离替换为一般的度量 \(d\)，上述所有定义都可以自然地推广到一般的度量空间 \((X, d)\) 中。
+    By replacing the Euclidean distance with a general metric \(d\), 
+    all the above definitions can be naturally extended to a general metric space \((X, d)\).
+
+    % 通过把度量 \(d\) 替换为一般的拓扑结构中的开集族，上述所有定义都可以推广到一般的拓扑空间 \((X, \tau)\) 中。
+    By replacing the metric \(d\) with the family of open sets in a general topological structure,
+    all the above definitions can be extended to a general topological space \((X, \tau)\).
+\end{remark}
+
+\begin{leftbarTitle}{Open and Closed Sets}\end{leftbarTitle} % 开集与闭集
+\begin{definition}{Classification of Point Sets} % 点集的分类
+    Let \(E\) be a subset of the Euclidean space \(\mathbb{R}^n\).
+    Point sets can be classified:
+    \begin{description}
+        \item[Closed Set] A set \(E\) is called a \textbf{closed set} if it contains all its accumulation points.
+        \item[Open Set] A set \(E\) is called an \textbf{open set} if every point in \(E\) is an interior point of \(E\).
+        \item[Compact Set] A set \(E\) is called a \textbf{compact set} if every open cover of \(E\) has a finite subcover,
+            or equivalently, if \(E\) is closed and bounded (Heine-Borel Theorem).
+        \item[Perfect Set] A set \(E\) is called a \textbf{perfect set} if it is closed and has no isolated points, 
+            i.e., every point in \(E\) is an accumulation point of \(E\), or equivalently, \(E=E'\).
+    \end{description}
+\end{definition}
