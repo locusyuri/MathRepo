@@ -9,8 +9,59 @@
     \[
         \mathscr{P}(X) = \{A \mid A \subseteq X\}.
     \]
-    
 \end{definition}
+
+\begin{leftbarTitle}{Operations on Sets}\end{leftbarTitle} % 集合运算
+\begin{definition}{Basic Operations on Sets} % 集合的基本运算
+    Let \(A\) and \(B\) be two sets. The following operations are defined:
+    \begin{description}
+        \item[Union] The union of \(A\) and \(B\), denoted by \(A \cup B\), 
+            is defined as the set of elements that are in \(A\) or in \(B\) (or in both):
+            \[
+                A \cup B = \{x \mid x \in A \text{ or } x \in B\}.
+            \]
+        \item[Intersection] The intersection of \(A\) and \(B\), denoted by \(A \cap B\), 
+            is defined as the set of elements that are in both \(A\) and \(B\):
+            \[
+                A \cap B = \{x \mid x \in A \text{ and } x \in B\}.
+            \]
+        \item[Difference] The difference of \(A\) and \(B\), denoted by \(A - B\) or \(A \setminus B\), 
+            is defined as the set of elements that are in \(A\) but not in \(B\):
+            \[
+                A - B = \{x \mid x \in A \text{ and } x \notin B\}.
+            \]
+        \item[Complement] The complement of \(A\) with respect to a universal set \(U\), 
+            denoted by \(A^c\) or \(\overline{A}\), is defined as the set of elements that are in \(U\) but not in \(A\):
+            \[
+                A^c = U - A = \{x \mid x \in U \text{ and } x \notin A\}.
+            \]
+        \item[Symmetric Difference] The symmetric difference of \(A\) and \(B\), 
+            denoted by \(A \oplus B\) or \(A \triangle B\), is defined as the set of elements that are in either \(A\) or \(B\) 
+            but not in both:
+            \[
+                A \oplus B = (A - B) \cup (B - A) = \{x \mid (x \in A \text{ and } x \notin B) \text{ or } (x \in B \text{ and } x \notin A)\}.
+            \]
+    \end{description}
+\end{definition}
+
+
+\begin{definition}{Limit of a Sequence of Sets} % 集合列的极限
+    Let \(\{A_n\}_{n=1}^{\infty}\) be a sequence of sets. 
+    The \textbf{limit inferior} (or \textbf{lim inf}) and \textbf{limit superior} (or \textbf{lim sup}) of the sequence are defined as follows:
+    \[
+        \liminf_{n \to \infty} A_n = \bigcup_{n=1}^{\infty} \bigcap_{k=n}^{\infty} A_k,
+    \]
+    \[
+        \limsup_{n \to \infty} A_n = \bigcap_{n=1}^{\infty} \bigcup_{k=n}^{\infty} A_k.
+    \]
+    If \(\liminf_{n \to \infty} A_n = \limsup_{n \to \infty} A_n\), 
+    then the common set is called the \textbf{limit} of the sequence, denoted by:
+    \[
+        \lim_{n \to \infty} A_n = \liminf_{n \to \infty} A_n = \limsup_{n \to \infty} A_n.
+    \]
+\end{definition}
+
+
 
 \section{Relations and Mappings} % 关系与映射
 \begin{leftbarTitle}{Relations}\end{leftbarTitle}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  30 JAN 2026 19:27
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  30 JAN 2026 20:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1445,92 +1445,27 @@ Chapter 1.
 
 
 ]
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 69.
+) (./chapters/chap02.tex
 
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 131.
-[2]) (./chapters/chap02.tex
-
-[3]
+(Font)              scaled to size 10.0pt on input line 1.
+[2]
 Chapter 2.
-) (./chapters/chap04.tex
+) (./chapters/chap03.tex
+
+[3
+
+]
+Chapter 3.
+) (./chapters/chap04.tex) (./chapters/chap05.tex) (./chapters/chap06.tex)
 
 [4
 
 ]
-Chapter 3.
-
 
 [5
-
-]) (./chapters/chap05.tex
-
-[6]
-Chapter 4.
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\(' on input line 42.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\alpha' on input line 42.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 42.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\alpha' on input line 42.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\)' on input line 42.
-
-) (./chapters/chap06.tex
-
-[7
-
-]
-Chapter 5.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 8.0pt on input line 25.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 25.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 29.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 29.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 29.
-
-
-[8
-
-]
-
-[9]) (./chapters/chap07.tex
-
-[10]
-Chapter 6.
-) (./chapters/chap08.tex
-
-[11
-
-]
-Chapter 7.
-) (./chapters/chap09.tex
-
-[12
-
-]
-Chapter 8.
-)
-
-[13
-
-]
-
-[14
 
 ] (./tmp/initial.aux)
  ***********
@@ -1538,18 +1473,18 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 8DFB537C66E0121C406B9E1A88B5163E;4728.
+(rerunfilecheck)             Checksum: 5B4CDFF113AC510404C67477176ADD70;1008.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46111 strings out of 473831
- 957726 string characters out of 5733137
- 1993906 words of memory out of 5000000
- 68320 multiletter control sequences out of 15000+600000
- 572156 words of font info for 176 fonts, out of 8000000 for 9000
+ 45970 strings out of 473831
+ 955299 string characters out of 5733137
+ 1980831 words of memory out of 5000000
+ 68195 multiletter control sequences out of 15000+600000
+ 566275 words of font info for 148 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,14n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,12n,108p,692b,1338s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (17 pages).
+Output written on ./tmp/initial.pdf (8 pages).

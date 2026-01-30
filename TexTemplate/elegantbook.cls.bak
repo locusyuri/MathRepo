@@ -303,35 +303,30 @@
   \definecolor{main}{RGB}{0,120,2}%
   \definecolor{second}{RGB}{230,90,7}%
   \definecolor{third}{RGB}{0,160,152}%
-  \definecolor{fourth}{RGB}{155,89,182}% 紫色系
 }{\relax}
 \ifdefstring{\ELEGANT@color}{cyan}{
   \definecolor{structurecolor}{RGB}{31,186,190}%
   \definecolor{main}{RGB}{59,180,5}%
   \definecolor{second}{RGB}{175,153,8}%
   \definecolor{third}{RGB}{244,105,102}%
-  \definecolor{fourth}{RGB}{155,89,182}% 紫色系
 }{\relax}
 \ifdefstring{\ELEGANT@color}{blue}{
   \definecolor{structurecolor}{RGB}{60,113,183}
   \definecolor{main}{RGB}{0,166,82}%
   \definecolor{second}{RGB}{255,134,24}%
   \definecolor{third}{RGB}{0,174,247}%
-  \definecolor{fourth}{RGB}{155,89,182}% 紫色系
 }{\relax}
 \ifdefstring{\ELEGANT@color}{gray}{
   \definecolor{structurecolor}{RGB}{150,150,150}
   \definecolor{main}{RGB}{150,150,150}%
   \definecolor{second}{RGB}{150,150,150}%
   \definecolor{third}{RGB}{150,150,150}%
-  \definecolor{fourth}{RGB}{155,89,182}% 紫色系
 }{\relax}
 \ifdefstring{\ELEGANT@color}{black}{
   \definecolor{structurecolor}{RGB}{0,0,0}
   \definecolor{main}{RGB}{0,0,0}%
   \definecolor{second}{RGB}{0,0,0}%
   \definecolor{third}{RGB}{0,0,0}%
-  \definecolor{fourth}{RGB}{155,89,182}% 紫色系
 }{\relax}
 
 %green color
@@ -339,31 +334,26 @@
 \definecolor{main1}{RGB}{0,120,2}%
 \definecolor{second1}{RGB}{230,90,7}%
 \definecolor{third1}{RGB}{0,160,152}%
-\definecolor{fourth1}{RGB}{155,89,182}% 紫色系
 %cyan color
 \definecolor{structure2}{RGB}{31,186,190}%
 \definecolor{main2}{RGB}{59,180,5}%
 \definecolor{second2}{RGB}{175,153,8}%
 \definecolor{third2}{RGB}{244,105,102}%
-\definecolor{fourth2}{RGB}{155,89,182}% 紫色系
 %blue color
 \definecolor{structure3}{RGB}{60,113,183}
 \definecolor{main3}{RGB}{0,166,82}%
 \definecolor{second3}{RGB}{255,134,24}%
 \definecolor{third3}{RGB}{0,174,247}%
-\definecolor{fourth3}{RGB}{155,89,182}% 紫色系
 % gray color
 \definecolor{structure4}{RGB}{150,150,150}
 \definecolor{main4}{RGB}{150,150,150}%
 \definecolor{second4}{RGB}{150,150,150}%
 \definecolor{third4}{RGB}{150,150,150}%
-\definecolor{fourth4}{RGB}{155,89,182}% 紫色系
 % black color
 \definecolor{structure5}{RGB}{0,0,0}
 \definecolor{main5}{RGB}{0,0,0}%
 \definecolor{second5}{RGB}{0,0,0}%
 \definecolor{third5}{RGB}{0,0,0}%
-\definecolor{fourth5}{RGB}{155,89,182}% 紫色系
 
 % corlor definition
 \definecolor{winered}{rgb}{0.5,0,0}
@@ -1005,23 +995,6 @@
       overlay unbroken and last={
         \node[anchor=south east, outer sep=0pt] at (\linewidth-width,0) {
           \textcolor{third}{$\spadesuit$}};}},
-    % =====================================================================
-    % 公理与公设样式 - 紫色系主题
-    % =====================================================================
-    % 该样式用于 axiom（公理）和 postulate（公设）环境
-    % 使用 fourth 颜色（RGB: 155,89,182）创建与其他样式区别的视觉对比
-    % 特点：紫色色调、菱形符号、独立的计数器标签
-    % =====================================================================
-    axiomstyle/.style={ % 公理与公设样式
-      common,
-      fontupper=\theoremfont, % 定理字体
-      fonttitle=\cursivetitle, % 花体标题
-      colframe=fourth, % 紫色边框
-      colback=fourth!5, % 浅紫色背景（透明度95%）
-      colbacktitle=fourth, % 紫色标题背景
-      overlay unbroken and last={
-        \node[anchor=south east, outer sep=0pt] at (\linewidth-width,0) {
-          \textcolor{fourth}{$\diamondsuit$}};}}, % 紫色菱形符号
     ELEGANT@title/.code n args={2}
       {
 
@@ -1096,8 +1069,8 @@
   % we define headers like \definitionname before
   \ELEGANT@newtheorem{theorem}{thm}{thmstyle}
   \ELEGANT@newtheorem{definition}{def}{defstyle}
-  \ELEGANT@newtheorem{postulate}{pos}{axiomstyle} % 使用紫色系axiomstyle
-  \ELEGANT@newtheorem{axiom}{axi}{axiomstyle} % 使用紫色系axiomstyle
+  \ELEGANT@newtheorem{postulate}{pos}{thmstyle}
+  \ELEGANT@newtheorem{axiom}{axi}{thmstyle}
   \ELEGANT@newtheorem{corollary}{cor}{thmstyle}
   \ELEGANT@newtheorem{lemma}{lem}{thmstyle}
   \ELEGANT@newtheorem{proposition}{pro}{prostyle}

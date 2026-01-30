@@ -1,0 +1,47 @@
+\chapter{Borel and Analytic Sets} % Borel 集与分析集
+\section{Borel Sets} % Borel 集
+\begin{definition}{Algebra of Sets} % 集合代数
+    Let \(S\) be a non-empty set. A non-empty collection \(\mathcal{S}\) of subsets of \(S\) 
+    (i.e., \(\mathcal{S} \subseteq \mathscr{P}(S)\)) is called an 
+    \textbf{algebra of sets} on \(S\) if it satisfies the following properties:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(S\in \mathcal{S}\).
+        \item If \(A \in \mathcal{S}\), then \(S \setminus A \in \mathcal{S}\)\footnote{
+            % 结合第(i)条, 这意味着空集 \(\emptyset\) 也属于集合代数.
+            Combining with item (i), this means that the empty set \(\emptyset\) also belongs to the algebra of sets.
+            % \( \emptyset, S \in \mathcal{S} \) 这种说法也是常见的, 尤其是在拓扑学中.
+            The notation \( \emptyset, S \in \mathcal{S} \) is also common, especially in topology.
+        }.
+        \item If \(A_1, A_2, \ldots, A_n \in \mathcal{S}\), then \(\bigcup_{i=1}^n A_i \in \mathcal{S}\).
+    \end{enumerate}
+    From these properties, it follows that an algebra of sets is also closed under finite intersections.
+\end{definition}
+
+\begin{definition}{\(\sigma\)-Algebra of Sets} % σ-代数
+    Let \(S\) be a non-empty set. A non-empty collection \(\mathcal{S}\) of subsets of \(S\) 
+    (i.e., \(\mathcal{S} \subseteq \mathscr{P}(S)\)) is called a 
+    \(\sigma\)-\textbf{algebra of sets} on \(S\) if it satisfies the following properties:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(S\in \mathcal{S}\).
+        \item If \(A \in \mathcal{S}\), then \(S \setminus A \in \mathcal{S}\).
+        \item If \(A_1, A_2, \ldots \in \mathcal{S}\), then \(\bigcup_{i=1}^{\infty} A_i \in \mathcal{S}\).
+    \end{enumerate}
+    From these properties, it follows that a \(\sigma\)-algebra of sets is also closed under countable intersections.
+\end{definition}
+
+\begin{remark}
+    \(\sigma\)-algebra is the \(\sigma\)-completion of algebra of sets.
+    It inherits all the properties of algebra.
+    Additionally, it requires closure under countable union (and hence countable intersection),
+    which is the core of handling limit processes in analysis (such as interchange of integration and limits).
+\end{remark}
+
+\begin{definition}{Borel Set} % Borel 集
+    The \textbf{Borel \(\sigma\)-algebra} on Euclidean space \(\mathbb{R}^n\), denoted by \(\mathcal{B}(\mathbb{R}^n)\), 
+    is the smallest \(\sigma\)-algebra containing all open sets in \(\mathbb{R}^n\).
+    Sets in \(\mathcal{B}(\mathbb{R}^n)\) are called \textbf{Borel sets}.
+    
+    Similarly, for any topological space \((X, \tau)\),
+    the \textbf{Borel \(\sigma\)-algebra} on \(X\), denoted by \(\mathcal{B}(X)\),
+    is the smallest \(\sigma\)-algebra containing all open sets in \(X\).
+\end{definition}

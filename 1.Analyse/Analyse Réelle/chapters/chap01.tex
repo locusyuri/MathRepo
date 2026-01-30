@@ -1,0 +1,130 @@
+\chapter{Lebesgue Measure} % Lebesgue 测度
+\begin{definition}{Measurable Space} % 可测空间
+    A \textbf{measurable space} is a pair \((X, \Sigma_{X})\) where \(X\) is a set 
+    and \(\Sigma_{X}\) is a \(\sigma\)-algebra of \(X\).
+\end{definition}
+
+
+\begin{definition}{Measure} % 测度
+    Let \((X, \Sigma_{X})\) be a measurable space. A \textbf{measure} on \((X, \Sigma_{X})\) 
+    is a function \(\mu : \Sigma_{X} \to [0, +\infty]\) that satisfies the following properties:
+    \begin{enumerate}[label=(\roman*)]
+        \item \(\mu(\emptyset) = 0\) (Null empty set);
+        \item (Countable Additivity/\(\sigma\)-additivity) For any countable collection \(\{A_i\}_{i=1}^{\infty}\) 
+            of pairwise disjoint sets in \(\Sigma_{X}\),
+            \[
+                \mu\left( \bigcup_{i=1}^{\infty} A_i \right) = \sum_{i=1}^{\infty} \mu(A_i).
+            \]
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}{Measure Space} % 测度空间
+    A \textbf{measure space} is a triple \((X, \Sigma_{X}, \mu)\) where \((X, \Sigma_{X})\) 
+    is a measurable space and \(\mu\) is a measure on \((X, \Sigma_{X})\).
+\end{definition}
+
+\begin{caution}
+    % 注意区分可测空间与测度空间: 可测空间只是一个集合与其 σ-代数的配对, 而测度空间则在此基础上增加了测度的概念.
+    Note the distinction between measurable space and measure space:
+    A measurable space is simply a pair of a set and its \(\sigma\)-algebra,
+    while a measure space adds the concept of measure on top of that.
+\end{caution}
+
+\section{Outer Measure and Measurable Sets} % 外测度与可测集
+\begin{leftbarTitle}{Outer Measure}\end{leftbarTitle}
+\begin{definition}{Lebesgue Outer Measure} % Lebesgue 外测度
+    Let \(E\subseteq \mathbb{R^{n}}\). If \(\{ I_{k} \}\) is a countable collection of open rectangles
+    such that \(E \subseteq \bigcup_{k} I_{k}\), then \(\{ I_{k} \}\) is called a \textbf{\(L\)-cover} of \(E\).
+
+    The \textbf{Lebesgue outer measure} (simplified outer measure) of \(E\) is defined as
+    \[
+        m^{*}(E) = \inf \left\{ \sum_{k} |I_{k}| : \{ I_{k} \} \text{ is an } L\text{-cover of } E \right\},
+    \]
+    where \(|I_{k}|\) denotes the volume of the rectangle \(I_{k}\).
+
+    If for any \(L\)-cover \(\{ I_{k} \}\) of \(E\), 
+    \[
+        \sum_{k} |I_{k}| = +\infty,
+    \]
+    we define \(m^{*}(E) = +\infty\). Otherwise, \(m^{*}(E)\) is a non-negative real number.
+\end{definition}
+
+% 外测度为 0 的集合称为零测集.
+Sets with outer measure zero are called \textbf{null sets}.
+
+\begin{remark}
+    % 现代实分析教学中, Lebesgue 外测度是定义 Lebesgue 测度的基础工具. 虽然也存在 Lebesgue 内测度的概念, 但其使用较少.
+    % 内测度在有限测度空间或有拓扑结构时可辅助直观（如计算勒贝格测度），但因其依赖外部条件、无法自然定义σ-代数、且缺乏一般可测性判据，
+    % 在基础理论中被Carathéodory方法取代。
+    In modern real analysis education, Lebesgue outer measure is the foundational tool for defining Lebesgue measure.
+    Although the concept of Lebesgue inner measure also exists, it is used less frequently.
+    
+    Inner measure can aid intuition in finite measure spaces or those with topological structures 
+    (e.g., calculating Lebesgue measure),
+    but due to its dependence on external conditions, inability to naturally define \(\sigma\)-algebras, 
+    and lack of general measurability criteria,
+    it has been supplanted by the Carathéodory method in foundational theory.
+\end{remark}
+
+\begin{property}
+    \begin{description}
+        \item[Non-negativity] For any \(E \subseteq \mathbb{R^{n}}\), \(m^{*}(E) \geq 0\).
+        \item[Monotonicity] If \(A \subseteq B \subseteq \mathbb{R^{n}}\), then 
+            \(m^{*}(A) \leq m^{*}(B)\).
+        \item[Countable Subadditivity] For any countable collection \(\{ A_{i} \}_{i=1}^{\infty}\) 
+            of subsets of \(\mathbb{R^{n}}\),
+            \[
+                m^{*}\left( \bigcup_{i=1}^{\infty} A_{i} \right) \leq \sum_{i=1}^{\infty} m^{*}(A_{i}).
+            \]
+    \end{description}
+\end{property}
+
+
+\begin{theorem}{Translation Invariance} % 平移不变性
+    For any \(E \subseteq \mathbb{R^{n}}\) and any vector \(x_{0} \in \mathbb{R^{n}}\),
+    \[
+        m^{*}(E + x_{0}) = m^{*}(E),
+    \]
+    where \(E + x = \{ x + x_{0} : x \in E \}\).
+\end{theorem}
+
+\begin{leftbarTitle}{Carathéodory Measurability Criterion}\end{leftbarTitle} % Caratheodory 可测性准则
+\begin{theorem}{Carathéodory Measurability Criterion} % Caratheodory 可测性准则
+    A set \(E \subseteq \mathbb{R^{n}}\) is \textbf{Carathéodory measurable} (or simply \textbf{measurable}) 
+    if for every set \(T \subseteq \mathbb{R^{n}}\),
+    \[
+        m^{*}(T) = m^{*}(T \cap E) + m^{*}(T \cap E^{c}).
+    \]
+
+    % 可测集的全体成为可测集类, 记作 \(\mathscr{M}\). 则 \((\mathbb{R^{n}}, \mathcal{M}, m)\) 构成测度空间, 其中 \(m\) 是 Lebesgue 测度.
+    The collection of all measurable sets forms a \(\sigma\)-algebra, denoted by \(\mathscr{M}\).
+    Thus, \((\mathbb{R^{n}}, \mathscr{M}, m)\) constitutes a measure space, where \(m\) is the Lebesgue measure.
+\end{theorem}
+
+\begin{definition}{Continuity of Measure for Increasing Sequences} % 递增可测集列的测度运算
+    Let \(\{ E_{i} \}_{i=1}^{\infty}\) be a sequence of measurable sets such that 
+    \(E_{1} \subseteq E_{2} \subseteq E_{3} \subseteq \cdots\).
+    Then,
+    \[
+        m\left( \bigcup_{i=1}^{\infty} E_{i} \right) = \lim_{i \to \infty} m(E_{i}).
+    \]
+
+    Similarly, for a sequence of measurable sets \(\{ F_{i} \}_{i=1}^{\infty}\) such that
+    \(F_{1} \supseteq F_{2} \supseteq F_{3} \supseteq \cdots\) and \(m(F_{1}) < +\infty\),
+    \[
+        m\left( \bigcap_{i=1}^{\infty} F_{i} \right) = \lim_{i \to \infty} m(F_{i}).
+    \]
+\end{definition}
+
+\section{Measurable Sets and Borel Sets} % 可测集与 Borel 集
+\begin{lemma}{Carathéodory Lemma}
+    Let \(G\neq \mathbb{R}^{n}\) be an open set, \(E \subset G\). 
+    Let 
+    \[
+    E_{k} = \{ x \in E : d(x, G^{c}) \geq 1/k \}, \quad k=1,2,\ldots
+    \]
+    Then each \(E_{k}\) is closed and
+    \[
+        m^{*}(E) = \lim_{k \to \infty} m^{*}(E_{k}).
+    \]
+\end{lemma}
