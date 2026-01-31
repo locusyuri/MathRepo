@@ -1,49 +1,117 @@
->[!todo] 
->后续将会把pdf文件直接存储进仓库特定目录下，方便查找
+[Homepage]() | [Github](https://github.com/locusyuri/Mathematics) | [Download]() | 
 
-# 简介
-数学笔记(数学系)
+![License](https://img.shields.io/github/license/locusyuri/Mathematics) ![Repo Size](https://img.shields.io/github/repo-size/locusyuri/Mathematics) ![Commit Activity](https://img.shields.io/github/commit-activity/w/locusyuri/Mathematics)
 
-- 仓库中为markdown版本，配置不同可能导致显示异常；
-- release中为pdf版本，已进行样式优化，可下载使用。
+------
 
-# 内容结构
-## 本科一年级
+# Structure | 目錄結構
+This is a repository for mathematical notes. The directory structure is as follows (folders with ~~strike through~~ are under construction):
 
-| 课程名称 | 仓库路径               | PDF路径 |
-| ---- | ------------------ | ----- |
-| 数学分析 | 分析学/微积分            |       |
-| 高等代数 | 代数学/多项式理论，代数学/线性代数 |       |
-| 解析几何 | 几何学/初等解析几何         |       |
+## 1.Analyse | 分析學
+- [Analyse Complexe | 複分析](./1.Analyse/Analyse%20Complexe/tmp/initial.pdf)
+- [Analyse Harmonique | 調和分析](./1.Analyse/Analyse%20Harmonique/tmp/initial.pdf)
+- [Analyse Mathématique | 數學分析](./1.Analyse/Analyse%20Mathématique/tmp/initial.pdf)
+- [Analyse Réelle | 實分析](./1.Analyse/Analyse%20Réelle/tmp/initial.pdf)
+- [Équation Différentielle Ordinaire | 常微分方程](./1.Analyse/Équation%20Différentielle%20Ordinaire/tmp/initial.pdf)
 
 
+## 2.Algèbre | 代數學
+- [Algèbre Abstraite | 抽象代數](./2.Algèbre/Algèbre%20Abstraite/tmp/initial.pdf)
+- [Algèbre Linéaire | 線性代數](./2.Algèbre/Algèbre%20Linéaire/tmp/initial.pdf)
+- [Polynôme | 多項式](./2.Algèbre/Polynôme/tmp/initial.pdf)
+- [Théorie des Nombres | 數論](./2.Algèbre/Théorie%20des%20Nombres/tmp/initial.pdf)
 
 
-# 书写规范
-## 定义
-`> <span style='background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);font-size:1.5em;font-style:normal;padding:2px;font-family:方正龙爪简体;font-weight:bold;border-radius:0 10px 0 0;box-shadow: 2px 2px 5px 3px #ccc;'>「Definition:」</span>`
+## 3.Géométrie | 幾何學
+- [Géométrie Analytique | 解析幾何](./3.Géométrie/Géométrie%20Analytique/tmp/initial.pdf)
+- ~~[Topologie Algébrique  | 代數拓撲]()~~
+- [Topologie Générale | 點集拓撲](./3.Géométrie/Topologie%20Générale/tmp/initial.pdf)
 
-## 定理
-`><span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Theorem:</span>`
+## 4.Mathématiques discrètes | 離散數學
+- [Combinatoire | 組合數學](./4.Mathématiques%20discrètes/Combinatoire/tmp/initial.pdf)
+- [Logique Mathématique | 數理邏輯](./4.Mathématiques%20discrètes/Logique%20Mathématique/tmp/initial.pdf)
+- [Théorie des Ensembles | 集合論](./4.Mathématiques%20discrètes/Théorie%20des%20Ensembles/tmp/initial.pdf)
+- [Théorie des Graphes | 圖論](./4.Mathématiques%20discrètes/Théorie%20des%20Graphes/tmp/initial.pdf)
 
-## 证明
-`<span style='color:#434343;background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);border-radius:7px;box-shadow: 1px 1px 30px 5px rgb(204, 204, 204, 0.52);font-family:Monotype Corsiva;font-size:2em;'>Proof :</span>
-...
-<span style='display: inline-block; width: 0.8em; height: 0.8em; background: #000; margin-left: 0.5em; vertical-align: middle; box-shadow: 1px 1px 2px rgba(0,0,0,0.2); margin-left:90%'></span>`
-## 例题
-`<span style='color:#434343;background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);border-radius:7px;box-shadow: 1px 1px 30px 5px rgb(204, 204, 204, 0.52);font-family:Monotype Corsiva;font-size:2em;'> eg. 1 </span>`
+## 5.Statistiques | 統計學
+- [Probabilités | 機率論](./5.Statistiques/Probabilités/tmp/initial.pdf)
+- [Processus Stochastique | 隨機過程](./5.Statistiques/Processus%20Stochastique/tmp/initial.pdf)
+- [Statistiques Mathématiques | 數理統計](./5.Statistiques/Statistiques%20Mathématiques/tmp/initial.pdf)
 
-## 公理
-`><span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Axiom:</span>`
 
-## 反例
-`<span style='color:#434343;background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);border-radius:7px;box-shadow: 1px 1px 30px 5px rgb(204, 204, 204, 0.52);font-family:Monotype Corsiva;font-size:2em;'>Counter-Example :</span>`
+## 6.Mathématiques appliquées | 應用數學
+- [Latex | Latex 教程](./6.Mathématiques%20appliquées/Latex/tmp/initial.pdf)
+- [Théorie des Champs | 場論](./6.Mathématiques%20appliquées/Théorie%20des%20Champs/tmp/initial.pdf)
 
-## 强调
-`**强调**`
 
-## 重点
-`==重点==`
+---
+# Term Index | 術語索引
+## A
 
-## 关键词
-`<span style="background:#d2cbff">关键词</span>`
+## B
+- **Banach Space (巴拿赫空間)** | 
+- **Bounded Variation (有界變差)** | Analyse Mathématique - Section 14.6: Bounded Variation Functions
+## C
+## D
+## E
+## F
+## G
+## H
+- **Hilbert Space (希爾伯特空間)** |
+- **Homogeneous Function (齊次函數)** | Équation Différentielle Ordinaire - Section 2.3: Homogeneous Equations
+
+## I
+## J
+## K
+## L
+
+- **Linear Space (線性空間)** | Algèbre Linéaire - Section 3.2: Linear Space
+
+## M
+## N
+## O
+## P
+## Q
+## R
+## S
+## T
+## U
+## V
+## W
+## X
+## Y
+## Z
+
+---
+# Notations
+[🌐`elegantbook` 原項目地址](https://github.com/ElegantLaTeX/ElegantBook)
+
+
+------
+# Font Setting | 字體設置
+字體修改如下，請確保本機含有如下字體：
+```tex
+\ifdefstring{\ELEGANT@lang}{en}{
+  \RequirePackage{fontspec} % 字體設置
+  ...
+  ...
+  ...
+  % 自定義標題字體
+  \newfontfamily\titlefont{Merriweather}
+  % 環境字體定義
+  \newfontfamily\theoremfont{GaramondPremrPro-Disp}      % 定理
+  \newfontfamily\definitionfont{GaramondPremrPro-Disp}   % 定義
+  \newfontfamily\propositionfont{GaramondPremrPro-Disp}   % 命題
+  \newfontfamily\examplefont{Bembo}       % 例子
+  %\newfontfamily\exercisefont{\ttfamily}     % 練習
+  %\newfontfamily\prooffont{\sffamily}        % 證明
+  %\newfontfamily\remarkfont{方正宋刻本秀楷简体}        % 註釋
+  \newfontfamily\remarkfont{NeutraTextTF-Book}        % 註釋
+  \newfontfamily\cursivetitle{Monotype Corsiva} % 花體標題
+}{\relax}
+```
+> 注意：若使用的 Tex 發行版為 Tex Live，請在 `...\texlive\2025\texmf-dist\fonts` 目錄下（對應格式）放入相應字體。
+
+-------
+Copyright © 2026 Cat Mono. All rights reserved.
+
