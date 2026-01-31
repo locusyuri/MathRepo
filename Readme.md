@@ -5,12 +5,13 @@
 ------
 
 # Structure | 目錄結構
-This is a repository for mathematical notes. The directory structure is as follows
-(folders with ~~strike through~~ are under construction):
+This is a repository for mathematical notes. The directory structure is as follows (folders with ~~strike through~~ are under construction):
 
 ## 1.Analyse | 分析學
+- [Analyse Complexe | 複分析](./1.Analyse/Analyse%20Complexe/tmp/initial.pdf)
 - [Analyse Harmonique | 調和分析](./1.Analyse/Analyse%20Harmonique/tmp/initial.pdf)
 - [Analyse Mathématique | 數學分析](./1.Analyse/Analyse%20Mathématique/tmp/initial.pdf)
+- [Analyse Réelle | 實分析](./1.Analyse/Analyse%20Réelle/tmp/initial.pdf)
 - [Équation Différentielle Ordinaire | 常微分方程](./1.Analyse/Équation%20Différentielle%20Ordinaire/tmp/initial.pdf)
 
 
@@ -33,6 +34,9 @@ This is a repository for mathematical notes. The directory structure is as follo
 - [Théorie des Graphes | 圖論](./4.Mathématiques%20discrètes/Théorie%20des%20Graphes/tmp/initial.pdf)
 
 ## 5.Statistiques | 統計學
+- [Probabilités | 機率論](./5.Statistiques/Probabilités/tmp/initial.pdf)
+- [Processus Stochastique | 隨機過程](./5.Statistiques/Processus%20Stochastique/tmp/initial.pdf)
+- [Statistiques Mathématiques | 數理統計](./5.Statistiques/Statistiques%20Mathématiques/tmp/initial.pdf)
 
 
 ## 6.Mathématiques appliquées | 應用數學
@@ -45,23 +49,23 @@ This is a repository for mathematical notes. The directory structure is as follo
 ## A
 
 ## B
-- Banach Space (巴拿赫空間) | 
-- Bounded Variation (有界變差) | Analyse Mathématique - Section 14.6: Bounded Variation Functions
+- **Banach Space (巴拿赫空間)** | 
+- **Bounded Variation (有界變差)** | Analyse Mathématique - Section 14.6: Bounded Variation Functions
 ## C
 ## D
 ## E
 ## F
 ## G
 ## H
-- Hilbert Space (希爾伯特空間) |
-- Homogeneous Function (齊次函數) | Équation Différentielle Ordinaire - Section 2.3: Homogeneous Equations
+- **Hilbert Space (希爾伯特空間)** |
+- **Homogeneous Function (齊次函數)** | Équation Différentielle Ordinaire - Section 2.3: Homogeneous Equations
 
 ## I
 ## J
 ## K
 ## L
 
-- Linear Space (線性空間) | Algèbre Linéaire - Section 3.2: Linear Space
+- **Linear Space (線性空間)** | Algèbre Linéaire - Section 3.2: Linear Space
 
 ## M
 ## N
@@ -80,7 +84,7 @@ This is a repository for mathematical notes. The directory structure is as follo
 
 ---
 # Notations
-[`elegantbook` 原項目地址](https://github.com/ElegantLaTeX/ElegantBook)
+[🌐`elegantbook` 原項目地址](https://github.com/ElegantLaTeX/ElegantBook)
 
 
 ------
@@ -109,5 +113,5 @@ This is a repository for mathematical notes. The directory structure is as follo
 > 注意：若使用的 Tex 發行版為 Tex Live，請在 `...\texlive\2025\texmf-dist\fonts` 目錄下（對應格式）放入相應字體。
 
 -------
-
+Copyright © 2026 Cat Mono. All rights reserved.
 

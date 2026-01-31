@@ -1,10 +1,9 @@
-\documentclass[11pt]{../../TexTemplate/elegantbook}
-
-\title{Équation Différentielle Ordinaire} % 这里放置书名
+\documentclass[11pt]{../../TexTemplate/elegantbook} % 这里是文档类，默认使用 elegantbook
+\title{Analyse de Fourier} % 这里放置书名
 % \subtitle{Subtitle} % 这里放置副标题
 
-\author{MonoCat} % 这里放置作者名
-\date{July, 2025} % 这里放置日期
+\author{CatMono} % 这里放置作者名
+\date{November, 2025} % 这里放置日期
 \version{0.1} % 这里放置版本号
 % \institute{Elegant\LaTeX{} Program} % 这里放置机构名
 % \bioinfo{Custom Key}{Custom Value} % 这里放置自定义信息
@@ -23,7 +22,7 @@
 \colorlet{coverlinecolor}{customcolor}
 \usepackage{cprotect} % 保护命令参数不被 LaTeX 解析器过早处理，允许在某些特殊环境中使用脆弱命令（fragile commands）。
 \usepackage{xeCJK} % 使用 xeCJK 包支持中文
-
+\usepackage{amsmath} % 使用 amsmath 包支持数学公式
 
 % ===== 开始文档 =====
 \begin{document}
@@ -37,35 +36,51 @@
 % \listoftables       % 表格目录 (页码: iv)
 
 \chapter{Preface}   % 前言章节（无编号，页码: v, vi...）
+This is the preface of the book...
+
 % \chapter{Acknowledgments}  % 致谢（无编号）
 % I would like to thank...
 % === 正文部分 ===
 \mainmatter         % 开始正文，页码从 1 重新开始
 
-
-
-\input{chapters/chap01.tex} % 导论
-\input{chapters/chap02.tex} % 一阶方程
-\input{chapters/chap03.tex} % 存在唯一性定理
-\input{chapters/chap04.tex} % 一阶线性方程组
-\input{chapters/chap05.tex} % 高阶线性方程组
-\input{chapters/chap07.tex} % 非线性方程与稳定性
-\input{chapters/chap08.tex} % 一阶偏微分方程
-\input{chapters/chap06.tex} % 边值问题
+\chapter{Fourier Series} % 这里放置章节标题
+\section{Fourier Expansion}
 
 
 
+\chapter{Convergence of Fourier Series} % 傅里叶级数的收敛性
+\section{Mean Convergence} % 均方收敛
 
+\begin{lemma}{Riemann-Lebesgue Lemma}
+    Let \( f(x) \in R[a, b] \), \( g(x) \) has a period \( T \) and \( g(x) \in R[0, T] \),
+    then:
+    \[
+    \lim_{p \to +\infty}\int_{a}^{b} f(x)g(px) \, \mathrm{d}x 
+    = \int_{a}^{b} f(x) \, \mathrm{d}x \cdot \frac{1}{T} \int_{0}^{T} g(t) \, \mathrm{d}t.
+    \]
+    A special case is when \( g(x) = \sin x \) or \( g(x) = \cos x \), then:
+    \[
+    \lim_{p \to +\infty}\int_{a}^{b} f(x)\sin(px) \, \mathrm{d}x 
+    = \int_{a}^{b} f(x)\cos(px) \, \mathrm{d}x = 0.
+    \]
+\end{lemma}
+
+
+
+\section{Pointwise Convergence} % 点值收敛
+
+\chapter{Fourier Transform on \(\mathbb{R}\)} % R1 上的傅里叶变换
+
+\chapter{Fourier Transform on \(\mathbb{R}^n\)} % Rn 上的傅里叶变换
+
+\chapter{Finite Fourier Analysis} % 有限傅里叶分析
+
+\chapter{Dirichlet Theorem} % Dirichlet 定理
 
 
 \begin{thebibliography}{99} 
-\bibitem{1} 柳彬. \emph{常微分方程 (1th edition) }. 北京大学出版社, 2021.
-\bibitem{2} 东北师范大学微分方程教研室. \emph{常微分方程 (3th edition) }. 高等教育出版社, 2022.
-\bibitem{3} 王高雄, 周之铭, 朱思铭, 王寿松. \emph{常微分方程 (4th edition) }. 高等教育出版社, 2020.
-\bibitem{4} William E. Boyce, Richard C. DiPrima, Douglas B. Meade. 
-    \emph{Elementary Differential Equations and Boundary Value Problems (12th edition) }. Wiley, 2022.
-\bibitem{9} Wikipedia. \url{https://en.wikipedia.org/wiki/}.
-
+\bibitem{en1} Elias M. Stein, Rami Shakarchi. \emph{Fourier Analysis: An Introduction}. Princeton University Press, 2016.
+\bibitem{en2} Author2, Title2, Journal2, Year2. \emph{ This is another example of a reference.}
 \end{thebibliography}
 
 \end{document}

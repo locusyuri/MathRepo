@@ -6,9 +6,9 @@ An equation of the form
 \begin{equation}\label{eq:symmetric form}
     M(x,y) \, \mathrm{d}x + N(x,y) \, \mathrm{d}y = 0
 \end{equation}
-is called the symmetric form of a first-order differential equation.
+is called the symmetric form (or differential form) of a first-order differential equation.
 
-If there exists a continuously differentiable function $u(x,y)$ such that
+If there exists a continuously differentiable function $U(x,y)$ such that
 \[
 \mathrm{d}U(x,y) = M(x,y) \, \mathrm{d}x + N(x,y) \, \mathrm{d}y,
 \]
@@ -48,7 +48,7 @@ where $c$ is an arbitrary constant. Equation~\eqref{general integral} is called 
     connecting \((x_0, y_0)\) and \((x, y)\), and \(c\) is an arbitrary constant.
 \end{theorem}
 \begin{proof}
-    
+    Refer to \emph{Analyse Mathématique Thm 15.9}.
 \end{proof}
 
 The aforementioned proof also serves as a method for determining the bivariate function $U(x, y)$ 
@@ -57,7 +57,6 @@ there exist two simpler methods for solving $U(x, y)$.
 
 \begin{description}
     \item [Utilizing Curve Integrals to Solve $U(x, y)$] 
-
 
     \item [Term Combination Method]
         Utilizing the properties of bivariate differential functions, 
@@ -81,7 +80,7 @@ The theory above can also be rewritten in differential form:
 
 Let:
 \[
-\omega^1 = M(x, y) \, dx + N(x, y) \, dy.
+\omega^1 = M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y.
 \]
 The differential form \( \omega^1 \) is said to be \textbf{closed} if \( \mathrm{d}\omega^1 = 0 \). 
 It is called \textbf{exact} if there exists a function \( U(x, y) \) such that \( \omega^1 = \mathrm{d}U(x, y) \). 
@@ -120,7 +119,7 @@ U(x, y) = \int \omega^1.
     \end{equation}
 \end{definition}
 
-\begin{theorem}{Solutions to Separable Equations}
+\begin{theorem}{Solutions to Separable Equations}\label{thm:solutions to separable equations}
     All the solutions to the separable equation~\eqref{eq:separable form} are given by:
     \[
     \int_{x_{0}}^{x}  \frac{M_{1}(t)}{N_{1}(t)}\mathrm{d}t + \int_{y_{0}}^{y} \frac{N_{2}(s)}{M_{2}(s)}\mathrm{d}s = c,
@@ -132,6 +131,7 @@ U(x, y) = \int \omega^1.
     \end{gather*}
     where \(M_{2}(b_{i})=0\quad(i=1,2,\ldots,m)\) and \(N_{1}(a_{j})=0\quad(j=1,2,\ldots,n)\), \(c\) is arbitrary constant.
 \end{theorem}
+
 
 \section{Homogeneous Equations}
 \begin{definition}{Homogeneous Functions}
@@ -288,8 +288,10 @@ where \(a_1, a_2, b_1, b_2, c_1, c_2\) are constants.
     \]
     where \(M(x, y)\) and \(N(x, y)\) are quasihomogeneous functions of degree \(d_0\) and \(d_1\) 
     with weights \(\alpha\) and \(\beta\) for \(x\) and \(y\), respectively.
-    Proposition: When \(d_0 = d_1 + \beta - \alpha\) the equation can be solved by elementary integration method.
+    \newline Proposition: When \(d_0 = d_1 + \beta - \alpha\) the equation can be solved by elementary integration method.
 \end{example}
+
+
 \section{Linear Equations}
 \begin{definition}{First-Order Linear Equations}
     A \textbf{first-order linear equation} is an equation of the form
@@ -328,6 +330,22 @@ y = e^{-\int p(x) \, \mathrm{d}x} \left( c + \int q(x) e^{\int p(x) \, \mathrm{d
 
 This method of solving first-order linear equations is known as the \textbf{method of variation of constants}.
 
+% 当有初值条件y(x_0)=y时, 解可以表示为:...
+When an initial condition \(y(x_0) = y_0\) is provided, the solution can be expressed as:
+\[
+y = e^{-\int_{x_0}^{x} p(t) \, \mathrm{d}t} \left( y_0 + \int_{x_0}^{x} q(t) e^{\int_{x_0}^{t} p(s) \, \mathrm{d}s} \, \mathrm{d}t \right)
+= e^{-\int_{x_0}^{x} p(t) \, \mathrm{d}t} y_0 + \int_{x_0}^{x} q(t) e^{-\int_{t}^{x} p(s) \, \mathrm{d}s} \, \mathrm{d}t.
+\]
+% 最后一个式子可以记作: "基本解*初值加上基本解与非齐次项的卷积"
+The last expression can be interpreted as the 
+\newline``\emph{fundamental solution \(\times \) the initial value \(+\) 
+the convolution of the fundamental solution with the non-homogeneous term}."
+
+\begin{remark}
+    % 常数变易法推广到非齐次线性偏微分方程中, 称为"Duhamel原理".
+    The method of variation of constants can be extended to non-homogeneous linear partial differential equations, 
+    known as the ''Duhamel's principle''.
+\end{remark}
 
 \begin{definition}{Bernoulli's Equation}
     A first-order differential equation of the form
@@ -345,30 +363,40 @@ Substituting \(\frac{\mathrm{d}y}{\mathrm{d}x}\) from Bernoulli's equation into 
 \[\frac{\mathrm{d}z}{\mathrm{d}x} = (1-n) \left( -p(x) z + q(x) \right).\]
 This is a first-order linear equation in \(z\), which can be solved using the method for first-order linear equations.
 
+\vspace{0.7cm}
+\begin{example}
+    \(f\in C[0,+\infty), \lim_{x \to \infty}f(x)=b\).
+    Prove: For the equation
+    \[
+    \frac{\mathrm{d}y}{\mathrm{d}x} + ay = f(x),
+    \]
+    when \(a > 0\), any solution \(y(x)\) satisfies \(\lim_{x \to \infty} y(x) = \frac{b}{a}\);
+    when \(a < 0\), there exists a unique solution \(y(x)\) such that \(\lim_{x \to \infty} y(x) = \frac{b}{a}\).
+\end{example}
+
+\begin{proof}
+    
+\end{proof}
+
 \section{Integrating Factors}
 \begin{definition}{Integrating Factors}
-    An \textbf{integrating factor} for a first-order differential equation of the form
-    \begin{equation}\label{eq:integrating factor equation}
-        M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y = 0
-    \end{equation}
-    is a differentiable function \(\mu(x, y)\) such that when multiplied by the equation:
-    \[
-    \mu(x, y) M(x, y) \, \mathrm{d}x + \mu(x, y) N(x, y) \, \mathrm{d}y = 0,
-    \]
-    it becomes an exact equation.
+    % 对于非恰当微分形式omega, 若存在一个非零可微函数mu, 使得mu*omega是恰当微分形式, 则称mu为omega的积分因子.
+    For a non-exact differential form \(\omega = M(x, y) \, \mathrm{d}x + N(x, y) \, \mathrm{d}y\),
+    if there exists a non-zero differentiable function \(\mu(x, y)\) such that \(\mu(x, y) \omega\) is an exact differential form,
+    then \(\mu(x, y)\) is called an \textbf{integrating factor} of \(\omega\).
+    % 
     Id est, there exists a function \(\Phi(x, y)\) such that
     \[
-    \mu(x, y) M(x, y) \, \mathrm{d}x + \mu(x, y) N(x, y) \, \mathrm{d}y = \mathrm{d}U(x, y).
+    \mu(x, y) \omega = \mathrm{d}U(x, y).
     \]
     If such functions \(\mu(x, y)\) and \(U(x, y)\) exist, and \(U(x, y)\) is smooth, then
     \begin{equation}\label{eq:integrating factor condition}
         \frac{\partial(\mu M)}{\partial y} = \frac{\partial(\mu N)}{\partial x}
         \left( = \frac{\partial^2 U}{\partial x \partial y} \right).
     \end{equation}
-    In this case, \(\mu(x, y)\) is called an integrating factor for equation~\eqref{eq:integrating factor equation}.
 \end{definition}
 According to Equation~\eqref{eq:integrating factor condition}, 
-finding an integrating factor \(\mu(x, y)\) for equation~\eqref{eq:integrating factor equation}
+finding an integrating factor \(\mu(x, y)\) for \(\omega\)
 is equivalent to solving the partial differential equation:
 \begin{equation}\label{eq:integrating factor PDE}
     \frac{\partial \mu}{\partial x} N - \frac{\partial \mu}{\partial y} M 
@@ -406,7 +434,7 @@ is equivalent to solving the partial differential equation:
         \]
 
     \item 
-        For equation~\ref{eq:integrating factor equation} to have an integrating factor of the form 
+        For \(\omega\) to have an integrating factor of the form 
         $\mu = \mu(\phi(x, y))$, the necessary condition is:
         \[
         \frac{1}{\frac{\partial \phi}{\partial x} N - \frac{\partial \phi}{\partial y} M} 
@@ -420,7 +448,7 @@ is equivalent to solving the partial differential equation:
 
 \begin{theorem}
     Let the functions \(P(x, y)\), \(Q(x, y)\), \(\mu_1(x, y)\), and \(\mu_2(x, y)\) be continuously differentiable. 
-    Suppose \(\mu_1(x, y)\) and \(\mu_2(x, y)\) are integrating factors for equation~\eqref{eq:integrating factor equation}, 
+    Suppose \(\mu_1(x, y)\) and \(\mu_2(x, y)\) are integrating factors for \(\omega\), 
     and the ratio \(\frac{\mu_1(x, y)}{\mu_2(x, y)}\) is not a constant. 
     Then: 
     \[
@@ -436,50 +464,226 @@ This section discusses the problem of solving the first-order implicit different
 F(x, y, y') = 0
 \end{equation}
 where \(F\) is a continuously differentiable function. 
-A so-called implicit differential equation is one in which \(y'\) does not have an explicit solution, 
-that is, the equation cannot be written in the form \(y' = f(x, y)\).
 
-\begin{leftbarTitle}{Differentiation Method}\end{leftbarTitle}
-Suppose that Equation~\eqref{eq:implicit ODE} can be solved for \(y\), that is,
-\begin{equation}\label{eq:differentiation method}
-    y = f(x, p),\quad p = \frac{dy}{dx},
-\end{equation}
-where \(f(x, p)\) is a continuously differentiable function.
+Denote \(p=y'=\frac{\mathrm{d}y}{\mathrm{d}x}\),
+\begin{enumerate}[label=(\alph*)]
+    \item If \(p\) is solvable, i.e., \(p = f(x, y)\), 
+        then equation~\eqref{eq:implicit ODE} becomes a first-order explicit differential equation,
+        which can be solved using the methods discussed in previous sections. 
+    \item If \(y\) is solvable, i.e., \(y = f(x, p)\), 
+        then differentiating both sides with respect to \(x\) gives:
+        \[
+        \frac{\mathrm{d}y}{\mathrm{d}x} = p = \frac{\partial f}{\partial x} + \frac{\partial f}{\partial p} \frac{\mathrm{d}p}{\mathrm{d}x}.
+        \]
+        Rearranging yields:
+        \[
+        \frac{\mathrm{d}p}{\mathrm{d}x} = \frac{p - \frac{\partial f}{\partial x}}{\frac{\partial f}{\partial p}}.
+        \]
+        This is a first-order differential equation in \(p\), which can be solved using the methods discussed earlier. 
+        After finding \(p(x)\), substituting back into \(y = f(x, p)\) gives the solution for \(y\).
+    \item If \(x\) is solvable, i.e., \(x = f(y, p)\), 
+        then differentiating both sides with respect to \(x\) gives:
+        \[
+        1 = \frac{\partial f}{\partial y} \frac{\mathrm{d}y}{\mathrm{d}x} + \frac{\partial f}{\partial p} \frac{\mathrm{d}p}{\mathrm{d}x}.
+        \]
+        Rearranging yields:
+        \[
+        \frac{\mathrm{d}p}{\mathrm{d}x} = \frac{1 - p \frac{\partial f}{\partial y}}{\frac{\partial f}{\partial p}}.
+        \]
+        This is a first-order differential equation in \(p\), which can be solved using the methods discussed earlier. 
+        After finding \(p(x)\), substituting back into \(x = f(y, p)\) gives the solution for \(y\).
+    \item If none of the above three cases apply, 
+        one can attempt to solve equation~\eqref{eq:implicit ODE} using the method of parameterization.
+        Let \(x=\varphi(u, v), y=\psi(u, v), p=\theta(u, v)\).
+        By \(\mathrm{d}y = p \, \mathrm{d}x\), we have:
+        \[
+        \frac{\partial \psi}{\partial u} \, \mathrm{d}u + \frac{\partial \psi}{\partial v} \, \mathrm{d}v
+        = \theta \left( \frac{\partial \varphi}{\partial u} \, \mathrm{d}u + 
+        \frac{\partial \varphi}{\partial v} \, \mathrm{d}v \right).
+        \]
+\end{enumerate}
 
-Differentiating both sides of \(y = f(x, p)\) with respect to \(x\), we obtain
+\vspace{0.7cm}
+% 形如xxx格式的叫做克莱罗方程
+Equations of the form
 \[
-p = \frac{dy}{dx} = \frac{\partial f}{\partial x} + \frac{\partial f}{\partial p} \frac{dp}{dx},
+    y = x p + g(p)
 \]
-that is,
-\begin{equation*}
-\frac{\partial f}{\partial p} \frac{dp}{dx} = p - \frac{\partial f}{\partial x}.
-\end{equation*}
+are called \textbf{Clairaut's equations}, where \(p = y', g(p)\in C^{1}\).
+\newline Differentiating both sides with respect to \(x\) gives:
+\[
+    p = p + x \frac{\mathrm{d}p}{\mathrm{d}x} + g'(p) \frac{\mathrm{d}p}{\mathrm{d}x}.
+\]
+Rearranging yields:
+\[
+    \left( x + g'(p) \right) \frac{\mathrm{d}p}{\mathrm{d}x} = 0.
+\]
+Thus, there are two cases to consider:
+\begin{enumerate}
+    \item When \(\frac{\mathrm{d}p}{\mathrm{d}x} = 0\), \(p\) is a constant, denoted as \(c\). 
+        Substituting back into the original equation gives the general solution:
+        \[
+        y = cx + g(c).
+        \]
+    \item When \(x + g'(p) = 0\), solving for \(x\) gives:
+        \[
+        x = -g'(p).
+        \]
+        Substituting back into the original equation yields the singular solution:
+        \[
+        y = -p g'(p) + g(p).
+        \]
+        This represents a parametric curve in the \(Oxy\) plane, with parameter \(p\).
+\end{enumerate}
 
-This is a first-order differential equation in the variables \(x\), \(p\), \(\frac{dp}{dx}\). 
-If a solution \(p = p(x)\) can be found, then Equation~\eqref{eq:differentiation method} yields a solution
+% Clairaut 方程可以推广到更一般的形式, 即Lagrange方程
+Clairaut's equations can be generalized to a more general form known as \textbf{Lagrange's equations}:
 \[
-y = f(x, p(x)).
+    y = x f(p) + g(p),
 \]
-\begin{leftbarTitle}{Parametric Method}\end{leftbarTitle}
-In general, Equation~\eqref{eq:implicit ODE} represents a surface in the \((x, y, p)\)-space. 
-Therefore, the solution can be obtained using a parametric representation of the surface. 
-Suppose the parametric form of the surface described by Equation~\eqref{eq:implicit ODE} is
+where \(p = y', f(p), g(p) \in C^{1}\).
+\newline Differentiating both sides with respect to \(x\) gives:
 \[
-x = x(u, v),\quad y = y(u, v),\quad p = p(u, v) = y'.
+    p = f(p) + x f'(p) \frac{\mathrm{d}p}{\mathrm{d}x} + g'(p) \frac{\mathrm{d}p}{\mathrm{d}x}.
 \]
-Note that
+Rearranging yields:
 \[
-dy = p \; \mathrm{d}x,
+    \left( x f'(p) + g'(p) \right) \frac{\mathrm{d}p}{\mathrm{d}x} = p - f(p).
 \]
-thus we obtain
+Thus, there are two cases to consider:
+\begin{enumerate}
+    \item When \(p - f(p) = 0\), solving for \(p\) gives \(p = c\). 
+        Substituting back into the original equation gives the general solution:
+        \[
+        y = cx + g(c).
+        \]
+    \item When \(x f'(p) + g'(p) = 0\), solving for \(x\) gives:
+        \[
+        x = -\frac{g'(p)}{f'(p)}.
+        \]
+        Substituting back into the original equation yields the singular solution:
+        \[
+        y = -\frac{g'(p)}{f'(p)} f(p) + g(p).
+        \]
+        This represents a parametric curve in the \(Oxy\) plane, with parameter \(p\).
+\end{enumerate}
+
+\section{Higher-Order Equations Reducible to Lower Order} % 可降阶的高阶方程
+Some higher-order differential equations can be reduced to lower-order equations through variable substitution.
+\begin{enumerate}
+    \item If a differential equation of order \(n\) does not explicitly contain the dependent variable \(y\) and 
+        its lower-order derivatives up to \(y^{(k-1)}\), i.e., it can be expressed as:
+        \[
+        F\left( x, y^{(k)}, y^{(k+1)}, \ldots, y^{(n)} \right) = 0,
+        \]
+        then by letting \(p = y^{(k)}\), we have:
+        \[
+        y^{(k+1)} = p \frac{\mathrm{d}p}{\mathrm{d}y^{(k)}}, \quad y^{(k+2)} = 
+        p^2 \frac{\mathrm{d}^2 p}{\mathrm{d}(y^{(k)})^2} + p \left( \frac{\mathrm{d}p}{\mathrm{d}y^{(k)}} \right)^2,
+        \]
+        and so on. 
+        Substituting these expressions into the original equation reduces it to an equation of order \(n-1\) in terms of \(p\) and \(y\).
+    \item If a differential equation of order \(n\) does not explicitly contain the independent variable \(x\), 
+        i.e., it can be expressed as:
+        \[
+        F\left( y, y', y'', \ldots, y^{(n)} \right) = 0,
+        \]
+        then by letting \(p = y'\), we have:
+        \[
+        y'' = p \frac{\mathrm{d}p}{\mathrm{d}y}, \quad y''' = p^2 \frac{\mathrm{d}^2 p}{\mathrm{d}y^2} + p \left( \frac{\mathrm{d}p}{\mathrm{d}y} \right)^2,
+        \]
+        and so on. 
+        Substituting these expressions into the original equation reduces it to an equation of order \(n-1\) in terms of \(p\) and \(y\).
+    \item If a differential equation of order \(n\) does not explicitly contain certain derivatives,
+        i.e., it can be expressed as:
+        \[
+        F\left( x, y, y', \ldots, y^{(k-1)}, y^{(k+1)}, \ldots, y^{(n)} \right) = 0,
+        \]
+        then by letting \(p = y^{(k)}\), we have:
+        \[
+        y^{(k+1)} = p \frac{\mathrm{d}p}{\mathrm{d}y^{(k-1)}}, \quad y^{(k+2)} = p^2 \frac{\mathrm{d}^2 p}{\mathrm{d}(y^{(k-1)})^2} + p \left( \frac{\mathrm{d}p}{\mathrm{d}y^{(k-1)}} \right)^2,
+        \]
+        and so on. 
+        Substituting these expressions into the original equation reduces it to an equation of order \(n-1\) in terms of \(p\) and \(y^{(k-1)}\).
+\end{enumerate}
+
+% 形如xxx的高阶方程称为欧拉柯西方程
+Differential equations of the form:
 \[
-y_u' \mathrm{d}u + y_v' \mathrm{d}v = p(u, v)(x_u' \mathrm{d}u + x_v' \mathrm{d}v).
+    x^n y^{(n)} + a_{n-1} x^{n-1} y^{(n-1)} + \cdots + a_1 x y' + a_0 y = f(x),
 \]
-This is an explicit differential equation in the variables \(u\) and \(v\). Suppose it admits a solution
+where \(a_0, a_1, \ldots, a_{n-1}\) are constants, are called \textbf{Euler-Cauchy equations}.
+\newline By letting \(x = e^t\), we have:
 \[
-v = v(u, c),
+    \frac{\mathrm{d}y}{\mathrm{d}x} = \frac{1}{x} \frac{\mathrm{d}y}{\mathrm{d}t}, \quad
+    \frac{\mathrm{d}^2 y}{\mathrm{d}x^2} = \frac{1}{x^2} \left( \frac{\mathrm{d}^2 y}{\mathrm{d}t^2} 
+    - \frac{\mathrm{d}y}{\mathrm{d}t} \right), \quad
+    \ldots, \quad
+    \frac{\mathrm{d}^n y}{\mathrm{d}x^n} = \frac{1}{x^n} \left( \frac{\mathrm{d}^n y}{\mathrm{d}t^n} 
+    - (n-1) \frac{\mathrm{d}^{n-1} y}{\mathrm{d}t^{n-1}} + \cdots + (-1)^{n-1} \frac{\mathrm{d}y}{\mathrm{d}t} \right).
 \]
-where \(c\) is a constant, then Equation~\eqref{eq:implicit ODE} has a solution
-\[
-x = x(u, v(u, c)),\quad y = y(u, v(u, c)).
-\]
+Substituting these expressions into the original equation transforms it into a linear differential equation 
+with constant coefficients in terms of \(t\).
+% 另一种解法是先用特征根法求齐次通解, 再用常数变易法求非齐次特解.
+\newline Another method is to first find the general solution of the homogeneous equation using the characteristic root method,
+and then use the method of variation of constants to find a particular solution of the non-homogeneous equation. 
+
+\vspace{0.7cm}
+\begin{example}
+    Fill in the blanks:
+    \begin{enumerate}
+        \item Equation 
+            \[
+            y\ln y \mathrm{d}x + (x-\ln y) \mathrm{d}y = 0
+            \]
+            is which type of equation? ()
+        \item Equation  
+            \[
+            \frac{\mathrm{d}y}{\mathrm{d}x} = \sqrt{y},\quad (0\leqslant y\leqslant +\infty)
+            \]
+            has how many solutions passing through the point \((0,0)\)? ()
+        \item All constants solutions of the equation 
+            \[
+            x(y^{2}-1) \mathrm{d}x + y(x^{2}-1) \mathrm{d}y = 0
+            \]
+            are: ()
+    \end{enumerate}
+\end{example}
+
+\begin{solution}
+\begin{enumerate}
+    \item Linear equation. 
+        \newline Rewriting the equation gives:
+        \[
+        \frac{\mathrm{d}x}{\mathrm{d}y} = \frac{1}{y\ln y}x-\frac{1}{y},
+        \]
+        which is a first-order linear equation.
+    \item Infinite solutions. 
+        % 由于解不满足唯一性要求, 因此可以构造分段形式的解.
+        \newline Since the solution does not satisfy the uniqueness requirement,
+        piecewise solutions can be constructed.
+        For example:
+        \[
+        y = \begin{cases}
+        0, & x \in [0, 2], \\
+        \frac{x^2}{4}, & x > 2.
+        \end{cases}
+        \]
+    \item \(y=\pm 1, x=\pm 1\).
+        \newline By Theorem~\ref{thm:solutions to separable equations},
+        let
+        \[
+        M_{1}(x)=x, \quad M_{2}(y)=y^{2}-1, \quad N_{1}(x)=x^{2}-1, \quad N_{2}(y)=y,
+        \]
+        then the constant solutions are:
+        \[
+        M_{2}(y)=0 \Rightarrow y=\pm 1, \quad N_{1}(x)=0 \Rightarrow x=\pm 1.
+        \]
+\end{enumerate}
+\end{solution}
+
+\begin{caution}
+    % 注意, 当方程写成对称形式时, x 和 y 的角色是对等的.
+    Note that when an equation is written in symmetric form,
+    the roles of \(x\) and \(y\) are interchangeable.
+\end{caution}

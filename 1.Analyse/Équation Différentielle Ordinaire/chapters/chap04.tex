@@ -198,24 +198,17 @@ criteria for their linear independence on the definition interval \(I\) is provi
     \end{pmatrix}
     \]
     be their Wronskian determinant.
-    Then, if~\eqref{VectorFunctionGroup} are linearly dependent on \(I\), then \(W(x) \equiv 0\) for all \(x \in I\);
+    Then, 
+    \begin{enumerate}
+        \item if~\eqref{VectorFunctionGroup} are linearly dependent on \(I\), then \(W(x) \equiv 0\);
+        \item When~\eqref{VectorFunctionGroup} are solutions to 
+            the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
+            they are linearly dependent on \(I\) if and only if \(W(x) \equiv 0\).
+    \end{enumerate}
 \end{theorem}
-Furthermore, if~\eqref{VectorFunctionGroup} are solutions to 
-the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
-then the following conclusion holds:
-\begin{theorem}
-    If ~\eqref{VectorFunctionGroup} are linearly independent solutions to 
-    the homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear and homogeneous},
-    then \(W(x) \not\equiv 0\) for all \(x \in I\).
-\end{theorem}
-Combine the above two theorems, we have the following corollary:
-\begin{corollary}{Criterion for Linear Independence}\label{corollary:criterion for linear independence}
-    For vector functions~\eqref{VectorFunctionGroup},
-    if their Wronskian determinant \(W(x_{0}) \neq  0\) for some \(x_{0} \in I\),
-    then they are linearly independent on \(I\).
-\end{corollary}
 
 
+\vspace{0.7cm}
 As for the relation between the solutions and the coefficient,
 we have the following theorem.
 \begin{theorem}{Liouville's Formula}
@@ -285,7 +278,7 @@ the homogeneous linear system~\eqref{eq:matrix form of system of first-order lin
 can be not exceed \(n\),
 and the solution space of the system is an \(n\)-dimensional linear space.
 
-\section{General Theory of Non-Homogeneous Linear Systems}
+\section{General Theory of Non-Homogeneous Linear Systems} % 非齐次线性方程组的一般理论
 For the non-homogeneous linear system~\eqref{eq:matrix form of system of first-order linear equations - linear},
 similar to linear systems of algebraic equations,
 we have the following conclusion:
@@ -362,8 +355,21 @@ system~\eqref{eq:matrix form of system of first-order linear equations - linear}
     we can use~\eqref{eq:variation of constants - step 1} directly to find \(\frac{\mathrm{d}\mathbf{C}}{\mathrm{d}x}\).
 \end{remark}
 
+\begin{note}
+    The general solution to the non-homogeneous linear 
+    system~\eqref{eq:matrix form of system of first-order linear equations - linear} is:
+    \[
+    \mathbf{Y}(x) = \mathbf{\Phi}(x) \mathbf{C} + \mathbf{\Phi}(x) \int \mathbf{\Phi}^{-1}(t) \mathbf{F}(t) \, \mathrm{d}t.
+    \]
+    If the solution satisfying the initial condition \(\mathbf{Y}(x_{0}) = \mathbf{Y}_{0}\),
+    then the solution is:
+    \[
+    \mathbf{Y}(x) = \mathbf{\Phi}(x) \mathbf{\Phi}^{-1}(x_{0}) \mathbf{Y}_{0} 
+    + \mathbf{\Phi}(x) \int_{x_{0}}^{x} \mathbf{\Phi}^{-1}(t) \mathbf{F}(t) \, \mathrm{d}t.
+    \]
+\end{note}
 
-\section{Solution to Constant Coefficient Homogeneous Linear Systems}
+\section{Solution to Constant Coefficient Homogeneous Linear Systems} % 常系数齐次线性方程组的解法
 For autonomous linear systems with constant coefficients:
 \begin{equation}\label{eq:constant coefficient linear system}
     \frac{\mathrm{d}\mathbf{Y}}{\mathrm{d}x} = \mathbf{A} \mathbf{Y},
@@ -461,222 +467,26 @@ Then we have:
     e^{\mathbf{J}_{k} x} \right) \mathbf{P}^{-1}.
 \end{equation}
 
-However, computing the Jordan canonical form and transition matrix is not always easy.
-Note that \(e^{\mathbf{A}x}\) is a fundamental solution matrix to
-the homogeneous linear system~\eqref{eq:constant coefficient linear system},
-since \(\mathbf{P}\) is invertible,
-\(e^{\mathbf{A}x}\mathbf{P}\) 
-is also a fundamental solution matrix to~\eqref{eq:constant coefficient linear system}.
-Then according to \eqref{eq:matrix exponential by Jordan form},
-\(\mathbf{P}e^{\mathbf{J}x}\) is also a fundamental solution matrix to~\eqref{eq:constant coefficient linear system}.
-
-By~\eqref{eq:matrix exponential of Jordan block},
-we can utilize method of undetermined coefficients to find
-\(n\) linearly independent solution matrix to~\eqref{eq:constant coefficient linear system}.
-% 下面按 A 是否有重特征根分类讨论
-In the following, we classify the discussion based on whether \(\mathbf{A}\) has repeated eigenvalues.
-
-% A 无重特征根
-\begin{leftbarTitle}{Distinct Eigenvalues}\end{leftbarTitle}
-\begin{theorem}
-    Let \(\lambda_{1}, \lambda_{2}, \ldots, \lambda_{n}\) be \(n\) distinct eigenvalues of matrix \(\mathbf{A}\),
-    then the fundamental solution matrix to 
-    the homogeneous linear system~\eqref{eq:constant coefficient linear system} is given by:
-    \[
-    \Phi(x) =
-    \begin{pmatrix}
-        e^{\lambda_{1} x} \boldsymbol{\xi}_{1} & e^{\lambda_{2} x} \boldsymbol{\xi}_{2} & \cdots & e^{\lambda_{n} x} \boldsymbol{\xi}_{n}
-    \end{pmatrix},
-    \]
-    where \(\boldsymbol{\xi}_{i}\) is the eigenvector corresponding to eigenvalue \(\lambda_{i}\) of 
-    matrix \(\mathbf{A}\) (\(i = 1, 2, \ldots, n\)).
-\end{theorem}
-% 复特征值
-If there is a complex eigenvalue \(\lambda=\alpha+ \beta i\) (\(\beta \neq 0\)) of matrix \(\mathbf{A}\),
-then its complex conjugate \(\bar{\lambda}=\alpha - \beta i\) is also an eigenvalue of \(\mathbf{A}\).
-And their corresponding eigenvectors are also complex conjugates of each other, i.e. \(\boldsymbol{\xi}, \bar{\boldsymbol{\xi}}\).
-At this time, the pair of conjugate eigenvalues and eigenvectors will produce a complex solution:
-\begin{align*}
-    \mathbf{Y} &= e^{\lambda x} \boldsymbol{\xi} = e^{\alpha x} \left[ \cos(\beta x) + i \sin(\beta x) \right] (\boldsymbol{\xi}_{1} + i \boldsymbol{\xi}_{2})  \\
-    & = e^{\alpha x} \left[ \left( \cos(\beta x) \boldsymbol{\xi}_{1} - \sin(\beta x) \boldsymbol{\xi}_{2} \right) 
-    + i \left( \sin(\beta x) \boldsymbol{\xi}_{1} + \cos(\beta x) \boldsymbol{\xi}_{2} \right) \right].
-\end{align*}
-Since the equation~\eqref{eq:constant coefficient linear system} is linear, 
-the real and imaginary parts of this complex solution are each real solutions to the original equation. 
-Thus, we obtain two linearly independent real solutions:
-\begin{gather*}
-    \mathbf{Y}_{1} = e^{\alpha x} \left( \cos(\beta x) \boldsymbol{\xi}_{1} - \sin(\beta x) \boldsymbol{\xi}_{2} \right), \\
-    \mathbf{Y}_{2} = e^{\alpha x} \left( \sin(\beta x) \boldsymbol{\xi}_{1} + \cos(\beta x) \boldsymbol{\xi}_{2} \right).
-\end{gather*}
-
-% A 有重特征根
-\begin{leftbarTitle}{Repeated Eigenvalues}\end{leftbarTitle}
-Assume that \(\lambda_{1}, \lambda_{2}, \cdots, \lambda_{s}\) are all distinct eigenvalues of matrix \(\mathbf{A}\),
-with algebraic multiplicities \(n_{1}, n_{2}, \ldots, n_{s}\) respectively,
-where \(n_{1} + n_{2} + \cdots + n_{s} = n\).
-Note that the fundamental solution matrix \(e^{\mathbf{A}x} \mathbf{P}= \mathbf{P}e^{\mathbf{J}x}\), 
-hence in the expression of \(\mathbf{P}e^{\mathbf{J}x}\),
-all column vectors corresponding to the eigenvalue \(\lambda_{j}\) have the form:
-\begin{equation}\label{eq:solution form for repeated eigenvalue}
-    \mathbf{Y} = e^{\lambda_{j} x} 
-    \left[ \boldsymbol{\xi}_{0} + \frac{x}{1!}\boldsymbol{\xi}_{1} + \frac{x^2}{2!}\boldsymbol{\xi}_{2} + \cdots + \frac{x^{n_j - 1}}{(n_j - 1)!}\boldsymbol{\xi}_{n_j - 1} \right],
-\end{equation}
-where \(\xi_{0}, \xi_{1}, \ldots, \xi_{n_j - 1}\) are constant vectors.
-
-
-\begin{lemma}
-    Let \(\lambda_{j}\) be an eigenvalue of matrix \(\mathbf{A}\) with algebraic multiplicity \(n_{j}\),
-    then~\eqref{eq:constant coefficient linear system} has non-zero solutions of 
-    the form~\eqref{eq:solution form for repeated eigenvalue}
-    if and only if
-    \(\boldsymbol{\xi}_{0}\) is a non-zero solution to
-    \begin{equation}\label{eq:generalized eigenvector equation}
-        (\mathbf{A} - \lambda_{j} \mathbf{E})^{n_{j}} \boldsymbol{\xi} = 0,
-    \end{equation}
-    and \(\boldsymbol{\xi}_{1}, \boldsymbol{\xi}_{2}, \ldots, \boldsymbol{\xi}_{n_j - 1}\) 
-    satisfy the following chain of generalized eigenvector equations\footnote{
-        In fact, \(\boldsymbol{\xi}_{n_{j}-1}\) is the true eigenvector corresponding to eigenvalue \(\lambda_{j}\),
-        and \(\boldsymbol{\xi}_{0}, \boldsymbol{\xi}_{1}, \ldots, \boldsymbol{\xi}_{n_{j}-2}\) 
-        are generalized eigenvectors of orders \(n_{j}, n_{j}-1, \ldots, 2\) respectively.
-    }:
-    \begin{equation}\label{eq:generalized eigenvector chain}    
-        \begin{cases}
-            \boldsymbol{\xi}_{1} = (\mathbf{A} - \lambda_{j} \mathbf{E}) \boldsymbol{\xi}_{0}, \\
-            \boldsymbol{\xi}_{2} = (\mathbf{A} - \lambda_{j} \mathbf{E}) \boldsymbol{\xi}_{1}, \\
-            \vdots \\
-            \boldsymbol{\xi}_{n_j - 1} = (\mathbf{A} - \lambda_{j} \mathbf{E}) \boldsymbol{\xi}_{n_{j}-2}.
-        \end{cases}
-    \end{equation}
-\end{lemma}
-
-\begin{lemma}
-    Under the same conditions as above,
-    denote the linear space of all constant vectors of \(n\) degrees as \(V\),
-    then
-    \begin{enumerate}
-        \item The subspace of \(V\) 
-            \[
-            V_{j} = \{ \xi \in V \mid (\mathbf{A} - \lambda_{j} \mathbf{E})^{n_{j}} \xi = 0 \},\quad j=1, 2, \ldots, s
-            \]
-            is invariant under \(\mathbf{A}\).
-        \item There exists a direct sum decomposition of \(V\):
-            \[
-            V = V_{1} \oplus V_{2} \oplus \cdots \oplus V_{s}.
-            \]
-    \end{enumerate}
-\end{lemma}
-
-\begin{theorem}
-    Under the same conditions as above,
-    the fundamental solution matrix to 
-    the homogeneous linear system~\eqref{eq:constant coefficient linear system} is given by:
-    \[
-    \Phi(x) =
-    \begin{pmatrix}
-        e^{\lambda_{1}x} \mathbf{P}_{1}^{(1)}(x) & 
-        e^{\lambda_{2}x} \mathbf{P}_{2}^{(2)}(x) & 
-        \cdots & e^{\lambda_{s}x} \mathbf{P}_{s}^{(s)}(x)
-    \end{pmatrix},
-    \]
-    where for each \(j = 1, 2, \ldots, s\),
-    \[
-    \mathbf{P}_{j}^{(j)}(x) =
-        \boldsymbol{\xi}_{j0}^{(i)} + \frac{x}{1!} \boldsymbol{\xi}_{j1}^{(i)} + \frac{x^{2}}{2!} \boldsymbol{\xi}_{j2}^{(i)} + 
-        \cdots + \frac{x^{n_j - 1}}{(n_j - 1)!} \boldsymbol{\xi}_{j, n_j - 1}^{(i)},
-    \]
-    which is the \(j\)-th vector polynomial corresponding to eigenvalue \(\lambda_{i}\) 
-    (\(i = 1, 2, \ldots, n_{j};j = 1, 2, \ldots, n_{i}\)).
-    \(\boldsymbol{\xi}_{10}^{(i)}, \cdots, \boldsymbol{\xi}_{n_{i}0}^{(i)}\) is \(n_{i}\) linearly independent solutions to
-    ~\eqref{eq:generalized eigenvector equation},
-    and the other \(\boldsymbol{\xi}_{jl}^{(i)}\) (\(j = 1, 2, \ldots, n_{i}; l = 1, 2, \ldots, n_{j} - 1\))
-    is obtained by replacing corresponding \(\boldsymbol{\xi}_{j0}^{(i)}\) with \(\boldsymbol{\xi}_{0}\) in~\eqref{eq:generalized eigenvector chain}.
-\end{theorem}
-
-
-
 \vspace{0.7cm}
-Let us summarize the method from an overall perspective.
-
-When there exist repeated eigenvalues, let \(k\) be the algebraic multiplicity of eigenvalue \(\lambda\).
-The core issue is: 
-\newline \underline{can we find \(k\) linearly independent eigenvectors 
-for this eigenvalue \(\lambda\) that has been repeated \(k\) times?}\footnote{
-    As a matter of fact, the method above has already contained the following two cases. 
-    But for clarity, we explicitly state them here.
-}
-\begin{itemize}
-    \item If we can, that is \(\text{AM} = \text{GM}\)\footnote{
-        \(\text{AM}\) refers to algebraic multiplicity,
-        \(\text{GM}\) refers to geometric multiplicity.
-    }, and we say the corresponding eigenvalue is complete;
-    \item If not, that is \(\text{AM} > \text{GM}\), and we say the corresponding eigenvalue is defective.
-        We can only find \(\text{GM}<\text{AM}=k\) linearly independent eigenvectors,
-        yet there are still \(k - \text{GM}\) solutions missing.
-        In fact, these missing solutions are just the generalized eigenvectors.
-\end{itemize}
-Now we discuss the two cases separately.
-\begin{description}
-    \item[Complete] 
-        If eigenvalue \(\lambda\) is complete,
-        then we can find \(k\) linearly independent eigenvectors 
-        \(\boldsymbol{\xi}_{1}, \boldsymbol{\xi}_{2}, \ldots, \boldsymbol{\xi}_{k}\)
-        corresponding to eigenvalue \(\lambda\).
-        Thus, we can directly write out \(k\) linearly independent solutions:
-        \[
-        \mathbf{Y}_{1} = e^{\lambda x} \boldsymbol{\xi}_{1}, \quad
-        \mathbf{Y}_{2} = e^{\lambda x} \boldsymbol{\xi}_{2}, \quad
-        \ldots, \quad
-        \mathbf{Y}_{k} = e^{\lambda x} \boldsymbol{\xi}_{k}.
-        \]
-    \item[Defective] 
-        When we cannot find enough eigenvectors, 
-        we need to look for so-called generalized eigenvectors to supplement the missing solutions.
-        Assume that we have found only \(m < k\) linearly independent eigenvectors
-        \(\boldsymbol{\xi}_{1}, \boldsymbol{\xi}_{2}, \ldots, \boldsymbol{\xi}_{m}\),
-        i.e., \(\text{GM} = m < k = \text{AM}\).
-        Then for each eigenvector \(\boldsymbol{\xi}_{i}\) (\(i = 1, 2, \ldots, m\)),
-        we can find a chain of generalized eigenvectors:
-        \[
-        \boldsymbol{\xi}_{i}, \boldsymbol{\xi}_{i}^{(1)}, \boldsymbol{\xi}_{i}^{(2)}, \ldots, \boldsymbol{\xi}_{i}^{(t_{i})},
-        \]
-        where \(t_{i}\) is the length of the chain corresponding to eigenvector \(\boldsymbol{\xi}_{i}\),
-        and these generalized eigenvectors satisfy:
-        \[
-        \begin{cases}
-            (\mathbf{A} - \lambda \mathbf{E}) \boldsymbol{\xi}_{i}^{(1)} = \boldsymbol{\xi}_{i}, \\
-            (\mathbf{A} - \lambda \mathbf{E}) \boldsymbol{\xi}_{i}^{(2)} = \boldsymbol{\xi}_{i}^{(1)}, \\
-            \vdots \\
-            (\mathbf{A} - \lambda \mathbf{E}) \boldsymbol{\xi}_{i}^{(t_{i})} = \boldsymbol{\xi}_{i}^{(t_{i}-1)},
-        \end{cases}
-        \]
-        they will contribute \(t_{i} + 1\) linearly independent solutions\footnote{
-            Here, \(\boldsymbol{\xi}_{i}\) is the true eigenvector,
-            and \(\boldsymbol{\xi}_{i}^{(1)}, \boldsymbol{\xi}_{i}^{(2)}, \ldots, \boldsymbol{\xi}_{i}^{(t_{i})}\)
-            are generalized eigenvectors of orders \(2, 3, \ldots, t_{i} + 1\) respectively.
-            % 不同于之前的编号方式 (自顶向下), 这里采用自底向上的编号方式, 方便理解.
-            Different from the previous numbering method (\underline{top-down}), 
-            here we use a \underline{bottom-up} numbering method for better understanding.
-        }.
-        Note that the total number of vectors in all chains is:
-        \[
-        t_{1} + t_{2} + \cdots + t_{m} + m = k.
-        \]
-        Then we can write out \(k\) linearly independent solutions:
-        \[
-        \begin{aligned}
-            & \mathbf{Y}_{i} = e^{\lambda x} \boldsymbol{\xi}_{i}, \\
-            & \mathbf{Y}_{i}^{(1)} = e^{\lambda x} \left( x \boldsymbol{\xi}_{i} + \boldsymbol{\xi}_{i}^{(1)} \right), \\
-            & \mathbf{Y}_{i}^{(2)} = e^{\lambda x} \left( \frac{x^{2}}{2!} \boldsymbol{\xi}_{i} + x \boldsymbol{\xi}_{i}^{(1)} + \boldsymbol{\xi}_{i}^{(2)} \right), \\
-            & \vdots \\
-            & \mathbf{Y}_{i}^{(t_{i})} = e^{\lambda x} \left( \frac{x^{t_{i}}}{t_{i}!} \boldsymbol{\xi}_{i} + \frac{x^{t_{i}-1}}{(t_{i}-1)!} \boldsymbol{\xi}_{i}^{(1)} + 
-            \cdots + x \boldsymbol{\xi}_{i}^{(t_{i}-1)} + \boldsymbol{\xi}_{i}^{(t_{i})} \right),
-        \end{aligned}
-        \]
-        for each \(i = 1, 2, \ldots, m\).
-\end{description}
-
-
-
+% 下面的定理可以直接应用于常系数齐次线性方程组的求解
+The theorem below can be directly applied to solve constant coefficient homogeneous linear systems.
+\begin{theorem}{Solution to Constant Coefficient Homogeneous Linear Systems}
+    Let \(\lambda_{i}\) be an eigenvalue of matrix \(\mathbf{A}\) with algebraic multiplicity \(k_{i}\),
+    then the homogeneous linear system~\eqref{eq:constant coefficient linear system}
+    has \(k_{i}\) linearly independent solutions of the form:
+    \[
+    \mathbf{Y}(x) = (\mathbf{R_{0}}+\mathbf{R_{1}}x+\mathbf{R_{2}}x^{2}+\cdots+\mathbf{R_{k_{i}-1}}x^{k_{i}-1})e^{\lambda_{i} x},
+    \]
+    where \((\lambda_{i} \mathbf{E}-\mathbf{A})^{k_{i}}\mathbf{R_{0}} = 0\) and 
+    \[
+    \begin{cases} 
+        (\lambda_{i}\mathbf{E}-\mathbf{A})\mathbf{R_{0}} = \mathbf{R_{1}}, \\ 
+        (\lambda_{i}\mathbf{E}-\mathbf{A})\mathbf{R_{1}} = 2\mathbf{R_{2}}, \\ 
+        \cdots \\
+        (\lambda_{i}\mathbf{E}-\mathbf{A})\mathbf{R_{k_{i}-2}} = (k_{i}-1)\mathbf{R_{k_{i}-1}}. \\ 
+    \end{cases}
+    \]
+\end{theorem}
 
 
 \section{Periodic Coefficient Linear Differential Equation Systems} % 周期系数线性微分方程组

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  12 DEC 2025 16:49
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.7.28)  31 JAN 2026 21:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1177,7 +1177,7 @@ Package tocloft Info: The document has chapter divisions on input line 51.
 \cfttabnumwidth=\skip138
 )
 LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/n' will be
-(Font)              scaled to size 10.95pt on input line 1561.
+(Font)              scaled to size 10.95pt on input line 1588.
 ) (c:/texlive/2025/texmf-dist/tex/latex/cprotect/cprotect.sty
 Package: cprotect 2011/01/27 v1.0e (Bruno Le Floch)
  (c:/texlive/2025/texmf-dist/tex/latex/bigfoot/suffix.sty
@@ -1455,7 +1455,7 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/b/it' will be
 ]
 
 LaTeX Font Warning: Font shape `TU/MonotypeCorsiva(0)/b/n' undefined
-(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 138.
+(Font)              using `TU/MonotypeCorsiva(0)/m/n' instead on input line 141.
 
 ) (./chapters/chap02.tex
 
@@ -1482,20 +1482,26 @@ LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
 
 [9]
 
-[10]) (./chapters/chap03.tex
+[10]
 
 [11]
-Chapter 3.
+
+[12]
+Overfull \hbox (7.42805pt too wide) detected at line 624
+[] \OT1/cmr/m/n/10.95 = [][]\OML/cmm/m/it/10.95 ;  [] \OT1/cmr/m/n/10.95 = [] [] \OML/cmm/m/it/10.95 ;  [] ;  [] \OT1/cmr/m/n/10.95 = [] [] \OML/cmm/m/it/10.95 :
+ []
 
 
-[12
+Overfull \hbox (3.7336pt too wide) in paragraph at lines 624--630
+\TU/Alegreya(0)/m/n/10.95 method, and then use the method of variation of constants to find a particular solution of the non-homogeneous
+ []
 
-]) (./chapters/chap04.tex
 
-[13]
+
+[13]) (./chapters/chap03.tex
 
 [14]
-Chapter 4.
+Chapter 3.
 
 
 [15
@@ -1506,49 +1512,49 @@ Chapter 4.
 
 [17]
 
-[18]
+[18]) (./chapters/chap04.tex
 
 [19]
-
-[20]
-
-[21]
-Overfull \hbox (20.88719pt too wide) in paragraph at lines 514--520
-[]\TU/Alegreya(0)/m/n/10.95 Assume that $\OML/cmm/m/it/10.95 ^^U[]; ^^U[]; []  ; ^^U[]$ \TU/Alegreya(0)/m/n/10.95 are all distinct eigenvalues of matrix $\OT1/cmr/bx/n/10.95 A$\TU/Alegreya(0)/m/n/10.95 , with algebraic multiplicities $\OML/cmm/m/it/10.95 n[]; n[]; [] ; n[]$
- []
-
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 537.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 9.0pt on input line 541.
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/it' will be
-(Font)              scaled to size 6.0pt on input line 541.
+Chapter 4.
 
 
-[22]
-LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 611.
-
-
-[23]) (./chapters/chap05.tex
-
-[24]
-Chapter 5.
-
-
-[25
+[20
 
 ]
 
-[26]
+[21]
 
-[27]) (./chapters/chap07.tex
+[22]
+
+LaTeX Warning: Reference `corollary:criterion for linear independence' on page 23 undefined on input line 250.
+
+
+
+[23]
+
+[24]
+
+[25]) (./chapters/chap05.tex
+
+[26]
+Chapter 5.
+LaTeX Font Info:    Font shape `TU/Alegreya(0)/m/n' will be
+(Font)              scaled to size 9.0pt on input line 48.
+
+
+[27
+
+]
 
 [28]
+
+[29]) (./chapters/chap07.tex
+
+[30]
 Chapter 6.
 
 
-[29
+[31
 
 ]
 File: img/stable.png Graphic file (type bmp)
@@ -1559,9 +1565,9 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[30]
+[32]
 
-[31]
+[33]
 File: img/node.png Graphic file (type bmp)
 <img/node.png>
 File: img/saddle.png Graphic file (type bmp)
@@ -1577,7 +1583,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[32]
+[34]
 File: img/degenerated.png Graphic file (type bmp)
 <img/degenerated.png>
 
@@ -1586,7 +1592,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-[33]
+[35]
 File: img/spiral.png Graphic file (type bmp)
 <img/spiral.png>
 File: img/center.png Graphic file (type bmp)
@@ -1600,25 +1606,25 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 ) (./chapters/chap08.tex
 
-[34]
+[36]
 
-[35]
+[37]
 Chapter 7.
 
 
-[36
+[38
 
 ]) (./chapters/chap06.tex
 
-[37]
+[39]
 Chapter 8.
 )
 
-[38
+[40
 
 ]
 
-[39
+[41
 
 ] (./tmp/initial.aux)
  ***********
@@ -1629,19 +1635,22 @@ L3 programming layer <2022/08/05>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `initial.out' has not changed.
-(rerunfilecheck)             Checksum: 330EB2E248693C72697147693886C895;9423.
+(rerunfilecheck)             Checksum: BEE82325F50B05242ADFDC1CFCC0B849;9760.
 Package logreq Info: Writing requests to 'initial.run.xml'.
 \openout1 = `initial.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 46318 strings out of 473831
- 962878 string characters out of 5733137
- 2004873 words of memory out of 5000000
- 68503 multiletter control sequences out of 15000+600000
- 573708 words of font info for 182 fonts, out of 8000000 for 9000
+ 46315 strings out of 473831
+ 962758 string characters out of 5733137
+ 2001607 words of memory out of 5000000
+ 68504 multiletter control sequences out of 15000+600000
+ 572472 words of font info for 176 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,17n,108p,692b,1340s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ./tmp/initial.pdf (43 pages).
+Output written on ./tmp/initial.pdf (45 pages).

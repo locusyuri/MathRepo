@@ -45,9 +45,34 @@ give the existence and uniqueness theorem.
     \]
 \end{theorem}
 
-\begin{proposition}
-    
-\end{proposition}
+
+\begin{note}
+    % Picard 迭代的主要过程如下:
+    The main process of \textbf{Picard iteration} is as follows:
+    \begin{enumerate}
+        \item Convert the Cauchy problem~\eqref{eq:Cauchy problem} into an equivalent integral equation:
+            \[
+            y = y_0 + \int_{x_0}^{x} f(t, y) \, dt.
+            \]
+        \item Construct a sequence of approximate solutions \(\{y_n\}\) using the iteration formula:
+            \[
+            \varphi_{n+1} = y_0 + \int_{x_0}^{x} f(t, \varphi_n) \, dt, \quad n = 0, 1, 2, \ldots,
+            \]
+            with the initial approximation \(\varphi_0 = y_0\).
+        \item Prove that the sequence \(\{\varphi_n\}\) converges uniformly to a function \(y = \varphi(x)\) 
+            in the interval \([x_{0}-h, x_{0}+h]\).
+            % 相邻两项的误差满足
+            The error between two adjacent terms satisfies
+            \[
+            |\varphi_{n+1} - \varphi_n| \leqslant  \frac{M L^{n} }{(n+1)!}|x - x_0|^{n+1}.
+            \]
+        \item Show that the limit function \(y = \varphi(x)\) satisfies the integral equation and hence 
+            is a solution to the Cauchy problem~\eqref{eq:Cauchy problem}.
+        \item Finally, prove the uniqueness of the solution by assuming there are two solutions and 
+            showing they must be identical using the Lipschitz condition.
+    \end{enumerate}
+\end{note}
+
 
 \begin{leftbarTitle}{Peano Theorem and Osgood Theorem}\end{leftbarTitle}
 In regard to the solutions for the Cauchy problem~\eqref{eq:Cauchy problem},
@@ -75,10 +100,10 @@ we have the following two theorems, which are weaker than the Picard-Lindelöf t
     In the Cauchy problem~\eqref{eq:Cauchy problem},
     let \(D\) be a closed rectangle in the \(xy\)-plane: 
     \[
-    D = [x_{0}-a, x_{0}+a] \times [y_{0}-b, y_{0}+b]
-    \].
+    D = [x_{0}-a, x_{0}+a] \times [y_{0}-b, y_{0}+b].
+    \]
     If the function \(f(x, y)\) is continuous in \(D\),
-    then there \underline{exists} at least one solution \(y = \varphi(x)\) (\(\varphi(x_0) = y_0\)) 
+    then there \emph{exists at least one solution} \(y = \varphi(x)\) (\(\varphi(x_0) = y_0\)) 
     to the Cauchy problem~\eqref{eq:Cauchy problem}
     in the interval \([x_{0}-h, x_{0}+h]\), where
     \[
@@ -105,30 +130,165 @@ we have the following two theorems, which are weaker than the Picard-Lindelöf t
 \section{Continuation of the Solution}
 \begin{leftbarTitle}{Uncontinuable Solutions}\end{leftbarTitle}
 \begin{definition}{Uncontinuable Solutions}
-    Let \(y = \varphi(x)\) be a solution to the Cauchy problem~\eqref{eq:Cauchy problem} in the interval \(I_1\subset \mathbb{R}\).
-    If there exists an another solution \(y = \varphi_{2}(x)\) to the Cauchy problem~\eqref{eq:Cauchy problem} 
-    in any interval \(I_{2} \supsetneq I_{1}\) such that
+    Let \(y = \phi(x)\) be a solution to the Cauchy problem~\eqref{eq:Cauchy problem} in the interval \(I_1\subset \mathbb{R}\).
+    If there exists an another solution \(y =\tilde{\phi}(x)\) 
+    in interval \(I_{2} \supsetneq I_{1}\) such that
     \[
-    \varphi_{2}(x) \equiv \varphi(x), \quad x \in I_{1},
+    \tilde{\phi}(x)\mid_{I_1} \equiv \phi(x), 
     \]
-    then \(y = \varphi_{1}(x)\) is called \textbf{continuable},
-    and \(y = \varphi_{2}(x)\) is called a \textbf{continuation} of \(y = \varphi_{1}(x)\).
-    If there does not exist such a solution \(y = \varphi_{2}(x)\), 
-    then \(y = \varphi_{1}(x)\) is called \textbf{uncontinuable}, or \textbf{saturated}.
+    then \(y = \phi_{1}(x)\) is called \textbf{continuable},
+    and \(y = \tilde{\phi}(x)\) is called a \textbf{continuation} of \(y = \phi_{1}(x)\).
+    \newline If there does not exist such a solution \(y = \tilde{\phi}(x)\), 
+    then \(y = \phi_{1}(x)\) is called \textbf{uncontinuable}, or \textbf{saturated}.
 \end{definition}
 
 \begin{theorem}
     In the Cauchy problem~\eqref{eq:Cauchy problem},
-    let \(D\) be a \underline{bounded} closed rectangle in the \(xy\)-plane.
-    If the function \(f(x, y)\) is continuous in \(D\),
-    and satisfies the local Lipschitz condition with respect to \(y\) in \(D\),
-    then any solution \(y = \varphi(x)\) passing through \((x_{0}, y_{0}) \in D\) 
+    let \(D\) be a \emph{bounded closed} rectangle in the \(xy\)-plane.
+    
+    Let the function \(f(x, y)\) be continuous in \(D\),
+    and satisfies the \emph{local Lipschitz condition} with respect to \(y\) in \(D\),
+    id est, for any point \((x', y') \in D\), there exists a neighborhood \(V((x', y')) \subset D\)
+    and a constant \(L > 0\) such that for any \((x, y_1), (x, y_2) \in V((x', y'))\),
+    \[
+    |f(x, y_1) - f(x, y_2)| \leqslant  L |y_1 - y_2|.
+    \]
+    Then any solution \(y = \phi(x)\) passing through \((x_{0}, y_{0}) \in D\) 
     to the Cauchy problem~\eqref{eq:Cauchy problem} can be continued
     until it arbitrarily approaches the boundary of \(D\).
 \end{theorem}
 
 \begin{leftbarTitle}{Comparison Theorem}\end{leftbarTitle}
+\begin{theorem}{Comparison Theorem}
+    Let \(f(x, y)\) and \(g(x, y)\) be continuous functions in the region \(D\),
+    and satisfy the Lipschitz condition with respect to \(y\) in \(D\).
+    If for any \((x, y) \in D\),
+    \[
+    f(x, y) \leqslant  g(x, y),
+    \]
+    then the solutions \(y = \phi(x)\) and \(y = \psi(x)\) 
+    passing through the same point \((x_{0}, y_{0}) \in D\)
+    to the Cauchy problems
+    \[
+    \begin{cases}
+        \frac{\mathrm{d}y}{\mathrm{d}x} = f(x, y), \\
+        y(x_0) = y_0,
+    \end{cases}
+    \quad
+    \begin{cases}
+        \frac{\mathrm{d}y}{\mathrm{d}x} = g(x, y), \\
+        y(x_0) = y_0,
+    \end{cases}
+    \]
+    satisfy
+    \[
+    \phi(x) \leqslant  \psi(x)
+    \]
+    in their common interval of existence.
+    
+    The same conclusion holds if the above inequalities are replaced by strict inequalities.
+\end{theorem}
 
 \section{Singular Solutions and Envelopes}
+\begin{definition}{Singular Solutions}
+    In the differential equation \(F(x, y, y')=0\), let \(\Phi(x, y, c)\) be the general solution,
+    where \(c\) is an arbitrary constant.
 
-\section{Dependency of Solutions on Initial Data}
+    If there exists an integral curve \(S\) such that
+    \begin{enumerate}[label=(\roman*)]
+        \item \(S\) satisfies the differential equation \(F(x, y, y')=0\),
+        \item \(S\) is not a member of the family of curves represented by \(\Phi(x, y, c)\),
+        \item at each point of \(S\), there are at least two distinct solutions of the equation passing through (
+            thus destroying the uniqueness of the solution at that point
+        ),
+    \end{enumerate}
+    then \(S\) is called a \textbf{singular solution} of the differential equation \(F(x, y, y')=0\).
+\end{definition}
+
+\begin{definition}{Envelope}
+    Given a family of curves represented by \(\Phi(x, y, c) = 0\),
+    if there exists a curve \(S\) such that at each point of \(S\),
+    there is a member of the family tangent to \(S\),
+    then \(S\) is called the \textbf{envelope} of the family of curves.
+\end{definition}
+
+\begin{caution}
+    % 注意：奇解不一定是包络线（有可能是积分曲线族的奇点轨迹），包络线也不一定是奇解。
+    A singular solution is not necessarily an envelope
+    (it may be the locus of singular points of the family of integral curves),
+    and an envelope is not necessarily a singular solution.
+\end{caution}
+
+
+\begin{theorem}{\(c\)-Test}
+    Let \(\Phi(x, y, c) = 0\) be the general solution of the differential equation \(F(x, y, y')=0\).
+    Then \(c\)-test curves obtained by eliminating \(c\) from the equations
+    \[
+    \Phi(x, y, c) = 0, \quad \frac{\partial \Phi}{\partial c} = 0.
+    \]
+    \(c\)-test curves is the \emph{candidate} for the envelope of the family of curves represented by \(\Phi(x, y, c) = 0\).
+
+    If a \(c\)-test curve satisfies 
+    \begin{enumerate}
+        \item % 可解出连续可微的正则曲线, 即令x=varphi(c), y=psi(c), 则varphi(c), psi(c)连续可微且rank()=1, i.e., ^2 + ^2 !=0
+            it can be expressed as a continuously differentiable regular curve, 
+            i.e., let \(x = \varphi(c), y = \psi(c)\),
+            where \(\varphi(c), \psi(c)\) are continuously differentiable and \(\operatorname{rank}(\varphi', \psi') = 1\), 
+            or equivalently, \(\varphi'^{2} + \psi'^{2} \neq 0\);
+        \item % 梯度不为零, 即令G(x,y)=Phi(x,y,c), 则grad G !=0
+            the gradient is non-zero, i.e., \(\nabla \Phi = (\Phi_{x}, \Phi_{y}) \neq 0\);
+    \end{enumerate}
+    then it is just the envelope of the family of curves,
+    and also a singular solution of the differential equation \(F(x, y, y')=0\).
+\end{theorem}
+
+
+\begin{theorem}{\(p\)-test}
+    For the differential equation \(F(x, y, y')=0\) (\(p=y'\)),
+    \(p\)-test curves are obtained by eliminating \(p\) from the equations
+    \[
+    F(x, y, p) = 0, \quad \frac{\partial F}{\partial p} = 0.
+    \]
+
+    If a \(p\)-test curve satisfies 
+    \begin{enumerate}
+        \item % 消去p得到的函数y=psi(x)是方程的解 
+            the function \(y = \psi(x)\) obtained by eliminating \(p\) is a solution of the equation;
+        \item \(F_{y}\neq 0, F_{pp}\neq 0\);
+    \end{enumerate}
+    then it is a singular solution of the differential equation \(F(x, y, y')=0\).
+\end{theorem}
+
+\section{Dependency of Solutions on Initial Values}
+For the Cauchy problem~\eqref{eq:Cauchy problem},
+let the solution passing through \((x_0, y_0)\) be denoted as \(y = \varphi(x; x_0, y_0)\).
+
+\begin{definition}{Continuous Dependence on Initial Values}
+    If for any \(\varepsilon > 0\), there exists a \(\delta > 0\) such that
+    whenever \(|x_0 - x_1| < \delta\) and \(|y_0 - y_1| < \delta\),
+    the solutions \(y = \varphi(x; x_0, y_0)\) and \(y = \varphi(x; x_1, y_1)\) satisfy
+    \[
+    |\varphi(x; x_0, y_0) - \varphi(x; x_1, y_1)| < \varepsilon,
+    \]
+    then the solution \(y = \varphi(x; x_0, y_0)\) is said to depend continuously on the initial values
+    \((x_0, y_0)\).
+\end{definition}
+
+\begin{theorem}
+    In the Cauchy problem~\eqref{eq:Cauchy problem},
+    let \(D\) be a closed rectangle in the \(xy\)-plane: 
+    \[
+    D = [x_{0}-a, x_{0}+a] \times [y_{0}-b, y_{0}+b].
+    \]
+    If the function \(f(x, y)\) and its partial derivative \(f_{y}(x, y)\)
+    are continuous in \(D\),
+    then the solution \(y = \varphi(x; x_0, y_0)\) (as the function of \(x, x_{0}, y_{0}\))
+    is \(C^{1}\) in the existence domain.
+
+    Moreover,
+    \[
+    \frac{\partial \varphi}{\partial y_0} = \exp\left(\int_{x_0}^{x} f_{y}(t, \varphi(t; x_0, y_0)) \, dt\right),
+    \frac{\partial \varphi}{\partial x_0} = -f(x_0, y_0) \exp\left(\int_{x_0}^{x} f_{y}(t, \varphi(t; x_0, y_0)) \, dt\right).
+    \]
+\end{theorem}
+
