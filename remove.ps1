@@ -42,6 +42,11 @@ if (-not (Test-Path -Path $SourceRoot -PathType Container)) {
     return
 }
 
+# Ensure destination root exists before copying
+if (-not (Test-Path -Path $DestinationRoot -PathType Container)) {
+    New-Item -Path $DestinationRoot -ItemType Directory -Force | Out-Null
+}
+
 # --- Main Processing ---
 Write-Host "Starting PDF processing..."
 Write-Host "Source: $SourceRoot"
@@ -98,3 +103,19 @@ foreach ($categoryFolder in $categoryFolders) {
 }
 
 Write-Host "`nProcessing complete."
+
+# Archive the resulting PDF-only export
+$downloadsPath = Join-Path -Path $home -ChildPath "Downloads"
+$zipFileName = "Mathématiques-Export_$([DateTime]::UtcNow.ToString('yyyyMMdd-HHmmss')).zip"
+$zipFilePath = Join-Path -Path $downloadsPath -ChildPath $zipFileName
+
+try {
+    if (Test-Path -Path $zipFilePath) {
+        Remove-Item -Path $zipFilePath -Force
+    }
+    Compress-Archive -Path (Join-Path -Path $DestinationRoot -ChildPath '*') -DestinationPath $zipFilePath -Force
+    Write-Host "Export archive created at: $zipFilePath"
+}
+catch {
+    Write-Error "Failed to create export archive: $_"
+}

@@ -62,8 +62,8 @@ From it, we can derive some important applications:
 \end{description}
 
 \vspace{0.7cm}
-In summary, the \underline{determinant}, \underline{rank}, and \underline{trace} of a matrix are invariants\footnote{
-    And also include the \underline{characteristic polynomial}, \underline{eigenvalues}, and \underline{eigenvectors} 
+In summary, the \emph{determinant}, \emph{rank}, and \emph{trace} of a matrix are invariants\footnote{
+    And also include the \emph{characteristic polynomial}, \emph{eigenvalues}, and \emph{eigenvectors} 
     in next section.
 } under similarity relations, 
 and are collectively referred to as \textbf{similarity invariants}.
@@ -163,7 +163,7 @@ The following proposition summarizes the properties of the eigenpolynomial:
     Let \( V \) be a linear space over field \( F \), 
     and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
     For an eigenvalue \( \lambda \) of \( \mathcal{A} \), 
-    the set of all eigenvectors corresponding to \( \lambda \) \underline{along with the zero vector}:
+    the set of all eigenvectors corresponding to \( \lambda \) \emph{along with the zero vector}:
     \[
     V_{\lambda} = \{ \alpha | \alpha \in V, \mathcal{A}(\alpha) = \lambda \alpha \} = 
     \operatorname{Ker}(\mathcal{A} - \lambda \mathcal{E}),
@@ -417,7 +417,7 @@ Similarly, generalized kernel and image can be defined.
     Furthermore, if a linear transformation \( \mathcal{A} \) on a linear space \( V \)
     has \( k \) distinct eigenvalues \( \lambda_1, \lambda_2, \dots, \lambda_k \),
     and \( \alpha_{i1}, \alpha_{i2}, \dots, \alpha_{ir_{i}} \) (\(i = 1, 2, \dots, k\)) 
-    are the corresponding \underline{linearly independent} eigenvectors of \( \lambda_i \),
+    are the corresponding \emph{linearly independent} eigenvectors of \( \lambda_i \),
     then the set of vectors
     \[
     \{ \alpha_{ij} | i = 1, 2, \dots, k, j = 1, 2, \dots, r_i \}
@@ -440,13 +440,13 @@ Similarly, generalized kernel and image can be defined.
             the sum of the dimensions of all eigenspaces equals \( n \).
         }
         \item \( V = V_{\lambda_1} \oplus V_{\lambda_2} \oplus \cdots \oplus V_{\lambda_k} \),
-            where \( \lambda_1, \lambda_2, \dots, \lambda_k \) are the \underline{distinct} eigenvalues of \( \mathcal{A} \).
+            where \( \lambda_1, \lambda_2, \dots, \lambda_k \) are the \emph{distinct} eigenvalues of \( \mathcal{A} \).
         \item The minimal polynomial\footnote{
             Since the minimal polynomial is the monic polynomial with least degree 
             of all annihilating polynomials of \( \mathcal{A} \),
             the condition also holds for any annihilating polynomial of \( \mathcal{A} \).
         } of \( \mathcal{A} \) has not repeated roots, 
-            i.e. it can be factored into \underline{distinct} linear factors over field \( F \):
+            i.e. it can be factored into \emph{distinct} linear factors over field \( F \):
             \[
             m(\lambda) = (\lambda - \lambda_1)(\lambda - \lambda_2) \cdots (\lambda - \lambda_k).
             \]
@@ -455,7 +455,7 @@ Similarly, generalized kernel and image can be defined.
 
 \section{Diagonalization of Special Matrices}
 In this section, we will discuss the diagonalization of several special types of matrices.
-Let \(V\) be a linear space over field \( F \) (without specific statements, it can be \underline{infinite} dimensional),
+Let \(V\) be a linear space over field \( F \) (without specific statements, it can be \emph{infinite} dimensional),
 and let \( \mathcal{A}\in \operatorname{Hom}(V) \).
 \(A\) is the matrix representation of \( \mathcal{A} \) under some basis of \( V \).
 
@@ -651,7 +651,7 @@ where \(C\) is the cyclic shift matrix.
         \end{pmatrix}.
         \]
         It means that circulant matrices share the same set of eigenvectors as the cyclic shift matrix.
-    \item \(A\) is diagonalizable. Furthermore, it can be unitarily diagonalized by the \underline{same} DFT matrix.
+    \item \(A\) is diagonalizable. Furthermore, it can be unitarily diagonalized by the \emph{same} DFT matrix.
 \end{enumerate}
 
 \begin{leftbarTitle}{Triangular Matrix}\end{leftbarTitle}

@@ -111,7 +111,7 @@ then the system~\eqref{eq:differential equations system Lyapunov} can be transfo
     \frac{\mathrm{d} \mathbf{y}}{\mathrm{d}t} = \mathbf{F}(t, \mathbf{y}).
 \end{equation}
 Then the stability of solution \(\mathbf{x} = \boldsymbol{\phi}(t; t_{0}, \mathbf{x}_{1})\)
-to~\eqref{eq:differential equations system Lyapunov} is \underline{equivalent to the stability of the zero solution}
+to~\eqref{eq:differential equations system Lyapunov} is \emph{equivalent to the stability of the zero solution}
 to~\eqref{eq:transformed system Lyapunov}.
 
 Without loss of generality, we only discuss the stability of the zero solution \(\mathbf{x} = \mathbf{0}\)
@@ -154,16 +154,17 @@ The following definition is derived:
     \includegraphics[width=0.8\textwidth]{img/stable.png}
 \end{figure}
 
-\section{Ляпунов Second Method} % Lyapunov 第二方法
+\section{Ляпунов Methods} % Lyapunov 方法
 Ляпунов established two methods for studying the stability of solutions to differential equations:
-\newline The first method is based on the series solutions of differential equations,
-which is often difficult to apply in practice.
-\newline The second method, known as the Ляпунов second method,
-relies on constructing a special scalar function, called the Ляпунов function,
-to analyze the stability of solutions without explicitly solving the differential equations,
-which is also called the direct method of Ляпунов.
+\begin{enumerate}[label=(\arabic*)]
+    \item The first method is based on the series solutions of differential equations,
+        which is often difficult to apply in practice.
+    \item The second method, known as the Ляпунов second method,
+        relies on constructing a special scalar function, called the Ляпунов function,
+        to analyze the stability of solutions without explicitly solving the differential equations,
+        which is also called the direct method of Ляпунов.
+\end{enumerate}
 
-For convenience, we only consider autonomous system:
 \begin{equation}\label{eq:autonomous system Lyapunov}
     \frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = \mathbf{f}(\mathbf{x}),\quad \mathbf{x}\in G \subset \mathbb{R}^{n},
 \end{equation}
@@ -171,6 +172,29 @@ where \(\mathbf{f}(\mathbf{x})\) is continuous in \(G\)
 and satisfies the local Lipschitz condition with respect to \(\mathbf{x}\),
 and \(\mathbf{f}(\mathbf{0}) = \mathbf{0}\).
 
+\begin{leftbarTitle}{Lyapunov First Method}\end{leftbarTitle} % Ляпунов 第一方法
+\begin{theorem}{Ляпунов Linearization Theorem}
+    For the autonomous system~\eqref{eq:autonomous system Lyapunov},
+    let \(\mathbf{f}(\mathbf{x})\) be continuously differentiable in a neighborhood of \(\mathbf{x} = \mathbf{0}\),
+    and let 
+    \[
+    J= \nabla \mathbf{f}(\mathbf{x})\mid_{\mathbf{x}=\mathbf{0}} = \left( \frac{\partial f_i}{\partial x_j} \right)_{n\times n}.
+    \]
+    Let \(\lambda_{1}, \lambda_{2}, \ldots, \lambda_{n}\) be all eigenvalues of matrix \(J\).
+    Then for linearized system \(\dot{\mathbf{y}}=J\mathbf{y}\) it holds that:
+    \begin{description}
+        \item[Stability] if \(\mathrm{Re}(\lambda_i) < 0\) for all \(i=1,2,\ldots,n\),
+            then the zero solution \(\mathbf{x} = \mathbf{0}\) is asymptotically stable;
+        \item[Unstability] if there exists \(\mathrm{Re}(\lambda_k) > 0\),
+            then the zero solution \(\mathbf{x} = \mathbf{0}\) is unstable.
+        \item[Inconclusiveness] if there exists \(\mathrm{Re}(\lambda_m) = 0\),
+            then the stability of the zero solution \(\mathbf{x} = \mathbf{0}\) 
+            cannot be determined by the linearized system.
+    \end{description}
+\end{theorem}
+
+
+\begin{leftbarTitle}{Lyapunov Second Method}\end{leftbarTitle} % Ляпунов 第二方法
 \begin{definition}{Ляпунов Function}
     A scalar function \(V(\mathbf{x}): G \to \mathbb{R}\) is called a \textbf{Ляпунов function},
     if it satisfies the following conditions:
@@ -209,6 +233,81 @@ and \(\mathbf{f}(\mathbf{0}) = \mathbf{0}\).
     \end{description}
 \end{theorem}
 
+Here are some common Ляпунов functions: % 能量函数, 变量梯度, 二次型
+\begin{description}
+    \item[Energy Function] In many physical systems, the total energy (kinetic energy + potential energy) (\(E=T+U\))
+        can serve as a Ляпунов function.
+        For instance, for a simple pendulum without friction, \(\ddot{\theta} + \frac{g}{l} \sin \theta = 0\),
+        the Ляпунов function can be chosen as
+        \[
+        V(\theta, \dot{\theta}) = T + U = \frac{1}{2} m l^{2} \dot{\theta}^{2} + mgl(1 - \cos \theta),
+        \]
+        where \(m\) is the mass of the pendulum bob, \(l\) is the length of the pendulum,
+        and \(g\) is the acceleration due to gravity.
+        Then by \(\dot{V}=\nabla V \cdot \mathbf{f}(\mathbf{x}) = 0\),
+        we can conclude that the equilibrium point \((\theta, \dot{\theta}) = (0, 0)\) is stable but not asymptotically stable.
+    \item[Variable Gradient] If there exists a scalar function \(V(\mathbf{x})\)
+        such that \(\nabla V(\mathbf{x}) = \mathbf{g}(\mathbf{x})\),
+        where \(\mathbf{g}(\mathbf{x})\) satisfies
+        \begin{enumerate}
+            \item \(\mathbf{g}(\mathbf{0}) = \mathbf{0}\);
+            \item \(\mathbf{g}\) is field of gradients, i.e., \(\nabla \times \mathbf{g} = \mathbf{0}\) or equivalently 
+                \(\frac{\partial g_i}{\partial x_j} = \frac{\partial g_j}{\partial x_i}\) for all \(i, j\);
+            \item \(\dot{V}(\mathbf{x}) = \mathbf{g}(\mathbf{x}) \cdot \mathbf{f}(\mathbf{x}) \leqslant 0\) (or \(\geqslant 0\))
+                for all \(\mathbf{x} \in G\).
+        \end{enumerate}
+        then \(V(\mathbf{x})\) can be used as a Ляпунов function.
+    \item[Quadratic Form] For linear system \(\dot{\mathbf{x}}=\mathbf{A}x\), 
+        let \(V(\mathbf{x})=\mathbf{x}^{\mathrm{T}} P \mathbf{x}\), where \(P\) is a symmetric positive definite matrix.
+        Along the trajectories of the system, we have
+        \[
+        \dot{V}(\mathbf{x}) = \mathbf{x}^{\mathrm{T}} (A^{\mathrm{T}} P + P A) \mathbf{x}.
+        \]
+        If there exists a symmetric positive definite matrix \(Q\) such that
+        \[
+        A^{\mathrm{T}} P + P A = -Q,
+        \]
+        then \(V(\mathbf{x})\) is a Ляпунов function and the zero solution is asymptotically stable.
+\end{description}
+
+
+\begin{leftbarTitle}{Other Theorems}\end{leftbarTitle} % 其他定理
+
+\begin{theorem}{LaSalle Invariance Principle} % LaSalle 不变定理
+    For the autonomous system~\eqref{eq:autonomous system Lyapunov},
+    let \(V(\mathbf{x})\) be a Ляпунов function in \(G\),
+    and its total derivative along the trajectories of~\eqref{eq:autonomous system Lyapunov} is given by:
+    \[
+    \dot{V}(\mathbf{x}) = \nabla V(\mathbf{x}) \cdot \mathbf{f}(\mathbf{x}) 
+    = \sum_{i=1}^{n}\frac{\partial V}{\partial x_i} f_i(\mathbf{x}).
+    \]
+    Let 
+    \[
+    S = \{ \mathbf{x} \in G \mid \dot{V}(\mathbf{x}) = 0 \},
+    \]
+    and let \(M\) be the largest invariant set in \(S\).
+    Then the zero solution \(\mathbf{x} = \mathbf{0}\) is asymptotically stable
+    if \(M = \{\mathbf{0}\}\).
+\end{theorem}
+
+
+\begin{theorem}{Chetaev Theorem} % Chetaev 定理
+    For the autonomous system~\eqref{eq:autonomous system Lyapunov},
+    let \(V(\mathbf{x})\) be a Ляпунов function in \(G\),
+    and its total derivative along the trajectories of~\eqref{eq:autonomous system Lyapunov} is given by:
+    \[
+    \dot{V}(\mathbf{x}) = \nabla V(\mathbf{x}) \cdot \mathbf{f}(\mathbf{x}) 
+    = \sum_{i=1}^{n}\frac{\partial V}{\partial x_i} f_i(\mathbf{x}).
+    \]
+    If there exists a domain \(U \subset G\) such that
+    \begin{itemize}
+        \item \(\mathbf{0} \in \partial U\) (the boundary of \(U\));
+        \item \(V(\mathbf{x}) > 0\) for all \(\mathbf{x} \in U\);
+        \item \(\dot{V}(\mathbf{x}) > 0\) for all \(\mathbf{x} \in U\);
+    \end{itemize}
+    then the zero solution \(\mathbf{x} = \mathbf{0}\) is unstable.
+\end{theorem}
+
 \section{Critical Points and Limit Cycles} % 平面奇点与极限环
 \begin{leftbarTitle}{Classification of Critical Points}\end{leftbarTitle}
 For plane system~\eqref{eq:phase plane system},
@@ -223,16 +322,9 @@ A = \begin{pmatrix}
 The classification of primary critical points is completely subject to the eigenvalues of matrix \(A\)
 (Hartman-Grobman theorem). 
 
-For an eigenvalue \(\lambda\) of matrix \(A\), we are concerned with its three properties:
-\begin{itemize}
-    \item real part: \(\mathrm{Re}(\lambda)\), if \(\mathrm{Re}(\lambda) < 0 (>0)\), 
-        then the critical point is attracting (repelling) along the corresponding eigenvector direction;
-    \item imaginary part: \(\mathrm{Im}(\lambda)\);
-    \item multiplicity: algebraic multiplicity and geometric multiplicity.
-\end{itemize}
 
-By the Jordan canonical form of matrix, \(A\sim J\), where
-there are three cases for \(J\):
+
+By the Jordan canonical form of matrix, \(A\sim J\), where there are three cases for \(J\):
 \begin{description}
     \item[Distinct real eigenvalues] 
         \[
@@ -388,3 +480,21 @@ The following table summarizes the classification of primary critical points:
 \end{table}
 
 \begin{leftbarTitle}{Limit Cycles}\end{leftbarTitle}
+\begin{definition}{Limit Cycle}
+    A \textbf{limit cycle} is a closed trajectory in the phase plane
+    such that at least one other trajectory spirals towards it as \(t \to +\infty\) (stable limit cycle)
+    or as \(t \to -\infty\) (unstable limit cycle).
+\end{definition}
+
+\begin{theorem}{Poincaré-Bendixson Theorem}
+    For the plane system~\eqref{eq:phase plane system},
+    let \(R\) be a closed bounded region in the phase plane,
+    and suppose that:
+    \begin{itemize}
+        \item \(R\) contains no critical points of the system;
+        \item A trajectory starts in \(R\) at some time \(t_{0}\),
+            and remains in \(R\) for all \(t > t_{0}\).
+    \end{itemize}
+    Then the trajectory either is a closed orbit (a limit cycle),
+    or approaches a closed orbit as \(t \to +\infty\).
+\end{theorem}
