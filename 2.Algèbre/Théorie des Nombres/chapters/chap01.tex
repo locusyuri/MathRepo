@@ -1,0 +1,195 @@
+\chapter{Integers}  % 整数
+\section{Divisibility and Prime Numbers} % 整除性与素数
+Let\footnote{
+    Sometimes, natural numbers refer to the set of positive integers excluding zero, i.e., \(\mathbb{N}^{+}=\{1,2,3,\ldots\}\).
+} 
+\[
+\mathbb{N}=\{0,1,2,3,\ldots\},\quad \mathbb{N}^{+}=\{1,2,3,\ldots\},\quad \mathbb{Z}=\{\ldots,-2,-1,0,1,2,\ldots\}.
+\]
+% 对于一个实数, 引入高斯符号
+
+\begin{definition}{Gauß Symbols}
+    For a real number \(x\), the floor function (greatest integer function) is defined as:
+    \[
+    \lfloor x \rfloor = \max\{n \in \mathbb{Z} \mid n \leq x\}.
+    \]
+    Similarly, the ceiling function (least integer function) is defined as:
+    \[
+    \lceil x \rceil = \min\{n \in \mathbb{Z} \mid n \geq x\}.
+    \]
+\end{definition}
+\begin{property}
+    \begin{enumerate}
+        \item For any \(m \in \mathbb{N}^{+}\), there is \textbf{Hermite's identity}:
+            \[
+            \left\lfloor mx \right\rfloor = \left\lfloor x \right\rfloor + \left\lfloor x+ \frac{1}{m} \right\rfloor 
+            + \cdots + \left\lfloor x+ \frac{m-1}{m} \right\rfloor.
+            \]
+            \[
+            \left\lceil mx \right\rceil = \left\lceil x \right\rceil + \left\lceil x - \frac{1}{m} \right\rceil 
+            + \cdots + \left\lceil x - \frac{m-1}{m} \right\rceil.
+            \]
+        \item 
+    \end{enumerate}
+\end{property}
+
+
+\begin{theorem}{Euclidean Algorithm}
+    For any integers \(a\) and \(b\) with \(b > 0\), there exist unique integers \(q\) and \(r\) such that
+    \[
+    a = bq + r, \quad 0 \leq r < b.
+    \]
+    \(r\) is called the remainder of \(a\) divided by \(b\), denoted as \(r = a \bmod b\).
+
+    If \(r = 0\), then \(b\) divides \(a\), denoted as \(b \mid a\); 
+    otherwise, \(b\) does not divide \(a\), denoted as \(b \nmid a\).
+    In other words, \(b \mid a\) if and only if there exists an integer \(k\) such that \(a = bk\).
+
+    If \(a=kb\) and \(b\neq a, b\neq 1\), then \(b\) is called a proper divisor of \(a\).
+\end{theorem}
+
+\begin{property}
+    If \(b\neq 0, c\neq 0\), then
+    \begin{enumerate}
+        \item If \(b\mid a, c\mid b\), then \(c\mid a\).
+        \item If \(b\mid a\), then \(bc \mid ac\).
+        \item If \(c \mid d, c\mid e\), then \(c \mid (md + ne)\), for any integers \(m, n\).
+    \end{enumerate}
+\end{property}
+
+\section{Carry System} % 进位制
+Carry system (or positional numeral system) is a method of representing numbers using a radix (or base) \(r\) (\(r \geq 2\)).
+In base \(r\), any non-negative integer \(N\) can be expressed as:
+\[
+N = a_k r^k + a_{k-1} r^{k-1} + \cdots + a_1 r + a_0 = \sum_{i=0}^{k} a_i r^i =: (a_k a_{k-1} \cdots a_1 a_0)_r,
+\]
+where \(a_i\) are the digits satisfying \(0 \leq a_i < r\) and \(a_k \neq 0\).
+
+% 扩展到小数
+This can be extended to decimal fractions as:
+\[
+N = a_k r^k + a_{k-1} r^{k-1} + \cdots + a_1 r + a_0 + a_{-1} r^{-1} + a_{-2} r^{-2} + \cdots = \sum_{i=-m}^{k} a_i r^i =: 
+(a_k a_{k-1} \cdots a_1 a_0 . a_{-1} a_{-2} \cdots a_{-m})_r,
+\]
+where \(m\) is a positive integer.
+
+\begin{leftbarTitle}{Radix Conversion}\end{leftbarTitle} % 进制转换
+% 十进制与 r 进制的转换
+Here are \emph{methods for converting between decimal and base \(r\)}:
+\begin{itemize}
+    \item Decimal to base \(r\):
+        \begin{enumerate}
+            \item For the integer part, repeatedly divide by \(r\) and record the remainders.
+            \item For the fractional part, repeatedly multiply by \(r\) and record the integer parts.
+            \item Combine the results to form the base \(r\) representation.
+        \end{enumerate}
+    \item Base \(r\) to decimal:
+        \begin{enumerate}
+            \item For the integer part, multiply each digit by \(r\) raised to its position power and sum them.
+            \item For the fractional part, multiply each digit by \(r\) raised to its negative position power and sum them.
+            \item Combine both sums to get the decimal representation.
+        \end{enumerate}
+\end{itemize}
+
+\begin{example}
+    \begin{enumerate}
+        \item Convert decimal \(45.625\) to binary.
+        \item Convert binary \((1101.101)_2\) to decimal.
+    \end{enumerate}
+\end{example}
+
+\begin{solution}
+\begin{enumerate}
+    \item For integer part \(45\):
+        \begin{align*}
+            &45 \div 2 = 22 \text{ remainder } 1 \\
+            &22 \div 2 = 11 \text{ remainder } 0 \\
+            &11 \div 2 = 5 \text{ remainder } 1 \\
+            &5 \div 2 = 2 \text{ remainder } 1 \\
+            &2 \div 2 = 1 \text{ remainder } 0 \\
+            &1 \div 2 = 0 \text{ remainder } 1 \\
+        \end{align*}
+        Reading remainders from bottom to top gives \(101101\).
+        \newline For fractional part \(0.625\):
+        \begin{align*}
+            &0.625 \times 2 = 1.25 \quad (\text{integer part } 1) \\
+            &0.25 \times 2 = 0.5 \quad (\text{integer part } 0) \\
+            &0.5 \times 2 = 1.0 \quad (\text{integer part } 1)
+        \end{align*}
+        Reading integer parts gives \(101\).
+        \newline Combining both parts, we get \(45.625_{10} = (101101.101)_2\).
+    \item Since  
+        \(
+        1 \times 2^3 + 1 \times 2^2 + 0 \times 2^1 + 1 \times 2^0 + 1 \times 2^{-1} + 0 \times 2^{-2} + 1 \times 2^{-3} 
+        = 8 + 4 + 0 + 1 + 0.5 + 0 + 0.125 = 13.625;
+        \)
+        thus, \((1101.101)_2 = 13.625_{10}\).
+\end{enumerate}
+\end{solution}
+
+\begin{leftbarTitle}{Generalized Carry System}\end{leftbarTitle} % 广义进制系统
+
+\begin{leftbarTitle}{Balanced Ternary}\end{leftbarTitle} % 平衡三进制
+\textbf{Balanced ternary} (symmetric ternary) is a non-standard positional numeral system 
+that uses three digits: \(-1\), \(0\), and \(1\).
+Since \(-1\) is not a standard digit, it is often represented by the symbol \(Z\) or \(\bar{1}\).
+The weight calculation is the same as standard ternary, with the weight of the \(i\)-th digit being \(3^{i}\).
+
+\begin{theorem}{Uniqueness of Balanced Ternary Representation}
+    Every integer can be uniquely represented in balanced ternary.
+\end{theorem}
+
+\begin{proposition}
+    % 对于负数, 只需将对应整数的每一位取反即可
+    For negative numbers, simply negate each digit of the corresponding positive integer's balanced ternary representation.
+\end{proposition}
+
+\vspace{0.7cm}
+Here are \emph{methods for converting between decimal and balanced ternary}:
+\begin{itemize}
+    \item Decimal to balanced ternary:
+        \begin{enumerate}
+            \item Repeatedly divide the number by \(3\), recording the remainders.
+            \item If a remainder is \(2\), replace it with \(-1\) (or \(Z\)) and increment the quotient by \(1\).
+            \item Continue until the quotient is \(0\).
+            \item Read the remainders from bottom to top to form the balanced ternary representation.
+        \end{enumerate}
+    \item Balanced ternary to decimal:
+        \begin{enumerate}
+            \item Multiply each digit by \(3\) raised to its position power and sum them.
+            \item For digits equal to \(-1\) (or \(Z\)), treat them as \(-1\) in the calculation.
+        \end{enumerate}
+\end{itemize}
+
+
+\begin{example}
+    \begin{enumerate}
+        \item Convert decimal \(64\) to balanced ternary. 
+        \item Convert balanced ternary \(1Z0Z1\) to decimal.
+    \end{enumerate}
+\end{example}
+
+\begin{solution}
+\begin{enumerate}
+    \item For integer part \(64\):
+        \begin{align*}
+            &64 \div 3 = 21 \text{ remainder } 1 \\
+            &21 \div 3 = 7 \text{ remainder } 0 \\
+            &7 \div 3 = 2 \text{ remainder } 1 \\
+            &2 \div 3 = 0 \text{ remainder } 2 \quad (\text{replace } 2 \text{ with } Z, \text{ increment quotient to } 1) \\
+            &1 \div 3 = 0 \text{ remainder } 1
+        \end{align*}
+        Reading remainders from bottom to top gives \(1Z0Z1\).
+        Thus, \(64_{10} = (1Z0Z1)_{3b}\).
+    \item Since  
+        \(
+        1 \times 3^4 + (-1) \times 3^3 + 0 \times 3^2 + (-1) \times 3^1 + 1 \times 3^0 
+        = 81 - 27 + 0 - 3 + 1 = 52;
+        \)
+        thus, \((1Z0Z1)_{3b} = 52_{10}\).
+\end{enumerate}
+\end{solution}
+
+\section{Greatest Common Divisor and Least Common Multiple} % 最大公约数与最小公倍数
+
+\section{Fundamental Theorem of Arithmetic} % 算数基本定理

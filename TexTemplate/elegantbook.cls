@@ -370,6 +370,24 @@
 \definecolor{bule}{RGB}{18,29,57}
 \colorlet{coverlinecolor}{second}
 
+% ----- Emphasis Color Definition -----
+% 定义强调文本的颜色
+% Define the color for emphasized text
+\definecolor{emphcolor}{RGB}{74,35,50} 
+
+% ----- Custom Emphasis Style -----
+% 重新定义 \emph 命令，使其具有斜体和特殊颜色
+% Redefine \emph command to have italic shape with special color
+\DeclareTextFontCommand{\emph}{\color{emphcolor}\em}
+
+% 说明：
+% - \em 会自动处理嵌套的斜体（嵌套时会切换为正体）
+% - 该定义会覆盖 LaTeX 默认的 \emph 命令
+% 
+% Note:
+% - \em automatically handles nested emphasis (switches to upright when nested)
+% - This definition overrides LaTeX's default \emph command
+
 
 % ----- Title Style -----
 \ifdefstring{\ELEGANT@titlestyle}{hang}{\def\style{hang}}{\relax}
