@@ -1,10 +1,10 @@
 \chapter{Integers}  % 整数
-\section{Divisibility and Prime Numbers} % 整除性与素数
+\section{Divisibility} % 整除性
 Let\footnote{
-    Sometimes, natural numbers refer to the set of positive integers excluding zero, i.e., \(\mathbb{N}^{+}=\{1,2,3,\ldots\}\).
+    Sometimes, natural numbers refer to the set of positive integers excluding zero, i.e., \(\mathbb{N}_{+}=\{1,2,3,\ldots\}\).
 } 
 \[
-\mathbb{N}=\{0,1,2,3,\ldots\},\quad \mathbb{N}^{+}=\{1,2,3,\ldots\},\quad \mathbb{Z}=\{\ldots,-2,-1,0,1,2,\ldots\}.
+\mathbb{N}=\{0,1,2,3,\ldots\},\quad \mathbb{N}_{+}=\{1,2,3,\ldots\},\quad \mathbb{Z}=\{\ldots,-2,-1,0,1,2,\ldots\}.
 \]
 % 对于一个实数, 引入高斯符号
 
@@ -20,7 +20,7 @@ Let\footnote{
 \end{definition}
 \begin{property}
     \begin{enumerate}
-        \item For any \(m \in \mathbb{N}^{+}\), there is \textbf{Hermite's identity}:
+        \item For any \(m \in \mathbb{N}_{+}\), there is \textbf{Hermite's identity}:
             \[
             \left\lfloor mx \right\rfloor = \left\lfloor x \right\rfloor + \left\lfloor x+ \frac{1}{m} \right\rfloor 
             + \cdots + \left\lfloor x+ \frac{m-1}{m} \right\rfloor.
@@ -34,7 +34,7 @@ Let\footnote{
 \end{property}
 
 
-\begin{theorem}{Euclidean Algorithm}
+\begin{theorem}{Euclidean Division (Division with Remainder)} % Euclid 除法定理 (带余除法定理) 
     For any integers \(a\) and \(b\) with \(b > 0\), there exist unique integers \(q\) and \(r\) such that
     \[
     a = bq + r, \quad 0 \leq r < b.
@@ -56,6 +56,22 @@ Let\footnote{
         \item If \(c \mid d, c\mid e\), then \(c \mid (md + ne)\), for any integers \(m, n\).
     \end{enumerate}
 \end{property}
+
+\begin{definition}{Modular Arithmetic and Modular Inverse} % 模运算和模逆元
+    For any integers \(a\), \(b\), and positive integer \(m\), if \(m\mid (a-b)\), 
+    then \(a\) is congruent to \(b\) modulo \(m\), denoted as
+    \[
+    a \equiv b \pmod{m}.
+    \]
+    % 下面引入模逆元
+    If there exists an integer \(x\) such that
+    \[
+    ax \equiv 1 \pmod{m},
+    \]
+    then \(x\) is called the modular inverse of \(a\) modulo \(m\),
+    also denoted as \(a^{-1} \equiv x \pmod{m}\).
+\end{definition}
+
 
 \section{Carry System} % 进位制
 Carry system (or positional numeral system) is a method of representing numbers using a radix (or base) \(r\) (\(r \geq 2\)).
@@ -191,5 +207,171 @@ Here are \emph{methods for converting between decimal and balanced ternary}:
 \end{solution}
 
 \section{Greatest Common Divisor and Least Common Multiple} % 最大公约数与最小公倍数
+
+\begin{definition}{Greatest Common Divisor (GCD)}
+    For two integers \(a\) and \(b\), not both zero, the greatest common divisor (GCD) of \(a\) and \(b\), 
+    denoted as \(\gcd(a,b)\) (if there is no ambiguity, it can be abbreviated as \((a, b)\)),
+    is the largest positive integer that divides both \(a\) and \(b\).
+    Id est, \(\gcd(a,b) = d\) if and only if:
+    \begin{enumerate}
+        \item \(d \mid a\) and \(d \mid b\);
+        \item For any integer \(c\) such that \(c \mid a\) and \(c \mid b\), it follows that \(c \mid d\).
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}{Least Common Multiple (LCM)}
+    For two integers \(a\) and \(b\), not both zero, the least common multiple (LCM) of \(a\) and \(b\), 
+    denoted as \(\operatorname{lcm}(a,b)\) (if there is no ambiguity, it can be abbreviated as \([a, b]\)),
+    is the smallest positive integer that is a multiple of both \(a\) and \(b\).
+    Id est, \(\operatorname{lcm}(a,b) = m\) if and only if:
+    \begin{enumerate}
+        \item \(a \mid m\) and \(b \mid m\);
+        \item For any integer \(n\) such that \(a \mid n\) and \(b \mid n\), it follows that \(m \mid n\).
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+    % 有的时候会把 gcd(a,0) 定义为 |a|
+    Sometimes, \(\gcd(a,0)\) is defined as \(|a|\).
+\end{remark}
+
+\begin{property}
+    GCD and LCM have the following relationship:
+    \begin{enumerate}
+        \item \((a, b)[a, b] = |ab|\); 
+        \item \((ab, bc, ca)[a, b, c]=|abc|\);
+        \item \(\frac{(a, b, c)^{2}}{(a,b)(b,c)(a,c)}=\frac{[a,b,c]^{2}}{[a,b][b,c][a,c]}\)
+    \end{enumerate}
+\end{property}
+
+\begin{theorem}{Euclidean Algorithm} % Euclid 算法 (辗转相除法)
+    For any integers \(a\) and \(b\) with \(b \neq 0\), 
+    \[
+    \gcd(a,b) = \gcd(b, a \bmod b).
+    \]
+\end{theorem}
+\begin{proof}
+    By the definition of GCD, let \(d = \gcd(a,b)\).
+    Then \(d \mid a\) and \(d \mid b\), which implies \(d \mid (a - bq)\) for any integer \(q\).
+    Choosing \(q = \lfloor a/b \rfloor\), we have \(d \mid (a \bmod b)\).
+    Thus, \(d\) is a common divisor of \(b\) and \(a \bmod b\).
+    \newline Conversely, let \(d' = \gcd(b, a \bmod b)\).
+    Then \(d' \mid b\) and \(d' \mid (a \bmod b)\), which implies \(d' \mid (bq + (a \bmod b)) = a\).
+    Thus, \(d'\) is a common divisor of \(a\) and \(b\).
+    \newline Since both \(d\) and \(d'\) are the greatest common divisors of their respective pairs, we conclude that \(d = d'\).
+\end{proof}
+
+
+According to the Euclidean algorithm, we can compute the GCD of two integers efficiently 
+by repeatedly applying the division with remainder until the remainder is zero.
+\begin{example}
+    Find \(\gcd(252, 105)\) using the Euclidean algorithm.
+\end{example}
+\begin{solution}
+\begin{align*}
+    252 & = 2 \times 105 + 42 \\
+    105 & = 2 \times 42 + 21 \\
+    42 & = 2 \times 21 + 0
+\end{align*}
+Thus, \(\gcd(252, 105) = 21\).
+\end{solution}
+
+\begin{theorem}{Bézout's Identity} % Bézout 引理
+    For any integers \(a\), \(b\), and \(m\), the linear Diophantine equation (known as the Bézout identity): 
+    \[
+    ax + by = m
+    \]  
+    has integer solutions if and only if \(m\) is a multiple of \(d\) (\(d=\gcd(a,b)\)). 
+    
+    When the Bézout identity has solutions, there are infinitely many integer solutions \(x\), \(y\), 
+    each of which is called a Bézout coefficient, and they can be found using the extended Euclidean algorithm.
+\end{theorem}
+\begin{proof}
+    % 若 a, b 中有一个为 0, 则显然成立
+    If either \(a\) or \(b\) is zero, the statement is obviously true.
+
+    % 下面不妨设 a, b 均不为 0
+    Without loss of generality, assume both \(a\) and \(b\) are non-zero.
+    \newline Let \(A=\{ xa+yb | x,y \in \mathbb{Z} \}\), next, 
+    we will prove that the smallest positive integer in \(A\) is \(\gcd(a,b)\).
+    \newline First, \(A\cap \mathbb{N}_{+}\) is non-empty since \(a\) and \(b\) are non-zero.
+    Since \(\mathbb{N}_{+}\) is well-ordered, \(A\) has a smallest positive integer, denoted as \(d_{0}=x_{0}a + y_{0}b\).
+    \newline Consider any one positive integer \(p \in A\), by the division with remainder, 
+    there exist integers \(q\in \mathbb{N}_{+}\) and \(r\in [0, d_0)\) such that
+    \[
+    p = qd_{0} + r, \quad 0 \leq r < d_{0},
+    \]
+    where \(r = p - qd_{0} = (p - qx_{0}a) + (-qy_{0}b) \in A\).
+    \newline Therefore, if \(r > 0\), it contradicts the minimality of \(d_{0}\).
+    Hence, \(r = 0\), which implies that \(d_{0} \mid p\) for any \(p \in A\).
+    \newline In particular, \(d_{0} \mid a\) and \(d_{0} \mid b\), so \(d_{0}\) is a common divisor of \(a\) and \(b\).
+    \newline On the other hand, for any positive common divisor \(d\) of \(a\) and \(b\), let \(a=kd, b=ld\),
+    then \(d_{0}=x_{0}a + y_{0}b = x_{0}kd + y_{0}ld = (x_{0}k + y_{0}l)d\), which implies \(d \mid d_{0}\).
+    \newline Thus, \(d_{0} = \gcd(a,b)\).
+    \newline In the equation \(ax + by = m\), if \(m=m_{0}d_{0}\), then the equation has infinitely many integer solutions obviously,
+    \[
+    \left\{ \left( m_{0}x_{0}+\frac{kb}{d}, m_{0}y_{0}-\frac{ka}{d} \right) \mid k \in \mathbb{Z} \right\}.
+    \]
+    \newline Conversely, if the equation has integer solutions, then \(|m|\in A\).
+    Thus, \(d_{0} \mid |m|\), i.e., \(m\) is a multiple of \(d_{0}\).
+\end{proof}
+
+% 这个证明过程正是扩展欧几里得算法的过程
+This proof is essentially the process of the extended Euclidean algorithm.
+Extended Euclidean algorithm not only computes \(\gcd(a,b)\), but also finds integers \(x\) and \(y\) such that
+\[
+ax + by = \gcd(a,b).
+\]
+% 计算模逆元
+Using it, we can compute the modular inverse of \(a\) modulo \(m\) when \(\gcd(a,m) = 1\).
+
+
+
+\section{Prime Numbers} % 素数
+\begin{definition}{Prime Number}
+    A \textbf{prime number} is a natural number greater than \(1\) that has no positive divisors other than \(1\) and itself.
+    In other words, the set of prime numbers is defined as:
+    \[
+    \{ p=ab | p \in \mathbb{N}_{+}\setminus \{1\}, a=1 \text{ or } b=1 \}.
+    \]
+
+    If a natural number greater than \(1\) is not prime, it is called a \textbf{composite number}.
+\end{definition}
+\(\mathbb{N}_{+}\) can be divided into three disjoint subsets: 
+\(\{ 1 \}\), the set of prime numbers and the set of composite numbers.
+
+% 为了判定一个数是否为素数, 引入素性测试
+To determine whether a number is prime, we introduce primality tests.
+\begin{theorem}{Trial Division Primality Test (Sieve of Eratosthenes)} % 试除法素性测试(埃拉托斯特尼筛法)
+    To determine whether a natural number \(n > 1\) is prime, it suffices to check for divisibility by all prime numbers 
+    less than or equal to \(\sqrt{n}\). If \(n\) is not divisible by any of these primes, then \(n\) is prime; 
+    otherwise, it is composite.
+\end{theorem}
+
+Euler's sieve is an optimized version of the Sieve of Eratosthenes for finding all prime numbers up to a given limit \(n\).
+It works by iteratively marking the multiples of each prime number starting from \(2\), 
+ensuring that each composite number is marked only once. Its procedure is as follows:
+\begin{enumerate}
+    \item Create a list of consecutive integers from \(2\) to \(n\).
+    \item Start with the first number in the list (which is \(2\)).
+    \item Mark all multiples of this number (except the number itself) as composite.
+    \item Move to the next unmarked number in the list and repeat step 3 until you reach \(\sqrt{n}\).
+    \item The remaining unmarked numbers in the list are all prime numbers up to \(n\).
+\end{enumerate}
+
+
+
+\begin{theorem}{Fermat's Little Theorem} % Fermat 小定理
+    If \(p\) is a prime number and \(a\) is an integer not divisible by \(p\), then
+    \[
+    a^{p-1} \equiv 1 \pmod{p}.
+    \]
+    Equivalently, for any integer \(a\),
+    \[
+    a^{p} \equiv a \pmod{p}.
+    \]
+\end{theorem}
+
+
 
 \section{Fundamental Theorem of Arithmetic} % 算数基本定理
