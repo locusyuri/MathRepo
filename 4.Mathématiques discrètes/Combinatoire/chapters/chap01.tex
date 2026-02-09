@@ -1,0 +1,65 @@
+\chapter{Basic Counting Principles} % 基本计数原理
+
+
+\section{Addition and Multiplication Principles} % 加法与乘法原理
+
+\section{Bijection Principle} % 一一对应原理
+
+
+\section{Permutations and Combinations} % 排列与组合
+\begin{definition}{Permutation and Combination}
+    Let \( n \) be a non-negative integer, and \( k \) be an integer such that \( 0 \leq k \leq n \). 
+    The number of ways to choose \( k \) elements from a set of \( n \) distinct elements 
+    and arrange them in a specific order is called the number of permutations of \( n \) elements taken \( k \) at a time, 
+    denoted as \( P(n, k) \) (or \(_nP_k\), \(P_n^k\) or \(A_n^k\)). 
+    It is given by the formula:
+    \[
+    P(n, k) = \frac{n!}{(n-k)!}.
+    \]
+    The number of ways to choose \( k \) elements from a set of \( n \) distinct elements 
+    without regard to the order of selection is called the number of combinations of \( n \) elements taken \( k \) at a time, 
+    denoted as \( C(n, k) \) (or \(_nC_k\), \(C_n^k\) or \(\binom{n}{k}\)). 
+    It is given by the formula:
+    \[
+    C(n, k) = \frac{n!}{k!(n-k)!} = \binom{n}{k}.
+    \]
+\end{definition}
+
+\begin{property}
+    The following properties hold for permutations and combinations:
+    \begin{enumerate}
+        \item \( A_{n}^{0} = 1 \) and \( A_{n}^{n} = n! \).
+        \item \( C_{n}^{0} = 1 \) and \( C_{n}^{n} = 1 \).
+        \item \( C_{n}^{k} = C_{n}^{n-k} \).
+        \item \( A_{n}^{k} = k! \cdot C_{n}^{k} \).
+        \item \(C_{n}^{k}=C_{n-1}^{k-1}+C_{n-1}^{k}\) (\textbf{Pascal's triangle/YangHui's triangle})\footnote{
+            This property can also be understood that to choose \(k\) elements from \(n+1\), 
+            you can first take one element \(A\): 
+            \begin{enumerate}
+                \item  The number of ways that include \(A\) is \(\mathrm{C}_{n}^{k-1}\); 
+                \item  The number of ways that does not include \(A\) is \(\mathrm{C}_{n}^{k}\).
+            \end{enumerate}
+        }.
+        % 在Pascal's triangle中，每个元素等于其左上方和右上方的两个元素之和，如图\ref{fig:pascal_triangle}所示。
+        \newline In Pascal's triangle, each element is equal to the sum of the two elements directly above it, 
+        as shown in Figure \ref{fig:pascal_triangle}.
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.8\textwidth]{img/pascal_triangle.png}
+            \caption{Pascal's triangle (YangHui's triangle).}
+            \label{fig:pascal_triangle}
+        \end{figure}
+        \item \((a+b)^{n}=\sum_{k=0}^{n} C_{n}^{k} a^{k} b^{n-k}\) (\textbf{Binomial theorem}).
+        % 因此我们可以得到Pascal's triangle和Binomial Theorem之间的关系，如图\ref{fig:pascal_and_binomial}所示。
+        \newline Therefore, we can see the relationship between Pascal's triangle and the Binomial theorem, 
+        as shown in Figure \ref{fig:pascal_and_binomial}.
+        % 其中\(C_{n}^{k}\)是Pascal's triangle中第\(n\)行第\(k\)列的元素。
+        Here, \(C_{n}^{k}\) is the element in the \(n\)-th row and \(k\)-th column of Pascal's triangle.
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.8\textwidth]{img/pascal_and_binomial.png}
+            \caption{Pascal's triangle and Binomial theorem.}
+            \label{fig:pascal_and_binomial}
+        \end{figure}
+    \end{enumerate}
+\end{property}

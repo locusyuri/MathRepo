@@ -1,0 +1,39 @@
+\chapter{Inclusion-Exclusion Principle} % 容斥原理
+\section{Inclusion-Exclusion Principle} % 容斥原理
+\begin{theorem}{Inclusion-Exclusion Principle}
+    Let \( A_1, A_2, \ldots, A_n \) be finite sets. Then the number of elements in the union of these sets is given by:
+    \[
+    \left| \bigcup_{i=1}^{n} A_i \right| = 
+    \sum_{i=1}^{n} |A_i| - \sum_{1 \leq i < j \leq n} |A_i \cap A_j| + \sum_{1 \leq i < j < k \leq n} |A_i \cap A_j \cap A_k| - \cdots + (-1)^{n+1} |A_1 \cap A_2 \cap \cdots \cap A_n|.
+    \]
+    Denote \( S_k = \sum_{1 \leq i_1 < i_2 < \cdots < i_k \leq n} |A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}| \) 
+    for \( k = 1, 2, \ldots, n \). 
+    Then the formula can be rewritten as:
+    \[
+    \left| \bigcup_{i=1}^{n} A_i \right| = \sum_{k=1}^{n} (-1)^{k+1} S_k.
+    \]
+\end{theorem}
+Specially, when \( n = 2 \), we have:
+\[
+|A_1 \cup A_2| = |A_1| + |A_2| - |A_1 \cap A_2|.
+\]
+When \( n = 3 \), we have:
+\[
+|A_1 \cup A_2 \cup A_3| = |A_1| + |A_2| + |A_3| - |A_1 \cap A_2| - |A_1 \cap A_3| - |A_2 \cap A_3| + |A_1 \cap A_2 \cap A_3|.
+\]
+
+\vspace{0.7cm}
+% 容斥原理还有一种更常用的形式: 补集形式(性质计数法)
+The inclusion-exclusion principle also has a more commonly used form, \textbf{the complement form (property counting method)}:
+\newline Let \( U \) be the universal set that contains all the elements under consideration, 
+and \( \overline{A_i} = U \setminus A_i \) be the complement of \( A_i \) in \( U \). 
+Then we have:
+\[
+\left| \bigcup_{i=1}^{n} A_i \right| = \left| U \right| - \left| \bigcap_{i=1}^{n} \overline{A_i} \right| 
+= \left| U \right| - \sum_{k=0}^{n} (-1)^{k} S_k.
+\]
+
+
+\section{Möbius Inversion} % Möbius 反演
+
+\section{Generalizations of Inclusion-Exclusion} % 容斥原理的推广

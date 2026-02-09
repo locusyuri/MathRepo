@@ -200,12 +200,12 @@
     Extension = .otf ,
     Scale = 0.9]
 
-  \setmonofont{JetBrainsMono NF}[
-    UprightFont = * Regular ,
+  \setmonofont{Consolas}[
+    Scale = 0.95,
     BoldFont = * Bold ,
     ItalicFont = * Italic ,
-    BoldItalicFont = * Bold Italic ,
-    Scale = 1.0]    % 代码字体
+    BoldItalicFont = * Bold Italic,
+    Scale = 1.0 ]    % 代码字体 (Consolas for listings)
 \fi
 
 \ifdefstring{\ELEGANT@lang}{cn}{
@@ -1297,7 +1297,7 @@
   \citshape}{\par}
 
 % \newenvironment{solution}{\par\noindent\textbf{\color{main}\solutionname} \citshape}{\par}
-\newenvironment{remark}{\noindent\textbf{\color{second}\faDeviantart\remarkname}\remarkfont}{\par}
+\newenvironment{remark}{\noindent\textbf{\color{second}\faDeviantart\remarkname}\citshape}{\par}
 \newenvironment{assumption}{\par\noindent\textbf{\color{third}\assumptionname} \citshape}{\par}
 \newenvironment{conclusion}{\par\noindent\textbf{\color{third}\conclusionname} \citshape}{\par}
 % \newenvironment{property}{\par\noindent\textbf{\color{third}\faPaperclip\propertyname} \citshape}{\par}
@@ -1305,7 +1305,7 @@
 \newenvironment{property}{
   \par\noindent\makebox[5pt][c]{
     \tiny\color{third}\faPaperclip\quad}
-    \textbf{\color{third}\propertyname} \citshape}{\par}
+    \textbf{\color{third}\propertyname} \remarkfont}{\par}
 
 \newenvironment{caution}{\par\noindent\textbf{\color{red!90}\faExclamationTriangle Caution} \citshape}{\par}
 \newenvironment{custom}[1]{\par\noindent\textbf{\color{third} #1} \citshape}{\par}
@@ -1477,35 +1477,87 @@
 
 \newcommand{\dollar}{\mbox{\textdollar}}
 
+% ----- Listings Package Configuration -----
+% 代码块样式配置（GitHub 风格）
+% Code block styling (GitHub style)
+
 \RequirePackage{listings}
-\renewcommand{\ttdefault}{cmtt}
+
+% 定义代码块颜色方案 (GitHub-inspired color scheme)
+\definecolor{codebackground}{RGB}{246,248,250}     % 浅灰色背景 (Light gray background)
+\definecolor{codeborder}{RGB}{208,215,222}         % 边框颜色 (Border color)
+\definecolor{codenumber}{RGB}{87,96,106}           % 行号颜色 (Line number color)
+\definecolor{codekeyword}{RGB}{215,58,73}          % 关键字红色 (Keyword red)
+\definecolor{codecomment}{RGB}{106,115,125}        % 注释灰色 (Comment gray)
+\definecolor{codestring}{RGB}{3,47,98}             % 字符串深蓝 (String dark blue)
+\definecolor{codeemphasis}{RGB}{111,66,193}        % 强调紫色 (Emphasis purple)
+
+
+% 定义基础代码样式
+% Define base code style
 \lstdefinestyle{mystyle}{
-  basicstyle=%
-    \ttfamily
-    \lst@ifdisplaystyle\small\fi
+  basicstyle=\ttfamily\small\color{black},          % 基础字体样式
+  backgroundcolor=\color{codebackground},            % 背景颜色
+  commentstyle=\color{codecomment}\itshape,          % 注释样式：灰色斜体
+  keywordstyle=\color{codekeyword}\bfseries,         % 关键字样式：红色加粗
+  numberstyle=\tiny\color{codenumber},               % 行号样式：小号灰色
+  stringstyle=\color{codestring},                    % 字符串样式：深蓝色
+  emphstyle=\color{codeemphasis}\bfseries,           % 强调样式：紫色加粗
+  % 边框和间距设置
+  frame=single,                                      % 单线边框
+  framerule=0.8pt,                                   % 边框粗细
+  rulecolor=\color{codeborder},                      % 边框颜色
+  framexleftmargin=5pt,                              % 左边距
+  framexrightmargin=5pt,                             % 右边距
+  framextopmargin=3pt,                               % 上边距
+  framexbottommargin=3pt,                            % 下边距
+  xleftmargin=10pt,                                  % 代码左边距
+  xrightmargin=10pt,                                 % 代码右边距
+  % 行号设置（已关闭）
+  numbers=none,                                      % 不显示行号
+  % 其他设置
+  breaklines=true,                                   % 自动断行
+  breakatwhitespace=false,                           % 断行不仅在空白处
+  tabsize=4,                                         % Tab 宽度
+  columns=flexible,                                  % 列对齐方式
+  keepspaces=true,                                   % 保留空格
+  showspaces=false,                                  % 不显示空格
+  showstringspaces=false,                            % 字符串中不显示空格
+  showtabs=false,                                    % 不显示 Tab
+  captionpos=b,                                      % 标题在底部
+  aboveskip=10pt,                                    % 代码块上方间距
+  belowskip=10pt,                                    % 代码块下方间距
 }
 
-\lstset{basicstyle=\ttfamily,style=mystyle,breaklines=true}
-
-\definecolor{lightgrey}{rgb}{0.9,0.9,0.9}
-\definecolor{frenchplum}{RGB}{190,20,83}
-\lstset{language=[LaTeX]TeX,
-  texcsstyle=*\color{winered},
-  numbers=none,
+% LaTeX/TeX 特定配置
+% LaTeX/TeX specific configuration
+\lstset{
+  style=mystyle,
+  language=[LaTeX]TeX,
+  texcsstyle=*\color{codekeyword}\bfseries,
   mathescape=false,
-  breaklines=true,
-  keywordstyle=\color{winered},
-  commentstyle=\color{gray},
+  % LaTeX 包和命令的强调
   emph={elegantpaper,fontenc,fontspec,xeCJK,citestyle,FiraMono,xunicode,figure,fig,image,img,table,itemize,enumerate,ctex,microtype,description,times,booktabs,tabular,PDFLaTeX,XeLaTeX,type1cm,BibTeX,device,color,mode,lang,amsthm,tcolorbox,titlestyle,cite,ctex,listings,base,math,scheme,toc,esint,chinesefont,amsmath,bibstyle,natbib,pgfornament,addbibresource,printbibliography},
-  emphstyle={\color{frenchplum}},
-  morekeywords={DeclareSymbolFont,SetSymbolFont,toprule,midrule,bottomrule,institute,version,includegraphics,setmainfont,setsansfont,setmonofont ,setCJKmainfont,setCJKsansfont,setCJKmonofont,RequirePackage,figref,tabref,email,maketitle,keywords,definecolor,extrainfo,logo,cover,subtitle,appendix,chapter,section,hypersetup,mainmatter,frontmatter,tableofcontents,elegantpar,heiti,kaishu,lstset,pagecolor,zhnumber,marginpar,part,equote,marginnote,bioinfo,datechange,listofchange,lvert,lastpage,songti,heiti,fangsong,setCJKfamilyfont,textbf,elegantnewtheorem,thmcnt,colorlet,usesamecnt},
-  frame=single,
-  tabsize=2,
-  rulecolor=\color{structurecolor},
-  framerule=0.2pt,
-  columns=flexible,
-  % backgroundcolor=\color{lightgrey}
+  % 更多 LaTeX 关键字
+  morekeywords={DeclareSymbolFont,SetSymbolFont,toprule,midrule,bottomrule,institute,version,includegraphics,setmainfont,setsansfont,setmonofont,setCJKmainfont,setCJKsansfont,setCJKmonofont,RequirePackage,figref,tabref,email,maketitle,keywords,definecolor,extrainfo,logo,cover,subtitle,appendix,chapter,section,hypersetup,mainmatter,frontmatter,tableofcontents,elegantpar,heiti,kaishu,lstset,pagecolor,zhnumber,marginpar,part,equote,marginnote,bioinfo,datechange,listofchange,lvert,lastpage,songti,heiti,fangsong,setCJKfamilyfont,textbf,elegantnewtheorem,thmcnt,colorlet,usesamecnt},
 }
+
+% ----- Custom Code Block Style -----
+% 代码块已通过 listings 包配置
+% Code block is configured via listings package
+% 使用标准的 lstlisting 环境即可：
+% Use standard lstlisting environment:
+% \begin{lstlisting}[language=python]
+% your code here
+% \end{lstlisting}
+
+% 如果需要圆角，可以手动用 tcolorbox 包装：
+% For rounded corners, you can manually wrap with tcolorbox:
+% \begin{tcolorbox}[colback=codebackground,colframe=codeborder,arc=6pt,left=8pt,right=8pt,top=8pt,bottom=8pt]
+% \begin{lstlisting}[language=python]
+% your code here
+% \end{lstlisting}
+% \end{tcolorbox}
 
 \newcommand\bmmax{0}
 \RequirePackage{bm}

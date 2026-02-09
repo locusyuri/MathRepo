@@ -1,0 +1,70 @@
+\chapter{Special Counting Sequences} % 特殊计数序列
+\section{Catalan Numbers} % Catalan 数
+\begin{definition}{Catalan Numbers}
+    The \( n \)-th Catalan number \( C_n \) is given by:
+    \[
+    C_n = \frac{1}{n+1} \binom{2n}{n} = \frac{(2n)!}{(n+1)!n!}=\binom{2n}{n} - \binom{2n}{n+1}.
+    \]
+    The first ten Catalan numbers are:
+    \begin{gather*}
+    C_0 = 1, \quad C_1 = 1, \quad C_2 = 2, \quad C_3 = 5, \quad C_4 = 14, \\
+    C_5 = 42, \quad C_6 = 132, \quad C_7 = 429, \quad C_8 = 1430, \quad C_9 = 4862.
+    \end{gather*}
+\end{definition}
+\begin{property}
+    The Catalan numbers satisfy multiple recurrence relations:
+    \begin{enumerate}
+        \item  
+            \[
+            C_{n} = \sum_{i=0}^{n-1} C_i C_{n-1-i} \quad (n \geq 1), \quad C_0 = 1.
+            \]
+            This recurrence relation reflects the self-similarity of Catalan numbers.
+        \item 
+            \[
+            C_{n} = \frac{2(2n-1)}{n+1} C_{n-1} \quad (n \geq 1), \quad C_0 = 1.
+            \]
+            This recurrence relation can be derived from the closed-form expression of Catalan numbers.
+        \item Let \( G(x) = \sum_{n=0}^{\infty} C_n x^n \) be the generating function of Catalan numbers. 
+            Then \( G(x) \) satisfies the functional equation:
+            \[
+            G(x) = 1 + x G(x)^2,
+            \]
+            id est,
+            \[
+            G(x) = \frac{1 - \sqrt{1-4x}}{2x}.
+            \]
+            This functional equation can be used to derive the closed-form expression of Catalan numbers using 
+            the Lagrange inversion formula.
+    \end{enumerate}
+\end{property}
+
+\vspace{0.7cm}
+Catalan numbers is the answer to many combinatorial problems, 
+\begin{description}
+    \item[Ballot problem] There is an \( n \times n \) grid graph, 
+        with the bottom-left corner at \((0, 0)\) and the top-right corner at \((n, n)\). 
+        Starting from the bottom-left corner, and \emph{moving only right or up one unit at each step}, 
+        the total number of paths to reach the top-right corner 
+        without going above the diagonal \(y=x\) (but allowing touching it) is denoted as \(C_n\).
+    \item[Dyck path counting problem] A Dyck path of semilength \(n\) is a lattice path from \((0, 0)\) to \((2n, 0)\) 
+        that never dips below the \(x\)-axis and consists of steps \((1, 1)\) (up step) and \((1, -1)\) (down step). 
+        The number of Dyck paths of semilength \(n\) is \(C_n\).
+    \item[Counting non-intersecting chords in a circle] There are \(2n\) points on a circle. 
+        The number of ways to pair these points with \(n\) chords 
+        such that no two chords intersect is the Catalan number \(C_n\).
+    \item[Triangulation counting problem] The number of ways to divide a convex \((n+2)\)-sided region 
+        into triangular regions without intersecting diagonals is \(C_n\).
+    \item[Binary Tree Counting Problem] The number of structurally different binary trees with \(n\)
+        nodes is \(C_n\). 
+        Equivalently, the number of structurally different full binary trees with \(n\) non-leaf nodes is \(C_n\).
+    \item[Counting problem of parenthesis sequences] The number of valid parenthesis sequences 
+        consisting of \(n\) pairs of parentheses is \(C_n\).
+    \item[Stack popping sequence counting problem] The push sequence of a stack (of infinite size) is \(1, 2, \ldots, n\), 
+        and the number of valid popping sequences is \(C_n\).
+    \item[Sequence Counting Problem] The number of sequences \(a_1, a_2, \ldots, a_{2n}\) 
+        consisting of \(n\) \(+1\)'s and \(n\) \(-1\)'s such that 
+        the partial sums satisfy \(a_1 + a_2 + \ldots + a_k \geq 0\) (\(k = 1, 2, 3, \ldots, 2n\)) is \(C_n\).
+\end{description}
+
+
+\section{Stirling Numbers} % Stirling 数

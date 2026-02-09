@@ -359,6 +359,27 @@ ensuring that each composite number is marked only once. Its procedure is as fol
     \item The remaining unmarked numbers in the list are all prime numbers up to \(n\).
 \end{enumerate}
 
+\begin{lstlisting}[language=C++]
+vector<int> euler_sieve(int n){
+    vector<bool> is_prime(n+1, true);
+    vector<int> primes;
+
+    is_prime[0] = is_prime[1] = false;
+
+    for (int i = 2; i <= n; ++i) {
+        if (is_prime[i]) {
+            primes.push_back(i);
+        }
+
+        for(int p : primes) {
+            if (i*p>n) break;
+            is_prime[i*p] = false;
+            if (i%p==0) break;
+        }
+    }
+    return primes;
+}
+\end{lstlisting}
 
 
 \begin{theorem}{Fermat's Little Theorem} % Fermat 小定理

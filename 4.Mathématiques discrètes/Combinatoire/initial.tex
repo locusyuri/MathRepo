@@ -43,66 +43,25 @@ This is the preface of the book...
 % === 正文部分 ===
 \mainmatter         % 开始正文，页码从 1 重新开始
 
-\chapter{Permutations and Combinations} % 排列与组合
 
-\chapter{Basic Counting Principles} % 基本计数原理
-\section{Pigeonhole Principle} % 鸽巢原理
+% --- Part 1: 基础计数工具 (The Foundation) ---
+\input{chapters/chap01.tex} % 基本计数原理
+% \input{chapters/chap02.tex} % 排列与组合      已合并入第一章
+\input{chapters/chap03.tex} % 二项式系数
 
-\chapter{Binomial Coefficients} % 二项式系数
+% --- Part 2: 进阶计数方法 (Advanced Counting) ---
+\input{chapters/chap05.tex} % 递推关系与生成函数
+\input{chapters/chap04.tex} % 容斥原理
+\input{chapters/chap06.tex} % 特殊计数序列
 
-\chapter{Inclusion-Exclusion Principle} % 容斥原理
-\chapter{Recurrence Relations and Generating Functions} % 生成函数
+% --- Part 3: 存在性与极值 (Existence & Structure) ---
+\input{chapters/chap07.tex} % 鸽巢原理
+\input{chapters/chap08.tex} % 极值原理
+\input{chapters/chap09.tex} % Ramsey 理论
 
-\chapter{Special Counting Sequences} % 特殊计数序列
-\section{Catalan Numbers} % Catalan 数
-\begin{definition}{Catalan Numbers}
-    The \( n \)-th Catalan number \( C_n \) is given by:
-    \[
-    C_n = \frac{1}{n+1} \binom{2n}{n} = \frac{(2n)!}{(n+1)!n!}.
-    \]
-    The first ten Catalan numbers are:
-    \begin{gather*}
-    C_0 = 1, \quad C_1 = 1, \quad C_2 = 2, \quad C_3 = 5, \quad C_4 = 14, \\
-    C_5 = 42, \quad C_6 = 132, \quad C_7 = 429, \quad C_8 = 1430, \quad C_9 = 4862.
-    \end{gather*}
-\end{definition}
-
-Catalan numbers is the answer to many combinatorial problems, 
-\begin{description}
-    \item[Path counting problem] There is an \( n \times n \) grid graph, 
-        with the bottom-left corner at \((0, 0)\) and the top-right corner at \((n, n)\). 
-        Starting from the bottom-left corner, and moving only right or up one unit at each step, 
-        the total number of paths to reach the top-right corner 
-        without going above the diagonal \(y=x\) (but allowing touching it) is denoted as \(C_n\).
-    \item[Counting non-intersecting chords in a circle] There are \(2n\) points on a circle. 
-        The number of ways to pair these points with \(n\) chords 
-        such that no two chords intersect is the Catalan number \(C_n\).
-    \item[Triangulation counting problem] The number of ways to divide a convex \((n+2)\)-sided region 
-        into triangular regions without intersecting diagonals is \(C_n\).
-    \item[Binary Tree Counting Problem] The number of structurally different binary trees with \(n\)
-        nodes is \(C_n\). 
-        Equivalently, the number of structurally different full binary trees with \(n\) non-leaf nodes is \(C_n\).
-    \item[Counting problem of parenthesis sequences] The number of valid parenthesis sequences 
-        consisting of \(n\) pairs of parentheses is \(C_n\).
-    \item[Stack popping sequence counting problem] The push sequence of a stack (of infinite size) is \(1, 2, \ldots, n\), 
-        and the number of valid popping sequences is \(C_n\).
-    \item[Sequence Counting Problem] The number of sequences \(a_1, a_2, \ldots, a_{2n}\) 
-        consisting of \(n\) \(+1\)'s and \(n\) \(-1\)'s such that 
-        the partial sums satisfy \(a_1 + a_2 + \ldots + a_k \geq 0\) (\(k = 1, 2, 3, \ldots, 2n\)) is \(C_n\).
-\end{description}
-
-
-\section{Stirling Numbers} % Stirling 数
-
-
-\chapter{Extremal Principle} % 极值原理
-
-
-\chapter{Ramsey Theory} % Ramsey 理论
-
-\chapter{Design Theory} % 组合设计
-
-\chapter{Pólya Counting} % Pólya 计数
+% --- Part 4: 结构与代数 (Structure & Algebra) ---
+\input{chapters/chap10.tex} % 组合设计
+\input{chapters/chap11.tex} % Pólya 计数
 
 
 
