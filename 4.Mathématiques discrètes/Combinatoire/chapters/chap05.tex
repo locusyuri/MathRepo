@@ -1,1 +1,79 @@
 \chapter{Recurrence Relations and Generating Functions} % 递归关系与生成函数
+\section{Recurrence Relations} % 递归关系
+\textbf{Recurrence relations} are equations that define sequences recursively,
+expressing each term as a function of its preceding terms, with the form of:
+\[
+a_{n} = f(a_{n-1}, a_{n-2}, \ldots, a_{n-k}), \quad n \geq k,
+\]
+where \( k \) is the order of the recurrence relation, and \( f \) is a function that combines the previous \( k \) terms.
+
+Recurrence relations can be classified into several types:
+\begin{description}
+    \item[Homogeneous vs. Non-homogeneous] A recurrence relation is homogeneous if it can be expressed solely in terms of 
+        previous terms of the sequence.
+        If it includes additional functions or constants, it is non-homogeneous.
+    \item[Linear vs. Non-linear] A recurrence relation is linear if each term is a linear combination of previous terms:
+        \[
+        a_{n} = c_1 a_{n-1} + c_2 a_{n-2} + \cdots + c_k a_{n-k}.
+        \]
+        If it involves products or other non-linear operations, it is non-linear.
+    \item[Constant Coefficients vs. Variable Coefficients] A recurrence relation has constant coefficients if 
+        the coefficients in the linear combination are constants. If they vary with \( n \), it has variable coefficients.
+\end{description}
+
+\begin{leftbarTitle}{Methods for Solving Recurrence Relations}\end{leftbarTitle} % 递推关系的解法
+
+
+\begin{leftbarTitle}{Common Recurrence Relations}\end{leftbarTitle} % 常见递推关系
+\begin{example}
+    Define the \textbf{Fibonacci sequence} \( \{F_n\} \) by the recurrence relation:
+    \[
+    F_{0} = 0, \quad F_{1} = 1, \quad F_{n} = F_{n-1} + F_{n-2}, \quad n \geq 2,
+    \]
+    which is a linear homogeneous recurrence relation with constant coefficients.
+\end{example}
+
+\begin{example}
+    The \textbf{tower of Hanoi} problem (Figure~\ref{fig:Hanoi}) is a classic example of a problem 
+    that can be solved using a recurrence relation.
+    Move \(n\) plates from A to C, using B as an auxiliary, 
+    with the condition that only one plate can be moved at a time and a larger plate cannot be placed on a smaller one.
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{img/Hanoi.png}
+        \caption{Tower of Hanoi problem}
+        \label{fig:Hanoi}
+    \end{figure}
+    \newline It can be described by the recurrence relation:
+    \[
+    T(n) = 2T(n-1) + 1, \quad T(1) = 1,
+    \]
+    where \( T(n) \) represents the minimum number of moves required to transfer \( n \) disks from one peg to another.
+\end{example}
+
+
+
+
+\section{Generating Functions} % 生成函数
+\begin{definition}
+    The \textbf{ordinary generating function} (OGF) of a sequence \( \{a_n\} \) is defined as the formal power series:
+    \[
+    G(a_n; x) = \sum_{n=0}^{\infty} a_n x^n,
+    \]
+    where \( x \) is an indeterminate.
+
+    The \textbf{exponential generating function} (EGF) of a sequence \( \{a_n\} \) is defined as:
+    \[
+    E(a_n; x) = \sum_{n=0}^{\infty} \frac{a_n}{n!} x^n.
+    \]
+
+    The \textbf{Dirichlet generating function} (DGF) of a sequence \( \{a_n\} \) is defined as:
+    \[
+    D(a_n; s) = \sum_{n=1}^{\infty} \frac{a_n}{n^s},
+    \]
+    where \( s \) is a complex variable.
+\end{definition}
+
+\begin{leftbarTitle}{Solving Recurrence Relations Using Generating Functions}\end{leftbarTitle} % 生成函数解递推关系
+
+\begin{leftbarTitle}{Integer Partitions}\end{leftbarTitle} % 整数拆分

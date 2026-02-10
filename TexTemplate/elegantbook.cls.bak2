@@ -932,31 +932,6 @@
   {\newcommand{\xchaptertitle}{\chaptername~\thechapter~}}
 
 \setcounter{secnumdepth}{5}
-
-%----------------------------------------------------------------------------------------
-%	PART FORMATTING (from LegrandOrangeBook style)
-%----------------------------------------------------------------------------------------
-
-\titleformat{\part}
-	[display] % Shape type: display allows multiline formatting
-	{\thispagestyle{empty}\centering\normalfont\Huge\bfseries\color{structurecolor}} % Format
-	{%
-		\begin{tikzpicture}[remember picture, overlay]
-			\node[anchor=center, rectangle, fill=structurecolor!15, fill opacity=0.9, 
-				minimum height=0.35\paperheight, minimum width=\paperwidth] 
-				at (current page.center) {};
-		\end{tikzpicture}%
-		\vspace*{1.5cm} % 这个值可以调整以控制标题在页面上的垂直位置
-		\partname~\thepart%
-	} % Label with background
-	{0.1em} % Separation between part number and title 在标签和标题之间的距离
-	{\fontsize{32}{38}\selectfont\color{structurecolor}} % Before code
-	[\newpage] % After code - start new page after part
-
-%----------------------------------------------------------------------------------------
-%	CHAPTER FORMATTING
-%----------------------------------------------------------------------------------------
-
 \titleformat{\chapter}[\style]{\titlefont\bfseries}{
   \filcenter\LARGE\enspace\bfseries{\color{structurecolor} \IfAppendix{\appendixname\;\thechapter\;}{\xchaptertitle\;}}}{1pt}{
   \LARGE\bfseries\color{structurecolor}\filcenter}[]
@@ -1646,127 +1621,10 @@
 % https://tex.stackexchange.com/questions/56839/chaptername-is-used-even-for-appendix-chapters-in-toc
 \RequirePackage{calc}
 \RequirePackage[titles]{tocloft}
-
-%----------------------------------------------------------------------------------------
-%	TABLE OF CONTENTS STYLING (from LegrandOrangeBook)
-%----------------------------------------------------------------------------------------
-
-\RequirePackage{titletoc} % Required for manipulating the table of contents
-
-\setcounter{tocdepth}{2} % Display down to subsections in the table of contents
-
-\contentsmargin{0cm} % Removes the default right margin
-
-%------------------------------------------------
-
-% Styling of numbered parts in the table of contents (with background boxes)
-\newcommand{\tocentrypartnumbered}[1]{%
-	\setlength\fboxsep{0pt}% Remove box padding
-	\contentslabel[%
-		% Part number box
-		\colorbox{structurecolor!20}{% Background color
-			\strut\parbox[c][.7cm]{1.1cm}{% Box size
-				\color{structurecolor}\Large\bfseries\centering\thecontentslabel% Part number
-			}%
-		}%
-		\hspace{4pt}%
-		% Part title box
-		\colorbox{structurecolor!40}{% Background color
-			\strut\parbox[c][.7cm]{\linewidth-1.25cm}{% Box size
-				\centering\Large\bfseries #1% Part title
-			}%
-		}%
-	]{1.25cm}
-}
-
-% Styling of unnumbered parts in the table of contents
-\newcommand{\tocentrypartunnumbered}[1]{%
-	\setlength\fboxsep{0pt}% Remove box padding
-	\contentslabel[%
-		% Part title box
-		\colorbox{structurecolor!40}{% Background color
-			\strut\parbox[c][.7cm]{\linewidth}{% Box size
-				\centering\Large\bfseries #1% Part title
-			}%
-		}%
-	]{1.25cm}
-}
-
-\titlecontents{part} % Section type being modified
-	[1.25cm] % Left indentation
-	{\addvspace{20pt}\Large\bfseries\hypersetup{linkcolor=black}} % Before code
-	{\tocentrypartnumbered} % Formatting of numbered sections of this type
-	{\tocentrypartunnumbered} % Formatting of numberless sections of this type
-	{} % Formatting of the filler to the right of the heading and the page number
-	[] % After code
-
-%------------------------------------------------
-
-\titlecontents{chapter} % Section type being modified
-	[1.25cm] % Left indentation
-	{\addvspace{12pt}\large\bfseries\hypersetup{linkcolor=structurecolor}} % Before code
-	{\color{structurecolor}\contentslabel[\Large\thecontentslabel]{1.25cm}} % Formatting of numbered sections
-	{} % Formatting of numberless sections
-	{\color{structurecolor!60}\normalsize\;\titlerule*[6pt]{.}\;\color{structurecolor}\thecontentspage} % Filler and page number
-	[] % After code
-
-%------------------------------------------------
-
-\titlecontents{section} % Section type being modified
-	[1.25cm] % Left indentation
-	{\addvspace{3pt}\bfseries} % Before code
-	{\contentslabel[\thecontentslabel]{1.25cm}} % Formatting of numbered sections
-	{} % Formatting of numberless sections
-	{~{\normalfont\titlerule*[6pt]{.}}~\thecontentspage} % Filler and page number
-	[] % After code
-
-%------------------------------------------------
-
-\titlecontents{subsection} % Section type being modified
-	[1.25cm] % Left indentation
-	{\addvspace{1pt}\small} % Before code
-	{\contentslabel[\thecontentslabel]{1.25cm}} % Formatting of numbered sections
-	{} % Formatting of numberless sections
-	{~\titlerule*[6pt]{.}~\thecontentspage} % Filler and page number
-	[] % After code
-	
-%------------------------------------------------
-
-\titlecontents{subsubsection} % Section type being modified
-	[1.75cm] % Left indentation
-	{\small} % Before code
-	{\contentslabel[\thecontentslabel]{1.75cm}} % Formatting of numbered sections  
-	{} % Formatting of numberless sections
-	{~\titlerule*[6pt]{.}~\thecontentspage} % Filler and page number
-	[] % After code
-
-%------------------------------------------------
-
-% List of figures entries
-\titlecontents{figure} % Section type being modified
-	[0cm] % Left indentation
-	{\addvspace{2pt}\small} % Before code
-	{\thecontentslabel\hspace*{1em}} % Formatting of numbered sections
-	{} % Formatting of numberless sections
-	{~\titlerule*[6pt]{.}~\thecontentspage} % Filler and page number
-	[] % After code
-
-%------------------------------------------------
-
-% List of tables entries
-\titlecontents{table} % Section type being modified
-	[0cm] % Left indentation
-	{\addvspace{2pt}\sffamily\small} % Before code
-	{\thecontentslabel\hspace*{1em}} % Formatting of numbered sections
-	{} % Formatting of numberless sections
-	{~\titlerule*[6pt]{.}~\thecontentspage} % Filler and page number
-	[] % After code
-
-%----------------------------------------------------------------------------------------
-%	APPENDIX HANDLING
-%----------------------------------------------------------------------------------------
-
 \ifdefstring{\ELEGANT@lang}{cn}{
+  % \renewcommand{\cftchappresnum}{\beforechap\space}
+  % \renewcommand{\cftchapaftersnum}{\space\afterchap}
+  % \setlength{\cftchapnumwidth}{\widthof{\textbf{附录~十一}}}
   \renewcommand{\numberline}[1]{%
   \@cftbsnum #1\@cftasnum~\@cftasnumb ~%
   }
@@ -1781,9 +1639,22 @@
         {\numberline{\xchaptertitle}}{\numberline{\thechapter}}%
         {}{\fail}  
     \fi
+    \addtocontents{toc}{%
+      \protect\renewcommand{\protect\cftchappresnum}{\appendixname\space}%
+      \protect\renewcommand{\protect\cftchapaftersnum}{}%
+    }%
   }
 }{
-  \g@addto@macro\appendix{}
+  \renewcommand{\cftchappresnum}{\chaptername\space}
+  \renewcommand{\cftchapaftersnum}{\space}
+  \setlength{\cftchapnumwidth}{\widthof{\textbf{Appendix~9}}}
+  \g@addto@macro\appendix{%
+    \addtocontents{toc}{%
+      \protect\renewcommand{\protect\cftchappresnum}{\appendixname\space}%
+      \protect\renewcommand{\protect\cftchapaftersnum}{}%
+      \setlength{\cftchapnumwidth}{\widthof{\textbf{Appendix~999}}}
+    }%
+  }
 }
 
 % restore the tt default family to lmodern tt family

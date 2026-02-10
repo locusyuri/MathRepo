@@ -5,7 +5,7 @@
 \author{CatMono} % 这里放置作者名
 \date{November, 2025} % 这里放置日期
 \version{0.1} % 这里放置版本号
-% \institute{Elegant\LaTeX{} Program} % 这里放置机构名
+% \institute{Mathématiques} % 这里放置机构名
 % \bioinfo{Custom Key}{Custom Value} % 这里放置自定义信息
 
 % \extrainfo{extra information} % 这里放置额外信息，将显示在最下方中央
@@ -14,7 +14,7 @@
 \setcounter{secnumdepth}{2} % 设置章节编号深度
 
 
-% \logo{logo-blue.png} % 这里放置封面logo，默认从figure目录下寻找
+\logo{../../TexTemplate/fig/logo.png} % 这里放置封面logo，默认从figure目录下寻找
 % \cover{LogiqueMathematique.png} % 这里放置封面图片，默认从figure目录下寻找
 
 % modify the color in the middle of titlepage
@@ -44,22 +44,27 @@ This is the preface of the book...
 \mainmatter         % 开始正文，页码从 1 重新开始
 
 
+
 % --- Part 1: 基础计数工具 (The Foundation) ---
+\part{Basic Counting}
 \input{chapters/chap01.tex} % 基本计数原理
 % \input{chapters/chap02.tex} % 排列与组合      已合并入第一章
 \input{chapters/chap03.tex} % 二项式系数
 
 % --- Part 2: 进阶计数方法 (Advanced Counting) ---
+\part{Advanced Counting}
 \input{chapters/chap05.tex} % 递推关系与生成函数
 \input{chapters/chap04.tex} % 容斥原理
 \input{chapters/chap06.tex} % 特殊计数序列
 
-% --- Part 3: 存在性与极值 (Existence & Structure) ---
+% --- Part 3: 存在性与极值 (Existence and Extremal) ---
+\part{Existence and Extremal}
 \input{chapters/chap07.tex} % 鸽巢原理
 \input{chapters/chap08.tex} % 极值原理
 \input{chapters/chap09.tex} % Ramsey 理论
 
-% --- Part 4: 结构与代数 (Structure & Algebra) ---
+% --- Part 4: 结构与代数 (Structure and Algebra) ---
+\part{Structure and Algebra}
 \input{chapters/chap10.tex} % 组合设计
 \input{chapters/chap11.tex} % Pólya 计数
 
@@ -67,8 +72,7 @@ This is the preface of the book...
 
 
 \begin{thebibliography}{99} 
-\bibitem{en1} Elias M. Stein, Rami Shakarchi. \emph{Fourier Analysis: An Introduction}. Princeton University Press, 2016.
-\bibitem{en2} Author2, Title2, Journal2, Year2. \emph{ This is another example of a reference.}
+\bibitem{en1} Richard A. Brualdi. \emph{Introductory Combinatorics 5th Edition}. 机械工业出版社, 2012.
 \end{thebibliography}
 
 \end{document}

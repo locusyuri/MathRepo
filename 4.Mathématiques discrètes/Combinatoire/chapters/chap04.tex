@@ -4,7 +4,8 @@
     Let \( A_1, A_2, \ldots, A_n \) be finite sets. Then the number of elements in the union of these sets is given by:
     \[
     \left| \bigcup_{i=1}^{n} A_i \right| = 
-    \sum_{i=1}^{n} |A_i| - \sum_{1 \leq i < j \leq n} |A_i \cap A_j| + \sum_{1 \leq i < j < k \leq n} |A_i \cap A_j \cap A_k| - \cdots + (-1)^{n+1} |A_1 \cap A_2 \cap \cdots \cap A_n|.
+    \sum_{i=1}^{n} |A_i| - \sum_{1 \leq i < j \leq n} |A_i \cap A_j| + \sum_{1 \leq i < j < k \leq n} |A_i \cap A_j \cap A_k| 
+    - \cdots + (-1)^{n+1} |A_1 \cap A_2 \cap \cdots \cap A_n|.
     \]
     Denote \( S_k = \sum_{1 \leq i_1 < i_2 < \cdots < i_k \leq n} |A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}| \) 
     for \( k = 1, 2, \ldots, n \). 
@@ -13,6 +14,12 @@
     \left| \bigcup_{i=1}^{n} A_i \right| = \sum_{k=1}^{n} (-1)^{k+1} S_k.
     \]
 \end{theorem}
+
+\begin{remark}
+    % 可以记为"加奇减偶"原则
+    Mnemonic: ``Add odd, subtract even''.
+\end{remark}
+
 Specially, when \( n = 2 \), we have:
 \[
 |A_1 \cup A_2| = |A_1| + |A_2| - |A_1 \cap A_2|.
@@ -35,5 +42,41 @@ Then we have:
 
 
 \section{Möbius Inversion} % Möbius 反演
+The inclusion-exclusion principle holds essentially because the inclusion relations among sets form a partially ordered set. 
+Möbius inversion is a highly generalized form of the inclusion-exclusion principle in number theory functions and 
+partially ordered sets.
+\begin{definition}{Arithmetic Function} % 数论函数
+    An \textbf{arithmetic function} is a function defined on the set of positive integers and taking values in the complex numbers:
+    \[
+    f: \mathbb{N}^* \to \mathbb{C}.
+    \] 
+    
+    Examples include the divisor function \( d(n) \), the Euler totient function \( \phi(n) \), 
+    and the Möbius function \( \mu(n) \).
+\end{definition}
+
+
+\begin{definition}{Möbius Function}
+    The Möbius function \( \mu(n) \) is defined on the positive integers as follows:
+    \[
+    \mu(n) = \begin{cases}
+        1 & n = 1, \\
+        (-1)^k &  n \text{ is a product of } k \text{ distinct primes} (n=p_1 p_2 \cdots p_k), \\
+        0 &  n \text{ has a squared prime factor} (4, 9, 16, \ldots).
+    \end{cases}
+    \]
+\end{definition}
+
+\begin{theorem}{Möbius Inversion} % Möbius 反演
+    Let \( f \) and \( g \) be two arithmetic functions defined on the positive integers. 
+    If for every positive integer \( n \), we have:
+    \[
+    g(n) = \sum_{d | n} f(d),
+    \]
+    then we can express \( f(n) \) in terms of \( g(n) \) using the Möbius function \( \mu(d) \):
+    \[
+    f(n) = \sum_{d | n} \mu(d) g\left( \frac{n}{d} \right).
+    \]
+\end{theorem}
 
 \section{Generalizations of Inclusion-Exclusion} % 容斥原理的推广
