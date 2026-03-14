@@ -1,5 +1,5 @@
 \documentclass[11pt]{../../TexTemplate/elegantbook} % 这里是文档类，默认使用 elegantbook
-\title{Analyse Complexe} % 复分析
+\title{Mécanique} % 力学
 % \subtitle{Subtitle} % 这里放置副标题
 
 \author{CatMono} % 这里放置作者名
@@ -43,14 +43,26 @@ This is the preface of the book...
 % === 正文部分 ===
 \mainmatter         % 开始正文，页码从 1 重新开始
 
-\input{chapters/chap01.tex} % 复数与复平面
-\input{chapters/chap02.tex} % 复函数
-\input{chapters/chap03.tex} % 复变函数的积分
-\input{chapters/chap04.tex} % 级数展开与留数定理
-\input{chapters/chap05.tex} % 共形映射与 Riemann 面
-\input{chapters/chap06.tex} % 解析延拓与调和函数
-
-
+% --- Part 1: 质点运动与动力学 ---
+\part{Particle Kinematics and Dynamics}
+\input{chapters/chap01.tex} % 质点运动学
+\input{chapters/chap02.tex} % 牛顿运动定律
+\input{chapters/chap03.tex} % 静力学基础
+\input{chapters/chap04.tex} % 动量与角动量
+\input{chapters/chap05.tex} % 能量与功
+% --- Part 2: 质点系力学 ---
+\part{System of Particles}
+\input{chapters/chap06.tex} % 刚体力学
+\input{chapters/chap07.tex} % 流体力学基础
+% --- Part 3: 振动、波动与场 ---
+\part{Vibration, Waves, and Fields}
+\input{chapters/chap08.tex} % 机械振动
+\input{chapters/chap09.tex} % 机械波
+\input{chapters/chap10.tex} % 天体力学基础
+% --- Part 4: 相对论与分析力学 ---
+\part{Relativity and Analytical Mechanics}
+\input{chapters/chap11.tex} % 狭义相对论基础
+\input{chapters/chap12.tex} % 分析力学基础
 
 \begin{thebibliography}{99} 
 \bibitem{en1} Elias M. Stein, Rami Shakarchi. \emph{Fourier Analysis: An Introduction}. Princeton University Press, 2016.

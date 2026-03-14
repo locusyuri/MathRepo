@@ -1,0 +1,82 @@
+\chapter{Complex Functions} % 复变函数
+\section{Complex Functions and Their Limits} % 复函数及其极限
+\begin{definition}{Complex Functions}
+    A \textbf{complex function} is a function 
+    \[
+    f: 
+    \begin{matrix}
+        E \to \mathbb{C}, \\
+        z \mapsto \omega,
+    \end{matrix}
+    \] 
+    where \(E \subseteq \mathbb{C}\) is the domain of \(f\) and \(\omega = f(z)\) is the value of \(f\) at \(z\).
+    
+    % 单值函数与多值函数
+    A complex function is called \textbf{single-valued} if 
+    for every \(z \in E\), there is a unique value \(\omega\) such that \(f(z) = \omega\).
+    Otherwise, it is called \textbf{multi-valued}.
+\end{definition}
+
+\begin{caution}
+    % 需要注意的是, 所谓的多值函数并不是一个真正意义上的函数, 因为它不满足函数的定义, 但我们仍然习惯性地称其为函数, 以便于讨论和分析
+    % 之后我们会通过解析延拓等方法将多值函数转化为单值函数, 从而使其成为一个真正意义上的函数
+    It should be noted that a so-called multi-valued function \emph{is not a function in the true sense}, 
+    because it does not satisfy the definition of a function. 
+    However, we still habitually call it a function for the sake of discussion and analysis.
+    Later, we will use methods such as analytic continuation to transform multi-valued functions into 
+    single-valued functions, thus making them true functions in the mathematical sense.
+\end{caution}
+
+\begin{definition}{Limit of Complex Functions}
+    Let \(f: E \to \mathbb{C}\) be a complex function and \(z_0\) be a limit point of \(E\). 
+    We say that the limit of \(f(z)\) as \(z\) approaches \(z_0\) is \(\omega_0\), denoted by
+    \[
+    \lim_{z \to z_0} f(z) = \omega_0,
+    \]
+    if for every \(\varepsilon > 0\), there exists a \(\delta > 0\) such that 
+    whenever \(0 < |z - z_0| < \delta\) and \(z \in E\), we have \(|f(z) - \omega_0| < \varepsilon\).
+\end{definition}
+
+\begin{definition}{Continuity of Complex Functions}
+    A complex function \(f: E \to \mathbb{C}\) is said to be \textbf{continuous} at a point \(z_0 \in E\) if 
+    \[
+    \lim_{z \to z_0} f(z) = f(z_0).
+    \]
+    If \(f\) is continuous at every point in its domain \(E\), then we say that \(f\) is continuous on \(E\).
+\end{definition}
+
+\begin{definition}{Uniform Continuity of Complex Functions}
+    A complex function \(f: E \to \mathbb{C}\) is said to be \textbf{uniformly continuous} on \(E\) if 
+    for every \(\varepsilon > 0\), there exists a \(\delta > 0\) such that 
+    whenever \(z_1, z_2 \in E\) and \(|z_1 - z_2| < \delta\), we have \(|f(z_1) - f(z_2)| < \varepsilon\).
+\end{definition}
+
+\begin{definition}{Derivative and Differential of Complex Functions}
+    Let \(f: E \to \mathbb{C}\) be a complex function and \(z_0 \in E\). 
+    We say that \(f\) is \textbf{derivable} at \(z_0\) if the limit
+    \[
+    f'(z_0) = \lim_{z \to z_0} \frac{f(z) - f(z_0)}{z - z_0}
+    \]
+    exists. The value \(f'(z_0)\) is called the \textbf{derivative} of \(f\) at \(z_0\).
+    
+    If \(f\) is derivable at every point in its domain \(E\), then we say that \(f\) is derivable on \(E\).
+
+    The \textbf{differential} of \(f\) at \(z_0\) is defined as
+    \[
+    \mathrm{d}f(z_0) = f'(z_0) \mathrm{d}z,
+    \]
+    where \(\mathrm{d}z\) is an infinitesimal change in \(z\).
+\end{definition}
+
+\begin{note}
+    % 需要注意的是, 复函数的可微与可导是等价的, 这与多元实函数不同, 因为复函数的导数必须满足 Cauchy-Riemann 方程, 这使得复函数的导数具有更强的性质, 比如解析性和共形性等
+    It should be noted that for complex functions, differentiability and derivability are equivalent. 
+    This is different from multivariable real functions, where derivability does not necessarily imply differentiability. 
+    For complex functions, the derivative must satisfy the Cauchy-Riemann equations, 
+    which endow the derivative with stronger properties such as analyticity and conformality.
+\end{note}
+
+
+\section{Analytic Functions} % 解析函数
+
+\section{Elementary Functions} % 初等函数

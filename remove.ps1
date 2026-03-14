@@ -13,15 +13,17 @@
     1. Iterate through each module in each category.
     2. Find the 'tmp\initial.pdf' file.
     3. Copy this PDF to a destination directory.
-    4. The destination structure will mirror the categories (e.g., 'Destination\1.Analyse\').
-    5. The copied file will be renamed to match its module's name (e.g., 'Analyse Mathématique.pdf').
-    6. Original files and folders will not be modified.
+    4. The destination folder will be cleared before export starts.
+    5. The destination structure will mirror the categories (e.g., 'Destination\1.Analyse\').
+    6. The copied file will be renamed to match its module's name (e.g., 'Analyse Mathématique.pdf').
+    7. Original source files and folders will not be modified.
 
 .PARAMETER SourceRoot
     The path to the root folder containing the category subdirectories (e.g., 'C:\MyNotes'). This is a mandatory parameter.
 
 .PARAMETER DestinationRoot
-    The path to the output folder where the renamed PDFs will be saved. The script will create this folder if it doesn't exist. This is a mandatory parameter.
+    The path to the output folder where the renamed PDFs will be saved. The script will create this folder if it doesn't exist,
+    then clear its existing contents before copying. This is a mandatory parameter.
 
 .EXAMPLE
     .\copy_modules.ps1 -SourceRoot "D:\Mes documents\Mathématiques" -DestinationRoot "D:\Mes documents\Mathématiques_Compilées"
@@ -33,7 +35,7 @@
 param ()
 
 $SourceRoot = "C:\Users\Violet\OneDrive\Mathématiques"
-$DestinationRoot = "C:\Users\Violet\OneDrive - stu.hit.edu.cn\Books\数学\ExportTex"
+$DestinationRoot = "C:\Users\Violet\WPSDrive\1774341244\WPS企业云盘\哈尔滨工业大学\我的企业文档\Books\01数学\ExportTex"
 
 # --- Validation ---
 # Check if the source directory exists
@@ -45,6 +47,13 @@ if (-not (Test-Path -Path $SourceRoot -PathType Container)) {
 # Ensure destination root exists before copying
 if (-not (Test-Path -Path $DestinationRoot -PathType Container)) {
     New-Item -Path $DestinationRoot -ItemType Directory -Force | Out-Null
+}
+
+# Clear destination root before exporting to avoid stale files
+$destinationItems = Get-ChildItem -Path $DestinationRoot -Force -ErrorAction SilentlyContinue
+if ($destinationItems) {
+    Write-Host "Clearing destination folder: $DestinationRoot"
+    Remove-Item -Path $destinationItems.FullName -Recurse -Force -ErrorAction Stop
 }
 
 # --- Main Processing ---
