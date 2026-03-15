@@ -49,12 +49,19 @@ Here is a table summarizing the different types of relations:
     i.e., \((\forall x \in A)\, (x \subseteq A)\).
 \end{definition}
 
-\begin{definition}{Ordinal} % 序数
+\begin{definition}{Von Neumann Ordinal} % 冯诺依曼序数
     A set \(\alpha\) is an ordinal number (an \textbf{ordinal}) 
     if it is transitive and well-ordered by the membership relation \(\in\).
 
     All ordinals form a proper class denoted by \(\mathrm{Ord}\).
 \end{definition}
+\begin{remark}
+    % 在 ZF 中, 上述定义可等价为: \(\alpha\) 是一个序数当且仅当 \(\alpha\) 是一个传递集且它的所有元素都是传递集.
+    In ZF, the above definition is equivalent to: \(\alpha\) is an ordinal if and only if 
+    \(\alpha\) is a transitive set and all of its elements are transitive sets.
+    % 这是由于正则公理保证了集合的良基性
+    This is because the axiom of regularity ensures the well-foundedness of sets.
+\end{remark}
 
 Ordinals can be classified into three types:
 \begin{description}

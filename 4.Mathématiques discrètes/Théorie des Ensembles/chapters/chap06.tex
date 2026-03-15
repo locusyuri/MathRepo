@@ -158,6 +158,13 @@ Or it can be uniquely classified into one of the following three categories:
             or equivalently, if \(E\) is closed and bounded (Heine-Borel Theorem).
         \item[Perfect Set] A set \(E\) is called a \textbf{perfect set} if it is closed and has no isolated points, 
             i.e., every point in \(E\) is an accumulation point of \(E\), or equivalently, \(E=E'\).
+        \item[Dense Set] A set \(E\) is called a \textbf{dense set} in \(\mathbb{R}^n\) if every point in \(\mathbb{R}^n\) 
+            is either in \(E\) or is an accumulation point of \(E\), i.e., \(\bar{E} = \mathbb{R}^n\).
+        \item[Nowhere Dense Set] A set \(E\) is called a \textbf{nowhere dense set} in \(\mathbb{R}^n\) 
+            if the interior of its closure is empty, i.e., \(\mathring{\bar{E}} = \emptyset\).
+            % 或者, 它的闭包的补集是稠密的, 即: \(\overline{E}^c\) is dense in \(\mathbb{R}^n\).
+            Or equivalently, the complement of its closure is dense in \(\mathbb{R}^n\), i.e., 
+            \(\overline{E}^c\) is dense in \(\mathbb{R}^n\).
     \end{description}
 \end{definition}
 
@@ -176,8 +183,58 @@ Or it can be uniquely classified into one of the following three categories:
     and closed sets are always sequentially closed, but the converse is not true.
 \end{note}
 
+\vspace{0.7cm}
+\begin{lemma}
+    Let \(G \subset \mathbb{R}\) be non-empty bounded open set, 
+    then for all \(x_{0} \in G\), there exists an open interval \((\alpha, \beta)\) such that
+    \begin{enumerate}[label=(\roman*)]
+        \item \(x_0 \in (\alpha, \beta)\);
+        \item \(\alpha, \beta \not\in G\).
+    \end{enumerate}
+\end{lemma}
+
+\begin{property}
+    \begin{enumerate}
+        \item Such interval \((\alpha, \beta)\) is the maximal open interval containing \(x_0\) and contained in \(G\),
+            and is called the \textbf{construction interval} of \(G\).
+        \item For any \(x\in G\), there exists a construction interval of \(G\) that contains \(x\).
+        \item The construction intervals of \(G\) are pairwise disjoint.
+    \end{enumerate}
+\end{property}
+
+\begin{note}
+    % 引理中的 G 要求有界, 事实上无界也成立, 但是相应的构成区间也可以是无界的, 例如: G = (0, +\infty), x_0 = 1, 则构成区间可以是 (0, +\infty).
+    The boundedness of \(G\) in the lemma is not necessary, and the conclusion still holds for unbounded sets.
+    However, the corresponding construction interval can also be unbounded.
+    For example, if \(G = (0, +\infty)\) and \(x_0 = 1\), then the construction interval can be \((0, +\infty)\).
+
+    % 类似的, 构成区间的定义也可以推广到 R^n 中
+    Similarly, the definition of construction interval can also be extended to \(\mathbb{R}^n\).
+\end{note}
+
 \begin{theorem}{Open Set Construction Theorem} % 开集的构造定理
-    % R^1直线上任一个非空开集可以表示成至多可数个互不相交的开区间的并集.
-    % 进一步, R^n 中的任一非空开集都可以表示成可数个开矩形的并集.
+    % R^1直线上任一个非空开集可以表示成可数个构成区间的并集.
+    % 进一步, R^n 中的任一非空开集都可以表示成可数个构成区间的并集.
+    Every non-empty open set on the real line can be expressed as a countable union of construction intervals.
+    
+    Furthermore, every non-empty open set in \(\mathbb{R}^n\) can be expressed as a countable union of construction intervals.
 \end{theorem}
 
+\section{Special Point Sets and Special Functions} % 特殊点集与特殊函数
+
+\begin{leftbarTitle}{Cantor Set}\end{leftbarTitle} % Cantor 三分集
+\begin{definition}{Cantor Set} % Cantor 三分集
+    The \textbf{Cantor set} \(C\) is defined as the set of all points in the interval \([0, 1]\) 
+    that can be represented in base \(3\) without the digit \(1\). 
+    Equivalently, \(C\) can be constructed by repeatedly removing the open middle third of each remaining interval, 
+    starting with the interval \([0, 1]\).
+\end{definition}
+
+\begin{property}
+    Denote by \(C_n\) the set obtained after the \(n\)-th step of the construction process, 
+    then \(C = \bigcap_{n=0}^{\infty} C_n\), and each \(C_n\) is a union of \(2^n\) closed intervals of length \(3^{-n}\).
+    \begin{enumerate}
+        \item \(C\) is uncountable, and has the same cardinality as the interval \([0, 1]\).
+        \item \(C\) is a closed set not containing any interval, i.e., \(C\) is a perfect nowhere dense set.
+    \end{enumerate}
+\end{property}

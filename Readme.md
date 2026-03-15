@@ -40,7 +40,12 @@ This is a repository for mathematical notes. The directory structure is as follo
 
 
 ## 6.Mathématiques appliquées | 應用數學
+- [Électromagnétisme | 電磁學](./6.Mathématiques%20appliquées/Électromagnétisme/tmp/initial.pdf)
 - [Latex | Latex 教程](./6.Mathématiques%20appliquées/Latex/tmp/initial.pdf)
+- [Mécanique | 力學](./6.Mathématiques%20appliquées/Mécanique/tmp/initial.pdf)
+- [Mécanique quantique | 量子力學](./6.Mathématiques%20appliquées/Mécanique%20quantique/tmp/initial.pdf)
+- [Optique | 光學](./6.Mathématiques%20appliquées/Optique/tmp/initial.pdf)
+- [Relativité | 相對論](./6.Mathématiques%20appliquées/Relativité/tmp/initial.pdf)
 - [Théorie des Champs | 場論](./6.Mathématiques%20appliquées/Théorie%20des%20Champs/tmp/initial.pdf)
 
 

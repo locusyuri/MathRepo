@@ -1,5 +1,6 @@
 \chapter{Complex Functions} % 复变函数
-\section{Complex Functions and Their Limits} % 复函数及其极限
+\section{Complex Functions and Analytic Functions} % 复函数与解析函数 
+\begin{leftbarTitle}{Complex Functions}\end{leftbarTitle}
 \begin{definition}{Complex Functions}
     A \textbf{complex function} is a function 
     \[
@@ -27,6 +28,11 @@
     single-valued functions, thus making them true functions in the mathematical sense.
 \end{caution}
 
+
+
+
+
+\begin{leftbarTitle}{Limit, Continuity, and Differentiability}\end{leftbarTitle}
 \begin{definition}{Limit of Complex Functions}
     Let \(f: E \to \mathbb{C}\) be a complex function and \(z_0\) be a limit point of \(E\). 
     We say that the limit of \(f(z)\) as \(z\) approaches \(z_0\) is \(\omega_0\), denoted by
@@ -59,8 +65,6 @@
     \]
     exists. The value \(f'(z_0)\) is called the \textbf{derivative} of \(f\) at \(z_0\).
     
-    If \(f\) is derivable at every point in its domain \(E\), then we say that \(f\) is derivable on \(E\).
-
     The \textbf{differential} of \(f\) at \(z_0\) is defined as
     \[
     \mathrm{d}f(z_0) = f'(z_0) \mathrm{d}z,
@@ -76,7 +80,156 @@
     which endow the derivative with stronger properties such as analyticity and conformality.
 \end{note}
 
+\begin{leftbarTitle}{Analytic Functions}\end{leftbarTitle}
+\begin{definition}{Analytic Functions}
+    A complex function \(f: E \to \mathbb{C}\) is said to be \textbf{analytic} at a point \(z_0 \in E\) if 
+    there exists an open neighborhood \(U\) of \(z_0\) such that \(f\) is derivable at every point in \(U\).
+    If \(f\) is analytic at every point in its domain \(E\), then we say that \(f\) is analytic on \(E\).
 
-\section{Analytic Functions} % 解析函数
+    An analytic function is also called a \textbf{holomorphic function}.
+\end{definition}
+
+\begin{theorem}{Cauchy-Riemann Equations}
+    Let \(f: E \to \mathbb{C}\) be a complex function, where \(E \subseteq \mathbb{C}\) is an open set. 
+    Write \(f(z) = u(x, y) + iv(x, y)\), where \(z = x + iy\), 
+    and \(u\) and \(v\) are real-valued functions of two real variables \(x\) and \(y\). 
+    Then \(f\) is analytic at a point \(z_0 = x_0 + iy_0 \in E\) 
+    if and only if the following \textbf{Cauchy-Riemann equations} hold at \((x_0, y_0)\):
+    \[
+    \begin{cases}
+        \frac{\partial u}{\partial x}(x_0, y_0) = \frac{\partial v}{\partial y}(x_0, y_0), \\
+        \frac{\partial u}{\partial y}(x_0, y_0) = -\frac{\partial v}{\partial x}(x_0, y_0).
+    \end{cases}
+    \]
+\end{theorem}
 
 \section{Elementary Functions} % 初等函数
+\begin{definition}{Exponential Functions}
+    Let \(z=x+\mathrm{i}y\) with \(x, y \in \mathbb{R}\). The exponential function \(f(z) = e^z\) is defined as
+    \[
+    e^z = e^x (\cos y + \mathrm{i} \sin y),
+    \]
+    which satisfies:
+    \begin{enumerate}
+        \item \(\forall x\in \mathbb{R}, f(x)=e^x\); 
+        \item \(f(z)\) is analytic on \(\mathbb{C}\);
+        \item \(\forall z_1, z_2 \in \mathbb{C}, f(z_1 + z_2) = f(z_1) f(z_2)\).
+    \end{enumerate}
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item \(f(z)\) is periodic with period \(2\pi \mathrm{i}\), i.e., \(\forall z \in \mathbb{C}, f(z + 2\pi \mathrm{i}) = f(z)\);
+        \item \(f(z)\) is never zero, i.e., \(\forall z \in \mathbb{C}, f(z) \neq 0\);
+        \item \(f(z)\) is unbounded, i.e., \(\forall M > 0, \exists z \in \mathbb{C}\) such that \(|f(z)| > M\).
+    \end{enumerate}
+\end{property}
+
+
+\vspace{0.7cm}
+\begin{definition}{Power Functions and Root Functions}
+    Let \(\alpha \in \mathbb{C}\) be a fixed complex number. The power function \(f(z) = z^\alpha\) is defined as
+    \[
+    z^\alpha = e^{\alpha \mathrm{Ln}\, z},
+    \]
+    where \(\mathrm{Ln}\, z\) is the logarithmic function defined above.
+    When \(z=0\), define \(z^{\alpha} =0\).
+    
+    The root function \(f(z) = \sqrt[n]{z}\) is defined as
+    \[
+    \sqrt[n]{z} = z^{\frac{1}{n}} = e^{\frac{1}{n} \mathrm{Ln}\, z},
+    \]
+    where \(n\) is a positive integer.
+\end{definition}
+
+
+\vspace{0.7cm}
+\begin{definition}{Trigonometric Functions}
+    The trigonometric functions \(\sin z\) and \(\cos z\) are defined as
+    \begin{gather*}
+        \sin z = \frac{e^{\mathrm{i} z} - e^{-\mathrm{i} z}}{2\mathrm{i}}, \\
+        \cos z = \frac{e^{\mathrm{i} z} + e^{-\mathrm{i} z}}{2}.  
+    \end{gather*}
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item \(\cos z\) is even and \(\sin z\) is odd, i.e., 
+            \(\forall z \in \mathbb{C}, \cos(-z) = \cos z\) and \(\sin(-z) = -\sin z\);
+        \item \(\sin z\) and \(\cos z\) are periodic with period \(2\pi\), i.e., 
+            \(\forall z \in \mathbb{C}, \sin(z + 2\pi) = \sin z\) and \(\cos(z + 2\pi) = \cos z\);
+        \item \(\sin z\) and \(\cos z\) are unbounded, i.e., 
+            \(\forall M > 0, \exists z \in \mathbb{C}\) such that \(|\sin z| > M\) and \(|\cos z| > M\).
+        \item \(\sin z\) and \(\cos z\) are analytic on \(\mathbb{C}\) and 
+            \(\left( \sin z \right)' = \cos z\), \(\left( \cos z \right)' = -\sin z\).
+    \end{enumerate}  
+\end{property}
+
+\section{Elementary Multi-Valued Functions} 
+\begin{definition}{Branch Points, Branch Cuts, and Branches} % 支点、割线与分支
+    Let \(f\) be a multi-valued complex function on a domain \(E \subseteq \widehat{\mathbb{C}}\), 
+    where \(\widehat{\mathbb{C}}\) denotes the Riemann sphere.
+    
+    A point \(z_0 \in E\) is called a \textbf{branch point} of \(f\) if the analytic continuation of a local branch of \(f\)
+    along a closed loop encircling \(z_0\) does not return to its initial value.
+    
+    A \textbf{branch cut} of \(f\) is a curve (or a set of curves) removed from \(E\) so that, on the remaining domain,
+    one can choose a single-valued branch of \(f\) (typically on a simply connected domain).
+
+    A \textbf{branch} of \(f\) is a single-valued function defined on a domain obtained 
+    by cutting the complex plane along the branch cuts,
+    such that it coincides with \(f\) on that domain.
+
+    % 单值连续分支与单值解析分支
+    A branch can be further classified into a \textbf{single-valued continuous branch} if it is continuous,
+    and an \textbf{analytic branch} if it is analytic.
+\end{definition}
+
+
+\begin{definition}{Argument Function}
+    Let \(z\in \mathbb{C} \setminus \{0\}\) be a nonzero complex number. 
+    The \textbf{argument function} \(\arg(z)\) is defined as:
+    \[
+    \omega = \mathrm{Arg} (z) = \arg(z) + 2k\pi, \quad k \in \mathbb{Z},
+    \]
+    where \(\arg(z)\) is the principal value of the argument, which takes values in \((-\pi, \pi]\).
+\end{definition}
+
+
+
+For the argument function, the branch points are \(0\) and \(\infty\): 
+a circuit around either point changes \(\mathrm{Arg}\, z\) by an integer multiple of \(2\pi\), 
+so monodromy is nontrivial. 
+A standard branch cut is the negative real axis \(( -\infty, 0 ]\), 
+and on \(\mathbb{C} \setminus ( -\infty, 0 ]\) one obtains the principal branch
+\[
+\arg z \in (-\pi, \pi).
+\]
+This branch is single-valued and continuous, but not analytic (indeed, real-valued and non-constant on a planar domain).
+
+
+\vspace{0.7cm}
+\begin{definition}{Logarithmic Functions}
+    The logarithmic function \(f(z) = \mathrm{Ln}\, z\) is defined as the inverse function of the exponential function \(e^z\), i.e., 
+    \[
+    \omega = f(z) = \mathrm{Ln}\, z \iff e^{\omega} = z.
+    \]
+    Since the exponential function is periodic with period \(2\pi \mathrm{i}\), the logarithmic function is multi-valued, 
+    and can be expressed as
+    \[
+    f(z) = \mathrm{Ln}\, z = \ln |z| + \mathrm{i} \mathrm{Arg}\, z,
+    \]
+    where \(\ln |z|\) is the natural logarithm of the modulus of \(z\).
+\end{definition}
+% 由此可见, 任何非零复数有无穷多个对数, 任意两个相差 \(2k\pi \mathrm{i}\), \(k \in \mathbb{Z}\).
+It can be seen that \emph{any nonzero complex number has infinitely many logarithms,
+and any two of them differ by \(2k\pi \mathrm{i}\) for some integer \(k\)}.
+
+% 对数函数的支点、割线与分支
+The branch points of the logarithmic function are \(0\) and \(\infty\),
+and a standard branch cut is the negative real axis \(( -\infty, 0 ]\).
+On \(\mathbb{C} \setminus ( -\infty, 0 ]\), one can define the principal branch of the logarithmic function as
+\[
+\mathrm{ln}\, z = \ln |z| + \mathrm{i} \arg z,
+\]
+which is single-valued and analytic, so it is an analytic branch of the logarithmic function.
