@@ -230,6 +230,28 @@ Or it can be uniquely classified into one of the following three categories:
     starting with the interval \([0, 1]\).
 \end{definition}
 
+% Cantor 集的端点使用三进制表示为:
+The endpoints of the intervals in the construction of the Cantor set can be represented in base \(3\) as:
+\begin{gather*}
+    0 = 0_3, \quad
+    \frac{1}{3} = 0.1\ldots_3 = 0.0222\ldots_3, \quad
+    \frac{2}{3} = 0.2\ldots_3, \\
+    \frac{1}{9} = 0.01\ldots_3 = 0.0022\ldots_3, \quad
+    \frac{2}{9} = 0.02\ldots_3, \quad
+    \frac{7}{9} = 0.21\ldots_3, \quad
+    \frac{8}{9} = 0.22\ldots_3, \\
+    \ldots
+\end{gather*}
+
+% 它们的共同特点是: 要么只有有限位, 要么从某一位开始全是 2. 这些端点的数量是可数的, 
+% 但是 Cantor 集中还有许多其他非端点的点, 例如: 1/4 = 0.02020202..._3, 4/13 = 0.002200220022..._3, 这些点的数量是不可数的.
+The common feature of these endpoints is that \emph{they either have a finite number of digits or, 
+from some digit onward, all digits are \(2\)}.
+
+The number of these endpoints is countable, but there are many other non-endpoint points in the Cantor set, 
+such as \(\frac{1}{4} = 0.02020202\ldots_3\) and \(\frac{4}{13} = 0.002200220022\ldots_3\), 
+and the number of these points is uncountable.
+
 \begin{property}
     Denote by \(C_n\) the set obtained after the \(n\)-th step of the construction process, 
     then \(C = \bigcap_{n=0}^{\infty} C_n\), and each \(C_n\) is a union of \(2^n\) closed intervals of length \(3^{-n}\).

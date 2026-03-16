@@ -10,18 +10,27 @@
     that is reflexive, antisymmetric, and transitive.
     The relation \(\preceq\) is called a \textbf{partial order} on \(P\).
     
-    Sometimes, \(\prec\) is called a \textbf{strict partial order} on \(P\) if it is irreflexive, antisymmetric, and transitive.
+    Specifically, \(\prec\) is called a \textbf{strict partial order} on \(P\) if it is irreflexive, antisymmetric, and transitive.
 \end{definition}
 
 \begin{definition}{Totally Ordered Set (Chain)} % 全序集
-    A \textbf{totally ordered set} (or \textbf{chain}) is a poset \(P\) such that for every \(a, b \in P\), 
-    either \(a \preceq b\) or \(b \preceq a\), that is, any two elements are comparable.
+    A \textbf{totally ordered set} (or \textbf{chain}) is a set \(P\) together with a partial order \(\preceq\)
+    that is connected (total), i.e., for any \(x, y \in P\), either \(x \preceq y\) or \(y \preceq x\).
 \end{definition}
 
 \begin{definition}{Well-Ordered Set} % 良序集
-    A \textbf{well-ordered set} is a totally ordered set \(P\) such that every non-empty subset of \(P\) 
-    has a least element.
+    A \textbf{well-ordered set} is a set \(P\) together with a totally ordered \(\preceq\) that is well-founded, 
+    i.e., every nonempty subset of \(P\) has a least element.
 \end{definition}
+
+\begin{theorem}{Well-Ordering Theorem} % 良序定理
+    Every set can be well-ordered.
+\end{theorem}
+
+\begin{note}
+    % 良序定理是选择公理的一个等价表述, 也是 ZF 中无法证明的命题.
+    The well-ordering theorem is an equivalent formulation of the axiom of choice and is unprovable in ZF.
+\end{note}
 
 Here is a table summarizing the different types of relations:
 
