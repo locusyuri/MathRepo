@@ -35,7 +35,7 @@
 param ()
 
 $SourceRoot = "C:\Users\Violet\OneDrive\Mathématiques"
-$DestinationRoot = "C:\Users\Violet\WPSDrive\1774341244\WPS企业云盘\哈尔滨工业大学\我的企业文档\Books\01数学\ExportTex"
+$DestinationRoot = "C:\Users\Violet\WPSDrive\1774341244\WPS企业云盘\哈尔滨工业大学\我的企业文档\PDF\Mathématiques"
 
 # --- Validation ---
 # Check if the source directory exists
@@ -113,18 +113,18 @@ foreach ($categoryFolder in $categoryFolders) {
 
 Write-Host "`nProcessing complete."
 
-# Archive the resulting PDF-only export
-$downloadsPath = Join-Path -Path $home -ChildPath "Downloads"
-$zipFileName = "Mathématiques-Export_$([DateTime]::UtcNow.ToString('yyyyMMdd-HHmmss')).zip"
-$zipFilePath = Join-Path -Path $downloadsPath -ChildPath $zipFileName
+# # Archive the resulting PDF-only export
+# $downloadsPath = Join-Path -Path $home -ChildPath "Downloads"
+# $zipFileName = "Mathématiques-Export_$([DateTime]::UtcNow.ToString('yyyyMMdd-HHmmss')).zip"
+# $zipFilePath = Join-Path -Path $downloadsPath -ChildPath $zipFileName
 
-try {
-    if (Test-Path -Path $zipFilePath) {
-        Remove-Item -Path $zipFilePath -Force
-    }
-    Compress-Archive -Path (Join-Path -Path $DestinationRoot -ChildPath '*') -DestinationPath $zipFilePath -Force
-    Write-Host "Export archive created at: $zipFilePath"
-}
-catch {
-    Write-Error "Failed to create export archive: $_"
-}
+# try {
+#     if (Test-Path -Path $zipFilePath) {
+#         Remove-Item -Path $zipFilePath -Force
+#     }
+#     Compress-Archive -Path (Join-Path -Path $DestinationRoot -ChildPath '*') -DestinationPath $zipFilePath -Force
+#     Write-Host "Export archive created at: $zipFilePath"
+# }
+# catch {
+#     Write-Error "Failed to create export archive: $_"
+# }

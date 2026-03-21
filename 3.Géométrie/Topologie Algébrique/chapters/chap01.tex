@@ -1,0 +1,22 @@
+\chapter{Fundamental Group} % 基本群
+
+\begin{definition}{Simply Connected Space}\label{def:simply_connected_space} % 单连通空间
+    Let \(X\) be a topological space.
+    We say \(X\) is \textbf{simply connected} if it is 
+    \begin{enumerate}
+        \item path-connected, and 
+        \item every loop in \(X\) can be continuously contracted to a point, i.e., 
+            for any loop \(\gamma: S^1 \to X\), there exists a homotopy \(H: S^1 \times [0, 1] \to X\) such that 
+            \(H(s, 0) = \gamma(s)\) for all \(s \in S^1\) and \(H(s, 1) = x_0\) for some fixed point \(x_0 \in X\).
+    \end{enumerate}
+
+    % 以上为一般拓扑学中的定义，下面我们用群来刻画单连通空间
+    Equivalently, \(X\) is simply connected if its 
+    fundamental group \(\pi_1(X, x_0)\) is trivial for some (and hence any) base point \(x_0 \in X\).
+    % \(\pi_1(X, x_0)\) 是平凡群也常常表述为 \(\pi_1(X, x_0) = 0\)
+    \(\pi_1(X, x_0) = 0\) is also a common way to express that the fundamental group is trivial.
+\end{definition}
+% 在复分析中, 单连通空间往往被表述为: D 是单连通的当且仅当 D 中任意简单闭曲线的内部完全包含在 D 中, 这也是单连通空间的一个重要性质
+In complex analysis, simply connected spaces (\(\in \mathbb{C}\)) are often characterized by the property that 
+any simple closed curve in the space has its interior completely contained within the space. 
+This is an important property of simply connected spaces.
