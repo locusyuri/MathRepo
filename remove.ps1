@@ -34,7 +34,7 @@
 [CmdletBinding()]
 param ()
 
-$SourceRoot = "C:\Users\Violet\OneDrive\Mathématiques"
+$SourceRoot = "C:\Users\Violet\OneDrive\Notiz\Mathématiques"
 $DestinationRoot = "C:\Users\Violet\WPSDrive\1774341244\WPS企业云盘\哈尔滨工业大学\我的企业文档\PDF\Mathématiques"
 
 # --- Validation ---
