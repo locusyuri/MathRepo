@@ -1,1 +1,52 @@
 \chapter{Complex Integrals} % 复变函数的积分
+\section{Complex Integrals} % 复积分
+\begin{definition}{Complex Integral}
+    Let \(C: z=z(t), t\in [\alpha, \beta]\) be an oriented curve in the complex plane 
+    starting at \(a=z(\alpha)\) and ending at \(b=z(\beta)\)
+    and let \(f(z)\) be a complex-valued function defined on \(C\).
+    From \(a\) to \(b\), take partitions of \(C\) into \(n\) segments by points \(z_0=a, z_1, z_2, \dots, z_n=b\).
+    Then on each segment \(z_{k-1}z_k\), take a point \(\xi_k\) and form the sum
+    \[
+        \sum_{k=1}^n f(\xi_k)\Delta z_{k}, \quad \Delta z_{k} = z_k - z_{k-1}.
+    \]   
+    If the limit of the above sum exists as the maximum length of the segments tends to zero, 
+    then we call it the \textbf{complex integral} of \(f\) along \(C\), denoted by
+    \[
+        \int_C f(z) \mathrm{d}z.
+    \]
+\end{definition}
+
+\begin{property}
+    \begin{enumerate}
+        \item \(\int_C \alpha f(z) \mathrm{d}z = \alpha \int_C f(z) \mathrm{d}z, \alpha \in \mathbb{C}\); 
+        \item \(\int_C [f(z) + g(z)] \mathrm{d}z = \int_C f(z) \mathrm{d}z + \int_C g(z) \mathrm{d}z\)
+        \item \(\int_C f(z) \mathrm{d}z = -\int_{-C} f(z) \mathrm{d}z\), where \(-C\) is the curve \(C\) with opposite orientation.
+        \item \(\int_C f(z) \mathrm{d}z = \int_{C_{1}} f(z) \mathrm{d}z + \int_{C_{2}} f(z) \mathrm{d}z + \ldots + \int_{C_{n}} f(z) \mathrm{d}z\), 
+            where \(C\) is the curve obtained by connecting \(C_1, C_2, \dots, C_n\) end to end.
+        \item Let \(L\) be the length of \(C\) and \(M = \max_{z \in C} |f(z)|\), 
+            then \(\left|\int_C f(z) \mathrm{d}z\right| \leq ML\).
+    \end{enumerate}
+\end{property}
+
+\begin{theorem}
+    If \(f(z) = u(x, y) + \mathrm{i} v(x, y)\) is continuous on \(C\), then \(f(z)\) is integrable on \(C\) and
+    \[
+        \int_C f(z) \mathrm{d}z = \int_C u \mathrm{d}x - v \mathrm{d}y + \mathrm{i} \int_C v \mathrm{d}x + u \mathrm{d}y.
+    \]
+\end{theorem}
+
+\begin{proposition}
+    Some common integrals:
+    \begin{enumerate}
+        \item Let \(C\) be any curve connecting \(a\) and \(b\), then
+            \[\int_C \mathrm{d}z = b - a.\] 
+        \item Let \(C\) be any curve connecting \(a\) and \(b\), then 
+            \[\int_C z \mathrm{d}z = \frac{1}{2}(b^2 - a^2).\]
+        \item Let \(C\) be a circle, then
+            \[\int_C \frac{\mathrm{d}z}{(z-a)^{n}} = \begin{cases} 2\pi \mathrm{i}, & n = 1 \\ 0, & n \neq 1 \end{cases} \] 
+    \end{enumerate}
+\end{proposition}
+
+\section{Cauchy-Goursat Theorem} % Cauchy-Goursat 定理
+
+\section{Cauchy Integral Formula} % Cauchy 积分公式

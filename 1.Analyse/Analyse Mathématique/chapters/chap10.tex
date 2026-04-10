@@ -1,7 +1,35 @@
 \chapter{Power Series} % 幂级数
-\section{Power Series and Its Convergence Radius}
+\section{Power Series and Its Convergence Radius} % 幂级数和其收敛半径
 
-\section{Expanding Functions into Power Series}
+\section{Expanding Functions into Power Series} % 函数的展开为幂级数
+\begin{definition}{Smooth Function}\label{def:smooth_function}
+    For a function \( f(x) \) defined on an interval \( I \), 
+    if \( f(x) \) is continuous, then \(f(x)\) is called \(C^{0}\) function on \( I \);
+    if \( f(x) \) has continuous \(n\) (\(n \geq 1\)) derivative, then \(f(x)\) is called \(C^{n}\) function on \( I \);
+    if for any \(n \in \mathbb{N}\), \(f(x)\) has continuous \(n\)-th derivative, 
+    then \(f(x)\) is called \(C^{\infty}\) function on \( I \), also known as \textbf{smooth function}.
+\end{definition}
+
+\begin{definition}{(Real) Analytic Function}\label{def:real_analytic_function}
+    For a function \( f(x) \) defined on an interval \( I \), 
+    if for any point \( x_{0} \in I \), there exists a power series expansion of \(f(x)\) at \(x_{0}\) 
+    \[
+    f(x) = \sum_{n=0}^{\infty} a_{n} (x - x_{0})^{n}
+    \]
+    that converges to \(f(x)\) in some neighborhood of \(x_{0}\), 
+    then \(f(x)\) is called an \textbf{(real) analytic function} on \( I \).
+    
+    % 或者等价地，实解析函数也可以定义为在定义域内每一点 x_0 的泰勒级数皆逐点收敛的光滑函数 
+    Or equivalently, \(f(x)\) is analytic on \(I\) if for any point \(x_{0} \in I\),
+    the Taylor series of \(f(x)\) at \(x_{0}\) converges pointwise to \(f(x)\) in some neighborhood of \(x_{0}\), that is,
+    \[
+    T(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_{0})}{n!} (x - x_{0})^{n} \to  f(x).
+    \]
+
+    % I 上实解析函数的全体通常记为
+    The set of all real analytic functions on \(I\) is usually denoted by \(C^{\omega}(I)\).
+\end{definition}
+
 
 \section{Smooth Appropriation of Functions}
 First, we use continuous functions to approximate Riemann integrable functions

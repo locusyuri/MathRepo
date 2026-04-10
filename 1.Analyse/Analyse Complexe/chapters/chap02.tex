@@ -74,36 +74,71 @@
 
 \begin{note}
     % 需要注意的是, 复函数的可微与可导是等价的, 这与多元实函数不同, 因为复函数的导数必须满足 Cauchy-Riemann 方程, 这使得复函数的导数具有更强的性质, 比如解析性和共形性等
-    It should be noted that for complex functions, differentiability and derivability are equivalent. 
+    It should be noted that \emph{for complex functions, differentiability and derivability are equivalent}. 
     This is different from multivariable real functions, where derivability does not necessarily imply differentiability. 
-    For complex functions, the derivative must satisfy the Cauchy-Riemann equations, 
-    which endow the derivative with stronger properties such as analyticity and conformality.
 \end{note}
 
-\begin{leftbarTitle}{Analytic Functions}\end{leftbarTitle}
-\begin{definition}{Analytic Functions}
-    A complex function \(f: E \to \mathbb{C}\) is said to be \textbf{analytic} at a point \(z_0 \in E\) if 
+\begin{leftbarTitle}{Holomorphic Functions}\end{leftbarTitle}
+\begin{definition}{Holomorphic Functions}
+    A complex function \(f: E \to \mathbb{C}\) is said to be \textbf{holomorphic} at a point \(z_0 \in E\) if 
     there exists an open neighborhood \(U\) of \(z_0\) such that \(f\) is derivable at every point in \(U\).
-    If \(f\) is analytic at every point in its domain \(E\), then we say that \(f\) is analytic on \(E\).
-
-    An analytic function is also called a \textbf{holomorphic function}.
+    
+    If \(f\) is holomorphic at every point in its domain \(E\), then we say that \(f\) is holomorphic on \(E\).
 \end{definition}
+
+\begin{definition}{Analytic Functions}\label{def:complex_analytic_function}
+    A complex function \(f: E \to \mathbb{C}\) is said to be \textbf{analytic} at a point \(z_0 \in E\) if 
+    there exists an open neighborhood \(U\) of \(z_0\) such that \(f\) can be represented by a power series expansion around \(z_0\), i.e.,
+    \[
+    f(z) = \sum_{n=0}^{\infty} a_n (z - z_0)^n, \quad z \in U,
+    \]
+    where \(a_n\) are complex coefficients.
+
+    If \(f\) is analytic at every point in its domain \(E\), then we say that \(f\) is analytic on \(E\).
+\end{definition}
+
+\begin{theorem}
+    A complex function \(f: E \to \mathbb{C}\) is analytic on \(E\) if and only if it is holomorphic on \(E\).
+\end{theorem}
+
+\begin{remark}
+    % 一些教材中, 不区分解析函数与全纯函数. 
+    % 这是因为, 复函数的解析性与全纯性是等价的, 因为复函数的导数必须满足 Cauchy-Riemann 方程, 这使得复函数的导数具有更强的性质, 比如解析性和共形性等
+    % 但为了与实函数的定义保持一致, 我们将复函数的解析性也定义为在某个区域内具有幂级数展开的性质
+    In some textbooks, there is no distinction between analytic functions and holomorphic functions. 
+    This is because for complex functions, analyticity and holomorphy are equivalent,
+    because the derivative of a complex function must satisfy the Cauchy-Riemann equations, 
+    which endow the derivative with stronger properties such as analyticity and conformality.
+
+    However, in order to maintain consistency with the definition of real functions,
+    we will also define the analyticity of complex functions as the property of having a power series expansion.
+\end{remark}
 
 \begin{theorem}{Cauchy-Riemann Equations}
     Let \(f: E \to \mathbb{C}\) be a complex function, where \(E \subseteq \mathbb{C}\) is an open set. 
     Write \(f(z) = u(x, y) + iv(x, y)\), where \(z = x + iy\), 
     and \(u\) and \(v\) are real-valued functions of two real variables \(x\) and \(y\). 
-    Then \(f\) is analytic at a point \(z_0 = x_0 + iy_0 \in E\) 
-    if and only if the following \textbf{Cauchy-Riemann equations} hold at \((x_0, y_0)\):
+
+    Then \(f\) is holomorphic on \(E\)
+    if and only if the following \textbf{Cauchy-Riemann equations} hold:
     \[
     \begin{cases}
-        \frac{\partial u}{\partial x}(x_0, y_0) = \frac{\partial v}{\partial y}(x_0, y_0), \\
-        \frac{\partial u}{\partial y}(x_0, y_0) = -\frac{\partial v}{\partial x}(x_0, y_0).
+        \frac{\partial u}{\partial x}(x, y) = \frac{\partial v}{\partial y}(x, y), \\
+        \frac{\partial u}{\partial y}(x, y) = -\frac{\partial v}{\partial x}(x, y).
     \end{cases}
+    \]
+    Moreover, the derivative of \(f(z)\) can be expressed as
+    \[
+    f'(z) = \frac{\partial u}{\partial x} + i \frac{\partial v}{\partial x}
+    = \frac{\partial v}{\partial y} - i \frac{\partial u}{\partial y}.
     \]
 \end{theorem}
 
-\section{Elementary Functions} % 初等函数
+\begin{proof}
+    
+\end{proof}
+
+\section{Elementary Analytic Functions} % 初等函数
 \begin{definition}{Exponential Functions}
     Let \(z=x+\mathrm{i}y\) with \(x, y \in \mathbb{R}\). The exponential function \(f(z) = e^z\) is defined as
     \[
@@ -166,26 +201,59 @@
 \end{property}
 
 \section{Elementary Multi-Valued Functions} 
-\begin{definition}{Branch Points, Branch Cuts, and Branches} % 支点、割线与分支
-    Let \(f\) be a multi-valued complex function on a domain \(E \subseteq \widehat{\mathbb{C}}\), 
-    where \(\widehat{\mathbb{C}}\) denotes the Riemann sphere.
-    
-    A point \(z_0 \in E\) is called a \textbf{branch point} of \(f\) if the analytic continuation of a local branch of \(f\)
-    along a closed loop encircling \(z_0\) does not return to its initial value.
-    
-    A \textbf{branch cut} of \(f\) is a curve (or a set of curves) removed from \(E\) so that, on the remaining domain,
-    one can choose a single-valued branch of \(f\) (typically on a simply connected domain).
+Let \(F\) be a multi-valued complex function on a domain \(E \subseteq \widehat{\mathbb{C}}\), 
+where \(\widehat{\mathbb{C}}\) denotes the Riemann sphere.
 
-    A \textbf{branch} of \(f\) is a single-valued function defined on a domain obtained 
-    by cutting the complex plane along the branch cuts,
-    such that it coincides with \(f\) on that domain.
+\begin{definition}{Branch Points} % 支点、割线与分支
+    \begin{description}
+        \item[Finite Branch Points]
+            Let \(z_{0}\) be a singular point of \(F\) (not in the domain).
+            If there exists a simple closed loop \(\gamma\) around \(z_{0}\) such that 
+            the continuous continuation of \(F\) along a closed loop encircling \(z_0\) 
+            does not return to its initial value,
+            then \(z_{0}\) is called a \textbf{finite branch point} of \(F\).
+        \item[Infinite Branch Points] 
+            We call \(\infty\) an \textbf{infinite branch point} of \(F\) if 
+            let \(\zeta = 1/z\), \(g(\zeta) = F(\frac{1}{\zeta})\) and \(\zeta=0\) is a finite branch point of \(g\).
+        \item[Algebraic Branch Points (Finite-Order Branch Points)]
+            A branch point \(z_0\) is called an \textbf{\(n\)-order algebraic branch point} if 
+            the monodromy around \(z_0\) has finite order, i.e., there exists a positive integer \(n\) such that 
+            the continuous continuation of \(F\) along a closed loop encircling \(z_0\) 
+            returns to its initial value after \(n\) iterations.
+        \item[Logarithmic Branch Points (Infinite-Order Branch Points)]  
+            A branch point \(z_0\) is called a \textbf{logarithmic branch point} if 
+            the monodromy around \(z_0\) has infinite order, i.e., for any positive integer \(n\), 
+            the continuous continuation of \(F\) along a closed loop encircling \(z_0\) 
+            does not return to its initial value after \(n\) iterations.
+    \end{description}
+\end{definition}
 
-    % 单值连续分支与单值解析分支
-    A branch can be further classified into a \textbf{single-valued continuous branch} if it is continuous,
-    and an \textbf{analytic branch} if it is analytic.
+\begin{definition}{Branch Cut}
+    Let the set of all branch points of \(F\) be denoted by \(B = \{ z_1, z_2, \ldots \infty \}\).
+    If the curve (usually line segment or ray) \(L \subset \mathbb{\hat{C}}\) satisfies the following conditions:
+    \begin{enumerate}
+        \item \(L\) is Jordan curve;
+        \item \(B \subset L\);
+        \item \(\mathbb{\hat{C}} \setminus L\) is simply connected;
+    \end{enumerate}
+    then \(L\) is called a \textbf{branch cut} of \(F\).
+\end{definition}
+% L 的性质是为了让它破坏 gamma 的闭路径
+% 使得 gamma 在 L 上被切断, 从而无法绕过 branch point, 以保证单值性
+The properties of \(L\) are designed to break the closed path \(\gamma\) around the branch points, 
+thus ensuring the single-valuedness of \(F\).
+
+\begin{definition}{Branch}
+    Let \(L\) be a branch cut of \(F\), \(D=\mathbb{C} \setminus L\).
+    If there exists a single-valued function \(f: D \to \mathbb{C}\) such that
+    \(f(z) = F(z)\) for all \(z \in D\), then \(f\) is called a \textbf{branch} of \(F\) on \(D\).
+
+    If \(f\) is also continuous on \(D\), then \(f\) is called a \textbf{continuous branch} of \(F\) on \(D\).
+    If \(f\) is also analytic on \(D\), then \(f\) is called an \textbf{analytic branch} of \(F\) on \(D\).
 \end{definition}
 
 
+\vspace{0.7cm}
 \begin{definition}{Argument Function}
     Let \(z\in \mathbb{C} \setminus \{0\}\) be a nonzero complex number. 
     The \textbf{argument function} \(\arg(z)\) is defined as:
