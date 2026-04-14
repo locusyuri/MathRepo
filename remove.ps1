@@ -34,8 +34,65 @@
 [CmdletBinding()]
 param ()
 
+Add-Type -AssemblyName System.Windows.Forms
+
 $SourceRoot = "C:\Users\Violet\OneDrive\Notiz\Mathématiques"
 $DestinationRoot = "C:\Users\Violet\WPSDrive\1774341244\WPS企业云盘\哈尔滨工业大学\我的企业文档\PDF\Mathématiques"
+
+function Show-PdfChoiceDialog {
+    param(
+        [string]$ModuleName,
+        [string]$RootPdfPath,
+        [string]$TmpPdfPath
+    )
+    
+    $form = New-Object System.Windows.Forms.Form
+    $form.Text = "PDF 冲突选择"
+    $form.Width = 450
+    $form.Height = 200
+    $form.StartPosition = "CenterScreen"
+    $form.FormBorderStyle = "FixedDialog"
+    $form.MaximizeBox = $false
+    $form.MinimizeBox = $false
+    
+    $label = New-Object System.Windows.Forms.Label
+    $label.Text = "模块 ""$ModuleName"" 中发现多个 PDF 文件，请选择要导出的版本："
+    $label.Location = New-Object System.Drawing.Point(20, 20)
+    $label.AutoSize = $true
+    
+    $rootRadio = New-Object System.Windows.Forms.RadioButton
+    $rootRadio.Text = "模块根目录: $RootPdfPath"
+    $rootRadio.Location = New-Object System.Drawing.Point(30, 55)
+    $rootRadio.AutoSize = $true
+    $rootRadio.Checked = $true
+    
+    $tmpRadio = New-Object System.Windows.Forms.RadioButton
+    $tmpRadio.Text = "tmp 目录: $TmpPdfPath"
+    $tmpRadio.Location = New-Object System.Drawing.Point(30, 80)
+    $tmpRadio.AutoSize = $true
+    
+    $okButton = New-Object System.Windows.Forms.Button
+    $okButton.Text = "确定"
+    $okButton.Location = New-Object System.Drawing.Point(170, 115)
+    $okButton.DialogResult = "OK"
+    $form.AcceptButton = $okButton
+    
+    $cancelButton = New-Object System.Windows.Forms.Button
+    $cancelButton.Text = "取消导出"
+    $cancelButton.Location = New-Object System.Drawing.Point(250, 115)
+    $cancelButton.DialogResult = "Cancel"
+    $form.CancelButton = $cancelButton
+    
+    $form.Controls.AddRange(@($label, $rootRadio, $tmpRadio, $okButton, $cancelButton))
+    
+    $result = $form.ShowDialog()
+    
+    if ($result -eq "OK") {
+        if ($rootRadio.Checked) { return $RootPdfPath }
+        else { return $TmpPdfPath }
+    }
+    return $null
+}
 
 # --- Validation ---
 # Check if the source directory exists
@@ -77,36 +134,58 @@ foreach ($categoryFolder in $categoryFolders) {
 
     foreach ($moduleFolder in $moduleFolders) {
         $moduleName = $moduleFolder.Name
-        $initialPdfPath = Join-Path -Path $moduleFolder.FullName -ChildPath "tmp\initial.pdf"
-
-        # Check if the 'initial.pdf' file exists
-        if (Test-Path -Path $initialPdfPath -PathType Leaf) {
-            # --- Destination Path Construction ---
-            # 1. Define the destination category folder path
-            $destinationCategoryPath = Join-Path -Path $DestinationRoot -ChildPath $categoryFolder.Name
-
-            # 2. Create the destination category folder if it doesn't exist
-            if (-not (Test-Path -Path $destinationCategoryPath -PathType Container)) {
-                Write-Host "  Creating destination category folder: $destinationCategoryPath"
-                New-Item -Path $destinationCategoryPath -ItemType Directory -Force | Out-Null
-            }
-
-            # 3. Define the final destination file path with the new name
-            $newPdfName = "$moduleName.pdf"
-            $destinationPdfPath = Join-Path -Path $destinationCategoryPath -ChildPath $newPdfName
-
-            # --- Copy Operation ---
-            Write-Host "  Found '$($initialPdfPath)'. Copying to '$($destinationPdfPath)'..."
-            try {
-                Copy-Item -Path $initialPdfPath -Destination $destinationPdfPath -Force -ErrorAction Stop
-                Write-Host "  Successfully copied." -ForegroundColor Green
-            }
-            catch {
-                Write-Error "  Failed to copy file for module '$moduleName'. Error: $_"
+        
+        # 检查两个可能位置的 PDF 文件
+        $rootPdfPath = Join-Path -Path $moduleFolder.FullName -ChildPath "initial.pdf"
+        $tmpPdfPath = Join-Path -Path $moduleFolder.FullName -ChildPath "tmp\initial.pdf"
+        
+        $rootPdfExists = Test-Path -Path $rootPdfPath -PathType Leaf
+        $tmpPdfExists = Test-Path -Path $tmpPdfPath -PathType Leaf
+        
+        # 确定要复制的 PDF 路径
+        $pdfToCopy = $null
+        if ($rootPdfExists -and $tmpPdfExists) {
+            # 两者都存在，弹出选择框
+            Write-Host "  检测到冲突：模块 '$moduleName' 在根目录和 tmp 目录都有 PDF 文件。"
+            $pdfToCopy = Show-PdfChoiceDialog -ModuleName $moduleName -RootPdfPath $rootPdfPath -TmpPdfPath $tmpPdfPath
+            if ($null -eq $pdfToCopy) {
+                Write-Host "  用户取消导出，跳过此模块。" -ForegroundColor Yellow
+                continue
             }
         }
+        elseif ($rootPdfExists) {
+            $pdfToCopy = $rootPdfPath
+        }
+        elseif ($tmpPdfExists) {
+            $pdfToCopy = $tmpPdfPath
+        }
         else {
-            Write-Warning "  'initial.pdf' not found for module '$moduleName' at path '$initialPdfPath'."
+            Write-Warning "  模块 '$moduleName' 中未找到 'initial.pdf' 文件。"
+            continue
+        }
+        
+        # --- Destination Path Construction ---
+        # 1. Define the destination category folder path
+        $destinationCategoryPath = Join-Path -Path $DestinationRoot -ChildPath $categoryFolder.Name
+
+        # 2. Create the destination category folder if it doesn't exist
+        if (-not (Test-Path -Path $destinationCategoryPath -PathType Container)) {
+            Write-Host "  Creating destination category folder: $destinationCategoryPath"
+            New-Item -Path $destinationCategoryPath -ItemType Directory -Force | Out-Null
+        }
+
+        # 3. Define the final destination file path with the new name
+        $newPdfName = "$moduleName.pdf"
+        $destinationPdfPath = Join-Path -Path $destinationCategoryPath -ChildPath $newPdfName
+
+        # --- Copy Operation ---
+        Write-Host "  Found '$pdfToCopy'. Copying to '$destinationPdfPath'..."
+        try {
+            Copy-Item -Path $pdfToCopy -Destination $destinationPdfPath -Force -ErrorAction Stop
+            Write-Host "  Successfully copied." -ForegroundColor Green
+        }
+        catch {
+            Write-Error "  Failed to copy file for module '$moduleName'. Error: $_"
         }
     }
 }
