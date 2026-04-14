@@ -31,5 +31,4 @@
 #include "chapters/LebesgueIntegration.typ" // 勒贝格积分
 
 
-
-#bibliography("references.bib")
+#bibliography("./references.bib")
