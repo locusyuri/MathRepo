@@ -31,4 +31,8 @@
 #include "chapters/LebesgueIntegration.typ" // 勒贝格积分
 
 
-#bibliography("./references.bib")
+
+*只有被引用的章节才会被编译和显示在目录中，因此如果你想要显示某个章节，请确保在主文件中正确引用了它。*
+refer to @zhou2016
+
+#bibliography("references.bib")
