@@ -32,6 +32,9 @@
 /// 次级说明文字颜色
 #let color-muted = rgb("#666666")
 
+// 高亮背景色
+#let color-highlight = rgb("#f0d719")
+
 /// 浅灰边框色
 #let color-border-light = rgb("#D9D9D9")
 
@@ -106,7 +109,7 @@
 #let font-cjk-main = ("Source Han Serif SC", "STSong", "SimSun")
 
 /// 拉丁正文字体回退链
-#let font-latin-main = ("Segoe UI", "Times New Roman")
+#let font-latin-main = ("Book Antiqua", "Times New Roman")
 
 /// Part 名称（与 elegantbook 的 partname 对齐）
 #let part-name = "Part"
@@ -940,7 +943,7 @@
 #let highlight(body) = {
   [
     #box(
-      fill: color-structure.lighten(80%),
+      fill: color-highlight.lighten(60%),
       inset: (x: 2pt, y: 2pt),
       baseline: 2pt,
       radius: 2pt,
