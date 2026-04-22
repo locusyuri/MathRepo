@@ -33,7 +33,7 @@ The set of all complex numbers is denoted by $bb(C)$.
 *Field* is a set $bb(F)$ equipped with two operations (addition and multiplication) that satisfy:
 
 1. $(bb(F), +)$ is an abelian group.
-2. $(bb(F) \ {0}, dot)$ is an abelian group.
+2. $(bb(F) backslash {0}, dot)$ is an abelian group.
 3. Multiplication is distributive over addition.
 
 If we define addition and multiplication of complex numbers as follows:
@@ -175,3 +175,6 @@ In the extended complex plane, every line intersects at the point at infinity,
 so we can view the extended complex plane as a compactification of the complex plane.
 This compactification allows us to apply topological and geometric methods to study complex functions,
 especially those that have singularities or poles at infinity.
+
+
+= Complex Functions // 复函数
