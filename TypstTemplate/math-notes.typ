@@ -207,7 +207,7 @@
 // ┌────────────────────────────────────────────────────────────────────┐
 // │ SECTION 1.5: Part 页面                                             │
 // │                                                                    │
-// │ 这里只实现一个轻量版 Part 页面：浅色背景、罗马数字和标题。         │
+// │ 优雅的 Part 页面设计：简洁装饰、清晰层次。                         │
 // └────────────────────────────────────────────────────────────────────┘
 
 /// 独立 Part 页面
@@ -229,26 +229,66 @@
     #page(margin: 0cm, header: none, footer: none)[
       #set par(justify: false, first-line-indent: 0em)
 
-      // 参考 elegantbook: 居中的浅色背景区块（约 0.35 页面高度）
-      #align(center + horizon)[
-        #box(width: 100%, height: 35%, fill: color-structure.lighten(85%))
+      // 背景：浅色渐变
+      #place(top + left)[
+        #box(width: 100%, height: 100%, fill: gradient.linear(
+          (color-structure.lighten(90%), 0%),
+          (white, 30%),
+          (white, 70%),
+          (color-structure.lighten(92%), 100%),
+        ))
       ]
 
-      // 参考 elegantbook: Part + 罗马数字
-      #place(center, dy: -7.2cm, context text(
-        font: font-latin-title,
-        size: 30pt,
-        weight: "bold",
-        fill: color-structure,
-      )[#part-name #h(0.3em)#numbering("I", part-counter.get().first())])
+      // 左侧装饰条
+      #place(top + left)[
+        #box(width: 0.5cm, height: 100%, fill: color-structure)
+      ]
+
+      // 右下角装饰
+      #place(bottom + right)[
+        #box(width: 8cm, height: 0.3cm, fill: color-cover-line)
+      ]
+
+      // Part 编号：超大罗马数字
+      #place(center, dy: 4cm, context [
+        #text(
+          font: font-latin-title,
+          size: 80pt,
+          weight: "bold",
+          fill: color-structure.lighten(70%),
+        )[
+          #numbering("I", part-counter.get().first())
+        ]
+      ])
+
+      // Part 标签
+      #place(center, dy: 5cm)[
+        #text(
+          font: font-latin-title,
+          size: 14pt,
+          fill: color-muted,
+          style: "italic",
+        )[
+          #part-name
+        ]
+      ]
 
       // Part 标题
-      #place(center, dy: -3.8cm, text(
-        font: font-latin-title,
-        size: part-title-size,
-        weight: "bold",
-        fill: color-structure,
-      )[#title])
+      #place(center, dy: 9cm)[
+        #text(
+          font: font-latin-title,
+          size: part-title-size + 6pt,
+          weight: "bold",
+          fill: color-title,
+        )[
+          #title
+        ]
+      ]
+
+      // 标题下装饰线
+      #place(center, dy: 13cm)[
+        #box(width: 20%, height: 2pt, fill: color-structure)
+      ]
     ]
     // #pagebreak()
   ]
@@ -447,14 +487,14 @@
         ]
       ]
 
-      #v(1.2cm)
+      #v(1.7cm)
 
       // 底部装饰：右侧色块
       #place(bottom + right)[
-        #box(width: 25%, height: 0.8cm, fill: color-cover-line)
+        #box(width: 70%, height: 0.5cm, fill: color-cover-line)
       ]
-      #place(bottom + right, dx: -25%)[
-        #box(width: 25%, height: 0.8cm, fill: color-cover-line.lighten(25%))
+      #place(bottom + right, dx: -70%)[
+        #box(width: 30%, height: 0.5cm, fill: color-cover-line.lighten(25%))
       ]
     ]
     #pagebreak()
@@ -497,24 +537,27 @@
 /// 主目录生成器
 #let make-outline(depth: 3, title: "Contents") = {
   return [
-    // 手动渲染目录标题，避免被当作 heading 处理
-    #v(1.0em)
+    // 现代简洁的目录标题设计
+    #v(2.5em)
     #align(center)[
-      #text(size: 42pt, font: font-latin-title, weight: "bold", fill: color-structure.lighten(70%))[
-        ≡
+      // 主标题
+      #text(size: 36pt, font: font-latin-title, weight: "bold", fill: color-title)[
+        #title
+      ]
+      #v(-1.2em)
+      // 装饰线：渐变效果
+      #box(width: 30%, height: 3pt, fill: gradient.linear(
+        (color-structure.lighten(70%), 0%),
+        (color-structure, 50%),
+        (color-structure.lighten(70%), 100%),
+      ))
+      #v(0.8em)
+      // 副标题
+      #text(size: 12pt, font: font-latin-title, fill: color-muted, style: "italic")[
+        Table of Contents
       ]
     ]
-    #v(-0.5em)
-    #align(center)[
-      #box(width: 12%, height: 2pt, fill: color-structure)
-    ]
-    #v(0.4em)
-    #align(center, text(size: 12pt, font: font-latin-title, fill: color-muted, style: "italic")[
-      Contents
-    ])
-    #v(0.3em)
-    #align(center, text(size: 24pt, font: font-latin-title, weight: "bold", fill: color-title)[#title])
-    #v(1.5em)
+    #v(2.0em)
     
     // 使用 query 手动生成目录，完全控制渲染
     #context {
