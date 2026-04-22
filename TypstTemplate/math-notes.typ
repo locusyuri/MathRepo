@@ -17,26 +17,26 @@
 // │ 先把后续会反复用到的颜色、字体和尺寸集中定义，便于统一调整。        │
 // └────────────────────────────────────────────────────────────────────┘
 
-/// 主题主色 - 对应 elegantbook 的 structurecolor
-#let color-structure = rgb("#3C71B7")
+/// 主题主色 - 深蓝灰色调，优雅沉稳
+#let color-structure = rgb("#2C5F7C")
 
-/// 封面横条颜色 - 对应 elegantbook 的 coverlinecolor（second）
-#let color-cover-line = rgb("#FF8618")
+/// 封面横条颜色 - 柔和的珊瑚色作为点缀
+#let color-cover-line = rgb("#E07B54")
 
-/// 标题主色
-#let color-title = rgb("#1A1A1A")
+/// 标题主色 - 深墨色
+#let color-title = rgb("#1C1C1C")
 
-/// 正文主色
-#let color-main-text = rgb("#333333")
+/// 正文主色 - 柔和深灰
+#let color-main-text = rgb("#2D2D2D")
 
-/// 次级说明文字颜色
-#let color-muted = rgb("#666666")
+/// 次级说明文字颜色 - 中灰
+#let color-muted = rgb("#5A5A5A")
 
-// 高亮背景色
-#let color-highlight = rgb("#f0d719")
+// 高亮背景色 - 柔和琥珀色
+#let color-highlight = rgb("#E8C547")
 
 /// 浅灰边框色
-#let color-border-light = rgb("#D9D9D9")
+#let color-border-light = rgb("#D4D4D4")
 
 /// theorem-like 主要组件渐变色系
 #let color-theorem-bg-1 = rgb("#FFF4F4")
@@ -115,7 +115,7 @@
 #let part-name = "Part"
 
 /// 拉丁标题字体回退链
-#let font-latin-title = ("Merriweather", "Georgia", "Times New Roman")
+#let font-latin-title = ("Georgia", "Merriweather", "Times New Roman")
 
 /// 主要组件标签字体（参考 elegantbook 的 cursivetitle 气质）
 #let font-major-label = ("Monotype Corsiva", "Merriweather", "Georgia")
@@ -313,13 +313,11 @@
 // ┌────────────────────────────────────────────────────────────────────┐
 // │ SECTION 3: 封面工具                                                │
 // │                                                                    │
-// │ 封面结构参考 elegantbook 的 maketitle：                            │
-// │ - 顶部封面图或占位块                                               │
-// │ - 主题色横条                                                       │
-// │ - 大标题                                                           │
-// │ - 副标题和作者信息                                                │
-// │ - 右下角 Logo                                                     │
-// │ - 底部补充说明                                                    │
+// │ 现代简洁风格封面设计：                                             │
+// │ - 几何装饰元素（色块、线条）                                       │
+// │ - 居中对称布局                                                     │
+// │ - 清晰的信息层级                                                  │
+// │ - 无图片依赖                                                       │
 // └────────────────────────────────────────────────────────────────────┘
 
 /// 封面信息行：用于显示作者、单位、日期、版本等信息
@@ -347,8 +345,8 @@
 /// - date: 日期（可选）
 /// - version: 版本号（可选）
 /// - extra-info: 底部补充说明（可选）
-/// - cover-image: 顶部封面图（可选）
-/// - logo-image: 右下角 Logo（可选）
+/// - cover-image: 顶部封面图（可选，已弃用）
+/// - logo-image: 右下角 Logo（可选，已弃用）
 #let make-cover(
   title,
   author,
@@ -366,65 +364,98 @@
       #set par(justify: false, first-line-indent: 0em)
       #set text(font: font-cjk-main, fill: color-main-text)
 
-      // 顶部封面图：有图就放图，没有就用浅色占位块，避免版面塌陷
-      #if cover-image != none [
-        #image(cover-image, width: 100%)
-      ] else [
-        #box(width: 100%, height: 10.2cm, fill: color-structure.lighten(88%))
+      // 顶部装饰：左侧色块 + 右侧渐变条
+      #place(top + left)[
+        #box(width: 35%, height: 2.8cm, fill: color-structure)
+      ]
+      #place(top + right)[
+        #box(width: 65%, height: 2.8cm, fill: gradient.linear(
+          (color-structure.lighten(15%), 0%),
+          (color-structure.lighten(45%), 100%),
+        ))
       ]
 
-      // 主题横条：这是 elegantbook 封面最醒目的视觉锚点之一
-      #box(width: 100%, fill: color-cover-line)[
-        #v(0.5in)
+      // 左上角装饰：小方块点缀
+      #place(top + left, dx: 1.2cm, dy: 0.6cm)[
+        #box(width: 0.4cm, height: 0.4cm, fill: white, radius: 2pt)
+      ]
+      #place(top + left, dx: 1.9cm, dy: 0.6cm)[
+        #box(width: 0.4cm, height: 0.4cm, fill: white.lighten(30%), radius: 2pt)
+      ]
+      #place(top + left, dx: 2.6cm, dy: 0.6cm)[
+        #box(width: 0.4cm, height: 0.4cm, fill: white.lighten(50%), radius: 2pt)
       ]
 
-      #v(1.0fr)
+      #v(4.5cm)
 
-      // 主标题：左侧偏移，保留 elegantbook 的大字号排版感
-      #h(2em)
-      #box(width: 80%)[
-        #text(size: font-cover-title-size, font: font-latin-title, weight: "bold", fill: color-title)[
+      // 主标题区域：居中显示
+      #align(center)[
+        #v(17em)
+        // 主标题
+        #text(size: font-cover-title-size + 6pt, font: font-latin-title, weight: "bold", fill: color-title)[
           #title
         ]
-      ]
 
-      #v(1.0em)
+        #v(0.8em)
 
-      // 副标题与作者信息：和原版一样用较窄的文本区承载
-      #h(2.5em)
-      #box(width: 67%)[
+        // 装饰线：渐变效果
+        #box(width: 40%, height: 3pt, fill: gradient.linear(
+          (color-structure.lighten(60%), 0%),
+          (color-structure, 50%),
+          (color-structure.lighten(60%), 100%),
+        ))
+
+        #v(1.2em)
+
+        // 副标题
         #if subtitle != none [
-          #text(size: font-cover-subtitle-size, font: font-cjk-main, weight: "bold", fill: color-muted)[
+          #text(size: font-cover-subtitle-size + 2pt, font: font-cjk-main, fill: color-muted)[
             #subtitle
           ]
-          #v(1.2em)
+          #v(1.5em)
         ]
-
-        #cover-meta-row("作者：", author)
-        #cover-meta-row("单位：", institute)
-        #cover-meta-row("日期：", date)
-        #cover-meta-row("版本：", version)
       ]
 
-      // 右下角 Logo：保留 elegantbook 的视觉习惯
-      #place(bottom + right, dx: -0.8in, dy: 1.5in)[
-        #if logo-image != none [
-          #image(logo-image, width: cover-logo-size)
+      #v(3.0fr)
+
+      // 作者信息区域：居中显示
+      #align(center)[
+        #box(width: 50%)[
+          #align(center)[
+            #cover-meta-row("Author: ", author)
+            #cover-meta-row("Institute: ", institute)
+            #cover-meta-row("Date: ", date)
+            #cover-meta-row("Version: ", version)
+          ]
         ]
       ]
 
       #v(1.0fr)
 
-      // 底部补充说明：居中显示，类似原版封面下方的附加说明区
+      // 底部装饰：细线 + 补充说明
+      #align(center)[
+        #box(width: 60%, height: 1pt, fill: color-structure.lighten(70%))
+      ]
+
+      #v(0.8em)
+
       #if extra-info != none [
         #align(center)[
-          #box(width: 70%)[
-            #text(size: 11pt, font: font-cjk-main, fill: color-muted)[#extra-info]
+          #text(size: 10pt, font: font-cjk-main, fill: color-muted.lighten(20%))[
+            #extra-info
           ]
         ]
       ]
 
-      #v(0.8fr)
+      #v(1.2cm)
+
+      // 底部装饰：右侧色块
+      #place(bottom + right)[
+        #box(width: 25%, height: 0.8cm, fill: color-cover-line)
+      ]
+      #place(bottom + right, dx: -25%)[
+        #box(width: 25%, height: 0.8cm, fill: color-cover-line.lighten(25%))
+      ]
     ]
     #pagebreak()
   ]
@@ -466,94 +497,123 @@
 /// 主目录生成器
 #let make-outline(depth: 3, title: "Contents") = {
   return [
-    #show outline.entry: it => {
-      let counter-int = counter(heading).at(it.element.location())
-      let numbering-setting = it.element.numbering
-      let num = none
-      if numbering-setting != none and counter-int.first() > 0 {
-        num = numbering("1.", ..counter-int)
-      }
-      let title-content = it.element.body
-      let heading-page = it.page()
-
-      if it.level == 1 {
-        // Chapter 层级
-        let p-state = part-title-state.at(it.element.location())
-        let p-location = part-location-state.at(it.element.location())
-        let p-counter = part-counter.at(it.element.location())
-        let p-first-ch = part-first-chapter-num.at(it.element.location())
-
-        // 判断是否是新 Part 的首个 Chapter
-        let is-new-part = (p-location != none) and (counter-int.first() == p-first-ch)
-
-        if (is-new-part) {
-          grid(
-            columns: (1.2cm, 1fr),
-            align: (center + horizon),
-            gutter: 0pt,
-            rect(
-              width: 1.2cm,
-              height: 0.7cm,
-              fill: color-structure.lighten(80%),
-              inset: 2pt,
-              align(center, text(
-                size: 1.3em,
-                weight: "bold",
-                fill: color-structure.lighten(30%),
-                font: font-latin-title,
-                numbering("I", p-counter.first()),
-              )),
-            ),
-            rect(
-              width: 100% - 0.2cm,
-              fill: color-structure.lighten(60%),
-              inset: 5pt,
-              align(center, link(p-location, text(
-                size: 1.3em,
-                weight: "bold",
-                font: font-latin-title,
-                p-state,
-              ))),
-            ),
-          )
-        } else {
-          v(0.3cm, weak: true)
+    // 手动渲染目录标题，避免被当作 heading 处理
+    #v(1.0em)
+    #align(center)[
+      #text(size: 42pt, font: font-latin-title, weight: "bold", fill: color-structure.lighten(70%))[
+        ≡
+      ]
+    ]
+    #v(-0.5em)
+    #align(center)[
+      #box(width: 12%, height: 2pt, fill: color-structure)
+    ]
+    #v(0.4em)
+    #align(center, text(size: 12pt, font: font-latin-title, fill: color-muted, style: "italic")[
+      Contents
+    ])
+    #v(0.3em)
+    #align(center, text(size: 24pt, font: font-latin-title, weight: "bold", fill: color-title)[#title])
+    #v(1.5em)
+    
+    // 使用 query 手动生成目录，完全控制渲染
+    #context {
+      // 获取所有层级的标题（从1到depth）
+      let headings = query(heading.where())
+      
+      for elem in headings {
+        // 只处理指定深度内的标题
+        if elem.level > depth {
+          continue
         }
-        // Chapter 层级
-        outline-row(
-          text-weight: "bold",
-          text-size: 13pt,
-          text-color: color-structure,
-          number: num,
-          title: title-content,
-          page: heading-page,
-          location: it.element.location(),
-        )
-      } else if it.level == 2 {
-        // Section 层级
-        outline-row(
-          text-weight: "bold",
-          text-size: 11pt,
-          text-color: black,
-          number: num,
-          title: title-content,
-          page: heading-page,
-          location: it.element.location(),
-        )
-      } else if it.level == 3 {
-        // Subsection 层级
-        outline-row(
-          text-weight: "regular",
-          text-size: 10pt,
-          text-color: black,
-          number: num,
-          title: title-content,
-          page: heading-page,
-          location: it.element.location(),
-        )
+        
+        let counter-int = counter(heading).at(elem.location())
+        let numbering-setting = elem.numbering
+        let num = none
+        if numbering-setting != none and counter-int.first() > 0 {
+          num = numbering("1.", ..counter-int)
+        }
+        let title-content = elem.body
+        let heading-page = str(elem.location().page())
+
+        if elem.level == 1 {
+          // Chapter 层级
+          let p-state = part-title-state.at(elem.location())
+          let p-location = part-location-state.at(elem.location())
+          let p-counter = part-counter.at(elem.location())
+          let p-first-ch = part-first-chapter-num.at(elem.location())
+
+          // 判断是否是新 Part 的首个 Chapter
+          let is-new-part = (p-location != none) and (counter-int.first() == p-first-ch)
+
+          if (is-new-part) {
+            grid(
+              columns: (1.2cm, 1fr),
+              align: (center + horizon),
+              gutter: 0pt,
+              rect(
+                width: 1.2cm,
+                height: 0.7cm,
+                fill: color-structure.lighten(80%),
+                inset: 2pt,
+                align(center, text(
+                  size: 1.3em,
+                  weight: "bold",
+                  fill: color-structure.lighten(30%),
+                  font: font-latin-title,
+                  numbering("I", p-counter.first()),
+                )),
+              ),
+              rect(
+                width: 100% - 0.2cm,
+                fill: color-structure.lighten(60%),
+                inset: 5pt,
+                align(center, link(p-location, text(
+                  size: 1.3em,
+                  weight: "bold",
+                  font: font-latin-title,
+                  p-state,
+                ))),
+              ),
+            )
+          } else {
+            v(0.3cm, weak: true)
+          }
+          // Chapter 层级
+          outline-row(
+            text-weight: "bold",
+            text-size: 13pt,
+            text-color: color-structure,
+            number: num,
+            title: title-content,
+            page: heading-page,
+            location: elem.location(),
+          )
+        } else if elem.level == 2 {
+          // Section 层级
+          outline-row(
+            text-weight: "bold",
+            text-size: 11pt,
+            text-color: black,
+            number: num,
+            title: title-content,
+            page: heading-page,
+            location: elem.location(),
+          )
+        } else if elem.level == 3 {
+          // Subsection 层级
+          outline-row(
+            text-weight: "regular",
+            text-size: 10pt,
+            text-color: black,
+            number: num,
+            title: title-content,
+            page: heading-page,
+            location: elem.location(),
+          )
+        }
       }
     }
-    #outline(title: title, depth: depth, indent: 0em)
   ]
 }
 
@@ -1016,16 +1076,32 @@
       section-num-state.update(0)
     }
     pagebreak(weak: false)
-    v(0.8em)
+    v(1.0em)
+    
+    // Chapter 编号：优雅的大号数字
     align(center, context {
       let chapter-num = chapter-counter.get().first()
-      text(22pt, font: font-latin-title, weight: "bold", fill: color-structure)[
-        Chapter #chapter-num
+      text(size: 42pt, font: font-latin-title, weight: "bold", fill: color-structure.lighten(70%))[
+        #chapter-num
       ]
     })
-    v(0.35em)
-    align(center, text(24pt, font: font-latin-title, weight: "bold", fill: color-structure)[#it.body])
-    v(1.3em)
+    v(-0.5em)
+    
+    // 装饰线
+    align(center)[
+      #box(width: 12%, height: 2pt, fill: color-structure)
+    ]
+    v(0.4em)
+    
+    // Chapter 标签
+    align(center, text(size: 12pt, font: font-latin-title, fill: color-muted, style: "italic")[
+      Chapter
+    ])
+    v(0.3em)
+    
+    // Chapter 标题
+    align(center, text(size: 24pt, font: font-latin-title, weight: "bold", fill: color-title)[#it.body])
+    v(1.5em)
   }
 
   // ── Section: 二级标题 (==) ──
@@ -1038,33 +1114,41 @@
       chapter-num-state.update(ch-num)
       section-num-state.update(sec-num)
     }
-    v(0.9em)
+    v(1.2em)
     context {
       let chapter-num = if chapter-counter.get().first() > 0 { chapter-counter.get().first() } else { 1 }
       let section-num = section-counter.get().first()
-      align(left)[
-        #text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-structure)[
-          #chapter-num.#section-num #it.body
-        ]
+      
+      // 编号部分：紧凑的数字设计
+      text(size: 20pt, font: font-latin-title, weight: "bold", fill: color-structure.lighten(60%))[
+        #chapter-num.#section-num
+      ]
+      h(0.5em)
+      
+      // 标题文本
+      text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-title)[
+        #it.body
       ]
     }
-    v(0.35em)
+    v(0.5em)
   }
 
   // ── Paragraph: 三级标题 (===) ──
-  // 对应 leftBarTitle：左边竖线 + 符号，不显示编号。
+  // 优雅的左侧装饰设计
   show heading.where(level: 3): it => {
     set par(first-line-indent: 0em)
-    v(0.55em)
-    grid(
-      columns: (3pt, auto, 1fr),
-      gutter: 7pt,
-      align: (center + horizon, left + horizon),
-      // box(width: 3pt, height: 1.15em, fill: color-cover-line, radius: 1.5pt),
-      text(size: 12pt, font: font-latin-title, weight: "bold", fill: color-structure)[¶],
-      text(size: 13pt, font: font-latin-title, weight: "bold", fill: color-structure)[#it.body],
-    )
-    v(0.25em)
+    v(0.8em)
+    
+    // 左侧装饰：渐变色块
+    box(width: 4pt, height: 1.2em, fill: color-structure, radius: 1pt, baseline: 1.5pt)
+    h(0.6em)
+    
+    // 标题文本
+    text(size: 14pt, font: font-latin-title, weight: "semibold", fill: color-title)[
+      #it.body
+    ]
+    
+    v(0.4em)
   }
 
   doc
