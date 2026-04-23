@@ -18,6 +18,7 @@
   extra-info: "Migrated from LaTeX to Typst (single-file mode).",
 )
 
+
 #make-outline(depth: 2, title: "Contents")
 
 #part("Basic Counting")
@@ -37,8 +38,8 @@
   elements taken $k$ at a time, denoted as $P(n, k)$ (also written as $""_n P_k$, $P_n^k$, or $A_n^k$).
   It is given by
   $
-    P(n, k) = n! / (n-k)!
-  $.
+    P(n, k) = n! / (n-k)!.
+  $
 
   The number of ways to choose $k$ elements from a set of $n$ distinct elements
   without regard to order is called the number of combinations of $n$ elements taken
@@ -74,7 +75,7 @@
   6. $(a+b)^n = sum_(k=0)^n C_n^k a^k b^(n-k)$ (*Binomial theorem*).
 
   Therefore, we can see the relationship between Pascal triangle and the Binomial theorem,
-  as shown in @fig:pascal_and_binomial.
+  as shown in @fig:pascal_and_binomial. Here, $C_n^k$ is the element in the $n$-th row and $k$-th column of Pascal's triangle.
 
   #figure(
     image("img/pascal_and_binomial.png", width: 80%),
@@ -104,8 +105,8 @@
 *Recurrence relations* are equations that define sequences recursively,
 expressing each term as a function of preceding terms, in the form
 $
-  a_n = f(a_(n-1), a_(n-2), dots, a_(n-k)), quad n >= k
-$,
+  a_n = f(a_(n-1), a_(n-2), dots, a_(n-k)), quad n >= k,
+$
 where $k$ is the order of the recurrence relation.
 
 Common categories:
@@ -128,8 +129,8 @@ Common categories:
 #example[
   Define the Fibonacci sequence $(F_n)$ by
   $
-    F_0 = 0, quad F_1 = 1, quad F_n = F_(n-1) + F_(n-2), quad n >= 2
-  $.
+    F_0 = 0, quad F_1 = 1, quad F_n = F_(n-1) + F_(n-2), quad n >= 2.
+  $
   This is a linear homogeneous recurrence relation with constant coefficients.
 ]
 
@@ -142,8 +143,8 @@ Common categories:
   Let $T(n)$ be the minimum number of moves to transfer $n$ disks.
   Then
   $
-    T(n) = 2T(n-1) + 1, quad T(1) = 1
-  $.
+    T(n) = 2T(n-1) + 1, quad T(1) = 1.
+  $
 
   Here $T(n)$ represents the minimum number of moves required to transfer
   $n$ disks from one peg to another.
@@ -162,18 +163,18 @@ Common categories:
   The *ordinary generating function* (OGF) of a sequence $(a_n)$ is
   $
     G(a_n; x) = sum_(n=0)^infinity a_n x^n,
-  $.
+  $
   where $x$ is an indeterminate.
 
   The *exponential generating function* (EGF) is
   $
     E(a_n; x) = sum_(n=0)^infinity (a_n / n!) x^n.
-  $.
+  $
 
   The *Dirichlet generating function* (DGF) is
   $
-    D(a_n; s) = sum_(n=1)^infinity a_n / n^s
-  $,
+    D(a_n; s) = sum_(n=1)^infinity a_n / n^s,
+  $
   where $s$ is a complex variable.
 ]
 
@@ -192,19 +193,19 @@ Common categories:
     = sum_(i=1)^n abs(A_i)
     - sum_(1 <= i < j <= n) abs(A_i inter A_j)
     + sum_(1 <= i < j < k <= n) abs(A_i inter A_j inter A_k)
-    - dots + (-1)^(n+1) abs(A_1 inter A_2 inter dots inter A_n)
-  $.
+    - dots + (-1)^(n+1) abs(A_1 inter A_2 inter dots inter A_n).
+  $
 
   Denote
   $
     S_k = sum_(1 <= i_1 < i_2 < dots < i_k <= n)
       abs(A_(i_1) inter A_(i_2) inter dots inter A_(i_k)),
-    quad k = 1, 2, dots, n
-  $.
+    quad k = 1, 2, dots, n.
+  $
   Then
   $
-    abs(union.big_(i=1)^n A_i) = sum_(k=1)^n (-1)^(k+1) S_k
-  $.
+    abs(union.big_(i=1)^n A_i) = sum_(k=1)^n (-1)^(k+1) S_k.
+  $
 ]
 
 #note[
@@ -214,15 +215,15 @@ Common categories:
 Special cases:
 
 $
-  abs(A_1 union A_2) = abs(A_1) + abs(A_2) - abs(A_1 inter A_2)
-$.
+  abs(A_1 union A_2) = abs(A_1) + abs(A_2) - abs(A_1 inter A_2).
+$
 
 $
   abs(A_1 union A_2 union A_3)
   = abs(A_1) + abs(A_2) + abs(A_3)
   - abs(A_1 inter A_2) - abs(A_1 inter A_3) - abs(A_2 inter A_3)
-  + abs(A_1 inter A_2 inter A_3)
-$.
+  + abs(A_1 inter A_2 inter A_3).
+$
 
 #v(0.7cm)
 
@@ -233,7 +234,7 @@ $
   abs(union.big_(i=1)^n A_i)
   = abs(U) - abs(inter.big_(i=1)^n overline(A_i))
   = abs(U) - sum_(k=0)^n (-1)^k S_k.
-$.
+$
 
 == Mobius Inversion
 
@@ -243,8 +244,8 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
 #definition(name: "Arithmetic Function")[
   An *arithmetic function* is a function on positive integers with complex values:
   $
-    f: NN^* -> CC
-  $.
+    f: NN^* -> CC.
+  $
   Examples include the divisor function $d(n)$, Euler totient function $phi(n)$,
   and Mobius function $mu(n)$.
 ]
@@ -256,20 +257,20 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
       1 & "if " n = 1,
       (-1)^k & "if " n " is a product of " k " distinct primes,",
       0 & "if " n " has a squared prime factor."
-    )
-  $.
+    ).
+  $
 ]
 
 #theorem(name: "Mobius Inversion")[
   Let $f$ and $g$ be arithmetic functions.
   If for every positive integer $n$,
   $
-    g(n) = sum_(d | n) f(d)
-  $,
+    g(n) = sum_(d | n) f(d),
+  $
   then
   $
-    f(n) = sum_(d | n) mu(d) g(n / d)
-  $.
+    f(n) = sum_(d | n) mu(d) g(n / d).
+  $
 ]
 
 == Generalizations of Inclusion-Exclusion
@@ -281,14 +282,14 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
 #definition(name: "Catalan Numbers")[
   The $n$-th Catalan number is
   $
-    C_n = 1/(n+1) binom(2n, n) = (2n)!/((n+1)!n!) = binom(2n, n) - binom(2n, n+1)
-  $.
+    C_n = 1/(n+1) binom(2n, n) = (2n)!/((n+1)!n!) = binom(2n, n) - binom(2n, n+1).
+  $
 
   First ten values:
   $
     C_0 = 1, C_1 = 1, C_2 = 2, C_3 = 5, C_4 = 14,
-    C_5 = 42, C_6 = 132, C_7 = 429, C_8 = 1430, C_9 = 4862
-  $.
+    C_5 = 42, C_6 = 132, C_7 = 429, C_8 = 1430, C_9 = 4862.
+  $
 ]
 
 #property[
