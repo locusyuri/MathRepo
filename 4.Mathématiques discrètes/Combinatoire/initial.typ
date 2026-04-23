@@ -388,4 +388,5 @@ Catalan numbers is the answer to many combinatorial problems:
   This chapter currently contains only a title in the LaTeX source.
 ]
 
+
 #bibliography("references.bib")
