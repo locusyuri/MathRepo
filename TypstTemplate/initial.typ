@@ -60,15 +60,17 @@ Use the following conventions in this project:
 - Typst automatically scales ordinary brackets in math mode, so you usually do not need LaTeX-style `left` / `right`.
 - When you need a long evaluation bar, use `lr(...)` explicitly.
 - Use upright differential symbols everywhere: write `dif x`, `dif t`, and `frac(dif, dif x)`.
-- Use dot-derivative accents as `x.dot`, `x.double`, `x.triple`; do not use `ddot`-style names.
+- Use dot-derivative accents as `dot(x)`, `dot.double(x)`, `dot.triple(x)`; do not use `ddot`-style names.
+- Do not use LaTeX-style `mathcal` / `mathscr`; use `cal(...)` and `scr(...)` directly.
+- There is no direct `mathrm` equivalent; for upright text in math, use quotes like `"const"`.
 - For theorem-like blocks, use `#theorem(...)[...]`, `#definition(...)[...]`, etc., without wrapping the body in extra parentheses.
 
 Example:
 
 ```typ
 delta J[q; eta] = lr(frac(dif, dif epsilon) J[q + epsilon eta]|)_(epsilon=0)
-m q.double + c q.dot + k q = 0
-j.triple(t) = frac(dif^3 j, dif t^3)
+m dot.double(q) + c dot(q) + k q = 0
+F = cal(F), quad A = scr(A), quad "const" in bb(R)
 ```
 
 == Structure Preview
