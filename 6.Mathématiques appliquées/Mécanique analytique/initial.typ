@@ -25,7 +25,233 @@
 #make-outline(depth: 2, title: "Contents")
 
 
-#part("Basic Real Analysis") // 基础实分析
+#part("Mathematical Foundations") // 数学基础
+
+= Variational Calculus  // 变分法
+== Functionals and Variations // 泛函与变分
+
+In analytical mechanics, we optimize objects whose input is a whole function (or path), not a finite-dimensional vector.
+This leads naturally from ordinary calculus to variational calculus.
+
+#note[
+  We only introduce the functional-analytic language needed for mechanics here.
+  A systematic treatment of linear functionals, Banach/Hilbert spaces, and weak topologies is deferred to the Functional Analysis notebook.
+]
+
+=== Functionals and Admissible Curves
+
+Let $X$ be a space of functions. A functional is a map
+$
+  J: X -> bb(R)
+$
+assigning a real number to each admissible function.
+
+
+In mechanics, a standard example is
+
+$
+  J[q] = integral_a^b L(t, q(t), dot(q)(t)) dif t,
+$
+
+where $L$ is the Lagrangian and $q$ is an admissible trajectory.
+
+#definition(name: "Admissible Variation")[
+  Let $q$ be an admissible curve with fixed endpoints $q(a)=q_a$, $q(b)=q_b$.
+  A variation of $q$ is a family
+
+  $
+    q_epsilon(t) = q(t) + epsilon eta(t),
+  $
+
+  where $eta(a)=eta(b)=0$ and $eta$ is sufficiently smooth.
+]
+
+=== First Variation
+
+#definition(name: "First Variation")[
+  The first variation of $J$ at $q$ along $eta$ is
+
+  $
+    delta J[q; eta] = lr(frac(dif, dif epsilon) J[q + epsilon eta]|)_(epsilon=0).
+  $
+
+  A curve $q$ is called *stationary* if $delta J[q; eta] = 0$ for every admissible $eta$.
+]
+
+For
+
+$
+  J[q] = integral_a^b L(t, q, dot(q)) dif t,
+$
+
+direct differentiation gives
+
+$
+  delta J[q; eta] = integral_a^b ( frac(partial L, partial q) eta + frac(partial L, partial dot(q)) dot(eta) ) dif t.
+$
+
+After integration by parts and using $eta(a)=eta(b)=0$,
+
+$
+  delta J[q; eta] = integral_a^b ( frac(partial L, partial q) - frac(dif, dif t) frac(partial L, partial dot(q)) ) eta(t) dif t.
+$
+
+#theorem(name: "Stationarity Criterion")[
+  If $q$ is stationary for all endpoint-fixed variations, then
+
+  $
+    frac(partial L, partial q) - frac(dif, dif t) frac(partial L, partial dot(q)) = 0,
+  $
+
+  which is the Euler-Lagrange equation.
+]
+
+=== Simple Example: Shortest Curve in the Plane
+
+#example[
+  Consider
+
+  $
+    J[y] = integral_(x_0)^(x_1) sqrt(1 + (y')^2) dif x
+  $
+
+  with fixed endpoints $y(x_0)=y_0$, $y(x_1)=y_1$.
+  Here $L(y, y') = sqrt(1 + (y')^2)$ does not depend explicitly on $y$, so
+
+  $
+    frac(dif, dif x) frac(partial L, partial y') = 0
+  $
+
+  implies $frac(partial L, partial y')$ is constant, hence $y' = C$.
+  Therefore the stationary curve is a line segment.
+]
+
+This variational viewpoint is the direct bridge to Hamilton's principle and the full Lagrangian formalism.
+
+== Euler-Lagrange Equation // 欧拉-拉格朗日方程
+
+The Euler-Lagrange equation is the local differential form of stationarity for the action functional.
+It turns a global variational statement into equations of motion.
+
+#definition(name: "Euler-Lagrange Equation (Single Coordinate)")[
+  For
+
+  $
+    J[q] = integral_a^b L(t, q, dot(q)) dif t,
+  $
+
+  with fixed endpoints $q(a), q(b)$, a stationary curve satisfies
+
+  $
+    frac(partial L, partial q) - frac(dif, dif t) frac(partial L, partial dot(q)) = 0.
+  $
+]
+
+=== Derivation from First Variation
+
+Starting from
+
+$
+  delta J[q; eta] = integral_a^b ( frac(partial L, partial q) eta + frac(partial L, partial dot(q)) dot(eta) ) dif t,
+$
+
+integration by parts gives
+
+$
+  delta J[q; eta] = lr(frac(partial L, partial dot(q)) eta|)_a^b + integral_a^b ( frac(partial L, partial q) - frac(dif, dif t) frac(partial L, partial dot(q)) ) eta dif t.
+$
+
+Because endpoint-fixed variations satisfy $eta(a)=eta(b)=0$, the boundary term vanishes.
+By the fundamental lemma of variational calculus, the integrand must be zero, yielding the Euler-Lagrange equation.
+
+=== Multi-Coordinate Form
+
+#theorem(name: "Euler-Lagrange System")[
+  For generalized coordinates $q_1, dots, q_n$ and
+
+  $
+    S[q] = integral_(t_0)^(t_1) L(t, q_1, dots, q_n, dot(q)_1, dots, dot(q)_n) dif t,
+  $
+
+  stationarity under endpoint-fixed variations implies, for each $i=1,dots,n$,
+
+  $
+    frac(dif, dif t) frac(partial L, partial dot(q)_i) - frac(partial L, partial q_i) = 0.
+  $
+]
+
+=== Natural Boundary Conditions (Free Endpoints)
+
+#note[
+  If an endpoint is free, the boundary term does not automatically vanish.
+  One then obtains a natural boundary condition, typically
+  $frac(partial L, partial dot(q)) = 0$ at that free endpoint (or its constrained variant).
+]
+
+=== First Integrals and Cyclic Coordinates
+
+#proposition(name: "Cyclic Coordinate")[
+  If $frac(partial L, partial q_k) = 0$, then
+
+  $
+    frac(dif, dif t) frac(partial L, partial dot(q)_k) = 0,
+  $
+
+  so the conjugate momentum
+  $
+    p_k = frac(partial L, partial dot(q)_k)
+  $
+  is conserved.
+]
+
+#proposition(name: "Energy Integral (Autonomous Case)")[
+  If $L$ has no explicit $t$-dependence, then
+
+  $
+    E = sum_i dot(q)_i frac(partial L, partial dot(q)_i) - L
+  $
+
+  is constant along solutions.
+]
+
+=== Example: Particle in a Potential
+
+#example[
+  Let
+
+  $
+    L(q, dot(q)) = frac(1,2) m dot(q)^2 - V(q).
+  $
+
+  Then
+  $
+    frac(partial L, partial dot(q)) = m dot(q),
+  $
+  and
+  $
+    frac(partial L, partial q) = -frac(dif V, dif q).
+  $
+
+  The Euler-Lagrange equation becomes
+
+  $
+    m frac(dif^2 q, dif t^2) + frac(dif V, dif q) = 0,
+  $
+
+  i.e. Newton's equation $m dot.double(q) = -frac(dif V, dif q)$.
+]
+
+This section provides the variational core used in the next chapters on Lagrange's equations, constraints, and Hamiltonian reformulation.
+
+= Generalized Coordinates and Constraints // 广义坐标与约束
+
+#part("Lagrangian Mechanics") // 拉格朗日力学
+
+= Lagrange's Equations // 拉格朗日方程
+
+#part("Hamiltonian Mechanics") // 哈密顿力学
+
+#part("Advanced Topics") // 进阶主题
 
 
 // 目录

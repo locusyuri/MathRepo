@@ -53,6 +53,24 @@ Your text starts here.
 You can use #highlight[inline highlight] for key phrases.
 You can also add a short note#footnote[Footnotes are useful for side remarks and references.] directly in a sentence.
 
+== Typst Math Syntax Notes
+
+Use the following conventions in this project:
+
+- Typst automatically scales ordinary brackets in math mode, so you usually do not need LaTeX-style `left` / `right`.
+- When you need a long evaluation bar, use `lr(...)` explicitly.
+- Use upright differential symbols everywhere: write `dif x`, `dif t`, and `frac(dif, dif x)`.
+- Use dot-derivative accents as `x.dot`, `x.double`, `x.triple`; do not use `ddot`-style names.
+- For theorem-like blocks, use `#theorem(...)[...]`, `#definition(...)[...]`, etc., without wrapping the body in extra parentheses.
+
+Example:
+
+```typ
+delta J[q; eta] = lr(frac(dif, dif epsilon) J[q + epsilon eta]|)_(epsilon=0)
+m q.double + c q.dot + k q = 0
+j.triple(t) = frac(dif^3 j, dif t^3)
+```
+
 == Structure Preview
 
 This template currently supports:
