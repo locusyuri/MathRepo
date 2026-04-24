@@ -205,7 +205,7 @@ be the *characteristic function* of set $A$.
 ]
 
 #note[
-  In analysis, the term "extension" is often used interchangeably with "*continuation*".
+  In analysis, the term "extension" is often used interchangeably with "*continuation*"<def:continuation>.
   However, an extension typically requires the extended mapping to satisfy certain properties, such as continuity or differentiability.
 ]
 
@@ -660,46 +660,75 @@ The number of these endpoints is countable, but there are many other non-endpoin
   The LaTeX source for this section currently contains only a section title.
 ]
 
-#part("Borel and Analytic Sets")
 
-= Borel and Analytic Sets
 
-== Borel Sets
+#part("Appendix")
+= Glossary
 
-#definition(name: "Algebra of Sets")[
-  Let $S$ be a non-empty set. A non-empty collection $cal(S)$ of subsets of $S$ (i.e., $cal(S) subset scr(P)(S)$) is called an *algebra of sets* on $S$ if it satisfies the following properties:
+== C
+- *#link(<def:continuation>)[Continuation]*
 
-  1. $S in cal(S)$.
-  2. If $A in cal(S)$, then $S backslash A in cal(S)$#footnote[
-    Combining with item (i), this means that the empty set $emptyset$ also belongs to the algebra of sets.
-    The notation $emptyset, S in cal(S)$ is also common, especially in topology.
-  ].
-  3. If $A_1, A_2, dots, A_n in cal(S)$, then $union_(i=1)^n A_i in cal(S)$.
-
-  From these properties, it follows that an algebra of sets is also closed under finite intersections.
-]
-
-#definition(name: "$sigma$-Algebra of Sets")[
-  Let $S$ be a non-empty set. A non-empty collection $cal(S)$ of subsets of $S$ (i.e., $cal(S) subset scr(P)(S)$) is called a $sigma$-*algebra of sets* on $S$ if it satisfies the following properties:
-
-  1. $S in cal(S)$.
-  2. If $A in cal(S)$, then $S backslash A in cal(S)$.
-  3. If $A_1, A_2, dots in cal(S)$, then $union_(i=1)^infinity A_i in cal(S)$.
-
-  From these properties, it follows that a $sigma$-algebra of sets is also closed under countable intersections.
-]
-
-#note[
-  $sigma$-algebra is the $sigma$-completion of algebra of sets.
-  It inherits all the properties of algebra.
-  Additionally, it requires closure under countable union (and hence countable intersection), which is the core of handling limit processes in analysis (such as interchange of integration and limits).
-]
-
-#definition(name: "Borel Set")[
-  The *Borel $sigma$-algebra* on Euclidean space $bb(R)^n$, denoted by $cal(B)(bb(R)^n)$, is the smallest $sigma$-algebra containing all open sets in $bb(R)^n$.
-  Sets in $cal(B)(bb(R)^n)$ are called *Borel sets*.
-
-  Similarly, for any topological space $(X, tau)$, the *Borel $sigma$-algebra* on $X$, denoted by $cal(B)(X)$, is the smallest $sigma$-algebra containing all open sets in $X$.
-]
 
 #bibliography("references.bib")
+
+
+// --- Part I: Foundations of Set Theory (集合论基础) ---
+
+// Chapter 1: Naïve Set Theory (朴素集合论)
+//   Section 1.1: Sets and Their Operations (集合及其运算)
+//   Section 1.2: Relations and Mappings (关系与映射)
+//   Section 1.3: Basic Notions of Set Sequences (集合列的基本概念)
+
+// Chapter 2: Axiomatic Set Theory (公理化集合论)
+//   Section 2.1: Zermelo-Fraenkel Set Theory with Choice (ZFC) (带选择公理的ZFC)
+//   Section 2.2: Axiom of Choice and Equivalent Principles (选择公理及其等价命题)
+//   Section 2.3: Von Neumann-Bernays-Gödel Set Theory (NBG公理)
+
+// --- Part II: Ordinals and Cardinals (序数与基数) ---
+
+// Chapter 3: Ordinals (序数)
+//   Section 3.1: Order Relations (序关系)
+//   Section 3.2: Ordinal Numbers (序数的定义与分类)
+//   Section 3.3: Transfinite Induction and Recursion (超限归纳与超限递归)
+//   Section 3.4: Ordinal Arithmetic (序数运算)
+
+// Chapter 4: Cardinals (基数)
+//   Section 4.1: Cardinality and Equinumerosity (基数与等势)
+//   Section 4.2: Countable and Uncountable Sets (可数集与不可数集)
+//   Section 4.3: Cantor-Bernstein-Schröder Theorem and Cantor's Theorem (康托-伯恩斯坦-施罗德定理与康托定理)
+//   Section 4.4: Cardinal Arithmetic (基数运算)
+//   Section 4.5: Cofinality and Continuum Hypothesis (共终性与连续统假设)
+
+// --- Part III: Real Numbers and Point-Set Topology (实数与点集拓扑) ---
+
+// Chapter 5: Real Numbers and Euclidean Point Sets (实数与欧氏空间中的点集)
+//   Section 5.1: Construction of the Real Numbers (实数的构造)
+//   Section 5.2: Diameter, Boundedness and Limits (直径、有界性与极限)
+//   Section 5.3: Classification of Points (点的分类)
+//   Section 5.4: Open and Closed Sets (开集与闭集)
+//   Section 5.5: Compactness, Perfectness and Density (紧致性、完美性与稠密性)
+
+// Chapter 6: Special Point Sets and Special Classes of Sets (特殊点集与特殊集合类)
+//   Section 6.1: Derived Sets and Closure Operations (导集与闭包运算)
+//   Section 6.2: Nowhere Dense Sets and Meagre-Type Notions (处处稀疏集与瘦集类概念)
+//   Section 6.3: Cantor Set and Related Fractals (Cantor 集及相关分形)
+//   Section 6.4: Special Classes of Sets in the Real Line (实直线上的特殊集合类)
+
+// --- Part IV: Filters and Descriptive Set Theory (滤子与描述集合论) ---
+
+// Chapter 7: Filters and Boolean Algebras (滤子与布尔代数)
+//   Section 7.1: Filters and Ultrafilters (滤子与极大滤子)
+//   Section 7.2: Boolean Algebras (布尔代数)
+//   Section 7.3: Stone Representation Philosophy (Stone 表示思想)
+
+// Chapter 8: Borel and Analytic Sets (Borel 集与分析集)
+//   Section 8.1: Algebras and Sigma-Algebras (集合代数与σ-代数)
+//   Section 8.2: Borel Sets (Borel 集)
+//   Section 8.3: Borel Hierarchy and Generated Classes (Borel 层级与生成类)
+//   Section 8.4: Analytic Sets and Descriptive Set Theory (分析集与描述集合论)
+
+// Structure note:
+// - Part I establishes the language and axioms of set theory.
+// - Part II collects ordinals, cardinals, and transfinite methods in one coherent block.
+// - Part III unifies real numbers with point-set topology and geometric set classes.
+// - Part IV closes the book with filters, Boolean algebras, and Borel / analytic set theory.
