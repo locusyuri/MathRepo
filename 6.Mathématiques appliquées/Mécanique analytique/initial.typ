@@ -25,6 +25,40 @@
 #make-outline(depth: 2, title: "Contents")
 
 
+#part("Classical Mechanics Foundations") // 经典力学基础
+
+= Kinematics of Particles and Particle Systems // 质点与质点系
+== Kinematic Attributes of Point Particles // 质点的运动学属性
+== Rigid Body Kinematics: Translation and Rotation // 刚体平动与转动
+== Correspondence between Linear and Angular Quantities // 线量与角量的对应
+
+= Newton's Laws and Rigid Body Rotational Dynamics // 牛顿运动定律与刚体转动定律
+== Newton's Three Laws // 牛顿三大定律
+== Rigid Body Rotation about a Fixed Axis // 刚体定轴转动
+
+= Momentum, Angular Momentum, and Energy // 动量、角动量与功能原理
+== Linear Momentum and Impulse // 线动量与冲量
+== Angular Momentum and Torque // 角动量与力矩
+== Work-Energy Theorem and Energy Conservation // 功能定理与能量守恒
+== Isomorphism between Translational and Rotational Structures // 平动与转动的同构性
+== Potential Energy and Force Fields // 势能与力场
+
+= Oscillations and Waves // 振动与波动
+== Simple Harmonic Motion // 简谐运动
+== Damped and Driven Oscillations // 阻尼与受驱振动
+== Wave Propagation // 波动传播
+
+= Celestial Mechanics Foundations // 天体力学基础
+== Kepler's Laws // 开普勒定律
+== Orbit Classification // 轨道分类
+== Two-Body Problem and Reduced Mass // 二体问题与约化质量
+
+= Fluid Mechanics Foundations // 流体力学基础
+== Continuum Hypothesis and Density Fields // 连续体假设与密度场
+== Euler's Equations of Motion // 欧拉运动方程
+== Bernoulli's Equation // 伯努利方程
+
+
 #part("Mathematical Foundations") // 数学基础
 
 = Variational Calculus  // 变分法
@@ -681,113 +715,159 @@ These conservation laws will be used repeatedly in the applications chapter.
 
 // 目录
 
+/// =========================================================================
+// COURSE STRUCTURE (课程结构) - Revised with Classical Mechanics Foundation
+// =========================================================================
+
+// --- Part 0: Classical Mechanics Foundations (经典力学基础) ---
+
+// Chapter 1: Kinematics of Particles and Particle Systems (质点与质点系)
+//   Section 1.1: Kinematic Attributes of Point Particles (质点的运动学属性)
+//   Section 1.2: Rigid Body Kinematics: Translation and Rotation (刚体平动与转动)
+//   Section 1.3: Correspondence between Linear and Angular Quantities (线量与角量的对应)
+
+// Chapter 2: Newton's Laws and Rigid Body Rotational Dynamics (牛顿运动定律与刚体转动定律)
+//   Section 2.1: Newton's Three Laws (牛顿三大定律)
+//   Section 2.2: Rigid Body Rotation about a Fixed Axis (刚体定轴转动定律)
+
+// Chapter 3: Momentum, Angular Momentum, and Energy (动量、角动量与功能原理)
+//   Section 3.1: Linear Momentum and Impulse (线动量与冲量)
+//   Section 3.2: Angular Momentum and Torque (角动量与力矩)
+//   Section 3.3: Work-Energy Theorem and Energy Conservation (功能定理与能量守恒)
+//   Section 3.4: Isomorphism between Translational and Rotational Structures (平动与转动的同构性)
+//   Section 3.5: Potential Energy and Force Fields (势能与力场)
+
+// Chapter 4: Oscillations and Waves (振动与波动)
+//   Section 4.1: Simple Harmonic Motion (简谐运动)
+//   Section 4.2: Damped and Driven Oscillations (阻尼与受驱振动)
+//   Section 4.3: Wave Propagation (波动传播)
+
+// Chapter 5: Celestial Mechanics Foundations (天体力学基础)
+//   Section 5.1: Kepler's Laws (开普勒定律)
+//   Section 5.2: Orbit Classification (轨道分类)
+//   Section 5.3: Two-Body Problem and Reduced Mass (二体问题与约化质量)
+
+// Chapter 6: Fluid Mechanics Foundations (流体力学基础)
+//   Section 6.1: Continuum Hypothesis and Density Fields (连续体假设与密度场)
+//   Section 6.2: Euler's Equations of Motion (欧拉运动方程)
+//   Section 6.3: Bernoulli's Equation (伯努利方程)
+
+// =========================================================================
 // --- Part I: Mathematical Foundations (数学基础) ---
+// =========================================================================
 
-// Chapter 1: Variational Calculus (变分法)
-//   Section 1.1: Hamilton's Principle (哈密顿原理)
-//   Section 1.2: Variational Method and First Variation (变分法与第一变分)
-//   Section 1.3: Euler-Lagrange Equation (欧拉-拉格朗日方程)
-//   Section 1.4: First Integrals and Conservation Laws (首次积分与守恒律)
-//   Section 1.5: Variational Problems with Constraints (带约束的变分问题)
-//   Section 1.6: Multi-variable Variational Problems (多元变分问题)
+// Chapter 1: Mathematical Preparation: Variational Calculus (数学准备：变分法)
+//   Section 1.1: Functionals and Variations (泛函与变分)
+//   Section 1.2: Derivation of Euler-Lagrange Equations (欧拉-拉格朗日方程的推导)
+//   Section 1.3: Variational Problems with Constraints (带约束的变分问题)
 
-// Chapter 2: Generalized Coordinates and Constraints (广义坐标与约束)
+// Chapter 2: Description of Mechanical Systems (力学系统的完整描述)
 //   Section 2.1: Degrees of Freedom and Generalized Coordinates (自由度与广义坐标)
-//   Section 2.2: Holonomic and Non-holonomic Constraints (完整约束与非完整约束)
-//   Section 2.3: Virtual Displacements and Virtual Work (虚位移与虚功)
-//   Section 2.4: D'Alembert's Principle (达朗贝尔原理)
+//   Section 2.2: Classification of Constraints (约束的分类)
+//   Section 2.3: Real Displacements and Virtual Displacements (实位移与虚位移)
+//   Section 2.4: D'Alembert's Principle and Virtual Work (达朗贝尔原理与虚功原理) [← Retrospective to Part 0 Ch. 2]
 
+// Chapter 3: Axiom: Hamilton's Principle (公理：哈密顿原理 - 最小作用量原理)
+//   Section 3.1: Definition of Action Functional (作用量泛函的定义)
+//   Section 3.2: Axiomatic Statement (公理陈述)
+//   Section 3.3: Additivity and Gauge Invariance of Lagrangian (拉格朗日量的可加性与不唯一性)
+
+// =========================================================================
 // --- Part II: Lagrangian Mechanics (拉格朗日力学) ---
+// =========================================================================
+// Theme: Retrospective derivation showing how Lagrangian methods recover classical results
 
-// Chapter 3: Lagrange's Equations (拉格朗日方程)
-//   Section 3.1: Lagrangian Function (拉格朗日函数)
-//   Section 3.2: Derivation from Hamilton's Principle (从哈密顿原理推导)
-//   Section 3.3: Lagrange's Equations of the Second Kind (第二类拉格朗日方程)
-//   Section 3.4: Generalized Forces (广义力)
-//   Section 3.5: Lagrange's Equations with Constraints (带约束的拉格朗日方程)
-//   Section 3.6: Lagrange Multipliers in Mechanics (力学中的拉格朗日乘子)
+// Chapter 4: Lagrange's Equations (拉格朗日方程)
+//   Section 4.1: Lagrangian Function (拉格朗日函数) [← Based on Part 0 Ch. 3.5: Potential Energy]
+//   Section 4.2: Derivation from Hamilton's Principle (从哈密顿原理推导)
+//   Section 4.3: Lagrange's Equations of the Second Kind (第二类拉格朗日方程) [← Recovers Part 0 Ch. 2.1]
+//   Section 4.4: Generalized Forces (广义力)
+//   Section 4.5: Lagrange's Equations with Constraints (带约束的拉格朗日方程) [← Generalizes Part 0 Ch. 2.2]
+//   Section 4.6: Lagrange Multipliers in Mechanics (力学中的拉格朗日乘子)
 
-// Chapter 4: Conservation Laws in Lagrangian Mechanics (拉格朗日力学中的守恒律)
-//   Section 4.1: Cyclic Coordinates and Generalized Momenta (循环坐标与广义动量)
-//   Section 4.2: Energy Conservation (能量守恒)
-//   Section 4.3: Noether's Theorem (诺特定理)
-//   Section 4.4: Momentum Conservation and Translational Symmetry (动量守恒与平移对称性)
-//   Section 4.5: Angular Momentum Conservation and Rotational Symmetry (角动量守恒与旋转对称性)
+// Chapter 5: Conservation Laws in Lagrangian Mechanics (拉格朗日力学中的守恒律)
+//   Section 5.1: Cyclic Coordinates and Generalized Momenta (循环坐标与广义动量)
+//   Section 5.2: Energy Conservation (能量守恒) [← Time symmetry → Retrospective to Part 0 Ch. 3.3]
+//   Section 5.3: Noether's Theorem (诺特定理)
+//   Section 5.4: Momentum Conservation and Translational Symmetry (动量守恒与平移对称性) [← Retrospective to Part 0 Ch. 3.1]
+//   Section 5.5: Angular Momentum Conservation and Rotational Symmetry (角动量守恒与旋转对称性) [← Retrospective to Part 0 Ch. 3.2]
 
-// Chapter 5: Applications of Lagrangian Mechanics (拉格朗日力学的应用)
-//   Section 5.1: Central Force Motion (中心力运动)
-//   Section 5.2: Rigid Body Dynamics (刚体动力学)
-//   Section 5.3: Small Oscillations (小振动)
-//   Section 5.4: Normal Modes and Eigenfrequencies (简正模与本征频率)
-//   Section 5.5: Coupled Oscillators (耦合振子)
+// Chapter 6: Applications of Lagrangian Mechanics (拉格朗日力学的应用)
+//   Section 6.1: Rigid Body Dynamics (刚体动力学) [← Recovers Part 0 Ch. 2.2 via Lagrangian]
+//   Section 6.2: Central Force Motion (中心力运动) [← Connects to Part 0 Ch. 5]
+//   Section 6.3: Small Oscillations (小振动) [← Generalizes Part 0 Ch. 4]
+//   Section 6.4: Normal Modes and Eigenfrequencies (简正模与本征频率)
+//   Section 6.5: Coupled Oscillators (耦合振子)
 
+// =========================================================================
 // --- Part III: Hamiltonian Mechanics (哈密顿力学) ---
+// =========================================================================
 
-// Chapter 6: Hamilton's Equations (哈密顿方程)
-//   Section 6.1: Legendre Transformation (勒让德变换)
-//   Section 6.2: Hamiltonian Function (哈密顿函数)
-//   Section 6.3: Canonical Equations of Motion (正则运动方程)
-//   Section 6.4: Hamiltonian for Common Systems (常见系统的哈密顿量)
-//   Section 6.5: Phase Space and Phase Portraits (相空间与相图)
+// Chapter 7: Hamilton's Equations (哈密顿方程)
+//   Section 7.1: Legendre Transformation (勒让德变换)
+//   Section 7.2: Hamiltonian Function (哈密顿函数)
+//   Section 7.3: Canonical Equations of Motion (正则运动方程)
+//   Section 7.4: Hamiltonian for Common Systems (常见系统的哈密顿量)
+//   Section 7.5: Phase Space and Phase Portraits (相空间与相图)
 
-// Chapter 7: Canonical Transformations (正则变换)
-//   Section 7.1: Generating Functions (生成函数)
-//   Section 7.2: Types of Generating Functions (生成函数的类型)
-//   Section 7.3: Conditions for Canonical Transformations (正则变换的条件)
-//   Section 7.4: Poisson Brackets (泊松括号)
-//   Section 7.5: Invariants under Canonical Transformations (正则变换下的不变量)
-//   Section 7.6: Symplectic Structure (辛结构)
+// Chapter 8: Canonical Transformations (正则变换)
+//   Section 8.1: Generating Functions (生成函数)
+//   Section 8.2: Types of Generating Functions (生成函数的类型)
+//   Section 8.3: Conditions for Canonical Transformations (正则变换的条件)
+//   Section 8.4: Poisson Brackets (泊松括号)
+//   Section 8.5: Invariants under Canonical Transformations (正则变换下的不变量)
+//   Section 8.6: Symplectic Structure (辛结构)
 
-// Chapter 8: Hamilton-Jacobi Theory (哈密顿-雅可比理论)
-//   Section 8.1: Hamilton-Jacobi Equation (哈密顿-雅可比方程)
-//   Section 8.2: Separation of Variables (分离变量法)
-//   Section 8.3: Action-Angle Variables (作用量-角变量)
-//   Section 8.4: Complete Integrals and Characteristics (完全积分与特征线)
-//   Section 8.5: Applications to Central Force Problems (在中心力问题中的应用)
+// Chapter 9: Hamilton-Jacobi Theory (哈密顿-雅可比理论)
+//   Section 9.1: Hamilton-Jacobi Equation (哈密顿-雅可比方程)
+//   Section 9.2: Separation of Variables (分离变量法)
+//   Section 9.3: Action-Angle Variables (作用量-角变量)
+//   Section 9.4: Complete Integrals and Characteristics (完全积分与特征线)
+//   Section 9.5: Applications to Central Force Problems (在中心力问题中的应用)
 
+// =========================================================================
 // --- Part IV: Advanced Topics (进阶主题) ---
+// =========================================================================
 
-// Chapter 9: Liouville's Theorem and Statistical Mechanics (刘维尔定理与统计力学)
-//   Section 9.1: Liouville's Theorem (刘维尔定理)
-//   Section 9.2: Phase Space Volume Conservation (相空间体积守恒)
-//   Section 9.3: Ergodicity and Mixing (遍历性与混合)
-//   Section 9.4: Poincaré Recurrence Theorem (庞加莱回归定理)
+// Chapter 10: Liouville's Theorem and Statistical Mechanics (刘维尔定理与统计力学)
+//   Section 10.1: Liouville's Theorem (刘维尔定理)
+//   Section 10.2: Phase Space Volume Conservation (相空间体积守恒)
+//   Section 10.3: Ergodicity and Mixing (遍历性与混合)
+//   Section 10.4: Poincaré Recurrence Theorem (庞加莱回归定理)
 
-// Chapter 10: Perturbation Theory (微扰理论)
-//   Section 10.1: Time-independent Perturbation Theory (不含时微扰理论)
-//   Section 10.2: Time-dependent Perturbation Theory (含时微扰理论)
-//   Section 10.3: Adiabatic Invariants (绝热不变量)
-//   Section 10.4: Canonical Perturbation Theory (正则微扰理论)
+// Chapter 11: Perturbation Theory (微扰理论)
+//   Section 11.1: Time-independent Perturbation Theory (不含时微扰理论)
+//   Section 11.2: Time-dependent Perturbation Theory (含时微扰理论)
+//   Section 11.3: Adiabatic Invariants (绝热不变量)
+//   Section 11.4: Canonical Perturbation Theory (正则微扰理论)
 
-// Chapter 11: Integrable Systems (可积系统)
-//   Section 11.1: Complete Integrability (完全可积性)
-//   Section 11.2: Lax Pairs (Lax对)
-//   Section 11.3: Inverse Scattering Method (逆散射方法)
-//   Section 11.4: Examples of Integrable Systems (可积系统示例)
+// Chapter 12: Integrable Systems (可积系统)
+//   Section 12.1: Complete Integrability (完全可积性)
+//   Section 12.2: Lax Pairs (Lax对)
+//   Section 12.3: Inverse Scattering Method (逆散射方法)
+//   Section 12.4: Examples of Integrable Systems (可积系统示例)
 
-// Chapter 12: Stability and Chaos (稳定性与混沌)
-//   Section 12.1: Linear Stability Analysis (线性稳定性分析)
-//   Section 12.2: Lyapunov Exponents (李雅普诺夫指数)
-//   Section 12.3: Poincaré Sections (庞加莱截面)
-//   Section 12.4: Bifurcations (分岔)
-//   Section 12.5: Routes to Chaos (通向混沌的道路)
+// Chapter 13: Stability and Chaos (稳定性与混沌)
+//   Section 13.1: Linear Stability Analysis (线性稳定性分析)
+//   Section 13.2: Lyapunov Exponents (李雅普诺夫指数)
+//   Section 13.3: Poincaré Sections (庞加莱截面)
+//   Section 13.4: Bifurcations (分岔)
+//   Section 13.5: Routes to Chaos (通向混沌的道路)
 
+// =========================================================================
 // --- Part V: Relativistic and Field Extensions (相对论与场的推广) ---
+// =========================================================================
 
-// Chapter 13: Relativistic Mechanics (相对论力学)
-//   Section 13.1: Relativistic Lagrangian (相对论拉格朗日量)
-//   Section 13.2: Relativistic Hamiltonian (相对论哈密顿量)
-//   Section 13.3: Electromagnetic Interactions (电磁相互作用)
-//   Section 13.4: Covariant Formulation (协变形式)
+// Chapter 14: Relativistic Mechanics (相对论力学)
+//   Section 14.1: Relativistic Lagrangian (相对论拉格朗日量)
+//   Section 14.2: Relativistic Hamiltonian (相对论哈密顿量)
+//   Section 14.3: Electromagnetic Interactions (电磁相互作用)
+//   Section 14.4: Covariant Formulation (协变形式)
 
-// Chapter 14: Classical Field Theory (经典场论)
-//   Section 14.1: Lagrangian Density (拉格朗日密度)
-//   Section 14.2: Field Equations from Variational Principle (从变分原理推导场方程)
-//   Section 14.3: Noether's Theorem for Fields (场的诺特定理)
-//   Section 14.4: Stress-Energy Tensor (应力-能量张量)
-//   Section 14.5: Examples: Scalar and Electromagnetic Fields (示例：标量场与电磁场)
-
-// 结构说明：
-// 本目录分为五个部分，共14章。Part I 建立变分法与广义坐标的数学基础；Part II 系统阐述拉格朗日力学，从方程推导到守恒律再到具体应用；Part III 深入哈密顿力学，包括正则变换与哈密顿-雅可比理论；Part IV 涵盖刘维尔定理、微扰理论、可积系统与混沌等进阶主题；Part V 将分析力学推广至相对论与经典场论。整体编排遵循从基础到进阶、从有限自由度到无限自由度的逻辑主线。
-
+// Chapter 15: Classical Field Theory (经典场论)
+//   Section 15.1: Lagrangian Density (拉格朗日密度)
+//   Section 15.2: Field Equations from Variational Principle (从变分原理推导场方程)
+//   Section 15.3: Noether's Theorem for Fields (场的诺特定理)
+//   Section 15.4: Stress-Energy Tensor (应力-能量张量)
+//   Section 15.5: Examples: Scalar and Electromagnetic Fields (示例：标量场与电磁场)
 
