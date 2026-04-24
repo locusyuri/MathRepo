@@ -30,7 +30,7 @@ Some notations are used throughout this book:
 - $bb(Q)$: Set of rational numbers.
 - $bb(R)$: Set of real numbers.
 
-#part("Naïve Set Theory")
+#part("Foundations of Set Theory")
 
 = Naïve Set Theory
 
@@ -174,16 +174,16 @@ There are several special types of mappings:
 
 Mappings can be classified based on their behavior:
 
-- *Injective (One-to-One)*: A mapping $f: X -> Y$ is *injective* if for every $x_1, x_2 in X$, $f(x_1) = f(x_2)$ -> $x_1 = x_2$.
+- *Injective (One-to-One)*: A mapping $f: X -> Y$ is *injective* if for every $x_1, x_2 in X$, $f(x_1) = f(x_2) => x_1 = x_2$.
 - *Surjective (Onto)*: A mapping $f: X -> Y$ is *surjective* if for every $y in Y$, there exists an $x in X$ such that $f(x) = y$.
 - *Bijective*: A mapping $f: X -> Y$ is *bijective* if it is both injective and surjective.
 
 For $A subset X$, let
 
 $
-  chi_A(x) = cases(
-    1, & x in A,
-    0, & x in.not A,
+  chi_A (x) = cases(
+    1\, quad  x in A\, ,
+    0\, quad  x in.not A.
   )
 $
 
@@ -209,7 +209,7 @@ be the *characteristic function* of set $A$.
   However, an extension typically requires the extended mapping to satisfy certain properties, such as continuity or differentiability.
 ]
 
-#part("Zermelo-Fraenkel Set Theory")
+
 
 = Zermelo-Fraenkel Set Theory
 
@@ -280,7 +280,7 @@ be the *characteristic function* of set $A$.
 
 == Von Neumann-Bernays-Gödel Set Theory
 
-#part("Ordinals")
+#part("Ordinals and Cardinals")
 
 = Ordinals
 
@@ -313,14 +313,25 @@ be the *characteristic function* of set $A$.
   The well-ordering theorem is an equivalent formulation of the axiom of choice and is unprovable in ZF.
 ]
 
-#table(
-  columns: 7,
-  [Binary Relation], [Reflexive], [Symmetric], [Antisymmetric], [Transitive], [Connected], [Well-founded],
-  [Equivalence], [show.math.checkmark], [show.math.checkmark], [], [show.math.checkmark], [], [],
-  [Preorder], [show.math.checkmark], [], [], [show.math.checkmark], [], [],
-  [Partial Order], [show.math.checkmark], [], [show.math.checkmark], [show.math.checkmark], [], [],
-  [Total Order], [show.math.checkmark], [], [show.math.checkmark], [show.math.checkmark], [show.math.checkmark], [],
-  [Well-Order], [show.math.checkmark], [], [show.math.checkmark], [show.math.checkmark], [show.math.checkmark], [show.math.checkmark],
+#tex-table(
+  (
+    [Binary Relation], [Reflexive], [Symmetric], [Antisymmetric], [Transitive], [Connected], [Well-founded],
+  ),
+  (
+    [Equivalence], [$checkmark$], [$checkmark$], [], [$checkmark$], [], [],
+  ),
+  (
+    [Preorder], [$checkmark$], [], [], [$checkmark$], [], [],
+  ),
+  (
+    [Partial Order], [$checkmark$], [], [$checkmark$], [$checkmark$], [], [],
+  ),
+  (
+    [Total Order], [$checkmark$], [], [$checkmark$], [$checkmark$], [$checkmark$], [],
+  ),
+  (
+    [Well-Order], [$checkmark$], [], [$checkmark$], [$checkmark$], [$checkmark$], [$checkmark$],
+  ),
 )
 
 == Ordinal Numbers
@@ -394,7 +405,7 @@ Ordinals can be classified into three types:
   where $n$ is a positive integer, $c_1, c_2, dots, c_n$ are positive integers, and $beta_1 > beta_2 > dots > beta_n$ are ordinals.
 ]
 
-#part("Cardinals")
+
 
 = Cardinals
 
@@ -411,7 +422,7 @@ Ordinals can be classified into three types:
 
   - $aleph_0$ is the cardinality of the set of natural numbers $bb(N)$.
   - For any ordinal $alpha$, $aleph_(alpha + 1)$ is the least cardinal number greater than $aleph_alpha$.
-  - For any limit ordinal $lambda$, $aleph_lambda = sup{{aleph_beta | beta < lambda}}$.
+  - For any limit ordinal $lambda$, $aleph_lambda = sup{aleph_beta | beta < lambda}$.
 ]
 
 #theorem(name: "Cantor-Bernstein-Schröder Theorem")[
@@ -440,7 +451,7 @@ Ordinals can be classified into three types:
 
 == Cofinality
 
-#part("Real Numbers")
+#part("Real Numbers and Point Sets in Euclidean Space")
 
 = Real Numbers
 
@@ -536,14 +547,14 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
   Let $E$ be a subset of the Euclidean space $bb(R)^n$.
 
   - The *derived set* of $E$, denoted by $E'$, is the set of all accumulation points of $E$.
-  - The *interior* of set $E$, denoted by $"int"(E)$, or $E^circle$, is the set of all interior points of $E$.
-  - The *boundary* of set $E$, denoted by $partial E$, is the set of all boundary points of $E$, or equivalently, $partial E = overline(E) backslash E^circle$.
+  - The *interior* of set $E$, denoted by $"int"(E)$, or $E^circle.tiny$, is the set of all interior points of $E$.
+  - The *boundary* of set $E$, denoted by $partial E$, is the set of all boundary points of $E$, or equivalently, $partial E = overline(E) backslash E^circle.tiny$.
   - The *closure* of set $E$, denoted by $overline(E)$, is the union of $E$ and its accumulation points, i.e., $overline(E) = E union E'$.
 ]
 
 #property[
-  - $(E^circle)^c = overline(E^c)$, $(overline(E))^c = E^circle$.
-  - Let $A subset B$, then $A' subset B'$, $E^circle(A) subset E^circle(B)$ and $overline(A) subset overline(B)$.
+  - $(E^circle.tiny)^c = overline(E^c)$, $(overline(E))^c = E^circle.tiny$.
+  - Let $A subset B$, then $A' subset B'$, $E^circle.tiny (A) subset E^circle.tiny (B)$ and $overline(A) subset overline(B)$.
   - $(A union B)' = A' union B'$.
 ]
 
@@ -621,7 +632,7 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
 The endpoints of the intervals in the construction of the Cantor set can be represented in base $3$ as:
 
 $
-  0 = 0_3, quad 1/3 = 0.1..._3 = 0.0222..._3, quad 2/3 = 0.2..._3,
+  0 = 0_3, quad 1/3 = 0.1..._3 = 0.0222..._3, quad 2/3 = 0.2..._3, \
   quad 1/9 = 0.01..._3 = 0.0022..._3, quad 2/9 = 0.02..._3, quad 7/9 = 0.21..._3, quad 8/9 = 0.22..._3,
   quad dots
 $
@@ -631,12 +642,15 @@ The common feature of these endpoints is that *they either have a finite number 
 The number of these endpoints is countable, but there are many other non-endpoint points in the Cantor set, such as $1/4 = 0.02020202..._3$ and $4/13 = 0.002200220022..._3$, and the number of these points is uncountable.
 
 #property[
-  Denote by $C_n$ the set obtained after the $n$-th step of the construction process, then $C = inter_(n=0)^infinity C_n$, and each $C_n$ is a union of $2^n$ closed intervals of length $3^(-n)$.
+  Denote by $C_n$ the set obtained after the $n$-th step of the construction process, then 
+  $
+  C = inter.big_(n=0)^infinity C_n,
+  $
+  and each $C_n$ is a union of $2^n$ closed intervals of length $3^(-n)$.
   1. $C$ is uncountable, and has the same cardinality as the interval $[0, 1]$.
   2. $C$ is a closed set not containing any interval, i.e., $C$ is a perfect nowhere dense set.
 ]
 
-#part("Special Classes of Sets")
 
 = Special Classes of Sets
 
