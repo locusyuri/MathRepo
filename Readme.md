@@ -5,14 +5,16 @@
 ------
 
 # Structure | 目录结构
-This is a repository for mathematical notes. The directory structure is as follows (folders with ~~strike through~~ are under construction):
+This repository collects bilingual mathematics notes organized by subject. The list below reflects the current folder tree; folders shown with ~~strike through~~ are still under construction.
 
 ## 1.Analyse | 分析学
-- [Analyse Complexe | 复分析](./1.Analyse/Analyse%20Complexe/tmp/initial.pdf)
+- [Analyse Complexe | 复分析](./1.Analyse/Analyse%20Complexe/initial.pdf)
 - [Analyse Harmonique | 调和分析](./1.Analyse/Analyse%20Harmonique/tmp/initial.pdf)
+- [Analyse Fonctionnelle | 泛函分析](./1.Analyse/Analyse%20Fonctionnelle/initial.pdf)
 - [Analyse Mathématique | 数学分析](./1.Analyse/Analyse%20Mathématique/tmp/initial.pdf)
-- [Analyse Réelle | 实分析](./1.Analyse/Analyse%20Réelle/tmp/initial.pdf)
+- [Analyse Réelle | 实分析](./1.Analyse/Analyse%20Réelle/initial.pdf)
 - [Équation Différentielle Ordinaire | 常微分方程](./1.Analyse/Équation%20Différentielle%20Ordinaire/tmp/initial.pdf)
+- [Équations aux Dérivées Partielles | 偏微分方程](./1.Analyse/Équations%20aux%20Dérivées%20Partielles/initial.pdf)
 
 
 ## 2.Algèbre | 代数学
@@ -24,13 +26,13 @@ This is a repository for mathematical notes. The directory structure is as follo
 
 ## 3.Géométrie | 几何学
 - [Géométrie Analytique | 解析几何](./3.Géométrie/Géométrie%20Analytique/tmp/initial.pdf)
-- ~~[Topologie Algébrique  | 代数拓扑]()~~
+- [Topologie Algébrique  | 代数拓扑](./3.Géométrie/Topologie%20Algébrique/initial.pdf)
 - [Topologie Générale | 点集拓扑](./3.Géométrie/Topologie%20Générale/tmp/initial.pdf)
 
 ## 4.Mathématiques discrètes | 离散数学
 - [Combinatoire | 组合数学](./4.Mathématiques%20discrètes/Combinatoire/tmp/initial.pdf)
 - [Logique Mathématique | 数理逻辑](./4.Mathématiques%20discrètes/Logique%20Mathématique/tmp/initial.pdf)
-- [Théorie des Ensembles | 集合论](./4.Mathématiques%20discrètes/Théorie%20des%20Ensembles/tmp/initial.pdf)
+- [Théorie des Ensembles | 集合论](./4.Mathématiques%20discrètes/Théorie%20des%20Ensembles/initial.pdf)
 - [Théorie des Graphes | 图论](./4.Mathématiques%20discrètes/Théorie%20des%20Graphes/tmp/initial.pdf)
 
 ## 5.Statistiques | 统计学
@@ -40,13 +42,10 @@ This is a repository for mathematical notes. The directory structure is as follo
 
 
 ## 6.Mathématiques appliquées | 应用数学
-- [Électromagnétisme | 电磁学](./6.Mathématiques%20appliquées/Électromagnétisme/tmp/initial.pdf)
+- [Électrodynamique | 电动力学](./6.Mathématiques%20appliquées/Électrodynamique/initial.pdf)
 - [Latex | Latex 教程](./6.Mathématiques%20appliquées/Latex/tmp/initial.pdf)
-- [Mécanique | 力学](./6.Mathématiques%20appliquées/Mécanique/tmp/initial.pdf)
-- [Mécanique quantique | 量子力学](./6.Mathématiques%20appliquées/Mécanique%20quantique/tmp/initial.pdf)
-- [Optique | 光学](./6.Mathématiques%20appliquées/Optique/tmp/initial.pdf)
-- [Relativité | 相对论](./6.Mathématiques%20appliquées/Relativité/tmp/initial.pdf)
-- [Théorie des Champs | 场论](./6.Mathématiques%20appliquées/Théorie%20des%20Champs/tmp/initial.pdf)
+- [Mécanique analytique | 分析力学](./6.Mathématiques%20appliquées/Mécanique%20analytique/initial.pdf)
+- [Mécanique quantique | 量子力学](./6.Mathématiques%20appliquées/Mécanique%20quantique/initial.pdf)
 
 
 ---
