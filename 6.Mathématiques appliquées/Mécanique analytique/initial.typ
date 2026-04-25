@@ -29,8 +29,258 @@
 
 = Kinematics of Particles and Particle Systems // 质点与质点系
 == Kinematic Attributes of Point Particles // 质点的运动学属性
+
+Kinematics describes motion without asking what causes it.
+For a point particle, the basic data are position, velocity, and acceleration as functions of time.
+
+#definition(name: "Point Particle and Trajectory")[
+  A point particle is modeled by its position vector
+
+  $
+    bold(r) = bold(r)(t) in bb(R)^3.
+  $
+
+  The geometric curve traced by $bold(r)(t)$ is the trajectory.
+]
+
+#definition(name: "Velocity and Acceleration")[
+  The velocity and acceleration are
+
+  $
+    bold(v) = frac(dif bold(r), dif t), quad bold(a) = frac(dif bold(v), dif t) = frac(dif^2 bold(r), dif t^2).
+  $
+
+  Their magnitudes are the speed $|bold(v)|$ and acceleration magnitude $|bold(a)|$.
+]
+
+=== Cartesian Representation
+
+In Cartesian coordinates,
+
+$
+  bold(r)(t) = x(t) bold(e_x) + y(t) bold(e_y) + z(t) bold(e_z),
+$
+
+so
+
+$
+  bold(v) = dot(x) bold(e_x) + dot(y) bold(e_y) + dot(z) bold(e_z),
+  quad
+  bold(a) = dot.double(x) bold(e_x) + dot.double(y) bold(e_y) + dot.double(z) bold(e_z).
+$
+
+Each coordinate evolves independently at the kinematic level.
+
+=== Plane Polar Representation
+
+For planar motion, let $(r, theta)$ be polar coordinates. Then
+
+$
+  bold(v) = dot(r) bold(e_r) + r dot(theta) bold(e_theta),
+$
+
+$
+  bold(a) = (dot.double(r) - r dot(theta)^2) bold(e_r) + (r dot.double(theta) + 2 dot(r) dot(theta)) bold(e_theta).
+$
+
+#note[
+  This decomposition is crucial later:
+  radial and tangential components naturally match force decomposition in central-force problems.
+]
+
+=== Arc-Length and Tangential-Normal Decomposition
+
+Let $s$ be arc length along the trajectory and $rho$ the local radius of curvature. Then
+
+$
+  v = frac(dif s, dif t),
+  quad
+  bold(v) = frac(dif s, dif t),
+  quad
+  bold(a) = dot(bold(v)) bold(hat(t)) + frac(|bold(v)|^2, rho) bold(hat(n)),
+$
+
+where $bold(hat(t))$ and $bold(hat(n))$ are unit tangent and principal normal vectors.
+
+#proposition(name: "Uniform Circular Motion")[
+  For motion on a circle of radius $R$ with constant angular speed $omega$,
+
+  $
+    |bold(v)| = R omega,
+    quad
+    |bold(a)| = R omega^2,
+  $
+
+  and acceleration points toward the center.
+]
+
+=== Relative Motion and Frame Shift (Galilean Form)
+
+If two inertial frames differ by constant relative velocity $u$, then
+
+$
+  bold(r)' = bold(r) - bold(u) t - bold(r_0),
+  quad
+  bold(v)' = bold(v) - bold(u),
+  quad
+  bold(a)' = bold(a).
+$
+
+So acceleration is invariant under Galilean transformation, which prepares the ground for Newton's second law in the next chapter.
+
 == Rigid Body Kinematics: Translation and Rotation // 刚体平动与转动
+
+A rigid body is a mechanical system whose internal distances remain constant during motion.
+Its kinematics is therefore determined by the motion of one reference point and by the body's orientation.
+
+#definition(name: "Rigid Body Motion")[
+  Let $bold(r_A)(t)$ and $bold(r_B)(t)$ be the positions of two points $A$ and $B$ of the same body.
+  The rigid-body condition is
+
+  $
+    |bold(r_A) - bold(r_B)| = "const".
+  $
+
+  Equivalently, the distance between any two material points is preserved in time.
+]
+
+=== Translation of a Rigid Body
+
+If every point of the body has the same velocity, the motion is a pure translation.
+In that case, the velocity and acceleration of any point coincide with those of a chosen reference point.
+
+#proposition(name: "Pure Translation")[
+  Suppose the position of every point $P$ of the body can be written as
+
+  $
+    bold(r)_P(t) = bold(R)(t) + bold(r)_P^0,
+  $
+
+  where $bold(r)_P^0$ is fixed in the body frame.
+  Then
+
+  $
+    bold(v)_P = dot bold(R), quad bold(a)_P = dot.double bold(R),
+  $
+
+  so all points share the same translational motion.
+]
+
+=== Rotation about a Fixed Point
+
+If the body rotates around a fixed point $O$, then the position of each point can be described by a rotation matrix or, equivalently, by an angular velocity vector.
+
+#definition(name: "Angular Velocity")[
+  The angular velocity $bold(omega)$ is the vector whose direction is given by the right-hand rule and whose magnitude is the instantaneous rotation rate.
+]
+
+For a point with position vector $bold(r)$ measured from the rotation center, the velocity is
+
+
+$
+  bold(v) = bold(omega) times bold(r).
+$
+
+Differentiating once more gives the acceleration decomposition
+
+
+$
+  bold(a) = dot(bold(omega)) times bold(r) + bold(omega) times (bold(omega) times bold(r)).
+$
+
+The first term is tangential, and the second term is centripetal.
+
+=== General Rigid-Body Motion
+
+The most general rigid-body motion is the sum of a translation of a reference point and a rotation about that point.
+
+$
+  bold(r)_P(t) = bold(R)(t) + cal(R)(t) bold(r)_P^0,
+$
+
+where $cal(R)(t)$ is a rotation operator.
+
+#note[
+  This decomposition is the kinematic backbone of rigid-body dynamics.
+  Later, Lagrangian methods will convert it into equations of motion and conservation laws.
+]
+
 == Correspondence between Linear and Angular Quantities // 线量与角量的对应
+
+Rigid-body rotation becomes especially transparent once we pair linear quantities with their angular analogues.
+The main point is that many formulas in translation and rotation have exactly the same algebraic structure.
+
+=== Linear and Angular Pairing
+
+For a point at distance $rho$ from the axis of rotation,
+
+$
+  s = rho theta,
+  quad
+  v = rho omega,
+  quad
+  a_t = rho alpha,
+  quad
+  a_n = rho omega^2,
+$
+
+where $theta$ is the angular displacement, $omega = dot(theta)$ the angular velocity, and $alpha = dot(omega)$ the angular acceleration.
+
+#table(
+  columns: 2,
+  inset: 6pt,
+  align: left,
+  [*Translational quantity*], [*Rotational analogue*],
+  [$bold(r)$], [$theta$],
+  [$bold(v) = dot(bold(r))$], [$omega = dot(theta)$],
+  [$bold(a)$], [$alpha = dot(omega)$],
+  [$bold(F)$], [$tau$],
+  [$m$], [$I$],
+  [$bold(p) = m bold(v)$], [$J = I omega$],
+  [$bold(k) = frac(1,2) m |bold(v)|^2$], [$K = frac(1,2) I omega^2$],
+)
+
+#proposition(name: "Translational-Rotational Correspondence")[
+  For a rigid body rotating about a fixed axis, the following dictionary holds:
+
+  $ 
+    bold(v) <-> rho omega, quad
+    bold(a) <-> rho alpha, quad
+    bold(F) <-> tau, quad
+    m <-> I.
+  $
+
+  Under this correspondence, the formulas for momentum, work, and kinetic energy take the same form in linear and angular variables.
+]
+
+=== Work and Kinetic Energy
+
+The infinitesimal work done by a torque is
+
+$
+  dif W = tau dif theta,
+$
+
+just as the infinitesimal work done by a force is
+
+$
+  dif W = bold(F) dot dif bold(r).
+$
+
+Likewise, the rotational kinetic energy of a rigid body is
+
+$
+  K = frac(1,2) I omega^2,
+$
+
+which is formally identical to the translational expression $frac(1,2) m |bold(v)|^2$.
+
+=== Why This Correspondence Matters
+
+#note[
+  This chapter is designed as a bridge.
+  The next chapter will turn Newton's second law and the fixed-axis rotation law into the dynamical counterpart of the kinematic dictionary above.
+]
 
 = Newton's Laws and Rigid Body Rotational Dynamics // 牛顿运动定律与刚体转动定律
 == Newton's Three Laws // 牛顿三大定律
