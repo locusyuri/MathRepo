@@ -31,6 +31,15 @@
 #part("Complex Integration") // 复积分
 #include "chapters/ComplexIntegral.typ" // 复积分
 
+#part("Series") // 级数
+#include "chapters/Series.typ" // 级数
+
+#part("Conformal Mapping and Analytic Continuation") // 共形映射与解析延拓
+#include "chapters/ConformalMapping.typ" // 共形映射与解析延拓
+
+#part("Special Functions") // 特殊函数
+
+#part("Advanced Topics") // 进阶主题
 
 
 
@@ -85,7 +94,7 @@
 //   Section 6.4: Identity Theorem (恒等定理)
 //   Section 6.5: Weierstrass Convergence Theorem (魏尔斯特拉斯收敛定理)
 
-// --- Part III: Series Representations (级数表示) ---
+// --- Part III: Series (级数) ---
 
 // Chapter 7: Power Series (幂级数)
 //   Section 7.1: Convergence of Power Series (幂级数的收敛性)
@@ -109,7 +118,7 @@
 //   Section 9.4: Integrals with Branch Cuts (含割线的积分)
 //   Section 9.5: Summation of Series (级数求和)
 
-// --- Part IV: Conformal Mapping (共形映射) ---
+// --- Part IV: Conformal Mapping and Analytic Continuation (共形映射与解析延拓) ---
 
 // Chapter 10: Theory of Conformal Mapping (共形映射理论)
 //   Section 10.1: Conformal Mapping and Analytic Functions (共形映射与解析函数)
@@ -125,8 +134,6 @@
 //   Section 11.4: Mappings of the Upper Half-Plane (上半平面的映射)
 //   Section 11.5: Applications to Potential Theory (在势论中的应用)
 
-// --- Part V: Analytic Continuation (解析延拓) ---
-
 // Chapter 12: Analytic Continuation (解析延拓)
 //   Section 12.1: Direct Analytic Continuation (直接解析延拓)
 //   Section 12.2: Analytic Continuation along a Curve (沿曲线的解析延拓)
@@ -135,7 +142,7 @@
 //   Section 12.5: Riemann Surfaces (黎曼曲面)
 //   Section 12.6: Schwarz Reflection Principle (施瓦茨反射原理)
 
-// --- Part VI: Special Functions (特殊函数) ---
+// --- Part V: Special Functions (特殊函数) ---
 
 // Chapter 13: Gamma and Beta Functions (伽马函数与贝塔函数)
 //   Section 13.1: Gamma Function (伽马函数)
@@ -158,7 +165,7 @@
 //   Section 15.4: Elliptic Integrals (椭圆积分)
 //   Section 15.5: Applications (应用)
 
-// --- Part VII: Advanced Topics (进阶主题) ---
+// --- Part VI: Advanced Topics (进阶主题) ---
 
 // Chapter 16: Entire and Meromorphic Functions (整函数与亚纯函数)
 //   Section 16.1: Weierstrass Factorization Theorem (魏尔斯特拉斯分解定理)

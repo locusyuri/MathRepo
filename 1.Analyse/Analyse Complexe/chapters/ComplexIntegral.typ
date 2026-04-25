@@ -50,7 +50,7 @@ $
 $
 - Let $C$ be any curve connecting $a$ and $b$, then
 $
-    integral_C z "d"z = frac{b^2 - a^2}{2}.
+    integral_C z "d"z = (b^2 - a^2)/2.
 $
 - Let $C$ be a circle centered at the origin with radius $r$ and let $n in bb(C)$, then
 $
@@ -64,7 +64,7 @@ $
 == Cauchy-Goursat Theorem // 柯西-古尔萨定理
 
 #theorem(name: "Cauchy-Goursat Theorem")[
-    If $f(z)$ is analytic in a simply connected domain $D$ and $C$ is a closed curve in $D$, then
+    If $f(z)$ is analytic in a simply connected domain $D$ and $C$ is a simple closed curve in $D$, then
     $
         integral_C f(z) "d"z = 0.
     $
@@ -72,7 +72,8 @@ $
 
 == Cauchy Integral Formula // 柯西积分公式
 #theorem(name: "Cauchy Integral Formula")[
-    If $f(z)$ is analytic in a simply connected domain $D$ and $C$ is a closed curve in $D$ that encloses a point $z_0$, then
+    If $f(z)$ is analytic in a simply connected domain $D$ and continuous on $partial D$, and
+    $C$ is a simple closed curve in $D$ that encloses a point $z_0$ (usually take $partial D$), then
     $
         f(z_0) = 1/(2 pi"i") integral_C f(z)/(z - z_0) "d"z.
     $
