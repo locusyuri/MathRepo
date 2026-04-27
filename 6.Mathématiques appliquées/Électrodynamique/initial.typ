@@ -25,7 +25,119 @@
 #make-outline(depth: 2, title: "Contents")
 
 
-#part("Basic Real Analysis") // 基础实分析
+#part("Mathematical Foundations") // 数学基础
+
+= Vector Analysis and Field Theory // 矢量分析与场论
+
+== Divergence and Curl // 散度与旋度
+// 在物理中, 我们通常只考虑三维空间中的矢量场, 下面给出场的定义
+In physics, we typically focus on vector fields in three-dimensional space $RR^3 subset Omega$. A *vector field* / *scalar field* assigns a vector/scalar to every point in space, and it can represent various physical quantities such as velocity, force, or electromagnetic fields/temperature, pressure, etc.
+
+If a field does not explicitly depend on time, we call it a *static field*; otherwise, it is a *time-varying field*.
+
+// 显然, 任何 Omega 上的三元函数都可以看作其上的一个标量场. 若其有连续偏导数, 则其梯度 xxx 为一个矢量场, 称之为一个梯度场.
+Obviously, any scalar function $f(x, y, z)$ defined on $Omega$ can be considered a scalar field. If it has continuous partial derivatives, its gradient 
+$
+gradient f = bold("grad") f = ( (partial f)/(partial x), (partial f)/(partial y), (partial f)/(partial z) )
+$ 
+is a vector field, known as a *gradient field*.
+
+Let
+$
+  bold(a) = P(x, y, z) bold(i) + Q(x, y, z) bold(j) + R(x, y, z) bold(k), quad (x, y, z) in Omega,
+$
+be a vector field defined on $Omega$ and $P, Q, R in C^1(Omega)$.
+
+=== Flux and Divergence
+// 为了判定场中的点是源还是汇, 以及源的强弱和汇的大小, 我们引入通量和散度.
+To determine whether a point is a source or a sink, and to determine the strength and size of the source and sink, we introduce flux and divergence.
+
+#definition(name: "Divergence")[
+Let $harpoon(Sigma)$ be an oriented surface in $Omega$, then the *flux* of $bold(a)$ through $harpoon(Sigma)$ is defined as
+$
+  Phi = integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_harpoon(Sigma) (P dif y dif z + Q dif z dif x + R dif x dif y) dif bold(Sigma).
+$
+Let $M$ be a point in $Omega$, then the *divergence* of $bold(a)$ at $M$ is defined as
+$
+  "div" bold(a)(M) = (partial P)/(partial x) (M) + (partial Q)/(partial y) (M) + (partial R)/(partial z) (M),
+$
+denoted as $div bold(a)$. 
+]
+If $"div" bold(a) > 0$, we say that $M$ is a *source* of the field; if $"div" bold(a) < 0$, we say that $M$ is a *sink* of the field; if $"div" bold(a) = 0$, we say that $M$ is a *saddle point* of the field; if $"div" bold(a) = 0$ for all points in $Omega$, we say that $bold(a)$ is a *solenoidal field*.
+
+#theorem[
+  The divergence of $bold(a)$ is the rate of change of the flux of $bold(a)$ regarding the volume of $harpoon(Sigma)$, i.e.,
+$
+  "div" bold(a)(M) = lim_(V -> 0)  (integral.double_Sigma bold(a) dot dif bold(Sigma)) / V.
+$
+]
+
+// 向量线
+Let $Gamma$ be a curve in $Omega$. If $bold(a)$ is a vector field defined on $Omega$, then the *vector line* of $bold(a)$ is defined as the curve $Gamma$ such that at every point on $Gamma$, the tangent vector of $Gamma$ is parallel to $bold(a)$. The electric field lines, magnetic field lines and electromagnetic field lines are all examples of vector lines.
+
+=== Circulation and Curl // 环量与旋度
+To determine whether a field is irrotational or solenoidal, we introduce circulation and curl.
+#definition(name: "Curl")[
+Let $harpoon(Gamma)$ be an oriented curve in $Omega$, then the *circulation* of $bold(a)$ through $harpoon(Gamma)$ is defined as
+
+$
+
+  Zeta = integral_harpoon(Gamma) bold(a) times dif bold(Gamma).
+
+$
+
+Let $M$ be a point in $Omega$, then the *curl* of $bold(a)$ at $M$ is defined as
+
+$
+
+  "curl" bold(a)(M) = ((partial R)/(partial y) - (partial Q)/(partial z)) (M) - ((partial P)/(partial x) - (partial R)/(partial z)) (M) + ((partial Q)/(partial x) - (partial P)/(partial y)) (M),
+
+$
+
+denoted as $"curl" bold(a)$ or $"rot" bold(a)$.
+]
+
+If $"curl" bold(a) = bold(0)$ for all points in $Omega$, we say that $bold(a)$ is an *irrotational field*; if $"curl" bold(a) = bold(0)$, we say that $bold(a)$ is a *solenoidal field*.
+
+#theorem[
+]
+
+=== Hamilton's Operator // 哈密尔顿算子
+The *Hamilton's operator* is defined as
+$
+  nabla = bold(i) (partial)/(partial x) + bold(j) (partial)/(partial y) + bold(k) (partial)/(partial z),
+$
+where $nabla$ is called the *del operator* or *nabla operator*.
+
+With the Hamilton's operator, we can express the gradient, divergence and curl of a vector field in a compact form:
+$
+  gradient f = 
+$
+
+
+== Conservative Fields and Potential Functions // 保守场与势函数
+
+== Helmholtz Decomposition Theorem  // 亥姆霍兹分解定理
+
+== Curvilinear Coordinates // 曲线坐标系
+
+== Dirac Delta Function // 狄拉克δ函数
+
+= Tensor Analysis // 张量分析
+== Definition and Representation of Cartesian Tensors // 笛卡尔张量的定义与表示
+== Tensor Algebraic Operations and Contraction // 张量代数运算与缩并
+== Symmetric and Antisymmetric Tensors // 对称与反对称张量
+== Principal Axis Transformation and Eigenvalues // 主轴变换与特征值
+== Moment of Inertia Tensor and Stress Tensor // 惯性矩张量与应力张量
+== Electromagnetic Field Tensors in Electrodynamics // 电动力学中的电磁场张量
+
+
+#part("Electrostatics") // 静电学
+#part("Magnetostatics") // 静磁学
+#part("Electromagnetic Induction and Time-Varying Fields") // 电磁感应与时变场
+#part("Electromagnetic Waves") // 电磁波
+#part("Potentials and Radiation") // 势与辐射
+#part("Special Relativity and Electrodynamics") // 狭义相对论与电动力学
 
 
 
@@ -38,18 +150,19 @@
 // --- Part I: Mathematical Foundations (数学基础) ---
 
 // Chapter 1: Vector Analysis and Field Theory (矢量分析与场论)
-//   Section 1.1: Vector Algebra (矢量代数)
-//   Section 1.2: Vector Calculus: Gradient, Divergence and Curl (矢量微积分：梯度、散度与旋度)
-//   Section 1.3: Line, Surface and Volume Integrals (线积分、面积分与体积分)
-//   Section 1.4: Theorems of Gauss, Stokes and Green (高斯定理、斯托克斯定理与格林定理)
+//   Section 1.2: Divergence and Curl (散度与旋度)
+//   Section 1.4: Conservative Fields and Potential Functions (保守场与势函数)
 //   Section 1.5: Helmholtz Decomposition Theorem (亥姆霍兹分解定理)
 //   Section 1.6: Curvilinear Coordinates (曲线坐标系)
 //   Section 1.7: Dirac Delta Function (狄拉克δ函数)
 
 // Chapter 2: Tensor Analysis (张量分析)
-//   Section 2.1: Cartesian Tensors (笛卡尔张量)
-//   Section 2.2: Tensor Operations and Contractions (张量运算与缩并)
-//   Section 2.3: Applications in Electrodynamics (在电动力学中的应用)
+//   Section 2.1: Definition and Representation of Cartesian Tensors (笛卡尔张量的定义与表示)
+//   Section 2.2: Tensor Algebraic Operations and Contraction (张量代数运算与缩并)
+//   Section 2.3: Symmetric and Antisymmetric Tensors (对称与反对称张量)
+//   Section 2.4: Principal Axis Transformation and Eigenvalues (主轴变换与特征值)
+//   Section 2.5: Moment of Inertia Tensor and Stress Tensor (惯性矩张量与应力张量)
+//   Section 2.6: Electromagnetic Field Tensors in Electrodynamics (电动力学中的电磁场张量)
 
 // --- Part II: Electrostatics (静电学) ---
 
