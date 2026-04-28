@@ -48,6 +48,7 @@ $
 $
 be a vector field defined on $Omega$ and $P, Q, R in C^1(Omega)$.
 
+
 === Flux and Divergence
 // 为了判定场中的点是源还是汇, 以及源的强弱和汇的大小, 我们引入通量和散度.
 To determine whether a point is a source or a sink, and to determine the strength and size of the source and sink, we introduce flux and divergence.
@@ -111,11 +112,54 @@ where $nabla$ is called the *del operator* or *nabla operator*.
 
 With the Hamilton's operator, we can express the gradient, divergence and curl of a vector field in a compact form:
 $
-  gradient f = 
+  gradient f = ((partial f)/(partial x), (partial f)/(partial y), (partial f)/(partial z)) = bold("grad") f,
 $
-
+$
+  nabla dot f = (partial P)/(partial x) + (partial Q)/(partial y) + (partial R)/(partial z) = bold("div") bold(a),
+$
+$
+  nabla times f = ((partial R)/(partial y) - (partial Q)/(partial z)) bold(i) - ((partial P)/(partial x) - (partial R)/(partial z)) bold(j) + ((partial Q)/(partial x) - (partial P)/(partial y)) bold(k) = bold("curl") a.
+$
+Obviously, we have the following identities:
+$
+  nabla dot nabla f = nabla dot (gradient f) = "div" (gradient f) = Delta f,
+$
+where $Delta f$ is the *Laplace operator*.
+Functions satisfying the *Laplace equation*
+$
+Delta f = (partial^2 f)/(partial x^2) + (partial^2 f)/(partial y^2) + (partial^2 f)/(partial z^2) = 0.
+$
+are called *harmonic functions*.
 
 == Conservative Fields and Potential Functions // 保守场与势函数
+#definition(name: "Potential Function and Conservative Field")[ // 有势场与势函数
+Let 
+$
+bold(a) = (P, Q, R), quad P, Q, R in C(Omega),
+$ 
+be a vector field defined on $Omega$.
+
+If there exists a scalar field $U$ such that $bold(a) = gradient U$, then we say that $bold(a)$ is a *potential field* and $V=-U$ is the *potential function* of $bold(a)$.
+
+In the filed $bold(a)$, if the curve integral is independent of the path, i.e., for any two curves $Gamma_1$ and $Gamma_2$ connecting the same two points in $Omega$, we have
+$
+  integral_harpoon(Gamma_1) bold(a) = integral_harpoon(Gamma_2) bold(a).
+$
+Then we say that $bold(a)$ is a *conservative field*.
+]
+
+#theorem[
+Let 
+$
+bold(a) = (P, Q, R), quad P, Q, R in C^1(Omega),
+$ 
+be a vector field defined on simply connected region $Omega$.
+The following statements are equivalent:
+1. $bold(a)$ is a conservative field.
+2. $bold(a)$ is a potential field.
+3. $bold(a)$ is an irrotational field, i.e., $"curl" bold(a) = bold(0)$.
+]
+
 
 == Helmholtz Decomposition Theorem  // 亥姆霍兹分解定理
 
@@ -133,6 +177,56 @@ $
 
 
 #part("Electrostatics") // 静电学
+= Electrostatic Field // 静电场
+== Coulomb's Law // 库仑定律
+
+#definition(name: "Coulomb's Law")[
+The *Coulomb's law* states that the electrostatic force $bold(F)$ between two point charges $q_1$ and $q_2$ separated by a distance $r$ in vacuum is given by
+$  
+bold(F) = k (q_1 q_2) / r^2 hat(r),
+$
+where $k$ is the Coulomb's constant, $hat(r)$ is the unit vector pointing from one charge to the other.
+]
+
+In SI units, the Coulomb's constant is given by $k = 8.9875517873681764 times 10^9 "N" dot "m"^2 dot "C"^(-2)$.
+For convenience, we often use the permittivity of free space $epsilon_0$ to express Coulomb's constant as 
+$
+k = 1 / (4 pi epsilon_0),
+$ 
+where $epsilon_0 = 8.854187817 times 10^(-12) "C"^2 dot "N"^(-1) dot "m"^(-2)$.
+
+== Electric Field Intensity // 电场强度
+#definition(name: "Electric Field Intensity")[
+The *electric field intensity* $bold(E)$ at a point in space is defined as the force $bold(F)$ experienced by a positive test charge $q$ placed at that point, divided by the magnitude of the test charge, i.e.,
+$  
+bold(E) = bold(F) / q.
+$
+]
+
+
+== Gauss's Law and Electric Flux // 高斯定律与电通量
+
+== Electric Potential // 电势
+
+== Poisson's Equation and Laplace's Equation // 泊松方程与拉普拉斯方程
+
+== Electrostatic Energy // 静电能
+
+= Boundary Value Problems in Electrostatics // 静电学边值问题
+== Uniqueness Theorems // 唯一性定理
+== Method of Images // 镜像法
+== Separation of Variables in Cartesian Coordinates // 直角坐标系分离变量法
+== Separation of Variables in Spherical Coordinates // 球坐标系分离变量法
+== Separation of Variables in Cylindrical Coordinates // 柱坐标系分离变量法
+== Multipole Expansion // 多极展开
+= Electrostatics in Matter // 介质中的静电学
+== Polarization and Bound Charges // 极化与束缚电荷
+== Electric Displacement // 电位移矢量
+== Linear Dielectrics // 线性电介质
+== Boundary Conditions at Dielectric Interfaces // 电介质界面边界条件
+== Energy in Dielectric Systems // 电介质系统中的能量
+
+
 #part("Magnetostatics") // 静磁学
 #part("Electromagnetic Induction and Time-Varying Fields") // 电磁感应与时变场
 #part("Electromagnetic Waves") // 电磁波
