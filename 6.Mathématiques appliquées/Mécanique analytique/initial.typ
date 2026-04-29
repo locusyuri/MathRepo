@@ -226,18 +226,17 @@ $
 
 where $theta$ is the angular displacement, $omega = dot(theta)$ the angular velocity, and $alpha = dot(omega)$ the angular acceleration.
 
-#table(
-  columns: 2,
-  inset: 6pt,
-  align: left,
-  [*Translational quantity*], [*Rotational analogue*],
-  [$bold(r)$], [$theta$],
-  [$bold(v) = dot(bold(r))$], [$omega = dot(theta)$],
-  [$bold(a)$], [$alpha = dot(omega)$],
-  [$bold(F)$], [$tau$],
-  [$m$], [$I$],
-  [$bold(p) = m bold(v)$], [$J = I omega$],
-  [$bold(k) = frac(1,2) m |bold(v)|^2$], [$K = frac(1,2) I omega^2$],
+
+
+#tex-table(
+  ("Translational quantity", "Rotational analogue"),
+  ($bold(r)$, $theta$),
+  ($bold(v) = dot(bold(r))$, $omega = dot(theta)$),
+  ($bold(a)$, $alpha = dot(omega)$),
+  ($bold(F)$, $tau$),
+  ($m$, $I$),
+  ($bold(p) = m bold(v)$, $J = I omega$),
+  ($bold(k) = frac(1,2) m |bold(v)|^2$, $K = frac(1,2) I omega^2$),
 )
 
 #proposition(name: "Translational-Rotational Correspondence")[
