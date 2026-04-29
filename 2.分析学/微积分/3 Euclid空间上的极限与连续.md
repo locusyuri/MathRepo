@@ -1,9 +1,9 @@
 以下均在n维Euclid空间上讨论
 
 # 序列的极限
-## 1 Euclid空间上的点集
+## Euclid空间上的点集
 
-### 1.1 邻域
+### 邻域
 >  <span style='background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);font-size:1.5em;font-style:normal;padding:2px;font-family:方正龙爪简体;font-weight:bold;border-radius:0 10px 0 0;box-shadow: 2px 2px 5px 3px #ccc;'>「Definition:邻域」</span>
 >  设$x_{0}\in\mathbb{R}^n,\delta>0$,称点集$\{ x\in \mathbb{R}^n|d(x,x_{0})<\delta \}$为$\mathbb{R}^n$中以$x_{0}$为中心,以$\delta$为半径的开球,也称$x_{0}$的$\delta$(球)邻域,记为$U(x_{0},\delta)$(或$B,O$)
 >   
@@ -18,7 +18,7 @@
 > 
 > 显然,$E$是有界集的充要条件是:$\exists M>0,|x|<M(\forall x)$
 
-### 1.2 聚点,内点,界点
+### 聚点,内点,界点
 >设$E$是$\mathbb{R}^n$中的一个点集(记$E^c=\mathbb{R}^n\setminus E$),$x_{0}$是$\mathbb{R}^n$中的一个定点,考察$x_{0}$与$E$的关系:
 > <span style='background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);font-size:1.5em;font-style:normal;padding:2px;font-family:方正龙爪简体;font-weight:bold;border-radius:0 10px 0 0;box-shadow: 2px 2px 5px 3px #ccc;'>「Definition:内点,外点,界点」</span>
 > 若$\exists U(x_{0}),s.t.U(x_{0})\subset E$,则称$x_{0}$为$E$的内点
@@ -75,7 +75,7 @@ end
 > 3)$(A\cup B)'=A'\cup B'$
 
 
-### 1.3 开集与闭集
+### 开集与闭集
 > <span style='background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);font-size:1.5em;font-style:normal;padding:2px;font-family:方正龙爪简体;font-weight:bold;border-radius:0 10px 0 0;box-shadow: 2px 2px 5px 3px #ccc;'>「Definition:开集与闭集」</span> 
 > 设$E\subset \mathbb{R}^n$,
 > 如果$E$的每一点都是$E$的内点,则称$E$为开集
@@ -107,7 +107,7 @@ $2^\circ$ 若$E$为闭集,则$E$的一切聚点属于$E$,即$\forall x\in E^c$,$
 >  完备集就是自密闭集,也就是没有孤立点的闭集
 
 
-## 2 收敛序列
+## 收敛序列
 > <span style='background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);font-size:1.5em;font-style:normal;padding:2px;font-family:方正龙爪简体;font-weight:bold;border-radius:0 10px 0 0;box-shadow: 2px 2px 5px 3px #ccc;'>「Definition:点列的极限」</span>
 > 设$\{ \boldsymbol{x_{i}} \}$是$\mathbb{R}^n$中的一个点列,$\boldsymbol{a}\in \mathbb{R}^n$.如果$\forall\varepsilon>0,\exists N\in \mathbb{N}^*,\forall i>N:\lvert \boldsymbol{x_{i}-a} \rvert\leqslant \varepsilon$,就称点$\boldsymbol{a}$是点列$\{ \boldsymbol{x_{i}} \}$的极限,记作$\lim_\limits{ i \to \infty }\boldsymbol{x_{i}}=\boldsymbol{a}$,也称点列$\{ \boldsymbol{x_{i}} \}$收敛于$\boldsymbol{a}$
 > 
@@ -125,7 +125,7 @@ $2^\circ$ 若$E$为闭集,则$E$的一切聚点属于$E$,即$\forall x\in E^c$,$
 
 <span style='color:#434343;background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);border-radius:7px;box-shadow: 1px 1px 30px 5px rgb(204, 204, 204, 0.52);font-family:Monotype Corsiva;font-size:2em;'>Proof :</span>
 
-## 3 实数系基本定理的推广
+## 实数系基本定理的推广
 >实数系基本定理可推广到多维Euclid空间中的有:
 ><span style='font-family:汉仪劲楷简 Regular,Stem;font-style: normal;font-weight: bold;color: #242424;text-decoration: none;text-shadow: 1px 1px 1px #eeece1;font-size:1.5em;background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%);border-radius:7px;box-shadow: 1px 1px 29px rgb(204, 204, 204, 0.68);padding:3px;'>Theorem:闭集套定理</span>
 >设$\{ S_{k} \}$为$\mathbb{R}^n$中的非空闭集序列,满足$S_{1}\supset S_{2}\supset\dots S_{k}\supset\dots$以及$\lim_\limits{ k \to \infty }\mathrm{diam}S_{k}=\lim_\limits{ k \to \infty }\sup\{ \lvert \boldsymbol{x-y} \rvert:\forall \boldsymbol{x,y}\in S_{k} \}$,则$\exists!\boldsymbol{a}\in \bigcap\limits_{k=1}^\infty S_{k}$
