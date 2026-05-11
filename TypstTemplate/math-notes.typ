@@ -124,7 +124,7 @@
 #let font-annot-text = ("Neutra Text TF", "Segoe UI", "Times New Roman")
 
 /// theorem-like 正文字体（参考 elegantbook theorem/definition/proposition 字体）
-#let font-theorem-widget = ("Stempel Garamond LT Std", "Times New Roman", "Palatino Linotype")
+#let font-theorem-widget = ("Stempel Garamond LT Pro", "Times New Roman", "Palatino Linotype")
 
 /// 等宽字体回退链
 #let font-mono = ("Consolas", "JetBrainsMono NF", "Courier New")

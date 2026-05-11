@@ -175,3 +175,24 @@ Now we present some equivalent characterizations of measurable functions that ar
   + For every $alpha in bb(R)$, the set ${x in X : f(x) < alpha} in cal(S)$.
   + For every $alpha in bb(R)$, the set ${x in X : f(x) <= alpha} in cal(S)$.
 ]
+
+
+#definition(name: "Simple Function")[
+    A *simple function* is a measurable function that takes only a finite number of distinct values. Formally, a function $s: X  -> overline(bb(R))$ is simple if there exist distinct real numbers $a_1, a_2, dots, a_n$ and *disjoint* measurable sets $A_1, A_2, dots, A_n in cal(S)$ such that
+    $
+    s(x) = sum_(i=1)^n a_i chi_(A_i)(x),
+    $
+    where $A_1 union A_2 union dots union A_n = X$ and $chi_(A_i)$ is the indicator function of the set $A_i$.
+]
+
+#note[
+// 一些教材中的定义仅要求值域为有限集合, 不要求定义域的分割集合是可测的, 但这会带来一些麻烦, 因此我们更常用上面这个定义.
+Some textbooks define a simple function as a function that takes only a finite number of distinct values, without requiring the partition sets to be measurable. However, this can lead to trouble, as we prefer to define the partition sets to be measurable.
+]
+
+#property(name: "Properties of Simple Functions")[
++ Simple functions are measurable.
+// 简单函数的和、差、积、商（分母不为零）、数乘仍然是简单函数
++ The sum, difference, product, and quotient (where the denominator is nonzero) of simple functions are still simple functions.
+
+]
