@@ -1,4 +1,5 @@
 #import "../../../TypstTemplate/math-notes.typ": *
+#import "@preview/xarrow:0.4.0": xarrow
 
 = Lebesgue Measure
 == $sigma$-Algebra and Measure // Sigma 代数和测度
@@ -156,6 +157,7 @@ $
 
 = Measurable Function
 == Definition and Properties of Measurable Functions // 可测函数的定义和性质
+=== Measurable Function // 可测函数
 #definition(name: "Measurable Function")[
     Let $(X, cal(S))$ and $(Y, cal(T))$ be measurable spaces. A function $f: X  -> Y$ is called *$cal(S)"-"cal(T)$ measurable* if for every set $B in cal(T)$, the preimage $f^(-1)(B) = {x in X : f(x) in B} in cal(S)$.
 ]
@@ -176,23 +178,116 @@ Now we present some equivalent characterizations of measurable functions that ar
   + For every $alpha in bb(R)$, the set ${x in X : f(x) <= alpha} in cal(S)$.
 ]
 
+#definition(name: "Almost Everywhere")[
+    Let $(X, cal(S), mu)$ be a measure space. A property $P(x)$ is said to hold *almost everywhere* (a.e.) if the set of points where $P$ fails to hold has measure zero, i.e., $mu({x in X : not P(x)}) = 0$, denoted by $P(x) a.e.$.
+]
+For example, 
+- *Almost everywhere continuous*: $f$ is almost everywhere continuous if $f$ is continuous at every point of $X$ except for a set of measure zero.
+- *Almost everywhere equality*: $f$ is almost everywhere equal to $g$ if $f(x) = g(x)$ for almost every $x in X$.
 
+
+=== Simple Function // 简单函数
 #definition(name: "Simple Function")[
-    A *simple function* is a measurable function that takes only a finite number of distinct values. Formally, a function $s: X  -> overline(bb(R))$ is simple if there exist distinct real numbers $a_1, a_2, dots, a_n$ and *disjoint* measurable sets $A_1, A_2, dots, A_n in cal(S)$ such that
-    $
-    s(x) = sum_(i=1)^n a_i chi_(A_i)(x),
-    $
-    where $A_1 union A_2 union dots union A_n = X$ and $chi_(A_i)$ is the indicator function of the set $A_i$.
+Let $(X, cal(S))$ be a measurable space. A function $s: X  -> overline(bb(R))$ is called a *simple function* if it takes only finitely many distinct values, i.e., there exist distinct real numbers $c_1, c_2, dots, c_n$ and disjoint sets $A_1, A_2, dots, A_n in cal(S)$ such that
+$
+s(x) = sum_(k=1)^n c_k chi_(A_k)(x),
+$
+where $A_1 union A_2 union dots union A_n = X$ and $chi_(A_k)$ is the indicator function of the set $A_k$#footnote[
+  // 换句话说, A_1, A_2, ..., A_n 是 X 的一个划分, s 在 A_k 上恒等于 c_k.
+  In other words, $A_1, A_2, ..., A_n$ are a partition of $X$, and s is constant on each $A_k$, equal to $c_k$.
+].
 ]
 
 #note[
-// 一些教材中的定义仅要求值域为有限集合, 不要求定义域的分割集合是可测的, 但这会带来一些麻烦, 因此我们更常用上面这个定义.
-Some textbooks define a simple function as a function that takes only a finite number of distinct values, without requiring the partition sets to be measurable. However, this can lead to trouble, as we prefer to define the partition sets to be measurable.
+// 在测度论中，我们更关心可测简单函数。如果上述定义中的每个集合 EiE_iEi​ 都属于 σ\sigmaσ-代数 F\mathcal{F}F（即都是可测集），那么 s(x)s(x)s(x) 就称为​F\mathcal{F}F-可测简单函数。
+In measure theory, we are more interested in measurable simple functions. If each set $A_k$ in the above definition belongs to the $sigma$-algebra $cal(S)$ (i.e., is a measurable set), then $s(x)$ is called a *$cal(S)$-measurable simple function*.
+
+// 以后我们说简单函数时, 默认都是可测简单函数.
+From now on, when we say simple functions, we will assume they are measurable simple functions by default.
 ]
 
-#property(name: "Properties of Simple Functions")[
-+ Simple functions are measurable.
-// 简单函数的和、差、积、商（分母不为零）、数乘仍然是简单函数
-+ The sum, difference, product, and quotient (where the denominator is nonzero) of simple functions are still simple functions.
 
+
+#property(name: "Algebraic Properties of Simple Functions")[
+// 线性封闭性：如果 sss 和 ttt 是简单函数，α,β∈R\alpha, \beta \in \mathbb{R}α,β∈R，则 αs+βt\alpha s + \beta tαs+βt 也是简单函数。
+- *Linear Closure*: If $s$ and $t$ are simple functions, and $alpha, beta in bb(R)$, then $alpha s + beta t$ is also a simple function.
+// 乘积封闭性：如果 sss 和 ttt 是简单函数，则 sts ttt 也是简单函数。
+- *Product Closure*: If $s$ and $t$ are simple functions, then $s t$ is also a simple function.
+// 最大/最小封闭性：如果 sss 和 ttt 是简单函数，则 max⁡(s,t)\max(s, t)max(s,t) 和 min⁡(s,t)\min(s, t)min(s,t) 也是简单函数。
+- *Max/Min Closure*: If $s$ and $t$ are simple functions, then $max(s, t)$ and $min(s, t)$ are also simple functions.
+// 正部与负部：对任意简单函数 sss，其正部 s+=max⁡(s,0)s^+ = \max(s, 0)s+=max(s,0) 和负部 s−=max⁡(−s,0)s^- = \max(-s, 0)s−=max(−s,0) 也是简单函数，且有 s=s+−s−s = s^+ - s^-s=s+−s−。
+- *Positive/Negative Parts*: For any simple function $s$, its positive part $s^+ = max(s, 0)$ and its negative part $s^- = max(-s, 0)$ are also simple functions, and $s = s^+ - s^-$.
 ]
+
+=== Measurable Functions Series // 可测函数列
+#theorem[
+  // 可测函数列的上下确界、上下极限也是可测函数
+  Let $(X, cal(S))$ be a measurable space and $f_n: X  -> overline(bb(R))$ be a sequence of measurable functions. Then the pointwise supremum $sup_n f_n$, infimum $inf_n f_n$, limit superior $limsup_(n->infinity) f_n$, and limit inferior $liminf_(n->infinity) f_n$ are all measurable functions.
+]
+
+#theorem[
+  // 可测函数列的极限几乎处处存在时, 极限函数也是可测函数
+  Let $(X, cal(S))$ be a measurable space and $f_n: X  -> overline(bb(R))$ be a sequence of measurable functions. If the pointwise limit $f(x) = lim_(n->infinity) f_n (x)$ exists for almost every $x in X$, then the limit function $f$ is also measurable.
+]
+
+#theorem(name: "Approximation by Simple Functions")[
+Let $(X, cal(S))$ be a measurable space.
++ Let $f: X  -> overline(bb(R))$ be a non-negative measurable function. Then there exists an increasing sequence of non-negative simple functions $s_n: X  -> overline(bb(R))$ such that $lim_(n->infinity) s_n (x) = f(x)$ for all $x in X$.
++ Let $f: X  -> overline(bb(R))$ be a measurable function. Then there exists a sequence of simple functions $s_n: X  -> overline(bb(R))$ such that $lim_(n->infinity) s_n (x) = f(x)$ for all $x in X$.
+]
+
+#corollary[
+  // f为可测函数的充要条件是存在一列简单函数列逐点收敛于f
+  A function $f: X  -> overline(bb(R))$ is measurable if and only if there exists a sequence of simple functions $s_n: X  -> overline(bb(R))$ such that $lim_(n->infinity) s_n (x) = f(x)$ for all $x in X$.
+]
+
+#proposition[
+// 可测函数的和、差、积、商（分母不为零）也是可测函数
+Let $(X, cal(S))$ be a measurable space and $f, g: X  -> overline(bb(R))$ be measurable functions. Then the functions $f + g$, $f - g$, $f g$, and $f / g$ (where defined) are also measurable functions.
+]
+
+
+== Convergence of Measurable Functions // 可测函数列的收敛性
+#definition(name: "Convergence of Measurable Functions")[ // 三种收敛模式
+Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
++ *Almost everywhere convergence*: If $f_n (x) = f(x)$ for almost every $x in X$, then we say that $f_n$ converges *almost everywhere* to $f$, denoted by $f_n xarrow("a.e.") f$.
++ *Convergence in measure*: If for every $epsilon > 0$, we have $lim_(n->infinity) mu({x in X : |f_n (x) - f(x)| > epsilon}) = 0$, then we say that $f_n$ converges *in measure* to $f$, denoted by $f_n (x) xarrow(mu) f(x)$.
++ *Almost uniform convergence*: If for all $delta > 0$, there exist a measurable set $E subset X$ with $mu(X backslash E ) < delta$ such that $f_n$ converges uniformly to $f$ on $X backslash E$, then we say that $f_n$ converges *almost uniformly* to $f$, denoted by $f_n (x) xarrow("a.u.") f(x)$.
+]
+
+#definition(name: "Cauchy Sequence in Measure")[ // 依测度基本列
+Let $(X, cal(S), mu)$ be a measure space and $f_n: X  -> overline(bb(R))$ be an a.e. finite sequence of measurable functions. We say that $f_n$ is a *Cauchy sequence in measure* if for every $epsilon > 0$, we have $lim_(m,n->infinity) mu({x in X : |f_n (x) - f_m (x)| > epsilon}) = 0$.
+]
+
+#theorem[
+  // 依测度基本列的极限函数存在且唯一, 且依测度收敛于该极限函数
+  Let $(X, cal(S), mu)$ be a finite measure space and $f_n: X  -> overline(bb(R))$ be a Cauchy sequence in measure. 
+  
+  Then there exists a measurable function $f: X  -> overline(bb(R))$ such that $f_n (x) xarrow(mu) f(x)$.
+]
+
+// 关于这三种收敛, 我们有一系列定理和反例
+About these three convergence modes, we have a series of theorems and counterexamples.
+
+== a.e. and $mu$
+#theorem(name: "Rieze's Theorem")[
+  Let $(X, cal(S), mu)$ be a finite measure space, i.e. $mu(X) < infinity$ and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+  
+  Then $f_n (x) xarrow(mu) f(x)$ if and only if for any subsequence $f_(n_k)$, there exists a further subsequence $f_(n_(k_i))$ such that $f_(n_(k_i)) (x) xarrow("a.e.") f(x)$.
+]
+
+== $mu$ and a.u.
+#example[
+// 即便测测度有限, mu 收敛也不一定能推出几乎处处收敛
+Even if the measure is finite, convergence in measure does not necessarily imply almost everywhere convergence. 
+
+For example,
+]
+
+#theorem(name: "Его́ров's Theorem")[
+  Let $(X, cal(S), mu)$ be a finite measure space, i.e. $mu(X) < infinity$ and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+  Then $f_n (x) xarrow(mu) f(x)$ if and only if $f_n (x) xarrow("a.u.") f(x)$.
+]
+
+== a.e. and a.u.
