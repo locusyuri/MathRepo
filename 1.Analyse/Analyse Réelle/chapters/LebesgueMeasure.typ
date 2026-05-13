@@ -269,14 +269,14 @@ Let $(X, cal(S), mu)$ be a measure space and $f_n: X  -> overline(bb(R))$ be an 
 // 关于这三种收敛, 我们有一系列定理和反例
 About these three convergence modes, we have a series of theorems and counterexamples.
 
-== a.e. and $mu$
+=== a.e. and $mu$
 #theorem(name: "Rieze's Theorem")[
   Let $(X, cal(S), mu)$ be a finite measure space, i.e. $mu(X) < infinity$ and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
   
   Then $f_n (x) xarrow(mu) f(x)$ if and only if for any subsequence $f_(n_k)$, there exists a further subsequence $f_(n_(k_i))$ such that $f_(n_(k_i)) (x) xarrow("a.e.") f(x)$.
 ]
 
-== $mu$ and a.u.
+=== $mu$ and a.u.
 #example[
 // 即便测测度有限, mu 收敛也不一定能推出几乎处处收敛
 Even if the measure is finite, convergence in measure does not necessarily imply almost everywhere convergence. 
@@ -290,4 +290,4 @@ For example,
   Then $f_n (x) xarrow(mu) f(x)$ if and only if $f_n (x) xarrow("a.u.") f(x)$.
 ]
 
-== a.e. and a.u.
+=== a.e. and a.u.
