@@ -109,13 +109,13 @@
 #let font-cjk-main = ("Source Han Serif SC", "STSong", "SimSun")
 
 /// 拉丁正文字体回退链
-#let font-latin-main = ("Book Antiqua", "Times New Roman")
+#let font-latin-main = ("Alegreya", "Book Antiqua", "Times New Roman")
 
 /// Part 名称（与 elegantbook 的 partname 对齐）
 #let part-name = "Part"
 
 /// 拉丁标题字体回退链
-#let font-latin-title = ("Georgia", "Merriweather", "Times New Roman")
+#let font-latin-title = ("Merriweather", "Georgia", "Times New Roman")
 
 /// 主要组件标签字体（参考 elegantbook 的 cursivetitle 气质）
 #let font-major-label = ("Monotype Corsiva", "Merriweather", "Georgia")

@@ -55,6 +55,7 @@ There are various types of measures,
 + *Complete Measure*: A measure $mu$ is called complete if every subset of a null set (i.e., a set $A$ with $mu(A) = 0$) is measurable and has measure zero.
 
 == Lebesgue Measure // 勒贝格测度
+=== Lebesgue Measure // 勒贝格测度
 #definition(name: "Lebesgue Outer Measure")[
 The *Lebesgue outer measure* on $bb(R)^n$ is defined for any set $A subset bb(R)^n$ as
 $
@@ -96,6 +97,7 @@ $
 m(A) = m^*(A).
 $
 
+=== Measure Space // 测度空间
 #definition(name: "Measure Space")[
   A *measure space* is a triple $(X, cal(S), mu)$ where $(X, cal(S))$ is a measurable space and $mu$ is a measure on $(X, cal(S))$.
 ]
@@ -106,8 +108,27 @@ $
 
 #definition(name: "Lebesgue Measure Space")[
   $(bb(R)^n, cal(L)(bb(R)^n), m)$ is a $sigma$-finite, complete measure space, called the *Lebesgue measure space*.
-]
+]\
 
+#v(0.5em)
+// 最后, 我们给出一个常用的引理: Borel-Cantelli 引理, 以及一个重要的反例: Vitali 集.
+Finally, we present a commonly used lemma: the Borel-Cantelli lemma, and an important counterexample: the Vitali set.
+
+#lemma(name: "Borel-Cantelli Lemma")[
+Let $(X, cal(S), mu)$ be a measure space.
+// 设 {An}\{A_n\}{An​} 是一列可测集，若 ∑n=1∞m(An)<∞\sum_{n=1}^{\infty} m(A_n) < \infty∑n=1∞​m(An​)<∞，则m(lim sup⁡no∞An)=0m\left(\limsup_{n 	o \infty} A_n\right) = 0m(no∞limsup​An​)=0即几乎所有的点至多属于有限个 AnA_nAn​。
+1. Let $A_n in cal(S)$ be a sequence of measurable sets. If $sum_(n=1)^infinity mu(A_n) < infinity$, then 
+$
+mu(lim sup_(n->infinity) A_n) = 0,
+$
+that is, almost all points belong to at most a finite number of sets in the sequence.
+// 设 {An}\{A_n\}{An​} 是一列相互独立的可测集，若 ∑n=1∞m(An)=∞\sum_{n=1}^{\infty} m(A_n) = \infty∑n=1∞​m(An​)=∞，则m(lim sup⁡no∞An)=m(E)m\left(\limsup_{n 	o \infty} A_n\right) = m(E)m(no∞limsup​An​)=m(E)即几乎所有的点属于无穷多个 AnA_nAn​。
+2. Let $A_n$ be a sequence of independent measurable sets. If $sum_(n=1)^infinity mu(A_n) = infinity$, then
+$
+mu(lim sup_(n->infinity) A_n) = mu(X),
+$
+that is, almost all points belong to an infinite number of sets in the sequence.
+]
 
 
 == Non-Measurable Sets // 非可测集
@@ -255,16 +276,6 @@ Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be 
 + *Almost uniform convergence*: If for all $delta > 0$, there exist a measurable set $E subset X$ with $mu(X backslash E ) < delta$ such that $f_n$ converges uniformly to $f$ on $X backslash E$, then we say that $f_n$ converges *almost uniformly* to $f$, denoted by $f_n (x) xarrow("a.u.") f(x)$.
 ]
 
-#definition(name: "Cauchy Sequence in Measure")[ // 依测度基本列
-Let $(X, cal(S), mu)$ be a measure space and $f_n: X  -> overline(bb(R))$ be an a.e. finite sequence of measurable functions. We say that $f_n$ is a *Cauchy sequence in measure* if for every $epsilon > 0$, we have $lim_(m,n->infinity) mu({x in X : |f_n (x) - f_m (x)| > epsilon}) = 0$.
-]
-
-#theorem[
-  // 依测度基本列的极限函数存在且唯一, 且依测度收敛于该极限函数
-  Let $(X, cal(S), mu)$ be a finite measure space and $f_n: X  -> overline(bb(R))$ be a Cauchy sequence in measure. 
-  
-  Then there exists a measurable function $f: X  -> overline(bb(R))$ such that $f_n (x) xarrow(mu) f(x)$.
-]
 
 // 关于这三种收敛, 我们有一系列定理和反例
 About these three convergence modes, we have a series of theorems and counterexamples.
@@ -274,6 +285,19 @@ About these three convergence modes, we have a series of theorems and counterexa
   Let $(X, cal(S), mu)$ be a finite measure space, i.e. $mu(X) < infinity$ and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
   
   Then $f_n (x) xarrow(mu) f(x)$ if and only if for any subsequence $f_(n_k)$, there exists a further subsequence $f_(n_(k_i))$ such that $f_(n_(k_i)) (x) xarrow("a.e.") f(x)$.
+]
+
+
+
+#definition(name: "Cauchy Sequence in Measure")[ // 依测度基本列
+Let $(X, cal(S), mu)$ be a measure space and $f_n: X  -> overline(bb(R))$ be an a.e. finite sequence of measurable functions. We say that $f_n$ is a *Cauchy sequence in measure* if for every $epsilon > 0$, we have $lim_(m,n->infinity) mu({x in X : |f_n (x) - f_m (x)| > epsilon}) = 0$.
+]
+
+#theorem[
+  // 依测度基本列的极限函数存在且唯一, 且依测度收敛于该极限函数
+  Let $(X, cal(S), mu)$ be a finite measure space and $f_n: X  -> overline(bb(R))$ be a Cauchy sequence in measure. 
+  
+  Then there exists a measurable function $f: X  -> overline(bb(R))$ such that $f_n (x) xarrow(mu) f(x)$.
 ]
 
 === $mu$ and a.u.
@@ -291,3 +315,62 @@ For example,
 ]
 
 === a.e. and a.u.
+
+
+=== Norm Convergence // 范数收敛
+// 最后, 我们给出一种非常强的收敛模式, 即范数收敛. 
+Lastly, we present a very strong mode of convergence, namely norm convergence.
+#definition(name: "Norm Convergence")[ // 范数收敛
+Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+We say that $f_n$ converges *in $L^p$ norm* to $f$, denoted by $f_n xarrow(L^p) f$, if for some $p >= 1$, we have
+$
+lim_(n->infinity) (integral_X |f_n (x) - f(x)|^p dif mu)^(1/p) = 0.
+$
+]
+
+// 我们在这里最常用的是L1范数收敛, 它蕴含着依测度收敛, 可以使用Markov不等式证明.
+Here, the most commonly used norm convergence is $L^1$ norm convergence, which implies convergence in measure and can be proved using Markov's inequality.
+#theorem(name: "Markov's Inequality")[
+  Let $(X, cal(S), mu)$ be a measure space and $f: X  -> [0, infinity]$ be a non-negative measurable function. Then for every $epsilon > 0$, we have
+  $
+  mu({x in X : f(x) >= epsilon}) <= (1/epsilon) integral_X f(x) dif mu.
+  $
+]
+
+#proposition[
+  Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
++ If $f_n xarrow(L^1) f$, then $f_n xarrow(mu) f$.
++ If $f_n xarrow(L^1) f$, then $integral_X f_n dif mu = integral_X f dif mu$.  // 积分号与极限可交换
+]
+
+
+== Measurable Functions and Continuous Functions // 可测函数与连续函数
+=== Лузин's Theorem // Лузин定理
+
+#theorem(name: "Лузин's Theorem")[
+  Let $(X, cal(S), mu)$ be a measure space and $f: X  -> overline(bb(R))$ be a measurable function that is a.e. finite. 
+
+  Then for every $epsilon > 0$, there exists a closed set $F subset X$ such that $mu(X backslash F) < epsilon$ and the restriction of $f$ to $F$ is continuous, i.e. $f|_F: F  -> overline(bb(R)) in C(F)$.
+]
+
+#corollary[
+  Let $(X, cal(S), mu)$ be a measure space and $f: X  -> overline(bb(R))$ be a measurable function that is a.e. finite. 
+
+  Then for every $epsilon > 0$, there exists a continuous function $g: X  -> overline(bb(R))$ such that 
+  $
+  mu({x in X : f(x) != g(x)}) < epsilon.
+  $
+
+  // 若X还是有界集，则可使上述g(x）具有紧支集．
+  If $mu(X) < infinity$, then $g$ can be made to have a compact support.
+]
+
+#corollary[
+  Let $(X, cal(S), mu)$ be a measure space and $f: X  -> overline(bb(R))$ be a measurable function that is a.e. finite. 
+
+  Then there exists a sequence of continuous functions $g_n: X  -> overline(bb(R))$ such that $g_n (x) xarrow("a.e.") f(x)$.
+]
+
+=== Measurability of Composite Functions // 复合函数可测性
