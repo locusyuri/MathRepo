@@ -44,7 +44,7 @@ refer to @zhou2016
 
 // 目录
 
-// --- Part I: Measure Theory (测度论) ---
+// --- Part I: Measure Thevectory (测度论) ---
 
 // Chapter 1: σ-Algebra and Measure (σ-代数与测度)
 //   Section 1.1: Algebra of Sets (集代数)
