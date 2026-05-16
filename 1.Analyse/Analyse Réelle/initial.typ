@@ -44,56 +44,28 @@ refer to @zhou2016
 
 // 目录
 
-// --- Part I: Measure Thevectory (测度论) ---
+// --- Part I: Measure Theory (测度论) ---
 
-// Chapter 1: σ-Algebra and Measure (σ-代数与测度)
-//   Section 1.1: Algebra of Sets (集代数)
-//   Section 1.2: σ-Algebra and Borel Sets (σ-代数与Borel集)
-//   Section 1.3: Measurable Spaces (可测空间)
-//   Section 1.4: Measure and Its Properties (测度及其性质)
-//   Section 1.5: Finite and σ-Finite Measures (有限测度与σ-有限测度)
-//   Section 1.6: Complete Measures (完备测度)
+// Chapter 1: Lebesgue Measure (勒贝格测度)
+//   Section 1.1: σ-Algebra and Measure (σ-代数与测度)
+//   Section 1.2: Lebesgue Measure (勒贝格测度)
+//   Section 1.3: Non-Measurable Sets (非可测集)
+//   Section 1.4: Other Views to introduce the Lebesgue Measure (其他引入 Lebesgue 测度的视角)
 
-// Chapter 2: Lebesgue Measure (勒贝格测度)
-//   Section 2.1: Lebesgue Outer Measure (勒贝格外测度)
-//   Section 2.2: Carathéodory Measurable Condition (Carathéodory可测性条件)
-//   Section 2.3: Lebesgue Measurable Sets (勒贝格可测集)
-//   Section 2.4: Properties of Lebesgue Measure (勒贝格测度的性质)
-//   Section 2.5: Non-Measurable Sets (非可测集)
-//   Section 2.6: Lebesgue-Stieltjes Measure (勒贝格-斯蒂尔吉斯测度)
+// Chapter 2: Measurable Function (可测函数)
+//   Section 2.1: Definition and Properties of Measurable Functions (可测函数的定义和性质)
+//   Section 2.2: Convergence of Measurable Functions (可测函数列的收敛性)
+//   Section 2.3: Measurable Functions and Continuous Functions (可测函数与连续函数)
 
-// Chapter 3: Measurable Functions (可测函数)
-//   Section 3.1: Definition of Measurable Functions (可测函数的定义)
-//   Section 3.2: Equivalent Characterizations (等价刻画)
-//   Section 3.3: Operations on Measurable Functions (可测函数的运算)
-//   Section 3.4: Sequences of Measurable Functions (可测函数列)
-//   Section 3.5: Simple Functions (简单函数)
-//   Section 3.6: Approximation by Simple Functions (简单函数逼近)
-// 
 // --- Part II: Integration Theory (积分理论) ---
 
-// Chapter 4: Lebesgue Integration (勒贝格积分)
-//   Section 4.1: Integration of Simple Functions (简单函数的积分)
-//   Section 4.2: Integration of Non-negative Measurable Functions (非负可测函数的积分)
-//   Section 4.3: Integration of General Measurable Functions (一般可测函数的积分)
-//   Section 4.4: Integrable Functions (可积函数)
-//   Section 4.5: Properties of Lebesgue Integral (勒贝格积分的性质)
-//   Section 4.6: Relationship with Riemann Integral (与黎曼积分的关系)
+// Chapter 3: Lebesgue Integration (勒贝格积分)
+//   Section 3.1: Lebesgue Integration (勒贝格积分)
+//   Section 3.2: Limit of Integral Sequences (积分序列的极限)
+//   Section 3.3: Relation to Riemann Integral (与黎曼积分的关系)
+//   Section 3.4: Product Measure and Fubini's Theorem (乘积测度与Fubini定理)
 
-// Chapter 5: Convergence Theorems (收敛定理)
-//   Section 5.1: Modes of Convergence (收敛方式)
-//   Section 5.2: Monotone Convergence Theorem (单调收敛定理)
-//   Section 5.3: Fatou's Lemma (Fatou引理)
-//   Section 5.4: Dominated Convergence Theorem (控制收敛定理)
-//   Section 5.5: Uniform Integrability (一致可积性)
-//   Section 5.6: Vitali Convergence Theorem (Vitali收敛定理)
-
-// Chapter 6: Product Measures and Fubini Theorem (乘积测度与Fubini定理)
-//   Section 6.1: Product σ-Algebra (乘积σ-代数)
-//   Section 6.2: Product Measure (乘积测度)
-//   Section 6.3: Fubini-Tonelli Theorem (Fubini-Tonelli定理)
-//   Section 6.4: Fubini's Theorem (Fubini定理)
-//   Section 6.5: Applications of Fubini Theorem (Fubini定理的应用)
+// Chapter 4: Differential and Integral (微分与积分)
 
 // --- Part III: Function Spaces (函数空间) ---
 
