@@ -82,16 +82,11 @@ That is, the second series stands for an analytic function $f_2(z)$ in the regio
 If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two series, called a two-sided power series, denoted as
 
 
-#math.equation(
-  numbering: (..nums) => {
-    let chapter-num = chapter-counter.get().first()
-    let local-num = nums.pos().last()
-    str(chapter-num) + "." + str(local-num)
-  },
+#eq[
   $
   sum_(n=-infinity)^infinity c_n (z-z_0)^n.
   $
-)<two-sided-power-series>
+] <two-sided-power-series>
 
 #property[
   Let the convergent disk of series @two-sided-power-series be

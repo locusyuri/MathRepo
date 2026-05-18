@@ -172,6 +172,23 @@
   str(chapter-num) + "." + str(local-num)
 }
 
+/// 章节公式编号：章号.本公式序号（例如 1.1）
+#let chapter-equation-number(local-num) = {
+  let ch = chapter-counter.get().first()
+  let chapter-num = if ch > 0 { ch } else { 1 }
+  "(" + str(chapter-num) + "." + str(local-num) + ")"
+}
+
+/// 章节公式包装器：仅用于需要编号的公式
+#let eq(body) = {
+  math.equation(
+    numbering: chapter-equation-number,
+    block: true,
+  )[
+    #body
+  ]
+}
+
 /// Chapter 显示编号状态（供目录读取）
 #let chapter-num-state = state("chapter-num-state", 0)
 
