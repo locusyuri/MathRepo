@@ -14,4 +14,8 @@
 *.lof
 *.lot
 
+*.pdf
+!**/initial.pdf
+
 /.codeartsdoer
+

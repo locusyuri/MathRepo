@@ -1,5 +1,6 @@
 #import "../../../TypstTemplate/math-notes.typ": *
 
+
 = Power Series and Taylor Series // 幂级数和泰勒级数
 == Complex Series // 复级数
 // 实数级数中, 只依赖距离和完备性的结论都能直接推广到复数级数 (绝对值替换成模); 但依赖序结构和特殊交错形式的结论不能。复数引入模后，许多判别法变得更统一，但条件收敛行为更复杂。
@@ -33,11 +34,69 @@ $
 and the radius of convergence of this power series is at least the distance from $z_0$ to the boundary of $D$.
 ]
 
-==  // 解析函数零点孤立性
+== Isolation and Uniqueness of Zeros of Analytic Functions // 解析函数零点孤立性与唯一性
+#definition(name: "m-th Order Zero")[ // m阶零点
+Let $f(z)$ be analytic in region $D subset CC$ and $z_0 in D$. We say that $z_0$ is an $m$-th order zero of $f$ if 
+$
+f(z_0) = f'(z_0) = ... = f^(m-1)(z_0) = 0, quad f^(m)(z_0) != 0.
+$
+]
+
+#theorem[
+The point $z_0$ is an $m$-th order zero of the analytic function $f(z)$ that is not identically zero if and only if 
+$
+f(z) = (z - z_0)^m g(z),
+$
+where $g(z)$ is analytic in a neighborhood of $z_0$ and $g(z_0) != 0$.
+]
+
+#theorem(name: "Isolation of Zeros")[
+Let $f(z)$ be an analytic function in region $D subset CC$ that is not identically zero. Then the zeros of $f$ are isolated, i.e., for each zero $z_0$ of $f$, there exists a neighborhood of $z_0$ that contains no other zeros of $f$.
+]
+
+#theorem(name: "Uniqueness of Zeros")[
+Let $f_1(z), f_2(z)$ be analytic functions in region $D subset CC$ that are not identically zero.
+There is a sequence ${z_n} (z!=z_0)$ that is converging to $z_0$ such that $f_1(z_n) = f_2(z_n) = 0$ for all $n$.
+Then $f_1(z) equiv f_2(z)$ for all $z in D$.
+]
 
 
+#theorem(name: "Maximum Modulus Principle")[ // 最大模原理
+Let $f(z)$ be a non-constant analytic function in a bounded region $D subset CC$ that is continuous on the closure of $D$. Then the maximum of $|f(z)|$ on the closure of $D$ is attained on the boundary of $D$.
+]
 
 = Laurent Series // 洛朗级数
+== Laurent Series // 洛朗级数
+Considering two series:
+$
+  c_0 + c_1 (z-z_0) + c_2 (z-z_0)^2 + ..., \
+  c_{-1}/(z-z_0) + c_{-2}/(z-z_0)^2 + dots .
+$
+The first one is a power series, which stands for an analytic function $f_1(z)$ in a convergent disk $|z-z_0| < R (0<R<=infinity)$.
+As for the second one, let $zeta = 1/(z-z_0)$, then it becomes a power series in $zeta$:
+$
+  c_{-1} zeta + c_{-2} zeta^2 + dots,
+$
+which stands for an analytic function $f_2(zeta)$ in a convergent disk $|zeta| < 1/r (0< 1/r <= infinity)$.
+That is, the second series stands for an analytic function $f_2(z)$ in the region $|z-z_0| > r (0<r<=infinity)$.
+If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two series, called a two-sided power series, denoted as
+
+
+#math.equation(
+  numbering: (..nums) => {
+    let chapter-num = chapter-counter.get().first()
+    let local-num = nums.pos().last()
+    str(chapter-num) + "." + str(local-num)
+  },
+  $
+  sum_(n=-infinity)^infinity c_n (z-z_0)^n.
+  $
+)<two-sided-power-series>
+
+#property[
+  Let the convergent disk of series @two-sided-power-series be
+]
+
 
 = Residue Theory // 留数理论
 

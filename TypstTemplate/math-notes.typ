@@ -1194,5 +1194,8 @@
     v(0.4em)
   }
 
+// ── Equation: 关闭内置编号 ──
+  set math.equation(numbering: none, block: true)
+
   doc
 }

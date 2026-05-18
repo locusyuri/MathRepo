@@ -95,14 +95,14 @@
 //   Section 6.5: Weierstrass Convergence Theorem (魏尔斯特拉斯收敛定理)
 
 // --- Part III: Series (级数) ---
-
+// 
 // Chapter 7: Power Series (幂级数)
 //   Section 7.1: Convergence of Power Series (幂级数的收敛性)
 //   Section 7.2: Radius of Convergence (收敛半径)
 //   Section 7.3: Taylor Series (泰勒级数)
 //   Section 7.4: Laurent Series (洛朗级数)
 //   Section 7.5: Uniqueness of Series Representations (级数表示的唯一性)
-
+// 
 // Chapter 8: Residue Theory (留数理论)
 //   Section 8.1: Isolated Singularities (孤立奇点)
 //   Section 8.2: Classification of Singularities (奇点的分类)
