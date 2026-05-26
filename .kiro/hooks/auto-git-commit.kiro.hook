@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "自动 Git 提交",
+  "description": "当 agent 执行完成后，自动将修改的文件 git add 并 commit，使用中文 commit message 描述本次修改内容。",
+  "version": "1",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "检查当前 git 状态，如果有未提交的修改，将相关文件 git add 并用中文写一条简洁的 commit message 进行 git commit。commit message 应概括本次修改的内容（如\"补全勒贝格积分收敛定理章节\"）。不要 push。"
+  }
+}

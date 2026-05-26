@@ -321,11 +321,32 @@ Subject/
 
 ---
 
-## 15. 禁止事项
+## 15. 章节文件（`chapters/*.typ`）
+
+章节文件需要在开头导入模板和可能用到的外部包：
+
+```typst
+#import "../../../TypstTemplate/math-notes.typ": *
+#import "@preview/xarrow:0.4.0": xarrow
+```
+
+- 导入路径比 `initial.typ` 多一层（因为在 `chapters/` 子目录中）
+- 外部包（如 `xarrow`）在需要时导入，用于特殊箭头符号（如 `$f_n xarrow("a.e.") f$`）
+- 章节文件以 `= Chapter Title` 开头（一级标题）
+
+### 常用外部包
+
+| 包名 | 用途 | 示例 |
+|------|------|------|
+| `@preview/xarrow:0.4.0` | 带标注的箭头 | `$f_n xarrow("a.e.") f$`、`$f_n xarrow(mu) f$` |
+
+---
+
+## 16. 禁止事项
 
 1. **不要修改** `TypstTemplate/math-notes.typ` 的公共接口
 2. **不要** 在笔记目录外创建包装目录（如 `src/`、`content/`）
-3. **不要** 在章节文件中重复 `#import` 模板
-4. **不要** 手动设置页面尺寸或页眉页脚（由 `apply-style` 统一管理）
-5. **不要** 手动管理定理编号（由计数器自动处理）
-6. **不要** 使用 `#outline()` 内置目录（使用 `#make-outline()` 代替）
+3. **不要** 手动设置页面尺寸或页眉页脚（由 `apply-style` 统一管理）
+4. **不要** 手动管理定理编号（由计数器自动处理）
+5. **不要** 使用 `#outline()` 内置目录（使用 `#make-outline()` 代替）
+6. **不要** 在 `initial.typ` 中重复章节文件已有的内容
