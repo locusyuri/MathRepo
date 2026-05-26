@@ -121,5 +121,6 @@
 		"Буняко́вский",
 		"Ляпунов"
 	],
-	"commentTranslate.source": "Copilot"
+	"commentTranslate.source": "Copilot",
+	"commentTranslate.mutualTranslate": true
 }

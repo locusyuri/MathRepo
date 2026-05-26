@@ -82,6 +82,7 @@ That is, the second series stands for an analytic function $f_2(z)$ in the regio
 If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two series, called a two-sided power series, denoted as
 
 
+
 #eq[
   $
   sum_(n=-infinity)^infinity c_n (z-z_0)^n.
@@ -90,8 +91,47 @@ If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two s
 
 #property[
   Let the convergent disk of series @two-sided-power-series be
+  $
+    H: r < |z-z_0| < R (0<=r<R<=infinity).
+  $
+  Then:
+  + @two-sided-power-series absolutely converges and internally closed uniformly converges to $f(z) = f_1(z) + f_2(z)$ in $H$.
+  + $f(z)$ is analytic in $H$ .
+  + $f(z) = sum_(n=-infinity)^infinity c_n (z-z_0)^n$ in H can be termwise differentiated $p$ times.  // 函数在 H 内可以逐项求导 p 次
+  + $f(z)$ can be integrated along any path in $H$, and the integral equals the sum of the integrals of the terms.
 ]
 
+#theorem(name: "Laurent's Theorem")[
+Let $f(z)$ is analytic in the annulus $H: r < |z-z_0| < R (0<=r<R<=infinity)$.
+Then $f(z)$ can be represented as a two-sided power series:
+$
+  f(z) = sum_(n=-infinity)^infinity c_n (z-z_0)^n,
+$
+where
+$
+  c_n = 1/(2 pi"i") integral_(|z-z_0|=rho) f(z)/(z-z_0)^(n+1) dif z, quad r < rho < R, n = 0, plus.minus 1, plus.minus 2, ...
+$
+]
+
+== Classification of Singularities // 奇点的分类
+#theorem(name: "Isolated Singularities")[
+Let $f(z)$ be an analytic function in the punctured disk $0 < |z-z_0| < R (0<R<=infinity)$.
+Then $z_0$ is called an isolated singularity of $f$.
+]
+
+If $z_0$ is an isolated singularity of $f$, then $f(z)$ can be represented as a Laurent series in the annulus $0 < |z-z_0| < R$.
+There are two common methods to expand $f(z)$ into a Laurent series:
++ Method 1: Directly compute the coefficients $c_n$ using the integral formula.
++ Method 2: According to the uniqueness of the series composed of positive and negative power terms, use algebraic calculations, variable substitution, and Taylor expansion to obtain the Laurent series expansion. // 根据正负幂项组成的级数的唯一性, 使用代数计算、变量代换，并利用泰勒展开去求得洛朗展开式。
+
+Let the Laurent series expansion of $f(z)$ at $z_0$ be
+$
+  f(z) = sum_(n=-infinity)^infinity c_n (z-z_0)^n.
+$
+Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ at $z_0$, and the minus power terms $c_(-n) (z-z_0)^(-n)$ the principal part of $f(z)$ at $z_0$. Then we can classify the isolated singularity $z_0$ of $f(z)$ as follows:
++ If the principal part of $f(z)$ at $z_0$ is identically zero, i.e., $c_n = 0$ for all $n < 0$, then $z_0$ is called a removable singularity of $f(z)$.
++ If the principal part of $f(z)$ at $z_0$ has only finitely many non-zero terms, i.e., there exists a positive integer $m$ such that $c_n = 0$ for all $n < -m$, then $z_0$ is called a pole of order $m$ of $f(z)$.
++ If the principal part of $f(z)$ at $z_0$ has infinitely many non-zero terms, i.e., $c_n != 0$ for infinitely many negative integers $n$, then $z_0$ is called an essential singularity of $f(z)$.
 
 = Residue Theory // 留数理论
 
