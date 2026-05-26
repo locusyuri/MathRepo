@@ -264,6 +264,117 @@ The Vitali Convergence Theorem generalizes LDCT by replacing the single dominati
 
 == Relation to Riemann Integral // 与黎曼积分的关系
 
+// 本节聚焦于 Riemann 积分与 Lebesgue 积分的关系，不重复 Riemann 积分的定义（见数学分析笔记）。
+This section focuses on the relationship between the Riemann integral and the Lebesgue integral. We assume familiarity with the Riemann integral as defined via Darboux upper and lower sums on bounded closed intervals.
+
+=== Riemann Integrability Implies Lebesgue Integrability // Riemann 可积蕴含 Lebesgue 可积
+
+#theorem(name: "Riemann Integrable Implies Lebesgue Integrable")[
+  Let $f: [a, b] -> bb(R)$ be a bounded function. If $f$ is Riemann integrable on $[a, b]$, then $f$ is Lebesgue integrable on $[a, b]$, and the two integrals coincide:
+  $
+  (R) integral_a^b f(x) dif x = (L) integral_([a,b]) f dif m.
+  $
+]
+
+#proof[
+  Let $P_n = {a = x_0 < x_1 < dots < x_(k_n) = b}$ be a sequence of partitions with mesh $|P_n| -> 0$. Define the lower and upper step functions:
+  $
+  l_n (x) = inf_(x in [x_(i-1), x_i]) f(x), quad u_n (x) = sup_(x in [x_(i-1), x_i]) f(x)
+  $
+  on each subinterval $(x_(i-1), x_i)$.
+
+  Then $l_n$ and $u_n$ are measurable simple functions satisfying $l_n <= f <= u_n$ a.e. By refining partitions, we may assume $l_n <= l_(n+1)$ and $u_n >= u_(n+1)$.
+
+  Let $l = lim_(n->infinity) l_n$ and $u = lim_(n->infinity) u_n$. By the Monotone Convergence Theorem:
+  $
+  integral_([a,b]) l dif m = lim_(n->infinity) integral_([a,b]) l_n dif m = lim_(n->infinity) L(f, P_n) = (R) integral_a^b f dif x,
+  $
+  and similarly $integral_([a,b]) u dif m = (R) integral_a^b f dif x$.
+
+  Since $l <= f <= u$ a.e. and $integral l = integral u$, we conclude $f = l = u$ a.e., hence $f$ is measurable and Lebesgue integrable with $integral_([a,b]) f dif m = (R) integral_a^b f dif x$.
+]
+
+#note[
+  The converse is false: a Lebesgue integrable function need not be Riemann integrable. The Dirichlet function $chi_(bb(Q) inter [0,1])$ is Lebesgue integrable (with integral $0$) but not Riemann integrable.
+]
+
+=== Lebesgue's Criterion // Lebesgue 判据
+
+// Lebesgue 判据的完整证明见数学分析笔记，这里仅陈述结论并从测度论视角解读。
+The following characterization of Riemann integrability is proved in classical analysis (see the Analyse Mathématique notes). We state it here for reference and interpret it from the measure-theoretic viewpoint.
+
+#theorem(name: "Lebesgue's Criterion for Riemann Integrability")[
+  Let $f: [a, b] -> bb(R)$ be a bounded function, and let $D_f = {x in [a, b] : f "is discontinuous at" x}$ denote the set of discontinuity points of $f$. Then
+  $
+  f "is Riemann integrable on" [a, b] <==> m(D_f) = 0.
+  $
+]
+
+#note[
+  From the measure-theoretic perspective, this criterion says: a bounded measurable function on $[a, b]$ is Riemann integrable if and only if it is "almost continuous" (continuous except on a null set). This explains why the Lebesgue integral is strictly more general — it can integrate any bounded measurable function, regardless of the size of its discontinuity set.
+]
+
+#example[
+  *Thomae's function* (the Riemann function) $f: [0,1] -> bb(R)$ defined by $f(p\/q) = 1\/q$ for $p\/q$ in lowest terms and $f(x) = 0$ for $x in.not bb(Q)$. Its discontinuity set is $D_f = bb(Q) inter [0,1]$, which is countable and hence has measure zero. By Lebesgue's criterion, $f$ is Riemann integrable.
+]
+
+#example[
+  *Dirichlet's function* $chi_(bb(Q) inter [0,1])$ is discontinuous everywhere, so $D_f = [0,1]$ and $m(D_f) = 1 != 0$. Hence it is not Riemann integrable. However, since $bb(Q) inter [0,1]$ is a null set, $chi_(bb(Q) inter [0,1]) = 0$ a.e., so it is Lebesgue integrable with $(L) integral_([0,1]) chi_(bb(Q)) dif m = 0$.
+]
+
+=== Improper Riemann Integrals // 反常 Riemann 积分
+
+// 反常积分与 Lebesgue 积分的关系更为微妙：绝对收敛时一致，条件收敛时不一致。
+The relationship between improper Riemann integrals and Lebesgue integrals is more subtle. The key distinction is that the Lebesgue integral requires absolute integrability.
+
+#theorem(name: "Absolutely Convergent Improper Integrals")[
+  Let $f: [a, infinity) -> bb(R)$ be locally Riemann integrable (i.e., Riemann integrable on every $[a, b]$). If the improper integral converges absolutely:
+  $
+  (R) integral_a^infinity |f(x)| dif x < infinity,
+  $
+  then $f in L^1 ([a, infinity), m)$ and
+  $
+  (L) integral_([a, infinity)) f dif m = lim_(b -> infinity) (R) integral_a^b f(x) dif x.
+  $
+]
+
+#proof[
+  For each $n in bb(N)$, define $f_n = f dot chi_([a, a+n])$. Then $f_n$ is Riemann integrable on $[a, a+n]$, hence Lebesgue integrable, and $|f_n| <= |f|$ with $f_n -> f$ pointwise.
+
+  Since $(R) integral_a^infinity |f| dif x < infinity$, the function $|f|$ is Lebesgue integrable (by the same argument applied to $|f_n| arrow.t |f|$ and MCT). By the Dominated Convergence Theorem applied to $f_n$ with dominating function $|f| in L^1$:
+  $
+  (L) integral_([a,infinity)) f dif m = lim_(n->infinity) integral_([a, a+n]) f dif m = lim_(n->infinity) (R) integral_a^(a+n) f(x) dif x.
+  $
+]
+
+#caution(title: "Conditional Convergence")[
+  If the improper Riemann integral converges only conditionally (not absolutely), then $f in.not L^1$ and the Lebesgue integral does not exist. The Lebesgue integral is inherently an "absolute" integral.
+]
+
+#example[
+  The function $f(x) = (sin x) / x$ on $[1, infinity)$ satisfies:
+  $
+  (R) integral_1^infinity frac(sin x, x) dif x "converges" quad "but" quad (R) integral_1^infinity frac(|sin x|, x) dif x = infinity.
+  $
+  Therefore $(sin x) / x in.not L^1 ([1, infinity))$, and the Lebesgue integral $(L) integral_([1,infinity)) (sin x) / x dif m$ does not exist. The improper Riemann integral captures a cancellation phenomenon that the Lebesgue integral cannot express.
+]
+
+=== Comparison Summary // 对比总结
+
+#tex-table(
+  ("Aspect", "Riemann Integral", "Lebesgue Integral"),
+  ("Domain", "Bounded closed intervals", "General measure spaces"),
+  ("Integrand", "Bounded functions", [Measurable; $f in L^1$ suffices]),
+  ("Limit interchange", "Requires uniform convergence", "MCT, Fatou, DCT, Vitali"),
+  ([Completeness of $L^1$], "No", "Yes"),
+  ("Conditional convergence", "Allowed (improper)", "Not allowed (absolute only)"),
+  ("Discontinuities", [Riemann integrable $<=>$ $m(D_f) = 0$], "Any measurable function"),
+)
+
+#note[
+  In summary, the Lebesgue integral strictly generalizes the Riemann integral for bounded functions on bounded intervals. Its main advantages are: (1) much more powerful limit-interchange theorems, (2) completeness of $L^p$ spaces, and (3) applicability to general measure spaces. The price paid is the loss of conditional convergence — the Lebesgue integral is fundamentally an absolute integral.
+]
+
 == Product Measure and Fubini's Theorem// 乘积测度与Fubini定理
 
 = Differential and Integral // 微分与积分
