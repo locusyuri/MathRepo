@@ -1,7 +1,7 @@
 {
   "enabled": true,
   "name": "自动 Git 提交",
-  "description": "当 agent 执行完成后，自动将修改的文件 git add 并 commit，使用中文 commit message 描述本次修改内容。",
+  "description": "当 agent 执行完成后，自动将修改的文件 git add 并 commit （包括pdf），使用中文 commit message 描述本次修改内容。",
   "version": "1",
   "when": {
     "type": "agentStop"
