@@ -111,6 +111,13 @@ $
 ]\
 
 #v(0.5em)
+#definition(name: "Almost Everywhere")[
+    Let $(X, cal(S), mu)$ be a measure space. A property $P(x)$ is said to hold *almost everywhere* (a.e.) if the set of points where $P$ fails to hold has measure zero, i.e., $mu({x in X : not P(x)}) = 0$, denoted by $P(x) a.e.$.
+]
+For example, 
+- *Almost everywhere continuous*: $f$ is almost everywhere continuous if $f$ is continuous at every point of $X$ except for a set of measure zero.
+- *Almost everywhere equality*: $f$ is almost everywhere equal to $g$ if $f(x) = g(x)$ for almost every $x in X$.
+
 // 最后, 我们给出一个常用的引理: Borel-Cantelli 引理, 以及一个重要的反例: Vitali 集.
 Finally, we present a commonly used lemma: the Borel-Cantelli lemma, and an important counterexample: the Vitali set.
 
@@ -188,6 +195,16 @@ In another definition, $f$ is defined on a measurable subset $E$ of $X$, then we
 
 Specially, if $Y = overline(bb(R))$#footnote[Here, $overline(bb(R))$ denotes the extended real line] and $cal(T) = cal(B)(overline(bb(R)))$ is the Borel $sigma$-algebra on $bb(R)$, then a function $f: X  -> bb(R)$ is called *(real) measurable* if it is $cal(S)"-"cal(B)(bb(R))$ measurable.
 
+#proposition(name: "Borel and Lebesgue Measurable Functions")[
+// 当定义域配备不同的 σ-代数时，可测函数有不同的名称。
+Let $f: bb(R)^n -> overline(bb(R))$ be a function.
+- If $f$ is $cal(B)(bb(R)^n)"-"cal(B)(overline(bb(R)))$ measurable (i.e., the domain is equipped with the Borel $sigma$-algebra), then $f$ is called a *Borel measurable function*.
+- If $f$ is $cal(L)(bb(R)^n)"-"cal(B)(overline(bb(R)))$ measurable (i.e., the domain is equipped with the Lebesgue $sigma$-algebra), then $f$ is called a *Lebesgue measurable function*.
+
+// 由于 Borel σ-代数包含于 Lebesgue σ-代数，每个 Borel 可测函数都是 Lebesgue 可测的，但反之不然。
+Since $cal(B)(bb(R)^n) subset cal(L)(bb(R)^n)$, every Borel measurable function is Lebesgue measurable, but the converse does not hold in general.
+]
+
 // 下面给出可测函数的更常用的等价定义
 Now we present some equivalent characterizations of measurable functions that are more commonly used.
 #proposition(name: "Equivalent Characterizations of Measurable Functions")[
@@ -199,13 +216,10 @@ Now we present some equivalent characterizations of measurable functions that ar
   + For every $alpha in bb(R)$, the set ${x in X : f(x) <= alpha} in cal(S)$.
 ]
 
-#definition(name: "Almost Everywhere")[
-    Let $(X, cal(S), mu)$ be a measure space. A property $P(x)$ is said to hold *almost everywhere* (a.e.) if the set of points where $P$ fails to hold has measure zero, i.e., $mu({x in X : not P(x)}) = 0$, denoted by $P(x) a.e.$.
+#proposition[
+// 可测函数的和、差、积、商（分母不为零）也是可测函数
+Let $(X, cal(S))$ be a measurable space and $f, g: X  -> overline(bb(R))$ be measurable functions. Then the functions $f + g$, $f - g$, $f g$, and $f / g$ (where defined) are also measurable functions.
 ]
-For example, 
-- *Almost everywhere continuous*: $f$ is almost everywhere continuous if $f$ is continuous at every point of $X$ except for a set of measure zero.
-- *Almost everywhere equality*: $f$ is almost everywhere equal to $g$ if $f(x) = g(x)$ for almost every $x in X$.
-
 
 === Simple Function // 简单函数
 #definition(name: "Simple Function")[
@@ -220,11 +234,14 @@ where $A_1 union A_2 union dots union A_n = X$ and $chi_(A_k)$ is the indicator 
 ]
 
 #note[
-// 在测度论中，我们更关心可测简单函数。如果上述定义中的每个集合 EiE_iEi​ 都属于 σ\sigmaσ-代数 F\mathcal{F}F（即都是可测集），那么 s(x)s(x)s(x) 就称为​F\mathcal{F}F-可测简单函数。
-In measure theory, we are more interested in measurable simple functions. If each set $A_k$ in the above definition belongs to the $sigma$-algebra $cal(S)$ (i.e., is a measurable set), then $s(x)$ is called a *$cal(S)$-measurable simple function*.
+// 一般的简单函数只要求取有限个不同值，并将定义域划分为有限个不相交集合，但不要求这些集合可测。
+A general simple function only requires taking finitely many distinct values and partitioning the domain into finitely many disjoint sets, without requiring those sets to be measurable.
 
-// 以后我们说简单函数时, 默认都是可测简单函数.
-From now on, when we say simple functions, we will assume they are measurable simple functions by default.
+// 上面的定义使用的是更强的版本：要求 A_k ∈ cal(S)，即每个集合都是可测集，因此定义的是可测简单函数。
+The definition given above uses the stronger version where $A_k in cal(S)$ (i.e., each partition set is measurable), so it defines a *measurable simple function* by default.
+
+// 以后我们说简单函数时，默认都是指可测简单函数。
+From now on, "simple function" refers to the measurable version unless stated otherwise.
 ]
 
 
@@ -240,7 +257,7 @@ From now on, when we say simple functions, we will assume they are measurable si
 - *Positive/Negative Parts*: For any simple function $s$, its positive part $s^+ = max(s, 0)$ and its negative part $s^- = max(-s, 0)$ are also simple functions, and $s = s^+ - s^-$.
 ]
 
-=== Measurable Functions Series // 可测函数列
+=== Sequences of Measurable Functions // 可测函数列
 #theorem[
   // 可测函数列的上下确界、上下极限也是可测函数
   Let $(X, cal(S))$ be a measurable space and $f_n: X  -> overline(bb(R))$ be a sequence of measurable functions. Then the pointwise supremum $sup_n f_n$, infimum $inf_n f_n$, limit superior $limsup_(n->infinity) f_n$, and limit inferior $liminf_(n->infinity) f_n$ are all measurable functions.
@@ -260,11 +277,6 @@ Let $(X, cal(S))$ be a measurable space.
 #corollary[
   // f为可测函数的充要条件是存在一列简单函数列逐点收敛于f
   A function $f: X  -> overline(bb(R))$ is measurable if and only if there exists a sequence of simple functions $s_n: X  -> overline(bb(R))$ such that $lim_(n->infinity) s_n (x) = f(x)$ for all $x in X$.
-]
-
-#proposition[
-// 可测函数的和、差、积、商（分母不为零）也是可测函数
-Let $(X, cal(S))$ be a measurable space and $f, g: X  -> overline(bb(R))$ be measurable functions. Then the functions $f + g$, $f - g$, $f g$, and $f / g$ (where defined) are also measurable functions.
 ]
 
 
