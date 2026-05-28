@@ -281,57 +281,63 @@ Let $(X, cal(S))$ be a measurable space.
 
 
 == Convergence of Measurable Functions // 可测函数列的收敛性
-#definition(name: "Convergence of Measurable Functions")[ // 三种收敛模式
+#definition(name: "Almost Everywhere Convergence")[ // 几乎处处收敛
 Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
-+ *Almost everywhere convergence*: If $f_n (x) = f(x)$ for almost every $x in X$, then we say that $f_n$ converges *almost everywhere* to $f$, denoted by $f_n xarrow("a.e.") f$.
-+ *Convergence in measure*: If for every $epsilon > 0$, we have $lim_(n->infinity) mu({x in X : |f_n (x) - f(x)| > epsilon}) = 0$, then we say that $f_n$ converges *in measure* to $f$, denoted by $f_n (x) xarrow(mu) f(x)$.
-+ *Almost uniform convergence*: If for all $delta > 0$, there exist a measurable set $E subset X$ with $mu(X backslash E ) < delta$ such that $f_n$ converges uniformly to $f$ on $X backslash E$, then we say that $f_n$ converges *almost uniformly* to $f$, denoted by $f_n (x) xarrow("a.u.") f(x)$.
+
+If $f_n (x) -> f(x)$ for almost every $x in X$, i.e. $mu({x in X : lim_(n->infinity) f_n (x) != f(x)}) = 0$, then we say that $f_n$ converges *almost everywhere* to $f$, denoted by $f_n xarrow("a.e.") f$.
 ]
 
+// 下面我们介绍另外几种收敛模式, 并研究它们之间的关系.
+We now introduce several other modes of convergence for sequences of measurable functions and study the relationships between them.
 
-// 关于这三种收敛, 我们有一系列定理和反例
-About these three convergence modes, we have a series of theorems and counterexamples.
+=== Convergence in Measure // 依测度收敛
 
-=== a.e. and $mu$
-#theorem(name: "Rieze's Theorem")[
-  Let $(X, cal(S), mu)$ be a finite measure space, i.e. $mu(X) < infinity$ and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
-  
-  Then $f_n (x) xarrow(mu) f(x)$ if and only if for any subsequence $f_(n_k)$, there exists a further subsequence $f_(n_(k_i))$ such that $f_(n_(k_i)) (x) xarrow("a.e.") f(x)$.
+#definition(name: "Convergence in Measure")[ // 依测度收敛
+Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+If for every $epsilon > 0$, we have $lim_(n->infinity) mu({x in X : |f_n (x) - f(x)| > epsilon}) = 0$, then we say that $f_n$ converges *in measure* to $f$, denoted by $f_n (x) xarrow(mu) f(x)$.
 ]
-
-
 
 #definition(name: "Cauchy Sequence in Measure")[ // 依测度基本列
 Let $(X, cal(S), mu)$ be a measure space and $f_n: X  -> overline(bb(R))$ be an a.e. finite sequence of measurable functions. We say that $f_n$ is a *Cauchy sequence in measure* if for every $epsilon > 0$, we have $lim_(m,n->infinity) mu({x in X : |f_n (x) - f_m (x)| > epsilon}) = 0$.
 ]
 
-#theorem[
+#theorem(name: "Completeness of Convergence in Measure")[
   // 依测度基本列的极限函数存在且唯一, 且依测度收敛于该极限函数
-  Let $(X, cal(S), mu)$ be a finite measure space and $f_n: X  -> overline(bb(R))$ be a Cauchy sequence in measure. 
+  Let $(X, cal(S), mu)$ be a measure space and $f_n: X  -> overline(bb(R))$ be a Cauchy sequence in measure. 
   
   Then there exists a measurable function $f: X  -> overline(bb(R))$ such that $f_n (x) xarrow(mu) f(x)$.
 ]
 
-=== $mu$ and a.u.
-#example[
-// 即便测测度有限, mu 收敛也不一定能推出几乎处处收敛
-Even if the measure is finite, convergence in measure does not necessarily imply almost everywhere convergence. 
+// 下面我们研究依测度收敛与几乎处处收敛之间的关系.
+We now examine the relationship between convergence in measure and almost everywhere convergence.
 
-For example,
+#theorem(name: "Riesz's Theorem")[
+  Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+  
+  Then $f_n (x) xarrow(mu) f(x)$ if and only if for any subsequence $f_(n_k)$, there exists a further subsequence $f_(n_(k_i))$ such that $f_(n_(k_i)) (x) xarrow("a.e.") f(x)$.
 ]
 
-#theorem(name: "Его́ров's Theorem")[
-  Let $(X, cal(S), mu)$ be a finite measure space, i.e. $mu(X) < infinity$ and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+#example(name: "Typewriter Sequence")[
+// 即便测度有限, 依测度收敛也不一定能推出几乎处处收敛 (滑动凸起序列)
+Even on a finite measure space, convergence in measure does not imply almost everywhere convergence.
 
-  Then $f_n (x) xarrow(mu) f(x)$ if and only if $f_n (x) xarrow("a.u.") f(x)$.
+Consider $([0,1], cal(L), m)$ with Lebesgue measure. We construct the *typewriter sequence* (sliding bump) as follows: enumerate intervals of width $1/k$ that tile $[0,1]$, cycling through each "round":
+- Round 1 ($k=1$): $I_1 = [0, 1]$
+- Round 2 ($k=2$): $I_2 = [0, 1/2], I_3 = [1/2, 1]$
+- Round 3 ($k=3$): $I_4 = [0, 1/3], I_5 = [1/3, 2/3], I_6 = [2/3, 1]$
+- Round $k$: $k$ intervals of width $1/k$ covering $[0,1]$
+
+Define $f_n = chi_(I_n)$ (the indicator function of $I_n$).
+
+*Convergence in measure*: For any $epsilon in (0, 1]$, we have $m({x : f_n (x) > epsilon}) = m(I_n) = 1/k -> 0$ as $n -> infinity$ (since $n$ in round $k$ means $k -> infinity$). Thus $f_n xarrow(mu) 0$.
+
+*No a.e. convergence*: For every $x in [0,1]$, in each round $k$ there is exactly one interval $I_n$ containing $x$, so $f_n (x) = 1$ for infinitely many $n$. Meanwhile $f_n (x) = 0$ for infinitely many other $n$. Therefore $lim_(n->infinity) f_n (x)$ does not exist for any $x in [0,1]$, and $f_n$ does not converge almost everywhere.
 ]
 
-=== a.e. and a.u.
+// 最后, 我们介绍一种更强的收敛模式: 范数收敛, 它蕴含依测度收敛.
+Finally, we introduce a stronger mode of convergence — norm convergence — which implies convergence in measure.
 
-
-=== Norm Convergence // 范数收敛
-// 最后, 我们给出一种非常强的收敛模式, 即范数收敛. 
-Lastly, we present a very strong mode of convergence, namely norm convergence.
 #definition(name: "Norm Convergence")[ // 范数收敛
 Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
 
@@ -341,8 +347,6 @@ lim_(n->infinity) (integral_X |f_n (x) - f(x)|^p dif mu)^(1/p) = 0.
 $
 ]
 
-// 我们在这里最常用的是L1范数收敛, 它蕴含着依测度收敛, 可以使用Markov不等式证明.
-Here, the most commonly used norm convergence is $L^1$ norm convergence, which implies convergence in measure and can be proved using Markov's inequality.
 #theorem(name: "Markov's Inequality")[
   Let $(X, cal(S), mu)$ be a measure space and $f: X  -> [0, infinity]$ be a non-negative measurable function. Then for every $epsilon > 0$, we have
   $
@@ -354,7 +358,57 @@ Here, the most commonly used norm convergence is $L^1$ norm convergence, which i
   Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
 
 + If $f_n xarrow(L^1) f$, then $f_n xarrow(mu) f$.
-+ If $f_n xarrow(L^1) f$, then $integral_X f_n dif mu = integral_X f dif mu$.  // 积分号与极限可交换
++ If $f_n xarrow(L^1) f$, then $integral_X f_n dif mu -> integral_X f dif mu$.  // 积分号与极限可交换
+]
+
+
+=== Almost Uniform Convergence // 近一致收敛
+
+#definition(name: "Almost Uniform Convergence")[ // 近一致收敛
+Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+If for all $delta > 0$, there exists a measurable set $E subset X$ with $mu(E) < delta$ such that $f_n$ converges uniformly to $f$ on $X backslash E$, then we say that $f_n$ converges *almost uniformly* to $f$, denoted by $f_n (x) xarrow("a.u.") f(x)$.
+]
+
+#theorem(name: "Egorov's Theorem")[ // Его́ров 定理
+  Let $(X, cal(S), mu)$ be a finite measure space, i.e. $mu(X) < infinity$, and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+  If $f_n (x) xarrow("a.e.") f(x)$, then $f_n (x) xarrow("a.u.") f(x)$.
+]
+
+#proposition[
+  // 近一致收敛蕴含几乎处处收敛
+  Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+  If $f_n (x) xarrow("a.u.") f(x)$, then $f_n (x) xarrow("a.e.") f(x)$.
+]
+
+#proposition[
+  // 近一致收敛蕴含依测度收敛
+  Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+  If $f_n (x) xarrow("a.u.") f(x)$, then $f_n (x) xarrow(mu) f(x)$.
+]
+
+#note(title: "Summary of Implications")[
+// 四种收敛模式之间的蕴含关系总结
+The relationships between the four convergence modes on a measure space $(X, cal(S), mu)$ are:
+
+$
+f_n xarrow(L^p) f &=> f_n xarrow(mu) f #h(2em) &"(Markov's inequality)" \
+f_n xarrow("a.u.") f &=> f_n xarrow("a.e.") f #h(2em) &"(trivial)" \
+f_n xarrow("a.u.") f &=> f_n xarrow(mu) f #h(2em) &"(trivial)" \
+$
+
+On *finite measure spaces* ($mu(X) < infinity$):
+$
+f_n xarrow("a.e.") f &=> f_n xarrow("a.u.") f #h(2em) &"(Egorov's theorem)" \
+f_n xarrow(mu) f &=> exists f_(n_(k_i)) xarrow("a.e.") f #h(2em) &"(Riesz's theorem)"
+$
+
+*Non-implications*:
+- $f_n xarrow(mu) f$ does NOT imply $f_n xarrow("a.e.") f$ (typewriter sequence).
+- $f_n xarrow("a.e.") f$ does NOT imply $f_n xarrow(L^p) f$ in general.
 ]
 
 
