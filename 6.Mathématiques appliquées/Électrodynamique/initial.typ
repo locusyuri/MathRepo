@@ -180,28 +180,155 @@ The following statements are equivalent:
 = Electrostatic Field // 静电场
 == Coulomb's Law // 库仑定律
 
+=== Historical Background and Experimental Basis // 历史背景与实验基础
+
+The study of electrostatics originated from the ancient observation of amber attracting light objects when rubbed. In the 18th century, Charles-Augustin de Coulomb conducted a series of experiments using a torsion balance (扭秤) to measure the electrostatic force between charged spheres, leading to the formulation of the law that now bears his name.
+
+// 电荷的基本性质：同号相斥、异号相吸
+Electric charges exhibit two fundamental properties:
+- Like charges repel each other; opposite charges attract each other.
+- Charge is quantized in units of the elementary charge $e = 1.602176634 times 10^(-19) "C"$.
+- The SI unit of electric charge is the *coulomb* (C).
+
+=== Mathematical Formulation // 库仑定律的数学表述
+
 #definition(name: "Coulomb's Law")[
-The *Coulomb's law* states that the electrostatic force $bold(F)$ between two point charges $q_1$ and $q_2$ separated by a distance $r$ in vacuum is given by
-$  
-bold(F) = k (q_1 q_2) / r^2 hat(r),
-$
-where $k$ is the Coulomb's constant, $hat(r)$ is the unit vector pointing from one charge to the other.
+  The *Coulomb's law* states that the electrostatic force $bold(F)$ between two point charges $q_1$ and $q_2$ separated by a distance $r$ in vacuum is given by
+  $
+    bold(F)_(12) = k frac(q_1 q_2, r^2) hat(r)_(12),
+  $
+  where $k$ is the Coulomb's constant, $hat(r)_(12)$ is the unit vector pointing from charge $q_2$ to $q_1$, and $bold(F)_(12)$ is the force exerted on $q_2$ by $q_1$.
 ]
 
-In SI units, the Coulomb's constant is given by $k = 8.9875517873681764 times 10^9 "N" dot "m"^2 dot "C"^(-2)$.
-For convenience, we often use the permittivity of free space $epsilon_0$ to express Coulomb's constant as 
+In SI units, the Coulomb's constant is given by
 $
-k = 1 / (4 pi epsilon_0),
-$ 
-where $epsilon_0 = 8.854187817 times 10^(-12) "C"^2 dot "N"^(-1) dot "m"^(-2)$.
+k = 8.9875517873681764 times 10^9 "N" dot "m"^2 dot "C"^(-2).
+$
+
+For convenience, we often express Coulomb's constant in terms of the *permittivity of free space* $epsilon_0$:
+$
+k = frac(1, 4 pi epsilon_0),
+$
+where
+$
+epsilon_0 = 8.854187817 times 10^(-12) "C"^2 dot "N"^(-1) dot "m"^(-2).
+$
+
+#note[
+  The inverse-square nature of Coulomb's law has been experimentally verified to high precision. The exponent $2$ is accurate to within $10^(-16)$, i.e., $F prop r^(-(2 plus.minus delta))$ with $delta << 1$. This remarkable precision has deep theoretical significance — any deviation from the exact inverse-square law would imply a nonzero photon mass.
+]
+
+#note[
+  Coulomb's law bears a striking resemblance to Newton's law of universal gravitation: both are inverse-square central forces. However, there are crucial differences:
+  - Gravitational forces are always attractive, while electrostatic forces can be attractive or repulsive.
+  - The gravitational constant $G$ is independent of the medium, while the effective Coulomb constant depends on the permittivity of the surrounding medium.
+  - The electrostatic force between two protons is about $10^36$ times stronger than the gravitational force between them.
+]
+
+=== Superposition Principle // 库仑力的叠加原理
+
+#theorem(name: "Superposition Principle for Electrostatic Forces")[
+  The total electrostatic force on a point charge $q_i$ due to a system of $N$ point charges $q_1, q_2, ..., q_N$ is the vector sum of the individual forces exerted by each charge:
+  $
+    bold(F)_i = sum_(j != i) frac(1, 4 pi epsilon_0) frac(q_i q_j, |bold(r)_i - bold(r)_j|^2) hat(bold(r))_(i j),
+  $
+  where $hat(bold(r))_(i j) = (bold(r)_i - bold(r)_j) / |bold(r)_i - bold(r)_j|$ is the unit vector pointing from $q_j$ to $q_i$.
+]
+
+#note[
+  The superposition principle is an empirical fact, not a logical consequence of Coulomb's law alone. It states that the presence of other charges does not alter the pairwise interaction between any two charges. This principle is the foundation upon which all of electrostatics is built.
+]
+
+=== Status and Significance // 库仑定律的地位与意义
+
+- Coulomb's law is the fundamental experimental law of electrostatics, analogous to Newton's law of universal gravitation in mechanics.
+- It is strictly valid only for *stationary* point charges. For moving charges, magnetic forces and relativistic corrections must be considered.
+- Together with the superposition principle, Coulomb's law provides a complete framework for calculating electrostatic forces in any configuration of point charges.
+- The inverse-square form is intimately connected to Gauss's law and the divergence-free nature of the electric field in free space.
+
+=== Exercises // 示例/习题
+- Three collinear point charges: find the equilibrium position of a charge placed between two fixed charges.
+- Compare the electrostatic force and gravitational force between an electron and a proton. Calculate the ratio $F_e / F_g$.
+- Show that Coulomb's law and the superposition principle together satisfy Newton's third law for a system of point charges.
 
 == Electric Field Intensity // 电场强度
+
+=== From Force to Field // 场的引入：从力到场
+
+The Coulomb's law describes electrostatic interaction in the language of *action at a distance* (超距作用). Faraday, however, introduced the concept of a *field* — the idea that a charge modifies the space around it, and this modified space exerts forces on other charges.
+
 #definition(name: "Electric Field Intensity")[
-The *electric field intensity* $bold(E)$ at a point in space is defined as the force $bold(F)$ experienced by a positive test charge $q$ placed at that point, divided by the magnitude of the test charge, i.e.,
-$  
-bold(E) = bold(F) / q.
-$
+  The *electric field intensity* $bold(E)$ at a point in space is defined as the force $bold(F)$ experienced by a positive test charge $q$ placed at that point, divided by the magnitude of the test charge:
+  $
+    bold(E) = bold(F) / q.
+  $
+  The limit $q -> 0$ is implicit, ensuring that the test charge does not disturb the original field configuration.
 ]
+
+The SI unit of the electric field is newtons per coulomb ($"N/C"$), equivalently volts per meter ($"V/m"$).
+
+=== Field of a Point Charge and Discrete Charge Systems // 点电荷与点电荷系的电场
+
+From Coulomb's law, the electric field produced by a single point charge $q$ located at $bold(r)'$ is
+$
+  bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) frac(q, |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)').
+$
+
+For a system of $N$ point charges, the total electric field at $bold(r)$ is the vector sum (superposition) of the fields due to each charge:
+$
+  bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) sum_(i=1)^N frac(q_i, |bold(r) - bold(r)_i|^2) hat(bold(r) - bold(r)_i).
+$
+
+=== Continuous Charge Distributions // 连续分布电荷的电场
+
+For a continuous charge distribution, the summation over discrete charges is replaced by integration. The charge distribution can be described by three types of density:
+
+- *Volume charge density* $rho(bold(r)')$ (charge per unit volume)
+- *Surface charge density* $sigma(bold(r)')$ (charge per unit area)
+- *Linear charge density* $lambda(bold(r)')$ (charge per unit length)
+
+The electric field is then given by:
+
+#definition(name: "Electric Field of Continuous Distributions")[
+  For a volume charge distribution $rho(bold(r)')$:
+  $
+    bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) integral_V frac(rho(bold(r)'), |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)') dif V'.
+  $
+
+  For a surface charge distribution $sigma(bold(r)')$:
+  $
+    bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) integral_S frac(sigma(bold(r)'), |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)') dif S'.
+  $
+
+  For a linear charge distribution $lambda(bold(r)')$:
+  $
+    bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) integral_L frac(lambda(bold(r)'), |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)') dif l'.
+  $
+]
+
+=== Electric Field Lines // 电力线的概念
+
+#definition(name: "Electric Field Lines")[
+  *Electric field lines* (or lines of force) are curves drawn in space such that the tangent at every point is parallel to the direction of $bold(E)$ at that point. The density of lines in a region is proportional to the magnitude of the electric field.
+]
+
+Electric field lines have the following properties:
+- They originate from positive charges and terminate on negative charges.
+- They never cross each other (the field is single-valued at each point).
+- The number of lines leaving a positive charge is proportional to the magnitude of the charge.
+- In regions where the field is strong, the lines are closely spaced; where the field is weak, the lines are sparse.
+
+=== Physical Discussion // 物理讨论
+
+- The electric field $bold(E)$ is a *physical field* — it exists independently of whether a test charge is present to detect it. This is the fundamental shift from the action-at-a-distance viewpoint to the field viewpoint.
+- The superposition principle for $bold(E)$ is a direct consequence of the linearity of Coulomb's law and the superposition of forces.
+- The transition from discrete sums to continuous integrals is justified when the number of charges is large and individual discreteness is negligible at the macroscopic scale.
+
+=== Exercises // 示例/习题
+- Find the electric field of an electric dipole consisting of $+q$ and $-q$ separated by a distance $d$, along the perpendicular bisector and along the axis.
+- Calculate the electric field on the perpendicular bisector of a uniformly charged rod of length $L$ and total charge $Q$.
+- Find the electric field on the axis of a uniformly charged ring of radius $R$ and total charge $Q$.
+- *Challenge*: Show that the electric field inside a uniformly charged spherical shell is zero.
 
 
 == Gauss's Law and Electric Flux // 高斯定律与电通量
