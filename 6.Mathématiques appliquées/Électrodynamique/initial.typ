@@ -312,8 +312,6 @@ The electric field is then given by:
   - In regions where the field is strong, the lines are closely spaced; where the field is weak, the lines are sparse.
 ]
 
-=== Physical Discussion // 物理讨论
-
 #note[
   The electric field $bold(E)$ is a *physical field* — it exists independently of whether a test charge is present to detect it. This is the fundamental shift from the action-at-a-distance viewpoint to the field viewpoint.
 ]
@@ -325,6 +323,8 @@ The electric field is then given by:
 == Gauss's Law and Electric Flux // 高斯定律与电通量
 
 == Electric Potential // 电势
+
+== Common Models: Field and Potential
 
 == Poisson's Equation and Laplace's Equation // 泊松方程与拉普拉斯方程
 
