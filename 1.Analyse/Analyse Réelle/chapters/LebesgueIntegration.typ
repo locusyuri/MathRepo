@@ -380,7 +380,210 @@ The relationship between improper Riemann integrals and Lebesgue integrals is mo
 = Differential and Integral // 微分与积分
 == Jump Functions and Dini Derivatives // 跳跃函数与 Dini 导数
 
+// 导语：当导数尚未存在时，如何用更弱的局部斜率信息描述函数行为
+// 本节是后面单调函数、Vitali 引理、绝对连续性的准备。
+
+The theory of differentiation relies, at its core, on understanding how a function behaves locally. When a function is differentiable at a point, its derivative provides complete first-order local information. But what happens when the derivative does not exist? The following concepts — jump functions and Dini derivatives — offer two complementary ways to describe local behavior in the absence of full differentiability. They serve as foundational tools for the study of monotone functions, the Vitali covering lemma, and absolute continuity in the subsequent sections.
+
+=== Jump Functions // 跳跃函数
+
+// 跳跃函数是最简单的局部非光滑模型，代表"有断裂但仍可控"的行为
+
+Jump functions are the simplest type of function that exhibits controlled discontinuities. A function is said to have a *jump* at a point if its left and right limits exist but differ.
+
+#definition(name: "Jump Function (Saltus Function)")[
+  A function $f: [a, b] -> bb(R)$ is called a *jump function* (or *saltus function*) if it is right-continuous with left limits (a *cadlag* function) and its discontinuities are all jump discontinuities. For each $x in [a, b]$, define the *jump size* at $x$ as
+  $
+  j_f (x) = f(x^+) - f(x^-),
+  $
+  where $f(x^+) = lim_(h -> 0^+) f(x + h)$ and $f(x^-) = lim_(h -> 0^+) f(x - h)$ (with the convention $f(a^-) = f(a)$ and $f(b^+) = f(b)$). The function $f$ is continuous at $x$ if and only if $j_f (x) = 0$.
+]
+
+#example[
+  The *Heaviside step function*
+  $
+  H(x) = cases(0 & "if" x < 0, 1 & "if" x >= 0)
+  $
+  has a single jump at $x = 0$ with jump size $j_H(0) = 1$. It is the prototypical example of a jump function: piecewise constant, with one point of discontinuity where the function jumps from one value to another.
+]
+
+#note[
+  Jump functions are intimately connected to two important classes of functions:
+  - *Monotone functions*: Every monotone function on $[a, b]$ has at most countably many jump discontinuities. The sum of its jump sizes is bounded by $|f(b) - f(a)|$.
+  - *Functions of bounded variation (BV)*: Every BV function can be decomposed uniquely as the sum of an absolutely continuous part, a jump part (a pure jump function), and a singular part (the Lebesgue decomposition of the distributional derivative).
+]
+
+=== Dini Derivatives // Dini 导数
+
+// Dini 导数的四个版本：上下左右
+
+When a function is not differentiable at a point, we can still extract useful local slope information by considering the limsup and liminf of difference quotients. The four *Dini derivatives* capture exactly this information.
+
+#definition(name: "Dini Derivatives")[
+  Let $f: [a, b] -> bb(R)$ be a function. For $x in (a, b)$, define the four Dini derivatives:
+
+  *Upper right Dini derivative:*
+  $ D^+ f(x) = limsup_(h -> 0^+) (f(x + h) - f(x)) / h, $
+
+  *Lower right Dini derivative:*
+  $ D_+ f(x) = liminf_(h -> 0^+) (f(x + h) - f(x)) / h, $
+
+  *Upper left Dini derivative:*
+  $ D^- f(x) = limsup_(h -> 0^-) (f(x + h) - f(x)) / h, $
+
+  *Lower left Dini derivative:*
+  $ D_- f(x) = liminf_(h -> 0^-) (f(x + h) - f(x)) / h, $
+
+  where $h -> 0^-$ means $h$ approaches $0$ from below. For convenience, we also write $overline(D) f(x) = D^+ f(x)$ and $underline(D) f(x) = D_+ f(x)$ for the upper and lower derivatives (right-sided).
+]
+
+#note[
+  *Relationship with the ordinary derivative*:
+  - If $f$ is differentiable at $x$, then all four Dini derivatives coincide with $f'(x)$:
+    $ D^+ f(x) = D_+ f(x) = D^- f(x) = D_- f(x) = f'(x). $
+  - Conversely, if all four Dini derivatives exist and are equal (as finite numbers), then $f$ is differentiable at $x$ with that common value.
+  - The key advantage of Dini derivatives is that they *always exist* (as extended real numbers) for any function, whereas the ordinary derivative may not.
+]
+
+#example[
+  Consider $f(x) = |x| sin(1 / x)$ for $x != 0$ and $f(0) = 0$. This function is not differentiable at $x = 0$ because the difference quotient $(f(h) - f(0)) / h = |h| sin(1 / h) / h = "sgn"(h) sin(1 / h)$ oscillates between $-1$ and $1$ as $h -> 0$. However, the Dini derivatives at $0$ exist:
+  $
+  D^+ f(0) = 1, quad D_+ f(0) = -1, quad D^- f(0) = 1, quad D_- f(0) = -1.
+  $
+  The Dini derivatives capture the extremal slopes of the oscillations even though the ordinary derivative does not exist.
+]
+
+=== Local Behavior via Dini Derivatives // Dini 导数的局部性质
+
+// 过渡：Dini 导数是分析单调性、局部 Lipschitz 性和可微性的工具
+
+Dini derivatives serve as a versatile tool for extracting local information about a function's behavior without requiring full differentiability. The following observations illustrate their role:
+
+#note[
+  - *Monotonicity*: A function $f$ is non-decreasing on $[a, b]$ if and only if $D_+ f(x) >= 0$ for all $x in (a, b)$. Similarly, $f$ is non-increasing if and only if $D^+ f(x) <= 0$ for all $x$.
+  
+  - *Local Lipschitz property*: If all four Dini derivatives are uniformly bounded on $[a, b]$, then $f$ is Lipschitz continuous on $[a, b]$.
+  
+  - *Differentiability a.e.*: For monotone functions, the Dini derivatives satisfy $D^+ f(x) = D_- f(x)$ a.e. and $D_+ f(x) = D^- f(x)$ a.e. This symmetry is the first step toward proving that monotone functions are differentiable almost everywhere — a result that will be established through the Vitali covering lemma in the next section.
+]
+
+These properties highlight the central role of Dini derivatives: they provide a way to reason about differentiability and growth without assuming the derivative exists. The challenge, however, is that Dini derivatives are only pointwise quantities — to translate their local information into global (or almost everywhere) conclusions, we need a covering argument. This is precisely where the Vitali covering lemma comes in.
+
+#v(0.5em)
+// 过渡段：Dini 导数解决"局部斜率怎么看"，Vitali 覆盖解决"如何把局部信息提升成几乎处处结论"
+Dini derivatives tell us how to measure local slopes; the Vitali covering lemma tells us how to lift these local measurements to almost-everywhere conclusions. Together, they form the backbone of the classical theory of differentiation. We now turn to the Vitali covering lemma and its applications.
+
 == Vitali Coverings and the Vitali Lemma // Vitali 覆盖与 Vitali 引理
+
+// Motivation: 为什么需要覆盖引理
+// Dini 导数只提供逐点信息，要得到几乎处处结论，需要一种把"任意小区间"的局部信息
+// 汇集为全局信息的技术手段。
+
+Dini derivatives give us pointwise information about a function's local slope, but converting this into almost-everywhere conclusions requires a covering argument. The prototypical scenario is this: let $f$ be an increasing function on $[a, b]$, and suppose at each point $x$ in a set $E$ we know $D^+ f(x) > t$. We would like to bound $|f(b) - f(a)|$ from below by $t dot m(E)$. To do this, for each $x in E$ we pick a small interval $[x, x + h]$ (or $[x - h, x]$) where the difference quotient $(f(x + h) - f(x))/h$ exceeds $t$, then select a disjoint subfamily of these intervals and sum their lengths. The Vitali covering lemma turns this intuition into a rigorous tool.
+
+#note[
+  *Why a covering lemma?* Three key observations:
+  - We need a family of arbitrarily small intervals covering *every* point of $E$ (a *Vitali covering*).
+  - From this family we must extract a disjoint subcollection whose total length approximates the measure of $E$.
+  - This same pattern — cover, extract, estimate — recurs throughout real analysis: Lebesgue density theorem, a.e. differentiability, differentiation of integrals.
+]
+
+=== Vitali Coverings // Vitali 覆盖
+
+#definition(name: "Vitali Covering")[
+  Let $E subset bb(R)$ and let $cal(V)$ be a collection of closed intervals in $bb(R)$. We say that $cal(V)$ is a *Vitali covering* of $E$ if for every $x in E$ and every $epsilon > 0$, there exists $I in cal(V)$ such that $x in I$ and $|I| < epsilon$.
+  In other words, the collection $cal(V)$ contains intervals of arbitrarily small length that contain $x$.
+]
+
+#example[
+  Consider $E = [0, 1]$ and let $cal(V) = {(x - delta, x + delta) : x in [0, 1], delta > 0}$. This is a Vitali covering of $[0, 1]$: every point $x$ is contained in intervals of every positive length.
+]
+
+#example[
+  Let $cal(V) = {[k 2^(-n), (k+1) 2^(-n)] : n in bb(N), 0 <= k < 2^n}$ be the family of all dyadic intervals. Then $cal(V)$ is *not* a Vitali covering of $[0, 1]$. Although the intervals become arbitrarily small, at the point $x = 1/3$ (which has a non-terminating binary expansion) there is no dyadic interval that contains $1/3$ as an interior point — the dyadic grid does not align with every point.
+]
+
+=== Vitali Covering Lemma // Vitali 覆盖引理
+
+// Vitali 覆盖引理是本节的核心理论工具
+// 采用"二合一"版本：先给出可数/有限版本，再给出有限近似版本
+
+#theorem(name: "Vitali Covering Lemma")[
+  Let $E subset bb(R)$ with $m^*(E) < infinity$ and let $cal(V)$ be a Vitali covering of $E$. Then there exists a finite or countable disjoint subcollection ${I_k} subset.eq cal(V)$ such that
+
+  $
+  m^*(E backslash union.big_k I_k) = 0.
+  $
+
+  Equivalently, for every $epsilon > 0$, there exists a *finite* disjoint subcollection ${I_1, ..., I_N} subset.eq cal(V)$ satisfying
+
+  $
+  m^*(E backslash union.big_(k=1)^N I_k) < epsilon.
+  $
+]
+
+#proof[
+  *Step 1: Restrict to a bounded open set.*
+  Since $m^*(E) < infinity$, there exists an open set $U$ such that $E subset U$ and $m(U) < infinity$. Discard all intervals of $cal(V)$ that are not contained in $U$; the remaining collection, call it $cal(V)_0$, is still a Vitali covering of $E$ (for each $x in E$, take an interval small enough to lie inside $U$).
+
+  *Step 2: Greedy selection.*
+  Define a size function on intervals: $r(I) = |I|$. Let $I_1 in cal(V)_0$ be any interval such that $r(I_1) > 1/2 sup{r(I) : I in cal(V)_0}$.
+
+  Having chosen $I_1, ..., I_n$, let
+  $
+  cal(V)_n = {I in cal(V)_0 : I inter (union.big_(k=1)^n I_k) = emptyset}.
+  $
+  If $cal(V)_n != emptyset$, choose $I_(n+1) in cal(V)_n$ such that
+  $
+  r(I_(n+1)) > 1/2 sup{r(I) : I in cal(V)_n}.
+  $
+  If $cal(V)_n = emptyset$ for some $n$, then every point of $E$ lies in some $I_k$ ($k <= n$) and the lemma is proved. Otherwise we obtain an infinite sequence of disjoint intervals ${I_k}$.
+
+  *Step 3: The total length is finite.*
+  Since all intervals are disjoint and contained in $U$, we have
+  $
+  sum_(k=1)^infinity |I_k| <= m(U) < infinity.
+  $
+  In particular, $|I_k| -> 0$ as $k -> infinity$ and the tail sums $sum_(k=N+1)^infinity |I_k| -> 0$.
+
+  *Step 4: The dilation trick.*
+  For each chosen interval $I_k$, let $J_k$ be the closed interval concentric with $I_k$ but with five times the length: $|J_k| = 5 |I_k|$. We claim that
+  $
+  E backslash union.big_(k=1)^infinity I_k subset union.big_(k=1)^infinity J_k.
+  $
+
+  To see this, take any $x in E backslash union.big_k I_k$. Since $cal(V)_0$ is a Vitali covering, there exists $I in cal(V)_0$ such that $x in I$. Because $x$ does not belong to any $I_k$, the interval $I$ must intersect at least one selected $I_k$ (otherwise it would have been eligible for selection at every step, contradicting the greedy maximality). Let $N$ be the smallest index such that $I inter I_N != emptyset$.
+
+  *Why $N$ is the first intersecting index:* By the greedy selection rule, when $I_N$ was chosen, we had $r(I_N) > 1/2 sup{r(J) : J in cal(V)_(N-1)}$. Since $I in cal(V)_(N-1)$ (it does not intersect $I_1, ..., I_(N-1)$ by minimality of $N$), we have $r(I) <= 2 r(I_N)$.
+
+  Now compare the positions of $I$ and $I_N$. Since they intersect and $|I| <= 2 |I_N|$, a simple geometric argument shows that $I subset J_N$ (the 5-times concentric dilation of $I_N$). Hence $x in J_N$, establishing the claim.
+
+  *Step 5: Measure estimate.*
+  For any $N$,
+  $
+  m^*(E backslash union.big_(k=1)^N I_k) <= sum_(k=N+1)^infinity |J_k| = 5 sum_(k=N+1)^infinity |I_k|.
+  $
+  Since the tail sum tends to $0$, letting $N -> infinity$ gives $m^*(E backslash union.big_k I_k) = 0$ (the infinite version). For the finite version, given $epsilon > 0$, choose $N$ large enough so that $5 sum_(k=N+1)^infinity |I_k| < epsilon$; then ${I_1, ..., I_N}$ is the desired finite subcollection.
+]
+
+#note[
+  *The key idea*: The greedy selection ensures that each chosen interval $I_k$ is "large" relative to every unchosen interval near it. Passing over an interval means it must be "close" to some previously chosen one, and the 5-times dilation captures all such overlooked intervals. The disjointness of the chosen intervals keeps their total measure under control, so the measure of what is missed by the first $N$ intervals shrinks to zero.
+]
+
+=== Forward-Looking Remarks // 前瞻
+
+#note[
+  The Vitali Covering Lemma is the engine behind three fundamental results that follow:
+  - *Lebesgue Density Theorem*: Almost every point of a measurable set is a density point.
+  - *Differentiability of Monotone Functions*: A monotone function on $[a, b]$ is differentiable a.e. — proved by applying Vitali to the sets where the Dini derivatives differ.
+  - *Lebesgue Differentiation Theorem*: For $f in L^1_("loc")(bb(R))$,
+    $lim_(r -> 0) 1/(2 r) integral_(x-r)^(x+r) f(t) dif t = f(x)$ for a.e. $x$.
+
+  In this chapter, we will primarily use it to establish the a.e. differentiability of monotone functions, from which the remaining theory (BV decomposition, Newton-Leibniz formula) follows.
+]
+
+#v(0.5em)
+With the Vitali covering lemma in hand, we can now return to the question left open in the previous section: are monotone functions differentiable almost everywhere? The answer is yes, and the lemma provides the precise covering argument needed.
 
 == Monotone Functions on Closed Intervals // 闭区间上的单调函数
 
