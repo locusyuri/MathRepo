@@ -180,8 +180,6 @@ The following statements are equivalent:
 = Electrostatic Field // 静电场
 == Coulomb's Law // 库仑定律
 
-=== Historical Background and Experimental Basis // 历史背景与实验基础
-
 The study of electrostatics originated from the ancient observation of amber attracting light objects when rubbed. In the 18th century, Charles-Augustin de Coulomb conducted a series of experiments using a torsion balance (扭秤) to measure the electrostatic force between charged spheres, leading to the formulation of the law that now bears his name.
 
 // 电荷的基本性质：同号相斥、异号相吸
@@ -239,17 +237,12 @@ $
   The superposition principle is an empirical fact, not a logical consequence of Coulomb's law alone. It states that the presence of other charges does not alter the pairwise interaction between any two charges. This principle is the foundation upon which all of electrostatics is built.
 ]
 
-=== Status and Significance // 库仑定律的地位与意义
+Coulomb's law holds profound significance in electrodynamics:
 
-- Coulomb's law is the fundamental experimental law of electrostatics, analogous to Newton's law of universal gravitation in mechanics.
+- It is the fundamental experimental law of electrostatics, analogous to Newton's law of universal gravitation in mechanics.
 - It is strictly valid only for *stationary* point charges. For moving charges, magnetic forces and relativistic corrections must be considered.
 - Together with the superposition principle, Coulomb's law provides a complete framework for calculating electrostatic forces in any configuration of point charges.
 - The inverse-square form is intimately connected to Gauss's law and the divergence-free nature of the electric field in free space.
-
-=== Exercises // 示例/习题
-- Three collinear point charges: find the equilibrium position of a charge placed between two fixed charges.
-- Compare the electrostatic force and gravitational force between an electron and a proton. Calculate the ratio $F_e / F_g$.
-- Show that Coulomb's law and the superposition principle together satisfy Newton's third law for a system of point charges.
 
 == Electric Field Intensity // 电场强度
 
@@ -312,24 +305,22 @@ The electric field is then given by:
   *Electric field lines* (or lines of force) are curves drawn in space such that the tangent at every point is parallel to the direction of $bold(E)$ at that point. The density of lines in a region is proportional to the magnitude of the electric field.
 ]
 
-Electric field lines have the following properties:
-- They originate from positive charges and terminate on negative charges.
-- They never cross each other (the field is single-valued at each point).
-- The number of lines leaving a positive charge is proportional to the magnitude of the charge.
-- In regions where the field is strong, the lines are closely spaced; where the field is weak, the lines are sparse.
+#property(name: "Properties of Electric Field Lines")[
+  - They originate from positive charges and terminate on negative charges.
+  - They never cross each other (the field is single-valued at each point).
+  - The number of lines leaving a positive charge is proportional to the magnitude of the charge.
+  - In regions where the field is strong, the lines are closely spaced; where the field is weak, the lines are sparse.
+]
 
 === Physical Discussion // 物理讨论
 
-- The electric field $bold(E)$ is a *physical field* — it exists independently of whether a test charge is present to detect it. This is the fundamental shift from the action-at-a-distance viewpoint to the field viewpoint.
-- The superposition principle for $bold(E)$ is a direct consequence of the linearity of Coulomb's law and the superposition of forces.
-- The transition from discrete sums to continuous integrals is justified when the number of charges is large and individual discreteness is negligible at the macroscopic scale.
+#note[
+  The electric field $bold(E)$ is a *physical field* — it exists independently of whether a test charge is present to detect it. This is the fundamental shift from the action-at-a-distance viewpoint to the field viewpoint.
+]
 
-=== Exercises // 示例/习题
-- Find the electric field of an electric dipole consisting of $+q$ and $-q$ separated by a distance $d$, along the perpendicular bisector and along the axis.
-- Calculate the electric field on the perpendicular bisector of a uniformly charged rod of length $L$ and total charge $Q$.
-- Find the electric field on the axis of a uniformly charged ring of radius $R$ and total charge $Q$.
-- *Challenge*: Show that the electric field inside a uniformly charged spherical shell is zero.
-
+#note[
+  The superposition principle for $bold(E)$ is a direct consequence of the linearity of Coulomb's law and the superposition of forces. The transition from discrete sums to continuous integrals is justified when the number of charges is large and individual discreteness is negligible at the macroscopic scale.
+]
 
 == Gauss's Law and Electric Flux // 高斯定律与电通量
 
