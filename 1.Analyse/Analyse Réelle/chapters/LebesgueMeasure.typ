@@ -439,4 +439,33 @@ $
   Then there exists a sequence of continuous functions $g_n: X  -> overline(bb(R))$ such that $g_n (x) xarrow("a.e.") f(x)$.
 ]
 
+=== Continuity via Preimages // 通过原像定义连续性
+#definition(name: "Continuity via Open Sets")[
+  Let $(X, tau_X)$ and $(Y, tau_Y)$ be topological spaces. A function $g: X -> Y$ is called *continuous* if for every open set $U in tau_Y$, the preimage $g^(-1)(U)$ is open in $X$.
+]
+
+=== Equivalent Definitions of Continuity // 连续性的等价定义
+#proposition(name: "Equivalence of Continuity Definitions")[
+  Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces. A function $g: X -> Y$ is continuous in the $epsilon$-$delta$ (pointwise) sense if and only if for every open set $U subset Y$ the preimage $g^(-1)(U)$ is open in $X$.
+
+  #proof[
+    Sketch: If $g$ is $epsilon$-$delta$ continuous at every point, then for any open $U$ and any $x in g^(-1)(U)$ one can find a neighborhood mapped into $U$, hence $g^(-1)(U)$ is a union of neighborhoods and open. Conversely, if preimages of open sets are open, take $U$ to be an open ball around $g(x)$ to obtain the usual $epsilon$-$delta$ condition.
+  ]
+]
+
+#note[
+  This formulation mirrors measurability: measurable maps preserve measurable sets under inverse images, while continuous maps preserve open sets under inverse images. Using the preimage viewpoint makes the passage to Borel measurability and composition transparent.
+]
+
 === Measurability of Composite Functions // 复合函数可测性
+#proposition(name: "Composition with Continuous Functions")[
+  Let $(X, cal(S))$ be a measurable space and let $Y$ be a topological space with Borel sigma-algebra $cal(B)(Y)$. If $f: X -> Y$ is $cal(S)$-$cal(B)(Y)$ measurable and $g: Y -> overline(bb(R))$ is continuous, then the composition $g compose f: X -> overline(bb(R))$ is $cal(S)$-$cal(B)(overline(bb(R)))$ measurable.
+]
+
+#proposition(name: "Composition with Borel Measurable Functions")[
+  Let $(X, cal(S))$ be a measurable space and let $Y$ be a measurable space with sigma-algebra $cal(T)$. If $f: X -> Y$ is $cal(S)$-$cal(T)$ measurable and $g: Y -> Z$ is $cal(T)$-$cal(U)$ measurable, then $g compose f: X -> Z$ is $cal(S)$-$cal(U)$ measurable.
+]
+
+#note[
+  In particular, continuous maps are Borel measurable, so the first proposition is a special case of the second. This shows the natural alignment between continuity (open-set preimages) and measurability (measurable-set preimages) under composition.
+]
