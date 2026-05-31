@@ -322,9 +322,188 @@ The electric field is then given by:
 
 == Gauss's Law and Electric Flux // 高斯定律与电通量
 
+=== Electric Flux // 电通量
+
+#definition(name: "Electric Flux")[
+  The *electric flux* $Phi_E$ through a surface $S$ is defined as the surface integral of the electric field over $S$:
+  $
+    Phi_E = integral_S bold(E) dot dif bold(S),
+  $
+  where $dif bold(S) = bold(n) dif S$ is the vector area element, with $bold(n)$ being the outward unit normal to the surface.
+]
+
+Physically, the electric flux measures the "flow" of the electric field through a surface — it is proportional to the number of field lines passing through that surface. For a closed surface, positive flux indicates a net outflow of field lines (a source), while negative flux indicates a net inflow (a sink).
+
+#example[
+  Consider a uniform electric field $bold(E) = E_0 bold(e)_z$ passing through a flat surface of area $A$ oriented at an angle $theta$ with respect to the field. The flux through the surface is:
+  $
+    Phi_E = integral_A bold(E) dot dif A = E_0 A cos theta.
+  $
+  The flux is maximal when the surface is perpendicular to the field ($theta = 0$) and zero when the surface is parallel to the field ($theta = pi/2$).
+]
+
+=== Gauss's Law // 高斯定律
+
+#theorem(name: "Gauss's Law — Integral Form")[
+  The total electric flux through any closed surface $S$ (also called a *Gaussian surface*) is proportional to the total charge enclosed within that surface:
+  $
+    integral_harpoon(S) bold(E) dot dif bold(S) = frac(Q_"enc", epsilon_0),
+  $
+  where $Q_"enc" = integral_V rho(bold(r)) dif V$ is the total charge inside the volume $V$ bounded by $S$, and $epsilon_0$ is the permittivity of free space.
+]
+
+This law is one of the four Maxwell's equations. It captures the fundamental fact that electric charges are the sources (and sinks) of the electric field — positive charges produce outward flux, negative charges produce inward flux.
+
+By applying the divergence theorem to the integral form, we obtain the local (pointwise) counterpart:
+
+#theorem(name: "Gauss's Law — Differential Form")[
+  $
+    nabla dot bold(E) = frac(rho, epsilon_0),
+  $
+  where $rho(bold(r))$ is the volume charge density at the point in question.
+]
+
+The differential form states that the divergence of the electric field at a point is directly proportional to the charge density at that point. This is the field-theoretic expression of the fact that charges are the sources of the electric field.
+
+#note[
+  The differential form $nabla dot bold(E) = rho / epsilon_0$ holds at every point in space where the electric field is continuously differentiable. At a point charge itself, the field is singular — the correct mathematical treatment uses the Dirac delta function:
+  $
+    nabla dot bold(E)(bold(r)) = frac(1, epsilon_0) sum_i q_i delta^3(bold(r) - bold(r)_i).
+  $
+]
+
+=== Applications of Gauss's Law // 高斯定律的应用
+
+While Coulomb's law is the fundamental force law, Gauss's law often provides a much simpler route to computing the electric field when the charge distribution possesses sufficient symmetry. The key is to choose a Gaussian surface over which $bold(E)$ is either constant or parallel to the surface normal.
+
+#theorem(name: "Strategy for Applying Gauss's Law")[
+  To compute $bold(E)$ using Gauss's law:
+  1. Identify the symmetry of the charge distribution (spherical, cylindrical, or planar).
+  2. Choose a Gaussian surface that respects this symmetry.
+  3. Evaluate the flux integral $integral_S bold(E) dot dif bold(S)$ — by symmetry, $|bold(E)|$ is constant on the surface.
+  4. Compute the enclosed charge $Q_"enc"$.
+  5. Solve for $|bold(E)|$.
+]
+
+#example(name: "Spherical Symmetry — Point Charge")[
+  For a point charge $q$ at the origin, choose a spherical Gaussian surface of radius $r$ concentric with the charge. By symmetry, $bold(E)$ is radial and has constant magnitude on the sphere:
+  $
+    integral_S bold(E) dot dif bold(S) = E(r) dot 4 pi r^2 = frac(q, epsilon_0).
+  $
+  Hence $E(r) = frac(1, 4 pi epsilon_0) frac(q, r^2)$, recovering Coulomb's law from Gauss's law.
+]
+
+#example(name: "Cylindrical Symmetry — Infinite Line Charge")[
+  For an infinite line charge with uniform linear density $lambda$, choose a cylindrical Gaussian surface of radius $r$ and length $L$ coaxial with the line. The flux through the end caps is zero (field is parallel to them), and the lateral surface gives:
+  $
+    E(r) dot 2 pi r L = frac(lambda L, epsilon_0).
+  $
+  Hence $E(r) = frac(lambda, 2 pi epsilon_0 r)$.
+]
+
+#example(name: "Planar Symmetry — Infinite Plane")[
+  For an infinite plane with uniform surface charge density $sigma$, choose a cylindrical "pillbox" Gaussian surface that pierces the plane. By symmetry the field is perpendicular to the plane and has equal magnitude on both sides:
+  $
+    E dot A + E dot A = frac(sigma A, epsilon_0),
+  $
+  giving $E = frac(sigma, 2 epsilon_0)$ (direction away from the plane for $sigma > 0$).
+]
+
+=== Relation to Coulomb's Law // 与库仑定律的关系
+
+#note[
+  Gauss's law and Coulomb's law are mathematically equivalent *in electrostatics*, provided the charge distribution is spherically symmetric. However, Gauss's law is the more fundamental of the two — it remains valid for time-varying fields where Coulomb's law no longer applies, and it constitutes one of the four Maxwell's equations. In fact, Coulomb's law can be derived from Gauss's law combined with the curl-free condition $nabla times bold(E) = bold(0)$ of electrostatics.
+]
+
 == Electric Potential // 电势
 
-== Common Models: Field and Potential
+=== Work, Energy, and the Electric Field // 功、能量与电场
+
+In a conservative field, the work done by the field on a charge moving from point $A$ to point $B$ is independent of the path taken. This allows us to define a scalar *potential* function whose gradient gives the field.
+
+#definition(name: "Electric Potential Difference")[
+  The *electric potential difference* between two points $A$ and $B$ is defined as the negative of the line integral of the electric field from $A$ to $B$:
+  $
+    V(B) - V(A) = - integral_A^B bold(E) dot dif bold(l),
+  $
+  where $V$ is the electric potential. The SI unit of potential is the *volt* ($"V" = "J/C"$).
+]
+
+The potential difference $V(B) - V(A)$ represents the work per unit charge that must be done by an external agent to move a test charge from $A$ to $B$ against the electric field.
+
+#note[
+  The reference point (zero of potential) is arbitrary. In electrostatics, we conventionally set $V = 0$ at infinity, provided the charge distribution is localized. This gives the absolute potential at a point $P$ as:
+  $
+    V(P) = - integral_infinity^P bold(E) dot dif bold(l).
+  $
+]
+
+=== Potential of a Point Charge and Superposition // 点电荷的电势与叠加
+
+For a single point charge $q$ at the origin, the electric field is radial: $bold(E) = frac(1, 4 pi epsilon_0) frac(q, r^2) hat(bold(r))$. Choosing the radial path from infinity to $r$, we obtain:
+
+#definition(name: "Potential of a Point Charge")[
+  The electric potential at a distance $r$ from a point charge $q$ is
+  $
+    V(r) = frac(1, 4 pi epsilon_0) frac(q, r),
+  $
+  with the convention $V(infinity) = 0$.
+]
+
+For a system of point charges, the potential at a given point is the scalar sum of the potentials due to each charge — this is much easier than vector superposition of fields.
+
+#theorem(name: "Superposition Principle for Potential")[
+  For a system of $N$ point charges $q_i$ located at positions $bold(r)_i$:
+  $
+    V(bold(r)) = frac(1, 4 pi epsilon_0) sum_(i=1)^N frac(q_i, |bold(r) - bold(r)_i|).
+  $
+  For continuous distributions:
+  $
+    V(bold(r)) = frac(1, 4 pi epsilon_0) integral_V frac(rho(bold(r)'), |bold(r) - bold(r)'|) dif V',
+  $
+  with analogous expressions for surface and line distributions.
+]
+
+#note[
+  The potential is a *scalar* field, making it significantly easier to compute than the vector field $bold(E)$. Once $V$ is known, the electric field can be recovered by differentiation: $bold(E) = - nabla V$. This is the standard strategy in electrostatics: first compute $V$ via scalar integration, then differentiate to obtain $bold(E)$.
+]
+
+=== Relationship Between Field and Potential // 场与势的关系
+
+#property(name: "Fundamental Relations")[
+  - The electric field is the negative gradient of the potential: $bold(E) = - nabla V$.
+  - Componentwise: $E_x = -(partial V)/(partial x)$, $E_y = -(partial V)/(partial y)$, $E_z = -(partial V)/(partial z)$.
+  - The curl-free condition: $nabla times bold(E) = bold(0)$ is automatically satisfied for any gradient field, reflecting the conservative nature of the electrostatic field.
+]
+
+#definition(name: "Equipotential Surfaces")[
+  An *equipotential surface* is a surface on which the electric potential is constant. The electric field is everywhere perpendicular to equipotential surfaces, pointing in the direction of steepest potential decrease.
+]
+
+#example[
+  For a point charge, the equipotential surfaces are concentric spheres. The field lines (radial lines) are orthogonal to these spheres at every point. This orthogonality is a general property: field lines and equipotential surfaces always intersect at right angles.
+]
+
+=== Potential Energy of Charge Systems // 电荷系统的势能
+
+The potential energy of a charge configuration is the work required to assemble the charges from infinity to their final positions (assuming all charges start infinitely far apart).
+
+#definition(name: "Electrostatic Potential Energy of Point Charges")[
+  For a system of $N$ point charges $q_1, q_2, ..., q_N$, the total electrostatic potential energy is:
+  $
+    U = frac(1, 4 pi epsilon_0) sum_(i < j)^N frac(q_i q_j, |bold(r)_i - bold(r)_j|)
+      = frac(1, 2) sum_(i=1)^N q_i V_i,
+  $
+  where $V_i = sum_(j != i) frac(1, 4 pi epsilon_0) frac(q_j, |bold(r)_i - bold(r)_j|)$ is the potential at the location of $q_i$ due to all other charges.
+]
+
+The factor $1/2$ in the second expression accounts for the double-counting of pairwise interactions in the sum over all charges. For a continuous charge distribution, the expression generalizes to:
+
+$
+  U = frac(1, 2) integral_V rho(bold(r)) V(bold(r)) dif V.
+$
+
+== Common Models: Field and Potential // 常见模型：场与势
 
 == Poisson's Equation and Laplace's Equation // 泊松方程与拉普拉斯方程
 
