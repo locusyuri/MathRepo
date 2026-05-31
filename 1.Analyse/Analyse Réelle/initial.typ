@@ -66,6 +66,11 @@ refer to @zhou2016
 //   Section 3.4: Product Measure and Fubini's Theorem (乘积测度与Fubini定理)
 
 // Chapter 4: Differential and Integral (微分与积分)
+//   Section 4.1: Jump Functions and Dini Derivatives (跳跃函数与 Dini 导数)
+//   Section 4.2: Vitali Coverings and the Vitali Lemma (Vitali 覆盖与 Vitali 引理)
+//   Section 4.3: Monotone Functions on Closed Intervals (闭区间上的单调函数)
+//   Section 4.4: Functions of Bounded Variation and Absolute Continuity (有界变差函数与绝对连续函数)
+//   Section 4.5: Absolute Continuity and the Newton-Leibniz Formula (绝对连续性与 Newton-Leibniz 公式)
 
 // --- Part III: Function Spaces (函数空间) ---
 
@@ -94,7 +99,7 @@ refer to @zhou2016
 //   Section 9.5: Radon-Nikodym Derivative (Radon-Nikodym导数)
 
 // Chapter 10: Differentiation of Functions (函数的微分)
-//   Section 10.1: Functions of Bounded Variation (有界变差函数)
+//   Section 10.1: Functions of Bounded Variation and Their Structure (有界变差函数及其结构)
 //   Section 10.2: Absolutely Continuous Functions (绝对连续函数)
 //   Section 10.3: Lebesgue Differentiation Theorem (勒贝格微分定理)
 //   Section 10.4: Fundamental Theorem of Calculus for Lebesgue Integral (勒贝格积分的基本定理)

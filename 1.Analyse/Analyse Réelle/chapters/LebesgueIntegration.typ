@@ -378,3 +378,12 @@ The relationship between improper Riemann integrals and Lebesgue integrals is mo
 == Product Measure and Fubini's Theorem// 乘积测度与Fubini定理
 
 = Differential and Integral // 微分与积分
+== Jump Functions and Dini Derivatives // 跳跃函数与 Dini 导数
+
+== Vitali Coverings and the Vitali Lemma // Vitali 覆盖与 Vitali 引理
+
+== Monotone Functions on Closed Intervals // 闭区间上的单调函数
+
+== Functions of Bounded Variation and Absolute Continuity // 有界变差函数与绝对连续函数
+
+== Absolute Continuity and the Newton-Leibniz Formula // 绝对连续性与 Newton-Leibniz 公式
