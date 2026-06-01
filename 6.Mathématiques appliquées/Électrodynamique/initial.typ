@@ -731,7 +731,269 @@ Configurations invariant under translations parallel to the plane. The field is 
 
 == Poisson's Equation and Laplace's Equation // 泊松方程与拉普拉斯方程
 
-== Electrostatic Energy // 静电能
+== Electrostatic Energy // 静电能 [→ Ch5]
+
+// 静电能（静电能的一般表达式、能量密度）已在 Chapter 5 中结合电容器讨论。
+// 参见 §5.5: Electrostatic Energy and Capacitors.
+
+= Boundary Value Problems in Electrostatics // 静电学边值问题
+== Uniqueness Theorems // 唯一性定理
+== Method of Images // 镜像法
+== Separation of Variables in Cartesian Coordinates // 直角坐标系分离变量法
+== Separation of Variables in Spherical Coordinates // 球坐标系分离变量法
+== Separation of Variables in Cylindrical Coordinates // 柱坐标系分离变量法
+== Multipole Expansion // 多极展开
+
+= Conductors and Dielectrics in Electrostatic Fields // 静电场中的导体与电介质
+
+== Conductors in Electrostatic Fields // 静电场中的导体
+// 静电平衡条件、电荷分布、静电屏蔽、导体存在时静电场的分析与计算
+
+A *conductor* contains free charges (electrons in metals, ions in electrolytes) that can move freely under the influence of an electric field. In electrostatics, we consider the equilibrium state after all charges have stopped moving.
+
+=== Conditions for Electrostatic Equilibrium // 静电平衡条件
+
+#definition(name: "Electrostatic Equilibrium")[
+  A conductor is in *electrostatic equilibrium* when there is no net motion of charge within it. Under this condition, the electric field inside the conductor must be zero everywhere:
+  $
+    bold(E)_"inside" = bold(0).
+  $
+  If $bold(E) != bold(0)$ inside, free charges would accelerate until they rearrange to cancel the field.
+]
+
+#property(name: "Properties of a Conductor in Equilibrium")[
+  Let a conductor occupy region $Omega$ with boundary $partial Omega$. In electrostatic equilibrium:
+  1. $bold(E) = bold(0)$ inside $Omega$.
+  2. The interior is equipotential: $V = "const"$ throughout $Omega$.
+  3. Any net charge resides entirely on the surface $partial Omega$; the volume charge density $rho = 0$ inside $Omega$.
+  4. The electric field just outside the surface is perpendicular to the surface and satisfies
+     $
+       E_("just outside") = frac(sigma, epsilon_0) hat(bold(n)),
+     $
+     where $sigma$ is the surface charge density and $hat(bold(n))$ is the outward unit normal.
+  5. The surface is an equipotential; field lines meet it at right angles.
+]
+
+#proof[
+  *1-2.* $bold(E) = bold(0)$ follows from equilibrium. Since $nabla V = -bold(E)$, the potential is constant inside. The conductor's surface is therefore equipotential.
+
+  *3.* Apply Gauss's law in differential form: $rho = epsilon_0 nabla dot bold(E)$. Inside $Omega$, $bold(E) = bold(0)$ implies $rho = 0$. Any net charge must reside on the surface as $sigma$ (charge per unit area).
+
+  *4.* Apply Gauss's law to a Gaussian pillbox straddling the surface. The flat face inside the conductor sees $bold(E) = bold(0)$; the flat face outside sees the normal component $E_perp$. The side surface contribution vanishes in the limit of zero height. If $sigma$ is the enclosed surface charge, then
+  $
+    E_perp A = frac(sigma A, epsilon_0) arrow E_perp = frac(sigma, epsilon_0).
+  $
+  The tangential component is zero because the surface is equipotential: $E_("tan") = - (partial V)/(partial t) = 0$.
+  This yields $bold(E)_"outside" = (sigma / epsilon_0) hat(bold(n))$, where $hat(bold(n))$ points outward.
+]
+
+=== Charge Distribution on Conductors // 导体上的电荷分布
+
+The surface charge density $sigma$ is *not* uniform in general. It depends on the shape of the conductor, with higher concentrations at sharp points (large curvature).
+
+#property(name: "Charge Distribution on a Conducting Sphere")[
+  For an isolated conducting sphere of radius $R$ carrying total charge $Q$:
+  $
+    sigma = frac(Q, 4 pi R^2)
+    quad ("uniform due to spherical symmetry"),
+    bold(E)_"outside" = frac(1, 4 pi epsilon_0) frac(Q, r^2) hat(bold(r)),
+    V = frac(1, 4 pi epsilon_0) frac(Q, R) quad ("for $r <= R$").
+  $
+]
+
+#property(name: "Charge Concentration at Sharp Points")[
+  For two connected conductors (same potential), the surface charge density is inversely proportional to the local radius of curvature $R_c$:
+  $
+    sigma approx frac("const", R_c).
+  $
+  Consequently, pointed regions ($R_c$ small) have high $sigma$, producing strong local fields that can ionise the surrounding air — the principle behind lightning rods and corona discharge.
+]
+
+=== Electrostatic Shielding (Faraday Cage) // 静电屏蔽
+
+#theorem(name: "Faraday Cage Effect")[
+  A hollow conductor (a cavity inside a conductor) shields its interior from external electrostatic fields. If there are no charges inside the cavity, the field in the cavity is zero regardless of the external field.
+]
+
+#proof[
+  Consider a conductor with a cavity. Since the conductor is equipotential, the entire boundary of the cavity is at the same potential. Laplace's equation $nabla^2 V = 0$ holds inside the cavity (no charges there). The uniqueness theorem states that if $V$ is constant on the boundary, the only solution inside is $V = "const"$, giving $bold(E) = - nabla V = bold(0)$.
+]
+
+#example(name: "Point Charge Near a Grounded Conducting Sphere")[
+  A point charge $q$ placed at distance $a > R$ from the centre of a grounded ($V = 0$) conducting sphere of radius $R$. The sphere acquires an induced surface charge distribution whose total is $-q R / a$.
+
+  This problem is solved by the *method of images* (Chapter 4, §4.2): a fictitious image charge $q' = -q R / a$ placed inside the sphere at distance $b = R^2 / a$ from the centre ensures $V = 0$ on the spherical surface.
+]
+
+#caution[
+  The shielding is *perfect* only for static fields. Time-varying fields can penetrate a conductor to a depth determined by the skin depth $delta = sqrt(2 / (mu sigma omega))$, which is the basis for shielding enclosures in RF engineering.
+]
+
+=== Conductors in Capacitor Configurations // 导体与电容器
+
+#property(name: "Parallel-Plate Capacitor")[
+  Two parallel conducting plates of area $A$ separated by distance $d << sqrt(A)$, carrying charges $+Q$ and $-Q$.
+
+  Neglecting fringe effects, the field is uniform between the plates and zero outside:
+  $
+    bold(E) = frac(sigma, epsilon_0) hat(bold(n)) = frac(Q, epsilon_0 A) hat(bold(n)),
+    quad V = E d = frac(Q d, epsilon_0 A),
+    quad C = frac(Q, V) = frac(epsilon_0 A, d).
+  $
+]
+
+#note[
+  The parallel-plate capacitor is the simplest example of how a conductor geometry determines capacitance. More complex geometries (coaxial cylinders, concentric spheres) also follow $C = Q / V$ and are tabulated in // Common Models.
+]
+
+=== Analysis Strategy with Conductors // 导体存在时的分析策略
+
+When solving electrostatic problems involving conductors:
+
+#property(name: "General Approach")[
+  1. Identify all conductors and their potentials (or total charges).
+  2. Inside each conductor: $bold(E) = bold(0)$, $V = "const"$.
+  3. On each conductor surface: $bold(E)_"outside" = (sigma / epsilon_0) hat(bold(n))$, tangential component zero.
+  4. Total charge on each conductor: $Q = integral_sigma dif a$.
+  5. In the volume between conductors: solve Laplace's equation $nabla^2 V = 0$ with boundary conditions $V = V_i$ on each conductor surface.
+  6. Once $V$ is known, obtain $bold(E) = - nabla V$ and $sigma = epsilon_0 E_n$.
+]
+
+== Polarization and Bound Charges // 极化与束缚电荷
+// 电极化强度、束缚电荷密度、电介质的极化机制
+
+Electric dielectrics (电介质) are insulating materials that respond to an external electric field by developing an internal polarization. Unlike conductors, they contain no free charges, but their bound charges can shift slightly, creating microscopic dipoles.
+
+=== Polarization Vector // 电极化强度
+
+#definition(name: "Polarization Vector")[
+  The *polarization vector* $bold(P)$ is defined as the electric dipole moment per unit volume:
+  $
+    bold(P)(bold(r)) = lim_(Delta V -> 0) (sum_i bold(p)_i) / Delta V,
+  $
+  where $bold(p)_i$ is the dipole moment of the $i$-th molecule within volume $Delta V$.
+  In a linear, isotropic dielectric, polarization is proportional to the electric field:
+  $
+    bold(P) = epsilon_0 chi_e bold(E),
+  $
+  where $chi_e$ is the *electric susceptibility* (电极化率), a dimensionless material constant.
+]
+
+#property(name: "Dielectric Constant")[
+  The *relative permittivity* (介电常数) is defined as $epsilon_r = 1 + chi_e$.
+  The absolute permittivity is $epsilon = epsilon_0 epsilon_r = epsilon_0 (1 + chi_e)$.
+  For vacuum: $chi_e = 0$, $epsilon_r = 1$. For typical dielectrics: $1 < epsilon_r <= 100$.
+]
+
+=== Bound Charge Densities // 束缚电荷密度
+
+When a dielectric is polarized, the displacement of bound charges produces effective charge distributions. These are called *bound charges* (束缚电荷), as opposed to *free charges* (自由电荷) that can move freely through a conductor.
+
+#theorem(name: "Bound Volume Charge Density")[
+  The bound volume charge density is the negative divergence of the polarization:
+  $
+    rho_b = - nabla dot bold(P).
+  $
+]
+
+#proof[
+  Consider a small volume $Delta V$ containing polarized molecules. Each molecule has a dipole moment $bold(p) = q bold(d)$. When the polarization $bold(P)$ is non-uniform, more dipole "heads" (positive ends) enter the volume than leave through the opposite face, or vice versa. The net bound charge within $Delta V$ equals the negative of the net dipole flux out of the surface:
+  $
+    Delta Q_b = - integral_(partial Delta V) bold(P) dot hat(bold(n)) dif a = - integral_(Delta V) (nabla dot bold(P)) dif V,
+  $
+  where the divergence theorem is applied. Thus $rho_b = Delta Q_b / Delta V = - nabla dot bold(P)$.
+]
+
+#theorem(name: "Bound Surface Charge Density")[
+  At the interface between a dielectric and vacuum (or another medium), the bound surface charge density is:
+  $
+    sigma_b = bold(P) dot hat(bold(n)),
+  $
+  where $hat(bold(n))$ is the outward unit normal from the dielectric.
+]
+
+#proof[
+  At the dielectric surface, the polarization causes positive bound charges to accumulate on one side and negative bound charges on the other. The surface density equals the component of $bold(P)$ normal to the surface — the projection of the dipole moment per unit area onto the surface normal.
+]
+
+#note[
+  *Key insight:* The total bound charge in any closed system is zero:
+  $
+    Q_b = integral_V rho_b dif V + integral_S sigma_b dif a
+        = integral_V (-nabla dot bold(P)) dif V + integral_S bold(P) dot hat(bold(n)) dif a
+        = 0,
+  $
+  by the divergence theorem. Bound charges are merely a redistribution of the dielectric's internal charges — no net charge is created.
+]
+
+=== Polarization Mechanisms in Dielectrics // 电介质的极化机制
+
+Different dielectric materials respond to an external field through different microscopic mechanisms:
+
+#property(name: "Electronic Polarization")[ // 电子极化
+  In atoms and nonpolar molecules, the external field displaces the electron cloud relative to the nucleus, creating an induced dipole. This mechanism is present in all materials, extremely fast (~$10^{-15}$ s), and essentially temperature-independent. Typical contribution: $chi_e approx 0.01 - 1$.
+]
+
+#property(name: "Ionic Polarization")[ // 离子极化
+  In ionic crystals (e.g., NaCl), the external field displaces positive and negative ions in opposite directions, increasing the dipole moment of each ion pair. Slower than electronic polarization (~$10^{-13}$ s) and moderately temperature-dependent. Typical contribution: $chi_e approx 1 - 10$.
+]
+
+#property(name: "Orientational (Dipolar) Polarization")[ // 取向极化
+  In polar molecules (e.g., H₂O, NH₃) that possess a permanent dipole moment, the external field tends to align these dipoles against thermal agitation. This is the strongest mechanism but also the slowest (~$10^{-10}$ s) and strongly temperature-dependent (following the Langevin function). Typical contribution: $chi_e$ can exceed $10$.
+]
+
+#property(name: "Interfacial (Space-Charge) Polarization")[ // 界面极化
+  In heterogeneous materials (composites, polycrystalline solids), free charges accumulate at interfaces between different phases, creating macroscopic dipoles. This is the slowest mechanism (~seconds to hours) and dominates at low frequencies.
+]
+
+#caution[
+  The total susceptibility is the sum of all contributions: $chi_e = chi_e^("elec") + chi_e^("ion") + chi_e^("orient") + chi_e^("inter")$.
+  At optical frequencies, only electronic polarization can respond — this is why $epsilon_r$ at optical frequencies equals the square of the refractive index: $n^2 = epsilon_r^("optical")$.
+]
+
+=== Polarized Dielectric Sphere in a Uniform Field // 均匀场中的极化介质球
+
+#proposition(name: "Uniformly Polarized Sphere")[
+  A sphere of radius $R$ with uniform polarization $bold(P) = P hat(bold(z))$ produces:
+  - Inside ($r < R$): a uniform depolarization field $bold(E)^("in") = - P / (3 epsilon_0) hat(bold(z))$.
+  - Outside ($r > R$): the field of a pure dipole with moment $bold(p) = (4/3) pi R^3 bold(P)$.
+  - Bound surface charge: $sigma_b = bold(P) dot hat(bold(n)) = P cos theta$.
+]
+
+#proof[
+  For uniform $bold(P)$, the bound volume charge $rho_b = -nabla dot bold(P) = 0$. Only the surface bound charge $sigma_b = P cos theta$ exists.
+
+  The potential outside is that of a dipole at the origin:
+  $
+    V_text("out")(r, theta) = frac(1, 4 pi epsilon_0) frac(p cos theta, r^2), quad p = (4/3) pi R^3 P.
+  $
+
+  Inside, the potential must satisfy Laplace's equation and match the boundary condition at $r = R$. The unique solution is:
+  $
+    V_text("in")(r, theta) = frac(P, 3 epsilon_0) r cos theta = frac(P, 3 epsilon_0) z.
+  $
+
+  Hence $bold(E)^("in") = -nabla V_text("in") = - P / (3 epsilon_0) hat(bold(z))$, a uniform field opposing the polarization (the *depolarization field*).
+]
+
+#note[
+  This result is fundamental: the field inside a uniformly polarized sphere is uniform and opposite to the polarization. For a dielectric sphere placed in a *uniform external field* $bold(E)_0$, the total internal field is also uniform:
+  $
+    bold(E)^("in") = frac(3, epsilon_r + 2) bold(E)_0,
+    quad
+    bold(P) = 3 epsilon_0 frac(epsilon_r - 1, epsilon_r + 2) bold(E)_0.
+  $
+  This is obtained by combining the external field with the depolarization field from the induced polarization.
+]
+
+== Electric Displacement and Gauss's Law for D // 电位移矢量与D的高斯定理
+// 电位移矢量定义、D的高斯定理、线性电介质
+
+== Boundary Conditions at Interfaces // 介质界面边界条件
+// 电场与电位移矢量的边界条件、导体-介质界面
+
+== Electrostatic Energy and Capacitors // 静电能与电容器
+// 静电能的一般表达式、电容器储能、能量密度、自能与相互作用能
 
 The energy required to assemble a charge distribution from infinity is stored as electrostatic energy. For discrete point charges, this was given by $U = frac(1, 2) sum_i q_i V_i$ (Section // 势与电势). We now extend this to continuous distributions and express the energy in terms of the electric field.
 
@@ -844,20 +1106,6 @@ where $U_(text("int"))^(i j) = frac(1, 4 pi epsilon_0) frac(q_i q_j, |bold(r)_i 
   - Capacitor energy provides a direct link between circuit concepts and field theory.
 ]
 
-= Boundary Value Problems in Electrostatics // 静电学边值问题
-== Uniqueness Theorems // 唯一性定理
-== Method of Images // 镜像法
-== Separation of Variables in Cartesian Coordinates // 直角坐标系分离变量法
-== Separation of Variables in Spherical Coordinates // 球坐标系分离变量法
-== Separation of Variables in Cylindrical Coordinates // 柱坐标系分离变量法
-== Multipole Expansion // 多极展开
-= Electrostatics in Matter // 介质中的静电学
-== Polarization and Bound Charges // 极化与束缚电荷
-== Electric Displacement // 电位移矢量
-== Linear Dielectrics // 线性电介质
-== Boundary Conditions at Dielectric Interfaces // 电介质界面边界条件
-== Energy in Dielectric Systems // 电介质系统中的能量
-
 
 #part("Magnetostatics") // 静磁学
 #part("Electromagnetic Induction and Time-Varying Fields") // 电磁感应与时变场
@@ -898,7 +1146,6 @@ where $U_(text("int"))^(i j) = frac(1, 4 pi epsilon_0) frac(q_i q_j, |bold(r)_i 
 //   Section 3.3: Gauss's Law and Electric Flux (高斯定律与电通量)
 //   Section 3.4: Electric Potential (电势)
 //   Section 3.5: Poisson's Equation and Laplace's Equation (泊松方程与拉普拉斯方程)
-//   Section 3.6: Electrostatic Energy (静电能)
 
 // Chapter 4: Boundary Value Problems in Electrostatics (静电学边值问题)
 //   Section 4.1: Uniqueness Theorems (唯一性定理)
@@ -908,12 +1155,12 @@ where $U_(text("int"))^(i j) = frac(1, 4 pi epsilon_0) frac(q_i q_j, |bold(r)_i 
 //   Section 4.5: Separation of Variables in Cylindrical Coordinates (柱坐标系分离变量法)
 //   Section 4.6: Multipole Expansion (多极展开)
 
-// Chapter 5: Electrostatics in Matter (介质中的静电学)
-//   Section 5.1: Polarization and Bound Charges (极化与束缚电荷)
-//   Section 5.2: Electric Displacement (电位移矢量)
-//   Section 5.3: Linear Dielectrics (线性电介质)
-//   Section 5.4: Boundary Conditions at Dielectric Interfaces (电介质界面边界条件)
-//   Section 5.5: Energy in Dielectric Systems (电介质系统中的能量)
+// Chapter 5: Conductors and Dielectrics in Electrostatic Fields (静电场中的导体与电介质)
+//   Section 5.1: Conductors in Electrostatic Fields (静电场中的导体)
+//   Section 5.2: Polarization and Bound Charges (极化与束缚电荷)
+//   Section 5.3: Electric Displacement and Gauss's Law for D (电位移矢量与D的高斯定理)
+//   Section 5.4: Boundary Conditions at Interfaces (介质界面边界条件)
+//   Section 5.5: Electrostatic Energy and Capacitors (静电能与电容器)
 
 // --- Part III: Magnetostatics (静磁学) ---
 
