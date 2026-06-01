@@ -59,7 +59,7 @@ user_invocable: false
 | `\to`, `\rightarrow` | `->` |
 | `\Rightarrow` | `=>` |
 | `\Leftrightarrow` | `<=>` |
-| `\infty` | `infinity` |
+| `\infty` | `oo` |
 | `\subseteq` | `subset` |
 | `\cup` | `union` |
 | `\cap` | `inter` |
@@ -82,6 +82,14 @@ user_invocable: false
 | `\overline{X}` | `overline(X)` |
 | `\chi_A`（特征函数） | `chi_A` |
 | `\backslash` | `backslash` |
+| `\int` | `integral` |
+| `\iint`, `\iiint` | `integral.double`, `integral.triple` |
+| `\oint` | `integral`（无闭合环符号，用 $integral_(partial V)$ 替代） |
+| `\cdot` | `dot` |
+| `\sim` | `~` 或 `approx` |
+| `\text{...}` | `text("...")`（**必须用字符串引号**） |
+| `\left(`, `\right)` | 无对应命令，Typst 自动缩放括号 |
+| `\left[`, `\right]` | 无对应命令，Typst 自动缩放方括号 |
 
 ### 硬规则（必须遵守）
 
@@ -92,6 +100,10 @@ user_invocable: false
 5. **函数复合**：`$compose$`
 6. **微分符号**：使用正体 `dif x`、`dif t`
 7. **导数点记号**：`dot(x)`、`dot.double(x)`、`dot.triple(x)`
+8. **积分号**：用 `integral`，不是 `int`。二重/三重：`integral.double`、`integral.triple`
+9. **`text()` 必须用字符串参数**：写 `text("something")`，不是 `text(something)`
+10. **点乘**：写 `a dot b`，不用 `a cdot b`（`cdot` 不存在）
+11. **`\left(`/`\right)` 不存在**：Typst 自动缩放括号，不需要 `\left`/`\right`
 
 ### 常见陷阱
 
@@ -129,12 +141,12 @@ $bold(F)_i^("ext")$  // 外力
 ```typst
 // 错误
 $
-  G(a_n; x) = sum_(n=0)^infinity a_n x^n
+  G(a_n; x) = sum_(n=0)^oo a_n x^n
 $.
 
 // 正确
 $
-  G(a_n; x) = sum_(n=0)^infinity a_n x^n.
+  G(a_n; x) = sum_(n=0)^oo a_n x^n.
 $
 ```
 
@@ -145,6 +157,58 @@ $
 #### 括号自动缩放
 
 Typst 自动缩放普通括号，通常不需要 LaTeX 的 `\left`/`\right`。需要长竖线时使用 `lr(...)`。
+
+#### `int` → `integral` 遗忘
+
+LaTeX 习惯用 `\int`，Typst 必须写 `integral`。`int` 是未知变量，会报错。
+
+```typst
+// 错误
+$int_0^1 f(x) dif x$
+
+// 正确
+$integral_0^1 f(x) dif x$
+
+// 二重积分
+$integral.double_S f dif S$
+
+// 闭合曲面积分（无 oint 符号）
+$integral_(partial V) bold(E) dot dif bold(S)$
+```
+
+#### `text()` 字符串参数
+
+Typst 的 `text()` 函数必须传入字符串，未加引号的参数会被当作变量：
+
+```typst
+// 错误 — "self" 被当作变量名
+$U_(text(self))$
+
+// 正确
+$U_(text("self"))$
+```
+
+#### `sim`/`cdot` 等 LaTeX 宏不存在
+
+Typst 数学模式不识别 `\sim`、`\cdot` 等 LaTeX 宏名。使用原生操作符：
+
+| 意图 | 错误写法 | 正确写法 |
+|------|---------|---------|
+| 约等于/相似 | `$a sim b$` | `$a ~ b$` 或 `$a approx b$` |
+| 点乘 | `$a cdot b$` | `$a dot b$` |
+| 趋向 | `$x to oo$` | `$x arrow oo$` 或 `$x -> oo$` |
+
+#### `infty` → `oo`
+
+无限大符号是 `oo`（两个字母 o），不是 `infty` 也不是 `infinity`：
+
+```typst
+// 错误
+$n -> infinity$
+
+// 正确
+$n -> oo$
+```
 
 ---
 
@@ -275,7 +339,7 @@ $integral_({x in X : f(x) >= epsilon}) f dif mu$
 
 // 上确界/下确界带下标
 $sup_(s <= f) integral_X s dif mu$
-$liminf_(n->infinity) integral_X f_n dif mu$
+$liminf_(n->oo) integral_X f_n dif mu$
 ```
 
 ---

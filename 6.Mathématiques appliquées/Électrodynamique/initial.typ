@@ -505,9 +505,344 @@ $
 
 == Common Models: Field and Potential // 常见模型：场与势
 
+This section serves as a quick-reference table of standard charge configurations in electrostatics with sufficient symmetry to be solved by Gauss's law or direct integration. Each entry specifies the coordinate system, symmetry type, and applicable method.
+
+// ============================================================================
+// Spherical Symmetry
+// ============================================================================
+
+=== Spherical Symmetry // 球对称模型
+
+All spherically symmetric configurations share the property that the electric field is radial and depends only on the distance $r$ from the center: $bold(E)(bold(r)) = E(r) hat(bold(r))$. Gauss's law with a spherical Gaussian surface concentric with the charge distribution gives the solution.
+
+#property(name: "Point Charge")[ // 点电荷
+  A single point charge $q$ at the origin.
+  $
+    bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) frac(q, r^2) hat(bold(r)),
+    quad V(r) = frac(1, 4 pi epsilon_0) frac(q, r).
+  $
+  Reference: $V(infinity) = 0$. The field diverges as $r -> 0$.
+]
+
+#property(name: "Uniformly Charged Spherical Shell")[ // 均匀带电球面
+  Radius $R$, total charge $Q$ uniformly distributed on the surface.
+  $
+    bold(E) = cases(
+      frac(1, 4 pi epsilon_0) frac(Q, r^2) hat(bold(r)) & (r > R),
+      bold(0) & (r < R),
+    )
+    quad
+    V = cases(
+      frac(1, 4 pi epsilon_0) frac(Q, r) & (r >= R),
+      frac(1, 4 pi epsilon_0) frac(Q, R) & (r < R),
+    )
+  $
+  The field inside is zero (Faraday cage principle); the interior is equipotential.
+]
+
+#property(name: "Uniformly Charged Solid Sphere")[ // 均匀带电球体
+  Radius $R$, uniform volume charge density $rho = 3 Q / (4 pi R^3)$.
+  $
+    bold(E) = cases(
+      frac(1, 4 pi epsilon_0) frac(Q, r^2) hat(bold(r)) & (r > R),
+      frac(1, 4 pi epsilon_0) frac(Q r, R^3) hat(bold(r)) & (r < R),
+    )
+    quad
+    V = cases(
+      frac(1, 4 pi epsilon_0) frac(Q, r) & (r >= R),
+      frac(1, 4 pi epsilon_0) frac(Q, 2 R) (3 - frac(r^2, R^2)) & (r < R),
+    )
+  $
+  Inside the sphere the field grows linearly $E prop r$; at the center $V(0) = frac(3, 2) frac(1, 4 pi epsilon_0) frac(Q, R)$, the maximum potential.
+]
+
+#property(name: "Concentric Spherical Shells")[ // 同心球壳模型
+  Two concentric spherical shells of radii $a$ and $b$ $(a < b)$, carrying charges $Q_a$ and $Q_b$ respectively.
+
+  By superposition, the field in each region is the sum of contributions from both shells.
+  $
+    bold(E) = cases(
+      frac(1, 4 pi epsilon_0) frac(Q_a + Q_b, r^2) hat(bold(r)) & (r > b),
+      frac(1, 4 pi epsilon_0) frac(Q_a, r^2) hat(bold(r)) & (a < r < b),
+      bold(0) & (r < a),
+    )
+    quad
+    V = cases(
+      frac(1, 4 pi epsilon_0) frac(Q_a + Q_b, r) & (r >= b),
+      frac(1, 4 pi epsilon_0) (frac(Q_a, r) + frac(Q_b, b)) & (a <= r < b),
+      frac(1, 4 pi epsilon_0) (frac(Q_a, a) + frac(Q_b, b)) & (r < a),
+    )
+  $
+  The inner region ($r < a$) is always equipotential and field-free, regardless of $Q_a$ and $Q_b$.
+]
+
+#note[
+  For any spherically symmetric charge distribution, the field at radius $r$ depends _only_ on the total charge enclosed within $r$:
+  $
+    bold(E)(r) = frac(1, 4 pi epsilon_0) frac(Q_"enc"(r), r^2) hat(bold(r)), quad
+    Q_"enc"(r) = integral_0^r rho(r') 4 pi r'^2 dif r'.
+  $
+  This is a direct consequence of Gauss's law.
+]
+
+// ============================================================================
+// Cylindrical Symmetry
+// ============================================================================
+
+=== Cylindrical Symmetry // 柱对称模型
+
+Configurations invariant under translations along the $z$-axis and rotations about it. Use a coaxial cylindrical Gaussian surface of radius $rho$ and length $L$. The field is radial in cylindrical coordinates: $bold(E) = E(rho) hat(bold(rho))$.
+
+#property(name: "Infinite Line Charge")[ // 无限长均匀带电直线
+  Linear charge density $lambda$, along the $z$-axis.
+  $
+    bold(E)(rho) = frac(lambda, 2 pi epsilon_0 rho) hat(bold(rho)).
+  $
+  Potential cannot refer to $rho = infinity$ (the integral diverges). Choose a reference radius $rho_0$:
+  $
+    V(rho) = frac(lambda, 2 pi epsilon_0) ln frac(rho_0, rho).
+  $
+]
+
+#property(name: "Uniformly Charged Cylindrical Shell")[ // 均匀带电圆柱面
+  Radius $R$, surface charge density $sigma$ (or linear charge density $lambda = 2 pi R sigma$), infinite along $z$.
+  $
+    bold(E) = cases(
+      frac(lambda, 2 pi epsilon_0 rho) hat(bold(rho)) & (rho > R),
+      bold(0) & (rho < R),
+    )
+    quad
+    V = cases(
+      frac(lambda, 2 pi epsilon_0) ln frac(rho_0, rho) & (rho >= R),
+      frac(lambda, 2 pi epsilon_0) ln frac(rho_0, R) & (rho < R),
+    )
+  $
+  Inside the shell the field is zero; the interior is equipotential.
+]
+
+#property(name: "Uniformly Charged Solid Cylinder")[ // 均匀带电圆柱体
+  Radius $R$, uniform volume charge density $rho$ (or linear density $lambda = rho pi R^2$), infinite along $z$.
+  $
+    bold(E) = cases(
+      frac(lambda, 2 pi epsilon_0 rho) hat(bold(rho)) & (rho > R),
+      frac(rho, 2 epsilon_0) rho hat(bold(rho)) & (rho < R),
+    )
+  $
+  Inside the cylinder the field grows linearly $E prop rho$; outside it matches the infinite line charge result.
+]
+
+#note[
+  For cylindrical symmetry, the field outside any rotationally symmetric infinite charge distribution depends only on the enclosed linear charge density $lambda$:
+  $
+    bold(E)(rho) = frac(lambda_"enc", 2 pi epsilon_0 rho) hat(bold(rho)), quad
+    lambda_"enc" = integral_0^R rho(rho') 2 pi rho' dif rho'.
+  $
+]
+
+// ============================================================================
+// Axial (Rotational) Symmetry — Finite Distributions
+// ============================================================================
+
+=== Axial Symmetry: Finite Distributions // 轴对称模型：有限分布
+
+These configurations have rotational symmetry about the $z$-axis but are finite in extent. Gauss's law is not directly applicable; the field is obtained by direct integration (superposition). Results are given on the symmetry axis.
+
+#property(name: "Uniformly Charged Ring")[ // 均匀带电圆环
+  Radius $R$, total charge $Q$, lying in the $"xy"$-plane centered at the origin.
+  $
+    bold(E)(z) = frac(1, 4 pi epsilon_0) frac(Q z, (z^2 + R^2)^(3/2)) hat(bold(z)),
+    quad V(z) = frac(1, 4 pi epsilon_0) frac(Q, sqrt(z^2 + R^2)).
+  $
+  - $z >> R$ (far away): $bold(E) approx frac(1, 4 pi epsilon_0) frac(Q, z^2) hat(bold(z))$ — looks like a point charge.
+  - At center $z=0$: $bold(E) = bold(0)$, $V(0) = frac(1, 4 pi epsilon_0) frac(Q, R)$.
+]
+
+#property(name: "Uniformly Charged Disk")[ // 均匀带电圆盘
+  Radius $R$, uniform surface charge density $sigma$, lying in the $"xy"$-plane. Obtained by integrating ring contributions radially.
+  $
+    bold(E)(z) = frac(sigma, 2 epsilon_0) (1 - frac(z, sqrt(z^2 + R^2))) hat(bold(z)).
+  $
+  - $R -> infinity$ (infinite plane): $bold(E) = frac(sigma, 2 epsilon_0) hat(bold(z))$ — uniform field!
+  - $z >> R$: $bold(E) approx frac(1, 4 pi epsilon_0) frac(Q, z^2) hat(bold(z))$, where $Q = sigma pi R^2$.
+]
+
+// ============================================================================
+// Planar Symmetry
+// ============================================================================
+
+=== Planar Symmetry // 平面对称模型
+
+Configurations invariant under translations parallel to the plane. The field is perpendicular to the plane. Use a cylindrical "pillbox" Gaussian surface that pierces the plane.
+
+#property(name: "Infinite Charged Plane")[ // 无限大均匀带电平面
+  Uniform surface charge density $sigma$.
+  $
+    bold(E) = frac(sigma, 2 epsilon_0) hat(bold(n)),
+  $
+  where $hat(bold(n))$ is the outward normal to the plane. The field is constant in magnitude and points away from the plane for $sigma > 0$, toward it for $sigma < 0$. Using $V=0$ at the plane:
+  $
+    V(z) = - frac(sigma, 2 epsilon_0) |z|.
+  $
+]
+
+#property(name: "Parallel-Plate Capacitor")[ // 平行板电容器
+  Two infinite parallel planes with equal and opposite surface charge densities $plus.minus sigma$.
+  $
+    bold(E) = cases(
+      frac(sigma, epsilon_0) hat(bold(n)) & (text("between the plates")),
+      bold(0) & (text("outside")),
+    )
+  $
+  The field exists only between the plates and is uniform. Potential difference across gap $d$:
+  $
+    Delta V = E d = frac(sigma d, epsilon_0),
+    quad C = frac(Q, Delta V) = frac(epsilon_0 A, d).
+  $
+  This is the simplest model of a capacitor (neglecting fringe effects).
+]
+
+// ============================================================================
+// Electric Dipole
+// ============================================================================
+
+=== Electric Dipole // 电偶极子
+
+#property(name: "Electric Dipole Field and Potential")[ // 电偶极子的场与势
+  A pair $+q$ and $-q$ separated by displacement $bold(d)$, with dipole moment $bold(p) = q bold(d)$. In the far-field limit ($r >> d$), in spherical coordinates with $bold(p) = p hat(bold(z))$:
+  $
+    V(r, theta) = frac(1, 4 pi epsilon_0) frac(p cos theta, r^2),
+    quad
+    bold(E)(r, theta) = frac(1, 4 pi epsilon_0) frac(p, r^3) (2 cos theta hat(bold(r)) + sin theta hat(bold(theta))).
+  $
+  In Cartesian form:
+  $
+    bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) frac(1, r^3) [3(bold(p) dot hat(bold(r))) hat(bold(r)) - bold(p)].
+  $
+  The field decays as $1/r^3$, faster than a point charge's $1/r^2$. The dipole serves as the fundamental building block for multipole expansions.
+]
+
+#note[
+  *Quick-reference guide by symmetry type:*
+  - *Spherical*: choose a spherical Gaussian surface concentric with the charge; $E$ is radial and constant on the surface.
+  - *Cylindrical*: choose a coaxial cylindrical Gaussian surface; $E$ is radial and constant on the lateral surface; end caps contribute zero flux.
+  - *Planar*: choose a cylindrical pillbox that crosses the plane; $E$ is perpendicular to the plane and constant on each end cap.
+  - *Axial (finite)*: use direct integration (Coulomb's law) — Gauss's law alone is insufficient.
+]
+
 == Poisson's Equation and Laplace's Equation // 泊松方程与拉普拉斯方程
 
 == Electrostatic Energy // 静电能
+
+The energy required to assemble a charge distribution from infinity is stored as electrostatic energy. For discrete point charges, this was given by $U = frac(1, 2) sum_i q_i V_i$ (Section // 势与电势). We now extend this to continuous distributions and express the energy in terms of the electric field.
+
+=== Work to Assemble Point Charges // 组装点电荷的功
+
+#proposition(name: "Work to Assemble Point Charges")[
+  The work done to bring $N$ point charges $q_1, ..., q_N$ from infinity to their final positions $bold(r)_1, ..., bold(r)_N$ is independent of the order of assembly. Starting with the first charge (zero work), bringing the second charge $q_2$ into the field of $q_1$ requires work
+  $
+    W_2 = q_2 V_1(bold(r)_2) = frac(1, 4 pi epsilon_0) frac(q_1 q_2, |bold(r)_1 - bold(r)_2|).
+  $
+  Bringing the third charge $q_3$ into the combined field of $q_1$ and $q_2$ gives
+  $
+    W_3 = q_3 [V_1(bold(r)_3) + V_2(bold(r)_3)] = frac(1, 4 pi epsilon_0) (frac(q_1 q_3, |bold(r)_1 - bold(r)_3|) + frac(q_2 q_3, |bold(r)_2 - bold(r)_3|)).
+  $
+  Summing all contributions, each pair $(i, j)$ appears exactly once, yielding the total electrostatic energy
+  $
+    U = frac(1, 4 pi epsilon_0) sum_(i < j) frac(q_i q_j, |bold(r)_i - bold(r)_j|)
+      = frac(1, 2) sum_(i=1)^N q_i V_i,
+  $
+  consistent with the earlier definition. The factor $1/2$ compensates for double-counting each pair when summing over all $i$.
+]
+
+=== Continuous Distributions and Field Energy // 连续分布与场能量
+
+#proposition(name: "Energy of a Continuous Charge Distribution")[
+  For a continuous charge distribution with density $rho(bold(r))$, the electrostatic energy generalizes to
+  $
+    U = frac(1, 2) integral rho(bold(r)) V(bold(r)) dif tau.
+  $
+  Using Gauss's law in differential form $rho = epsilon_0 nabla dot bold(E)$, this can be rewritten in terms of the field alone:
+  $
+    U = frac(epsilon_0, 2) integral (nabla dot bold(E)) V dif tau.
+  $
+  Integrate by parts using the vector identity $V (nabla dot bold(E)) = nabla dot (V bold(E)) - bold(E) dot nabla V$:
+  $
+    U = frac(epsilon_0, 2) [ integral_(partial V) V bold(E) dot dif bold(a) - integral bold(E) dot underbrace((nabla V), -bold(E)) dif tau ].
+  $
+  Extend the integration volume to all space. The surface integral vanishes because for a localized distribution $V approx 1/r$ and $bold(E) approx 1/r^2$, so $V bold(E) approx 1/r^3$ while the surface area grows as $r^2$, giving $V bold(E) dot d bold(a) approx 1/r arrow 0$ as $r arrow infinity$. Using $nabla V = -bold(E)$, we obtain
+  $
+    U = frac(epsilon_0, 2) integral_("all space") E^2 dif tau.
+  $
+  This form reveals that electrostatic energy is stored in the electric field itself, not merely in the charges.
+]
+
+#property(name: "Electrostatic Energy Density")[
+  The integrand of the field-energy expression defines the *electrostatic energy density*
+  $
+    u(bold(r)) = frac(1, 2) epsilon_0 |bold(E)(bold(r))|^2.
+  $
+  The total energy is $U = integral u(bold(r)) dif tau$. This is a local quantity: each point in space carries energy proportional to the square of the field strength there, regardless of whether charges are present at that point.
+]
+
+=== Energy in Capacitors // 电容器的储能
+
+#property(name: "Energy Stored in a Capacitor")[
+  For a capacitor with capacitance $C$, storing charge $Q$ and potential difference $V$, the electrostatic energy is
+  $
+    U = frac(Q^2, 2C) = frac(1, 2) C V^2.
+  $
+  This follows from $U = frac(1, 2) integral rho V dif tau$: for two conductors carrying $+Q$ and $-Q$ at potentials $V_+$ and $V_-$,
+  $
+    U = frac(1, 2) (Q V_+ + (-Q) V_-) = frac(1, 2) Q (V_+ - V_-) = frac(1, 2) Q V.
+  $
+  Substituting $Q = C V$ gives the familiar forms. As a consistency check, for a parallel-plate capacitor ($C = epsilon_0 A / d$, $E = V/d$), the field-energy approach gives
+  $
+    U = frac(epsilon_0, 2) integral E^2 dif tau = frac(epsilon_0, 2) E^2 (A d) = frac(1, 2) epsilon_0 A d (frac(V, d))^2 = frac(1, 2) C V^2,
+  $
+  confirming that both interpretations agree.
+]
+
+=== Self-Energy and Interaction Energy // 自能与相互作用能
+
+The expression $U = frac(epsilon_0, 2) integral E^2 dif tau$ integrates over all space and includes the energy of the field produced by every charge, including the field *of a point charge itself*. For a single point charge $q$, the field is $E = q/(4 pi epsilon_0 r^2)$, and
+$
+  U_(text("self")) = frac(epsilon_0, 2) integral_0^oo (frac(q, 4 pi epsilon_0 r^2))^2 4 pi r^2 dif r
+    = frac(q^2, 8 pi epsilon_0) integral_0^oo frac(1, r^2) dif r arrow infinity.
+$
+This *self-energy divergence* is a fundamental limitation of classical electrodynamics: the energy of a point charge is infinite. In practice, only *changes* in energy (differences between configurations) are physically meaningful for point charges, and these are finite because the divergent self-energy contributions cancel.
+
+For a system of multiple charges, we may decompose
+$
+  U = sum_i U_(text("self"))^(i) + sum_(i < j) U_(text("int"))^(i j),
+$
+where $U_(text("int"))^(i j) = frac(1, 4 pi epsilon_0) frac(q_i q_j, |bold(r)_i - bold(r)_j|)$ is the finite interaction energy between distinct charges. The total energy in $U = frac(1, 2) sum_i q_i V_i$ automatically excludes self-energy because $V_i$ is the potential due to *all other* charges only.
+
+#example(name: "Energy of a Uniformly Charged Solid Sphere")[
+  A sphere of radius $R$ carries uniform volume charge density $rho$ (total charge $Q = 4 pi R^3 rho / 3$). Compute its electrostatic energy by two methods.
+
+  *Method 1 — field integral*: Using the field from // Common Models: $bold(E) = frac(Q, 4 pi epsilon_0) frac(r, R^3) hat(bold(r))$ for $r < R$ and $bold(E) = frac(Q, 4 pi epsilon_0) frac(1, r^2) hat(bold(r))$ for $r >= R$,
+  $
+    U = frac(epsilon_0, 2) integral_0^R (frac(Q r, 4 pi epsilon_0 R^3))^2 4 pi r^2 dif r
+      + frac(epsilon_0, 2) integral_R^oo (frac(Q, 4 pi epsilon_0 r^2))^2 4 pi r^2 dif r
+    = frac(3 Q^2, 20 pi epsilon_0 R).
+  $
+
+  *Method 2 — charge-potential integral*: Using $V(r) = frac(Q, 8 pi epsilon_0 R) (3 - frac(r^2, R^2))$ for $r < R$,
+  $
+    U = frac(1, 2) integral_0^R rho V(r) 4 pi r^2 dif r
+    = frac(1, 2) rho integral_0^R frac(Q, 8 pi epsilon_0 R) (3 - frac(r^2, R^2)) 4 pi r^2 dif r
+    = frac(3 Q^2, 20 pi epsilon_0 R),
+  $
+  confirming consistency.
+]
+
+#note[
+  *Key takeaways:*
+  - Electrostatic energy can be computed either from the charge distribution ($frac(1, 2) integral rho V dif tau$) or from the field ($frac(epsilon_0, 2) integral E^2 dif tau$).
+  - The field-energy expression generalizes to all space, showing energy is localized in the field.
+  - For point charges, the self-energy diverges; physically relevant quantities involve energy *differences* (interaction energies).
+  - Capacitor energy provides a direct link between circuit concepts and field theory.
+]
 
 = Boundary Value Problems in Electrostatics // 静电学边值问题
 == Uniqueness Theorems // 唯一性定理
