@@ -1108,6 +1108,29 @@ where $U_(text("int"))^(i j) = frac(1, 4 pi epsilon_0) frac(q_i q_j, |bold(r)_i 
 
 
 #part("Magnetostatics") // 静磁学
+= Magnetostatic Field // 静磁场
+
+// 恒定电流（电流密度、连续性方程、欧姆定律、电动势）
+== Steady Currents and Ohm's Law // 恒定电流与欧姆定律
+
+// 洛伦兹力、磁感应强度的定义、比奥-萨伐尔定律及其应用
+== Lorentz Force and Biot-Savart Law // 洛伦兹力与比奥-萨伐尔定律
+
+// 安培环路定理（积分与微分形式）、磁场高斯定理、磁通量；对比静电学微分方程
+== Ampère's Law and Gauss's Law for Magnetism // 安培环路定理与磁场高斯定理
+
+// 磁矢势、库仑规范、矢势的泊松方程、磁通量与矢势环量的关系
+== Magnetic Vector Potential and Flux // 磁矢势与磁通量
+
+// 用 property 块整理常见模型：无限长直导线、有限长直导线、圆环轴线、螺线管、均匀载流圆柱体
+== Common Models in Magnetostatics // 常见模型：载流导体的磁场
+
+// 回旋运动、螺旋运动、E×B 漂移、磁镜效应；霍尔效应（霍尔电压、霍尔系数、载流子类型判定）
+== Motion of Charged Particles in Magnetic Fields // 带电粒子在磁场中的运动
+
+// 安培力、平行载流导线相互作用、载流线圈力矩与磁偶极矩、静磁能（场能表达式）
+== Magnetic Forces on Currents and Energy // 磁场对电流的作用与磁能
+
 #part("Electromagnetic Induction and Time-Varying Fields") // 电磁感应与时变场
 #part("Electromagnetic Waves") // 电磁波
 #part("Potentials and Radiation") // 势与辐射
@@ -1165,11 +1188,13 @@ where $U_(text("int"))^(i j) = frac(1, 4 pi epsilon_0) frac(q_i q_j, |bold(r)_i 
 // --- Part III: Magnetostatics (静磁学) ---
 
 // Chapter 6: Magnetostatic Field (静磁场)
-//   Section 6.1: Biot–Savart Law (毕奥–萨伐尔定律)
-//   Section 6.2: Ampère's Law (安培定律)
-//   Section 6.3: Magnetic Vector Potential (磁矢势)
-//   Section 6.4: Magnetic Force and Torque (磁力与力矩)
-//   Section 6.5: Magnetostatic Energy (静磁能)
+//   Section 6.1: Steady Currents and Ohm's Law (恒定电流与欧姆定律)
+//   Section 6.2: Lorentz Force and Biot-Savart Law (洛伦兹力与比奥-萨伐尔定律)
+//   Section 6.3: Ampère's Law and Gauss's Law for Magnetism (安培环路定理与磁场高斯定理)
+//   Section 6.4: Magnetic Vector Potential and Flux (磁矢势与磁通量)
+//   Section 6.5: Common Models in Magnetostatics (常见模型：载流导体的磁场)
+//   Section 6.6: Motion of Charged Particles in Magnetic Fields (带电粒子在磁场中的运动)
+//   Section 6.7: Magnetic Forces on Currents and Energy (磁场对电流的作用与磁能)
 
 // Chapter 7: Magnetostatics in Matter (介质中的静磁学)
 //   Section 7.1: Magnetization and Bound Currents (磁化与束缚电流)
