@@ -1198,7 +1198,7 @@ Under steady-state (magnetostatic) conditions, all charge densities are constant
 
 === Ohm's Law and Conductivity // 欧姆定律与电导率
 
-#law(name: "Ohm's Law, Local Form")[
+#law(name: "Ohm's Law (Local Form)")[
   For a wide class of materials (known as *Ohmic conductors*), the current density is proportional to the electric field within the conductor:
   $
     bold(J) = sigma bold(E),
@@ -1211,25 +1211,30 @@ Under steady-state (magnetostatic) conditions, all charge densities are constant
   $
     V = I R, quad R = frac(L, sigma A) = rho frac(L, A),
   $
-  where $R$ is the *resistance* (电阻) measured in ohms ($Omega$). The SI unit of resistance is $1 Omega = 1 "V/A"$.
+  where $R$ is the *resistance* measured in ohms ($Omega$). The SI unit of resistance is $1 Omega = 1 "V/A"$.
 ]
 
-#property(name: "Microscopic Interpretation")[
-  In a metal, conduction electrons drift under an applied electric field. The drift velocity is proportional to the field:
-  $
-    bold(v)_d = - mu_e bold(E),
-  $
-  where $mu_e$ is the *electron mobility* (迁移率). The current density is then
-  $
-    bold(J) = - n e bold(v)_d = n e mu_e bold(E),
-  $
-  so the conductivity is $sigma = n e mu_e$. This relation connects macroscopic conductivity to microscopic parameters (carrier density and mobility).
-]
+#h(2em)
+// 给出欧姆定律的微观解释，连接电导率与载流子密度和迁移率
+Here we provide a microscopic interpretation of Ohm's law, connecting the macroscopic conductivity to the underlying charge carrier dynamics in a conductor.
+
+In a metal, conduction electrons drift under an applied electric field. The drift velocity is proportional to the field:
+$
+  bold(v)_d = - mu_e bold(E),
+$
+where $mu_e$ is the *electron mobility*. The current density is then
+$
+  bold(J) = - n e bold(v)_d = n e mu_e bold(E),
+$
+so the conductivity is $sigma = n e mu_e$. This relation connects macroscopic conductivity to microscopic parameters (carrier density and mobility).
+
+*Temperature dependence of resistivity.* In metals, resistivity decreases as temperature is lowered, since phonon scattering is suppressed. At sufficiently low temperatures, certain materials undergo a *superconducting transition*: resistivity drops to zero below a *critical temperature* $T_"c"$, discovered by Onnes in 1911 ($T_"c" approx 4.2 "K"$ in mercury). 
 
 #note[
   Not all conductors obey Ohm's law. Semiconductors, ionic solutions, and plasmas may exhibit nonlinear $J$-$E$ relations. In anisotropic media (e.g., certain crystals), conductivity is a tensor: $J_i = sigma_(i j) E_j$.
 ]
 
+== Electromotive Force // 电动势
 === Electromotive Force and Power Sources // 电动势与电源
 
 An electrostatic field $bold(E)$ alone cannot sustain a steady current in a closed circuit, since $integral bold(E) dot d bold(l) = 0$ along any closed path. To maintain a steady current, a *source* of energy is needed to drive charges "uphill" against the electrostatic field. This driving mechanism is characterized by the *electromotive force*.
@@ -1246,32 +1251,33 @@ An electrostatic field $bold(E)$ alone cannot sustain a steady current in a clos
   The SI unit of EMF is the volt (V). Despite the name, EMF is not a force but a potential difference (an energy per unit charge).
 ]
 
-The most common sources of EMF include:
-| Source | Mechanism | $bold(f)$ |
-|--------|-----------|----------|
-| Chemical battery | Electrochemical reactions | Chemical force |
-| Thermocouple | Temperature gradient | Thermal diffusion |
-| Photovoltaic cell | Light absorption | Internal field at junction |
-| Generator (motional EMF) | Conductor moving through $bold(B)$ | $bold(v) times bold(B)$ (see Ch. 8) |
+#h(2em)The most common sources of EMF include:
 
-#property(name: "Real Battery: Internal Resistance and Terminal Voltage")[
-  A real battery is modelled as an ideal EMF $cal(E)$ in series with an *internal resistance* $r$ (内阻):
+#tex-table(
+  ("Source", "Mechanism", [Driving force $bold(f)$]),
+  ("Chemical battery", "Electrochemical reactions", "Chemical force"),
+  ("Thermocouple", "Temperature gradient", "Thermal diffusion"),
+  ("Photovoltaic cell", "Light absorption", "Internal field at junction"),
+  ([Generator (motional EMF)], [Conductor moving through $bold(B)$], [$bold(v) times bold(B)$ (see Ch. 8)]),
+)
 
-  - *Discharging* (source supplies current to external circuit):
-    $
-      V = cal(E) - I r,
-    $
-    where $V$ is the terminal voltage (端电压) across the battery. The current through the external load $R$ is $I = cal(E) / (R + r)$.
+#h(2em)A real battery is modelled as an ideal EMF $cal(E)$ in series with an *internal resistance* $r$:
 
-  - *Charging* (external source forces current into the battery):
-    $
-      V = cal(E) + I r.
-    $
-    Electrical energy is converted into chemical energy (recharging).
+- *Discharging* (source supplies current to external circuit):
+  $
+    V = cal(E) - I r,
+  $
+  where $V$ is the terminal voltage across the battery. The current through the external load $R$ is $I = cal(E) / (R + r)$.
 
-  - *Open circuit* ($I = 0$): $V = cal(E)$.
-  - *Short circuit* ($R = 0$): $I_"sc" = cal(E) / r$, terminal voltage drops to zero.
-]
+- *Charging* (external source forces current into the battery):
+  $
+    V = cal(E) + I r.
+  $
+  Electrical energy is converted into chemical energy (recharging).
+
+- *Open circuit* ($I = 0$): $V = cal(E)$.
+- *Short circuit* ($R = 0$): $I_"sc" = cal(E) / r$, terminal voltage drops to zero.
+
 
 #note[
   The distinction between charging and discharging is crucial: the terminal voltage is *lower* than the EMF during discharge and *higher* during charge. This behaviour is central to understanding battery-operated circuits.
@@ -1307,10 +1313,11 @@ In electrostatics, the conservative nature of the electric field implies that th
 ]
 
 === Joule Heating and Power Dissipation // 焦耳热与能量耗散
+If the voltage across a circuit is $U$, when a charge $q$ passes through, the work done by the electric field on the charge is $W = q U = I U t$. The work done by the electric field per unit time is called electric power $P = W/t = I U$.
 
-When current flows through a conductor, the electric field does work on the moving charges. This work is converted into thermal energy through collisions with the lattice — a phenomenon known as *Joule heating* (焦耳热) or *ohmic heating*.
+When current flows through a conductor, the electric field does work on the moving charges. This work is converted into thermal energy through collisions with the lattice — a phenomenon known as *Joule heating* or *ohmic heating*.
 
-#property(name: "Joule Heating — Power Dissipation")[
+#law(name: "Joule Heating and Power Dissipation")[
   The power dissipated per unit volume (power density) in a conductor is:
   $
     p = bold(J) dot bold(E) = sigma E^2 = frac(J^2, sigma).
