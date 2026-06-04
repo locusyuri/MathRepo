@@ -1113,6 +1113,232 @@ where $U_(text("int"))^(i j) = frac(1, 4 pi epsilon_0) frac(q_i q_j, |bold(r)_i 
 // 恒定电流（电流密度、连续性方程、欧姆定律、电动势）
 == Steady Currents and Ohm's Law // 恒定电流与欧姆定律
 
+Steady currents are the "source" of magnetostatic fields — just as stationary electric charges are the source of electrostatic fields. This section establishes the fundamental concepts of current, charge conservation, and conduction, which provide the foundation for all subsequent magnetic field calculations.
+
+=== Electric Current and Current Density // 电流与电流密度
+
+#definition(name: "Electric Current")[
+  *Electric current* is the rate of flow of electric charge through a surface. If a net charge $dif Q$ passes through a surface $S$ in time $dif t$, the current is
+  $
+    I = frac(dif Q, dif t).
+  $
+  The SI unit of current is the *ampere* (A): $1 "A" = 1 "C/s"$.
+]
+
+The macroscopic current $I$ does not contain directional information at every point. For a complete description of charge flow, we introduce the vector current density.
+
+#definition(name: "Current Density")[
+  The *current density* $bold(J)$ is a vector field whose direction is the direction of net charge flow and whose magnitude is the current per unit area perpendicular to the flow:
+  $
+    bold(J) = n q bold(v),
+  $
+  where $n$ is the number density of charge carriers, $q$ is the charge per carrier, and $bold(v)$ is the average drift velocity. The current through a surface $S$ is the flux of $bold(J)$:
+  $
+    I = integral_S bold(J) dot dif bold(S).
+  $
+]
+
+
+Just as charge distributions can be volumetric, surface, or linear, current distributions are classified analogously:
+
+- *Volume current density* $bold(J)$ ($"A/m"^2$): $bold(K)$ for bulk flow,
+- *Surface current density* $bold(K)$ (A/m): current per unit width on a thin sheet,
+- *Line current* $I$ (A): current confined to a thin wire, treated as a filament.
+
+The total current from a line current is simply $I$, from a surface current is $I = integral_L bold(K) dot (hat(bold(n)) times d bold(l))$, and from a volume current is $I = integral_S bold(J) dot dif bold(S)$.
+
+
+#note[
+  In magnetostatics we require that all currents be *steady* — the charge density at every point is constant in time ($partial rho / partial t = 0$). This condition ensures that the magnetic field produced by the currents is static.
+]
+
+=== Continuity Equation and Kirchhoff's Current Law // 连续性方程与基尔霍夫电流定律
+
+Charge is a conserved quantity: it can neither be created nor destroyed. This fundamental principle leads to a differential relation between the current density and the charge density.
+
+#theorem(name: "Continuity Equation")[
+  The conservation of electric charge is expressed locally by the *continuity equation*:
+  $
+    partial overline(rho) / partial t + nabla dot bold(J) = 0.
+  $
+  In integral form: the net current flowing out of a closed surface equals the rate of decrease of charge inside the volume:
+  $
+    integral_S bold(J) dot dif bold(S) = - frac(d, d t) integral_V rho dif V.
+  $
+]
+
+#proof[
+  Consider a volume $V$ enclosed by a surface $S$. The total charge inside $V$ is $Q = integral_V rho dif V$. The current flowing out of $V$ through $S$ is $I = integral_S bold(J) dot dif bold(S)$. Charge conservation requires that the outflow current equals the rate of decrease of charge inside:
+  $
+    integral_S bold(J) dot dif bold(S) = - frac(d Q, d t) = - integral_V (partial rho / partial t) dif V.
+  $
+  Applying the divergence theorem to the left side: $integral_V (nabla dot bold(J)) dif V = - integral_V (partial rho / partial t) dif V$. Since this holds for any volume, the integrands must be equal pointwise, giving $nabla dot bold(J) + partial rho / partial t = 0$.
+]
+
+Under steady-state (magnetostatic) conditions, all charge densities are constant in time, so $partial rho / partial t = 0$. The continuity equation then reduces to:
+
+#corollary(name: "Kirchhoff's Current Law")[
+  For steady currents: $nabla dot bold(J) = 0$.
+
+  In integral form: for any closed surface $S$,
+  $
+    integral_S bold(J) dot dif bold(S) = 0.
+  $
+
+  This is the *Kirchhoff's Current Law (KCL)*, also called the *node rule*: the algebraic sum of currents entering any node (junction) is zero:
+  $
+    sum_i I_i = 0,
+  $
+  taking currents entering the node as positive and those leaving as negative.
+]
+
+#note[
+  KCL is not an independent law — it is a direct consequence of charge conservation under the steady-state assumption. It is one of the two fundamental laws of circuit analysis (the other being KVL, introduced below).
+]
+
+=== Ohm's Law and Conductivity // 欧姆定律与电导率
+
+#definition(name: "Ohm's Law, Local Form")[
+  For a wide class of materials (known as *Ohmic conductors*), the current density is proportional to the electric field within the conductor:
+  $
+    bold(J) = sigma bold(E),
+  $
+  where $sigma$ is the *electrical conductivity* of the material, measured in siemens per metre ($"S/m"$). The reciprocal quantity $rho = 1 / sigma$ is the *resistivity*, measured in ohm-metres ($Omega dot "m"$).
+]
+
+#property(name: "Macroscopic Ohm's Law")[
+  For a uniform wire of length $L$, cross-sectional area $A$, and conductivity $sigma$, the current $I = J A$ and the potential difference $V = E L$ across its ends satisfy the familiar form:
+  $
+    V = I R, quad R = frac(L, sigma A) = rho frac(L, A),
+  $
+  where $R$ is the *resistance* (电阻) measured in ohms ($Omega$). The SI unit of resistance is $1 Omega = 1 "V/A"$.
+]
+
+#property(name: "Microscopic Interpretation")[
+  In a metal, conduction electrons drift under an applied electric field. The drift velocity is proportional to the field:
+  $
+    bold(v)_d = - mu_e bold(E),
+  $
+  where $mu_e$ is the *electron mobility* (迁移率). The current density is then
+  $
+    bold(J) = - n e bold(v)_d = n e mu_e bold(E),
+  $
+  so the conductivity is $sigma = n e mu_e$. This relation connects macroscopic conductivity to microscopic parameters (carrier density and mobility).
+]
+
+#note[
+  Not all conductors obey Ohm's law. Semiconductors, ionic solutions, and plasmas may exhibit nonlinear $J$-$E$ relations. In anisotropic media (e.g., certain crystals), conductivity is a tensor: $J_i = sigma_(i j) E_j$.
+]
+
+=== Electromotive Force and Power Sources // 电动势与电源
+
+An electrostatic field $bold(E)$ alone cannot sustain a steady current in a closed circuit, since $integral bold(E) dot d bold(l) = 0$ along any closed path. To maintain a steady current, a *source* of energy is needed to drive charges "uphill" against the electrostatic field. This driving mechanism is characterized by the *electromotive force*.
+
+#definition(name: "Electromotive Force")[
+  The *electromotive force (EMF)* $cal(E)$ of a source is the line integral of the net driving force per unit charge, $bold(f)$, around the circuit:
+  $
+    cal(E) = integral.cont bold(f) dot d bold(l).
+  $
+  For a source acting solely within a limited region (e.g., a battery), the EMF is concentrated across its terminals:
+  $
+    cal(E) = integral_"inside source" bold(f) dot d bold(l).
+  $
+  The SI unit of EMF is the volt (V). Despite the name, EMF is not a force but a potential difference (an energy per unit charge).
+]
+
+The most common sources of EMF include:
+| Source | Mechanism | $bold(f)$ |
+|--------|-----------|----------|
+| Chemical battery | Electrochemical reactions | Chemical force |
+| Thermocouple | Temperature gradient | Thermal diffusion |
+| Photovoltaic cell | Light absorption | Internal field at junction |
+| Generator (motional EMF) | Conductor moving through $bold(B)$ | $bold(v) times bold(B)$ (see Ch. 8) |
+
+#property(name: "Real Battery: Internal Resistance and Terminal Voltage")[
+  A real battery is modelled as an ideal EMF $cal(E)$ in series with an *internal resistance* $r$ (内阻):
+
+  - *Discharging* (source supplies current to external circuit):
+    $
+      V = cal(E) - I r,
+    $
+    where $V$ is the terminal voltage (端电压) across the battery. The current through the external load $R$ is $I = cal(E) / (R + r)$.
+
+  - *Charging* (external source forces current into the battery):
+    $
+      V = cal(E) + I r.
+    $
+    Electrical energy is converted into chemical energy (recharging).
+
+  - *Open circuit* ($I = 0$): $V = cal(E)$.
+  - *Short circuit* ($R = 0$): $I_"sc" = cal(E) / r$, terminal voltage drops to zero.
+]
+
+#note[
+  The distinction between charging and discharging is crucial: the terminal voltage is *lower* than the EMF during discharge and *higher* during charge. This behaviour is central to understanding battery-operated circuits.
+]
+
+=== Kirchhoff's Voltage Law // 基尔霍夫电压定律
+
+In electrostatics, the conservative nature of the electric field implies that the potential difference around any closed loop is zero. In a circuit containing sources of EMF, this principle generalises to account for the driving forces within sources.
+
+#theorem(name: "Kirchhoff's Voltage Law")[
+  The algebraic sum of all potential differences (voltage drops and rises) around any closed loop in a circuit is zero:
+  $
+    sum_i V_i = 0.
+  $
+
+  Equivalently, in a loop containing resistors and EMF sources:
+  $
+    sum_i I_i R_i = sum_j cal(E)_j.
+  $
+  Voltage drops across resistors ($I R$) are taken as positive when traversed in the direction of the current; EMFs are taken as positive when traversed from the negative to the positive terminal.
+]
+
+#proof[
+  Starting from the conservative nature of the electrostatic field, $integral.cont bold(E) dot d bold(l) = 0$ around any closed path. However, inside a source, the total field that drives current is $bold(E)_"total" = bold(E) + bold(f)$, where $bold(f)$ is the non-electrostatic force per unit charge (e.g., chemical force in a battery). The line integral around the complete circuit gives:
+  $
+    0 = integral.cont bold(E) dot d bold(l) = integral.cont (bold(E)_"total" - bold(f)) dot d bold(l) = - integral.cont bold(f) dot d bold(l) + integral.cont bold(J)/sigma dot d bold(l) = - sum cal(E) + sum I R.
+  $
+  Rearranging gives $sum I R = sum cal(E)$, which is KVL.
+]
+
+#note[
+  KVL together with KCL form the complete set of circuit equations. They are purely topological (independent of the specific components) and hold for any lumped-element circuit under the quasi-static approximation.
+]
+
+=== Joule Heating and Power Dissipation // 焦耳热与能量耗散
+
+When current flows through a conductor, the electric field does work on the moving charges. This work is converted into thermal energy through collisions with the lattice — a phenomenon known as *Joule heating* (焦耳热) or *ohmic heating*.
+
+#property(name: "Joule Heating — Power Dissipation")[
+  The power dissipated per unit volume (power density) in a conductor is:
+  $
+    p = bold(J) dot bold(E) = sigma E^2 = frac(J^2, sigma).
+  $
+
+  For a uniform wire carrying current $I$ with potential difference $V$ across its ends:
+  $
+    P = I V = I^2 R = frac(V^2, R),
+  $
+  where $P$ is the total power dissipated in the wire, measured in watts (W).
+]
+
+#proof[
+  Consider a small volume $d tau$ containing charge $rho d tau$ moving at drift velocity $bold(v)$. The force on this charge is $rho d tau bold(E)$, and the work done per unit time (power) is $bold(F) dot bold(v) = rho bold(v) d tau dot bold(E) = bold(J) d tau dot bold(E)$. Hence $p = bold(J) dot bold(E)$. Using Ohm's law $bold(J) = sigma bold(E)$, we obtain $p = sigma E^2 = J^2/sigma$.
+]
+
+#note[
+  Joule heating is *irreversible* — electrical energy is converted into heat, which cannot be fully converted back. This contrasts with the reversible energy storage in electric and magnetic fields (electrostatic energy $frac(1,2) epsilon_0 E^2$ and magnetostatic energy $frac(1,2) mu_0 B^2$), which will be discussed in subsequent sections.
+]
+
+#note[
+  *Key takeaways for magnetostatics:*
+  - The steady current density $bold(J)$ (with $nabla dot bold(J) = 0$) is the source term for the magnetic field.
+  - Ohm's law $bold(J) = sigma bold(E)$ provides the constitutive relation linking $bold(J)$ to the electric field.
+  - EMF sources are essential for sustaining steady currents; real sources have internal resistance.
+  - KCL and KVL are the two fundamental circuit laws, both derivable from the field equations under steady-state conditions.
+  - Joule heating represents the inevitable energy loss in conducting materials.
+]
 // 洛伦兹力、磁感应强度的定义、比奥-萨伐尔定律及其应用
 == Lorentz Force and Biot-Savart Law // 洛伦兹力与比奥-萨伐尔定律
 
