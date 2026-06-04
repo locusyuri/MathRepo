@@ -1287,7 +1287,7 @@ An electrostatic field $bold(E)$ alone cannot sustain a steady current in a clos
 
 In electrostatics, the conservative nature of the electric field implies that the potential difference around any closed loop is zero. In a circuit containing sources of EMF, this principle generalises to account for the driving forces within sources.
 
-#theorem(name: "Kirchhoff's Voltage Law")[
+#law(name: "Kirchhoff's Voltage Law")[
   The algebraic sum of all potential differences (voltage drops and rises) around any closed loop in a circuit is zero:
   $
     sum_i V_i = 0.

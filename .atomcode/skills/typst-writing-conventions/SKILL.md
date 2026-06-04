@@ -401,8 +401,9 @@ $liminf_(n->oo) integral_X f_n dif mu$
 
 ### 语言与术语
 
-- 正文使用英文，中文翻译以 `//` 注释形式附在标题后：`== Section Title // 中文标题`
-- 定理、定义等组件的 `name` 参数使用英文
+- 正文使用英文，**正文中不得出现中文**（包括中文括号内的翻译、中文术语、中文解释）
+- 中文仅能出现在 `//` 注释中：`== Section Title // 中文标题`
+- 组件 `name` 参数使用英文
 - 数学术语使用学科通用英文表述
 
 ### 证明写作
@@ -413,14 +414,70 @@ $liminf_(n->oo) integral_X f_n dif mu$
 
 ### 内容组织模式
 
-典型的定理展开模式（按需选用）：
+典型的定理/定律展开模式（按需选用）：
 
 ```
-#theorem(name: "...")[...]
+#theorem / #law(name: "...")[...]
 #proof[...]
 #corollary[...]          // 直接推论
 #example[...]            // 说明性例子或反例
-#note[...]               // 与其他定理的对比、适用场景说明
+#note[...]               // 对比、适用条件说明
+```
+
+- 物理定律用 `#law`，数学定理用 `#theorem`
+- `#proof` 可用于两者之后
+
+### 组件选择指南
+
+组件不能滥用。参考项目现有内容的分工：
+
+| 组件 | 用途 | 何时使用 | 何时不用 |
+|------|------|---------|---------|
+| `#definition` | 定义核心概念 | 引入新术语/新量时（电场强度、电流密度、通量） | 仅仅是列举属性或计算步骤时不用 |
+| `#law` | 物理定律（实验或简单推理得出） | 库仑定律、欧姆定律、焦耳定律、基尔霍夫定律、安培定律 | 纯数学定理不用 |
+| `#theorem` | 数学定理或推论（经严格证明的命题） | 唯一性定理、叠加原理、矢势的泊松方程 | 物理定律不用 |
+| `#property` | 一组相关性质的枚举 | 只有**确实在列举一组属性**时用（如"电力线的性质"） | 单一公式、单一解释、计算过程不用 |
+| `#example` | 带计算的工作示例 | 演示定律的应用、对称性计算 | 纯文字说明不用 |
+| `#note` | 补充说明、对比、洞察 | 概念对比、适用条件、与其他定理的关系 | 核心内容不应放进 note |
+| `#proof` | 定理或定律的推导证明 | 紧跟在 `#theorem` / `#law` 之后 | 没有明确陈述时不用单独使用 |
+| `#caution` | 易错点或警告 | 需要强调不能忽略的条件 | 日常说明不用 |
+
+**两个常见误区：**
+- 不要把 `#property` 当作"包装任何非定理内容"的万能工具 — 很多内容直接写成普通段落即可
+- 不是每个概念都需要用组件包裹：SI 单位说明、常数值、过渡段、列表列举等，直接写纯文本
+
+参考写法对比：
+
+```typst
+// ✓ 正确：核心定义用 #definition
+#definition(name: "Current Density")[
+  The *current density* $bold(J)$ is defined as $bold(J) = n q bold(v)$.
+]
+
+// ✓ 正确：过渡段直接写纯文本
+The SI unit of the electric field is newtons per coulomb ($"N/C"$).
+
+// ✓ 正确：分类列举直接写列表（不用 #property）
+- *Volume current density* $bold(J)$
+- *Surface current density* $bold(K)$
+- *Line current* $I$
+
+// ✓ 正确：property 只用于确实在列举属性时
+#property(name: "Properties of Electric Field Lines")[
+  - They originate from positive charges and terminate on negative charges.
+  - They never cross each other.
+]
+
+// ✗ 错误：将 #property 当作通用包装器
+#property(name: "Joule Heating")[  // ← 不应使用 property
+  The power density is $p = bold(J) dot bold(E)$.
+]
+// 应改为：
+#law(name: "Joule Heating")[  // ← 物理定律用 law
+  The power density is $p = bold(J) dot bold(E)$.
+]
+// 或者直接写纯文本段落：
+The power dissipated per unit volume is $p = bold(J) dot bold(E)$.
 ```
 
 ### 注释的使用场景
@@ -453,6 +510,7 @@ $liminf_(n->oo) integral_X f_n dif mu$
 5. 不改动模板公共接口名称
 6. 保持与现有内容的风格一致性
 7. 补全后确保文件可编译（使用 `typst compile` 验证）
-8. 不删除或修改已有内容，除非明确要求
-9. 章节文件（`chapters/*.typ`）开头需要 `#import` 模板（因为它们可能被独立引用）
-10. 正文中的过渡段落（连接定理之间的逻辑）直接写为普通文本，不使用组件包裹
+8. **正文中不得出现中文**（中文仅限 `//` 注释和 `== Title // 中文标题` 格式）
+9. 不删除或修改已有内容，除非明确要求
+10. 章节文件（`chapters/*.typ`）开头需要 `#import` 模板（因为它们可能被独立引用）
+11. 正文中的过渡段落（连接定理之间的逻辑）直接写为普通文本，不使用组件包裹
