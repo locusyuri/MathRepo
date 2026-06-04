@@ -769,13 +769,24 @@
   }
 }
 
-/// 主要组件：定义
+
+
+/// 主要组件：定义, 定律
 #let definition(body, name: none) = {
   context {
     let local-num = definition-counter.get().first() + 1
     definition-counter.step()
     let num = chapter-widget-number(local-num)
     major-box("Definition", [♣], color-definition-bg-1, color-definition-bg-2, color-definition-border, body, number: num, name: name, body-font: font-theorem-widget)
+  }
+}
+
+#let law(body, name: none) = {
+  context {
+    let local-num = law-counter.get().first() + 1
+    law-counter.step()
+    let num = chapter-widget-number(local-num)
+    major-box("Law", [♣], color-definition-bg-1, color-definition-bg-2, color-definition-border, body, number: num, name: name, body-font: font-theorem-widget)
   }
 }
 

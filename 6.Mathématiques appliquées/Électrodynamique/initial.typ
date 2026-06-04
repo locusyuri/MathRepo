@@ -1198,7 +1198,7 @@ Under steady-state (magnetostatic) conditions, all charge densities are constant
 
 === Ohm's Law and Conductivity // 欧姆定律与电导率
 
-#definition(name: "Ohm's Law, Local Form")[
+#law(name: "Ohm's Law, Local Form")[
   For a wide class of materials (known as *Ohmic conductors*), the current density is proportional to the electric field within the conductor:
   $
     bold(J) = sigma bold(E),
@@ -1206,7 +1206,7 @@ Under steady-state (magnetostatic) conditions, all charge densities are constant
   where $sigma$ is the *electrical conductivity* of the material, measured in siemens per metre ($"S/m"$). The reciprocal quantity $rho = 1 / sigma$ is the *resistivity*, measured in ohm-metres ($Omega dot "m"$).
 ]
 
-#property(name: "Macroscopic Ohm's Law")[
+#law(name: "Macroscopic Ohm's Law")[
   For a uniform wire of length $L$, cross-sectional area $A$, and conductivity $sigma$, the current $I = J A$ and the potential difference $V = E L$ across its ends satisfy the familiar form:
   $
     V = I R, quad R = frac(L, sigma A) = rho frac(L, A),
