@@ -75,20 +75,7 @@ user_invocable: false
 
 ## 5. 章节文件组织
 
-### 单文件模式（推荐用于较短笔记）
-
-所有内容直接写在 `initial.typ` 中。
-
-### 多文件模式（推荐用于较长笔记）
-
-```typst
-#part("Part Title")
-#include "chapters/ChapterName.typ"
-```
-
-- 章节文件放在 `chapters/` 目录下
-- 章节文件内不需要重复导入模板（已由 `initial.typ` 全局导入）
-- 章节文件直接以 `= Chapter Title` 开头
+所有内容直接写在 `initial.typ` 中。不再使用 `chapters/` 目录的 `#include` 分文件模式。
 
 ---
 
@@ -298,11 +285,10 @@ Content here.
 
 ```
 Subject/
-  initial.typ        # 主入口（唯一构建入口）
+  initial.typ        # 主入口（唯一构建入口，所有内容写在此文件）
   references.bib     # 参考文献
   img/               # 图片资源
   tmp/               # 构建输出
-  chapters/          # 章节文件（可选，用于多文件模式）
 ```
 
 ---
@@ -322,18 +308,16 @@ Subject/
 
 ---
 
-## 15. 章节文件（`chapters/*.typ`）
+## 15. 单文件模式说明
 
-章节文件需要在开头导入模板和可能用到的外部包：
+当前项目统一使用单文件模式：所有内容直接写在 `initial.typ` 中。不再使用 `chapters/*.typ` 分文件方式。
+
+如需导入外部包（如 `xarrow`），在 `initial.typ` 开头导入：
 
 ```typst
-#import "../../../TypstTemplate/math-notes.typ": *
+#import "../../TypstTemplate/math-notes.typ": *
 #import "@preview/xarrow:0.4.0": xarrow
 ```
-
-- 导入路径比 `initial.typ` 多一层（因为在 `chapters/` 子目录中）
-- 外部包（如 `xarrow`）在需要时导入，用于特殊箭头符号（如 `$f_n xarrow("a.e.") f$`）
-- 章节文件以 `= Chapter Title` 开头（一级标题）
 
 ### 常用外部包
 

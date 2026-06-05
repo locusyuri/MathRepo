@@ -1,4 +1,5 @@
 #import "../../TypstTemplate/math-notes.typ": *
+#import "@preview/xarrow:0.4.0": xarrow // 引入 xarrow 包以使用自定义箭头符号
 
 #set document(
   title: "Analyse Réelle",
@@ -25,16 +26,1072 @@
 #make-outline(depth: 2, title: "Contents")
 
 #part("Measure Theory") // 测度论
-#include "chapters/LebesgueMeasure.typ" // 勒贝格测度
+= Lebesgue Measure
+== $sigma$-Algebra and Measure // Sigma 代数和测度
+#definition(name: "Algebra of Sets")[
+  Let $S$ be a non-empty set. A non-empty collection $cal(S)$ of subsets of $S$ (i.e., $cal(S) subset scr(P)(S) $) is called an *algebra of sets* on $S$ if it satisfies the following properties:
+    + $S subset cal(S)$;
+    + If $A in cal(S)$, then $S backslash A in cal(S)$;
+    + If $A_1, A_2, dots A_n in cal(S)$, then $union.big_(i=1)^n A_i in cal(S)$.
+]
+Obviously, an algebra of sets is closed under finite unions and finite intersections.
+
+#definition(name: "Sigma-Algebra")[
+  Let $S$ be a non-empty set. A non-empty collection $cal(S)$ of subsets of $S$ (i.e., $cal(S) subset scr(P)(S) $) is called a *$sigma$-algebra* on $S$ if it satisfies the following properties:
+    + $S subset cal(S)$;
+    + If $A in cal(S)$, then $S backslash A in cal(S)$;
+    + If $A_1, A_2, dots in cal(S)$, then $union.big_(i=1)^infinity A_i in cal(S)$.
+]
+Obviously, a sigma-algebra is closed under countable unions, countable intersections, and complements.
+
+#note[
+    $sigma$-algebra is the $sigma$-completion of algebra of sets. It inherits all the properties of algebra.
+    
+    Additionally, it requires closure under countable union (and hence countable intersection), which is the core of handling limit processes in analysis (such as interchange of integration and limits).
+]
+#definition(name: "Borel Set")[
+    The *Borel $sigma$-algebra* on Euclidean space $bb(R)^n$, denoted by $cal(B)(bb(R)^n)$, is the smallest $sigma$-algebra containing all open sets in $bb(R)^n$. Sets in $cal(B)(bb(R)^n)$ are called *Borel sets*.
+    
+    Similarly, for any topological space $(X, tau)$, the *Borel $sigma$-algebra* on $X$, denoted by $cal(B)(X)$, is the smallest $sigma$-algebra containing all open sets in $X$.
+]
+
+#definition(name: "Measurable Space")[
+    A *measurable space* is a pair $(X, cal(S))$ where $X$ is a set and $cal(S)$ is a $sigma$-algebra on $X$. The elements of $cal(S)$ are called *measurable sets*.
+]
+#definition(name: "Measure")[
+    Let $(X, cal(S))$ be a measurable space. A *measure* on $(X, cal(S))$ is a function $mu: cal(S)  -> [0, infinity]$ that satisfies the following properties:
+    + $mu(A) >= 0, forall A in cal(S)$;
+    + $mu(emptyset) = 0$;
+    + If $A_1, A_2, dots in cal(S)$ are pairwise disjoint, then $mu(union.big_(i=1)^infinity A_i) = sum_(i=1)^infinity mu(A_i)$.
+]
+
+#property(name: "Properties of Measures")[
+  + *Monotonicity*: If $A subset B$ and $A, B in cal(S)$, then $mu(A) <= mu(B)$.
+  + *Subtractivity*: If $A subset B$ and $A, B in cal(S), mu(B) < infinity$, then $mu(B) - mu(A) = mu(B backslash A)$.
+  + *Subadditivity*: $mu(union.big_(i=1)^infinity A_i) <= sum_(i=1)^infinity mu(A_i)$.
+  + *Continuity from Below and Above*: If $A_1 subset A_2 subset dots$ and $A_i in cal(S)$, then $mu(union.big_(i=1)^infinity A_i) = lim_(i->infinity) mu(A_i)$, and vice versa.
+]
+
+// 测度分类
+There are various types of measures, 
++ *Finite Measure*: A measure $mu$ is called finite if $mu(X) < infinity$.
++ *$sigma$-Finite Measure*: A measure $mu$ is called $sigma$-finite if there exists a sequence of measurable sets $A_1, A_2, dots in cal(S)$ such that $X = union.big_(i=1)^infinity A_i$ and $mu(A_i) < infinity$ for all $i$.
++ *Probability Measure*: A measure $mu$ is called a probability measure if $mu(X) = 1$.
++ *Complete Measure*: A measure $mu$ is called complete if every subset of a null set (i.e., a set $A$ with $mu(A) = 0$) is measurable and has measure zero.
+
+== Lebesgue Measure // 勒贝格测度
+=== Lebesgue Measure // 勒贝格测度
+#definition(name: "Lebesgue Outer Measure")[
+The *Lebesgue outer measure* on $bb(R)^n$ is defined for any set $A subset bb(R)^n$ as
+$
+m^*(A) = inf{ sum_(i=1)^infinity |I_i| : A subset union.big_(i=1)^infinity I_i, I_i "is an interval in" bb(R)^n }.
+$
+where $|I_i|$ denotes the volume of the interval $I_i$.
+]
+
+#property(name: "Properties of Lebesgue Outer Measure")[
+  + *Monotonicity*: If $A subset B$, then $m^*(A) <= m^*(B)$.
+  + *Countable Subadditivity*: For any sequence of sets $A_1, A_2, dots$, we have $m^*(union.big_(i=1)^infinity A_i) <= sum_(i=1)^infinity m^*(A_i)$.
+  + *Translation Invariance*: For any set $A$ and any vector $v in bb(R)^n$, we have $m^*(A + v) = m^*(A)$.
+  + *Scaling Invariance*: For any set $A$ and any scalar $c > 0$, we have $m^*(c A) = c^n m^*(A)$.
+  + *Interval Property*: For any interval $I$, we have $m^*(I) = |I|$.
+]
+
+#definition(name: "Carathéodory Measurable Condition")[ // Carathéodory 可测性条件
+A set $E subset bb(R)^n$ is called *Lebesgue measurable* if for every set $A subset bb(R)^n$, we have
+$
+m^*(A) = m^*(A inter E) + m^*(A inter E^("c")).
+$
+]
+
+#proposition[
++ Borel sets are Lebesgue measurable, i.e., $cal(B)(bb(R)^n) subset cal(L)(bb(R)^n)$.
++ Null sets (i.e., sets with Lebesgue outer measure zero) are Lebesgue measurable, and any subset of a null set is also Lebesgue measurable.
+]
+
+
+#theorem[
+  // 可测集族为 sigma-代数, 且m^*|cal(L)(bb(R)^n)是一个测度
+  The collection of Lebesgue measurable sets $cal(L)(bb(R)^n)$ forms a $sigma$-algebra, and the restriction of the Lebesgue outer measure $m^*$ to $cal(L)(bb(R)^n)$ is a measure.
+]
+
+
+// 之后我们得到勒贝格测度的最终定义: 将勒贝格外测度限制在勒贝格可测集上，即 $m(A) = m^*(A)$ for all $A in cal(L)(bb(R)^n)$.
+Thus, the *Lebesgue measure* on $bb(R)^n$ is defined as the restriction of the Lebesgue outer measure to the $sigma$-algebra of Lebesgue measurable sets, i.e., for any $A in cal(L)(bb(R)^n)$, we have
+$
+m(A) = m^*(A).
+$
+
+=== Measure Space // 测度空间
+#definition(name: "Measure Space")[
+  A *measure space* is a triple $(X, cal(S), mu)$ where $(X, cal(S))$ is a measurable space and $mu$ is a measure on $(X, cal(S))$.
+]
+#note[
+  // 可测空间与测度空间的区别
+  A measurable space consists of a set and a sigma-algebra, which defines the collection of measurable sets. #highlight[A measure space adds a measure function] that assigns a non-negative extended real number to each measurable set, quantifying its "size" in some sense.
+]
+
+#definition(name: "Lebesgue Measure Space")[
+  $(bb(R)^n, cal(L)(bb(R)^n), m)$ is a $sigma$-finite, complete measure space, called the *Lebesgue measure space*.
+]\
+
+#v(0.5em)
+#definition(name: "Almost Everywhere")[
+    Let $(X, cal(S), mu)$ be a measure space. A property $P(x)$ is said to hold *almost everywhere* (a.e.) if the set of points where $P$ fails to hold has measure zero, i.e., $mu({x in X : not P(x)}) = 0$, denoted by $P(x) a.e.$.
+]
+For example, 
+- *Almost everywhere continuous*: $f$ is almost everywhere continuous if $f$ is continuous at every point of $X$ except for a set of measure zero.
+- *Almost everywhere equality*: $f$ is almost everywhere equal to $g$ if $f(x) = g(x)$ for almost every $x in X$.
+
+// 最后, 我们给出一个常用的引理: Borel-Cantelli 引理, 以及一个重要的反例: Vitali 集.
+Finally, we present a commonly used lemma: the Borel-Cantelli lemma, and an important counterexample: the Vitali set.
+
+#lemma(name: "Borel-Cantelli Lemma")[
+Let $(X, cal(S), mu)$ be a measure space.
+// 设 {An}\{A_n\}{An​} 是一列可测集，若 ∑n=1∞m(An)<∞\sum_{n=1}^{\infty} m(A_n) < \infty∑n=1∞​m(An​)<∞，则m(lim sup⁡no∞An)=0m\left(\limsup_{n 	o \infty} A_n\right) = 0m(no∞limsup​An​)=0即几乎所有的点至多属于有限个 AnA_nAn​。
+1. Let $A_n in cal(S)$ be a sequence of measurable sets. If $sum_(n=1)^infinity mu(A_n) < infinity$, then 
+$
+mu(lim sup_(n->infinity) A_n) = 0,
+$
+that is, almost all points belong to at most a finite number of sets in the sequence.
+// 设 {An}\{A_n\}{An​} 是一列相互独立的可测集，若 ∑n=1∞m(An)=∞\sum_{n=1}^{\infty} m(A_n) = \infty∑n=1∞​m(An​)=∞，则m(lim sup⁡no∞An)=m(E)m\left(\limsup_{n 	o \infty} A_n\right) = m(E)m(no∞limsup​An​)=m(E)即几乎所有的点属于无穷多个 AnA_nAn​。
+2. Let $A_n$ be a sequence of independent measurable sets. If $sum_(n=1)^infinity mu(A_n) = infinity$, then
+$
+mu(lim sup_(n->infinity) A_n) = mu(X),
+$
+that is, almost all points belong to an infinite number of sets in the sequence.
+]
+
+
+== Non-Measurable Sets // 非可测集
+
+== Other Views to introduce the Lebesgue Measure // 其他引入 Lebesgue 测度的视角
+
+=== The Original Definition// 原始定义
+
+#definition(name: "Measure of Bounded Open and Closed Sets")[
+  For any non-empty bounded open set $G subset bb(R)$, we define its measure as
+  $
+  m(G) = sum_k (beta_k - alpha_k),
+  $
+  where $(alpha_k, beta_k)$ are the construction intervals of $G$ (i.e., $G = union.big_k (alpha_k, beta_k)$ is the representation of $G$ as a countable union of disjoint open intervals).
+
+  For any bounded closed set $F subset bb(R)$, take any open interval $(a, b) supset F$ and let $G = (a, b) backslash F$ be the complement of $F$ in $(a, b)$. Then we define the measure of $F$ as
+  $
+  m(F) = m((a, b)) - m(G) = (b - a) - m(G).
+  $ 
+]
+
+#definition(name: "Inner and Outer Measures")[
+  For any set $E subset bb(R)$, we define its *inner measure* as
+  $
+  m_*(E) = sup{ m(F) : F subset E, F "is a bounded closed set" },
+  $
+  and its *outer measure* as
+  $
+  m^*(E) = inf{ m(G) : G supset E, G "is a bounded open set" }.
+  $
+
+  If $m_*(E) = m^*(E)$, then we say that $E$ is *Lebesgue measurable* and define its measure as $m(E) = m_*(E) = m^*(E)$.
+]
+
+
+
+
+
+
+
+
+
+
+// 可测函数的定义：设 (X, 𝒮) 和 (Y, 𝒯) 为可测空间，若对于 𝒯 中每个集合 B，原像 f^(-1)(B) 都属于 𝒮，则称函数 f: X → Y 为 𝒮-𝒯 可测的
+
+// 实值可测函数的特殊情况：当 Y = ℝ ̅ 且 𝒯 = ℬ(ℝ ̅) 为 ℝ 上的 Borel σ-代数时，若 f: X → ℝ 是 𝒮-ℬ(ℝ) 可测的，则称 f 为（实）可测函数
+
+= Measurable Function
+== Definition and Properties of Measurable Functions // 可测函数的定义和性质
+=== Measurable Function // 可测函数
+#definition(name: "Measurable Function")[
+    Let $(X, cal(S))$ and $(Y, cal(T))$ be measurable spaces. A function $f: X  -> Y$ is called *$cal(S)"-"cal(T)$ measurable* if for every set $B in cal(T)$, the preimage $f^(-1)(B) = {x in X : f(x) in B} in cal(S)$.
+]
+// 另一种定义中, f 定义在 X 的一个可测子集 E 上, 这本质上就是在子可测空间(E, cal(S)∣E​)上的全局可测函数, 因此两者是等价的.
+In another definition, $f$ is defined on a measurable subset $E$ of $X$, then we can view $f$ as a globally measurable function on the subspace $(E, cal(S)|E)$, where $cal(S)|E = {A inter E : A in cal(S)}$ is the trace $sigma$-algebra on $E$. Thus, the two definitions are equivalent.
+
+
+Specially, if $Y = overline(bb(R))$#footnote[Here, $overline(bb(R))$ denotes the extended real line] and $cal(T) = cal(B)(overline(bb(R)))$ is the Borel $sigma$-algebra on $bb(R)$, then a function $f: X  -> bb(R)$ is called *(real) measurable* if it is $cal(S)"-"cal(B)(bb(R))$ measurable.
+
+#proposition(name: "Borel and Lebesgue Measurable Functions")[
+// 当定义域配备不同的 σ-代数时，可测函数有不同的名称。
+Let $f: bb(R)^n -> overline(bb(R))$ be a function.
+- If $f$ is $cal(B)(bb(R)^n)"-"cal(B)(overline(bb(R)))$ measurable (i.e., the domain is equipped with the Borel $sigma$-algebra), then $f$ is called a *Borel measurable function*.
+- If $f$ is $cal(L)(bb(R)^n)"-"cal(B)(overline(bb(R)))$ measurable (i.e., the domain is equipped with the Lebesgue $sigma$-algebra), then $f$ is called a *Lebesgue measurable function*.
+
+// 由于 Borel σ-代数包含于 Lebesgue σ-代数，每个 Borel 可测函数都是 Lebesgue 可测的，但反之不然。
+Since $cal(B)(bb(R)^n) subset cal(L)(bb(R)^n)$, every Borel measurable function is Lebesgue measurable, but the converse does not hold in general.
+]
+
+// 下面给出可测函数的更常用的等价定义
+Now we present some equivalent characterizations of measurable functions that are more commonly used.
+#proposition(name: "Equivalent Characterizations of Measurable Functions")[
+  Let $(X, cal(S))$ be a measurable space and $f: X  -> overline(bb(R))$ be a function. The following statements are equivalent:
+  + $f$ is measurable.
+  + For every $alpha in bb(R)$, the set ${x in X : f(x) > alpha} in cal(S)$.
+  + For every $alpha in bb(R)$, the set ${x in X : f(x) >= alpha} in cal(S)$.
+  + For every $alpha in bb(R)$, the set ${x in X : f(x) < alpha} in cal(S)$.
+  + For every $alpha in bb(R)$, the set ${x in X : f(x) <= alpha} in cal(S)$.
+]
+
+#proposition[
+// 可测函数的和、差、积、商（分母不为零）也是可测函数
+Let $(X, cal(S))$ be a measurable space and $f, g: X  -> overline(bb(R))$ be measurable functions. Then the functions $f + g$, $f - g$, $f g$, and $f / g$ (where defined) are also measurable functions.
+]
+
+=== Simple Function // 简单函数
+#definition(name: "Simple Function")[
+Let $(X, cal(S))$ be a measurable space. A function $s: X  -> overline(bb(R))$ is called a *simple function* if it takes only finitely many distinct values, i.e., there exist distinct real numbers $c_1, c_2, dots, c_n$ and disjoint sets $A_1, A_2, dots, A_n in cal(S)$ such that
+$
+s(x) = sum_(k=1)^n c_k chi_(A_k)(x),
+$
+where $A_1 union A_2 union dots union A_n = X$ and $chi_(A_k)$ is the indicator function of the set $A_k$#footnote[
+  // 换句话说, A_1, A_2, ..., A_n 是 X 的一个划分, s 在 A_k 上恒等于 c_k.
+  In other words, $A_1, A_2, ..., A_n$ are a partition of $X$, and s is constant on each $A_k$, equal to $c_k$.
+].
+]
+
+#note[
+// 一般的简单函数只要求取有限个不同值，并将定义域划分为有限个不相交集合，但不要求这些集合可测。
+A general simple function only requires taking finitely many distinct values and partitioning the domain into finitely many disjoint sets, without requiring those sets to be measurable.
+
+// 上面的定义使用的是更强的版本：要求 A_k ∈ cal(S)，即每个集合都是可测集，因此定义的是可测简单函数。
+The definition given above uses the stronger version where $A_k in cal(S)$ (i.e., each partition set is measurable), so it defines a *measurable simple function* by default.
+
+// 以后我们说简单函数时，默认都是指可测简单函数。
+From now on, "simple function" refers to the measurable version unless stated otherwise.
+]
+
+
+
+#property(name: "Algebraic Properties of Simple Functions")[
+// 线性封闭性：如果 sss 和 ttt 是简单函数，α,β∈R\alpha, \beta \in \mathbb{R}α,β∈R，则 αs+βt\alpha s + \beta tαs+βt 也是简单函数。
+- *Linear Closure*: If $s$ and $t$ are simple functions, and $alpha, beta in bb(R)$, then $alpha s + beta t$ is also a simple function.
+// 乘积封闭性：如果 sss 和 ttt 是简单函数，则 sts ttt 也是简单函数。
+- *Product Closure*: If $s$ and $t$ are simple functions, then $s t$ is also a simple function.
+// 最大/最小封闭性：如果 sss 和 ttt 是简单函数，则 max⁡(s,t)\max(s, t)max(s,t) 和 min⁡(s,t)\min(s, t)min(s,t) 也是简单函数。
+- *Max/Min Closure*: If $s$ and $t$ are simple functions, then $max(s, t)$ and $min(s, t)$ are also simple functions.
+// 正部与负部：对任意简单函数 sss，其正部 s+=max⁡(s,0)s^+ = \max(s, 0)s+=max(s,0) 和负部 s−=max⁡(−s,0)s^- = \max(-s, 0)s−=max(−s,0) 也是简单函数，且有 s=s+−s−s = s^+ - s^-s=s+−s−。
+- *Positive/Negative Parts*: For any simple function $s$, its positive part $s^+ = max(s, 0)$ and its negative part $s^- = max(-s, 0)$ are also simple functions, and $s = s^+ - s^-$.
+]
+
+=== Sequences of Measurable Functions // 可测函数列
+#theorem[
+  // 可测函数列的上下确界、上下极限也是可测函数
+  Let $(X, cal(S))$ be a measurable space and $f_n: X  -> overline(bb(R))$ be a sequence of measurable functions. Then the pointwise supremum $sup_n f_n$, infimum $inf_n f_n$, limit superior $limsup_(n->infinity) f_n$, and limit inferior $liminf_(n->infinity) f_n$ are all measurable functions.
+]
+
+#theorem[
+  // 可测函数列的极限几乎处处存在时, 极限函数也是可测函数
+  Let $(X, cal(S))$ be a measurable space and $f_n: X  -> overline(bb(R))$ be a sequence of measurable functions. If the pointwise limit $f(x) = lim_(n->infinity) f_n (x)$ exists for almost every $x in X$, then the limit function $f$ is also measurable.
+]
+
+#theorem(name: "Approximation by Simple Functions")[
+Let $(X, cal(S))$ be a measurable space.
++ Let $f: X  -> overline(bb(R))$ be a non-negative measurable function. Then there exists an increasing sequence of non-negative simple functions $s_n: X  -> overline(bb(R))$ such that $lim_(n->infinity) s_n (x) = f(x)$ for all $x in X$.
++ Let $f: X  -> overline(bb(R))$ be a measurable function. Then there exists a sequence of simple functions $s_n: X  -> overline(bb(R))$ such that $lim_(n->infinity) s_n (x) = f(x)$ for all $x in X$.
+]
+
+#corollary[
+  // f为可测函数的充要条件是存在一列简单函数列逐点收敛于f
+  A function $f: X  -> overline(bb(R))$ is measurable if and only if there exists a sequence of simple functions $s_n: X  -> overline(bb(R))$ such that $lim_(n->infinity) s_n (x) = f(x)$ for all $x in X$.
+]
+
+
+== Convergence of Measurable Functions // 可测函数列的收敛性
+#definition(name: "Almost Everywhere Convergence")[ // 几乎处处收敛
+Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+If $f_n (x) -> f(x)$ for almost every $x in X$, i.e. $mu({x in X : lim_(n->infinity) f_n (x) != f(x)}) = 0$, then we say that $f_n$ converges *almost everywhere* to $f$, denoted by $f_n xarrow("a.e.") f$.
+]
+
+// 下面我们介绍另外几种收敛模式, 并研究它们之间的关系.
+We now introduce several other modes of convergence for sequences of measurable functions and study the relationships between them.
+
+=== Convergence in Measure // 依测度收敛
+
+#definition(name: "Convergence in Measure")[ // 依测度收敛
+Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+If for every $epsilon > 0$, we have $lim_(n->infinity) mu({x in X : |f_n (x) - f(x)| > epsilon}) = 0$, then we say that $f_n$ converges *in measure* to $f$, denoted by $f_n (x) xarrow(mu) f(x)$.
+]
+
+#definition(name: "Cauchy Sequence in Measure")[ // 依测度基本列
+Let $(X, cal(S), mu)$ be a measure space and $f_n: X  -> overline(bb(R))$ be an a.e. finite sequence of measurable functions. We say that $f_n$ is a *Cauchy sequence in measure* if for every $epsilon > 0$, we have $lim_(m,n->infinity) mu({x in X : |f_n (x) - f_m (x)| > epsilon}) = 0$.
+]
+
+#theorem(name: "Completeness of Convergence in Measure")[
+  // 依测度基本列的极限函数存在且唯一, 且依测度收敛于该极限函数
+  Let $(X, cal(S), mu)$ be a measure space and $f_n: X  -> overline(bb(R))$ be a Cauchy sequence in measure. 
+  
+  Then there exists a measurable function $f: X  -> overline(bb(R))$ such that $f_n (x) xarrow(mu) f(x)$.
+]
+
+// 下面我们研究依测度收敛与几乎处处收敛之间的关系.
+We now examine the relationship between convergence in measure and almost everywhere convergence.
+
+#theorem(name: "Riesz's Theorem")[
+  Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+  
+  Then $f_n (x) xarrow(mu) f(x)$ if and only if for any subsequence $f_(n_k)$, there exists a further subsequence $f_(n_(k_i))$ such that $f_(n_(k_i)) (x) xarrow("a.e.") f(x)$.
+]
+
+#example(name: "Typewriter Sequence")[
+// 即便测度有限, 依测度收敛也不一定能推出几乎处处收敛 (滑动凸起序列)
+Even on a finite measure space, convergence in measure does not imply almost everywhere convergence.
+
+Consider $([0,1], cal(L), m)$ with Lebesgue measure. We construct the *typewriter sequence* (sliding bump) as follows: enumerate intervals of width $1/k$ that tile $[0,1]$, cycling through each "round":
+- Round 1 ($k=1$): $I_1 = [0, 1]$
+- Round 2 ($k=2$): $I_2 = [0, 1/2], I_3 = [1/2, 1]$
+- Round 3 ($k=3$): $I_4 = [0, 1/3], I_5 = [1/3, 2/3], I_6 = [2/3, 1]$
+- Round $k$: $k$ intervals of width $1/k$ covering $[0,1]$
+
+Define $f_n = chi_(I_n)$ (the indicator function of $I_n$).
+
+*Convergence in measure*: For any $epsilon in (0, 1]$, we have $m({x : f_n (x) > epsilon}) = m(I_n) = 1/k -> 0$ as $n -> infinity$ (since $n$ in round $k$ means $k -> infinity$). Thus $f_n xarrow(mu) 0$.
+
+*No a.e. convergence*: For every $x in [0,1]$, in each round $k$ there is exactly one interval $I_n$ containing $x$, so $f_n (x) = 1$ for infinitely many $n$. Meanwhile $f_n (x) = 0$ for infinitely many other $n$. Therefore $lim_(n->infinity) f_n (x)$ does not exist for any $x in [0,1]$, and $f_n$ does not converge almost everywhere.
+]
+
+// 最后, 我们介绍一种更强的收敛模式: 范数收敛, 它蕴含依测度收敛.
+Finally, we introduce a stronger mode of convergence — norm convergence — which implies convergence in measure.
+
+#definition(name: "Norm Convergence")[ // 范数收敛
+Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+We say that $f_n$ converges *in $L^p$ norm* to $f$, denoted by $f_n xarrow(L^p) f$, if for some $p >= 1$, we have
+$
+lim_(n->infinity) (integral_X |f_n (x) - f(x)|^p dif mu)^(1/p) = 0.
+$
+]
+
+#theorem(name: "Markov's Inequality")[
+  Let $(X, cal(S), mu)$ be a measure space and $f: X  -> [0, infinity]$ be a non-negative measurable function. Then for every $epsilon > 0$, we have
+  $
+  mu({x in X : f(x) >= epsilon}) <= (1/epsilon) integral_X f(x) dif mu.
+  $
+]
+
+#proposition[
+  Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
++ If $f_n xarrow(L^1) f$, then $f_n xarrow(mu) f$.
++ If $f_n xarrow(L^1) f$, then $integral_X f_n dif mu -> integral_X f dif mu$.  // 积分号与极限可交换
+]
+
+
+=== Almost Uniform Convergence // 近一致收敛
+
+#definition(name: "Almost Uniform Convergence")[ // 近一致收敛
+Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+If for all $delta > 0$, there exists a measurable set $E subset X$ with $mu(E) < delta$ such that $f_n$ converges uniformly to $f$ on $X backslash E$, then we say that $f_n$ converges *almost uniformly* to $f$, denoted by $f_n (x) xarrow("a.u.") f(x)$.
+]
+
+#theorem(name: "Egorov's Theorem")[ // Его́ров 定理
+  Let $(X, cal(S), mu)$ be a finite measure space, i.e. $mu(X) < infinity$, and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+  If $f_n (x) xarrow("a.e.") f(x)$, then $f_n (x) xarrow("a.u.") f(x)$.
+]
+
+#proposition[
+  // 近一致收敛蕴含几乎处处收敛
+  Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+  If $f_n (x) xarrow("a.u.") f(x)$, then $f_n (x) xarrow("a.e.") f(x)$.
+]
+
+#proposition[
+  // 近一致收敛蕴含依测度收敛
+  Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+
+  If $f_n (x) xarrow("a.u.") f(x)$, then $f_n (x) xarrow(mu) f(x)$.
+]
+
+#note(title: "Summary of Implications")[
+// 四种收敛模式之间的蕴含关系总结
+The relationships between the four convergence modes on a measure space $(X, cal(S), mu)$ are:
+
+$
+f_n xarrow(L^p) f &=> f_n xarrow(mu) f #h(2em) &"(Markov's inequality)" \
+f_n xarrow("a.u.") f &=> f_n xarrow("a.e.") f #h(2em) &"(trivial)" \
+f_n xarrow("a.u.") f &=> f_n xarrow(mu) f #h(2em) &"(trivial)" \
+$
+
+On *finite measure spaces* ($mu(X) < infinity$):
+$
+f_n xarrow("a.e.") f &=> f_n xarrow("a.u.") f #h(2em) &"(Egorov's theorem)" \
+f_n xarrow(mu) f &=> exists f_(n_(k_i)) xarrow("a.e.") f #h(2em) &"(Riesz's theorem)"
+$
+
+*Non-implications*:
+- $f_n xarrow(mu) f$ does NOT imply $f_n xarrow("a.e.") f$ (typewriter sequence).
+- $f_n xarrow("a.e.") f$ does NOT imply $f_n xarrow(L^p) f$ in general.
+]
+
+
+== Measurable Functions and Continuous Functions // 可测函数与连续函数
+=== Лузин's Theorem // Лузин定理
+
+#theorem(name: "Лузин's Theorem")[
+  Let $(X, cal(S), mu)$ be a measure space and $f: X  -> overline(bb(R))$ be a measurable function that is a.e. finite. 
+
+  Then for every $epsilon > 0$, there exists a closed set $F subset X$ such that $mu(X backslash F) < epsilon$ and the restriction of $f$ to $F$ is continuous, i.e. $f|_F: F  -> overline(bb(R)) in C(F)$.
+]
+
+#corollary[
+  Let $(X, cal(S), mu)$ be a measure space and $f: X  -> overline(bb(R))$ be a measurable function that is a.e. finite. 
+
+  Then for every $epsilon > 0$, there exists a continuous function $g: X  -> overline(bb(R))$ such that 
+  $
+  mu({x in X : f(x) != g(x)}) < epsilon.
+  $
+
+  // 若X还是有界集，则可使上述g(x）具有紧支集．
+  If $mu(X) < infinity$, then $g$ can be made to have a compact support.
+]
+
+#corollary[
+  Let $(X, cal(S), mu)$ be a measure space and $f: X  -> overline(bb(R))$ be a measurable function that is a.e. finite. 
+
+  Then there exists a sequence of continuous functions $g_n: X  -> overline(bb(R))$ such that $g_n (x) xarrow("a.e.") f(x)$.
+]
+
+=== Continuity via Preimages // 通过原像定义连续性
+#definition(name: "Continuity via Open Sets")[
+  Let $(X, tau_X)$ and $(Y, tau_Y)$ be topological spaces. A function $g: X -> Y$ is called *continuous* if for every open set $U in tau_Y$, the preimage $g^(-1)(U)$ is open in $X$.
+]
+
+=== Equivalent Definitions of Continuity // 连续性的等价定义
+#proposition(name: "Equivalence of Continuity Definitions")[
+  Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces. A function $g: X -> Y$ is continuous in the $epsilon$-$delta$ (pointwise) sense if and only if for every open set $U subset Y$ the preimage $g^(-1)(U)$ is open in $X$.
+
+  #proof[
+    Sketch: If $g$ is $epsilon$-$delta$ continuous at every point, then for any open $U$ and any $x in g^(-1)(U)$ one can find a neighborhood mapped into $U$, hence $g^(-1)(U)$ is a union of neighborhoods and open. Conversely, if preimages of open sets are open, take $U$ to be an open ball around $g(x)$ to obtain the usual $epsilon$-$delta$ condition.
+  ]
+]
+
+#note[
+  This formulation mirrors measurability: measurable maps preserve measurable sets under inverse images, while continuous maps preserve open sets under inverse images. Using the preimage viewpoint makes the passage to Borel measurability and composition transparent.
+]
+
+=== Measurability of Composite Functions // 复合函数可测性
+#proposition(name: "Composition with Continuous Functions")[
+  Let $(X, cal(S))$ be a measurable space and let $Y$ be a topological space with Borel sigma-algebra $cal(B)(Y)$. If $f: X -> Y$ is $cal(S)$-$cal(B)(Y)$ measurable and $g: Y -> overline(bb(R))$ is continuous, then the composition $g compose f: X -> overline(bb(R))$ is $cal(S)$-$cal(B)(overline(bb(R)))$ measurable.
+]
+
+#proposition(name: "Composition with Borel Measurable Functions")[
+  Let $(X, cal(S))$ be a measurable space and let $Y$ be a measurable space with sigma-algebra $cal(T)$. If $f: X -> Y$ is $cal(S)$-$cal(T)$ measurable and $g: Y -> Z$ is $cal(T)$-$cal(U)$ measurable, then $g compose f: X -> Z$ is $cal(S)$-$cal(U)$ measurable.
+]
+
+#note[
+  In particular, continuous maps are Borel measurable, so the first proposition is a special case of the second. This shows the natural alignment between continuity (open-set preimages) and measurability (measurable-set preimages) under composition.
+]
 
 #part("Integration Theory") // 积分理论
-#include "chapters/LebesgueIntegration.typ" // 勒贝格积分
+= Lebesgue Integration
+== Lebesgue Integration
+=== Definition of the Lebesgue Integral // 勒贝格积分的定义
+
+#definition(name: "Lebesgue Integral of Simple Functions")[ // 简单函数的 Lebesgue 积分
+Let $(X, cal(S), mu)$ be a measure space and $s: X -> [0, infinity)$ a simple function.
+$s(x)$ can be expressed as $s(x) = sum_{i=1}^n a_i chi_{A_i}(x)$, where $a_i >= 0$ and $A_i in cal(S)$ are disjoint measurable sets. The Lebesgue integral of $s$ with respect to $mu$ is defined as:
+$
+integral_X s dif mu = sum_(i=1)^n a_i mu(A_i).
+$
+]
+
+#definition(name: "Lebesgue Integral of Non-Negative Functions")[ // 非负函数的 Lebesgue 积分
+Let $(X, cal(S), mu)$ be a measure space and $f: X -> [0, infinity)$ a non-negative measurable function. The Lebesgue integral of $f$ with respect to $mu$ is defined as:
+$
+integral_X f dif mu = sup_(s <= f) integral_X s dif mu,
+$
+where the supremum is taken over all simple functions $s$ such that $s(x) <= f(x)$ for all $x in X$.
+]
+
+#definition(name: "Lebesgue Integral of Real-Valued Functions")[ //实值函数的 Lebesgue 积分
+Let $(X, cal(S), mu)$ be a measure space and $f: X -> RR$ a real-valued measurable function. We can decompose $f$ into its positive and negative parts:
+$
+f^+(x) = max{f(x), 0}, f^-(x) = max{-f(x), 0}.
+$
+Then $f(x) = f^+(x) - f^-(x)$ and both $f^+$ and $f^-$ are non-negative measurable functions. The Lebesgue integral of $f$ with respect to $mu$ is defined as:
+$
+integral_X f dif mu = integral_X f^+ dif mu - integral_X f^- dif mu.
+$
+]
+
+
+
+=== Properties of the Lebesgue Integral // 勒贝格积分的性质
+
+== Limit of Integral Sequences // 积分序列的极限
+
+=== Monotone Convergence Theorem // 单调收敛定理
+
+#theorem(name: "Monotone Convergence Theorem (Levi)")[
+  Let $(X, cal(S), mu)$ be a measure space and $f_n: X -> [0, infinity]$ be a sequence of non-negative measurable functions such that $f_n (x) <= f_(n+1) (x)$ for all $x in X$ and all $n in bb(N)$. Let $f(x) = lim_(n->infinity) f_n (x)$. Then
+  $
+  lim_(n->infinity) integral_X f_n dif mu = integral_X f dif mu.
+  $
+]
+
+#proof[
+  Since $f_n <= f_(n+1) <= f$ for all $n$, by monotonicity of the integral we have $integral_X f_n dif mu <= integral_X f dif mu$, so $lim_(n->infinity) integral_X f_n dif mu <= integral_X f dif mu$.
+
+  For the reverse inequality, let $s$ be any simple function with $0 <= s <= f$, and let $alpha in (0, 1)$. Define $E_n = {x in X : f_n (x) >= alpha s(x)}$. Then $E_n$ is an increasing sequence of measurable sets with $union.big_(n=1)^infinity E_n = X$.
+
+  We have
+  $
+  integral_X f_n dif mu >= integral_(E_n) f_n dif mu >= alpha integral_(E_n) s dif mu.
+  $
+
+  Since $s$ is a simple function, say $s = sum_(i=1)^k c_i chi_(A_i)$, we have $integral_(E_n) s dif mu = sum_(i=1)^k c_i mu(A_i inter E_n)$. By continuity of measure from below, $mu(A_i inter E_n) -> mu(A_i)$ as $n -> infinity$. Therefore
+  $
+  lim_(n->infinity) integral_X f_n dif mu >= alpha integral_X s dif mu.
+  $
+
+  Letting $alpha -> 1$ gives $lim_(n->infinity) integral_X f_n dif mu >= integral_X s dif mu$. Taking the supremum over all such $s$ yields $lim_(n->infinity) integral_X f_n dif mu >= integral_X f dif mu$.
+]
+
+#corollary(name: "Series and Integral Interchange")[
+  Let $(X, cal(S), mu)$ be a measure space and $f_n: X -> [0, infinity]$ be a sequence of non-negative measurable functions. Then
+  $
+  integral_X sum_(n=1)^infinity f_n dif mu = sum_(n=1)^infinity integral_X f_n dif mu.
+  $
+]
+
+#proof[
+  Apply the Monotone Convergence Theorem to the partial sums $S_N = sum_(n=1)^N f_n$, which form a non-negative increasing sequence converging pointwise to $sum_(n=1)^infinity f_n$.
+]
+
+#example[
+  The monotonicity condition cannot be dropped. Consider $f_n = chi_([n, n+1])$ on $(bb(R), cal(L), m)$. Then $f_n -> 0$ pointwise, but $integral_bb(R) f_n dif m = 1$ for all $n$, so $lim integral f_n = 1 != 0 = integral lim f_n$.
+]
+
+=== Fatou's Lemma // Fatou 引理
+
+#theorem(name: "Fatou's Lemma")[
+  Let $(X, cal(S), mu)$ be a measure space and $f_n: X -> [0, infinity]$ be a sequence of non-negative measurable functions. Then
+  $
+  integral_X liminf_(n->infinity) f_n dif mu <= liminf_(n->infinity) integral_X f_n dif mu.
+  $
+]
+
+#proof[
+  Define $g_n (x) = inf_(k >= n) f_k (x)$. Then $g_n$ is non-negative, measurable, and $g_n <= g_(n+1)$ for all $n$. Moreover, $lim_(n->infinity) g_n (x) = liminf_(n->infinity) f_n (x)$.
+
+  Since $g_n <= f_k$ for all $k >= n$, we have $integral_X g_n dif mu <= integral_X f_k dif mu$ for all $k >= n$, hence $integral_X g_n dif mu <= inf_(k >= n) integral_X f_k dif mu$.
+
+  By the Monotone Convergence Theorem applied to the increasing sequence $(g_n)$:
+  $
+  integral_X liminf_(n->infinity) f_n dif mu = lim_(n->infinity) integral_X g_n dif mu <= lim_(n->infinity) inf_(k >= n) integral_X f_k dif mu = liminf_(n->infinity) integral_X f_n dif mu.
+  $
+]
+
+#corollary(name: "Reverse Fatou's Lemma")[
+  Let $(X, cal(S), mu)$ be a measure space and $f_n: X -> [0, infinity]$ be a sequence of measurable functions. If there exists an integrable function $g$ such that $f_n <= g$ a.e. for all $n$, then
+  $
+  limsup_(n->infinity) integral_X f_n dif mu <= integral_X limsup_(n->infinity) f_n dif mu.
+  $
+]
+
+#example[
+  Strict inequality can occur in Fatou's Lemma. Consider $f_n = n chi_([0, 1\/n])$ on $(bb(R), cal(L), m)$. Then $f_n -> 0$ a.e., so $integral liminf f_n = 0$, but $integral f_n = 1$ for all $n$, so $liminf integral f_n = 1 > 0$.
+]
+
+=== Lebesgue Dominated Convergence Theorem // 勒贝格控制收敛定理
+
+#theorem(name: "Lebesgue Dominated Convergence Theorem")[
+  Let $(X, cal(S), mu)$ be a measure space and $f_n: X -> overline(bb(R))$ be a sequence of measurable functions such that $f_n (x) -> f(x)$ a.e. If there exists an integrable function $g in L^1 (X, mu)$ such that $|f_n (x)| <= g(x)$ a.e. for all $n$, then $f in L^1 (X, mu)$ and
+  $
+  lim_(n->infinity) integral_X f_n dif mu = integral_X f dif mu.
+  $
+  Equivalently, $lim_(n->infinity) integral_X |f_n - f| dif mu = 0$.
+]
+
+#proof[
+  Since $|f_n| <= g$ a.e. and $f_n -> f$ a.e., we have $|f| <= g$ a.e., so $f in L^1 (X, mu)$.
+
+  Consider the non-negative functions $g + f_n >= 0$ and $g - f_n >= 0$. Applying Fatou's Lemma to each:
+
+  For $g + f_n$:
+  $
+  integral_X (g + f) dif mu <= liminf_(n->infinity) integral_X (g + f_n) dif mu = integral_X g dif mu + liminf_(n->infinity) integral_X f_n dif mu.
+  $
+  This gives $integral_X f dif mu <= liminf_(n->infinity) integral_X f_n dif mu$.
+
+  For $g - f_n$:
+  $
+  integral_X (g - f) dif mu <= liminf_(n->infinity) integral_X (g - f_n) dif mu = integral_X g dif mu - limsup_(n->infinity) integral_X f_n dif mu.
+  $
+  This gives $limsup_(n->infinity) integral_X f_n dif mu <= integral_X f dif mu$.
+
+  Combining: $integral_X f dif mu <= liminf integral_X f_n dif mu <= limsup integral_X f_n dif mu <= integral_X f dif mu$.
+]
+
+#corollary(name: "Bounded Convergence Theorem")[
+  Let $(X, cal(S), mu)$ be a finite measure space (i.e., $mu(X) < infinity$) and $f_n: X -> overline(bb(R))$ be a sequence of measurable functions such that $f_n (x) -> f(x)$ a.e. If there exists a constant $M > 0$ such that $|f_n (x)| <= M$ a.e. for all $n$, then
+  $
+  lim_(n->infinity) integral_X f_n dif mu = integral_X f dif mu.
+  $
+]
+
+#proof[
+  Take $g equiv M$. Since $mu(X) < infinity$, we have $g in L^1 (X, mu)$. The result follows directly from the Lebesgue Dominated Convergence Theorem.
+]
+
+#corollary(name: "Differentiation under the Integral Sign")[
+  Let $(X, cal(S), mu)$ be a measure space, $I subset bb(R)$ an open interval, and $f: X times I -> bb(R)$ a function such that:
+  + For each $t in I$, the function $x |-> f(x, t)$ is integrable.
+  + For a.e. $x in X$, the partial derivative $partial / (partial t) f(x, t)$ exists for all $t in I$.
+  + There exists $g in L^1 (X, mu)$ such that $|partial / (partial t) f(x, t)| <= g(x)$ for a.e. $x$ and all $t in I$.
+  Then $F(t) = integral_X f(x, t) dif mu(x)$ is differentiable on $I$ and
+  $
+  F'(t) = integral_X frac(partial, partial t) f(x, t) dif mu(x).
+  $
+]
+
+#note[
+  *Comparison of MCT and LDCT*:
+  - MCT requires monotonicity but no dominating function; it applies only to non-negative functions.
+  - LDCT requires a dominating function but no monotonicity; it applies to general integrable functions.
+  - Fatou's Lemma is the weakest in hypotheses but gives only an inequality.
+]
+
+=== Uniform Integrability and Vitali Convergence // 一致可积与 Vitali 收敛定理
+
+// 一致可积与等度绝对连续是 Vitali 收敛定理的核心概念
+We now introduce two closely related concepts that generalize the domination condition in LDCT.
+
+#definition(name: "Uniform Integrability")[
+  Let $(X, cal(S), mu)$ be a measure space. A family of measurable functions ${f_i}_(i in I)$ is called *uniformly integrable* if
+  $
+  lim_(M -> infinity) sup_(i in I) integral_({|f_i| > M}) |f_i| dif mu = 0.
+  $
+]
+
+#definition(name: "Equi-absolute Continuity of Integrals")[
+  Let $(X, cal(S), mu)$ be a measure space. A family of integrable functions ${f_i}_(i in I)$ is said to have *equi-absolutely continuous integrals* (or to be *equi-integrable*) if for every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A$ with $mu(A) < delta$,
+  $
+  sup_(i in I) integral_A |f_i| dif mu < epsilon.
+  $
+]
+
+#note[
+  *Comparison of the two concepts*:
+  - *Uniform integrability* controls the "tail" at large values: the integral over the set where $|f_i|$ is large becomes uniformly small.
+  - *Equi-absolute continuity* controls the integral over "small sets": the integral over any set of small measure is uniformly small.
+  - On a finite measure space, the two concepts are closely related but not identical without an additional boundedness condition.
+]
+
+#proposition(name: "Equivalence on Finite Measure Spaces")[
+  Let $(X, cal(S), mu)$ be a finite measure space and ${f_n}$ a sequence of integrable functions. Then the following are equivalent:
+  + ${f_n}$ is uniformly integrable.
+  + ${f_n}$ has equi-absolutely continuous integrals and $sup_n integral_X |f_n| dif mu < infinity$.
+]
+
+#proof[
+  $(1) => (2)$: Suppose ${f_n}$ is uniformly integrable. For any $epsilon > 0$, choose $M$ such that $sup_n integral_({|f_n| > M}) |f_n| dif mu < epsilon / 2$. Then for any measurable set $A$ with $mu(A) < delta := epsilon / (2 M)$:
+  $
+  integral_A |f_n| dif mu = integral_(A inter {|f_n| <= M}) |f_n| dif mu + integral_(A inter {|f_n| > M}) |f_n| dif mu <= M mu(A) + epsilon / 2 < epsilon.
+  $
+  Also, $integral_X |f_n| dif mu <= M mu(X) + sup_n integral_({|f_n| > M}) |f_n| dif mu < infinity$.
+
+  $(2) => (1)$: Suppose ${f_n}$ has equi-absolutely continuous integrals and $C := sup_n integral_X |f_n| dif mu < infinity$. By Chebyshev's inequality, $mu({|f_n| > M}) <= C / M$. For any $epsilon > 0$, choose $delta$ from equi-absolute continuity, then choose $M$ large enough so that $C / M < delta$. Then $mu({|f_n| > M}) < delta$, hence $sup_n integral_({|f_n| > M}) |f_n| dif mu < epsilon$.
+]
+
+#example[
+  *Uniform integrability does not imply uniform boundedness*: On $([0,1], cal(L), m)$, let $f_n = n chi_([0, 1\/n^2])$. Then $integral |f_n| = 1 / n -> 0$ and ${f_n}$ is uniformly integrable (since $integral_({f_n > M}) f_n dif m -> 0$ uniformly), but $sup_x |f_n (x)| = n -> infinity$.
+]
+
+#example[
+  *LDCT implies uniform integrability*: If $|f_n| <= g in L^1$ for all $n$, then ${f_n}$ is uniformly integrable. Indeed, $integral_({|f_n| > M}) |f_n| dif mu <= integral_({g > M}) g dif mu -> 0$ as $M -> infinity$, independent of $n$.
+]
+
+#v(0.5em)
+// Vitali 收敛定理是 LDCT 的真正推广
+The Vitali Convergence Theorem generalizes LDCT by replacing the single dominating function with the weaker condition of uniform integrability.
+
+#theorem(name: "Vitali Convergence Theorem")[
+  Let $(X, cal(S), mu)$ be a finite measure space and $f_n: X -> overline(bb(R))$ be a sequence of integrable functions. Suppose:
+  + $f_n (x) -> f(x)$ in measure (or a.e.).
+  + ${f_n}$ is uniformly integrable.
+  Then $f in L^1 (X, mu)$ and
+  $
+  lim_(n->infinity) integral_X |f_n - f| dif mu = 0.
+  $
+  In particular, $lim_(n->infinity) integral_X f_n dif mu = integral_X f dif mu$.
+]
+
+#proof[
+  We show $integral_X |f_n - f| dif mu -> 0$. Fix $epsilon > 0$.
+
+  *Step 1*: By uniform integrability, choose $M > 0$ such that $sup_n integral_({|f_n| > M}) |f_n| dif mu < epsilon / 4$.
+
+  *Step 2*: By equi-absolute continuity (which follows from uniform integrability on a finite measure space), choose $delta > 0$ such that $mu(A) < delta$ implies $sup_n integral_A |f_n| dif mu < epsilon / 4$.
+
+  *Step 3*: Since $f_n -> f$ in measure, by Egorov's theorem there exists a set $E$ with $mu(X backslash E) < delta$ such that $f_n -> f$ uniformly on $E$. Choose $N$ such that for $n >= N$, $|f_n (x) - f(x)| < epsilon / (2 mu(X))$ for all $x in E$.
+
+  *Step 4*: For $n >= N$:
+  $
+  integral_X |f_n - f| dif mu = integral_E |f_n - f| dif mu + integral_(X backslash E) |f_n - f| dif mu.
+  $
+  The first term is bounded by $epsilon / 2$. For the second term, by Fatou's lemma applied to $|f|$ and the equi-absolute continuity:
+  $
+  integral_(X backslash E) |f_n - f| dif mu <= integral_(X backslash E) |f_n| dif mu + integral_(X backslash E) |f| dif mu < epsilon / 4 + epsilon / 4 = epsilon / 2.
+  $
+  Hence $integral_X |f_n - f| dif mu < epsilon$.
+]
+
+#note[
+  *Vitali vs. LDCT*: The Vitali Convergence Theorem is strictly more general than LDCT on finite measure spaces. The condition $|f_n| <= g in L^1$ implies uniform integrability, but uniform integrability does not require a single dominating function. This is particularly useful in probability theory and in situations where the "envelope" of the sequence is not integrable but the sequence still has controlled tails.
+]
+
+#example[
+  *Vitali applies but LDCT does not*: On $([0,1], cal(L), m)$, let $f_n = n^(1\/2) chi_([0, 1\/n])$. Then $f_n -> 0$ a.e. and $integral |f_n| = n^(-1\/2) -> 0$. The family ${f_n}$ is uniformly integrable (since $integral_({f_n > M}) f_n dif m <= n^(-1\/2) -> 0$), so Vitali's theorem applies. However, there is no single integrable function $g$ dominating all $f_n$, since $sup_n f_n (x) = infinity$ on a set of positive measure near $0$.
+]
+
+== Relation to Riemann Integral // 与黎曼积分的关系
+
+// 本节聚焦于 Riemann 积分与 Lebesgue 积分的关系，不重复 Riemann 积分的定义（见数学分析笔记）。
+This section focuses on the relationship between the Riemann integral and the Lebesgue integral. We assume familiarity with the Riemann integral as defined via Darboux upper and lower sums on bounded closed intervals.
+
+=== Riemann Integrability Implies Lebesgue Integrability // Riemann 可积蕴含 Lebesgue 可积
+
+#theorem(name: "Riemann Integrable Implies Lebesgue Integrable")[
+  Let $f: [a, b] -> bb(R)$ be a bounded function. If $f$ is Riemann integrable on $[a, b]$, then $f$ is Lebesgue integrable on $[a, b]$, and the two integrals coincide:
+  $
+  (R) integral_a^b f(x) dif x = (L) integral_([a,b]) f dif m.
+  $
+]
+
+#proof[
+  Let $P_n = {a = x_0 < x_1 < dots < x_(k_n) = b}$ be a sequence of partitions with mesh $|P_n| -> 0$. Define the lower and upper step functions:
+  $
+  l_n (x) = inf_(x in [x_(i-1), x_i]) f(x), quad u_n (x) = sup_(x in [x_(i-1), x_i]) f(x)
+  $
+  on each subinterval $(x_(i-1), x_i)$.
+
+  Then $l_n$ and $u_n$ are measurable simple functions satisfying $l_n <= f <= u_n$ a.e. By refining partitions, we may assume $l_n <= l_(n+1)$ and $u_n >= u_(n+1)$.
+
+  Let $l = lim_(n->infinity) l_n$ and $u = lim_(n->infinity) u_n$. By the Monotone Convergence Theorem:
+  $
+  integral_([a,b]) l dif m = lim_(n->infinity) integral_([a,b]) l_n dif m = lim_(n->infinity) L(f, P_n) = (R) integral_a^b f dif x,
+  $
+  and similarly $integral_([a,b]) u dif m = (R) integral_a^b f dif x$.
+
+  Since $l <= f <= u$ a.e. and $integral l = integral u$, we conclude $f = l = u$ a.e., hence $f$ is measurable and Lebesgue integrable with $integral_([a,b]) f dif m = (R) integral_a^b f dif x$.
+]
+
+#note[
+  The converse is false: a Lebesgue integrable function need not be Riemann integrable. The Dirichlet function $chi_(bb(Q) inter [0,1])$ is Lebesgue integrable (with integral $0$) but not Riemann integrable.
+]
+
+=== Lebesgue's Criterion // Lebesgue 判据
+
+// Lebesgue 判据的完整证明见数学分析笔记，这里仅陈述结论并从测度论视角解读。
+The following characterization of Riemann integrability is proved in classical analysis (see the Analyse Mathématique notes). We state it here for reference and interpret it from the measure-theoretic viewpoint.
+
+#theorem(name: "Lebesgue's Criterion for Riemann Integrability")[
+  Let $f: [a, b] -> bb(R)$ be a bounded function, and let $D_f = {x in [a, b] : f "is discontinuous at" x}$ denote the set of discontinuity points of $f$. Then
+  $
+  f "is Riemann integrable on" [a, b] <==> m(D_f) = 0.
+  $
+]
+
+#note[
+  From the measure-theoretic perspective, this criterion says: a bounded measurable function on $[a, b]$ is Riemann integrable if and only if it is "almost continuous" (continuous except on a null set). This explains why the Lebesgue integral is strictly more general — it can integrate any bounded measurable function, regardless of the size of its discontinuity set.
+]
+
+#example[
+  *Thomae's function* (the Riemann function) $f: [0,1] -> bb(R)$ defined by $f(p\/q) = 1\/q$ for $p\/q$ in lowest terms and $f(x) = 0$ for $x in.not bb(Q)$. Its discontinuity set is $D_f = bb(Q) inter [0,1]$, which is countable and hence has measure zero. By Lebesgue's criterion, $f$ is Riemann integrable.
+]
+
+#example[
+  *Dirichlet's function* $chi_(bb(Q) inter [0,1])$ is discontinuous everywhere, so $D_f = [0,1]$ and $m(D_f) = 1 != 0$. Hence it is not Riemann integrable. However, since $bb(Q) inter [0,1]$ is a null set, $chi_(bb(Q) inter [0,1]) = 0$ a.e., so it is Lebesgue integrable with $(L) integral_([0,1]) chi_(bb(Q)) dif m = 0$.
+]
+
+=== Improper Riemann Integrals // 反常 Riemann 积分
+
+// 反常积分与 Lebesgue 积分的关系更为微妙：绝对收敛时一致，条件收敛时不一致。
+The relationship between improper Riemann integrals and Lebesgue integrals is more subtle. The key distinction is that the Lebesgue integral requires absolute integrability.
+
+#theorem(name: "Absolutely Convergent Improper Integrals")[
+  Let $f: [a, infinity) -> bb(R)$ be locally Riemann integrable (i.e., Riemann integrable on every $[a, b]$). If the improper integral converges absolutely:
+  $
+  (R) integral_a^infinity |f(x)| dif x < infinity,
+  $
+  then $f in L^1 ([a, infinity), m)$ and
+  $
+  (L) integral_([a, infinity)) f dif m = lim_(b -> infinity) (R) integral_a^b f(x) dif x.
+  $
+]
+
+#proof[
+  For each $n in bb(N)$, define $f_n = f dot chi_([a, a+n])$. Then $f_n$ is Riemann integrable on $[a, a+n]$, hence Lebesgue integrable, and $|f_n| <= |f|$ with $f_n -> f$ pointwise.
+
+  Since $(R) integral_a^infinity |f| dif x < infinity$, the function $|f|$ is Lebesgue integrable (by the same argument applied to $|f_n| arrow.t |f|$ and MCT). By the Dominated Convergence Theorem applied to $f_n$ with dominating function $|f| in L^1$:
+  $
+  (L) integral_([a,infinity)) f dif m = lim_(n->infinity) integral_([a, a+n]) f dif m = lim_(n->infinity) (R) integral_a^(a+n) f(x) dif x.
+  $
+]
+
+#caution(title: "Conditional Convergence")[
+  If the improper Riemann integral converges only conditionally (not absolutely), then $f in.not L^1$ and the Lebesgue integral does not exist. The Lebesgue integral is inherently an "absolute" integral.
+]
+
+#example[
+  The function $f(x) = (sin x) / x$ on $[1, infinity)$ satisfies:
+  $
+  (R) integral_1^infinity frac(sin x, x) dif x "converges" quad "but" quad (R) integral_1^infinity frac(|sin x|, x) dif x = infinity.
+  $
+  Therefore $(sin x) / x in.not L^1 ([1, infinity))$, and the Lebesgue integral $(L) integral_([1,infinity)) (sin x) / x dif m$ does not exist. The improper Riemann integral captures a cancellation phenomenon that the Lebesgue integral cannot express.
+]
+
+=== Comparison Summary // 对比总结
+
+#tex-table(
+  ("Aspect", "Riemann Integral", "Lebesgue Integral"),
+  ("Domain", "Bounded closed intervals", "General measure spaces"),
+  ("Integrand", "Bounded functions", [Measurable; $f in L^1$ suffices]),
+  ("Limit interchange", "Requires uniform convergence", "MCT, Fatou, DCT, Vitali"),
+  ([Completeness of $L^1$], "No", "Yes"),
+  ("Conditional convergence", "Allowed (improper)", "Not allowed (absolute only)"),
+  ("Discontinuities", [Riemann integrable $<=>$ $m(D_f) = 0$], "Any measurable function"),
+)
+
+#note[
+  In summary, the Lebesgue integral strictly generalizes the Riemann integral for bounded functions on bounded intervals. Its main advantages are: (1) much more powerful limit-interchange theorems, (2) completeness of $L^p$ spaces, and (3) applicability to general measure spaces. The price paid is the loss of conditional convergence — the Lebesgue integral is fundamentally an absolute integral.
+]
+
+== Product Measure and Fubini's Theorem// 乘积测度与Fubini定理
+
+= Differential and Integral // 微分与积分
+== Jump Functions and Dini Derivatives // 跳跃函数与 Dini 导数
+
+// 导语：当导数尚未存在时，如何用更弱的局部斜率信息描述函数行为
+// 本节是后面单调函数、Vitali 引理、绝对连续性的准备。
+
+The theory of differentiation relies, at its core, on understanding how a function behaves locally. When a function is differentiable at a point, its derivative provides complete first-order local information. But what happens when the derivative does not exist? The following concepts — jump functions and Dini derivatives — offer two complementary ways to describe local behavior in the absence of full differentiability. They serve as foundational tools for the study of monotone functions, the Vitali covering lemma, and absolute continuity in the subsequent sections.
+
+=== Jump Functions // 跳跃函数
+
+// 跳跃函数是最简单的局部非光滑模型，代表"有断裂但仍可控"的行为
+
+Jump functions are the simplest type of function that exhibits controlled discontinuities. A function is said to have a *jump* at a point if its left and right limits exist but differ.
+
+#definition(name: "Jump Function (Saltus Function)")[
+  A function $f: [a, b] -> bb(R)$ is called a *jump function* (or *saltus function*) if it is right-continuous with left limits (a *cadlag* function) and its discontinuities are all jump discontinuities. For each $x in [a, b]$, define the *jump size* at $x$ as
+  $
+  j_f (x) = f(x^+) - f(x^-),
+  $
+  where $f(x^+) = lim_(h -> 0^+) f(x + h)$ and $f(x^-) = lim_(h -> 0^+) f(x - h)$ (with the convention $f(a^-) = f(a)$ and $f(b^+) = f(b)$). The function $f$ is continuous at $x$ if and only if $j_f (x) = 0$.
+]
+
+#example[
+  The *Heaviside step function*
+  $
+  H(x) = cases(0 & "if" x < 0, 1 & "if" x >= 0)
+  $
+  has a single jump at $x = 0$ with jump size $j_H(0) = 1$. It is the prototypical example of a jump function: piecewise constant, with one point of discontinuity where the function jumps from one value to another.
+]
+
+#note[
+  Jump functions are intimately connected to two important classes of functions:
+  - *Monotone functions*: Every monotone function on $[a, b]$ has at most countably many jump discontinuities. The sum of its jump sizes is bounded by $|f(b) - f(a)|$.
+  - *Functions of bounded variation (BV)*: Every BV function can be decomposed uniquely as the sum of an absolutely continuous part, a jump part (a pure jump function), and a singular part (the Lebesgue decomposition of the distributional derivative).
+]
+
+=== Dini Derivatives // Dini 导数
+
+// Dini 导数的四个版本：上下左右
+
+When a function is not differentiable at a point, we can still extract useful local slope information by considering the limsup and liminf of difference quotients. The four *Dini derivatives* capture exactly this information.
+
+#definition(name: "Dini Derivatives")[
+  Let $f: [a, b] -> bb(R)$ be a function. For $x in (a, b)$, define the four Dini derivatives:
+
+  *Upper right Dini derivative:*
+  $ D^+ f(x) = limsup_(h -> 0^+) (f(x + h) - f(x)) / h, $
+
+  *Lower right Dini derivative:*
+  $ D_+ f(x) = liminf_(h -> 0^+) (f(x + h) - f(x)) / h, $
+
+  *Upper left Dini derivative:*
+  $ D^- f(x) = limsup_(h -> 0^-) (f(x + h) - f(x)) / h, $
+
+  *Lower left Dini derivative:*
+  $ D_- f(x) = liminf_(h -> 0^-) (f(x + h) - f(x)) / h, $
+
+  where $h -> 0^-$ means $h$ approaches $0$ from below. For convenience, we also write $overline(D) f(x) = D^+ f(x)$ and $underline(D) f(x) = D_+ f(x)$ for the upper and lower derivatives (right-sided).
+]
+
+#note[
+  *Relationship with the ordinary derivative*:
+  - If $f$ is differentiable at $x$, then all four Dini derivatives coincide with $f'(x)$:
+    $ D^+ f(x) = D_+ f(x) = D^- f(x) = D_- f(x) = f'(x). $
+  - Conversely, if all four Dini derivatives exist and are equal (as finite numbers), then $f$ is differentiable at $x$ with that common value.
+  - The key advantage of Dini derivatives is that they *always exist* (as extended real numbers) for any function, whereas the ordinary derivative may not.
+]
+
+#example[
+  Consider $f(x) = |x| sin(1 / x)$ for $x != 0$ and $f(0) = 0$. This function is not differentiable at $x = 0$ because the difference quotient $(f(h) - f(0)) / h = |h| sin(1 / h) / h = "sgn"(h) sin(1 / h)$ oscillates between $-1$ and $1$ as $h -> 0$. However, the Dini derivatives at $0$ exist:
+  $
+  D^+ f(0) = 1, quad D_+ f(0) = -1, quad D^- f(0) = 1, quad D_- f(0) = -1.
+  $
+  The Dini derivatives capture the extremal slopes of the oscillations even though the ordinary derivative does not exist.
+]
+
+=== Local Behavior via Dini Derivatives // Dini 导数的局部性质
+
+// 过渡：Dini 导数是分析单调性、局部 Lipschitz 性和可微性的工具
+
+Dini derivatives serve as a versatile tool for extracting local information about a function's behavior without requiring full differentiability. The following observations illustrate their role:
+
+#note[
+  - *Monotonicity*: A function $f$ is non-decreasing on $[a, b]$ if and only if $D_+ f(x) >= 0$ for all $x in (a, b)$. Similarly, $f$ is non-increasing if and only if $D^+ f(x) <= 0$ for all $x$.
+  
+  - *Local Lipschitz property*: If all four Dini derivatives are uniformly bounded on $[a, b]$, then $f$ is Lipschitz continuous on $[a, b]$.
+  
+  - *Differentiability a.e.*: For monotone functions, the Dini derivatives satisfy $D^+ f(x) = D_- f(x)$ a.e. and $D_+ f(x) = D^- f(x)$ a.e. This symmetry is the first step toward proving that monotone functions are differentiable almost everywhere — a result that will be established through the Vitali covering lemma in the next section.
+]
+
+These properties highlight the central role of Dini derivatives: they provide a way to reason about differentiability and growth without assuming the derivative exists. The challenge, however, is that Dini derivatives are only pointwise quantities — to translate their local information into global (or almost everywhere) conclusions, we need a covering argument. This is precisely where the Vitali covering lemma comes in.
+
+#v(0.5em)
+// 过渡段：Dini 导数解决"局部斜率怎么看"，Vitali 覆盖解决"如何把局部信息提升成几乎处处结论"
+Dini derivatives tell us how to measure local slopes; the Vitali covering lemma tells us how to lift these local measurements to almost-everywhere conclusions. Together, they form the backbone of the classical theory of differentiation. We now turn to the Vitali covering lemma and its applications.
+
+== Vitali Coverings and the Vitali Lemma // Vitali 覆盖与 Vitali 引理
+
+// Motivation: 为什么需要覆盖引理
+// Dini 导数只提供逐点信息，要得到几乎处处结论，需要一种把"任意小区间"的局部信息
+// 汇集为全局信息的技术手段。
+
+Dini derivatives give us pointwise information about a function's local slope, but converting this into almost-everywhere conclusions requires a covering argument. The prototypical scenario is this: let $f$ be an increasing function on $[a, b]$, and suppose at each point $x$ in a set $E$ we know $D^+ f(x) > t$. We would like to bound $|f(b) - f(a)|$ from below by $t dot m(E)$. To do this, for each $x in E$ we pick a small interval $[x, x + h]$ (or $[x - h, x]$) where the difference quotient $(f(x + h) - f(x))/h$ exceeds $t$, then select a disjoint subfamily of these intervals and sum their lengths. The Vitali covering lemma turns this intuition into a rigorous tool.
+
+#note[
+  *Why a covering lemma?* Three key observations:
+  - We need a family of arbitrarily small intervals covering *every* point of $E$ (a *Vitali covering*).
+  - From this family we must extract a disjoint subcollection whose total length approximates the measure of $E$.
+  - This same pattern — cover, extract, estimate — recurs throughout real analysis: Lebesgue density theorem, a.e. differentiability, differentiation of integrals.
+]
+
+=== Vitali Coverings // Vitali 覆盖
+
+#definition(name: "Vitali Covering")[
+  Let $E subset bb(R)$ and let $cal(V)$ be a collection of closed intervals in $bb(R)$. We say that $cal(V)$ is a *Vitali covering* of $E$ if for every $x in E$ and every $epsilon > 0$, there exists $I in cal(V)$ such that $x in I$ and $|I| < epsilon$.
+  In other words, the collection $cal(V)$ contains intervals of arbitrarily small length that contain $x$.
+]
+
+#example[
+  Consider $E = [0, 1]$ and let $cal(V) = {(x - delta, x + delta) : x in [0, 1], delta > 0}$. This is a Vitali covering of $[0, 1]$: every point $x$ is contained in intervals of every positive length.
+]
+
+#example[
+  Let $cal(V) = {[k 2^(-n), (k+1) 2^(-n)] : n in bb(N), 0 <= k < 2^n}$ be the family of all dyadic intervals. Then $cal(V)$ is *not* a Vitali covering of $[0, 1]$. Although the intervals become arbitrarily small, at the point $x = 1/3$ (which has a non-terminating binary expansion) there is no dyadic interval that contains $1/3$ as an interior point — the dyadic grid does not align with every point.
+]
+
+=== Vitali Covering Lemma // Vitali 覆盖引理
+
+// Vitali 覆盖引理是本节的核心理论工具
+// 采用"二合一"版本：先给出可数/有限版本，再给出有限近似版本
+
+#theorem(name: "Vitali Covering Lemma")[
+  Let $E subset bb(R)$ with $m^*(E) < infinity$ and let $cal(V)$ be a Vitali covering of $E$. Then there exists a finite or countable disjoint subcollection ${I_k} subset.eq cal(V)$ such that
+
+  $
+  m^*(E backslash union.big_k I_k) = 0.
+  $
+
+  Equivalently, for every $epsilon > 0$, there exists a *finite* disjoint subcollection ${I_1, ..., I_N} subset.eq cal(V)$ satisfying
+
+  $
+  m^*(E backslash union.big_(k=1)^N I_k) < epsilon.
+  $
+]
+
+#proof[
+  *Step 1: Restrict to a bounded open set.*
+  Since $m^*(E) < infinity$, there exists an open set $U$ such that $E subset U$ and $m(U) < infinity$. Discard all intervals of $cal(V)$ that are not contained in $U$; the remaining collection, call it $cal(V)_0$, is still a Vitali covering of $E$ (for each $x in E$, take an interval small enough to lie inside $U$).
+
+  *Step 2: Greedy selection.*
+  Define a size function on intervals: $r(I) = |I|$. Let $I_1 in cal(V)_0$ be any interval such that $r(I_1) > 1/2 sup{r(I) : I in cal(V)_0}$.
+
+  Having chosen $I_1, ..., I_n$, let
+  $
+  cal(V)_n = {I in cal(V)_0 : I inter (union.big_(k=1)^n I_k) = emptyset}.
+  $
+  If $cal(V)_n != emptyset$, choose $I_(n+1) in cal(V)_n$ such that
+  $
+  r(I_(n+1)) > 1/2 sup{r(I) : I in cal(V)_n}.
+  $
+  If $cal(V)_n = emptyset$ for some $n$, then every point of $E$ lies in some $I_k$ ($k <= n$) and the lemma is proved. Otherwise we obtain an infinite sequence of disjoint intervals ${I_k}$.
+
+  *Step 3: The total length is finite.*
+  Since all intervals are disjoint and contained in $U$, we have
+  $
+  sum_(k=1)^infinity |I_k| <= m(U) < infinity.
+  $
+  In particular, $|I_k| -> 0$ as $k -> infinity$ and the tail sums $sum_(k=N+1)^infinity |I_k| -> 0$.
+
+  *Step 4: The dilation trick.*
+  For each chosen interval $I_k$, let $J_k$ be the closed interval concentric with $I_k$ but with five times the length: $|J_k| = 5 |I_k|$. We claim that
+  $
+  E backslash union.big_(k=1)^infinity I_k subset union.big_(k=1)^infinity J_k.
+  $
+
+  To see this, take any $x in E backslash union.big_k I_k$. Since $cal(V)_0$ is a Vitali covering, there exists $I in cal(V)_0$ such that $x in I$. Because $x$ does not belong to any $I_k$, the interval $I$ must intersect at least one selected $I_k$ (otherwise it would have been eligible for selection at every step, contradicting the greedy maximality). Let $N$ be the smallest index such that $I inter I_N != emptyset$.
+
+  *Why $N$ is the first intersecting index:* By the greedy selection rule, when $I_N$ was chosen, we had $r(I_N) > 1/2 sup{r(J) : J in cal(V)_(N-1)}$. Since $I in cal(V)_(N-1)$ (it does not intersect $I_1, ..., I_(N-1)$ by minimality of $N$), we have $r(I) <= 2 r(I_N)$.
+
+  Now compare the positions of $I$ and $I_N$. Since they intersect and $|I| <= 2 |I_N|$, a simple geometric argument shows that $I subset J_N$ (the 5-times concentric dilation of $I_N$). Hence $x in J_N$, establishing the claim.
+
+  *Step 5: Measure estimate.*
+  For any $N$,
+  $
+  m^*(E backslash union.big_(k=1)^N I_k) <= sum_(k=N+1)^infinity |J_k| = 5 sum_(k=N+1)^infinity |I_k|.
+  $
+  Since the tail sum tends to $0$, letting $N -> infinity$ gives $m^*(E backslash union.big_k I_k) = 0$ (the infinite version). For the finite version, given $epsilon > 0$, choose $N$ large enough so that $5 sum_(k=N+1)^infinity |I_k| < epsilon$; then ${I_1, ..., I_N}$ is the desired finite subcollection.
+]
+
+#note[
+  *The key idea*: The greedy selection ensures that each chosen interval $I_k$ is "large" relative to every unchosen interval near it. Passing over an interval means it must be "close" to some previously chosen one, and the 5-times dilation captures all such overlooked intervals. The disjointness of the chosen intervals keeps their total measure under control, so the measure of what is missed by the first $N$ intervals shrinks to zero.
+]
+
+=== Forward-Looking Remarks // 前瞻
+
+#note[
+  The Vitali Covering Lemma is the engine behind three fundamental results that follow:
+  - *Lebesgue Density Theorem*: Almost every point of a measurable set is a density point.
+  - *Differentiability of Monotone Functions*: A monotone function on $[a, b]$ is differentiable a.e. — proved by applying Vitali to the sets where the Dini derivatives differ.
+  - *Lebesgue Differentiation Theorem*: For $f in L^1_("loc")(bb(R))$,
+    $lim_(r -> 0) 1/(2 r) integral_(x-r)^(x+r) f(t) dif t = f(x)$ for a.e. $x$.
+
+  In this chapter, we will primarily use it to establish the a.e. differentiability of monotone functions, from which the remaining theory (BV decomposition, Newton-Leibniz formula) follows.
+]
+
+#v(0.5em)
+With the Vitali covering lemma in hand, we can now return to the question left open in the previous section: are monotone functions differentiable almost everywhere? The answer is yes, and the lemma provides the precise covering argument needed.
+
+== Monotone Functions on Closed Intervals // 闭区间上的单调函数
+
+== Functions of Bounded Variation and Absolute Continuity // 有界变差函数与绝对连续函数
+
+== Absolute Continuity and the Newton-Leibniz Formula // 绝对连续性与 Newton-Leibniz 公式
 
 #part("Function Spaces") // 函数空间
-#include "chapters/FunctionSpaces.typ"
+
 
 #part("Differentiation Theory") // 微分理论 
-#include "chapters/Differentiation.typ"
+
 
 *只有被引用的章节才会被编译和显示在目录中，因此如果你想要显示某个章节，请确保在主文件中正确引用了它。*
 refer to @zhou2016

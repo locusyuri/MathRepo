@@ -19,7 +19,6 @@ Bilingual (English/Chinese) mathematics notes repository. Typst is the primary a
   initial.typ          # Entrypoint (only compile target)
   initial.pdf          # Generated PDF (same directory)
   references.bib       # Bibliography (optional)
-  chapters/            # Chapter source files
   img/                 # Images
   tmp/                 # Build cache (legacy)
 ```
@@ -28,7 +27,6 @@ Bilingual (English/Chinese) mathematics notes repository. Typst is the primary a
   ```typst
   #import "../../TypstTemplate/math-notes.typ": *
   ```
-- Group content with `#part("Title")`, include chapters with `#include "chapters/...typ"`.
 
 ## Content Conventions
 
@@ -45,7 +43,7 @@ Bilingual (English/Chinese) mathematics notes repository. Typst is the primary a
   | `#exercise` | Practice problems |
 - **Typography**: Follow `.agent/Typst.md` for Typst syntax, `.agent/Gen_Content.md` for directory structure generation.
 - **Cross-references**: Use `@label-name` tags.
-- **Edits**: Keep changes local to the active subject and its directly included files.
+- **Edits**: Keep changes local to the active subject's `initial.typ`.
 
 ## Available Skills
 
