@@ -862,7 +862,7 @@ When solving electrostatic problems involving conductors:
 == Polarization and Bound Charges // 极化与束缚电荷
 // 电极化强度、束缚电荷密度、电介质的极化机制
 
-Electric dielectrics (电介质) are insulating materials that respond to an external electric field by developing an internal polarization. Unlike conductors, they contain no free charges, but their bound charges can shift slightly, creating microscopic dipoles.
+Electric dielectrics are insulating materials that respond to an external electric field by developing an internal polarization. Unlike conductors, they contain no free charges, but their bound charges can shift slightly, creating microscopic dipoles.
 
 === Polarization Vector // 电极化强度
 
@@ -876,18 +876,18 @@ Electric dielectrics (电介质) are insulating materials that respond to an ext
   $
     bold(P) = epsilon_0 chi_e bold(E),
   $
-  where $chi_e$ is the *electric susceptibility* (电极化率), a dimensionless material constant.
+  where $chi_e$ is the *electric susceptibility*, a dimensionless material constant.
 ]
 
 #property(name: "Dielectric Constant")[
-  The *relative permittivity* (介电常数) is defined as $epsilon_r = 1 + chi_e$.
+  The *relative permittivity* is defined as $epsilon_r = 1 + chi_e$.
   The absolute permittivity is $epsilon = epsilon_0 epsilon_r = epsilon_0 (1 + chi_e)$.
   For vacuum: $chi_e = 0$, $epsilon_r = 1$. For typical dielectrics: $1 < epsilon_r <= 100$.
 ]
 
 === Bound Charge Densities // 束缚电荷密度
 
-When a dielectric is polarized, the displacement of bound charges produces effective charge distributions. These are called *bound charges* (束缚电荷), as opposed to *free charges* (自由电荷) that can move freely through a conductor.
+When a dielectric is polarized, the displacement of bound charges produces effective charge distributions. These are called *bound charges*, as opposed to *free charges* that can move freely through a conductor.
 
 #theorem(name: "Bound Volume Charge Density")[
   The bound volume charge density is the negative divergence of the polarization:
@@ -1348,6 +1348,124 @@ When current flows through a conductor, the electric field does work on the movi
 ]
 // 洛伦兹力、磁感应强度的定义、比奥-萨伐尔定律及其应用
 == Lorentz Force and Biot-Savart Law // 洛伦兹力与比奥-萨伐尔定律
+
+Having established the source of magnetostatic fields in section §6.1 (steady currents), we now turn to the field itself. This section introduces the magnetic field $bold(B)$ through its defining force law and the integral law that allows us to compute $bold(B)$ from a given current distribution. The structure parallels §3.2 (Electric Field Intensity) in electrostatics.
+
+=== Lorentz Force and the Magnetic Field // 洛伦兹力与磁场
+
+Just as the electric field $bold(E)$ was defined via the force on a stationary test charge, the magnetic field $bold(B)$ is defined via the force on a moving charge. Unlike electrostatic forces, magnetic forces depend on the velocity of the test charge and are always perpendicular to it.
+
+#law(name: "Lorentz Force")[
+  The total electromagnetic force on a point charge $q$ moving with velocity $bold(v)$ in an electric field $bold(E)$ and magnetic field $bold(B)$ is:
+  $
+    bold(F) = q (bold(E) + bold(v) times bold(B)).
+  $
+  The term $bold(F)_m = q bold(v) times bold(B)$ is the *magnetic Lorentz force*. In magnetostatics (where $bold(E) = bold(0)$), this reduces to:
+  $
+    bold(F) = q bold(v) times bold(B).
+  $
+]
+
+From the Lorentz force law, we can define the magnetic field $bold(B)$ operationally: for a known test charge $q$ and a measured force at a given velocity, $bold(B)$ is the unique vector satisfying $bold(F)_m = q bold(v) times bold(B)$.
+
+#definition(name: "Magnetic Field Intensity")[
+  The *magnetic flux density* $bold(B)$ is defined by the magnetic force on a moving charge:
+  $
+    |bold(B)| = frac(F_m, q v sin theta),
+  $
+  where $theta$ is the angle between $bold(v)$ and $bold(B)$. The direction of $bold(B)$ is perpendicular to both $bold(v)$ and $bold(F)_m$, following the right-hand rule.
+
+  The SI unit of $bold(B)$ is the *tesla* (T):
+  $
+    1 "T" = 1 frac("N", "A" dot "m") = 1 frac("kg", "s"^2 dot "A").
+  $
+  An alternative unit is the *gauss* (G): $1 "G" = 10^(-4) "T"$.
+]
+
+#note[
+  The magnetic force $q bold(v) times bold(B)$ is always perpendicular to the velocity $bold(v)$, so it does zero work on the particle:
+  $
+    frac(d W, d t) = bold(F)_m dot bold(v) = q (bold(v) times bold(B)) dot bold(v) = 0.
+  $
+  A magnetic field cannot change the speed (kinetic energy) of a charged particle — it can only change its direction of motion. This distinguishes magnetic forces from electric forces, which can do work and change the particle's energy.
+]
+
+#note[
+  The Lorentz force law is the operational definition of $bold(B)$ in the same way that $bold(F) = q bold(E)$ defines $bold(E)$. Together with Coulomb's law, it forms the complete description of how electromagnetic fields exert forces on charges — a fact that will be unified when we study the electromagnetic field tensor in §1.6.
+]
+
+=== Biot-Savart Law // 比奥-萨伐尔定律
+
+The Lorentz force tells us what $bold(B)$ does to a moving charge; we now need to know how $bold(B)$ is produced by currents. The fundamental law was discovered experimentally by Jean-Baptiste Biot and Félix Savart in 1820. It plays the same role in magnetostatics as Coulomb's law does in electrostatics: it gives the magnetic field produced by a known current distribution.
+
+#law(name: "Biot-Savart Law")[
+  The magnetic field at a point $bold(r)$ due to a steady line current $I$ flowing along a curve $L$ is:
+  $
+    bold(B)(bold(r)) = frac(mu_0, 4 pi) integral_L frac(I d bold(l)' times (bold(r) - bold(r)'), |bold(r) - bold(r)'|^3) = frac(mu_0, 4 pi) integral_L frac(I d bold(l)' times hat(bold(R)), R^2),
+  $
+  where $d bold(l)'$ is a differential element along the wire in the direction of the current, $bold(R) = bold(r) - bold(r)'$ is the vector from the source point $bold(r)'$ to the field point $bold(r)$, and $mu_0$ is the *permeability of free space*:
+  $
+    mu_0 = 4 pi times 10^(-7) "N" / "A"^2.
+  $
+]
+
+The Biot-Savart law obeys the superposition principle: the total field from multiple current elements is the vector sum of the individual contributions.
+
+#definition(name: "Biot-Savart Law — Continuous Distributions")[
+  For a volume current density $bold(J)$:
+  $
+    bold(B)(bold(r)) = frac(mu_0, 4 pi) integral_V frac(bold(J)(bold(r)') times hat(bold(R)), R^2) dif V'.
+  $
+  For a surface current density $bold(K)$:
+  $
+    bold(B)(bold(r)) = frac(mu_0, 4 pi) integral_S frac(bold(K)(bold(r)') times hat(bold(R)), R^2) dif S'.
+  $
+]
+
+#example(name: "Magnetic Field on the Axis of a Circular Loop")[
+  Consider a circular loop of radius $R$ carrying a steady current $I$, lying in the $x y$-plane with its centre at the origin. We compute the magnetic field at a point on the $z$-axis at height $z$.
+
+  By symmetry, the field points along the $z$-axis: $bold(B) = B_z(z) hat(bold(z))$. Each current element $I d bold(l)$ contributes a component $d B_z = (mu_0 / 4 pi) (I d l / r^2) sin psi$, where $psi$ is the angle between $d bold(l)$ and $bold(R)$. Since $d bold(l)$ is perpendicular to $bold(R)$ for $z$-axis points, $sin psi = 1$. The distance from each element to $P$ is $r = sqrt(R^2 + z^2)$, and the projection factor is $R / r$:
+  $
+    B_z(z) = frac(mu_0, 4 pi) integral_0^(2 pi R) frac(I d l, r^2) frac(R, r) = frac(mu_0, 4 pi) frac(I R, (R^2 + z^2)^(3/2)) integral_0^(2 pi R) d l.
+  $
+
+  Evaluating the integral:
+  $
+    B_z(z) = frac(mu_0 I R^2, 2 (R^2 + z^2)^(3/2)).
+  $
+
+  At the centre ($z = 0$): $B_z(0) = mu_0 I / (2 R)$. Far away ($|z| >> R$): $B_z(z) approx mu_0 I R^2 / (2 |z|^3)$, the field of a magnetic dipole.
+]
+
+#note[
+  The Biot-Savart law is a *volume law*: every current element contributes to the field at every point in space. In contrast, Ampère's law (to be introduced in §6.3) is a *boundary law* that is much more powerful when the current distribution has sufficient symmetry. This parallels the relationship between Coulomb's law and Gauss's law in electrostatics.
+]
+
+=== Magnetic Field Lines // 磁感线
+
+#definition(name: "Magnetic Field Lines")[
+  *Magnetic field lines* are curves drawn in space such that the tangent at every point is parallel to the direction of $bold(B)$ at that point. The density of lines in a region is proportional to the magnitude of the magnetic field.
+]
+
+#property(name: "Properties of Magnetic Field Lines")[
+  - They form closed loops — they have no beginning and no end.
+  - They never cross each other.
+  - Unlike electric field lines (which originate and terminate on charges), magnetic field lines are continuous: every line that enters a region must also leave it.
+  - The direction of the field at a point is given by the right-hand rule with respect to the current that produces it.
+]
+
+#note[
+  The fact that magnetic field lines form closed loops is the geometric expression of $nabla dot bold(B) = 0$ — the absence of magnetic monopoles. This is one of the four Maxwell's equations and distinguishes magnetism from electrostatics, where $nabla dot bold(E) = rho / epsilon_0$ implies field lines begin and end on charges.
+]
+
+#note[
+  *Key takeaways for magnetostatics:*
+  - The Lorentz force $q bold(v) times bold(B)$ defines the magnetic field $bold(B)$ operationally.
+  - The Biot-Savart law gives the integral relation between a steady current and the magnetic field it produces — the magnetostatic counterpart of Coulomb's law.
+  - Magnetic field lines are closed, reflecting $nabla dot bold(B) = 0$ and the absence of magnetic monopoles.
+  - The permeability $mu_0$ plays the same role in magnetostatics as $epsilon_0$ does in electrostatics.
+]
 
 // 安培环路定理（积分与微分形式）、磁场高斯定理、磁通量；对比静电学微分方程
 == Ampère's Law and Gauss's Law for Magnetism // 安培环路定理与磁场高斯定理
