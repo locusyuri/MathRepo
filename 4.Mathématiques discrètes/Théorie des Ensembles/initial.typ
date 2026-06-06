@@ -25,7 +25,7 @@
 Some notations are used throughout this book:
 
 - $bb(N)$: Set of natural numbers (including 0).
-- $bb(N)^* / bb(N)_+$: Set of natural numbers (excluding 0).
+- $bb(N)^* \/ bb(N)_+$: Set of natural numbers (excluding 0).
 - $bb(Z)$: Set of integers.
 - $bb(Q)$: Set of rational numbers.
 - $bb(R)$: Set of real numbers.
@@ -437,7 +437,7 @@ Ordinals can be classified into three types:
 = Cardinals
 
 == Cardinality
-
+=== Equinumerosity and Cardinality
 #definition(name: "Equinumerosity and Cardinality")[
   Two sets $A$ and $B$ are said to be *equinumerous* (or have the same cardinality), denoted by $A tilde B$, if there exists a bijection $f : A -> B$.
 
@@ -452,25 +452,51 @@ Ordinals can be classified into three types:
   - For any limit ordinal $lambda$, $aleph_lambda = sup{aleph_beta | beta < lambda}$.
 ]
 
-#theorem(name: "Cantor-Bernstein-Schröder Theorem")[
-  If there exist injections $f : A -> B$ and $g : B -> A$, then there exists a bijection $h : A -> B$.
-  In particular, $|A| = |B|$.
-]
+
 
 #definition(name: "Countable and Uncountable Sets")[
   A set $A$ is called *countable* if $|A| <= aleph_0$, i.e., there exists an injection from $A$ to $bb(N)$.
   A set is called *uncountable* if it is not countable, i.e., its cardinality is greater than $aleph_0$.
 ]
 
-#proposition[
-  1. The subsets of a countable set are countable.
-  2. The countable union of countable sets is countable.
-  3. Any infinite set contains a countable subset.
+#caution[
+  // 一些教材中要求可数集必须是无限集, 但我们这里认为有限集也是可数的.
+  In some textbooks, a countable set is defined as an infinite set that can be put into one-to-one correspondence with the natural numbers. However, in this book, we consider finite sets to be countable as well.
 ]
 
-#theorem(name: "Cantor's Theorem")[
-  For any set $A$, $|A| < |scr(P)(A)|$.
+#proposition[
+  + *$aleph_0$ is the smallest infinite cardinal*: Any infinite set contains a countable subset.
+  + *Character of infinite sets*: $A$ is infinite if and only if $A$ is equinumerous to a proper subset of itself.
+  + *Character of uncountable sets*: $A$ is uncountable if and only if $A$ is infinite and $A tilde B$ for every countable subset $B subset A$.
+  + *Cantor's Theorem*: $|A| < |scr(P)(A)|$ for any set $A$.
+  + *Countable union of countable sets*: The countable union of countable sets is countable.
 ]
+
+
+=== Cantor-Bernstein-Schröder Theorem
+
+#lemma(name: "Banach's Decomposition Lemma")[
+  Let $f: X -> Y$ and $g: Y -> X$ be mappings.
+  Then there exist disjoint decompositions of $X$ and $Y$:
+  $
+    X = A union overline(A), quad Y = B union overline(B),
+  $
+  such that $f(A) = B$, $g(B) = overline(A)$, $A inter overline(A) = emptyset$, and $B inter overline(B) = emptyset$.
+]
+
+#theorem(name: "Cantor-Bernstein-Schröder Theorem")[
+  If there exist injections $f : A -> B$ and $g : B -> A$, then there exists a bijection $h : A -> B$.
+  In other words, $|A| = |B|$.
+]
+
+
+#exercise[
+Prove:
++ If $A$ is countable and $B$ is infinite, then $A union B tilde B$.
++ $QQ$ is countable (in multiple ways).
++ $[0, 1]$, $[0, 1)$ are uncountable.
+]
+
 
 == Cardinal Arithmetic
 

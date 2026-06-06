@@ -28,21 +28,19 @@
 #part("Measure Theory") // 测度论
 = Lebesgue Measure
 == $sigma$-Algebra and Measure // Sigma 代数和测度
-#definition(name: "Algebra of Sets")[
-  Let $S$ be a non-empty set. A non-empty collection $cal(S)$ of subsets of $S$ (i.e., $cal(S) subset scr(P)(S) $) is called an *algebra of sets* on $S$ if it satisfies the following properties:
-    + $S subset cal(S)$;
-    + If $A in cal(S)$, then $S backslash A in cal(S)$;
-    + If $A_1, A_2, dots A_n in cal(S)$, then $union.big_(i=1)^n A_i in cal(S)$.
-]
-Obviously, an algebra of sets is closed under finite unions and finite intersections.
+#definition(name: "Ring and Algebra of Sets")[
+  Let $S$ be a non-empty set. A non-empty collection $cal(S)$ of subsets of $S$ (i.e., $cal(S) subset scr(P)(S)$) is called a *ring of sets* on $S$ if for any $A, B in cal(S)$, we have $A union B in cal(S)$ and $A - B in cal(S)$.
 
-#definition(name: "Sigma-Algebra")[
-  Let $S$ be a non-empty set. A non-empty collection $cal(S)$ of subsets of $S$ (i.e., $cal(S) subset scr(P)(S) $) is called a *$sigma$-algebra* on $S$ if it satisfies the following properties:
-    + $S subset cal(S)$;
-    + If $A in cal(S)$, then $S backslash A in cal(S)$;
-    + If $A_1, A_2, dots in cal(S)$, then $union.big_(i=1)^infinity A_i in cal(S)$.
+  If a ring $cal(S)$ additionally satisfies $S in cal(S)$, then $cal(S)$ is called an *algebra of sets* (or *field*) on $S$.
 ]
-Obviously, a sigma-algebra is closed under countable unions, countable intersections, and complements.
+Obviously, a ring of sets is closed under finite unions and finite differences. An algebra of sets is additionally closed under complements in $S$ and finite intersections.
+
+#definition(name: "Sigma-Ring and Sigma-Algebra of Sets")[
+  Let $S$ be a non-empty set. A non-empty collection $cal(S)$ of subsets of $S$ (i.e., $cal(S) subset scr(P)(S)$) is called a *$sigma$-ring of sets* on $S$ if for any $A, B in cal(S)$ we have $A - B in cal(S)$, and for any countable sequence $A_i in cal(S)$ $(i = 1, 2, dots)$, we have $union.big_(i=1)^infinity A_i in cal(S)$.
+
+  If a $sigma$-ring $cal(S)$ additionally satisfies $S in cal(S)$, then $cal(S)$ is called a *$sigma$-algebra of sets* (or *$sigma$-field*) on $S$.
+]
+Obviously, a sigma-ring is closed under countable unions and countable differences. A sigma-algebra is additionally closed under complements in $S$ and countable intersections.
 
 #note[
     $sigma$-algebra is the $sigma$-completion of algebra of sets. It inherits all the properties of algebra.
