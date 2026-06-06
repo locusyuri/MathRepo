@@ -113,7 +113,7 @@ $
   $
     lim_(n -> infinity) A_n = liminf_(n -> infinity) A_n = limsup_(n -> infinity) A_n.
   $
-]
+]<def:limit-of-sequence-of-sets>
 
 #proposition[
   // 集合上下极限的定义是自洽的, 即等号成立
@@ -647,7 +647,7 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
   Every non-empty open set on the real line can be expressed as a countable union of construction intervals.
 
   Furthermore, every non-empty open set in $bb(R)^n$ can be expressed as a countable union of construction intervals.
-]
+]<thm:open-set-construction>
 
 == Special Point Sets and Special Functions
 
@@ -709,6 +709,11 @@ The number of these endpoints is countable, but there are many other non-endpoin
 == C
 - *#link(<def:continuation>)[Continuation]*
 
+== L
+- *#link(<def:limit-of-sequence-of-sets>)[Limit of a Sequence of Sets]*
+
+== O
+- *#link(<thm:open-set-construction>)[Open Set Construction Theorem]*
 
 #bibliography("references.bib")
 
