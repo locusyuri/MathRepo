@@ -80,23 +80,50 @@ Some notations are used throughout this book:
       A plus.o B = (A - B) union (B - A) = {x | (x in A text(" and ") x in.not B) text(" or ") (x in B text(" and ") x not in A)}.
     $
 ]
+#theorem(name: "De Morgan's Formulas")[
+$
+  X - union.big_(alpha in Gamma) A_alpha = inter.big_(alpha in Gamma) (X - A_alpha), \
+  X - inter.big_(alpha in Gamma) A_alpha = union.big_(alpha in Gamma) (X - A_alpha).
+$
+If $A_alpha in X (forall alpha in Gamma)$, $X$ is a universal set, then the above formulas can be rewritten as:
+$
+  (union.big_(alpha in Gamma) A_alpha)^c = inter.big_(alpha in Gamma) A_alpha^c, \
+  (inter.big_(alpha in Gamma) A_alpha)^c = union.big_(alpha in Gamma) A_alpha^c.
+$
+]
 
 #definition(name: "Limit of a Sequence of Sets")[
   Let ${A_n}_{n=1}^infinity$ be a sequence of sets.
   The *limit inferior* (or *lim inf*) and *limit superior* (or *lim sup*) of the sequence are defined as follows:
 
   $
-    liminf_(n -> infinity) A_n = union_(n=1)^infinity inter_(k=n)^infinity A_k,
+    liminf_(n -> infinity) A_n &=  {x | exists "infinite" k, "s.t." x in A_k}\
+    &= { x | forall n exists k > n, "s.t." x in A_k}\
+    &= union.big_(n=1)^infinity inter.big_(k=n)^infinity A_k,
   $
 
   $
-    limsup_(n -> infinity) A_n = inter_(n=1)^infinity union_(k=n)^infinity A_k,
+    limsup_(n -> infinity) A_n &= {x | exists "infinite" k, "s.t." x in A_k}\
+    &= { x | forall n exists k > n, "s.t." x in A_k}\
+    &=inter.big_(n=1)^infinity union.big_(k=n)^infinity A_k,
   $
 
-  If $liminf_(n -> infinity) A_n = limsup_(n -> infinity) A_n$, then the common set is called the *limit* of the sequence, denoted by
+  If $liminf_(n -> infinity) A_n = limsup_(n -> infinity) A_n$, then the common set is called the *limit of the sequence of sets*, denoted by
 
   $
     lim_(n -> infinity) A_n = liminf_(n -> infinity) A_n = limsup_(n -> infinity) A_n.
+  $
+]
+
+#proposition[
+  // 集合上下极限的定义是自洽的, 即等号成立
+  The definitions of limit inferior and limit superior of a sequence of sets are consistent, i.e., the equalities hold.
+]
+// 上下极限的转换
+#theorem(name: "Conversion of Limit Inferior and Superior")[
+  $
+    X - limsup_(n -> infinity) A_n = liminf_(n -> infinity) (X - A_n), \
+    X - liminf_(n -> infinity) A_n = limsup_(n -> infinity) (X - A_n).
   $
 ]
 
