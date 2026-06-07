@@ -623,7 +623,7 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
 ]
 
 == Open and Closed Sets
-
+=== Classification of Point Sets
 #definition(name: "Classification of Point Sets")[
   Let $E$ be a subset of the Euclidean space $bb(R)^n$.
   Point sets can be classified:
@@ -646,14 +646,30 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
   However, in a topological space, the definitions of open and closed sets depend on the topological structure, and closed sets are always sequentially closed, but the converse is not true.
 ]
 
-#v(0.7cm)
-
+=== Open Set Construction
 #lemma[
   Let $G subset bb(R)$ be non-empty bounded open set, then for all $x_0 in G$, there exists an open interval $(alpha, beta)$ such that
 
   1. $x_0 in (alpha, beta)$.
   2. $alpha, beta in.not G$.
 ]
+
+#proof[
+  Let $x_0 in G$. Since $G$ is open, there exists an open interval $(a, b) subset G$ such that $x_0 in (a, b)$.
+
+  _Conclusion 1: $x_0 in (alpha, beta)$_
+
+  Let $alpha = sup{x in bb(R) | (x, x_0] subset G}$, $beta = inf{b' in bb(R) | [x_0, b') subset G}$.
+  Since $G$ is bounded open set and $alpha, beta$ are defined as supremum and infimum respectively, we have $alpha < x_0 < beta$, i.e., $x_0 in (alpha, beta)$.
+  
+  _Conclusion 2: $alpha, beta in.not G$_
+
+  $forall x in (alpha, beta)$, without loss of generality, assume $x < x_0$.
+  We have $alpha < (alpha + x)/2 < x_0$ and $x in ((alpha + x)/2, x_0)$. By the definition of $alpha$, we have $((alpha + x)/2, x_0) subset G$, so $x in G$.
+  Assume $alpha in G$, there exists $delta > 0$ such that $(alpha - delta, alpha + delta) subset G$, then $(alpha - delta, beta) subset G$, contradicting the definition of $alpha$. Hence $alpha in.not G$.
+  Similarly, we can show that $beta in.not G$, which completes the proof.
+]
+
 
 #property[
   1. Such interval $(alpha, beta)$ is the maximal open interval containing $x_0$ and contained in $G$, and is called the *construction interval* of $G$.
@@ -674,9 +690,7 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
 ]<thm:open-set-construction>
 
 #proof[
-
-
-2. _Step 1: Dyadic grid construction._
+  _Step 1: Dyadic grid construction._
 
   For each $k in bb(N)$, define the dyadic grid of level $k$ as the collection of half-open $n$-dimensional cubes:
   $
