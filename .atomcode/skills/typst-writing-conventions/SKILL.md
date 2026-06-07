@@ -1,6 +1,6 @@
 ---
 name: typst-writing-conventions
-description: 当编辑/创建 .typ 文件时，必须使用本技能以确保符合 Typst 语法规范（如 subset→subset.eq, \sigma→sigma, integral→integral 等）、符号映射规则、文档层级结构和写作风格约定。尤其适用于从 LaTeX 迁移内容或新增数学公式较多的笔记时。
+description: 当编辑/创建 .typ 文件时，必须使用本技能以确保符合 Typst 语法规范（如 subset→subset.eq, \sigma→sigma, integral→integral 等）、符号映射规则、文档层级结构和写作风格约定。尤其适用于新增数学公式较多的笔记时。
 user_invocable: false
 ---
 

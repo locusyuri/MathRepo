@@ -68,7 +68,7 @@ Obviously, a sigma-ring is closed under countable unions and countable differenc
 #definition(name: "Monotone Class")[
     Let $S$ be a non-empty set. A non-empty collection $cal(M)$ of subsets of $S$ is called a *monotone class* if it is closed under limits of monotone sequences of sets. That is, for any monotone sequence ${A_n}_{n in bb(N)}$ in $cal(M)$ (i.e., $A_1 subset.eq A_2 subset.eq dots$ or $A_1 supset.eq A_2 supset.eq dots$), we have
     $
-    lim_(n->infinity) A_n = union.big_(n=1)^infinity A_n quad "or" quad lim_(n->infinity) A_n = inter_(n=1)^infinity A_n quad in cal(M).
+    lim_(n->infinity) A_n = union.big_(n=1)^infinity A_n quad "or" quad lim_(n->infinity) A_n = inter.big_(n=1)^infinity A_n quad in cal(M).
     $
     
     In other words, a monotone class is closed under countable increasing unions and countable decreasing intersections.

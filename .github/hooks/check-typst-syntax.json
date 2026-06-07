@@ -1,0 +1,14 @@
+{
+	"hooks": {
+		"PostToolUse": [
+			{
+				"type": "command",
+				"command": "powershell -ExecutionPolicy Bypass -File .github/hooks/scripts/check-typst-syntax.ps1",
+				"timeout": 30,
+				"windows": {
+					"command": "powershell -ExecutionPolicy Bypass -File .github/hooks/scripts/check-typst-syntax.ps1"
+				}
+			}
+		]
+	}
+}

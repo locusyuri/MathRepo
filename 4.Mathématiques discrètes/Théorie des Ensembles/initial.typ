@@ -665,15 +665,53 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
   The boundedness of $G$ in the lemma is not necessary, and the conclusion still holds for unbounded sets.
   However, the corresponding construction interval can also be unbounded.
   For example, if $G = (0, infinity)$ and $x_0 = 1$, then the construction interval can be $(0, infinity)$.
-
-  Similarly, the definition of construction interval can also be extended to $bb(R)^n$.
 ]
 
 #theorem(name: "Open Set Construction Theorem")[
   Every non-empty open set on the real line can be expressed as a countable union of construction intervals.
 
-  Furthermore, every non-empty open set in $bb(R)^n$ can be expressed as a countable union of construction intervals.
+  Furthermore, every non-empty open set in $bb(R)^n$ can be expressed as a countable union of pairwise disjoint half-open $n$-dimensional cubes.
 ]<thm:open-set-construction>
+
+#proof[
+
+
+2. _Step 1: Dyadic grid construction._
+
+  For each $k in bb(N)$, define the dyadic grid of level $k$ as the collection of half-open $n$-dimensional cubes:
+  $
+  Gamma_k = { product_(i=1)^n [m_i 2^(-k), (m_i+1) 2^(-k)) : (m_1, dots, m_n) in bb(Z)^n }.
+  $
+
+  Each $Gamma_k$ partitions $bb(R)^n$ into countably many pairwise disjoint half-open cubes of side length $2^(-k)$.
+
+  _Step 2: Selection algorithm._
+
+  Define collections $cal(H)_k$ inductively:
+
+  - Let $cal(H)_0$ be the set of all cubes in $Gamma_0$ that are contained in $G$.
+
+  - For $k >= 1$, let $cal(H)_k$ be the set of all cubes in $Gamma_k$ that are contained in
+    $
+    G backslash union.big_(i=0)^(k-1) union.big_(J in cal(H)_i) J.
+    $
+
+  _Step 3: Countability._
+
+  Each $cal(H)_k$ is countable (since $Gamma_k$ is countable), so the total collection $cal(H) = union.big_(k=0)^(oo) cal(H)_k$ is countable.
+
+  _Step 4: Pairwise disjointness._
+
+  By construction, cubes in different levels are disjoint: if $J in cal(H)_i$ and $J' in cal(H)_j$ with $i < j$, then $J' subset.eq G backslash J$, so $J inter J' = emptyset$. Cubes within the same level are disjoint by the grid property.
+
+  _Step 5: Coverage._
+
+  Let $x in G$. Since $G$ is open, there exists $delta > 0$ such that $B(x; delta) subset.eq G$. The diameter of cubes in $Gamma_k$ is $sqrt(n) 2^(-k) -> 0$ as $k -> oo$. Choose $k$ large enough so that $sqrt(n) 2^(-k) < delta$. Then the unique cube $J in Gamma_k$ containing $x$ satisfies $J subset.eq B(x; delta) subset.eq G$.
+
+  By the selection algorithm, $J$ must belong to some $cal(H)_i$ with $i <= k$ (since it was not already covered by cubes from earlier levels). Hence $x in J subset.eq union.big cal(H)$.
+
+  Therefore $G = union.big_(J in cal(H)) J$.
+]
 
 == Special Point Sets and Special Functions
 
