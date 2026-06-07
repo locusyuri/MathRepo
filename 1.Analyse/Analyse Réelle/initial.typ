@@ -115,7 +115,7 @@ There are various types of measures,
 + *Probability Measure*: A measure $mu$ is called a probability measure if $mu(X) = 1$.
 + *Complete Measure*: A measure $mu$ is called complete if every subset of a null set (i.e., a set $A$ with $mu(A) = 0$) is measurable and has measure zero.
 
-== Lebesgue Measure // 勒贝格测度
+== Measure and Measurable Spaces // 测度与可测空间
 === Lebesgue Measure // 勒贝格测度
 #definition(name: "Lebesgue Outer Measure")[
 The *Lebesgue outer measure* on $bb(R)^n$ is defined for any set $A subset bb(R)^n$ as
@@ -157,6 +157,8 @@ Thus, the *Lebesgue measure* on $bb(R)^n$ is defined as the restriction of the L
 $
 m(A) = m^*(A).
 $
+// 如无特殊说明, 今后我们提到的测度都是 Lebesgue 测度, 提到的可测集都是 Lebesgue 可测集.
+From now on, unless otherwise specified, when we refer to a measure, we mean the Lebesgue measure, and when we refer to measurable sets, we mean Lebesgue measurable sets.
 
 === Measure Space // 测度空间
 #definition(name: "Measure Space")[
@@ -169,7 +171,7 @@ $
 
 #definition(name: "Lebesgue Measure Space")[
   $(bb(R)^n, cal(L)(bb(R)^n), m)$ is a $sigma$-finite, complete measure space, called the *Lebesgue measure space*.
-]\
+]
 
 #v(0.5em)
 #definition(name: "Almost Everywhere")[
@@ -179,8 +181,7 @@ For example,
 - *Almost everywhere continuous*: $f$ is almost everywhere continuous if $f$ is continuous at every point of $X$ except for a set of measure zero.
 - *Almost everywhere equality*: $f$ is almost everywhere equal to $g$ if $f(x) = g(x)$ for almost every $x in X$.
 
-// 最后, 我们给出一个常用的引理: Borel-Cantelli 引理, 以及一个重要的反例: Vitali 集.
-Finally, we present a commonly used lemma: the Borel-Cantelli lemma, and an important counterexample: the Vitali set.
+== Measurable Sets // 可测集
 
 #lemma(name: "Borel-Cantelli Lemma")[
 Let $(X, cal(S), mu)$ be a measure space.
@@ -198,8 +199,44 @@ $
 that is, almost all points belong to an infinite number of sets in the sequence.
 ]
 
+=== Lebesgue Measurable Sets // 勒贝格可测集
 
-== Non-Measurable Sets // 非可测集
+#theorem(name: "Sufficient and Necessary Condition for Measurability")[
+  Let $E subset bb(R)$ be a set. Then $E$ is Lebesgue measurable if and only if any of the following equivalent conditions holds:
+  + For every $epsilon > 0$, there exists an open set $G supset E$ such that $m^*(G backslash E) < epsilon$.
+  + For every $epsilon > 0$, there exists a closed set $F subset E$ such that $m^*(E backslash F) < epsilon$.
+  + There exists a $G_delta$ set $H supset E$ such that $m^*(H backslash E) = 0$ (hence $m^*(H) = m^*(E)$).
+  + There exists an $F_sigma$ set $K subset E$ such that $m^*(E backslash K) = 0$ (hence $m^*(K) = m^*(E)$).
+  + There exist a $G_delta$ set $H$ and an $F_sigma$ set $K$ such that $K subset E subset H$, and
+    $
+    m^*(H backslash E) = m^*(E backslash K) = m^*(H backslash K) = 0
+    $
+    (hence $m^*(H) = m^*(E) = m^*(K)$).
+]
+
+
+#definition(name: "Equal-Measure Envelope")[
+  Let $E subset bb(R)$ be a set. A Lebesgue measurable set $H supset E$ is called an *equal-measure envelope* of $E$ if $m^*(H) = m^*(E)$.
+]
+
+#corollary(name: "Existence of Equal-Measure Envelope")[
+  Let $E subset bb(R)$ be a set. Then there exists a $G_delta$ set $H supset E$ such that $m^*(H) = m^*(E)$. In other words, every set $E$ admits an equal-measure envelope that is a $G_delta$ set.
+]
+
+#corollary(name: "Structure of Lebesgue Measurable Sets")[
+  Any Lebesgue measurable set $E$ can be expressed as the union of a Borel set and a null set; simultaneously, it can also be expressed as the difference of a Borel set and a null set.
+]
+
+=== Borel Measurable Sets // Borel 可测集
+#theorem[
+  There exists Lebesgue measurable sets that are not Borel sets. A classical example is the class of Суслин sets, also known as analytic sets. 
+]
+
+#note[
+  Borel $subset$ Суслин $subset$ Lebesgue.
+]
+
+
 
 == Other Views to introduce the Lebesgue Measure // 其他引入 Lebesgue 测度的视角
 
@@ -234,41 +271,17 @@ that is, almost all points belong to an infinite number of sets in the sequence.
 
 
 === $G_delta$ and $F_sigma$ Definition // G_delta Sets and F_sigma Sets // G_δ 集和 F_σ 集
-#definition(name: "$G_delta$ and $F_sigma$ Sets")[
-  A subset $E subset bb(R)^n$ is called a *$G_delta$ set* if it can be expressed as a countable intersection of open sets:
-  $
-  E = inter.big_(n=1)^infinity U_n, quad U_n "open".
-  $
-
-  A subset $E subset bb(R)^n$ is called an *$F_sigma$ set* if it can be expressed as a countable union of closed sets:
-  $
-  E = union.big_(n=1)^infinity F_n, quad F_n "closed".
-  $
-]
-
-#property[
-+ $E$ is a $G_delta$ set if and only if $E^c$ is an $F_sigma$ set.
-+ Every Borel set is both a $G_delta$ set and an $F_sigma$ set.
-]
 
 
 
-#proposition[
-+ *Continuity set of a function* Let $G subset bb(R)^n$ be open and $f: G -> bb(R)$ be a function. Then the set of points where $f$ is continuous is a $G_delta$ set (hence a Borel set).
-+ *Differentiability set of a continuous function* Let $f: bb(R) -> bb(R)$ be a continuous function. Then the set of points where $f$ is differentiable is a $F_{delta sigma}$ set (a countable intersection of $F_sigma$ sets).
-+ *Properties of the limit function of a sequence of continuous functions* Let $f_i: bb(R)^n -> bb(R)$ be continuous functions, $i in bb(N)$, and suppose $lim_(i -> +infinity) f_i(x) = f(x)$ for all $x in bb(R)^n$. Then:
-  - If $G subset bb(R)$ is open, then $f^(-1)(G)$ is an $F_sigma$ set;
-  - The set of continuity points of $f$ is a dense $G_delta$ set in $bb(R)^n$ (equivalently, the set of discontinuity points $D(f)$ is an $F_sigma$ set with empty interior in $bb(R)^n$).
-]
 
 
-#theorem(name: "Baire Theorem")[
-  Let $E subset bb(R)^n$ be an $F_sigma$ set, i.e., $E = union.big_(k=1)^infinity F_k$, where each $F_k$ ($k in bb(N)$) is a closed set.
-  
-  If each $F_k$ ($k in bb(N)$) has empty interior, then $E$ also has empty interior.
-  
-  Equivalently, if $E$ has non-empty interior, then there exists some $F_{k_0}$ that contains an interior point.
-]
+
+== Non-Measurable Sets // 非可测集
+=== Vitali Set // 维塔利集
+
+
+=== Bernstein Set // 伯恩斯坦集
 
 
 
