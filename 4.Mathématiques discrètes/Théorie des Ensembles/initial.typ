@@ -757,6 +757,11 @@ The number of these endpoints is countable, but there are many other non-endpoin
 ]
 
 
+#definition(name: "")[ // 类 Cantor 三分集
+
+]
+
+
 = Special Classes of Sets
 
 #note[
