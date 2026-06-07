@@ -1,6 +1,6 @@
 ---
 name: typst-writing-conventions
-description: 本技能文件规定了在本项目中使用 Typst 编写数学/物理笔记时必须遵守的语法规范和最佳实践。
+description: 当编辑/创建 .typ 文件时，必须使用本技能以确保符合 Typst 语法规范（如 subset→subset.eq, \sigma→sigma, integral→integral 等）、符号映射规则、文档层级结构和写作风格约定。尤其适用于从 LaTeX 迁移内容或新增数学公式较多的笔记时。
 user_invocable: false
 ---
 
