@@ -284,6 +284,10 @@ that is, almost all points belong to an infinite number of sets in the sequence.
 === Bernstein Set // 伯恩斯坦集
 
 
+== Other Measure // 其他测度, 包括 Hausdorff measure, Packing measure, Jordan measure, etc.
+
+=== Hausdorff Measure 
+
 
 
 // 可测函数的定义：设 (X, 𝒮) 和 (Y, 𝒯) 为可测空间，若对于 𝒯 中每个集合 B，原像 f^(-1)(B) 都属于 𝒮，则称函数 f: X → Y 为 𝒮-𝒯 可测的
