@@ -192,7 +192,7 @@ mu(lim sup_(n->infinity) A_n) = 0,
 $
 that is, almost all points belong to at most a finite number of sets in the sequence.
 // 设 {An}\{A_n\}{An​} 是一列相互独立的可测集，若 ∑n=1∞m(An)=∞\sum_{n=1}^{\infty} m(A_n) = \infty∑n=1∞​m(An​)=∞，则m(lim sup⁡no∞An)=m(E)m\left(\limsup_{n 	o \infty} A_n\right) = m(E)m(no∞limsup​An​)=m(E)即几乎所有的点属于无穷多个 AnA_nAn​。
-2. Let $A_n$ be a sequence of independent measurable sets. If $sum_(n=1)^infinity mu(A_n) = infinity$, then
+2. Let $mu(X) < infinity$ and $A_n$ be a sequence of independent measurable sets. If $sum_(n=1)^infinity mu(A_n) = infinity$, then
 $
 mu(lim sup_(n->infinity) A_n) = mu(X),
 $
@@ -369,14 +369,11 @@ From now on, "simple function" refers to the measurable version unless stated ot
 ]
 
 === Sequences of Measurable Functions // 可测函数列
-#theorem[
-  // 可测函数列的上下确界、上下极限也是可测函数
-  Let $(X, cal(S))$ be a measurable space and $f_n: X  -> overline(bb(R))$ be a sequence of measurable functions. Then the pointwise supremum $sup_n f_n$, infimum $inf_n f_n$, limit superior $limsup_(n->infinity) f_n$, and limit inferior $liminf_(n->infinity) f_n$ are all measurable functions.
-]
-
-#theorem[
+#theorem(name: "Limit of Sequence of Measurable Functions")[
   // 可测函数列的极限几乎处处存在时, 极限函数也是可测函数
-  Let $(X, cal(S))$ be a measurable space and $f_n: X  -> overline(bb(R))$ be a sequence of measurable functions. If the pointwise limit $f(x) = lim_(n->infinity) f_n (x)$ exists for almost every $x in X$, then the limit function $f$ is also measurable.
+  Let $(X, cal(S))$ be a measurable space and $f_n: X  -> overline(bb(R))$ be a sequence of measurable functions. 
++ The pointwise supremum $sup_n f_n$, infimum $inf_n f_n$, limit superior $limsup_(n->infinity) f_n$, and limit inferior $liminf_(n->infinity) f_n$ are all measurable functions.
++ If the pointwise limit $f(x) = lim_(n->infinity) f_n (x)$ exists for almost every $x in X$, then the limit function $f$ is also measurable.
 ]
 
 #theorem(name: "Approximation by Simple Functions")[
@@ -424,9 +421,14 @@ Let $(X, cal(S), mu)$ be a measure space and $f_n: X  -> overline(bb(R))$ be an 
 We now examine the relationship between convergence in measure and almost everywhere convergence.
 
 #theorem(name: "Riesz's Theorem")[
-  Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
+  Let $(X, cal(S), mu)$ be a finite measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
   
   Then $f_n (x) xarrow(mu) f(x)$ if and only if for any subsequence $f_(n_k)$, there exists a further subsequence $f_(n_(k_i))$ such that $f_(n_(k_i)) (x) xarrow("a.e.") f(x)$.
+]
+
+#caution[
+  // 只有充分性的条件需要测度有限, 必要性的条件不需要测度有限
+  The condition of finite measure is only required for the sufficiency part of Riesz's theorem, but not for the necessity part.
 ]
 
 #example(name: "Typewriter Sequence")[
@@ -446,8 +448,7 @@ Define $f_n = chi_(I_n)$ (the indicator function of $I_n$).
 *No a.e. convergence*: For every $x in [0,1]$, in each round $k$ there is exactly one interval $I_n$ containing $x$, so $f_n (x) = 1$ for infinitely many $n$. Meanwhile $f_n (x) = 0$ for infinitely many other $n$. Therefore $lim_(n->infinity) f_n (x)$ does not exist for any $x in [0,1]$, and $f_n$ does not converge almost everywhere.
 ]
 
-// 最后, 我们介绍一种更强的收敛模式: 范数收敛, 它蕴含依测度收敛.
-Finally, we introduce a stronger mode of convergence — norm convergence — which implies convergence in measure.
+=== Convergence in $L^p$ Norm // 范数收敛
 
 #definition(name: "Norm Convergence")[ // 范数收敛
 Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
@@ -488,18 +489,12 @@ If for all $delta > 0$, there exists a measurable set $E subset X$ with $mu(E) <
 ]
 
 #proposition[
-  // 近一致收敛蕴含几乎处处收敛
+  // 近一致收敛蕴含几乎处处收敛和依测度收敛
   Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
-
-  If $f_n (x) xarrow("a.u.") f(x)$, then $f_n (x) xarrow("a.e.") f(x)$.
++ If $f_n (x) xarrow("a.u.") f(x)$, then $f_n (x) xarrow("a.e.") f(x)$.
++ If $f_n (x) xarrow("a.u.") f(x)$, then $f_n (x) xarrow(mu) f(x)$.
 ]
 
-#proposition[
-  // 近一致收敛蕴含依测度收敛
-  Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
-
-  If $f_n (x) xarrow("a.u.") f(x)$, then $f_n (x) xarrow(mu) f(x)$.
-]
 
 #note(title: "Summary of Implications")[
 // 四种收敛模式之间的蕴含关系总结
@@ -550,18 +545,18 @@ $
   Then there exists a sequence of continuous functions $g_n: X  -> overline(bb(R))$ such that $g_n (x) xarrow("a.e.") f(x)$.
 ]
 
-=== Continuity via Preimages // 通过原像定义连续性
+=== Equivalent Definitions of Continuity // 连续性的等价定义
 #definition(name: "Continuity via Open Sets")[
   Let $(X, tau_X)$ and $(Y, tau_Y)$ be topological spaces. A function $g: X -> Y$ is called *continuous* if for every open set $U in tau_Y$, the preimage $g^(-1)(U)$ is open in $X$.
 ]
 
-=== Equivalent Definitions of Continuity // 连续性的等价定义
 #proposition(name: "Equivalence of Continuity Definitions")[
   Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces. A function $g: X -> Y$ is continuous in the $epsilon$-$delta$ (pointwise) sense if and only if for every open set $U subset Y$ the preimage $g^(-1)(U)$ is open in $X$.
 
-  #proof[
-    Sketch: If $g$ is $epsilon$-$delta$ continuous at every point, then for any open $U$ and any $x in g^(-1)(U)$ one can find a neighborhood mapped into $U$, hence $g^(-1)(U)$ is a union of neighborhoods and open. Conversely, if preimages of open sets are open, take $U$ to be an open ball around $g(x)$ to obtain the usual $epsilon$-$delta$ condition.
-  ]
+
+]
+#proof[
+  Sketch: If $g$ is $epsilon$-$delta$ continuous at every point, then for any open $U$ and any $x in g^(-1)(U)$ one can find a neighborhood mapped into $U$, hence $g^(-1)(U)$ is a union of neighborhoods and open. Conversely, if preimages of open sets are open, take $U$ to be an open ball around $g(x)$ to obtain the usual $epsilon$-$delta$ condition.
 ]
 
 #note[
