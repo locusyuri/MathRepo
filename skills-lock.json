@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "math-reasoning": {
+      "source": "lingzhi227/agent-research-skills",
+      "sourceType": "github",
+      "skillPath": "skills/math-reasoning/SKILL.md",
+      "computedHash": "5cdc3f13b6e96922fdd876d3bb353186ebc45d8f37d48d4d1795b4b40fc0663f"
+    },
+    "math-review": {
+      "source": "athola/claude-night-market",
+      "sourceType": "github",
+      "skillPath": "plugins/pensive/skills/math-review/SKILL.md",
+      "computedHash": "ab8ba15d289cc8719a2236aa355f6bb3de2ca83d926befd5b6c753e410985afd"
+    },
+    "typst": {
+      "source": "lucifer1004/claude-skill-typst",
+      "sourceType": "github",
+      "skillPath": "skills/typst/SKILL.md",
+      "computedHash": "8b777abf25ab51cc81b57d5e35dfe7bdcd14520381fbd026fa83e08c9e73b411"
+    }
+  }
+}
