@@ -744,6 +744,14 @@ $
   ("Lebesgue measurable", "Lebesgue measurable", [NOT necessarily measurable]),
 )
 
+#note[
+  // 复合函数可测性的核心规律
+  The measurability of $g compose f$ is governed by a *chain rule*: the output $sigma$-algebra of $f$ must match the input $sigma$-algebra of $g$. Since $cal(B) subset cal(L)$, we have:
+  - The stronger $g$ is (continuous $>$ Borel $>$ Lebesgue), the smaller its input $sigma$-algebra, and the easier the chain succeeds.
+  - *$g$ Lebesgue measurable* is the only danger zone: $g^(-1)(B)$ may lie in $cal(L) backslash cal(B)$, which $f^(-1)$ cannot pull back through a Borel-level guarantee.
+  - *$f$ Borel measurable* acts as "universal glue": it outputs $cal(B)$, which matches the input of both Borel and Lebesgue $g$.
+]
+
 
 #part("Integration Theory") // 积分理论
 = Lebesgue Integration
