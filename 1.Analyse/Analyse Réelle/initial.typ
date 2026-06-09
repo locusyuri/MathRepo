@@ -860,13 +860,14 @@ Let $(X, cal(S), mu)$ be a measure space (not necessarily finite). If $f: X -> o
 
 #property(name: "Properties of the Lebesgue Integral")[
 Let $(X, cal(S), mu)$ be a measure space, and let $f, g: X -> overline(bb(R))$ be integrable functions.
-+ *Finite Additivity*: For any two disjoint measurable sets $A, B in cal(S)$,
-  $
-  integral_(A union B) f dif mu = integral_A f dif mu + integral_B f dif mu.
-  $
 + *Linearity*: For any $alpha, beta in bb(R)$, the function $alpha f + beta g$ is integrable and
   $
   integral_X (alpha f + beta g) dif mu = alpha integral_X f dif mu + beta integral_X g dif mu.
+  $
++ *Uniqueness*: $integral_X |f| dif mu = 0$ if and only if $f(x) = 0$ almost everywhere.
++ *Finite Additivity*: For any two disjoint measurable sets $A, B in cal(S)$,
+  $
+  integral_(A union B) f dif mu = integral_A f dif mu + integral_B f dif mu.
   $
 + *Absolute Continuity of the Integral*: For every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A in cal(S)$ with $mu(A) < delta$,
   $
