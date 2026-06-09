@@ -280,8 +280,105 @@ that is, almost all points belong to an infinite number of sets in the sequence.
 == Non-Measurable Sets // 非可测集
 === Vitali Set // 维塔利集
 
+// Vitali 集是最经典的非 Lebesgue 可测集的例子, 它的构造依赖于选择公理.
+// 其核心思想是利用有理数平移的等价关系将 [0,1] 划分为不可数多个等价类,
+// 然后从每个等价类中选取恰好一个代表元构成集合 V.
+
+#definition(name: "Vitali Set")[
+  Define an equivalence relation on $[0, 1]$ by
+  $
+  x tilde y quad <=> quad x - y in bb(Q).
+  $
+  This partitions $[0, 1]$ into uncountably many equivalence classes. By the *Axiom of Choice*, we can select exactly one representative from each equivalence class. The resulting set $V subset [0, 1]$ is called a *Vitali set*.
+]
+
+#theorem(name: "Non-Measurability of the Vitali Set")[
+  Any Vitali set $V subset [0, 1]$ is not Lebesgue measurable.
+]
+
+#proof[
+  Let $V$ be a Vitali set. Enumerate the rational numbers in $[-1, 1]$ as $q_1, q_2, dots$, and define the translates $V_k = V + q_k = {v + q_k : v in V}$.
+
+  *Step 1: The translates are pairwise disjoint.*
+  Suppose $x in V_i inter V_j$ for $i != j$. Then $x = v_i + q_i = v_j + q_j$ for some $v_i, v_j in V$, so $v_i - v_j = q_j - q_i in bb(Q)$. This means $v_i tilde v_j$, and since $V$ contains exactly one representative per equivalence class, we must have $v_i = v_j$, hence $q_i = q_j$, a contradiction.
+
+  *Step 2: $[0, 1] subset union_k V_k subset [-1, 2]$.*
+  For any $x in [0, 1]$, there exists $v in V$ such that $x tilde v$, i.e. $x - v = q_k in bb(Q)$. Since $x, v in [0, 1]$, we have $q_k in [-1, 1]$, so $x = v + q_k in V_k$. Thus $[0, 1] subset union_k V_k$. On the other hand, each $V_k subset [-1, 2]$, so $union_k V_k subset [-1, 2]$.
+
+  *Step 3: Contradiction with measurability.*
+  Suppose $V$ is Lebesgue measurable. By translation invariance of Lebesgue measure, $m(V_k) = m(V)$ for all $k$. By countable additivity and Step 1:
+  $
+  m(union_k V_k) = sum_k m(V_k) = sum_k m(V).
+  $
+  By Step 2 and monotonicity:
+  $
+  1 = m([0, 1]) <= m(union_k V_k) <= m([-1, 2]) = 3.
+  $
+  If $m(V) = 0$, then $sum_k m(V) = 0 < 1$, contradicting the lower bound. If $m(V) > 0$, then $sum_k m(V) = infinity > 3$, contradicting the upper bound. In either case we reach a contradiction, so $V$ is not Lebesgue measurable.
+]
+
+#note[
+  // Vitali 集的构造揭示了选择公理与 Lebesgue 测度之间的根本矛盾
+  The construction of the Vitali set reveals a fundamental tension between the Axiom of Choice and Lebesgue measurability: the Axiom of Choice allows us to construct sets that are "too pathological" to be assigned a consistent measure. This result motivated the development of alternative set-theoretic frameworks (e.g., Solovay's model, 1970) in which every subset of $bb(R)$ is Lebesgue measurable, at the cost of rejecting the full Axiom of Choice.
+]
 
 === Bernstein Set // 伯恩斯坦集
+
+// Bernstein 集是另一类非 Lebesgue 可测集, 其构造同样依赖于选择公理 (或等价地, 良序原理).
+// 它的定义基于完美集 (perfect set): 既不包含任何完美集, 其补集也不包含任何完美集.
+
+#definition(name: "Perfect Set")[
+  A subset $P subset bb(R)$ is called a *perfect set* if it is closed and every point of $P$ is a limit point of $P$ (i.e., $P$ has no isolated points).
+]
+
+#note[
+  Every non-empty perfect set in $bb(R)$ has cardinality $frak(c)$ (the continuum). Moreover, every uncountable closed set contains a non-empty perfect subset (the Cantor–Bendixson theorem). In particular, every non-empty perfect set has positive Lebesgue outer measure.
+]
+
+#definition(name: "Bernstein Set")[
+  A set $B subset bb(R)$ is called a *Bernstein set* if for every non-empty perfect set $P subset bb(R)$,
+  $
+  B inter P != emptyset quad "and" quad B^("c") inter P != emptyset.
+  $
+  In other words, neither $B$ nor its complement $B^("c")$ contains any non-empty perfect set.
+]
+
+#theorem(name: "Existence of Bernstein Sets")[
+  Assuming the Axiom of Choice, there exists a Bernstein set in $bb(R)$.
+]
+
+#proof[
+  Let ${P_alpha}_{alpha < frak(c)}$ be a well-ordering of all non-empty perfect subsets of $bb(R)$ (there are exactly $frak(c)$ such sets). We construct $B$ by transfinite induction.
+
+  At each stage $alpha < frak(c)$, the set of points already chosen has cardinality $|alpha| < frak(c)$. Since $|P_alpha| = frak(c)$, we can pick two distinct points $x_alpha, y_alpha in P_alpha$ that have not been chosen at any previous stage.
+
+  Define
+  $
+  B = {x_alpha : alpha < frak(c)}.
+  $
+
+  By construction, for every perfect set $P_alpha$, the point $x_alpha in B inter P_alpha$ and $y_alpha in B^("c") inter P_alpha$. Therefore $B$ is a Bernstein set.
+]
+
+#theorem(name: "Non-Measurability of Bernstein Sets")[
+  Every Bernstein set $B subset bb(R)$ is not Lebesgue measurable.
+]
+
+#proof[
+  Suppose for contradiction that $B$ is Lebesgue measurable. By the regularity of Lebesgue measure, for every $epsilon > 0$ there exists a closed set $F subset B$ such that $m^*(B inter K) <= m(F) + epsilon$ for any bounded interval $K$.
+
+  If $m(B inter K) > 0$ for some bounded interval $K$, then $B inter K$ contains an uncountable closed set $F$ (since any measurable set of positive measure contains an uncountable closed subset). By the Cantor–Bendixson theorem, $F$ contains a non-empty perfect set $P subset B$, contradicting the defining property of $B$.
+
+  Therefore $m(B inter K) = 0$ for every bounded interval $K$, which implies $m(B) = 0$. By the same argument applied to $B^("c")$, we obtain $m(B^("c")) = 0$. But $B union B^("c") = bb(R)$, so $m(bb(R)) = 0$, a contradiction. Hence $B$ is not Lebesgue measurable.
+]
+
+#note[
+  // Bernstein 集与 Vitali 集的对比
+  *Comparison with the Vitali set*:
+  - The Vitali set exploits the translation-invariance of Lebesgue measure: its rational translates produce a countable partition that is inconsistent with countable additivity.
+  - The Bernstein set exploits the regularity of Lebesgue measure: any measurable set of positive measure must contain a perfect subset, which a Bernstein set explicitly avoids.
+  - Both constructions rely essentially on the Axiom of Choice. Neither $V$ nor $B$ can be explicitly constructed in ZF alone.
+]
 
 
 == Other Measure // 其他测度, 包括 Hausdorff measure, Packing measure, Jordan measure, etc.
@@ -406,6 +503,16 @@ Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be 
 If for every $epsilon > 0$, we have $lim_(n->infinity) mu({x in X : |f_n (x) - f(x)| > epsilon}) = 0$, then we say that $f_n$ converges *in measure* to $f$, denoted by $f_n (x) xarrow(mu) f(x)$.
 ]
 
+#property[
+  // 依测度收敛的性质
+  Let $(X, cal(S), mu)$ be a measure space and $f_n, f, g_n, g: X  -> overline(bb(R))$ be measurable functions. Then:
+  + *Uniqueness of the Limit*: If $f_n xarrow(mu) f$ and $f_n xarrow(mu) g$, then $f = g$ almost everywhere.
+  + *Linearity*: If $f_n xarrow(mu) f$ and $g_n xarrow(mu) g$, then $f_n + g_n xarrow(mu) f + g$.
+  + *Convergence of Absolute Value*: If $f_n xarrow(mu) f$, then $|f_n| xarrow(mu) |f|$.
+  + *Convergence of Product*: If $mu(X) < infinity$ and $f_n xarrow(mu) f$ and $g_n xarrow(mu) g$, then $f_n g_n xarrow(mu) f g$.
+]
+
+
 #definition(name: "Cauchy Sequence in Measure")[ // 依测度基本列
 Let $(X, cal(S), mu)$ be a measure space and $f_n: X  -> overline(bb(R))$ be an a.e. finite sequence of measurable functions. We say that $f_n$ is a *Cauchy sequence in measure* if for every $epsilon > 0$, we have $lim_(m,n->infinity) mu({x in X : |f_n (x) - f_m (x)| > epsilon}) = 0$.
 ]
@@ -482,10 +589,58 @@ Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X  -> overline(bb(R))$ be 
 If for all $delta > 0$, there exists a measurable set $E subset X$ with $mu(E) < delta$ such that $f_n$ converges uniformly to $f$ on $X backslash E$, then we say that $f_n$ converges *almost uniformly* to $f$, denoted by $f_n (x) xarrow("a.u.") f(x)$.
 ]
 
-#theorem(name: "Egorov's Theorem")[ // Его́ров 定理
+#theorem(name: "Его́ров's Theorem")[ // Его́ров 定理
   Let $(X, cal(S), mu)$ be a finite measure space, i.e. $mu(X) < infinity$, and $f_n, f: X  -> overline(bb(R))$ be measurable functions. 
 
   If $f_n (x) xarrow("a.e.") f(x)$, then $f_n (x) xarrow("a.u.") f(x)$.
+]<thm:Egorov>
+
+#proof[
+  Since $f_n xarrow("a.e.") f$, there exists a null set $N in cal(S)$ (with $mu(N) = 0$) such that $f_n (x) -> f(x)$ for all $x in X backslash N$. Let $X_0 = X backslash N$; then $mu(X_0) = mu(X)$.
+
+  _Step 1: Define the convergence sets._
+  For each $k, n in bb(N)$, define
+  $
+  E_(n, k) = inter_(m = n)^infinity {x in X_0 : |f_m (x) - f(x)| < 1 / k}.
+  $
+  Since each $f_m$ and $f$ are measurable, every set ${x in X_0 : |f_m (x) - f(x)| < 1/k}$ belongs to $cal(S)$, and hence $E_(n, k) in cal(S)$ as a countable intersection of measurable sets.
+
+  _Step 2: Monotonicity and limit of $E_(n, k)$._
+  For each fixed $k$, the sequence $(E_(n, k))_(n=1)^infinity$ is increasing:
+  $
+  E_(1, k) subset E_(2, k) subset E_(3, k) subset dots
+  $
+  Moreover, $union_(n=1)^infinity E_(n, k) = X_0$. Indeed, $x in X_0$ if and only if $f_n (x) -> f(x)$, which means for every $k$ there exists $n$ such that $|f_m (x) - f(x)| < 1/k$ for all $m >= n$, i.e. $x in E_(n, k)$.
+
+  _Step 3: Apply continuity of measure from below._
+  Since $mu(X) < infinity$, we have $mu(E_(n,k)) <= mu(X) < infinity$ for all $n, k$. By continuity of measure from below applied to the increasing sequence $(E_(n,k))_(n=1)^infinity$:
+  $
+  lim_(n -> infinity) mu(E_(n, k)) = mu(union_(n=1)^infinity E_(n, k)) = mu(X_0) = mu(X).
+  $
+  Equivalently, $lim_(n -> infinity) mu(X backslash E_(n, k)) = 0$.
+
+  _Step 4: Construct the exceptional set._
+  Let $delta > 0$ be given. By Step 3, for each $k in bb(N)$, we can choose $n_k in bb(N)$ large enough so that
+  $
+  mu(X backslash E_(n_k, k)) < delta / 2^k.
+  $
+  Define the exceptional set
+  $
+  E_delta = union_(k=1)^infinity (X backslash E_(n_k, k)).
+  $
+  By countable subadditivity:
+  $
+  mu(E_delta) <= sum_(k=1)^infinity mu(X backslash E_(n_k, k)) < sum_(k=1)^infinity delta / 2^k = delta.
+  $
+
+  _Step 5: Verify uniform convergence on $X backslash E_delta$._
+  We have
+  $
+  X backslash E_delta = inter_(k=1)^infinity E_(n_k, k).
+  $
+  Let $epsilon > 0$ be given. Choose $K in bb(N)$ such that $1 / K < epsilon$. Then for all $x in X backslash E_delta$ and all $m >= n_K$: since $x in E_(n_K, K)$, we have $|f_m (x) - f(x)| < 1 / K < epsilon$. The choice of $N = n_K$ depends only on $epsilon$ (not on $x$), so $f_n$ converges uniformly to $f$ on $X backslash E_delta$.
+
+  Since $delta > 0$ was arbitrary, $f_n xarrow("a.u.") f$.
 ]
 
 #proposition[
@@ -539,10 +694,10 @@ $
   If $mu(X) < infinity$, then $g$ can be made to have a compact support.
 ]
 
-#corollary[
-  Let $(X, cal(S), mu)$ be a measure space and $f: X  -> overline(bb(R))$ be a measurable function that is a.e. finite. 
+#corollary(name: "Sufficient and Necessary Condition for Measurability")[ // 可测函数充要条件
+  Let $(X, cal(S), mu)$ be a measure space and $f: X  -> overline(bb(R))$ be a function that is a.e. finite. 
 
-  Then there exists a sequence of continuous functions $g_n: X  -> overline(bb(R))$ such that $g_n (x) xarrow("a.e.") f(x)$.
+  Then $f$ is measurable if and only if there exists a sequence of continuous functions $f_n: X  -> overline(bb(R))$ such that $f_n (x) xarrow("a.e.") f(x)$.
 ]
 
 === Equivalent Definitions of Continuity // 连续性的等价定义
@@ -575,6 +730,20 @@ $
 #note[
   In particular, continuous maps are Borel measurable, so the first proposition is a special case of the second. This shows the natural alignment between continuity (open-set preimages) and measurability (measurable-set preimages) under composition.
 ]
+
+#tex-table(
+  ("$g$ (outer)", "$f$ (inner)", "$g compose f$ (composition)"),
+  ("Continuous", "Continuous", "Continuous"),
+  ("Continuous", "Borel measurable", "Borel measurable"),
+  ("Continuous", "Lebesgue measurable", "Lebesgue measurable"),
+  ("Borel measurable", "Continuous", "Borel measurable"),
+  ("Borel measurable", "Borel measurable", "Borel measurable"),
+  ("Borel measurable", "Lebesgue measurable", "Lebesgue measurable"),
+  ("Lebesgue measurable", "Continuous", [NOT necessarily measurable]),
+  ("Lebesgue measurable", "Borel measurable", "Lebesgue measurable"),
+  ("Lebesgue measurable", "Lebesgue measurable", [NOT necessarily measurable]),
+)
+
 
 #part("Integration Theory") // 积分理论
 = Lebesgue Integration
