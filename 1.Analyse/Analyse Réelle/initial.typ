@@ -553,6 +553,12 @@ Define $f_n = chi_(I_n)$ (the indicator function of $I_n$).
 *Convergence in measure*: For any $epsilon in (0, 1]$, we have $m({x : f_n (x) > epsilon}) = m(I_n) = 1/k -> 0$ as $n -> infinity$ (since $n$ in round $k$ means $k -> infinity$). Thus $f_n xarrow(mu) 0$.
 
 *No a.e. convergence*: For every $x in [0,1]$, in each round $k$ there is exactly one interval $I_n$ containing $x$, so $f_n (x) = 1$ for infinitely many $n$. Meanwhile $f_n (x) = 0$ for infinitely many other $n$. Therefore $lim_(n->infinity) f_n (x)$ does not exist for any $x in [0,1]$, and $f_n$ does not converge almost everywhere.
+
+Moreover, since $integral_0^1 |f_n|^p dif m = m(I_n) = 1/k -> 0$, we also have $f_n xarrow(L^p) 0$ for all $p >= 1$. Thus the typewriter sequence simultaneously demonstrates the non-implications:
+- $f_n xarrow(mu) f$ does NOT imply $f_n xarrow("a.e.") f$.
+- $f_n xarrow(L^p) f$ does NOT imply $f_n xarrow("a.e.") f$.
+- $f_n xarrow(mu) f$ does NOT imply $f_n xarrow("a.u.") f$ (since a.u. $=>$ a.e.).
+- $f_n xarrow(mu) f$ does NOT imply $f_n xarrow(L^p) f$ (e.g. modify widths to make $L^p$ norms diverge).
 ]
 
 === Convergence in $L^p$ Norm // 范数收敛
@@ -578,6 +584,17 @@ $
 
 + If $f_n xarrow(L^1) f$, then $f_n xarrow(mu) f$.
 + If $f_n xarrow(L^1) f$, then $integral_X f_n dif mu -> integral_X f dif mu$.  // 积分号与极限可交换
+]
+
+#example(name: "Shrinking Bump")[
+// 几乎处处收敛推不出 L^p 收敛 (有限测度空间上的"收缩尖峰")
+Almost everywhere convergence does not imply $L^p$ convergence, even on a finite measure space.
+
+Consider $([0,1], cal(L), m)$ and let $f_n = n chi_([0, 1/n])$.
+
+*Almost everywhere convergence*: For $x = 0$, $f_n(0) = n -> infinity$. For every $x > 0$, when $n > 1/x$ we have $x in.not [0, 1/n]$, so $f_n(x) = 0$ eventually. Thus $f_n -> 0$ a.e. (the exceptional set ${0}$ has measure zero).
+
+*No $L^p$ convergence*: For $p > 1$, $integral_0^1 |f_n|^p dif m = n^p / n = n^(p-1) -> infinity$. For $p = 1$, $integral_0^1 |f_n| dif m = 1$ for all $n$, so $integral f_n dif m$ does not converge to $0 = integral 0 dif m$. In either case $f_n$ does not converge to $0$ in $L^p$.
 ]
 
 
@@ -667,9 +684,27 @@ f_n xarrow("a.e.") f &=> f_n xarrow("a.u.") f #h(2em) &"(Egorov's theorem)" \
 f_n xarrow(mu) f &=> exists f_(n_(k_i)) xarrow("a.e.") f #h(2em) &"(Riesz's theorem)"
 $
 
-*Non-implications*:
+*Non-implications* (with counterexamples):
 - $f_n xarrow(mu) f$ does NOT imply $f_n xarrow("a.e.") f$ (typewriter sequence).
-- $f_n xarrow("a.e.") f$ does NOT imply $f_n xarrow(L^p) f$ in general.
+- $f_n xarrow(L^p) f$ does NOT imply $f_n xarrow("a.e.") f$ (typewriter sequence, since $L^p$ also holds).
+- $f_n xarrow("a.e.") f$ does NOT imply $f_n xarrow(L^p) f$ (shrinking bump, even on finite measure).
+- $f_n xarrow(mu) f$ does NOT imply $f_n xarrow("a.u.") f$ (typewriter sequence, since a.u. $=>$ a.e.).
+- $f_n xarrow("a.u.") f$ does NOT imply $f_n xarrow(L^p) f$ (shrinking bump, since a.u. $=>$ a.e. here).
+
+On *infinite measure spaces* ($mu(X) = infinity$), additionally:
+- $f_n xarrow("a.e.") f$ does NOT imply $f_n xarrow(mu) f$ (traveling bump).
+- $f_n xarrow("a.e.") f$ does NOT imply $f_n xarrow("a.u.") f$ (traveling bump; Egorov's theorem fails).
+]
+
+#example(name: "Traveling Bump — Failure on Infinite Measure Spaces")[
+// 无穷测度空间上, 几乎处处收敛既不蕴含依测度收敛, 也不蕴含近一致收敛
+Consider $(bb(R), cal(L), m)$ with Lebesgue measure and let $f_n = chi_([n, n+1])$.
+
+*Almost everywhere convergence*: For every fixed $x in bb(R)$, when $n > x$ we have $x in.not [n, n+1]$, so $f_n(x) = 0$ for all sufficiently large $n$. Thus $f_n -> 0$ everywhere (hence a.e.).
+
+*No convergence in measure*: For $epsilon = 1/2$, $m({x : |f_n(x)| > epsilon}) = m([n, n+1]) = 1$ for all $n$, which does not tend to $0$. Thus $f_n$ does NOT converge to $0$ in measure.
+
+*No almost uniform convergence*: Suppose for contradiction that $f_n xarrow("a.u.") 0$. Then for $delta = 1/2$, there exists $E$ with $m(E) < 1/2$ such that $f_n -> 0$ uniformly on $bb(R) backslash E$. Choose $N$ such that $|f_n(x)| < 1$ for all $x in bb(R) backslash E$ and all $n >= N$. But $f_n(x) = 1$ on $[n, n+1]$, so $[n, n+1] subset E$ for all $n >= N$, giving $m(E) >= 1 > 1/2$, a contradiction.
 ]
 
 
