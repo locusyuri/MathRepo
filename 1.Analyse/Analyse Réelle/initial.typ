@@ -820,9 +820,64 @@ integral_X f dif mu = integral_X f^+ dif mu - integral_X f^- dif mu.
 $
 ]
 
+#proposition(name: "Absolute Integrability is Equivalent to Integrability")[ // 绝对可积等价可积
+Let $(X, cal(S), mu)$ be a measure space and $f: X -> RR$ a real-valued measurable function. Then $f$ is integrable if and only if $|f|$ is integrable. In this case, we have
+$
+integral_X f dif mu = integral_X f^+ dif mu - integral_X f^- dif mu, \
+integral_X |f| dif mu = integral_X f^+ dif mu + integral_X f^- dif mu.
+$
+]
 
+#proposition(name: "Dominated Integrability and Bounded Integrability")[ // 控制可积与有界可积
+Let $(X, cal(S), mu)$ be a measure space.
++ *Comparison Principle*: Let $f, g: X -> overline(bb(R))$ be measurable functions with $g$ integrable. If $|f(x)| <= g(x)$ a.e., then $f$ is integrable and
+  $
+  |integral_X f dif mu| <= integral_X |f| dif mu <= integral_X g dif mu.
+  $
++ *Bounded Measurable Functions on Finite Measure Spaces*: If $mu(X) < infinity$ and $f: X -> overline(bb(R))$ is measurable with $|f(x)| <= M$ a.e. for some constant $M > 0$, then $f$ is integrable and
+  $
+  |integral_X f dif mu| <= M dot mu(X).
+  $
+]
+
+#proposition(name: "Integrable Functions are Finite Almost Everywhere")[ // 可积函数几乎处处有限
+Let $(X, cal(S), mu)$ be a measure space (not necessarily finite). If $f: X -> overline(bb(R))$ is integrable, then $f(x)$ is finite for almost every $x in X$, i.e. $mu({x in X : |f(x)| = infinity}) = 0$.
+]
+
+#proof[
+  For any $M > 0$, by Markov's inequality:
+  $
+  mu({x in X : |f(x)| >= M}) <= (1/M) integral_X |f| dif mu.
+  $
+  The set ${x : |f(x)| = infinity}$ is contained in ${x : |f(x)| >= M}$ for every $M > 0$, so
+  $
+  mu({x : |f(x)| = infinity}) <= (1/M) integral_X |f| dif mu quad "for all" M > 0.
+  $
+  Since $f$ is integrable, $integral_X |f| dif mu < infinity$. Letting $M -> infinity$ gives $mu({x : |f(x)| = infinity}) = 0$.
+]
 
 === Properties of the Lebesgue Integral // 勒贝格积分的性质
+
+#property(name: "Properties of the Lebesgue Integral")[
+Let $(X, cal(S), mu)$ be a measure space, and let $f, g: X -> overline(bb(R))$ be integrable functions.
++ *Finite Additivity*: For any two disjoint measurable sets $A, B in cal(S)$,
+  $
+  integral_(A union B) f dif mu = integral_A f dif mu + integral_B f dif mu.
+  $
++ *Linearity*: For any $alpha, beta in bb(R)$, the function $alpha f + beta g$ is integrable and
+  $
+  integral_X (alpha f + beta g) dif mu = alpha integral_X f dif mu + beta integral_X g dif mu.
+  $
++ *Absolute Continuity of the Integral*: For every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A in cal(S)$ with $mu(A) < delta$,
+  $
+  integral_A |f| dif mu < epsilon.
+  $
++ *Sigma-Additivity over Disjoint Sets*: Let $A_1, A_2, dots in cal(S)$ be pairwise disjoint. Then
+  $
+  integral_(union_(i=1)^infinity A_i) f dif mu = sum_(i=1)^infinity integral_(A_i) f dif mu.
+  $
+  The series on the right converges absolutely.
+]
 
 == Limit of Integral Sequences // 积分序列的极限
 
