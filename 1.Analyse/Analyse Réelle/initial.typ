@@ -878,18 +878,25 @@ Let $(bb(R), cal(L), m)$ be a measure space, and let $f, g: X -> overline(bb(R))
 
 #property(name: "Analytic Properties of the Lebesgue Integral")[ // 积分的分析性质
 Let $(bb(R), cal(L), m)$ be a measure space, and let $f: X -> overline(bb(R))$ be integrable functions.
-+ *Translation Invariance*: For any $t in bb(R)$, the translated function $f_t(x) = f(x - t)$ is integrable and
++ *Translation Invariance*: For any $t in bb(R)$, the translated function $f_h(x) = f(x + h)$ is integrable and
   $
-  integral_bb(R) f_t dif m = integral_bb(R) f dif m.
+  integral_bb(R) f_h dif m = integral_bb(R) f dif m.
   $
 + *Continuity of Average*: 
 $
-  lim_(h->0) integral_bb(R) |f(x+h) - f(x)| dif m = 0.
+  lim_(h->0) integral_bb(R) |f_h(x) - f(x)| dif m = 0.
 $
 + *Absolute Continuity of the Integral*: For every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A in cal(S)$ with $mu(A) < delta$,
   $
   integral_A |f| dif mu < epsilon.
   $
+]
+
+#note[
+  // Translation Invariance vs. Continuity of Average
+  - *Translation Invariance* is an equality: the integral value is unchanged under any translation. It is a structural property of the Lebesgue measure itself.
+  - *Continuity of Average* is a limit statement: it asserts that the $L^1$ distance between $f$ and its translate $f_h(x)$ tends to $0$ as $h -> 0$. This is the $L^1$-continuity of the translation operator.
+  - Translation invariance is a necessary condition for the continuity statement to be meaningful (otherwise the integrals would not even be comparable), but it does not imply continuity of average. The latter requires $f in L^1$ and is a non-trivial approximation property.
 ]
 
 == Limit of Integral Sequences // 积分序列的极限
@@ -1980,6 +1987,365 @@ The results of the preceding sections converge on a single question: for which f
 ]
 
 #part("Function Spaces") // 函数空间
+= $L^p$ Spaces
+== $L^p$ Spaces and Completeness // L^p空间与完备性
+
+// 本节正式定义 L^p 空间，验证范数公理（Hölder + Minkowski），证明完备性（Riesz-Fischer）
+
+Throughout the preceding chapters, the expression $(integral_X |f|^p dif mu)^(1/p)$ appeared repeatedly — in the definition of convergence in $L^p$ norm (Section 2.2), in the hypotheses of the Dominated Convergence Theorem (Section 3.2), and in the comparison of function classes (Section 4.4). We now formalize the space of functions for which this quantity is finite, establish its fundamental inequalities, and prove that it is a complete normed space.
+
+=== Definition of $L^p$ Spaces // L^p空间的定义
+
+#definition(name: "$L^p$ Space, $1 <= p < infinity$")[
+  Let $(X, cal(S), mu)$ be a measure space and let $1 <= p < infinity$. Define
+  $
+  cal(L)^p(X, mu) = {f: X -> overline(bb(R)) "measurable" : integral_X |f|^p dif mu < infinity}.
+  $
+  Two functions $f, g in cal(L)^p(X, mu)$ are said to be *equivalent*, written $f tilde g$, if $f = g$ almost everywhere. The *$L^p$ space* is the quotient
+  $
+  L^p(X, mu) = cal(L)^p(X, mu) / tilde.
+  $
+  For $f in L^p(X, mu)$, the *$L^p$ norm* is defined by
+  $
+  ||f||_p = (integral_X |f|^p dif mu)^(1/p).
+  $
+]
+
+#definition(name: "$L^infinity$ Space")[
+  A measurable function $f: X -> overline(bb(R))$ is *essentially bounded* if there exists $M >= 0$ such that $mu({x in X : |f(x)| > M}) = 0$. The *essential supremum* is
+  $
+  ||f||_oo = "ess sup"_(x in X) |f(x)| = inf {M >= 0 : mu({x : |f(x)| > M}) = 0}.
+  $
+  The space $L^infinity(X, mu)$ consists of equivalence classes (modulo a.e. equality) of essentially bounded measurable functions, equipped with the norm $||dot||_oo$.
+]
+
+#note[
+  The quotient by a.e. equivalence is essential: without it, $||f||_p = 0$ would only imply $f = 0$ a.e., not $f = 0$ everywhere, so the norm axioms would fail. By identifying functions that agree a.e., we ensure that $||f||_p = 0 => f = 0$ in $L^p$. In practice, we write "$f in L^p$" and work with representatives freely, keeping in mind that equalities hold a.e.
+]
+
+#proposition(name: "$L^p$ is a Vector Space")[
+  For $1 <= p <= infinity$, $L^p(X, mu)$ is a vector space over $bb(R)$.
+]
+
+#proof[
+  Let $f, g in L^p$. For $1 <= p < infinity$, the elementary inequality $|a + b|^p <= 2^p max(|a|^p, |b|^p) <= 2^p(|a|^p + |b|^p)$ gives
+  $
+  integral_X |f + g|^p dif mu <= 2^p (integral_X |f|^p dif mu + integral_X |g|^p dif mu) < infinity,
+  $
+  so $f + g in L^p$. Scalar closure is immediate: $||alpha f||_p = |alpha| ||f||_p$. For $p = infinity$, both properties follow directly from the definition of essential supremum.
+]
+
+=== Hölder's Inequality // Hölder不等式
+
+#definition(name: "Conjugate Exponents")[
+  Let $1 < p < infinity$. The *conjugate exponent* $q$ is defined by
+  $
+  1/p + 1/q = 1, quad "equivalently" quad q = p / (p - 1).
+  $
+  We also adopt the convention that $p = 1$ and $q = infinity$ (or vice versa) are conjugate pairs.
+]
+
+#lemma(name: "Young's Inequality")[
+  Let $a, b >= 0$ and let $p, q$ be conjugate exponents with $1 < p < infinity$. Then
+  $
+  a b <= a^p / p + b^q / q.
+  $
+  Equality holds if and only if $a^p = b^q$.
+]
+
+#proof[
+  If $a = 0$ or $b = 0$, the inequality is trivial. Assume $a, b > 0$. Since the logarithm is strictly concave on $(0, infinity)$, for any $t in (0, 1)$ and $u, v > 0$:
+  $
+  t log u + (1 - t) log v <= log(t u + (1 - t) v),
+  $
+  with equality iff $u = v$. Apply this with $t = 1/p$, $u = a^p$, $v = b^q$:
+  $
+  1/p log(a^p) + 1/q log(b^q) <= log(a^p / p + b^q / q).
+  $
+  The left side equals $log(a b)$, so exponentiating gives $a b <= a^p / p + b^q / q$. Equality holds iff $a^p = b^q$.
+]
+
+#theorem(name: "Hölder's Inequality")[
+  Let $1 <= p <= infinity$ with conjugate exponent $q$. If $f in L^p(X, mu)$ and $g in L^q(X, mu)$, then $f g in L^1(X, mu)$ and
+  $
+  integral_X |f g| dif mu <= ||f||_p ||g||_q.
+  $
+]
+
+#proof[
+  _Step 1: Trivial cases._ If $||f||_p = 0$, then $f = 0$ a.e., so $f g = 0$ a.e. and the inequality holds. Assume $||f||_p, ||g||_q > 0$.
+
+  _Step 2: The case $p = 1, q = infinity$._ By definition of essential supremum, $|g(x)| <= ||g||_oo$ a.e. Therefore
+  $
+  integral_X |f g| dif mu <= ||g||_oo integral_X |f| dif mu = ||f||_1 ||g||_oo.
+  $
+
+  _Step 3: Normalization ($1 < p < infinity$)._ Define $F = f / ||f||_p$ and $G = g / ||g||_q$. Then $||F||_p = 1$ and $||G||_q = 1$.
+
+  _Step 4: Pointwise application of Young's inequality._ For each $x in X$:
+  $
+  |F(x) G(x)| <= |F(x)|^p / p + |G(x)|^q / q.
+  $
+
+  _Step 5: Integration._ Integrating both sides:
+  $
+  integral_X |F G| dif mu <= 1/p integral_X |F|^p dif mu + 1/q integral_X |G|^q dif mu = 1/p + 1/q = 1.
+  $
+  Substituting back $F = f / ||f||_p$ and $G = g / ||g||_q$ yields the result.
+]
+
+#corollary(name: "$L^p$ Inclusion on Finite Measure Spaces")[
+  Let $mu(X) < infinity$ and $1 <= p_1 < p_2 <= infinity$. Then $L^(p_2)(X, mu) subset.eq L^(p_1)(X, mu)$.
+]
+
+#proof[
+  Let $f in L^(p_2)$. Apply Hölder's inequality to $|f|^(p_1)$ and $g = 1$ with exponents $r = p_2 / p_1 > 1$ and its conjugate $r' = r / (r - 1)$:
+  $
+  integral_X |f|^(p_1) dif mu <= (integral_X |f|^(p_1 dot r) dif mu)^(1/r) (integral_X 1 dif mu)^(1/r') = ||f||_(p_2)^(p_1) mu(X)^(1/r') < infinity.
+  $
+  Hence $f in L^(p_1)$.
+]
+
+#example[
+  The inclusion $L^(p_2) subset.eq L^(p_1)$ on finite measure spaces is *strict*: on $([0, 1], m)$, the function $f(x) = x^(-alpha)$ with $1/p_2 < alpha < 1/p_1$ belongs to $L^(p_1)$ but not $L^(p_2)$.
+
+  On $(bb(R), m)$, the spaces $L^1$ and $L^2$ are *not* comparable: $f(x) = 1/(1 + |x|) in L^2 backslash L^1$ (decays too slowly for $L^1$), while $g = chi_([0,1]) / sqrt(x) in L^1 backslash L^2$ (singular at $0$, too strong for $L^2$).
+]
+
+=== Minkowski's Inequality // Minkowski不等式
+
+#theorem(name: "Minkowski's Inequality")[
+  Let $1 <= p <= infinity$. For all $f, g in L^p(X, mu)$,
+  $
+  ||f + g||_p <= ||f||_p + ||g||_p.
+  $
+]
+
+#proof[
+  _Step 1: The cases $p = 1$ and $p = infinity$._ For $p = 1$, the inequality follows from $|f + g| <= |f| + |g|$ and linearity of the integral. For $p = infinity$, $|f(x) + g(x)| <= ||f||_oo + ||g||_oo$ a.e., so $||f + g||_oo <= ||f||_oo + ||g||_oo$.
+
+  _Step 2: Setup for $1 < p < infinity$._ If $||f + g||_p = 0$, the result is trivial. Otherwise, write
+  $
+  |f + g|^p = |f + g| dot |f + g|^(p-1) <= (|f| + |g|) |f + g|^(p-1).
+  $
+  Integrating:
+  $
+  ||f + g||_p^p <= integral_X |f| |f + g|^(p-1) dif mu + integral_X |g| |f + g|^(p-1) dif mu.
+  $
+
+  _Step 3: Apply Hölder's inequality._ Let $q = p/(p-1)$ be the conjugate exponent. Note that $(p-1) q = p$, so $|f + g|^((p-1)q) = |f + g|^p$. Applying Hölder to each term:
+  $
+  integral_X |f| |f + g|^(p-1) dif mu <= ||f||_p (integral_X |f + g|^((p-1)q) dif mu)^(1/q) = ||f||_p ||f + g||_p^(p/q).
+  $
+  Similarly for the $|g|$ term.
+
+  _Step 4: Combine and divide._ We obtain
+  $
+  ||f + g||_p^p <= (||f||_p + ||g||_p) ||f + g||_p^(p/q).
+  $
+  Since $||f + g||_p > 0$, divide both sides by $||f + g||_p^(p/q)$. Using $p - p/q = p(1 - 1/q) = p dot 1/p = 1$:
+  $
+  ||f + g||_p <= ||f||_p + ||g||_p.
+  $
+]
+
+#corollary(name: "$L^p$ Norm Axioms")[
+  For $1 <= p <= infinity$, $(L^p(X, mu), ||dot||_p)$ satisfies all norm axioms:
+  + *Non-negativity*: $||f||_p >= 0$, with equality if and only if $f = 0$ in $L^p$ (i.e., $f = 0$ a.e.).
+  + *Absolute homogeneity*: $||alpha f||_p = |alpha| ||f||_p$ for all $alpha in bb(R)$.
+  + *Triangle inequality*: $||f + g||_p <= ||f||_p + ||g||_p$ (Minkowski's inequality).
+
+  Therefore $(L^p(X, mu), ||dot||_p)$ is a normed vector space.
+]
+
+#note[
+  When $0 < p < 1$, Minkowski's inequality *reverses*: $||f + g||_p >= ||f||_p + ||g||_p$ for non-negative $f, g$. Consequently, $||dot||_p$ is *not* a norm. One can still define $L^p$ for $0 < p < 1$ as a metric space with $d(f, g) = integral |f - g|^p dif mu$, but it is not locally convex and has trivial dual space.
+]
+
+=== Completeness of $L^p$ Spaces // L^p空间的完备性
+
+// Riesz-Fischer 定理：L^p 是完备的（Banach 空间）
+// 证明核心：从 Cauchy 列中提取快速收敛子列，利用级数和 Fatou 引理
+
+#theorem(name: "Riesz-Fischer Theorem")[
+  For $1 <= p <= infinity$, the space $L^p(X, mu)$ is complete: every Cauchy sequence in $L^p$ converges to an element of $L^p$. Therefore $(L^p(X, mu), ||dot||_p)$ is a Banach space.
+]
+
+#proof[
+  We prove the case $1 <= p < infinity$; the case $p = infinity$ is similar but simpler.
+
+  _Step 1: Extract a fast-converging subsequence._ Let $(f_n)$ be a Cauchy sequence in $L^p$. Choose a subsequence $(f_(n_k))$ such that
+  $
+  ||f_(n_(k+1)) - f_(n_k)||_p < 1 / 2^k quad "for all" k >= 1.
+  $
+
+  _Step 2: Define the telescoping series._ Let
+  $
+  g_K(x) = sum_(k=1)^K |f_(n_(k+1))(x) - f_(n_k)(x)|, quad g(x) = lim_(K -> oo) g_K(x) = sum_(k=1)^oo |f_(n_(k+1))(x) - f_(n_k)(x)|.
+  $
+
+  _Step 3: Show $g in L^p$._ By Minkowski's inequality, $||g_K||_p <= sum_(k=1)^K 1/2^k < 1$. By Fatou's Lemma applied to $(g_K^p)$:
+  $
+  integral_X g^p dif mu = integral_X liminf_(K -> oo) g_K^p dif mu <= liminf_(K -> oo) integral_X g_K^p dif mu <= 1.
+  $
+  Hence $g in L^p$, and in particular $g(x) < infinity$ a.e.
+
+  _Step 4: Pointwise convergence a.e._ Since $g(x) < infinity$ a.e., the telescoping series
+  $
+  f_(n_1)(x) + sum_(k=1)^oo (f_(n_(k+1))(x) - f_(n_k)(x))
+  $
+  converges absolutely a.e. Define $f(x) = lim_(k -> oo) f_(n_k)(x)$ where the limit exists, and $f(x) = 0$ otherwise.
+
+  _Step 5: $f in L^p$._ We have $|f_(n_k)| <= |f_(n_1)| + g in L^p$. By Fatou's Lemma:
+  $
+  integral_X |f|^p dif mu <= liminf_(k -> oo) integral_X |f_(n_k)|^p dif mu < infinity,
+  $
+  since Cauchy sequences are bounded. Hence $f in L^p$.
+
+  _Step 6: $f_(n_k) -> f$ in $L^p$._ For fixed $j$, the inequality $|f_(n_k) - f_(n_j)|^p <= (|f_(n_j)| + g)^p in L^1$ and the pointwise convergence $f_(n_k) -> f$ a.e. allow us to apply Fatou's Lemma:
+  $
+  ||f - f_(n_j)||_p^p = integral_X |f - f_(n_j)|^p dif mu <= liminf_(k -> oo) integral_X |f_(n_k) - f_(n_j)|^p dif mu = liminf_(k -> oo) ||f_(n_k) - f_(n_j)||_p^p.
+  $
+  Since $(f_n)$ is Cauchy, $||f_(n_k) - f_(n_j)||_p -> 0$ as $j -> oo$. Hence $||f - f_(n_j)||_p -> 0$.
+
+  _Step 7: Full sequence converges._ Since $(f_n)$ is Cauchy and the subsequence $(f_(n_k))$ converges to $f$ in $L^p$, the full sequence $(f_n)$ converges to $f$:
+  $
+  ||f_n - f||_p <= ||f_n - f_(n_k)||_p + ||f_(n_k) - f||_p -> 0.
+  $
+]
+
+#note[
+  The key idea — sometimes called the *Riesz trick* — is that a Cauchy sequence in $L^p$ need not converge pointwise, but a subsequence always converges pointwise a.e. This subsequence provides a concrete limit candidate $f$, and Fatou's Lemma (or LDCT) transfers the pointwise information back into $L^p$ convergence.
+]
+
+#proposition(name: "Monotonicity of $L^p$ Norms on Finite Measure")[
+  Let $mu(X) < infinity$ and $1 <= p <= q <= infinity$. For any $f in L^q(X, mu)$:
+  $
+  ||f||_p <= mu(X)^(1/p - 1/q) ||f||_q.
+  $
+]
+
+#proof[
+  For $q = infinity$: $|f(x)| <= ||f||_oo$ a.e., so $integral |f|^p <= ||f||_oo^p mu(X)$, giving $||f||_p <= mu(X)^(1/p) ||f||_oo$.
+
+  For $q < infinity$: apply Hölder's inequality to $|f|^p$ with exponent $r = q/p > 1$ and conjugate $r' = r/(r-1) = q/(q-p)$:
+  $
+  integral_X |f|^p dif mu <= (integral_X |f|^(p dot r) dif mu)^(1/r) (integral_X 1 dif mu)^(1/r') = ||f||_q^p mu(X)^((q-p)/q).
+  $
+  Taking the $1/p$-th power: $||f||_p <= ||f||_q mu(X)^((q-p)/(p q)) = mu(X)^(1/p - 1/q) ||f||_q$.
+]
+
+#tex-table(
+  ("Setting", "Inclusion", "Reason"),
+  ("$mu(X) < oo$", "$L^q subset.eq L^p$ for $q > p$", "Hölder + finite measure"),
+  ("$mu$ = counting measure on $bb(N)$", "$ell^p subset.eq ell^q$ for $p < q$", "$|a_n|^q <= |a_n|^p$ when $|a_n| <= 1$"),
+  ("General $(X, mu)$", "No inclusion", "Both $L^p backslash L^q$ and $L^q backslash L^p$ may be non-empty"),
+)
+
+== Separability of $L^p$ Spaces // L^p空间的可分性
+
+// 本节研究 L^p 空间的拓扑结构：哪些子空间是稠密的，L^p 是否可分
+
+Knowing that $L^p$ is a Banach space, we now study its topological structure. Which natural subspaces are dense in $L^p$? Is $L^p$ separable — does it admit a countable dense subset? These questions have direct practical importance: density results allow us to prove theorems for "nice" functions first, then extend by continuity.
+
+=== Dense Subspaces of $L^p$ // L^p的稠密子空间
+
+#theorem(name: "Simple Functions are Dense in $L^p$")[
+  Let $1 <= p < infinity$. For every $f in L^p(X, mu)$ and every $epsilon > 0$, there exists a simple function $s in L^p(X, mu)$ such that $||f - s||_p < epsilon$.
+]
+
+#proof[
+  _Step 1: Truncate to bounded functions._ Define
+  $
+  f_N(x) = cases(f(x) & "if" |f(x)| <= N, 0 & "if" |f(x)| > N).
+  $
+  Then $|f(x) - f_N(x)|^p -> 0$ pointwise as $N -> oo$, and $|f - f_N|^p <= |f|^p in L^1$. By the Dominated Convergence Theorem, $||f - f_N||_p -> 0$. Choose $N$ large enough so that $||f - f_N||_p < epsilon / 2$.
+
+  _Step 2: Approximate bounded functions by simple functions._ Since $f_N$ is bounded and measurable, by the Approximation Theorem for measurable functions (Section 2.1), there exists a sequence of simple functions $(s_n)$ such that $s_n -> f_N$ pointwise and $|s_n| <= ||f_N||_oo$. Then $|f_N - s_n|^p -> 0$ pointwise and $|f_N - s_n|^p <= (2 ||f_N||_oo)^p$. Since $f_N in L^p$, the support of $f_N$ has finite measure or $f_N$ decays sufficiently, so $(2 ||f_N||_oo)^p chi_("supp"(f_N)) in L^1$. By LDCT, $||f_N - s_n||_p -> 0$. Choose $n$ so that $||f_N - s_n||_p < epsilon / 2$. Then $||f - s_n||_p < epsilon$.
+]
+
+#theorem(name: "$C_c(bb(R)^n)$ is Dense in $L^p(bb(R)^n)$")[
+  For $1 <= p < infinity$, the space $C_c(bb(R)^n)$ of continuous functions with compact support is dense in $L^p(bb(R)^n, m)$.
+]
+
+#proof[
+  _Step 1: Reduce to indicator functions._ By the previous theorem, simple functions are dense in $L^p$. Since every simple function is a finite linear combination of indicator functions $chi_E$ with $m(E) < infinity$, it suffices to approximate $chi_E$ for measurable $E$ with $m(E) < infinity$.
+
+  _Step 2: Regularity of Lebesgue measure._ Given $epsilon > 0$, by the regularity of Lebesgue measure, there exist a compact set $K subset E$ and an open set $U supset E$ such that $m(U backslash K) < epsilon^p$.
+
+  _Step 3: Urysohn's lemma._ Since $K subset U$ with $K$ compact and $U$ open, there exists $phi in C_c(bb(R)^n)$ with $0 <= phi <= 1$, $phi = 1$ on $K$, and $"supp"(phi) subset U$.
+
+  _Step 4: Norm estimate._ Since $|chi_E(x) - phi(x)| = 0$ on $K$ and on $U^c$, and $|chi_E - phi| <= 1$ on $U backslash K$:
+  $
+  ||chi_E - phi||_p^p = integral_(U backslash K) |chi_E - phi|^p dif m <= m(U backslash K) < epsilon^p.
+  $
+  Hence $||chi_E - phi||_p < epsilon$, and $C_c(bb(R)^n)$ is dense in $L^p(bb(R)^n, m)$.
+]
+
+#corollary[
+  Step functions (finite linear combinations of indicator functions of intervals) are dense in $L^p(bb(R), m)$ for $1 <= p < infinity$.
+]
+
+=== Separability // 可分性
+
+#definition(name: "Separable Space")[
+  A metric space $(M, d)$ is *separable* if it contains a countable dense subset.
+]
+
+#theorem(name: "Separability of $L^p$")[
+  For $1 <= p < infinity$, $L^p(bb(R)^n, m)$ is separable.
+]
+
+#proof[
+  _Step 1: A countable family._ Let $cal(D)$ be the set of step functions of the form
+  $
+  s(x) = sum_(j=1)^N c_j chi_(R_j)(x),
+  $
+  where $N in bb(N)$, each $c_j in bb(Q)$, and each $R_j$ is a rectangle with rational vertices in $bb(R)^n$. Since there are countably many choices for $N$, the $c_j$, and the $R_j$, the set $cal(D)$ is countable.
+
+  _Step 2: $cal(D)$ is dense in the step functions._ Any step function with real coefficients and measurable rectangles can be approximated by elements of $cal(D)$: rational coefficients approximate real ones, and rational rectangles approximate measurable ones in measure.
+
+  _Step 3: $cal(D)$ is dense in $C_c(bb(R)^n)$._ Let $phi in C_c(bb(R)^n)$ with $"supp"(phi) subset K$ compact. By uniform continuity on $K$, for any $delta > 0$, there exists a partition of $K$ into small rectangles on which $phi$ varies by at most $delta$. A step function from $cal(D)$ on this partition satisfies $||phi - s||_oo < delta$.
+
+  _Step 4: $cal(D)$ is dense in $L^p$._ Since $||phi - s||_p <= ||phi - s||_oo m(K)^(1/p)$, uniform approximation on bounded support gives $L^p$ approximation. Since $C_c(bb(R)^n)$ is dense in $L^p$ (previous theorem) and $cal(D)$ is dense in $C_c(bb(R)^n)$, $cal(D)$ is dense in $L^p(bb(R)^n, m)$.
+]
+
+#theorem(name: "$L^infinity$ is NOT Separable")[
+  $L^infinity(bb(R), m)$ is not separable.
+]
+
+#proof[
+  Consider the uncountable family ${chi_([0, t]) : t in (0, 1)}$. For $s != t$ in $(0, 1)$:
+  $
+  ||chi_([0, s]) - chi_([0, t])||_oo = 1.
+  $
+  Suppose $L^infinity$ were separable, with countable dense subset ${g_n}$. For each $t in (0, 1)$, there exists $n(t) in bb(N)$ such that $||chi_([0, t]) - g_(n(t))||_oo < 1/3$. For $s != t$:
+  $
+  ||g_(n(s)) - g_(n(t))||_oo >= ||chi_([0, s]) - chi_([0, t])||_oo - ||chi_([0, s]) - g_(n(s))||_oo - ||chi_([0, t]) - g_(n(t))||_oo > 1 - 2/3 = 1/3.
+  $
+  Therefore $n(s) != n(t)$, giving an injection from $(0, 1)$ to $bb(N)$ — a contradiction.
+]
+
+#note[
+  The same argument shows that $L^infinity(X, mu)$ is not separable whenever the measure space has uncountably many disjoint sets of positive measure. This is one reason $L^infinity$ has a fundamentally different character from the other $L^p$ spaces.
+]
+
+=== Summary and Outlook // 总结与展望
+
+#tex-table(
+  ("Property", "$1 <= p < infinity$", "$p = infinity$"),
+  ("Normed space", "Yes (Minkowski)", "Yes"),
+  ("Complete (Banach)", "Yes (Riesz-Fischer)", "Yes"),
+  ("Separable (on $bb(R)^n$)", "Yes", "No"),
+  ("Dense subspace", "Simple functions, $C_c(bb(R)^n)$", "No countable dense subset"),
+)
+
+#note[
+  *Outlook.* The study of $L^p$ spaces continues in several directions:
+  - *Duality*: For $1 <= p < infinity$, the dual space $(L^p)^*$ is isometrically isomorphic to $L^q$ where $q$ is the conjugate exponent (Riesz Representation Theorem for $L^p$). The case $p = 1$, $q = infinity$ requires $sigma$-finiteness.
+  - *$L^2$ as a Hilbert space*: The inner product $chevron.l f, g chevron.r = integral_X f dot g dif mu$ makes $L^2(X, mu)$ a Hilbert space, enabling orthogonal projections, Fourier series, and spectral theory.
+  - *Weak convergence*: A sequence $(f_n)$ converges weakly in $L^p$ if $integral f_n g dif mu -> integral f g dif mu$ for every $g in L^q$. This notion, weaker than norm convergence, is central to the study of PDEs and variational problems.
+]
 
 
 #part("Differentiation Theory") // 微分理论 
