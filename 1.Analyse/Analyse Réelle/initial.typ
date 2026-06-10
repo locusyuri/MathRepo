@@ -858,8 +858,8 @@ Let $(X, cal(S), mu)$ be a measure space (not necessarily finite). If $f: X -> o
 
 === Properties of the Lebesgue Integral // 勒贝格积分的性质
 
-#property(name: "Properties of the Lebesgue Integral")[
-Let $(X, cal(S), mu)$ be a measure space, and let $f, g: X -> overline(bb(R))$ be integrable functions.
+#property(name: "Algebraic Properties of the Lebesgue Integral")[ // 勒贝格积分的代数性质
+Let $(bb(R), cal(L), m)$ be a measure space, and let $f, g: X -> overline(bb(R))$ be integrable functions.
 + *Linearity*: For any $alpha, beta in bb(R)$, the function $alpha f + beta g$ is integrable and
   $
   integral_X (alpha f + beta g) dif mu = alpha integral_X f dif mu + beta integral_X g dif mu.
@@ -869,15 +869,27 @@ Let $(X, cal(S), mu)$ be a measure space, and let $f, g: X -> overline(bb(R))$ b
   $
   integral_(A union B) f dif mu = integral_A f dif mu + integral_B f dif mu.
   $
-+ *Absolute Continuity of the Integral*: For every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A in cal(S)$ with $mu(A) < delta$,
-  $
-  integral_A |f| dif mu < epsilon.
-  $
 + *Sigma-Additivity over Disjoint Sets*: Let $A_1, A_2, dots in cal(S)$ be pairwise disjoint. Then
   $
   integral_(union_(i=1)^infinity A_i) f dif mu = sum_(i=1)^infinity integral_(A_i) f dif mu.
   $
   The series on the right converges absolutely.
+]
+
+#property(name: "Analytic Properties of the Lebesgue Integral")[ // 积分的分析性质
+Let $(bb(R), cal(L), m)$ be a measure space, and let $f: X -> overline(bb(R))$ be integrable functions.
++ *Translation Invariance*: For any $t in bb(R)$, the translated function $f_t(x) = f(x - t)$ is integrable and
+  $
+  integral_bb(R) f_t dif m = integral_bb(R) f dif m.
+  $
++ *Continuity of Average*: 
+$
+  lim_(h->0) integral_bb(R) |f(x+h) - f(x)| dif m = 0.
+$
++ *Absolute Continuity of the Integral*: For every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A in cal(S)$ with $mu(A) < delta$,
+  $
+  integral_A |f| dif mu < epsilon.
+  $
 ]
 
 == Limit of Integral Sequences // 积分序列的极限
@@ -1655,9 +1667,317 @@ With the Vitali covering lemma in hand, we can now return to the question left o
 
 == Monotone Functions on Closed Intervals // 闭区间上的单调函数
 
+// 本节核心：利用 Dini 导数和 Vitali 覆盖引理证明单调函数几乎处处可导
+
+The Dini derivatives provide pointwise slope information, and the Vitali covering lemma converts local data into almost-everywhere conclusions. This section combines them to establish the central result: every monotone function on a closed interval is differentiable almost everywhere.
+
+#theorem(name: "Lebesgue's Differentiability Theorem")[
+  Let $f: [a, b] -> bb(R)$ be a monotone function. Then $f$ is differentiable at almost every point of $[a, b]$ with respect to Lebesgue measure. That is, the set
+  $
+  {x in (a, b) : f'(x) "does not exist"}
+  $
+  has Lebesgue measure zero.
+]
+
+#proof[
+  _Step 1: Reduction and setup._
+  Without loss of generality, assume $f$ is non-decreasing (if $f$ is non-increasing, replace it by $-f$). From the discussion of Dini derivatives (Section 4.1), we know that for a non-decreasing function, $D^+ f(x) = D_- f(x)$ a.e. and $D_+ f(x) = D^- f(x)$ a.e. It therefore suffices to show that $D^+ f(x) = D_+ f(x)$ a.e., since this forces all four Dini derivatives to coincide.
+
+  For each pair of rational numbers $alpha < beta$, define
+  $
+  E_(alpha, beta) = {x in (a, b) : D_+ f(x) < alpha < beta < D^+ f(x)}.
+  $
+  The set where $D^+ f(x) > D_+ f(x)$ is contained in
+  $
+  union.big_(alpha < beta, alpha, beta in bb(Q)) E_(alpha, beta),
+  $
+  a countable union. It suffices to show $m^*(E_(alpha, beta)) = 0$ for each fixed pair.
+
+  _Step 2: First Vitali covering — exploiting $D_+ f < alpha$._
+  Fix rational $alpha < beta$ and let $E = E_(alpha, beta)$. For each $x in E$, we have $D_+ f(x) < alpha$, so there exist arbitrarily small $h > 0$ such that
+  $
+  f(x + h) - f(x) < alpha h.
+  $
+  The collection $cal(V)_1 = {[x, x + h] : x in E, f(x + h) - f(x) < alpha h}$ is a Vitali covering of $E$. Given $epsilon > 0$, extract a finite disjoint subcollection $I_1, ..., I_N$ with $I_i = [x_i, x_i + h_i]$ such that
+  $
+  m^*(E backslash union.big_(i=1)^N I_i) < epsilon.
+  $
+  Let $U = union.big_(i=1)^N (x_i, x_i + h_i)$ be the union of the interiors. Then $m^*(E inter U) > m^*(E) - epsilon$.
+
+  _Step 3: Second Vitali covering — exploiting $D^+ f > beta$._
+  For each $y in E inter U$, we have $y in (x_i, x_i + h_i)$ for some $i$, and $D^+ f(y) > beta$. There exist arbitrarily small $k > 0$ such that $[y, y + k] subset (x_i, x_i + h_i)$ and
+  $
+  f(y + k) - f(y) > beta k.
+  $
+  These intervals form a Vitali covering of $E inter U$. Extract a finite disjoint subcollection $J_1, ..., J_M$ with $J_j = [y_j, y_j + k_j]$ such that
+  $
+  m^*((E inter U) backslash union.big_(j=1)^M J_j) < epsilon.
+  $
+  Since the intervals $J_j$ cover all but an $epsilon$-portion of $E inter U$, we have
+  $
+  sum_(j=1)^M k_j >= m^*(E inter U inter union.big_(j=1)^M J_j) > m^*(E) - 2 epsilon.
+  $
+
+  _Step 4: The key inequality chain._
+  Since $f$ is non-decreasing and each $J_j$ is contained in some $I_i$, with all $J_j$ pairwise disjoint, the monotonicity of $f$ gives
+  $
+  sum_(j=1)^M (f(y_j + k_j) - f(y_j)) <= sum_(i=1)^N (f(x_i + h_i) - f(x_i)).
+  $
+  Combining this with the defining inequalities from Steps 2 and 3:
+  $
+  beta sum_(j=1)^M k_j < sum_(j=1)^M (f(y_j + k_j) - f(y_j)) <= sum_(i=1)^N (f(x_i + h_i) - f(x_i)) < alpha sum_(i=1)^N h_i.
+  $
+  Using $sum k_j > m^*(E) - 2 epsilon$:
+  $
+  beta (m^*(E) - 2 epsilon) < alpha sum_(i=1)^N h_i.
+  $
+
+  _Step 5: The bootstrapping argument._
+  The argument of Steps 2–4 applies to $E inter (c, d)$ for any open interval $(c, d) subset.eq [a, b]$, yielding
+  $
+  m^*(E inter (c, d)) <= (alpha / beta)(d - c).
+  $
+  Now let $G$ be an open set with $E subset G subset (a, b)$ and $m(G) < m^*(E) + epsilon$. Decompose $G = union.big_(k=1)^oo (c_k, d_k)$ into disjoint open intervals. Then
+  $
+  m^*(E) = m^*(E inter G) <= sum_(k=1)^oo m^*(E inter (c_k, d_k)) <= (alpha / beta) sum_(k=1)^oo (d_k - c_k) = (alpha / beta) m(G) < (alpha / beta)(m^*(E) + epsilon).
+  $
+  Since $epsilon > 0$ is arbitrary, $m^*(E) <= (alpha / beta) m^*(E)$. Since $alpha / beta < 1$, this forces $m^*(E) = 0$.
+
+  _Step 6: Conclusion._
+  The set where $f$ fails to be differentiable is contained in
+  $
+  {x : D^+ f(x) != D_+ f(x)} union {x : f'(x) = plus.minus infinity}.
+  $
+  The first set is $union.big_(alpha < beta in bb(Q)) E_(alpha, beta)$, a countable union of measure-zero sets. The second set has measure zero: since $f$ is monotone on a compact interval, $|f(b) - f(a)| < infinity$, so $f'$ cannot be infinite on a set of positive measure. Therefore $f$ is differentiable a.e.
+]
+
+#corollary[
+  Let $f: [a, b] -> bb(R)$ be monotone. Then $f'$ is measurable and Lebesgue integrable on $[a, b]$, with
+  $
+  integral_a^b f'(x) dif x <= |f(b) - f(a)|.
+  $
+]
+
+#proof[
+  Assume $f$ is non-decreasing. Extend $f$ to $[a, b + 1]$ by setting $f(x) = f(b)$ for $x > b$. Define
+  $
+  f_n(x) = n(f(x + 1/n) - f(x)), quad x in [a, b].
+  $
+  Each $f_n$ is measurable (as a composition of measurable functions), $f_n >= 0$, and $f_n(x) -> f'(x)$ a.e. by Lebesgue's Differentiability Theorem. Since $f'$ is the a.e. limit of measurable functions, it is measurable.
+
+  For integrability, apply Fatou's Lemma:
+  $
+  integral_a^b f'(x) dif x = integral_a^b liminf_(n -> oo) f_n(x) dif x <= liminf_(n -> oo) integral_a^b f_n(x) dif x.
+  $
+  Computing the integral of $f_n$:
+  $
+  integral_a^b f_n(x) dif x = n integral_a^b (f(x + 1/n) - f(x)) dif x = n integral_b^(b + 1/n) f(t) dif t - n integral_a^(a + 1/n) f(t) dif t.
+  $
+  Since $f$ is non-decreasing, $n integral_b^(b + 1/n) f(t) dif t <= f(b)$ and $n integral_a^(a + 1/n) f(t) dif t >= f(a)$. Therefore $integral_a^b f_n dif x <= f(b) - f(a)$, giving the result.
+]
+
+#note[
+  The inequality $integral_a^b f' dif x <= f(b) - f(a)$ can be *strict*. The classical example is the *Cantor function* (or *devil's staircase*) $c: [0, 1] -> [0, 1]$: a continuous, non-decreasing function with $c(0) = 0$ and $c(1) = 1$, yet $c'(x) = 0$ for every $x$ outside the Cantor set (which has measure zero). Thus
+  $
+  integral_0^1 c'(x) dif x = 0 < 1 = c(1) - c(0).
+  $
+  The "missing mass" corresponds to a *singular* component of the function's variation — growth that occurs on a set of measure zero and is invisible to the derivative. This phenomenon motivates the introduction of *absolute continuity* (Section 4.4) as the precise condition ensuring that the derivative fully captures the function's increment.
+]
+
+#proposition[
+  A monotone function $f: [a, b] -> bb(R)$ has at most countably many points of discontinuity.
+]
+
+#proof[
+  Assume $f$ is non-decreasing. At each discontinuity $x$, the jump $j_f(x) = f(x^+) - f(x^-) > 0$. For any $n in bb(N)$, the number of points with $j_f(x) > 1/n$ is at most $n(f(b) - f(a)) < infinity$, since the sum of all jumps cannot exceed $f(b) - f(a)$. The set of all discontinuities is
+  $
+  union.big_(n=1)^oo {x : j_f(x) > 1/n},
+  $
+  a countable union of finite sets, hence countable.
+]
+
 == Functions of Bounded Variation and Absolute Continuity // 有界变差函数与绝对连续函数
 
+// 本节引入绝对连续函数作为 BV 函数的"表现良好"的子类，
+// 不重新定义 BV（留给 Part IV），只聚焦 AC 与 BV 的关系和 AC 的结构性质
+
+As noted in Section 4.1, every function of bounded variation (BV) on $[a, b]$ admits a decomposition into an absolutely continuous part, a jump part, and a singular part. This section introduces *absolute continuity* as the well-behaved subclass of BV functions — the class for which the Newton-Leibniz formula holds. We do not re-define BV or re-state the Jordan decomposition here (these belong to Part IV); instead, we focus on the intrinsic properties of absolutely continuous functions and their relationship to integration.
+
+#definition(name: "Absolutely Continuous Function")[
+  A function $f: [a, b] -> bb(R)$ is called *absolutely continuous* on $[a, b]$ if for every $epsilon > 0$, there exists $delta > 0$ such that for any finite collection of pairwise disjoint open intervals $(a_1, b_1), ..., (a_n, b_n)$ in $[a, b]$ satisfying
+  $
+  sum_(k=1)^n (b_k - a_k) < delta,
+  $
+  we have
+  $
+  sum_(k=1)^n |f(b_k) - f(a_k)| < epsilon.
+  $
+  The collection of all absolutely continuous functions on $[a, b]$ is denoted $"AC"([a, b])$.
+]
+
+#note[
+  *Comparison of function classes*:
+  - *Lipschitz $=>$ AC*: If $|f(x) - f(y)| <= L|x - y|$ for all $x, y$, then $sum |f(b_k) - f(a_k)| <= L sum(b_k - a_k) < L delta$. Choosing $delta = epsilon / L$ verifies the AC condition.
+  - *AC $=>$ uniformly continuous*: Take $n = 1$ in the definition. Given $epsilon > 0$, choose $delta$ from the AC condition; then $|x - y| < delta$ implies $|f(x) - f(y)| < epsilon$.
+  - *Strictness*: $f(x) = sqrt(x)$ on $[0, 1]$ is AC but not Lipschitz (unbounded derivative near $0$). The function $f(x) = x sin(1/x)$ (with $f(0) = 0$) on $[0, 1]$ is uniformly continuous but *not* AC, and not BV either.
+]
+
+#example(name: "Cantor Function")[
+  The *Cantor function* $c: [0, 1] -> [0, 1]$ is defined as follows. For $x in [0, 1]$, write $x$ in ternary: $x = sum_(k=1)^oo a_k 3^(-k)$ with $a_k in {0, 1, 2}$. Let $N$ be the smallest index with $a_N = 1$ (if no such index exists, set $N = oo$). Define $b_k = a_k / 2$ for $k < N$ and $b_N = 1$. Then
+  $
+  c(x) = sum_(k=1)^N b_k 2^(-k).
+  $
+  *Properties*: $c$ is continuous, non-decreasing, $c(0) = 0$, and $c(1) = 1$. On the complement of the Cantor set (a union of open intervals of total measure $1$), $c$ is locally constant, so $c'(x) = 0$ a.e.
+
+  $c$ is BV (since it is monotone), but *not* absolutely continuous. At the $n$-th stage of the Cantor set construction, the remaining $2^n$ closed intervals have total length $(2/3)^n$, which can be made arbitrarily small. Yet the sum of $|c(b_k) - c(a_k)|$ over these intervals is always $1$. Thus, for $epsilon = 1/2$, no $delta > 0$ satisfies the AC condition.
+]
+
+#proposition(name: "Properties of Absolutely Continuous Functions")[
+  Let $f, g in "AC"([a, b])$. Then:
+  + $f$ is continuous and of bounded variation on $[a, b]$.
+  + $f + g in "AC"([a, b])$ and $f dot g in "AC"([a, b])$.
+  + *Lusin's N property*: If $E subset [a, b]$ with $m(E) = 0$, then $m(f(E)) = 0$.
+]
+
+#proof[
+  _(1) AC implies BV._ Choose $delta$ for $epsilon = 1$ from the AC definition. Partition $[a, b]$ into $N = ceil((b - a) / delta)$ subintervals of length at most $delta$. On each subinterval $[c, d]$, any partition into sub-subintervals has total length at most $delta$, so the variation of $f$ on $[c, d]$ is at most $1$. The total variation of $f$ on $[a, b]$ is therefore at most $N < infinity$, so $f in "BV"([a, b])$.
+
+  _(2) Sum and product._ The sum $f + g$ is AC by the triangle inequality applied to the AC conditions of $f$ and $g$. For the product, write
+  $
+  f(b_k) g(b_k) - f(a_k) g(a_k) = f(b_k)(g(b_k) - g(a_k)) + g(a_k)(f(b_k) - f(a_k)).
+  $
+  Since AC functions are continuous on the compact set $[a, b]$, they are bounded: $|f|, |g| <= M$ for some $M > 0$. Then $sum |f(b_k) g(b_k) - f(a_k) g(a_k)| <= M sum |g(b_k) - g(a_k)| + M sum |f(b_k) - f(a_k)|$. Choosing $delta$ small enough for both $f$ and $g$ with $epsilon / (2M)$ gives the AC condition for $f dot g$.
+
+  _(3) Lusin's N property._ Let $E subset [a, b]$ with $m(E) = 0$. Given $epsilon > 0$, choose $delta > 0$ from the AC definition for this $epsilon$. Since $m(E) = 0$, there exists a cover of $E$ by open intervals $(a_k, b_k)$ with $sum(b_k - a_k) < delta$. Since $f$ is continuous, $f((a_k, b_k))$ is an interval, and its length is at most the oscillation of $f$ on $[a_k, b_k]$, which is bounded by $sup f - inf f$ on $[a_k, b_k]$. For AC functions, the oscillation on $(a_k, b_k)$ is at most $|f(b_k) - f(a_k)|$ (by the intermediate value property and the definition). Therefore,
+  $
+  m^*(f(E)) <= sum_(k=1)^oo |f(b_k) - f(a_k)| < epsilon.
+  $
+  Since $epsilon$ is arbitrary, $m(f(E)) = 0$.
+]
+
+#theorem(name: "Absolute Continuity of Indefinite Integrals")[
+  Let $g in L^1([a, b])$. Then the function $F: [a, b] -> bb(R)$ defined by
+  $
+  F(x) = integral_a^x g(t) dif t
+  $
+  is absolutely continuous on $[a, b]$.
+]
+
+#proof[
+  Let $epsilon > 0$. Since $g in L^1([a, b])$, the absolute continuity of the Lebesgue integral (Chapter 3, Section 3.1) provides $delta > 0$ such that for any measurable $A subset [a, b]$ with $m(A) < delta$,
+  $
+  integral_A |g(t)| dif t < epsilon.
+  $
+  Now let $(a_1, b_1), ..., (a_n, b_n)$ be disjoint intervals in $[a, b]$ with $sum(b_k - a_k) < delta$. Set $A = union_(k=1)^n (a_k, b_k)$. Then $m(A) < delta$, so
+  $
+  sum_(k=1)^n |F(b_k) - F(a_k)| = sum_(k=1)^n |integral_(a_k)^(b_k) g(t) dif t| <= sum_(k=1)^n integral_(a_k)^(b_k) |g(t)| dif t = integral_A |g(t)| dif t < epsilon.
+  $
+  Hence $F in "AC"([a, b])$.
+]
+
+#note[
+  This theorem establishes one direction of the Fundamental Theorem of Calculus: every indefinite integral of an $L^1$ function is absolutely continuous. The converse — that *every* absolutely continuous function arises in this way, with the integrand equal to $f'$ a.e. — is the main result of the next section.
+]
+
 == Absolute Continuity and the Newton-Leibniz Formula // 绝对连续性与 Newton-Leibniz 公式
+
+// 本节是 Chapter 4 的收束：给出 Newton-Leibniz 公式成立的充要条件
+// 绝对连续函数恰好就是那些可以被其导数通过积分恢复的函数
+
+The results of the preceding sections converge on a single question: for which functions does the Newton-Leibniz formula $f(x) - f(a) = integral_a^x f'(t) dif t$ hold? Lebesgue's Differentiability Theorem guarantees that monotone (hence BV, hence AC) functions are differentiable a.e., but the Cantor function shows that differentiability a.e. is not sufficient. Absolute continuity is the missing ingredient.
+
+#theorem(name: "Fundamental Theorem of Calculus for Lebesgue Integrals")[
+  Let $f: [a, b] -> bb(R)$. The following are equivalent:
+  + $f$ is absolutely continuous on $[a, b]$.
+  + $f$ is differentiable a.e. on $[a, b]$, $f' in L^1([a, b])$, and for all $x in [a, b]$,
+    $
+    f(x) - f(a) = integral_a^x f'(t) dif t.
+    $
+  + There exists $g in L^1([a, b])$ such that for all $x in [a, b]$,
+    $
+    f(x) - f(a) = integral_a^x g(t) dif t.
+    $
+  Moreover, when condition (3) holds, $g = f'$ a.e.
+]
+
+#proof[
+  _Step 1: $(3) => (1)$._
+  If $f(x) = f(a) + integral_a^x g(t) dif t$ with $g in L^1([a, b])$, then $f$ is the sum of a constant and an indefinite integral. By the Absolute Continuity of Indefinite Integrals (Section 4.4), $f in "AC"([a, b])$.
+
+  _Step 2: $(1) => (2)$ — the main argument._
+  This is the heart of the proof and proceeds through several sub-steps.
+
+  _(a) Differentiability a.e._ Since $f in "AC"([a, b])$, by the proposition in Section 4.4, $f in "BV"([a, b])$. The total variation function $V(x) = V_a^x(f)$ is non-decreasing, and both $V(x)$ and $V(x) - f(x)$ are non-decreasing. By Lebesgue's Differentiability Theorem (Section 4.3), both are differentiable a.e., hence $f = V - (V - f)$ is differentiable a.e.
+
+  _(b) $V$ is absolutely continuous._ We claim $V in "AC"([a, b])$. Given $epsilon > 0$, choose $delta > 0$ from the AC definition of $f$ for this $epsilon$. For disjoint intervals $(a_k, b_k)$ with $sum(b_k - a_k) < delta$, any partition $a_k = t_0 < t_1 < ... < t_m = b_k$ satisfies $sum(t_j - t_(j-1)) = sum(b_k - a_k) < delta$, so $sum |f(t_j) - f(t_(j-1))| < epsilon$. Taking the supremum over all partitions gives $V(b_k) - V(a_k) <= epsilon$. Thus $sum |V(b_k) - V(a_k)| < epsilon$, and $V in "AC"([a, b])$.
+
+  _(c) Reduction to the key lemma._ Since $f$ and $V$ are both AC, $f = V - (V - f)$ decomposes $f$ as a difference of two non-decreasing AC functions. It therefore suffices to prove condition (2) for a non-decreasing AC function $g$. For such $g$, Lebesgue's theorem gives $g' >= 0$ a.e. and $integral_a^x g'(t) dif t <= g(x) - g(a)$ for all $x in [a, b]$. Define
+  $
+  h(x) = g(x) - g(a) - integral_a^x g'(t) dif t.
+  $
+  Then $h(a) = 0$, $h$ is AC (difference of AC functions), $h$ is non-decreasing (since $integral_c^d g' <= g(d) - g(c)$ for any subinterval $[c, d]$), and $h'(x) = g'(x) - g'(x) = 0$ a.e. The following lemma closes the argument.
+
+  _(d) Key lemma: $h in "AC"([a, b])$ and $h'(x) = 0$ a.e. implies $h$ is constant._
+  Fix $c in (a, b]$. We show $h(c) = h(a)$. Let $E = {x in [a, c) : h'(x) = 0}$; then $m([a, c) backslash E) = 0$. Given $epsilon > 0$, choose $delta > 0$ from the AC definition of $h$ on $[a, c]$ for $epsilon / 2$.
+
+  For each $x in E$, since $h'(x) = 0$, there exist arbitrarily small $k > 0$ such that $|h(x + k) - h(x)| < (epsilon / (2(c - a))) k$. The collection of such intervals $[x, x + k]$ forms a Vitali covering of $E$. By the Vitali Covering Lemma (Section 4.2), extract a finite disjoint subcollection $I_1, ..., I_N$ with $I_i = [x_i, x_i + k_i]$ such that
+  $
+  m^*(E backslash union.big_(i=1)^N I_i) < delta.
+  $
+
+  Let $R = [a, c] backslash union.big_(i=1)^N I_i$ be the remaining set. Since $m(E) = c - a$ and $sum k_i <= c - a$, the complement $R$ satisfies $m(R) < delta$. Moreover, $R$ can be written as a finite union of intervals (the gaps between the $I_i$ and the boundary points $a, c$). By the AC property of $h$, the total variation of $h$ over $R$ is less than $epsilon / 2$.
+
+  Summing over the Vitali intervals:
+  $
+  sum_(i=1)^N |h(x_i + k_i) - h(x_i)| < epsilon / (2(c - a)) sum_(i=1)^N k_i <= epsilon / 2.
+  $
+  Combining: $|h(c) - h(a)| < epsilon / 2 + epsilon / 2 = epsilon$. Since $epsilon$ is arbitrary, $h(c) = h(a)$. Applying this to every $c in [a, b]$, $h$ is constant.
+
+  _(e) Conclusion of $(1) => (2)$._ By the lemma, $h(x) = h(a) = 0$ for all $x$, so $g(x) - g(a) = integral_a^x g'(t) dif t$. Since $f = V - (V - f)$ and both $V$ and $V - f$ satisfy the integral formula, subtracting gives $f(x) - f(a) = integral_a^x f'(t) dif t$.
+
+  _Step 3: $(2) => (3)$._
+  Trivial: take $g = f'$.
+
+  _Step 4: Uniqueness — $(3)$ implies $g = f'$ a.e._
+  If $f(x) - f(a) = integral_a^x g(t) dif t$ for all $x$, then by Steps 1 and 2, $f$ is AC and $f(x) - f(a) = integral_a^x f'(t) dif t$. Therefore $integral_a^x (g(t) - f'(t)) dif t = 0$ for all $x in [a, b]$. If $g - f'$ were positive (or negative) on a set of positive measure, there would exist an interval where the integral is nonzero — a contradiction. Hence $g = f'$ a.e.
+]
+
+#corollary(name: "Integration by Parts")[
+  Let $f, g in "AC"([a, b])$. Then $f dot g in "AC"([a, b])$ and
+  $
+  integral_a^b f(x) g'(x) dif x = f(b) g(b) - f(a) g(a) - integral_a^b f'(x) g(x) dif x.
+  $
+]
+
+#proof[
+  The product $f dot g$ is AC (Proposition in Section 4.4). By the FTC, $(f dot g)' in L^1([a, b])$ and
+  $
+  integral_a^b (f dot g)'(x) dif x = f(b) g(b) - f(a) g(a).
+  $
+  Since $f$ and $g$ are both differentiable a.e., the product rule $(f dot g)' = f' dot g + f dot g'$ holds a.e. Substituting and rearranging gives the result.
+]
+
+#corollary(name: "Failure of the Cantor Function")[
+  The Cantor function $c$ satisfies $c'(x) = 0$ a.e. on $[0, 1]$. If the Newton-Leibniz formula held, we would obtain
+  $
+  c(1) - c(0) = integral_0^1 c'(x) dif x = integral_0^1 0 dif x = 0,
+  $
+  contradicting $c(1) - c(0) = 1$. By the FTC equivalence, $c$ is *not* absolutely continuous. This precisely identifies the failure: the Cantor function is BV but not AC, and its singular component accounts for the full unit of increase.
+]
+
+#note[
+  *Hierarchy of function classes on $[a, b]$*:
+  $
+  C^1([a, b]) subset.eq "Lip"([a, b]) subset.eq "AC"([a, b]) subset.eq "BV"([a, b]) subset.eq {f : f' "exists a.e."}.
+  $
+  Each inclusion is strict:
+  - $C^1 subset.eq "Lip"$: Mean value theorem. Strict: $f(x) = |x|$ is Lipschitz but not $C^1$.
+  - $"Lip" subset.eq "AC"$: Direct from definitions. Strict: $f(x) = sqrt(x)$ on $[0, 1]$ is AC but not Lipschitz.
+  - $"AC" subset.eq "BV"$: Proposition in Section 4.4. Strict: the Cantor function is BV but not AC.
+  - $"BV" subset.eq {f' "exists a.e."}$: BV functions are differences of monotone functions; apply Lebesgue's theorem. Strict: $f(x) = x^2 sin(1/x^2)$ (with $f(0) = 0$) is differentiable everywhere but not BV.
+
+  The Fundamental Theorem of Calculus characterizes the class $"AC"$ as exactly those functions that can be recovered from their derivatives via integration.
+]
 
 #part("Function Spaces") // 函数空间
 
