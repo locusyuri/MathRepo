@@ -522,6 +522,13 @@ All spherically symmetric configurations share the property that the electric fi
     quad V(r) = frac(1, 4 pi epsilon_0) frac(q, r).
   $
   Reference: $V(infinity) = 0$. The field diverges as $r -> 0$.
+
+  #figure(
+    image("img/point_charge_field.png", width: 100%),
+    caption: [Electric field of a point charge.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:point_charge_field>
 ]
 
 #example(name: "Uniformly Charged Spherical Shell")[ // 均匀带电球面
