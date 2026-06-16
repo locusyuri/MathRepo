@@ -17,5 +17,11 @@
 *.pdf
 !**/initial.pdf
 
-/.codeartsdoer
+
+
+# AI
+.qoder
+.github
+.atomcode
+.codeartsdoer
 
