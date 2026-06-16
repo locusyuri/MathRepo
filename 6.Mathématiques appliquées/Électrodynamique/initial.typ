@@ -545,6 +545,13 @@ All spherically symmetric configurations share the property that the electric fi
     )
   $
   The field inside is zero (Faraday cage principle); the interior is equipotential.
+
+  #figure(
+    image("img/charged_sphere.png", width: 100%),
+    caption: [Electric field of a uniformly charged spherical shell.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:charged_sphere>
 ]
 
 #example(name: "Uniformly Charged Solid Sphere")[ // 均匀带电球体
