@@ -515,7 +515,7 @@ This section serves as a quick-reference table of standard charge configurations
 
 All spherically symmetric configurations share the property that the electric field is radial and depends only on the distance $r$ from the center: $bold(E)(bold(r)) = E(r) hat(bold(r))$. Gauss's law with a spherical Gaussian surface concentric with the charge distribution gives the solution.
 
-#property(name: "Point Charge")[ // 点电荷
+#example(name: "Point Charge")[ // 点电荷
   A single point charge $q$ at the origin.
   $
     bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) frac(q, r^2) hat(bold(r)),
@@ -524,7 +524,7 @@ All spherically symmetric configurations share the property that the electric fi
   Reference: $V(infinity) = 0$. The field diverges as $r -> 0$.
 ]
 
-#property(name: "Uniformly Charged Spherical Shell")[ // 均匀带电球面
+#example(name: "Uniformly Charged Spherical Shell")[ // 均匀带电球面
   Radius $R$, total charge $Q$ uniformly distributed on the surface.
   $
     bold(E) = cases(
@@ -540,7 +540,7 @@ All spherically symmetric configurations share the property that the electric fi
   The field inside is zero (Faraday cage principle); the interior is equipotential.
 ]
 
-#property(name: "Uniformly Charged Solid Sphere")[ // 均匀带电球体
+#example(name: "Uniformly Charged Solid Sphere")[ // 均匀带电球体
   Radius $R$, uniform volume charge density $rho = 3 Q / (4 pi R^3)$.
   $
     bold(E) = cases(
@@ -556,7 +556,7 @@ All spherically symmetric configurations share the property that the electric fi
   Inside the sphere the field grows linearly $E prop r$; at the center $V(0) = frac(3, 2) frac(1, 4 pi epsilon_0) frac(Q, R)$, the maximum potential.
 ]
 
-#property(name: "Concentric Spherical Shells")[ // 同心球壳模型
+#example(name: "Concentric Spherical Shells")[ // 同心球壳模型
   Two concentric spherical shells of radii $a$ and $b$ $(a < b)$, carrying charges $Q_a$ and $Q_b$ respectively.
 
   By superposition, the field in each region is the sum of contributions from both shells.
@@ -593,7 +593,7 @@ All spherically symmetric configurations share the property that the electric fi
 
 Configurations invariant under translations along the $z$-axis and rotations about it. Use a coaxial cylindrical Gaussian surface of radius $rho$ and length $L$. The field is radial in cylindrical coordinates: $bold(E) = E(rho) hat(bold(rho))$.
 
-#property(name: "Infinite Line Charge")[ // 无限长均匀带电直线
+#example(name: "Infinite Line Charge")[ // 无限长均匀带电直线
   Linear charge density $lambda$, along the $z$-axis.
   $
     bold(E)(rho) = frac(lambda, 2 pi epsilon_0 rho) hat(bold(rho)).
@@ -604,7 +604,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
   $
 ]
 
-#property(name: "Uniformly Charged Cylindrical Shell")[ // 均匀带电圆柱面
+#example(name: "Uniformly Charged Cylindrical Shell")[ // 均匀带电圆柱面
   Radius $R$, surface charge density $sigma$ (or linear charge density $lambda = 2 pi R sigma$), infinite along $z$.
   $
     bold(E) = cases(
@@ -620,7 +620,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
   Inside the shell the field is zero; the interior is equipotential.
 ]
 
-#property(name: "Uniformly Charged Solid Cylinder")[ // 均匀带电圆柱体
+#example(name: "Uniformly Charged Solid Cylinder")[ // 均匀带电圆柱体
   Radius $R$, uniform volume charge density $rho$ (or linear density $lambda = rho pi R^2$), infinite along $z$.
   $
     bold(E) = cases(
@@ -647,7 +647,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
 
 These configurations have rotational symmetry about the $z$-axis but are finite in extent. Gauss's law is not directly applicable; the field is obtained by direct integration (superposition). Results are given on the symmetry axis.
 
-#property(name: "Uniformly Charged Ring")[ // 均匀带电圆环
+#example(name: "Uniformly Charged Ring")[ // 均匀带电圆环
   Radius $R$, total charge $Q$, lying in the $"xy"$-plane centered at the origin.
   $
     bold(E)(z) = frac(1, 4 pi epsilon_0) frac(Q z, (z^2 + R^2)^(3/2)) hat(bold(z)),
@@ -657,7 +657,7 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
   - At center $z=0$: $bold(E) = bold(0)$, $V(0) = frac(1, 4 pi epsilon_0) frac(Q, R)$.
 ]
 
-#property(name: "Uniformly Charged Disk")[ // 均匀带电圆盘
+#example(name: "Uniformly Charged Disk")[ // 均匀带电圆盘
   Radius $R$, uniform surface charge density $sigma$, lying in the $"xy"$-plane. Obtained by integrating ring contributions radially.
   $
     bold(E)(z) = frac(sigma, 2 epsilon_0) (1 - frac(z, sqrt(z^2 + R^2))) hat(bold(z)).
@@ -674,7 +674,7 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
 
 Configurations invariant under translations parallel to the plane. The field is perpendicular to the plane. Use a cylindrical "pillbox" Gaussian surface that pierces the plane.
 
-#property(name: "Infinite Charged Plane")[ // 无限大均匀带电平面
+#example(name: "Infinite Charged Plane")[ // 无限大均匀带电平面
   Uniform surface charge density $sigma$.
   $
     bold(E) = frac(sigma, 2 epsilon_0) hat(bold(n)),
@@ -685,7 +685,7 @@ Configurations invariant under translations parallel to the plane. The field is 
   $
 ]
 
-#property(name: "Parallel-Plate Capacitor")[ // 平行板电容器
+#example(name: "Parallel-Plate Capacitor")[ // 平行板电容器
   Two infinite parallel planes with equal and opposite surface charge densities $plus.minus sigma$.
   $
     bold(E) = cases(
@@ -707,7 +707,7 @@ Configurations invariant under translations parallel to the plane. The field is 
 
 === Electric Dipole // 电偶极子
 
-#property(name: "Electric Dipole Field and Potential")[ // 电偶极子的场与势
+#example(name: "Electric Dipole Field and Potential")[ // 电偶极子的场与势
   A pair $+q$ and $-q$ separated by displacement $bold(d)$, with dipole moment $bold(p) = q bold(d)$. In the far-field limit ($r >> d$), in spherical coordinates with $bold(p) = p hat(bold(z))$:
   $
     V(r, theta) = frac(1, 4 pi epsilon_0) frac(p cos theta, r^2),
@@ -1411,7 +1411,7 @@ The Lorentz force tells us what $bold(B)$ does to a moving charge; we now need t
 
 The Biot-Savart law obeys the superposition principle: the total field from multiple current elements is the vector sum of the individual contributions.
 
-#definition(name: "Biot-Savart Law — Continuous Distributions")[
+#law(name: "Biot-Savart Law — Continuous Distributions")[
   For a volume current density $bold(J)$:
   $
     bold(B)(bold(r)) = frac(mu_0, 4 pi) integral_V frac(bold(J)(bold(r)') times hat(bold(R)), R^2) dif V'.
@@ -1436,6 +1436,13 @@ The Biot-Savart law obeys the superposition principle: the total field from mult
   $
 
   At the centre ($z = 0$): $B_z(0) = mu_0 I / (2 R)$. Far away ($|z| >> R$): $B_z(z) approx mu_0 I R^2 / (2 |z|^3)$, the field of a magnetic dipole.
+
+  #figure(
+    image("img/magnetic_field_loop.png", width: 60%),
+    caption: [Magnetic field of a circular current loop.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:magnetic_field_loop>
 ]
 
 #note[
@@ -1470,10 +1477,211 @@ The Biot-Savart law obeys the superposition principle: the total field from mult
 // 安培环路定理（积分与微分形式）、磁场高斯定理、磁通量；对比静电学微分方程
 == Ampère's Law and Gauss's Law for Magnetism // 安培环路定理与磁场高斯定理
 
+In section §6.2, the Biot-Savart law gave us the fundamental integral relation between steady currents and the magnetic field they produce — the magnetostatic counterpart of Coulomb's law. We now turn to the two field equations that govern the _global_ structure of $bold(B)$: Gauss's law for magnetism and Ampère's circuital law. Just as Gauss's law for $bold(E)$ (§3.3) exploits symmetry to simplify electrostatic calculations, Ampère's law provides an elegant route to $bold(B)$ when the current distribution possesses sufficient symmetry. Together, these two laws form the magnetostatic pair among Maxwell's four equations.
+
+=== Magnetic Flux // 磁通量
+
+#definition(name: "Magnetic Flux")[
+  The *magnetic flux* $Phi_B$ through a surface $S$ is defined as the surface integral of the magnetic field over $S$:
+  $
+    Phi_B = integral_S bold(B) dot dif bold(S),
+  $
+  where $dif bold(S) = hat(bold(n)) dif S$ is the vector area element, with $hat(bold(n))$ being the unit normal to the surface. For a closed surface, the flux is denoted:
+  $
+    Phi_B = integral_harpoon(S) bold(B) dot dif bold(S).
+  $
+
+  The SI unit of magnetic flux is the *weber* (Wb):
+  $
+    1 "Wb" = 1 "T" dot "m"^2 = 1 "V" dot "s".
+  $
+]
+
+Physically, the magnetic flux measures the "flow" of the magnetic field through a surface — it is proportional to the number of field lines passing through that surface. Unlike electric flux, the magnetic flux through any _closed_ surface is always zero — a fundamental fact that will be formalised in the next subsection.
+
+#example[
+  Consider a uniform magnetic field $bold(B) = B_0 hat(bold(z))$ passing through a flat surface of area $A$ oriented at an angle $theta$ with respect to the field. The flux through the surface is:
+  $
+    Phi_B = integral_A bold(B) dot dif bold(S) = B_0 A cos theta.
+  $
+  The flux is maximal when the surface is perpendicular to the field ($theta = 0$) and zero when the surface is parallel to the field ($theta = pi/2$). This mirrors the electric flux example from §3.3.
+]
+
+=== Gauss's Law for Magnetism // 磁场高斯定理
+
+#law(name: "Gauss's Law for Magnetism — Integral Form")[
+  The net magnetic flux through any closed surface $S$ is identically zero:
+  $
+    integral_harpoon(S) bold(B) dot dif bold(S) = 0.
+  $
+]
+
+This law expresses the experimental fact that *magnetic monopoles do not exist*. Every magnetic field line that enters a closed surface must also leave it. Contrast this with Gauss's law for $bold(E)$ (§3.3), where the flux is proportional to the enclosed charge:
+$
+  integral_harpoon(S) bold(E) dot dif bold(S) = frac(Q_"enc", epsilon_0).
+$
+The right-hand side being zero means there are no "magnetic charges" to serve as sources or sinks of the magnetic field.
+
+By applying the divergence theorem to the integral form, we obtain the local (pointwise) counterpart:
+
+#law(name: "Gauss's Law for Magnetism — Differential Form")[
+  $
+    nabla dot bold(B) = 0.
+  $
+]
+
+The divergence theorem gives $integral_V (nabla dot bold(B)) dif V = 0$ for any volume $V$. Since this holds for every volume, the integrand must vanish pointwise.
+
+#note[
+  The condition $nabla dot bold(B) = 0$ means $bold(B)$ is a *solenoidal field* (as defined in §1.1). The magnetic field lines are always closed loops — they have neither beginning nor end. This was already anticipated by the properties of magnetic field lines in §6.2. If magnetic monopoles were ever discovered, this equation would become $nabla dot bold(B) = rho_m$ (where $rho_m$ is the magnetic charge density), restoring the symmetry with electrostatics.
+]
+
+=== Ampère's Circuital Law // 安培环路定理
+
+Before stating the law, we define the enclosed current. For a surface $S$ bounded by a closed curve $C$:
+
+#definition(name: "Enclosed Current")[
+  The *enclosed current* $I_"enc"$ is the net current passing through any surface $S$ bounded by the closed contour $C$:
+  $
+    I_"enc" = integral_S bold(J) dot dif bold(S).
+  $
+  By the continuity equation for steady currents (§6.1, $nabla dot bold(J) = 0$), the result is independent of the choice of surface $S$, provided it is bounded by the same contour $C$.
+]
+
+#law(name: "Ampère's Circuital Law — Integral Form")[
+  The circulation of the magnetic field $bold(B)$ around any closed contour $C$ (the *Amperian loop*) is proportional to the net current enclosed by $C$:
+  $
+    integral.cont_C bold(B) dot dif bold(l) = mu_0 I_"enc",
+  $
+  where $dif bold(l)$ is the line element along $C$ in the direction of integration, and $mu_0$ is the permeability of free space. The direction convention follows the right-hand rule: curl the fingers of the right hand along the direction of integration; the thumb gives the positive direction for enclosed current.
+]
+
+The left-hand side is the *circulation* of $bold(B)$ around $C$ (as defined in §1.1). Unlike the electrostatic field, whose circulation vanishes ($integral.cont bold(E) dot dif bold(l) = 0$), the magnetic field generally has nonzero circulation proportional to the enclosed current. This is the magnetostatic analogue of Gauss's law for $bold(E)$: a powerful integral relation connecting the field to its source.
+
+#h(2em)By applying Stokes' theorem, we obtain the differential form:
+
+#theorem(name: "Ampère's Law — Differential Form")[
+  $
+    nabla times bold(B) = mu_0 bold(J).
+  $
+]
+
+#proof[
+  Stokes' theorem states that for any vector field $bold(F)$ and any surface $S$ bounded by a closed contour $C$:
+  $
+    integral.cont_C bold(F) dot dif bold(l) = integral_S (nabla times bold(F)) dot dif bold(S).
+  $
+
+  Applying this to the left-hand side of Ampère's law:
+  $
+    integral.cont_C bold(B) dot dif bold(l) = integral_S (nabla times bold(B)) dot dif bold(S).
+  $
+
+  The right-hand side is:
+  $
+    mu_0 I_"enc" = mu_0 integral_S bold(J) dot dif bold(S).
+  $
+
+  Equating the two:
+  $
+    integral_S (nabla times bold(B) - mu_0 bold(J)) dot dif bold(S) = 0.
+  $
+
+  Since this holds for _any_ surface $S$, the integrand must vanish pointwise:
+  $
+    nabla times bold(B) = mu_0 bold(J).
+  $
+]
+
+#note[
+  The differential form $nabla times bold(B) = mu_0 bold(J)$ tells us that the curl of the magnetic field at a point is proportional to the current density at that point. Where no current flows ($bold(J) = bold(0)$), the magnetic field is irrotational ($nabla times bold(B) = bold(0)$), though it may still be nonzero (as the field outside a wire demonstrates). This is the magnetostatic counterpart of the electrostatic condition $nabla times bold(E) = bold(0)$.
+]
+
+=== Applications of Ampère's Law // 安培环路定理的应用
+
+While the Biot-Savart law is the fundamental force law for magnetic fields, Ampère's law often provides a much simpler route to computing $bold(B)$ when the current distribution possesses sufficient symmetry. The key is to choose an Amperian loop over which $bold(B)$ is either constant or perpendicular to the path.
+
+#theorem(name: "Strategy for Applying Ampère's Law")[
+  To compute $bold(B)$ using Ampère's law:
+  1. Identify the symmetry of the current distribution (cylindrical, solenoidal, or toroidal).
+  2. Choose an Amperian loop $C$ that respects this symmetry, such that $bold(B)$ is constant in magnitude and either parallel or perpendicular to $dif bold(l)$ along each segment.
+  3. Evaluate the circulation $integral.cont bold(B) dot dif bold(l)$ — by symmetry, $|bold(B)|$ factors out of the integral.
+  4. Compute the enclosed current $I_"enc"$.
+  5. Solve for $|bold(B)|$.
+]
+
+#example(name: "Infinite Straight Wire — Cylindrical Symmetry")[ // 无限长直导线
+  An infinite straight wire carrying steady current $I$ along the $z$-axis. By cylindrical symmetry, $bold(B) = B(rho) hat(bold(phi))$. Choose a circular Amperian loop of radius $rho$ centred on the wire:
+  $
+    integral.cont bold(B) dot dif bold(l) = B(rho) dot 2 pi rho = mu_0 I.
+  $
+  Hence:
+  $
+    bold(B) = frac(mu_0 I, 2 pi rho) hat(bold(phi)).
+  $
+  This is the magnetostatic counterpart of the infinite line charge result $E = lambda / (2 pi epsilon_0 rho)$ from §3.3. The field decays as $1/rho$ and circles the wire according to the right-hand rule.
+]
+
+#example(name: "Infinite Solenoid")[ // 无限长螺线管
+  An infinite solenoid with $n$ turns per unit length carrying current $I$. By symmetry, $bold(B) = B hat(bold(z))$ inside and $bold(B) = bold(0)$ outside. Choose a rectangular Amperian loop with one side of length $L$ inside and one side outside the solenoid, parallel to the axis:
+  $
+    B L = mu_0 (n L) I.
+  $
+  Hence:
+  $
+    bold(B) = mu_0 n I hat(bold(z)) quad text("inside").
+  $
+  The field inside an infinite solenoid is *uniform* — the magnetic analogue of the uniform field between infinite parallel plates in electrostatics. Outside the solenoid, $bold(B) = bold(0)$.
+]
+
+#example(name: "Toroid")[ // 环形螺线管（螺绕环）
+  A toroid with $N$ total turns carrying current $I$. Choose a circular Amperian loop of radius $r$ concentric with the toroid axis:
+  $
+    B(r) dot 2 pi r = mu_0 N I.
+  $
+  Hence:
+  $
+    bold(B) = frac(mu_0 N I, 2 pi r) hat(bold(phi)) quad text("inside the toroid"),
+  $
+  and $bold(B) = bold(0)$ outside. Unlike the solenoid, the field inside a toroid is not uniform — it varies as $1/r$. For a toroid of large radius $R$ with $r approx R$, the field is approximately uniform: $B approx mu_0 N I / (2 pi R) = mu_0 n I$, recovering the solenoid result.
+]
+
+=== Electrostatic vs Magnetostatic Field Equations // 静电场与静磁场方程对比
+
+We have now assembled the complete set of field equations for electrostatics and magnetostatics. Let us collect them and examine the structural parallels and differences.
+
+#tex-table(
+  ("Equation", "Electrostatics", "Magnetostatics", "Physical meaning"),
+  ("Divergence", [$nabla dot bold(E) = rho / epsilon_0$], [$nabla dot bold(B) = 0$], "Sources of the field"),
+  ("Curl", [$nabla times bold(E) = bold(0)$], [$nabla times bold(B) = mu_0 bold(J)$], "Circulation of the field"),
+  ([Gauss-type (integral)], [$integral_harpoon(S) bold(E) dot dif bold(S) = Q_"enc" / epsilon_0$], [$integral_harpoon(S) bold(B) dot dif bold(S) = 0$], "Flux law"),
+  ([Circulation (integral)], [$integral.cont bold(E) dot dif bold(l) = 0$], [$integral.cont bold(B) dot dif bold(l) = mu_0 I_"enc"$], "Ampère / electrostatic law"),
+)
+
+#h(2em)The structural parallels and asymmetries are striking:
+
+- The electrostatic field is *irrotational* ($nabla times bold(E) = bold(0)$) and has *sources* (charges, $nabla dot bold(E) = rho / epsilon_0$). It can be derived from a scalar potential: $bold(E) = - nabla V$.
+- The magnetostatic field is *solenoidal* ($nabla dot bold(B) = 0$) and has *circulation* (currents, $nabla times bold(B) = mu_0 bold(J)$). It cannot be described by a scalar potential in regions with current; instead, a *vector potential* $bold(A)$ will be introduced in §6.4 such that $bold(B) = nabla times bold(A)$.
+- The asymmetry between the two sets reflects the absence of magnetic monopoles. If magnetic monopoles existed (with density $rho_m$ and current $bold(J)_m$), the equations would become fully symmetric.
+- The constants $epsilon_0$ and $mu_0$ play dual roles, linked by $c^2 = 1 / (mu_0 epsilon_0)$.
+
+#note[
+  In time-varying electrodynamics, two of these equations will be modified. Faraday's law will give $nabla times bold(E) = - (partial bold(B)) / (partial t)$, and Maxwell's displacement current will add a term $mu_0 epsilon_0 (partial bold(E)) / (partial t)$ to the Ampère–Maxwell equation. These modifications couple $bold(E)$ and $bold(B)$ together and give rise to electromagnetic waves. But for static situations, the four equations above are complete and decoupled.
+]
+
+#note[
+  *Key takeaways for Ampère's law and Gauss's law for magnetism:*
+  - Gauss's law for magnetism ($nabla dot bold(B) = 0$) expresses the absence of magnetic monopoles: magnetic field lines are always closed loops.
+  - Ampère's circuital law ($integral.cont bold(B) dot dif bold(l) = mu_0 I_"enc"$) relates the circulation of $bold(B)$ to the enclosed current — the magnetostatic counterpart of Gauss's law for $bold(E)$.
+  - The differential form $nabla times bold(B) = mu_0 bold(J)$ follows from Ampère's law via Stokes' theorem and shows that currents are the sources of the curl of $bold(B)$.
+  - The four static equations ($nabla dot bold(E) = rho / epsilon_0$, $nabla times bold(E) = bold(0)$, $nabla dot bold(B) = 0$, $nabla times bold(B) = mu_0 bold(J)$) mirror each other, with the asymmetry reflecting the nonexistence of magnetic monopoles.
+  - Ampère's law is powerful for computing $bold(B)$ in symmetric geometries (infinite wires, solenoids, toroids), just as Gauss's law simplifies $bold(E)$ calculations for symmetric charge distributions.
+]
+
 // 磁矢势、库仑规范、矢势的泊松方程、磁通量与矢势环量的关系
 == Magnetic Vector Potential and Flux // 磁矢势与磁通量
 
-// 用 property 块整理常见模型：无限长直导线、有限长直导线、圆环轴线、螺线管、均匀载流圆柱体
+// 常见模型：无限长直导线、有限长直导线、圆环轴线、螺线管、均匀载流圆柱体
 == Common Models in Magnetostatics // 常见模型：载流导体的磁场
 
 // 回旋运动、螺旋运动、E×B 漂移、磁镜效应；霍尔效应（霍尔电压、霍尔系数、载流子类型判定）
