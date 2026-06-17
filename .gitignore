@@ -14,14 +14,12 @@
 *.lof
 *.lot
 
-*.pdf
-!**/initial.pdf
-
-
-
 # AI
 .qoder
 .github
 .atomcode
 .codeartsdoer
 .agents/*.bin
+
+# Build artifacts — tracked PDFs retained in latest commit only
+*.pdf
