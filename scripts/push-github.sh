@@ -6,6 +6,9 @@ cd "$REPO_ROOT"
 
 echo "Preparing GitHub push (code only, no PDFs)..."
 
+GIT_USER_NAME="$(git config user.name)"
+GIT_USER_EMAIL="$(git config user.email)"
+
 git worktree remove .github-worktree --force 2>/dev/null || true
 git branch -D github-main 2>/dev/null || true
 rm -rf .github-worktree 2>/dev/null || true
@@ -20,7 +23,8 @@ git rm --cached --ignore-unmatch .gitattributes >/dev/null 2>&1
 if git diff --cached --quiet 2>/dev/null; then
   echo "No changes to push."
 else
-  git commit -m "chore: remove PDFs and LFS config for GitHub (code only)"
+  git -c user.name="$GIT_USER_NAME" -c user.email="$GIT_USER_EMAIL" \
+    commit -m "chore: remove PDFs and LFS config for GitHub (code only)"
 fi
 
 git push github github-main --force
