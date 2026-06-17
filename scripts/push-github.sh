@@ -10,7 +10,7 @@ git worktree remove .github-worktree --force 2>/dev/null || true
 git branch -D github-main 2>/dev/null || true
 rm -rf .github-worktree 2>/dev/null || true
 
-git worktree add .github-worktree -B github-main main
+git worktree add .github-worktree -B github-main main || true
 
 cd .github-worktree
 
