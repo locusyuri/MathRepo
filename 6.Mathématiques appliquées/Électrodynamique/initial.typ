@@ -653,6 +653,13 @@ Configurations invariant under translations along the $z$-axis and rotations abo
     )
   $
   Inside the shell the field is zero; the interior is equipotential.
+
+  #figure(
+    image("img/charged_cylindrical_shell.png", width: 100%),
+    caption: [Electric field of a uniformly charged cylindrical shell.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:charged_cylindrical_shell>
 ]
 
 #example(name: "Uniformly Charged Solid Cylinder")[ // 均匀带电圆柱体
@@ -664,6 +671,13 @@ Configurations invariant under translations along the $z$-axis and rotations abo
     )
   $
   Inside the cylinder the field grows linearly $E prop rho$; outside it matches the infinite line charge result.
+
+  #figure(
+    image("img/charged_solid_cylinder.png", width: 100%),
+    caption: [Electric field of a uniformly charged solid cylinder.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:charged_solid_cylinder>
 ]
 
 #note[
@@ -690,6 +704,13 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
   $
   - $z >> R$ (far away): $bold(E) approx frac(1, 4 pi epsilon_0) frac(Q, z^2) hat(bold(z))$ — looks like a point charge.
   - At center $z=0$: $bold(E) = bold(0)$, $V(0) = frac(1, 4 pi epsilon_0) frac(Q, R)$.
+
+  #figure(
+    image("img/charged_ring.png", width: 100%),
+    caption: [Electric field of a uniformly charged ring along its axis.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:charged_ring>
 ]
 
 #example(name: "Uniformly Charged Disk")[ // 均匀带电圆盘
@@ -699,6 +720,13 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
   $
   - $R -> infinity$ (infinite plane): $bold(E) = frac(sigma, 2 epsilon_0) hat(bold(z))$ — uniform field!
   - $z >> R$: $bold(E) approx frac(1, 4 pi epsilon_0) frac(Q, z^2) hat(bold(z))$, where $Q = sigma pi R^2$.
+
+  #figure(
+    image("img/charged_disk.png", width: 100%),
+    caption: [Electric field of a uniformly charged disk along its axis.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:charged_disk>
 ]
 
 // ============================================================================
@@ -718,6 +746,13 @@ Configurations invariant under translations parallel to the plane. The field is 
   $
     V(z) = - frac(sigma, 2 epsilon_0) |z|.
   $
+
+  #figure(
+    image("img/charged_plane.png", width: 100%),
+    caption: [Electric field of an infinite charged plane.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:infinite_plane>
 ]
 
 #example(name: "Parallel-Plate Capacitor")[ // 平行板电容器
@@ -734,6 +769,13 @@ Configurations invariant under translations parallel to the plane. The field is 
     quad C = frac(Q, Delta V) = frac(epsilon_0 A, d).
   $
   This is the simplest model of a capacitor (neglecting fringe effects).
+
+  #figure(
+    image("img/parallel_plate_capacitor.png", width: 100%),
+    caption: [Electric field of a parallel-plate capacitor.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:parallel_plate_capacitor>
 ]
 
 // ============================================================================
@@ -754,6 +796,13 @@ Configurations invariant under translations parallel to the plane. The field is 
     bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) frac(1, r^3) [3(bold(p) dot hat(bold(r))) hat(bold(r)) - bold(p)].
   $
   The field decays as $1/r^3$, faster than a point charge's $1/r^2$. The dipole serves as the fundamental building block for multipole expansions.
+
+  #figure(
+    image("img/electric_dipole.png", width: 100%),
+    caption: [Electric field of an electric dipole.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:electric_dipole>
 ]
 
 #note[
