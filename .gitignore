@@ -21,5 +21,3 @@
 .codeartsdoer
 .agents/*.bin
 
-# Build artifacts — tracked PDFs retained in latest commit only
-*.pdf
