@@ -568,6 +568,13 @@ All spherically symmetric configurations share the property that the electric fi
     )
   $
   Inside the sphere the field grows linearly $E prop r$; at the center $V(0) = frac(3, 2) frac(1, 4 pi epsilon_0) frac(Q, R)$, the maximum potential.
+
+  #figure(
+    image("img/charged_solid_sphere.png", width: 100%),
+    caption: [Electric field of a uniformly charged solid sphere.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:charged_solid_sphere>
 ]
 
 #example(name: "Concentric Spherical Shells")[ // 同心球壳模型
@@ -588,6 +595,13 @@ All spherically symmetric configurations share the property that the electric fi
     )
   $
   The inner region ($r < a$) is always equipotential and field-free, regardless of $Q_a$ and $Q_b$.
+  
+  #figure(
+    image("img/concentric_shells.png", width: 100%),
+    caption: [Electric field of concentric spherical shells.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:concentric_shells>
 ]
 
 #note[
@@ -616,6 +630,13 @@ Configurations invariant under translations along the $z$-axis and rotations abo
   $
     V(rho) = frac(lambda, 2 pi epsilon_0) ln frac(rho_0, rho).
   $
+
+  #figure(
+    image("img/infinite_line_charge.png", width: 100%),
+    caption: [Electric field of an infinite line charge.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:infinite_line_charge>
 ]
 
 #example(name: "Uniformly Charged Cylindrical Shell")[ // 均匀带电圆柱面
