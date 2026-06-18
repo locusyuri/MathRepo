@@ -2022,6 +2022,13 @@ Configurations invariant under translations along the $z$-axis and rotations abo
   $
     Phi_B = integral_a^b bold(B) dot (L dif rho hat(bold(phi))) = frac(mu_0 I L, 2 pi) ln frac(b, a).
   $
+
+  #figure(
+    image("img/infinite_wire_magnetic_field.png", width: 100%),
+    caption: [Magnetic field of an infinite straight wire.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:infinite_wire_magnetic_field>
 ]
 
 #example(name: "Uniformly Conducting Solid Cylinder")[ // 均匀载流圆柱体
