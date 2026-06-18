@@ -2200,6 +2200,107 @@ Just as the electric dipole is the fundamental building block for multipole expa
 == Magnetic Forces on Currents and Energy // 磁场对电流的作用与磁能
 
 #part("Electromagnetic Induction and Time-Varying Fields") // 电磁感应与时变场
+
+= Electromagnetic Induction // 电磁感应
+
+== Faraday's Law of Induction // 法拉第电磁感应定律
+// 实验基础：变化的磁通量产生感应电动势
+// 积分形式：ℰ = -dΦ_B/dt，Lenz 定律（负号的物理含义）
+// 微分形式：∇×E = -∂B/∂t（感应电场是有旋场）
+// 感应电场与静电场的本质区别：∇×E_induced ≠ 0（与 ∇×E_static = 0 对比）
+// 应用示例：矩形闭合回路在时变磁场中的感应电动势
+
+== Motional EMF and Induced Electric Field // 动生电动势与感应电场
+// === Motional EMF（动生电动势）
+// 导体在静磁场中运动产生的电动势：ℰ_motional = ∮(v×B)·dl
+// 物理图像：洛伦兹力对自由电荷做功分离电荷（注意：总功率为零的悖论与分析）
+// 经典例子：滑动导轨（Hall bar）—— 电动势、电流、安培力、功率守恒
+// === Induced Electric Field（感应电场）
+// 时变磁场在自由空间产生的感应电场（即使没有导体存在）
+// 感应电场的非保守性：∮ E·dl = -dΦ_B/dt ≠ 0，不能定义标势
+// 感应电场线的闭合性（无源场）：∇·E_induced = 0
+// 与静电场的统一：总电场 E = E_static + E_induced——E_static 由电荷产生，E_induced 由时变磁场产生
+// 应用示例：变压器（互感基本原理）、电子感应加速器（betatron 原理）
+// Note：两种电动势的对比表——产生机制、物理来源、适用范围
+
+== Inductance // 电感
+// 自感现象：回路中电流变化产生的自感电动势 ℰ_L = -L dI/dt
+// 自感系数 L = NΦ/I 的定义，与回路几何形状的关系
+// 自感计算示例：长直螺线管、同轴电缆（单位长度）
+// 互感现象：回路1的电流变化在回路2中产生互感电动势 ℰ_2 = -M dI_1/dt
+// 互感系数 M 的互易性：M_12 = M_21（Neumann 公式的对称性证明）
+// Neumann 公式：M = (μ₀/4π) ∮∮ (dl₁·dl₂)/r
+// RL 电路暂态过程：电流增长与衰减的时间常数 τ = L/R
+// 耦合系数 k = M/√(L₁L₂)（0 ≤ k ≤ 1）
+// Note：电感是电路中"磁场惯性"的量度——类比质量在力学中的作用
+
+== Magnetic Energy in Circuits // 电路中的磁能
+// 电感储能：建立电流过程中电源做的功 → U = ½LI²
+// 互感储能：两个耦合回路的磁能 U = ½L₁I₁² + ½L₂I₂² + MI₁I₂
+// 磁能密度的场表达式：从 U = ½LI² 推广到 u_B = B²/(2μ₀)
+// 任意电流分布的总磁能：U = ½∫ A·J dV = ∫ (B²/2μ₀) dV
+// 两种磁能表达式的等价性证明（注意：与静电能 U = ½∫ ρV dV = ∫ (ε₀E²/2) dV 的类比）
+// Note：磁能密度 u_B 与电能密度 u_E = ε₀E²/2 的结构对称性——为 §9.5 Poynting 定理铺垫
+
+= Maxwell's Equations // 麦克斯韦方程组
+
+== Displacement Current and Ampère–Maxwell Law // 位移电流与安培–麦克斯韦定律
+// Ampère 定律在时变情形下的失效：对充电电容器取不同曲面得到矛盾结果
+// 问题的根源：电流连续性方程 ∂ρ/∂t + ∇·J = 0 在时变情形下 ∇·J ≠ 0
+// Maxwell 的修正：引入位移电流 J_D = ε₀ ∂E/∂t（或更一般 Ḋ）
+// 物理直觉：变化的电场等价于一种电流——电容器极板间的电场变化产生"虚拟电流"
+// 完整 Ampère–Maxwell 定律：
+// 积分形式 ∮ B·dl = μ₀I_enc + μ₀ε₀ ∫ (∂E/∂t)·dS
+// 微分形式 ∇×B = μ₀J + μ₀ε₀ ∂E/∂t
+// 位移电流的物理本质：不是真正的电荷运动，而是电场的时间变化率
+// 位移电流在介质中的推广：J_D = ∂D/∂t（包括了极化电流 ∂P/∂t）
+// Note：位移电流是 Maxwell 方程组得以自洽的关键，也是电磁波存在的理论基础
+
+== Maxwell's Equations in Vacuum // 真空中的麦克斯韦方程组
+// 四个方程的完整表述（真空、无源情形——既无自由电荷也无传导电流）
+// Maxwell's Equations in Vacuum（源区：有 ρ 和 J 的一般形式）
+// ∇·E = ρ/ε₀, ∇·B = 0, ∇×E = -∂B/∂t, ∇×B = μ₀J + μ₀ε₀ ∂E/∂t
+// 积分-微分对照表（四大方程并排对比）
+// 对称性分析：如果存在磁单极 ρ_m 和 J_m，则方程组完全对称
+// The displacement current is Maxwell's greatest contribution 在自由空间 ∇×B = μ₀ε₀ ∂E/∂t
+// 自由度分析：6 个场分量（E_x, E_y, E_z, B_x, B_y, B_z），2 个约束方程（散度），2 个演化方程（旋度）→ 4 个自由度（2 个横波偏振态）
+// 从 Maxwell 方程组推导真空电磁波波动方程（仅推导预告 §10）
+// 真空中光速 c = 1/√(μ₀ε₀)——力学常数与电磁常数的统一
+// Note：Maxwell 方程组是经典电动力学的最高总结——统一了电学、磁学和光学
+
+== Maxwell's Equations in Matter // 介质中的麦克斯韦方程组
+// 极化和磁化引入束缚电荷 ρ_b = -∇·P 和束缚电流 J_b = ∇×M + ∂P/∂t
+// 辅助场 D 和 H 的定义：D = ε₀E + P, H = B/μ₀ - M
+// 宏观 Maxwell 方程组（仅含自由电荷和自由电流）：
+// ∇·D = ρ_f, ∇·B = 0, ∇×E = -∂B/∂t, ∇×H = J_f + ∂D/∂t
+// 本构关系：线性各向同性介质 D = εE, B = μH, J = σE
+// ε = ε₀ε_r, μ = μ₀μ_r, σ 的物理意义
+// 色散与频率依赖的预告：ε(ω)、μ(ω)——为 §11 色散关系铺垫
+// Note：宏观 Maxwell 方程组的适用范围——平均场近似，忽略微观涨落
+
+== Boundary Conditions for Electromagnetic Fields // 电磁场边界条件
+// 从积分形式的 Maxwell 方程组推导四个场量的边界条件
+// 法向分量：D_⊥ 的跃变（自由面电荷密度）= σ_f；B_⊥ 连续
+// 切向分量：E_∥ 连续；H_∥ 的跃变（自由面电流密度）= K_f × n̂
+// 完整边界条件汇总表
+// // 特殊情形——理想导体内部 E = B = 0，边界条件简化为：
+// // n̂ × E = 0（切向电场为零），n̂·B = 0（法向磁场为零）
+// // 理想导体表面存在自由面电流 K_f = n̂ × H 和自由面电荷 σ_f = n̂·D
+// 应用预览：§11 反射折射、§12 波导模式
+// Note：边界条件是求解边值问题的关键——连接不同介质区域的 Maxwell 方程组
+
+== Conservation of Energy: Poynting's Theorem // 能量守恒：坡印廷定理
+// 从 Maxwell 方程组出发推导坡印廷定理（能量守恒定律的场形式）
+// 推导：E·(∇×H) - H·(∇×E) = E·J_f + E·∂D/∂t + H·∂B/∂t
+// 利用矢量恒等式 ∇·(E×H) = H·(∇×E) - E·(∇×H)
+// 得到 -∂u/∂t = ∇·S + J_f·E（其中 u = ½(E·D + B·H), S = E×H）
+// 积分形式：-dU/dt = ∮ S·dA + ∫ J_f·E dV
+// Poynting 矢量 S = E×H 的物理意义：电磁场能量流密度（单位时间通过单位面积的能量）
+// 电磁场能量密度 u = ½(ε₀E² + B²/μ₀)（真空情形）
+// Poynting 定理的物理诠释：某体积内电磁能量的减少 = 流出该体积的能流 + 对电荷做功消耗的功率
+// 经典示例：直流电阻直导线的能量从外部电磁场流入（Poynting 矢量指向导线内部）
+// Note：Poynting 定理是 §14 辐射能流和天线理论基础
+
 #part("Electromagnetic Waves") // 电磁波
 #part("Potentials and Radiation") // 势与辐射
 #part("Special Relativity and Electrodynamics") // 狭义相对论与电动力学
