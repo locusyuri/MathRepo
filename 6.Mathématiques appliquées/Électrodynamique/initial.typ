@@ -2002,6 +2002,214 @@ The flux-circulation relation provides an alternative way to compute magnetic fl
 // 常见模型：无限长直导线、有限长直导线、圆环轴线、螺线管、均匀载流圆柱体
 == Common Models in Magnetostatics // 常见模型：载流导体的磁场
 
+This section serves as a quick-reference table of standard current configurations in magnetostatics, organized by symmetry type. Each entry specifies the applicable method (Ampère's circuital law or Biot-Savart law) and gives the magnetic field $bold(B)$, the vector potential $bold(A)$ (in the Coulomb gauge), and key limiting behaviors.
+
+// ============================================================================
+// Cylindrical Symmetry
+// ============================================================================
+
+=== Cylindrical Symmetry // 柱对称模型
+
+Configurations invariant under translations along the $z$-axis and rotations about it. Use a coaxial circular Amperian loop of radius $rho$ and length $L$. The field is azimuthal: $bold(B) = B(rho) hat(bold(phi))$ in cylindrical coordinates $(rho, phi, z)$.
+
+#example(name: "Infinite Straight Wire")[ // 无限长直导线
+  A steady current $I$ flows along the $z$-axis. (§6.3 gives the full Ampère derivation.)
+  $
+    bold(B)(rho) = frac(mu_0 I, 2 pi rho) hat(bold(phi)), quad
+    bold(A)(rho) = frac(mu_0 I, 2 pi) ln frac(rho_0, rho) hat(bold(z)),
+  $
+  where $rho_0$ is an arbitrary reference radius (the vector potential diverges at infinity, mirroring the infinite line charge in electrostatics). The magnetic flux through a rectangular strip of length $L$ extending from $rho = a$ to $rho = b$ is:
+  $
+    Phi_B = integral_a^b bold(B) dot (L dif rho hat(bold(phi))) = frac(mu_0 I L, 2 pi) ln frac(b, a).
+  $
+]
+
+#example(name: "Uniformly Conducting Solid Cylinder")[ // 均匀载流圆柱体
+  Radius $R$, uniform current density $bold(J) = J hat(bold(z))$ (total current $I = J pi R^2$), infinite along $z$.
+  $
+    bold(B) = cases(
+      frac(mu_0 I, 2 pi rho) hat(bold(phi)) & (rho > R),
+      frac(mu_0 J rho, 2) hat(bold(phi)) & (rho < R),
+    )
+    quad
+    bold(A) = cases(
+      frac(mu_0 I, 2 pi) ln frac(rho_0, rho) hat(bold(z)) & (rho >= R),
+      frac(mu_0 J, 4) (R^2 - rho^2) hat(bold(z)) & (rho < R),
+    )
+  $
+  Inside the cylinder the field grows linearly: $B(rho) prop rho$; outside it is identical to an infinite line wire carrying the same total current $I$.
+]
+
+#example(name: "Coaxial Cable")[ // 同轴电缆
+  An inner solid conductor of radius $a$ carrying current $I$ outward, and an outer conducting shell of inner radius $b$ and outer radius $c$ carrying current $I$ return. Assume uniform current densities in both conductors.
+  $
+    bold(B) = cases(
+      frac(mu_0 I, 2 pi a^2) rho hat(bold(phi)) & (0 < rho < a),
+      frac(mu_0 I, 2 pi rho) hat(bold(phi)) & (a < rho < b),
+      frac(mu_0 I, 2 pi rho) frac(c^2 - rho^2, c^2 - b^2) hat(bold(phi)) & (b < rho < c),
+      bold(0) & (rho > c),
+    )
+  $
+  The field is confined entirely to the region $rho < c$: the currents in the inner and outer conductors cancel for $rho > c$, making the coaxial cable a *shielded* transmission line. This is the magnetic analogue of the parallel-plate capacitor — charge (or current) confinement leads to field confinement.
+]
+
+// ============================================================================
+// Solenoidal Configurations
+// ============================================================================
+
+=== Solenoidal Configurations // 螺线管类模型
+
+Configurations based on helical or toroidal windings. The field is predominantly axial (solenoid) or azimuthal (toroid), and Ampère's law with a suitably chosen rectangular or circular Amperian loop gives the solution.
+
+#example(name: "Infinite Solenoid")[ // 无限长螺线管
+  $n$ turns per unit length, each carrying current $I$. (§6.3 gives the full Ampère derivation.)
+  $
+    bold(B) = cases(
+      mu_0 n I hat(bold(z)) & (text("inside")),
+      bold(0) & (text("outside")),
+    )
+    quad
+    bold(A) = frac(mu_0 n I rho, 2) hat(bold(phi)) quad (text("inside")),
+  $
+  where $rho$ is the radial distance from the solenoid axis. The interior field is *uniform* — the magnetic analogue of the uniform field between parallel capacitor plates. Outside, both $bold(B) = bold(0)$ and $bold(A)$ is constant (can be taken as zero after a gauge transformation). The magnetic flux through a single turn is $Phi_B = mu_0 n I pi R^2$, where $R$ is the solenoid radius.
+
+  For a *finite* solenoid of length $L$, the on-axis field at the centre is:
+  $
+    B_z(0) = mu_0 n I frac(L, sqrt(L^2 + 4 R^2)),
+  $
+  approaching $mu_0 n I$ as $L >> R$. At the end of a long solenoid, $B_z approx mu_0 n I / 2$.
+]
+
+#example(name: "Toroid")[ // 环形螺线管（螺绕环）
+  $N$ total turns wound around a torus of mean radius $R$, each carrying current $I$. (§6.3 gives the derivation.)
+  $
+    bold(B)(r) = cases(
+      frac(mu_0 N I, 2 pi r) hat(bold(phi)) & (text("inside")),
+      bold(0) & (text("outside")),
+    )
+  $
+  The field is *non-uniform* inside: $B prop 1/r$. For a toroid of large radius ($R >>$ cross-sectional radius $a$), the field is approximately uniform: $B approx mu_0 n I$ with $n = N / (2 pi R)$.
+
+  The vector potential outside a toroid cannot be globally defined in the Coulomb gauge due to the nontrivial topology — a manifestation of the Aharonov-Bohm effect.
+]
+
+// ============================================================================
+// Axial Symmetry — Finite Distributions (Biot-Savart)
+// ============================================================================
+
+=== Axial Symmetry: Finite Current Distributions // 轴对称有限电流分布
+
+These configurations have rotational symmetry about the $z$-axis but are finite in extent. Ampère's law alone is insufficient; the field is obtained by direct integration of the Biot-Savart law. Results are simplest on the symmetry axis.
+
+#example(name: "Finite Straight Wire")[ // 有限长直导线
+  A straight wire segment of length $L$, carrying current $I$, lying along the $z$-axis from $z = -L/2$ to $z = L/2$. By the Biot-Savart law, the magnetic field at a distance $rho$ from the wire, in the plane perpendicular to its midpoint, is:
+  $
+    bold(B)(rho) = frac(mu_0 I, 4 pi rho) (sin theta_2 - sin theta_1) hat(bold(phi)),
+  $
+  where $theta_1$ and $theta_2$ are the angles subtended by the wire endpoints relative to the observation point:
+  $
+    sin theta_2 = frac(L/2, sqrt(rho^2 + (L/2)^2)), quad
+    sin theta_1 = - frac(L/2, sqrt(rho^2 + (L/2)^2)).
+  $
+  Hence:
+  $
+    B(rho) = frac(mu_0 I L, 4 pi rho sqrt(rho^2 + (L/2)^2)).
+  $
+  - For $L -> infinity$: $B = mu_0 I / (2 pi rho)$, recovering the infinite wire result.
+  - For $rho << L$ (near the wire, away from ends): $B approx mu_0 I / (2 pi rho)$.
+  - For $rho >> L$ (far field): $B approx mu_0 I L / (4 pi rho^2)$ — the field of a current element.
+]
+
+#example(name: "Circular Current Loop — On Axis")[ // 载流圆环轴线磁场
+  A circular loop of radius $R$ carrying steady current $I$, lying in the $"xy"$-plane centered at the origin. By the Biot-Savart law, the field on the $z$-axis is:
+  $
+    bold(B)(z) = frac(mu_0 I R^2, 2 (R^2 + z^2)^(3/2)) hat(bold(z)).
+  $
+  The vector potential (in Coulomb gauge) on the axis is zero by symmetry; off-axis it requires elliptic integrals. In the far-field limit ($|z| >> R$):
+  $
+    bold(B)(z) approx frac(mu_0, 2 pi) frac(m, |z|^3) hat(bold(z)),
+    quad m = I pi R^2 = I A,
+  $
+  where $m$ is the *magnetic dipole moment* of the loop (see the Magnetic Dipole subsection below). The field decays as $1/|z|^3$, characteristic of a dipole.
+
+  - At the centre ($z = 0$): $B(0) = mu_0 I / (2 R)$.
+  - For $N$ closely spaced turns (a coil): $B(z) = mu_0 N I R^2 / (2 (R^2 + z^2)^(3/2))$.
+
+  #figure(
+    image("img/magnetic_field_loop.png", width: 100%),
+    caption: [Magnetic field of a circular current loop.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:magnetic_field_loop>
+]
+
+// ============================================================================
+// Magnetic Dipole
+// ============================================================================
+
+=== Magnetic Dipole // 磁偶极子
+
+Just as the electric dipole is the fundamental building block for multipole expansions of the electrostatic field, the *magnetic dipole* plays the same role in magnetostatics. While a magnetic monopole does not exist, a magnetic dipole can be realized physically as a small current loop or as a bar magnet.
+
+#definition(name: "Magnetic Dipole Moment")[
+  For a planar current loop of area $A$ carrying current $I$, the *magnetic dipole moment* is:
+  $
+    bold(m) = I bold(A),
+  $
+  where $bold(A) = A hat(bold(n))$ is the vector area, with $hat(bold(n))$ oriented by the right-hand rule (fingers along current, thumb gives $hat(bold(n))$). The SI unit is $"A" dot "m"^2$.
+
+  For a general current distribution $bold(J)(bold(r))$, the magnetic dipole moment is:
+  $
+    bold(m) = frac(1, 2) integral_V bold(r) times bold(J)(bold(r)) dif V.
+  $
+]
+
+#example(name: "Magnetic Dipole Field")[ // 磁偶极子的磁场
+  In the far-field limit ($r >>$ loop radius $R$), the magnetic field of a dipole $bold(m) = m hat(bold(z))$ in spherical coordinates is:
+  $
+    bold(B)(r, theta) = frac(mu_0, 4 pi) frac(m, r^3) (2 cos theta hat(bold(r)) + sin theta hat(bold(theta))).
+  $
+  In Cartesian form:
+  $
+    bold(B)(bold(r)) = frac(mu_0, 4 pi) frac(1, r^3) [3(bold(m) dot hat(bold(r))) hat(bold(r)) - bold(m)].
+  $
+
+  The vector potential of a magnetic dipole is:
+  $
+    bold(A)(bold(r)) = frac(mu_0, 4 pi) frac(bold(m) times hat(bold(r)), r^2).
+  $
+
+  - The field decays as $1/r^3$, exactly like the electric dipole field in electrostatics.
+  - The magnetic field lines form closed loops, exiting the north pole (方向沿 $bold(m)$) and entering the south pole.
+  - For a circular loop of radius $R$, the far-field expression matches the on-axis result from the previous example when $|z| >> R$.
+]
+
+#example(name: "Force and Torque on a Magnetic Dipole")[ // 磁偶极子受力和力矩
+  A magnetic dipole $bold(m)$ placed in an external magnetic field $bold(B)_"ext"$ experiences:
+  - *Torque* (tending to align the dipole with the field):
+    $
+      bold(tau) = bold(m) times bold(B)_"ext".
+    $
+  - *Force* (in a non-uniform field):
+    $
+      bold(F) = nabla (bold(m) dot bold(B)_"ext").
+    $
+  - *Potential energy*:
+    $
+      U = - bold(m) dot bold(B)_"ext".
+    $
+
+  These relations are directly analogous to those for an electric dipole $bold(p)$ in an external electric field $bold(E)$ (§3.5), with $bold(p) -> bold(m)$ and $bold(E) -> bold(B)$.
+]
+
+#note[
+  *Quick-reference guide by symmetry type:*
+  - *Cylindrical (infinite)*: choose a coaxial circular Amperian loop; $bold(B) = B(rho) hat(bold(phi))$ is azimuthal and constant on the loop. Includes straight wires and coaxial cables.
+  - *Solenoidal*: choose a rectangular Amperian loop with one side inside and one outside; $B$ is axial and uniform inside. Includes solenoids and toroids.
+  - *Finite axial*: use the Biot-Savart law directly; closed-form results exist only on the symmetry axis. Includes finite wires and circular loops.
+  - *Dipole far field*: $bold(B) prop 1/r^3$, given by $bold(B)(r) = (mu_0 / 4 pi) [3(bold(m) dot hat(bold(r))) hat(bold(r)) - bold(m)] / r^3$.
+]
+
 // 回旋运动、螺旋运动、E×B 漂移、磁镜效应；霍尔效应（霍尔电压、霍尔系数、载流子类型判定）
 == Motion of Charged Particles in Magnetic Fields // 带电粒子在磁场中的运动
 
