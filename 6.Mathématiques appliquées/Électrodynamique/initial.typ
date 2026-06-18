@@ -1254,7 +1254,7 @@ Charge is a conserved quantity: it can neither be created nor destroyed. This fu
 #proof[
   Consider a volume $V$ enclosed by a surface $S$. The total charge inside $V$ is $Q = integral_V rho dif V$. The current flowing out of $V$ through $S$ is $I = integral_S bold(J) dot dif bold(S)$. Charge conservation requires that the outflow current equals the rate of decrease of charge inside:
   $
-    integral_S bold(J) dot dif bold(S) = - frac(d Q, d t) = - integral_V (partial rho / partial t) dif V.
+    integral_S bold(J) dot dif bold(S) = - frac(dif Q, dif t) = - integral_V (partial rho / partial t) dif V.
   $
   Applying the divergence theorem to the left side: $integral_V (nabla dot bold(J)) dif V = - integral_V (partial rho / partial t) dif V$. Since this holds for any volume, the integrands must be equal pointwise, giving $nabla dot bold(J) + partial rho / partial t = 0$.
 ]
@@ -1469,7 +1469,7 @@ From the Lorentz force law, we can define the magnetic field $bold(B)$ operation
 #note[
   The magnetic force $q bold(v) times bold(B)$ is always perpendicular to the velocity $bold(v)$, so it does zero work on the particle:
   $
-    frac(d W, d t) = bold(F)_m dot bold(v) = q (bold(v) times bold(B)) dot bold(v) = 0.
+    frac(dif W, dif t) = bold(F)_m dot bold(v) = q (bold(v) times bold(B)) dot bold(v) = 0.
   $
   A magnetic field cannot change the speed (kinetic energy) of a charged particle — it can only change its direction of motion. This distinguishes magnetic forces from electric forces, which can do work and change the particle's energy.
 ]
@@ -2204,15 +2204,126 @@ Just as the electric dipole is the fundamental building block for multipole expa
 = Electromagnetic Induction // 电磁感应
 
 == Faraday's Law of Induction // 法拉第电磁感应定律
-// 实验基础：变化的磁通量产生感应电动势
-// 积分形式：ℰ = -dΦ_B/dt，Lenz 定律（负号的物理含义）
-// 微分形式：∇×E = -∂B/∂t（感应电场是有旋场）
-// 感应电场与静电场的本质区别：∇×E_induced ≠ 0（与 ∇×E_static = 0 对比）
-// 应用示例：矩形闭合回路在时变磁场中的感应电动势
+
+Of the four Maxwell equations, Faraday's law is perhaps the most directly tied to practical technology — it is the operating principle behind electrical generators, transformers, and inductive sensors. Its discovery by Michael Faraday in 1831 marked the culmination of a decade-long search for the relationship between electricity and magnetism.
+
+Faraday's key insight was that a *changing* magnetic field can produce an electric current, a phenomenon he called *electromagnetic induction* (电磁感应). This was revolutionary: previously, scientists had only observed that steady currents produce steady magnetic fields (Oersted, Ampère). Faraday showed the converse effect — magnetism can produce electricity, but only if the magnetic field is *changing* in time.
+
+=== Experimental Foundation // 实验基础
+
+Faraday's original experiments can be reproduced with a simple setup: a coil of wire connected to a sensitive galvanometer, and a bar magnet. The galvanometer deflects only when the magnet is *moving* relative to the coil — that is, when the magnetic flux through the coil is changing. A steady magnet produces no current, no matter how strong it is.
+
+The quantity that determines the induced electromotive force (EMF) is the *magnetic flux* through the loop (defined in §6.3):
+
+$
+  Phi_B = integral_S bold(B) dot dif bold(S).
+$
+
+The experimental results can be summarised by two key observations:
+
+1. An EMF is induced in a loop whenever the magnetic flux through the loop changes with time.
+2. The magnitude of the induced EMF is proportional to the rate of change of the flux.
+
+=== Faraday's Law — Integral Form // 法拉第定律——积分形式
+
+#law(name: "Faraday's Law of Induction — Integral Form")[
+  The electromotive force $cal(E)$ induced around a closed loop $C$ (the boundary of an open surface $S$) is equal to the negative rate of change of the magnetic flux through that surface:
+  $
+    cal(E) = integral.cont_C bold(E) dot dif bold(l) = - frac(dif, dif t) integral_S bold(B) dot dif bold(S) = - frac(dif Phi_B, dif t).
+  $
+  Here $cal(E)$ is the induced EMF, defined as the line integral of the total electric field $bold(E)$ around the loop. The SI unit of EMF is the volt ($"V"$).
+]
+
+#law(name: "Lenz's Law")[
+  The negative sign in Faraday's law embodies *Lenz's law*: the induced EMF always acts in such a direction as to *oppose* the change that produced it.
+  
+  In other words, the induced current creates a magnetic field that tries to cancel the change in the external flux:
+  - If $Phi_B$ is increasing, the induced current produces a field opposite to the external field.
+  - If $Phi_B$ is decreasing, the induced current produces a field in the same direction as the external field.
+]
+
+#note[
+  Lenz's law is not an independent law but a physical interpretation of the minus sign. It guarantees energy conservation: if the induced EMF *aided* the change, we would obtain a runaway positive feedback loop, violating conservation of energy.
+]
+
+#example(name: "Rectangular Loop in a Time-Varying Magnetic Field")[
+  A rectangular loop of width $w$ and height $h$ lies in the $"xy"$-plane. A uniform but time-dependent magnetic field $bold(B)(t) = B_0 sin(omega t) hat(bold(z))$ penetrates the loop.
+
+  The magnetic flux through the loop is:
+  $
+    Phi_B(t) = integral_S bold(B) dot dif bold(S) = B_0 sin(omega t) w h.
+  $
+
+  By Faraday's law, the induced EMF is:
+  $
+    cal(E)(t) = - frac(dif Phi_B, dif t) = - omega B_0 w h cos(omega t).
+  $
+
+  The induced electric field circulates around the loop. By symmetry, it is constant in magnitude along each side and tangential to the loop. For a circular loop of radius $R$, we can find $bold(E)$ directly: by symmetry $bold(E) = E(t) hat(bold(phi))$, and
+  $
+    cal(E) = integral.cont bold(E) dot dif bold(l) = 2 pi R E(t) = - pi R^2 frac(dif B, dif t),
+  $
+  giving $E(t) = - frac(R, 2) frac(dif B, dif t)$.
+]
+
+=== Faraday's Law — Differential Form // 法拉第定律——微分形式
+
+The integral form describes the EMF around a finite loop. To obtain a local (pointwise) relation, we apply Stokes' theorem to the left-hand side:
+
+$
+  integral.cont_C bold(E) dot dif bold(l) = integral_S (nabla times bold(E)) dot dif bold(S).
+$
+
+Faraday's law then becomes:
+
+$
+  integral_S (nabla times bold(E)) dot dif bold(S) = - frac(dif, dif t) integral_S bold(B) dot dif bold(S).
+$
+
+For a stationary surface $S$ (the loop does not deform or move), the time derivative can be taken inside the integral:
+
+$
+  integral_S (nabla times bold(E)) dot dif bold(S) = - integral_S (partial bold(B) / partial t) dot dif bold(S).
+$
+
+Since this holds for *any* surface $S$, the integrands must be equal pointwise:
+
+#law(name: "Faraday's Law — Differential Form")[
+  $
+    nabla times bold(E) = - frac(partial bold(B), partial t).
+  $
+]
+
+#note[
+  The differential form $nabla times bold(E) = - partial bold(B) / partial t$ tells us that a time-varying magnetic field generates a *rotational* (curl) electric field. This is the first modification to the static equations: in electrostatics we had $nabla times bold(E) = bold(0)$; in electrodynamics, the curl of $bold(E)$ is proportional to the rate of change of $bold(B)$.
+
+  Compare:
+  $
+    text("Electrostatics"): quad nabla times bold(E) = bold(0),
+    quad
+    text("Electrodynamics"): quad nabla times bold(E) = - frac(partial bold(B), partial t).
+  $
+]
+
+#property(name: "Key Properties of the Induced Electric Field")[
+  - The induced electric field is *non-conservative*: its circulation around a closed loop is nonzero when $dif Phi_B / dif t != 0$.
+  - Unlike the electrostatic field, the induced field cannot be derived from a scalar potential $V$ alone (since $nabla times bold(E) != 0$). In time-varying situations, the full electric field is given by $bold(E) = - nabla V - partial bold(A) / partial t$, where $bold(A)$ is the vector potential (§6.4).
+  - The induced electric field lines are *closed loops* (they have no sources or sinks), as $nabla dot bold(E) = rho / epsilon_0$ still holds — the divergence of $bold(E)$ is determined only by charge density.
+  - Faraday's law applies regardless of whether a physical conducting loop is present: a time-varying magnetic field produces an electric field in *empty space* as well.
+]
+
+#note[
+  *Summary of Faraday's Law:*
+  - Integral form: $cal(E) = - dif Phi_B / dif t$ — a changing magnetic flux induces an EMF around any closed loop.
+  - Lenz's law: the induced EMF opposes the change that produced it (energy conservation).
+  - Differential form: $nabla times bold(E) = - partial bold(B) / partial t$ — a time-varying magnetic field is a source of curl for the electric field.
+  - This is the first dynamical coupling between $bold(E)$ and $bold(B)$ in Maxwell's equations. The second coupling (how a time-varying $bold(E)$ produces $bold(B)$) will be introduced in §9.1 through the displacement current.
+  - The total electric field in electrodynamics is the sum of a conservative part (from charges) and a solenoidal part (from time-varying magnetic fields).
+]
 
 == Motional EMF and Induced Electric Field // 动生电动势与感应电场
 // === Motional EMF（动生电动势）
-// 导体在静磁场中运动产生的电动势：ℰ_motional = ∮(v×B)·dl
+// 导体在静磁场中运动产生的电动势：cal(E)_motional = ∮(v×B)·dl
 // 物理图像：洛伦兹力对自由电荷做功分离电荷（注意：总功率为零的悖论与分析）
 // 经典例子：滑动导轨（Hall bar）—— 电动势、电流、安培力、功率守恒
 // === Induced Electric Field（感应电场）
@@ -2223,11 +2334,120 @@ Just as the electric dipole is the fundamental building block for multipole expa
 // 应用示例：变压器（互感基本原理）、电子感应加速器（betatron 原理）
 // Note：两种电动势的对比表——产生机制、物理来源、适用范围
 
+The EMF in Faraday's law, $cal(E) = - dif Phi_B / dif t$, can arise through two physically distinct mechanisms: (1) the *motional EMF* produced when a conductor moves through a magnetic field, and (2) the *induced electric field* generated by a time-varying magnetic field, independent of any motion. Although these mechanisms differ fundamentally in their microscopic origin, both are captured by the same flux rule — a remarkable unification that underscores the power of the field-theoretic viewpoint.
+
+=== Motional EMF // 动生电动势
+
+When a conductor moves through a static magnetic field, the free charges inside the conductor experience the magnetic Lorentz force:
+
+$
+  bold(F) = q (bold(v) times bold(B)).
+$
+
+This force pushes charges along the conductor, separating positive and negative charges until the resulting electrostatic field balances the magnetic force. The *motional EMF* is defined as the line integral of the effective force per unit charge along the conductor:
+
+#definition(name: "Motional EMF")[
+  For a conductor moving with velocity $bold(v)$ in a magnetic field $bold(B)$, the motional EMF along a curve $C$ is:
+  $
+    cal(E)_"mot" = integral.cont_C (bold(v) times bold(B)) dot dif bold(l).
+  $
+  This is equivalent to the rate at which the conductor "cuts" magnetic field lines.
+]
+
+#example(name: "Sliding Bar on U-Shaped Rails")[ // 滑动导轨
+  Consider a U-shaped conducting rail with a movable bar of length $L$ sliding frictionlessly to the right at constant velocity $bold(v) = v hat(bold(x))$. A uniform magnetic field $bold(B) = B hat(bold(z))$ points out of the page. A resistor $R$ is connected across the rails.
+
+  *EMF:* The motional EMF is generated in the moving bar. For the bar, $bold(v) times bold(B) = v B hat(bold(y))$, directed along the bar from bottom to top. The EMF is:
+  $
+    cal(E) = integral_0^L (v B) dif y = v B L.
+  $
+  By Lenz's law, the induced current flows clockwise (opposing the increase in flux).
+
+  *Current:* $I = cal(E) / R = v B L / R$, flowing clockwise through the circuit.
+
+  *Magnetic force on the bar:* The current-carrying bar in the magnetic field experiences $bold(F)_B = I bold(L) times bold(B) = I L B (- hat(bold(x)))$ — a force to the left, opposing the motion. Magnitude: $F_B = I L B = (v B^2 L^2) / R$.
+
+  *Power balance:* 
+  - Power input (external agent pulling the bar): $P_"in" = F_("ext") v = F_B v = (v^2 B^2 L^2) / R$.
+  - Power dissipated (Joule heating in resistor): $P_R = I^2 R = (v^2 B^2 L^2) / R$.
+  - $P_"in" = P_R$ — mechanical work is converted entirely into electrical energy, demonstrating conservation of energy.
+
+  This example resolves the apparent paradox that magnetic forces do no work (since $bold(F)_B perp bold(v)$). The magnetic force *transfers* mechanical energy from the external agent to electrical energy, acting as a mediator rather than a source of work.
+]
+
+#note[
+  The motional EMF arises purely from the Lorentz force in a moving conductor — no time-varying magnetic field is required. In the rest frame of the bar, the magnetic field $bold(B)$ transforms (relativistically) into an electric field $bold(E)' = bold(v) times bold(B)$, which is the source of the EMF in that frame. This relativistic perspective unifies motional EMF with the induced electric field (next subsection) under the umbrella of electromagnetic field transformations (to be explored in §17.3).
+]
+
+=== Induced Electric Field // 感应电场
+
+Faraday's law reveals a profound fact: even in the absence of any conductor or material medium, a time-varying magnetic field produces an electric field in free space. This *induced electric field* exists independently of whether a wire is present to detect it.
+
+#definition(name: "Induced Electric Field")[
+  The *induced electric field* $bold(E)_"ind"$ is the electric field generated by a time-varying magnetic field, satisfying:
+  $
+    nabla times bold(E)_"ind" = - frac(partial bold(B), partial t), quad nabla dot bold(E)_"ind" = 0.
+  $
+  Unlike the electrostatic field, the induced electric field is *non-conservative* and its field lines form *closed loops*.
+]
+
+#property(name: "Properties of the Induced Electric Field")[
+  - *Non-conservative:* $integral.cont_C bold(E)_"ind" dot dif bold(l) = - dif Phi_B / dif t != 0$ — the circulation is nonzero whenever the magnetic flux changes.
+  - *Solenoidal:* $nabla dot bold(E)_"ind" = 0$ — the induced field has no sources or sinks; its field lines are closed loops.
+  - *No scalar potential:* Because $nabla times bold(E)_"ind" != 0$, it cannot be expressed as the gradient of a scalar function. In time-varying situations, the full electric field is expressed using both scalar and vector potentials:
+    $
+      bold(E) = - nabla V - frac(partial bold(A), partial t),
+    $
+    where $- nabla V$ is the conservative part (from charges) and $- partial bold(A) / partial t$ is the solenoidal part (from changing magnetic fields). This extends the electrostatic relation $bold(E) = - nabla V$.
+]
+
+#example(name: "Transformer — The Betatron Principle")[ // 变压器与电子感应加速器
+  *Transformer principle:* Two coils wound around a common ferromagnetic core. When the current in the primary coil changes, the magnetic flux through the secondary coil changes, inducing an EMF:
+  $
+    cal(E)_2 = - M frac(dif I_1, dif t),
+  $
+  where $M$ is the mutual inductance (to be studied in §8.3). This is the operating principle of every electrical transformer.
+
+  *Betatron (electron induction accelerator):* An electron accelerator that uses a time-varying magnetic field to accelerate electrons in a circular orbit. A changing magnetic field $B(t)$ (directed perpendicular to the orbit plane) generates an azimuthal induced electric field:
+  $
+    E_phi = - frac(R, 2) frac(dif B_"avg", dif t),
+  $
+  where $B_"avg"$ is the average magnetic field inside the orbit. The electron gains energy from the work done by $E_phi$ each revolution. The stable orbit condition requires the field at the orbit $B_"orb"$ to satisfy $B_"orb" = B_"avg" / 2$ (the *betatron condition*).
+
+  The betatron beautifully demonstrates that the induced electric field is a real physical field — it exerts forces and does work on charged particles even in vacuum, without any conductor present.
+]
+
+=== Unification: The Total Electric Field // 统一：总电场
+
+The key conceptual advance of electrodynamics over electrostatics is that the electric field now has *two independent sources*:
+
+$
+  bold(E) = bold(E)_"static" + bold(E)_"ind",
+$
+
+where $bold(E)_"static"$ is produced by electric charges ($nabla dot bold(E)_"static" = rho / epsilon_0$, $nabla times bold(E)_"static" = bold(0)$) and $bold(E)_"ind"$ is produced by time-varying magnetic fields ($nabla dot bold(E)_"ind" = 0$, $nabla times bold(E)_"ind" = - partial bold(B) / partial t$).
+
+#note[
+  *Comparison of motional EMF and induced electric field:*
+
+  #tex-table(
+    ("Property", "Motional EMF", "Induced Electric Field"),
+    ("Source", "Motion of conductor through $bold(B)$", "Time-varying $bold(B)$ in free space"),
+    ("Microscopic origin", "Lorentz force $bold(F) = q (bold(v) times bold(B))$", "Faraday's law $nabla times bold(E) = - partial bold(B) / partial t$"),
+    ("Requires conductor?", "Yes (charge carriers must move)", "No (exists in vacuum)"),
+    ("cal(E) formula", "$cal(E) = integral.cont (bold(v) times bold(B)) dot dif bold(l)$", "$cal(E) = - dif / dif t integral_S bold(B) dot dif bold(S)$"),
+    ("Frame dependence", "Exists in lab frame; transforms to $bold(E)$ in moving frame", "Lorentz-invariant (frame-independent flux change)"),
+    ("Applicable where", "Generators, sliding contacts", "Transformers, betatrons, eddy currents"),
+  )
+
+  Despite their different microscopic origins, both mechanisms are quantitatively captured by the single equation $cal(E) = - dif Phi_B / dif t$ — the flux rule. This unification is one of the greatest triumphs of Faraday's experimental insight and Maxwell's mathematical formulation.
+]
+
 == Inductance // 电感
-// 自感现象：回路中电流变化产生的自感电动势 ℰ_L = -L dI/dt
+// 自感现象：回路中电流变化产生的自感电动势 cal(E)_L = -L dI/dt
 // 自感系数 L = NΦ/I 的定义，与回路几何形状的关系
 // 自感计算示例：长直螺线管、同轴电缆（单位长度）
-// 互感现象：回路1的电流变化在回路2中产生互感电动势 ℰ_2 = -M dI_1/dt
+// 互感现象：回路1的电流变化在回路2中产生互感电动势 cal(E)_2 = -M dI_1/dt
 // 互感系数 M 的互易性：M_12 = M_21（Neumann 公式的对称性证明）
 // Neumann 公式：M = (μ₀/4π) ∮∮ (dl₁·dl₂)/r
 // RL 电路暂态过程：电流增长与衰减的时间常数 τ = L/R
