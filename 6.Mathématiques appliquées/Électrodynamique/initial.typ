@@ -2022,6 +2022,13 @@ Configurations invariant under translations along the $z$-axis and rotations abo
     )
   $
   Inside the cylinder the field grows linearly: $B(rho) prop rho$; outside it is identical to an infinite line wire carrying the same total current $I$.
+
+  #figure(
+    image("img/solid_cylinder_magnetic_field.png", width: 100%),
+    caption: [Magnetic field of a uniformly conducting solid cylinder.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:solid_cylinder_magnetic_field>
 ]
 
 #example(name: "Coaxial Cable")[ // 同轴电缆
@@ -2454,6 +2461,146 @@ where $bold(E)_"static"$ is produced by electric charges ($nabla dot bold(E)_"st
 // 耦合系数 k = M/√(L₁L₂)（0 ≤ k ≤ 1）
 // Note：电感是电路中"磁场惯性"的量度——类比质量在力学中的作用
 
+When a circuit carries a time-varying current, the changing magnetic flux through the circuit itself (or through a nearby circuit) induces an EMF that opposes the change. This phenomenon — *inductance* — is the magnetic analogue of inertia in mechanics: just as mass opposes changes in velocity, inductance opposes changes in current.
+
+=== Self-Inductance // 自感
+
+#definition(name: "Self-Inductance")[
+  For a circuit carrying current $I$, the *self-inductance* $L$ is defined as the ratio of the total magnetic flux linkage $N Phi_B$ (where $N$ is the number of turns and $Phi_B$ is the flux through each turn) to the current:
+  $
+    L = frac(N Phi_B, I).
+  $
+  The SI unit of inductance is the *henry* ($"H"$), where $1 "H" = 1 "Wb" / "A" = 1 "V" dot "s" / "A"$.
+
+  When the current changes, the induced EMF (by Faraday's law) is:
+  $
+    cal(E)_L = - frac(d (N Phi_B), d t) = - L frac(dif I, dif t).
+  $
+]
+
+#property(name: "Properties of Self-Inductance")[
+  - Inductance depends only on the geometry of the circuit (shape, size, number of turns) and the magnetic properties of the surrounding medium.
+  - For a circuit in a linear medium (constant $mu$), $L$ is independent of the current $I$.
+  - The EMF $cal(E)_L = - L dif I / dif t$ always opposes the change in current (Lenz's law): if $I$ is increasing, $cal(E)_L$ is negative (opposing the increase); if $I$ is decreasing, $cal(E)_L$ is positive (opposing the decrease).
+]
+
+#example(name: "Self-Inductance of a Long Solenoid")[ // 长直螺线管的自感
+  A long solenoid of length $l$, cross-sectional area $A = pi R^2$, and $n$ turns per unit length (total $N = n l$ turns). From §6.5, the interior magnetic field is uniform: $B = mu_0 n I$.
+
+  The flux through a single turn: $Phi_B = B A = mu_0 n I pi R^2$.
+  The total flux linkage: $N Phi_B = (n l) (mu_0 n I pi R^2) = mu_0 n^2 I pi R^2 l$.
+
+  Hence:
+  $
+    L = frac(N Phi_B, I) = mu_0 n^2 pi R^2 l = mu_0 n^2 V,
+  $
+  where $V = pi R^2 l$ is the volume of the solenoid.
+
+  Key observation: $L$ is proportional to $n^2$ (doubling the turns quadruples the inductance) and to the volume, consistent with the magnetic energy interpretation (§8.4).
+]
+
+#example(name: "Self-Inductance of a Coaxial Cable (per unit length)")[ // 同轴电缆自感
+  A coaxial cable consists of an inner solid conductor of radius $a$ and an outer conducting shell of radius $b$ ($b > a$). For a length $l$ carrying current $I$ with return path through the outer shell, the magnetic field exists only in the region $a < rho < b$ (neglecting internal flux in the conductors):
+  $
+    B(rho) = frac(mu_0 I, 2 pi rho), quad a < rho < b.
+  $
+
+  The magnetic flux through a rectangular strip of length $l$ and width $(b-a)$ between the conductors is:
+  $
+    Phi_B = integral_a^b B(rho) l dif rho = frac(mu_0 I l, 2 pi) ln frac(b, a).
+  $
+
+  The self-inductance per unit length is:
+  $
+    frac(L, l) = frac(mu_0, 2 pi) ln frac(b, a).
+  $
+
+  For typical cables with $b/a approx 2$-$10$, $L/l approx 0.1$-$0.5$ $"mu H/m"$.
+]
+
+=== Mutual Inductance // 互感
+
+#definition(name: "Mutual Inductance")[
+  Consider two circuits $C_1$ and $C_2$. When a time-varying current $I_1$ in circuit $C_1$ produces a magnetic flux $Phi_(2←1)$ through circuit $C_2$, the *mutual inductance* $M_21$ is defined as:
+  $
+    M_21 = frac(N_2 Phi_(2←1), I_1),
+  $
+  where $N_2$ is the number of turns of circuit $C_2$. The EMF induced in circuit $C_2$ due to $I_1$ is:
+  $
+    cal(E)_2 = - M_21 frac(dif I_1, dif t).
+  $
+  Similarly, $cal(E)_1 = - M_12 frac(dif I_2, dif t)$ for the effect of $C_2$ on $C_1$.
+]
+
+#theorem(name: "Reciprocity of Mutual Inductance")[
+  The mutual inductance coefficients are symmetric:
+  $
+    M_12 = M_21 = M.
+  $
+  This reciprocity is a consequence of the symmetry of the Neumann formula and, more fundamentally, of the linearity and self-adjointness of the magnetostatic field equations.
+]
+
+For two circuits of arbitrary shape, the mutual inductance can be expressed in terms of a double line integral:
+
+#theorem(name: "Neumann's Formula")[
+  The mutual inductance between two closed circuits $C_1$ and $C_2$ is given by:
+  $
+    M = frac(mu_0, 4 pi) integral.cont_(C_1) integral.cont_(C_2) frac(dif bold(l)_1 dot dif bold(l)_2, |bold(r)_1 - bold(r)_2|).
+  $
+]
+
+#proof[
+  The magnetic vector potential produced by circuit $C_1$ at a point on $C_2$ is (from §6.4):
+  $
+    bold(A)_1(bold(r)_2) = frac(mu_0 I_1, 4 pi) integral.cont_(C_1) frac(dif bold(l)_1, |bold(r)_2 - bold(r)_1|).
+  $
+
+  The flux through $C_2$ is $Phi_(2←1) = integral.cont_(C_2) bold(A)_1 dot dif bold(l)_2$. Substituting:
+  $
+    Phi_(2←1) = frac(mu_0 I_1, 4 pi) integral.cont_(C_2) integral.cont_(C_1) frac(dif bold(l)_1 dot dif bold(l)_2, |bold(r)_2 - bold(r)_1|).
+  $
+
+  Since $M = Phi_(2←1) / I_1$, and $|bold(r)_2 - bold(r)_1| = |bold(r)_1 - bold(r)_2|$, we obtain Neumann's formula. The symmetry under exchange of indices $(1, 2)$ is manifest, proving $M_12 = M_21$.
+]
+
+#definition(name: "Coupling Coefficient")[
+  For two circuits with self-inductances $L_1$ and $L_2$ and mutual inductance $M$, the *coupling coefficient* $k$ is defined as:
+  $
+    k = frac(M, sqrt(L_1 L_2)), quad 0 <= k <= 1.
+  $
+  - $k = 0$: no coupling (circuits are far apart or orthogonal).
+  - $k = 1$: perfect coupling (all flux from one circuit links the other, e.g., an ideal transformer with a common core).
+  - $0 < k < 1$: partial coupling (flux leakage between circuits).
+]
+
+=== RL Circuit Transient // RL 电路暂态过程
+
+#example(name: "RL Circuit — Current Growth and Decay")[ // RL 电路的电流增长与衰减
+  Consider a series $R L$ circuit (a resistor $R$ and an inductor $L$ connected to a voltage source $V_0$ through a switch).
+
+  *Current growth ($t > 0$, switch closed at $t = 0$):* By Kirchhoff's voltage law:
+  $
+    V_0 - L frac(dif I, dif t) - I R = 0.
+  $
+  This first-order differential equation has the solution:
+  $
+    I(t) = frac(V_0, R) (1 - e^(-t / tau)), quad tau = frac(L, R).
+  $
+  The current approaches the steady-state value $V_0 / R$ exponentially with time constant $tau = L / R$.
+
+  *Current decay ($t > 0$, source shorted after steady state):* With $V_0 = 0$:
+  $
+    I(t) = frac(V_0, R) e^(-t / tau),
+  $
+  where $tau = L / R$ is the same time constant.
+
+  *Physical interpretation:* The time constant $tau = L / R$ describes how quickly the circuit responds to changes. A larger $L$ means more "magnetic inertia" — the current takes longer to change. A larger $R$ means faster dissipation, hence a shorter time constant.
+]
+
+#note[
+  *Inductance as magnetic inertia:* In mechanics, mass $m$ opposes changes in velocity ($F = m a = m dif v / dif t$). In circuits, inductance $L$ opposes changes in current ($cal(E)_L = - L dif I / dif t$). This analogy is exact for the $R L$ circuit, where the time constant $tau = L / R$ mirrors the mechanical timescale $tau = m / gamma$ for a mass subject to viscous damping.
+]
+
 == Magnetic Energy in Circuits // 电路中的磁能
 // 电感储能：建立电流过程中电源做的功 → U = ½LI²
 // 互感储能：两个耦合回路的磁能 U = ½L₁I₁² + ½L₂I₂² + MI₁I₂
@@ -2461,6 +2608,113 @@ where $bold(E)_"static"$ is produced by electric charges ($nabla dot bold(E)_"st
 // 任意电流分布的总磁能：U = ½∫ A·J dV = ∫ (B²/2μ₀) dV
 // 两种磁能表达式的等价性证明（注意：与静电能 U = ½∫ ρV dV = ∫ (ε₀E²/2) dV 的类比）
 // Note：磁能密度 u_B 与电能密度 u_E = ε₀E²/2 的结构对称性——为 §9.5 Poynting 定理铺垫
+
+Just as a capacitor stores energy in the electric field, an inductor stores energy in the magnetic field. This energy is released when the current decreases, supplying power to the circuit.
+
+=== Energy Stored in a Single Inductor // 单电感储能
+
+To establish a current $I$ through an inductor $L$, the external source must do work against the induced EMF. The instantaneous power supplied to the inductor is:
+$
+  P = - cal(E)_L I = L frac(dif I, dif t) I.
+$
+
+The total work done to raise the current from $0$ to $I$ is stored as magnetic energy:
+#theorem(name: "Magnetic Energy of a Single Inductor")[
+  $
+    U_B = integral_0^t P dif t' = integral_0^I L I' dif I' = frac(1, 2) L I^2.
+  $
+]
+
+=== Energy of Coupled Circuits // 耦合回路的磁能
+
+For two coupled circuits, the total magnetic energy includes contributions from both self-inductances and their mutual interaction:
+
+#theorem(name: "Magnetic Energy of Two Coupled Circuits")[
+  $
+    U_B = frac(1, 2) L_1 I_1^2 + frac(1, 2) L_2 I_2^2 + M I_1 I_2.
+  $
+  The cross-term $M I_1 I_2$ can be positive or negative depending on the relative direction of the currents (flux aiding or opposing).
+]
+
+#proof[
+  For two circuits with currents $I_1$ and $I_2$, the total flux through circuit 1 is $Phi_1 = L_1 I_1 + M I_2$, and through circuit 2 is $Phi_2 = L_2 I_2 + M I_1$. The work done to establish the currents from zero to their final values is:
+  $
+    U_B = integral_0^(I_1, I_2) (I_1 dif Phi_1 + I_2 dif Phi_2) = frac(1, 2) L_1 I_1^2 + frac(1, 2) L_2 I_2^2 + M I_1 I_2.
+  $
+]
+
+This generalises to a system of $N$ circuits:
+$
+  U_B = frac(1, 2) sum_(i=1)^N sum_(j=1)^N L_(i j) I_i I_j,
+$
+where $L_(i i) = L_i$ are the self-inductances and $L_(i j) = M_(i j)$ for $i != j$ are the mutual inductances.
+
+=== Magnetic Energy Density // 磁能密度
+
+The circuit expression $U_B = frac(1, 2) L I^2$ can be recast as a volume integral over the magnetic field, revealing the local energy density. Using the solenoid example ($L = mu_0 n^2 V$, $B = mu_0 n I$):
+
+$
+  U_B = frac(1, 2) (mu_0 n^2 V) I^2 = frac(1, 2) frac(B^2, mu_0) V.
+$
+
+Since the field is uniform inside the solenoid, the energy density is:
+
+#definition(name: "Magnetic Energy Density")[
+  The energy stored in a magnetic field per unit volume is:
+  $
+    u_B = frac(B^2, 2 mu_0) quad text("in vacuum").
+  $
+  In a linear magnetic medium ($bold(B) = mu bold(H)$):
+  $
+    u_B = frac(1, 2) bold(H) dot bold(B) = frac(B^2, 2 mu).
+  $
+]
+
+=== General Expression: A·J Form // 一般形式：A·J 表达
+
+The total magnetic energy of any current distribution can also be expressed in terms of the vector potential and the current density.
+
+#theorem(name: "Magnetic Energy — A·J Form")[
+  The total magnetic energy of a system of steady currents is:
+  $
+    U_B = frac(1, 2) integral_V bold(A) dot bold(J) dif V.
+  $
+]
+
+#proof[
+  Using $bold(B) = nabla times bold(A)$ and Ampère's law $nabla times bold(H) = bold(J)$:
+  $
+    U_B = integral_V frac(1, 2) bold(H) dot bold(B) dif V
+        = frac(1, 2) integral_V bold(H) dot (nabla times bold(A)) dif V.
+  $
+  Using the identity $nabla dot (bold(A) times bold(H)) = bold(H) dot (nabla times bold(A)) - bold(A) dot (nabla times bold(H))$:
+  $
+    bold(H) dot (nabla times bold(A)) = bold(A) dot (nabla times bold(H)) + nabla dot (bold(A) times bold(H)).
+  $
+  Substituting $nabla times bold(H) = bold(J)$:
+  $
+    U_B = frac(1, 2) integral_V bold(A) dot bold(J) dif V + frac(1, 2) integral_V nabla dot (bold(A) times bold(H)) dif V.
+  $
+  The second term becomes a surface integral $frac(1, 2) integral_S (bold(A) times bold(H)) dot dif bold(S)$. For a localized current distribution, this vanishes as the surface is taken to infinity (fields decay sufficiently fast). Hence:
+  $
+    U_B = frac(1, 2) integral_V bold(A) dot bold(J) dif V.
+  $
+]
+
+#note[
+  *Comparison of electrostatic and magnetostatic energy expressions:*
+
+  #tex-table(
+    ("Quantity", "Electrostatics", "Magnetostatics"),
+    ("Source", "Charge density $rho$", "Current density $bold(J)$"),
+    ("Potential", "Scalar potential $V$", "Vector potential $bold(A)$"),
+    ("Circuit form", "$U_E = frac(1, 2) C V^2$", "$U_B = frac(1, 2) L I^2$"),
+    ("Charge/current form", "$U_E = frac(1, 2) integral rho V dif V$", "$U_B = frac(1, 2) integral bold(A) dot bold(J) dif V$"),
+    ("Field energy density", "$u_E = frac(epsilon_0, 2) E^2 = frac(1, 2) bold(E) dot bold(D)$", "$u_B = frac(1, 2 mu_0) B^2 = frac(1, 2) bold(H) dot bold(B)$"),
+  )
+
+  The structural symmetry between these expressions reflects the deep duality between electric and magnetic phenomena. In time-varying situations (§9.5), these two energy densities combine to give the total electromagnetic energy density $u = u_E + u_B$, which evolves according to Poynting's theorem.
+]
 
 = Maxwell's Equations // 麦克斯韦方程组
 
