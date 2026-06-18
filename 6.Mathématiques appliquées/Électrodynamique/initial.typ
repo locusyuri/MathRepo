@@ -1506,29 +1506,6 @@ The Biot-Savart law obeys the superposition principle: the total field from mult
   $
 ]
 
-#example(name: "Magnetic Field on the Axis of a Circular Loop")[
-  Consider a circular loop of radius $R$ carrying a steady current $I$, lying in the $x y$-plane with its centre at the origin. We compute the magnetic field at a point on the $z$-axis at height $z$.
-
-  By symmetry, the field points along the $z$-axis: $bold(B) = B_z(z) hat(bold(z))$. Each current element $I d bold(l)$ contributes a component $d B_z = (mu_0 / 4 pi) (I d l / r^2) sin psi$, where $psi$ is the angle between $d bold(l)$ and $bold(R)$. Since $d bold(l)$ is perpendicular to $bold(R)$ for $z$-axis points, $sin psi = 1$. The distance from each element to $P$ is $r = sqrt(R^2 + z^2)$, and the projection factor is $R / r$:
-  $
-    B_z(z) = frac(mu_0, 4 pi) integral_0^(2 pi R) frac(I d l, r^2) frac(R, r) = frac(mu_0, 4 pi) frac(I R, (R^2 + z^2)^(3/2)) integral_0^(2 pi R) d l.
-  $
-
-  Evaluating the integral:
-  $
-    B_z(z) = frac(mu_0 I R^2, 2 (R^2 + z^2)^(3/2)).
-  $
-
-  At the centre ($z = 0$): $B_z(0) = mu_0 I / (2 R)$. Far away ($|z| >> R$): $B_z(z) approx mu_0 I R^2 / (2 |z|^3)$, the field of a magnetic dipole.
-
-  #figure(
-    image("img/magnetic_field_loop.png", width: 60%),
-    caption: [Magnetic field of a circular current loop.],
-    placement: auto,
-    supplement: [Fig.]
-  ) <fig:magnetic_field_loop>
-]
-
 #note[
   The Biot-Savart law is a *volume law*: every current element contributes to the field at every point in space. In contrast, Ampère's law (to be introduced in §6.3) is a *boundary law* that is much more powerful when the current distribution has sufficient symmetry. This parallels the relationship between Coulomb's law and Gauss's law in electrostatics.
 ]
@@ -2143,13 +2120,12 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
   - For $N$ closely spaced turns (a coil): $B(z) = mu_0 N I R^2 / (2 (R^2 + z^2)^(3/2))$.
 
   #figure(
-    image("img/magnetic_field_loop.png", width: 100%),
+    image("img/magnetic_field_loop.png", width: 35%),
     caption: [Magnetic field of a circular current loop.],
     placement: auto,
     supplement: [Fig.]
   ) <fig:magnetic_field_loop>
 ]
-
 // ============================================================================
 // Magnetic Dipole
 // ============================================================================
