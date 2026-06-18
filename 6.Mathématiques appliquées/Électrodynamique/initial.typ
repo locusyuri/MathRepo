@@ -1765,6 +1765,240 @@ We have now assembled the complete set of field equations for electrostatics and
 // 磁矢势、库仑规范、矢势的泊松方程、磁通量与矢势环量的关系
 == Magnetic Vector Potential and Flux // 磁矢势与磁通量
 
+In the preceding section (§6.3), we established the complete set of magnetostatic field equations:
+$
+  nabla dot bold(B) = 0, quad nabla times bold(B) = mu_0 bold(J).
+$
+
+The divergence-free condition $nabla dot bold(B) = 0$ tells us that the magnetic field is *solenoidal* — its field lines form closed loops without sources or sinks. By the Helmholtz decomposition theorem (§1.5), any solenoidal vector field can be expressed as the curl of some vector field. This leads us to introduce the *magnetic vector potential* $bold(A)$ — a construction that parallels the scalar potential $V$ for the electrostatic field, but adapted to the distinct topological nature of the magnetic field.
+
+Just as $bold(E) = - nabla V$ automatically satisfies $nabla times bold(E) = bold(0)$ in electrostatics, the vector potential will allow us to satisfy $nabla dot bold(B) = 0$ identically in magnetostatics.
+
+=== Definition of the Magnetic Vector Potential // 磁矢势的定义
+
+#definition(name: "Magnetic Vector Potential")[
+  The *magnetic vector potential* $bold(A)$ is a vector field defined such that
+  $
+    bold(B) = nabla times bold(A).
+  $
+  The SI unit of $bold(A)$ is the weber per meter ($"Wb/m"$), equivalently $"N/A"$ or $"T" dot "m"$.
+]
+
+#property[
+  - The defining relation $bold(B) = nabla times bold(A)$ automatically guarantees $nabla dot bold(B) = 0$ (since the divergence of a curl is identically zero).
+  - Conversely, the Helmholtz decomposition theorem guarantees that *any* solenoidal field in a simply connected region can be represented as the curl of some vector potential.
+]
+
+The analogy with electrostatics is illuminating:
+
+#tex-table(
+  ("", "Electrostatics", "Magnetostatics"),
+  ("Field equation", [$nabla times bold(E) = bold(0)$], [$nabla dot bold(B) = 0$]),
+  ("Condition", "Irrotational (curl-free)", "Solenoidal (divergence-free)"),
+  ("Potential", [$bold(E) = - nabla V$], [$bold(B) = nabla times bold(A)$]),
+  ("Nature", "Scalar potential $V$", "Vector potential $bold(A)$"),
+  ("Fixing condition", "Reference point $V(infinity) = 0$", "Gauge fixing (e.g., $nabla dot bold(A) = 0$)"),
+)
+
+#note[
+  The magnetic vector potential $bold(A)$ is *not uniquely defined*. If $bold(A)$ is a valid vector potential, then $bold(A)' = bold(A) + nabla chi$ (where $chi$ is any scalar function) produces the same magnetic field:
+  $
+    nabla times bold(A)' = nabla times bold(A) + nabla times (nabla chi) = nabla times bold(A) = bold(B),
+  $
+  since the curl of a gradient is identically zero. This freedom to add a gradient without changing the physical field $bold(B)$ is called *gauge invariance*, and the transformation $bold(A) -> bold(A) + nabla chi$ is a *gauge transformation*. To obtain a unique $bold(A)$, we must impose an additional condition — a *gauge fixing* condition.
+]
+
+#note[
+  Compare this with the scalar potential in electrostatics: $V$ is also ambiguous up to an additive constant ($V' = V + C$). There, the gauge freedom is one-dimensional (a constant shift); here, the freedom is infinite-dimensional (any scalar function $chi$). The fixing condition $V(infinity) = 0$ in electrostatics is analogous to imposing a gauge condition on $bold(A)$.
+]
+
+=== Coulomb Gauge // 库仑规范
+
+Among the many possible gauge choices, the *Coulomb gauge* (also called the *transverse gauge*) is the simplest and most natural for magnetostatics.
+
+#definition(name: "Coulomb Gauge")[
+  The *Coulomb gauge* imposes the condition
+  $
+    nabla dot bold(A) = 0.
+  $
+  This fixes the longitudinal (divergence) part of $bold(A)$, leaving only the transverse (curl) degrees of freedom.
+]
+
+#property(name: "Properties of the Coulomb Gauge")[
+  - The Coulomb gauge is the magnetostatic analogue of the scalar potential condition $nabla dot bold(E) = rho / epsilon_0$ — it removes the gauge freedom by setting the divergence of $bold(A)$ to zero.
+  - In the Coulomb gauge, $bold(A)$ is a *transverse field*: its Fourier components are perpendicular to the wave vector.
+  - For static fields, the Coulomb gauge is always attainable: given any $bold(A)$ with nonzero divergence, we can perform a gauge transformation $bold(A) -> bold(A) + nabla chi$ where $chi$ satisfies the Poisson equation $nabla^2 chi = - nabla dot bold(A)$, thereby enforcing $nabla dot bold(A)' = 0$.
+]
+
+#note[
+  In time-varying electrodynamics (§13.3), the Coulomb gauge gives $nabla^2 V = - rho / epsilon_0$ (instantaneous scalar potential) and $nabla^2 bold(A) - (1/c^2) (partial^2 bold(A)) / (partial t^2) = - mu_0 bold(J) + (1/c^2) nabla (partial V) / (partial t)$. The scalar potential in this gauge is the "instantaneous" Coulomb potential — hence the name. But for *static* fields, the Coulomb gauge simply reduces to $nabla dot bold(A) = 0$ as given above.
+]
+
+=== Poisson's Equation for the Vector Potential // 矢势的泊松方程
+
+With the Coulomb gauge condition $nabla dot bold(A) = 0$, we can derive a differential equation for $bold(A)$ from Ampère's law.
+
+#theorem(name: "Vector Poisson's Equation in the Coulomb Gauge")[
+  In the Coulomb gauge, the magnetic vector potential satisfies the *vector Poisson equation*
+  $
+    nabla^2 bold(A) = - mu_0 bold(J),
+  $
+  where $nabla^2 = nabla dot nabla$ is the Laplacian operator applied componentwise:
+  $
+    nabla^2 A_x = - mu_0 J_x, quad
+    nabla^2 A_y = - mu_0 J_y, quad
+    nabla^2 A_z = - mu_0 J_z.
+  $
+]
+
+#proof[
+  Starting from Ampère's law and the definition of $bold(A)$:
+  $
+    nabla times bold(B) = mu_0 bold(J) quad (nabla times (nabla times bold(A))) = mu_0 bold(J).
+  $
+
+  Using the vector identity $nabla times (nabla times bold(A)) = nabla (nabla dot bold(A)) - nabla^2 bold(A)$:
+  $
+    nabla (nabla dot bold(A)) - nabla^2 bold(A) = mu_0 bold(J).
+  $
+
+  Imposing the Coulomb gauge $nabla dot bold(A) = 0$, the first term vanishes, yielding the vector Poisson equation:
+  $
+    nabla^2 bold(A) = - mu_0 bold(J).
+  $
+]
+
+This is one of the most beautiful results of magnetostatics: in the Coulomb gauge, each Cartesian component of $bold(A)$ satisfies a scalar Poisson equation of exactly the same form as the electrostatic Poisson equation $nabla^2 V = - rho / epsilon_0$. The source term for $A_i$ is $mu_0 J_i$, mirroring the source term $rho / epsilon_0$ for $V$.
+
+#solution(name: "Integral Solution for the Vector Potential")[
+  By analogy with the scalar Poisson equation, the solution for each component is:
+  $
+    A_i(bold(r)) = frac(mu_0, 4 pi) integral_V frac(J_i(bold(r)'), |bold(r) - bold(r)'|) dif V',
+  $
+  or, in full vector form:
+  $
+    bold(A)(bold(r)) = frac(mu_0, 4 pi) integral_V frac(bold(J)(bold(r)'), |bold(r) - bold(r)'|) dif V'.
+  $
+
+  For a surface current density $bold(K)$:
+  $
+    bold(A)(bold(r)) = frac(mu_0, 4 pi) integral_S frac(bold(K)(bold(r)'), |bold(r) - bold(r)'|) dif S'.
+  $
+
+  For a line current $I$ along a curve $C'$:
+  $
+    bold(A)(bold(r)) = frac(mu_0, 4 pi) integral_C' frac(I, |bold(r) - bold(r)'|) dif bold(l)'.
+  $
+]
+
+#proof[
+  The scalar Poisson equation $nabla^2 phi = - f$ has the well-known solution $phi(bold(r)) = frac(1, 4 pi) integral f(bold(r)') / |bold(r) - bold(r)'| dif V'$. Applying this componentwise to $nabla^2 A_i = - mu_0 J_i$ yields the integral form above. One can verify directly that this $bold(A)$ satisfies $nabla dot bold(A) = 0$ for static currents satisfying $nabla dot bold(J) = 0$, confirming consistency with the Coulomb gauge.
+]
+
+#note[
+  *Parallel between electrostatic scalar potential and magnetostatic vector potential:*
+
+  #tex-table(
+    ("Quantity", "Electrostatics", "Magnetostatics"),
+    ("Field equation", [$nabla^2 V = - rho / epsilon_0$], [$nabla^2 bold(A) = - mu_0 bold(J)$]),
+    ("Source", "Charge density $rho$", "Current density $bold(J)$"),
+    ("Solution", [$V = frac(1, 4 pi epsilon_0) integral frac(rho, R) dif V'$], [$bold(A) = frac(mu_0, 4 pi) integral frac(bold(J), R) dif V'$]),
+    ("Recovery of field", [$bold(E) = - nabla V$], [$bold(B) = nabla times bold(A)$]),
+    ("Constant", [$1 / (4 pi epsilon_0)$], [$mu_0 / (4 pi)$]),
+  )
+
+  The structural symmetry between these two sets of equations reflects the deep unity of electromagnetism. The different constants ($1 / epsilon_0$ vs $mu_0$) mirror the roles of $bold(E)$ and $bold(B)$ as sources of flux and circulation respectively.
+]
+
+=== Magnetic Flux and Circulation of the Vector Potential // 磁通量与矢势环量
+
+The magnetic vector potential is not merely a mathematical convenience — it has a direct physical relation to magnetic flux, mediated by the geometry of the field.
+
+#theorem(name: "Flux-Circulation Relation")[
+  The magnetic flux $Phi_B$ through any open surface $S$ is equal to the circulation of the vector potential $bold(A)$ around the closed boundary $C = partial S$ of that surface:
+  $
+    Phi_B = integral_S bold(B) dot dif bold(S) = integral.cont_C bold(A) dot dif bold(l).
+  $
+]
+
+#proof[
+  By definition, $bold(B) = nabla times bold(A)$. Substituting into the flux integral:
+  $
+    Phi_B = integral_S bold(B) dot dif bold(S) = integral_S (nabla times bold(A)) dot dif bold(S).
+  $
+
+  Applying Stokes' theorem, which converts a surface integral of $nabla times bold(A)$ into a line integral of $bold(A)$ around the boundary:
+  $
+    integral_S (nabla times bold(A)) dot dif bold(S) = integral.cont_C bold(A) dot dif bold(l).
+  $
+
+  Hence $Phi_B = integral.cont_C bold(A) dot dif bold(l)$.
+]
+
+#note[
+  This relation is gauge-invariant: the left-hand side $Phi_B$ is a physical observable, independent of the choice of gauge. The right-hand side must therefore also be gauge-invariant. Indeed, under a gauge transformation $bold(A) -> bold(A) + nabla chi$:
+  $
+    integral.cont_C (bold(A) + nabla chi) dot dif bold(l) = integral.cont_C bold(A) dot dif bold(l) + integral.cont_C nabla chi dot dif bold(l) = integral.cont_C bold(A) dot dif bold(l),
+  $
+  since $integral.cont_C nabla chi dot dif bold(l) = 0$ for any single-valued $chi$ (the line integral of a gradient around a closed loop vanishes). The flux-circulation relation is thus consistent with gauge invariance.
+]
+
+The flux-circulation relation provides an alternative way to compute magnetic flux without integrating $bold(B)$ directly. It also reveals that $bold(A)$ plays a fundamental role in quantum mechanics: the Aharonov-Bohm effect demonstrates that $bold(A)$ affects the quantum phase of a charged particle even in regions where $bold(B) = 0$, highlighting that the vector potential is more than a mathematical auxiliary.
+
+#example(name: "Uniform Magnetic Field — Two Gauges")[
+  Consider a uniform magnetic field $bold(B) = B_0 hat(bold(z))$. We construct two different vector potentials that both satisfy $nabla times bold(A) = bold(B)$, illustrating the gauge freedom.
+
+  *Gauge choice 1* (symmetric gauge): $bold(A)_1 = frac(1, 2) B_0 (-y, x, 0)$.
+  $
+    nabla times bold(A)_1 = frac(1, 2) B_0 [ (partial_x (x) - partial_y (-y)) hat(bold(z)) ] = B_0 hat(bold(z)) = bold(B),
+  $
+  and $nabla dot bold(A)_1 = 0$ (Coulomb gauge).
+
+  *Gauge choice 2* (Landau gauge): $bold(A)_2 = B_0 (-y, 0, 0)$.
+  $
+    nabla times bold(A)_2 = B_0 [ (partial_x (0) - partial_y (-y)) hat(bold(z)) ] = B_0 hat(bold(z)) = bold(B),
+  $
+  but $nabla dot bold(A)_2 = 0$ as well (also Coulomb gauge). The gauge transformation linking them is $bold(A)_1 - bold(A)_2 = nabla( - B_0 x y / 2)$.
+
+  Both give the same magnetic flux through any surface: for a rectangle of area $L_x L_y$ in the $"xy"$-plane, $Phi_B = B_0 L_x L_y$, and using either gauge:
+  $
+    integral.cont_C bold(A)_1 dot dif bold(l) = integral.cont_C bold(A)_2 dot dif bold(l) = B_0 L_x L_y = Phi_B.
+  $
+]
+
+#example(name: "Flux Through a Loop via the Vector Potential")[
+  A circular loop of radius $R$ lies in the $"xy"$-plane, centered at the origin. A magnetic field $bold(B) = B_0 (1 - rho / R) hat(bold(z))$ (decreasing linearly with radius) penetrates the loop. Compute the flux directly and via $bold(A)$.
+
+  *Direct flux calculation:*
+  $
+    Phi_B = integral_S bold(B) dot dif bold(S) = integral_0^R B_0 (1 - rho / R) 2 pi rho dif rho = 2 pi B_0 integral_0^R (rho - rho^2 / R) dif rho = frac(pi B_0 R^2, 3).
+  $
+
+  *Via $bold(A)$:* By symmetry, $bold(A) = A_phi(rho) hat(bold(phi))$. From $bold(B) = nabla times bold(A)$ in cylindrical coordinates:
+  $
+    B_z = frac(1, rho) (partial (rho A_phi)) / (partial rho) = B_0 (1 - rho / R).
+  $
+  Integrating: $rho A_phi = B_0 integral (rho - rho^2 / R) dif rho = B_0 (rho^2 / 2 - rho^3 / (3 R))$, so
+  $
+    A_phi(rho) = B_0 (rho / 2 - rho^2 / (3 R)).
+  $
+  The circulation around the rim ($rho = R$) gives:
+  $
+    integral.cont bold(A) dot dif bold(l) = 2 pi R A_phi(R) = 2 pi R B_0 (R / 2 - R^2 / (3 R)) = 2 pi R B_0 frac(R, 6) = frac(pi B_0 R^2, 3),
+  $
+  matching the direct calculation.
+]
+
+#note[
+  *Key takeaways for the magnetic vector potential:*
+  - $bold(A)$ is defined by $bold(B) = nabla times bold(A)$, automatically satisfying $nabla dot bold(B) = 0$.
+  - $bold(A)$ is not unique: gauge transformations $bold(A) -> bold(A) + nabla chi$ leave $bold(B)$ unchanged.
+  - The Coulomb gauge $nabla dot bold(A) = 0$ simplifies the field equations and yields the vector Poisson equation $nabla^2 bold(A) = - mu_0 bold(J)$.
+  - The integral solution $bold(A)(bold(r)) = frac(mu_0, 4 pi) integral bold(J)(bold(r)') / |bold(r) - bold(r)'| dif V'$ mirrors the electrostatic potential formula.
+  - The magnetic flux through a surface equals the circulation of $bold(A)$ around its boundary: $Phi_B = integral.cont_C bold(A) dot dif bold(l)$ — a gauge-invariant relation that directly links the vector potential to a physical observable.
+  - These results are the magnetostatic foundation upon which the time-dependent treatment of potentials will build in Chapter 13.
+]
+
 // 常见模型：无限长直导线、有限长直导线、圆环轴线、螺线管、均匀载流圆柱体
 == Common Models in Magnetostatics // 常见模型：载流导体的磁场
 
