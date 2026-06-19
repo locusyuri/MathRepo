@@ -2730,6 +2730,140 @@ The total magnetic energy of any current distribution can also be expressed in t
 // 位移电流在介质中的推广：J_D = ∂D/∂t（包括了极化电流 ∂P/∂t）
 // Note：位移电流是 Maxwell 方程组得以自洽的关键，也是电磁波存在的理论基础
 
+With Faraday's law (§8.1), we introduced the first dynamical coupling between $bold(E)$ and $bold(B)$: a time-varying magnetic field produces an electric field. But the story is incomplete — there must be a reciprocal coupling: a time-varying electric field should produce a magnetic field. Without this, the four Maxwell equations would be inconsistent for time-varying fields. The discovery of this missing piece was James Clerk Maxwell's greatest contribution to physics.
+
+=== The Inconsistency of Ampère's Law // 安培定律的矛盾
+
+In magnetostatics, Ampère's law in differential form reads:
+
+$
+  nabla times bold(B) = mu_0 bold(J).
+$
+
+Taking the divergence of both sides:
+
+$
+  nabla dot (nabla times bold(B)) = mu_0 nabla dot bold(J).
+$
+
+The left-hand side is identically zero (divergence of a curl vanishes), so we obtain:
+
+$
+  nabla dot bold(J) = 0.
+$
+
+This is perfectly consistent with *steady-state* currents, where $nabla dot bold(J) = 0$ (Kirchhoff's current law, §6.1). However, in time-varying situations, charge conservation demands the full continuity equation:
+
+$
+  nabla dot bold(J) + frac(partial rho, partial t) = 0,
+$
+
+which allows $nabla dot bold(J) != 0$ whenever charge density changes with time. *Ampère's law in its original form is incompatible with the continuity equation for time-varying fields.*
+
+This contradiction is not just a mathematical subtlety — it has a direct physical manifestation.
+
+#example(name: "Charging Capacitor — The Paradox")[ // 充电电容器悖论
+  Consider a parallel-plate capacitor being charged by a steady current $I$. The current flows through the wire onto one plate and away from the other. We apply Ampère's law to a closed loop $C$ encircling the wire, and consider two different surfaces bounded by $C$:
+
+  - *Surface $S_1$* (intersecting the wire): The current through $S_1$ is $I$, so $integral.cont_C bold(B) dot dif bold(l) = mu_0 I$.
+  - *Surface $S_2$* (passing between the capacitor plates, avoiding the wire): No current passes through $S_2$, so $integral.cont_C bold(B) dot dif bold(l) = 0$.
+
+  These two results are contradictory, yet both surfaces share the *same* boundary $C$! By Stokes' theorem, the circulation of $bold(B)$ around $C$ must be the same regardless of which surface we choose — it depends only on the curl of $bold(B)$ integrated over *any* surface spanning $C$. The contradiction reveals that $nabla times bold(B) = mu_0 bold(J)$ cannot be the full story for time-varying fields.
+
+  #note[
+    Note that for a steady current ($I = "constant"$), the same paradox does *not* arise: between the plates of a steady-current capacitor, $bold(E) = "constant"$ and there is no inconsistency. The paradox only appears when $I$ is changing — that is, when the electric field between the plates is time-dependent.
+  ]
+]
+
+=== Maxwell's Resolution: The Displacement Current // Maxwell 的解答：位移电流
+
+Maxwell resolved the inconsistency by noting that between the capacitor plates, although there is no conduction current $bold(J)$, there *is* a time-varying electric field. During charging, the electric field $bold(E)$ between the plates increases, and its rate of change $partial bold(E) / partial t$ provides the missing term.
+
+From the continuity equation and Gauss's law ($nabla dot bold(E) = rho / epsilon_0$):
+
+$
+  nabla dot bold(J) = - frac(partial rho, partial t) = - epsilon_0 frac(partial, partial t) (nabla dot bold(E)) = nabla dot ( - epsilon_0 frac(partial bold(E), partial t) ).
+$
+
+Thus the combination $bold(J) + epsilon_0 partial bold(E) / partial t$ is divergence-free, even when $bold(J)$ alone is not. Maxwell proposed that the *total current density* — the source of the curl of $bold(B)$ — is the sum of the conduction current and a new term called the *displacement current*.
+
+#definition(name: "Displacement Current")[
+  The *displacement current density* is defined as:
+  $
+    bold(J)_D = epsilon_0 frac(partial bold(E), partial t).
+  $
+  In matter, this generalises to $bold(J)_D = partial bold(D) / partial t$, which includes the polarisation current $partial bold(P) / partial t$.
+
+  The *displacement current* (the total flow, not density) through a surface $S$ is:
+  $
+    I_D = integral_S bold(J)_D dot dif bold(S) = epsilon_0 integral_S frac(partial bold(E), partial t) dot dif bold(S).
+  $
+]
+
+=== The Ampère–Maxwell Law // 安培–麦克斯韦定律
+
+With the displacement current, the corrected law is:
+
+#law(name: "Ampère–Maxwell Law — Integral Form")[
+  $
+    integral.cont_C bold(B) dot dif bold(l) = mu_0 I_"enc" + mu_0 epsilon_0 integral_S frac(partial bold(E), partial t) dot dif bold(S).
+  $
+  The first term on the right is the conduction current through $S$; the second term is the displacement current through $S$.
+]
+
+Applying Stokes' theorem to the left-hand side and noting that the result must hold for any surface $S$, we obtain the differential form:
+
+#law(name: "Ampère–Maxwell Law — Differential Form")[
+  $
+    nabla times bold(B) = mu_0 bold(J) + mu_0 epsilon_0 frac(partial bold(E), partial t).
+  $
+]
+
+The presence of $mu_0 epsilon_0$ is significant: $mu_0 epsilon_0 = 1 / c^2$, where $c$ is the speed of light. This is the first hint that Maxwell's equations predict electromagnetic waves propagating at the speed of light.
+
+#proof[Apply the new law to the capacitor paradox. With the displacement current term, both surfaces give the same result:
+- Surface $S_1$ (intersecting wire): $I_"enc" = I$, and the displacement current through $S_1$ is negligible (the field is confined between the plates).
+- Surface $S_2$ (between plates): $I_"enc" = 0$, but the displacement current between the plates equals $I_D = epsilon_0 dif / dif t integral_S bold(E) dot dif bold(S) = epsilon_0 dif / dif t (Q / epsilon_0) = dif Q / dif t = I$.
+
+Both surfaces give $integral.cont_C bold(B) dot dif bold(l) = mu_0 I$, resolving the paradox.
+]
+
+=== Physical Meaning of the Displacement Current // 位移电流的物理本质
+
+#property(name: "Key Properties of the Displacement Current")[
+  - The displacement current is *not* a flow of charge — it is the time rate of change of the electric field. In vacuum, it exists even when no charges or conductors are present.
+  - In a dielectric, $bold(J)_D = partial bold(D) / partial t = epsilon_0 partial bold(E) / partial t + partial bold(P) / partial t$. The term $partial bold(P) / partial t$ is the *polarisation current density*, representing the actual motion of bound charges as the material polarises.
+  - The displacement current produces a magnetic field exactly like a conduction current — this is why a time-varying electric field generates a magnetic field, completing the reciprocal coupling with Faraday's law.
+  - Between the capacitor plates, the displacement current density $J_D = epsilon_0 partial E / partial t$ is uniform and directed along the axis, maintaining the continuity of the total current.
+  - At high frequencies, the displacement current in a conductor can dominate over the conduction current — this defines the transition from a "good conductor" to a "good dielectric".
+]
+
+=== Generalisation to Matter // 介质中的推广
+
+In the presence of dielectric and magnetic materials, the Ampère–Maxwell law becomes:
+
+$
+  nabla times bold(H) = bold(J)_f + frac(partial bold(D), partial t),
+$
+
+where $bold(J)_f$ is the *free* current density, $bold(H) = bold(B) / mu_0 - bold(M)$ is the magnetic field intensity, and $bold(D) = epsilon_0 bold(E) + bold(P)$ is the electric displacement field. The displacement current $partial bold(D) / partial t$ includes both the vacuum term $epsilon_0 partial bold(E) / partial t$ and the polarisation current $partial bold(P) / partial t$.
+
+#note[
+  *The displacement current — Maxwell's greatest contribution:*
+
+  The introduction of the displacement current was not merely a mathematical patch to fix Ampère's law. It had three profound consequences:
+
+  1. *Self-consistency* Maxwell's equations are now mathematically consistent with charge conservation for *all* fields, static or time-varying.
+  2. *Electromagnetic waves* The displacement current term $mu_0 epsilon_0 partial bold(E) / partial t$ couples with Faraday's law $partial bold(B) / partial t$ to produce wave equations for $bold(E)$ and $bold(B)$, predicting electromagnetic waves propagating at speed $c = 1 / sqrt(mu_0 epsilon_0)$ (see §10).
+  3. *Unification of optics and electromagnetism* Since $c$ from the wave equation matched the measured speed of light, Maxwell concluded that light *is* an electromagnetic wave — one of the greatest unifications in the history of physics.
+
+  In vacuum, with no charges or currents ($rho = 0, bold(J) = bold(0)$), the Ampère–Maxwell law reduces to:
+  $
+    nabla times bold(B) = mu_0 epsilon_0 frac(partial bold(E), partial t),
+  $
+  showing that a changing electric field alone can sustain a magnetic field, and vice versa — the essence of electromagnetic wave propagation.
+]
+
 == Maxwell's Equations in Vacuum // 真空中的麦克斯韦方程组
 // 四个方程的完整表述（真空、无源情形——既无自由电荷也无传导电流）
 // Maxwell's Equations in Vacuum（源区：有 ρ 和 J 的一般形式）
