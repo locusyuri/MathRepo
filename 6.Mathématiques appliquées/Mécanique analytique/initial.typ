@@ -399,8 +399,228 @@ which is formally identical to the translational expression $frac(1,2) m |bold(v
 ]
 
 = Newton's Laws and Rigid Body Rotational Dynamics // 牛顿运动定律与刚体转动定律
+
+Chapter 1 established the *kinematic* language of motion: position, velocity, acceleration, and their angular counterparts. This chapter supplies the *dynamics* — the laws that relate motion to its causes. We first review Newton's three laws in their familiar translational form, then develop the parallel rotational laws for rigid bodies. The structural analogy between translation and rotation, already visible in the kinematics of §1.3, becomes deeper here: force ↔ torque, mass ↔ moment of inertia, and linear acceleration ↔ angular acceleration.
+
 == Newton's Three Laws // 牛顿三大定律
+
+Newton's laws form the foundation of classical mechanics. They summarise centuries of observation into three concise statements about how forces affect motion.
+
+=== First Law: Inertia // 第一定律：惯性
+
+#law(name: "Newton's First Law — Law of Inertia")[
+  A body remains at rest or in uniform rectilinear motion unless acted upon by a net external force.
+
+  Equivalently: in an inertial reference frame, $sum bold(F) = bold(0)$ implies $bold(a) = bold(0)$.
+]
+
+The first law defines what we mean by an *inertial frame*: a frame in which an isolated body moves with constant velocity. The Galilean transformation from Chapter 1 connects all such frames.
+
+=== Second Law: Equation of Motion // 第二定律：运动方程
+
+#law(name: "Newton's Second Law")[
+  The net force on a body equals the time rate of change of its linear momentum:
+  $
+    sum bold(F) = frac(dif bold(p), dif t), quad bold(p) = m bold(v).
+  $
+  When the mass is constant, this reduces to the familiar form:
+  $
+    sum bold(F) = m bold(a).
+  $
+]
+
+#definition(name: "Weight and Gravitational Mass")[
+  Near the Earth's surface, the gravitational force (weight) is $bold(W) = m bold(g)$, where $g approx 9.81 "m/s"^2$ is the gravitational acceleration.
+]
+
+=== Third Law: Action and Reaction // 第三定律：作用与反作用
+
+#law(name: "Newton's Third Law")[
+  For every action (force applied by body $A$ on body $B$), there is an equal and opposite reaction (force applied by $B$ on $A$):
+  $
+    bold(F)_(A -> B) = - bold(F)_(B -> A).
+  $
+  These two forces act on *different* bodies and never cancel each other in a free-body diagram of a single body.
+]
+
+=== Force as a Vector and Superposition // 力的矢量性与叠加原理
+
+#property(name: "Superposition of Forces")[
+  Forces are vectors: they add componentwise. The net force on a particle is
+  $
+    bold(F)_"net" = sum_i bold(F)_i.
+  $
+  Newton's second law applies to $bold(F)_"net"$, not to individual forces separately.
+]
+
+#example(name: "Free-Body Analysis — Block on an Incline")[ // 斜面滑块分析
+  A block of mass $m$ slides down a frictionless incline at angle $theta$.
+
+  The forces are:
+  - Weight $m g$ vertically downward,
+  - Normal force $N$ perpendicular to the surface.
+
+  Decomposing weight into components parallel and perpendicular to the incline:
+  $
+    F_parallel = m g sin theta, quad F_perp = - m g cos theta + N = 0.
+  $
+  Newton's second law along the incline gives:
+  $
+    m a = m g sin theta arrow a = g sin theta.
+  $
+]
+
+=== The Road Ahead: Rotational Analogue // 前瞻：转动类比
+
+Newton's laws have precise rotational counterparts, which we develop in the next section:
+
+#tex-table(
+  ("Quantity", "Translation", "Rotation"),
+  ("Inertia", "Mass $m$", "Moment of inertia $I$"),
+  ("Cause of acceleration", "Force $bold(F)$", "Torque $bold(tau)$"),
+  ("Second law", "$sum bold(F) = m bold(a)$", "$sum bold(tau) = I bold(alpha)$"),
+  ("Momentum", "$bold(p) = m bold(v)$", "$bold(L) = I bold(omega)$"),
+  ("Work", "$W = int bold(F) dot dif bold(r)$", "$W = int tau dif theta$"),
+  ("Kinetic energy", "$K = frac(1,2) m v^2$", "$K = frac(1,2) I omega^2$"),
+)
+
+#note[
+  This correspondence is more than a mnemonic: it reflects the deep structural isomorphism between linear and angular dynamics, which will be explored systematically in Chapter 3.
+]
+
 == Rigid Body Rotation about a Fixed Axis // 刚体定轴转动
+
+We now develop the rotational dynamics of a rigid body constrained to rotate about a fixed axis. The key quantities are *torque* (the rotational analogue of force) and *moment of inertia* (the rotational analogue of mass).
+
+=== Torque // 力矩
+
+#definition(name: "Torque")[
+  The *torque* of a force $bold(F)$ applied at a point with position vector $bold(r)$ (measured from the axis or rotation centre) is:
+  $
+    bold(tau) = bold(r) times bold(F).
+  $
+  Its magnitude is $|bold(tau)| = r F sin theta = F d$, where $d = r sin theta$ is the *lever arm* (perpendicular distance from the axis to the line of action of the force). The SI unit is the newton-metre ($"N" dot "m"$).
+]
+
+For a rigid body rotating about a fixed axis, only the component of torque parallel to the axis contributes to the angular acceleration. The total torque about the axis is the sum of the torques from all external forces.
+
+=== Moment of Inertia // 转动惯量
+
+#definition(name: "Moment of Inertia")[
+  For a system of $N$ point masses, the *moment of inertia* about a given axis is:
+  $
+    I = sum_(a=1)^N m_a r_(a_perp)^2,
+  $
+  where $r_(a_perp)$ is the perpendicular distance of $m_a$ from the axis.
+
+  For a continuous rigid body with density $rho(bold(r))$:
+  $
+    I = integral_V r_perp^2 rho(bold(r)) dif V.
+  $
+]
+
+#theorem(name: "Parallel Axis Theorem")[
+  If $I_"CM"$ is the moment of inertia about an axis through the centre of mass, then the moment about a *parallel* axis at distance $d$ is:
+  $
+    I = I_"CM" + M d^2,
+  $
+  where $M$ is the total mass of the body.
+]
+
+#example(name: "Moments of Inertia of Common Bodies")[ // 常见刚体的转动惯量
+  - *Thin hoop* (radius $R$, axis through centre, perpendicular to plane): $I = M R^2$.
+  - *Solid disk* (radius $R$, same axis): $I = frac(1,2) M R^2$.
+  - *Solid sphere* (radius $R$, axis through centre): $I = frac(2,5) M R^2$.
+  - *Thin rod* (length $L$, axis through centre, perpendicular to rod): $I = frac(1,12) M L^2$.
+  - *Thin rod* (axis through end): $I = frac(1,3) M L^2$ (by parallel axis theorem).
+]
+
+=== Rotational Form of Newton's Second Law // 转动形式的牛顿第二定律
+
+#law(name: "Rotational Second Law")[
+  The net torque on a rigid body rotating about a fixed axis equals the product of its moment of inertia and its angular acceleration:
+  $
+    sum tau_"ext" = I alpha.
+  $
+  This is the rotational counterpart of $sum F = m a$.
+]
+
+#proof[
+  For a single particle of mass $m_a$ at distance $r_a$ from the axis, the tangential component of Newton's second law gives:
+  $
+    F_(a, t) = m_a a_(a, t) = m_a r_a alpha.
+  $
+  Multiplying by $r_a$ gives the torque contribution: $tau_a = F_(a, t) r_a = m_a r_a^2 alpha$.
+  Summing over all particles: $sum tau_a = (sum m_a r_a^2) alpha = I alpha$.
+]
+
+=== Work and Power in Rotation // 转动中的功与功率
+
+#property(name: "Rotational Work and Power")[
+  The work done by a torque $tau$ through an angular displacement $dif theta$ is:
+  $
+    dif W = tau dif theta.
+  $
+  The power delivered by a torque is:
+  $
+    P = tau omega.
+  $
+  These are direct analogues of the translational formulas $dif W = F dif s$ and $P = F v$.
+]
+
+=== Applications // 应用
+
+#example(name: "Compound Atwood Machine with Pulley")[ // 含滑轮的系统
+  Consider a pulley of mass $M$, radius $R$, and moment of inertia $I = frac(1,2) M R^2$, with a mass $m$ hanging from a light string wrapped around the pulley.
+
+  *Translational equation for the hanging mass:*
+  $
+    m g - T = m a,
+  $
+  where $T$ is the tension in the string and $a$ is the downward acceleration.
+
+  *Rotational equation for the pulley:*
+  $
+    tau_"net" = T R = I alpha = I frac(a, R).
+  $
+
+  Solving simultaneously:
+  $
+    a = frac(m g, m + I / R^2)
+      = frac(m g, m + M/2).
+  $
+  The tension is $T = m (g - a)$.
+
+  This example shows how translation and rotation are coupled through the constraint $a = R alpha$.
+]
+
+#example(name: "Physical Pendulum")[ // 物理摆
+  A rigid body of mass $M$ pivoted at a distance $d$ from its centre of mass. The torque due to gravity is $tau = - M g d sin theta$. The rotational second law gives:
+  $
+    I dot.double(theta) + M g d sin theta = 0.
+  $
+  For small angles ($sin theta approx theta$), this reduces to simple harmonic motion:
+  $
+    dot.double(theta) + omega_0^2 theta = 0, quad omega_0 = sqrt(frac(M g d, I)).
+  $
+
+  The period is $T = 2 pi / omega_0 = 2 pi sqrt(frac(I, M g d))$, which reduces to the simple pendulum result $T = 2 pi sqrt(L/g)$ when $I = M d^2$ (mass concentrated at distance $d$).
+]
+
+=== Summary of the Translational-Rotational Dictionary // 平动-转动词典总结
+
+#note[
+  The laws developed in this chapter complete the dynamical side of the correspondence started in Chapter 1:
+
+  $
+    bold(F) quad ↔ quad bold(tau), quad
+    m quad ↔ quad I, quad
+    bold(a) quad ↔ quad bold(alpha), quad
+    bold(p) quad ↔ quad bold(L).
+  $
+
+  The next chapter (Momentum, Angular Momentum, and Energy) will expand this dictionary to include momentum, impulse, work, and energy, and will prove the structural *isomorphism* between the two sets of laws.
+]
 
 = Momentum, Angular Momentum, and Energy // 动量、角动量与功能原理
 == Linear Momentum and Impulse // 线动量与冲量
