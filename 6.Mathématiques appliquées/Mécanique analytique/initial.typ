@@ -1121,17 +1121,139 @@ The points where $cos(k x) = 0$ (nodes) are stationary; the points where $|cos(k
 ]
 
 = Celestial Mechanics Foundations // 天体力学基础
+
+Celestial mechanics studies the motion of astronomical bodies under gravitational forces. This brief chapter establishes the essential results — Kepler's laws, orbit classification, and the two-body reduction — that will be revisited in Part II from the Lagrangian perspective.
+
 == Kepler's Laws // 开普勒定律
+
+Based on Tycho Brahe's meticulous observations, Johannes Kepler formulated three empirical laws of planetary motion.
+
+#law(name: "Kepler's Laws of Planetary Motion")[
+  1. *Law of Ellipses:* Each planet moves in an ellipse with the Sun at one focus.
+  2. *Law of Equal Areas:* The radius vector from the Sun to a planet sweeps out equal areas in equal times.
+  3. *Law of Periods:* The square of the orbital period is proportional to the cube of the semi-major axis:
+     $
+       T^2 = frac(4 pi^2, G M) a^3,
+     $
+     where $a$ is the semi-major axis, $M$ is the solar mass, and $G$ is the gravitational constant.
+]
+
+The second law is a direct consequence of angular momentum conservation: for a central force, $bold(tau) = bold(r) times bold(F) = bold(0)$, so $bold(L) = m bold(r) times bold(v)$ is constant, implying the areal velocity $dif A / dif t = L / (2m)$ is constant.
+
 == Orbit Classification // 轨道分类
+
+The general solution of the two-body problem is a *conic section* (ellipse, parabola, hyperbola) with the centre of mass at one focus.
+
+#definition(name: "Orbital Eccentricity")[
+  The shape of an orbit is determined by its *eccentricity* $e$:
+  $
+    e = 0: quad text("circular"), quad
+    0 < e < 1: quad text("elliptical"), quad
+    e = 1: quad text("parabolic"), quad
+    e > 1: quad text("hyperbolic").
+  $
+  The total energy determines the type:
+  - $E < 0$: bound orbit (elliptical or circular),
+  - $E = 0$: unbound, parabolic escape trajectory,
+  - $E > 0$: unbound, hyperbolic flyby.
+]
+
+#note[
+  The energy-orbit connection is profound: a bound system ($E < 0$) always follows a closed or quasi-periodic orbit, while an unbound system ($E >= 0$) escapes to infinity. This classification reappears in the effective potential analysis of central forces in Part II.
+]
+
 == Two-Body Problem and Reduced Mass // 二体问题与约化质量
 
+The gravitational two-body problem — two masses $m_1$ and $m_2$ interacting via $F = G m_1 m_2 / r^2$ — can be reduced to an equivalent one-body problem.
+
+#theorem(name: "Reduction to One-Body Problem")[
+  The relative motion of two bodies under a mutual central force is equivalent to the motion of a single particle of *reduced mass*
+  $
+    mu = frac(m_1 m_2, m_1 + m_2)
+  $
+  about a fixed centre of force located at the centre of mass. The equation of motion for the relative coordinate $bold(r) = bold(r)_1 - bold(r)_2$ is:
+  $
+    mu dot.double(bold(r)) = - frac(G m_1 m_2, r^2) hat(bold(r)).
+  $
+]
+
+#example(name: "Earth-Sun System")[ // 地日系统
+  For the Earth-Sun system, $m_ "Sun" = 1.989 times 10^30 "kg"$, $m_ "Earth" = 5.972 times 10^24 "kg"$.
+  The reduced mass is:
+  $
+    mu = frac(m_ "Sun" m_ "Earth", m_ "Sun" + m_ "Earth") approx m_ "Earth" (1 - frac(m_ "Earth", m_ "Sun")) approx 5.972 times 10^24 "kg",
+  $
+  which is essentially the Earth's mass because $m_ "Sun" >> m_ "Earth"$. The Sun is nearly stationary at the centre of mass, and the Earth's orbit is nearly Keplerian around it.
+]
+
+#note[
+  The two-body reduction is the foundation of celestial mechanics. In Part II (Lagrangian mechanics), we will derive the same result from a Lagrangian with translational symmetry, and the conserved quantities (energy, angular momentum) will emerge directly from Noether's theorem.
+]
+
 = Fluid Mechanics Foundations // 流体力学基础
+
+Fluid mechanics describes the motion of continuous deformable media — liquids and gases. This chapter provides the minimal foundation needed to appreciate the parallels between particle mechanics and continuum mechanics in later parts of the notes.
+
 == Continuum Hypothesis and Density Fields // 连续体假设与密度场
+
+#definition(name: "Continuum Hypothesis")[
+  A fluid is modelled as a continuous medium, ignoring its molecular discreteness. The fundamental fields are:
+  - *Mass density*: $rho(bold(r), t)$ (mass per unit volume),
+  - *Velocity field*: $bold(v)(bold(r), t)$,
+  - *Pressure field*: $p(bold(r), t)$.
+]
+
+The total mass in a volume $V$ is $M = integral_V rho dif V$. Mass conservation is expressed by the *continuity equation*:
+
+$
+  frac(partial rho, partial t) + nabla dot (rho bold(v)) = 0,
+$
+
+which states that the rate of change of mass in any volume equals the net flux of mass through its boundary.
+
 == Euler's Equations of Motion // 欧拉运动方程
+
+For an *inviscid* (frictionless) fluid, Newton's second law applied to a fluid element gives Euler's equation:
+
+#law(name: "Euler's Equation for Inviscid Flow")[
+  $
+    rho frac(D bold(v), D t) = - nabla p + rho bold(g),
+  $
+  where $frac(D, D t) = frac(partial, partial t) + bold(v) dot nabla$ is the *material derivative* (the rate of change following a fluid element). In component form:
+  $
+    frac(partial bold(v), partial t) + (bold(v) dot nabla) bold(v) = - frac(1, rho) nabla p + bold(g).
+  $
+]
+
+The term $(bold(v) dot nabla) bold(v)$ is the *convective acceleration* — it accounts for the fact that fluid particles move to regions of different velocity even in steady flow.
+
+#note[
+  Euler's equation is the fluid analogue of Newton's second law. In Part V (Classical Field Theory), we will see how it emerges from a variational principle applied to a continuous medium.
+]
+
 == Bernoulli's Equation // 伯努利方程
 
+For steady, incompressible ($rho = "const"$), inviscid flow along a streamline, Euler's equation integrates to Bernoulli's principle:
 
-#part("Mathematical Foundations") // 数学基础
+#law(name: "Bernoulli's Equation")[
+  Along a streamline in steady, inviscid, incompressible flow:
+  $
+    p + frac(1,2) rho v^2 + rho g y = text("constant"),
+  $
+  where $p$ is the pressure, $frac(1,2) rho v^2$ is the dynamic pressure, and $rho g y$ is the gravitational potential energy density.
+]
+
+#example(name: "Venturi Effect and Airplane Wing")[ // 文丘里效应与机翼
+  *Venturi tube:* When a fluid flows through a constricted pipe, the velocity increases and the pressure drops. This is the operating principle of carburetors and perfume atomisers.
+
+  *Airplane wing:* The curved upper surface of an airfoil forces air to travel faster over the top than the bottom. By Bernoulli's equation, the faster flow above creates lower pressure, generating lift. (In reality, the full explanation also involves the angle of attack and circulation — a topic for advanced fluid dynamics.)
+]
+
+#note[
+  Bernoulli's equation is a statement of energy conservation for fluid flow: the sum of pressure energy, kinetic energy density, and gravitational potential energy density is constant along a streamline. This is the fluid analogue of the mechanical energy conservation from Chapter 3.
+]
+
+This completes the Classical Mechanics Foundations part. The next part (Mathematical Foundations) introduces the variational calculus that underpins analytical mechanics. All the concepts developed here — conservation laws, oscillations, central forces, and continuum mechanics — will be revisited and deepened through the Lagrangian and Hamiltonian formalisms.
 
 = Variational Calculus  // 变分法
 == Hamilton's Principle // 哈密顿原理
