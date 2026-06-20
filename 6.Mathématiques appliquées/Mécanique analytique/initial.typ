@@ -942,9 +942,183 @@ Central forces conserve angular momentum (since $bold(tau) = bold(r) times bold(
 ]
 
 = Oscillations and Waves // 振动与波动
+
+Oscillatory motion is ubiquitous in physics — from a swinging pendulum to vibrating molecules and electromagnetic waves. This chapter develops the fundamental concepts of simple harmonic motion, damped and driven oscillations, and wave propagation. These ideas will be revisited in Part II, where Lagrangian methods provide a systematic approach to small oscillations and normal modes.
+
 == Simple Harmonic Motion // 简谐运动
+
+=== Equation of Motion // 运动方程
+
+The simplest oscillatory system is a mass $m$ attached to a spring of stiffness $k$. When displaced from equilibrium, Hooke's law gives $F = - k x$, and Newton's second law yields:
+
+$
+  m dot.double(x) + k x = 0.
+$
+
+This is the equation of *simple harmonic motion* (SHM). Dividing by $m$ and defining the *angular frequency* $omega_0 = sqrt(k / m)$:
+
+#definition(name: "Simple Harmonic Motion")[
+  The equation of SHM and its general solution:
+  $
+    dot.double(x) + omega_0^2 x = 0, quad x(t) = A cos(omega_0 t + phi),
+  $
+  where $A$ is the amplitude and $phi$ is the initial phase. The period and frequency are:
+  $
+    T = frac(2 pi, omega_0) = 2 pi sqrt(frac(m, k)), quad f = frac(1, T) = frac(omega_0, 2 pi).
+  $
+]
+
+=== Energy of the Simple Harmonic Oscillator // 简谐振子的能量
+
+The total mechanical energy is conserved and oscillates between kinetic and potential forms:
+
+$
+  E = frac(1,2) m dot(x)^2 + frac(1,2) k x^2 = frac(1,2) k A^2.
+$
+
+#example(name: "Mass-Spring System")[ // 弹簧振子
+  A mass $m = 0.5 "kg"$ on a spring of stiffness $k = 32 "N/m"$ is pulled $A = 0.1 "m"$ from equilibrium and released.
+
+  Angular frequency: $omega_0 = sqrt(k / m) = sqrt(32 / 0.5) = 8 "rad/s"$.
+  Period: $T = 2 pi / omega_0 = pi / 4 approx 0.785 "s"$.
+  Maximum speed: $v_"max" = omega_0 A = 0.8 "m/s"$.
+  Total energy: $E = frac(1,2) k A^2 = frac(1,2) times 32 times 0.1^2 = 0.16 "J"$.
+]
+
+=== The Simple Pendulum // 单摆
+
+The simple pendulum (mass $m$, length $L$) obeys $dot.double(theta) + (g / L) sin theta = 0$. For small angles, $sin theta approx theta$, giving SHM:
+
+$
+  dot.double(theta) + omega_0^2 theta = 0, quad omega_0 = sqrt(frac(g, L)).
+$
+
+#note[
+  The small-angle approximation $sin theta approx theta$ is the first term of the Taylor expansion. For larger amplitudes, corrections appear: the period becomes $T = 2 pi sqrt(L/g) (1 + theta_0^2 / 16 + ...)$, as derived from the energy integral in Chapter 3.
+]
+
+=== Relation to the Physical Pendulum // 与物理摆的联系
+
+The physical pendulum (Chapter 2) has $omega_0 = sqrt(M g d / I)$. For a simple pendulum, $I = M L^2$ and $d = L$, recovering $omega_0 = sqrt(g / L)$. The SHM framework thus unifies all systems with a linear restoring torque.
+
 == Damped and Driven Oscillations // 阻尼与受驱振动
+
+=== Damped Harmonic Oscillator // 阻尼振子
+
+Real oscillators experience energy loss due to friction or drag. For a velocity-dependent damping force $F_d = - b dot(x)$, the equation of motion becomes:
+
+$
+  m dot.double(x) + b dot(x) + k x = 0.
+$
+
+Dividing by $m$ and defining $beta = b / (2m)$ (damping coefficient) and $omega_0 = sqrt(k / m)$:
+
+$
+  dot.double(x) + 2 beta dot(x) + omega_0^2 x = 0.
+$
+
+The characteristic equation $r^2 + 2 beta r + omega_0^2 = 0$ has roots $r = - beta plus.minus sqrt(beta^2 - omega_0^2)$.
+
+#definition(name: "Damping Regimes")[
+  - *Underdamped* ($beta < omega_0$): $x(t) = e^(-beta t) [A cos(omega_1 t) + B sin(omega_1 t)]$, where $omega_1 = sqrt(omega_0^2 - beta^2)$. The amplitude decays exponentially with time constant $1 / beta$.
+  - *Critically damped* ($beta = omega_0$): $x(t) = (A + B t) e^(-omega_0 t)$. The system returns to equilibrium fastest without oscillating.
+  - *Overdamped* ($beta > omega_0$): $x(t) = A e^(-r_1 t) + B e^(-r_2 t)$, with $r_1, r_2 > 0$. The system returns slowly without oscillating.
+]
+
+=== Driven Oscillator and Resonance // 受驱振子与共振
+
+When an external driving force $F(t) = F_0 cos(omega t)$ is applied:
+
+$
+  dot.double(x) + 2 beta dot(x) + omega_0^2 x = frac(F_0, m) cos(omega t).
+$
+
+The steady-state solution is $x(t) = A(omega) cos(omega t - delta)$, with:
+
+$
+  A(omega) = frac(F_0 / m, sqrt((omega_0^2 - omega^2)^2 + (2 beta omega)^2)), quad
+  tan delta = frac(2 beta omega, omega_0^2 - omega^2).
+$
+
+#theorem(name: "Resonance")[
+  The amplitude $A(omega)$ reaches a maximum at the *resonance frequency*:
+  $
+    omega_"res" = sqrt(omega_0^2 - 2 beta^2).
+  $
+  For weak damping ($beta << omega_0$), $omega_"res" approx omega_0$ and the peak amplitude is:
+  $
+    A_"max" approx frac(F_0, 2 m beta omega_0).
+  $
+  The width of the resonance curve (full width at half maximum) is $Delta omega approx 2 beta$, giving a quality factor $Q = omega_0 / (2 beta)$.
+]
+
+#note[
+  Resonance is a crucial phenomenon across physics: it explains why a small force at the right frequency can produce large oscillations (e.g., pushing a child on a swing, tuning a radio receiver, or the Tacoma Narrows Bridge collapse).
+]
+
 == Wave Propagation // 波动传播
+
+=== The Wave Equation // 波动方程
+
+While oscillators describe the motion of individual particles, *waves* describe the propagation of disturbances through a continuous medium. The simplest is the one-dimensional wave equation:
+
+#definition(name: "One-Dimensional Wave Equation")[
+  The displacement $u(x, t)$ of a wave travelling along the $x$-axis satisfies:
+  $
+    frac(partial^2 u, partial t^2) = v^2 frac(partial^2 u, partial x^2),
+  $
+  where $v$ is the wave speed. For a wave on a string of tension $T$ and linear density $mu$:
+  $
+    v = sqrt(frac(T, mu)).
+  $
+]
+
+=== Travelling Waves // 行波
+
+#definition(name: "Travelling Wave Solution")[
+  The wave equation admits travelling wave solutions of the form:
+  $
+    u(x, t) = f(x - v t) + g(x + v t),
+  $
+  where $f$ describes a wave travelling to the right and $g$ to the left. A *harmonic* travelling wave is:
+  $
+    u(x, t) = A cos(k x - omega t + phi),
+  $
+  where $k = 2 pi / lambda$ is the wavenumber, $lambda$ the wavelength, and $omega = v k$ the angular frequency.
+]
+
+=== Standing Waves // 驻波
+
+When two identical waves travel in opposite directions, they interfere to form a *standing wave*:
+
+$
+  u(x, t) = 2 A cos(k x) cos(omega t).
+$
+
+The points where $cos(k x) = 0$ (nodes) are stationary; the points where $|cos(k x)| = 1$ (antinodes) oscillate with maximum amplitude.
+
+#example(name: "Standing Waves on a String Fixed at Both Ends")[ // 两端固定弦的驻波
+  For a string of length $L$ fixed at $x = 0$ and $x = L$, the boundary conditions $u(0, t) = u(L, t) = 0$ require $k L = n pi$, $n = 1, 2, 3, ...$.
+
+  The *normal modes* are:
+  $
+    u_n(x, t) = A_n sin(frac(n pi x, L)) cos(omega_n t), quad omega_n = n omega_1, quad omega_1 = frac(pi v, L).
+  $
+
+  The fundamental frequency is $f_1 = omega_1 / (2 pi) = v / (2 L)$, and the higher harmonics are integer multiples: $f_n = n f_1$.
+]
+
+=== Superposition Principle // 叠加原理
+
+#property(name: "Superposition for Waves")[
+  The wave equation is *linear*: if $u_1$ and $u_2$ are solutions, then $u_1 + u_2$ is also a solution. This allows complex wave patterns to be built from simple harmonic components (Fourier analysis).
+]
+
+#note[
+  *Connection to later topics:*
+  - The normal modes of a string are the first example of a discrete eigenvalue problem. In Part II (Lagrangian mechanics, Ch6), we will generalise this to coupled oscillators and normal mode analysis using matrix methods.
+  - The wave equation generalises to two and three dimensions in fluid mechanics and electromagnetism. The same mathematics — separation of variables, boundary conditions, eigenfrequencies — reappears in quantum mechanics and electrodynamics.
+]
 
 = Celestial Mechanics Foundations // 天体力学基础
 == Kepler's Laws // 开普勒定律
