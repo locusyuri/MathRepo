@@ -28,13 +28,13 @@
 #part("Classical Mechanics Foundations") // 经典力学基础
 
 = Kinematics of Particles and Particle Systems // 质点与质点系
-== Kinematic Attributes of Point Particles // 质点的运动学属性
+== Kinematic Attributes of PointParticles // 质点的运动学属性
 
 Kinematics describes motion without asking what causes it.
-For a point particle, the basic data are position, velocity, and acceleration as functions of time.
+For a pointparticle, the basic data are position, velocity, and acceleration as functions of time.
 
-#definition(name: "Point Particle and Trajectory")[
-  A point particle is modeled by its position vector
+#definition(name: "PointParticle and Trajectory")[
+  A pointparticle is modeled by its position vector
 
   $
     bold(r) = bold(r)(t) in bb(R)^3.
@@ -90,7 +90,7 @@ $
 
 === Cylindrical Coordinates // 柱坐标
 
-For three-dimensional motion with rotational symmetry about the $z$-axis, cylindrical coordinates $(rho, phi, z)$ are the natural choice. The unit vectors are $bold(e_rho)$, $bold(e_phi)$, $bold(e_z)$, with $bold(e_rho)$ and $bold(e_phi)$ rotating as the point moves.
+For three-dimensional motion with rotational symmetry about the $z$-axis, cylindrical coordinates $(rho, phi, z)$ are the natural choice. The unit vectors are $bold(e_rho)$, $bold(e_phi)$, $bold(e_z)$, with $bold(e_rho)$ and $bold(e_phi)$ rotating as the pointmoves.
 
 $
   bold(r) = rho bold(e_rho) + z bold(e_z),
@@ -191,7 +191,7 @@ So acceleration is invariant under Galilean transformation, which prepares the g
 
 === Kinematics of Particle Systems // 质点系的运动学
 
-Real mechanical systems rarely consist of a single point particle. Multiple particles introduce new kinematic concepts — the centre of mass, relative coordinates, and degrees of freedom — that are essential for the later analysis of rigid bodies, celestial systems, and continua.
+Real mechanical systems rarely consist of a single pointparticle. Multiple particles introduce new kinematic concepts — the centre of mass, relative coordinates, and degrees of freedom — that are essential for the later analysis of rigid bodies, celestial systems, and continua.
 
 #definition(name: "Centre of Mass")[
   For a system of $N$ particles with masses $m_a$ and positions $bold(r)_a$, the *centre of mass* (CM) is:
@@ -250,7 +250,7 @@ The rigid-body kinematics that follows requires understanding how velocities tra
 == Rigid Body Kinematics: Translation and Rotation // 刚体平动与转动
 
 A rigid body is a mechanical system whose internal distances remain constant during motion.
-Its kinematics is therefore determined by the motion of one reference point and by the body's orientation.
+Its kinematics is therefore determined by the motion of one reference pointand by the body's orientation.
 
 #definition(name: "Rigid Body Motion")[
   Let $bold(r_A)(t)$ and $bold(r_B)(t)$ be the positions of two points $A$ and $B$ of the same body.
@@ -265,11 +265,11 @@ Its kinematics is therefore determined by the motion of one reference point and 
 
 === Translation of a Rigid Body
 
-If every point of the body has the same velocity, the motion is a pure translation.
-In that case, the velocity and acceleration of any point coincide with those of a chosen reference point.
+If every pointof the body has the same velocity, the motion is a pure translation.
+In that case, the velocity and acceleration of any pointcoincide with those of a chosen reference point.
 
 #proposition(name: "Pure Translation")[
-  Suppose the position of every point $P$ of the body can be written as
+  Suppose the position of every point$P$ of the body can be written as
 
   $
     bold(r)_P(t) = bold(R)(t) + bold(r)_P^0,
@@ -287,13 +287,13 @@ In that case, the velocity and acceleration of any point coincide with those of 
 
 === Rotation about a Fixed Point
 
-If the body rotates around a fixed point $O$, then the position of each point can be described by a rotation matrix or, equivalently, by an angular velocity vector.
+If the body rotates around a fixed point$O$, then the position of each pointcan be described by a rotation matrix or, equivalently, by an angular velocity vector.
 
 #definition(name: "Angular Velocity")[
   The angular velocity $bold(omega)$ is the vector whose direction is given by the right-hand rule and whose magnitude is the instantaneous rotation rate.
 ]
 
-For a point with position vector $bold(r)$ measured from the rotation center, the velocity is
+For a pointwith position vector $bold(r)$ measured from the rotation center, the velocity is
 
 
 $
@@ -311,7 +311,7 @@ The first term is tangential, and the second term is centripetal.
 
 === General Rigid-Body Motion
 
-The most general rigid-body motion is the sum of a translation of a reference point and a rotation about that point.
+The most general rigid-body motion is the sum of a translation of a reference pointand a rotation about that point.
 
 $
   bold(r)_P(t) = bold(R)(t) + cal(R)(t) bold(r)_P^0,
@@ -327,11 +327,11 @@ where $cal(R)(t)$ is a rotation operator.
 == Correspondence between Linear and Angular Quantities // 线量与角量的对应
 
 Rigid-body rotation becomes especially transparent once we pair linear quantities with their angular analogues.
-The main point is that many formulas in translation and rotation have exactly the same algebraic structure.
+The main pointis that many formulas in translation and rotation have exactly the same algebraic structure.
 
 === Linear and Angular Pairing
 
-For a point at distance $rho$ from the axis of rotation,
+For a pointat distance $rho$ from the axis of rotation,
 
 $
   s = rho theta,
@@ -480,7 +480,7 @@ Newton's laws have precise rotational counterparts, which we develop in the next
   ("Cause of acceleration", "Force $bold(F)$", "Torque $bold(tau)$"),
   ("Second law", "$sum bold(F) = m bold(a)$", "$sum bold(tau) = I bold(alpha)$"),
   ("Momentum", "$bold(p) = m bold(v)$", "$bold(L) = I bold(omega)$"),
-  ("Work", "$W = int bold(F) dot dif bold(r)$", "$W = int tau dif theta$"),
+  ("Work", "$W = integral bold(F) dot dif bold(r)$", "$W = integral tau dif theta$"),
   ("Kinetic energy", "$K = frac(1,2) m v^2$", "$K = frac(1,2) I omega^2$"),
 )
 
@@ -495,7 +495,7 @@ We now develop the rotational dynamics of a rigid body constrained to rotate abo
 === Torque // 力矩
 
 #definition(name: "Torque")[
-  The *torque* of a force $bold(F)$ applied at a point with position vector $bold(r)$ (measured from the axis or rotation centre) is:
+  The *torque* of a force $bold(F)$ applied at a pointwith position vector $bold(r)$ (measured from the axis or rotation centre) is:
   $
     bold(tau) = bold(r) times bold(F).
   $
@@ -507,7 +507,7 @@ For a rigid body rotating about a fixed axis, only the component of torque paral
 === Moment of Inertia // 转动惯量
 
 #definition(name: "Moment of Inertia")[
-  For a system of $N$ point masses, the *moment of inertia* about a given axis is:
+  For a system of $N$ pointmasses, the *moment of inertia* about a given axis is:
   $
     I = sum_(a=1)^N m_a r_(a_perp)^2,
   $
@@ -591,7 +591,7 @@ For a rigid body rotating about a fixed axis, only the component of torque paral
   $
   The tension is $T = m (g - a)$.
 
-  This example shows how translation and rotation are coupled through the constraint $a = R alpha$.
+  This example shows how translation and rotation are coupled through the constraintegral$a = R alpha$.
 ]
 
 #example(name: "Physical Pendulum")[ // 物理摆
@@ -623,11 +623,323 @@ For a rigid body rotating about a fixed axis, only the component of torque paral
 ]
 
 = Momentum, Angular Momentum, and Energy // 动量、角动量与功能原理
+
+Chapter 2 established the dynamical laws for translation ($sum bold(F) = m bold(a)$) and rotation ($sum tau = I alpha$). This chapter develops the *integral* forms of these laws — momentum, impulse, angular momentum, work, and energy — which are often more powerful for solving problems than direct integration of the equations of motion. The crowning result is the *structural isomorphism* between translational and rotational mechanics: the two sets of laws are formally identical, differing only in the physical interpretation of the variables.
+
 == Linear Momentum and Impulse // 线动量与冲量
+
+=== Linear Momentum // 线动量
+
+#definition(name: "Linear Momentum")[
+  The *linear momentum* of a particle of mass $m$ moving with velocity $bold(v)$ is:
+  $
+    bold(p) = m bold(v).
+  $
+  For a system of $N$ particles, the total momentum is:
+  $
+    bold(P) = sum_(a=1)^N m_a bold(v)_a = M bold(V)_"CM",
+  $
+  where $M$ is the total mass and $bold(V)_"CM"$ is the velocity of the centre of mass.
+]
+
+Newton's second law can be expressed directly in terms of momentum:
+
+$
+  sum bold(F) = frac(dif bold(p), dif t).
+$
+
+This form is more fundamental than $sum bold(F) = m bold(a)$ because it remains valid when mass changes (e.g., rockets, relativistic mechanics).
+
+=== Impulse-Momentum Theorem // 冲量定理
+
+#theorem(name: "Impulse-Momentum Theorem")[
+  The *impulse* delivered by a net force over a time interval $[t_1, t_2]$ equals the change in momentum:
+  $
+    bold(J) = integral_(t_1)^(t_2) sum bold(F) dif t = bold(p)(t_2) - bold(p)(t_1).
+  $
+  For a constant force, $bold(J) = sum bold(F) Delta t$.
+]
+
+#example(name: "Collision of Two Particles")[ // 两粒子碰撞
+  Two particles of masses $m_1$, $m_2$ interact during a collision. By Newton's third law, the forces they exert on each other are equal and opposite at every instant. Integrating over the collision time:
+  $
+    Delta bold(p)_1 = - Delta bold(p)_2.
+  $
+  Hence the *total* momentum of the system is conserved:
+  $
+    bold(P)_"initial" = bold(P)_"final".
+  $
+  This holds regardless of the detailed nature of the interaction force.
+]
+
+=== Conservation of Linear Momentum // 动量守恒定律
+
+#law(name: "Conservation of Linear Momentum")[
+  If the net external force on a system is zero, the total linear momentum is conserved:
+  $
+    sum bold(F)_"ext" = bold(0) quad arrow quad bold(P) = "const".
+  $
+]
+
+This is one of the most powerful principles in mechanics. It follows directly from Newton's second law and third law, but it applies even when the internal forces are unknown (as in collisions and explosions).
+
+#note[
+  Conservation of momentum is a consequence of *translational symmetry* of space (Noether's theorem, to be studied in Part II). If the laws of physics are the same at every pointin space, momentum must be conserved.
+]
+
 == Angular Momentum and Torque // 角动量与力矩
+
+=== Angular Momentum of a Particle // 质点的角动量
+
+#definition(name: "Angular Momentum of a Particle")[
+  The *angular momentum* of a particle with respect to a fixed point$O$ is:
+  $
+    bold(L) = bold(r) times bold(p) = m bold(r) times bold(v),
+  $
+  where $bold(r)$ is the position vector from $O$. The SI unit is $"kg" dot "m"^2 / "s"$.
+]
+
+Differentiating with respect to time gives the rotational analogue of $sum bold(F) = dif bold(p) / dif t$:
+
+$
+  frac(dif bold(L), dif t) = frac(dif, dif t)(bold(r) times bold(p)) = bold(v) times bold(p) + bold(r) times frac(dif bold(p), dif t) = bold(r) times sum bold(F) = sum bold(tau),
+$
+
+where $bold(tau) = bold(r) times bold(F)$ is the torque about $O$.
+
+=== Angular Momentum of a System // 质点系的角动量
+
+#definition(name: "Total Angular Momentum")[
+  For a system of particles, the total angular momentum about a point$O$ is:
+  $
+    bold(L) = sum_a bold(r)_a times bold(p)_a.
+  $
+  The torque equation generalises to:
+  $
+    sum bold(tau)_"ext" = frac(dif bold(L), dif t),
+  $
+  where $sum bold(tau)_"ext"$ is the net external torque about $O$.
+]
+
+#theorem(name: "Angular Momentum about the Centre of Mass")[
+  The total angular momentum can be decomposed into "spin" (about the CM) and "orbital" (of the CM):
+  $
+    bold(L) = bold(R)_"CM" times bold(P) + sum_a bold(r)'_a times bold(p)'_a.
+  $
+  Importantly, the torque equation $sum tau_"ext" = dif bold(L) / dif t$ holds even when $O$ is the centre of mass, regardless of whether the CM is accelerating.
+]
+
+=== Conservation of Angular Momentum // 角动量守恒定律
+
+#law(name: "Conservation of Angular Momentum")[
+  If the net external torque on a system is zero, the total angular momentum is conserved:
+  $
+    sum bold(tau)_"ext" = bold(0) quad arrow quad bold(L) = "const".
+  $
+]
+
+#example(name: "Spinning Ice Skater")[ // 旋转冰舞者
+  An ice skater spins with arms extended, then pulls her arms in. No external torque acts about the vertical axis (neglecting friction), so angular momentum is conserved:
+  $
+    I_1 omega_1 = I_2 omega_2.
+  $
+  Since pulling in the arms reduces the moment of inertia ($I_2 < I_1$), the angular velocity increases ($omega_2 > omega_1$). The rotational kinetic energy $K = frac(1,2) I omega^2$ increases — the skater does work to pull her arms inward against the centrifugal effect.
+]
+
+=== Parallel Structure of Momentum and Angular Momentum // 动量与角动量的平行结构
+
+#tex-table(
+  ("Quantity", "Translation", "Rotation"),
+  ("Momentum", [$bold(p) = m bold(v)$], [$bold(L) = I bold(omega)$]),
+  ("Newton's law", [$sum bold(F) = dif bold(p) / dif t$], [$sum bold(tau) = dif bold(L) / dif t$]),
+  ("Impulse", [$bold(J) = integral sum bold(F) dif t$], [$bold(J)_"rot" = integral sum bold(tau) dif t$]),
+  ("Conservation", [$sum bold(F)_"ext" = bold(0) arrow bold(P) = text("const")$], [$sum bold(tau)_"ext" = bold(0) arrow bold(L) = text("const")$]),
+  ("CM decomposition", [$bold(P) = M bold(V)_"CM"$], [$bold(L) = bold(R)_"CM" times bold(P) + bold(L)_"spin"$]),
+)
+
 == Work-Energy Theorem and Energy Conservation // 功能定理与能量守恒
+
+=== Work and Kinetic Energy // 功与动能
+
+#definition(name: "Work Done by a Force")[
+  The infinitesimal work done by a force $bold(F)$ over a displacement $dif bold(r)$ is:
+  $
+    dif W = bold(F) dot dif bold(r).
+  $
+  The total work along a path $C$ from $A$ to $B$ is:
+  $
+    W_(A -> B) = integral_C bold(F) dot dif bold(r).
+  $
+]
+
+#theorem(name: "Work-Energy Theorem")[
+  The net work done on a particle equals its change in kinetic energy:
+  $
+    W_"net" = Delta K = frac(1,2) m v_B^2 - frac(1,2) m v_A^2.
+  $
+]
+
+#proof[
+  $
+    W_"net" = integral_C m bold(a) dot dif bold(r) = integral_(t_A)^(t_B) m frac(dif bold(v), dif t) dot bold(v) dif t
+            = integral_(t_A)^(t_B) frac(dif, dif t) (frac(1,2) m v^2) dif t
+            = frac(1,2) m v_B^2 - frac(1,2) m v_A^2.
+  $
+]
+
+The rotational analogue is:
+
+#theorem(name: "Rotational Work-Energy Theorem")[
+  The net work done by torques equals the change in rotational kinetic energy:
+  $
+    W_"net" = integral tau dif theta = Delta K_"rot" = frac(1,2) I omega_B^2 - frac(1,2) I omega_A^2.
+  $
+]
+
+=== Conservative Forces and Potential Energy // 保守力与势能
+
+#definition(name: "Conservative Force")[
+  A force $bold(F)$ is *conservative* if the work it does is independent of the path taken, depending only on the endpoints. Equivalently:
+  - The circulation around any closed loop vanishes: $integral.cont bold(F) dot dif bold(r) = 0$.
+  - The force can be expressed as the negative gradient of a scalar potential: $bold(F) = - nabla V$.
+]
+
+#property(name: "Conditions for a Conservative Force")[
+  In three dimensions, a force is conservative iff:
+  1. $nabla times bold(F) = bold(0)$ (the force is curl-free, or irrotational).
+  2. The domain is simply connected (no holes that would allow a nonzero circulation).
+]
+
+#definition(name: "Potential Energy")[
+  If $bold(F)$ is conservative, the *potential energy* $V$ at $bold(r)$ relative to a reference point $bold(r)_0$ is:
+  $
+    V(bold(r)) = - integral_(bold(r)_0)^(bold(r)) bold(F) dot dif bold(r)'.
+  $
+  The work-energy theorem then becomes:
+  $
+    Delta K + Delta V = 0 quad arrow quad E = K + V = text("constant").
+  $
+]
+
+=== Conservation of Mechanical Energy // 机械能守恒
+
+#law(name: "Conservation of Mechanical Energy")[
+  For a system subject only to conservative forces, the total mechanical energy $E = K + V$ is conserved:
+  $
+    E = frac(1,2) m v^2 + V(bold(r)) = "const".
+  $
+  When non-conservative forces (e.g., friction) are present, the work done by those forces equals the change in total mechanical energy:
+  $
+    W_"nc" = Delta E.
+  $
+]
+
+#example(name: "Energy Analysis of a Simple Pendulum")[ // 单摆的能量分析
+  A simple pendulum of length $L$ and mass $m$ is released from rest at an angle $theta_0$. The forces are gravity (conservative) and tension (does no work, since it is always perpendicular to the velocity).
+
+  *Energy conservation:*
+  $
+    E = frac(1,2) m (L dot(theta))^2 + m g L (1 - cos theta) = m g L (1 - cos theta_0).
+  $
+
+  The angular velocity at the bottom ($theta = 0$) is:
+  $
+    dot(theta)_"max" = sqrt(frac(2 g, L) (1 - cos theta_0)) = 2 sqrt(frac(g, L)) sin frac(theta_0, 2).
+  $
+
+  For small angles, $dot(theta)_"max" approx theta_0 sqrt(g / L)$, consistent with the simple harmonic result $omega = sqrt(g / L)$.
+]
+
+=== Power // 功率
+
+#definition(name: "Power")[
+  The *power* delivered by a force is the rate of doing work:
+  $
+    P = frac(dif W, dif t) = bold(F) dot bold(v).
+  $
+  For a torque: $P = tau omega$.
+]
+
 == Isomorphism between Translational and Rotational Structures // 平动与转动的同构性
+
+This section formalises the structural parallel that has been developed throughout Chapters 1–3. The correspondence is not merely a collection of analogies — it is a genuine mathematical *isomorphism*: the equations of translational and rotational mechanics have identical algebraic forms.
+
+=== The Isomorphism Table // 同构对照表
+
+#tex-table(
+  ([], [*Translation*], [*Rotation*]),
+  ([Kinematic variables], [$bold(r), bold(v), bold(a)$], [$theta, omega, alpha$]),
+  ([Inertia], [$m$], [$I$]),
+  ([Cause], [$bold(F)$], [$bold(tau)$]),
+  ([Newton / Euler law], [$sum bold(F) = m bold(a)$], [$sum bold(tau) = I alpha$]),
+  ([Momentum], [$bold(p) = m bold(v)$], [$bold(L) = I bold(omega)$]),
+  ([Impulse], [$bold(J) = integral sum bold(F) dif t$], [$bold(J)_"rot" = integral sum bold(tau) dif t$]),
+  ([Newton's law (momentum form)], [$sum bold(F) = dif bold(p) / dif t$], [$sum bold(tau) = dif bold(L) / dif t$]),
+  ([Kinetic energy], [$K = frac(1,2) m v^2$], [$K = frac(1,2) I omega^2$]),
+  ([Work], [$W = integral bold(F) dot dif bold(r)$], [$W = integral tau dif theta$]),
+  ([Power], [$P = bold(F) dot bold(v)$], [$P = tau omega$]),
+  ([Conservation], [no net $bold(F)_"ext" arrow bold(p)$ const], [no net $bold(tau)_"ext" arrow bold(L)$ const]),
+)
+
+=== Why This Matters // 为什么这很重要
+
+#note[
+  The translational-rotational isomorphism is not just a pedagogical convenience. It reflects a deep fact about the structure of classical mechanics: both sets of equations arise from the same underlying variational principle (Hamilton's principle, Part I). When we later study Lagrangian mechanics, we will see that a single equation — the Euler-Lagrange equation — produces *both* the translational and rotational equations of motion, depending only on which generalized coordinates we choose.
+
+  Moreover, this isomorphism extends beyond rigid-body mechanics. The same mathematical structures (configuration spaces, momenta, conjugate variables) reappear in field theory, quantum mechanics, and even statistical mechanics. Mastering the translational-rotational correspondence is the first step toward recognising these unifying patterns.
+]
+
 == Potential Energy and Force Fields // 势能与力场
+
+=== One-Dimensional Systems // 一维系统
+
+For a particle moving in one dimension under a conservative force $F(x) = - dif V / dif x$, the energy $E = frac(1,2) m dot(x)^2 + V(x)$ is conserved. This allows a complete qualitative analysis of the motion without solving the equation of motion.
+
+#definition(name: "Effective Potential and Turning Points")[
+  For a given energy $E$, the motion is confined to regions where $V(x) <= E$. The points where $V(x) = E$ are *turning points* — the particle stops and reverses direction.
+]
+
+#example(name: "Energy Diagram of a Quartic Oscillator")[ // 四次振子的能量图
+  Consider the potential $V(x) = frac(1,2) k x^2 + frac(1,4) alpha x^4$ ($alpha > 0$).
+
+  - For small energies, the quartic term is negligible and the motion is approximately simple harmonic (as in Chapter 4).
+  - For large energies, the quartic term dominates, giving anharmonic oscillations with a frequency that increases with amplitude.
+  - The turning points are found by solving $V(x) = E$, which generally requires a quartic equation but can be solved numerically or graphically.
+]
+
+=== Three-Dimensional Conservative Fields // 三维保守力场
+
+#definition(name: "Force from Potential")[
+  In three dimensions, a conservative force is the negative gradient of a scalar potential:
+  $
+    bold(F) = - nabla V = - (frac(partial V, partial x), frac(partial V, partial y), frac(partial V, partial z)).
+  $
+  In spherical coordinates (relevant for central forces):
+  $
+    bold(F) = - (frac(partial V, partial r) bold(e_r) + frac(1, r) frac(partial V, partial theta) bold(e_theta) + frac(1, r sin theta) frac(partial V, partial phi) bold(e_phi)).
+  $
+]
+
+#property(name: "Properties of Conservative Fields")[
+  - $nabla times bold(F) = bold(0)$ (the field is irrotational).
+  - The work around any closed path is zero: $integral.cont bold(F) dot dif bold(r) = 0$.
+  - The potential $V$ is defined up to an additive constant.
+  - Equipotential surfaces ($V = text("const")$) are perpendicular to field lines.
+]
+
+=== Central Forces // 中心力
+
+A particularly important class of conservative forces in mechanics is the *central force* — a force that depends only on the distance from a fixed pointand points radially:
+
+$
+  bold(F) = F(r) bold(e_r), quad F(r) = - frac(dif V(r), dif r).
+$
+
+Central forces conserve angular momentum (since $bold(tau) = bold(r) times bold(F) = bold(0)$), and the motion is confined to a plane. These properties will be used extensively in Chapter 5 (Celestial Mechanics) and again in Part II (Lagrangian mechanics, central force applications).
+
+#note[
+  This chapter has established the three pillars of conservation — momentum, angular momentum, and energy — each linked to a fundamental symmetry of space and time. These conservation laws are not just convenient shortcuts; they are deeper than the equations of motion themselves. In Part II, Noether's theorem will reveal the direct connection: every continuous symmetry of the action implies a conserved quantity.
+]
 
 = Oscillations and Waves // 振动与波动
 == Simple Harmonic Motion // 简谐运动
@@ -650,7 +962,7 @@ For a rigid body rotating about a fixed axis, only the component of torque paral
 = Variational Calculus  // 变分法
 == Hamilton's Principle // 哈密顿原理
 
-In this notebook, we take Hamilton's principle as the foundational axiom-like starting point of analytical mechanics.
+In this notebook, we take Hamilton's principle as the foundational axiom-like starting pointof analytical mechanics.
 
 Before stating the principle, we fix the basic objects:
 
@@ -774,7 +1086,7 @@ $
   Therefore the stationary curve is a line segment.
 ]
 
-This variational viewpoint is the direct bridge to Hamilton's principle and the full Lagrangian formalism.
+This variational viewpointis the direct bridge to Hamilton's principle and the full Lagrangian formalism.
 
 == Euler-Lagrange Equation // 欧拉-拉格朗日方程
 
@@ -831,9 +1143,9 @@ By the fundamental lemma of variational calculus, the integrand must be zero, yi
 === Natural Boundary Conditions (Free Endpoints)
 
 #note[
-  If an endpoint is free, the boundary term does not automatically vanish.
+  If an endpointis free, the boundary term does not automatically vanish.
   One then obtains a natural boundary condition, typically
-  $frac(partial L, partial dot(q)) = 0$ at that free endpoint (or its constrained variant).
+  $frac(partial L, partial dot(q)) = 0$ at that free endpoint(or its constrained variant).
 ]
 
 === First Integrals and Cyclic Coordinates
@@ -902,7 +1214,7 @@ The key idea is that the actual trajectory is a stationary curve of the action, 
 
 == Lagrangian Function // 拉格朗日函数
 
-The starting point of analytical mechanics is the *Lagrangian function*.
+The starting pointof analytical mechanics is the *Lagrangian function*.
 
 #definition(name: "Lagrangian")[
   For a system with generalized coordinates $q_1, dots, q_n$ and velocities $dot(q)_1, dots, dot(q)_n$, the Lagrangian is a function
@@ -1033,14 +1345,14 @@ If the constraints are holonomic, one can either solve them explicitly or introd
     frac(dif, dif t) frac(partial L, partial dot(q)_i) - frac(partial L, partial q_i) = sum_(alpha=1)^m lambda_alpha frac(partial f_alpha, partial q_i),
   $
 
-  together with the constraint equations
+  together with the constraintegralequations
 
   $
     f_alpha(q, t) = 0, quad alpha = 1, dots, m.
   $
 ]
 
-The multipliers $lambda_alpha$ encode the constraint reaction forces.
+The multipliers $lambda_alpha$ encode the constraintegralreaction forces.
 They eliminate the need to solve the constraints explicitly before writing the equations of motion.
 
 === Lagrange Multipliers in Mechanics // 力学中的拉格朗日乘子
@@ -1308,7 +1620,7 @@ These conservation laws will be used repeatedly in the applications chapter.
 // --- Part 0: Classical Mechanics Foundations (经典力学基础) ---
 
 // Chapter 1: Kinematics of Particles and Particle Systems (质点与质点系)
-//   Section 1.1: Kinematic Attributes of Point Particles (质点的运动学属性)
+//   Section 1.1: Kinematic Attributes of PointParticles (质点的运动学属性)
 //   Section 1.2: Rigid Body Kinematics: Translation and Rotation (刚体平动与转动)
 //   Section 1.3: Correspondence between Linear and Angular Quantities (线量与角量的对应)
 
