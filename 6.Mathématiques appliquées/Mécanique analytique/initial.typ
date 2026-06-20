@@ -28,11 +28,11 @@
 #part("Classical Mechanics Foundations") // 经典力学基础
 
 // Chapter 1: Kinematics of Particles and Particle Systems (质点与质点系)
-//   Section 1.1: Kinematic Attributes of PointParticles (质点的运动学属性)
+//   Section 1.1: Kinematic Attributes of Point Particles (质点的运动学属性)
 //   Section 1.2: Rigid Body Kinematics: Translation and Rotation (刚体平动与转动)
 //   Section 1.3: Correspondence between Linear and Angular Quantities (线量与角量的对应)
 = Kinematics of Particles and Particle Systems // 质点与质点系
-== Kinematic Attributes of PointParticles // 质点的运动学属性
+== Kinematic Attributes of Point Particles // 质点的运动学属性
 
 Kinematics describes motion without asking what causes it.
 For a pointparticle, the basic data are position, velocity, and acceleration as functions of time.
@@ -269,8 +269,8 @@ Its kinematics is therefore determined by the motion of one reference pointand b
 
 === Translation of a Rigid Body
 
-If every pointof the body has the same velocity, the motion is a pure translation.
-In that case, the velocity and acceleration of any pointcoincide with those of a chosen reference point.
+If every point of the body has the same velocity, the motion is a pure translation.
+In that case, the velocity and acceleration of any point coincide with those of a chosen reference point.
 
 #proposition(name: "Pure Translation")[
   Suppose the position of every point$P$ of the body can be written as
@@ -1290,50 +1290,6 @@ This completes the Classical Mechanics Foundations part. The next part (Mathemat
 //   Section 1.2: Derivation of Euler-Lagrange Equations (欧拉-拉格朗日方程的推导)
 //   Section 1.3: Variational Problems with Constraints (带约束的变分问题)
 = Variational Calculus  // 变分法
-== Hamilton's Principle // 哈密顿原理
-
-In this notebook, we take Hamilton's principle as the foundational axiom-like starting pointof analytical mechanics.
-
-Before stating the principle, we fix the basic objects:
-
-- A configuration curve $q: [t_0, t_1] -> Q$ in configuration space $Q$.
-- A Lagrangian $L(t, q, dot(q))$.
-- An action functional
-
-$
-  S[q] = integral_(t_0)^(t_1) L(t, q, dot(q)) dif t.
-$
-
-Here, a *functional* means a map from a function space to real numbers, e.g. $S: cal(A) -> bb(R)$ on an admissible curve class $cal(A)$.
-
-#axiom(name: "Hamilton's Principle (Stationary Action)")[
-  Among all admissible curves with fixed endpoints,
-
-  $
-    q(t_0) = q_0, quad q(t_1) = q_1,
-  $
-
-  the physical trajectory $q$ is characterized by the stationarity condition
-
-  $
-    delta S[q; eta] = 0
-  $
-
-  for all endpoint-fixed admissible variations.
-]
-
-Equivalently, with a variation family
-
-$
-  q_epsilon(t) = q(t) + epsilon eta(t), quad eta(t_0)=eta(t_1)=0,
-$
-
-the first-order term in $S[q_epsilon] - S[q]$ vanishes at $epsilon = 0$.
-
-#note[
-  In rigorous mathematical language, this is a *stationary* principle, not necessarily a strict minimum principle.
-  The phrase "least action" is historical; "stationary action" is usually the precise formulation.
-]
 
 == Variational Method and First Variation // 变分法与第一变分
 
@@ -1416,7 +1372,7 @@ $
   Therefore the stationary curve is a line segment.
 ]
 
-This variational viewpointis the direct bridge to Hamilton's principle and the full Lagrangian formalism.
+This variational viewpoint is the direct bridge to Hamilton's principle and the full Lagrangian formalism.
 
 == Euler-Lagrange Equation // 欧拉-拉格朗日方程
 
@@ -1537,14 +1493,131 @@ This section provides the variational core used in the next chapters on Lagrange
 //   Section 2.2: Classification of Constraints (约束的分类)
 //   Section 2.3: Real Displacements and Virtual Displacements (实位移与虚位移)
 //   Section 2.4: D'Alembert's Principle and Virtual Work (达朗贝尔原理与虚功原理) [← Retrospective to Part 0 Ch. 2]
-= Generalized Coordinates and Constraints // 广义坐标与约束
+= Description of Mechanical Systems // 力学系统的完整描述
 
+Before we can apply Hamilton's principle, we must describe the system we are studying. This chapter introduces the concepts that bridge the physical system to its mathematical representation: generalized coordinates, constraints, virtual displacements, and D'Alembert's principle.
+
+=== Degrees of Freedom and Generalized Coordinates // 自由度与广义坐标
+
+The first step in any Lagrangian analysis is to choose a set of independent coordinates that fully describe the configuration of the system.
+
+#definition(name: "Generalized Coordinates")[
+  A set of $n$ independent parameters $q_1, q_2, ..., q_n$ that uniquely specify the configuration of a mechanical system are called *generalized coordinates*. The number $n$ is the number of *degrees of freedom*.
+
+  For an unconstrained system of $N$ particles in 3D space: $n = 3N$.
+  For a system with $k$ independent holonomic constraints: $n = 3N - k$.
+]
+
+The generalised coordinates need not be Cartesian — they can be angles, distances, or any other convenient parameters. The choice of coordinates is the most important skill in Lagrangian mechanics.
+
+=== Classification of Constraints // 约束的分类
+
+#definition(name: "Holonomic and Nonholonomic Constraints")[
+  A constraint is *holonomic* if it can be written as an equation relating coordinates (and possibly time):
+  $
+    f(q_1, ..., q_n, t) = 0.
+  $
+  Constraints that cannot be written in this form (e.g., inequalities or velocity-dependent relations) are *nonholonomic*.
+
+  Holonomic constraints reduce the number of independent coordinates; nonholonomic constraints reduce the number of accessible velocities but not the configuration dimension.
+]
+
+Examples of holonomic constraints: a bead on a wire ($f = 0$ fixes the position to a curve), a rigid body ($|r_i - r_j| = text("const")$ for all pairs).
+Examples of nonholonomic constraints: a rolling wheel without slipping (velocity-dependent), a particle confined to a region ($x > 0$).
+
+=== Real Displacements and Virtual Displacements // 实位移与虚位移
+
+#definition(name: "Virtual Displacement")[
+  A *virtual displacement* $delta q_i$ is an infinitesimal change in the coordinates that is *consistent with the constraints at a fixed instant of time* — it does not violate the constraints and does not involve time evolution.
+
+  This contrasts with a *real displacement* $dif q_i$, which occurs over an infinitesimal time interval $dif t$ and respects both the constraints and the equations of motion.
+]
+
+The key difference: a virtual displacement is a *comparison* between two neighbouring paths at the same instant, while a real displacement is the actual motion along a single path over time.
+
+=== D'Alembert's Principle and Virtual Work // 达朗贝尔原理与虚功原理
+
+#definition(name: "Virtual Work")[
+  The *virtual work* done by a force $bold(F)_a$ acting on particle $a$ under a virtual displacement $delta bold(r)_a$ is:
+  $
+    delta W = sum_a bold(F)_a dot delta bold(r)_a.
+  $
+  For a system in equilibrium, $delta W = 0$ for all virtual displacements (the *principle of virtual work*).
+]
+
+#law(name: "D'Alembert's Principle")[
+  For a system in motion, the sum of the applied forces and the *inertial forces* vanishes for any virtual displacement:
+  $
+    sum_a (bold(F)_a - m_a bold(a)_a) dot delta bold(r)_a = 0.
+  $
+]
+
+D'Alembert's principle transforms dynamics into a form of statics by including the inertial term $-m bold(a)$. In the next chapter, we will show that this principle is equivalent to Hamilton's principle of stationary action, and that it leads directly to Lagrange's equations.
+
+#note[
+  The logical chain is now complete: generalized coordinates → constraints → virtual displacements → D'Alembert's principle → (next chapter) Hamilton's principle → Lagrange's equations. Each step translates the Newtonian picture into a more abstract but more powerful language.
+]
 
 // Chapter 3: Axiom: Hamilton's Principle (公理：哈密顿原理 - 最小作用量原理)
 //   Section 3.1: Definition of Action Functional (作用量泛函的定义)
 //   Section 3.2: Axiomatic Statement (公理陈述)
 //   Section 3.3: Additivity and Gauge Invariance of Lagrangian (拉格朗日量的可加性与不唯一性)
 = Axiom: Hamilton's Principle // 公理：哈密顿原理
+
+In this notebook, we take Hamilton's principle as the foundational axiom-like starting point of analytical mechanics.
+
+Before stating the principle, we fix the basic objects:
+
+- A configuration curve $q: [t_0, t_1] -> Q$ in configuration space $Q$.
+- A Lagrangian $L(t, q, dot(q))$.
+- An action functional
+
+$
+  S[q] = integral_(t_0)^(t_1) L(t, q, dot(q)) dif t.
+$
+
+Here, a *functional* means a map from a function space to real numbers, e.g. $S: cal(A) -> bb(R)$ on an admissible curve class $cal(A)$.
+
+#axiom(name: "Hamilton's Principle (Stationary Action)")[
+  Among all admissible curves with fixed endpoints,
+
+  $
+    q(t_0) = q_0, quad q(t_1) = q_1,
+  $
+
+  the physical trajectory $q$ is characterized by the stationarity condition
+
+  $
+    delta S[q; eta] = 0
+  $
+
+  for all endpoint-fixed admissible variations.
+]
+
+Equivalently, with a variation family
+
+$
+  q_epsilon(t) = q(t) + epsilon eta(t), quad eta(t_0)=eta(t_1)=0,
+$
+
+the first-order term in $S[q_epsilon] - S[q]$ vanishes at $epsilon = 0$.
+
+#note[
+  In rigorous mathematical language, this is a *stationary* principle, not necessarily a strict minimum principle.
+  The phrase "least action" is historical; "stationary action" is usually the precise formulation.
+]
+
+=== Additivity and Gauge Invariance of Lagrangian // 拉格朗日量的可加性与不唯一性
+
+#property(name: "Gauge Invariance of the Lagrangian")[
+  If two Lagrangians differ by a total time derivative, $L' = L + dif F / dif t$, they produce the same equations of motion. The action changes only by boundary terms:
+  $
+    S'[q] = S[q] + F(q(t_1), t_1) - F(q(t_0), t_0),
+  $
+  so the stationarity condition is unchanged.
+]
+
+This gauge freedom is important: it allows us to simplify Lagrangians by adding total derivatives without affecting the physics.
 
 // =========================================================================
 // --- Part II: Lagrangian Mechanics (拉格朗日力学) ---
@@ -1566,7 +1639,7 @@ The key idea is that the actual trajectory is a stationary curve of the action, 
 
 == Lagrangian Function // 拉格朗日函数
 
-The starting pointof analytical mechanics is the *Lagrangian function*.
+The starting point of analytical mechanics is the *Lagrangian function*.
 
 #definition(name: "Lagrangian")[
   For a system with generalized coordinates $q_1, dots, q_n$ and velocities $dot(q)_1, dots, dot(q)_n$, the Lagrangian is a function
@@ -1653,7 +1726,9 @@ $
 
 Since the variations $eta_i$ are arbitrary in the interior of the interval, the fundamental lemma implies that each coefficient must vanish.
 
-== Lagrange's Equations of the Second Kind // 第二类拉格朗日方程=== Generalized Forces // 广义力
+== Lagrange's Equations of the Second Kind // 第二类拉格朗日方程
+
+=== Generalized Forces // 广义力
 
 #theorem(name: "Lagrange's Equations")[
 In the presence of non-potential external forces, the Lagrangian description is augmented by *generalized forces*.
@@ -1696,14 +1771,14 @@ If the constraints are holonomic, one can either solve them explicitly or introd
     frac(dif, dif t) frac(partial L, partial dot(q)_i) - frac(partial L, partial q_i) = sum_(alpha=1)^m lambda_alpha frac(partial f_alpha, partial q_i),
   $
 
-  together with the constraintegralequations
+  together with the constraint equations
 
   $
     f_alpha(q, t) = 0, quad alpha = 1, dots, m.
   $
 ]
 
-The multipliers $lambda_alpha$ encode the constraintegralreaction forces.
+The multipliers $lambda_alpha$ encode the constraint reaction forces.
 They eliminate the need to solve the constraints explicitly before writing the equations of motion.
 
 === Lagrange Multipliers in Mechanics // 力学中的拉格朗日乘子
@@ -1971,6 +2046,153 @@ These conservation laws will be used repeatedly in the applications chapter.
 //   Section 6.4: Normal Modes and Eigenfrequencies (简正模与本征频率)
 //   Section 6.5: Coupled Oscillators (耦合振子)
 = Applications of Lagrangian Mechanics // 拉格朗日力学的应用
+
+This chapter demonstrates the power of the Lagrangian formalism by applying it to three classic problems: rigid body dynamics, central force motion, and small oscillations. In each case, the Lagrangian approach reproduces the results of Part 0 with greater elegance and generality, while also extending them to situations that would be cumbersome to handle with Newtonian methods.
+
+== Rigid Body Dynamics via Lagrangian // 刚体动力学的拉格朗日方法
+
+The Lagrangian formalism provides a natural framework for rigid body dynamics. By choosing appropriate generalized coordinates (e.g., Euler angles), the kinetic and potential energies are expressed directly, and Lagrange's equations yield the equations of motion without the need to analyse constraint forces.
+
+=== Kinetic Energy of a Rigid Body // 刚体的动能
+
+For a rigid body rotating about a fixed axis with moment of inertia $I$ and angular velocity $omega = dot(theta)$:
+
+$
+  T = frac(1,2) I omega^2.
+$
+
+The Lagrangian is $L = T - V$, and Lagrange's equation $frac(dif, dif t) frac(partial L, partial dot(theta)) - frac(partial L, partial theta) = 0$ gives:
+
+$
+  I dot.double(theta) + frac(partial V, partial theta) = 0,
+$
+
+which is precisely the rotational second law $I alpha = tau$ from Part 0 Ch 2, where $tau = - partial V / partial theta$ is the torque derived from potential.
+
+#example(name: "Physical Pendulum Revisited")[ // 物理摆的拉格朗日分析
+  A rigid body pivoted at a distance $d$ from its CM. Using $theta$ as the generalized coordinate:
+  $
+    T = frac(1,2) I dot(theta)^2, quad V = M g d (1 - cos theta),
+  $
+  $
+    L = frac(1,2) I dot(theta)^2 - M g d (1 - cos theta).
+  $
+
+  Lagrange's equation yields $I dot.double(theta) + M g d sin theta = 0$, recovering the physical pendulum result from Part 0 Ch 2.6.
+]
+
+== Central Force Motion // 中心力运动
+
+The two-body central force problem (Part 0 Ch 5) finds a particularly elegant solution in the Lagrangian framework.
+
+=== Lagrangian in Plane Polar Coordinates // 平面极坐标下的拉格朗日量
+
+For a reduced mass $mu$ moving in a central potential $V(r)$, we use plane polar coordinates $(r, theta)$:
+
+$
+  L = frac(1,2) mu (dot(r)^2 + r^2 dot(theta)^2) - V(r).
+$
+
+Note that $theta$ is a *cyclic coordinate*: $partial L / partial theta = 0$, so the conjugate momentum is conserved:
+
+$
+  p_theta = frac(partial L, partial dot(theta)) = mu r^2 dot(theta) = L_z = text("constant").
+$
+
+This is the conservation of angular momentum, directly recovered from the cyclic coordinate without invoking torques.
+
+=== Radial Equation and Effective Potential // 径向方程与有效势
+
+The $r$-equation follows from the Euler-Lagrange equation for $r$:
+
+$
+  mu dot.double(r) - mu r dot(theta)^2 + frac(dif V, dif r) = 0.
+$
+
+Using $dot(theta) = L_z / (mu r^2)$ to eliminate $dot(theta)$:
+
+$
+  mu dot.double(r) = - frac(dif V_("eff"), dif r), quad
+  V_("eff")(r) = V(r) + frac(L_z^2, 2 mu r^2).
+$
+
+#note[
+  The centrifugal term $L_z^2 / (2 mu r^2)$ arises naturally from the kinetic energy in polar coordinates — no physical force is involved. This effective potential analysis was anticipated in Part 0 Ch 5 (orbit classification) and will be used to derive Kepler's laws from the Lagrangian in the exercises.
+]
+
+== Small Oscillations // 小振动
+
+The small oscillation problem — one of the most important applications of Lagrangian mechanics — generalises the simple harmonic oscillator of Part 0 Ch 4 to multiple degrees of freedom.
+
+=== One Degree of Freedom // 单自由度
+
+Near a stable equilibrium $q_0$, the Lagrangian can be expanded to second order:
+
+$
+  L approx frac(1,2) m dot(q)^2 - frac(1,2) k (q - q_0)^2,
+$
+
+where $k = V''(q_0)$. Lagrange's equation gives $m dot.double(q) + k (q - q_0) = 0$, i.e., SHM with $omega_0 = sqrt(k / m)$. This recovers the simple harmonic oscillator from Part 0 Ch 4.1.
+
+=== Multiple Degrees of Freedom // 多自由度
+
+#theorem(name: "Small Oscillations — General Formulation")[
+  For a system of $n$ degrees of freedom near stable equilibrium, the Lagrangian is:
+  $
+    L = frac(1,2) sum_(i,j) M_(i j) dot(q)_i dot(q)_j - frac(1,2) sum_(i,j) K_(i j) q_i q_j,
+  $
+  where $M_(i j)$ is the mass (inertia) matrix and $K_(i j)$ is the stiffness matrix. The equations of motion are:
+  $
+    sum_j M_(i j) dot.double(q)_j + sum_j K_(i j) q_j = 0, quad i = 1, dots, n.
+  $
+]
+
+== Normal Modes and Eigenfrequencies // 简正模与本征频率
+
+The coupled equations from the previous section can be decoupled by solving an eigenvalue problem.
+
+#theorem(name: "Normal Mode Analysis")[
+  Assume a solution $q_j(t) = A_j e^(i omega t)$. Substituting into the equations of motion gives the generalised eigenvalue problem:
+  $
+    sum_j (K_(i j) - omega^2 M_(i j)) A_j = 0.
+  $
+  The eigenfrequencies $omega_alpha$ satisfy $det(K - omega^2 M) = 0$, and the eigenvectors define the *normal mode coordinates* $Q_alpha$ in which the system decouples into independent harmonic oscillators:
+  $
+    L = frac(1,2) sum_(alpha=1)^n (dot(Q)_alpha^2 - omega_alpha^2 Q_alpha^2).
+  $
+]
+
+#example(name: "Two Coupled Masses")[ // 两耦合振子
+  Two identical masses $m$ connected by three springs of stiffness $k$ between fixed walls. The Lagrangian is:
+  $
+    L = frac(1,2) m (dot(x)_1^2 + dot(x)_2^2) - frac(1,2) k (x_1^2 + (x_2 - x_1)^2 + x_2^2).
+  $
+
+  The mass and stiffness matrices are:
+  $
+    M = mat(m, 0; 0, m), quad
+    K = mat(2k, -k; -k, 2k).
+  $
+
+  Solving $det(K - omega^2 M) = 0$ gives:
+  $
+    omega_1^2 = frac(k, m) quad (text("in-phase mode")), quad
+    omega_2^2 = frac(3k, m) quad (text("out-of-phase mode")).
+  $
+
+  The normal coordinates are $Q_1 = (x_1 + x_2) / sqrt(2)$ and $Q_2 = (x_1 - x_2) / sqrt(2)$.
+]
+
+== Coupled Oscillators // 耦合振子
+
+The normal mode analysis extends naturally to systems with $N$ coupled oscillators, forming the foundation for understanding waves in discrete and continuous media.
+
+#note[
+  *Connection to earlier and later topics:*
+  - The two-mass system above is the simplest nontrivial example of mode splitting. With $N$ coupled masses, one obtains $N$ normal modes whose frequencies approach a continuous spectrum as $N -> infinity$ — the transition from discrete oscillators to a continuous wave (Part 0 Ch 4.3, standing waves on a string).
+  - The eigenvalue problem $det(K - omega^2 M) = 0$ reappears in quantum mechanics (vibrational spectra of molecules) and in structural engineering (modal analysis of buildings and bridges).
+  - In the limit of $N -> infinity$, the normal mode frequencies form a dispersion relation $omega(k)$, connecting to the wave propagation discussed in Part 0 Ch 4.3.
+]
 
 // =========================================================================
 // --- Part III: Hamiltonian Mechanics (哈密顿力学) ---
