@@ -88,6 +88,44 @@ $
   radial and tangential components naturally match force decomposition in central-force problems.
 ]
 
+=== Cylindrical Coordinates // 柱坐标
+
+For three-dimensional motion with rotational symmetry about the $z$-axis, cylindrical coordinates $(rho, phi, z)$ are the natural choice. The unit vectors are $bold(e_rho)$, $bold(e_phi)$, $bold(e_z)$, with $bold(e_rho)$ and $bold(e_phi)$ rotating as the point moves.
+
+$
+  bold(r) = rho bold(e_rho) + z bold(e_z),
+$
+
+$
+  bold(v) = dot(rho) bold(e_rho) + rho dot(phi) bold(e_phi) + dot(z) bold(e_z),
+$
+
+$
+  bold(a) = (dot.double(rho) - rho dot(phi)^2) bold(e_rho)
+          + (rho dot.double(phi) + 2 dot(rho) dot(phi)) bold(e_phi)
+          + dot.double(z) bold(e_z).
+$
+
+#note[
+  The radial terms $- rho dot(phi)^2$ (centripetal) and $2 dot(rho) dot(phi)$ (Coriolis) in the $phi$-component are kinematic — they arise purely from the geometry of the coordinate system, not from any physical force. These same terms will reappear in the rotating-frame dynamics of Chapter 2.
+]
+
+=== Spherical Coordinates // 球坐标
+
+For central-force problems (e.g., planetary motion, Chapter 5), spherical coordinates $(r, theta, phi)$ are the most convenient. Here $r$ is the radial distance, $theta$ the polar angle from the $z$-axis, and $phi$ the azimuthal angle.
+
+$
+  bold(v) = dot(r) bold(e_r) + r dot(theta) bold(e_theta) + r sin theta dot(phi) bold(e_phi),
+$
+
+$
+  bold(a) = (dot.double(r) - r dot(theta)^2 - r sin^2 theta dot(phi)^2) bold(e_r) + ...
+$
+
+#note[
+  The full expression for acceleration in spherical coordinates is lengthy, but the radial component alone — which contains the centrifugal terms $- r dot(theta)^2 - r sin^2 theta dot(phi)^2$ — is often sufficient for deriving radial equations in central-force problems.
+]
+
 === Arc-Length and Tangential-Normal Decomposition
 
 Let $s$ be arc length along the trajectory and $rho$ the local radius of curvature. Then
@@ -95,12 +133,35 @@ Let $s$ be arc length along the trajectory and $rho$ the local radius of curvatu
 $
   v = frac(dif s, dif t),
   quad
-  bold(v) = frac(dif s, dif t),
+  bold(v) = v bold(hat(t)),
   quad
-  bold(a) = dot(bold(v)) bold(hat(t)) + frac(|bold(v)|^2, rho) bold(hat(n)),
+  bold(a) = dot(v) bold(hat(t)) + frac(v^2, rho) bold(hat(n)),
 $
 
 where $bold(hat(t))$ and $bold(hat(n))$ are unit tangent and principal normal vectors.
+
+=== Frenet-Serret Frame // 弗莱纳-塞雷框架
+
+The complete description of a space curve uses three orthonormal vectors — the *Frenet-Serret frame*.
+
+#definition(name: "Frenet-Serret Frame")[
+  For a smooth curve parametrised by arc length $s$, define:
+  - *Unit tangent*: $bold(hat(t)) = dif bold(r) / dif s$,
+  - *Principal normal*: $bold(hat(n)) = (dif bold(hat(t)) / dif s) / |dif bold(hat(t)) / dif s|$,
+  - *Binormal*: $bold(hat(b)) = bold(hat(t)) times bold(hat(n))$.
+
+  The three vectors satisfy the Frenet-Serret formulas:
+  $
+    frac(dif bold(hat(t)), dif s) = kappa bold(hat(n)), quad
+    frac(dif bold(hat(n)), dif s) = - kappa bold(hat(t)) + tau bold(hat(b)), quad
+    frac(dif bold(hat(b)), dif s) = - tau bold(hat(n)),
+  $
+  where $kappa = 1 / rho$ is the curvature and $tau$ is the torsion (rate of twisting out of the osculating plane).
+]
+
+#note[
+  For planar motion, $tau = 0$ and $bold(hat(b))$ is constant. The acceleration decomposition $bold(a) = dot(v) bold(hat(t)) + v^2 / rho bold(hat(n))$ then follows directly from the first Frenet-Serret formula.
+]
 
 #proposition(name: "Uniform Circular Motion")[
   For motion on a circle of radius $R$ with constant angular speed $omega$,
@@ -127,6 +188,64 @@ $
 $
 
 So acceleration is invariant under Galilean transformation, which prepares the ground for Newton's second law in the next chapter.
+
+=== Kinematics of Particle Systems // 质点系的运动学
+
+Real mechanical systems rarely consist of a single point particle. Multiple particles introduce new kinematic concepts — the centre of mass, relative coordinates, and degrees of freedom — that are essential for the later analysis of rigid bodies, celestial systems, and continua.
+
+#definition(name: "Centre of Mass")[
+  For a system of $N$ particles with masses $m_a$ and positions $bold(r)_a$, the *centre of mass* (CM) is:
+  $
+    bold(R)_"CM" = frac(1, M) sum_(a=1)^N m_a bold(r)_a, quad M = sum_(a=1)^N m_a.
+  $
+  The CM velocity and acceleration are the mass-weighted averages:
+  $
+    bold(V)_"CM" = frac(1, M) sum_(a=1)^N m_a bold(v)_a, quad
+    bold(A)_"CM" = frac(1, M) sum_(a=1)^N m_a bold(a)_a.
+  $
+]
+
+#definition(name: "Relative Coordinates")[
+  The position of each particle can be decomposed into CM and relative parts:
+  $
+    bold(r)_a = bold(R)_"CM" + bold(r)'_a,
+  $
+  where $bold(r)'_a$ is the position relative to the CM. By construction,
+  $
+    sum_(a=1)^N m_a bold(r)'_a = bold(0), quad
+    sum_(a=1)^N m_a bold(v)'_a = bold(0).
+  $
+]
+
+#definition(name: "Degrees of Freedom")[
+  The number of *degrees of freedom* (DOF) of a system is the minimum number of independent coordinates needed to specify its configuration:
+  - Single free particle in space: $3$ DOF.
+  - $N$ free particles: $3N$ DOF.
+  - $N$ particles with $k$ independent holonomic constraints: $3N - k$ DOF.
+]
+
+#note[
+  The CM decomposition is more than a kinematic convenience: it decouples the overall motion from the internal motion. This decoupling is the foundation of the two-body reduction in celestial mechanics (Chapter 5) and of rigid-body dynamics (next section), where the internal constraints determine the rotational degrees of freedom.
+]
+
+=== A Preview of Rotating Reference Frames // 转动参考系前瞻
+
+The rigid-body kinematics that follows requires understanding how velocities transform between a fixed (inertial) frame and a rotating frame. This brief preview establishes the formula; the dynamical consequences will be explored in Chapter 2.
+
+#proposition(name: "Velocity in a Rotating Frame")[
+  Let a vector $bold(Q)$ be observed in an inertial frame $cal(F)$ and in a frame $cal(F')$ rotating with angular velocity $bold(omega)$ relative to $cal(F)$. The time derivatives are related by:
+  $
+    lr(frac(dif bold(Q), dif t))_cal(F) = lr(frac(dif bold(Q), dif t))_(cal(F)') + bold(omega) times bold(Q).
+  $
+  Applying this to the position vector $bold(r)$ gives the velocity transformation:
+  $
+    bold(v)_cal(F) = bold(v)_(cal(F)') + bold(omega) times bold(r).
+  $
+]
+
+#note[
+  The term $bold(omega) times bold(r)$ is the *transport velocity* — the apparent velocity due to the rotation of the frame itself. This formula is the kinematic foundation for the rigid-body velocity $bold(v) = bold(omega) times bold(r)$ derived in the next section.
+]
 
 == Rigid Body Kinematics: Translation and Rotation // 刚体平动与转动
 
@@ -226,18 +345,15 @@ $
 
 where $theta$ is the angular displacement, $omega = dot(theta)$ the angular velocity, and $alpha = dot(omega)$ the angular acceleration.
 
-#table(
-  columns: 2,
-  inset: 6pt,
-  align: left,
-  [*Translational quantity*], [*Rotational analogue*],
-  [$bold(r)$], [$theta$],
-  [$bold(v) = dot(bold(r))$], [$omega = dot(theta)$],
-  [$bold(a)$], [$alpha = dot(omega)$],
-  [$bold(F)$], [$tau$],
-  [$m$], [$I$],
-  [$bold(p) = m bold(v)$], [$J = I omega$],
-  [$bold(k) = frac(1,2) m |bold(v)|^2$], [$K = frac(1,2) I omega^2$],
+#tex-table(
+  ([*Translational quantity*], [*Rotational analogue*]),
+  ([$bold(r)$], [$theta$]),
+  ([$bold(v) = dot(bold(r))$], [$omega = dot(theta)$]),
+  ([$bold(a)$], [$alpha = dot(omega)$]),
+  ([$bold(F)$], [$tau$]),
+  ([$m$], [$I$]),
+  ([$bold(p) = m bold(v)$], [$J = I omega$]),
+  ([$bold(k) = frac(1,2) m |bold(v)|^2$], [$K = frac(1,2) I omega^2$]),
 )
 
 #proposition(name: "Translational-Rotational Correspondence")[
@@ -1120,4 +1236,3 @@ These conservation laws will be used repeatedly in the applications chapter.
 //   Section 15.3: Noether's Theorem for Fields (场的诺特定理)
 //   Section 15.4: Stress-Energy Tensor (应力-能量张量)
 //   Section 15.5: Examples: Scalar and Electromagnetic Fields (示例：标量场与电磁场)
-
