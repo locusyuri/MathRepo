@@ -35,10 +35,10 @@
 == Kinematic Attributes of Point Particles // 质点的运动学属性
 
 Kinematics describes motion without asking what causes it.
-For a pointparticle, the basic data are position, velocity, and acceleration as functions of time.
+For a point particle, the basic data are position, velocity, and acceleration as functions of time.
 
-#definition(name: "PointParticle and Trajectory")[
-  A pointparticle is modeled by its position vector
+#definition(name: "Point Particle and Trajectory")[
+  A point particle is modeled by its position vector
 
   $
     bold(r) = bold(r)(t) in bb(R)^3.
@@ -195,7 +195,7 @@ So acceleration is invariant under Galilean transformation, which prepares the g
 
 === Kinematics of Particle Systems // 质点系的运动学
 
-Real mechanical systems rarely consist of a single pointparticle. Multiple particles introduce new kinematic concepts — the centre of mass, relative coordinates, and degrees of freedom — that are essential for the later analysis of rigid bodies, celestial systems, and continua.
+Real mechanical systems rarely consist of a single point particle. Multiple particles introduce new kinematic concepts — the centre of mass, relative coordinates, and degrees of freedom — that are essential for the later analysis of rigid bodies, celestial systems, and continua.
 
 #definition(name: "Centre of Mass")[
   For a system of $N$ particles with masses $m_a$ and positions $bold(r)_a$, the *centre of mass* (CM) is:
@@ -1285,9 +1285,9 @@ This completes the Classical Mechanics Foundations part. The next part (Mathemat
 // =========================================================================
 #part("Mathematical Foundations") // 数学基础
 
-// Chapter 1: Variational Calculus (数学准备：变分法)
-//   Section 1.1: Functionals and Variations (泛函与变分)
-//   Section 1.2: Derivation of Euler-Lagrange Equations (欧拉-拉格朗日方程的推导)
+// Chapter 1: Variational Calculus (变分法)
+//   Section 1.1: Variational Method and First Variation (变分法与第一变分)
+//   Section 1.2: Euler-Lagrange Equations (欧拉-拉格朗日方程)
 //   Section 1.3: Variational Problems with Constraints (带约束的变分问题)
 = Variational Calculus  // 变分法
 
@@ -1393,7 +1393,7 @@ It turns a global variational statement into equations of motion.
   $
 ]
 
-=== Derivation from First Variation
+=== Derivation from First Variation // 从第一变分推导
 
 Starting from
 
@@ -1410,7 +1410,7 @@ $
 Because endpoint-fixed variations satisfy $eta(a)=eta(b)=0$, the boundary term vanishes.
 By the fundamental lemma of variational calculus, the integrand must be zero, yielding the Euler-Lagrange equation.
 
-=== Multi-Coordinate Form
+=== Multi-Coordinate Form // 多坐标形式
 
 #theorem(name: "Euler-Lagrange System")[
   For generalized coordinates $q_1, dots, q_n$ and
@@ -1426,7 +1426,7 @@ By the fundamental lemma of variational calculus, the integrand must be zero, yi
   $
 ]
 
-=== Natural Boundary Conditions (Free Endpoints)
+=== Natural Boundary Conditions (Free Endpoints) // 自然边界条件（自由端点）
 
 #note[
   If an endpointis free, the boundary term does not automatically vanish.
@@ -1434,7 +1434,7 @@ By the fundamental lemma of variational calculus, the integrand must be zero, yi
   $frac(partial L, partial dot(q)) = 0$ at that free endpoint(or its constrained variant).
 ]
 
-=== First Integrals and Cyclic Coordinates
+=== First Integrals and Cyclic Coordinates // 第一积分与循环坐标
 
 #proposition(name: "Cyclic Coordinate")[
   If $frac(partial L, partial q_k) = 0$, then
@@ -1460,7 +1460,7 @@ By the fundamental lemma of variational calculus, the integrand must be zero, yi
   is constant along solutions.
 ]
 
-=== Example: Particle in a Potential
+=== Example: Particle in a Potential Field // 例子：势场中的粒子
 
 #example[
   Let
@@ -1488,6 +1488,12 @@ By the fundamental lemma of variational calculus, the integrand must be zero, yi
 ]
 
 This section provides the variational core used in the next chapters on Lagrange's equations, constraints, and Hamiltonian reformulation.
+
+
+== Variational Problems with Constraints // 带约束的变分问题
+
+
+
 // Chapter 2: Description of Mechanical Systems (力学系统的完整描述)
 //   Section 2.1: Degrees of Freedom and Generalized Coordinates (自由度与广义坐标)
 //   Section 2.2: Classification of Constraints (约束的分类)
@@ -1497,7 +1503,7 @@ This section provides the variational core used in the next chapters on Lagrange
 
 Before we can apply Hamilton's principle, we must describe the system we are studying. This chapter introduces the concepts that bridge the physical system to its mathematical representation: generalized coordinates, constraints, virtual displacements, and D'Alembert's principle.
 
-=== Degrees of Freedom and Generalized Coordinates // 自由度与广义坐标
+== Degrees of Freedom and Generalized Coordinates // 自由度与广义坐标
 
 The first step in any Lagrangian analysis is to choose a set of independent coordinates that fully describe the configuration of the system.
 
@@ -1510,7 +1516,7 @@ The first step in any Lagrangian analysis is to choose a set of independent coor
 
 The generalised coordinates need not be Cartesian — they can be angles, distances, or any other convenient parameters. The choice of coordinates is the most important skill in Lagrangian mechanics.
 
-=== Classification of Constraints // 约束的分类
+== Classification of Constraints // 约束的分类
 
 #definition(name: "Holonomic and Nonholonomic Constraints")[
   A constraint is *holonomic* if it can be written as an equation relating coordinates (and possibly time):
@@ -1525,7 +1531,7 @@ The generalised coordinates need not be Cartesian — they can be angles, distan
 Examples of holonomic constraints: a bead on a wire ($f = 0$ fixes the position to a curve), a rigid body ($|r_i - r_j| = text("const")$ for all pairs).
 Examples of nonholonomic constraints: a rolling wheel without slipping (velocity-dependent), a particle confined to a region ($x > 0$).
 
-=== Real Displacements and Virtual Displacements // 实位移与虚位移
+== Real Displacements and Virtual Displacements // 实位移与虚位移
 
 #definition(name: "Virtual Displacement")[
   A *virtual displacement* $delta q_i$ is an infinitesimal change in the coordinates that is *consistent with the constraints at a fixed instant of time* — it does not violate the constraints and does not involve time evolution.
@@ -1535,7 +1541,7 @@ Examples of nonholonomic constraints: a rolling wheel without slipping (velocity
 
 The key difference: a virtual displacement is a *comparison* between two neighbouring paths at the same instant, while a real displacement is the actual motion along a single path over time.
 
-=== D'Alembert's Principle and Virtual Work // 达朗贝尔原理与虚功原理
+== D'Alembert's Principle and Virtual Work // 达朗贝尔原理与虚功原理
 
 #definition(name: "Virtual Work")[
   The *virtual work* done by a force $bold(F)_a$ acting on particle $a$ under a virtual displacement $delta bold(r)_a$ is:
