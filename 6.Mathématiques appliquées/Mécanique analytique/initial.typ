@@ -1285,7 +1285,7 @@ This completes the Classical Mechanics Foundations part. The next part (Mathemat
 // =========================================================================
 #part("Mathematical Foundations") // 数学基础
 
-// Chapter 1: Mathematical Preparation: Variational Calculus (数学准备：变分法)
+// Chapter 1: Variational Calculus (数学准备：变分法)
 //   Section 1.1: Functionals and Variations (泛函与变分)
 //   Section 1.2: Derivation of Euler-Lagrange Equations (欧拉-拉格朗日方程的推导)
 //   Section 1.3: Variational Problems with Constraints (带约束的变分问题)
@@ -1544,18 +1544,13 @@ This section provides the variational core used in the next chapters on Lagrange
 //   Section 3.1: Definition of Action Functional (作用量泛函的定义)
 //   Section 3.2: Axiomatic Statement (公理陈述)
 //   Section 3.3: Additivity and Gauge Invariance of Lagrangian (拉格朗日量的可加性与不唯一性)
-
+= Axiom: Hamilton's Principle // 公理：哈密顿原理
 
 // =========================================================================
 // --- Part II: Lagrangian Mechanics (拉格朗日力学) ---
 // =========================================================================
 // Theme: Retrospective derivation showing how Lagrangian methods recover classical results
 #part("Lagrangian Mechanics") // 拉格朗日力学
-
-= Lagrange's Equations // 拉格朗日方程
-
-In this chapter, the variational principle from the previous section is converted into differential equations for motion.
-The key idea is that the actual trajectory is a stationary curve of the action, and the equations of motion are the corresponding Euler-Lagrange equations in generalized coordinates.
 
 // Chapter 4: Lagrange's Equations (拉格朗日方程)
 //   Section 4.1: Lagrangian Function (拉格朗日函数) [← Based on Part 0 Ch. 3.5: Potential Energy]
@@ -1564,6 +1559,11 @@ The key idea is that the actual trajectory is a stationary curve of the action, 
 //   Section 4.4: Generalized Forces (广义力)
 //   Section 4.5: Lagrange's Equations with Constraints (带约束的拉格朗日方程) [← Generalizes Part 0 Ch. 2.2]
 //   Section 4.6: Lagrange Multipliers in Mechanics (力学中的拉格朗日乘子)
+= Lagrange's Equations // 拉格朗日方程
+
+In this chapter, the variational principle from the previous section is converted into differential equations for motion.
+The key idea is that the actual trajectory is a stationary curve of the action, and the equations of motion are the corresponding Euler-Lagrange equations in generalized coordinates.
+
 == Lagrangian Function // 拉格朗日函数
 
 The starting pointof analytical mechanics is the *Lagrangian function*.
@@ -1774,7 +1774,6 @@ which is exactly Newton's law in one dimension.
 //   Section 5.4: Momentum Conservation and Translational Symmetry (动量守恒与平移对称性) [← Retrospective to Part 0 Ch. 3.1]
 //   Section 5.5: Angular Momentum Conservation and Rotational Symmetry (角动量守恒与旋转对称性) [← Retrospective to Part 0 Ch. 3.2]
 
-
 = Conservation Laws in Lagrangian Mechanics // 拉格朗日力学中的守恒律
 
 Conservation laws are the symmetry side of the Lagrangian formalism.
@@ -1971,43 +1970,12 @@ These conservation laws will be used repeatedly in the applications chapter.
 //   Section 6.3: Small Oscillations (小振动) [← Generalizes Part 0 Ch. 4]
 //   Section 6.4: Normal Modes and Eigenfrequencies (简正模与本征频率)
 //   Section 6.5: Coupled Oscillators (耦合振子)
-
-
-#part("Hamiltonian Mechanics") // 哈密顿力学
-
-#part("Advanced Topics") // 进阶主题
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+= Applications of Lagrangian Mechanics // 拉格朗日力学的应用
 
 // =========================================================================
 // --- Part III: Hamiltonian Mechanics (哈密顿力学) ---
 // =========================================================================
+#part("Hamiltonian Mechanics") // 哈密顿力学
 
 // Chapter 7: Hamilton's Equations (哈密顿方程)
 //   Section 7.1: Legendre Transformation (勒让德变换)
@@ -2034,6 +2002,7 @@ These conservation laws will be used repeatedly in the applications chapter.
 // =========================================================================
 // --- Part IV: Advanced Topics (进阶主题) ---
 // =========================================================================
+#part("Advanced Topics") // 进阶主题
 
 // Chapter 10: Liouville's Theorem and Statistical Mechanics (刘维尔定理与统计力学)
 //   Section 10.1: Liouville's Theorem (刘维尔定理)
@@ -2060,9 +2029,12 @@ These conservation laws will be used repeatedly in the applications chapter.
 //   Section 13.4: Bifurcations (分岔)
 //   Section 13.5: Routes to Chaos (通向混沌的道路)
 
+
+
 // =========================================================================
 // --- Part V: Relativistic and Field Extensions (相对论与场的推广) ---
 // =========================================================================
+#part("Relativistic and Field Extensions") // 相对论与场的推广
 
 // Chapter 14: Relativistic Mechanics (相对论力学)
 //   Section 14.1: Relativistic Lagrangian (相对论拉格朗日量)
