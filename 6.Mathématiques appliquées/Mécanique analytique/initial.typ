@@ -24,9 +24,13 @@
 
 #make-outline(depth: 2, title: "Contents")
 
-
+// --- Part 0: Classical Mechanics Foundations (经典力学基础) ---
 #part("Classical Mechanics Foundations") // 经典力学基础
 
+// Chapter 1: Kinematics of Particles and Particle Systems (质点与质点系)
+//   Section 1.1: Kinematic Attributes of PointParticles (质点的运动学属性)
+//   Section 1.2: Rigid Body Kinematics: Translation and Rotation (刚体平动与转动)
+//   Section 1.3: Correspondence between Linear and Angular Quantities (线量与角量的对应)
 = Kinematics of Particles and Particle Systems // 质点与质点系
 == Kinematic Attributes of PointParticles // 质点的运动学属性
 
@@ -398,6 +402,9 @@ which is formally identical to the translational expression $frac(1,2) m |bold(v
   The next chapter will turn Newton's second law and the fixed-axis rotation law into the dynamical counterpart of the kinematic dictionary above.
 ]
 
+// Chapter 2: Newton's Laws and Rigid Body Rotational Dynamics (牛顿运动定律与刚体转动定律)
+//   Section 2.1: Newton's Three Laws (牛顿三大定律)
+//   Section 2.2: Rigid Body Rotation about a Fixed Axis (刚体定轴转动定律)
 = Newton's Laws and Rigid Body Rotational Dynamics // 牛顿运动定律与刚体转动定律
 
 Chapter 1 established the *kinematic* language of motion: position, velocity, acceleration, and their angular counterparts. This chapter supplies the *dynamics* — the laws that relate motion to its causes. We first review Newton's three laws in their familiar translational form, then develop the parallel rotational laws for rigid bodies. The structural analogy between translation and rotation, already visible in the kinematics of §1.3, becomes deeper here: force ↔ torque, mass ↔ moment of inertia, and linear acceleration ↔ angular acceleration.
@@ -622,6 +629,12 @@ For a rigid body rotating about a fixed axis, only the component of torque paral
   The next chapter (Momentum, Angular Momentum, and Energy) will expand this dictionary to include momentum, impulse, work, and energy, and will prove the structural *isomorphism* between the two sets of laws.
 ]
 
+// Chapter 3: Momentum, Angular Momentum, and Energy (动量、角动量与功能原理)
+//   Section 3.1: Linear Momentum and Impulse (线动量与冲量)
+//   Section 3.2: Angular Momentum and Torque (角动量与力矩)
+//   Section 3.3: Work-Energy Theorem and Energy Conservation (功能定理与能量守恒)
+//   Section 3.4: Isomorphism between Translational and Rotational Structures (平动与转动的同构性)
+//   Section 3.5: Potential Energy and Force Fields (势能与力场)
 = Momentum, Angular Momentum, and Energy // 动量、角动量与功能原理
 
 Chapter 2 established the dynamical laws for translation ($sum bold(F) = m bold(a)$) and rotation ($sum tau = I alpha$). This chapter develops the *integral* forms of these laws — momentum, impulse, angular momentum, work, and energy — which are often more powerful for solving problems than direct integration of the equations of motion. The crowning result is the *structural isomorphism* between translational and rotational mechanics: the two sets of laws are formally identical, differing only in the physical interpretation of the variables.
@@ -941,6 +954,10 @@ Central forces conserve angular momentum (since $bold(tau) = bold(r) times bold(
   This chapter has established the three pillars of conservation — momentum, angular momentum, and energy — each linked to a fundamental symmetry of space and time. These conservation laws are not just convenient shortcuts; they are deeper than the equations of motion themselves. In Part II, Noether's theorem will reveal the direct connection: every continuous symmetry of the action implies a conserved quantity.
 ]
 
+// Chapter 4: Oscillations and Waves (振动与波动)
+//   Section 4.1: Simple Harmonic Motion (简谐运动)
+//   Section 4.2: Damped and Driven Oscillations (阻尼与受驱振动)
+//   Section 4.3: Wave Propagation (波动传播)
 = Oscillations and Waves // 振动与波动
 
 Oscillatory motion is ubiquitous in physics — from a swinging pendulum to vibrating molecules and electromagnetic waves. This chapter develops the fundamental concepts of simple harmonic motion, damped and driven oscillations, and wave propagation. These ideas will be revisited in Part II, where Lagrangian methods provide a systematic approach to small oscillations and normal modes.
@@ -1120,6 +1137,10 @@ The points where $cos(k x) = 0$ (nodes) are stationary; the points where $|cos(k
   - The wave equation generalises to two and three dimensions in fluid mechanics and electromagnetism. The same mathematics — separation of variables, boundary conditions, eigenfrequencies — reappears in quantum mechanics and electrodynamics.
 ]
 
+// Chapter 5: Celestial Mechanics Foundations (天体力学基础)
+//   Section 5.1: Kepler's Laws (开普勒定律)
+//   Section 5.2: Orbit Classification (轨道分类)
+//   Section 5.3: Two-Body Problem and Reduced Mass (二体问题与约化质量)
 = Celestial Mechanics Foundations // 天体力学基础
 
 Celestial mechanics studies the motion of astronomical bodies under gravitational forces. This brief chapter establishes the essential results — Kepler's laws, orbit classification, and the two-body reduction — that will be revisited in Part II from the Lagrangian perspective.
@@ -1190,6 +1211,10 @@ The gravitational two-body problem — two masses $m_1$ and $m_2$ interacting vi
   The two-body reduction is the foundation of celestial mechanics. In Part II (Lagrangian mechanics), we will derive the same result from a Lagrangian with translational symmetry, and the conserved quantities (energy, angular momentum) will emerge directly from Noether's theorem.
 ]
 
+// Chapter 6: Fluid Mechanics Foundations (流体力学基础)
+//   Section 6.1: Continuum Hypothesis and Density Fields (连续体假设与密度场)
+//   Section 6.2: Euler's Equations of Motion (欧拉运动方程)
+//   Section 6.3: Bernoulli's Equation (伯努利方程)
 = Fluid Mechanics Foundations // 流体力学基础
 
 Fluid mechanics describes the motion of continuous deformable media — liquids and gases. This chapter provides the minimal foundation needed to appreciate the parallels between particle mechanics and continuum mechanics in later parts of the notes.
@@ -1255,6 +1280,15 @@ For steady, incompressible ($rho = "const"$), inviscid flow along a streamline, 
 
 This completes the Classical Mechanics Foundations part. The next part (Mathematical Foundations) introduces the variational calculus that underpins analytical mechanics. All the concepts developed here — conservation laws, oscillations, central forces, and continuum mechanics — will be revisited and deepened through the Lagrangian and Hamiltonian formalisms.
 
+// =========================================================================
+// --- Part I: Mathematical Foundations (数学基础) ---
+// =========================================================================
+#part("Mathematical Foundations") // 数学基础
+
+// Chapter 1: Mathematical Preparation: Variational Calculus (数学准备：变分法)
+//   Section 1.1: Functionals and Variations (泛函与变分)
+//   Section 1.2: Derivation of Euler-Lagrange Equations (欧拉-拉格朗日方程的推导)
+//   Section 1.3: Variational Problems with Constraints (带约束的变分问题)
 = Variational Calculus  // 变分法
 == Hamilton's Principle // 哈密顿原理
 
@@ -1498,9 +1532,24 @@ By the fundamental lemma of variational calculus, the integrand must be zero, yi
 ]
 
 This section provides the variational core used in the next chapters on Lagrange's equations, constraints, and Hamiltonian reformulation.
-
+// Chapter 2: Description of Mechanical Systems (力学系统的完整描述)
+//   Section 2.1: Degrees of Freedom and Generalized Coordinates (自由度与广义坐标)
+//   Section 2.2: Classification of Constraints (约束的分类)
+//   Section 2.3: Real Displacements and Virtual Displacements (实位移与虚位移)
+//   Section 2.4: D'Alembert's Principle and Virtual Work (达朗贝尔原理与虚功原理) [← Retrospective to Part 0 Ch. 2]
 = Generalized Coordinates and Constraints // 广义坐标与约束
 
+
+// Chapter 3: Axiom: Hamilton's Principle (公理：哈密顿原理 - 最小作用量原理)
+//   Section 3.1: Definition of Action Functional (作用量泛函的定义)
+//   Section 3.2: Axiomatic Statement (公理陈述)
+//   Section 3.3: Additivity and Gauge Invariance of Lagrangian (拉格朗日量的可加性与不唯一性)
+
+
+// =========================================================================
+// --- Part II: Lagrangian Mechanics (拉格朗日力学) ---
+// =========================================================================
+// Theme: Retrospective derivation showing how Lagrangian methods recover classical results
 #part("Lagrangian Mechanics") // 拉格朗日力学
 
 = Lagrange's Equations // 拉格朗日方程
@@ -1508,6 +1557,13 @@ This section provides the variational core used in the next chapters on Lagrange
 In this chapter, the variational principle from the previous section is converted into differential equations for motion.
 The key idea is that the actual trajectory is a stationary curve of the action, and the equations of motion are the corresponding Euler-Lagrange equations in generalized coordinates.
 
+// Chapter 4: Lagrange's Equations (拉格朗日方程)
+//   Section 4.1: Lagrangian Function (拉格朗日函数) [← Based on Part 0 Ch. 3.5: Potential Energy]
+//   Section 4.2: Derivation from Hamilton's Principle (从哈密顿原理推导)
+//   Section 4.3: Lagrange's Equations of the Second Kind (第二类拉格朗日方程) [← Recovers Part 0 Ch. 2.1]
+//   Section 4.4: Generalized Forces (广义力)
+//   Section 4.5: Lagrange's Equations with Constraints (带约束的拉格朗日方程) [← Generalizes Part 0 Ch. 2.2]
+//   Section 4.6: Lagrange Multipliers in Mechanics (力学中的拉格朗日乘子)
 == Lagrangian Function // 拉格朗日函数
 
 The starting pointof analytical mechanics is the *Lagrangian function*.
@@ -1597,8 +1653,7 @@ $
 
 Since the variations $eta_i$ are arbitrary in the interior of the interval, the fundamental lemma implies that each coefficient must vanish.
 
-== Lagrange's Equations of the Second Kind // 第二类拉格朗日方程
-=== Generalized Forces // 广义力
+== Lagrange's Equations of the Second Kind // 第二类拉格朗日方程=== Generalized Forces // 广义力
 
 #theorem(name: "Lagrange's Equations")[
 In the presence of non-potential external forces, the Lagrangian description is augmented by *generalized forces*.
@@ -1711,6 +1766,14 @@ $
 $
 
 which is exactly Newton's law in one dimension.
+
+// Chapter 5: Conservation Laws in Lagrangian Mechanics (拉格朗日力学中的守恒律)
+//   Section 5.1: Cyclic Coordinates and Generalized Momenta (循环坐标与广义动量)
+//   Section 5.2: Energy Conservation (能量守恒) [← Time symmetry → Retrospective to Part 0 Ch. 3.3]
+//   Section 5.3: Noether's Theorem (诺特定理)
+//   Section 5.4: Momentum Conservation and Translational Symmetry (动量守恒与平移对称性) [← Retrospective to Part 0 Ch. 3.1]
+//   Section 5.5: Angular Momentum Conservation and Rotational Symmetry (角动量守恒与旋转对称性) [← Retrospective to Part 0 Ch. 3.2]
+
 
 = Conservation Laws in Lagrangian Mechanics // 拉格朗日力学中的守恒律
 
@@ -1902,96 +1965,45 @@ This chapter shows how symmetries of the Lagrangian produce conserved quantities
 
 These conservation laws will be used repeatedly in the applications chapter.
 
-#part("Hamiltonian Mechanics") // 哈密顿力学
-
-#part("Advanced Topics") // 进阶主题
-
-
-// 目录
-
-/// =========================================================================
-// COURSE STRUCTURE (课程结构) - Revised with Classical Mechanics Foundation
-// =========================================================================
-
-// --- Part 0: Classical Mechanics Foundations (经典力学基础) ---
-
-// Chapter 1: Kinematics of Particles and Particle Systems (质点与质点系)
-//   Section 1.1: Kinematic Attributes of PointParticles (质点的运动学属性)
-//   Section 1.2: Rigid Body Kinematics: Translation and Rotation (刚体平动与转动)
-//   Section 1.3: Correspondence between Linear and Angular Quantities (线量与角量的对应)
-
-// Chapter 2: Newton's Laws and Rigid Body Rotational Dynamics (牛顿运动定律与刚体转动定律)
-//   Section 2.1: Newton's Three Laws (牛顿三大定律)
-//   Section 2.2: Rigid Body Rotation about a Fixed Axis (刚体定轴转动定律)
-
-// Chapter 3: Momentum, Angular Momentum, and Energy (动量、角动量与功能原理)
-//   Section 3.1: Linear Momentum and Impulse (线动量与冲量)
-//   Section 3.2: Angular Momentum and Torque (角动量与力矩)
-//   Section 3.3: Work-Energy Theorem and Energy Conservation (功能定理与能量守恒)
-//   Section 3.4: Isomorphism between Translational and Rotational Structures (平动与转动的同构性)
-//   Section 3.5: Potential Energy and Force Fields (势能与力场)
-
-// Chapter 4: Oscillations and Waves (振动与波动)
-//   Section 4.1: Simple Harmonic Motion (简谐运动)
-//   Section 4.2: Damped and Driven Oscillations (阻尼与受驱振动)
-//   Section 4.3: Wave Propagation (波动传播)
-
-// Chapter 5: Celestial Mechanics Foundations (天体力学基础)
-//   Section 5.1: Kepler's Laws (开普勒定律)
-//   Section 5.2: Orbit Classification (轨道分类)
-//   Section 5.3: Two-Body Problem and Reduced Mass (二体问题与约化质量)
-
-// Chapter 6: Fluid Mechanics Foundations (流体力学基础)
-//   Section 6.1: Continuum Hypothesis and Density Fields (连续体假设与密度场)
-//   Section 6.2: Euler's Equations of Motion (欧拉运动方程)
-//   Section 6.3: Bernoulli's Equation (伯努利方程)
-
-// =========================================================================
-// --- Part I: Mathematical Foundations (数学基础) ---
-// =========================================================================
-
-// Chapter 1: Mathematical Preparation: Variational Calculus (数学准备：变分法)
-//   Section 1.1: Functionals and Variations (泛函与变分)
-//   Section 1.2: Derivation of Euler-Lagrange Equations (欧拉-拉格朗日方程的推导)
-//   Section 1.3: Variational Problems with Constraints (带约束的变分问题)
-
-// Chapter 2: Description of Mechanical Systems (力学系统的完整描述)
-//   Section 2.1: Degrees of Freedom and Generalized Coordinates (自由度与广义坐标)
-//   Section 2.2: Classification of Constraints (约束的分类)
-//   Section 2.3: Real Displacements and Virtual Displacements (实位移与虚位移)
-//   Section 2.4: D'Alembert's Principle and Virtual Work (达朗贝尔原理与虚功原理) [← Retrospective to Part 0 Ch. 2]
-
-// Chapter 3: Axiom: Hamilton's Principle (公理：哈密顿原理 - 最小作用量原理)
-//   Section 3.1: Definition of Action Functional (作用量泛函的定义)
-//   Section 3.2: Axiomatic Statement (公理陈述)
-//   Section 3.3: Additivity and Gauge Invariance of Lagrangian (拉格朗日量的可加性与不唯一性)
-
-// =========================================================================
-// --- Part II: Lagrangian Mechanics (拉格朗日力学) ---
-// =========================================================================
-// Theme: Retrospective derivation showing how Lagrangian methods recover classical results
-
-// Chapter 4: Lagrange's Equations (拉格朗日方程)
-//   Section 4.1: Lagrangian Function (拉格朗日函数) [← Based on Part 0 Ch. 3.5: Potential Energy]
-//   Section 4.2: Derivation from Hamilton's Principle (从哈密顿原理推导)
-//   Section 4.3: Lagrange's Equations of the Second Kind (第二类拉格朗日方程) [← Recovers Part 0 Ch. 2.1]
-//   Section 4.4: Generalized Forces (广义力)
-//   Section 4.5: Lagrange's Equations with Constraints (带约束的拉格朗日方程) [← Generalizes Part 0 Ch. 2.2]
-//   Section 4.6: Lagrange Multipliers in Mechanics (力学中的拉格朗日乘子)
-
-// Chapter 5: Conservation Laws in Lagrangian Mechanics (拉格朗日力学中的守恒律)
-//   Section 5.1: Cyclic Coordinates and Generalized Momenta (循环坐标与广义动量)
-//   Section 5.2: Energy Conservation (能量守恒) [← Time symmetry → Retrospective to Part 0 Ch. 3.3]
-//   Section 5.3: Noether's Theorem (诺特定理)
-//   Section 5.4: Momentum Conservation and Translational Symmetry (动量守恒与平移对称性) [← Retrospective to Part 0 Ch. 3.1]
-//   Section 5.5: Angular Momentum Conservation and Rotational Symmetry (角动量守恒与旋转对称性) [← Retrospective to Part 0 Ch. 3.2]
-
 // Chapter 6: Applications of Lagrangian Mechanics (拉格朗日力学的应用)
 //   Section 6.1: Rigid Body Dynamics (刚体动力学) [← Recovers Part 0 Ch. 2.2 via Lagrangian]
 //   Section 6.2: Central Force Motion (中心力运动) [← Connects to Part 0 Ch. 5]
 //   Section 6.3: Small Oscillations (小振动) [← Generalizes Part 0 Ch. 4]
 //   Section 6.4: Normal Modes and Eigenfrequencies (简正模与本征频率)
 //   Section 6.5: Coupled Oscillators (耦合振子)
+
+
+#part("Hamiltonian Mechanics") // 哈密顿力学
+
+#part("Advanced Topics") // 进阶主题
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // =========================================================================
 // --- Part III: Hamiltonian Mechanics (哈密顿力学) ---
