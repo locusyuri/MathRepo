@@ -1042,6 +1042,13 @@ The characteristic equation $r^2 + 2 beta r + omega_0^2 = 0$ has roots $r = - be
   - *Overdamped* ($beta > omega_0$): $x(t) = A e^(-r_1 t) + B e^(-r_2 t)$, with $r_1, r_2 > 0$. The system returns slowly without oscillating.
 ]
 
+#figure(
+  image("img/damped_oscillation.png", width: 100%),
+  caption: [Damped oscillation: underdamped (blue), critically damped (green), and overdamped (orange).],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:damped_oscillation>
+
 === Driven Oscillator and Resonance // 受驱振子与共振
 
 When an external driving force $F(t) = F_0 cos(omega t)$ is applied:
@@ -1068,6 +1075,13 @@ $
   $
   The width of the resonance curve (full width at half maximum) is $Delta omega approx 2 beta$, giving a quality factor $Q = omega_0 / (2 beta)$.
 ]
+
+#figure(
+  image("img/resonance_curves.png", width: 100%),
+  caption: [Resonance curves for different damping ratios $beta / omega_0$. Sharp peaks correspond to weak damping; broad curves correspond to strong damping.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:resonance_curves>
 
 #note[
   Resonance is a crucial phenomenon across physics: it explains why a small force at the right frequency can produce large oscillations (e.g., pushing a child on a swing, tuning a radio receiver, or the Tacoma Narrows Bridge collapse).
@@ -1124,6 +1138,13 @@ The points where $cos(k x) = 0$ (nodes) are stationary; the points where $|cos(k
 
   The fundamental frequency is $f_1 = omega_1 / (2 pi) = v / (2 L)$, and the higher harmonics are integer multiples: $f_n = n f_1$.
 ]
+
+#figure(
+  image("img/string_normal_modes.png", width: 100%),
+  caption: [Normal modes of a string fixed at both ends: $n = 1$ (fundamental), $n = 2$ (second harmonic), $n = 3$ (third harmonic). Nodes are marked in red.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:string_normal_modes>
 
 === Superposition Principle // 叠加原理
 
