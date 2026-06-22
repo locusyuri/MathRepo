@@ -1002,6 +1002,52 @@ $
   Total energy: $E = frac(1,2) k A^2 = frac(1,2) times 32 times 0.1^2 = 0.16 "J"$.
 ]
 
+=== Rotating Vector and Complex Representation // 旋转矢量法与复数表示
+
+The solution $x(t) = A cos(omega_0 t + phi)$ can be visualised as the projection of a rotating vector (phasor) of length $A$ rotating at angular speed $omega_0$.
+
+#definition(name: "Rotating Vector / Phasor")[
+  The SHM displacement is the real part of a complex exponential:
+  $
+    x(t) = Re(bold(A) e^(i omega_0 t)), quad bold(A) = A e^(i phi).
+  $
+  Here $bold(A)$ is the *complex amplitude* (phasor) encoding both amplitude $A$ and initial phase $phi$. The velocity and acceleration are:
+  $
+    dot(x) = Re(i omega_0 bold(A) e^(i omega_0 t)), quad
+    dot.double(x) = Re(- omega_0^2 bold(A) e^(i omega_0 t)).
+  $
+]
+
+#note[
+  The complex representation turns differentiation into multiplication by $i omega$, and superposition into complex addition. This is the foundation of phasor analysis in AC circuits and of Fourier methods in normal mode analysis (Part II, Ch6.4).
+]
+
+The rotating vector makes phase relationships geometrically obvious: velocity leads displacement by $pi/2$ (the tangent direction), and acceleration leads displacement by $pi$ (opposite direction).
+
+=== Superposition of SHM and Beats // 简谐运动的合成与拍频
+
+Because the wave equation is linear, the sum of two SHM solutions is also a solution. This leads to two important phenomena.
+
+#definition(name: "Superposition of Two SHMs (Same Frequency)")[
+  The sum of two SHMs with the same frequency $omega$ but different amplitudes $A_1, A_2$ and phases $phi_1, phi_2$ is another SHM at the same frequency:
+  $
+    x(t) = A_1 cos(omega t + phi_1) + A_2 cos(omega t + phi_2) = A cos(omega t + phi),
+  $
+  where $A = sqrt(A_1^2 + A_2^2 + 2 A_1 A_2 cos(Delta phi))$ and $tan phi = frac(A_1 sin phi_1 + A_2 sin phi_2, A_1 cos phi_1 + A_2 cos phi_2)$.
+]
+
+#definition(name: "Beats")[
+  When two SHMs have *slightly different* frequencies $omega_1$ and $omega_2 = omega_1 + Delta omega$:
+  $
+    x(t) = A cos(omega_1 t) + A cos(omega_2 t) = 2 A cos(frac(Delta omega, 2) t) cos(bar(omega) t),
+  $
+  where $bar(omega) = (omega_1 + omega_2) / 2$. The amplitude is modulated at the *beat frequency* $Delta omega = |omega_2 - omega_1|$.
+]
+
+#note[
+  Beats are the simplest example of *amplitude modulation*. In Part II, we will see that the normal mode splitting of coupled oscillators follows the same mathematics — two resonant frequencies produce a "beat-like" energy transfer between the two masses.
+]
+
 === The Simple Pendulum // 单摆
 
 The simple pendulum (mass $m$, length $L$) obeys $dot.double(theta) + (g / L) sin theta = 0$. For small angles, $sin theta approx theta$, giving SHM:
@@ -1087,35 +1133,174 @@ $
   Resonance is a crucial phenomenon across physics: it explains why a small force at the right frequency can produce large oscillations (e.g., pushing a child on a swing, tuning a radio receiver, or the Tacoma Narrows Bridge collapse).
 ]
 
+=== Power Absorption and Linewidth // 功率吸收与线宽
+
+The rate at which the driving force does work on the oscillator is $P(t) = F(t) dot(x)(t)$. The *average power* absorbed is:
+
+$
+  〈P(omega)〉 = frac(F_0^2, 2 m) frac(beta omega^2, (omega_0^2 - omega^2)^2 + (2 beta omega)^2).
+$
+
+#property(name: "Power Absorption Characteristics")[
+  - The peak absorbed power occurs at $omega = omega_0$ (not at $omega_"res"$): $P_"max" = F_0^2 / (4 m beta)$.
+  - The full width at half maximum (FWHM) of the power curve is $Delta omega = 2 beta$.
+  - The quality factor $Q = omega_0 / (2 beta) = omega_0 / Delta omega$ measures the sharpness of resonance.
+  - A high-$Q$ oscillator rings for many cycles after the driving force is removed; the number of oscillations for the amplitude to decay to $1/e$ is approximately $Q / pi$.
+]
+
+#note[
+  The $Q$ factor connects driven oscillations to free decay: $Q = pi$ times the number of oscillations for energy to decay to $1/e$. This same concept reappears in quantum mechanics (resonance width &lt;-&gt; particle lifetime) and in electrical engineering (bandwidth of RLC circuits).
+]
+
 == Wave Propagation // 波动传播
 
-=== The Wave Equation // 波动方程
+While oscillators describe the motion of individual particles, *waves* describe the propagation of disturbances through a continuous medium. The key conceptual shift is from a function of time alone $x(t)$ to a function of both space and time $u(x,t)$.
 
-While oscillators describe the motion of individual particles, *waves* describe the propagation of disturbances through a continuous medium. The simplest is the one-dimensional wave equation:
+=== The Wave Equation // 波动方程
 
 #definition(name: "One-Dimensional Wave Equation")[
   The displacement $u(x, t)$ of a wave travelling along the $x$-axis satisfies:
   $
-    frac(partial^2 u, partial t^2) = v^2 frac(partial^2 u, partial x^2),
+    frac(partial^2 u, partial t^2) = v^2 frac(partial^2 u, partial x^2).
   $
-  where $v$ is the wave speed. For a wave on a string of tension $T$ and linear density $mu$:
+  For a wave on a string of tension $T$ and linear density $mu$: $v = sqrt(T / mu)$.
+  For a sound wave in a fluid of bulk modulus $K$ and density $rho$: $v = sqrt(K / rho)$.
+]
+
+=== d'Alembert's Solution // 达朗贝尔解
+
+The wave equation admits a general solution in terms of travelling waves:
+
+$
+  u(x, t) = f(x - v t) + g(x + v t),
+$
+
+where $f$ and $g$ are arbitrary twice-differentiable functions. The function $f(x - v t)$ represents a wave travelling to the right at speed $v$ without changing shape; $g(x + v t)$ travels to the left. This is *d'Alembert's solution*, and it reveals that the wave equation is fundamentally a statement that the waveform propagates without distortion in a non-dispersive medium.
+
+=== Transverse and Longitudinal Waves // 横波与纵波
+
+Waves are classified by the direction of particle displacement relative to the propagation direction.
+
+#definition(name: "Transverse and Longitudinal Waves")[
+  - *Transverse wave*: particle displacement is *perpendicular* to the direction of wave propagation (e.g., waves on a string, electromagnetic waves). The restoring mechanism is *shear stress*.
+  - *Longitudinal wave*: particle displacement is *parallel* to the direction of wave propagation (e.g., sound waves in air, compression waves in a spring). The restoring mechanism is *bulk (compression) stress*.
+  - In solids, both types coexist, giving rise to distinct wave speeds:
+    $
+      v_"transverse" = sqrt(frac(G, rho)), quad
+      v_"longitudinal" = sqrt(frac(K + 4G/3, rho)),
+    $
+    where $G$ is the shear modulus and $K$ is the bulk modulus. Since $G < K$ typically, $v_"long" > v_"transe"$ — this is why seismic P-waves (longitudinal) arrive before S-waves (transverse).
+]
+
+=== Strain and Stress in Elastic Media // 弹性介质中的应变与应力
+
+To understand the restoring forces in a solid, we introduce the concepts of strain (deformation) and stress (internal force per area).
+
+#definition(name: "Three Types of Strain")[
+  - *Linear strain* (拉伸/压缩): $epsilon = Delta L / L$, the fractional change in length.
+  - *Shear strain* (切变): $gamma = Delta x / h = tan theta approx theta$, the angular distortion.
+  - *Bulk strain* (体变): $Delta V / V$, the fractional change in volume.
+]
+
+Each type of strain is related to a corresponding stress through an elastic modulus:
+
+$
+  text("Tensile stress"): sigma = E epsilon, quad
+  text("Shear stress"): tau = G gamma, quad
+  text("Pressure"): p = -K frac(Delta V, V).
+$
+
+Here $E$ is Young's modulus, $G$ the shear modulus, and $K$ the bulk modulus.
+
+=== Poisson's Ratio // 泊松比
+
+When a material is stretched in one direction, it contracts in the perpendicular directions. This coupling is quantified by *Poisson's ratio*:
+
+#definition(name: "Poisson's Ratio")[
   $
-    v = sqrt(frac(T, mu)).
+    nu = - frac(text("lateral strain"), text("axial strain")) = - frac(epsilon_"lat", epsilon_"ax").
   $
+  For most materials, $0 < nu < 0.5$. Rubber has $nu approx 0.5$ (incompressible), while cork has $nu approx 0$.
+
+  The three elastic moduli are related by: $E = 2 G (1 + nu) = 3 K (1 - 2 nu)$.
+]
+
+#note[
+  Poisson's ratio explains why a stretched rubber band becomes thinner, and why a cork (used in wine bottles) can be pushed in without expanding sideways — $nu approx 0$. The relation between moduli also shows that only two of $(E, G, K, nu)$ are independent.
+]
+
+=== Helmholtz Decomposition: P-waves and S-waves // 亥姆霍兹分解：P波与S波
+
+In a solid, any deformation can be decomposed into a *dilatational* (volume-changing) part and a *distortional* (volume-preserving) part — this is the *Helmholtz decomposition* of the displacement field $bold(u)$:
+
+$
+  bold(u) = nabla phi + nabla times bold(psi), quad nabla dot bold(psi) = 0.
+$
+
+#property(name: "P-waves and S-waves")[
+  - The *irrotational* part $nabla phi$ corresponds to *P-waves* (primary / pressure waves): longitudinal, curl-free ($nabla times bold(u) = 0$). These are the fastest seismic waves.
+  - The *solenoidal* part $nabla times bold(psi)$ corresponds to *S-waves* (secondary / shear waves): transverse, divergence-free ($nabla dot bold(u) = 0$). These cannot propagate through fluids (no shear resistance).
+  - The Helmholtz decomposition shows that P-waves and S-waves propagate *independently* in a homogeneous isotropic elastic medium — they do not mix or convert into each other except at boundaries.
 ]
 
 === Travelling Waves // 行波
 
-#definition(name: "Travelling Wave Solution")[
-  The wave equation admits travelling wave solutions of the form:
-  $
-    u(x, t) = f(x - v t) + g(x + v t),
-  $
-  where $f$ describes a wave travelling to the right and $g$ to the left. A *harmonic* travelling wave is:
+The simplest and most important special case of d'Alembert's solution is the *harmonic travelling wave*.
+
+#definition(name: "Harmonic Travelling Wave")[
   $
     u(x, t) = A cos(k x - omega t + phi),
   $
   where $k = 2 pi / lambda$ is the wavenumber, $lambda$ the wavelength, and $omega = v k$ the angular frequency.
+]
+
+A travelling wave has three defining features:
+
+#property(name: "Three Characteristics of Travelling Waves")[
+  1. *Morphology*: The entire waveform translates rigidly at speed $v$. A snapshot at time $t+Delta t$ is identical to the snapshot at $t$ shifted by $v Delta t$.
+  2. *Phase*: Each particle lags behind the particle to its left (for $+x$ propagation). The phase difference between two points separated by $Delta x$ is $Delta phi = k Delta x$.
+  3. *Energy*: Traveling waves carry energy unidirectionally — there is a net energy flux from source to receiver, unlike standing waves which store energy locally.
+]
+
+=== Three Types of Wave Solutions // 三类波解
+
+Depending on the geometry of the wave source, the solutions of the wave equation take different forms.
+
+#definition(name: "Plane, Spherical, and Cylindrical Waves")[
+  - *Plane wave*: wavefronts are infinite planes. $u = A cos(omega t - bold(k) dot bold(r) + phi)$. Energy does not spread — amplitude is constant.
+  - *Spherical wave* (point source): wavefronts are expanding spheres. $u(r, t) = frac(A, r) cos(omega t - k r + phi)$. Amplitude decays as $1/r$ to conserve energy (intensity $prop 1/r^2$).
+  - *Cylindrical wave* (line source): wavefronts are coaxial cylinders. $u(r, t) prop frac(1, sqrt(r)) cos(omega t - k r + phi)$. Amplitude decays as $1/sqrt(r)$.
+]
+
+=== Complex Representation of Waves // 波的复数表示
+
+Just as for SHM, harmonic waves are most conveniently written using complex exponentials:
+
+$
+  u(x, t) = Re(bold(U) e^(i(k x - omega t))), quad bold(U) = A e^(i phi).
+$
+
+The complex amplitude $bold(U)$ encodes both the real amplitude $A$ and the initial phase $phi$. This representation makes superposition, differentiation, and impedance calculations straightforward.
+
+=== Reflection and Impedance // 反射与阻抗
+
+When a wave encounters a boundary between two media, part of the energy is reflected and part is transmitted. The determining factor is the *characteristic impedance* of each medium.
+
+#definition(name: "Characteristic Impedance")[
+  For a wave on a string: $Z = mu v = sqrt(T mu)$ (ratio of transverse force to transverse velocity).
+  For a sound wave: $Z = rho v$ (ratio of acoustic pressure to particle velocity).
+]
+
+#theorem(name: "Reflection and Transmission at a Boundary")[
+  At a boundary between two media with impedances $Z_1$ and $Z_2$:
+  $
+    R = frac(Z_1 - Z_2, Z_1 + Z_2) quad (text("amplitude reflection coefficient")),
+    T = frac(2 Z_1, Z_1 + Z_2) quad (text("amplitude transmission coefficient")).
+  $
+  Special cases:
+  - Fixed end ($Z_2 -> infinity$): $R = -1$ (reflected wave inverted, total reflection).
+  - Free end ($Z_2 = 0$): $R = +1$ (reflected wave upright, total reflection).
+  - Impedance matching ($Z_1 = Z_2$): $R = 0$, $T = 1$ (no reflection, perfect transmission).
 ]
 
 === Standing Waves // 驻波
@@ -1141,7 +1326,7 @@ The points where $cos(k x) = 0$ (nodes) are stationary; the points where $|cos(k
 
 #figure(
   image("img/string_normal_modes.png", width: 100%),
-  caption: [Normal modes of a string fixed at both ends: $n = 1$ (fundamental), $n = 2$ (second harmonic), $n = 3$ (third harmonic). Nodes are marked in red.],
+  caption: [Normal modes of a string fixed at both ends: $n = 1$ (fundamental), $n = 2$ (second harmonic), $n = 3$ (third harmonic).],
   placement: auto,
   supplement: [Fig.]
 ) <fig:string_normal_modes>
@@ -1149,13 +1334,84 @@ The points where $cos(k x) = 0$ (nodes) are stationary; the points where $|cos(k
 === Superposition Principle // 叠加原理
 
 #property(name: "Superposition for Waves")[
-  The wave equation is *linear*: if $u_1$ and $u_2$ are solutions, then $u_1 + u_2$ is also a solution. This allows complex wave patterns to be built from simple harmonic components (Fourier analysis).
+  The wave equation is *linear*: if $u_1$ and $u_2$ are solutions, then $u_1 + u_2$ is also a solution. This allows complex wave patterns to be built from simple harmonic components.
 ]
+
+=== Energy and Intensity in Waves // 波的能量与强度
+
+A travelling wave carries both kinetic and potential energy. For a wave on a string:
+
+$
+  text("Kinetic energy density"): cal(K) = frac(1,2) mu (partial u / partial t)^2,
+  quad
+  text("Potential energy density"): cal(V) = frac(1,2) T (partial u / partial x)^2.
+$
+
+For a harmonic travelling wave $u = A cos(k x - omega t)$:
+
+$
+  cal(K) = cal(V) = frac(1,4) mu omega^2 A^2,
+  quad
+  text("Total energy density"): cal(E) = frac(1,2) mu omega^2 A^2.
+$
+
+#definition(name: "Wave Intensity")[
+  The *intensity* (average power per unit area) of a harmonic wave is:
+  $
+    I = frac(1,2) rho v omega^2 A^2 = frac(1,2) Z omega^2 A^2.
+  $
+  For a point source emitting power $P$, the intensity at distance $r$ is $I = P / (4 pi r^2)$, consistent with the $1/r$ amplitude decay of spherical waves.
+]
+
+#note[
+  The energy flux of a mechanical wave is the analogue of the Poynting vector in electromagnetism. In Part V, we will see that the same structure — energy density, energy flux, and conservation law — appears in the electromagnetic field.
+]
+
+=== Dispersion and Group Velocity // 色散与群速度
+
+For the ideal string, the wave speed $v = sqrt(T / mu)$ is independent of frequency — all frequency components travel at the same speed. In many real media, however, the wave speed depends on frequency; this is called *dispersion*.
+
+#definition(name: "Dispersion Relation and Wave Velocities")[
+  The *dispersion relation* $omega(k)$ links angular frequency and wavenumber:
+  - Non-dispersive: $omega = v k$ (constant $v$), e.g., ideal string.
+  - Dispersive: $omega(k)$ is nonlinear, e.g., deep water waves $omega = sqrt(g k)$, bending waves on a beam $omega prop k^2$.
+
+  Two velocities are defined:
+  $
+    v_p = frac(omega, k) quad text("(phase velocity — speed of a single crest)"),
+    v_g = frac(dif omega, dif k) quad text("(group velocity — speed of a wave packet / energy)").
+  $
+  In a non-dispersive medium, $v_p = v_g$. In a dispersive medium, $v_p != v_g$; a wave packet spreads as it propagates.
+]
+
+#example(name: "Deep Water Waves")[ // 深水波
+  For deep water waves, the dispersion relation is $omega = sqrt(g k)$. The phase velocity $v_p = omega / k = sqrt(g / k)$ increases with wavelength (longer waves travel faster). The group velocity $v_g = dif omega / dif k = frac(1,2) sqrt(g / k) = v_p / 2$ — energy travels at half the speed of the crests.
+]
+
+=== Fourier Analysis and Normal Modes // 傅里叶分析与简正模
+
+Any standing wave configuration on a string can be expressed as a sum of normal modes — this is the essence of *Fourier analysis*.
+
+#definition(name: "Fourier Series for Standing Waves")[
+  The general solution for a string fixed at both ends is a superposition of normal modes:
+  $
+    u(x, t) = sum_(n=1)^oo (a_n cos(omega_n t) + b_n sin(omega_n t)) sin(frac(n pi x, L)).
+  $
+  The coefficients $a_n, b_n$ are determined by the initial conditions $u(x, 0)$ and $dot(u)(x, 0)$ through the Fourier integrals:
+  $
+    a_n = frac(2, L) integral_0^L u(x, 0) sin(frac(n pi x, L)) dif x,
+    quad
+    b_n = frac(2, L omega_n) integral_0^L dot(u)(x, 0) sin(frac(n pi x, L)) dif x.
+  $
+]
+
+The normal modes are the *eigenfunctions* of the wave equation with given boundary conditions. This concept — expanding a general solution in eigenfunctions — is one of the most powerful ideas in mathematical physics, reappearing in quantum mechanics (particle in a box), electromagnetism (waveguide modes), and structural engineering (modal analysis).
 
 #note[
   *Connection to later topics:*
   - The normal modes of a string are the first example of a discrete eigenvalue problem. In Part II (Lagrangian mechanics, Ch6), we will generalise this to coupled oscillators and normal mode analysis using matrix methods.
-  - The wave equation generalises to two and three dimensions in fluid mechanics and electromagnetism. The same mathematics — separation of variables, boundary conditions, eigenfrequencies — reappears in quantum mechanics and electrodynamics.
+  - The Fourier series is the discrete precursor to the Fourier transform, which describes the continuous spectrum of a wave packet.
+  - In quantum mechanics, the same "expand in eigenfunctions" strategy solves the Schrödinger equation for bound states.
 ]
 
 // Chapter 5: Celestial Mechanics Foundations (天体力学基础)
