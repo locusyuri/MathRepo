@@ -180,22 +180,28 @@ The following statements are equivalent:
 = Electrostatic Field // 静电场
 == Coulomb's Law // 库仑定律
 
-The study of electrostatics originated from the ancient observation of amber attracting light objects when rubbed. In the 18th century, Charles-Augustin de Coulomb conducted a series of experiments using a torsion balance (扭秤) to measure the electrostatic force between charged spheres, leading to the formulation of the law that now bears his name.
+The study of electrostatics originated from the ancient observation of amber attracting light objects when rubbed. In the 18th century, Charles-Augustin de Coulomb conducted a series of experiments using a torsion balance to measure the electrostatic force between charged spheres, leading to the formulation of the law that now bears his name.
 
-// 电荷的基本性质：同号相斥、异号相吸
-Electric charges exhibit two fundamental properties:
-- Like charges repel each other; opposite charges attract each other.
-- Charge is quantized in units of the elementary charge $e = 1.602176634 times 10^(-19) "C"$.
-- The SI unit of electric charge is the *coulomb* (C).
+#property[
+Electric charges exhibit some fundamental properties:
++ Like charges repel each other, while opposite charges attract each other.
++ The *law of charge conservation* states that the total charge in an isolated system remains constant.
++ *Quantization* means that charge appears only in discrete multiples of the elementary charge $e approx 1.6021766208 times 10^(-19) "C"$, where $C$ is the coulomb, the SI unit of charge.
++ *Relativistic invariance* requires that the laws of electromagnetism maintain the same form in all inertial frames.
+]
+
+// 点电荷模型
+#h(2em) In idealized electrostatics, we often model charged objects as *point charges*, which are treated as having all their charge concentrated at a single point in space. This simplification allows us to apply Coulomb's law directly and serves as the foundation for more complex charge distributions.
+
 
 === Mathematical Formulation // 库仑定律的数学表述
 
 #definition(name: "Coulomb's Law")[
   The *Coulomb's law* states that the electrostatic force $bold(F)$ between two point charges $q_1$ and $q_2$ separated by a distance $r$ in vacuum is given by
   $
-    bold(F)_(12) = k frac(q_1 q_2, r^2) hat(r)_(12),
+    bold(F)_(12) = k frac(q_1 q_2, r^2) hat(bold(r))_(12),
   $
-  where $k$ is the Coulomb's constant, $hat(r)_(12)$ is the unit vector pointing from charge $q_2$ to $q_1$, and $bold(F)_(12)$ is the force exerted on $q_2$ by $q_1$.
+  where $k$ is the Coulomb's constant, $hat(bold(r))_(12)$ is the unit vector pointing from charge $q_2$ to $q_1$, and $bold(F)_(12)$ is the force exerted on $q_2$ by $q_1$.
 ]
 
 In SI units, the Coulomb's constant is given by
@@ -248,7 +254,7 @@ Coulomb's law holds profound significance in electrodynamics:
 
 === From Force to Field // 场的引入：从力到场
 
-The Coulomb's law describes electrostatic interaction in the language of *action at a distance* (超距作用). Faraday, however, introduced the concept of a *field* — the idea that a charge modifies the space around it, and this modified space exerts forces on other charges.
+The Coulomb's law describes electrostatic interaction in the language of *action at a distance*. Faraday, however, introduced the concept of a *field* — the idea that a charge modifies the space around it, and this modified space exerts forces on other charges.
 
 #definition(name: "Electric Field Intensity")[
   The *electric field intensity* $bold(E)$ at a point in space is defined as the force $bold(F)$ experienced by a positive test charge $q$ placed at that point, divided by the magnitude of the test charge:
@@ -260,7 +266,7 @@ The Coulomb's law describes electrostatic interaction in the language of *action
 
 The SI unit of the electric field is newtons per coulomb ($"N/C"$), equivalently volts per meter ($"V/m"$).
 
-=== Field of a Point Charge and Discrete Charge Systems // 点电荷与点电荷系的电场
+=== Continuous Charge Distributions // 连续分布电荷的电场
 
 From Coulomb's law, the electric field produced by a single point charge $q$ located at $bold(r)'$ is
 $
@@ -271,8 +277,6 @@ For a system of $N$ point charges, the total electric field at $bold(r)$ is the 
 $
   bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) sum_(i=1)^N frac(q_i, |bold(r) - bold(r)_i|^2) hat(bold(r) - bold(r)_i).
 $
-
-=== Continuous Charge Distributions // 连续分布电荷的电场
 
 For a continuous charge distribution, the summation over discrete charges is replaced by integration. The charge distribution can be described by three types of density:
 
@@ -302,7 +306,7 @@ The electric field is then given by:
 === Electric Field Lines // 电力线的概念
 
 #definition(name: "Electric Field Lines")[
-  *Electric field lines* (or lines of force) are curves drawn in space such that the tangent at every point is parallel to the direction of $bold(E)$ at that point. The density of lines in a region is proportional to the magnitude of the electric field.
+  *Electric field lines* (or lines of force) are curves drawn in space such that the tangent at every point is parallel to the direction of $bold(E)$ at that point.
 ]
 
 #property(name: "Properties of Electric Field Lines")[
@@ -332,7 +336,9 @@ The electric field is then given by:
   where $dif bold(S) = bold(n) dif S$ is the vector area element, with $bold(n)$ being the outward unit normal to the surface.
 ]
 
-Physically, the electric flux measures the "flow" of the electric field through a surface — it is proportional to the number of field lines passing through that surface. For a closed surface, positive flux indicates a net outflow of field lines (a source), while negative flux indicates a net inflow (a sink).
+#h(2em) Physically, the electric flux measures the "flow" of the electric field through a surface — it is proportional to the number of field lines passing through that surface. 
+
+For a closed surface, positive flux indicates a net outflow of field lines (a source), while negative flux indicates a net inflow (a sink).
 
 #example[
   Consider a uniform electric field $bold(E) = E_0 bold(e)_z$ passing through a flat surface of area $A$ oriented at an angle $theta$ with respect to the field. The flux through the surface is:
@@ -344,7 +350,7 @@ Physically, the electric flux measures the "flow" of the electric field through 
 
 === Gauss's Law // 高斯定律
 
-#theorem(name: "Gauss's Law — Integral Form")[
+#law(name: "Gauss's Law — Integral Form")[
   The total electric flux through any closed surface $S$ (also called a *Gaussian surface*) is proportional to the total charge enclosed within that surface:
   $
     integral_harpoon(S) bold(E) dot dif bold(S) = frac(Q_"enc", epsilon_0),
@@ -352,11 +358,11 @@ Physically, the electric flux measures the "flow" of the electric field through 
   where $Q_"enc" = integral_V rho(bold(r)) dif V$ is the total charge inside the volume $V$ bounded by $S$, and $epsilon_0$ is the permittivity of free space.
 ]
 
-This law is one of the four Maxwell's equations. It captures the fundamental fact that electric charges are the sources (and sinks) of the electric field — positive charges produce outward flux, negative charges produce inward flux.
+#h(2em) This law is one of the four Maxwell's equations. It captures the fundamental fact that electric charges are the sources (and sinks) of the electric field — positive charges produce outward flux, negative charges produce inward flux.
 
 By applying the divergence theorem to the integral form, we obtain the local (pointwise) counterpart:
 
-#theorem(name: "Gauss's Law — Differential Form")[
+#law(name: "Gauss's Law — Differential Form")[
   $
     nabla dot bold(E) = frac(rho, epsilon_0),
   $
