@@ -382,14 +382,13 @@ The differential form states that the divergence of the electric field at a poin
 
 While Coulomb's law is the fundamental force law, Gauss's law often provides a much simpler route to computing the electric field when the charge distribution possesses sufficient symmetry. The key is to choose a Gaussian surface over which $bold(E)$ is either constant or parallel to the surface normal.
 
-#theorem(name: "Strategy for Applying Gauss's Law")[
-  To compute $bold(E)$ using Gauss's law:
-  1. Identify the symmetry of the charge distribution (spherical, cylindrical, or planar).
-  2. Choose a Gaussian surface that respects this symmetry.
-  3. Evaluate the flux integral $integral_S bold(E) dot dif bold(S)$ — by symmetry, $|bold(E)|$ is constant on the surface.
-  4. Compute the enclosed charge $Q_"enc"$.
-  5. Solve for $|bold(E)|$.
-]
+To compute $bold(E)$ using Gauss's law:
+1. Identify the symmetry of the charge distribution (spherical, cylindrical, or planar).
+2. Choose a Gaussian surface that respects this symmetry.
+3. Evaluate the flux integral $integral_S bold(E) dot dif bold(S)$ — by symmetry, $|bold(E)|$ is constant on the surface.
+4. Compute the enclosed charge $Q_"enc"$.
+5. Solve for $|bold(E)|$.
+
 
 #example(name: "Spherical Symmetry — Point Charge")[
   For a point charge $q$ at the origin, choose a spherical Gaussian surface of radius $r$ concentric with the charge. By symmetry, $bold(E)$ is radial and has constant magnitude on the sphere:
@@ -414,8 +413,6 @@ While Coulomb's law is the fundamental force law, Gauss's law often provides a m
   $
   giving $E = frac(sigma, 2 epsilon_0)$ (direction away from the plane for $sigma > 0$).
 ]
-
-=== Relation to Coulomb's Law // 与库仑定律的关系
 
 #note[
   Gauss's law and Coulomb's law are mathematically equivalent *in electrostatics*, provided the charge distribution is spherically symmetric. However, Gauss's law is the more fundamental of the two — it remains valid for time-varying fields where Coulomb's law no longer applies, and it constitutes one of the four Maxwell's equations. In fact, Coulomb's law can be derived from Gauss's law combined with the curl-free condition $nabla times bold(E) = bold(0)$ of electrostatics.
