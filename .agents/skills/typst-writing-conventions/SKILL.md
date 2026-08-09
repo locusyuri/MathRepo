@@ -266,6 +266,10 @@ $n -> oo$
 - 图片引用：`@fig:example`
 - 自定义组件引用：`#link(<label>)[显示文本]`
 
+> **注意**：`#theorem` / `#definition` / `#corollary` 等模板组件内部包裹了 `context`，
+> 其标签**不能用 `@` 语法引用**（会报错 `cannot reference context`），
+> 必须使用 `#link(<label>)[显示文本]`。
+
 ```typst
 #definition(name: "Continuous Function")[
   A function $f: X -> Y$ is continuous if...

@@ -406,8 +406,6 @@ which stands for an analytic function $f_2(zeta)$ in a convergent disk $|zeta| <
 That is, the second series stands for an analytic function $f_2(z)$ in the region $|z-z_0| > r (0<r<=infinity)$.
 If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two series, called a two-sided power series, denoted as
 
-
-
 #eq[
   $
     sum_(n=-infinity)^infinity c_n (z-z_0)^n.
@@ -454,19 +452,210 @@ $
   f(z) = sum_(n=-infinity)^infinity c_n (z-z_0)^n.
 $
 Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ at $z_0$, and the minus power terms $c_(-n) (z-z_0)^(-n)$ the principal part of $f(z)$ at $z_0$. Then we can classify the isolated singularity $z_0$ of $f(z)$ as follows:
-+ If the principal part of $f(z)$ at $z_0$ is identically zero, i.e., $c_n = 0$ for all $n < 0$, then $z_0$ is called a removable singularity of $f(z)$.
-+ If the principal part of $f(z)$ at $z_0$ has only finitely many non-zero terms, i.e., there exists a positive integer $m$ such that $c_n = 0$ for all $n < -m$, then $z_0$ is called a pole of order $m$ of $f(z)$.
-+ If the principal part of $f(z)$ at $z_0$ has infinitely many non-zero terms, i.e., $c_n != 0$ for infinitely many negative integers $n$, then $z_0$ is called an essential singularity of $f(z)$.
++ If the principal part of $f(z)$ at $z_0$ is identically zero, i.e., $c_n = 0$ for all $n < 0$, then $z_0$ is called a *removable singularity* of $f(z)$.
++ If the principal part of $f(z)$ at $z_0$ has only finitely many non-zero terms, i.e., there exists a positive integer $m$ such that $c_n = 0$ for all $n < -m$, then $z_0$ is called a *pole* of order $m$ of $f(z)$.
++ If the principal part of $f(z)$ at $z_0$ has infinitely many non-zero terms, i.e., $c_n != 0$ for infinitely many negative integers $n$, then $z_0$ is called *essential singularity* of $f(z)$.
 
 = Residue Theory // 留数理论
 
 == Residues and Their Calculation // 留数及其计算
 
+// 留数是洛朗展开中负一次项的系数，是连接级数表示与围道积分的关键工具。
+#definition(name: "Residue")[
+  Let $f(z)$ be analytic in the punctured disk $0 < abs(z - z_0) < R$, and let
+  $
+    f(z) = sum_(n=-infinity)^infinity c_n (z - z_0)^n
+  $
+  be its Laurent series at $z_0$ (see @two-sided-power-series). The coefficient $c_(-1)$ is called the *residue* of $f$ at $z_0$, denoted by
+  $
+    "Res"(f, z_0) = c_(-1).
+  $
+] <def:residue>
+
+#property[
+  - By the integral formula for Laurent coefficients, for any $0 < rho < R$,
+    $
+      "Res"(f, z_0) = 1/(2 pi"i") integral_(abs(z - z_0) = rho) f(z) dif z.
+    $
+  - If $z_0$ is a removable singularity of $f$, then $"Res"(f, z_0) = 0$.
+]
+
+#theorem(name: "Residues at Poles")[
+  Let $z_0$ be a pole of $f$ of order $m$.
+  + If $m = 1$ (*simple pole*), then
+    $
+      "Res"(f, z_0) = lim_(z -> z_0) (z - z_0) f(z).
+    $
+    In particular, if $f = P/Q$ with $P(z_0) != 0$ and $Q$ having a simple zero at $z_0$, then
+    $
+      "Res"(f, z_0) = P(z_0)/Q'(z_0).
+    $
+  + For a pole of order $m$,
+    $
+      "Res"(f, z_0) = 1/((m-1)!) lim_(z -> z_0) (dif^(m-1))/(dif z^(m-1)) [(z - z_0)^m f(z)].
+    $
+]
+
+#theorem(name: "Logarithmic Derivative")[
+  If $f$ has a zero of order $m$ at $z_0$, then $"Res"(f'/f, z_0) = m$; if $f$ has a pole of order $m$ at $z_0$, then $"Res"(f'/f, z_0) = -m$.
+]
+
+#example(name: "Residue of e^z/z^2 at 0")[
+  Since
+  $
+    e^z/z^2 = 1/z^2 + 1/z + 1/2 + z/6 + dots,
+  $
+  the coefficient of $z^(-1)$ is $1$, so $"Res"(e^z/z^2, 0) = 1$.
+]
+
+#example(name: "Residue of 1/(z^2+1) at i")[
+  The function $1/(z^2 + 1) = 1/((z - "i")(z + "i"))$ has simple poles at $z = plus.minus "i"$. Taking $P(z) = 1$ and $Q(z) = z^2 + 1$,
+  $
+    "Res"(1/(z^2 + 1), "i") = P("i")/Q'("i") = 1/(2"i") = -"i"/2.
+  $
+]
+
 == Residue Theorem // 留数定理
+
+// 留数定理将围道积分转化为被积函数在奇点处留数之和，是复分析中计算积分最核心的工具。
+#theorem(name: "Residue Theorem")[
+  Let $f(z)$ be analytic in a region $D$ except for a finite number of isolated singularities $z_1, z_2, dots, z_n$ inside $D$, and let $C$ be a positively oriented simple closed curve in $D$ that does not pass through any singularity. Then
+  $
+    integral_C f(z) dif z = 2 pi"i" sum_(k=1)^n "Res"(f, z_k),
+  $
+  where the sum is taken over the singularities $z_k$ enclosed by $C$.
+] <thm:residue-theorem>
+
+#proof[
+  Enclose each singularity $z_k$ inside $C$ by a small positively oriented circle $C_k$ centered at $z_k$ such that the disks are pairwise disjoint and contained in the region bounded by $C$. Deforming the contour $C$ onto the circles $C_1, C_2, dots, C_n$ (a consequence of the Cauchy-Goursat theorem), we get
+  $
+    integral_C f(z) dif z = sum_(k=1)^n integral_(C_k) f(z) dif z.
+  $
+  On each $C_k$, expanding $f$ into its Laurent series at $z_k$ and integrating termwise (which is legitimate by the uniform convergence established in Ch8),
+  $
+    integral_(C_k) f(z) dif z = 2 pi"i" c_(-1)^((k)) = 2 pi"i" "Res"(f, z_k),
+  $
+  since all terms $(z - z_k)^n$ with $n != -1$ vanish on integration over a closed curve. Summing over $k$ yields the theorem.
+]
+
+// 扩充复平面上全部留数（含无穷远点）之和为零，这是留数定理的常用推论。
+#corollary(name: "Sum of All Residues")[
+  Define the residue of $f$ at infinity by
+  $
+    "Res"(f, infinity) = -"Res"(f(1/z)/z^2, 0).
+  $
+  If $f$ is meromorphic on the extended complex plane $hat(bb(C))$ with finitely many singularities, then
+  $
+    sum_(z in hat(bb(C))) "Res"(f, z) = 0,
+  $
+  where the sum is over all finite singularities together with the point at infinity.
+]
+
+#example(name: "Integral of 1/(z^2+1) over |z| = 2")[
+  The function $f(z) = 1/(z^2 + 1)$ has simple poles at $plus.minus "i"$, both lying inside the circle $abs(z) = 2$. By the formula for $f = P/Q$ with $P(z) = 1$, $Q(z) = z^2 + 1$,
+  $
+    "Res"(f, "i") = P("i")/Q'("i") = 1/(2"i") = -"i"/2, quad "Res"(f, -"i") = P(-"i")/Q'(-"i") = -1/(2"i") = "i"/2.
+  $
+  Hence by #link(<thm:residue-theorem>)[the Residue Theorem],
+  $
+    integral_(abs(z) = 2) 1/(z^2 + 1) dif z = 2 pi"i" ("Res"(f, "i") + "Res"(f, -"i")) = 0.
+  $
+]
 
 == Argument Principle // 辐角原理
 
+// 环绕数（winding number）刻画一条闭曲线绕某点转过的圈数，是辐角原理的几何基础。
+#definition(name: "Winding Number")[
+  Let $C$ be a closed curve and let $z_0$ be a point not on $C$. The *winding number* of $C$ with respect to $z_0$ is defined as
+  $
+    "Ind"_C(z_0) = 1/(2 pi"i") integral_C dif z/(z - z_0).
+  $
+  For a simple closed curve $C$, $"Ind"_C(z_0) = 1$ if $z_0$ lies inside $C$ and $0$ otherwise.
+]
+
+// 辐角原理：亚纯函数沿闭曲线的对数导数积分等于内部零点数减去极点数。
+#theorem(name: "Argument Principle")[
+  Let $f(z)$ be meromorphic in a region $D$ and let $C$ be a positively oriented simple closed curve in $D$ that does not pass through any zero or pole of $f$. Then
+  $
+    1/(2 pi"i") integral_C f'(z)/f(z) dif z = N - P,
+  $
+  where $N$ and $P$ are the numbers of zeros and poles of $f$ inside $C$, counted with multiplicity.
+] <thm:argument-principle>
+
+#proof[
+  Let $z_0$ be a zero of $f$ of order $m$. Then $f(z) = (z - z_0)^m g(z)$ with $g$ analytic and $g(z_0) != 0$, hence
+  $
+    f'(z)/f(z) = m/(z - z_0) + g'(z)/g(z),
+  $
+  where $g'/g$ is analytic at $z_0$. Thus $"Res"(f'/f, z_0) = m$. Similarly, at a pole of order $p$, $"Res"(f'/f, z_0) = -p$. Applying #link(<thm:residue-theorem>)[the Residue Theorem] to $f'/f$ gives
+  $
+    1/(2 pi"i") integral_C f'(z)/f(z) dif z = N - P.
+  $
+]
+
+// 几何解释：沿 C 走一圈，f(z) 的辐角总变化量等于 2π(N-P)。
+#note[
+  Since $f'(z)/f(z) = (ln f(z))'$ locally, the integral above measures the total change of the argument of $f$ along $C$:
+  $
+    N - P = (Delta_C "Arg"(f))/(2 pi),
+  $
+  where $Delta_C "Arg"(f)$ is the change of the argument of $f(z)$ as $z$ traverses $C$ once. This explains the name of the principle.
+]
+
+#example(name: "Zeros Minus Poles of a Rational Function")[
+  Let
+  $
+    f(z) = (z - 1)(z - 2)^2/((z + 1)(z + 2))
+  $
+  and let $C$ be the circle $abs(z) = 3$. Inside $C$, $f$ has zeros of total order $N = 1 + 2 = 3$ and poles of total order $P = 1 + 1 = 2$, so the argument principle gives
+  $
+    1/(2 pi"i") integral_C f'(z)/f(z) dif z = N - P = 1.
+  $
+]
+
 == Rouché's Theorem // 儒歇定理
+
+// 儒歇定理通过边界上的模比较来判定区域内零点个数，是辐角原理最重要的应用。
+#theorem(name: "Rouché's Theorem")[
+  Let $f(z)$ and $g(z)$ be analytic in a region $D$ and let $C$ be a positively oriented simple closed curve in $D$. If
+  $
+    abs(g(z)) < abs(f(z)) quad "for all" z in C,
+  $
+  then $f$ and $f + g$ have the same number of zeros inside $C$, counted with multiplicity.
+] <thm:rouche>
+
+#proof[
+  On $C$, the inequality $abs(g) < abs(f)$ implies that neither $f$ nor $f + g$ vanishes on $C$. Moreover,
+  $
+    abs((f(z) + g(z))/f(z) - 1) = abs(g(z))/abs(f(z)) < 1,
+  $
+  so the curve $(f + g)/f(C)$ lies entirely inside the disk centered at $1$ with radius $1$, which does not contain $0$; hence $"Ind"_((f+g)/f)(0) = 0$. Applying #link(<thm:argument-principle>)[the Argument Principle] to $f + g$ and $f$ and subtracting,
+  $
+    N_(f+g) - N_f = 1/(2 pi"i") integral_C ((f + g)'/(f + g) - f'/f) dif z = 1/(2 pi"i") integral_C ((f + g)/f)'/((f + g)/f) dif z = 0.
+  $
+  Therefore $N_(f+g) = N_f$.
+]
+
+// 代数基本定理的另一个证明，与 Ch5 中刘维尔定理的证明互为补充。
+#corollary(name: "Fundamental Theorem of Algebra")[
+  Every polynomial $p(z) = a_n z^n + a_(n-1) z^(n-1) + dots + a_0$ with $a_n != 0$ has exactly $n$ zeros in $bb(C)$, counted with multiplicity.
+]
+
+#proof[
+  Write $p = f + g$ with $f(z) = a_n z^n$ and $g(z) = a_(n-1) z^(n-1) + dots + a_0$. On a sufficiently large circle $abs(z) = R$,
+  $
+    abs(g(z)) <= sum_(k=0)^(n-1) abs(a_k) R^k < abs(a_n) R^n = abs(f(z)),
+  $
+  since the leading term dominates for large $R$. By #link(<thm:rouche>)[Rouché's Theorem], $p$ has as many zeros inside $abs(z) = R$ as $f(z) = a_n z^n$, namely $n$; letting $R -> infinity$ completes the proof.
+]
+
+#example(name: "Zeros of z^4 - 6z + 3 in the Unit Disk")[
+  Let $p(z) = z^4 - 6z + 3$. Take $f(z) = -6z$ and $g(z) = z^4 + 3$. On the unit circle $abs(z) = 1$,
+  $
+    abs(g(z)) <= abs(z)^4 + 3 = 4 < 6 = abs(f(z)),
+  $
+  so by #link(<thm:rouche>)[Rouché's Theorem], $p$ has exactly one zero inside $abs(z) < 1$, the same as $f(z) = -6z$.
+]
 
 = Evaluation of Real Integrals // 实积分的计算
 
