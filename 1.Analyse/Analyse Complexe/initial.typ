@@ -212,9 +212,7 @@ especially those that have singularities or poles at infinity.
 
 == Limits and Continuity // 极限与连续性
 
-== Differentiability and Cauchy-Riemann Equations // 可微性与柯西-黎曼方程
-
-== Holomorphic and Analytic Functions // 全纯函数与解析函数
+== Differentiability and Analytic Functions // 可微性与解析函数
 
 == Harmonic Functions // 调和函数
 
@@ -307,7 +305,7 @@ especially those that have singularities or poles at infinity.
   $
 ]
 
-== Cauchy Integral Formula // 柯西积分公式
+== Cauchy Integral Formula and Its Derivatives // 柯西积分公式及其导数
 #theorem(name: "Cauchy Integral Formula")[
   If $f(z)$ is analytic in a simply connected domain $D$ and continuous on $partial D$, and
   $C$ is a simple closed curve in $D$ that encloses a point $z_0$ (usually take $partial D$), then
@@ -316,26 +314,18 @@ especially those that have singularities or poles at infinity.
   $
 ]
 
-== Cauchy Integral Formula for Derivatives // 导数的柯西积分公式
-
 == Morera's Theorem // 莫雷拉定理
 
-== Liouville's Theorem // 刘维尔定理
-
-== Fundamental Theorem of Algebra // 代数基本定理
+== Liouville's Theorem and Fundamental Theorem of Algebra // 刘维尔定理与代数基本定理
 
 = Applications of Cauchy Integral Formula // 柯西积分公式的应用
 
-== Maximum Modulus Principle // 最大模原理
+== Maximum Modulus Principle and Mean Value Property // 最大模原理与平均值性质
 #theorem(name: "Maximum Modulus Principle")[ // 最大模原理
   Let $f(z)$ be a non-constant analytic function in a bounded region $D subset CC$ that is continuous on the closure of $D$. Then the maximum of $|f(z)|$ on the closure of $D$ is attained on the boundary of $D$.
 ]
 
-== Mean Value Property // 平均值性质
-
 == Schwarz Lemma // 施瓦茨引理
-
-== Identity Theorem // 恒等定理
 
 == Weierstrass Convergence Theorem // 魏尔斯特拉斯收敛定理
 
@@ -531,9 +521,8 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
 // Chapter 2: Complex Functions (复函数)
 //   Section 2.1: Definition and Basic Properties (定义与基本性质)
 //   Section 2.2: Limits and Continuity (极限与连续性)
-//   Section 2.3: Differentiability and Cauchy-Riemann Equations (可微性与柯西-黎曼方程)
-//   Section 2.4: Holomorphic and Analytic Functions (全纯函数与解析函数)
-//   Section 2.5: Harmonic Functions (调和函数)
+//   Section 2.3: Differentiability and Analytic Functions (可微性与解析函数)
+//   Section 2.4: Harmonic Functions (调和函数)
 
 // Chapter 3: Elementary Functions (初等函数)
 //   Section 3.1: Exponential Function (指数函数)
@@ -551,18 +540,14 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
 
 // Chapter 5: Cauchy's Theorem and Integral Formula (柯西定理与积分公式)
 //   Section 5.1: Cauchy-Goursat Theorem (柯西-古尔萨定理)
-//   Section 5.2: Cauchy Integral Formula (柯西积分公式)
-//   Section 5.3: Cauchy Integral Formula for Derivatives (导数的柯西积分公式)
-//   Section 5.4: Morera's Theorem (莫雷拉定理)
-//   Section 5.5: Liouville's Theorem (刘维尔定理)
-//   Section 5.6: Fundamental Theorem of Algebra (代数基本定理)
+//   Section 5.2: Cauchy Integral Formula and Its Derivatives (柯西积分公式及其导数)
+//   Section 5.3: Morera's Theorem (莫雷拉定理)
+//   Section 5.4: Liouville's Theorem and Fundamental Theorem of Algebra (刘维尔定理与代数基本定理)
 
 // Chapter 6: Applications of Cauchy Integral Formula (柯西积分公式的应用)
-//   Section 6.1: Maximum Modulus Principle (最大模原理)
-//   Section 6.2: Mean Value Property (平均值性质)
-//   Section 6.3: Schwarz Lemma (施瓦茨引理)
-//   Section 6.4: Identity Theorem (恒等定理)
-//   Section 6.5: Weierstrass Convergence Theorem (魏尔斯特拉斯收敛定理)
+//   Section 6.1: Maximum Modulus Principle and Mean Value Property (最大模原理与平均值性质)
+//   Section 6.2: Schwarz Lemma (施瓦茨引理)
+//   Section 6.3: Weierstrass Convergence Theorem (魏尔斯特拉斯收敛定理)
 
 // --- Part III: Series (级数) ---
 
@@ -606,12 +591,11 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
 //   Section 12.5: Applications to Potential Theory (在势论中的应用)
 
 // Chapter 13: Analytic Continuation (解析延拓)
-//   Section 13.1: Direct Analytic Continuation (直接解析延拓)
-//   Section 13.2: Analytic Continuation along a Curve (沿曲线的解析延拓)
-//   Section 13.3: Monodromy Theorem (单值性定理)
-//   Section 13.4: Branch Points and Branch Cuts (支点与割线)
-//   Section 13.5: Riemann Surfaces (黎曼曲面)
-//   Section 13.6: Schwarz Reflection Principle (施瓦茨反射原理)
+//   Section 13.1: Direct Analytic Continuation and Continuation along a Curve (直接解析延拓与沿曲线的解析延拓)
+//   Section 13.2: Monodromy Theorem (单值性定理)
+//   Section 13.3: Branch Points and Branch Cuts (支点与割线)
+//   Section 13.4: Riemann Surfaces (黎曼曲面)
+//   Section 13.5: Schwarz Reflection Principle (施瓦茨反射原理)
 
 // --- Part V: Special Functions (特殊函数) ---
 
