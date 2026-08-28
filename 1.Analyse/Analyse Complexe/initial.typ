@@ -358,7 +358,7 @@ Continuous functions on compact sets enjoy particularly strong properties, which
 ]
 
 #example(name: "A Function with No Limit at the Origin")[
-  Define $f: bb(C) backslash {0} -> bb(C)$ by $f(z) = z / |z|$. Restricting to the ray $z = r e^(i theta)$ (with $theta$ fixed and $r -> 0^+$), we get
+  Define $f: bb(C) backslash {0} -> bb(C)$ by $f(z) = z / (|z|)$. Restricting to the ray $z = r e^(i theta)$ (with $theta$ fixed and $r -> 0^+$), we get
   $
     f(r e^(i theta)) = (r e^(i theta)) / r = e^(i theta).
   $
@@ -366,7 +366,7 @@ Continuous functions on compact sets enjoy particularly strong properties, which
 ]
 
 #caution(title: "Continuity of $f$ vs. Continuity of $|f|$")[
-  It follows from the triangle inequality that if $f$ is continuous at $z_0$, then so is the real-valued function $|f|$. The converse is false: the function $f(z) = z / |z|$ of the preceding example has $|f(z)| = 1$ (hence $|f|$ is continuous everywhere on $bb(C) backslash {0}$), but $f$ itself does not have a limit at $0$, so it cannot be extended to a continuous function on $bb(C)$.
+  It follows from the triangle inequality that if $f$ is continuous at $z_0$, then so is the real-valued function $|f|$. The converse is false: the function $f(z) = z / (|z|)$ of the preceding example has $|f(z)| = 1$ (hence $|f|$ is continuous everywhere on $bb(C) backslash {0}$), but $f$ itself does not have a limit at $0$, so it cannot be extended to a continuous function on $bb(C)$.
 
   In a different spirit, $f(z) = e^(i / z)$ has $|f(z)| = 1$ for all $z != 0$, yet it has no limit as $z -> 0$ along the imaginary axis.
 ]
@@ -488,7 +488,7 @@ The Cauchy-Riemann equations alone are _not_ sufficient for complex differentiab
 #caution(title: "Partial Derivatives + CR $neq$ Complex Differentiability")[
   It is a common mistake to assume that the mere existence of the four partial derivatives together with the Cauchy-Riemann equations implies complex differentiability. This is false: Frechet differentiability of $(u, v)$ is strictly stronger than the existence of the partial derivatives. A standard counterexample is
   $
-    f(0) = 0, quad f(z) = z^5 / |z|^4 text(" for ") z != 0.
+    f(0) = 0, quad f(z) = (z^5) / (|z|^4) text(" for ") z != 0.
   $
   At $z = 0$ one has $partial_x u = partial_y u = partial_x v = partial_y v = 0$, so the Cauchy-Riemann equations are trivially satisfied at the origin; however, approaching $0$ along the ray $z = t(1 + "i")$ with $t -> 0$ yields $f(z)/z -> (1+"i")^5 / 4$, which differs from $0$. Therefore $f'(0)$ does not exist.
 ]
@@ -561,7 +561,7 @@ It is one of the deepest and most remarkable facts of complex analysis — far f
   We verify that several simple functions are _nowhere_ holomorphic, using the Cauchy-Riemann equations.
   - *Complex conjugate.* Let $f(z) = overline(z) = x - "i"y$, so $u = x$, $v = -y$. The partials are $partial_x u = 1$, $partial_y v = -1$. Since $1 != -1$, the first CR equation fails at every point, and therefore $f$ is nowhere complex-differentiable.
   - *Real part.* Let $f(z) = Re(z) = x$. Then $u = x$, $v = 0$, so $partial_x u = 1$ but $partial_y v = 0$. Again the CR equations fail everywhere.
-  - *Modulus.* Let $f(z) = |z| = sqrt(x^2 + y^2)$. For $z != 0$, direct computation gives $partial_x u = x/|z|$, $partial_y v = 0$, so the first CR equation fails. At $z = 0$ the difference quotient $|z|/z$ has no limit (it equals $e^(-i theta)$ on the ray $z = r e^(i theta)$), confirming that $f$ is nowhere differentiable.
+  - *Modulus.* Let $f(z) = |z| = sqrt(x^2 + y^2)$. For $z != 0$, direct computation gives $partial_x u = x/(|z|)$, $partial_y v = 0$, so the first CR equation fails. At $z = 0$ the difference quotient $(|z|)/z$ has no limit (it equals $e^(-i theta)$ on the ray $z = r e^(i theta)$), confirming that $f$ is nowhere differentiable.
   - *Square of modulus.* $f(z) = |z|^2$, already treated above: differentiable only at $z = 0$, and not holomorphic there.
 ]
 
