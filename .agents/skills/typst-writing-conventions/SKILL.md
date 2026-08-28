@@ -163,6 +163,20 @@ $2 x y$
 #note(title: "On the Usage of 'Holomorphic' and 'Analytic'")[...]
 ```
 
+#### 组件 name/title 参数中的数学公式
+
+`name:` / `title:` 参数需要包含数学公式（如 `$L^p$`、`$z^2$`）时，**必须传 content（中括号 `[...]`）而非字符串**。模板组件通过 `#text(...)[#name]` 直接输出该参数，不做任何解析（全模板无 `eval`）：字符串内的 `$...$` 只会按字面原样显示，不会渲染成数学。
+
+```typst
+// 错误 — str 中的 $...$ 原样显示为 "$L^p$ Space"，不渲染
+#definition(name: "$L^p$ Space")[...]
+
+// 正确 — content 形式，数学正常渲染
+#definition(name: [$L^p$ Space])[...]
+```
+
+纯文本标题两种写法均可；一旦含数学就必须用 `[...]`。
+
 #### 标点位置
 
 独立数学公式的句号等标点必须写在数学环境内部：

@@ -728,7 +728,7 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
 ]
 
 === $G_delta$ and $F_sigma$ Sets
-#definition(name: "$G_delta$ and $F_sigma$ Sets")[
+#definition(name: [$G_delta$ and $F_sigma$ Sets])[
   A subset $E subset bb(R)^n$ is called a *$G_delta$ set* if it can be expressed as a countable intersection of open sets:
   $
   E = inter.big_(n=1)^infinity U_n, quad U_n "open".
