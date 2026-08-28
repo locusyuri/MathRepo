@@ -210,11 +210,473 @@ especially those that have singularities or poles at infinity.
 
 == Definition and Basic Properties // 定义与基本性质
 
+In the previous chapter we studied the algebraic and topological structure of the complex plane $bb(C)$. We now turn our attention to *functions* defined on subsets of $bb(C)$, which form the central object of study in complex analysis.
+
+#definition(name: "Complex Function")[
+  A *complex function* is a mapping
+  $
+    f: E -> bb(C),
+  $
+  where $E subset bb(C)$ is the *domain* of $f$ (the set on which $f$ is defined). For each $z in E$, the uniquely assigned value $omega = f(z)$ is called the *value* of $f$ at $z$.
+
+  A complex function is called *single-valued* if for every $z in E$ there is exactly one $omega in bb(C)$ such that $f(z) = omega$. Otherwise it is called *multi-valued*.
+] <def:complex-function>
+
+#caution(title: "Multi-Valued Functions Are Not True Functions")[
+  A so-called multi-valued function is _not a function in the strict set-theoretic sense_, since it violates the uniqueness requirement of the function definition. Nonetheless, we habitually refer to such objects as "functions" for convenience of discussion. Later (in the chapters on elementary functions and analytic continuation) we will use branch cuts and the monodromy theorem to extract single-valued branches from multi-valued functions.
+]
+
+The most fundamental technique in complex analysis is to decompose a complex function into a pair of real-valued functions of two real variables. Write $z = x + y"i"$ with $x, y in bb(R)$. Then every complex function $f$ can be written uniquely as
+#eq[$
+  f(z) = u(x, y) + "i" v(x, y),
+$] <eq:re-im-decomp>
+where $u, v: E subset bb(R)^2 -> bb(R)$ are real-valued functions. We call $u = Re(f)$ the *real part* and $v = Im(f)$ the *imaginary part* of $f$. This decomposition is the primary bridge between complex analysis and multivariable real analysis, and will be used constantly throughout these notes.
+
+#note[
+  The decomposition @eq:re-im-decomp turns a single complex-valued function of one complex variable into a pair of real-valued functions of two real variables. This correspondence will allow us to import results from the calculus of two variables _when appropriate_, but we will also see that the extra structure imposed by complex differentiability (the Cauchy-Riemann equations) makes complex functions far more rigid than arbitrary pairs of real functions.
+]
+
+A complex function $f: E -> bb(C)$ can be interpreted geometrically as a mapping from its domain $E$ (a subset of the *$z$-plane*) onto its image $f(E)$ (a subset of the *$w$-plane*). Unlike a graph in $bb(R)^2$, the graph of a complex function would require four real dimensions, so instead one visualizes $f$ as a transformation that moves points, curves, and regions from the source plane to the target plane.
+
+#figure(
+  image("./img/Complex_conjugate_picture.svg.png", width: 30%),
+  caption: [A complex function $f: bb(C) -> bb(C)$ can be visualized as a transformation between two copies of the complex plane, the $z$-plane and the $w$-plane. Shown here: the mapping $w = overline(z)$ reflects across the real axis.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:z-w-mapping>
+
+#definition(name: "Bounded Complex Function")[
+  A complex function $f: E -> bb(C)$ is *bounded* on $E$ if there exists a constant $M >= 0$ such that
+  $
+    |f(z)| <= M quad "for all" z in E.
+  $
+]
+
+Given two functions $f: E -> bb(C)$ and $g: F -> bb(C)$ with $f(E) subset F$, their *composition* $g compose f: E -> bb(C)$ is defined by
+$
+  (g compose f)(z) = g(f(z)).
+$
+In terms of the real and imaginary parts, if $f(z) = u_1 + "i"v_1$ and $g(w) = u_2 + "i"v_2$, then the real and imaginary parts of $g compose f$ are obtained by substituting $w = f(z)$ into $g$, i.e., $u_2(u_1, v_1)$ and $v_2(u_1, v_1)$.
+
 == Limits and Continuity // 极限与连续性
+
+#definition(name: "Limit of a Complex Function")[
+  Let $f: E -> bb(C)$ be a complex function and let $z_0 in bb(C)$ be an accumulation point of $E$. We say that $f(z)$ tends to the *limit* $omega_0 in bb(C)$ as $z$ approaches $z_0$, written
+  $
+    lim_(z -> z_0) f(z) = omega_0,
+  $
+  if for every $epsilon > 0$ there exists $delta > 0$ such that
+  $
+    0 < |z - z_0| < delta text(" and ") z in E quad => quad |f(z) - omega_0| < epsilon.
+  $
+] <def:complex-limit>
+
+The limit of a complex function can be completely characterized by the limits of its real and imaginary parts, which reduces the study of complex limits to that of real bivariate limits.
+
+#theorem(name: "Limit via Real and Imaginary Parts")[
+  Let $f(z) = u(x, y) + "i"v(x, y)$ and $omega_0 = a + "i"b$. Then
+  $
+    lim_(z -> z_0) f(z) = omega_0
+  $
+  if and only if
+  $
+    lim_((x,y) -> (x_0, y_0)) u(x, y) = a quad text(" and ") quad lim_((x,y) -> (x_0, y_0)) v(x, y) = b.
+  $
+] <thm:limit-real-image>
+
+#proof[
+  The inequalities
+  $
+    |u - a| <= |f - omega_0| <= |u - a| + |v - b|,
+    quad
+    |v - b| <= |f - omega_0| <= |u - a| + |v - b|
+  $
+  show that $|f - omega_0|$ is small if and only if both $|u - a|$ and $|v - b|$ are small. The $epsilon$-$delta$ definitions are therefore equivalent.
+]
+
+#property(name: "Elementary Properties of Limits")[
+  Assume $lim_(z -> z_0) f(z) = alpha$ and $lim_(z -> z_0) g(z) = beta$. Then:
+  - *Uniqueness*: The limit, if it exists, is unique.
+  - *Linearity*: $lim_(z -> z_0) (lambda f(z) + mu g(z)) = lambda alpha + mu beta$ for all $lambda, mu in bb(C)$.
+  - *Product*: $lim_(z -> z_0) (f(z) g(z)) = alpha beta$.
+  - *Quotient*: $lim_(z -> z_0) (f(z) / g(z)) = alpha / beta$, provided $beta != 0$.
+  - *Composition*: If $lim_(w -> alpha) h(w) = gamma$ and $h$ is continuous at $alpha$ (or if $f(z) != alpha$ near $z_0$), then $lim_(z -> z_0) h(f(z)) = gamma$.
+  - *Squeeze*: If $|f(z)| <= g(z)$ for all $z$ near $z_0$ and $lim_(z -> z_0) g(z) = 0$, then $lim_(z -> z_0) f(z) = 0$.
+]
+
+#note[
+  The proofs of the properties in #link(<thm:limit-real-image>)[Limit via Real and Imaginary Parts] and the above list are formally identical to their real-variable counterparts: simply replace every occurrence of the real absolute value with the complex modulus. For this reason we do not repeat the details here, and refer the reader to any standard textbook on multivariable real calculus.
+]
+
+We also extend the definition of limit to include the point at infinity from the extended complex plane $hat(bb(C))$ (see §1.4).
+
+- We write $lim_(z -> z_0) f(z) = oo$ if for every $M > 0$ there exists $delta > 0$ such that $0 < |z - z_0| < delta$ implies $|f(z)| > M$.
+- We write $lim_(z -> oo) f(z) = omega_0$ if for every $epsilon > 0$ there exists $R > 0$ such that $|z| > R$ implies $|f(z) - omega_0| < epsilon$.
+
+We now turn to continuity.
+
+#definition(name: "Continuity of a Complex Function")[
+  A complex function $f: E -> bb(C)$ is *continuous at a point* $z_0 in E$ if
+  $
+    lim_(z -> z_0) f(z) = f(z_0).
+  $
+  If $f$ is continuous at every point of $E$, we say that $f$ is *continuous on $E$*.
+]
+
+#definition(name: "Uniform Continuity")[
+  A function $f: E -> bb(C)$ is *uniformly continuous* on $E$ if for every $epsilon > 0$ there exists $delta > 0$ such that
+  $
+    z_1, z_2 in E text(" and ") |z_1 - z_2| < delta quad => quad |f(z_1) - f(z_2)| < epsilon.
+  $
+]
+
+#proposition(name: "Equivalent Characterizations of Continuity")[
+  Let $f: E -> bb(C)$ have real and imaginary parts $u, v$. The following are equivalent:
+  1. $f$ is continuous at $z_0 in E$.
+  2. $u$ and $v$ are both continuous at $(x_0, y_0)$ (as functions from $bb(R)^2$ to $bb(R)$).
+  3. For every sequence $(z_n)_(n in bb(N)) subset E$ with $z_n -> z_0$, one has $f(z_n) -> f(z_0)$.
+]
+
+#property(name: "Algebra of Continuous Functions")[
+  If $f$ and $g$ are continuous on $E$, then so are $f +- g$, $f dot g$, and (where $g(z) != 0$) $f / g$. If $g$ is continuous on $f(E)$ and $f$ is continuous on $E$, then the composition $g compose f$ is continuous on $E$.
+]
+
+Continuous functions on compact sets enjoy particularly strong properties, which we will use repeatedly in later chapters.
+
+#theorem(name: "Continuous Functions on Compact Sets")[
+  Let $K subset bb(C)$ be compact (closed and bounded) and let $f: K -> bb(C)$ be continuous on $K$. Then:
+  1. *Boundedness*: $f$ is bounded on $K$, i.e., $sup_(z in K) |f(z)| < oo$.
+  2. *Extremal values*: There exist points $z_max, z_min in K$ such that
+    $
+      |f(z_max)| = sup_(z in K) |f(z)|, quad |f(z_min)| = inf_(z in K) |f(z)|.
+    $
+  3. *Uniform continuity*: $f$ is uniformly continuous on $K$.
+] <thm:compact-continuous>
+
+#proof[
+  Claims (1) and (3) are direct consequences of the Heine-Borel and Heine-Cantor theorems in the Euclidean metric space $bb(R)^2$, applied separately to the real and imaginary parts. Claim (2) follows from the fact that the modulus $|f|$ is a continuous real-valued function on the compact set $K$, and a continuous real function on a compact set attains its supremum and infimum.
+]
+
+#example(name: "A Function with No Limit at the Origin")[
+  Define $f: bb(C) backslash {0} -> bb(C)$ by $f(z) = z / |z|$. Restricting to the ray $z = r e^(i theta)$ (with $theta$ fixed and $r -> 0^+$), we get
+  $
+    f(r e^(i theta)) = (r e^(i theta)) / r = e^(i theta).
+  $
+  Thus $f$ approaches a different value for each direction $theta$: it tends to $1$ along the positive real axis, $-1$ along the negative real axis, $"i"$ along the positive imaginary axis, and so on. Therefore $lim_(z -> 0) f(z)$ does not exist, even though $|f(z)| = 1$ for all $z != 0$.
+]
+
+#caution(title: "Continuity of $f$ vs. Continuity of $|f|$")[
+  It follows from the triangle inequality that if $f$ is continuous at $z_0$, then so is the real-valued function $|f|$. The converse is false: the function $f(z) = z / |z|$ of the preceding example has $|f(z)| = 1$ (hence $|f|$ is continuous everywhere on $bb(C) backslash {0}$), but $f$ itself does not have a limit at $0$, so it cannot be extended to a continuous function on $bb(C)$.
+
+  In a different spirit, $f(z) = e^(i / z)$ has $|f(z)| = 1$ for all $z != 0$, yet it has no limit as $z -> 0$ along the imaginary axis.
+]
 
 == Differentiability and Analytic Functions // 可微性与解析函数
 
+We are now ready to introduce the concept that truly distinguishes complex analysis from the real analysis of two variables: complex differentiability.
+
+#definition(name: "Derivative and Differential")[
+  Let $f: E -> bb(C)$ be a complex function and let $z_0 in E$ be an interior point of $E$. The function $f$ is *derivable* (or *differentiable*) at $z_0$ if the limit
+  #eq[$
+    f'(z_0) = lim_(z -> z_0) frac(f(z) - f(z_0), z - z_0)
+  $] <eq:complex-derivative>
+  exists as a finite complex number. The value $f'(z_0)$ is called the *derivative* of $f$ at $z_0$.
+
+  The *differential* of $f$ at $z_0$ is the linear map $"d"f(z_0): bb(C) -> bb(C)$ defined by
+  $
+    "d"f(z_0)(Delta z) = f'(z_0) Delta z,
+  $
+  and one writes $"d"f = f'(z_0) "d"z$.
+] <def:complex-diff>
+
+#note[
+  For complex functions, _derivability and differentiability are equivalent_, just as in one-variable real calculus. This is in stark contrast to the case of multivariable real functions, where the existence of all partial derivatives does not guarantee (Frechet) differentiability. The reason lies in the rigidity of the difference quotient @eq:complex-derivative, which forces the limit to be independent of the direction from which $z$ approaches $z_0$ — a condition far stronger than mere directional differentiability.
+]
+
+Geometrically, multiplication by $f'(z_0)$ sends each infinitesimal vector $"d"z$ to $f'(z_0) "d"z$. Writing $f'(z_0) = R e^(i phi)$ in polar form, this operation consists of a *scaling* by $R = |f'(z_0)|$ followed by a *rotation* by $phi = arg(f'(z_0))$. Thus the differential of a complex-differentiable map is a *conformal* (angle-preserving) infinitesimal transformation: it preserves the angles and the ratio of lengths between any two tangent vectors at $z_0$. This is the geometric source of the theory of conformal mappings, which we study systematically in Part IV.
+
+We now derive the celebrated Cauchy-Riemann equations, which provide the algebraic link between complex differentiability and the partial derivatives of $u$ and $v$.
+
+#theorem(name: "Cauchy-Riemann Equations (Necessity)")[
+  Let $f = u + "i"v$ be complex-differentiable at $z_0 = x_0 + "i"y_0$. Then all four first-order partial derivatives
+  $
+    (partial_x u)(x_0, y_0), quad (partial_y u)(x_0, y_0),
+    quad
+    (partial_x v)(x_0, y_0), quad (partial_y v)(x_0, y_0)
+  $
+  exist at $(x_0, y_0)$ and satisfy the *Cauchy-Riemann equations*:
+  #eq[$
+    cases(
+      partial_x u = partial_y v,
+      partial_y u = -partial_x v.
+    )
+  $] <eq:CR-cartesian>
+
+  Moreover, the derivative may be computed from the partials by either of the two formulas:
+  $
+    f'(z_0) = partial_x u + "i" partial_x v = partial_y v - "i" partial_y u.
+  $
+] <thm:CR-necessary>
+
+#proof[
+  Let $Delta z = Delta x + "i" Delta y$. By assumption the limit in @eq:complex-derivative exists regardless of how $Delta z -> 0$. We evaluate it along two particular paths.
+
+  *Path 1 (along the real axis).* Take $Delta y = 0$ and let $Delta x -> 0$. Then
+  $
+    frac(f(z_0 + Delta x) - f(z_0), Delta x)
+    = frac(u(x_0 + Delta x, y_0) - u(x_0, y_0), Delta x)
+    + "i" frac(v(x_0 + Delta x, y_0) - v(x_0, y_0), Delta x)
+    -> partial_x u + "i" partial_x v.
+  $
+
+  *Path 2 (along the imaginary axis).* Take $Delta x = 0$ and let $Delta y -> 0$. Then
+  $
+    frac(f(z_0 + "i" Delta y) - f(z_0), "i" Delta y)
+    = frac(u(x_0, y_0 + Delta y) - u(x_0, y_0), "i" Delta y)
+    + "i" frac(v(x_0, y_0 + Delta y) - v(x_0, y_0), "i" Delta y).
+  $
+  Using $1/"i" = -"i"$, the right-hand side simplifies to
+  $
+    -"i" partial_y u + partial_y v = partial_y v - "i" partial_y u.
+  $
+
+  Since the two limits must equal $f'(z_0)$, equating their real and imaginary parts yields exactly @eq:CR-cartesian.
+]
+
+For problems expressed in polar coordinates it is often more convenient to use the polar form of the Cauchy-Riemann equations.
+
+#proposition(name: "Cauchy-Riemann Equations in Polar Form")[
+  Let $z = r e^(i phi)$ and write $f(z) = u(r, phi) + "i"v(r, phi)$. If $f$ is differentiable at a point with $r != 0$, then
+  #eq[$
+    partial_r u = frac(1, r) partial_phi v, quad partial_r v = -frac(1, r) partial_phi u.
+  $] <eq:CR-polar>
+  Conversely, if $u, v$ are Frechet-differentiable (as functions of $r, phi$) and satisfy @eq:CR-polar, then $f$ is complex-differentiable.
+]
+
+The Cauchy-Riemann equations alone are _not_ sufficient for complex differentiability; one also needs the real and imaginary parts to be Frechet-differentiable as functions on $bb(R)^2$. The correct necessary and sufficient statement is the following.
+
+#theorem(name: "Necessary and Sufficient Condition for Complex Differentiability")[
+  Let $f = u + "i"v$ be defined on an open set containing $z_0 = x_0 + "i"y_0$. Then $f$ is complex-differentiable at $z_0$ if and only if:
+  1. $u$ and $v$ are (Frechet) differentiable at $(x_0, y_0)$ as functions from $bb(R)^2$ to $bb(R)$;
+  2. $u$ and $v$ satisfy the Cauchy-Riemann equations @eq:CR-cartesian at $(x_0, y_0)$.
+] <thm:complex-diff-equiv>
+
+#proof[
+  *Necessity.* If $f$ is complex-differentiable, then the Cauchy-Riemann equations hold by #link(<thm:CR-necessary>)[Cauchy-Riemann Equations (Necessity)]. Moreover, from @eq:complex-derivative one has
+  $
+    f(z_0 + Delta z) - f(z_0) = f'(z_0) Delta z + o(|Delta z|).
+  $
+  Writing this in real and imaginary parts gives the Frechet differentiability of $u$ and $v$, with Jacobian matrix
+  $
+    mat(delim: "(", partial_x u, partial_y u; partial_x v, partial_y v)
+    = mat(delim: "(", Re(f'), -Im(f'); Im(f'), Re(f')).
+  $
+
+  *Sufficiency.* If $u, v$ are Frechet-differentiable, then
+  $
+    Delta u = partial_x u Delta x + partial_y u Delta y + o(sqrt(Delta x^2 + Delta y^2)),
+    quad
+    Delta v = partial_x v Delta x + partial_y v Delta y + o(sqrt(Delta x^2 + Delta y^2)).
+  $
+  Using the Cauchy-Riemann equations to substitute $partial_y u = -partial_x v$ and $partial_y v = partial_x u$ into the expression for $Delta f = Delta u + "i" Delta v$, we obtain
+  $
+    Delta f = (partial_x u + "i" partial_x v)(Delta x + "i" Delta y) + o(|Delta z|),
+  $
+  which is exactly the statement that $f'(z_0) = partial_x u + "i" partial_x v$ exists.
+]
+
+#caution(title: "Partial Derivatives + CR $neq$ Complex Differentiability")[
+  It is a common mistake to assume that the mere existence of the four partial derivatives together with the Cauchy-Riemann equations implies complex differentiability. This is false: Frechet differentiability of $(u, v)$ is strictly stronger than the existence of the partial derivatives. A standard counterexample is
+  $
+    f(0) = 0, quad f(z) = z^5 / |z|^4 text(" for ") z != 0.
+  $
+  At $z = 0$ one has $partial_x u = partial_y u = partial_x v = partial_y v = 0$, so the Cauchy-Riemann equations are trivially satisfied at the origin; however, approaching $0$ along the ray $z = t(1 + "i")$ with $t -> 0$ yields $f(z)/z -> (1+"i")^5 / 4$, which differs from $0$. Therefore $f'(0)$ does not exist.
+]
+
+#property(name: "Algebra of Derivatives")[
+  If $f, g$ are differentiable at $z_0$ and $lambda in bb(C)$, then:
+  - *Linearity*: $(lambda f + mu g)'(z_0) = lambda f'(z_0) + mu g'(z_0)$.
+  - *Product rule*: $(f dot g)'(z_0) = f'(z_0) g(z_0) + f(z_0) g'(z_0)$.
+  - *Quotient rule*: $(f / g)'(z_0) = (f'(z_0) g(z_0) - f(z_0) g'(z_0)) / g(z_0)^2$, provided $g(z_0) != 0$.
+  - *Chain rule*: If $g$ is differentiable at $f(z_0)$ then $(g compose f)'(z_0) = g'(f(z_0)) dot f'(z_0)$.
+  - *Inverse function*: If $f'(z_0) != 0$ then $f^(-1)$ is differentiable at $w_0 = f(z_0)$ and $(f^(-1))'(w_0) = 1 / f'(z_0)$.
+]
+
+We now elevate differentiability from a pointwise notion to a regional one. The result is the central class of functions in complex analysis.
+
+#definition(name: "Holomorphic Function")[
+  A function $f: E -> bb(C)$ is *holomorphic at a point* $z_0 in E$ if there exists an open neighborhood $U subset E$ of $z_0$ such that $f$ is differentiable at every point of $U$.
+
+  If $f$ is holomorphic at every point of an open set $D subset bb(C)$, we say that $f$ is *holomorphic on $D$*, and we write $f in cal(H)(D)$.
+] <def:holomorphic>
+
+A more classical terminology, which keeps consistency with the usage in real analysis, defines analyticity in terms of local power series expansions.
+
+#definition(name: "Analytic Function")[
+  A function $f: E -> bb(C)$ is *analytic at a point* $z_0 in E$ if there exists an open neighborhood $U$ of $z_0$ and a sequence of coefficients $(a_n)_(n >= 0) subset bb(C)$ such that for all $z in U$,
+  #eq[$
+    f(z) = sum_(n=0)^oo a_n (z - z_0)^n.
+  $] <eq:power-series-def>
+
+  If $f$ is analytic at every point of an open set $D$, then $f$ is *analytic on $D$*.
+] <def:analytic>
+
+It is one of the deepest and most remarkable facts of complex analysis — far from obvious from the definitions — that the two notions above are actually equivalent on open subsets of $bb(C)$.
+
+#theorem(name: "Equivalence of Holomorphy and Analyticity")[
+  Let $D subset bb(C)$ be open. A function $f: D -> bb(C)$ is holomorphic on $D$ if and only if it is analytic on $D$.
+] <thm:holo-equiv-analytic>
+
+#proof[
+  The easy direction (analytic $=>$ holomorphic) follows from the fact that a convergent power series can be differentiated term by term within its radius of convergence, yielding another power series; thus every power series defines a holomorphic function. This will be proved rigorously in §7.2 when we study power series in detail.
+
+  The non-trivial direction (holomorphic $=>$ analytic) is a consequence of the Cauchy integral formula: once one represents a holomorphic function as a contour integral, expanding the integrand as a geometric series yields the required power series representation. We prove this in §7.3 as part of Taylor's theorem for analytic functions.
+]
+
+#note(title: "On the Usage of 'Holomorphic' and 'Analytic'")[
+  In some textbooks, especially those of a more classical tradition, no distinction is made between _holomorphic_ and _analytic_ functions: the two words are used interchangeably. This is perfectly legitimate in view of #link(<thm:holo-equiv-analytic>)[Equivalence of Holomorphy and Analyticity], since for functions on open subsets of $bb(C)$ the concepts coincide.
+
+  However, the situation is very different for real-valued functions of a real variable: a $C^oo$ real function need _not_ be real-analytic (the classic counterexample $e^(-1/x^2)$ extended by $0$ at the origin is $C^oo$ on $bb(R)$ but not real-analytic at $0$). In order to maintain terminological consistency with real analysis, we define complex analyticity _à priori_ via local power series expansions (@eq:power-series-def) and holomorphic via local differentiability, then prove the equivalence as a substantive theorem. In the rest of these notes we will generally prefer the term *holomorphic* when thinking in terms of differentiation, and *analytic* when thinking in terms of power series.
+]
+
+#caution(title: "Pointwise Differentiability vs. Holomorphy at a Point")[
+  Holomorphy at a point $z_0$ is a strictly stronger condition than mere differentiability at $z_0$: it requires differentiability throughout some open neighborhood of $z_0$. For example, the function $f(z) = |z|^2 = z overline(z)$ has real and imaginary parts $u = x^2 + y^2$, $v = 0$, whose partial derivatives are continuous everywhere; the Cauchy-Riemann equations reduce to $2x = 0$ and $2y = 0$, which hold _only_ at the origin. Thus $f$ is differentiable at $z = 0$ with $f'(0) = 0$, but it is not differentiable at any other point, so there is no open set around $0$ on which $f$ is differentiable. Therefore $f$ is _not_ holomorphic at $0$.
+]
+
+#example(name: "Elementary Holomorphic Functions")[
+  - *Constant functions.* If $f(z) = c$ for all $z$, then $f'(z) = 0$ everywhere, so $f in cal(H)(bb(C))$.
+  - *Identity.* If $f(z) = z$, then the difference quotient @eq:complex-derivative equals $1$ for any $z$, so $f in cal(H)(bb(C))$ with $f'(z) = 1$.
+  - *Polynomials.* By induction using the product rule and linearity, every polynomial
+    $
+      P(z) = a_n z^n + a_(n-1) z^(n-1) + dots + a_0
+    $
+    is entire (i.e., holomorphic on all of $bb(C)$), with
+    $
+      P'(z) = n a_n z^(n-1) + (n-1) a_(n-1) z^(n-2) + dots + a_1.
+    $
+  - *Rational functions.* A quotient $P(z) / Q(z)$ of two polynomials is holomorphic on the complement of the zero set of $Q$, with derivative given by the quotient rule.
+]
+
+#example(name: "Classical Non-Holomorphic Functions")[
+  We verify that several simple functions are _nowhere_ holomorphic, using the Cauchy-Riemann equations.
+  - *Complex conjugate.* Let $f(z) = overline(z) = x - "i"y$, so $u = x$, $v = -y$. The partials are $partial_x u = 1$, $partial_y v = -1$. Since $1 != -1$, the first CR equation fails at every point, and therefore $f$ is nowhere complex-differentiable.
+  - *Real part.* Let $f(z) = Re(z) = x$. Then $u = x$, $v = 0$, so $partial_x u = 1$ but $partial_y v = 0$. Again the CR equations fail everywhere.
+  - *Modulus.* Let $f(z) = |z| = sqrt(x^2 + y^2)$. For $z != 0$, direct computation gives $partial_x u = x/|z|$, $partial_y v = 0$, so the first CR equation fails. At $z = 0$ the difference quotient $|z|/z$ has no limit (it equals $e^(-i theta)$ on the ray $z = r e^(i theta)$), confirming that $f$ is nowhere differentiable.
+  - *Square of modulus.* $f(z) = |z|^2$, already treated above: differentiable only at $z = 0$, and not holomorphic there.
+]
+
+A point at which a function fails to be holomorphic is called a *singular point*, or briefly a *singularity*. Singularities are classified in great detail once the Laurent series machinery is available (Chapter 8): removable singularities, poles of finite order, and essential singularities. For the moment we content ourselves with the intuitive concept.
+
+#note(title: "The Rigidity Phenomenon")[
+  Holomorphic functions enjoy a "rigidity" that is entirely foreign to real differentiable functions. We mention three striking illustrations, to be proved in later chapters:
+  1. *Infinite differentiability.* Every holomorphic function is automatically $C^oo$ (and, by #link(<thm:holo-equiv-analytic>)[Equivalence of Holomorphy and Analyticity], even real-analytic in both variables).
+  2. *Uniqueness / Identity theorem.* If two holomorphic functions on a connected domain $D$ agree on any subset with an accumulation point in $D$, they must be identical on all of $D$. No such property holds for $C^oo$ real functions.
+  3. *Maximum modulus principle.* A non-constant holomorphic function on a domain cannot attain a local maximum of its modulus inside the domain — the maximum must lie on the boundary.
+
+  These three properties alone make holomorphic functions far more structured than their real-variable counterparts, and they form the backbone of most applications of complex analysis.
+]
+
 == Harmonic Functions // 调和函数
+
+The Cauchy-Riemann equations link the real and imaginary parts of a holomorphic function in a very special way. When we differentiate them once more, a second-order partial differential equation emerges — the Laplace equation. Its solutions are the *harmonic functions*, which occupy a central position at the crossroads of complex analysis, potential theory, and mathematical physics.
+
+#definition(name: "Harmonic Function")[
+  Let $D subset bb(R)^2$ be open. A twice continuously differentiable real-valued function $u: D -> bb(R)$ is *harmonic* on $D$ if it satisfies the *Laplace equation*
+  #eq[$
+    nabla^2 u = (partial_x)^2 u + (partial_y)^2 u = 0
+  $] <eq:laplace>
+  at every point of $D$. Here $nabla^2 = partial_x^2 + partial_y^2$ is the Laplace operator in two dimensions.
+] <def:harmonic>
+
+The next theorem explains why harmonic functions are an integral part of complex analysis.
+
+#theorem(name: "Real and Imaginary Parts of a Holomorphic Function Are Harmonic")[
+  Let $f = u + "i"v$ be holomorphic on a domain $D$ and assume that $u, v in C^2(D)$. Then both $u$ and $v$ are harmonic on $D$.
+] <thm:analytic-harmonic>
+
+#proof[
+  Differentiating the Cauchy-Riemann equations @eq:CR-cartesian:
+  $
+    partial_x u = partial_y v quad => quad partial_x^2 u = partial_x partial_y v,
+  $
+  $
+    partial_y u = -partial_x v quad => quad partial_y^2 u = -partial_y partial_x v.
+  $
+  Since $u in C^2(D)$, the mixed partial derivatives of $v$ are equal (Schwarz's theorem), so adding the two displayed lines yields
+  $
+    nabla^2 u = partial_x^2 u + partial_y^2 u = partial_x partial_y v - partial_y partial_x v = 0.
+  $
+  The same computation, with the roles of $u$ and $v$ interchanged, shows that $nabla^2 v = 0$ as well.
+]
+
+#note[
+  The $C^2$ assumption in #link(<thm:analytic-harmonic>)[Real and Imaginary Parts of a Holomorphic Function Are Harmonic] is actually superfluous: a holomorphic function is automatically $C^oo$ (and indeed real-analytic in both variables), as will follow from the Cauchy integral formula in §5.2. We keep the $C^2$ hypothesis here only because our current proof uses equality of mixed partial derivatives.
+]
+
+#definition(name: "Conjugate Harmonic Function")[
+  Let $u$ be harmonic on a domain $D$. A real-valued function $v$ on $D$ is a *conjugate harmonic function* of $u$ if $u$ and $v$ together satisfy the Cauchy-Riemann equations @eq:CR-cartesian on all of $D$, i.e., if $f = u + "i"v$ is holomorphic on $D$.
+]
+
+#caution(title: "Conjugate Relation Is Not Symmetric")[
+  If $v$ is a conjugate harmonic of $u$, then $-u$ (not $u$!) is a conjugate harmonic of $v$. Indeed, if $f = u + "i"v$ is holomorphic, then so is $-i f = v - "i"u$; this shows that the conjugate of $v$ is $-u$. Thus the relation "is a conjugate harmonic of" is asymmetric, unlike the statement that $u$ and $v$ are "conjugate harmonic to each other".
+]
+
+Given a harmonic function $u$ on a *simply connected* domain $D$, one can always construct a conjugate harmonic $v$ by integrating the Cauchy-Riemann equations along paths. The recipe is: choose a base point $(x_0, y_0) in D$, and for any $(x, y) in D$ define
+#eq[$
+  v(x, y) = integral_((x_0, y_0))^((x, y)) (-partial_y u) dif x + (partial_x u) dif y.
+$] <eq:conj-harm-integral>
+Because $u$ is harmonic, the vector field $(-partial_y u, partial_x u)$ is irrotational ($partial_x (partial_x u) - partial_y (-partial_y u) = nabla^2 u = 0$), and on a simply connected domain this guarantees that the line integral is independent of the chosen path, so that $v$ is well defined. One then checks that the partials of $v$ are exactly $-partial_y u$ and $partial_x u$, so the Cauchy-Riemann equations hold.
+
+#example(name: "Recovering $z^2$ from Its Real Part")[
+  Let $u(x, y) = x^2 - y^2$. A short computation shows that $nabla^2 u = 2 - 2 = 0$, so $u$ is harmonic on $bb(R)^2$. We find the conjugate harmonic by integrating along the polyline $(0, 0) -> (x, 0) -> (x, y)$ in @eq:conj-harm-integral:
+  - Along the horizontal segment: $dif y = 0$, $-partial_y u = 2y = 0$, $partial_x u = 2x$. The integral contributes $0$.
+  - Along the vertical segment: $dif x = 0$, $partial_x u = 2 x$. The integral contributes $integral_0^y 2 x dif t = 2 x y$.
+
+  So $v(x, y) = 2 x y$ (up to an additive constant). Then
+  $
+    f(z) = u + "i"v = (x^2 - y^2) + "i" 2 x y = (x + "i"y)^2 = z^2,
+  $
+  which is indeed entire.
+]
+
+#note(title: "Milne-Thomson Method — A Practical Shortcut")[
+  There is a handy "trick" for recovering the holomorphic function $f(z)$ directly from its real part $u(x, y)$, without performing the line integral @eq:conj-harm-integral: substitute
+  $
+    x = (z + overline(z))/2, quad y = (z - overline(z))/(2"i")
+  $
+  into $u(x, y)$, then formally set $overline(z) = 0$ (i.e., evaluate at $x = z/2$, $y = z/(2"i")$). More precisely, for a harmonic $u$ that is real-analytic near the origin,
+  $
+    f(z) = 2 u(z/2, z/(2"i")) - u(0, 0) + "i"C,
+  $
+  where $C in bb(R)$ is an arbitrary constant corresponding to the additive constant of the conjugate.
+
+  Applying this to the previous example $u = x^2 - y^2$:
+  $
+    2 u(z/2, z/(2"i")) = 2 ((z/2)^2 - (z/(2"i"))^2) = 2(z^2/4 + z^2/4) = z^2,
+  $
+  and $u(0, 0) = 0$, giving $f(z) = z^2 + "i"C$, as expected.
+
+  The method is particularly convenient when an explicit integral along a path would be messy. A rigorous justification relies on the identity theorem for analytic functions.
+]
+
+#note(title: "Physical Interpretations of Harmonic Functions")[
+  Harmonic functions describe a wide variety of physical systems in two dimensions that are in *equilibrium*:
+  - *Electrostatics.* In a charge-free region of the plane, the electrostatic potential $Phi(x, y)$ satisfies Laplace's equation $nabla^2 Phi = 0$. The conjugate harmonic of $Phi$ is the *stream function* of the electric field; together they form a *complex potential* $F = Phi + "i" Psi$, whose derivative $F'(z) = E_x - "i"E_y$ encodes the electric field.
+  - *Stationary heat conduction.* In a region without heat sources or sinks, the equilibrium temperature distribution $T(x, y)$ obeys $nabla^2 T = 0$.
+  - *Incompressible, irrotational fluid flow.* The velocity potential $phi$ and the stream function $psi$ are both harmonic, and their combination $f = phi + "i"psi$ is the complex velocity potential of the flow.
+
+  In all these contexts, solving the Dirichlet problem (finding a harmonic function with prescribed boundary values) is of paramount importance; we return to this in Chapter 18.
+]
+
+#note(title: "Preview of Further Properties")[
+  We conclude this chapter with a forward-looking list of additional properties of harmonic functions, to be established in Chapters 6 and 18 using the integral calculus of holomorphic functions:
+  1. *Mean-value property.* For any disk contained in $D$, the value of a harmonic function at the center equals its average value on the boundary circle.
+  2. *Maximum and minimum principle.* A non-constant harmonic function cannot attain a local maximum or minimum inside the domain; both extrema must lie on the boundary.
+  3. *Smoothness.* Any harmonic function is automatically $C^oo$ and even real-analytic.
+  4. *Harnack's inequality and Harnack's theorem.* These results control the growth of non-negative harmonic functions and yield compactness properties of families of harmonic functions.
+
+  Each of these properties is a direct consequence of the corresponding statement for holomorphic functions, once one realizes that — locally at least — every harmonic function is the real part of some holomorphic function.
+]
 
 = Elementary Functions // 初等函数
 

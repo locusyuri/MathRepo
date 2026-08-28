@@ -121,7 +121,7 @@ $""_x$
 
 #### 多字母变量问题
 
-Typst 将连续字母识别为内置函数名（如 `sin`、`exp`），导致编译错误。
+Typst 将连续字母识别为内置函数名（如 `sin`、`exp`），或把相邻的单字母变量合并为一个未知多字母变量，导致编译错误。
 
 ```typst
 // 正体多字母变量：用引号包裹
@@ -132,6 +132,35 @@ $e x t$
 
 // 示例
 $bold(F)_i^("ext")$  // 外力
+```
+
+**相邻单字母变量之间必须用空格分隔**，否则整体被识别为一个未知变量（报 `unknown variable: xy` 等）：
+
+```typst
+// 错误 — 字母连写被合并为单个未知变量
+$xy$     // → unknown variable: xy
+$2xy$    // → unknown variable: xy
+$2 x y z$ 若写成 $2xyz$
+
+// 正确 — 变量与变量之间留空格
+$x y$
+$2 x y$
+```
+
+数字紧跟单个变量（如 `$2x$`）本身合法，但建议统一写成 `$2 x$` 保持风格一致。
+
+**排查指南**：遇到 `unknown variable` 错误时，优先排查两类根因——多字母连写（如 `xy`、`2xy`）与 LaTeX 宏残留（如 `cdot`、`int`、`infty`）。
+
+#### 组件参数中的引号嵌套
+
+组件的 `name:` / `title:` 等字符串参数内部**不能直接嵌套双引号**，否则字符串提前终止，报 `unclosed delimiter` / `expected comma`：
+
+```typst
+// 错误 — 内层双引号截断了外层字符串
+#note(title: "On the Usage of "Holomorphic" and "Analytic")[...]
+
+// 正确 — 内层改用单引号
+#note(title: "On the Usage of 'Holomorphic' and 'Analytic'")[...]
 ```
 
 #### 标点位置
@@ -197,6 +226,18 @@ Typst 数学模式不识别 `\sim`、`\cdot` 等 LaTeX 宏名。使用原生操�
 | 约等于/相似 | `$a sim b$` | `$a ~ b$` 或 `$a approx b$` |
 | 点乘 | `$a cdot b$` | `$a dot b$` |
 | 趋向 | `$x to oo$` | `$x arrow oo$` 或 `$x -> oo$` |
+
+**占位符场景**同样报 `unknown variable: cdot`：
+
+```typst
+// 错误 — cdot 作为绝对值/范数中间的占位符也是未知变量
+$|cdot|$
+
+// 可行 — 用 dot 充当占位符
+$|dot|$
+
+// 更推荐 — 在正文中改用自然语言描述（如 "the complex modulus"），避免占位符
+```
 
 #### `ll`, `gg` 等比较符号不存在
 
@@ -277,6 +318,22 @@ $n -> oo$
 
 Later, we refer to *#link(<def:continuous>)[Continuous Function]*.
 ```
+
+**标签必须写在组件 body 闭合 `]` 之后**，不能夹在组件参数与 body 之间，否则报 `missing argument: body`：
+
+```typst
+// 错误 — 标签夹在组件参数与 body 之间
+#definition(name: "Complex Function") <def:complex-function>[
+  ...
+]
+
+// 正确 — 标签紧跟 body 闭合括号之后
+#definition(name: "Complex Function")[
+  ...
+] <def:complex-function>
+```
+
+同理，编号公式的标签也写在 `#eq(...)` 的 body 之后：`#eq[$ ... $] <eq:label>`。
 
 ---
 
