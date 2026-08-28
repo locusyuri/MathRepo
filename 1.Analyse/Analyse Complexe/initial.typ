@@ -239,7 +239,7 @@ where $u, v: E subset bb(R)^2 -> bb(R)$ are real-valued functions. We call $u = 
 A complex function $f: E -> bb(C)$ can be interpreted geometrically as a mapping from its domain $E$ (a subset of the *$z$-plane*) onto its image $f(E)$ (a subset of the *$w$-plane*). Unlike a graph in $bb(R)^2$, the graph of a complex function would require four real dimensions, so instead one visualizes $f$ as a transformation that moves points, curves, and regions from the source plane to the target plane.
 
 #figure(
-  image("./img/Complex_conjugate_picture.svg.png", width: 30%),
+  image("./img/complex-function-mapping.png", width: 80%),
   caption: [A complex function $f: bb(C) -> bb(C)$ can be visualized as a transformation between two copies of the complex plane, the $z$-plane and the $w$-plane. Shown here: the mapping $w = overline(z)$ reflects across the real axis.],
   placement: auto,
   supplement: [Fig.],
@@ -338,7 +338,7 @@ We now turn to continuity.
 ]
 
 #property(name: "Algebra of Continuous Functions")[
-  If $f$ and $g$ are continuous on $E$, then so are $f +- g$, $f dot g$, and (where $g(z) != 0$) $f / g$. If $g$ is continuous on $f(E)$ and $f$ is continuous on $E$, then the composition $g compose f$ is continuous on $E$.
+  If $f$ and $g$ are continuous on $E$, then so are $f plus.minus g$, $f dot g$, and (where $g(z) != 0$) $f / g$. If $g$ is continuous on $f(E)$ and $f$ is continuous on $E$, then the composition $g compose f$ is continuous on $E$.
 ]
 
 Continuous functions on compact sets enjoy particularly strong properties, which we will use repeatedly in later chapters.
@@ -627,7 +627,7 @@ Given a harmonic function $u$ on a *simply connected* domain $D$, one can always
 $] <eq:conj-harm-integral>
 Because $u$ is harmonic, the vector field $(-partial_y u, partial_x u)$ is irrotational ($partial_x (partial_x u) - partial_y (-partial_y u) = nabla^2 u = 0$), and on a simply connected domain this guarantees that the line integral is independent of the chosen path, so that $v$ is well defined. One then checks that the partials of $v$ are exactly $-partial_y u$ and $partial_x u$, so the Cauchy-Riemann equations hold.
 
-#example(name: "Recovering $z^2$ from Its Real Part")[
+#example(name: [Recovering $z^2$ from Its Real Part])[
   Let $u(x, y) = x^2 - y^2$. A short computation shows that $nabla^2 u = 2 - 2 = 0$, so $u$ is harmonic on $bb(R)^2$. We find the conjugate harmonic by integrating along the polyline $(0, 0) -> (x, 0) -> (x, y)$ in @eq:conj-harm-integral:
   - Along the horizontal segment: $dif y = 0$, $-partial_y u = 2y = 0$, $partial_x u = 2x$. The integral contributes $0$.
   - Along the vertical segment: $dif x = 0$, $partial_x u = 2 x$. The integral contributes $integral_0^y 2 x dif t = 2 x y$.
