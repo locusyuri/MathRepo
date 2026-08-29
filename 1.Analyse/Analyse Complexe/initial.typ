@@ -695,7 +695,7 @@ Everything in this chapter grows out of a single function: the complex exponenti
   $
     exp(z) = sum_(n=0)^oo z^n / n!,
   $
-  which converges absolutely for every $z in bb(C)$: the ratio of successive terms satisfies $|a_(n+1) / a_n| = |z| / (n+1) -> 0$, so the ratio test gives convergence on the whole plane. Since $exp$ is represented by a convergent power series at every point, it is analytic on $bb(C)$ in the sense of #link(<def:analytic>)[Definition]; such functions are called *entire*.
+  which converges absolutely for every $z in bb(C)$: the ratio of successive terms satisfies $|a_(n+1) / a_n| = (|z|) / (n+1) -> 0$, so the ratio test gives convergence on the whole plane. Since $exp$ is represented by a convergent power series at every point, it is analytic on $bb(C)$ in the sense of #link(<def:analytic>)[Definition]; such functions are called *entire*.
 ] <def:exp-function>
 
 The basic law governing $exp$ is the addition theorem.
@@ -735,7 +735,7 @@ The basic law governing $exp$ is the addition theorem.
   where the last equality is Euler's formula established in Chapter 1.
 ]
 
-#theorem(name: "Properties of the Exponential")[
+#property(name: "Properties of the Exponential")[
   The exponential function enjoys the following properties:
   + *Derivative*: $exp'(z) = exp(z)$ for all $z in bb(C)$.
   + *Non-vanishing*: $exp(z) != 0$ for all $z$, and $exp(-z) = 1 / exp(z)$.
@@ -789,7 +789,7 @@ With the exponential in hand, the trigonometric and hyperbolic functions can be 
   $
     sin z = (exp(i z) - exp(-i z)) / (2 i), quad cos z = (exp(i z) + exp(-i z)) / 2.
   $
-  The remaining trigonometric functions are defined by quotients, whenever the denominator is nonzero: $tan z = sin z / cos z$, $cot z = 1 / tan z$, $sec z = 1 / cos z$, $csc z = 1 / sin z$.
+  The remaining trigonometric functions are defined by quotients, whenever the denominator is nonzero: $tan z = (sin z) / (cos z)$, $cot z = 1 / (tan z)$, $sec z = 1 / (cos z)$, $csc z = 1 / (sin z)$.
 ] <def:trig-functions>
 
 #property(name: "Properties of $sin$ and $cos$")[
@@ -1157,6 +1157,23 @@ This completes our library of elementary functions: the exponential and its desc
   $
     integral_C f(z) "d"z.
   $
+] <def:complex-integral>
+
+The infinitesimal $dif z$ is a complex number, so $|dif z| = |z'(t)| dif t = dif s$ gives the arc-length element. Two types of integrals thus arise:
+
+- *Complex line integral*: $integral_C f(z) dif z$ — signed (direction matters).
+- *Arc-length integral*: $integral_C f(z) |dif z|$ — unsigned (direction irrelevant).
+
+The estimation inequality (see *#link(<prop:integral-properties>)[Properties]*) bounds the former by the latter:
+
+$
+  |integral_C f(z) dif z| <= integral_C |f(z)| |dif z| <= M L,
+$
+
+where $L = integral_C |dif z|$ is the total arc length of $C$.
+
+#note(title: "Geometric Meaning of the ML Estimate")[
+  The inequality $|integral_C f dif z| <= M L$ is a direct extension of the real inequality $|integral_a^b f dif x| <= (max |f|)(b - a)$. In Chapter 5, this *estimate* will become the *Cauchy estimate* for derivatives, yielding Liouville's theorem and the maximum modulus principle. The moral is: bounds on integrals encode geometric rigidity of analytic functions.
 ]
 
 #property[
@@ -1176,14 +1193,14 @@ This completes our library of elementary functions: the exponential and its desc
   $
     |integral_C f(z) "d"z| <= M L.
   $
-]
+] <prop:integral-properties>
 
 #theorem[
   If $f(z) = u(x, y) + "i" v(x, y)$ is continuous on $C$, then $f$ is integrable on $C$ and
   $
     integral_C f(z) "d"z = integral_C u "d"x - integral_C v "d"y + "i" (integral_C v "d"x + integral_C u "d"y).
   $
-]
+] <thm:continuous-integrable>
 
 #proposition(name: "Some Common Integrals")[
   - Let $C$ be any curve connecting $a$ and $b$, then
@@ -1201,11 +1218,113 @@ This completes our library of elementary functions: the exponential and its desc
       2 pi"i" & n = -1
     )
   $
-]
+] <prop:common-integrals>
 
 == Contour Integrals // 围道积分
 
+#definition(name: "Smooth Curve")[
+  A curve $C: z = z(t), t in [alpha, beta]$ is *smooth* if $z'(t)$ exists, is continuous, and $z'(t) != 0$ for all $t in [alpha, beta]$. A curve is *piecewise smooth* if it is the union of finitely many smooth curves joined end to end.
+
+  A *contour* is a piecewise smooth simple closed curve. The *positive orientation* of a contour is the counterclockwise direction, so that the interior region lies to the left as one traverses $C$.
+] <def:contour>
+
+The complex integral reduces to a real integral via parameterization:
+
+#theorem(name: "Parametric Evaluation")[
+  Let $C: z = z(t), t in [alpha, beta]$ be a smooth curve and $f$ continuous on $C$. Then
+  $
+    integral_C f(z) dif z = integral_alpha^beta f(z(t)) z'(t) dif t.
+  $
+] <thm:parametric-integral>
+
+#example(name: "Integral of $z^2$ Along a Semicircle")[
+  Let $C$ be the upper semicircle $z(t) = e^(i t), t in [0, pi]$, from $a = 1$ to $b = -1$. Then $z'(t) = i e^(i t)$, so
+  $
+    integral_C z^2 dif z = integral_0^pi e^(2 i t) dot i e^(i t) dif t = i integral_0^pi e^(3 i t) dif t = i [e^(3 i t) / (3 i)]_0^pi = (e^(3 pi i) - 1) / 3.
+  $
+  Since $e^(3 pi i) = e^(pi i) = -1$, this gives $(-1 - 1)/3 = -2/3$. The direct antiderivative $F(z) = z^3 / 3$ yields $F(-1) - F(1) = -1/3 - 1/3 = -2/3$, confirming the result.
+] <ex:semicircle-z-squared>
+
+#example(name: "Integral of $overline(z)$ Along the Unit Circle")[
+  Let $C$ be the unit circle $|z| = 1$ traversed counterclockwise, so $z(t) = e^(i t), t in [0, 2 pi]$. Then $overline(z) = e^(-i t)$ and $z'(t) = i e^(i t)$, giving
+  $
+    integral_C overline(z) dif z = integral_0^(2 pi) e^(-i t) dot i e^(i t) dif t = i integral_0^(2 pi) 1 dif t = 2 pi i.
+  $
+  This is nonzero, reflecting that $overline(z)$ is not analytic (see *#link(<thm:cauchy-goursat>)[Cauchy-Goursat Theorem]* in Chapter 5). Compare with $integral_C z^(-1) dif z = 2 pi i$: the *same* value arises for different reasons.
+] <ex:circle-conjugate>
+
+#example(name: "Power Integral $integral (z-a)^n$")[
+  Let $C$ be the circle $|z - a| = r$ traversed once counterclockwise, parameterized as $z(t) = a + r e^(i t)$. Then $z'(t) = i r e^(i t)$ and
+  $
+    integral_C (z - a)^n dif z = integral_0^(2 pi) (r e^(i t))^n dot i r e^(i t) dif t = i r^(n+1) integral_0^(2 pi) e^(i (n+1) t) dif t.
+  $
+  For $n != -1$, the integral of $e^(i (n+1) t)$ over a full period vanishes. For $n = -1$, we get $i integral_0^(2 pi) 1 dif t = 2 pi i$. This is the fundamental integral of complex analysis:
+  $
+    integral_(|z-a|=r) (dif z)/(z - a) = 2 pi i.
+  $
+] <ex:power-integral>
+
+For a multiply connected domain with holes, the boundary is traversed so that the region is always on the left: the outer boundary counterclockwise and each inner boundary clockwise. This convention ensures the region lies to the left of all boundary components.
+
+#figure(
+  image("img/contour-types.png", width: 75%),
+  caption: [Types of contours: simple closed, piecewise smooth, and multiply connected domains. Outer boundary traversed counterclockwise (positive), inner boundaries clockwise (negative).],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:contour-types>
+
 == Path Independence // 路径无关性
+
+#definition(name: "Path Independence")[
+  A function $f$ has *path-independent integrals* on a domain $D$ if for any two points $a, b in D$ and any two contours $C_1, C_2$ in $D$ from $a$ to $b$,
+  $
+    integral_(C_1) f(z) dif z = integral_(C_2) f(z) dif z.
+  $
+] <def:path-independent>
+
+#definition(name: "Primitive / Antiderivative")[
+  A function $F: D -> bb(C)$ is a *primitive* (or *antiderivative*) of $f$ on $D$ if $F$ is analytic on $D$ and $F'(z) = f(z)$ for all $z in D$.
+] <def:primitive>
+
+#theorem(name: "Fundamental Theorem of Calculus for Contour Integrals")[
+  Let $F$ be a primitive of $f$ on a domain $D$. Then for any contour $C$ in $D$ from $a$ to $b$:
+  $
+    integral_C f(z) dif z = F(b) - F(a).
+  $
+  In particular, $integral_C f dif z$ depends only on the endpoints, not on the path.
+] <thm:newton-leibniz>
+
+#proof[
+  Write $F = U + i V$ and $f = u + i v$ as in *#link(<thm:continuous-integrable>)[Continuous Integrability]*. Since $F' = f$ and $F$ is analytic, the Cauchy-Riemann equations give $U_x = u, V_x = v$. Then:
+  $
+    integral_C f dif z & = integral_C (u dif x - v dif y) + i integral_C (v dif x + u dif y) \
+                       & = integral_C (U_x dif x + U_y dif y) + i integral_C (V_x dif x + V_y dif y) \
+                       & = integral_C dif U + i integral_C dif V \
+                       & = U(b) - U(a) + i(V(b) - V(a)) \
+                       & = F(b) - F(a).
+  $
+  The last step uses the real fundamental theorem of calculus applied to $U$ and $V$ along the parameterized curve.
+]
+
+#theorem(name: "Equivalence of Path Independence")[
+  Let $f$ be continuous on a domain $D$. The following are equivalent:
+  + $f$ has a primitive on $D$.
+  + $integral_C f dif z = 0$ for every closed contour $C$ in $D$.
+  + Integrals of $f$ are path-independent on $D$.
+] <thm:path-independence-equiv>
+
+#proposition(name: "Uniqueness of the Primitive")[
+  If $F$ and $G$ are both primitives of $f$ on a connected domain $D$, then $F(z) - G(z) = c$ for some constant $c in bb(C)$.
+] <prop:primitive-unique>
+
+#figure(
+  image("img/path-independence.png", width: 65%),
+  caption: [Path independence: two contours $C_1$ and $C_2$ with the same endpoints form a closed contour $C_1 - C_2$. If $integral_C f dif z = 0$ for every closed contour, then the integrals along $C_1$ and $C_2$ are equal.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:path-independence>
+
+So far, path independence requires the *existence of a primitive* — a strong condition. The central question of Chapter 5 is: *does analyticity alone suffice?* The Cauchy-Goursat theorem answers in the affirmative, showing that $integral_C f dif z = 0$ for every closed contour in a simply connected domain whenever $f$ is analytic — no primitive needed.
 
 = Cauchy's Theorem and Integral Formula // 柯西定理与积分公式
 
@@ -1216,7 +1335,7 @@ This completes our library of elementary functions: the exponential and its desc
   $
     integral_C f(z) "d"z = 0.
   $
-]
+] <thm:cauchy-goursat>
 
 == Cauchy Integral Formula and Its Derivatives // 柯西积分公式及其导数
 #theorem(name: "Cauchy Integral Formula")[
