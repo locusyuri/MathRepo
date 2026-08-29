@@ -772,7 +772,7 @@ The basic law governing $exp$ is the addition theorem.
 ] <ex:exp-geometry>
 
 #figure(
-  image("./img/exp-mapping.png", width: 70%),
+  image("./img/exp_mapping.svg", width: 70%),
   caption: [The mapping $w = exp z$. Vertical lines are wrapped onto circles centered at $0$, horizontal lines onto rays; the strip $0 < y < 2 pi$ is mapped bijectively onto the punctured plane $bb(C) backslash {0}$.],
 ) <fig:exp-mapping>
 
@@ -811,7 +811,7 @@ All five properties follow immediately from the exponential definition and the a
 ] <caution:trig-unbounded>
 
 #figure(
-  image("./img/sin-modulus.png", width: 55%),
+  image("./img/sin-modulus.svg", width: 55%),
   caption: [The modulus surface $|sin z| = sqrt(sin^2 x + sinh^2 y)$. Along the real axis the surface coincides with the familiar bounded graph of $|sin x|$, while it grows exponentially in the imaginary directions.],
 ) <fig:sin-modulus>
 
@@ -872,7 +872,7 @@ In both cases the trouble originates from a single point: loops around $0$ (and,
 ] <def:algebraic-log-branch-point>
 
 #figure(
-  image("./img/monodromy-loop.png", width: 55%),
+  image("./img/monodromy-loop.svg", width: 55%),
   caption: [Monodromy around a branch point. Traversing the loop $gamma$ once, the continuously chosen value of the function does not return to its starting value: for $sqrt(z)$ the two branches are interchanged (algebraic, order 2), while for $Ln z$ the value increases by $2 pi i$ with every loop (logarithmic).],
 ) <fig:monodromy-loop>
 
@@ -975,7 +975,7 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
 ]
 
 #figure(
-  image("./img/branch-cut-log.png", width: 55%),
+  image("./img/branch-cut-log.svg", width: 55%),
   caption: [The principal branch of the logarithm. The branch points $0$ and $oo$ are joined by the branch cut along the negative real axis; on the cut plane $D = bb(C) backslash (-oo, 0]$ the angle is confined to $(-pi, pi)$ and $ln z = ln |z| + i arg z$ is single-valued and analytic.],
 ) <fig:branch-cut-log>
 
@@ -996,7 +996,7 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
 ]
 
 #figure(
-  image("./img/log-riemann-surface.png", width: 50%),
+  image("./img/log-riemann-surface.svg", width: 50%),
   caption: [The Riemann surface of $Ln$: infinitely many sheets of the $w$-plane, each obtained by shifting $arg$ by $2 pi$, glued along the cut into a helicoid. A loop around the origin moves to the next sheet, making the multi-valuedness geometrically visible.],
 ) <fig:log-riemann-surface>
 
@@ -1073,7 +1073,7 @@ The multi-valued structure depends sharply on $alpha$.
 ] <ex:roots-as-powers>
 
 #figure(
-  image("./img/sqrt-branches.png", width: 80%),
+  image("./img/sqrt-branches.svg", width: 80%),
   caption: [The two analytic branches of $sqrt(z)$ on $D = bb(C) backslash (-oo, 0]$. Crossing the cut swaps the branches: $f_+$ approaches the value $i sqrt(r)$ from above the negative real axis but $-i sqrt(r)$ from below, reflecting the order-2 algebraic monodromy at $0$ and $oo$.],
 ) <fig:sqrt-branches>
 
@@ -1267,7 +1267,7 @@ The complex integral reduces to a real integral via parameterization:
 For a multiply connected domain with holes, the boundary is traversed so that the region is always on the left: the outer boundary counterclockwise and each inner boundary clockwise. This convention ensures the region lies to the left of all boundary components.
 
 #figure(
-  image("img/contour-types.png", width: 75%),
+  image("img/contour-types.svg", width: 75%),
   caption: [Types of contours: simple closed, piecewise smooth, and multiply connected domains. Outer boundary traversed counterclockwise (positive), inner boundaries clockwise (negative).],
   placement: auto,
   supplement: [Fig.],
@@ -1318,7 +1318,7 @@ For a multiply connected domain with holes, the boundary is traversed so that th
 ] <prop:primitive-unique>
 
 #figure(
-  image("img/path-independence.png", width: 65%),
+  image("img/path-independence.svg", width: 65%),
   caption: [Path independence: two contours $C_1$ and $C_2$ with the same endpoints form a closed contour $C_1 - C_2$. If $integral_C f dif z = 0$ for every closed contour, then the integrals along $C_1$ and $C_2$ are equal.],
   placement: auto,
   supplement: [Fig.],
