@@ -6,10 +6,10 @@
     将仓库中的图片文件与阿里云 OSS 进行双向同步，保持目录结构一致。
     OSS 路径: oss://math-repo/imgs/
 
-    同步策略 (ossutil sync --update):
-    - 比较文件大小和最后修改时间
-    - 跳过大小和 mtime 均相同的文件
-    - 不删除对端已不存在的文件（安全模式）
+    同步策略:
+    - 上行: 复制图片到临时目录 → ossutil sync --update → 清理临时目录
+    - 下行: 逐文件 ossutil cp --update（仅下载图片，避免拉取非图片文件）
+    - 比较文件大小和最后修改时间，跳过未变更的文件
 
 .PARAMETER Direction
     同步方向: "up" (本地→OSS) 或 "down" (OSS→本地)
@@ -40,27 +40,16 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-$RepoRoot    = Split-Path -Parent $PSScriptRoot
-$OssPrefix   = 'oss://math-repo/imgs/'
-$ImageExts   = @('.png', '.jpg', '.jpeg', '.svg', '.webp', '.gif', '.bmp')
+$RepoRoot  = Split-Path -Parent $PSScriptRoot
+$OssPrefix = 'oss://math-repo/imgs/'
+$ImageExts = @('.png', '.jpg', '.jpeg', '.svg', '.webp', '.gif', '.bmp')
 
-# ── helpers ──────────────────────────────────────────────────────────────────
+# ── helpers ─────────────────────────────────────────────────────────────────
 
-function Write-Title($text) {
-    Write-Host "`n$text" -ForegroundColor Cyan
-}
-
-function Write-Ok($text) {
-    Write-Host $text -ForegroundColor Green
-}
-
-function Write-Err($text) {
-    Write-Host $text -ForegroundColor Red
-}
-
-function Write-Warn($text) {
-    Write-Host $text -ForegroundColor Yellow
-}
+function Write-Title($text) { Write-Host "`n$text" -ForegroundColor Cyan }
+function Write-Ok($text)    { Write-Host $text -ForegroundColor Green }
+function Write-Err($text)   { Write-Host $text -ForegroundColor Red }
+function Write-Warn($text)  { Write-Host $text -ForegroundColor Yellow }
 
 function Test-Ossutil {
     if (-not (Get-Command ossutil -ErrorAction SilentlyContinue)) {
@@ -80,36 +69,42 @@ function Test-OssConnection {
     Write-Ok " 正常"
 }
 
-function Get-LocalImages {
-    $files = @()
+function Test-IsImage($path) {
+    $ext = [System.IO.Path]::GetExtension($path).ToLower()
+    $ImageExts -contains $ext
+}
+
+function Get-LocalImageList {
+    $result = @()
     foreach ($ext in $ImageExts) {
         $found = Get-ChildItem -Path $RepoRoot -Recurse -Filter "*$ext" -File -ErrorAction SilentlyContinue |
             Where-Object { $_.FullName -notlike '*\.git\*' }
-        $files += $found
+        foreach ($f in $found) {
+            $result += [PSCustomObject]@{
+                FullName = $f.FullName
+                Relative = $f.FullName.Substring($RepoRoot.Length + 1)
+            }
+        }
     }
-    $files | Sort-Object FullName | Get-Unique -AsString
+    $result | Sort-Object Relative | Group-Object Relative | ForEach-Object { $_.Group[0] }
 }
 
-function Get-OssImages {
+function Get-OssImageList {
     $output = & ossutil ls $OssPrefix 2>&1
     if ($LASTEXITCODE -ne 0) {
         Write-Err "查询 OSS 文件列表失败"
         return @()
     }
-
     $images = @()
     foreach ($line in $output) {
-        # 从每行末尾提取 oss:// 路径（完整输出格式: LastModifiedTime Size StorageClass ETAG ObjectName）
-        if ($line -match '(oss://\S+)$') {
-            $fullPath = $Matches[1]
-            if ($fullPath.Length -le $OssPrefix.Length) { continue }
-            $relative = $fullPath.Substring($OssPrefix.Length)
-            # 跳过目录标记（以 / 结尾）
-            if ($relative.EndsWith('/')) { continue }
-            $ext = [System.IO.Path]::GetExtension($relative).ToLower()
-            if ($ImageExts -contains $ext) {
-                $images += $relative
-            }
+        $idx = $line.IndexOf('oss://')
+        if ($idx -lt 0) { continue }
+        $fullPath = $line.Substring($idx).Trim()
+        if ($fullPath.Length -le $OssPrefix.Length) { continue }
+        $relative = $fullPath.Substring($OssPrefix.Length)
+        if ($relative.EndsWith('/')) { continue }
+        if (Test-IsImage $relative) {
+            $images += $relative
         }
     }
     $images | Sort-Object
@@ -120,9 +115,7 @@ function Show-FileList($files, $label) {
     Write-Host ("-" * 60)
     $maxDisplay = 50
     $display = if ($files.Count -gt $maxDisplay) { $files | Select-Object -First $maxDisplay } else { $files }
-    foreach ($f in $display) {
-        Write-Host "  $f"
-    }
+    foreach ($f in $display) { Write-Host "  $f" }
     if ($files.Count -gt $maxDisplay) {
         Write-Warn "  ... 还有 $($files.Count - $maxDisplay) 个文件未显示"
     }
@@ -141,23 +134,40 @@ function Confirm-Action($message) {
 function Invoke-Upload {
     Write-Title "上行同步: 本地 → OSS"
 
-    $localFiles = Get-LocalImages
-    if ($localFiles.Count -eq 0) {
+    $localImages = Get-LocalImageList
+    if ($localImages.Count -eq 0) {
         Write-Warn "本地未找到任何图片文件"
         return
     }
 
-    $relativePaths = $localFiles | ForEach-Object { $_.FullName.Replace("$RepoRoot\", '') }
-    Show-FileList $relativePaths "待上传文件"
+    Show-FileList ($localImages | ForEach-Object { $_.Relative }) "待上传文件"
 
-    if (-not (Confirm-Action "确认上传以上 $($relativePaths.Count) 个文件到 OSS？")) {
+    if (-not (Confirm-Action "确认上传以上 $($localImages.Count) 个文件到 OSS？")) {
         Write-Host "已取消"
         return
     }
 
-    Write-Host "`n开始上传..." -ForegroundColor Cyan
-    & ossutil sync $RepoRoot $OssPrefix --update -f
-    $exitCode = $LASTEXITCODE
+    # 使用临时目录 staging，仅包含图片文件，保持目录结构
+    $staging = Join-Path $env:TEMP "mathrepo-img-upload-$(Get-Random)"
+    New-Item -ItemType Directory -Path $staging -Force | Out-Null
+
+    try {
+        Write-Host "`n准备临时目录..." -ForegroundColor Cyan
+        foreach ($img in $localImages) {
+            $dest = Join-Path $staging $img.Relative
+            $destDir = Split-Path -Parent $dest
+            if (-not (Test-Path $destDir)) {
+                New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+            }
+            Copy-Item -Path $img.FullName -Destination $dest -Force
+        }
+
+        Write-Host "同步到 OSS..." -ForegroundColor Cyan
+        & ossutil sync $staging $OssPrefix --update -f
+        $exitCode = $LASTEXITCODE
+    } finally {
+        Remove-Item -Path $staging -Recurse -Force -ErrorAction SilentlyContinue
+    }
 
     if ($exitCode -eq 0) {
         Write-Ok "`n上传完成"
@@ -169,58 +179,67 @@ function Invoke-Upload {
 function Invoke-Download {
     Write-Title "下行同步: OSS → 本地"
 
-    $ossFiles = Get-OssImages
-    if ($ossFiles.Count -eq 0) {
+    $ossImages = Get-OssImageList
+    if ($ossImages.Count -eq 0) {
         Write-Warn "OSS 上未找到任何图片文件"
         return
     }
 
-    Show-FileList $ossFiles "待下载文件"
+    Show-FileList $ossImages "待下载文件"
 
-    if (-not (Confirm-Action "确认从 OSS 下载以上 $($ossFiles.Count) 个文件到本地？")) {
+    if (-not (Confirm-Action "确认从 OSS 下载以上 $($ossImages.Count) 个文件到本地？")) {
         Write-Host "已取消"
         return
     }
 
-    Write-Host "`n开始下载..." -ForegroundColor Cyan
-    & ossutil sync $OssPrefix $RepoRoot --update -f
-    $exitCode = $LASTEXITCODE
+    $total = $ossImages.Count
+    $success = 0
+    $failed = 0
 
-    if ($exitCode -eq 0) {
-        Write-Ok "`n下载完成"
-    } else {
-        Write-Err "`n下载失败 (exit code: $exitCode)"
+    for ($i = 0; $i -lt $total; $i++) {
+        $relative = $ossImages[$i]
+        $num = $i + 1
+        $destPath = Join-Path $RepoRoot ($relative -replace '/', '\')
+        $destDir = Split-Path -Parent $destPath
+        if (-not (Test-Path $destDir)) {
+            New-Item -ItemType Directory -Path $destDir -Force | Out-Null
+        }
+
+        Write-Host "[$num/$total] $relative" -NoNewline
+        & ossutil cp "$OssPrefix$relative" $destPath --update 2>&1 | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            Write-Ok " ✓"
+            $success++
+        } else {
+            Write-Err " ✗"
+            $failed++
+        }
     }
+
+    Write-Host "`n下载完成: $success 成功, $failed 失败" -ForegroundColor $(if ($failed -eq 0) { 'Green' } else { 'Yellow' })
 }
 
 # ── main ─────────────────────────────────────────────────────────────────────
 
 Test-Ossutil
 
-# ListOnly: 仅列出本地图片
 if ($ListOnly) {
     Write-Title "本地图片文件"
-    $local = Get-LocalImages
+    $local = Get-LocalImageList
     if ($local.Count -eq 0) {
         Write-Warn "未找到任何图片文件"
     } else {
-        Show-FileList ($local | ForEach-Object { $_.FullName.Replace("$RepoRoot\", '') }) "图片文件"
+        Show-FileList ($local | ForEach-Object { $_.Relative }) "图片文件"
     }
     exit 0
 }
 
-# 参数模式: 已指定 Direction
 if ($Direction) {
     Test-OssConnection
-    if ($Direction -eq 'up') {
-        Invoke-Upload
-    } else {
-        Invoke-Download
-    }
+    if ($Direction -eq 'up') { Invoke-Upload } else { Invoke-Download }
     exit $LASTEXITCODE
 }
 
-# 交互式模式
 Write-Title "MathRepo 图片同步工具"
 Write-Host "OSS 路径: $OssPrefix"
 Write-Host "仓库根目录: $RepoRoot"
@@ -234,20 +253,8 @@ Write-Host ""
 $choice = Read-Host "请输入选项 (0/1/2)"
 
 switch ($choice) {
-    '1' {
-        Test-OssConnection
-        Invoke-Upload
-    }
-    '2' {
-        Test-OssConnection
-        Invoke-Download
-    }
-    '0' {
-        Write-Host "已取消"
-        exit 0
-    }
-    default {
-        Write-Err "无效选项: $choice"
-        exit 1
-    }
+    '1' { Test-OssConnection; Invoke-Upload }
+    '2' { Test-OssConnection; Invoke-Download }
+    '0' { Write-Host "已取消"; exit 0 }
+    default { Write-Err "无效选项: $choice"; exit 1 }
 }

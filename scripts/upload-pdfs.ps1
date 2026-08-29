@@ -3,24 +3,26 @@
     MathRepo PDF 上传至 OSS 脚本
 
 .DESCRIPTION
-    将仓库中编译生成的 PDF 文件上传到阿里云 OSS，保持目录结构一致。
-    OSS 路径: oss://math-repo/math/main/
+    将仓库中编译生成的 initial.pdf 上传到阿里云 OSS，并重命名为学科名。
 
-    同步策略 (ossutil sync --update):
+    命名映射:
+      本地: 1.Analyse/Analyse Complexe/initial.pdf
+      OSS:  oss://math-repo/math/main/1.Analyse/Analyse Complexe.pdf
+
+    同步策略 (ossutil cp --update):
     - 比较文件大小和最后修改时间
     - 跳过大小和 mtime 均相同的文件
-    - 不删除对端已不存在的文件（安全模式）
 
 .PARAMETER Yes
     跳过交互式确认，直接执行上传
 
 .PARAMETER ListOnly
-    仅列出本地 PDF 文件，不执行上传
+    仅列出映射关系，不执行上传
 
 .EXAMPLE
     .\upload-pdfs.ps1                # 交互式模式
     .\upload-pdfs.ps1 -Yes           # 直接上传，无需确认
-    .\upload-pdfs.ps1 -ListOnly      # 仅查看 PDF 列表
+    .\upload-pdfs.ps1 -ListOnly      # 仅查看映射列表
 #>
 
 [CmdletBinding()]
@@ -72,24 +74,64 @@ function Test-OssConnection {
     Write-Ok " 正常"
 }
 
-function Get-LocalPdfs {
-    Get-ChildItem -Path $RepoRoot -Recurse -Filter '*.pdf' -File -ErrorAction SilentlyContinue |
-        Where-Object { $_.FullName -notlike '*\.git\*' } |
+function Get-PdfMapping {
+    $mappings = @()
+    $seen = @{}
+
+    $pdfs = Get-ChildItem -Path $RepoRoot -Recurse -Filter 'initial.pdf' -File -ErrorAction SilentlyContinue |
+        Where-Object {
+            $_.FullName -notlike '*\.git\*' -and
+            $_.FullName -notlike '*\TexTemplate\*' -and
+            $_.FullName -notlike '*\TypstTemplate\*'
+        } |
         Sort-Object FullName
+
+    foreach ($pdf in $pdfs) {
+        $relative = $pdf.FullName.Substring($RepoRoot.Length + 1)
+        $parts = $relative -split '\\|/'
+
+        # 支持两种模式:
+        #   Typst:  {学科}/{科目}/initial.pdf       (3 段)
+        #   LaTeX:  {学科}/{科目}/tmp/initial.pdf    (4 段)
+        $category = $null
+        $subject  = $null
+
+        if ($parts.Count -eq 3 -and $parts[2] -eq 'initial.pdf') {
+            $category = $parts[0]
+            $subject  = $parts[1]
+        } elseif ($parts.Count -eq 4 -and $parts[2] -eq 'tmp' -and $parts[3] -eq 'initial.pdf') {
+            $category = $parts[0]
+            $subject  = $parts[1]
+        } else {
+            Write-Warn "  跳过异常路径: $relative (期望 {{学科}}/{{科目}}/initial.pdf 或 {{学科}}/{{科目}}/tmp/initial.pdf)"
+            continue
+        }
+
+        $ossKey = "$category/$subject.pdf"
+
+        if ($seen.ContainsKey($ossKey)) {
+            continue
+        }
+        $seen[$ossKey] = $true
+
+        $mappings += [PSCustomObject]@{
+            Local  = $relative
+            OssKey = $ossKey
+            File   = $pdf
+        }
+    }
+    $mappings
 }
 
-function Show-FileList($files, $label) {
-    Write-Host "`n$label ($($files.Count) 个文件):" -ForegroundColor White
-    Write-Host ("-" * 60)
-    $maxDisplay = 50
-    $display = if ($files.Count -gt $maxDisplay) { $files | Select-Object -First $maxDisplay } else { $files }
-    foreach ($f in $display) {
-        Write-Host "  $f"
+function Show-MappingList($mappings) {
+    Write-Host "`n映射关系 ($($mappings.Count) 个文件):" -ForegroundColor White
+    Write-Host ("-" * 70)
+    foreach ($m in $mappings) {
+        Write-Host "  $($m.Local)" -NoNewline
+        Write-Host " → " -NoNewline -ForegroundColor Cyan
+        Write-Host $m.OssKey
     }
-    if ($files.Count -gt $maxDisplay) {
-        Write-Warn "  ... 还有 $($files.Count - $maxDisplay) 个文件未显示"
-    }
-    Write-Host ("-" * 60)
+    Write-Host ("-" * 70)
 }
 
 function Confirm-Action($message) {
@@ -99,39 +141,56 @@ function Confirm-Action($message) {
     return $input -ne 'n'
 }
 
-# ── main ─────────────────────────────────────────────────────────────────────
+function Invoke-Upload($mappings) {
+    $total = $mappings.Count
+    $success = 0
+    $skipped = 0
+    $failed = 0
+
+    for ($i = 0; $i -lt $total; $i++) {
+        $m = $mappings[$i]
+        $num = $i + 1
+        Write-Host "[$num/$total] $($m.OssKey)" -NoNewline
+        & ossutil cp $m.File.FullName "$OssPrefix$($m.OssKey)" --update 2>&1 | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            Write-Ok " ✓"
+            $success++
+        } else {
+            Write-Err " ✗ (exit $LASTEXITCODE)"
+            $failed++
+        }
+    }
+
+    Write-Host ""
+    Write-Host "上传完成: " -NoNewline
+    Write-Ok "$success 成功" -NoNewline
+    if ($failed -gt 0) { Write-Host ", "; Write-Err "$failed 失败" -NoNewline }
+    Write-Host ""
+}
+
+# ── main ────────────────────────────────────────────────────────────────────
 
 Test-Ossutil
 
+$mappings = Get-PdfMapping
+if ($mappings.Count -eq 0) {
+    Write-Warn "`n未找到任何 initial.pdf，请先编译笔记"
+    exit 0
+}
+
 # ListOnly
 if ($ListOnly) {
-    Write-Title "本地 PDF 文件"
-    $local = Get-LocalPdfs
-    if ($local.Count -eq 0) {
-        Write-Warn "未找到任何 PDF 文件"
-    } else {
-        $relativePaths = $local | ForEach-Object { $_.FullName.Replace("$RepoRoot\", '') }
-        Show-FileList $relativePaths "PDF 文件"
-    }
+    Write-Title "PDF 映射预览"
+    Show-MappingList $mappings
     exit 0
 }
 
 # 参数模式: -Yes 直接上传
 if ($Yes) {
     Test-OssConnection
-    $localFiles = Get-LocalPdfs
-    if ($localFiles.Count -eq 0) {
-        Write-Warn "本地未找到任何 PDF 文件"
-        exit 0
-    }
-    Write-Host "`n开始上传 $($localFiles.Count) 个 PDF 文件..." -ForegroundColor Cyan
-    & ossutil sync $RepoRoot $OssPrefix --update -f
-    if ($LASTEXITCODE -eq 0) {
-        Write-Ok "`n上传完成"
-    } else {
-        Write-Err "`n上传失败 (exit code: $LASTEXITCODE)"
-        exit 1
-    }
+    Write-Host "`n开始上传 $($mappings.Count) 个 PDF..." -ForegroundColor Cyan
+    Show-MappingList $mappings
+    Invoke-Upload $mappings
     exit 0
 }
 
@@ -142,25 +201,11 @@ Write-Host "仓库根目录: $RepoRoot"
 
 Test-OssConnection
 
-$localFiles = Get-LocalPdfs
-if ($localFiles.Count -eq 0) {
-    Write-Warn "`n本地未找到任何 PDF 文件"
-    exit 0
-}
+Show-MappingList $mappings
 
-$relativePaths = $localFiles | ForEach-Object { $_.FullName.Replace("$RepoRoot\", '') }
-Show-FileList $relativePaths "待上传 PDF"
-
-if (-not (Confirm-Action "确认上传以上 $($relativePaths.Count) 个 PDF 文件到 OSS？")) {
+if (-not (Confirm-Action "确认上传以上 $($mappings.Count) 个 PDF 到 OSS？")) {
     Write-Host "已取消"
     exit 0
 }
 
-Write-Host "`n开始上传..." -ForegroundColor Cyan
-& ossutil sync $RepoRoot $OssPrefix --update -f
-if ($LASTEXITCODE -eq 0) {
-    Write-Ok "`n上传完成"
-} else {
-    Write-Err "`n上传失败 (exit code: $LASTEXITCODE)"
-    exit 1
-}
+Invoke-Upload $mappings
