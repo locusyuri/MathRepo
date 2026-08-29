@@ -8,6 +8,12 @@
 
 #show: apply-style
 
+// Custom multi-letter operators (not built into Typst math)
+#let Ln = math.op("Ln")
+#let Arg = math.op("Arg")
+#let arg = math.op("arg")
+#let atan = math.op("atan")
+
 // --------------------------------------------------------------------------
 // Cover + Outline
 // --------------------------------------------------------------------------
@@ -682,13 +688,458 @@ Because $u$ is harmonic, the vector field $(-partial_y u, partial_x u)$ is irrot
 
 == Exponential Function // 指数函数
 
+Everything in this chapter grows out of a single function: the complex exponential. It generates the trigonometric functions, it will serve as the model of a well-behaved entire function, and — through its failure to be injective — it is the origin of all multi-valued phenomena studied in this chapter.
+
+#definition(name: "Complex Exponential Function")[
+  The *complex exponential function* is defined by the power series
+  $
+    exp(z) = sum_(n=0)^oo z^n / n!,
+  $
+  which converges absolutely for every $z in bb(C)$: the ratio of successive terms satisfies $|a_(n+1) / a_n| = |z| / (n+1) -> 0$, so the ratio test gives convergence on the whole plane. Since $exp$ is represented by a convergent power series at every point, it is analytic on $bb(C)$ in the sense of #link(<def:analytic>)[Definition]; such functions are called *entire*.
+] <def:exp-function>
+
+The basic law governing $exp$ is the addition theorem.
+
+#theorem(name: "Addition Theorem for the Exponential")[
+  For all $w, z in bb(C)$,
+  $
+    exp(w + z) = exp(w) exp(z).
+  $
+] <thm:exp-addition>
+
+#proof[
+  Since both series converge absolutely, their Cauchy product converges to the product of the sums:
+  $
+    exp(w) exp(z) = sum_(n=0)^oo sum_(k=0)^n w^k z^(n-k) / (k! (n-k)!).
+  $
+  By the binomial theorem, the inner sum equals $(w + z)^n / n!$:
+  $
+    sum_(k=0)^n (n!) / (k! (n-k)!) w^k z^(n-k) = (w + z)^n.
+  $
+  Therefore $exp(w) exp(z) = sum_(n=0)^oo (w + z)^n / n! = exp(w + z)$.
+]
+
+#theorem(name: [Euler's Formula for $exp$])[
+  For $z = x + i y$ with $x, y in bb(R)$,
+  $
+    exp(x + i y) = e^x (cos y + i sin y).
+  $
+  In particular, $exp(x) = e^x$ for real $x$, so the complex exponential extends the real exponential function.
+] <thm:exp-euler-formula>
+
+#proof[
+  The addition theorem gives $exp(x + i y) = exp(x) exp(i y)$, so it remains to compute $exp(i y)$. Splitting the series into even and odd powers of $i$,
+  $
+    exp(i y) = sum_(k=0)^oo (-1)^k (y^(2 k)) / ((2 k)!) + i sum_(k=0)^oo (-1)^k (y^(2 k + 1)) / ((2 k + 1)!) = cos y + i sin y,
+  $
+  where the last equality is Euler's formula established in Chapter 1.
+]
+
+#theorem(name: "Properties of the Exponential")[
+  The exponential function enjoys the following properties:
+  + *Derivative*: $exp'(z) = exp(z)$ for all $z in bb(C)$.
+  + *Non-vanishing*: $exp(z) != 0$ for all $z$, and $exp(-z) = 1 / exp(z)$.
+  + *Periodicity*: $exp$ is periodic with period $2 pi i$; more precisely,
+    $
+      exp(w) = exp(z) <==> w - z in 2 pi i ZZ.
+    $
+  + *Unboundedness*: for every $M > 0$ there exists $z$ with $|exp(z)| > M$.
+] <thm:exp-properties>
+
+#proof[
+  *Derivative*: write $exp(z) = u(x, y) + i v(x, y)$ with $u = e^x cos y$ and $v = e^x sin y$. The partial derivatives of $u$ and $v$ are continuous everywhere and
+  $
+    u_x = e^x cos y = v_y, quad u_y = -e^x sin y = -v_x,
+  $
+  so the Cauchy-Riemann equations of #link(<thm:complex-diff-equiv>)[Theorem] hold on all of $bb(C)$, and $f$ is complex differentiable with
+  $
+    exp'(z) = u_x + i v_x = e^x cos y + i e^x sin y = exp(z).
+  $
+  This recovers the derivative by the general theory of Section 2.3; it can also be obtained directly by differentiating the power series term by term.
+
+  *Non-vanishing*: from the addition theorem, $exp(z) exp(-z) = exp(0) = 1$, hence $exp(z) != 0$ and $exp(-z) = 1 / exp(z)$.
+
+  *Periodicity*: $exp(z + 2 pi i) = exp(z) exp(2 pi i) = exp(z) (cos 2 pi + i sin 2 pi) = exp(z)$. Conversely, if $exp(w) = exp(z)$, then $exp(w - z) = 1$. Writing $w - z = x + i y$ and taking absolute values via #link(<thm:exp-euler-formula>)[Euler's formula] gives $|exp(w - z)| = e^x = 1$, hence $x = 0$; then $cos y + i sin y = 1$ forces $y in 2 pi ZZ$. Thus $w - z in 2 pi i ZZ$.
+
+  *Unboundedness*: $|exp(x)| = e^x -> oo$ as $x -> oo$ along the real axis.
+]
+
+#example(name: "What the Exponential Does to Lines and Strips")[
+  Euler's formula $exp(x + i y) = e^x (cos y + i sin y)$ identifies polar coordinates of $w = exp z$: the modulus is $|w| = e^x$ and the argument is $y$ (modulo $2 pi$). Consequently, writing $z = x + i y$:
+  - a vertical line ${z : x = c}$ is mapped onto the circle ${w : |w| = e^c}$;
+  - a horizontal line ${z : y = c}$ is mapped onto the ray ${w : arg w = c}$;
+  - the horizontal strip ${z : 0 < y < 2 pi}$ is mapped *bijectively* onto the punctured plane $bb(C) backslash {0}$.
+] <ex:exp-geometry>
+
+#figure(
+  image("./img/exp-mapping.png", width: 70%),
+  caption: [The mapping $w = exp z$. Vertical lines are wrapped onto circles centered at $0$, horizontal lines onto rays; the strip $0 < y < 2 pi$ is mapped bijectively onto the punctured plane $bb(C) backslash {0}$.],
+) <fig:exp-mapping>
+
+#note[
+  The bijectivity in #link(<ex:exp-geometry>)[the example above] collapses precisely because the strip has height $2 pi$: any two points differing by $2 pi i$ land on the same value. Thus $exp$ is *not injective* on $bb(C)$, and no global inverse exists. The equation $exp(w) = z$ still has solutions — infinitely many, differing by $2 pi i$ — and defining a reasonable "inverse" from this multi-valued solution set is exactly the problem that the branch machinery of Section 3.3 will solve.
+]
+
 == Trigonometric and Hyperbolic Functions // 三角函数与双曲函数
+
+With the exponential in hand, the trigonometric and hyperbolic functions can be defined for complex arguments in one stroke.
+
+#definition(name: "Complex Trigonometric Functions")[
+  The *sine* and *cosine* functions on $bb(C)$ are defined by
+  $
+    sin z = (exp(i z) - exp(-i z)) / (2 i), quad cos z = (exp(i z) + exp(-i z)) / 2.
+  $
+  The remaining trigonometric functions are defined by quotients, whenever the denominator is nonzero: $tan z = sin z / cos z$, $cot z = 1 / tan z$, $sec z = 1 / cos z$, $csc z = 1 / sin z$.
+] <def:trig-functions>
+
+#property(name: [Properties of $sin$ and $cos$])[
+  + *Parity*: $cos(-z) = cos z$ and $sin(-z) = -sin z$.
+  + *Periodicity*: $sin$ and $cos$ are $2 pi$-periodic.
+  + *Euler's identity*: $e^(i z) = cos z + i sin z$ for all $z in bb(C)$.
+  + *Derivatives*: $cos' z = -sin z$ and $sin' z = cos z$.
+  + *Real agreement*: for $x in bb(R)$, $sin x$ and $cos x$ coincide with the real trigonometric functions.
+] <prop:trig-properties>
+
+All five properties follow immediately from the exponential definition and the addition theorem #link(<thm:exp-addition>)[Theorem]; we leave the routine verifications to the reader.
+
+#caution[
+  The most striking difference from the real theory: $sin$ and $cos$ are *unbounded* on $bb(C)$. Indeed, writing $z = x + i y$,
+  $
+    |sin z|^2 = sin^2 x cosh^2 y + cos^2 x sinh^2 y = sin^2 x + sinh^2 y,
+  $
+  which grows without bound as $|y| -> oo$. In particular $cos(i y) = cosh y -> oo$, and the familiar real-variable intuition "cosine never exceeds 1" fails dramatically off the real axis. The reason is structural: the boundedness of real $sin$ and $cos$ relies on cancellation in the real and imaginary parts, and complex arguments destroy this balance.
+] <caution:trig-unbounded>
+
+#figure(
+  image("./img/sin-modulus.png", width: 55%),
+  caption: [The modulus surface $|sin z| = sqrt(sin^2 x + sinh^2 y)$. Along the real axis the surface coincides with the familiar bounded graph of $|sin x|$, while it grows exponentially in the imaginary directions.],
+) <fig:sin-modulus>
+
+The hyperbolic functions are the "odd partners" obtained by removing the factors of $i$.
+
+#definition(name: "Complex Hyperbolic Functions")[
+  The *hyperbolic sine* and *hyperbolic cosine* are defined by
+  $
+    sinh z = (exp(z) - exp(-z)) / 2, quad cosh z = (exp(z) + exp(-z)) / 2.
+  $
+] <def:hyperbolic-functions>
+
+#property(name: "Relations Between Trigonometric and Hyperbolic Functions")[
+  For all $z in bb(C)$:
+  + $sin(i z) = i sinh z$ and $cos(i z) = cosh z$; conversely $sinh(i z) = i sin z$ and $cosh(i z) = cos z$.
+  + $cosh^2 z - sinh^2 z = 1$ and $sin^2 z + cos^2 z = 1$.
+  + $sinh' z = cosh z$ and $cosh' z = sinh z$.
+] <prop:trig-hyp-relations>
+
+A useful observation about zeros: although $sin$ and $cos$ are now complex functions, their zeros are exactly the familiar real ones.
+
+#proposition[
+  $sin z = 0$ if and only if $z = k pi$ for some $k in ZZ$, and $cos z = 0$ if and only if $z = pi / 2 + k pi$ for some $k in ZZ$.
+] <prop:trig-zeros>
+
+#proof[
+  Write $z = x + i y$. By $sin z = sin x cosh y + i cos x sinh y$, the equation $sin z = 0$ splits into
+  $
+    sin x cosh y = 0, quad cos x sinh y = 0.
+  $
+  Since $cosh y >= 1$, the first equation forces $sin x = 0$, i.e. $x = k pi$. If $y != 0$, then $sinh y != 0$, so the second equation forces $cos x = 0$, contradicting $x = k pi$. Hence $y = 0$ and $z = k pi$. The argument for $cos$ is analogous (or follows from $cos z = sin(z + pi / 2)$ shifted by $pi / 2$).
+]
+
+Consequently the zeros of $tan z$ are the points $k pi$, and $tan$ has simple poles at $z = pi / 2 + k pi$ — our first examples of the isolated singularities introduced at the end of Section 2.3.
+
+== Branch Points, Branch Cuts, and Branches // 支点、割线与分支
+
+Section 3.1 left us with a puzzle: the exponential is not injective, so a genuine inverse does not exist — yet the equation $exp(w) = z$ always has infinitely many solutions. The same phenomenon appeared in Chapter 1, where every nonzero complex number was seen to have *two* square roots. Such solution sets are not functions, but they are too useful to discard. This section develops the vocabulary that makes them manageable.
+
+Two warm-up observations show what can go wrong.
+
+- *The argument.* Write $z = r e^(i theta)$ with $theta$ chosen continuously. Traversing a circle around the origin once, $theta$ changes continuously from its initial value $theta_0$ to $theta_0 + 2 pi$: upon returning to the starting point, the "value" has increased by $2 pi$. Hence no single-valued continuous function defined on all of $bb(C) backslash {0}$ can represent the argument.
+
+- *The square root.* For $z = r e^(i theta)$, the two solutions of $w^2 = z$ are $w = sqrt(r) e^(i theta / 2)$ and its negative. Following one branch continuously around a full circle changes $theta / 2$ by $pi$ and thereby interchanges the two roots.
+
+In both cases the trouble originates from a single point: loops around $0$ (and, as we will see, around $oo$) change the value. This motivates the following definitions.
+
+#definition(name: "Branch Point")[
+  Let $F$ be a multi-valued function on a domain $E subset hat(bb(C))$, and let $z_0$ be a singular point of $F$. If the continuous continuation of $F$ along a simple closed loop $gamma$ encircling $z_0$ does *not* return to its initial value, then $z_0$ is called a *branch point* of $F$.
+] <def:branch-point>
+
+#definition(name: "Infinite Branch Point")[
+  We say that $oo$ is a *branch point* of $F$ if, setting $zeta = 1 / z$ and $g(zeta) = F(1 / zeta)$, the point $zeta = 0$ is a finite branch point of $g$. Here $hat(bb(C)) = bb(C) union {oo}$ is the extended complex plane of Section 1.4.
+] <def:infinite-branch-point>
+
+#definition(name: "Algebraic and Logarithmic Branch Points")[
+  A branch point $z_0$ of $F$ is called an *algebraic branch point of order $n$* if the continuation of $F$ around $z_0$ returns to its initial value after exactly $n$ full loops — that is, the *monodromy* around $z_0$ has finite order $n in ZZ_+$. If the monodromy has infinite order, so that continuation around $z_0$ never returns to its initial value, $z_0$ is called a *logarithmic branch point*.
+] <def:algebraic-log-branch-point>
+
+#figure(
+  image("./img/monodromy-loop.png", width: 55%),
+  caption: [Monodromy around a branch point. Traversing the loop $gamma$ once, the continuously chosen value of the function does not return to its starting value: for $sqrt(z)$ the two branches are interchanged (algebraic, order 2), while for $Ln z$ the value increases by $2 pi i$ with every loop (logarithmic).],
+) <fig:monodromy-loop>
+
+Branch points obstruct single-valuedness only because loops can wind around them. The next device removes this ability.
+
+#definition(name: "Branch Cut")[
+  Let $B$ denote the set of all branch points of $F$ in $hat(bb(C))$. A curve $L$ (usually a line segment or a ray) is called a *branch cut* of $F$ if
+  + $L$ is a Jordan arc;
+  + $B subset L$;
+  + $hat(bb(C)) backslash L$ is simply connected.
+] <def:branch-cut>
+
+The three conditions are designed to break every closed loop around the branch points: once the plane is cut along $L$, no loop in the remaining domain can encircle a branch point, so the continuation of $F$ becomes path-independent and single-valuedness is restored. The requirement that $hat(bb(C)) backslash L$ be simply connected is what guarantees this.
+
+#definition(name: "Branch")[
+  Let $L$ be a branch cut of $F$ and let $D = hat(bb(C)) backslash L$. A single-valued function $f: D -> bb(C)$ such that $f(z)$ is one of the values of $F(z)$ for every $z in D$ is called a *branch* of $F$ on $D$. If $f$ is moreover continuous, it is a *continuous branch*; if $f$ is analytic, it is an *analytic branch*.
+] <def:branch>
+
+Two examples make the machinery concrete.
+
+#example(name: "Branches of the Argument")[
+  The multi-valued argument function $F(z) = Arg z$ has branch points $0$ and $oo$: a circuit around either point changes the value by a nontrivial multiple of $2 pi$, and since $n$ loops change it by $2 n pi$, the monodromy is infinite — both are logarithmic branch points. A standard branch cut is the negative real axis $(-oo, 0]$. On the cut plane $D = bb(C) backslash (-oo, 0]$, each nonzero $z$ has a unique continuous choice of angle $theta in (-pi, pi)$, and
+  $
+    f(z) = arg z, quad arg z in (-pi, pi),
+  $
+  is the corresponding continuous branch, called the *principal branch* of the argument. It is *not* analytic: if a real-valued function were analytic on a plane domain, the Cauchy-Riemann equations of #link(<thm:CR-necessary>)[Theorem] would force its partial derivatives to vanish identically, making it constant — but $arg z$ is not constant. This illustrates that a continuous branch need not be an analytic branch.
+] <ex:arg-branches>
+
+#example(name: "Branches of the Square Root")[
+  Let $F(z) = sqrt(z)$ denote the two-valued set of solutions of $w^2 = z$. The branch points are $0$ and $oo$: one loop around either point interchanges the two values, and two loops restore them, so both are algebraic branch points of order 2. Cutting along the negative real axis and choosing $theta in (-pi, pi)$, the two analytic branches on $D = bb(C) backslash (-oo, 0]$ are
+  $
+    f_+(z) = sqrt(r) e^(i theta \/ 2), quad f_-(z) = -f_+(z), quad z = r e^(i theta).
+  $
+  Both satisfy $(f_+(z))^2 = z$, and they agree with the real square roots on the positive real axis.
+] <ex:sqrt-branches>
+
+#note[
+  Two deeper results await later chapters. The *monodromy theorem* (Chapter 13, analytic continuation) explains exactly when a local analytic branch extends to the whole cut plane, and the technique of *integration along branch cuts* (Section 10.4) turns branch points from an obstacle into a computational tool for real integrals.
+]
+
+With this vocabulary in place, we can finally give the logarithm the precise treatment it demands.
 
 == Logarithmic Function // 对数函数
 
+#definition(name: "Complex Logarithm")[
+  For $z != 0$, the *logarithm of $z$* is the multi-valued function defined implicitly by
+  $
+    w = Ln z <==> exp(w) = z.
+  $
+  Writing $z = r e^(i theta)$ with $r = |z|$, the solutions are exactly
+  $
+    Ln z = ln r + i theta = ln |z| + i Arg z,
+  $
+  where $Arg z$ denotes the multi-valued argument of $z$.
+] <def:log-function>
+
+#proposition[
+  Every nonzero complex number has infinitely many logarithms, and any two of them differ by an integer multiple of $2 pi i$:
+  $
+    Ln z = ln |z| + i arg z + 2 k pi i, quad k in ZZ.
+  $
+] <prop:log-multi-valued>
+
+#proof[
+  Let $w = a + i b$ satisfy $exp(w) = z != 0$. Taking moduli, $|exp(w)| = e^a = |z|$, so $a = ln |z|$ is uniquely determined. Then $exp(w) = e^a (cos b + i sin b) = z$ forces $cos b = x / |z|$ and $sin b = y / |z|$, i.e. $b$ is an angle of $z$: $b = theta$ where $theta$ is any choice of $arg z$, and the set of admissible $b$ is $theta + 2 pi ZZ$. Hence the solutions are exactly $ln |z| + i (theta + 2 k pi)$, $k in ZZ$.
+]
+
+The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch points: every full loop around either point changes the value by $2 pi i$, so the monodromy never returns — even infinitely many loops do not restore the initial value. A standard branch cut is again the negative real axis.
+
+#theorem(name: "Principal Branch of the Logarithm")[
+  On the cut plane $D = bb(C) backslash (-oo, 0]$, the *principal branch of the logarithm*
+  $
+    ln z = ln |z| + i arg z, quad arg z in (-pi, pi),
+  $
+  is an analytic branch of $Ln$, and
+  $
+    (ln z)' = 1 / z.
+  $
+  For $x > 0$ it agrees with the real natural logarithm.
+] <thm:log-principal-branch>
+
+#proof[
+  Write $ln z = u(x, y) + i v(x, y)$ with
+  $
+    u = ln |z| = 1 / 2 ln(x^2 + y^2), quad v = arg z.
+  $
+  Direct computation gives $u_x = x / (x^2 + y^2)$ and $u_y = y / (x^2 + y^2)$. On the cut plane the angle $v$ is a smooth function of $(x, y)$, and its gradient is
+  $
+    v_x = -y / (x^2 + y^2), quad v_y = x / (x^2 + y^2),
+  $
+  which follows by differentiating the local expressions of $arg z$ via $atan(y / x)$ away from the vertical axis. Hence the Cauchy-Riemann equations of #link(<thm:complex-diff-equiv>)[Theorem] hold:
+  $
+    u_x = v_y, quad u_y = -v_x.
+  $
+  The partial derivatives are continuous on $D$, so $ln$ is analytic there, with
+  $
+    (ln z)' = u_x + i v_x = (x - i y) / (x^2 + y^2) = (x + i y)^(-1) = 1 / z.
+  $
+  For $x > 0$ we have $arg x = 0$ and $ln |x| = ln x$, so the branch extends the real logarithm.
+]
+
+#figure(
+  image("./img/branch-cut-log.png", width: 55%),
+  caption: [The principal branch of the logarithm. The branch points $0$ and $oo$ are joined by the branch cut along the negative real axis; on the cut plane $D = bb(C) backslash (-oo, 0]$ the angle is confined to $(-pi, pi)$ and $ln z = ln |z| + i arg z$ is single-valued and analytic.],
+) <fig:branch-cut-log>
+
+#caution[
+  The identity
+  $
+    Ln(z_1 z_2) = Ln z_1 + Ln z_2
+  $
+  is valid only *as an equality of sets*: the left side runs over all solutions of $exp(w) = z_1 z_2$, the right side over all sums of the two solution sets, and these coincide. For a fixed branch the identity may fail by a multiple of $2 pi i$. For example, with $z_1 = z_2 = e^(3 pi i \/ 4)$ we have $z_1 z_2 = e^(3 pi i \/ 2)$, so $ln(z_1 z_2) = -pi i \/ 2$ (since $arg in (-pi, pi)$), whereas $ln z_1 + ln z_2 = 3 pi i \/ 2$ — the two differ by $2 pi i$.
+] <caution:log-set-identity>
+
+#caution[
+  Notation: a capital $Arg$ or $Ln$ denotes the *multi-valued* function, while the lowercase $arg$ and $ln$ are reserved for the *principal values*. Mixing these up silently turns a correct computation into a wrong one; always check which convention is in force.
+] <caution:log-notation>
+
+#note[
+  Since $ln z$ is analytic on $D$, the theory of Section 2.4 applies: its real part $u = ln |z|$ is harmonic on the punctured plane, as predicted by #link(<thm:analytic-harmonic>)[Theorem]. This is precisely the potential of a point source in two-dimensional electrostatics — one of the physical interpretations discussed there. Furthermore, the Taylor expansion $ln(1 + z) = sum_(n=1)^oo (-1)^(n+1) z^n / n$ will be established in Section 7.3, showing that the principal branch is indeed analytic in the power series sense.
+]
+
+#figure(
+  image("./img/log-riemann-surface.png", width: 50%),
+  caption: [The Riemann surface of $Ln$: infinitely many sheets of the $w$-plane, each obtained by shifting $arg$ by $2 pi$, glued along the cut into a helicoid. A loop around the origin moves to the next sheet, making the multi-valuedness geometrically visible.],
+) <fig:log-riemann-surface>
+
+With the logarithm in hand, complex powers follow naturally.
+
 == Complex Powers // 复数幂
 
+#definition(name: "Complex Power")[
+  Let $alpha in bb(C)$ and $z != 0$. The *power* $z^alpha$ is defined by
+  $
+    z^alpha = exp(alpha Ln z).
+  $
+  Since $Ln z$ is multi-valued, so is $z^alpha$ in general. For $z = 0$ one sets $z^alpha = 0$ whenever the real part of $alpha$ is positive.
+] <def:complex-power>
+
+The multi-valued structure depends sharply on $alpha$.
+
+#theorem(name: "Branch Structure of $z^alpha$")[
+  Let $alpha$ be a fixed complex number and $z != 0$.
+  + If $alpha = n$ is an integer, $z^alpha$ is single-valued and coincides with the elementary power: $z^n$ for $n >= 0$, and $1 / z^(-n)$ for $n < 0$.
+  + If $alpha = p / q$ is a rational number in lowest terms ($q >= 1$), $z^alpha$ takes exactly $q$ distinct values.
+  + If $alpha$ is irrational or non-real, $z^alpha$ takes infinitely many values.
+  In every case the values of $z^alpha = exp(alpha (ln |z| + i (theta + 2 k pi)))$ are
+  $
+    |z|^alpha e^(i alpha theta) dot exp(2 k pi i alpha), quad k in ZZ,
+  $
+  and the cases above classify how the factors $exp(2 k pi i alpha)$ repeat.
+] <thm:power-branch-structure>
+
+#proof[
+  The key factor is $exp(2 k pi i alpha)$ as $k$ ranges over $ZZ$.
+
+  *Integral $alpha = n$*: $exp(2 k pi i n) = 1$ for every $k$, so $z^n = |z|^n e^(i n theta)$ is single-valued, and Euler's formula shows it agrees with the product $z dots.c z$.
+
+  *Rational $alpha = p / q$ in lowest terms*: $exp(2 pi i alpha k) = e^(2 pi i p k \/ q)$ depends only on $k mod q$, giving exactly $q$ distinct values $e^(2 pi i p k \/ q)$ for $k = 0, 1, dots, q - 1$ (distinct because $p k_1 equiv p k_2 mod q$ forces $q | k_1 - k_2$).
+
+  *Irrational or non-real $alpha$*: if $alpha in bb(R) backslash bb(Q)$, then $e^(2 pi i alpha k_1) = e^(2 pi i alpha k_2)$ would imply $alpha (k_1 - k_2) in ZZ$, impossible unless $k_1 = k_2$. If $alpha = a + i b$ with $b != 0$, the moduli $|e^(2 pi i alpha k)| = e^(-2 pi b k)$ are pairwise distinct, so the values are again infinite in number.
+]
+
+#proposition[
+  Let $alpha in bb(C)$. On any domain $D subset bb(C) backslash (-oo, 0]$ on which the principal branch $ln z$ is analytic, the function
+  $
+    f(z) = z^alpha = exp(alpha ln z)
+  $
+  is an analytic branch of $z^alpha$, called the *principal branch of the power*, and
+  $
+    f'(z) = alpha z^(alpha - 1)
+  $
+  on $D$, in the sense that $f'(z) = alpha f(z) / z$.
+] <prop:power-principal-branch>
+
+#proof[
+  $f$ is a composition of the analytic function $ln$ with $w mapsto exp(alpha w)$, hence analytic by the chain rule for analytic functions (Section 2.3). Differentiating,
+  $
+    f'(z) = exp(alpha ln z) dot alpha / z = alpha f(z) / z.
+  $
+  Writing $alpha f(z) / z = alpha exp(alpha ln z) exp(-ln z) = alpha exp((alpha - 1) ln z) = alpha z^(alpha - 1)$ justifies the usual notation.
+]
+
+#example(name: [The Value of $i^i$])[
+  By definition, $i^i = exp(i Ln i)$. Since $i = e^(pi i \/ 2)$, we have $Ln i = i(pi / 2 + 2 k pi)$, hence
+  $
+    i^i = exp(-pi / 2 - 2 k pi), quad k in ZZ.
+  $
+  Although $i$ and the exponent $i$ are both non-real, all values of $i^i$ are *real numbers*; the principal value ($k = 0$) is $e^(-pi \/ 2) approx 0.208$.
+] <ex:i-to-the-i>
+
+#example(name: "Roots as Powers")[
+  For a positive integer $n$, the function $z^(1 \/ n) = exp((1 \/ n) Ln z)$ takes exactly $n$ values, recovering the $n$ roots of $z$ studied numerically in Section 1.3. With the principal branch on $D = bb(C) backslash (-oo, 0]$,
+  $
+    f_k(z) = root(n, r) e^(i (theta + 2 k pi) \/ n), quad k = 0, 1, dots, n - 1,
+  $
+  are the $n$ analytic branches; the case $n = 2$ reproduces #link(<ex:sqrt-branches>)[the square-root example]. The branch points $0$ and $oo$ are algebraic of order $n$: one loop permutes the $n$ branches cyclically, and $n$ loops restore them.
+] <ex:roots-as-powers>
+
+#figure(
+  image("./img/sqrt-branches.png", width: 80%),
+  caption: [The two analytic branches of $sqrt(z)$ on $D = bb(C) backslash (-oo, 0]$. Crossing the cut swaps the branches: $f_+$ approaches the value $i sqrt(r)$ from above the negative real axis but $-i sqrt(r)$ from below, reflecting the order-2 algebraic monodromy at $0$ and $oo$.],
+) <fig:sqrt-branches>
+
+#caution[
+  Algebraic identities involving powers may fail across branches. In particular, $(z^2)^(1 \/ 2) != z$ as single-valued functions: the left side is the principal square root of $z^2$, which equals $|z|$, not $z$ — e.g. for $z = -1$, $((-1)^2)^(1 \/ 2) = 1 != -1$. Rules such as $(z^a)^b = z^(a b)$ hold only at the level of multi-valued sets, or on a fixed branch with consistent choices.
+] <caution:power-identities>
+
 == Inverse Trigonometric Functions // 反三角函数
+
+As a final application, we invert the trigonometric functions. This section is the graduation exam for the branch language: each inverse combines *two* multi-valued sources — the logarithm and the square root — and the formulas below encode their entire multi-valued structure in a single expression.
+
+Since $sin$ is $2 pi$-periodic, the equation $sin w = z$ has infinitely many solutions for suitable $z$; the inverse must be multi-valued. Solving it algebraically, set $u = exp(i w)$. Then
+$
+  sin w = z <==> u - 1 / u = 2 i z <==> u^2 - 2 i z u - 1 = 0,
+$
+whose two roots $u = i z plus.minus sqrt(1 - z^2)$ are precisely the two values of $i z + sqrt(1 - z^2)$. Taking logarithms and multiplying by $-i$ gives the result.
+
+#definition(name: "Inverse Trigonometric Functions")[
+  For $z in bb(C)$, the *inverse sine*, *inverse cosine*, and *inverse tangent* are the multi-valued functions
+  $
+    arcsin z = -i Ln(i z + sqrt(1 - z^2)),
+  $
+  $
+    arccos z = -i Ln(z + sqrt(z^2 - 1)),
+  $
+  $
+    arctan z = 1 / (2 i) Ln((1 + i z) / (1 - i z)).
+  $
+  Each denotes the set of values $w$ satisfying $sin w = z$, $cos w = z$, and $tan w = z$, respectively (with the usual exclusions $z != plus.minus i$ for $tan$).
+] <def:inverse-trig>
+
+#proof[
+  The formula for $arcsin$ was derived above. For $arccos$: $cos w = z$ is equivalent to $u + 1 / u = 2 z$ with $u = exp(i w)$, i.e. $u^2 - 2 z u + 1 = 0$, giving $u = z + sqrt(z^2 - 1)$ and $w = -i Ln(z + sqrt(z^2 - 1))$. For $arctan$: $tan w = z$ reads $sin w = z cos w$, which after division by $exp(i w) != 0$ becomes $u - 1 / u = i z (u + 1 / u)$ with $u = exp(i w)$; hence $u^2 (1 - i z) = 1 + i z$, so
+  $
+    exp(2 i w) = (1 + i z) / (1 - i z), quad w = 1 / (2 i) Ln((1 + i z) / (1 - i z)).
+  $
+]
+
+#theorem(name: "Derivatives of the Inverse Trigonometric Functions")[
+  On any domain in which a single-valued analytic branch of the expressions in #link(<def:inverse-trig>)[Definition] has been fixed, the corresponding branch is analytic and
+  $
+    (arcsin z)' = 1 / sqrt(1 - z^2), quad (arccos z)' = -1 / sqrt(1 - z^2), quad (arctan z)' = 1 / (1 + z^2),
+  $
+  with the square root evaluated on the branch fixed in the definition of $arcsin$ (respectively $arccos$).
+] <thm:inverse-trig-derivatives>
+
+#proof[
+  Differentiate the identity $sin w = z$ with respect to $z$ along the branch: by the chain rule, $cos w dot w' = 1$, so
+  $
+    w' = 1 / (cos w).
+  $
+  Since $cos^2 w = 1 - sin^2 w = 1 - z^2$, we have $cos w = plus.minus sqrt(1 - z^2)$, and the sign is fixed once and for all by the chosen branch — for the branch agreeing with the real $arcsin$ near the origin, $cos w = sqrt(1 - z^2)$. This gives $(arcsin z)' = 1 / sqrt(1 - z^2)$. The formula for $arccos$ follows from the branch identity $arccos z = pi / 2 - arcsin z$, and for $arctan$ one differentiates $exp(2 i w) = (1 + i z) / (1 - i z)$: with $g(z) = (1 + i z) / (1 - i z)$,
+  $
+    2 i w' = g'(z) / g(z) = 2 i / (1 + z^2),
+  $
+  hence $w' = 1 / (1 + z^2)$.
+]
+
+#note[
+  The multi-valued structure is now completely transparent:
+  - the square root contributes two values: replacing $sqrt(1 - z^2)$ by its negative replaces $w$ by $pi - w$, which is again a solution of $sin w = z$;
+  - the logarithm contributes infinitely many values, differing by $2 pi$: if $w$ is a solution of $sin w = z$, so is $w + 2 pi$ (and $pi - w$).
+  The branch points are where these sources degenerate: $z = plus.minus 1$ for $arcsin$ and $arccos$ (where $sqrt(1 - z^2)$ or $sqrt(z^2 - 1)$ collapses), and $z = plus.minus i$ for $arctan$ (where $1 - i z$ or $1 + i z$ vanishes). These six points, together with $oo$, are exactly the singularities of the inverse trigonometric functions.
+]
+
+This completes our library of elementary functions: the exponential and its descendants, the trigonometric and hyperbolic families, the logarithm, and the powers — together with the branch machinery needed to handle their multi-valued inverses. All of these functions will reappear constantly: as integrands and antiderivatives in the chapters on integration, and as the building blocks of conformal mappings later in the book.
 
 #part("Complex Integration") // 复积分
 = Complex Integral // 复积分
