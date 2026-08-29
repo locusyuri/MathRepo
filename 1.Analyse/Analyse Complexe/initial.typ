@@ -1328,6 +1328,8 @@ So far, path independence requires the *existence of a primitive* — a strong c
 
 = Cauchy's Theorem and Integral Formula // 柯西定理与积分公式
 
+The question left open in Chapter 4 is now answered. There we saw that vanishing contour integrals, path independence, and the existence of a primitive are equivalent — but every route to these properties required *exhibiting a primitive*, and primitives are rarely available in closed form. Cauchy's theorem asserts that *analyticity alone* forces every closed contour integral to vanish: no primitive needs to be found, because one always exists. This theorem is the pivot on which all of complex analysis turns: from it flow the Cauchy integral formula, the infinite differentiability of holomorphic functions, Liouville's theorem, and the Fundamental Theorem of Algebra.
+
 == Cauchy-Goursat Theorem // 柯西-古尔萨定理
 
 #theorem(name: "Cauchy-Goursat Theorem")[
@@ -1337,6 +1339,105 @@ So far, path independence requires the *existence of a primitive* — a strong c
   $
 ] <thm:cauchy-goursat>
 
+The proof rests on two steps: Goursat's lemma for triangles, and a triangulation argument that passes from triangles to general contours.
+
+#theorem(name: "Cauchy's Theorem for Triangles")[
+  Let $f$ be analytic on a domain $D$, and let $T$ be a closed triangle whose boundary and interior are contained in $D$. Then
+  $
+    integral_(partial T) f(z) dif z = 0.
+  $
+] <thm:cauchy-triangle>
+
+#proof[
+  Write $I(T) = |integral_(partial T) f(z) dif z|$ and let $L$ be the perimeter of $T$.
+
+  *Step 1 (Bisection).* Connect the midpoints of the three sides, dividing $T$ into four congruent triangles $T^((1)), dots, T^((4))$. The integrals over the four small boundaries sum to the integral over $partial T$, because each interior edge is traversed twice with opposite orientations and the two contributions cancel. Hence some sub-triangle $T'$ satisfies
+  $
+    I(T') >= I(T) / 4, quad "with perimeter" L(T') = L / 2 "and" "diam"(T') = "diam"(T) / 2.
+  $
+
+  *Step 2 (Nested triangles).* Repeating the bisection, we obtain nested triangles $T supset T_1 supset T_2 supset dots$ with
+  $
+    I(T_n) >= I(T) / 4^n, quad L(T_n) = L / 2^n, quad "diam"(T_n) = "diam"(T) / 2^n.
+  $
+
+  *Step 3 (Limit point).* The $T_n$ are nonempty, closed, and nested with diameters tending to zero, so by the completeness of $bb(C)$ they share exactly one point $z_0$, with $z_0 in T_n$ for all $n$.
+
+  *Step 4 (Local linearization).* Since $f$ is analytic at $z_0$, there exist $r > 0$ and a function $eta(z) -> 0$ as $z -> z_0$ such that
+  $
+    f(z) = f(z_0) + f'(z_0)(z - z_0) + eta(z)(z - z_0), quad |z - z_0| < r.
+  $
+  Choose $n$ large enough that $T_n$ is contained in $|z - z_0| < r$. Integrating over $partial T_n$ and using *#link(<prop:common-integrals>)[the common integrals]* — $integral_(partial T_n) dif z = 0$ and $integral_(partial T_n) (z - z_0) dif z = 0$ on a closed contour — only the remainder survives:
+  $
+    I(T_n) = |integral_(partial T_n) eta(z)(z - z_0) dif z| <= delta_n dot L(T_n) dot L(T_n),
+  $
+  where $delta_n = sup_(z in T_n) |eta(z)| -> 0$ (as $"diam"(T_n) -> 0$ and $eta(z) -> 0$ at $z_0$), and $|z - z_0| <= L(T_n)$ for $z in T_n$.
+
+  *Step 5 (Conclusion).* Combining Steps 2 and 4,
+  $
+    I(T) / 4^n <= I(T_n) <= delta_n L^2 / 4^n,
+  $
+  hence $I(T) <= delta_n L^2$ for all large $n$. Letting $n -> oo$ yields $I(T) = 0$.
+]
+
+#figure(
+  image("img/goursat-triangulation.png", width: 80%),
+  caption: [Goursat's proof: repeated bisection selects a nested sequence of triangles (left); triangulating the interior of a contour, interior edges cancel in pairs (right).],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:goursat-triangulation>
+
+#note(title: "Goursat's Improvement")[
+  Cauchy originally proved the theorem under the extra assumption that $f'$ is continuous, via Green's theorem. Writing $f = u + i v$, the contour integral splits as in *#link(<thm:continuous-integrable>)[Continuous Integrability]*:
+  $
+    integral_C f dif z = integral_(partial Omega) (u dif x - v dif y) + "i" integral_(partial Omega) (v dif x + u dif y),
+  $
+  and Green's theorem converts each line integral into a double integral:
+  $
+    integral_(partial Omega) (u dif x - v dif y) = integral.double_Omega (-v_x - u_y) dif x dif y = 0, quad
+    integral_(partial Omega) (v dif x + u dif y) = integral.double_Omega (u_x - v_y) dif x dif y = 0,
+  $
+  where the vanishing uses the Cauchy-Riemann equations. But this argument *requires the partial derivatives to be continuous*. Goursat's insight (1900) was that the bisection argument above removes the continuity assumption entirely: differentiability alone suffices, so the theorem holds for exactly the class of holomorphic functions.
+]
+
+#proof[
+  (Of *#link(<thm:cauchy-goursat>)[Cauchy-Goursat]*.) Let $Omega$ be the interior of $C$. Since $D$ is simply connected and $C subset D$, the closed region $overline(Omega) = Omega union C$ lies in $D$, where $f$ is analytic. When $C$ is polygonal, triangulate $overline(Omega)$ into finitely many small triangles. By *#link(<thm:cauchy-triangle>)[Cauchy's Theorem for Triangles]*, the integral over each triangle boundary vanishes; summing over all triangles, the contributions of interior edges cancel in pairs, leaving only the boundary:
+  $
+    0 = sum_j integral_(partial T_j) f(z) dif z = integral_C f(z) dif z.
+  $
+  For a general contour $C$, one first approximates $C$ by polygonal contours in a neighborhood where $f$ is uniformly continuous, then passes to the limit; the approximation argument is standard and we omit the technical details.
+]
+
+#theorem(name: "Principle of Deformation of Contours")[
+  Let $C_1$ and $C_2$ be positively oriented simple closed contours with $C_2$ contained in the interior of $C_1$. If $f$ is analytic on a domain containing the closed region between them, then
+  $
+    integral_(C_1) f(z) dif z = integral_(C_2) f(z) dif z.
+  $
+] <thm:deformation-invariance>
+
+#proof[
+  Join $C_1$ and $C_2$ by a *crosscut* $gamma$: a simple curve from $b in C_1$ to $a in C_2$ meeting the two contours only at its endpoints. The crosscut cuts the annular region between $C_1$ and $C_2$ into a simply connected region whose boundary, traversed with the region on the left, consists of $C_1$ (counterclockwise), $gamma$ (inward), $C_2$ (clockwise), and $gamma$ again (outward). The crosscut is thus traversed twice with opposite orientations, so its two contributions cancel. Applying the triangulation argument to this boundary — interior edges cancel in pairs exactly as before — the total integral vanishes:
+  $
+    0 = integral_(C_1) f dif z + integral_(-C_2) f dif z = integral_(C_1) f dif z - integral_(C_2) f dif z,
+  $
+  which is the claim.
+]
+
+#figure(
+  image("img/cif-deformation.png", width: 70%),
+  caption: [Deformation of contours: the integrals over $C_1$ and $C_2$ agree; the crosscut $gamma$ is traversed twice in opposite directions and cancels.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:cif-deformation>
+
+#example(name: "Deforming a Contour Around a Pole")[
+  Evaluate $integral_(|z| = 2) (dif z)/(z - 1)$. The integrand is analytic in the closed region between $|z| = 2$ and the small circle $C_r: |z - 1| = r$. By *#link(<thm:deformation-invariance>)[Deformation of Contours]*,
+  $
+    integral_(|z| = 2) (dif z)/(z - 1) = integral_(|z - 1| = r) (dif z)/(z - 1) = 2 pi "i",
+  $
+  where the last equality is the fundamental power integral *#link(<ex:power-integral>)[computed in Chapter 4]*. Note that the answer does not depend on the outer contour: any simple closed contour enclosing $1$ gives $2 pi "i"$.
+] <ex:deform-circle>
+
 == Cauchy Integral Formula and Its Derivatives // 柯西积分公式及其导数
 #theorem(name: "Cauchy Integral Formula")[
   If $f(z)$ is analytic in a simply connected domain $D$ and continuous on $partial D$, and
@@ -1344,11 +1445,165 @@ So far, path independence requires the *existence of a primitive* — a strong c
   $
     f(z_0) = 1/(2 pi"i") integral_C f(z)/(z - z_0) "d"z.
   $
+] <thm:cauchy-integral-formula>
+
+#proof[
+  Let $C_r: |z - z_0| = r$ be a small circle around $z_0$ contained in the interior of $C$ (@fig:cif-deformation). The function $f(z) / (z - z_0)$ is analytic in the closed region between $C$ and $C_r$, so by *#link(<thm:deformation-invariance>)[Deformation of Contours]*,
+  $
+    integral_C f(z)/(z - z_0) dif z = integral_(C_r) f(z)/(z - z_0) dif z quad "for every sufficiently small" r.
+  $
+  On $C_r$, write $f(z) = f(z_0) + (f(z) - f(z_0))$. The first part integrates to
+  $
+    f(z_0) integral_(C_r) (dif z)/(z - z_0) = 2 pi "i" f(z_0)
+  $
+  by the fundamental power integral, while for the remainder the ML estimate gives
+  $
+    |integral_(C_r) (f(z) - f(z_0))/(z - z_0) dif z| <= M_r / r dot 2 pi r = 2 pi M_r -> 0 quad "as" r -> 0,
+  $
+  where $M_r = sup_(|z - z_0| = r) |f(z) - f(z_0)| -> 0$ by continuity of $f$ at $z_0$. The left-hand side does not depend on $r$, so it equals the limit $2 pi "i" f(z_0)$.
+]
+
+The Cauchy integral formula is remarkable: the value of $f$ at an *interior* point is completely determined by its *boundary* values. Differentiating under the integral pushes this determinism to all orders.
+
+#theorem(name: "Derivatives of the Cauchy Integral Formula")[
+  Under the hypotheses of *#link(<thm:cauchy-integral-formula>)[Cauchy's Integral Formula]*, $f$ is infinitely differentiable in the interior of $C$, and for every $n >= 0$,
+  $
+    f^(n)(z_0) = (n!)/(2 pi "i") integral_C f(z)/(z - z_0)^(n+1) dif z.
+  $
+] <thm:cif-derivatives>
+
+#proof[
+  It suffices to establish the case $n = 1$; the general case follows by iterating the same argument. For $h != 0$ small, apply *#link(<thm:cauchy-integral-formula>)[Cauchy's Integral Formula]* to both $f(z_0 + h)$ and $f(z_0)$ (the same contour $C$ works for both points) and form the difference quotient:
+  $
+    (f(z_0 + h) - f(z_0)) / h = 1/(2 pi "i") integral_C f(z) / ((z - z_0)(z - z_0 - h)) dif z.
+  $
+  As $h -> 0$ the integrand converges uniformly on $C$ to $f(z) / (z - z_0)^2$:
+  $
+    |f(z) / ((z - z_0)(z - z_0 - h)) - f(z) / (z - z_0)^2| = (|f(z)| dot |h|) / (|z - z_0|^2 dot |z - z_0 - h|).
+  $
+  With $m = min_(z in C) |z - z_0| > 0$ and $|h| < m / 2$, the denominators are bounded below by $m^2 dot m / 2$, while $|f|$ is bounded on the compact set $C$; the whole expression tends to $0$ uniformly in $z$. Since $C$ has finite length, limit and integral may be interchanged, giving
+  $
+    f'(z_0) = 1/(2 pi "i") integral_C f(z) / (z - z_0)^2 dif z.
+  $
+]
+
+#corollary(name: "Analytic Functions are Infinitely Differentiable")[
+  If $f$ is holomorphic on a domain $D$, then $f$ possesses derivatives of all orders on $D$, and each derivative $f^(n)$ is holomorphic (hence continuous) on $D$.
+] <cor:infinite-differentiability>
+
+#proof[
+  Fix $z in D$ and a small circle around $z$ whose closed disk lies in $D$. By *#link(<thm:cif-derivatives>)[the derivative formula]*, $f^(n)(z)$ exists for every $n$. Since $f^(n+1)$ also exists, each $f^(n)$ is complex-differentiable on $D$, hence holomorphic there; continuity follows a fortiori.
+]
+
+#note(title: "Rigidity: Real versus Complex")[
+  In real analysis, once differentiable does not imply twice differentiable: the function $f(x) = x^2 sin(1/x)$ with $f(0) = 0$ is differentiable everywhere, but its derivative is discontinuous at the origin, so $f$ is not twice differentiable there. In the complex setting, holomorphy on a *neighborhood* — a condition involving only the *first* derivative — already forces derivatives of all orders. This is the first manifestation of the rigidity of holomorphic functions anticipated in Section 2.3, and it has no counterpart in real analysis.
+]
+
+#note(title: "Toward Taylor Series")[
+  The derivative formula hands us the would-be coefficients of the Taylor expansion of $f$ about $z_0$:
+  $
+    f^(n)(z_0)/(n!) = 1/(2 pi "i") integral_C f(z)/(z - z_0)^(n+1) dif z.
+  $
+  That boundary integrals encode local series data is the engine behind the Taylor series of Chapter 7 and the Laurent series of Chapter 8.
 ]
 
 == Morera's Theorem // 莫雷拉定理
 
+Cauchy-Goursat says: holomorphic $=>$ closed contour integrals vanish. Morera's theorem is the precise converse, and its proof constructs the primitive explicitly.
+
+#theorem(name: "Morera's Theorem")[
+  Let $f$ be continuous on a domain $D$. If $integral_C f(z) dif z = 0$ for every closed contour $C$ in $D$, then $f$ is holomorphic on $D$.
+] <thm:morera>
+
+#proof[
+  Vanishing closed contour integrals imply, by *#link(<thm:path-independence-equiv>)[the equivalence theorem of Chapter 4]*, that integrals of $f$ are path-independent on $D$. (The construction below also completes the one direction of that equivalence left unproved in Chapter 4.) Fix $z_0 in D$ and define
+  $
+    F(z) = integral_(z_0)^z f(zeta) dif zeta,
+  $
+  taken along any path in $D$ from $z_0$ to $z$; by path independence, $F$ is well defined. For $z in D$ and small $h$, the segment from $z$ to $z + h$ lies in $D$, and
+  $
+    (F(z + h) - F(z)) / h - f(z) = 1/h integral_z^(z+h) (f(zeta) - f(z)) dif zeta.
+  $
+  Since $f$ is continuous at $z$, for $|zeta - z| <= |h|$ we have $|f(zeta) - f(z)| <= epsilon_h$ with $epsilon_h -> 0$ as $h -> 0$. Hence
+  $
+    |(F(z + h) - F(z)) / h - f(z)| <= epsilon_h -> 0,
+  $
+  so $F'(z) = f(z)$: the primitive $F$ exists and is holomorphic on $D$. By *#link(<cor:infinite-differentiability>)[infinite differentiability]*, $F' = f$ is itself holomorphic on $D$.
+]
+
+#corollary(name: "Existence of Primitives on Simply Connected Domains")[
+  If $f$ is holomorphic on a simply connected domain $D$, then $f$ has a primitive on $D$.
+] <cor:primitive-existence>
+
+#proof[
+  By *#link(<thm:cauchy-goursat>)[Cauchy-Goursat]*, $integral_C f dif z = 0$ for every closed contour $C$ in $D$; the construction in the proof of *#link(<thm:morera>)[Morera's Theorem]* then produces a primitive $F$ with $F' = f$.
+]
+
+#note(title: "The Circle Closes")[
+  Chapter 4 established that primitive existence, vanishing closed-contour integrals, and path independence are equivalent — but left open whether *analyticity alone* guarantees any of them. Cauchy-Goursat and Morera now complete the picture: on a simply connected domain,
+  $
+    f " holomorphic" <=> integral_C f dif z = 0 " for every closed" C <=> f " has a primitive" <=> "integrals are path-independent".
+  $
+  What analyticity could not deliver in Chapter 4, it now delivers in full.
+]
+
 == Liouville's Theorem and Fundamental Theorem of Algebra // 刘维尔定理与代数基本定理
+
+The derivative formula expresses $f^(n)(z_0)$ through boundary values; combined with the ML estimate of Chapter 4, it yields quantitative bounds — the *Cauchy estimates* — from which Liouville's theorem and the Fundamental Theorem of Algebra follow in a few lines.
+
+#theorem(name: "Cauchy's Estimates")[
+  Let $f$ be holomorphic on a domain containing the closed disk $|z - z_0| <= R$, and suppose $|f(z)| <= M$ on the circle $|z - z_0| = R$. Then for every $n >= 0$,
+  $
+    |f^(n)(z_0)| <= (n! M) / R^n.
+  $
+] <thm:cauchy-estimates>
+
+#proof[
+  Apply *#link(<thm:cif-derivatives>)[the derivative formula]* on the circle $C_R: |z - z_0| = R$ and use the ML estimate (*#link(<prop:integral-properties>)[Properties of the Complex Integral]*):
+  $
+    |f^(n)(z_0)| = |(n!)/(2 pi "i") integral_(C_R) f(z)/(z - z_0)^(n+1) dif z| <= (n!)/(2 pi) dot M / R^(n+1) dot 2 pi R = (n! M) / R^n.
+  $
+]
+
+The estimates quantify the rigidity: higher derivatives at a point are controlled by the size of the function on arbitrarily large circles. Taking the radius to infinity collapses everything.
+
+#theorem(name: "Liouville's Theorem")[
+  A bounded entire function is constant.
+] <thm:liouville>
+
+#proof[
+  Let $f$ be entire with $|f(z)| <= M$ for all $z in bb(C)$, and fix $z_0 in bb(C)$. For every $R > 0$, $f$ is holomorphic on $|z - z_0| <= R$ and bounded by $M$ on its boundary, so *#link(<thm:cauchy-estimates>)[Cauchy's estimate]* with $n = 1$ gives
+  $
+    |f'(z_0)| <= M / R quad "for all" R > 0.
+  $
+  Letting $R -> oo$ yields $f'(z_0) = 0$. Since $z_0$ was arbitrary, $f' = 0$ on $bb(C)$. Writing $f = u + i v$, we get $u_x + i v_x = 0$ and the Cauchy-Riemann equations (*#link(<thm:CR-necessary>)[CR Theorem]*) give $u_y = -v_x = 0$ and $v_y = u_x = 0$; all first partials of $u$ and $v$ vanish on the connected plane, so $u$ and $v$ are constant, and so is $f$.
+]
+
+#theorem(name: "The Fundamental Theorem of Algebra")[
+  Every non-constant polynomial $p(z) = a_n z^n + a_(n-1) z^(n-1) + dots + a_0$ with $n >= 1$ and $a_n != 0$ has a root in $bb(C)$. Counted with multiplicity, $p$ has exactly $n$ roots in $bb(C)$.
+] <thm:fundamental-theorem-algebra>
+
+#proof[
+  *Step 1 (Growth).* By the reverse triangle inequality, for $|z|$ large,
+  $
+    |p(z)| >= |a_n| |z|^n - (|a_(n-1)| |z|^(n-1) + dots + |a_0|) >= (|a_n| / 2) |z|^n,
+  $
+  so $|p(z)| -> oo$ as $|z| -> oo$.
+
+  *Step 2 (A root exists).* Suppose $p$ has no root. Then $q = 1/p$ is entire. On the compact disk $|z| <= R_0$ the continuous function $|q|$ is bounded; on $|z| > R_0$ Step 1 gives $|q(z)| <= 2 / (|a_n| |z|^n) <= 2 / |a_n|$. Hence $q$ is a bounded entire function, constant by *#link(<thm:liouville>)[Liouville's Theorem]* — but then $p$ is constant, a contradiction. So $p$ has a root $z_1 in bb(C)$.
+
+  *Step 3 (Multiplicity count).* By the factor theorem, $p(z) = (z - z_1) p_1(z)$ with $p_1$ a polynomial of degree $n - 1$. Applying Step 2 to $p_1$ (if non-constant) and iterating,
+  $
+    p(z) = a_n (z - z_1)(z - z_2) dots (z - z_n),
+  $
+  so $p$ has exactly $n$ roots in $bb(C)$, counted with multiplicity.
+]
+
+#example(name: "Entire but Unbounded")[
+  Liouville's theorem is sharp: boundedness cannot be dropped. The exponential is entire but unbounded, since $|e^z| = e^x -> oo$ as $x -> +oo$; likewise $sin z$ grows exponentially along the imaginary axis, $|sin(i y)| = sinh |y|$, as emphasized in *#link(<caution:trig-unbounded>)[the caution of Chapter 3]*. Neither function contradicts Liouville — precisely because both are unbounded.
+] <ex:entire-unbounded>
+
+The Cauchy integral formula is more than a computational device: it encodes the *local* behavior of holomorphic functions through *boundary* data. The next chapter exploits this systematically. Averaging $f$ over circles yields the mean value property and the maximum modulus principle; the Schwarz lemma classifies the self-maps of the disk; and Weierstrass's theorem shows that locally uniform limits of holomorphic functions remain holomorphic — the theory's gateway from finite to infinite-dimensional phenomena.
 
 = Applications of Cauchy Integral Formula // 柯西积分公式的应用
 
