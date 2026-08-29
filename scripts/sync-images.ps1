@@ -40,7 +40,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-$RepoRoot    = $PSScriptRoot
+$RepoRoot    = Split-Path -Parent $PSScriptRoot
 $OssPrefix   = 'oss://math-repo/imgs/'
 $ImageExts   = @('.png', '.jpg', '.jpeg', '.svg', '.webp', '.gif', '.bmp')
 
