@@ -576,18 +576,18 @@
       ]
     ]
     #v(2.0em)
-    
+
     // 使用 query 手动生成目录，完全控制渲染
     #context {
       // 获取所有层级的标题（从1到depth）
       let headings = query(heading.where())
-      
+
       for elem in headings {
         // 只处理指定深度内的标题
         if elem.level > depth {
           continue
         }
-        
+
         let counter-int = counter(heading).at(elem.location())
         let numbering-setting = elem.numbering
         let num = none
@@ -687,7 +687,18 @@
 // └────────────────────────────────────────────────────────────────────┘
 
 /// theorem-like 通用生成器
-#let major-box(label, suit, bg-1, bg-2, border-color, body, number: none, name: none, body-font: font-theorem-widget, body-style: "normal") = {
+#let major-box(
+  label,
+  suit,
+  bg-1,
+  bg-2,
+  border-color,
+  body,
+  number: none,
+  name: none,
+  body-font: font-theorem-widget,
+  body-style: "normal",
+) = {
   return [
     #v(0.8em)
     #block(width: 100%)[
@@ -727,7 +738,9 @@
             ]
             #if name != none [
               #h(0.4em)
-              #text(font: body-font, size: font-widget-number-size, weight: "regular")[#name]
+              #text(font: body-font, size: font-widget-number-size, weight: "regular")[
+                #if type(name) == str { eval(name, mode: "markup") } else { name }
+              ]
             ]
           ]
         ]
@@ -750,7 +763,17 @@
     let local-num = theorem-counter.get().first() + 1
     theorem-counter.step()
     let num = chapter-widget-number(local-num)
-    major-box("Theorem", [♥], color-theorem-bg-1, color-theorem-bg-2, color-theorem-border, body, number: num, name: name, body-font: font-theorem-widget)
+    major-box(
+      "Theorem",
+      [♥],
+      color-theorem-bg-1,
+      color-theorem-bg-2,
+      color-theorem-border,
+      body,
+      number: num,
+      name: name,
+      body-font: font-theorem-widget,
+    )
   }
 }
 #let corollary(body, name: none) = {
@@ -758,7 +781,17 @@
     let local-num = corollary-counter.get().first() + 1
     corollary-counter.step()
     let num = chapter-widget-number(local-num)
-    major-box("Corollary", [♥], color-theorem-bg-1, color-theorem-bg-2, color-theorem-border, body, number: num, name: name, body-font: font-theorem-widget)
+    major-box(
+      "Corollary",
+      [♥],
+      color-theorem-bg-1,
+      color-theorem-bg-2,
+      color-theorem-border,
+      body,
+      number: num,
+      name: name,
+      body-font: font-theorem-widget,
+    )
   }
 }
 #let lemma(body, name: none) = {
@@ -766,7 +799,17 @@
     let local-num = lemma-counter.get().first() + 1
     lemma-counter.step()
     let num = chapter-widget-number(local-num)
-    major-box("Lemma", [♥], color-theorem-bg-1, color-theorem-bg-2, color-theorem-border, body, number: num, name: name, body-font: font-theorem-widget)
+    major-box(
+      "Lemma",
+      [♥],
+      color-theorem-bg-1,
+      color-theorem-bg-2,
+      color-theorem-border,
+      body,
+      number: num,
+      name: name,
+      body-font: font-theorem-widget,
+    )
   }
 }
 
@@ -778,7 +821,17 @@
     let local-num = definition-counter.get().first() + 1
     definition-counter.step()
     let num = chapter-widget-number(local-num)
-    major-box("Definition", [♣], color-definition-bg-1, color-definition-bg-2, color-definition-border, body, number: num, name: name, body-font: font-theorem-widget)
+    major-box(
+      "Definition",
+      [♣],
+      color-definition-bg-1,
+      color-definition-bg-2,
+      color-definition-border,
+      body,
+      number: num,
+      name: name,
+      body-font: font-theorem-widget,
+    )
   }
 }
 
@@ -787,7 +840,17 @@
     let local-num = law-counter.get().first() + 1
     law-counter.step()
     let num = chapter-widget-number(local-num)
-    major-box("Law", [♣], color-definition-bg-1, color-definition-bg-2, color-definition-border, body, number: num, name: name, body-font: font-theorem-widget)
+    major-box(
+      "Law",
+      [♣],
+      color-definition-bg-1,
+      color-definition-bg-2,
+      color-definition-border,
+      body,
+      number: num,
+      name: name,
+      body-font: font-theorem-widget,
+    )
   }
 }
 
@@ -797,7 +860,17 @@
     let local-num = proposition-counter.get().first() + 1
     proposition-counter.step()
     let num = chapter-widget-number(local-num)
-    major-box("Proposition", [♠], color-proposition-bg-1, color-proposition-bg-2, color-proposition-border, body, number: num, name: name, body-font: font-theorem-widget)
+    major-box(
+      "Proposition",
+      [♠],
+      color-proposition-bg-1,
+      color-proposition-bg-2,
+      color-proposition-border,
+      body,
+      number: num,
+      name: name,
+      body-font: font-theorem-widget,
+    )
   }
 }
 #let property(body, name: none) = {
@@ -805,7 +878,17 @@
     let local-num = property-counter.get().first() + 1
     property-counter.step()
     let num = chapter-widget-number(local-num)
-    major-box("Property", [♣], color-definition-bg-1, color-definition-bg-2, color-definition-border, body, number: num, name: name, body-font: font-theorem-widget)
+    major-box(
+      "Property",
+      [♣],
+      color-definition-bg-1,
+      color-definition-bg-2,
+      color-definition-border,
+      body,
+      number: num,
+      name: name,
+      body-font: font-theorem-widget,
+    )
   }
 }
 #let example(body, name: none) = {
@@ -813,7 +896,17 @@
     let local-num = example-counter.get().first() + 1
     example-counter.step()
     let num = chapter-widget-number(local-num)
-    major-box("Example", [♠], color-example-bg-1, color-example-bg-2, color-example-border, body, number: num, name: name, body-font: font-theorem-widget)
+    major-box(
+      "Example",
+      [♠],
+      color-example-bg-1,
+      color-example-bg-2,
+      color-example-border,
+      body,
+      number: num,
+      name: name,
+      body-font: font-theorem-widget,
+    )
   }
 }
 
@@ -823,7 +916,17 @@
     let local-num = axiom-counter.get().first() + 1
     axiom-counter.step()
     let num = chapter-widget-number(local-num)
-    major-box("Axiom", [♦], color-axiom-bg-1, color-axiom-bg-2, color-axiom-border, body, number: num, name: name, body-font: font-theorem-widget)
+    major-box(
+      "Axiom",
+      [♦],
+      color-axiom-bg-1,
+      color-axiom-bg-2,
+      color-axiom-border,
+      body,
+      number: num,
+      name: name,
+      body-font: font-theorem-widget,
+    )
   }
 }
 #let postulate(body, name: none) = {
@@ -831,16 +934,38 @@
     let local-num = postulate-counter.get().first() + 1
     postulate-counter.step()
     let num = chapter-widget-number(local-num)
-    major-box("Postulate", [♦], color-axiom-bg-1, color-axiom-bg-2, color-axiom-border, body, number: num, name: name, body-font: font-theorem-widget)
+    major-box(
+      "Postulate",
+      [♦],
+      color-axiom-bg-1,
+      color-axiom-bg-2,
+      color-axiom-border,
+      body,
+      number: num,
+      name: name,
+      body-font: font-theorem-widget,
+    )
   }
 }
 
 /// 注释类配色方案（仅保留 note / caution）
 #let note-palette(kind: "note") = {
   if kind == "caution" {
-    (title: "Caution", icon: [!], bg: color-annot-caution-bg, border: color-annot-caution-border, accent: color-annot-caution-accent)
+    (
+      title: "Caution",
+      icon: [!],
+      bg: color-annot-caution-bg,
+      border: color-annot-caution-border,
+      accent: color-annot-caution-accent,
+    )
   } else {
-    (title: "Note", icon: [i], bg: color-annot-note-bg, border: color-annot-note-border, accent: color-annot-note-accent)
+    (
+      title: "Note",
+      icon: [i],
+      bg: color-annot-note-bg,
+      border: color-annot-note-border,
+      accent: color-annot-note-accent,
+    )
   }
 }
 
@@ -855,7 +980,9 @@
   accent: none,
 ) = {
   let p = note-palette(kind: kind)
-  let title-text = if title != none { title } else { p.title }
+  let title-text = if title != none {
+    if type(title) == str { eval(title, mode: "markup") } else { title }
+  } else { p.title }
   let icon-text = if icon != none { icon } else { p.icon }
   let bg-color = if bg != none { bg } else { p.bg }
   let border-color = if border != none { border } else { p.border }
@@ -883,7 +1010,9 @@
         style: "normal",
       )
 
-      #text(font: font-annot-text, size: 11pt, style: "normal", weight: "bold", fill: accent-color)[#icon-text #h(0.35em) #title-text]
+      #text(font: font-annot-text, size: 11pt, style: "normal", weight: "bold", fill: accent-color)[#icon-text #h(
+          0.35em,
+        ) #title-text]
       #v(0.18em)
       #body
     ]
@@ -925,9 +1054,15 @@
         gutter: 0.35em,
         align: (left + horizon, left + horizon),
         text(font: font-latin-title, size: font-widget-title-size, weight: "bold", fill: color-structure)[#icon],
-        text(font: font-major-label, size: font-widget-secondary-title-size, style: "italic", weight: "bold", fill: color-title)[
+        text(
+          font: font-major-label,
+          size: font-widget-secondary-title-size,
+          style: "italic",
+          weight: "bold",
+          fill: color-title,
+        )[
           #label
-          #if name != none [#h(0.35em)#name]
+          #if name != none [#h(0.35em)#if type(name) == str { eval(name, mode: "markup") } else { name }]
         ],
       )
       #v(0.25em)
@@ -1016,11 +1151,9 @@
       stroke: (x, y) => if y == 0 {
         (bottom: 0.7pt + black)
         (top: 0.7pt + black)
-      }
-      else if y == data-rows.len() {
+      } else if y == data-rows.len() {
         (bottom: 0.7pt + black)
-      }
-      else {
+      } else {
         none
       },
       ..header-cells, ..body-cells,
@@ -1055,9 +1188,7 @@
       stroke: gradient.linear(gray, silver),
       gutter: 1.5pt,
       fill: (col, row) => {
-        if row == 0 { silver } 
-        else if (col == 0) { silver }
-        // else if (calc.rem(row, 2) == 0) { gray.lighten(76%) } 
+        if row == 0 { silver } else if (col == 0) { silver } // else if (calc.rem(row, 2) == 0) { gray.lighten(76%) }
         else { white }
       },
       ..header-cells, ..body-cells,
@@ -1150,7 +1281,7 @@
     }
     pagebreak(weak: false)
     v(1.0em)
-    
+
     // Chapter 编号：优雅的大号数字
     align(center, context {
       let chapter-num = chapter-counter.get().first()
@@ -1159,19 +1290,19 @@
       ]
     })
     v(-0.5em)
-    
+
     // 装饰线
     align(center)[
       #box(width: 12%, height: 2pt, fill: color-structure)
     ]
     v(0.4em)
-    
+
     // Chapter 标签
     align(center, text(size: 12pt, font: font-latin-title, fill: color-muted, style: "italic")[
       Chapter
     ])
     v(0.3em)
-    
+
     // Chapter 标题
     align(center, text(size: 24pt, font: font-latin-title, weight: "bold", fill: color-title)[#it.body])
     v(1.5em)
@@ -1191,13 +1322,13 @@
     context {
       let chapter-num = if chapter-counter.get().first() > 0 { chapter-counter.get().first() } else { 1 }
       let section-num = section-counter.get().first()
-      
+
       // 编号部分：紧凑的数字设计
       text(size: 20pt, font: font-latin-title, weight: "bold", fill: color-structure.lighten(60%))[
         #chapter-num.#section-num
       ]
       h(0.5em)
-      
+
       // 标题文本
       text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-title)[
         #it.body
@@ -1211,20 +1342,20 @@
   show heading.where(level: 3): it => {
     set par(first-line-indent: 0em)
     v(0.8em)
-    
+
     // 左侧装饰：渐变色块
     box(width: 4pt, height: 1.2em, fill: color-structure, radius: 1pt, baseline: 1.5pt)
     h(0.6em)
-    
+
     // 标题文本
     text(size: 14pt, font: font-latin-title, weight: "semibold", fill: color-title)[
       #it.body
     ]
-    
+
     v(0.4em)
   }
 
-// ── Equation: 关闭内置编号 ──
+  // ── Equation: 关闭内置编号 ──
   set math.equation(numbering: none, block: true)
 
   doc

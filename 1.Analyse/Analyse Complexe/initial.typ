@@ -491,7 +491,7 @@ The Cauchy-Riemann equations alone are _not_ sufficient for complex differentiab
   which is exactly the statement that $f'(z_0) = partial_x u + "i" partial_x v$ exists.
 ]
 
-#caution(title: "Partial Derivatives + CR $neq$ Complex Differentiability")[
+#caution(title: "Partial Derivatives + CR $!=$ Complex Differentiability")[
   It is a common mistake to assume that the mere existence of the four partial derivatives together with the Cauchy-Riemann equations implies complex differentiability. This is false: Frechet differentiability of $(u, v)$ is strictly stronger than the existence of the partial derivatives. A standard counterexample is
   $
     f(0) = 0, quad f(z) = (z^5) / (|z|^4) text(" for ") z != 0.
@@ -792,7 +792,7 @@ With the exponential in hand, the trigonometric and hyperbolic functions can be 
   The remaining trigonometric functions are defined by quotients, whenever the denominator is nonzero: $tan z = sin z / cos z$, $cot z = 1 / tan z$, $sec z = 1 / cos z$, $csc z = 1 / sin z$.
 ] <def:trig-functions>
 
-#property(name: [Properties of $sin$ and $cos$])[
+#property(name: "Properties of $sin$ and $cos$")[
   + *Parity*: $cos(-z) = cos z$ and $sin(-z) = -sin z$.
   + *Periodicity*: $sin$ and $cos$ are $2 pi$-periodic.
   + *Euler's identity*: $e^(i z) = cos z + i sin z$ for all $z in bb(C)$.
@@ -1014,7 +1014,7 @@ With the logarithm in hand, complex powers follow naturally.
 
 The multi-valued structure depends sharply on $alpha$.
 
-#theorem(name: "Branch Structure of $z^alpha$")[
+#theorem(name: [Branch Structure of $z^alpha$])[
   Let $alpha$ be a fixed complex number and $z != 0$.
   + If $alpha = n$ is an integer, $z^alpha$ is single-valued and coincides with the elementary power: $z^n$ for $n >= 0$, and $1 / z^(-n)$ for $n < 0$.
   + If $alpha = p / q$ is a rational number in lowest terms ($q >= 1$), $z^alpha$ takes exactly $q$ distinct values.
@@ -1056,7 +1056,7 @@ The multi-valued structure depends sharply on $alpha$.
   Writing $alpha f(z) / z = alpha exp(alpha ln z) exp(-ln z) = alpha exp((alpha - 1) ln z) = alpha z^(alpha - 1)$ justifies the usual notation.
 ]
 
-#example(name: [The Value of $i^i$])[
+#example(name: "The Value of $i^i$")[
   By definition, $i^i = exp(i Ln i)$. Since $i = e^(pi i \/ 2)$, we have $Ln i = i(pi / 2 + 2 k pi)$, hence
   $
     i^i = exp(-pi / 2 - 2 k pi), quad k in ZZ.
