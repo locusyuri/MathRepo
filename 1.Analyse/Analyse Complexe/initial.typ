@@ -1609,13 +1609,205 @@ The Cauchy integral formula is more than a computational device: it encodes the 
 = Applications of Cauchy Integral Formula // 柯西积分公式的应用
 
 == Maximum Modulus Principle and Mean Value Property // 最大模原理与平均值性质
-#theorem(name: "Maximum Modulus Principle")[ // 最大模原理
-  Let $f(z)$ be a non-constant analytic function in a bounded region $D subset CC$ that is continuous on the closure of $D$. Then the maximum of $|f(z)|$ on the closure of $D$ is attained on the boundary of $D$.
+
+The Cauchy integral formula admits two readings. Read as "boundary values determine interior values", it produced the rigidity theorems of Chapter 5. Read the other way — the interior value is an *average* of boundary values — it yields the mean value property, and from it the maximum modulus principle.
+
+#theorem(name: "Mean Value Property")[
+  Let $f$ be holomorphic on a domain containing the closed disk $|z - z_0| <= r$. Then
+  $
+    f(z_0) = 1/(2 pi) integral_0^(2 pi) f(z_0 + r e^(i theta)) dif theta,
+  $
+  the value at the center equals the average of the values over the circle. In particular,
+  $
+    |f(z_0)| <= 1/(2 pi) integral_0^(2 pi) |f(z_0 + r e^(i theta))| dif theta.
+  $
+] <thm:mean-value>
+
+#proof[
+  Apply *#link(<thm:cauchy-integral-formula>)[Cauchy's Integral Formula]* on the contour $|z - z_0| = r$, where $z = z_0 + r e^(i theta)$ and $dif z = i r e^(i theta) dif theta$:
+  $
+    f(z_0) = 1/(2 pi "i") integral_0^(2 pi) f(z_0 + r e^(i theta)) / (r e^(i theta)) dot i r e^(i theta) dif theta = 1/(2 pi) integral_0^(2 pi) f(z_0 + r e^(i theta)) dif theta.
+  $
+  Taking moduli and using the triangle inequality for integrals yields the second display.
 ]
+
+#lemma(name: "Maximum Principle for Mean-Value Functions")[
+  Let $g$ be continuous on a connected open set $Omega$ and satisfy the mean value property at every point of $Omega$ — the value at each point equals its average over every circle centered there whose closed disk lies in $Omega$. Then $|g|$ cannot attain a maximum at an interior point of $Omega$ unless $g$ is constant on $Omega$.
+] <lem:mmp-mvm>
+
+#proof[
+  Let $M = sup_(z in Omega) |g(z)|$ and consider the set $E = {z in Omega : |g(z)| = M}$ (possibly with no elements). If $z_1 in E$ and the circle $|z - z_1| = s$ lies with its interior in $Omega$, the mean value property gives
+  $
+    M = |g(z_1)| <= 1/(2 pi) integral_0^(2 pi) |g(z_1 + s e^(i theta))| dif theta <= M,
+  $
+  since $|g| <= M$ everywhere. Equality holds throughout, so $|g| = M$ on the entire circle: $E$ is open. $E$ is also closed in $Omega$ by continuity of $|g|$, and $Omega$ is connected, so either $E$ is empty — the maximum is attained only on the boundary — or $E = Omega$. In the latter case $|g| = M$ everywhere, and each mean value is an average of numbers of modulus $M$ whose modulus is again $M$; by the equality case of the triangle inequality, all values on each circle share a single argument, so $g$ is locally constant, hence constant on the connected set $Omega$.
+]
+
+With the lemma in hand, the maximum modulus principle is immediate.
+
+#theorem(name: "Maximum Modulus Principle")[ // 最大模原理
+  Let $f(z)$ be a non-constant analytic function in a bounded region $D subset bb(C)$ that is continuous on the closure of $D$. Then the maximum of $|f(z)|$ on the closure of $D$ is attained on the boundary of $D$.
+] <thm:maximum-modulus>
+
+#proof[
+  Since $overline(D)$ is compact and $|f|$ continuous, the maximum of $|f|$ on $overline(D)$ is attained somewhere. A holomorphic function satisfies the mean value property at every point of $D$, so if the maximum were attained at an interior point, *#link(<lem:mmp-mvm>)[the maximum principle]* would force $f$ to be constant on $D$ — contradicting the hypothesis. Hence it is attained on the boundary.
+]
+
+#note(title: "No Peaks Inside")[
+  The principle is often used in the equivalent *strong form*: if $|f|$ attains a local maximum at an interior point, then $f$ is constant in a neighborhood — indeed on the whole component. Geometrically, the modulus surface of a holomorphic function has *no peaks over the interior*: every summit lies on the boundary. In the steady-state temperature interpretation of Section 2.4, a harmonic temperature distribution has no hot or cold spots inside the region; extremes occur only on the boundary — this fulfills the preview given there.
+]
+
+#figure(
+  image("img/maximum-modulus.svg", width: 70%),
+  caption: [The modulus surface of a holomorphic function over a disk: the surface has no interior peaks, and the maximum of $|f|$ is attained on the boundary circle.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:maximum-modulus>
+
+#corollary(name: "Minimum Modulus Principle")[
+  Let $f$ be a non-constant analytic function in a bounded region $D$ that is continuous on $overline(D)$ and has *no zeros* in $D$. Then the minimum of $|f|$ on $overline(D)$ is attained on the boundary of $D$.
+] <cor:minimum-modulus>
+
+#proof[
+  Since $f$ has no zeros, $1/f$ is holomorphic on $D$ and continuous on $overline(D)$. Its maximum is $1$ over the minimum of $|f|$; apply *#link(<thm:maximum-modulus>)[the maximum modulus principle]* to $1/f$.
+]
+
+#corollary(name: "Maximum Principle for Harmonic Functions")[
+  Let $u$ be a non-constant harmonic function on a bounded region $D$, continuous on $overline(D)$. Then both the maximum and the minimum of $u$ on $overline(D)$ are attained on the boundary of $D$.
+] <cor:harmonic-max-principle>
+
+#proof[
+  Locally on a disk, a harmonic function is the real part of a holomorphic function $f$ (the conjugate construction of Section 2.4). Since $|e^(f)| = e^u$, applying *#link(<thm:maximum-modulus>)[the maximum modulus principle]* to $e^f$ excludes interior maxima of $u$, and applying it to $e^(-f)$ — equivalently, to the harmonic function $-u$ — excludes interior minima. The open-closed set argument of *#link(<lem:mmp-mvm>)[the lemma]* extends the conclusion from local disks to all of the connected region $D$.
+]
+
+#example(name: "Bounding a Function by Its Boundary Values")[
+  Let $f(z) = z^2 + 3$ on the closed unit disk. The boundary values satisfy
+  $
+    |f(e^(i theta))| = |e^(2 i theta) + 3| = sqrt((cos 2 theta + 3)^2 + (sin 2 theta)^2) = sqrt(10 + 6 cos 2 theta) <= 4,
+  $
+  with equality at $theta = 0$. *#link(<thm:maximum-modulus>)[The maximum modulus principle]* certifies $|f(z)| <= 4$ on the *entire* disk without checking any interior point — a first taste of how boundary data controls a holomorphic function globally.
+] <ex:boundary-max>
 
 == Schwarz Lemma // 施瓦茨引理
 
+The Schwarz lemma is the precise form of a remarkable fact: a holomorphic self-map of the disk that fixes the origin cannot push points away from it.
+
+#theorem(name: "Schwarz Lemma")[
+  Let $f$ be holomorphic on the unit disk $bb(D) = {|z| < 1}$ with $f(0) = 0$ and $|f(z)| <= 1$ for all $z in bb(D)$. Then:
+  + $|f(z)| <= |z|$ for all $z in bb(D)$;
+  + $|f'(0)| <= 1$.
+
+  If moreover $|f(z_0)| = |z_0|$ for some $z_0 != 0$, or $|f'(0)| = 1$, then $f(z) = e^(i theta) z$ for some real constant $theta$: $f$ is a rotation.
+] <thm:schwarz-lemma>
+
+#proof[
+  Define
+  $
+    g(z) = cases(f(z)/z & z != 0, f'(0) & z = 0).
+  $
+  Then $g$ is holomorphic on $bb(D) backslash {0}$ and continuous on all of $bb(D)$: differentiability of $f$ at $0$ with $f(0) = 0$ gives $f(z) = f'(0) z + eta(z) z$ with $eta(z) -> 0$, so $g(z) = f'(0) + eta(z) -> f'(0)$ as $z -> 0$.
+
+  *Step 1 ($g$ satisfies the mean value property at $0$).* Fix $0 < r < 1$ and parametrize the circle by $w = r e^(i theta)$, so $dif w = i w dif theta$ and $e^(-i theta) = r / w$. Then
+  $
+    1/(2 pi) integral_0^(2 pi) g(r e^(i theta)) dif theta
+    = 1/(2 pi r) integral_0^(2 pi) f(r e^(i theta)) e^(-i theta) dif theta
+    = 1/(2 pi r) dot r/"i" integral_(|w| = r) f(w)/w^2 dif w
+    = 1/(2 pi r) dot r/"i" dot 2 pi "i" f'(0)
+    = g(0),
+  $
+  where the third equality is *#link(<thm:cif-derivatives>)[the derivative formula]* applied to $f$ at $0$.
+
+  *Step 2 (the bound).* Fix $0 < r < 1$. On the closed disk $|z| <= r$, the function $g$ is continuous and satisfies the mean value property at every interior point: holomorphy away from $0$ gives *#link(<thm:mean-value>)[the mean value property]* there, and Step 1 covers the center. On the boundary circle $|z| = r$ we have $|g(z)| = |f(z)| / r <= 1/r$, so *#link(<lem:mmp-mvm>)[the maximum principle]* yields $|g(z)| <= 1/r$ throughout the disk. Hence $|f(z)| <= |z| / r$ for $|z| <= r$; fixing $z$ and letting $r -> 1^(-)$ gives $|f(z)| <= |z|$. Setting $z = 0$ in the bound $|g| <= 1/r$ gives $|f'(0)| <= 1$.
+
+  *Step 3 (the equality case).* Suppose $|f(z_0)| = |z_0|$ for some $z_0 != 0$ (the case $|f'(0)| = 1$ is analogous, with $z_0$ replaced by $0$). Then $|g(z_0)| = 1$. Choosing $r$ with $|z_0| < r < 1$, Step 2 gives $|g| <= 1/r < 1 = |g(z_0)|$ on $|z| <= r$: the maximum is attained at the interior point $z_0$, so *#link(<lem:mmp-mvm>)[the maximum principle]* forces $g$ to be constant of modulus $1$ on $|z| < r$, say $g = e^(i theta)$. Every point $z in bb(D)$ lies in some disk $|w| < r$ that also contains $z_0$ (take $r > max(|z|, |z_0|)$), and the same argument applies on that disk; hence $g = e^(i theta)$ throughout $bb(D)$, that is, $f(z) = e^(i theta) z$.
+]
+
+#example(name: "Strict Contraction by $z^2$")[
+  The map $f(z) = z^2$ sends the unit disk into itself and fixes the origin. For $0 < |z| < 1$,
+  $
+    |f(z)| = |z|^2 < |z|,
+  $
+  so the Schwarz inequality is strict at every nonzero point — consistent with the equality case, since $f$ is not a rotation; likewise $|f'(0)| = 0 < 1$.
+] <ex:schwarz-strict>
+
+#figure(
+  image("img/schwarz-lemma.svg", width: 60%),
+  caption: [Schwarz lemma: a holomorphic self-map of the disk fixing the origin satisfies $|f(z)| <= |z|$ — the image is never farther from the origin than its preimage.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:schwarz-lemma>
+
+#note(title: "Toward Schwarz-Pick and Disk Automorphisms")[
+  The Schwarz lemma is the gateway to the geometry of the disk. Dropping the normalization $f(0) = 0$ and pre-composing with disk automorphisms $phi_a(z) = (z - a)/(1 - overline(a) z)$ yields the *Schwarz-Pick lemma*: holomorphic self-maps of the disk never decrease hyperbolic distance. This theory — including the full classification of disk automorphisms — will be taken up once Möbius transformations become available later in this book.
+]
+
 == Weierstrass Convergence Theorem // 魏尔斯特拉斯收敛定理
+
+The Cauchy theory of Chapter 5 established what single holomorphic functions can do; this final section asks what *limits* of holomorphic functions do. The answer — everything survives, even differentiation — opens the door to series of functions, and thereby to the next chapter.
+
+#definition(name: "Locally Uniform Convergence")[
+  A sequence of functions $f_n$ *converges locally uniformly* to $f$ on a domain $D$ if every point of $D$ has a neighborhood on which $f_n -> f$ uniformly — equivalently, $f_n -> f$ uniformly on every compact subset $K subset D$:
+  $
+    sup_(z in K) |f_n(z) - f(z)| -> 0 quad "as" n -> oo.
+  $
+] <def:locally-uniform>
+
+#note[
+  Basic facts carry over from real analysis: a locally uniform limit of continuous functions is continuous, uniform convergence permits interchanging limits with integrals over compact curves, and series are controlled by the Weierstrass M-test. What is *new* in the complex setting is the following theorem.
+]
+
+#theorem(name: "Weierstrass Convergence Theorem")[
+  Let $f_n$ be holomorphic on a domain $D$ and let $f_n -> f$ locally uniformly on $D$. Then $f$ is holomorphic on $D$, and moreover the derivatives converge locally uniformly:
+  $
+    f_n' -> f' quad "locally uniformly on" D.
+  $
+] <thm:weierstrass>
+
+#proof[
+  *Step 1 ($f$ is holomorphic).* $f$ is continuous, being a locally uniform limit of continuous functions. For any closed contour $C$ in $D$, *#link(<thm:cauchy-goursat>)[Cauchy-Goursat]* gives $integral_C f_n dif z = 0$ for every $n$, and since $C$ is compact, $f_n -> f$ uniformly on it:
+  $
+    |integral_C f dif z| = |integral_C (f - f_n) dif z| <= "length"(C) dot sup_(z in C) |f_n(z) - f(z)| -> 0.
+  $
+  Hence $integral_C f dif z = 0$ for every closed contour $C$, and $f$ is holomorphic by *#link(<thm:morera>)[Morera's Theorem]*.
+
+  *Step 2 (convergence of derivatives).* Fix $z_0 in D$ and a circle $C_r: |z - z_0| = r$ whose closed disk lies in $D$. Applying *#link(<thm:cif-derivatives>)[the derivative formula]* to $f_n$ and — by Step 1 — to $f$,
+  $
+    f_n'(z_0) - f'(z_0) = 1/(2 pi "i") integral_(C_r) (f_n(z) - f(z)) / (z - z_0)^2 dif z,
+  $
+  so the ML estimate gives
+  $
+    |f_n'(z_0) - f'(z_0)| <= 1/r dot sup_(|z - z_0| = r) |f_n(z) - f(z)| -> 0.
+  $
+  To upgrade this to uniform convergence on compacts, cover a given compact $K subset D$ by finitely many disks $|z - z_j| < r_j$ whose closures lie in $D$; each point of $K$ lies in some smaller disk $|z - z_j| < r_j / 2$, on which the estimate applies with the circle $|w - z| = r_j / 2$ contained in $|w - z_j| < r_j$. The right-hand side tends to $0$ uniformly over each of the finitely many disks, hence over $K$.
+]
+
+#note(title: "Real versus Complex, Once More")[
+  In real analysis, a uniform limit of differentiable functions need not be differentiable — and even when it is, the derivatives may fail to converge: $f_n(x) = sin(n x) / sqrt(n)$ converges uniformly to $0$ on $bb(R)$, yet $f_n'(x) = sqrt(n) cos(n x)$ diverges at every point. In the complex setting, Weierstrass's theorem shows that the limit of holomorphic functions is holomorphic *and* the derivatives converge — rigidity survives the passage to a limit.
+]
+
+#corollary(name: "Term-by-Term Differentiation")[
+  Let $sum_(n=1)^oo u_n(z)$ be a series of holomorphic functions on a domain $D$ converging locally uniformly to $s(z)$. Then $s$ is holomorphic on $D$, and the series may be differentiated term by term:
+  $
+    s'(z) = sum_(n=1)^oo u_n'(z),
+  $
+  the differentiated series converging locally uniformly on $D$.
+] <cor:term-by-term>
+
+#proof[
+  Apply *#link(<thm:weierstrass>)[Weierstrass's theorem]* to the partial sums $s_n = u_1 + dots + u_n$, whose derivatives are $s_n' = sum_(k=1)^n u_k'$.
+]
+
+#example(name: "The Geometric Series")[
+  On the unit disk, the partial sums $s_n(z) = 1 + z + dots + z^n$ are holomorphic and converge to $s(z) = 1/(1 - z)$. On any compact set where $|z| <= rho < 1$,
+  $
+    |s(z) - s_n(z)| = |z^(n+1) / (1 - z)| <= rho^(n+1) / (1 - rho) -> 0,
+  $
+  so the convergence is locally uniform. *#link(<cor:term-by-term>)[Term-by-term differentiation]* then recovers
+  $
+    s'(z) = 1/(1 - z)^2 = sum_(n=1)^oo n z^(n-1).
+  $
+  The geometric series is the prototype of a power series; the next chapter develops the general theory on exactly these lines.
+] <ex:geometric-series>
 
 #part("Series") // 级数
 = Power Series and Taylor Series // 幂级数和泰勒级数
