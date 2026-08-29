@@ -375,9 +375,11 @@ Later, we refer to *#link(<def:continuous>)[Continuous Function]*.
 
 ## 5. 图片
 
+图片统一使用 **SVG**（矢量格式：缩放无损、体积小、线框类数学插图最清晰）。Typst 的 `image()` 原生支持 SVG；PNG/JPG 仍可用作后备（如只能获得位图来源时）。
+
 ```typst
 #figure(
-  image("img/example.png", width: 60%),
+  image("img/example.svg", width: 60%),
   caption: [This is an example figure.],
   placement: auto,
   supplement: [Fig.]
@@ -386,15 +388,16 @@ Later, we refer to *#link(<def:continuous>)[Continuous Function]*.
 
 - 图片文件放在 `img/` 目录下
 - 使用相对路径引用
+- SVG 注意事项：保持文件自包含（无外部引用）；Typst 通过 usvg 渲染，SVG 内的文本会被转为路径，不支持滤镜与动画
 
 ### 图片生成工作流（占位 + 集中出提示词）
 
 需要新图片时，不要让图片阻塞写作，按以下流程处理：
 
-1. **先写引用**：在 `.typ` 中直接写好 `#figure(image("./img/xxx.png", ...))` 与 `<fig:xxx>` 标签，保持文档结构完整
-2. **创建占位文件**：将仓库根目录的 `0.Wiki/null.png`（空白占位图）复制到目标 `img/` 目录，并改名为实际图片名（如 `img/xxx.png`）。占位图是有效 PNG，期间 `typst compile` 仍可通过
+1. **先写引用**：在 `.typ` 中直接写好 `#figure(image("./img/xxx.svg", ...))` 与 `<fig:xxx>` 标签，保持文档结构完整
+2. **创建占位文件**：将仓库根目录的 `0.Wiki/null.svg`（空白占位图）复制到目标 `img/` 目录，并改名为实际图片名（如 `img/xxx.svg`）。占位图是有效 SVG，期间 `typst compile` 仍可通过
 3. **登记提示词**：按 illustration-prompt 技能规范为每张图片编写绘图提示词，集中记录，不逐张打断输出
-4. **任务结束时汇总输出**：把本次所有图片的提示词一次性列给用户（含建议的 image_size、目标路径 `img/xxx.png`、对应的 `<fig:xxx>` 标签），由**用户手动生成**并替换占位文件
+4. **任务结束时汇总输出**：把本次所有图片的提示词一次性列给用户（含目标路径 `img/xxx.svg`、对应的 `<fig:xxx>` 标签、布局建议），由**用户手动生成** SVG 并替换占位文件
 5. **图片就位后编译验证**：全部真实图片就位后，重新 `typst compile` 确认通过
 
 ---

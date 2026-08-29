@@ -66,7 +66,7 @@ user_invocable: false
 按 `typst-writing-conventions` SKILL.md §5 的图片工作流：
 - 列出本章需要的图片（标签名、内容描述、布局建议、image_size、优先级）
 - 标注哪些是核心图、哪些可选
-- 规划完成后，写作时用 `0.Wiki/null.png` 占位
+- 规划完成后，写作时用 `0.Wiki/null.svg` 占位（图片统一 SVG 格式）
 
 ### 3.6 参考资料对照
 如有 `chapXX.tex` 参考文件：
@@ -141,6 +141,6 @@ Step 4: 用户确认后进入写入阶段
 1. 按 `typst-writing-conventions` SKILL.md 的所有规范执行
 2. 按节顺序写入（每节一个 Edit），避免一次性写入全部内容
 3. 每节写完后立即检查 Typst 语法陷阱（多字母变量、括号、标签位置等）
-4. 图片用 `0.Wiki/null.png` 占位（复制到 `img/` 改名为实际图片名）
+4. 图片用 `0.Wiki/null.svg` 占位（复制到 `img/` 改名为实际图片名；图片统一 SVG 格式）
 5. 全部写完后编译验证
 6. 最后汇总输出所有图片的提示词（按 `illustration-prompt` 技能规范）
