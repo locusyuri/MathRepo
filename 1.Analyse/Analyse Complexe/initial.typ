@@ -1381,7 +1381,7 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
 ]
 
 #figure(
-  image("img/goursat-triangulation.png", width: 80%),
+  image("img/goursat-triangulation.png", width: 95%),
   caption: [Goursat's proof: repeated bisection selects a nested sequence of triangles (left); triangulating the interior of a contour, interior edges cancel in pairs (right).],
   placement: auto,
   supplement: [Fig.],
@@ -1424,7 +1424,7 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
 ]
 
 #figure(
-  image("img/cif-deformation.png", width: 70%),
+  image("img/cif-deformation.svg", width: 70%),
   caption: [Deformation of contours: the integrals over $C_1$ and $C_2$ agree; the crosscut $gamma$ is traversed twice in opposite directions and cancels.],
   placement: auto,
   supplement: [Fig.],
@@ -1502,7 +1502,7 @@ The Cauchy integral formula is remarkable: the value of $f$ at an *interior* poi
 #note(title: "Toward Taylor Series")[
   The derivative formula hands us the would-be coefficients of the Taylor expansion of $f$ about $z_0$:
   $
-    f^(n)(z_0)/(n!) = 1/(2 pi "i") integral_C f(z)/(z - z_0)^(n+1) dif z.
+    f^(n)((z_0)/(n!)) = 1/(2 pi "i") integral_C f(z)/(z - z_0)^(n+1) dif z.
   $
   That boundary integrals encode local series data is the engine behind the Taylor series of Chapter 7 and the Laurent series of Chapter 8.
 ]
@@ -1542,7 +1542,8 @@ Cauchy-Goursat says: holomorphic $=>$ closed contour integrals vanish. Morera's 
 #note(title: "The Circle Closes")[
   Chapter 4 established that primitive existence, vanishing closed-contour integrals, and path independence are equivalent — but left open whether *analyticity alone* guarantees any of them. Cauchy-Goursat and Morera now complete the picture: on a simply connected domain,
   $
-    f " holomorphic" <=> integral_C f dif z = 0 " for every closed" C <=> f " has a primitive" <=> "integrals are path-independent".
+            f " holomorphic" & <=> integral_C f dif z = 0 " for every closed" C \
+    <=> f " has a primitive" & <=> "integrals are path-independent".
   $
   What analyticity could not deliver in Chapter 4, it now delivers in full.
 ]
