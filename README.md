@@ -1,4 +1,4 @@
-[Homepage]() | [Github](https://github.com/locusyuri/MathRepo) | [Download]() | 
+[Homepage](https://lis-azure.vercel.app/indexes/math) | [Github](https://github.com/locusyuri/MathRepo) | [CNB](https://cnb.cool/catmono/MathRepo) | 
 
 ![License](https://img.shields.io/github/license/locusyuri/MathRepo) ![Repo Size](https://img.shields.io/github/repo-size/locusyuri/MathRepo) ![Commit Activity](https://img.shields.io/github/commit-activity/w/locusyuri/MathRepo) ![Last Commit](https://img.shields.io/github/last-commit/locusyuri/MathRepo) ![Issues](https://img.shields.io/github/issues/locusyuri/MathRepo)  ![Stargazers](https://img.shields.io/github/stars/locusyuri/MathRepo?style=social) ![Forks](https://img.shields.io/github/forks/locusyuri/MathRepo?style=social) ![Watchers](https://img.shields.io/github/watchers/locusyuri/MathRepo?style=social) ![Language](https://img.shields.io/github/languages/top/locusyuri/MathRepo) ![Top Language](https://img.shields.io/github/languages/count/locusyuri/MathRepo)
 
