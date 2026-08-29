@@ -1815,59 +1815,356 @@ The Cauchy theory of Chapter 5 established what single holomorphic functions can
 // 实数级数中, 只依赖距离和完备性的结论都能直接推广到复数级数 (绝对值替换成模); 但依赖序结构和特殊交错形式的结论不能。复数引入模后，许多判别法变得更统一，但条件收敛行为更复杂。
 In real analysis, only the results that depend on completeness and distance can be directly extended to complex analysis (absolute value replaced by modulus); but the results that depend on order structure and special interleaving form cannot. After introducing the modulus, many criteria become more uniform, but the conditions of convergent behavior become more complex.
 
-// 下面我们复级数区别于实数级数的部分
-In the following, we will focus on the parts where complex series differ from real series.
+// 下面先记录哪些判别法可以原样迁移, 再聚焦复级数区别于实数级数的部分。
+We first record which parts of the real theory transfer verbatim, and then focus on the parts where complex series genuinely differ.
+
+=== Convergence and Absolute Convergence // 收敛与绝对收敛
+
+#definition(name: "Absolute Convergence")[ // 绝对收敛
+  A series $sum_(n=0)^oo a_n$ of complex numbers *converges* if its sequence of partial sums $s_n = a_0 + a_1 + dots + a_n$ converges in $bb(C)$, and it *converges absolutely* if the real series $sum_(n=0)^oo |a_n|$ converges. A series that converges but does not converge absolutely is *conditionally convergent*.
+] <def:series-absolute>
+
+#theorem(name: "Cauchy Criterion for Series")[ // 级数的柯西收敛判据
+  A series $sum_(n=0)^oo a_n$ of complex numbers converges if and only if for every $epsilon > 0$ there exists $N in NN$ such that
+  $
+    |sum_(k=n+1)^m a_k| < epsilon quad quad "for all" quad quad m > n >= N.
+  $
+] <thm:series-cauchy>
+
+#proof[
+  The tail of the series satisfies $sum_(k=n+1)^m a_k = s_m - s_n$, so the displayed condition says precisely that the sequence of partial sums $(s_n)$ is Cauchy. Since $bb(C)$ is complete, $(s_n)$ converges if and only if it is a Cauchy sequence. Equivalently, $sum a_n$ converges if and only if the two real series $sum Re(a_n)$ and $sum Im(a_n)$ both converge.
+]
+
+#corollary(name: "Absolute Convergence Implies Convergence")[ // 绝对收敛蕴含收敛
+  If $sum_(n=0)^oo a_n$ converges absolutely, then it converges, and
+  $
+    |sum_(n=0)^oo a_n| <= sum_(n=0)^oo |a_n|.
+  $
+] <cor:absolute-implies>
+
+#proof[
+  By the triangle inequality, $|sum_(k=n+1)^m a_k| <= sum_(k=n+1)^m |a_k|$. Since $sum |a_k|$ converges, its tails can be made arbitrarily small, so $(s_n)$ is Cauchy and the series converges by #link(<thm:series-cauchy>)[the Cauchy criterion]. Letting $m -> oo$ in $|s_m| <= sum_(k=0)^m |a_k|$ yields the displayed inequality.
+]
+
+#proposition(name: "The Ratio and Root Tests Transfer")[
+  // 比值判别法与根值判别法的迁移
+  Let $sum_(n=0)^oo a_n$ be a series of complex numbers.
+  + *Ratio test*: if $lim_(n -> oo) (|a_(n+1)|) / (|a_n|) = L$, then the series converges absolutely when $L < 1$ and diverges when $L > 1$; the case $L = 1$ is inconclusive.
+  + *Root test*: if $limsup_(n -> oo) root(n, abs(a_n)) = L$, then the series converges absolutely when $L < 1$ and diverges when $L > 1$; again the case $L = 1$ is inconclusive.
+] <prop:ratio-root-tests>
+
+#proof[
+  Both tests read only the moduli $|a_n|$, and absolute convergence is by definition convergence of the real series $sum |a_n|$. Since the triangle inequality and the Cauchy criterion depend only on moduli, the real-variable proofs transfer verbatim once every "convergence" is read as absolute convergence. Divergence in both tests means that the terms $a_n$ do not tend to zero, which likewise involves only moduli.
+]
+
+#note(title: "Why Only the Metric Tests Transfer")[ // 为何只有度量型判别法可迁移
+  The comparison test and the alternating series (Leibniz) test exploit the *order* of $bb(R)$ or sign-alternating structure, neither of which exists in $bb(C)$. The ratio and root tests, by contrast, only measure sizes, and the size of a complex number is the single real quantity $|a_n|$. This is why exactly the "metric" tests survive the passage to complex terms — a pattern that will repeat when uniform convergence of function series is taken up in #link(<thm:weierstrass>)[Weierstrass's theorem].
+]
 
 === Rearrangement of Series // 级数的重排
 // 对于实数级数，条件收敛的级数可通过重排收敛到任意实数。
 // 对于复数级数，情况更复杂（因为条件收敛的实部和虚部各自可能条件收敛），但绝对收敛的复数级数可以任意重排而不改变和，这和实数完全一样。
-For real series, conditionally convergent series can be rearranged to converge to any real number.
+For real series, a conditionally convergent series can be rearranged to converge to any prescribed real number (Riemann's rearrangement theorem).
 
-For complex series, the situation is more complicated (because the real and imaginary parts of a conditionally convergent series may each be conditionally convergent), but absolutely convergent complex series can be rearranged arbitrarily without changing the sum, which is exactly the same as for real series.
+For complex series, the situation is more complicated, because the real and imaginary parts of a conditionally convergent series may each be conditionally convergent and the two can be rearranged independently. Absolutely convergent complex series, however, behave exactly as in the real case:
+
+#theorem(name: "Rearrangement of Absolutely Convergent Series")[ // 绝对收敛级数的重排定理
+  Let $sum_(n=0)^oo a_n$ be an absolutely convergent series of complex numbers and let $sigma: NN -> NN$ be a bijection. Then the rearranged series $sum_(n=0)^oo a_(sigma(n))$ also converges absolutely, and its sum is unchanged:
+  $
+    sum_(n=0)^oo a_(sigma(n)) = sum_(n=0)^oo a_n.
+  $
+] <thm:absolute-rearrangement>
+
+#proof[
+  For each $N$, let $M_N$ be the largest of the finitely many integers $sigma(0), dots, sigma(N)$. Then
+  $
+    sum_(n=0)^N |a_(sigma(n))| <= sum_(k=0)^(M_N) |a_k| <= sum_(k=0)^oo |a_k|,
+  $
+  so the rearranged series converges absolutely.
+
+  Write $S = sum_(k=0)^oo a_k$, $S_M = sum_(k=0)^M a_k$ and $S_N' = sum_(n=0)^N a_(sigma(n))$. Given $epsilon > 0$, choose $M$ with $sum_(k=M+1)^oo |a_k| < epsilon$, and then choose $N$ so large that ${0, 1, dots, M} subset {sigma(0), dots, sigma(N)}$. The common terms $a_0, dots, a_M$ cancel in $S_N' - S_M$, leaving only terms $a_k$ with $k > M$:
+  $
+    |S_N' - S_M| <= sum_(k=M+1)^oo |a_k| < epsilon.
+  $
+  Letting $N -> oo$ gives $|sum_(n=0)^oo a_(sigma(n)) - S_M| <= epsilon$; since $epsilon$ is arbitrary and $S_M -> S$, the rearranged series has the same sum.
+]
+
+#note(title: "Conditional Convergence in the Plane")[ // 复平面中的条件收敛
+  The Riemann rearrangement phenomenon persists in $bb(C)$ in a sharper form: the set of all sums of convergent rearrangements of a conditionally convergent complex series is either a straight line or the entire plane (the two-dimensional Levy--Steinitz theorem). The mechanism is that the real and imaginary parts can be exploited independently. We will not need this refinement.
+]
 
 
 == Radius of Convergence and Properties of Power Series // 收敛半径与幂级数的性质
 
+// 幂级数是最简单的一类函数项级数——每一项都是 z - z_0 的幂。本节研究其收敛结构与和函数的解析性; §7.3 将证明任何全纯函数都由这样的级数局部表示。
+A *power series* is a series of functions all of whose terms are monomials in $z - z_0$ — the simplest functions imaginable. Yet this humble class is exactly the one that will turn out to represent every holomorphic function locally.
+
+#definition(name: "Power Series")[ // 幂级数
+  A *power series* centered at $z_0 in bb(C)$ is a series of the form
+  $
+    sum_(n=0)^oo c_n (z - z_0)^n,
+  $
+  with coefficients $c_0, c_1, c_2, dots in bb(C)$. Its value at a point $z$ is the sum of the numeric series, whenever that series converges; note that the series always converges at $z = z_0$.
+] <def:power-series>
+
+This is the same shape as the expansion in #link(<def:analytic>)[the definition of analyticity] (@eq:power-series-def); there it was a property a function might enjoy, here it is an object to be studied in its own right. The first task is to understand *where* the series converges.
+
+#theorem(name: "Cauchy--Hadamard Formula")[
+  // 柯西–阿达马公式
+  Let $sum_(n=0)^oo c_n (z - z_0)^n$ be a power series and set
+  $
+    L = limsup_(n -> oo) root(n, abs(c_n)), quad quad R = 1/L,
+  $
+  with the conventions $1/0 = oo$ and $1/oo = 0$. Then:
+  + the series converges absolutely for $|z - z_0| < R$;
+  + the series diverges for $|z - z_0| > R$.
+] <thm:cauchy-hadamard>
+
+#proof[
+  Apply #link(<prop:ratio-root-tests>)[the root test] with $a_n = c_n (z - z_0)^n$:
+  $
+    limsup_(n -> oo) root(n, abs(c_n (z - z_0)^n)) = |z - z_0| dot limsup_(n -> oo) root(n, abs(c_n)) = |z - z_0| dot L.
+  $
+  If $|z - z_0| < R$, then $|z - z_0| dot L < 1$ and the series converges absolutely. If $|z - z_0| > R$, then $|z - z_0| dot L > 1$, so $|c_n (z - z_0)^n| > 1$ for infinitely many $n$ and the terms do not tend to zero — the series diverges.
+]
+
+#definition(name: "Radius of Convergence")[ // 收敛半径
+  The number $R in [0, oo]$ of #link(<thm:cauchy-hadamard>)[the Cauchy--Hadamard formula] is the *radius of convergence* of the power series, and the disk $|z - z_0| < R$ is its *disk of convergence*.
+] <def:radius-convergence>
+
+#note(title: "Nothing Is Predicted on the Circle")[ // 收敛圆上没有一般性结论
+  The Cauchy--Hadamard formula is silent about the circle $|z - z_0| = R$, where all three behaviors occur: $sum z^n$ diverges at every point of $|z| = 1$ (its terms do not tend to $0$); $sum z^n / (n^2)$ converges at every point of $|z| = 1$; $sum z^n / n$ converges at $z = -1$ but diverges at $z = 1$. Each has radius $R = 1$.
+]
+
 === Abel's Theorem for Power Series // 幂级数的阿贝尔定理
 
-== Taylor Series
+// 收敛只是逐点的; 下面的定理把逐点收敛升级为内闭一致收敛——这是逐项求导与逐项积分的通行证。
+Pointwise convergence is a fragile property. The next theorem upgrades it to locally uniform convergence on the disk of convergence — the passport to term-by-term operations.
 
-#theorem(name: "Taylor's Theorem")[
-  Let $f(z)$ be holomorphic in region $D subset CC$ and $z_0 in D$. Then there exists the unique power series expansion of $f$ at $z_0$:
+#theorem(name: "Abel's Theorem")[ // 阿贝尔定理
+  Let $sum_(n=0)^oo c_n (z - z_0)^n$ be a power series with radius of convergence $R > 0$. Then the series converges absolutely at every point of the disk $|z - z_0| < R$, and *locally uniformly* there: uniformly on every closed sub-disk $|z - z_0| <= rho$ with $0 < rho < R$.
+] <thm:abel-power>
+
+#proof[
+  Fix $0 < rho < R$. Since $rho$ lies inside the disk of convergence, the numeric series $sum |c_n| rho^n$ converges. For every $z$ with $|z - z_0| <= rho$,
   $
-    f(z) = sum_(n=0)^infinity c_n (z - z_0)^n,
+    |c_n (z - z_0)^n| <= |c_n| rho^n,
+  $
+  and the dominating series of constants converges. The Weierstrass M-test — the function-series form of #link(<cor:absolute-implies>)[absolute convergence] — yields uniform convergence on $|z - z_0| <= rho$; absolute convergence at each individual point was the starting point.
+]
+
+#theorem(name: "Holomorphy and Term-by-Term Operations")[
+  // 和函数的解析性与逐项运算
+  Let $f(z) = sum_(n=0)^oo c_n (z - z_0)^n$ have radius of convergence $R > 0$, so that $f$ is defined on the disk $|z - z_0| < R$. Then:
+  + $f$ is holomorphic on the disk of convergence, and the termwise derivative
+    $
+      sum_(n=1)^oo n c_n (z - z_0)^(n-1)
+    $
+    has the same radius of convergence $R$ and equals $f'(z)$ there.
+  + $f$ is infinitely complex-differentiable on the disk, every derivative being obtained by termwise differentiation.
+  + Term-by-term integration: for any path $gamma$ in the disk,
+    $
+      integral_gamma f(z) dif z = sum_(n=0)^oo c_n integral_gamma (z - z_0)^n dif z.
+    $
+] <thm:power-series-diff>
+
+#proof[
+  The termwise derivative has coefficients $n c_n$ (absorbing the index shift), and since $root(n, n) -> 1$,
+  $
+    limsup_(n -> oo) root(n, n abs(c_n)) = limsup_(n -> oo) root(n, n) dot root(n, abs(c_n)) = limsup_(n -> oo) root(n, abs(c_n)),
+  $
+  so by #link(<thm:cauchy-hadamard>)[the Cauchy--Hadamard formula] the differentiated series has the same radius $R$. #link(<thm:abel-power>)[Abel's theorem] applied to both series shows that on every closed sub-disk $|z - z_0| <= rho < R$ the original series and the differentiated series converge uniformly. The partial sums are polynomials, hence holomorphic; #link(<thm:weierstrass>)[Weierstrass's convergence theorem] then shows that $f$ is holomorphic on the disk and that $f'$ is the sum of the differentiated series. Iterating the same argument on the differentiated series gives the second claim. For the third, the image of the path $gamma$ is a compact subset of the disk, on which the series converges uniformly; the sum and the integral may therefore be interchanged.
+]
+
+#corollary(name: "Coefficients Are Determined by the Sum")[ // 系数由和函数唯一决定
+  If $f(z) = sum_(n=0)^oo c_n (z - z_0)^n$ on a disk of positive radius, then $f$ is infinitely complex-differentiable there and
+  $
+    c_n = (f^(n)(z_0)) / (n!) quad quad "for all" quad n >= 0.
+  $
+  In particular, a power series representation of a function is unique.
+] <cor:power-coefficients>
+
+#proof[
+  Holomorphy and infinite differentiability are #link(<thm:power-series-diff>)[the term-by-term theorem]. Differentiating $n$ times and evaluating at $z = z_0$, every term of $f^(n)$ vanishes except the one with $k = n$, which equals $n! c_n$; hence $c_n = (f^(n)(z_0)) / (n!)$. Uniqueness follows: two representations of the same function have coefficients computed from the same derivatives.
+]
+
+This completes the easy direction of #link(<thm:holo-equiv-analytic>)[the equivalence theorem]: a function given by a convergent power series — *analytic* in the sense of #link(<def:analytic>)[Definition] — is holomorphic. The converse direction is #link(<thm:taylor>)[Taylor's theorem] in the next section.
+
+#example(name: "Three Radii")[
+  // 三个收敛半径
+  - $sum_(n=0)^oo z^n / (n!)$: the ratio test gives $(|a_(n+1)|) / (|a_n|) = |z| / (n+1) -> 0$, so $R = oo$. This recovers the exponential function of #link(<def:exp-function>)[Definition], entire on all of $bb(C)$.
+  - $sum_(n=0)^oo n! z^n$: the ratio $(|a_(n+1)|) / (|a_n|) = (n+1) |z|$ tends to $oo$ unless $z = 0$, so $R = 0$: the series represents a function only at its center.
+  - $sum_(n=1)^oo z^n / n$: the ratio tends to $|z|$, so $R = 1$; on the boundary circle the series converges at $z = -1$ but diverges at $z = 1$, as described in the note following #link(<thm:cauchy-hadamard>)[the Cauchy--Hadamard formula].
+] <ex:radius-examples>
+
+== Taylor Series // 泰勒级数
+
+// §6 的几何级数例展示了幂级数表示函数的雏形; 现在用柯西积分公式证明: 每个全纯函数都由幂级数局部表示。
+#link(<ex:geometric-series>)[The geometric series] showed a concrete function represented by a power series, and the machinery of the last two chapters — the Cauchy integral formula above all — explains why this is the rule rather than the exception: *every* holomorphic function is locally a power series.
+
+#lemma(name: "Geometric Expansion of the Cauchy Kernel")[ // 柯西核的几何级数展开
+  Let $z_0 in bb(C)$ and $r > 0$. Then for $|z - z_0| < |zeta - z_0| = r$,
+  $
+    1/(zeta - z) = sum_(n=0)^oo (z - z_0)^n / ((zeta - z_0)^(n+1)),
+  $
+  and the convergence is uniform whenever $|z - z_0| <= rho < r$ and $|zeta - z_0| = r$ simultaneously.
+] <lem:geometric-kernel>
+
+#proof[
+  This is the geometric series of #link(<ex:geometric-series>)[the example] in the variable $w = (z - z_0) / (zeta - z_0)$:
+  $
+    1/(zeta - z) = 1/(zeta - z_0) dot 1/(1 - w) = sum_(n=0)^oo (z - z_0)^n / ((zeta - z_0)^(n+1)),
+  $
+  valid whenever $|w| < 1$. Under the stated constraints $|w| = (|z - z_0|) / (|zeta - z_0|) <= rho / r < 1$. For uniformity, note that the $n$-th term satisfies
+  $
+    |(z - z_0)^n / ((zeta - z_0)^(n+1))| <= 1/r dot (rho / r)^n,
+  $
+  and $sum_(n=0)^oo 1/r dot (rho / r)^n$ is a convergent geometric series of constants; the Weierstrass M-test gives uniform convergence.
+]
+
+#theorem(name: "Taylor's Theorem")[ // 泰勒定理
+  Let $f$ be holomorphic in a region $D subset CC$, let $z_0 in D$, and let $r > 0$ be such that the closed disk $|z - z_0| <= r$ is contained in $D$. Then for $|z - z_0| < r$,
+  $
+    f(z) = sum_(n=0)^oo c_n (z - z_0)^n,
   $
   where
   $
-    c_n = 1/(2 pi "i") integral_(|z-z_0|=r) f(z)/(z-z_0)^(n+1) dif z = f^(n)(z_0)/n!,
+    c_n = 1/(2 pi "i") integral_(|zeta - z_0| = r) f(zeta)/(zeta - z_0)^(n+1) dif zeta = (f^(n)(z_0)) / (n!),
   $
-  and the radius of convergence of this power series is at least the distance from $z_0$ to the boundary of $D$.
+  and the representation is unique. In particular, the radius of convergence of the series is at least the distance from $z_0$ to the boundary of $D$.
+] <thm:taylor>
+
+#proof[
+  Fix $r > 0$ such that the closed disk $|z - z_0| <= r$ lies in $D$, and fix $z$ with $|z - z_0| < r$. By the Cauchy integral formula,
+  $
+    f(z) = 1/(2 pi "i") integral_(|zeta - z_0| = r) f(zeta)/(zeta - z) dif zeta.
+  $
+  With $rho = |z - z_0| < r$, #link(<lem:geometric-kernel>)[the kernel expansion] converges uniformly on the circle $|zeta - z_0| = r$, so the sum and the integral may be interchanged:
+  $
+    f(z) = sum_(n=0)^oo (1/(2 pi "i") integral_(|zeta - z_0| = r) f(zeta)/(zeta - z_0)^(n+1) dif zeta) (z - z_0)^n = sum_(n=0)^oo c_n (z - z_0)^n.
+  $
+  Since $z$ was arbitrary, the representation holds on the whole disk $|z - z_0| < r$. By #link(<thm:cif-derivatives>)[the derivative formula], $c_n = (f^(n)(z_0)) / (n!)$. The coefficients are thus completely determined by $f$ and $z_0$ — independently of the auxiliary radius $r$ — so the representation is unique; and since it exists for every $r$ smaller than the distance from $z_0$ to $partial D$, the radius of convergence of the series is at least that distance.
 ]
+
+Combining #link(<cor:power-coefficients>)[the corollary] above with Taylor's theorem settles the equivalence announced in Chapter 2:
+
+#corollary(name: "Holomorphic Implies Analytic")[ // 全纯蕴含解析
+  Every holomorphic function on an open set $D subset CC$ is analytic on $D$. Consequently, holomorphy and analyticity coincide: #link(<thm:holo-equiv-analytic>)[the equivalence theorem] holds.
+] <cor:holo-implies-analytic>
+
+#proof[
+  Given $z_0 in D$, choose $r > 0$ with the closed disk $|z - z_0| <= r$ contained in $D$; #link(<thm:taylor>)[Taylor's theorem] provides the power series expansion of $f$ at $z_0$. The reverse implication was #link(<thm:power-series-diff>)[the term-by-term theorem].
+]
+
+#example(name: "Standard Taylor Series")[
+  // 标准泰勒展开
+  The following expansions, legitimate by Taylor's theorem and uniquely determined by #link(<cor:power-coefficients>)[the coefficients], are the working vocabulary of the subject.
+  - *Geometric series*: $1/(1 - z) = sum_(n=0)^oo z^n$ for $|z| < 1$ — the prototype, #link(<ex:geometric-series>)[revisited from Chapter 6].
+  - *Exponential*: $exp(z) = sum_(n=0)^oo z^n / (n!)$ for all $z$, as postulated in #link(<def:exp-function>)[the definition]; Taylor's theorem now explains *why* the series representation was legitimate.
+  - *Sine and cosine*: for all $z$,
+    $
+      sin z = sum_(n=0)^oo (-1)^n (z^(2n+1)) / ((2n+1)!), quad quad cos z = sum_(n=0)^oo (-1)^n (z^(2n)) / ((2n)!).
+    $
+  - *Logarithm* (principal branch): integrating the geometric series term by term — legitimate by #link(<thm:power-series-diff>)[the term-by-term theorem] — gives
+    $
+      "log"(1 + z) = sum_(n=1)^oo (-1)^(n-1) (z^n) / (n), quad quad |z| < 1,
+    $
+    valid for the principal branch on $bb(C) backslash (-oo, -1]$; the radius $1$ is the distance from $0$ to the singularity at $z = -1$.
+  - *Binomial series*: for $alpha in bb(C)$ and the branch $(1 + z)^alpha = exp(alpha "log"(1 + z))$, the $n$-th derivative at $0$ is $alpha (alpha - 1) dots (alpha - n + 1)$, so
+    $
+      (1 + z)^alpha = sum_(n=0)^oo binom(alpha, n) z^n, quad quad binom(alpha, n) = (alpha (alpha - 1) dots (alpha - n + 1)) / (n!), quad quad |z| < 1.
+    $
+] <ex:standard-taylor>
+
+#example(name: "The Radius Is Set by the Nearest Singularity")[ // 收敛半径由最近的奇点决定
+  Consider $f(z) = 1/(1 - z^2)$, holomorphic on $bb(C) backslash {plus.minus 1}$. Expanding at $z_0 = 0$,
+  $
+    f(z) = 1/(1 - z^2) = sum_(n=0)^oo z^(2n), quad quad |z| < 1,
+  $
+  a power series in $z^2$ with radius exactly $1$ — the distance to the nearest singularities $plus.minus 1$. Expanding the same function at $z_0 = 1/2$, the distance to the nearest singularity is $1/2$, and the Taylor series converges only on $|z - 1/2| < 1/2$ (@fig:taylor-disk). The same function, different centers, different disks: the radius of convergence is a property of the *pair* (function, center), set by the nearest obstruction.
+] <ex:radius-singularity>
+
+#figure(
+  image("./img/taylor-disk.svg", width: 80%),
+  caption: [The radius of convergence is the distance to the nearest singularity. Left: $f(z) = 1/(1 - z^2)$ expanded at $z_0 = 0$ converges on $|z| < 1$, blocked by the singularities $plus.minus 1$ (marked with $times$). Right: the same function expanded at $z_0 = 1/2$ converges only on $|z - 1/2| < 1/2$, blocked by the nearer singularity at $1$.],
+) <fig:taylor-disk>
+
+#note(title: "Real versus Complex, One Last Time")[ // 实函数与复函数的最后一次对照
+  A real $C^oo$ function need not be real-analytic: $e^(-1/x^2)$ (extended by $0$ at the origin) has derivatives of every order at $0$, all equal to $0$, so its formal Taylor series at $0$ converges — but to the wrong function. In the complex setting this pathology is impossible: by Taylor's theorem, a holomorphic function *is* its Taylor series near every point of its domain. Analyticity is not an extra hypothesis in complex analysis; it is a theorem.
+]
+
+// 泰勒级数不仅是表示工具, 更是研究函数局部结构的显微镜: 系数的消失模式刻画零点。
+Taylor's theorem is not merely a representation device; it is a microscope for the local structure of holomorphic functions. The first application is the theory of zeros.
 
 == Isolation and Uniqueness of Zeros of Analytic Functions // 解析函数零点孤立性与唯一性
-#definition(name: "m-th Order Zero")[ // m阶零点
-  Let $f(z)$ be analytic in region $D subset CC$ and $z_0 in D$. We say that $z_0$ is an $m$-th order zero of $f$ if
-  $
-    f(z_0) = f'(z_0) = ... = f^(m-1)(z_0) = 0, quad f^(m)(z_0) != 0.
-  $
-]
 
-#theorem[
-  The point $z_0$ is an $m$-th order zero of the analytic function $f(z)$ that is not identically zero if and only if
+// 零点的结构由泰勒系数的消失模式决定: 前多少项系数为零, 零点就是多少阶的。本节中 region 指连通开集。
+Let $f$ be analytic near $z_0$ with Taylor expansion $f(z) = sum_(n=0)^oo c_n (z - z_0)^n$. Either all coefficients vanish — and then $f$ is identically zero near $z_0$ — or there is a first non-vanishing coefficient. This dichotomy organizes the entire theory of zeros. Throughout this section, a *region* is a connected open set.
+
+#definition(name: "m-th Order Zero")[ // m阶零点
+  Let $f(z)$ be analytic in a region $D subset CC$ and $z_0 in D$. We say that $z_0$ is an $m$-th order zero of $f$ if
+  $
+    f(z_0) = f'(z_0) = ... = f^(m-1)(z_0) = 0, quad quad f^(m)(z_0) != 0.
+  $
+  A zero of order $1$ is called a *simple zero*.
+] <def:mth-order-zero>
+
+#theorem(name: "Factorization at a Zero")[ // 零点处的因式分解
+  Let $f$ be analytic in a region $D$ and let $z_0 in D$ be a zero of $f$ that is not identically zero near $z_0$. Then $z_0$ is a zero of order $m$ if and only if
   $
     f(z) = (z - z_0)^m g(z),
   $
-  where $g(z)$ is analytic in a neighborhood of $z_0$ and $g(z_0) != 0$.
+  where $g$ is analytic near $z_0$ and $g(z_0) != 0$.
+] <thm:zero-factorization>
+
+#proof[
+  By #link(<cor:holo-implies-analytic>)[the equivalence theorem], $f$ has a Taylor expansion $f(z) = sum_(n=0)^oo c_n (z - z_0)^n$ near $z_0$, with $c_n = (f^(n)(z_0)) / (n!)$. If $z_0$ is a zero of order $m$, then $c_0 = ... = c_(m-1) = 0$ and $c_m != 0$, so
+  $
+    f(z) = (z - z_0)^m sum_(n=m)^oo c_n (z - z_0)^(n-m) = (z - z_0)^m g(z),
+  $
+  where $g(z) = sum_(k=0)^oo c_(k+m) (z - z_0)^k$ is analytic near $z_0$ — a convergent power series — and $g(z_0) = c_m = (f^(m)(z_0)) / (m!) != 0$. Conversely, if $f(z) = (z - z_0)^m g(z)$ with $g$ analytic near $z_0$ and $g(z_0) != 0$, then reading off the Taylor coefficients gives $f^(n)(z_0) = 0$ for $n < m$ and $f^(m)(z_0) = m! g(z_0) != 0$, so $z_0$ is a zero of order $m$.
 ]
 
-#theorem(name: "Isolation of Zeros")[
-  Let $f(z)$ be an analytic function in region $D subset CC$ that is not identically zero. Then the zeros of $f$ are isolated, i.e., for each zero $z_0$ of $f$, there exists a neighborhood of $z_0$ that contains no other zeros of $f$.
+#theorem(name: "Identity Theorem")[ // 恒等定理
+  Let $f$ be analytic in a region $D subset CC$ and let $(z_n)_(n >= 1)$ be a sequence of distinct points of $D$ converging to some $z_0 in D$, with $z_n != z_0$ and $f(z_n) = 0$ for all $n$. Then $f(z) equiv 0$ on $D$.
+] <thm:identity-theorem>
+
+#proof[
+  Let $S$ be the set of points $z in D$ such that $f$ vanishes identically on some neighborhood of $z$. We show that $S$ is nonempty, open, and closed in $D$; since $D$ is connected, it follows that $S = D$.
+
+  *$S$ is nonempty.* By continuity, $f(z_0) = lim_(n -> oo) f(z_n) = 0$. Expand $f$ at $z_0$. If some Taylor coefficient were the first non-vanishing one, #link(<thm:zero-factorization>)[the factorization theorem] would give $f(z) = (z - z_0)^m g(z)$ with $g$ continuous and $g(z_0) != 0$; then $g != 0$ on some neighborhood of $z_0$, making $z_0$ the only zero of $f$ there — contradicting $f(z_n) = 0$ with $z_n -> z_0$ and $z_n != z_0$. Hence all Taylor coefficients vanish and $f equiv 0$ near $z_0$, i.e., $z_0 in S$.
+
+  *$S$ is open* by definition.
+
+  *$S$ is closed in $D$.* Let $z_j in S$ converge to $z^* in D$. Since $f$ vanishes identically near each $z_j$, we can pick a sequence of distinct points $w_j != z^*$ with $w_j -> z^*$ and $f(w_j) = 0$. The argument of the first step, applied at $z^*$, then shows $f equiv 0$ near $z^*$, i.e., $z^* in S$.
+
+  Therefore $S = D$ and $f equiv 0$ on $D$.
 ]
 
-#theorem(name: "Uniqueness of Zeros")[
-  Let $f_1(z), f_2(z)$ be analytic functions in region $D subset CC$ that are not identically zero.
-  There is a sequence ${z_n} (z!=z_0)$ that is converging to $z_0$ such that $f_1(z_n) = f_2(z_n) = 0$ for all $n$.
-  Then $f_1(z) equiv f_2(z)$ for all $z in D$.
+#corollary(name: "Uniqueness of Analytic Functions")[ // 解析函数的唯一性定理
+  Let $f_1, f_2$ be analytic in a region $D$. If $f_1(z_n) = f_2(z_n)$ for a sequence of distinct points $z_n -> z_0 in D$ with $z_n != z_0$, then $f_1 equiv f_2$ on $D$.
+] <cor:function-uniqueness>
+
+#proof[
+  Apply #link(<thm:identity-theorem>)[the identity theorem] to $f_1 - f_2$, which vanishes at every $z_n$.
+]
+
+#theorem(name: "Isolation of Zeros")[ // 零点的孤立性
+  Let $f$ be analytic in a region $D subset CC$, not identically zero. Then the zeros of $f$ are isolated: each zero $z_0$ of $f$ admits a neighborhood containing no other zero of $f$.
+] <thm:zeros-isolated>
+
+#proof[
+  If $f$ vanished identically on some neighborhood of $z_0$, then $f equiv 0$ on $D$ by #link(<thm:identity-theorem>)[the identity theorem], contrary to the hypothesis. Hence the Taylor expansion of $f$ at $z_0$ has a first non-vanishing coefficient $c_m$, and #link(<thm:zero-factorization>)[the factorization theorem] gives $f(z) = (z - z_0)^m g(z)$ with $g$ analytic near $z_0$ and $g(z_0) = c_m != 0$. By continuity, $g != 0$ on some neighborhood of $z_0$; there the only zero of $f$ is $z_0$ itself.
+]
+
+#example(name: "Why Real Identities Survive Complexification")[ // 实恒等式为何在复化后仍成立
+  Read the Pythagorean identity as a statement about the entire function $F(z) = sin^2 z + cos^2 z - 1$. On the real interval $(0, 1)$ — in particular at a sequence of distinct points converging to $1/2 in bb(C)$ — we have $F = 0$ by the real identity. #link(<thm:identity-theorem>)[The identity theorem] then forces $F equiv 0$ on all of $bb(C)$: no separate complex computation is needed. The same principle transfers any identity between entire functions that holds on a real interval (or on any set with an accumulation point in $bb(C)$) to the whole plane.
+
+  The transfer hinges on holomorphy on a *complex* neighborhood. A real $C^oo$ "bump" function can vanish on the entire half-line $(-oo, 0]$ yet be nonzero elsewhere, because $C^oo$ regularity on $bb(R)$ exerts no rigidity; an entire function vanishing on $(-oo, 0]$ is necessarily $equiv 0$, since the interval accumulates at, say, $0 in bb(C)$, where the function is holomorphic. Rigidity is the dividend of complex differentiability.
+] <ex:identity-application>
+
+#note(title: "Order Counts")[ // 阶数记账: 通向极点与留数
+  #link(<def:mth-order-zero>)[The order of a zero] is the first instance of a counting principle that pervades complex analysis: the factorization $f(z) = (z - z_0)^m g(z)$ reappears in the next chapter as the classification of poles, and the same bookkeeping becomes quantitative in the residue theorem. The identity theorem, in turn, is the engine of *analytic continuation*: an analytic function on a region is determined by its values on any set with an accumulation point in the region, so a function germ can have at most one continuation along a given path.
 ]
 
 = Laurent Series // 洛朗级数
