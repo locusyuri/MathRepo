@@ -1,3 +1,4 @@
+# Intermediate files
 *.aux
 *.bcf
 *.log
@@ -26,3 +27,6 @@
 .agents/*.bin
 .trae
 
+# Pictures
+**/img/*
+**/fig/*
