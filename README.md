@@ -51,6 +51,35 @@ This repository collects bilingual mathematics notes organized by subject. The l
 
 
 ---
+# Image Sync | 图片同步
+
+本仓库的图片文件（`img/`、`fig/` 目录）不纳入 Git 版本控制，而是通过阿里云 OSS 存储。
+clone 仓库后需要手动下载图片才能正常编译 PDF。
+
+## 快速开始
+
+```powershell
+# 下行同步：从 OSS 下载所有图片到本地（保持目录结构）
+.\sync-images.ps1 -Direction down -Yes
+
+# 上行同步：将本地图片上传到 OSS
+.\sync-images.ps1 -Direction up -Yes
+
+# 交互式模式（带文件预览和确认）
+.\sync-images.ps1
+```
+
+## 前置要求
+
+- [ossutil](https://help.aliyun.com/document_detail/120075.html) 已安装并配置（`ossutil config`）
+- PowerShell 5.1+ / PowerShell Core
+
+## 同步策略
+
+使用 `ossutil sync --update`，基于文件大小和修改时间判断是否需要传输，
+跳过未变更的文件，不删除对端已不存在的文件。
+
+---
 # Term Index | 术语索引
 ## A
 
