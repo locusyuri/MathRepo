@@ -2222,11 +2222,11 @@ If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two s
 ] <lem:laurent-kernel>
 
 #proof[
-  On the outer circle the geometric series of #link(<lem:geometric-kernel>)[the kernel lemma] applies with ratio $|(z - z_0)| / (|zeta - z_0|) = |z - z_0| / rho_2 < 1$, bounded away from $1$ uniformly in $zeta$. On the inner circle, write
+  On the outer circle the geometric series of #link(<lem:geometric-kernel>)[the kernel lemma] applies with ratio $|z - z_0| / (|zeta - z_0|) = |z - z_0| / rho_2 < 1$, bounded away from $1$ uniformly in $zeta$. On the inner circle, write
   $
     1/(zeta - z) = -1/(z - z_0) dot 1/(1 - (zeta - z_0)/(z - z_0)),
   $
-  a geometric series with ratio $|(zeta - z_0)| / (|z - z_0|) = rho_1 / (|z - z_0|) < 1$, again uniformly in $zeta$; expanding gives the stated negative-power series.
+  a geometric series with ratio $|zeta - z_0| / (|z - z_0|) = rho_1 / (|z - z_0|) < 1$, again uniformly in $zeta$; expanding gives the stated negative-power series.
 ]
 
 #theorem(name: "Laurent's Theorem")[ // 洛朗定理
@@ -2472,7 +2472,7 @@ The principal part classifies the singularity:
   )
 ]
 
-Among the three classes, it is the coefficient $c_(-1)$ — the top term of the principal part — that controls the contour integrals of $f$ around $z_0$. Making this precise is the subject of the next chapter. // c_{-1} 控制围道积分 —— 引出留数理论
+Among the three classes, it is the coefficient $c_(-1)$ — the top term of the principal part — that controls the contour integrals of $f$ around $z_0$. Making this precise is the subject of the next chapter. // c_(-1) 控制围道积分 —— 引出留数理论
 
 = Residue Theory // 留数理论
 
