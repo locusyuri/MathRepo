@@ -2172,12 +2172,12 @@ Let $f$ be analytic near $z_0$ with Taylor expansion $f(z) = sum_(n=0)^oo c_n (z
 Considering two series:
 $
   c_0 + c_1 (z-z_0) + c_2 (z-z_0)^2 + ..., \
-  c_{-1}/(z-z_0) + c_{-2}/(z-z_0)^2 + dots .
+  c_(-1)/(z-z_0) + c_(-2)/(z-z_0)^2 + dots .
 $
 The first one is a power series, which stands for an analytic function $f_1(z)$ in a convergent disk $|z-z_0| < R (0<R<=infinity)$.
 As for the second one, let $zeta = 1/(z-z_0)$, then it becomes a power series in $zeta$:
 $
-  c_{-1} zeta + c_{-2} zeta^2 + dots,
+  c_(-1) zeta + c_(-2) zeta^2 + dots,
 $
 which stands for an analytic function $f_2(zeta)$ in a convergent disk $|zeta| < 1/r (0< 1/r <= infinity)$.
 That is, the second series stands for an analytic function $f_2(z)$ in the region $|z-z_0| > r (0<r<=infinity)$.
@@ -2202,7 +2202,7 @@ If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two s
 ] <prop:two-sided-series>
 
 #proof[
-  *Convergence.* On a compact sub-annulus $rho_1 <= |z - z_0| <= rho_2$ with $r < rho_1 < rho_2 < R$, the positive part is dominated by $sum_(n>=0) |c_n| rho_2^n$, convergent because $rho_2 < R$, and the negative part by $sum_(n>=1) |c_(-n)| / (rho_1^n)$, convergent because $rho_1 > r$. The Weierstrass M-test yields locally uniform convergence, and absolute convergence at each point holds by definition of $r$ and $R$.
+  *Convergence.* On a compact sub-annulus $rho_1 <= |z - z_0| <= rho_2$ with $r < rho_1 < rho_2 < R$, the positive part is dominated by $sum_(n>=0) |c_n| rho_2^n$, convergent because $rho_2 < R$, and the negative part by $sum_(n>=1) (|c_(-n)|) / (rho_1^n)$, convergent because $rho_1 > r$. The Weierstrass M-test yields locally uniform convergence, and absolute convergence at each point holds by definition of $r$ and $R$.
 
   *Holomorphy.* On $H$ the positive part is a locally uniform limit of polynomials and the negative part one of negative powers $1/(z - z_0)^n$ — each holomorphic on $H$ — so #link(<thm:weierstrass>)[Weierstrass's theorem] shows that $f$ is holomorphic.
 
@@ -2222,11 +2222,11 @@ If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two s
 ] <lem:laurent-kernel>
 
 #proof[
-  On the outer circle the geometric series of #link(<lem:geometric-kernel>)[the kernel lemma] applies with ratio $|z - z_0| / (|zeta - z_0|) = |z - z_0| / rho_2 < 1$, bounded away from $1$ uniformly in $zeta$. On the inner circle, write
+  On the outer circle the geometric series of #link(<lem:geometric-kernel>)[the kernel lemma] applies with ratio $(|z - z_0|) / (|zeta - z_0|) = (|z - z_0|) / rho_2 < 1$, bounded away from $1$ uniformly in $zeta$. On the inner circle, write
   $
     1/(zeta - z) = -1/(z - z_0) dot 1/(1 - (zeta - z_0)/(z - z_0)),
   $
-  a geometric series with ratio $|zeta - z_0| / (|z - z_0|) = rho_1 / (|z - z_0|) < 1$, again uniformly in $zeta$; expanding gives the stated negative-power series.
+  a geometric series with ratio $(|zeta - z_0|) / (|z - z_0|) = rho_1 / (|z - z_0|) < 1$, again uniformly in $zeta$; expanding gives the stated negative-power series.
 ]
 
 #theorem(name: "Laurent's Theorem")[ // 洛朗定理
