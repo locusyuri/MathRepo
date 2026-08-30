@@ -2190,48 +2190,289 @@ If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two s
 ] <two-sided-power-series>
 
 #property[
-  Let the convergent disk of series @two-sided-power-series be
+  Let the region of convergence of the series @two-sided-power-series be the annulus
   $
-    H: r < |z-z_0| < R (0<=r<R<=infinity).
+    H: r < |z-z_0| < R quad (0 <= r < R <= oo).
   $
   Then:
-  + @two-sided-power-series absolutely converges and internally closed uniformly converges to $f(z) = f_1(z) + f_2(z)$ in $H$.
-  + $f(z)$ is analytic in $H$ .
-  + $f(z) = sum_(n=-infinity)^infinity c_n (z-z_0)^n$ in H can be termwise differentiated $p$ times.  // 函数在 H 内可以逐项求导 p 次
-  + $f(z)$ can be integrated along any path in $H$, and the integral equals the sum of the integrals of the terms.
+  + the series converges absolutely and locally uniformly on $H$, and its sum is $f(z) = f_1(z) + f_2(z)$;
+  + $f$ is holomorphic, hence analytic, on $H$;
+  + $f$ can be differentiated term by term any number of times in $H$;  // 函数在 H 内可以逐项求导任意次
+  + $f$ can be integrated term by term along any path in $H$.
+] <prop:two-sided-series>
+
+#proof[
+  *Convergence.* On a compact sub-annulus $rho_1 <= |z - z_0| <= rho_2$ with $r < rho_1 < rho_2 < R$, the positive part is dominated by $sum_(n>=0) |c_n| rho_2^n$, convergent because $rho_2 < R$, and the negative part by $sum_(n>=1) |c_(-n)| / (rho_1^n)$, convergent because $rho_1 > r$. The Weierstrass M-test yields locally uniform convergence, and absolute convergence at each point holds by definition of $r$ and $R$.
+
+  *Holomorphy.* On $H$ the positive part is a locally uniform limit of polynomials and the negative part one of negative powers $1/(z - z_0)^n$ — each holomorphic on $H$ — so #link(<thm:weierstrass>)[Weierstrass's theorem] shows that $f$ is holomorphic.
+
+  *Term-by-term operations.* The mechanism of #link(<thm:power-series-diff>)[the power-series theorem] applies to each part: the termwise derivative has the same radii of convergence (since $root(n, n) -> 1$), hence converges locally uniformly on $H$; termwise integration follows from uniform convergence on compact paths.
 ]
 
-#theorem(name: "Laurent's Theorem")[
-  Let $f(z)$ is analytic in the annulus $H: r < |z-z_0| < R (0<=r<R<=infinity)$.
-  Then $f(z)$ can be represented as a two-sided power series:
+#lemma(name: "Kernel Expansions on Boundary Circles")[ // 内外两圈的柯西核展开
+  Fix $r < rho_1 < rho_2 < R$ and a point $z$ with $rho_1 < |z - z_0| < rho_2$. Then on the outer circle $|zeta - z_0| = rho_2$,
   $
-    f(z) = sum_(n=-infinity)^infinity c_n (z-z_0)^n,
+    1/(zeta - z) = sum_(n=0)^oo (z - z_0)^n / ((zeta - z_0)^(n+1)),
+  $
+  while on the inner circle $|zeta - z_0| = rho_1$,
+  $
+    1/(zeta - z) = -sum_(n=1)^oo (zeta - z_0)^(n-1) / ((z - z_0)^n),
+  $
+  both series converging uniformly in $zeta$ on their respective circles (for this fixed $z$).
+] <lem:laurent-kernel>
+
+#proof[
+  On the outer circle the geometric series of #link(<lem:geometric-kernel>)[the kernel lemma] applies with ratio $|(z - z_0)| / (|zeta - z_0|) = |z - z_0| / rho_2 < 1$, bounded away from $1$ uniformly in $zeta$. On the inner circle, write
+  $
+    1/(zeta - z) = -1/(z - z_0) dot 1/(1 - (zeta - z_0)/(z - z_0)),
+  $
+  a geometric series with ratio $|(zeta - z_0)| / (|z - z_0|) = rho_1 / (|z - z_0|) < 1$, again uniformly in $zeta$; expanding gives the stated negative-power series.
+]
+
+#theorem(name: "Laurent's Theorem")[ // 洛朗定理
+  Let $f$ be holomorphic in the annulus $H: r < |z-z_0| < R quad (0 <= r < R <= oo)$.
+  Then $f$ can be represented in $H$ as a two-sided power series:
+  $
+    f(z) = sum_(n=-oo)^oo c_n (z-z_0)^n,
   $
   where
   $
-    c_n = 1/(2 pi"i") integral_(|z-z_0|=rho) f(z)/(z-z_0)^(n+1) dif z, quad r < rho < R, n = 0, plus.minus 1, plus.minus 2, ...
+    c_n = 1/(2 pi"i") integral_(|zeta-z_0|=rho) f(zeta)/(zeta-z_0)^(n+1) dif zeta, quad r < rho < R, quad n in ZZ.
   $
+  The coefficients are independent of the choice of $rho in (r, R)$, and the expansion is unique.
+] <thm:laurent>
+
+#proof[
+  *Existence.* Fix $z in H$ and choose $rho_1, rho_2$ with $r < rho_1 < |z - z_0| < rho_2 < R$. The integrand $f(zeta)/(zeta - z)$ is holomorphic on the closed annulus $rho_1 <= |zeta - z_0| <= rho_2$, whose boundary consists of the outer circle counterclockwise and the inner circle clockwise; by #link(<thm:deformation-invariance>)[deformation of contours],
+  $
+    f(z) = 1/(2 pi"i") integral_(|zeta - z_0| = rho_2) f(zeta)/(zeta - z) dif zeta - 1/(2 pi"i") integral_(|zeta - z_0| = rho_1) f(zeta)/(zeta - z) dif zeta.
+  $
+  By #link(<lem:laurent-kernel>)[the kernel expansions], both geometric series converge uniformly on their circles, so the sums and the integrals may be interchanged:
+  $
+    f(z) = sum_(n=0)^oo (z - z_0)^n dot 1/(2 pi"i") integral_(|zeta - z_0| = rho_2) f(zeta)/(zeta - z_0)^(n+1) dif zeta + sum_(k=1)^oo (z - z_0)^(-k) dot 1/(2 pi"i") integral_(|zeta - z_0| = rho_1) f(zeta)(zeta - z_0)^(k-1) dif zeta.
+  $
+  Since $(zeta - z_0)^(k-1) = 1/(zeta - z_0)^(-k+1)$, both sums combine into $f(z) = sum_(n=-oo)^oo c_n (z - z_0)^n$ with
+  $
+    c_n = 1/(2 pi"i") integral_(|zeta - z_0| = rho) f(zeta)/(zeta - z_0)^(n+1) dif zeta
+  $
+  — the nonnegative powers coming from the outer circle and the negative powers from the inner one.
+
+  *Independence of $rho$.* For $r < rho < rho' < R$, the integrand $f(zeta)/(zeta - z_0)^(n+1)$ is holomorphic on the closed annulus $rho <= |zeta - z_0| <= rho'$, so #link(<thm:deformation-invariance>)[deformation of contours] yields the same integral for both radii.
+
+  *Uniqueness.* Suppose $f = sum_(n=-oo)^oo c_n (z - z_0)^n$ converges to $f$ locally uniformly on $H$. For $k in ZZ$, termwise integration over the circle $|z - z_0| = rho in (r, R)$ — legitimate by #link(<prop:two-sided-series>)[the two-sided series proposition] — and #link(<prop:common-integrals>)[the common integrals] give
+  $
+    integral_(|z - z_0| = rho) f(z)/(z - z_0)^(k+1) dif z = sum_(n=-oo)^oo c_n integral_(|z - z_0| = rho) (z - z_0)^(n-k-1) dif z = 2 pi"i" c_k,
+  $
+  since only the term with $n - k - 1 = -1$ survives. Hence every representation has the coefficients of the displayed formula: the expansion is unique.
 ]
+
+#figure(
+  image("./img/laurent-annulus.svg", width: 72%),
+  caption: [The proof of Laurent's theorem. The function $f$ is holomorphic on the annulus $r < |z - z_0| < R$ (shaded). For a point $z$ in the annulus, the Cauchy kernel is expanded on the outer circle $|zeta - z_0| = rho_2$, producing the nonnegative powers, and on the inner circle $|zeta - z_0| = rho_1$, producing the negative powers; both integrals are deformations of each other.],
+) <fig:laurent-annulus>
+
+== Methods of Laurent Expansion and Examples // 洛朗展开的方法与例题
+
+#link(<thm:laurent>)[Laurent's theorem] guarantees both the existence and the uniqueness of the two-sided expansion on any annulus of holomorphy. In practice the integral formula for the coefficients is rarely used; uniqueness does all the work: *any* two-sided series representing $f$ on the annulus — obtained by algebraic manipulations, substitutions, or operations on known series — is automatically *the* Laurent series. // 由唯一性，通过代数运算、变量代换与已知展开式得到的表示即为洛朗展开
+
+The working methods are:
+
++ *Partial fractions and geometric series.* Decompose $f$ into simpler fractions and expand each one by #link(<ex:standard-taylor>)[the geometric series]. The direction of the expansion — powers of $z - z_0$ or inverse powers — is dictated by the annulus: a geometric series converges inside its circle of convergence, and in inverse powers outside it.
++ *Substitution in known Taylor series.* Expansions such as $exp z$, $sin z$, $cos z$ can be evaluated at $1/(z - z_0)$ or rescaled, producing the principal part for free.
+
+#example(name: "One Function, Three Annuli")[ // 同一函数在三个圆环中的洛朗展开
+  Let $f(z) = 1/((z - 1)(z - 2))$. Partial fractions give
+  $
+    f(z) = 1/(z - 2) - 1/(z - 1),
+  $
+  and the singularities $1$ and $2$ divide the plane centered at $0$ into three annuli. The two geometric expansions
+  $
+    1/(z - 1) = -sum_(n=0)^oo z^n quad (|z| < 1), quad quad 1/(z - 1) = sum_(n=0)^oo 1/z^(n+1) quad (|z| > 1),
+  $
+  $
+    1/(z - 2) = -sum_(n=0)^oo z^n / 2^(n+1) quad (|z| < 2), quad quad 1/(z - 2) = sum_(n=0)^oo 2^n / z^(n+1) quad (|z| > 2)
+  $
+  combine differently on each annulus.
+
+  *On $|z| < 1$.* Both fractions expand in nonnegative powers:
+  $
+    f(z) = sum_(n=0)^oo (1 - 2^(-(n+1))) z^n,
+  $
+  which is the Taylor series of $f$ at $0$ — as it must be, since $f$ is holomorphic in the disk.
+
+  *On $1 < |z| < 2$.* Now $1/(z - 1)$ must be expanded in inverse powers, while $1/(z - 2)$ keeps its ordinary expansion:
+  $
+    f(z) = -1/2 sum_(n=0)^oo (z/2)^n - sum_(n=0)^oo 1/z^(n+1).
+  $
+
+  *On $2 < |z| < oo$.* Both fractions must be expanded in inverse powers:
+  $
+    f(z) = sum_(n=0)^oo (2^n - 1)/z^(n+1).
+  $
+] <ex:laurent-three-annuli>
+
+#note[ // 洛朗展开依赖于圆环的选取；只有挖去圆盘对应孤立奇点
+  The example shows that the Laurent expansion is a property of the *pair* (function, annulus): the same function has genuinely different expansions on different annuli. Only when the annulus is a punctured disk $0 < |z - z_0| < R$ — so that $z_0$ is an isolated singularity — does the negative part of the expansion reflect the behavior of $f$ at $z_0$ itself; this is the subject of the next section.
+]
+
+#example(name: "Principal Parts by Substitution")[ // 用代换获得主要部分
+  Substituting $w = 1/z$ into the exponential series of #link(<def:exp-function>)[the definition] gives, for $0 < |z| < oo$,
+  $
+    exp(1/z) = sum_(n=0)^oo 1/(n! z^n) = 1 + 1/z + 1/(2! z^2) + 1/(3! z^3) + dots,
+  $
+  and uniqueness identifies this as *the* Laurent expansion of $exp(1/z)$ on the punctured plane; its principal part has infinitely many nonzero terms. The same substitution in the sine series gives
+  $
+    sin(1/z) = 1/z - 1/(3! z^3) + 1/(5! z^5) - dots, quad 0 < |z| < oo.
+  $
+  Both functions are the model examples of #link(<def:singularity-classification>)[essential singularities] in the next section.
+] <ex:exp-1-over-z>
+
+#example(name: "A Pole of Order Two")[ // 二阶极点的展开
+  Dividing the Taylor series of #link(<def:trig-functions>)[the sine function] by $z^3$ gives, for $0 < |z| < oo$,
+  $
+    sin z / z^3 = 1/z^2 - 1/(3!) + z^2/(5!) - dots,
+  $
+  so $sin z / z^3$ has Laurent expansion at $0$ whose principal part consists of the single term $1/z^2$ — the hallmark of a pole of order two. Note that $c_(-1) = 0$: even at a pole, the coefficient that will become the residue (Chapter 9) may vanish.
+] <ex:sin-z-cubed>
 
 == Classification of Singularities // 奇点的分类
-#theorem(name: "Isolated Singularities")[
-  Let $f(z)$ be an analytic function in the punctured disk $0 < |z-z_0| < R (0<R<=infinity)$.
-  Then $z_0$ is called an isolated singularity of $f$.
+#definition(name: "Isolated Singularity")[ // 孤立奇点
+  A point $z_0$ is called an *isolated singularity* of $f$ if $f$ is holomorphic in a punctured disk
+  $
+    0 < |z - z_0| < R quad (0 < R <= oo)
+  $
+  but not holomorphic at $z_0$ itself.
+] <def:isolated-singularity>
+
+If $z_0$ is an isolated singularity of $f$, the punctured disk is an annulus with inner radius $r = 0$, so #link(<thm:laurent>)[Laurent's theorem] represents $f$ there:
+$
+  f(z) = sum_(n=-oo)^oo c_n (z - z_0)^n.
+$
+
+#definition(name: "Regular and Principal Parts")[ // 正则部与主要部分
+  In the expansion above, the sum of the nonnegative powers,
+  $
+    sum_(n=0)^oo c_n (z - z_0)^n,
+  $
+  is called the *regular part* of $f$ at $z_0$, and the sum of the negative powers,
+  $
+    sum_(n=1)^oo c_(-n) (z - z_0)^(-n),
+  $
+  is called the *principal part* of $f$ at $z_0$.
+] <def:principal-part>
+
+The principal part classifies the singularity:
+
+#definition(name: "Classification of Isolated Singularities")[
+  // 孤立奇点的分类
+  Let $z_0$ be an isolated singularity of $f$ with principal part as in #link(<def:principal-part>)[the definition].
+  + If the principal part vanishes identically, i.e. $c_n = 0$ for all $n < 0$, then $z_0$ is called a *removable singularity* of $f$.
+  + If the principal part has finitely many nonzero terms, i.e. there is a positive integer $m$ with $c_(-m) != 0$ and $c_n = 0$ for all $n < -m$, then $z_0$ is called a *pole of order $m$* of $f$; a pole of order $1$ is called a *simple pole*.
+  + If the principal part has infinitely many nonzero terms, then $z_0$ is called an *essential singularity* of $f$.
+] <def:singularity-classification>
+
+// 可去奇点与极点可以用函数的内在行为刻画，而不必借助级数展开。
+#theorem(name: "Riemann's Removable Singularity Criterion")[
+  // 黎曼可去奇点判别准则
+  Let $z_0$ be an isolated singularity of $f$. The following are equivalent:
+  + $z_0$ is a removable singularity;
+  + $f$ is bounded in some punctured neighborhood of $z_0$;
+  + $lim_(z -> z_0) f(z)$ exists.
+  In this case, setting $f(z_0) := c_0 = lim_(z -> z_0) f(z)$ extends $f$ holomorphically to $z_0$.
+] <thm:removable-criterion>
+
+#proof[
+  *(i) $=>$ (iii).* If the principal part vanishes, the regular part alone converges to its sum on the full disk $|z - z_0| < R$ by #link(<prop:two-sided-series>)[the two-sided series proposition], so $lim_(z -> z_0) f(z) = c_0$ exists.
+
+  *(iii) $=>$ (ii)* is trivial.
+
+  *(ii) $=>$ (i).* Suppose $|f| <= M$ on the punctured disk $0 < |z - z_0| <= rho$. For $k >= 1$, applying the ML estimate to the coefficient formula of #link(<thm:laurent>)[Laurent's theorem] with $n = -k$ gives
+  $
+    abs(c_(-k)) <= 1/(2 pi) integral_(|zeta - z_0| = rho) abs(f(zeta)) rho^(k-1) dif zeta <= M rho^k.
+  $
+  The coefficients do not depend on $rho in (0, R)$, so letting $rho -> 0$ yields $c_(-k) = 0$ for every $k >= 1$: the principal part vanishes.
 ]
 
-If $z_0$ is an isolated singularity of $f$, then $f(z)$ can be represented as a Laurent series in the annulus $0 < |z-z_0| < R$.
-There are two common methods to expand $f(z)$ into a Laurent series:
-+ Method 1: Directly compute the coefficients $c_n$ using the integral formula.
-+ Method 2: According to the uniqueness of the series composed of positive and negative power terms, use algebraic calculations, variable substitution, and Taylor expansion to obtain the Laurent series expansion. // 根据正负幂项组成的级数的唯一性, 使用代数计算、变量代换，并利用泰勒展开去求得洛朗展开式。
+#theorem(name: "Criterion for Poles")[
+  // 极点的判别
+  Let $z_0$ be an isolated singularity of $f$. The following are equivalent:
+  + $z_0$ is a pole of order $m$ of $f$;
+  + $f(z) = g(z)/(z - z_0)^m$ near $z_0$, where $g$ is holomorphic at $z_0$ with $g(z_0) != 0$;
+  + $1/f$ has a zero of order $m$ at $z_0$ in the sense of #link(<def:mth-order-zero>)[the definition];
+  + $lim_(z -> z_0) |f(z)| = oo$.
+] <thm:pole-criterion>
 
-Let the Laurent series expansion of $f(z)$ at $z_0$ be
-$
-  f(z) = sum_(n=-infinity)^infinity c_n (z-z_0)^n.
-$
-Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ at $z_0$, and the minus power terms $c_(-n) (z-z_0)^(-n)$ the principal part of $f(z)$ at $z_0$. Then we can classify the isolated singularity $z_0$ of $f(z)$ as follows:
-+ If the principal part of $f(z)$ at $z_0$ is identically zero, i.e., $c_n = 0$ for all $n < 0$, then $z_0$ is called a *removable singularity* of $f(z)$.
-+ If the principal part of $f(z)$ at $z_0$ has only finitely many non-zero terms, i.e., there exists a positive integer $m$ such that $c_n = 0$ for all $n < -m$, then $z_0$ is called a *pole* of order $m$ of $f(z)$.
-+ If the principal part of $f(z)$ at $z_0$ has infinitely many non-zero terms, i.e., $c_n != 0$ for infinitely many negative integers $n$, then $z_0$ is called *essential singularity* of $f(z)$.
+#proof[
+  *(i) $=>$ (ii).* Factoring out $(z - z_0)^(-m)$,
+  $
+    f(z) = sum_(n=-m)^oo c_n (z - z_0)^n = g(z)/(z - z_0)^m, quad g(z) = sum_(n=-m)^oo c_n (z - z_0)^(n+m),
+  $
+  and $g$ is holomorphic at $z_0$ with $g(z_0) = c_(-m) != 0$.
+
+  *(ii) $=>$ (iii).* $1/f = (z - z_0)^m dot 1/g$, and $1/g$ is holomorphic at $z_0$ with value $1/g(z_0) != 0$: by definition, $1/f$ has a zero of order $m$ at $z_0$.
+
+  *(iii) $=>$ (iv).* $1/f = (z - z_0)^m h(z)$ with $h$ holomorphic near $z_0$ and $h(z_0) != 0$ gives $|f(z)| >= C |z - z_0|^(-m) -> oo$.
+
+  *(iv) $=>$ (i).* Since $|f(z)| -> oo$, $f$ has no zeros in some punctured neighborhood of $z_0$, so $1/f$ is holomorphic there with $1/f -> 0$; by #link(<thm:removable-criterion>)[Riemann's criterion], $1/f$ extends holomorphically to $z_0$ with value $0$. The extension is not identically zero — it is nonzero on the punctured disk — so by #link(<thm:zeros-isolated>)[isolation of zeros] it has a zero of some finite order $m >= 1$ at $z_0$:
+  $
+    1/f = (z - z_0)^m h(z), quad h(z_0) != 0.
+  $
+  Then $f = (1/h)/(z - z_0)^m$ with $1/h$ holomorphic and nonzero at $z_0$, so $z_0$ is a pole of order $m$ by (ii).
+]
+
+#example(name: "Removable Singularities")[ // 可去奇点的例子
+  The functions $sin z / z$ and $(1 - cos z)/z^2$ are holomorphic on the punctured plane and
+  $
+    sin z / z = 1 - z^2/(3!) + z^4/(5!) - dots, quad quad (1 - cos z)/z^2 = 1/2 - z^2/(4!) + z^4/(6!) - dots,
+  $
+  so both have removable singularities at $0$; the holomorphic extensions take the values $1$ and $1/2$ there.
+] <ex:removable-examples>
+
+// 本质奇点附近的函数值在复平面内稠密。
+#theorem(name: "Casorati-Weierstrass")[ // 卡索拉蒂-魏尔斯特拉斯定理
+  Let $z_0$ be an essential singularity of $f$. Then the values of $f$ are dense in $bb(C)$ on every punctured disk: for every $w in bb(C)$, every $epsilon > 0$ and every $R' > 0$ there exists $z$ with
+  $
+    0 < |z - z_0| < R' quad "and" quad |f(z) - w| < epsilon.
+  $
+] <thm:casorati-weierstrass>
+
+#proof[
+  Fix $w in bb(C)$ and $R' > 0$, and suppose — for contradiction — that $|f(z) - w| >= epsilon > 0$ on some punctured disk $V: 0 < |z - z_0| < delta <= R'$. Then
+  $
+    g(z) = 1/(f(z) - w)
+  $
+  is holomorphic and bounded by $1/epsilon$ on $V$, so by #link(<thm:removable-criterion>)[Riemann's criterion] $g$ extends holomorphically to $z_0$. Two cases are possible.
+
+  - If $g(z_0) != 0$, then $f = w + 1/g$ extends holomorphically to $z_0$ as well: $z_0$ is removable, not essential.
+
+  - If $g(z_0) = 0$, the extension of $g$ has a zero of some finite order $m >= 1$ at $z_0$, so $g = (z - z_0)^m h$ with $h(z_0) != 0$, and
+    $
+      f = w + 1/g = (w (z - z_0)^m h(z) + 1)/((z - z_0)^m h(z)) = tilde(g)(z)/(z - z_0)^m
+    $
+    with $tilde(g)$ holomorphic at $z_0$ and $tilde(g)(z_0) = 1 != 0$: $f$ has a pole of order $m$ at $z_0$ by #link(<thm:pole-criterion>)[the pole criterion].
+
+  Either way $z_0$ is removable or a pole, contradicting that it is essential.
+]
+
+#figure(
+  image("./img/singularity-types.svg", width: 90%),
+  caption: [The three types of isolated singularities, pictured through the modulus of $f$ near $z_0$. A removable singularity (left) is bounded near $z_0$; a pole of order $m$ (center) blows up like $|z - z_0|^(-m)$; near an essential singularity (right) the values of $f$ are dense in $bb(C)$ by Casorati-Weierstrass.],
+) <fig:singularity-types>
+
+#note[ // 三类奇点判别汇总
+  The classification is summarized by the following table.
+
+  #table(
+    columns: 4,
+    align: center,
+    [*Type*], [*Principal part*], [*Behavior near $z_0$*], [*Model at $0$*],
+    [Removable], [empty], [bounded; finite limit], [$sin z \/ z$],
+    [Pole of order $m$], [$c_(-m) != 0$, $c_n = 0$ for $n < -m$], [$|f(z)| -> oo$], [$sin z \/ z^3$ (order 2)],
+    [Essential], [infinitely many terms], [values dense in $bb(C)$], [$exp(1\/z)$],
+  )
+]
+
+Among the three classes, it is the coefficient $c_(-1)$ — the top term of the principal part — that controls the contour integrals of $f$ around $z_0$. Making this precise is the subject of the next chapter. // c_{-1} 控制围道积分 —— 引出留数理论
 
 = Residue Theory // 留数理论
 
@@ -2243,19 +2484,20 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
   $
     f(z) = sum_(n=-infinity)^infinity c_n (z - z_0)^n
   $
-  be its Laurent series at $z_0$ (see @two-sided-power-series). The coefficient $c_(-1)$ is called the *residue* of $f$ at $z_0$, denoted by
+  be its Laurent series at $z_0$ (see #link(<thm:laurent>)[Laurent's theorem]). The coefficient $c_(-1)$ is called the *residue* of $f$ at $z_0$, denoted by
   $
     "Res"(f, z_0) = c_(-1).
   $
 ] <def:residue>
 
 #property[
-  - By the integral formula for Laurent coefficients, for any $0 < rho < R$,
+  // 留数的积分公式
+  - By the coefficient formula of #link(<thm:laurent>)[Laurent's theorem], for any $0 < rho < R$,
     $
       "Res"(f, z_0) = 1/(2 pi"i") integral_(abs(z - z_0) = rho) f(z) dif z.
     $
-  - If $z_0$ is a removable singularity of $f$, then $"Res"(f, z_0) = 0$.
-]
+  - If $z_0$ is a removable singularity of $f$, then the principal part vanishes and $"Res"(f, z_0) = c_(-1) = 0$.
+] <prop:residue-integral>
 
 #theorem(name: "Residues at Poles")[
   Let $z_0$ be a pole of $f$ of order $m$.
@@ -2271,10 +2513,39 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
     $
       "Res"(f, z_0) = 1/((m-1)!) lim_(z -> z_0) (dif^(m-1))/(dif z^(m-1)) [(z - z_0)^m f(z)].
     $
+] <thm:residue-poles>
+
+#proof[
+  *Simple pole.* The Laurent expansion at $z_0$ reads $f(z) = c_(-1)/(z - z_0) + sum_(n=0)^oo c_n (z - z_0)^n$; multiplying by $(z - z_0)$ and letting $z -> z_0$, every term except $c_(-1)$ vanishes:
+  $
+    lim_(z -> z_0) (z - z_0) f(z) = c_(-1) = "Res"(f, z_0).
+  $
+  If $f = P/Q$ with $Q$ having a simple zero at $z_0$, write $Q(z) = (z - z_0) q(z)$; then $q$ is holomorphic near $z_0$ with $q(z_0) = Q'(z_0) != 0$, so $f = (P/q)/(z - z_0)$ has a simple pole whose residue is $(P/q)(z_0) = P(z_0)/Q'(z_0)$.
+
+  *Pole of order $m$.* The product $(z - z_0)^m f$ extends holomorphically to $z_0$, and its Taylor expansion there is
+  $
+    (z - z_0)^m f(z) = c_(-m) + c_(-m+1) (z - z_0) + dots + c_(-1) (z - z_0)^(m-1) + dots,
+  $
+  so $c_(-1)$ is the Taylor coefficient of order $m - 1$:
+  $
+    "Res"(f, z_0) = c_(-1) = 1/((m-1)!) lim_(z -> z_0) (dif^(m-1))/(dif z^(m-1)) [(z - z_0)^m f(z)].
+  $
 ]
 
 #theorem(name: "Logarithmic Derivative")[
   If $f$ has a zero of order $m$ at $z_0$, then $"Res"(f'/f, z_0) = m$; if $f$ has a pole of order $m$ at $z_0$, then $"Res"(f'/f, z_0) = -m$.
+] <thm:log-derivative-residue>
+
+#proof[
+  If $f$ has a zero of order $m$ at $z_0$, then $f(z) = (z - z_0)^m g(z)$ with $g$ holomorphic near $z_0$ and $g(z_0) != 0$ (see #link(<def:mth-order-zero>)[the definition]). Differentiating,
+  $
+    f'(z)/f(z) = m/(z - z_0) + g'(z)/g(z),
+  $
+  where $g'/g$ is holomorphic at $z_0$; the coefficient of $(z - z_0)^(-1)$ is $m$, so $"Res"(f'/f, z_0) = m$. If $f$ has a pole of order $m$ at $z_0$, #link(<thm:pole-criterion>)[the pole criterion] gives $f = g/(z - z_0)^m$ with $g(z_0) != 0$, and the same computation yields
+  $
+    f'(z)/f(z) = -m/(z - z_0) + g'(z)/g(z),
+  $
+  so $"Res"(f'/f, z_0) = -m$.
 ]
 
 #example(name: "Residue of e^z/z^2 at 0")[
@@ -2285,12 +2556,12 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
   the coefficient of $z^(-1)$ is $1$, so $"Res"(e^z/z^2, 0) = 1$.
 ]
 
-#example(name: "Residue of 1/(z^2+1) at i")[
-  The function $1/(z^2 + 1) = 1/((z - "i")(z + "i"))$ has simple poles at $z = plus.minus "i"$. Taking $P(z) = 1$ and $Q(z) = z^2 + 1$,
+#example(name: "Residue at a Pole of Order Three")[
+  The function $f(z) = e^z/(z - 1)^3$ has a pole of order $3$ at $z_0 = 1$. By #link(<thm:residue-poles>)[the pole formula],
   $
-    "Res"(1/(z^2 + 1), "i") = P("i")/Q'("i") = 1/(2"i") = -"i"/2.
+    "Res"(f, 1) = 1/(2!) lim_(z -> 1) (dif^2)/(dif z^2) e^z = e/2.
   $
-]
+] <ex:residue-order-three>
 
 == Residue Theorem // 留数定理
 
@@ -2304,28 +2575,15 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
 ] <thm:residue-theorem>
 
 #proof[
-  Enclose each singularity $z_k$ inside $C$ by a small positively oriented circle $C_k$ centered at $z_k$ such that the disks are pairwise disjoint and contained in the region bounded by $C$. Deforming the contour $C$ onto the circles $C_1, C_2, dots, C_n$ (a consequence of the Cauchy-Goursat theorem), we get
+  Enclose each singularity $z_k$ inside $C$ by a small positively oriented circle $C_k$ centered at $z_k$ such that the disks are pairwise disjoint and contained in the region bounded by $C$. Deforming the contour $C$ onto the circles $C_1, C_2, dots, C_n$ (a consequence of #link(<thm:cauchy-goursat>)[the Cauchy-Goursat theorem]), we get
   $
     integral_C f(z) dif z = sum_(k=1)^n integral_(C_k) f(z) dif z.
   $
-  On each $C_k$, expanding $f$ into its Laurent series at $z_k$ and integrating termwise (which is legitimate by the uniform convergence established in Ch8),
+  On each $C_k$, expanding $f$ into its Laurent series at $z_k$ and integrating termwise — legitimate by #link(<prop:two-sided-series>)[the convergence of two-sided series] —
   $
     integral_(C_k) f(z) dif z = 2 pi"i" c_(-1)^((k)) = 2 pi"i" "Res"(f, z_k),
   $
   since all terms $(z - z_k)^n$ with $n != -1$ vanish on integration over a closed curve. Summing over $k$ yields the theorem.
-]
-
-// 扩充复平面上全部留数（含无穷远点）之和为零，这是留数定理的常用推论。
-#corollary(name: "Sum of All Residues")[
-  Define the residue of $f$ at infinity by
-  $
-    "Res"(f, infinity) = -"Res"(f(1/z)/z^2, 0).
-  $
-  If $f$ is meromorphic on the extended complex plane $hat(bb(C))$ with finitely many singularities, then
-  $
-    sum_(z in hat(bb(C))) "Res"(f, z) = 0,
-  $
-  where the sum is over all finite singularities together with the point at infinity.
 ]
 
 #example(name: "Integral of 1/(z^2+1) over |z| = 2")[
@@ -2337,7 +2595,90 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
   $
     integral_(abs(z) = 2) 1/(z^2 + 1) dif z = 2 pi"i" ("Res"(f, "i") + "Res"(f, -"i")) = 0.
   $
+] <ex:residue-theorem-circle>
+
+== The Residue at Infinity // 无穷远点的留数
+
+// 无穷远点的奇性与留数通过变换 w = 1/z 归结到原点；全部留数之和为零常用于简化计算。
+The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genuine point (Section 2.4), and a function holomorphic for $|z| > R$ can be examined there by the substitution $z = 1/w$, which trades a neighborhood of $oo$ for one of the origin.
+
+#definition(name: "Singularities at Infinity")[ // 无穷远点的奇性
+  Let $f$ be holomorphic for $|z| > R$ and set $g(w) = f(1/w)$, holomorphic in the punctured disk $0 < |w| < 1/R$. Then $oo$ is called a *removable singularity*, a *pole of order $m$*, or an *essential singularity* of $f$, according as $0$ is removable, a pole of order $m$, or an essential singularity of $g$. If $oo$ is removable, $f$ is said to be *holomorphic at infinity*, with
+  $
+    f(oo) := lim_(z -> oo) f(z) = g(0).
+  $
+] <def:infinity-singularity>
+
+#example(name: "Polynomials and the Exponential at Infinity")[ // 多项式与指数函数在无穷远处
+  A polynomial $p$ of degree $m >= 1$ satisfies
+  $
+    p(1/w) = (a_m + a_(m-1) w + ... + a_0 w^m)/w^m,
+  $
+  a pole of order $m$ at $w = 0$: a polynomial of degree $m$ has a pole of order $m$ at infinity. For the exponential, substituting $w = 1/z$ in the series of #link(<ex:exp-1-over-z>)[the example] gives
+  $
+    exp(1/w) = sum_(n=0)^oo 1/(n! w^n),
+  $
+  so $oo$ is an essential singularity of $exp$ — indeed its only singularity in $hat(bb(C))$.
+] <ex:infinity-polynomial-exp>
+
+#definition(name: "Residue at Infinity")[ // 无穷远点的留数
+  Let $f$ be holomorphic for $|z| > R$ with Laurent expansion at infinity
+  $
+    f(z) = sum_(n=-oo)^oo c_n z^n quad (|z| > R).
+  $
+  The *residue of $f$ at infinity* is
+  $
+    "Res"(f, oo) := -c_(-1).
+  $
+] <def:residue-infinity>
+
+#property(name: "Two Formulas for the Residue at Infinity")[ // 无穷远点留数的两个公式
+  For $rho > R$, termwise integration over $|z| = rho$ gives
+  $
+    "Res"(f, oo) = -1/(2 pi"i") integral_(abs(z) = rho) f(z) dif z,
+  $
+  the minus sign compensating the orientation: the point $oo$ lies to the *left* of the counterclockwise circle, so it is the clockwise direction that winds around $oo$ positively. Substituting $z = 1/w$ equivalently yields
+  $
+    "Res"(f, oo) = -"Res"(f(1/w)/w^2, 0).
+  $
+] <prop:residue-infinity-formulas>
+
+#proof[
+  On $|z| = rho$ the expansion converges uniformly (#link(<prop:two-sided-series>)[the two-sided series proposition]), so termwise integration is legitimate, and #link(<prop:common-integrals>)[the common integrals] leave only the term $c_(-1) z^(-1)$:
+  $
+    integral_(abs(z) = rho) f(z) dif z = 2 pi"i" c_(-1) = -2 pi"i" "Res"(f, oo).
+  $
+  For the second formula, substitute $z = 1/w$, so $dif z = -dif w \/ w^2$: the circle $|z| = rho$ counterclockwise maps to the circle $|w| = 1/rho$ clockwise, and the minus sign of the orientation cancels the minus sign of $dif z$, giving
+  $
+    integral_(abs(z) = rho) f(z) dif z = integral_(abs(w) = 1/rho) f(1/w)/w^2 dif w = 2 pi"i" "Res"(f(1/w)/w^2, 0),
+  $
+  the last integral being taken counterclockwise, so that #link(<prop:residue-integral>)[the residue formula] applies to $g(w) = f(1/w)/w^2$ at $w = 0$. Comparing the two displayed identities completes the proof.
 ]
+
+#corollary(name: "Sum of All Residues")[ // 全部留数之和为零
+  If $f$ is holomorphic on $hat(bb(C))$ except for finitely many singularities $z_1, dots, z_n$ in $bb(C)$, then
+  $
+    sum_(k=1)^n "Res"(f, z_k) + "Res"(f, oo) = 0.
+  $
+] <cor:sum-residues>
+
+#proof[
+  Choose $rho$ larger than the moduli of all the finite singularities, so that $f$ is holomorphic in $|z| >= rho$ and, by #link(<thm:residue-theorem>)[the Residue Theorem],
+  $
+    integral_(abs(z) = rho) f(z) dif z = 2 pi"i" sum_(k=1)^n "Res"(f, z_k).
+  $
+  Comparing with #link(<prop:residue-infinity-formulas>)[the two formulas] gives $2 pi"i" sum_(k=1)^n "Res"(f, z_k) = -2 pi"i" "Res"(f, oo)$, which is the claim.
+]
+
+#example(name: "Residues at Infinity of Simple Functions")[ // 简单函数在无穷远点的留数
+  *A function holomorphic at infinity can have a nonzero residue there.* For $f(z) = 1/z$, holomorphic for $|z| > 0$ with expansion $f(z) = 1/z$, the definition gives $"Res"(f, oo) = -1$ although $f(oo) = 0$ is perfectly finite. The sum of all residues is indeed zero: $"Res"(f, 0) + "Res"(f, oo) = 1 - 1 = 0$.
+
+  *A rational function.* For $f(z) = 1/(z^2 + 1)$, the expansion for $|z| > 1$,
+  $
+    1/(z^2 + 1) = 1/z^2 dot 1/(1 + 1/z^2) = 1/z^2 - 1/z^4 + 1/z^6 - dots,
+  $
+  has no $z^(-1)$ term, so $"Res"(f, oo) = 0$ — consistently with the residues $-"i"/2$ and $"i"/2$ at $plus.minus "i"$ found in #link(<ex:residue-theorem-circle>)[the example above], whose sum vanishes.
+] <ex:residue-infinity-rational>
 
 == Argument Principle // 辐角原理
 
@@ -2348,7 +2689,7 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
     "Ind"_C(z_0) = 1/(2 pi"i") integral_C dif z/(z - z_0).
   $
   For a simple closed curve $C$, $"Ind"_C(z_0) = 1$ if $z_0$ lies inside $C$ and $0$ otherwise.
-]
+] <def:winding-number>
 
 // 辐角原理：亚纯函数沿闭曲线的对数导数积分等于内部零点数减去极点数。
 #theorem(name: "Argument Principle")[
@@ -2360,11 +2701,7 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
 ] <thm:argument-principle>
 
 #proof[
-  Let $z_0$ be a zero of $f$ of order $m$. Then $f(z) = (z - z_0)^m g(z)$ with $g$ analytic and $g(z_0) != 0$, hence
-  $
-    f'(z)/f(z) = m/(z - z_0) + g'(z)/g(z),
-  $
-  where $g'/g$ is analytic at $z_0$. Thus $"Res"(f'/f, z_0) = m$. Similarly, at a pole of order $p$, $"Res"(f'/f, z_0) = -p$. Applying #link(<thm:residue-theorem>)[the Residue Theorem] to $f'/f$ gives
+  #link(<thm:log-derivative-residue>)[The logarithmic derivative theorem] computes the residues of $f'/f$: at a zero of order $m$ the residue is $m$, at a pole of order $p$ it is $-p$, and $f'/f$ has no other singularities inside $C$. #link(<thm:residue-theorem>)[The Residue Theorem] applied to $f'/f$ therefore gives
   $
     1/(2 pi"i") integral_C f'(z)/f(z) dif z = N - P.
   $
@@ -2388,7 +2725,7 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
   $
     1/(2 pi"i") integral_C f'(z)/f(z) dif z = N - P = 1.
   $
-]
+] <ex:argument-rational>
 
 == Rouché's Theorem // 儒歇定理
 
@@ -2406,25 +2743,21 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
   $
     abs((f(z) + g(z))/f(z) - 1) = abs(g(z))/abs(f(z)) < 1,
   $
-  so the curve $(f + g)/f(C)$ lies entirely inside the disk centered at $1$ with radius $1$, which does not contain $0$; hence $"Ind"_((f+g)/f)(0) = 0$. Applying #link(<thm:argument-principle>)[the Argument Principle] to $f + g$ and $f$ and subtracting,
+  so the curve $(f + g)/f(C)$ lies entirely inside the disk centered at $1$ with radius $1$, which does not contain $0$; hence $"Ind"_((f+g)/f)(0) = 0$ by #link(<def:winding-number>)[the winding number]. Applying #link(<thm:argument-principle>)[the Argument Principle] to $f + g$ and $f$ and subtracting,
   $
     N_(f+g) - N_f = 1/(2 pi"i") integral_C ((f + g)'/(f + g) - f'/f) dif z = 1/(2 pi"i") integral_C ((f + g)/f)'/((f + g)/f) dif z = 0.
   $
   Therefore $N_(f+g) = N_f$.
 ]
 
-// 代数基本定理的另一个证明，与 Ch5 中刘维尔定理的证明互为补充。
-#corollary(name: "Fundamental Theorem of Algebra")[
-  Every polynomial $p(z) = a_n z^n + a_(n-1) z^(n-1) + dots + a_0$ with $a_n != 0$ has exactly $n$ zeros in $bb(C)$, counted with multiplicity.
-]
-
-#proof[
-  Write $p = f + g$ with $f(z) = a_n z^n$ and $g(z) = a_(n-1) z^(n-1) + dots + a_0$. On a sufficiently large circle $abs(z) = R$,
+// 代数基本定理的第二个证明，与 Ch5 中刘维尔定理的证明互为补充。
+#example(name: "A Second Proof of the Fundamental Theorem of Algebra")[
+  #link(<thm:fundamental-theorem-algebra>)[The Fundamental Theorem of Algebra] was proved in Chapter 5 via Liouville's theorem; #link(<thm:rouche>)[Rouché's theorem] yields a second proof. Let $p(z) = a_n z^n + a_(n-1) z^(n-1) + dots + a_0$ with $a_n != 0$, and write $p = f + g$ with $f(z) = a_n z^n$ and $g(z) = a_(n-1) z^(n-1) + dots + a_0$. On a sufficiently large circle $abs(z) = R$,
   $
     abs(g(z)) <= sum_(k=0)^(n-1) abs(a_k) R^k < abs(a_n) R^n = abs(f(z)),
   $
   since the leading term dominates for large $R$. By #link(<thm:rouche>)[Rouché's Theorem], $p$ has as many zeros inside $abs(z) = R$ as $f(z) = a_n z^n$, namely $n$; letting $R -> infinity$ completes the proof.
-]
+] <ex:fta-rouche>
 
 #example(name: "Zeros of z^4 - 6z + 3 in the Unit Disk")[
   Let $p(z) = z^4 - 6z + 3$. Take $f(z) = -6z$ and $g(z) = z^4 + 3$. On the unit circle $abs(z) = 1$,
@@ -2432,7 +2765,7 @@ Then we called non-minus power terms $c_n (z-z_0)^n$ the regular part of $f(z)$ 
     abs(g(z)) <= abs(z)^4 + 3 = 4 < 6 = abs(f(z)),
   $
   so by #link(<thm:rouche>)[Rouché's Theorem], $p$ has exactly one zero inside $abs(z) < 1$, the same as $f(z) = -6z$.
-]
+] <ex:rouche-quartic>
 
 = Evaluation of Real Integrals // 实积分的计算
 
