@@ -82,7 +82,7 @@ Now we give several rigorous definitions of the complex number field for subsequ
 #definition(name: "Complex Number")[
   1. *Analytic/Ordered Pair Definition.* Let
   $
-    bb(C) = {(x, y) \| x, y in bb(R)},
+    bb(C) = {(x, y) \abs( x, y in bb(R)},
   $
   and define addition and multiplication as follows:
   $ (x_1, y_1) + (x_2, y_2) = (x_1 + x_2, y_1 + y_2), $
@@ -95,7 +95,7 @@ Now we give several rigorous definitions of the complex number field for subsequ
   called the complex field.
   3. *Matrix Definition.* Let
   $
-    bb(C) = {mat(delim: "(", x, -y; y, x) \| x, y in bb(R)}.
+    bb(C) = {mat(delim: "(", x, -y; y, x) \) x, y in bb(R)}.
   $
   Then $(bb(C), +, dot)$ is a field, where addition and multiplication are defined as matrix addition and multiplication, respectively, called the complex field.
 ]
@@ -151,7 +151,7 @@ Thus, we know that multiplying two complex numbers is equivalent to multiplying 
 
   Let
   $
-    bb(C) = mat(delim: "(", r cos phi, -r sin phi; r sin phi, r cos phi) \| r >= 0, phi in [0, 2pi) .
+    bb(C) = mat(delim: "(", r cos phi, -r sin phi; r sin phi, r cos phi) \abs( r >= 0, phi in [0, 2pi) .
   $
   Then we can verify that the addition and multiplication defined as matrix addition and multiplication, respectively, are consistent with the polar representation of complex numbers.
 
@@ -254,7 +254,7 @@ A complex function $f: E -> bb(C)$ can be interpreted geometrically as a mapping
 #definition(name: "Bounded Complex Function")[
   A complex function $f: E -> bb(C)$ is *bounded* on $E$ if there exists a constant $M >= 0$ such that
   $
-    |f(z)| <= M quad "for all" z in E.
+    )f(z)abs( <= M quad "for all" z in E.
   $
 ]
 
@@ -273,7 +273,7 @@ In terms of the real and imaginary parts, if $f(z) = u_1 + "i"v_1$ and $g(w) = u
   $
   if for every $epsilon > 0$ there exists $delta > 0$ such that
   $
-    0 < |z - z_0| < delta text(" and ") z in E quad => quad |f(z) - omega_0| < epsilon.
+    0 < )z - z_0abs( < delta text(" and ") z in E quad => quad )f(z) - omega_0abs( < epsilon.
   $
 ] <def:complex-limit>
 
@@ -293,11 +293,11 @@ The limit of a complex function can be completely characterized by the limits of
 #proof[
   The inequalities
   $
-    |u - a| <= |f - omega_0| <= |u - a| + |v - b|,
+    )u - aabs( <= )f - omega_0abs( <= )u - aabs( + )v - babs(,
     quad
-    |v - b| <= |f - omega_0| <= |u - a| + |v - b|
+    )v - babs( <= )f - omega_0abs( <= )u - aabs( + )v - babs(
   $
-  show that $|f - omega_0|$ is small if and only if both $|u - a|$ and $|v - b|$ are small. The $epsilon$-$delta$ definitions are therefore equivalent.
+  show that $)f - omega_0abs($ is small if and only if both $)u - aabs($ and $)v - babs($ are small. The $epsilon$-$delta$ definitions are therefore equivalent.
 ]
 
 #property(name: "Elementary Properties of Limits")[
@@ -307,7 +307,7 @@ The limit of a complex function can be completely characterized by the limits of
   - *Product*: $lim_(z -> z_0) (f(z) g(z)) = alpha beta$.
   - *Quotient*: $lim_(z -> z_0) (f(z) / g(z)) = alpha / beta$, provided $beta != 0$.
   - *Composition*: If $lim_(w -> alpha) h(w) = gamma$ and $h$ is continuous at $alpha$ (or if $f(z) != alpha$ near $z_0$), then $lim_(z -> z_0) h(f(z)) = gamma$.
-  - *Squeeze*: If $|f(z)| <= g(z)$ for all $z$ near $z_0$ and $lim_(z -> z_0) g(z) = 0$, then $lim_(z -> z_0) f(z) = 0$.
+  - *Squeeze*: If $)f(z)abs( <= g(z)$ for all $z$ near $z_0$ and $lim_(z -> z_0) g(z) = 0$, then $lim_(z -> z_0) f(z) = 0$.
 ]
 
 #note[
@@ -316,8 +316,8 @@ The limit of a complex function can be completely characterized by the limits of
 
 We also extend the definition of limit to include the point at infinity from the extended complex plane $hat(bb(C))$ (see §1.4).
 
-- We write $lim_(z -> z_0) f(z) = oo$ if for every $M > 0$ there exists $delta > 0$ such that $0 < |z - z_0| < delta$ implies $|f(z)| > M$.
-- We write $lim_(z -> oo) f(z) = omega_0$ if for every $epsilon > 0$ there exists $R > 0$ such that $|z| > R$ implies $|f(z) - omega_0| < epsilon$.
+- We write $lim_(z -> z_0) f(z) = oo$ if for every $M > 0$ there exists $delta > 0$ such that $0 < )z - z_0abs( < delta$ implies $)f(z)abs( > M$.
+- We write $lim_(z -> oo) f(z) = omega_0$ if for every $epsilon > 0$ there exists $R > 0$ such that $)zabs( > R$ implies $)f(z) - omega_0abs( < epsilon$.
 
 We now turn to continuity.
 
@@ -332,7 +332,7 @@ We now turn to continuity.
 #definition(name: "Uniform Continuity")[
   A function $f: E -> bb(C)$ is *uniformly continuous* on $E$ if for every $epsilon > 0$ there exists $delta > 0$ such that
   $
-    z_1, z_2 in E text(" and ") |z_1 - z_2| < delta quad => quad |f(z_1) - f(z_2)| < epsilon.
+    z_1, z_2 in E text(" and ") )z_1 - z_2abs( < delta quad => quad )f(z_1) - f(z_2)abs( < epsilon.
   $
 ]
 
@@ -351,30 +351,30 @@ Continuous functions on compact sets enjoy particularly strong properties, which
 
 #theorem(name: "Continuous Functions on Compact Sets")[
   Let $K subset bb(C)$ be compact (closed and bounded) and let $f: K -> bb(C)$ be continuous on $K$. Then:
-  1. *Boundedness*: $f$ is bounded on $K$, i.e., $sup_(z in K) |f(z)| < oo$.
+  1. *Boundedness*: $f$ is bounded on $K$, i.e., $sup_(z in K) )f(z)abs( < oo$.
   2. *Extremal values*: There exist points $z_max, z_min in K$ such that
     $
-      |f(z_max)| = sup_(z in K) |f(z)|, quad |f(z_min)| = inf_(z in K) |f(z)|.
+      )f(z_max)abs( = sup_(z in K) )f(z)abs(, quad )f(z_min)abs( = inf_(z in K) )f(z)abs(.
     $
   3. *Uniform continuity*: $f$ is uniformly continuous on $K$.
 ] <thm:compact-continuous>
 
 #proof[
-  Claims (1) and (3) are direct consequences of the Heine-Borel and Heine-Cantor theorems in the Euclidean metric space $bb(R)^2$, applied separately to the real and imaginary parts. Claim (2) follows from the fact that the modulus $|f|$ is a continuous real-valued function on the compact set $K$, and a continuous real function on a compact set attains its supremum and infimum.
+  Claims (1) and (3) are direct consequences of the Heine-Borel and Heine-Cantor theorems in the Euclidean metric space $bb(R)^2$, applied separately to the real and imaginary parts. Claim (2) follows from the fact that the modulus $)fabs($ is a continuous real-valued function on the compact set $K$, and a continuous real function on a compact set attains its supremum and infimum.
 ]
 
 #example(name: "A Function with No Limit at the Origin")[
-  Define $f: bb(C) backslash {0} -> bb(C)$ by $f(z) = z / (|z|)$. Restricting to the ray $z = r e^(i theta)$ (with $theta$ fixed and $r -> 0^+$), we get
+  Define $f: bb(C) backslash {0} -> bb(C)$ by $f(z) = z / ()zabs()$. Restricting to the ray $z = r e^(i theta)$ (with $theta$ fixed and $r -> 0^+$), we get
   $
     f(r e^(i theta)) = (r e^(i theta)) / r = e^(i theta).
   $
-  Thus $f$ approaches a different value for each direction $theta$: it tends to $1$ along the positive real axis, $-1$ along the negative real axis, $"i"$ along the positive imaginary axis, and so on. Therefore $lim_(z -> 0) f(z)$ does not exist, even though $|f(z)| = 1$ for all $z != 0$.
+  Thus $f$ approaches a different value for each direction $theta$: it tends to $1$ along the positive real axis, $-1$ along the negative real axis, $"i"$ along the positive imaginary axis, and so on. Therefore $lim_(z -> 0) f(z)$ does not exist, even though $)f(z)abs( = 1$ for all $z != 0$.
 ]
 
-#caution(title: "Continuity of $f$ vs. Continuity of $|f|$")[
-  It follows from the triangle inequality that if $f$ is continuous at $z_0$, then so is the real-valued function $|f|$. The converse is false: the function $f(z) = z / (|z|)$ of the preceding example has $|f(z)| = 1$ (hence $|f|$ is continuous everywhere on $bb(C) backslash {0}$), but $f$ itself does not have a limit at $0$, so it cannot be extended to a continuous function on $bb(C)$.
+#caution(title: "Continuity of $f$ vs. Continuity of $)fabs($")[
+  It follows from the triangle inequality that if $f$ is continuous at $z_0$, then so is the real-valued function $)fabs($. The converse is false: the function $f(z) = z / ()zabs()$ of the preceding example has $)f(z)abs( = 1$ (hence $)fabs($ is continuous everywhere on $bb(C) backslash {0}$), but $f$ itself does not have a limit at $0$, so it cannot be extended to a continuous function on $bb(C)$.
 
-  In a different spirit, $f(z) = e^(i / z)$ has $|f(z)| = 1$ for all $z != 0$, yet it has no limit as $z -> 0$ along the imaginary axis.
+  In a different spirit, $f(z) = e^(i / z)$ has $)f(z)abs( = 1$ for all $z != 0$, yet it has no limit as $z -> 0$ along the imaginary axis.
 ]
 
 == Differentiability and Analytic Functions // 可微性与解析函数
@@ -399,7 +399,7 @@ We are now ready to introduce the concept that truly distinguishes complex analy
   For complex functions, _derivability and differentiability are equivalent_, just as in one-variable real calculus. This is in stark contrast to the case of multivariable real functions, where the existence of all partial derivatives does not guarantee (Frechet) differentiability. The reason lies in the rigidity of the difference quotient @eq:complex-derivative, which forces the limit to be independent of the direction from which $z$ approaches $z_0$ — a condition far stronger than mere directional differentiability.
 ]
 
-Geometrically, multiplication by $f'(z_0)$ sends each infinitesimal vector $"d"z$ to $f'(z_0) "d"z$. Writing $f'(z_0) = R e^(i phi)$ in polar form, this operation consists of a *scaling* by $R = |f'(z_0)|$ followed by a *rotation* by $phi = arg(f'(z_0))$. Thus the differential of a complex-differentiable map is a *conformal* (angle-preserving) infinitesimal transformation: it preserves the angles and the ratio of lengths between any two tangent vectors at $z_0$. This is the geometric source of the theory of conformal mappings, which we study systematically in Part IV.
+Geometrically, multiplication by $f'(z_0)$ sends each infinitesimal vector $"d"z$ to $f'(z_0) "d"z$. Writing $f'(z_0) = R e^(i phi)$ in polar form, this operation consists of a *scaling* by $R = )f'(z_0)abs($ followed by a *rotation* by $phi = arg(f'(z_0))$. Thus the differential of a complex-differentiable map is a *conformal* (angle-preserving) infinitesimal transformation: it preserves the angles and the ratio of lengths between any two tangent vectors at $z_0$. This is the geometric source of the theory of conformal mappings, which we study systematically in Part IV.
 
 We now derive the celebrated Cauchy-Riemann equations, which provide the algebraic link between complex differentiability and the partial derivatives of $u$ and $v$.
 
@@ -470,7 +470,7 @@ The Cauchy-Riemann equations alone are _not_ sufficient for complex differentiab
 #proof[
   *Necessity.* If $f$ is complex-differentiable, then the Cauchy-Riemann equations hold by #link(<thm:CR-necessary>)[Cauchy-Riemann Equations (Necessity)]. Moreover, from @eq:complex-derivative one has
   $
-    f(z_0 + Delta z) - f(z_0) = f'(z_0) Delta z + o(|Delta z|).
+    f(z_0 + Delta z) - f(z_0) = f'(z_0) Delta z + o()Delta zabs().
   $
   Writing this in real and imaginary parts gives the Frechet differentiability of $u$ and $v$, with Jacobian matrix
   $
@@ -486,7 +486,7 @@ The Cauchy-Riemann equations alone are _not_ sufficient for complex differentiab
   $
   Using the Cauchy-Riemann equations to substitute $partial_y u = -partial_x v$ and $partial_y v = partial_x u$ into the expression for $Delta f = Delta u + "i" Delta v$, we obtain
   $
-    Delta f = (partial_x u + "i" partial_x v)(Delta x + "i" Delta y) + o(|Delta z|),
+    Delta f = (partial_x u + "i" partial_x v)(Delta x + "i" Delta y) + o()Delta zabs(),
   $
   which is exactly the statement that $f'(z_0) = partial_x u + "i" partial_x v$ exists.
 ]
@@ -494,7 +494,7 @@ The Cauchy-Riemann equations alone are _not_ sufficient for complex differentiab
 #caution(title: "Partial Derivatives + CR $!=$ Complex Differentiability")[
   It is a common mistake to assume that the mere existence of the four partial derivatives together with the Cauchy-Riemann equations implies complex differentiability. This is false: Frechet differentiability of $(u, v)$ is strictly stronger than the existence of the partial derivatives. A standard counterexample is
   $
-    f(0) = 0, quad f(z) = (z^5) / (|z|^4) text(" for ") z != 0.
+    f(0) = 0, quad f(z) = (z^5) / ()zabs(^4) text(" for ") z != 0.
   $
   At $z = 0$ one has $partial_x u = partial_y u = partial_x v = partial_y v = 0$, so the Cauchy-Riemann equations are trivially satisfied at the origin; however, approaching $0$ along the ray $z = t(1 + "i")$ with $t -> 0$ yields $f(z)/z -> (1+"i")^5 / 4$, which differs from $0$. Therefore $f'(0)$ does not exist.
 ]
@@ -546,7 +546,7 @@ It is one of the deepest and most remarkable facts of complex analysis — far f
 ]
 
 #caution(title: "Pointwise Differentiability vs. Holomorphy at a Point")[
-  Holomorphy at a point $z_0$ is a strictly stronger condition than mere differentiability at $z_0$: it requires differentiability throughout some open neighborhood of $z_0$. For example, the function $f(z) = |z|^2 = z overline(z)$ has real and imaginary parts $u = x^2 + y^2$, $v = 0$, whose partial derivatives are continuous everywhere; the Cauchy-Riemann equations reduce to $2x = 0$ and $2y = 0$, which hold _only_ at the origin. Thus $f$ is differentiable at $z = 0$ with $f'(0) = 0$, but it is not differentiable at any other point, so there is no open set around $0$ on which $f$ is differentiable. Therefore $f$ is _not_ holomorphic at $0$.
+  Holomorphy at a point $z_0$ is a strictly stronger condition than mere differentiability at $z_0$: it requires differentiability throughout some open neighborhood of $z_0$. For example, the function $f(z) = )zabs(^2 = z overline(z)$ has real and imaginary parts $u = x^2 + y^2$, $v = 0$, whose partial derivatives are continuous everywhere; the Cauchy-Riemann equations reduce to $2x = 0$ and $2y = 0$, which hold _only_ at the origin. Thus $f$ is differentiable at $z = 0$ with $f'(0) = 0$, but it is not differentiable at any other point, so there is no open set around $0$ on which $f$ is differentiable. Therefore $f$ is _not_ holomorphic at $0$.
 ]
 
 #example(name: "Elementary Holomorphic Functions")[
@@ -567,8 +567,8 @@ It is one of the deepest and most remarkable facts of complex analysis — far f
   We verify that several simple functions are _nowhere_ holomorphic, using the Cauchy-Riemann equations.
   - *Complex conjugate.* Let $f(z) = overline(z) = x - "i"y$, so $u = x$, $v = -y$. The partials are $partial_x u = 1$, $partial_y v = -1$. Since $1 != -1$, the first CR equation fails at every point, and therefore $f$ is nowhere complex-differentiable.
   - *Real part.* Let $f(z) = Re(z) = x$. Then $u = x$, $v = 0$, so $partial_x u = 1$ but $partial_y v = 0$. Again the CR equations fail everywhere.
-  - *Modulus.* Let $f(z) = |z| = sqrt(x^2 + y^2)$. For $z != 0$, direct computation gives $partial_x u = x/(|z|)$, $partial_y v = 0$, so the first CR equation fails. At $z = 0$ the difference quotient $(|z|)/z$ has no limit (it equals $e^(-i theta)$ on the ray $z = r e^(i theta)$), confirming that $f$ is nowhere differentiable.
-  - *Square of modulus.* $f(z) = |z|^2$, already treated above: differentiable only at $z = 0$, and not holomorphic there.
+  - *Modulus.* Let $f(z) = )zabs( = sqrt(x^2 + y^2)$. For $z != 0$, direct computation gives $partial_x u = x/()zabs()$, $partial_y v = 0$, so the first CR equation fails. At $z = 0$ the difference quotient $()zabs()/z$ has no limit (it equals $e^(-i theta)$ on the ray $z = r e^(i theta)$), confirming that $f$ is nowhere differentiable.
+  - *Square of modulus.* $f(z) = )zabs(^2$, already treated above: differentiable only at $z = 0$, and not holomorphic there.
 ]
 
 A point at which a function fails to be holomorphic is called a *singular point*, or briefly a *singularity*. Singularities are classified in great detail once the Laurent series machinery is available (Chapter 8): removable singularities, poles of finite order, and essential singularities. For the moment we content ourselves with the intuitive concept.
@@ -695,7 +695,7 @@ Everything in this chapter grows out of a single function: the complex exponenti
   $
     exp(z) = sum_(n=0)^oo z^n / n!,
   $
-  which converges absolutely for every $z in bb(C)$: the ratio of successive terms satisfies $|a_(n+1) / a_n| = (|z|) / (n+1) -> 0$, so the ratio test gives convergence on the whole plane. Since $exp$ is represented by a convergent power series at every point, it is analytic on $bb(C)$ in the sense of #link(<def:analytic>)[Definition]; such functions are called *entire*.
+  which converges absolutely for every $z in bb(C)$: the ratio of successive terms satisfies $)a_(n+1) / a_nabs( = ()zabs() / (n+1) -> 0$, so the ratio test gives convergence on the whole plane. Since $exp$ is represented by a convergent power series at every point, it is analytic on $bb(C)$ in the sense of #link(<def:analytic>)[Definition]; such functions are called *entire*.
 ] <def:exp-function>
 
 The basic law governing $exp$ is the addition theorem.
@@ -743,7 +743,7 @@ The basic law governing $exp$ is the addition theorem.
     $
       exp(w) = exp(z) <==> w - z in 2 pi i ZZ.
     $
-  + *Unboundedness*: for every $M > 0$ there exists $z$ with $|exp(z)| > M$.
+  + *Unboundedness*: for every $M > 0$ there exists $z$ with $)exp(z)abs( > M$.
 ] <thm:exp-properties>
 
 #proof[
@@ -759,14 +759,14 @@ The basic law governing $exp$ is the addition theorem.
 
   *Non-vanishing*: from the addition theorem, $exp(z) exp(-z) = exp(0) = 1$, hence $exp(z) != 0$ and $exp(-z) = 1 / exp(z)$.
 
-  *Periodicity*: $exp(z + 2 pi i) = exp(z) exp(2 pi i) = exp(z) (cos 2 pi + i sin 2 pi) = exp(z)$. Conversely, if $exp(w) = exp(z)$, then $exp(w - z) = 1$. Writing $w - z = x + i y$ and taking absolute values via #link(<thm:exp-euler-formula>)[Euler's formula] gives $|exp(w - z)| = e^x = 1$, hence $x = 0$; then $cos y + i sin y = 1$ forces $y in 2 pi ZZ$. Thus $w - z in 2 pi i ZZ$.
+  *Periodicity*: $exp(z + 2 pi i) = exp(z) exp(2 pi i) = exp(z) (cos 2 pi + i sin 2 pi) = exp(z)$. Conversely, if $exp(w) = exp(z)$, then $exp(w - z) = 1$. Writing $w - z = x + i y$ and taking absolute values via #link(<thm:exp-euler-formula>)[Euler's formula] gives $)exp(w - z)abs( = e^x = 1$, hence $x = 0$; then $cos y + i sin y = 1$ forces $y in 2 pi ZZ$. Thus $w - z in 2 pi i ZZ$.
 
-  *Unboundedness*: $|exp(x)| = e^x -> oo$ as $x -> oo$ along the real axis.
+  *Unboundedness*: $)exp(x)abs( = e^x -> oo$ as $x -> oo$ along the real axis.
 ]
 
 #example(name: "What the Exponential Does to Lines and Strips")[
-  Euler's formula $exp(x + i y) = e^x (cos y + i sin y)$ identifies polar coordinates of $w = exp z$: the modulus is $|w| = e^x$ and the argument is $y$ (modulo $2 pi$). Consequently, writing $z = x + i y$:
-  - a vertical line ${z : x = c}$ is mapped onto the circle ${w : |w| = e^c}$;
+  Euler's formula $exp(x + i y) = e^x (cos y + i sin y)$ identifies polar coordinates of $w = exp z$: the modulus is $)wabs( = e^x$ and the argument is $y$ (modulo $2 pi$). Consequently, writing $z = x + i y$:
+  - a vertical line ${z : x = c}$ is mapped onto the circle ${w : )wabs( = e^c}$;
   - a horizontal line ${z : y = c}$ is mapped onto the ray ${w : arg w = c}$;
   - the horizontal strip ${z : 0 < y < 2 pi}$ is mapped *bijectively* onto the punctured plane $bb(C) backslash {0}$.
 ] <ex:exp-geometry>
@@ -805,14 +805,14 @@ All five properties follow immediately from the exponential definition and the a
 #caution[
   The most striking difference from the real theory: $sin$ and $cos$ are *unbounded* on $bb(C)$. Indeed, writing $z = x + i y$,
   $
-    |sin z|^2 = sin^2 x cosh^2 y + cos^2 x sinh^2 y = sin^2 x + sinh^2 y,
+    )sin zabs(^2 = sin^2 x cosh^2 y + cos^2 x sinh^2 y = sin^2 x + sinh^2 y,
   $
-  which grows without bound as $|y| -> oo$. In particular $cos(i y) = cosh y -> oo$, and the familiar real-variable intuition "cosine never exceeds 1" fails dramatically off the real axis. The reason is structural: the boundedness of real $sin$ and $cos$ relies on cancellation in the real and imaginary parts, and complex arguments destroy this balance.
+  which grows without bound as $)yabs( -> oo$. In particular $cos(i y) = cosh y -> oo$, and the familiar real-variable intuition "cosine never exceeds 1" fails dramatically off the real axis. The reason is structural: the boundedness of real $sin$ and $cos$ relies on cancellation in the real and imaginary parts, and complex arguments destroy this balance.
 ] <caution:trig-unbounded>
 
 #figure(
   image("./img/sin-modulus.svg", width: 55%),
-  caption: [The modulus surface $|sin z| = sqrt(sin^2 x + sinh^2 y)$. Along the real axis the surface coincides with the familiar bounded graph of $|sin x|$, while it grows exponentially in the imaginary directions.],
+  caption: [The modulus surface $)sin zabs( = sqrt(sin^2 x + sinh^2 y)$. Along the real axis the surface coincides with the familiar bounded graph of $)sin xabs($, while it grows exponentially in the imaginary directions.],
 ) <fig:sin-modulus>
 
 The hyperbolic functions are the "odd partners" obtained by removing the factors of $i$.
@@ -922,9 +922,9 @@ With this vocabulary in place, we can finally give the logarithm the precise tre
   $
     w = Ln z <==> exp(w) = z.
   $
-  Writing $z = r e^(i theta)$ with $r = |z|$, the solutions are exactly
+  Writing $z = r e^(i theta)$ with $r = )zabs($, the solutions are exactly
   $
-    Ln z = ln r + i theta = ln |z| + i Arg z,
+    Ln z = ln r + i theta = ln )zabs( + i Arg z,
   $
   where $Arg z$ denotes the multi-valued argument of $z$.
 ] <def:log-function>
@@ -932,12 +932,12 @@ With this vocabulary in place, we can finally give the logarithm the precise tre
 #proposition[
   Every nonzero complex number has infinitely many logarithms, and any two of them differ by an integer multiple of $2 pi i$:
   $
-    Ln z = ln |z| + i arg z + 2 k pi i, quad k in ZZ.
+    Ln z = ln )zabs( + i arg z + 2 k pi i, quad k in ZZ.
   $
 ] <prop:log-multi-valued>
 
 #proof[
-  Let $w = a + i b$ satisfy $exp(w) = z != 0$. Taking moduli, $|exp(w)| = e^a = |z|$, so $a = ln |z|$ is uniquely determined. Then $exp(w) = e^a (cos b + i sin b) = z$ forces $cos b = x / |z|$ and $sin b = y / |z|$, i.e. $b$ is an angle of $z$: $b = theta$ where $theta$ is any choice of $arg z$, and the set of admissible $b$ is $theta + 2 pi ZZ$. Hence the solutions are exactly $ln |z| + i (theta + 2 k pi)$, $k in ZZ$.
+  Let $w = a + i b$ satisfy $exp(w) = z != 0$. Taking moduli, $)exp(w)abs( = e^a = )zabs($, so $a = ln )zabs($ is uniquely determined. Then $exp(w) = e^a (cos b + i sin b) = z$ forces $cos b = x / )zabs($ and $sin b = y / )zabs($, i.e. $b$ is an angle of $z$: $b = theta$ where $theta$ is any choice of $arg z$, and the set of admissible $b$ is $theta + 2 pi ZZ$. Hence the solutions are exactly $ln )zabs( + i (theta + 2 k pi)$, $k in ZZ$.
 ]
 
 The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch points: every full loop around either point changes the value by $2 pi i$, so the monodromy never returns — even infinitely many loops do not restore the initial value. A standard branch cut is again the negative real axis.
@@ -945,7 +945,7 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
 #theorem(name: "Principal Branch of the Logarithm")[
   On the cut plane $D = bb(C) backslash (-oo, 0]$, the *principal branch of the logarithm*
   $
-    ln z = ln |z| + i arg z, quad arg z in (-pi, pi),
+    ln z = ln )zabs( + i arg z, quad arg z in (-pi, pi),
   $
   is an analytic branch of $Ln$, and
   $
@@ -957,7 +957,7 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
 #proof[
   Write $ln z = u(x, y) + i v(x, y)$ with
   $
-    u = ln |z| = 1 / 2 ln(x^2 + y^2), quad v = arg z.
+    u = ln )zabs( = 1 / 2 ln(x^2 + y^2), quad v = arg z.
   $
   Direct computation gives $u_x = x / (x^2 + y^2)$ and $u_y = y / (x^2 + y^2)$. On the cut plane the angle $v$ is a smooth function of $(x, y)$, and its gradient is
   $
@@ -971,12 +971,12 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
   $
     (ln z)' = u_x + i v_x = (x - i y) / (x^2 + y^2) = (x + i y)^(-1) = 1 / z.
   $
-  For $x > 0$ we have $arg x = 0$ and $ln |x| = ln x$, so the branch extends the real logarithm.
+  For $x > 0$ we have $arg x = 0$ and $ln )xabs( = ln x$, so the branch extends the real logarithm.
 ]
 
 #figure(
   image("./img/branch-cut-log.svg", width: 55%),
-  caption: [The principal branch of the logarithm. The branch points $0$ and $oo$ are joined by the branch cut along the negative real axis; on the cut plane $D = bb(C) backslash (-oo, 0]$ the angle is confined to $(-pi, pi)$ and $ln z = ln |z| + i arg z$ is single-valued and analytic.],
+  caption: [The principal branch of the logarithm. The branch points $0$ and $oo$ are joined by the branch cut along the negative real axis; on the cut plane $D = bb(C) backslash (-oo, 0]$ the angle is confined to $(-pi, pi)$ and $ln z = ln )zabs( + i arg z$ is single-valued and analytic.],
 ) <fig:branch-cut-log>
 
 #caution[
@@ -992,7 +992,7 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
 ] <caution:log-notation>
 
 #note[
-  Since $ln z$ is analytic on $D$, the theory of Section 2.4 applies: its real part $u = ln |z|$ is harmonic on the punctured plane, as predicted by #link(<thm:analytic-harmonic>)[Theorem]. This is precisely the potential of a point source in two-dimensional electrostatics — one of the physical interpretations discussed there. Furthermore, the Taylor expansion $ln(1 + z) = sum_(n=1)^oo (-1)^(n+1) z^n / n$ will be established in Section 7.3, showing that the principal branch is indeed analytic in the power series sense.
+  Since $ln z$ is analytic on $D$, the theory of Section 2.4 applies: its real part $u = ln )zabs($ is harmonic on the punctured plane, as predicted by #link(<thm:analytic-harmonic>)[Theorem]. This is precisely the potential of a point source in two-dimensional electrostatics — one of the physical interpretations discussed there. Furthermore, the Taylor expansion $ln(1 + z) = sum_(n=1)^oo (-1)^(n+1) z^n / n$ will be established in Section 7.3, showing that the principal branch is indeed analytic in the power series sense.
 ]
 
 #figure(
@@ -1019,9 +1019,9 @@ The multi-valued structure depends sharply on $alpha$.
   + If $alpha = n$ is an integer, $z^alpha$ is single-valued and coincides with the elementary power: $z^n$ for $n >= 0$, and $1 / z^(-n)$ for $n < 0$.
   + If $alpha = p / q$ is a rational number in lowest terms ($q >= 1$), $z^alpha$ takes exactly $q$ distinct values.
   + If $alpha$ is irrational or non-real, $z^alpha$ takes infinitely many values.
-  In every case the values of $z^alpha = exp(alpha (ln |z| + i (theta + 2 k pi)))$ are
+  In every case the values of $z^alpha = exp(alpha (ln )zabs( + i (theta + 2 k pi)))$ are
   $
-    |z|^alpha e^(i alpha theta) dot exp(2 k pi i alpha), quad k in ZZ,
+    )zabs(^alpha e^(i alpha theta) dot exp(2 k pi i alpha), quad k in ZZ,
   $
   and the cases above classify how the factors $exp(2 k pi i alpha)$ repeat.
 ] <thm:power-branch-structure>
@@ -1029,11 +1029,11 @@ The multi-valued structure depends sharply on $alpha$.
 #proof[
   The key factor is $exp(2 k pi i alpha)$ as $k$ ranges over $ZZ$.
 
-  *Integral $alpha = n$*: $exp(2 k pi i n) = 1$ for every $k$, so $z^n = |z|^n e^(i n theta)$ is single-valued, and Euler's formula shows it agrees with the product $z dots.c z$.
+  *Integral $alpha = n$*: $exp(2 k pi i n) = 1$ for every $k$, so $z^n = )zabs(^n e^(i n theta)$ is single-valued, and Euler's formula shows it agrees with the product $z dots.c z$.
 
-  *Rational $alpha = p / q$ in lowest terms*: $exp(2 pi i alpha k) = e^(2 pi i p k \/ q)$ depends only on $k mod q$, giving exactly $q$ distinct values $e^(2 pi i p k \/ q)$ for $k = 0, 1, dots, q - 1$ (distinct because $p k_1 equiv p k_2 mod q$ forces $q | k_1 - k_2$).
+  *Rational $alpha = p / q$ in lowest terms*: $exp(2 pi i alpha k) = e^(2 pi i p k \/ q)$ depends only on $k mod q$, giving exactly $q$ distinct values $e^(2 pi i p k \/ q)$ for $k = 0, 1, dots, q - 1$ (distinct because $p k_1 equiv p k_2 mod q$ forces $q ) k_1 - k_2$).
 
-  *Irrational or non-real $alpha$*: if $alpha in bb(R) backslash bb(Q)$, then $e^(2 pi i alpha k_1) = e^(2 pi i alpha k_2)$ would imply $alpha (k_1 - k_2) in ZZ$, impossible unless $k_1 = k_2$. If $alpha = a + i b$ with $b != 0$, the moduli $|e^(2 pi i alpha k)| = e^(-2 pi b k)$ are pairwise distinct, so the values are again infinite in number.
+  *Irrational or non-real $alpha$*: if $alpha in bb(R) backslash bb(Q)$, then $e^(2 pi i alpha k_1) = e^(2 pi i alpha k_2)$ would imply $alpha (k_1 - k_2) in ZZ$, impossible unless $k_1 = k_2$. If $alpha = a + i b$ with $b != 0$, the moduli $abs(e^(2 pi i alpha k)) = e^(-2 pi b k)$ are pairwise distinct, so the values are again infinite in number.
 ]
 
 #proposition[
@@ -1078,7 +1078,7 @@ The multi-valued structure depends sharply on $alpha$.
 ) <fig:sqrt-branches>
 
 #caution[
-  Algebraic identities involving powers may fail across branches. In particular, $(z^2)^(1 \/ 2) != z$ as single-valued functions: the left side is the principal square root of $z^2$, which equals $|z|$, not $z$ — e.g. for $z = -1$, $((-1)^2)^(1 \/ 2) = 1 != -1$. Rules such as $(z^a)^b = z^(a b)$ hold only at the level of multi-valued sets, or on a fixed branch with consistent choices.
+  Algebraic identities involving powers may fail across branches. In particular, $(z^2)^(1 \/ 2) != z$ as single-valued functions: the left side is the principal square root of $z^2$, which equals $abs(z)$, not $z$ — e.g. for $z = -1$, $((-1)^2)^(1 \/ 2) = 1 != -1$. Rules such as $(z^a)^b = z^(a b)$ hold only at the level of multi-valued sets, or on a fixed branch with consistent choices.
 ] <caution:power-identities>
 
 == Inverse Trigonometric Functions // 反三角函数
@@ -1159,21 +1159,21 @@ This completes our library of elementary functions: the exponential and its desc
   $
 ] <def:complex-integral>
 
-The infinitesimal $dif z$ is a complex number, so $|dif z| = |z'(t)| dif t = dif s$ gives the arc-length element. Two types of integrals thus arise:
+The infinitesimal $dif z$ is a complex number, so $abs(dif z) = abs(z'(t)) dif t = dif s$ gives the arc-length element. Two types of integrals thus arise:
 
 - *Complex line integral*: $integral_C f(z) dif z$ — signed (direction matters).
-- *Arc-length integral*: $integral_C f(z) |dif z|$ — unsigned (direction irrelevant).
+- *Arc-length integral*: $integral_C f(z) abs(dif z)$ — unsigned (direction irrelevant).
 
 The estimation inequality (see *#link(<prop:integral-properties>)[Properties]*) bounds the former by the latter:
 
 $
-  |integral_C f(z) dif z| <= integral_C |f(z)| |dif z| <= M L,
+  abs(integral_C f(z) dif z) <= integral_C abs(f(z)) abs(dif z) <= M L,
 $
 
-where $L = integral_C |dif z|$ is the total arc length of $C$.
+where $L = integral_C abs(dif z)$ is the total arc length of $C$.
 
 #note(title: "Geometric Meaning of the ML Estimate")[
-  The inequality $|integral_C f dif z| <= M L$ is a direct extension of the real inequality $|integral_a^b f dif x| <= (max |f|)(b - a)$. In Chapter 5, this *estimate* will become the *Cauchy estimate* for derivatives, yielding Liouville's theorem and the maximum modulus principle. The moral is: bounds on integrals encode geometric rigidity of analytic functions.
+  The inequality $abs(integral_C f dif z) <= M L$ is a direct extension of the real inequality $abs(integral_a^b f dif x) <= (max abs(f))(b - a)$. In Chapter 5, this *estimate* will become the *Cauchy estimate* for derivatives, yielding Liouville's theorem and the maximum modulus principle. The moral is: bounds on integrals encode geometric rigidity of analytic functions.
 ]
 
 #property[
@@ -1189,9 +1189,9 @@ where $L = integral_C |dif z|$ is the total arc length of $C$.
   $
     integral_(-C) f(z) "d"z = - integral_C f(z) "d"z.
   $
-  - *Estimation*: If $f$ is integrable on $C$, let $L$ be the length of $C$ and $M = max_(z in C) |f(z)|$, then
+  - *Estimation*: If $f$ is integrable on $C$, let $L$ be the length of $C$ and $M = max_(z in C) abs(f(z))$, then
   $
-    |integral_C f(z) "d"z| <= M L.
+    abs(integral_C f(z) "d"z) <= M L.
   $
 ] <prop:integral-properties>
 
@@ -1246,7 +1246,7 @@ The complex integral reduces to a real integral via parameterization:
 ] <ex:semicircle-z-squared>
 
 #example(name: "Integral of $overline(z)$ Along the Unit Circle")[
-  Let $C$ be the unit circle $|z| = 1$ traversed counterclockwise, so $z(t) = e^(i t), t in [0, 2 pi]$. Then $overline(z) = e^(-i t)$ and $z'(t) = i e^(i t)$, giving
+  Let $C$ be the unit circle $abs(z) = 1$ traversed counterclockwise, so $z(t) = e^(i t), t in [0, 2 pi]$. Then $overline(z) = e^(-i t)$ and $z'(t) = i e^(i t)$, giving
   $
     integral_C overline(z) dif z = integral_0^(2 pi) e^(-i t) dot i e^(i t) dif t = i integral_0^(2 pi) 1 dif t = 2 pi i.
   $
@@ -1254,13 +1254,13 @@ The complex integral reduces to a real integral via parameterization:
 ] <ex:circle-conjugate>
 
 #example(name: "Power Integral $integral (z-a)^n$")[
-  Let $C$ be the circle $|z - a| = r$ traversed once counterclockwise, parameterized as $z(t) = a + r e^(i t)$. Then $z'(t) = i r e^(i t)$ and
+  Let $C$ be the circle $abs(z - a) = r$ traversed once counterclockwise, parameterized as $z(t) = a + r e^(i t)$. Then $z'(t) = i r e^(i t)$ and
   $
     integral_C (z - a)^n dif z = integral_0^(2 pi) (r e^(i t))^n dot i r e^(i t) dif t = i r^(n+1) integral_0^(2 pi) e^(i (n+1) t) dif t.
   $
   For $n != -1$, the integral of $e^(i (n+1) t)$ over a full period vanishes. For $n = -1$, we get $i integral_0^(2 pi) 1 dif t = 2 pi i$. This is the fundamental integral of complex analysis:
   $
-    integral_(|z-a|=r) (dif z)/(z - a) = 2 pi i.
+    integral_(abs(z-a)=r) (dif z)/(z - a) = 2 pi i.
   $
 ] <ex:power-integral>
 
@@ -1349,7 +1349,7 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
 ] <thm:cauchy-triangle>
 
 #proof[
-  Write $I(T) = |integral_(partial T) f(z) dif z|$ and let $L$ be the perimeter of $T$.
+  Write $I(T) = abs(integral_(partial T) f(z) dif z)$ and let $L$ be the perimeter of $T$.
 
   *Step 1 (Bisection).* Connect the midpoints of the three sides, dividing $T$ into four congruent triangles $T^((1)), dots, T^((4))$. The integrals over the four small boundaries sum to the integral over $partial T$, because each interior edge is traversed twice with opposite orientations and the two contributions cancel. Hence some sub-triangle $T'$ satisfies
   $
@@ -1365,13 +1365,13 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
 
   *Step 4 (Local linearization).* Since $f$ is analytic at $z_0$, there exist $r > 0$ and a function $eta(z) -> 0$ as $z -> z_0$ such that
   $
-    f(z) = f(z_0) + f'(z_0)(z - z_0) + eta(z)(z - z_0), quad |z - z_0| < r.
+    f(z) = f(z_0) + f'(z_0)(z - z_0) + eta(z)(z - z_0), quad abs(z - z_0) < r.
   $
-  Choose $n$ large enough that $T_n$ is contained in $|z - z_0| < r$. Integrating over $partial T_n$ and using *#link(<prop:common-integrals>)[the common integrals]* — $integral_(partial T_n) dif z = 0$ and $integral_(partial T_n) (z - z_0) dif z = 0$ on a closed contour — only the remainder survives:
+  Choose $n$ large enough that $T_n$ is contained in $abs(z - z_0) < r$. Integrating over $partial T_n$ and using *#link(<prop:common-integrals>)[the common integrals]* — $integral_(partial T_n) dif z = 0$ and $integral_(partial T_n) (z - z_0) dif z = 0$ on a closed contour — only the remainder survives:
   $
-    I(T_n) = |integral_(partial T_n) eta(z)(z - z_0) dif z| <= delta_n dot L(T_n) dot L(T_n),
+    I(T_n) = abs(integral_(partial T_n) eta(z)(z - z_0) dif z) <= delta_n dot L(T_n) dot L(T_n),
   $
-  where $delta_n = sup_(z in T_n) |eta(z)| -> 0$ (as $"diam"(T_n) -> 0$ and $eta(z) -> 0$ at $z_0$), and $|z - z_0| <= L(T_n)$ for $z in T_n$.
+  where $delta_n = sup_(z in T_n) abs(eta(z)) -> 0$ (as $"diam"(T_n) -> 0$ and $eta(z) -> 0$ at $z_0$), and $abs(z - z_0) <= L(T_n)$ for $z in T_n$.
 
   *Step 5 (Conclusion).* Combining Steps 2 and 4,
   $
@@ -1431,9 +1431,9 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
 ) <fig:cif-deformation>
 
 #example(name: "Deforming a Contour Around a Pole")[
-  Evaluate $integral_(|z| = 2) (dif z)/(z - 1)$. The integrand is analytic in the closed region between $|z| = 2$ and the small circle $C_r: |z - 1| = r$. By *#link(<thm:deformation-invariance>)[Deformation of Contours]*,
+  Evaluate $integral_(abs(z) = 2) (dif z)/(z - 1)$. The integrand is analytic in the closed region between $abs(z) = 2$ and the small circle $C_r: abs(z - 1) = r$. By *#link(<thm:deformation-invariance>)[Deformation of Contours]*,
   $
-    integral_(|z| = 2) (dif z)/(z - 1) = integral_(|z - 1| = r) (dif z)/(z - 1) = 2 pi "i",
+    integral_(abs(z) = 2) (dif z)/(z - 1) = integral_(abs(z - 1) = r) (dif z)/(z - 1) = 2 pi "i",
   $
   where the last equality is the fundamental power integral *#link(<ex:power-integral>)[computed in Chapter 4]*. Note that the answer does not depend on the outer contour: any simple closed contour enclosing $1$ gives $2 pi "i"$.
 ] <ex:deform-circle>
@@ -1448,7 +1448,7 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
 ] <thm:cauchy-integral-formula>
 
 #proof[
-  Let $C_r: |z - z_0| = r$ be a small circle around $z_0$ contained in the interior of $C$ (@fig:cif-deformation). The function $f(z) / (z - z_0)$ is analytic in the closed region between $C$ and $C_r$, so by *#link(<thm:deformation-invariance>)[Deformation of Contours]*,
+  Let $C_r: abs(z - z_0) = r$ be a small circle around $z_0$ contained in the interior of $C$ (@fig:cif-deformation). The function $f(z) / (z - z_0)$ is analytic in the closed region between $C$ and $C_r$, so by *#link(<thm:deformation-invariance>)[Deformation of Contours]*,
   $
     integral_C f(z)/(z - z_0) dif z = integral_(C_r) f(z)/(z - z_0) dif z quad "for every sufficiently small" r.
   $
@@ -1458,9 +1458,9 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
   $
   by the fundamental power integral, while for the remainder the ML estimate gives
   $
-    |integral_(C_r) (f(z) - f(z_0))/(z - z_0) dif z| <= M_r / r dot 2 pi r = 2 pi M_r -> 0 quad "as" r -> 0,
+    abs(integral_(C_r) (f(z) - f(z_0))/(z - z_0) dif z) <= M_r / r dot 2 pi r = 2 pi M_r -> 0 quad "as" r -> 0,
   $
-  where $M_r = sup_(|z - z_0| = r) |f(z) - f(z_0)| -> 0$ by continuity of $f$ at $z_0$. The left-hand side does not depend on $r$, so it equals the limit $2 pi "i" f(z_0)$.
+  where $M_r = sup_(abs(z - z_0) = r) abs(f(z) - f(z_0)) -> 0$ by continuity of $f$ at $z_0$. The left-hand side does not depend on $r$, so it equals the limit $2 pi "i" f(z_0)$.
 ]
 
 The Cauchy integral formula is remarkable: the value of $f$ at an *interior* point is completely determined by its *boundary* values. Differentiating under the integral pushes this determinism to all orders.
@@ -1479,9 +1479,9 @@ The Cauchy integral formula is remarkable: the value of $f$ at an *interior* poi
   $
   As $h -> 0$ the integrand converges uniformly on $C$ to $f(z) / (z - z_0)^2$:
   $
-    |f(z) / ((z - z_0)(z - z_0 - h)) - f(z) / (z - z_0)^2| = (|f(z)| dot |h|) / (|z - z_0|^2 dot |z - z_0 - h|).
+    abs(f(z) / ((z - z_0)(z - z_0 - h)) - f(z) / (z - z_0)^2) = (abs(f(z)) dot abs(h)) / (abs(z - z_0)^2 dot abs(z - z_0 - h)).
   $
-  With $m = min_(z in C) |z - z_0| > 0$ and $|h| < m / 2$, the denominators are bounded below by $m^2 dot m / 2$, while $|f|$ is bounded on the compact set $C$; the whole expression tends to $0$ uniformly in $z$. Since $C$ has finite length, limit and integral may be interchanged, giving
+  With $m = min_(z in C) abs(z - z_0) > 0$ and $abs(h) < m / 2$, the denominators are bounded below by $m^2 dot m / 2$, while $abs(f)$ is bounded on the compact set $C$; the whole expression tends to $0$ uniformly in $z$. Since $C$ has finite length, limit and integral may be interchanged, giving
   $
     f'(z_0) = 1/(2 pi "i") integral_C f(z) / (z - z_0)^2 dif z.
   $
@@ -1524,9 +1524,9 @@ Cauchy-Goursat says: holomorphic $=>$ closed contour integrals vanish. Morera's 
   $
     (F(z + h) - F(z)) / h - f(z) = 1/h integral_z^(z+h) (f(zeta) - f(z)) dif zeta.
   $
-  Since $f$ is continuous at $z$, for $|zeta - z| <= |h|$ we have $|f(zeta) - f(z)| <= epsilon_h$ with $epsilon_h -> 0$ as $h -> 0$. Hence
+  Since $f$ is continuous at $z$, for $abs(zeta - z) <= abs(h)$ we have $abs(f(zeta) - f(z)) <= epsilon_h$ with $epsilon_h -> 0$ as $h -> 0$. Hence
   $
-    |(F(z + h) - F(z)) / h - f(z)| <= epsilon_h -> 0,
+    abs((F(z + h) - F(z)) / h - f(z)) <= epsilon_h -> 0,
   $
   so $F'(z) = f(z)$: the primitive $F$ exists and is holomorphic on $D$. By *#link(<cor:infinite-differentiability>)[infinite differentiability]*, $F' = f$ is itself holomorphic on $D$.
 ]
@@ -1553,16 +1553,16 @@ Cauchy-Goursat says: holomorphic $=>$ closed contour integrals vanish. Morera's 
 The derivative formula expresses $f^(n)(z_0)$ through boundary values; combined with the ML estimate of Chapter 4, it yields quantitative bounds — the *Cauchy estimates* — from which Liouville's theorem and the Fundamental Theorem of Algebra follow in a few lines.
 
 #theorem(name: "Cauchy's Estimates")[
-  Let $f$ be holomorphic on a domain containing the closed disk $|z - z_0| <= R$, and suppose $|f(z)| <= M$ on the circle $|z - z_0| = R$. Then for every $n >= 0$,
+  Let $f$ be holomorphic on a domain containing the closed disk $abs(z - z_0) <= R$, and suppose $abs(f(z)) <= M$ on the circle $abs(z - z_0) = R$. Then for every $n >= 0$,
   $
-    |f^(n)(z_0)| <= (n! M) / R^n.
+    abs(f^(n)(z_0)) <= (n! M) / R^n.
   $
 ] <thm:cauchy-estimates>
 
 #proof[
-  Apply *#link(<thm:cif-derivatives>)[the derivative formula]* on the circle $C_R: |z - z_0| = R$ and use the ML estimate (*#link(<prop:integral-properties>)[Properties of the Complex Integral]*):
+  Apply *#link(<thm:cif-derivatives>)[the derivative formula]* on the circle $C_R: abs(z - z_0) = R$ and use the ML estimate (*#link(<prop:integral-properties>)[Properties of the Complex Integral]*):
   $
-    |f^(n)(z_0)| = |(n!)/(2 pi "i") integral_(C_R) f(z)/(z - z_0)^(n+1) dif z| <= (n!)/(2 pi) dot M / R^(n+1) dot 2 pi R = (n! M) / R^n.
+    abs(f^(n)(z_0)) = abs((n!)/(2 pi "i") integral_(C_R) f(z)/(z - z_0)^(n+1) dif z) <= (n!)/(2 pi) dot M / R^(n+1) dot 2 pi R = (n! M) / R^n.
   $
 ]
 
@@ -1573,9 +1573,9 @@ The estimates quantify the rigidity: higher derivatives at a point are controlle
 ] <thm:liouville>
 
 #proof[
-  Let $f$ be entire with $|f(z)| <= M$ for all $z in bb(C)$, and fix $z_0 in bb(C)$. For every $R > 0$, $f$ is holomorphic on $|z - z_0| <= R$ and bounded by $M$ on its boundary, so *#link(<thm:cauchy-estimates>)[Cauchy's estimate]* with $n = 1$ gives
+  Let $f$ be entire with $abs(f(z)) <= M$ for all $z in bb(C)$, and fix $z_0 in bb(C)$. For every $R > 0$, $f$ is holomorphic on $abs(z - z_0) <= R$ and bounded by $M$ on its boundary, so *#link(<thm:cauchy-estimates>)[Cauchy's estimate]* with $n = 1$ gives
   $
-    |f'(z_0)| <= M / R quad "for all" R > 0.
+    abs(f'(z_0)) <= M / R quad "for all" R > 0.
   $
   Letting $R -> oo$ yields $f'(z_0) = 0$. Since $z_0$ was arbitrary, $f' = 0$ on $bb(C)$. Writing $f = u + i v$, we get $u_x + i v_x = 0$ and the Cauchy-Riemann equations (*#link(<thm:CR-necessary>)[CR Theorem]*) give $u_y = -v_x = 0$ and $v_y = u_x = 0$; all first partials of $u$ and $v$ vanish on the connected plane, so $u$ and $v$ are constant, and so is $f$.
 ]
@@ -1585,13 +1585,13 @@ The estimates quantify the rigidity: higher derivatives at a point are controlle
 ] <thm:fundamental-theorem-algebra>
 
 #proof[
-  *Step 1 (Growth).* By the reverse triangle inequality, for $|z|$ large,
+  *Step 1 (Growth).* By the reverse triangle inequality, for $abs(z)$ large,
   $
-    |p(z)| >= |a_n| |z|^n - (|a_(n-1)| |z|^(n-1) + dots + |a_0|) >= (|a_n| / 2) |z|^n,
+    abs(p(z)) >= abs(a_n) abs(z)^n - (abs(a_(n-1)) abs(z)^(n-1) + dots + abs(a_0)) >= (abs(a_n) / 2) abs(z)^n,
   $
-  so $|p(z)| -> oo$ as $|z| -> oo$.
+  so $abs(p(z)) -> oo$ as $abs(z) -> oo$.
 
-  *Step 2 (A root exists).* Suppose $p$ has no root. Then $q = 1/p$ is entire. On the compact disk $|z| <= R_0$ the continuous function $|q|$ is bounded; on $|z| > R_0$ Step 1 gives $|q(z)| <= 2 / (|a_n| |z|^n) <= 2 / |a_n|$. Hence $q$ is a bounded entire function, constant by *#link(<thm:liouville>)[Liouville's Theorem]* — but then $p$ is constant, a contradiction. So $p$ has a root $z_1 in bb(C)$.
+  *Step 2 (A root exists).* Suppose $p$ has no root. Then $q = 1/p$ is entire. On the compact disk $abs(z) <= R_0$ the continuous function $abs(q)$ is bounded; on $abs(z) > R_0$ Step 1 gives $abs(q(z)) <= 2 / (abs(a_n) abs(z)^n) <= 2 / abs(a_n)$. Hence $q$ is a bounded entire function, constant by *#link(<thm:liouville>)[Liouville's Theorem]* — but then $p$ is constant, a contradiction. So $p$ has a root $z_1 in bb(C)$.
 
   *Step 3 (Multiplicity count).* By the factor theorem, $p(z) = (z - z_1) p_1(z)$ with $p_1$ a polynomial of degree $n - 1$. Applying Step 2 to $p_1$ (if non-constant) and iterating,
   $
@@ -1601,7 +1601,7 @@ The estimates quantify the rigidity: higher derivatives at a point are controlle
 ]
 
 #example(name: "Entire but Unbounded")[
-  Liouville's theorem is sharp: boundedness cannot be dropped. The exponential is entire but unbounded, since $|e^z| = e^x -> oo$ as $x -> +oo$; likewise $sin z$ grows exponentially along the imaginary axis, $|sin(i y)| = sinh |y|$, as emphasized in *#link(<caution:trig-unbounded>)[the caution of Chapter 3]*. Neither function contradicts Liouville — precisely because both are unbounded.
+  Liouville's theorem is sharp: boundedness cannot be dropped. The exponential is entire but unbounded, since $abs(e^z) = e^x -> oo$ as $x -> +oo$; likewise $sin z$ grows exponentially along the imaginary axis, $abs(sin(i y)) = sinh abs(y)$, as emphasized in *#link(<caution:trig-unbounded>)[the caution of Chapter 3]*. Neither function contradicts Liouville — precisely because both are unbounded.
 ] <ex:entire-unbounded>
 
 The Cauchy integral formula is more than a computational device: it encodes the *local* behavior of holomorphic functions through *boundary* data. The next chapter exploits this systematically. Averaging $f$ over circles yields the mean value property and the maximum modulus principle; the Schwarz lemma classifies the self-maps of the disk; and Weierstrass's theorem shows that locally uniform limits of holomorphic functions remain holomorphic — the theory's gateway from finite to infinite-dimensional phenomena.
@@ -1613,18 +1613,18 @@ The Cauchy integral formula is more than a computational device: it encodes the 
 The Cauchy integral formula admits two readings. Read as "boundary values determine interior values", it produced the rigidity theorems of Chapter 5. Read the other way — the interior value is an *average* of boundary values — it yields the mean value property, and from it the maximum modulus principle.
 
 #theorem(name: "Mean Value Property")[
-  Let $f$ be holomorphic on a domain containing the closed disk $|z - z_0| <= r$. Then
+  Let $f$ be holomorphic on a domain containing the closed disk $abs(z - z_0) <= r$. Then
   $
     f(z_0) = 1/(2 pi) integral_0^(2 pi) f(z_0 + r e^(i theta)) dif theta,
   $
   the value at the center equals the average of the values over the circle. In particular,
   $
-    |f(z_0)| <= 1/(2 pi) integral_0^(2 pi) |f(z_0 + r e^(i theta))| dif theta.
+    abs(f(z_0)) <= 1/(2 pi) integral_0^(2 pi) abs(f(z_0 + r e^(i theta))) dif theta.
   $
 ] <thm:mean-value>
 
 #proof[
-  Apply *#link(<thm:cauchy-integral-formula>)[Cauchy's Integral Formula]* on the contour $|z - z_0| = r$, where $z = z_0 + r e^(i theta)$ and $dif z = i r e^(i theta) dif theta$:
+  Apply *#link(<thm:cauchy-integral-formula>)[Cauchy's Integral Formula]* on the contour $abs(z - z_0) = r$, where $z = z_0 + r e^(i theta)$ and $dif z = i r e^(i theta) dif theta$:
   $
     f(z_0) = 1/(2 pi "i") integral_0^(2 pi) f(z_0 + r e^(i theta)) / (r e^(i theta)) dot i r e^(i theta) dif theta = 1/(2 pi) integral_0^(2 pi) f(z_0 + r e^(i theta)) dif theta.
   $
@@ -1632,44 +1632,44 @@ The Cauchy integral formula admits two readings. Read as "boundary values determ
 ]
 
 #lemma(name: "Maximum Principle for Mean-Value Functions")[
-  Let $g$ be continuous on a connected open set $Omega$ and satisfy the mean value property at every point of $Omega$ — the value at each point equals its average over every circle centered there whose closed disk lies in $Omega$. Then $|g|$ cannot attain a maximum at an interior point of $Omega$ unless $g$ is constant on $Omega$.
+  Let $g$ be continuous on a connected open set $Omega$ and satisfy the mean value property at every point of $Omega$ — the value at each point equals its average over every circle centered there whose closed disk lies in $Omega$. Then $abs(g)$ cannot attain a maximum at an interior point of $Omega$ unless $g$ is constant on $Omega$.
 ] <lem:mmp-mvm>
 
 #proof[
-  Let $M = sup_(z in Omega) |g(z)|$ and consider the set $E = {z in Omega : |g(z)| = M}$ (possibly with no elements). If $z_1 in E$ and the circle $|z - z_1| = s$ lies with its interior in $Omega$, the mean value property gives
+  Let $M = sup_(z in Omega) abs(g(z))$ and consider the set $E = {z in Omega : abs(g(z)) = M}$ (possibly with no elements). If $z_1 in E$ and the circle $abs(z - z_1) = s$ lies with its interior in $Omega$, the mean value property gives
   $
-    M = |g(z_1)| <= 1/(2 pi) integral_0^(2 pi) |g(z_1 + s e^(i theta))| dif theta <= M,
+    M = abs(g(z_1)) <= 1/(2 pi) integral_0^(2 pi) abs(g(z_1 + s e^(i theta))) dif theta <= M,
   $
-  since $|g| <= M$ everywhere. Equality holds throughout, so $|g| = M$ on the entire circle: $E$ is open. $E$ is also closed in $Omega$ by continuity of $|g|$, and $Omega$ is connected, so either $E$ is empty — the maximum is attained only on the boundary — or $E = Omega$. In the latter case $|g| = M$ everywhere, and each mean value is an average of numbers of modulus $M$ whose modulus is again $M$; by the equality case of the triangle inequality, all values on each circle share a single argument, so $g$ is locally constant, hence constant on the connected set $Omega$.
+  since $abs(g) <= M$ everywhere. Equality holds throughout, so $abs(g) = M$ on the entire circle: $E$ is open. $E$ is also closed in $Omega$ by continuity of $abs(g)$, and $Omega$ is connected, so either $E$ is empty — the maximum is attained only on the boundary — or $E = Omega$. In the latter case $abs(g) = M$ everywhere, and each mean value is an average of numbers of modulus $M$ whose modulus is again $M$; by the equality case of the triangle inequality, all values on each circle share a single argument, so $g$ is locally constant, hence constant on the connected set $Omega$.
 ]
 
 With the lemma in hand, the maximum modulus principle is immediate.
 
 #theorem(name: "Maximum Modulus Principle")[ // 最大模原理
-  Let $f(z)$ be a non-constant analytic function in a bounded region $D subset bb(C)$ that is continuous on the closure of $D$. Then the maximum of $|f(z)|$ on the closure of $D$ is attained on the boundary of $D$.
+  Let $f(z)$ be a non-constant analytic function in a bounded region $D subset bb(C)$ that is continuous on the closure of $D$. Then the maximum of $abs(f(z))$ on the closure of $D$ is attained on the boundary of $D$.
 ] <thm:maximum-modulus>
 
 #proof[
-  Since $overline(D)$ is compact and $|f|$ continuous, the maximum of $|f|$ on $overline(D)$ is attained somewhere. A holomorphic function satisfies the mean value property at every point of $D$, so if the maximum were attained at an interior point, *#link(<lem:mmp-mvm>)[the maximum principle]* would force $f$ to be constant on $D$ — contradicting the hypothesis. Hence it is attained on the boundary.
+  Since $overline(D)$ is compact and $abs(f)$ continuous, the maximum of $abs(f)$ on $overline(D)$ is attained somewhere. A holomorphic function satisfies the mean value property at every point of $D$, so if the maximum were attained at an interior point, *#link(<lem:mmp-mvm>)[the maximum principle]* would force $f$ to be constant on $D$ — contradicting the hypothesis. Hence it is attained on the boundary.
 ]
 
 #note(title: "No Peaks Inside")[
-  The principle is often used in the equivalent *strong form*: if $|f|$ attains a local maximum at an interior point, then $f$ is constant in a neighborhood — indeed on the whole component. Geometrically, the modulus surface of a holomorphic function has *no peaks over the interior*: every summit lies on the boundary. In the steady-state temperature interpretation of Section 2.4, a harmonic temperature distribution has no hot or cold spots inside the region; extremes occur only on the boundary — this fulfills the preview given there.
+  The principle is often used in the equivalent *strong form*: if $abs(f)$ attains a local maximum at an interior point, then $f$ is constant in a neighborhood — indeed on the whole component. Geometrically, the modulus surface of a holomorphic function has *no peaks over the interior*: every summit lies on the boundary. In the steady-state temperature interpretation of Section 2.4, a harmonic temperature distribution has no hot or cold spots inside the region; extremes occur only on the boundary — this fulfills the preview given there.
 ]
 
 #figure(
   image("img/maximum-modulus.svg", width: 70%),
-  caption: [The modulus surface of a holomorphic function over a disk: the surface has no interior peaks, and the maximum of $|f|$ is attained on the boundary circle.],
+  caption: [The modulus surface of a holomorphic function over a disk: the surface has no interior peaks, and the maximum of $abs(f)$ is attained on the boundary circle.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:maximum-modulus>
 
 #corollary(name: "Minimum Modulus Principle")[
-  Let $f$ be a non-constant analytic function in a bounded region $D$ that is continuous on $overline(D)$ and has *no zeros* in $D$. Then the minimum of $|f|$ on $overline(D)$ is attained on the boundary of $D$.
+  Let $f$ be a non-constant analytic function in a bounded region $D$ that is continuous on $overline(D)$ and has *no zeros* in $D$. Then the minimum of $abs(f)$ on $overline(D)$ is attained on the boundary of $D$.
 ] <cor:minimum-modulus>
 
 #proof[
-  Since $f$ has no zeros, $1/f$ is holomorphic on $D$ and continuous on $overline(D)$. Its maximum is $1$ over the minimum of $|f|$; apply *#link(<thm:maximum-modulus>)[the maximum modulus principle]* to $1/f$.
+  Since $f$ has no zeros, $1/f$ is holomorphic on $D$ and continuous on $overline(D)$. Its maximum is $1$ over the minimum of $abs(f)$; apply *#link(<thm:maximum-modulus>)[the maximum modulus principle]* to $1/f$.
 ]
 
 #corollary(name: "Maximum Principle for Harmonic Functions")[
@@ -1677,15 +1677,15 @@ With the lemma in hand, the maximum modulus principle is immediate.
 ] <cor:harmonic-max-principle>
 
 #proof[
-  Locally on a disk, a harmonic function is the real part of a holomorphic function $f$ (the conjugate construction of Section 2.4). Since $|e^(f)| = e^u$, applying *#link(<thm:maximum-modulus>)[the maximum modulus principle]* to $e^f$ excludes interior maxima of $u$, and applying it to $e^(-f)$ — equivalently, to the harmonic function $-u$ — excludes interior minima. The open-closed set argument of *#link(<lem:mmp-mvm>)[the lemma]* extends the conclusion from local disks to all of the connected region $D$.
+  Locally on a disk, a harmonic function is the real part of a holomorphic function $f$ (the conjugate construction of Section 2.4). Since $abs(e^(f)) = e^u$, applying *#link(<thm:maximum-modulus>)[the maximum modulus principle]* to $e^f$ excludes interior maxima of $u$, and applying it to $e^(-f)$ — equivalently, to the harmonic function $-u$ — excludes interior minima. The open-closed set argument of *#link(<lem:mmp-mvm>)[the lemma]* extends the conclusion from local disks to all of the connected region $D$.
 ]
 
 #example(name: "Bounding a Function by Its Boundary Values")[
   Let $f(z) = z^2 + 3$ on the closed unit disk. The boundary values satisfy
   $
-    |f(e^(i theta))| = |e^(2 i theta) + 3| = sqrt((cos 2 theta + 3)^2 + (sin 2 theta)^2) = sqrt(10 + 6 cos 2 theta) <= 4,
+    abs(f(e^(i theta))) = abs(e^(2 i theta) + 3) = sqrt((cos 2 theta + 3)^2 + (sin 2 theta)^2) = sqrt(10 + 6 cos 2 theta) <= 4,
   $
-  with equality at $theta = 0$. *#link(<thm:maximum-modulus>)[The maximum modulus principle]* certifies $|f(z)| <= 4$ on the *entire* disk without checking any interior point — a first taste of how boundary data controls a holomorphic function globally.
+  with equality at $theta = 0$. *#link(<thm:maximum-modulus>)[The maximum modulus principle]* certifies $abs(f(z)) <= 4$ on the *entire* disk without checking any interior point — a first taste of how boundary data controls a holomorphic function globally.
 ] <ex:boundary-max>
 
 == Schwarz Lemma // 施瓦茨引理
@@ -1693,11 +1693,11 @@ With the lemma in hand, the maximum modulus principle is immediate.
 The Schwarz lemma is the precise form of a remarkable fact: a holomorphic self-map of the disk that fixes the origin cannot push points away from it.
 
 #theorem(name: "Schwarz Lemma")[
-  Let $f$ be holomorphic on the unit disk $bb(D) = {|z| < 1}$ with $f(0) = 0$ and $|f(z)| <= 1$ for all $z in bb(D)$. Then:
-  + $|f(z)| <= |z|$ for all $z in bb(D)$;
-  + $|f'(0)| <= 1$.
+  Let $f$ be holomorphic on the unit disk $bb(D) = {abs(z) < 1}$ with $f(0) = 0$ and $abs(f(z)) <= 1$ for all $z in bb(D)$. Then:
+  + $abs(f(z)) <= abs(z)$ for all $z in bb(D)$;
+  + $abs(f'(0)) <= 1$.
 
-  If moreover $|f(z_0)| = |z_0|$ for some $z_0 != 0$, or $|f'(0)| = 1$, then $f(z) = e^(i theta) z$ for some real constant $theta$: $f$ is a rotation.
+  If moreover $abs(f(z_0)) = abs(z_0)$ for some $z_0 != 0$, or $abs(f'(0)) = 1$, then $f(z) = e^(i theta) z$ for some real constant $theta$: $f$ is a rotation.
 ] <thm:schwarz-lemma>
 
 #proof[
@@ -1711,28 +1711,28 @@ The Schwarz lemma is the precise form of a remarkable fact: a holomorphic self-m
   $
     1/(2 pi) integral_0^(2 pi) g(r e^(i theta)) dif theta
     = 1/(2 pi r) integral_0^(2 pi) f(r e^(i theta)) e^(-i theta) dif theta
-    = 1/(2 pi r) dot r/"i" integral_(|w| = r) f(w)/w^2 dif w
+    = 1/(2 pi r) dot r/"i" integral_(abs(w) = r) f(w)/w^2 dif w
     = 1/(2 pi r) dot r/"i" dot 2 pi "i" f'(0)
     = g(0),
   $
   where the third equality is *#link(<thm:cif-derivatives>)[the derivative formula]* applied to $f$ at $0$.
 
-  *Step 2 (the bound).* Fix $0 < r < 1$. On the closed disk $|z| <= r$, the function $g$ is continuous and satisfies the mean value property at every interior point: holomorphy away from $0$ gives *#link(<thm:mean-value>)[the mean value property]* there, and Step 1 covers the center. On the boundary circle $|z| = r$ we have $|g(z)| = |f(z)| / r <= 1/r$, so *#link(<lem:mmp-mvm>)[the maximum principle]* yields $|g(z)| <= 1/r$ throughout the disk. Hence $|f(z)| <= |z| / r$ for $|z| <= r$; fixing $z$ and letting $r -> 1^(-)$ gives $|f(z)| <= |z|$. Setting $z = 0$ in the bound $|g| <= 1/r$ gives $|f'(0)| <= 1$.
+  *Step 2 (the bound).* Fix $0 < r < 1$. On the closed disk $abs(z) <= r$, the function $g$ is continuous and satisfies the mean value property at every interior point: holomorphy away from $0$ gives *#link(<thm:mean-value>)[the mean value property]* there, and Step 1 covers the center. On the boundary circle $abs(z) = r$ we have $abs(g(z)) = abs(f(z)) / r <= 1/r$, so *#link(<lem:mmp-mvm>)[the maximum principle]* yields $abs(g(z)) <= 1/r$ throughout the disk. Hence $abs(f(z)) <= abs(z) / r$ for $abs(z) <= r$; fixing $z$ and letting $r -> 1^(-)$ gives $abs(f(z)) <= abs(z)$. Setting $z = 0$ in the bound $abs(g) <= 1/r$ gives $abs(f'(0)) <= 1$.
 
-  *Step 3 (the equality case).* Suppose $|f(z_0)| = |z_0|$ for some $z_0 != 0$ (the case $|f'(0)| = 1$ is analogous, with $z_0$ replaced by $0$). Then $|g(z_0)| = 1$. Choosing $r$ with $|z_0| < r < 1$, Step 2 gives $|g| <= 1/r < 1 = |g(z_0)|$ on $|z| <= r$: the maximum is attained at the interior point $z_0$, so *#link(<lem:mmp-mvm>)[the maximum principle]* forces $g$ to be constant of modulus $1$ on $|z| < r$, say $g = e^(i theta)$. Every point $z in bb(D)$ lies in some disk $|w| < r$ that also contains $z_0$ (take $r > max(|z|, |z_0|)$), and the same argument applies on that disk; hence $g = e^(i theta)$ throughout $bb(D)$, that is, $f(z) = e^(i theta) z$.
+  *Step 3 (the equality case).* Suppose $abs(f(z_0)) = abs(z_0)$ for some $z_0 != 0$ (the case $abs(f'(0)) = 1$ is analogous, with $z_0$ replaced by $0$). Then $abs(g(z_0)) = 1$. Choosing $r$ with $abs(z_0) < r < 1$, Step 2 gives $abs(g) <= 1/r < 1 = abs(g(z_0))$ on $abs(z) <= r$: the maximum is attained at the interior point $z_0$, so *#link(<lem:mmp-mvm>)[the maximum principle]* forces $g$ to be constant of modulus $1$ on $abs(z) < r$, say $g = e^(i theta)$. Every point $z in bb(D)$ lies in some disk $abs(w) < r$ that also contains $z_0$ (take $r > max(abs(z), abs(z_0))$), and the same argument applies on that disk; hence $g = e^(i theta)$ throughout $bb(D)$, that is, $f(z) = e^(i theta) z$.
 ]
 
 #example(name: "Strict Contraction by $z^2$")[
-  The map $f(z) = z^2$ sends the unit disk into itself and fixes the origin. For $0 < |z| < 1$,
+  The map $f(z) = z^2$ sends the unit disk into itself and fixes the origin. For $0 < abs(z) < 1$,
   $
-    |f(z)| = |z|^2 < |z|,
+    abs(f(z)) = abs(z)^2 < abs(z),
   $
-  so the Schwarz inequality is strict at every nonzero point — consistent with the equality case, since $f$ is not a rotation; likewise $|f'(0)| = 0 < 1$.
+  so the Schwarz inequality is strict at every nonzero point — consistent with the equality case, since $f$ is not a rotation; likewise $abs(f'(0)) = 0 < 1$.
 ] <ex:schwarz-strict>
 
 #figure(
   image("img/schwarz-lemma.svg", width: 60%),
-  caption: [Schwarz lemma: a holomorphic self-map of the disk fixing the origin satisfies $|f(z)| <= |z|$ — the image is never farther from the origin than its preimage.],
+  caption: [Schwarz lemma: a holomorphic self-map of the disk fixing the origin satisfies $abs(f(z)) <= abs(z)$ — the image is never farther from the origin than its preimage.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:schwarz-lemma>
@@ -1748,7 +1748,7 @@ The Cauchy theory of Chapter 5 established what single holomorphic functions can
 #definition(name: "Locally Uniform Convergence")[
   A sequence of functions $f_n$ *converges locally uniformly* to $f$ on a domain $D$ if every point of $D$ has a neighborhood on which $f_n -> f$ uniformly — equivalently, $f_n -> f$ uniformly on every compact subset $K subset D$:
   $
-    sup_(z in K) |f_n(z) - f(z)| -> 0 quad "as" n -> oo.
+    sup_(z in K) abs(f_n(z) - f(z)) -> 0 quad "as" n -> oo.
   $
 ] <def:locally-uniform>
 
@@ -1766,19 +1766,19 @@ The Cauchy theory of Chapter 5 established what single holomorphic functions can
 #proof[
   *Step 1 ($f$ is holomorphic).* $f$ is continuous, being a locally uniform limit of continuous functions. For any closed contour $C$ in $D$, *#link(<thm:cauchy-goursat>)[Cauchy-Goursat]* gives $integral_C f_n dif z = 0$ for every $n$, and since $C$ is compact, $f_n -> f$ uniformly on it:
   $
-    |integral_C f dif z| = |integral_C (f - f_n) dif z| <= "length"(C) dot sup_(z in C) |f_n(z) - f(z)| -> 0.
+    abs(integral_C f dif z) = abs(integral_C (f - f_n) dif z) <= "length"(C) dot sup_(z in C) abs(f_n(z) - f(z)) -> 0.
   $
   Hence $integral_C f dif z = 0$ for every closed contour $C$, and $f$ is holomorphic by *#link(<thm:morera>)[Morera's Theorem]*.
 
-  *Step 2 (convergence of derivatives).* Fix $z_0 in D$ and a circle $C_r: |z - z_0| = r$ whose closed disk lies in $D$. Applying *#link(<thm:cif-derivatives>)[the derivative formula]* to $f_n$ and — by Step 1 — to $f$,
+  *Step 2 (convergence of derivatives).* Fix $z_0 in D$ and a circle $C_r: abs(z - z_0) = r$ whose closed disk lies in $D$. Applying *#link(<thm:cif-derivatives>)[the derivative formula]* to $f_n$ and — by Step 1 — to $f$,
   $
     f_n'(z_0) - f'(z_0) = 1/(2 pi "i") integral_(C_r) (f_n(z) - f(z)) / (z - z_0)^2 dif z,
   $
   so the ML estimate gives
   $
-    |f_n'(z_0) - f'(z_0)| <= 1/r dot sup_(|z - z_0| = r) |f_n(z) - f(z)| -> 0.
+    abs(f_n'(z_0) - f'(z_0)) <= 1/r dot sup_(abs(z - z_0) = r) abs(f_n(z) - f(z)) -> 0.
   $
-  To upgrade this to uniform convergence on compacts, cover a given compact $K subset D$ by finitely many disks $|z - z_j| < r_j$ whose closures lie in $D$; each point of $K$ lies in some smaller disk $|z - z_j| < r_j / 2$, on which the estimate applies with the circle $|w - z| = r_j / 2$ contained in $|w - z_j| < r_j$. The right-hand side tends to $0$ uniformly over each of the finitely many disks, hence over $K$.
+  To upgrade this to uniform convergence on compacts, cover a given compact $K subset D$ by finitely many disks $abs(z - z_j) < r_j$ whose closures lie in $D$; each point of $K$ lies in some smaller disk $abs(z - z_j) < r_j / 2$, on which the estimate applies with the circle $abs(w - z) = r_j / 2$ contained in $abs(w - z_j) < r_j$. The right-hand side tends to $0$ uniformly over each of the finitely many disks, hence over $K$.
 ]
 
 #note(title: "Real versus Complex, Once More")[
@@ -1798,9 +1798,9 @@ The Cauchy theory of Chapter 5 established what single holomorphic functions can
 ]
 
 #example(name: "The Geometric Series")[
-  On the unit disk, the partial sums $s_n(z) = 1 + z + dots + z^n$ are holomorphic and converge to $s(z) = 1/(1 - z)$. On any compact set where $|z| <= rho < 1$,
+  On the unit disk, the partial sums $s_n(z) = 1 + z + dots + z^n$ are holomorphic and converge to $s(z) = 1/(1 - z)$. On any compact set where $abs(z) <= rho < 1$,
   $
-    |s(z) - s_n(z)| = |z^(n+1) / (1 - z)| <= rho^(n+1) / (1 - rho) -> 0,
+    abs(s(z) - s_n(z)) = abs(z^(n+1) / (1 - z)) <= rho^(n+1) / (1 - rho) -> 0,
   $
   so the convergence is locally uniform. *#link(<cor:term-by-term>)[Term-by-term differentiation]* then recovers
   $
@@ -1821,13 +1821,13 @@ We first record which parts of the real theory transfer verbatim, and then focus
 === Convergence and Absolute Convergence // 收敛与绝对收敛
 
 #definition(name: "Absolute Convergence")[ // 绝对收敛
-  A series $sum_(n=0)^oo a_n$ of complex numbers *converges* if its sequence of partial sums $s_n = a_0 + a_1 + dots + a_n$ converges in $bb(C)$, and it *converges absolutely* if the real series $sum_(n=0)^oo |a_n|$ converges. A series that converges but does not converge absolutely is *conditionally convergent*.
+  A series $sum_(n=0)^oo a_n$ of complex numbers *converges* if its sequence of partial sums $s_n = a_0 + a_1 + dots + a_n$ converges in $bb(C)$, and it *converges absolutely* if the real series $sum_(n=0)^oo abs(a_n)$ converges. A series that converges but does not converge absolutely is *conditionally convergent*.
 ] <def:series-absolute>
 
 #theorem(name: "Cauchy Criterion for Series")[ // 级数的柯西收敛判据
   A series $sum_(n=0)^oo a_n$ of complex numbers converges if and only if for every $epsilon > 0$ there exists $N in NN$ such that
   $
-    |sum_(k=n+1)^m a_k| < epsilon quad quad "for all" quad quad m > n >= N.
+    abs(sum_(k=n+1)^m a_k) < epsilon quad quad "for all" quad quad m > n >= N.
   $
 ] <thm:series-cauchy>
 
@@ -1838,27 +1838,27 @@ We first record which parts of the real theory transfer verbatim, and then focus
 #corollary(name: "Absolute Convergence Implies Convergence")[ // 绝对收敛蕴含收敛
   If $sum_(n=0)^oo a_n$ converges absolutely, then it converges, and
   $
-    |sum_(n=0)^oo a_n| <= sum_(n=0)^oo |a_n|.
+    abs(sum_(n=0)^oo a_n) <= sum_(n=0)^oo abs(a_n).
   $
 ] <cor:absolute-implies>
 
 #proof[
-  By the triangle inequality, $|sum_(k=n+1)^m a_k| <= sum_(k=n+1)^m |a_k|$. Since $sum |a_k|$ converges, its tails can be made arbitrarily small, so $(s_n)$ is Cauchy and the series converges by #link(<thm:series-cauchy>)[the Cauchy criterion]. Letting $m -> oo$ in $|s_m| <= sum_(k=0)^m |a_k|$ yields the displayed inequality.
+  By the triangle inequality, $abs(sum_(k=n+1)^m a_k) <= sum_(k=n+1)^m abs(a_k)$. Since $sum abs(a_k)$ converges, its tails can be made arbitrarily small, so $(s_n)$ is Cauchy and the series converges by #link(<thm:series-cauchy>)[the Cauchy criterion]. Letting $m -> oo$ in $abs(s_m) <= sum_(k=0)^m abs(a_k)$ yields the displayed inequality.
 ]
 
 #proposition(name: "The Ratio and Root Tests Transfer")[
   // 比值判别法与根值判别法的迁移
   Let $sum_(n=0)^oo a_n$ be a series of complex numbers.
-  + *Ratio test*: if $lim_(n -> oo) (|a_(n+1)|) / (|a_n|) = L$, then the series converges absolutely when $L < 1$ and diverges when $L > 1$; the case $L = 1$ is inconclusive.
+  + *Ratio test*: if $lim_(n -> oo) abs(a_(n+1)) / abs(a_n) = L$, then the series converges absolutely when $L < 1$ and diverges when $L > 1$; the case $L = 1$ is inconclusive.
   + *Root test*: if $limsup_(n -> oo) root(n, abs(a_n)) = L$, then the series converges absolutely when $L < 1$ and diverges when $L > 1$; again the case $L = 1$ is inconclusive.
 ] <prop:ratio-root-tests>
 
 #proof[
-  Both tests read only the moduli $|a_n|$, and absolute convergence is by definition convergence of the real series $sum |a_n|$. Since the triangle inequality and the Cauchy criterion depend only on moduli, the real-variable proofs transfer verbatim once every "convergence" is read as absolute convergence. Divergence in both tests means that the terms $a_n$ do not tend to zero, which likewise involves only moduli.
+  Both tests read only the moduli $abs(a_n)$, and absolute convergence is by definition convergence of the real series $sum abs(a_n)$. Since the triangle inequality and the Cauchy criterion depend only on moduli, the real-variable proofs transfer verbatim once every "convergence" is read as absolute convergence. Divergence in both tests means that the terms $a_n$ do not tend to zero, which likewise involves only moduli.
 ]
 
 #note(title: "Why Only the Metric Tests Transfer")[ // 为何只有度量型判别法可迁移
-  The comparison test and the alternating series (Leibniz) test exploit the *order* of $bb(R)$ or sign-alternating structure, neither of which exists in $bb(C)$. The ratio and root tests, by contrast, only measure sizes, and the size of a complex number is the single real quantity $|a_n|$. This is why exactly the "metric" tests survive the passage to complex terms — a pattern that will repeat when uniform convergence of function series is taken up in #link(<thm:weierstrass>)[Weierstrass's theorem].
+  The comparison test and the alternating series (Leibniz) test exploit the *order* of $bb(R)$ or sign-alternating structure, neither of which exists in $bb(C)$. The ratio and root tests, by contrast, only measure sizes, and the size of a complex number is the single real quantity $abs(a_n)$. This is why exactly the "metric" tests survive the passage to complex terms — a pattern that will repeat when uniform convergence of function series is taken up in #link(<thm:weierstrass>)[Weierstrass's theorem].
 ]
 
 === Rearrangement of Series // 级数的重排
@@ -1878,15 +1878,15 @@ For complex series, the situation is more complicated, because the real and imag
 #proof[
   For each $N$, let $M_N$ be the largest of the finitely many integers $sigma(0), dots, sigma(N)$. Then
   $
-    sum_(n=0)^N |a_(sigma(n))| <= sum_(k=0)^(M_N) |a_k| <= sum_(k=0)^oo |a_k|,
+    sum_(n=0)^N abs(a_(sigma(n))) <= sum_(k=0)^(M_N) abs(a_k) <= sum_(k=0)^oo abs(a_k),
   $
   so the rearranged series converges absolutely.
 
-  Write $S = sum_(k=0)^oo a_k$, $S_M = sum_(k=0)^M a_k$ and $S_N' = sum_(n=0)^N a_(sigma(n))$. Given $epsilon > 0$, choose $M$ with $sum_(k=M+1)^oo |a_k| < epsilon$, and then choose $N$ so large that ${0, 1, dots, M} subset {sigma(0), dots, sigma(N)}$. The common terms $a_0, dots, a_M$ cancel in $S_N' - S_M$, leaving only terms $a_k$ with $k > M$:
+  Write $S = sum_(k=0)^oo a_k$, $S_M = sum_(k=0)^M a_k$ and $S_N' = sum_(n=0)^N a_(sigma(n))$. Given $epsilon > 0$, choose $M$ with $sum_(k=M+1)^oo abs(a_k) < epsilon$, and then choose $N$ so large that ${0, 1, dots, M} subset {sigma(0), dots, sigma(N)}$. The common terms $a_0, dots, a_M$ cancel in $S_N' - S_M$, leaving only terms $a_k$ with $k > M$:
   $
-    |S_N' - S_M| <= sum_(k=M+1)^oo |a_k| < epsilon.
+    abs(S_N' - S_M) <= sum_(k=M+1)^oo abs(a_k) < epsilon.
   $
-  Letting $N -> oo$ gives $|sum_(n=0)^oo a_(sigma(n)) - S_M| <= epsilon$; since $epsilon$ is arbitrary and $S_M -> S$, the rearranged series has the same sum.
+  Letting $N -> oo$ gives $abs(sum_(n=0)^oo a_(sigma(n)) - S_M) <= epsilon$; since $epsilon$ is arbitrary and $S_M -> S$, the rearranged series has the same sum.
 ]
 
 #note(title: "Conditional Convergence in the Plane")[ // 复平面中的条件收敛
@@ -1916,24 +1916,24 @@ This is the same shape as the expansion in #link(<def:analytic>)[the definition 
     L = limsup_(n -> oo) root(n, abs(c_n)), quad quad R = 1/L,
   $
   with the conventions $1/0 = oo$ and $1/oo = 0$. Then:
-  + the series converges absolutely for $|z - z_0| < R$;
-  + the series diverges for $|z - z_0| > R$.
+  + the series converges absolutely for $abs(z - z_0) < R$;
+  + the series diverges for $abs(z - z_0) > R$.
 ] <thm:cauchy-hadamard>
 
 #proof[
   Apply #link(<prop:ratio-root-tests>)[the root test] with $a_n = c_n (z - z_0)^n$:
   $
-    limsup_(n -> oo) root(n, abs(c_n (z - z_0)^n)) = |z - z_0| dot limsup_(n -> oo) root(n, abs(c_n)) = |z - z_0| dot L.
+    limsup_(n -> oo) root(n, abs(c_n (z - z_0)^n)) = abs(z - z_0) dot limsup_(n -> oo) root(n, abs(c_n)) = abs(z - z_0) dot L.
   $
-  If $|z - z_0| < R$, then $|z - z_0| dot L < 1$ and the series converges absolutely. If $|z - z_0| > R$, then $|z - z_0| dot L > 1$, so $|c_n (z - z_0)^n| > 1$ for infinitely many $n$ and the terms do not tend to zero — the series diverges.
+  If $abs(z - z_0) < R$, then $abs(z - z_0) dot L < 1$ and the series converges absolutely. If $abs(z - z_0) > R$, then $abs(z - z_0) dot L > 1$, so $abs(c_n (z - z_0)^n) > 1$ for infinitely many $n$ and the terms do not tend to zero — the series diverges.
 ]
 
 #definition(name: "Radius of Convergence")[ // 收敛半径
-  The number $R in [0, oo]$ of #link(<thm:cauchy-hadamard>)[the Cauchy--Hadamard formula] is the *radius of convergence* of the power series, and the disk $|z - z_0| < R$ is its *disk of convergence*.
+  The number $R in [0, oo]$ of #link(<thm:cauchy-hadamard>)[the Cauchy--Hadamard formula] is the *radius of convergence* of the power series, and the disk $abs(z - z_0) < R$ is its *disk of convergence*.
 ] <def:radius-convergence>
 
 #note(title: "Nothing Is Predicted on the Circle")[ // 收敛圆上没有一般性结论
-  The Cauchy--Hadamard formula is silent about the circle $|z - z_0| = R$, where all three behaviors occur: $sum z^n$ diverges at every point of $|z| = 1$ (its terms do not tend to $0$); $sum z^n / (n^2)$ converges at every point of $|z| = 1$; $sum z^n / n$ converges at $z = -1$ but diverges at $z = 1$. Each has radius $R = 1$.
+  The Cauchy--Hadamard formula is silent about the circle $abs(z - z_0) = R$, where all three behaviors occur: $sum z^n$ diverges at every point of $abs(z) = 1$ (its terms do not tend to $0$); $sum z^n / (n^2)$ converges at every point of $abs(z) = 1$; $sum z^n / n$ converges at $z = -1$ but diverges at $z = 1$. Each has radius $R = 1$.
 ]
 
 === Abel's Theorem for Power Series // 幂级数的阿贝尔定理
@@ -1942,20 +1942,20 @@ This is the same shape as the expansion in #link(<def:analytic>)[the definition 
 Pointwise convergence is a fragile property. The next theorem upgrades it to locally uniform convergence on the disk of convergence — the passport to term-by-term operations.
 
 #theorem(name: "Abel's Theorem")[ // 阿贝尔定理
-  Let $sum_(n=0)^oo c_n (z - z_0)^n$ be a power series with radius of convergence $R > 0$. Then the series converges absolutely at every point of the disk $|z - z_0| < R$, and *locally uniformly* there: uniformly on every closed sub-disk $|z - z_0| <= rho$ with $0 < rho < R$.
+  Let $sum_(n=0)^oo c_n (z - z_0)^n$ be a power series with radius of convergence $R > 0$. Then the series converges absolutely at every point of the disk $abs(z - z_0) < R$, and *locally uniformly* there: uniformly on every closed sub-disk $abs(z - z_0) <= rho$ with $0 < rho < R$.
 ] <thm:abel-power>
 
 #proof[
-  Fix $0 < rho < R$. Since $rho$ lies inside the disk of convergence, the numeric series $sum |c_n| rho^n$ converges. For every $z$ with $|z - z_0| <= rho$,
+  Fix $0 < rho < R$. Since $rho$ lies inside the disk of convergence, the numeric series $sum abs(c_n) rho^n$ converges. For every $z$ with $abs(z - z_0) <= rho$,
   $
-    |c_n (z - z_0)^n| <= |c_n| rho^n,
+    abs(c_n (z - z_0)^n) <= abs(c_n) rho^n,
   $
-  and the dominating series of constants converges. The Weierstrass M-test — the function-series form of #link(<cor:absolute-implies>)[absolute convergence] — yields uniform convergence on $|z - z_0| <= rho$; absolute convergence at each individual point was the starting point.
+  and the dominating series of constants converges. The Weierstrass M-test — the function-series form of #link(<cor:absolute-implies>)[absolute convergence] — yields uniform convergence on $abs(z - z_0) <= rho$; absolute convergence at each individual point was the starting point.
 ]
 
 #theorem(name: "Holomorphy and Term-by-Term Operations")[
   // 和函数的解析性与逐项运算
-  Let $f(z) = sum_(n=0)^oo c_n (z - z_0)^n$ have radius of convergence $R > 0$, so that $f$ is defined on the disk $|z - z_0| < R$. Then:
+  Let $f(z) = sum_(n=0)^oo c_n (z - z_0)^n$ have radius of convergence $R > 0$, so that $f$ is defined on the disk $abs(z - z_0) < R$. Then:
   + $f$ is holomorphic on the disk of convergence, and the termwise derivative
     $
       sum_(n=1)^oo n c_n (z - z_0)^(n-1)
@@ -1973,7 +1973,7 @@ Pointwise convergence is a fragile property. The next theorem upgrades it to loc
   $
     limsup_(n -> oo) root(n, n abs(c_n)) = limsup_(n -> oo) root(n, n) dot root(n, abs(c_n)) = limsup_(n -> oo) root(n, abs(c_n)),
   $
-  so by #link(<thm:cauchy-hadamard>)[the Cauchy--Hadamard formula] the differentiated series has the same radius $R$. #link(<thm:abel-power>)[Abel's theorem] applied to both series shows that on every closed sub-disk $|z - z_0| <= rho < R$ the original series and the differentiated series converge uniformly. The partial sums are polynomials, hence holomorphic; #link(<thm:weierstrass>)[Weierstrass's convergence theorem] then shows that $f$ is holomorphic on the disk and that $f'$ is the sum of the differentiated series. Iterating the same argument on the differentiated series gives the second claim. For the third, the image of the path $gamma$ is a compact subset of the disk, on which the series converges uniformly; the sum and the integral may therefore be interchanged.
+  so by #link(<thm:cauchy-hadamard>)[the Cauchy--Hadamard formula] the differentiated series has the same radius $R$. #link(<thm:abel-power>)[Abel's theorem] applied to both series shows that on every closed sub-disk $abs(z - z_0) <= rho < R$ the original series and the differentiated series converge uniformly. The partial sums are polynomials, hence holomorphic; #link(<thm:weierstrass>)[Weierstrass's convergence theorem] then shows that $f$ is holomorphic on the disk and that $f'$ is the sum of the differentiated series. Iterating the same argument on the differentiated series gives the second claim. For the third, the image of the path $gamma$ is a compact subset of the disk, on which the series converges uniformly; the sum and the integral may therefore be interchanged.
 ]
 
 #corollary(name: "Coefficients Are Determined by the Sum")[ // 系数由和函数唯一决定
@@ -1992,9 +1992,9 @@ This completes the easy direction of #link(<thm:holo-equiv-analytic>)[the equiva
 
 #example(name: "Three Radii")[
   // 三个收敛半径
-  - $sum_(n=0)^oo z^n / (n!)$: the ratio test gives $(|a_(n+1)|) / (|a_n|) = |z| / (n+1) -> 0$, so $R = oo$. This recovers the exponential function of #link(<def:exp-function>)[Definition], entire on all of $bb(C)$.
-  - $sum_(n=0)^oo n! z^n$: the ratio $(|a_(n+1)|) / (|a_n|) = (n+1) |z|$ tends to $oo$ unless $z = 0$, so $R = 0$: the series represents a function only at its center.
-  - $sum_(n=1)^oo z^n / n$: the ratio tends to $|z|$, so $R = 1$; on the boundary circle the series converges at $z = -1$ but diverges at $z = 1$, as described in the note following #link(<thm:cauchy-hadamard>)[the Cauchy--Hadamard formula].
+  - $sum_(n=0)^oo z^n / (n!)$: the ratio test gives $abs(a_(n+1)) / abs(a_n) = abs(z) / (n+1) -> 0$, so $R = oo$. This recovers the exponential function of #link(<def:exp-function>)[Definition], entire on all of $bb(C)$.
+  - $sum_(n=0)^oo n! z^n$: the ratio $abs(a_(n+1)) / abs(a_n) = (n+1) abs(z)$ tends to $oo$ unless $z = 0$, so $R = 0$: the series represents a function only at its center.
+  - $sum_(n=1)^oo z^n / n$: the ratio tends to $abs(z)$, so $R = 1$; on the boundary circle the series converges at $z = -1$ but diverges at $z = 1$, as described in the note following #link(<thm:cauchy-hadamard>)[the Cauchy--Hadamard formula].
 ] <ex:radius-examples>
 
 == Taylor Series // 泰勒级数
@@ -2003,11 +2003,11 @@ This completes the easy direction of #link(<thm:holo-equiv-analytic>)[the equiva
 #link(<ex:geometric-series>)[The geometric series] showed a concrete function represented by a power series, and the machinery of the last two chapters — the Cauchy integral formula above all — explains why this is the rule rather than the exception: *every* holomorphic function is locally a power series.
 
 #lemma(name: "Geometric Expansion of the Cauchy Kernel")[ // 柯西核的几何级数展开
-  Let $z_0 in bb(C)$ and $r > 0$. Then for $|z - z_0| < |zeta - z_0| = r$,
+  Let $z_0 in bb(C)$ and $r > 0$. Then for $abs(z - z_0) < abs(zeta - z_0) = r$,
   $
     1/(zeta - z) = sum_(n=0)^oo (z - z_0)^n / ((zeta - z_0)^(n+1)),
   $
-  and the convergence is uniform whenever $|z - z_0| <= rho < r$ and $|zeta - z_0| = r$ simultaneously.
+  and the convergence is uniform whenever $abs(z - z_0) <= rho < r$ and $abs(zeta - z_0) = r$ simultaneously.
 ] <lem:geometric-kernel>
 
 #proof[
@@ -2015,35 +2015,35 @@ This completes the easy direction of #link(<thm:holo-equiv-analytic>)[the equiva
   $
     1/(zeta - z) = 1/(zeta - z_0) dot 1/(1 - w) = sum_(n=0)^oo (z - z_0)^n / ((zeta - z_0)^(n+1)),
   $
-  valid whenever $|w| < 1$. Under the stated constraints $|w| = (|z - z_0|) / (|zeta - z_0|) <= rho / r < 1$. For uniformity, note that the $n$-th term satisfies
+  valid whenever $abs(w) < 1$. Under the stated constraints $abs(w) = (abs(z - z_0)) / (abs(zeta - z_0)) <= rho / r < 1$. For uniformity, note that the $n$-th term satisfies
   $
-    |(z - z_0)^n / ((zeta - z_0)^(n+1))| <= 1/r dot (rho / r)^n,
+    abs((z - z_0)^n / ((zeta - z_0)^(n+1))) <= 1/r dot (rho / r)^n,
   $
   and $sum_(n=0)^oo 1/r dot (rho / r)^n$ is a convergent geometric series of constants; the Weierstrass M-test gives uniform convergence.
 ]
 
 #theorem(name: "Taylor's Theorem")[ // 泰勒定理
-  Let $f$ be holomorphic in a region $D subset CC$, let $z_0 in D$, and let $r > 0$ be such that the closed disk $|z - z_0| <= r$ is contained in $D$. Then for $|z - z_0| < r$,
+  Let $f$ be holomorphic in a region $D subset CC$, let $z_0 in D$, and let $r > 0$ be such that the closed disk $abs(z - z_0) <= r$ is contained in $D$. Then for $abs(z - z_0) < r$,
   $
     f(z) = sum_(n=0)^oo c_n (z - z_0)^n,
   $
   where
   $
-    c_n = 1/(2 pi "i") integral_(|zeta - z_0| = r) f(zeta)/(zeta - z_0)^(n+1) dif zeta = (f^(n)(z_0)) / (n!),
+    c_n = 1/(2 pi "i") integral_(abs(zeta - z_0) = r) f(zeta)/(zeta - z_0)^(n+1) dif zeta = (f^(n)(z_0)) / (n!),
   $
   and the representation is unique. In particular, the radius of convergence of the series is at least the distance from $z_0$ to the boundary of $D$.
 ] <thm:taylor>
 
 #proof[
-  Fix $r > 0$ such that the closed disk $|z - z_0| <= r$ lies in $D$, and fix $z$ with $|z - z_0| < r$. By the Cauchy integral formula,
+  Fix $r > 0$ such that the closed disk $abs(z - z_0) <= r$ lies in $D$, and fix $z$ with $abs(z - z_0) < r$. By the Cauchy integral formula,
   $
-    f(z) = 1/(2 pi "i") integral_(|zeta - z_0| = r) f(zeta)/(zeta - z) dif zeta.
+    f(z) = 1/(2 pi "i") integral_(abs(zeta - z_0) = r) f(zeta)/(zeta - z) dif zeta.
   $
-  With $rho = |z - z_0| < r$, #link(<lem:geometric-kernel>)[the kernel expansion] converges uniformly on the circle $|zeta - z_0| = r$, so the sum and the integral may be interchanged:
+  With $rho = abs(z - z_0) < r$, #link(<lem:geometric-kernel>)[the kernel expansion] converges uniformly on the circle $abs(zeta - z_0) = r$, so the sum and the integral may be interchanged:
   $
-    f(z) = sum_(n=0)^oo (1/(2 pi "i") integral_(|zeta - z_0| = r) f(zeta)/(zeta - z_0)^(n+1) dif zeta) (z - z_0)^n = sum_(n=0)^oo c_n (z - z_0)^n.
+    f(z) = sum_(n=0)^oo (1/(2 pi "i") integral_(abs(zeta - z_0) = r) f(zeta)/(zeta - z_0)^(n+1) dif zeta) (z - z_0)^n = sum_(n=0)^oo c_n (z - z_0)^n.
   $
-  Since $z$ was arbitrary, the representation holds on the whole disk $|z - z_0| < r$. By #link(<thm:cif-derivatives>)[the derivative formula], $c_n = (f^(n)(z_0)) / (n!)$. The coefficients are thus completely determined by $f$ and $z_0$ — independently of the auxiliary radius $r$ — so the representation is unique; and since it exists for every $r$ smaller than the distance from $z_0$ to $partial D$, the radius of convergence of the series is at least that distance.
+  Since $z$ was arbitrary, the representation holds on the whole disk $abs(z - z_0) < r$. By #link(<thm:cif-derivatives>)[the derivative formula], $c_n = (f^(n)(z_0)) / (n!)$. The coefficients are thus completely determined by $f$ and $z_0$ — independently of the auxiliary radius $r$ — so the representation is unique; and since it exists for every $r$ smaller than the distance from $z_0$ to $partial D$, the radius of convergence of the series is at least that distance.
 ]
 
 Combining #link(<cor:power-coefficients>)[the corollary] above with Taylor's theorem settles the equivalence announced in Chapter 2:
@@ -2053,13 +2053,13 @@ Combining #link(<cor:power-coefficients>)[the corollary] above with Taylor's the
 ] <cor:holo-implies-analytic>
 
 #proof[
-  Given $z_0 in D$, choose $r > 0$ with the closed disk $|z - z_0| <= r$ contained in $D$; #link(<thm:taylor>)[Taylor's theorem] provides the power series expansion of $f$ at $z_0$. The reverse implication was #link(<thm:power-series-diff>)[the term-by-term theorem].
+  Given $z_0 in D$, choose $r > 0$ with the closed disk $abs(z - z_0) <= r$ contained in $D$; #link(<thm:taylor>)[Taylor's theorem] provides the power series expansion of $f$ at $z_0$. The reverse implication was #link(<thm:power-series-diff>)[the term-by-term theorem].
 ]
 
 #example(name: "Standard Taylor Series")[
   // 标准泰勒展开
   The following expansions, legitimate by Taylor's theorem and uniquely determined by #link(<cor:power-coefficients>)[the coefficients], are the working vocabulary of the subject.
-  - *Geometric series*: $1/(1 - z) = sum_(n=0)^oo z^n$ for $|z| < 1$ — the prototype, #link(<ex:geometric-series>)[revisited from Chapter 6].
+  - *Geometric series*: $1/(1 - z) = sum_(n=0)^oo z^n$ for $abs(z) < 1$ — the prototype, #link(<ex:geometric-series>)[revisited from Chapter 6].
   - *Exponential*: $exp(z) = sum_(n=0)^oo z^n / (n!)$ for all $z$, as postulated in #link(<def:exp-function>)[the definition]; Taylor's theorem now explains *why* the series representation was legitimate.
   - *Sine and cosine*: for all $z$,
     $
@@ -2067,26 +2067,26 @@ Combining #link(<cor:power-coefficients>)[the corollary] above with Taylor's the
     $
   - *Logarithm* (principal branch): integrating the geometric series term by term — legitimate by #link(<thm:power-series-diff>)[the term-by-term theorem] — gives
     $
-      "log"(1 + z) = sum_(n=1)^oo (-1)^(n-1) (z^n) / (n), quad quad |z| < 1,
+      "log"(1 + z) = sum_(n=1)^oo (-1)^(n-1) (z^n) / (n), quad quad abs(z) < 1,
     $
     valid for the principal branch on $bb(C) backslash (-oo, -1]$; the radius $1$ is the distance from $0$ to the singularity at $z = -1$.
   - *Binomial series*: for $alpha in bb(C)$ and the branch $(1 + z)^alpha = exp(alpha "log"(1 + z))$, the $n$-th derivative at $0$ is $alpha (alpha - 1) dots (alpha - n + 1)$, so
     $
-      (1 + z)^alpha = sum_(n=0)^oo binom(alpha, n) z^n, quad quad binom(alpha, n) = (alpha (alpha - 1) dots (alpha - n + 1)) / (n!), quad quad |z| < 1.
+      (1 + z)^alpha = sum_(n=0)^oo binom(alpha, n) z^n, quad quad binom(alpha, n) = (alpha (alpha - 1) dots (alpha - n + 1)) / (n!), quad quad abs(z) < 1.
     $
 ] <ex:standard-taylor>
 
 #example(name: "The Radius Is Set by the Nearest Singularity")[ // 收敛半径由最近的奇点决定
   Consider $f(z) = 1/(1 - z^2)$, holomorphic on $bb(C) backslash {plus.minus 1}$. Expanding at $z_0 = 0$,
   $
-    f(z) = 1/(1 - z^2) = sum_(n=0)^oo z^(2n), quad quad |z| < 1,
+    f(z) = 1/(1 - z^2) = sum_(n=0)^oo z^(2n), quad quad abs(z) < 1,
   $
-  a power series in $z^2$ with radius exactly $1$ — the distance to the nearest singularities $plus.minus 1$. Expanding the same function at $z_0 = 1/2$, the distance to the nearest singularity is $1/2$, and the Taylor series converges only on $|z - 1/2| < 1/2$ (@fig:taylor-disk). The same function, different centers, different disks: the radius of convergence is a property of the *pair* (function, center), set by the nearest obstruction.
+  a power series in $z^2$ with radius exactly $1$ — the distance to the nearest singularities $plus.minus 1$. Expanding the same function at $z_0 = 1/2$, the distance to the nearest singularity is $1/2$, and the Taylor series converges only on $abs(z - 1/2) < 1/2$ (@fig:taylor-disk). The same function, different centers, different disks: the radius of convergence is a property of the *pair* (function, center), set by the nearest obstruction.
 ] <ex:radius-singularity>
 
 #figure(
   image("./img/taylor-disk.svg", width: 80%),
-  caption: [The radius of convergence is the distance to the nearest singularity. Left: $f(z) = 1/(1 - z^2)$ expanded at $z_0 = 0$ converges on $|z| < 1$, blocked by the singularities $plus.minus 1$ (marked with $times$). Right: the same function expanded at $z_0 = 1/2$ converges only on $|z - 1/2| < 1/2$, blocked by the nearer singularity at $1$.],
+  caption: [The radius of convergence is the distance to the nearest singularity. Left: $f(z) = 1/(1 - z^2)$ expanded at $z_0 = 0$ converges on $abs(z) < 1$, blocked by the singularities $plus.minus 1$ (marked with $times$). Right: the same function expanded at $z_0 = 1/2$ converges only on $abs(z - 1/2) < 1/2$, blocked by the nearer singularity at $1$.],
 ) <fig:taylor-disk>
 
 #note(title: "Real versus Complex, One Last Time")[ // 实函数与复函数的最后一次对照
@@ -2174,14 +2174,14 @@ $
   c_0 + c_1 (z-z_0) + c_2 (z-z_0)^2 + ..., \
   c_(-1)/(z-z_0) + c_(-2)/(z-z_0)^2 + dots .
 $
-The first one is a power series, which stands for an analytic function $f_1(z)$ in a convergent disk $|z-z_0| < R (0<R<=infinity)$.
+The first one is a power series, which stands for an analytic function $f_1(z)$ in a convergent disk $abs(z-z_0) < R (0<R<=infinity)$.
 As for the second one, let $zeta = 1/(z-z_0)$, then it becomes a power series in $zeta$:
 $
   c_(-1) zeta + c_(-2) zeta^2 + dots,
 $
-which stands for an analytic function $f_2(zeta)$ in a convergent disk $|zeta| < 1/r (0< 1/r <= infinity)$.
-That is, the second series stands for an analytic function $f_2(z)$ in the region $|z-z_0| > r (0<r<=infinity)$.
-If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two series, called a two-sided power series, denoted as
+which stands for an analytic function $f_2(zeta)$ in a convergent disk $abs(zeta) < 1/r (0< 1/r <= infinity)$.
+That is, the second series stands for an analytic function $f_2(z)$ in the region $abs(z-z_0) > r (0<r<=infinity)$.
+If there exists a non-empty annulus $r < abs(z-z_0) < R$, then the sum of the two series, called a two-sided power series, denoted as
 
 #eq[
   $
@@ -2192,7 +2192,7 @@ If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two s
 #property[
   Let the region of convergence of the series @two-sided-power-series be the annulus
   $
-    H: r < |z-z_0| < R quad (0 <= r < R <= oo).
+    H: r < abs(z-z_0) < R quad (0 <= r < R <= oo).
   $
   Then:
   + the series converges absolutely and locally uniformly on $H$, and its sum is $f(z) = f_1(z) + f_2(z)$;
@@ -2202,7 +2202,7 @@ If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two s
 ] <prop:two-sided-series>
 
 #proof[
-  *Convergence.* On a compact sub-annulus $rho_1 <= |z - z_0| <= rho_2$ with $r < rho_1 < rho_2 < R$, the positive part is dominated by $sum_(n>=0) |c_n| rho_2^n$, convergent because $rho_2 < R$, and the negative part by $sum_(n>=1) (|c_(-n)|) / (rho_1^n)$, convergent because $rho_1 > r$. The Weierstrass M-test yields locally uniform convergence, and absolute convergence at each point holds by definition of $r$ and $R$.
+  *Convergence.* On a compact sub-annulus $rho_1 <= abs(z - z_0) <= rho_2$ with $r < rho_1 < rho_2 < R$, the positive part is dominated by $sum_(n>=0) abs(c_n) rho_2^n$, convergent because $rho_2 < R$, and the negative part by $sum_(n>=1) (abs(c_(-n))) / (rho_1^n)$, convergent because $rho_1 > r$. The Weierstrass M-test yields locally uniform convergence, and absolute convergence at each point holds by definition of $r$ and $R$.
 
   *Holomorphy.* On $H$ the positive part is a locally uniform limit of polynomials and the negative part one of negative powers $1/(z - z_0)^n$ — each holomorphic on $H$ — so #link(<thm:weierstrass>)[Weierstrass's theorem] shows that $f$ is holomorphic.
 
@@ -2210,11 +2210,11 @@ If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two s
 ]
 
 #lemma(name: "Kernel Expansions on Boundary Circles")[ // 内外两圈的柯西核展开
-  Fix $r < rho_1 < rho_2 < R$ and a point $z$ with $rho_1 < |z - z_0| < rho_2$. Then on the outer circle $|zeta - z_0| = rho_2$,
+  Fix $r < rho_1 < rho_2 < R$ and a point $z$ with $rho_1 < abs(z - z_0) < rho_2$. Then on the outer circle $abs(zeta - z_0) = rho_2$,
   $
     1/(zeta - z) = sum_(n=0)^oo (z - z_0)^n / ((zeta - z_0)^(n+1)),
   $
-  while on the inner circle $|zeta - z_0| = rho_1$,
+  while on the inner circle $abs(zeta - z_0) = rho_1$,
   $
     1/(zeta - z) = -sum_(n=1)^oo (zeta - z_0)^(n-1) / ((z - z_0)^n),
   $
@@ -2222,53 +2222,53 @@ If there exists a non-empty annulus $r < |z-z_0| < R$, then the sum of the two s
 ] <lem:laurent-kernel>
 
 #proof[
-  On the outer circle the geometric series of #link(<lem:geometric-kernel>)[the kernel lemma] applies with ratio $(|z - z_0|) / (|zeta - z_0|) = (|z - z_0|) / rho_2 < 1$, bounded away from $1$ uniformly in $zeta$. On the inner circle, write
+  On the outer circle the geometric series of #link(<lem:geometric-kernel>)[the kernel lemma] applies with ratio $(abs(z - z_0)) / (abs(zeta - z_0)) = (abs(z - z_0)) / rho_2 < 1$, bounded away from $1$ uniformly in $zeta$. On the inner circle, write
   $
     1/(zeta - z) = -1/(z - z_0) dot 1/(1 - (zeta - z_0)/(z - z_0)),
   $
-  a geometric series with ratio $(|zeta - z_0|) / (|z - z_0|) = rho_1 / (|z - z_0|) < 1$, again uniformly in $zeta$; expanding gives the stated negative-power series.
+  a geometric series with ratio $(abs(zeta - z_0)) / (abs(z - z_0)) = rho_1 / (abs(z - z_0)) < 1$, again uniformly in $zeta$; expanding gives the stated negative-power series.
 ]
 
 #theorem(name: "Laurent's Theorem")[ // 洛朗定理
-  Let $f$ be holomorphic in the annulus $H: r < |z-z_0| < R quad (0 <= r < R <= oo)$.
+  Let $f$ be holomorphic in the annulus $H: r < abs(z-z_0) < R quad (0 <= r < R <= oo)$.
   Then $f$ can be represented in $H$ as a two-sided power series:
   $
     f(z) = sum_(n=-oo)^oo c_n (z-z_0)^n,
   $
   where
   $
-    c_n = 1/(2 pi"i") integral_(|zeta-z_0|=rho) f(zeta)/(zeta-z_0)^(n+1) dif zeta, quad r < rho < R, quad n in ZZ.
+    c_n = 1/(2 pi"i") integral_(abs(zeta-z_0)=rho) f(zeta)/(zeta-z_0)^(n+1) dif zeta, quad r < rho < R, quad n in ZZ.
   $
   The coefficients are independent of the choice of $rho in (r, R)$, and the expansion is unique.
 ] <thm:laurent>
 
 #proof[
-  *Existence.* Fix $z in H$ and choose $rho_1, rho_2$ with $r < rho_1 < |z - z_0| < rho_2 < R$. The integrand $f(zeta)/(zeta - z)$ is holomorphic on the closed annulus $rho_1 <= |zeta - z_0| <= rho_2$, whose boundary consists of the outer circle counterclockwise and the inner circle clockwise; by #link(<thm:deformation-invariance>)[deformation of contours],
+  *Existence.* Fix $z in H$ and choose $rho_1, rho_2$ with $r < rho_1 < abs(z - z_0) < rho_2 < R$. The integrand $f(zeta)/(zeta - z)$ is holomorphic on the closed annulus $rho_1 <= abs(zeta - z_0) <= rho_2$, whose boundary consists of the outer circle counterclockwise and the inner circle clockwise; by #link(<thm:deformation-invariance>)[deformation of contours],
   $
-    f(z) = 1/(2 pi"i") integral_(|zeta - z_0| = rho_2) f(zeta)/(zeta - z) dif zeta - 1/(2 pi"i") integral_(|zeta - z_0| = rho_1) f(zeta)/(zeta - z) dif zeta.
+    f(z) = 1/(2 pi"i") integral_(abs(zeta - z_0) = rho_2) f(zeta)/(zeta - z) dif zeta - 1/(2 pi"i") integral_(abs(zeta - z_0) = rho_1) f(zeta)/(zeta - z) dif zeta.
   $
   By #link(<lem:laurent-kernel>)[the kernel expansions], both geometric series converge uniformly on their circles, so the sums and the integrals may be interchanged:
   $
-    f(z) = sum_(n=0)^oo (z - z_0)^n dot 1/(2 pi"i") integral_(|zeta - z_0| = rho_2) f(zeta)/(zeta - z_0)^(n+1) dif zeta + sum_(k=1)^oo (z - z_0)^(-k) dot 1/(2 pi"i") integral_(|zeta - z_0| = rho_1) f(zeta)(zeta - z_0)^(k-1) dif zeta.
+    f(z) = sum_(n=0)^oo (z - z_0)^n dot 1/(2 pi"i") integral_(abs(zeta - z_0) = rho_2) f(zeta)/(zeta - z_0)^(n+1) dif zeta + sum_(k=1)^oo (z - z_0)^(-k) dot 1/(2 pi"i") integral_(abs(zeta - z_0) = rho_1) f(zeta)(zeta - z_0)^(k-1) dif zeta.
   $
   Since $(zeta - z_0)^(k-1) = 1/(zeta - z_0)^(-k+1)$, both sums combine into $f(z) = sum_(n=-oo)^oo c_n (z - z_0)^n$ with
   $
-    c_n = 1/(2 pi"i") integral_(|zeta - z_0| = rho) f(zeta)/(zeta - z_0)^(n+1) dif zeta
+    c_n = 1/(2 pi"i") integral_(abs(zeta - z_0) = rho) f(zeta)/(zeta - z_0)^(n+1) dif zeta
   $
   — the nonnegative powers coming from the outer circle and the negative powers from the inner one.
 
-  *Independence of $rho$.* For $r < rho < rho' < R$, the integrand $f(zeta)/(zeta - z_0)^(n+1)$ is holomorphic on the closed annulus $rho <= |zeta - z_0| <= rho'$, so #link(<thm:deformation-invariance>)[deformation of contours] yields the same integral for both radii.
+  *Independence of $rho$.* For $r < rho < rho' < R$, the integrand $f(zeta)/(zeta - z_0)^(n+1)$ is holomorphic on the closed annulus $rho <= abs(zeta - z_0) <= rho'$, so #link(<thm:deformation-invariance>)[deformation of contours] yields the same integral for both radii.
 
-  *Uniqueness.* Suppose $f = sum_(n=-oo)^oo c_n (z - z_0)^n$ converges to $f$ locally uniformly on $H$. For $k in ZZ$, termwise integration over the circle $|z - z_0| = rho in (r, R)$ — legitimate by #link(<prop:two-sided-series>)[the two-sided series proposition] — and #link(<prop:common-integrals>)[the common integrals] give
+  *Uniqueness.* Suppose $f = sum_(n=-oo)^oo c_n (z - z_0)^n$ converges to $f$ locally uniformly on $H$. For $k in ZZ$, termwise integration over the circle $abs(z - z_0) = rho in (r, R)$ — legitimate by #link(<prop:two-sided-series>)[the two-sided series proposition] — and #link(<prop:common-integrals>)[the common integrals] give
   $
-    integral_(|z - z_0| = rho) f(z)/(z - z_0)^(k+1) dif z = sum_(n=-oo)^oo c_n integral_(|z - z_0| = rho) (z - z_0)^(n-k-1) dif z = 2 pi"i" c_k,
+    integral_(abs(z - z_0) = rho) f(z)/(z - z_0)^(k+1) dif z = sum_(n=-oo)^oo c_n integral_(abs(z - z_0) = rho) (z - z_0)^(n-k-1) dif z = 2 pi"i" c_k,
   $
   since only the term with $n - k - 1 = -1$ survives. Hence every representation has the coefficients of the displayed formula: the expansion is unique.
 ]
 
 #figure(
   image("./img/laurent-annulus.svg", width: 72%),
-  caption: [The proof of Laurent's theorem. The function $f$ is holomorphic on the annulus $r < |z - z_0| < R$ (shaded). For a point $z$ in the annulus, the Cauchy kernel is expanded on the outer circle $|zeta - z_0| = rho_2$, producing the nonnegative powers, and on the inner circle $|zeta - z_0| = rho_1$, producing the negative powers; both integrals are deformations of each other.],
+  caption: [The proof of Laurent's theorem. The function $f$ is holomorphic on the annulus $r < abs(z - z_0) < R$ (shaded). For a point $z$ in the annulus, the Cauchy kernel is expanded on the outer circle $abs(zeta - z_0) = rho_2$, producing the nonnegative powers, and on the inner circle $abs(zeta - z_0) = rho_1$, producing the negative powers; both integrals are deformations of each other.],
 ) <fig:laurent-annulus>
 
 == Methods of Laurent Expansion and Examples // 洛朗展开的方法与例题
@@ -2287,48 +2287,48 @@ The working methods are:
   $
   and the singularities $1$ and $2$ divide the plane centered at $0$ into three annuli. The two geometric expansions
   $
-    1/(z - 1) = -sum_(n=0)^oo z^n quad (|z| < 1), quad quad 1/(z - 1) = sum_(n=0)^oo 1/z^(n+1) quad (|z| > 1),
+    1/(z - 1) = -sum_(n=0)^oo z^n quad (abs(z) < 1), quad quad 1/(z - 1) = sum_(n=0)^oo 1/z^(n+1) quad (abs(z) > 1),
   $
   $
-    1/(z - 2) = -sum_(n=0)^oo z^n / 2^(n+1) quad (|z| < 2), quad quad 1/(z - 2) = sum_(n=0)^oo 2^n / z^(n+1) quad (|z| > 2)
+    1/(z - 2) = -sum_(n=0)^oo z^n / 2^(n+1) quad (abs(z) < 2), quad quad 1/(z - 2) = sum_(n=0)^oo 2^n / z^(n+1) quad (abs(z) > 2)
   $
   combine differently on each annulus.
 
-  *On $|z| < 1$.* Both fractions expand in nonnegative powers:
+  *On $abs(z) < 1$.* Both fractions expand in nonnegative powers:
   $
     f(z) = sum_(n=0)^oo (1 - 2^(-(n+1))) z^n,
   $
   which is the Taylor series of $f$ at $0$ — as it must be, since $f$ is holomorphic in the disk.
 
-  *On $1 < |z| < 2$.* Now $1/(z - 1)$ must be expanded in inverse powers, while $1/(z - 2)$ keeps its ordinary expansion:
+  *On $1 < abs(z) < 2$.* Now $1/(z - 1)$ must be expanded in inverse powers, while $1/(z - 2)$ keeps its ordinary expansion:
   $
     f(z) = -1/2 sum_(n=0)^oo (z/2)^n - sum_(n=0)^oo 1/z^(n+1).
   $
 
-  *On $2 < |z| < oo$.* Both fractions must be expanded in inverse powers:
+  *On $2 < abs(z) < oo$.* Both fractions must be expanded in inverse powers:
   $
     f(z) = sum_(n=0)^oo (2^n - 1)/z^(n+1).
   $
 ] <ex:laurent-three-annuli>
 
 #note[ // 洛朗展开依赖于圆环的选取；只有挖去圆盘对应孤立奇点
-  The example shows that the Laurent expansion is a property of the *pair* (function, annulus): the same function has genuinely different expansions on different annuli. Only when the annulus is a punctured disk $0 < |z - z_0| < R$ — so that $z_0$ is an isolated singularity — does the negative part of the expansion reflect the behavior of $f$ at $z_0$ itself; this is the subject of the next section.
+  The example shows that the Laurent expansion is a property of the *pair* (function, annulus): the same function has genuinely different expansions on different annuli. Only when the annulus is a punctured disk $0 < abs(z - z_0) < R$ — so that $z_0$ is an isolated singularity — does the negative part of the expansion reflect the behavior of $f$ at $z_0$ itself; this is the subject of the next section.
 ]
 
 #example(name: "Principal Parts by Substitution")[ // 用代换获得主要部分
-  Substituting $w = 1/z$ into the exponential series of #link(<def:exp-function>)[the definition] gives, for $0 < |z| < oo$,
+  Substituting $w = 1/z$ into the exponential series of #link(<def:exp-function>)[the definition] gives, for $0 < abs(z) < oo$,
   $
     exp(1/z) = sum_(n=0)^oo 1/(n! z^n) = 1 + 1/z + 1/(2! z^2) + 1/(3! z^3) + dots,
   $
   and uniqueness identifies this as *the* Laurent expansion of $exp(1/z)$ on the punctured plane; its principal part has infinitely many nonzero terms. The same substitution in the sine series gives
   $
-    sin(1/z) = 1/z - 1/(3! z^3) + 1/(5! z^5) - dots, quad 0 < |z| < oo.
+    sin(1/z) = 1/z - 1/(3! z^3) + 1/(5! z^5) - dots, quad 0 < abs(z) < oo.
   $
   Both functions are the model examples of #link(<def:singularity-classification>)[essential singularities] in the next section.
 ] <ex:exp-1-over-z>
 
 #example(name: "A Pole of Order Two")[ // 二阶极点的展开
-  Dividing the Taylor series of #link(<def:trig-functions>)[the sine function] by $z^3$ gives, for $0 < |z| < oo$,
+  Dividing the Taylor series of #link(<def:trig-functions>)[the sine function] by $z^3$ gives, for $0 < abs(z) < oo$,
   $
     sin z / z^3 = 1/z^2 - 1/(3!) + z^2/(5!) - dots,
   $
@@ -2339,7 +2339,7 @@ The working methods are:
 #definition(name: "Isolated Singularity")[ // 孤立奇点
   A point $z_0$ is called an *isolated singularity* of $f$ if $f$ is holomorphic in a punctured disk
   $
-    0 < |z - z_0| < R quad (0 < R <= oo)
+    0 < abs(z - z_0) < R quad (0 < R <= oo)
   $
   but not holomorphic at $z_0$ itself.
 ] <def:isolated-singularity>
@@ -2382,13 +2382,13 @@ The principal part classifies the singularity:
 ] <thm:removable-criterion>
 
 #proof[
-  *(i) $=>$ (iii).* If the principal part vanishes, the regular part alone converges to its sum on the full disk $|z - z_0| < R$ by #link(<prop:two-sided-series>)[the two-sided series proposition], so $lim_(z -> z_0) f(z) = c_0$ exists.
+  *(i) $=>$ (iii).* If the principal part vanishes, the regular part alone converges to its sum on the full disk $abs(z - z_0) < R$ by #link(<prop:two-sided-series>)[the two-sided series proposition], so $lim_(z -> z_0) f(z) = c_0$ exists.
 
   *(iii) $=>$ (ii)* is trivial.
 
-  *(ii) $=>$ (i).* Suppose $|f| <= M$ on the punctured disk $0 < |z - z_0| <= rho$. For $k >= 1$, applying the ML estimate to the coefficient formula of #link(<thm:laurent>)[Laurent's theorem] with $n = -k$ gives
+  *(ii) $=>$ (i).* Suppose $abs(f) <= M$ on the punctured disk $0 < abs(z - z_0) <= rho$. For $k >= 1$, applying the ML estimate to the coefficient formula of #link(<thm:laurent>)[Laurent's theorem] with $n = -k$ gives
   $
-    abs(c_(-k)) <= 1/(2 pi) integral_(|zeta - z_0| = rho) abs(f(zeta)) rho^(k-1) dif zeta <= M rho^k.
+    abs(c_(-k)) <= 1/(2 pi) integral_(abs(zeta - z_0) = rho) abs(f(zeta)) rho^(k-1) dif zeta <= M rho^k.
   $
   The coefficients do not depend on $rho in (0, R)$, so letting $rho -> 0$ yields $c_(-k) = 0$ for every $k >= 1$: the principal part vanishes.
 ]
@@ -2399,7 +2399,7 @@ The principal part classifies the singularity:
   + $z_0$ is a pole of order $m$ of $f$;
   + $f(z) = g(z)/(z - z_0)^m$ near $z_0$, where $g$ is holomorphic at $z_0$ with $g(z_0) != 0$;
   + $1/f$ has a zero of order $m$ at $z_0$ in the sense of #link(<def:mth-order-zero>)[the definition];
-  + $lim_(z -> z_0) |f(z)| = oo$.
+  + $lim_(z -> z_0) abs(f(z)) = oo$.
 ] <thm:pole-criterion>
 
 #proof[
@@ -2411,9 +2411,9 @@ The principal part classifies the singularity:
 
   *(ii) $=>$ (iii).* $1/f = (z - z_0)^m dot 1/g$, and $1/g$ is holomorphic at $z_0$ with value $1/g(z_0) != 0$: by definition, $1/f$ has a zero of order $m$ at $z_0$.
 
-  *(iii) $=>$ (iv).* $1/f = (z - z_0)^m h(z)$ with $h$ holomorphic near $z_0$ and $h(z_0) != 0$ gives $|f(z)| >= C |z - z_0|^(-m) -> oo$.
+  *(iii) $=>$ (iv).* $1/f = (z - z_0)^m h(z)$ with $h$ holomorphic near $z_0$ and $h(z_0) != 0$ gives $abs(f(z)) >= C abs(z - z_0)^(-m) -> oo$.
 
-  *(iv) $=>$ (i).* Since $|f(z)| -> oo$, $f$ has no zeros in some punctured neighborhood of $z_0$, so $1/f$ is holomorphic there with $1/f -> 0$; by #link(<thm:removable-criterion>)[Riemann's criterion], $1/f$ extends holomorphically to $z_0$ with value $0$. The extension is not identically zero — it is nonzero on the punctured disk — so by #link(<thm:zeros-isolated>)[isolation of zeros] it has a zero of some finite order $m >= 1$ at $z_0$:
+  *(iv) $=>$ (i).* Since $abs(f(z)) -> oo$, $f$ has no zeros in some punctured neighborhood of $z_0$, so $1/f$ is holomorphic there with $1/f -> 0$; by #link(<thm:removable-criterion>)[Riemann's criterion], $1/f$ extends holomorphically to $z_0$ with value $0$. The extension is not identically zero — it is nonzero on the punctured disk — so by #link(<thm:zeros-isolated>)[isolation of zeros] it has a zero of some finite order $m >= 1$ at $z_0$:
   $
     1/f = (z - z_0)^m h(z), quad h(z_0) != 0.
   $
@@ -2432,12 +2432,12 @@ The principal part classifies the singularity:
 #theorem(name: "Casorati-Weierstrass")[ // 卡索拉蒂-魏尔斯特拉斯定理
   Let $z_0$ be an essential singularity of $f$. Then the values of $f$ are dense in $bb(C)$ on every punctured disk: for every $w in bb(C)$, every $epsilon > 0$ and every $R' > 0$ there exists $z$ with
   $
-    0 < |z - z_0| < R' quad "and" quad |f(z) - w| < epsilon.
+    0 < abs(z - z_0) < R' quad "and" quad abs(f(z) - w) < epsilon.
   $
 ] <thm:casorati-weierstrass>
 
 #proof[
-  Fix $w in bb(C)$ and $R' > 0$, and suppose — for contradiction — that $|f(z) - w| >= epsilon > 0$ on some punctured disk $V: 0 < |z - z_0| < delta <= R'$. Then
+  Fix $w in bb(C)$ and $R' > 0$, and suppose — for contradiction — that $abs(f(z) - w) >= epsilon > 0$ on some punctured disk $V: 0 < abs(z - z_0) < delta <= R'$. Then
   $
     g(z) = 1/(f(z) - w)
   $
@@ -2456,7 +2456,7 @@ The principal part classifies the singularity:
 
 #figure(
   image("./img/singularity-types.svg", width: 90%),
-  caption: [The three types of isolated singularities, pictured through the modulus of $f$ near $z_0$. A removable singularity (left) is bounded near $z_0$; a pole of order $m$ (center) blows up like $|z - z_0|^(-m)$; near an essential singularity (right) the values of $f$ are dense in $bb(C)$ by Casorati-Weierstrass.],
+  caption: [The three types of isolated singularities, pictured through the modulus of $f$ near $z_0$. A removable singularity (left) is bounded near $z_0$; a pole of order $m$ (center) blows up like $abs(z - z_0)^(-m)$; near an essential singularity (right) the values of $f$ are dense in $bb(C)$ by Casorati-Weierstrass.],
 ) <fig:singularity-types>
 
 #note[ // 三类奇点判别汇总
@@ -2467,7 +2467,7 @@ The principal part classifies the singularity:
     align: center,
     [*Type*], [*Principal part*], [*Behavior near $z_0$*], [*Model at $0$*],
     [Removable], [empty], [bounded; finite limit], [$sin z \/ z$],
-    [Pole of order $m$], [$c_(-m) != 0$, $c_n = 0$ for $n < -m$], [$|f(z)| -> oo$], [$sin z \/ z^3$ (order 2)],
+    [Pole of order $m$], [$c_(-m) != 0$, $c_n = 0$ for $n < -m$], [$abs(f(z)) -> oo$], [$sin z \/ z^3$ (order 2)],
     [Essential], [infinitely many terms], [values dense in $bb(C)$], [$exp(1\/z)$],
   )
 ]
@@ -2586,7 +2586,7 @@ Among the three classes, it is the coefficient $c_(-1)$ — the top term of the 
   since all terms $(z - z_k)^n$ with $n != -1$ vanish on integration over a closed curve. Summing over $k$ yields the theorem.
 ]
 
-#example(name: "Integral of 1/(z^2+1) over |z| = 2")[
+#example(name: "Integral of 1/(z^2+1) over abs(z) = 2")[
   The function $f(z) = 1/(z^2 + 1)$ has simple poles at $plus.minus "i"$, both lying inside the circle $abs(z) = 2$. By the formula for $f = P/Q$ with $P(z) = 1$, $Q(z) = z^2 + 1$,
   $
     "Res"(f, "i") = P("i")/Q'("i") = 1/(2"i") = -"i"/2, quad "Res"(f, -"i") = P(-"i")/Q'(-"i") = -1/(2"i") = "i"/2.
@@ -2600,10 +2600,10 @@ Among the three classes, it is the coefficient $c_(-1)$ — the top term of the 
 == The Residue at Infinity // 无穷远点的留数
 
 // 无穷远点的奇性与留数通过变换 w = 1/z 归结到原点；全部留数之和为零常用于简化计算。
-The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genuine point (Section 2.4), and a function holomorphic for $|z| > R$ can be examined there by the substitution $z = 1/w$, which trades a neighborhood of $oo$ for one of the origin.
+The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genuine point (Section 2.4), and a function holomorphic for $abs(z) > R$ can be examined there by the substitution $z = 1/w$, which trades a neighborhood of $oo$ for one of the origin.
 
 #definition(name: "Singularities at Infinity")[ // 无穷远点的奇性
-  Let $f$ be holomorphic for $|z| > R$ and set $g(w) = f(1/w)$, holomorphic in the punctured disk $0 < |w| < 1/R$. Then $oo$ is called a *removable singularity*, a *pole of order $m$*, or an *essential singularity* of $f$, according as $0$ is removable, a pole of order $m$, or an essential singularity of $g$. If $oo$ is removable, $f$ is said to be *holomorphic at infinity*, with
+  Let $f$ be holomorphic for $abs(z) > R$ and set $g(w) = f(1/w)$, holomorphic in the punctured disk $0 < abs(w) < 1/R$. Then $oo$ is called a *removable singularity*, a *pole of order $m$*, or an *essential singularity* of $f$, according as $0$ is removable, a pole of order $m$, or an essential singularity of $g$. If $oo$ is removable, $f$ is said to be *holomorphic at infinity*, with
   $
     f(oo) := lim_(z -> oo) f(z) = g(0).
   $
@@ -2622,9 +2622,9 @@ The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genu
 ] <ex:infinity-polynomial-exp>
 
 #definition(name: "Residue at Infinity")[ // 无穷远点的留数
-  Let $f$ be holomorphic for $|z| > R$ with Laurent expansion at infinity
+  Let $f$ be holomorphic for $abs(z) > R$ with Laurent expansion at infinity
   $
-    f(z) = sum_(n=-oo)^oo c_n z^n quad (|z| > R).
+    f(z) = sum_(n=-oo)^oo c_n z^n quad (abs(z) > R).
   $
   The *residue of $f$ at infinity* is
   $
@@ -2633,7 +2633,7 @@ The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genu
 ] <def:residue-infinity>
 
 #property(name: "Two Formulas for the Residue at Infinity")[ // 无穷远点留数的两个公式
-  For $rho > R$, termwise integration over $|z| = rho$ gives
+  For $rho > R$, termwise integration over $abs(z) = rho$ gives
   $
     "Res"(f, oo) = -1/(2 pi"i") integral_(abs(z) = rho) f(z) dif z,
   $
@@ -2644,11 +2644,11 @@ The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genu
 ] <prop:residue-infinity-formulas>
 
 #proof[
-  On $|z| = rho$ the expansion converges uniformly (#link(<prop:two-sided-series>)[the two-sided series proposition]), so termwise integration is legitimate, and #link(<prop:common-integrals>)[the common integrals] leave only the term $c_(-1) z^(-1)$:
+  On $abs(z) = rho$ the expansion converges uniformly (#link(<prop:two-sided-series>)[the two-sided series proposition]), so termwise integration is legitimate, and #link(<prop:common-integrals>)[the common integrals] leave only the term $c_(-1) z^(-1)$:
   $
     integral_(abs(z) = rho) f(z) dif z = 2 pi"i" c_(-1) = -2 pi"i" "Res"(f, oo).
   $
-  For the second formula, substitute $z = 1/w$, so $dif z = -dif w \/ w^2$: the circle $|z| = rho$ counterclockwise maps to the circle $|w| = 1/rho$ clockwise, and the minus sign of the orientation cancels the minus sign of $dif z$, giving
+  For the second formula, substitute $z = 1/w$, so $dif z = -dif w \/ w^2$: the circle $abs(z) = rho$ counterclockwise maps to the circle $abs(w) = 1/rho$ clockwise, and the minus sign of the orientation cancels the minus sign of $dif z$, giving
   $
     integral_(abs(z) = rho) f(z) dif z = integral_(abs(w) = 1/rho) f(1/w)/w^2 dif w = 2 pi"i" "Res"(f(1/w)/w^2, 0),
   $
@@ -2663,7 +2663,7 @@ The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genu
 ] <cor:sum-residues>
 
 #proof[
-  Choose $rho$ larger than the moduli of all the finite singularities, so that $f$ is holomorphic in $|z| >= rho$ and, by #link(<thm:residue-theorem>)[the Residue Theorem],
+  Choose $rho$ larger than the moduli of all the finite singularities, so that $f$ is holomorphic in $abs(z) >= rho$ and, by #link(<thm:residue-theorem>)[the Residue Theorem],
   $
     integral_(abs(z) = rho) f(z) dif z = 2 pi"i" sum_(k=1)^n "Res"(f, z_k).
   $
@@ -2671,9 +2671,9 @@ The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genu
 ]
 
 #example(name: "Residues at Infinity of Simple Functions")[ // 简单函数在无穷远点的留数
-  *A function holomorphic at infinity can have a nonzero residue there.* For $f(z) = 1/z$, holomorphic for $|z| > 0$ with expansion $f(z) = 1/z$, the definition gives $"Res"(f, oo) = -1$ although $f(oo) = 0$ is perfectly finite. The sum of all residues is indeed zero: $"Res"(f, 0) + "Res"(f, oo) = 1 - 1 = 0$.
+  *A function holomorphic at infinity can have a nonzero residue there.* For $f(z) = 1/z$, holomorphic for $abs(z) > 0$ with expansion $f(z) = 1/z$, the definition gives $"Res"(f, oo) = -1$ although $f(oo) = 0$ is perfectly finite. The sum of all residues is indeed zero: $"Res"(f, 0) + "Res"(f, oo) = 1 - 1 = 0$.
 
-  *A rational function.* For $f(z) = 1/(z^2 + 1)$, the expansion for $|z| > 1$,
+  *A rational function.* For $f(z) = 1/(z^2 + 1)$, the expansion for $abs(z) > 1$,
   $
     1/(z^2 + 1) = 1/z^2 dot 1/(1 + 1/z^2) = 1/z^2 - 1/z^4 + 1/z^6 - dots,
   $
