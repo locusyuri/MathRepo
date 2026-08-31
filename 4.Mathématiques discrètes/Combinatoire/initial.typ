@@ -27,7 +27,75 @@
 
 == Addition and Multiplication Principles
 
+#definition(name: "Addition Principle")[
+  Suppose the objects to be counted can be *classified* into pairwise disjoint
+  classes $E_1, E_2, dots, E_k$ containing $m_1, m_2, dots, m_k$ objects
+  respectively. Then the total number of objects is
+  $
+    m_1 + m_2 + dots + m_k.
+  $
+] <def:addition-principle>
+
+#definition(name: "Multiplication Principle")[
+  Suppose a procedure consists of $k$ successive steps, where the $i$-th step
+  can be performed in $m_i$ ways *regardless of the choices made in the previous
+  steps*. Then the whole procedure can be performed in
+  $
+    m_1 times m_2 times dots times m_k
+  $
+  ways.
+] <def:multiplication-principle>
+
+#example[
+  How many four-digit integers with pairwise distinct digits end with $0$ or $5$?
+
+  - *Ending with $0$*: the leading three digits form an ordered selection of
+    distinct digits from the remaining nine digits, giving $9 times 8 times 7 = 504$
+    ways by #link(<def:multiplication-principle>)[the multiplication principle];
+  - *Ending with $5$*: the first digit can be neither $0$ nor $5$, giving
+    $8 times 8 times 7 = 448$ ways.
+
+  The two classes are disjoint, so by #link(<def:addition-principle>)[the
+    addition principle] the answer is $504 + 448 = 952$.
+] <ex:digit-counting>
+
+#note[
+  The addition principle applies to *classification* (disjoint cases), while the
+  multiplication principle applies to *successive steps*. Distinguishing these
+  two situations is the first skill in solving counting problems.
+]
+
 == Bijection Principle
+
+#definition(name: "Bijection Principle")[
+  If there is a bijection between two finite sets, then they contain the same
+  number of elements. Consequently, to count a set $S$ one may instead count any
+  set $T$ in bijection with $S$.
+] <def:bijection-principle>
+
+The word *bijection* is understood in the sense of set theory (developed in the
+Théorie des Ensembles note); here we only exploit its counting consequence. The
+art lies in finding a "mirror" set whose elements are easier to enumerate.
+
+#example[
+  Every subset $S subset.eq {1, 2, dots, n}$ corresponds to its characteristic
+  vector $(x_1, x_2, dots, x_n) in {0, 1}^n$, where $x_i = 1$ precisely when
+  $i in S$. The correspondence is a bijection, so an $n$-element set has
+  exactly $2^n$ subsets.
+] <ex:subsets-bijection>
+
+#example[
+  For $0 <= k <= n$, pairing each $k$-element subset of an $n$-element set with
+  its complement is a bijection onto the family of $(n - k)$-element subsets.
+  Hence
+  $
+    C_n^k = C_n^(n-k).
+  $
+] <ex:symmetry-bijection>
+
+Bijection arguments of this kind are the basic tool for proving combinatorial
+identities; they reappear in #link(<prop:binomial-identities>)[the basic
+  identities] and #link(<thm:vandermonde>)[Vandermonde's identity].
 
 == Permutations and Combinations
 
@@ -55,15 +123,128 @@
 
   1. $A_n^0 = 1$ and $A_n^n = n!$.
   2. $C_n^0 = 1$ and $C_n^n = 1$.
-  3. $C_n^k = C_n^(n-k)$.
-  4. $A_n^k = k! C_n^k$.
-  5. $C_n^k = C_(n-1)^(k-1) + C_(n-1)^k$ (*Pascal triangle/YangHui triangle*)#footnote[
-      This property can also be understood that to choose $k$ elements from $n + 1$, you can first take one element A:
-      + The number of ways that include A is $C_(n)^(k-1)$;
-      + The number of ways that does not include A is $C_(n)^(k)$.
-    ].
+  3. $A_n^k = k! C_n^k$.
 
-  In Pascal triangle, each element is equal to the sum of the two elements directly above it.
+  Further properties of the binomial coefficients $C_n^k$ — symmetry, the Pascal
+  recurrence, and the binomial theorem — are treated in the chapter
+  *Binomial Coefficients* below.
+]
+
+#note[
+  Quick link to the core definition:
+  *#link(<def:perm_comb>)[Permutation and Combination]*.
+]
+
+=== Permutations and Combinations of Multisets
+
+#definition(name: "Permutations of Multisets")[
+  Let $S$ be a multiset with $k$ types of objects, where type $i$ occurs with
+  multiplicity $n_i$ ($i = 1, 2, dots, k$), and let $n = n_1 + dots + n_k$.
+  The number of permutations of $S$, that is, sequences of its $n$ objects in
+  which objects of the same type are indistinguishable, is
+  $
+    (n!) / (n_1! n_2! dots n_k!).
+  $
+] <def:multiset-permutation>
+
+#example[
+  The letters of the word MISSISSIPPI form a multiset in which the letters
+  $M, I, S, P$ occur $1, 4, 4, 2$ times respectively (total $11$). Hence the
+  number of distinguishable permutations is
+  $
+    (11!) / (1! 4! 4! 2!) = 34650.
+  $
+]
+
+#theorem(name: "Combinations with Repetition")[
+  The number of ways to choose $k$ objects from $n$ types, with repetition
+  allowed and order ignored, is
+  $
+    binom(k + n - 1, k).
+  $
+] <thm:multiset-combination>
+
+#proof[
+  Encode a choice by the multiplicities $(x_1, dots, x_n)$ with
+  $x_1 + dots + x_n = k$. Write $x_i$ stars for type $i$ and separate adjacent
+  types by bars; the resulting sequence of $k$ stars and $n - 1$ bars is
+  determined by the positions of the bars, a bijection with the family of
+  $(n - 1)$-subsets of the $k + n - 1$ available positions. By
+  #link(<def:bijection-principle>)[the bijection principle] the count equals
+  $binom(k + n - 1, n - 1) = binom(k + n - 1, k)$. This device is known as
+  *stars and bars*.
+]
+
+The multiset permutations and the numbers $binom(k + n - 1, k)$ are special
+cases of the #link(<def:multinomial>)[multinomial coefficients].
+
+= Binomial Coefficients
+
+== Binomial Theorem
+
+#theorem(name: "Binomial Theorem")[
+  For every integer $n >= 0$ and all $a, b$,
+  $
+    (a + b)^n = sum_(k=0)^n C_n^k a^k b^(n-k).
+  $
+] <thm:binomial-theorem>
+
+#proof[
+  Expand $(a + b)^n$ as the product of $n$ identical factors $(a + b)$: every one
+  of the $2^n$ monomials arises by picking, from each factor, either an $a$ or a
+  $b$. A monomial $a^k b^(n-k)$ arises exactly when $a$ is picked from $k$ of the
+  $n$ factors, which can be done in $C_n^k$ ways. Grouping the monomials by the
+  exponent of $a$ — a disjoint classification — and applying
+  #link(<def:addition-principle>)[the addition principle] yields the identity.
+]
+
+#note[
+  Replacing $b$ by $-b$ gives
+  $(a - b)^n = sum_(k=0)^n (-1)^k C_n^k a^(n-k) b^k$; in particular the
+  coefficients of $(a - b)^n$ alternate in sign.
+]
+
+#note[
+  An alternative proof proceeds by induction on $n$ using the Pascal recurrence
+  (#link(<prop:pascal-recurrence>)[below]). The combinatorial proof above is
+  preferred here, as it exhibits *why* binomial coefficients appear.
+]
+
+== Basic Combinatorial Identities
+
+Throughout, $n$ is a non-negative integer and $0 <= k <= n$ unless stated
+otherwise. The following identities are the working toolbox of elementary
+combinatorics.
+
+#property[
+  The following identities hold:
+
+  1. *Symmetry*: $C_n^k = C_n^(n-k)$; see
+    #link(<ex:symmetry-bijection>)[the example above] for a bijective proof.
+  2. *Absorption*: $k C_n^k = n C_(n-1)^(k-1)$ for $k >= 1$.
+  3. *Row sum*: $sum_(k=0)^n C_n^k = 2^n$; this refines
+    #link(<ex:subsets-bijection>)[the subset count] by classifying subsets
+    according to their cardinality.
+  4. *Alternating sum*: $sum_(k=0)^n (-1)^k C_n^k = 0$ for $n >= 1$; indeed,
+    toggling a fixed element is a bijection between the subsets of odd and even
+    cardinality.
+] <prop:binomial-identities>
+
+#property(name: "Pascal's Recurrence")[
+  For $1 <= k <= n$,
+  $
+    C_n^k = C_(n-1)^(k-1) + C_(n-1)^k.
+  $
+
+  Combinatorial proof: to choose $k$ elements from $n + 1$ elements, fix one
+  element $A$. The choices that contain $A$ number $C_n^(k-1)$, and those that
+  do not contain $A$ number $C_n^k$; the two classes are disjoint, and
+  #link(<def:addition-principle>)[the addition principle] applies.
+
+  In Pascal's triangle, each element is equal to the sum of the two elements
+  directly above it. Here $C_n^k$ is the element in the $n$-th row and $k$-th
+  column of the triangle, and the recurrence generates the whole triangle from
+  its boundary values $C_n^0 = C_n^n = 1$.
 
   #figure(
     image("img/pascal_triangle.png", width: 80%),
@@ -72,31 +253,100 @@
     supplement: [Fig.],
   ) <fig:pascal_triangle>
 
-  6. $(a+b)^n = sum_(k=0)^n C_n^k a^k b^(n-k)$ (*Binomial theorem*).
-
-  Therefore, we can see the relationship between Pascal triangle and the Binomial theorem,
-  as shown in @fig:pascal_and_binomial. Here, $C_n^k$ is the element in the $n$-th row and $k$-th column of Pascal's triangle.
-
   #figure(
     image("img/pascal_and_binomial.png", width: 80%),
     caption: [Pascal triangle and Binomial theorem.],
     placement: auto,
     supplement: [Fig.],
   ) <fig:pascal_and_binomial>
+] <prop:pascal-recurrence>
+
+#theorem(name: "Vandermonde's Identity")[
+  For non-negative integers $m, n$ and $r$,
+  $
+    sum_(k=0)^r C_m^k C_n^(r-k) = C_(m+n)^r.
+  $
+] <thm:vandermonde>
+
+#proof[
+  *Bijective proof.* Let $M$ and $N$ be disjoint sets with $abs(M) = m$ and
+  $abs(N) = n$. The right-hand side counts the $r$-element subsets of
+  $M union N$. Every such subset contains exactly $k$ elements of $M$ for a
+  unique $k in {0, 1, dots, r}$, and for fixed $k$ the choices are counted by
+  $C_m^k C_n^(r-k)$. Summing over $k$ gives the identity.
+
+  *Generating-function proof.* Multiply the expansions of $(1 + x)^m$ and
+  $(1 + x)^n$:
+  $
+    (1 + x)^(m+n) = (sum_(k=0)^m C_m^k x^k)(sum_(j=0)^n C_n^j x^j).
+  $
+  The coefficient of $x^r$ on the left is $C_(m+n)^r$, while on the right it is
+  $sum_(k=0)^r C_m^k C_n^(r-k)$; equating coefficients gives the identity. The
+  generating-function method is developed systematically in the chapter on
+  recurrence relations and generating functions.
 ]
 
-#note[
-  Quick link to the core definition:
-  *#link(<def:perm_comb>)[Permutation and Combination]*.
-]
+#example[
+  The absorption and row-sum identities yield, for $n >= 1$,
+  $
+    sum_(k=0)^n k C_n^k
+    = n sum_(k=1)^n C_(n-1)^(k-1)
+    = n sum_(j=0)^(n-1) C_(n-1)^j
+    = n 2^(n-1).
+  $
 
-= Binomial Coefficients
-
-== Binomial Theorem
-
-== Basic Combinatorial Identities
+  A bijective proof counts the pairs $(A, a)$ where $A$ is a subset of an
+  $n$-element set and $a in A$ an element thereof: first by the cardinality of
+  $A$ (the left-hand sum), then by the marked element $a$, which can be chosen
+  in $n$ ways and completed by an arbitrary subset of the remaining
+  $n - 1$ elements (the right-hand side).
+] <ex:identity-application>
 
 == Multinomial Coefficients
+
+#definition(name: "Multinomial Coefficient")[
+  Let $n_1, n_2, dots, n_k$ be non-negative integers with $n = n_1 + dots + n_k$.
+  The *multinomial coefficient* is
+  $
+    binom(n, n_1, n_2, dots, n_k) = (n!) / (n_1! n_2! dots n_k!).
+  $
+  It counts the permutations of a multiset with multiplicities $n_1, dots, n_k$
+  (#link(<def:multiset-permutation>)[above]), and equally the ways to partition
+  an $n$-element set into an ordered list of classes of sizes
+  $n_1, dots, n_k$.
+
+  For $k = 2$ it reduces to the binomial coefficient:
+  $binom(n, k, n - k) = binom(n, k)$.
+] <def:multinomial>
+
+#theorem(name: "Multinomial Theorem")[
+  For every integer $n >= 0$ and all $x_1, x_2, dots, x_k$,
+  $
+    (x_1 + x_2 + dots + x_k)^n
+    = sum_(n_1 + dots + n_k = n)
+    binom(n, n_1, n_2, dots, n_k) x_1^(n_1) x_2^(n_2) dots x_k^(n_k),
+  $
+  where the sum runs over all $k$-tuples of non-negative integers with total $n$.
+] <thm:multinomial-theorem>
+
+#proof[
+  Expand the product of $n$ identical factors as in the proof of
+  #link(<thm:binomial-theorem>)[the binomial theorem]: each monomial
+  $x_1^(n_1) dots x_k^(n_k)$ arises once for every assignment of the $n$ factors
+  to the $k$ variables in which variable $x_i$ is chosen exactly $n_i$ times.
+  The assignments with prescribed exponents $(n_1, dots, n_k)$ are counted by
+  the multinomial coefficient.
+]
+
+#example[
+  $
+    (a + b + c)^3 = a^3 + b^3 + c^3
+    + 3(a^2 b + a^2 c + a b^2 + b^2 c + a c^2 + b c^2)
+    + 6 a b c.
+  $
+  For instance, the coefficient of $a b c$ is
+  $binom(3, 1, 1, 1) = (3!) / (1! 1! 1!) = 6$.
+]
 
 #part("Advanced Counting")
 
