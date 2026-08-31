@@ -354,12 +354,14 @@ combinatorics.
 
 == Recurrence Relations
 
-*Recurrence relations* are equations that define sequences recursively,
-expressing each term as a function of preceding terms, in the form
-$
-  a_n = f(a_(n-1), a_(n-2), dots, a_(n-k)), quad n >= k,
-$
-where $k$ is the order of the recurrence relation.
+#definition(name: "Recurrence Relation")[
+  A *recurrence relation* is an equation that defines a sequence recursively,
+  expressing each term as a function of preceding terms, in the form
+  $
+    a_n = f(a_(n-1), a_(n-2), dots, a_(n-k)), quad n >= k,
+  $
+  where $k$ is the order of the recurrence relation.
+] <def:recurrence>
 
 Common categories:
 
@@ -373,6 +375,125 @@ Common categories:
   If coefficients are constants, it has constant coefficients; otherwise variable coefficients.
 
 === Methods for Solving Recurrence Relations
+
+*Iteration (unrolling).* The most direct device is to apply the recurrence to
+itself repeatedly until a pattern emerges.
+
+#example[
+  We solve the Tower of Hanoi recurrence of @fig:hanoi,
+  $
+    T(n) = 2 T(n-1) + 1, quad T(1) = 1,
+  $
+  by iteration:
+  $
+    T(n) = 2 T(n-1) + 1
+    = 2^2 T(n-2) + 2 + 1
+    = 2^3 T(n-3) + 2^2 + 2 + 1
+    = dots
+    = 2^(n-1) T(1) + (2^(n-2) + dots + 2 + 1)
+    = 2^(n-1) + (2^(n-1) - 1)
+    = 2^n - 1.
+  $
+  The finite geometric sum $2^(n-2) + dots + 2 + 1 = 2^(n-1) - 1$ closes the
+  computation. Iteration works best for first-order recurrences; higher-order
+  ones need more structure.
+] <ex:hanoi-closed>
+
+*Linear homogeneous recurrences with constant coefficients.* In normal form
+(all terms moved to the left), such a recurrence reads
+$
+  a_n + c_1 a_(n-1) + dots + c_k a_(n-k) = 0, quad n >= k,
+$
+with constants $c_1, dots, c_k$ and $c_k != 0$.
+
+#theorem(name: "Characteristic Equation Method")[
+  Associate to the recurrence its *characteristic polynomial*
+  $
+    p(r) = r^k + c_1 r^(k-1) + dots + c_k.
+  $
+  If $p$ has $k$ distinct roots $r_1, dots, r_k$, then every solution is of the
+  form
+  $
+    a_n = alpha_1 r_1^n + alpha_2 r_2^n + dots + alpha_k r_k^n,
+  $
+  where the constants $alpha_i$ are uniquely determined by the initial values
+  $a_0, dots, a_(k-1)$. If a root $r$ has multiplicity $mu$, the part of the
+  general solution contributed by $r$ is instead
+  $
+    (beta_0 + beta_1 n + dots + beta_(mu-1) n^(mu-1)) r^n.
+  $
+] <thm:characteristic>
+
+#proof[
+  Substituting $a_n = r^n$ into the recurrence gives $r^(n-k) p(r) = 0$ for all
+  $n >= k$: the pure exponentials $r^n$ are solutions precisely for
+  characteristic roots. By linearity, linear combinations of solutions are
+  solutions; when $r$ has multiplicity $mu$, the sequences $n^j r^n$ for
+  $0 <= j < mu$ are also solutions, which follows by induction on $j$ from the
+  factorization $p(x) = (x - r)^mu tilde(p)(x)$.
+
+  The solution set is a vector space of dimension $k$: a solution is uniquely
+  determined by its $k$ initial values $a_0, dots, a_(k-1)$, and any initial
+  values extend uniquely along the recurrence. Finally, the $k$ sequences
+  displayed in the theorem are linearly independent — for distinct roots this
+  is the invertibility of the Vandermonde matrix $(r_i^j)_(0 <= j, i < k)$, and
+  the multiple-root families contribute independent directions. Hence they form
+  a basis of the solution space, which is the claim.
+]
+
+#example[
+  The Fibonacci recurrence
+  $
+    F_n = F_(n-1) + F_(n-2), quad F_0 = 0, quad F_1 = 1
+  $
+  has characteristic polynomial $p(r) = r^2 - r - 1$ with roots
+  $
+    phi = (1 + sqrt(5)) / 2, quad psi = (1 - sqrt(5)) / 2.
+  $
+  The general solution is $F_n = alpha_1 phi^n + alpha_2 psi^n$; the initial
+  values give $alpha_1 + alpha_2 = 0$ and $alpha_1 phi + alpha_2 psi = 1$, so
+  $alpha_1 = 1 / sqrt(5)$ and $alpha_2 = -1 / sqrt(5)$, using
+  $phi - psi = sqrt(5)$. Therefore
+  $
+    F_n = (phi^n - psi^n) / sqrt(5),
+  $
+  the *Binet formula*. The irrational ingredients conspire to produce integers.
+] <ex:fibonacci-closed-form>
+
+*Linear non-homogeneous recurrences.*
+
+#property[
+  Consider a linear recurrence with constant coefficients and a non-zero
+  right-hand side:
+  $
+    a_n + c_1 a_(n-1) + dots + c_k a_(n-k) = f(n).
+  $
+  Every solution is the sum of one *particular* solution of the full recurrence
+  and the general solution of the associated homogeneous recurrence; in
+  particular, the difference of any two solutions satisfies the homogeneous
+  recurrence.
+] <prop:nonhomogeneous>
+
+#example[
+  Solve $a_n = a_(n-1) + n$ with $a_0 = 0$. The homogeneous solution is the
+  constant sequence $a_n = alpha$. For a particular solution, try a quadratic
+  polynomial $a_n^((p)) = c n^2 + d n$; substituting and equating coefficients
+  gives $c = 1 / 2$ and $d = 1 / 2$, so
+  $
+    a_n = alpha + (n^2 + n) / 2.
+  $
+  The initial value forces $alpha = 0$, and we recognize the triangular numbers
+  $a_n = n (n + 1) / 2$.
+]
+
+#note[
+  Trial particular solutions: if $f(n)$ is a polynomial of degree $d$, try a
+  polynomial of degree $d$ — multiplied by $n^mu$ when $1$ is a characteristic
+  root of multiplicity $mu$; if $f(n) = s^n q(n)$ with $q$ of degree $d$, try
+  $n^mu s^n q(n)$, where $mu$ is the multiplicity of $s$ as a characteristic
+  root. The multipliers $n^mu$ are exactly the resonance phenomenon of
+  #link(<thm:characteristic>)[multiple roots].
+]
 
 === Common Recurrence Relations
 
@@ -426,11 +547,196 @@ Common categories:
     D(a_n; s) = sum_(n=1)^infinity a_n / n^s,
   $
   where $s$ is a complex variable.
-]
+] <def:generating-functions>
 
 === Solving Recurrence Relations Using Generating Functions
 
+The generating function packages an entire sequence into a single object.
+Its power for recurrences is this: the recurrence translates into an *algebraic
+equation* for the generating function, which can be solved by ordinary algebra
+and then "read back" coefficient by coefficient.
+
+#property[
+  Let $A(x) = sum_(n>=0) a_n x^n$ and $B(x) = sum_(n>=0) b_n x^n$ be ordinary
+  generating functions. Then:
+
+  - *Sum*: $A(x) + B(x) = sum_(n>=0) (a_n + b_n) x^n$;
+  - *Shift*: $A(x) - a_0 - a_1 x - dots - a_(k-1) x^(k-1) = x^k sum_(n>=0) a_(n+k) x^n$;
+  - *Scale and shift*: $c x^m A(x) = sum_(n>=m) c a_(n-m) x^n$;
+  - *Derivative*: $A'(x) = sum_(n>=1) n a_n x^(n-1)$, and equivalently
+    $x A'(x) = sum_(n>=0) n a_n x^n$;
+  - *Cauchy product*:
+    $A(x) B(x) = sum_(n>=0) (sum_(i=0)^n a_i b_(n-i)) x^n$.
+] <prop:gf-operations>
+
+The shift rule is the engine for recurrences: multiplying $A(x)$ by $x$ shifts
+every coefficient one step to the right, so multiplying the recurrence through
+by powers of $x$ and summing converts the recurrence into a closed equation.
+
+#example[
+  We solve the Fibonacci recurrence a second time — compare
+  #link(<ex:fibonacci-closed-form>)[the characteristic equation solution]. Let
+  $F(x) = sum_(n>=0) F_n x^n$. Summing $F_n = F_(n-1) + F_(n-2)$ for $n >= 2$
+  against $x^n$:
+  $
+    F(x) - F_0 - F_1 x
+    = x sum_(n>=2) F_(n-1) x^(n-1) + x^2 sum_(n>=2) F_(n-2) x^(n-2).
+  $
+  With $F_0 = 0$, $F_1 = 1$ both tail sums equal $F(x)$, so
+  $
+    F(x) - x = x F(x) + x^2 F(x)
+    quad ==> quad
+    F(x) = x / (1 - x - x^2).
+  $
+  Factor the denominator: $1 - x - x^2 = (1 - phi x)(1 - psi x)$, where
+  $phi$ and $psi$ are again the roots of $r^2 - r - 1$. Partial fractions give
+  $
+    F(x) = (1 / sqrt(5)) (1 / (1 - phi x) - 1 / (1 - psi x)).
+  $
+  Expanding the geometric series $(1 - phi x)^(-1) = sum phi^n x^n$ and taking
+  coefficients recovers the Binet formula
+  $
+    F_n = (phi^n - psi^n) / sqrt(5),
+  $
+  in exact agreement with #link(<ex:fibonacci-closed-form>)[the earlier
+    derivation].
+] <ex:fibonacci-ogf>
+
+#note[
+  The two methods are two faces of one computation. The characteristic
+  polynomial $p(r)$ of a recurrence and the denominator of the rational
+  generating function are related by $P(x) = x^k p(1 \/ x)$: roots $r_i$ of
+  $p$ correspond to poles $1 \/ r_i$ of $A(x)$, and the partial fraction
+  decomposition of $A(x)$ is precisely the general solution of
+  #link(<thm:characteristic>)[the characteristic equation method]. Generating
+  functions nevertheless reach further: they handle variable coefficients,
+  non-linear recurrences, and two-dimensional arrays by the same algebraic
+  mechanics.
+]
+
 === Integer Partitions
+
+#definition(name: "Integer Partition")[
+  A *partition* of a positive integer $n$ is a way of writing $n$ as a sum of
+  positive integers,
+  $
+    n = lambda_1 + lambda_2 + dots + lambda_k,
+    quad lambda_1 >= lambda_2 >= dots >= lambda_k >= 1,
+  $
+  where the *order of the summands does not matter*. The summands $lambda_i$
+  are the *parts* of the partition. Let $p(n)$ denote the number of partitions
+  of $n$, and let $p_m(n)$ denote the number of partitions of $n$ into exactly
+  $m$ parts.
+] <def:partition>
+
+#example[
+  There are $p(4) = 5$ partitions of $4$:
+  $
+    4, quad 3 + 1, quad 2 + 2, quad 2 + 1 + 1, quad 1 + 1 + 1 + 1.
+  $
+  Note that $3 + 1$ and $1 + 3$ are the *same* partition — this is what
+  distinguishes partitions from compositions, where order matters.
+] <ex:partitions-of-4>
+
+Partitions have no simple recurrence, but they do have a marvellous product
+formula — arguably the birth certificate of the subject.
+
+#theorem(name: "Euler's Generating Function for Partitions")[
+  The ordinary generating function of the partition numbers is the infinite
+  product
+  $
+    sum_(n=0)^infinity p(n) x^n = product_(k=1)^infinity 1 / (1 - x^k).
+  $
+  More generally, the generating function of $p_m(n)$, the number of
+  partitions of $n$ into exactly $m$ parts, is
+  $
+    sum_(n>=0) p_m(n) x^n = product_(k=1)^infinity x^k / (1 - x^k),
+  $
+  the same product divided by $x^(1 + 2 + dots + m)$.
+] <thm:partition-gf>
+
+#proof[
+  A partition either contains a part of size $k$ (some number of times,
+  possibly zero) or it does not. Choosing, independently for each $k$, how
+  many copies of $k$ the partition contains, the generating function factors
+  as a Cauchy product over all part sizes:
+  $
+    sum_(n>=0) p(n) x^n
+    = product_(k=1)^infinity (1 + x^k + x^(2k) + dots)
+    = product_(k=1)^infinity 1 / (1 - x^k),
+  $
+  by #link(<prop:gf-operations>)[the Cauchy product rule] extended to
+  infinitely many factors, valid formally since the coefficient of $x^n$
+  involves only factors with $k <= n$.
+
+  For $p_m(n)$, partitioning into exactly $m$ parts and subtracting $1$ from
+  each part leaves a partition of $n - m$ into at most $m$ parts; each part
+  of size $k$ then contributes a copy of $x^(k)$ with total exponent offset
+  $1 + 2 + dots + m$, giving the stated quotient.
+]
+
+The product formula makes conjugate partitions transparent through the Ferrers
+diagram, a visual representation in which each part is a row of dots.
+
+#figure(
+  image("img/ferrers-diagram.svg", width: 62%),
+  caption: [The Ferrers diagram of the partition $6 + 4 + 4 + 2 + 1$ of $17$
+    (left) and its conjugate $5 + 4 + 3 + 3 + 1 + 1$ (right).],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:ferrers>
+
+#example[
+  Reading #link(<fig:ferrers>)[the Ferrers diagram] by rows gives the partition
+  $lambda = (6, 4, 4, 2, 1)$ of $17$; reading it by *columns* gives the
+  *conjugate partition* $lambda' = (5, 4, 3, 3, 1, 1)$. Row-column duality
+  implies
+  $
+    p_m(n) = p(n) "into at most" m "parts",
+  $
+  i.e. the number of partitions of $n$ into exactly $m$ parts equals the
+  number of partitions of $n$ whose largest part is $m$. This is the visual
+  form of the second part of #link(<thm:partition-gf>)[Euler's formula].
+] <ex:conjugate-partitions>
+
+The same product technology proves Euler's celebrated theorem on distinct
+versus odd parts.
+
+#theorem(name: "Euler's Distinct–Odd Partitions Theorem")[
+  For every $n$, the number of partitions of $n$ into *distinct* parts equals
+  the number of partitions of $n$ into *odd* parts.
+] <thm:euler-distinct-odd>
+
+#proof[
+  The generating function for partitions into distinct parts is
+  $
+    product_(k=1)^infinity (1 + x^k),
+  $
+  since each part size $k$ is used at most once. The generating function for
+  partitions into odd parts is
+  $
+    product_(j=1)^infinity 1 / (1 - x^(2j - 1)),
+  $
+  since only odd part sizes are available, each with unbounded multiplicity.
+  Using the identity $1 + x^k = (1 - x^(2k)) / (1 - x^k)$,
+  $
+    product_(k=1)^infinity (1 + x^k)
+    = product_(k=1)^infinity (1 - x^(2k)) / (1 - x^k)
+    = product_(k=1)^infinity 1 / (1 - x^(2k - 1)),
+  $
+  because the even factors $1 - x^(2k)$ cancel against the same factors
+  appearing in the denominator. The two generating functions coincide, hence
+  so do their coefficients.
+]
+
+#note[
+  There is also a purely bijective proof: split each distinct part into its
+  odd part times a power of two — e.g. $6 = 3 dot 2$, $12 = 3 dot 2^2$ — and
+  collect the odd parts; this maps distinct partitions to odd partitions, and
+  the map is invertible. The generating function proof and the bijection are
+  the two standard styles of the subject, and both recur throughout
+  enumerative combinatorics.
+]
 
 = Inclusion-Exclusion and Sieve Methods
 
