@@ -82,7 +82,7 @@ Now we give several rigorous definitions of the complex number field for subsequ
 #definition(name: "Complex Number")[
   1. *Analytic/Ordered Pair Definition.* Let
   $
-    bb(C) = {(x, y) \abs( x, y in bb(R)},
+    bb(C) = {(x, y) \| x, y in bb(R)},
   $
   and define addition and multiplication as follows:
   $ (x_1, y_1) + (x_2, y_2) = (x_1 + x_2, y_1 + y_2), $
@@ -95,7 +95,7 @@ Now we give several rigorous definitions of the complex number field for subsequ
   called the complex field.
   3. *Matrix Definition.* Let
   $
-    bb(C) = {mat(delim: "(", x, -y; y, x) \) x, y in bb(R)}.
+    bb(C) = {mat(delim: "(", x, -y; y, x) \| x, y in bb(R)}.
   $
   Then $(bb(C), +, dot)$ is a field, where addition and multiplication are defined as matrix addition and multiplication, respectively, called the complex field.
 ]
@@ -151,7 +151,7 @@ Thus, we know that multiplying two complex numbers is equivalent to multiplying 
 
   Let
   $
-    bb(C) = mat(delim: "(", r cos phi, -r sin phi; r sin phi, r cos phi) \abs( r >= 0, phi in [0, 2pi) .
+    bb(C) = mat(delim: "(", r cos phi, -r sin phi; r sin phi, r cos phi) \| r >= 0, phi in [0, 2pi) .
   $
   Then we can verify that the addition and multiplication defined as matrix addition and multiplication, respectively, are consistent with the polar representation of complex numbers.
 
@@ -254,7 +254,7 @@ A complex function $f: E -> bb(C)$ can be interpreted geometrically as a mapping
 #definition(name: "Bounded Complex Function")[
   A complex function $f: E -> bb(C)$ is *bounded* on $E$ if there exists a constant $M >= 0$ such that
   $
-    )f(z)abs( <= M quad "for all" z in E.
+    abs(f(z)) <= M quad "for all" z in E.
   $
 ]
 
@@ -273,7 +273,7 @@ In terms of the real and imaginary parts, if $f(z) = u_1 + "i"v_1$ and $g(w) = u
   $
   if for every $epsilon > 0$ there exists $delta > 0$ such that
   $
-    0 < )z - z_0abs( < delta text(" and ") z in E quad => quad )f(z) - omega_0abs( < epsilon.
+    0 < abs(z - z_0) < delta text(" and ") z in E quad => quad abs(f(z) - omega_0) < epsilon.
   $
 ] <def:complex-limit>
 
@@ -293,11 +293,11 @@ The limit of a complex function can be completely characterized by the limits of
 #proof[
   The inequalities
   $
-    )u - aabs( <= )f - omega_0abs( <= )u - aabs( + )v - babs(,
+    abs(u - a) <= abs(f - omega_0) <= abs(u - a) + abs(v - b),
     quad
-    )v - babs( <= )f - omega_0abs( <= )u - aabs( + )v - babs(
+    abs(v - b) <= abs(f - omega_0) <= abs(u - a) + abs(v - b)
   $
-  show that $)f - omega_0abs($ is small if and only if both $)u - aabs($ and $)v - babs($ are small. The $epsilon$-$delta$ definitions are therefore equivalent.
+  show that $abs(f - omega_0)$ is small if and only if both $abs(u - a)$ and $abs(v - b)$ are small. The $epsilon$-$delta$ definitions are therefore equivalent.
 ]
 
 #property(name: "Elementary Properties of Limits")[
@@ -307,7 +307,7 @@ The limit of a complex function can be completely characterized by the limits of
   - *Product*: $lim_(z -> z_0) (f(z) g(z)) = alpha beta$.
   - *Quotient*: $lim_(z -> z_0) (f(z) / g(z)) = alpha / beta$, provided $beta != 0$.
   - *Composition*: If $lim_(w -> alpha) h(w) = gamma$ and $h$ is continuous at $alpha$ (or if $f(z) != alpha$ near $z_0$), then $lim_(z -> z_0) h(f(z)) = gamma$.
-  - *Squeeze*: If $)f(z)abs( <= g(z)$ for all $z$ near $z_0$ and $lim_(z -> z_0) g(z) = 0$, then $lim_(z -> z_0) f(z) = 0$.
+  - *Squeeze*: If $abs(f(z)) <= g(z)$ for all $z$ near $z_0$ and $lim_(z -> z_0) g(z) = 0$, then $lim_(z -> z_0) f(z) = 0$.
 ]
 
 #note[
@@ -316,8 +316,8 @@ The limit of a complex function can be completely characterized by the limits of
 
 We also extend the definition of limit to include the point at infinity from the extended complex plane $hat(bb(C))$ (see §1.4).
 
-- We write $lim_(z -> z_0) f(z) = oo$ if for every $M > 0$ there exists $delta > 0$ such that $0 < )z - z_0abs( < delta$ implies $)f(z)abs( > M$.
-- We write $lim_(z -> oo) f(z) = omega_0$ if for every $epsilon > 0$ there exists $R > 0$ such that $)zabs( > R$ implies $)f(z) - omega_0abs( < epsilon$.
+- We write $lim_(z -> z_0) f(z) = oo$ if for every $M > 0$ there exists $delta > 0$ such that $0 < abs(z - z_0) < delta$ implies $abs(f(z)) > M$.
+- We write $lim_(z -> oo) f(z) = omega_0$ if for every $epsilon > 0$ there exists $R > 0$ such that $abs(z) > R$ implies $abs(f(z) - omega_0) < epsilon$.
 
 We now turn to continuity.
 
@@ -332,7 +332,7 @@ We now turn to continuity.
 #definition(name: "Uniform Continuity")[
   A function $f: E -> bb(C)$ is *uniformly continuous* on $E$ if for every $epsilon > 0$ there exists $delta > 0$ such that
   $
-    z_1, z_2 in E text(" and ") )z_1 - z_2abs( < delta quad => quad )f(z_1) - f(z_2)abs( < epsilon.
+    z_1, z_2 in E text(" and ") abs(z_1 - z_2) < delta quad => quad abs(f(z_1) - f(z_2)) < epsilon.
   $
 ]
 
@@ -351,30 +351,30 @@ Continuous functions on compact sets enjoy particularly strong properties, which
 
 #theorem(name: "Continuous Functions on Compact Sets")[
   Let $K subset bb(C)$ be compact (closed and bounded) and let $f: K -> bb(C)$ be continuous on $K$. Then:
-  1. *Boundedness*: $f$ is bounded on $K$, i.e., $sup_(z in K) )f(z)abs( < oo$.
+  1. *Boundedness*: $f$ is bounded on $K$, i.e., $sup_(z in K) abs(f(z)) < oo$.
   2. *Extremal values*: There exist points $z_max, z_min in K$ such that
     $
-      )f(z_max)abs( = sup_(z in K) )f(z)abs(, quad )f(z_min)abs( = inf_(z in K) )f(z)abs(.
+      abs(f(z_max)) = sup_(z in K) abs(f(z)), quad abs(f(z_min)) = inf_(z in K) abs(f(z)).
     $
   3. *Uniform continuity*: $f$ is uniformly continuous on $K$.
 ] <thm:compact-continuous>
 
 #proof[
-  Claims (1) and (3) are direct consequences of the Heine-Borel and Heine-Cantor theorems in the Euclidean metric space $bb(R)^2$, applied separately to the real and imaginary parts. Claim (2) follows from the fact that the modulus $)fabs($ is a continuous real-valued function on the compact set $K$, and a continuous real function on a compact set attains its supremum and infimum.
+  Claims (1) and (3) are direct consequences of the Heine-Borel and Heine-Cantor theorems in the Euclidean metric space $bb(R)^2$, applied separately to the real and imaginary parts. Claim (2) follows from the fact that the modulus $abs(f)$ is a continuous real-valued function on the compact set $K$, and a continuous real function on a compact set attains its supremum and infimum.
 ]
 
 #example(name: "A Function with No Limit at the Origin")[
-  Define $f: bb(C) backslash {0} -> bb(C)$ by $f(z) = z / ()zabs()$. Restricting to the ray $z = r e^(i theta)$ (with $theta$ fixed and $r -> 0^+$), we get
+  Define $f: bb(C) backslash {0} -> bb(C)$ by $f(z) = z / (abs(z))$. Restricting to the ray $z = r e^(i theta)$ (with $theta$ fixed and $r -> 0^+$), we get
   $
     f(r e^(i theta)) = (r e^(i theta)) / r = e^(i theta).
   $
-  Thus $f$ approaches a different value for each direction $theta$: it tends to $1$ along the positive real axis, $-1$ along the negative real axis, $"i"$ along the positive imaginary axis, and so on. Therefore $lim_(z -> 0) f(z)$ does not exist, even though $)f(z)abs( = 1$ for all $z != 0$.
+  Thus $f$ approaches a different value for each direction $theta$: it tends to $1$ along the positive real axis, $-1$ along the negative real axis, $"i"$ along the positive imaginary axis, and so on. Therefore $lim_(z -> 0) f(z)$ does not exist, even though $abs(f(z)) = 1$ for all $z != 0$.
 ]
 
-#caution(title: "Continuity of $f$ vs. Continuity of $)fabs($")[
-  It follows from the triangle inequality that if $f$ is continuous at $z_0$, then so is the real-valued function $)fabs($. The converse is false: the function $f(z) = z / ()zabs()$ of the preceding example has $)f(z)abs( = 1$ (hence $)fabs($ is continuous everywhere on $bb(C) backslash {0}$), but $f$ itself does not have a limit at $0$, so it cannot be extended to a continuous function on $bb(C)$.
+#caution(title: "Continuity of $f$ vs. Continuity of $abs(f)$")[
+  It follows from the triangle inequality that if $f$ is continuous at $z_0$, then so is the real-valued function $abs(f)$. The converse is false: the function $f(z) = z / (abs(z))$ of the preceding example has $abs(f(z)) = 1$ (hence $abs(f)$ is continuous everywhere on $bb(C) backslash {0}$), but $f$ itself does not have a limit at $0$, so it cannot be extended to a continuous function on $bb(C)$.
 
-  In a different spirit, $f(z) = e^(i / z)$ has $)f(z)abs( = 1$ for all $z != 0$, yet it has no limit as $z -> 0$ along the imaginary axis.
+  In a different spirit, $f(z) = e^(i / z)$ has $abs(f(z)) = 1$ for all $z != 0$, yet it has no limit as $z -> 0$ along the imaginary axis.
 ]
 
 == Differentiability and Analytic Functions // 可微性与解析函数
@@ -399,7 +399,7 @@ We are now ready to introduce the concept that truly distinguishes complex analy
   For complex functions, _derivability and differentiability are equivalent_, just as in one-variable real calculus. This is in stark contrast to the case of multivariable real functions, where the existence of all partial derivatives does not guarantee (Frechet) differentiability. The reason lies in the rigidity of the difference quotient @eq:complex-derivative, which forces the limit to be independent of the direction from which $z$ approaches $z_0$ — a condition far stronger than mere directional differentiability.
 ]
 
-Geometrically, multiplication by $f'(z_0)$ sends each infinitesimal vector $"d"z$ to $f'(z_0) "d"z$. Writing $f'(z_0) = R e^(i phi)$ in polar form, this operation consists of a *scaling* by $R = )f'(z_0)abs($ followed by a *rotation* by $phi = arg(f'(z_0))$. Thus the differential of a complex-differentiable map is a *conformal* (angle-preserving) infinitesimal transformation: it preserves the angles and the ratio of lengths between any two tangent vectors at $z_0$. This is the geometric source of the theory of conformal mappings, which we study systematically in Part IV.
+Geometrically, multiplication by $f'(z_0)$ sends each infinitesimal vector $"d"z$ to $f'(z_0) "d"z$. Writing $f'(z_0) = R e^(i phi)$ in polar form, this operation consists of a *scaling* by $R = abs(f'(z_0))$ followed by a *rotation* by $phi = arg(f'(z_0))$. Thus the differential of a complex-differentiable map is a *conformal* (angle-preserving) infinitesimal transformation: it preserves the angles and the ratio of lengths between any two tangent vectors at $z_0$. This is the geometric source of the theory of conformal mappings, which we study systematically in Part IV.
 
 We now derive the celebrated Cauchy-Riemann equations, which provide the algebraic link between complex differentiability and the partial derivatives of $u$ and $v$.
 
@@ -470,7 +470,7 @@ The Cauchy-Riemann equations alone are _not_ sufficient for complex differentiab
 #proof[
   *Necessity.* If $f$ is complex-differentiable, then the Cauchy-Riemann equations hold by #link(<thm:CR-necessary>)[Cauchy-Riemann Equations (Necessity)]. Moreover, from @eq:complex-derivative one has
   $
-    f(z_0 + Delta z) - f(z_0) = f'(z_0) Delta z + o()Delta zabs().
+    f(z_0 + Delta z) - f(z_0) = f'(z_0) Delta z + o(abs(Delta z)).
   $
   Writing this in real and imaginary parts gives the Frechet differentiability of $u$ and $v$, with Jacobian matrix
   $
@@ -486,7 +486,7 @@ The Cauchy-Riemann equations alone are _not_ sufficient for complex differentiab
   $
   Using the Cauchy-Riemann equations to substitute $partial_y u = -partial_x v$ and $partial_y v = partial_x u$ into the expression for $Delta f = Delta u + "i" Delta v$, we obtain
   $
-    Delta f = (partial_x u + "i" partial_x v)(Delta x + "i" Delta y) + o()Delta zabs(),
+    Delta f = (partial_x u + "i" partial_x v)(Delta x + "i" Delta y) + o(abs(Delta z)),
   $
   which is exactly the statement that $f'(z_0) = partial_x u + "i" partial_x v$ exists.
 ]
@@ -494,7 +494,7 @@ The Cauchy-Riemann equations alone are _not_ sufficient for complex differentiab
 #caution(title: "Partial Derivatives + CR $!=$ Complex Differentiability")[
   It is a common mistake to assume that the mere existence of the four partial derivatives together with the Cauchy-Riemann equations implies complex differentiability. This is false: Frechet differentiability of $(u, v)$ is strictly stronger than the existence of the partial derivatives. A standard counterexample is
   $
-    f(0) = 0, quad f(z) = (z^5) / ()zabs(^4) text(" for ") z != 0.
+    f(0) = 0, quad f(z) = (z^5) / (abs(z)^4) text(" for ") z != 0.
   $
   At $z = 0$ one has $partial_x u = partial_y u = partial_x v = partial_y v = 0$, so the Cauchy-Riemann equations are trivially satisfied at the origin; however, approaching $0$ along the ray $z = t(1 + "i")$ with $t -> 0$ yields $f(z)/z -> (1+"i")^5 / 4$, which differs from $0$. Therefore $f'(0)$ does not exist.
 ]
@@ -546,7 +546,7 @@ It is one of the deepest and most remarkable facts of complex analysis — far f
 ]
 
 #caution(title: "Pointwise Differentiability vs. Holomorphy at a Point")[
-  Holomorphy at a point $z_0$ is a strictly stronger condition than mere differentiability at $z_0$: it requires differentiability throughout some open neighborhood of $z_0$. For example, the function $f(z) = )zabs(^2 = z overline(z)$ has real and imaginary parts $u = x^2 + y^2$, $v = 0$, whose partial derivatives are continuous everywhere; the Cauchy-Riemann equations reduce to $2x = 0$ and $2y = 0$, which hold _only_ at the origin. Thus $f$ is differentiable at $z = 0$ with $f'(0) = 0$, but it is not differentiable at any other point, so there is no open set around $0$ on which $f$ is differentiable. Therefore $f$ is _not_ holomorphic at $0$.
+  Holomorphy at a point $z_0$ is a strictly stronger condition than mere differentiability at $z_0$: it requires differentiability throughout some open neighborhood of $z_0$. For example, the function $f(z) = abs(z)^2 = z overline(z)$ has real and imaginary parts $u = x^2 + y^2$, $v = 0$, whose partial derivatives are continuous everywhere; the Cauchy-Riemann equations reduce to $2x = 0$ and $2y = 0$, which hold _only_ at the origin. Thus $f$ is differentiable at $z = 0$ with $f'(0) = 0$, but it is not differentiable at any other point, so there is no open set around $0$ on which $f$ is differentiable. Therefore $f$ is _not_ holomorphic at $0$.
 ]
 
 #example(name: "Elementary Holomorphic Functions")[
@@ -567,8 +567,8 @@ It is one of the deepest and most remarkable facts of complex analysis — far f
   We verify that several simple functions are _nowhere_ holomorphic, using the Cauchy-Riemann equations.
   - *Complex conjugate.* Let $f(z) = overline(z) = x - "i"y$, so $u = x$, $v = -y$. The partials are $partial_x u = 1$, $partial_y v = -1$. Since $1 != -1$, the first CR equation fails at every point, and therefore $f$ is nowhere complex-differentiable.
   - *Real part.* Let $f(z) = Re(z) = x$. Then $u = x$, $v = 0$, so $partial_x u = 1$ but $partial_y v = 0$. Again the CR equations fail everywhere.
-  - *Modulus.* Let $f(z) = )zabs( = sqrt(x^2 + y^2)$. For $z != 0$, direct computation gives $partial_x u = x/()zabs()$, $partial_y v = 0$, so the first CR equation fails. At $z = 0$ the difference quotient $()zabs()/z$ has no limit (it equals $e^(-i theta)$ on the ray $z = r e^(i theta)$), confirming that $f$ is nowhere differentiable.
-  - *Square of modulus.* $f(z) = )zabs(^2$, already treated above: differentiable only at $z = 0$, and not holomorphic there.
+  - *Modulus.* Let $f(z) = abs(z) = sqrt(x^2 + y^2)$. For $z != 0$, direct computation gives $partial_x u = x/(abs(z))$, $partial_y v = 0$, so the first CR equation fails. At $z = 0$ the difference quotient $(abs(z))/z$ has no limit (it equals $e^(-i theta)$ on the ray $z = r e^(i theta)$), confirming that $f$ is nowhere differentiable.
+  - *Square of modulus.* $f(z) = abs(z)^2$, already treated above: differentiable only at $z = 0$, and not holomorphic there.
 ]
 
 A point at which a function fails to be holomorphic is called a *singular point*, or briefly a *singularity*. Singularities are classified in great detail once the Laurent series machinery is available (Chapter 8): removable singularities, poles of finite order, and essential singularities. For the moment we content ourselves with the intuitive concept.
@@ -695,7 +695,7 @@ Everything in this chapter grows out of a single function: the complex exponenti
   $
     exp(z) = sum_(n=0)^oo z^n / n!,
   $
-  which converges absolutely for every $z in bb(C)$: the ratio of successive terms satisfies $)a_(n+1) / a_nabs( = ()zabs() / (n+1) -> 0$, so the ratio test gives convergence on the whole plane. Since $exp$ is represented by a convergent power series at every point, it is analytic on $bb(C)$ in the sense of #link(<def:analytic>)[Definition]; such functions are called *entire*.
+  which converges absolutely for every $z in bb(C)$: the ratio of successive terms satisfies $abs(a_(n+1) / a_n) = (abs(z)) / (n+1) -> 0$, so the ratio test gives convergence on the whole plane. Since $exp$ is represented by a convergent power series at every point, it is analytic on $bb(C)$ in the sense of #link(<def:analytic>)[Definition]; such functions are called *entire*.
 ] <def:exp-function>
 
 The basic law governing $exp$ is the addition theorem.
@@ -743,7 +743,7 @@ The basic law governing $exp$ is the addition theorem.
     $
       exp(w) = exp(z) <==> w - z in 2 pi i ZZ.
     $
-  + *Unboundedness*: for every $M > 0$ there exists $z$ with $)exp(z)abs( > M$.
+  + *Unboundedness*: for every $M > 0$ there exists $z$ with $abs(exp(z)) > M$.
 ] <thm:exp-properties>
 
 #proof[
@@ -759,14 +759,14 @@ The basic law governing $exp$ is the addition theorem.
 
   *Non-vanishing*: from the addition theorem, $exp(z) exp(-z) = exp(0) = 1$, hence $exp(z) != 0$ and $exp(-z) = 1 / exp(z)$.
 
-  *Periodicity*: $exp(z + 2 pi i) = exp(z) exp(2 pi i) = exp(z) (cos 2 pi + i sin 2 pi) = exp(z)$. Conversely, if $exp(w) = exp(z)$, then $exp(w - z) = 1$. Writing $w - z = x + i y$ and taking absolute values via #link(<thm:exp-euler-formula>)[Euler's formula] gives $)exp(w - z)abs( = e^x = 1$, hence $x = 0$; then $cos y + i sin y = 1$ forces $y in 2 pi ZZ$. Thus $w - z in 2 pi i ZZ$.
+  *Periodicity*: $exp(z + 2 pi i) = exp(z) exp(2 pi i) = exp(z) (cos 2 pi + i sin 2 pi) = exp(z)$. Conversely, if $exp(w) = exp(z)$, then $exp(w - z) = 1$. Writing $w - z = x + i y$ and taking absolute values via #link(<thm:exp-euler-formula>)[Euler's formula] gives $abs(exp(w - z)) = e^x = 1$, hence $x = 0$; then $cos y + i sin y = 1$ forces $y in 2 pi ZZ$. Thus $w - z in 2 pi i ZZ$.
 
-  *Unboundedness*: $)exp(x)abs( = e^x -> oo$ as $x -> oo$ along the real axis.
+  *Unboundedness*: $abs(exp(x)) = e^x -> oo$ as $x -> oo$ along the real axis.
 ]
 
 #example(name: "What the Exponential Does to Lines and Strips")[
-  Euler's formula $exp(x + i y) = e^x (cos y + i sin y)$ identifies polar coordinates of $w = exp z$: the modulus is $)wabs( = e^x$ and the argument is $y$ (modulo $2 pi$). Consequently, writing $z = x + i y$:
-  - a vertical line ${z : x = c}$ is mapped onto the circle ${w : )wabs( = e^c}$;
+  Euler's formula $exp(x + i y) = e^x (cos y + i sin y)$ identifies polar coordinates of $w = exp z$: the modulus is $abs(w) = e^x$ and the argument is $y$ (modulo $2 pi$). Consequently, writing $z = x + i y$:
+  - a vertical line ${z : x = c}$ is mapped onto the circle ${w : abs(w) = e^c}$;
   - a horizontal line ${z : y = c}$ is mapped onto the ray ${w : arg w = c}$;
   - the horizontal strip ${z : 0 < y < 2 pi}$ is mapped *bijectively* onto the punctured plane $bb(C) backslash {0}$.
 ] <ex:exp-geometry>
@@ -805,14 +805,14 @@ All five properties follow immediately from the exponential definition and the a
 #caution[
   The most striking difference from the real theory: $sin$ and $cos$ are *unbounded* on $bb(C)$. Indeed, writing $z = x + i y$,
   $
-    )sin zabs(^2 = sin^2 x cosh^2 y + cos^2 x sinh^2 y = sin^2 x + sinh^2 y,
+    abs(sin z)^2 = sin^2 x cosh^2 y + cos^2 x sinh^2 y = sin^2 x + sinh^2 y,
   $
-  which grows without bound as $)yabs( -> oo$. In particular $cos(i y) = cosh y -> oo$, and the familiar real-variable intuition "cosine never exceeds 1" fails dramatically off the real axis. The reason is structural: the boundedness of real $sin$ and $cos$ relies on cancellation in the real and imaginary parts, and complex arguments destroy this balance.
+  which grows without bound as $abs(y) -> oo$. In particular $cos(i y) = cosh y -> oo$, and the familiar real-variable intuition "cosine never exceeds 1" fails dramatically off the real axis. The reason is structural: the boundedness of real $sin$ and $cos$ relies on cancellation in the real and imaginary parts, and complex arguments destroy this balance.
 ] <caution:trig-unbounded>
 
 #figure(
   image("./img/sin-modulus.svg", width: 55%),
-  caption: [The modulus surface $)sin zabs( = sqrt(sin^2 x + sinh^2 y)$. Along the real axis the surface coincides with the familiar bounded graph of $)sin xabs($, while it grows exponentially in the imaginary directions.],
+  caption: [The modulus surface $abs(sin z) = sqrt(sin^2 x + sinh^2 y)$. Along the real axis the surface coincides with the familiar bounded graph of $abs(sin x)$, while it grows exponentially in the imaginary directions.],
 ) <fig:sin-modulus>
 
 The hyperbolic functions are the "odd partners" obtained by removing the factors of $i$.
@@ -922,9 +922,9 @@ With this vocabulary in place, we can finally give the logarithm the precise tre
   $
     w = Ln z <==> exp(w) = z.
   $
-  Writing $z = r e^(i theta)$ with $r = )zabs($, the solutions are exactly
+  Writing $z = r e^(i theta)$ with $r = abs(z)$, the solutions are exactly
   $
-    Ln z = ln r + i theta = ln )zabs( + i Arg z,
+    Ln z = ln r + i theta = ln abs(z) + i Arg z,
   $
   where $Arg z$ denotes the multi-valued argument of $z$.
 ] <def:log-function>
@@ -932,12 +932,12 @@ With this vocabulary in place, we can finally give the logarithm the precise tre
 #proposition[
   Every nonzero complex number has infinitely many logarithms, and any two of them differ by an integer multiple of $2 pi i$:
   $
-    Ln z = ln )zabs( + i arg z + 2 k pi i, quad k in ZZ.
+    Ln z = ln abs(z) + i arg z + 2 k pi i, quad k in ZZ.
   $
 ] <prop:log-multi-valued>
 
 #proof[
-  Let $w = a + i b$ satisfy $exp(w) = z != 0$. Taking moduli, $)exp(w)abs( = e^a = )zabs($, so $a = ln )zabs($ is uniquely determined. Then $exp(w) = e^a (cos b + i sin b) = z$ forces $cos b = x / )zabs($ and $sin b = y / )zabs($, i.e. $b$ is an angle of $z$: $b = theta$ where $theta$ is any choice of $arg z$, and the set of admissible $b$ is $theta + 2 pi ZZ$. Hence the solutions are exactly $ln )zabs( + i (theta + 2 k pi)$, $k in ZZ$.
+  Let $w = a + i b$ satisfy $exp(w) = z != 0$. Taking moduli, $abs(exp(w)) = e^a = abs(z)$, so $a = ln abs(z)$ is uniquely determined. Then $exp(w) = e^a (cos b + i sin b) = z$ forces $cos b = x / abs(z)$ and $sin b = y / abs(z)$, i.e. $b$ is an angle of $z$: $b = theta$ where $theta$ is any choice of $arg z$, and the set of admissible $b$ is $theta + 2 pi ZZ$. Hence the solutions are exactly $ln abs(z) + i (theta + 2 k pi)$, $k in ZZ$.
 ]
 
 The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch points: every full loop around either point changes the value by $2 pi i$, so the monodromy never returns — even infinitely many loops do not restore the initial value. A standard branch cut is again the negative real axis.
@@ -945,7 +945,7 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
 #theorem(name: "Principal Branch of the Logarithm")[
   On the cut plane $D = bb(C) backslash (-oo, 0]$, the *principal branch of the logarithm*
   $
-    ln z = ln )zabs( + i arg z, quad arg z in (-pi, pi),
+    ln z = ln abs(z) + i arg z, quad arg z in (-pi, pi),
   $
   is an analytic branch of $Ln$, and
   $
@@ -957,7 +957,7 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
 #proof[
   Write $ln z = u(x, y) + i v(x, y)$ with
   $
-    u = ln )zabs( = 1 / 2 ln(x^2 + y^2), quad v = arg z.
+    u = ln abs(z) = 1 / 2 ln(x^2 + y^2), quad v = arg z.
   $
   Direct computation gives $u_x = x / (x^2 + y^2)$ and $u_y = y / (x^2 + y^2)$. On the cut plane the angle $v$ is a smooth function of $(x, y)$, and its gradient is
   $
@@ -971,12 +971,12 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
   $
     (ln z)' = u_x + i v_x = (x - i y) / (x^2 + y^2) = (x + i y)^(-1) = 1 / z.
   $
-  For $x > 0$ we have $arg x = 0$ and $ln )xabs( = ln x$, so the branch extends the real logarithm.
+  For $x > 0$ we have $arg x = 0$ and $ln abs(x) = ln x$, so the branch extends the real logarithm.
 ]
 
 #figure(
   image("./img/branch-cut-log.svg", width: 55%),
-  caption: [The principal branch of the logarithm. The branch points $0$ and $oo$ are joined by the branch cut along the negative real axis; on the cut plane $D = bb(C) backslash (-oo, 0]$ the angle is confined to $(-pi, pi)$ and $ln z = ln )zabs( + i arg z$ is single-valued and analytic.],
+  caption: [The principal branch of the logarithm. The branch points $0$ and $oo$ are joined by the branch cut along the negative real axis; on the cut plane $D = bb(C) backslash (-oo, 0]$ the angle is confined to $(-pi, pi)$ and $ln z = ln abs(z) + i arg z$ is single-valued and analytic.],
 ) <fig:branch-cut-log>
 
 #caution[
@@ -992,7 +992,7 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
 ] <caution:log-notation>
 
 #note[
-  Since $ln z$ is analytic on $D$, the theory of Section 2.4 applies: its real part $u = ln )zabs($ is harmonic on the punctured plane, as predicted by #link(<thm:analytic-harmonic>)[Theorem]. This is precisely the potential of a point source in two-dimensional electrostatics — one of the physical interpretations discussed there. Furthermore, the Taylor expansion $ln(1 + z) = sum_(n=1)^oo (-1)^(n+1) z^n / n$ will be established in Section 7.3, showing that the principal branch is indeed analytic in the power series sense.
+  Since $ln z$ is analytic on $D$, the theory of Section 2.4 applies: its real part $u = ln abs(z)$ is harmonic on the punctured plane, as predicted by #link(<thm:analytic-harmonic>)[Theorem]. This is precisely the potential of a point source in two-dimensional electrostatics — one of the physical interpretations discussed there. Furthermore, the Taylor expansion $ln(1 + z) = sum_(n=1)^oo (-1)^(n+1) z^n / n$ will be established in Section 7.3, showing that the principal branch is indeed analytic in the power series sense.
 ]
 
 #figure(
@@ -1019,9 +1019,9 @@ The multi-valued structure depends sharply on $alpha$.
   + If $alpha = n$ is an integer, $z^alpha$ is single-valued and coincides with the elementary power: $z^n$ for $n >= 0$, and $1 / z^(-n)$ for $n < 0$.
   + If $alpha = p / q$ is a rational number in lowest terms ($q >= 1$), $z^alpha$ takes exactly $q$ distinct values.
   + If $alpha$ is irrational or non-real, $z^alpha$ takes infinitely many values.
-  In every case the values of $z^alpha = exp(alpha (ln )zabs( + i (theta + 2 k pi)))$ are
+  In every case the values of $z^alpha = exp(alpha (ln abs(z) + i (theta + 2 k pi)))$ are
   $
-    )zabs(^alpha e^(i alpha theta) dot exp(2 k pi i alpha), quad k in ZZ,
+    abs(z)^alpha e^(i alpha theta) dot exp(2 k pi i alpha), quad k in ZZ,
   $
   and the cases above classify how the factors $exp(2 k pi i alpha)$ repeat.
 ] <thm:power-branch-structure>
@@ -1029,9 +1029,9 @@ The multi-valued structure depends sharply on $alpha$.
 #proof[
   The key factor is $exp(2 k pi i alpha)$ as $k$ ranges over $ZZ$.
 
-  *Integral $alpha = n$*: $exp(2 k pi i n) = 1$ for every $k$, so $z^n = )zabs(^n e^(i n theta)$ is single-valued, and Euler's formula shows it agrees with the product $z dots.c z$.
+  *Integral $alpha = n$*: $exp(2 k pi i n) = 1$ for every $k$, so $z^n = abs(z)^n e^(i n theta)$ is single-valued, and Euler's formula shows it agrees with the product $z dots.c z$.
 
-  *Rational $alpha = p / q$ in lowest terms*: $exp(2 pi i alpha k) = e^(2 pi i p k \/ q)$ depends only on $k mod q$, giving exactly $q$ distinct values $e^(2 pi i p k \/ q)$ for $k = 0, 1, dots, q - 1$ (distinct because $p k_1 equiv p k_2 mod q$ forces $q ) k_1 - k_2$).
+  *Rational $alpha = p / q$ in lowest terms*: $exp(2 pi i alpha k) = e^(2 pi i p k \/ q)$ depends only on $k mod q$, giving exactly $q$ distinct values $e^(2 pi i p k \/ q)$ for $k = 0, 1, dots, q - 1$ (distinct because $p k_1 equiv p k_2 mod q$ forces $q | k_1 - k_2$).
 
   *Irrational or non-real $alpha$*: if $alpha in bb(R) backslash bb(Q)$, then $e^(2 pi i alpha k_1) = e^(2 pi i alpha k_2)$ would imply $alpha (k_1 - k_2) in ZZ$, impossible unless $k_1 = k_2$. If $alpha = a + i b$ with $b != 0$, the moduli $abs(e^(2 pi i alpha k)) = e^(-2 pi b k)$ are pairwise distinct, so the values are again infinite in number.
 ]
@@ -1849,7 +1849,7 @@ We first record which parts of the real theory transfer verbatim, and then focus
 #proposition(name: "The Ratio and Root Tests Transfer")[
   // 比值判别法与根值判别法的迁移
   Let $sum_(n=0)^oo a_n$ be a series of complex numbers.
-  + *Ratio test*: if $lim_(n -> oo) abs(a_(n+1)) / abs(a_n) = L$, then the series converges absolutely when $L < 1$ and diverges when $L > 1$; the case $L = 1$ is inconclusive.
+  + *Ratio test*: if $lim_(n -> oo) (abs(a_(n+1))) / (abs(a_n)) = L$, then the series converges absolutely when $L < 1$ and diverges when $L > 1$; the case $L = 1$ is inconclusive.
   + *Root test*: if $limsup_(n -> oo) root(n, abs(a_n)) = L$, then the series converges absolutely when $L < 1$ and diverges when $L > 1$; again the case $L = 1$ is inconclusive.
 ] <prop:ratio-root-tests>
 
@@ -1992,8 +1992,8 @@ This completes the easy direction of #link(<thm:holo-equiv-analytic>)[the equiva
 
 #example(name: "Three Radii")[
   // 三个收敛半径
-  - $sum_(n=0)^oo z^n / (n!)$: the ratio test gives $abs(a_(n+1)) / abs(a_n) = abs(z) / (n+1) -> 0$, so $R = oo$. This recovers the exponential function of #link(<def:exp-function>)[Definition], entire on all of $bb(C)$.
-  - $sum_(n=0)^oo n! z^n$: the ratio $abs(a_(n+1)) / abs(a_n) = (n+1) abs(z)$ tends to $oo$ unless $z = 0$, so $R = 0$: the series represents a function only at its center.
+  - $sum_(n=0)^oo z^n / (n!)$: the ratio test gives $(abs(a_(n+1))) / (abs(a_n)) = abs(z) / (n+1) -> 0$, so $R = oo$. This recovers the exponential function of #link(<def:exp-function>)[Definition], entire on all of $bb(C)$.
+  - $sum_(n=0)^oo n! z^n$: the ratio $(abs(a_(n+1))) / (abs(a_n)) = (n+1) abs(z)$ tends to $oo$ unless $z = 0$, so $R = 0$: the series represents a function only at its center.
   - $sum_(n=1)^oo z^n / n$: the ratio tends to $abs(z)$, so $R = 1$; on the boundary circle the series converges at $z = -1$ but diverges at $z = 1$, as described in the note following #link(<thm:cauchy-hadamard>)[the Cauchy--Hadamard formula].
 ] <ex:radius-examples>
 
