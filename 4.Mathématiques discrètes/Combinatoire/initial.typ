@@ -762,13 +762,29 @@ versus odd parts.
   $
     abs(union.big_(i=1)^n A_i) = sum_(k=1)^n (-1)^(k+1) S_k.
   $
+] <thm:inclusion-exclusion>
+
+#proof[
+  It suffices to show that every element of $union.big_(i=1)^n A_i$ contributes
+  exactly $1$ to the alternating sum $sum_(k=1)^n (-1)^(k+1) S_k$, while
+  elements outside contribute nothing. Fix an element $x$ lying in exactly
+  $m >= 1$ of the sets, and relabel so that $x in A_1, dots, A_m$ and
+  $x in.not A_(m+1), dots, A_n$. Then $x$ contributes to exactly those $S_k$
+  indexed by $k$-subsets of ${1, dots, m}$, hence its total contribution is
+  $
+    sum_(k=1)^m (-1)^(k+1) binom(m, k)
+    = 1 - sum_(k=0)^m (-1)^k binom(m, k)
+    = 1 - (1 - 1)^m
+    = 1,
+  $
+  as required. The alternating sum therefore counts $union A_i$ exactly.
 ]
 
 #note[
   Mnemonic: add odd, subtract even.
 ]
 
-Special cases:
+Two small cases, obtained by expanding the sums:
 
 $
   abs(A_1 union A_2) = abs(A_1) + abs(A_2) - abs(A_1 inter A_2).
@@ -781,18 +797,67 @@ $
   + abs(A_1 inter A_2 inter A_3).
 $
 
-#v(0.7cm)
-
-The complement form (property counting method):
-let $U$ be the universal set and $overline(A_i) = U backslash A_i$.
-Then
-$
-  abs(union.big_(i=1)^n A_i)
-  = abs(U) - abs(inter.big_(i=1)^n overline(A_i))
-  = abs(U) - sum_(k=0)^n (-1)^k S_k.
-$
+#corollary(name: "Complement Form")[
+  Let $U$ be a finite universal set and $A_1, dots, A_n subset.eq U$, and put
+  $S_0 = abs(U)$. The number of elements of $U$ lying in *none* of the $A_i$
+  is
+  $
+    abs(inter.big_(i=1)^n overline(A_i))
+    = abs(U) - abs(union.big_(i=1)^n A_i)
+    = sum_(k=0)^n (-1)^k S_k,
+  $
+  where $overline(A_i) = U backslash A_i$. In applications this "count the
+  complement" form is often the most efficient: rather than counting the good
+  objects directly, one counts the bad ones and subtracts.
+] <cor:complement-form>
 
 == Applications of Inclusion-Exclusion
+
+#example[
+  A *derangement* of ${1, 2, dots, n}$ is a permutation fixing no point; let
+  $D_n$ be their number. Let $A_i$ be the set of permutations fixing $i$. Then
+  permutations fixing a prescribed set of $k$ points number $(n - k)!$, so
+  $S_k = binom(n, k) (n - k)!$. By #link(<cor:complement-form>)[the complement
+    form],
+  $
+    D_n = sum_(k=0)^n (-1)^k binom(n, k) (n - k)!
+    = n! sum_(k=0)^n (-1)^k / k!.
+  $
+  Since $sum_(k=0)^n (-1)^k / k! -> 1 \/ e$ extremely fast, $D_n$ is the
+  nearest integer to $n! \/ e$ for all $n >= 1$, and the probability that a
+  random permutation is a derangement tends to $1 \/ e$.
+] <ex:derangements>
+
+#example[
+  Let $n = p_1^(a_1) dots p_r^(a_r)$ be the prime factorization of $n$, and
+  count the integers in ${1, dots, n}$ coprime to $n$ — this is Euler's
+  totient $phi(n)$. Let $A_i$ be the set of integers divisible by $p_i$. An
+  intersection of $k$ of them counts multiples of $p_(i_1) dots p_(i_k)$,
+  contributing $n / (p_(i_1) dots p_(i_k))$ to $S_k$. By
+  #link(<cor:complement-form>)[the complement form],
+  $
+    phi(n) = n sum_(I subset.eq {1, dots, r}) (-1)^(abs(I))
+    1 / (product_(i in I) p_i)
+    = n product_(i=1)^r (1 - 1 / p_i).
+  $
+  We will rederive this formula by Möbius inversion in
+  #link(<ex:mobius-phi>)[a later example].
+] <ex:euler-phi>
+
+#example[
+  How many surjections $f: {1, dots, m} -> {1, dots, n}$ are there? Let $A_i$
+  be the set of functions missing the value $i$. Functions missing a
+  prescribed set of $k$ values number $(n - k)^m$, so $S_k =
+  binom(n, k)(n - k)^m$, and #link(<cor:complement-form>)[the complement form]
+  gives
+  $
+    "Sur"(m, n) = sum_(k=0)^n (-1)^k binom(n, k) (n - k)^m.
+  $
+  Every surjection splits its domain into $n$ non-empty fibres, so
+  $"Sur"(m, n) = n! S(m, n)$, where $S(m, n)$ is the Stirling number of the
+  second kind; we will meet it again from this angle in
+  #link(<ex:stirling-onto>)[the Stirling chapter].
+] <ex:onto-functions>
 
 == Mobius Inversion
 
@@ -806,7 +871,7 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
   $
   Examples include the divisor function $d(n)$, Euler totient function $phi(n)$,
   and Mobius function $mu(n)$.
-]
+] <def:arithmetic-function>
 
 #definition(name: "Mobius Function")[
   The Mobius function $mu(n)$ is defined by
@@ -817,6 +882,27 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
       0 & "if " n " has a squared prime factor."
     ).
   $
+] <def:mobius-function>
+
+The key property of $mu$ is that its divisor sums vanish away from $1$.
+
+#lemma(name: "Mobius Divisor Sum")[
+  For every positive integer $n$,
+  $
+    sum_(d | n) mu(d) = cases(1 & "if " n = 1, 0 & "if " n > 1).
+  $
+] <lem:mobius-sum>
+
+#proof[
+  Write $n = p_1^(a_1) dots p_r^(a_r)$. Only square-free divisors contribute,
+  and these are exactly the products $d_I = product_(i in I) p_i$ over subsets
+  $I subset.eq {1, dots, r}$. Hence
+  $
+    sum_(d | n) mu(d)
+    = sum_(I subset.eq {1, dots, r}) (-1)^(abs(I))
+    = (1 - 1)^r,
+  $
+  which is $1$ when $r = 0$ (i.e. $n = 1$) and $0$ otherwise.
 ]
 
 #theorem(name: "Mobius Inversion")[
@@ -829,9 +915,97 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
   $
     f(n) = sum_(d | n) mu(d) g(n / d).
   $
+] <thm:mobius-inversion>
+
+#proof[
+  Substitute the formula for $g$ into the claimed inversion and interchange
+  the order of summation:
+  $
+    sum_(d | n) mu(d) g(n / d)
+    = sum_(d | n) mu(d) sum_(e | n / d) f(e)
+    = sum_(e | n) f(e) sum_(d | n / e) mu(d).
+  $
+  By #link(<lem:mobius-sum>)[the divisor-sum lemma] the inner sum is $1$
+  precisely when $n \/ e = 1$, i.e. $e = n$, and vanishes otherwise. Only the
+  term $e = n$ survives, leaving $f(n)$.
 ]
 
+#example[
+  We rederive #link(<ex:euler-phi>)[Euler's totient formula] by inversion.
+  Classifying the integers $1, dots, n$ by $gcd(m, n)$ gives at once
+  $
+    sum_(d | n) phi(d) = n:
+  $
+  the integers with $gcd(m, n) = d$ are exactly $m = d m'$ with
+  $gcd(m', n \/ d) = 1$, and there are $phi(n \/ d)$ of those. Applying
+  #link(<thm:mobius-inversion>)[Möbius inversion] to $g(n) = n$ yields
+  $
+    phi(n) = sum_(d | n) mu(d) n / d
+    = n sum_(d | n, d " square-free") mu(d) / d
+    = n product_(p | n) (1 - 1 / p),
+  $
+  the last step because the square-free divisors of $n$ are the products of
+  subsets of its prime divisors. Two independent routes to one formula.
+] <ex:mobius-phi>
+
 == Generalizations of Inclusion-Exclusion
+
+The divisor lattice underlying #link(<thm:mobius-inversion>)[Möbius inversion]
+is one instance of a general phenomenon: on any finite partially ordered set,
+an inversion formula of the same shape exists, and for the Boolean lattice it
+reduces exactly to #link(<thm:inclusion-exclusion>)[inclusion-exclusion].
+
+#definition(name: "Möbius Function of a Poset")[
+  Let $(P, <=)$ be a finite partially ordered set. The *Möbius function*
+  $mu_P: P times P -> ZZ$ is defined recursively by
+  $
+    mu_P(x, x) = 1,
+    quad
+    mu_P(x, y) = -sum_(x <= z < y) mu_P(x, z) quad "for" x < y,
+  $
+  and $mu_P(x, y) = 0$ unless $x <= y$.
+] <def:poset-mobius>
+
+#theorem(name: "Möbius Inversion on a Poset")[
+  Let $(P, <=)$ be a finite poset and let $F, G: P -> CC$ satisfy
+  $
+    F(x) = sum_(y in P, y >= x) G(y) quad "for all" x in P.
+  $
+  Then conversely
+  $
+    G(x) = sum_(y in P, y >= x) mu_P(x, y) F(y)
+    quad "for all" x in P.
+  $
+] <thm:poset-mobius-inversion>
+
+#proof[
+  Substitute the expression for $F$ and interchange the sums:
+  $
+    sum_(y >= x) mu_P(x, y) F(y)
+    = sum_(y >= x) mu_P(x, y) sum_(z >= y) G(z)
+    = sum_(z >= x) (sum_(x <= y <= z) mu_P(x, y)) G(z).
+  $
+  The inner sum equals $sum_(x <= y < z) mu_P(x, y) + mu_P(x, z)$, which by
+  #link(<def:poset-mobius>)[the recursive definition] is $0$ when $x < z$ and
+  $mu_P(x, x) = 1$ when $x = z$. Only the term $z = x$ survives, leaving
+  $G(x)$.
+]
+
+#note[
+  Take $P = {1, dots, n}$-subsets ordered by inclusion (the *Boolean lattice*)
+  and let $A_i$ be finite sets. Setting $F(X) = abs(inter.big_(i in X) A_i)$
+  and $G(X)$ to be the number of elements belonging to exactly the sets
+  indexed by $X$, the identity $F(X) = sum_(Y supset.eq X) G(Y)$ holds by
+  classifying each element through the exact set of $A_i$ containing it. One
+  computes $mu_P(X, Y) = (-1)^(abs(Y backslash X))$, so
+  #link(<thm:poset-mobius-inversion>)[poset Möbius inversion] produces
+  precisely the inclusion–exclusion expansion of
+  #link(<thm:inclusion-exclusion>)[the principle] — the two themes of this
+  chapter are one. The arithmetic Möbius function
+  #link(<def:mobius-function>)[$mu$] arises the same way from the divisor
+  lattice, with $mu_P(1, n) = mu(n)$. Deeper poset enumeration belongs to a
+  more advanced treatment and is not pursued here.
+]
 
 = Special Counting Sequences
 
@@ -840,7 +1014,7 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
 #definition(name: "Catalan Numbers")[
   The $n$-th Catalan number is
   $
-    C_n = 1/(n+1) binom(2n, n) = (2n)!/((n+1)!n!) = binom(2n, n) - binom(2n, n+1).
+    C_n = 1/(n+1) binom(2n, n).
   $
 
   First ten values:
@@ -848,39 +1022,58 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
     C_0 = 1, C_1 = 1, C_2 = 2, C_3 = 5, C_4 = 14,
     C_5 = 42, C_6 = 132, C_7 = 429, C_8 = 1430, C_9 = 4862.
   $
-]
+] <def:catalan>
 
 #property[
-  Catalan numbers satisfy multiple recurrences:
+  The Catalan numbers admit three equivalent descriptions, each useful in its
+  own right:
 
-  1.
+  1. *Ratio recurrence*:
     $
-      C_n = sum_(i=0)^(n-1) C_i C_(n-1-i), quad (n >= 1), quad C_0 = 1.
+      C_n = (2 (2n - 1)) / (n + 1) dot C_(n-1), quad n >= 1, quad C_0 = 1.
     $
-    This recurrence relation reflects the self-similarity of Catalan numbers.
 
-  2.
-    $
-      C_n = (2(2n-1)/(n+1)) C_(n-1), quad (n >= 1), quad C_0 = 1.
-    $
-    This recurrence relation can be derived from the closed-form expression of Catalan numbers.
-
-  3. Let $G(x) = sum_(n=0)^infinity C_n x^n$ be the generating function of Catalan numbers.
-    Then $G(x)$ satisfies the functional equation:
+  2. *Generating function*: with
+    $G(x) = sum_(n=0)^infinity C_n x^n$ from
+    #link(<def:generating-functions>)[the OGF],
     $
       G(x) = 1 + x G(x)^2,
+      quad "and hence"
+      quad G(x) = (1 - sqrt(1 - 4x)) / (2x).
     $
-    id est,
+
+  3. *Convolution recurrence*:
     $
-      G(x) = (1 - sqrt(1-4x))/(2x).
+      C_n = sum_(i=0)^(n-1) C_i C_(n-1-i), quad n >= 1,
     $
-    This functional equation can be used to derive the closed-form expression of Catalan numbers
-    using the Lagrange inversion formula.
+    reflecting the self-similarity of Catalan structures.
+] <prop:catalan-recurrences>
+
+#proof[
+  (1) is a direct computation: $binom(2n, n) = binom(2n-2, n-1) dot (2n)(2n-1) / n^2$
+  and $n / (n+1)$ upgrades to the ratio
+  $C_n / C_(n-1) = (2n)(2n-1) / (n(n+1)) = 2(2n-1)/(n+1)$.
+
+  For (2), expand $sqrt(1 - 4x)$ by the generalized binomial theorem. For
+  $n >= 1$ one computes
+  $
+    binom(1 \/ 2, n) (-4)^n = -2 binom(2n - 2, n - 1) / n = -2 C_(n-1),
+  $
+  so
+  $
+    sqrt(1 - 4x) = 1 - 2 sum_(n>=1) C_(n-1) x^n = 1 - 2 x G(x),
+  $
+  i.e. $G(x) = (1 - sqrt(1 - 4x)) / (2x)$. Squaring out verifies the quadratic
+  equation: $x G(x)^2 = (1 - 2x - sqrt(1 - 4x)) / (2x)$, and adding $1$ gives
+  $G(x)$.
+
+  For (3), read off coefficients in $G = 1 + x G^2$: the constant term gives
+  $C_0 = 1$, and for $n >= 1$ the coefficient of $x^n$ on the right is
+  $sum_(i=0)^(n-1) C_i C_(n-1-i)$ by #link(<prop:gf-operations>)[the Cauchy
+    product rule].
 ]
 
-#v(0.7cm)
-
-Catalan numbers is the answer to many combinatorial problems:
+The Catalan numbers are the answer to a remarkable list of counting problems:
 
 - *Ballot problem*: There is an $n times n$ grid graph, with the bottom-left corner at $(0, 0)$
   and the top-right corner at $(n, n)$. Starting from the bottom-left corner, and
@@ -906,11 +1099,245 @@ Catalan numbers is the answer to many combinatorial problems:
   $n$ $+1$'s and $n$ $-1$'s such that the partial sums satisfy
   $a_1 + a_2 + dots + a_k >= 0$ ($k = 1, 2, 3, dots, 2n$) is $C_n$.
 
+The Dyck path interpretation deserves a proof — both for its own elegance and
+because the reflection trick it rests on recurs throughout combinatorics.
+
+#figure(
+  image("img/dyck-paths.svg", width: 68%),
+  caption: [The $C_3 = 5$ Dyck paths of semilength $3$ (left), and the
+    reflection principle: a bad path (first hitting $-1$ marked) reflects its
+    remaining steps to end at $(6, -2)$ (right).],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:dyck-paths>
+
+#example[
+  We prove the Dyck path count. A Dyck path of semilength $n$ is a word of
+  $n$ up-steps and $n$ down-steps whose partial sums stay non-negative, so
+  there are at most $binom(2n, n)$ candidates. Call a path *bad* if some
+  partial sum reaches $-1$. Map each bad path to a path from $(0, 0)$ to
+  $(2n, -2)$ as follows: up to and including the *first* step reaching $-1$,
+  keep the path; afterwards, swap every up-step with a down-step. This
+  "reflection" turns the remaining $n - 1$ up-steps and $n$ down-steps into
+  $n - 1$ down-steps and $n$ up-steps, so the image is a path with $n + 1$
+  down-steps and $n - 1$ up-steps ending at $(2n, -2)$ — see
+  @fig:dyck-paths. The map is a bijection: applying it again to the first
+  step reaching $-1$ of the image (interpreted with up/down swapped)
+  recovers the original path. Hence the number of bad paths is
+  $binom(2n, n - 1)$, and
+  $
+    "Dyck"_n = binom(2n, n) - binom(2n, n - 1)
+    = binom(2n, n) - binom(2n, n + 1),
+  $
+  which equals $C_n$ — the difference form alluded to in
+  #link(<def:catalan>)[the definition], here obtained combinatorially.
+  The ballot interpretation follows by mapping the grid path to a Dyck path
+  (a right step becomes an up-step and an up-step a down-step, rotated).
+] <ex:catalan-reflection>
+
 == Stirling Numbers
+
+Catalan numbers count structures on a *linearly ordered* object. The Stirling
+numbers instead measure how a set can be *split* — the basic enumeration of
+set partitions.
+
+#definition(name: "Stirling Numbers of the Second Kind")[
+  For $n >= 0$ and $0 <= k <= n$, the *Stirling number of the second kind*
+  $S(n, k)$ is the number of ways to partition an $n$-element set into $k$
+  non-empty, unlabelled blocks. By convention $S(n, 0) = 0$ for $n >= 1$ and
+  $S(0, 0) = 1$.
+] <def:stirling-second>
+
+#definition(name: "Stirling Numbers of the First Kind")[
+  The *Stirling number of the first kind* $s(n, k)$ counts the permutations
+  of an $n$-element set having exactly $k$ cycles. We work with the unsigned
+  convention throughout; in identities involving signs the factor
+  $(-1)^(n - k)$ is attached explicitly.
+] <def:stirling-first>
+
+#property[
+  Both Stirling numbers satisfy Pascal-type recurrences:
+  $
+    S(n, k) = k S(n - 1, k) + S(n - 1, k - 1),
+    quad
+    s(n, k) = (n - 1) s(n - 1, k) + s(n - 1, k - 1),
+  $
+  for $n >= 1$ and $1 <= k <= n$, with boundary values $S(n, 0) =
+  s(n, 0) = 0$ for $n >= 1$ and $S(0, 0) = s(0, 0) = 1$.
+] <prop:stirling-recurrences>
+
+#proof[
+  For $S$: partition ${1, dots, n}$ according to the fate of the element $n$.
+  If $n$ forms a single block, the remaining elements form a partition of an
+  $(n-1)$-set into $k - 1$ blocks; if not, first partition ${1, dots, n-1}$
+  into $k$ blocks ($S(n-1, k)$ ways) and insert $n$ into any one of them
+  ($k$ choices).
+
+  For $s$: write each permutation of ${1, dots, n}$ as cycles.
+  If $n$ is a fixed point, remove it to get a permutation of $n - 1$
+  elements with $k - 1$ cycles. Otherwise insert $n$ into one of the $n - 1$
+  positions of a permutation of ${1, dots, n - 1}$ with $k$ cycles (after any
+  of the $n - 1$ existing symbols), and this correspondence is bijective.
+]
+
+#theorem(name: "Change of Basis")[
+  For all $n >= 0$,
+  $
+    x^n = sum_(k=0)^n S(n, k) x^underline(k),
+    quad
+    x^underline(n) = sum_(k=0)^n (-1)^(n - k) s(n, k) x^k,
+  $
+  where $x^underline(k) = x (x - 1) dots (x - k + 1)$ is the falling
+  factorial. In matrix language, the matrices $(S(n, k))$ and
+  $((-1)^(n-k) s(n, k))$ are inverses of each other.
+] <thm:stirling-connection>
+
+#proof[
+  First identity: both sides are polynomials in $x$, so it suffices to check
+  them at all non-negative integers $x = m$. A function $f: {1, dots, n} ->
+  {1, dots, m}$ factors uniquely as (a partition of the domain into the
+  non-empty fibres) followed by (a labelling of the $k$ fibres by values).
+  Classifying by the number $k$ of fibres:
+  $
+    m^n = sum_(k=0)^n S(n, k) m^underline(k),
+  $
+  since choosing which $k$ of the $m$ values occur and requiring each to
+  occur gives $m^underline(k)$ labellings. Second identity: the falling
+  factorial counts *injective* functions ${1, dots, n} -> {1, dots, x}$
+  when $x$ is a non-negative integer, and injectivity excludes pairs of
+  elements sharing a value; classifying injections by their partition into
+  fibres and applying inclusion–exclusion — or inducting on $n$ with
+  #link(<prop:stirling-recurrences>)[the recurrence of
+    #link(<def:stirling-first>)[$s$]] — yields the signed expansion.
+  The two identities are inverse change-of-basis formulas between the bases
+  $(x^n)$ and $(x^underline(n))$ of the polynomial ring, which is the matrix
+  statement.
+]
+
+#example[
+  The first rows of $S(n, k)$:
+
+  #table(
+    columns: 6,
+    align: center,
+    table.header[$n backslash k$][$0$][$1$][$2$][$3$][$4$],
+    [$0$], [$1$], [], [], [], [],
+    [$1$], [$0$], [$1$], [], [], [],
+    [$2$], [$0$], [$1$], [$1$], [], [],
+    [$3$], [$0$], [$1$], [$3$], [$1$], [],
+    [$4$], [$0$], [$1$], [$7$], [$6$], [$1$],
+  )
+
+  For instance $S(4, 2) = 7$: writing each partition with a vertical bar
+  between its two blocks, they are
+  $12 | 34, quad 13 | 24, quad 14 | 23, quad 123 | 4, quad 124 | 3,
+  quad 134 | 2, quad 234 | 1$.
+] <ex:stirling-table>
+
+#example[
+  Revisiting #link(<ex:onto-functions>)[the surjection count from the
+    inclusion–exclusion chapter]: a surjection ${1, dots, m} -> {1, dots, n}$
+  is exactly a set partition into $n$ non-empty fibres together with a
+  bijection from fibres to values, so
+  $
+    "Sur"(m, n) = n! S(m, n).
+  $
+  The inclusion–exclusion formula
+  $sum_(k=0)^n (-1)^k binom(n, k)(n - k)^m$ and the Stirling recurrence
+  compute the same numbers by different means: the former evaluates fast for
+  fixed $n$, the latter tabulates the whole triangle at once.
+] <ex:stirling-onto>
 
 == Bell Numbers
 
+Summing over the number of blocks turns the Stirling triangle into a single
+sequence counting *all* set partitions.
+
+#definition(name: "Bell Numbers")[
+  The $n$-th *Bell number* is the number of partitions of an $n$-element
+  set:
+  $
+    B_n = sum_(k=0)^n S(n, k).
+  $
+] <def:bell>
+
+#example[
+  $B_3 = 5$: the partitions of ${1, 2, 3}$ are
+  $123, quad 1 | 23, quad 2 | 13, quad 3 | 12, quad 1 | 2 | 3$
+  (one block, three two-block splits, three singletons). The first values
+  are $B_0 = 1, B_1 = 1, B_2 = 2, B_3 = 5, B_4 = 15, B_5 = 52$.
+] <ex:bell-partitions>
+
+#property[
+  The Bell numbers satisfy the recurrence
+  $
+    B_(n+1) = sum_(k=0)^n binom(n, k) B_k,
+  $
+  and their exponential generating function from
+  #link(<def:generating-functions>)[the EGF] is
+  $
+    B(x) = sum_(n=0)^infinity B_n x^n / n! = e^(e^x - 1).
+  $
+] <prop:bell-egf>
+
+#proof[
+  For the recurrence, classify partitions of ${1, dots, n + 1}$ by the block
+  containing $n + 1$: if the other elements of that block are chosen from
+  $n - k$ of the $n$ remaining elements (equivalently, $k$ elements are left
+  out, in $binom(n, k)$ ways), the excluded $k$ elements are partitioned
+  freely in $B_k$ ways.
+
+  For the EGF, fix the number of blocks $k$. Splitting an $n$-set into $k$
+  labelled non-empty blocks and then forgetting the labels, the EGF of
+  $S(n, k)$ over $n$ is $(e^x - 1)^k \/ k!$ — each labelled block contributes
+  the EGF $e^x - 1$ of a non-empty set, and the $k!$ removes the labelling.
+  Summing over $k$ and using the exponential series,
+  $
+    B(x) = sum_(k=0)^infinity (e^x - 1)^k / k! = e^(e^x - 1).
+  $
+]
+
 == Schroder Numbers
+
+Catalan paths take unit steps; allowing *diagonal* shortcuts gives the last
+family of this chapter.
+
+#definition(name: "Schröder Numbers")[
+  The $n$-th (large) *Schröder number* $R_n$ is the number of lattice paths
+  from $(0, 0)$ to $(n, n)$ that use steps $(1, 0)$ (east), $(0, 1)$ (north)
+  and $(1, 1)$ (diagonal) and never go above the diagonal $y = x$. The first
+  values are
+  $
+    R_0 = 1, R_1 = 2, R_2 = 6, R_3 = 22, R_4 = 90, R_5 = 394.
+  $
+] <def:schroder>
+
+#example[
+  For $n = 2$ the $R_2 = 6$ paths are, written as words in the steps $E$,
+  $N$, $D$ (diagonal):
+  $
+    E E N N, quad E N E N, quad D E N, quad E D N, quad E N D, quad D D.
+  $
+  Every word starting with $N$ immediately crosses the diagonal, and $D N E$
+  crosses it after its second step, so the six words above exhaust the
+  possibilities: two without a diagonal, three with one, one with two.
+] <ex:schroder-paths>
+
+#note[
+  Splitting at the last diagonal-free segment gives the functional equation
+  for the ordinary generating function $R(x) = sum_(n>=0) R_n x^n$:
+  $
+    R(x) = 1 + x R(x) + x R(x)^2,
+  $
+  whose solution (the branch with $R(0) = 1$) is
+  $R(x) = (1 - x - sqrt(1 - 6x + x^2)) / (2x)$. Comparing with
+  #link(<prop:catalan-recurrences>)[the Catalan equation] $G = 1 + x G^2$,
+  the Schröder equation is the Catalan equation plus the single-step option
+  $x R$: the two families are linked by
+  $R_n = sum_(k=0)^n binom(n + k, 2k) C_k$, and the *small* Schröder numbers
+  $R_n \/ 2$ ($n >= 1$) count the same paths in which no diagonal step lies
+  on the main diagonal.
+]
 
 #part("Existence and Extremal")
 
