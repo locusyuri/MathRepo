@@ -38,9 +38,8 @@ This repository collects bilingual mathematics notes organized by subject. The l
 - [Théorie des Graphes | 图论](https://lis-azure.vercel.app/notes/th%C3%A9orie-des-graphes)
 
 ## 5.Statistique | 统计学
-- [Probabilités | 机率论](https://lis-azure.vercel.app/notes/probabilit%C3%A9s)
+- [Probabilités | 概率论](https://lis-azure.vercel.app/notes/probabilit%C3%A9s)
 - [Processus Stochastique | 随机过程](https://lis-azure.vercel.app/notes/processus-stochastique)
-- [Statistiques Mathématiques | 数理统计](https://lis-azure.vercel.app/notes/statistiques-math%C3%A9matiques)
 
 
 ## 6.Mathématiques appliquées | 应用数学
