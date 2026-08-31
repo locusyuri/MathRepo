@@ -58,10 +58,10 @@
   3. $C_n^k = C_n^(n-k)$.
   4. $A_n^k = k! C_n^k$.
   5. $C_n^k = C_(n-1)^(k-1) + C_(n-1)^k$ (*Pascal triangle/YangHui triangle*)#footnote[
-    This property can also be understood that to choose $k$ elements from $n + 1$, you can first take one element A:
-    + The number of ways that include A is $C_(n)^(k-1)$;
-    + The number of ways that does not include A is $C_(n)^(k)$.
-  ].
+      This property can also be understood that to choose $k$ elements from $n + 1$, you can first take one element A:
+      + The number of ways that include A is $C_(n)^(k-1)$;
+      + The number of ways that does not include A is $C_(n)^(k)$.
+    ].
 
   In Pascal triangle, each element is equal to the sum of the two elements directly above it.
 
@@ -69,7 +69,7 @@
     image("img/pascal_triangle.png", width: 80%),
     caption: [Pascal triangle (YangHui triangle).],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:pascal_triangle>
 
   6. $(a+b)^n = sum_(k=0)^n C_n^k a^k b^(n-k)$ (*Binomial theorem*).
@@ -81,7 +81,7 @@
     image("img/pascal_and_binomial.png", width: 80%),
     caption: [Pascal triangle and Binomial theorem.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:pascal_and_binomial>
 ]
 
@@ -92,9 +92,11 @@
 
 = Binomial Coefficients
 
-#note[
-  This chapter currently contains only a title in the LaTeX source.
-]
+== Binomial Theorem
+
+== Basic Combinatorial Identities
+
+== Multinomial Coefficients
 
 #part("Advanced Counting")
 
@@ -116,9 +118,7 @@ Common categories:
   otherwise it is non-homogeneous.
 - *Linear vs. non-linear*:
   A recurrence is linear if each term is a linear combination of previous terms, e.g.
-  $
-    a_n = c_1 a_(n-1) + c_2 a_(n-2) + dots + c_k a_(n-k)
-  $.
+  $ a_n = c_1 a_(n-1) + c_2 a_(n-2) + dots + c_k a_(n-k) $.
 - *Constant coefficients vs. variable coefficients*:
   If coefficients are constants, it has constant coefficients; otherwise variable coefficients.
 
@@ -153,7 +153,7 @@ Common categories:
     image("img/Hanoi.png", width: 80%),
     caption: [Tower of Hanoi problem.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:hanoi>
 ]
 
@@ -182,7 +182,7 @@ Common categories:
 
 === Integer Partitions
 
-= Inclusion-Exclusion Principle
+= Inclusion-Exclusion and Sieve Methods
 
 == Inclusion-Exclusion Principle
 
@@ -199,7 +199,7 @@ Common categories:
   Denote
   $
     S_k = sum_(1 <= i_1 < i_2 < dots < i_k <= n)
-      abs(A_(i_1) inter A_(i_2) inter dots inter A_(i_k)),
+    abs(A_(i_1) inter A_(i_2) inter dots inter A_(i_k)),
     quad k = 1, 2, dots, n.
   $
   Then
@@ -235,6 +235,8 @@ $
   = abs(U) - abs(inter.big_(i=1)^n overline(A_i))
   = abs(U) - sum_(k=0)^n (-1)^k S_k.
 $
+
+== Applications of Inclusion-Exclusion
 
 == Mobius Inversion
 
@@ -296,28 +298,28 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
   Catalan numbers satisfy multiple recurrences:
 
   1.
-     $
-       C_n = sum_(i=0)^(n-1) C_i C_(n-1-i), quad (n >= 1), quad C_0 = 1.
-     $
-     This recurrence relation reflects the self-similarity of Catalan numbers.
+    $
+      C_n = sum_(i=0)^(n-1) C_i C_(n-1-i), quad (n >= 1), quad C_0 = 1.
+    $
+    This recurrence relation reflects the self-similarity of Catalan numbers.
 
   2.
-     $
-       C_n = (2(2n-1)/(n+1)) C_(n-1), quad (n >= 1), quad C_0 = 1.
-     $
-     This recurrence relation can be derived from the closed-form expression of Catalan numbers.
+    $
+      C_n = (2(2n-1)/(n+1)) C_(n-1), quad (n >= 1), quad C_0 = 1.
+    $
+    This recurrence relation can be derived from the closed-form expression of Catalan numbers.
 
   3. Let $G(x) = sum_(n=0)^infinity C_n x^n$ be the generating function of Catalan numbers.
-     Then $G(x)$ satisfies the functional equation:
-     $
-       G(x) = 1 + x G(x)^2,
-     $
-     id est,
-     $
-       G(x) = (1 - sqrt(1-4x))/(2x).
-     $
-     This functional equation can be used to derive the closed-form expression of Catalan numbers
-     using the Lagrange inversion formula.
+    Then $G(x)$ satisfies the functional equation:
+    $
+      G(x) = 1 + x G(x)^2,
+    $
+    id est,
+    $
+      G(x) = (1 - sqrt(1-4x))/(2x).
+    $
+    This functional equation can be used to derive the closed-form expression of Catalan numbers
+    using the Lagrange inversion formula.
 ]
 
 #v(0.7cm)
@@ -356,6 +358,15 @@ Catalan numbers is the answer to many combinatorial problems:
 
 #part("Existence and Extremal")
 
+// --------------------------------------------------------------------------
+// Boundary note (structure design):
+// - Graph theory is used informally in this part (Ramsey, extremal, matchings);
+//   a systematic treatment belongs to a separate note (Theorie des Graphes, planned).
+// - Group actions used by Burnside / Polya counting are developed in
+//   Algèbre Abstraite; only the enumeration side is treated here.
+// - Probability generating functions are developed in Probabilités.
+// --------------------------------------------------------------------------
+
 = Pigeonhole Principle
 
 #note[
@@ -364,9 +375,21 @@ Catalan numbers is the answer to many combinatorial problems:
 
 = Extremal Principle
 
-#note[
-  This chapter currently contains only a title in the LaTeX source.
-]
+== Double Counting
+
+== Averaging Arguments
+
+== Sperner's Theorem
+
+== Erdos-Ko-Rado Theorem
+
+== Probabilistic Method
+
+= Systems of Distinct Representatives
+
+== Hall's Theorem
+
+== Matchings in Bipartite Graphs
 
 = Ramsey Theory
 
@@ -384,9 +407,11 @@ Catalan numbers is the answer to many combinatorial problems:
 
 = Polya Counting
 
-#note[
-  This chapter currently contains only a title in the LaTeX source.
-]
+== Group Actions
+
+== Burnside's Lemma
+
+== Polya's Enumeration Theorem
 
 
 #bibliography("references.bib")
