@@ -27,6 +27,448 @@
 #part("Fundamentals of Probability")
 = Random Events and Probability // 随机事件与概率
 
+== Random Events and Operations // 随机事件及其运算
+
+Probability theory is the mathematical study of *random phenomena* —
+experiments whose outcome cannot be predicted with certainty even when
+repeated under identical conditions. A *random experiment* is characterized by
+three features: it can be repeated under (at least conceptually) identical
+conditions; the set of all possible outcomes is known in advance; and the
+individual outcome of a single trial is not predictable.
+
+#definition(name: "Sample Space")[
+  The set of all possible outcomes of a random experiment is called its
+  *sample space*, denoted $Omega$; each individual outcome $omega$ is a
+  *sample point*.
+] <def:sample-space>
+
+#example[
+  - Tossing a coin once: $Omega = {H, T}$.
+  - Rolling a die: $Omega = {1, 2, 3, 4, 5, 6}$.
+  - Recording the lifetime of a light bulb: $Omega = [0, infinity)$, an
+    uncountable sample space.
+] <ex:sample-spaces>
+
+#definition(name: "Random Event")[
+  A *random event* is a subset of the sample space $Omega$. An event $A$
+  *occurs* if the observed outcome $omega$ belongs to $A$. An event consisting
+  of a single point is *elementary* (a *simple event*). The whole space
+  $Omega$ is the *certain event* (always occurs) and the empty set is the
+  *impossible event* (never occurs).
+] <def:event>
+
+Events are mathematical objects of exactly the same nature as sets, so the
+set language developed in the Théorie des Ensembles note applies verbatim —
+the only difference is vocabulary ("or" for union, "and" for intersection).
+
+#definition(name: "Relations between Events")[
+  Let $A, B$ be events in $Omega$.
+
+  - $A$ *implies* $B$ (written $A subset.eq B$) if every outcome of $A$ is an
+    outcome of $B$;
+  - $A$ and $B$ are *equal* (written $A = B$) if $A subset.eq B$ and
+    $B subset.eq A$;
+  - $A$ and $B$ are *mutually exclusive* (disjoint) if $A inter B = emptyset$;
+  - $A$ and $B$ are *complementary* (opposite) if $A inter B = emptyset$ and
+    $A union B = Omega$; the complement of $A$ is written $overline(A)$.
+] <def:event-relations>
+
+#definition(name: "Operations on Events")[
+  The operations on events are the set operations: $A union B$ ("$A$ or
+  $B$"), $A inter B$ ("$A$ and $B$"), and the difference
+  $
+    A backslash B = A inter overline(B).
+  $
+  Unions and intersections extend to arbitrary families
+  $union.big_(i) A_i$, $inter.big_(i) A_i$, and they obey the *De Morgan
+  laws*
+  $
+    overline(A union B) = overline(A) inter overline(B),
+    quad
+    overline(A inter B) = overline(A) union overline(B).
+  $
+] <def:event-operations>
+
+#example[
+  Roll a die and let $A = {2, 4, 6}$ (even), $B = {1, 2, 3}$ (at most $3$).
+  Then
+  $
+    A union B = {1, 2, 3, 4, 6},
+    quad
+    A inter B = {2},
+    quad
+    A backslash B = {4, 6},
+    quad
+    overline(A) = {1, 3, 5}.
+  $
+  The events $A$ and $overline(B) = {4, 5, 6}$ are not disjoint, since
+  $A inter overline(B) = {4, 6} != emptyset$; likewise $A$ and $B$ share the
+  point $2$.
+  De Morgan's law checks: $overline(A union B) = {5} = overline(A) inter
+  overline(B) = {1, 3, 5} inter {4, 5, 6} = {5}$.
+] <ex:event-operations>
+
+#figure(
+  image("img/venn-operations.svg", width: 78%),
+  caption: [Venn diagrams of the four basic operations on two events
+    $A, B$: union $A union B$ (top left), intersection $A inter B$ (top
+    right), difference $A backslash B$ (bottom left), and complement
+    $overline(A)$ (bottom right).],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:venn-operations>
+
+In finitely many-outcome experiments it is natural to allow *every* subset as
+an event. For general sample spaces, however, one restricts attention to a
+family closed under the operations above.
+
+#definition(name: "Event Field")[
+  A *field of events* (a $sigma$-field on $Omega$) is a family
+  $F$ of subsets of $Omega$ such that
+
+  - $Omega in F$;
+  - $A in F$ implies $overline(A) in F$;
+  - $A_1, A_2, dots in F$ implies $union.big_(n=1)^infinity A_n in F$.
+
+  The pair $(Omega, F)$ is called a *measurable space*, and the elements of
+  $F$ are the *events*.
+] <def:event-field>
+
+#note[
+  The systematic construction of $sigma$-fields belongs to measure theory and
+  is developed in the Théorie des Ensembles note. Throughout this note the
+  ambient $sigma$-field is tacitly fixed: $F = {cal(P)}(Omega)$ for finite or
+  countable $Omega$, and the Borel $sigma$-field for $Omega = RR$.
+]
+
+Events describe *what can happen*; assigning numbers to events — measuring
+"how likely" each one is — is the task of the next section, and a random
+variable will then simply be a device that converts outcomes into numbers so
+that distributions can be studied with the tools of analysis.
+
+== Definitions of Probability // 概率的定义
+
+Intuitively, the probability of an event is a number measuring the likelihood
+of its occurrence. This intuition acquires mathematical meaning through an
+axiom system; before stating it, we examine the empirical notion from which
+it abstracts.
+
+#property(name: "Frequencies and Their Stability")[
+  Repeating an experiment $n$ times, let $n_A$ be the number of trials in
+  which the event $A$ occurs. The ratio
+  $
+    f_n(A) = n_A / n
+  $
+  is the *frequency* of $A$. Frequencies satisfy $0 <= f_n(A) <= 1$,
+  $f_n(Omega) = 1$, and $f_n(A union B) = f_n(A) + f_n(B)$ whenever
+  $A inter B = emptyset$. Empirically, as $n$ grows, $f_n(A)$ *stabilizes*
+  around a definite value — the frequency interpretation of probability.
+] <prop:frequency-stability>
+
+The stabilization of frequencies is itself a theorem, not an axiom — it is
+Bernoulli's law of large numbers, proved in the Limit Theorems part. What the
+axiomatic definition does is to fix the *idealized limit object* directly and
+derive everything else from it.
+
+#definition(name: "Axiomatic Definition of Probability")[
+  Let $(Omega, F)$ be a measurable space. A *probability measure* is a
+  function $P: F -> [0, 1]$ such that
+
+  - (non-negativity) $P(A) >= 0$ for all $A in F$;
+  - (normalization) $P(Omega) = 1$;
+  - (countable additivity) for every sequence of pairwise disjoint events
+    $A_1, A_2, dots$,
+    $
+      P(union.big_(n=1)^infinity A_n) = sum_(n=1)^infinity P(A_n).
+    $
+
+  The triple $(Omega, F, P)$ is a *probability space*.
+] <def:probability-axioms>
+
+#definition(name: "Classical Probability")[
+  Let $Omega$ be finite and all its outcomes equally likely (the *classical
+  model*). For $A subset.eq Omega$,
+  $
+    P(A) = abs(A) / abs(Omega)
+    = ("favourable outcomes") / ("possible outcomes").
+  $
+] <def:classical-probability>
+
+#example[
+  An urn contains $N$ balls, $K$ of them red; $n$ balls are drawn. Let
+  $A_(n, k)$ be the event "exactly $k$ red balls are drawn". According to the
+  drawing protocol, the classical formula gives:
+
+  - *without replacement, unordered* (hypergeometric model):
+    $
+      P(A_(n, k)) = binom(K, k) binom(N - K, n - k) / binom(N, n);
+    $
+  - *without replacement, ordered*: the count of ordered draws with $k$ red
+    balls divided by $N^underline(n)$ gives the same value — the ordering
+    cancels;
+  - *with replacement, ordered* (binomial model):
+    $
+      P(A_(n, k)) = binom(n, k) (K \/ N)^k (1 - K \/ N)^(n - k);
+    $
+  - *with replacement, unordered*: a third value, rarely of practical
+    interest, as physical drawing protocols are ordered.
+
+  The lesson: the probability depends on the *physical protocol*, and the
+  combinatorial bookkeeping must match it.
+] <ex:balls-sampling>
+
+#example[
+  (Matching problem.) $n$ gentlemen check their hats; the hats are returned at
+  random, one to each. What is the probability that *at least one* gentleman
+  receives his own hat? Let $A_i$ be the event that gentleman $i$ gets his
+  own hat. The event of interest is $union.big_(i=1)^n A_i$, and the
+  inclusion–exclusion principle (proved in the Combinatoire note) with
+  $abs(A_(i_1) inter dots inter A_(i_k)) = (n - k)!$ gives
+  $
+    P(union.big_(i=1)^n A_i)
+    = sum_(k=1)^n (-1)^(k+1) binom(n, k) (n - k)! / n!
+    = 1 - sum_(k=0)^n (-1)^k / k!
+    -> 1 - 1 / e quad (n -> infinity),
+  $
+  where the last step uses the derangement count established in the
+  Combinatoire note. The probability is already about $0.632$ for small
+  $n$ and stays there.
+] <ex:matching-problem>
+
+#definition(name: "Geometric Probability")[
+  Let $Omega subset.eq RR^d$ be a region of finite measure (length, area or
+  volume) and suppose the outcome is "uniformly distributed" over $Omega$ in
+  the sense that the probability of landing in a region depends only on its
+  measure. For $A subset.eq Omega$,
+  $
+    P(A) = m(A) / m(Omega),
+  $
+  where $m$ is length, area or volume as appropriate.
+] <def:geometric-probability>
+
+#example[
+  (The meeting problem.) Two friends agree to meet at a fixed spot between
+  noon and $1$ pm; each arrives at a time uniformly distributed over the
+  hour, independently of the other, and waits $15$ minutes before leaving.
+  What is the probability that they meet? Model the two arrival times by a
+  point $(x, y)$ of the square $[0, 1]^2$; they meet iff
+  $abs(x - y) <= 1 \/ 4$ (see @fig:meeting-problem). The complementary
+  region consists of two triangles of total area $(3 \/ 4)^2$, so
+  $
+    P("they meet") = 1 - (3 / 4)^2 = 7 / 16.
+  $
+] <ex:meeting-problem>
+
+#figure(
+  image("img/meeting-problem.svg", width: 62%),
+  caption: [The meeting problem: the square $[0, 1]^2$ of arrival-time pairs;
+    the shaded band $abs(x - y) <= 1 \/ 4$ is the meeting region, and the two
+    unshaded right triangles form its complement.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:meeting-problem>
+
+#caution[
+  (Bertrand's paradox.) Choose "a chord of a circle at random" and ask for the
+  probability that it is longer than the side of the inscribed equilateral
+  triangle. Three natural-sounding randomization mechanisms give different
+  answers: uniformly chosen endpoints give $1 \/ 3$; a uniformly chosen radius
+  with a uniformly chosen point on it gives $1 \/ 2$; a uniformly chosen chord
+  midpoint in the disc gives $1 \/ 4$. The paradox does not reveal a
+  contradiction in probability theory — it shows that "uniformly random" must
+  specify *the mechanism generating the outcomes*, exactly as the urn example
+  of #link(<ex:balls-sampling>)[the drawing protocols] warned. A geometric
+  model is well-posed only once $Omega$ and its uniform measure are pinned
+  down.
+] <caution:bertrand>
+
+#note[
+  (Subjective probability.) In situations with no repeatable experiment —
+  e.g. "the candidate will win the election" — practitioners assign
+  *degrees of belief* obeying the same axioms. This Bayesian viewpoint,
+  axiomatized by de Finetti and Savage, will resurface when prior
+  distributions are discussed; the present note works with the objective
+  axiomatic framework of #link(<def:probability-axioms>)[Kolmogorov].
+]
+
+== Properties of Probability // 概率的性质
+
+The axioms of #link(<def:probability-axioms>)[the definition] already contain
+the whole theory of $P$; this section unwinds its first consequences.
+
+#property(name: "Finite Additivity and Consequences")[
+  Let $P$ be a probability measure.
+
+  - $P(emptyset) = 0$;
+  - finite additivity: for pairwise disjoint $A_1, dots, A_n$,
+    $
+      P(union.big_(i=1)^n A_i) = sum_(i=1)^n P(A_i);
+    $
+  - complement rule: $P(overline(A)) = 1 - P(A)$;
+  - Boole's inequality (subadditivity): for any events $A_1, dots, A_n$,
+    $
+      P(union.big_(i=1)^n A_i) <= sum_(i=1)^n P(A_i).
+    $
+] <prop:probability-additivity>
+
+#proof[
+  Take $A_1 = Omega$ and $A_n = emptyset$ for $n >= 2$ in countable
+  additivity: $1 = P(Omega) = P(Omega) + P(emptyset) + P(emptyset) + dots$,
+  so $P(emptyset) = 0$. For finite additivity, extend a finite disjoint
+  family by infinitely many copies of $emptyset$ and use countable
+  additivity. The complement rule follows from disjointness of $A$ and
+  $overline(A)$. For Boole's inequality, decompose $union A_i$ into
+  pairwise disjoint pieces $B_i = A_i backslash (A_1 union dots union
+    A_(i-1))$, note $B_i subset.eq A_i$, and apply finite additivity to the
+  $B_i$ together with #link(<prop:probability-monotonicity>)[monotonicity].
+]
+
+#property(name: "Monotonicity and Difference")[
+  If $A subset.eq B$ then
+  $
+    P(B backslash A) = P(B) - P(A),
+    quad "hence"
+    quad P(A) <= P(B).
+  $
+  In particular $P(A) <= 1$ for every event $A$.
+] <prop:probability-monotonicity>
+
+#property(name: "Addition Formula")[
+  For any two events,
+  $
+    P(A union B) = P(A) + P(B) - P(A inter B),
+  $
+  and for any three,
+  $
+    P(A union B union C)
+    = P(A) + P(B) + P(C)
+    - P(A inter B) - P(A inter C) - P(B inter C)
+    + P(A inter B inter C).
+  $
+] <prop:addition-formula>
+
+#proof[
+  Decompose $A union B$ into the disjoint union
+  $A union B = A union (B backslash (A inter B))$ and apply
+  #link(<prop:probability-additivity>)[finite additivity] together with
+  #link(<prop:probability-monotonicity>)[the difference formula]. The
+  three-event version follows by the same decomposition, or directly by the
+  inclusion–exclusion pattern known from the Combinatoire note.
+]
+
+The next theorem extends the addition pattern from finite unions to limits of
+monotone sequences of events; it relies on the notion of limits of sequences
+of sets from the Théorie des Ensembles note.
+
+#theorem(name: "Continuity of Probability")[
+  Let $(A_n)_(n >= 1)$ be a sequence of events.
+
+  - If $A_1 subset.eq A_2 subset.eq dots$ is increasing, then
+    $
+      P(union.big_(n=1)^infinity A_n) = lim_(n -> infinity) P(A_n).
+    $
+  - If $A_1 supset.eq A_2 supset.eq dots$ is decreasing, then
+    $
+      P(inter.big_(n=1)^infinity A_n) = lim_(n -> infinity) P(A_n).
+    $
+] <thm:continuity-probability>
+
+#proof[
+  For the increasing case, set $A_0 = emptyset$ and decompose the union into
+  the disjoint rings
+  $B_n = A_n backslash A_(n - 1)$, so that
+  $union.big_(n>=1) A_n = union.big_(n>=1) B_n$ with $B_i inter B_j =
+  emptyset$ for $i != j$. Countable additivity and
+  #link(<prop:probability-monotonicity>)[the difference formula] give
+  $
+    P(union.big_(n=1)^infinity A_n)
+    = sum_(n=1)^infinity P(B_n)
+    = lim_(N -> infinity) sum_(n=1)^N (P(A_n) - P(A_(n-1)))
+    = lim_(N -> infinity) P(A_N),
+  $
+  the series telescoping. The decreasing case follows by taking complements:
+  apply the increasing case to $overline(A_1) subset.eq overline(A_2) subset.eq
+  dots$ and use the complement rule.
+]
+
+Monotone limits prepare the language of "infinitely often", on which the
+strong limit theorems of the Limit Theorems part rest.
+
+#theorem(name: "Borel–Cantelli Lemmas")[
+  Let $(A_n)_(n >= 1)$ be a sequence of events. The *upper limit*
+  $lim"sup" A_n$ of the sequence is the event "$A_n$ infinitely often"
+  ($A_n$ "i.o." for short):
+  $
+    lim"sup" A_n
+    = inter.big_(N=1)^infinity union.big_(n=N)^infinity A_n.
+  $
+
+  - (First lemma) If $sum_(n=1)^infinity P(A_n) < infinity$, then
+    $P(lim"sup" A_n) = 0$.
+  - (Second lemma) If the $A_n$ are mutually independent and
+    $sum_(n=1)^infinity P(A_n) = infinity$, then
+    $P(lim"sup" A_n) = 1$.
+] <thm:borel-cantelli>
+
+#proof[
+  (First lemma.) For every $N$,
+  $lim"sup" A_n subset.eq union.big_(n=N)^infinity A_n$, so by
+  #link(<prop:probability-additivity>)[Boole's inequality] (iterated)
+  $
+    P(lim"sup" A_n)
+    <= sum_(n=N)^infinity P(A_n)
+    -> 0 quad "as" N -> infinity,
+  $
+  since the tail of a convergent series tends to zero. (Second lemma:
+  independence enters through a product inequality; its proof is deferred to
+  the Limit Theorems part where independence in the limit sense has been
+  developed.)
+]
+
+== Combinatorial Methods // 组合方法
+
+In the classical model of #link(<def:classical-probability>)[the definition],
+computing $P(A) = abs(A) \/ abs(Omega)$ is a *counting problem*. The tools —
+permutations, combinations, and the addition and multiplication principles —
+are developed once and for all in the Combinatoire note and are used here
+without restatement; the examples below are chosen for their probabilistic
+content.
+
+#example[
+  (Inclusion–exclusion in probability.) An integer is drawn uniformly at
+  random from ${1, 2, dots, 1000}$. Let $D_2, D_3, D_5$ be the events that
+  it is divisible by $2, 3, 5$ respectively. Then
+  $P(D_2) = 1 \/ 2$, $P(D_3) = 1 \/ 3$, $P(D_5) = 1 \/ 5$, and
+  $P(D_i inter D_j) = 1 \/ (i j)$ for distinct $i, j$, while
+  $P(D_2 inter D_3 inter D_5) = 1 \/ 30$. By the inclusion–exclusion
+  principle (the Combinatoire note again),
+  $
+    P(D_2 union D_3 union D_5)
+    = 1/2 + 1/3 + 1/5 - 1/6 - 1/10 - 1/15 + 1/30
+    = 11 / 15.
+  $
+] <ex:inclusion-exclusion-prob>
+
+#example[
+  (Pólya's urn.) An urn initially contains $a$ red and $b$ black balls. At
+  each step one ball is drawn uniformly at random, its colour is noted, and
+  it is returned together with $c$ additional balls of the *same colour*.
+  Remarkably, the probability of drawing a red ball at step $k$ equals
+  $a / (a + b)$ *for every* $k$: letting $X_(k-1)$ be the number of red
+  balls drawn in the first $k - 1$ steps (and writing $E[X_(k-1)]$ for its
+  average over the drawing protocols — the notion of expectation is made
+  precise in the Numerical Characteristics part), the induction hypothesis
+  $E[X_(k-1)] = (k - 1) a / (a + b)$ (trivial for $k = 1$) gives
+  $
+    P("red at step " k)
+    = E[(a + c X_(k-1)) / (a + b + (k - 1) c)]
+    = (a + c (k - 1) a / (a + b)) / (a + b + (k - 1) c)
+    = a / (a + b).
+  $
+  The model produces reinforced randomness — early draws bias later ones —
+  yet the marginal probability of each draw stays constant; this self-reinforcing
+  structure reappears in Bayesian statistics as a predictive scheme.
+] <ex:polya-urn>
 
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
