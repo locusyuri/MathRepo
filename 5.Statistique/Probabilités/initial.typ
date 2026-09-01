@@ -470,6 +470,285 @@ content.
   structure reappears in Bayesian statistics as a predictive scheme.
 ] <ex:polya-urn>
 
+= Conditional Probability and Independence // 条件概率与独立性
+
+== Conditional Probability // 条件概率
+
+New information changes probabilities. Knowing that event $B$ has occurred
+restricts the sample space from $Omega$ to $B$, and the likelihood of $A$
+must be re-evaluated *within this reduced space*.
+
+#definition(name: "Conditional Probability")[
+  Let $B in F$ with $P(B) > 0$. The *conditional probability* of $A$ given
+  $B$ is
+  $
+    P(A | B) = (P(A inter B)) / (P(B)).
+  $
+] <def:conditional-probability>
+
+#property(name: "Conditional Probability is a Probability")[
+  For fixed $B$ with $P(B) > 0$, the map $A mapsto P(A | B)$ is a
+  probability measure on $(Omega, F)$: it is non-negative, satisfies
+  $P(Omega | B) = 1$, and is countably additive.
+] <prop:cond-prob-measure>
+
+#proof[
+  Non-negativity is clear since $P(A inter B) >= 0$. Normalization:
+  $P(Omega | B) = P(B) / P(B) = 1$. Countable additivity: for pairwise
+  disjoint $A_1, A_2, dots$, the sets $A_n inter B$ are pairwise disjoint as
+  well, so countable additivity of $P$ gives
+  $
+    P(union.big_(n=1)^infinity A_n | B)
+    = (P((union.big_(n=1)^infinity A_n) inter B)) / (P(B))
+    = sum_(n=1)^infinity (P(A_n inter B)) / (P(B))
+    = sum_(n=1)^infinity P(A_n | B).
+  $
+]
+
+All properties proved in the preceding chapter therefore transfer verbatim
+to $P(dot | B)$ — additivity, monotonicity, the addition formula,
+continuity. Rewriting the definition as a product yields the workhorse of
+sequential computations.
+
+#property(name: "Multiplication Rule")[
+  If $P(B) > 0$, then $P(A inter B) = P(B) P(A | B)$. More generally,
+  for events $A_1, dots, A_n$ with $P(A_1 inter dots inter A_(n-1)) > 0$,
+  $
+    P(A_1 inter A_2 inter dots inter A_n)
+    = P(A_1) P(A_2 | A_1) P(A_3 | A_1 inter A_2)
+    dots P(A_n | A_1 inter dots inter A_(n-1)).
+  $
+] <prop:multiplication-rule>
+
+#proof[
+  The two-event case is the definition rearranged. The chain version
+  follows by induction: multiply the definition of
+  $P(A_n | A_1 inter dots inter A_(n-1))$ by
+  $P(A_1 inter dots inter A_(n-1))$, which is positive by hypothesis, and
+  apply the induction hypothesis to the product.
+]
+
+#example[
+  (Drawing lots is fair.) $n$ people draw lots from a box containing one
+  winning slip and $n - 1$ blanks, one after another without replacement.
+  Intuition suggests — and suspicion doubts — that drawing early is
+  advantageous. Let $W_i$ be the event that person $i$ wins. By
+  #link(<prop:multiplication-rule>)[the multiplication rule], for person
+  $k$ the preceding $k - 1$ draws must all miss:
+  $
+    P(W_k)
+    = P(overline(W_1)) P(overline(W_2) | overline(W_1))
+    dots P(W_k | overline(W_1) inter dots inter overline(W_(k-1)))
+    = (n-1)/n dot (n-2)/(n-1) dots 1/(n-k+1)
+    = 1 / n.
+  $
+  The probability of winning does not depend on the position: the protocol
+  is fair.
+] <ex:lottery-fairness>
+
+== Total Probability and Bayes' Theorem // 全概率公式与 Bayes 公式
+
+Conditional probabilities come with a dividend: the reduced space can be
+*decomposed*, and probabilities reassembled from the pieces.
+
+#definition(name: "Partition of the Sample Space")[
+  Events $B_1, B_2, dots, B_n$ form a *partition* of $Omega$ if they are
+  pairwise disjoint, have positive probability, and
+  $
+    B_1 union B_2 union dots union B_n = Omega.
+  $
+] <def:partition>
+
+#theorem(name: "Law of Total Probability")[
+  If $B_1, dots, B_n$ form a partition of $Omega$, then for any event $A$,
+  $
+    P(A) = sum_(i=1)^n P(B_i) P(A | B_i).
+  $
+] <thm:total-probability>
+
+#proof[
+  The sets $A inter B_i$ are pairwise disjoint and their union is
+  $A inter (B_1 union dots union B_n) = A$. Countable additivity
+  (#link(<prop:probability-additivity>)[finite additivity]) and the
+  multiplication rule give the identity.
+]
+
+#theorem(name: "Bayes' Theorem")[
+  If $B_1, dots, B_n$ form a partition of $Omega$ and $P(A) > 0$, then for
+  each $j$,
+  $
+    P(B_j | A)
+    = (P(B_j) P(A | B_j)) / (sum_(i=1)^n P(B_i) P(A | B_i)).
+  $
+] <thm:bayes>
+
+#proof[
+  By the definition of conditional probability,
+  $P(B_j | A) = P(B_j inter A) / P(A)$; the numerator expands by the
+  multiplication rule and the denominator is exactly the law of total
+  probability.
+]
+
+#example[
+  (Medical screening.) A disease affects $0.1%$ of a population. A test has
+  sensitivity $P(+ | D) = 0.99$ (a sick person tests positive with
+  probability $99%$) and specificity $P(- | overline(D)) = 0.99$ (a
+  healthy person tests negative with probability $99%$). A randomly chosen
+  person tests positive. How likely are they actually sick? The events
+  $D$ (diseased) and $overline(D)$ partition $Omega$, and
+  #link(<thm:bayes>)[Bayes' theorem] gives
+  $
+    P(D | +)
+    = (P(D) P(+ | D)) / (P(D) P(+ | D) + P(overline(D)) P(+ | overline(D)))
+    = (0.001 times 0.99) / (0.001 times 0.99 + 0.999 times 0.01)
+    = 0.00099 / 0.01098
+    approx 9%.
+  $
+  Despite a highly accurate test, fewer than one in ten positive results
+  comes from a sick person — because the disease is rare, the false
+  positives among the healthy many outnumber the true positives among the
+  sick few (see @fig:bayes-tree).
+] <ex:bayes-screening>
+
+#figure(
+  image("img/bayes-tree.svg", width: 70%),
+  caption: [Tree diagram of the screening example: the first branching
+    carries the prior probabilities $P(D) = 0.001$ and
+    $P(overline(D)) = 0.999$; the second carries the conditional test
+    probabilities. Leaves show the joint probabilities; the posterior
+    $P(D | +)$ is the shaded leaf divided by the sum of the two
+    "$+$" leaves.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:bayes-tree>
+
+#note[
+  (Prior and posterior.) In the language of statistics, $P(D)$ is the
+  *prior* probability — knowledge before the data — and $P(D | +)$ is
+  the *posterior* probability — knowledge after observing the data. Bayes'
+  theorem is precisely the rule for updating priors into posteriors; this
+  reading will be formalized when Bayesian estimation is discussed in the
+  Parametric Estimation part.
+]
+
+== Independence // 独立性
+
+Conditioning on an event changes probabilities; the opposite situation —
+information that changes *nothing* — deserves its own name.
+
+#definition(name: "Independence of Two Events")[
+  Events $A$ and $B$ are *independent* if
+  $
+    P(A inter B) = P(A) P(B).
+  $
+] <def:independence>
+
+Note that the definition does not *require* $P(B) > 0$, but when it does
+hold, independence is equivalent to $P(A | B) = P(A)$: knowing $B$
+neither promotes nor suppresses $A$. The definition by the product formula
+is preferred because it is symmetric in $A$ and $B$.
+
+#caution[
+  Independence and mutual exclusivity are unrelated — indeed incompatible in
+  an interesting way. If $A$ and $B$ are *mutually exclusive* events with
+  positive probability, then $P(A inter B) = 0 != P(A) P(B)$, so they are
+  *dependent*: the occurrence of one *rules out* the other, which is
+  information of the strongest kind. Independent events (with positive
+  probabilities) always intersect.
+] <caution:independence-vs-exclusion>
+
+#property(name: "Closure Properties of Independence")[
+  If $A$ and $B$ are independent, then so are $A$ and $overline(B)$,
+  $overline(A)$ and $B$, and $overline(A)$ and $overline(B)$.
+] <prop:independence-preserved>
+
+#proof[
+  It suffices to prove the first pairing; the rest follow by symmetrical
+  arguments. Since $B = (A inter B) union (overline(A) inter B)$ is a
+  disjoint decomposition,
+  $
+    P(overline(A) inter B)
+    = P(B) - P(A inter B)
+    = P(B) - P(A) P(B)
+    = P(overline(A)) P(B),
+  $
+  using the complement rule of
+  #link(<prop:probability-additivity>)[the basic properties].
+]
+
+For more than two events, pairwise conditions do not suffice.
+
+#definition(name: "Mutual Independence")[
+  Events $A_1, dots, A_n$ are *mutually independent* if for every choice of
+  distinct indices $i_1, dots, i_k$ with $2 <= k <= n$,
+  $
+    P(A_(i_1) inter dots inter A_(i_k))
+    = P(A_(i_1)) dots P(A_(i_k)).
+  $
+  An infinite family is mutually independent if every finite subfamily is.
+] <def:mutual-independence>
+
+#example[
+  (Pairwise independence is not mutual independence.) Let
+  $Omega = {1, 2, 3, 4}$ with all outcomes equally likely, and set
+  $A = {1, 2}$, $B = {1, 3}$, $C = {1, 4}$. Then
+  $P(A) = P(B) = P(C) = 1 \/ 2$ and $A inter B = A inter C = B inter C =
+  {1}$, so every pair is independent. But
+  $
+    P(A inter B inter C) = P({1}) = 1 / 4
+    != 1 / 8 = P(A) P(B) P(C),
+  $
+  so the three events are *not* mutually independent — the definition
+  demands all subfamilies precisely to exclude such examples.
+] <ex:pairwise-not-mutual>
+
+#definition(name: "Independent Experiments")[
+  Two random experiments are *independent* if every event determined by the
+  first is independent of every event determined by the second. Formally,
+  with the experiment encoded on a product space, the $sigma$-fields they
+  generate are independent families. Iterating gives independence of any
+  number of experiments.
+] <def:independent-experiments>
+
+The classical instance is repeated trials of the *same* experiment.
+
+#definition(name: "Bernoulli Trials")[
+  A sequence of $n$ trials constitutes *Bernoulli trials* (the $n$-fold
+  Bernoulli scheme) if
+
+  - each trial has exactly two outcomes, *success* ($S$) and *failure*
+    ($F$);
+  - the success probability is the same number $p in (0, 1)$ in every
+    trial;
+  - the trials are independent experiments.
+
+  Writing $q = 1 - p$, the probability that exactly $k$ of the $n$ trials
+  succeed is
+  $
+    P(X = k) = binom(n, k) p^k q^(n - k),
+  $
+  since the $binom(n, k)$ sequences with exactly $k$ successes are mutually
+  exclusive, each having probability $p^k q^(n-k)$ by independence, and the
+  count of such sequences is a binomial coefficient by the multiplication
+  principle established in the Combinatoire note.
+] <def:bernoulli-trials>
+
+#example[
+  (At least one success.) In $n$ Bernoulli trials with success probability
+  $p$, the probability of *at least one* success is
+  $
+    P("at least one" S) = 1 - P("all" F) = 1 - q^n.
+  $
+  For $p = 1 \/ 100$ and $n = 100$ this is $1 - (0.99)^100 approx 0.634$:
+  an event with per-trial probability $1%$ occurs within 100 trials more
+  often than not. The comforting thought that "a $1%$ accident needs ages
+  to happen" is a statistical fallacy.
+] <ex:bernoulli-at-least-one>
+
+The count $X$ of successes in Bernoulli trials inherits a life of its own —
+its distribution, the *binomial distribution*, opens the catalogue of the
+next chapter.
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
