@@ -24,6 +24,10 @@
 
 #make-outline(depth: 2, title: "Contents")
 
+#part("Fundamentals of Probability")
+= Random Events and Probability // 随机事件与概率
+
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================

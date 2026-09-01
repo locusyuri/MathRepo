@@ -18,15 +18,27 @@
   subtitle: "A notebook for functional analysis",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.2.0",
+  version: "v0.3.0",
   extra-info: "This is a notebook for functional analysis.",
 )
 
 #make-outline(depth: 2, title: "Contents")
 
-
-#part("Basic Functional Analysis") // 基础泛函分析
-
+// ==========================================================================
+// 目录蓝图 (Planned Outline)
+// ==========================================================================
+// 主线叙事：度量与赋范空间 → Banach 空间 → Hilbert 空间 → 紧算子与谱理论
+//
+// 职责边界 (SRP Boundaries)：
+// - 本笔记负责：Banach/Hilbert 空间抽象理论、算子理论、谱理论、弱收敛方法
+// - Fourier 级数与 Fourier 变换 → Analyse Harmonique（本笔记 §7.4 仅从 Hilbert 空间视角讨论）
+// - Sobolev 空间理论 → Analyse Harmonique（本笔记仅引用其定义与嵌入定理）
+// - 分布理论 → Équations aux Dérivées Partielles
+// - L^p 空间的一般测度论基础 → Analyse Réelle（本笔记仅引用结果）
+//
+// 与 PDE 笔记的衔接：
+// - 本笔记 §8.4 (二次型与变分方法)、§11.4 (微分方程与变分问题) 为 PDE 弱解理论提供泛函基础
+// - PDE 笔记中的弱形式、Lax-Milgram 定理、Galerkin 方法均引用本笔记的抽象框架
 
 
 
@@ -110,9 +122,17 @@
 //   Section 11.3: Applications to Integral Equations (积分方程中的应用)
 //   Section 11.4: Applications to Differential Equations and Variational Problems (微分方程与变分问题中的应用)
 
-// Structure note:
-// This outline is organized into 4 Parts and 11 Chapters.
-// Part I builds the metric and normed-space foundation needed throughout the notebook.
-// Part II collects the core Banach-space theorems and duality theory in one coherent block.
-// Part III develops Hilbert-space geometry and operator theory, which naturally mirror each other.
-// Part IV closes with compact operators, spectral theory, and weak-convergence applications.
+// ==========================================================================
+// 结构说明 (Structure Note)
+// ==========================================================================
+// 本笔记遵循"度量与赋范空间 → Banach 空间 → Hilbert 空间 → 紧算子与谱理论"的四段式主线，
+// 共 4 Part、11 Chapter。
+//
+// Part I（Ch 1-2）：度量与赋范空间基础，建立拓扑与线性结构的基本框架。
+// Part II（Ch 3-5）：Banach 空间理论，涵盖完备性、三大基本定理与对偶理论。
+// Part III（Ch 6-8）：Hilbert 空间理论，内积几何、正交系与算子理论。
+// Part IV（Ch 9-11）：紧算子与谱理论，弱收敛方法及其在积分/微分方程中的应用。
+//
+// 本笔记为 PDE 弱解理论提供泛函分析基础（§8.4 变分方法、§11.4 微分方程应用）。
+// Fourier 级数与 Sobolev 空间的完整理论参见 Analyse Harmonique。
+// ==========================================================================
