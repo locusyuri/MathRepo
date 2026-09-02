@@ -88,10 +88,10 @@
 #let font-widget-body-size = 11pt
 
 /// 组件统一字号：主组件标题/标签
-#let font-widget-title-size = 11pt
+#let font-widget-title-size = 11.5pt
 
 /// 组件统一字号：主组件编号
-#let font-widget-number-size = 11pt
+#let font-widget-number-size = 11.5pt
 
 /// 组件统一字号：次要组件标题
 #let font-widget-secondary-title-size = 12pt
@@ -706,50 +706,52 @@
       #set text(size: font-widget-body-size, fill: color-main-text, font: body-font, style: body-style)
 
       // 主体内容块：明显渐变背景 + 整体边框
+      // 标签和花色作为 body block 的内部子元素：
+      //   - z-order 在 fill/stroke 之上（不会被渐变背景遮住）
+      //   - place 在 body 之前 → 跨页时标签留在第一页
+      //   - place 在 body 之后 → 跨页时花色在最后一页右下角
       #block(
         fill: gradient.linear(
           (bg-1.lighten(32%), 0%),
           (bg-1.lighten(10%), 12%),
           (bg-2.lighten(8%), 44%),
           (bg-1.darken(2%), 72%),
-          (bg-1.darken(22%), 100%),
+          (bg-1.darken(8%), 100%),
         ),
         stroke: 1.15pt + border-color.darken(10%),
         radius: 5pt,
         inset: (left: 1.15em, top: 0.9em, bottom: 0.9em, right: 1em),
         width: 100%,
       )[
-        #body
-      ]
-
-      // 左上角标签：模仿 elegantbook 的 theorem title 贴边样式
-      #place(top + left, dx: 0.8em, dy: -0.7em)[
-        #box(
-          fill: border-color,
-          stroke: 0.7pt + border-color.darken(10%),
-          radius: 0pt,
-          inset: (x: 0.55em, y: 0.25em),
-        )[
-          #text(font: font-major-label, size: font-widget-title-size, weight: "bold", fill: white)[
-            #label
-            #if number != none [
-              #h(0.35em)
-              #text(font: font-major-label, size: font-widget-number-size, weight: "regular")[#number]
-            ]
-            #if name != none [
-              #h(0.4em)
-              #text(font: body-font, size: font-widget-number-size, weight: "regular")[
-                #if type(name) == str { eval(name, mode: "markup") } else { name }
+        // 左上角标签：模仿 elegantbook 的 theorem title 贴边样式
+        #place(top + left, dx: 0.2em, dy: -1.5em)[
+          #box(
+            fill: border-color,
+            stroke: 0.7pt + border-color.darken(10%),
+            radius: 0pt,
+            inset: (x: 0.55em, y: 0.25em),
+          )[
+            #text(font: font-major-label, size: font-widget-title-size, weight: "bold", fill: white)[
+              #label
+              #if number != none [
+                #h(0.01em)
+                #text(font: font-major-label, size: font-widget-number-size, weight: "regular")[#number]
+              ]
+              #if name != none [
+                #h(0.4em)
+                #text(font: font-major-label, size: font-widget-number-size, weight: "regular")[
+                  #if type(name) == str { eval(name, mode: "markup") } else { name }
+                ]
               ]
             ]
           ]
         ]
-      ]
-
-      // 右下角花色：四种花色作为统一装饰
-      #place(bottom + right, dx: -0.45em, dy: -0.1em)[
-        #text(font: font-latin-title, size: 19pt, weight: "bold", fill: border-color.darken(2%))[
-          #suit
+        #body
+        // 右下角花色：四种花色作为统一装饰
+        #place(bottom + right, dx: 0.5em, dy: 0.5em)[
+          #text(font: font-latin-title, size: 19pt, weight: "bold", fill: border-color.darken(2%))[
+            #suit
+          ]
         ]
       ]
     ]
@@ -1256,8 +1258,8 @@
     lang: "en",
   )
 
-  // 正文首行缩进（不影响标题和显式布局块）
-  set par(first-line-indent: 2em)
+  // 正文首行缩进（all: true 强制 block 后首段也缩进，避免 theorem/figure 后第一段丢失缩进）
+  set par(first-line-indent: (amount: 2em, all: true))
 
   // ── Chapter: 一级标题 (=) ──
   show heading.where(level: 1): it => {
