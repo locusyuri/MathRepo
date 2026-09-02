@@ -1206,6 +1206,325 @@ multidimensional Jacobian — a tool to be developed in the next chapter,
 where multivariate distributions and the change-of-variables technique for
 joint densities take centre stage.
 
+= Multivariate Random Variables and Distributions // 多维随机变量及其分布
+
+== Joint Distributions // 联合分布
+
+A single random variable tracks one quantity; real experiments often
+produce several numbers at once — the height and weight of a randomly chosen
+person, the coordinates of a random point, the lifetimes of two components
+in the same system. The theory extends from one variable to many by
+*packaging* them into a single random vector.
+
+#definition(name: "Random Vector")[
+  A *$n$-dimensional random vector* is a measurable function
+  $bold(X) = (X_1, X_2, dots, X_n): Omega -> RR^n$, i.e. each component
+  $X_i$ is a random variable on the same probability space.
+] <def:multivariate-rv>
+
+The joint behaviour of the components is captured by a multivariate
+distribution function, exactly as a single variable was captured by its CDF.
+
+#definition(name: "Joint Cumulative Distribution Function")[
+  The *joint CDF* of a random vector $bold(X) = (X_1, dots, X_n)$ is
+  $
+    F(bold(x)) = P(X_1 <= x_1, X_2 <= x_2, dots, X_n <= x_n).
+  $
+  For $n = 2$ we write $F(x, y) = P(X <= x, Y <= y)$.
+] <def:joint-cdf>
+
+#property(name: "Properties of the Joint CDF")[
+  Let $F(x, y)$ be a bivariate CDF.
+
+  - $F$ is non-decreasing and right-continuous in each argument;
+  - $F(-infinity, y) = F(x, -infinity) = 0$ and $F(+infinity, +infinity) = 1$;
+  - (rectangle formula) for $a_1 < b_1$, $a_2 < b_2$,
+    $
+      P(a_1 < X <= b_1, a_2 < Y <= b_2)
+      = F(b_1, b_2) - F(a_1, b_2) - F(b_1, a_2) + F(a_1, a_2).
+    $
+] <prop:joint-cdf-properties>
+
+#proof[
+  The rectangle ${a_1 < X <= b_1, a_2 < Y <= b_2}$ equals ${X <= b_1, Y
+    <= b_2}$ with the two strips ${X <= a_1, Y <= b_2}$ and ${X <= b_1, Y
+    <= a_2}$ removed, and the corner ${X <= a_1, Y <= a_2}$ (subtracted
+  twice) added back. Applying
+  #link(<prop:probability-additivity>)[finite additivity] with this
+  inclusion–exclusion pattern gives the rectangle formula. The limits and
+  monotonicity are #link(<thm:continuity-probability>)[continuity]
+  arguments as in the univariate case.
+]
+
+As in one dimension, two structural types carry most of the theory.
+
+#definition(name: "Joint Probability Mass Function")[
+  Discrete random variables $X_1, dots, X_n$ have a *joint PMF*
+  $
+    p(x_1, dots, x_n) = P(X_1 = x_1, dots, X_n = x_n),
+  $
+  with $sum p(x_1, dots, x_n) = 1$. The joint CDF is a multivariate step
+  function: $F(bold(x)) = sum_(x_i <= x_i "for all" i) p(bold(x))$.
+] <def:joint-pmf>
+
+#definition(name: "Joint Probability Density Function")[
+  Continuous random variables $X_1, dots, X_n$ have a *joint PDF* $f$ if
+  $
+    F(bold(x)) = integral_(-infinity)^(x_1) dots integral_(-infinity)^(x_n) f(t_1, dots, t_n) dif t_n dots dif t_1.
+  $
+] <def:joint-pdf>
+
+#property(name: "Properties of the Joint PDF")[
+  - (non-negativity) $f(x_1, dots, x_n) >= 0$;
+  - (normalization) $integral_(RR^n) f(bold(x)) dif bold(x) = 1$;
+  - (region probabilities) for a region $D subset.eq RR^n$,
+    $P(bold(X) in D) = integral_D f(bold(x)) dif bold(x)$.
+] <prop:joint-pdf-properties>
+
+#definition(name: "Multivariate Uniform Distribution")[
+  A random vector $bold(X)$ is *uniformly distributed* on a region
+  $D subset.eq RR^n$ of finite volume $m(D) > 0$ if
+  $
+    f(bold(x)) = 1 / m(D), quad bold(x) in D,
+  $
+  and zero elsewhere. When $D$ is a rectangle $[a_1, b_1] times dots times
+  [a_n, b_n]$, the components are independent uniform variables — a fact to
+  be revisited when independence is defined.
+] <def:multivariate-uniform>
+
+#figure(
+  image("img/joint-density.svg", width: 75%),
+  caption: [A bivariate joint density $f(x, y)$ visualised by contour lines
+    in the $(x, y)$ plane; the marginal densities $f_X(x)$ and $f_Y(y)$
+    appear as projections on the side panels.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:joint-density>
+
+== Marginal Distributions and Independence // 边缘分布与独立性
+
+Given the joint distribution of $(X, Y)$, the distribution of each component
+alone — the *marginal* — is recovered by summing (discrete) or integrating
+(continuous) over the other variable. The marginals are projections of the
+joint.
+
+#definition(name: "Marginal Distribution")[
+  The *marginal PMF* of $X$ from a joint PMF $p(x, y)$ is
+  $
+    p_X(x) = sum_y p(x, y).
+  $
+  The *marginal PDF* of $X$ from a joint PDF $f(x, y)$ is
+  $
+    f_X(x) = integral_(-infinity)^infinity f(x, y) dif y.
+  $
+  The marginal CDF is $F_X(x) = lim_(y -> +infinity) F(x, y)$.
+] <def:marginal-distribution>
+
+#property(name: "Marginal Formulas")[
+  Marginals are bona fide PMFs/PDFs: they are non-negative and sum/integrate
+  to $1$. For a bivariate continuous vector,
+  $
+    P(a < X <= b) = integral_a^b f_X(x) dif x
+    = integral_a^b (integral_(-infinity)^infinity f(x, y) dif y) dif x.
+  $
+  Symmetric formulas hold for the marginal of $Y$.
+] <prop:marginal-formulas>
+
+Marginals tell each variable's story separately; the joint tells how they
+interact. When the interaction vanishes — when the joint factors — the
+variables are *independent*.
+
+#definition(name: "Independence of Random Variables")[
+  Random variables $X_1, dots, X_n$ are *independent* if their joint CDF
+  factors into the product of the marginal CDFs:
+  $
+    F(x_1, dots, x_n) = product_(i=1)^n F_(X_i)(x_i).
+  $
+  Equivalently (when densities/masses exist), the joint PMF/PDF factors:
+  $
+    f(x_1, dots, x_n) = product_(i=1)^n f_(X_i)(x_i).
+  $
+] <def:rv-independence>
+
+This is the random-variable instantiation of
+#link(<def:mutual-independence>)[mutual independence of events]: the
+$sigma$-fields generated by each $X_i$ are independent families.
+
+#property(name: "Independence Criterion")[
+  Independent random variables satisfy:
+
+  - $P(X in A, Y in B) = P(X in A) P(Y in B)$ for all Borel sets $A, B$;
+  - if $g$ and $h$ are measurable functions, $g(X)$ and $h(Y)$ are
+    independent;
+  - the joint CDF determines the joint distribution *and* the marginals, but
+    the converse requires independence: the marginals alone do *not*
+    determine the joint.
+] <prop:independence-criterion>
+
+#note[
+  Independence of random variables is stronger than *uncorrelatedness*: two
+  variables can be uncorrelated (a condition involving expectations, to be
+  defined in the Numerical Characteristics chapter) yet dependent. The
+  distinction is central to the covariance theory developed there.
+]
+
+== Distributions of Functions of Random Variables // 随机变量函数的分布
+
+Given the joint distribution of several random variables, the distribution of
+a function of them — a sum, a product, a maximum — is the natural next
+question. The methods extend the univariate tools of
+#link(<thm:monotone-transform>)[the monotone transform] to higher
+dimensions.
+
+For a *discrete* vector, the method is direct enumeration.
+
+#example[
+  Let $(X, Y)$ have joint PMF $p(i, j) = 1\/36$ on ${1, dots, 6}^2$ (two fair
+  dice), and set $Z = X + Y$. Then $Z$ takes values $2, 3, dots, 12$ with
+  $
+    P(Z = k) = sum_(i+j=k) p(i, j).
+  $
+  For instance $P(Z = 7) = 6\/36 = 1\/6$ and $P(Z = 2) = P(Z = 12) = 1\/36$.
+] <ex:discrete-sum>
+
+For *extreme values* of independent variables, simple product formulas
+apply.
+
+#property(name: "Distributions of Maxima and Minima")[
+  Let $X_1, dots, X_n$ be independent with CDFs $F_1, dots, F_n$.
+
+  - (maximum) $M_n = max(X_1, dots, X_n)$ has CDF
+    $
+      F_(M_n)(z) = product_(i=1)^n F_i(z).
+    $
+  - (minimum) $N_n = min(X_1, dots, X_n)$ has CDF
+    $
+      F_(N_n)(z) = 1 - product_(i=1)^n (1 - F_i(z)).
+    $
+  If the $X_i$ are identically distributed with CDF $F$, then
+  $F_(M_n) = F^n$ and $F_(N_n) = 1 - (1 - F)^n$.
+] <prop:extreme-distributions>
+
+#proof[
+  $max(X_i) <= z$ iff $X_i <= z$ for every $i$; independence gives the
+  product. Similarly, $min(X_i) <= z$ iff at least one $X_i <= z$, i.e. the
+  complement of "$X_i > z$ for all $i$".
+]
+
+For *sums* of independent continuous variables, the integral form is the
+*convolution*.
+
+#theorem(name: "Convolution Formula")[
+  Let $X$ and $Y$ be independent continuous random variables with densities
+  $f_X$ and $f_Y$. The density of $Z = X + Y$ is the *convolution*
+  $
+    f_Z(z) = integral_(-infinity)^infinity f_X(x) f_Y(z - x) dif x.
+  $
+] <thm:convolution>
+
+#proof[
+  Condition on $X$:
+  $
+    F_Z(z) = P(X + Y <= z) = integral_(-infinity)^infinity P(Y <= z - x) f_X(x) dif x = integral_(-infinity)^infinity F_Y(z - x) f_X(x) dif x.
+  $
+  Differentiating in $z$ (under the integral, justified by dominated
+  convergence) gives $f_Z(z) = integral f_Y(z - x) f_X(x) dif x$.
+]
+
+#example[
+  (Sum of exponentials is Gamma.) Let $X_1, dots, X_n$ be i.i.d.
+  $"Exp"(lambda)$. We prove by induction that $S_n = X_1 + dots + X_n ~
+  "Ga"(n, lambda)$. The base case $n = 1$ is $"Exp"(lambda) = "Ga"(1,
+    lambda)$. For the inductive step, assume $S_n ~ "Ga"(n, lambda)$ and
+  apply #link(<thm:convolution>)[the convolution] to $S_(n+1) = S_n +
+  X_(n+1)$:
+  $
+    f_(S_(n+1))(s)
+    = integral_0^s (lambda^n / "Gamma"(n)) t^(n-1) e^(-lambda t) dot lambda e^(-lambda(s - t)) dif t
+    = (lambda^(n+1) e^(-lambda s)) / "Gamma"(n) integral_0^s t^(n-1) dif t
+    = (lambda^(n+1) s^n e^(-lambda s)) / "Gamma"(n+1),
+  $
+  which is the $"Ga"(n+1, lambda)$ density — using $"Gamma"(n+1) = n dot
+  "Gamma"(n)$. This confirms the Gamma-to-Exponential connection noted in
+  #link(<def:gamma-dist>)[the Gamma definition].
+] <ex:exp-sum-gamma>
+
+For *general transformations* of a continuous random vector, the univariate
+monotone transform generalises to a multidimensional change of variables.
+
+#theorem(name: "Multivariate Change of Variables")[
+  Let $bold(X) = (X_1, dots, X_n)$ be a continuous random vector with joint
+  density $f_(bold X)$. Let $bold(g): A -> B$ be a one-to-one differentiable
+  map from an open set $A subset.eq RR^n$ containing the range of $bold(X)$
+  onto $B$, with inverse $bold(h) = bold(g)^(-1)$. Then $bold(Y) =
+  bold(g)(bold(X))$ has joint density
+  $
+    f_(bold Y)(bold(y)) = f_(bold X)(bold(h)(bold(y))) dot abs(J(bold(y))),
+  $
+  where $J$ is the determinant of the matrix $(partial h_i / partial y_j)_(i,j)$
+  — the Jacobian determinant of the inverse map.
+] <thm:jacobian-transform>
+
+#proof[
+  For a region $D subset.eq B$,
+  $
+    P(bold(Y) in D) = P(bold(X) in bold(h)(D)) = integral_(bold(h)(D)) f_(bold X)(bold(x)) dif bold(x).
+  $
+  The multivariate change-of-variables theorem from calculus replaces
+  $dif bold(x)$ by $abs(J(bold(y))) dif bold(y)$ and the domain by $D$:
+  $
+    P(bold(Y) in D) = integral_D f_(bold X)(bold(h)(bold(y))) abs(J(bold(y))) dif bold(y).
+  $
+  Comparing with $P(bold(Y) in D) = integral_D f_(bold Y)(bold(y)) dif bold(y)$
+  for every $D$ identifies the integrand.
+]
+
+This is the $n$-dimensional generalisation of
+#link(<thm:monotone-transform>)[the monotone transform]; the factor
+$abs(h'(y))$ is replaced by $abs(J)$, the absolute Jacobian determinant.
+
+== Conditional Distributions // 条件分布
+
+Conditional probability restricts the sample space; conditional
+distributions restrict one variable to a fixed value and examine the
+distribution of the other.
+
+#definition(name: "Conditional PMF")[
+  For discrete $X, Y$ with joint PMF $p(x, y)$ and $p_X(x) > 0$, the
+  *conditional PMF* of $Y$ given $X = x$ is
+  $
+    p_(Y|X)(y|x) = (p(x, y)) / p_X(x).
+  $
+] <def:conditional-pmf>
+
+#definition(name: "Conditional PDF")[
+  For continuous $X, Y$ with joint PDF $f(x, y)$ and $f_X(x) > 0$, the
+  *conditional PDF* of $Y$ given $X = x$ is
+  $
+    f_(Y|X)(y|x) = (f(x, y)) / f_X(x).
+  $
+] <def:conditional-pdf>
+
+#property(name: "Properties of Conditional Distributions")[
+  - For fixed $x$ with $f_X(x) > 0$, $f_(Y|X)(dot|x)$ is a bona fide PDF:
+    non-negative and integrating to $1$ over $y$;
+  - (multiplication rule) $f(x, y) = f_X(x) f_(Y|X)(y|x) = f_Y(y) f_(X|Y)(x|y)$;
+  - (total density) $f_Y(y) = integral_(-infinity)^infinity f_(Y|X)(y|x) f_X(x) dif x$
+    — the density analogue of
+    #link(<thm:total-probability>)[the law of total probability];
+  - if $X$ and $Y$ are independent, $f_(Y|X)(y|x) = f_Y(y)$ — conditioning
+    changes nothing.
+] <prop:conditional-dist-properties>
+
+#note[
+  The *conditional expectation* $E[Y|X]$ — the mean of the conditional
+  distribution — and the *law of total expectation*
+  $E[Y] = E[E[Y|X]]$ require the notion of expectation, which is developed
+  in the Numerical Characteristics chapter. There, the conditional
+  framework set up here will yield the tower property and the analysis of
+  variance via conditional variances.
+]
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
