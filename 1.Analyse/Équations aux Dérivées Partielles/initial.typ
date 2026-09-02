@@ -754,21 +754,305 @@ When characteristics cross, the classical solution breaks down and we must admit
 // Part II — Distribution Theory (分布理论)
 // ==========================================================================
 
-// --- Chapter 3: Classification of Second-Order PDEs (二阶偏微分方程分类) ---
+// ==========================================================================
+// Chapter 3: Classification of Second-Order PDEs (二阶偏微分方程分类)
+// ==========================================================================
 
-// 设计思路：建立椭圆/抛物/双曲三分体系，为后续三 Part 提供框架。
+= Classification of Second-Order PDEs // 二阶偏微分方程分类
 
-//   Section 3.1: Linear Second-Order Equations (线性二阶方程)
-//     - 一般线性二阶算子的标准记号
-//     - 主象征 (principal symbol)
+The three model equations introduced in #link(<def:laplace-equation>)[Ch 1] — Laplace, heat, and wave — exhibit fundamentally different solution behaviors: harmonic functions are smooth, heat flow is irreversible, and waves propagate at finite speed. This chapter reveals the algebraic invariant behind this trichotomy: the _principal symbol_ of the second-order operator determines the equation type, which in turn governs the geometry of _characteristic surfaces_ and the canonical form to which the equation can be reduced.
 
-//   Section 3.2: Elliptic, Parabolic, Hyperbolic Types (椭圆型、抛物型与双曲型)
-//     - 判别准则
-//     - 典型模型方程归类
+== Linear Second-Order Equations // 线性二阶方程
 
-//   Section 3.3: Canonical Forms and Characteristics (标准形与特征)
-//     - 化简为标准形的方法
-//     - 特征曲线与特征面的几何意义
+The most general linear second-order PDE for $u: Omega subset bold(R)^n -> bold(R)$ takes the form
+
+#eq[$
+  L[u] = sum_(i, j = 1)^n a_(i j)(x) (partial^2 u) / (partial x_i partial x_j) + sum_(i=1)^n b_i(x) (partial u) / (partial x_i) + c(x) u = f(x),
+$] <eq:general-2nd-order>
+
+where $a_{i j}, b_i, c, f$ are given functions on $Omega$. By #link(<def:pde-linearity-classification>)[§1], this equation is _linear_: the unknown $u$ and all its derivatives appear to the first power. We assume $a_{i j} = a_{j i}$ throughout (any non-symmetric coefficient matrix can be symmetrized since $u_{x_i x_j} = u_{x_j x_i}$ for $C^2$ solutions).
+
+=== The Coefficient Matrix and Principal Symbol
+
+The second-order part of $L$ is encoded in the symmetric _coefficient matrix_:
+
+$
+  A(x) = (a_{i j}(x))_(1 <= i, j <= n).
+$
+
+The operator decomposes as $L[u] = L_2[u] + L_1[u] + c u$, where the _principal (second-order) part_ is
+
+$
+  L_2[u] = sum_(i, j = 1)^n a_(i j)(x) (partial^2 u) / (partial x_i partial x_j),
+$
+
+and $L_1[u] = sum_i b_i(x) u_(x_i)$ is the first-order part.
+
+#definition(name: "Principal Symbol")[
+  The _principal symbol_ of the operator $L$ is the quadratic form
+  #eq[$
+    a(x, xi) = sum_(i, j = 1)^n a_(i j)(x) xi_i xi_j = xi^T A(x) xi,
+  $] <eq:principal-symbol>
+  where $xi = (xi_1, dots, xi_n) in bold(R)^n$. The _full symbol_ of $L$ is $sigma(x, xi) = a(x, xi) + i sum_i b_i(x) xi_i - c(x)$, which incorporates lower-order contributions.
+]
+
+The principal symbol captures the highest-order behavior of the operator. Since classification depends only on the leading derivatives, the principal symbol — not the full symbol — determines the equation type.
+
+=== Characteristic Surfaces
+
+The concept of characteristic surfaces generalizes the characteristic curves of first-order PDEs (#link(<def:characteristic-curve>)[§2.1]) to the second-order setting.
+
+#definition(name: "Characteristic Surface")[
+  A hypersurface $S subset bold(R)^n$ is a _characteristic surface_ for the operator $L$ if at every point $x in S$, the principal symbol vanishes in the direction of the normal $nu(x)$ to $S$:
+  #eq[$
+    a(x, nu) = sum_(i, j = 1)^n a_(i j)(x) nu_i nu_j = 0.
+  $] <eq:characteristic-eq>
+] <def:char-surface>
+
+Characteristic surfaces are the loci along which singularities of solutions can propagate, and across which information may fail to determine the solution uniquely.
+
+#example(name: "Characteristics of Model Equations")[
+  *Laplace equation* $Delta u = 0$: Here $A = I$, so $a(xi) = xi_1^2 + dots + xi_n^2 = abs(xi)^2$. The characteristic equation $abs(nu)^2 = 0$ has no nonzero real solutions. The Laplace equation has _no real characteristic surfaces_.
+
+  *Heat equation* $u_t = kappa u_(x x)$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((kappa, 0), (0, 0))$. The characteristic equation $kappa nu_1^2 = 0$ gives $nu_1 = 0$, so surfaces $t = text("const")$ are characteristic. These are precisely the initial/boundary surfaces for the Cauchy problem (#link(<def:cauchy-problem>)[§1]).
+
+  *Wave equation* $u_(t t) - c^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $A = mat((-c^2, 0), (0, 1))$. The characteristic equation $-c^2 nu_1^2 + nu_2^2 = 0$ yields $nu_2 = +- c nu_1$, giving characteristic lines $x +- c t = text("const")$ in the $(x, t)$-plane.
+]
+
+=== The Characteristic ODE in Two Dimensions
+
+For operators with two independent variables, the characteristic equation reduces to an ODE for the characteristic curves.
+
+#proposition(name: "Characteristic Equation as ODE")[
+  Let $n = 2$ with $(x_1, x_2) = (x, y)$, and write the principal part as $a u_(x x) + 2 b u_(x y) + c u_(y y)$, so that
+  $
+    A = mat((a, b), (b, c)).
+  $
+  The characteristic equation $a nu_1^2 + 2 b nu_1 nu_2 + c nu_2^2 = 0$ with $(nu_1, nu_2) = (d y, -d x)$ becomes
+  #eq[$
+    a (d y)^2 - 2 b dif x dif y + c (d x)^2 = 0,
+  $] <eq:char-ode-2d>
+  which yields the ODE for characteristic curves:
+  $
+    (d y) / (d x) = (b +- sqrt(b^2 - a c)) / a.
+  $
+  The _discriminant_ $Delta = b^2 - a c$ governs the nature of the solutions.
+] <prop:char-ode>
+
+#proof[
+  Substitute $nu_1 = d y$ and $nu_2 = -d x$ into $a nu_1^2 + 2 b nu_1 nu_2 + c nu_2^2 = 0$:
+  $
+    a (d y)^2 + 2 b (d y)(-d x) + c (-d x)^2 = a (d y)^2 - 2 b dif x dif y + c (d x)^2 = 0.
+  $
+  Dividing by $(d x)^2$ and setting $lambda = (d y)/(d x)$:
+  $
+    a lambda^2 - 2 b lambda + c = 0 => lambda = (2 b +- sqrt(4 b^2 - 4 a c)) / (2 a) = (b +- sqrt(b^2 - a c)) / a.
+  $
+]
+
+#note[
+  *Extension to $n$ dimensions.* In general, the classification is determined by the eigenvalue signature of $A(x)$:
+  - _Elliptic_: all eigenvalues have the same sign ($A$ is definite)
+  - _Hyperbolic_: exactly one eigenvalue has a different sign from the rest
+  - _Parabolic_: $A$ is singular (at least one zero eigenvalue)
+
+  In two dimensions, these reduce to conditions on the discriminant $Delta = b^2 - a c$, since $det A = a c - b^2 = -Delta$. The systematic study of the three types in 2D is the subject of the next section.
+]
+
+== Elliptic, Parabolic, Hyperbolic Types // 椭圆型、抛物型、双曲型
+
+In two independent variables, the classification reduces to a single algebraic quantity: the _discriminant_ of the principal part. We work with the general linear second-order equation in $(x, y)$:
+
+#eq[$
+  a(x, y) u_(x x) + 2 b(x, y) u_(x y) + c(x, y) u_(y y) + text("lower-order terms") = f(x, y),
+$] <eq:general-2d>
+
+where the principal part has coefficient matrix $A = mat((a, b), (b, c))$ with $det A = a c - b^2$.
+
+#definition(name: "Classification in Two Dimensions")[
+  Let $Delta = b^2 - a c$ be the _discriminant_ of the principal part at a point $(x_0, y_0)$. The equation is classified at that point as:
+
+  - *Elliptic* if $Delta < 0$ (equivalently, $det A > 0$): the matrix $A$ is definite.
+  - *Parabolic* if $Delta = 0$ (equivalently, $det A = 0$): the matrix $A$ is singular.
+  - *Hyperbolic* if $Delta > 0$ (equivalently, $det A < 0$): the matrix $A$ is indefinite.
+
+  If the type is the same at every point of the domain $Omega$, the equation is said to be _of that type_ on $Omega$. If the type varies, the equation is of _mixed type_.
+] <def:pde-type-2d>
+
+The connection to characteristic surfaces (#link(<def:char-surface>)[§3.1]) is direct: the characteristic equation $a (d y)^2 - 2 b dif x dif y + c (d x)^2 = 0$ from #link(<eq:char-ode-2d>)[§3.1] has real solutions if and only if $Delta >= 0$. Thus:
+- _Elliptic_: no real characteristic curves (solutions are smooth)
+- _Parabolic_: one family of characteristic curves (one degenerate direction)
+- _Hyperbolic_: two distinct families of characteristic curves (wave-like propagation)
+
+#example(name: "Classification of Model Equations")[
+  We classify the three model equations from #link(<def:laplace-equation>)[Ch 1] using #link(<def:pde-type-2d>)[Definition above].
+
+  *Laplace equation* $u_(x x) + u_(y y) = 0$: Here $a = 1$, $b = 0$, $c = 1$, so $Delta = 0 - 1 = -1 < 0$. The Laplace equation is _elliptic_ everywhere.
+
+  *Heat equation* $u_t - kappa u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $a = -kappa$, $b = 0$, $c = 0$, so $Delta = 0 - 0 = 0$. The heat equation is _parabolic_ everywhere. The characteristic surfaces are $t = text("const")$, consistent with #link(<eq:char-ode-2d>)[§3.1].
+
+  *Wave equation* $u_(t t) - c^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((-c^2, 0), (0, 1))$, so $Delta = 0^2 - (-c^2)(1) = c^2 > 0$. The wave equation is _hyperbolic_ everywhere. The characteristic lines $x +- c t = text("const")$ are the two families found in #link(<eq:char-ode-2d>)[§3.1].
+] <ex:model-equations-type>
+
+#example(name: "Tricomi Equation and Mixed Type")[
+  The *Tricomi equation* is
+  $
+    y u_(x x) + u_(y y) = 0.
+  $
+  Here $a = y$, $b = 0$, $c = 1$, so $Delta = 0 - y = -y$. The type depends on the sign of $y$:
+  - $y > 0$: $Delta < 0$, _elliptic_ (the upper half-plane)
+  - $y = 0$: $Delta = 0$, _parabolic_ (the $x$-axis)
+  - $y < 0$: $Delta > 0$, _hyperbolic_ (the lower half-plane)
+
+  The Tricomi equation is the prototypical _mixed-type_ PDE. It arises in transonic gas dynamics, where the flow transitions from subsonic (elliptic) to supersonic (hyperbolic) across the sonic line $y = 0$. The boundary value problem for the Tricomi equation — elliptic in the upper half-plane with data prescribed on the parabolic degeneracy — is known as the _Tricomi problem_.
+] <ex:tricomi>
+
+#note[
+  *Summary of the 2D classification.* The following table summarizes the three types:
+
+  #table(
+    columns: (1fr, 1fr, 1fr, 2fr),
+    stroke: .5pt,
+    align: center,
+    table.header([Type], [Discriminant], [$det A$], [Characteristics]),
+    [Elliptic], [$Delta < 0$], [$> 0$], [No real characteristics],
+    [Parabolic], [$Delta = 0$], [$= 0$], [One degenerate family],
+    [Hyperbolic], [$Delta > 0$], [$< 0$], [Two distinct families],
+  )
+
+  The transport equation $u_t + c u_x = 0$ from #link(<ex:transport-equation>)[§2] is a _first-order_ hyperbolic equation. When viewed as a second-order equation (by differentiating), it satisfies the wave equation $u_(t t) - c^2 u_(x x) = 0$, confirming the consistency between the first-order and second-order classifications.
+]
+
+== Canonical Forms and Characteristics // 标准形与特征线
+
+The classification of #link(<def:pde-type-2d>)[§3.2] is not merely a labeling scheme: it determines the _canonical form_ to which any equation of that type can be reduced by a suitable change of variables. The characteristic curves computed in #link(<eq:char-ode-2d>)[§3.1] provide exactly the coordinates needed for this reduction.
+
+We work with the general linear second-order equation in two variables (#link(<eq:general-2d>)[§3.2]):
+$
+  a u_(x x) + 2 b u_(x y) + c u_(y y) + text("lower-order terms") = f(x, y).
+$
+
+=== Hyperbolic Equations
+
+When $Delta = b^2 - a c > 0$, the characteristic ODE #link(<eq:char-ode-2d>)[§3.1] has two distinct real families of solutions:
+$
+  phi(x, y) = c_1, quad psi(x, y) = c_2.
+$
+
+#theorem(name: "Hyperbolic Canonical Form")[
+  Let $Delta > 0$ in a domain $Omega$. Introduce characteristic coordinates $xi = phi(x, y)$ and $eta = psi(x, y)$. In these coordinates, the equation reduces to the _first canonical form_:
+  #eq[$
+    u_(xi eta) = Phi(xi, eta, u, u_xi, u_eta).
+  $] <eq:canonical-hyperbolic>
+  Equivalently, setting $alpha = xi + eta$ and $beta = xi - eta$, one obtains the _second canonical form_:
+  #eq[$
+    u_(alpha alpha) - u_(beta beta) = Psi(alpha, beta, u, u_alpha, u_beta).
+  $] <eq:canonical-hyperbolic-alt>
+]
+
+#proof[
+  The chain rule gives:
+  $
+    u_x = u_xi phi_x + u_eta psi_x, quad u_y = u_xi phi_y + u_eta psi_y.
+  $
+  Computing second derivatives and substituting into #link(<eq:general-2d>)[§3.2], the coefficient of $u_(xi xi)$ is $a phi_x^2 + 2 b phi_x phi_y + c phi_y^2$, which vanishes precisely because $phi = text("const")$ satisfies the characteristic ODE #link(<eq:char-ode-2d>)[§3.1]. Similarly, the coefficient of $u_(eta eta)$ vanishes because $psi = text("const")$ is also a characteristic family. The only surviving second-order term is proportional to $u_(xi eta)$, yielding #link(<eq:canonical-hyperbolic>)[(7)]. The second form follows by a linear change of variables.
+]
+
+#example(name: "Wave Equation in Canonical Form")[
+  The wave equation $u_(t t) - c^2 u_(x x) = 0$ from #link(<def:wave-equation>)[Ch 1] has $a = -c^2$, $b = 0$, $c_"coeff" = 1$ (with variables $(x, t)$), so $Delta = c^2 > 0$. The characteristic ODE gives:
+  $
+    -c^2 (d t)^2 + (d x)^2 = 0 quad => quad x +- c t = text("const").
+  $
+  Setting $xi = x + c t$ and $eta = x - c t$, the wave equation becomes $u_(xi eta) = 0$, which integrates directly to $u = F(xi) + G(eta) = F(x + c t) + G(x - c t)$. This recovers the _d'Alembert formula_: every solution is a superposition of right- and left-traveling waves.
+]
+
+=== Parabolic Equations
+
+When $Delta = 0$, the characteristic ODE has a single repeated family of solutions $phi(x, y) = c$.
+
+#theorem(name: "Parabolic Canonical Form")[
+  Let $Delta = 0$ in a domain $Omega$. Set $xi = phi(x, y)$ and choose $eta = psi(x, y)$ to be any function functionally independent of $phi$. In these coordinates, the equation reduces to:
+  #eq[$
+    u_(eta eta) = Phi(xi, eta, u, u_xi, u_eta).
+  $] <eq:canonical-parabolic>
+  Only one second-order derivative survives.
+]
+
+The proof follows the same chain-rule computation: since $Delta = 0$, the two characteristic families coincide, so both the $u_(xi xi)$ and $u_(xi eta)$ coefficients vanish, leaving only $u_(eta eta)$.
+
+#example(name: "Heat Equation in Canonical Form")[
+  The heat equation $u_t = kappa u_(x x)$ from #link(<def:heat-equation>)[Ch 1] has $a = -kappa$, $b = 0$, $c_"coeff" = 0$ (with variables $(x, t)$), so $Delta = 0$. The characteristic ODE gives $-kappa (d t)^2 = 0$, so $t = text("const")$ is the single characteristic family. Setting $xi = t$ and $eta = x$, the equation is already in canonical form #link(<eq:canonical-parabolic>)[(9)]:
+  $
+    u_(eta eta) = (1) / (kappa) u_xi.
+  $
+  The variable $xi = t$ plays the role of the "evolution parameter," and $eta = x$ is the spatial variable. The absence of a $u_(xi xi)$ term reflects the irreversible nature of diffusion.
+]
+
+=== Elliptic Equations
+
+When $Delta < 0$, the characteristic ODE has no real solutions. However, it has two _complex conjugate_ families:
+$
+  phi(x, y) = alpha(x, y) + i beta(x, y) = c_1, quad overline(phi)(x, y) = alpha(x, y) - i beta(x, y) = c_2.
+$
+
+#theorem(name: "Elliptic Canonical Form")[
+  Let $Delta < 0$ in a domain $Omega$. Set $alpha = text("Re")(phi)$ and $beta = text("Im")(phi)$. In these coordinates, the equation reduces to:
+  #eq[$
+    u_(alpha alpha) + u_(beta beta) = Phi(alpha, beta, u, u_alpha, u_beta).
+  $] <eq:canonical-elliptic>
+]
+
+#proof[
+  If we formally apply the hyperbolic reduction with complex coordinates $z = alpha + i beta$ and $bar(z) = alpha - i beta$, the canonical form would be $u_(z bar(z)) = 0$. Converting back to real variables via $alpha = (z + bar(z)) / 2$, $beta = (z - bar(z)) / (2 i)$ transforms $4 u_(z bar(z))$ into $u_(alpha alpha) + u_(beta beta)$, yielding #link(<eq:canonical-elliptic>)[(10)].
+]
+
+#example(name: "Laplace Equation in Canonical Form")[
+  The Laplace equation $u_(x x) + u_(y y) = 0$ from #link(<def:laplace-equation>)[Ch 1] has $a = 1$, $b = 0$, $c = 1$, so $Delta = -1 < 0$. The characteristic ODE gives:
+  $
+    (d y)^2 + (d x)^2 = 0 quad => quad y +- i x = text("const").
+  $
+  The complex characteristic families are $z = y + i x$ and $bar(z) = y - i x$, giving $alpha = y$, $beta = x$. The equation is already in canonical form: $u_(alpha alpha) + u_(beta beta) = 0$. Solutions are precisely the _harmonic functions_, and the canonical form reveals why elliptic equations have no preferred direction — the operator is isotropic.
+]
+
+=== Summary and the Transport Equation Revisited
+
+The following table summarizes the canonical forms and their characteristic geometry:
+
+#table(
+  columns: (1fr, 2fr, 2fr, 2fr),
+  stroke: .5pt,
+  align: center,
+  table.header([Type], [Canonical form], [Coordinates], [Characteristics]),
+  [Elliptic], [$u_(alpha alpha) + u_(beta beta) = Phi$], [$alpha + i beta = phi(x, y)$], [Complex; no real curves],
+  [Parabolic], [$u_(eta eta) = Phi$], [$xi = phi(x, y)$; $eta$ free], [One real family],
+  [Hyperbolic], [$u_(xi eta) = Phi$], [$xi = phi, eta = psi$], [Two real families],
+)
+
+#note[
+  *The transport equation revisited.* In #link(<ex:transport-equation>)[§2], we noted that the transport equation $u_t + c u_x = 0$ is "the simplest hyperbolic PDE" and promised to revisit it in this chapter. We can now make this precise from the second-order perspective.
+
+  Differentiating $u_t + c u_x = 0$ with respect to $t$ and $x$ yields:
+  $
+    u_(t t) + c u_(x t) = 0, quad u_(x t) + c u_(x x) = 0.
+  $
+  Eliminating the mixed derivative gives $u_(t t) - c^2 u_(x x) = 0$: every solution of the transport equation also satisfies the wave equation. The characteristic lines $x - c t = text("const")$ of the transport equation are one of the two characteristic families of the wave equation; the other family $x + c t = text("const")$ corresponds to left-traveling waves, which the transport equation does not see.
+
+  This confirms the classification hierarchy: first-order hyperbolic equations are the "square roots" of second-order hyperbolic equations, and the characteristic structure is consistent across both levels.
+]
+
+=== Characteristics of the Three Types: A Visual Comparison
+
+#figure(
+  image("img/characteristics-three-types.svg", width: 90%),
+  caption: [Characteristic curves for the three types of second-order PDEs. _Left_: Elliptic — no real characteristics (complex conjugate families). _Center_: Parabolic — one degenerate family of parallel lines. _Right_: Hyperbolic — two transverse families of characteristic curves.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:characteristics-three-types>
+
+The figure above provides a geometric summary of the classification. The characteristic curves (#link(<def:char-surface>)[§3.1]) partition the domain differently for each type:
+- *Elliptic*: no real characteristics. Information propagates in all directions equally; solutions are smooth.
+- *Parabolic*: one family of characteristics. Information propagates along a single preferred direction (the "time" direction); solutions smooth out in that direction.
+- *Hyperbolic*: two transverse families. Information propagates along characteristics; solutions can develop singularities along characteristic curves.
 
 // ==========================================================================
 // Part II — Distribution Theory (分布理论)
