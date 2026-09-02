@@ -384,6 +384,526 @@ inverses — is the definition of a group, and it is where
 #link(<def:binary-operation>)[Chapter 2] begins.
 
 // ==========================================================================
+// Chapter 2: 群的定义与基本性质
+// ==========================================================================
+
+= Definition and Basic Properties of Groups // 群的定义与基本性质
+
+Chapter 1 assembled the toolkit: sets with operations (§1.1), the
+quotient construction (§1.2), and structure-preserving maps (§1.3).
+We now make the axiomatic selection promised there. Among all binary
+operations we ask for the least that must be demanded so that
+computation becomes reliable: that products can be rebracketed at
+will (*associativity*), that there is a neutral element to measure
+against (*identity*), and that every element can be undone
+(*inverses*). The answer is the definition of a *group* — and the
+rest of this notebook studies how much structure these three axioms
+buy.
+
+#definition(name: "Group")[
+  A *group* is a set $G$ equipped with a binary operation $star$
+  satisfying:
+  - (G1) *associativity*: $(a star b) star c = a star (b star c)$
+    for all $a, b, c in G$;
+  - (G2) *identity*: there exists $e in G$ with
+    $e star a = a star e = a$ for all $a in G$;
+  - (G3) *inverses*: for every $a in G$ there exists $a^(-1) in G$
+    with $a star a^(-1) = a^(-1) star a = e$.
+
+  Strictly the group is the pair $(G, star)$; the operation is
+  suppressed in the notation when no confusion is possible. Axioms
+  (G2) and (G3) are the two-sided versions of the laws isolated in
+  #link(<def:identity-inverse>)[Chapter 1], with associativity
+  borrowed from #link(<prop:operation-laws>)[the fundamental laws].
+] <def:group>
+
+#definition(name: "Abelian Group")[
+  A group whose operation is commutative — $a star b = b star a$
+  for all $a, b in G$ — is called *abelian* (or *commutative*),
+  after N. H. Abel.
+] <def:abelian-group>
+
+#note[
+  (Notation.) In *multiplicative notation* the operation is written
+  as juxtaposition, $a star b = a b$, the identity as $e$ (or $1$),
+  and the inverse as $a^(-1)$; powers $a^n$ follow the rules of
+  #link(<note:power-notation>)[Chapter 1]. In *additive notation*
+  the operation is $+$, the identity is $0$, the inverse of $a$ is
+  $-a$, and one writes the multiple $n a$ instead of the power
+  $a^n$. Additive notation is reserved for abelian groups;
+  multiplicative notation serves in general. The promise made in
+  #link(<note:power-notation>)[Chapter 1] — that the interplay of
+  powers and orders would become central — is redeemed in §2.3,
+  where the *order* of an element is defined through powers.
+] <note:notation-convention>
+
+A natural suspicion: are the axioms perhaps redundant — does one of
+them follow from the others, or can the two-sidedness requirements
+be halved? The equivalence at the heart of the definition is the
+following.
+
+#theorem(name: "Equivalent Axioms for Groups")[
+  Let $G$ be a non-empty set with an associative binary operation.
+  Suppose there exists a *left identity*: an element $e$ with
+  $e a = a$ for all $a in G$; and suppose each $a in G$ has a *left
+  inverse*: an element $a'$ with $a' a = e$. Then $G$ is a group.
+] <thm:group-equivalent-axioms>
+
+*Proof.* First we upgrade the left inverse of $a$ to a two-sided
+one. Let $a''$ be a left inverse of $a'$, which exists by
+hypothesis. Then
+$
+  a a' = e (a a') = (a'' a') (a a') = a'' ((a' a) a') = a'' (e a')
+  = a'' a' = e,
+$
+each step justified in turn by the left identity $e$, the choice of
+$a''$, associativity, $a' a = e$, $e a' = a'$, and $a'' a' = e$. So
+$a'$ is also a *right* inverse of $a$. Now the left identity becomes
+two-sided as well:
+$
+  a e = a (a' a) = (a a') a = e a = a,
+$
+using $e = a' a$, associativity, the identity $a a' = e$ just
+proved, and the left identity property. Both one-sided conditions
+have thus been upgraded to two-sided ones, and (G1)–(G3) hold. ⊙
+
+Note the division of labour inside the proof: each upgrade uses
+*both* one-sided conditions. Neither condition alone suffices — see
+#link(<ex:non-groups>)[the right-zero operation] in §2.2.
+
+#corollary(name: "Uniqueness Inside a Group")[
+  In a group the identity is unique and each element has exactly one
+  inverse. Conversely, any solution of $a b = e$ is already the
+  inverse of $a$: $b a = e$ follows.
+] <cor:group-identity-uniqueness>
+
+*Proof.* In a group (G2) supplies an identity that the theorem just
+proved makes two-sided, and uniqueness of a two-sided identity —
+hence of each inverse — is
+#link(<prop:operation-laws-unique>)[Chapter 1]. For the converse,
+suppose $a b = e$. Then
+$
+  b = e b = (a^(-1) a) b = a^(-1) (a b) = a^(-1) e = a^(-1),
+$
+using (G3) in the second step and the hypothesis $a b = e$ in the
+third. Hence $b a = a^(-1) a = e$, as claimed. ⊙
+
+== Typical Examples // 典型例子
+
+Definitions earn their keep through examples. We build a stock that
+will serve the whole notebook, checking the axioms in each case; a
+run of deliberate near-misses at the end shows which axiom does
+which work.
+
+#example[
+  (Elementary groups.) The sets $bb(Z)$, $bb(Q)$, $bb(R)$ under
+  addition are abelian groups: closure and associativity are
+  inherited from arithmetic, $0$ is the identity, and $-a$ inverts
+  $a$. The non-zero rationals and reals under multiplication,
+  $(bb(Q)^*, dot)$ and $(bb(R)^*, dot)$, are abelian groups with
+  identity $1$ and inverse $1 \/ a$. Note the exclusion of $0$: it
+  has no multiplicative inverse, so the full structures
+  $(bb(Q), dot)$ fail (G3).
+] <ex:elementary-groups>
+
+#example[
+  (Residue classes form a group.) Take $bb(Z)_n$ with the addition
+  defined in #link(<caution:well-defined-operations>)[Chapter 1] —
+  the well-definedness check made there is precisely what allows us
+  to speak of an operation at all. The axioms lift from $bb(Z)$:
+  $([a] + [b]) + [c] = [a + b + c] = [a] + ([b] + [c])$, the class
+  $[0]$ acts as identity, and $[-a]$ inverts $[a]$. The result is an
+  abelian group $(bb(Z)_n, +)$ of order $n$ — the Cayley table of
+  $(bb(Z)_4, +)$ appeared in #link(<ex:cayley-table>)[Chapter 1].
+] <ex:residue-group>
+
+#definition(name: "Symmetric Group")[
+  Let $X$ be a set. A *permutation* of $X$ is a bijection
+  $sigma: X -> X$. Under composition the permutations of $X$ form a
+  group: the composite of bijections is a bijection, composition of
+  mappings is associative (a fact of the Théorie des Ensembles
+  note), the identity map is neutral, and a bijection has an inverse
+  bijection. For $X = {1, 2, dots, n}$ this group is the *symmetric
+  group* $S_n$; its order is $n!$, since a bijection on $n$ points
+  is determined by choosing, in succession, the images of
+  $1, dots, n$.
+] <def:symmetric-group>
+
+#note[
+  (Cycle notation.) A permutation is written in *cycle notation*:
+  $(1 2 3)$ denotes the map $1 -> 2$, $2 -> 3$, $3 -> 1$ — each
+  entry mapped to the next, the last wrapping around to the first —
+  and $(1 2)$ denotes a *transposition*, swapping $1$ and $2$ while
+  fixing all other points. Products are read right to left:
+  $sigma tau$ means "apply $tau$ first, then $sigma$". Fixed points
+  are omitted, so $(1 2)$ and $(1 2)(3)$ are the same permutation.
+] <note:cycle-notation>
+
+#example[
+  (The smallest non-abelian group.) $S_3$ has six elements:
+  $
+    e, quad (1 2 3), quad (1 3 2), quad (1 2), quad (1 3), quad (2 3).
+  $
+  Each transposition is its own inverse and the two 3-cycles are
+  inverse to each other, so every element has order at most $3$.
+  Composition is not commutative:
+  $
+    (1 2)(2 3) = (1 2 3), quad quad (2 3)(1 2) = (1 3 2),
+  $
+  as one checks by following each point through the right factor
+  first. Thus $S_3$ is a non-abelian group of order $6$ — indeed the
+  smallest possible, a fact that will drop out of the classification
+  of groups of small order in Chapter 3.
+] <ex:s3-details>
+
+#definition(name: "Dihedral Group")[
+  Let $n >= 3$. The *dihedral group* $D_n$ is the group of symmetry
+  transformations of the regular $n$-gon: the $n$ rotations and $n$
+  reflections that preserve the polygon, composed as mappings of the
+  plane. Writing $r$ for the rotation through $(2 pi) \/ n$ and $s$
+  for one fixed reflection, every element is uniquely $r^k$ or
+  $r^k s$ with $0 <= k <= n - 1$, so $abs(D_n) = 2 n$, and the two
+  generators satisfy
+  $
+    r^n = e, quad quad s^2 = e, quad quad s r = r^(-1) s.
+  $
+  The last relation shows $s r != r s$ as soon as $r != r^(-1)$,
+  that is, $n >= 3$: dihedral groups are non-abelian.
+] <def:dihedral-group>
+
+#definition(name: "General and Special Linear Groups")[
+  Let $F$ be a field — for the time being, $bb(Q)$ or $bb(R)$
+  suffices. The *general linear group* $"GL"_n(F)$ is the set of
+  invertible $n times n$ matrices over $F$ under matrix
+  multiplication: the product of invertible matrices is invertible,
+  matrix multiplication is associative, the identity matrix $I$ is
+  neutral, and every invertible matrix has its inverse matrix — the
+  axioms are exactly linear algebra. The *special linear group*
+  $"SL"_n(F)$ consists of the matrices of determinant $1$; it is a
+  group in its own right, since products and inverses of
+  determinant-$1$ matrices again have determinant $1$. For $n >= 2$
+  these groups are non-abelian.
+] <def:general-linear-group>
+
+#example[
+  (The quaternion group.) Let
+  $Q_8 = {plus.minus 1, plus.minus i, plus.minus j, plus.minus k}$
+  with multiplication determined by
+  $
+    i^2 = j^2 = k^2 = -1, quad i j = k, quad j k = i, quad k i = j,
+  $
+  and the products in reversed order carrying a minus sign:
+  $j i = -k$, $k j = -i$, $i k = -j$. One checks that $1$ is the
+  identity, $-1$ commutes with everything and squares to $1$, and
+  each of $plus.minus i$, $plus.minus j$, $plus.minus k$ has order
+  $4$; so $abs(Q_8) = 8$. The group is non-abelian
+  ($i j = k != -k = j i$), yet all of its proper subgroups are
+  cyclic — a small group with a rich structure to which Chapter 7
+  will return.
+] <ex:quaternion-group>
+
+#example[
+  (Near-misses: why each axiom is needed.)
+  - $(bb(N), +)$ is closed and associative with identity $0$, but no
+    positive number has an inverse: (G3) fails, everything else
+    holds.
+  - $(bb(Z), -)$ with $a star b = a - b$ is closed, but not
+    associative ($(1 - 2) - 3 = -4$ while $1 - (2 - 3) = 2$) and
+    without identity: (G1) and (G2) fail.
+  - $(bb(R), dot)$ has identity $1$ and inverses of every $a != 0$,
+    but $0$ has none. Deleting $0$ repairs the structure — the
+    identity must be invertible *for every element*, with no
+    exceptions.
+  - On any set with at least two elements define the *right zero*
+    operation $x star y = y$. Then $star$ is associative:
+    $(x star y) star z = z = x star (y star z)$. Every element is a
+    *left* identity ($e star y = y$ for all $e$), yet no right
+    identity exists ($x star e = e != x$), and no element has a left
+    inverse. A group fails for want of the right-handed half of the
+    axioms — compare #link(<thm:group-equivalent-axioms>)[the
+      equivalent axioms], where the two *left-handed* conditions, held
+    *simultaneously*, do suffice.
+] <ex:non-groups>
+
+The stock is complete: abelian specimens ($(bb(Z), +)$,
+$(bb(Z)_n, +)$), non-abelian ones ($S_3$, $D_n$, $"GL"_n(F)$,
+$Q_8$), and structures dismissed at each axiom in turn. What do the
+axioms buy once admitted? The next section collects the first
+dividends — all of them free, none requiring extra hypotheses.
+
+== Basic Properties of Groups // 群的基本性质
+
+The axioms look modest; their first dividends follow. Everything in
+this section is obtained by multiplying on the left or on the right
+by a well-chosen inverse — the two moves that a semigroup cannot
+make.
+
+#property(name: "Basic Consequences of the Axioms")[
+  Let $G$ be a group and $a, b, c in G$.
+  + *Cancellation*: $a b = a c$ implies $b = c$, and
+    $b a = c a$ implies $b = c$.
+  + *Unique solutions*: the equation $a x = b$ has the unique
+    solution $x = a^(-1) b$; the equation $y a = b$ has the unique
+    solution $y = b a^(-1)$.
+  + *Double inverse*: $(a^(-1))^(-1) = a$.
+  + *Socks and shoes*: $(a b)^(-1) = b^(-1) a^(-1)$. In an abelian
+    group the order may be swapped: $(a b)^(-1) = a^(-1) b^(-1)$.
+] <prop:group-basic-properties>
+
+*Proof.* (1) Multiply $a b = a c$ by $a^(-1)$ on the left:
+$(a^(-1) a) b = (a^(-1) a) c$ gives $e b = e c$, that is, $b = c$;
+the right-sided version multiplies on the right. (2) The element
+$x_0 = a^(-1) b$ solves $a x = b$, since
+$a x_0 = (a a^(-1)) b = e b = b$; if $x$ is any solution then
+$a x = a x_0$ and cancellation in (1) gives $x = x_0$. Symmetrically
+for $y a = b$. (3) By (G3), $a^(-1) a = e$ and $a a^(-1) = e$: so
+*both* $a$ and $(a^(-1))^(-1)$ are inverses of $a^(-1)$, and
+inverses are unique by #link(<cor:group-identity-uniqueness>)[the
+  corollary above]. (4) $(b^(-1) a^(-1)) (a b) = b^(-1) (a^(-1) a) b
+= b^(-1) b = e$ and dually $(a b) (b^(-1) a^(-1)) = e$, so
+$b^(-1) a^(-1)$ is the inverse of $a b$; in the abelian case
+$b^(-1) a^(-1) = a^(-1) b^(-1)$ outright. ⊙
+
+The name of (4): to undo "$a$ then $b$" one removes $b$ first, then
+$a$ — socks before shoes. Two warnings worth fixing early. First,
+*cancellation* is a group phenomenon: $(bb(N), +)$ cannot cancel
+subtraction because inverses are missing. Second, $(a b)^(-1) =
+b^(-1) a^(-1)$ *reverses* the order — forgetting the reversal is
+the standard slip, and the abelian shortcut above is a privilege,
+not a right.
+
+== The Order of an Element // 元素的阶
+
+Powers $a^n$ were defined for any associative operation in
+#link(<note:power-notation>)[Chapter 1] — with a promise attached.
+The group axioms make every power well behaved, and the following
+notion cashes the promise.
+
+#definition(name: "Order of an Element")[
+  Let $G$ be a group and $a in G$. If some positive power of $a$
+  equals $e$, the smallest such exponent is the *order* of $a$,
+  written $"ord"(a)$; in this case $a$ has *finite order*. If
+  $a^n != e$ for every $n in bb(Z)^+$, then $a$ has *infinite
+  order*, written $"ord"(a) = infinity$: all powers $a^n$ with
+  $n in bb(Z)$ are then distinct.
+] <def:order-element>
+
+#example[
+  (Orders at a glance.) In $(bb(Z)_4, +)$:
+  $"ord"([1]) = 4$, $"ord"([2]) = 2$ (since $2 [2] = [4] = [0]$),
+  $"ord"([0]) = 1$. In $S_3$
+  (#link(<ex:s3-details>)[§2.2]): every transposition has order $2$,
+  the 3-cycles have order $3$, and $e$ has order $1$. In
+  $(bb(Z), +)$ the element $1$ has infinite order, as does every
+  non-zero integer.
+] <ex:element-orders>
+
+#property(name: "Powers Wrap Around")[
+  Let $G$ be a group and $a in G$ an element of finite order $n =
+  "ord"(a)$. Then:
+  - $a^m = e$ if and only if $n$ divides $m$;
+  - $a^m = a^k$ if and only if $m equiv k (mod n)$;
+  - the set of powers $⟨a⟩ = {a^k | k in bb(Z)}$ — which Chapter 3
+    will recognise as a *subgroup* — has exactly $n$ elements:
+    $⟨a⟩ = {e, a, a^2, dots, a^(n-1)}$, and in particular
+    $abs(⟨a⟩) = n = "ord"(a)$.
+] <prop:order-properties>
+
+*Proof.* Divide with remainder: every integer $m$ writes uniquely as
+$m = q n + r$ with $0 <= r <= n - 1$, and
+$
+  a^m = a^(q n + r) = (a^n)^q a^r = e^q a^r = a^r.
+$
+So $a^m = e$ exactly when $a^r = e$, which by minimality of $n$
+happens exactly when $r = 0$ — that is, when $n$ divides $m$. The
+second item follows by subtraction: $a^m = a^k$ holds exactly when
+$a^(m - k) = e$, i.e. $n | m - k$, i.e. $m equiv k (mod n)$. For the
+third item: by the division step every power $a^m$ lands in
+${a^0, dots, a^(n-1)}$, and these $n$ powers are distinct — if
+$a^i = a^j$ with $0 <= i < j <= n - 1$, the second item would force
+$n | j - i$, impossible for $0 < j - i < n$. ⊙
+
+The wrap-around phenomenon is the algebraic shadow of a clock:
+after $n$ steps the walk returns to its start, and only the
+remainder of the step count matters.
+
+#definition(name: "Order of a Group")[
+  The *order* of a group $G$ is the number of its elements, written
+  $abs(G)$ — a cardinal, for infinite groups, in the sense of the
+  Théorie des Ensembles note. The group is *finite* if $abs(G)$ is
+  finite. Do not confuse the two orders: the order of a *group*
+  counts elements, the order of an *element* measures powers. They
+  meet in the cyclic world of §2.4, where
+  $abs(⟨a⟩) = "ord"(a)$.
+] <def:order-group>
+
+== Cyclic Groups // 循环群
+
+We have met, repeatedly, groups in which every element is a power of
+a single element: $(bb(Z), +)$ is generated by $1$, $(bb(Z)_n, +)$
+by $[1]$, and $⟨a⟩$ of #link(<prop:order-properties>)[§2.3] is built
+from its own namesake. The phenomenon deserves a name, for these
+groups admit a complete classification — the first structure theorem
+of this notebook.
+
+#note[
+  (Subgroups, a working definition.) A non-empty subset $H$ of a
+  group $G$ is a *subgroup* if it is closed under the operation and
+  under inverses: $h_1 h_2 in H$ and $h^(-1) in H$ whenever
+  $h_1, h_2, h in H$. A subgroup is itself a group under the
+  restricted operation — the axioms restrict for free. The formal
+  definition and the subgroup criteria belong to Chapter 3; this
+  working notion suffices here. Note at once that for any $a$ the
+  power set $⟨a⟩ = {a^k | k in bb(Z)}$ is a subgroup:
+  $a^j a^k = a^(j+k) in ⟨a⟩$ and $(a^j)^(-1) = a^(-j) in ⟨a⟩$.
+] <note:subgroup-preview>
+
+#definition(name: "Cyclic Group")[
+  A group $G$ is *cyclic* if $G = ⟨g⟩$ for some $g in G$ — that is,
+  every element of $G$ is a power $g^k$ with $k in bb(Z)$. The
+  element $g$ is then a *generator* of $G$, and one writes
+  $G = ⟨g⟩$.
+] <def:cyclic-group>
+
+#corollary(name: "Cyclic Implies Abelian")[
+  Every cyclic group is abelian.
+] <cor:cyclic-abelian>
+
+*Proof.* Any two elements are $g^j$ and $g^k$, and
+$g^j g^k = g^(j+k) = g^(k+j) = g^k g^j$. ⊙
+
+#theorem(name: "Classification of Cyclic Groups")[
+  Let $G = ⟨g⟩$ be a cyclic group.
+  - If $g$ has infinite order, then $G$ is isomorphic to
+    $(bb(Z), +)$, via the map $g^k arrow.r.double k$.
+  - If $"ord"(g) = n < infinity$, then $abs(G) = n$ and $G$ is
+    isomorphic to $(bb(Z)_n, +)$, via the map $g^k arrow.r.double
+    [k]$.
+
+  Consequently, up to isomorphism there is exactly one cyclic group
+  of each order: the infinite one $(bb(Z), +)$, and, for each
+  $n >= 1$, the group $(bb(Z)_n, +)$.
+] <thm:cyclic-classification>
+
+*Proof.* *Infinite case.* Define $phi: bb(Z) -> G$ by $phi(k) =
+g^k$. Surjectivity is the very definition of $G = ⟨g⟩$, and $phi$
+preserves the operations: $phi(j + k) = g^(j+k) = g^j g^k = phi(j)
+phi(k)$. Injectivity: if $g^j = g^k$ with $j > k$, then $g^(j-k) = e$
+with the *positive* exponent $j - k$, contradicting infinite order.
+A bijective operation-preserving map is an isomorphism
+(#link(<def:homomorphism>)[Chapter 1]).
+
+*Finite case.* Since $g^n = e$ by the definition of order, the
+division step in #link(<prop:order-properties>)[§2.3] gives
+$⟨g⟩ = {e, g, dots, g^(n-1)}$ with these $n$ elements distinct;
+hence $abs(G) = n$. Define $psi: bb(Z)_n -> G$ by $psi([k]) = g^k$.
+*Well-definedness*: if $[j] = [k]$ then $n | j - k$, so $g^(j-k) = e$
+and $g^j = g^k$ — exactly the compatibility pattern of
+#link(<caution:well-defined-operations>)[Chapter 1], the congruence
+relation on exponents being tailored to the powers of $g$. The map
+preserves addition, $psi([j] + [k]) = g^(j+k) = psi([j]) psi([k])$,
+and is surjective by $G = ⟨g⟩$; since both sides have $n$ elements,
+surjectivity forces bijectivity. ⊙
+
+The isomorphism $bb(Z)_4 ≅ U_4$ computed in
+#link(<ex:isomorphic-examples>)[Chapter 1] is precisely the case
+$n = 4$ of the theorem; the theorem says such luck is *systematic*.
+
+#corollary(name: "Element Orders Divide the Group Order")[
+  Let $G = ⟨g⟩$ be cyclic of finite order $n$, and let $a = g^k$ be
+  any element of $G$. Then
+  $
+    "ord"(a) = n \/ ("gcd"(n, k)),
+  $
+  which in particular divides $n$. (That element orders divide the
+  group order in *every* finite group is Lagrange's theorem,
+  Chapter 3; in the cyclic world it already falls out here.)
+] <cor:order-divides>
+
+*Proof.* By #link(<prop:order-properties>)[§2.3], $a^m = g^(k m) = e$
+holds exactly when $n | k m$. Write $d = "gcd"(n, k)$, so $n = d n'$
+and $k = d k'$ with $"gcd"(n', k') = 1$; then $n | k m$ unfolds to
+$d n' | d k' m$, i.e. $n' | k' m$, i.e. $n' | m$ since $n', k'$ are
+coprime. The smallest positive such $m$ is $n'$, so
+$"ord"(a) = n' = n \/ d$, which divides $n = d n'$. ⊙
+
+#corollary(name: "Generators of a Finite Cyclic Group")[
+  In a cyclic group $G = ⟨g⟩$ of order $n$, the element $g^k$ is a
+  generator of $G$ if and only if $"gcd"(n, k) = 1$. Hence $G$ has
+  exactly $phi(n)$ generators, where $phi$ is Euler's totient
+  function, counting the integers in ${0, 1, dots, n - 1}$ coprime
+  to $n$. For instance, $(bb(Z)_6, +)$ has generators $[1]$ and
+  $[5]$.
+] <cor:cyclic-generators>
+
+*Proof.* $g^k$ generates $G$ exactly when $⟨g^k⟩ = G$, i.e. when
+$abs(⟨g^k⟩) = n$; by #link(<cor:order-divides>)[the corollary above],
+$abs(⟨g^k⟩) = "ord"(g^k) = n \/ ("gcd"(n, k))$, which equals $n$
+exactly when $"gcd"(n, k) = 1$. The count of such exponents $k$ in
+${0, 1, dots, n - 1}$ is $phi(n)$ by definition. ⊙
+
+#theorem(name: "Subgroups of Cyclic Groups")[
+  Let $G = ⟨g⟩$ be a cyclic group.
+  - Every subgroup of $G$ is cyclic.
+  - If $abs(G) = n$ is finite, then for every positive divisor $d$
+    of $n$ there is exactly one subgroup of order $d$, namely
+    $⟨g^(n \/ d)⟩$; there are no other subgroups.
+] <thm:cyclic-subgroups>
+
+*Proof.* (1) Let $H$ be a subgroup of $G = ⟨g⟩$. If $H = {e}$, then
+$H = ⟨e⟩$ is cyclic. Otherwise $H$ contains $g^m$ with $m != 0$;
+since also $(g^m)^(-1) = g^(-m) in H$, we may choose $m$ *positive*,
+and choose it minimal among the positive exponents with $g^m in H$.
+Every element of $H$ is some $g^k$; write $k = q m + r$ with
+$0 <= r < m$. Then
+$
+  g^r = g^(k - q m) = g^k (g^m)^(-q) in H,
+$
+and the minimality of $m$ forces $r = 0$. Hence every $g^k in H$
+equals $(g^m)^q$, so $H subset.eq ⟨g^m⟩$; the reverse inclusion is
+trivial, and $H = ⟨g^m⟩$ is cyclic.
+
+(2) *Existence.* Let $d | n$. The element $g^(n \/ d)$ has order
+$n \/ ("gcd"(n, n \/ d)) = n \/ (n \/ d) = d$, where
+$"gcd"(n, n \/ d) = n \/ d$ because $d | n$; so $⟨g^(n \/ d)⟩$ is a
+subgroup of order $d$.
+
+*Uniqueness.* Let $H$ be any subgroup of order $d$. By (1),
+$H = ⟨g^m⟩$ for some $m$ with $"ord"(g^m) = d$, i.e.
+$n \/ ("gcd"(n, m)) = d$, i.e. $"gcd"(n, m) = n \/ d$. Then
+$(n \/ d) | m$, so $g^m$ is a power of $g^(n \/ d)$ and
+$H subset.eq ⟨g^(n \/ d)⟩$; both sides have $d$ elements, so they
+are equal. ⊙
+
+#figure(
+  image("img/cyclic-group-circle.svg", width: 62%),
+  caption: [The cyclic group $bb(Z)_6$ drawn as a clock. The six
+    classes $[0], dots, [5]$ sit on a circle, and the outer arrows
+    are the steps of the generator $[1]$. The subgroup generated by
+    $[2]$ — the triangle ${[0], [2], [4]}$ — and the subgroup
+    generated by $[3]$ — the diameter ${[0], [3]}$ — appear as
+    smaller circuits; their orders $3$ and $2$ divide $6$, as
+    #link(<cor:order-divides>)[predicted], and they are the *only*
+    proper subgroups, as #link(<thm:cyclic-subgroups>)[the subgroup
+      theorem] guarantees.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:cyclic-circle>
+
+The chapter closes with a tally. We have the axiomatic object (§2.1),
+a stocked bestiary from $(bb(Z), +)$ to $Q_8$ (§2.2), the free
+cancellations and the two notions of order purchased by the axioms
+(§2.3), and the first classification theorem: cyclic groups are
+unique up to isomorphism, and their subgroups are laid out by the
+divisors of the order (§2.4). The next chapter steps *inside* a
+group and studies the subsets it shelters: subgroups and the cosets
+they carve out lead to Lagrange's theorem — the first structural
+constraint on finite groups, and the tool with which Chapter 3 will
+classify groups of small order, delivering the promise of
+#link(<ex:s3-details>)[§2.2] that $S_3$ is the smallest non-abelian
+group.
+
+// ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
 //
