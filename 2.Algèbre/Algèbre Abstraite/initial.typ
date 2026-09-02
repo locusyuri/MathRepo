@@ -65,19 +65,21 @@ usable — is not the bare mapping but the *laws* it satisfies.
   are inserted.
 ] <prop:operation-laws>
 
-*Proof of the generalised associativity.* Induct on $n$. For $n <= 3$
-this is the associativity law itself. Let every bracketing of $n >= 4$
-factors split as $P star Q$ with $P$ a bracketing of the first $k$
-factors and $Q$ one of the last $n - k$, for some $1 <= k <= n - 1$.
-By induction both $P = a_1 star dots star a_k$ and
-$Q = a_(k+1) star dots star a_n$ are the "clean" products, so every
-bracketing equals
-$
-  (a_1 star dots star a_k) star (a_(k+1) star dots star a_n).
-$
-It remains to see this value is the same for all $k$; a second
-induction moving one factor at a time across the middle $star$, using
-the three-factor law, gives the result. ⊙
+#proof(name: "of the generalised associativity")[
+  Induct on $n$. For $n <= 3$
+  this is the associativity law itself. Let every bracketing of $n >= 4$
+  factors split as $P star Q$ with $P$ a bracketing of the first $k$
+  factors and $Q$ one of the last $n - k$, for some $1 <= k <= n - 1$.
+  By induction both $P = a_1 star dots star a_k$ and
+  $Q = a_(k+1) star dots star a_n$ are the "clean" products, so every
+  bracketing equals
+  $
+    (a_1 star dots star a_k) star (a_(k+1) star dots star a_n).
+  $
+  It remains to see this value is the same for all $k$; a second
+  induction moving one factor at a time across the middle $star$, using
+  the three-factor law, gives the result.
+]
 
 The distributive laws involve two operations at once and will be
 decisive for rings (Chapter 8); here we only record their form.
@@ -99,10 +101,12 @@ decisive for rings (Chapter 8); here we only record their form.
   both inverses of $a$, then $b = c$.
 ] <prop:operation-laws-unique>
 
-*Proof.* $e_L = e_L star e_R = e_R$, using that $e_R$ is a right
-identity in the first step and $e_L$ a left identity in the second.
-For inverses: $b = b star e = b star (a star c) = (b star a) star c =
-e star c = c$. ⊙
+#proof[
+  $e_L = e_L star e_R = e_R$, using that $e_R$ is a right
+  identity in the first step and $e_L$ a left identity in the second.
+  For inverses: $b = b star e = b star (a star c) = (b star a) star c =
+  e star c = c$.
+]
 
 #example[
   (Reading a Cayley table.) The operation table (*Cayley table*) of
@@ -176,12 +180,14 @@ the purely set-theoretic setting, is the prototype of quotient groups
   - $not (a R b)$ if and only if $[a]_R ∩ [b]_R = emptyset$.
 ] <prop:equivalence-class-props>
 
-*Proof.* Reflexivity gives $a in [a]_R$. If $[a]_R = [b]_R$ then
-$a in [a]_R = [b]_R$ gives $a R b$; conversely if $a R b$ and $x in
-[a]_R$, then $x R a$ and $a R b$ give $x R b$, so $[a]_R subset.eq
-[b]_R$, and symmetry reverses the inclusion. The third item follows:
-if $x$ lies in both classes, then $a R x$ and $x R b$ force $a R b$,
-reducing to the second item. ⊙
+#proof[
+  Reflexivity gives $a in [a]_R$. If $[a]_R = [b]_R$ then
+  $a in [a]_R = [b]_R$ gives $a R b$; conversely if $a R b$ and $x in
+  [a]_R$, then $x R a$ and $a R b$ give $x R b$, so $[a]_R subset.eq
+  [b]_R$, and symmetry reverses the inclusion. The third item follows:
+  if $x$ lies in both classes, then $a R x$ and $x R b$ force $a R b$,
+  reducing to the second item.
+]
 
 So the classes are either *equal* or *disjoint* — never partially
 overlapping. This is exactly what it takes for them to carve $S$ into
@@ -203,19 +209,21 @@ blocks.
   namely "$a R b$ if and only if $a$ and $b$ lie in the same block."
 ] <thm:partition-correspondence>
 
-*Proof.* ($R ==>$ partition) Reflexivity covers $S$
-(#link(<prop:equivalence-class-props>)[first property]); classes are
-pairwise disjoint: if $[a]_R ∩ [b]_R != emptyset$, the second
-property forces $[a]_R = [b]_R$ — classes are equal or disjoint,
-never partially overlapping.
+#proof[
+  ($R ==>$ partition) Reflexivity covers $S$
+  (#link(<prop:equivalence-class-props>)[first property]); classes are
+  pairwise disjoint: if $[a]_R ∩ [b]_R != emptyset$, the second
+  property forces $[a]_R = [b]_R$ — classes are equal or disjoint,
+  never partially overlapping.
 
-(partition $==>$ $R$) Let ${S_i}$ be a partition and define $a R b$ if
-some block contains both. Reflexivity holds since $a$ lies in the
-block covering it, symmetry is built into "both lie", and
-transitivity holds because if $a, b$ share one block and $b, c$ share
-one, then both blocks contain $b$, so they coincide and contain $a$
-and $c$. Uniqueness is clear: the relation reads off the partition
-and conversely. ⊙
+  (partition $==>$ $R$) Let ${S_i}$ be a partition and define $a R b$ if
+  some block contains both. Reflexivity holds since $a$ lies in the
+  block covering it, symmetry is built into "both lie", and
+  transitivity holds because if $a, b$ share one block and $b, c$ share
+  one, then both blocks contain $b$, so they coincide and contain $a$
+  and $c$. Uniqueness is clear: the relation reads off the partition
+  and conversely.
+]
 
 #figure(
   image("img/partition-quotient.svg", width: 82%),
@@ -321,19 +329,21 @@ from Cayley's theorem to Galois theory — is a study of such maps.
   $
 ] <prop:homomorphism-properties>
 
-*Proof.* For any $y in T$, surjectivity gives $y = f(a)$ for some
-$a in S$, and
-$
-  f(e) diamond y = f(e) diamond f(a) = f(e star a) = f(a) = y,
-$
-so $f(e)$ is a left identity of $T$; dually it is a right identity.
-By #link(<prop:operation-laws-unique>)[uniqueness of the identity],
-$f(e) = e'$. For inverses:
-$
-  f(a^(-1)) diamond f(a) = f(a^(-1) star a) = f(e) = e',
-  quad quad f(a) diamond f(a^(-1)) = e',
-$
-so $f(a^(-1))$ is an inverse of $f(a)$. ⊙
+#proof[
+  For any $y in T$, surjectivity gives $y = f(a)$ for some
+  $a in S$, and
+  $
+    f(e) diamond y = f(e) diamond f(a) = f(e star a) = f(a) = y,
+  $
+  so $f(e)$ is a left identity of $T$; dually it is a right identity.
+  By #link(<prop:operation-laws-unique>)[uniqueness of the identity],
+  $f(e) = e'$. For inverses:
+  $
+    f(a^(-1)) diamond f(a) = f(a^(-1) star a) = f(e) = e',
+    quad quad f(a) diamond f(a^(-1)) = e',
+  $
+  so $f(a^(-1))$ is an inverse of $f(a)$.
+]
 
 Surjectivity is essential in the first part: without it $f(e)$ is
 merely an idempotent of $T$, not the identity. (For homomorphisms of
@@ -449,23 +459,25 @@ following.
   inverse*: an element $a'$ with $a' a = e$. Then $G$ is a group.
 ] <thm:group-equivalent-axioms>
 
-*Proof.* First we upgrade the left inverse of $a$ to a two-sided
-one. Let $a''$ be a left inverse of $a'$, which exists by
-hypothesis. Then
-$
-  a a' = e (a a') = (a'' a') (a a') = a'' ((a' a) a') = a'' (e a')
-  = a'' a' = e,
-$
-each step justified in turn by the left identity $e$, the choice of
-$a''$, associativity, $a' a = e$, $e a' = a'$, and $a'' a' = e$. So
-$a'$ is also a *right* inverse of $a$. Now the left identity becomes
-two-sided as well:
-$
-  a e = a (a' a) = (a a') a = e a = a,
-$
-using $e = a' a$, associativity, the identity $a a' = e$ just
-proved, and the left identity property. Both one-sided conditions
-have thus been upgraded to two-sided ones, and (G1)–(G3) hold. ⊙
+#proof[
+  First we upgrade the left inverse of $a$ to a two-sided
+  one. Let $a''$ be a left inverse of $a'$, which exists by
+  hypothesis. Then
+  $
+    a a' = e (a a') = (a'' a') (a a') = a'' ((a' a) a') = a'' (e a')
+    = a'' a' = e,
+  $
+  each step justified in turn by the left identity $e$, the choice of
+  $a''$, associativity, $a' a = e$, $e a' = a'$, and $a'' a' = e$. So
+  $a'$ is also a *right* inverse of $a$. Now the left identity becomes
+  two-sided as well:
+  $
+    a e = a (a' a) = (a a') a = e a = a,
+  $
+  using $e = a' a$, associativity, the identity $a a' = e$ just
+  proved, and the left identity property. Both one-sided conditions
+  have thus been upgraded to two-sided ones, and (G1)–(G3) hold.
+]
 
 Note the division of labour inside the proof: each upgrade uses
 *both* one-sided conditions. Neither condition alone suffices — see
@@ -477,16 +489,18 @@ Note the division of labour inside the proof: each upgrade uses
   inverse of $a$: $b a = e$ follows.
 ] <cor:group-identity-uniqueness>
 
-*Proof.* In a group (G2) supplies an identity that the theorem just
-proved makes two-sided, and uniqueness of a two-sided identity —
-hence of each inverse — is
-#link(<prop:operation-laws-unique>)[Chapter 1]. For the converse,
-suppose $a b = e$. Then
-$
-  b = e b = (a^(-1) a) b = a^(-1) (a b) = a^(-1) e = a^(-1),
-$
-using (G3) in the second step and the hypothesis $a b = e$ in the
-third. Hence $b a = a^(-1) a = e$, as claimed. ⊙
+#proof[
+  In a group (G2) supplies an identity that the theorem just
+  proved makes two-sided, and uniqueness of a two-sided identity —
+  hence of each inverse — is
+  #link(<prop:operation-laws-unique>)[Chapter 1]. For the converse,
+  suppose $a b = e$. Then
+  $
+    b = e b = (a^(-1) a) b = a^(-1) (a b) = a^(-1) e = a^(-1),
+  $
+  using (G3) in the second step and the hypothesis $a b = e$ in the
+  third. Hence $b a = a^(-1) a = e$, as claimed.
+]
 
 == Typical Examples // 典型例子
 
@@ -650,19 +664,21 @@ make.
     group the order may be swapped: $(a b)^(-1) = a^(-1) b^(-1)$.
 ] <prop:group-basic-properties>
 
-*Proof.* (1) Multiply $a b = a c$ by $a^(-1)$ on the left:
-$(a^(-1) a) b = (a^(-1) a) c$ gives $e b = e c$, that is, $b = c$;
-the right-sided version multiplies on the right. (2) The element
-$x_0 = a^(-1) b$ solves $a x = b$, since
-$a x_0 = (a a^(-1)) b = e b = b$; if $x$ is any solution then
-$a x = a x_0$ and cancellation in (1) gives $x = x_0$. Symmetrically
-for $y a = b$. (3) By (G3), $a^(-1) a = e$ and $a a^(-1) = e$: so
-*both* $a$ and $(a^(-1))^(-1)$ are inverses of $a^(-1)$, and
-inverses are unique by #link(<cor:group-identity-uniqueness>)[the
-  corollary above]. (4) $(b^(-1) a^(-1)) (a b) = b^(-1) (a^(-1) a) b
-= b^(-1) b = e$ and dually $(a b) (b^(-1) a^(-1)) = e$, so
-$b^(-1) a^(-1)$ is the inverse of $a b$; in the abelian case
-$b^(-1) a^(-1) = a^(-1) b^(-1)$ outright. ⊙
+#proof[
+  (1) Multiply $a b = a c$ by $a^(-1)$ on the left:
+  $(a^(-1) a) b = (a^(-1) a) c$ gives $e b = e c$, that is, $b = c$;
+  the right-sided version multiplies on the right. (2) The element
+  $x_0 = a^(-1) b$ solves $a x = b$, since
+  $a x_0 = (a a^(-1)) b = e b = b$; if $x$ is any solution then
+  $a x = a x_0$ and cancellation in (1) gives $x = x_0$. Symmetrically
+  for $y a = b$. (3) By (G3), $a^(-1) a = e$ and $a a^(-1) = e$: so
+  *both* $a$ and $(a^(-1))^(-1)$ are inverses of $a^(-1)$, and
+  inverses are unique by #link(<cor:group-identity-uniqueness>)[the
+    corollary above]. (4) $(b^(-1) a^(-1)) (a b) = b^(-1) (a^(-1) a) b
+  = b^(-1) b = e$ and dually $(a b) (b^(-1) a^(-1)) = e$, so
+  $b^(-1) a^(-1)$ is the inverse of $a b$; in the abelian case
+  $b^(-1) a^(-1) = a^(-1) b^(-1)$ outright.
+]
 
 The name of (4): to undo "$a$ then $b$" one removes $b$ first, then
 $a$ — socks before shoes. Two warnings worth fixing early. First,
@@ -709,19 +725,21 @@ notion cashes the promise.
     $abs(⟨a⟩) = n = "ord"(a)$.
 ] <prop:order-properties>
 
-*Proof.* Divide with remainder: every integer $m$ writes uniquely as
-$m = q n + r$ with $0 <= r <= n - 1$, and
-$
-  a^m = a^(q n + r) = (a^n)^q a^r = e^q a^r = a^r.
-$
-So $a^m = e$ exactly when $a^r = e$, which by minimality of $n$
-happens exactly when $r = 0$ — that is, when $n$ divides $m$. The
-second item follows by subtraction: $a^m = a^k$ holds exactly when
-$a^(m - k) = e$, i.e. $n | m - k$, i.e. $m equiv k (mod n)$. For the
-third item: by the division step every power $a^m$ lands in
-${a^0, dots, a^(n-1)}$, and these $n$ powers are distinct — if
-$a^i = a^j$ with $0 <= i < j <= n - 1$, the second item would force
-$n | j - i$, impossible for $0 < j - i < n$. ⊙
+#proof[
+  Divide with remainder: every integer $m$ writes uniquely as
+  $m = q n + r$ with $0 <= r <= n - 1$, and
+  $
+    a^m = a^(q n + r) = (a^n)^q a^r = e^q a^r = a^r.
+  $
+  So $a^m = e$ exactly when $a^r = e$, which by minimality of $n$
+  happens exactly when $r = 0$ — that is, when $n$ divides $m$. The
+  second item follows by subtraction: $a^m = a^k$ holds exactly when
+  $a^(m - k) = e$, i.e. $n | m - k$, i.e. $m equiv k (mod n)$. For the
+  third item: by the division step every power $a^m$ lands in
+  ${a^0, dots, a^(n-1)}$, and these $n$ powers are distinct — if
+  $a^i = a^j$ with $0 <= i < j <= n - 1$, the second item would force
+  $n | j - i$, impossible for $0 < j - i < n$.
+]
 
 The wrap-around phenomenon is the algebraic shadow of a clock:
 after $n$ steps the walk returns to its start, and only the
@@ -769,8 +787,10 @@ of this notebook.
   Every cyclic group is abelian.
 ] <cor:cyclic-abelian>
 
-*Proof.* Any two elements are $g^j$ and $g^k$, and
-$g^j g^k = g^(j+k) = g^(k+j) = g^k g^j$. ⊙
+#proof[
+  Any two elements are $g^j$ and $g^k$, and
+  $g^j g^k = g^(j+k) = g^(k+j) = g^k g^j$.
+]
 
 #theorem(name: "Classification of Cyclic Groups")[
   Let $G = ⟨g⟩$ be a cyclic group.
@@ -785,25 +805,27 @@ $g^j g^k = g^(j+k) = g^(k+j) = g^k g^j$. ⊙
   $n >= 1$, the group $(bb(Z)_n, +)$.
 ] <thm:cyclic-classification>
 
-*Proof.* *Infinite case.* Define $phi: bb(Z) -> G$ by $phi(k) =
-g^k$. Surjectivity is the very definition of $G = ⟨g⟩$, and $phi$
-preserves the operations: $phi(j + k) = g^(j+k) = g^j g^k = phi(j)
-phi(k)$. Injectivity: if $g^j = g^k$ with $j > k$, then $g^(j-k) = e$
-with the *positive* exponent $j - k$, contradicting infinite order.
-A bijective operation-preserving map is an isomorphism
-(#link(<def:homomorphism>)[Chapter 1]).
+#proof[
+  *Infinite case.* Define $phi: bb(Z) -> G$ by $phi(k) =
+  g^k$. Surjectivity is the very definition of $G = ⟨g⟩$, and $phi$
+  preserves the operations: $phi(j + k) = g^(j+k) = g^j g^k = phi(j)
+  phi(k)$. Injectivity: if $g^j = g^k$ with $j > k$, then $g^(j-k) = e$
+  with the *positive* exponent $j - k$, contradicting infinite order.
+  A bijective operation-preserving map is an isomorphism
+  (#link(<def:homomorphism>)[Chapter 1]).
 
-*Finite case.* Since $g^n = e$ by the definition of order, the
-division step in #link(<prop:order-properties>)[§2.3] gives
-$⟨g⟩ = {e, g, dots, g^(n-1)}$ with these $n$ elements distinct;
-hence $abs(G) = n$. Define $psi: bb(Z)_n -> G$ by $psi([k]) = g^k$.
-*Well-definedness*: if $[j] = [k]$ then $n | j - k$, so $g^(j-k) = e$
-and $g^j = g^k$ — exactly the compatibility pattern of
-#link(<caution:well-defined-operations>)[Chapter 1], the congruence
-relation on exponents being tailored to the powers of $g$. The map
-preserves addition, $psi([j] + [k]) = g^(j+k) = psi([j]) psi([k])$,
-and is surjective by $G = ⟨g⟩$; since both sides have $n$ elements,
-surjectivity forces bijectivity. ⊙
+  *Finite case.* Since $g^n = e$ by the definition of order, the
+  division step in #link(<prop:order-properties>)[§2.3] gives
+  $⟨g⟩ = {e, g, dots, g^(n-1)}$ with these $n$ elements distinct;
+  hence $abs(G) = n$. Define $psi: bb(Z)_n -> G$ by $psi([k]) = g^k$.
+  *Well-definedness*: if $[j] = [k]$ then $n | j - k$, so $g^(j-k) = e$
+  and $g^j = g^k$ — exactly the compatibility pattern of
+  #link(<caution:well-defined-operations>)[Chapter 1], the congruence
+  relation on exponents being tailored to the powers of $g$. The map
+  preserves addition, $psi([j] + [k]) = g^(j+k) = psi([j]) psi([k])$,
+  and is surjective by $G = ⟨g⟩$; since both sides have $n$ elements,
+  surjectivity forces bijectivity.
+]
 
 The isomorphism $bb(Z)_4 ≅ U_4$ computed in
 #link(<ex:isomorphic-examples>)[Chapter 1] is precisely the case
@@ -820,12 +842,14 @@ $n = 4$ of the theorem; the theorem says such luck is *systematic*.
   Chapter 3; in the cyclic world it already falls out here.)
 ] <cor:order-divides>
 
-*Proof.* By #link(<prop:order-properties>)[§2.3], $a^m = g^(k m) = e$
-holds exactly when $n | k m$. Write $d = "gcd"(n, k)$, so $n = d n'$
-and $k = d k'$ with $"gcd"(n', k') = 1$; then $n | k m$ unfolds to
-$d n' | d k' m$, i.e. $n' | k' m$, i.e. $n' | m$ since $n', k'$ are
-coprime. The smallest positive such $m$ is $n'$, so
-$"ord"(a) = n' = n \/ d$, which divides $n = d n'$. ⊙
+#proof[
+  By #link(<prop:order-properties>)[§2.3], $a^m = g^(k m) = e$
+  holds exactly when $n | k m$. Write $d = "gcd"(n, k)$, so $n = d n'$
+  and $k = d k'$ with $"gcd"(n', k') = 1$; then $n | k m$ unfolds to
+  $d n' | d k' m$, i.e. $n' | k' m$, i.e. $n' | m$ since $n', k'$ are
+  coprime. The smallest positive such $m$ is $n'$, so
+  $"ord"(a) = n' = n \/ d$, which divides $n = d n'$.
+]
 
 #corollary(name: "Generators of a Finite Cyclic Group")[
   In a cyclic group $G = ⟨g⟩$ of order $n$, the element $g^k$ is a
@@ -836,11 +860,13 @@ $"ord"(a) = n' = n \/ d$, which divides $n = d n'$. ⊙
   $[5]$.
 ] <cor:cyclic-generators>
 
-*Proof.* $g^k$ generates $G$ exactly when $⟨g^k⟩ = G$, i.e. when
-$abs(⟨g^k⟩) = n$; by #link(<cor:order-divides>)[the corollary above],
-$abs(⟨g^k⟩) = "ord"(g^k) = n \/ ("gcd"(n, k))$, which equals $n$
-exactly when $"gcd"(n, k) = 1$. The count of such exponents $k$ in
-${0, 1, dots, n - 1}$ is $phi(n)$ by definition. ⊙
+#proof[
+  $g^k$ generates $G$ exactly when $⟨g^k⟩ = G$, i.e. when
+  $abs(⟨g^k⟩) = n$; by #link(<cor:order-divides>)[the corollary above],
+  $abs(⟨g^k⟩) = "ord"(g^k) = n \/ ("gcd"(n, k))$, which equals $n$
+  exactly when $"gcd"(n, k) = 1$. The count of such exponents $k$ in
+  ${0, 1, dots, n - 1}$ is $phi(n)$ by definition.
+]
 
 #theorem(name: "Subgroups of Cyclic Groups")[
   Let $G = ⟨g⟩$ be a cyclic group.
@@ -850,30 +876,32 @@ ${0, 1, dots, n - 1}$ is $phi(n)$ by definition. ⊙
     $⟨g^(n \/ d)⟩$; there are no other subgroups.
 ] <thm:cyclic-subgroups>
 
-*Proof.* (1) Let $H$ be a subgroup of $G = ⟨g⟩$. If $H = {e}$, then
-$H = ⟨e⟩$ is cyclic. Otherwise $H$ contains $g^m$ with $m != 0$;
-since also $(g^m)^(-1) = g^(-m) in H$, we may choose $m$ *positive*,
-and choose it minimal among the positive exponents with $g^m in H$.
-Every element of $H$ is some $g^k$; write $k = q m + r$ with
-$0 <= r < m$. Then
-$
-  g^r = g^(k - q m) = g^k (g^m)^(-q) in H,
-$
-and the minimality of $m$ forces $r = 0$. Hence every $g^k in H$
-equals $(g^m)^q$, so $H subset.eq ⟨g^m⟩$; the reverse inclusion is
-trivial, and $H = ⟨g^m⟩$ is cyclic.
+#proof[
+  (1) Let $H$ be a subgroup of $G = ⟨g⟩$. If $H = {e}$, then
+  $H = ⟨e⟩$ is cyclic. Otherwise $H$ contains $g^m$ with $m != 0$;
+  since also $(g^m)^(-1) = g^(-m) in H$, we may choose $m$ *positive*,
+  and choose it minimal among the positive exponents with $g^m in H$.
+  Every element of $H$ is some $g^k$; write $k = q m + r$ with
+  $0 <= r < m$. Then
+  $
+    g^r = g^(k - q m) = g^k (g^m)^(-q) in H,
+  $
+  and the minimality of $m$ forces $r = 0$. Hence every $g^k in H$
+  equals $(g^m)^q$, so $H subset.eq ⟨g^m⟩$; the reverse inclusion is
+  trivial, and $H = ⟨g^m⟩$ is cyclic.
 
-(2) *Existence.* Let $d | n$. The element $g^(n \/ d)$ has order
-$n \/ ("gcd"(n, n \/ d)) = n \/ (n \/ d) = d$, where
-$"gcd"(n, n \/ d) = n \/ d$ because $d | n$; so $⟨g^(n \/ d)⟩$ is a
-subgroup of order $d$.
+  (2) *Existence.* Let $d | n$. The element $g^(n \/ d)$ has order
+  $n \/ ("gcd"(n, n \/ d)) = n \/ (n \/ d) = d$, where
+  $"gcd"(n, n \/ d) = n \/ d$ because $d | n$; so $⟨g^(n \/ d)⟩$ is a
+  subgroup of order $d$.
 
-*Uniqueness.* Let $H$ be any subgroup of order $d$. By (1),
-$H = ⟨g^m⟩$ for some $m$ with $"ord"(g^m) = d$, i.e.
-$n \/ ("gcd"(n, m)) = d$, i.e. $"gcd"(n, m) = n \/ d$. Then
-$(n \/ d) | m$, so $g^m$ is a power of $g^(n \/ d)$ and
-$H subset.eq ⟨g^(n \/ d)⟩$; both sides have $d$ elements, so they
-are equal. ⊙
+  *Uniqueness.* Let $H$ be any subgroup of order $d$. By (1),
+  $H = ⟨g^m⟩$ for some $m$ with $"ord"(g^m) = d$, i.e.
+  $n \/ ("gcd"(n, m)) = d$, i.e. $"gcd"(n, m) = n \/ d$. Then
+  $(n \/ d) | m$, so $g^m$ is a power of $g^(n \/ d)$ and
+  $H subset.eq ⟨g^(n \/ d)⟩$; both sides have $d$ elements, so they
+  are equal.
+]
 
 #figure(
   image("img/cyclic-group-circle.svg", width: 62%),
@@ -949,19 +977,21 @@ the chapter.
   $
 ] <thm:subgroup-criterion>
 
-*Proof.* Necessity is immediate: if $H$ is a subgroup and
-$a, b in H$, then $b^(-1) in H$ by closure under inverses, and then
-$a b^(-1) in H$ by closure under the operation.
+#proof[
+  Necessity is immediate: if $H$ is a subgroup and
+  $a, b in H$, then $b^(-1) in H$ by closure under inverses, and then
+  $a b^(-1) in H$ by closure under the operation.
 
-Conversely, suppose $a b^(-1) in H$ whenever $a, b in H$. Since $H$
-is non-empty, pick $h in H$; then $e = h h^(-1) in H$, so the
-identity of $G$ lies in $H$ and acts as an identity inside $H$. For
-$h in H$, the criterion with $a = e$ and $b = h$ gives $h^(-1) = e
-h^(-1) in H$. For $a, b in H$, we now know $b^(-1) in H$, and the
-criterion with $b^(-1)$ in place of $b$ gives $a (b^(-1))^(-1) = a b
-in H$. Thus $H$ is non-empty and closed under the operation and
-under inverses — a subgroup by
-#link(<def:subgroup>)[the definition]. ⊙
+  Conversely, suppose $a b^(-1) in H$ whenever $a, b in H$. Since $H$
+  is non-empty, pick $h in H$; then $e = h h^(-1) in H$, so the
+  identity of $G$ lies in $H$ and acts as an identity inside $H$. For
+  $h in H$, the criterion with $a = e$ and $b = h$ gives $h^(-1) = e
+  h^(-1) in H$. For $a, b in H$, we now know $b^(-1) in H$, and the
+  criterion with $b^(-1)$ in place of $b$ gives $a (b^(-1))^(-1) = a b
+  in H$. Thus $H$ is non-empty and closed under the operation and
+  under inverses — a subgroup by
+  #link(<def:subgroup>)[the definition].
+]
 
 #example[
   (A subgroup inventory.)
@@ -1007,13 +1037,15 @@ smallest subgroup containing it.
   indeed a subgroup, the smallest one.
 ] <prop:intersection-subgroups>
 
-*Proof.* The identity $e$ lies in every $H_i$, so the intersection
-is non-empty. If $a, b$ lie in the intersection, they lie in each
-$H_i$; by #link(<thm:subgroup-criterion>)[the criterion],
-$a b^(-1) in H_i$ for every $i$, so $a b^(-1)$ lies in the
-intersection. For the consequence: the concrete product description
-of $⟨S⟩$ is visibly closed under $a b^(-1)$ and contains $S$, so it
-coincides with the intersection. ⊙
+#proof[
+  The identity $e$ lies in every $H_i$, so the intersection
+  is non-empty. If $a, b$ lie in the intersection, they lie in each
+  $H_i$; by #link(<thm:subgroup-criterion>)[the criterion],
+  $a b^(-1) in H_i$ for every $i$, so $a b^(-1)$ lies in the
+  intersection. For the consequence: the concrete product description
+  of $⟨S⟩$ is visibly closed under $a b^(-1)$ and contains $S$, so it
+  coincides with the intersection.
+]
 
 #note[
   (The cyclic case, restated.) With the subgroup vocabulary in
@@ -1059,26 +1091,28 @@ general mechanism.
   - The left cosets of $H$ partition $G$.
 ] <lem:coset-equivalent>
 
-*Proof.* (1) $a = a e in a H$. The map $h arrow.r.double a h$ has
-inverse $x arrow.r.double a^(-1) x$, so it is a bijection.
+#proof[
+  (1) $a = a e in a H$. The map $h arrow.r.double a h$ has
+  inverse $x arrow.r.double a^(-1) x$, so it is a bijection.
 
-(2) If $a H = b H$, then $b in b H = a H$, so $b = a h$ for some
-$h in H$ and $a^(-1) b = h in H$. Conversely, if $a^(-1) b = h in
-H$, then $b = a h in a H$, and for any $b h'$ with $h' in H$ we get
-$b h' = a h h' in a H$; so $b H subset.eq a H$, and symmetry of the
-argument reverses the inclusion.
+  (2) If $a H = b H$, then $b in b H = a H$, so $b = a h$ for some
+  $h in H$ and $a^(-1) b = h in H$. Conversely, if $a^(-1) b = h in
+  H$, then $b = a h in a H$, and for any $b h'$ with $h' in H$ we get
+  $b h' = a h h' in a H$; so $b H subset.eq a H$, and symmetry of the
+  argument reverses the inclusion.
 
-(3) If $x in a H ∩ b H$, write $x = a h_1 = b h_2$; then
-$a^(-1) b = h_1 h_2^(-1) in H$ by
-#link(<thm:subgroup-criterion>)[the criterion], and (2) gives
-$a H = b H$.
+  (3) If $x in a H ∩ b H$, write $x = a h_1 = b h_2$; then
+  $a^(-1) b = h_1 h_2^(-1) in H$ by
+  #link(<thm:subgroup-criterion>)[the criterion], and (2) gives
+  $a H = b H$.
 
-(4) Every $a in G$ lies in its own coset $a H$, and the cosets are
-pairwise disjoint: a partition of $G$ in the sense of
-#link(<def:partition>)[Chapter 1]. The equivalence relation behind
-it, "$a tilde b$ if and only if $a^(-1) b in H$", matches
-#link(<thm:partition-correspondence>)[the partition-class
-  correspondence]. ⊙
+  (4) Every $a in G$ lies in its own coset $a H$, and the cosets are
+  pairwise disjoint: a partition of $G$ in the sense of
+  #link(<def:partition>)[Chapter 1]. The equivalence relation behind
+  it, "$a tilde b$ if and only if $a^(-1) b in H$", matches
+  #link(<thm:partition-correspondence>)[the partition-class
+    correspondence].
+]
 
 #example[
   (Cosets in $S_3$.) Take $H = ⟨(1 2 3)⟩ = {e, (1 2 3), (1 3 2)}$.
@@ -1121,9 +1155,11 @@ it, "$a tilde b$ if and only if $a^(-1) b in H$", matches
   and in particular $abs(H)$ divides $abs(G)$.
 ] <thm:lagrange>
 
-*Proof.* By #link(<lem:coset-equivalent>)[the lemma], the left
-cosets partition $G$ into $[G : H]$ classes, each of cardinality
-$abs(H)$. Counting elements class by class gives the identity. ⊙
+#proof[
+  By #link(<lem:coset-equivalent>)[the lemma], the left
+  cosets partition $G$ into $[G : H]$ classes, each of cardinality
+  $abs(H)$. Counting elements class by class gives the identity.
+]
 
 The tiles are all the same size; the group is a whole number of
 tiles. Every structural statement below is this picture in words.
@@ -1146,22 +1182,26 @@ tiles. Every structural statement below is this picture in words.
   $abs(G)$; in particular $a^(abs(G)) = e$ for all $a in G$.
 ] <cor:lagrange-order-divides>
 
-*Proof.* This fulfils the promise attached to
-#link(<cor:order-divides>)[the cyclic case of Chapter 2]. The
-cyclic subgroup $⟨a⟩$ has $abs(⟨a⟩) = "ord"(a)$ elements
-(#link(<prop:order-properties>)[§2.3]), so Lagrange gives
-$"ord"(a) | abs(G)$. Writing $abs(G) = "ord"(a) dot m$, we get
-$a^(abs(G)) = (a^("ord"(a)))^m = e^m = e$. ⊙
+#proof[
+  This fulfils the promise attached to
+  #link(<cor:order-divides>)[the cyclic case of Chapter 2]. The
+  cyclic subgroup $⟨a⟩$ has $abs(⟨a⟩) = "ord"(a)$ elements
+  (#link(<prop:order-properties>)[§2.3]), so Lagrange gives
+  $"ord"(a) | abs(G)$. Writing $abs(G) = "ord"(a) dot m$, we get
+  $a^(abs(G)) = (a^("ord"(a)))^m = e^m = e$.
+]
 
 #corollary(name: "Groups of Prime Order")[
   Every group of prime order is cyclic — indeed, every non-identity
   element generates it.
 ] <cor:prime-order-cyclic>
 
-*Proof.* Let $abs(G) = p$ be prime and $a != e$. Then
-$"ord"(a) > 1$ and, by the corollary above, $"ord"(a) | p$; hence
-$"ord"(a) = p$, and $⟨a⟩$ already has $p = abs(G)$ elements:
-$⟨a⟩ = G$. ⊙
+#proof[
+  Let $abs(G) = p$ be prime and $a != e$. Then
+  $"ord"(a) > 1$ and, by the corollary above, $"ord"(a) | p$; hence
+  $"ord"(a) = p$, and $⟨a⟩$ already has $p = abs(G)$ elements:
+  $⟨a⟩ = G$.
+]
 
 The prime-order corollary feeds the classification of the smallest
 groups — and to run it at order $4$ we need the one non-cyclic
@@ -1245,26 +1285,28 @@ to isomorphism, a group of permutations of some set.
   to a subgroup of $"Sym"(G)$.
 ] <thm:cayley>
 
-*Proof.* For $g in G$ define the *left translation*
-$
-  L_g: G -> G, quad x arrow.r.double g x.
-$
-Each $L_g$ is a bijection with inverse $L_(g^(-1))$, since
-$L_(g^(-1))(L_g(x)) = g^(-1) (g x) = x$ and similarly from the
-other side. Translations compose according to the group law:
-$
-  (L_g circle L_h)(x) = L_g(h x) = (g h) x = L_(g h)(x),
-$
-so $L_g circle L_h = L_(g h)$. Now let $L(G) = {L_g | g in G}$, a
-subset of $"Sym"(G)$. It contains the identity map $L_e$, and for
-$L_g, L_h in L(G)$ the criterion computation gives
-$L_g circle L_h^(-1) = L_g circle L_(h^(-1)) = L_(g h^(-1)) in
-L(G)$; by #link(<thm:subgroup-criterion>)[the one-step criterion],
-$L(G)$ is a subgroup of $"Sym"(G)$ — a transformation group.
-Finally, $g arrow.r.double L_g$ maps $G$ bijectively onto $L(G)$
-(injective: $L_g = L_h$ says $g x = h x$ for all $x$, and $x = e$
-gives $g = h$) and preserves the operation, $L_(g h) = L_g circle
-L_h$. Hence $G ≅ L(G) <= "Sym"(G)$. ⊙
+#proof[
+  For $g in G$ define the *left translation*
+  $
+    L_g: G -> G, quad x arrow.r.double g x.
+  $
+  Each $L_g$ is a bijection with inverse $L_(g^(-1))$, since
+  $L_(g^(-1))(L_g(x)) = g^(-1) (g x) = x$ and similarly from the
+  other side. Translations compose according to the group law:
+  $
+    (L_g circle L_h)(x) = L_g(h x) = (g h) x = L_(g h)(x),
+  $
+  so $L_g circle L_h = L_(g h)$. Now let $L(G) = {L_g | g in G}$, a
+  subset of $"Sym"(G)$. It contains the identity map $L_e$, and for
+  $L_g, L_h in L(G)$ the criterion computation gives
+  $L_g circle L_h^(-1) = L_g circle L_(h^(-1)) = L_(g h^(-1)) in
+  L(G)$; by #link(<thm:subgroup-criterion>)[the one-step criterion],
+  $L(G)$ is a subgroup of $"Sym"(G)$ — a transformation group.
+  Finally, $g arrow.r.double L_g$ maps $G$ bijectively onto $L(G)$
+  (injective: $L_g = L_h$ says $g x = h x$ for all $x$, and $x = e$
+  gives $g = h$) and preserves the operation, $L_(g h) = L_g circle
+  L_h$. Hence $G ≅ L(G) <= "Sym"(G)$.
+]
 
 #note[
   (What Cayley says, and what it does not.) The theorem exhibits
@@ -1289,23 +1331,25 @@ normal form carries an invariant of the first importance.
   factors and cyclic rotations inside each cycle.
 ] <lem:cycle-decomposition>
 
-*Proof.* *Existence.* Pick $x_1$ and follow the sequence
-$x_1, sigma(x_1), sigma^2(x_1), dots$. Since $X$ is finite, some
-value repeats: $sigma^j(x_1) = sigma^k(x_1)$ with $0 < j < k$.
-Applying $sigma^(-j)$ yields $x_1 = sigma^(k - j)(x_1)$, so the
-*first* repetition is $x_1$ returning to itself, and the orbit
-closes into a cycle $c_1$ on
-${x_1, sigma(x_1), dots, sigma^(k-j-1)(x_1)}$. If $c_1$ exhausts
-$X$, done. Otherwise pick $x'$ outside this orbit and repeat; the
-new orbit is disjoint from the first (orbits of a map cannot
-partially overlap, for the same first-repetition argument), and
-finiteness terminates the process. The product of the resulting
-disjoint cycles agrees with $sigma$ on every point.
+#proof[
+  *Existence.* Pick $x_1$ and follow the sequence
+  $x_1, sigma(x_1), sigma^2(x_1), dots$. Since $X$ is finite, some
+  value repeats: $sigma^j(x_1) = sigma^k(x_1)$ with $0 < j < k$.
+  Applying $sigma^(-j)$ yields $x_1 = sigma^(k - j)(x_1)$, so the
+  *first* repetition is $x_1$ returning to itself, and the orbit
+  closes into a cycle $c_1$ on
+  ${x_1, sigma(x_1), dots, sigma^(k-j-1)(x_1)}$. If $c_1$ exhausts
+  $X$, done. Otherwise pick $x'$ outside this orbit and repeat; the
+  new orbit is disjoint from the first (orbits of a map cannot
+  partially overlap, for the same first-repetition argument), and
+  finiteness terminates the process. The product of the resulting
+  disjoint cycles agrees with $sigma$ on every point.
 
-*Uniqueness.* Any decomposition into disjoint cycles determines the
-orbit of each point, hence the cycles on orbits of size $>= 2$ are
-forced; points fixed by $sigma$ appear as 1-cycles or are omitted,
-a harmless ambiguity. ⊙
+  *Uniqueness.* Any decomposition into disjoint cycles determines the
+  orbit of each point, hence the cycles on orbits of size $>= 2$ are
+  forced; points fixed by $sigma$ appear as 1-cycles or are omitted,
+  a harmless ambiguity.
+]
 
 #property(name: "Transpositions Generate")[
   A $k$-cycle factors into $k - 1$ transpositions:
@@ -1317,14 +1361,16 @@ a harmless ambiguity. ⊙
   $n >= 2$ is a product of transpositions.
 ] <prop:transpositions-generate>
 
-*Proof.* Follow each point through the right-hand product: $a_1$
-maps to $a_2$ and then no factor touches it; $a_i$ ($i >= 2$) is
-untouched until $(a_1 a_i)$ sends it to $a_1$, after which
-$(a_1 a_(i+1))$ sends it to $a_(i+1)$, and so on — giving the
-cycle's action $a_i arrow.r.double a_(i+1)$ with $a_k arrow.r.double
-a_1$. Points outside $\{a_1, dots, a_k\}$ are fixed throughout.
-Existence of a factorization for $sigma$ then follows by decomposing
-into cycles first. ⊙
+#proof[
+  Follow each point through the right-hand product: $a_1$
+  maps to $a_2$ and then no factor touches it; $a_i$ ($i >= 2$) is
+  untouched until $(a_1 a_i)$ sends it to $a_1$, after which
+  $(a_1 a_(i+1))$ sends it to $a_(i+1)$, and so on — giving the
+  cycle's action $a_i arrow.r.double a_(i+1)$ with $a_k arrow.r.double
+  a_1$. Points outside $\{a_1, dots, a_k\}$ are fixed throughout.
+  Existence of a factorization for $sigma$ then follows by decomposing
+  into cycles first.
+]
 
 #lemma(name: "Parity Is Well Defined")[
   Let $sigma in S_n$ and suppose $sigma = tau_1 tau_2 dots tau_k$
@@ -1333,23 +1379,25 @@ into cycles first. ⊙
   transpositions satisfies $k equiv l (mod 2)$.
 ] <lem:sign-well-defined>
 
-*Proof.* Consider the Vandermonde polynomial
-$
-  Delta(x_1, dots, x_n) = product_(1 <= i < j <= n) (x_j - x_i),
-$
-a non-zero element of the polynomial ring in $n$ variables. For a
-permutation $sigma$, let $sigma(Delta)$ denote the polynomial
-obtained by replacing each $x_i$ with $x_(sigma(i))$. A transposition
-$tau = (p q)$ swaps the variables $x_p$ and $x_q$: the factor
-$(x_q - x_p)$ changes sign, each pair of factors involving exactly
-one of $p, q$ is exchanged without sign change, and all other
-factors are untouched; hence $tau(Delta) = -Delta$. Composing,
-$sigma = tau_1 dots tau_k$ gives $sigma(Delta) = (-1)^k Delta$. If
-also $sigma = tau'_1 dots tau'_l$, then
-$
-  (-1)^k Delta = sigma(Delta) = (-1)^l Delta,
-$
-and since $Delta != 0$, the parities agree. ⊙
+#proof[
+  Consider the Vandermonde polynomial
+  $
+    Delta(x_1, dots, x_n) = product_(1 <= i < j <= n) (x_j - x_i),
+  $
+  a non-zero element of the polynomial ring in $n$ variables. For a
+  permutation $sigma$, let $sigma(Delta)$ denote the polynomial
+  obtained by replacing each $x_i$ with $x_(sigma(i))$. A transposition
+  $tau = (p q)$ swaps the variables $x_p$ and $x_q$: the factor
+  $(x_q - x_p)$ changes sign, each pair of factors involving exactly
+  one of $p, q$ is exchanged without sign change, and all other
+  factors are untouched; hence $tau(Delta) = -Delta$. Composing,
+  $sigma = tau_1 dots tau_k$ gives $sigma(Delta) = (-1)^k Delta$. If
+  also $sigma = tau'_1 dots tau'_l$, then
+  $
+    (-1)^k Delta = sigma(Delta) = (-1)^l Delta,
+  $
+  and since $Delta != 0$, the parities agree.
+]
 
 #definition(name: "Sign and the Alternating Group")[
   Let $sigma in S_n$ with $n >= 2$, and factor $sigma$ into
