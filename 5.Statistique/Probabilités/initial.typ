@@ -1721,6 +1721,305 @@ make the multivariate normal the structural backbone of classical
 multivariate analysis, to which the sampling distribution and regression
 chapters will return repeatedly.
 
+= Numerical Characteristics // 数字特征
+
+A distribution is fully described by its CDF or density, but a few numbers
+— the mean, the variance, the correlation — capture its essential features
+and enable comparisons. These *numerical characteristics* are the
+quantities that statistics estimates and probability theory bounds.
+
+== Mathematical Expectation // 数学期望
+
+#definition(name: "Expectation of a Discrete Random Variable")[
+  Let $X$ be discrete with PMF $p(x)$. If $sum_x abs(x) p(x) < infinity$,
+  the *expectation* (or *mean*) of $X$ is
+  $
+    E[X] = sum_x x p(x).
+  $
+  If the series is not absolutely convergent, the expectation does not
+  exist.
+] <def:expectation-discrete>
+
+#definition(name: "Expectation of a Continuous Random Variable")[
+  Let $X$ be continuous with PDF $f(x)$. If $integral_(-infinity)^infinity
+  abs(x) f(x) dif x < infinity$, the *expectation* of $X$ is
+  $
+    E[X] = integral_(-infinity)^infinity x f(x) dif x.
+  $
+] <def:expectation-continuous>
+
+The absolute-convergence requirement is essential: conditionally convergent
+series depend on summation order, which has no probabilistic meaning.
+
+#property(name: "Linearity of Expectation")[
+  For any random variables $X, Y$ with finite expectations and constants
+  $a, b in RR$,
+  $
+    E[a X + b Y] = a E[X] + b E[Y].
+  $
+  Linearity holds *without* any independence assumption — this is what
+  makes expectation so powerful.
+] <prop:expectation-linearity>
+
+#theorem(name: "LOTUS (Law of the Unconscious Statistician)")[
+  Let $X$ have PMF $p(x)$ (or PDF $f(x)$) and let $g: RR -> RR$ be
+  measurable. Then
+  $
+    E[g(X)] = sum_x g(x) p(x) quad ("or" quad integral_(-infinity)^infinity g(x) f(x) dif x).
+  $
+  No intermediate step of deriving the distribution of $Y = g(X)$ is needed
+  — the expectation of $g(X)$ is computed directly from the distribution of
+  $X$.
+] <thm:lotus>
+
+#definition(name: "Conditional Expectation")[
+  Given #link(<def:conditional-pmf>)[the conditional PMF/PDF] of $Y$ given
+  $X = x$, the *conditional expectation* is
+  $
+    E[Y|X=x] = sum_y y p_(Y|X)(y|x) quad ("discrete"), quad integral_(-infinity)^infinity y f_(Y|X)(y|x) dif y quad ("continuous").
+  $
+  As a function of $x$, this defines a random variable $E[Y|X]$ — the
+  *regression function* of $Y$ on $X$.
+] <def:conditional-expectation>
+
+#theorem(name: "Law of Total Expectation (Tower Property)")[
+  If $E[abs(Y)] < infinity$, then
+  $
+    E[Y] = E[E[Y|X]].
+  $
+] <thm:total-expectation>
+
+#proof[
+  (Continuous case.) Using
+  #link(<prop:conditional-dist-properties>)[the total density formula]
+  $f_Y(y) = integral f_(Y|X)(y|x) f_X(x) dif x$:
+  $
+    E[E[Y|X]] = integral E[Y|X=x] f_X(x) dif x = integral (integral y f_(Y|X)(y|x) dif y) f_X(x) dif x = integral y (integral f_(Y|X)(y|x) f_X(x) dif x) dif y = integral y f_Y(y) dif y = E[Y].
+  $
+  The discrete case replaces integrals by sums.
+]
+
+#property(name: "Conditional Variance Decomposition")[
+  $
+    "Var"(Y) = E["Var"(Y|X)] + "Var"(E[Y|X]).
+  $
+  The total variance decomposes into the *expected conditional variance*
+  (within-group scatter) and the *variance of the conditional mean*
+  (between-group scatter).
+] <prop:variance-decomposition>
+
+#proof[
+  $E["Var"(Y|X)] = E[E[Y^2|X] - (E[Y|X])^2] = E[Y^2] - E[(E[Y|X])^2]$
+  and $"Var"(E[Y|X]) = E[(E[Y|X])^2] - (E[E[Y|X]])^2 = E[(E[Y|X])^2] -
+  (E[Y])^2$. Adding: $E[Y^2] - (E[Y])^2 = "Var"(Y)$.
+]
+
+#property(name: "Markov's Inequality")[
+  If $X >= 0$ a.s. and $a > 0$, then
+  $
+    P(X >= a) <= (E[X]) / a.
+  $
+] <prop:markov-inequality>
+
+#proof[
+  $E[X] = integral_0^infinity x f(x) dif x >= integral_a^infinity x f(x) dif x
+  >= a integral_a^infinity f(x) dif x = a P(X >= a)$.
+]
+
+#example[
+  Common expectations (verified by direct computation or LOTUS):
+
+  | Distribution | $E[X]$ |
+  |---|---|
+  | $"Ber"(p)$ | $p$ |
+  | $B(n, p)$ | $n p$ |
+  | $"Pois"(lambda)$ | $lambda$ |
+  | $"Geom"(p)$ | $(1-p) / p$ |
+  | $U(a, b)$ | $(a+b) / 2$ |
+  | $"Exp"(lambda)$ | $1 / lambda$ |
+  | $N(mu, sigma^2)$ | $mu$ |
+  | $"Ga"(alpha, lambda)$ | $alpha / lambda$ |
+  | $"Be"(a, b)$ | $a / (a+b)$ |
+
+  For instance, $E["Exp"(lambda)] = integral_0^infinity x lambda exp(
+    -lambda
+    x
+  ) dif x = 1 / lambda$ by integration by parts.
+] <ex:common-expectations>
+
+== Variance and Standard Deviation // 方差与标准差
+
+#definition(name: "Variance")[
+  The *variance* of $X$ with finite $E[X^2]$ is
+  $
+    "Var"(X) = E[(X - E[X])^2] = E[X^2] - (E[X])^2,
+  $
+  and the *standard deviation* is $sigma = sqrt("Var"(X))$.
+] <def:variance>
+
+The computational form $E[X^2] - (E[X])^2$ follows from
+#link(<prop:expectation-linearity>)[linearity]: expand $E[(X - mu)^2] =
+E[X^2] - 2 mu E[X] + mu^2 = E[X^2] - mu^2$.
+
+#property(name: "Properties of Variance")[
+  - $"Var"(a X + b) = a^2 "Var"(X)$ — shift does not affect spread;
+  - if $X_1, dots, X_n$ are pairwise independent, $"Var"(sum X_i) = sum
+    "Var"(X_i)$;
+  - $"Var"(X) >= 0$, with equality iff $X = E[X]$ a.s.;
+  - $"Var"(X) < infinity$ iff $E[X^2] < infinity$.
+] <prop:variance-properties>
+
+#theorem(name: "Chebyshev's Inequality")[
+  If $"Var"(X) < infinity$, then for any $k > 0$,
+  $
+    P(abs(X - E[X]) >= k) <= ("Var"(X)) / k^2.
+  $
+  Equivalently, $P(abs(X - mu) >= k sigma) <= 1 / k^2$.
+] <thm:chebyshev-inequality>
+
+#proof[
+  Apply #link(<prop:markov-inequality>)[Markov's inequality] to the
+  non-negative random variable $(X - mu)^2$ with $a = k^2$:
+  $
+    P(abs(X - mu) >= k) = P((X - mu)^2 >= k^2) <= (E[(X - mu)^2]) / k^2 = ("Var"(X)) / k^2.
+  $
+]
+
+Chebyshev's inequality is universal — it uses only the mean and variance,
+not the full distribution. It is the bridge from finite moments to limit
+theorems: the Weak Law of Large Numbers (Part IV) is a direct corollary.
+
+#note[
+  (Exponential family callback.) The
+  #link(<prop:cgf-derivative>)[log-partition derivative property] states
+  $A'' = "Var"(T(X))$. This is a special case of the general principle that
+  the variance of a natural statistic is the second derivative of $A$ — a
+  fact that connects the algebraic structure of the exponential family
+  directly to the numerical characteristics developed here.
+]
+
+== Covariance and Correlation // 协方差与相关系数
+
+#definition(name: "Covariance")[
+  For random variables $X, Y$ with finite second moments, the *covariance*
+  is
+  $
+    "Cov"(X, Y) = E[(X - E[X])(Y - E[Y])] = E[X Y] - E[X] E[Y].
+  $
+] <def:covariance>
+
+#definition(name: "Correlation Coefficient")[
+  The *Pearson correlation coefficient* is the normalised covariance
+  $
+    rho_(X Y) = ("Cov"(X, Y)) / (sigma_X sigma_Y),
+  $
+  provided $sigma_X, sigma_Y > 0$. It satisfies $-1 <= rho <= 1$, with
+  $rho = plus.minus 1$ iff $Y = a X + b$ a.s. for some $a != 0$.
+] <def:correlation-coefficient>
+
+#property(name: "Uncorrelatedness vs Independence")[
+  - If $X$ and $Y$ are independent, then $"Cov"(X, Y) = 0$ (they are
+    *uncorrelated*).
+  - The converse is false in general: zero covariance does not imply
+    independence.
+  - (Normal case.) For jointly normal variables, uncorrelatedness and
+    independence are *equivalent* — see
+    #link(<prop:mv-normal-independence>)[the multivariate normal
+      independence property].
+  - $"Cov"(X, Y) = 0$ is equivalent to $E[X Y] = E[X] E[Y]$ and to
+    $"Var"(X + Y) = "Var"(X) + "Var"(Y)$.
+] <prop:uncorrelated-vs-independent>
+
+#example[
+  (Uncorrelated but dependent.) Let $X ~ U(-1, 1)$ and $Y = X^2$. Then
+  $"Cov"(X, Y) = E[X^3] - E[X] E[X^2] = 0 - 0 = 0$ (since $E[X^3] = 0$ by
+  symmetry), yet $Y$ is a deterministic function of $X$ — far from
+  independent.
+]
+
+#definition(name: "Mean Vector and Covariance Matrix")[
+  For a random vector $bold(X) = (X_1, dots, X_n)$:
+  - the *mean vector* is $bold(mu) = E[bold(X)] = (E[X_1], dots,
+      E[X_n])^T$;
+  - the *covariance matrix* is the $n times n$ matrix $Sigma$ with entries
+    $
+      Sigma_(i j) = "Cov"(X_i, X_j), quad i, j = 1, dots, n,
+    $
+    with $Sigma_(i i) = "Var"(X_i)$ on the diagonal.
+
+  $Sigma$ is symmetric and positive semi-definite. This is the object
+  appearing in the
+  #link(<def:multivariate-normal>)[multivariate normal density]: the
+  abstract $Sigma$ of Chapter 5 is now grounded in the concrete notion of
+  covariance.
+] <def:mean-vector-covariance-matrix>
+
+== Other Characterization Numbers // 其他特征数
+
+#definition(name: "Moments and Central Moments")[
+  The *$k$-th moment* of $X$ is $mu_k = E[X^k]$, and the *$k$-th central
+  moment* is
+  $
+    mu_k' = E[(X - mu)^k],
+  $
+  provided the expectations exist. The variance is the second central
+  moment: $"Var"(X) = mu_2'$.
+] <def:moments>
+
+#definition(name: "Coefficient of Variation")[
+  The *coefficient of variation* is the dimensionless ratio
+  $
+    "CV" = sigma / mu,
+  $
+  measuring relative dispersion. It is meaningful when $X > 0$ (e.g.
+  lifetimes, incomes).
+] <def:coefficient-of-variation>
+
+#definition(name: "Quantiles and Median")[
+  For $0 < p < 1$, the *$p$-th quantile* is
+  $
+    x_p = inf {x : F(x) >= p}.
+  $
+  The *median* is $x_(1\/2)$, the *quartiles* are $x_(1\/4)$ and
+  $x_(3\/4)$. The *interquartile range* $x_(3\/4) - x_(1\/4)$ is a
+  robust measure of spread.
+] <def:quantiles>
+
+#definition(name: "Skewness")[
+  The *skewness* (coefficient of skewness) is
+  $
+    gamma_1 = (mu_3') / sigma^3 = (E[(X - mu)^3]) / sigma^3.
+  $
+  It measures asymmetry: $gamma_1 > 0$ (right-skewed), $gamma_1 < 0$
+  (left-skewed), $gamma_1 = 0$ (symmetric).
+] <def:skewness>
+
+#definition(name: "Kurtosis")[
+  The *kurtosis* (excess kurtosis) is
+  $
+    gamma_2 = (mu_4') / sigma^4 - 3 = (E[(X - mu)^4]) / sigma^4 - 3.
+  $
+  The subtraction of $3$ makes the normal distribution the reference:
+  $gamma_2 = 0$ (*mesokurtic*), $gamma_2 > 0$ (*leptokurtic* — heavier
+  tails), $gamma_2 < 0$ (*platykurtic* — lighter tails).
+] <def:kurtosis>
+
+#figure(
+  image("img/skewness-kurtosis.svg", width: 90%),
+  caption: [Left: positive skewness (right tail heavy) versus negative
+    skewness (left tail heavy), with a symmetric density for reference.
+    Right: leptokurtic (peaked, heavy tails) versus platykurtic (flat,
+    light tails) densities, with the normal (mesokurtic) in between.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:skewness-kurtosis>
+
+The mean, variance, skewness, and kurtosis are the first four standardised
+moments — together they sketch the shape of a distribution: location,
+scale, asymmetry, and tail weight. Higher moments and the moment
+generating function, which encodes *all* moments in a single function, are
+the subject of the next chapter.
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
