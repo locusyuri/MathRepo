@@ -721,8 +721,8 @@ In this section, we will discuss several important convergence tests from coarse
   Let $f(x)$ be a $2pi$-periodic function defined as:
   $
     f(x) = cases(
-      x, & x in [-pi, pi),
-      -pi, & x = pi. ,
+      x x in [-pi, pi),
+      -pi x = pi. ,
     ) 
   $
   Find its Fourier series and $1 - (1) / (3) + (1) / (5) - (1) / (7) + dots.h$.
@@ -754,14 +754,14 @@ In this section, we will discuss several important convergence tests from coarse
   Furthermore,
   $
     tilde(f)(x) = cases(
-      f(x), & x != 2 k pi + pi,
-      (f(pi+) + f(pi-)) / (2), & x = 2 k pi + pi,
+      f(x) x != 2 k pi + pi,
+      (f(pi+) + f(pi-)) / (2) x = 2 k pi + pi,
     ) 
   $
   $
     tilde(f)(x) = cases(
-      f(x), & x in (2 k pi - pi, 2 k pi + pi),
-      (-pi + pi) / (2) = 0, & x = 2 k pi + pi,
+      f(x) x in (2 k pi - pi, 2 k pi + pi),
+      (-pi + pi) / (2) = 0 x = 2 k pi + pi,
     ) 
   $
   $
@@ -792,8 +792,8 @@ This phenomenon is known as the *Gibbs phenomenon*.
 For example, for a square wave function $f(x)$ with period $2pi$:
 $
   f(x) = cases(
-    -1, & x in [-pi, 0),
-    1, & x in (0, pi],
+    -1 x in [-pi, 0),
+    1 x in (0, pi],
   ) quad quad ,
   f(x) ~ (4) / (pi) sum_(n=0)^(+oo) (sin((2 n + 1) x)) / (2 n + 1). ,
 $
@@ -801,8 +801,8 @@ Using Dirichlet-Jordan test, $f(x) in "BV"$,
 then we can show that the Fourier series of $f(x)$ converges to:
 $
   cases(
-    f(x), & x " is continuous",
-    (f(x+) + f(x-)) / (2), & x " is discontinuous". ,
+    f(x) x " is continuous",
+    (f(x+) + f(x-)) / (2) x " is discontinuous". ,
   ) 
 $
 Regarding the partial sum of the $N$-term Fourier series $S_N(f; x)$,

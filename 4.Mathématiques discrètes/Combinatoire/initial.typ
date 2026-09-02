@@ -877,9 +877,9 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
   The Mobius function $mu(n)$ is defined by
   $
     mu(n) = cases(
-      1 & "if " n = 1,
-      (-1)^k & "if " n " is a product of " k " distinct primes,",
-      0 & "if " n " has a squared prime factor."
+      1 "if " n = 1,
+      (-1)^k "if " n " is a product of " k " distinct primes,",
+      0 "if " n " has a squared prime factor."
     ).
   $
 ] <def:mobius-function>
@@ -889,7 +889,7 @@ The key property of $mu$ is that its divisor sums vanish away from $1$.
 #lemma(name: "Mobius Divisor Sum")[
   For every positive integer $n$,
   $
-    sum_(d | n) mu(d) = cases(1 & "if " n = 1, 0 & "if " n > 1).
+    sum_(d | n) mu(d) = cases(1 "if " n = 1, 0 "if " n > 1).
   $
 ] <lem:mobius-sum>
 

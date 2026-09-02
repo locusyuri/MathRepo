@@ -60,7 +60,7 @@ $
 $
 Let $M$ be a point in $Omega$, then the *divergence* of $bold(a)$ at $M$ is defined as
 $
-  "div" bold(a)(M) = (partial P)/(partial x) (M) + (partial Q)/(partial y) (M) + (partial R)/(partial z) (M),
+  "div" bold(a) (M) = (partial P)/(partial x) (M) + (partial Q)/(partial y) (M) + (partial R)/(partial z) (M),
 $
 denoted as $div bold(a)$. 
 ]
@@ -69,7 +69,7 @@ If $"div" bold(a) > 0$, we say that $M$ is a *source* of the field; if $"div" bo
 #theorem[
   The divergence of $bold(a)$ is the rate of change of the flux of $bold(a)$ regarding the volume of $harpoon(Sigma)$, i.e.,
 $
-  "div" bold(a)(M) = lim_(V -> 0)  (integral.double_Sigma bold(a) dot dif bold(Sigma)) / V.
+  "div" bold(a) (M) = lim_(V -> 0)  (integral.double_Sigma bold(a) dot dif bold(Sigma)) / V.
 $
 ]
 
@@ -91,7 +91,7 @@ Let $M$ be a point in $Omega$, then the *curl* of $bold(a)$ at $M$ is defined as
 
 $
 
-  "curl" bold(a)(M) = ((partial R)/(partial y) - (partial Q)/(partial z)) (M) - ((partial P)/(partial x) - (partial R)/(partial z)) (M) + ((partial Q)/(partial x) - (partial P)/(partial y)) (M),
+  "curl" bold(a) (M) = ((partial R)/(partial y) - (partial Q)/(partial z)) (M) - ((partial P)/(partial x) - (partial R)/(partial z)) (M) + ((partial Q)/(partial x) - (partial P)/(partial y)) (M),
 
 $
 
@@ -270,12 +270,12 @@ The SI unit of the electric field is newtons per coulomb ($"N/C"$), equivalently
 
 From Coulomb's law, the electric field produced by a single point charge $q$ located at $bold(r)'$ is
 $
-  bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) frac(q, |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)').
+  bold(E) (bold(r)) = frac(1, 4 pi epsilon_0) frac(q, |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)').
 $
 
 For a system of $N$ point charges, the total electric field at $bold(r)$ is the vector sum (superposition) of the fields due to each charge:
 $
-  bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) sum_(i=1)^N frac(q_i, |bold(r) - bold(r)_i|^2) hat(bold(r) - bold(r)_i).
+  bold(E) (bold(r)) = frac(1, 4 pi epsilon_0) sum_(i=1)^N frac(q_i, |bold(r) - bold(r)_i|^2) hat(bold(r) - bold(r)_i).
 $
 
 For a continuous charge distribution, the summation over discrete charges is replaced by integration. The charge distribution can be described by three types of density:
@@ -289,17 +289,17 @@ The electric field is then given by:
 #definition(name: "Electric Field of Continuous Distributions")[
   For a volume charge distribution $rho(bold(r)')$:
   $
-    bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) integral_V frac(rho(bold(r)'), |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)') dif V'.
+    bold(E) (bold(r)) = frac(1, 4 pi epsilon_0) integral_V frac(rho(bold(r)'), |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)') dif V'.
   $
 
   For a surface charge distribution $sigma(bold(r)')$:
   $
-    bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) integral_S frac(sigma(bold(r)'), |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)') dif S'.
+    bold(E) (bold(r)) = frac(1, 4 pi epsilon_0) integral_S frac(sigma(bold(r)'), |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)') dif S'.
   $
 
   For a linear charge distribution $lambda(bold(r)')$:
   $
-    bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) integral_L frac(lambda(bold(r)'), |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)') dif l'.
+    bold(E) (bold(r)) = frac(1, 4 pi epsilon_0) integral_L frac(lambda(bold(r)'), |bold(r) - bold(r)'|^2) hat(bold(r) - bold(r)') dif l'.
   $
 ]
 
@@ -374,7 +374,7 @@ The differential form states that the divergence of the electric field at a poin
 #note[
   The differential form $nabla dot bold(E) = rho / epsilon_0$ holds at every point in space where the electric field is continuously differentiable. At a point charge itself, the field is singular — the correct mathematical treatment uses the Dirac delta function:
   $
-    nabla dot bold(E)(bold(r)) = frac(1, epsilon_0) sum_i q_i delta^3(bold(r) - bold(r)_i).
+    nabla dot bold(E) (bold(r)) = frac(1, epsilon_0) sum_i q_i delta^3(bold(r) - bold(r)_i).
   $
 ]
 
@@ -516,12 +516,12 @@ This section serves as a quick-reference table of standard charge configurations
 
 === Spherical Symmetry // 球对称模型
 
-All spherically symmetric configurations share the property that the electric field is radial and depends only on the distance $r$ from the center: $bold(E)(bold(r)) = E(r) hat(bold(r))$. Gauss's law with a spherical Gaussian surface concentric with the charge distribution gives the solution.
+All spherically symmetric configurations share the property that the electric field is radial and depends only on the distance $r$ from the center: $bold(E) (bold(r)) = E(r) hat(bold(r))$. Gauss's law with a spherical Gaussian surface concentric with the charge distribution gives the solution.
 
 #example(name: "Point Charge")[ // 点电荷
   A single point charge $q$ at the origin.
   $
-    bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) frac(q, r^2) hat(bold(r)),
+    bold(E) (bold(r)) = frac(1, 4 pi epsilon_0) frac(q, r^2) hat(bold(r)),
     quad V(r) = frac(1, 4 pi epsilon_0) frac(q, r).
   $
   Reference: $V(infinity) = 0$. The field diverges as $r -> 0$.
@@ -538,13 +538,13 @@ All spherically symmetric configurations share the property that the electric fi
   Radius $R$, total charge $Q$ uniformly distributed on the surface.
   $
     bold(E) = cases(
-      frac(1, 4 pi epsilon_0) frac(Q, r^2) hat(bold(r)) & (r > R),
-      bold(0) & (r < R),
+      frac(1, 4 pi epsilon_0) frac(Q, r^2) hat(bold(r)) (r > R),
+      bold(0) (r < R),
     )
     quad
     V = cases(
-      frac(1, 4 pi epsilon_0) frac(Q, r) & (r >= R),
-      frac(1, 4 pi epsilon_0) frac(Q, R) & (r < R),
+      frac(1, 4 pi epsilon_0) frac(Q, r) (r >= R),
+      frac(1, 4 pi epsilon_0) frac(Q, R) (r < R),
     )
   $
   The field inside is zero (Faraday cage principle); the interior is equipotential.
@@ -561,13 +561,13 @@ All spherically symmetric configurations share the property that the electric fi
   Radius $R$, uniform volume charge density $rho = 3 Q / (4 pi R^3)$.
   $
     bold(E) = cases(
-      frac(1, 4 pi epsilon_0) frac(Q, r^2) hat(bold(r)) & (r > R),
-      frac(1, 4 pi epsilon_0) frac(Q r, R^3) hat(bold(r)) & (r < R),
+      frac(1, 4 pi epsilon_0) frac(Q, r^2) hat(bold(r)) (r > R),
+      frac(1, 4 pi epsilon_0) frac(Q r, R^3) hat(bold(r)) (r < R),
     )
     quad
     V = cases(
-      frac(1, 4 pi epsilon_0) frac(Q, r) & (r >= R),
-      frac(1, 4 pi epsilon_0) frac(Q, 2 R) (3 - frac(r^2, R^2)) & (r < R),
+      frac(1, 4 pi epsilon_0) frac(Q, r) (r >= R),
+      frac(1, 4 pi epsilon_0) frac(Q, 2 R) (3 - frac(r^2, R^2)) (r < R),
     )
   $
   Inside the sphere the field grows linearly $E prop r$; at the center $V(0) = frac(3, 2) frac(1, 4 pi epsilon_0) frac(Q, R)$, the maximum potential.
@@ -586,15 +586,15 @@ All spherically symmetric configurations share the property that the electric fi
   By superposition, the field in each region is the sum of contributions from both shells.
   $
     bold(E) = cases(
-      frac(1, 4 pi epsilon_0) frac(Q_a + Q_b, r^2) hat(bold(r)) & (r > b),
-      frac(1, 4 pi epsilon_0) frac(Q_a, r^2) hat(bold(r)) & (a < r < b),
-      bold(0) & (r < a),
+      frac(1, 4 pi epsilon_0) frac(Q_a + Q_b, r^2) hat(bold(r)) (r > b),
+      frac(1, 4 pi epsilon_0) frac(Q_a, r^2) hat(bold(r)) (a < r < b),
+      bold(0) (r < a),
     )
     quad
     V = cases(
-      frac(1, 4 pi epsilon_0) frac(Q_a + Q_b, r) & (r >= b),
-      frac(1, 4 pi epsilon_0) (frac(Q_a, r) + frac(Q_b, b)) & (a <= r < b),
-      frac(1, 4 pi epsilon_0) (frac(Q_a, a) + frac(Q_b, b)) & (r < a),
+      frac(1, 4 pi epsilon_0) frac(Q_a + Q_b, r) (r >= b),
+      frac(1, 4 pi epsilon_0) (frac(Q_a, r) + frac(Q_b, b)) (a <= r < b),
+      frac(1, 4 pi epsilon_0) (frac(Q_a, a) + frac(Q_b, b)) (r < a),
     )
   $
   The inner region ($r < a$) is always equipotential and field-free, regardless of $Q_a$ and $Q_b$.
@@ -610,7 +610,7 @@ All spherically symmetric configurations share the property that the electric fi
 #note[
   For any spherically symmetric charge distribution, the field at radius $r$ depends _only_ on the total charge enclosed within $r$:
   $
-    bold(E)(r) = frac(1, 4 pi epsilon_0) frac(Q_"enc"(r), r^2) hat(bold(r)), quad
+    bold(E) (r) = frac(1, 4 pi epsilon_0) frac(Q_"enc"(r), r^2) hat(bold(r)), quad
     Q_"enc"(r) = integral_0^r rho(r') 4 pi r'^2 dif r'.
   $
   This is a direct consequence of Gauss's law.
@@ -627,7 +627,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
 #example(name: "Infinite Line Charge")[ // 无限长均匀带电直线
   Linear charge density $lambda$, along the $z$-axis.
   $
-    bold(E)(rho) = frac(lambda, 2 pi epsilon_0 rho) hat(bold(rho)).
+    bold(E) (rho) = frac(lambda, 2 pi epsilon_0 rho) hat(bold(rho)).
   $
   Potential cannot refer to $rho = infinity$ (the integral diverges). Choose a reference radius $rho_0$:
   $
@@ -646,13 +646,13 @@ Configurations invariant under translations along the $z$-axis and rotations abo
   Radius $R$, surface charge density $sigma$ (or linear charge density $lambda = 2 pi R sigma$), infinite along $z$.
   $
     bold(E) = cases(
-      frac(lambda, 2 pi epsilon_0 rho) hat(bold(rho)) & (rho > R),
-      bold(0) & (rho < R),
+      frac(lambda, 2 pi epsilon_0 rho) hat(bold(rho)) (rho > R),
+      bold(0) (rho < R),
     )
     quad
     V = cases(
-      frac(lambda, 2 pi epsilon_0) ln frac(rho_0, rho) & (rho >= R),
-      frac(lambda, 2 pi epsilon_0) ln frac(rho_0, R) & (rho < R),
+      frac(lambda, 2 pi epsilon_0) ln frac(rho_0, rho) (rho >= R),
+      frac(lambda, 2 pi epsilon_0) ln frac(rho_0, R) (rho < R),
     )
   $
   Inside the shell the field is zero; the interior is equipotential.
@@ -669,8 +669,8 @@ Configurations invariant under translations along the $z$-axis and rotations abo
   Radius $R$, uniform volume charge density $rho$ (or linear density $lambda = rho pi R^2$), infinite along $z$.
   $
     bold(E) = cases(
-      frac(lambda, 2 pi epsilon_0 rho) hat(bold(rho)) & (rho > R),
-      frac(rho, 2 epsilon_0) rho hat(bold(rho)) & (rho < R),
+      frac(lambda, 2 pi epsilon_0 rho) hat(bold(rho)) (rho > R),
+      frac(rho, 2 epsilon_0) rho hat(bold(rho)) (rho < R),
     )
   $
   Inside the cylinder the field grows linearly $E prop rho$; outside it matches the infinite line charge result.
@@ -686,7 +686,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
 #note[
   For cylindrical symmetry, the field outside any rotationally symmetric infinite charge distribution depends only on the enclosed linear charge density $lambda$:
   $
-    bold(E)(rho) = frac(lambda_"enc", 2 pi epsilon_0 rho) hat(bold(rho)), quad
+    bold(E) (rho) = frac(lambda_"enc", 2 pi epsilon_0 rho) hat(bold(rho)), quad
     lambda_"enc" = integral_0^R rho(rho') 2 pi rho' dif rho'.
   $
 ]
@@ -702,7 +702,7 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
 #example(name: "Uniformly Charged Ring")[ // 均匀带电圆环
   Radius $R$, total charge $Q$, lying in the $"xy"$-plane centered at the origin.
   $
-    bold(E)(z) = frac(1, 4 pi epsilon_0) frac(Q z, (z^2 + R^2)^(3/2)) hat(bold(z)),
+    bold(E) (z) = frac(1, 4 pi epsilon_0) frac(Q z, (z^2 + R^2)^(3/2)) hat(bold(z)),
     quad V(z) = frac(1, 4 pi epsilon_0) frac(Q, sqrt(z^2 + R^2)).
   $
   - $z >> R$ (far away): $bold(E) approx frac(1, 4 pi epsilon_0) frac(Q, z^2) hat(bold(z))$ — looks like a point charge.
@@ -719,7 +719,7 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
 #example(name: "Uniformly Charged Disk")[ // 均匀带电圆盘
   Radius $R$, uniform surface charge density $sigma$, lying in the $"xy"$-plane. Obtained by integrating ring contributions radially.
   $
-    bold(E)(z) = frac(sigma, 2 epsilon_0) (1 - frac(z, sqrt(z^2 + R^2))) hat(bold(z)).
+    bold(E) (z) = frac(sigma, 2 epsilon_0) (1 - frac(z, sqrt(z^2 + R^2))) hat(bold(z)).
   $
   - $R -> infinity$ (infinite plane): $bold(E) = frac(sigma, 2 epsilon_0) hat(bold(z))$ — uniform field!
   - $z >> R$: $bold(E) approx frac(1, 4 pi epsilon_0) frac(Q, z^2) hat(bold(z))$, where $Q = sigma pi R^2$.
@@ -762,8 +762,8 @@ Configurations invariant under translations parallel to the plane. The field is 
   Two infinite parallel planes with equal and opposite surface charge densities $plus.minus sigma$.
   $
     bold(E) = cases(
-      frac(sigma, epsilon_0) hat(bold(n)) & (text("between the plates")),
-      bold(0) & (text("outside")),
+      frac(sigma, epsilon_0) hat(bold(n)) (text("between the plates")),
+      bold(0) (text("outside")),
     )
   $
   The field exists only between the plates and is uniform. Potential difference across gap $d$:
@@ -792,11 +792,11 @@ Configurations invariant under translations parallel to the plane. The field is 
   $
     V(r, theta) = frac(1, 4 pi epsilon_0) frac(p cos theta, r^2),
     quad
-    bold(E)(r, theta) = frac(1, 4 pi epsilon_0) frac(p, r^3) (2 cos theta hat(bold(r)) + sin theta hat(bold(theta))).
+    bold(E) (r, theta) = frac(1, 4 pi epsilon_0) frac(p, r^3) (2 cos theta hat(bold(r)) + sin theta hat(bold(theta))).
   $
   In Cartesian form:
   $
-    bold(E)(bold(r)) = frac(1, 4 pi epsilon_0) frac(1, r^3) [3(bold(p) dot hat(bold(r))) hat(bold(r)) - bold(p)].
+    bold(E) (bold(r)) = frac(1, 4 pi epsilon_0) frac(1, r^3) [3(bold(p) dot hat(bold(r))) hat(bold(r)) - bold(p)].
   $
   The field decays as $1/r^3$, faster than a point charge's $1/r^2$. The dipole serves as the fundamental building block for multipole expansions.
 
@@ -956,7 +956,7 @@ Electric dielectrics are insulating materials that respond to an external electr
 #definition(name: "Polarization Vector")[
   The *polarization vector* $bold(P)$ is defined as the electric dipole moment per unit volume:
   $
-    bold(P)(bold(r)) = lim_(Delta V -> 0) (sum_i bold(p)_i) / Delta V,
+    bold(P) (bold(r)) = lim_(Delta V -> 0) (sum_i bold(p)_i) / Delta V,
   $
   where $bold(p)_i$ is the dipole moment of the $i$-th molecule within volume $Delta V$.
   In a linear, isotropic dielectric, polarization is proportional to the electric field:
@@ -1052,12 +1052,12 @@ Different dielectric materials respond to an external field through different mi
 
   The potential outside is that of a dipole at the origin:
   $
-    V_text("out")(r, theta) = frac(1, 4 pi epsilon_0) frac(p cos theta, r^2), quad p = (4/3) pi R^3 P.
+    V_text("out") (r, theta) = frac(1, 4 pi epsilon_0) frac(p cos theta, r^2), quad p = (4/3) pi R^3 P.
   $
 
   Inside, the potential must satisfy Laplace's equation and match the boundary condition at $r = R$. The unique solution is:
   $
-    V_text("in")(r, theta) = frac(P, 3 epsilon_0) r cos theta = frac(P, 3 epsilon_0) z.
+    V_text("in") (r, theta) = frac(P, 3 epsilon_0) r cos theta = frac(P, 3 epsilon_0) z.
   $
 
   Hence $bold(E)^("in") = -nabla V_text("in") = - P / (3 epsilon_0) hat(bold(z))$, a uniform field opposing the polarization (the *depolarization field*).
@@ -1128,7 +1128,7 @@ The energy required to assemble a charge distribution from infinity is stored as
 #property(name: "Electrostatic Energy Density")[
   The integrand of the field-energy expression defines the *electrostatic energy density*
   $
-    u(bold(r)) = frac(1, 2) epsilon_0 |bold(E)(bold(r))|^2.
+    u(bold(r)) = frac(1, 2) epsilon_0 |bold(E) (bold(r))|^2.
   $
   The total energy is $U = integral u(bold(r)) dif tau$. This is a local quantity: each point in space carries energy proportional to the square of the field strength there, regardless of whether charges are present at that point.
 ]
@@ -1488,7 +1488,7 @@ The Lorentz force tells us what $bold(B)$ does to a moving charge; we now need t
 #law(name: "Biot-Savart Law")[
   The magnetic field at a point $bold(r)$ due to a steady line current $I$ flowing along a curve $L$ is:
   $
-    bold(B)(bold(r)) = frac(mu_0, 4 pi) integral_L frac(I d bold(l)' times (bold(r) - bold(r)'), |bold(r) - bold(r)'|^3) = frac(mu_0, 4 pi) integral_L frac(I d bold(l)' times hat(bold(R)), R^2),
+    bold(B) (bold(r)) = frac(mu_0, 4 pi) integral_L frac(I d bold(l)' times (bold(r) - bold(r)'), |bold(r) - bold(r)'|^3) = frac(mu_0, 4 pi) integral_L frac(I d bold(l)' times hat(bold(R)), R^2),
   $
   where $d bold(l)'$ is a differential element along the wire in the direction of the current, $bold(R) = bold(r) - bold(r)'$ is the vector from the source point $bold(r)'$ to the field point $bold(r)$, and $mu_0$ is the *permeability of free space*:
   $
@@ -1501,11 +1501,11 @@ The Biot-Savart law obeys the superposition principle: the total field from mult
 #law(name: "Biot-Savart Law — Continuous Distributions")[
   For a volume current density $bold(J)$:
   $
-    bold(B)(bold(r)) = frac(mu_0, 4 pi) integral_V frac(bold(J)(bold(r)') times hat(bold(R)), R^2) dif V'.
+    bold(B) (bold(r)) = frac(mu_0, 4 pi) integral_V frac(bold(J) (bold(r)') times hat(bold(R)), R^2) dif V'.
   $
   For a surface current density $bold(K)$:
   $
-    bold(B)(bold(r)) = frac(mu_0, 4 pi) integral_S frac(bold(K)(bold(r)') times hat(bold(R)), R^2) dif S'.
+    bold(B) (bold(r)) = frac(mu_0, 4 pi) integral_S frac(bold(K) (bold(r)') times hat(bold(R)), R^2) dif S'.
   $
 ]
 
@@ -1857,17 +1857,17 @@ This is one of the most beautiful results of magnetostatics: in the Coulomb gaug
   $
   or, in full vector form:
   $
-    bold(A)(bold(r)) = frac(mu_0, 4 pi) integral_V frac(bold(J)(bold(r)'), |bold(r) - bold(r)'|) dif V'.
+    bold(A) (bold(r)) = frac(mu_0, 4 pi) integral_V frac(bold(J) (bold(r)'), |bold(r) - bold(r)'|) dif V'.
   $
 
   For a surface current density $bold(K)$:
   $
-    bold(A)(bold(r)) = frac(mu_0, 4 pi) integral_S frac(bold(K)(bold(r)'), |bold(r) - bold(r)'|) dif S'.
+    bold(A) (bold(r)) = frac(mu_0, 4 pi) integral_S frac(bold(K) (bold(r)'), |bold(r) - bold(r)'|) dif S'.
   $
 
   For a line current $I$ along a curve $C'$:
   $
-    bold(A)(bold(r)) = frac(mu_0, 4 pi) integral_C' frac(I, |bold(r) - bold(r)'|) dif bold(l)'.
+    bold(A) (bold(r)) = frac(mu_0, 4 pi) integral_C' frac(I, |bold(r) - bold(r)'|) dif bold(l)'.
   $
 ]
 
@@ -1974,7 +1974,7 @@ The flux-circulation relation provides an alternative way to compute magnetic fl
   - $bold(A)$ is defined by $bold(B) = nabla times bold(A)$, automatically satisfying $nabla dot bold(B) = 0$.
   - $bold(A)$ is not unique: gauge transformations $bold(A) -> bold(A) + nabla chi$ leave $bold(B)$ unchanged.
   - The Coulomb gauge $nabla dot bold(A) = 0$ simplifies the field equations and yields the vector Poisson equation $nabla^2 bold(A) = - mu_0 bold(J)$.
-  - The integral solution $bold(A)(bold(r)) = frac(mu_0, 4 pi) integral bold(J)(bold(r)') / |bold(r) - bold(r)'| dif V'$ mirrors the electrostatic potential formula.
+  - The integral solution $bold(A) (bold(r)) = frac(mu_0, 4 pi) integral bold(J) (bold(r)') / |bold(r) - bold(r)'| dif V'$ mirrors the electrostatic potential formula.
   - The magnetic flux through a surface equals the circulation of $bold(A)$ around its boundary: $Phi_B = integral.cont_C bold(A) dot dif bold(l)$ — a gauge-invariant relation that directly links the vector potential to a physical observable.
   - These results are the magnetostatic foundation upon which the time-dependent treatment of potentials will build in Chapter 13.
 ]
@@ -1995,8 +1995,8 @@ Configurations invariant under translations along the $z$-axis and rotations abo
 #example(name: "Infinite Straight Wire")[ // 无限长直导线
   A steady current $I$ flows along the $z$-axis. (§6.3 gives the full Ampère derivation.)
   $
-    bold(B)(rho) = frac(mu_0 I, 2 pi rho) hat(bold(phi)), quad
-    bold(A)(rho) = frac(mu_0 I, 2 pi) ln frac(rho_0, rho) hat(bold(z)),
+    bold(B) (rho) = frac(mu_0 I, 2 pi rho) hat(bold(phi)), quad
+    bold(A) (rho) = frac(mu_0 I, 2 pi) ln frac(rho_0, rho) hat(bold(z)),
   $
   where $rho_0$ is an arbitrary reference radius (the vector potential diverges at infinity, mirroring the infinite line charge in electrostatics). The magnetic flux through a rectangular strip of length $L$ extending from $rho = a$ to $rho = b$ is:
   $
@@ -2015,13 +2015,13 @@ Configurations invariant under translations along the $z$-axis and rotations abo
   Radius $R$, uniform current density $bold(J) = J hat(bold(z))$ (total current $I = J pi R^2$), infinite along $z$.
   $
     bold(B) = cases(
-      frac(mu_0 I, 2 pi rho) hat(bold(phi)) & (rho > R),
-      frac(mu_0 J rho, 2) hat(bold(phi)) & (rho < R),
+      frac(mu_0 I, 2 pi rho) hat(bold(phi)) (rho > R),
+      frac(mu_0 J rho, 2) hat(bold(phi)) (rho < R),
     )
     quad
     bold(A) = cases(
-      frac(mu_0 I, 2 pi) ln frac(rho_0, rho) hat(bold(z)) & (rho >= R),
-      frac(mu_0 J, 4) (R^2 - rho^2) hat(bold(z)) & (rho < R),
+      frac(mu_0 I, 2 pi) ln frac(rho_0, rho) hat(bold(z)) (rho >= R),
+      frac(mu_0 J, 4) (R^2 - rho^2) hat(bold(z)) (rho < R),
     )
   $
   Inside the cylinder the field grows linearly: $B(rho) prop rho$; outside it is identical to an infinite line wire carrying the same total current $I$.
@@ -2038,10 +2038,10 @@ Configurations invariant under translations along the $z$-axis and rotations abo
   An inner solid conductor of radius $a$ carrying current $I$ outward, and an outer conducting shell of inner radius $b$ and outer radius $c$ carrying current $I$ return. Assume uniform current densities in both conductors.
   $
     bold(B) = cases(
-      frac(mu_0 I, 2 pi a^2) rho hat(bold(phi)) & (0 < rho < a),
-      frac(mu_0 I, 2 pi rho) hat(bold(phi)) & (a < rho < b),
-      frac(mu_0 I, 2 pi rho) frac(c^2 - rho^2, c^2 - b^2) hat(bold(phi)) & (b < rho < c),
-      bold(0) & (rho > c),
+      frac(mu_0 I, 2 pi a^2) rho hat(bold(phi)) (0 < rho < a),
+      frac(mu_0 I, 2 pi rho) hat(bold(phi)) (a < rho < b),
+      frac(mu_0 I, 2 pi rho) frac(c^2 - rho^2, c^2 - b^2) hat(bold(phi)) (b < rho < c),
+      bold(0) (rho > c),
     )
   $
   The field is confined entirely to the region $rho < c$: the currents in the inner and outer conductors cancel for $rho > c$, making the coaxial cable a *shielded* transmission line. This is the magnetic analogue of the parallel-plate capacitor — charge (or current) confinement leads to field confinement.
@@ -2059,8 +2059,8 @@ Configurations based on helical or toroidal windings. The field is predominantly
   $n$ turns per unit length, each carrying current $I$. (§6.3 gives the full Ampère derivation.)
   $
     bold(B) = cases(
-      mu_0 n I hat(bold(z)) & (text("inside")),
-      bold(0) & (text("outside")),
+      mu_0 n I hat(bold(z)) (text("inside")),
+      bold(0) (text("outside")),
     )
     quad
     bold(A) = frac(mu_0 n I rho, 2) hat(bold(phi)) quad (text("inside")),
@@ -2077,9 +2077,9 @@ Configurations based on helical or toroidal windings. The field is predominantly
 #example(name: "Toroid")[ // 环形螺线管（螺绕环）
   $N$ total turns wound around a torus of mean radius $R$, each carrying current $I$. (§6.3 gives the derivation.)
   $
-    bold(B)(r) = cases(
-      frac(mu_0 N I, 2 pi r) hat(bold(phi)) & (text("inside")),
-      bold(0) & (text("outside")),
+    bold(B) (r) = cases(
+      frac(mu_0 N I, 2 pi r) hat(bold(phi)) (text("inside")),
+      bold(0) (text("outside")),
     )
   $
   The field is *non-uniform* inside: $B prop 1/r$. For a toroid of large radius ($R >>$ cross-sectional radius $a$), the field is approximately uniform: $B approx mu_0 n I$ with $n = N / (2 pi R)$.
@@ -2098,7 +2098,7 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
 #example(name: "Finite Straight Wire")[ // 有限长直导线
   A straight wire segment of length $L$, carrying current $I$, lying along the $z$-axis from $z = -L/2$ to $z = L/2$. By the Biot-Savart law, the magnetic field at a distance $rho$ from the wire, in the plane perpendicular to its midpoint, is:
   $
-    bold(B)(rho) = frac(mu_0 I, 4 pi rho) (sin theta_2 - sin theta_1) hat(bold(phi)),
+    bold(B) (rho) = frac(mu_0 I, 4 pi rho) (sin theta_2 - sin theta_1) hat(bold(phi)),
   $
   where $theta_1$ and $theta_2$ are the angles subtended by the wire endpoints relative to the observation point:
   $
@@ -2117,11 +2117,11 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
 #example(name: "Circular Current Loop — On Axis")[ // 载流圆环轴线磁场
   A circular loop of radius $R$ carrying steady current $I$, lying in the $"xy"$-plane centered at the origin. By the Biot-Savart law, the field on the $z$-axis is:
   $
-    bold(B)(z) = frac(mu_0 I R^2, 2 (R^2 + z^2)^(3/2)) hat(bold(z)).
+    bold(B) (z) = frac(mu_0 I R^2, 2 (R^2 + z^2)^(3/2)) hat(bold(z)).
   $
   The vector potential (in Coulomb gauge) on the axis is zero by symmetry; off-axis it requires elliptic integrals. In the far-field limit ($|z| >> R$):
   $
-    bold(B)(z) approx frac(mu_0, 2 pi) frac(m, |z|^3) hat(bold(z)),
+    bold(B) (z) approx frac(mu_0, 2 pi) frac(m, |z|^3) hat(bold(z)),
     quad m = I pi R^2 = I A,
   $
   where $m$ is the *magnetic dipole moment* of the loop (see the Magnetic Dipole subsection below). The field decays as $1/|z|^3$, characteristic of a dipole.
@@ -2151,25 +2151,25 @@ Just as the electric dipole is the fundamental building block for multipole expa
   $
   where $bold(A) = A hat(bold(n))$ is the vector area, with $hat(bold(n))$ oriented by the right-hand rule (fingers along current, thumb gives $hat(bold(n))$). The SI unit is $"A" dot "m"^2$.
 
-  For a general current distribution $bold(J)(bold(r))$, the magnetic dipole moment is:
+  For a general current distribution $bold(J) (bold(r))$, the magnetic dipole moment is:
   $
-    bold(m) = frac(1, 2) integral_V bold(r) times bold(J)(bold(r)) dif V.
+    bold(m) = frac(1, 2) integral_V bold(r) times bold(J) (bold(r)) dif V.
   $
 ]
 
 #example(name: "Magnetic Dipole Field")[ // 磁偶极子的磁场
   In the far-field limit ($r >>$ loop radius $R$), the magnetic field of a dipole $bold(m) = m hat(bold(z))$ in spherical coordinates is:
   $
-    bold(B)(r, theta) = frac(mu_0, 4 pi) frac(m, r^3) (2 cos theta hat(bold(r)) + sin theta hat(bold(theta))).
+    bold(B) (r, theta) = frac(mu_0, 4 pi) frac(m, r^3) (2 cos theta hat(bold(r)) + sin theta hat(bold(theta))).
   $
   In Cartesian form:
   $
-    bold(B)(bold(r)) = frac(mu_0, 4 pi) frac(1, r^3) [3(bold(m) dot hat(bold(r))) hat(bold(r)) - bold(m)].
+    bold(B) (bold(r)) = frac(mu_0, 4 pi) frac(1, r^3) [3(bold(m) dot hat(bold(r))) hat(bold(r)) - bold(m)].
   $
 
   The vector potential of a magnetic dipole is:
   $
-    bold(A)(bold(r)) = frac(mu_0, 4 pi) frac(bold(m) times hat(bold(r)), r^2).
+    bold(A) (bold(r)) = frac(mu_0, 4 pi) frac(bold(m) times hat(bold(r)), r^2).
   $
 
   - The field decays as $1/r^3$, exactly like the electric dipole field in electrostatics.
@@ -2200,7 +2200,7 @@ Just as the electric dipole is the fundamental building block for multipole expa
   - *Cylindrical (infinite)*: choose a coaxial circular Amperian loop; $bold(B) = B(rho) hat(bold(phi))$ is azimuthal and constant on the loop. Includes straight wires and coaxial cables.
   - *Solenoidal*: choose a rectangular Amperian loop with one side inside and one outside; $B$ is axial and uniform inside. Includes solenoids and toroids.
   - *Finite axial*: use the Biot-Savart law directly; closed-form results exist only on the symmetry axis. Includes finite wires and circular loops.
-  - *Dipole far field*: $bold(B) prop 1/r^3$, given by $bold(B)(r) = (mu_0 / 4 pi) [3(bold(m) dot hat(bold(r))) hat(bold(r)) - bold(m)] / r^3$.
+  - *Dipole far field*: $bold(B) prop 1/r^3$, given by $bold(B) (r) = (mu_0 / 4 pi) [3(bold(m) dot hat(bold(r))) hat(bold(r)) - bold(m)] / r^3$.
 ]
 
 // 回旋运动、螺旋运动、E×B 漂移、磁镜效应；霍尔效应（霍尔电压、霍尔系数、载流子类型判定）
@@ -2257,7 +2257,7 @@ The experimental results can be summarised by two key observations:
 ]
 
 #example(name: "Rectangular Loop in a Time-Varying Magnetic Field")[
-  A rectangular loop of width $w$ and height $h$ lies in the $"xy"$-plane. A uniform but time-dependent magnetic field $bold(B)(t) = B_0 sin(omega t) hat(bold(z))$ penetrates the loop.
+  A rectangular loop of width $w$ and height $h$ lies in the $"xy"$-plane. A uniform but time-dependent magnetic field $bold(B) (t) = B_0 sin(omega t) hat(bold(z))$ penetrates the loop.
 
   The magnetic flux through the loop is:
   $
@@ -2266,7 +2266,7 @@ The experimental results can be summarised by two key observations:
 
   By Faraday's law, the induced EMF is:
   $
-    cal(E)(t) = - frac(dif Phi_B, dif t) = - omega B_0 w h cos(omega t).
+    cal(E) (t) = - frac(dif Phi_B, dif t) = - omega B_0 w h cos(omega t).
   $
 
   The induced electric field circulates around the loop. By symmetry, it is constant in magnitude along each side and tangential to the loop. For a circular loop of radius $R$, we can find $bold(E)$ directly: by symmetry $bold(E) = E(t) hat(bold(phi))$, and

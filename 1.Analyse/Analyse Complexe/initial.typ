@@ -1214,8 +1214,8 @@ where $L = integral_C abs(dif z)$ is the total arc length of $C$.
   - Let $C$ be a circle centered at the origin with radius $r$ and let $n in bb(C)$, then
   $
     integral_C 1/(z-a)^n "d"z = cases(
-      0 & n != -1,
-      2 pi"i" & n = -1
+      0 n != -1,
+      2 pi"i" n = -1
     )
   $
 ] <prop:common-integrals>
@@ -1297,11 +1297,11 @@ For a multiply connected domain with holes, the boundary is traversed so that th
 #proof[
   Write $F = U + i V$ and $f = u + i v$ as in *#link(<thm:continuous-integrable>)[Continuous Integrability]*. Since $F' = f$ and $F$ is analytic, the Cauchy-Riemann equations give $U_x = u, V_x = v$. Then:
   $
-    integral_C f dif z & = integral_C (u dif x - v dif y) + i integral_C (v dif x + u dif y) \
-                       & = integral_C (U_x dif x + U_y dif y) + i integral_C (V_x dif x + V_y dif y) \
-                       & = integral_C dif U + i integral_C dif V \
-                       & = U(b) - U(a) + i(V(b) - V(a)) \
-                       & = F(b) - F(a).
+    integral_C f dif z= integral_C (u dif x - v dif y) + i integral_C (v dif x + u dif y) \
+                      = integral_C (U_x dif x + U_y dif y) + i integral_C (V_x dif x + V_y dif y) \
+                      = integral_C dif U + i integral_C dif V \
+                      = U(b) - U(a) + i(V(b) - V(a)) \
+                      = F(b) - F(a).
   $
   The last step uses the real fundamental theorem of calculus applied to $U$ and $V$ along the parameterized curve.
 ]
@@ -1542,8 +1542,8 @@ Cauchy-Goursat says: holomorphic $=>$ closed contour integrals vanish. Morera's 
 #note(title: "The Circle Closes")[
   Chapter 4 established that primitive existence, vanishing closed-contour integrals, and path independence are equivalent — but left open whether *analyticity alone* guarantees any of them. Cauchy-Goursat and Morera now complete the picture: on a simply connected domain,
   $
-            f " holomorphic" & <=> integral_C f dif z = 0 " for every closed" C \
-    <=> f " has a primitive" & <=> "integrals are path-independent".
+            f " holomorphic"<=> integral_C f dif z = 0 " for every closed" C \
+    <=> f " has a primitive"<=> "integrals are path-independent".
   $
   What analyticity could not deliver in Chapter 4, it now delivers in full.
 ]
@@ -1703,7 +1703,7 @@ The Schwarz lemma is the precise form of a remarkable fact: a holomorphic self-m
 #proof[
   Define
   $
-    g(z) = cases(f(z)/z & z != 0, f'(0) & z = 0).
+    g(z) = cases(f(z)/z z != 0, f'(0) z = 0).
   $
   Then $g$ is holomorphic on $bb(D) backslash {0}$ and continuous on all of $bb(D)$: differentiability of $f$ at $0$ with $f(0) = 0$ gives $f(z) = f'(0) z + eta(z) z$ with $eta(z) -> 0$, so $g(z) = f'(0) + eta(z) -> f'(0)$ as $z -> 0$.
 

@@ -673,15 +673,15 @@ We now examine the relationship between convergence in measure and almost everyw
   The relationships between the four convergence modes on a measure space $(X, cal(S), mu)$ are:
 
   $
-       f_n xarrow(L^p) f & => f_n xarrow(mu) f #h(2em)     & "(Markov's inequality)" \
-    f_n xarrow("a.u.") f & => f_n xarrow("a.e.") f #h(2em) &             "(trivial)" \
-    f_n xarrow("a.u.") f & => f_n xarrow(mu) f #h(2em)     &             "(trivial)" \
+       f_n xarrow(L^p) f=> f_n xarrow(mu) f #h(2em)    "(Markov's inequality)" \
+    f_n xarrow("a.u.") f=> f_n xarrow("a.e.") f #h(2em)            "(trivial)" \
+    f_n xarrow("a.u.") f=> f_n xarrow(mu) f #h(2em)                "(trivial)" \
   $
 
   On *finite measure spaces* ($mu(X) < infinity$):
   $
-    f_n xarrow("a.e.") f & => f_n xarrow("a.u.") f #h(2em)                & "(Egorov's theorem)" \
-        f_n xarrow(mu) f & => exists f_(n_(k_i)) xarrow("a.e.") f #h(2em) &  "(Riesz's theorem)"
+    f_n xarrow("a.e.") f=> f_n xarrow("a.u.") f #h(2em)               "(Egorov's theorem)" \
+        f_n xarrow(mu) f=> exists f_(n_(k_i)) xarrow("a.e.") f #h(2em) "(Riesz's theorem)"
   $
 
   *Non-implications* (with counterexamples):
@@ -1407,7 +1407,7 @@ We now state the two central theorems of product integration. The first applies 
 #example[
   *Failure without absolute integrability*. Define $f: [0,1] times [0,1] -> bb(R)$ by
   $
-    f(x,y) = cases((x^2 - y^2) / (x^2 + y^2)^2 & "if" (x,y) != (0,0), 0 & "if" (x,y) = (0,0)).
+    f(x,y) = cases((x^2 - y^2) / (x^2 + y^2)^2 "if" (x,y) != (0,0), 0 "if" (x,y) = (0,0)).
   $
   A direct computation shows:
   $
@@ -1492,7 +1492,7 @@ Jump functions are the simplest type of function that exhibits controlled discon
 #example[
   The *Heaviside step function*
   $
-    H(x) = cases(0 & "if" x < 0, 1 & "if" x >= 0)
+    H(x) = cases(0 "if" x < 0, 1 "if" x >= 0)
   $
   has a single jump at $x = 0$ with jump size $j_H(0) = 1$. It is the prototypical example of a jump function: piecewise constant, with one point of discontinuity where the function jumps from one value to another.
 ]
@@ -2264,7 +2264,7 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 #proof[
   _Step 1: Truncate to bounded functions._ Define
   $
-    f_N(x) = cases(f(x) & "if" |f(x)| <= N, 0 & "if" |f(x)| > N).
+    f_N(x) = cases(f(x) "if" |f(x)| <= N, 0 "if" |f(x)| > N).
   $
   Then $|f(x) - f_N(x)|^p -> 0$ pointwise as $N -> oo$, and $|f - f_N|^p <= |f|^p in L^1$. By the Dominated Convergence Theorem, $||f - f_N||_p -> 0$. Choose $N$ large enough so that $||f - f_N||_p < epsilon / 2$.
 
