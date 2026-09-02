@@ -348,32 +348,411 @@ The third condition (stability) is particularly important: small changes in the 
 ]
 
 // ==========================================================================
-// Part II — Distribution Theory (分布理论)
+// Chapter 2: First-Order PDEs (一阶偏微分方程)
 // ==========================================================================
 
-// --- Chapter 2: First-Order PDEs (一阶偏微分方程) ---
+= First-Order PDEs // 一阶偏微分方程
 
-// 设计思路：完整处理一阶 PDE 的理论，包括特征线法、Hamilton-Jacobi 方程
-// 和守恒律。本笔记作为一阶 PDE 的主要归属。
+The theory of first-order PDEs is built around a single unifying idea: _characteristic curves_ along which a PDE reduces to a system of ODEs. This chapter develops the method of characteristics in full generality and applies it to quasilinear equations, Hamilton--Jacobi equations, and conservation laws.
 
-//   Section 2.1: Quasilinear Equations (拟线性方程)
-//     - 拟线性一阶方程的一般形式
-//     - 特征方程组的导出
+== Quasilinear Equations // 拟线性方程
 
-//   Section 2.2: Method of Characteristics (特征线法)
-//     - 特征曲线的几何意义
-//     - Cauchy 问题的求解
-//     - 特征线法的完整推导与应用
+Consider a first-order PDE with two independent variables:
 
-//   Section 2.3: Hamilton-Jacobi Equations (Hamilton-Jacobi 方程)
-//     - 方程的导出与物理背景
-//     - 特征系统方法
-//     - 与经典力学的联系
+#eq[$
+  a(x, y, u) (partial u) / (partial x) + b(x, y, u) (partial u) / (partial y) = c(x, y, u).
+$] <eq:quasilinear-pde>
 
-//   Section 2.4: Conservation Laws in One Space Dimension (一维守恒律)
-//     - 守恒律方程的导出
-//     - 行波解
-//     - 简单例子
+where $u = u(x, y)$ is the unknown function and $a, b, c$ are given functions with $a$ and $b$ not both zero. By #link(<def:pde-linearity-classification>)[§1], this equation is _quasilinear_: it is linear in the first-order derivatives, but the coefficients may depend on $u$ itself.
+
+The left-hand side can be interpreted as a directional derivative:
+$
+  a u_x + b u_y = nabla u dot (a, b).
+$
+The equation states that the directional derivative of $u$ along the vector field $(a, b)$ equals $c$ at every point.
+
+=== Characteristic Equations
+
+The key idea is to find curves along which the PDE becomes an ODE. Introduce a parameter $t$ and construct curves $(x(t), y(t), u(t))$ in three-dimensional space whose tangent vector is parallel to $(a, b, c)$ at each point.
+
+#definition(name: "Characteristic Curves")[
+  The _characteristic curves_ of the quasilinear equation (#link(<eq:quasilinear-pde>)[1]) are the curves $(x(t), y(t), u(t))$ satisfying the _characteristic system_:
+] <def:characteristic-curve>
+
+#eq[$
+  (dif x) / (dif t) = a(x, y, u), quad (dif y) / (dif t) = b(x, y, u), quad (dif u) / (dif t) = c(x, y, u).
+$] <eq:char-system>
+
+Along these curves, the PDE reduces to an ODE.
+
+#lemma(name: "Solution Along Characteristics")[
+  If $u(x,y)$ satisfies (#link(<eq:quasilinear-pde>)[1]), then along any characteristic curve:
+  $
+    (dif u) / (dif t) = c(x(t), y(t), u(t)).
+  $
+] <lem:char-constant>
+
+#proof[
+  By the chain rule:
+  $
+    (dif u) / (dif t) = (partial u) / (partial x) (dif x) / (dif t) + (partial u) / (partial y) (dif y) / (dif t) = a u_x + b u_y = c.
+  $
+]
+
+This lemma is the heart of the method: it converts the PDE into an ODE system along characteristic curves. The existence and uniqueness theory for the Cauchy problem then follows from the corresponding ODE theory (Picard--Lindelöf theorem).
+
+The projection of the characteristic curve onto the $(x, y)$-plane (determined by the first two equations of (#link(<eq:char-system>)[2])) is called the _characteristic baseline_.
+
+#example(name: "Transport Equation")[
+  The simplest first-order PDE is the _transport equation_:
+  $
+    u_t + c u_x = 0, quad c in bb(R).
+  $
+  This is (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = c$, and $c(x,y,u) = 0$ (here the independent variables are $(x, t)$). The characteristic system is:
+  $
+    (dif x) / (dif t) = c, quad (dif u) / (dif t) = 0.
+  $
+  The characteristics are straight lines $x = c t + x_0$ in the $x t$-plane, and $u$ is constant along each line. The general solution is:
+  $
+    u(x, t) = f(x - c t),
+  $
+  where $f$ is an arbitrary differentiable function. The solution represents a wave profile $f$ propagating at speed $c$ without change of shape.
+] <ex:transport-equation>
+
+#note[
+  The transport equation is closely related to the wave equation #link(<def:wave-equation>)[Ch 1]: it is the simplest hyperbolic PDE and serves as a building block for understanding wave propagation. We will revisit it in Ch 3 when we classify second-order PDEs.
+]
+
+The example above illustrates the general strategy: (1) write down the characteristic equations (#link(<eq:char-system>)[2]); (2) solve the ODE system; (3) use the initial data to determine the solution. We formalize this procedure in §2.2.
+
+#note[
+  Although we have presented the theory for two independent variables, the method extends directly to $n$ variables. The characteristic system for a first-order PDE in $n$ independent variables consists of $n + 1$ ODEs, and the same geometric ideas apply.
+]
+
+== Method of Characteristics // 特征线法
+
+We now formalize the procedure illustrated in §2.1 into a systematic method for solving the Cauchy problem for first-order PDEs.
+
+=== The Cauchy Problem
+
+Given the quasilinear equation (#link(<eq:quasilinear-pde>)[1]), the _Cauchy problem_ consists of finding a solution $u(x, y)$ satisfying prescribed values on a curve $Gamma$ in the $(x, y)$-plane.
+
+#definition(name: "Cauchy Problem for First-Order PDE")[
+  Let $Gamma$ be a curve in $bb(R)^2$ parametrized by $(x_0(s), y_0(s))$ for $s in I subset bb(R)$, and let $u_0: I -> bb(R)$ be a given function. The _Cauchy problem_ for (#link(<eq:quasilinear-pde>)[1]) is:
+  $
+    cases(
+      a u_x + b u_y = c(x, y, u), "along characteristics",
+      u(x_0(s), y_0(s)) = u_0(s), "initial data on" Gamma,
+    )
+  $
+  The curve $Gamma$ is called the _initial curve_ (or _base curve_), and $u_0$ is the _initial data_.
+] <def:cauchy-first-order>
+
+=== Solving via Characteristics
+
+The method proceeds in three steps.
+
+*Step 1: Parametrize the initial data.* At each point $(x_0(s), y_0(s))$ on $Gamma$, the characteristic curve passing through this point carries the value $u_0(s)$. This gives the initial conditions for the characteristic system (#link(<eq:char-system>)[2]):
+
+#eq[$
+  x(s, 0) = x_0(s), quad y(s, 0) = y_0(s), quad u(s, 0) = u_0(s).
+$] <eq:char-initial-cond>
+
+*Step 2: Solve the characteristic ODE system.* For each fixed $s$, solve (#link(<eq:char-system>)[2]) with initial conditions (#link(<eq:char-initial-cond>)[3]) to obtain a family of characteristic curves:
+$
+  (x(s, t), y(s, t), u(s, t)).
+$
+
+*Step 3: Invert the projection.* The map $(s, t) |-> (x(s, t), y(s, t))$ sends characteristic labels to points in the plane. If this map is locally invertible, we can solve for $(s, t)$ as functions of $(x, y)$ and substitute into $u(s, t)$ to obtain the solution $u(x, y)$.
+
+=== The Transversality Condition
+
+The invertibility in Step 3 is guaranteed by the implicit function theorem provided the Jacobian is nonzero.
+
+#definition(name: "Non-characteristic Curve")[
+  The initial curve $Gamma$ is said to be _non-characteristic_ at a point $P = (x_0(s), y_0(s))$ if
+  $
+    det (mat(
+      x_0'(s), y_0'(s);
+      a(x_0(s), y_0(s), u_0(s)), b(x_0(s), y_0(s), u_0(s))
+    )) != 0.
+  $
+  Equivalently, the vector $(a, b)$ is not tangent to $Gamma$ at $P$.
+] <def:non-characteristic>
+
+Geometrically, the non-characteristic condition means that the characteristic direction $(a, b)$ is _transverse_ to the initial curve: characteristics cross $Gamma$ rather than running along it.
+
+#theorem(name: "Local Existence and Uniqueness")[
+  Let $a, b, c$ be $C^1$ functions, and let $Gamma$ be a $C^1$ non-characteristic initial curve with $C^1$ initial data $u_0$. Then the Cauchy problem #link(<def:cauchy-first-order>)[1] has a unique $C^1$ solution in a neighborhood of $Gamma$.
+] <thm:cauchy-existence-unique>
+
+#proof[
+  Since $Gamma$ is non-characteristic, the Jacobian
+  $
+    J(s, t) = det (mat(
+      partial x / partial s, partial y / partial s;
+      partial x / partial t, partial y / partial t
+    ))
+  $
+  satisfies $J(s, 0) = x_0'(s) b - y_0'(s) a != 0$ at every point of $Gamma$. By the inverse function theorem, the map $(s, t) |-> (x(s, t), y(s, t))$ is a local diffeomorphism near $t = 0$. The solution $u(x, y) = u(s(x, y), t(x, y))$ is therefore well-defined and $C^1$ in a neighborhood of $Gamma$. Uniqueness follows from the uniqueness of the characteristic ODEs (Picard--Lindelöf theorem).
+]
+
+#example(name: "Cauchy Problem for the Transport Equation")[
+  Consider the transport equation $u_t + c u_x = 0$ with initial data $u(x, 0) = g(x)$. The initial curve is the $x$-axis: $(x_0(s), t_0(s)) = (s, 0)$, with $u_0(s) = g(s)$.
+
+  The characteristic system with initial conditions is:
+  $
+    (dif x) / (dif t) = c, quad x(s, 0) = s; quad quad (dif u) / (dif t) = 0, quad u(s, 0) = g(s).
+  $
+  Solving: $x(s, t) = s + c t$ and $u(s, t) = g(s)$. The map $(s, t) |-> (x, t) = (s + c t, t)$ has Jacobian $1 != 0$, so it is globally invertible: $s = x - c t$. The solution is:
+  $
+    u(x, t) = g(x - c t).
+  $
+] <ex:transport-cauchy>
+
+=== Breakdown of Classical Solutions
+
+Even when the initial data is smooth, the solution of a _quasilinear_ (nonlinear in $u$) first-order PDE may cease to exist after a finite time. This occurs when characteristics cross, creating a _shock_.
+
+#example(name: "Shock Formation in Burgers' Equation")[
+  Consider _inviscid Burgers' equation_:
+  $
+    u_t + u u_x = 0, quad u(x, 0) = u_0(x).
+  $
+  This is (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = u$, $c = 0$. The characteristic system is:
+  $
+    (dif x) / (dif t) = u, quad (dif u) / (dif t) = 0.
+  $
+  Since $u$ is constant along characteristics, each characteristic is a straight line $x = u_0(s) t + s$ with slope $u_0(s)$. If $u_0$ is decreasing somewhere (i.e., $u_0'(s) < 0$ for some $s$), then characteristics emanating from regions where $u_0$ is larger will overtake those from regions where $u_0$ is smaller. The characteristics cross at time:
+  $
+    t^"break" = -1 / min u_0'(s),
+  $
+  provided $min u_0'(s) < 0$. At this time, the classical solution breaks down: $u_x$ becomes infinite (a _gradient catastrophe_).
+] <ex:burgers-shock>
+
+#note[
+  After the breaking time $t^"break"$, the solution must be continued as a _weak solution_ that admits discontinuities (shocks). The theory of weak solutions and shock conditions is developed in §2.4.
+]
+
+#note[
+  #figure(
+    image("./img/characteristics-crossing.svg", width: 70%),
+    caption: [Characteristic curves in the $x t$-plane for Burgers' equation $u_t + u u_x = 0$ with decreasing initial data. The characteristics converge and intersect at the breaking time $t^"break"$, where the classical solution develops a gradient catastrophe.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:characteristics-crossing>
+]
+
+== Hamilton--Jacobi Equations // Hamilton--Jacobi 方程
+
+We now turn to a fundamentally different class of first-order PDEs: those that are _fully nonlinear_ in the first-order derivatives.
+
+#definition(name: "Hamilton--Jacobi Equation")[
+  A _Hamilton--Jacobi equation_ is a first-order PDE of the form
+  $
+    H(x, y, u, u_x, u_y) = 0,
+  $
+  where $H: bb(R)^5 -> bb(R)$ is a given function. The equation is _fully nonlinear_ in the sense that $H$ depends nonlinearly on the gradient $(u_x, u_y)$.
+] <def:hamilton-jacobi>
+
+The most important special case arises when $H$ does not depend on $u$ explicitly:
+
+#eq[$
+  H(x, y, u_x, u_y) = 0.
+$] <eq:hj-no-u>
+
+This is the form that appears most naturally in classical mechanics and the calculus of variations.
+
+=== The Characteristic System for Hamilton--Jacobi
+
+Unlike the quasilinear case, the characteristic system for a fully nonlinear equation involves not only $(x, y, u)$ but also the derivatives $p = u_x$ and $q = u_y$.
+
+#theorem(name: "Charpit's Method")[
+  Let $F(x, y, u, p, q) = 0$ be a fully nonlinear first-order PDE, where $p = u_x$ and $q = u_y$. The _Charpit characteristic system_ is:
+  $
+    cases(
+      (dif x) / (dif t) = F_p,
+      (dif y) / (dif t) = F_q,
+      (dif u) / (dif t) = p F_p + q F_q,
+      (dif p) / (dif t) = -(F_x + p F_u),
+      (dif q) / (dif t) = -(F_y + q F_u),
+    )
+  $
+  where subscripts on $F$ denote partial derivatives. Along the characteristic curves, $F$ is conserved: $(dif F)/(dif t) = 0$.
+] <thm:charpit>
+
+#proof[
+  We verify that $F$ is conserved. By the chain rule:
+  $
+    (dif F) / (dif t) = F_x (dif x) / (dif t) + F_y (dif y) / (dif t) + F_u (dif u) / (dif t) + F_p (dif p) / (dif t) + F_q (dif q) / (dif t).
+  $
+  Substituting the characteristic equations:
+  $
+    (dif F) / (dif t) = F_x F_p + F_y F_q + F_u (p F_p + q F_q) + F_p (-(F_x + p F_u)) + F_q (-(F_y + q F_u)).
+  $
+  Expanding and collecting terms:
+  $
+    (dif F) / (dif t) = F_x F_p + F_y F_q + p F_u F_p + q F_u F_q - F_p F_x - p F_p F_u - F_q F_y - q F_q F_u = 0.
+  $
+  All terms cancel in pairs.
+]
+
+=== Connection to Classical Mechanics
+
+The Hamilton--Jacobi equation plays a central role in classical mechanics. Consider a Hamiltonian system with Hamiltonian $H(bold(q), bold(p), t)$, where $bold(q) = (q_1, dots, q_n)$ are generalized coordinates and $bold(p) = (p_1, dots, p_n)$ are conjugate momenta.
+
+#definition(name: "Hamilton--Jacobi Equation in Mechanics")[
+  The _Hamilton--Jacobi equation_ for a mechanical system with Hamiltonian $H$ is:
+  $
+    (partial S) / (partial t) + H(bold(q), nabla_(bold(q)) S, t) = 0,
+  $
+  where $S(bold(q), t)$ is _Hamilton's principal function_ and $bold(p) = nabla_(bold(q)) S$.
+] <def:hj-mechanics>
+
+#note[
+  The key insight of Hamilton--Jacobi theory is that if one can find a complete solution $S(bold(q), bold(alpha), t)$ depending on $n$ parameters $bold(alpha) = (alpha_1, dots, alpha_n)$, then the equations of motion are obtained by differentiation: $bold(p) = nabla_(bold(q)) S$ and $bold(beta) = nabla_(bold(alpha)) S$, where $bold(beta)$ are constants. This reduces the problem of solving $2n$ ODEs (Hamilton's equations) to solving a single PDE.
+]
+
+#example(name: "Hamilton--Jacobi for a Free Particle")[
+  For a free particle of mass $m$, the Hamiltonian is $H = abs(bold(p))^2 / (2m)$. The Hamilton--Jacobi equation in one dimension is:
+  $
+    (partial S) / (partial t) + 1 / (2m) ((partial S) / (partial q))^2 = 0.
+  $
+  We seek a complete solution of the form $S(q, alpha, t) = W(q, alpha) - E(alpha) t$. Substituting:
+  $
+    -E + 1 / (2m) (W'(q))^2 = 0 => W'(q) = sqrt(2 m E) => W = sqrt(2 m E) q.
+  $
+  Taking $alpha = E$, the complete solution is:
+  $
+    S(q, E, t) = sqrt(2 m E) q - E t.
+  $
+  The equation of motion follows from $beta = (partial S) / (partial E) = sqrt(m / (2E)) q - t$, giving $q = sqrt(2E/m) (t + beta)$, which is uniform motion as expected.
+] <ex:hj-free-particle>
+
+== Conservation Laws in One Space Dimension // 一维守恒律
+
+We now apply the method of characteristics to an important class of nonlinear first-order PDEs arising in fluid dynamics, traffic flow, and gas dynamics.
+
+=== Derivation of Conservation Laws
+
+Consider a quantity with density $u(x, t)$ and flux $f(u)$ in one spatial dimension. Conservation of the quantity in any interval $[a, b]$ requires:
+
+#eq[$
+  (dif) / (dif t) integral_a^b u(x, t) dif x = f(u(a, t)) - f(u(b, t)).
+$] <eq:conservation-integral>
+
+Assuming sufficient smoothness and applying the fundamental theorem of calculus to the right side:
+
+#eq[$
+  integral_a^b [u_t + (f(u))_x] dif x = 0.
+$]
+
+Since this holds for every interval $[a, b]$, the integrand must vanish:
+
+#definition(name: "Conservation Law")[
+  The _conservation law_ in one space dimension is:
+  $
+    u_t + (f(u))_x = 0,
+  $
+  where $u = u(x, t)$ is the conserved density and $f: bb(R) -> bb(R)$ is the _flux function_. Expanding the derivative:
+  $
+    u_t + f'(u) u_x = 0.
+  $
+] <def:conservation-law>
+
+This is a quasilinear equation (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = f'(u)$, and $c = 0$.
+
+=== Solution by Characteristics
+
+The characteristic system for the conservation law is:
+
+#eq[$
+  (dif x) / (dif t) = f'(u), quad (dif u) / (dif t) = 0.
+$] <eq:conservation-char>
+
+Since $u$ is constant along characteristics, each characteristic is a straight line in the $x t$-plane with slope $f'(u_0(s))$, where $u_0(s)$ is the initial data $u(x, 0) = u_0(x)$.
+
+The solution is given implicitly by:
+
+#eq[$
+  u(x, t) = u_0(x - f'(u) t).
+$] <eq:conservation-implicit>
+
+This is an implicit equation for $u$: the value of $u$ at $(x, t)$ equals the initial value at the foot of the characteristic passing through $(x, t)$.
+
+=== Traveling Wave Solutions
+
+When the flux function is linear, $f(u) = c u$, the conservation law reduces to the transport equation and the solution is a traveling wave. For nonlinear flux, we can still look for special solutions.
+
+#definition(name: "Traveling Wave Solution")[
+  A _traveling wave solution_ of the conservation law is a solution of the form $u(x, t) = phi(x - v t)$ for some profile function $phi$ and wave speed $v$. Substituting into $u_t + f'(u) u_x = 0$:
+  $
+    -v phi' + f'(phi) phi' = 0 => (f'(phi) - v) phi' = 0.
+  $
+  Either $phi' = 0$ (constant solution) or $f'(phi) = v$ (constant speed). For a _shock wave_ (discontinuous traveling wave), the speed is determined by the Rankine--Hugoniot condition.
+] <def:traveling-wave>
+
+=== The Rankine--Hugoniot Condition
+
+When characteristics cross, the classical solution breaks down and we must admit discontinuous (weak) solutions. Consider a shock located at $x = s(t)$ separating left state $u_L$ from right state $u_R$.
+
+#theorem(name: "Rankine--Hugoniot Condition")[
+  A discontinuity at $x = s(t)$ is a weak solution of the conservation law $u_t + f(u)_x = 0$ if and only if the shock speed satisfies:
+  $
+    s'(t) = (f(u_L) - f(u_R)) / (u_L - u_R),
+  $
+  where $u_L$ and $u_R$ are the values of $u$ to the left and right of the shock.
+] <thm:rankine-hugoniot>
+
+#proof[
+  Integrate the conservation law over a small rectangle $[s(t) - epsilon, s(t) + epsilon] times [t_1, t_2]$:
+  $
+    integral_(t_1)^(t_2) integral_(s(t) - epsilon)^(s(t) + epsilon) [u_t + f(u)_x] dif x dif t = 0.
+  $
+  Applying the fundamental theorem of calculus and letting $epsilon -> 0$:
+  $
+    integral_(t_1)^(t_2) [f(u_L) - f(u_R) - s'(t)(u_L - u_R)] dif t = 0.
+  $
+  Since this holds for all $[t_1, t_2]$, the integrand must vanish, yielding the result.
+]
+
+#example(name: "Burgers' Equation with Shock")[
+  Consider Burgers' equation $u_t + u u_x = 0$ (flux $f(u) = u^2 / 2$) with step initial data:
+  $
+    u(x, 0) = cases(u_L, x < 0, u_R, x > 0.)
+  $
+  where $u_L > u_R$. The characteristics from the left carry value $u_L$ with speed $u_L$, and those from the right carry $u_R$ with speed $u_R$. Since $u_L > u_R$, they intersect immediately, forming a shock at $x = 0$.
+
+  The Rankine--Hugoniot condition (#link(<thm:rankine-hugoniot>)[RH]) gives the shock speed:
+  $
+    s' = (u_L^2 / 2 - u_R^2 / 2) / (u_L - u_R) = (u_L + u_R) / 2.
+  $
+  The shock is the straight line $x = (u_L + u_R) t / 2$.
+] <ex:burgers-shock-solution>
+
+#note[
+  When $u_L < u_R$ (the opposite case), characteristics diverge rather than converge, and no shock forms. Instead, a _rarefaction wave_ (continuous self-similar solution) fills the gap:
+  $
+    u(x, t) = cases(
+      u_L, x < u_L t,
+      x / t, u_L t <= x <= u_R t,
+      u_R, x > u_R t.
+    )
+  $
+]
+
+#note[
+  #figure(
+    image("./img/burgers-shock-rarefaction.svg", width: 80%),
+    caption: [Solutions of Burgers' equation $u_t + u u_x = 0$. *Left:* Shock wave for $u_L > u_R$: characteristics converge and a shock forms at speed $s = (u_L + u_R)/2$. *Right:* Rarefaction wave for $u_L < u_R$: characteristics diverge and a fan of characteristics fills the expansion region.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:burgers-shock-rarefaction>
+]
+
+// ==========================================================================
+// Part II — Distribution Theory (分布理论)
+// ==========================================================================
 
 // --- Chapter 3: Classification of Second-Order PDEs (二阶偏微分方程分类) ---
 
