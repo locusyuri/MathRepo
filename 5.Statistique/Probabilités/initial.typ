@@ -749,6 +749,463 @@ The count $X$ of successes in Bernoulli trials inherits a life of its own —
 its distribution, the *binomial distribution*, opens the catalogue of the
 next chapter.
 
+= Univariate Random Variables and Distributions // 一维随机变量及其分布
+
+== Random Variables and Their Distributions // 随机变量及其分布
+
+Events describe *what can happen*; the next step is to attach *numbers* to
+outcomes, so that the tools of analysis — limits, integrals, Taylor
+expansions — become available. A random variable is the bridge from the
+sample space to the real line.
+
+#definition(name: "Random Variable")[
+  A *random variable* on a probability space $(Omega, F, P)$ is a function
+  $X: Omega -> RR$ that is *measurable*: for every $x in RR$, the set
+  ${omega in Omega : X(omega) <= x}$ belongs to the event field $F$.
+] <def:random-variable>
+
+The measurability condition guarantees that questions like "$X <= x$?" are
+*events* — they can be assigned probabilities. Once $X$ is fixed, its
+probabilistic profile is completely determined by a single real-valued
+function.
+
+#definition(name: "Cumulative Distribution Function")[
+  The *cumulative distribution function* (CDF) of a random variable $X$ is
+  $
+    F(x) = P(X <= x), quad x in RR.
+  $
+] <def:cdf>
+
+#property(name: "Properties of the CDF")[
+  Let $F$ be a CDF. Then:
+
+  - (monotonicity) $F$ is non-decreasing: $x_1 <= x_2 arrow.r.double F(x_1) <= F(x_2)$;
+  - (limits) $lim_(x -> -infinity) F(x) = 0$ and $lim_(x -> +infinity) F(x) = 1$;
+  - (right-continuity) $F$ is right-continuous: $F(x) = F(x^+)$;
+  - (range) $0 <= F(x) <= 1$, and $P(a < X <= b) = F(b) - F(a)$.
+] <prop:cdf-properties>
+
+#proof[
+  Monotonicity follows from ${X <= x_2} = {X <= x_1} union {x_1 < X <= x_2}$
+  and #link(<prop:probability-monotonicity>)[monotonicity of $P$]. The
+  limits follow from #link(<thm:continuity-probability>)[continuity of
+    probability]: ${X <= x} arrow.t Omega$ as $x -> +infinity$ gives
+  $F(x) -> P(Omega) = 1$, and ${X <= x} arrow.b emptyset$ as
+  $x -> -infinity$ gives $F(x) -> 0$. Right-continuity uses the decreasing
+  case applied to ${X <= x + 1\/n} arrow.b {X <= x}$. Finally,
+  $P(a < X <= b) = P(X <= b) - P(X <= a) = F(b) - F(a)$ by the difference
+  formula.
+]
+
+Two structural types of random variable dominate the theory.
+
+#definition(name: "Discrete Random Variable")[
+  A random variable $X$ is *discrete* if it takes values in a finite or
+  countable set ${x_1, x_2, dots}$. Its *probability mass function* (PMF) is
+  $
+    p(x_i) = P(X = x_i), quad sum_(i) p(x_i) = 1.
+  $
+  The CDF is a step function: $F(x) = sum_(x_i <= x) p(x_i)$.
+] <def:discrete-rv>
+
+#definition(name: "Continuous Random Variable")[
+  A random variable $X$ is *continuous* if there exists a non-negative
+  integrable function $f$ such that
+  $
+    F(x) = integral_(-infinity)^x f(t) dif t, quad x in RR.
+  $
+  The function $f$ is the *probability density function* (PDF); at points
+  of continuity of $f$, $F'(x) = f(x)$.
+] <def:continuous-rv>
+
+#property(name: "Properties of the PDF")[
+  Let $f$ be a PDF. Then:
+
+  - (non-negativity) $f(x) >= 0$ for all $x$;
+  - (normalization) $integral_(-infinity)^infinity f(x) dif x = 1$;
+  - (interval probabilities) for $a < b$,
+    $P(a < X <= b) = integral_a^b f(x) dif x$;
+  - (point probabilities) $P(X = a) = 0$ for every single point $a$.
+] <prop:pdf-properties>
+
+#proof[
+  Non-negativity and normalization follow from $F$ being non-decreasing
+  with $lim F = 1$. The interval formula follows from additivity of the
+  integral: $F(b) - F(a) = integral_a^b f(x) dif x$. For point
+  probabilities, $P(X = a) = F(a) - F(a^-) = 0$ since $F$ is continuous
+  for a continuous variable.
+]
+
+#note[
+  Not every random variable is purely discrete or purely continuous:
+  *mixed* types exist, with a CDF that has both smooth stretches and jump
+  discontinuities (e.g. the waiting time at a traffic light with a positive
+  probability of zero wait). The theory is developed for the two pure types
+  and extended to mixed cases by decomposition.
+]
+
+#figure(
+  image("img/cdf-types.svg", width: 90%),
+  caption: [Three types of cumulative distribution functions: a discrete
+    step CDF (left), a continuous smooth CDF (centre), and a mixed CDF
+    combining a jump with a smooth section (right).],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:cdf-types>
+
+== Common Discrete Distributions // 常用离散分布
+
+The Bernoulli scheme of #link(<def:bernoulli-trials>)[the preceding chapter]
+produces the first and most important discrete distribution family.
+
+#definition(name: "Bernoulli Distribution")[
+  A random variable $X$ has the *Bernoulli distribution* with parameter
+  $p in [0, 1]$, written $X ~ "Ber"(p)$, if $P(X = 1) = p$ and
+  $P(X = 0) = 1 - p = q$. It models a single Bernoulli trial.
+] <def:bernoulli-dist>
+
+#definition(name: "Binomial Distribution")[
+  The number $X$ of successes in $n$ independent Bernoulli trials with
+  success probability $p$ has the *binomial distribution*
+  $
+    P(X = k) = binom(n, k) p^k q^(n-k), quad k = 0, 1, dots, n,
+  $
+  written $X ~ B(n, p)$ — the formula already established in
+  #link(<def:bernoulli-trials>)[the Bernoulli definition].
+] <def:binomial-dist>
+
+#property(name: "Most Probable Value of the Binomial")[
+  The most probable value (mode) of $X ~ B(n, p)$ is the greatest integer
+  $k$ not exceeding $(n + 1) p$, provided this number is at least $0$ and
+  at most $n$. When $(n + 1) p$ is itself an integer, there are two adjacent
+  modes: $k = (n + 1) p - 1$ and $k = (n + 1) p$.
+] <prop:binomial-mode>
+
+#proof[
+  The ratio of consecutive probabilities is
+  $
+    P(X = k+1) / P(X = k) = (n - k) / (k + 1) dot p / q.
+  $
+  This ratio exceeds $1$ iff $k < (n + 1) p - 1$, equals $1$ iff
+  $k = (n + 1) p - 1$, and is below $1$ iff $k > (n + 1) p - 1$. The
+  probabilities increase up to the threshold and decrease thereafter.
+]
+
+#definition(name: "Poisson Distribution")[
+  A random variable $X$ has the *Poisson distribution* with parameter
+  $lambda > 0$, written $X ~ "Pois"(lambda)$, if
+  $
+    P(X = k) = (lambda^k e^(-lambda)) / k!, quad k = 0, 1, 2, dots
+  $
+] <def:poisson-dist>
+
+The Poisson distribution arises as the limit of binomial distributions with
+vanishing success probability — the *law of rare events*.
+
+#theorem(name: "Poisson Limit Theorem")[
+  Let $X_n ~ B(n, p_n)$ with $n p_n -> lambda > 0$ as $n -> infinity$. Then
+  for every fixed $k >= 0$,
+  $
+    P(X_n = k) -> (lambda^k e^(-lambda)) / k!.
+  $
+] <thm:poisson-limit>
+
+#proof[
+  Set $lambda_n = n p_n -> lambda$. The binomial probability is
+  $
+    P(X_n = k)
+    = binom(n, k) (lambda_n / n)^k (1 - lambda_n / n)^(n - k).
+  $
+  For fixed $k$, $binom(n, k) = n (n-1) dots (n-k+1) / k!$ behaves as
+  $n^k / k!$ for large $n$; the factor $(lambda_n / n)^k$ contributes
+  $lambda_n^k / n^k$; and
+  $
+    (1 - lambda_n / n)^(n - k)
+    = (1 - lambda_n / n)^n (1 - lambda_n / n)^(-k)
+    -> e^(-lambda) dot 1.
+  $
+  Multiplying the three limits recovers $(lambda^k e^(-lambda)) / k!$.
+]
+
+#definition(name: "Hypergeometric Distribution")[
+  An urn contains $N$ balls, $K$ of them red; $n$ are drawn without
+  replacement. The number $X$ of red balls drawn has the *hypergeometric
+  distribution*,
+  $
+    P(X = k) = (binom(K, k) binom(N - K, n - k)) / binom(N, n),
+  $
+  for $max(0, n + K - N) <= k <= min(K, n)$, written $X ~ "Hyp"(N, K, n)$
+  — the classical formula of #link(<ex:balls-sampling>)[the sampling
+    example].
+] <def:hypergeometric-dist>
+
+#definition(name: "Geometric Distribution")[
+  In a sequence of independent Bernoulli trials, the number $X$ of trials
+  up to and including the first success has the *geometric distribution*
+  $
+    P(X = k) = q^(k-1) p, quad k = 1, 2, 3, dots
+  $
+  written $X ~ "Geo"(p)$.
+] <def:geometric-dist>
+
+#property(name: "Memorylessness of the Geometric")[
+  The geometric distribution is *memoryless*: for $m, n >= 1$,
+  $
+    P(X > m + n | X > m) = P(X > n).
+  $
+  It is the unique discrete distribution on ${1, 2, dots}$ with this
+  property.
+] <prop:geometric-memoryless>
+
+#proof[
+  Since $P(X > n) = sum_(k=n+1)^infinity q^(k-1) p = q^n$,
+  $
+    P(X > m + n | X > m)
+    = P(X > m + n) / P(X > m)
+    = q^(m+n) / q^m = q^n = P(X > n).
+  $
+  For uniqueness: if a distribution on ${1, 2, dots}$ is memoryless, its
+  survival function $overline(F)(n) = P(X > n)$ satisfies the multiplicative
+  equation $overline(F)(m + n) = overline(F)(m) overline(F)(n)$; the only
+  non-trivial solution on $ZZ_{>= 0}$ is $overline(F)(n) = q^n$.
+]
+
+#definition(name: "Negative Binomial Distribution")[
+  The number $X$ of trials up to and including the $r$-th success in
+  independent Bernoulli trials has the *negative binomial distribution*
+  $
+    P(X = k) = binom(k - 1, r - 1) p^r q^(k - r), quad k = r, r + 1, dots
+  $
+  written $X ~ "NB"(r, p)$. For $r = 1$ this reduces to the geometric
+  distribution.
+] <def:negative-binomial-dist>
+
+#note[
+  (Distribution genealogy.) The six discrete distributions above are
+  organized by two axes: *what is counted* — success count (binomial,
+  Poisson), failure count (negative binomial, geometric), or drawn count
+  (hypergeometric); and *the sampling protocol* — with replacement
+  (binomial family) or without (hypergeometric). The Poisson distribution
+  approximates the binomial when $n$ is large and $p$ small
+  (#link(<thm:poisson-limit>)[Poisson limit theorem]); the hypergeometric
+  approaches the binomial when $N -> infinity$ with $K / N -> p$, since
+  drawing without replacement then becomes practically drawing with
+  replacement.
+]
+
+== Common Continuous Distributions // 常用连续分布
+
+The discrete families of the preceding section are models for counting;
+the continuous families below are models for measuring — time, length,
+concentration, error.
+
+#definition(name: "Uniform Distribution")[
+  A random variable $X$ has the *uniform distribution* on $[a, b]$, written
+  $X ~ U(a, b)$, if its density is
+  $
+    f(x) = 1 / (b - a), quad a <= x <= b,
+  $
+  and zero elsewhere. The CDF is $F(x) = (x - a) / (b - a)$ on $[a, b]$.
+] <def:uniform-dist>
+
+#definition(name: "Exponential Distribution")[
+  A random variable $X$ has the *exponential distribution* with rate
+  $lambda > 0$, written $X ~ "Exp"(lambda)$, if
+  $
+    f(x) = lambda e^(-lambda x), quad x >= 0.
+  $
+  The CDF is $F(x) = 1 - e^(-lambda x)$ for $x >= 0$.
+] <def:exponential-dist>
+
+#property(name: "Memorylessness of the Exponential")[
+  The exponential distribution is *memoryless*: for $s, t >= 0$,
+  $
+    P(X > s + t | X > s) = P(X > t).
+  $
+  It is the unique continuous distribution on $[0, infinity)$ with this
+  property.
+] <prop:exponential-memoryless>
+
+#proof[
+  Since $P(X > t) = e^(-lambda t)$,
+  $
+    P(X > s + t | X > s)
+    = P(X > s + t) / P(X > s)
+    = e^(-lambda(s+t)) / e^(-lambda s)
+    = e^(-lambda t) = P(X > t).
+  $
+  The uniqueness argument parallels the geometric case: the survival function
+  $overline(F)(t) = P(X > t)$ satisfies $overline(F)(s + t) =
+  overline(F)(s) overline(F)(t)$, whose only non-trivial right-continuous
+  solution is $overline(F)(t) = e^(-lambda t)$.
+]
+
+#definition(name: "Normal Distribution")[
+  A random variable $X$ has the *normal distribution* with mean $mu in RR$
+  and variance $sigma^2 > 0$, written $X ~ N(mu, sigma^2)$, if
+  $
+    f(x) = 1 / (sigma sqrt(2 pi)) exp(-(x - mu)^2 / (2 sigma^2)), quad x in RR.
+  $
+  The case $mu = 0$, $sigma = 1$ is the *standard normal* distribution,
+  with density $phi(x)$ and CDF $Phi(x)$.
+] <def:normal-dist>
+
+Every normal variable standardizes: if $X ~ N(mu, sigma^2)$ then
+$Z = (X - mu) / sigma ~ N(0, 1)$, and $F_X(x) = Phi((x - mu) / sigma)$.
+Tables of $Phi$ (in the Appendix) thus serve all parameter values.
+
+#property(name: "Three-Sigma Rule")[
+  For $X ~ N(mu, sigma^2)$,
+  $
+    P(abs(X - mu) < sigma) approx 0.6827, quad
+    P(abs(X - mu) < 2 sigma) approx 0.9545, quad
+    P(abs(X - mu) < 3 sigma) approx 0.9973.
+  $
+  In practice, nearly all normal mass lies within three standard deviations
+  of the mean.
+] <prop:normal-3sigma>
+
+#figure(
+  image("img/normal-curves.svg", width: 80%),
+  caption: [Normal density curves: the standard $N(0, 1)$ bell (solid),
+    a wider $N(0, 2^2)$ (dashed), and a shifted $N(1, 1)$ (dotted),
+    illustrating the roles of $sigma$ (width) and $mu$ (location). Shaded
+    band marks the $3 sigma$ interval for $N(0,1)$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:normal-curves>
+
+#definition(name: "Gamma Distribution")[
+  A random variable $X$ has the *Gamma distribution* with shape $alpha > 0$
+  and rate $lambda > 0$, written $X ~ "Ga"(alpha, lambda)$, if
+  $
+    f(x) = (lambda^alpha) / ("Gamma"(alpha)) x^(alpha - 1) e^(-lambda x), quad x >= 0,
+  $
+  where $"Gamma"(alpha) = integral_0^infinity t^(alpha - 1) e^(-t) dif t$
+  is the Gamma function.
+] <def:gamma-dist>
+
+#definition(name: "Beta Distribution")[
+  A random variable $X$ has the *Beta distribution* with parameters
+  $a > 0$, $b > 0$, written $X ~ "Be"(a, b)$, if
+  $
+    f(x) = 1 / ("B"(a, b)) x^(a - 1) (1 - x)^(b - 1), quad 0 < x < 1,
+  $
+  where $"B"(a, b) = ("Gamma"(a) "Gamma"(b)) / "Gamma"(a + b)$.
+] <def:beta-dist>
+
+#definition(name: "Kernel of a Distribution")[
+  The *kernel* of a density $f(x; theta)$ is the part of $f$ that depends on
+  $x$, stripped of the normalizing constant. Formally, if
+  $
+    f(x; theta) = c(theta) dot k(x; theta),
+  $
+  then $k(x; theta)$ is the *kernel*. Two densities with the same kernel
+  (for fixed $theta$) differ only by a constant and are thus identical
+  after normalization.
+] <def:kernel>
+
+For example, the kernel of $N(mu, 1)$ is $exp(-(x - mu)^2 / 2)$ — the
+factor $1 / sqrt(2 pi)$ is a normalizing constant independent of $mu$;
+for $N(mu, sigma^2)$ with $sigma$ known, the kernel is
+$exp(-(x - mu)^2 / (2 sigma^2))$, which as a function of $mu$ is itself
+proportional to a normal density. This observation — "the kernel as a
+function of the parameter" — is the seed of maximum likelihood estimation
+and conjugate Bayesian analysis.
+
+#note[
+  (Distribution relationships.) The continuous families are tightly connected:
+  $U(0, 1) = "Be"(1, 1)$; $"Exp"(lambda) = "Ga"(1, lambda)$; the sum of
+  $n$ independent $"Exp"(lambda)$ variables is $"Ga"(n, lambda)$; if
+  $X ~ "Ga"(a, lambda)$ and $Y ~ "Ga"(b, lambda)$ independently, then
+  $X / (X + Y) ~ "Be"(a, b)$ — a Gamma-to-Beta transformation that
+  generalizes the ratio of two independent chi-squared variables. The
+  normal distribution connects to the Gamma family through $X^2$ for
+  $X ~ N(0, 1)$, which is $"Ga"(1\/2, 1\/2)$ — the chi-squared distribution
+  with one degree of freedom, to be met again in the sampling distributions
+  chapter.
+]
+
+== Distributions of Functions of Random Variables // 随机变量函数的分布
+
+Given the distribution of $X$, what is the distribution of $Y = g(X)$? The
+answer depends on the type of $X$ and the nature of $g$.
+
+For a *discrete* $X$, the method is direct: enumerate the values of $Y$ and
+collect the probabilities of the pre-images.
+
+#example[
+  Let $X$ take $-1, 0, 1$ each with probability $1\/3$, and set $Y = X^2$.
+  Then $Y$ takes values $0$ and $1$, with
+  $
+    P(Y = 0) = P(X = 0) = 1/3, quad
+    P(Y = 1) = P(X = -1) + P(X = 1) = 2/3.
+  $
+] <ex:discrete-transform>
+
+For a *continuous* $X$, the distribution can be recovered from its CDF:
+the *distribution function method* — compute $F_Y(y) = P(g(X) <= y)$,
+then differentiate.
+
+#example[
+  Let $X ~ U(0, 1)$ and $Y = X^2$. For $0 <= y <= 1$,
+  $
+    F_Y(y) = P(X^2 <= y) = P(X <= sqrt(y)) = sqrt(y),
+  $
+  so $f_Y(y) = d\/(d y) sqrt(y) = 1 / (2 sqrt(y))$ for $0 < y < 1$. This
+  is the $"Be"(1\/2, 1)$ density, the square of a uniform variable being a
+  special case of the Beta-Gamma connection noted above.
+] <ex:cdf-method>
+
+When $g$ is monotone, a direct formula avoids the detour through the CDF.
+
+#theorem(name: "Monotone Transform Formula")[
+  Let $X$ be a continuous random variable with density $f_X$, and let
+  $g$ be strictly monotone and differentiable on the range of $X$. Set
+  $Y = g(X)$ and let $h = g^(-1)$ be the inverse function. Then $Y$ has
+  density
+  $
+    f_Y(y) = f_X(h(y)) dot abs(h'(y)),
+  $
+  for $y$ in the range of $g$.
+] <thm:monotone-transform>
+
+#proof[
+  Suppose $g$ is strictly increasing (the decreasing case is symmetric).
+  Then $g^(-1)$ is also increasing, so
+  $
+    F_Y(y) = P(g(X) <= y) = P(X <= h(y)) = F_X(h(y)).
+  $
+  Differentiating by the chain rule gives
+  $f_Y(y) = f_X(h(y)) h'(y)$; since $h$ is increasing, $h'(y) >= 0$ and
+  $h'(y) = abs(h'(y))$. If $g$ is strictly decreasing, then
+  $
+    F_Y(y) = P(g(X) <= y) = P(X >= h(y)) = 1 - F_X(h(y)),
+  $
+  and differentiating gives $f_Y(y) = -f_X(h(y)) h'(y)$; since $h$ is now
+  decreasing, $h'(y) <= 0$ and $-h'(y) = abs(h'(y))$. The two cases unify
+  in the stated formula.
+]
+
+#example[
+  (Linear transform.) Let $X ~ N(mu, sigma^2)$ and $Y = a X + b$ with
+  $a != 0$. Then $h(y) = (y - b) / a$ and $h'(y) = 1 / a$, so
+  $
+    f_Y(y)
+    = f_X((y - b) / a) dot abs(1 / a)
+    = 1 / (abs(a) sigma sqrt(2 pi)) exp(-(y - a mu - b)^2 / (2 a^2 sigma^2)).
+  $
+  This is $N(a mu + b, a^2 sigma^2)$: linear transforms of normals are
+  normal, with scale and location transformed accordingly. In particular,
+  $Z = (X - mu) / sigma ~ N(0, 1)$ — the standardization used throughout
+  normal calculations.
+] <ex:linear-transform>
+
+The monotone transform formula extends to several variables via the
+multidimensional Jacobian — a tool to be developed in the next chapter,
+where multivariate distributions and the change-of-variables technique for
+joint densities take centre stage.
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
