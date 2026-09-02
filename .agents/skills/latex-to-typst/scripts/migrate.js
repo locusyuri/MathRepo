@@ -188,7 +188,7 @@ function convertLabelsAndRefs(text) {
 
 function convertLeftbar(text) {
   const re = /\\begin\{leftbarTitle\}\{([^}]*)\}\s*(.*?)\\end\{leftbarTitle\}/gs;
-  return text.replace(re, (_, title, body) => `== ${title}\n${body.trim()}`);
+  return text.replace(re, (_, title, body) => `=== ${title}\n${body.trim()}`);
 }
 
 function convertTheoremEnvs(text) {
@@ -284,6 +284,7 @@ function convertMathEnvs(text) {
   const alignReplacer = (body) => {
     body = body.replace(/\\(?:notag|nonumber)\*?\s*/g, '');
     body = body.replace(/\\label\{([^}]*)\}/g, '<eq:$1>');
+    body = body.replace(/\\\\/g, '\\');
     return `$\n${body.trim()}\n$`;
   };
 
@@ -297,6 +298,11 @@ function convertMathEnvs(text) {
   text = replaceAllEnvsSafe(text, 'gather*', gatherReplacer);
   text = replaceAllEnvsSafe(text, 'gather', gatherReplacer);
   text = replaceAllEnvsSafe(text, 'equation*', alignReplacer);
+
+  text = replaceAllEnvsSafe(text, 'cases', (body) => {
+    const branches = body.split(/\\\\/).map(b => b.trim()).filter(Boolean);
+    return `cases(\n  ${branches.join(',\n  ')},\n)`;
+  });
 
   const matrixDelims = {
     pmatrix: '(', bmatrix: '[', Bmatrix: '{',
@@ -409,24 +415,25 @@ function convertMathFonts(text) {
 
 function convertMathFunctions(text) {
   text = replaceBracedCmd(text, 'operatorname', c => `"${c}"`);
-  text = text.replace(/\\Re\b/g, 'Re');
-  text = text.replace(/\\Im\b/g, 'Im');
+  text = text.replace(/\\Re(?![a-zA-Z])/g, 'Re');
+  text = text.replace(/\\Im(?![a-zA-Z])/g, 'Im');
   text = replaceBracedCmd(text, 'mathrm', c => {
     if (c === 'Re') return 'Re';
     if (c === 'Im') return 'Im';
     if (c === 'Arg') return 'Arg';
     if (c === 'i') return 'i';
-    if (c === 'd') return 'd';
+    if (c === 'd') return 'dif';
     if (c === 'e') return 'e';
     return `\\rm("${c}")`;
   });
 
-  const funcs = ['ln', 'exp', 'sin', 'cos', 'tan', 'cot', 'sec', 'csc',
-    'arcsin', 'arccos', 'arctan', 'sinh', 'cosh', 'tanh',
+  const funcs = ['arcsin', 'arccos', 'arctan',
+    'ln', 'exp', 'sin', 'cos', 'tan', 'cot', 'sec', 'csc',
+    'sinh', 'cosh', 'tanh',
     'log', 'lim', 'sup', 'inf', 'max', 'min', 'det', 'dim',
     'ker', 'deg', 'gcd', 'hom', 'arg'];
   for (const f of funcs) {
-    text = text.replace(new RegExp('\\\\' + f + '\\b', 'g'), f);
+    text = text.replace(new RegExp('\\\\' + f + '(?![a-zA-Z])', 'g'), f);
   }
   return text;
 }
@@ -450,129 +457,129 @@ function convertMiscCommands(text) {
 
 function convertSymbols(text) {
   const replacements = [
-    [/\\infty\b/g, 'oo'],
-    [/\\varnothing\b/g, 'emptyset'],
-    [/\\cup\b/g, 'union'],
-    [/\\cap\b/g, 'inter'],
-    [/\\bigcup\b/g, 'union'],
-    [/\\bigcap\b/g, 'inter'],
-    [/\\land\b/g, 'and'],
-    [/\\lor\b/g, 'or'],
-    [/\\lnot\b/g, 'not'],
-    [/\\neg\b/g, 'not'],
-    [/\\subseteq\b/g, 'subset.eq'],
-    [/\\supseteq\b/g, 'supset.eq'],
-    [/\\subsetneq\b/g, 'subset.neq'],
-    [/\\supsetneq\b/g, 'supset.neq'],
-    [/\\subset\b/g, 'subset'],
-    [/\\supset\b/g, 'supset'],
-    [/\\setminus\b/g, 'backslash'],
-    [/\\in\b/g, 'in'],
-    [/\\notin\b/g, 'in.not'],
-    [/\\neq\b/g, '!='],
-    [/\\leq\b/g, '<='],
-    [/\\geq\b/g, '>='],
-    [/\\ll\b/g, '<<'],
-    [/\\gg\b/g, '>>'],
-    [/\\approx\b/g, 'approx'],
-    [/\\equiv\b/g, 'equiv'],
-    [/\\sim\b/g, '~'],
-    [/\\simeq\b/g, 'tilde.eq'],
-    [/\\propto\b/g, 'prop'],
-    [/\\to\b/g, '->'],
-    [/\\mapsto\b/g, '|->'],
-    [/\\longrightarrow\b/g, '->'],
-    [/\\longleftarrow\b/g, '<-'],
-    [/\\Rightarrow\b/g, '=>'],
-    [/\\implies\b/g, '=>'],
-    [/\\Leftrightarrow\b/g, '<=>'],
-    [/\\iff\b/g, '<=>'],
-    [/\\rightarrow\b/g, '->'],
-    [/\\leftarrow\b/g, '<-'],
-    [/\\leftrightarrow\b/g, '<->'],
-    [/\\uparrow\b/g, 'arrow.t'],
-    [/\\downarrow\b/g, 'arrow.b'],
-    [/\\forall\b/g, 'forall'],
-    [/\\exists\b/g, 'exists'],
-    [/\\nexists\b/g, 'exists.not'],
-    [/\\nabla\b/g, 'nabla'],
-    [/\\partial\b/g, 'partial'],
-    [/\\ell\b/g, 'ell'],
-    [/\\hbar\b/g, 'planck.reduce'],
-    [/\\cdot\b/g, 'dot'],
-    [/\\times\b/g, 'times'],
-    [/\\div\b/g, 'div'],
-    [/\\pm\b/g, 'plus.minus'],
-    [/\\mp\b/g, 'minus.plus'],
-    [/\\circ\b/g, 'compose'],
-    [/\\bullet\b/g, 'bullet'],
-    [/\\oplus\b/g, 'plus.o'],
-    [/\\otimes\b/g, 'times.o'],
-    [/\\ldots\b/g, 'dots'],
-    [/\\cdots\b/g, 'dots.h'],
-    [/\\vdots\b/g, 'dots.v'],
-    [/\\ddots\b/g, 'dots.down'],
-    [/\\left\b/g, ''],
-    [/\\right\b/g, ''],
-    [/\\big\b(?![gG])/g, ''],
-    [/\\Big\b(?![gG])/g, ''],
-    [/\\bigg\b(?![G])/g, ''],
-    [/\\Bigg\b/g, ''],
-    [/\\quad\b/g, ' quad '],
-    [/\\qquad\b/g, ' qquad '],
+    [/\\infty(?![a-zA-Z])/g, 'oo'],
+    [/\\varnothing(?![a-zA-Z])/g, 'emptyset'],
+    [/\\cup(?![a-zA-Z])/g, 'union'],
+    [/\\cap(?![a-zA-Z])/g, 'inter'],
+    [/\\bigcup(?![a-zA-Z])/g, 'union'],
+    [/\\bigcap(?![a-zA-Z])/g, 'inter'],
+    [/\\land(?![a-zA-Z])/g, 'and'],
+    [/\\lor(?![a-zA-Z])/g, 'or'],
+    [/\\lnot(?![a-zA-Z])/g, 'not'],
+    [/\\neg(?![a-zA-Z])/g, 'not'],
+    [/\\subseteq(?![a-zA-Z])/g, 'subset.eq'],
+    [/\\supseteq(?![a-zA-Z])/g, 'supset.eq'],
+    [/\\subsetneq(?![a-zA-Z])/g, 'subset.neq'],
+    [/\\supsetneq(?![a-zA-Z])/g, 'supset.neq'],
+    [/\\subset(?![a-zA-Z])/g, 'subset'],
+    [/\\supset(?![a-zA-Z])/g, 'supset'],
+    [/\\setminus(?![a-zA-Z])/g, 'backslash'],
+    [/\\in(?![a-zA-Z])/g, 'in'],
+    [/\\notin(?![a-zA-Z])/g, 'in.not'],
+    [/\\neq(?![a-zA-Z])/g, '!='],
+    [/\\leq(?![a-zA-Z])/g, '<='],
+    [/\\geq(?![a-zA-Z])/g, '>='],
+    [/\\ll(?![a-zA-Z])/g, '<<'],
+    [/\\gg(?![a-zA-Z])/g, '>>'],
+    [/\\approx(?![a-zA-Z])/g, 'approx'],
+    [/\\equiv(?![a-zA-Z])/g, 'equiv'],
+    [/\\sim(?![a-zA-Z])/g, '~'],
+    [/\\simeq(?![a-zA-Z])/g, 'tilde.eq'],
+    [/\\propto(?![a-zA-Z])/g, 'prop'],
+    [/\\to(?![a-zA-Z])/g, '->'],
+    [/\\mapsto(?![a-zA-Z])/g, '|->'],
+    [/\\longrightarrow(?![a-zA-Z])/g, '->'],
+    [/\\longleftarrow(?![a-zA-Z])/g, '<-'],
+    [/\\Rightarrow(?![a-zA-Z])/g, '=>'],
+    [/\\implies(?![a-zA-Z])/g, '=>'],
+    [/\\Leftrightarrow(?![a-zA-Z])/g, '<=>'],
+    [/\\iff(?![a-zA-Z])/g, '<=>'],
+    [/\\rightarrow(?![a-zA-Z])/g, '->'],
+    [/\\leftarrow(?![a-zA-Z])/g, '<-'],
+    [/\\leftrightarrow(?![a-zA-Z])/g, '<->'],
+    [/\\uparrow(?![a-zA-Z])/g, 'arrow.t'],
+    [/\\downarrow(?![a-zA-Z])/g, 'arrow.b'],
+    [/\\forall(?![a-zA-Z])/g, 'forall'],
+    [/\\exists(?![a-zA-Z])/g, 'exists'],
+    [/\\nexists(?![a-zA-Z])/g, 'exists.not'],
+    [/\\nabla(?![a-zA-Z])/g, 'nabla'],
+    [/\\partial(?![a-zA-Z])/g, 'partial'],
+    [/\\ell(?![a-zA-Z])/g, 'ell'],
+    [/\\hbar(?![a-zA-Z])/g, 'planck.reduce'],
+    [/\\cdot(?![a-zA-Z])/g, 'dot'],
+    [/\\times(?![a-zA-Z])/g, 'times'],
+    [/\\div(?![a-zA-Z])/g, 'div'],
+    [/\\pm(?![a-zA-Z])/g, 'plus.minus'],
+    [/\\mp(?![a-zA-Z])/g, 'minus.plus'],
+    [/\\circ(?![a-zA-Z])/g, 'compose'],
+    [/\\bullet(?![a-zA-Z])/g, 'bullet'],
+    [/\\oplus(?![a-zA-Z])/g, 'plus.o'],
+    [/\\otimes(?![a-zA-Z])/g, 'times.o'],
+    [/\\ldots(?![a-zA-Z])/g, 'dots'],
+    [/\\cdots(?![a-zA-Z])/g, 'dots.h'],
+    [/\\vdots(?![a-zA-Z])/g, 'dots.v'],
+    [/\\ddots(?![a-zA-Z])/g, 'dots.down'],
+    [/\\left(?![a-zA-Z])/g, ''],
+    [/\\right(?![a-zA-Z])/g, ''],
+    [/\\big(?![a-zA-Z])/g, ''],
+    [/\\Big(?![a-zA-Z])/g, ''],
+    [/\\bigg(?![a-zA-Z])/g, ''],
+    [/\\Bigg(?![a-zA-Z])/g, ''],
+    [/\\quad(?![a-zA-Z])/g, ' quad '],
+    [/\\qquad(?![a-zA-Z])/g, ' qquad '],
     [/\\,/g, ' '],
     [/\\:/g, ' '],
     [/\\;/g, ' '],
     [/\\!/g, ''],
-    [/\\sum\b/g, 'sum'],
-    [/\\prod\b/g, 'product'],
-    [/\\coprod\b/g, 'product.co'],
-    [/\\int\b/g, 'integral'],
-    [/\\iint\b/g, 'integral.double'],
-    [/\\iiint\b/g, 'integral.triple'],
-    [/\\oint\b/g, 'integral.cont'],
-    [/\\lim\b/g, 'lim'],
-    [/\\liminf\b/g, 'liminf'],
-    [/\\limsup\b/g, 'limsup'],
-    [/\\varepsilon\b/g, 'epsilon'],
-    [/\\varphi\b/g, 'phi'],
-    [/\\vartheta\b/g, 'theta'],
-    [/\\varrho\b/g, 'rho'],
-    [/\\varsigma\b/g, 'sigma'],
-    [/\\alpha\b/g, 'alpha'],
-    [/\\beta\b/g, 'beta'],
-    [/\\gamma\b/g, 'gamma'],
-    [/\\delta\b/g, 'delta'],
-    [/\\epsilon\b/g, 'epsilon'],
-    [/\\zeta\b/g, 'zeta'],
-    [/\\eta\b/g, 'eta'],
-    [/\\theta\b/g, 'theta'],
-    [/\\iota\b/g, 'iota'],
-    [/\\kappa\b/g, 'kappa'],
-    [/\\lambda\b/g, 'lambda'],
-    [/\\mu\b/g, 'mu'],
-    [/\\nu\b/g, 'nu'],
-    [/\\xi\b/g, 'xi'],
-    [/\\pi\b/g, 'pi'],
-    [/\\rho\b/g, 'rho'],
-    [/\\sigma\b/g, 'sigma'],
-    [/\\tau\b/g, 'tau'],
-    [/\\upsilon\b/g, 'upsilon'],
-    [/\\phi\b/g, 'phi'],
-    [/\\chi\b/g, 'chi'],
-    [/\\psi\b/g, 'psi'],
-    [/\\omega\b/g, 'omega'],
-    [/\\Gamma\b/g, 'Gamma'],
-    [/\\Delta\b/g, 'Delta'],
-    [/\\Theta\b/g, 'Theta'],
-    [/\\Lambda\b/g, 'Lambda'],
-    [/\\Xi\b/g, 'Xi'],
-    [/\\Pi\b/g, 'Pi'],
-    [/\\Sigma\b/g, 'Sigma'],
-    [/\\Upsilon\b/g, 'Upsilon'],
-    [/\\Phi\b/g, 'Phi'],
-    [/\\Psi\b/g, 'Psi'],
-    [/\\Omega\b/g, 'Omega'],
+    [/\\sum(?![a-zA-Z])/g, 'sum'],
+    [/\\prod(?![a-zA-Z])/g, 'product'],
+    [/\\coprod(?![a-zA-Z])/g, 'product.co'],
+    [/\\int(?![a-zA-Z])/g, 'integral'],
+    [/\\iint(?![a-zA-Z])/g, 'integral.double'],
+    [/\\iiint(?![a-zA-Z])/g, 'integral.triple'],
+    [/\\oint(?![a-zA-Z])/g, 'integral.cont'],
+    [/\\lim(?![a-zA-Z])/g, 'lim'],
+    [/\\liminf(?![a-zA-Z])/g, 'liminf'],
+    [/\\limsup(?![a-zA-Z])/g, 'limsup'],
+    [/\\varepsilon(?![a-zA-Z])/g, 'epsilon'],
+    [/\\varphi(?![a-zA-Z])/g, 'phi'],
+    [/\\vartheta(?![a-zA-Z])/g, 'theta'],
+    [/\\varrho(?![a-zA-Z])/g, 'rho'],
+    [/\\varsigma(?![a-zA-Z])/g, 'sigma'],
+    [/\\alpha(?![a-zA-Z])/g, 'alpha'],
+    [/\\beta(?![a-zA-Z])/g, 'beta'],
+    [/\\gamma(?![a-zA-Z])/g, 'gamma'],
+    [/\\delta(?![a-zA-Z])/g, 'delta'],
+    [/\\epsilon(?![a-zA-Z])/g, 'epsilon'],
+    [/\\zeta(?![a-zA-Z])/g, 'zeta'],
+    [/\\eta(?![a-zA-Z])/g, 'eta'],
+    [/\\theta(?![a-zA-Z])/g, 'theta'],
+    [/\\iota(?![a-zA-Z])/g, 'iota'],
+    [/\\kappa(?![a-zA-Z])/g, 'kappa'],
+    [/\\lambda(?![a-zA-Z])/g, 'lambda'],
+    [/\\mu(?![a-zA-Z])/g, 'mu'],
+    [/\\nu(?![a-zA-Z])/g, 'nu'],
+    [/\\xi(?![a-zA-Z])/g, 'xi'],
+    [/\\pi(?![a-zA-Z])/g, 'pi'],
+    [/\\rho(?![a-zA-Z])/g, 'rho'],
+    [/\\sigma(?![a-zA-Z])/g, 'sigma'],
+    [/\\tau(?![a-zA-Z])/g, 'tau'],
+    [/\\upsilon(?![a-zA-Z])/g, 'upsilon'],
+    [/\\phi(?![a-zA-Z])/g, 'phi'],
+    [/\\chi(?![a-zA-Z])/g, 'chi'],
+    [/\\psi(?![a-zA-Z])/g, 'psi'],
+    [/\\omega(?![a-zA-Z])/g, 'omega'],
+    [/\\Gamma(?![a-zA-Z])/g, 'Gamma'],
+    [/\\Delta(?![a-zA-Z])/g, 'Delta'],
+    [/\\Theta(?![a-zA-Z])/g, 'Theta'],
+    [/\\Lambda(?![a-zA-Z])/g, 'Lambda'],
+    [/\\Xi(?![a-zA-Z])/g, 'Xi'],
+    [/\\Pi(?![a-zA-Z])/g, 'Pi'],
+    [/\\Sigma(?![a-zA-Z])/g, 'Sigma'],
+    [/\\Upsilon(?![a-zA-Z])/g, 'Upsilon'],
+    [/\\Phi(?![a-zA-Z])/g, 'Phi'],
+    [/\\Psi(?![a-zA-Z])/g, 'Psi'],
+    [/\\Omega(?![a-zA-Z])/g, 'Omega'],
     [/\\mathbb\{R\}/g, 'bb(R)'],
     [/\\mathbb\{C\}/g, 'bb(C)'],
     [/\\mathbb\{N\}/g, 'bb(N)'],
@@ -612,6 +619,34 @@ function convertSymbols(text) {
 function convertDifferential(text) {
   text = text.replace(/rm\("d"\)\s*([a-zA-Z])/g, 'dif $1');
   text = text.replace(/\\mathrm\{d\}\s*([a-zA-Z])/g, 'dif $1');
+  return text;
+}
+
+function convertBraceGroups(text) {
+  let prev;
+  do {
+    prev = text;
+    let result = '';
+    let i = 0;
+    while (i < text.length) {
+      if ((text[i] === '_' || text[i] === '^') && i + 1 < text.length && text[i + 1] === '{') {
+        const op = text[i];
+        const end = findMatchingBrace(text, i + 1);
+        if (end !== -1) {
+          const inner = text.substring(i + 2, end);
+          result += op + '(' + inner + ')';
+          i = end + 1;
+        } else {
+          result += text[i];
+          i++;
+        }
+      } else {
+        result += text[i];
+        i++;
+      }
+    }
+    text = result;
+  } while (text !== prev);
   return text;
 }
 
@@ -662,6 +697,7 @@ function convert(text, { skipSymbols = false, envOnly = false } = {}) {
     text = convertDifferential(text);
   }
 
+  text = convertBraceGroups(text);
   return cleanup(text);
 }
 
