@@ -1057,29 +1057,505 @@ The figure above provides a geometric summary of the classification. The charact
 // ==========================================================================
 // Part II — Distribution Theory (分布理论)
 // ==========================================================================
-// 设计思路：为后续三类方程提供广义函数与基本解的语言基础。
-// 本 Part 仅包含分布理论——PDE 中最基本的广义函数工具。
-// Sobolev 空间、弱形式、变分方法、谱理论等内容
-// 分别在 Analyse Harmonique 和 Analyse Fonctionnelle 中处理，
-// 本笔记通过交叉引用使用这些工具。
 
-// --- Chapter 4: Distribution Theory (分布理论) ---
+= Chapter 4: Distribution Theory (分布理论) <sec:ch4-distributions>
 
-//   Section 4.1: Test Functions and Distributions (测试函数与分布)
-//     - 测试函数空间 D, S
-//     - 分布的定义与例子
+The classical theory of PDEs seeks smooth solutions. However, many physically relevant problems — point charges in electrostatics, shock waves, impulse forces — have no classical solution. Distribution theory, introduced by Schwartz in the 1940s, provides a rigorous framework that extends the notion of functions, allows differentiation of non-smooth objects, and supplies the concept of a *fundamental solution* for linear PDEs with constant coefficients.
 
-//   Section 4.2: Weak Derivatives (弱导数)
-//     - 弱导数的定义
-//     - 与经典导数的关系
+This chapter develops the foundational tools: test function spaces, distributions, weak derivatives, convolution, and fundamental solutions. These tools are then applied in subsequent chapters to study elliptic, parabolic, and hyperbolic equations.
 
-//   Section 4.3: Convolution and Approximation (卷积与近似恒等)
-//     - 分布的卷积
-//     - 磨光算子 (mollifier)
+== Section 4.1: Test Functions and Distributions (测试函数与分布)
 
-//   Section 4.4: Fundamental Solutions (基本解)
-//     - 基本解的定义
-//     - Laplace、热传导、波动算子的基本解
+The strategy of distribution theory is to transfer derivatives from the unknown function onto smooth "test functions" via integration by parts. This requires a space of test functions with strong regularity and support properties, and a dual space of "generalized functions."
+
+#definition(name: "Space of Test Functions $cal(D)(Omega)$")[
+  Let $Omega subset R^n$ be an open set. The space $cal(D)(Omega) = C_c^oo(Omega)$ consists of all infinitely differentiable functions with *compact support* in $Omega$:
+  $
+    cal(D)(Omega) = {phi in C^oo(Omega) : "supp"(phi) " is compact and" "supp"(phi) subset Omega}.
+  $
+  A sequence $(phi_j)$ *converges* to $phi$ in $cal(D)(Omega)$ if there exists a compact set $K subset Omega$ such that $"supp"(phi_j) subset K$ for all $j$, and for every multi-index $alpha$,
+  $
+    sup_(x in K) abs(D^alpha phi_j(x) - D^alpha phi(x)) -> 0 quad "as" j -> oo.
+  $
+] <def:test-fn-space-D>
+
+The space $cal(D)(Omega)$ is non-trivial: it contains functions that are smooth yet compactly supported.
+
+#lemma(name: "Existence of Bump Functions")[
+  For every $a in R^n$ and $r > 0$, there exists a function $phi in cal(D)(R^n)$ such that $phi >= 0$, $"supp"(phi) = overline(B(a, r))$, and $integral phi dif x > 0$.
+
+  #proof[
+    Define the auxiliary function:
+    $
+      f(t) = cases(
+        e^(-1/t), t > 0,
+        0, t <= 0.
+      )
+    $
+    One verifies by induction that $f in C^oo(R)$ with $f^(k)(0) = 0$ for all $k >= 0$. Now set:
+    $
+      g(x) = f(r^2 - abs(x - a)^2).
+    $
+    Then $g in C^oo(R^n)$, $g(x) > 0$ for $abs(x - a) < r$, and $g(x) = 0$ for $abs(x - a) >= r$. Thus $"supp"(g) = overline(B(a, r))$ and $g$ is the desired bump function.
+  ]
+] <lem:bump-function>
+
+#note[
+  The bump function from #link(<lem:bump-function>)[§4.1 Lemma] is the building block for partitions of unity, which are essential for localizing PDE problems and extending local results to global ones.
+]
+
+For problems on all of $R^n$, a larger test function space with controlled decay at infinity is more convenient.
+
+#definition(name: "Schwartz Space $cal(S)(R^n)$")[
+  The *Schwartz space* $cal(S)(R^n)$ consists of all $phi in C^oo(R^n)$ such that for every pair of multi-indices $alpha, beta$,
+  $
+    sup_(x in R^n) abs(x^alpha D^beta phi(x)) < oo.
+  $
+  A sequence $(phi_j)$ converges to $phi$ in $cal(S)(R^n)$ if for all multi-indices $alpha, beta$,
+  $
+    sup_(x in R^n) abs(x^alpha D^beta(phi_j(x) - phi(x))) -> 0 quad "as" j -> oo.
+  $
+] <def:test-fn-space-S>
+
+#note[
+  The Schwartz space satisfies $cal(D)(R^n) subset cal(S)(R^n) subset C^oo(R^n)$. Functions in $cal(S)$ and all their derivatives decay faster than any polynomial at infinity — this makes $cal(S)$ the natural domain for the Fourier transform (see §4.4).
+]
+
+We now define distributions as continuous linear functionals on test functions.
+
+#definition(name: "Distribution")[
+  A *distribution* on an open set $Omega subset R^n$ is a continuous linear functional $T: cal(D)(Omega) -> R$. The space of all distributions is denoted $cal(D)'(Omega)$.
+
+  Concretely, $T in cal(D)'(Omega)$ satisfies:
+  1. *Linearity*: $T(a phi + b psi) = a T(phi) + b T(psi)$ for all $phi, psi in cal(D)(Omega)$ and $a, b in R$.
+  2. *Continuity*: If $phi_j -> phi$ in $cal(D)(Omega)$, then $T(phi_j) -> T(phi)$.
+
+  The value of $T$ on a test function $phi$ is denoted by the *duality pairing*:
+  $
+    ⟨ T, phi ⟩ = T(phi).
+  $
+] <def:distribution>
+
+#eq[$
+  ⟨ T, phi ⟩ = T(phi).
+$] <eq:duality-pairing>
+
+The angle bracket notation $⟨ T, phi ⟩$ generalizes the integral $integral f phi dif x$ and emphasizes that $T$ need not be a function.
+
+Many classical functions can be identified with distributions.
+
+#proposition(name: "Regular Distributions")[
+  Every locally integrable function $f in L^1_"loc"(Omega)$ defines a distribution $T_f in cal(D)'(Omega)$ via:
+  $
+    ⟨ T_f, phi ⟩ = integral_Omega f(x) phi(x) dif x, quad phi in cal(D)(Omega).
+  $
+  The map $f |-> T_f$ is injective: if $T_f = T_g$, then $f = g$ almost everywhere.
+] <prop:reg-func-as-distribution>
+
+#proof[
+  Linearity of $T_f$ is immediate from the linearity of the integral. For continuity, if $phi_j -> phi$ in $cal(D)(Omega)$, then all $phi_j$ are supported in a common compact set $K$ and $phi_j -> phi$ uniformly. Since $f in L^1(K)$, dominated convergence gives $integral f phi_j dif x -> integral f phi dif x$.
+
+  Injectivity: if $integral (f - g) phi dif x = 0$ for all $phi in cal(D)(Omega)$, then $f = g$ a.e. by the fundamental lemma of the calculus of variations.
+]
+
+Distributions arising from locally integrable functions in this way are called *regular distributions*. Those not of this form are called *singular distributions*.
+
+#example(name: "Dirac Delta Distribution")[
+  The *Dirac delta* at $a in Omega$ is the distribution $delta_a in cal(D)'(Omega)$ defined by:
+  $
+    ⟨ delta_a, phi ⟩ = phi(a), quad phi in cal(D)(Omega).
+  $
+  When $a = 0$, we write $delta$ for $delta_0$. The delta distribution is the prototypical singular distribution.
+] <ex:dirac-delta>
+
+#example(name: "Delta Is Not Regular")[
+  The Dirac delta $delta$ cannot be represented by any locally integrable function.
+
+  #proof[
+    Suppose for contradiction that $delta = T_f$ for some $f in L^1_"loc"(R^n)$. Then for all $phi in cal(D)(R^n)$:
+    $
+      integral_(R^n) f(x) phi(x) dif x = phi(0).
+    $
+    Choose a sequence of test functions $phi_j in cal(D)(R^n)$ with $"supp"(phi_j) subset B(0, 1/j)$, $0 <= phi_j <= 1$, and $phi_j(0) = 1$ (constructed from the bump function in #link(<lem:bump-function>)[§4.1]). Then:
+    $
+      abs(integral f phi_j dif x) <= integral_(B(0, 1/j)) abs(f(x)) dif x -> 0
+    $
+    as $j -> oo$, since $f in L^1_"loc"$. But $phi_j(0) = 1$ for all $j$, contradicting $integral f phi_j dif x = phi_j(0) = 1$.
+  ]
+] <ex:delta-not-regular>
+
+#definition(name: "Support of a Distribution")[
+  The *support* of a distribution $T in cal(D)'(Omega)$, denoted $"supp"(T)$, is the complement of the largest open set $U subset Omega$ on which $T$ vanishes, i.e., $⟨ T, phi ⟩ = 0$ for all $phi in cal(D)(U)$.
+] <def:support-distribution>
+
+For example, $"supp"(delta_a) = {a}$, and for a regular distribution $T_f$, the support coincides with the essential support of $f$.
+
+#note[
+  A key conceptual point: distributions do not have pointwise values in general. The expression "$T(x)$" is not defined for a general distribution. Only operations that can be transferred to test functions — differentiation, multiplication by smooth functions, convolution — are well-defined. This "duality philosophy" is the central principle of distribution theory.
+]
+
+== Section 4.2: Weak Derivatives (弱导数)
+
+The most important operation on distributions for PDE theory is differentiation. Classical derivatives require pointwise limits, which fail for non-smooth functions. Distribution theory extends differentiation to _all_ distributions by transferring derivatives to test functions via integration by parts.
+
+#definition(name: "Weak Derivative")[
+  Let $u in L^1_"loc"(Omega)$ and let $alpha in bb(N)^n$ be a multi-index with $abs(alpha) = 1$. A function $v in L^1_"loc"(Omega)$ is called the *weak derivative of order* $alpha$ *of* $u$ if for all $phi in cal(D)(Omega)$:
+  $
+    integral_(Omega) v(x) phi(x) dif x = (-1)^(abs(alpha)) integral_(Omega) u(x) partial^alpha phi(x) dif x.
+  $
+  We write $v = partial^alpha u$ in the weak sense. More generally, for a multi-index $alpha$ with $abs(alpha) >= 1$, the weak derivative $partial^alpha u$ is defined by:
+  $
+    integral_(Omega) (partial^alpha u) phi dif x = (-1)^(abs(alpha)) integral_(Omega) u (partial^alpha phi) dif x
+  $
+  for all $phi in cal(D)(Omega)$.
+] <def:weak-derivative>
+
+#note[
+  The key idea is a complete reversal of perspective: instead of requiring $u$ to be differentiable, we _define_ the derivative of $u$ to be whatever distribution $v$ satisfies the integration-by-parts formula. Since test functions are $C^oo$, the right-hand side $integral u (partial^alpha phi) dif x$ is always well-defined for $u in L^1_"loc"$. The question is whether the resulting linear functional on $cal(D)(Omega)$ is represented by a locally integrable function.
+]
+
+#proposition(name: "Uniqueness of Weak Derivatives")[
+  If the weak derivative $partial^alpha u$ exists, it is unique up to equality almost everywhere.
+] <prop:weak-derivative-unique>
+
+#proof[
+  Suppose $v_1, v_2 in L^1_"loc"(Omega)$ both satisfy the weak derivative definition. Then for all $phi in cal(D)(Omega)$:
+  $
+    integral_(Omega) (v_1 - v_2) phi dif x = 0.
+  $
+  By the fundamental lemma of the calculus of variations (du Bois-Reymond lemma), $v_1 = v_2$ a.e. in $Omega$.
+]
+
+#proposition(name: "Consistency with Classical Derivatives")[
+  If $u in C^(abs(alpha))(Omega)$, then the weak derivative $partial^alpha u$ exists and coincides with the classical derivative almost everywhere.
+] <prop:weak-classical-consistency>
+
+#proof[
+  When $u in C^(abs(alpha))(Omega)$, the classical derivative $partial^alpha u in C(Omega) subset L^1_"loc"(Omega)$. For any $phi in cal(D)(Omega)$, integration by parts gives:
+  $
+    integral_(Omega) (partial^alpha u) phi dif x = (-1)^(abs(alpha)) integral_(Omega) u (partial^alpha phi) dif x.
+  $
+  The boundary terms vanish since $phi in cal(D)(Omega)$ has compact support in $Omega$. This is exactly the weak derivative definition, so the classical derivative is also the weak derivative.
+]
+
+The following two examples illustrate the power of weak derivatives: functions that are not classically differentiable can still possess weak derivatives.
+
+#example(name: "Weak Derivative of $abs(x)$")[
+  Let $u(x) = abs(x)$ on $bb(R)$. This function is not differentiable at $x = 0$ in the classical sense. We claim its weak derivative is the sign function:
+  $
+    u'(x) = "sign"(x) = cases(1, x > 0, -1, x < 0, 0, x = 0.).
+  $
+
+  #proof[
+    We must verify that for all $phi in cal(D)(bb(R))$:
+    $
+      integral_(bb(R)) "sign"(x) phi(x) dif x = -integral_(bb(R)) abs(x) phi'(x) dif x.
+    $
+    Split the left side at $x = 0$:
+    $
+      integral_(bb(R)) "sign"(x) phi(x) dif x = -integral_(-oo)^0 phi(x) dif x + integral_0^oo phi(x) dif x.
+    $
+    On $(0, oo)$, integrate by parts:
+    $
+      integral_0^oo phi(x) dif x = [x phi(x)]_0^oo - integral_0^oo x phi'(x) dif x = -integral_0^oo x phi'(x) dif x
+    $
+    since $phi$ has compact support (so $x phi(x) -> 0$ as $x -> oo$) and $0 dot phi(0) = 0$.
+
+    On $(-oo, 0)$, integrate by parts similarly:
+    $
+      -integral_(-oo)^0 phi(x) dif x = -([x phi(x)]_(-oo)^0 - integral_(-oo)^0 x phi'(x) dif x) = -integral_(-oo)^0 x phi'(x) dif x.
+    $
+    Adding the two halves:
+    $
+      integral_(bb(R)) "sign"(x) phi(x) dif x = -integral_(-oo)^0 x phi'(x) dif x - integral_0^oo x phi'(x) dif x = -integral_(bb(R)) abs(x) phi'(x) dif x,
+    $
+    which is exactly the weak derivative definition.
+  ]
+] <ex:weak-abs-x>
+
+#example(name: "Weak Derivative of the Heaviside Function")[
+  Let $H(x)$ be the Heaviside step function:
+  $
+    H(x) = cases(1, x > 0, 0, x < 0.).
+  $
+  The weak derivative of $H$ is the Dirac delta: $H' = delta$ in $cal(D)'(bb(R))$.
+
+  #proof[
+    For any $phi in cal(D)(bb(R))$:
+    $
+      integral_(bb(R)) H(x) phi'(x) dif x = integral_0^oo phi'(x) dif x = -phi(0).
+    $
+    Therefore:
+    $
+      -integral_(bb(R)) H(x) phi'(x) dif x = phi(0) = ⟨ delta, phi ⟩.
+    $
+    By #link(<def:weak-derivative>)[Definition 4.2], $H' = delta$ in the sense of distributions. Note that $delta$ is not a regular distribution (#link(<ex:delta-not-regular>)[Example 4.1]), so $H'$ cannot be represented by any locally integrable function.
+  ]
+] <ex:weak-heaviside>
+
+#note[
+  The Heaviside example is paradigmatic: the weak derivative framework allows us to differentiate discontinuous functions, with the result being a _distribution_ (not necessarily a function). This is impossible in classical analysis. For PDE theory, this means we can seek solutions in distribution spaces, dramatically enlarging the class of admissible solutions. The systematic study of function spaces built on weak derivatives — Sobolev spaces — is developed in Analyse Harmonique and Analyse Fonctionnelle; here we only establish the distribution-theoretic foundation.
+]
+
+== Section 4.3: Convolution and Approximation (卷积与逼近)
+
+Convolution with smooth functions provides the primary tool for approximating distributions by smooth functions. This section develops the mollification technique, which is indispensable for PDE theory: it allows us to regularize rough data and construct smooth approximate solutions.
+
+#definition(name: "Convolution of Functions")[
+  Let $f in L^1_"loc"(bb(R)^n)$ and $g in cal(D)(bb(R)^n)$. The *convolution* $f * g$ is the function:
+  $
+    (f * g)(x) = integral_(bb(R)^n) f(y) g(x - y) dif y.
+  $
+  The integral is well-defined since $g$ has compact support. The result $f * g in C^oo(bb(R)^n)$, with derivatives:
+  $
+    partial^alpha (f * g) = f * (partial^alpha g).
+  $
+] <def:conv-function>
+
+For distributions, we extend convolution by duality. If $T in cal(D)'(bb(R)^n)$ and $psi in cal(D)(bb(R)^n)$, the convolution $T * psi$ is defined as a smooth function.
+
+#definition(name: "Convolution of a Distribution with a Test Function")[
+  Let $T in cal(D)'(bb(R)^n)$ and $psi in cal(D)(bb(R)^n)$. The *convolution* $T * psi$ is the $C^oo$ function:
+  $
+    (T * psi)(x) = ⟨ T, psi(x - dot) ⟩,
+  $
+  where the distribution $T$ acts on the function $y |-> psi(x - y)$. Its derivatives satisfy:
+  $
+    partial^alpha (T * psi) = T * (partial^alpha psi).
+  $
+] <def:conv-distribution>
+
+#note[
+  The key property is that convolution with a smooth function _smooths_ a distribution: even if $T$ is highly singular (like $delta$), the convolution $T * psi$ is always $C^oo$. This is because the smoothness of $psi(x - y)$ as a function of $x$ transfers to the convolution.
+]
+
+#definition(name: "Standard Mollifier")[
+  The *standard mollifier* is the function $rho in cal(D)(bb(R)^n)$ defined by:
+  $
+    rho(x) = cases(c exp(-1 / (1 - abs(x)^2)), abs(x) < 1, 0, abs(x) >= 1.,)
+  $
+  where $c > 0$ is chosen so that $integral_(bb(R)^n) rho(x) dif x = 1$. For $epsilon > 0$, define the rescaled mollifier:
+  $
+    rho_epsilon(x) = epsilon^(-n) rho(x / epsilon).
+  $
+  Then $"supp"(rho_epsilon) = overline(B(0, epsilon))$, $rho_epsilon >= 0$, and $integral rho_epsilon dif x = 1$ for all $epsilon > 0$.
+] <def:mollifier>
+
+The family $(rho_epsilon)_(epsilon > 0)$ is an _approximate identity_: as $epsilon -> 0$, the mollifier concentrates at the origin while maintaining unit mass. Convolving with $rho_epsilon$ produces smooth approximations that converge to the original distribution.
+
+#theorem(name: "Mollifier Approximation")[
+  Let $T in cal(D)'(bb(R)^n)$ and let $(rho_epsilon)_(epsilon > 0)$ be the standard mollifier family. Then:
+  $
+    T * rho_epsilon -> T quad text("in") quad cal(D)'(bb(R)^n)  quad text("as") quad epsilon -> 0,
+  $
+  meaning $⟨ T * rho_epsilon, phi ⟩ -> ⟨ T, phi ⟩$ for all $phi in cal(D)(bb(R)^n)$.
+
+  Moreover, if $T = T_f$ for $f in L^p(bb(R)^n)$ ($1 <= p < oo$), then $f * rho_epsilon -> f$ in $L^p(bb(R)^n)$.
+] <thm:mollifier-approx>
+
+#proof[
+  *Step 1: Convergence in $cal(D)'(bb(R)^n)$.* For any $phi in cal(D)(bb(R)^n)$:
+  $
+    ⟨ T * rho_epsilon, phi ⟩ = integral_(bb(R)^n) (T * rho_epsilon)(x) phi(x) dif x.
+  $
+  By definition of $T * rho_epsilon$:
+  $
+    ⟨ T * rho_epsilon, phi ⟩ = integral (⟨ T_y, rho_epsilon(x - y) ⟩) phi(x) dif x = ⟨ T_y, integral rho_epsilon(x - y) phi(x) dif x ⟩ = ⟨ T, rho_epsilon * phi ⟩.
+  $
+  The classical result $rho_epsilon * phi -> phi$ in $cal(D)(bb(R)^n)$ (uniform convergence of all derivatives on compact sets) combined with the continuity of $T$ gives $⟨ T, rho_epsilon * phi ⟩ -> ⟨ T, phi ⟩$.
+
+  *Step 2: $L^p$ convergence.* For $f in L^p$, the $L^p$ convergence $f * rho_epsilon -> f$ follows from Minkowski's integral inequality and the density of $C_c(bb(R)^n)$ in $L^p(bb(R)^n)$.
+]
+
+#corollary(name: "Density of Smooth Functions in $cal(D)'$")[
+  Every distribution $T in cal(D)'(bb(R)^n)$ is the limit (in $cal(D)'$) of a sequence of $C^oo$ functions. Specifically, $T * rho_(1/j) in C^oo(bb(R)^n)$ and $T * rho_(1/j) -> T$ in $cal(D)'(bb(R)^n)$ as $j -> oo$.
+] <cor:smooth-density-D-prime>
+
+This density result is fundamental: it means we can approximate any distribution — no matter how singular — by smooth functions. In PDE theory, this allows us to first solve problems for smooth data and then pass to the limit.
+
+#figure(
+  image("img/mollifier-approx.svg", width: 85%),
+  caption: [Mollification of the Heaviside function $H(x)$. *Left:* The discontinuous function $H(x)$ (blue) and the mollifier kernel $rho_epsilon(x)$ (red, dashed). *Right:* The convolution $H * rho_epsilon$ (green) is a smooth approximation of $H$; as $epsilon -> 0$, it converges pointwise to $H$ away from the jump.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:mollifier-approx>
+
+== Section 4.4: Fundamental Solutions (基本解)
+
+The concept of a fundamental solution transforms PDE theory: it reduces the problem of solving $P(partial) u = f$ to convolution. Every linear PDE with constant coefficients possesses a fundamental solution in the distributional sense — a fact that is far from obvious and constitutes one of the deepest results in the field.
+
+#definition(name: "Fundamental Solution")[
+  Let $P(partial) = sum_(abs(alpha) <= m) a_alpha partial^alpha$ be a linear differential operator with constant coefficients $a_alpha in bb(R)$. A distribution $E in cal(D)'(bb(R)^n)$ is called a *fundamental solution* of $P(partial)$ if:
+  $
+    P(partial) E = delta quad text("in") quad cal(D)'(bb(R)^n),
+  $
+  i.e., for all $phi in cal(D)(bb(R)^n)$:
+  $
+    ⟨ P(partial) E, phi ⟩ = phi(0).
+  $
+] <def:fundamental-solution>
+
+If $E$ is a fundamental solution, then for any $f in cal(D)(bb(R)^n)$ the convolution $u = E * f$ satisfies $P(partial) u = f$ in the sense of distributions (see #link(<def:conv-distribution>)[Definition 4.5]). This reduces solving a PDE to computing a convolution — provided the fundamental solution is known.
+
+The fundamental solution is not unique: if $E_1$ and $E_2$ are both fundamental solutions, then $P(partial)(E_1 - E_2) = 0$, so $E_1 - E_2$ solves the homogeneous equation. This freedom is exploited in applications by selecting the fundamental solution with the most convenient properties (causal, retarded, advanced, etc.).
+
+#theorem(name: "Malgrange–Ehrenpreis Theorem")[
+  Every linear differential operator $P(partial)$ with constant coefficients (not identically zero) possesses a fundamental solution $E in cal(D)'(bb(R)^n)$.
+] <thm:malgrange-ehrenpreis>
+
+This is a deep existence theorem; we omit the general proof (which requires tools from Fourier analysis on $cal(S)'$, treated in Analyse Harmonique). Instead, we verify it concretely by constructing fundamental solutions for the three central operators of PDE theory.
+
+#example(name: "Fundamental Solution of the Laplace Operator")[
+  For the Laplace operator $Delta = sum_(i=1)^n partial_(x_i)^2$, the fundamental solution is:
+
+  For $n >= 3$:
+  $
+    E(x) = -1 / ((n - 2) omega_n) abs(x)^(2 - n),
+  $
+  where $omega_n = 2 pi^(n/2) / Gamma(n/2)$ is the surface area of the unit sphere $S^(n-1) subset R^n$.
+
+  For $n = 2$:
+  $
+    E(x) = 1 / (2 pi) log abs(x).
+  $
+  In both cases, $Delta E = delta$ in $cal(D)'(bb(R)^n)$. The function $abs(x)^(2-n)$ (for $n >= 3$) is called the *Newtonian potential*.
+
+  #proof[
+    We treat $n >= 3$; the $n = 2$ case is analogous. Away from the origin, $E in C^oo$ and a direct computation shows $Delta abs(x)^(2-n) = 0$ for $x != 0$.
+
+    For $phi in cal(D)(bb(R)^n)$, we evaluate $⟨ Delta E, phi ⟩ = ⟨ E, Delta phi ⟩$ by excising a small ball. Since $abs(x)^(2-n) in L^1_"loc"(bb(R)^n)$:
+    $
+      ⟨ E, Delta phi ⟩ = lim_(epsilon -> 0) (-1) / ((n - 2) omega_n) integral_(abs(x) > epsilon) abs(x)^(2 - n) Delta phi(x) dif x.
+    $
+    By Green's second identity on $Omega_epsilon = {x : abs(x) > epsilon}$:
+    $
+      integral_(Omega_epsilon) (abs(x)^(2 - n) Delta phi - phi Delta(abs(x)^(2 - n))) dif x = integral_(partial B(0, epsilon)) (abs(x)^(2 - n) (partial phi) / (partial nu) - phi (partial(abs(x)^(2 - n))) / (partial nu)) dif S(x),
+    $
+    where $nu$ is the _inward_ unit normal to $partial B(0, epsilon)$ (inward with respect to $Omega_epsilon$). Since $Delta abs(x)^(2-n) = 0$ in $Omega_epsilon$, the left side reduces to $integral_(Omega_epsilon) abs(x)^(2-n) Delta phi dif x$.
+
+    On $partial B(0, epsilon)$: $abs(x)^(2-n) = epsilon^(2-n)$, and $(partial abs(x)^(2-n)) / (partial nu) = -(d / (dif r)) r^(2-n) |_(r = epsilon) = (n - 2) epsilon^(1 - n)$. Therefore:
+    $
+      integral_(partial B(0, epsilon)) (partial(abs(x)^(2 - n))) / (partial nu) phi dif S = (n - 2) epsilon^(1 - n) integral_(partial B(0, epsilon)) phi dif S -> (n - 2) epsilon^(1 - n) dot omega_n epsilon^(n - 1) phi(0) = (n - 2) omega_n phi(0)
+    $
+    as $epsilon -> 0$, using the mean value property of integrals over spheres. The other boundary term satisfies:
+    $
+      epsilon^(2 - n) integral_(partial B(0, epsilon)) (partial phi) / (partial nu) dif S -> 0
+    $
+    since $"supp"(phi)$ is bounded and $partial phi / partial nu$ is bounded.
+
+    Combining:
+    $
+      ⟨ Delta E, phi ⟩ = (-1) / ((n - 2) omega_n) dot (-(n - 2) omega_n phi(0)) = phi(0).
+    $
+    Hence $Delta E = delta$.
+
+    For $n = 2$: $E(x) = (1 / (2 pi)) log abs(x)$. The proof is analogous: $Delta log abs(x) = 0$ for $x != 0$, and the boundary integral on $partial B(0, epsilon)$ gives $(d / (dif r)) log r |_(r = epsilon) = 1 / epsilon$, so $integral_(partial B(0, epsilon)) (1 / epsilon) phi dif S -> 2 pi phi(0)$, yielding $⟨ Delta E, phi ⟩ = (1 / (2 pi)) dot 2 pi phi(0) = phi(0)$.
+  ]
+] <ex:fund-laplace>
+
+#example(name: "Fundamental Solution of the Heat Operator")[
+  For the heat operator $partial_t - Delta_x$ on $bb(R)^(1+n)$ with coordinates $(t, x) in bb(R) times bb(R)^n$, the fundamental solution is the *heat kernel*:
+  $
+    E(t, x) = cases(1 / (4 pi t)^(n/2) exp(-abs(x)^2 / (4 t)), t > 0, 0, t < 0.)
+  $
+  Then $(partial_t - Delta_x) E = delta$ in $cal(D)'(bb(R)^(1+n))$, where $delta = delta_(0, 0)$ is the delta at the origin of spacetime.
+
+  #proof[
+    For $t > 0$, $E in C^oo$ and satisfies the classical heat equation $(partial_t - Delta_x) E = 0$ (direct verification by computing partial derivatives of the Gaussian). For $t < 0$, $E = 0$.
+
+    For $phi in cal(D)(bb(R)^(1+n))$:
+    $
+      ⟨ (partial_t - Delta) E, phi ⟩ = -⟨ E, (partial_t + Delta) phi ⟩ = -integral_0^oo integral_(bb(R)^n) E(t, x) ((partial_t + Delta_x) phi)(t, x) dif x dif t.
+    $
+    Since $E$ is smooth for $t > 0$ and decays rapidly in $x$, we integrate by parts in $t$ over $(0, oo)$:
+    $
+      -integral_0^oo integral E (partial_t phi) dif x dif t = integral_0^oo integral (partial_t E) phi dif x dif t + integral_(bb(R)^n) E(0^+, x) phi(0, x) dif x.
+    $
+    The spatial integration by parts gives $-integral E Delta phi dif x dif t = integral (Delta E) phi dif x dif t$ (boundary terms in $x$ vanish by rapid decay). Since $partial_t E = Delta E$ for $t > 0$, the volume integrals cancel, leaving:
+    $
+      ⟨ (partial_t - Delta) E, phi ⟩ = integral_(bb(R)^n) E(0^+, x) phi(0, x) dif x.
+    $
+    As $t -> 0^+$, the heat kernel $E(t, dot) -> delta$ in $cal(D)'(bb(R)^n)$ (it is an approximate identity: $E >= 0$, $integral E dif x = 1$ for all $t > 0$, and $"supp"(E(t, dot))$ concentrates at the origin). Therefore:
+    $
+      integral_(bb(R)^n) E(0^+, x) phi(0, x) dif x = phi(0, 0).
+    $
+    Hence $(partial_t - Delta) E = delta_(0,0)$.
+  ]
+] <ex:fund-heat>
+
+#example(name: "Fundamental Solution of the Wave Operator")[
+  For the wave operator $square = partial_t^2 - Delta_x$ on $bb(R)^(1+n)$, the fundamental solution depends on the spatial dimension in a qualitatively different way.
+
+  For $n = 1$:
+  $
+    E(t, x) = 1/2 H(t) H(t^2 - x^2) = cases(1/2, t > abs(x), 0, t < abs(x).),
+  $
+  where $H$ is the Heaviside function (#link(<ex:weak-heaviside>)[Example 4.2]). The support of $E$ is the forward light cone ${(t, x) : t >= abs(x)}$.
+
+  For $n = 3$:
+  $
+    E(t, x) = 1 / (4 pi t) delta(t - abs(x)) H(t),
+  $
+  supported on the _surface_ of the forward light cone.
+
+  For general odd $n >= 3$, $E$ involves the derivative $partial_t^((n-3)/2)$ of a distribution supported on the light cone. For general even $n >= 2$, $E$ is supported on the _entire interior_ of the forward light cone.
+
+  We verify $square E = delta$ for $n = 1$ in detail, as the key mechanism already appears in this simplest case.
+
+  #proof[
+    For $n = 1$, $E(t, x) = (1/2) H(t - abs(x))$. For $phi in cal(D)(bb(R)^2)$:
+    $
+      ⟨ square E, phi ⟩ = ⟨ E, square phi ⟩ = 1/2 integral_0^oo (integral_(-t)^t (partial_t^2 phi - partial_x^2 phi) dif x) dif t.
+    $
+
+    *Step 1: The $partial_t^2$ integral.* For fixed $t > 0$, integrate in $t$ over $(0, oo)$ by parts. On each half-line:
+    $
+      integral_0^oo integral_x^oo partial_t^2 phi dif t dif x = -integral_0^oo partial_t phi(x, x) dif x
+    $
+    (since $phi$ has compact support, $partial_t phi(x, t) -> 0$ as $t -> oo$). Similarly:
+    $
+      integral_0^oo integral_(-oo)^(-x) partial_t^2 phi dif t dif x = -integral_(-oo)^0 partial_t phi(-x, -x) dif x.
+    $
+    Substituting $x -> -x$ in the second integral:
+    $
+      integral_0^oo integral_(-t)^t partial_t^2 phi dif x dif t = -integral_0^oo partial_t phi(x, x) dif x - integral_0^oo partial_t phi(x, -x) dif x.
+    $
+
+    *Step 2: The $partial_x^2$ integral.* For fixed $t$:
+    $
+      integral_(-t)^t partial_x^2 phi dif x = partial_x phi(t, t) - partial_x phi(t, -t).
+    $
+    So:
+    $
+      integral_0^oo integral_(-t)^t partial_x^2 phi dif x dif t = integral_0^oo partial_x phi(t, t) dif t - integral_0^oo partial_x phi(t, -t) dif t.
+    $
+
+    *Step 3: Combining.* Let $A = integral_0^oo partial_t phi(x, x) dif x$ and $B = integral_0^oo partial_x phi(x, x) dif x$. Since $(d / (dif x)) phi(x, x) = partial_x phi(x, x) + partial_t phi(x, x)$:
+    $
+      A + B = integral_0^oo (d / (dif x)) phi(x, x) dif x = phi(oo, oo) - phi(0, 0) = -phi(0, 0).
+    $
+    Similarly, let $C = integral_0^oo partial_t phi(x, -x) dif x$ and $D = integral_0^oo partial_x phi(x, -x) dif x$. Since $(d / (dif x)) phi(x, -x) = partial_x phi(x, -x) - partial_t phi(x, -x)$:
+    $
+      D - C = integral_0^oo (d / (dif x)) phi(x, -x) dif x = phi(oo, -oo) - phi(0, 0) = -phi(0, 0).
+    $
+
+    From Steps 1 and 2:
+    $
+      2 ⟨ square E, phi ⟩ = -(A + C) - (B - D) = -(A + B) - (C - D) = phi(0, 0) + phi(0, 0) = 2 phi(0, 0).
+    $
+    Hence $⟨ square E, phi ⟩ = phi(0, 0)$, i.e., $square E = delta_(0, 0)$.
+  ]
+] <ex:fund-wave>
+
+#note[
+  The three fundamental solutions reveal fundamentally different propagation behaviors, reflecting the classification of Chapter 3:
+
+  - *Laplace* ($Delta$): $E$ is supported on _all_ of $R^n$ — elliptic equations have infinite propagation in all directions; disturbances are felt everywhere instantaneously.
+  - *Heat* ($partial_t - Delta$): $E$ is supported on ${t >= 0}$ — parabolic equations have infinite spatial propagation speed but respect the arrow of time (irreversibility).
+  - *Wave* ($partial_t^2 - Delta$): $E$ is supported on the forward light cone ${t >= abs(x)}$ — hyperbolic equations respect finite propagation speed and causality.
+
+  Moreover, the wave fundamental solution reveals a striking dimensional dichotomy: for odd $n$, $E$ is supported on the _surface_ of the light cone (sharp signals — the *strong Huygens' principle*); for even $n$, $E$ fills the _interior_ (after-effects — the *weak Huygens' principle*). This is explored in detail in Chapter 12.
+]
 
 // ==========================================================================
 // Part III — Elliptic Equations (椭圆型方程)
