@@ -812,7 +812,7 @@ no dependence on the intermolecular distance because an ideal gas has
 no intermolecular potential energy at all. The full thermodynamic
 identity $(∂ U / ∂ V)_T = T (∂ p / ∂ T)_V - p$, from which
 Joule's law follows in one line for an ideal gas, is derived with the
-Maxwell relations in Chapter 4.
+Maxwell relations in Chapter 6.
 
 == Enthalpy and the Heat Capacity Relation // 焓与热容关系
 
@@ -864,7 +864,7 @@ At constant pressure, $dif V = (partial V / partial T)_p dif T$, so
 $
   C_p = C_V + [(partial U / partial V)_T + p] (partial V / partial T)_p.
 $
-The bracket is rewritten using the identity (proved in Chapter 4 with
+The bracket is rewritten using the identity (proved in Chapter 6 with
 the Maxwell relations)
 $
   (partial U / partial V)_T = T (partial p / partial T)_V - p,
@@ -950,7 +950,7 @@ $
   mu_("JT") = - (partial H / partial p)_T / C_p.
 $
 With $H = U + p V$ and the identity
-$(partial U / partial p)_T = - T (partial V / partial T)_p - p (partial V / partial p)_T$ (Chapter 4),
+$(partial U / partial p)_T = - T (partial V / partial T)_p - p (partial V / partial p)_T$ (Chapter 6),
 $
   mu_("JT") = 1/C_p [T (partial V / partial T)_p - V] = V / C_p (T alpha - 1).
 $
@@ -1437,8 +1437,350 @@ bound follows from $"COP"_"HP" = "COP"_R + 1$. ⊙
 
 The Carnot bound is the engineering face of the second law: efficiency
 is bought with temperature, not with mechanical ingenuity. The
-thermodynamic potentials of Chapter 4 — free energy and free enthalpy —
+thermodynamic potentials of Chapter 6 — free energy and free enthalpy —
 will carry the same accounting to non-cyclic processes.
+
+= Third Law of Thermodynamics // 热力学第三定律
+
+The zeroth, first and second laws each introduced a state quantity —
+temperature, internal energy, entropy — defined up to a constant. For
+temperature the constant was fixed by convention (the triple point of
+water); for internal energy it is genuinely undeterminable. The third
+law addresses entropy at its lower boundary: it fixes $S(0)$
+absolutely, and in doing so it decrees the death of classical physics
+at low temperature.
+
+== Nernst Heat Theorem // 能斯特热定理
+
+#theorem(name: "Nernst Heat Theorem")[
+  For any isothermal process $A -> B$ involving only condensed systems
+  (liquids and solids) in internal equilibrium,
+  $
+    lim_(T -> 0) Delta S = lim_(T -> 0) [S_B(T) - S_A(T)] = 0.
+  $
+] <thm:nernst-heat-theorem>
+
+*Proof.* Between two states connected by an isothermal step at $T$,
+compute the entropy difference by integrating along any reversible
+paths joining each state to a common low-temperature reference:
+$
+  Delta S(T)
+  = Delta S(T_0) + integral_(T_0)^T (C_A(T') - C_B(T')) / T' dif T'.
+$
+Now let $T_0 -> 0$. If both heat capacities remained finite as $T' ->
+0$, the integral would diverge logarithmically and $|Delta S| -> oo$ —
+absurd, since entropy differences between equilibrium states are
+finite. Consistency demands the integral converge as the lower limit
+recedes, which for arbitrary pairs of states is possible only if
+$
+  lim_(T -> 0) [C_A(T) - C_B(T)] = 0
+  quad "and, in the strengthened form below," quad
+  lim_(T -> 0) C(T) = 0.
+$
+Under these conditions every isothermal entropy change vanishes at the
+origin: all condensed systems share one entropy at $T = 0$. ⊙
+
+#property(name: "Heat Capacities Vanish at Zero Temperature")[
+  The Nernst theorem implies that the heat capacities of condensed
+  systems vanish in the zero-temperature limit,
+  $
+    lim_(T -> 0) C_V = lim_(T -> 0) C_p = 0.
+  $
+] <prop:low-t-heat-capacity>
+
+Were $C$ finite at $T = 0$, two systems differing in composition would
+accumulate an infinite entropy difference — violating the theorem.
+Experimentally the vanishing is universal and *quantitative*: lattice
+heat capacities fall as $T^3$ (Debye's law) and conduction electrons
+contribute a linear term $gamma T$, both far below the constant value
+the classical equipartition of
+#link(<thm:equipartition>)[Chapter 1] demands. The macroscopic third
+law and the microscopic failure of
+#link(<caution:equipartition-failure>)[classical equipartition] are two
+faces of the same quantum reality — resolved by the quantum statistics
+of Chapters 16 and 17.
+
+#caution[
+  (Classical ideal gases violate the third law.) The classical ideal
+  gas has $C_V = f/2 n R$ right down to $T = 0$ and an entropy of the
+  Sackur-Tetrode form that diverges as $T -> 0$: classical statistical
+  mechanics contradicts the third law outright. No paradox arises —
+  the classical description itself fails long before, when the thermal
+  wavelength exceeds the interparticle spacing and quantum degeneracy
+  sets in (Chapters 15-16). The third law is a theorem about nature,
+  and classical physics is the approximation that fails.
+] <caution:classical-gas-violates>
+
+== Planck Formulation and Absolute Entropy // 普朗克表述与绝对熵
+
+Nernst's theorem fixes entropy *differences* at $T = 0$ but not their
+common value. Planck supplied the normalisation.
+
+#theorem(name: "Planck Formulation")[
+  For a perfect crystalline substance,
+  $
+    lim_(T -> 0) S = 0,
+  $
+  the entropy at absolute zero being zero regardless of all other
+  state variables. Hence the entropy is an *absolute* quantity, free
+  of additive constants.
+] <thm:planck-formulation>
+
+The contrast with internal energy is instructive: $U$ retains an
+undeterminable additive constant because only its *changes* enter the
+first law. Entropy loses its constant because the third law pins the
+reference — thermodynamics' only absolute energy-like scale.
+
+#definition(name: "Absolute Entropy")[
+  The entropy of a substance at temperature $T$ is computed from
+  calorimetric data alone:
+  $
+    S(T) = integral_0^T (C_p(T')) / T' dif T'
+    + sum_("transitions") (L_i) / T_i,
+  $
+  where each transition (crystal structure change, melting, vaporisation)
+  at temperature $T_i$ with latent heat $L_i$ contributes its entropy
+  jump, and $S(0) = 0$.
+] <def:absolute-entropy>
+
+The integral converges at the origin because $C_p -> 0$ — precisely
+the content of #link(<prop:low-t-heat-capacity>)[the low-temperature
+  theorem]; a classical gas with constant $C_p$ would yield a divergent
+absolute entropy.
+
+#note[
+  (Standard entropies.) Tables of chemical thermodynamics list the
+  *standard entropy* $S degree(298.15 "K")$ of each species — the
+  absolute entropy at $298.15 "K"$ in its standard state, obtained from
+  the formula above with calorimetric $C_p$ and latent heats. Reaction
+  entropies follow by summation over species, without any reference
+  state ambiguity. This unambiguous bookkeeping is what makes the
+  equilibrium constants of Chapter 8 computable from data tables.
+] <note:standard-entropy>
+
+== Unattainability of Absolute Zero // 绝对零度不可达性
+
+#theorem(name: "Unattainability of Absolute Zero")[
+  No finite sequence of processes can bring any system to
+  $
+    T = 0.
+  $
+] <thm:unattainability>
+
+*Proof sketch.* Any cooling operation reduces to two ingredients on the
+$T$-$S$ diagram: an *isothermal* leg (in contact with a colder stage,
+reducing entropy) and an *adiabatic* leg (reducing temperature at fixed
+entropy). By #link(<def:absolute-entropy>)[the absolute entropy
+  formula], a system with any fixed entropy $S > S(0)$ sits at $T > 0$:
+$
+  S - S(0) = integral_0^T (C_p(T')) / T' dif T' > 0
+  quad "for" T > 0 quad ("since" C_p > 0).
+$
+An adiabatic leg preserves $S$, so to land on $T = 0$ it must preserve
+$S = S(0)$ — but every reachable state above zero temperature has
+$S > S(0)$, and the entropy can be driven down only by isothermal
+steps whose endpoints still obey $S(T) > S(0)$. Each cycle approaches
+$T = 0$ asymptotically without reaching it; infinitely many steps
+would be required. ⊙
+
+The argument is the standard heuristic one — it assumes cooling cycles
+built from isothermal and adiabatic legs and $C_p > 0$ throughout —
+and its status among the formulations of the third law is discussed in
+the literature; we adopt it as the operational reading of the law.
+
+#example[
+  (Adiabatic demagnetization.) The workhorse of microkelvin physics
+  realises the two-leg pattern with a paramagnetic salt. The spin
+  degrees of freedom contribute an entropy $S(B, T)$ that decreases
+  with field $B$ (a field aligns the moments, ordering the system) and
+  increases with $T$. The cycle:
+
+  - *isothermal magnetization* at $T_1$: switch on $B$ from 0 to
+    $B_1$; the spins' entropy drops and heat $T_1 Delta S < 0$ flows
+    out to the bath;
+  - *adiabatic demagnetization*: thermally isolate, switch $B$ back to
+    0; the spins' entropy wants to rise, but $S$ is frozen — so the
+    *lattice* temperature falls to $T_2 < < T_1$ to compensate, the
+    spin system absorbing entropy from the lattice.
+
+  Temperatures of a few millikelvin are reachable; the same
+  isothermal-then-adiabatic rhythm underlies dilution refrigeration,
+  which sustains continuous cooling near $10 "mK"$. The method is the
+  magnetic analogue of the gas adiabats of
+  #link(<prop:adiabatic-process>)[Chapter 2], with spin order playing
+  the role of volume. See @fig:demag-ts.
+] <ex:adiabatic-demagnetization>
+
+#figure(
+  image("img/demag-ts.svg", width: 74%),
+  caption: [Adiabatic demagnetization in the $T$-$S$ plane. Two entropy
+    curves $S(T, B)$ are shown: $B = 0$ (upper) and $B = B_1$ (lower),
+    both terminating on the same axis value $S(0)$ as $T -> 0$
+    (Nernst's theorem). Step 1: isothermal magnetization at $T_1$
+    (horizontal arrow, entropy expelled as heat). Step 2: adiabatic
+    demagnetization (vertical arrow at constant $S$), landing at
+    $T_2 < < T_1$. Repeating the cycle walks the temperature down —
+    approaching, never reaching, $T = 0$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:demag-ts>
+
+== Residual Entropy // 残余熵
+
+#definition(name: "Residual Entropy")[
+  A substance has *residual entropy* if its molar entropy approaches a
+  positive limit as $T -> 0$:
+  $
+    S(0) = k_B ln W_0 > 0,
+  $
+  where $W_0$ is the degeneracy of the zero-temperature macrostate —
+  the number of distinguishable ground-state configurations the
+  substance can freeze into.
+] <def:residual-entropy>
+
+Residual entropy arises when the energy landscape has many minima of
+equal energy separated by barriers so high that the system cannot
+equilibrate on experimental timescales: the molecular orientations are
+frozen randomly at the ordering temperature and remain disordered all
+the way down.
+
+#example[
+  (Carbon monoxide crystal.) The CO molecule is nearly cylindrically
+  symmetric — C and O ends differ in energy only marginally — so as
+  the crystal forms, each molecule adopts one of two orientations
+  essentially at random, and reorientation freezes out at low $T$. For
+  $N$ molecules the ground-state degeneracy is $W_0 = 2^N$, giving
+  $
+    S(0) = N k_B ln 2 = R ln 2 approx 5.8 "J/(mol K)",
+  $
+  in fair agreement with the calorimetric deficit of about
+  $5.8 "J/(mol K)"$ observed when the third-law entropy is compared
+  with the statistical-mechanical value.
+] <ex:co-crystal>
+
+#example[
+  (Ice.) Water ice obeys Pauling's *ice rules*: each oxygen is surrounded by
+  four hydrogens, two near (covalent) and two far (hydrogen bonds), and
+  each bond carries exactly one proton. Pauling counted the
+  configurations: per molecule of $N$ molecules the number of
+  admissible proton arrangements is $W_0 approx (3/2)^N$, so
+  $
+    S(0) = R ln(3/2) approx 3.4 "J/(mol K)",
+  $
+  matching the measured residual entropy of ice, about
+  $3.4 "J/(mol K)"$ — one of the great back-of-envelope successes.
+] <ex:ice-pauling>
+
+#note[
+  (Reconciling with Planck.) Residual entropy does not contradict
+  #link(<thm:planck-formulation>)[Planck's formulation] — it exposes
+  the load-bearing role of the qualifier *perfect crystal*. A frozen-in
+  configurational disorder is not the unique ground state, so the
+  substance never occupies the perfectly ordered state the theorem
+  assumes; thermodynamic measurements probe the frozen ensemble. The
+  counting $S = k_B ln W_0$ is
+  #link(<note:statistical-meaning>)[Boltzmann's formula] doing real
+  thermodynamic work; its derivation from first principles is the
+  business of Chapter 12.
+] <note:third-law-statistical>
+
+== Negative Temperatures // 负温度
+
+The third law closed the thermodynamic scale at $T = 0^+$. Remarkably,
+the entropy-energy relation opens a *second* branch on the far side of
+infinite temperature.
+
+#definition(name: "Negative Temperature")[
+  The thermodynamic temperature is defined by
+  $
+    1/T = (partial S / partial E)_("V, N").
+  $
+  A system whose entropy $S(E)$ *decreases* with energy — possible
+  only when the energy spectrum is bounded from above — has
+  $partial S / partial E < 0$ at high energies and therefore
+  $T < 0$: a *negative temperature*.
+] <def:negative-temperature>
+
+For ordinary systems $S(E)$ increases without bound (the spectrum is
+unbounded above), $partial S / partial E > 0$ always, and $T > 0$
+throughout. Negative temperature requires a *population inversion*:
+more of the system at high energies than at moderate ones.
+
+#example[
+  (Spin-$1/2$ paramagnet.) Take $N$ spins of moment $mu$ in a field
+  $B$, energies $E = mu B (N_arrow.b - N_arrow.t)$ ranging from
+  $-N mu B$ (all up) to $+N mu B$ (all down). The number of states
+  with $N_arrow.t$ spins up is binomial, $W = "binom"(N, N_arrow.t)$,
+  and
+  $
+    S(E) = k_B ln "binom"(N, (E + N mu B) / (2 mu B))
+  $
+  rises from $0$ at $E = -N mu B$, peaks at $E = 0$ (half up, half
+  down: maximal disorder), and falls back to $0$ at $E = +N mu B$ —
+  see @fig:negative-t. Reading $T$ off the slope $1/T = partial S / partial E$:
+
+  - $E = -N mu B$: slope $+oo$, $T = 0^+$ (all up — cold end);
+  - $E = 0$: slope $0$, $T = +- oo$ (the same state from both sides!);
+  - $E = +N mu B$: slope $-oo$, $T = 0^-$ (all down — hotter than
+    anything).
+
+  The branch $E > 0$ is populated by reversing the field faster than
+  the spins can follow (or, in the laboratory, by a radio-frequency
+  pulse): more spins sit in the higher-energy orientation than the
+  lower — the population inversion of every laser.
+] <ex:spin-system>
+
+#figure(
+  image("img/negative-t.svg", width: 74%),
+  caption: [Entropy versus energy for the spin-$1/2$ paramagnet. The
+    curve $S(E)$ is symmetric about $E = 0$, where it peaks
+    ($S = k_B N ln 2$). The local slope is $1 / T$: infinite positive
+    temperature at the cold end $E = -N mu B$ where the slope is
+    steepest, $T = +- oo$ at the peak, and negative temperatures on
+    the descending branch, tending to $0^-$ at $E = +N mu B$. The
+    negative branch is *hotter* than every positive temperature.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:negative-t>
+
+#property(name: "Negative Temperatures Are Hotter Than Infinity")[
+  If two systems at $T_1 < 0$ and $T_2 > 0$ exchange energy, heat
+  flows from the negative-temperature system to the positive one:
+  in the ordering
+  $
+    +0 < T_2 < +oo < -oo < T_1 < -0,
+  $
+  negative temperatures lie *above* $+oo$ on the hotness scale.
+] <prop:hotter-than-infinity>
+
+*Proof.* When the negative-temperature system loses a small energy
+$delta E > 0$ to the positive-temperature one, its entropy change is
+$(partial S_1 / partial E)(-delta E) = -delta E / T_1 > 0$ (since
+$T_1 < 0$), while the receiver gains $delta E / T_2 > 0$. The total
+entropy increases — the process runs forward by
+#link(<thm:entropy-increase>)[the entropy increase principle]. The
+reverse flow would decrease total entropy and does not occur. ⊙
+
+#caution[
+  (Existence conditions.) Negative temperatures require three things
+  at once: a spectrum *bounded above* (otherwise $S(E)$ never turns
+  over), internal equilibration among the high-energy degrees of
+  freedom (the inverted population must be a genuine thermal state,
+  with its own well-defined temperature), and isolation from ordinary
+  matter (contact with any positive-temperature reservoir would
+  immediately dump the excess energy). Nuclear spin systems fulfil all
+  three — Purcell and Pound inverted LiF nuclear spins in 1951,
+  the first negative-temperature state. Kinetic degrees of freedom,
+  whose spectra are unbounded, can never go negative: a gas of
+  negative temperature is a contradiction in terms.
+] <caution:negative-t-conditions>
+
+The microcanonical definition $1/T = partial S / partial E$ used here
+will be rebuilt from the counting of microstates in
+Chapter 12 — where negative temperatures reappear as a corollary of
+Boltzmann's formula, and the hotness scale of
+#link(<prop:hotter-than-infinity>)[this section] becomes a theorem
+about the geometry of $S(E)$.
 
 // ==========================================================================
 // Thermodynamique (热力学与统计力学) — Table of Contents
