@@ -1782,6 +1782,319 @@ Boltzmann's formula, and the hotness scale of
 #link(<prop:hotter-than-infinity>)[this section] becomes a theorem
 about the geometry of $S(E)$.
 
+= Relativistic Thermodynamics // 相对论热力学
+
+Special relativity revises the bookkeeping of energy and momentum;
+thermodynamics, built on those books, must follow. This chapter
+examines what survives unchanged (the laws, the temperature of
+equilibrium) and what bends (dispersion, pressure ratios, adiabatic
+exponents) — ending with the photon gas, where the ultra-relativistic
+limit is not an approximation but an exact state of affairs, and with
+the covariant formulation that closes Part I.
+
+== Thermodynamics of the Relativistic Ideal Gas // 相对论理想气体的热力学
+
+#definition(name: "Relativistic Dispersion")[
+  A relativistic particle of mass $m$ and momentum $p$ has energy
+  $
+    E(p) = sqrt(p^2 c^2 + m^2 c^4),
+  $
+  with the two universal limits
+  $
+    E approx m c^2 + p^2 / (2m) quad ("non-relativistic," p < < m c)
+  $
+  and
+  $
+    E approx p c quad ("ultra-relativistic," p >> m c "or" m = 0).
+  $
+] <def:relativistic-dispersion>
+
+#figure(
+  image("img/relativistic-dispersion.svg", width: 76%),
+  caption: [The dispersion relation $E(p)$ (blue) with its two limits:
+    near the origin the parabola $m c^2 + p^2 \/ 2m$ (grey, dashed) —
+    kinetic energy quadratic in momentum as in Chapter 1; at large
+    momentum the line $E = p c$ (orange, dashed) — mass becomes
+    irrelevant. The crossover scale is $p = m c$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:relativistic-dispersion>
+
+#property(name: "Pressure of a Relativistic Gas")[
+  For an isotropic gas of particles with arbitrary dispersion, the
+  pressure is the momentum flux
+  $
+    p = n ⟨p dot v⟩ / 3,
+  $
+  where $n$ is the number density. Consequently
+  $
+    p = 2/3 u_"kin" quad ("non-relativistic"),
+    quad quad p = 1/3 u quad ("ultra-relativistic"),
+  $
+  with $u_"kin"$ the kinetic energy density and $u$ the total energy
+  density (including rest energy).
+] <prop:ultrarelativistic-pressure>
+
+*Derivation.* Particles striking a wall element $dif A$ in time $dif t$
+transfer normal momentum $p cos theta$; the flux of particles at angle
+$theta$ carries the factor $v cos theta$, so integrating over the
+isotropic solid angle gives $p = n < p v cos^2 theta >$ averaged over
+directions, i.e. $p = n < p v > / 3$ since $< cos^2 theta > = 1/3$.
+This is the relativistic completion of
+#link(<prop:kinetic-pressure>)[the kinetic-theory derivation]. Now
+insert the dispersion: non-relativistically, $p v = p^2 / m = 2
+E_"kin"$, while ultra-relativistically, $p v = p c = E$. ⊙
+
+The pressure-energy ratio $p = u / 3$ — one half of the
+non-relativistic value — is the fingerprint of the ultra-relativistic
+regime, and it reappears below as the equation of state of radiation.
+
+#example[
+  (Adiabats and heat capacities across the crossover.) For a classical
+  ideal gas the equation of state $p V = n R T$ holds in both regimes,
+  while the energy density is regime-dependent. Ultra-relativistically
+  $U = 3 p V = 3 n R T$, so
+  $
+    C_V = 3 n R, quad C_p = 4 n R, quad gamma = C_p / C_V = 4/3,
+  $
+  and quasi-static adiabats satisfy $p V^(4/3) = "const"$ — repeating
+  the derivation of #link(<prop:adiabatic-process>)[Chapter 2] with
+  the new $C_V$. Compare the non-relativistic monatomic values
+  $C_V = 3 n R / 2$, $gamma = 5/3$. The generalized equipartition
+  $< p dot v > = 3 k_B T$ (the relativistic form of
+  #link(<thm:equipartition>)[the equipartition theorem]) accommodates
+  both: each degree contributes $< p dot v > / 2$-type bookkeeping
+  through the velocity rather than momentum. As a gas is heated
+  through $k_B T ~ m c^2$, its adiabats stiffen from $gamma = 5/3$
+  towards $gamma = 4/3$.
+] <ex:relativistic-adiabats>
+
+== Relativistic Energy-Momentum and Thermal Equilibrium // 相对论能量-动量与热平衡
+
+The relativistic generalisation of the Maxwell distribution is the
+*Jüttner distribution*: in momentum space,
+$
+  f(p) = 1/Z exp(-E(p) / (k_B T)),
+  quad E(p) = sqrt(p^2 c^2 + m^2 c^4),
+$
+with the same $T$ and $k_B$ as in the non-relativistic theory. In the
+limit $p < < m c$ the factor $e^(-m c^2 / k_B T)$ is absorbed into the
+normalisation and $f(p) -> e^(-p^2 \/ 2 m k_B T)$ — exactly the
+Maxwell momentum distribution underlying
+#link(<def:maxwell-velocity>)[Chapter 1's velocity distribution].
+
+#note[
+  (Derivation deferred.) The Jüttner distribution is the $beta = 1/k_B
+  T$ member of the canonical family; its derivation from
+  maximum-entropy over relativistic phase space belongs to statistical
+  mechanics and is given in Chapter 14, together with the subtleties
+  (measure choice, reference frame) that sparked a long literature.
+  Here we take it as the postulated equilibrium weight and examine its
+  consequences.
+] <note:juttner-preview>
+
+#property(name: "Temperature Invariance at Equilibrium")[
+  If two bodies in relative motion are in thermal equilibrium with
+  each other, then their proper (rest-frame) temperatures are equal.
+  Equilibrium is thus characterised by a Lorentz-invariant statement
+  about the comoving temperature, and heat flow is absent exactly when
+  the comoving temperatures agree.
+] <prop:temperature-invariance>
+
+*Derivation.* The zeroth law (#link(<def:zeroth-law>)[Chapter 2])
+defines temperature through the transitivity of mutual equilibrium,
+and the principle of relativity demands that equilibrium be an
+observer-independent state of affairs — whether two bodies exchange
+net heat cannot depend on who watches. The only frame-independent
+temperature attached to each body is its comoving one; equilibrium
+therefore equates comoving temperatures. ⊙
+
+#note[
+  (Does a moving body run hot?) If one insists on asking for the
+  temperature a moving body "appears" to have, the literature splits:
+  the Ott proposal reads energy transformation as $T' = gamma T$
+  (moving hotter), Planck-Einstein argued $T' = T / gamma$ (moving
+  colder), and Landsberg concludes $T' = T$ (invariant) — consistent
+  with the equilibrium argument above. The modern resolution: the
+  question is protocol-dependent, because temperature is defined
+  operationally for a body at rest with its thermometer; a comoving
+  thermometer always reads $T$. Throughout this note, $T$ means the
+  comoving temperature.
+] <note:temperature-transformation>
+
+== Photon Gas and Ultra-Relativistic Limit // 光子气体与极端相对论极限
+
+#definition(name: "Photon Gas")[
+  A *photon gas* is the equilibrium electromagnetic radiation confined
+  in a cavity, treated as a gas of massless particles: each photon has
+  dispersion $E = p c$ exactly, moves at $c$, and — crucially —
+  photons are created and absorbed by the cavity walls, so their
+  number is *not* conserved. The equilibrium state is characterised by
+  temperature alone.
+] <def:photon-gas>
+
+Number non-conservation will later be expressed as vanishing chemical
+potential $mu = 0$ (Chapter 14); thermodynamically, it means the
+energy density $u$ can be a function of $T$ alone — no second density
+to keep fixed.
+
+#property(name: "Radiation Pressure")[
+  The pressure of equilibrium radiation is one third of its energy
+  density:
+  $
+    p = u / 3.
+  $
+] <prop:radiation-pressure>
+
+*Derivation.* Directly the ultra-relativistic limit of
+#link(<prop:ultrarelativistic-pressure>)[the relativistic pressure
+  formula], with $E = p c$ holding exactly for every photon. ⊙
+
+#theorem(name: "Stefan-Boltzmann Law")[
+  The energy density of equilibrium radiation is a universal function
+  of temperature alone, quartic in $T$:
+  $
+    u = a T^4,
+  $
+  with $a$ a universal constant. The emissive power of a black surface
+  is $j = sigma T^4$ with $sigma = a c / 4$.
+] <thm:stefan-boltzmann>
+
+*Derivation.* (Boltzmann 1884, purely thermodynamic.) Let radiation be
+the working substance of a reversible engine between $T$ and
+$T - dif T$. Its state is fixed by $T$ and $V$; energy $U = u(T) V$,
+pressure $p = u / 3$.
+
+- *Isothermal expansion* at $T$, volume $dif V$: heat absorbed
+  $
+    delta Q = dif U + p dif V = u dif V + u/3 dif V = 4/3 u dif V.
+  $
+- *Quasi-static adiabats*: $dif S = 0$ gives, from $dif Q = 0$,
+  $V dif u + 4/3 u dif V = 0$, i.e. $T V^(1/3) = "const"$ (using
+  $p = u/3$ and the final result $u prop T^4$ consistency —
+  equivalently derived directly from $dif S = (V/T) dif u + (4u \/ 3T) dif V = 0$).
+- *Isothermal compression* at $T - dif T$ releases
+  $delta Q' = 4/3 u(T - dif T) dif V'$; the adiabatic relations give
+  $dif V' = dif V dot (T / (T - dif T))^3$.
+
+Carnot's efficiency
+(#link(<prop:carnot-efficiency>)[Chapter 3]) demands
+$delta Q' / delta Q = (T - dif T) / T$:
+$
+  (u(T - dif T)) / u(T) dot (T / (T - dif T))^3 = (T - dif T) / T,
+$
+so
+$
+  u(T - dif T) = u(T) (1 - (dif T)/T)^4
+  quad ==> quad (dif u)/u = 4 (dif T)/T
+  quad ==> quad u = a T^4.
+$
+The exponent 4 is not put in by hand — it is forced by the radiation
+pressure $p = u/3$, i.e. by the ultra-relativistic dispersion. ⊙
+
+The full spectral distribution (Planck's law) and the numerical value
+of $a$ require quantum statistics — the ultraviolet catastrophe that
+launched quantum theory is previewed in
+#link(<caution:equipartition-failure>)[Chapter 1] and resolved in
+Chapter 15.
+
+#example[
+  (Surface temperature of the Sun.) The solar constant — the radiant
+  flux at the Earth's orbit — is $S = 1361 "W/m"^2$. A black surface
+  at temperature $T$ emits $j = sigma T^4$ per unit area with
+  $sigma = 5.67 times 10^(-8) "W" "m"^(-2) "K"^(-4)$. Balancing the
+  solar luminosity:
+  $
+    4 pi R_sun^2 sigma T^4 = 4 pi d^2 S
+    quad ==> quad
+    T = (S d^2 / (sigma R_sun^2))^(1/4),
+  $
+  with $R_sun = 6.96 times 10^8 "m"$ and $d = 1.496 times 10^11 "m"$:
+  $
+    T = (1361 dot (1.496 times 10^11)^2 / (5.67 times 10^(-8) dot (6.96 times 10^8)^2))^(1/4)
+    approx 5.77 times 10^3 "K",
+  $
+  the accepted solar surface temperature. A table of constants, the
+  second law, and $p = u/3$ have measured a star. The same balance
+  applied to the Earth's cross-section gives the mean surface
+  temperature $~ 278 "K"$ before atmospheric corrections.
+] <ex:solar-temperature>
+
+== Thermodynamic Laws in Covariant Form // 热力学定律的协变形式
+
+We close Part I by writing the first law in the language spacetime
+demands. Only the minimal toolkit is assembled here — four-vectors,
+the metric $eta = mat(+, 0, 0, 0; 0, -, 0, 0; 0, 0, -, 0; 0, 0, 0, -)$
+with signature $(+, -, -, -)$, four
+velocity $u^mu = dif x^mu / dif tau$ normalised by $u^mu u_mu = c^2$,
+and the convention that Greek indices run over spacetime.
+
+#definition(name: "Energy-Momentum Tensor of a Perfect Fluid")[
+  A perfect fluid with comoving energy density $rho$ (including rest
+  energy) and pressure $p$, moving with four-velocity $u^mu$, has
+  energy-momentum tensor
+  $
+    T^(mu nu) = ((rho + p) / c^2) u^mu u^nu - p eta^(mu nu).
+  $
+  In the rest frame, $T^(00) = rho$ (energy density) and
+  $T^(i i) = p$ (pressure): the tensor packages both quantities that
+  #link(<prop:ultrarelativistic-pressure>)[Chapter 1's kinetic
+    argument] identified as momentum flux.
+] <def:energy-momentum-tensor>
+
+#property(name: "Conservation Law")[
+  In the absence of external forces,
+  $
+    partial_mu T^(mu nu) = 0,
+  $
+  four equations: $nu = 0$ is the local energy conservation, $nu = i$
+  the relativistic Euler equations for momentum. In the
+  non-relativistic, low-velocity limit these reduce to the
+  hydrodynamic balance laws — the continuum completion of the kinetic
+  picture of Chapter 1.
+] <prop:tensor-conservation>
+
+#definition(name: "Inverse Temperature Vector")[
+  The *inverse temperature four-vector* of a fluid element is
+  $
+    beta^mu = u^mu / T,
+  $
+  whose comoving component is $beta^mu = (c / T, 0, 0, 0)$ at rest.
+  It packages "temperature divided by the time direction" so that
+  entropy bookkeeping becomes frame-independent.
+] <def:inverse-temperature-vector>
+
+#theorem(name: "Covariant First Law")[
+  For an infinitesimal reversible change of a fluid element,
+  $
+    dif S = beta_mu dif P^mu + p / T dif V,
+  $
+  where $dif P^mu$ is the change of its total four-momentum. In the
+  comoving frame, $dif P^mu = (dif U / c, 0, 0, 0)$ and
+  $beta_mu dif P^mu = dif U / T$, recovering
+  $dif S = (dif U + p dif V) / T$ — the first law of
+  #link(<thm:first-law>)[Chapter 2] together with the entropy of
+  #link(<def:entropy>)[Chapter 3].
+] <thm:covariant-first-law>
+
+This is the Israel form of the first law. The derivation — and the
+full covariant theory of dissipative fluids, where heat conduction
+and viscosity entangle with relativity — belongs to relativistic
+hydrodynamics, beyond this note's scope.
+
+#note[
+  (Boundary of this chapter.) Everything above the hydrodynamic
+  frontier is macroscopic thermodynamics: laws, equilibrium, and
+  kinematics. What relativity forbids is not more laws but simpler
+  bookkeeping; what it cannot supply is the *values* — the equation
+  of state, the constant $a$, the Jüttner normalisation all wait for
+  counting. That counting is Part III's business: microstates
+  (Chapter 12), the Boltzmann distribution (Chapter 14), and quantum
+  statistics (Chapters 16-17). Part II, to which we now turn, builds
+  the formal machinery — thermodynamic potentials and Maxwell
+  relations — that makes those connections computable.
+] <note:covariant-boundary>
+
 // ==========================================================================
 // Thermodynamique (热力学与统计力学) — Table of Contents
 // ==========================================================================
