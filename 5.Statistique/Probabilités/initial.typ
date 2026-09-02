@@ -1525,6 +1525,202 @@ distribution of the other.
   variance via conditional variances.
 ]
 
+= Characterization and Classification of Distributions // 分布的特征与分类
+
+The distributions of Chapters 3 and 4 — normal, Gamma, Beta, Poisson,
+binomial — look different on the surface, yet most of them share a hidden
+algebraic skeleton: the *exponential family*. Recognising a distribution as
+a member of this family immediately yields its sufficient statistic, its
+moment-generating structure, and its conjugate prior — three pillars of
+modern statistical inference. This chapter assembles that skeleton and then
+turns to the multivariate normal, the canonical distribution of multivariate
+statistics.
+
+== Exponential Family // 指数族
+
+#definition(name: "Exponential Family")[
+  A family of densities $f(x; theta)$ with parameter $theta in Theta
+  subset.eq RR^k$ belongs to the *exponential family* if it can be written
+  in the *canonical form*
+  $
+    f(x; theta) = h(x) exp(eta(theta) dot T(x) - A(theta)),
+  $
+  where:
+
+  - $h(x) >= 0$ is the *base measure*, independent of $theta$;
+  - $eta(theta) in RR^k$ is the *natural parameter*;
+  - $T(x) in RR^k$ is the *natural statistic* (a vector of the same
+    dimension as $eta$);
+  - $A(theta)$ is the *log-partition function* (or cumulant generating
+    function), ensuring normalisation.
+
+  The inner product $eta dot T = sum_(i=1)^k eta_i T_i$ couples parameter
+  to data.
+] <def:exponential-family>
+
+The key structural constraint is that the support ${{x : f(x; theta) > 0}}$ must not depend on $theta$; the parameter enters only
+through the exponential factor.
+
+#property(name: "Classical Distributions in the Exponential Family")[
+  Each of the following admits the canonical form; the table lists the
+  ingredients.
+
+  | Distribution | $eta$ | $T(x)$ | $A(theta)$ | $h(x)$ |
+  |---|---|---|---|---|
+  | $"Pois"(lambda)$ | $ln lambda$ | $x$ | $lambda$ | $1 / x!$ |
+  | $"Ber"(p)$ | $ln(p / (1-p))$ | $x$ | $-ln(1-p)$ | $1$ |
+  | $B(n, p)$ | $ln(p / (1-p))$ | $x$ | $-n ln(1-p)$ | $binom(n, x)$ |
+  | $"Exp"(lambda)$ | $-lambda$ | $x$ | $-ln lambda$ | $1$ |
+  | $"Ga"(alpha, lambda)$ | $(-lambda, alpha)$ | $(x, ln x)$ | $ln "Gamma"(alpha) - alpha ln lambda$ | $1 / x$ |
+  | $N(mu, sigma^2)$ ($sigma$ known) | $mu / sigma^2$ | $x$ | $mu^2 / (2 sigma^2) + ln sigma$ | $exp(-x^2 / (2 sigma^2)) / sqrt(2 pi)$ |
+  | $"Be"(a, b)$ | $(a-1, b-1)$ | $(ln x, ln(1-x))$ | $ln "B"(a, b)$ | $1$ |
+] <prop:exp-family-members>
+
+The verification is mechanical: rewrite each density by collecting the
+$theta$-dependent parts into $exp(eta dot T)$ and moving the
+$theta$-independent remainder into $h(x)$. For instance, the Poisson density
+$
+  f(k; lambda) = (lambda^k exp(-lambda)) / k! = (1 / k!) exp(k ln lambda - lambda)
+$
+has $eta = ln lambda$, $T(k) = k$, $A = lambda$, $h = 1 / k!$.
+
+#note[
+  (A notable exception.) The uniform distribution $U(0, theta)$ does *not*
+  belong to the exponential family, because its support $[0, theta]$
+  depends on $theta$. The support-independence requirement is not a
+  technicality: it is what makes the factorisation theorem and conjugate
+  Bayesian analysis work.
+]
+
+#definition(name: "Natural Parameter Space")[
+  The *natural parameter space* is the set of $eta$ for which the density is
+  normalisable:
+  $
+    H = {eta in RR^k : integral h(x) exp(eta dot T(x)) dif x < infinity}.
+  $
+  The family is *regular* if $H$ is an open set; *full* if $H$ is the
+  maximal set. The log-partition function is
+  $
+    A(theta) = ln integral h(x) exp(eta(theta) dot T(x)) dif x.
+  $
+] <def:natural-parameter-space>
+
+#property(name: "Derivative of the Log-Partition Function")[
+  Under regularity conditions,
+  $
+    (dif A) / (dif eta) = E[T(X)], quad (dif^2 A) / (dif eta^2) = "Var"(T(X)).
+  $
+  Thus the cumulant generating function $A$ encodes the mean and variance of
+  the natural statistic.
+] <prop:cgf-derivative>
+
+The proof requires interchange of differentiation and integration, which
+the regularity of the natural parameter space guarantees. The notation
+$E[T(X)]$ and $"Var"(T(X))$ — expectation and variance — is made precise in
+the Numerical Characteristics chapter; the point here is that the moments
+of the sufficient statistic are read off from the derivatives of $A$.
+
+#note[
+  (Sufficient statistic preview.) The canonical form $f(x; theta) = h(x)
+  exp(eta dot T(x) - A)$ depends on the data only through $T(x)$. This
+  means $T(X_1, dots, X_n) = sum_i T(X_i)$ is a *sufficient statistic* for
+  $theta$ — it captures all the information the sample contains about the
+  parameter. The formal proof uses the factorisation theorem, developed in
+  the Sufficient Statistics chapter. The exponential family is the natural
+  habitat of sufficiency.
+]
+
+== Multivariate Normal Distribution // 多元正态分布
+
+The univariate normal of #link(<def:normal-dist>)[Chapter 3] extends to
+vectors, and its geometry — ellipsoidal contours, linear closure,
+independence through zero covariance — makes it the workhorse of multivariate
+statistics.
+
+#definition(name: "Multivariate Normal Distribution")[
+  A random vector $bold(X) = (X_1, dots, X_n)$ has the *$n$-variate normal
+  distribution* with mean vector $bold(mu) in RR^n$ and covariance matrix
+  $Sigma$ (a symmetric positive-definite $n times n$ matrix), written
+  $bold(X) ~ N_n(bold(mu), Sigma)$, if its joint density is
+  $
+    f(bold(x)) = 1 / ((2 pi)^(n\/2) sqrt(abs(Sigma))) exp(-1\/2 (bold(x) - bold(mu))^T Sigma^(-1) (bold(x) - bold(mu))).
+  $
+  The quadratic form $(bold(x) - bold(mu))^T Sigma^(-1) (bold(x) - bold(mu))$
+  is the *Mahalanobis distance* from $bold(x)$ to $bold(mu)$.
+] <def:multivariate-normal>
+
+The covariance matrix $Sigma = (sigma_(i j))$ where $sigma_(i j) =
+"Cov"(X_i, X_j)$ encodes the pairwise covariances; its diagonal entries are
+the variances $sigma_(i i) = "Var"(X_i)$. These notions are formalised in
+the Numerical Characteristics chapter, but the multivariate normal can be
+understood geometrically through its density now: level sets are
+ellipsoids centred at $bold(mu)$, with axes determined by the eigenvectors
+and eigenvalues of $Sigma$.
+
+For $n = 2$ and $Sigma = [[sigma_1^2, rho sigma_1 sigma_2], [rho sigma_1
+    sigma_2, sigma_2^2]]$, the contours are ellipses tilted by the correlation
+$rho$ — the picture of #link(<fig:joint-density>)[the joint density figure].
+
+#property(name: "Linear Transformations")[
+  If $bold(X) ~ N_n(bold(mu), Sigma)$ and $bold(Y) = bold(A) bold(X) +
+  bold(b)$ where $bold(A)$ is an $m times n$ matrix and $bold(b) in RR^m$,
+  then $bold(Y) ~ N_m(bold(A) bold(mu) + bold(b), bold(A) Sigma bold(A)^T)$.
+  In particular, any linear combination of jointly normal variables is
+  normal — the *closure under linear transformation*.
+] <prop:mv-normal-linear>
+
+The proof is a direct application of
+#link(<thm:jacobian-transform>)[the multivariate change of variables] with
+$bold(g)(bold(x)) = bold(A) bold(x) + bold(b)$, whose Jacobian is
+$abs(bold(A))$.
+
+#property(name: "Marginal Distributions")[
+  Any subvector of a multivariate normal is itself multivariate normal. If
+  $bold(X) = (bold(X)_1, bold(X)_2)$ is partitioned with
+  $bold(mu) = (bold(mu)_1, bold(mu)_2)$ and
+  $
+    Sigma = [[Sigma_(11), Sigma_(12)], [Sigma_(21), Sigma_(22)]],
+  $
+  then $bold(X)_1 ~ N(bold(mu)_1, Sigma_(11))$ and $bold(X)_2 ~
+  N(bold(mu)_2, Sigma_(22))$.
+] <prop:mv-normal-marginal>
+
+#property(name: "Independence and Zero Covariance")[
+  For a multivariate normal, two subvectors $bold(X)_1$ and $bold(X)_2$ are
+  *independent* if and only if $"Cov"(bold(X)_1, bold(X)_2) = bold(0)$, i.e.
+  $Sigma_(12) = bold(0)$.
+
+  This is a *special* property of the normal: for general distributions,
+  zero covariance (uncorrelatedness) is necessary but not sufficient for
+  independence (see the note in
+  #link(<prop:independence-criterion>)[the independence criterion]). For the
+  normal, the density factorises iff $Sigma_(12) = bold(0)$, because the
+  cross term in the exponent vanishes.
+] <prop:mv-normal-independence>
+
+#property(name: "Conditional Distributions")[
+  Given $bold(X)_2 = bold(x)_2$, the conditional distribution of
+  $bold(X)_1$ is normal:
+  $
+    bold(X)_1 | bold(X)_2 = bold(x)_2 ~ N(bold(mu)_(1|2), Sigma_(1|2)),
+  $
+  with
+  $
+    bold(mu)_(1|2) = bold(mu)_1 + Sigma_(12) Sigma_(22)^(-1) (bold(x)_2 - bold(mu)_2),
+    quad
+    Sigma_(1|2) = Sigma_(11) - Sigma_(12) Sigma_(22)^(-1) Sigma_(21).
+  $
+  The conditional mean is a linear function of $bold(x)_2$ — the *linear
+  regression* of $bold(X)_1$ on $bold(X)_2$; the conditional covariance is
+  independent of $bold(x)_2$ — the regression is *homoscedastic*.
+] <prop:mv-normal-conditional>
+
+These four properties — linear closure, normal marginals, the
+equivalence of independence with zero covariance, and normal conditionals —
+make the multivariate normal the structural backbone of classical
+multivariate analysis, to which the sampling distribution and regression
+chapters will return repeatedly.
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
