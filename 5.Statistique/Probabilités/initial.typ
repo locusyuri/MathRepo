@@ -2267,6 +2267,262 @@ in a single analytic function. The CF, with its universal existence and
 the Lévy continuity theorem, is the master tool for the limit theorems
 of Part IV.
 
+= LLN and CLT // 大数定律与中心极限定理
+
+The limit theorems — Laws of Large Numbers and the Central Limit Theorem
+— are the culmination of the probability-theoretic framework built in
+Parts I–III. They answer two fundamental questions:
+
+- *Does the sample average stabilise?* The LLN says yes: $overline(X)_n -> mu$
+  (almost surely, or in probability).
+- *How fast does it stabilise?* The CLT says: the fluctuation
+  $sqrt(n)(overline(X)_n - mu)$ converges *in distribution* to a normal law.
+
+== Concepts of Convergence // 收敛概念
+
+#definition(name: "Convergence in Probability")[
+  $X_n$ converges *in probability* to $X$, written $X_n arrow.r^P X$,
+  if for every $epsilon > 0$,
+  $
+    P(abs(X_n - X) > epsilon) -> 0 quad "as" n -> infinity.
+  $
+] <def:convergence-probability>
+
+#definition(name: "Convergence in Distribution")[
+  $X_n$ converges *in distribution* (or *weakly*) to $X$, written
+  $X_n arrow.r^d X$, if $F_n(x) -> F(x)$ at every continuity point $x$
+  of $F$. Equivalently (by #link(<thm:continuity-theorem>)[Lévy's
+    continuity theorem]), $phi_n(t) -> phi(t)$ for all $t in RR$.
+] <def:convergence-distribution>
+
+#definition(name: "Almost Sure Convergence")[
+  $X_n$ converges *almost surely* (a.s.) to $X$, written
+  $X_n arrow.r^(a.s.) X$, if
+  $
+    P(lim_(n->infinity) X_n = X) = 1.
+  $
+  That is, $X_n(omega) -> X(omega)$ for all $omega$ outside a null set.
+] <def:convergence-as>
+
+#definition(name: "Convergence in L^p")[
+  $X_n$ converges *in $L^p$* to $X$, written $X_n arrow.r^(L^p) X$, if
+  $E[abs(X_n - X)^p] -> 0$ (assuming $X_n, X in L^p$).
+] <def:convergence-lp>
+
+#theorem(name: "Hierarchy of Convergence Modes")[
+  - (a.s. $arrow.r.double$ P) $X_n arrow.r^(a.s.) X$ implies $X_n
+    arrow.r^P X$;
+  - ($L^p$ $arrow.r.double$ P) $X_n arrow.r^(L^p) X$ implies $X_n
+    arrow.r^P X$;
+  - (P $arrow.r.double$ d) $X_n arrow.r^P X$ implies $X_n arrow.r^d X$;
+  - Neither a.s. nor $L^p$ implies the other.
+] <thm:convergence-relations>
+
+#proof[
+  (a.s. $arrow.r.double$ P) If $X_n -> X$ a.s., then for any $epsilon > 0$,
+  ${abs(X_n - X) > epsilon}$ occurs only finitely often (outside a null
+  set). By #link(<thm:borel-cantelli>)[the first Borel-Cantelli lemma],
+  $P(abs(X_n - X) > epsilon) -> 0$.
+
+  ($L^p$ $arrow.r.double$ P) By #link(<prop:markov-inequality>)[Markov's
+    inequality], $P(abs(X_n - X) > epsilon) <= E[abs(X_n - X)^p] / epsilon^p
+  -> 0$.
+
+  (P $arrow.r.double$ d) If $X_n arrow.r^P X$, then at any continuity
+  point $x$ of $F$, split $F_n(x)$ using $abs(X_n - X) > epsilon$ and
+  bound each piece to get $F_n(x) -> F(x)$.
+]
+
+== Laws of Large Numbers // 大数定律
+
+#theorem(name: "Bernoulli WLLN")[
+  Let $X_1, X_2, dots$ be i.i.d. $"Ber"(p)$ random variables and
+  $overline(X)_n = (1/n) sum_(i=1)^n X_i$. Then for every $epsilon > 0$,
+  $
+    P(abs(overline(X)_n - p) > epsilon) -> 0.
+  $
+] <thm:bernoulli-wlln>
+
+#proof[
+  Since $E[overline(X)_n] = p$ and $"Var"(overline(X)_n) = p(1-p)/n$, #link(<thm:chebyshev-inequality>)[Chebyshev's inequality] gives
+  $
+    P(abs(overline(X)_n - p) > epsilon) <= p(1-p) / (n epsilon^2) -> 0.
+  $
+  This fulfils the promise of #link(<prop:frequency-stability>)[frequency
+    stability]: the relative frequency $overline(X)_n$ converges to the theoretical
+  probability $p$.
+]
+
+#theorem(name: "Chebyshev WLLN")[
+  Let $X_1, X_2, dots$ be independent (not necessarily identically
+  distributed) with $E[X_i] = mu_i$ and $"Var"(X_i) <= C$ for all $i$.
+  Then $overline(X)_n - overline(mu)_n arrow.r^P 0$, where $overline(mu)_n = (1/n) sum mu_i$.
+] <thm:chebyshev-wlln>
+
+#theorem(name: "Khinchin WLLN")[
+  Let $X_1, X_2, dots$ be i.i.d. with $E[abs(X_1)] < infinity$ and
+  $E[X_1] = mu$. Then $overline(X)_n arrow.r^P mu$.
+] <thm:khinchin-wlln>
+
+#proof[
+  (via characteristic functions.) Let $phi$ be the CF of $X_1$. The CF of
+  $overline(X)_n$ is $phi_(overline(X)_n)(t) = [phi(t/n)]^n$. Since $E[abs(X_1)] < infinity$,
+  $phi$ is differentiable at $0$ with $phi'(0) = i mu$, so
+  $
+    phi(t/n) = 1 + i mu t / n + o(1/n), quad [phi(t/n)]^n -> exp(i mu t).
+  $
+  The right side is the CF of the constant $mu$. By #link(<thm:continuity-theorem>)[Lévy's continuity theorem],
+  $overline(X)_n arrow.r^d mu$, which implies $overline(X)_n arrow.r^P mu$.
+]
+
+#theorem(name: "Kolmogorov SLLN")[
+  Let $X_1, X_2, dots$ be i.i.d. with $E[abs(X_1)] < infinity$ and
+  $E[X_1] = mu$. Then
+  $
+    overline(X)_n arrow.r^(a.s.) mu.
+  $
+] <thm:kolmogorov-slln>
+
+The proof requires deeper machinery than the weak law. The key tool is
+*Kolmogorov's inequality* — a maximal version of Chebyshev's inequality
+controlling $max_(k<=n) abs(S_k - k mu)$. Combined with the
+*Borel-Cantelli second lemma* (which states: if $A_n$ are independent
+and $sum P(A_n) = infinity$, then $A_n$ occur infinitely often), one
+shows that the event ${abs(overline(X)_n - mu) > epsilon quad "i.o."}$ has
+probability $0$ for every $epsilon > 0$, yielding a.s. convergence.
+
+This fulfils the promise of #link(<thm:borel-cantelli>)[the Borel-Cantelli
+  lemmas]: the second lemma, whose proof was deferred from Part I, is
+central to the SLLN.
+
+== Central Limit Theorem // 中心极限定理
+
+#theorem(name: "Lindeberg-Lévy CLT")[
+  Let $X_1, X_2, dots$ be i.i.d. with $E[X_1] = mu$ and
+  $0 < "Var"(X_1) = sigma^2 < infinity$. Then
+  $
+    sqrt(n) (overline(X)_n - mu) arrow.r^d N(0, sigma^2).
+  $
+] <thm:clt>
+
+#proof[
+  (via characteristic functions.) We fulfil the promise of
+  #link(<thm:continuity-theorem>)[Lévy's continuity theorem]: the CLT
+  reduces to showing $phi_(sqrt(n)(overline(X)_n - mu))(t) ->
+  exp(-sigma^2 t^2 / 2)$.
+
+  Let $Z_i = (X_i - mu) / sigma$, so $E[Z_1] = 0$, $"Var"(Z_1) = 1$.
+  Then $sqrt(n)(overline(X)_n - mu) / sigma = (1/sqrt(n)) sum Z_i$,
+  whose CF is $[phi_Z(t/sqrt(n))]^n$. Since $E[Z_1^2] = 1$, the CF
+  has the expansion (by #link(<prop:cf-moments>)[the CF moment formula]):
+  $
+    phi_Z(t/sqrt(n)) = 1 - t^2/(2n) + o(1/n).
+  $
+  Hence
+  $
+    [phi_Z(t/sqrt(n))]^n = [1 - t^2/(2n) + o(1/n)]^n -> exp(-t^2/2),
+  $
+  which is the CF of $N(0,1)$. By #link(<thm:continuity-theorem>)[the
+    continuity theorem], $sqrt(n)(overline(X)_n - mu) / sigma arrow.r^d
+  N(0,1)$, i.e. $sqrt(n)(overline(X)_n - mu) arrow.r^d N(0, sigma^2)$.
+]
+
+#corollary(name: "De Moivre-Laplace CLT")[
+  If $X_n ~ B(n, p)$, then for large $n$,
+  $
+    (X_n - n p) / sqrt(n p (1-p)) approx N(0, 1).
+  $
+] <cor:demoivre-laplace>
+
+This is the CLT applied to Bernoulli trials: $X_n = sum_(i=1)^n X_i$ with
+$X_i ~ "Ber"(p)$, $mu = p$, $sigma^2 = p(1-p)$. The De Moivre-Laplace
+theorem predates the general CLT by two centuries.
+
+#property(name: "Lindeberg-Lyapunov CLT (Independent, Non-Identically Distributed)")[
+  Let $X_1, X_2, dots$ be independent with $E[X_k] = mu_k$,
+  $"Var"(X_k) = sigma_k^2$, $s_n^2 = sum_(k=1)^n sigma_k^2$. If the
+  *Lindeberg condition* holds —
+  $
+    (1 / s_n^2) sum_(k=1)^n E[(X_k - mu_k)^2 dot 1_{abs(X_k - mu_k) > epsilon s_n}] -> 0 quad "for all" epsilon > 0 —
+  $
+  then $S_n / s_n arrow.r^d N(0,1)$, where $S_n = sum_(k=1)^n (X_k - mu_k)$.
+] <prop:lindeberg-condition>
+
+The Lindeberg condition ensures that no single $X_k$ dominates the sum.
+A simpler but stronger sufficient condition is the *Lyapunov condition*:
+$sum E[abs(X_k - mu_k)^(2+delta)] / s_n^(2+delta) -> 0$ for some
+$delta > 0$. The proof uses the same CF strategy as the i.i.d. case,
+but the Taylor expansion must control each term individually.
+
+#example[
+  (Normal approximation to the binomial.) A factory produces items with
+  defect rate $p = 0.05$. In a batch of $n = 1000$, what is
+  $P(X >= 60)$ for $X ~ B(1000, 0.05)$?
+
+  By De Moivre-Laplace, $(X - 50) / sqrt(47.5) approx N(0,1)$, so
+  $
+    P(X >= 60) approx. P(N(0,1) >= (59.5 - 50)/sqrt(47.5)) approx. P(Z >= 1.378) approx. 0.084.
+  $
+  The continuity correction ($59.5$ instead of $60$) improves the
+  approximation.
+] <ex:normal-approximation>
+
+#example[
+  (CLT for sample means.) If $X_1, dots, X_n$ is a random sample from
+  any distribution with mean $mu$ and variance $sigma^2$, then for large
+  $n$ the sample mean $overline(X)_n$ is approximately normal:
+  $
+    overline(X)_n approx N(mu, sigma^2 / n).
+  $
+  This is the foundation of statistical inference: even when the
+  population distribution is unknown, the sample mean has a
+  well-characterised *asymptotic* distribution. The Delta method extends
+  this to smooth functions of $overline(X)_n$.
+] <ex:clt-application>
+
+== Delta Method // Delta 方法
+
+#theorem(name: "Delta Method (First Order)")[
+  Let $X_1, X_2, dots$ be i.i.d. with $E[X_1] = mu$ and
+  $"Var"(X_1) = sigma^2 < infinity$. If $g$ is differentiable at $mu$
+  with $g'(mu) != 0$, then
+  $
+    sqrt(n) (g(overline(X)_n) - g(mu)) arrow.r^d N(0, [g'(mu)]^2 sigma^2).
+  $
+] <thm:delta-method>
+
+#proof[
+  By #link(<thm:clt>)[the CLT], $sqrt(n)(overline(X)_n - mu)
+  arrow.r^d N(0, sigma^2)$. A first-order Taylor expansion gives
+  $
+    g(overline(X)_n) = g(mu) + g'(mu)(overline(X)_n - mu) + o_p(overline(X)_n - mu).
+  $
+  Multiplying by $sqrt(n)$ and using Slutsky's theorem (if $Y_n arrow.r^d
+  Y$ and $Z_n arrow.r^P c$, then $Z_n Y_n arrow.r^d c Y$):
+  $
+    sqrt(n)(g(overline(X)_n) - g(mu)) = g'(mu) dot sqrt(n)(overline(X)_n - mu) + o_p(1) arrow.r^d g'(mu) dot N(0, sigma^2) = N(0, [g'(mu)]^2 sigma^2).
+  $
+]
+
+#example[
+  Let $X_1, dots, X_n$ be i.i.d. $"Exp"(lambda)$, so $mu = 1/lambda$,
+  $sigma^2 = 1/lambda^2$. To estimate $g(mu) = 1/mu = lambda$ via
+  $g(overline(X)_n) = 1/overline(X)_n$, note $g'(mu) = -1/mu^2 =
+  -lambda^2$, so $[g'(mu)]^2 sigma^2 = lambda^4 dot 1/lambda^2 =
+  lambda^2$. The Delta method gives
+  $
+    sqrt(n) (1/overline(X)_n - lambda) arrow.r^d N(0, lambda^2).
+  $
+  This previews Part VI: the maximum likelihood estimator of $lambda$
+  is $1/overline(X)_n$, and the Delta method establishes its asymptotic
+  normality.
+] <ex:delta-method-application>
+
+The limit theorems of this chapter are the pillars of statistical
+inference. Part V applies them to sampling distributions; Part VI uses
+the CLT and Delta method to establish the asymptotic properties of
+estimators.
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
