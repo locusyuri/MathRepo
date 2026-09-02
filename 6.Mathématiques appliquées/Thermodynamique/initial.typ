@@ -24,6 +24,504 @@
 
 #make-outline(depth: 2, title: "Contents")
 
+#part("Kinetic Theory and Classical Thermodynamics")
+
+= Kinetic Theory of Gases // 气体分子运动论
+
+Kinetic theory explains the macroscopic behaviour of gases from the
+molecular picture: a gas is a swarm of particles in ceaseless random
+motion, and every thermodynamic quantity is a statistical average over
+this motion. This chapter builds that dictionary — pressure as momentum
+flux, temperature as mean kinetic energy — before the formal
+thermodynamic framework of Chapters 2–4.
+
+== Ideal Gas Law and Equation of State // 理想气体定律与状态方程
+
+#definition(name: "Equilibrium State and State Variables")[
+  A thermodynamic system is in an *equilibrium state* if its measurable
+  properties are independent of time and of the system's history. For a
+  simple compressible system of fixed composition, the state is
+  characterised by a small set of *state variables* — the pressure $p$,
+  the volume $V$, and the temperature $T$.
+] <def:equilibrium-state>
+
+#definition(name: "Equation of State")[
+  The *equation of state* is the functional relation among the state
+  variables,
+  $
+    f(p, V, T) = 0,
+  $
+  expressing that only two of the three variables are independent for a
+  simple system.
+] <def:equation-of-state>
+
+The *ideal gas* is the limiting case of a gas at low density, where
+intermolecular forces and molecular volumes are negligible. Its
+equation of state, established empirically by Boyle, Charles and
+Avogadro, is
+$
+  p V = n R T = N k_B T,
+$
+where $n$ is the amount of substance, $R = N_A k_B = 8.314 "J\/(mol K)"$
+is the gas constant, and $k_B = 1.38 times 10^(-23) "J\/K"$ is the
+Boltzmann constant. The three families of curves $p V = "const"$
+(isotherms), $p = "const"$ (isobars) and $V = "const"$ (isochores)
+partition the $p$-$V$ plane; see @fig:pv-isotherms.
+
+#example[
+  (Van der Waals equation.) The first systematic correction to the
+  ideal gas accounts for the finite molecular volume $b$ and the
+  attractive intermolecular forces, giving the *van der Waals equation*
+  per mole,
+  $
+    (p + a / V_m^2)(V_m - b) = R T.
+  $
+  The parameter $a$ adds an internal pressure (cohesion) and $b$
+  subtracts the excluded volume. Below the critical temperature
+  $T_c = 8a / (27 R b)$ the isotherms develop a loop signalling the
+  liquid--gas transition; the physical isotherm is recovered by the
+  Maxwell equal-area construction, discussed with the mean field theory
+  of Chapter 19.
+] <ex:vanderwaals-isotherms>
+
+#figure(
+  image("img/pv-isotherms.svg", width: 72%),
+  caption: [Isotherms in the $p$-$V$ plane: hyperbolic ideal-gas
+    isotherms $p V = n R T$ and van der Waals isotherms, the subcritical
+    one developing the characteristic loop that signals the liquid--gas
+    transition below the critical temperature.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:pv-isotherms>
+
+More generally, any equation of state admits a low-density expansion,
+the *virial expansion*
+$
+  (p V_m) / (R T) = 1 + B_2(T) / V_m + B_3(T) / V_m^2 + dots,
+$
+with temperature-dependent *virial coefficients* $B_2, B_3, dots$
+encoding the intermolecular forces. The ideal gas corresponds to all
+virial coefficients vanishing; their systematic computation from first
+principles is carried out by the cluster expansion of Chapter 19.
+
+== Maxwell-Boltzmann Velocity Distribution // 麦克斯韦-玻尔兹曼速度分布
+
+In equilibrium the molecules of a gas are distributed over velocities
+according to a law so universal that it has survived every subsequent
+revolution in physics. Maxwell derived it in 1860 from two symmetry
+assumptions alone.
+
+#definition(name: "Maxwell Velocity Distribution")[
+  In a gas at thermal equilibrium, the probability density of the
+  velocity $bold(v) = (v_x, v_y, v_z)$ of a molecule of mass $m$ at
+  temperature $T$ is
+  $
+    f(bold(v)) = (m / (2 pi k_B T))^(3/2) exp(- m v^2 / (2 k_B T)),
+  $
+  where $v^2 = v_x^2 + v_y^2 + v_z^2$.
+] <def:maxwell-velocity>
+
+*Derivation (Maxwell's argument).* Write the density as
+$f(v_x, v_y, v_z)$ and impose two assumptions:
+
+- *Isotropy*: the gas selects no preferred direction, so $f$ depends on
+  the velocity only through its magnitude, $f = phi(v)$ with
+  $v = sqrt(v_x^2 + v_y^2 + v_z^2)$;
+- *Component independence*: the three Cartesian components are
+  statistically independent, so
+  $f(v_x, v_y, v_z) = g(v_x) g(v_y) g(v_z)$ for one and the same
+  function $g$, by isotropy again.
+
+Combining the two and setting $v_z = 0$,
+$
+  g(v_x) g(v_y) = phi(sqrt(v_x^2 + v_y^2)).
+$
+Taking logarithms with $G(u) = ln g(sqrt(u))$ and
+$Phi(s) = ln phi(sqrt(s))$ gives $G(u) + G(w) = Phi(u + w)$ for all
+$u, w >= 0$; differentiating with respect to $u$ and $w$ separately
+yields $G'(u) = G'(w)$ for all $u, w$, so $G'$ is a constant $-alpha$
+and
+$
+  g(v) = A exp(-alpha v^2).
+$
+Normalisation fixes $A = sqrt(alpha / pi)$ per component. The parameter
+$alpha$ is fixed by the pressure computation below to be
+$alpha = m / (2 k_B T)$.
+
+#property(name: "Pressure as Momentum Flux")[
+  In a gas of number density $n$ whose velocities follow the Maxwell
+  distribution, the pressure exerted on a container wall is
+  $
+    p = n m lr(⟨ v_x^2 ⟩) = 1/3 n m lr(⟨ v^2 ⟩).
+  $
+] <prop:kinetic-pressure>
+
+*Derivation.* Molecules striking the wall transfer $2 m v_x$ of momentum,
+the normal component being reversed. The flux of molecules arriving with
+normal component in $(v_x, v_x + dif v_x)$, $v_x > 0$, is
+$n v_x g(v_x) dif v_x$, so
+$
+  p = integral_0^infinity 2 m v_x dot n v_x g(v_x) dif v_x
+  = n m integral_(-infinity)^infinity v_x^2 g(v_x) dif v_x
+  = n m lr(⟨ v_x^2 ⟩).
+$
+Isotropy gives $lr(⟨ v_x^2 ⟩) = lr(⟨ v_y^2 ⟩) =
+lr(⟨ v_z^2 ⟩) = lr(⟨ v^2 ⟩) / 3$. Comparing with the
+ideal gas law $p = n k_B T$ forces
+$
+  1/3 m lr(⟨ v^2 ⟩) = k_B T, quad "i.e." quad
+  1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T,
+$
+so $alpha = m / (2 k_B T)$. Temperature is thereby *identified* with the
+mean kinetic energy per molecule — the dictionary entry announcing the
+equipartition theorem of §1.4. The argument does not merely use the
+ideal gas law; it *explains* it.
+
+#definition(name: "Speed Distribution")[
+  The probability density of the speed $v = norm(bold(v))$ follows by
+  integrating the velocity density over the spherical shell
+  $v < norm(bold(v)) < v + dif v$ of volume $4 pi v^2 dif v$:
+  $
+    F(v) = 4 pi v^2 (m / (2 pi k_B T))^(3/2)
+    exp(- m v^2 / (2 k_B T)).
+  $
+] <def:speed-distribution>
+
+The factor $4 pi v^2$ — the volume of the shell — reshapes the Gaussian
+into a law with a rising front and a long tail.
+
+#property(name: "Characteristic Speeds")[
+  Three speeds characterise the Maxwell distribution:
+  $
+    v_p = sqrt(2 k_B T / m), quad
+    overline(v) = sqrt(8 k_B T / (pi m)), quad
+    v_("rms") = sqrt(3 k_B T / m),
+  $
+  the *most probable*, *mean* and *root-mean-square* speeds, in the
+  fixed ratio
+  $
+    v_p : overline(v) : v_("rms") = 1 : 1.128 : 1.225.
+  $
+] <prop:characteristic-speeds>
+
+*Derivation.* The most probable speed maximises $F$: setting
+$dif (v^2 exp(-alpha v^2)) / dif v = 0$ gives $2/v - 2 alpha v = 0$,
+hence $v_p = 1 / sqrt(alpha)$. The mean speed uses the integral
+$integral_0^infinity v^3 exp(-alpha v^2) dif v = 1 / (2 alpha^2)$:
+$
+  overline(v) = 4 pi A^3 dot 1 / (2 alpha^2) = 2 / sqrt(pi alpha).
+$
+Finally $v_("rms")^2 = lr(⟨ v^2 ⟩) = 3 / (2 alpha)$ from the
+pressure derivation above.
+
+#figure(
+  image("img/maxwell-speed-distribution.svg", width: 75%),
+  caption: [Maxwell speed distribution $F(v)$ at three temperatures. The
+    most probable speed $v_p$ (the peak), the mean speed $overline(v)$
+    and the root-mean-square speed $v_("rms")$ all scale as $sqrt(T)$, and
+    the distribution spreads towards higher speeds as $T$ rises.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:maxwell-speed>
+
+#example[
+  (Stern experiment, 1920.) Silver atoms evaporating from an oven pass
+  through a slit into a rotating drum; the deposit on the inner wall is
+  spread according to flight time, hence according to speed. The
+  measured deposit profile matches $F(v)$, providing direct experimental
+  confirmation of the Maxwell distribution.
+] <ex:stern-experiment>
+
+#note[
+  (Probabilistic structure.) The velocity density factorises into three
+  independent Gaussians; consequently $v^2$ is distributed as a sum of
+  three squared centred Gaussians — a scaled chi-square distribution
+  with three degrees of freedom, as studied in the Probabilités note.
+  The speed distribution $F(v)$ is thus a scaled chi distribution, and
+  the characteristic speeds of
+  #link(<prop:characteristic-speeds>)[the preceding property] are its
+  shape parameters in disguise.
+] <note:mb-probability>
+
+== Mean Free Path and Collision Frequency // 平均自由程与碰撞频率
+
+The Maxwell distribution describes free flight; the picture is completed
+by the collisions that randomise it. For a dilute gas, the collision
+structure is captured by a single geometric quantity.
+
+#definition(name: "Collision Cross-Section")[
+  Model the molecules as hard spheres of diameter $d$. A collision
+  occurs whenever two centres pass within a distance $d$; equivalently,
+  each molecule sweeps out a *collision cross-section*
+  $
+    sigma = pi d^2
+  $
+  on the cylinder of targets it can hit.
+] <def:collision-cross-section>
+
+#property(name: "Mean Free Path")[
+  A molecule of a gas with number density $n$ travels, between
+  successive collisions, an average distance
+  $
+    lambda = 1 / (sqrt(2) n sigma).
+  $
+] <prop:mean-free-path>
+
+*Derivation.* In a time $dif t$, a molecule moving with speed $v$ sweeps
+a cylinder of volume $sigma v dif t$ and collides with every other
+molecule whose centre lies inside it. With stationary targets the
+collision rate would be $n sigma v$, giving $lambda = 1/(n sigma)$. The
+targets are themselves moving: the relevant quantity is the *relative*
+speed, whose mean over two Maxwell-distributed velocities is
+$sqrt(2) overline(v)$ (the difference of two independent Gaussians is
+Gaussian, with doubled variance). Hence the collision rate
+$
+  z = sqrt(2) n sigma overline(v), quad "so that" quad lambda =
+  overline(v) / z = 1 / (sqrt(2) n sigma).
+$
+The mean free path depends only on density and molecular size — at
+atmospheric conditions $lambda approx 70 "nm"$, some $200$ molecular
+diameters, which is why the dilute-gas picture is self-consistent.
+
+The *collision frequency* $z$ will do little explicit work below, but
+the mean free path $lambda$ and the mean speed $overline(v)$ are the
+two ingredients from which all transport coefficients of §1.5 are
+assembled.
+
+== Energy Equipartition Theorem // 能量均分定理
+
+A classical system in thermal equilibrium shares its energy equally
+among all quadratic degrees of freedom. The result underlies the
+classical theory of heat capacities — and its dramatic failure at low
+temperatures, which announced the quantum theory.
+
+#theorem(name: "Equipartition Theorem")[
+  Let the energy of a classical system be
+  $
+    E = sum_(i=1)^f alpha_i x_i^2 + tilde(E)(x_(f+1), dots, x_N),
+  $
+  where the coordinates $x_1, dots, x_f$ enter only quadratically and
+  the remaining coordinates appear in $tilde(E)$ but not in the
+  quadratic terms. In thermal equilibrium at temperature $T$,
+  $
+    lr(⟨ alpha_i x_i^2 ⟩) = 1/2 k_B T quad "for each" i = 1,
+    dots, f.
+  $
+] <thm:equipartition>
+
+*Derivation.* The distribution over phase space in equilibrium is the
+Maxwell--Boltzmann density proportional to $exp(- E / (k_B T))$ (this
+will be rederived systematically from the canonical ensemble in
+Chapter 13; at the kinetic level it is the velocity law of §1.2 applied
+to every quadratic coordinate). Then
+$
+  lr(⟨ alpha_i x_i^2 ⟩)
+  = (integral alpha_i x_i^2 exp(-E/(k_B T)) dif Gamma) /
+  (integral exp(-E/(k_B T)) dif Gamma).
+$
+
+Let $beta = 1/(k_B T)$. The Gaussian factorisation makes each quadratic
+coordinate independent:
+$
+  lr(⟨ alpha_i x_i^2 ⟩) = (alpha_i integral x_i^2 exp(-beta alpha_i x_i^2) dif x_i) / (integral exp(-beta alpha_i x_i^2) dif x_i).
+$
+With the Gaussian integrals
+$integral exp(-beta alpha x^2) dif x = sqrt(pi / (beta alpha))$ and
+$integral x^2 exp(-beta alpha x^2) dif x = sqrt(pi) / (2 (beta alpha)^(3/2))$,
+the ratio equals $1/(2 beta) = 1/2 k_B T$.
+
+#example[
+  (Heat capacities of dilute gases.) Each translational or rotational
+  degree of freedom contributes $1/2 k_B T$ to the mean energy per
+  molecule, so
+
+  - *monatomic gas* ($f = 3$ translations): $lr(⟨ E ⟩) = 3/2 k_B T$
+    per molecule and $C_V = 3/2 R$ per mole;
+  - *rigid diatomic gas* ($f = 5$: three translations + two rotations,
+    the axis along the bond carrying no moment of inertia):
+    $C_V = 5/2 R$;
+  - *diatomic gas with vibrational mode* ($f = 7$: adding one kinetic +
+    one potential quadratic term): $C_V = 7/2 R$.
+
+  These are precisely the classical values tabulated for gases such as
+  helium ($C_V approx 3/2 R$), nitrogen at room temperature
+  ($approx 5/2 R$), and chlorine at high temperature ($approx 7/2 R$).
+] <ex:gas-heat-capacities>
+
+#caution[
+  (Failure of equipartition.) The vibrational contribution of the
+  previous example is *frozen out* at room temperature: nitrogen does
+  not reach $C_V = 7/2 R$ until far above $2000 "K"$. Worse still, the
+  vibrational and rotational contributions of solids are missing
+  entirely at low temperatures, and the classical prediction of the
+  specific heat of a crystal — $3 R$ per mole at *all* temperatures
+  (the Dulong--Petit law) — collapses below tens of kelvin. Classical
+  statistical mechanics cannot explain these facts; the resolution is
+  quantum mechanical, and is supplied by the Einstein and Debye models
+  (Chapter 15) and by quantum statistics (Chapter 17).
+] <caution:equipartition-failure>
+
+== Transport Phenomena // 输运现象
+
+A gas in which the local state varies from point to point does not stay
+that way: molecules flying freely between collisions carry momentum,
+energy and particles across any surface, smoothing out the inhomogeneity.
+Three gradient-driven relaxation processes result, each governed by a
+*transport coefficient*.
+
+| Phenomenon | Graded quantity | Flux law | Coefficient |
+|---|---|---|---|
+| Momentum transport (viscosity) | flow velocity $u(z)$ | $Pi = -eta dif u / dif z$ | shear viscosity $eta$ |
+| Energy transport (heat conduction) | temperature $T(z)$ | $q = -kappa dif T / dif z$ | thermal conductivity $kappa$ |
+| Mass transport (diffusion) | number density $n(z)$ | $J = -D dif n / dif z$ | diffusion coefficient $D$ |
+
+Each law is written for transport along $z$; the flux $Pi$ carries
+$z$-momentum across a plane, $q$ is the heat current and $J$ the particle
+current. All three share the same kinetic origin — a molecule crossing
+the plane travels, on average, one mean free path since its last
+collision, and so deposits the local value of the transported property
+one mean free path away.
+
+#definition(name: "Transport Coefficients")[
+  With the flux laws of the table above, the *shear viscosity* $eta$,
+  the *thermal conductivity* $kappa$ and the *diffusion coefficient*
+  $D$ characterise the response of the gas to velocity, temperature and
+  density gradients respectively.
+] <def:transport-coefficients>
+
+#property(name: "Kinetic Estimates of Transport Coefficients")[
+  In terms of the mean free path $lambda$, mean speed $overline(v)$,
+  number density $n$ and molecular mass $m$,
+  $
+    eta = 1/3 rho overline(v) lambda, quad
+    kappa = 1/3 n overline(v) lambda c_V^("mol") , quad
+    D = 1/3 overline(v) lambda,
+  $
+  where $rho = n m$ is the mass density and $c_V^("mol")$ the molar
+  heat capacity at constant volume.
+] <prop:kinetic-transport>
+
+*Derivation (one of three; the viscosity case).* Take the flow velocity
+$u(z)$ along $x$, sheared in $z$. Molecules cross a plane $z = "const"$
+from above and from below at rate $1/2 n overline(v)$ per unit area
+(the factor $1/3$ averaging over directions collapses into the isotropic
+crossing rate $1/4 n overline(v)$ per direction pair; the resulting
+prefactor is $1/3$ in the elementary estimate, higher-order treatments
+give $0.37$-odd). A molecule arriving from distance $lambda$ carries the
+$x$-momentum appropriate to its departure point, $m u(z - lambda)$ from
+below and $m u(z + lambda)$ from above. The net momentum flux in the
+$+z$ direction is
+$
+  Pi = 1/2 n overline(v) [m u(z - lambda) - m u(z + lambda)]
+  = - n m overline(v) lambda dif u / dif z,
+$
+with the sign convention that positive $Pi$ transports $x$-momentum
+towards $+z$. Comparing with $Pi = -eta dif u / dif z$ yields
+$eta = rho overline(v) lambda / 3$. The conductivity follows by
+replacing the transported property by the mean energy $c_V^("mol") T / N_A$
+per molecule, and the diffusivity by the particle property itself.
+
+Three consequences are worth recording:
+
+- *Independence of density.* $lambda = 1/(sqrt(2) n sigma)$ cancels the
+  $n$ in $eta = 1/3 rho overline(v) lambda$: the viscosity of a dilute
+  gas is independent of pressure — a striking 1860 prediction of
+  Maxwell, confirmed by his own experiments.
+- *Temperature dependence.* Since $overline(v) prop sqrt(T)$ and
+  $lambda prop T$ at fixed pressure, $eta prop T^(1/2)$ and
+  $kappa prop T^(1/2)$: gaseous viscosity *increases* with
+  temperature, opposite to liquids — a fingerprint of transport by
+  free flight rather than by intermolecular locking.
+- *Self-consistency.* All three coefficients share the combination
+  $overline(v) lambda$, of order the collision rate — and all three
+  derivations use free flight over one $lambda$, valid only when
+  $lambda$ is small compared with the macroscopic scale of the gradient.
+
+#note[
+  (Stochastic boundary.) The molecular-randomness picture of this
+  section is the classical precursor of fluctuation phenomena: a
+  suspended particle buffeted by molecular impacts performs Brownian
+  motion, whose rigorous treatment — Langevin equations,
+  Fokker--Planck equations, the fluctuation--dissipation theorem — is
+  the subject of the Processus Stochastique note, and is touched upon
+  again in Chapter 23 of this note.
+] <note:transport-stochastic>
+
+== Boltzmann H-Theorem and Irreversibility // 玻尔兹曼 H 定理与不可逆性
+
+The microscopic laws of motion are invariant under time reversal; the
+transport phenomena of §1.5 are not — viscosity dissipates, heat flows
+from hot to cold, and never backwards. Boltzmann's H-theorem was the
+first quantitative bridge across this gap.
+
+#definition(name: "H Function")[
+  For a gas with one-particle velocity distribution $f(bold(v), t)$,
+  the *H function* is
+  $
+    H(t) = integral f(bold(v), t) ln f(bold(v), t) dif^3 v.
+  $
+  Up to constants, $H$ is the (negative) continuous entropy of the
+  velocity distribution.
+] <def:h-function>
+
+#theorem(name: "Boltzmann H-Theorem")[
+  For a dilute gas whose collisions conserve particle number, momentum
+  and kinetic energy, and whose colliding pairs are statistically
+  uncorrelated before impact (*molecular chaos*), the H function
+  satisfies
+  $
+    (dif H) / (dif t) <= 0,
+  $
+  with equality if and only if $f$ is the Maxwell distribution of
+  §1.2.
+] <thm:h-theorem>
+
+*Derivation (sketch).* Each collision $bold(v), bold(v)_1 arrow.r
+bold(v)', bold(v)'_1$ changes $H$ by the amount contributed by the four
+distribution values involved. Collecting the gain of the outgoing pair
+and the loss of the incoming pair, summing over all collisions and
+using the conservation laws, one obtains schematically
+$
+  (dif H) / (dif t) = 1/4 integral integral (f' f'_1 - f f_1)
+  ln (f f_1 / (f' f'_1)) dif^3 v dif^3 v_1 quad <= 0,
+$
+because for positive numbers $x = f f_1$ and $y = f' f'_1$ the factor
+$(y - x) ln(x / y)$ is never positive (the function $u ln u$ is
+convex, or equivalently $ln u <= u - 1$). Equality forces
+$f f_1 = f' f'_1$ in every collision — the incoming and outgoing
+distributions agree, which is precisely the characterisation of the
+Maxwell distribution. The full collision integral is set up and
+analysed systematically in Chapter 21.
+
+#caution[
+  (Loschmidt and Zermelo paradoxes.) *Loschmidt's reversibility
+  objection* (1876): since the microscopic dynamics is invariant under
+  velocity reversal, every H-decreasing motion has an H-increasing
+  twin — how can H-theorem hold? *Zermelo's recurrence objection*
+  (1896): Poincaré recurrence returns a closed system arbitrarily close
+  to its initial state, so $H$ must return to its initial value. Both
+  objections are correct about the microscopic dynamics and both miss
+  the statistical content of the theorem: the molecular-chaos
+  assumption encodes a *probability* statement about initial
+  conditions, and $dif H / (dif t) <= 0$ holds with overwhelming
+  probability, not with certainty. Irreversibility is not a law of
+  motion but a law of large numbers applied to motion — the Second Law
+  of Chapter 3 in statistical costume.
+] <caution:reversibility-paradoxes>
+
+#note[
+  (Statistical interpretation.) The H function is, up to the constant
+  $-k_B N$, the Gibbs entropy of the one-particle distribution. The
+  H-theorem thus gives the microscopic mechanism of entropy increase,
+  and its equality condition — the Maxwell distribution — identifies
+  the equilibrium state. Two caveats delimit its scope: the theorem
+  addresses the approach to equilibrium, not the value of equilibrium
+  entropy itself (Chapter 12); and the molecular-chaos assumption
+  breaks the formal time-reversal symmetry of the underlying dynamics,
+  which is exactly where the statistical arrow of time enters. The
+  systematic Boltzmann-equation treatment, including the rigorous
+  collision integral, is the subject of Chapter 21.
+] <note:h-statistical>
 
 // ==========================================================================
 // Thermodynamique (热力学与统计力学) — Table of Contents
