@@ -46,23 +46,310 @@
 // Ch 2 完整处理一阶 PDE 理论（特征线法、Hamilton-Jacobi、守恒律）。
 // 对应教材：通常占据 PDE 教材的前 2-3 章。
 
-// --- Chapter 1: Introduction to PDEs (偏微分方程导论) ---
+= Introduction to PDEs // 偏微分方程导论
 
-//   Section 1.1: Basic Concepts and Examples (基本概念与例子)
-//     - 偏微分方程的定义、阶、线性与非线性
-//     - 典型例子：Laplace、热传导、波动方程的引出
+== Basic Concepts and Examples // 基本概念与例子
 
-//   Section 1.2: Order, Linearity and Superposition (阶、线性与叠加原理)
-//     - 齐次与非齐次方程
-//     - 叠加原理及其适用条件
+A *partial differential equation (PDE)* is an equation involving an unknown function of several variables and its partial derivatives. Formally, a PDE of order $m$ takes the form:
 
-//   Section 1.3: Initial and Boundary Value Problems (初值问题与边值问题)
-//     - Cauchy 问题、Dirichlet / Neumann / Robin 边界条件
-//     - 典型定解问题的适定性表述
+#definition(name: "Partial Differential Equation")[
+  A *partial differential equation* of order $m$ is an equation of the form
+  $
+    F(x, u, nabla u, nabla^2 u, dots, nabla^m u) = 0,
+  $
+  where $x in Omega subset R^n$, $Omega$ is an open set, $u: Omega -> R$ is the unknown function, and $nabla^k u$ denotes all partial derivatives of order $k$ of $u$. Here $F$ is a given function.
+] <def:pde>
 
-//   Section 1.4: Well-Posedness (适定性: Hadamard 框架)
-//     - 存在性、唯一性、连续依赖性
-//     - 适定与不适定问题的例子
+To express partial derivatives systematically, we use multi-index notation.
+
+#definition(name: "Multi-Index Notation")[
+  A *multi-index* $alpha = (alpha_1, dots, alpha_n) in Z_+^n$ is an $n$-tuple of non-negative integers. We define the order $abs(alpha)$ and the corresponding derivative operator $D^alpha$ by:
+] <def:multi-index>
+
+#eq[$
+  |alpha| &= alpha_1 + alpha_2 + dots + alpha_n, \
+  D^alpha u &= (partial^(|alpha|) u) / (partial x_1^(alpha_1) partial x_2^(alpha_2) dots partial x_n^(alpha_n)) = partial^(alpha_1)_(x_1) partial^(alpha_2)_(x_2) dots partial^(alpha_n) u.
+$] <eq:multi-index>
+
+Using this notation, a general PDE of order $m$ can be written as:
+$
+  F(x, u, (D^alpha u)_(|alpha| <= m)) = 0.
+$
+
+#definition(name: "Order of PDE")[
+  The *order* of a PDE is the highest order of the partial derivatives appearing in the equation.
+] <def:pde-order>
+
+PDEs are classified according to their linearity properties:
+
+#definition(name: "Classification of PDEs by Linearity")[
+  Consider a PDE of the form $F(x, u, nabla u, nabla^2 u, dots, nabla^m u) = 0$.
+
+  1. The PDE is *linear* if $F$ is linear in $u$ and all its partial derivatives, i.e.,
+    $
+      F(x, u, nabla u, dots) = sum_(|alpha| <= m) a_alpha(x) D^alpha u - f(x),
+    $
+    where coefficients $a_alpha(x)$ depend only on $x$.
+
+  2. The PDE is *semilinear* if it is linear in the highest-order derivatives but nonlinear in lower-order derivatives:
+    $
+      sum_(|alpha| = m) a_alpha(x) D^alpha u = f(x, u, (D^beta u)_(|beta| < m)).
+    $
+
+  3. The PDE is *quasilinear* if it is linear in the highest-order derivatives but coefficients may depend on the function and lower-order derivatives:
+    $
+      sum_(|alpha| = m) a_alpha(x, u, (D^beta u)_(|beta| < m)) D^alpha u = f(x, u, (D^beta u)_(|beta| < m)).
+    $
+
+  4. The PDE is *fully nonlinear* if it is nonlinear in the highest-order derivatives.
+] <def:pde-linearity-classification>
+
+Let us introduce three fundamental PDEs that serve as models for large classes of equations:
+
+#definition(name: "Laplace Equation")[
+  The *Laplace equation* is given by
+  $
+    Delta u = sum_(i=1)^n (partial^2 u) / (partial x_i^2) = 0.
+  $
+  Solutions to this equation are called *harmonic functions*.
+] <def:laplace-equation>
+
+The Laplace equation arises in various physical contexts:
+- Electrostatics: $Delta V = 0$ where $V$ is the electrostatic potential in a charge-free region
+- Steady-state heat conduction: $Delta T = 0$ where $T$ is temperature in equilibrium
+- Incompressible fluid flow: $Delta phi = 0$ where $phi$ is the velocity potential
+
+#definition(name: "Heat Equation")[
+  The *heat equation* (or diffusion equation) is given by
+  $
+    u_t - kappa Delta u = f(x,t),
+  $
+  where $kappa > 0$ is the thermal diffusivity and $f(x,t)$ represents a heat source.
+] <def:heat-equation>
+
+Physical derivation: Consider heat flow in a homogeneous medium. Let $u(x,t)$ denote the temperature at position $x$ and time $t$. By conservation of energy and Fourier's law of heat conduction ($bold(q) = -kappa nabla u$ where $bold(q)$ is the heat flux), we obtain:
+$
+  rho c_p (partial u) / (partial t) = nabla dot (kappa nabla u) + Q,
+$
+where $rho$ is density, $c_p$ is specific heat capacity, and $Q$ is the heat source. For constant coefficients and rescaling, this becomes $u_t - kappa Delta u = f$.
+
+#definition(name: "Wave Equation")[
+  The *wave equation* is given by
+  $
+    u_(t t) - c^2 Delta u = f(x,t),
+  $
+  where $c > 0$ is the wave speed and $f(x,t)$ represents a forcing term.
+] <def:wave-equation>
+
+Physical derivation: For small amplitude waves in an elastic medium, consider the displacement $u(x,t)$ of particles from equilibrium. Newton's second law combined with Hooke's law for elastic forces leads to:
+$
+  rho (partial^2 u) / (partial t^2) = nabla dot (c^2 rho nabla u) + F,
+$
+where $rho$ is density, $c$ is the wave speed, and $F$ is the external force. This simplifies to $u_(t t) - c^2 Delta u = f$ after rescaling.
+
+#example(name: "Identifying PDE Properties")[
+  Consider the following equations:
+
+  1. $u_x + u_y = 0$ (First-order linear PDE)
+  2. $u_t + u u_x = 0$ (First-order quasilinear PDE - Burgers' equation)
+  3. $u_(x x) + u_(y y) = u^2$ (Second-order semilinear PDE)
+  4. $u_(x x) u_(y y) - u_(x y)^2 = 1$ (Second-order fully nonlinear PDE - Monge-Ampère type)
+
+  Identify their orders, linearity types, and principal parts.
+] <ex:pde-classification>
+
+== Order, Linearity and Superposition // 阶、线性与叠加原理
+
+The classification introduced in #link(<def:pde-linearity-classification>)[§1] determines which structural tools are available for analyzing a PDE. For *linear* equations, the superposition principle allows us to decompose complex solutions into simpler building blocks — a property that fundamentally distinguishes linear PDEs from their nonlinear counterparts.
+
+#definition(name: "Homogeneous and Inhomogeneous Equations")[
+  A linear PDE is said to be *homogeneous* if it can be written in the form $L u = 0$, where $L$ is a linear differential operator. It is *inhomogeneous* (or non-homogeneous) if it has the form $L u = f$ with $f not= 0$.
+] <def:homogeneous-pde>
+
+#definition(name: "Linear Operator")[
+  A differential operator $L$ is *linear* if it satisfies:
+
+  1. $L(u + v) = L u + L v$ (additivity)
+  2. $L(c u) = c L u$ (homogeneity)
+
+  for all functions $u, v$ in the domain of $L$ and all scalars $c$.
+] <def:linear-operator>
+
+#proposition(name: "Superposition Principle")[
+  If $u_1, u_2, dots, u_k$ are solutions of the homogeneous linear PDE $L u = 0$, then any linear combination $u = c_1 u_1 + c_2 u_2 + dots + c_k u_k$ is also a solution, where $c_1, c_2, dots, c_k$ are arbitrary constants.
+
+  Furthermore, if $u_p$ is a particular solution of the inhomogeneous equation $L u = f$ and $u_h$ is the general solution of the homogeneous equation $L u = 0$, then the general solution of $L u = f$ is $u = u_h + u_p$.
+] <prop:superposition-principle>
+
+#proof[
+  Since $L$ is linear and $L u_i = 0$ for $i = 1, dots, k$, we have:
+  $
+    L(c_1 u_1 + c_2 u_2 + dots + c_k u_k) = c_1 L u_1 + c_2 L u_2 + dots + c_k L u_k = 0.
+  $
+
+  For the inhomogeneous case:
+  $
+    L(u_h + u_p) = L u_h + L u_p = 0 + f = f.
+  $
+]
+
+#example(name: "Application of Superposition")[
+  The heat equation $u_t - kappa u_(x x) = 0$ is linear and homogeneous. If $u_1(x,t) = sin(x)e^(-kappa t)$ and $u_2(x,t) = cos(x)e^(-kappa t)$ are both solutions, then $u(x,t) = A sin(x)e^(-kappa t) + B cos(x)e^(-kappa t)$ is also a solution for any constants $A, B$.
+] <ex:superposition-application>
+
+#note[
+  The superposition principle is fundamental to the theory of linear PDEs. It allows us to build complex solutions from simpler ones and forms the basis for solution techniques like separation of variables and Fourier series.
+]
+
+== Initial and Boundary Value Problems // 初值问题与边值问题
+
+A PDE alone does not uniquely determine a solution. Additional conditions are required, typically of two types:
+
+#definition(name: "Initial Value Problem (Cauchy Problem)")[
+  An *initial value problem* (also called *Cauchy problem*) consists of a PDE together with conditions on the unknown function and its derivatives at an initial time $t = t_0$:
+  $
+    u(x, t_0) = g_0(x), \
+    u_t(x, t_0) = g_1(x), \
+    dots.v \
+    partial_t^(k-1) u(x, t_0) = g_(k-1)(x),
+  $
+  where $k$ is the order of the equation in time.
+] <def:cauchy-problem>
+
+For example, the wave equation $u_(t t) - c^2 Delta u = 0$ requires two initial conditions:
+$
+  u(x, 0) = g(x), quad u_t(x, 0) = h(x).
+$
+
+#definition(name: "Boundary Value Problem")[
+  A *boundary value problem* consists of a PDE in a domain $Omega subset R^n$ together with conditions on the boundary $partial Omega$.
+] <def:bvp>
+
+The three most common boundary conditions are:
+
+#definition(name: "Boundary Conditions")[
+  Let $Omega subset R^n$ be a domain with boundary $partial Omega$, and $bold(n)$ the outward unit normal. The three classical boundary conditions are:
+
+  1. *Dirichlet*: prescribes the value of the solution on the boundary:
+    $
+      u(x) = g(x) text(" for ") x in partial Omega.
+    $
+
+  2. *Neumann*: prescribes the normal derivative of the solution:
+    $
+      (partial u)/(partial n)(x) = nabla u(x) dot bold(n) = g(x) text(" for ") x in partial Omega.
+    $
+
+  3. *Robin* (mixed): a linear combination of the function and its normal derivative:
+    $
+      alpha(x) u(x) + beta(x) (partial u)/(partial n)(x) = g(x) text(" for ") x in partial Omega,
+    $
+    where $alpha, beta$ are given functions with $alpha^2 + beta^2 != 0$.
+] <def:boundary-conditions>
+
+#example(name: "Classifying Boundary Conditions")[
+  For the heat equation $u_t - kappa Delta u = 0$ in a domain $Omega$:
+
+  - Dirichlet: $u(x,t) = 0$ on $partial Omega$ (fixed temperature on boundary)
+  - Neumann: $(partial u)/(partial n) = 0$ on $partial Omega$ (insulated boundary)
+  - Robin: $u + gamma (partial u)/(partial n) = 0$ on $partial Omega$ (convective boundary condition)
+] <ex:boundary-conditions-classification>
+
+#note[
+  The choice of boundary conditions depends on the physical problem being modeled. In general, for a second-order PDE, we need one boundary condition per boundary point.
+]
+
+== Well-Posedness // 适定性
+
+The concept of well-posedness, introduced by Jacques Hadamard, provides a framework for determining whether a PDE problem has a meaningful solution in the physical sense.
+
+#definition(name: "Well-Posed Problem (Hadamard)")[
+  A problem consisting of a PDE together with auxiliary conditions (initial and/or boundary conditions) is said to be *well-posed* in the sense of Hadamard if:
+
+  1. *(Existence)* A solution exists.
+  2. *(Uniqueness)* The solution is unique.
+  3. *(Stability)* The solution depends continuously on the data (initial/boundary conditions, coefficients, source terms).
+
+  If any of these conditions fails, the problem is said to be *ill-posed* or *not well-posed*.
+] <def:well-posedness>
+
+The third condition (stability) is particularly important: small changes in the data should lead to small changes in the solution. This ensures that the mathematical model is robust and that numerical approximations will converge to the true solution.
+
+#example(name: "Laplace Equation with Dirichlet Data")[
+  The Dirichlet problem for Laplace's equation:
+  $
+    cases(
+      Delta u = 0 text("in ") Omega,
+      u = g text("on ") partial Omega,
+    )
+  $
+  is well-posed under suitable regularity assumptions on the domain $Omega$ and boundary data $g$. Existence and uniqueness can be established using variational methods or maximum principles, and stability follows from the continuous dependence estimate:
+  $
+    norm(u)_(L^oo(Omega)) <= norm(g)_(L^oo(partial Omega)).
+  $
+] <ex:laplace-dirichlet-well-posed>
+
+#example(name: "Cauchy Problem for Laplace Equation (Ill-posed)")[
+  Consider the Cauchy problem for Laplace's equation in the upper half-plane:
+  $
+    cases(
+      u_(x x) + u_(y y) = 0 y > 0,
+      u(x, 0) = f(x),
+      u_y(x, 0) = g(x) .,
+    )
+  $
+  This problem is ill-posed. Even if $f$ and $g$ are very small, the solution can grow arbitrarily large. For example, with $f(x) = 0$ and $g(x) = (1/n) sin(n x)$ for large $n$, we have:
+  $
+    u_n(x,y) = (1/(n^2)) sin(n x) sinh(n y).
+  $
+  At $y = 1$ and $x = pi/(2n)$, we get $u_n(pi/(2n), 1) = (1/(n^2)) sinh(n) approx (e^n)/(2n^2)$, which grows exponentially as $n -> oo$, despite the data being small in any reasonable norm.
+] <ex:laplace-cauchy-ill-posed>
+
+#note[
+  The instability of the Cauchy problem for elliptic equations like Laplace's equation explains why such problems rarely occur in applications. Physical measurements of both the function and its normal derivative simultaneously at the same boundary are typically impossible.
+]
+
+#example(name: "Backward Heat Equation (Ill-posed)")[
+  The backward heat equation:
+  $
+    u_t = -kappa u_(x x), quad t > 0,
+  $
+  with final condition $u(x, T) = g(x)$ is ill-posed. Solutions may not exist for arbitrary final data, and when they do exist, they are unstable. Small changes in the final data can lead to exponential growth in the solution at earlier times.
+
+  This can be seen from the solution formula (formal):
+  $
+    hat(u)(xi, t) = hat(g)(xi) e^(kappa xi^2 (t-T)),
+  $
+  where $hat(u)$ denotes the Fourier transform. The exponential factor $e^(kappa xi^2 (t-T))$ for $t < T$ grows rapidly for high frequencies $xi$, causing instability.
+] <ex:backward-heat-ill-posed>
+
+#proposition(name: "Well-Posedness of the Forward Heat Equation")[
+  The initial-boundary value problem for the *forward* heat equation:
+  $
+    cases(
+      u_t - kappa Delta u = f text("in ") Omega times (0, T],
+      u(x, 0) = g(x) text("in ") Omega,
+      u(x, t) = 0 text("on ") partial Omega times [0, T],
+    )
+  $
+  is well-posed in the sense of #link(<def:well-posedness>)[Hadamard] for suitable data $f$ and $g$. The solution satisfies the stability estimate:
+  $
+    sup_(t in [0, T]) norm(u(dot, t))_(L^2(Omega)) <= norm(g)_(L^2(Omega)) + integral_0^T norm(f(dot, s))_(L^2(Omega)) dif s.
+  $
+  This stands in sharp contrast to the backward heat equation (#link(<ex:backward-heat-ill-posed>)[Example above]), where the same estimate fails catastrophically. The full proof requires energy methods developed in #link(<def:heat-equation>)[Ch 9].
+] <prop:heat-well-posed>
+
+#caution(title: "Importance of Well-Posedness")[
+  Well-posedness is essential for a PDE to model a physical phenomenon correctly. An ill-posed problem indicates either an incomplete mathematical model or inappropriate auxiliary conditions. In numerical computations, ill-posed problems lead to unstable algorithms that amplify errors.
+]
+
+#note[
+  While well-posedness is crucial for most applications, some important problems in inverse problems, imaging, and control theory are inherently ill-posed. In such cases, regularization techniques are used to obtain stable approximate solutions.
+]
+
+// ==========================================================================
+// Part II — Distribution Theory (分布理论)
+// ==========================================================================
 
 // --- Chapter 2: First-Order PDEs (一阶偏微分方程) ---
 

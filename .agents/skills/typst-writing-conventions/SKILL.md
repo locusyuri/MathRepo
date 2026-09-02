@@ -379,6 +379,36 @@ $n -> infinity$
 $n -> oo$
 ```
 
+#### `cases()` 不用 `&` 对齐，逗号是分行符
+
+Typst 的 `cases()` 函数中，**逗号是分行符**（等价于换行），同一行内的多列用**空格**分隔。不能使用 LaTeX 风格的 `&` 对齐语法。
+
+```typst
+// 错误 — LaTeX \begin{cases} 的 & 对齐语法
+$
+  cases(
+    Delta u = 0, & text("in ") Omega,
+    u = g, & text("on ") partial Omega,
+  )
+$
+
+// 错误 — 逗号是分行符，会把表达式和条件拆成两行
+$
+  cases(
+    Delta u = 0, text("in ") Omega,
+    u = g, text("on ") partial Omega,
+  )
+$
+
+// 正确 — 同行内用空格分隔列，逗号只在行末用于换行
+$
+  cases(
+    Delta u = 0 text("in ") Omega,
+    u = g text("on ") partial Omega,
+  )
+$
+```
+
 ---
 
 ## 4. 标签与交叉引用
