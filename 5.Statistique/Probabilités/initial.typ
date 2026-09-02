@@ -2020,6 +2020,253 @@ scale, asymmetry, and tail weight. Higher moments and the moment
 generating function, which encodes *all* moments in a single function, are
 the subject of the next chapter.
 
+= Generating Functions and Transform Methods // 生成函数与变换方法
+
+A single function — the moment generating function, the characteristic
+function, or the probability generating function — can encode *all* the
+moments, *all* the distributional information, and *all* the
+independence structure of a random variable. These transforms turn
+hard problems (sums of independent variables, convergence in
+distribution) into routine algebra (products, limits of functions).
+
+== Moment Generating Functions // 矩母函数
+
+#definition(name: "Moment Generating Function")[
+  The *moment generating function* (MGF) of $X$ is
+  $
+    M_X(t) = E[exp(t X)],
+  $
+  defined for all $t$ where the expectation is finite. The domain of $M_X$
+  is the set $D = {t in RR : E[exp(t X)] < infinity}$, which always
+  contains $t = 0$.
+] <def:mgf>
+
+The name is justified by the following property — the MGF generates all
+moments by differentiation, fulfilling the promise of
+#link(<def:moments>)[the moments definition].
+
+#property(name: "Moments from the MGF")[
+  If $M_X$ is finite in an open interval containing $t = 0$, then the
+  $k$-th moment of $X$ is
+  $
+    E[X^k] = M_X^(k)(0) = (dif^k M_X) / (dif t^k) upright("at") t = 0.
+  $
+  This follows from differentiating under the expectation:
+  $(dif^k) / (dif t^k) exp(t X) = X^k exp(t X)$, evaluated at $t = 0$.
+] <prop:mgf-moments>
+
+#property(name: "Properties of the MGF")[
+  - (linearity) $M_(a X + b)(t) = exp(b t) M_X(a t)$;
+  - (independent sum) if $X$ and $Y$ are independent, $M_(X+Y)(t) = M_X(t)
+    M_Y(t)$ — the MGF of a sum is the product of the MGFs;
+  - (identification) $M_X = M_Y$ (on a common domain) implies $X$
+    and $Y$ have the same distribution.
+] <prop:mgf-properties>
+
+#theorem(name: "Uniqueness Theorem")[
+  If $M_X(t)$ exists and is finite in an open interval $(-h, h)$ around
+  $0$, and if $M_X = M_Y$ on this interval, then $X$ and $Y$ have the
+  same distribution.
+] <thm:mgf-uniqueness>
+
+The proof relies on the uniqueness of the Laplace transform: if two
+integrable functions have the same transform on a strip, they are equal
+almost everywhere. This is the analytic counterpart of the
+probabilistic statement that the MGF determines the distribution.
+
+#example[
+  Common MGFs (computed from the definition via LOTUS):
+
+  | Distribution | $M_X(t)$ | Domain |
+  |---|---|---|
+  | $"Ber"(p)$ | $1 - p + p exp(t)$ | $RR$ |
+  | $B(n, p)$ | $(1 - p + p exp(t))^n$ | $RR$ |
+  | $"Pois"(lambda)$ | $exp(lambda (exp(t) - 1))$ | $RR$ |
+  | $"Exp"(lambda)$ | $lambda / (lambda - t)$ | $t < lambda$ |
+  | $"Ga"(alpha, lambda)$ | $(lambda / (lambda - t))^alpha$ | $t < lambda$ |
+  | $N(mu, sigma^2)$ | $exp(mu t + sigma^2 t^2 / 2)$ | $RR$ |
+
+  For the normal: $M_X(t) = E[exp(t(mu + sigma Z))] = exp(mu t)
+  E[exp(sigma t Z)]$ where $Z ~ N(0,1)$; expanding $exp(sigma t Z)$ in
+  a power series and using $E[Z^(2k)] = (2k-1) "!!"$ recovers $exp(
+    sigma^2
+    t^2 / 2
+  )$.
+] <ex:common-mgf>
+
+#caution[
+  (MGF may not exist.) For the Cauchy distribution, $E[exp(t X)] =
+  infinity$ for every $t != 0$ — the integral diverges. The MGF fails to
+  exist outside $t = 0$, so it cannot be used to identify the
+  distribution or compute moments. This motivates the *characteristic
+  function*, which always exists.
+] <caution:mgf-nonexistence>
+
+== Characteristic Functions // 特征函数
+
+#definition(name: "Characteristic Function")[
+  The *characteristic function* (CF) of $X$ is
+  $
+    phi_X(t) = E[exp(i t X)],
+  $
+  defined for *all* $t in RR$.
+] <def:cf>
+
+The CF always exists because $abs(exp(i t X)) = 1$, so $E[abs(
+    exp(
+      i t
+      X
+    )
+  )] = 1 < infinity$. This is the key advantage over the MGF.
+
+#property(name: "Basic Properties of the CF")[
+  - $phi_X(0) = 1$;
+  - $abs(phi_X(t)) <= 1$ for all $t$;
+  - (conjugate symmetry) $phi_X(-t) = overline(phi_X(t))$;
+  - (uniform continuity) $phi_X$ is uniformly continuous on $RR$;
+  - (linearity) $phi_(a X + b)(t) = exp(i b t) phi_X(a t)$;
+  - (independent sum) if $X$ and $Y$ are independent, $phi_(X+Y)(t) = phi_X(t)
+    phi_Y(t)$.
+] <prop:cf-properties>
+
+#property(name: "Moments and the CF")[
+  If $E[abs(X)^k] < infinity$, then
+  $
+    E[X^k] = i^(-k) phi_X^(k)(0) = i^(-k) (dif^k phi_X) / (dif t^k) upright("at") t = 0.
+  $
+] <prop:cf-moments>
+
+This mirrors #link(<prop:mgf-moments>)[the MGF moment formula], but with
+$i^k$ in the denominator. The CF plays the same role as the MGF for
+moment extraction, with the crucial advantage of universal existence.
+
+#theorem(name: "Inversion Formula")[
+  If $phi_X$ is integrable ($integral_(-infinity)^infinity abs(phi_X(t))
+  dif t < infinity$), then $X$ has a continuous density $f$ given by
+  $
+    f(x) = 1 / (2 pi) integral_(-infinity)^infinity exp(-i t x) phi_X(t) dif t.
+  $
+  In general, $F(b) - F(a) = lim_(T -> infinity) 1/(2 pi) integral_(-T)^T (exp(-i t a) - exp(-i t b)) / (i t) phi_X(t) dif t$.
+] <thm:inversion-formula>
+
+The proof is a Fourier inversion argument; the full development of the
+Fourier analysis tools required is deferred to the Processus Stochastique
+note. The essential idea: the CF is the Fourier transform of the
+distribution, and the inversion formula is the inverse Fourier transform.
+
+#theorem(name: "Lévy's Continuity Theorem")[
+  Let $X_1, X_2, dots$ and $X$ be random variables with CFs $phi_n$ and
+  $phi$. Then
+  $
+    X_n arrow.r^d X quad "iff" quad phi_n(t) -> phi(t) "for all" t in RR.
+  $
+  Moreover, if $phi_n -> phi$ pointwise and $phi$ is continuous at $0$,
+  then $phi$ is a CF and $X_n arrow.r^d X$.
+] <thm:continuity-theorem>
+
+The proof strategy has two directions:
+
+- ($arrow.r.double$) Convergence in distribution implies pointwise
+  convergence of CFs by the definition of $arrow.r^d$ (the
+  bounded continuous function $exp(i t dot)$ has the right limit).
+
+- ($arrow.l.double$) This is the hard direction. The key steps are:
+  1. (truncation) Show tightness of ${X_n}$ from the convergence $phi_n
+    -> phi$ and continuity at $0$;
+  2. (subsequence) Extract a weakly convergent subsequence by Prohorov's
+  theorem;
+  3. (identification) The limit has CF $phi$, hence (by uniqueness) is
+  $X$.
+
+This theorem is the *master tool* for proving limit theorems. The
+Central Limit Theorem (Part IV) reduces to showing $phi_(S_n / sqrt(n))
+(t) -> exp(-t^2 / 2)$ — a routine computation with independent-sum CFs.
+
+#note[
+  (Fourier analysis boundary.) The CF is the Fourier transform of the
+  distribution measure, and the inversion formula is the inverse
+  transform. The full theory — $L^1$ and $L^2$ inversion, Plancherel's
+  theorem, distributional Fourier transforms — is developed in the
+  Analyse Harmonique note. Here we use the CF as a probabilistic tool;
+  the Fourier-analytic proofs of the inversion and continuity theorems
+  are recalled as needed.
+] <note:fourier-boundary>
+
+== Probability Generating Functions // 概率生成函数
+
+#definition(name: "Probability Generating Function")[
+  For a random variable $X$ taking non-negative integer values with PMF
+  $p_k = P(X = k)$, the *probability generating function* (PGF) is
+  $
+    G_X(s) = E[s^X] = sum_(k=0)^infinity p_k s^k, quad abs(s) <= 1.
+  $
+] <def:pgf>
+
+The PGF is, in form, an ordinary generating function (OGF) applied to the
+sequence ${p_k}$. The Combinatoire note develops OGFs as a tool for
+solving recurrences and counting problems; here the coefficients are
+probabilities, and the focus is on extracting moments, handling sums of
+independent variables, and analysing compound distributions.
+
+#property(name: "Properties of the PGF")[
+  - (normalisation) $G_X(1) = 1$;
+  - (factorial moments) $G_X^(k)(1) = E[X(X-1)dots(X-k+1)]$, the $k$-th
+    factorial moment; in particular $G_X'(1) = E[X]$ and
+    $G_X''(1) = E[X(X-1)] = E[X^2] - E[X]$;
+  - (independent sum) if $X$ and $Y$ are independent,
+    $G_(X+Y)(s) = G_X(s) G_Y(s)$;
+  - (uniqueness) $G_X$ determines the distribution:
+    $p_k = G_X^(k)(0) / k!$.
+] <prop:pgf-properties>
+
+#property(name: "Compound Distribution (Random Sum)")[
+  Let $X_1, X_2, dots$ be i.i.d. with PGF $G_X$, and let $N$ be a
+  non-negative integer-valued random variable independent of the $X_i$,
+  with PGF $G_N$. The *random sum* $S_N = sum_(i=1)^N X_i$ has PGF
+  $
+    G_(S_N)(s) = G_N(G_X(s)).
+  $
+] <prop:pgf-compound>
+
+#proof[
+  Condition on $N = n$: $G_(S_N)(s) = E[s^(X_1 + dots + X_n)] = G_X(s)^n$
+  by independence. Averaging over $N$:
+  $
+    G_(S_N)(s) = sum_(n=0)^infinity P(N=n) G_X(s)^n = G_N(G_X(s)).
+  $
+]
+
+#example[
+  (Compound Poisson.) If $N ~ "Pois"(lambda)$ and $X_i ~ "Pois"(mu)$,
+  then $S_N ~ "Pois"(lambda mu)$. Indeed
+  $
+    G_(S_N)(s) = G_N(G_X(s)) = exp(lambda (G_X(s) - 1)) = exp(lambda (exp(mu(s - 1)) - 1)) = exp(lambda mu (s - 1)),
+  $
+  which is the PGF of $"Pois"(lambda mu)$. The Poisson distribution is
+  *closed under compounding* — a property central to the compound Poisson
+  process in the Stochastic Processes chapter.
+] <ex:compound-poisson>
+
+#example[
+  Common PGFs:
+
+  | Distribution | $G_X(s)$ |
+  |---|---|
+  | $"Ber"(p)$ | $1 - p + p s$ |
+  | $B(n, p)$ | $(1 - p + p s)^n$ |
+  | $"Geom"(p)$ | $(p s) / (1 - (1-p) s)$ |
+  | $"Pois"(lambda)$ | $exp(lambda (s - 1))$ |
+
+  These are verified by direct summation. For instance, the Poisson PGF:
+  $sum_(k=0)^infinity (lambda^k exp(-lambda)) / k! s^k = exp(-lambda)
+  sum (lambda s)^k / k! = exp(lambda(s - 1))$.
+] <ex:common-pgf>
+
+The three transforms — MGF, CF, PGF — each encode the full distribution
+in a single analytic function. The CF, with its universal existence and
+the Lévy continuity theorem, is the master tool for the limit theorems
+of Part IV.
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
