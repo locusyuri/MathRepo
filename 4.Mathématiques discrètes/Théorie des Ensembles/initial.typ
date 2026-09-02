@@ -130,21 +130,21 @@ $
 == Relations and Mappings
 
 === Relations
-#definition(name: "Cartesian productuct")[
+#definition(name: "Cartesian product")[
   Let $X$ and $Y$ be two sets.
-  The *Cartesian productuct* (or direct productuct) of $X$ and $Y$, denoted by $X times Y$, is defined as the set of all ordered pairs $(x, y)$ where $x in X$ and $y in Y$:
+  The *Cartesian product* (or direct product) of $X$ and $Y$, denoted by $X times Y$, is defined as the set of all ordered pairs $(x, y)$ where $x in X$ and $y in Y$:
 
   $
     X times Y = {(x, y) | x in X, y in Y}.
   $
 
-  The Cartesian productuct can be extended to finitely many sets.
-  The Cartesian productuct of $X$ and itself $n$ times is denoted by $X^n$.
+  The Cartesian product can be extended to finitely many sets.
+  The Cartesian product of $X$ and itself $n$ times is denoted by $X^n$.
 ]
 
 #definition(name: "Relation")[
   Let $X$ and $Y$ be two sets.
-  A *relation* $R$ from $X$ to $Y$ is a subset of the Cartesian productuct $X times Y$:
+  A *relation* $R$ from $X$ to $Y$ is a subset of the Cartesian product $X times Y$:
 
   $
     R subset X times Y.
@@ -165,7 +165,7 @@ $
 There are several special types of relations:
 
 - *Empty relation*: The empty set $emptyset$ is a relation from $X$ to $Y$.
-- *Total relation*: The Cartesian productuct $X times Y$ is a relation from $X$ to $Y$.
+- *Total relation*: The Cartesian product $X times Y$ is a relation from $X$ to $Y$.
 - *Identity relation*: The relation $I_X = {(x, x) | x in X}$ is called the *identity relation* on $X$.
 
 When studying binary relations, we often focus on whether they have some special properties.

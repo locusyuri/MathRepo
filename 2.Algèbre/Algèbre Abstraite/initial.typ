@@ -24,6 +24,365 @@
 
 #make-outline(depth: 2, title: "Contents")
 
+#part("Group Theory")
+
+= Preliminaries // 预备知识
+
+Abstract algebra studies sets equipped with operations and the maps
+between them that preserve those operations. This chapter assembles
+the three tools the whole notebook rests on: *binary operations*
+(§1.1), the *quotient construction* (§1.2), and *homomorphisms*
+(§1.3). Set-theoretic prerequisites — sets, mappings, equivalence
+relations — are quoted from the Théorie des Ensembles note rather
+than redefined.
+
+== Algebraic Operations // 代数运算
+
+#definition(name: "Binary Operation")[
+  A *binary operation* on a set $S$ is a mapping
+  $
+    mu: S times S -> S, quad (a, b) mapsto mu(a, b).
+  $
+  Writing $mu(a, b) = a star b$, the defining requirement is
+  *closure*: $a star b in S$ for all $a, b in S$. More generally, an
+  $n$-ary operation is a mapping $S^n -> S$.
+] <def:binary-operation>
+
+Familiar operations: addition and multiplication on $bb(Z)$,
+composition of self-maps of a set, vector addition in $bb(R)^n$. In
+each case the interesting structure — what makes the operation
+usable — is not the bare mapping but the *laws* it satisfies.
+
+#property(name: "Fundamental Operation Laws")[
+  A binary operation $star$ on $S$ may satisfy:
+  - *associativity*: $(a star b) star c = a star (b star c)$ for all
+    $a, b, c in S$;
+  - *commutativity*: $a star b = b star a$;
+  - for a pair of operations $star, diamond$: the *distributive laws*
+    $a star (b diamond c) = (a star b) diamond (a star c)$ and dually.
+  Under associativity alone, the generalised product
+  $a_1 star a_2 star dots star a_n$ is independent of how parentheses
+  are inserted.
+] <prop:operation-laws>
+
+*Proof of the generalised associativity.* Induct on $n$. For $n <= 3$
+this is the associativity law itself. Let every bracketing of $n >= 4$
+factors split as $P star Q$ with $P$ a bracketing of the first $k$
+factors and $Q$ one of the last $n - k$, for some $1 <= k <= n - 1$.
+By induction both $P = a_1 star dots star a_k$ and
+$Q = a_(k+1) star dots star a_n$ are the "clean" products, so every
+bracketing equals
+$
+  (a_1 star dots star a_k) star (a_(k+1) star dots star a_n).
+$
+It remains to see this value is the same for all $k$; a second
+induction moving one factor at a time across the middle $star$, using
+the three-factor law, gives the result. ⊙
+
+The distributive laws involve two operations at once and will be
+decisive for rings (Chapter 8); here we only record their form.
+
+#definition(name: "Identity and Inverse")[
+  Let $star$ be a binary operation on $S$.
+  - An element $e in S$ is a *two-sided identity* if
+    $e star a = a star e = a$ for all $a in S$. A *left identity*
+    satisfies only $e star a = a$, a *right identity* only
+    $a star e = a$.
+  - If an identity $e$ exists and $a star b = b star a = e$, then $b$
+    is an *inverse* of $a$.
+] <def:identity-inverse>
+
+#property(name: "Uniqueness of Identity and Inverses")[
+  If a left identity $e_L$ and a right identity $e_R$ both exist, then
+  $e_L = e_R$; hence a two-sided identity, when it exists, is unique.
+  When the identity is unique, so is each inverse: if $b$ and $c$ are
+  both inverses of $a$, then $b = c$.
+] <prop:operation-laws-unique>
+
+*Proof.* $e_L = e_L star e_R = e_R$, using that $e_R$ is a right
+identity in the first step and $e_L$ a left identity in the second.
+For inverses: $b = b star e = b star (a star c) = (b star a) star c =
+e star c = c$. ⊙
+
+#example[
+  (Reading a Cayley table.) The operation table (*Cayley table*) of
+  addition modulo 4 on $S = {0, 1, 2, 3}$:
+  #align(center)[
+    #table(
+      columns: 5,
+      align: center,
+      stroke: 0.5pt,
+      table.header([$+$], [$0$], [$1$], [$2$], [$3$]),
+      table.hline(),
+      [$0$], [$0$], [$1$], [$2$], [$3$],
+      [$1$], [$1$], [$2$], [$3$], [$0$],
+      [$2$], [$2$], [$3$], [$0$], [$1$],
+      [$3$], [$3$], [$0$], [$1$], [$2$],
+    )
+  ]
+  The table encodes everything at a glance: the row and column
+  headings coincide with the entries of the $0$-row and $0$-column,
+  revealing $0$ as the identity; each row contains $0$ exactly once,
+  reading off inverses ($1^(-1) = 3$, $2^(-1) = 2$); the table is
+  symmetric about its diagonal — the operation is commutative.
+  Associativity, in contrast, cannot be read off the table: it would
+  require $4^3 = 64$ checks. Structural laws beat brute force.
+] <ex:cayley-table>
+
+#note[
+  (Power notation.) For an associative operation with identity $e$,
+  define $a^n$ for $n in bb(Z)^+$ by
+  $
+    a^1 = a, quad a^(n+1) = a^n star a,
+  $
+  and $a^0 = e$, $a^(-n) = (a^(-1))^n$ when inverses exist. The
+  exponent laws
+  $
+    a^m star a^n = a^(m+n), quad (a^m)^n = a^(m n)
+  $
+  follow by induction on $n$. In *additive notation* (the operation
+  written $+$) the same quantity is the multiple $n a$, and one never
+  writes $a^n$. Mixing the two notations is the standard beginner's
+  error; keep them apart from the start. The interplay between powers
+  and orders of elements will be central in
+  #link(<def:identity-inverse>)[Chapter 2].
+] <note:power-notation>
+
+== Equivalence Relations and Quotient Sets // 等价关系与商集
+
+An *equivalence relation* on a set $S$ — reflexive, symmetric,
+transitive — was defined in the Théorie des Ensembles note, together
+with the general vocabulary of relations and mappings. What algebra
+adds is the construction performed with it: *collapsing* a set into
+its equivalence classes. This quotient construction, built here in
+the purely set-theoretic setting, is the prototype of quotient groups
+(Chapter 4), quotient rings (Chapter 9), and quotient modules
+(Chapter 17).
+
+#definition(name: "Equivalence Class")[
+  Let $R$ be an equivalence relation on $S$ and $a in S$. The
+  *equivalence class* of $a$ is
+  $
+    [a]_R = {x in S | x R a}.
+  $
+  Any $x in [a]_R$ is called a *representative* of the class.
+] <def:equivalence-class>
+
+#property(name: "Basic Properties of Classes")[
+  For all $a, b in S$:
+  - $a in [a]_R$ (in particular every class is non-empty and every
+    element lies in some class);
+  - $a R b$ if and only if $[a]_R = [b]_R$;
+  - $not (a R b)$ if and only if $[a]_R ∩ [b]_R = emptyset$.
+] <prop:equivalence-class-props>
+
+*Proof.* Reflexivity gives $a in [a]_R$. If $[a]_R = [b]_R$ then
+$a in [a]_R = [b]_R$ gives $a R b$; conversely if $a R b$ and $x in
+[a]_R$, then $x R a$ and $a R b$ give $x R b$, so $[a]_R subset.eq
+[b]_R$, and symmetry reverses the inclusion. The third item follows:
+if $x$ lies in both classes, then $a R x$ and $x R b$ force $a R b$,
+reducing to the second item. ⊙
+
+So the classes are either *equal* or *disjoint* — never partially
+overlapping. This is exactly what it takes for them to carve $S$ into
+blocks.
+
+#definition(name: "Partition")[
+  A *partition* of a set $S$ is a family ${S_i}_("i in I")$ of
+  non-empty subsets such that
+  $
+    union_(i in I) S_i = S, quad quad S_i ∩ S_j = emptyset
+    quad "for" i != j.
+  $
+] <def:partition>
+
+#theorem(name: "Partition-Class Correspondence")[
+  Every equivalence relation on $S$ determines a partition of $S$,
+  namely its family of equivalence classes; conversely, every
+  partition of $S$ arises from exactly one equivalence relation,
+  namely "$a R b$ if and only if $a$ and $b$ lie in the same block."
+] <thm:partition-correspondence>
+
+*Proof.* ($R ==>$ partition) Reflexivity covers $S$
+(#link(<prop:equivalence-class-props>)[first property]); classes are
+pairwise disjoint: if $[a]_R ∩ [b]_R != emptyset$, the second
+property forces $[a]_R = [b]_R$ — classes are equal or disjoint,
+never partially overlapping.
+
+(partition $==>$ $R$) Let ${S_i}$ be a partition and define $a R b$ if
+some block contains both. Reflexivity holds since $a$ lies in the
+block covering it, symmetry is built into "both lie", and
+transitivity holds because if $a, b$ share one block and $b, c$ share
+one, then both blocks contain $b$, so they coincide and contain $a$
+and $c$. Uniqueness is clear: the relation reads off the partition
+and conversely. ⊙
+
+#figure(
+  image("img/partition-quotient.svg", width: 82%),
+  caption: [The quotient construction. Left: the set $S$ carved into
+    pairwise disjoint equivalence classes $[a], [b], [c]$, each
+    shaded region one class. Right: the classes themselves collected
+    as points of the quotient set $S \/ R$. Elements *inside* one
+    class are identified; the quotient set is the set of blocks.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:partition-quotient>
+
+#definition(name: "Quotient Set")[
+  The set of all equivalence classes of $R$ on $S$,
+  $
+    S \/ R = {[a] | a in S},
+  $
+  is the *quotient set* of $S$ by $R$. Its elements are classes, not
+  elements of $S$.
+] <def:quotient-set>
+
+#example[
+  (Residue classes.) On $bb(Z)$, declare
+  $
+    a equiv b quad (mod n)
+    quad <=> quad n "divides" a - b.
+  $
+  Reflexivity ($n | 0$), symmetry ($n | a-b ==>$ $n | b-a$) and
+  transitivity ($n | a-b, n | b-c ==>$ $n | a-c$) are immediate. The
+  class of $a$ is the arithmetic progression
+  $[a] = {a + k n | k in bb(Z)}$, and there are exactly $n$ classes:
+  $
+    bb(Z)_n = {[0], [1], dots, [n-1]},
+  $
+  since every integer is congruent to its remainder upon division by
+  $n$. For $n = 4$: $[0] = {dots, -8, -4, 0, 4, 8, dots}$,
+  $[1] = {dots, -7, -3, 1, 5, dots}$, and so on.
+] <ex:residue-classes>
+
+The quotient set $bb(Z)_n$ begs for arithmetic: surely
+$[a] + [b]$ should be $[a + b]$. The request conceals the single most
+important technical point in the theory of quotients.
+
+#caution[
+  (Well-definedness on quotient sets.) A formula
+  $[a] star [b] = [a star b]$ does not define an operation on
+  $S \/ R$ until it is shown *independent of the chosen
+  representatives*: replacing $a$ by $a'$ and $b$ by $b'$ must give
+  the same class. For $bb(Z)_n$ this succeeds: $a equiv a'$,
+  $b equiv b' (mod n)$ imply $a + b equiv a' + b'$ and
+  $a b equiv a' b'$, so addition and multiplication descend to
+  $bb(Z)_n$.
+
+  For a general equivalence relation the descent can *fail*. On
+  $bb(Z)$ take $a R b "iff" abs(a) = abs(b)$, with classes
+  ${0}, {plus.minus 1}, {plus.minus 2}, dots$. Attempting
+  $[a] + [b] = [a + b]$ gives, using representatives $1$ and $-1$
+  (the same class),
+  $
+    [1] + [1] = [2], quad quad [-1] + [1] = [0],
+  $
+  and $[2] != [0]$: the "operation" depends on the representative and
+  is therefore *not an operation at all*.
+
+  An equivalence relation compatible with the operations — called a
+  *congruence relation* — is exactly what makes quotients inherit
+  algebra. This compatibility check will be replayed, with
+  growing sophistication, for quotient groups (Chapter 4) and
+  quotient rings (Chapter 9).
+] <caution:well-defined-operations>
+
+== Homomorphisms and Isomorphisms // 同态与同构
+
+Mappings between sets were the business of the Théorie des Ensembles
+note: injective, surjective, bijective maps and their composition.
+Algebra asks the first structural question about a map: *does it
+respect the operations?* A map that does is the algebraic notion of
+"sameness-preserving assignment", and everything in this notebook —
+from Cayley's theorem to Galois theory — is a study of such maps.
+
+#definition(name: "Homomorphism")[
+  Let $(S, star)$ and $(T, diamond)$ be algebraic systems, each
+  equipped with one binary operation. A mapping $f: S -> T$ is a
+  *homomorphism* if it preserves the operation:
+  $
+    f(a star b) = f(a) diamond f(b) quad quad "for all" a, b in S.
+  $
+  A homomorphism that is bijective is called an *isomorphism*; two
+  systems between which an isomorphism exists are *isomorphic*,
+  written $S equiv T$.
+] <def:homomorphism>
+
+#property(name: "Homomorphisms Preserve Identity and Inverses")[
+  Let $f: (S, star) -> (T, diamond)$ be a *surjective* homomorphism,
+  where both operations have identities $e$ and $e'$. Then
+  $
+    f(e) = e',
+  $
+  and for any $a in S$ possessing an inverse $a^(-1)$ in $S$, the
+  element $f(a)$ possesses an inverse in $T$, namely
+  $
+    f(a)^(-1) = f(a^(-1)).
+  $
+] <prop:homomorphism-properties>
+
+*Proof.* For any $y in T$, surjectivity gives $y = f(a)$ for some
+$a in S$, and
+$
+  f(e) diamond y = f(e) diamond f(a) = f(e star a) = f(a) = y,
+$
+so $f(e)$ is a left identity of $T$; dually it is a right identity.
+By #link(<prop:operation-laws-unique>)[uniqueness of the identity],
+$f(e) = e'$. For inverses:
+$
+  f(a^(-1)) diamond f(a) = f(a^(-1) star a) = f(e) = e',
+  quad quad f(a) diamond f(a^(-1)) = e',
+$
+so $f(a^(-1))$ is an inverse of $f(a)$. ⊙
+
+Surjectivity is essential in the first part: without it $f(e)$ is
+merely an idempotent of $T$, not the identity. (For homomorphisms of
+groups, where inverses exist for *every* element, the image $f(S)$
+carries the induced operation and $f(e) = e'$ holds inside $f(S)$
+regardless — this will be systematised in
+#link(<note:kernel-preliminary>)[Chapter 5].)
+
+#example[
+  (Two isomorphisms.)
+  - $f: (bb(Z), +) -> (2 bb(Z), +)$, $f(n) = 2 n$: bijective, and
+    $f(m + n) = 2(m + n) = 2m + 2n = f(m) + f(n)$. The even integers,
+    with addition, are an algebraic copy of the integers — they are
+    "the same" additive system.
+  - Let $U_4 = {1, i, -1, -i}$ under multiplication. The map
+    $f: bb(Z)_4 -> U_4$, $f([k]) = i^k$ is well defined (if
+    $k equiv k' mod 4$ then $i^k = i^(k')$) and satisfies
+    $f([k] + [l]) = i^(k+l) = i^k i^l = f([k]) f([l])$; it is
+    bijective. So the residue-class addition of
+    #link(<ex:residue-classes>)[Example 1.4] is, structurally,
+    rotation of the square.
+] <ex:isomorphic-examples>
+
+#note[
+  (The kernel, a first look.) For a homomorphism $f: (S, star) ->
+  (T, diamond)$ where both systems have identities $e, e'$ and
+  inverses, the *kernel* of $f$ is
+  $
+    "ker" f = {a in S | f(a) = e'}.
+  $
+  It measures the collapse $f$ performs. In particular, a homomorphism
+  of such systems is injective exactly when $"ker" f$ is trivial:
+  $f(a) = f(b)$ implies $f(a star b^(-1)) = e'$, so $a star b^(-1) in
+  "ker" f$; if the kernel holds only $e$, then $a = b$. The kernel
+  turns out to be not merely a subset but a substructure of a very
+  special kind — normal subgroup (Chapter 5), ideal (Chapter 9) — and
+  the homomorphism theorems of Chapters 5 and 9, the first great
+  structure theorems of this subject, are precisely the statement
+  that $S$ is built from $"ker" f$ and the image $f(S)$.
+] <note:kernel-preliminary>
+
+A closing remark situates the chapter. We now possess: objects with
+operations (§1.1), a method for constructing new objects by
+identifying elements (§1.2), and the arrows between objects that
+preserve structure (§1.3). The axiomatic selection of the most
+important class of objects — associative operation, identity, all
+inverses — is the definition of a group, and it is where
+#link(<def:binary-operation>)[Chapter 2] begins.
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
