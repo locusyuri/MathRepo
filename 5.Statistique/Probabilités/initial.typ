@@ -749,6 +749,7 @@ The count $X$ of successes in Bernoulli trials inherits a life of its own —
 its distribution, the *binomial distribution*, opens the catalogue of the
 next chapter.
 
+#part("Random Variables and Distributions")
 = Univariate Random Variables and Distributions // 一维随机变量及其分布
 
 == Random Variables and Their Distributions // 随机变量及其分布
@@ -1721,6 +1722,7 @@ make the multivariate normal the structural backbone of classical
 multivariate analysis, to which the sampling distribution and regression
 chapters will return repeatedly.
 
+#part("Numerical Characteristics and Generating Tools")
 = Numerical Characteristics // 数字特征
 
 A distribution is fully described by its CDF or density, but a few numbers
@@ -2267,6 +2269,7 @@ in a single analytic function. The CF, with its universal existence and
 the Lévy continuity theorem, is the master tool for the limit theorems
 of Part IV.
 
+#part("Limit Theorems")
 = LLN and CLT // 大数定律与中心极限定理
 
 The limit theorems — Laws of Large Numbers and the Central Limit Theorem
