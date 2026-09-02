@@ -363,7 +363,7 @@ the ratio equals $1/(2 beta) = 1/2 k_B T$.
 
 == Transport Phenomena // 输运现象
 
-A gas in which the local state varies from point to point does not stay
+A gas in which the local state varies from pintegral.cont to pintegral.cont does not stay
 that way: molecules flying freely between collisions carry momentum,
 energy and particles across any surface, smoothing out the inhomogeneity.
 Three gradient-driven relaxation processes result, each governed by a
@@ -415,7 +415,7 @@ from above and from below at rate $1/2 n overline(v)$ per unit area
 crossing rate $1/4 n overline(v)$ per direction pair; the resulting
 prefactor is $1/3$ in the elementary estimate, higher-order treatments
 give $0.37$-odd). A molecule arriving from distance $lambda$ carries the
-$x$-momentum appropriate to its departure point, $m u(z - lambda)$ from
+$x$-momentum appropriate to its departure pintegral.cont, $m u(z - lambda)$ from
 below and $m u(z + lambda)$ from above. The net momentum flux in the
 $+z$ direction is
 $
@@ -627,14 +627,14 @@ equation of state (Chapter 1) supplies a system-independent standard.
   $
     T(p) = 273.16 dot p / p_3 quad "K",
   $
-  where $p_3$ is the pressure at the triple point of water, is
+  where $p_3$ is the pressure at the triple pintegral.cont of water, is
   independent of the gas used (in the dilute limit) and coincides with
   the absolute Kelvin scale.
 ] <prop:ideal-gas-scale>
 
 *Derivation.* For a fixed amount of gas at fixed volume,
 #link(<def:equation-of-state>)[the ideal gas law] gives $p = n R T / V
-prop T$. The triple point of water — the unique state at which ice,
+prop T$. The triple pintegral.cont of water — the unique state at which ice,
 liquid water and vapour coexist — is assigned $T_3 = 273.16 "K"$ by
 convention, so $T / T_3 = p / p_3$. That the ratio $p / p_3$, read off
 ∂erent dilute gases, converges to a common limit is the empirical
@@ -687,7 +687,7 @@ whose ∂erential it would be.
     W_("by") = integral_C p dif V,
   $
   the area under the path. Work therefore depends on the path, not
-  merely on the endpoints.
+  merely on the endpintegral.conts.
 ] <prop:work-path>
 
 #example[
@@ -702,7 +702,7 @@ whose ∂erential it would be.
   At the shared final volume the isobar runs at pressure $p_1 > p_2$,
   so $W' = n R T (V_2 - V_1) / V_1 > n R T ln(V_2/V_1) = W$: the
   two-step path delivers more work, because it runs at a higher
-  pressure throughout. Same endpoints, ∂erent work — the visual
+  pressure throughout. Same endpintegral.conts, ∂erent work — the visual
   statement of @fig:work-path.
 ] <ex:path-dependence>
 
@@ -749,7 +749,7 @@ or as heat with a thermostat, and mixtures of the two occur in general.
 #definition(name: "Internal Energy")[
   Every equilibrium state of a system admits a state quantity $U$, the
   *internal energy*, such that the energy the system receives in any
-  process equals the increase of $U$ between the endpoint states. $U$
+  process equals the increase of $U$ between the endpintegral.cont states. $U$
   is extensive, and is defined up to an additive constant (only
   ∂erences $Delta U$ are measurable).
 ] <def:internal-energy>
@@ -758,7 +758,7 @@ The physical motivation is Joule's paddle-wheel experiment: stir an
 insulated (adiabatic) vessel with a falling weight, and a given amount
 of mechanical work always raises the state — measured by any thermometer
 — identically, regardless of how the stirring is arranged. The
-endpoints are characterised by a number $U$.
+endpintegral.conts are characterised by a number $U$.
 
 #theorem(name: "First Law of Thermodynamics")[
   For any process of a closed system,
@@ -921,8 +921,8 @@ so $(dif T) / T = -(gamma - 1)(dif V) / V$, which integrates to
 $T V^(gamma - 1) = "const"$; eliminating $T$ with the equation of state
 gives the $p V^gamma$ and $T^gamma p^(1-gamma)$ forms.
 
-On the $p$-$V$ diagram the adiabat through a point is *steeper* than
-the isotherm through the same point, since
+On the $p$-$V$ diagram the adiabat through a pintegral.cont is *steeper* than
+the isotherm through the same pintegral.cont, since
 $(partial p / partial V)_("adiabatic") = gamma (partial p / partial V)_T$
 and $gamma > 1$: expansion cools the gas, so its pressure falls faster
 than isothermally — see @fig:work-path, right panel. Correspondingly,
@@ -973,9 +973,472 @@ $
   (Liquefaction.) The throttling cooler is the core of gas liquefaction
   technology, and its efficiency analysis couples to the phase
   behaviour of real gases. The inversion curve, the liquefaction
-  cycle, and the critical-point physics behind them are treated in
+  cycle, and the critical-pintegral.cont physics behind them are treated in
   Chapter 20 on phase transitions.
 ] <note:jt-liquefaction>
+
+= Second Law of Thermodynamics // 热力学第二定律
+
+The first law forbids energy non-conservation; it says nothing about
+*direction*. Yet nature is full of one-way streets: heat flows hot to
+cold and never back, gases expand freely but never recompress,
+frictional heat never re-concentrates. The second law selects, among
+all first-law-compliant processes, those actually allowed — and
+thereby produces the entropy, the quantity that grades the direction.
+
+== Clausius and Kelvin-Planck Statements // 克劳修斯与开尔文-普朗克表述
+
+#definition(name: "Thermal Reservoir and Heat Engine")[
+  A *thermal reservoir* is an idealised body of fixed temperature whose
+  state is unaltered by exchanging any finite amount of heat. A *heat
+  engine* is a cyclic device that absorbs heat $Q_h$ from a hot
+  reservoir at $T_h$, rejects heat $Q_c$ to a cold reservoir at
+  $T_c < T_h$, and delivers net work $W = Q_h - Q_c$ per cycle;
+  a *refrigerator* (or heat pump) is the same device run backwards.
+] <def:heat-engine>
+
+#figure(
+  image("img/reservoir-schematic.svg", width: 88%),
+  caption: [Left: a heat engine absorbing $Q_h$ from the hot reservoir,
+    delivering work $W$ and rejecting $Q_c$ to the cold reservoir. Right:
+    the same device run as a refrigerator, consuming work $W$ to pump
+    heat $Q_c$ from the cold to the hot reservoir.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:reservoir-schematic>
+
+Experience: no cyclic device absorbs heat from a single reservoir and
+converts it entirely into work, however ingeniously designed. This
+regularity is elevated to a law in two equivalent formulations.
+
+#theorem(name: "Kelvin-Planck Statement")[
+  No process is possible whose sole result is the complete conversion
+  of heat, extracted from a single thermal reservoir, into work.
+] <thm:kelvin-planck>
+
+#caution[
+  (Perpetual motion of the second kind.) An engine violating
+  #link(<thm:kelvin-planck>)[the Kelvin-Planck statement] would be a
+  *perpetual motion machine of the second
+  kind*: it respects energy conservation (extracting heat from the
+  ocean would power a ship forever) yet is impossible. The first law
+  rules out machines of the first kind; the second law is genuinely new
+  physics. Isothermal expansion of an ideal gas does convert heat to
+  work completely — but it is not cyclic: the gas ends up at larger
+  volume, and the *sole* result clause forbids exactly such leftover
+  changes.
+] <caution:perpetual-motion-ii>
+
+#theorem(name: "Clausius Statement")[
+  No process is possible whose sole result is the transfer of heat
+  from a colder body to a hotter body.
+] <thm:clausius-statement>
+
+Note that a refrigerator *does* pump heat from cold to hot — but only
+at the cost of work input, so the *sole* result clause is not violated.
+The two statements look different; they are the same law.
+
+#theorem(name: "Equivalence of the Two Statements")[
+  The Kelvin-Planck statement and the Clausius statement are
+  equivalent: a device violating one can be combined with ordinary
+  devices to violate the other.
+] <thm:statement-equivalence>
+
+*Proof.* ($"KP" ==>$ $"C"$) Suppose a device $X$ violates the Clausius
+statement: it transfers $Q$ from the cold to the hot reservoir with no
+other effect. Couple it to an ordinary heat engine $E$ that absorbs
+$Q_h$ from the hot reservoir, rejects exactly $Q$ to the cold one, and
+delivers $W = Q_h - Q$. The composite takes $Q_h - Q$ as heat from the
+single hot reservoir and delivers the same work, violating the
+Kelvin-Planck statement.
+
+($"C" ==>$ $"KP"$) Symmetrically, suppose a device $X$ violates
+Kelvin-Planck: it absorbs $Q_h$ from the hot reservoir and converts it
+entirely into work $W$. Run $W$ into an ordinary refrigerator $R$
+pumping $Q_c$ from the cold reservoir and dumping $Q_c + W$ into the
+hot one. The composite transfers $Q_c$ from cold to hot with no other
+effect — violating the Clausius statement. ⊙
+
+== Carnot's Theorem // 卡诺定理
+
+#definition(name: "Carnot Cycle")[
+  The *Carnot cycle* is the reversible cycle of an ideal gas consisting
+  of four quasi-static legs:
+  $
+    a -> b quad "isothermal expansion at" T_h,
+  $
+  absorbing $Q_h = n R T_h ln(V_b / V_a)$ from the hot reservoir;
+  $
+    b -> c quad "adiabatic expansion," T_h -> T_c;
+  $
+  $
+    c -> d quad "isothermal compression at" T_c,
+  $
+  rejecting $Q_c = n R T_c ln(V_c / V_d)$ to the cold reservoir;
+  $
+    d -> a quad "adiabatic compression," T_c -> T_h,
+  $
+  closing the cycle.
+] <def:carnot-cycle>
+
+#property(name: "Carnot Efficiency")[
+  The efficiency of a Carnot engine depends only on the two reservoir
+  temperatures:
+  $
+    eta_C = 1 - T_c / T_h.
+  $
+] <prop:carnot-efficiency>
+
+*Derivation.* Work and heat per cycle: $W = Q_h - Q_c$ with
+$Q_h, Q_c$ as above. The two adiabatic legs of
+#link(<prop:adiabatic-process>)[the quasi-static adiabatic relation]
+give $T_h V_b^(gamma-1) = T_c V_c^(gamma-1)$ and
+$T_c V_d^(gamma-1) = T_h V_a^(gamma-1)$; dividing,
+$
+  (V_b / V_a)^(gamma - 1) = (V_c / V_d)^(gamma - 1)
+  quad "hence" quad V_b / V_a = V_c / V_d.
+$
+Therefore
+$
+  eta_C = 1 - Q_c / Q_h
+  = 1 - (T_c ln(V_c/V_d)) / (T_h ln(V_b/V_a))
+  = 1 - T_c / T_h.
+$
+
+#theorem(name: "Carnot's Theorem")[
+  All reversible engines operating between the same two reservoirs
+  have the same efficiency $eta_C = 1 - T_c \/ T_h$; every irreversible
+  engine operating between them has strictly smaller efficiency.
+] <thm:carnot-theorem>
+
+*Proof.* Let $I$ be any engine between the reservoirs, and $R$ a
+Carnot (reversible) engine run *backwards* as a refrigerator, sized so
+that it absorbs exactly the heat $Q_c$ that $I$ rejects. The composite
+$I R$ then delivers work
+$
+  W = Q_h - Q_c - (Q_h' - Q_c) = Q_h - Q_h',
+$
+takes no net heat from the cold reservoir, and extracts net heat
+$Q_h - Q_h'$ from the hot one. If $eta_I > eta_R$, then
+$Q_h' / Q_c > Q_h / Q_c$, i.e. $Q_h' > Q_h$: the composite would be a
+sole-result work producer from one reservoir — violating
+#link(<thm:kelvin-planck>)[Kelvin-Planck]. Hence
+$eta_I <= eta_R$. If $I$ is irreversible, running a *reversible* $R$
+forward and $I$ backward in the same coupling (now with roles swapped)
+yields the strict inequality $eta_I < eta_R$; equality would make the
+composite reversible, forcing $I$ itself reversible. ⊙
+
+#figure(
+  image("img/carnot-cycle.svg", width: 78%),
+  caption: [The Carnot cycle in the $p$-$V$ plane: isothermal expansion
+    $a -> b$ at $T_h$ (absorbing $Q_h$), adiabatic expansion $b -> c$
+    to $T_c$, isothermal compression $c -> d$ (rejecting $Q_c$), and
+    adiabatic compression $d -> a$. The enclosed area is the net work
+    per cycle.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:carnot-cycle>
+
+Carnot's theorem caps every real engine: no cleverness of design beats
+$1 - T_c / T_h$ — the only levers are the reservoir temperatures. What
+remains is to convert this cap into a state function, which is the
+business of §3.3.
+
+== Entropy and the Clausius Inequality // 熵与克劳修斯不等式
+
+#property(name: "Clausius Inequality")[
+  For any cyclic process of a closed system,
+  $
+    integral.cont (delta Q) / T <= 0,
+  $
+  where $delta Q$ is the heat absorbed by the system at each stage and
+  $T$ is the temperature *at the boundary* where the heat is exchanged.
+  Equality holds if and only if the cycle is reversible.
+] <prop:clausius-inequality>
+
+*Proof.* Decompose an arbitrary cycle into a fine mesh: each elementary
+strip exchanges heat $delta Q_i$ with reservoirs whose temperatures
+match the boundary temperature $T_i$. By
+#link(<thm:carnot-theorem>)[Carnot's theorem], a reversible engine
+working between $T_i$ and a reference temperature $T_0$ satisfies
+$delta W_i = delta Q_i (1 - T_0 / T_i)$, while the actual strip
+delivers at most this work: $delta Q_i (1 - T_0 / T_i) >= delta W_i$.
+Summing over the whole cycle and using $sum delta W_i = integral.cont delta Q$
+(gross heat minus gross work balance of the cycle),
+$
+  integral.cont delta Q - T_0 integral.cont (delta Q) / T >= integral.cont delta Q
+  quad "hence" quad integral.cont (delta Q) / T <= 0.
+$
+Equality holds exactly when every elementary engine is reversible,
+i.e. the cycle is reversible; for an irreversible cycle the inequality
+is strict. ⊙
+
+#definition(name: "Entropy")[
+  The *entropy* of a system is the state function $S$ whose change
+  between two nearby equilibrium states is
+  $
+    dif S = (delta Q_("rev")) / T,
+  $
+  the heat absorbed in a *reversible* path divided by the common
+  temperature. For a finite reversible path,
+  $
+    Delta S = integral^(("rev")) (delta Q) / T.
+  $
+] <def:entropy>
+
+That $S$ exists — that the integral is path-independent — follows from
+the equality case of #link(<prop:clausius-inequality>)[the Clausius
+  inequality]:
+
+#property(name: "Entropy Is a State Function")[
+  For any reversible cycle, $integral.cont_("rev") (delta Q) / T = 0$.
+  Consequently $integral (delta Q) / T$ along reversible paths depends
+  only on the endpintegral.conts, and $S$ is well-defined as a state quantity.
+] <prop:entropy-state-function>
+
+*Proof.* Every reversible cycle satisfies the Clausius inequality with
+equality. Given any two states $A, B$, the integral along a reversible
+path is therefore independent of which reversible path is chosen — for
+two such paths form a reversible cycle. ⊙
+
+The entropy of an irreversible process is *not* obtained by
+integrating $delta Q / T$ along that process; one integrates along any
+*reversible* path connecting the same endpintegral.conts.
+
+#example[
+  (Entropy of an ideal gas.) For a reversible change of $n$ moles,
+  $delta Q = dif U + p dif V = C_V dif T + n R T (dif V) / V$, so
+  $
+    dif S = C_V (dif T) / T + n R (dif V) / V,
+  $
+  and integrating,
+  $
+    Delta S = C_V ln(T_2 / T_1) + n R ln(V_2 / V_1).
+  $
+  Between any two states this formula holds — including for
+  irreversible changes between them, since only the endpintegral.conts enter.
+] <ex:entropy-ideal-gas>
+
+#caution[
+  ($delta Q \/ T$ versus $dif S$.) Only on a reversible path is
+  $delta Q = T dif S$. Along an irreversible path the absorbed heat is
+  smaller than $integral T dif S$ (for the same endpintegral.conts), and writing
+  $dif S = delta Q \/ T$ for an irreversible step silently shrinks the
+  entropy. The safe route is always: compute $Delta S$ on a reversible
+  path between the endpintegral.conts, regardless of how the actual process
+  ran.
+] <caution:heat-vs-entropy>
+
+== Entropy and Irreversibility // 熵与不可逆性
+
+#note[
+  (Reversibility, formally.) A process is *reversible* if the system
+  and the environment can be restored to their initial states with no
+  other change. This was anticipated in
+  #link(<def:quasi-static-process>)[Chapter 2]: quasi-statics plus the
+  absence of dissipative effects (friction, unhindered heat flow
+  across finite temperature differences, free expansion) is the
+  practical recipe for reversibility. Every irreversibility mechanism
+  generates entropy, as the theorem below makes quantitative.
+] <note:reversibility-defined>
+
+#theorem(name: "Principle of Entropy Increase")[
+  For any process of an isolated system,
+  $
+    Delta S >= 0 quad "with equality iff the process is reversible."
+  $
+  Equivalently, for any process whatsoever,
+  $
+    Delta S_("system") + Delta S_("environment") >= 0.
+  $
+] <thm:entropy-increase>
+
+*Proof.* Take an irreversible process carrying an isolated system from
+$A$ to $B$; the Clausius inequality applied to the cycle formed by the
+actual process and an arbitrary reversible return path $B -> A$ gives
+$
+  integral_A^B (delta Q) / T + integral_B^A (delta Q_("rev")) / T <= 0,
+$
+and the first integral vanishes ($delta Q = 0$ in isolation), so
+$Delta S = S_B - S_A >= 0$, strict for the irreversible process. For a
+non-isolated system, enlarge the boundary: system plus environment is
+isolated, and their entropy sum obeys the same inequality. ⊙
+
+#example[
+  (Free expansion, explained.) An ideal gas doubling its volume in
+  adiabatic free expansion (§2.6: $W = Q = 0$, $Delta U = 0$, hence
+  $T$ unchanged) has entropy change — computed on the reversible
+  isothermal path between the same endpintegral.conts —
+  $
+    Delta S = n R ln(V_2 / V_1) = n R ln 2 > 0.
+  $
+  The first law saw nothing ($Delta U = 0$); the entropy increase
+  declares the process irreversible and predicts it never runs
+  backwards. This fulfils the promissory note of
+  #link(<ex:free-expansion>)[the free-expansion example].
+] <ex:free-expansion-entropy>
+
+#example[
+  (Heat conduction.) Heat $Q$ flows directly from a body at $T_h$ to a
+  body at $T_c < T_h$. Each body changes at fixed temperature, so
+  $
+    Delta S = Q / T_c - Q / T_h = Q (1/T_c - 1/T_h) > 0:
+  $
+  conduction across a finite temperature difference generates entropy
+  — precisely why it is irreversible, and why reversible heat exchange
+  requires reservoirs differing infinitesimally.
+] <ex:heat-transfer-entropy>
+
+#caution[
+  (Entropy of non-isolated systems.) The entropy of a *system* may
+  decrease: a refrigerator pumps heat out of its cold box, freezing
+  water crystallises, living organisms build order — each at the price
+  of exporting more entropy to the environment. The principle
+  constrains only the *total*: $Delta S_("system") + Delta S_("environment") >= 0$
+  holds without exception.
+] <caution:entropy-nonisolated>
+
+#note[
+  (Statistical meaning.) The molecular origin of entropy was
+  anticipated by the kinetic theory of Chapter 1: Boltzmann's
+  $H$-function decreases monotonically in collisions, and
+  #link(<note:h-statistical>)[its interpretation] as a negative
+  logarithm of molecular disorder prefigures the identity
+  $
+    S = k_B ln W,
+  $
+  where $W$ counts the microscopic configurations compatible with the
+  macrostate. Free expansion then increases entropy because more
+  microstates fit the larger volume; the second law becomes a
+  probability statement. The rigorous construction — microstates,
+  ensembles, and the derivation of all thermodynamic potentials — is
+  the programme of Part III (Chapters 12-13).
+] <note:statistical-meaning>
+
+== Thermodynamic Temperature Scale // 热力学温标
+
+The efficiency bound $eta_C = 1 - T_c \/ T_h$ rests on the temperatures
+of the reservoirs — but which temperature? The ideal-gas scale of
+#link(<prop:ideal-gas-scale>)[§2.2] referenced a particular substance.
+Carnot's theorem offers something better: a temperature scale defined
+by the second law itself, independent of any material.
+
+#theorem(name: "Absolute (Kelvin) Temperature Scale")[
+  For reversible engines operating between two reservoirs, the ratio
+  of the exchanged heats depends only on the reservoirs:
+  $
+    Q_h / Q_c = f(theta_h, theta_c),
+  $
+  where $theta$ denotes any empirical temperatures. This allows the
+  *absolute temperature* $T$ to be defined — up to a multiplicative
+  constant — as the unique quantity satisfying
+  $
+    Q_h / Q_c = T_h / T_c
+  $
+  for every reversible engine between the reservoirs.
+] <thm:absolute-scale>
+
+*Derivation.* Let two reversible engines $R_1$ (between $theta_1,
+theta_2$) and $R_2$ (between $theta_2, theta_3$) be coupled, with
+$R_2$ consuming exactly what $R_1$ rejects at $theta_2$. The composite
+is a reversible engine between $theta_1$ and $theta_3$, so
+$
+  f(theta_1, theta_3) = f(theta_1, theta_2) dot f(theta_2, theta_3).
+$
+With $theta_3$ fixed as a reference, the left side is independent of
+$theta_2$; hence $f(theta_1, theta_2)$ must factor as
+$phi(theta_1) / phi(theta_2)$ for a single function $phi$. Choosing
+$T := c dot phi(theta)$ (constant fixed by convention) gives
+$Q_h / Q_c = T_h / T_c$. ⊙
+
+The reference constant is fixed by assigning $T = 273.16 "K"$ to the
+triple point of water — the same convention as the gas scale.
+
+#property(name: "Equivalence of the Carnot and Ideal-Gas Scales")[
+  The absolute temperature of #link(<thm:absolute-scale>)[the Carnot
+    definition] coincides with the ideal-gas temperature of
+  #link(<prop:ideal-gas-scale>)[§2.2].
+] <prop:scales-equivalence>
+
+*Proof.* Compute the Carnot cycle of #link(<def:carnot-cycle>)[§3.2]
+using the *gas* scale $theta$ throughout the equation of state
+$p V = n R theta$: the derivation of
+#link(<prop:carnot-efficiency>)[the Carnot efficiency] never used any
+property of $T$ beyond the equation of state, and it produced
+$
+  Q_h / Q_c = theta_h / theta_c.
+$
+Thus the gas scale satisfies the defining relation of the absolute
+scale; both scales fix the same value at the triple point of water, so
+they are identical. ⊙
+
+This closes the account opened in #link(<note:kelvin-scale>)[§2.2]:
+temperature now rests on the second law alone, and every thermometer —
+gas, resistance, or otherwise — measures the same $T$.
+
+== Heat Engines and Refrigeration Cycles // 热机与制冷循环
+
+#definition(name: "Efficiency and Coefficients of Performance")[
+  For a heat engine absorbing $Q_h$ and delivering $W = Q_h - Q_c$ per
+  cycle, the *efficiency* is
+  $
+    eta = W / Q_h.
+  $
+  For a refrigerator pumping $Q_c$ out of the cold space at a work
+  cost $W = Q_h - Q_c$, the *coefficient of performance* is
+  $
+    "COP"_R = Q_c / W;
+  $
+  for a heat pump delivering $Q_h$ into the warm space,
+  $
+    "COP"_"HP" = Q_h / W.
+  $
+  (COP can exceed 1; efficiency cannot.)
+] <def:efficiency-cop>
+
+#property(name: "Carnot Bounds")[
+  Any engine between reservoirs at $T_h, T_c$ satisfies
+  $
+    eta <= 1 - T_c / T_h, quad
+    "COP"_R <= T_c / (T_h - T_c), quad
+    "COP"_"HP" <= T_h / (T_h - T_c),
+  $
+  with equality exactly for reversible (Carnot) devices.
+] <prop:carnot-bounds>
+
+*Derivation.* The efficiency bound is
+#link(<thm:carnot-theorem>)[Carnot's theorem] itself. For a
+refrigerator, run the same accounting in reverse: a refrigerator with
+$"COP"_R > T_c / (T_h - T_c)$, driven by a Carnot engine of efficiency
+$eta_C$ fed by the same heat $Q_h' = W$, would form a composite
+transferring heat from cold to hot with no other effect — violating
+#link(<thm:clausius-statement>)[the Clausius statement]. The heat-pump
+bound follows from $"COP"_"HP" = "COP"_R + 1$. ⊙
+
+#example[
+  (Numerical work-out.) A Carnot engine operates between $T_h = 600
+  "K"$ and $T_c = 300 "K"$ with $Q_h = 1000 "J"$ per cycle:
+  $
+    eta_C = 1 - 300 / 600 = 0.5, quad W = 500 "J", quad Q_c = 500 "J".
+  $
+  A real engine between the same reservoirs at $eta = 0.35$ wastes
+  part of the Carnot potential to friction and finite-rate heat
+  exchange. The same temperature gap run as a Carnot refrigerator
+  gives
+  $
+    "COP"_R = T_c / (T_h - T_c) = 1, quad
+    W = 500 "J" quad "to extract" quad Q_c = 500 "J".
+  $
+  Note how the numbers expose the asymmetry the definitions encode:
+  the same reservoir pair yields $eta < 1$ but $"COP"_R$ of order
+  $T_c / (T_h - T_c)$, which can far exceed 1 for narrow gaps — the
+  reason refrigeration is cheap and engine power is not.
+] <ex:engine-numerical>
+
+The Carnot bound is the engineering face of the second law: efficiency
+is bought with temperature, not with mechanical ingenuity. The
+thermodynamic potentials of Chapter 4 — free energy and free enthalpy —
+will carry the same accounting to non-cyclic processes.
 
 // ==========================================================================
 // Thermodynamique (热力学与统计力学) — Table of Contents
