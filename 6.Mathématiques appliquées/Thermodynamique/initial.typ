@@ -138,7 +138,7 @@ $
 $
 Taking logarithms with $G(u) = ln g(sqrt(u))$ and
 $Phi(s) = ln phi(sqrt(s))$ gives $G(u) + G(w) = Phi(u + w)$ for all
-$u, w >= 0$; differentiating with respect to $u$ and $w$ separately
+$u, w >= 0$; ∂erentiating with respect to $u$ and $w$ separately
 yields $G'(u) = G'(w)$ for all $u, w$, so $G'$ is a constant $-alpha$
 and
 $
@@ -273,7 +273,7 @@ molecule whose centre lies inside it. With stationary targets the
 collision rate would be $n sigma v$, giving $lambda = 1/(n sigma)$. The
 targets are themselves moving: the relevant quantity is the *relative*
 speed, whose mean over two Maxwell-distributed velocities is
-$sqrt(2) overline(v)$ (the difference of two independent Gaussians is
+$sqrt(2) overline(v)$ (the ∂erence of two independent Gaussians is
 Gaussian, with doubled variance). Hence the collision rate
 $
   z = sqrt(2) n sigma overline(v), quad "so that" quad lambda =
@@ -369,11 +369,18 @@ energy and particles across any surface, smoothing out the inhomogeneity.
 Three gradient-driven relaxation processes result, each governed by a
 *transport coefficient*.
 
-| Phenomenon | Graded quantity | Flux law | Coefficient |
-|---|---|---|---|
-| Momentum transport (viscosity) | flow velocity $u(z)$ | $Pi = -eta dif u / dif z$ | shear viscosity $eta$ |
-| Energy transport (heat conduction) | temperature $T(z)$ | $q = -kappa dif T / dif z$ | thermal conductivity $kappa$ |
-| Mass transport (diffusion) | number density $n(z)$ | $J = -D dif n / dif z$ | diffusion coefficient $D$ |
+#table(
+  columns: (auto, auto, auto, auto),
+  align: (left, left, center, left),
+  [Phenomenon], [Graded quantity], [Flux law], [Coefficient],
+  [Momentum transport (viscosity)], [flow velocity $u(z)$], [$Pi = -eta dif u \/ dif z$], [shear viscosity $eta$],
+  [Energy transport (heat conduction)],
+  [temperature $T(z)$],
+  [$q = -kappa dif T \/ dif z$],
+  [thermal conductivity $kappa$],
+
+  [Mass transport (∂usion)], [number density $n(z)$], [$J = -D dif n \/ dif z$], [∂usion coefficient $D$],
+)
 
 Each law is written for transport along $z$; the flux $Pi$ carries
 $z$-momentum across a plane, $q$ is the heat current and $J$ the particle
@@ -384,7 +391,7 @@ one mean free path away.
 
 #definition(name: "Transport Coefficients")[
   With the flux laws of the table above, the *shear viscosity* $eta$,
-  the *thermal conductivity* $kappa$ and the *diffusion coefficient*
+  the *thermal conductivity* $kappa$ and the *∂usion coefficient*
   $D$ characterise the response of the gas to velocity, temperature and
   density gradients respectively.
 ] <def:transport-coefficients>
@@ -419,7 +426,7 @@ with the sign convention that positive $Pi$ transports $x$-momentum
 towards $+z$. Comparing with $Pi = -eta dif u / dif z$ yields
 $eta = rho overline(v) lambda / 3$. The conductivity follows by
 replacing the transported property by the mean energy $c_V^("mol") T / N_A$
-per molecule, and the diffusivity by the particle property itself.
+per molecule, and the ∂usivity by the particle property itself.
 
 Three consequences are worth recording:
 
@@ -522,6 +529,453 @@ analysed systematically in Chapter 21.
   systematic Boltzmann-equation treatment, including the rigorous
   collision integral, is the subject of Chapter 21.
 ] <note:h-statistical>
+
+= Zeroth and First Laws of Thermodynamics // 热力学第零与第一定律
+
+The kinetic theory of Chapter 1 derived macroscopic quantities from
+molecular motion. Classical thermodynamics takes the opposite route: it
+organises the macroscopic regularities themselves into a logical
+structure — four laws — from which measurable consequences follow
+without any assumption about molecules. This chapter establishes the
+temperature scale (zeroth law) and the balance sheet of energy (first
+law).
+
+== Thermodynamic Systems and State Variables // 热力学系统与状态变量
+
+#definition(name: "Thermodynamic System")[
+  A *thermodynamic system* is the macroscopic body singled out for
+  study; everything outside is the *environment*, and the surface
+  separating the two is the *boundary*. Systems are classified by what
+  crosses the boundary:
+
+  - an *isolated* system exchanges neither matter nor energy;
+  - a *closed* system exchanges energy but not matter;
+  - an *open* system exchanges both.
+] <def:thermodynamic-system>
+
+#definition(name: "Extensive and Intensive Quantities")[
+  A state quantity is *extensive* if it doubles when two copies of the
+  system are combined into one, and *intensive* if it is unchanged
+  under such a scaling. Volume $V$, amount of substance $n$, internal
+  energy $U$, entropy $S$ are extensive; pressure $p$, temperature
+  $T$, density $rho$ are intensive. The quotient of two extensive
+  quantities is intensive.
+] <def:extensive-intensive>
+
+The equilibrium states in which the laws operate were characterised in
+#link(<def:equilibrium-state>)[Chapter 1]: state variables that are
+independent of time and history.
+
+#definition(name: "Quasi-Static Process")[
+  A *quasi-static process* is one that proceeds through a continuous
+  sequence of equilibrium states — slower than the time the system
+  needs to equilibrate internally, so that the state variables are
+  well-defined at every instant.
+] <def:quasi-static-process>
+
+Every quasi-static process can be drawn as a curve in the state
+diagram ($p$-$V$ plane for a simple fluid), which is the arena for the
+work calculations of §2.3. A quasi-static process need not be
+*reversible* (friction inside the system spoils reversibility without
+destroying quasi-statics); the precise notion of reversibility belongs
+to the second law and is developed in Chapter 3.
+
+#note[
+  (Axiomatics.) Callen reformulated classical thermodynamics as an
+  axiomatic system: a handful of postulates on the existence of
+  equilibrium states and on an extensive quantity — the entropy — that
+  is maximised at equilibrium. Since the entropy is not yet available
+  (it is the business of Chapter 3), we keep the present development
+  law-by-law; the Callen postulates are stated and made rigorous by
+  the microcanonical ensemble of Chapter 12, where the statistical
+  origin of each postulate becomes visible.
+] <note:callen-program>
+
+== Zeroth Law and Temperature // 第零定律与温度
+
+That "temperature" is a meaningful state variable rests on an empirical
+regularity so basic it was formalised last, after the first law, and
+therefore numbered zero.
+
+#definition(name: "Zeroth Law")[
+  Two systems each in thermal equilibrium with a third are in thermal
+  equilibrium with each other. Consequently, thermal equilibrium is an
+  equivalence relation on the set of all systems, and to each
+  equivalence class one may attach a number — the *temperature* —
+  common to all its members.
+] <def:zeroth-law>
+
+The existence of an equivalence class label is the *existence of
+temperature*; the choice of labelling scheme is a *temperature scale*.
+
+#definition(name: "Empirical Temperature")[
+  A *thermometer* is a small test body with one conveniently measurable
+  state quantity — the *thermometric parameter* $theta$ (mercury column
+  height, electrical resistance, gas pressure) — fixed while all its
+  other state variables are held fixed. The value of $theta$ at thermal
+  equilibrium with a system defines the *empirical temperature* of that
+  system on the chosen scale.
+] <def:empirical-temperature>
+
+Different thermometers need not agree in detail — each defines its own
+empirical scale. The universal choice uses the ideal gas, whose
+equation of state (Chapter 1) supplies a system-independent standard.
+
+#property(name: "Ideal Gas Temperature Scale")[
+  Fix the volume of a gas thermometer and measure its pressure $p$. The
+  temperature defined by
+  $
+    T(p) = 273.16 dot p / p_3 quad "K",
+  $
+  where $p_3$ is the pressure at the triple point of water, is
+  independent of the gas used (in the dilute limit) and coincides with
+  the absolute Kelvin scale.
+] <prop:ideal-gas-scale>
+
+*Derivation.* For a fixed amount of gas at fixed volume,
+#link(<def:equation-of-state>)[the ideal gas law] gives $p = n R T / V
+prop T$. The triple point of water — the unique state at which ice,
+liquid water and vapour coexist — is assigned $T_3 = 273.16 "K"$ by
+convention, so $T / T_3 = p / p_3$. That the ratio $p / p_3$, read off
+∂erent dilute gases, converges to a common limit is the empirical
+content of the law; the deviations vanish as the gas charge is
+reduced, because all low-density gases approach the same ideal gas of
+Chapter 1.
+
+#note[
+  (The absolute scale.) The identification with the *absolute
+  (Kelvin) scale* was just used ahead of its proof. Properly, the
+  absolute scale is constructed from the Carnot cycle, which references
+  no material substance at all; the equivalence of the Carnot and
+  ideal-gas scales is proved in Chapter 3, once the second law is
+  available. Until then, the ideal-gas scale of
+  #link(<prop:ideal-gas-scale>)[the preceding property] serves as the
+  definition of $T$.
+] <note:kelvin-scale>
+
+== Work and Heat in Thermodynamic Processes // 热力学过程中的功与热
+
+Energy crosses the boundary of a closed system in exactly two forms:
+work, which is energy transfer by macroscopically controlled means, and
+heat, which is transfer exploiting a temperature ∂erence. Neither is
+a property of the state — they characterise the *process*.
+
+#definition(name: "Work")[
+  For a simple compressible system, the work done *on* the system by
+  the environment during a quasi-static volume change is
+  $
+    delta W = - p dif V,
+  $
+  the sign convention being that compression ($dif V < 0$) does
+  positive work on the system. More generally, for a system with
+  generalised force $Y$ and displacement $X$,
+  $
+    delta W = sum_i Y_i dif X_i,
+  $
+  covering, e.g., magnetic work $mu_0 H dif M$, elastic work $F dif L$
+  and surface work $sigma dif A$.
+] <def:work>
+
+The $delta$ in $delta W$ — as opposed to the $dif$ in $dif V$ — signals
+that work is *not* an exact ∂erential: no state function $W$ exists
+whose ∂erential it would be.
+
+#property(name: "Work as Area in the State Diagram")[
+  For a quasi-static process taking the system along a curve $C$ in the
+  $p$-$V$ plane, the work done *by* the system is
+  $
+    W_("by") = integral_C p dif V,
+  $
+  the area under the path. Work therefore depends on the path, not
+  merely on the endpoints.
+] <prop:work-path>
+
+#example[
+  (Path dependence.) Take an ideal gas from $(V_1, T)$ to $(V_2, T)$
+  (with $V_2 > V_1$) along two quasi-static paths:
+
+  - *direct isothermal expansion*: $W = n R T ln(V_2 / V_1)$;
+  - *two-step path*: isobaric expansion at $p_1$ from $V_1$ to $V_2$
+    ($W' = p_1 (V_2 - V_1)$), then isochoric cooling back to $T$ (no
+    work).
+
+  At the shared final volume the isobar runs at pressure $p_1 > p_2$,
+  so $W' = n R T (V_2 - V_1) / V_1 > n R T ln(V_2/V_1) = W$: the
+  two-step path delivers more work, because it runs at a higher
+  pressure throughout. Same endpoints, ∂erent work — the visual
+  statement of @fig:work-path.
+] <ex:path-dependence>
+
+#figure(
+  grid(
+    columns: 2,
+    column-gutter: 6%,
+    image("img/work-path-left.svg", width: 100%), image("img/work-path-right.svg", width: 100%),
+  ),
+  caption: [Left: three quasi-static paths from state 1 to state 2 in
+    the $p$-$V$ plane; the work done by the gas is the area under the
+    path, and the three shaded areas ∂er. Right: through the same
+    state, the adiabat $p V^gamma = "const"$ ($gamma > 1$) is steeper
+    than the isotherm $p V = "const"$; the adiabatic compression from 1
+    to $2'$ therefore reaches a higher pressure than the isothermal
+    compression to 2.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:work-path>
+
+#definition(name: "Heat")[
+  Energy that crosses the boundary of a system by virtue of a
+  temperature ∂erence with the environment is *heat*, denoted $Q$
+  (positive when absorbed by the system). Heat is energy *in transit*:
+  a body does not *contain* heat, any more than it contains work.
+] <def:heat>
+
+The distinction from work is one of mechanism, not of substance: the
+same energy transfer can be realised as work with a frictionless piston
+or as heat with a thermostat, and mixtures of the two occur in general.
+
+#caution[
+  (Path functions.) Work and heat are *process quantities*: $delta W$
+  and $delta Q$ are inexact ∂erentials, and writing $dif W$ or
+  speaking of "the heat contained in a body" is a category error that
+  invalidates calculations. Only increments are defined, and the
+  integrals $integral delta W$, $integral delta Q$ are path integrals
+  to be evaluated along a specified curve. State quantities ($U$, $H$,
+  and later $S$) ∂er precisely in having exact ∂erentials.
+] <caution:path-functions>
+
+== First Law and Internal Energy // 第一定律与内能
+
+#definition(name: "Internal Energy")[
+  Every equilibrium state of a system admits a state quantity $U$, the
+  *internal energy*, such that the energy the system receives in any
+  process equals the increase of $U$ between the endpoint states. $U$
+  is extensive, and is defined up to an additive constant (only
+  ∂erences $Delta U$ are measurable).
+] <def:internal-energy>
+
+The physical motivation is Joule's paddle-wheel experiment: stir an
+insulated (adiabatic) vessel with a falling weight, and a given amount
+of mechanical work always raises the state — measured by any thermometer
+— identically, regardless of how the stirring is arranged. The
+endpoints are characterised by a number $U$.
+
+#theorem(name: "First Law of Thermodynamics")[
+  For any process of a closed system,
+  $
+    Delta U = Q + W,
+  $
+  where $Q$ is the heat absorbed and $W$ the work done *on* the system
+  (equivalently, $Delta U = Q - W_("by")$). For infinitesimal
+  quasi-static processes of a simple compressible system,
+  $
+    dif U = delta Q - p dif V.
+  $
+] <thm:first-law>
+
+In words: energy is conserved once both transfer channels are counted;
+$U$ is the bookkeeping quantity whose increases balance the net inflow.
+Every perpetual-motion machine of the first kind — one producing work
+from nothing — is ruled out.
+
+#definition(name: "Heat Capacities")[
+  The *heat capacities* measure the heat required per unit temperature
+  change along a specified path:
+  $
+    C_V = (∂ Q)_V / (dif T) = (∂ U / ∂ T)_V, quad
+    C_p = (∂ Q)_p / (dif T) = (∂ H / ∂ T)_p,
+  $
+  the second equality of each defining the constant-volume and
+  constant-pressure heat capacities through the state functions $U$ and
+  $H$ of §2.5. They are extensive; per unit amount of substance they
+  become the molar quantities $c_V$, $c_p$.
+] <def:heat-capacities>
+
+For a dilute gas, the kinetic theory of Chapter 1 already computed
+$C_V = f/2 R$ from #link(<thm:equipartition>)[the equipartition
+  theorem]; §2.4 and §2.5 treat $C_V$ and $C_p$ as thermodynamic
+quantities, defined for any substance.
+
+#property(name: "Joule's Law: Internal Energy of an Ideal Gas")[
+  The internal energy of an ideal gas depends on temperature alone:
+  $
+    U = U(T) quad "and hence" quad C_V = (dif U) / (dif T).
+  $
+] <prop:joule-law>
+
+*Justification.* Experimentally, Joule's free-expansion measurement
+(§2.6) found no temperature change when a dilute gas expanded into a
+vacuum, suggesting $U$ is independent of $V$. Kinetically, the
+internal energy is the sum of molecular kinetic energies,
+$U = f/2 N k_B T$ by #link(<thm:equipartition>)[equipartition], with
+no dependence on the intermolecular distance because an ideal gas has
+no intermolecular potential energy at all. The full thermodynamic
+identity $(∂ U / ∂ V)_T = T (∂ p / ∂ T)_V - p$, from which
+Joule's law follows in one line for an ideal gas, is derived with the
+Maxwell relations in Chapter 4.
+
+== Enthalpy and the Heat Capacity Relation // 焓与热容关系
+
+#definition(name: "Enthalpy")[
+  The *enthalpy* of a system is the state function
+  $
+    H = U + p V.
+  $
+  For a quasi-static isobaric process, $dif H = delta Q$, i.e. the heat
+  absorbed equals the enthalpy increase:
+  $
+    dif H = dif U + p dif V + V dif p = delta Q + V dif p = delta Q
+    quad "at" dif p = 0.
+  $
+  $H$ is extensive and is the natural energy bookkeeping for processes
+  at fixed ambient pressure — the laboratory condition.
+] <def:enthalpy>
+
+The term $p V$ is the *flow work* an element of fluid must expend to
+push its way into (or that is done on it by fluid behind it in) a
+pipeline; this is why enthalpy, not internal energy, is the conserved
+per-mass quantity in steady-flow devices, and it is the quantity whose
+changes measure reaction heats in chemistry.
+
+#property(name: "The Relation between C_p and C_V")[
+  For any simple compressible system,
+  $
+    C_p - C_V = T V alpha^2 / kappa_T > 0,
+  $
+  where
+  $
+    alpha = 1/V (partial V / partial T)_p quad "and" quad
+    kappa_T = - 1/V (partial V / partial p)_T
+  $
+  are the thermal expansion coefficient and the isothermal
+  compressibility. For an ideal gas the relation collapses to
+  $
+    C_p - C_V = n R.
+  $
+] <prop:cp-cv>
+
+*Derivation.* Start from $U = U(T, V)$ and
+$C_V = (partial U / partial T)_V$. Then for any quasi-static process
+$
+  delta Q = dif U + p dif V
+  = C_V dif T + [(partial U / partial V)_T + p] dif V.
+$
+At constant pressure, $dif V = (partial V / partial T)_p dif T$, so
+$
+  C_p = C_V + [(partial U / partial V)_T + p] (partial V / partial T)_p.
+$
+The bracket is rewritten using the identity (proved in Chapter 4 with
+the Maxwell relations)
+$
+  (partial U / partial V)_T = T (partial p / partial T)_V - p,
+$
+so the bracket becomes $T (partial p / partial T)_V$. With the cyclic
+identity $(partial p / partial T)_V = alpha / kappa_T$ and
+$(partial V / partial T)_p = alpha V$,
+$
+  C_p - C_V = T dot alpha / kappa_T dot alpha V = T V alpha^2 / kappa_T.
+$
+For the ideal gas, $p = n R T / V$ gives $alpha = 1/T$ and
+$kappa_T = 1/p$, hence $C_p - C_V = T V (1/T^2) p = n R$.
+
+The inequality $C_p > C_V$ has a direct reading: heating at constant
+pressure must pay for the expansion work in addition to raising the
+internal energy. The ratio $gamma = C_p / C_V$ governs the adiabatic
+processes of §2.6.
+
+== Applications: Free Expansion, Adiabatic Process and Throttling // 应用：自由膨胀、绝热过程与节流
+
+#example[
+  (Adiabatic free expansion.) An ideal gas initially at $(T_1, V_1)$
+  expands into a vacuum inside an insulated vessel, reaching volume
+  $V_2$. No work is done ($dif V$ of the *system* is unresisted; the
+  process is not quasi-static, but $W = 0$ regardless), and no heat
+  flows ($Q = 0$ by insulation). The first law gives
+  $
+    Delta U = 0 quad "and hence" quad T_2 = T_1
+  $
+  by #link(<prop:joule-law>)[Joule's law]. The free expansion is
+  *irreversible* — a fact invisible to the first law, whose explanation
+  requires the entropy of Chapter 3. (For a real gas the temperature
+  changes slightly: the fingerprint of intermolecular forces.)
+] <ex:free-expansion>
+
+#property(name: "Quasi-Static Adiabatic Process")[
+  A quasi-static adiabatic process ($delta Q = 0$) of an ideal gas with
+  constant heat capacities obeys
+  $
+    p V^gamma = "const", quad T V^(gamma - 1) = "const", quad
+    T^gamma p^(1 - gamma) = "const",
+  $
+  where $gamma = C_p / C_V > 1$.
+] <prop:adiabatic-process>
+
+*Derivation.* The first law with $delta Q = 0$ gives
+$C_V dif T = - p dif V$. Substituting $p = n R T / V$ and dividing by
+$T$,
+$
+  C_V (dif T) / T = - n R (dif V) / V
+  quad "with" quad n R = C_p - C_V = (gamma - 1) C_V,
+$
+so $(dif T) / T = -(gamma - 1)(dif V) / V$, which integrates to
+$T V^(gamma - 1) = "const"$; eliminating $T$ with the equation of state
+gives the $p V^gamma$ and $T^gamma p^(1-gamma)$ forms.
+
+On the $p$-$V$ diagram the adiabat through a point is *steeper* than
+the isotherm through the same point, since
+$(partial p / partial V)_("adiabatic") = gamma (partial p / partial V)_T$
+and $gamma > 1$: expansion cools the gas, so its pressure falls faster
+than isothermally — see @fig:work-path, right panel. Correspondingly,
+adiabatic compression to a given volume attains a higher pressure and a
+higher temperature than isothermal compression.
+
+#definition(name: "Joule-Thomson (Throttle) Coefficient")[
+  In a *throttling process*, a fluid is pushed steadily through a
+  porous plug or fine valve; for each element of fluid the process is
+  adiabatic, and steady-flow bookkeeping shows it is *isenthalpic*:
+  $
+    H_1 = H_2.
+  $
+  The temperature response is quantified by the *Joule-Thomson
+  coefficient*
+  $
+    mu_("JT") = (partial T / partial p)_H.
+  $
+] <def:jt-coefficient>
+
+*Derivation.* Treat $H = H(T, p)$: at constant $H$,
+$
+  0 = (partial H / partial T)_p dif T + (partial H / partial p)_T dif p
+  quad "so" quad
+  mu_("JT") = - (partial H / partial p)_T / C_p.
+$
+With $H = U + p V$ and the identity
+$(partial U / partial p)_T = - T (partial V / partial T)_p - p (partial V / partial p)_T$ (Chapter 4),
+$
+  mu_("JT") = 1/C_p [T (partial V / partial T)_p - V] = V / C_p (T alpha - 1).
+$
+
+#example[
+  (Cooling by throttling.) For an ideal gas, $alpha = 1/T$, so
+  $mu_("JT") = 0$: throttling changes no temperature, consistent with
+  the absence of intermolecular energy. For real gases, at moderate
+  temperatures $T alpha > 1$ and $mu_("JT") > 0$: expansion (pressure
+  drop) *cools* the gas — nitrogen and oxygen cool at room temperature,
+  which is the operating principle of the Linde liquefaction cycle;
+  hydrogen and helium have $mu_("JT") < 0$ at room temperature and
+  must be pre-cooled below their inversion temperature first. The
+  inversion curve in the $T$-$p$ plane, separating the cooling and
+  heating regions, is a van der Waals prediction revisited in
+  Chapter 20.
+] <ex:throttling>
+
+#note[
+  (Liquefaction.) The throttling cooler is the core of gas liquefaction
+  technology, and its efficiency analysis couples to the phase
+  behaviour of real gases. The inversion curve, the liquefaction
+  cycle, and the critical-point physics behind them are treated in
+  Chapter 20 on phase transitions.
+] <note:jt-liquefaction>
 
 // ==========================================================================
 // Thermodynamique (热力学与统计力学) — Table of Contents
