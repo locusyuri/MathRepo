@@ -3307,6 +3307,640 @@ of Chapter 16. With the structure of finite abelian groups (Chapter
 group (#link(<thm:an-simple>)[§4.3]) in hand, we are ready for that
 final chapter of the group-theoretic narrative.
 
+= Structure of Finitely Generated Abelian Groups // 有限生成 Abel 群的结构
+
+The structure theorem for finitely generated abelian groups is the
+crown of the group-theoretic half of this book. It is the *full
+converse* of Lagrange's theorem in the abelian setting: not only does
+the order of any subgroup divide $abs(G)$ (#link(<thm:lagrange>)[§3.2]),
+but for every prime-power divisor of $abs(G)$ there is a subgroup of
+exactly that order, and these subgroups fit together so tightly that
+$G$ is — up to isomorphism — completely determined by a finite list
+of integers.
+
+The theorem has two equivalent standard forms. The *invariant factor
+form* writes
+$
+  G ~= bb(Z)^r ⊕ bb(Z) \/ d_1 ⊕ dots.c ⊕ bb(Z) \/ d_k,
+  quad d_1 | d_2 | dots | d_k,
+$
+where $d_1 | d_2 | dots | d_k$ are the *invariant factors*. The
+*elementary divisor form* writes
+$
+  G ~= bb(Z)^r ⊕ bb(Z) \/ p_1^(a_1) ⊕ dots.c ⊕ bb(Z)
+  \/ p_s^(a_s),
+$
+where each $p_i$ is prime. Both decompositions are *unique* (up to
+reordering of the cyclic factors), and they are related by the unique
+factorisation of each $d_j$ into prime powers in $bb(Z)$.
+
+The integer $r$ is the *rank* of $G$ (the number of infinite cyclic
+factors); the $d_i$ and $p^a$ are its *torsion data*. The theorem
+says that a finitely generated abelian group is, up to isomorphism,
+exactly a rank and a finite list of prime-power torsion data — the
+abelian analogue of the fundamental theorem of arithmetic for $bb(Z)$.
+
+This chapter develops the theorem in three stages: direct sums and
+free abelian groups (the building blocks, §7.1); the structure
+theorem itself, with both standard forms and the uniqueness argument
+(§7.2); and the classification of finite abelian groups, with
+explicit enumeration in small orders (§7.3).
+
+== Direct Sums and Free Abelian Groups // 直和与自由 Abel 群
+
+The structure theorem expresses $G$ as a *direct sum* of cyclic
+groups. We begin by making this notion precise, then introduce the
+free abelian groups $bb(Z)^r$ as the "skeleton" of every finitely
+generated abelian group.
+
+#definition(name: "Direct Sum of Abelian Groups")[
+  Let $G_1, dots, G_n$ be abelian groups (written additively). The
+  *direct sum* is the abelian group
+  $
+    G_1 ⊕ dots.c ⊕ G_n = G_1 times dots times G_n
+  $
+  with componentwise addition: $(g_1, dots, g_n) + (g'_1, dots,
+  g'_n) = (g_1 + g'_1, dots, g_n + g'_n)$. The identity is
+  $(0, dots, 0)$ and the inverse of $(g_1, dots, g_n)$ is $(-g_1,
+  dots, -g_n)$.
+] <def:direct-sum>
+
+We write $⊕$ rather than $times$ when we wish to emphasise
+that the operation is additive (the direct *sum* rather than direct
+*product*). The two agree for finite index sets; for infinite families
+they differ, but we shall not need the infinite case.
+
+#property(name: "Basic Properties of Direct Sums")[
+  Let $G = G_1 ⊕ dots.c ⊕ G_n$.
+  + *Commutativity and associativity*: $G_i ⊕ G_j ≅ G_j ⊕
+    G_i$ and $(G_1 ⊕ G_2) ⊕ G_3 ≅ G_1 ⊕ (G_2 ⊕
+    G_3)$.
+  + *Projections and injections*: there are homomorphisms $pi_i: G
+    -> G_i$ (projections) and $iota_i: G_i -> G$ (injections), with
+    $pi_i ∘ iota_i = "id"_(G_i)$ and $sum_i iota_i ∘
+    pi_i = "id"_G$.
+  + *Universal property*: a homomorphism $f: G -> H$ is equivalent to
+    a list of homomorphisms $f_i = f ∘ iota_i: G_i -> H$,
+    with $f(g_1, dots, g_n) = f_1(g_1) + dots + f_n(g_n)$.
+  + *Order (finite case)*: if each $G_i$ is finite then $abs(G_1
+    ⊕ dots.c ⊕ G_n) = abs(G_1) dots.c abs(G_n)$.
+] <prop:direct-sum-properties>
+
+The last point makes direct sums the natural tool for building
+abelian groups out of cyclic components: $abs(bb(Z)_m ⊕ bb(Z)_n)
+= m n$, so $bb(Z)_m ⊕ bb(Z)_n$ and $bb(Z)_(m n)$ have the same
+order, even though they are isomorphic only when $gcd(m, n) = 1$.
+
+#property(name: "Order of a Direct Sum")[
+  Let $G_1, dots, G_n$ be finite abelian groups. Then
+  $
+    abs(G_1 ⊕ dots.c ⊕ G_n) = abs(G_1) dots.c abs(G_n).
+  $
+  In particular, $abs(bb(Z) \/ n bb(Z)) = n$, and the *exponent* of a
+  direct sum (the smallest $m$ with $m G = {0}$) is the least common
+  multiple of the exponents of the summands.
+] <prop:order-direct-sum>
+
+The building blocks of the structure theorem are the *free* abelian
+groups, the additive analogue of a vector space.
+
+#definition(name: "Free Abelian Group")[
+  An abelian group $F$ is *free abelian* if it is isomorphic to
+  $bb(Z)^r$ for some $r >= 0$, where
+  $
+    bb(Z)^r = bb(Z) ⊕ dots.c ⊕ bb(Z) quad ("r copies").
+  $
+  A *basis* of $F$ is a set ${e_1, dots, e_r}$ such that every $x in
+  F$ has a unique expression $x = n_1 e_1 + dots + n_r e_r$ with $n_i
+  in bb(Z)$. The integer $r$ is the *rank* of $F$, written $"rank"(F)
+  = r$.
+] <def:free-abelian>
+
+A free abelian group is thus an abelian group with a $bb(Z)$-basis —
+the exact analogue of a vector space, with $bb(Z)$ replacing the field
+of scalars. The same proofs as in linear algebra (Gaussian
+elimination over $bb(Z)$) give:
+
+- Every subgroup of $bb(Z)^r$ is free abelian of rank $<= r$.
+- Any two bases of a free abelian group have the same size.
+
+The second statement — *rank invariance* — deserves a self-contained
+proof, as it is the engine of uniqueness in the structure theorem.
+
+#definition(name: "Basis and Rank")[
+  Let $F$ be a free abelian group. A *basis* is a linearly
+  independent generating set: ${e_1, dots, e_r} subset.eq F$ such that
+  $n_1 e_1 + dots + n_r e_r = 0$ implies $n_1 = dots = n_r = 0$
+  (independence) and every $x in F$ is such a combination (span). The
+  *rank* of $F$, $r = "rank"(F)$, is the size of any basis.
+] <def:basis-rank>
+
+#theorem(name: "Rank is Well-Defined")[
+  Any two bases of a free abelian group $F$ have the same size. Hence
+  the rank is an invariant of $F$.
+] <thm:rank-invariance>
+
+#proof[
+  Let ${e_1, dots, e_r}$ and ${f_1, dots, f_s}$ be two bases of $F$.
+  Fix any prime $p$. Consider the quotient $F \/ p F$ as a vector
+  space over $bb(Z) \/ p bb(Z) = bb(F)_p$: scalar multiplication by
+  $overline(n) in bb(F)_p$ is defined by $overline(n) dot.c (x + p F)
+  = n x + p F$, which is well-defined since $p F$ absorbs the
+  ambiguity modulo $p$.
+
+  The basis ${e_1, dots, e_r}$ descends to a basis of $F \/ p F$ over
+  $bb(F)_p$: any $x in F$ is $x = n_1 e_1 + dots + n_r e_r$, so $x + p
+  F = overline(n_1) (e_1 + p F) + dots + overline(n_r) (e_r + p F)$
+  (spanning); and $overline(n_1) (e_1 + p F) + dots + overline(n_r)
+  (e_r + p F) = 0$ means $n_1 e_1 + dots + n_r e_r in p F$, i.e.
+  $n_1 e_1 + dots + n_r e_r = p m_1 e_1 + dots + p m_r e_r$ for some
+  $m_i in bb(Z)$, so $(n_1 - p m_1) e_1 + dots = 0$, hence $p | n_i$
+  by independence, so $overline(n_i) = 0$ (independence).
+
+  Hence $F \/ p F$ has $bb(F)_p$-dimension $r$. The same argument with
+  the other basis gives dimension $s$. Since dimension is an invariant
+  of vector spaces, $r = s$.
+]
+
+The proof illustrates a recurring theme: properties of free abelian
+groups are detected by reducing to a *vector space over a field*
+($bb(F)_p$), where linear algebra applies. The same idea will
+underwrite the existence proof of the structure theorem in §7.2.
+
+Every finitely generated abelian group is a quotient of a free
+abelian group:
+
+#lemma(name: "Free Subgroup of a Finitely Generated Abelian Group")[
+  Let $G$ be a finitely generated abelian group, with generators
+  $g_1, dots, g_n$. Then:
+  + There is a surjective homomorphism $phi: bb(Z)^n -> G$, $e_i |-> 
+    g_i$ (so $G ≅ bb(Z)^n \/ "ker" phi$).
+  + Let $t(G) = {x in G | m x = 0 "for some" m > 0}$ be the *torsion
+    subgroup* of $G$ (elements of finite order). Then $t(G)$ is a
+    subgroup, and there is a free abelian subgroup $F <= G$ of rank
+    $r = "rank"(G / t(G))$ with
+    $
+      G ~= F ⊕ t(G).
+    $
+  In particular, $G$ is the direct sum of a free abelian group $bb(Z)^r$
+  and a finite abelian group $t(G)$, where $r$ is the *rank* of $G$.
+] <lem:free-subgroup>
+
+#proof[
+  (1) The map $phi: bb(Z)^n -> G$, $phi(n_1, dots, n_n) = n_1 g_1 +
+  dots + n_n g_n$, is a surjective homomorphism (the $g_i$ generate
+  $G$). The First Isomorphism Theorem
+  (#link(<thm:first-isomorphism>)[§5.2]) gives $G ≅ bb(Z)^n \/
+  "ker" phi$.
+
+  (2) The torsion elements $t(G)$ form a subgroup: if $m x = 0$ and $n
+  y = 0$ then $m n (x - y) = 0$. The quotient $G / t(G)$ is
+  torsion-free (if $m (x + t(G)) = 0 + t(G)$ then $m x in t(G)$, so
+  $k m x = 0$ for some $k$, hence $x in t(G)$, i.e. $x + t(G) = 0 +
+  t(G)$). Being finitely generated and torsion-free, $G / t(G)$ is
+  free abelian of some rank $r$ (a classical lemma: a finitely
+  generated torsion-free abelian group is free — proved by embedding
+  into $bb(Q)^r$ and clearing denominators).
+
+  Let $pi: G -> G / t(G) ~= bb(Z)^r$. Choose $f_1, dots, f_r in G$
+  with $pi(f_i) = $ standard basis of $bb(Z)^r$. The subgroup $F =
+  ⟨f_1, dots, f_r⟩$ is free abelian of rank $r$, and
+  $G = F + t(G)$ (any $x in G$ has $pi(x) = sum n_i pi(f_i)$, so $x -
+  sum n_i f_i in "ker" pi = t(G)$). Since $F ∩ t(G) = {0}$ (free
+  vs. torsion), $G ~= F ⊕ t(G)$.
+]
+
+This lemma reduces the structure theorem to two cases: the free part
+$bb(Z)^r$ (already classified) and the finite torsion part $t(G)$
+(classified in §7.2). The rank $r$ is an invariant — by the same
+$F / p F$ argument — and the torsion part is classified by its
+*p-primary components*, to which we now turn.
+
+== The Structure Theorem // 结构定理
+
+We now state the main theorem in its two standard forms. The two
+statements are *equivalent* — each is a re-packaging of the other via
+unique factorisation in $bb(Z)$ — but they optimise different
+computations, so both are kept on record. The proofs of existence
+and uniqueness occupy the second half of this section.
+
+#theorem(name: "Invariant Factor Form")[
+  Let $G$ be a finitely generated abelian group. Then there is a
+  unique integer $r >= 0$ and a unique list of integers
+  $d_1, dots, d_k >= 2$ with $d_1 | d_2 | dots | d_k$ such that
+  $
+    G ~= bb(Z)^r ⊕ bb(Z) \/ d_1 bb(Z) ⊕ dots.c ⊕ bb(Z) \/ d_k bb(Z).
+  $
+  The integer $r$ is the *rank* of $G$; the $d_i$ are its *invariant
+  factors*.
+] <thm:structure-invariant>
+
+The divisibility chain $d_1 | d_2 | dots | d_k$ is what makes the
+list canonical: it forces a single ordering of the cyclic torsion
+factors, so any two such decompositions of $G$ coincide term by term.
+A useful mnemonic: $d_k$ is the largest cyclic direct summand of the
+torsion subgroup, and $d_1$ is its exponent.
+
+#theorem(name: "Elementary Divisor Form")[
+  Let $G$ be a finitely generated abelian group. Then there is a
+  unique integer $r >= 0$ and a unique multiset of prime powers
+  $p_1^(a_1), dots, p_s^(a_s)$ (each $p_i$ prime, each $a_i >= 1$)
+  such that
+  $
+    G ~= bb(Z)^r ⊕ bb(Z) \/ p_1^(a_1) bb(Z) ⊕ dots.c ⊕ bb(Z) \/ p_s^(a_s) bb(Z).
+  $
+  The $p_i^(a_i)$ are the *elementary divisors* of $G$.
+] <thm:structure-elementary>
+
+The elementary divisors are the *finest* torsion data: each cyclic
+summand has prime-power order, so it cannot be split further. The
+invariant factors, by contrast, pack the same data into the smallest
+number of cyclic summands. The two views are equivalent by the
+*primary decomposition*, which we now develop.
+
+#lemma(name: "p-Primary Decomposition")[
+  Let $G$ be a finite abelian group of order
+  $n = p_1^(a_1) dots.c p_s^(a_s)$ (prime factorisation). For each
+  prime $p$ dividing $abs(G)$, the *$p$-primary component* of $G$ is
+  $
+    G_(p) = {x in G : p^k x = 0 "for some" k >= 1}.
+  $
+  Then:
+  + Each $G_(p)$ is a subgroup of $G$.
+  + $G ~= G_(p_1) ⊕ dots.c ⊕ G_(p_s)$ (internal direct sum).
+  + $abs(G_(p)) = p^(a_p)$ where $p^(a_p)$ is the $p$-part of $abs(G)$.
+] <lem:p-primary-decomposition>
+
+#proof[
+  (1) *Closure*: if $p^k x = 0$ and $p^ell y = 0$ then
+  $p^(max(k, ell)) (x - y) = 0$, so $G_(p)$ is closed under subtraction.
+  Since $G$ is abelian, $G_(p)$ is automatically normal, hence a
+  subgroup.
+
+  (2) *Direct sum*: write $n_p = n \/ p^(a_p)$, the $p'$-part of $n$.
+  The integers $n_(p_1), dots, n_(p_s)$ are jointly coprime — their
+  gcd is $1$ — so by repeated Bezout there exist $u_1, dots, u_s in
+  bb(Z)$ with $sum_(p=1)^s u_p n_p = 1$. For any $x in G$, set
+  $
+    x_p = u_p n_p dot x in G, quad p = 1, dots, s.
+  $
+  Then $p^(a_p) x_p = u_p n_p p^(a_p) x = u_p n x = 0$ (Lagrange,
+  #link(<thm:lagrange>)[§3.2]: $n x = 0$ for every $x in G$), so
+  $x_p in G_(p_p)$. And $x = sum_p x_p$ because
+  $sum_p u_p n_p = 1$. Hence $G = sum_p G_(p_p)$.
+
+  For independence, suppose
+  $x in G_(p_p) ∩ sum_(q != p) G_(q_q)$. Then $p^(a_p) x = 0$
+  (since $x in G_(p_p)$), and there are elements $y_q in G_(q_q)$
+  with $x = sum_(q != p) y_q$, so $m x = 0$ for any common multiple
+  $m$ of $q^(a_q)$ for $q != p$ — such an $m$ is coprime to $p$. Bezout
+  gives $u, v$ with $u p^(a_p) + v m = 1$, so
+  $
+    x = (u p^(a_p) + v m) x = u p^(a_p) x + v m x = 0 + 0 = 0.
+  $
+  Hence $G_(p_p) ∩ sum_(q != p) G_(q_q) = {0}$, and the sum is direct.
+
+  (3) By (2) and #link(<prop:order-direct-sum>)[§7.1],
+  $abs(G) = product_p abs(G_(p_p))$. Every element of $G_(p_p)$ has
+  $p$-power order (by definition), so $G_(p_p)$ is a $p$-group and
+  $abs(G_(p_p))$ is a power of $p$. Since the prime factorisation of
+  $abs(G)$ is $product_p p^(a_p)$, we must have $abs(G_(p_p)) = p^(a_p)$.
+]
+
+The $p$-primary decomposition reduces the structure theorem for a
+*finite* abelian group to the case of a $p$-group. For *finitely
+generated* groups, combine with #link(<lem:free-subgroup>)[the free
+subgroup lemma] to peel off the free part $bb(Z)^r$ first; then the
+finite torsion part splits as $t(G) ~= ⊕_p G_(p_p)$, and the theorem
+is reduced to the finite $p$-group case.
+
+#note(title: "Equivalence of the Two Canonical Forms")[
+  The two forms in
+  #link(<thm:structure-invariant>)[the invariant factor theorem] and
+  #link(<thm:structure-elementary>)[the elementary divisor theorem]
+  are equivalent. To pass from invariant factors to elementary
+  divisors: factorise each $d_j$ into prime powers,
+  $d_j = product_p p^(a_(p, j))$, and lay out all the resulting
+  prime powers as the elementary divisors (with repetitions). To pass
+  back: collect the elementary divisors of each prime $p$, order the
+  powers increasingly as
+  $a_(p, 1) <= dots.c <= a_(p, k_p)$, pad shorter columns at the
+  *top* with $p^0 = 1$ so every column has length $k = max_p k_p$,
+  and reconstruct each invariant factor as
+  $
+    d_i = product_p p^(a_(p, i)), quad i = 1, dots, k.
+  $
+  Because each column is sorted increasingly, $a_(p, i) <= a_(p, i+1)$,
+  so $d_i | d_(i+1)$; the divisibility $d_1 | d_2 | dots | d_k$ is
+  automatic.
+] <note:two-canonical-forms>
+
+#figure(
+  image("img/factor-correspondence.svg"),
+  caption: [The dictionary between invariant factors $d_1, d_2, d_3$
+  and elementary divisors. Each row reconstructs one $d_j$ as the
+  product of one prime power per column, with the powers ordered
+  increasingly down each column; this guarantees $d_1 | d_2 | d_3$.]
+) <fig:factor-correspondence>
+
+=== Existence and Uniqueness of the Decomposition // 分解的存在性与唯一性
+
+We now prove #link(<thm:structure-invariant>)[the structure theorem]
+— both existence and uniqueness. Existence is an application of the
+*Smith normal form* of an integer matrix; uniqueness then follows from
+counting elements of bounded order in each $p$-primary component.
+
+#theorem(name: "Smith Normal Form over Z")[
+  Let $A$ be an $m times n$ integer matrix. Then $A$ can be
+  transformed by elementary row and column operations (over $bb(Z)$)
+  into a diagonal matrix
+  $
+    "diag"(d_1, d_2, dots, d_r, 0, dots, 0), quad d_1 | d_2 | dots | d_r, quad d_i > 0,
+  $
+  for some $r <= min(m, n)$. The $d_i$ are unique (given $A$) and are
+  the *invariant factors* of $A$.
+] <thm:smith-normal-form>
+
+#proof[
+  *Existence.* The algorithm runs in two phases.
+
+  Phase (i) — *Diagonalisation.* If $A = 0$ we are done. Otherwise
+  pick an entry of $A$ of smallest positive absolute value; by row
+  and column swaps, move it to position $(1, 1)$ and call it $a$. For
+  every other entry $b$ in row 1, divide $b$ by $a$: write
+  $b = q a + r$ with $0 <= r < a$, and subtract $q$ times column 1
+  from the column containing $b$. If some $r != 0$, move $r$ to
+  position $(1, 1)$ (so $a$ shrinks). Repeat until all off-diagonal
+  entries in row 1 are zero. Apply the same procedure to column 1
+  (using row operations), then recurse on the
+  $(m - 1) times (n - 1)$ minor. Termination is guaranteed because
+  the absolute value of the $(1, 1)$ entry strictly decreases at each
+  swap.
+
+  Phase (ii) — *Divisibility chain.* Suppose phase (i) yields
+  diagonal entries $delta_1, dots, delta_r$ with $delta_i > 0$. If
+  $delta_i$ does not divide $delta_(i+1)$ for some $i$, add row
+  $(i+1)$ to row $i$ (so the $(i, i+1)$ entry becomes
+  $delta_(i+1)$ and the $(i, i)$ entry remains $delta_i$), then
+  re-run phase (i) on the $2 times 2$ block in rows $i, i+1$ and
+  columns $i, i+1$. The new top-left entry is
+  $gcd(delta_i, delta_(i+1))$, a strict divisor of $delta_i$ unless
+  $delta_i | delta_(i+1)$ already. The product
+  $delta_1 dots.c delta_r$ is preserved by the operations, so the
+  iteration terminates, producing $d_1 | d_2 | dots | d_r$.
+
+  *Uniqueness (sketch).* For each $k = 1, dots, r$, let $Delta_k(A)$
+  be the gcd of all $k times k$ minors of $A$ (with $Delta_0 = 1$).
+  Elementary row and column operations do not change $Delta_k$ (they
+  multiply $k$-minors by $plus.minus 1$ or replace them with
+  $bb(Z)$-combinations, which preserves the gcd). For the diagonal
+  form, $Delta_k = d_1 d_2 dots.c d_k$. Hence
+  $d_k = Delta_k \/ Delta_(k-1)$ is determined by $A$, so the list
+  $d_1, dots, d_r$ is unique.
+]
+
+We can now complete the proof of the structure theorem.
+
+*Existence in the structure theorem.* By
+#link(<lem:free-subgroup>)[the free subgroup lemma], $G$ admits a
+surjection $phi : bb(Z)^n -> G$ with $G ≅ bb(Z)^n \/ "ker" phi$. The
+kernel $"ker" phi$ is a subgroup of $bb(Z)^n$; since $bb(Z)$ is
+Noetherian (every ideal of $bb(Z)$ is principal), every subgroup of
+$bb(Z)^n$ is finitely generated, so $"ker" phi = A dot bb(Z)^m$ for
+some $n times m$ integer matrix $A$.
+
+Apply #link(<thm:smith-normal-form>)[Smith normal form] to $A$:
+there are unimodular matrices $P in "GL"_n(bb(Z))$ and
+$Q in "GL"_m(bb(Z))$ with
+$
+  P A Q = "diag"(d_1, dots, d_r, 0, dots, 0), quad d_1 | dots | d_r.
+$
+The change of basis $P$ on $bb(Z)^n$ and $Q$ on $bb(Z)^m$ are
+isomorphisms, so they do not change $G$ up to isomorphism. After
+the change of basis, the quotient becomes
+$
+  bb(Z)^n \/ "diag"(d_1, dots, d_r, 0, dots, 0) bb(Z)^m ~= bb(Z) \/ d_1 bb(Z) ⊕ dots.c ⊕ bb(Z) \/ d_r bb(Z) ⊕ bb(Z)^(n-r).
+$
+Setting $r_("free") = n - r$ (the free part) and discarding any
+$d_i = 1$ (which give trivial cyclic summands $bb(Z) \/ 1 bb(Z) =
+{0}$) yields the invariant factor decomposition of
+#link(<thm:structure-invariant>)[the theorem].
+
+*Uniqueness.* By
+#link(<lem:p-primary-decomposition>)[the $p$-primary decomposition],
+uniqueness for $G$ reduces to uniqueness for each $p$-primary
+component $G_(p)$. So assume $G$ is a finite abelian $p$-group with
+two decompositions
+$
+  G ~= bb(Z) \/ p^(a_1) ⊕ dots.c ⊕ bb(Z) \/ p^(a_k)
+  ~= bb(Z) \/ p^(b_1) ⊕ dots.c ⊕ bb(Z) \/ p^(b_ell),
+$
+with $a_1 >= dots >= a_k >= 1$ and $b_1 >= dots >= b_ell >= 1$. We
+show $k = ell$ and $a_i = b_i$ for all $i$.
+
+For $j >= 0$, let $G[p^j] = {x in G : p^j x = 0}$, the $p^j$-torsion
+subgroup. In the first decomposition,
+$
+  abs(G[p^j]) = product_(i=1)^k p^(min(a_i, j)) = p^(sum_(i=1)^k min(a_i, j)).
+$
+The same formula on the second decomposition gives
+$abs(G[p^j]) = p^(sum_(i=1)^ell min(b_i, j))$. So for every $j >= 0$,
+$
+  sum_(i=1)^k min(a_i, j) = sum_(i=1)^ell min(b_i, j).
+$
+Subtracting the $j$-equation from the $(j+1)$-equation gives
+$
+  abs({i : a_i >= j+1}) = abs({i : b_i >= j+1}), quad forall j >= 0.
+$
+The sequence $abs({i : a_i >= 1}) >= abs({i : a_i >= 2}) >= dots$
+determines the multiset ${a_i}$ by telescoping: the number of $i$
+with $a_i = j$ is $abs({i : a_i >= j}) - abs({i : a_i >= j+1})$.
+Hence the multiset ${a_i}$ is determined by $G$, so after sorting
+$a_i = b_i$ term by term, and $k = ell$.
+
+This completes the proof of both existence and uniqueness in
+#link(<thm:structure-invariant>)[the structure theorem]. The
+equivalence with the elementary divisor form
+(#link(<thm:structure-elementary>)[the elementary divisor theorem])
+follows from #link(<note:two-canonical-forms>)[the dictionary
+between the two forms], so the elementary divisor form is also
+uniquely determined by $G$.
+
+#note(title: "Generalisation to Principal Ideal Domains")[
+  The proof of the structure theorem goes through verbatim with
+  $bb(Z)$ replaced by any principal ideal domain (PID) $R$: every
+  finitely generated $R$-module $M$ admits a Smith normal form, and
+  the same counting argument gives uniqueness. The structure theorem
+  then reads
+  $
+    M ~= R^r ⊕ R \/ d_1 R ⊕ dots.c ⊕ R \/ d_k R, quad d_1 | dots | d_k,
+  $
+  with $d_i$ defined up to units of $R$. The case $R = k[x]$ (polynomials
+  over a field) gives the *rational canonical form* of a linear
+  operator, and the elementary divisor form gives the *Jordan normal
+  form* (after base-change to the algebraic closure of $k$). We will
+  develop the module-theoretic version in the chapters on ring theory.
+] <note:pid-generalisation>
+
+== Classification of Finite Abelian Groups // 有限 Abel 群的分类
+
+The structure theorem gives a *complete* classification of finite
+abelian groups: such a group is determined up to isomorphism by its
+list of elementary divisors (or, equivalently, its list of invariant
+factors). We illustrate this with explicit enumeration in small
+orders, and connect the result to the Sylow theory of
+#link(<thm:sylow-first>)[§6.3].
+
+#corollary(name: "Full Converse of Lagrange in the Abelian Case")[
+  Let $G$ be a finite abelian group of order $n$. For every divisor
+  $d | n$, there is a subgroup $H <= G$ with $abs(H) = d$.
+] <cor:lagrange-converse-abelian>
+
+#proof[
+  Factorise $n = p_1^(a_1) dots.c p_s^(a_s)$. By
+  #link(<lem:p-primary-decomposition>)[the $p$-primary
+  decomposition], $G ~= G_(p_1) ⊕ dots.c ⊕ G_(p_s)$ with
+  $abs(G_(p_i)) = p_i^(a_i)$. Any divisor $d | n$ factors as
+  $d = d_1 dots.c d_s$ with $d_i | p_i^(a_i)$. It suffices to find,
+  in each $G_(p_i)$, a subgroup of order $d_i$.
+
+  So let $G$ be a finite abelian $p$-group, written in elementary
+  divisor form as
+  $G ~= bb(Z) \/ p^(a_1) ⊕ dots.c ⊕ bb(Z) \/ p^(a_k)$
+  with $a_1 >= dots >= a_k >= 1$. Any divisor of $p^(a_1 + dots + a_k)$
+  has the form $p^(b_1 + dots + b_k)$ with $0 <= b_i <= a_i$. In the
+  $i$-th summand $bb(Z) \/ p^(a_i) bb(Z)$, the subgroup
+  $
+    p^(a_i - b_i) bb(Z) \/ p^(a_i) bb(Z) ~= bb(Z) \/ p^(b_i) bb(Z)
+  $
+  has order $p^(b_i)$. The direct sum of these subgroups gives a
+  subgroup of $G$ of order $p^(b_1 + dots + b_k) = d$.
+]
+
+The abelian case is thus the "happy" setting for Lagrange's theorem:
+*every* divisor is realised as the order of a subgroup. In a general
+finite group this fails (cf. $A_4$ has no subgroup of order $6$,
+although $6 | 12$).
+
+#property(name: "Exponent Equals Maximum Order")[
+  Let $G$ be a finite abelian group. The *exponent* of $G$ — the
+  smallest $m$ with $m G = {0}$ — equals the maximum order of an
+  element of $G$. In invariant factor form, the exponent is $d_k$,
+  the last (largest) invariant factor.
+] <prop:exponent-characterisation>
+
+#proof[
+  Write $G ~= bb(Z) \/ d_1 ⊕ dots.c ⊕ bb(Z) \/ d_k$ with
+  $d_1 | dots | d_k$. The exponent is the least common multiple of
+  the $d_i$, which — because $d_i | d_k$ for all $i$ — is exactly
+  $d_k$. The element $(0, dots, 0, overline(1))$ in the last summand
+  has order $d_k$, so the maximum order equals the exponent.
+]
+
+We now illustrate the classification by enumerating abelian groups of
+small orders.
+
+#example(name: "Abelian Groups of Order 8")[
+  We classify abelian groups $G$ with $abs(G) = 8 = 2^3$. The
+  elementary divisors are partitions of the exponent $3$ (as a sum of
+  positive integers, the exponents of $2$ in each cyclic summand).
+  There are three partitions of $3$:
+
+  + $3 = 3$: one elementary divisor $2^3$, so
+    $G ~= bb(Z) \/ 8 bb(Z)$ (cyclic of order $8$).
+
+  + $3 = 2 + 1$: elementary divisors $2^2, 2^1$, so
+    $G ~= bb(Z) \/ 4 bb(Z) ⊕ bb(Z) \/ 2 bb(Z)$.
+
+  + $3 = 1 + 1 + 1$: three elementary divisors $2^1, 2^1, 2^1$, so
+    $G ~= (bb(Z) \/ 2 bb(Z))^3$.
+
+  In invariant factor form (using
+  #link(<note:two-canonical-forms>)[the dictionary]), the three
+  groups are $bb(Z) \/ 8 bb(Z)$ with $d_1 = 8$;
+  $bb(Z) \/ 4 bb(Z) ⊕ bb(Z) \/ 2 bb(Z)$ with $d_1 = 2 | d_2 = 4$;
+  and $(bb(Z) \/ 2 bb(Z))^3$ with $d_1 = d_2 = d_3 = 2$.
+] <ex:abelian-order-8>
+
+#example(name: "Abelian Groups of Order 12")[
+  We classify abelian groups $G$ with $abs(G) = 12 = 2^2 dot 3$. By
+  #link(<lem:p-primary-decomposition>)[the $p$-primary
+  decomposition], $G ~= G_(2) ⊕ G_(3)$ with $abs(G_(2)) = 4$ and
+  $abs(G_(3)) = 3$.
+
+  Abelian groups of order $4 = 2^2$: the partitions of $2$ give two
+  groups:
+  $bb(Z) \/ 4 bb(Z)$ (partition $2 = 2$) and
+  $bb(Z) \/ 2 bb(Z) ⊕ bb(Z) \/ 2 bb(Z)$ (partition $2 = 1 + 1$).
+
+  Abelian groups of order $3 = 3^1$: only one, $bb(Z) \/ 3 bb(Z)$
+  (partition $1 = 1$).
+
+  Combining via direct sum (and using the Chinese Remainder Theorem
+  to merge coprime cyclic factors), the abelian groups of order $12$
+  are:
+
+  + $bb(Z) \/ 4 bb(Z) ⊕ bb(Z) \/ 3 bb(Z) ~= bb(Z) \/ 12 bb(Z)$
+    (cyclic, since $gcd(4, 3) = 1$).
+
+  + $bb(Z) \/ 2 bb(Z) ⊕ bb(Z) \/ 2 bb(Z) ⊕ bb(Z) \/ 3 bb(Z)
+    ~= bb(Z) \/ 2 bb(Z) ⊕ bb(Z) \/ 6 bb(Z)$
+    (merge one factor $2$ with the $3$ via CRT).
+
+  The invariant factor forms are $bb(Z) \/ 12 bb(Z)$ with
+  $d_1 = 12$; and $bb(Z) \/ 2 bb(Z) ⊕ bb(Z) \/ 6 bb(Z)$ with
+  $d_1 = 2 | d_2 = 6$.
+] <ex:abelian-order-12>
+
+The general pattern is now clear: *abelian groups of order $n$ are in
+bijection with multisets of prime powers whose product is $n$*, or
+equivalently with divisibility chains $d_1 | dots | d_k$ with
+$d_1 dots.c d_k = n$.
+
+#note(title: "Relation to the Sylow Theorems")[
+  In a finite abelian group $G$ of order
+  $p_1^(a_1) dots.c p_s^(a_s)$, the $p_i$-primary component
+  $G_(p_i)$ is the *unique* Sylow $p_i$-subgroup (of order
+  $p_i^(a_i)$). Uniqueness is automatic: $G$ is abelian, so every
+  subgroup is normal, and the conjugate Sylow $p_i$-subgroups (which
+  #link(<thm:sylow-second>)[the second Sylow theorem] says are all
+  conjugate) must all coincide.
+
+  The structure theorem refines the Sylow theorem in the abelian
+  case: not only does a Sylow $p$-subgroup exist
+  (#link(<thm:sylow-first>)[the first Sylow theorem]) and is unique,
+  it splits *as a direct sum of cyclic groups of prime-power order*.
+  For *general* finite groups, the Sylow theorems give existence and
+  conjugacy of $p$-subgroups but no internal decomposition — that
+  is the special gift of commutativity.
+] <note:sylow-connection>
+
+=== Closing Remarks on Group Theory // 群论总结
+
+The structure theorem for finitely generated abelian groups closes
+the group-theoretic half of this book. Three threads converge here:
+
+- *Lagrange's theorem* (#link(<thm:lagrange>)[§3.2]) restricted the
+  possible orders of subgroups; the structure theorem realises
+  *every* divisor in the abelian case
+  (#link(<cor:lagrange-converse-abelian>)[above]).
+- *The Sylow theorems* (#link(<thm:sylow-first>)[§6.3]) guaranteed
+  Sylow $p$-subgroups in any finite group; in the abelian case, the
+  $p$-primary decomposition makes them unique and completely
+  decomposes them.
+- *The isomorphism theorems* (#link(<thm:first-isomorphism>)[§5.2])
+  let us write $G$ as a quotient $bb(Z)^n \/ "ker" phi$, from which
+  the Smith normal form extracts the invariant factors.
+
+For *non-abelian* groups, no structure theorem of comparable strength
+exists — the simplicity of $A_5$ (#link(<ex:a5-simple>)[§4.3])
+already shows that the building blocks are far more varied than the
+cyclic groups $bb(Z) \/ n bb(Z)$. The rest of this book shifts focus
+from groups to *rings* and *modules*, where the structure theorem
+generalises beautifully: the same proof, with $bb(Z)$ replaced by any
+principal ideal domain $R$, classifies finitely generated $R$-modules
+(#link(<note:pid-generalisation>)[§7.2]).
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
