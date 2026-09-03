@@ -1967,6 +1967,546 @@ homomorphism $f: G -> H$ is, up to isomorphism, the natural
 projection $G -> G \/ "ker" f$.
 
 // ==========================================================================
+// Chapter 5: 群的同态定理
+// ==========================================================================
+
+= Homomorphism Theorems for Groups // 群的同态定理
+
+Chapter 4 closed on a promise: every homomorphism $f: G -> H$ is,
+up to isomorphism, the natural projection $G -> G \/ "ker" f$. This
+chapter fulfills it. §5.1 strengthens the homomorphism concept of
+#link(<def:homomorphism>)[Chapter 1] for the group setting:
+kernels — previewed in #link(<note:kernel-preliminary>)[§1.3] — are
+not merely subgroups but *normal* subgroups, exactly the structures
+that support a quotient (§4.1). §5.2 then states and proves the
+*First Isomorphism Theorem* $G \/ "ker" f ~= "im" f$, the precise
+form of #link(<note:natural-projection-universal>)[§4.2]'s universal
+property, and unpacks its consequence: every $f$ factors as natural
+projection, isomorphism, and inclusion. §5.3 closes with the
+*Second* and *Third Isomorphism Theorems* — refinements of the First
+at the level of subgroups — and the *Correspondence Theorem* that
+links the subgroup lattices of $G$ and $G \/ N$. Together, these
+four theorems are the first great structural result of group theory,
+and the template for the analogous theorems in ring theory (§9.3)
+and module theory (§17.3).
+
+== Homomorphisms of Groups // 群的同态
+
+The homomorphism concept of #link(<def:homomorphism>)[§1.3] was
+stated for any algebraic system with one operation. Specialised to
+groups — where every element has an inverse — it acquires two
+features invisible in the general setting: the image of the identity
+is *always* the identity (no surjectivity needed, redeeming
+#link(<prop:homomorphism-properties>)[§1.3]'s caveat), and the
+kernel is *always* normal (the link between homomorphisms and
+quotients).
+
+#property(name: "Group Homomorphisms Preserve Structure")[
+  Let $f: G -> H$ be a homomorphism of groups, with identities
+  $e in G$, $e' in H$.
+  + $f(e) = e'$ — no surjectivity required.
+  + $f(a^(-1)) = f(a)^(-1)$ for every $a in G$.
+  + $f(a^n) = f(a)^n$ for every $a in G$, $n in bb(Z)$.
+  + If $K <= G$ then $f(K) <= H$; if $K ⊲ G$ then $f(K) ⊲ f(G)$.
+  + If $L <= H$ then $f^(-1)(L) <= G$; if $L ⊲ H$ then
+    $f^(-1)(L) ⊲ G$.
+] <prop:group-homomorphism-properties>
+
+#proof[
+  (1) For any $a in G$, $f(a) = f(a dot e) = f(a) dot f(e)$; by
+  #link(<prop:group-basic-properties>)[cancellation in $H$], $f(e) =
+  e'$.
+
+  (2) $e' = f(e) = f(a a^(-1)) = f(a) f(a^(-1))$, so $f(a^(-1))$ is
+  an inverse of $f(a)$, hence equals $f(a)^(-1)$ by uniqueness of
+  inverses.
+
+  (3) For $n >= 0$ this is induction on $n$; for $n < 0$ combine the
+  $n > 0$ case with (2).
+
+  (4) Closure: $f(a), f(b) in f(K)$ with $a, b in K$ gives $f(a)
+  f(b)^(-1) = f(a b^(-1)) in f(K)$ by (2), since $K$ is closed under
+  $a b^(-1)$. For normality when $K ⊲ G$: take $f(a) in f(G)$ and
+  $f(k) in f(K)$, then $f(a) f(k) f(a)^(-1) = f(a k a^(-1)) in
+  f(K)$ by normality of $K$ in $G$.
+
+  (5) For $L <= H$ and $a, b in f^(-1)(L)$: $f(a b^(-1)) = f(a)
+  f(b)^(-1) in L$, so $a b^(-1) in f^(-1)(L)$. For normality when
+  $L ⊲ H$: $a in G$, $b in f^(-1)(L)$ gives $f(a b a^(-1)) = f(a)
+  f(b) f(a)^(-1) in L$ since $L ⊲ H$, hence $a b a^(-1) in
+  f^(-1)(L)$.
+]
+
+#definition(name: "Kernel and Image")[
+  Let $f: G -> H$ be a group homomorphism. The *kernel* of $f$ is
+  $
+    "ker" f = {a in G | f(a) = e'},
+  $
+  and the *image* of $f$ is
+  $
+    "im" f = {f(a) | a in G}.
+  $
+  By #link(<prop:group-homomorphism-properties>)[property (4) and
+  (5)] $"ker" f <= G$ and $"im" f <= H$.
+] <def:kernel-image>
+
+This formalises #link(<note:kernel-preliminary>)[§1.3]'s
+preliminary kernel. The key new fact — invisible at the level of
+general algebraic systems, where inverses need not exist for every
+element — is that the kernel is *normal*.
+
+#theorem(name: "Kernels Are Normal")[
+  For any group homomorphism $f: G -> H$, the kernel $"ker" f$ is a
+  normal subgroup of $G$.
+] <thm:kernel-normal>
+
+#proof[
+  We verify criterion (3) of
+  #link(<thm:normal-equivalents>)[§4.1]: for $a in G$ and $n in
+  "ker" f$ we must show $a n a^(-1) in "ker" f$. Compute
+  $
+    f(a n a^(-1)) = f(a) f(n) f(a)^(-1) = f(a) dot e' dot f(a)^(-1)
+    = e',
+  $
+  using #link(<prop:group-homomorphism-properties>)[property (1) and
+  (2)] and the fact that $f(n) = e'$ (since $n in "ker" f$). Hence
+  $a n a^(-1) in "ker" f$ as required.
+]
+
+The theorem has a striking converse, which we record for emphasis:
+*every* normal subgroup of $G$ is the kernel of *some* homomorphism
+— namely, the natural projection $pi: G -> G \/ N$ of
+#link(<thm:quotient-group>)[§4.2], whose kernel is exactly $N$. So
+the link between "normal subgroup" and "kernel of a homomorphism"
+is exact:
+$
+  {N ⊲ G} <-> {"ker" f | f: G -> H "for some" H}.
+$
+
+#example[
+  (Determinant as a homomorphism.) The determinant map
+  $
+    det: "GL"_n(F) -> F^times, quad A |-> det(A),
+  $
+  is a homomorphism since $det(A B) = det(A) det(B)$. Its kernel is
+  $
+    "ker"(det) = {A in "GL"_n(F) | det(A) = 1} = "SL"_n(F),
+  $
+  the special linear group of #link(<def:general-linear-group>)[§2.2]
+  and #link(<ex:normal-examples>)[§4.1]. Theorem
+  #link(<thm:kernel-normal>)[above] re-proves, in one line, that
+  $"SL"_n(F) ⊲ "GL"_n(F)$.
+] <ex:det-kernel>
+
+#example[
+  (Sign as a homomorphism.) The sign map
+  $
+    "sign": S_n -> {plus.minus 1}, quad sigma |-> "sign"(sigma),
+  $
+  recording the parity of a permutation, is a homomorphism since the
+  sign of a product is the product of the signs (see
+  #link(<def:alternating-group>)[§3.3]). Its kernel is
+  $
+    "ker"("sign") = {sigma in S_n | "sign"(sigma) = +1} = A_n,
+  $
+  the alternating group. Again, Theorem
+  #link(<thm:kernel-normal>)[above] re-proves, in one line, that
+  $A_n ⊲ S_n$ — the result of
+  #link(<prop:normal-properties>)[§4.1 property (3)], recovered from
+  a structural perspective.
+] <ex:sign-kernel>
+
+The two examples share a common shape: a "natural" homomorphism
+out of $G$ produces, as kernel, a "natural" normal subgroup. The
+First Isomorphism Theorem will run this construction in reverse —
+given $N ⊲ G$, it finds a homomorphism (the natural projection) with
+kernel $N$.
+
+#property(name: "Image Is a Subgroup")[
+  For any homomorphism $f: G -> H$, the image $"im" f$ is a
+  subgroup of $H$. The corestriction — same mapping rule, target
+  restricted to the image — is a *surjective* homomorphism $G ->
+  "im" f$ with the same kernel as $f$.
+] <prop:image-subgroup>
+
+#proof[
+  Immediate from #link(<prop:group-homomorphism-properties>)[property
+  (4)] with $K = G$: $f(G) = "im" f <= H$. Surjectivity of the
+  corestriction is by construction, and the kernel is unchanged
+  since the mapping rule is.
+]
+
+#example[
+  (Two extreme homomorphisms.) Let $G$ be any group.
+  + For any subgroup $H <= G$, the *inclusion* $i: H -> G$, $i(h) =
+    h$, is an injective homomorphism with $"ker" i = {e_H}$ and
+    $"im" i = H$. The kernel is as small as possible — trivial — so
+    $i$ "forgets nothing".
+  + For any $N ⊲ G$, the *natural projection* $pi: G -> G \/ N$,
+    $pi(a) = a N$, of #link(<thm:quotient-group>)[§4.2] is a
+    surjective homomorphism with $"ker" pi = N$ and $"im" pi = G \/
+    N$. The kernel is as large as $N$ — chosen by us — and the
+    projection "forgets exactly $N$'s worth of structure".
+
+  Every homomorphism sits between these two extremes; the First
+  Isomorphism Theorem will say that it is, up to isomorphism, the
+  composite of a projection with an inclusion.
+] <ex:inclusion-projection>
+
+== First Isomorphism Theorem // 第一同构定理
+
+The two extreme examples of #link(<ex:inclusion-projection>)[above] —
+inclusions (trivial kernel) and projections (kernel $N$, image $G \/ N$)
+— are the building blocks of *every* homomorphism. Given $f: G -> H$,
+the projection $pi: G -> G \/ "ker" f$ quotients out exactly the
+information $f$ forgets, and the inclusion $i: "im" f -> H$ records
+where the images land. The First Isomorphism Theorem says that what
+remains in between is an isomorphism: the quotient $G \/ "ker" f$
+recovers, up to renaming, exactly the image $"im" f$.
+
+#theorem(name: "First Isomorphism Theorem")[
+  Let $f: G -> H$ be a group homomorphism. The map
+  $
+    overline(f): G \/ "ker" f -> "im" f, quad a("ker" f) |-> f(a),
+  $
+  is a well-defined isomorphism. In particular,
+  $
+    G \/ "ker" f ~= "im" f.
+  $
+] <thm:first-isomorphism>
+
+#proof[
+  We verify four things in turn: that $overline(f)$ is well-defined,
+  a homomorphism, injective, and surjective.
+
+  *Well-defined.* If $a("ker" f) = b("ker" f)$ then $b^(-1) a in
+  "ker" f$ by #link(<def:coset>)[§3.2], so $f(b^(-1) a) = e'$, i.e.
+  $f(b)^(-1) f(a) = e'$, giving $f(a) = f(b)$. Thus $overline(f)$
+  depends only on the coset, not on the representative.
+
+  *Homomorphism.* For $a, b in G$,
+  $
+    overline(f)(a("ker" f) dot b("ker" f)) &= overline(f)((a b)("ker"
+    f)) = f(a b) \
+    &= f(a) f(b) = overline(f)(a("ker" f)) dot overline(f)(b("ker" f)),
+  $
+  using the definition of the quotient operation
+  (#link(<thm:quotient-group>)[§4.2]) and that $f$ is a homomorphism.
+
+  *Injective.* If $overline(f)(a("ker" f)) = e'$, then $f(a) = e'$,
+  so $a in "ker" f$, i.e. $a("ker" f) = "ker" f$ — the identity of
+  $G \/ "ker" f$. The kernel of $overline(f)$ is trivial.
+
+  *Surjective.* By definition, every element of $"im" f$ is of the
+  form $f(a) = overline(f)(a("ker" f))$ for some $a in G$.
+
+  Being a well-defined, injective and surjective homomorphism,
+  $overline(f)$ is an isomorphism.
+]
+
+#figure(
+  image("img/first-isomorphism.svg"),
+  caption: [The First Isomorphism Theorem as a commutative diagram:
+    every row is exact, and $overline(f)$ fills the dashed arrow as
+    the canonical isomorphism $G \/ "ker" f ~= "im" f$.],
+) <fig:first-isomorphism>
+
+The theorem unpacks into a *factorization* of $f$, which is often
+more useful in practice than the bare isomorphism.
+
+#corollary(name: "Homomorphism Factorization")[
+  Every group homomorphism $f: G -> H$ factors as
+  $
+    G arrow.r^pi G \/ "ker" f arrow.r^(overline(f)) "im" f
+    arrow.r.hook H,
+  $
+  where $pi$ is the natural projection, $overline(f)$ is the
+  isomorphism of #link(<thm:first-isomorphism>)[the theorem], and
+  the last arrow is the inclusion. In particular, every homomorphism
+  is — up to isomorphism — a projection followed by an inclusion.
+] <cor:homomorphism-factorization>
+
+This is the sense in which #link(<ex:inclusion-projection>)[the two
+extremes] generate all homomorphisms: any $f$ is recovered from its
+kernel (deciding what to forget) and its image (deciding where to
+land), with the quotient doing the rest.
+
+#example[
+  (Cyclic groups from $bb(Z)$.) Consider the homomorphism
+  $
+    phi: bb(Z) -> bb(Z)_n, quad k |-> overline(k) = k + n bb(Z),
+  $
+  mapping an integer to its residue modulo $n$. It is surjective,
+  with kernel $"ker" phi = n bb(Z)$. The First Isomorphism Theorem
+  recovers the classification of cyclic groups of order $n$:
+  $
+    bb(Z) \/ n bb(Z) ~= bb(Z)_n.
+  $
+  The same construction with $n = 0$ gives $bb(Z) \/ {0} ~= bb(Z)$,
+  and the infinite cyclic group is recovered as a quotient of
+  itself.
+] <ex:zn-iso>
+
+#example[
+  (Sign map and $bb(Z)_2$.) The sign homomorphism of
+  #link(<ex:sign-kernel>)[§5.1],
+  $
+    "sign": S_n -> {plus.minus 1},
+  $
+  is surjective with kernel $A_n$. The First Isomorphism Theorem
+  gives
+  $
+    S_n \/ A_n ~= {plus.minus 1} ~= bb(Z)_2,
+  $
+  re-deriving from #link(<def:alternating-group>)[§3.3] the structural
+  fact that $A_n$ has index $2$ in $S_n$ (hence is normal): $S_n \/ A_n$
+  has order $2$, and any group of order $2$ is isomorphic to
+  $bb(Z)_2$.
+
+  The same pattern recovers $bb(Z)_2$ from the determinant:
+  $bb(R)^times$ has a sign component, and
+  $
+    "GL"_n(bb(R)) \/ "GL"_n^+(bb(R)) ~= {plus.minus 1} ~= bb(Z)_2,
+  $
+  where $"GL"_n^+(bb(R))$ is the subgroup of matrices with positive
+  determinant (index $2$, hence normal).
+] <ex:sign-iso>
+
+#note[
+  *Isomorphism invariants.* The First Isomorphism Theorem turns the
+  question "compute $G \/ "ker" f$" into the often-easier question
+  "compute $"im" f$". Combined with
+  #link(<prop:group-homomorphism-properties>)[§5.1], this makes the
+  following invariants cheap to read off from any homomorphism out of
+  $G$:
+  - *Order*: $abs(G \/ "ker" f) = abs("im" f)$, so quotients of $G$
+    are bounded by the orders of its homomorphic images.
+  - *Abelianness*: $G \/ "ker" f$ is abelian iff $"im" f$ is — quotients
+    inherit commutativity from images and conversely.
+  - *Simplicity*: if $G$ is simple, every non-trivial homomorphism
+    out of $G$ is injective (its kernel cannot be $G$), so $G$ embeds
+    into its image — the content of #link(<def:simple-group>)[§4.3].
+
+  Conversely, to *show* two groups are isomorphic, build a
+  surjective homomorphism between them and verify its kernel is
+  trivial; the theorem does the rest.
+] <note:iso-invariants>
+
+With the First Isomorphism Theorem in hand, two refinements become
+natural: what happens when we quotient by a larger normal subgroup
+containing another, and what happens when we quotient a subgroup of
+$G$ by its intersection with $N$. These are the *Second* and *Third*
+Isomorphism Theorems, treated next.
+
+== Second and Third Isomorphism Theorems // 第二与第三同构定理
+
+The First Isomorphism Theorem identifies $G \/ "ker" f$ with $"im" f$.
+Two natural follow-up questions arise:
+
+  (a) If $N$, $K$ are both normal in $G$ with $N subset.eq K$, does
+      $K \/ N$ sit inside $G \/ N$ as a normal subgroup, and is the
+      further quotient $(G \/ N) \/ (K \/ N)$ the same as $G \/ K$?
+  (b) If $H <= G$ and $N ⊲ G$, what is $H N \/ N$ in terms of $H$?
+
+The *Third* Isomorphism Theorem answers (a) — quotienting "twice" is
+the same as quotienting once by the larger subgroup. The *Second*
+Isomorphism Theorem answers (b) — quotienting $H N$ by $N$ kills only
+the $N$-part, leaving $H$ intact.
+
+#theorem(name: "Second Isomorphism Theorem (Diamond Theorem)")[
+  Let $G$ be a group, $H <= G$ a subgroup, and $N ⊲ G$ a normal
+  subgroup. Then $H N$ is a subgroup of $G$, $N ⊲ H N$, $H ∩ N ⊲ H$,
+  and
+  $
+    H N \/ N ~= H \/ (H ∩ N).
+  $
+] <thm:second-isomorphism>
+
+#proof[
+  *$H N$ is a subgroup.* For $h_1 n_1, h_2 n_2 in H N$ we have
+  $(h_1 n_1)(h_2 n_2)^(-1) = h_1 h_2 (h_2^(-1) n_1 h_2)
+  n_2^(-1)$. Since $N$ is normal, $h_2^(-1) n_1 h_2 in N$, so the
+  product lies in $H N$; closure under inverses and products follows.
+
+  *$N ⊲ H N$ and $H ∩ N ⊲ H$.* Both follow from
+  #link(<thm:normal-equivalents>)[§4.1 criterion (3)]: $N$ is normal
+  in $G$, hence in any subgroup containing it; $H ∩ N$ is the
+  intersection of $H$ with a normal subgroup of $G$, which
+  #link(<prop:normal-properties>)[§4.1 property (4)] shows is normal
+  in $H$.
+
+  *The isomorphism.* Consider the homomorphism
+  $
+    phi: H -> H N \/ N, quad h |-> h N,
+  $
+  i.e. the restriction of the projection $H N -> H N \/ N$ to $H$. It
+  is surjective: every coset $h n N$ equals $h N$ since $n in N$.
+  Its kernel is $H ∩ N$ (those $h in H$ with $h in N$). The First
+  Isomorphism Theorem
+  (#link(<thm:first-isomorphism>)[§5.2]) gives the result.
+]
+
+The theorem is called the *diamond* theorem because the four groups
+form a diamond-shaped lattice, with $H N$ at the top, $H ∩ N$ at
+the bottom, and $H$, $N$ on the sides; opposite sides of the diamond
+have isomorphic quotients.
+
+#example[
+  (A diamond in $S_4$.) Take $G = S_4$, $H = S_3$ (the stabiliser of
+  $4$, embedded as permutations of ${1, 2, 3}$), and
+  $N = V_4 = {e, (1 2)(3 4), (1 3)(2 4), (1 4)(2 3)}$ the Klein
+  four-group, normal in $S_4$ (it is the kernel of the conjugation
+  action of $S_4$ on ${(1 2), (1 3), (1 4), (2 3), (2 4), (3 4)}$).
+  Then
+  $
+    H ∩ N = {e, (1 2)(3 4)}, quad H N \/ N ~= H \/ (H ∩ N)
+    ~= S_3 \/ bb(Z)_2 ~= "Dih"_6,
+  $
+  the dihedral group of order $6$. The quotient $S_4 \/ V_4 ~= S_3$
+  is itself a Second Isomorphism Theorem computation with $H = S_3$
+  and $N = V_4$: $S_4 \/ V_4 ~= S_3$, recovering the well-known
+  isomorphism from #link(<ex:normal-examples>)[§4.1] via a direct
+  application of the theorem.
+] <ex:s4-diamond>
+
+#theorem(name: "Third Isomorphism Theorem")[
+  Let $G$ be a group with $N$, $K ⊲ G$ and $N subset.eq K$. Then
+  $K \/ N ⊲ G \/ N$ and
+  $
+    (G \/ N) \/ (K \/ N) ~= G \/ K.
+  $
+] <thm:third-isomorphism>
+
+#proof[
+  Consider the composite
+  $
+    G arrow.r^pi G \/ N arrow.r^q (G \/ N) \/ (K \/ N),
+  $
+  where $pi$ is the natural projection and $q$ is the quotient by
+  $K \/ N$. This is a surjective homomorphism $psi: G -> (G \/ N)
+  \/ (K \/ N)$. Its kernel is $K$: $a in "ker" psi$ iff $a N$ lies in
+  $K \/ N$, iff $a in K$ (since $K \/ N$ consists of cosets $k N$
+  with $k in K$). The First Isomorphism Theorem
+  (#link(<thm:first-isomorphism>)[§5.2]) applied to $psi$ gives
+  $
+    (G \/ N) \/ (K \/ N) ~= G \/ "ker" psi = G \/ K.
+  $
+]
+
+In words: *quotienting in stages is the same as quotienting once by
+the larger normal subgroup*. The Third Isomorphism Theorem is the
+formal justification for the colloquial fact that "killing $N$ and
+then killing $K \/ N$ is the same as killing $K$ outright".
+
+#example[
+  (Modular arithmetic in stages.) Take $G = bb(Z)$ (additive), $K =
+  6 bb(Z)$, $N = 2 bb(Z)$. Both are normal since $bb(Z)$ is abelian,
+  and $N subset.eq K$ since $2 | 6$. The theorem gives
+  $
+    (bb(Z) \/ 2 bb(Z)) \/ (6 bb(Z) \/ 2 bb(Z)) ~= bb(Z) \/ 6 bb(Z),
+  $
+  i.e. $bb(Z)_2 \/ {0, 2, 4} ~= bb(Z)_6$ — quotienting $bb(Z)_2$
+  (the parity classes) by the subgroup ${0, 2, 4}$ (the
+  even-remainder subgroup) recovers $bb(Z)_6$. Concretely, the
+  quotient collapses the two odd classes ${1, 3, 5}$ and
+  ${0, 2, 4}$ of $bb(Z)_6$ viewed as a $bb(Z)_2$-module, leaving
+  a single cyclic group of order $6$.
+] <ex:modular-stages>
+
+The third theorem is often summarised as: "$G$ has the same quotients
+by $K$ whether or not we first quotient by a smaller $N$." The next
+theorem is a related but distinct structural result: it says that
+*every* normal subgroup of $G \/ N$ comes from a normal subgroup of
+$G$ containing $N$.
+
+#theorem(name: "Correspondence Theorem (Fourth Isomorphism Theorem)")[
+  Let $G$ be a group, $N ⊲ G$, and $pi: G -> G \/ N$ the natural
+  projection. The assignments
+  $
+    Phi: K |-> K \/ N, quad Psi: L |-> pi^(-1)(L)
+  $
+  are mutually inverse, inclusion-preserving bijections between
+  ${K <= G | N subset.eq K}$ (subgroups of $G$ containing $N$) and
+  the subgroups of $G \/ N$. Moreover, $K_1 subset.eq K_2$ iff
+  $K_1 \/ N subset.eq K_2 \/ N$, and under this bijection $K ⊲ G$
+  iff $K \/ N ⊲ G \/ N$, in which case
+  $
+    (G \/ N) \/ (K \/ N) ~= G \/ K
+  $
+  (recovering the Third Isomorphism Theorem).
+] <thm:correspondence>
+
+#proof[
+  *$pi(K) = K \/ N$ is a subgroup of $G \/ N$* by
+  #link(<prop:group-homomorphism-properties>)[§5.1 property (4)], and
+  *the preimage of a subgroup is a subgroup* by the same property. We
+  check the two maps are inverses.
+
+  *$pi^(-1)(pi(K)) = K$:* $pi(K) = K \/ N$, and $pi^(-1)(K \/ N) = K$
+  since $N subset.eq K$ — an element $a in G$ satisfies $a N in K \/ N$
+  iff $a in K$.
+
+  *$pi(pi^(-1)(L)) = L$:* since $pi$ is surjective (every coset of
+  $G \/ N$ is of the form $pi(a) = a N$ for some $a$), this holds
+  for any subgroup $L$ of $G \/ N$.
+
+  *Inclusion preservation* is immediate: $K_1 subset.eq K_2$ implies
+  $K_1 \/ N subset.eq K_2 \/ N$, and conversely. *Normality:* if $K
+  ⊲ G$ with $N subset.eq K$, then $K \/ N ⊲ G \/ N$ by
+  #link(<prop:group-homomorphism-properties>)[§5.1 property (4)]
+  applied to $pi$. Conversely, if $L ⊲ G \/ N$, then $pi^(-1)(L) ⊲
+  G$ by property (5) of the same proposition. The last clause is the
+  Third Isomorphism Theorem.
+]
+
+#example[
+  (Subgroups of $bb(Z)_4$.) Take $G = bb(Z)$, $N = 4 bb(Z)$, so $G \/
+  N = bb(Z)_4$. By the Correspondence Theorem, the subgroups of
+  $bb(Z)_4$ are in bijection with the subgroups of $bb(Z)$ containing
+  $4 bb(Z)$. Since every subgroup of $bb(Z)$ is of the form $d bb(Z)$
+  for $d in bb(N) union {0}$ (#link(<thm:cyclic-subgroups>)[§2.4]),
+  the containing ones are exactly $d bb(Z)$ with $d | 4$, i.e. $d in
+  {1, 2, 4}$ (and $d = 0$ gives $bb(Z)$ itself, which is not in
+  the range since $bb(Z)$ strictly contains $4 bb(Z)$). The lattice of
+  subgroups of $bb(Z)_4$ is thus
+  $
+    {0} = 4 bb(Z) \/ 4 bb(Z) subset.eq 2 bb(Z) \/ 4 bb(Z)
+    subset.eq bb(Z) \/ 4 bb(Z) = bb(Z)_4,
+  $
+  i.e. $bb(Z)_4$ has exactly three subgroups, of orders $1, 2, 4$
+  respectively — recovering the cyclic group classification of
+  #link(<cor:cyclic-generators>)[§2.4].
+] <ex:z4-subgroups>
+
+#note[
+  *Subgroup lattices.* The Correspondence Theorem says that to
+  understand the subgroup lattice of $G \/ N$, it suffices to
+  understand the subgroups of $G$ *containing $N$*. In particular:
+
+  - If $N$ is *maximal normal* (i.e. $N eq G$ and there is no $K$ with
+    $N subset.neq K subset.neq G$), then $G \/ N$ is simple — the
+    very definition of #link(<def:simple-group>)[§4.3].
+  - Quotients of simple groups are simple or trivial: $G$ simple
+    means the only normal subgroups are ${e, G}$, so $G \/ N$ is
+    $G \/ G$ (trivial) or $G \/ {e} ~= G$ (simple).
+  - The lattice of $G$ is "folded" by the projection $pi$, and the
+    lattice of $G \/ N$ is precisely the upper part of the lattice of
+    $G$ above $N$.
+
+  This is the sense in which the quotient $G \/ N$ is "$G$ with $N$
+  collapsed to the identity": subgroups below $N$ disappear, those
+  above $N$ survive with their relative structure intact.
+] <note:subgroup-lattice>
+
+The three isomorphism theorems together — First, Second, Third,
+together with the Correspondence Theorem as a "zeroth" companion —
+form the *structural calculus of quotients*. Every manipulation of
+normal subgroups and quotient groups, in group theory and beyond
+(rings in §9, modules in §17), reduces to these four results. With
+them in hand, we turn next to *group actions*, the second great
+structural tool of group theory.
+
+// ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
 //
