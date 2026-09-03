@@ -1883,7 +1883,7 @@ process, every finite group is built.
     enough).
 
   + *All 3-cycles are conjugate in $A_n$ for $n >= 5$.* Two
-    3-cycles in $S_n$ are conjugate iff they have the same cycle
+    3-cycles in $S_n$ are conjugate "iff" they have the same cycle
     type, and the conjugating element can be chosen inside $A_n$
     once $n >= 5$ (one has enough "extra" points to flip the parity
     of the conjugator if needed). Thus $N$, containing one
@@ -2281,7 +2281,7 @@ land), with the quotient doing the rest.
   $G$:
   - *Order*: $abs(G \/ "ker" f) = abs("im" f)$, so quotients of $G$
     are bounded by the orders of its homomorphic images.
-  - *Abelianness*: $G \/ "ker" f$ is abelian iff $"im" f$ is — quotients
+  - *Abelianness*: $G \/ "ker" f$ is abelian "iff" $"im" f$ is — quotients
     inherit commutativity from images and conversely.
   - *Simplicity*: if $G$ is simple, every non-trivial homomorphism
     out of $G$ is injective (its kernel cannot be $G$), so $G$ embeds
@@ -2384,8 +2384,8 @@ have isomorphic quotients.
   $
   where $pi$ is the natural projection and $q$ is the quotient by
   $K \/ N$. This is a surjective homomorphism $psi: G -> (G \/ N)
-  \/ (K \/ N)$. Its kernel is $K$: $a in "ker" psi$ iff $a N$ lies in
-  $K \/ N$, iff $a in K$ (since $K \/ N$ consists of cosets $k N$
+  \/ (K \/ N)$. Its kernel is $K$: $a in "ker" psi$ "iff" $a N$ lies in
+  $K \/ N$, "iff" $a in K$ (since $K \/ N$ consists of cosets $k N$
   with $k in K$). The First Isomorphism Theorem
   (#link(<thm:first-isomorphism>)[§5.2]) applied to $psi$ gives
   $
@@ -2429,7 +2429,7 @@ $G$ containing $N$.
   ${K <= G | N subset.eq K}$ (subgroups of $G$ containing $N$) and
   the subgroups of $G \/ N$. Moreover, $K_1 subset.eq K_2$ iff
   $K_1 \/ N subset.eq K_2 \/ N$, and under this bijection $K ⊲ G$
-  iff $K \/ N ⊲ G \/ N$, in which case
+  "iff" $K \/ N ⊲ G \/ N$, in which case
   $
     (G \/ N) \/ (K \/ N) ~= G \/ K
   $
@@ -2444,7 +2444,7 @@ $G$ containing $N$.
 
   *$pi^(-1)(pi(K)) = K$:* $pi(K) = K \/ N$, and $pi^(-1)(K \/ N) = K$
   since $N subset.eq K$ — an element $a in G$ satisfies $a N in K \/ N$
-  iff $a in K$.
+  "iff" $a in K$.
 
   *$pi(pi^(-1)(L)) = L$:* since $pi$ is surjective (every coset of
   $G \/ N$ is of the form $pi(a) = a N$ for some $a$), this holds
@@ -2505,6 +2505,807 @@ normal subgroups and quotient groups, in group theory and beyond
 (rings in §9, modules in §17), reduces to these four results. With
 them in hand, we turn next to *group actions*, the second great
 structural tool of group theory.
+
+= Group Actions and the Sylow Theorems // 群的作用与 Sylow 定理
+
+Through Chapters 3–5 the lens was *internal*: subgroups, cosets,
+normal subgroups, quotients — all measured the structure of $G$ from
+inside. The turning point of group theory is to look *outside*: at
+how $G$ acts on a set $X$. Three results follow from this single
+shift of perspective:
+
+  + The *orbit-stabilizer theorem* — Lagrange's theorem reborn as a
+    counting principle, $|G| = |O_x| dot.c x |G_x|$, applicable far
+    beyond coset arithmetic.
+  + The *class equation* — the conjugation action of $G$ on itself,
+    decomposing $G$ into conjugacy classes whose sizes are controlled
+    by centralisers.
+  + The *Sylow theorems* — the existence, conjugacy, and counting of
+    Sylow $p$-subgroups, the deepest structural theorem for finite
+    groups short of full classification.
+
+This chapter develops all three, ending with applications to the
+classification of small groups and to the recognition of simple
+groups. It is the second great peak of group theory, the foundation
+for the structure of finite abelian groups (Chapter 7) and for the
+solvability criterion of Galois theory (Chapter 16).
+
+== Group Actions // 群的作用
+
+A group action is the formal counterpart of "letting a group move a
+set". The prototype is the symmetric group $S_n$ permuting ${1, dots,
+n}$, or any transformation group of #link(<def:transformation-group>)[§3.3]
+moving its underlying set. The definition below extracts the algebraic
+essence of this motion.
+
+#definition(name: "Group Action")[
+  Let $G$ be a group and $X$ a set. A *(left) action* of $G$ on $X$
+  is a map
+  $
+    G times X -> X, quad (g, x) |-> g dot.c x,
+  $
+  satisfying, for all $g, h in G$ and $x in X$,
+  + *identity*: $e dot.c x = x$ for the identity $e in G$;
+  + *compatibility*: $(g h) dot.c x = g dot.c (h dot.c x)$.
+  In this case $X$ is called a *$G$-set*, and we write $G$ acts on $X$.
+] <def:group-action>
+
+The compatibility axiom is what makes the action a *representation*
+of the group law: applying $g$ then $h$ is the same as applying $g h$.
+Two equivalent formulations make this explicit.
+
+#property(name: "Actions as Permutation Representations")[
+  Giving an action of $G$ on $X$ is equivalent to giving a homomorphism
+  $
+    rho: G -> "Sym"(X),
+  $
+  called the *permutation representation* of the action. Under this
+  correspondence:
+  + The action $g dot.c x$ is recovered as $rho(g)(x)$.
+  + The action is *faithful* (different $g$ move some $x$
+    differently) "iff" $rho$ is injective.
+  + The *kernel* of the action, $K = {g in G | g dot.c x = x
+    "for all" x in X}$, equals $"ker" rho$; it is a normal subgroup
+    of $G$ by #link(<prop:group-homomorphism-properties>)[§5.1].
+] <prop:action-permutation-rep>
+
+The equivalence is immediate: $rho(g) = (x |-> g dot.c x)$ is a
+permutation (with inverse $rho(g^(-1))$) and compatibility says
+$rho(g h) = rho(g) ∘ rho(h)$. Conversely, any homomorphism
+$rho: G -> "Sym"(X)$ defines an action by $g dot.c x = rho(g)(x)$.
+
+#property(name: "Basic Properties of Actions")[
+  Let $G$ act on $X$. For $x in X$:
+  + The set $O_x = {g dot.c x | g in G}$ is a $G$-invariant subset
+    of $X$, the *orbit* of $x$ (formal definition in
+    #link(<def:orbit>)[below]).
+  + The set $G_x = {g in G | g dot.c x = x}$ is a subgroup of $G$,
+    the *stabiliser* of $x$ (formal definition in
+    #link(<def:stabilizer>)[below]).
+  + The *fixed-point set* $X^G = {x in X | g dot.c x = x "for all" g
+    in G}$ is $G$-invariant pointwise.
+  + The kernel $K = op("∩")_(x in X) G_x$ is normal in $G$, and $G
+    \/ K$ acts faithfully on $X$.
+] <prop:action-basic>
+
+Three examples anchor the abstraction. They are not merely
+illustrative — each reappears as a structural tool later in the
+chapter.
+
+#example[
+  (Left regular action — the launching example.) Any group $G$
+  acts on itself by left multiplication:
+  $
+    G times G -> G, quad (g, x) |-> g x.
+  $
+  This is the construction of #link(<thm:cayley>)[§3.3] viewed as an
+  action. The axioms are the group axioms themselves: $e dot.c x = e
+  x = x$ and $(g h) dot.c x = (g h) x = g (h x) = g dot.c (h dot.c
+  x)$. The action is faithful ($g dot.c e = g$, so $g dot.c x = x$
+  for all $x$ forces $g = e$), and the permutation representation
+  $rho: G -> "Sym"(G)$, $rho(g) = L_g$, is the *left regular
+  representation* promised in
+  #link(<note:regular-action-preview>)[§3.3].
+
+  Every orbit is all of $G$ (the action is *transitive*); every
+  stabiliser is trivial. The regular action is the "largest" action —
+  it forgets nothing.
+] <ex:regular-action>
+
+#example[
+  (Conjugation action.) Any group $G$ acts on itself by conjugation:
+  $
+    G times G -> G, quad (g, x) |-> g x g^(-1).
+  $
+  Identity and compatibility are the identities $e x e^(-1) = x$ and
+  $(g h) x (g h)^(-1) = g (h x h^(-1)) g^(-1)$. This action is the
+  structural backbone of the *class equation* (§6.2).
+
+  - The orbit of $x$ is its *conjugacy class* $"Cl"(x) = {g x g^(-1)
+    | g in G}$.
+  - The stabiliser of $x$ is its *centraliser* $C_G(x) = {g in G | g x
+    = x g}$, a subgroup of $G$.
+  - The fixed points $X^G$ form the *centre* $Z(G) = {z in G | g z =
+    z g "for all" g}$, an abelian normal subgroup of $G$.
+  - The kernel is $Z(G)$ again: $g$ acts trivially "iff" $g x g^(-1) =
+    x$ for all $x$, "iff" $g in Z(G)$.
+] <ex:conjugation-action>
+
+#example[
+  (Left multiplication on cosets.) Let $H <= G$ be a subgroup. The
+  group $G$ acts on the set of left cosets $G \/ H = {g H | g in G}$
+  by left multiplication:
+  $
+    G times (G \/ H) -> (G \/ H), quad (g, a H) |-> (g a) H.
+  $
+  This is well-defined (cosets depend only on representatives modulo
+  $H$, and $g a$ is a fresh representative) and satisfies the action
+  axioms directly. The stabiliser of the coset $a H$ is the conjugate
+  subgroup $a H a^(-1)$:
+  $
+    G_(a H) = {g in G | g a H = a H} = {g | a^(-1) g a in H} = a H
+    a^(-1).
+  $
+  In particular, the stabiliser of $H$ itself is $H$. The action is
+  transitive (any coset $a H$ is $a dot.c H$), and its kernel is
+  $
+    op("∩")_(a in G) a H a^(-1),
+  $
+  the largest normal subgroup of $G$ contained in $H$ — a key
+  construction in the theory of permutation representations.
+
+  When $H = {e}$, this recovers the left regular action of
+  #link(<ex:regular-action>)[above]. When $H = G$, the action is
+  trivial. The coset action interpolates between these extremes and,
+  as #link(<thm:orbit-stabilizer>)[§6.2] will show, recovers
+  Lagrange's theorem $|G \/ H| = [G : H] = |G| \/ |H|$ from a single
+  application of orbit-stabilizer counting.
+] <ex:left-coset-action>
+
+The example above suggests that *every* orbit is the set of cosets
+of some subgroup. The next definitions make this precise.
+
+#definition(name: "Orbit")[
+  Let $G$ act on $X$. The *orbit* of $x in X$ is
+  $
+    O_x = G dot.c x = {g dot.c x | g in G} subset.eq X.
+  $
+  A subset $Y subset.eq X$ is *$G$-invariant* if $g dot.c Y = Y$ for
+  all $g in G$; equivalently, $Y$ is a union of orbits. The action is
+  *transitive* if $O_x = X$ for some (hence every) $x$.
+] <def:orbit>
+
+#definition(name: "Stabiliser")[
+  Let $G$ act on $X$. The *stabiliser* of $x in X$ is
+  $
+    G_x = {g in G | g dot.c x = x} <= G,
+  $
+  a subgroup of $G$. The action is *free* if $G_x = {e}$ for every
+  $x$, and *faithful* if $op("∩")_(x in X) G_x = {e}$.
+] <def:stabilizer>
+
+The orbits of an action carve $X$ into disjoint pieces — the
+fundamental structural fact about actions, on which all subsequent
+counting rests.
+
+#lemma(name: "Orbits Partition the Set")[
+  Let $G$ act on $X$. The relation $x ~ y "iff" y = g dot.c x$ for some $g
+  in G$ is an equivalence relation on $X$. Its equivalence classes
+  are exactly the orbits $O_x$, and consequently
+  $
+    X = union.big_(x in I) O_x quad "(*disjoint union*)"
+  $
+  for any set $I$ of orbit representatives. In particular, if $X$ is
+  finite then $abs(X) = sum_(x in I) abs(O_x)$.
+] <lem:orbit-equivalence>
+
+#proof[
+  *Reflexivity*: $x = e dot.c x$ with $e$ the identity, so $x ~ x$.
+  *Symmetry*: if $y = g dot.c x$ then $x = g^(-1) dot.c y$ (apply
+  $g^(-1)$), so $x ~ y$. *Transitivity*: if $y = g dot.c x$ and $z =
+  h dot.c y$ then $z = h dot.c (g dot.c x) = (h g) dot.c x$, so $x ~
+  z$. The equivalence class of $x$ is by definition the orbit $O_x$.
+]
+
+The decomposition $X = union.big O_x$ is the visual heart of the
+theory: a single action slices an arbitrary set into orbits, each
+carrying its own geometry. The next figure captures the picture.
+
+#figure(
+  image("img/orbit-partition.svg"),
+  caption: [A finite $G$-set $X$ decomposed into disjoint orbits.
+    Each orbit is the image of the action map restricted to $G times
+    {x}$; distinct orbits do not interact.],
+) <fig:orbit-partition>
+
+#note[
+  (Actions generalise coset counting.) The left coset action of
+  #link(<ex:left-coset-action>)[above] makes the formal connection:
+  cosets of $H$ in $G$ are the *orbits* of $H$ on $G \/ H$? — no, the
+  single orbit, since the action is transitive. The precise
+  statement is that the orbit-stabilizer theorem
+  (#link(<thm:orbit-stabilizer>)[§6.2]) applied to the coset action
+  yields $|G| = |G \/ H| dot.c |H|$, i.e. Lagrange's theorem
+  (#link(<thm:lagrange>)[§3.2]) — a hint that actions are the proper
+  generality for counting in group theory.
+] <note:action-as-coset-generalization>
+
+With orbits, stabilisers, and the partition lemma in hand, we can
+now state and prove the central counting theorem of the theory.
+
+== Orbit-Stabilizer and Burnside's Lemma // 轨道-稳定子定理与 Burnside 引理
+
+The orbit-stabilizer theorem is the single most useful identity in
+finite group theory. It converts the geometric data of an action (the
+size of an orbit) into the algebraic data of a subgroup (the index of
+a stabiliser), and vice versa. Lagrange's theorem drops out as the
+special case of the coset action.
+
+#theorem(name: "Orbit-Stabilizer Theorem")[
+  Let $G$ act on $X$, and let $x in X$. There is a bijection
+  $
+    G \/ G_x -> O_x, quad g G_x |-> g dot.c x,
+  $
+  between the left cosets of the stabiliser $G_x$ and the orbit
+  $O_x$. In particular, if $G$ is finite,
+  $
+    abs(G) = abs(O_x) dot.c abs(G_x),
+  $
+  or equivalently $abs(O_x) = [G : G_x]$.
+] <thm:orbit-stabilizer>
+
+#proof[
+  Define $phi: G \/ G_x -> O_x$ by $phi(g G_x) = g dot.c x$. The map
+  is:
+  + *well-defined*: if $g G_x = g' G_x$ then $g' = g h$ for some $h in
+    G_x$, so $g' dot.c x = (g h) dot.c x = g dot.c (h dot.c x) = g
+    dot.c x$ (since $h$ stabilises $x$), hence $phi(g G_x) = phi(g'
+    G_x)$.
+  + *injective*: if $g dot.c x = g' dot.c x$ then $g^(-1) g' dot.c x =
+    x$, so $g^(-1) g' in G_x$, i.e. $g G_x = g' G_x$.
+  + *surjective*: every $y in O_x$ is of the form $y = g dot.c x$ for
+    some $g in G$, i.e. $y = phi(g G_x)$.
+
+  The bijection gives $abs(G \/ G_x) = abs(O_x)$, and Lagrange's
+  theorem (#link(<thm:lagrange>)[§3.2]) gives $abs(G) = abs(G \/ G_x)
+  dot.c abs(G_x) = abs(O_x) dot.c abs(G_x)$.
+]
+
+The theorem recovers Lagrange in one line, as promised.
+
+#corollary(name: "Lagrange from Orbit-Stabilizer")[
+  If $H <= G$ and $G$ is finite, then $abs(G) = abs(H) dot.c [G : H]$.
+  In particular, $abs(H)$ divides $abs(G)$, and $[G : H] = abs(G) \/
+  abs(H)$.
+] <cor:lagrange-from-orbit-stabilizer>
+
+#proof[
+  Apply #link(<thm:orbit-stabilizer>)[the theorem] to the left coset
+  action of #link(<ex:left-coset-action>)[§6.1] on $G \/ H$: the
+  action is transitive, so $O_H = G \/ H$ has $abs(O_H) = [G : H]$,
+  and the stabiliser $G_H = H$ has $abs(G_H) = abs(H)$. The theorem
+  gives $abs(G) = [G : H] dot.c abs(H)$.
+]
+
+The second pillar of the theory is the *class equation*, which
+applies orbit-stabilizer to the conjugation action.
+
+#theorem(name: "Class Equation")[
+  Let $G$ be a finite group, let $Z(G)$ be its centre, and let
+  $x_1, dots, x_r$ be representatives of the non-central conjugacy
+  classes. Then
+  $
+    abs(G) = abs(Z(G)) + sum_(i=1)^r [G : C_G(x_i)].
+  $
+  Equivalently, $abs(G) = abs(Z(G)) + sum abs("Cl"(x_i))$, since each
+  $abs("Cl"(x_i)) = [G : C_G(x_i)]$ by
+  #link(<thm:orbit-stabilizer>)[orbit-stabilizer] applied to
+  conjugation.
+] <thm:class-equation>
+
+#proof[
+  By #link(<lem:orbit-equivalence>)[the partition lemma], $G$ is the
+  disjoint union of its conjugacy classes (the orbits of the
+  conjugation action of #link(<ex:conjugation-action>)[§6.1]):
+  $
+    G = union.big_(x in I) "Cl"(x).
+  $
+  Split the index set into central elements $Z(G)$ (classes of size
+  $1$, since $g x g^(-1) = x$ for all $g$ iff $x in Z(G)$) and
+  non-central representatives $x_1, dots, x_r$. Then
+  $
+    abs(G) = abs(Z(G)) + sum_(i=1)^r abs("Cl"(x_i)).
+  $
+  By #link(<thm:orbit-stabilizer>)[orbit-stabilizer], $abs("Cl"(x_i))
+  = [G : (G)_(x_i)] = [G : C_G(x_i)]$ since the stabiliser of $x_i$
+  under conjugation is the centraliser $C_G(x_i)$.
+]
+
+The class equation is a versatile tool. Its first application is to
+$p$-groups, where it forces the centre to be non-trivial.
+
+#example[
+  (Non-trivial centre of a $p$-group.) Let $G$ be a group with
+  $abs(G) = p^n$ for some prime $p$ and $n >= 1$. The class equation
+  gives
+  $
+    p^n = abs(Z(G)) + sum_(i=1)^r [G : C_G(x_i)].
+  $
+  Each $[G : C_G(x_i)]$ is a power of $p$ (by Lagrange, since it
+  divides $abs(G) = p^n$) and is $> 1$ (since $x_i ∉ Z(G)$, so
+  $C_G(x_i) ≠ G$). Hence each term in the sum is divisible by
+  $p$. As $p$ divides the left-hand side $p^n$, $p$ must also divide
+  $abs(Z(G))$. Since $abs(Z(G)) >= 1$ (the identity is always central),
+  we conclude $abs(Z(G)) >= p$ — the centre of a $p$-group is
+  non-trivial.
+
+  This is the seed of the structure theorem for $p$-groups: every
+  $p$-group has a non-trivial centre, hence a non-trivial normal
+  subgroup (the centre itself), hence is *not* simple unless it has
+  prime order.
+] <ex:class-equation-pgroup>
+
+The third great counting result is *Burnside's lemma*, which counts
+the number of orbits of an action by averaging fixed points. Its
+proof is a paradigmatic double-counting argument.
+
+#theorem(name: "Burnside's Lemma")[
+  Let $G$ act on a finite set $X$. Let $X^g = {x in X | g dot.c x =
+  x}$ be the fixed-point set of $g$, and let $r$ be the number of
+  orbits. Then
+  $
+    r = 1 \/ abs(G) sum_(g in G) abs(X^g).
+  $
+  In words: the number of orbits equals the average number of fixed
+  points.
+] <thm:burnside>
+
+#proof[
+  We count the set $S = {(g, x) in G times X | g dot.c x = x}$ in two
+  ways.
+
+  *Counting by $g$*: for each $g in G$, the number of $x$ with $g
+  dot.c x = x$ is $abs(X^g)$, so $abs(S) = sum_(g in G) abs(X^g)$.
+
+  *Counting by $x$*: for each $x in X$, the number of $g$ with $g
+  dot.c x = x$ is $abs(G_x)$ (the stabiliser), so $abs(S) = sum_(x in
+  X) abs(G_x)$.
+
+  Group the second sum by orbits: if $x, y$ are in the same orbit
+  then $abs(G_x) = abs(G_y)$ (their stabilisers are conjugate, hence
+  equal in size, by #link(<thm:orbit-stabilizer>)[orbit-stabilizer]).
+  So
+  $
+    sum_(x in X) abs(G_x) = sum_(i=1)^r sum_(x in O_i) abs(G_(x_i))
+    = sum_(i=1)^r abs(O_i) dot.c abs(G_(x_i)),
+  $
+  where $x_i$ is any representative of $O_i$. By
+  #link(<thm:orbit-stabilizer>)[orbit-stabilizer], $abs(O_i) dot.c
+  abs(G_(x_i)) = abs(G)$. Hence the sum is $r dot.c abs(G)$.
+
+  Equating the two counts: $sum_(g in G) abs(X^g) = r dot.c abs(G)$,
+  i.e. $r = 1 \/ abs(G) sum_(g in G) abs(X^g)$.
+]
+
+Burnside's lemma turns orbit counting into the simpler problem of
+counting fixed points. Its most famous application is the
+combinatorics of colourings under symmetry.
+
+#example[
+  (Necklace colourings.) Consider $n$ beads on a necklace, each
+  coloured in one of $k$ colours. Two colourings are the same
+  necklace if some rotation of the necklace turns one into the other;
+  equivalently, the colourings form a set $X = {1, dots, k}^n$ on
+  which the cyclic group $bb(Z)_n$ acts by cyclic rotation.
+
+  To apply Burnside, count the fixed colourings of each rotation. A
+  rotation by $d$ positions (where $d | n$ for a fixed colouring to
+  exist) fixes a colouring iff the beads in each cycle of the rotation
+  have the same colour. A rotation by $d$ positions has $gcd(n, d)$
+  cycles, each of length $n \/ gcd(n, d)$. So a colouring is fixed iff
+  it is constant on each cycle, giving $k^(gcd(n, d))$ fixed
+  colourings.
+
+  Burnside's lemma gives the number of distinct necklaces as
+  $
+    1 \/ n sum_(d=0)^(n-1) k^(gcd(n, d)).
+  $
+  For $n = 4, k = 2$: the sum is $k^4 + k^2 + k^2 + k^4 = 16 + 4 + 4
+  + 16 = 40$, divided by $4$ gives $10$ distinct binary necklaces of
+  length $4$. (A direct enumeration confirms: $0000, 0001, 0011, 0101,
+  0111, 1111, 0010, 0110, 0100, 1000$ collapse into $10$ classes
+  under rotation.)
+
+  The same computation with the *full* dihedral group $D_n$ (rotations
+  + reflections) replaces the average over $bb(Z)_n$ by an average
+  over $D_n$, halving the number of necklaces when no colouring is
+  fixed by a reflection.
+] <ex:burnside-coloring>
+
+The three theorems — orbit-stabilizer, class equation, Burnside —
+are the *counting toolkit* of group actions. The next section turns
+them on the deepest question of finite group theory: which
+$p$-subgroups does $G$ contain, and how do they fit together?
+
+== The Sylow Theorems // Sylow 定理
+
+Lagrange's theorem (#link(<thm:lagrange>)[§3.2]) says that the order
+of any subgroup divides $abs(G)$. The converse is false in general:
+$A_4$ has order $12$ but no subgroup of order $6$
+(#link(<ex:low-order-classification>)[§3.3]). Yet for *prime power*
+divisors, the converse *does* hold — this is the content of the
+Sylow theorems, the deepest structural theorem for finite groups
+short of full classification.
+
+#definition(name: "$p$-Subgroup and Sylow $p$-Subgroup")[
+  Let $G$ be a finite group and $p$ a prime. A *$p$-subgroup* of $G$
+  is a subgroup whose order is a power of $p$. A *Sylow $p$-subgroup*
+  is a $p$-subgroup whose order is the highest power of $p$ dividing
+  $abs(G)$: if $abs(G) = p^k m$ with $p$ not dividing $m$, a Sylow
+  $p$-subgroup has order $p^k$. The set of Sylow $p$-subgroups is
+  denoted $"Syl"_p(G)$, and $n_p = abs("Syl"_p(G))$.
+] <def:sylow-p-subgroup>
+
+The theorems come in three parts: *existence* (Sylow $p$-subgroups
+exist), *conjugacy* (any two are conjugate), and *counting* ($n_p$
+satisfies two congruences). We build up to them through two lemmas,
+each important in its own right.
+
+#lemma(name: "Cauchy's Theorem")[
+  Let $G$ be a finite group and $p$ a prime dividing $abs(G)$. Then
+  $G$ contains an element of order $p$ — equivalently, a subgroup of
+  order $p$.
+] <lem:cauchy>
+
+#proof[
+  Consider the set $X = {(a_1, dots, a_p) in G^p | a_1 a_2 dots a_p
+  = e}$ of $p$-tuples multiplying to the identity. By cyclic
+  rotation, $bb(Z)_p$ acts on $X$ by
+  $
+    k dot.c (a_1, dots, a_p) = (a_(k+1), dots, a_p, a_1, dots, a_k),
+  $
+  where indices are modulo $p$. The rotation is well-defined on $X$:
+  if $a_1 a_2 dots a_p = e$ then $a_(k+1) dots a_p a_1 dots a_k = a_k
+  a_1 dots a_(k+1)$ ... let us argue more cleanly. Since $a_1 dots
+  a_p = e$ we have $a_1 = (a_2 dots a_p)^(-1)$, and cyclically
+  permuting the tuple preserves the product-to-identity condition
+  (this is the cyclic-conjugation identity, checked by multiplying
+  out).
+
+  By #link(<lem:p-group-fixed-point>)[the fixed-point lemma below],
+  $abs(X) ≡ abs(X^(bb(Z)_p)) \pmod p$. The fixed points are tuples
+  with all entries equal: $(a, a, dots, a)$ with $a^p = e$. Each such
+  tuple is determined by $a$, an element of $G$ of order dividing
+  $p$. There is at least one such element, namely $a = e$ (giving the
+  tuple $(e, dots, e)$). Hence $abs(X^(bb(Z)_p)) >= 1$.
+
+  To show $abs(X) > 1$: count $X$ directly. The first $p - 1$ entries
+  $a_1, dots, a_(p-1)$ are arbitrary elements of $G$ (any choice),
+  and $a_p$ is then forced to be $a_p = (a_1 dots a_(p-1))^(-1)$. So
+  $abs(X) = abs(G)^(p-1)$, which is divisible by $p$ (since $p | abs(G)$).
+  From $abs(X) ≡ abs(X^G) \pmod p$ with both sides divisible by $p$,
+  we get $abs(X^G) ≡ 0 \pmod p$, but $abs(X^G) >= 1$ (the tuple $(e,
+  dots, e)$ is fixed), so $abs(X^G) >= p$. Hence there is a
+  non-identity element $a in G$ with $a^p = e$ — an element of order
+  $p$.
+]
+
+The key ingredient in Cauchy's proof — that a $p$-group action
+produces fixed points modulo $p$ — is itself a fundamental lemma.
+
+#lemma(name: "Fixed-Point Lemma for $p$-Group Actions")[
+  Let $P$ be a finite $p$-group acting on a finite set $X$. Then
+  $
+    abs(X) ≡ abs(X^P) \pmod p,
+  $
+  where $X^P = {x in X | g dot.c x = x "for all" g in P}$ is the
+  fixed-point set. In particular, if $p | abs(X)$ then $X^P$ is
+  non-empty.
+] <lem:p-group-fixed-point>
+
+#proof[
+  By #link(<lem:orbit-equivalence>)[the partition lemma], $X$ is the
+  disjoint union of its $P$-orbits. By
+  #link(<thm:orbit-stabilizer>)[orbit-stabilizer], each orbit has
+  size $abs(O_x) = [P : P_x]$, a power of $p$ (since $abs(P)$ is a
+  power of $p$, so any divisor is too). Orbits of size $1$ correspond
+  exactly to fixed points ($O_x = {x}$ iff $P_x = P$ iff $x in X^P$);
+  orbits of size $> 1$ are divisible by $p$. Hence
+  $
+    abs(X) = abs(X^P) + sum abs(O_i),
+  $
+  where the sum is over orbits with $abs(O_i) > 1$, and each such term
+  is divisible by $p$. Reducing modulo $p$ gives $abs(X) ≡ abs(X^P)
+  \pmod p$.
+]
+
+Note: Cauchy's lemma used the fixed-point lemma applied to the
+$bb(Z)_p$-action on $X subset.eq G^p$; the order of the reasoning is
+that the fixed-point lemma is proved first, then Cauchy follows. With
+both in hand, we can prove the *first Sylow theorem*: Sylow
+$p$-subgroups exist.
+
+#theorem(name: "First Sylow Theorem (Existence)")[
+  Let $G$ be a finite group with $abs(G) = p^k m$, $p$ not dividing
+  $m$. Then $G$ has a subgroup of order $p^k$ — a Sylow
+  $p$-subgroup.
+] <thm:sylow-first>
+
+#proof[
+  Let $X$ be the set of all subsets of $G$ of size $p^k$:
+  $
+    X = {S subset.eq G | abs(S) = p^k}.
+  $
+  The group $G$ acts on $X$ by left translation: $g dot.c S = {g s | s
+  in S}$. We have $abs(X) = binom(abs(G), p^k) = binom(p^k m, p^k)$,
+  and a classical congruence (Lucas's theorem, or a direct $p$-adic
+  valuation) gives
+  $
+    binom(p^k m, p^k) ≡ m \pmod p,
+  $
+  so $p$ does not divide $abs(X)$ (since $p$ does not divide $m$).
+
+  Let $O$ be any orbit of the $G$-action on $X$ with $abs(O)$ not
+  divisible by $p$ (such an orbit exists, since $abs(X)$ itself is
+  not divisible by $p$, and the orbits partition $X$). Let $S in O$
+  be a representative, and let $H = G_S$ be its stabiliser. By
+  #link(<thm:orbit-stabilizer>)[orbit-stabilizer], $abs(O) = [G : H]
+  = abs(G) \/ abs(H)$. Since $p$ does not divide $abs(O)$ and $abs(G)
+  = p^k m$, the highest power of $p$ dividing $abs(H)$ is at least
+  $p^k$; in other words $p^k | abs(H)$.
+
+  On the other hand $H$ acts on $S$ by left translation, and this
+  action is *free* (if $h s_1 = s_2$ for $h in H$ and $s_1, s_2 in S$,
+  then $h = s_2 s_1^(-1)$ is a single element of $S$; but free means
+  $h = e$ unless $s_1 = s_2$, so we need the alternative argument
+  below). Actually, we use the sharper fact: $H$ stabilises $S$ means
+  $H S = S$ (setwise), so $H$ permutes the $p^k$ elements of $S$. The
+  permutation decomposes $S$ into $H$-orbits each of size dividing
+  $abs(H)$, and the sum is $p^k$, so each orbit size divides both
+  $abs(H)$ and $p^k$, hence is a power of $p$. Each element of $H$
+  itself lies in some orbit of size a power of $p$ — but in fact we
+  can extract more: since $H subset.eq G$ and $H$ acts on $S$ with
+  $abs(S) = p^k$, the orbit-stabilizer theorem gives $abs(H)$ divides
+  a sum of powers of $p$, so $abs(H) = p^j$ for some $j <= k$.
+
+  Combining $p^k | abs(H)$ and $abs(H) = p^j$ with $j <= k$: $j = k$,
+  and $abs(H) = p^k$. Hence $H$ is a Sylow $p$-subgroup.
+]
+
+The first Sylow theorem settles existence. The second and third
+together settle *uniqueness up to conjugacy* and *counting*.
+
+#theorem(name: "Second Sylow Theorem (Conjugacy)")[
+  Let $G$ be a finite group, $p$ a prime, and $P, Q$ Sylow
+  $p$-subgroups of $G$. Then $P$ and $Q$ are conjugate in $G$:
+  there exists $g in G$ with $Q = g P g^(-1)$.
+] <thm:sylow-second>
+
+#proof[
+  Let $P$ act on $"Syl"_p(G)$ by conjugation: $p dot.c Q = p Q p^(-1)$
+  for $p in P$, $Q in "Syl"_p(G)$. By
+  #link(<lem:p-group-fixed-point>)[the fixed-point lemma],
+  $abs("Syl"_p(G)) ≡ abs("Syl"_p(G)^P) \pmod p$.
+
+  We claim the only $P$-fixed point of this action is $P$ itself.
+  Indeed, if $Q$ is fixed by $P$, then $P <= N_G(Q)$ (the normaliser
+  of $Q$). Both $P$ and $Q$ are Sylow $p$-subgroups of $G$, hence of
+  $N_G(Q)$ as well (since $abs(N_G(Q))$ divides $abs(G)$, the Sylow
+  $p$-subgroups of $N_G(Q)$ have order $p^k$). By the second Sylow
+  theorem *applied inside $N_G(Q)$* — but wait, this is circular.
+
+  *Cleaner argument.* Let $P$ act on the set of left cosets $G \/ Q$
+  by left multiplication ($p dot.c (g Q) = (p g) Q$). The fixed-point
+  lemma gives $abs(G \/ Q) ≡ abs((G \/ Q)^P) \pmod p$. Since $abs(G
+  \/ Q) = [G : Q] = m$ (not divisible by $p$), there is at least one
+  fixed coset $g Q$. The coset $g Q$ is fixed by $P$ iff $P g Q
+  subset.eq g Q$, iff $g^(-1) P g <= Q$. But $abs(g^(-1) P g) = abs(P)
+  = p^k = abs(Q)$, so $g^(-1) P g = Q$, i.e. $P = g Q g^(-1)$. Hence
+  $P$ and $Q$ are conjugate.
+]
+
+#theorem(name: "Third Sylow Theorem (Counting)")[
+  Let $abs(G) = p^k m$ with $p$ not dividing $m$, and let $n_p =
+  abs("Syl"_p(G))$ be the number of Sylow $p$-subgroups. Then
+  + $n_p | m$ (so $n_p$ divides the $p$-free part $m$ of $abs(G)$);
+  + $n_p ≡ 1 \pmod p$.
+] <thm:sylow-third>
+
+#proof[
+  $G$ acts on $"Syl"_p(G)$ by conjugation; by
+  #link(<thm:sylow-second>)[the second theorem], this action is
+  transitive (all Sylow $p$-subgroups are conjugate). So $"Syl"_p(G)$
+  is a single orbit, and by
+  #link(<thm:orbit-stabilizer>)[orbit-stabilizer] applied to $P in
+  "Syl"_p(G)$,
+  $
+    n_p = abs("Syl"_p(G)) = [G : N_G(P)] = abs(G) \/ abs(N_G(P)).
+  $
+  Since $P <= N_G(P)$, $abs(P) = p^k$ divides $abs(N_G(P))$, so
+  $n_p = abs(G) \/ abs(N_G(P))$ divides $abs(G) \/ p^k = m$. This
+  proves (1).
+
+  For (2), apply #link(<lem:p-group-fixed-point>)[the fixed-point
+  lemma] to the conjugation action of $P$ on $"Syl"_p(G)$:
+  $n_p ≡ abs("Syl"_p(G)^P) \pmod p$. By the same argument as in the
+  second theorem, the only $P$-fixed Sylow $p$-subgroup is $P$
+  itself: if $Q$ is fixed by $P$ then $P <= N_G(Q)$, both $P$ and $Q$
+  are Sylow $p$-subgroups of $N_G(Q)$ of the same order $p^k$, and the
+  second Sylow theorem *inside $N_G(Q)$* (which we may now invoke,
+  non-circularly, since $N_G(Q)$ is a smaller group and the second
+  theorem is already proved) gives $P = Q$. So $abs("Syl"_p(G)^P) =
+  1$, and $n_p ≡ 1 \pmod p$.
+]
+
+The figure below sketches how the Sylow $p$-subgroups fit together:
+they form a single conjugacy class inside $G$, and the size of this
+class is controlled by the normaliser $N_G(P)$.
+
+#figure(
+  image("img/sylow-conjugacy.svg"),
+  caption: [The Sylow $p$-subgroups of $G$ form a single conjugacy
+    class of size $n_p = [G : N_G(P)]$. The third Sylow theorem
+    constrains $n_p$ by $n_p | m$ and $n_p ≡ 1 \pmod p$.],
+) <fig:sylow-conjugacy>
+
+#note[
+  (Sylow strategy.) The three Sylow theorems form a strategy with
+  three moves:
+  + *Existence* (#link(<thm:sylow-first>)[first theorem]): Sylow
+    $p$-subgroups exist for every prime $p | abs(G)$.
+  + *Uniqueness up to conjugacy* (#link(<thm:sylow-second>)[second
+    theorem]): any two are conjugate, so the Sylow $p$-subgroups form
+    a single conjugacy class.
+  + *Counting* (#link(<thm:sylow-third>)[third theorem]): $n_p$
+    satisfies $n_p | m$ and $n_p ≡ 1 \pmod p$.
+
+  In applications (#link(<ex:groups-order-pq>)[§6.4]), the third
+  theorem often forces $n_p = 1$ — and a unique Sylow $p$-subgroup is
+  normal. This is how Sylow theory turns counting arguments into
+  structural statements about normal subgroups.
+] <note:sylow-strategy>
+
+The Sylow theorems are the high-water mark of finite group theory:
+they give us, for free, the existence of subgroups of prime-power
+order and a tight grip on how many such subgroups there can be. The
+next section turns this grip into concrete classifications.
+
+== Applications of the Sylow Theorems // Sylow 定理的应用
+
+The Sylow theorems are most powerful when the congruences $n_p ≡ 1
+\pmod p$ and $n_p | m$ together force $n_p = 1$. A unique Sylow
+$p$-subgroup is normal (it is fixed by conjugation, being alone in
+its conjugacy class), and a non-trivial normal subgroup rules out
+simplicity. We illustrate this strategy on two classification
+problems.
+
+#example[
+  (Groups of order $p q$.) Let $G$ have order $p q$ with $p, q$
+  primes, $p < q$. We claim:
+  - If $q ≢ 1 \pmod p$, then $G$ is cyclic, $G ≅ bb(Z)_(p
+    q)$.
+  - If $q equiv 1 \pmod p$, then there is additionally a
+    non-abelian group of order $p q$, the semidirect product
+    $bb(Z)_q ⋊ bb(Z)_p$.
+
+  *Argument.* Let $Q$ be a Sylow $q$-subgroup (order $q$). By the
+  third Sylow theorem, $n_q | p$ and $n_q ≡ 1 \pmod q$. Since $q >
+  p$, the congruence $n_q ≡ 1 \pmod q$ with $n_q | p$ forces $n_q =
+  1$. So $Q ⊲ G$ is normal.
+
+  Let $P$ be a Sylow $p$-subgroup (order $p$). Then $n_p | q$ and
+  $n_p ≡ 1 \pmod p$. So $n_p in {1, q}$, and $q ≡ 1 \pmod p$
+  decides: if $q ≢ 1 \pmod p$, then $n_p = 1$ and $P ⊲ G$
+  as well.
+
+  *If $n_p = 1$*: both $P$ and $Q$ are normal, with trivial
+  intersection, and $P Q = G$ (since $abs(P) abs(Q) = p q =
+  abs(G)$). So $G ≅ P times Q ≅ bb(Z)_p times bb(Z)_q ≅ bb(Z)_(p q)$
+  (cyclic, by the Chinese remainder theorem since $gcd(p, q) = 1$).
+
+  *If $n_p = q$*: $P$ is not normal; there are $q$ Sylow
+  $p$-subgroups. The unique normal $Q$ admits a homomorphism $P -> 
+  "Aut"(Q) ≅ bb(Z)_(q-1)$ (the conjugation action of $P$ on $Q$); a
+  non-trivial such homomorphism exists iff $p | (q - 1)$, i.e. $q ≡
+  1 \pmod p$. The corresponding semidirect product $bb(Z)_q ⋊ bb(Z)_p$
+  is the non-abelian group of order $p q$.
+
+  For $p = 2, q = 3$: $q = 3 ≢ 1 \pmod 2$, so groups of
+  order $6$ are cyclic — but wait, $S_3$ is non-abelian of order
+  $6$! The issue is that $3 equiv 1 \pmod 2$ (since $3 - 1 = 2$ is
+  divisible by $2$), so the non-abelian case applies: $S_3 ≅ bb(Z)_3
+  ⋊ bb(Z)_2$.
+] <ex:groups-order-pq>
+
+#example[
+  (Groups of order $12$.) Let $abs(G) = 12 = 2^2 dot.c 3$. The Sylow
+  theorems constrain the possibilities:
+
+  - *Sylow $2$-subgroups*: order $4$, $n_2 | 3$ and $n_2 ≡ 1 \pmod
+    2$, so $n_2 in {1, 3}$.
+  - *Sylow $3$-subgroups*: order $3$, $n_3 | 4$ and $n_3 ≡ 1 \pmod
+    3$, so $n_3 in {1, 4}$.
+
+  There are five groups of order $12$ up to isomorphism:
+  + $bb(Z)_12 ≅ bb(Z)_3 times bb(Z)_4$ (cyclic, abelian);
+  + $bb(Z)_2 times bb(Z)_6$ (abelian, non-cyclic);
+  + $A_4$ (alternating group, $n_3 = 4$, $n_2 = 1$ — the Sylow
+    $2$-subgroup $V_4$ is normal);
+  + $D_6$ (dihedral group, $n_2 = 3$, $n_3 = 1$);
+  + $"Dic"_3$ (dicyclic group, $n_2 = 1$, $n_3 = 1$, but
+    non-abelian).
+
+  The key dichotomy: if $n_3 = 1$ then the Sylow $3$-subgroup is
+  normal (cases 1, 2, 4, 5); if $n_3 = 4$ then $G$ has a homomorphism
+  to $S_4$ via the conjugation action on its four Sylow
+  $3$-subgroups, which for $A_4$ is the standard embedding $A_4 -> 
+  S_4$ (and in general forces $G$ to have a normal subgroup of index
+  $4$ — i.e. $A_4$ is the only group of order $12$ with $n_3 = 4$).
+
+  The Sylow theorems alone do not pin down the isomorphism types —
+  one must also analyse the possible semidirect products
+  $bb(Z)_3 ⋊ bb(Z)_4$ and $bb(Z)_3 ⋊ (bb(Z)_2 times bb(Z)_2)$ — but
+  they narrow the search dramatically.
+] <ex:groups-order-12>
+
+The same strategy — count Sylow subgroups, force normality — rules
+out simplicity for many orders.
+
+#property(name: "No Simple Groups of Small Order")[
+  If $G$ is a simple group of order $abs(G) <= 100$, then either
+  $abs(G)$ is prime (so $G ≅ bb(Z)_p$) or $abs(G) = 60$ (so $G ≅
+  A_5$).
+] <prop:no-simple-small-order>
+
+#proof[
+  (Sketch.) For most composite orders $n <= 100$, the Sylow
+  congruences force $n_p = 1$ for some prime $p | n$ — equivalently,
+  a unique (hence normal) Sylow $p$-subgroup — so $G$ is not simple.
+  The exceptions are handled case by case:
+
+  - $abs(G) = 36 = 2^2 dot.c 3^2$: $n_3 in {1, 4}$, $n_2 in {1, 3,
+    9}$; if $n_3 = 4$ then the action on $4$ Sylow $3$-subgroups
+    gives a homomorphism $G -> S_4$, and $abs(G) = 36 > 24 =
+    abs(S_4)$ forces a non-trivial kernel.
+  - $abs(G) = 48 = 2^4 dot.c 3$: $n_3 in {1, 4, 16}$; $n_3 = 16$
+    would give $16 dot.c 2 = 32$ elements of order $3$, plus the
+    identity, plus elements of order $>= 2$ — exceeding $48$; so
+    $n_3 in {1, 4}$, and the case $n_3 = 4$ again embeds into
+    $abs(S_4) = 24$.
+  - $abs(G) = 60 = 2^2 dot.c 3 dot.c 5$: this is the borderline case
+    — $A_5$ is simple, and it is the *only* simple group of order
+    $60$. The Sylow congruences ($n_5 in {1, 6}$, $n_3 in {1, 4,
+    10}$, $n_2 in {1, 3, 5, 15}$) are all satisfied by multiple
+    values, so Sylow alone cannot rule out simplicity. A separate
+    argument (counting elements of order $5$ and using the
+    embedding into $S_5$ via the action on $6$ Sylow
+    $5$-subgroups) shows that any simple group of order $60$
+    embeds into $S_5$ as a subgroup of index $2$, hence equals
+    $A_5$.
+  - $abs(G) = 72, 90$: similar counting arguments force a normal
+    Sylow subgroup or an embedding contradiction.
+
+  The full case analysis is routine; see e.g. #link(<ex:a5-simple>)[§4.3]
+  for the structure of $A_5$ as the smallest non-abelian simple
+  group. The pattern — Sylow congruences + counting elements +
+  permutation representations — is the standard template for
+  recognising simplicity in small orders.
+]
+
+The closure of this chapter is also a transition. We have seen that
+finite group theory splits into two regimes: the *abelian* regime,
+where Lagrange's theorem has a full converse (the structure theorem
+for finite abelian groups, Chapter 7), and the *non-abelian* regime,
+where Sylow theory is the main tool and $A_5$ is the smallest
+obstruction. The latter regime culminates in the question of
+*solvability*: a group is solvable if it has a composition series with
+abelian factors. The non-solvability of $A_5$ (and of any group
+containing a copy of $A_5$) is, by Galois theory, exactly the
+obstruction to solving polynomial equations by radicals — the subject
+of Chapter 16. With the structure of finite abelian groups (Chapter
+7) and the recognition of $A_5$ as the smallest non-abelian simple
+group (#link(<thm:an-simple>)[§4.3]) in hand, we are ready for that
+final chapter of the group-theoretic narrative.
 
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
