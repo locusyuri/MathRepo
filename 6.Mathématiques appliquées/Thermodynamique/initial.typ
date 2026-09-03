@@ -121,32 +121,34 @@ assumptions alone.
   where $v^2 = v_x^2 + v_y^2 + v_z^2$.
 ] <def:maxwell-velocity>
 
-*Derivation (Maxwell's argument).* Write the density as
-$f(v_x, v_y, v_z)$ and impose two assumptions:
+#proof(name: "Maxwell's argument")[
+  Write the density as
+  $f(v_x, v_y, v_z)$ and impose two assumptions:
 
-- *Isotropy*: the gas selects no preferred direction, so $f$ depends on
-  the velocity only through its magnitude, $f = phi(v)$ with
-  $v = sqrt(v_x^2 + v_y^2 + v_z^2)$;
-- *Component independence*: the three Cartesian components are
-  statistically independent, so
-  $f(v_x, v_y, v_z) = g(v_x) g(v_y) g(v_z)$ for one and the same
-  function $g$, by isotropy again.
+  - *Isotropy*: the gas selects no preferred direction, so $f$ depends on
+    the velocity only through its magnitude, $f = phi(v)$ with
+    $v = sqrt(v_x^2 + v_y^2 + v_z^2)$;
+  - *Component independence*: the three Cartesian components are
+    statistically independent, so
+    $f(v_x, v_y, v_z) = g(v_x) g(v_y) g(v_z)$ for one and the same
+    function $g$, by isotropy again.
 
-Combining the two and setting $v_z = 0$,
-$
-  g(v_x) g(v_y) = phi(sqrt(v_x^2 + v_y^2)).
-$
-Taking logarithms with $G(u) = ln g(sqrt(u))$ and
-$Phi(s) = ln phi(sqrt(s))$ gives $G(u) + G(w) = Phi(u + w)$ for all
-$u, w >= 0$; ∂erentiating with respect to $u$ and $w$ separately
-yields $G'(u) = G'(w)$ for all $u, w$, so $G'$ is a constant $-alpha$
-and
-$
-  g(v) = A exp(-alpha v^2).
-$
-Normalisation fixes $A = sqrt(alpha / pi)$ per component. The parameter
-$alpha$ is fixed by the pressure computation below to be
-$alpha = m / (2 k_B T)$.
+  Combining the two and setting $v_z = 0$,
+  $
+    g(v_x) g(v_y) = phi(sqrt(v_x^2 + v_y^2)).
+  $
+  Taking logarithms with $G(u) = ln g(sqrt(u))$ and
+  $Phi(s) = ln phi(sqrt(s))$ gives $G(u) + G(w) = Phi(u + w)$ for all
+  $u, w >= 0$; differentiating with respect to $u$ and $w$ separately
+  yields $G'(u) = G'(w)$ for all $u, w$, so $G'$ is a constant $-alpha$
+  and
+  $
+    g(v) = A exp(-alpha v^2).
+  $
+  Normalisation fixes $A = sqrt(alpha / pi)$ per component. The parameter
+  $alpha$ is fixed by the pressure computation below to be
+  $alpha = m / (2 k_B T)$.
+]
 
 #property(name: "Pressure as Momentum Flux")[
   In a gas of number density $n$ whose velocities follow the Maxwell
@@ -156,26 +158,28 @@ $alpha = m / (2 k_B T)$.
   $
 ] <prop:kinetic-pressure>
 
-*Derivation.* Molecules striking the wall transfer $2 m v_x$ of momentum,
-the normal component being reversed. The flux of molecules arriving with
-normal component in $(v_x, v_x + dif v_x)$, $v_x > 0$, is
-$n v_x g(v_x) dif v_x$, so
-$
-  p = integral_0^infinity 2 m v_x dot n v_x g(v_x) dif v_x
-  = n m integral_(-infinity)^infinity v_x^2 g(v_x) dif v_x
-  = n m lr(⟨ v_x^2 ⟩).
-$
-Isotropy gives $lr(⟨ v_x^2 ⟩) = lr(⟨ v_y^2 ⟩) =
-lr(⟨ v_z^2 ⟩) = lr(⟨ v^2 ⟩) / 3$. Comparing with the
-ideal gas law $p = n k_B T$ forces
-$
-  1/3 m lr(⟨ v^2 ⟩) = k_B T, quad "i.e." quad
-  1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T,
-$
-so $alpha = m / (2 k_B T)$. Temperature is thereby *identified* with the
-mean kinetic energy per molecule — the dictionary entry announcing the
-equipartition theorem of §1.4. The argument does not merely use the
-ideal gas law; it *explains* it.
+#proof[
+  Molecules striking the wall transfer $2 m v_x$ of momentum,
+  the normal component being reversed. The flux of molecules arriving with
+  normal component in $(v_x, v_x + dif v_x)$, $v_x > 0$, is
+  $n v_x g(v_x) dif v_x$, so
+  $
+    p = integral_0^infinity 2 m v_x dot n v_x g(v_x) dif v_x
+    = n m integral_(-infinity)^infinity v_x^2 g(v_x) dif v_x
+    = n m lr(⟨ v_x^2 ⟩).
+  $
+  Isotropy gives $lr(⟨ v_x^2 ⟩) = lr(⟨ v_y^2 ⟩) =
+  lr(⟨ v_z^2 ⟩) = lr(⟨ v^2 ⟩) / 3$. Comparing with the
+  ideal gas law $p = n k_B T$ forces
+  $
+    1/3 m lr(⟨ v^2 ⟩) = k_B T, quad "i.e." quad
+    1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T,
+  $
+  so $alpha = m / (2 k_B T)$. Temperature is thereby *identified* with the
+  mean kinetic energy per molecule — the dictionary entry announcing the
+  equipartition theorem of §1.4. The argument does not merely use the
+  ideal gas law; it *explains* it.
+]
 
 #definition(name: "Speed Distribution")[
   The probability density of the speed $v = norm(bold(v))$ follows by
@@ -204,15 +208,17 @@ into a law with a rising front and a long tail.
   $
 ] <prop:characteristic-speeds>
 
-*Derivation.* The most probable speed maximises $F$: setting
-$dif (v^2 exp(-alpha v^2)) / dif v = 0$ gives $2/v - 2 alpha v = 0$,
-hence $v_p = 1 / sqrt(alpha)$. The mean speed uses the integral
-$integral_0^infinity v^3 exp(-alpha v^2) dif v = 1 / (2 alpha^2)$:
-$
-  overline(v) = 4 pi A^3 dot 1 / (2 alpha^2) = 2 / sqrt(pi alpha).
-$
-Finally $v_("rms")^2 = lr(⟨ v^2 ⟩) = 3 / (2 alpha)$ from the
-pressure derivation above.
+#proof[
+  The most probable speed maximises $F$: setting
+  $dif (v^2 exp(-alpha v^2)) / dif v = 0$ gives $2/v - 2 alpha v = 0$,
+  hence $v_p = 1 / sqrt(alpha)$. The mean speed uses the integral
+  $integral_0^infinity v^3 exp(-alpha v^2) dif v = 1 / (2 alpha^2)$:
+  $
+    overline(v) = 4 pi A^3 dot 1 / (2 alpha^2) = 2 / sqrt(pi alpha).
+  $
+  Finally $v_("rms")^2 = lr(⟨ v^2 ⟩) = 3 / (2 alpha)$ from the
+  pressure derivation above.
+]
 
 #figure(
   image("img/maxwell-speed-distribution.svg", width: 75%),
@@ -267,21 +273,23 @@ structure is captured by a single geometric quantity.
   $
 ] <prop:mean-free-path>
 
-*Derivation.* In a time $dif t$, a molecule moving with speed $v$ sweeps
-a cylinder of volume $sigma v dif t$ and collides with every other
-molecule whose centre lies inside it. With stationary targets the
-collision rate would be $n sigma v$, giving $lambda = 1/(n sigma)$. The
-targets are themselves moving: the relevant quantity is the *relative*
-speed, whose mean over two Maxwell-distributed velocities is
-$sqrt(2) overline(v)$ (the ∂erence of two independent Gaussians is
-Gaussian, with doubled variance). Hence the collision rate
-$
-  z = sqrt(2) n sigma overline(v), quad "so that" quad lambda =
-  overline(v) / z = 1 / (sqrt(2) n sigma).
-$
-The mean free path depends only on density and molecular size — at
-atmospheric conditions $lambda approx 70 "nm"$, some $200$ molecular
-diameters, which is why the dilute-gas picture is self-consistent.
+#proof[
+  In a time $dif t$, a molecule moving with speed $v$ sweeps
+  a cylinder of volume $sigma v dif t$ and collides with every other
+  molecule whose centre lies inside it. With stationary targets the
+  collision rate would be $n sigma v$, giving $lambda = 1/(n sigma)$. The
+  targets are themselves moving: the relevant quantity is the *relative*
+  speed, whose mean over two Maxwell-distributed velocities is
+  $sqrt(2) overline(v)$ (the difference of two independent Gaussians is
+  Gaussian, with doubled variance). Hence the collision rate
+  $
+    z = sqrt(2) n sigma overline(v), quad "so that" quad lambda =
+    overline(v) / z = 1 / (sqrt(2) n sigma).
+  $
+  The mean free path depends only on density and molecular size — at
+  atmospheric conditions $lambda approx 70 "nm"$, some $200$ molecular
+  diameters, which is why the dilute-gas picture is self-consistent.
+]
 
 The *collision frequency* $z$ will do little explicit work below, but
 the mean free path $lambda$ and the mean speed $overline(v)$ are the
@@ -309,26 +317,28 @@ temperatures, which announced the quantum theory.
   $
 ] <thm:equipartition>
 
-*Derivation.* The distribution over phase space in equilibrium is the
-Maxwell--Boltzmann density proportional to $exp(- E / (k_B T))$ (this
-will be rederived systematically from the canonical ensemble in
-Chapter 13; at the kinetic level it is the velocity law of §1.2 applied
-to every quadratic coordinate). Then
-$
-  lr(⟨ alpha_i x_i^2 ⟩)
-  = (integral alpha_i x_i^2 exp(-E/(k_B T)) dif Gamma) /
-  (integral exp(-E/(k_B T)) dif Gamma).
-$
+#proof[
+  The distribution over phase space in equilibrium is the
+  Maxwell--Boltzmann density proportional to $exp(- E / (k_B T))$ (this
+  will be rederived systematically from the canonical ensemble in
+  Chapter 13; at the kinetic level it is the velocity law of §1.2 applied
+  to every quadratic coordinate). Then
+  $
+    lr(⟨ alpha_i x_i^2 ⟩)
+    = (integral alpha_i x_i^2 exp(-E/(k_B T)) dif Gamma) /
+    (integral exp(-E/(k_B T)) dif Gamma).
+  $
 
-Let $beta = 1/(k_B T)$. The Gaussian factorisation makes each quadratic
-coordinate independent:
-$
-  lr(⟨ alpha_i x_i^2 ⟩) = (alpha_i integral x_i^2 exp(-beta alpha_i x_i^2) dif x_i) / (integral exp(-beta alpha_i x_i^2) dif x_i).
-$
-With the Gaussian integrals
-$integral exp(-beta alpha x^2) dif x = sqrt(pi / (beta alpha))$ and
-$integral x^2 exp(-beta alpha x^2) dif x = sqrt(pi) / (2 (beta alpha)^(3/2))$,
-the ratio equals $1/(2 beta) = 1/2 k_B T$.
+  Let $beta = 1/(k_B T)$. The Gaussian factorisation makes each quadratic
+  coordinate independent:
+  $
+    lr(⟨ alpha_i x_i^2 ⟩) = (alpha_i integral x_i^2 exp(-beta alpha_i x_i^2) dif x_i) / (integral exp(-beta alpha_i x_i^2) dif x_i).
+  $
+  With the Gaussian integrals
+  $integral exp(-beta alpha x^2) dif x = sqrt(pi / (beta alpha))$ and
+  $integral x^2 exp(-beta alpha x^2) dif x = sqrt(pi) / (2 (beta alpha)^(3/2))$,
+  the ratio equals $1/(2 beta) = 1/2 k_B T$.
+]
 
 #example[
   (Heat capacities of dilute gases.) Each translational or rotational
@@ -363,7 +373,7 @@ the ratio equals $1/(2 beta) = 1/2 k_B T$.
 
 == Transport Phenomena // 输运现象
 
-A gas in which the local state varies from pintegral.cont to pintegral.cont does not stay
+A gas in which the local state varies from point to point does not stay
 that way: molecules flying freely between collisions carry momentum,
 energy and particles across any surface, smoothing out the inhomogeneity.
 Three gradient-driven relaxation processes result, each governed by a
@@ -379,7 +389,7 @@ Three gradient-driven relaxation processes result, each governed by a
   [$q = -kappa dif T \/ dif z$],
   [thermal conductivity $kappa$],
 
-  [Mass transport (∂usion)], [number density $n(z)$], [$J = -D dif n \/ dif z$], [∂usion coefficient $D$],
+  [Mass transport (diffusion)], [number density $n(z)$], [$J = -D dif n \/ dif z$], [diffusion coefficient $D$],
 )
 
 Each law is written for transport along $z$; the flux $Pi$ carries
@@ -391,7 +401,7 @@ one mean free path away.
 
 #definition(name: "Transport Coefficients")[
   With the flux laws of the table above, the *shear viscosity* $eta$,
-  the *thermal conductivity* $kappa$ and the *∂usion coefficient*
+  the *thermal conductivity* $kappa$ and the *diffusion coefficient*
   $D$ characterise the response of the gas to velocity, temperature and
   density gradients respectively.
 ] <def:transport-coefficients>
@@ -408,41 +418,43 @@ one mean free path away.
   heat capacity at constant volume.
 ] <prop:kinetic-transport>
 
-*Derivation (one of three; the viscosity case).* Take the flow velocity
-$u(z)$ along $x$, sheared in $z$. Molecules cross a plane $z = "const"$
-from above and from below at rate $1/2 n overline(v)$ per unit area
-(the factor $1/3$ averaging over directions collapses into the isotropic
-crossing rate $1/4 n overline(v)$ per direction pair; the resulting
-prefactor is $1/3$ in the elementary estimate, higher-order treatments
-give $0.37$-odd). A molecule arriving from distance $lambda$ carries the
-$x$-momentum appropriate to its departure pintegral.cont, $m u(z - lambda)$ from
-below and $m u(z + lambda)$ from above. The net momentum flux in the
-$+z$ direction is
-$
-  Pi = 1/2 n overline(v) [m u(z - lambda) - m u(z + lambda)]
-  = - n m overline(v) lambda dif u / dif z,
-$
-with the sign convention that positive $Pi$ transports $x$-momentum
-towards $+z$. Comparing with $Pi = -eta dif u / dif z$ yields
-$eta = rho overline(v) lambda / 3$. The conductivity follows by
-replacing the transported property by the mean energy $c_V^("mol") T / N_A$
-per molecule, and the ∂usivity by the particle property itself.
+#proof(name: "one of three; the viscosity case")[
+  Take the flow velocity
+  $u(z)$ along $x$, sheared in $z$. Molecules cross a plane $z = "const"$
+  from above and from below at rate $1/2 n overline(v)$ per unit area
+  (the factor $1/3$ averaging over directions collapses into the isotropic
+  crossing rate $1/4 n overline(v)$ per direction pair; the resulting
+  prefactor is $1/3$ in the elementary estimate, higher-order treatments
+  give $0.37$-odd). A molecule arriving from distance $lambda$ carries the
+  $x$-momentum appropriate to its departure point, $m u(z - lambda)$ from
+  below and $m u(z + lambda)$ from above. The net momentum flux in the
+  $+z$ direction is
+  $
+    Pi = 1/2 n overline(v) [m u(z - lambda) - m u(z + lambda)]
+    = - n m overline(v) lambda dif u / dif z,
+  $
+  with the sign convention that positive $Pi$ transports $x$-momentum
+  towards $+z$. Comparing with $Pi = -eta dif u / dif z$ yields
+  $eta = rho overline(v) lambda / 3$. The conductivity follows by
+  replacing the transported property by the mean energy $c_V^("mol") T / N_A$
+  per molecule, and the diffusivity by the particle property itself.
 
-Three consequences are worth recording:
+  Three consequences are worth recording:
 
-- *Independence of density.* $lambda = 1/(sqrt(2) n sigma)$ cancels the
-  $n$ in $eta = 1/3 rho overline(v) lambda$: the viscosity of a dilute
-  gas is independent of pressure — a striking 1860 prediction of
-  Maxwell, confirmed by his own experiments.
-- *Temperature dependence.* Since $overline(v) prop sqrt(T)$ and
-  $lambda prop T$ at fixed pressure, $eta prop T^(1/2)$ and
-  $kappa prop T^(1/2)$: gaseous viscosity *increases* with
-  temperature, opposite to liquids — a fingerprint of transport by
-  free flight rather than by intermolecular locking.
-- *Self-consistency.* All three coefficients share the combination
-  $overline(v) lambda$, of order the collision rate — and all three
-  derivations use free flight over one $lambda$, valid only when
-  $lambda$ is small compared with the macroscopic scale of the gradient.
+  - *Independence of density.* $lambda = 1/(sqrt(2) n sigma)$ cancels the
+    $n$ in $eta = 1/3 rho overline(v) lambda$: the viscosity of a dilute
+    gas is independent of pressure — a striking 1860 prediction of
+    Maxwell, confirmed by his own experiments.
+  - *Temperature dependence.* Since $overline(v) prop sqrt(T)$ and
+    $lambda prop T$ at fixed pressure, $eta prop T^(1/2)$ and
+    $kappa prop T^(1/2)$: gaseous viscosity *increases* with
+    temperature, opposite to liquids — a fingerprint of transport by
+    free flight rather than by intermolecular locking.
+  - *Self-consistency.* All three coefficients share the combination
+    $overline(v) lambda$, of order the collision rate — and all three
+    derivations use free flight over one $lambda$, valid only when
+    $lambda$ is small compared with the macroscopic scale of the gradient.
+]
 
 #note[
   (Stochastic boundary.) The molecular-randomness picture of this
@@ -483,22 +495,24 @@ first quantitative bridge across this gap.
   §1.2.
 ] <thm:h-theorem>
 
-*Derivation (sketch).* Each collision $bold(v), bold(v)_1 arrow.r
-bold(v)', bold(v)'_1$ changes $H$ by the amount contributed by the four
-distribution values involved. Collecting the gain of the outgoing pair
-and the loss of the incoming pair, summing over all collisions and
-using the conservation laws, one obtains schematically
-$
-  (dif H) / (dif t) = 1/4 integral integral (f' f'_1 - f f_1)
-  ln (f f_1 / (f' f'_1)) dif^3 v dif^3 v_1 quad <= 0,
-$
-because for positive numbers $x = f f_1$ and $y = f' f'_1$ the factor
-$(y - x) ln(x / y)$ is never positive (the function $u ln u$ is
-convex, or equivalently $ln u <= u - 1$). Equality forces
-$f f_1 = f' f'_1$ in every collision — the incoming and outgoing
-distributions agree, which is precisely the characterisation of the
-Maxwell distribution. The full collision integral is set up and
-analysed systematically in Chapter 21.
+#proof(name: "sketch")[
+  Each collision $bold(v), bold(v)_1 arrow.r
+  bold(v)', bold(v)'_1$ changes $H$ by the amount contributed by the four
+  distribution values involved. Collecting the gain of the outgoing pair
+  and the loss of the incoming pair, summing over all collisions and
+  using the conservation laws, one obtains schematically
+  $
+    (dif H) / (dif t) = 1/4 integral integral (f' f'_1 - f f_1)
+    ln (f f_1 / (f' f'_1)) dif^3 v dif^3 v_1 quad <= 0,
+  $
+  because for positive numbers $x = f f_1$ and $y = f' f'_1$ the factor
+  $(y - x) ln(x / y)$ is never positive (the function $u ln u$ is
+  convex, or equivalently $ln u <= u - 1$). Equality forces
+  $f f_1 = f' f'_1$ in every collision — the incoming and outgoing
+  distributions agree, which is precisely the characterisation of the
+  Maxwell distribution. The full collision integral is set up and
+  analysed systematically in Chapter 21.
+]
 
 #caution[
   (Loschmidt and Zermelo paradoxes.) *Loschmidt's reversibility
@@ -627,20 +641,22 @@ equation of state (Chapter 1) supplies a system-independent standard.
   $
     T(p) = 273.16 dot p / p_3 quad "K",
   $
-  where $p_3$ is the pressure at the triple pintegral.cont of water, is
+  where $p_3$ is the pressure at the triple point of water, is
   independent of the gas used (in the dilute limit) and coincides with
   the absolute Kelvin scale.
 ] <prop:ideal-gas-scale>
 
-*Derivation.* For a fixed amount of gas at fixed volume,
-#link(<def:equation-of-state>)[the ideal gas law] gives $p = n R T / V
-prop T$. The triple pintegral.cont of water — the unique state at which ice,
-liquid water and vapour coexist — is assigned $T_3 = 273.16 "K"$ by
-convention, so $T / T_3 = p / p_3$. That the ratio $p / p_3$, read off
-∂erent dilute gases, converges to a common limit is the empirical
-content of the law; the deviations vanish as the gas charge is
-reduced, because all low-density gases approach the same ideal gas of
-Chapter 1.
+#proof[
+  For a fixed amount of gas at fixed volume,
+  #link(<def:equation-of-state>)[the ideal gas law] gives $p = n R T / V
+  prop T$. The triple point of water — the unique state at which ice,
+  liquid water and vapour coexist — is assigned $T_3 = 273.16 "K"$ by
+  convention, so $T / T_3 = p / p_3$. That the ratio $p / p_3$, read off
+  different dilute gases, converges to a common limit is the empirical
+  content of the law; the deviations vanish as the gas charge is
+  reduced, because all low-density gases approach the same ideal gas of
+  Chapter 1.
+]
 
 #note[
   (The absolute scale.) The identification with the *absolute
@@ -657,7 +673,7 @@ Chapter 1.
 
 Energy crosses the boundary of a closed system in exactly two forms:
 work, which is energy transfer by macroscopically controlled means, and
-heat, which is transfer exploiting a temperature ∂erence. Neither is
+heat, which is transfer exploiting a temperature difference. Neither is
 a property of the state — they characterise the *process*.
 
 #definition(name: "Work")[
@@ -677,8 +693,8 @@ a property of the state — they characterise the *process*.
 ] <def:work>
 
 The $delta$ in $delta W$ — as opposed to the $dif$ in $dif V$ — signals
-that work is *not* an exact ∂erential: no state function $W$ exists
-whose ∂erential it would be.
+that work is *not* an exact differential: no state function $W$ exists
+whose differential it would be.
 
 #property(name: "Work as Area in the State Diagram")[
   For a quasi-static process taking the system along a curve $C$ in the
@@ -687,7 +703,7 @@ whose ∂erential it would be.
     W_("by") = integral_C p dif V,
   $
   the area under the path. Work therefore depends on the path, not
-  merely on the endpintegral.conts.
+  merely on the endpoints.
 ] <prop:work-path>
 
 #example[
@@ -702,7 +718,7 @@ whose ∂erential it would be.
   At the shared final volume the isobar runs at pressure $p_1 > p_2$,
   so $W' = n R T (V_2 - V_1) / V_1 > n R T ln(V_2/V_1) = W$: the
   two-step path delivers more work, because it runs at a higher
-  pressure throughout. Same endpintegral.conts, ∂erent work — the visual
+  pressure throughout. Same endpoints, different work — the visual
   statement of @fig:work-path.
 ] <ex:path-dependence>
 
@@ -714,7 +730,7 @@ whose ∂erential it would be.
   ),
   caption: [Left: three quasi-static paths from state 1 to state 2 in
     the $p$-$V$ plane; the work done by the gas is the area under the
-    path, and the three shaded areas ∂er. Right: through the same
+    path, and the three shaded areas differ. Right: through the same
     state, the adiabat $p V^gamma = "const"$ ($gamma > 1$) is steeper
     than the isotherm $p V = "const"$; the adiabatic compression from 1
     to $2'$ therefore reaches a higher pressure than the isothermal
@@ -725,7 +741,7 @@ whose ∂erential it would be.
 
 #definition(name: "Heat")[
   Energy that crosses the boundary of a system by virtue of a
-  temperature ∂erence with the environment is *heat*, denoted $Q$
+  temperature difference with the environment is *heat*, denoted $Q$
   (positive when absorbed by the system). Heat is energy *in transit*:
   a body does not *contain* heat, any more than it contains work.
 ] <def:heat>
@@ -736,12 +752,12 @@ or as heat with a thermostat, and mixtures of the two occur in general.
 
 #caution[
   (Path functions.) Work and heat are *process quantities*: $delta W$
-  and $delta Q$ are inexact ∂erentials, and writing $dif W$ or
+  and $delta Q$ are inexact differentials, and writing $dif W$ or
   speaking of "the heat contained in a body" is a category error that
   invalidates calculations. Only increments are defined, and the
   integrals $integral delta W$, $integral delta Q$ are path integrals
   to be evaluated along a specified curve. State quantities ($U$, $H$,
-  and later $S$) ∂er precisely in having exact ∂erentials.
+  and later $S$) differ precisely in having exact differentials.
 ] <caution:path-functions>
 
 == First Law and Internal Energy // 第一定律与内能
@@ -749,16 +765,16 @@ or as heat with a thermostat, and mixtures of the two occur in general.
 #definition(name: "Internal Energy")[
   Every equilibrium state of a system admits a state quantity $U$, the
   *internal energy*, such that the energy the system receives in any
-  process equals the increase of $U$ between the endpintegral.cont states. $U$
+  process equals the increase of $U$ between the endpoint states. $U$
   is extensive, and is defined up to an additive constant (only
-  ∂erences $Delta U$ are measurable).
+  differences $Delta U$ are measurable).
 ] <def:internal-energy>
 
 The physical motivation is Joule's paddle-wheel experiment: stir an
 insulated (adiabatic) vessel with a falling weight, and a given amount
 of mechanical work always raises the state — measured by any thermometer
 — identically, regardless of how the stirring is arranged. The
-endpintegral.conts are characterised by a number $U$.
+endpoints are characterised by a number $U$.
 
 #theorem(name: "First Law of Thermodynamics")[
   For any process of a closed system,
@@ -854,29 +870,31 @@ changes measure reaction heats in chemistry.
   $
 ] <prop:cp-cv>
 
-*Derivation.* Start from $U = U(T, V)$ and
-$C_V = (partial U / partial T)_V$. Then for any quasi-static process
-$
-  delta Q = dif U + p dif V
-  = C_V dif T + [(partial U / partial V)_T + p] dif V.
-$
-At constant pressure, $dif V = (partial V / partial T)_p dif T$, so
-$
-  C_p = C_V + [(partial U / partial V)_T + p] (partial V / partial T)_p.
-$
-The bracket is rewritten using the identity (proved in Chapter 6 with
-the Maxwell relations)
-$
-  (partial U / partial V)_T = T (partial p / partial T)_V - p,
-$
-so the bracket becomes $T (partial p / partial T)_V$. With the cyclic
-identity $(partial p / partial T)_V = alpha / kappa_T$ and
-$(partial V / partial T)_p = alpha V$,
-$
-  C_p - C_V = T dot alpha / kappa_T dot alpha V = T V alpha^2 / kappa_T.
-$
-For the ideal gas, $p = n R T / V$ gives $alpha = 1/T$ and
-$kappa_T = 1/p$, hence $C_p - C_V = T V (1/T^2) p = n R$.
+#proof[
+  Start from $U = U(T, V)$ and
+  $C_V = (partial U / partial T)_V$. Then for any quasi-static process
+  $
+    delta Q = dif U + p dif V
+    = C_V dif T + [(partial U / partial V)_T + p] dif V.
+  $
+  At constant pressure, $dif V = (partial V / partial T)_p dif T$, so
+  $
+    C_p = C_V + [(partial U / partial V)_T + p] (partial V / partial T)_p.
+  $
+  The bracket is rewritten using the identity (proved in Chapter 6 with
+  the Maxwell relations)
+  $
+    (partial U / partial V)_T = T (partial p / partial T)_V - p,
+  $
+  so the bracket becomes $T (partial p / partial T)_V$. With the cyclic
+  identity $(partial p / partial T)_V = alpha / kappa_T$ and
+  $(partial V / partial T)_p = alpha V$,
+  $
+    C_p - C_V = T dot alpha / kappa_T dot alpha V = T V alpha^2 / kappa_T.
+  $
+  For the ideal gas, $p = n R T / V$ gives $alpha = 1/T$ and
+  $kappa_T = 1/p$, hence $C_p - C_V = T V (1/T^2) p = n R$.
+]
 
 The inequality $C_p > C_V$ has a direct reading: heating at constant
 pressure must pay for the expansion work in addition to raising the
@@ -910,19 +928,21 @@ processes of §2.6.
   where $gamma = C_p / C_V > 1$.
 ] <prop:adiabatic-process>
 
-*Derivation.* The first law with $delta Q = 0$ gives
-$C_V dif T = - p dif V$. Substituting $p = n R T / V$ and dividing by
-$T$,
-$
-  C_V (dif T) / T = - n R (dif V) / V
-  quad "with" quad n R = C_p - C_V = (gamma - 1) C_V,
-$
-so $(dif T) / T = -(gamma - 1)(dif V) / V$, which integrates to
-$T V^(gamma - 1) = "const"$; eliminating $T$ with the equation of state
-gives the $p V^gamma$ and $T^gamma p^(1-gamma)$ forms.
+#proof[
+  The first law with $delta Q = 0$ gives
+  $C_V dif T = - p dif V$. Substituting $p = n R T / V$ and dividing by
+  $T$,
+  $
+    C_V (dif T) / T = - n R (dif V) / V
+    quad "with" quad n R = C_p - C_V = (gamma - 1) C_V,
+  $
+  so $(dif T) / T = -(gamma - 1)(dif V) / V$, which integrates to
+  $T V^(gamma - 1) = "const"$; eliminating $T$ with the equation of state
+  gives the $p V^gamma$ and $T^gamma p^(1-gamma)$ forms.
+]
 
-On the $p$-$V$ diagram the adiabat through a pintegral.cont is *steeper* than
-the isotherm through the same pintegral.cont, since
+On the $p$-$V$ diagram the adiabat through a point is *steeper* than
+the isotherm through the same point, since
 $(partial p / partial V)_("adiabatic") = gamma (partial p / partial V)_T$
 and $gamma > 1$: expansion cools the gas, so its pressure falls faster
 than isothermally — see @fig:work-path, right panel. Correspondingly,
@@ -943,17 +963,19 @@ higher temperature than isothermal compression.
   $
 ] <def:jt-coefficient>
 
-*Derivation.* Treat $H = H(T, p)$: at constant $H$,
-$
-  0 = (partial H / partial T)_p dif T + (partial H / partial p)_T dif p
-  quad "so" quad
-  mu_("JT") = - (partial H / partial p)_T / C_p.
-$
-With $H = U + p V$ and the identity
-$(partial U / partial p)_T = - T (partial V / partial T)_p - p (partial V / partial p)_T$ (Chapter 6),
-$
-  mu_("JT") = 1/C_p [T (partial V / partial T)_p - V] = V / C_p (T alpha - 1).
-$
+#proof[
+  Treat $H = H(T, p)$: at constant $H$,
+  $
+    0 = (partial H / partial T)_p dif T + (partial H / partial p)_T dif p
+    quad "so" quad
+    mu_("JT") = - (partial H / partial p)_T / C_p.
+  $
+  With $H = U + p V$ and the identity
+  $(partial U / partial p)_T = - T (partial V / partial T)_p - p (partial V / partial p)_T$ (Chapter 6),
+  $
+    mu_("JT") = 1/C_p [T (partial V / partial T)_p - V] = V / C_p (T alpha - 1).
+  $
+]
 
 #example[
   (Cooling by throttling.) For an ideal gas, $alpha = 1/T$, so
@@ -973,7 +995,7 @@ $
   (Liquefaction.) The throttling cooler is the core of gas liquefaction
   technology, and its efficiency analysis couples to the phase
   behaviour of real gases. The inversion curve, the liquefaction
-  cycle, and the critical-pintegral.cont physics behind them are treated in
+  cycle, and the critical-point physics behind them are treated in
   Chapter 20 on phase transitions.
 ] <note:jt-liquefaction>
 
@@ -1044,20 +1066,22 @@ The two statements look different; they are the same law.
   devices to violate the other.
 ] <thm:statement-equivalence>
 
-*Proof.* ($"KP" ==>$ $"C"$) Suppose a device $X$ violates the Clausius
-statement: it transfers $Q$ from the cold to the hot reservoir with no
-other effect. Couple it to an ordinary heat engine $E$ that absorbs
-$Q_h$ from the hot reservoir, rejects exactly $Q$ to the cold one, and
-delivers $W = Q_h - Q$. The composite takes $Q_h - Q$ as heat from the
-single hot reservoir and delivers the same work, violating the
-Kelvin-Planck statement.
+#proof[
+  ($"KP" ==>$ $"C"$) Suppose a device $X$ violates the Clausius
+  statement: it transfers $Q$ from the cold to the hot reservoir with no
+  other effect. Couple it to an ordinary heat engine $E$ that absorbs
+  $Q_h$ from the hot reservoir, rejects exactly $Q$ to the cold one, and
+  delivers $W = Q_h - Q$. The composite takes $Q_h - Q$ as heat from the
+  single hot reservoir and delivers the same work, violating the
+  Kelvin-Planck statement.
 
-($"C" ==>$ $"KP"$) Symmetrically, suppose a device $X$ violates
-Kelvin-Planck: it absorbs $Q_h$ from the hot reservoir and converts it
-entirely into work $W$. Run $W$ into an ordinary refrigerator $R$
-pumping $Q_c$ from the cold reservoir and dumping $Q_c + W$ into the
-hot one. The composite transfers $Q_c$ from cold to hot with no other
-effect — violating the Clausius statement. ⊙
+  ($"C" ==>$ $"KP"$) Symmetrically, suppose a device $X$ violates
+  Kelvin-Planck: it absorbs $Q_h$ from the hot reservoir and converts it
+  entirely into work $W$. Run $W$ into an ordinary refrigerator $R$
+  pumping $Q_c$ from the cold reservoir and dumping $Q_c + W$ into the
+  hot one. The composite transfers $Q_c$ from cold to hot with no other
+  effect — violating the Clausius statement.
+]
 
 == Carnot's Theorem // 卡诺定理
 
@@ -1089,21 +1113,23 @@ effect — violating the Clausius statement. ⊙
   $
 ] <prop:carnot-efficiency>
 
-*Derivation.* Work and heat per cycle: $W = Q_h - Q_c$ with
-$Q_h, Q_c$ as above. The two adiabatic legs of
-#link(<prop:adiabatic-process>)[the quasi-static adiabatic relation]
-give $T_h V_b^(gamma-1) = T_c V_c^(gamma-1)$ and
-$T_c V_d^(gamma-1) = T_h V_a^(gamma-1)$; dividing,
-$
-  (V_b / V_a)^(gamma - 1) = (V_c / V_d)^(gamma - 1)
-  quad "hence" quad V_b / V_a = V_c / V_d.
-$
-Therefore
-$
-  eta_C = 1 - Q_c / Q_h
-  = 1 - (T_c ln(V_c/V_d)) / (T_h ln(V_b/V_a))
-  = 1 - T_c / T_h.
-$
+#proof[
+  Work and heat per cycle: $W = Q_h - Q_c$ with
+  $Q_h, Q_c$ as above. The two adiabatic legs of
+  #link(<prop:adiabatic-process>)[the quasi-static adiabatic relation]
+  give $T_h V_b^(gamma-1) = T_c V_c^(gamma-1)$ and
+  $T_c V_d^(gamma-1) = T_h V_a^(gamma-1)$; dividing,
+  $
+    (V_b / V_a)^(gamma - 1) = (V_c / V_d)^(gamma - 1)
+    quad "hence" quad V_b / V_a = V_c / V_d.
+  $
+  Therefore
+  $
+    eta_C = 1 - Q_c / Q_h
+    = 1 - (T_c ln(V_c/V_d)) / (T_h ln(V_b/V_a))
+    = 1 - T_c / T_h.
+  $
+]
 
 #theorem(name: "Carnot's Theorem")[
   All reversible engines operating between the same two reservoirs
@@ -1111,22 +1137,24 @@ $
   engine operating between them has strictly smaller efficiency.
 ] <thm:carnot-theorem>
 
-*Proof.* Let $I$ be any engine between the reservoirs, and $R$ a
-Carnot (reversible) engine run *backwards* as a refrigerator, sized so
-that it absorbs exactly the heat $Q_c$ that $I$ rejects. The composite
-$I R$ then delivers work
-$
-  W = Q_h - Q_c - (Q_h' - Q_c) = Q_h - Q_h',
-$
-takes no net heat from the cold reservoir, and extracts net heat
-$Q_h - Q_h'$ from the hot one. If $eta_I > eta_R$, then
-$Q_h' / Q_c > Q_h / Q_c$, i.e. $Q_h' > Q_h$: the composite would be a
-sole-result work producer from one reservoir — violating
-#link(<thm:kelvin-planck>)[Kelvin-Planck]. Hence
-$eta_I <= eta_R$. If $I$ is irreversible, running a *reversible* $R$
-forward and $I$ backward in the same coupling (now with roles swapped)
-yields the strict inequality $eta_I < eta_R$; equality would make the
-composite reversible, forcing $I$ itself reversible. ⊙
+#proof[
+  Let $I$ be any engine between the reservoirs, and $R$ a
+  Carnot (reversible) engine run *backwards* as a refrigerator, sized so
+  that it absorbs exactly the heat $Q_c$ that $I$ rejects. The composite
+  $I R$ then delivers work
+  $
+    W = Q_h - Q_c - (Q_h' - Q_c) = Q_h - Q_h',
+  $
+  takes no net heat from the cold reservoir, and extracts net heat
+  $Q_h - Q_h'$ from the hot one. If $eta_I > eta_R$, then
+  $Q_h' / Q_c > Q_h / Q_c$, i.e. $Q_h' > Q_h$: the composite would be a
+  sole-result work producer from one reservoir — violating
+  #link(<thm:kelvin-planck>)[Kelvin-Planck]. Hence
+  $eta_I <= eta_R$. If $I$ is irreversible, running a *reversible* $R$
+  forward and $I$ backward in the same coupling (now with roles swapped)
+  yields the strict inequality $eta_I < eta_R$; equality would make the
+  composite reversible, forcing $I$ itself reversible.
+]
 
 #figure(
   image("img/carnot-cycle.svg", width: 78%),
@@ -1156,22 +1184,24 @@ business of §3.3.
   Equality holds if and only if the cycle is reversible.
 ] <prop:clausius-inequality>
 
-*Proof.* Decompose an arbitrary cycle into a fine mesh: each elementary
-strip exchanges heat $delta Q_i$ with reservoirs whose temperatures
-match the boundary temperature $T_i$. By
-#link(<thm:carnot-theorem>)[Carnot's theorem], a reversible engine
-working between $T_i$ and a reference temperature $T_0$ satisfies
-$delta W_i = delta Q_i (1 - T_0 / T_i)$, while the actual strip
-delivers at most this work: $delta Q_i (1 - T_0 / T_i) >= delta W_i$.
-Summing over the whole cycle and using $sum delta W_i = integral.cont delta Q$
-(gross heat minus gross work balance of the cycle),
-$
-  integral.cont delta Q - T_0 integral.cont (delta Q) / T >= integral.cont delta Q
-  quad "hence" quad integral.cont (delta Q) / T <= 0.
-$
-Equality holds exactly when every elementary engine is reversible,
-i.e. the cycle is reversible; for an irreversible cycle the inequality
-is strict. ⊙
+#proof[
+  Decompose an arbitrary cycle into a fine mesh: each elementary
+  strip exchanges heat $delta Q_i$ with reservoirs whose temperatures
+  match the boundary temperature $T_i$. By
+  #link(<thm:carnot-theorem>)[Carnot's theorem], a reversible engine
+  working between $T_i$ and a reference temperature $T_0$ satisfies
+  $delta W_i = delta Q_i (1 - T_0 / T_i)$, while the actual strip
+  delivers at most this work: $delta Q_i (1 - T_0 / T_i) >= delta W_i$.
+  Summing over the whole cycle and using $sum delta W_i = integral.cont delta Q$
+  (gross heat minus gross work balance of the cycle),
+  $
+    integral.cont delta Q - T_0 integral.cont (delta Q) / T >= integral.cont delta Q
+    quad "hence" quad integral.cont (delta Q) / T <= 0.
+  $
+  Equality holds exactly when every elementary engine is reversible,
+  i.e. the cycle is reversible; for an irreversible cycle the inequality
+  is strict.
+]
 
 #definition(name: "Entropy")[
   The *entropy* of a system is the state function $S$ whose change
@@ -1193,17 +1223,19 @@ the equality case of #link(<prop:clausius-inequality>)[the Clausius
 #property(name: "Entropy Is a State Function")[
   For any reversible cycle, $integral.cont_("rev") (delta Q) / T = 0$.
   Consequently $integral (delta Q) / T$ along reversible paths depends
-  only on the endpintegral.conts, and $S$ is well-defined as a state quantity.
+  only on the endpoints, and $S$ is well-defined as a state quantity.
 ] <prop:entropy-state-function>
 
-*Proof.* Every reversible cycle satisfies the Clausius inequality with
-equality. Given any two states $A, B$, the integral along a reversible
-path is therefore independent of which reversible path is chosen — for
-two such paths form a reversible cycle. ⊙
+#proof[
+  Every reversible cycle satisfies the Clausius inequality with
+  equality. Given any two states $A, B$, the integral along a reversible
+  path is therefore independent of which reversible path is chosen — for
+  two such paths form a reversible cycle.
+]
 
 The entropy of an irreversible process is *not* obtained by
 integrating $delta Q / T$ along that process; one integrates along any
-*reversible* path connecting the same endpintegral.conts.
+*reversible* path connecting the same endpoints.
 
 #example[
   (Entropy of an ideal gas.) For a reversible change of $n$ moles,
@@ -1216,16 +1248,16 @@ integrating $delta Q / T$ along that process; one integrates along any
     Delta S = C_V ln(T_2 / T_1) + n R ln(V_2 / V_1).
   $
   Between any two states this formula holds — including for
-  irreversible changes between them, since only the endpintegral.conts enter.
+  irreversible changes between them, since only the endpoints enter.
 ] <ex:entropy-ideal-gas>
 
 #caution[
   ($delta Q \/ T$ versus $dif S$.) Only on a reversible path is
   $delta Q = T dif S$. Along an irreversible path the absorbed heat is
-  smaller than $integral T dif S$ (for the same endpintegral.conts), and writing
+  smaller than $integral T dif S$ (for the same endpoints), and writing
   $dif S = delta Q \/ T$ for an irreversible step silently shrinks the
   entropy. The safe route is always: compute $Delta S$ on a reversible
-  path between the endpintegral.conts, regardless of how the actual process
+  path between the endpoints, regardless of how the actual process
   ran.
 ] <caution:heat-vs-entropy>
 
@@ -1253,22 +1285,24 @@ integrating $delta Q / T$ along that process; one integrates along any
   $
 ] <thm:entropy-increase>
 
-*Proof.* Take an irreversible process carrying an isolated system from
-$A$ to $B$; the Clausius inequality applied to the cycle formed by the
-actual process and an arbitrary reversible return path $B -> A$ gives
-$
-  integral_A^B (delta Q) / T + integral_B^A (delta Q_("rev")) / T <= 0,
-$
-and the first integral vanishes ($delta Q = 0$ in isolation), so
-$Delta S = S_B - S_A >= 0$, strict for the irreversible process. For a
-non-isolated system, enlarge the boundary: system plus environment is
-isolated, and their entropy sum obeys the same inequality. ⊙
+#proof[
+  Take an irreversible process carrying an isolated system from
+  $A$ to $B$; the Clausius inequality applied to the cycle formed by the
+  actual process and an arbitrary reversible return path $B -> A$ gives
+  $
+    integral_A^B (delta Q) / T + integral_B^A (delta Q_("rev")) / T <= 0,
+  $
+  and the first integral vanishes ($delta Q = 0$ in isolation), so
+  $Delta S = S_B - S_A >= 0$, strict for the irreversible process. For a
+  non-isolated system, enlarge the boundary: system plus environment is
+  isolated, and their entropy sum obeys the same inequality.
+]
 
 #example[
   (Free expansion, explained.) An ideal gas doubling its volume in
   adiabatic free expansion (§2.6: $W = Q = 0$, $Delta U = 0$, hence
   $T$ unchanged) has entropy change — computed on the reversible
-  isothermal path between the same endpintegral.conts —
+  isothermal path between the same endpoints —
   $
     Delta S = n R ln(V_2 / V_1) = n R ln 2 > 0.
   $
@@ -1338,18 +1372,20 @@ by the second law itself, independent of any material.
   for every reversible engine between the reservoirs.
 ] <thm:absolute-scale>
 
-*Derivation.* Let two reversible engines $R_1$ (between $theta_1,
-theta_2$) and $R_2$ (between $theta_2, theta_3$) be coupled, with
-$R_2$ consuming exactly what $R_1$ rejects at $theta_2$. The composite
-is a reversible engine between $theta_1$ and $theta_3$, so
-$
-  f(theta_1, theta_3) = f(theta_1, theta_2) dot f(theta_2, theta_3).
-$
-With $theta_3$ fixed as a reference, the left side is independent of
-$theta_2$; hence $f(theta_1, theta_2)$ must factor as
-$phi(theta_1) / phi(theta_2)$ for a single function $phi$. Choosing
-$T := c dot phi(theta)$ (constant fixed by convention) gives
-$Q_h / Q_c = T_h / T_c$. ⊙
+#proof[
+  Let two reversible engines $R_1$ (between $theta_1,
+  theta_2$) and $R_2$ (between $theta_2, theta_3$) be coupled, with
+  $R_2$ consuming exactly what $R_1$ rejects at $theta_2$. The composite
+  is a reversible engine between $theta_1$ and $theta_3$, so
+  $
+    f(theta_1, theta_3) = f(theta_1, theta_2) dot f(theta_2, theta_3).
+  $
+  With $theta_3$ fixed as a reference, the left side is independent of
+  $theta_2$; hence $f(theta_1, theta_2)$ must factor as
+  $phi(theta_1) / phi(theta_2)$ for a single function $phi$. Choosing
+  $T := c dot phi(theta)$ (constant fixed by convention) gives
+  $Q_h / Q_c = T_h / T_c$.
+]
 
 The reference constant is fixed by assigning $T = 273.16 "K"$ to the
 triple point of water — the same convention as the gas scale.
@@ -1360,17 +1396,19 @@ triple point of water — the same convention as the gas scale.
   #link(<prop:ideal-gas-scale>)[§2.2].
 ] <prop:scales-equivalence>
 
-*Proof.* Compute the Carnot cycle of #link(<def:carnot-cycle>)[§3.2]
-using the *gas* scale $theta$ throughout the equation of state
-$p V = n R theta$: the derivation of
-#link(<prop:carnot-efficiency>)[the Carnot efficiency] never used any
-property of $T$ beyond the equation of state, and it produced
-$
-  Q_h / Q_c = theta_h / theta_c.
-$
-Thus the gas scale satisfies the defining relation of the absolute
-scale; both scales fix the same value at the triple point of water, so
-they are identical. ⊙
+#proof[
+  Compute the Carnot cycle of #link(<def:carnot-cycle>)[§3.2]
+  using the *gas* scale $theta$ throughout the equation of state
+  $p V = n R theta$: the derivation of
+  #link(<prop:carnot-efficiency>)[the Carnot efficiency] never used any
+  property of $T$ beyond the equation of state, and it produced
+  $
+    Q_h / Q_c = theta_h / theta_c.
+  $
+  Thus the gas scale satisfies the defining relation of the absolute
+  scale; both scales fix the same value at the triple point of water, so
+  they are identical.
+]
 
 This closes the account opened in #link(<note:kelvin-scale>)[§2.2]:
 temperature now rests on the second law alone, and every thermometer —
@@ -1406,14 +1444,16 @@ gas, resistance, or otherwise — measures the same $T$.
   with equality exactly for reversible (Carnot) devices.
 ] <prop:carnot-bounds>
 
-*Derivation.* The efficiency bound is
-#link(<thm:carnot-theorem>)[Carnot's theorem] itself. For a
-refrigerator, run the same accounting in reverse: a refrigerator with
-$"COP"_R > T_c / (T_h - T_c)$, driven by a Carnot engine of efficiency
-$eta_C$ fed by the same heat $Q_h' = W$, would form a composite
-transferring heat from cold to hot with no other effect — violating
-#link(<thm:clausius-statement>)[the Clausius statement]. The heat-pump
-bound follows from $"COP"_"HP" = "COP"_R + 1$. ⊙
+#proof[
+  The efficiency bound is
+  #link(<thm:carnot-theorem>)[Carnot's theorem] itself. For a
+  refrigerator, run the same accounting in reverse: a refrigerator with
+  $"COP"_R > T_c / (T_h - T_c)$, driven by a Carnot engine of efficiency
+  $eta_C$ fed by the same heat $Q_h' = W$, would form a composite
+  transferring heat from cold to hot with no other effect — violating
+  #link(<thm:clausius-statement>)[the Clausius statement]. The heat-pump
+  bound follows from $"COP"_"HP" = "COP"_R + 1$.
+]
 
 #example[
   (Numerical work-out.) A Carnot engine operates between $T_h = 600
@@ -1460,25 +1500,27 @@ at low temperature.
   $
 ] <thm:nernst-heat-theorem>
 
-*Proof.* Between two states connected by an isothermal step at $T$,
-compute the entropy difference by integrating along any reversible
-paths joining each state to a common low-temperature reference:
-$
-  Delta S(T)
-  = Delta S(T_0) + integral_(T_0)^T (C_A(T') - C_B(T')) / T' dif T'.
-$
-Now let $T_0 -> 0$. If both heat capacities remained finite as $T' ->
-0$, the integral would diverge logarithmically and $|Delta S| -> oo$ —
-absurd, since entropy differences between equilibrium states are
-finite. Consistency demands the integral converge as the lower limit
-recedes, which for arbitrary pairs of states is possible only if
-$
-  lim_(T -> 0) [C_A(T) - C_B(T)] = 0
-  quad "and, in the strengthened form below," quad
-  lim_(T -> 0) C(T) = 0.
-$
-Under these conditions every isothermal entropy change vanishes at the
-origin: all condensed systems share one entropy at $T = 0$. ⊙
+#proof[
+  Between two states connected by an isothermal step at $T$,
+  compute the entropy difference by integrating along any reversible
+  paths joining each state to a common low-temperature reference:
+  $
+    Delta S(T)
+    = Delta S(T_0) + integral_(T_0)^T (C_A(T') - C_B(T')) / T' dif T'.
+  $
+  Now let $T_0 -> 0$. If both heat capacities remained finite as $T' ->
+  0$, the integral would diverge logarithmically and $|Delta S| -> oo$ —
+  absurd, since entropy differences between equilibrium states are
+  finite. Consistency demands the integral converge as the lower limit
+  recedes, which for arbitrary pairs of states is possible only if
+  $
+    lim_(T -> 0) [C_A(T) - C_B(T)] = 0
+    quad "and, in the strengthened form below," quad
+    lim_(T -> 0) C(T) = 0.
+  $
+  Under these conditions every isothermal entropy change vanishes at the
+  origin: all condensed systems share one entropy at $T = 0$.
+]
 
 #property(name: "Heat Capacities Vanish at Zero Temperature")[
   The Nernst theorem implies that the heat capacities of condensed
@@ -1567,21 +1609,23 @@ absolute entropy.
   $
 ] <thm:unattainability>
 
-*Proof sketch.* Any cooling operation reduces to two ingredients on the
-$T$-$S$ diagram: an *isothermal* leg (in contact with a colder stage,
-reducing entropy) and an *adiabatic* leg (reducing temperature at fixed
-entropy). By #link(<def:absolute-entropy>)[the absolute entropy
-  formula], a system with any fixed entropy $S > S(0)$ sits at $T > 0$:
-$
-  S - S(0) = integral_0^T (C_p(T')) / T' dif T' > 0
-  quad "for" T > 0 quad ("since" C_p > 0).
-$
-An adiabatic leg preserves $S$, so to land on $T = 0$ it must preserve
-$S = S(0)$ — but every reachable state above zero temperature has
-$S > S(0)$, and the entropy can be driven down only by isothermal
-steps whose endpoints still obey $S(T) > S(0)$. Each cycle approaches
-$T = 0$ asymptotically without reaching it; infinitely many steps
-would be required. ⊙
+#proof(name: "sketch")[
+  Any cooling operation reduces to two ingredients on the
+  $T$-$S$ diagram: an *isothermal* leg (in contact with a colder stage,
+  reducing entropy) and an *adiabatic* leg (reducing temperature at fixed
+  entropy). By #link(<def:absolute-entropy>)[the absolute entropy
+    formula], a system with any fixed entropy $S > S(0)$ sits at $T > 0$:
+  $
+    S - S(0) = integral_0^T (C_p(T')) / T' dif T' > 0
+    quad "for" T > 0 quad ("since" C_p > 0).
+  $
+  An adiabatic leg preserves $S$, so to land on $T = 0$ it must preserve
+  $S = S(0)$ — but every reachable state above zero temperature has
+  $S > S(0)$, and the entropy can be driven down only by isothermal
+  steps whose endpoints still obey $S(T) > S(0)$. Each cycle approaches
+  $T = 0$ asymptotically without reaching it; infinitely many steps
+  would be required.
+]
 
 The argument is the standard heuristic one — it assumes cooling cycles
 built from isothermal and adiabatic legs and $C_p > 0$ throughout —
@@ -1753,13 +1797,15 @@ more of the system at high energies than at moderate ones.
   negative temperatures lie *above* $+oo$ on the hotness scale.
 ] <prop:hotter-than-infinity>
 
-*Proof.* When the negative-temperature system loses a small energy
-$delta E > 0$ to the positive-temperature one, its entropy change is
-$(partial S_1 / partial E)(-delta E) = -delta E / T_1 > 0$ (since
-$T_1 < 0$), while the receiver gains $delta E / T_2 > 0$. The total
-entropy increases — the process runs forward by
-#link(<thm:entropy-increase>)[the entropy increase principle]. The
-reverse flow would decrease total entropy and does not occur. ⊙
+#proof[
+  When the negative-temperature system loses a small energy
+  $delta E > 0$ to the positive-temperature one, its entropy change is
+  $(partial S_1 / partial E)(-delta E) = -delta E / T_1 > 0$ (since
+  $T_1 < 0$), while the receiver gains $delta E / T_2 > 0$. The total
+  entropy increases — the process runs forward by
+  #link(<thm:entropy-increase>)[the entropy increase principle]. The
+  reverse flow would decrease total entropy and does not occur.
+]
 
 #caution[
   (Existence conditions.) Negative temperatures require three things
@@ -1835,15 +1881,17 @@ the covariant formulation that closes Part I.
   density (including rest energy).
 ] <prop:ultrarelativistic-pressure>
 
-*Derivation.* Particles striking a wall element $dif A$ in time $dif t$
-transfer normal momentum $p cos theta$; the flux of particles at angle
-$theta$ carries the factor $v cos theta$, so integrating over the
-isotropic solid angle gives $p = n < p v cos^2 theta >$ averaged over
-directions, i.e. $p = n < p v > / 3$ since $< cos^2 theta > = 1/3$.
-This is the relativistic completion of
-#link(<prop:kinetic-pressure>)[the kinetic-theory derivation]. Now
-insert the dispersion: non-relativistically, $p v = p^2 / m = 2
-E_"kin"$, while ultra-relativistically, $p v = p c = E$. ⊙
+#proof[
+  Particles striking a wall element $dif A$ in time $dif t$
+  transfer normal momentum $p cos theta$; the flux of particles at angle
+  $theta$ carries the factor $v cos theta$, so integrating over the
+  isotropic solid angle gives $p = n < p v cos^2 theta >$ averaged over
+  directions, i.e. $p = n < p v > / 3$ since $< cos^2 theta > = 1/3$.
+  This is the relativistic completion of
+  #link(<prop:kinetic-pressure>)[the kinetic-theory derivation]. Now
+  insert the dispersion: non-relativistically, $p v = p^2 / m = 2
+  E_"kin"$, while ultra-relativistically, $p v = p c = E$.
+]
 
 The pressure-energy ratio $p = u / 3$ — one half of the
 non-relativistic value — is the fingerprint of the ultra-relativistic
@@ -1901,13 +1949,15 @@ Maxwell momentum distribution underlying
   the comoving temperatures agree.
 ] <prop:temperature-invariance>
 
-*Derivation.* The zeroth law (#link(<def:zeroth-law>)[Chapter 2])
-defines temperature through the transitivity of mutual equilibrium,
-and the principle of relativity demands that equilibrium be an
-observer-independent state of affairs — whether two bodies exchange
-net heat cannot depend on who watches. The only frame-independent
-temperature attached to each body is its comoving one; equilibrium
-therefore equates comoving temperatures. ⊙
+#proof[
+  The zeroth law (#link(<def:zeroth-law>)[Chapter 2])
+  defines temperature through the transitivity of mutual equilibrium,
+  and the principle of relativity demands that equilibrium be an
+  observer-independent state of affairs — whether two bodies exchange
+  net heat cannot depend on who watches. The only frame-independent
+  temperature attached to each body is its comoving one; equilibrium
+  therefore equates comoving temperatures.
+]
 
 #note[
   (Does a moving body run hot?) If one insists on asking for the
@@ -1946,9 +1996,11 @@ to keep fixed.
   $
 ] <prop:radiation-pressure>
 
-*Derivation.* Directly the ultra-relativistic limit of
-#link(<prop:ultrarelativistic-pressure>)[the relativistic pressure
-  formula], with $E = p c$ holding exactly for every photon. ⊙
+#proof[
+  Directly the ultra-relativistic limit of
+  #link(<prop:ultrarelativistic-pressure>)[the relativistic pressure
+    formula], with $E = p c$ holding exactly for every photon.
+]
 
 #theorem(name: "Stefan-Boltzmann Law")[
   The energy density of equilibrium radiation is a universal function
@@ -1960,37 +2012,39 @@ to keep fixed.
   is $j = sigma T^4$ with $sigma = a c / 4$.
 ] <thm:stefan-boltzmann>
 
-*Derivation.* (Boltzmann 1884, purely thermodynamic.) Let radiation be
-the working substance of a reversible engine between $T$ and
-$T - dif T$. Its state is fixed by $T$ and $V$; energy $U = u(T) V$,
-pressure $p = u / 3$.
+#proof(name: "Boltzmann 1884, purely thermodynamic")[
+  Let radiation be
+  the working substance of a reversible engine between $T$ and
+  $T - dif T$. Its state is fixed by $T$ and $V$; energy $U = u(T) V$,
+  pressure $p = u / 3$.
 
-- *Isothermal expansion* at $T$, volume $dif V$: heat absorbed
-  $
-    delta Q = dif U + p dif V = u dif V + u/3 dif V = 4/3 u dif V.
-  $
-- *Quasi-static adiabats*: $dif S = 0$ gives, from $dif Q = 0$,
-  $V dif u + 4/3 u dif V = 0$, i.e. $T V^(1/3) = "const"$ (using
-  $p = u/3$ and the final result $u prop T^4$ consistency —
-  equivalently derived directly from $dif S = (V/T) dif u + (4u \/ 3T) dif V = 0$).
-- *Isothermal compression* at $T - dif T$ releases
-  $delta Q' = 4/3 u(T - dif T) dif V'$; the adiabatic relations give
-  $dif V' = dif V dot (T / (T - dif T))^3$.
+  - *Isothermal expansion* at $T$, volume $dif V$: heat absorbed
+    $
+      delta Q = dif U + p dif V = u dif V + u/3 dif V = 4/3 u dif V.
+    $
+  - *Quasi-static adiabats*: $dif S = 0$ gives, from $dif Q = 0$,
+    $V dif u + 4/3 u dif V = 0$, i.e. $T V^(1/3) = "const"$ (using
+    $p = u/3$ and the final result $u prop T^4$ consistency —
+    equivalently derived directly from $dif S = (V/T) dif u + (4u \/ 3T) dif V = 0$).
+  - *Isothermal compression* at $T - dif T$ releases
+    $delta Q' = 4/3 u(T - dif T) dif V'$; the adiabatic relations give
+    $dif V' = dif V dot (T / (T - dif T))^3$.
 
-Carnot's efficiency
-(#link(<prop:carnot-efficiency>)[Chapter 3]) demands
-$delta Q' / delta Q = (T - dif T) / T$:
-$
-  (u(T - dif T)) / u(T) dot (T / (T - dif T))^3 = (T - dif T) / T,
-$
-so
-$
-  u(T - dif T) = u(T) (1 - (dif T)/T)^4
-  quad ==> quad (dif u)/u = 4 (dif T)/T
-  quad ==> quad u = a T^4.
-$
-The exponent 4 is not put in by hand — it is forced by the radiation
-pressure $p = u/3$, i.e. by the ultra-relativistic dispersion. ⊙
+  Carnot's efficiency
+  (#link(<prop:carnot-efficiency>)[Chapter 3]) demands
+  $delta Q' / delta Q = (T - dif T) / T$:
+  $
+    (u(T - dif T)) / u(T) dot (T / (T - dif T))^3 = (T - dif T) / T,
+  $
+  so
+  $
+    u(T - dif T) = u(T) (1 - (dif T)/T)^4
+    quad ==> quad (dif u)/u = 4 (dif T)/T
+    quad ==> quad u = a T^4.
+  $
+  The exponent 4 is not put in by hand — it is forced by the radiation
+  pressure $p = u/3$, i.e. by the ultra-relativistic dispersion.
+]
 
 The full spectral distribution (Planck's law) and the numerical value
 of $a$ require quantum statistics — the ultraviolet catastrophe that

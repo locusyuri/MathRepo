@@ -1447,6 +1447,526 @@ next chapter, and it unlocks the construction of quotient groups
 promised back in #link(<def:quotient-set>)[Chapter 1].
 
 // ==========================================================================
+// Chapter 4: 正规子群与商群
+// ==========================================================================
+
+= Normal Subgroups and Quotient Groups // 正规子群与商群
+
+Chapter 3 ended on a fault line. In #link(<ex:s3-cosets>)[§3.2] the
+subgroup $H = ⟨(1 2 3)⟩$ of $S_3$ satisfied $a H = H a$ for every $a
+in S_3$, while $K = ⟨(1 2)⟩$ did not: $(1 3) K != K (1 3)$. Both
+subgroups tile $S_3$ into equal-sized cosets — Lagrange's counting is
+blind to the difference — but only the first behaves as if its cosets
+were "transparent" to multiplication. This chapter isolates that
+behavior under the name *normal subgroup* (§4.1), shows it is exactly
+the condition that makes coset multiplication well-defined — redeeming
+the compatibility check promised in
+#link(<caution:well-defined-operations>)[Chapter 1] — and constructs
+the *quotient group* $G \/ N$ (§4.2). The natural projection $pi: G
+-> G \/ N$ is the universal homomorphism from $G$, and it sets up
+the homomorphism theorems of Chapter 5. The chapter closes (§4.3)
+with *simple groups*: groups with no non-trivial normal subgroups,
+hence no non-trivial quotients — the irreducible building blocks of
+finite group theory.
+
+== Normal Subgroups // 正规子群
+
+#definition(name: "Normal Subgroup")[
+  Let $G$ be a group and $N <= G$ a subgroup. $N$ is *normal* in
+  $G$, written $N ⊲ G$, if
+  $
+    a N = N a quad "for all" a in G,
+  $
+  where $a N = {a n | n in N}$ and $N a = {n a | n in N}$ are the
+  left and right cosets of #link(<def:coset>)[§3.2]. If no
+  ambient group needs to be named, $N$ is simply called *normal*.
+] <def:normal-subgroup>
+
+Two remarks are in order. First, normality is *relative to $G$*: the
+same subgroup may be normal in one ambient group and not in another.
+Second, $a N = N a$ is *not* the assertion that $a n = n a$ for every
+$n in N$ — only that the two *sets* coincide; commutativity of
+elements is far stronger, and is the special property of abelian
+groups (which we exploit below). The slogan: normal subgroups are
+those for which left and right cosets are the *same partition* of $G$,
+not just same-sized partitions.
+
+#theorem(name: "Equivalent Characterizations of Normality")[
+  Let $N <= G$. The following are equivalent:
+  + $a N = N a$ for every $a in G$.
+  + $a N a^(-1) subset.eq N$ for every $a in G$.
+  + $a n a^(-1) in N$ for every $a in G$, $n in N$.
+  + $N$ is invariant under every inner automorphism $phi_a(x) = a x
+    a^(-1)$ of $G$.
+] <thm:normal-equivalents>
+
+#proof[
+  $(1) arrow.r.double (2)$: from $a N = N a$, multiply on the right
+  by $a^(-1)$ to obtain $a N a^(-1) = N$, which in particular gives
+  $a N a^(-1) subset.eq N$.
+
+  $(2) arrow.r.double (3)$: element-wise specialization: $a n
+  a^(-1) in a N a^(-1) subset.eq N$.
+
+  $(3) arrow.r.double (4)$: condition (3) says precisely $phi_a(N)
+  subset.eq N$; applying it to $a^(-1)$ gives $phi_(a^(-1))(N)
+  subset.eq N$, which (relabeling $n$ as $a^(-1) n a$) yields the
+  reverse inclusion $N subset.eq phi_a(N)$.
+
+  $(4) arrow.r.double (1)$: invariance under $phi_a$ means $a N
+  a^(-1) = N$, hence $a N = N a$ by right multiplication.
+]
+
+The third reformulation — closure under conjugation — is the working
+test for normality: to verify $N ⊲ G$ one checks that $a n a^(-1) in
+N$ for arbitrary $a$ and $n$. The fourth — invariance under inner
+automorphisms — is the structural one: normal subgroups are precisely
+those stable under the natural "change of frame" of the group.
+
+#property(name: "Basic Properties of Normal Subgroups")[
+  Let $G$ be a group.
+  + Every subgroup of an abelian group is normal. The trivial
+    subgroup $\\{e\\}$ and $G$ itself are normal in $G$.
+  + If $N, M ⊲ G$, then $N inter M$ and the product $N M = {n m | n
+    in N, m in M}$ are normal in $G$.
+  + If $[G : N] = 2$, then $N ⊲ G$. In particular $A_n ⊲ S_n$ for
+    $n >= 2$ (since $abs(A_n) = n! \/ 2$ by
+    #link(<def:alternating-group>)[§3.3]).
+  + The union of normal subgroups need not be normal — indeed, need
+    not be a subgroup at all.
+] <prop:normal-properties>
+
+#proof[
+  (1) Abelian: $a N = {a n} = {n a} = N a$ for every $a$, so every
+  subgroup qualifies. The two trivial subgroups are visibly invariant
+  under conjugation.
+
+  (2) For the intersection: $a (N inter M) a^(-1) = a N a^(-1) inter
+  a M a^(-1) = N inter M$. For the product: $a (n m) a^(-1) = (a n
+  a^(-1))(a m a^(-1))$, a product of one element of $N$ and one of
+  $M$, hence in $N M$.
+
+  (3) When $[G : N] = 2$ there are exactly two left cosets — $N$ and
+  $a N$ for any $a$ outside $N$ — and exactly two right cosets — $N$
+  and $N a$. The set of elements outside $N$ is therefore equal to
+  both $a N$ and $N a$, giving $a N = N a$ for every $a$ outside $N$
+  (and trivially for $a in N$).
+
+  (4) is the business of #link(<ex:non-normal>)[the example below].
+]
+
+#example[
+  (A gallery of normal subgroups.)
+  + In #link(<ex:a3-alternating>)[§3.3] we observed that $A_3 = {e,
+    (1 2 3), (1 3 2)}$ has index $2$ in $S_3$, so $A_3 ⊲ S_3$ by
+    #link(<prop:normal-properties>)[property (3)]. The same argument
+    lifts: $A_n ⊲ S_n$ for every $n >= 2$.
+  + The *special linear group* $"SL"_n(F)$ of
+    #link(<def:general-linear-group>)[§2.2] is normal in
+    $"GL"_n(F)$: it is the kernel of the determinant
+    $
+      det: "GL"_n(F) -> F^times,
+    $
+    a first taste of the general principle — *kernels of
+    homomorphisms are normal* — systematised in
+    #link(<note:kernel-preliminary>)[Chapter 5].
+  + The *center* $Z(G) = {z in G | z g = g z "for all" g in G}$ is
+    normal: $a z a^(-1) = z$ for $z in Z(G)$, so $a Z(G) a^(-1) =
+    Z(G)$.
+  + In an abelian group every subgroup is normal: $n bb(Z) ⊲ bb(Z)$
+    for every $n >= 1$ — the foundation of
+    #link(<ex:residue-classes>)[Chapter 1].
+] <ex:normal-examples>
+
+#example(name: "A Subgroup That Is Not Normal")[
+  Recall $K = ⟨(1 2)⟩ = {e, (1 2)} <= S_3$ from
+  #link(<ex:s3-cosets>)[§3.2]. The left coset
+  $
+    (1 3) K = {(1 3), (1 2 3)},
+  $
+  while the right coset is
+  $
+    K (1 3) = {(1 3), (1 3 2)}.
+  $
+  Since $(1 2 3) != (1 3 2)$, $(1 3) K != K (1 3)$; condition (1) of
+  #link(<thm:normal-equivalents>)[the equivalent characterizations]
+  fails, so $K$ is not normal in $S_3$. This is the kind of
+  "blindness" Lagrange's theorem cannot see: $abs(S_3) = 3 dot
+  abs(K)$ either way.
+] <ex:non-normal>
+
+#property(name: "Normal Closure")[
+  Let $S subset.eq G$ be any subset. The *normal closure* of $S$ in
+  $G$, written $⟨⟨S⟩⟩_G$, is the smallest normal subgroup of $G$
+  containing $S$ — equivalently, the intersection of all normal
+  subgroups of $G$ that contain $S$. Concretely,
+  $
+    ⟨⟨S⟩⟩_G = ⟨g s g^(-1) : s in S, g in G⟩,
+  $
+  the subgroup generated by the entire conjugacy class of $S$ in $G$.
+  It is normal because conjugating a generator by $a in G$ permutes
+  the generators: $a (g s g^(-1)) a^(-1) = (a g) s (a g)^(-1)$, again
+  a generator.
+] <prop:normal-closure>
+
+Normal closure is the construction of choice when one needs *the*
+smallest normal subgroup containing a given set — it will return, for
+instance, when we ask which normal subgroup a generating set of $G$
+produces (and so, indirectly, in
+#link(<note:kernel-preliminary>)[Chapter 5], when we examine kernels
+of homomorphisms from $G$).
+
+== Quotient Groups // 商群
+
+Chapter 1 closed §1.2 with a warning, enshrined in
+#link(<caution:well-defined-operations>)[a caution]: an operation on
+the equivalence classes of a quotient set descends cleanly only when
+the underlying equivalence relation is *compatible* with the
+operation. The congruence relation $a tilde b "iff" a - b in n bb(Z)$
+satisfied this for addition and multiplication, and the residue-class
+arithmetic of #link(<ex:residue-classes>)[Chapter 1] descended to
+$bb(Z)_n$. The same compatibility check, run on the coset relation
+"$a tilde b "iff" a^(-1) b in N$" of
+#link(<lem:coset-equivalent>)[§3.2], is the substance of this
+section. The verdict is crisp: the descent succeeds *exactly* when
+$N$ is normal.
+
+#lemma(name: "Coset Multiplication Is Well-Defined iff Normal")[
+  Let $N <= G$. The operation on left cosets
+  $
+    (a N) dot (b N) = (a b) N
+  $
+  is well-defined — that is, $a N = a' N$ and $b N = b' N$ imply
+  $(a b) N = (a' b') N$ — if and only if $N ⊲ G$.
+] <lem:coset-multiplication-well-defined>
+
+#proof[
+  $(arrow.r.double)$ Suppose $N ⊲ G$; by
+  #link(<thm:normal-equivalents>)[criterion (3)] we may use $a n
+  a^(-1) in N$ freely. Take representatives $a' = a n_1$ and $b' = b
+  n_2$ with $n_1, n_2 in N$. By normality ($N b = b N$), there is
+  $n_3 in N$ with $n_1 b = b n_3$. Then
+  $
+    a' b' = a n_1 b n_2 = a b n_3 n_2 in (a b) N,
+  $
+  giving $(a' b') N = (a b) N$ as required.
+
+  $(arrow.l.double)$ Suppose the operation is well-defined. Fix
+  $a in G$ and $n in N$. Since $n in N$, the cosets $n N$ and $e N$
+  coincide (both equal $N$); well-definedness then forces
+  $
+    (n N) dot (a^(-1) N) = (e N) dot (a^(-1) N),
+  $
+  i.e. $(n a^(-1)) N = a^(-1) N$. By the coset-equality criterion
+  #link(<lem:coset-equivalent>)[of §3.2], this is
+  $
+    (a^(-1))^(-1) (n a^(-1)) = a n a^(-1) in N,
+  $
+  which is normality.
+]
+
+The lemma fulfills the promise of
+#link(<caution:well-defined-operations>)[Chapter 1] for groups: the
+"compatibility check" is precisely the conjugation-closure condition
+of #link(<thm:normal-equivalents>)[§4.1]. With well-definedness in
+hand, the rest is a verification.
+
+#theorem(name: "Quotient Group")[
+  Let $N ⊲ G$. The set $G \/ N$ of left cosets of $N$ in $G$,
+  equipped with the operation $(a N) dot (b N) = (a b) N$, is a
+  group. The identity is $e N = N$, the inverse of $a N$ is
+  $a^(-1) N$, and the *natural projection*
+  $
+    pi: G -> G \/ N, quad pi(a) = a N
+  $
+  is a surjective homomorphism with $"ker" pi = N$.
+] <thm:quotient-group>
+
+#proof[
+  Closure and well-definedness are the lemma. Associativity is
+  inherited from $G$:
+  $
+    ((a N) dot (b N)) dot c N = (a b) N dot c N = (a b c) N = a N
+    dot (b c) N = a N dot ((b N) dot (c N)).
+  $
+  The coset $N = e N$ is the identity: $N dot a N = (e a) N = a N$
+  and $a N dot N = (a e) N = a N$. The inverse of $a N$ is
+  $a^(-1) N$ since $a N dot a^(-1) N = (a a^(-1)) N = N$, and the
+  reverse product is the same. Thus $G \/ N$ is a group.
+
+  For the projection: $pi(a b) = (a b) N = (a N) dot (b N) = pi(a)
+  pi(b)$, so $pi$ is a homomorphism; it is surjective by
+  construction, and
+  $
+    "ker" pi = {a in G | a N = N} = N
+  $
+  by the coset-equality criterion.
+]
+
+#figure(
+  image("img/quotient-projection.svg", width: 80%),
+  caption: [The quotient map collapses each coset of $N$ to a
+    single point. *Left:* the group $G$ (here $S_3$, six
+    permutations) partitioned by $N = A_3$ into two cosets — $N$
+    itself (highlighted) and the reflected coset $(1 2) N$.
+    *Right:* the quotient $G \/ N$, a two-element group whose
+    identity is the coset $N$ and whose other element is $(1 2) N$.
+    The natural projection $pi: G -> G \/ N$ sends every element of
+    a coset to the corresponding point; the multiplication of
+    cosets, $(a N)(b N) = (a b) N$, is exactly multiplication in
+    $G \/ N$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:quotient-projection>
+
+#property(name: "Order of the Quotient")[
+  For a finite group $G$ and $N ⊲ G$,
+  $
+    abs(G \/ N) = [G : N] = abs(G) \/ abs(N).
+  $
+  In particular $abs(N)$ divides $abs(G)$ (as
+  #link(<thm:lagrange>)[Lagrange] already guaranteed) and
+  $abs(G \/ N)$ divides $abs(G)$.
+] <prop:quotient-order>
+
+#proof[
+  The elements of $G \/ N$ are the left cosets of $N$; their count is
+  $[G : N]$ by #link(<def:index>)[definition], and
+  #link(<thm:lagrange>)[Lagrange] gives $abs(G) = [G : N] dot
+  abs(N)$.
+]
+
+#example[
+  (Residue classes as a quotient.) For $G = (bb(Z), +)$ and $N = n
+  bb(Z)$ (which is normal since $bb(Z)$ is abelian), the quotient
+  $G \/ N$ is precisely $bb(Z) \/ n bb(Z) = bb(Z)_n$ of
+  #link(<ex:residue-classes>)[Chapter 1], now revealed as a genuine
+  quotient group. The coset $a + N$ is the residue class $[a]$, and
+  the addition $([a]) + ([b]) = ([a + b])$ is exactly the coset
+  multiplication of #link(<thm:quotient-group>)[the theorem]. The
+  natural projection $pi: bb(Z) -> bb(Z)_n$, $pi(a) = [a]$, is the
+  classical "mod $n$" map.
+] <ex:quotient-zn>
+
+#example[
+  (Parity as a quotient.) The subgroup $A_3 ⊲ S_3$ has index $2$
+  (#link(<ex:a3-alternating>)[§3.3]), so $S_3 \/ A_3$ is a group of
+  order $2$, hence isomorphic to $bb(Z)_2$ by
+  #link(<ex:low-order-classification>)[the order-$2$ case]. The two
+  cosets — $A_3$ (the even permutations) and $(1 2) A_3$ (the odd
+  ones) — multiply as one would expect: even$dot$even $=$ even,
+  odd$dot$odd $=$ even, mixed $=$ odd. In other words, the sign map
+  $"sign": S_3 -> {plus.minus 1} ~= bb(Z)_2$ of
+  #link(<def:alternating-group>)[§3.3] *is* (up to isomorphism) the
+  natural projection $S_3 -> S_3 \/ A_3$. The same pattern holds in
+  every degree: $S_n \/ A_n ~= bb(Z)_2$ for $n >= 2$.
+] <ex:s3-quotient>
+
+#example[
+  (Orientation as a quotient.) Let $D_n$ be the dihedral group of
+  #link(<def:dihedral-group>)[§2.2] — symmetries of a regular
+  $n$-gon — and let $r$ denote the rotation by $2 pi \/ n$. The
+  subgroup $⟨r⟩$ of rotations is normal in $D_n$: it has index $2$
+  (the rotations tile the group with the reflections), so
+  #link(<prop:normal-properties>)[property (3)] applies. The
+  quotient
+  $
+    D_n \/ ⟨r⟩ ~= bb(Z)_2
+  $
+  captures the single bit "rotation or reflection" — the
+  orientation of a symmetry. Multiplication in the quotient is
+  exactly the orientation rule: two rotations compose to a rotation,
+  two reflections to a rotation, mixed to a reflection. The quotient
+  thus *forgets* the angle of rotation and retains only the
+  orientation type.
+] <ex:dihedral-quotient>
+
+#note[
+  (The universal property, a first taste.) The natural projection
+  $pi: G -> G \/ N$ is more than a homomorphism: it is the
+  *universal* homomorphism out of $G$ whose kernel contains $N$.
+  Precisely, any homomorphism $f: G -> H$ with $N subset.eq "ker" f$
+  factors uniquely through $G \/ N$ — that is, there is a unique
+  homomorphism $f^~: G \/ N -> H$ with $f = f^~ compose pi$. This
+  factorization, the content of the *First Isomorphism Theorem*, is
+  the subject of #link(<note:kernel-preliminary>)[Chapter 5]; it
+  underlies the homomorphism-theoretic reading of normal subgroups
+  as "kernels" and of quotient groups as "images, up to isomorphism,
+  of homomorphisms from $G$."
+] <note:natural-projection-universal>
+
+== Simple Groups // 单群
+
+Normal subgroups, we have just seen, are the price of admission for
+a quotient: $G \/ N$ exists only when $N ⊲ G$, and the resulting
+quotient measures how much of $G$'s structure $N$ collapses. At one
+extreme sit the trivial cases $N = \\{e\\}$ (quotient $G \/ \\{e\\} ~=
+G$, no collapse) and $N = G$ (quotient $G \/ G$ is the one-element
+trivial group, total collapse). At the other extreme sit groups
+*with no non-trivial normal subgroups at all* — groups, that is,
+that admit no non-trivial quotient. These are the *simple* groups,
+and they play in group theory the role that primes play in
+arithmetic: the atoms from which, by a yet-undeveloped composition
+process, every finite group is built.
+
+#definition(name: "Simple Group")[
+  A group $G$ is *simple* if its only normal subgroups are the
+  trivial subgroup $\\{e\\}$ and $G$ itself. An abelian simple group
+  is necessarily cyclic of prime order (see
+  #link(<thm:abelian-simple>)[below]); the non-abelian case is the
+  subtler one.
+] <def:simple-group>
+
+#theorem(name: "Abelian Simple Groups")[
+  An abelian group is simple if and only if it is cyclic of prime
+  order.
+] <thm:abelian-simple>
+
+#proof[
+  $(arrow.r.double)$ Let $G = bb(Z)_p$ with $p$ prime, and let $H
+  ⊲ G$. By #link(<thm:lagrange>)[Lagrange], $abs(H)$ divides
+  $abs(G) = p$; the only divisors are $1$ and $p$, so $abs(H) = 1$
+  ($H = \\{e\\}$) or $abs(H) = p$ ($H = G$). Hence $bb(Z)_p$ is
+  simple.
+
+  $(arrow.l.double)$ Let $G$ be a simple abelian group. Abelian
+  implies every subgroup is normal
+  (#link(<prop:normal-properties>)[property (1)]), so simple
+  abelian = "no non-trivial subgroups". Pick any $a in G$ with $a
+  != e$; the cyclic subgroup $⟨a⟩$ is non-trivial, so $⟨a⟩ = G$,
+  i.e. $G$ is cyclic. By
+  #link(<thm:cyclic-classification>)[Chapter 2], $G ~= bb(Z)$ or
+  $G ~= bb(Z)_n$ for some $n$. The infinite case is excluded:
+  $⟨a^2⟩$ would be a non-trivial proper subgroup of $bb(Z)$. So $G
+  ~= bb(Z)_n$ for some $n >= 2$, and
+  #link(<thm:cyclic-subgroups>)[the subgroup structure of cyclic
+  groups] gives one subgroup of each order dividing $n$;
+  simplicity forces $n$ to have no non-trivial divisors, i.e. $n =
+  p$ is prime.
+]
+
+#example[
+  (The atomic abelian groups.) For each prime $p$, the cyclic
+  group $bb(Z)_p$ is the unique abelian simple group of order $p$ —
+  by #link(<thm:cyclic-classification>)[Chapter 2] it is the only
+  cyclic group of that order, and by
+  #link(<thm:abelian-simple>)[the theorem] it is simple. These are
+  the simplest non-trivial groups in existence: $bb(Z)_2$ sits
+  underneath the parity quotient $S_n \/ A_n ~= bb(Z)_2$ of
+  #link(<ex:s3-quotient>)[§4.2], and $bb(Z)_3$ is the rotating part
+  of $D_3 ~= S_3$. They are the building blocks of the structure
+  theorem for finite abelian groups, to which
+  #link(<note:composition-series-preview>)[a later note] returns.
+] <ex:cyclic-prime-simple>
+
+#theorem(name: "Simplicity of $A_n$ for $n >= 5$")[
+  For $n >= 5$, the alternating group $A_n$ is simple.
+] <thm:an-simple>
+
+#proof[
+  The argument is substantial; we record the four-step strategy,
+  with full details to be revisited elsewhere.
+
+  + *3-cycles generate.* For $n >= 3$, every element of $A_n$ is a
+    product of 3-cycles: a $k$-cycle decomposes into $k - 1$
+    transpositions by
+    #link(<prop:transpositions-generate>)[§3.3], and any
+    even-length product of transpositions is, by a case-by-case
+    verification, a product of 3-cycles.
+
+  + *A non-trivial normal $N$ contains a 3-cycle.* This is the
+    technical heart: the structure of $A_n$ for $n >= 5$ is rich
+    enough that conjugating any non-identity element of $N$ by a
+    suitable 3-cycle yields a 3-cycle still inside $N$ (one uses
+    that the support of the conjugating element can be made
+    disjoint from that of the given element when $n$ is large
+    enough).
+
+  + *All 3-cycles are conjugate in $A_n$ for $n >= 5$.* Two
+    3-cycles in $S_n$ are conjugate iff they have the same cycle
+    type, and the conjugating element can be chosen inside $A_n$
+    once $n >= 5$ (one has enough "extra" points to flip the parity
+    of the conjugator if needed). Thus $N$, containing one
+    3-cycle, contains them all.
+
+  + *Conclusion.* By (1) and (3), $N$ contains every 3-cycle and
+    every product of 3-cycles; but these generate $A_n$, so $N =
+    A_n$.
+]
+
+#example[
+  ($A_5$, the smallest non-abelian simple group.) The alternating
+  group $A_5$ has order $5! \/ 2 = 60$ and is, by
+  #link(<thm:an-simple>)[the theorem above], simple. It is the
+  symmetry group of the icosahedron (or, equivalently, of the
+  dodecahedron): the $60$ rotations of a regular icosahedron form a
+  group isomorphic to $A_5$. As the smallest non-abelian simple
+  group, $A_5$ is the first obstruction to "solvability" of a
+  finite group — a notion that returns in Chapter 6 and, ultimately,
+  in Chapter 16 decides which polynomial equations are solvable by
+  radicals.
+] <ex:a5-simple>
+
+#note[
+  (The classification of finite simple groups.) The simple groups
+  are the periodic table of finite group theory, and the
+  classification theorem — completed in $2004$ after a multi-decade,
+  tens-of-thousands-of-pages effort — lists them all:
+  + the cyclic groups $bb(Z)_p$ for $p$ prime (the abelian ones, by
+    #link(<thm:abelian-simple>)[the theorem]);
+  + the alternating groups $A_n$ for $n >= 5$
+    (#link(<thm:an-simple>)[above]);
+  + the finite groups of Lie type (e.g. the projective special
+    linear groups $"PSL"_n(q)$, including $A_5 ~= "PSL"_2(4)$);
+  + $26$ *sporadic* groups, ranging from the Mathieu groups in
+    degrees $12$ and $24$ up to the *Monster* of order about $8
+    times 10^53$.
+
+  Every finite simple group is on this list; and every finite
+  group, by the Jordan–Hölder programme, is a "stack" of such
+  simple factors — see #link(<note:composition-series-preview>)[the
+  following note].
+] <note:classification-finite-simple>
+
+#note[
+  (Composition series, a preview.) A *composition series* for a
+  finite group $G$ is a chain
+  $
+    G = G_0 ⊳ G_1 ⊳ dots ⊳ G_k = \\{e\\}
+  $
+  in which each $G_(i+1)$ is normal in $G_i$ and the quotients $G_i
+  \/ G_(i+1)$ are simple. The *Jordan–Hölder theorem* states that
+  any two composition series for $G$ have the same length and the
+  same multiset of simple factors (up to reordering and
+  isomorphism). In particular, the simple factors are invariants of
+  $G$. This is the precise sense in which simple groups are the
+  "atoms" of finite group theory: every finite group is determined
+  — up to the way its simple factors are stacked — by those factors
+  themselves.
+
+  For abelian $G$, the theorem reduces to the structure theorem
+  for finite abelian groups, the subject of Chapter 7. For
+  non-abelian $G$, the question of which "stackings" of given simple
+  factors actually yield a group is the *extension problem*, which
+  remains intractable in general — the price one pays for replacing
+  "elements" by "simple quotients".
+] <note:composition-series-preview>
+
+Chapter 4 closes. We began with the fault line of
+#link(<ex:s3-cosets>)[§3.2] — the asymmetry between left and right
+cosets — and isolated it under the name *normal subgroup* (§4.1).
+Normality turned out to be exactly the condition that makes coset
+multiplication well-defined, redeeming
+#link(<caution:well-defined-operations>)[the promise of Chapter 1];
+the resulting *quotient group* $G \/ N$ and its natural projection
+$pi$ gave us our first universal homomorphism out of $G$ (§4.2). The
+chapter closed with *simple groups* — the atoms of group theory,
+admitting no further quotient (§4.3). The story so far says *when*
+one can take a quotient; Chapter 5 says *why* one does — every
+homomorphism $f: G -> H$ is, up to isomorphism, the natural
+projection $G -> G \/ "ker" f$.
+
+// ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
 //
