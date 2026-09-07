@@ -1,20 +1,28 @@
 #import "../../TypstTemplate/math-notes.typ": *
 
-#set page(
-  paper: "a4",
-  margin: (x: 2cm, y: 2.5cm),
+#set document(
+  title: "Logique Mathématique", // 数理逻辑
+  author: "Violet",
+  date: datetime.today(),
 )
-#set text(font: ("Times New Roman", "SimSun"), size: 11pt)
-#show heading.where(level: 1): it => pagebreak() + it
 
-#align(center)[
-  *#text(size: 22pt, color-structure)[Mathematical Logic]* \
-  #text(size: 14pt, color-muted)[数理逻辑] \
-  #v(0.5em)
-  #text(size: 11pt, color-muted)[CatMono · 2025]
-]
+#show: apply-style
 
-#v(2em)
+// --------------------------------------------------------------------------
+// Cover + Outline
+// --------------------------------------------------------------------------
+
+#make-cover(
+  "Logique Mathématique", // 数理逻辑
+  "Violet",
+  subtitle: "A notebook for mathematical logic",
+  institute: "Notiz Mathematiques",
+  date: datetime.today().display(),
+  version: "v0.2.0",
+  extra-info: "This is a notebook for mathematical logic.",
+)
+
+#make-outline(depth: 2, title: "Contents")
 
 #part("Propositional Logic")  // 命题逻辑
 
@@ -42,11 +50,10 @@ There are five commonly used propositional connectives.
   is true if and only if $p$ is false.
 ] <def:negation>
 
-#table(
-  columns: (1fr, 1fr),
-  [ $p$ ], [ $¬p$ ],
-  [ $0$ ], [ $1$ ],
-  [ $1$ ], [ $0$ ],
+#tex-table(
+  ([$p$], [$¬p$]),
+  ([$0$], [$1$]),
+  ([$1$], [$0$]),
 )
 
 #definition(name: "Conjunction")[
@@ -54,13 +61,12 @@ There are five commonly used propositional connectives.
   $p ∧ q$, is true if and only if both $p$ and $q$ are true.
 ] <def:conjunction>
 
-#table(
-  columns: (1fr, 1fr, 1fr),
-  [ $p$ ], [ $q$ ], [ $p ∧ q$ ],
-  [ $0$ ], [ $0$ ], [ $0$ ],
-  [ $0$ ], [ $1$ ], [ $0$ ],
-  [ $1$ ], [ $0$ ], [ $0$ ],
-  [ $1$ ], [ $1$ ], [ $1$ ],
+#tex-table(
+  ([$p$], [$q$], [$p ∧ q$]),
+  ([$0$], [$0$], [$0$]),
+  ([$0$], [$1$], [$0$]),
+  ([$1$], [$0$], [$0$]),
+  ([$1$], [$1$], [$1$]),
 )
 
 #definition(name: "Disjunction")[
@@ -68,13 +74,12 @@ There are five commonly used propositional connectives.
   $p ∨ q$, is true if and only if at least one of $p$ or $q$ is true.
 ] <def:disjunction>
 
-#table(
-  columns: (1fr, 1fr, 1fr),
-  [ $p$ ], [ $q$ ], [ $p ∨ q$ ],
-  [ $0$ ], [ $0$ ], [ $0$ ],
-  [ $0$ ], [ $1$ ], [ $1$ ],
-  [ $1$ ], [ $0$ ], [ $1$ ],
-  [ $1$ ], [ $1$ ], [ $1$ ],
+#tex-table(
+  ([$p$], [$q$], [$p ∨ q$]),
+  ([$0$], [$0$], [$0$]),
+  ([$0$], [$1$], [$1$]),
+  ([$1$], [$0$], [$1$]),
+  ([$1$], [$1$], [$1$]),
 )
 
 #definition(name: "Implication")[
@@ -82,13 +87,12 @@ There are five commonly used propositional connectives.
   and only if $p$ is true and $q$ is false.
 ] <def:implication>
 
-#table(
-  columns: (1fr, 1fr, 1fr),
-  [ $p$ ], [ $q$ ], [ $p -> q$ ],
-  [ $0$ ], [ $0$ ], [ $1$ ],
-  [ $0$ ], [ $1$ ], [ $1$ ],
-  [ $1$ ], [ $0$ ], [ $0$ ],
-  [ $1$ ], [ $1$ ], [ $1$ ],
+#tex-table(
+  ([$p$], [$q$], [$p -> q$]),
+  ([$0$], [$0$], [$1$]),
+  ([$0$], [$1$], [$1$]),
+  ([$1$], [$0$], [$0$]),
+  ([$1$], [$1$], [$1$]),
 )
 
 #definition(name: "Biconditional")[
@@ -97,13 +101,12 @@ There are five commonly used propositional connectives.
   truth value.
 ] <def:biconditional>
 
-#table(
-  columns: (1fr, 1fr, 1fr),
-  [ $p$ ], [ $q$ ], [ $p ↔ q$ ],
-  [ $0$ ], [ $0$ ], [ $1$ ],
-  [ $0$ ], [ $1$ ], [ $0$ ],
-  [ $1$ ], [ $0$ ], [ $0$ ],
-  [ $1$ ], [ $1$ ], [ $1$ ],
+#tex-table(
+  ([$p$], [$q$], [$p ↔ q$]),
+  ([$0$], [$0$], [$1$]),
+  ([$0$], [$1$], [$0$]),
+  ([$1$], [$0$], [$0$]),
+  ([$1$], [$1$], [$1$]),
 )
 
 == Formal Language and Well-Formed Formulas  // 形式语言与合式公式
@@ -140,7 +143,7 @@ system whose formulas are constructed from a fixed alphabet.
 #note[
   The set $L(A)$ can be *stratified by depth*: let $L_0(A) = A$, and
   $L_(n+1)(A) = L_n(A) union {(f p_1 dots p_j) | p_i in L_n(A),
-  f in Omega_j}$. Then $L(A) = union.big_(n >= 0) L_n(A)$.
+    f in Omega_j}$. Then $L(A) = union.big_(n >= 0) L_n(A)$.
 ]
 
 #definition(name: "Derived Connectives")[
@@ -155,12 +158,38 @@ system whose formulas are constructed from a fixed alphabet.
 
 == Axiom Systems  // 公理系统
 
+Although axiomatic proof has been used since Euclid's *Elements of
+Geometry*, in propositional logic it dates back to Gottlob Frege's
+1879 *Begriffsschrift*. Frege's system used only implication and
+negation as connectives, with six axioms ($p, q, r in A$):
+
+#tex-table(
+  ([Axiom], [Name]),
+  ([$p -> (q -> p)$], [Law of Affirming the Consequent]),
+  ([$(p -> (q -> r)) -> ((p -> q) -> (p -> r))$], [Law of Distribution of Implication]),
+  ([$(p -> (q -> r)) -> (q -> (p -> r))$], [Law of Permutation]),
+  ([$(p -> q) -> (¬ q -> ¬ p)$], [Law of Transposition]),
+  ([$¬ ¬ p -> p$], [Law of Double Negation Elimination]),
+  ([$p -> ¬ ¬ p$], [Law of Double Negation Introduction]),
+)
+
+These were used by Frege together with modus ponens and a rule of
+substitution (which was used but never precisely stated) to yield a
+complete and consistent axiomatization of classical truth-functional
+propositional logic.
+
+Jan Łukasiewicz showed that, in Frege's system, the third axiom is
+superfluous since it can be derived from the preceding two, and that
+the last three axioms can be replaced by the single sentence
+$(¬ p -> ¬ q) -> (q -> p)$ — written in *Polish notation*
+(prefix notation, which allows expressions without parentheses) as
+$C C N p N q q p$. This simplified version is the *Łukasiewicz axiom
+system*.
+
 #note[
-  Axiomatic proof dates back to Euclid's *Elements*, but in
-  propositional logic it originates from Gottlob Frege's 1879
-  *Begriffsschrift*. Frege's system used only implication and negation,
-  with six axioms and modus ponens. Jan Łukasiewicz later simplified
-  it to three axioms.
+  *Polish notation* (prefix notation) places operators before their
+  operands, e.g. $(5 - 6) times 7$ is written as $times - 5 6 7$. It
+  is commonly used in logic and computer science.
 ]
 
 #definition(name: "Łukasiewicz Axiom System")[
@@ -286,6 +315,39 @@ system whose formulas are constructed from a fixed alphabet.
   + $⊢ ¬ (p -> q) -> ¬ q$;
   + $⊢ ¬ (p -> q) -> p$.
 ] <prop:negation-reversal>
+
+== Propositional Algebra  // 命题代数
+
+Two formulas $p$ and $q$ are *logically equivalent* (written
+$p equiv q$) if $p ↔ q$ is a tautology, i.e., they take the same
+truth value under every valuation. The following algebraic laws
+hold for all formulas $p, q, r$:
+
+#proposition(name: "Algebraic Laws of Propositional Logic")[
+  + *Idempotence*: $p ∧ p ≡ p$, $p ∨ p ≡ p$.
+  + *Commutativity*: $p ∧ q ≡ q ∧ p$, $p ∨ q ≡ q ∨ p$.
+  + *Associativity*: $(p ∧ q) ∧ r ≡ p ∧ (q ∧ r)$,
+    $(p ∨ q) ∨ r ≡ p ∨ (q ∨ r)$.
+  + *Distributivity*:
+    $p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r)$,
+    $p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r)$.
+  + *Absorption*: $p ∧ (p ∨ q) ≡ p$, $p ∨ (p ∧ q) ≡ p$.
+  + *Identity*: $p ∧ top ≡ p$, $p ∨ bot ≡ p$.
+  + *Annihilation*: $p ∧ bot ≡ bot$, $p ∨ top ≡ top$.
+  + *Complement*: $p ∧ ¬ p ≡ bot$, $p ∨ ¬ p ≡ top$.
+  + *Double Negation*: $¬ ¬ p ≡ p$.
+  + *De Morgan's Laws*:
+    $¬ (p ∧ q) ≡ ¬ p ∨ ¬ q$,
+    $¬ (p ∨ q) ≡ ¬ p ∧ ¬ q$.
+  + *Implication*: $p -> q ≡ ¬ p ∨ q ≡ ¬ q -> ¬ p$ (contrapositive).
+  + *Biconditional*: $p ↔ q ≡ (p -> q) ∧ (q -> p)$.
+] <prop:algebraic-laws>
+
+#note[
+  These laws make the set of formulas modulo logical equivalence into
+  a *Boolean algebra*: a distributive complemented lattice. This is
+  the algebraic perspective on classical propositional logic.
+]
 
 == Semantics: Valuations and Tautologies  // 语义：赋值与重言式
 
