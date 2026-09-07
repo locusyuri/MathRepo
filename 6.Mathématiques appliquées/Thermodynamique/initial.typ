@@ -78,8 +78,8 @@ The three families of curves $p V = "const"$ (isotherms),
 $p = "const"$ (isobars) and $V = "const"$ (isochores) partition the
 $p$-$V$ plane; see @fig:pv-isotherms.
 
-#example[
-  (Van der Waals equation.) The first systematic correction to the
+#example(name: "Van der Waals equation")[
+  The first systematic correction to the
   ideal gas accounts for the finite molecular volume $b$ and the
   attractive intermolecular forces, giving the *van der Waals equation*
   per mole,
@@ -240,8 +240,8 @@ into a law with a rising front and a long tail.
   supplement: [Fig.],
 ) <fig:maxwell-speed>
 
-#example[
-  (Stern experiment, 1920.) Silver atoms evaporating from an oven pass
+#example(name: "Stern experiment, 1920")[
+  Silver atoms evaporating from an oven pass
   through a slit into a rotating drum; the deposit on the inner wall is
   spread according to flight time, hence according to speed. The
   measured deposit profile matches $F(v)$, providing direct experimental
@@ -350,8 +350,8 @@ temperatures, which announced the quantum theory.
   the ratio equals $1/(2 beta) = 1/2 k_B T$.
 ]
 
-#example[
-  (Heat capacities of dilute gases.) Each translational or rotational
+#example(name: "Heat capacities of dilute gases")[
+  Each translational or rotational
   degree of freedom contributes $1/2 k_B T$ to the mean energy per
   molecule, so
 
@@ -716,8 +716,8 @@ whose differential it would be.
   merely on the endpoints.
 ] <prop:work-path>
 
-#example[
-  (Path dependence.) Take an ideal gas from $(V_1, T)$ to $(V_2, T)$
+#example(name: "Path dependence")[
+  Take an ideal gas from $(V_1, T)$ to $(V_2, T)$
   (with $V_2 > V_1$) along two quasi-static paths:
 
   - *direct isothermal expansion*: $W = nu R T ln(V_2 / V_1)$;
@@ -913,8 +913,8 @@ processes of §2.6.
 
 == Applications: Free Expansion, Adiabatic Process and Throttling // 应用：自由膨胀、绝热过程与节流
 
-#example[
-  (Adiabatic free expansion.) An ideal gas initially at $(T_1, V_1)$
+#example(name: "Adiabatic free expansion")[
+  An ideal gas initially at $(T_1, V_1)$
   expands into a vacuum inside an insulated vessel, reaching volume
   $V_2$. No work is done ($dif V$ of the *system* is unresisted; the
   process is not quasi-static, but $W = 0$ regardless), and no heat
@@ -987,8 +987,8 @@ higher temperature than isothermal compression.
   $
 ]
 
-#example[
-  (Cooling by throttling.) For an ideal gas, $alpha = 1/T$, so
+#example(name: "Cooling by throttling")[
+  For an ideal gas, $alpha = 1/T$, so
   $mu_("JT") = 0$: throttling changes no temperature, consistent with
   the absence of intermolecular energy. For real gases, at moderate
   temperatures $T alpha > 1$ and $mu_("JT") > 0$: expansion (pressure
@@ -1247,8 +1247,8 @@ The entropy of an irreversible process is *not* obtained by
 integrating $delta Q / T$ along that process; one integrates along any
 *reversible* path connecting the same endpoints.
 
-#example[
-  (Entropy of an ideal gas.) For a reversible change of $n$ moles,
+#example(name: "Entropy of an ideal gas")[
+  For a reversible change of $nu$ moles,
   $delta Q = dif U + p dif V = C_V dif T + nu R T (dif V) / V$, so
   $
     dif S = C_V (dif T) / T + nu R (dif V) / V,
@@ -1308,8 +1308,8 @@ integrating $delta Q / T$ along that process; one integrates along any
   isolated, and their entropy sum obeys the same inequality.
 ]
 
-#example[
-  (Free expansion, explained.) An ideal gas doubling its volume in
+#example(name: "Free expansion, explained")[
+  An ideal gas doubling its volume in
   adiabatic free expansion (§2.6: $W = Q = 0$, $Delta U = 0$, hence
   $T$ unchanged) has entropy change — computed on the reversible
   isothermal path between the same endpoints —
@@ -1322,8 +1322,8 @@ integrating $delta Q / T$ along that process; one integrates along any
   #link(<ex:free-expansion>)[the free-expansion example].
 ] <ex:free-expansion-entropy>
 
-#example[
-  (Heat conduction.) Heat $Q$ flows directly from a body at $T_h$ to a
+#example(name: "Heat conduction")[
+  Heat $Q$ flows directly from a body at $T_h$ to a
   body at $T_c < T_h$. Each body changes at fixed temperature, so
   $
     Delta S = Q / T_c - Q / T_h = Q (1/T_c - 1/T_h) > 0:
@@ -1465,8 +1465,8 @@ gas, resistance, or otherwise — measures the same $T$.
   bound follows from $"COP"_"HP" = "COP"_R + 1$.
 ]
 
-#example[
-  (Numerical work-out.) A Carnot engine operates between $T_h = 600
+#example(name: "Numerical work-out")[
+  A Carnot engine operates between $T_h = 600
   "K"$ and $T_c = 300 "K"$ with $Q_h = 1000 "J"$ per cycle:
   $
     eta_C = 1 - 300 / 600 = 0.5, quad W = 500 "J", quad Q_c = 500 "J".
@@ -1642,8 +1642,8 @@ built from isothermal and adiabatic legs and $C_p > 0$ throughout —
 and its status among the formulations of the third law is discussed in
 the literature; we adopt it as the operational reading of the law.
 
-#example[
-  (Adiabatic demagnetization.) The workhorse of microkelvin physics
+#example(name: "Adiabatic demagnetization")[
+  The workhorse of microkelvin physics
   realises the two-leg pattern with a paramagnetic salt. The spin
   degrees of freedom contribute an entropy $S(B, T)$ that decreases
   with field $B$ (a field aligns the moments, ordering the system) and
@@ -1698,8 +1698,8 @@ equilibrate on experimental timescales: the molecular orientations are
 frozen randomly at the ordering temperature and remain disordered all
 the way down.
 
-#example[
-  (Carbon monoxide crystal.) The CO molecule is nearly cylindrically
+#example(name: "Carbon monoxide crystal")[
+  The CO molecule is nearly cylindrically
   symmetric — C and O ends differ in energy only marginally — so as
   the crystal forms, each molecule adopts one of two orientations
   essentially at random, and reorientation freezes out at low $T$. For
@@ -1712,8 +1712,8 @@ the way down.
   with the statistical-mechanical value.
 ] <ex:co-crystal>
 
-#example[
-  (Ice.) Water ice obeys Pauling's *ice rules*: each oxygen is surrounded by
+#example(name: "Ice")[
+  Water ice obeys Pauling's *ice rules*: each oxygen is surrounded by
   four hydrogens, two near (covalent) and two far (hydrogen bonds), and
   each bond carries exactly one proton. Pauling counted the
   configurations: per molecule of $N$ molecules the number of
@@ -1760,8 +1760,8 @@ unbounded above), $partial S / partial E > 0$ always, and $T > 0$
 throughout. Negative temperature requires a *population inversion*:
 more of the system at high energies than at moderate ones.
 
-#example[
-  (Spin-$1/2$ paramagnet.) Take $N$ spins of moment $mu$ in a field
+#example(name: "Spin-$1/2$ paramagnet")[
+  Take $N$ spins of moment $mu$ in a field
   $B$, energies $E = mu B (N_arrow.b - N_arrow.t)$ ranging from
   $-N mu B$ (all up) to $+N mu B$ (all down). The number of states
   with $N_arrow.t$ spins up is binomial, $W = "binom"(N, N_arrow.t)$,
@@ -1907,8 +1907,8 @@ The pressure-energy ratio $p = u / 3$ — one half of the
 non-relativistic value — is the fingerprint of the ultra-relativistic
 regime, and it reappears below as the equation of state of radiation.
 
-#example[
-  (Adiabats and heat capacities across the crossover.) For a classical
+#example(name: "Adiabats and heat capacities across the crossover")[
+  For a classical
   ideal gas the equation of state $p V = nu R T$ holds in both regimes,
   while the energy density is regime-dependent. Ultra-relativistically
   $U = 3 p V = 3 nu R T$, so
@@ -2062,8 +2062,8 @@ launched quantum theory is previewed in
 #link(<caution:equipartition-failure>)[Chapter 1] and resolved in
 Chapter 15.
 
-#example[
-  (Surface temperature of the Sun.) The solar constant — the radiant
+#example(name: "Surface temperature of the Sun")[
+  The solar constant — the radiant
   flux at the Earth's orbit — is $S = 1361 "W/m"^2$. A black surface
   at temperature $T$ emits $j = sigma T^4$ per unit area with
   $sigma = 5.67 times 10^(-8) "W" "m"^(-2) "K"^(-4)$. Balancing the
