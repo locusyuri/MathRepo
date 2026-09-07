@@ -48,6 +48,19 @@ than redefined.
   $n$-ary operation is a mapping $S^n -> S$.
 ] <def:binary-operation>
 
+#note[
+  A binary operation is, in itself, *nothing more* than an arbitrary
+  mapping $S times S -> S$: any such map qualifies, no matter how
+  chaotic. There is nothing intrinsic to the concept that singles it
+  out — abstract algebra gives it a name and a notation only because
+  every structure studied here (groups, rings, fields, modules) is
+  built on top of one or more such maps, so the vocabulary recurs
+  constantly. The actual mathematical content lies not in the map but
+  in the *laws* a particular operation may satisfy
+  (#link(<prop:operation-laws>)[below]); a generic binary operation
+  has none of them.
+] <note:binary-operation-trivial>
+
 Familiar operations: addition and multiplication on $bb(Z)$,
 composition of self-maps of a set, vector addition in $bb(R)^n$. In
 each case the interesting structure — what makes the operation
@@ -154,96 +167,19 @@ decisive for rings (Chapter 8); here we only record their form.
 
 == Equivalence Relations and Quotient Sets // 等价关系与商集
 
-An *equivalence relation* on a set $S$ — reflexive, symmetric,
-transitive — was defined in the Théorie des Ensembles note, together
-with the general vocabulary of relations and mappings. What algebra
-adds is the construction performed with it: *collapsing* a set into
-its equivalence classes. This quotient construction, built here in
-the purely set-theoretic setting, is the prototype of quotient groups
-(Chapter 4), quotient rings (Chapter 9), and quotient modules
-(Chapter 17).
+The general theory of equivalence relations, equivalence classes,
+partitions, and quotient sets is developed in the *Théorie des
+Ensembles* note. We recall only the notation here: if $R$ is an
+equivalence relation on $S$, the class of $a in S$ is
+$[a]_R = {x in S | x R a}$, and the quotient set is
+$S \/ R = {[a]_R | a in S}$.
 
-#definition(name: "Equivalence Class")[
-  Let $R$ be an equivalence relation on $S$ and $a in S$. The
-  *equivalence class* of $a$ is
-  $
-    [a]_R = {x in S | x R a}.
-  $
-  Any $x in [a]_R$ is called a *representative* of the class.
-] <def:equivalence-class>
-
-#property(name: "Basic Properties of Classes")[
-  For all $a, b in S$:
-  - $a in [a]_R$ (in particular every class is non-empty and every
-    element lies in some class);
-  - $a R b$ if and only if $[a]_R = [b]_R$;
-  - $not (a R b)$ if and only if $[a]_R ∩ [b]_R = emptyset$.
-] <prop:equivalence-class-props>
-
-#proof[
-  Reflexivity gives $a in [a]_R$. If $[a]_R = [b]_R$ then
-  $a in [a]_R = [b]_R$ gives $a R b$; conversely if $a R b$ and $x in
-  [a]_R$, then $x R a$ and $a R b$ give $x R b$, so $[a]_R subset.eq
-  [b]_R$, and symmetry reverses the inclusion. The third item follows:
-  if $x$ lies in both classes, then $a R x$ and $x R b$ force $a R b$,
-  reducing to the second item.
-]
-
-So the classes are either *equal* or *disjoint* — never partially
-overlapping. This is exactly what it takes for them to carve $S$ into
-blocks.
-
-#definition(name: "Partition")[
-  A *partition* of a set $S$ is a family ${S_i}_("i in I")$ of
-  non-empty subsets such that
-  $
-    union_(i in I) S_i = S, quad quad S_i ∩ S_j = emptyset
-    quad "for" i != j.
-  $
-] <def:partition>
-
-#theorem(name: "Partition-Class Correspondence")[
-  Every equivalence relation on $S$ determines a partition of $S$,
-  namely its family of equivalence classes; conversely, every
-  partition of $S$ arises from exactly one equivalence relation,
-  namely "$a R b$ if and only if $a$ and $b$ lie in the same block."
-] <thm:partition-correspondence>
-
-#proof[
-  ($R ==>$ partition) Reflexivity covers $S$
-  (#link(<prop:equivalence-class-props>)[first property]); classes are
-  pairwise disjoint: if $[a]_R ∩ [b]_R != emptyset$, the second
-  property forces $[a]_R = [b]_R$ — classes are equal or disjoint,
-  never partially overlapping.
-
-  (partition $==>$ $R$) Let ${S_i}$ be a partition and define $a R b$ if
-  some block contains both. Reflexivity holds since $a$ lies in the
-  block covering it, symmetry is built into "both lie", and
-  transitivity holds because if $a, b$ share one block and $b, c$ share
-  one, then both blocks contain $b$, so they coincide and contain $a$
-  and $c$. Uniqueness is clear: the relation reads off the partition
-  and conversely.
-]
-
-#figure(
-  image("img/partition-quotient.svg", width: 82%),
-  caption: [The quotient construction. Left: the set $S$ carved into
-    pairwise disjoint equivalence classes $[a], [b], [c]$, each
-    shaded region one class. Right: the classes themselves collected
-    as points of the quotient set $S \/ R$. Elements *inside* one
-    class are identified; the quotient set is the set of blocks.],
-  placement: auto,
-  supplement: [Fig.],
-) <fig:partition-quotient>
-
-#definition(name: "Quotient Set")[
-  The set of all equivalence classes of $R$ on $S$,
-  $
-    S \/ R = {[a] | a in S},
-  $
-  is the *quotient set* of $S$ by $R$. Its elements are classes, not
-  elements of $S$.
-] <def:quotient-set>
+What algebra adds is a single, decisive question: *when does an
+operation on $S$ descend to an operation on $S \/ R$?* The answer
+controls every quotient construction in this book — quotient groups
+(Chapter 4), quotient rings (Chapter 9), quotient modules
+(Chapter 17). We motivate it with the most important example, then
+state the general principle.
 
 #example[
   (Residue classes.) On $bb(Z)$, declare
@@ -316,6 +252,17 @@ from Cayley's theorem to Galois theory — is a study of such maps.
   written $S equiv T$.
 ] <def:homomorphism>
 
+#definition(name: "Endomorphism and Automorphism")[
+  A homomorphism from an algebraic system to *itself* is called an
+  *endomorphism*: $f: (S, star) -> (S, star)$. A bijective
+  endomorphism is an *automorphism* — equivalently, an isomorphism
+  $S -> S$. The set of all automorphisms of $S$ is written
+  $"Aut"(S)$; under composition it is closed, contains the identity
+  map, and every element has an inverse (the inverse bijection), so
+  $"Aut"(S)$ is a group — a fact we will use repeatedly once groups
+  are defined in #link(<def:binary-operation>)[Chapter 2].
+] <def:endomorphism-automorphism>
+
 #property(name: "Homomorphisms Preserve Identity and Inverses")[
   Let $f: (S, star) -> (T, diamond)$ be a *surjective* homomorphism,
   where both operations have identities $e$ and $e'$. Then
@@ -351,6 +298,43 @@ groups, where inverses exist for *every* element, the image $f(S)$
 carries the induced operation and $f(e) = e'$ holds inside $f(S)$
 regardless — this will be systematised in
 #link(<note:kernel-preliminary>)[Chapter 5].)
+
+#property(name: "Surjective Homomorphisms Preserve Operation Laws")[
+  Let $f: (S, star) -> (T, diamond)$ be a *surjective* homomorphism.
+  - If $star$ is associative, then $diamond$ is associative.
+  - If $star$ is commutative, then $diamond$ is commutative.
+  - For two operations on each side: if $f$ also preserves a second
+    pair of operations $f(a star' b) = f(a) diamond' f(b)$, and $star$
+    distributes over $star'$ in $S$, then $diamond$ distributes over
+    $diamond'$ in $T$.
+
+  In each case surjectivity is essential: without it the law holds
+  only on the image $f(S)$, not on all of $T$.
+] <prop:homomorphism-preserves-laws>
+
+#proof[
+  We prove associativity; the others are identical in pattern. Let
+  $u, v, w in T$. Surjectivity gives $u = f(a)$, $v = f(b)$,
+  $w = f(c)$ for some $a, b, c in S$. Then
+  $
+    (u diamond v) diamond w
+    = (f(a) diamond f(b)) diamond f(c)
+    = f(a star b) diamond f(c)
+    = f((a star b) star c),
+  $
+  and on the other hand
+  $
+    u diamond (v diamond w)
+    = f(a) diamond (f(b) diamond f(c))
+    = f(a) diamond f(b star c)
+    = f(a star (b star c)).
+  $
+  By associativity of $star$, $(a star b) star c = a star (b star c)$,
+  so the two images are equal: $(u diamond v) diamond w = u diamond
+  (v diamond w)$. Since $u, v, w$ were arbitrary, $diamond$ is
+  associative. Commutativity and distributivity follow the same
+  $f$-chasing argument.
+]
 
 #example[
   (Two isomorphisms.)
@@ -1107,11 +1091,10 @@ general mechanism.
   $a H = b H$.
 
   (4) Every $a in G$ lies in its own coset $a H$, and the cosets are
-  pairwise disjoint: a partition of $G$ in the sense of
-  #link(<def:partition>)[Chapter 1]. The equivalence relation behind
-  it, "$a tilde b$ if and only if $a^(-1) b in H$", matches
-  #link(<thm:partition-correspondence>)[the partition-class
-    correspondence].
+  pairwise disjoint: a partition of $G$ (in the sense of the
+  *Théorie des Ensembles* note). The equivalence relation behind
+  it, "$a tilde b$ if and only if $a^(-1) b in H$", matches the
+  partition-class correspondence.
 ]
 
 #example[
@@ -1444,7 +1427,8 @@ produce the alternating groups (§3.3). Yet the coset examples of
 sometimes not. Measuring that fault line — isolating the subgroups
 for which left and right cosets coincide — is the business of the
 next chapter, and it unlocks the construction of quotient groups
-promised back in #link(<def:quotient-set>)[Chapter 1].
+promised back in the quotient-set construction of the
+*Théorie des Ensembles* note.
 
 // ==========================================================================
 // Chapter 4: 正规子群与商群
