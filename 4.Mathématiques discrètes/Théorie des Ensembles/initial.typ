@@ -14,7 +14,7 @@
   subtitle: "A notebook for set theory",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.1.0",
+  version: "v0.2.0",
   extra-info: "Migrated from LaTeX to Typst (single-file mode).",
 )
 
@@ -36,16 +36,15 @@ Some notations are used throughout this book:
 
 == Sets and Their Operations
 
+=== Operations on Sets
+
 #definition(name: "Power Set")[
   Let $X$ be a set.
   The *power set* of $X$, denoted by $scr(P)(X)$, is defined as the set of all subsets of $X$:
-
   $
-    scr(P)(X) = {A | A subset X}.
+    scr(P)(X) = {A | A subset.eq X}.
   $
-]
-
-=== Operations on Sets
+] <def:power-set>
 
 #definition(name: "Basic Operations on Sets")[
   Let $A$ and $B$ be two sets. The following operations are defined:
@@ -79,53 +78,28 @@ Some notations are used throughout this book:
     $
       A plus.o B = (A - B) union (B - A) = {x | (x in A text(" and ") x in.not B) text(" or ") (x in B text(" and ") x not in A)}.
     $
-]
+] <def:basic-operations>
+
 #theorem(name: "De Morgan's Formulas")[
-$
-  X - union.big_(alpha in Gamma) A_alpha = inter.big_(alpha in Gamma) (X - A_alpha), \
-  X - inter.big_(alpha in Gamma) A_alpha = union.big_(alpha in Gamma) (X - A_alpha).
-$
-If $A_alpha in X (forall alpha in Gamma)$, $X$ is a universal set, then the above formulas can be rewritten as:
-$
-  (union.big_(alpha in Gamma) A_alpha)^c = inter.big_(alpha in Gamma) A_alpha^c, \
-  (inter.big_(alpha in Gamma) A_alpha)^c = union.big_(alpha in Gamma) A_alpha^c.
-$
-]
+  $
+    X - union.big_(alpha in Gamma) A_alpha = inter.big_(alpha in Gamma) (X - A_alpha), \
+    X - inter.big_(alpha in Gamma) A_alpha = union.big_(alpha in Gamma) (X - A_alpha).
+  $
+  If $A_alpha in X (forall alpha in Gamma)$, $X$ is a universal set, then the above formulas can be rewritten as:
+  $
+    (union.big_(alpha in Gamma) A_alpha)^c = inter.big_(alpha in Gamma) A_alpha^c, \
+    (inter.big_(alpha in Gamma) A_alpha)^c = union.big_(alpha in Gamma) A_alpha^c.
+  $
+] <thm:de-morgan>
 
-#definition(name: "Limit of a Sequence of Sets")[
-  Let ${A_n}_{n=1}^infinity$ be a sequence of sets.
-  The *limit inferior* (or *lim inf*) and *limit superior* (or *lim sup*) of the sequence are defined as follows:
-
+#property(name: "Distributive Laws")[
+  For any sets $A$, $B$, $C$:
   $
-    liminf_(n -> infinity) A_n &=  {x | exists "infinite" k, "s.t." x in A_k}\
-    &= { x | forall n exists k > n, "s.t." x in A_k}\
-    &= union.big_(n=1)^infinity inter.big_(k=n)^infinity A_k,
+    A union (B inter C) = (A union B) inter (A union C), \
+    A inter (B union C) = (A inter B) union (A inter C).
   $
-
-  $
-    limsup_(n -> infinity) A_n &= {x | exists "infinite" k, "s.t." x in A_k}\
-    &= { x | forall n exists k > n, "s.t." x in A_k}\
-    &=inter.big_(n=1)^infinity union.big_(k=n)^infinity A_k,
-  $
-
-  If $liminf_(n -> infinity) A_n = limsup_(n -> infinity) A_n$, then the common set is called the *limit of the sequence of sets*, denoted by
-
-  $
-    lim_(n -> infinity) A_n = liminf_(n -> infinity) A_n = limsup_(n -> infinity) A_n.
-  $
-]<def:limit-of-sequence-of-sets>
-
-#proposition[
-  // 集合上下极限的定义是自洽的, 即等号成立
-  The definitions of limit inferior and limit superior of a sequence of sets are consistent, i.e., the equalities hold.
-]
-// 上下极限的转换
-#theorem(name: "Conversion of Limit Inferior and Superior")[
-  $
-    X - limsup_(n -> infinity) A_n = liminf_(n -> infinity) (X - A_n), \
-    X - liminf_(n -> infinity) A_n = limsup_(n -> infinity) (X - A_n).
-  $
-]
+  These extend to arbitrary families: union distributes over intersection and vice versa.
+] <prop:distributive-laws>
 
 == Relations and Mappings
 
@@ -140,7 +114,7 @@ $
 
   The Cartesian product can be extended to finitely many sets.
   The Cartesian product of $X$ and itself $n$ times is denoted by $X^n$.
-]
+] <def:cartesian-product>
 
 #definition(name: "Relation")[
   Let $X$ and $Y$ be two sets.
@@ -160,7 +134,7 @@ $
 
   is called the *image* of $A$ under the relation $R$.
   $R(X)$ is called the *range* of the relation $R$.
-]
+] <def:relation>
 
 There are several special types of relations:
 
@@ -182,9 +156,195 @@ For a binary relation $R$ on a set $X$, we define the following special properti
 
 #definition(name: "Equivalence Relation")[
   A binary relation $R$ on a set $X$ is called an *equivalence relation* if it is reflexive, symmetric, and transitive.
+] <def:equivalence-relation>
+
+=== Mappings
+
+#definition(name: "Mapping (Function)")[
+  A *mapping* (or function) $f$ from a set $X$ to a set $Y$ is a relation such that for every $x in X$, there exists a unique $y in Y$ such that $(x, y) in f$.
+  We denote this by $f: X -> Y$ and write $f(x) = y$.
+
+  The set $X$ is called the *domain* of $f$, and the set $Y$ is called the *codomain* of $f$.
+  The set $f(X) = {f(x) | x in X}$ is called the *image* of $f$.
+] <def:mapping>
+
+There are several special types of mappings:
+
+- *Identity mapping*: The mapping $id_X: X -> X$ defined by $id_X(x) = x$ for all $x in X$ is called the *identity mapping* on $X$.
+- *Constant mapping*: A mapping $f: X -> Y$ is called a *constant mapping* if there exists a fixed element $y_0 in Y$ such that $f(x) = y_0$ for all $x in X$.
+
+Mappings can be classified based on their behavior:
+
+- *Injective (One-to-One)*: A mapping $f: X -> Y$ is *injective* if for every $x_1, x_2 in X$, $f(x_1) = f(x_2) => x_1 = x_2$.
+- *Surjective (Onto)*: A mapping $f: X -> Y$ is *surjective* if for every $y in Y$, there exists an $x in X$ such that $f(x) = y$.
+- *Bijective*: A mapping $f: X -> Y$ is *bijective* if it is both injective and surjective.
+
+For $A subset X$, let
+
+$
+  chi_A (x) = cases(
+    1\, quad x in A\,,
+    0\, quad x in.not A.
+  )
+$
+
+be the *characteristic function* of set $A$.
+
+#definition(name: "Inverse Mapping and Composition Mappings")[
+  Let $f: X -> Y$ be a bijective mapping.
+  The *inverse mapping* of $f$, denoted by $f^(-1): Y -> X$, is defined by $f^(-1)(y) = x$ if and only if $f(x) = y$.
+
+  Let $f: X -> Y$ and $g: Y -> Z$ be two mappings.
+  The *composition mapping* of $f$ and $g$, denoted by $g compose f: X -> Z$, is defined by $(g compose f)(x) = g(f(x))$ for all $x in X$.
+] <def:inverse-composition>
+
+#definition(name: "Restriction and Extension")[
+  Let $f: X -> Y$ be a mapping, and let $A subset X$.
+  The *restriction* of $f$ to $A$, denoted by $f|_A$, is the mapping from $A$ to $Y$ defined by $f|_A(x) = f(x)$ for all $x in A$.
+
+  Conversely, if $g: A -> Y$ is a mapping and $A subset X$, an *extension* of $g$ to $X$ is a mapping $f: X -> Y$ such that $f|_A = g$.
+] <def:restriction-extension>
+
+== Relational Algebra // 关系代数
+
+Relational algebra, introduced by E. F. Codd in 1970, treats
+relations (defined in #link(<def:relation>)[§1.2] as subsets of
+Cartesian products) as the basic data model and operates on them with
+a family of algebraic operators. Each operator takes one or more
+relations as input and produces a new relation as output. In database
+theory, a relation is often presented as a *table*: each tuple is a
+row, and each attribute is a column. We write a relation on attributes
+$A_1, dots, A_n$ as $R(A_1, dots, A_n)$, and a tuple in $R$ as
+$t = (t_1, dots, t_n)$ where $t_i$ is the value of attribute $A_i$.
+
+#definition(name: "Selection and Projection")[
+  Let $R$ be a relation on attributes $A_1, dots, A_n$.
+  - *Selection* $sigma_theta (R)$: the subset of tuples in $R$
+    satisfying a predicate $theta$:
+    $
+      sigma_theta (R) = {t in R | theta(t)}.
+    $
+  - *Projection* $pi_S (R)$: the relation obtained by keeping only
+    the attributes in $S subset.eq {A_1, dots, A_n}$ from each tuple:
+    $
+      pi_S (R) = {t[S] | t in R}.
+    $
+  Projection may reduce the number of tuples (duplicates are removed,
+  since relations are sets).
+] <def:selection-projection>
+
+#definition(name: "Cartesian Product and Join")[
+  Let $R(A_1, dots, A_n)$ and $S(B_1, dots, B_m)$ be relations.
+  - *Cartesian product* $R times S$: the relation on
+    $A_1, dots, A_n, B_1, dots, B_m$ consisting of all concatenations:
+    $
+      R times S = {(t, u) | t in R, u in S}.
+    $
+  - *$theta$-join* $R ⋈_"theta" S$: selection on the Cartesian
+    product:
+    $
+      R ⋈_"theta" S = sigma_theta (R times S).
+    $
+  - *Natural join* $R ⋈ S$: the $theta$-join where $theta$
+    requires equality on all common attributes, followed by projection
+    to remove duplicate columns.
+] <def:join>
+
+#definition(name: "Set Operations on Relations")[
+  When two relations $R$ and $S$ are *union-compatible* (same number
+  of attributes with matching domains), the set operations of
+  #link(<def:basic-operations>)[§1.1] apply directly:
+  - *Union*: $R union S$
+  - *Intersection*: $R inter S$
+  - *Difference*: $R - S$
+] <def:relation-set-operations>
+
+#definition(name: "Division")[
+  Let $R(A, B)$ be a relation with two attribute groups, and $S(B)$ a
+  relation on $B$. The *division* $R div S$ is the set of $A$-values
+  that, combined with every $B$-tuple in $S$, appear in $R$:
+  $
+    R div S = {a | forall s in S, (a, s) in R}.
+  $
+  Division is the algebraic dual of universal quantification and is
+  useful for "for all" queries.
+] <def:division>
+
+#definition(name: "Rename")[
+  The *rename* operator $rho_(A -> B) (R)$ changes the attribute name
+  $A$ to $B$ in the schema of $R$, leaving the data unchanged.
+] <def:rename>
+
+#note[
+  These operators are *complete*: any query expressible in first-order
+  logic over relations can be expressed using selection, projection,
+  Cartesian product, union, difference, and rename. The join and
+  division operators are derived conveniences.
 ]
 
-=== Equivalence Relations and Quotient Sets // 等价关系与商集
+== Set Sequences // 集合列
+
+#definition(name: "Monotone Sequence of Sets")[
+  A sequence ${A_n}_{n=1}^infinity$ of sets is:
+  - *increasing* (or *ascending*) if $A_n subset.eq A_(n+1)$ for all
+    $n$;
+  - *decreasing* (or *descending*) if $A_(n+1) subset.eq A_n$ for all
+    $n$.
+  Both cases are called *monotone*.
+] <def:monotone-sequence>
+
+#definition(name: "Limit of a Sequence of Sets")[
+  Let ${A_n}_{n=1}^infinity$ be a sequence of sets.
+  The *limit inferior* (or *lim inf*) and *limit superior* (or *lim sup*) of the sequence are defined as follows:
+
+  $
+    liminf_(n -> infinity) A_n & = {x | exists "infinite" k, "s.t." x in A_k} \
+                               & = { x | forall n exists k > n, "s.t." x in A_k} \
+                               & = union.big_(n=1)^infinity inter.big_(k=n)^infinity A_k,
+  $
+
+  $
+    limsup_(n -> infinity) A_n & = {x | exists "infinite" k, "s.t." x in A_k} \
+                               & = { x | forall n exists k > n, "s.t." x in A_k} \
+                               & = inter.big_(n=1)^infinity union.big_(k=n)^infinity A_k,
+  $
+
+  If $liminf_(n -> infinity) A_n = limsup_(n -> infinity) A_n$, then the common set is called the *limit of the sequence of sets*, denoted by
+
+  $
+    lim_(n -> infinity) A_n = liminf_(n -> infinity) A_n = limsup_(n -> infinity) A_n.
+  $
+] <def:limit-of-sequence-of-sets>
+
+#proposition(name: "Consistency of Limit Definitions")[
+  The definitions of limit inferior and limit superior of a sequence of sets are consistent, i.e., the equalities in the definition hold.
+] <prop:limit-consistency>
+
+#theorem(name: "Conversion of Limit Inferior and Superior")[
+  $
+    X - limsup_(n -> infinity) A_n = liminf_(n -> infinity) (X - A_n), \
+    X - liminf_(n -> infinity) A_n = limsup_(n -> infinity) (X - A_n).
+  $
+] <thm:limsup-liminf-conversion>
+
+#property(name: "Limits of Monotone Sequences")[
+  If ${A_n}$ is increasing, then $lim_(n -> infinity) A_n$ exists and equals $union.big_(n=1)^infinity A_n$.
+  If ${A_n}$ is decreasing, then $lim_(n -> infinity) A_n$ exists and equals $inter.big_(n=1)^infinity A_n$.
+] <prop:monotone-limit>
+
+#note[
+  Countable union and countable intersection can be viewed as special
+  cases of set sequence limits. For an arbitrary sequence ${A_n}$:
+  - $union.big_(n=1)^infinity A_n = limsup_(n -> infinity) A_n$ when
+    the sequence is increasing;
+  - $inter.big_(n=1)^infinity A_n = liminf_(n -> infinity) A_n$ when
+    the sequence is decreasing.
+  These connections make set sequences a fundamental tool in measure
+  theory and probability, where continuity of measure is proved via
+  monotone sequences.
+]
+
+== Equivalence Relations and Quotient Sets // 等价关系与商集
 
 An equivalence relation on a set $S$ — reflexive, symmetric,
 transitive — allows us to *collapse* $S$ into the collection of its
@@ -274,128 +434,134 @@ blocks.
   elements of $S$.
 ] <def:quotient-set>
 
-=== Mappings
-
-#definition(name: "Mapping (Function)")[
-  A *mapping* (or function) $f$ from a set $X$ to a set $Y$ is a relation such that for every $x in X$, there exists a unique $y in Y$ such that $(x, y) in f$.
-  We denote this by $f: X -> Y$ and write $f(x) = y$.
-
-  The set $X$ is called the *domain* of $f$, and the set $Y$ is called the *codomain* of $f$.
-  The set $f(X) = {f(x) | x in X}$ is called the *image* of $f$.
-]
-
-There are several special types of mappings:
-
-- *Identity mapping*: The mapping $id_X: X -> X$ defined by $id_X(x) = x$ for all $x in X$ is called the *identity mapping* on $X$.
-- *Constant mapping*: A mapping $f: X -> Y$ is called a *constant mapping* if there exists a fixed element $y_0 in Y$ such that $f(x) = y_0$ for all $x in X$.
-
-Mappings can be classified based on their behavior:
-
-- *Injective (One-to-One)*: A mapping $f: X -> Y$ is *injective* if for every $x_1, x_2 in X$, $f(x_1) = f(x_2) => x_1 = x_2$.
-- *Surjective (Onto)*: A mapping $f: X -> Y$ is *surjective* if for every $y in Y$, there exists an $x in X$ such that $f(x) = y$.
-- *Bijective*: A mapping $f: X -> Y$ is *bijective* if it is both injective and surjective.
-
-For $A subset X$, let
-
-$
-  chi_A (x) = cases(
-    1\, quad  x in A\, ,
-    0\, quad  x in.not A.
-  )
-$
-
-be the *characteristic function* of set $A$.
-
-#definition(name: "Inverse Mapping and Composition Mappings")[
-  Let $f: X -> Y$ be a bijective mapping.
-  The *inverse mapping* of $f$, denoted by $f^(-1): Y -> X$, is defined by $f^(-1)(y) = x$ if and only if $f(x) = y$.
-
-  Let $f: X -> Y$ and $g: Y -> Z$ be two mappings.
-  The *composition mapping* of $f$ and $g$, denoted by $g compose f: X -> Z$, is defined by $(g compose f)(x) = g(f(x))$ for all $x in X$.
-]
-
-#definition(name: "Restriction and Extension")[
-  Let $f: X -> Y$ be a mapping, and let $A subset X$.
-  The *restriction* of $f$ to $A$, denoted by $f|_A$, is the mapping from $A$ to $Y$ defined by $f|_A(x) = f(x)$ for all $x in A$.
-
-  Conversely, if $g: A -> Y$ is a mapping and $A subset X$, an *extension* of $g$ to $X$ is a mapping $f: X -> Y$ such that $f|_A = g$.
-]
-
-#note[
-  In analysis, the term "extension" is often used interchangeably with "*continuation*"<def:continuation>.
-  However, an extension typically requires the extended mapping to satisfy certain properties, such as continuity or differentiability.
-]
-
-
-
 = Zermelo-Fraenkel Set Theory
 
 == Axioms of ZFC
 
-#axiom(name: "Zermelo-Fraenkel Set Theory with Choice (ZFC)")[
-  Zermelo-Fraenkel Set Theory with Choice (ZFC) is a formal system that provides a foundation for much of modern mathematics.
-  It consists of a set of axioms that describe the properties and behavior of sets.
+Zermelo-Fraenkel Set Theory with Choice (ZFC) is a formal system that
+provides a foundation for much of modern mathematics. We state the
+axioms individually so that they can be referenced when needed.
 
-  The axioms of ZFC are as follows:
+#axiom(name: "Axiom of Extensionality")[
+  Two sets are equal if they have the same elements.
+  $
+    forall A forall B (forall x (x in A <=> x in B) -> A = B).
+  $
+] <axiom:extensionality>
 
-  - *Axiom of Extensionality*: Two sets are equal if they have the same elements.
+#axiom(name: "Axiom of Regularity (Foundation)")[
+  Every non-empty set $A$ contains an element that is disjoint from
+  $A$.
+  $
+    forall A (A != emptyset -> exists B (B in A and B inter A = emptyset)).
+  $
+] <axiom:regularity>
 
-    $
-      forall A forall B (forall x (x in A <=> x in B) -> A = B)
-    $
+#axiom(name: "Axiom Schema of Specification (Separation)")[
+  For any set $A$ and any property $P(x)$, there exists a subset $B$
+  of $A$ containing exactly those elements of $A$ that satisfy $P(x)$.
+  $
+    forall A exists B forall x (x in B <=> (x in A and P(x))).
+  $
+] <axiom:specification>
 
-  - *Axiom of Regularity (Foundation)*: Every non-empty set $A$ contains an element that is disjoint from $A$.
+#axiom(name: "Axiom of Pairing")[
+  For any two sets $A$ and $B$, there exists a set $C$ that contains
+  exactly $A$ and $B$ as elements.
+  $
+    forall A forall B exists C forall x (x in C <=> (x = A or x = B)).
+  $
+] <axiom:pairing>
 
-    $
-      forall A (A != emptyset -> exists B (B in A and B inter A = emptyset))
-    $
+#axiom(name: "Axiom of Union")[
+  For any set $A$, there exists a set $B$ that contains exactly the
+  elements of the elements of $A$.
+  $
+    forall A exists B forall x (x in B <=> exists C (C in A and x in C)).
+  $
+] <axiom:union>
 
-  - *Axiom Schema of Specification (Separation)*: For any set $A$ and any property $P(x)$, there exists a subset $B$ of $A$ containing exactly those elements of $A$ that satisfy the property $P(x)$.
+#axiom(name: "Axiom Schema of Replacement")[
+  For any set $A$ and any definable function $F$, there exists a set
+  $B$ that contains exactly the images of the elements of $A$ under
+  $F$.
+  $
+    forall A exists B forall y (y in B <=> exists x (x in A and y = F(x))).
+  $
+] <axiom:replacement>
 
-    $
-      forall A exists B forall x (x in B <=> (x in A and P(x)))
-    $
+#axiom(name: "Axiom of Infinity")[
+  There exists a set $A$ that contains the empty set and is closed
+  under the operation of taking the successor.
+  $
+    exists A (emptyset in A and forall x (x in A -> x union {x} in A)).
+  $
+] <axiom:infinity>
 
-  - *Axiom of Pairing*: For any two sets $A$ and $B$, there exists a set $C$ that contains exactly $A$ and $B$ as elements.
+#axiom(name: "Axiom of Power Set")[
+  For any set $A$, there exists a set $B$ that contains exactly the
+  subsets of $A$.
+  $
+    forall A exists B forall C (C in B <=> C subset.eq A).
+  $
+] <axiom:power-set-axiom>
 
-    $
-      forall A forall B exists C forall x (x in C <=> (x = A or x = B))
-    $
+#axiom(name: "Axiom of Choice")[
+  For any set $A$ of non-empty sets, there exists a choice function
+  $f$ that selects exactly one element from each set in $A$.
+  $
+    forall A (forall B in A B != emptyset -> exists f : A -> union A forall B in A (f(B) in B)).
+  $
+] <axiom:choice>
 
-  - *Axiom of Union*: For any set $A$, there exists a set $B$ that contains exactly the elements of the elements of $A$.
+== Axiom of Choice and Equivalent Principles // 选择公理及其等价命题
 
-    $
-      forall A exists B forall x (x in B <=> exists C (C in A and x in C))
-    $
+The #link(<axiom:choice>)[Axiom of Choice] (AC) is independent of the
+other ZF axioms (Gödel 1938, Cohen 1963). Its importance lies in the
+fact that it is *equivalent* to several seemingly different
+statements. We list the most important ones.
 
-  - *Axiom Schema of Replacement*: For any set $A$ and any definable function $F$, there exists a set $B$ that contains exactly the images of the elements of $A$ under $F$.
+#theorem(name: "Well-Ordering Theorem")[
+  Every set can be well-ordered.
+] <thm:well-ordering>
 
-    $
-      forall A exists B forall y (y in B <=> exists x (x in A and y = F(x)))
-    $
-
-  - *Axiom of Infinity*: There exists a set $A$ that contains the empty set and is closed under the operation of taking the successor.
-
-    $
-      exists A (emptyset in A and forall x (x in A -> x union {x} in A))
-    $
-
-  - *Axiom of Power Set*: For any set $A$, there exists a set $B$ that contains exactly the subsets of $A$.
-
-    $
-      forall A exists B forall C (C in B <=> C subset A)
-    $
-
-  - *Axiom of Choice*: For any set $A$ of non-empty sets, there exists a choice function $f$ that selects exactly one element from each set in $A$.
-
-    $
-      forall A (forall B in A B != emptyset -> exists f : A -> union A forall B in A (f(B) in B))
-    $
+#note[
+  The well-ordering theorem is an equivalent formulation of the axiom
+  of choice and is unprovable in ZF. It was the original form in which
+  Zermelo stated the axiom in 1904.
 ]
 
-== Axiom of Choice
+#theorem(name: "Zorn's Lemma")[
+  Let $(P, prec.eq)$ be a non-empty partially ordered set in which
+  every chain (totally ordered subset) has an upper bound. Then $P$
+  has at least one maximal element.
+] <thm:zorn>
+
+#theorem(name: "Hausdorff Maximal Principle")[
+  Every partially ordered set contains a maximal chain.
+] <thm:hausdorff-maximal>
+
+#note[
+  The following are all equivalent (in ZF):
+  - #link(<axiom:choice>)[Axiom of Choice]
+  - #link(<thm:well-ordering>)[Well-Ordering Theorem]
+  - #link(<thm:zorn>)[Zorn's Lemma]
+  - #link(<thm:hausdorff-maximal>)[Hausdorff Maximal Principle]
+
+  The proofs of equivalence are non-trivial. AC $->$ Zorn uses
+  transfinite induction on the ordinals; Zorn $->$ Well-Ordering
+  applies Zorn to the poset of partial well-orderings; Well-Ordering
+  $->$ AC is immediate (well-order the union, then pick the least
+  element from each set).
+]
 
 == Von Neumann-Bernays-Gödel Set Theory
+
+#note[
+  Placeholder: NBG set theory, an alternative axiomatization that
+  distinguishes between *sets* and *proper classes*, will be developed
+  here.
+]
 
 #part("Ordinals and Cardinals")
 
@@ -422,32 +588,66 @@ be the *characteristic function* of set $A$.
   A *well-ordered set* is a set $P$ together with a totally ordered $prec.eq$ that is well-founded, i.e., every nonempty subset of $P$ has a least element.
 ]
 
-#theorem(name: "Well-Ordering Theorem")[
-  Every set can be well-ordered.
-]
-
 #note[
-  The well-ordering theorem is an equivalent formulation of the axiom of choice and is unprovable in ZF.
+  The statement that *every* set can be well-ordered — the
+  #link(<thm:well-ordering>)[Well-Ordering Theorem] — is developed in
+  #link(<axiom:choice>)[§2.2] as an equivalent of the Axiom of Choice.
 ]
 
 #tex-table(
   (
-    [Binary Relation], [Reflexive], [Symmetric], [Antisymmetric], [Transitive], [Connected], [Well-founded],
+    [Binary Relation],
+    [Reflexive],
+    [Symmetric],
+    [Antisymmetric],
+    [Transitive],
+    [Connected],
+    [Well-founded],
   ),
   (
-    [Equivalence], [$checkmark$], [$checkmark$], [], [$checkmark$], [], [],
+    [Equivalence],
+    [$checkmark$],
+    [$checkmark$],
+    [],
+    [$checkmark$],
+    [],
+    [],
   ),
   (
-    [Preorder], [$checkmark$], [], [], [$checkmark$], [], [],
+    [Preorder],
+    [$checkmark$],
+    [],
+    [],
+    [$checkmark$],
+    [],
+    [],
   ),
   (
-    [Partial Order], [$checkmark$], [], [$checkmark$], [$checkmark$], [], [],
+    [Partial Order],
+    [$checkmark$],
+    [],
+    [$checkmark$],
+    [$checkmark$],
+    [],
+    [],
   ),
   (
-    [Total Order], [$checkmark$], [], [$checkmark$], [$checkmark$], [$checkmark$], [],
+    [Total Order],
+    [$checkmark$],
+    [],
+    [$checkmark$],
+    [$checkmark$],
+    [$checkmark$],
+    [],
   ),
   (
-    [Well-Order], [$checkmark$], [], [$checkmark$], [$checkmark$], [$checkmark$], [$checkmark$],
+    [Well-Order],
+    [$checkmark$],
+    [],
+    [$checkmark$],
+    [$checkmark$],
+    [$checkmark$],
+    [$checkmark$],
   ),
 )
 
@@ -581,10 +781,10 @@ Ordinals can be classified into three types:
 
 
 #exercise[
-Prove:
-+ If $A$ is countable and $B$ is infinite, then $A union B tilde B$.
-+ $QQ$ is countable (in multiple ways).
-+ $[0, 1]$, $[0, 1)$ are uncountable.
+  Prove:
+  + If $A$ is countable and $B$ is infinite, then $A union B tilde B$.
+  + $QQ$ is countable (in multiple ways).
+  + $[0, 1]$, $[0, 1)$ are uncountable.
 ]
 
 
@@ -632,7 +832,7 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
     When $delta$ does not need to be emphasized, it can also be abbreviated as $B(x_0)$.
   ].
   Similarly, the closed ball can be defined as
-  
+
   $
     overline(B)(x_0, delta) = {x in bb(R)^n | d(x, x_0) <= delta}.
   $
@@ -679,9 +879,9 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
   - *Exterior Point*: A point $x in bb(R)^n backslash E$ is called an *exterior point* of set $E$ if there exists $U(x)$ such that $U(x) subset bb(R)^n backslash E$, or equivalently, $U(x) inter E = emptyset$.
   - *Boundary Point*: A point $x in bb(R)^n$ is called a *boundary point* of set $E$ if for every $U(x)$, the set $U(x)$ contains points in both $E$ and $bb(R)^n backslash E$.
   - *Accumulation Point (Limit Point)*: A point $x in bb(R)^n$ is called an *accumulation point* (or *limit point*) of set $E$ if for every $U(x)$, the set $U(x)$ contains at least one point of $E$ different from $x$#footnote[
-    Obviously, only infinite sets can have accumulation points.
-    In fact, here, containing at least one (distinct) point in the neighborhood is equivalent to containing infinitely many points.
-  ].
+      Obviously, only infinite sets can have accumulation points.
+      In fact, here, containing at least one (distinct) point in the neighborhood is equivalent to containing infinitely many points.
+    ].
   - *Isolated Point*: A point $x in E$ is called an *isolated point* of set $E$ if $x$ is not an accumulation point of $E$, i.e., there exists $U(x)$ such that $U(x) inter E = {x}$.
 ]
 
@@ -751,7 +951,7 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
 
   Let $alpha = sup{x in bb(R) | (x, x_0] subset G}$, $beta = inf{b' in bb(R) | [x_0, b') subset G}$.
   Since $G$ is bounded open set and $alpha, beta$ are defined as supremum and infimum respectively, we have $alpha < x_0 < beta$, i.e., $x_0 in (alpha, beta)$.
-  
+
   _Conclusion 2: $alpha, beta in.not G$_
 
   $forall x in (alpha, beta)$, without loss of generality, assume $x < x_0$.
@@ -784,7 +984,7 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
 
   For each $k in bb(N)$, define the dyadic grid of level $k$ as the collection of half-open $n$-dimensional cubes:
   $
-  Gamma_k = { product_(i=1)^n [m_i 2^(-k), (m_i+1) 2^(-k)) : (m_1, dots, m_n) in bb(Z)^n }.
+    Gamma_k = { product_(i=1)^n [m_i 2^(-k), (m_i+1) 2^(-k)) : (m_1, dots, m_n) in bb(Z)^n }.
   $
 
   Each $Gamma_k$ partitions $bb(R)^n$ into countably many pairwise disjoint half-open cubes of side length $2^(-k)$.
@@ -797,7 +997,7 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
 
   - For $k >= 1$, let $cal(H)_k$ be the set of all cubes in $Gamma_k$ that are contained in
     $
-    G backslash union.big_(i=0)^(k-1) union.big_(J in cal(H)_i) J.
+      G backslash union.big_(i=0)^(k-1) union.big_(J in cal(H)_i) J.
     $
 
   _Step 3: Countability._
@@ -821,35 +1021,35 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
 #definition(name: [$G_delta$ and $F_sigma$ Sets])[
   A subset $E subset bb(R)^n$ is called a *$G_delta$ set* if it can be expressed as a countable intersection of open sets:
   $
-  E = inter.big_(n=1)^infinity U_n, quad U_n "open".
+    E = inter.big_(n=1)^infinity U_n, quad U_n "open".
   $
 
   A subset $E subset bb(R)^n$ is called an *$F_sigma$ set* if it can be expressed as a countable union of closed sets:
   $
-  E = union.big_(n=1)^infinity F_n, quad F_n "closed".
+    E = union.big_(n=1)^infinity F_n, quad F_n "closed".
   $
 ]
 
 #property[
-+ $E$ is a $G_delta$ set if and only if $E^c$ is an $F_sigma$ set.
-+ Every Borel set is both a $G_delta$ set and an $F_sigma$ set.
+  + $E$ is a $G_delta$ set if and only if $E^c$ is an $F_sigma$ set.
+  + Every Borel set is both a $G_delta$ set and an $F_sigma$ set.
 ]
 
 
 #proposition[
-+ *Continuity set of a function* Let $G subset bb(R)^n$ be open and $f: G -> bb(R)$ be a function. Then the set of points where $f$ is continuous is a $G_delta$ set (hence a Borel set).
-+ *Differentiability set of a continuous function* Let $f: bb(R) -> bb(R)$ be a continuous function. Then the set of points where $f$ is differentiable is a $F_{delta sigma}$ set (a countable intersection of $F_sigma$ sets).
-+ *Properties of the limit function of a sequence of continuous functions* Let $f_i: bb(R)^n -> bb(R)$ be continuous functions, $i in bb(N)$, and suppose $lim_(i -> +infinity) f_i(x) = f(x)$ for all $x in bb(R)^n$. Then:
-  - If $G subset bb(R)$ is open, then $f^(-1)(G)$ is an $F_sigma$ set;
-  - The set of continuity points of $f$ is a dense $G_delta$ set in $bb(R)^n$ (equivalently, the set of discontinuity points $D(f)$ is an $F_sigma$ set with empty interior in $bb(R)^n$).
+  + *Continuity set of a function* Let $G subset bb(R)^n$ be open and $f: G -> bb(R)$ be a function. Then the set of points where $f$ is continuous is a $G_delta$ set (hence a Borel set).
+  + *Differentiability set of a continuous function* Let $f: bb(R) -> bb(R)$ be a continuous function. Then the set of points where $f$ is differentiable is a $F_{delta sigma}$ set (a countable intersection of $F_sigma$ sets).
+  + *Properties of the limit function of a sequence of continuous functions* Let $f_i: bb(R)^n -> bb(R)$ be continuous functions, $i in bb(N)$, and suppose $lim_(i -> +infinity) f_i(x) = f(x)$ for all $x in bb(R)^n$. Then:
+    - If $G subset bb(R)$ is open, then $f^(-1)(G)$ is an $F_sigma$ set;
+    - The set of continuity points of $f$ is a dense $G_delta$ set in $bb(R)^n$ (equivalently, the set of discontinuity points $D(f)$ is an $F_sigma$ set with empty interior in $bb(R)^n$).
 ]
 
 
 #theorem(name: "Baire Theorem")[
   Let $E subset bb(R)^n$ be an $F_sigma$ set, i.e., $E = union.big_(k=1)^infinity F_k$, where each $F_k$ ($k in bb(N)$) is a closed set.
-  
+
   If each $F_k$ ($k in bb(N)$) has empty interior, then $E$ also has empty interior.
-  
+
   Equivalently, if $E$ has non-empty interior, then there exists some $F_{k_0}$ that contains an interior point.
 ]
 
@@ -873,9 +1073,9 @@ The common feature of these endpoints is that *they either have a finite number 
 The number of these endpoints is countable, but there are many other non-endpoint points in the Cantor set, such as $1/4 = 0.02020202..._3$ and $4/13 = 0.002200220022..._3$, and the number of these points is uncountable.
 
 #property[
-  Denote by $C_n$ the set obtained after the $n$-th step of the construction process, then 
+  Denote by $C_n$ the set obtained after the $n$-th step of the construction process, then
   $
-  C = inter.big_(n=0)^infinity C_n,
+    C = inter.big_(n=0)^infinity C_n,
   $
   and each $C_n$ is a union of $2^n$ closed intervals of length $3^(-n)$.
   1. $C$ is uncountable, and has the same cardinality as the interval $[0, 1]$.
@@ -914,9 +1114,6 @@ The number of these endpoints is countable, but there are many other non-endpoin
 
 #part("Appendix")
 = Glossary
-
-== C
-- *#link(<def:continuation>)[Continuation]*
 
 == L
 - *#link(<def:limit-of-sequence-of-sets>)[Limit of a Sequence of Sets]*
