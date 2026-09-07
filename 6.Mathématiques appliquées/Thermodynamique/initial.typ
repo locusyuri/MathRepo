@@ -35,7 +35,7 @@ this motion. This chapter builds that dictionary — pressure as momentum
 flux, temperature as mean kinetic energy — before the formal
 thermodynamic framework of Chapters 2–4.
 
-== Ideal Gas Law and Equation of State // 理想气体定律与状态方程
+== Ideal Gas Equation of State // 理想气体状态方程
 
 #definition(name: "Equilibrium State and State Variables")[
   A thermodynamic system is in an *equilibrium state* if its measurable properties are independent of time and of the system's history.
@@ -78,22 +78,6 @@ The three families of curves $p V = "const"$ (isotherms),
 $p = "const"$ (isobars) and $V = "const"$ (isochores) partition the
 $p$-$V$ plane; see @fig:pv-isotherms.
 
-#example(name: "Van der Waals equation")[
-  The first systematic correction to the
-  ideal gas accounts for the finite molecular volume $b$ and the
-  attractive intermolecular forces, giving the *van der Waals equation*
-  per mole,
-  $
-    (p + a / V_m^2)(V_m - b) = R T.
-  $
-  The parameter $a$ adds an internal pressure (cohesion) and $b$
-  subtracts the excluded volume. Below the critical temperature
-  $T_c = 8a / (27 R b)$ the isotherms develop a loop signalling the
-  liquid--gas transition; the physical isotherm is recovered by the
-  Maxwell equal-area construction, discussed with the mean field theory
-  of Chapter 19.
-] <ex:vanderwaals-isotherms>
-
 #figure(
   image("img/pv-isotherms.svg", width: 72%),
   caption: [Isotherms in the $p$-$V$ plane: hyperbolic ideal-gas
@@ -113,6 +97,225 @@ with temperature-dependent *virial coefficients* $B_2, B_3, dots$
 encoding the intermolecular forces. The ideal gas corresponds to all
 virial coefficients vanishing; their systematic computation from first
 principles is carried out by the cluster expansion of Chapter 19.
+
+== Microscopic Model: Pressure and Temperature // 微观模型：压强与温度
+
+A thermodynamic volume of gas contains an immense number of molecules
+(some $10^(19)$ per cubic centimetre at room conditions), each in
+ceaseless free flight punctuated by brief collisions. The macroscopic
+pressure $p$ is nothing but the time-averaged momentum flux that this
+swarm delivers to a containing wall, and the temperature $T$ measures
+the mean kinetic energy per molecule. Building this dictionary — from
+molecular picture to thermodynamic variables — is the founding gesture
+of kinetic theory.
+
+#definition(name: "Ideal Gas Microscopic Model")[
+  The kinetic-theory model of an ideal gas rests on four assumptions:
+
+  - molecules are point particles — their volume is negligible compared
+    with the volume they occupy;
+  - except during the brief instants of collision, molecules exert no
+    force on one another;
+  - all collisions, both with the walls and between molecules, are
+    perfectly elastic;
+  - the molecules are in perpetual, disordered thermal motion, with no
+    preferred direction and no preferred subset.
+] <def:ideal-gas-model>
+
+#property(name: "Pressure Formula")[
+  For a gas of number density $n = N / V$ and molecular mass $m$ in
+  equilibrium, the pressure exerted on any wall is
+  $
+    p = 1/3 n m lr(⟨ v^2 ⟩),
+  $
+  where $lr(⟨ v^2 ⟩)$ is the mean squared molecular speed.
+] <prop:pressure-formula>
+
+#proof[
+  Take a wall perpendicular to the $x$-axis. In a time interval $dif
+  t$, a molecule with velocity $bold(v) = (v_x, v_y, v_z)$ and $v_x > 0$
+  lying within a distance $v_x dif t$ of the wall will strike it. With
+  number density $n$, the number of such molecules per unit wall area
+  and per unit velocity interval is $n f(v_x) dif v_x times v_x dif t$,
+  where $f(v_x)$ is the marginal distribution of $v_x$. Each impact
+  reverses the normal component, transferring momentum $2 m v_x$ to the
+  wall. The pressure is the momentum transfer per unit area per unit
+  time:
+  $
+    p = integral_0^infinity 2 m v_x dot n v_x f(v_x) dif v_x
+    = n m integral_0^infinity v_x^2 f(v_x) dif v_x.
+  $
+  The integrand is even, so extending to $(-infinity, infinity)$ and
+  invoking isotropy,
+  $
+    integral_0^infinity v_x^2 f(v_x) dif v_x
+    = 1/2 lr(⟨ v_x^2 ⟩)
+    = 1/2 dot lr(⟨ v^2 ⟩) / 3,
+  $
+  since the three Cartesian components contribute equally,
+  $lr(⟨ v_x^2 ⟩) = lr(⟨ v_y^2 ⟩) = lr(⟨ v_z^2 ⟩) = lr(⟨ v^2 ⟩) / 3$.
+  Hence $p = 1/3 n m lr(⟨ v^2 ⟩)$.
+]
+
+#property(name: "Microscopic Meaning of Temperature")[
+  Comparing the kinetic pressure formula with the ideal-gas equation of
+  state $p V = N k_B T$, i.e. $p = n k_B T$, gives the identification
+  $
+    1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T.
+  $
+  The temperature of an ideal gas is, up to the constant $3/2 k_B$ per
+  molecule, the mean translational kinetic energy per molecule.
+] <prop:temperature-kinetic>
+
+#proof[
+  Equate the two expressions for the pressure,
+  $
+    1/3 n m lr(⟨ v^2 ⟩) = n k_B T.
+  $
+  Cancelling $n$ and rearranging yields
+  $
+    1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T.
+  $
+  This is the kinetic definition of temperature.
+]
+
+#corollary(name: "Root-Mean-Square Speed")[
+  The root-mean-square molecular speed of an ideal gas at temperature $T$
+  is
+  $
+    v_("rms") = sqrt(lr(⟨ v^2 ⟩)) = sqrt(3 k_B T / m),
+  $
+  scaling as $sqrt(T)$ and inversely with the square root of the
+  molecular mass.
+] <cor:rms-speed>
+
+== Degrees of Freedom and Equipartition // 自由度与能量均分
+
+The pressure-temperature identification of §1.2 was derived without
+any knowledge of the velocity distribution — only the mean square speed
+mattered. A general principle is hiding behind that result: in thermal
+equilibrium, energy is shared *equally* among every quadratic degree of
+freedom. This is the *equipartition theorem*, the cornerstone of the
+classical theory of heat capacities.
+
+#definition(name: "Degrees of Freedom")[
+  The number of *degrees of freedom* $f$ of a mechanical system is the
+  number of independent coordinates required to specify its
+  configuration. For molecules they fall into three classes:
+
+  - *translational* — coordinates of the centre of mass;
+  - *rotational* — angles specifying the orientation about the centre
+    of mass;
+  - *vibrational* — internal coordinates describing relative motion
+    of atoms within the molecule.
+
+  For the ideal-gas models used below:
+
+  - a *monatomic* molecule has $f = 3$ (translation only);
+  - a *rigid diatomic* molecule has $f = 5$ (three translations plus
+    two rotations — the axis along the bond carries no moment of
+    inertia);
+  - a *non-rigid diatomic* molecule has $f = 7$ (adding one
+    vibrational coordinate, which contributes both a kinetic and a
+    potential quadratic term, hence two quadratic degrees).
+] <def:degrees-of-freedom>
+
+#theorem(name: "Equipartition Theorem")[
+  Let the energy of a classical system be
+  $
+    E = sum_(i=1)^f alpha_i x_i^2 + tilde(E)(x_(f+1), dots, x_N),
+  $
+  where the coordinates $x_1, dots, x_f$ enter only quadratically and
+  the remaining coordinates appear in $tilde(E)$ but not in the
+  quadratic terms. In thermal equilibrium at temperature $T$,
+  $
+    lr(⟨ alpha_i x_i^2 ⟩) = 1/2 k_B T quad "for each" i = 1,
+    dots, f.
+  $
+] <thm:equipartition>
+
+#proof[
+  The distribution over phase space in equilibrium is the
+  Maxwell--Boltzmann density proportional to $exp(- E / (k_B T))$ — this
+  law will be derived in §1.4 from Maxwell's symmetry argument, and more
+  systematically from the canonical ensemble in Chapter 13; here we use
+  it as the equilibrium weight for every quadratic coordinate. Then
+  $
+    lr(⟨ alpha_i x_i^2 ⟩)
+    = (integral alpha_i x_i^2 exp(-E/(k_B T)) dif Gamma) /
+    (integral exp(-E/(k_B T)) dif Gamma).
+  $
+
+  Let $beta = 1/(k_B T)$. The Gaussian factorisation makes each quadratic
+  coordinate independent:
+  $
+    lr(⟨ alpha_i x_i^2 ⟩) = (alpha_i integral x_i^2 exp(-beta alpha_i x_i^2) dif x_i) / (integral exp(-beta alpha_i x_i^2) dif x_i).
+  $
+  With the Gaussian integrals
+  $integral exp(-beta alpha x^2) dif x = sqrt(pi / (beta alpha))$ and
+  $integral x^2 exp(-beta alpha x^2) dif x = sqrt(pi) / (2 (beta alpha)^(3/2))$,
+  the ratio equals $1/(2 beta) = 1/2 k_B T$.
+]
+
+#property(name: "Internal Energy of an Ideal Gas")[
+  For a gas of $nu$ moles whose molecules have $f$ quadratic degrees of
+  freedom, the equilibrium internal energy is
+  $
+    U = f/2 nu R T,
+  $
+  a linear function of temperature alone.
+] <prop:ideal-gas-internal-energy>
+
+#proof[
+  By the equipartition theorem each quadratic degree contributes
+  $1/2 k_B T$ per molecule. With $N = nu N_A$ molecules and $f$ degrees
+  each, and using $k_B N_A = R$,
+  $
+    U = N dot f dot 1/2 k_B T = f/2 nu R T.
+  $
+  In particular $U = 3/2 nu R T$ for a monatomic gas, recovering the
+  temperature identification of §1.2 summed over all molecules.
+]
+
+#corollary(name: "Heat Capacity of an Ideal Gas")[
+  The molar heat capacities of an ideal gas of $f$ degrees of freedom
+  are
+  $
+    C_V = f/2 R, quad C_p = C_V + R = (f/2 + 1) R, quad
+    gamma = C_p / C_V = (f + 2) / f.
+  $
+] <cor:ideal-gas-heat-capacity>
+
+#example(name: "Heat capacities of dilute gases")[
+  Each translational or rotational
+  degree of freedom contributes $1/2 k_B T$ to the mean energy per
+  molecule, so
+
+  - *monatomic gas* ($f = 3$ translations): $lr(⟨ E ⟩) = 3/2 k_B T$
+    per molecule and $C_V = 3/2 R$ per mole;
+  - *rigid diatomic gas* ($f = 5$: three translations + two rotations,
+    the axis along the bond carrying no moment of inertia):
+    $C_V = 5/2 R$;
+  - *diatomic gas with vibrational mode* ($f = 7$: adding one kinetic +
+    one potential quadratic term): $C_V = 7/2 R$.
+
+  These are precisely the classical values tabulated for gases such as
+  helium ($C_V approx 3/2 R$), nitrogen at room temperature
+  ($approx 5/2 R$), and chlorine at high temperature ($approx 7/2 R$).
+] <ex:gas-heat-capacities>
+
+#caution[
+  (Failure of equipartition.) The vibrational contribution of the
+  previous example is *frozen out* at room temperature: nitrogen does
+  not reach $C_V = 7/2 R$ until far above $2000 "K"$. Worse still, the
+  vibrational and rotational contributions of solids are missing
+  entirely at low temperatures, and the classical prediction of the
+  specific heat of a crystal — $3 R$ per mole at *all* temperatures
+  (the Dulong--Petit law) — collapses below tens of kelvin. Classical
+  statistical mechanics cannot explain these facts; the resolution is
+  quantum mechanical, and is supplied by the Einstein and Debye models
+  (Chapter 15) and by quantum statistics (Chapter 17).
+] <caution:equipartition-failure>
 
 == Maxwell-Boltzmann Velocity Distribution // 麦克斯韦-玻尔兹曼速度分布
 
@@ -161,8 +364,10 @@ assumptions alone.
 ]
 
 #property(name: "Pressure as Momentum Flux")[
-  In a gas of number density $n$ whose velocities follow the Maxwell
-  distribution, the pressure exerted on a container wall is
+  The Maxwell distribution rederives the pressure formula of §1.2 by
+  direct integration. In a gas of number density $n$ whose velocities
+  follow the Maxwell distribution, the pressure exerted on a container
+  wall is
   $
     p = n m lr(⟨ v_x^2 ⟩) = 1/3 n m lr(⟨ v^2 ⟩).
   $
@@ -187,7 +392,7 @@ assumptions alone.
   $
   so $alpha = m / (2 k_B T)$. Temperature is thereby *identified* with the
   mean kinetic energy per molecule — the dictionary entry announcing the
-  equipartition theorem of §1.4. The argument does not merely use the
+  equipartition theorem of §1.3. The argument does not merely use the
   ideal gas law; it *explains* it.
 ]
 
@@ -259,6 +464,152 @@ into a law with a rising front and a long tail.
   shape parameters in disguise.
 ] <note:mb-probability>
 
+== Boltzmann Energy Distribution // 玻尔兹曼能量分布律
+
+The Maxwell distribution depends on velocity through the combination
+$m v^2 / 2$ — that is, through the *kinetic energy* $E_k$. This is no
+accident: the equilibrium probability of a state depends on its total
+energy, kinetic or otherwise, through the universal Boltzmann factor.
+The resulting *Boltzmann distribution* is the cornerstone of
+statistical mechanics.
+
+#theorem(name: "Boltzmann Distribution")[
+  In thermal equilibrium at temperature $T$, the probability that a
+  system occupies a state of energy $E$ is proportional to the
+  *Boltzmann factor*
+  $
+    f(E) prop exp(- E / (k_B T)).
+  $
+  The constant $1 / (k_B T)$ is the *thermodynamic beta* $beta$.
+] <thm:boltzmann-distribution>
+
+#proof[
+  Begin with the Maxwell velocity density of §1.4,
+  $
+    f(bold(v)) prop exp(- m v^2 / (2 k_B T)).
+  $
+  Recognise the exponent as the kinetic energy $E = 1/2 m v^2$, so
+  $
+    f(bold(v)) prop exp(- E / (k_B T)).
+  $
+  This is a law about energy, not about velocity: it generalises to
+  *any* system whose state has energy $E$, with the same exponential
+  weight. The generalisation is a fundamental postulate of statistical
+  mechanics — it will be derived from the microcanonical ensemble in
+  Chapter 13 — and the Maxwell distribution is recovered as the special
+  case of a free particle, $E = p^2 / (2 m)$ with no potential energy.
+]
+
+#example(name: "Isothermal atmosphere")[
+  In a gravitational field $g$ directed along $+z$, a molecule of mass
+  $m$ at altitude $h$ has potential energy $E = m g h$. The Boltzmann
+  distribution gives the number density
+  $
+    n(h) = n_0 exp(- m g h / (k_B T)),
+  $
+  the *barometric formula*. Defining the *scale height*
+  $H = k_B T / (m g) = R T / (M g)$ with $M$ the molar mass, this reads
+  $n(h) = n_0 exp(- h / H)$. For the Earth's atmosphere
+  ($T approx 280 "K"$, $M approx 29 "g/mol"$) one finds
+  $H approx 8 "km"$ — density falls by a factor of $exp(1)$ every
+  eight kilometres, in fair agreement with observation below about
+  $20 "km"$, where temperature and composition are still roughly
+  constant.
+] <ex:barometric-formula>
+
+#example(name: "Sedimentation equilibrium")[
+  Colloidal particles of mass $m$ suspended in a fluid settle under
+  gravity against thermal agitation. Their equilibrium density follows
+  the same Boltzmann law,
+  $
+    n(h) = n_0 exp(- m_("eff") g h / (k_B T)),
+  $
+  with $m_("eff")$ the *buoyancy-corrected* mass. Jean Perrin's 1908
+  measurement of the sedimentation profile of gamboge particles —
+  counting them at several heights under a microscope — gave the first
+  direct determination of $N_A$ (and hence of $k_B$), winning the
+  Nobel Prize in 1926 and settling the long controversy over the
+  reality of molecules.
+] <ex:sedimentation>
+
+#note[
+  (Special case.) The Maxwell distribution of §1.4 is the Boltzmann
+  distribution specialised to a free particle — kinetic energy only,
+  no potential. The two theories are not independent: the Boltzmann
+  law is the general principle, the Maxwell law its corollary for a
+  point mass in field-free space.
+] <note:mb-to-boltzmann>
+
+== Van der Waals Equation // 范德瓦尔斯方程
+
+The ideal-gas model of §1.1 neglects both the volume of the molecules
+and the forces between them. At low density this is well justified, but
+as density rises — high pressure, low temperature — both effects enter
+and the isotherms depart from the hyperbola $p V = nu R T$. The
+*van der Waals equation* is the simplest equation of state that
+captures both corrections.
+
+#definition(name: "Van der Waals Equation")[
+  For one mole of gas, the van der Waals equation of state reads
+  $
+    (p + a / V_m^2)(V_m - b) = R T,
+  $
+  where $V_m = V / nu$ is the molar volume, $a$ corrects for the
+  attractive intermolecular force and $b$ for the finite molecular
+  volume. The parameters $a, b$ are characteristic of the gas.
+] <def:vanderwaals-equation>
+
+#proof(name: "Physical derivation")[
+  Two corrections to the ideal-gas picture yield the equation.
+
+  - *Volume correction.* The volume actually available to the centres of
+    the molecules is the container volume $V$ minus the excluded volume
+    $b$, where $b = 4 N_A times (4/3) pi r^3$ for hard-sphere molecules
+    of radius $r$ (the centre of any molecule is excluded from a sphere
+    of radius $2 r$ about every other centre; the factor $1/2$ avoids
+    double counting). The free volume is thus $V - b$ per mole.
+  - *Pressure correction.* A molecule in the interior of the gas feels
+    attractions from its neighbours in every direction, which cancel;
+    a molecule about to strike the wall feels attractions only from the
+    half-space behind it, which decelerates it and reduces the pressure.
+    The deficit — the *internal pressure* — scales as the square of the
+    density, $p_"int" = a / V_m^2$, since both the flux of wall-striking
+    molecules and the typical attractive force on each scale with
+    density. The measured pressure is $p = p_"ideal" - p_"int"$, i.e.
+    $p_"ideal" = p + a / V_m^2$.
+
+  Substituting the corrected pressure and the free volume into the
+  ideal-gas law $p_"ideal" V_"free" = R T$ gives the van der Waals
+  equation.
+]
+
+#property(name: "Critical Point")[
+  The van der Waals isotherm $p(V_m)$ has, at sufficiently low
+  temperatures, a region of positive slope — unphysical, since it
+  signals negative compressibility. The boundary is the *critical
+  point*, at which the isotherm develops an inflection:
+  $
+    (dif p) / (dif V_m)_T = 0, quad (dif^2 p) / (dif V_m^2)_T = 0,
+  $
+  yielding the critical constants
+  $
+    T_c = 8 a / (27 R b), quad V_c = 3 b, quad p_c = a / (27 b^2).
+  $
+  Below $T_c$ the isotherms develop the characteristic loop that signals
+  the liquid--gas transition.
+] <prop:vdw-critical>
+
+#note[
+  (Maxwell construction.) The van der Waals loop below $T_c$ is
+  unphysical — a real substance does not exhibit negative
+  compressibility. Maxwell's *equal-area construction* replaces the
+  loop by a horizontal segment at the coexistence pressure, the area
+  under the loop above and below the segment being equal. The
+  construction ensures the equality of the Gibbs free energies of the
+  coexisting liquid and vapour phases, and will be analysed with the
+  mean-field theory of Chapter 19.
+] <note:maxwell-construction>
+
 == Mean Free Path and Collision Frequency // 平均自由程与碰撞频率
 
 The Maxwell distribution describes free flight; the picture is completed
@@ -303,83 +654,8 @@ structure is captured by a single geometric quantity.
 
 The *collision frequency* $z$ will do little explicit work below, but
 the mean free path $lambda$ and the mean speed $overline(v)$ are the
-two ingredients from which all transport coefficients of §1.5 are
+two ingredients from which all transport coefficients of §1.8 are
 assembled.
-
-== Energy Equipartition Theorem // 能量均分定理
-
-A classical system in thermal equilibrium shares its energy equally
-among all quadratic degrees of freedom. The result underlies the
-classical theory of heat capacities — and its dramatic failure at low
-temperatures, which announced the quantum theory.
-
-#theorem(name: "Equipartition Theorem")[
-  Let the energy of a classical system be
-  $
-    E = sum_(i=1)^f alpha_i x_i^2 + tilde(E)(x_(f+1), dots, x_N),
-  $
-  where the coordinates $x_1, dots, x_f$ enter only quadratically and
-  the remaining coordinates appear in $tilde(E)$ but not in the
-  quadratic terms. In thermal equilibrium at temperature $T$,
-  $
-    lr(⟨ alpha_i x_i^2 ⟩) = 1/2 k_B T quad "for each" i = 1,
-    dots, f.
-  $
-] <thm:equipartition>
-
-#proof[
-  The distribution over phase space in equilibrium is the
-  Maxwell--Boltzmann density proportional to $exp(- E / (k_B T))$ (this
-  will be rederived systematically from the canonical ensemble in
-  Chapter 13; at the kinetic level it is the velocity law of §1.2 applied
-  to every quadratic coordinate). Then
-  $
-    lr(⟨ alpha_i x_i^2 ⟩)
-    = (integral alpha_i x_i^2 exp(-E/(k_B T)) dif Gamma) /
-    (integral exp(-E/(k_B T)) dif Gamma).
-  $
-
-  Let $beta = 1/(k_B T)$. The Gaussian factorisation makes each quadratic
-  coordinate independent:
-  $
-    lr(⟨ alpha_i x_i^2 ⟩) = (alpha_i integral x_i^2 exp(-beta alpha_i x_i^2) dif x_i) / (integral exp(-beta alpha_i x_i^2) dif x_i).
-  $
-  With the Gaussian integrals
-  $integral exp(-beta alpha x^2) dif x = sqrt(pi / (beta alpha))$ and
-  $integral x^2 exp(-beta alpha x^2) dif x = sqrt(pi) / (2 (beta alpha)^(3/2))$,
-  the ratio equals $1/(2 beta) = 1/2 k_B T$.
-]
-
-#example(name: "Heat capacities of dilute gases")[
-  Each translational or rotational
-  degree of freedom contributes $1/2 k_B T$ to the mean energy per
-  molecule, so
-
-  - *monatomic gas* ($f = 3$ translations): $lr(⟨ E ⟩) = 3/2 k_B T$
-    per molecule and $C_V = 3/2 R$ per mole;
-  - *rigid diatomic gas* ($f = 5$: three translations + two rotations,
-    the axis along the bond carrying no moment of inertia):
-    $C_V = 5/2 R$;
-  - *diatomic gas with vibrational mode* ($f = 7$: adding one kinetic +
-    one potential quadratic term): $C_V = 7/2 R$.
-
-  These are precisely the classical values tabulated for gases such as
-  helium ($C_V approx 3/2 R$), nitrogen at room temperature
-  ($approx 5/2 R$), and chlorine at high temperature ($approx 7/2 R$).
-] <ex:gas-heat-capacities>
-
-#caution[
-  (Failure of equipartition.) The vibrational contribution of the
-  previous example is *frozen out* at room temperature: nitrogen does
-  not reach $C_V = 7/2 R$ until far above $2000 "K"$. Worse still, the
-  vibrational and rotational contributions of solids are missing
-  entirely at low temperatures, and the classical prediction of the
-  specific heat of a crystal — $3 R$ per mole at *all* temperatures
-  (the Dulong--Petit law) — collapses below tens of kelvin. Classical
-  statistical mechanics cannot explain these facts; the resolution is
-  quantum mechanical, and is supplied by the Einstein and Debye models
-  (Chapter 15) and by quantum statistics (Chapter 17).
-] <caution:equipartition-failure>
 
 == Transport Phenomena // 输运现象
 
@@ -479,7 +755,7 @@ one mean free path away.
 == Boltzmann H-Theorem and Irreversibility // 玻尔兹曼 H 定理与不可逆性
 
 The microscopic laws of motion are invariant under time reversal; the
-transport phenomena of §1.5 are not — viscosity dissipates, heat flows
+transport phenomena of §1.8 are not — viscosity dissipates, heat flows
 from hot to cold, and never backwards. Boltzmann's H-theorem was the
 first quantitative bridge across this gap.
 
@@ -502,7 +778,7 @@ first quantitative bridge across this gap.
     (dif H) / (dif t) <= 0,
   $
   with equality if and only if $f$ is the Maxwell distribution of
-  §1.2.
+  §1.4.
 ] <thm:h-theorem>
 
 #proof(name: "sketch")[
