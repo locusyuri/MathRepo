@@ -205,6 +205,112 @@ be the *characteristic function* of set $A$.
   Conversely, if $g: A -> Y$ is a mapping and $A subset X$, an *extension* of $g$ to $X$ is a mapping $f: X -> Y$ such that $f|_A = g$.
 ] <def:restriction-extension>
 
+== Order Relations // 序关系
+
+A binary relation that is reflexive, antisymmetric and transitive —
+or some variant thereof — singles out a notion of *order* on a set.
+These structures are needed as early as
+#link(<thm:zorn>)[Zorn's Lemma] in §2.2, so we collect the basic
+vocabulary here.
+
+#definition(name: "Preordered Set")[
+  A *preordered set* is a set $P$ together with a binary relation
+  $prec.eq$ that is reflexive and transitive.
+] <def:preorder>
+
+#definition(name: "Partially Ordered Set (Poset)")[
+  A *partially ordered set* (or *poset*) is a set $P$ together with a
+  binary relation $prec.eq$ that is reflexive, antisymmetric, and
+  transitive.
+  The relation $prec.eq$ is called a *partial order* on $P$.
+
+  Specifically, $prec$ is called a *strict partial order* on $P$ if it
+  is irreflexive, antisymmetric, and transitive.
+] <def:poset>
+
+#definition(name: "Totally Ordered Set (Chain)")[
+  A *totally ordered set* (or *chain*) is a set $P$ together with a
+  partial order $prec.eq$ that is connected (total), i.e., for any
+  $x, y in P$, either $x prec.eq y$ or $y prec.eq x$.
+] <def:total-order>
+
+#definition(name: "Well-Ordered Set")[
+  A *well-ordered set* is a set $P$ together with a total order
+  $prec.eq$ that is well-founded, i.e., every nonempty subset of $P$
+  has a least element.
+] <def:well-order>
+
+#note[
+  The statement that *every* set can be well-ordered — the
+  #link(<thm:well-ordering>)[Well-Ordering Theorem] — is developed in
+  #link(<axiom:choice>)[§2.2] as an equivalent of the Axiom of Choice.
+]
+
+#definition(name: "Upper Bound and Maximal Element")[
+  Let $(P, prec.eq)$ be a poset and $A subset.eq P$.
+  - An element $u in P$ is an *upper bound* of $A$ if
+    $a prec.eq u$ for all $a in A$.
+  - An element $m in P$ is *maximal* in $P$ if no element of $P$ is
+    strictly greater than $m$, i.e., $m prec.eq x$ implies $x = m$.
+] <def:upper-bound-maximal>
+
+#tex-table(
+  (
+    [Binary Relation],
+    [Reflexive],
+    [Symmetric],
+    [Antisymmetric],
+    [Transitive],
+    [Connected],
+    [Well-founded],
+  ),
+  (
+    [Equivalence],
+    [$checkmark$],
+    [$checkmark$],
+    [],
+    [$checkmark$],
+    [],
+    [],
+  ),
+  (
+    [Preorder],
+    [$checkmark$],
+    [],
+    [],
+    [$checkmark$],
+    [],
+    [],
+  ),
+  (
+    [Partial Order],
+    [$checkmark$],
+    [],
+    [$checkmark$],
+    [$checkmark$],
+    [],
+    [],
+  ),
+  (
+    [Total Order],
+    [$checkmark$],
+    [],
+    [$checkmark$],
+    [$checkmark$],
+    [$checkmark$],
+    [],
+  ),
+  (
+    [Well-Order],
+    [$checkmark$],
+    [],
+    [$checkmark$],
+    [$checkmark$],
+    [$checkmark$],
+    [$checkmark$],
+  ),
+)
+
 == Relational Algebra // 关系代数
 
 Relational algebra, introduced by E. F. Codd in 1970, treats
@@ -532,9 +638,11 @@ statements. We list the most important ones.
 ]
 
 #theorem(name: "Zorn's Lemma")[
-  Let $(P, prec.eq)$ be a non-empty partially ordered set in which
-  every chain (totally ordered subset) has an upper bound. Then $P$
-  has at least one maximal element.
+  Let $(P, prec.eq)$ be a non-empty
+  #link(<def:poset>)[partially ordered set] in which every chain
+  (#link(<def:total-order>)[totally ordered subset]) has an
+  #link(<def:upper-bound-maximal>)[upper bound] in $P$. Then $P$ has
+  at least one #link(<def:upper-bound-maximal>)[maximal element].
 ] <thm:zorn>
 
 #theorem(name: "Hausdorff Maximal Principle")[
@@ -567,150 +675,125 @@ statements. We list the most important ones.
 
 = Ordinals
 
-== Order
-
-#definition(name: "Preordered Set")[
-  A *preordered set* is a set $P$ together with a binary relation $prec.eq$ that is reflexive and transitive.
-]
-
-#definition(name: "Partially Ordered Set (Poset)")[
-  A *partially ordered set* (or *poset*) is a set $P$ together with a binary relation $prec.eq$ that is reflexive, antisymmetric, and transitive.
-  The relation $prec.eq$ is called a *partial order* on $P$.
-
-  Specifically, $prec$ is called a *strict partial order* on $P$ if it is irreflexive, antisymmetric, and transitive.
-]
-
-#definition(name: "Totally Ordered Set (Chain)")[
-  A *totally ordered set* (or *chain*) is a set $P$ together with a partial order $prec.eq$ that is connected (total), i.e., for any $x, y in P$, either $x prec.eq y$ or $y prec.eq x$.
-]
-
-#definition(name: "Well-Ordered Set")[
-  A *well-ordered set* is a set $P$ together with a totally ordered $prec.eq$ that is well-founded, i.e., every nonempty subset of $P$ has a least element.
-]
-
-#note[
-  The statement that *every* set can be well-ordered — the
-  #link(<thm:well-ordering>)[Well-Ordering Theorem] — is developed in
-  #link(<axiom:choice>)[§2.2] as an equivalent of the Axiom of Choice.
-]
-
-#tex-table(
-  (
-    [Binary Relation],
-    [Reflexive],
-    [Symmetric],
-    [Antisymmetric],
-    [Transitive],
-    [Connected],
-    [Well-founded],
-  ),
-  (
-    [Equivalence],
-    [$checkmark$],
-    [$checkmark$],
-    [],
-    [$checkmark$],
-    [],
-    [],
-  ),
-  (
-    [Preorder],
-    [$checkmark$],
-    [],
-    [],
-    [$checkmark$],
-    [],
-    [],
-  ),
-  (
-    [Partial Order],
-    [$checkmark$],
-    [],
-    [$checkmark$],
-    [$checkmark$],
-    [],
-    [],
-  ),
-  (
-    [Total Order],
-    [$checkmark$],
-    [],
-    [$checkmark$],
-    [$checkmark$],
-    [$checkmark$],
-    [],
-  ),
-  (
-    [Well-Order],
-    [$checkmark$],
-    [],
-    [$checkmark$],
-    [$checkmark$],
-    [$checkmark$],
-    [$checkmark$],
-  ),
-)
-
 == Ordinal Numbers
 
 #definition(name: "Transitive Set")[
-  A set $A$ is called *transitive* if every element of $A$ is also a subset of $A$, i.e., $(forall x in A) (x subset A)$.
-]
+  A set $A$ is called *transitive* if every element of $A$ is also a
+  subset of $A$, i.e., $(forall x in A) (x subset.eq A)$.
+] <def:transitive-set>
 
 #definition(name: "Von Neumann Ordinal")[
-  A set $alpha$ is an ordinal number (an *ordinal*) if it is transitive and well-ordered by the membership relation $in$.
+  A set $alpha$ is an ordinal number (an *ordinal*) if it is
+  transitive and well-ordered by the membership relation $in$.
 
   All ordinals form a proper class denoted by $"Ord"$.
-]
+] <def:ordinal>
 
 #note[
-  In ZF, the above definition is equivalent to: $alpha$ is an ordinal if and only if $alpha$ is a transitive set and all of its elements are transitive sets.
-  This is because the axiom of regularity ensures the well-foundedness of sets.
+  In ZF, the above definition is equivalent to: $alpha$ is an ordinal
+  if and only if $alpha$ is a transitive set and all of its elements
+  are transitive sets. This is because the
+  #link(<axiom:regularity>)[Axiom of Regularity] ensures the
+  well-foundedness of sets.
 ]
 
 Ordinals can be classified into three types:
 
-- *Zero*: The empty set $emptyset$ is the only ordinal that is neither a successor nor a limit.
-- *Successor Ordinal*: An ordinal $alpha$ is a *successor ordinal* if there exists an ordinal $beta$ such that $alpha = beta + 1 = beta union {beta}$.
-- *Limit Ordinal*: An ordinal $lambda$ is a *limit ordinal* if it is nonzero and not a successor, i.e., $lambda = union_(beta < lambda) beta$.
+- *Zero*: The empty set $emptyset$ is the only ordinal that is neither
+  a successor nor a limit.
+- *Successor Ordinal*: An ordinal $alpha$ is a *successor ordinal* if
+  there exists an ordinal $beta$ such that $alpha = beta + 1 = beta
+  union {beta}$.
+- *Limit Ordinal*: An ordinal $lambda$ is a *limit ordinal* if it is
+  nonzero and not a successor, i.e., $lambda = union.big_(beta < lambda)
+  beta$.
 
 #definition(name: "Natural Number")[
   Denote the least nonzero limit ordinal by $omega$ (or $bb(N)$).
-  The ordinals less than $omega$ are called *finite numbers*, or *natural numbers*.
-  Specially,
+  The ordinals less than $omega$ are called *finite numbers*, or
+  *natural numbers*. Specially,
 
   $
     0 = emptyset, quad 1 = {0}, quad 2 = {0, 1}, quad 3 = {0, 1, 2}, quad dots
   $
 
-  A set $X$ is finite if there is a one-to-one mapping of $X$ onto some $n in bb(N)$.
-  $X$ is infinite if it is not finite.
-]
+  A set $X$ is *finite* if there is a one-to-one mapping of $X$ onto
+  some $n in bb(N)$. $X$ is *infinite* if it is not finite.
+] <def:natural-number>
 
 == Induction and Recursion
 
 #theorem(name: "Transfinite Induction")[
   Let $C$ be a class of ordinals and assume that:
 
-  1. $0 in C$.
-  2. If $alpha in C$, then $alpha + 1 in C$.
-  3. If $lambda$ is a nonzero limit ordinal and $(forall beta < lambda) beta in C$, then $lambda in C$.
+  + $0 in C$.
+  + If $alpha in C$, then $alpha + 1 in C$.
+  + If $lambda$ is a nonzero limit ordinal and $(forall beta < lambda)
+    beta in C$, then $lambda in C$.
 
   Then $C = "Ord"$.
-]
+] <thm:transfinite-induction>
 
 #theorem(name: "Transfinite Recursion")[
-  Let $F$ be a class function that assigns to each ordinal $alpha$ an element $F(alpha, g)$, where $g$ is a function with domain $alpha$.
-  Then there exists a unique class function $G$ with domain $"Ord"$ such that for every ordinal $alpha$,
+  Let $F$ be a class function that assigns to each ordinal $alpha$
+  an element $F(alpha, g)$, where $g$ is a function with domain
+  $alpha$. Then there exists a unique class function $G$ with domain
+  $"Ord"$ such that for every ordinal $alpha$,
 
   $
     G(alpha) = F(alpha, G|_alpha),
   $
 
   where $G|_alpha$ is the restriction of $G$ to the domain $alpha$.
-]
+] <thm:transfinite-recursion>
 
 == Ordinal Arithmetic
+
+Ordinal addition, multiplication and exponentiation are defined by
+#link(<thm:transfinite-recursion>)[transfinite recursion] on the
+right argument.
+
+#definition(name: "Ordinal Addition")[
+  For ordinals $alpha, beta$:
+  + $alpha + 0 = alpha$;
+  + $alpha + (beta + 1) = (alpha + beta) + 1$;
+  + $alpha + lambda = union.big_(beta < lambda) (alpha + beta)$ for
+    a nonzero limit ordinal $lambda$.
+] <def:ordinal-addition>
+
+#definition(name: "Ordinal Multiplication")[
+  For ordinals $alpha, beta$:
+  + $alpha dot 0 = 0$;
+  + $alpha dot (beta + 1) = alpha dot beta + alpha$;
+  + $alpha dot lambda = union.big_(beta < lambda) (alpha dot beta)$
+    for a nonzero limit ordinal $lambda$.
+] <def:ordinal-multiplication>
+
+#definition(name: "Ordinal Exponentiation")[
+  For ordinals $alpha, beta$:
+  + $alpha^0 = 1$;
+  + $alpha^(beta+1) = alpha^beta dot alpha$;
+  + $alpha^lambda = union.big_(beta < lambda) alpha^beta$ for a
+    nonzero limit ordinal $lambda$.
+] <def:ordinal-exponentiation>
+
+#property(name: "Laws of Ordinal Arithmetic")[
+  Ordinal arithmetic is *associative* but *not commutative* and
+  *left-distributive* but not right-distributive:
+  + Associativity: $(alpha + beta) + gamma = alpha + (beta + gamma)$,
+    $(alpha dot beta) dot gamma = alpha dot (beta dot gamma)$.
+  + Left-distributivity: $alpha dot (beta + gamma) = alpha dot beta +
+    alpha dot gamma$.
+  + Non-commutativity: $1 + omega = omega != omega + 1$,
+    $2 dot omega = omega != omega dot 2 = omega + omega$.
+  + Failure of right-distributivity:
+    $(omega + 1) dot 2 = omega + 1 + omega + 1 = omega + (1 + omega)
+    + 1 = omega + omega + 1$,
+    while $omega dot 2 + 1 dot 2 = omega + omega + 1$ only if
+    distributivity held; in fact $1 dot 2 = 2$ and the right side
+    becomes $omega dot 2 + 2 = omega + omega + 2 != omega + omega +
+    1$.
+] <prop:ordinal-arithmetic-laws>
 
 #theorem(name: "Cantor's Normal Form")[
   Every ordinal $alpha > 0$ can be uniquely expressed in the form
@@ -719,80 +802,269 @@ Ordinals can be classified into three types:
     alpha = omega^beta_1 dot c_1 + omega^beta_2 dot c_2 + dots + omega^beta_n dot c_n,
   $
 
-  where $n$ is a positive integer, $c_1, c_2, dots, c_n$ are positive integers, and $beta_1 > beta_2 > dots > beta_n$ are ordinals.
+  where $n$ is a positive integer, $c_1, c_2, dots, c_n$ are positive
+  integers, and $beta_1 > beta_2 > dots > beta_n$ are ordinals.
+] <thm:cantor-normal-form>
+
+#note[
+  Cantor's Normal Form is the ordinal analogue of base-$omega$
+  representation; it is the key tool for computations in ordinal
+  arithmetic.
 ]
 
 
 
 = Cardinals
 
-== Cardinality
-=== Equinumerosity and Cardinality
-#definition(name: "Equinumerosity and Cardinality")[
-  Two sets $A$ and $B$ are said to be *equinumerous* (or have the same cardinality), denoted by $A tilde B$, if there exists a bijection $f : A -> B$.
+== Cardinality and Equinumerosity
 
-  The *cardinality* of a set $A$ is the least ordinal $kappa$ such that $A tilde kappa$, denoted by $|A|$ (or $"card"(A)$, $overline(overline(A))$).
-]
+#definition(name: "Equinumerosity and Cardinality")[
+  Two sets $A$ and $B$ are said to be *equinumerous* (or have the same
+  *cardinality*), denoted by $A tilde B$, if there exists a bijection
+  $f : A -> B$.
+
+  The *cardinality* of a set $A$ is the least ordinal $kappa$ such
+  that $A tilde kappa$, denoted by $|A|$ (or $"card"(A)$,
+  $overline(overline(A))$).
+] <def:equinumerosity>
 
 #definition(name: "Aleph Numbers")[
-  The *aleph numbers* are a sequence of cardinal numbers defined as follows:
+  The *aleph numbers* are a sequence of cardinal numbers defined as
+  follows:
 
-  - $aleph_0$ is the cardinality of the set of natural numbers $bb(N)$.
-  - For any ordinal $alpha$, $aleph_(alpha + 1)$ is the least cardinal number greater than $aleph_alpha$.
-  - For any limit ordinal $lambda$, $aleph_lambda = sup{aleph_beta | beta < lambda}$.
-]
+  - $aleph_0$ is the cardinality of $bb(N)$.
+  - For any ordinal $alpha$, $aleph_(alpha + 1)$ is the least cardinal
+    number greater than $aleph_alpha$.
+  - For any limit ordinal $lambda$,
+    $aleph_lambda = sup {aleph_beta | beta < lambda}$.
+] <def:aleph-numbers>
 
+#definition(name: "Cardinal Comparison")[
+  Write $|A| <= |B|$ if there is an injection $A -> B$, and
+  $|A| < |B|$ if $|A| <= |B|$ but $|A| != |B|$ (no bijection). The
+  relation $<=$ on cardinals is a
+  #link(<def:total-order>)[total order] (a consequence of the
+  #link(<thm:well-ordering>)[Well-Ordering Theorem]).
+] <def:cardinal-comparison>
 
+== Countable and Uncountable Sets
 
 #definition(name: "Countable and Uncountable Sets")[
-  A set $A$ is called *countable* if $|A| <= aleph_0$, i.e., there exists an injection from $A$ to $bb(N)$.
-  A set is called *uncountable* if it is not countable, i.e., its cardinality is greater than $aleph_0$.
-]
+  A set $A$ is called *countable* if $|A| <= aleph_0$, i.e., there
+  exists an injection from $A$ to $bb(N)$. A set is called
+  *uncountable* if it is not countable, i.e., its cardinality is
+  greater than $aleph_0$.
+] <def:countable>
 
 #caution[
-  // 一些教材中要求可数集必须是无限集, 但我们这里认为有限集也是可数的.
-  In some textbooks, a countable set is defined as an infinite set that can be put into one-to-one correspondence with the natural numbers. However, in this book, we consider finite sets to be countable as well.
+  In some textbooks, a countable set is defined as an *infinite* set
+  that can be put into one-to-one correspondence with $bb(N)$. In this
+  book, we consider finite sets to be countable as well.
 ]
 
-#proposition[
-  + *$aleph_0$ is the smallest infinite cardinal*: Any infinite set contains a countable subset.
-  + *Character of infinite sets*: $A$ is infinite if and only if $A$ is equinumerous to a proper subset of itself.
-  + *Character of uncountable sets*: $A$ is uncountable if and only if $A$ is infinite and $A tilde B$ for every countable subset $B subset A$.
-  + *Cantor's Theorem*: $|A| < |scr(P)(A)|$ for any set $A$.
-  + *Countable union of countable sets*: The countable union of countable sets is countable.
+#proposition(name: "Basic Facts on Cardinals")[
+  + *$aleph_0$ is the smallest infinite cardinal*: Any infinite set
+    contains a countable subset.
+  + *Characterisation of infinite sets*: $A$ is infinite if and only
+    if $A$ is equinumerous to a proper subset of itself.
+  + *Characterisation of uncountable sets*: $A$ is uncountable if and
+    only if $A$ is infinite and $A$ is not equinumerous to any
+    countable subset $B subset A$.
+  + *#link(<thm:cantor>)[Cantor's Theorem]*:
+    $|A| < |scr(P)(A)|$ for any set $A$.
+  + *Countable union of countable sets*: The countable union of
+    countable sets is countable.
+] <prop:cardinal-facts>
+
+#proof[
+  (1) Pick $a_0 in A$; since $A$ is infinite, $A - {a_0}$ is
+  non-empty, pick $a_1$ from it; continue. This recursion defines an
+  injection $n mapsto a_n$ from $bb(N)$ into $A$.
+
+  (4) The map $a mapsto {a}$ is an injection $A -> scr(P)(A)$, so
+  $|A| <= |scr(P)(A)|$. For the reverse, suppose for contradiction
+  that a bijection $f : A -> scr(P)(A)$ exists. Define
+  $D = {a in A | a in.not f(a)}$. Then $D subset.eq A$, so $D = f(d)$
+  for some $d in A$. But then $d in D "iff" d in.not f(d) = D$, a
+  contradiction.
+
+  (5) Index the family as ${A_n}_{n in bb(N)}$. For each $n$ choose
+  an injection $f_n : A_n -> bb(N)$ (this uses the
+  #link(<axiom:choice>)[Axiom of Choice] for countably many choices).
+  The map $(n, a) mapsto 2^n (2 f_n(a) + 1)$ injects $union.big_n A_n$
+  into $bb(N)$ by unique prime factorisation.
 ]
 
+#theorem(name: "Cantor's Theorem")[
+  For any set $A$, $|A| < |scr(P)(A)|$.
+] <thm:cantor>
 
-=== Cantor-Bernstein-Schröder Theorem
+== Cantor-Bernstein-Schröder Theorem
 
 #lemma(name: "Banach's Decomposition Lemma")[
-  Let $f: X -> Y$ and $g: Y -> X$ be mappings.
-  Then there exist disjoint decompositions of $X$ and $Y$:
+  Let $f: X -> Y$ and $g: Y -> X$ be mappings. Then there exist
+  disjoint decompositions of $X$ and $Y$:
   $
     X = A union overline(A), quad Y = B union overline(B),
   $
-  such that $f(A) = B$, $g(B) = overline(A)$, $A inter overline(A) = emptyset$, and $B inter overline(B) = emptyset$.
+  such that $f(A) = B$, $g(B) = overline(A)$, $A inter overline(A) =
+  emptyset$, and $B inter overline(B) = emptyset$.
+] <lem:banach-decomposition>
+
+#proof[
+  Call a subset $C subset.eq X$ *good* if $C inter g(Y - f(C))
+  = emptyset$, i.e., $C$ and $g(Y - f(C))$ are disjoint. The
+  union of any chain of good subsets is good, so by
+  #link(<thm:zorn>)[Zorn's Lemma] (or directly by taking the union of
+  all good subsets) there is a maximal good subset $A subset.eq X$.
+  Define $B = f(A)$ and $overline(A) = g(Y - B)$. Then $A$ and
+  $overline(A)$ partition $X$, $B$ and $overline(B) = Y - B$
+  partition $Y$, and $g(overline(B)) = overline(A)$ by maximality.
 ]
 
 #theorem(name: "Cantor-Bernstein-Schröder Theorem")[
-  If there exist injections $f : A -> B$ and $g : B -> A$, then there exists a bijection $h : A -> B$.
-  In other words, $|A| = |B|$.
-]
+  If there exist injections $f : A -> B$ and $g : B -> A$, then there
+  exists a bijection $h : A -> B$. In other words, $|A| = |B|$.
+] <thm:cantor-bernstein>
 
+#proof[
+  By the #link(<lem:banach-decomposition>)[Banach Decomposition Lemma]
+  applied to $f$ and $g$, decompose
+  $A = A_0 union overline(A_0)$, $B = B_0 union overline(B_0)$ with
+  $f(A_0) = B_0$ and $g(overline(B_0)) = overline(A_0)$. Then $f$
+  bijects $A_0$ onto $B_0$, and $g^(-1)$ bijects $overline(A_0)$ onto
+  $overline(B_0)$. Piecing them together gives a bijection
+  $
+    h(a) = cases(f(a) "if" a in A_0, g^(-1)(a) "if" a in overline(A_0)).
+  $
+]
 
 #exercise[
   Prove:
   + If $A$ is countable and $B$ is infinite, then $A union B tilde B$.
-  + $QQ$ is countable (in multiple ways).
+  + $bb(Q)$ is countable (in multiple ways).
   + $[0, 1]$, $[0, 1)$ are uncountable.
-]
-
+] <ex:cardinality-exercises>
 
 == Cardinal Arithmetic
 
+#definition(name: "Cardinal Arithmetic")[
+  Let $kappa, lambda$ be cardinals.
+  + *Sum*: $kappa + lambda = |kappa union^* lambda|$, where
+    $union^*$ denotes disjoint union (e.g.
+    $kappa times {0} union lambda times {1}$).
+  + *Product*: $kappa dot lambda = |kappa times lambda|$.
+  + *Exponentiation*: $kappa^lambda = |kappa^lambda|$, the cardinality
+    of the set of all functions $lambda -> kappa$.
+] <def:cardinal-arithmetic>
+
+#property(name: "Laws of Cardinal Arithmetic")[
+  + Commutativity: $kappa + lambda = lambda + kappa$, $kappa dot
+    lambda = lambda dot kappa$.
+  + Associativity and distributivity hold as for cardinals.
+  + *Absorption*: $kappa + lambda = kappa dot lambda = max(kappa,
+    lambda)$ for infinite $kappa, lambda$, provided at least one is
+    nonzero.
+  + $kappa^0 = 1$, $kappa^1 = kappa$, $1^kappa = 1$,
+    $kappa^(lambda + mu) = kappa^lambda dot kappa^mu$,
+    $(kappa^lambda)^mu = kappa^(lambda dot mu)$.
+] <prop:cardinal-arithmetic-laws>
+
+#theorem(name: "Cantor's Diagonal Argument for $2^aleph_0$")[
+  $|bb(R)| = 2^(aleph_0)$, and $aleph_0 < 2^(aleph_0)$.
+] <thm:continuum>
+
+#proof[
+  Identify $bb(R)$ with $scr(P)(bb(N))$ via characteristic functions
+  (mod countable/finite adjustments). Then
+  $|bb(R)| = |scr(P)(bb(N))| = 2^(aleph_0)$. The inequality
+  $aleph_0 < 2^(aleph_0)$ is #link(<thm:cantor>)[Cantor's Theorem].
+]
+
+#definition(name: "Continuum Hypothesis")[
+  The *Continuum Hypothesis* (CH) is the statement
+  $2^(aleph_0) = aleph_1$. The *Generalised Continuum Hypothesis*
+  (GCH) is the statement $2^(aleph_kappa) = aleph_(kappa + 1)$ for
+  every ordinal $kappa$.
+] <def:ch>
+
+#note[
+  CH is independent of ZFC (Gödel 1938: $L models dash(C)$; Cohen 1963:
+  forcing gives a model of ZFC $+ not("CH")$). Thus CH can neither be
+  proved nor disproved within ZFC.
+]
+
 == The Canonical Well-Ordering of $alpha times alpha$
 
+#theorem(name: "Canonical Well-Ordering of $alpha times alpha$")[
+  For every ordinal $alpha$, there is a well-ordering $prec$ of
+  $alpha times alpha$ such that for any $beta < alpha$, the initial
+  segment determined by $(beta, beta)$ has cardinality less than
+  $max(|beta|, aleph_0)$. In particular, $|alpha times alpha| =
+  |alpha|$ for every infinite ordinal $alpha$.
+] <thm:canonical-well-ordering>
+
+#proof[
+  Order pairs $(gamma, delta) in alpha times alpha$ by *max first*:
+  $(gamma_1, delta_1) prec (gamma_2, delta_2)$ if
+  $max(gamma_1, delta_1) < max(gamma_2, delta_2)$, or the maxima are
+  equal and $gamma_1 < gamma_2$, or both equal and $delta_1 < delta_2$.
+  The initial segment below $(beta, beta)$ is contained in
+  $(beta + 1) times (beta + 1)$, which has cardinality at most
+  $|beta + 1| dot |beta + 1|$. For infinite $beta$ this equals
+  $|beta|$ by induction on $beta$. Hence the whole product
+  $alpha times alpha$ has cardinality $|alpha|$ for infinite $alpha$.
+]
+
+#corollary(name: "Cardinal Multiplication is Idempotent")[
+  For every infinite cardinal $kappa$, $kappa dot kappa = kappa$.
+  Consequently, $kappa + kappa = kappa$ and $kappa dot lambda =
+  max(kappa, lambda)$ for infinite $kappa, lambda$ with $lambda != 0$.
+] <cor:cardinal-idempotent>
+
 == Cofinality
+
+#definition(name: "Cofinality")[
+  Let $alpha$ be an ordinal. A subset $C subset.eq alpha$ is
+  *cofinal* in $alpha$ if for every $beta < alpha$ there exists
+  $gamma in C$ with $beta <= gamma$. The *cofinality* of $alpha$,
+  written $"cf"(alpha)$, is the least ordinal $kappa$ such that $alpha$
+  has a cofinal subset of order type $kappa$.
+] <def:cofinality>
+
+#definition(name: "Regular and Singular Cardinals")[
+  An infinite cardinal $kappa$ is *regular* if $"cf"(kappa) = kappa$,
+  and *singular* otherwise.
+] <def:regular-singular>
+
+#property(name: "Basic Properties of Cofinality")[
+  + $"cf"(alpha) <= alpha$ for every ordinal $alpha$.
+  + $"cf"("cf"(alpha)) = "cf"(alpha)$; in particular $"cf"(alpha)$ is
+    always a regular cardinal.
+  + $aleph_0$ is regular.
+  + $"cf"(aleph_omega) = aleph_0$ (since
+    $aleph_omega = sup_n aleph_n$), so $aleph_omega$ is singular.
+  + For every cardinal $kappa$, $"cf"(2^kappa) > kappa$. In
+    particular $"cf"(2^(aleph_0)) > aleph_0$.
+] <prop:cofinality-facts>
+
+#theorem(name: "König's Theorem")[
+  Let ${kappa_i}_{i in I}$ and ${lambda_i}_{i in I}$ be families of
+  cardinals with $kappa_i < lambda_i$ for each $i in I$. Then
+  $
+    sum_(i in I) kappa_i < product_(i in I) lambda_i.
+  $
+] <thm:konig>
+
+#corollary(name: "Cofinality of $2^aleph_0$")[
+  $"cf"(2^(aleph_0)) > aleph_0$.
+] <cor:cf-continuum>
+
+#note[
+  König's Theorem is the cardinal analogue of Cantor's diagonal
+  argument and is the key tool for proving lower bounds on
+  cofinalities of power sets.
+]
 
 #part("Real Numbers and Point Sets in Euclidean Space")
 
@@ -1115,11 +1387,40 @@ The number of these endpoints is countable, but there are many other non-endpoin
 #part("Appendix")
 = Glossary
 
+== C
+- *#link(<def:cardinal-arithmetic>)[Cardinal Arithmetic]*
+- *#link(<def:cardinal-comparison>)[Cardinal Comparison]*
+- *#link(<thm:cantor-bernstein>)[Cantor-Bernstein-Schröder Theorem]*
+- *#link(<thm:cantor>)[Cantor's Theorem]*
+- *#link(<thm:cantor-normal-form>)[Cantor's Normal Form]*
+- *#link(<def:ch>)[Continuum Hypothesis]*
+- *#link(<def:countable>)[Countable and Uncountable Sets]*
+- *#link(<def:cofinality>)[Cofinality]*
+
+== E
+- *#link(<def:equinumerosity>)[Equinumerosity and Cardinality]*
+- *#link(<def:equivalence-class>)[Equivalence Class]*
+
 == L
 - *#link(<def:limit-of-sequence-of-sets>)[Limit of a Sequence of Sets]*
 
 == O
 - *#link(<thm:open-set-construction>)[Open Set Construction Theorem]*
+- *#link(<def:ordinal>)[Ordinal]*
+- *#link(<def:ordinal-addition>)[Ordinal Addition]*
+- *#link(<def:ordinal-multiplication>)[Ordinal Multiplication]*
+- *#link(<def:ordinal-exponentiation>)[Ordinal Exponentiation]*
+
+== P
+- *#link(<def:partition>)[Partition]*
+- *#link(<def:poset>)[Poset]*
+- *#link(<def:preorder>)[Preordered Set]*
+
+== R
+- *#link(<def:regular-singular>)[Regular and Singular Cardinals]*
+
+== Z
+- *#link(<thm:zorn>)[Zorn's Lemma]*
 
 #bibliography("references.bib")
 
