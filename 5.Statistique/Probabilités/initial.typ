@@ -216,8 +216,8 @@ derive everything else from it.
   combinatorial bookkeeping must match it.
 ] <ex:balls-sampling>
 
-#example[
-  (Matching problem.) $n$ gentlemen check their hats; the hats are returned at
+#example(name: "Matching problem")[
+  $n$ gentlemen check their hats; the hats are returned at
   random, one to each. What is the probability that *at least one* gentleman
   receives his own hat? Let $A_i$ be the event that gentleman $i$ gets his
   own hat. The event of interest is $union.big_(i=1)^n A_i$, and the
@@ -245,8 +245,8 @@ derive everything else from it.
   where $m$ is length, area or volume as appropriate.
 ] <def:geometric-probability>
 
-#example[
-  (The meeting problem.) Two friends agree to meet at a fixed spot between
+#example(name: "Meeting problem")[
+  Two friends agree to meet at a fixed spot between
   noon and $1$ pm; each arrives at a time uniformly distributed over the
   hour, independently of the other, and waits $15$ minutes before leaving.
   What is the probability that they meet? Model the two arrival times by a
@@ -267,8 +267,8 @@ derive everything else from it.
   supplement: [Fig.],
 ) <fig:meeting-problem>
 
-#example[
-  (Buffon's needle.) A floor is ruled with parallel lines at spacing $d$.
+#example(name: "Buffon's needle")[
+  A floor is ruled with parallel lines at spacing $d$.
   A needle of length $ell < d$ is dropped at random. What is the probability
   that it crosses a line?
 
@@ -303,8 +303,8 @@ derive everything else from it.
   supplement: [Fig.],
 ) <fig:buffon-needle>
 
-#example[
-  (Bertrand's paradox.) Choose "a chord of a circle at random" and ask for
+#example(name: "Bertrand's paradox")[
+  Choose "a chord of a circle at random" and ask for
   the probability that it is longer than the side of the inscribed equilateral
   triangle. Three natural-sounding randomization mechanisms give three
   different answers (see @fig:bertrand-paradox):
@@ -566,8 +566,8 @@ content.
   $
 ] <ex:inclusion-exclusion-prob>
 
-#example[
-  (Pólya's urn.) An urn initially contains $a$ red and $b$ black balls. At
+#example(name: "Pólya's urn")[
+  An urn initially contains $a$ red and $b$ black balls. At
   each step one ball is drawn uniformly at random, its colour is noted, and
   it is returned together with $c$ additional balls of the *same colour*.
   Remarkably, the probability of drawing a red ball at step $k$ equals
@@ -645,8 +645,8 @@ sequential computations.
   apply the induction hypothesis to the product.
 ]
 
-#example[
-  (Drawing lots is fair.) $n$ people draw lots from a box containing one
+#example(name: "Drawing lots is fair")[
+  $n$ people draw lots from a box containing one
   winning slip and $n - 1$ blanks, one after another without replacement.
   Intuition suggests — and suspicion doubts — that drawing early is
   advantageous. Let $W_i$ be the event that person $i$ wins. By
@@ -706,8 +706,8 @@ Conditional probabilities come with a dividend: the reduced space can be
   probability.
 ]
 
-#example[
-  (Medical screening.) A disease affects $0.1%$ of a population. A test has
+#example(name: "Medical screening")[
+  A disease affects $0.1%$ of a population. A test has
   sensitivity $P(+ | D) = 0.99$ (a sick person tests positive with
   probability $99%$) and specificity $P(- | overline(D)) = 0.99$ (a
   healthy person tests negative with probability $99%$). A randomly chosen
@@ -805,8 +805,8 @@ For more than two events, pairwise conditions do not suffice.
   An infinite family is mutually independent if every finite subfamily is.
 ] <def:mutual-independence>
 
-#example[
-  (Pairwise independence is not mutual independence.) Let
+#example(name: "Pairwise independence is not mutual independence")[
+  Let
   $Omega = {1, 2, 3, 4}$ with all outcomes equally likely, and set
   $A = {1, 2}$, $B = {1, 3}$, $C = {1, 4}$. Then
   $P(A) = P(B) = P(C) = 1 \/ 2$ and $A inter B = A inter C = B inter C =
@@ -850,8 +850,8 @@ The classical instance is repeated trials of the *same* experiment.
   principle established in the Combinatoire note.
 ] <def:bernoulli-trials>
 
-#example[
-  (At least one success.) In $n$ Bernoulli trials with success probability
+#example(name: "At least one success")[
+  In $n$ Bernoulli trials with success probability
   $p$, the probability of *at least one* success is
   $
     P("at least one" S) = 1 - P("all" F) = 1 - q^n.
@@ -1305,8 +1305,8 @@ When $g$ is monotone, a direct formula avoids the detour through the CDF.
   in the stated formula.
 ]
 
-#example[
-  (Linear transform.) Let $X ~ N(mu, sigma^2)$ and $Y = a X + b$ with
+#example(name: "Linear transform")[
+  Let $X ~ N(mu, sigma^2)$ and $Y = a X + b$ with
   $a != 0$. Then $h(y) = (y - b) / a$ and $h'(y) = 1 / a$, so
   $
     f_(Y)(y)
@@ -1549,8 +1549,8 @@ For *sums* of independent continuous variables, the integral form is the
   convergence) gives $f_(Z)(z) = integral f_(Y)(z - x) f_(X)(x) dif x$.
 ]
 
-#example[
-  (Sum of exponentials is Gamma.) Let $X_1, dots, X_n$ be i.i.d.
+#example(name: "Sum of exponentials is Gamma")[
+  Let $X_1, dots, X_n$ be i.i.d.
   $"Exp"(lambda)$. We prove by induction that $S_n = X_1 + dots + X_n ~
   "Ga"(n, lambda)$. The base case $n = 1$ is $"Exp"(lambda) = "Ga"(1,
     lambda)$. For the inductive step, assume $S_n ~ "Ga"(n, lambda)$ and
@@ -2049,8 +2049,8 @@ theorems: the Weak Law of Large Numbers (Part IV) is a direct corollary.
     $"Var"(X + Y) = "Var"(X) + "Var"(Y)$.
 ] <prop:uncorrelated-vs-independent>
 
-#example[
-  (Uncorrelated but dependent.) Let $X ~ U(-1, 1)$ and $Y = X^2$. Then
+#example(name: "Uncorrelated but dependent")[
+  Let $X ~ U(-1, 1)$ and $Y = X^2$. Then
   $"Cov"(X, Y) = E[X^3] - E[X] E[X^2] = 0 - 0 = 0$ (since $E[X^3] = 0$ by
   symmetry), yet $Y$ is a deterministic function of $X$ — far from
   independent.
@@ -2355,8 +2355,8 @@ independent variables, and analysing compound distributions.
   $
 ]
 
-#example[
-  (Compound Poisson.) If $N ~ "Pois"(lambda)$ and $X_i ~ "Pois"(mu)$,
+#example(name: "Compound Poisson")[
+  If $N ~ "Pois"(lambda)$ and $X_i ~ "Pois"(mu)$,
   then $S_N ~ "Pois"(lambda mu)$. Indeed
   $
     G_(S_N)(s) = G_(N)(G_(X)(s)) = exp(lambda (G_(X)(s) - 1)) = exp(lambda (exp(mu(s - 1)) - 1)) = exp(lambda mu (s - 1)),
@@ -2574,8 +2574,8 @@ $sum E[abs(X_k - mu_k)^(2+delta)] / s_n^(2+delta) -> 0$ for some
 $delta > 0$. The proof uses the same CF strategy as the i.i.d. case,
 but the Taylor expansion must control each term individually.
 
-#example[
-  (Normal approximation to the binomial.) A factory produces items with
+#example(name: "Normal approximation to the binomial")[
+  A factory produces items with
   defect rate $p = 0.05$. In a batch of $n = 1000$, what is
   $P(X >= 60)$ for $X ~ B(1000, 0.05)$?
 
@@ -2587,8 +2587,8 @@ but the Taylor expansion must control each term individually.
   approximation.
 ] <ex:normal-approximation>
 
-#example[
-  (CLT for sample means.) If $X_1, dots, X_n$ is a random sample from
+#example(name: "CLT for sample means")[
+  If $X_1, dots, X_n$ is a random sample from
   any distribution with mean $mu$ and variance $sigma^2$, then for large
   $n$ the sample mean $overline(X)_n$ is approximately normal:
   $
