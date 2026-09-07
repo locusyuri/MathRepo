@@ -14,7 +14,7 @@
   subtitle: "A notebook for combinatorics",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.1.0",
+  version: "v0.2.0",
   extra-info: "Migrated from LaTeX to Typst (single-file mode).",
 )
 
@@ -289,10 +289,7 @@ combinatorics.
 #example[
   The absorption and row-sum identities yield, for $n >= 1$,
   $
-    sum_(k=0)^n k C_n^k
-    = n sum_(k=1)^n C_(n-1)^(k-1)
-    = n sum_(j=0)^(n-1) C_(n-1)^j
-    = n 2^(n-1).
+    sum_(k=0)^n k C_n^k & = n sum_(k=1)^n C_(n-1)^(k-1) & = n sum_(j=0)^(n-1) C_(n-1)^j & = n 2^(n-1).
   $
 
   A bijective proof counts the pairs $(A, a)$ where $A$ is a subset of an
@@ -322,9 +319,8 @@ combinatorics.
 #theorem(name: "Multinomial Theorem")[
   For every integer $n >= 0$ and all $x_1, x_2, dots, x_k$,
   $
-    (x_1 + x_2 + dots + x_k)^n
-    = sum_(n_1 + dots + n_k = n)
-    binom(n, n_1, n_2, dots, n_k) x_1^(n_1) x_2^(n_2) dots x_k^(n_k),
+    (x_1 + x_2 + dots + x_k)^n & = sum_(n_1 + dots + n_k = n)
+                                 binom(n, n_1, n_2, dots, n_k) x_1^(n_1) x_2^(n_2) dots x_k^(n_k),
   $
   where the sum runs over all $k$-tuples of non-negative integers with total $n$.
 ] <thm:multinomial-theorem>
@@ -386,13 +382,13 @@ itself repeatedly until a pattern emerges.
   $
   by iteration:
   $
-    T(n) = 2 T(n-1) + 1
-    = 2^2 T(n-2) + 2 + 1
-    = 2^3 T(n-3) + 2^2 + 2 + 1
-    = dots
-    = 2^(n-1) T(1) + (2^(n-2) + dots + 2 + 1)
-    = 2^(n-1) + (2^(n-1) - 1)
-    = 2^n - 1.
+    T(n) &= 2 T(n-1) + 1
+    &= 2^2 T(n-2) + 2 + 1
+    &= 2^3 T(n-3) + 2^2 + 2 + 1
+    &= dots
+    &= 2^(n-1) T(1) + (2^(n-2) + dots + 2 + 1)
+    &= 2^(n-1) + (2^(n-1) - 1)
+    &= 2^n - 1.
   $
   The finite geometric sum $2^(n-2) + dots + 2 + 1 = 2^(n-1) - 1$ closes the
   computation. Iteration works best for first-order recurrences; higher-order
@@ -530,23 +526,51 @@ with constants $c_1, dots, c_k$ and $c_k != 0$.
 
 == Generating Functions
 
+A *generating function* packages an infinite sequence $(a_0, a_1, a_2, dots)$
+into a single analytic object — typically a formal power series in one
+variable — so that algebraic manipulations of the function correspond to
+combinatorial manipulations of the sequence. Addition of two such functions
+adds the sequences term-by-term; multiplication (the Cauchy product) yields
+the convolution, which encodes ordered pairs of sub-objects; differentiation
+shifts the index; evaluation and partial fractions extract coefficients. By
+translating counting problems into algebra, generating functions turn
+recurrence-driven guesswork into systematic machinery: the answer to a
+counting question is read off as a coefficient, often without ever closing
+the sequence in closed form.
+
+Three flavours cover most of combinatorics and number theory, differing only
+in the weighting assigned to the index.
+
 #definition(name: "Generating Functions")[
-  The *ordinary generating function* (OGF) of a sequence $(a_n)$ is
+  The *ordinary generating function* (OGF) of a sequence $(a_n)_(n>=0)$ is
   $
     G(a_n; x) = sum_(n=0)^infinity a_n x^n,
   $
-  where $x$ is an indeterminate.
+  the formal power series whose coefficient of $x^n$ records $a_n$ with weight
+  $1$. OGFs are the right tool for *unlabelled* structures, where objects of
+  size $n$ are counted without distinguishing their elements (e.g. partitions,
+  tilings, Catalan objects).
 
   The *exponential generating function* (EGF) is
   $
-    E(a_n; x) = sum_(n=0)^infinity (a_n / n!) x^n.
+    E(a_n; x) = sum_(n=0)^infinity (a_n / n!) x^n,
   $
+  where each $a_n$ is weighted by $1 \/ n!$. The division by $n!$ absorbs the
+  $n!$ permutations of an $n$-element set, so EGFs are natural for
+  *labelled* structures (e.g. permutations, set partitions, labelled trees);
+  the product of two EGFs is the exponential formula, building an ordered pair
+  of labelled sub-structures with a binomial factor accounting for splitting
+  the labels.
 
   The *Dirichlet generating function* (DGF) is
   $
     D(a_n; s) = sum_(n=1)^infinity a_n / n^s,
   $
-  where $s$ is a complex variable.
+  where $s$ is a complex variable and the index is weighted by $1 \/ n^s$.
+  DGFs are tailored to multiplicative number theory: their product encodes
+  Dirichlet convolution, which is the arithmetic of divisors underlying
+  #link(<thm:mobius-inversion>)[Möbius inversion] (e.g. $zeta(s)$ and
+  $1 \/ zeta(s)$ for the constant sequence and the Mobius function).
 ] <def:generating-functions>
 
 === Solving Recurrence Relations Using Generating Functions
@@ -579,8 +603,7 @@ by powers of $x$ and summing converts the recurrence into a closed equation.
   $F(x) = sum_(n>=0) F_n x^n$. Summing $F_n = F_(n-1) + F_(n-2)$ for $n >= 2$
   against $x^n$:
   $
-    F(x) - F_0 - F_1 x
-    = x sum_(n>=2) F_(n-1) x^(n-1) + x^2 sum_(n>=2) F_(n-2) x^(n-2).
+    F(x) - F_0 - F_1 x & = x sum_(n>=2) F_(n-1) x^(n-1) + x^2 sum_(n>=2) F_(n-2) x^(n-2).
   $
   With $F_0 = 0$, $F_1 = 1$ both tail sums equal $F(x)$, so
   $
@@ -661,9 +684,7 @@ formula — arguably the birth certificate of the subject.
   many copies of $k$ the partition contains, the generating function factors
   as a Cauchy product over all part sizes:
   $
-    sum_(n>=0) p(n) x^n
-    = product_(k=1)^infinity (1 + x^k + x^(2k) + dots)
-    = product_(k=1)^infinity 1 / (1 - x^k),
+    sum_(n>=0) p(n) x^n & = product_(k=1)^infinity (1 + x^k + x^(2k) + dots) & = product_(k=1)^infinity 1 / (1 - x^k),
   $
   by #link(<prop:gf-operations>)[the Cauchy product rule] extended to
   infinitely many factors, valid formally since the coefficient of $x^n$
@@ -721,8 +742,8 @@ versus odd parts.
   Using the identity $1 + x^k = (1 - x^(2k)) / (1 - x^k)$,
   $
     product_(k=1)^infinity (1 + x^k)
-    = product_(k=1)^infinity (1 - x^(2k)) / (1 - x^k)
-    = product_(k=1)^infinity 1 / (1 - x^(2k - 1)),
+    &= product_(k=1)^infinity (1 - x^(2k)) / (1 - x^k)
+    &= product_(k=1)^infinity 1 / (1 - x^(2k - 1)),
   $
   because the even factors $1 - x^(2k)$ cancel against the same factors
   appearing in the denominator. The two generating functions coincide, hence
@@ -745,11 +766,10 @@ versus odd parts.
 #theorem(name: "Inclusion-Exclusion Principle")[
   Let $A_1, A_2, dots, A_n$ be finite sets. Then
   $
-    abs(union.big_(i=1)^n A_i)
-    = sum_(i=1)^n abs(A_i)
-    - sum_(1 <= i < j <= n) abs(A_i inter A_j)
-    + sum_(1 <= i < j < k <= n) abs(A_i inter A_j inter A_k)
-    - dots + (-1)^(n+1) abs(A_1 inter A_2 inter dots inter A_n).
+    abs(union.big_(i=1)^n A_i) & = sum_(i=1)^n abs(A_i)
+                                 - sum_(1 <= i < j <= n) abs(A_i inter A_j)
+                                 + sum_(1 <= i < j < k <= n) abs(A_i inter A_j inter A_k)
+                                 - dots + (-1)^(n+1) abs(A_1 inter A_2 inter dots inter A_n).
   $
 
   Denote
@@ -772,10 +792,7 @@ versus odd parts.
   $x in.not A_(m+1), dots, A_n$. Then $x$ contributes to exactly those $S_k$
   indexed by $k$-subsets of ${1, dots, m}$, hence its total contribution is
   $
-    sum_(k=1)^m (-1)^(k+1) binom(m, k)
-    = 1 - sum_(k=0)^m (-1)^k binom(m, k)
-    = 1 - (1 - 1)^m
-    = 1,
+    sum_(k=1)^m (-1)^(k+1) binom(m, k) & = 1 - sum_(k=0)^m (-1)^k binom(m, k) & = 1 - (1 - 1)^m & = 1,
   $
   as required. The alternating sum therefore counts $union A_i$ exactly.
 ]
@@ -791,10 +808,9 @@ $
 $
 
 $
-  abs(A_1 union A_2 union A_3)
-  = abs(A_1) + abs(A_2) + abs(A_3)
-  - abs(A_1 inter A_2) - abs(A_1 inter A_3) - abs(A_2 inter A_3)
-  + abs(A_1 inter A_2 inter A_3).
+  abs(A_1 union A_2 union A_3) & = abs(A_1) + abs(A_2) + abs(A_3)
+                                 - abs(A_1 inter A_2) - abs(A_1 inter A_3) - abs(A_2 inter A_3)
+                                 + abs(A_1 inter A_2 inter A_3).
 $
 
 #corollary(name: "Complement Form")[
@@ -802,9 +818,7 @@ $
   $S_0 = abs(U)$. The number of elements of $U$ lying in *none* of the $A_i$
   is
   $
-    abs(inter.big_(i=1)^n overline(A_i))
-    = abs(U) - abs(union.big_(i=1)^n A_i)
-    = sum_(k=0)^n (-1)^k S_k,
+    abs(inter.big_(i=1)^n overline(A_i)) & = abs(U) - abs(union.big_(i=1)^n A_i) & = sum_(k=0)^n (-1)^k S_k,
   $
   where $overline(A_i) = U backslash A_i$. In applications this "count the
   complement" form is often the most efficient: rather than counting the good
@@ -820,8 +834,7 @@ $
   $S_k = binom(n, k) (n - k)!$. By #link(<cor:complement-form>)[the complement
     form],
   $
-    D_n = sum_(k=0)^n (-1)^k binom(n, k) (n - k)!
-    = n! sum_(k=0)^n (-1)^k / k!.
+    D_n & = sum_(k=0)^n (-1)^k binom(n, k) (n - k)! & = n! sum_(k=0)^n (-1)^k / k!.
   $
   Since $sum_(k=0)^n (-1)^k / k! -> 1 \/ e$ extremely fast, $D_n$ is the
   nearest integer to $n! \/ e$ for all $n >= 1$, and the probability that a
@@ -836,9 +849,8 @@ $
   contributing $n / (p_(i_1) dots p_(i_k))$ to $S_k$. By
   #link(<cor:complement-form>)[the complement form],
   $
-    phi(n) = n sum_(I subset.eq {1, dots, r}) (-1)^(abs(I))
-    1 / (product_(i in I) p_i)
-    = n product_(i=1)^r (1 - 1 / p_i).
+    phi(n) & = n sum_(I subset.eq {1, dots, r}) (-1)^(abs(I))
+             1 / (product_(i in I) p_i) & = n product_(i=1)^r (1 - 1 / p_i).
   $
   We will rederive this formula by Möbius inversion in
   #link(<ex:mobius-phi>)[a later example].
@@ -874,14 +886,20 @@ Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
 ] <def:arithmetic-function>
 
 #definition(name: "Mobius Function")[
-  The Mobius function $mu(n)$ is defined by
+  Writing the prime factorisation of $n$ as
+  $
+    n = p_1^(a_1) p_2^(a_2) dots p_k^(a_k),
+  $
+  the *Mobius function* $mu: NN^* -> {-1, 0, 1}$ is defined by
   $
     mu(n) = cases(
       1 "if " n = 1,
-      (-1)^k "if " n " is a product of " k " distinct primes,",
-      0 "if " n " has a squared prime factor."
+      0 "if " exists_i (a_i >= 2) ("(squared prime factor)"),
+      (-1)^k "if " a_1 = a_2 = dots = a_k = 1 ("(square-free)").
     ).
   $
+  Equivalently, $mu(n) = (-1)^k$ when $n$ is a product of $k$ distinct
+  primes, $mu(1) = 1$, and $mu(n) = 0$ as soon as $p^2 | n$ for some prime $p$.
 ] <def:mobius-function>
 
 The key property of $mu$ is that its divisor sums vanish away from $1$.
@@ -898,9 +916,7 @@ The key property of $mu$ is that its divisor sums vanish away from $1$.
   and these are exactly the products $d_I = product_(i in I) p_i$ over subsets
   $I subset.eq {1, dots, r}$. Hence
   $
-    sum_(d | n) mu(d)
-    = sum_(I subset.eq {1, dots, r}) (-1)^(abs(I))
-    = (1 - 1)^r,
+    sum_(d | n) mu(d) & = sum_(I subset.eq {1, dots, r}) (-1)^(abs(I)) & = (1 - 1)^r,
   $
   which is $1$ when $r = 0$ (i.e. $n = 1$) and $0$ otherwise.
 ]
@@ -921,9 +937,7 @@ The key property of $mu$ is that its divisor sums vanish away from $1$.
   Substitute the formula for $g$ into the claimed inversion and interchange
   the order of summation:
   $
-    sum_(d | n) mu(d) g(n / d)
-    = sum_(d | n) mu(d) sum_(e | n / d) f(e)
-    = sum_(e | n) f(e) sum_(d | n / e) mu(d).
+    sum_(d | n) mu(d) g(n / d) & = sum_(d | n) mu(d) sum_(e | n / d) f(e) & = sum_(e | n) f(e) sum_(d | n / e) mu(d).
   $
   By #link(<lem:mobius-sum>)[the divisor-sum lemma] the inner sum is $1$
   precisely when $n \/ e = 1$, i.e. $e = n$, and vanishes otherwise. Only the
@@ -937,12 +951,18 @@ The key property of $mu$ is that its divisor sums vanish away from $1$.
     sum_(d | n) phi(d) = n:
   $
   the integers with $gcd(m, n) = d$ are exactly $m = d m'$ with
-  $gcd(m', n \/ d) = 1$, and there are $phi(n \/ d)$ of those. Applying
-  #link(<thm:mobius-inversion>)[Möbius inversion] to $g(n) = n$ yields
+  $gcd(m', n \/ d) = 1$, and there are $phi(n \/ d)$ of those. This is a
+  *Dirichlet convolution*: in the notation $f * g$ for the Dirichlet sum
+  $(f * g)(n) = sum_(d | n) f(d) g(n / d)$, the identity reads
+  $phi * 1 = "id"$, where $"id"(n) = n$ is the identity function.
+  Applying #link(<thm:mobius-inversion>)[Möbius inversion] — equivalently
+  convolving both sides by $mu$ on the left, since $mu * 1 = epsilon$ is the
+  Dirichlet identity $epsilon(n) = cases(1 "if" n=1, 0 "if" n>1)$ — yields
   $
-    phi(n) = sum_(d | n) mu(d) n / d
-    = n sum_(d | n, d " square-free") mu(d) / d
-    = n product_(p | n) (1 - 1 / p),
+    phi = mu * "id", quad text("i.e.") quad
+    phi(n) &= sum_(d | n) mu(d) n / d
+    &= n sum_(d | n, d " square-free") mu(d) / d
+    &= n product_(p | n) (1 - 1 / p),
   $
   the last step because the square-free divisors of $n$ are the products of
   subsets of its prime divisors. Two independent routes to one formula.
@@ -950,10 +970,18 @@ The key property of $mu$ is that its divisor sums vanish away from $1$.
 
 == Generalizations of Inclusion-Exclusion
 
-The divisor lattice underlying #link(<thm:mobius-inversion>)[Möbius inversion]
-is one instance of a general phenomenon: on any finite partially ordered set,
-an inversion formula of the same shape exists, and for the Boolean lattice it
-reduces exactly to #link(<thm:inclusion-exclusion>)[inclusion-exclusion].
+The *Möbius inversion* on a poset is the *general framework* unifying all
+the "alternating-sum inversion" results in combinatorics: choose the poset
+$P$, compute its $mu_(P)$, and the inversion formula
+#link(<thm:poset-mobius-inversion>)[below] specialises to whatever
+counting principle one needs. The divisor lattice $(NN^*, |)$ recovers
+#link(<thm:mobius-inversion>)[arithmetic Möbius inversion]; the Boolean
+lattice of subsets reduces exactly to
+#link(<thm:inclusion-exclusion>)[inclusion-exclusion] (see
+#link(<ex:boolean-lattice-ie>)[the Boolean lattice note]); the lattice of subspaces of a finite vector space,
+the partition lattice, and the integer-interval lattice each give their own
+inversion identities. The cost of abstraction is paid once, the dividends
+are collected everywhere.
 
 #definition(name: "Möbius Function of a Poset")[
   Let $(P, <=)$ be a finite partially ordered set. The *Möbius function*
@@ -982,8 +1010,8 @@ reduces exactly to #link(<thm:inclusion-exclusion>)[inclusion-exclusion].
   Substitute the expression for $F$ and interchange the sums:
   $
     sum_(y >= x) mu_(P)(x, y) F(y)
-    = sum_(y >= x) mu_(P)(x, y) sum_(z >= y) G(z)
-    = sum_(z >= x) (sum_(x <= y <= z) mu_(P)(x, y)) G(z).
+    &= sum_(y >= x) mu_(P)(x, y) sum_(z >= y) G(z)
+    &= sum_(z >= x) (sum_(x <= y <= z) mu_(P)(x, y)) G(z).
   $
   The inner sum equals $sum_(x <= y < z) mu_(P)(x, y) + mu_(P)(x, z)$, which by
   #link(<def:poset-mobius>)[the recursive definition] is $0$ when $x < z$ and
@@ -1005,7 +1033,7 @@ reduces exactly to #link(<thm:inclusion-exclusion>)[inclusion-exclusion].
   #link(<def:mobius-function>)[$mu$] arises the same way from the divisor
   lattice, with $mu_(P)(1, n) = mu(n)$. Deeper poset enumeration belongs to a
   more advanced treatment and is not pursued here.
-]
+] <ex:boolean-lattice-ie>
 
 = Special Counting Sequences
 
