@@ -38,11 +38,9 @@ thermodynamic framework of Chapters 2–4.
 == Ideal Gas Law and Equation of State // 理想气体定律与状态方程
 
 #definition(name: "Equilibrium State and State Variables")[
-  A thermodynamic system is in an *equilibrium state* if its measurable
-  properties are independent of time and of the system's history. For a
-  simple compressible system of fixed composition, the state is
-  characterised by a small set of *state variables* — the pressure $p$,
-  the volume $V$, and the temperature $T$.
+  A thermodynamic system is in an *equilibrium state* if its measurable properties are independent of time and of the system's history.
+
+  For a simple compressible system of fixed composition, the state is characterised by a small set of *state variables* — the pressure $p$, the volume $V$, and the temperature $T$.
 ] <def:equilibrium-state>
 
 #definition(name: "Equation of State")[
@@ -58,15 +56,27 @@ thermodynamic framework of Chapters 2–4.
 The *ideal gas* is the limiting case of a gas at low density, where
 intermolecular forces and molecular volumes are negligible. Its
 equation of state, established empirically by Boyle, Charles and
-Avogadro, is
+Avogadro, takes two equivalent forms. The *macroscopic (molar) form*,
+suited to laboratory chemistry, reads
 $
-  p V = n R T = N k_B T,
+  p V = nu R T,
 $
-where $n$ is the amount of substance, $R = N_A k_B = 8.314 "J\/(mol K)"$
-is the gas constant, and $k_B = 1.38 times 10^(-23) "J\/K"$ is the
-Boltzmann constant. The three families of curves $p V = "const"$
-(isotherms), $p = "const"$ (isobars) and $V = "const"$ (isochores)
-partition the $p$-$V$ plane; see @fig:pv-isotherms.
+where $nu$ is the amount of substance (in moles) and
+$R = 8.314 "J/(mol K)"$ is the gas constant. The *microscopic
+(molecular) form*, suited to kinetic theory, reads
+$
+  p V = N k_B T,
+$
+where $N$ is the number of molecules and
+$k_B = 1.38 times 10^(-23) "J/K"$ is the Boltzmann constant. The two
+forms are linked by the conversion relations
+$
+  nu = N / N_A, quad k_B = R / N_A,
+$
+where $N_A = 6.022 times 10^23 "mol"^(-1)$ is the Avogadro constant.
+The three families of curves $p V = "const"$ (isotherms),
+$p = "const"$ (isobars) and $V = "const"$ (isochores) partition the
+$p$-$V$ plane; see @fig:pv-isotherms.
 
 #example[
   (Van der Waals equation.) The first systematic correction to the
@@ -87,7 +97,7 @@ partition the $p$-$V$ plane; see @fig:pv-isotherms.
 #figure(
   image("img/pv-isotherms.svg", width: 72%),
   caption: [Isotherms in the $p$-$V$ plane: hyperbolic ideal-gas
-    isotherms $p V = n R T$ and van der Waals isotherms, the subcritical
+    isotherms $p V = nu R T$ and van der Waals isotherms, the subcritical
     one developing the characteristic loop that signals the liquid--gas
     transition below the critical temperature.],
   placement: auto,
@@ -383,13 +393,13 @@ Three gradient-driven relaxation processes result, each governed by a
   columns: (auto, auto, auto, auto),
   align: (left, left, center, left),
   [Phenomenon], [Graded quantity], [Flux law], [Coefficient],
-  [Momentum transport (viscosity)], [flow velocity $u(z)$], [$Pi = -eta dif u \/ dif z$], [shear viscosity $eta$],
+  [Momentum transport (viscosity)], [flow velocity $u(z)$], [$Pi = -eta dif u / dif z$], [shear viscosity $eta$],
   [Energy transport (heat conduction)],
   [temperature $T(z)$],
-  [$q = -kappa dif T \/ dif z$],
+  [$q = -kappa dif T / dif z$],
   [thermal conductivity $kappa$],
 
-  [Mass transport (diffusion)], [number density $n(z)$], [$J = -D dif n \/ dif z$], [diffusion coefficient $D$],
+  [Mass transport (diffusion)], [number density $n(z)$], [$J = -D dif n / dif z$], [diffusion coefficient $D$],
 )
 
 Each law is written for transport along $z$; the flux $Pi$ carries
@@ -570,7 +580,7 @@ law).
 #definition(name: "Extensive and Intensive Quantities")[
   A state quantity is *extensive* if it doubles when two copies of the
   system are combined into one, and *intensive* if it is unchanged
-  under such a scaling. Volume $V$, amount of substance $n$, internal
+  under such a scaling. Volume $V$, amount of substance $nu$, internal
   energy $U$, entropy $S$ are extensive; pressure $p$, temperature
   $T$, density $rho$ are intensive. The quotient of two extensive
   quantities is intensive.
@@ -648,7 +658,7 @@ equation of state (Chapter 1) supplies a system-independent standard.
 
 #proof[
   For a fixed amount of gas at fixed volume,
-  #link(<def:equation-of-state>)[the ideal gas law] gives $p = n R T / V
+  #link(<def:equation-of-state>)[the ideal gas law] gives $p = nu R T / V
   prop T$. The triple point of water — the unique state at which ice,
   liquid water and vapour coexist — is assigned $T_3 = 273.16 "K"$ by
   convention, so $T / T_3 = p / p_3$. That the ratio $p / p_3$, read off
@@ -710,13 +720,13 @@ whose differential it would be.
   (Path dependence.) Take an ideal gas from $(V_1, T)$ to $(V_2, T)$
   (with $V_2 > V_1$) along two quasi-static paths:
 
-  - *direct isothermal expansion*: $W = n R T ln(V_2 / V_1)$;
+  - *direct isothermal expansion*: $W = nu R T ln(V_2 / V_1)$;
   - *two-step path*: isobaric expansion at $p_1$ from $V_1$ to $V_2$
     ($W' = p_1 (V_2 - V_1)$), then isochoric cooling back to $T$ (no
     work).
 
   At the shared final volume the isobar runs at pressure $p_1 > p_2$,
-  so $W' = n R T (V_2 - V_1) / V_1 > n R T ln(V_2/V_1) = W$: the
+  so $W' = nu R T (V_2 - V_1) / V_1 > nu R T ln(V_2/V_1) = W$: the
   two-step path delivers more work, because it runs at a higher
   pressure throughout. Same endpoints, different work — the visual
   statement of @fig:work-path.
@@ -866,7 +876,7 @@ changes measure reaction heats in chemistry.
   are the thermal expansion coefficient and the isothermal
   compressibility. For an ideal gas the relation collapses to
   $
-    C_p - C_V = n R.
+    C_p - C_V = nu R.
   $
 ] <prop:cp-cv>
 
@@ -892,8 +902,8 @@ changes measure reaction heats in chemistry.
   $
     C_p - C_V = T dot alpha / kappa_T dot alpha V = T V alpha^2 / kappa_T.
   $
-  For the ideal gas, $p = n R T / V$ gives $alpha = 1/T$ and
-  $kappa_T = 1/p$, hence $C_p - C_V = T V (1/T^2) p = n R$.
+  For the ideal gas, $p = nu R T / V$ gives $alpha = 1/T$ and
+  $kappa_T = 1/p$, hence $C_p - C_V = T V (1/T^2) p = nu R$.
 ]
 
 The inequality $C_p > C_V$ has a direct reading: heating at constant
@@ -930,11 +940,11 @@ processes of §2.6.
 
 #proof[
   The first law with $delta Q = 0$ gives
-  $C_V dif T = - p dif V$. Substituting $p = n R T / V$ and dividing by
+  $C_V dif T = - p dif V$. Substituting $p = nu R T / V$ and dividing by
   $T$,
   $
-    C_V (dif T) / T = - n R (dif V) / V
-    quad "with" quad n R = C_p - C_V = (gamma - 1) C_V,
+    C_V (dif T) / T = - nu R (dif V) / V
+    quad "with" quad nu R = C_p - C_V = (gamma - 1) C_V,
   $
   so $(dif T) / T = -(gamma - 1)(dif V) / V$, which integrates to
   $T V^(gamma - 1) = "const"$; eliminating $T$ with the equation of state
@@ -1091,14 +1101,14 @@ The two statements look different; they are the same law.
   $
     a -> b quad "isothermal expansion at" T_h,
   $
-  absorbing $Q_h = n R T_h ln(V_b / V_a)$ from the hot reservoir;
+  absorbing $Q_h = nu R T_h ln(V_b / V_a)$ from the hot reservoir;
   $
     b -> c quad "adiabatic expansion," T_h -> T_c;
   $
   $
     c -> d quad "isothermal compression at" T_c,
   $
-  rejecting $Q_c = n R T_c ln(V_c / V_d)$ to the cold reservoir;
+  rejecting $Q_c = nu R T_c ln(V_c / V_d)$ to the cold reservoir;
   $
     d -> a quad "adiabatic compression," T_c -> T_h,
   $
@@ -1133,7 +1143,7 @@ The two statements look different; they are the same law.
 
 #theorem(name: "Carnot's Theorem")[
   All reversible engines operating between the same two reservoirs
-  have the same efficiency $eta_C = 1 - T_c \/ T_h$; every irreversible
+  have the same efficiency $eta_C = 1 - T_c / T_h$; every irreversible
   engine operating between them has strictly smaller efficiency.
 ] <thm:carnot-theorem>
 
@@ -1239,23 +1249,23 @@ integrating $delta Q / T$ along that process; one integrates along any
 
 #example[
   (Entropy of an ideal gas.) For a reversible change of $n$ moles,
-  $delta Q = dif U + p dif V = C_V dif T + n R T (dif V) / V$, so
+  $delta Q = dif U + p dif V = C_V dif T + nu R T (dif V) / V$, so
   $
-    dif S = C_V (dif T) / T + n R (dif V) / V,
+    dif S = C_V (dif T) / T + nu R (dif V) / V,
   $
   and integrating,
   $
-    Delta S = C_V ln(T_2 / T_1) + n R ln(V_2 / V_1).
+    Delta S = C_V ln(T_2 / T_1) + nu R ln(V_2 / V_1).
   $
   Between any two states this formula holds — including for
   irreversible changes between them, since only the endpoints enter.
 ] <ex:entropy-ideal-gas>
 
 #caution[
-  ($delta Q \/ T$ versus $dif S$.) Only on a reversible path is
+  ($delta Q / T$ versus $dif S$.) Only on a reversible path is
   $delta Q = T dif S$. Along an irreversible path the absorbed heat is
   smaller than $integral T dif S$ (for the same endpoints), and writing
-  $dif S = delta Q \/ T$ for an irreversible step silently shrinks the
+  $dif S = delta Q / T$ for an irreversible step silently shrinks the
   entropy. The safe route is always: compute $Delta S$ on a reversible
   path between the endpoints, regardless of how the actual process
   ran.
@@ -1304,7 +1314,7 @@ integrating $delta Q / T$ along that process; one integrates along any
   $T$ unchanged) has entropy change — computed on the reversible
   isothermal path between the same endpoints —
   $
-    Delta S = n R ln(V_2 / V_1) = n R ln 2 > 0.
+    Delta S = nu R ln(V_2 / V_1) = nu R ln 2 > 0.
   $
   The first law saw nothing ($Delta U = 0$); the entropy increase
   declares the process irreversible and predicts it never runs
@@ -1351,7 +1361,7 @@ integrating $delta Q / T$ along that process; one integrates along any
 
 == Thermodynamic Temperature Scale // 热力学温标
 
-The efficiency bound $eta_C = 1 - T_c \/ T_h$ rests on the temperatures
+The efficiency bound $eta_C = 1 - T_c / T_h$ rests on the temperatures
 of the reservoirs — but which temperature? The ideal-gas scale of
 #link(<prop:ideal-gas-scale>)[§2.2] referenced a particular substance.
 Carnot's theorem offers something better: a temperature scale defined
@@ -1399,7 +1409,7 @@ triple point of water — the same convention as the gas scale.
 #proof[
   Compute the Carnot cycle of #link(<def:carnot-cycle>)[§3.2]
   using the *gas* scale $theta$ throughout the equation of state
-  $p V = n R theta$: the derivation of
+  $p V = nu R theta$: the derivation of
   #link(<prop:carnot-efficiency>)[the Carnot efficiency] never used any
   property of $T$ beyond the equation of state, and it produced
   $
@@ -1544,7 +1554,7 @@ of Chapters 16 and 17.
 
 #caution[
   (Classical ideal gases violate the third law.) The classical ideal
-  gas has $C_V = f/2 n R$ right down to $T = 0$ and an entropy of the
+  gas has $C_V = f/2 nu R$ right down to $T = 0$ and an entropy of the
   Sackur-Tetrode form that diverges as $T -> 0$: classical statistical
   mechanics contradicts the third law outright. No paradox arises —
   the classical description itself fails long before, when the thermal
@@ -1858,7 +1868,7 @@ the covariant formulation that closes Part I.
 #figure(
   image("img/relativistic-dispersion.svg", width: 76%),
   caption: [The dispersion relation $E(p)$ (blue) with its two limits:
-    near the origin the parabola $m c^2 + p^2 \/ 2m$ (grey, dashed) —
+    near the origin the parabola $m c^2 + p^2 / 2m$ (grey, dashed) —
     kinetic energy quadratic in momentum as in Chapter 1; at large
     momentum the line $E = p c$ (orange, dashed) — mass becomes
     irrelevant. The crossover scale is $p = m c$.],
@@ -1899,16 +1909,16 @@ regime, and it reappears below as the equation of state of radiation.
 
 #example[
   (Adiabats and heat capacities across the crossover.) For a classical
-  ideal gas the equation of state $p V = n R T$ holds in both regimes,
+  ideal gas the equation of state $p V = nu R T$ holds in both regimes,
   while the energy density is regime-dependent. Ultra-relativistically
-  $U = 3 p V = 3 n R T$, so
+  $U = 3 p V = 3 nu R T$, so
   $
-    C_V = 3 n R, quad C_p = 4 n R, quad gamma = C_p / C_V = 4/3,
+    C_V = 3 nu R, quad C_p = 4 nu R, quad gamma = C_p / C_V = 4/3,
   $
   and quasi-static adiabats satisfy $p V^(4/3) = "const"$ — repeating
   the derivation of #link(<prop:adiabatic-process>)[Chapter 2] with
   the new $C_V$. Compare the non-relativistic monatomic values
-  $C_V = 3 n R / 2$, $gamma = 5/3$. The generalized equipartition
+  $C_V = 3 nu R / 2$, $gamma = 5/3$. The generalized equipartition
   $< p dot v > = 3 k_B T$ (the relativistic form of
   #link(<thm:equipartition>)[the equipartition theorem]) accommodates
   both: each degree contributes $< p dot v > / 2$-type bookkeeping
@@ -1927,7 +1937,7 @@ $
 $
 with the same $T$ and $k_B$ as in the non-relativistic theory. In the
 limit $p < < m c$ the factor $e^(-m c^2 / k_B T)$ is absorbed into the
-normalisation and $f(p) -> e^(-p^2 \/ 2 m k_B T)$ — exactly the
+normalisation and $f(p) -> e^(-p^2 / 2 m k_B T)$ — exactly the
 Maxwell momentum distribution underlying
 #link(<def:maxwell-velocity>)[Chapter 1's velocity distribution].
 
@@ -2025,7 +2035,7 @@ to keep fixed.
   - *Quasi-static adiabats*: $dif S = 0$ gives, from $dif Q = 0$,
     $V dif u + 4/3 u dif V = 0$, i.e. $T V^(1/3) = "const"$ (using
     $p = u/3$ and the final result $u prop T^4$ consistency —
-    equivalently derived directly from $dif S = (V/T) dif u + (4u \/ 3T) dif V = 0$).
+    equivalently derived directly from $dif S = (V/T) dif u + (4u / 3T) dif V = 0$).
   - *Isothermal compression* at $T - dif T$ releases
     $delta Q' = 4/3 u(T - dif T) dif V'$; the adiabatic relations give
     $dif V' = dif V dot (T / (T - dif T))^3$.
@@ -2566,7 +2576,7 @@ hydrodynamics, beyond this note's scope.
 //     - 相对涨落的量级: ~1/√N
 //     - 涨落在热力学极限下的行为
 
-//   Section 13.6: Classical Limit and Equipartition Revisited (经典极限与均分定理再探)
+//   Section 13.6: Classical Limit and Equipartitionu Revisited (经典极限与均分定理再探)
 //     - 经典配分函数的相空间积分形式
 //     - 均分定理的统计推导
 //     - 经典极限的适用条件
@@ -2651,7 +2661,7 @@ hydrodynamics, beyond this note's scope.
 //     - 平均占据数: 1/(e^{β(ε-μ)} + 1)
 //     - Pauli 不相容原理的统计表达
 
-//   Section 16.4: Classical Limit: Maxwell-Boltzmann Recovery (经典极限：回到麦克斯韦-玻尔兹曼分布)
+//   Section 16.4: Classical Limit: Maxwell-Boltzmannu Recovery (经典极限：回到麦克斯韦-玻尔兹曼分布)
 //     - 高温低密度极限
 //     - 简并条件与热德布罗意波长
 //     - 量子到经典的过渡
@@ -2826,7 +2836,7 @@ hydrodynamics, beyond this note's scope.
 
 // --- Chapter 22: Linear Irreversible Thermodynamics (线性不可逆热力学) ---
 
-//   Section 22.1: Entropy Production Rate (熵产率)
+//   Section 22.1: Entropy Productionu Rate (熵产率)
 //     - 局部平衡假设
 //     - 熵平衡方程
 //     - 熵产率的非负性
