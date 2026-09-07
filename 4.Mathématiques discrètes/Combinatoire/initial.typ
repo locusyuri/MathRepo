@@ -625,7 +625,7 @@ by powers of $x$ and summing converts the recurrence into a closed equation.
   $
   where the *order of the summands does not matter*. The summands $lambda_i$
   are the *parts* of the partition. Let $p(n)$ denote the number of partitions
-  of $n$, and let $p_m(n)$ denote the number of partitions of $n$ into exactly
+  of $n$, and let $p_(m)(n)$ denote the number of partitions of $n$ into exactly
   $m$ parts.
 ] <def:partition>
 
@@ -647,10 +647,10 @@ formula — arguably the birth certificate of the subject.
   $
     sum_(n=0)^infinity p(n) x^n = product_(k=1)^infinity 1 / (1 - x^k).
   $
-  More generally, the generating function of $p_m(n)$, the number of
+  More generally, the generating function of $p_(m)(n)$, the number of
   partitions of $n$ into exactly $m$ parts, is
   $
-    sum_(n>=0) p_m(n) x^n = product_(k=1)^infinity x^k / (1 - x^k),
+    sum_(n>=0) p_(m)(n) x^n = product_(k=1)^infinity x^k / (1 - x^k),
   $
   the same product divided by $x^(1 + 2 + dots + m)$.
 ] <thm:partition-gf>
@@ -669,7 +669,7 @@ formula — arguably the birth certificate of the subject.
   infinitely many factors, valid formally since the coefficient of $x^n$
   involves only factors with $k <= n$.
 
-  For $p_m(n)$, partitioning into exactly $m$ parts and subtracting $1$ from
+  For $p_(m)(n)$, partitioning into exactly $m$ parts and subtracting $1$ from
   each part leaves a partition of $n - m$ into at most $m$ parts; each part
   of size $k$ then contributes a copy of $x^(k)$ with total exponent offset
   $1 + 2 + dots + m$, giving the stated quotient.
@@ -692,7 +692,7 @@ diagram, a visual representation in which each part is a row of dots.
   *conjugate partition* $lambda' = (5, 4, 3, 3, 1, 1)$. Row-column duality
   implies
   $
-    p_m(n) = p(n) "into at most" m "parts",
+    p_(m)(n) = p(n) "into at most" m "parts",
   $
   i.e. the number of partitions of $n$ into exactly $m$ parts equals the
   number of partitions of $n$ whose largest part is $m$. This is the visual
@@ -959,11 +959,11 @@ reduces exactly to #link(<thm:inclusion-exclusion>)[inclusion-exclusion].
   Let $(P, <=)$ be a finite partially ordered set. The *Möbius function*
   $mu_P: P times P -> ZZ$ is defined recursively by
   $
-    mu_P(x, x) = 1,
+    mu_(P)(x, x) = 1,
     quad
-    mu_P(x, y) = -sum_(x <= z < y) mu_P(x, z) quad "for" x < y,
+    mu_(P)(x, y) = -sum_(x <= z < y) mu_(P)(x, z) quad "for" x < y,
   $
-  and $mu_P(x, y) = 0$ unless $x <= y$.
+  and $mu_(P)(x, y) = 0$ unless $x <= y$.
 ] <def:poset-mobius>
 
 #theorem(name: "Möbius Inversion on a Poset")[
@@ -973,7 +973,7 @@ reduces exactly to #link(<thm:inclusion-exclusion>)[inclusion-exclusion].
   $
   Then conversely
   $
-    G(x) = sum_(y in P, y >= x) mu_P(x, y) F(y)
+    G(x) = sum_(y in P, y >= x) mu_(P)(x, y) F(y)
     quad "for all" x in P.
   $
 ] <thm:poset-mobius-inversion>
@@ -981,13 +981,13 @@ reduces exactly to #link(<thm:inclusion-exclusion>)[inclusion-exclusion].
 #proof[
   Substitute the expression for $F$ and interchange the sums:
   $
-    sum_(y >= x) mu_P(x, y) F(y)
-    = sum_(y >= x) mu_P(x, y) sum_(z >= y) G(z)
-    = sum_(z >= x) (sum_(x <= y <= z) mu_P(x, y)) G(z).
+    sum_(y >= x) mu_(P)(x, y) F(y)
+    = sum_(y >= x) mu_(P)(x, y) sum_(z >= y) G(z)
+    = sum_(z >= x) (sum_(x <= y <= z) mu_(P)(x, y)) G(z).
   $
-  The inner sum equals $sum_(x <= y < z) mu_P(x, y) + mu_P(x, z)$, which by
+  The inner sum equals $sum_(x <= y < z) mu_(P)(x, y) + mu_(P)(x, z)$, which by
   #link(<def:poset-mobius>)[the recursive definition] is $0$ when $x < z$ and
-  $mu_P(x, x) = 1$ when $x = z$. Only the term $z = x$ survives, leaving
+  $mu_(P)(x, x) = 1$ when $x = z$. Only the term $z = x$ survives, leaving
   $G(x)$.
 ]
 
@@ -997,13 +997,13 @@ reduces exactly to #link(<thm:inclusion-exclusion>)[inclusion-exclusion].
   and $G(X)$ to be the number of elements belonging to exactly the sets
   indexed by $X$, the identity $F(X) = sum_(Y supset.eq X) G(Y)$ holds by
   classifying each element through the exact set of $A_i$ containing it. One
-  computes $mu_P(X, Y) = (-1)^(abs(Y backslash X))$, so
+  computes $mu_(P)(X, Y) = (-1)^(abs(Y backslash X))$, so
   #link(<thm:poset-mobius-inversion>)[poset Möbius inversion] produces
   precisely the inclusion–exclusion expansion of
   #link(<thm:inclusion-exclusion>)[the principle] — the two themes of this
   chapter are one. The arithmetic Möbius function
   #link(<def:mobius-function>)[$mu$] arises the same way from the divisor
-  lattice, with $mu_P(1, n) = mu(n)$. Deeper poset enumeration belongs to a
+  lattice, with $mu_(P)(1, n) = mu(n)$. Deeper poset enumeration belongs to a
   more advanced treatment and is not pursued here.
 ]
 
