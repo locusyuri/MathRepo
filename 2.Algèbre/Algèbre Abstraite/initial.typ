@@ -256,12 +256,10 @@ from Cayley's theorem to Galois theory — is a study of such maps.
   A homomorphism from an algebraic system to *itself* is called an
   *endomorphism*: $f: (S, star) -> (S, star)$. A bijective
   endomorphism is an *automorphism* — equivalently, an isomorphism
-  $S -> S$. The set of all automorphisms of $S$ is written
-  $"Aut"(S)$; under composition it is closed, contains the identity
-  map, and every element has an inverse (the inverse bijection), so
-  $"Aut"(S)$ is a group — a fact we will use repeatedly once groups
-  are defined in #link(<def:binary-operation>)[Chapter 2].
+  $S -> S$.
 ] <def:endomorphism-automorphism>
+
+The set of all automorphisms of $S$ is written $"Aut"(S)$; under composition it is closed, contains the identity map, and every element has an inverse (the inverse bijection), so $"Aut"(S)$ is a group — a fact we will use repeatedly once groups are defined in #link(<def:binary-operation>)[Chapter 2].
 
 #property(name: "Homomorphisms Preserve Identity and Inverses")[
   Let $f: (S, star) -> (T, diamond)$ be a *surjective* homomorphism,
@@ -1512,7 +1510,7 @@ those stable under the natural "change of frame" of the group.
   + Every subgroup of an abelian group is normal. The trivial
     subgroup $\\{e\\}$ and $G$ itself are normal in $G$.
   + If $N, M ⊲ G$, then $N inter M$ and the product $N M = {n m | n
-    in N, m in M}$ are normal in $G$.
+      in N, m in M}$ are normal in $G$.
   + If $[G : N] = 2$, then $N ⊲ G$. In particular $A_n ⊲ S_n$ for
     $n >= 2$ (since $abs(A_n) = n! \/ 2$ by
     #link(<def:alternating-group>)[§3.3]).
@@ -1527,7 +1525,7 @@ those stable under the natural "change of frame" of the group.
 
   (2) For the intersection: $a (N inter M) a^(-1) = a N a^(-1) inter
   a M a^(-1) = N inter M$. For the product: $a (n m) a^(-1) = (a n
-  a^(-1))(a m a^(-1))$, a product of one element of $N$ and one of
+    a^(-1))(a m a^(-1))$, a product of one element of $N$ and one of
   $M$, hence in $N M$.
 
   (3) When $[G : N] = 2$ there are exactly two left cosets — $N$ and
@@ -1542,7 +1540,7 @@ those stable under the natural "change of frame" of the group.
 #example[
   (A gallery of normal subgroups.)
   + In #link(<ex:a3-alternating>)[§3.3] we observed that $A_3 = {e,
-    (1 2 3), (1 3 2)}$ has index $2$ in $S_3$, so $A_3 ⊲ S_3$ by
+      (1 2 3), (1 3 2)}$ has index $2$ in $S_3$, so $A_3 ⊲ S_3$ by
     #link(<prop:normal-properties>)[property (3)]. The same argument
     lifts: $A_n ⊲ S_n$ for every $n >= 2$.
   + The *special linear group* $"SL"_n(F)$ of
@@ -1824,7 +1822,7 @@ process, every finite group is built.
   $⟨a^2⟩$ would be a non-trivial proper subgroup of $bb(Z)$. So $G
   ~= bb(Z)_n$ for some $n >= 2$, and
   #link(<thm:cyclic-subgroups>)[the subgroup structure of cyclic
-  groups] gives one subgroup of each order dividing $n$;
+    groups] gives one subgroup of each order dividing $n$;
   simplicity forces $n$ to have no non-trivial divisors, i.e. $n =
   p$ is prime.
 ]
@@ -1909,7 +1907,7 @@ process, every finite group is built.
   Every finite simple group is on this list; and every finite
   group, by the Jordan–Hölder programme, is a "stack" of such
   simple factors — see #link(<note:composition-series-preview>)[the
-  following note].
+    following note].
 ] <note:classification-finite-simple>
 
 #note[
@@ -2031,7 +2029,7 @@ quotients).
     "im" f = {f(a) | a in G}.
   $
   By #link(<prop:group-homomorphism-properties>)[property (4) and
-  (5)] $"ker" f <= G$ and $"im" f <= H$.
+    (5)] $"ker" f <= G$ and $"im" f <= H$.
 ] <def:kernel-image>
 
 This formalises #link(<note:kernel-preliminary>)[§1.3]'s
@@ -2053,7 +2051,7 @@ element — is that the kernel is *normal*.
     = e',
   $
   using #link(<prop:group-homomorphism-properties>)[property (1) and
-  (2)] and the fact that $f(n) = e'$ (since $n in "ker" f$). Hence
+    (2)] and the fact that $f(n) = e'$ (since $n in "ker" f$). Hence
   $a n a^(-1) in "ker" f$ as required.
 ]
 
@@ -2115,7 +2113,7 @@ kernel $N$.
 
 #proof[
   Immediate from #link(<prop:group-homomorphism-properties>)[property
-  (4)] with $K = G$: $f(G) = "im" f <= H$. Surjectivity of the
+    (4)] with $K = G$: $f(G) = "im" f <= H$. Surjectivity of the
   corestriction is by construction, and the kernel is unchanged
   since the mapping rule is.
 ]
@@ -2170,9 +2168,9 @@ recovers, up to renaming, exactly the image $"im" f$.
 
   *Homomorphism.* For $a, b in G$,
   $
-    overline(f)(a("ker" f) dot b("ker" f)) &= overline(f)((a b)("ker"
-    f)) = f(a b) \
-    &= f(a) f(b) = overline(f)(a("ker" f)) dot overline(f)(b("ker" f)),
+    overline(f)(a("ker" f) dot b("ker" f)) & = overline(f)((a b)("ker"
+                                                 f)) = f(a b) \
+                                           & = f(a) f(b) = overline(f)(a("ker" f)) dot overline(f)(b("ker" f)),
   $
   using the definition of the quotient operation
   (#link(<thm:quotient-group>)[§4.2]) and that $f$ is a homomorphism.
@@ -2211,7 +2209,7 @@ more useful in practice than the bare isomorphism.
 ] <cor:homomorphism-factorization>
 
 This is the sense in which #link(<ex:inclusion-projection>)[the two
-extremes] generate all homomorphisms: any $f$ is recovered from its
+  extremes] generate all homomorphisms: any $f$ is recovered from its
 kernel (deciding what to forget) and its image (deciding where to
 land), with the quotient doing the rest.
 
@@ -2287,10 +2285,10 @@ Isomorphism Theorems, treated next.
 The First Isomorphism Theorem identifies $G \/ "ker" f$ with $"im" f$.
 Two natural follow-up questions arise:
 
-  (a) If $N$, $K$ are both normal in $G$ with $N subset.eq K$, does
-      $K \/ N$ sit inside $G \/ N$ as a normal subgroup, and is the
-      further quotient $(G \/ N) \/ (K \/ N)$ the same as $G \/ K$?
-  (b) If $H <= G$ and $N ⊲ G$, what is $H N \/ N$ in terms of $H$?
+(a) If $N$, $K$ are both normal in $G$ with $N subset.eq K$, does
+$K \/ N$ sit inside $G \/ N$ as a normal subgroup, and is the
+further quotient $(G \/ N) \/ (K \/ N)$ the same as $G \/ K$?
+(b) If $H <= G$ and $N ⊲ G$, what is $H N \/ N$ in terms of $H$?
 
 The *Third* Isomorphism Theorem answers (a) — quotienting "twice" is
 the same as quotienting once by the larger subgroup. The *Second*
@@ -2498,15 +2496,15 @@ inside. The turning point of group theory is to look *outside*: at
 how $G$ acts on a set $X$. Three results follow from this single
 shift of perspective:
 
-  + The *orbit-stabilizer theorem* — Lagrange's theorem reborn as a
-    counting principle, $|G| = |O_x| dot.c x |G_x|$, applicable far
-    beyond coset arithmetic.
-  + The *class equation* — the conjugation action of $G$ on itself,
-    decomposing $G$ into conjugacy classes whose sizes are controlled
-    by centralisers.
-  + The *Sylow theorems* — the existence, conjugacy, and counting of
-    Sylow $p$-subgroups, the deepest structural theorem for finite
-    groups short of full classification.
++ The *orbit-stabilizer theorem* — Lagrange's theorem reborn as a
+  counting principle, $|G| = |O_x| dot.c x |G_x|$, applicable far
+  beyond coset arithmetic.
++ The *class equation* — the conjugation action of $G$ on itself,
+  decomposing $G$ into conjugacy classes whose sizes are controlled
+  by centralisers.
++ The *Sylow theorems* — the existence, conjugacy, and counting of
+  Sylow $p$-subgroups, the deepest structural theorem for finite
+  groups short of full classification.
 
 This chapter develops all three, ending with applications to the
 classification of small groups and to the recognition of simple
@@ -2518,7 +2516,7 @@ solvability criterion of Galois theory (Chapter 16).
 
 A group action is the formal counterpart of "letting a group move a
 set". The prototype is the symmetric group $S_n$ permuting ${1, dots,
-n}$, or any transformation group of #link(<def:transformation-group>)[§3.3]
+  n}$, or any transformation group of #link(<def:transformation-group>)[§3.3]
 moving its underlying set. The definition below extracts the algebraic
 essence of this motion.
 
@@ -2549,7 +2547,7 @@ Two equivalent formulations make this explicit.
   + The action is *faithful* (different $g$ move some $x$
     differently) "iff" $rho$ is injective.
   + The *kernel* of the action, $K = {g in G | g dot.c x = x
-    "for all" x in X}$, equals $"ker" rho$; it is a normal subgroup
+      "for all" x in X}$, equals $"ker" rho$; it is a normal subgroup
     of $G$ by #link(<prop:group-homomorphism-properties>)[§5.1].
 ] <prop:action-permutation-rep>
 
@@ -2567,7 +2565,7 @@ $rho: G -> "Sym"(X)$ defines an action by $g dot.c x = rho(g)(x)$.
     the *stabiliser* of $x$ (formal definition in
     #link(<def:stabilizer>)[below]).
   + The *fixed-point set* $X^G = {x in X | g dot.c x = x "for all" g
-    in G}$ is $G$-invariant pointwise.
+      in G}$ is $G$-invariant pointwise.
   + The kernel $K = op("∩")_(x in X) G_x$ is normal in $G$, and $G
     \/ K$ acts faithfully on $X$.
 ] <prop:action-basic>
@@ -2585,7 +2583,7 @@ chapter.
   This is the construction of #link(<thm:cayley>)[§3.3] viewed as an
   action. The axioms are the group axioms themselves: $e dot.c x = e
   x = x$ and $(g h) dot.c x = (g h) x = g (h x) = g dot.c (h dot.c
-  x)$. The action is faithful ($g dot.c e = g$, so $g dot.c x = x$
+    x)$. The action is faithful ($g dot.c e = g$, so $g dot.c x = x$
   for all $x$ forces $g = e$), and the permutation representation
   $rho: G -> "Sym"(G)$, $rho(g) = L_g$, is the *left regular
   representation* promised in
@@ -2606,11 +2604,11 @@ chapter.
   structural backbone of the *class equation* (§6.2).
 
   - The orbit of $x$ is its *conjugacy class* $"Cl"(x) = {g x g^(-1)
-    | g in G}$.
+      | g in G}$.
   - The stabiliser of $x$ is its *centraliser* $C_G(x) = {g in G | g x
-    = x g}$, a subgroup of $G$.
+      = x g}$, a subgroup of $G$.
   - The fixed points $X^G$ form the *centre* $Z(G) = {z in G | g z =
-    z g "for all" g}$, an abelian normal subgroup of $G$.
+      z g "for all" g}$, an abelian normal subgroup of $G$.
   - The kernel is $Z(G)$ again: $g$ acts trivially "iff" $g x g^(-1) =
     x$ for all $x$, "iff" $g in Z(G)$.
 ] <ex:conjugation-action>
@@ -2743,8 +2741,10 @@ special case of the coset action.
   is:
   + *well-defined*: if $g G_x = g' G_x$ then $g' = g h$ for some $h in
     G_x$, so $g' dot.c x = (g h) dot.c x = g dot.c (h dot.c x) = g
-    dot.c x$ (since $h$ stabilises $x$), hence $phi(g G_x) = phi(g'
-    G_x)$.
+    dot.c x$ (since $h$ stabilises $x$), hence $phi(g G_x) = phi(
+      g'
+      G_x
+    )$.
   + *injective*: if $g dot.c x = g' dot.c x$ then $g^(-1) g' dot.c x =
     x$, so $g^(-1) g' in G_x$, i.e. $g G_x = g' G_x$.
   + *surjective*: every $y in O_x$ is of the form $y = g dot.c x$ for
@@ -2835,7 +2835,7 @@ proof is a paradigmatic double-counting argument.
 
 #theorem(name: "Burnside's Lemma")[
   Let $G$ act on a finite set $X$. Let $X^g = {x in X | g dot.c x =
-  x}$ be the fixed-point set of $g$, and let $r$ be the number of
+    x}$ be the fixed-point set of $g$, and let $r$ be the number of
   orbits. Then
   $
     r = 1 \/ abs(G) sum_(g in G) abs(X^g).
@@ -2943,7 +2943,7 @@ each important in its own right.
 
 #proof[
   Consider the set $X = {(a_1, dots, a_p) in G^p | a_1 a_2 dots a_p
-  = e}$ of $p$-tuples multiplying to the identity. By cyclic
+    = e}$ of $p$-tuples multiplying to the identity. By cyclic
   rotation, $bb(Z)_p$ acts on $X$ by
   $
     k dot.c (a_1, dots, a_p) = (a_(k+1), dots, a_p, a_1, dots, a_k),
@@ -2969,7 +2969,7 @@ each important in its own right.
   $abs(X) = abs(G)^(p-1)$, which is divisible by $p$ (since $p | abs(G)$).
   From $abs(X) ≡ abs(X^G) \pmod p$ with both sides divisible by $p$,
   we get $abs(X^G) ≡ 0 \pmod p$, but $abs(X^G) >= 1$ (the tuple $(e,
-  dots, e)$ is fixed), so $abs(X^G) >= p$. Hence there is a
+    dots, e)$ is fixed), so $abs(X^G) >= p$. Hence there is a
   non-identity element $a in G$ with $a^p = e$ — an element of order
   $p$.
 ]
@@ -3021,7 +3021,7 @@ $p$-subgroups exist.
     X = {S subset.eq G | abs(S) = p^k}.
   $
   The group $G$ acts on $X$ by left translation: $g dot.c S = {g s | s
-  in S}$. We have $abs(X) = binom(abs(G), p^k) = binom(p^k m, p^k)$,
+    in S}$. We have $abs(X) = binom(abs(G), p^k) = binom(p^k m, p^k)$,
   and a classical congruence (Lucas's theorem, or a direct $p$-adic
   valuation) gives
   $
@@ -3080,8 +3080,10 @@ together settle *uniqueness up to conjugacy* and *counting*.
 
   *Cleaner argument.* Let $P$ act on the set of left cosets $G \/ Q$
   by left multiplication ($p dot.c (g Q) = (p g) Q$). The fixed-point
-  lemma gives $abs(G \/ Q) ≡ abs((G \/ Q)^P) \pmod p$. Since $abs(G
-  \/ Q) = [G : Q] = m$ (not divisible by $p$), there is at least one
+  lemma gives $abs(G \/ Q) ≡ abs((G \/ Q)^P) \pmod p$. Since $abs(
+    G
+    \/ Q
+  ) = [G : Q] = m$ (not divisible by $p$), there is at least one
   fixed coset $g Q$. The coset $g Q$ is fixed by $P$ iff $P g Q
   subset.eq g Q$, iff $g^(-1) P g <= Q$. But $abs(g^(-1) P g) = abs(P)
   = p^k = abs(Q)$, so $g^(-1) P g = Q$, i.e. $P = g Q g^(-1)$. Hence
@@ -3110,7 +3112,7 @@ together settle *uniqueness up to conjugacy* and *counting*.
   proves (1).
 
   For (2), apply #link(<lem:p-group-fixed-point>)[the fixed-point
-  lemma] to the conjugation action of $P$ on $"Syl"_p(G)$:
+    lemma] to the conjugation action of $P$ on $"Syl"_p(G)$:
   $n_p ≡ abs("Syl"_p(G)^P) \pmod p$. By the same argument as in the
   second theorem, the only $P$-fixed Sylow $p$-subgroup is $P$
   itself: if $Q$ is fixed by $P$ then $P <= N_G(Q)$, both $P$ and $Q$
@@ -3138,7 +3140,7 @@ class is controlled by the normaliser $N_G(P)$.
   + *Existence* (#link(<thm:sylow-first>)[first theorem]): Sylow
     $p$-subgroups exist for every prime $p | abs(G)$.
   + *Uniqueness up to conjugacy* (#link(<thm:sylow-second>)[second
-    theorem]): any two are conjugate, so the Sylow $p$-subgroups form
+      theorem]): any two are conjugate, so the Sylow $p$-subgroups form
     a single conjugacy class.
   + *Counting* (#link(<thm:sylow-third>)[third theorem]): $n_p$
     satisfies $n_p | m$ and $n_p ≡ 1 \pmod p$.
@@ -3188,7 +3190,7 @@ problems.
   (cyclic, by the Chinese remainder theorem since $gcd(p, q) = 1$).
 
   *If $n_p = q$*: $P$ is not normal; there are $q$ Sylow
-  $p$-subgroups. The unique normal $Q$ admits a homomorphism $P -> 
+  $p$-subgroups. The unique normal $Q$ admits a homomorphism $P ->
   "Aut"(Q) ≅ bb(Z)_(q-1)$ (the conjugation action of $P$ on $Q$); a
   non-trivial such homomorphism exists iff $p | (q - 1)$, i.e. $q ≡
   1 \pmod p$. The corresponding semidirect product $bb(Z)_q ⋊ bb(Z)_p$
@@ -3222,7 +3224,7 @@ problems.
   The key dichotomy: if $n_3 = 1$ then the Sylow $3$-subgroup is
   normal (cases 1, 2, 4, 5); if $n_3 = 4$ then $G$ has a homomorphism
   to $S_4$ via the conjugation action on its four Sylow
-  $3$-subgroups, which for $A_4$ is the standard embedding $A_4 -> 
+  $3$-subgroups, which for $A_4$ is the standard embedding $A_4 ->
   S_4$ (and in general forces $G$ to have a normal subgroup of index
   $4$ — i.e. $A_4$ is the only group of order $12$ with $n_3 = 4$).
 
@@ -3248,7 +3250,7 @@ out simplicity for many orders.
   The exceptions are handled case by case:
 
   - $abs(G) = 36 = 2^2 dot.c 3^2$: $n_3 in {1, 4}$, $n_2 in {1, 3,
-    9}$; if $n_3 = 4$ then the action on $4$ Sylow $3$-subgroups
+      9}$; if $n_3 = 4$ then the action on $4$ Sylow $3$-subgroups
     gives a homomorphism $G -> S_4$, and $abs(G) = 36 > 24 =
     abs(S_4)$ forces a non-trivial kernel.
   - $abs(G) = 48 = 2^4 dot.c 3$: $n_3 in {1, 4, 16}$; $n_3 = 16$
@@ -3259,7 +3261,7 @@ out simplicity for many orders.
   - $abs(G) = 60 = 2^2 dot.c 3 dot.c 5$: this is the borderline case
     — $A_5$ is simple, and it is the *only* simple group of order
     $60$. The Sylow congruences ($n_5 in {1, 6}$, $n_3 in {1, 4,
-    10}$, $n_2 in {1, 3, 5, 15}$) are all satisfied by multiple
+      10}$, $n_2 in {1, 3, 5, 15}$) are all satisfied by multiple
     values, so Sylow alone cannot rule out simplicity. A separate
     argument (counting elements of order $5$ and using the
     embedding into $S_5$ via the action on $6$ Sylow
@@ -3344,9 +3346,9 @@ generated abelian group.
     G_1 ⊕ dots.c ⊕ G_n = G_1 times dots times G_n
   $
   with componentwise addition: $(g_1, dots, g_n) + (g'_1, dots,
-  g'_n) = (g_1 + g'_1, dots, g_n + g'_n)$. The identity is
+    g'_n) = (g_1 + g'_1, dots, g_n + g'_n)$. The identity is
   $(0, dots, 0)$ and the inverse of $(g_1, dots, g_n)$ is $(-g_1,
-  dots, -g_n)$.
+    dots, -g_n)$.
 ] <def:direct-sum>
 
 We write $⊕$ rather than $times$ when we wish to emphasise
@@ -3358,7 +3360,7 @@ they differ, but we shall not need the infinite case.
   Let $G = G_1 ⊕ dots.c ⊕ G_n$.
   + *Commutativity and associativity*: $G_i ⊕ G_j ≅ G_j ⊕
     G_i$ and $(G_1 ⊕ G_2) ⊕ G_3 ≅ G_1 ⊕ (G_2 ⊕
-    G_3)$.
+      G_3)$.
   + *Projections and injections*: there are homomorphisms $pi_i: G
     -> G_i$ (projections) and $iota_i: G_i -> G$ (injections), with
     $pi_i ∘ iota_i = "id"_(G_i)$ and $sum_i iota_i ∘
@@ -3366,8 +3368,10 @@ they differ, but we shall not need the infinite case.
   + *Universal property*: a homomorphism $f: G -> H$ is equivalent to
     a list of homomorphisms $f_i = f ∘ iota_i: G_i -> H$,
     with $f(g_1, dots, g_n) = f_1(g_1) + dots + f_n(g_n)$.
-  + *Order (finite case)*: if each $G_i$ is finite then $abs(G_1
-    ⊕ dots.c ⊕ G_n) = abs(G_1) dots.c abs(G_n)$.
+  + *Order (finite case)*: if each $G_i$ is finite then $abs(
+      G_1
+      ⊕ dots.c ⊕ G_n
+    ) = abs(G_1) dots.c abs(G_n)$.
 ] <prop:direct-sum-properties>
 
 The last point makes direct sums the natural tool for building
@@ -3457,7 +3461,7 @@ abelian group:
 #lemma(name: "Free Subgroup of a Finitely Generated Abelian Group")[
   Let $G$ be a finitely generated abelian group, with generators
   $g_1, dots, g_n$. Then:
-  + There is a surjective homomorphism $phi: bb(Z)^n -> G$, $e_i |-> 
+  + There is a surjective homomorphism $phi: bb(Z)^n -> G$, $e_i |->
     g_i$ (so $G ≅ bb(Z)^n \/ "ker" phi$).
   + Let $t(G) = {x in G | m x = 0 "for some" m > 0}$ be the *torsion
     subgroup* of $G$ (elements of finite order). Then $t(G)$ is a
@@ -3487,7 +3491,7 @@ abelian group:
   into $bb(Q)^r$ and clearing denominators).
 
   Let $pi: G -> G / t(G) ~= bb(Z)^r$. Choose $f_1, dots, f_r in G$
-  with $pi(f_i) = $ standard basis of $bb(Z)^r$. The subgroup $F =
+  with $pi(f_i) =$ standard basis of $bb(Z)^r$. The subgroup $F =
   ⟨f_1, dots, f_r⟩$ is free abelian of rank $r$, and
   $G = F + t(G)$ (any $x in G$ has $pi(x) = sum n_i pi(f_i)$, so $x -
   sum n_i f_i in "ker" pi = t(G)$). Since $F ∩ t(G) = {0}$ (free
@@ -3594,7 +3598,7 @@ number of cyclic summands. The two views are equivalent by the
 The $p$-primary decomposition reduces the structure theorem for a
 *finite* abelian group to the case of a $p$-group. For *finitely
 generated* groups, combine with #link(<lem:free-subgroup>)[the free
-subgroup lemma] to peel off the free part $bb(Z)^r$ first; then the
+  subgroup lemma] to peel off the free part $bb(Z)^r$ first; then the
 finite torsion part splits as $t(G) ~= ⊕_p G_(p_p)$, and the theorem
 is reduced to the finite $p$-group case.
 
@@ -3622,9 +3626,9 @@ is reduced to the finite $p$-group case.
 #figure(
   image("img/factor-correspondence.svg"),
   caption: [The dictionary between invariant factors $d_1, d_2, d_3$
-  and elementary divisors. Each row reconstructs one $d_j$ as the
-  product of one prime power per column, with the powers ordered
-  increasingly down each column; this guarantees $d_1 | d_2 | d_3$.]
+    and elementary divisors. Each row reconstructs one $d_j$ as the
+    product of one prime power per column, with the powers ordered
+    increasingly down each column; this guarantees $d_1 | d_2 | d_3$.],
 ) <fig:factor-correspondence>
 
 === Existence and Uniqueness of the Decomposition // 分解的存在性与唯一性
@@ -3747,7 +3751,7 @@ This completes the proof of both existence and uniqueness in
 equivalence with the elementary divisor form
 (#link(<thm:structure-elementary>)[the elementary divisor theorem])
 follows from #link(<note:two-canonical-forms>)[the dictionary
-between the two forms], so the elementary divisor form is also
+  between the two forms], so the elementary divisor form is also
 uniquely determined by $G$.
 
 #note(title: "Generalisation to Principal Ideal Domains")[
@@ -3783,7 +3787,7 @@ orders, and connect the result to the Sylow theory of
 #proof[
   Factorise $n = p_1^(a_1) dots.c p_s^(a_s)$. By
   #link(<lem:p-primary-decomposition>)[the $p$-primary
-  decomposition], $G ~= G_(p_1) ⊕ dots.c ⊕ G_(p_s)$ with
+    decomposition], $G ~= G_(p_1) ⊕ dots.c ⊕ G_(p_s)$ with
   $abs(G_(p_i)) = p_i^(a_i)$. Any divisor $d | n$ factors as
   $d = d_1 dots.c d_s$ with $d_i | p_i^(a_i)$. It suffices to find,
   in each $G_(p_i)$, a subgroup of order $d_i$.
@@ -3849,7 +3853,7 @@ small orders.
 #example(name: "Abelian Groups of Order 12")[
   We classify abelian groups $G$ with $abs(G) = 12 = 2^2 dot 3$. By
   #link(<lem:p-primary-decomposition>)[the $p$-primary
-  decomposition], $G ~= G_(2) ⊕ G_(3)$ with $abs(G_(2)) = 4$ and
+    decomposition], $G ~= G_(2) ⊕ G_(3)$ with $abs(G_(2)) = 4$ and
   $abs(G_(3)) = 3$.
 
   Abelian groups of order $4 = 2^2$: the partitions of $2$ give two
