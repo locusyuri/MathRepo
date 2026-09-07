@@ -50,11 +50,9 @@ individual outcome of a single trial is not predictable.
 ] <ex:sample-spaces>
 
 #definition(name: "Random Event")[
-  A *random event* is a subset of the sample space $Omega$. An event $A$
-  *occurs* if the observed outcome $omega$ belongs to $A$. An event consisting
-  of a single point is *elementary* (a *simple event*). The whole space
-  $Omega$ is the *certain event* (always occurs) and the empty set is the
-  *impossible event* (never occurs).
+  A *random event* is a subset of the sample space $Omega$. An event $A$ *occurs* if the observed outcome $omega$ belongs to $A$.
+
+  An event consisting of a single point is *elementary* (a *simple event*). The whole space $Omega$ is the *certain event* (always occurs) and the empty set is the *impossible event* (never occurs).
 ] <def:event>
 
 Events are mathematical objects of exactly the same nature as sets, so the
@@ -123,21 +121,19 @@ an event. For general sample spaces, however, one restricts attention to a
 family closed under the operations above.
 
 #definition(name: "Event Field")[
-  A *field of events* (a $sigma$-field on $Omega$) is a family
-  $F$ of subsets of $Omega$ such that
+  A *field of events* (a $sigma$-field on $Omega$) is a family $cal(F)$ of subsets of $Omega$ such that
+  - $Omega in cal(F)$;
+  - $A in cal(F)$ implies $overline(A) in cal(F)$;
+  - $A_1, A_2, dots in cal(F)$ implies $union.big_(n=1)^infinity A_n in cal(F)$.
 
-  - $Omega in F$;
-  - $A in F$ implies $overline(A) in F$;
-  - $A_1, A_2, dots in F$ implies $union.big_(n=1)^infinity A_n in F$.
-
-  The pair $(Omega, F)$ is called a *measurable space*, and the elements of
-  $F$ are the *events*.
+  The pair $(Omega, cal(F))$ is called a *measurable space*, and the elements of
+  $cal(F)$ are the *events*.
 ] <def:event-field>
 
 #note[
   The systematic construction of $sigma$-fields belongs to measure theory and
   is developed in the Théorie des Ensembles note. Throughout this note the
-  ambient $sigma$-field is tacitly fixed: $F = {cal(P)}(Omega)$ for finite or
+  ambient $sigma$-field is tacitly fixed: $cal(F) = cal(P)(Omega)$ for finite or
   countable $Omega$, and the Borel $sigma$-field for $Omega = RR$.
 ]
 
@@ -157,12 +153,15 @@ it abstracts.
   Repeating an experiment $n$ times, let $n_A$ be the number of trials in
   which the event $A$ occurs. The ratio
   $
-    f_n(A) = n_A / n
+    f_(n)(A) = n_A / n
   $
-  is the *frequency* of $A$. Frequencies satisfy $0 <= f_n(A) <= 1$,
-  $f_n(Omega) = 1$, and $f_n(A union B) = f_n(A) + f_n(B)$ whenever
-  $A inter B = emptyset$. Empirically, as $n$ grows, $f_n(A)$ *stabilizes*
-  around a definite value — the frequency interpretation of probability.
+  is the *frequency* of $A$. Frequencies satisfy $0 <= f_(n)(A) <= 1$,
+  $f_(n)(Omega) = 1$, and $f_(n)(A union B) = f_(n)(A) + f_(n)(B)$ whenever
+  $A inter B = emptyset$. Empirically, as $n$ grows, $f_(n)(A)$ *stabilizes*
+  around a definite value — this stable limit is taken as the *frequency
+  definition of probability*, a very intuitive interpretation that predates
+  the axiomatic framework: the probability of $A$ is the limiting
+  frequency $P(A) = lim_(n -> infinity) f_(n)(A)$.
 ] <prop:frequency-stability>
 
 The stabilization of frequencies is itself a theorem, not an axiom — it is
@@ -171,10 +170,10 @@ axiomatic definition does is to fix the *idealized limit object* directly and
 derive everything else from it.
 
 #definition(name: "Axiomatic Definition of Probability")[
-  Let $(Omega, F)$ be a measurable space. A *probability measure* is a
-  function $P: F -> [0, 1]$ such that
+  Let $(Omega, cal(F))$ be a measurable space. A *probability measure* is a
+  function $P: cal(F) -> [0, 1]$ such that
 
-  - (non-negativity) $P(A) >= 0$ for all $A in F$;
+  - (non-negativity) $P(A) >= 0$ for all $A in cal(F)$;
   - (normalization) $P(Omega) = 1$;
   - (countable additivity) for every sequence of pairwise disjoint events
     $A_1, A_2, dots$,
@@ -182,7 +181,7 @@ derive everything else from it.
       P(union.big_(n=1)^infinity A_n) = sum_(n=1)^infinity P(A_n).
     $
 
-  The triple $(Omega, F, P)$ is a *probability space*.
+  The triple $(Omega, cal(F), P)$ is a *probability space*.
 ] <def:probability-axioms>
 
 #definition(name: "Classical Probability")[
@@ -268,19 +267,79 @@ derive everything else from it.
   supplement: [Fig.],
 ) <fig:meeting-problem>
 
-#caution[
-  (Bertrand's paradox.) Choose "a chord of a circle at random" and ask for the
-  probability that it is longer than the side of the inscribed equilateral
-  triangle. Three natural-sounding randomization mechanisms give different
-  answers: uniformly chosen endpoints give $1 \/ 3$; a uniformly chosen radius
-  with a uniformly chosen point on it gives $1 \/ 2$; a uniformly chosen chord
-  midpoint in the disc gives $1 \/ 4$. The paradox does not reveal a
-  contradiction in probability theory — it shows that "uniformly random" must
-  specify *the mechanism generating the outcomes*, exactly as the urn example
-  of #link(<ex:balls-sampling>)[the drawing protocols] warned. A geometric
+#example[
+  (Buffon's needle.) A floor is ruled with parallel lines at spacing $d$.
+  A needle of length $ell < d$ is dropped at random. What is the probability
+  that it crosses a line?
+
+  Parameterise the needle's position by the distance $x$ from its midpoint
+  to the nearest line ($x in [0, d\/2]$) and its angle $theta$ with the
+  lines ($theta in [0, pi]$). The needle crosses a line iff
+  $
+    (ell / 2) sin theta >= x.
+  $
+  With uniform $x$ and $theta$ on $[0, d\/2] times [0, pi]$, the crossing
+  region has area
+  $
+    integral_0^pi (ell / 2) sin theta dif theta = ell,
+  $
+  while the full rectangle has area $d\/2 dot pi$. Hence
+  $
+    P("cross") = (2 ell) / (d pi)
+  $
+  (see @fig:buffon-needle). Inverting this formula gives a celebrated
+  experimental estimate of $pi$: drop the needle many times, count the
+  fraction that cross, and set $pi approx (2 ell) / (d dot f_(n))$.
+] <ex:buffon-needle>
+
+#figure(
+  image("img/buffon-needle.svg", width: 65%),
+  caption: [Buffon's needle: parallel lines at spacing $d$, a needle of
+    length $ell$ at angle $theta$ whose midpoint is at distance $x$ from the
+    nearest line. The needle crosses iff $(ell\/2) sin theta >= x$; the shaded
+    region in the $(theta, x)$-rectangle $[0, pi] times [0, d\/2]$ marks the
+    crossing condition.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:buffon-needle>
+
+#example[
+  (Bertrand's paradox.) Choose "a chord of a circle at random" and ask for
+  the probability that it is longer than the side of the inscribed equilateral
+  triangle. Three natural-sounding randomization mechanisms give three
+  different answers (see @fig:bertrand-paradox):
+
+  - *Random endpoints:* pick two points uniformly on the circumference;
+    the chord exceeds the side iff the arc between them is more than
+    $1\/3$ of the circle, giving $P = 1\/3$.
+  - *Random radius + point:* pick a radius uniformly, then a point
+    uniformly on it; the chord is perpendicular to that radius at the
+    point, and exceeds the side iff the point lies inside the concentric
+    disc of radius $r\/2$, giving $P = 1\/2$.
+  - *Random midpoint:* pick the chord midpoint uniformly in the disc;
+    the chord exceeds the side iff the midpoint lies inside the disc of
+    radius $r\/2$ (the inscribed triangle's incircle), giving
+    $P = (r\/2)^2 / r^2 = 1\/4$.
+
+  The paradox does not reveal a contradiction in probability theory — it
+  shows that "uniformly random" must specify *the mechanism generating
+  the outcomes*, exactly as the urn example of
+  #link(<ex:balls-sampling>)[the drawing protocols] warned. A geometric
   model is well-posed only once $Omega$ and its uniform measure are pinned
   down.
-] <caution:bertrand>
+] <ex:bertrand-paradox>
+
+#figure(
+  image("img/bertrand-paradox.svg", width: 90%),
+  caption: [Bertrand's paradox: three ways of choosing a "random chord" lead
+    to three different probabilities ($1\/3$, $1\/2$, $1\/4$) that it exceeds
+    the side of the inscribed equilateral triangle. Left: random endpoints on
+    the circumference. Middle: random radius with a random point on it. Right:
+    random midpoint in the disc. Each panel shows the favourable region (shaded)
+    within the relevant sample space.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:bertrand-paradox>
 
 #note[
   (Subjective probability.) In situations with no repeatable experiment —
@@ -333,7 +392,7 @@ the whole theory of $P$; this section unwinds its first consequences.
   In particular $P(A) <= 1$ for every event $A$.
 ] <prop:probability-monotonicity>
 
-#property(name: "Addition Formula")[
+#property(name: "Addition Formula (Inclusion–Exclusion)")[
   For any two events,
   $
     P(A union B) = P(A) + P(B) - P(A inter B),
@@ -345,6 +404,17 @@ the whole theory of $P$; this section unwinds its first consequences.
     - P(A inter B) - P(A inter C) - P(B inter C)
     + P(A inter B inter C).
   $
+
+  More generally, for any $n$ events $A_1, dots, A_n$,
+  $
+    P(union.big_(i=1)^n A_i)
+    = sum_(k=1)^n (-1)^(k+1) S_k,
+    quad S_k = sum_(1 <= i_1 < dots < i_k <= n) P(A_(i_1) inter dots inter A_(i_k)).
+  $
+  This is precisely the *inclusion–exclusion principle* of combinatorics,
+  transferred to the probabilistic setting: the alternating sum
+  overcounts and undercounts intersections to recover the probability of
+  the union.
 ] <prop:addition-formula>
 
 #proof[
@@ -352,8 +422,12 @@ the whole theory of $P$; this section unwinds its first consequences.
   $A union B = A union (B backslash (A inter B))$ and apply
   #link(<prop:probability-additivity>)[finite additivity] together with
   #link(<prop:probability-monotonicity>)[the difference formula]. The
-  three-event version follows by the same decomposition, or directly by the
-  inclusion–exclusion pattern known from the Combinatoire note.
+  three-event version follows by the same decomposition. The general
+  $n$-event case is the inclusion–exclusion principle: prove it by
+  induction on $n$, decomposing $A_1 union dots union A_n$ as
+  $A_1 union (A_2 union dots union A_n)$ and applying the two-event
+  formula; the alternating signs arise from the recursive subtraction of
+  pairwise, triplewise, $dots$ intersections.
 ]
 
 The next theorem extends the addition pattern from finite unions to limits of
@@ -390,6 +464,49 @@ of sets from the Théorie des Ensembles note.
   apply the increasing case to $overline(A_1) subset.eq overline(A_2) subset.eq
   dots$ and use the complement rule.
 ]
+
+The continuity theorem reveals a fundamental equivalence: the
+countable additivity axiom can be replaced by *finite additivity plus
+lower continuity* — that is, the requirement that $P(A_n arrow.b A)$
+implies $P(A_n) -> P(A)$.
+
+#theorem(name: "Equivalence of Countable Additivity and Finite Additivity + Lower Continuity")[
+  Let $P$ be a non-negative, normalized set function on
+ $(Omega, cal(F))$. Then $P$ is countably additive if and only if $P$
+  is finitely additive and *lower continuous*:
+  $
+    A_1 supset.eq A_2 supset.eq dots "with" inter.big_(n=1)^infinity A_n = emptyset
+    quad arrow.r.double quad lim_(n -> infinity) P(A_n) = 0.
+  $
+] <thm:countable-additivity-equivalence>
+
+#proof[
+  ($arrow.r.double$) Countable additivity implies finite additivity
+  (#link(<prop:probability-additivity>)[see above]) and, by the
+  continuity theorem
+  (#link(<thm:continuity-probability>)[continuity of probability]),
+  lower continuity.
+
+  ($arrow.l.double$) Given pairwise disjoint $A_1, A_2, dots$, set
+  $B_n = union.big_(k=n)^infinity A_k$. Then $B_n arrow.b emptyset$
+  and $union.big_(k=1)^infinity A_k = A_1 union B_2$. By finite
+  additivity,
+  $
+    P(union.big_(k=1)^infinity A_k) = P(A_1) + P(B_2).
+  $
+  Iterating, $P(B_n) = sum_(k=n)^infinity P(A_k)$; lower continuity
+  gives $P(B_n) -> 0$, so
+  $
+    P(union.big_(k=1)^infinity A_k)
+    = sum_(k=1)^(n-1) P(A_k) + P(B_n)
+    -> sum_(k=1)^infinity P(A_k).
+  $
+]
+
+This equivalence is of more than theoretical interest: in many
+constructions (e.g. extending a pre-measure from an algebra to a
+$sigma$-field via Carathéodory's extension theorem), it is
+finite additivity plus continuity that one verifies in practice.
 
 Monotone limits prepare the language of "infinitely often", on which the
 strong limit theorems of the Limit Theorems part rest.
@@ -479,7 +596,7 @@ restricts the sample space from $Omega$ to $B$, and the likelihood of $A$
 must be re-evaluated *within this reduced space*.
 
 #definition(name: "Conditional Probability")[
-  Let $B in F$ with $P(B) > 0$. The *conditional probability* of $A$ given
+  Let $B in cal(F)$ with $P(B) > 0$. The *conditional probability* of $A$ given
   $B$ is
   $
     P(A | B) = (P(A inter B)) / (P(B)).
@@ -488,7 +605,7 @@ must be re-evaluated *within this reduced space*.
 
 #property(name: "Conditional Probability is a Probability")[
   For fixed $B$ with $P(B) > 0$, the map $A mapsto P(A | B)$ is a
-  probability measure on $(Omega, F)$: it is non-negative, satisfies
+  probability measure on $(Omega, cal(F))$: it is non-negative, satisfies
   $P(Omega | B) = 1$, and is countably additive.
 ] <prop:cond-prob-measure>
 
@@ -760,9 +877,9 @@ expansions — become available. A random variable is the bridge from the
 sample space to the real line.
 
 #definition(name: "Random Variable")[
-  A *random variable* on a probability space $(Omega, F, P)$ is a function
+  A *random variable* on a probability space $(Omega, cal(F), P)$ is a function
   $X: Omega -> RR$ that is *measurable*: for every $x in RR$, the set
-  ${omega in Omega : X(omega) <= x}$ belongs to the event field $F$.
+  ${omega in Omega : X(omega) <= x}$ belongs to the event field $cal(F)$.
 ] <def:random-variable>
 
 The measurability condition guarantees that questions like "$X <= x$?" are
@@ -1052,7 +1169,7 @@ concentration, error.
 ] <def:normal-dist>
 
 Every normal variable standardizes: if $X ~ N(mu, sigma^2)$ then
-$Z = (X - mu) / sigma ~ N(0, 1)$, and $F_X(x) = Phi((x - mu) / sigma)$.
+$Z = (X - mu) / sigma ~ N(0, 1)$, and $F_(X)(x) = Phi((x - mu) / sigma)$.
 Tables of $Phi$ (in the Appendix) thus serve all parameter values.
 
 #property(name: "Three-Sigma Rule")[
@@ -1145,15 +1262,15 @@ collect the probabilities of the pre-images.
 ] <ex:discrete-transform>
 
 For a *continuous* $X$, the distribution can be recovered from its CDF:
-the *distribution function method* — compute $F_Y(y) = P(g(X) <= y)$,
+the *distribution function method* — compute $F_(Y)(y) = P(g(X) <= y)$,
 then differentiate.
 
 #example[
   Let $X ~ U(0, 1)$ and $Y = X^2$. For $0 <= y <= 1$,
   $
-    F_Y(y) = P(X^2 <= y) = P(X <= sqrt(y)) = sqrt(y),
+    F_(Y)(y) = P(X^2 <= y) = P(X <= sqrt(y)) = sqrt(y),
   $
-  so $f_Y(y) = d\/(d y) sqrt(y) = 1 / (2 sqrt(y))$ for $0 < y < 1$. This
+  so $f_(Y)(y) = d\/(d y) sqrt(y) = 1 / (2 sqrt(y))$ for $0 < y < 1$. This
   is the $"Be"(1\/2, 1)$ density, the square of a uniform variable being a
   special case of the Beta-Gamma connection noted above.
 ] <ex:cdf-method>
@@ -1166,7 +1283,7 @@ When $g$ is monotone, a direct formula avoids the detour through the CDF.
   $Y = g(X)$ and let $h = g^(-1)$ be the inverse function. Then $Y$ has
   density
   $
-    f_Y(y) = f_X(h(y)) dot abs(h'(y)),
+    f_(Y)(y) = f_(X)(h(y)) dot abs(h'(y)),
   $
   for $y$ in the range of $g$.
 ] <thm:monotone-transform>
@@ -1175,15 +1292,15 @@ When $g$ is monotone, a direct formula avoids the detour through the CDF.
   Suppose $g$ is strictly increasing (the decreasing case is symmetric).
   Then $g^(-1)$ is also increasing, so
   $
-    F_Y(y) = P(g(X) <= y) = P(X <= h(y)) = F_X(h(y)).
+    F_(Y)(y) = P(g(X) <= y) = P(X <= h(y)) = F_(X)(h(y)).
   $
   Differentiating by the chain rule gives
-  $f_Y(y) = f_X(h(y)) h'(y)$; since $h$ is increasing, $h'(y) >= 0$ and
+  $f_(Y)(y) = f_(X)(h(y)) h'(y)$; since $h$ is increasing, $h'(y) >= 0$ and
   $h'(y) = abs(h'(y))$. If $g$ is strictly decreasing, then
   $
-    F_Y(y) = P(g(X) <= y) = P(X >= h(y)) = 1 - F_X(h(y)),
+    F_(Y)(y) = P(g(X) <= y) = P(X >= h(y)) = 1 - F_(X)(h(y)),
   $
-  and differentiating gives $f_Y(y) = -f_X(h(y)) h'(y)$; since $h$ is now
+  and differentiating gives $f_(Y)(y) = -f_(X)(h(y)) h'(y)$; since $h$ is now
   decreasing, $h'(y) <= 0$ and $-h'(y) = abs(h'(y))$. The two cases unify
   in the stated formula.
 ]
@@ -1192,8 +1309,8 @@ When $g$ is monotone, a direct formula avoids the detour through the CDF.
   (Linear transform.) Let $X ~ N(mu, sigma^2)$ and $Y = a X + b$ with
   $a != 0$. Then $h(y) = (y - b) / a$ and $h'(y) = 1 / a$, so
   $
-    f_Y(y)
-    = f_X((y - b) / a) dot abs(1 / a)
+    f_(Y)(y)
+    = f_(X)((y - b) / a) dot abs(1 / a)
     = 1 / (abs(a) sigma sqrt(2 pi)) exp(-(y - a mu - b)^2 / (2 a^2 sigma^2)).
   $
   This is $N(a mu + b, a^2 sigma^2)$: linear transforms of normals are
@@ -1296,7 +1413,7 @@ As in one dimension, two structural types carry most of the theory.
 #figure(
   image("img/joint-density.svg", width: 75%),
   caption: [A bivariate joint density $f(x, y)$ visualised by contour lines
-    in the $(x, y)$ plane; the marginal densities $f_X(x)$ and $f_Y(y)$
+    in the $(x, y)$ plane; the marginal densities $f_(X)(x)$ and $f_(Y)(y)$
     appear as projections on the side panels.],
   placement: auto,
   supplement: [Fig.],
@@ -1312,20 +1429,20 @@ joint.
 #definition(name: "Marginal Distribution")[
   The *marginal PMF* of $X$ from a joint PMF $p(x, y)$ is
   $
-    p_X(x) = sum_y p(x, y).
+    p_(X)(x) = sum_y p(x, y).
   $
   The *marginal PDF* of $X$ from a joint PDF $f(x, y)$ is
   $
-    f_X(x) = integral_(-infinity)^infinity f(x, y) dif y.
+    f_(X)(x) = integral_(-infinity)^infinity f(x, y) dif y.
   $
-  The marginal CDF is $F_X(x) = lim_(y -> +infinity) F(x, y)$.
+  The marginal CDF is $F_(X)(x) = lim_(y -> +infinity) F(x, y)$.
 ] <def:marginal-distribution>
 
 #property(name: "Marginal Formulas")[
   Marginals are bona fide PMFs/PDFs: they are non-negative and sum/integrate
   to $1$. For a bivariate continuous vector,
   $
-    P(a < X <= b) = integral_a^b f_X(x) dif x
+    P(a < X <= b) = integral_a^b f_(X)(x) dif x
     = integral_a^b (integral_(-infinity)^infinity f(x, y) dif y) dif x.
   $
   Symmetric formulas hold for the marginal of $Y$.
@@ -1396,11 +1513,11 @@ apply.
 
   - (maximum) $M_n = max(X_1, dots, X_n)$ has CDF
     $
-      F_(M_n)(z) = product_(i=1)^n F_i(z).
+      F_(M_n)(z) = product_(i=1)^n F_(i)(z).
     $
   - (minimum) $N_n = min(X_1, dots, X_n)$ has CDF
     $
-      F_(N_n)(z) = 1 - product_(i=1)^n (1 - F_i(z)).
+      F_(N_n)(z) = 1 - product_(i=1)^n (1 - F_(i)(z)).
     $
   If the $X_i$ are identically distributed with CDF $F$, then
   $F_(M_n) = F^n$ and $F_(N_n) = 1 - (1 - F)^n$.
@@ -1419,17 +1536,17 @@ For *sums* of independent continuous variables, the integral form is the
   Let $X$ and $Y$ be independent continuous random variables with densities
   $f_X$ and $f_Y$. The density of $Z = X + Y$ is the *convolution*
   $
-    f_Z(z) = integral_(-infinity)^infinity f_X(x) f_Y(z - x) dif x.
+    f_(Z)(z) = integral_(-infinity)^infinity f_(X)(x) f_(Y)(z - x) dif x.
   $
 ] <thm:convolution>
 
 #proof[
   Condition on $X$:
   $
-    F_Z(z) = P(X + Y <= z) = integral_(-infinity)^infinity P(Y <= z - x) f_X(x) dif x = integral_(-infinity)^infinity F_Y(z - x) f_X(x) dif x.
+    F_(Z)(z) = P(X + Y <= z) = integral_(-infinity)^infinity P(Y <= z - x) f_(X)(x) dif x = integral_(-infinity)^infinity F_(Y)(z - x) f_(X)(x) dif x.
   $
   Differentiating in $z$ (under the integral, justified by dominated
-  convergence) gives $f_Z(z) = integral f_Y(z - x) f_X(x) dif x$.
+  convergence) gives $f_(Z)(z) = integral f_(Y)(z - x) f_(X)(x) dif x$.
 ]
 
 #example[
@@ -1491,29 +1608,29 @@ distributions restrict one variable to a fixed value and examine the
 distribution of the other.
 
 #definition(name: "Conditional PMF")[
-  For discrete $X, Y$ with joint PMF $p(x, y)$ and $p_X(x) > 0$, the
+  For discrete $X, Y$ with joint PMF $p(x, y)$ and $p_(X)(x) > 0$, the
   *conditional PMF* of $Y$ given $X = x$ is
   $
-    p_(Y|X)(y|x) = (p(x, y)) / p_X(x).
+    p_(Y|X)(y|x) = (p(x, y)) / p_(X)(x).
   $
 ] <def:conditional-pmf>
 
 #definition(name: "Conditional PDF")[
-  For continuous $X, Y$ with joint PDF $f(x, y)$ and $f_X(x) > 0$, the
+  For continuous $X, Y$ with joint PDF $f(x, y)$ and $f_(X)(x) > 0$, the
   *conditional PDF* of $Y$ given $X = x$ is
   $
-    f_(Y|X)(y|x) = (f(x, y)) / f_X(x).
+    f_(Y|X)(y|x) = (f(x, y)) / f_(X)(x).
   $
 ] <def:conditional-pdf>
 
 #property(name: "Properties of Conditional Distributions")[
-  - For fixed $x$ with $f_X(x) > 0$, $f_(Y|X)(dot|x)$ is a bona fide PDF:
+  - For fixed $x$ with $f_(X)(x) > 0$, $f_(Y|X)(dot|x)$ is a bona fide PDF:
     non-negative and integrating to $1$ over $y$;
-  - (multiplication rule) $f(x, y) = f_X(x) f_(Y|X)(y|x) = f_Y(y) f_(X|Y)(x|y)$;
-  - (total density) $f_Y(y) = integral_(-infinity)^infinity f_(Y|X)(y|x) f_X(x) dif x$
+  - (multiplication rule) $f(x, y) = f_(X)(x) f_(Y|X)(y|x) = f_(Y)(y) f_(X|Y)(x|y)$;
+  - (total density) $f_(Y)(y) = integral_(-infinity)^infinity f_(Y|X)(y|x) f_(X)(x) dif x$
     — the density analogue of
     #link(<thm:total-probability>)[the law of total probability];
-  - if $X$ and $Y$ are independent, $f_(Y|X)(y|x) = f_Y(y)$ — conditioning
+  - if $X$ and $Y$ are independent, $f_(Y|X)(y|x) = f_(Y)(y)$ — conditioning
     changes nothing.
 ] <prop:conditional-dist-properties>
 
@@ -1642,7 +1759,7 @@ statistics.
   A random vector $bold(X) = (X_1, dots, X_n)$ has the *$n$-variate normal
   distribution* with mean vector $bold(mu) in RR^n$ and covariance matrix
   $Sigma$ (a symmetric positive-definite $n times n$ matrix), written
-  $bold(X) ~ N_n(bold(mu), Sigma)$, if its joint density is
+  $bold(X) ~ N_(n)(bold(mu), Sigma)$, if its joint density is
   $
     f(bold(x)) = 1 / ((2 pi)^(n\/2) sqrt(abs(Sigma))) exp(-1\/2 (bold(x) - bold(mu))^T Sigma^(-1) (bold(x) - bold(mu))).
   $
@@ -1663,9 +1780,9 @@ For $n = 2$ and $Sigma = [[sigma_1^2, rho sigma_1 sigma_2], [rho sigma_1
 $rho$ — the picture of #link(<fig:joint-density>)[the joint density figure].
 
 #property(name: "Linear Transformations")[
-  If $bold(X) ~ N_n(bold(mu), Sigma)$ and $bold(Y) = bold(A) bold(X) +
+  If $bold(X) ~ N_(n)(bold(mu), Sigma)$ and $bold(Y) = bold(A) bold(X) +
   bold(b)$ where $bold(A)$ is an $m times n$ matrix and $bold(b) in RR^m$,
-  then $bold(Y) ~ N_m(bold(A) bold(mu) + bold(b), bold(A) Sigma bold(A)^T)$.
+  then $bold(Y) ~ N_(m)(bold(A) bold(mu) + bold(b), bold(A) Sigma bold(A)^T)$.
   In particular, any linear combination of jointly normal variables is
   normal — the *closure under linear transformation*.
 ] <prop:mv-normal-linear>
@@ -1794,9 +1911,9 @@ series depend on summation order, which has no probabilistic meaning.
 #proof[
   (Continuous case.) Using
   #link(<prop:conditional-dist-properties>)[the total density formula]
-  $f_Y(y) = integral f_(Y|X)(y|x) f_X(x) dif x$:
+  $f_(Y)(y) = integral f_(Y|X)(y|x) f_(X)(x) dif x$:
   $
-    E[E[Y|X]] = integral E[Y|X=x] f_X(x) dif x = integral (integral y f_(Y|X)(y|x) dif y) f_X(x) dif x = integral y (integral f_(Y|X)(y|x) f_X(x) dif x) dif y = integral y f_Y(y) dif y = E[Y].
+    E[E[Y|X]] = integral E[Y|X=x] f_(X)(x) dif x = integral (integral y f_(Y|X)(y|x) dif y) f_(X)(x) dif x = integral y (integral f_(Y|X)(y|x) f_(X)(x) dif x) dif y = integral y f_(Y)(y) dif y = E[Y].
   $
   The discrete case replaces integrals by sums.
 ]
@@ -2036,7 +2153,7 @@ distribution) into routine algebra (products, limits of functions).
 #definition(name: "Moment Generating Function")[
   The *moment generating function* (MGF) of $X$ is
   $
-    M_X(t) = E[exp(t X)],
+    M_(X)(t) = E[exp(t X)],
   $
   defined for all $t$ where the expectation is finite. The domain of $M_X$
   is the set $D = {t in RR : E[exp(t X)] < infinity}$, which always
@@ -2058,15 +2175,15 @@ moments by differentiation, fulfilling the promise of
 ] <prop:mgf-moments>
 
 #property(name: "Properties of the MGF")[
-  - (linearity) $M_(a X + b)(t) = exp(b t) M_X(a t)$;
-  - (independent sum) if $X$ and $Y$ are independent, $M_(X+Y)(t) = M_X(t)
-    M_Y(t)$ — the MGF of a sum is the product of the MGFs;
+  - (linearity) $M_(a X + b)(t) = exp(b t) M_(X)(a t)$;
+  - (independent sum) if $X$ and $Y$ are independent, $M_(X+Y)(t) = M_(X)(t)
+    M_(Y)(t)$ — the MGF of a sum is the product of the MGFs;
   - (identification) $M_X = M_Y$ (on a common domain) implies $X$
     and $Y$ have the same distribution.
 ] <prop:mgf-properties>
 
 #theorem(name: "Uniqueness Theorem")[
-  If $M_X(t)$ exists and is finite in an open interval $(-h, h)$ around
+  If $M_(X)(t)$ exists and is finite in an open interval $(-h, h)$ around
   $0$, and if $M_X = M_Y$ on this interval, then $X$ and $Y$ have the
   same distribution.
 ] <thm:mgf-uniqueness>
@@ -2079,7 +2196,7 @@ probabilistic statement that the MGF determines the distribution.
 #example[
   Common MGFs (computed from the definition via LOTUS):
 
-  | Distribution | $M_X(t)$ | Domain |
+  | Distribution | $M_(X)(t)$ | Domain |
   |---|---|---|
   | $"Ber"(p)$ | $1 - p + p exp(t)$ | $RR$ |
   | $B(n, p)$ | $(1 - p + p exp(t))^n$ | $RR$ |
@@ -2088,7 +2205,7 @@ probabilistic statement that the MGF determines the distribution.
   | $"Ga"(alpha, lambda)$ | $(lambda / (lambda - t))^alpha$ | $t < lambda$ |
   | $N(mu, sigma^2)$ | $exp(mu t + sigma^2 t^2 / 2)$ | $RR$ |
 
-  For the normal: $M_X(t) = E[exp(t(mu + sigma Z))] = exp(mu t)
+  For the normal: $M_(X)(t) = E[exp(t(mu + sigma Z))] = exp(mu t)
   E[exp(sigma t Z)]$ where $Z ~ N(0,1)$; expanding $exp(sigma t Z)$ in
   a power series and using $E[Z^(2k)] = (2k-1) "!!"$ recovers $exp(
     sigma^2
@@ -2109,7 +2226,7 @@ probabilistic statement that the MGF determines the distribution.
 #definition(name: "Characteristic Function")[
   The *characteristic function* (CF) of $X$ is
   $
-    phi_X(t) = E[exp(i t X)],
+    phi_(X)(t) = E[exp(i t X)],
   $
   defined for *all* $t in RR$.
 ] <def:cf>
@@ -2122,13 +2239,13 @@ The CF always exists because $abs(exp(i t X)) = 1$, so $E[abs(
   )] = 1 < infinity$. This is the key advantage over the MGF.
 
 #property(name: "Basic Properties of the CF")[
-  - $phi_X(0) = 1$;
-  - $abs(phi_X(t)) <= 1$ for all $t$;
-  - (conjugate symmetry) $phi_X(-t) = overline(phi_X(t))$;
+  - $phi_(X)(0) = 1$;
+  - $abs(phi_(X)(t)) <= 1$ for all $t$;
+  - (conjugate symmetry) $phi_(X)(-t) = overline(phi_(X)(t))$;
   - (uniform continuity) $phi_X$ is uniformly continuous on $RR$;
-  - (linearity) $phi_(a X + b)(t) = exp(i b t) phi_X(a t)$;
-  - (independent sum) if $X$ and $Y$ are independent, $phi_(X+Y)(t) = phi_X(t)
-    phi_Y(t)$.
+  - (linearity) $phi_(a X + b)(t) = exp(i b t) phi_(X)(a t)$;
+  - (independent sum) if $X$ and $Y$ are independent, $phi_(X+Y)(t) = phi_(X)(t)
+    phi_(Y)(t)$.
 ] <prop:cf-properties>
 
 #property(name: "Moments and the CF")[
@@ -2143,12 +2260,12 @@ $i^k$ in the denominator. The CF plays the same role as the MGF for
 moment extraction, with the crucial advantage of universal existence.
 
 #theorem(name: "Inversion Formula")[
-  If $phi_X$ is integrable ($integral_(-infinity)^infinity abs(phi_X(t))
+  If $phi_X$ is integrable ($integral_(-infinity)^infinity abs(phi_(X)(t))
   dif t < infinity$), then $X$ has a continuous density $f$ given by
   $
-    f(x) = 1 / (2 pi) integral_(-infinity)^infinity exp(-i t x) phi_X(t) dif t.
+    f(x) = 1 / (2 pi) integral_(-infinity)^infinity exp(-i t x) phi_(X)(t) dif t.
   $
-  In general, $F(b) - F(a) = lim_(T -> infinity) 1/(2 pi) integral_(-T)^T (exp(-i t a) - exp(-i t b)) / (i t) phi_X(t) dif t$.
+  In general, $F(b) - F(a) = lim_(T -> infinity) 1/(2 pi) integral_(-T)^T (exp(-i t a) - exp(-i t b)) / (i t) phi_(X)(t) dif t$.
 ] <thm:inversion-formula>
 
 The proof is a Fourier inversion argument; the full development of the
@@ -2160,7 +2277,7 @@ distribution, and the inversion formula is the inverse Fourier transform.
   Let $X_1, X_2, dots$ and $X$ be random variables with CFs $phi_n$ and
   $phi$. Then
   $
-    X_n arrow.r^d X quad "iff" quad phi_n(t) -> phi(t) "for all" t in RR.
+    X_n arrow.r^d X quad "iff" quad phi_(n)(t) -> phi(t) "for all" t in RR.
   $
   Moreover, if $phi_n -> phi$ pointwise and $phi$ is continuous at $0$,
   then $phi$ is a CF and $X_n arrow.r^d X$.
@@ -2200,7 +2317,7 @@ Central Limit Theorem (Part IV) reduces to showing $phi_(S_n / sqrt(n))
   For a random variable $X$ taking non-negative integer values with PMF
   $p_k = P(X = k)$, the *probability generating function* (PGF) is
   $
-    G_X(s) = E[s^X] = sum_(k=0)^infinity p_k s^k, quad abs(s) <= 1.
+    G_(X)(s) = E[s^X] = sum_(k=0)^infinity p_k s^k, quad abs(s) <= 1.
   $
 ] <def:pgf>
 
@@ -2211,12 +2328,12 @@ probabilities, and the focus is on extracting moments, handling sums of
 independent variables, and analysing compound distributions.
 
 #property(name: "Properties of the PGF")[
-  - (normalisation) $G_X(1) = 1$;
+  - (normalisation) $G_(X)(1) = 1$;
   - (factorial moments) $G_X^(k)(1) = E[X(X-1)dots(X-k+1)]$, the $k$-th
     factorial moment; in particular $G_X'(1) = E[X]$ and
     $G_X''(1) = E[X(X-1)] = E[X^2] - E[X]$;
   - (independent sum) if $X$ and $Y$ are independent,
-    $G_(X+Y)(s) = G_X(s) G_Y(s)$;
+    $G_(X+Y)(s) = G_(X)(s) G_(Y)(s)$;
   - (uniqueness) $G_X$ determines the distribution:
     $p_k = G_X^(k)(0) / k!$.
 ] <prop:pgf-properties>
@@ -2226,15 +2343,15 @@ independent variables, and analysing compound distributions.
   non-negative integer-valued random variable independent of the $X_i$,
   with PGF $G_N$. The *random sum* $S_N = sum_(i=1)^N X_i$ has PGF
   $
-    G_(S_N)(s) = G_N(G_X(s)).
+    G_(S_N)(s) = G_(N)(G_(X)(s)).
   $
 ] <prop:pgf-compound>
 
 #proof[
-  Condition on $N = n$: $G_(S_N)(s) = E[s^(X_1 + dots + X_n)] = G_X(s)^n$
+  Condition on $N = n$: $G_(S_N)(s) = E[s^(X_1 + dots + X_n)] = G_(X)(s)^n$
   by independence. Averaging over $N$:
   $
-    G_(S_N)(s) = sum_(n=0)^infinity P(N=n) G_X(s)^n = G_N(G_X(s)).
+    G_(S_N)(s) = sum_(n=0)^infinity P(N=n) G_(X)(s)^n = G_(N)(G_(X)(s)).
   $
 ]
 
@@ -2242,7 +2359,7 @@ independent variables, and analysing compound distributions.
   (Compound Poisson.) If $N ~ "Pois"(lambda)$ and $X_i ~ "Pois"(mu)$,
   then $S_N ~ "Pois"(lambda mu)$. Indeed
   $
-    G_(S_N)(s) = G_N(G_X(s)) = exp(lambda (G_X(s) - 1)) = exp(lambda (exp(mu(s - 1)) - 1)) = exp(lambda mu (s - 1)),
+    G_(S_N)(s) = G_(N)(G_(X)(s)) = exp(lambda (G_(X)(s) - 1)) = exp(lambda (exp(mu(s - 1)) - 1)) = exp(lambda mu (s - 1)),
   $
   which is the PGF of $"Pois"(lambda mu)$. The Poisson distribution is
   *closed under compounding* — a property central to the compound Poisson
@@ -2252,7 +2369,7 @@ independent variables, and analysing compound distributions.
 #example[
   Common PGFs:
 
-  | Distribution | $G_X(s)$ |
+  | Distribution | $G_(X)(s)$ |
   |---|---|
   | $"Ber"(p)$ | $1 - p + p s$ |
   | $B(n, p)$ | $(1 - p + p s)^n$ |
@@ -2293,9 +2410,9 @@ Parts I–III. They answer two fundamental questions:
 
 #definition(name: "Convergence in Distribution")[
   $X_n$ converges *in distribution* (or *weakly*) to $X$, written
-  $X_n arrow.r^d X$, if $F_n(x) -> F(x)$ at every continuity point $x$
+  $X_n arrow.r^d X$, if $F_(n)(x) -> F(x)$ at every continuity point $x$
   of $F$. Equivalently (by #link(<thm:continuity-theorem>)[Lévy's
-    continuity theorem]), $phi_n(t) -> phi(t)$ for all $t in RR$.
+    continuity theorem]), $phi_(n)(t) -> phi(t)$ for all $t in RR$.
 ] <def:convergence-distribution>
 
 #definition(name: "Almost Sure Convergence")[
@@ -2304,7 +2421,7 @@ Parts I–III. They answer two fundamental questions:
   $
     P(lim_(n->infinity) X_n = X) = 1.
   $
-  That is, $X_n(omega) -> X(omega)$ for all $omega$ outside a null set.
+  That is, $X_(n)(omega) -> X(omega)$ for all $omega$ outside a null set.
 ] <def:convergence-as>
 
 #definition(name: "Convergence in L^p")[
@@ -2332,8 +2449,8 @@ Parts I–III. They answer two fundamental questions:
   -> 0$.
 
   (P $arrow.r.double$ d) If $X_n arrow.r^P X$, then at any continuity
-  point $x$ of $F$, split $F_n(x)$ using $abs(X_n - X) > epsilon$ and
-  bound each piece to get $F_n(x) -> F(x)$.
+  point $x$ of $F$, split $F_(n)(x)$ using $abs(X_n - X) > epsilon$ and
+  bound each piece to get $F_(n)(x) -> F(x)$.
 ]
 
 == Laws of Large Numbers // 大数定律
@@ -2416,14 +2533,14 @@ central to the SLLN.
 
   Let $Z_i = (X_i - mu) / sigma$, so $E[Z_1] = 0$, $"Var"(Z_1) = 1$.
   Then $sqrt(n)(overline(X)_n - mu) / sigma = (1/sqrt(n)) sum Z_i$,
-  whose CF is $[phi_Z(t/sqrt(n))]^n$. Since $E[Z_1^2] = 1$, the CF
+  whose CF is $[phi_(Z)(t/sqrt(n))]^n$. Since $E[Z_1^2] = 1$, the CF
   has the expansion (by #link(<prop:cf-moments>)[the CF moment formula]):
   $
-    phi_Z(t/sqrt(n)) = 1 - t^2/(2n) + o(1/n).
+    phi_(Z)(t/sqrt(n)) = 1 - t^2/(2n) + o(1/n).
   $
   Hence
   $
-    [phi_Z(t/sqrt(n))]^n = [1 - t^2/(2n) + o(1/n)]^n -> exp(-t^2/2),
+    [phi_(Z)(t/sqrt(n))]^n = [1 - t^2/(2n) + o(1/n)]^n -> exp(-t^2/2),
   $
   which is the CF of $N(0,1)$. By #link(<thm:continuity-theorem>)[the
     continuity theorem], $sqrt(n)(overline(X)_n - mu) / sigma arrow.r^d
@@ -2498,12 +2615,12 @@ but the Taylor expansion must control each term individually.
   By #link(<thm:clt>)[the CLT], $sqrt(n)(overline(X)_n - mu)
   arrow.r^d N(0, sigma^2)$. A first-order Taylor expansion gives
   $
-    g(overline(X)_n) = g(mu) + g'(mu)(overline(X)_n - mu) + o_p(overline(X)_n - mu).
+    g(overline(X)_n) = g(mu) + g'(mu)(overline(X)_n - mu) + o_(p)(overline(X)_n - mu).
   $
   Multiplying by $sqrt(n)$ and using Slutsky's theorem (if $Y_n arrow.r^d
   Y$ and $Z_n arrow.r^P c$, then $Z_n Y_n arrow.r^d c Y$):
   $
-    sqrt(n)(g(overline(X)_n) - g(mu)) = g'(mu) dot sqrt(n)(overline(X)_n - mu) + o_p(1) arrow.r^d g'(mu) dot N(0, sigma^2) = N(0, [g'(mu)]^2 sigma^2).
+    sqrt(n)(g(overline(X)_n) - g(mu)) = g'(mu) dot sqrt(n)(overline(X)_n - mu) + o_(p)(1) arrow.r^d g'(mu) dot N(0, sigma^2) = N(0, [g'(mu)]^2 sigma^2).
   $
 ]
 
