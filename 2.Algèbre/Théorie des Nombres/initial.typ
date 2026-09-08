@@ -226,15 +226,88 @@
 //     - Fermat 伪素数、Carmichael 数（引向 Ch8 §8.4）
 
 // --- Chapter 5: Primitive Roots and Discrete Logarithms（原根与离散对数）---
-//   Section 5.1: The Order of an Integer（元素的阶）
-//     - 阶的定义与性质、o(m,a) | φ(m)
+//   核心洞察：Euler 定理的周期 φ(m) 在"好模"上能被取满——存在阶恰为 φ(m)
+//   的生成元，其幂次穷尽全部互素类（(ℤ/mℤ)ˣ 循环）；指标（离散对数）把乘法
+//   翻译成模 φ(m) 的加法，于是幂方程 x^k ≡ a 坍缩为一次同余。Part II 结构理论
+//   的高潮，依赖 Ch3/Ch4 全部底座，不需任何新分析工具（多项式根数界自含）。
+//   期望目标：① 给出阶的完整工具（整除 φ、幂的阶、周期判据、LCM 可达）；
+//   ② 证明原根存在性（p、p^α、2p^α）并给"当且仅当"完整分类 m ∈ {1,2,4,p^α,
+//   2p^α}（含"只当"排除证明，蓝图原为存在性三款，本轮决策扩展为闭环分类）；
+//   ③ 建立指标运算律与幂方程求解（化为线性同余回链 §3.3）；
+//   ④ 幂剩余判据 a^((p−1)/d) ≡ 1 与计数；n = 2 仅预告 Ch6（不预写 Euler 判据，
+//   SRP）。决策：证明路线取 max-order + LCM 引理（绕开 Σφ(d) = n，避免与 Ch7
+//   §7.3 卷积内容重复）；全章不配图（延续 Ch3/Ch4 纯代数风格，阶表/指标表承担
+//   直观）。Section 顺序 = 结构(§5.1) → 存在与分类(§5.2) → 应用(§5.3/§5.4)。
+//   Section 5.1: The Order of an Element（元素的阶）
+//     - 阶定义 #definition <def:order-of-element>（gcd(a,m) = 1 时最小 t > 0 使
+//       a^t ≡ 1 (mod m)；存在性由 Euler 定理 <thm:euler-theorem> 保证）
+//     - 阶整除 φ(m) #proposition <prop:order-divides-phi>（带余除法 + 最小性；
+//       兑现 ex:euler-example 注"隔离最小周期"）
+//     - 幂的阶 #proposition <prop:order-power>（ord(a^k) = ord(a)/gcd(ord(a), k)；
+//       供 §5.2 计数与 §5.3 幂方程反复消费）
+//     - 周期判据 #proposition <prop:order-periodicity>（a^r ≡ a^s (mod m) ⟺
+//       r ≡ s (mod ord_m(a))；指标唯一性引擎）
+//     - LCM 可达引理 #lemma <lem:order-lcm>（ord a = r、ord b = s ⟹ 存在 c 使
+//       ord c = lcm(r, s)；内证互素阶乘积子步；供 §5.2 主定理反证）
+//     - 例 <ex:order-table>（mod 7 各元素阶表；2 的阶 3 是 φ(6) 的真因子，
+//       呼应 <ex:euler-example>）；#note 互素类按阶分层与 RRS 结构（兑现
+//       Ch3 §3.2 note L1695-1699），引向 §5.2
 //   Section 5.2: Existence of Primitive Roots（原根的存在性）
-//     - 模 p、p^α、2p^α 原根存在性
-//     - 原根个数 φ(φ(m))
-//   Section 5.3: Indices and Discrete Logarithms（指数与离散对数）
-//     - 指标表、幂方程 x^k ≡ a 的求解
+//     - 原根定义 #definition <def:primitive-root>（阶 = φ(m)，幂穷尽 RRS；
+//       回链 <def:reduced-residue-system>）
+//     - 原根计数 #proposition <prop:primitive-root-power> + #corollary
+//       <cor:primitive-root-count>（g^k 原根 ⟺ gcd(k, φ(m)) = 1，故恰 φ(φ(m))
+//       个；兑现 Ch3 §3.5 note L2127-2132）
+//     - 多项式根数界 #lemma <lem:poly-roots-bound>（模素 p：d 次多项式至多 d 个
+//       解；归纳 + 因式定理 mod p，途中用 @thm:euclid-lemma；算术自含）
+//     - 素数原根存在性 #theorem <thm:primitive-root-prime>（max-order 路线：
+//       l = max{ord}，反证所有阶整除 l（@lem:order-lcm），x^l − 1 有 p − 1 个根
+//       逼出 l = p − 1；决策：不用 N(d) = φ(d) 分圆计数，避开 Σφ(d) = n 归 Ch7）
+//     - 二项式提升引理 #lemma <lem:binom-power-lift>（(1 + p^k u)^p ≡
+//       1 + p^(k+1) u (mod p^(k+2))，k ≥ 1；只需 @lem:binom-prime 整除系数）
+//     - 素幂原根 #theorem <thm:primitive-root-prime-power>（模 p 原根 g：
+//       g^(p−1) ≢ 1 (mod p²) 时直升，否则取 g + p；配 binom-power-lift 归纳抬升）
+//     - 2p^α 原根 #corollary <cor:primitive-root-twice-power>（g 偶则取 g + p^α）
+//     - 完整分类 #theorem <thm:primitive-root-classification>（原根存在 ⟺
+//       m ∈ {1,2,4,p^α,2p^α}；"只当"两情形：① m = 2^k (k ≥ 3) 归纳得阶 ≤
+//       2^(k−2)；② m 裂成互素 u,v > 2 时 φ(u)、φ(v) 皆偶，lcm 严格小于积；
+//       回链 <prop:phi-multiplicative>；本轮决策纳入完整 iff 闭环）
+//     - 例 <ex:primitive-roots-mod-prime>（mod 7 原根 {3,5}、mod 13 原根
+//       {2,6,7,11}，验 φ(φ) 计数）；例 <ex:lifted-primitive-root>（2 模 25 原根、
+//       mod 9 原根 2；展示提升定理小素数实例）
+//   Section 5.3: Indices and Discrete Logarithms（指标与离散对数）
+//     - 指标定义 #definition <def:index-logarithm>（固定原根 g，a ≡ g^(ind_g a)，
+//       指数模 φ(m) 唯一；唯一性即 <prop:order-periodicity>；仅对有原根的模成立）
+//     - 运算律 #proposition <prop:index-rules>（乘积→和、幂→倍数、换底公式；
+//       乘法幂与加法指标同构的显式兑现——呼应 Ch3 §3.1 note L1568-1570）
+//     - 例 <ex:index-table>（mod 13 以 2 为底的 12 值指标表，两行文本呈现）
+//     - 幂方程 #theorem <thm:power-congruence>（x^k ≡ a (mod m) 有原根模：
+//       换元 x = g^y 化为 k y ≡ ind(a) (mod φ(m))，回链 <thm:linear-congruence>
+//       <cor:linear-congruence-coprime>；可解 ⟺ d = gcd(k, φ(m)) | ind(a)，
+//       解数恰 d；兑现 Ch3 §3.3 note L1845-1847）
+//     - 例 <ex:power-congruence>（x³ ≡ 5 (mod 13) 恰 3 解 {8,11,7}；x⁴ ≡ 2
+//       (mod 13) 无解；验证 d | ind 判据）
+//     - #note 离散对数计算困难性与密码学应用一句（不展开，非本笔记主线）
 //   Section 5.4: Power Residues（幂剩余）
-//     - n 次剩余判别条件（n = 2 特例引向 Ch6）
+//     - 幂剩余定义 #definition <def:power-residue>（x^n ≡ a (mod m) 可解，
+//       gcd(a,m) = 1）
+//     - 判别条件 #theorem <thm:power-residue-criterion>（模素 p、d = gcd(n, p−1)：
+//       a 为 n 次剩余 ⟺ a^((p−1)/d) ≡ 1 (mod p)；⇒ 向用 <thm:fermat-little>，
+//       ⇐ 向原根化为整除 d | u 后线性可解；幂语言 ⇄ 指标语言双向示范）
+//     - 计数 #proposition <prop:count-power-residues>（模 p 的 n 次剩余恰
+//       (p−1)/d 个；指标视角 = 模 p−1 线性方程解数）
+//     - 例 <ex:power-residues>（mod 7：二次剩余 {1,2,4}（(7−1)/2 = 3 个）、
+//       三次剩余 {1,6}（(7−1)/3 = 2 个），判据双口径验证）
+//     - #note n = 2 时即 Euler 判据雏形 a^((p−1)/2) ≡ 1，Legendre 记号与完整
+//       理论属 Ch6 §6.1（SRP：本章不预写 Euler 判据）
+//   图片：全章无图（纯代数，阶表/指标表以文字呈现，C 类省略；本轮决策确认）
+//   写作顺序：§5.1 → §5.2 → §5.3 → §5.4 逐节写入，每节编译一次；
+//     编译检查点：§5.1 后、§5.2 前后半各一次、§5.3 后、全章终检
+//   承诺：兑现 Ch3 §3.1 note（L1530-1532 结构、L1568-1570 指标伏笔）、§3.2 note
+//     （L1695-1699 RRS 结构）、§3.3 note（L1845-1847 线性同余工具）、§3.5 note
+//     （L2127-2132 φ(φ(m))）、Ch4 §4.2 note（L2346-2350 最小周期、L2354-2359 群
+//     视角）与 Ch4 章末 prose（L2582-2587 阶与原根）共 8 处；埋 Ch6 Euler 判据/
+//     Legendre（n = 2 特例）；跨笔记引用 Algèbre Abstraite（(ℤ/mℤ)ˣ 循环结构）
 
 // --- Chapter 6: Quadratic Residues and the Law of Quadratic Reciprocity（二次剩余与二次互反律）---
 //   Section 6.1: Quadratic Residues and Legendre Symbols（二次剩余与 Legendre 符号）
