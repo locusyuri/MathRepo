@@ -2444,7 +2444,7 @@ for speed, after first building fast modular exponentiation.
   *Confirming primes.* For $p = 5$,
   $4! = 24 = 25 - 1 equiv -1$ (mod $5$); for $p = 7$,
   $6! = 720 = 721 - 1 equiv -1$ (mod $7$); for $p = 11$,
-  $10! = 3,628,800 = 329891 dot 11 - 1 equiv -1$ (mod $11$).
+  $10! = 3628800 = 329891 dot 11 - 1 equiv -1$ (mod $11$).
   *Rejecting composites.* The converse flips each check: for $n = 4$,
   $3! = 6 equiv 2$ (mod $4$) differs from $-1 equiv 3$ (mod $4$); for
   $n = 6$, $5! = 120 equiv 0$ (mod $6$); for $n = 9$, the factorial
@@ -2469,4 +2469,120 @@ for speed, after first building fast modular exponentiation.
   $2^2 = 4 equiv -1$ (mod $5$). Chapter 6 returns to this construction
   when it counts the solutions of $x^2 equiv a$ (mod $p$).
 ]
+
+== Applications: Modular Exponentiation and Primality Testing // 应用：模幂与素性检测
+
+The theorems of this chapter have so far been *identities*. Their
+practical currency, however, is *computation*. Euler's theorem shrinks
+exponents: when $gcd(a, m) = 1$, the residue $a^b$ (mod $m$) depends
+on the exponent $b$ only through its remainder modulo $phi(m)$. And
+Fermat's little theorem, read backwards, turns the expensive question
+"is $n$ prime?" into a fast — though fallible — congruence check. This
+section builds the exponentiation routine that makes the reduction
+cheap, then examines the resulting primality test and its two famous
+liars, the pseudoprimes and the Carmichael numbers.
+
+*Exponentiation by repeated squaring.* The naive evaluation of $a^b$
+(mod $m$) costs $b - 1$ multiplications. Write the exponent in binary
+as $b = sum_(i = 0)^k epsilon_i 2^i$ with $epsilon_i in {0, 1}$, so
+that
+$
+  a^b = product_(epsilon_i = 1) a^(2^i).
+$
+The auxiliary powers $a^(2^i)$ are obtained from one another by
+squaring, $a^(2^(i+1)) = (a^(2^i))^2$, and every operation is reduced
+modulo $m$ immediately, keeping the numbers small. Since $k ~= log_2
+b$, this takes $O(log b)$ modular multiplications instead of
+$O(b)$. The savings compound with the theorems of this chapter, which
+may reduce the exponent itself before any squaring begins.
+
+#example(name: "Computing a High Power Modulo 7")[
+  Fermat's little theorem (mod $7$, so $phi(7) = 6$) reduces the
+  exponent first: $50 = 8 dot 6 + 2$, hence $2^50 equiv 2^2 = 4$
+  (mod $7$). Alternatively, square away the binary expansion
+  $50 = 32 + 16 + 2$:
+  $
+    2^1 equiv 2, 2^2 equiv 4, 2^4 equiv 2, 2^8 equiv 4,
+    2^16 equiv 2, 2^32 equiv 4 quad ("mod" 7),
+  $
+  and multiplying the entries $i = 1, 4, 5$ selected by the bits of
+  $50$ gives $4 dot 2 dot 4 = 32 equiv 4$ (mod $7$). Both roads agree;
+  the first is shorter when a theorem pins the period, the second
+  needs no theorem at all.
+] <ex:powermod-example>
+
+*Fermat's test.* Fermat's little theorem implies that every odd prime
+$n$ satisfies $a^(n-1) equiv 1$ (mod $n$) for every base $a$ with
+$gcd(a, n) = 1$. Contrapositively, if some base $a$ violates this
+congruence, then $n$ is composite and $a$ is called a *witness* to the
+compositeness of $n$; no factoring is needed. When the congruence
+holds, $n$ merely *passes* the test for that base — it may still be
+composite, and then it carries a special name.
+
+#definition(name: "Pseudoprime to a Base")[
+  A composite integer $n$ is a *pseudoprime to the base $a$* if
+  $gcd(a, n) = 1$ and
+  $
+    a^(n-1) equiv 1 quad ("mod" n).
+  $
+  That is, $n$ deceives the Fermat test based on $a$: the test
+  concludes "likely prime" although $n$ is composite.
+] <def:pseudoprime>
+
+The smallest pseudoprime to the base $2$ is $n = 341 = 11 dot 31$:
+$2^10 = 1024 = 3 dot 341 + 1$, so $2^340 = (2^10)^34 equiv 1$
+(mod $341$), while $341$ is plainly composite. A single random base
+therefore certifies compositeness with high probability but proves
+primality never; and some composite numbers defeat the test for
+*every* base.
+
+#definition(name: "Carmichael Number")[
+  A composite integer $n$ is a *Carmichael number* if
+  $a^(n-1) equiv 1$ (mod $n$) for *every* integer $a$ with
+  $gcd(a, n) = 1$ — equivalently, $n$ is a pseudoprime to every base
+  coprime to it. The smallest Carmichael number is $561 = 3 dot 11 dot
+  17$.
+] <def:carmichael-number>
+
+#example(name: "Why 561 Is a Carmichael Number")[
+  Let $a$ be coprime to $561$; then none of $3, 11, 17$ divides $a$.
+  By Fermat's little theorem, $a^2 equiv 1$ (mod $3$),
+  $a^10 equiv 1$ (mod $11$) and $a^16 equiv 1$ (mod $17$). The
+  exponent $560 = n - 1$ is a multiple of each of $2, 10, 16$
+  ($560 = 2 dot 280 = 10 dot 56 = 16 dot 35$), so raising the three
+  congruences to suitable powers gives $a^560 equiv 1$ modulo each of
+  $3, 11, 17$. The moduli are pairwise coprime, and by the product
+  lemma of §3.4 (#link(<lem:pairwise-coprime-product>)[§3.4]) a number
+  divisible by each of them is divisible by their product; hence
+  $561 | (a^560 - 1)$, i.e. $a^560 equiv 1$ (mod $561$). Since $a$ was
+  arbitrary, $561$ passes the Fermat test for every base.
+] <ex:carmichael-example>
+
+#note[
+  The example exposes the exact weakness of Fermat's test: a
+  Carmichael number satisfies $a^(n-1) equiv 1$ (mod $n$) for all
+  bases, so no amount of rerunning the simple test catches it.
+  Korselt's criterion (1899) characterizes these numbers: a composite
+  $n$ is Carmichael if and only if it is squarefree and
+  $p - 1 | n - 1$ for every prime $p | n$. For $561$, the three values
+  $p - 1 = 2, 10, 16$ all divide $560$, as the example verified case
+  by case. The remedy is to look for *nontrivial square roots of $1$*:
+  if $a^2 equiv 1$ (mod $n$) yet $a$ is congruent to neither $1$ nor
+  $-1$ (mod $n$), then $n$ cannot be prime — the only square roots of
+  $1$ modulo a prime are $1$ and $-1$
+  (#link(<lem:square-roots-of-one>)[§4.3]). The Miller–Rabin test
+  mixes repeated squaring with this square-root check and forms the
+  robust probabilistic test of §8.4; Chapter 8 revisits these ideas in
+  detail. The Carmichael numbers themselves are known to be infinite
+  (Alford–Granville–Pomerance, 1994).
+]
+
+This closes Chapter 4. The three classical theorems and their
+applications gave the powers of an invertible class a *period* —
+$p - 1$ for a prime modulus, and in general a divisor of $phi(m)$.
+The next chapters refine this periodicity to its finest scale:
+Chapter 5 studies the exact order of an element and the exponents that
+generate the whole system of units, and Chapter 6 counts the solutions
+of quadratic congruences such as $x^2 equiv -1$ (mod $p$) with the
+tools glimpsed in §4.3.
 
