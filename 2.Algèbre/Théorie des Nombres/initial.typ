@@ -2141,3 +2141,332 @@ systems it carves out (§3.2), the resolution of linear congruences
 Part II now possesses both a compact language and a splitting tool;
 Chapter 4 harvests them into the three classical theorems of Fermat,
 Euler and Wilson.
+
+= Theorems of Fermat, Euler, and Wilson // Fermat–Euler–Wilson 定理
+
+Chapter 3 turned divisibility into a language: residue classes, their
+systems, and their invertible elements. This chapter spends that
+language on the oldest computational problem of the subject, the
+arithmetic of *high powers*. Given $a^n$ modulo a prime $p$, can the
+exponent be shrunk? The three theorems of the title answer the
+question in three voices. Fermat's little theorem (the claim dates
+from a letter of Fermat written in 1640; Euler gave the first
+published proof in 1736) fixes the period $p - 1$ of the powers of a
+base not divisible by $p$. Euler's theorem (1763) transplants that
+period to an arbitrary modulus $m$, where it becomes $phi(m)$. And
+Wilson's theorem — announced without proof by Waring in 1770 on
+behalf of John Wilson, and first proved by Lagrange in 1771 — records
+a striking bookkeeping of the factorial $(p - 1)!$ that in turn
+characterizes primes. All three rest on the same engine of Chapter 3:
+invertible classes may be permuted and cancelled freely. The chapter
+closes (§4.4) by converting the periodicity of powers into two
+computing tools, modular exponentiation and primality testing.
+
+== Fermat's Little Theorem // Fermat 小定理
+
+Reduction by congruence makes multiplication easy, but powers remain
+expensive: computing $3^100$ modulo a prime by repeated
+multiplication costs one hundred steps. The discovery of this section
+is that the powers of a fixed integer modulo a prime run in a short
+*cycle* — once the cycle length is known, the exponent may be reduced
+modulo it. The proof given here is the *binomial* one: it needs only
+the inverse-solving machinery of §3.3 and a single observation about
+the coefficients in the expansion of $(a + b)^p$. (The alternative
+route through residue systems is saved for §4.2, where it will be run
+at the general level of Euler's theorem.)
+
+#lemma(name: "Prime Divisibility of Binomial Coefficients")[
+  Let $p$ be a prime and let $1 <= k <= p - 1$. Then
+  $p | binom(p, k)$.
+] <lem:binom-prime>
+
+#proof(name: "of the lemma")[
+  The factorial identity
+  $
+    k binom(p, k) = p binom(p - 1, k - 1)
+  $
+  reduces to $k binom(p, k) equiv 0$ (mod $p$). Since
+  $1 <= k <= p - 1$, we have $gcd(k, p) = 1$, so $k$ is invertible
+  modulo $p$ (#link(<def:modular-inverse>)[§3.3]). Multiplying by the
+  inverse of $k$ yields $binom(p, k) equiv 0$ (mod $p$), that is,
+  $p | binom(p, k)$.
+]
+
+#property(name: "Freshman's Dream Modulo a Prime")[
+  If $p$ is prime and $a, b in bb(Z)$, then
+  $
+    (a + b)^p equiv a^p + b^p quad ("mod" p).
+  $
+] <prop:freshmans-dream>
+
+#proof(name: "of the property")[
+  Expanding by the binomial theorem,
+  $
+    (a + b)^p = sum_(k = 0)^p binom(p, k) a^(p - k) b^k,
+  $
+  every middle term $binom(p, k) a^(p - k) b^k$ with
+  $1 <= k <= p - 1$ vanishes modulo $p$ by #link(<lem:binom-prime>)[the
+  lemma], and only the terms $k = 0$ and $k = p$ survive.
+]
+
+The joke in the name is that a novice's urge to "distribute" the
+exponent, wrong in ordinary integer arithmetic, is correct here. Over
+finite fields this map $x -> x^p$ becomes the *Frobenius
+endomorphism*, a theme of abstract algebra that lies beyond this
+notebook's scope.
+
+#theorem(name: "Fermat's Little Theorem")[
+  Let $p$ be a prime and let $a in bb(Z)$. If $p$ does not divide
+  $a$, then
+  #eq[
+    $a^(p - 1) equiv 1 quad ("mod" p).$
+  ] <eq:fermat-little>
+  Equivalently, in the form that holds for *every* integer $a$,
+  $a^p equiv a$ (mod $p$).
+] <thm:fermat-little>
+
+#proof(name: "of Fermat's little theorem")[
+  We prove the universal form $a^p equiv a$ (mod $p$) and then derive
+  the displayed identity from it.
+  *Nonnegative bases.* Induct on $a >= 0$; the cases $a = 0, 1$ are
+  clear. If $a^p equiv a$ (mod $p$), then by the freshman's dream
+  (#link(<prop:freshmans-dream>)[§4.1]),
+  $
+    (a + 1)^p equiv a^p + 1 equiv a + 1 quad ("mod" p).
+  $
+  *Negative bases.* For an odd prime $p$ and $a >= 0$,
+  $(-a)^p = -a^p equiv -a$ (mod $p$). The prime $p = 2$ needs no case
+  split: $a^2 equiv a$ (mod $2$) for every integer $a$, since
+  $a^2 - a = a(a - 1)$ is even.
+  *First form.* If $p$ does not divide $a$, then $a$ is invertible
+  modulo $p$ (#link(<def:modular-inverse>)[§3.3]); multiplying
+  $a^p equiv a$ (mod $p$) by the inverse of $a$ gives
+  $a^(p - 1) equiv 1$ (mod $p$).
+]
+
+#example(name: "The Power Cycle Modulo 13")[
+  Fermat's little theorem asserts $2^12 equiv 1$ (mod $13$). Indeed
+  $2^6 = 64 equiv 12$ (mod $13$), and squaring gives
+  $2^12 equiv 144 equiv 1$ (mod $13$). To compute $2^90$ modulo $13$,
+  reduce the exponent modulo the period $12$:
+  $
+    2^90 equiv (2^12)^7 dot 2^6 equiv 1 dot 64 equiv 12
+    quad ("mod" 13).
+  $
+  Thus $13 | (2^90 - 12)$ — a verdict that naive exponentiation would
+  need ninety multiplications to reach.
+
+  The theorem also *manufactures inverses*: if $p$ does not divide
+  $a$, then $a^(p - 1) equiv 1$ (mod $p$) shows that $a^(p - 2)$ is
+  the inverse of $a$ modulo $p$. Modulo $7$, the inverse of $3$ is
+  $3^5 = 243 equiv 5$ (mod $7$), and indeed $3 dot 5 = 15 equiv 1$
+  (mod $7$).
+] <ex:fermat-example>
+
+#note[
+  The binomial route is not the only one. Multiplying the nonzero
+  residues $1, 2, ..., p - 1$ by $a$ permutes them — the multiples
+  $a, 2 a, ..., (p - 1) a$ again form a complete residue system
+  because $gcd(a, p) = 1$. Comparing the products of the two systems
+  and cancelling the common factor $(p - 1)!$ gives the same theorem.
+  This route is deferred because, with the factor $(p - 1)!$ replaced
+  by the product of a general reduced residue system and the exponent
+  $p - 1$ by $phi(m)$, it proves Euler's theorem *verbatim*; we run
+  it once, at its full level, in §4.2.
+]
+
+== Euler's Theorem // Euler 定理
+
+Fermat's little theorem regulates prime moduli. This section replaces
+the prime $p$ by an arbitrary modulus $m$ and asks: after how many
+steps do the powers of an invertible integer $a$ return to $1$?
+Chapter 3 supplied every ingredient. Section 3.5 counted the
+invertible classes modulo $m$ and named the count $phi(m)$
+(#link(<def:phi-function>)[§3.5]); §3.2 observed that multiplication
+by an invertible class keeps a reduced residue system closed and
+pairwise distinct (#link(<prop:reduced-closed>)[§3.2]). Euler's
+theorem is the statement that these two facts combine into a period
+of length $phi(m)$.
+
+#theorem(name: "Euler's Theorem")[
+  Let $m >= 2$ and let $a in bb(Z)$ with $gcd(a, m) = 1$. Then
+  #eq[
+    $a^(phi(m)) equiv 1 quad ("mod" m).$
+  ] <eq:euler-theorem>
+] <thm:euler-theorem>
+
+#proof(name: "of Euler's theorem")[
+  Fix a reduced residue system $r_1, ..., r_(phi(m))$ modulo $m$, a
+  list of representatives of the invertible classes
+  (#link(<def:reduced-residue-system>)[§3.2]). Multiplying every entry
+  by $a$ produces *another reduced residue system*:
+  - each product $a r_i$ is again coprime to $m$, by the closure of
+    the invertible classes (#link(<prop:reduced-closed>)[§3.2]);
+  - the products are pairwise incongruent: if
+    $a r_i equiv a r_j$ (mod $m$), then $m | a(r_i - r_j)$, and since
+    $gcd(a, m) = 1$ the factor $a$ may be cancelled
+    (#link(<def:modular-inverse>)[§3.3]), giving
+    $r_i equiv r_j$ (mod $m$) and hence $i = j$.
+
+  The two lists therefore represent the same $phi(m)$ classes, in a
+  permuted order, and their products are congruent modulo $m$:
+  $
+    product_(i = 1)^(phi(m)) a r_i equiv
+    product_(i = 1)^(phi(m)) r_i quad ("mod" m).
+  $
+  The left-hand product equals $a^(phi(m)) P$, where
+  $P = product_(i = 1)^(phi(m)) r_i$. Each factor $r_i$ is invertible
+  modulo $m$, so the product $P$ is invertible as well
+  (#link(<prop:reduced-closed>)[§3.2]); multiplying both sides by the
+  inverse of $P$ yields $a^(phi(m)) equiv 1$ (mod $m$).
+]
+
+This is the proof promised in the closing note of §4.1, now run at
+full strength: the reduced residue system plays the role that
+$1, 2, ..., p - 1$ played there, and $phi(m)$ replaces $p - 1$. For a
+prime modulus, $phi(p) = p - 1$
+(#link(<def:phi-function>)[§3.5]), so Euler's theorem contains
+Fermat's little theorem as the special case $m = p$
+(#link(<thm:fermat-little>)[§4.1]) — with the same proof structure,
+permutation followed by cancellation.
+
+#example(name: "Last Digits and Small Moduli")[
+  Let $m = 10$ and $a = 7$. Here $phi(10) = 4$, so Euler's theorem
+  promises $7^4 equiv 1$ (mod $10$): indeed $7^2 = 49 equiv 9$
+  (mod $10$) and $9^2 = 81 equiv 1$ (mod $10$). The powers of $7$
+  modulo $10$ cycle through
+  $
+    7, 9, 3, 1, 7, 9, 3, 1, ...
+  $
+  so the *last decimal digit* of $7^222$ is found by reducing the
+  exponent modulo the period $4$: $222 = 55 dot 4 + 2$, and the second
+  entry of the cycle is $9$. Hence $7^222 equiv 9$ (mod $10$).
+
+  For $m = 15$ the theorem gives $2^8 equiv 1$ (mod $15$) — and indeed
+  $2^8 = 256 = 17 dot 15 + 1$ — although no smaller positive power of
+  $2$ is congruent to $1$ modulo $15$: the period guaranteed by Euler's
+  theorem need not be *minimal*, only a divisor of $phi(m)$. Chapter 5
+  isolates the minimal period (the *order* of $a$ modulo $m$) and shows
+  that it always divides $phi(m)$.
+] <ex:euler-example>
+
+#note[
+  Euler's theorem is the workhorse behind the computations of §4.4:
+  an exponent may always be reduced modulo $phi(m)$ before a power is
+  evaluated. It also carries a structural message that Chapter 5
+  formalizes: the invertible classes modulo $m$ form an abelian group
+  under multiplication of size $phi(m)$, and Euler's theorem is the
+  statement that every element has order dividing the size of the
+  group — the finite analogue of Lagrange's theorem of group theory.
+  The power of the permutation argument is precisely that it never
+  used anything beyond closure and cancellation.
+]
+
+== Wilson's Theorem // Wilson 定理
+
+Fermat's and Euler's theorems regulate *powers*. Wilson's theorem
+concerns instead the full factorial of the nonzero residues. For a
+prime $p$ the numbers $1, 2, ..., p - 1$ are exactly the invertible
+classes modulo $p$, and the theorem asserts that their product is as
+far from $0$ as possible:
+
+#theorem(name: "Wilson's Theorem")[
+  If $p$ is prime, then
+  #eq[
+    $(p - 1)! equiv -1 quad ("mod" p).$
+  ] <eq:wilson>
+] <thm:wilson>
+
+The surprise is that the factorial — a long, unstructured product —
+collapses to a single value. The mechanism is *pairing by inverses*:
+in the list $1, 2, ..., p - 1$, every element other than $1$ and
+$p - 1$ multiplies with a distinct partner to give $1$. The only
+obstruction to this pairing is an element equal to its own inverse,
+and the next lemma says that, for a prime modulus, no such exotic
+elements exist.
+
+#lemma(name: "Self-Inverse Elements Modulo a Prime")[
+  Let $p$ be prime and let $x in bb(Z)$. If $x^2 equiv 1$
+  (mod $p$), then $x equiv plus.minus 1$ (mod $p$).
+] <lem:square-roots-of-one>
+
+#proof(name: "of the lemma")[
+  The congruence reads $p | (x - 1)(x + 1)$. Since $p$ is prime,
+  Euclid's lemma (#link(<thm:euclid-lemma>)[§2.1]) forces $p | x - 1$
+  or $p | x + 1$, i.e. $x equiv 1$ or $x equiv -1$ (mod $p$).
+]
+
+#proof(name: "of Wilson's theorem")[
+  The case $p = 2$ is immediate: $1! = 1 equiv -1$ (mod $2$), so
+  assume $p$ is odd.
+  *Pairing by inverses.* In the list $1, 2, ..., p - 1$ of invertible
+  classes modulo $p$ (#link(<def:modular-inverse>)[§3.3]) every
+  element $x$ has a unique inverse $x'$ with $x x' equiv 1$
+  (mod $p$). By #link(<lem:square-roots-of-one>)[the lemma], an
+  element coincides with its inverse only when $x equiv plus.minus 1$
+  (mod $p$), i.e. only for $x = 1$ and $x = p - 1$; all remaining
+  factors $2, ..., p - 2$ are therefore distinct from their inverses
+  and split into disjoint pairs $x, x'$ whose product is congruent to
+  $1$.
+  *Collecting the product.* The factorial $(p - 1)!$ is the product of
+  the unpaired factors $1$ and $p - 1 equiv -1$ (mod $p$) together
+  with the pairs, each contributing $1$. Hence
+  $
+    (p - 1)! equiv 1 dot (p - 1) equiv -1 quad ("mod" p).
+  $
+]
+
+The pairing argument explains *why* the answer is $-1$ rather than
+any other residue: the factorial is the product of the only two
+unpaired classes. Reversing the logic yields a primality test that
+cannot be fooled:
+
+#corollary(name: "Converse of Wilson's Theorem")[
+  Let $n >= 2$. If $(n - 1)! equiv -1$ (mod $n$), then $n$ is prime.
+] <cor:wilson-converse>
+
+#proof(name: "of the corollary")[
+  We argue by contraposition. If $n$ is composite, write $n = p k$
+  with $p$ prime and $k >= 2$. Since $p(k - 1) = n - p >= 2$, we have
+  $p <= n - 1$, so $p | (n - 1)!$. But the congruence
+  $(n - 1)! equiv -1$ (mod $n$) would force $n | (n - 1)! + 1$ and
+  hence $p | (n - 1)! + 1$; subtracting $p | (n - 1)!$ yields
+  $p | 1$, a contradiction.
+]
+
+Together with Wilson's theorem itself this gives an exact primality
+criterion: an integer $n >= 2$ is prime if and only if
+$(n - 1)! equiv -1$ (mod $n$). The criterion is perfect but slow — it
+requires $n - 1$ multiplications. Section 4.4 trades this certainty
+for speed, after first building fast modular exponentiation.
+
+#example(name: "Wilson's Theorem in Action")[
+  *Confirming primes.* For $p = 5$,
+  $4! = 24 = 25 - 1 equiv -1$ (mod $5$); for $p = 7$,
+  $6! = 720 = 721 - 1 equiv -1$ (mod $7$); for $p = 11$,
+  $10! = 3,628,800 = 329891 dot 11 - 1 equiv -1$ (mod $11$).
+  *Rejecting composites.* The converse flips each check: for $n = 4$,
+  $3! = 6 equiv 2$ (mod $4$) differs from $-1 equiv 3$ (mod $4$); for
+  $n = 6$, $5! = 120 equiv 0$ (mod $6$); for $n = 9$, the factorial
+  $8!$ contains the factors $3$ and $6$, so $9 | 8!$ and
+  $8! equiv 0 != 8 equiv -1$ (mod $9$).
+] <ex:wilson-example>
+
+#note[
+  *Half-factorial form.* Pairing the factors of $(p - 1)!$ as
+  $k(p - k) equiv -k^2$ (mod $p$) for $k = 1, ..., (p - 1)\/2$ gives
+  $
+    (p - 1)! = product_(k = 1)^((p - 1)\/2) k(p - k)
+    equiv (-1)^((p - 1)\/2) (((p - 1)\/2)!)^2 quad ("mod" p),
+  $
+  and Wilson's theorem converts this into
+  $
+    (((p - 1)\/2)!)^2 equiv (-1)^((p + 1)\/2) quad ("mod" p).
+  $
+  When $p equiv 1$ (mod $4$) the exponent $(p + 1)\/2$ is odd, so the
+  congruence exhibits an *explicit square root of $-1$ modulo $p$*,
+  namely $((p - 1)\/2)!$ — for $p = 5$, $2! = 2$ and
+  $2^2 = 4 equiv -1$ (mod $5$). Chapter 6 returns to this construction
+  when it counts the solutions of $x^2 equiv a$ (mod $p$).
+]
+
