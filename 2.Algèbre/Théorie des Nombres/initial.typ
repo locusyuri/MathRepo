@@ -56,21 +56,42 @@
 // 对应 LaTeX：chap01.tex（拆分为 Ch1 与 Ch2）
 
 // --- Chapter 1: Divisibility（整除性）---
+//   核心洞察：带余除法是 ℤ 上"除"的完备答案——gcd 存在、Bézout 线性表示、
+//   gcd·lcm 恒等式均由它机械推出；Ch2 的唯一分解即此引擎的首次总爆发。
 //   Section 1.1: Integers and Floor/Ceiling Functions（整数与取整函数）
-//     - ℕ/ℤ 与良序原理；Gauß 取整函数及其基本性质
-//     - Hermite 恒等式
+//     - 良序原理 #proposition <prop:well-ordering>（证明引擎，§1.2/§1.5 回链）
+//     - floor/ceiling 与小数部分 #definition <def:floor-ceiling>；
+//       刻画 <prop:floor-basic>、平移对偶 <prop:floor-identities>；<eq:hermite-identity>
+//     - Hermite 恒等式 <prop:hermite-identity>（小数部分 1/n 网格统计）
+//     - 数值例 <ex:floor-values>；#note 取整函数供 Ch7 求和消费（伏笔）
 //   Section 1.2: Divisibility and the Division Algorithm（整除性与带余除法）
-//     - 整除的定义与基本性质
-//     - 带余除法定理与真因子
+//     - 整除定义 #definition <def:divisibility>；运算律表 #property <prop:divisibility-rules>
+//       （真因子 prose 概念，供 Ch2 素数定义）；Polynôme 多项式版仅 #note 划界
+//     - 带余除法定理 #theorem <thm:division-algorithm>（良序取最小剩余 + 唯一性反证）
+//     - 核心式 <eq:division-identity>；数值例 <ex:division-example>（含负数情形）
+//     - #note 带余除法引向同余 Ch3 / 欧几里得引理 Ch2（伏笔）
 //   Section 1.3: Numeral Systems（进位制）
-//     - r 进制展开与进制转换
-//     - 广义进位制、平衡三进制
+//     - r 进制展开 #definition <def:numeral-system>；唯一性由反复带余除法（回链 thm）
+//     - 转换例 <ex:base-conversion>；平衡三进制 #note（竞赛向，简明）
 //   Section 1.4: GCD and LCM（最大公因数与最小公倍数）
-//     - gcd/lcm 定义、基本性质
-//     - 恒等式 gcd(a,b) · lcm(a,b) = |ab|
+//     - gcd/lcm/互素 #definition <def:gcd> <def:lcm> <def:coprime>
+//     - 初等性质 #proposition <prop:gcd-basic>；
+//       gcd | 一切线性组合 #corollary <cor:gcd-divides-linear>
+//     - 例 <ex:gcd-lcm-example>（观察 6·90 = 18·30，暂不证）
+//     - 乘积恒等式 |ab| 证明依赖 Bézout，留 §1.5 <cor:gcd-lcm-product> 兑现
 //   Section 1.5: Euclidean Algorithm and Bézout's Identity（辗转相除法与 Bézout 恒等式）
-//     - 辗转相除法（含扩展形式与 C++ 实现）
-//     - Bézout 恒等式与解的通式（为 Ch10 §10.1 伏笔）
+//     - 换余引理 #lemma <lem:gcd-substitution>（公约数集合相等）
+//     - 辗转相除法 #theorem <thm:euclidean-algorithm>（余数严格递减 ⇒ 有限步）
+//     - Bézout 恒等式 #theorem <thm:bezout>（Euclid 步骤反向归纳构造）
+//     - 算法呈现：编号算法框 + 回代表（非 C++ 代码块）；例 <ex:euclid-example>
+//       <ex:bezout-example>（252 与 105：21 = 5·105 − 2·252）
+//     - 互素判据 #corollary <cor:bezout-coprime>；核心式 <eq:bezout>
+//     - 乘积恒等式 <cor:gcd-lcm-product> + <eq:gcd-lcm-product>（互素可消去引理）
+//     - 章末 #note：Bézout → Ch10 §10.1 一次不定方程通解（兑现蓝图伏笔）
+//   图片：fig:euclid-rectangle（img/euclid-rectangle.svg，24×9 矩形切 9²,9²,6²,3²,3²
+//     → gcd 3；A 级核心图；占位先复制 0.Wiki/null.svg）
+//   写作顺序：§1.2 定义+带余除法 → §1.1 良序/取整 → §1.4 → §1.5 → §1.3 → 章首串联；
+//     每 1-2 节编译一次，编译检查点：§1.2 后、§1.5 后、全章终检
 
 // --- Chapter 2: Primes and the Fundamental Theorem of Arithmetic（素数与算术基本定理）---
 //   Section 2.1: Prime Numbers and the Infinitude of Primes（素数及其无穷性）
