@@ -1415,3 +1415,157 @@ Part II by changing the point of view: instead of asking when $b$
 divides $a - a'$, it studies the equivalence classes this relation
 carves out of $bb(Z)$ — the language of congruences, which will absorb
 all of Part I's machinery.
+
+#part("Theory of Congruences") // 同余理论
+
+= Basic Theory of Congruences // 同余的基本理论
+
+Chapter 1 asked when one integer divides another, and sharpened the
+answer into the Bézout identity; Chapter 2 crowned that identity with
+unique factorization. Part II changes the point of view. The equality
+of remainders that appeared in the wake of the Division Algorithm
+(§1.2) is promoted from an observation to a *language*: we agree to
+call two integers equivalent when they leave the same remainder on
+division by a fixed modulus, and we study the arithmetic of these
+equivalence classes as a world of its own. This is the theory of
+*congruences*, given its notation and first systematic treatment by
+Gauss in the *Disquisitiones Arithmeticae* (1801). Everything that
+follows in Part II — the theorems of Fermat, Euler and Wilson
+(Chapter 4), the order of elements and the primitive roots
+(Chapter 5), and the theory of quadratic residues (Chapter 6) — is a
+statement about this refined arithmetic, which absorbs all of the
+divisibility machinery of Part I into a cleaner setting.
+
+== Congruences and Their Properties // 同余及其性质
+
+Where Chapter 1 asked _when_ one integer divides another, this
+section asks when two integers behave "the same" relative to a third.
+The key observation, already noted after the Division Algorithm
+(§1.2), is that two integers leave the same remainder on division by
+$m$ exactly when their difference is a multiple of $m$.
+
+#definition(name: "Congruence Modulo $m$")[
+  Let $m in bb(Z)^+$ and $a, b in bb(Z)$. We say that $a$ is
+  *congruent* to $b$ modulo $m$, written
+  #eq[
+    $a equiv b quad ("mod" m)$,
+  ] <eq:congruence-def>
+  if $m$ divides the difference $a - b$; otherwise $a$ is
+  *incongruent* to $b$ modulo $m$. The fixed integer $m$ is the
+  *modulus* of the congruence.
+] <def:congruence>
+
+Congruence modulo $m$ is an equivalence relation on $bb(Z)$: it is
+*reflexive* ($m | 0$), *symmetric* (if $m | (a - b)$, then
+$m | (b - a)$), and *transitive* (from $m | (a - b)$ and
+$m | (b - c)$ the linear-combination rule of §1.2 gives
+$m | (a - c)$). The equivalence classes are arithmetic progressions of
+step $m$ that partition $bb(Z)$; §3.2 studies them as objects in their
+own right. What makes the relation useful for computation is that it
+*interacts* with arithmetic: congruent numbers may be interchanged
+freely inside expressions, provided the modulus is respected.
+
+#property(name: "Basic Rules of Congruence Arithmetic")[
+  Fix a modulus $m in bb(Z)^+$. For integers $a, b, c, d$:
+  - if $a equiv b$ and $c equiv d$ modulo $m$, then $a + c equiv b + d$
+    and $a - c equiv b - d$ modulo $m$;
+  - if $a equiv b$ and $c equiv d$ modulo $m$, then $a c equiv b d$
+    modulo $m$; in particular, $a c equiv b c$ modulo $m$ for every
+    integer $c$;
+  - if $a equiv b$ modulo $m$ and $d | m$, then $a equiv b$ modulo $d$
+    (*transfer to a divisor of the modulus*);
+  - congruences are *transitive*: if $a equiv b$ and $b equiv c$
+    modulo $m$, then $a equiv c$ modulo $m$.
+] <prop:congruence-basic>
+
+#proof(name: "of the rules")[
+  Write $a - b = m k$ and $c - d = m ell$ with $k, ell in bb(Z)$.
+  *Addition and subtraction.*
+  $(a + c) - (b + d) = (a - b) + (c - d) = m (k + ell)$ and
+  $(a - c) - (b - d) = (a - b) - (c - d) = m (k - ell)$, both multiples
+  of $m$.
+  *Multiplication.*
+  $a c - b d = c(a - b) + b(c - d) = m (c k + b ell)$, again a multiple
+  of $m$.
+  *Transfer.* If $d | m$ and $m | (a - b)$, then $d | (a - b)$ by the
+  transitivity of divisibility (#link(<prop:divisibility-rules>)[§1.2]).
+  *Transitivity.* This is the transitivity of the equivalence relation
+  shown above.
+]
+
+The rules are the complete arithmetic of congruences *except for
+division*, which is delicate: one cannot in general cancel a common
+factor from a congruence. The next result describes precisely what
+cancellation is allowed.
+
+#proposition(name: "Cancellation Law for Congruences")[
+  Let $m in bb(Z)^+$ and $a, b, c in bb(Z)$. Then
+  $
+    a c equiv b c quad ("mod" m) <=> a equiv b quad ("mod" m\/g),
+  $
+  where $g = "gcd"(c, m)$. In particular, when $"gcd"(c, m) = 1$, the
+  factor $c$ cancels outright:
+  $
+    a c equiv b c quad ("mod" m) <=> a equiv b quad ("mod" m).
+  $
+] <prop:congruence-cancellation>
+
+#proof[
+  The congruence $a c equiv b c$ modulo $m$ means $m | c(a - b)$.
+  Write $c = g c_0$ and $m = g m_0$; then
+  $"gcd"(c_0, m_0) = 1$. Dividing out the common factor $g$,
+  $
+    m | c(a - b) <=> m_0 | c_0 (a - b),
+  $
+  and since $"gcd"(c_0, m_0) = 1$, the
+  #link(<lem:coprime-divisibility>)[coprime form of Euclid's lemma]
+  (§1.5) lets us drop $c_0$: $m_0 | (a - b)$, i.e.
+  $a equiv b$ modulo $m_0 = m\/g$. The final clause is the case
+  $g = 1$.
+]
+
+Modulo a prime $p$ the law takes its cleanest form: every $c$ not
+divisible by $p$ is coprime to $p$, hence can be cancelled. In other
+words, nonzero "corrections" never distort a congruence modulo a
+prime. This qualitative difference between prime and composite moduli
+is the first hint of the refined structure theory that occupies
+Chapter 5.
+
+#example(name: "Clocks, Calendars, and Reduction")[
+  A twelve-hour clock measures time modulo $12$: the readings $13:00$
+  and $1:00$ coincide because $13 - 1 = 12$. If it is $11:00$, then
+  $8$ hours later the dial reads
+  $
+    11 + 8 = 19 equiv 7 quad ("mod" 12),
+  $
+  seven o'clock: the twelve-hour cycle has made a full revolution,
+  invisible to the dial.
+
+  The calendar runs modulo $7$. If today is the first day of the week
+  (Monday), then $30$ days from now falls on day
+  $
+    1 + 30 = 31 equiv 3 quad ("mod" 7),
+  $
+  i.e. Wednesday — because $30 equiv 2$ modulo $7$ leaves two extra
+  days beyond the full weeks.
+
+  The rules also justify *reduction before computing*: since
+  $17 equiv 5$ modulo $12$, the multiplication rule gives
+  $2 dot 17 equiv 2 dot 5 = 10$ modulo $12$; indeed
+  $34 - 24 = 10$. Large products can be taken apart into residues of
+  their factors.
+] <ex:congruence-clock>
+
+#note[
+  The multiplication rule upgrades from pairs of numbers to *integer
+  polynomials*: if $a equiv b$ modulo $m$ and $P(x) = sum_(k=0)^n c_k
+  x^k$ has integer coefficients, then $P(a) equiv P(b)$ modulo $m$.
+  Indeed each power satisfies
+  $a^k - b^k = (a - b)(a^(k-1) + a^(k-2) b + dots + b^(k-1))$, a
+  multiple of $a - b$, hence of $m$; summing over $k$ gives the claim.
+  This *substitution principle* — a residue may be replaced by any
+  congruent integer at every intermediate step — is what makes modular
+  computation genuinely easier than integer arithmetic. Chapter 5 will
+  press it into service when powers $x^k$ modulo $m$ are evaluated
+  through their indices.
+]
