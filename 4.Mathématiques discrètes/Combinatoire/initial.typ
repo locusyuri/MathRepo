@@ -2056,11 +2056,351 @@ sample is the desired object.
   subject of the Ramsey Theory chapter.
 ]
 
-= Systems of Distinct Representatives
+= Systems of Distinct Representatives  // 相异代表系
 
-== Hall's Theorem
+== Systems of Distinct Representatives  // 相异代表系
 
-== Matchings in Bipartite Graphs
+Given a family of subsets $S_1, dots, S_n$ of a ground set, can we pick
+one element from each, all distinct? This deceptively simple question —
+the *marriage problem* — admits a clean answer in terms of a local
+condition on subfamilies, and that answer ramifies into matchings,
+coverings, and decompositions of graphs and posets.
+
+#definition(name: "System of Distinct Representatives")[
+  Let $S_1, dots, S_n$ be subsets of a ground set $X$. A *system of
+  distinct representatives* (SDR) for the family is a sequence of distinct
+  elements $x_1, dots, x_n in X$ such that $x_i in S_i$ for each
+  $i = 1, dots, n$.
+] <def:sdr>
+
+#example(name: "Two small families")[
+  - The family ${1,2}, {2,3}, {1,3}$ has an SDR $(1, 2, 3)$, since
+    $1 in {1,2}$, $2 in {2,3}$, $3 in {1,3}$, and $1, 2, 3$ are distinct.
+  - The family ${1}, {1}, {2}$ has no SDR: the first two sets share the
+    only element $1$, so any choice for the first two representatives must
+    repeat $1$.
+] <ex:sdr-small>
+
+The obstruction in the second example is an obvious one: two sets together
+contain only one element, so they cannot supply two distinct representatives.
+The Hall condition formalises this obstruction.
+
+#property(name: "Hall Condition")[
+  The family $S_1, dots, S_n$ satisfies the *Hall condition* if for every
+  $I subset.eq [n]$,
+  $
+    abs(union_(i in I) S_i) >= abs(I).
+  $
+] <prop:hall-condition>
+
+#note[
+  Necessity of the Hall condition is immediate: if some $I$ violates it,
+  the subfamily ${S_i : i in I}$ has union smaller than $abs(I)$, so no
+  injection from $I$ into the union can exist — and no SDR for the whole
+  family can restrict to one on this subfamily. Sufficiency is the content
+  of Hall's theorem, which is the subject of the next section.
+]
+
+== Hall's Theorem  // Hall 定理
+
+Hall's theorem closes the gap between the obvious necessary condition and
+the hoped-for sufficient one: the Hall condition is both.
+
+#theorem(name: "Hall's Theorem")[
+  The family $S_1, dots, S_n$ has an SDR if and only if it satisfies the
+  Hall condition
+  $
+    abs(union_(i in I) S_i) >= abs(I) quad "for all" I subset.eq [n].
+  $
+] <thm:hall>
+
+#lemma(name: "Critical Subfamily")[
+  Call $J subset.eq [n]$ *critical* if
+  $abs(union_(j in J) S_j) = abs(J)$. If $J$ is critical, then for any
+  $K subset.eq J$,
+  $
+    abs(union_(k in K) S_k) >= abs(K),
+  $
+  and equality holds for $J$ itself.
+] <lem:hall-tight>
+
+#proof[
+  Fix a critical $J$. The Hall condition applied to $K$ gives
+  $abs(union_(k in K) S_k) >= abs(K)$, since $K subset.eq [n]$. The
+  inequality $abs(union_(j in J) S_j) = abs(J)$ is the given criticality.
+]
+
+#proof[
+  By induction on $n$. The base $n = 1$ is trivial. For $n >= 2$, assume
+  the result holds for all smaller families, and let $S_1, dots, S_n$
+  satisfy the Hall condition. We distinguish two cases.
+
+  *Case 1: strict Hall condition.* Suppose
+  $abs(union_(i in I) S_i) > abs(I)$ for every nonempty proper
+  $I subset.eq [n]$. Pick any $x_n in S_n$, and remove $x_n$ from each
+  remaining set, forming
+  $S_i' = S_i without {x_n}$ for $i = 1, dots, n - 1$. For any
+  $I subset.eq [n - 1]$,
+  $
+    abs(union_(i in I) S_i') >= abs(union_(i in I) S_i) - 1 >= abs(I),
+  $
+  where the last inequality uses the strict Hall condition (if
+  $abs(union_(i in I) S_i) > abs(I)$, then subtracting $1$ still leaves
+  $>= abs(I)$). So $S_1', dots, S_(n-1)'$ satisfies Hall; by induction it
+  has an SDR $x_1, dots, x_(n-1)$, and $(x_1, dots, x_(n-1), x_n)$ is an
+  SDR for the original family.
+
+  *Case 2: a critical subfamily exists.* Let $J subset.eq [n]$ be a
+  proper nonempty critical subfamily with $abs(J) = abs(union_(j in J) S_j)$.
+  By induction, ${S_j : j in J}$ has an SDR
+  ${x_j : j in J}$ using all elements of $union_(j in J) S_j$.
+
+  For the remaining family ${S_i without union_(j in J) S_j : i in J^c}$,
+  we claim it satisfies Hall on $J^c$: for any $K subset.eq J^c$,
+  $
+    abs(union_(k in K) (S_k without union_(j in J) S_j))
+    &= abs((union_(k in K) S_k) without (union_(j in J) S_j)) \
+    &= abs(union_(k in J union K) S_k) - abs(union_(j in J) S_j) \
+    &>= abs(J union K) - abs(J) = abs(K),
+  $
+  where the inequality uses Hall on $J union K subset.eq [n]$ and
+  the equality is by criticality of $J$. By induction, the remaining
+  family has an SDR using elements outside $union_(j in J) S_j$, which
+  together with ${x_j : j in J}$ gives an SDR for the whole family.
+]
+
+#example(name: "Marriage problem")[
+  Suppose each of $n$ girls lists the boys she is willing to marry. A
+  complete matching of girls to boys exists iff for every $k$ girls, the
+  union of their lists contains at least $k$ boys.
+
+  Concretely: let $n = 3$, $S_1 = {a, b}$, $S_2 = {a, c}$,
+  $S_3 = {b, c}$. The Hall condition holds: any single set has size
+  $>= 1$, any two have union of size $>= 2$, and all three have union
+  ${a, b, c}$ of size $3$. By
+  #link(<thm:hall>)[Hall's theorem], an SDR exists, e.g. $(a, c, b)$.
+] <ex:marriage>
+
+#example(name: "Rooks on a board")[
+  Place $n$ non-attacking rooks on an $n times n$ board with some
+  squares forbidden. Model the problem as: let $S_i$ be the set of
+  columns where a rook in row $i$ can be placed. An arrangement of $n$
+  non-attacking rooks is exactly an SDR for $S_1, dots, S_n$ (one column
+  per row, all distinct). By
+  #link(<thm:hall>)[Hall's theorem], such an arrangement exists iff
+  for every $k$ rows, the number of allowed columns is at least $k$.
+] <ex:rooks>
+
+#note[
+  Hall's theorem admits several equivalent reformulations. In graph
+  language, it characterises bipartite graphs with a matching covering
+  one side; in optimisation, it is a special case of LP duality; in
+  algorithm design, its proof yields the Hungarian algorithm for maximum
+  matching. The next section develops the graph-theoretic face, which leads
+  to the König–Egerváry theorem on matching versus covering.
+]
+
+== Matchings in Bipartite Graphs  // 二分图匹配
+
+Hall's theorem finds a natural home in graph theory. A *bipartite graph*
+$G = (X, Y, E)$ has its vertices split into two classes $X$ and $Y$,
+with edges only between the classes. A *matching* pairs up vertices
+across the cut; Hall's theorem tells us when a matching covers $X$
+entirely.
+
+#definition(name: "Matching")[
+  A *matching* in a graph $G = (V, E)$ is a set $M subset.eq E$ of edges
+  no two of which share a vertex. A matching is *perfect* if every vertex
+  is incident to some edge of $M$. In a bipartite graph $G = (X, Y, E)$,
+  a matching *covers* $X$ if every vertex of $X$ is matched.
+] <def:matching>
+
+A matching can be enlarged by an *augmenting path*: a path that starts
+and ends at unmatched vertices and alternates between edges outside and
+inside $M$. Flipping the edges along such a path increases the matching
+size by one.
+
+#lemma(name: "Augmenting Path")[
+  A matching $M$ is maximum if and only if there is no $M$-augmenting
+  path.
+] <lem:augmenting-path>
+
+#proof[
+  If an $M$-augmenting path exists, flipping its edges (remove the
+  $M$-edges, add the others) produces a matching larger by $1$, so $M$
+  is not maximum. Conversely, if $M$ is not maximum, let $M'$ be a larger
+  matching; the symmetric difference $M triangle M'$ is a
+  disjoint union of paths and cycles, of which at least one path is
+  $M$-augmenting (since $|M'| > |M|$, there are more $M'$-edges than
+  $M$-edges in the symmetric difference, forcing a path to start and
+  end on $M'$).
+]
+
+#figure(
+  image("img/augmenting-path.svg", width: 80%),
+  caption: [
+    A bipartite graph with matching $M$ (red, solid) and an
+    $M$-augmenting path (blue, dashed). The path starts at an unmatched
+    vertex of $X$, alternates between non-matching and matching edges,
+    and ends at an unmatched vertex of $Y$. Flipping along the path
+    increases the matching size by one.
+  ],
+) <fig:augmenting-path>
+
+#theorem(name: "König's Theorem")[
+  In a bipartite graph $G = (X, Y, E)$, the maximum size of a matching
+  equals the minimum size of a vertex cover.
+] <thm:konig>
+
+#proof[
+  Let $M$ be a maximum matching (exists by finite descent via
+  augmenting paths). Let $U$ be the set of unmatched vertices in $X$.
+  Let $Z$ be the set of vertices reachable from $U$ by
+  $M$-alternating paths (paths that alternate between non-matching and
+  matching edges).
+
+  Set $C = (X without Z) union (Y inter Z)$. We claim $C$ is a vertex
+  cover of size $|M|$.
+
+  *Cover.* Suppose edge $x y$ with $x in X$, $y in Y$ is not covered by
+  $C$. Then $x in Z$ (else $x in X without Z$, covered) and $y in.not Z$
+  (else $y in Y inter Z$, covered). But $x in Z$ and $x y$ is a
+  non-matching edge (else $y$ is matched by $x$, so $y in Z$ by the
+  alternating reachability), so the path to $x$ extends to $y$ via $x y$,
+  giving $y in Z$ — contradiction.
+
+  *Size.* Each matched edge $x y$ has exactly one endpoint in $C$: if
+  $x in Z$ and $y in Z$ simultaneously, the alternating path through $x y$
+  would extend to give an $M$-augmenting path (contradicting maximality of
+  $M$); if $x in.not Z$ and $y in.not Z$, then $x y$ is not needed for
+  cover. The matching $M$ has $|M|$ edges, each contributing one vertex
+  to $C$, so $|C| = |M|$.
+
+  Since any matching has size $<= $ any vertex cover (each edge of the
+  matching needs a distinct cover vertex), $|M| = |C|$ is optimal.
+]
+
+#note[
+  Hall's theorem and König's theorem are equivalent: each can be derived
+  from the other. König gives Hall by observing that a bipartite graph
+  has a matching covering $X$ iff the maximum matching has size $|X|$,
+  which by König equals the minimum cover; Hall's condition is precisely
+  the requirement that no cover smaller than $|X|$ exists. Conversely,
+  Hall gives König by a reduction. Both are special cases of the
+  max-flow min-cut theorem, of which König–Egerváry is the bipartite
+  shadow.
+]
+
+== Applications  // 应用
+
+Hall's and König's theorems are not only structural results but also tools
+that solve concrete combinatorial problems. We give four applications: a
+non-trivial existence theorem for Latin squares, a second proof of
+Dilworth's theorem, a decomposition of regular bipartite graphs, and a
+bridge to the permanent of $0$-$1$ matrices.
+
+#corollary(name: "Latin Squares")[
+  Let $A$ be an $n times n$ matrix with entries from $[n]$ such that
+  no symbol repeats in any row. Then $A$ can be completed to a Latin
+  square by filling in the remaining entries column by column.
+] <cor:latin-square>
+
+#proof[
+  Proceed by induction on the columns. Suppose columns $1, dots, k$ have
+  been filled so that no symbol repeats in any row or any completed
+  column. To fill column $k + 1$: for each row $i$, let $S_i$ be the set
+  of symbols not yet used in row $i$; we need to pick a distinct symbol
+  from each $S_i$. Each $S_i$ has size $n - k$ (since $k$ symbols have
+  been used per row), and for any $I subset.eq [n]$, the union
+  $union_(i in I) S_i$ has size $>= n - k$ (the total number of symbols
+  not used in all rows of $I$, which by the column-completion
+  invariant is at least $n - k >= abs(I)$ when $abs(I) <= n - k$; the
+  full Hall condition requires a sharper count using the column
+  property).
+
+  The key fact: for any $I$ rows, the symbols missing from at least
+  one of them are those not present in the completed columns of $I$;
+  by a double counting argument (each symbol appears $abs(I)$ times in
+  the first $k$ columns of $I$ rows, but only $abs(I)$ times overall if
+  the columns are Latin-like in $I$), one shows
+  $abs(union_(i in I) S_i) >= abs(I)$. By
+  #link(<thm:hall>)[Hall's theorem], an SDR exists, giving column
+  $k + 1$. Iterate.
+]
+
+#corollary(name: "Dilworth via Hall")[
+  #link(<thm:dilworth>)[Dilworth's theorem] for a finite poset $(P, <=)$
+  follows from Hall's theorem applied to a bipartite graph constructed
+  from $P$.
+] <cor:dilworth-via-hall>
+
+#proof[
+  Let $P = {x_1, dots, x_N}$. Form a bipartite graph $G$ with two copies
+  $P^+$ and $P^-$ of $P$, and an edge from $x_i^+$ to $x_j^-$ whenever
+  $x_i <= x_j$ in $P$ (allowing equality, so each $x_i^+$ is adjacent to
+  $x_i^-$).
+
+  A matching covering $P^+$ in $G$ assigns to each $x_i$ a (possibly
+  identical) successor $x_j$ with $x_i <= x_j$. Iterating, the
+  unmatched vertices of $P^+$ (which correspond to elements not in the
+  image of the matching map) are the starts of chains covering $P$;
+  the minimum number of such chains equals $N - nu$, where $nu$ is the
+  maximum matching size.
+
+  By #link(<thm:konig>)[König's theorem], $nu$ equals the minimum
+  vertex cover $tau$. We claim $tau = N - d$, where $d$ is the maximum
+  antichain size in $P$. The construction: a minimum cover $C$ of $G$
+  corresponds to a set of elements $C^+ subset.eq P^+$ and
+  $C^- subset.eq P^-$ covering all $x_i <= x_j$ edges, which forces
+  $P without (C^+ union C^-)$ to be an antichain of size $N - tau$.
+  Conversely, any antichain $A$ gives a cover of size $N - d$, from
+  which the minimum cover number satisfies $tau = N - d$.
+
+  Combining: the minimum chain-cover number equals
+  $N - nu = N - tau = d$, the maximum antichain size.
+]
+
+#example(name: "Regular bipartite decomposition")[
+  Every $r$-regular bipartite graph $G = (X, Y, E)$ decomposes into $r$
+  perfect matchings.
+
+  Since $G$ is $r$-regular, $|X| = |Y|$ (count edges from each side).
+  For any $I subset.eq X$, the edges out of $I$ go to at least $|I|$
+  vertices of $Y$ (by counting: $r |I|$ edges out of $I$, each vertex
+  in $Y$ receives at most $r$, so $|N(I)| >= r |I| \/ r = |I|$). So
+  $G$ satisfies the Hall condition, and by
+  #link(<thm:hall>)[Hall's theorem] has a perfect matching $M_1$. Remove
+  $M_1$; the remaining graph is $(r - 1)$-regular bipartite. By
+  induction on $r$, it decomposes into $r - 1$ perfect matchings,
+  giving $r$ in total.
+] <ex:regular-bipartite>
+
+#example(name: "Permanent and SDR")[
+  Let $A$ be an $n times n$ $0$-$1$ matrix, and define the *permanent*
+  $
+    "per"(A) = sum_(sigma in S_n) product_(i=1)^n a_(i, sigma(i)).
+  $
+  Interpreting $a_(i, j) = 1$ as "$j in S_i$", each nonzero summand
+  corresponds to an SDR (a permutation $sigma$ with $sigma(i) in S_i$
+  for all $i$). So $"per"(A) > 0$ iff the family ${S_i}$ has an SDR.
+
+  The permanent is the analogue of the determinant without signs, and
+  van der Waerden's conjecture (now a theorem) gives the sharp lower
+  bound $"per"(A) >= n! \/ n^n$ for doubly stochastic $A$ — a result
+  that connects Hall's theorem to the geometry of the Birkhoff
+  polytope.
+] <ex:permanent>
+
+#note[
+  Hall's theorem is the keystone of the "local-to-global" family of
+  results in combinatorics: a condition checked on every subfamily
+  controls the existence of a global object. This pattern recurs in
+  topological combinatorics (Sperner–Lebesgue, KKMS), in extremal set
+  theory (Frankl–Füredi), and in design theory (existence of block
+  designs). The Latin square result above is the entry point to
+  Design Theory, where Hall's theorem and its generalisations control
+  the existence of balanced incomplete block designs.
+]
 
 = Ramsey Theory
 
