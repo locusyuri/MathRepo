@@ -2401,10 +2401,187 @@ bridge to the permanent of $0$-$1$ matrices.
   the existence of balanced incomplete block designs.
 ]
 
-= Ramsey Theory
+= Ramsey Theory  // Ramsey 理论
+
+Ramsey theory is the systematic study of a single phenomenon: *complete
+disorder is impossible*. Beyond a certain size threshold, every structure
+— every coloring, every partition, every graph — must contain a highly
+regular substructure. The pigeonhole principle is the smallest instance;
+Ramsey's theorem is the general statement for colorings of edges; Schur's
+theorem is the arithmetic analogue for colorings of integers.
+
+== Ramsey's Theorem  // Ramsey 定理
+
+#definition(name: "Ramsey Number")[
+  The *Ramsey number* $R(s, t)$ is the least $N$ such that every
+  2-coloring of the edges of $K_N$ (in red and blue) contains either a red
+  $K_s$ or a blue $K_t$. Equivalently, $R(s, t)$ is the least $N$ such that
+  every graph on $N$ vertices contains either a clique of size $s$ or an
+  independent set of size $t$.
+] <def:ramsey-number>
+
+The existence of $R(s, t)$ — the fact that such an $N$ exists at all — is
+the content of Ramsey's theorem. A recursion proved in the Pigeonhole
+Principle chapter already gives an explicit upper bound.
+
+#theorem(name: "Ramsey's Theorem")[
+  For all $s, t >= 2$, the Ramsey number $R(s, t)$ exists and satisfies
+  $
+    R(s, t) <= R(s - 1, t) + R(s, t - 1).
+  $
+  In particular, $R(s, t) <= binom(s + t - 2, s - 1)$.
+] <thm:ramsey>
+
+#proof[
+  This is
+  #link(<lem:ramsey-recursion>)[the Ramsey recursion lemma] from the
+  Pigeonhole Principle chapter, restated here as the foundational theorem.
+  The proof proceeds by picking a vertex $v$ of $K_N$ (with
+  $N = R(s-1, t) + R(s, t-1)$), partitioning its $N - 1$ neighbors by the
+  color of their edge to $v$, and applying the pigeonhole principle to
+  force either $R(s-1, t)$ red neighbors or $R(s, t-1)$ blue neighbors.
+  The bound $R(s, t) <= binom(s + t - 2, s - 1)$ follows by induction
+  on $s + t$, using Pascal's identity.
+]
+
+#property(name: "Symmetry of Ramsey Numbers")[
+  $R(s, t) = R(t, s)$ for all $s, t >= 1$.
+] <prop:ramsey-symmetry>
+
+#proof[
+  Swap the two colors in any edge-coloring: a red $K_s$ becomes blue, and
+  a blue $K_t$ becomes red. The existence of a monochromatic $K_s$ or
+  $K_t$ is invariant under color swap, so the threshold $N$ is the same.
+]
+
+== Ramsey Numbers  // Ramsey 数
+
+#example(name: "R(3,3) = 6")[
+  The smallest non-trivial Ramsey number is $R(3, 3) = 6$. The upper bound
+  $R(3, 3) <= 6$ was proved in the Pigeonhole Principle chapter (see
+  #link(<ex:ramsey-r33>)[the $R(3,3)$ example] and
+  #link(<fig:ramsey-r33>)[the accompanying figure]). The lower bound
+  $R(3, 3) > 5$ is witnessed by the 5-cycle $C_5$ colored red, with its
+  complement (also $C_5$) colored blue: $C_5$ has no triangle and no
+  independent set of size $3$, so neither color contains a $K_3$.
+] <ex:ramsey-r33-value>
+
+#example(name: "R(4,4) upper bound")[
+  By the recursion,
+  $
+    R(4, 4) <= R(3, 4) + R(4, 3) = 2 R(3, 4).
+  $
+  For $R(3, 4)$, the recursion gives
+  $
+    R(3, 4) <= R(2, 4) + R(3, 3) = 4 + 6 = 10,
+  $
+  using $R(2, t) = t$ (a monochromatic edge is just a $K_2$). So
+  $R(4, 4) <= 18$. The exact value is $R(4, 4) = 18$, but the matching
+  lower bound $R(4, 4) > 17$ requires an explicit coloring of $K_(17)$
+  with no monochromatic $K_4$, which we do not construct here.
+
+#figure(
+  image("img/ramsey-r44.svg", width: 75%),
+  caption: [
+    Schematic of the recursion $R(4, 4) <= R(3, 4) + R(4, 3)$. A vertex
+    $v$ in $K_18$ has $17$ neighbors; at least $9$ share a color (say
+    red), giving $R(3, 4) <= 9$ red neighbors. Among those $9$, either a
+    red $K_3$ (forming a red $K_4$ with $v$) or a blue $K_4$.
+  ],
+) <fig:ramsey-r44>
+] <ex:ramsey-r44-upper>
+
+The lower bound for $R(k, k)$ — showing that $R(k, k)$ grows exponentially
+— was established by Erdős using the probabilistic method, as discussed in
+the Extremal Principle chapter (see
+#link(<ex:ramsey-lower>)[the Erdős lower bound example]). The key result:
+
+#property(name: "Erdős Lower Bound")[
+  For $n$ with $binom(n, k) dot 2^(1 - binom(k, 2)) < 1$, we have
+  $R(k, k) > n$. In particular, $R(k, k) > c dot k \/ sqrt(k) dot 2^(k/2)$
+  for a constant $c > 0$.
+] <prop:erdos-lower>
+
+#property(name: "Known Ramsey Numbers")[
+  The following small Ramsey numbers are known exactly:
+  #tex-table(
+    ([$R(s, t)$], [$s=2$], [$s=3$], [$s=4$], [$s=5$]),
+    ([$t=2$], [$2$], [$3$], [$4$], [$5$]),
+    ([$t=3$], [$3$], [$6$], [$9$], [$14$]),
+    ([$t=4$], [$4$], [$9$], [$18$], [$25$ (?)]),
+    ([$t=5$], [$5$], [$14$], [$25$ (?)], [unknown]),
+  )
+  The values $R(4, 5) = 25$ and $R(5, 5)$ are not known exactly; the
+  best bounds are $43 <= R(5, 5) <= 48$.
+] <prop:ramsey-known-values>
+
+== Schur's Theorem  // Schur 定理
+
+Schur's theorem is the arithmetic cousin of Ramsey's theorem: instead of
+coloring edges of a complete graph, we color positive integers, and
+guarantee a monochromatic solution to $x + y = z$.
+
+#theorem(name: "Schur's Theorem (Restated)")[
+  For every $r >= 1$, there exists $S(r)$ such that every $r$-coloring of
+  ${1, 2, dots, S(r)}$ contains a monochromatic triple $(x, y, z)$ with
+  $x + y = z$.
+] <thm:schur-restated>
+
+#proof[
+  The proof and the explicit recursion
+  $S(r) <= r dot S(r - 1) - r + 2$ were given in the Pigeonhole Principle
+  chapter (see #link(<thm:schur>)[Schur's theorem]). The values
+  $S(1) = 2$, $S(2) = 5$, $S(3) = 14$ follow.
+]
+
+The connection to Ramsey theory: Schur's theorem is a consequence of
+Ramsey's theorem, as follows. Given an $r$-coloring of ${1, dots, N}$,
+form a complete graph on vertices ${0, 1, dots, N}$, coloring edge
+${i, j}$ (with $i < j$) by the color of $j - i$. A monochromatic triangle
+on vertices $i < j < k$ gives $x = j - i$, $y = k - j$, $z = k - i$, with
+$x + y = z$, all the same color. So $S(r) <= R_r(3) - 1$, where $R_r(3)$
+is the $r$-color Ramsey number for triangles.
+
+== Applications and Bounds  // 应用与界
+
+The exponential gap between the upper and lower bounds for $R(k, k)$
+remains one of the most famous open problems in combinatorics.
+
+#property(name: "Upper and Lower Bounds for R(k,k)")[
+  For $k >= 3$, the Ramsey number $R(k, k)$ satisfies
+  $
+    c_1 dot k \/ sqrt(k) dot 2^(k/2) < R(k, k) <= c_2 dot 4^k \/ sqrt(k),
+  $
+  where $c_1, c_2$ are positive constants. The upper bound is from the
+  recursion #link(<thm:ramsey>)[Ramsey's theorem] via
+  $R(k, k) <= binom(2k - 2, k - 1) approx 4^k \/ sqrt(pi k)$; the lower
+  bound is
+  #link(<prop:erdos-lower>)[Erdős's probabilistic argument].
+] <prop:ramsey-bounds>
+
+The gap between $2^(k/2)$ and $4^k$ is exponential. Despite decades of
+work, no improvement to the order of either bound has been made since
+Erdős's 1947 lower bound and the classical recursion upper bound.
+
+#example(name: "Monochromatic arithmetic progression")[
+  Van der Waerden's theorem (a Ramsey-type result for arithmetic
+  progressions): for every $r, k$, there exists $W(r, k)$ such that every
+  $r$-coloring of ${1, dots, W(r, k)}$ contains a monochromatic
+  $k$-term arithmetic progression. This is a deeper Ramsey-type theorem
+  whose proof we do not give here; it shares with Ramsey's theorem the
+  philosophy that complete disorder is impossible.
+] <ex:vdw>
 
 #note[
-  This chapter currently contains only a title in the LaTeX source.
+  Ramsey theory extends far beyond the results presented here: the
+  Hales–Jewett theorem (combinatorial lines in high-dimensional grids),
+  the Erdős–Szekeres cup-cap theorem (convex polygons in point sets),
+  and the Graham–Rothschild–Spencer canonization theorem all belong to
+  the same family. The unifying theme: *every sufficiently large
+  structure contains a regular substructure*. The techniques of this
+  chapter — recursion for upper bounds, probabilistic arguments for
+  lower bounds — are the two pillars on which the rest of the theory
+  stands.
 ]
 
 #part("Structure and Algebra")
