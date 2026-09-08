@@ -3530,3 +3530,240 @@ $n$-th powers — are counted and recognized by the single congruence of
 residues modulo a prime, their Legendre symbol, and the law of
 quadratic reciprocity.
 
+= Quadratic Residues and the Law of Quadratic Reciprocity // 二次剩余与二次互反律
+
+This chapter is devoted to the case $n = 2$ of the theory of power
+residues. For an odd prime $p$ and an integer $a$ coprime to $p$, when
+is the congruence $x^2 equiv a$ (mod $p$) solvable, and how is the
+answer recognized without trying the $(p - 1)\/2$ candidates by hand?
+Section 5.4 counted the solutions from a distance — exactly half of
+the $(p - 1)$ nonzero classes are squares — and it already exposed the
+engine that decides a single class: $a$ is a square precisely when
+$a^((p - 1)\/2) equiv 1$ (mod $p$). The present chapter polishes that
+engine into a working instrument. The *Legendre symbol* $(a\/p)$ turns
+the verdict into a single character; arithmetic laws compute the symbol
+factor by factor; and the celebrated *Law of Quadratic Reciprocity*
+flips the roles of numerator and denominator, turning the question
+"Is $p$ a square modulo $q$?" into the equivalent but much cheaper
+question "Is $q$ a square modulo $p$?".
+
+The reciprocity law has an emblematic history. Euler stated equivalent
+forms of it from 1744 onward and finally guessed the complete rule in
+1783, a year before his death; Legendre gave the law its name and a
+nearly complete proof in 1785, introducing along the way the symbol
+that now bears his name. Gauss independently rediscovered the law at
+nineteen, called it his *theorema aureum* (golden theorem), produced
+the first complete proof in the *Disquisitiones Arithmeticae* (1801),
+and kept returning to it for the rest of his life with further proofs
+of very different natures — evidence of a phenomenon far deeper than
+the elementary statement suggests.
+
+Section 6.1 sets up the vocabulary of quadratic residues, proves
+Euler's criterion by polynomial counting, and installs the Legendre
+symbol together with its elementary laws. Section 6.2 proves Gauss's
+lemma and draws from it the two supplementary laws for the numerators
+$a = -1$ and $a = 2$. Section 6.3 then proves the reciprocity law
+itself by the geometric count of Eisenstein, in which the exponent
+$((p - 1)\/2)((q - 1)\/2)$ is read off from the lattice points of a
+rectangle. Section 6.4 extends the symbol to composite odd denominators
+(the *Jacobi symbol*), a purely computational device that makes the
+evaluation of Legendre symbols painless.
+
+== Quadratic Residues and Legendre Symbols // 二次剩余与 Legendre 符号
+
+The even prime needs no theory: every residue class modulo $2$ is a
+square, so all statements below concern an *odd* prime $p$. A nonzero
+class $a$ is a square modulo $p$ if some unit $x$ satisfies
+$x^2 equiv a$ (mod $p$). For $p = 7$ the squares of the nonzero classes
+are $1^2 equiv 1$, $2^2 equiv 4$, $3^2 equiv 2$ (mod $7$), and the
+remaining classes square to $4^2 equiv 2$, $5^2 equiv 4$, $6^2 equiv 1$
+(mod $7$) — the same three values again, since $(-x)^2 = x^2$. Already
+this tiny example shows both structural facts that organize the whole
+section: square roots come in opposite pairs, and the squares fill
+exactly half of the nonzero classes.
+
+#definition(name: "Quadratic Residues and Non-residues")[
+  Let $p$ be an odd prime and let $a$ be an integer with
+  $"gcd"(a, p) = 1$. If the congruence
+  $
+    x^2 equiv a quad ("mod" p)
+  $
+  is solvable, then $a$ is a *quadratic residue* modulo $p$; otherwise
+  $a$ is a *quadratic non-residue* modulo $p$. The zero class is
+  excluded from both terms — its only square root is itself — and it
+  plays no role in what follows.
+] <def:quadratic-residue>
+
+The vocabulary was announced in §5.4
+(#link(<def:power-residue>)[§5.4]), where the general $n$-th power
+residues were defined: a quadratic residue is exactly a $2$-nd power
+residue, and the whole apparatus of power residues guarantees that
+there are $(p - 1)\/2$ of them. The next proposition recovers both the
+pairing of roots and the count directly, without indices, since the
+exponent $2$ is so small that everything can be said by elementary
+counting.
+
+#proposition(name: "Square Roots Come in Pairs")[
+  Let $p$ be an odd prime and let $"gcd"(a, p) = 1$. If the congruence
+  $x^2 equiv a$ (mod $p$) has a solution $x_0$, then it has exactly two
+  solutions, namely $x_0$ and $-x_0$. Consequently the $(p - 1)$
+  nonzero residue classes split into exactly $(p - 1)\/2$ quadratic
+  residues and $(p - 1)\/2$ quadratic non-residues.
+] <prop:quadratic-solution-count>
+
+#proof(name: "of the proposition")[
+  *Pairs of roots.* If $x$ is any solution, then $x^2 equiv x_0^2$
+  (mod $p$), and multiplying by the inverse of $x_0^2$ turns this into
+  $(x x_0^(-1))^2 equiv 1$ (mod $p$). By the lemma of §4.3 on square
+  roots of one (#link(<lem:square-roots-of-one>)[§4.3]) the product
+  $x x_0^(-1)$ is congruent to $1$ or $-1$ modulo $p$, so
+  $x equiv plus.minus x_0$ (mod $p$). The two candidates are genuinely
+  distinct, because $p$ is odd and $x_0$ is not divisible by $p$
+  (its square $a$ is coprime to $p$).
+
+  *Counting.* Squaring maps the $(p - 1)$ nonzero classes onto the set
+  of quadratic residues — every residue is a square by definition, and
+  every square of a unit is again a unit. By the first part each image
+  has exactly two preimages, $x_0$ and $-x_0$, so the image has
+  $(p - 1)\/2$ elements.
+]
+
+Euler's criterion decides membership without solving any congruence:
+raise $a$ to the power $(p - 1)\/2$ and look at the result. The
+necessary direction is Fermat's little theorem in disguise; the
+surprising fact is that the single power also suffices.
+
+#theorem(name: "Euler's Criterion")[
+  Let $p$ be an odd prime and let $"gcd"(a, p) = 1$. Then $a$ is a
+  quadratic residue modulo $p$ if and only if
+  $
+    a^((p - 1)\/2) equiv 1 quad ("mod" p).
+  $
+] <thm:euler-criterion>
+
+#proof(name: "of the theorem")[
+  *If $a$ is a quadratic residue.* Choose $x_0$ with $x_0^2 equiv a$
+  (mod $p$). Fermat's little theorem
+  (#link(<thm:fermat-little>)[§4.1]) gives
+  $
+    a^((p - 1)\/2) equiv x_0^(p - 1) equiv 1 quad ("mod" p).
+  $
+
+  *Only if.* Let $S$ be the set of quadratic residues modulo $p$; by
+  the proposition above, $|S| = (p - 1)\/2$. Every element of $S$
+  satisfies the congruence, by the first part of this proof. But the
+  congruence $z^((p - 1)\/2) equiv 1$ (mod $p$) is an equation of
+  degree $(p - 1)\/2$ in the field of residues modulo the prime $p$, so
+  the polynomial root bound of §5.2
+  (#link(<lem:poly-roots-bound>)[§5.2]) allows it at most
+  $(p - 1)\/2$ solutions. The $S$-members already exhaust that quota:
+  a class satisfying $a^((p - 1)\/2) equiv 1$ (mod $p$) is therefore
+  one of them, i.e. a quadratic residue.
+]
+
+The same argument gives a bonus: for a unit $a$ the square of
+$a^((p - 1)\/2)$ is $a^(p - 1) equiv 1$ (mod $p$) by Fermat, so the
+power is a square root of one and equals $1$ or $-1$ modulo $p$
+(#link(<lem:square-roots-of-one>)[§4.3]). Non-residues therefore land
+on $-1$: the classes modulo $p$ are divided by the sign of this single
+power. This is precisely the specialization promised at the end of
+§5.4: with $d = "gcd"(2, p - 1) = 2$ the general criterion for power
+residues (#link(<thm:power-residue-criterion>)[§5.4]) becomes Euler's
+criterion, and the general count
+(#link(<prop:count-power-residues>)[§5.4]) reduces to $(p - 1)\/2$.
+The proof given here, however, is independent of the theory of indices
+used there — the exponent $2$ is small enough that polynomial counting
+alone suffices.
+
+#definition(name: "The Legendre Symbol")[
+  Let $p$ be an odd prime. The *Legendre symbol* $(a\/p)$ of an integer
+  $a$ is defined by
+  $
+    (a\/p) = cases(
+      1 text(" if ") a text(" is a quadratic residue modulo ") p,
+      -1 text(" if ") a text(" is a quadratic non-residue modulo ") p,
+      0 text(" if ") p text(" divides ") a.
+    )
+  $
+  The value $0$ records that the numerator is not a unit modulo $p$;
+  for the $(p - 1)$ units the symbol keeps the sign promised by
+  Euler's criterion, and it equals $1$ or $-1$.
+] <def:legendre-symbol>
+
+Read literally, the symbol abbreviates Euler's criterion: for
+$"gcd"(a, p) = 1$ one may recover $(a\/p)$ as the unique integer in
+${-1, 1}$ congruent to $a^((p - 1)\/2)$ modulo $p$. This point of view
+makes the arithmetic laws almost immediate.
+
+#proposition(name: "Laws of the Legendre Symbol")[
+  Let $p$ be an odd prime. The Legendre symbol obeys the following
+  rules.
+  + *Periodicity.* If $a equiv b$ (mod $p$), then $(a\/p) = (b\/p)$.
+  + *Multiplicativity.* For all integers $a$ and $b$,
+    $(a b\/p) = (a\/p)(b\/p)$.
+  + *Squares are residues.* If $"gcd"(a, p) = 1$, then
+    $(a^2 \/p) = 1$. In particular $(1\/p) = 1$.
+  + *Euler form.* If $"gcd"(a, p) = 1$, then
+    $(a\/p) equiv a^((p - 1)\/2)$ (mod $p$).
+] <prop:legendre-basic>
+
+#proof(name: "of the proposition")[
+  Periodicity is built into the definition, since residue classes
+  modulo $p$ decide solvability. For the Euler form, when $p$ does not
+  divide $a$ the integer $(a\/p)$ is $1$ for residues and $-1$ for
+  non-residues, and Euler's criterion shows that the residue class of
+  $a^((p - 1)\/2)$ modulo $p$ is exactly that number. The remaining
+  rules follow from it: raising $(a b)$ to the power $(p - 1)\/2$
+  multiplies the two powers, hence
+  $
+    (a b)^((p - 1)\/2) equiv a^((p - 1)\/2) b^((p - 1)\/2)
+    equiv (a\/p)(b\/p) quad ("mod" p),
+  $
+  and two integers in ${-1, 1}$ that are congruent modulo the odd prime
+  $p$ must be equal — this proves multiplicativity when $p$ divides
+  neither $a$ nor $b$, and the case where $p$ divides $a$ or $b$ is
+  trivial by the prime property of $p$. The rule for squares is the
+  special case $b = a$.
+]
+
+Multiplicativity is the workhorse of the chapter: it reduces any
+Legendre symbol to a product of symbols with prime numerators, so the
+only genuine computations are the symbols $(q\/p)$ with $q$ prime.
+The following example verifies the machinery on two small primes, first
+by definition and then against Euler's criterion.
+
+#example(name: "Legendre Symbols Modulo 7 and 13")[
+  For $p = 7$ the quadratic residues are ${1, 2, 4}$, so the symbol
+  $(a\/7)$ is $1$ for $a = 1, 2, 4$ and $-1$ for $a = 3, 5, 6$.
+
+  #tex-table(
+    ([$a$], [$1$], [$2$], [$3$], [$4$], [$5$], [$6$]),
+    ([$(a\/7)$], [$1$], [$1$], [$-1$], [$1$], [$-1$], [$-1$]),
+  )
+
+  Euler's criterion asks for $a^3$ modulo $7$; indeed $2^3 equiv 1$,
+  $3^3 equiv 27 equiv -1$, $5^3 equiv 125 equiv -1$ (mod $7$), in
+  agreement with the table.
+
+  For $p = 13$ the criterion asks for $a^6$ modulo $13$. Squaring
+  $1, 2, ..., 6$ gives the residues ${1, 4, 9, 3, 12, 10}$, ordered as
+  ${1, 3, 4, 9, 10, 12}$, hence the symbols
+
+  #tex-table(
+    ([$a$], [$1$], [$2$], [$3$], [$4$], [$5$], [$6$], [$7$], [$8$], [$9$], [$10$], [$11$], [$12$]),
+    ([$(a\/13)$], [$1$], [$-1$], [$1$], [$1$], [$-1$], [$-1$], [$-1$], [$-1$], [$1$], [$1$], [$-1$], [$1$]),
+  )
+
+  A sample check through multiplicativity: $10 equiv 2 dot 5$ (mod
+  $13$), and from the table $(2\/13)(5\/13) = (-1)(-1) = 1 =
+  (10\/13)$, as the second law predicts.
+] <ex:legendre-table>
+
+The symbol is now fully specified and computable in principle, but the
+laws of this section still stop short of a real computation: for a
+prime numerator $q$, evaluating $(q\/p)$ by Euler's criterion means
+raising to a huge power. Section 6.2 begins the dismantling of this
+obstacle by treating the two simplest numerators, $a = -1$ and $a =
+2$, where the answer is visible directly from the shape of $p$.
+
+
