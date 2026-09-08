@@ -1569,3 +1569,132 @@ Chapter 5.
   press it into service when powers $x^k$ modulo $m$ are evaluated
   through their indices.
 ]
+
+== Residue Classes and Systems // 剩余类与剩余系
+
+Because congruence modulo $m$ is an equivalence relation (§3.1), it
+splits $bb(Z)$ into $m$ disjoint pieces. This section names these
+pieces — the *residue classes* — and studies the various ways of
+selecting one representative from each class: the *complete* residue
+systems. Among the classes, those coprime to the modulus deserve
+special attention, since they alone behave well under multiplication.
+
+#definition(name: "Residue Class")[
+  Let $m in bb(Z)^+$. The *residue class* of the integer $a$ modulo
+  $m$ is the equivalence class
+  $
+    [a]_m = {a + k m : k in bb(Z)},
+  $
+  an arithmetic progression of step $m$. Every element of $[a]_m$ is
+  a *representative* of the class, and $[a]_m = [b]_m$ if and only if
+  $a equiv b$ (mod $m$). There are exactly $m$ distinct classes
+  modulo $m$: $[0]_m, [1]_m, dots, [m-1]_m$, and they partition
+  $bb(Z)$.
+] <def:residue-class>
+
+Among the representatives of a class, the one satisfying
+$0 <= r < m$ is the *least nonnegative residue*; it is precisely the
+remainder of the Division Algorithm (§1.2). In computations we
+usually identify a class with its least nonnegative residue, writing,
+for instance, $-5 equiv 7$ (mod $12$), the residue of $19$ modulo
+$12$ being $7$.
+
+The rules of §3.1 state exactly that the following class operations
+are well defined, independently of the representatives chosen:
+$
+  [a]_m + [b]_m = [a + b]_m, quad [a]_m dot [b]_m = [a b]_m.
+$
+
+#note[
+  The operations just displayed equip the residue classes with the
+  structure of the *ring of integers modulo $m$*, treated
+  systematically in the *Algèbre Abstraite* notebook. Here we keep
+  the elementary representative language: a class is named by any
+  convenient representative, and results are reduced to least
+  nonnegative residues at the end.
+]
+
+#definition(name: "Complete Residue System")[
+  A *complete residue system* modulo $m$ (CRS for short) is a set of
+  $m$ integers no two of which are congruent modulo $m$ — equivalently,
+  a set containing exactly one representative of each residue class.
+  The *canonical* system consists of the least nonnegative residues
+  ${0, 1, dots, m-1}$.
+] <def:complete-residue-system>
+
+Translating a complete system by a fixed integer preserves
+completeness: if $S$ is a CRS, then so is ${s + t : s in S}$, because
+the map $s -> s + t$ merely permutes the classes. The analogous
+statement for multiplication — a CRS multiplied by any integer coprime
+to $m$ is again a CRS — requires inverses, and is best proved in
+§3.3.
+
+#definition(name: "Reduced Residue System")[
+  A *reduced residue system* modulo $m$ (RRS for short) is a set of
+  integers containing exactly one representative of each residue
+  class $[a]_m$ with $"gcd"(a, m) = 1$. The *canonical* reduced system
+  is the set of least nonnegative residues coprime to $m$,
+  $
+    {1 <= k <= m : "gcd"(k, m) = 1},
+  $
+  whose size is Euler's function $phi(m)$, studied in §3.5.
+] <def:reduced-residue-system>
+
+The reduced system is singled out because coprimality to $m$ is
+preserved under products — a fact whose proof is the first genuine
+use of Euclid's lemma in the arithmetic of congruences.
+
+#property(name: "Reduced Systems Are Closed under Multiplication")[
+  Let $m in bb(Z)^+$. If $"gcd"(a, m) = 1$ and $"gcd"(b, m) = 1$, then
+  $"gcd"(a b, m) = 1$. Hence the integers coprime to $m$ form a set
+  closed under multiplication: products of elements of the canonical
+  RRS reduce to elements of the canonical RRS.
+] <prop:reduced-closed>
+
+#proof[
+  Suppose, for contradiction, that $"gcd"(a b, m) > 1$, and let $p$ be
+  a prime divisor of $"gcd"(a b, m)$. Then $p | a b$ and $p | m$. By
+  #link(<thm:euclid-lemma>)[Euclid's lemma] (§2.1), $p | a b$ forces
+  $p | a$ or $p | b$. If $p | a$, then $p$ divides both $a$ and $m$,
+  contradicting $"gcd"(a, m) = 1$; the case $p | b$ contradicts
+  $"gcd"(b, m) = 1$ similarly.
+]
+
+#example(name: "Residue Systems Modulo 8 and 12")[
+  Modulo $8$ the canonical complete system is ${0, 1, dots, 7}$, and
+  the reduced system retains only the elements coprime to $8$:
+  ${1, 3, 5, 7}$ — four elements, so $phi(8) = 4$. Modulo $12$ the
+  reduced system is ${1, 5, 7, 11}$, again with four elements, but for
+  a different reason: $phi(12) = 4$ counts the residues $1, 5, 7, 11$
+  together with their negatives ($-1 equiv 11$, $-5 equiv 7$).
+
+  The closure property is visible in the multiplication table modulo
+  $12$ restricted to the reduced system:
+  #tex-table(
+    ($""$, [$1$], [$5$], [$7$], [$11$]),
+    ([$1$], [$1$], [$5$], [$7$], [$11$]),
+    ([$5$], [$5$], [$1$], [$11$], [$7$]),
+    ([$7$], [$7$], [$11$], [$1$], [$5$]),
+    ([$11$], [$11$], [$7$], [$5$], [$1$]),
+  )
+  Every product again lies in ${1, 5, 7, 11}$, and each element is
+  its own inverse: the diagonal consists of ones, since
+  $5^2 = 25 equiv 1$, $7^2 = 49 equiv 1$ and $11^2 = 121 equiv 1$
+  modulo $12$. For a prime modulus this self-inverse behaviour never
+  occurs (aside from the trivial $1$ and $-1$), as Wilson's theorem
+  will confirm in Chapter 4.
+] <ex:residue-systems>
+
+#note[
+  A residue class $[a]_m$ possesses a *multiplicative inverse* — an
+  integer $x$ with $a x equiv 1$ (mod $m$) — if and only if
+  $"gcd"(a, m) = 1$. Necessity is clear: any common divisor of $a$ and
+  $m$ divides $a x$ and hence also $a x - 1$, forcing it to divide
+  $1$. Sufficiency follows from Bézout's identity
+  (#link(<thm:bezout>)[§1.5]): $a x + m y = 1$ reads, modulo $m$, as
+  $a x equiv 1$. Thus the reduced system is exactly the set of
+  invertible classes. §3.3 turns this existence statement into a
+  computation, and Chapter 5 will study the *structure* of these
+  invertible classes — how many elements of each possible order they
+  contain — via primitive roots.
+]
