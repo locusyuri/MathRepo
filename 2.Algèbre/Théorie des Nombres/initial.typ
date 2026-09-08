@@ -3186,3 +3186,151 @@ view belongs to abstract algebra; the notebooks on abstract algebra
 develop it there, whereas here the classical language of roots and
 indices carries the rest of the chapter.
 
+== Indices and Discrete Logarithms // 指标与离散对数
+
+A primitive root $g$ does more than generate: it *orders* the system
+of units. Written in the order visited by the powers of $g$, the units
+modulo $m$ form the list
+$
+  g^0 = 1, g, g^2, ..., g^(phi(m) - 1),
+$
+so that every invertible class occurs exactly once. Multiplication of
+classes is then nothing but addition of the positions in this list —
+turning the multiplicative structure of the units into the additive
+arithmetic of exponents, which Section 3.3 made completely explicit.
+Gauss called these exponents *indices* and exploited their logarithmic
+behaviour throughout the *Disquisitiones*; the modern name for the
+same quantity is the *discrete logarithm*, a term that carries its own
+computational warning, to which we return at the end of the section.
+Throughout this section $m$ admits a primitive root $g$, i.e.
+$m in {2, 4, p^alpha, 2 p^alpha}$ by the classification theorem, and
+all bases $a$ are coprime to $m$.
+
+#definition(name: "Index to a Fixed Base")[
+  Let $g$ be a primitive root modulo $m$, and let $"gcd"(a, m) = 1$.
+  The *index of $a$ to the base $g$*, written $"ind"_g(a)$, is the
+  unique integer $r$ with $0 <= r < phi(m)$ and
+  $
+    a equiv g^r quad ("mod" m).
+  $
+  One often says that $r$ is the *discrete logarithm of $a$ to the
+  base $g$*. Uniqueness is the periodicity proposition of §5.1
+  (#link(<prop:order-periodicity>)[§5.1]): two exponents are allowed
+  exactly when they are congruent modulo $"ord"_m(g) = phi(m)$.
+] <def:index-logarithm>
+
+Modulo $7$ with base $3$, the powers computed in §5.2 give
+$"ind"_3(1) = 0$, $"ind"_3(2) = 2$, $"ind"_3(4) = 4$ and
+$"ind"_3(5) = 5$. Exponents are read modulo $phi(m)$; e.g.
+$"ind"_3(1) = 0 = phi(7)$ is the same statement as $3^7 equiv 3^0
+equiv 1$. The index obeys the laws of a logarithm, with
+multiplication on the unit side and addition on the exponent side.
+
+#proposition(name: "The Index Rules")[
+  Let $g$ be a primitive root modulo $m$, and let $"gcd"(a, m) = 1$
+  and $"gcd"(b, m) = 1$. Then, with all congruences taken modulo
+  $phi(m)$:
+  - $"ind"_g(a b) equiv "ind"_g(a) + "ind"_g(b)$;
+  - $"ind"_g(a^k) equiv k dot "ind"_g(a)$ for every integer $k$;
+  - if $h$ is another primitive root and $h equiv g^c$, then
+    $"ind"_h(a) equiv "ind"_g(a) dot c^(-1)$, where $c^(-1)$ is the
+    inverse of $c$ modulo $phi(m)$.
+] <prop:index-rules>
+
+#proof(name: "of the index rules")[
+  Write $a equiv g^r$ and $b equiv g^s$ (mod $m$) with
+  $r = "ind"_g(a)$, $s = "ind"_g(b)$. Multiplying gives
+  $a b equiv g^(r + s)$ (mod $m$), and the displayed assertion is the
+  uniqueness of the index; raising $a equiv g^r$ to the $k$-th power
+  gives the second rule, which covers negative $k$ as well because the
+  inverse of $a$ is a power of $g$. For the change of base, both
+  $g$ and $h$ are primitive roots, so $"gcd"(c, phi(m)) = 1$ by the
+  proposition of §5.2 (#link(<prop:primitive-root-power>)[§5.2]) and
+  $c$ has an inverse modulo $phi(m)$. Since
+  $a equiv g^("ind"_g(a)) equiv (g^c)^("ind"_g(a) c^(-1)) equiv
+  h^("ind"_g(a) c^(-1))$ (mod $m$), uniqueness of the index to the
+  base $h$ forces the third rule.
+]
+
+#example(name: "An Index Table Modulo 13")[
+  The residue $2$ is a primitive root modulo $13$ (§5.2). Raising $2$
+  successively and reducing modulo $13$ produces the table
+  #tex-table(
+    ([$a$], [$1$], [$2$], [$3$], [$4$], [$5$], [$6$], [$7$], [$8$], [$9$], [$10$], [$11$], [$12$]),
+    ([$"ind"_2 (a)$], [$0$], [$1$], [$4$], [$2$], [$9$], [$5$], [$11$], [$3$], [$8$], [$10$], [$7$], [$6$]),
+  )
+  whose entries run through $0, 1, ..., 11$ exactly once. The product
+  rule is visible in a single line: $3 dot 5 = 15 equiv 2$ (mod $13$),
+  and $"ind"_2(3) + "ind"_2(5) = 4 + 9 = 13 equiv 1 = "ind"_2(2)$
+  (mod $12$). Multiplication of units has become addition of indices,
+  and $a^(-1)$ corresponds to $-"ind"_2(a)$ (mod $12$), as the rule
+  for $k = -1$ demands.
+] <ex:index-table>
+
+The payoff of a logarithm is that *equations in the exponent become
+linear*. Solving $x^k equiv a$ (mod $m$) means finding which units,
+when raised to the $k$-th power, land on $a$ — a question about
+products that the index converts into a single congruence of the form
+solved in §3.3.
+
+#theorem(name: "The Power Congruence Theorem")[
+  Let $m$ have a primitive root $g$, let $k >= 1$, and let
+  $"gcd"(a, m) = 1$. Put $d = "gcd"(k, phi(m))$. The congruence
+  $
+    x^k equiv a quad ("mod" m)
+  $
+  is solvable if and only if $d | "ind"_g(a)$, and in that case it has
+  exactly $d$ solutions modulo $m$.
+] <thm:power-congruence>
+
+#proof(name: "of the theorem")[
+  Any solution $x$ is a unit modulo $m$ (its $k$-th power is a unit),
+  hence is a power of $g$: write $x equiv g^y$ (mod $m$), with $y$
+  determined modulo $phi(m)$ and all exponents taken modulo $phi(m)$.
+  Then
+  $
+    x^k equiv a ("mod" m) <=> g^(k y) equiv g^("ind"_g(a))
+    ("mod" m) <=> k y equiv "ind"_g(a) ("mod" phi(m)),
+  $
+  the last equivalence being the periodicity of $g$'s powers. This is
+  a linear congruence in the variable $y$, and the theorem of §3.3
+  (#link(<thm:linear-congruence>)[§3.3]) says it is solvable exactly
+  when $d | "ind"_g(a)$, in which case there are $d$ solutions $y$
+  modulo $phi(m)$. The map $y -> g^y$ sends distinct $y$ modulo
+  $phi(m)$ to distinct classes, so the count survives.
+]
+
+The solvability condition is independent of the chosen base: changing
+base multiplies every index by the invertible number $c^(-1)$
+modulo $phi(m)$ (third index rule), and multiplying by a unit does
+not change which divisors of $phi(m)$ divide the index.
+
+#example(name: "Cube Roots Modulo 13")[
+  Work modulo $13$ with base $2$ and the index table above.
+  For $x^3 equiv 5$ (mod $13$): here $d = "gcd"(3, 12) = 3$ and
+  $"ind"_2(5) = 9$, and $3 | 9$, so three solutions are promised. The
+  congruence $3 y equiv 9$ (mod $12$) divides through by $3$ to give
+  $y equiv 3$ (mod $4$), i.e. $y in {3, 7, 11}$, and the
+  corresponding classes $x = 2^y$ are
+  $
+    x = 8, 11, 7.
+  $
+  Indeed $8^3 = 512 equiv 5$ (mod $13$) (and $2^9 equiv 5$), and the
+  other two are its multiples by cube roots of unity, $2^4 = 3$ and
+  $2^8 = 9$.
+  For $x^4 equiv 2$ (mod $13$): here $d = "gcd"(4, 12) = 4$, while
+  $"ind"_2(2) = 1$; since $4$ does not divide $1$, the congruence has
+  no solution at all — $2$ is a fourth power modulo $13$ only up to
+  the obstruction detected by $d | "ind"$.
+] <ex:power-congruence>
+
+#note[
+  When $m = p$ is a large prime, the index table has $p - 1$ entries
+  and the map $k -> g^k$ is a one-way computation in practice:
+  although exponentiating is fast (the repeated-squaring routine of
+  §4.4), no efficient method is known to recover an index from the
+  residue — the *discrete logarithm problem*. This asymmetry is the
+  basis of modern public-key cryptography (Diffie–Hellman key
+  exchange, ElGamal), a direction this notebook does not pursue.
+]
+
