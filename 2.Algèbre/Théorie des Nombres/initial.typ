@@ -1698,3 +1698,150 @@ use of Euclid's lemma in the arithmetic of congruences.
   invertible classes — how many elements of each possible order they
   contain — via primitive roots.
 ]
+
+== Linear Congruences // 一次同余
+
+We now solve equations in the arithmetic of congruences, beginning
+with the simplest nontrivial type. A *linear congruence* in the
+unknown $x$ has the form
+$
+  a x equiv b quad ("mod" m),
+$
+with $a, b in bb(Z)$ and modulus $m in bb(Z)^+$. Because congruence
+is compatible with addition and multiplication (§3.1), the solution
+set depends only on the residue classes of $a$ and $b$ modulo $m$:
+either coefficient may be replaced by a congruent integer without
+changing the solutions. Reading the definition literally, the problem
+is that of finding all integers $x$ for which $m$ divides $a x - b$,
+i.e. all solutions of the linear Diophantine equation
+$a x + m y = b$ in two variables.
+
+#definition(name: "Modular Inverse")[
+  Let $m in bb(Z)^+$ and $"gcd"(a, m) = 1$. An *inverse of $a$ modulo
+  $m$* is an integer $x$ such that
+  $
+    a x equiv 1 quad ("mod" m).
+  $
+  By the note closing §3.2 — Bézout's identity applied to the pair
+  $a, m$ — such an $x$ exists exactly when $"gcd"(a, m) = 1$, and it
+  is then unique modulo $m$. We write $a^(-1)$ for the unique inverse
+  class, so that $a dot a^(-1) equiv 1$ (mod $m$).
+] <def:modular-inverse>
+
+The inverse is the key to the general equation: multiplying
+$a x equiv b$ by $a^(-1)$ is the legitimate "division" in this
+arithmetic. The full picture is described by the main theorem, whose
+only obstruction is the common divisor of $a$ and $m$.
+
+#theorem(name: "Solvability of Linear Congruences")[
+  Let $m in bb(Z)^+$, $a, b in bb(Z)$, and $d = "gcd"(a, m)$. The
+  congruence
+  $
+    a x equiv b quad ("mod" m)
+  $
+  has a solution if and only if $d | b$. If $d | b$, there are exactly
+  $d$ solutions modulo $m$: dividing both sides and the modulus by
+  $d$ gives the reduced congruence
+  $
+    (a\/d) x equiv b\/d quad ("mod" m\/d)
+  $
+  with $"gcd"(a\/d, m\/d) = 1$, which has a unique solution
+  $x_0$ modulo $m\/d$; the solutions modulo $m$ are then
+  $
+    x_0, x_0 + m\/d, x_0 + 2 (m\/d), dots, x_0 + (d - 1) m\/d.
+  $
+] <thm:linear-congruence>
+
+#proof[
+  *If a solution exists, then $d | b$.* A solution $x$ of
+  $a x equiv b$ (mod $m$) means $a x - b = m y$ for some integer $y$.
+  Since $d$ divides both $a$ and $m$, it divides $a x - m y = b$.
+
+  *Assume now $d | b$.* The divisibility condition $m | (a x - b)$ is
+  equivalent to $(m\/d) | ((a\/d) x - b\/d)$, since $d$ can be divided
+  out of all three of $a$, $b$ and $m$. The reduced congruence
+  $
+    (a\/d) x equiv b\/d quad ("mod" m\/d)
+  $
+  has $"gcd"(a\/d, m\/d) = 1$: dividing two integers by their gcd
+  removes all common prime factors (unique factorization, §2.2).
+  Hence $(a\/d)$ possesses an inverse modulo $m\/d$
+  (#link(<def:modular-inverse>)[§3.3]) and the reduced congruence has
+  the unique solution class
+  $x_0 equiv (a\/d)^(-1) (b\/d)$ (mod $m\/d$).
+
+  *Lifting.* Every solution modulo $m$ reduces to $x_0$ modulo
+  $m\/d$, so it must be of the form $x_0 + k (m\/d)$. Among the $d$
+  values $k = 0, 1, dots, d - 1$ the resulting classes modulo $m$ are
+  distinct: two of them are congruent modulo $m$ only if
+  $d | (k_1 - k_2)$, which forces $k_1 = k_2$. Each such class solves
+  the original congruence, since the representative $x_0$ does and
+  adding $m\/d$ preserves the value of $(a\/d) x$ modulo $m\/d$.
+]
+
+The theorem contains the coprime case as its most common special
+form, worth stating separately.
+
+#corollary(name: "Coprime Case: Unique Solution")[
+  If $"gcd"(a, m) = 1$, the congruence $a x equiv b$ (mod $m$) has
+  exactly one solution modulo $m$, namely
+  $
+    x equiv a^(-1) b quad ("mod" m).
+  $
+] <cor:linear-congruence-coprime>
+
+Putting the pieces together gives a completely algorithmic procedure,
+free of trial and error.
+
+1. *Compute $d = "gcd"(a, m)$* by the Euclidean algorithm (§1.5).
+2. *Test solvability.* If $d$ does not divide $b$, there is no
+   solution. Otherwise divide $a$, $b$, $m$ by $d$, obtaining
+   $a' x equiv b'$ (mod $m'$) with $"gcd"(a', m') = 1$.
+3. *Invert.* Obtain the inverse of $a'$ modulo $m'$ from the Bézout
+   combination produced by back-substitution in the Euclidean
+   algorithm (§1.5), and set
+   $x_0 equiv (a')^(-1) b'$ (mod $m'$).
+4. *List the lifts.* If $d = 1$ the solution is the single class
+   $x_0$ modulo $m$. If $d > 1$, the $d$ solutions modulo $m$ are
+   $x_0 + k m'$ for $k = 0, 1, dots, d - 1$.
+
+#example(name: "Several Solutions, and Inversion by Back-Substitution")[
+  *Three solutions modulo $21$.* Solve $6 x equiv 15$ (mod $21$). Here
+  $d = "gcd"(6, 21) = 3$, and $3 | 15$, so there are three classes.
+  Dividing by $3$ gives $2 x equiv 5$ (mod $7$). The inverse of $2$
+  modulo $7$ is $4$, since $2 dot 4 = 8 equiv 1$; hence
+  $x_0 equiv 4 dot 5 = 20 equiv 6$ (mod $7$). Lifting by $m\/d = 7$:
+  the solutions modulo $21$ are
+  $
+    x equiv 6, 13, 20 quad ("mod" 21),
+  $
+  and indeed $6 dot 6 = 36 equiv 15$, $6 dot 13 = 78 equiv 15$ and
+  $6 dot 20 = 120 equiv 15$ modulo $21$.
+
+  *Inversion by back-substitution.* Solve $14 x equiv 3$ (mod $31$).
+  Since $"gcd"(14, 31) = 1$ there is a unique class. Run the Euclidean
+  algorithm on $(31, 14)$:
+  $
+    31 = 2 dot 14 + 3, quad 14 = 4 dot 3 + 2, quad 3 = 1 dot 2 + 1,
+  $
+  and read it backwards:
+  $
+    1 = 3 - 1 dot 2 = 3 - (14 - 4 dot 3) = 5 dot 3 - 14
+      = 5 (31 - 2 dot 14) - 14 = 5 dot 31 - 11 dot 14.
+  $
+  Thus $14 dot (-11) equiv 1$ (mod $31$), i.e.
+  $14^(-1) equiv -11 equiv 20$ (mod $31$), and
+  $
+    x equiv 3 dot 20 = 60 equiv 29 quad ("mod" 31).
+  $
+  Check: $14 dot 29 = 406 = 13 dot 31 + 3$.
+] <ex:linear-congruence>
+
+The method of this section is the exact computational twin of §1.5's
+Bézout identity: every linear congruence is reduced to one inverse,
+and every inverse is produced by the Euclidean algorithm. The systems
+of several congruences are the subject of the next section, where the
+Chinese Remainder Theorem converts them into a single congruence with
+composite modulus. When $b$ itself is a power or a product of
+congruences, these tools will power the order computations of
+Chapter 5.
