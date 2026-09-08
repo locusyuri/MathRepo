@@ -2659,3 +2659,208 @@ generate the whole system of units, and Chapter 6 counts the solutions
 of quadratic congruences such as $x^2 equiv -1$ (mod $p$) with the
 tools glimpsed in §4.3.
 
+= Primitive Roots and Discrete Logarithms // 原根与离散对数
+
+Euler's theorem attached to every invertible class modulo $m$ a
+*period*: the powers $a, a^2, a^3, ...$ return to $1$ by the exponent
+$phi(m)$, and no structural information was lost because an exponent
+may always be shrunk modulo $phi(m)$ before a power is evaluated.
+The present chapter changes the point of view and interrogates the
+period itself. *Which* divisors of $phi(m)$ actually occur as periods?
+When does an element attain the full period $phi(m)$, so that its
+powers exhaust the whole system of units? And once such a generator
+has been fixed, what arithmetic does it unlock?
+
+The answers form Gauss's theory of *primitive roots* and its
+computational shadow, the *discrete logarithm*. Euler verified
+empirically (1773) that prime moduli admit roots whose powers cover
+all nonzero residues; Gauss proved the existence theorem in the
+*Disquisitiones Arithmeticae* (1801) and went on to settle which
+moduli have this property at all — exactly the numbers
+$
+  m = 1, 2, 4, p^alpha, 2 p^alpha
+$
+with $p$ an odd prime. Section 5.1 isolates the minimal period — the
+*order* of an element — and proves the two structural facts that power
+the rest of the chapter: orders divide $phi(m)$, and every least
+common multiple of two orders is itself an order. Section 5.2 deploys
+these tools to prove the existence theorems and the classification
+above. Sections 5.3–5.4 turn the generator into a logarithm: once a
+root $g$ is fixed, each unit class $a$ is a uniquely determined power
+$g^k$, the exponent $k$ being the *index* of $a$. Multiplication
+translates into addition of indices, and the power equation
+$x^k equiv a$ — asking for $k$-th roots of $a$ — collapses into the
+linear congruences solved in §3.3. The case $n = 2$ then hands the
+subject to Chapter 6, which treats quadratic residues in full.
+
+== The Order of an Element // 元素的阶
+
+Fix $m >= 2$ and an integer $a$ coprime to $m$. Multiplication by $a$
+is invertible modulo $m$ (§3.3), so the sequence
+$1, a, a^2, a^3, ...$ can never reach $0$; Euler's theorem (§4.2)
+guarantees that it reaches $1$ at the exponent $phi(m)$ and therefore
+runs in a cycle whose length divides $phi(m)$. But as the example
+after Euler's theorem showed ($2$ modulo $15$), the genuine cycle may
+be shorter than the promised $phi(m)$, and may also be full. The exact
+cycle length deserves its own name.
+
+#definition(name: "Order of an Element Modulo m")[
+  Let $m >= 2$ and let $a$ be an integer with $"gcd"(a, m) = 1$. The
+  *order of $a$ modulo $m$*, written $"ord"_m(a)$, is the least
+  positive integer $t$ such that
+  $
+    a^t equiv 1 quad ("mod" m).
+  $
+  Such a $t$ exists: Euler's theorem gives $a^(phi(m)) equiv 1$
+  (mod $m$), and every nonempty set of positive integers has a least
+  element.
+] <def:order-of-element>
+
+#proposition(name: "The Order Divides φ(m)")[
+  Let $"gcd"(a, m) = 1$. Then
+  $"ord"_m(a) | phi(m)$.
+] <prop:order-divides-phi>
+
+#proof(name: "of the proposition")[
+  The single observation that makes order arguments mechanical is the
+  following *minimality criterion*. Let $t = "ord"_m(a)$; if $a^n
+  equiv 1$ (mod $m$) for some $n >= 0$, write $n = q t + r$ with
+  $0 <= r < t$. Then
+  $
+    a^n = a^(r + q t) = a^r (a^t)^q equiv a^r dot 1 = a^r quad
+    ("mod" m),
+  $
+  so $a^r equiv 1$ (mod $m$). By the minimality of $t$ the remainder
+  $r$ must vanish; hence $t | n$. In words: *an exponent is a period
+  of $a$ if and only if it is a multiple of the order.*
+  Now take $n = phi(m)$. Euler's theorem gives $a^(phi(m)) equiv 1$
+  (mod $m$), so the criterion forces $"ord"_m(a) | phi(m)$.
+]
+
+#proposition(name: "The Order of a Power")[
+  Let $"gcd"(a, m) = 1$ and put $t = "ord"_m(a)$. For every integer
+  $k >= 1$,
+  $
+    "ord"_m(a^k) = t / "gcd"(t, k).
+  $
+] <prop:order-power>
+
+#proof(name: "of the proposition")[
+  Write $d = "gcd"(t, k)$. The power $(a^k)^(t\/d) =
+  (a^t)^(k\/d)$ is $equiv 1$ (mod $m$), so by the minimality criterion
+  of §5.1 the order of $a^k$ divides $t\/d$.
+  Conversely, let $u = "ord"_m(a^k)$; then $a^(k u) = (a^k)^u
+  equiv 1$ (mod $m$), so the criterion applied to $a$ gives
+  $t | k u$. Dividing by $d$,
+  $
+    t\/d | (k\/d) u,
+  $
+  and since $"gcd"(t\/d, k\/d) = 1$, Euclid's lemma forces
+  $t\/d | u$. The two divisibilities leave $u = t\/d$.
+]
+
+#proposition(name: "Congruent Powers Coincide Exactly on Periods")[
+  Let $"gcd"(a, m) = 1$ and let $t = "ord"_m(a)$. For any integers
+  $r, s >= 0$,
+  $
+    a^r equiv a^s quad ("mod" m) <=> r equiv s quad ("mod" t).
+  $
+] <prop:order-periodicity>
+
+#proof(name: "of the proposition")[
+  By symmetry we may suppose $r >= s$. The class of $a^s$ is
+  invertible modulo $m$ (§3.3), so multiplying a congruence by its
+  inverse preserves equivalence:
+  $
+    a^r equiv a^s ("mod" m) <=> a^(r - s) equiv 1 ("mod" m)
+    <=> t | (r - s),
+  $
+  the last step being the minimality criterion. But $t | (r - s)$ is
+  exactly the assertion $r equiv s$ (mod $t$).
+]
+
+The proposition says that within the period the powers of $a$ never
+repeat, and outside it they echo perfectly: $a$ sweeps out a cycle of
+length $t$ and nothing else. This *uniqueness of exponents* is what
+makes logarithms possible later in the chapter, and the criterion used
+twice above is its engine. The last structural fact we need concerns
+two elements at once.
+
+#lemma(name: "Reaching the Least Common Multiple of Two Orders")[
+  Let $"gcd"(a, m) = 1$ and $"gcd"(b, m) = 1$, with
+  $r = "ord"_m(a)$ and $s = "ord"_m(b)$. Then there is an integer
+  $c$, coprime to $m$, with
+  $
+    "ord"_m(c) = "lcm"(r, s).
+  $
+] <lem:order-lcm>
+
+#proof(name: "of the lemma")[
+  *Step 1: coprime orders.* Assume first that $"gcd"(r, s) = 1$ and
+  show that $c = a b$ works. On one hand
+  $
+    (a b)^(r s) = (a^r)^s (b^s)^r equiv 1 dot 1 = 1 quad ("mod" m),
+  $
+  so $"ord"_m(a b) | r s$ by the minimality criterion. On the other
+  hand, let $n = "ord"_m(a b)$. Raising $(a b)^n equiv 1$ (mod $m$) to
+  the $s$-th power and using $b^s equiv 1$ gives $a^(n s) equiv 1$
+  (mod $m$), hence $r | n s$; as $"gcd"(r, s) = 1$, Euclid's lemma
+  yields $r | n$. The symmetric argument gives $s | n$, and the two
+  coprime divisors multiply: $r s | n$. Together with $n | r s$ we
+  obtain $n = r s = "lcm"(r, s)$.
+  *Step 2: general orders.* Split the two orders prime power by prime
+  power. For each prime $p$, let $p^alpha$ be the highest power of
+  $p$ dividing $r$ and $p^beta$ the highest power dividing $s$. If
+  $alpha >= beta$, keep $p^alpha$ inside $r_1$; if $beta > alpha$,
+  keep $p^beta$ inside $s_1$. The leftovers $r_2 = r\/r_1$ and
+  $s_2 = s\/s_1$ receive no prime power at all from the other order,
+  so $r_1$ and $s_1$ are coprime and $r_1 s_1 = "lcm"(r, s)$. By the
+  proposition on the order of a power,
+  $
+    "ord"_m(a^(r_2)) = r\/r_2 = r_1,
+    quad
+    "ord"_m(b^(s_2)) = s\/s_2 = s_1,
+  $
+  and the two orders are coprime. Step 1 applied to the two powers
+  yields an element $c$ of order $r_1 s_1 = "lcm"(r, s)$.
+]
+
+This lemma is the hidden engine of the existence theorems: whenever
+orders cannot be combined into one element, they cannot form a common
+multiple, and a maximal order would force every other order to divide
+it — the dichotomy §5.2 will exploit. First, a concrete tour of the
+orders modulo a small prime.
+
+#example(name: "Orders Modulo 7")[
+  The nonzero classes modulo $7$ are $1, 2, 3, 4, 5, 6$, and
+  $phi(7) = 6$. Iterating each element until it returns to $1$:
+  #tex-table(
+    ([$a$], [$1$], [$2$], [$3$], [$4$], [$5$], [$6$]),
+    ([$"ord"_7(a)$], [$1$], [$3$], [$6$], [$3$], [$6$], [$2$]),
+  )
+  All six orders divide $6 = phi(7)$, as the proposition demands, but
+  only $3$ and $5$ attain the full period $6$. For instance
+  $3^2 = 9 equiv 2$, $3^3 equiv 6$, $3^4 equiv 4$, $3^5 equiv 5$ and
+  $3^6 equiv 1$ (mod $7$), so the powers of $3$ visit every nonzero
+  class before returning; the element $6 equiv -1$ is the extreme
+  opposite case, bouncing between $6$ and $1$ with order $2$. Note
+  also the "middle" order $3$, realized by $2$ and $4$: modulo $7$ the
+  powers of $2$ run through $2, 4, 1$ and stop — a *proper* divisor of
+  $phi(7)$, in contrast to the element $2$ modulo $15$ of the example
+  in §4.2 (#link(<ex:euler-example>)[§4.2]), whose order $8$
+  equals $phi(15)$ exactly.
+] <ex:order-table>
+
+#note[
+  In the language of §4.2's remark after Euler's theorem, the
+  invertible classes modulo $m$ form an abelian group of size
+  $phi(m)$ under multiplication, and each order divides the group
+  size — the finite echo of Lagrange's theorem. The classes of a fixed
+  order $t$ form a *level*: the reduced residue system
+  (#link(<def:reduced-residue-system>)[§3.2]) splits into the disjoint
+  union of the levels $t | phi(m)$, each class sitting at exactly one
+  level. The highest level, $t = phi(m)$, consists of the classes
+  whose powers *generate* the whole system of units. Whether that
+  level is inhabited is precisely the question of the next section.
+]
+
