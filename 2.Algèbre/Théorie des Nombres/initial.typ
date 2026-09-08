@@ -3334,3 +3334,110 @@ not change which divisors of $phi(m)$ divide the index.
   exchange, ElGamal), a direction this notebook does not pursue.
 ]
 
+== Power Residues // 幂剩余
+
+Section 5.3 answered, for a fixed right-hand side $a$, how many
+solutions the congruence $x^k equiv a$ (mod $m$) has. This section
+reverses the question: fix the exponent $n$ and ask *which* residues
+can be reached at all. Those that can deserve a name; among them the
+case $n = 2$ is so important that Chapter 6 is devoted to it.
+
+#definition(name: "Power Residues")[
+  Let $p$ be an odd prime, let $n >= 1$, and let $"gcd"(a, p) = 1$.
+  The residue $a$ is an *$n$-th power residue modulo $p$* if the
+  congruence
+  $
+    x^n equiv a quad ("mod" p)
+  $
+  is solvable; otherwise $a$ is an *$n$-th power non-residue*. For
+  $n = 2$ one says *quadratic residue* and *quadratic non-residue*,
+  the vocabulary of Chapter 6.
+] <def:power-residue>
+
+For $n = 1$ every unit is a residue. For larger $n$ the index calculus
+already contains the answer, and the next theorem expresses it without
+mentioning a primitive root at all: it is decided by a single power of
+$a$, whose exponent is the "reduced" $(p - 1)\/d$.
+
+#theorem(name: "A Criterion for Power Residues")[
+  Let $p$ be an odd prime, $n >= 1$, and $"gcd"(a, p) = 1$. Put
+  $d = "gcd"(n, p - 1)$. Then $a$ is an $n$-th power residue modulo
+  $p$ if and only if
+  $
+    a^((p - 1)\/d) equiv 1 quad ("mod" p).
+  $
+] <thm:power-residue-criterion>
+
+#proof(name: "of the theorem")[
+  *If $a$ is an $n$-th power residue.* Choose $x$ with $x^n equiv a$
+  (mod $p$). Then $x$ is a unit modulo $p$, and Fermat's little
+  theorem (#link(<thm:fermat-little>)[§4.1]) applies:
+  $
+    a^((p - 1)\/d) equiv x^(n (p - 1)\/d) = x^((p - 1)(n\/d))
+    equiv 1^((n\/d)) = 1 quad ("mod" p).
+  $
+  *Only if, by indices.* Fix a primitive root $g$ modulo $p$ and write
+  $a equiv g^s$ (mod $p$), so $s = "ind"_g(a)$. The condition reads
+  $g^(s (p - 1)\/d) equiv 1$ (mod $p$), which holds exactly when the
+  order $p - 1$ of $g$ divides $s (p - 1)\/d$ — equivalently, dividing
+  by $d$, exactly when $d | s$. By the power congruence theorem of
+  §5.3 (#link(<thm:power-congruence>)[§5.3]) solvability of
+  $x^n equiv a$ (mod $p$) is itself equivalent to $d | "ind"_g(a) =
+  d | s$. The two conditions coincide, so $a$ is a power residue.
+]
+
+The criterion separates the units into $n$-th power residues and
+non-residues, and the index calculus even predicts how many of each
+there are: by the power congruence theorem each residue is attained by
+exactly $d$ elements, so the $(p - 1)$ units split into fibers of
+uniform size $d$.
+
+#proposition(name: "How Many Power Residues")[
+  Let $p$ be an odd prime and $d = "gcd"(n, p - 1)$. Among the
+  $p - 1$ nonzero residues modulo $p$ there are exactly
+  $(p - 1)\/d$ $n$-th power residues.
+] <prop:count-power-residues>
+
+#proof(name: "of the proposition")[
+  By the power congruence theorem, each solvable congruence
+  $x^n equiv a$ (mod $p$) has exactly $d$ solutions, and every unit
+  $x$ supplies a residue $x^n$. The $(p - 1)$ units therefore land on
+  the residue set in fibers of size $d$, and the number of distinct
+  images is $(p - 1)\/d$.
+]
+
+#example(name: "Power Residues Modulo 7")[
+  For $p = 7$ the criterion reads $a^((6)\/d) equiv 1$ (mod $7$).
+  With $n = 2$: $d = "gcd"(2, 6) = 2$, so the $(6)\/2 = 3$ quadratic
+  residues are the classes with $a^3 equiv 1$ (mod $7$). Squaring
+  $1, 2, 3$ gives $1, 4, 2$ and the set ${1, 2, 4}$; indeed $a^3$
+  equals $1$ for $a = 1, 2, 4$ and $-1$ for $3, 5, 6$.
+  With $n = 3$: $d = "gcd"(3, 6) = 3$, so there are $6\/3 = 2$ cubic
+  residues, the classes with $a^2 equiv 1$ (mod $7$), namely
+  $a = 1, 6$. Cubing confirms the list: $1^3 = 2^3 = 4^3 equiv 1$ and
+  $3^3 = 5^3 = 6^3 equiv 6$ (mod $7$), so the residues are
+  ${1, 6}$.
+] <ex:power-residues>
+
+#note[
+  With $n = 2$ the criterion becomes the assertion $a^((p - 1)\/2)
+  equiv 1$ (mod $p$) for quadratic residues — Euler's criterion in
+  embryo. Chapter 6 packages it into the Legendre symbol and the
+  arithmetic of quadratic residues, and it is there, not here, that
+  the theory of the case $n = 2$ is developed (the notation and its
+  laws belong to that chapter by the division of labour of this
+  notebook).
+]
+
+This closes Chapter 5. The chapter converted the periodicity of
+powers, first observed in Chapter 4, into a full structural theory:
+orders organize the units by levels (§5.1); the levels reach the top
+precisely for the moduli $2, 4, p^alpha, 2 p^alpha$, where a
+primitive root generates everything (§5.2); a fixed root turns
+multiplication into addition of indices and power equations into
+linear congruences (§5.3); and the power residues — the attainable
+$n$-th powers — are counted and recognized by the single congruence of
+§5.4. For $n = 2$ this is the gate to Chapter 6: the quadratic
+residues modulo a prime, their Legendre symbol, and the law of
+quadratic reciprocity.
+
