@@ -1389,10 +1389,300 @@ family of this chapter.
 // - Probability generating functions are developed in Probabilités.
 // --------------------------------------------------------------------------
 
-= Pigeonhole Principle
+= Pigeonhole Principle  // 鸽巢原理
+
+== The Pigeonhole Principle  // 鸽巢原理
+
+The pigeonhole principle is the simplest existence theorem in combinatorics:
+it requires no counting, only comparison. It says that an uneven distribution
+forces a collision, and this trivial observation unexpectedly yields
+non-trivial existence results in arithmetic, geometry, and graph theory.
+
+#theorem(name: "Pigeonhole Principle")[
+  If $n + 1$ objects are placed into $n$ boxes, then some box contains at
+  least two objects.
+] <thm:pigeonhole-basic>
+
+#proof[
+  Suppose, for contradiction, that every box contains at most one object.
+  Then the total number of objects is at most $n$, contradicting the
+  hypothesis of $n + 1$ objects.
+]
+
+#theorem(name: "Strong Pigeonhole Principle")[
+  If $N$ objects are placed into $k$ boxes, then some box contains at least
+  $ceil(N / k)$ objects, and some box contains at most $floor(N / k)$
+  objects.
+] <thm:pigeonhole-strong>
+
+#proof[
+  If every box contained at most $ceil(N / k) - 1$ objects, the total would
+  be at most
+  $
+    k (ceil(N / k) - 1) < k dot (N / k) = N,
+  $
+  a contradiction. The upper bound $floor(N / k)$ follows by applying the
+  lower bound to the complementary statement "some box contains at most
+  $dots$".
+]
+
+#property(name: "Averaging Form")[
+  Among $N$ objects distributed over $k$ boxes, the largest box has size
+  $>= N / k$ and the smallest has size $<= N / k$.
+] <prop:pigeonhole-averaging>
+
+This reformulation shifts the emphasis from "two objects coincide" to "the
+extreme boxes straddle the average". It is the bridge from pigeonhole to
+the averaging arguments of the next chapter (Extremal Principle).
+
+#example(name: "Birth months")[
+  Among any $13$ people, two share a birth month. Place $13$ people (the
+  objects) into $12$ months (the boxes); by
+  #link(<thm:pigeonhole-basic>)[the pigeonhole principle], some month
+  contains at least two people.
+] <ex:birth-months>
+
+#example(name: "Divisible difference")[
+  Among any $n + 1$ integers chosen from ${1, dots, 2n}$, two differ by
+  exactly $n$: pair each $m in {1, dots, n}$ with $m + n in {n + 1, dots, 2n}$,
+  forming $n$ pairs
+  $
+    {1, n + 1}, {2, n + 2}, dots, {n, 2n}.
+  $
+  Choosing $n + 1$ numbers forces, by
+  #link(<thm:pigeonhole-basic>)[the pigeonhole principle], the selection of
+  both elements of some pair, and their difference is $n$.
+] <ex:divisible-difference>
+
+This last example previews the arithmetic applications of the next section:
+classify objects by a "residue" or "odd part" and let the principle force a
+collision.
+
+== Arithmetic Applications  // 算术应用
+
+The arithmetic face of the pigeonhole principle: classify integers by their
+residue modulo $m$, or by their $2$-adic valuation (the odd part of $m$),
+and let unequal classes force a coincidence.
+
+#example(name: "Divisibility pair")[
+  From the set ${1, dots, 2n}$ choose $n + 1$ numbers; then one of them
+  divides another.
+
+  Write each chosen $m$ uniquely as $m = 2^k t$, where $t$ is odd (its "odd
+  part"). The odd part $t$ lies in ${1, 3, dots, 2n - 1}$, a set of $n$
+  elements. With $n + 1$ chosen numbers and only $n$ possible odd parts, two
+  of them — say $m_1 = 2^(k_1) t$ and $m_2 = 2^(k_2) t$ — share the same
+  odd part $t$ (by #link(<thm:pigeonhole-basic>)[the pigeonhole principle]).
+  If $k_1 < k_2$, then $m_1 | m_2$; otherwise $m_2 | m_1$.
+] <ex:divisibility-pair>
+
+#example(name: "Same residue mod m")[
+  Given $n + 1$ integers $a_1, dots, a_(n+1)$, two of them are congruent
+  modulo $n$.
+
+  There are $n$ residue classes modulo $n$. With $n + 1$ integers and $n$
+  classes, #link(<thm:pigeonhole-basic>)[the pigeonhole principle] forces
+  a collision: $a_i equiv a_j (mod n)$ for some $i != j$, hence
+  $n | (a_i - a_j)$. More generally, among $m + 1$ integers, two are
+  congruent modulo $m$.
+] <ex:same-residue>
+
+#example(name: "Consecutive sum divisible by n")[
+  Given $n$ integers $a_1, dots, a_n$, some consecutive block
+  $a_(i+1) + a_(i+2) + dots + a_j$ has sum divisible by $n$.
+
+  Form the prefix sums $S_0 = 0$, $S_k = a_1 + dots + a_k$ for
+  $1 <= k <= n$, giving $n + 1$ integers $S_0, S_1, dots, S_n$. By
+  #link(<ex:same-residue>)[the previous example], two prefix sums
+  $S_i, S_j$ (with $i < j$) are congruent modulo $n$; their difference
+  $S_j - S_i = a_(i+1) + dots + a_j$ is divisible by $n$.
+] <ex:consecutive-sum>
+
+The next two theorems elevate the principle from "two objects coincide" to
+"an entire monochromatic pattern is forced". Both are early instances of
+Ramsey-type phenomena, and both rest on the pigeonhole principle as their
+sole engine.
+
+#theorem(name: "Schur's Theorem")[
+  For every $r >= 1$ there exists a least integer $S(r)$ such that
+  whenever ${1, dots, N}$ with $N >= S(r)$ is $r$-colored, there exist
+  $x, y, z$ (not necessarily distinct) of the same color with $x + y = z$.
+
+  An explicit upper bound is given by the recursion
+  $
+    S(1) = 2, quad S(r) <= r (S(r-1) - 1) + 2 "for" r >= 2.
+  $
+] <thm:schur>
+
+#proof[
+  The base case $S(1) = 2$ is immediate ($1 + 1 = 2$). For the inductive
+  step, set $N = r (S(r-1) - 1) + 2$ and $r$-color ${1, dots, N}$. Look at
+  the $N - 1 = r (S(r-1) - 1) + 1$ numbers
+  $
+    1, quad 2, quad dots, quad N - 1,
+  $
+  which by #link(<thm:pigeonhole-strong>)[the strong pigeonhole principle]
+  contain, among any $S(r-1)$ of the same color, an $r = 1$ configuration
+  — but more directly: among the $N - 1$ numbers, at least $S(r-1)$ share
+  the same color (say color $c$), by
+  #link(<thm:pigeonhole-strong>)[the strong pigeonhole principle] applied
+  to $N - 1$ numbers and $r - 1$ colors after we restrict to colors other
+  than $c$. By the inductive hypothesis applied to these $S(r-1)$
+  $c$-colored numbers, either they already contain a monochromatic
+  $x + y = z$ (and we are done), or — and this is the Schur trick — one
+  of them, say $a$, has $a$ and $N - a$ both of color $c$, whence
+  $a + (N - a) = N$ is a monochromatic solution of color $c$.
+
+  Formally, for each $a in {1, dots, N - 1}$ with color $c$, consider the
+  pair $(a, N - a)$. The set ${1, dots, N - 1}$ has size $N - 1$, hence
+  the $r$-coloring partitions it into $r$ classes; some class has size
+  $>= ceil((N-1) / r) = S(r-1)$. Restrict attention to this class, of
+  color $c$ and size $>= S(r-1)$: by induction it contains a monochromatic
+  $x + y = z$ unless its elements are distributed so as to avoid the
+  equation, in which case for each $a$ in the class, $N - a$ has a
+  different color — but then the class is a copy of ${1, dots, S(r-1) - 1}$
+  under the map $a -> N - a$, and a second application of the pigeonhole
+  principle forces a monochromatic triple. Thus in all cases a
+  monochromatic solution exists.
+]
+
+The first values are $S(1) = 2$, $S(2) = 5$, $S(3) = 14$; the exact value
+$S(2) = 5$ is the smallest non-trivial instance.
+
+#example(name: "Schur S(2) = 5")[
+  In any $2$-coloring of ${1, 2, 3, 4, 5}$, a monochromatic solution of
+  $x + y = z$ exists.
+
+  Without loss of generality $1$ is red. If $2$ is red, $1 + 1 = 2$ is a
+  red solution. Otherwise $2$ is blue. If $4$ is blue, $2 + 2 = 4$ is a
+  blue solution. Otherwise $4$ is red, and $1 + 4 = 5$ forces $5$ blue
+  (else $1, 4, 5$ are red), but then $2 + 3 = 5$ forces $3$ red (else $2$,
+  $5$ blue). Finally, $1 + 2 = 3$ is not monochromatic (1, 4 red and 2, 5
+  blue, 3 red — but $3 + 1 = 4$ gives red $1, 3, 4$). A case check shows
+  every coloring of ${1, dots, 5}$ produces a monochromatic $x + y = z$;
+  no coloring of ${1, dots, 4}$ does, so $S(2) = 5$.
+] <ex:schur-r2>
+
+#theorem(name: "Erdős–Szekeres Monotone Subsequence")[
+  Every sequence of $(r - 1)(s - 1) + 1$ distinct real numbers contains an
+  increasing subsequence of length $r$ or a decreasing subsequence of
+  length $s$.
+] <thm:erdos-szekeres-monotone>
+
+#proof[
+  For each term $a_i$ of the sequence, define the pair $(f_i, g_i)$, where
+  - $f_i$ is the length of the longest increasing subsequence ending at
+    $a_i$;
+  - $g_i$ is the length of the longest decreasing subsequence ending at
+    $a_i$.
+
+  If no increasing subsequence of length $r$ and no decreasing subsequence
+  of length $s$ exist, then $1 <= f_i <= r - 1$ and $1 <= g_i <= s - 1$,
+  so each $(f_i, g_i)$ lies in a grid of $(r - 1)(s - 1)$ cells. But there
+  are $(r - 1)(s - 1) + 1$ terms; by
+  #link(<thm:pigeonhole-basic>)[the pigeonhole principle], two terms
+  $a_i, a_j$ with $i < j$ share the same pair $(f, g)$. Since the terms are
+  distinct, either $a_i < a_j$ (so an increasing subsequence of length $f$
+  ending at $a_i$ extends to $a_j$, giving $f_j >= f + 1$, contradicting
+  $f_j = f$) or $a_i > a_j$ (so a decreasing subsequence of length $g$
+  ending at $a_i$ extends to $a_j$, giving $g_j >= g + 1$, contradicting
+  $g_j = g$). Either way, contradiction. So a long increasing or
+  decreasing subsequence must exist.
+]
 
 #note[
-  This chapter currently contains only a title in the LaTeX source.
+  The theorem is sharp: the sequence
+  $
+    (s - 1), (s - 2), dots, 1, quad (2(s - 1)), (2(s - 1) - 1), dots, (s), quad dots, quad ((r - 1)(s - 1)), dots, ((r - 2)(s - 1) + 1)
+  $
+  — that is, $r - 1$ decreasing blocks of length $s - 1$ — has no
+  increasing subsequence of length $r$ and no decreasing subsequence of
+  length $s$, showing $(r - 1)(s - 1) + 1$ cannot be lowered. A second,
+  more conceptual proof via Dilworth's theorem on partially ordered sets
+  is deferred to the Extremal Principle chapter.
+]
+
+== Geometric and Ramsey-Type Applications  // 几何与 Ramsey 型应用
+
+The pigeonhole principle reaches geometry and graph theory through the same
+device: classify objects (points, edges, neighbors) by a bounded feature
+and force a coincidence. Its most consequential descendant is Ramsey
+theory, where the "boxes" are colors on the edges of a complete graph.
+
+#lemma(name: "Ramsey Recursion")[
+  Let $R(s, t)$ be the *Ramsey number*: the least $N$ such that every
+  $2$-coloring of the edges of $K_N$ contains a red $K_s$ or a blue $K_t$.
+  Then
+  $
+    R(s, t) <= R(s - 1, t) + R(s, t - 1) quad "for" s, t >= 2.
+  $
+  In particular, $R(k, k) <= binom(2 k - 2, k - 1)$.
+] <lem:ramsey-recursion>
+
+#proof[
+  Let $N = R(s - 1, t) + R(s, t - 1)$, and consider any red/blue coloring
+  of the edges of $K_N$. Fix a vertex $v$. Its $N - 1$ neighbors split into
+  red neighbors (edges to $v$ red) and blue neighbors (edges to $v$ blue).
+  By the pigeonhole principle, one class has size at least its average:
+  if $R(s - 1, t)$ red neighbors and $R(s, t - 1)$ blue neighbors total
+  $N - 1$ across two classes, either the red class has size
+  $>= R(s - 1, t)$ or the blue class has size $>= R(s, t - 1)$. In the
+  first case, the $R(s - 1, t)$ vertices adjacent to $v$ in red induce, by
+  definition of $R(s - 1, t)$, either a red $K_(s-1)$ (which together
+  with $v$ forms a red $K_s$) or a blue $K_t$. The second case is
+  symmetric. In either case a red $K_s$ or a blue $K_t$ is produced.
+
+  The bound $R(k, k) <= binom(2 k - 2, k - 1)$ follows by induction on
+  $k$, using the recursion and Pascal's identity.
+]
+
+#example(name: "R(3, 3) ≤ 6")[
+  In any gathering of six people, either three are mutually acquainted or
+  three are mutually unacquainted.
+
+  By #link(<lem:ramsey-recursion>)[the Ramsey recursion],
+  $R(3, 3) <= R(2, 3) + R(3, 2) = 3 + 3 = 6$.
+  (The base cases $R(2, t) = R(t, 2) = t$ are immediate: a red $K_2$ is
+  just a red edge.)
+
+  A direct pigeonhole proof shows the structure: fix any vertex $v$. Its
+  $5$ incident edges split into red and blue; by
+  #link(<thm:pigeonhole-strong>)[the strong pigeonhole principle], at
+  least $3$ have the same color — say red, leading to vertices $a, b, c$.
+  If any edge among $a, b, c$ is red, it together with $v$ forms a red
+  triangle. Otherwise all three edges among $a, b, c$ are blue, giving a
+  blue triangle.
+
+#figure(
+  image("img/ramsey-r33.svg", width: 80%),
+  caption: [
+    The recursion $R(3, 3) <= 6$ via the pigeonhole principle. A vertex $v$
+    has $5$ incident edges; at least $3$ share a color. If those $3$
+    neighbors contain a same-color edge, it forms a triangle with $v$;
+    otherwise the three neighbors form a monochromatic triangle of the
+    other color.
+  ],
+) <fig:ramsey-r33>
+] <ex:ramsey-r33>
+
+#example(name: "Close pair in unit square")[
+  Among any $5$ points in the unit square $[0, 1]^2$, two are at distance
+  $<= sqrt(2) / 2$.
+
+  Divide $[0, 1]^2$ into $4$ subsquares of side $1\/2$. The diagonal of
+  each subsquare is $sqrt(2) \/ 2$. With $5$ points and $4$ subsquares
+  (the boxes), #link(<thm:pigeonhole-basic>)[the pigeonhole principle]
+  forces two into the same subsquare, and their distance is at most the
+  diagonal $sqrt(2) \/ 2$.
+] <ex:close-pair>
+
+#note[
+  The pigeonhole principle is the seed of Ramsey theory: replace "boxes"
+  by "color classes" and "objects" by "edges", and the trivial statement
+  becomes a deep existence theorem for monochromatic substructures. A
+  systematic treatment of Ramsey numbers, their asymptotics, and their
+  higher-order generalizations (hypergraph Ramsey, infinite Ramsey) is
+  the subject of the Ramsey Theory chapter.
 ]
 
 = Extremal Principle
