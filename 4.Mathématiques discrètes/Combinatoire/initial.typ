@@ -1653,16 +1653,16 @@ theory, where the "boxes" are colors on the edges of a complete graph.
   triangle. Otherwise all three edges among $a, b, c$ are blue, giving a
   blue triangle.
 
-#figure(
-  image("img/ramsey-r33.svg", width: 80%),
-  caption: [
-    The recursion $R(3, 3) <= 6$ via the pigeonhole principle. A vertex $v$
-    has $5$ incident edges; at least $3$ share a color. If those $3$
-    neighbors contain a same-color edge, it forms a triangle with $v$;
-    otherwise the three neighbors form a monochromatic triangle of the
-    other color.
-  ],
-) <fig:ramsey-r33>
+  #figure(
+    image("img/ramsey-r33.svg", width: 80%),
+    caption: [
+      The recursion $R(3, 3) <= 6$ via the pigeonhole principle. A vertex $v$
+      has $5$ incident edges; at least $3$ share a color. If those $3$
+      neighbors contain a same-color edge, it forms a triangle with $v$;
+      otherwise the three neighbors form a monochromatic triangle of the
+      other color.
+    ],
+  ) <fig:ramsey-r33>
 ] <ex:ramsey-r33>
 
 #example(name: "Close pair in unit square")[
@@ -1845,7 +1845,7 @@ specialise to give Sperner's theorem with the same sharp constant.
 
 #example(name: "Erdős–Szekeres via Dilworth")[
   We rederive #link(<thm:erdos-szekeres-monotone>)[the Erdős–Szekeres
-  monotone subsequence theorem] from Dilworth. Given a sequence
+    monotone subsequence theorem] from Dilworth. Given a sequence
   $a_1, dots, a_N$ of distinct reals, order the indices by the partial
   order $i <= j$ iff $i <= j$ and $a_i <= a_j$ (an increasing subsequence).
   Chains are increasing subsequences; antichains are decreasing
@@ -1880,7 +1880,7 @@ specialise to give Sperner's theorem with the same sharp constant.
   So in each of the $n!$ orders, at most one $A in cal(F)$ is an interval.
   Counting pairs $(sigma, A)$ with $A$ an interval of $sigma$:
   $
-    sum_(A in cal(F)) |A|! (n - |A|)!  <= n!.
+    sum_(A in cal(F)) |A|! (n - |A|)! <= n!.
   $
   Dividing by $n!$ gives the claimed inequality.
 ]
@@ -1909,15 +1909,15 @@ specialise to give Sperner's theorem with the same sharp constant.
   $
   No two of these 2-element subsets contain one another.
 
-#figure(
-  image("img/sperner-hassee.svg", width: 70%),
-  caption: [
-    The Boolean lattice $2^{[4]}$ as a Hasse diagram. The middle layer
-    (subsets of size 2) is highlighted; it is the largest antichain, of
-    size $binom(4, 2) = 6$, consistent with
-    #link(<thm:sperner>)[Sperner's theorem].
-  ],
-) <fig:sperner-hassee>
+  #figure(
+    image("img/sperner-hassee.svg", width: 70%),
+    caption: [
+      The Boolean lattice $2^{[4]}$ as a Hasse diagram. The middle layer
+      (subsets of size 2) is highlighted; it is the largest antichain, of
+      size $binom(4, 2) = 6$, consistent with
+      #link(<thm:sperner>)[Sperner's theorem].
+    ],
+  ) <fig:sperner-hassee>
 ] <ex:sperner-n4>
 
 #note[
@@ -2158,10 +2158,9 @@ the hoped-for sufficient one: the Hall condition is both.
   For the remaining family ${S_i without union_(j in J) S_j : i in J^c}$,
   we claim it satisfies Hall on $J^c$: for any $K subset.eq J^c$,
   $
-    abs(union_(k in K) (S_k without union_(j in J) S_j))
-    &= abs((union_(k in K) S_k) without (union_(j in J) S_j)) \
-    &= abs(union_(k in J union K) S_k) - abs(union_(j in J) S_j) \
-    &>= abs(J union K) - abs(J) = abs(K),
+    abs(union_(k in K) (S_k without union_(j in J) S_j)) & = abs((union_(k in K) S_k) without (union_(j in J) S_j)) \
+                                                         & = abs(union_(k in J union K) S_k) - abs(union_(j in J) S_j) \
+                                                         & >= abs(J union K) - abs(J) = abs(K),
   $
   where the inequality uses Hall on $J union K subset.eq [n]$ and
   the equality is by criticality of $J$. By induction, the remaining
@@ -2276,7 +2275,7 @@ size by one.
   cover. The matching $M$ has $|M|$ edges, each contributing one vertex
   to $C$, so $|C| = |M|$.
 
-  Since any matching has size $<= $ any vertex cover (each edge of the
+  Since any matching has size $<=$ any vertex cover (each edge of the
   matching needs a distinct cover vertex), $|M| = |C|$ is optimal.
 ]
 

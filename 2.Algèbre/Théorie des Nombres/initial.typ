@@ -46,7 +46,6 @@
 //   - 余红兵《数论》华东师范大学出版社, 2011
 //
 // 结构：4 Parts, 10 Chapters, 约 40 Sections
-
 // ==========================================================================
 // Part I — Divisibility Theory（整除理论）
 // ==========================================================================
@@ -268,7 +267,7 @@ which will echo through every later chapter of this notebook.
 == Integers and Floor/Ceiling Functions // 整数与取整函数
 
 The raw material of the chapter is $bb(Z) = {dots, -2, -1, 0, 1, 2,
-dots}$, the set of integers, with its usual order and its usual
+  dots}$, the set of integers, with its usual order and its usual
 arithmetic. Before doing any division we record the one ordering fact
 that makes proofs about $bb(Z)$ work like proofs by induction, but
 without the ceremony.
@@ -564,7 +563,7 @@ one of the goals of §1.5 is to make the duality precise.
 #proposition(name: "Elementary Properties of the GCD")[
   Let $a, b in bb(Z)$ be nonzero and $c in bb(Z)$.
   - $"gcd"(a, b) = "gcd"(b, a) = "gcd"(abs(a), abs(b)) = "gcd"(abs(b),
-    abs(a))$;
+      abs(a))$;
   - $"gcd"(a, 0) = abs(a)$, $"gcd"(a, 1) = 1$, $"gcd"(a, a) = abs(a)$;
   - $"gcd"(a, b) = "gcd"(a, b + c a)$ for every integer $c$ (adding a
     multiple of one argument to the other does not change the gcd).
@@ -652,12 +651,12 @@ divisions must terminate at a division with remainder $0$.
   Let $a, b in bb(Z)$ with $b != 0$. Repeatedly applying the division
   algorithm produces the chain
   $
-    a = b q_1 + r_1, &quad 0 < r_1 < abs(b), \
-    b = r_1 q_2 + r_2, &quad 0 < r_2 < r_1, \
-    r_1 = r_2 q_3 + r_3, &quad 0 < r_3 < r_2, \
-    dots.v \
-    r_(n-2) = r_(n-1) q_n + r_n, &quad 0 < r_n < r_(n-1), \
-    r_(n-1) = r_n q_(n+1) + 0.
+                a = b q_1 + r_1, & quad 0 < r_1 < abs(b), \
+              b = r_1 q_2 + r_2, & quad 0 < r_2 < r_1, \
+            r_1 = r_2 q_3 + r_3, & quad 0 < r_3 < r_2, \
+                          dots.v \
+    r_(n-2) = r_(n-1) q_n + r_n, & quad 0 < r_n < r_(n-1), \
+      r_(n-1) = r_n q_(n+1) + 0.
   $
   The remainders are strictly decreasing nonnegative integers, so the
   process stops after finitely many steps, and the last nonzero
@@ -674,7 +673,7 @@ divisions must terminate at a division with remainder $0$.
   the chain,
   $
     "gcd"(a, b) = "gcd"(b, r_1) = "gcd"(r_1, r_2) = dots = "gcd"(r_(n-1),
-    r_n) = "gcd"(r_n, 0) = r_n,
+      r_n) = "gcd"(r_n, 0) = r_n,
   $
   since $"gcd"(x, 0) = abs(x)$ (#link(<prop:gcd-basic>)[§1.4]).
 ]

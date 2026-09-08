@@ -472,7 +472,7 @@ implies $P(A_n) -> P(A)$.
 
 #theorem(name: "Equivalence of Countable Additivity and Finite Additivity + Lower Continuity")[
   Let $P$ be a non-negative, normalized set function on
- $(Omega, cal(F))$. Then $P$ is countably additive if and only if $P$
+  $(Omega, cal(F))$. Then $P$ is countably additive if and only if $P$
   is finitely additive and *lower continuous*:
   $
     A_1 supset.eq A_2 supset.eq dots "with" inter.big_(n=1)^infinity A_n = emptyset
