@@ -1845,3 +1845,176 @@ Chinese Remainder Theorem converts them into a single congruence with
 composite modulus. When $b$ itself is a power or a product of
 congruences, these tools will power the order computations of
 Chapter 5.
+
+== The Chinese Remainder Theorem // 中国剩余定理
+
+Section 3.3 solved one linear congruence in one unknown. This section
+solves *systems* of linear congruences in a single unknown,
+$
+  x equiv a_1 quad ("mod" m_1), quad dots, quad
+  x equiv a_k quad ("mod" m_k),
+$
+with arbitrarily prescribed residues $a_i$. Nothing can be said in
+this generality: a single solution would have to carry several
+residues at once, and these may conflict. The classical answer — known
+in China since the third century and published by Sun Zi in the
+*Sunzi Suanjing* — is that, when the moduli are *pairwise coprime*,
+any prescribed list of residues is realisable by exactly one class.
+The Chinese Remainder Theorem (CRT) is the mathematical core of this
+fact, and its proof gives the solution in closed form.
+
+We isolate first the single divisibility fact that will enforce
+uniqueness. It is the multi-factor version of the observation behind
+§1.5's product identity: a common multiple of several pairwise coprime
+integers is a multiple of their product.
+
+#lemma(name: "Products of Pairwise Coprime Divisors")[
+  Let $m_1, m_2, dots, m_k$ be positive integers with
+  $"gcd"(m_i, m_j) = 1$ for all $i != j$, and put
+  $M = m_1 m_2 dots m_k$. If $m_i | n$ for every $i = 1, dots, k$,
+  then $M | n$.
+] <lem:pairwise-coprime-product>
+
+#proof[
+  Use the exponent dictionary of §2.4. Fix a prime $p$. Because the
+  $m_i$ are pairwise coprime, $p$ can occur in the prime factorization
+  of *at most one* of them: were $p | m_i$ and $p | m_j$ with
+  $i != j$, then $p$ would divide their gcd. Hence
+  $v_p(M) = v_p(m_i)$ for the unique index $i$ with $p | m_i$ (if any),
+  and $v_p(M) = 0$ otherwise. Since $m_i | n$,
+  $v_p(m_i) <= v_p(n)$ by the exponent criterion of §2.4, and so
+  $v_p(M) <= v_p(n)$ for every prime $p$. By the same criterion,
+  $M | n$ (#link(<def:p-adic-valuation>)[§2.4]).
+]
+
+Now the main theorem. The construction is often attributed to Qin
+Jiushao's day-and-astronomical calculations, and it is purely
+algorithmic: solve each congruence "one at a time", using §3.3's
+inverses, then add the pieces.
+
+#theorem(name: "Chinese Remainder Theorem")[
+  Let $m_1, dots, m_k$ be pairwise coprime positive integers and set
+  $M = m_1 m_2 dots m_k$. For *any* integers $a_1, dots, a_k$, the
+  system of congruences
+  $
+    x equiv a_i quad ("mod" m_i), quad i = 1, dots, k,
+  $
+  has a solution, and it is unique modulo $M$. A solution is obtained
+  as follows. Put $M_i = M\/m_i$ for each $i$. Since
+  $"gcd"(M_i, m_i) = 1$, let $y_i$ be the inverse of $M_i$ modulo
+  $m_i$ (§3.3). Then
+  $
+    x_0 equiv sum_(i=1)^k a_i M_i y_i quad ("mod" M)
+  $
+  is the unique solution class.
+] <thm:crt>
+
+#proof[
+  *Existence.* Fix an index $i$. For every $j != i$ the factor $m_i$
+  appears in $M_j = M\/m_j$, so each term $a_j M_j y_j$ with $j != i$
+  is divisible by $m_i$ and vanishes modulo $m_i$. Only the $i$-th
+  term survives:
+  $
+    x_0 equiv a_i M_i y_i equiv a_i dot 1 equiv a_i quad ("mod" m_i),
+  $
+  because $y_i$ was chosen with $M_i y_i equiv 1$. As $i$ was
+  arbitrary, $x_0$ satisfies every congruence of the system.
+
+  *Uniqueness.* If $x$ and $x'$ both satisfy the system, then
+  $m_i | (x - x')$ for every $i$. By
+  #link(<lem:pairwise-coprime-product>)[the previous lemma], the
+  product $M$ divides $x - x'$, i.e. $x equiv x'$ modulo $M$. The
+  solution class is therefore unique.
+]
+
+#example(name: "The Classic Puzzle of Sun Zi")[
+  The *Sunzi Suanjing* (third–fifth century) asks for the number that
+  leaves remainder $2$ on division by $3$, remainder $3$ on division
+  by $5$, and remainder $2$ on division by $7$ — "things whose number
+  is unknown". Here the moduli $(3, 5, 7)$ are pairwise coprime and
+  $M = 105$. The auxiliary quantities:
+  - $M_1 = 35 equiv 2$ (mod $3$), whose inverse modulo $3$ is
+    $y_1 = 2$ ($2 dot 2 = 4 equiv 1$);
+  - $M_2 = 21 equiv 1$ (mod $5$), so $y_2 = 1$;
+  - $M_3 = 15 equiv 1$ (mod $7$), so $y_3 = 1$.
+  The CRT solution is
+  $
+    x_0 = 2 dot 35 dot 2 + 3 dot 21 dot 1 + 2 dot 15 dot 1
+      = 140 + 63 + 30 = 233,
+  $
+  and reducing modulo $105$,
+  $
+    233 equiv 23 quad ("mod" 105),
+  $
+  the smallest positive answer. Check:
+  $23 equiv 2$ (mod $3$), $23 equiv 3$ (mod $5$), $23 equiv 2$ (mod
+  $7$). The same number was answered, independently, by Gauss in the
+  *Disquisitiones*, where the modern form of the theorem appears.
+] <ex:crt-sunzi>
+
+The moduli in the theorem must be pairwise coprime; without this the
+system may fail or admit several classes, as in the second example
+below. Compatibility is governed by the following refinement, which
+reduces any pair of congruences to a single one.
+
+#note(title: "Non-Coprime Moduli")[
+  The pair of congruences
+  $
+    x equiv a quad ("mod" m), quad x equiv b quad ("mod" n)
+  $
+  has a solution if and only if $a equiv b$ (mod $"gcd"(m, n)$). When
+  this compatibility condition holds, the solution is unique modulo
+  $"lcm"(m, n)$. Indeed, any solution satisfies both congruences
+  modulo $d = "gcd"(m, n)$ (§3.1, transfer to a divisor), forcing
+  $a equiv b$ modulo $d$; conversely, writing $x = a + m t$ and
+  substituting into the second congruence turns the problem into the
+  linear congruence $m t equiv b - a$ (mod $n$), which §3.3 solves
+  (its consistency condition $d | (b - a)$ is exactly the one stated).
+  A system of several congruences with arbitrary moduli is treated by
+  merging pairs successively in this way.
+]
+
+#example(name: "Compatible and Incompatible Pairs")[
+  *Compatible.* Solve
+  $
+    x equiv 7 quad ("mod" 12), quad x equiv 3 quad ("mod" 8).
+  $
+  The compatibility condition holds: $"gcd"(12, 8) = 4$ and
+  $7 equiv 3$ (mod $4$). Write $x = 7 + 12 t$; the second congruence
+  becomes $7 + 12 t equiv 3$ (mod $8$), i.e. $12 t equiv 4$ (mod
+  $8$). Reducing coefficients, $4 t equiv 4$ (mod $8$), whose solution
+  is $t equiv 1$ (mod $2$) — the reduction step of §3.3 with
+  $d = 4$. Hence $t = 1 + 2 s$ and
+  $
+    x = 7 + 12 (1 + 2 s) = 19 + 24 s,
+  $
+  so $x equiv 19$ (mod $24$), the unique class modulo
+  $"lcm"(12, 8) = 24$. Check: $19 equiv 7$ (mod $12$) and
+  $19 equiv 3$ (mod $8$).
+
+  *Incompatible.* The pair
+  $
+    x equiv 7 quad ("mod" 12), quad x equiv 5 quad ("mod" 8)
+  $
+  has no solution: reducing to the common divisor $4$ would force
+  $x equiv 7 equiv 3$ (mod $4$) from the first congruence and
+  $x equiv 5 equiv 1$ (mod $4$) from the second — a contradiction.
+] <ex:crt-noncoprime>
+
+#note[
+  In ring-theoretic language the CRT says that the map
+  $x -> ([x]_(m_1), dots, [x]_(m_k))$ is a bijection between the
+  residue classes modulo $M$ and the $k$-tuples of residue classes
+  modulo the $m_i$, preserving addition and multiplication component
+  by component: an isomorphism of the rings of integers modulo $M$ and
+  modulo $m_1, dots, m_k$. This is the viewpoint developed in the
+  *Algèbre Abstraite* notebook (§9.4); here the elementary
+  representative language of the construction above is sufficient.
+  Structurally, the theorem is the *splitting engine* of modular
+  arithmetic: any modulus $m$ factorizes into powers of distinct
+  primes, and every question about arithmetic modulo $m$ — units,
+  orders, power residues — can be answered prime power by prime power
+  and then reassembled. This is exactly the strategy behind the
+  structure theorems of Chapters 5 and 6, and behind the
+  multiplicativity of Euler's function proved in the next section.
+]
