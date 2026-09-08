@@ -827,7 +827,11 @@ $
 
 == Applications of Inclusion-Exclusion
 
-#example[
+The complement form is best seen in action. Each application follows the
+same pattern: identify the "bad" sets $A_i$, compute the intersections
+$S_k$, and apply the alternating sum.
+
+#example(name: "Derangements")[
   A *derangement* of ${1, 2, dots, n}$ is a permutation fixing no point; let
   $D_n$ be their number. Let $A_i$ be the set of permutations fixing $i$. Then
   permutations fixing a prescribed set of $k$ points number $(n - k)!$, so
@@ -841,7 +845,9 @@ $
   random permutation is a derangement tends to $1 \/ e$.
 ] <ex:derangements>
 
-#example[
+The same idea counts coprime integers.
+
+#example(name: "Euler's totient")[
   Let $n = p_1^(a_1) dots p_r^(a_r)$ be the prime factorization of $n$, and
   count the integers in ${1, dots, n}$ coprime to $n$ — this is Euler's
   totient $phi(n)$. Let $A_i$ be the set of integers divisible by $p_i$. An
@@ -856,7 +862,9 @@ $
   #link(<ex:mobius-phi>)[a later example].
 ] <ex:euler-phi>
 
-#example[
+Surjections are functions that miss no value.
+
+#example(name: "Onto functions")[
   How many surjections $f: {1, dots, m} -> {1, dots, n}$ are there? Let $A_i$
   be the set of functions missing the value $i$. Functions missing a
   prescribed set of $k$ values number $(n - k)^m$, so $S_k =
@@ -873,8 +881,11 @@ $
 
 == Mobius Inversion
 
-The inclusion-exclusion principle is deeply connected to partially ordered structures.
-Mobius inversion generalizes this viewpoint to arithmetic functions and posets.
+The inclusion-exclusion principle is an *alternating-sum inversion*: from
+$S_k = sum$ (intersections of $k$ sets) one recovers $abs(union A_i)$ by
+$sum (-1)^(k+1) S_k$. The same pattern — "invert a sum by an alternating
+correction" — appears in number theory, where the Mobius function $mu$
+plays the role of $(-1)^k$. The two themes are unified in §4.4.
 
 #definition(name: "Arithmetic Function")[
   An *arithmetic function* is a function on positive integers with complex values:
@@ -944,6 +955,17 @@ The key property of $mu$ is that its divisor sums vanish away from $1$.
   term $e = n$ survives, leaving $f(n)$.
 ]
 
+#definition(name: "Dirichlet Convolution")[
+  The *Dirichlet convolution* of two arithmetic functions $f$ and $g$ is
+  $
+    (f * g)(n) = sum_(d | n) f(d) g(n / d).
+  $
+  Three special functions appear frequently: the *unit* $1(n) = 1$, the
+  *identity* $"id"(n) = n$, and the *Dirichlet identity* $epsilon(n) = cases(1 "if" n=1, 0 "if" n>1)$. The convolution satisfies
+  $mu * 1 = epsilon$, which is exactly
+  #link(<lem:mobius-sum>)[the divisor-sum lemma] in convolution notation.
+] <def:dirichlet-convolution>
+
 #example[
   We rederive #link(<ex:euler-phi>)[Euler's totient formula] by inversion.
   Classifying the integers $1, dots, n$ by $gcd(m, n)$ gives at once
@@ -951,18 +973,14 @@ The key property of $mu$ is that its divisor sums vanish away from $1$.
     sum_(d | n) phi(d) = n:
   $
   the integers with $gcd(m, n) = d$ are exactly $m = d m'$ with
-  $gcd(m', n \/ d) = 1$, and there are $phi(n \/ d)$ of those. This is a
-  *Dirichlet convolution*: in the notation $f * g$ for the Dirichlet sum
-  $(f * g)(n) = sum_(d | n) f(d) g(n / d)$, the identity reads
-  $phi * 1 = "id"$, where $"id"(n) = n$ is the identity function.
-  Applying #link(<thm:mobius-inversion>)[Möbius inversion] — equivalently
-  convolving both sides by $mu$ on the left, since $mu * 1 = epsilon$ is the
-  Dirichlet identity $epsilon(n) = cases(1 "if" n=1, 0 "if" n>1)$ — yields
+  $gcd(m', n \/ d) = 1$, and there are $phi(n \/ d)$ of those. In
+  #link(<def:dirichlet-convolution>)[Dirichlet convolution] notation this
+  reads $phi * 1 = "id"$. Applying
+  #link(<thm:mobius-inversion>)[Mobius inversion] — equivalently convolving
+  both sides by $mu$, since $mu * 1 = epsilon$ — yields
   $
     phi = mu * "id", quad text("i.e.") quad
-    phi(n) &= sum_(d | n) mu(d) n / d
-    &= n sum_(d | n, d " square-free") mu(d) / d
-    &= n product_(p | n) (1 - 1 / p),
+    phi(n) & = sum_(d | n) mu(d) n / d & = n sum_(d | n, d " square-free") mu(d) / d & = n product_(p | n) (1 - 1 / p),
   $
   the last step because the square-free divisors of $n$ are the products of
   subsets of its prime divisors. Two independent routes to one formula.
@@ -970,18 +988,11 @@ The key property of $mu$ is that its divisor sums vanish away from $1$.
 
 == Generalizations of Inclusion-Exclusion
 
-The *Möbius inversion* on a poset is the *general framework* unifying all
-the "alternating-sum inversion" results in combinatorics: choose the poset
-$P$, compute its $mu_(P)$, and the inversion formula
-#link(<thm:poset-mobius-inversion>)[below] specialises to whatever
-counting principle one needs. The divisor lattice $(NN^*, |)$ recovers
-#link(<thm:mobius-inversion>)[arithmetic Möbius inversion]; the Boolean
-lattice of subsets reduces exactly to
-#link(<thm:inclusion-exclusion>)[inclusion-exclusion] (see
-#link(<ex:boolean-lattice-ie>)[the Boolean lattice note]); the lattice of subspaces of a finite vector space,
-the partition lattice, and the integer-interval lattice each give their own
-inversion identities. The cost of abstraction is paid once, the dividends
-are collected everywhere.
+Inclusion-exclusion and arithmetic Mobius inversion share the same
+skeleton: a sum $F = sum G$ is inverted by an alternating correction.
+The unifying framework is *poset Mobius inversion* — one definition of
+$mu_P$ on any finite poset, one inversion theorem, and all the preceding
+results drop out as special cases.
 
 #definition(name: "Möbius Function of a Poset")[
   Let $(P, <=)$ be a finite partially ordered set. The *Möbius function*
@@ -1033,7 +1044,7 @@ are collected everywhere.
   #link(<def:mobius-function>)[$mu$] arises the same way from the divisor
   lattice, with $mu_(P)(1, n) = mu(n)$. Deeper poset enumeration belongs to a
   more advanced treatment and is not pursued here.
-] <ex:boolean-lattice-ie>
+] <note:boolean-lattice-ie>
 
 = Special Counting Sequences
 
