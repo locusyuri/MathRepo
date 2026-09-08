@@ -4116,6 +4116,179 @@ periodicity in its cleanest form.
   product law factors the symbol into $2^k$-part and $b$-part.
 ]
 
+== Jacobi Symbols // Jacobi 符号
+
+The reciprocity law is a statement about *prime* denominators, but its
+proof went through nothing that used the primality of the denominator
+in an essential way — only that Legendre symbols are multiplicative and
+that the exponents $(p - 1)\/2$ are additive in products. Jacobi's
+observation (1837) was to exploit this: allow the denominator to be any
+odd positive integer, multiply the Legendre symbols over the prime
+factors, and the reciprocity law survives verbatim. The resulting
+*Jacobi symbol* is not a genuine test for squares when the denominator
+is composite — this is its one weakness, flagged below — but it turns
+the evaluation of Legendre symbols into an algorithm that never factors
+any number.
+
+#definition(name: "The Jacobi Symbol")[
+  Let $n$ be an odd positive integer with prime factorization
+  $n = product_(i=1)^k p_i^(e_i)$. For any integer $a$ the *Jacobi
+  symbol* $(a\/n)$ is defined by
+  $
+    (a\/n) = product_(i=1)^k (a\/p_i)^(e_i),
+  $
+  the product being taken over the distinct prime factors of $n$.
+  When $n$ is itself prime the symbol is the Legendre symbol; the
+  Jacobi symbol thus extends the Legendre symbol to composite odd
+  denominators.
+] <def:jacobi-symbol>
+
+By construction $(a\/n)$ takes values in ${0, plus.minus 1}$, and it
+vanishes exactly when $"gcd"(a, n) != 1$ (a prime factor $p_i$ divides
+$a$). The extension preserves every law of the Legendre symbol whose
+statement does not mention primes explicitly.
+
+#proposition(name: "Laws of the Jacobi Symbol")[
+  Let $m$, $n$ be odd positive integers and $a$, $b$ integers. The
+  Jacobi symbol obeys the following rules.
+  + *Periodicity.* If $a equiv b$ (mod $n$), then $(a\/n) = (b\/n)$.
+  + *Multiplicativity in the numerator.* For all integers $a$, $b$,
+    $(a b\/n) = (a\/n)(b\/n)$.
+  + *Multiplicativity in the denominator.* If $"gcd"(m, n) = 1$, then
+    $(a\/(m n)) = (a\/m)(a\/n)$.
+  + *Squares.* If $"gcd"(a, n) = 1$, then $(a^2 \/n) = 1$.
+  + *Supplementary laws.* For odd positive $n$,
+    $
+      (-1\/n) = (-1)^((n - 1)\/2),
+      quad
+      (2\/n) = (-1)^((n^2 - 1)\/8).
+    $
+] <prop:jacobi-basic>
+
+#proof(name: "of the proposition")[
+  The first four rules follow immediately from the corresponding laws
+  for the Legendre symbol, applied prime by prime; periodicity uses
+  that $a equiv b$ (mod $n$) implies $a equiv b$ modulo every prime
+  factor of $n$.
+
+  The supplementary laws need a short parity bookkeeping. For coprime
+  odd $m$ and $n$,
+  $
+    ((m n - 1)\/2) - ((m - 1)\/2) - ((n - 1)\/2)
+    = ((m - 1)(n - 1))\/2,
+  $
+  and the right-hand side is even since both factors $m - 1$, $n - 1$
+  are even. The exponent $(dot - 1)\/2$ is therefore additive modulo
+  $2$, and the first supplement for primes multiplies to
+  $(-1\/n) = product (-1\/p_i)^(e_i) = (-1)^(sum e_i (p_i-1)\/2)
+  = (-1)^((n - 1)\/2)$. The identity
+  $
+    ((m^2 n^2 - 1)\/8) - ((m^2 - 1)\/8) - ((n^2 - 1)\/8)
+    = ((m^2 - 1)(n^2 - 1))\/8
+  $
+  is likewise even, since $x^2 - 1$ is divisible by $8$ for every odd
+  $x$, so the same argument gives $(2\/n) = (-1)^((n^2 - 1)\/8)$.
+]
+
+#caution[
+  For composite $n$ the equation $(a\/n) = 1$ does *not* mean that $a$
+  is a square modulo $n$. For instance $(2\/15) = (2\/3)(2\/5) = 1$,
+  since both supplementary values are $-1$; yet the congruence
+  $x^2 equiv 2$ (mod $15$) has no solution, because any solution would
+  force $x^2 equiv 2$ (mod $3$), while $2$ is not a quadratic residue
+  modulo $3$. The Jacobi symbol only gives a necessary condition for
+  being a square modulo a composite number: the individual Legendre
+  factors must all be $1$. Its correct use is as a *computational
+  device* for Legendre symbols, whose denominators are prime.
+] <caution:jacobi-not-residue-test>
+
+The payoff is Jacobi's reciprocity law: it holds for arbitrary coprime
+odd denominators, with the same exponent formula. The proof is a
+faithful copy of the prime case, replacing the single pair of Legendre
+symbols by the double products.
+
+#theorem(name: "Jacobi's Reciprocity Law")[
+  Let $m$ and $n$ be coprime odd positive integers. Then
+  $
+    (m\/n)(n\/m) = (-1)^(((m - 1)\/2) ((n - 1)\/2)).
+  $
+] <thm:jacobi-reciprocity>
+
+#proof(name: "of the theorem")[
+  Factor $m = product q_j^(f_j)$ and $n = product p_i^(e_i)$ and expand
+  both symbols by the definition:
+  $
+    (m\/n) = product_(i, j) (q_j\/p_i)^(e_i f_j),
+    quad
+    (n\/m) = product_(i, j) (p_i\/q_j)^(f_j e_i).
+  $
+  Each pair $(q_j\/p_i)(p_i\/q_j)$ is governed by the prime reciprocity
+  law, with sign $(-1)^(((p_i - 1)\/2)((q_j - 1)\/2))$. The total
+  exponent is therefore $E = sum_(i, j) e_i f_j ((p_i - 1)\/2)
+  ((q_j - 1)\/2)$. It remains to compare $E$ with
+  $((m - 1)\/2)((n - 1)\/2)$ modulo $2$. From the additivity shown in
+  the previous proof, $(m - 1)\/2 equiv sum_j f_j (q_j - 1)\/2$
+  (mod $2$) and likewise $(n - 1)\/2 equiv sum_i e_i (p_i - 1)\/2$
+  (mod $2$); multiplying the two congruences gives exactly $E$ modulo
+  $2$. Hence the product of the two Jacobi symbols is
+  $(-1)^(((m - 1)\/2) ((n - 1)\/2))$, as claimed.
+]
+
+The arithmetic of Jacobi symbols mirrors the Euclidean algorithm. To
+evaluate $(a\/n)$: reduce $a$ modulo $n$ (periodicity); strip factors
+of $2$ using the second supplement until the numerator is odd; if it is
+$1$, stop with value $1$; otherwise invert with Jacobi's law, reducing
+the new denominator modulo the new numerator, and repeat. Each step
+replaces the pair $(a, n)$ by a pair of strictly smaller numbers, so
+the procedure terminates after finitely many steps — and no prime
+factorization is ever performed. The worked evaluations below follow
+this loop.
+
+#example(name: "Evaluating Symbols by the Jacobi Algorithm")[
+  *A Legendre symbol with composite numerator.* Determine
+  $(84\/127)$. Since $84 = 4 dot 21$ and $4$ is a square,
+  $(84\/127) = (4\/127)(21\/127) = (21\/127)$. By Jacobi's law the pair
+  $(21, 127)$ has even exponent $10 dot 63$, so
+  $(21\/127) = (127\/21) = (1\/21) = 1$ after reducing $127$ modulo
+  $21$. Hence $(84\/127) = 1$.
+
+  *The same loop with a factor $2$ stripped along the way.* Evaluate
+  $(62\/97)$. Writing $62 = 2 dot 31$,
+  $(62\/97) = (2\/97)(31\/97)$. The first factor is $1$ because
+  $97 equiv 1$ (mod $8$). For the second, the exponent for $(31, 97)$
+  is $15 dot 48$, even, so $(31\/97) = (97\/31)$; reducing
+  $97 equiv 4$ (mod $31$) gives $(4\/31) = 1$. Thus $(62\/97) = 1$.
+
+  In both runs the denominator stays prime and the final answer is a
+  true Legendre symbol — the composite numerators were handled without
+  ever being factored, which is exactly what Jacobi's symbol buys.
+] <ex:jacobi-calculation>
+
+#note[
+  Because the Jacobi symbol is computable in polynomial time without
+  factoring, it plays a role beyond mere bookkeeping: the identity
+  $a^((n - 1)\/2) equiv (a\/n)$ (mod $n$) — Jacobi's analogue of
+  Euler's criterion, valid for every integer $a$ coprime to $n$ — is
+  the engine of the Solovay–Strassen primality test. If $n$ is
+  composite, many witnesses $a$ fail this congruence, so testing random
+  classes gives a probabilistic primality certificate. This belongs to
+  the primality-testing section of Chapter 8 (§8.4); it is mentioned
+  here only to mark where the symbol's computational power leads.
+]
+
+This closes Chapter 6 and with it Part II. The chapter built the
+complete arithmetic of squares modulo a prime: Euler's criterion
+decides single classes (§6.1), Gauss's lemma and its two supplements
+settle the numerators $-1$ and $2$ by counting (§6.2), the reciprocity
+law flips any other odd numerator and reduces it modulo the opposite
+prime (§6.3), and the Jacobi symbol turns the whole apparatus into a
+fast Euclidean-style algorithm (§6.4). Part II, which began with the
+language of congruences, thus ends with one of the most beautiful
+closed theorems of elementary number theory. The next part leaves the
+single-prime world behind: the arithmetic functions of Chapter 7 count
+divisors and sum them, laying the analytical groundwork for the
+distribution of primes in Chapter 8.
+
 
 
 
