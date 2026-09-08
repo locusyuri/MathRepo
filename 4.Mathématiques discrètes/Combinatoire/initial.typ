@@ -1685,17 +1685,376 @@ theory, where the "boxes" are colors on the edges of a complete graph.
   the subject of the Ramsey Theory chapter.
 ]
 
-= Extremal Principle
+= Extremal Principle  // 极值原理
 
-== Double Counting
+== Double Counting  // 双计数
 
-== Averaging Arguments
+The simplest extremal technique: count the same quantity from two
+perspectives, and equate the results. The resulting identity forces
+structural conclusions out of bare arithmetic.
 
-== Sperner's Theorem
+#property(name: "Double Counting Template")[
+  Let $Q$ be a quantity associated with pairs $(x, y) in X times Y$. If
+  $Q$ is counted by summing over $X$ first and by summing over $Y$ first,
+  the two sums are equal:
+  $
+    sum_(x in X) sum_(y in Y_x) q(x, y) = sum_(y in Y) sum_(x in X_y) q(x, y).
+  $
+  In particular, if $q >= 0$, an upper bound on one side yields an upper
+  bound on the other.
+] <prop:double-count-template>
 
-== Erdos-Ko-Rado Theorem
+#example(name: "Handshaking lemma")[
+  In any graph $G = (V, E)$,
+  $
+    sum_(v in V) deg(v) = 2 |E|.
+  $
+  Count the incidences $(v, e)$ with $v in e$ two ways: summing over
+  vertices, each $v$ contributes $deg(v)$; summing over edges, each $e$
+  contributes $2$. The two counts are equal. A corollary: the number of
+  odd-degree vertices is even, since the left side is even and each
+  even-degree vertex contributes an even term.
+] <ex:handshaking>
 
-== Probabilistic Method
+#example(name: "Edges of K_n")[
+  The complete graph $K_n$ has $|E| = binom(n, 2) = n(n-1) \/ 2$ edges.
+  Counting by vertex pairs gives $binom(n, 2)$; counting by degrees gives
+  $1\/2 sum_v deg(v) = 1\/2 dot n(n-1)$, since each vertex has degree
+  $n - 1$. The two methods agree, as they must.
+] <ex:kn-edges>
+
+#example(name: "Burnside as double counting")[
+  Burnside's lemma, which counts the orbits of a group action by averaging
+  fixed points, is an instance of double counting. The two perspectives are:
+  - by group elements: $sum_(g in G) |"Fix"(g)|$ counts pairs $(g, x)$ with
+    $g dot x = x$;
+  - by points: $sum_(x in X) |"Stab"(x)|$ counts the same pairs.
+
+  Equating and using $|"Stab"(x)| = |G| \/ |"Orb"(x)|$ yields the Burnside
+  formula $|X\/G| = 1\/|G| sum_(g in G) |"Fix"(g)|$. The systematic
+  treatment of group actions and Burnside's lemma is given in the
+  Algèbre Abstraite note.
+] <ex:burnside-dc>
+
+== Averaging Arguments  // 平均论证
+
+Where the pigeonhole principle forces a collision, the averaging argument
+forces an extremum: among $N$ values distributed over $k$ categories, some
+value is at least the average and some is at most the average. This is the
+direct upgrade of
+#link(<prop:pigeonhole-averaging>)[the averaging form] of the pigeonhole
+principle, extended from "boxes" to arbitrary numerical quantities.
+
+#property(name: "Averaging Template")[
+  Let $a_1, dots, a_N$ be real numbers with average $overline(a) = (a_1 + dots + a_N) \/ N$. Then
+  - some $a_i >= overline(a)$;
+  - some $a_i <= overline(a)$;
+  - if all $a_i = overline(a)$, then every $a_i$ is equal to $overline(a)$.
+
+  In particular, $max_i a_i >= overline(a) >= min_i a_i$, and equality
+  throughout is possible only when all terms coincide.
+] <prop:averaging-template>
+
+#example(name: "High-degree vertex")[
+  Every graph on $n$ vertices with $|E|$ edges has a vertex of degree
+  $>= 2 |E| \/ n$.
+
+  The average degree is $2 |E| \/ n$ (by
+  #link(<ex:handshaking>)[the handshaking lemma]); by
+  #link(<prop:averaging-template>)[the averaging template], the maximum
+  degree is at least this average. In a complete graph $K_n$, this recovers
+  $max deg = n - 1$; more generally, a dense graph with
+  $|E| >= n(n-1)\/4$ has a vertex of degree $>= (n - 1) \/ 2$.
+] <ex:high-degree>
+
+#example(name: "Same degree pair")[
+  In any party of $n >= 2$ people, two people have the same number of
+  friends at the party.
+
+  Each person has degree in ${0, 1, dots, n-1}$. But degree $0$ (a hermit)
+  and degree $n - 1$ (a social butterfly) cannot coexist: if someone knows
+  everyone, no one can know no one. So the $n$ degrees lie in at most
+  $n - 1$ distinct values; by
+  #link(<thm:pigeonhole-basic>)[the pigeonhole principle], two coincide.
+] <ex:same-degree>
+
+#note[
+  This section closes the loop opened in the Pigeonhole Principle chapter:
+  the averaging form of the pigeonhole principle is the prototype of the
+  averaging argument. The upgrade is that the quantity being averaged is no
+  longer a box size but any numerical feature (degree, score, expectation);
+  the conclusion "some value straddles the average" is the engine behind
+  every extremal existence proof that follows.
+]
+
+== Sperner's Theorem  // Sperner 定理
+
+The pinnacle of extremal combinatorics on the Boolean lattice: the largest
+antichain in $2^{[n]}$ sits in the middle layer. Two equivalent pillars
+support the theory — Dilworth's theorem relating antichains to chain
+covers, and the LYM inequality giving a weighted size bound — and both
+specialise to give Sperner's theorem with the same sharp constant.
+
+#definition(name: "Antichain")[
+  A family $cal(F) subset.eq 2^{[n]}$ is an *antichain* if no two of its
+  members are comparable by inclusion: for all $A, B in cal(F)$ with
+  $A != B$, neither $A subset.eq B$ nor $B subset.eq A$.
+] <def:antichain>
+
+#theorem(name: "Dilworth's Theorem")[
+  In any finite poset $(P, <=)$, the minimum number of chains needed to
+  cover $P$ equals the maximum size of an antichain.
+] <thm:dilworth>
+
+#proof[
+  By induction on $|P|$. Let $r$ be the maximum antichain size. Every
+  antichain has $<= r$ elements, so $r$ is a lower bound on the chain-cover
+  number. For the upper bound, let $x$ be a maximal element of $P$, and
+  set $P' = P without {x}$. By induction, $P'$ has a chain cover of
+  $r'$ chains, where $r'$ is the maximum antichain size of $P'$.
+
+  If $r' < r$, add $x$ as a singleton chain: $r' + 1 <= r$ chains cover
+  $P$.
+
+  If $r' = r$, the chain cover of $P'$ already has $r$ chains. Take one
+  element from the top of each chain; these $r$ elements form an antichain
+  in $P'$ (and hence in $P$) of size $r$, which is maximum. If $x$ is
+  comparable to all of them, then $x$ is above some chain's top and extends
+  that chain; otherwise $x$ is incomparable to one of them, and adding $x$
+  to the antichain gives size $r + 1$, contradiction. So $x$ extends one
+  of the existing chains, and the $r$ chains cover $P$.
+]
+
+#theorem(name: "Mirsky's Theorem")[
+  In any finite poset $(P, <=)$, the minimum number of antichains needed
+  to cover $P$ equals the maximum size of a chain.
+] <thm:mirsky>
+
+#proof[
+  Define the *height* $h(x)$ of $x in P$ as the length of the longest
+  chain ending at $x$:
+  $
+    h(x) = 1 + max {h(y) : y < x} quad ("with " h(x) = 1 " if " x " is minimal").
+  $
+  The level sets $L_k = {x in P : h(x) = k}$ are antichains, and there are
+  $max h$ of them, where $max h$ is the longest chain length. So $P$ is
+  covered by $max h$ antichains. Conversely, a chain meets each antichain
+  in at most one element, so any antichain cover needs at least
+  (longest chain) members.
+]
+
+#example(name: "Erdős–Szekeres via Dilworth")[
+  We rederive #link(<thm:erdos-szekeres-monotone>)[the Erdős–Szekeres
+  monotone subsequence theorem] from Dilworth. Given a sequence
+  $a_1, dots, a_N$ of distinct reals, order the indices by the partial
+  order $i <= j$ iff $i <= j$ and $a_i <= a_j$ (an increasing subsequence).
+  Chains are increasing subsequences; antichains are decreasing
+  subsequences. If the longest chain has length $< r$ and the longest
+  antichain has length $< s$, then by
+  #link(<thm:mirsky>)[Mirsky] the chain-cover number is $< r$, but by
+  #link(<thm:dilworth>)[Dilworth] this equals the longest antichain, which
+  is $< s$ — a contradiction once $N >= (r - 1)(s - 1) + 1$, since the
+  chain cover uses at most $s - 1$ chains, each of length at most $r - 1$,
+  giving $N <= (r - 1)(s - 1)$. So either a long increasing or a long
+  decreasing subsequence must exist.
+] <ex:es-dilworth>
+
+#lemma(name: "LYM Inequality")[
+  For any antichain $cal(F) subset.eq 2^{[n]}$,
+  $
+    sum_(A in cal(F)) 1 / binom(n, |A|) <= 1.
+  $
+] <lem:lym>
+
+#proof[
+  Consider the $n!$ cyclic permutations (linear orders) of $[n]$. A set
+  $A$ of size $k$ appears as an *interval* (consecutive block) in exactly
+  $k!(n - k)!$ linear orders (choose which $k$ elements form $A$, then
+  order them and the complement). If two sets $A, B in cal(F)$ both appear
+  as intervals in the same order, and $|A| = |B| = k$, then the
+  antichain property forces $A = B$; in fact a stronger statement holds:
+  no two distinct $A, B in cal(F)$ can both be intervals of the same
+  order, because the smaller is contained in the larger or they are
+  disjoint, and the containment case violates the antichain property.
+
+  So in each of the $n!$ orders, at most one $A in cal(F)$ is an interval.
+  Counting pairs $(sigma, A)$ with $A$ an interval of $sigma$:
+  $
+    sum_(A in cal(F)) |A|! (n - |A|)!  <= n!.
+  $
+  Dividing by $n!$ gives the claimed inequality.
+]
+
+#theorem(name: "Sperner's Theorem")[
+  The largest antichain in $2^{[n]}$ has size $binom(n, floor(n\/2))$.
+] <thm:sperner>
+
+#proof[
+  By #link(<lem:lym>)[the LYM inequality],
+  $
+    |cal(F)| = sum_(A in cal(F)) 1 <= sum_(A in cal(F)) binom(n, |A|) <= binom(n, floor(n\/2)) sum_(A in cal(F)) 1 / binom(n, |A|) <= binom(n, floor(n\/2)),
+  $
+  using that $binom(n, k)$ is maximised at $k = floor(n\/2)$.
+
+  The bound is achieved by the *middle layer*
+  $cal(F) = {A subset.eq [n] : |A| = floor(n\/2)}$, which is an antichain
+  of size $binom(n, floor(n\/2))$.
+]
+
+#example(name: "Middle layer of 2^[4]")[
+  For $n = 4$, the largest antichain in $2^{[4]}$ has size
+  $binom(4, 2) = 6$, given by the middle layer
+  $
+    {1,2}, {1,3}, {1,4}, {2,3}, {2,4}, {3,4}.
+  $
+  No two of these 2-element subsets contain one another.
+
+#figure(
+  image("img/sperner-hassee.svg", width: 70%),
+  caption: [
+    The Boolean lattice $2^{[4]}$ as a Hasse diagram. The middle layer
+    (subsets of size 2) is highlighted; it is the largest antichain, of
+    size $binom(4, 2) = 6$, consistent with
+    #link(<thm:sperner>)[Sperner's theorem].
+  ],
+) <fig:sperner-hassee>
+] <ex:sperner-n4>
+
+#note[
+  Dilworth and Mirsky bind two seemingly unrelated quantities — the
+  minimum chain cover and the maximum antichain — into a single number.
+  This "duality" is the prototype of a wider phenomenon in extremal
+  order theory: min–max identities, LP duality, and the structure of
+  extremal families all flow from the same source. Group actions on
+  posets, treated in the Pólya counting chapter, give another face of
+  this duality.
+]
+
+== Erdos-Ko-Rado Theorem  // Erdős–Ko–Rado 定理
+
+From antichains (unstructured families) we turn to *intersecting* families:
+$k$-subsets that pairwise meet. The extremal question is how large such a
+family can be, and the answer — when $n$ is large enough relative to $k$ —
+is given by the *star*: all $k$-subsets through a fixed point.
+
+#definition(name: "Intersecting Family")[
+  A family $cal(F) subset.eq binom([n], k)$ is *intersecting* if
+  $A inter B != emptyset$ for all $A, B in cal(F)$, where
+  $binom([n], k)$ denotes the family of $k$-subsets of $[n]$.
+] <def:intersecting-family>
+
+#theorem(name: "Erdős–Ko–Rado")[
+  If $n >= 2k$ and $cal(F) subset.eq binom([n], k)$ is intersecting, then
+  $
+    |cal(F)| <= binom(n - 1, k - 1).
+  $
+  The bound is achieved by the *star*
+  $cal(F) = {A in binom([n], k) : 1 in A}$.
+] <thm:ekr>
+
+#proof[
+  (Katona's cycle method.) Place $[n]$ around a circle, and consider the
+  $n$ cyclic intervals of length $k$. A key observation: at most $k$ of
+  these $n$ intervals belong to $cal(F)$, since if two of them, say
+  $I, J$, are disjoint (which happens when $n >= 2k$), they cannot both
+  be in the intersecting family. More precisely, among any $k$
+  consecutive cyclic intervals, at most one belongs to $cal(F)$ if
+  $n >= 2k$ (because two intervals at cyclic distance $>= k$ are
+  disjoint, but even at smaller distance they may overlap; the clean
+  count is: each interval meets $2 k - 2$ other intervals, and the
+  intersecting constraint caps the number).
+
+  A sharper count: for each circular permutation $sigma$, at most $k$
+  of the $n$ cyclic intervals (those of length $k$ in $sigma$) belong
+  to $cal(F)$. There are $(n - 1)!$ circular permutations; a fixed
+  $k$-set $A$ is a cyclic interval in exactly $k!(n - k)!$ of them (order
+  $A$ in $k$ ways around its positions, order the complement in
+  $(n - k)!$ ways). Double counting pairs $(sigma, A)$ with $A in cal(F)$
+  a cyclic interval of $sigma$:
+  $
+    |cal(F)| dot k!(n - k)! <= k dot (n - 1)!,
+  $
+  giving $|cal(F)| <= k dot (n - 1)! \/ (k!(n - k)!) = binom(n - 1, k - 1)$.
+
+  The star achieves this: the $k$-subsets containing $1$ number
+  $binom(n - 1, k - 1)$, and any two of them share the element $1$.
+]
+
+#example(name: "Star family")[
+  For $n = 2 k$, the star $cal(F) = {A in binom([2k], k) : 1 in A}$ has
+  size $binom(2k - 1, k - 1)$ and is intersecting. By
+  #link(<thm:ekr>)[EKR], no intersecting family is larger.
+] <ex:star-family>
+
+#note[
+  The Erdős–Ko–Rado theorem is the starting point of *intersecting
+  extremal combinatorics*, which generalises to direct products, to
+  $t$-intersecting families (Frankl's theorem), and to the structure of
+  extremal families (the Hilton–Milner theorem for non-star extremals).
+  These developments connect naturally to design theory, where
+  intersection patterns of blocks are the central object.
+]
+
+== Probabilistic Method  // 概率方法
+
+The most elastic extremal technique: to prove that an object with desired
+properties exists, construct a random one and show that the expected value
+of the "badness" is small. Then *some* sample has small badness, and that
+sample is the desired object.
+
+#property(name: "Probabilistic Method Template")[
+  Let $X$ be a random variable with $X >= 0$ and expected value
+  $E[X] < t$. Then there exists a sample point $omega$ with
+  $X(omega) < t$. Equivalently: if the expected number of "bad" events is
+  $< 1$, then some sample has zero bad events.
+] <prop:prob-method-template>
+
+#example(name: "Erdős lower bound for Ramsey")[
+  For $n, k$ with $binom(n, k) dot 2^(1 - binom(k, 2)) < 1$, we have
+  $R(k, k) > n$.
+
+  Color each edge of $K_n$ red or blue uniformly at random. For each
+  $k$-subset $S subset.eq [n]$, let $X_S$ be the indicator of "$S$ is
+  monochromatic"; $P(X_S = 1) = 2 \/ 2^(binom(k, 2)) = 2^(1 - binom(k, 2))$.
+  The expected number of monochromatic $k$-subsets is
+  $
+    E[X] = sum_(|S| = k) P(X_S = 1) = binom(n, k) dot 2^(1 - binom(k, 2)).
+  $
+  If $E[X] < 1$, some coloring has $X = 0$ by
+  #link(<prop:prob-method-template>)[the probabilistic method template]:
+  no $k$-subset is monochromatic. So $R(k, k) > n$.
+
+  Taking $n approx k \/ (e sqrt(2)) dot 2^(k / 2)$ shows
+  $R(k, k) > c dot k \/ sqrt(k) dot 2^(k / 2)$, an exponential lower
+  bound — far sharper than
+  #link(<lem:ramsey-recursion>)[the recursive upper bound]
+  $R(k, k) <= binom(2k - 2, k - 1)$.
+] <ex:ramsey-lower>
+
+#example(name: "Small independence number")[
+  There exist graphs on $n$ vertices with no independent set or clique of
+  size $2 log_2 n + 1$.
+
+  Color $K_n$ randomly. By the union bound, for any $k$-subset $S$, the
+  probability that $S$ is independent or a clique is $2 dot 2^(-binom(k, 2))$.
+  The expected number of such $S$ is
+  $binom(n, k) dot 2^(1 - binom(k, 2))$, which is $< 1$ for
+  $k = 2 log_2 n + 1$ (with room to spare). By
+  #link(<prop:prob-method-template>)[the template], some graph has no
+  independent set or clique of size $k$. Since both the graph and its
+  complement are covered by the same random model, this gives a graph with
+  small $alpha$ and small $omega$ simultaneously.
+] <ex:small-alpha>
+
+#note[
+  The probabilistic method is the natural completion of extremal
+  combinatorics: where double counting proves *equality*, and averaging
+  proves *existence of an extremum*, the probabilistic method proves
+  *existence of a counterexample*. Erdős's lower bounds for Ramsey numbers
+  are the prototype; the systematic development of Ramsey theory — both
+  upper bounds via recursion and lower bounds via probability — is the
+  subject of the Ramsey Theory chapter.
+]
 
 = Systems of Distinct Representatives
 
