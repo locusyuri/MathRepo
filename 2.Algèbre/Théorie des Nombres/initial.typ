@@ -310,14 +310,103 @@
 //     Legendre（n = 2 特例）；跨笔记引用 Algèbre Abstraite（(ℤ/mℤ)ˣ 循环结构）
 
 // --- Chapter 6: Quadratic Residues and the Law of Quadratic Reciprocity（二次剩余与二次互反律）---
+//   核心洞察：判定 x² ≡ a (mod p) 可解，等价于把"± 对称性"编码为乘法字符——
+//   Legendre 符号 (a/p)，Euler 判据 a^((p−1)/2) ≡ ±1 (mod p) 是裁决机；二次互反律
+//   (p/q)(q/p) = (−1)^(((p−1)/2)((q−1)/2)) 把分子分母的角色对调，配合两个补充律
+//   (−1/p) = (−1)^((p−1)/2) 与 (2/p) = (−1)^((p²−1)/8)，把任意 (a/p) 的判定坍缩
+//   成欧几里得除法规模的模周期分类。Part II 收官章：n = 2 是 §5.4 通论判据最精制
+//   的特例；全部证明为整数/计数论证（多项式根数界自含、Gauss 引理、Eisenstein
+//   格点双计数），不再需要新分析工具。Jacobi 符号作为 Legendre 的便捷计算扩展
+//   收尾（分母可反转而免因式分解），但符号 = 1 对合数模不再表征二次剩余（caution）。
+//   期望目标：① 建立二次剩余语言并完备回答"解数与计数"（可解 ⟹ 恰两解 ±x₀、
+//   可解类恰 (p−1)/2 个，兑现 Ch4 的 §4.3 工具承诺）；② 自含证 Euler 判据并引
+//   Legendre 符号及其乘法运算律；③ 用 Gauss 引理取两个补充律 (−1/p)、(2/p)；
+//   ④ 证二次互反律（Eisenstein 格点路线）并用模周期语言消化其威力；
+//   ⑤ 建立 Jacobi 符号的运算与互反律，示范 (a/p) 的快速计算。
+//   决策：① LQR 证明路线取 Eisenstein 格点法（floor-sum 引理 + 矩形对角双计数，
+//   本轮确认）；② 配 1 张图 fig:reciprocity-rectangle（B 级，本轮确认，延续
+//   Ch1/Ch2 每章 1 图风格）；③ Euler 判据给自含独立证明（Fermat + 多项式根数界，
+//   与 §5.4 通论判据证明不同路，仅回链作 n = 2 特例对照，本轮确认）；④ 不引入
+//   二次高斯和（超纲，仅 §6.3 note 一句展望，归未来代数笔记）；
+//   ⑤ Jacobi 符号仅作计算工具，不涉素性判定实现（Solovay–Strassen 仅 note 一句）。
+//   Section 顺序：符号与判据(§6.1) → 补充律(§6.2) → 互反律(§6.3) → 计算工具(§6.4)。
 //   Section 6.1: Quadratic Residues and Legendre Symbols（二次剩余与 Legendre 符号）
-//     - Euler 判据、Legendre 符号及其运算律
+//     - 二次剩余定义 #definition <def:quadratic-residue>（n = 2 情形自含命名，
+//       回链 <def:power-residue>；兑现 §5.4 def L3352-3354 的 "vocabulary of
+//       Chapter 6"；小素数 QR 集 prose（p = 5, 7, 11）建立图像）
+//     - 解与计数 #proposition <prop:quadratic-solution-count>（x² ≡ a (mod p)
+//       可解 ⟺ 恰两解 ±x₀：解之比为 1 的平方根，回链 §4.3 <lem:square-roots-of-one>
+//       （L2646 一带）；可解类恰 (p−1)/2 个：配对 i ↔ p − i 或回链
+//       <prop:count-power-residues>（d = 2）；兑现 Ch4 §4.3 note L2539-2543 与
+//       Ch4 章末 prose L2656-2660 双承诺）
+//     - Euler 判据 #theorem <thm:euler-criterion>（a 为二次剩余 ⟺ a^((p−1)/2)
+//       ≡ 1 (mod p)；⇒ 向 <thm:fermat-little>；⇐ 向：全体 QR 已作多项式
+//       z^((p−1)/2) − 1 的根且个数 = (p−1)/2 = 根数界 @lem:poly-roots-bound，故
+//       根集恰为 QR 集——自含独立证明，不回用 §5.4 原根路线；#note 注明这即
+//       <thm:power-residue-criterion> 的 n = 2 特化，兑现 §5.4 note L3422-3430）
+//     - Legendre 符号 #definition <def:legendre-symbol>（(a/p) ∈ {0, ±1}：p ∤ a
+//       且 a 为 QR 取 1、非 QR 取 −1、p | a 取 0——0 值条款为 Jacobi 分母扩展预留）
+//     - 运算律 #proposition <prop:legendre-basic>（乘法性 (ab/p) = (a/p)(b/p)
+//       （Euler 判据幂次相乘）；周期：只依赖 a 的模 p 类；(a²/p) = 1（(p, a) = 1）；
+//       为 §6.3 互反律与 §6.4 Jacobi 铺路）
+//     - 例 <ex:legendre-table>（mod 7 / mod 13 的 (a/p) 取值表，双口径验证 Euler
+//       判据与乘法性）
 //   Section 6.2: Gauss's Lemma（Gauss 引理）
-//     - 特殊值 (-1/p)、(2/p)
+//     - Gauss 引理 #lemma <lem:gauss-lemma>（p ∤ a：(a/p) = (−1)^μ，μ 为
+//       a, 2a, …, ((p−1)/2)·a 的最小绝对剩余中的负数个数；证明：这些最小绝对
+//       剩余两两不互反且与 (p−1)/2! 恰差符号，乘积 ≡ a^((p−1)/2) (mod p)，
+//       用 Euler 判据换回 (a/p)）
+//     - 第一补充 #proposition <prop:minus-one-residue>（(−1/p) = (−1)^((p−1)/2)：
+//       −1 为 QR ⟺ p ≡ 1 (mod 4)；回扣 Ch4 §4.3 note L2539-2543 的显式根
+//       ((p−1)/2)!，x² ≡ −1 (mod p) 的解数随之落定——并兑现 Ch4 章末 L2656-2660）
+//     - 第二补充 #proposition <prop:two-over-p>（(2/p) = (−1)^((p²−1)/8)，
+//       即 p ≡ ±1 (mod 8) 时为 1；Gauss 引理特化：μ = #{i : 1 ≤ i ≤ (p−1)/2,
+//       2i > p/2} 的奇偶计数）
+//     - 例 <ex:gauss-lemma>（走引理全流程算小例，如 (3/11)、(−5/13)；(2/p)
+//       按 p mod 8 列值验第二补充）
 //   Section 6.3: The Law of Quadratic Reciprocity（二次互反律）
-//     - 互反律陈述、证明与应用
+//     - floor-sum 引理 #lemma <lem:eisenstein-lemma>（a 奇、p ∤ a：
+//       (a/p) = (−1)^Σ_(i=1)^((p−1)/2) ⌊a i/p⌋；由 Gauss 引理重述，关键奇偶恒等
+//       把"负剩余个数"化为 floor 和——互反律的计数引擎）
+//     - 二次互反律 #theorem <thm:quadratic-reciprocity>（p, q 相异奇素：
+//       (p/q)(q/p) = (−1)^(((p−1)/2)((q−1)/2))；证明 = Eisenstein 格点双计数：
+//       <lem:eisenstein-lemma> 两向展开得指数 = Σ⌊q i/p⌋ + Σ⌊p j/q⌋，恰为
+//       (p−1)/2 × (q−1)/2 矩形内对角两侧的格点数之和；gcd(p, q) = 1 保证对角线
+//       上无格点，故等于矩形格点总数——几何直观闭环）
+//     - 图 fig:reciprocity-rectangle（矩形格点按对角线分色、线上无点；证明的
+//       几何心脏，B 级）
+//     - 应用 #example <ex:reciprocity-applications>（模周期语言消化：反演后分子
+//       变小/周期化——(5/p) = 1 ⟺ p ≡ ±1 (mod 5)（因平方 mod 5 集 {1,4}）、
+//       (3/p) = 1 ⟺ p ≡ ±1 (mod 12)；对固定 a 的素数类判定表格式小结）
+//     - #note 高斯和视角一句展望（几何/代数后门，归未来代数笔记，不展开）
 //   Section 6.4: Jacobi Symbols（Jacobi 符号）
-//     - 定义、性质与互反律推广
+//     - Jacobi 符号定义 #definition <def:jacobi-symbol>（奇正 n = ∏ p_i^(e_i)：
+//       (a/n) = ∏ (a/p_i)^(e_i)；分母为素数时退化为 Legendre）
+//     - #caution Jacobi (a/n) = 1 对合数 n 不蕴含 a 为二次剩余（如 (2/15) = 1
+//       而 x² ≡ 2 (mod 15) 无解，可逐模验）
+//     - 性质 #proposition <prop:jacobi-basic>（分子乘法性、分母乘法性、(a/n) 仅
+//       依赖 a mod n；补充律推广 (−1/n) = (−1)^((n−1)/2)、(2/n) = (−1)^((n²−1)/8)
+//       由分母乘法性从两个补充律提升而来）
+//     - Jacobi 互反律 #theorem <thm:jacobi-reciprocity>（互素奇正 a, b：
+//       (a/b)(b/a) = (−1)^(((a−1)/2)((b−1)/2))；证明 = 素因子展开逐项 Legendre
+//       互反律 + 奇偶恒等 ((ab−1)/2) ≡ ((a−1)/2) + ((b−1)/2) (mod 2)）
+//     - 计算例 #example <ex:jacobi-calculation>（大分母 Legendre 判定经 Jacobi
+//       反转免分母因式分解，示范数值写作时验证）
+//     - #note Jacobi 的意义限于计算捷径（真二次剩余判定仍须分母素数）；
+//       Solovay–Strassen 素性判定一句前瞻（不展开）
+//   图片：fig:reciprocity-rectangle（img/reciprocity-rectangle.svg，1 张；占位先
+//     复制 0.Wiki/null.svg，正文写作阶段按蓝图补绘；§6.1 QR 集/§6.2 补充律以
+//     文字与表格呈现，不另配图）
+//   写作顺序：§6.1 → §6.2 → §6.3（引理 → 定理 → 图 → 应用）→ §6.4 逐节写入，
+//     每节编译一次；编译检查点：§6.1 后、§6.2 后、§6.3 后、全章终检
+//   承诺：兑现 Ch4 §4.3 note（L2539-2543 显式 sqrt(−1) 构造与解数）、Ch4 章末
+//     prose（L2656-2660 计数 x² ≡ a 与 §4.3 工具）、Ch5 章首 prose（L2688-2694
+//     "case n = 2 hands the subject to Chapter 6"）、Ch5 §5.4 intro prose
+//     （L3342-3343 n = 2 专属）、§5.4 def:power-residue（L3352-3354 词条）、
+//     §5.4 note（L3422-3430 Euler 判据胚胎 → Legendre）与 Ch5 章末 prose
+//     （L3432-3442 gate）共 7 处；呼应 Part II 设计思路（L146-149）；不埋新承诺
+//     （Ch6 收官 Part II，素数分布主线归 Ch7/Ch8，素性判定已由 Ch4 §4.4 引向
+//     Ch8 §8.4）；跨笔记引用 Algèbre Abstraite（有限域乘法群循环）仅 note 级别
 
 // ==========================================================================
 // Part III — Arithmetic Functions and the Distribution of Primes（数论函数与素数分布）
