@@ -2864,3 +2864,141 @@ orders modulo a small prime.
   level is inhabited is precisely the question of the next section.
 ]
 
+== Existence of Primitive Roots // 原根的存在性
+
+Section 5.1 closed with the highest order level, $t = phi(m)$, whose
+elements generate the whole system of units. Such elements deserve a
+name.
+
+#definition(name: "Primitive Root")[
+  Let $m >= 2$. An integer $g$ with $"gcd"(g, m) = 1$ is a *primitive
+  root modulo $m$* if
+  $"ord"_m(g) = phi(m)$.
+  By the periodicity proposition of §5.1
+  (#link(<prop:order-periodicity>)[§5.1]), its powers
+  $g^0 = 1, g, g^2, ..., g^(phi(m) - 1)$ are then pairwise incongruent
+  modulo $m$; there are $phi(m)$ of them, and they therefore form a
+  reduced residue system (#link(<def:reduced-residue-system>)[§3.2]).
+  In other words, every invertible class modulo $m$ is a power of $g$.
+] <def:primitive-root>
+
+Modulo $7$ the order table of §5.1 shows that $3$ and $5$ are
+primitive roots, and every nonzero class is one of their powers
+(for example $3^0 = 1, 3^1 = 3, 3^2 = 2, 3^3 = 6, 3^4 = 4, 3^5 = 5$
+(mod $7$), reading the classes in the order visited by $3$). Two
+facts about the collection of all roots follow immediately from the
+machinery already built.
+
+#proposition(name: "The Roots among the Powers of a Root")[
+  Let $g$ be a primitive root modulo $m$, and let $k >= 1$. Then
+  $g^k$ is a primitive root modulo $m$ if and only if
+  $"gcd"(k, phi(m)) = 1$.
+] <prop:primitive-root-power>
+
+#proof(name: "of the proposition")[
+  By the proposition on the order of a power
+  (#link(<prop:order-power>)[§5.1]),
+  $
+    "ord"_m(g^k) = phi(m) / "gcd"(phi(m), k),
+  $
+  and this quotient equals $phi(m)$ exactly when the denominator is
+  $1$.
+]
+
+#corollary(name: "Counting Primitive Roots")[
+  If a primitive root exists modulo $m$, then there are exactly
+  $phi(phi(m))$ incongruent primitive roots modulo $m$.
+] <cor:primitive-root-count>
+
+#proof(name: "of the corollary")[
+  Since the powers of a primitive root $g$ represent every invertible
+  class exactly once among $g^1, ..., g^(phi(m))$ — the exponents run
+  through a full residue system modulo $phi(m)$, and $g^0 = g^(phi(m))$
+  — every primitive root has the form $g^k$ for a unique $k in
+  {1, ..., phi(m)}$. By the proposition such a power is a root exactly
+  for the $k$ coprime to $phi(m)$, and there are $phi(phi(m))$ of
+  them.
+]
+
+For $m = 7$ this predicts $phi(6) = 2$ primitive roots, matching the
+pair ${3, 5}$ read off from the order table. The counting is settled;
+the harder question is whether the top level is inhabited at all. We
+answer it first for prime moduli, where the argument is short enough
+to belong entirely to this chapter. Its engine is a fact about
+polynomials that we have not needed before, and it is proved in two
+lines.
+
+#lemma(name: "Root Bound for Polynomial Congruences")[
+  Let $p$ be a prime and let
+  $f(x) = c_d x^d + c_(d-1) x^(d-1) + dots + c_0$ be a polynomial with
+  integer coefficients and $d >= 1$, with $c_d != 0$ (mod $p$). The
+  congruence
+  $
+    f(x) equiv 0 quad ("mod" p)
+  $
+  has at most $d$ incongruent solutions.
+] <lem:poly-roots-bound>
+
+#proof(name: "of the lemma")[
+  Argue by induction on the degree $d$. For $d = 1$ the congruence
+  $c_1 x equiv -c_0$ (mod $p$) has the single solution
+  $x equiv -c_0 c_1^(-1)$ (mod $p$), because $c_1$ is nonzero modulo
+  $p$ and hence invertible.
+  Assume $d >= 2$ and that the claim holds for lower degrees. If
+  $f(x) equiv 0$ (mod $p$) has no solution there is nothing to prove;
+  otherwise choose a solution $a$. Divide $f$ by the monic linear
+  polynomial $x - a$: long division over the integers gives
+  $f(x) = (x - a) q(x) + f(a)$, where $q$ has integer coefficients,
+  degree $d - 1$ and leading coefficient $c_d$. Since $f(a) equiv 0$
+  (mod $p$),
+  $
+    f(x) equiv (x - a) q(x) quad ("mod" p).
+  $
+  Let $b$ be any further solution with $b != a$ (mod $p$). Then
+  $(b - a) q(b) equiv 0$ (mod $p$); the factor $b - a$ is nonzero
+  modulo $p$, hence invertible, and Euclid's lemma
+  (#link(<thm:euclid-lemma>)[§2.1]) forces $q(b) equiv 0$ (mod $p$).
+  So every solution other than $a$ is a root of $q$, which has at most
+  $d - 1$ roots by the induction hypothesis; the bound $1 + (d - 1) =
+  d$ follows.
+]
+
+The lemma applies to any polynomial that is not identically zero
+modulo $p$, in particular to $x^l - 1$ for every $l$, whose roots are
+exactly the classes of order dividing $l$. With one additional idea —
+maximize the order — the existence theorem drops out.
+
+#theorem(name: "Primitive Roots Modulo a Prime")[
+  For every prime $p$ there exists a primitive root modulo $p$.
+] <thm:primitive-root-prime>
+
+#proof(name: "of the theorem")[
+  Consider the orders of the $p - 1$ nonzero classes modulo $p$ and let
+  $l$ be their maximum.
+  *Step 1: $l <= p - 1$.* An element of order $t$ has $t$ pairwise
+  incongruent powers $1, a, ..., a^(t-1)$ by the periodicity
+  proposition, all nonzero, so $t <= p - 1$.
+  *Step 2: every order divides $l$.* Let $a$ have order $t$. By the
+  least common multiple lemma of §5.1 (#link(<lem:order-lcm>)[§5.1]),
+  some element $c$ has order $"lcm"(t, l)$. This order cannot exceed
+  the maximum $l$, so $"lcm"(t, l) = l$, which means $t | l$.
+  *Step 3: conclude.* Every nonzero class $a$ has its order dividing
+  $l$, hence $a^l equiv 1$ (mod $p$) by the minimality criterion of
+  §5.1. The congruence $x^l equiv 1$ (mod $p$) therefore admits all
+  $p - 1$ nonzero classes as solutions. The root bound forbids this
+  when the degree is smaller: $l < p - 1$ would contradict the lemma,
+  so $l >= p - 1$. Together with Step 1, $l = p - 1$, and any element
+  of order $p - 1 = phi(p)$ is a primitive root.
+]
+
+The proof located an element of maximal order and *forced* it up to
+length $p - 1$: because orders can be combined into least common
+multiples, a maximal order must be a common multiple of all orders,
+and the polynomial root bound then measures that the pool of nonzero
+classes is exactly large enough. This cleanly sidesteps the finer
+counting function $sum_(d | p - 1) phi(d) = p - 1$ that organizes
+orders in another common proof; that identity belongs to the theory of
+arithmetical functions in Chapter 7. What remains for prime moduli is
+a bookkeeping of powers, which the next part of this section turns
+into the existence theorems for prime powers and their doubles.
+
