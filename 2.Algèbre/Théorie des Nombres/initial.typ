@@ -93,17 +93,50 @@
 //     每 1-2 节编译一次，编译检查点：§1.2 后、§1.5 后、全章终检
 
 // --- Chapter 2: Primes and the Fundamental Theorem of Arithmetic（素数与算术基本定理）---
+//   核心洞察：素数的原子性 p | ab ⇒ p | a∨p | b（Euclid 引理）由 Ch1 整除/Bézout 工具
+//   直接产出（兑现 §1.2/章末伏笔），唯一分解随后把乘法问题化为逐素数指数问题，
+//   gcd/lcm 变 min/max、阶乘指数由 Legendre 求和给出——"乘法问题加法化"。
 //   Section 2.1: Prime Numbers and the Infinitude of Primes（素数及其无穷性）
-//     - 素数/合数、最小正因子引理
-//     - Euclid 无穷性证明
+//     - 素数/合数定义 #definition <def:prime-composite>（回链 def:divisibility 真因子）；
+//       #caution：1 既非素亦非合、非正整数排除
+//     - 最小素因子引理 #lemma <lem:least-prime-divisor>（良序取最小 + 反证）
+//     - 合数有 ≤√n 素因子 #corollary <cor:composite-sqrt-bound>（§2.3 筛法依据）
+//     - Euclid 无穷性 #theorem <thm:infinitude-of-primes>（N = p₁…pₖ + 1，不依赖 FTA）
+//     - Euclid 引理（素数整除性）#theorem <thm:euclid-lemma>（兑现 §1.2 承诺；证明用
+//       gcd(p,a)=1 + §1.5 互素可消去引理 <lem:coprime-divisibility>）
+//     - 多因子推广 #corollary <cor:euclid-lemma-product>（§2.2 唯一性引擎）
+//     - 例 <ex:prime-table>（≤30 素数、2 唯一偶素）；#note 素数 vs 环论 irreducible/prime
+//       → Algèbre Abstraite UFD 划界
 //   Section 2.2: The Fundamental Theorem of Arithmetic（算术基本定理）
-//     - 分解存在性（强归纳）与唯一性
-//     - 标准分解式
-//   Section 2.3: Sieve Methods（筛法）
-//     - Eratosthenes 筛、Euler 筛（含 C++ 实现）
+//     - 算术基本定理 #theorem <thm:fta>（存在性：强归纳；唯一性：Euclid 引理逐因子消去）
+//     - 标准分解式 #definition <def:prime-factorization> + 核心式 <eq:canonical-form>
+//     - 例 <ex:factorization-example>（72, 1000, 360, 1001）；#note n = 1 空积约定
+//     - 例 <ex:sqrt2-irrational>（FTA 指数奇偶对比，唯一性第一个 payoff）
+//     - #note 预告 §2.4 v_p 语言
+//   Section 2.3: Sieve Methods（筛法；仅 Eratosthenes + 试除，无代码块，编号步骤呈现）
+//     - 筛法正确性 #proposition <prop:sieve-correctness>（cor:composite-sqrt-bound 反命题）
+//     - 算法：编号步骤 1-4（从 p² 开始划，p² > N 停）
+//     - 图：fig:sieve-grid（img/eratosthenes-sieve.svg，1-100 筛去 2,3,5,7 倍数后余 25 素数；
+//       B 级核心图；占位已复制 0.Wiki/null.svg）
+//     - 例 <ex:sieve-example>（≤100 逐素数划去；@fig:sieve-grid 验证 25 个素数）
+//     - #note 筛法是列示非测试；素性判定/π(x) → Ch8 §8.1/§8.4（前瞻）
 //   Section 2.4: Applications of Unique Factorization（唯一分解的应用）
-//     - 由分解式计算 gcd/lcm
-//     - n! 中素数 p 的指数（Legendre 公式）
+//     - p 进指数 v_p #definition <def:p-adic-valuation> + <eq:valuation-def>
+//       （v_p(n) = p^k || n 的最大 k；除法转指数不等式，Ch7 反复消费）
+//     - gcd/lcm 指数公式 #corollary <cor:gcd-lcm-valuation> + <eq:gcd-lcm-valuation>
+//       （v_p(gcd) = min、v_p(lcm) = max；与 §1.5 乘积恒等式 <cor:gcd-lcm-product> 闭环验证）
+//     - 例 <ex:gcd-lcm-valuation>（72 与 84 的分解式 gcd/lcm）
+//     - Legendre 公式 #theorem <thm:legendre-formula> + <eq:legendre-formula>
+//       （v_p(n!) = Σ⌊n/p^k⌋，逐层计 p^k 的倍数；回链 def:floor-ceiling §1.1）
+//     - 例 <ex:legendre-example>（v₅(100!) = 24、v₂ = 97、末尾零 min = 24）
+//     - #note 前瞻 Ch8 §8.2（中二项式系数、Chebyshev、Bertrand）
+//   图片：fig:sieve-grid（详见 §2.3；全章仅此 1 张，占位后任务收尾给提示词）
+//   写作顺序：§2.1 → §2.2 → §2.3 → §2.4 逐节写入，每节编译一次；
+//     编译检查点：§2.1 后、§2.2 后、§2.3 后、全章终检
+//   承诺：兑现 Ch1 §1.2 note（L473-476）与 Ch1 章末 prose（L839-845）的
+//     "Euclidean lemma" 伏笔 → §2.1 <thm:euclid-lemma>；埋 Ch7 v_p 消费、
+//     Ch8 Legendre/筛法/素性判定前瞻
+
 
 // ==========================================================================
 // Part II — Theory of Congruences（同余理论）
@@ -843,3 +876,492 @@ iteration (§1.3), the gcd/lcm and their elementary identities
 as its backward reading (§1.5). The next chapter feeds this engine its
 favourite fuel — primes — and the division algorithm's remainder-free
 case will return as the Euclidean lemma behind unique factorization.
+
+= Primes and the Fundamental Theorem of Arithmetic // 素数与算术基本定理
+
+Multiplication assembles structure; the question that opens this
+chapter is its inverse — *disassembly*. When can an integer be written
+as a product of smaller positive integers, and how far can the process
+be pushed? The integers that cannot be split further are the *prime
+numbers*, the atoms of multiplication. Two facts turn this atomism
+into a working theory: there are infinitely many primes, and — far less
+obvious — every integer is built from them in *essentially one way*.
+The first claim is proved by a construction of Euclid; the second, the
+*Fundamental Theorem of Arithmetic*, is the payoff of Chapter 1, since
+its key ingredient is exactly the Euclidean lemma promised there.
+
+== Prime Numbers and the Infinitude of Primes // 素数及其无穷性
+
+We isolate the indivisible integers. The definition is stated relative
+to the divisibility language of §1.2, where a proper divisor was
+already introduced.
+
+#definition(name: "Prime and Composite Numbers")[
+  A positive integer $n > 1$ is *prime* if its only positive divisors
+  are $1$ and $n$ itself — equivalently, $n$ has no *nontrivial proper
+  divisor* (#link(<def:divisibility>)[§1.2]). A positive integer
+  $n > 1$ that is not prime is *composite*: it admits a factorization
+  $n = a b$ with $1 < a, b < n$.
+] <def:prime-composite>
+
+#caution[
+  The integer $1$ is neither prime nor composite: it is the
+  multiplicative unit, and admitting it among the primes would destroy
+  any hope of uniqueness of factorization. Nonpositive integers are
+  excluded for the same reason — factorization is studied up to the
+  common factor $-1$ anyway, so it suffices to treat positive integers.
+]
+
+The definition is only useful if it is not vacuous: every $n > 1$ must
+actually contain a prime factor. This is the first structural
+guarantee, and it rests only on well-ordering.
+
+#lemma(name: "Least Prime Divisor")[
+  Let $n > 1$ be an integer. The smallest divisor of $n$ greater than
+  $1$ is a prime. In particular, every integer $n > 1$ has a prime
+  divisor.
+] <lem:least-prime-divisor>
+
+#proof[
+  The set of divisors $d$ of $n$ with $d > 1$ is nonempty (it contains
+  $n$), so by the
+  #link(<prop:well-ordering>)[well-ordering principle] it has a least
+  element $p$. If $p$ were composite, say $p = a b$ with $1 < a < p$,
+  then $a$ divides $p$ hence $n$, contradicting the minimality of $p$.
+  Thus $p$ is prime.
+]
+
+The lemma has an immediate quantitative refinement that will power the
+sieve of §2.3 and all trial-division tests: a composite number always
+betrays itself by a small factor.
+
+#corollary(name: "Composite Numbers Have Small Prime Divisors")[
+  If $n$ is composite, then $n$ has a prime divisor $p$ with
+  $p <= sqrt(n)$.
+] <cor:composite-sqrt-bound>
+
+#proof[
+  Write $n = a b$ with $1 < a, b < n$, ordering the factors so that
+  $a <= b$. Then $a <= sqrt(n)$: otherwise $b >= a > sqrt(n)$ would give
+  $n = a b > n$. By the previous lemma, $a$ has a prime divisor $p$
+  with $p <= a <= sqrt(n)$, and $p$ divides $a$ hence $n$.
+]
+
+The sieve of §2.3 says nothing more than the contrapositive of this
+corollary: if no prime $p <= sqrt(n)$ divides $n$, then $n$ must be
+prime. Before developing that theme, however, we record the first
+grand consequence of having at least one prime divisor of every integer
+— the primes themselves are inexhaustible.
+
+#theorem(name: "Euclid's Theorem: The Infinitude of Primes")[
+  There are infinitely many prime numbers.
+] <thm:infinitude-of-primes>
+
+#proof[
+  Suppose, to the contrary, that $p_1, p_2, dots, p_k$ are *all* the
+  primes. Consider
+  $
+    N = p_1 p_2 dots p_k + 1.
+  $
+  Since $N > 1$, the least-prime-divisor lemma
+  (#link(<lem:least-prime-divisor>)[§2.1]) provides a prime $q$ dividing
+  $N$. If $q = p_i$ for some $i$, then $q$ divides both $N$ and the
+  product $p_1 dots p_k$, so $q$ divides their difference $N - p_1 dots
+  p_k = 1$ — impossible since $q >= 2$. Hence $q$ is a prime not on the
+  list, contradicting the assumption that the list was complete.
+]
+
+#note[
+  The construction does _not_ require the Fundamental Theorem: Euclid's
+  proof needs only the existence of *some* prime divisor of $N$, which
+  the least-prime-divisor lemma supplies, not uniqueness of
+  factorization. This is worth stressing, because the two results are
+  logically independent. A later, analytic proof of the same infinitude
+  (from the divergence of the harmonic series) appears in Chapter 8.
+]
+
+The definition of a prime says that $p$ has no *proper* divisors; the
+next theorem converts this negative statement into a positive engine of
+divisibility. It is the lemma promised at the end of §1.2, where it was
+observed that division by a prime leaves essentially no remainder
+cases.
+
+#theorem(name: "Euclid's Lemma (Prime Divisibility)")[
+  Let $p$ be a prime. If $p | (a b)$, then $p | a$ or $p | b$.
+] <thm:euclid-lemma>
+
+#proof[
+  If $p | a$ there is nothing to prove, so assume $p$ does not divide
+  $a$. Because $p$ is prime, its only positive divisors are $1$ and $p$;
+  since $p$ does not divide $a$, the common divisors of $p$ and $a$
+  reduce to $1$, i.e. $"gcd"(p, a) = 1$. Now $p | (a b)$ and $p$ is
+  coprime to $a$: the
+  #link(<lem:coprime-divisibility>)[coprime form of Euclid's lemma]
+  proved in §1.5 applies and yields $p | b$.
+]
+
+The single-factor statement extends to arbitrary products by
+iteration — this is the precise form needed to prove uniqueness of
+factorization.
+
+#corollary(name: "Euclid's Lemma for Products")[
+  Let $p$ be a prime. If $p$ divides a product $a_1 a_2 dots a_k$,
+  then $p$ divides at least one of the factors $a_i$.
+] <cor:euclid-lemma-product>
+
+#proof[
+  Induction on $k$. The case $k = 1$ is trivial and $k = 2$ is exactly
+  #link(<thm:euclid-lemma>)[Euclid's lemma]. For $k >= 3$, apply the
+  lemma to the two-factor product $a_1 (a_2 dots a_k)$: either
+  $p | a_1$, or $p | (a_2 dots a_k)$, in which case the induction
+  hypothesis finishes the argument.
+]
+
+#example(name: "The Smallest Primes")[
+  Checking candidates by hand gives $2, 3, 5, 7, 11, 13, 17, 19, 23,
+  29$ as the primes not exceeding $30$. Note in particular that $2$ is
+  the only even prime: every larger even number is divisible by $2$ and
+  hence composite.
+] <ex:prime-table>
+
+#note[
+  The vocabulary of "prime" and "composite" lives here purely in the
+  integers. In a general ring the two roles split: an *irreducible*
+  element (no nontrivial factorization) need not be *prime* (satisfying
+  Euclid's lemma), and rings where the two notions coincide and unique
+  factorization holds are the *unique factorization domains* studied in
+  the Algèbre Abstraite notebook. Over $bb(Z)$ the classical proof just
+  given shows there is no such pathology.
+]
+
+== The Fundamental Theorem of Arithmetic // 算术基本定理
+
+We now reap the harvest of §2.1. The least-prime-divisor lemma says
+that every $n > 1$ has *some* prime factor; peeling factors off
+recursively gives *a* factorization into primes. The genuine content of
+this section is that this factorization is unique — up to reordering,
+there is exactly one way to write $n$ as a product of primes. This is
+the *Fundamental Theorem of Arithmetic*, and its proof has two parts:
+existence, by strong induction; and uniqueness, by Euclid's lemma.
+
+#theorem(name: "Fundamental Theorem of Arithmetic")[
+  Every integer $n > 1$ can be written as a product of primes:
+  $
+    n = p_1 p_2 dots p_r,
+  $
+  where each $p_i$ is prime. This factorization is *unique* up to the
+  order of the factors.
+] <thm:fta>
+
+#proof[
+  *Existence.* Strong induction on $n$. For $n = 2$ the claim is clear.
+  Assume every integer in ${2, 3, dots, n - 1}$ is a product of primes.
+  If $n$ is prime, it is itself such a product (of length $1$). If $n$
+  is composite, then $n = a b$ with $1 < a, b < n$
+  (#link(<def:prime-composite>)[§2.1]); by the induction hypothesis
+  both $a$ and $b$ are products of primes, and multiplying the two
+  products expresses $n$ as a product of primes.
+
+  *Uniqueness.* Suppose
+  $
+    p_1 p_2 dots p_r = q_1 q_2 dots q_s
+  $
+  are two factorizations into primes, and argue by induction on $r$.
+  If $r = 1$, then $n = p_1$ is prime, so the right-hand side, a
+  product of primes equal to a prime, must consist of the single factor
+  $q_1 = p_1$. For $r >= 2$, the prime $p_1$ divides the right-hand
+  side $q_1 dots q_s$, so by
+  #link(<cor:euclid-lemma-product>)[Euclid's lemma for products],
+  $p_1 = q_j$ for some $j$. Cancelling $p_1$ from both sides leaves
+  two factorizations of the same integer with $r - 1$ factors, and the
+  induction hypothesis identifies the remaining primes up to order.
+]
+
+#note[
+  Uniqueness is the reason the theorem deserves its name; without it,
+  a "prime factorization" would be a bookkeeping accident of the method
+  used to find one. Euclid's lemma is precisely the bridge: it is what
+  lets a single prime, once detected, be *cancelled* from an equality
+  of products. This is the role Chapter 1 promised when it observed that
+  the division algorithm, applied to a prime divisor, yields the
+  Euclidean lemma.
+]
+
+Collecting equal primes and writing them with exponents gives the
+standard form of the factorization, in which the order is fixed by
+increasing the base. This is the form we will use throughout the rest
+of the notebook.
+
+#definition(name: "Standard (Prime-Power) Factorization")[
+  Let $n > 1$ be an integer. Its *standard factorization* (or
+  *prime-power decomposition*) is the unique writing
+  #eq[
+    $n = p_1^(a_1) p_2^(a_2) dots p_k^(a_k)$,
+  ] <eq:canonical-form>
+  where $p_1 < p_2 < dots < p_k$ are distinct primes and $a_1, a_2,
+  dots, a_k$ are positive integers. The factor $p_i^(a_i)$ is the
+  $p_i$-*primary part* of $n$.
+] <def:prime-factorization>
+
+#note[
+  For $n = 1$ the standard factorization is the *empty product* (the
+  product over the empty list), which equals $1$ by convention. This
+  keeps the statement of uniqueness uniform: $1$ has no prime factors.
+]
+
+#example(name: "Writing the Standard Factorization")[
+  - $72 = 8 dot 9 = 2^3 dot 3^2$, since $72 = 2^3 dot 3^2$.
+  - $1000 = 10^3 = (2 dot 5)^3 = 2^3 dot 5^3$.
+  - $360 = 2^3 dot 3^2 dot 5$: divide by $2$ three times
+    ($360 -> 180 -> 90 -> 45$), then by $3$ twice ($45 -> 15 -> 5$),
+    leaving the prime $5$.
+  - $1001 = 7 dot 11 dot 13$: all three factors are prime.
+] <ex:factorization-example>
+
+The uniqueness of the prime factorization is a scalpel for questions
+that resist everything done so far. The classic example is the
+irrationality of $sqrt(2)$, which the Pythagoreans discovered and which
+now falls out of comparing exponents.
+
+#example(name: "The Irrationality of $sqrt(2)$")[
+  Suppose $sqrt(2)$ were rational, $sqrt(2) = a\/b$ with positive
+  integers $a, b$. Squaring gives
+  $
+    a^2 = 2 b^2.
+  $
+  In the standard factorization of $a^2$ every exponent is even (it is
+  twice the exponent in $a$), and likewise for $b^2$. But the
+  factorization of $2 b^2$ is that of $b^2$ with the exponent of $2$
+  increased by one: an odd exponent on the prime $2$. An integer cannot
+  have both an even and an odd exponent of $2$ in its unique
+  factorization — contradiction. Hence $sqrt(2)$ is irrational.
+] <ex:sqrt2-irrational>
+
+#note[
+  The exponent argument is the seed of a much more systematic language:
+  the *valuation* $v_p(n)$, the exponent of the prime $p$ in $n$,
+  introduced in §2.4. It turns every question about divisibility into a
+  question about comparing small integers. We will also see §2.4 that
+  the same exponent language makes the gcd and lcm formulas transparent.
+]
+
+== Sieve Methods // 筛法
+
+The results of §2.1 give a strategy for *producing* primes. To test one
+number $n$ we only need to try dividing by primes up to $sqrt(n)$
+(#link(<cor:composite-sqrt-bound>)[§2.1]); to produce a *list* of
+primes, the most ancient algorithm in the subject strikes out
+composites in bulk. This is the *sieve of Eratosthenes* (third century
+BC), and it is nothing but the contrapositive of the corollary of §2.1,
+applied simultaneously to every number in a range.
+
+#proposition(name: "Sieve of Eratosthenes: Correctness")[
+  Fix a bound $N >= 2$. Write down the integers
+  $2, 3, dots, N$. For each prime $p <= sqrt(N)$, cross out every proper
+  multiple of $p$ in the list (i.e. every $p k$ with $k >= 2$). At the
+  end, the numbers that are *not* crossed out are exactly the primes
+  not exceeding $N$.
+] <prop:sieve-correctness>
+
+#proof[
+  A number that remains is not divisible by any prime $p <= sqrt(N)$,
+  so by the contrapositive of
+  #link(<cor:composite-sqrt-bound>)[§2.1] it cannot be composite; it is
+  prime. Conversely, a prime $q <= N$ is never crossed out: it is
+  written down, and crossing out removes only proper multiples $p k$
+  with $k >= 2$, but no such product equals the prime $q$.
+]
+
+In practice one runs the sieve by levels: the smallest uncrossed number
+at any stage is prime, and its multiples are then removed.
+
+1. Start with the list $2, 3, 4, dots, N$.
+2. Let $p$ be the smallest number in the list not yet handled. Then
+   $p$ is prime: it survived all earlier crossings, so no prime
+   $< p$ divides it, and no composite divisor can exist without a prime
+   divisor.
+3. Cross out all proper multiples of $p$, i.e. $p^2, p(p+1), dots$ up
+   to $N$. (Multiples $p dot 2, dots, p dot (p-1)$ have already been
+   crossed out by smaller primes, so starting at $p^2$ saves work.)
+4. Repeat from step 2 until $p^2 > N$; the numbers left are the primes
+   $\le N$.
+
+The running example is the classical table of primes below $100$. Since
+$sqrt(100) = 10$ and the primes $\le 10$ are $2, 3, 5, 7$, only the
+multiples of these four primes need be crossed out.
+
+#figure(
+  image("img/eratosthenes-sieve.svg", width: 62%),
+  caption: [
+    The sieve of Eratosthenes for $N = 100$. Multiples of $2$, $3$, $5$
+    and $7$ (the primes $\le sqrt(100) = 10$) are struck out; the
+    remaining entries are the $25$ primes not exceeding $100$.
+  ],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:sieve-grid>
+
+#example(name: "Sifting the Primes up to 100")[
+  Starting from the list $2, 3, dots, 100$:
+  - $p = 2$: cross out $4, 6, 8, dots, 100$ (the even numbers);
+  - $p = 3$: cross out $9, 15, 21, dots, 99$ (proper multiples of $3$
+    not already removed);
+  - $p = 5$: cross out $25, 35, 55, 65, 85, 95$ (the remaining proper
+    multiples of $5$);
+  - $p = 7$: cross out $49, 77, 91$;
+  - $p = 11$: since $11^2 = 121 > 100$, stop.
+  The survivors are the primes
+  $
+    2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59,
+    61, 67, 71, 73, 79, 83, 89, 97,
+  $
+  twenty-five of them, matching the count visible in
+  @fig:sieve-grid.
+] <ex:sieve-example>
+
+#note[
+  The sieve is a *listing* device, not a *testing* device: it is
+  marvellous for sieving all primes below a moderate bound, but
+  hopeless for deciding whether a single very large integer is prime.
+  The frontier of primality testing — probabilistic tests and
+  polynomial-time determinism — belongs to Chapter 8. The same chapter
+  studies the *counting function* $pi(x)$, and the sieve furnishes one
+  of its crudest but most robust lower bounds.
+]
+
+== Applications of Unique Factorization // 唯一分解的应用
+
+The Fundamental Theorem pays its way as a *calculus*: whenever a
+question involves divisibility, the standard factorization of the
+numbers involved turns it into a question about the exponents of the
+individual primes. The clean way to phrase this is to record, for each
+prime $p$ separately, how many times $p$ occurs in $n$. This is the
+*p-adic valuation*, a function that will accompany the rest of this
+notebook.
+
+#definition(name: "The $p$-adic Valuation")[
+  Let $p$ be a prime and $n >= 1$ an integer. The *valuation of $n$ at
+  $p$*, written $v_p(n)$, is the exponent of $p$ in the standard
+  factorization of $n$ (#link(<def:prime-factorization>)[§2.2]); in
+  symbols,
+  #eq[
+    $v_p(n) = max{k >= 0 : p^k | n}$.
+  ] <eq:valuation-def>
+  For $n = 1$ the set is ${0}$, so $v_p(1) = 0$. Equivalently,
+  $p^k | n$ iff $k <= v_p(n)$, and one writes $p^(v_p(n)) "||" n$ to
+  say that $p^(v_p(n))$ divides $n$ but $p^(v_p(n)+1)$ does not.
+] <def:p-adic-valuation>
+
+#note[
+  With this notation the standard factorization reads
+  $
+    n = product_p p^(v_p(n)),
+  $
+  where the product runs over all primes $p$ but only finitely many
+  factors differ from $1$. The valuation turns divisibility into an
+  inequality of ordinary integers: $a | b$ iff $v_p(a) <= v_p(b)$ for
+  every prime $p$. This dictionary — one inequality per prime — is the
+  most useful reformulation of unique factorization in the whole
+  theory; it will be exploited heavily in Chapter 7.
+]
+
+The dictionary makes the gcd and lcm of two numbers trivial to
+describe: at each prime, the common part is governed by the *smaller*
+exponent and the joint part by the *larger* exponent.
+
+#corollary(name: "GCD and LCM from the Valuation")[
+  For positive integers $a, b$ and every prime $p$,
+  #eq[
+    $v_p("gcd"(a, b)) = min(v_p(a), v_p(b)), \
+     v_p("lcm"(a, b)) = max(v_p(a), v_p(b)).
+  $] <eq:gcd-lcm-valuation>
+] <cor:gcd-lcm-valuation>
+
+#proof[
+  Fix $p$ and write $alpha = v_p(a)$, $beta = v_p(b)$. Since the gcd
+  divides both $a$ and $b$, the valuation inequality of the previous
+  note gives
+  $v_p("gcd"(a, b)) <= alpha$ and $v_p("gcd"(a, b)) <= beta$, hence
+  $v_p("gcd"(a, b)) <= min(alpha, beta)$. Conversely, the common
+  divisor $p^(min(alpha, beta))$ divides both $a$ and $b$, so it
+  divides their gcd, whence $v_p("gcd"(a, b)) >= min(alpha, beta)$.
+  The two inequalities give equality. The argument for the lcm is
+  symmetric.
+]
+
+#example(name: "Valuation Computation of GCD and LCM")[
+  Take $a = 72 = 2^3 dot 3^2$ and $b = 84 = 2^2 dot 3 dot 7$. Applying
+  the corollary prime by prime:
+  - at $p = 2$: $min(3, 2) = 2$, so $2^2$ divides the gcd;
+  - at $p = 3$: $min(2, 1) = 1$;
+  - at $p = 7$: $min(0, 1) = 0$ (the factor $7$ is absent from $a$).
+  Hence $"gcd"(72, 84) = 2^2 dot 3 = 12$, and likewise
+  $"lcm"(72, 84) = 2^3 dot 3^2 dot 7 = 504$. Note that
+  $12 dot 504 = 6048 = 72 dot 84$, the product identity of §1.5
+  (#link(<cor:gcd-lcm-product>)[§1.5]) again.
+] <ex:gcd-lcm-valuation>
+
+As a second payoff of the exponent dictionary, we answer the question
+"how many factors of the prime $p$ are hidden inside the factorial
+$n!$?" This is the classical *Legendre formula*, whose proof is a pure
+exercise in counting multiples.
+
+#theorem(name: "Legendre's Formula for the Exponent of a Prime in a Factorial")[
+  For a prime $p$ and an integer $n >= 1$,
+  #eq[
+    $v_p(n!) = sum_(k=1)^oo floor(n\/p^k)$.
+  ] <eq:legendre-formula>
+] <thm:legendre-formula>
+
+#proof[
+  The product $n! = 1 dot 2 dots n$ has $v_p(n!)$ factors of $p$
+  in total. Count them by "layers": among $1, 2, dots, n$ there are
+  exactly $floor(n\/p)$ multiples of $p$, each contributing at least one
+  factor $p$; among those, $floor(n\/p^2)$ are multiples of $p^2$, each
+  contributing a *second* factor $p$; and so on. Adding the layers
+  counts every factor $p$ of $m$ exactly $v_p(m)$ times, so
+  $
+    v_p(n!) = sum_(m=1)^n v_p(m) = sum_(k=1)^oo floor(n\/p^k),
+  $
+  the series terminating as soon as $p^k > n$ (whence
+  $floor(n\/p^k) = 0$). The floor function is that of
+  #link(<def:floor-ceiling>)[§1.1].
+]
+
+#example(name: "The Exponent of $5$ in $100!$ and Trailing Zeros")[
+  By Legendre's formula,
+  $
+    v_5(100!) = floor(100\/5) + floor(100\/25) + floor(100\/125)
+      = 20 + 4 + 0 = 24,
+  $
+  while
+  $
+    v_2(100!) = 50 + 25 + 12 + 6 + 3 + 1 = 97.
+  $
+  The number of trailing zeros of $100!$ in base $10$ is the largest
+  power of $10 = 2 dot 5$ dividing $100!$, namely
+  $min(v_2(100!), v_5(100!)) = 24$: the "scarce" prime $5$ is the
+  bottleneck, as it is in every factorial $n!$ with $n >= 2$.
+] <ex:legendre-example>
+
+#note[
+  Legendre's formula is the main engine of the estimates in Chapter 8,
+  where the exponents $v_p(n!)$ and $v_p((2n)!) - 2 v_p(n!)$ control
+  the prime factors of binomial coefficients; the same machinery is at
+  the heart of the Chebyshev estimates and of Bertrand's postulate.
+  Already here it shows how the abstract unique factorization becomes
+  a concrete counting device.
+]
+
+This chapter completes Part I: Chapter 1 supplied the mechanics of
+divisibility and its crown, the Bézout identity; this chapter supplied
+the objects — primes — that the mechanics acts on, proved that every
+integer is assembled from them in a unique way, and converted that
+theorem into the computational vocabulary of valuations. Two recurring
+tools now stand ready for the rest of the notebook: *Euclid's lemma*
+for cancelling primes from products, and the *valuation* $v_p$ that
+reads divisibility as inequalities of exponents. Chapter 3 begins
+Part II by changing the point of view: instead of asking when $b$
+divides $a - a'$, it studies the equivalence classes this relation
+carves out of $bb(Z)$ — the language of congruences, which will absorb
+all of Part I's machinery.
