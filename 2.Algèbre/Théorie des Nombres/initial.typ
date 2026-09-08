@@ -3930,5 +3930,192 @@ the residue of $p$ modulo $q$ (for $q = 3$) or modulo $4 q$, and the
 tool that produces these periodicity statements is the law of quadratic
 reciprocity itself.
 
+== The Law of Quadratic Reciprocity // 二次互反律
+
+The question left over from the two supplements is the general one of
+an odd numerator. Let $p$ and $q$ be distinct odd primes and ask: how
+are the symbols $(q\/p)$ and $(p\/q)$ related? Taken literally, they
+live in unrelated worlds: the first classifies the squares modulo $p$,
+the second the squares modulo $q$. Quadratic reciprocity says that the
+two answers differ at most by a sign, and that the sign is a simple
+function of the two primes alone — nothing of their individual size
+enters.
+
+The proof below is the geometric one of Eisenstein (1844), a
+development of Gauss's third proof. Two ingredients are needed. The
+first converts each Legendre symbol into the parity of a floor sum;
+the second evaluates the total exponent by counting the lattice points
+of a rectangle, one of the few places in elementary number theory where
+a counting argument replaces an algebraic one. The two ingredients are
+assembled in two lemmas.
+
+#lemma(name: "Eisenstein's Lemma")[
+  Let $p$ be an odd prime and let $a$ be an odd integer coprime to $p$.
+  Put $m = (p - 1)\/2$ and
+  $
+    S = sum_(i=1)^m floor((a i)\/p).
+  $
+  Then
+  $
+    (a\/p) = (-1)^S.
+  $
+] <lem:eisenstein-lemma>
+
+#proof(name: "of the lemma")[
+  Reduce each multiple $i a$ with respect to $p$: write
+  $i a = p c_i + r_i$ where $1 <= r_i <= p - 1$ is the ordinary least
+  non-negative residue and $c_i = floor((a i)\/p)$; then
+  $S = sum c_i$. Let $n_i = abs(r_i)$ be the absolute value of the
+  least absolute residue of $i a$, i.e. $n_i = r_i$ if
+  $r_i <= m$ and $n_i = p - r_i$ if $r_i > m$. As in the proof of
+  Gauss's lemma the numbers $n_1, ..., n_m$ are a permutation of
+  $1, ..., m$, and $mu$ counts the indices $i$ with $r_i > m$ — the
+  negative least absolute residues.
+
+  *Step 1: parity of $mu$.* The difference $r_i - n_i$ is $0$ when
+  $r_i <= m$, and equals $2 r_i - p$, an odd number, when $r_i > m$.
+  Hence
+  $
+    sum_(i=1)^m (r_i - n_i) equiv mu quad ("mod" 2).
+  $
+
+  *Step 2: parity of $S$.* Sum the congruences $i a equiv r_i$
+  (mod $p$) after passing through $i a = p c_i + r_i$: with
+  $T = m (m + 1)\/2 = sum n_i$,
+  $
+    p S = sum_(i=1)^m i a - sum_(i=1)^m r_i = a T - sum_(i=1)^m r_i.
+  $
+  Reading this modulo $2$ — legal since $p$ and $a$ are odd — gives
+  $S equiv T - sum r_i$ (mod $2$). Decompose the residue sum as
+  $sum r_i = sum n_i + sum (r_i - n_i) equiv T + mu$ (mod $2$) by
+  Step 1, so $S equiv T - (T + mu) equiv mu$ (mod $2$).
+
+  Gauss's lemma therefore gives $(a\/p) = (-1)^mu = (-1)^S$, as
+  claimed.
+]
+
+The second ingredient is a pure lattice-point count, independent of
+any number theory. Fix two odd primes $p, q$ and set
+$m = (p - 1)\/2$, $n = (q - 1)\/2$. Consider the $m times n$ array of
+integer points $(i, j)$ with $1 <= i <= m$ and $1 <= j <= n$, and draw
+the diagonal $j = (q\/p) i$ through the origin. Because
+$"gcd"(p, q) = 1$, no lattice point of the array lies *on* the
+diagonal: an integer point there would satisfy $p j = q i$, forcing
+$p | i$, impossible since $1 <= i <= m < p$. Each point therefore lies
+strictly on one side of the diagonal, and the two sides partition the
+$m n$ points (see @fig:reciprocity-rectangle).
+
+#figure(
+  image("img/reciprocity-rectangle.svg", width: 72%),
+  caption: [
+    The $(p - 1)\/2 times (q - 1)\/2$ grid of lattice points used in
+    the Eisenstein proof. Points on the two sides of the diagonal are
+    shown in two colours; no lattice point of the array lies on the
+    diagonal itself, since $"gcd"(p, q) = 1$. The two shaded regions
+    contain exactly $sum floor((q i)\/p)$ and $sum floor((p j)\/q)$
+    points, whose sum is the total $(p - 1)\/2 dot (q - 1)\/2$.
+  ],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:reciprocity-rectangle>
+
+For a fixed column $x = i$ the points below the diagonal satisfy
+$j < (q\/p) i$, and since $(q i)\/p$ is not an integer there are
+exactly $floor((q i)\/p)$ such points; summing over $i$ counts all
+points below the diagonal. Symmetrically, fixing $y = j$, the points
+above the diagonal are counted by $sum_j floor((p j)\/q)$. The two
+counts add to $m n$.
+
+#theorem(name: "The Law of Quadratic Reciprocity")[
+  Let $p$ and $q$ be distinct odd primes. Then
+  $
+    (q\/p)(p\/q) = (-1)^(((p - 1)\/2) ((q - 1)\/2)).
+  $
+  Equivalently, $(q\/p) = (p\/q)$ unless both primes are congruent to
+  $3$ modulo $4$, in which case $(q\/p) = -(p\/q)$.
+] <thm:quadratic-reciprocity>
+
+#proof(name: "of the theorem")[
+  With $m = (p - 1)\/2$ and $n = (q - 1)\/2$, Eisenstein's lemma applied
+  to the odd numerators $q$ and $p$ gives
+  $
+    (q\/p) = (-1)^(sum_(i=1)^m floor((q i)\/p)),
+    quad
+    (p\/q) = (-1)^(sum_(j=1)^n floor((p j)\/q)).
+  $
+  Multiplying, the exponent of $-1$ is the sum of the two floor sums,
+  which is the total number $m n$ of lattice points counted in the
+  rectangle above. Hence
+  $(q\/p)(p\/q) = (-1)^(m n)$, and the exponent form follows. The
+  "equivalently" sentence is the classical reading: the exponent
+  $m n$ is odd precisely when both $m$ and $n$ are odd, i.e. when
+  $p equiv q equiv 3$ (mod $4$).
+]
+
+A numerical cross-check fixes the sign convention. Take $p = 7$ and
+$q = 11$: here $m = 3$, $n = 5$, and $m n = 15$ is odd, so the law
+predicts $(7\/11) = -(11\/7)$. Since $11 equiv 4$ (mod $7$) and $4$ is
+a square modulo $7$, one has $(11\/7) = (4\/7) = 1$, hence
+$(7\/11) = -1$ — indeed $7$ is absent from the residue list
+${1, 3, 4, 5, 9}$ modulo $11$.
+
+The reciprocity law is above all a machine for *evaluating* symbols.
+For an odd prime numerator $q$ it turns $(q\/p)$ into $(p\/q)$, whose
+numerator $p$ may be replaced by its residue modulo $q$ — a number
+smaller than $q$, not than $p$. The composite information
+"numerator $q$, parity of $p$" makes the value of $(q\/p)$ depend only
+on the residue of $p$ modulo $4 q$; the examples below display this
+periodicity in its cleanest form.
+
+#example(name: "Reciprocity at Work")[
+  *The numerator $5$.* Since $5 equiv 1$ (mod $4$), the exponent in the
+  law is even and $(5\/p) = (p\/5)$ for every odd prime $p != 5$. The
+  squares modulo $5$ are $1$ and $4$, so
+  $
+    (5\/p) = 1 <=> p equiv plus.minus 1 quad ("mod" 5).
+  $
+  For instance $(5\/11) = 1$ ($11 equiv 1$) and $(5\/7) = -1$
+  ($7 equiv 2$), agreeing with the residue lists of §6.1.
+
+  *The numerator $3$.* Now $3 equiv 3$ (mod $4$) and the sign depends
+  on the parity of $(p - 1)\/2$. Reciprocity says
+  $(3\/p) = (-1)^((p - 1)\/2) (p\/3)$, and $(p\/3) = 1$ exactly when
+  $p equiv 1$ (mod $3)$. The two pieces combine into a rule modulo
+  $12$:
+
+  #tex-table(
+    ([$p$ mod $12$], [$(p - 1)\/2$], [$(p\/3)$], [$(3\/p)$]),
+    ([$1$], [even], [$1$], [$1$]),
+    ([$5$], [even], [$-1$], [$-1$]),
+    ([$7$], [odd], [$1$], [$-1$]),
+    ([$11$], [odd], [$-1$], [$1$]),
+  )
+
+  Thus $(3\/p) = 1$ if and only if $p equiv plus.minus 1$ (mod $12$):
+  both $p = 11$ and $p = 13$ make $3$ a square, and indeed $3$ appears
+  in the residue lists modulo $11$ and $13$; $p = 7$ and $p = 5$ do
+  not.
+
+  *The general picture.* For any odd prime $q$ the same two-step
+  reduction evaluates $(q\/p)$ from the residue of $p$ modulo $4 q$
+  (modulo $q$ for the flipped symbol, modulo $4$ for the sign). No
+  exponentiation and no enumeration of $(p - 1)\/2$ candidates is ever
+  needed: a few Euclidean divisions settle the question.
+] <ex:reciprocity-applications>
+
+#note[
+  The exponent $((p - 1)\/2)((q - 1)\/2)$ that records the sign is a
+  genuinely deep object: Gauss, who called the reciprocity law his
+  *theorema aureum*, published six more proofs of it over his lifetime,
+  and many others have been found since. One family of proofs, due to
+  Gauss and Dirichlet, derives the law by evaluating quadratic Gauss
+  sums $sum_(x mod p) exp(2 pi i x^2 \/p)$ — a bridge to algebraic
+  number theory that lies beyond the scope of this notebook. The
+  section's own supplements do cover the even numerator: $(2\/p)$ was
+  settled in §6.2, and for a numerator $a = 2^k b$ with $b$ odd the
+  product law factors the symbol into $2^k$-part and $b$-part.
+]
+
+
 
 
