@@ -2018,3 +2018,126 @@ reduces any pair of congruences to a single one.
   structure theorems of Chapters 5 and 6, and behind the
   multiplicativity of Euler's function proved in the next section.
 ]
+
+== Euler's φ Function // Euler φ 函数
+
+The reduced residue systems of §3.2 have a size worth measuring. It
+counts the residue classes that are invertible under multiplication,
+and it turns out to be computable by an astonishingly simple product
+formula once the two structural tools of this chapter — unique
+factorization and the CRT — are brought to bear.
+
+#definition(name: "Euler's Totient Function $phi$")[
+  For $m in bb(Z)^+$, the *totient* (Euler's function) $phi(m)$ is the
+  number of integers $k$ with $1 <= k <= m$ and $"gcd"(k, m) = 1$:
+  #eq[
+    $phi(m) = abs({k in bb(Z) : 1 <= k <= m, "gcd"(k, m) = 1})$,
+  ] <eq:phi-def>
+  Equivalently, by §3.2, $phi(m)$ is the size of the canonical reduced
+  residue system modulo $m$: the number of invertible residue classes.
+  In particular, $phi(1) = 1$.
+] <def:phi-function>
+
+At a prime power $p^alpha$, counting is immediate: among the integers
+$1, dots, p^alpha$, exactly the multiples of $p$ are excluded, and
+there are $p^(alpha-1)$ of them. Hence
+$
+  phi(p^alpha) = p^alpha - p^(alpha-1) = p^(alpha-1)(p - 1).
+$
+The general modulus now falls to the Chinese Remainder Theorem, which
+was precisely the tool that reassembles prime powers into products.
+
+#proposition(name: "Multiplicativity of Euler's Totient")[
+  If $"gcd"(m, n) = 1$, then
+  $
+    phi(m n) = phi(m) phi(n).
+  $
+] <prop:phi-multiplicative>
+
+#proof[
+  An integer $x$ is coprime to the product $m n$ if and only if it is
+  coprime to both $m$ and $n$: a prime divides $m n$ precisely when it
+  divides one of the factors, so "sharing a prime with $m n$" is
+  equivalent to "sharing a prime with $m$ or with $n$".
+
+  By the CRT (#link(<thm:crt>)[§3.4]) the map
+  $[x]_(m n) -> ([x]_m, [x]_n)$ is a bijection between the residue
+  classes modulo $m n$ and the pairs of classes modulo $m$ and $n$.
+  The observation above restricts this bijection: classes coprime to
+  $m n$ correspond exactly to pairs $(u, v)$ with $u$ coprime to $m$
+  and $v$ coprime to $n$. Counting both sides gives
+  $phi(m n) = phi(m) phi(n)$, as claimed.
+]
+
+By repeated application (the prime powers of a factorization are
+pairwise coprime) the two pieces combine into the classical closed
+form.
+
+#theorem(name: "Euler's Product Formula")[
+  Let $n >= 2$ have prime factorization
+  $n = p_1^(alpha_1) p_2^(alpha_2) dots p_r^(alpha_r)$. Then
+  #eq[
+    $phi(n) = n product_(p | n) (1 - 1\/p)$.
+  ] <eq:phi-formula>
+] <thm:phi-formula>
+
+#proof[
+  Applying multiplicativity across the prime powers gives
+  $
+    phi(n) = product_(i=1)^r phi(p_i^(alpha_i)),
+  $
+  and the prime-power count turns each factor into
+  $
+    phi(p_i^(alpha_i)) = p_i^(alpha_i) - p_i^(alpha_i - 1)
+      = p_i^(alpha_i) (1 - 1\/p_i).
+  $
+  Multiplying over $i = 1, dots, r$ and using
+  $n = product_(i=1)^r p_i^(alpha_i)$ yields the formula.
+]
+
+#example(name: "Totient Values")[
+  *Small values.* The totients of $1, 2, dots, 12$ are
+  $
+    (phi(1), phi(2), dots, phi(12)) = (1, 1, 2, 2, 4, 2, 6, 4, 6, 4,
+    10, 4),
+  $
+  with $phi(n) = n - 1$ at the primes $n = 2, 3, 5, 7, 11$ and
+  strictly smaller values at the composites: $phi(4) = 2$, $phi(6) =
+  2$, $phi(8) = 4$, $phi(9) = 6$, $phi(10) = 4$, $phi(12) = 4$. (The
+  equality $phi(n) = n - 1$ characterizes the primes: every
+  $k < n$ is then coprime to $n$, forcing $n$ to have no proper
+  divisor.)
+
+  *The formula in action.* Factorize $360 = 2^3 dot 3^2 dot 5$. The
+  prime-power route gives
+  $
+    phi(360) = phi(8) phi(9) phi(5) = 4 dot 6 dot 4 = 96,
+  $
+  while the product formula reads
+  $
+    360 (1 - 1\/2)(1 - 1\/3)(1 - 1\/5)
+      = 360 dot 1\/2 dot 2\/3 dot 4\/5 = 96.
+  $
+  The two computations agree — and either one is far simpler than
+  listing the $96$ integers $1 <= k <= 360$ coprime to $360$.
+] <ex:phi-values>
+
+#note[
+  Euler's totient is the size of the group of invertible classes, and
+  it enters almost every later chapter: Chapter 4 proves Euler's
+  theorem $a^(phi(m)) equiv 1$ (mod $m$), the exponent being
+  $phi(m)$; Chapter 5 shows that $phi(phi(m))$ primitive roots exist
+  for suitable moduli and measures the order of each unit; Chapter 7
+  returns to multiplicativity, where $phi$ is absorbed into the
+  general framework of *multiplicative functions* and Dirichlet
+  convolution. The counting done here, via the CRT, is the prototype
+  of that whole theory.
+]
+
+This closes Chapter 3: congruence language (§3.1), the residue
+systems it carves out (§3.2), the resolution of linear congruences
+(§3.3), the Chinese Remainder Theorem that splits composite moduli
+(§3.4), and the totient that counts the invertible classes (§3.5).
+Part II now possesses both a compact language and a splitting tool;
+Chapter 4 harvests them into the three classical theorems of Fermat,
+Euler and Wilson.
