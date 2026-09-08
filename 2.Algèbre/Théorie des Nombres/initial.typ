@@ -3766,4 +3766,169 @@ raising to a huge power. Section 6.2 begins the dismantling of this
 obstacle by treating the two simplest numerators, $a = -1$ and $a =
 2$, where the answer is visible directly from the shape of $p$.
 
+== Gauss's Lemma // Gauss 引理
+
+Euler's criterion judges a class $a$ by the power $a^((p - 1)\/2)$, an
+operation whose cost grows with the numerator. Gauss's lemma replaces
+the power by a *count*: how many of the multiples $a, 2 a, ..., m a$,
+with $m = (p - 1)\/2$, fall on the negative side when every residue is
+brought back into the symmetric range $[-m, m]$. The parity of that
+count decides the symbol. Counting is a weaker instrument than
+exponentiating, but it is precisely what one can inspect by hand for
+special numerators such as $a = 2$, and it will be upgraded to a
+two-dimensional count in the proof of the reciprocity law (§6.3).
+
+Since $p$ is odd, every nonzero residue class modulo $p$ has a unique
+representative of absolute value at most $m$: among the two numbers
+$r$ and $p - r$ with $1 <= r <= m$, exactly one lies in $[-m, m]$.
+This representative is the *least absolute residue* of the class; the
+numbers $-m, ..., -1, 1, ..., m$ are the nonzero residues when listed
+symmetrically around $0$. With this vocabulary Gauss's lemma reads as
+follows.
+
+#lemma(name: "Gauss's Lemma")[
+  Let $p$ be an odd prime, let $"gcd"(a, p) = 1$, and put
+  $m = (p - 1)\/2$. For $1 <= i <= m$ let $r_i$ be the least absolute
+  residue of $i a$ modulo $p$, so that $r_i equiv i a$ (mod $p$) and
+  $-m <= r_i <= m$, and let $mu$ be the number of negative terms among
+  $r_1, ..., r_m$. Then
+  $
+    (a\/p) = (-1)^mu.
+  $
+] <lem:gauss-lemma>
+
+#proof(name: "of the lemma")[
+  Write $n_i = abs(r_i)$ for $1 <= i <= m$. None of the $r_i$
+  vanishes, because $i$ and $a$ are both coprime to $p$.
+
+  *Step 1: the numbers $n_1, ..., n_m$ are a permutation of
+  $1, ..., m$.* If $n_i = n_j$, then $r_i = plus.minus r_j$, and since
+  $r_i equiv i a$ and $r_j equiv j a$ (mod $p$) this gives
+  $i a equiv plus.minus j a$ (mod $p$). As $"gcd"(a, p) = 1$ one may
+  cancel $a$: either $i equiv j$ or $i equiv -j$ (mod $p$). The first
+  alternative forces $i = j$, because $abs(i - j) <= m - 1 < p$. The
+  second is impossible for $i != j$: the sum $i + j$ satisfies
+  $2 <= i + j <= 2 m = p - 1$, so it cannot be a positive multiple of
+  $p$. Hence the $m$ numbers $n_i$ are distinct elements of
+  ${1, ..., m}$ and exhaust that set.
+
+  *Step 2: multiply.* The congruence $r_i equiv i a$ (mod $p$) holds
+  for every $i$, so the products match:
+  $
+    m! a^m = product_(i=1)^m i a equiv product_(i=1)^m r_i
+    = product_(i=1)^m plus.minus n_i = (-1)^mu m! quad ("mod" p).
+  $
+  The two products are congruent to the same residue $(-1)^mu m!$; but
+  multiplying $r_i = plus.minus n_i$ over $i$ produces the sign
+  $(-1)^mu$ times the product of the $n_i$, which equals $m!$ by
+  Step 1. Cancelling $m!$, a unit modulo $p$, yields
+  $a^m equiv (-1)^mu$ (mod $p$). Euler's criterion identifies the left
+  side with the Legendre symbol, since $a^m equiv (a\/p)$ (mod $p$)
+  and both sides are $plus.minus 1$ — Gauss's lemma follows.
+]
+
+The lemma is a repackaging of Euler's criterion — the two proofs of
+the two statements are interderivable — but its form is far more
+malleable. For $a = -1$ every least absolute residue is visibly
+negative and the count is read off instantly; for $a = 2$ the count
+reduces to a question about halves and quarters of the prime, which is
+settled by the residue class of $p$ modulo $8$.
+
+#proposition(name: "The First Supplement")[
+  Let $p$ be an odd prime. Then
+  $
+    (-1\/p) = (-1)^((p - 1)\/2),
+  $
+  so $-1$ is a quadratic residue modulo $p$ if and only if $p equiv 1$
+  (mod $4$).
+] <prop:minus-one-residue>
+
+#proof(name: "of the proposition")[
+  Apply Gauss's lemma with $a = -1$. The multiples are
+  $-1, -2, ..., -m$, and each is already its own least absolute
+  residue: for $1 <= i <= m$ the number $-i$ lies in $[-m, m]$.
+  Hence every $r_i$ is negative, $mu = m$, and
+  $(-1\/p) = (-1)^m = (-1)^((p - 1)\/2)$. The power $(-1)^((p-1)\/2)$
+  equals $1$ exactly when $m$ is even, i.e. when $p equiv 1$ (mod $4$).
+]
+
+For primes $p equiv 1$ (mod $4$) this proposition agrees with — and
+completes — the construction of §4.3: there Wilson's theorem supplied
+the explicit square root $((p - 1)\/2)!$ of $-1$ whenever $p equiv 1$
+(mod $4$), with the tiny example $2! = 2$ for $p = 5$. The supplement
+adds the missing converse: for $p equiv 3$ (mod $4$) no such root
+exists, and the congruence $x^2 equiv -1$ (mod $p$) has no solution at
+all; when it is solvable it has exactly two solutions, as every
+solvable quadratic congruence does (§6.1). The single symbol therefore
+settles the question that Chapter 4 left open, and it answers the
+counting promise made there for the special case $a = -1$.
+
+For $a = 2$ the multiples to be inspected are the even numbers
+$2, 4, ..., 2 m$, all less than $p$. A term $2 i$ is negative after
+reduction exactly when it exceeds $p\/2$; then its least absolute
+residue is $2 i - p < 0$.
+
+#proposition(name: "The Second Supplement")[
+  Let $p$ be an odd prime. Then
+  $
+    (2\/p) = (-1)^((p^2 - 1)\/8),
+  $
+  so $2$ is a quadratic residue modulo $p$ if and only if
+  $p equiv plus.minus 1$ (mod $8$).
+] <prop:two-over-p>
+
+#proof(name: "of the proposition")[
+  In Gauss's lemma with $a = 2$ the residue $r_i$ of $2 i$ is negative
+  precisely when $2 i > p\/2$, i.e. when $i > p\/4$. Hence
+  $mu = m - floor(p\/4)$, the count of integers in
+  ${floor(p\/4) + 1, ..., m}$. Write $p = 8 k + r$ with
+  $r in {1, 3, 5, 7}$ and compute the parity of $mu = (p-1)\/2 -
+  floor(p\/4)$:
+
+  #tex-table(
+    ([$p$ mod $8$], [$m$], [$floor(p\/4)$], [$mu$], [$(2\/p)$]),
+    ([$1$], [$4 k$], [$2 k$], [$2 k$], [$1$]),
+    ([$3$], [$4 k + 1$], [$2 k$], [$2 k + 1$], [$-1$]),
+    ([$5$], [$4 k + 2$], [$2 k + 1$], [$2 k + 1$], [$-1$]),
+    ([$7$], [$4 k + 3$], [$2 k + 1$], [$2 k + 2$], [$1$]),
+  )
+
+  The symbol is $1$ for $r = 1, 7$ and $-1$ for $r = 3, 5$, which is
+  the assertion $p equiv plus.minus 1$ (mod $8$). An immediate check by
+  $p mod 8$ shows that $mu$ has the same parity as
+  $(p^2 - 1)\/8$, hence the exponent form of the supplement as well.
+]
+
+#example(name: "Gauss's Lemma in Action")[
+  *The full procedure.* Take $a = 3$, $p = 11$, so $m = 5$. The
+  multiples $3, 6, 9, 12, 15$ reduce to least absolute residues
+  $3, -5, -2, 1, 4$ respectively (for instance $6 equiv -5$ and
+  $12 equiv 1$ modulo $11$). Two of them are negative, $mu = 2$, and
+  Gauss's lemma gives $(3\/11) = (-1)^2 = 1$: three is a square modulo
+  eleven. Euler's criterion confirms: $3^5 equiv 1$ (mod $11$), since
+  $3^4 equiv 81 equiv 4$ (mod $11$).
+
+  *The second supplement by samples.* The supplement predicts
+  $(2\/p) = 1$ for $p equiv plus.minus 1$ (mod $8$). Reading off the
+  quadratic residues listed in §6.1 confirms the first few values:
+  $2$ is a square modulo $7$ and $17$ (indeed $3^2 equiv 2$ (mod $7$)
+  and $6^2 equiv 2$ (mod $17$)), while it is not a square modulo
+  $3, 5, 11, 13$ — the four classes $r = 1, 3, 5, 7$ behave exactly as
+  the table of the proof dictates.
+
+  *Multiplicativity shortcuts.* The first and second supplements feed
+  the product law: $(-5\/13) = (-1\/13)(5\/13)$, and
+  $(-1\/13) = 1$ since $13 equiv 1$ (mod $4$), while $(5\/13) = -1$
+  because $5$ does not appear in the residue list
+  ${1, 3, 4, 9, 10, 12}$ of the example of §6.1.
+] <ex:gauss-lemma>
+
+The two supplements answer every question whose numerator is $plus.minus
+1$ or $2$. They are the two extreme cases of a pattern that the next
+section completes: for an *odd* numerator $q$ the sign is decided by
+the residue of $p$ modulo $q$ (for $q = 3$) or modulo $4 q$, and the
+tool that produces these periodicity statements is the law of quadratic
+reciprocity itself.
+
+
 
