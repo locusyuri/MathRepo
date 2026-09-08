@@ -149,20 +149,70 @@
 // 对应 LaTeX：chap02.tex（拆为 Ch3–Ch5），chap03.tex（→ Ch6）
 
 // --- Chapter 3: Basic Theory of Congruences（同余的基本理论）---
+//   核心洞察：同余把"b | (a−a′)"重铸为 ℤ 上的等价关系 ≡，令"模 m 算术"独立成
+//   对象；一次同余 ax ≡ b (mod m) 的可解性由 gcd(a,m) 全权决定（Bézout 首次
+//   应用），CRT 说明互素模可分解再拼合——Part II 结构定理（Fermat–Euler–Wilson、
+//   原根、二次剩余）的全部语言地基。
 //   Section 3.1: Congruences and Their Properties（同余及其性质）
-//     - 同余的定义与运算规则
-//     - 消去律成立的条件
+//     - 同余定义 #definition <def:congruence> + <eq:congruence-def>
+//       （a ≡ b (mod m) ⟺ m | (a−b)；回链 def:divisibility；≡ 是等价关系 prose）
+//     - 运算律 #property <prop:congruence-basic>（同加减乘/移项/乘同数/换小模 d | m）
+//     - 消去律 #proposition <prop:congruence-cancellation>
+//       （ac ≡ bc (mod m) ⟺ a ≡ b (mod m/gcd(c,m))；证明回链 §1.5
+//       <lem:coprime-divisibility>；gcd(c,m) = 1 可消去为关键特例）
+//     - 例 <ex:congruence-clock>（时钟 mod 12 / 星期 mod 7）；#note 同余保持
+//       P(a) ≡ P(b)（整数多项式求值；Ch5 指标/幂方程伏笔）
 //   Section 3.2: Residue Classes and Systems（剩余类与剩余系）
-//     - 完全剩余系、既约剩余系
-//     - 简化剩余系的乘法性质
+//     - 剩余类 #definition <def:residue-class>（bar(a)_m = {a + k m}，等价类视角）
+//     - 完全剩余系 #definition <def:complete-residue-system>（{0,…,m−1}；平移仍 CRS）
+//     - 既约剩余系 #definition <def:reduced-residue-system>（与 m 互素的代表，
+//       个数记 φ(m)，正式定义 §3.5 <def:phi-function>）
+//     - RRS 乘法封闭 #property <prop:reduced-closed>（(a,m) = (b,m) = 1 ⟹
+//       (ab,m) = 1；证明用 @thm:euclid-lemma：p | ab ⟹ p | a∨p | b）
+//     - 例 <ex:residue-systems>（mod 8 与 mod 12 的 CRS/RRS 表；mod 12 乘法表
+//       验证 {1,5,7,11} 封闭）
+//     - #note 互素类在乘法下有逆（@thm:bezout），预告 §3.3 逆元；RRS 结构 →
+//       Ch5 原根（伏笔）
 //   Section 3.3: Linear Congruences（一次同余）
-//     - ax ≡ b (mod m) 的可解条件与解数
+//     - 乘法逆元 #definition <def:modular-inverse>（ax ≡ 1 (mod m)，存在 ⟺
+//       gcd(a,m) = 1；算法沿用 §1.5 Euclid 回代表）
+//     - 可解判据 #theorem <thm:linear-congruence>（d = gcd(a,m) | b ⟺ 可解；
+//       模 m 下恰 d 个解；约化到模 m/d 的唯一类后回代 d 个代表）
+//     - 互素唯一解 #corollary <cor:linear-congruence-coprime>
+//       （x ≡ a⁻¹b (mod m)）
+//     - 求解算法：编号步骤 1–3（非代码块）；例 <ex:linear-congruence>
+//       （6x ≡ 15 (mod 21)：d = 3、三个解；14x ≡ 3 (mod 31) 用回代表求逆）
 //   Section 3.4: The Chinese Remainder Theorem（中国剩余定理）
-//     - 互素模情形与非互素处理
-//     - 环同构 ℤ_m ≅ ℤ_(m_1) × … 视角（@Algèbre Abstraite 蓝图 §9.4）
+//     - 两两互素乘积引理 #lemma <lem:pairwise-coprime-product>
+//       （可用 v_p 指数路线，回链 def:p-adic-valuation；CRT 唯一性引擎）
+//     - 中国剩余定理 #theorem <thm:crt>（m_i 两两互素 ⟹ 模 M = Πm_i 唯一解；
+//       构造 x ≡ Σ a_i M_i y_i (mod M)，M_i = M/m_i，y_i 为 M_i 的逆 mod m_i；
+//       唯一性用 <lem:pairwise-coprime-product>）
+//     - 例 <ex:crt-sunzi>（孙子算经"物不知数"：≡ 2,3,2 (mod 3,5,7) → 23 (mod 105)）
+//     - 非互素合并：#note 相容条件 a ≡ b (mod gcd(m,n))、解 mod lcm(m,n)；
+//       例 <ex:crt-noncoprime>（x ≡ 7 (mod 12), x ≡ 3 (mod 8) → 19 (mod 24)）
+//       附不相容反例（x ≡ 5 (mod 8) 时）；#note 环同构
+//       ℤ_m ≅ ℤ_(m₁) × … × ℤ_(m_k) 视角划界 → Algèbre Abstraite 蓝图 §9.4
+//       （算术语言自含，仅 note 交叉引用）
 //   Section 3.5: Euler's φ Function（Euler φ 函数）
-//     - 定义与计算公式（既约剩余系视角）
-//     - 积性性质（引向 Ch7 卷积处理）
+//     - φ 定义 #definition <def:phi-function> + <eq:phi-def>（φ(1) = 1；
+//       φ(m) = #{1 ≤ k ≤ m : gcd(k,m) = 1} = RRS 大小，回链 §3.2）
+//     - 素幂计数 φ(p^α) = p^α − p^(α−1)（prose/公式）
+//     - 乘法性 #proposition <prop:phi-multiplicative>（gcd(m,n) = 1 ⟹
+//       φ(mn) = φ(m)φ(n)；证明 = CRT 双射 <thm:crt>，结构性 payoff；
+//       Ch7 卷积框架再抽象）
+//     - 一般公式 #theorem <thm:phi-formula> + <eq:phi-formula>
+//       （φ(n) = n∏_(p|n)(1 − 1/p)；FTA + 乘法性 + 素幂公式叠加）
+//     - 例 <ex:phi-values>（φ(360) = 96；φ(1..12) 数值表）
+//     - #note 前瞻：Euler 定理 a^φ(m) ≡ 1 → Ch4；φ(φ(m)) → Ch5 §5.2；
+//       φ 积性 → Ch7 §7.1/§7.3 卷积与 Möbius
+//   图片：全章无图（纯代数推导，CRT/φ 以文字与表格清晰呈现，C 类省略不硬凑）
+//   写作顺序：§3.1 → §3.2 → §3.3 → §3.4 → §3.5 逐节写入，每节编译一次；
+//     编译检查点：§3.1 后、§3.2 后、§3.3 后、§3.4 后、全章终检
+//   承诺：兑现 Ch1 §1.2 note（L504-506，"becomes the language of congruences
+//     in Chapter 3"）与 Ch2 章末 prose（L1363-1367，equivalence classes 预告）
+//     → §3.1 <def:congruence>；埋 Ch4 Euler 定理（φ/RRS）、Ch5 原根结构、
+//     Ch5 指标/幂方程、Ch7 卷积（φ 积性）、Algèbre Abstraite 环同构（跨笔记）
 
 // --- Chapter 4: Theorems of Fermat, Euler, and Wilson（Fermat–Euler–Wilson 定理）---
 //   Section 4.1: Fermat's Little Theorem（Fermat 小定理）
