@@ -3002,3 +3002,187 @@ arithmetical functions in Chapter 7. What remains for prime moduli is
 a bookkeeping of powers, which the next part of this section turns
 into the existence theorems for prime powers and their doubles.
 
+To lift a root from $p$ to $p^alpha$ we need to control what raising
+to the $p$-th power does to a number congruent to $1$ modulo a high
+power of $p$: each application of the $p$-th power pushes the
+congruence one level deeper. The computation is a binomial expansion
+whose middle coefficients are swallowed by the lemma of §4.1.
+
+#lemma(name: "A Binomial Lifting Identity")[
+  Let $p$ be an odd prime, let $k >= 1$, and let $u$ be an integer not
+  divisible by $p$. Then
+  $
+    (1 + p^k u)^p equiv 1 + p^(k + 1) u quad ("mod" p^(k + 2)).
+  $
+] <lem:binom-power-lift>
+
+#proof(name: "of the lemma")[
+  Expand:
+  $
+    (1 + p^k u)^p = 1 + p^(k + 1) u + sum_(i = 2)^(p - 1) binom(p, i)
+    p^(k i) u^i + p^(k p) u^p.
+  $
+  Every middle coefficient $binom(p, i)$ with $2 <= i <= p - 1$ is
+  divisible by $p$ (#link(<lem:binom-prime>)[§4.1]), so the
+  corresponding term is divisible by $p^(1 + k i) | p^(k + 2)$, since
+  $1 + k i >= 1 + 2 k >= k + 2$. The final term $p^(k p) u^p$ is
+  divisible by $p^(k p)$, and $k p >= 3 k >= k + 2$. Both tails vanish
+  modulo $p^(k + 2)$, leaving the claimed congruence.
+]
+
+#theorem(name: "Primitive Roots Modulo a Prime Power")[
+  Let $p$ be an odd prime and let $alpha >= 1$. There exists a
+  primitive root modulo $p^alpha$.
+] <thm:primitive-root-prime-power>
+
+#proof(name: "of the theorem")[
+  The case $alpha = 1$ is the theorem of the first part of this
+  section, so fix $alpha >= 2$.
+  *Step 1: a seed of exact order at the second level.* Choose a
+  primitive root $g$ modulo $p$. If $g^(p-1) != 1$ (mod $p^2$),
+  set $G = g$; otherwise set $G = g + p$. In either case $G equiv g$
+  (mod $p$), so $G$ is again a primitive root modulo $p$; and when the
+  replacement was made, the binomial theorem gives
+  $
+    G^(p-1) equiv g^(p-1) + (p - 1) g^(p-2) p equiv
+    1 + (p - 1) g^(p-2) p quad ("mod" p^2),
+  $
+  whose extra term is nonzero modulo $p^2$ because neither $p - 1$ nor
+  $g^(p-2)$ is divisible by $p$. Thus in all cases $G^(p-1) != 1$
+  (mod $p^2$).
+  Now the order of $G$ modulo $p^2$ is exactly $p (p - 1)$: it divides
+  $phi(p^2) = p (p - 1)$ by Euler's theorem, it is a multiple of
+  $p - 1$ since reducing $G^t equiv 1$ (mod $p^2$) modulo $p$ forces
+  $p - 1 | t$, and it is not the divisor $p - 1$ itself because
+  $G^(p-1) != 1$ (mod $p^2$).
+  *Step 2: each $p$-th power raises the level by one.* Since
+  $G^(p-1) equiv 1$ (mod $p$) yet not modulo $p^2$, write
+  $G^(p-1) = 1 + p u$ with $p$ not dividing $u$. We claim that for
+  every $m >= 0$ the exact power of $p$ dividing
+  $G^(p^m (p-1)) - 1$ is $p^(m + 1)$. This is clear for $m = 0$; if
+  $G^(p^m (p-1)) = 1 + p^(m + 1) u_m$ with $p$ not dividing $u_m$,
+  raising to the $p$-th power and applying the lifting identity gives
+  $G^(p^(m+1)(p-1)) equiv 1 + p^(m + 2) u_m$ (mod $p^(m + 3)$), and the
+  claim follows by induction.
+  *Step 3: orders at all levels.* The order of $G$ modulo $p^alpha$
+  divides $phi(p^alpha) = p^(alpha - 1) (p - 1)$ and is a multiple of
+  $p - 1$ (reduce modulo $p$), hence has the form $p^e (p - 1)$ with
+  $0 <= e <= alpha - 1$. Were $e <= alpha - 2$, the order would divide
+  $p^(alpha - 2) (p - 1)$, forcing $G^(p^(alpha - 2)(p - 1)) equiv 1$
+  (mod $p^alpha$); but Step 2 computes the valuation of the difference
+  $G^(p^(alpha - 2)(p - 1)) - 1$ as $(alpha - 2) + 1 = alpha - 1 <
+  alpha$. This contradiction leaves $e = alpha - 1$, so $G$ has order
+  $p^(alpha - 1)(p - 1) = phi(p^alpha)$ modulo $p^alpha$.
+]
+
+#example(name: "Lifting 2 from the Smallest Odd Primes")[
+  Modulo $9 = 3^2$: the residue $2$ is a primitive root modulo $3$
+  ($2^2 equiv 1$, and $2^1 != 1$), and $2^(3-1) = 4 != 1$
+  (mod $9$); no replacement is needed, and indeed $2^3 = 8 equiv -1$
+  (mod $9$), so $2$ has order $6 = phi(9)$.
+  Modulo $25 = 5^2$: again $2$ is a primitive root modulo $5$
+  ($2^4 = 16 equiv 1$ (mod $5$), while $2^2 = 4 != 1$), and
+  $2^(5-1) = 16 != 1$ (mod $25$). The theorem's Step 1 admits
+  $G = 2$ directly, and Step 3 predicts order $5 dot 4 = 20 =
+  phi(25)$; indeed $2^10 = 1024 = 40 dot 25 + 24 equiv -1$
+  (mod $25$), whose square is $1$, so the order of $2$ modulo $25$ is
+  $20$.
+  The same seed then serves every higher power: for instance $2$ has
+  order $4 dot 5^(alpha - 1)$ modulo $5^alpha$ for all $alpha$, by the
+  induction of Step 2.
+] <ex:lifted-primitive-root>
+
+The prime-power theorem lets one odd prime into the modulus; a single
+factor $2$ can be admitted alongside it for free, because the
+invertible classes of $2 p^alpha$ and of $p^alpha$ are in one-to-one
+correspondence.
+
+#corollary(name: "Primitive Roots Modulo Twice a Prime Power")[
+  Let $p$ be an odd prime and let $alpha >= 1$. There exists a
+  primitive root modulo $2 p^alpha$.
+] <cor:primitive-root-twice-power>
+
+#proof(name: "of the corollary")[
+  The units modulo $2 p^alpha$ are the odd classes coprime to
+  $p^alpha$, and $phi(2 p^alpha) = phi(p^alpha)$ by multiplicativity
+  (#link(<prop:phi-multiplicative>)[§3.5]). Let $G$ be a primitive
+  root modulo $p^alpha$. Among the two classes modulo $2 p^alpha$
+  that reduce to $G$ modulo $p^alpha$, namely $G$ and $G + p^alpha$,
+  exactly one is odd; call it $G'$. Its order modulo $2 p^alpha$
+  divides $phi(2 p^alpha) = phi(p^alpha)$, while reducing modulo
+  $p^alpha$ shows it is a multiple of the order of $G$, namely
+  $phi(p^alpha)$. The two bounds force
+  $"ord"_(2 p^alpha)(G') = phi(p^alpha) = phi(2 p^alpha)$.
+]
+
+The prime-power theorem and its corollary cover the moduli
+$p^alpha$ and $2 p^alpha$; the small cases $m = 2$ and $m = 4$ are
+checked by hand ($g = 1$ and $g = 3$, respectively, the latter of
+order $2 = phi(4)$). It remains to show that no other modulus
+succeeds — that powers of $2$ beyond the fourth and products of
+several odd primes are structurally unable to reach the top level.
+
+#theorem(name: "Which Moduli Admit Primitive Roots")[
+  Let $m >= 2$. A primitive root modulo $m$ exists if and only if
+  $m in {2, 4, p^alpha, 2 p^alpha}$ for some odd prime $p$ and some
+  integer $alpha >= 1$.
+] <thm:primitive-root-classification>
+
+#proof(name: "of the theorem")[
+  The "if" direction collects the cases already handled: $m = 2, 4$ by
+  hand, $m = p^alpha$ by the prime-power theorem, and $m = 2 p^alpha$
+  by its corollary.
+  For the "only if" direction write $m = u v$ with $"gcd"(u, v) = 1$
+  and $u, v >= 3$, whenever possible, and use the elementary fact that
+  $phi(n)$ is even for every $n >= 3$ (§3.5). For any unit $a$
+  modulo $m$, the order of $a$ modulo $m$ is the least common multiple
+  of its orders modulo $u$ and modulo $v$ ($a^t equiv 1$ (mod $m$)
+  holds exactly when it holds modulo both factors). Hence
+  $"ord"_m(a)$ divides $"lcm"(phi(u), phi(v)) = phi(m) /
+  "gcd"(phi(u), phi(v))$. When both $phi(u)$ and $phi(v)$ are even,
+  the denominator is at least $2$, so every order is at most
+  $phi(m)\/2$, strictly below $phi(m)$: no primitive root exists.
+  *Products of odd primes.* If $m$ has two distinct odd prime
+  divisors, or an odd prime divisor together with a factor $4$, it
+  splits as $u v$ with $u, v >= 3$, and the previous paragraph applies.
+  *High powers of $2$.* Suppose $m = 2^a$ with $a >= 3$. We show that
+  every odd $x$ satisfies $x^(2^(a-2)) equiv 1$ (mod $2^a$). Every odd
+  square is $equiv 1$ (mod $8$); inductively, if
+  $x^(2^j) equiv 1$ (mod $2^(j+2)$), say $x^(2^j) = 1 + 2^(j+2) c$,
+  then squaring gives $x^(2^(j+1)) equiv 1$ (mod $2^(j+3))$. Starting
+  from $j = 1$ and iterating to $j = a - 2$ yields the claim. But
+  $phi(2^a) = 2^(a - 1)$ exceeds $2^(a - 2)$, so every unit has order
+  at most $2^(a - 2) < phi(2^a)$: the top level is empty.
+  These two obstructions — a modulus splitting into two large coprime
+  parts, or being $2^a$ with $a >= 3$ — leave exactly
+  ${2, 4, p^alpha, 2 p^alpha}$ among the integers $m >= 2$.
+]
+
+#example(name: "The Full Sets of Primitive Roots")[
+  The classification predicts, for a modulus that has roots, exactly
+  $phi(phi(m))$ of them (#link(<cor:primitive-root-count>)[§5.2]).
+  Modulo $7$: $phi(6) = 2$ roots, and the order table of §5.1 shows
+  them to be $3$ and $5$.
+  Modulo $13$: here $phi(13) = 12$ and $phi(12) = 4$ roots are
+  expected. The residue $2$ is primitive: $2^6 = 64 equiv -1$
+  (mod $13$), so $2^12 equiv 1$ yet no smaller power reaches $1$. The
+  roots are the powers $2^k$ with $"gcd"(k, 12) = 1$, namely
+  $k = 1, 5, 7, 11$:
+  $
+    2^1 = 2, 2^5 = 32 equiv 6, 2^7 = 128 equiv 11,
+    2^11 = 2048 equiv 7 quad ("mod" 13),
+  $
+  so the primitive roots modulo $13$ are exactly
+  ${2, 6, 11, 7}$.
+] <ex:primitive-roots-mod-prime>
+
+The classification theorem has a striking restatement in the
+language of Chapter 4's remark after Euler's theorem: the group of
+units modulo $m$ is *cyclic* precisely for the moduli $m = 2, 4,
+p^alpha, 2 p^alpha$ — a primitive root being a generator. For all
+other moduli the unit group is a product of two cyclic groups of even
+order each, hence never generated by a single element. This structural
+view belongs to abstract algebra; the notebooks on abstract algebra
+develop it there, whereas here the classical language of roots and
+indices carries the rest of the chapter.
+
