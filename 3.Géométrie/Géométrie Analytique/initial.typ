@@ -29,32 +29,15 @@
 #make-outline(depth: 2, title: "Contents")
 
 // ==========================================================================
-// Preface
+// Part I — Vector Algebra (向量代数)
 // ==========================================================================
+// 设计思路：建立解析几何的代数工具基础。坐标架给出空间的代数化描述，
+// 向量的四种积（内积、外积、混合积、双重叉积）是后续一切图形方程的运算基础。
+// Lagrange 恒等式与 Jacobi 恒等式作为向量恒等式的核心结果收束本章。
 
-= Preface // 前言
-Version notes are in the table below.
+#part("Vector Algebra") // 向量代数
 
-#table(
-  columns: (auto, auto, 1fr),
-  align: center + horizon,
-  table.header[*Version*][*Date*][*Description*],
-  [0.1], [October, 2025], [Initial version],
-  [1.0], [January, 2026], [Basic content completed, including chapters on coordinates and vectors, planes and space lines, common surfaces and conic sections.],
-)
-
-#v(0.7cm)
-Without other remarks, this book is based on the $bb(R)^3$ space.
-
-// ==========================================================================
-// Chapter 1: Preliminaries
-// ==========================================================================
-
-= Preliminaries // 预备知识
-
-// ==========================================================================
-// Chapter 2: Coordinates and Vectors
-// ==========================================================================
+// --- Chapter 1: Coordinates and Vectors ---
 
 = Coordinates and Vectors // 坐标与向量
 
@@ -73,8 +56,6 @@ Without other remarks, this book is based on the $bb(R)^3$ space.
 
   Generally, $"{" O ; bold(e)_1, bold(e)_2, bold(e)_3 "}"}$ is called *affine frame*.
 ]
-
-== Theorems about Vectors // 向量相关定理
 
 == Products of Vectors // 向量的积
 
@@ -163,8 +144,15 @@ $bold(a)$, $bold(b)$, $bold(c)$ are coplanar if and only if $(bold(a), bold(b), 
 == Linear Independence // 线性无关
 
 // ==========================================================================
-// Chapter 3: Locus and Equation
+// Part II — Linear Figures (一次图形)
 // ==========================================================================
+// 设计思路：处理由一次方程描述的图形——直线与平面。
+// Ch2 先建立"图形与方程"的一般对应思想（轨迹、参数方程、常见曲线曲面），
+// Ch3 集中处理平面与直线的各种方程形式、相对位置关系、以及束的概念。
+
+#part("Linear Figures") // 一次图形
+
+// --- Chapter 2: Locus and Equation ---
 
 = Locus and Equation // 轨迹与方程
 
@@ -172,9 +160,7 @@ $bold(a)$, $bold(b)$, $bold(c)$ are coplanar if and only if $(bold(a), bold(b), 
 
 == Common Curves and Surfaces // 常见曲线与曲面
 
-// ==========================================================================
-// Chapter 4: Planes and Space Lines
-// ==========================================================================
+// --- Chapter 3: Planes and Space Lines ---
 
 = Planes and Space Lines // 平面与空间直线
 
@@ -502,8 +488,16 @@ $ A_1 A_2 + B_1 B_2 + C_1 C_2 = 0. $
 
 
 // ==========================================================================
-// Chapter 5: Common Surfaces
+// Part III — Quadratic Figures (二次图形)
 // ==========================================================================
+// 设计思路：处理由二次方程描述的图形——曲面与圆锥曲线。
+// Ch4 按生成方式分类曲面（柱/锥/旋转），Ch5 按标准方程分类二次曲面
+// （椭球/双曲/抛物/直纹），Ch6 处理平面上的圆锥曲线。
+// 两种分类视角互补：生成方式揭示曲面的构造来源，标准方程揭示曲面的几何特征。
+
+#part("Quadratic Figures") // 二次图形
+
+// --- Chapter 4: Common Surfaces ---
 
 = Common Surfaces // 常见曲面
 
@@ -730,9 +724,11 @@ around $z$-axis: $(x^2 + y^2 + z^2 + b^2 - a^2)^2 = 4 b^2 (x^2 + y^2)$ (torus)
 
 
 
-== Quadric Surfaces // 二次曲面
+// --- Chapter 5: Quadric Surfaces ---
 
-=== Ellipsoids // 椭球面
+= Quadric Surfaces // 二次曲面
+
+== Ellipsoids // 椭球面
 
 In space rectangular Cartesian coordinates,
 the surface represented by the equation
@@ -767,7 +763,7 @@ The other two methods of sectioning are similar.
   supplement: [Fig.],
 ) <fig:Ellipsoid1>
 
-=== Hyperboloids // 双曲面
+== Hyperboloids // 双曲面
 
 In space rectangular Cartesian coordinates,
 the surface represented by the equation
@@ -837,7 +833,7 @@ when $abs(h) = c$, the section is a point.
   supplement: [Fig.],
 ) <fig:TwoSheetHyperboloid>
 
-=== Paraboloids // 抛物面
+== Paraboloids // 抛物面
 
 In space rectangular Cartesian coordinates,
 the surface represented by the equation
@@ -939,9 +935,7 @@ is called a hyperbolic paraboloid, or a saddle surface.
 ) <fig:RuledSurface2>
 
 
-// ==========================================================================
-// Chapter 6: Conic Sections
-// ==========================================================================
+// --- Chapter 6: Conic Sections ---
 
 = Conic Sections // 圆锥曲线
 
@@ -956,13 +950,6 @@ is called a hyperbolic paraboloid, or a saddle surface.
 == Conic Sections and Lines // 圆锥曲线与直线
 
 == Simplification of Conic Equations // 圆锥曲线方程的化简
-
-
-// ==========================================================================
-// Chapter 7: Quadric Surfaces (placeholder)
-// ==========================================================================
-
-= Quadric Surfaces // 二次曲面（占位章节）
 
 
 #bibliography("references.bib")
