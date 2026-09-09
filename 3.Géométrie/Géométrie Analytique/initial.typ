@@ -48,13 +48,45 @@
   together with three non-coplanar ordered vectors $bold(e)_1$, $bold(e)_2$, $bold(e)_3$,
   is called a *coordinate frame* (or *reference frame*) in space,
   denoted by $"{" O ; bold(e)_1, bold(e)_2, bold(e)_3 "}"}$.
+] <def:coordinate-frame>
 
-  If $bold(e)_1$, $bold(e)_2$, $bold(e)_3$ are unit vectors,
-  then the frame is called a *Cartesian frame*.
-  Furthermore, if $bold(e)_1 perp bold(e)_2$, $bold(e)_2 perp bold(e)_3$, $bold(e)_3 perp bold(e)_1$,
-  then the frame is called a *rectangular Cartesian frame*, or simply a *rectangular frame*.
+#definition(name: "Cartesian Frame")[
+  Within a coordinate frame $ "{" O ; bold(e)_1, bold(e)_2, bold(e)_3 "}" $:
+  - If $bold(e)_1$, $bold(e)_2$, $bold(e)_3$ are unit vectors, the frame is called a *Cartesian frame*.
+  - Furthermore, if $bold(e)_1 perp bold(e)_2$, $bold(e)_2 perp bold(e)_3$, $bold(e)_3 perp bold(e)_1$,
+    the frame is called a *rectangular Cartesian frame* (or simply *rectangular frame*).
+  - A coordinate frame that is not necessarily Cartesian is also called an *affine frame*.
+] <def:cartesian-frame>
 
-  Generally, $"{" O ; bold(e)_1, bold(e)_2, bold(e)_3 "}"}$ is called *affine frame*.
+#definition(name: "Vector Coordinates")[
+  Given a coordinate frame $ "{" O ; bold(e)_1, bold(e)_2, bold(e)_3 "}" $ and a vector $bold(v)$,
+  since $bold(e)_1$, $bold(e)_2$, $bold(e)_3$ are non-coplanar (hence linearly independent),
+  there exist unique scalars $v_1, v_2, v_3 in bb(R)$ such that
+  $ bold(v) = v_1 bold(e)_1 + v_2 bold(e)_2 + v_3 bold(e)_3. $
+  The ordered triple $(v_1, v_2, v_3)$ is called the *coordinates* of $bold(v)$ under this frame,
+  denoted $bold(v) = (v_1, v_2, v_3)$.
+
+  For a point $M$ in space, the coordinates of $bold(v) = arrow(O M)$ are called the *coordinates of $M$*,
+  denoted $M(x, y, z)$ or $M = (x, y, z)$.
+] <def:vector-coordinates>
+
+#note[
+  The concept of vector coordinates is a specialization of the basis representation in linear algebra
+  (see the *Algèbre Linéaire* note, Chapter on Linear Spaces). Here we restrict to $bb(R)^3$ with a fixed frame.
+]
+
+#example(name: "Coordinates from three points")[
+  Given three points $A(1, 0, 0)$, $B(0, 1, 0)$, $C(0, 0, 1)$, find the coordinates of the vector
+  $bold(v) = arrow(A B) + arrow(B C)$ under the standard rectangular frame.
+  <ex:coordinate-frame>
+
+  #solution[
+    Compute each segment:
+    $ arrow(A B) = (0 - 1, 1 - 0, 0 - 0) = (-1, 1, 0), $
+    $ arrow(B C) = (0 - 0, 0 - 1, 1 - 0) = (0, -1, 1). $
+    Therefore,
+    $ bold(v) = arrow(A B) + arrow(B C) = (-1 + 0, 1 - 1, 0 + 1) = (-1, 0, 1). $
+  ]
 ]
 
 == Products of Vectors // 向量的积
@@ -65,9 +97,28 @@
   For two vectors $bold(a)$ and $bold(b)$, the *inner product* (or *dot product*) is defined as:
   $ bold(a) dot bold(b) = abs(bold(a)) abs(bold(b)) cos theta, $
   where $theta$ is the angle between the two vectors.
+] <def:inner-product>
+
+#property(name: "Geometric Meaning of Inner Product")[
+  The inner product encodes both length and angle information:
+  - *Length*: $abs(bold(a)) = sqrt(bold(a) dot bold(a))$.
+  - *Angle*: $cos theta = (bold(a) dot bold(b)) / (abs(bold(a)) abs(bold(b)))$ for $bold(a), bold(b) != 0$.
+  - *Perpendicularity*: $bold(a) perp bold(b) "iff" bold(a) dot bold(b) = 0$.
+  - *Projection*: $Pr_bold(b) bold(a) = (bold(a) dot bold(b)) / abs(bold(b))$.
+] <prop:inner-product-geometry>
+
+#example(name: "Angle between two vectors")[
+  Find the angle $theta$ between $bold(a) = (1, 2, 2)$ and $bold(b) = (2, 1, -2)$.
+  <ex:inner-product-angle>
+
+  #solution[
+    Compute the inner product and lengths:
+    $ bold(a) dot bold(b) = 1 dot 2 + 2 dot 1 + 2 dot (-2) = 2 + 2 - 4 = 0. $
+    Since $bold(a) dot bold(b) = 0$, the vectors are perpendicular, i.e., $theta = pi / 2$.
+  ]
 ]
 
-Obviously, $bold(a)$ and $bold(b)$ are perpendicular if and only if $bold(a) dot bold(b) = 0$.
+
 
 === Outer Product (Cross Product) // 外积/叉积
 
@@ -76,8 +127,16 @@ Obviously, $bold(a)$ and $bold(b)$ are perpendicular if and only if $bold(a) dot
   $ bold(a) times bold(b) = abs(bold(a)) abs(bold(b)) sin theta #h(0.17em) bold(n), $
   where $theta$ is the angle between the two vectors, and $bold(n)$ is a unit vector perpendicular
   to both $bold(a)$ and $bold(b)$,
-  following the right-hand rule, i.e., $bold(a), bold(b), bold(n)$ form a right-handed system.
-]
+  following the right-hand rule, i.e., $bold(a), bold(b), bold(n)$ form a right-handed system
+  (see @fig:right-hand-rule).
+] <def:outer-product>
+
+#figure(
+  image("img/right-hand-rule.svg", width: 50%),
+  caption: [Right-hand rule for the outer product.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:right-hand-rule>
 
 In Cartesian coordinates, if $bold(a) = (x_1, y_1, z_1)$ and $bold(b) = (x_2, y_2, z_2)$,
 then
@@ -86,6 +145,34 @@ $ bold(a) times bold(b) =
   (y_1 z_2 - z_1 y_2, z_1 x_2 - x_1 z_2, x_1 y_2 - y_1 x_2), $
 where $bold(i)$, $bold(j)$, $bold(k)$ are the unit vectors along the $x$, $y$, and $z$ axes respectively.
 
+#property(name: "Geometric Meaning of Outer Product")[
+  The outer product encodes area and normal direction:
+  - *Area*: $abs(bold(a) times bold(b)) = abs(bold(a)) abs(bold(b)) sin theta$
+    equals the area of the parallelogram spanned by $bold(a)$ and $bold(b)$.
+  - *Triangle area*: The area of the triangle with sides $bold(a), bold(b)$ is
+    $1 / 2 abs(bold(a) times bold(b))$.
+  - *Parallelism*: $bold(a) times bold(b) = 0 "iff" bold(a) #h(0.17em) "||" #h(0.17em) bold(b)$.
+  - *Normal direction*: $bold(a) times bold(b) perp bold(a)$ and $bold(a) times bold(b) perp bold(b)$,
+    used to construct normal vectors of planes (see Ch3 §3.1).
+] <prop:outer-product-geometry>
+
+#example(name: "Area of a triangle")[
+  Find the area of the triangle with vertices $A(1, 0, 0)$, $B(0, 1, 0)$, $C(0, 0, 1)$.
+  <ex:outer-product-area>
+
+  #solution[
+    Let $bold(a) = arrow(A B) = (-1, 1, 0)$ and $bold(b) = arrow(A C) = (-1, 0, 1)$.
+    Compute the outer product:
+    $ bold(a) times bold(b) =
+      (1 dot 1 - 0 dot 0, 0 dot (-1) - (-1) dot 1, (-1) dot 0 - 1 dot (-1))
+      = (1, 1, 1). $
+    The triangle area is
+    $ 1 / 2 abs(bold(a) times bold(b)) = 1 / 2 sqrt(1^2 + 1^2 + 1^2) = sqrt(3) / 2. $
+  ]
+]
+
+
+
 
 === Mixed Product // 混合积
 
@@ -93,22 +180,50 @@ where $bold(i)$, $bold(j)$, $bold(k)$ are the unit vectors along the $x$, $y$, a
   For three vectors $bold(a)$, $bold(b)$, $bold(c)$, the *mixed product* is defined as:
   $ (bold(a), bold(b), bold(c)) = (bold(a) times bold(b)) dot bold(c), $
   also denoted as $(bold(a), bold(b), bold(c))$.
-]
+] <def:mixed-product>
 
-#property[
+#property(name: "Permutation Symmetry of Mixed Product")[
   Cyclic permutation of the three factors of mixed product does not change its value;
   swapping any two factors changes the sign:
   $ (bold(a), bold(b), bold(c)) = (bold(b), bold(c), bold(a))
     = (bold(c), bold(a), bold(b)) = -(bold(b), bold(a), bold(c))
     = -(bold(a), bold(c), bold(b)) = -(bold(c), bold(b), bold(a)). $
-]
+] <prop:mixed-product-permutation>
 
-The absolute value of the mixed product represents the volume of the parallelepiped formed by the three vectors.
+*Geometric meaning.* The absolute value of the mixed product represents the volume of the
+parallelepiped formed by the three vectors (see @fig:mixed-product-volume).
 In Cartesian coordinates, if $bold(a) = (x_1, y_1, z_1)$, $bold(b) = (x_2, y_2, z_2)$,
 and $bold(c) = (x_3, y_3, z_3)$, then
 $ (bold(a), bold(b), bold(c)) =
   mat(delim: "|", x_1, y_1, z_1; x_2, y_2, z_2; x_3, y_3, z_3). $
 $bold(a)$, $bold(b)$, $bold(c)$ are coplanar if and only if $(bold(a), bold(b), bold(c)) = 0$.
+
+#figure(
+  image("img/mixed-product-volume.svg", width: 50%),
+  caption: [Volume of the parallelepiped equals the absolute value of the mixed product.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:mixed-product-volume>
+
+#example(name: "Volume of a tetrahedron")[
+  Find the volume of the tetrahedron with vertices
+  $O(0, 0, 0)$, $A(1, 0, 0)$, $B(0, 1, 0)$, $C(0, 0, 1)$.
+  <ex:mixed-product-volume>
+
+  #solution[
+    Let $bold(a) = arrow(O A) = (1, 0, 0)$,
+    $bold(b) = arrow(O B) = (0, 1, 0)$,
+    $bold(c) = arrow(O C) = (0, 0, 1)$.
+    The mixed product is
+    $ (bold(a), bold(b), bold(c)) =
+      mat(delim: "|", 1, 0, 0; 0, 1, 0; 0, 0, 1) = 1. $
+    The parallelepiped volume is $abs((bold(a), bold(b), bold(c))) = 1$.
+    Since a tetrahedron is $1 / 6$ of the parallelepiped, the tetrahedron volume is
+    $ V = 1 / 6 abs((bold(a), bold(b), bold(c))) = 1 / 6. $
+  ]
+]
+
+
 
 
 
@@ -117,14 +232,14 @@ $bold(a)$, $bold(b)$, $bold(c)$ are coplanar if and only if $(bold(a), bold(b), 
 #definition(name: "Double Cross Product")[
   For three vectors $bold(a)$, $bold(b)$, $bold(c)$, the *double cross product* is defined as:
   $ bold(a) times (bold(b) times bold(c)). $
-]
+] <def:double-cross-product>
 
-#property[
+#property(name: "Double Cross Product Identity")[
   The double cross product satisfies the following identity:
   $ bold(a) times (bold(b) times bold(c)) = (bold(a) dot bold(c)) bold(b) - (bold(a) dot bold(b)) bold(c) $
   or
   $ (bold(a) times bold(b)) times bold(c) = (bold(c) dot bold(a)) bold(b) - (bold(c) dot bold(b)) bold(a). $
-]
+] <prop:double-cross-identity>
 
 #theorem(name: "Lagrange Identity")[
   For any four vectors $bold(a)$, $bold(b)$, $bold(c)$, $bold(d)$, the following identity holds:
@@ -133,15 +248,46 @@ $bold(a)$, $bold(b)$, $bold(c)$ are coplanar if and only if $(bold(a), bold(b), 
     = mat(delim: "|", bold(a) dot bold(c), bold(a) dot bold(d); bold(b) dot bold(c), bold(b) dot bold(d)). $
   Specially, when $bold(a) = bold(c)$ and $bold(b) = bold(d)$, we have:
   $ abs(bold(a) times bold(b))^2 = abs(bold(a))^2 abs(bold(b))^2 - (bold(a) dot bold(b))^2. $
-]
+] <thm:lagrange-identity>
 
 #theorem(name: "Jacobi Identity")[
   For any three vectors $bold(a)$, $bold(b)$, $bold(c)$, the following identity holds:
   $ bold(a) times (bold(b) times bold(c)) + bold(b) times (bold(c) times bold(a)) + bold(c) times (bold(a) times bold(b)) = 0. $
+] <thm:jacobi-identity>
+
+
+== Linear Independence and Geometric Applications // 线性无关与几何应用
+
+#note[
+  The abstract definition of linear independence, basis, and dimension of vector spaces
+  is treated in the *Algèbre Linéaire* note (Chapter on Linear Spaces).
+  Here we focus on the *geometric applications* specific to $bb(R)^3$:
+  using linear (in)dependence to detect collinearity and coplanarity.
+] <note:linear-independence-srp>
+
+#property(name: "Collinearity Criterion")[
+  Two vectors $bold(a), bold(b) in bb(R)^3$ (with $bold(b) != 0$) are collinear, i.e.,
+  $bold(a) = lambda bold(b)$ for some $lambda in bb(R)$, if and only if
+  $ bold(a) times bold(b) = 0. $
+  Equivalently, in Cartesian coordinates, $bold(a) = (x_1, y_1, z_1)$ and $bold(b) = (x_2, y_2, z_2)$
+  are collinear iff
+  $ x_1 / x_2 = y_1 / y_2 = z_1 / z_2, $
+  where a zero coordinate in $bold(b)$ requires the corresponding coordinate in $bold(a)$ to also be zero.
+] <prop:collinearity-criterion>
+
+#property(name: "Coplanarity Criterion")[
+  Three vectors $bold(a), bold(b), bold(c) in bb(R)^3$ are coplanar, i.e., linearly dependent, if and only if
+  $ (bold(a), bold(b), bold(c)) = 0, $
+  i.e., their mixed product vanishes.
+  In Cartesian coordinates, this is equivalent to
+  $ mat(delim: "|", x_1, y_1, z_1; x_2, y_2, z_2; x_3, y_3, z_3) = 0. $
+] <prop:coplanarity-criterion>
+
+#note[
+  The three vectors $bold(e)_1, bold(e)_2, bold(e)_3$ of any coordinate frame
+  are non-coplanar, hence linearly independent, and form a basis of $bb(R)^3$.
+  This is precisely why every vector admits unique coordinates under a given frame.
 ]
-
-
-== Linear Independence // 线性无关
 
 // ==========================================================================
 // Part II — Linear Figures (一次图形)
