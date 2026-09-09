@@ -140,9 +140,11 @@
 
 In Cartesian coordinates, if $bold(a) = (x_1, y_1, z_1)$ and $bold(b) = (x_2, y_2, z_2)$,
 then
-$ bold(a) times bold(b) =
+$
+  bold(a) times bold(b) =
   mat(delim: "|", bold(i), bold(j), bold(k); x_1, y_1, z_1; x_2, y_2, z_2) =
-  (y_1 z_2 - z_1 y_2, z_1 x_2 - x_1 z_2, x_1 y_2 - y_1 x_2), $
+  (y_1 z_2 - z_1 y_2, z_1 x_2 - x_1 z_2, x_1 y_2 - y_1 x_2),
+$
 where $bold(i)$, $bold(j)$, $bold(k)$ are the unit vectors along the $x$, $y$, and $z$ axes respectively.
 
 #property(name: "Geometric Meaning of Outer Product")[
@@ -163,9 +165,11 @@ where $bold(i)$, $bold(j)$, $bold(k)$ are the unit vectors along the $x$, $y$, a
   #solution[
     Let $bold(a) = arrow(A B) = (-1, 1, 0)$ and $bold(b) = arrow(A C) = (-1, 0, 1)$.
     Compute the outer product:
-    $ bold(a) times bold(b) =
+    $
+      bold(a) times bold(b) =
       (1 dot 1 - 0 dot 0, 0 dot (-1) - (-1) dot 1, (-1) dot 0 - 1 dot (-1))
-      = (1, 1, 1). $
+      = (1, 1, 1).
+    $
     The triangle area is
     $ 1 / 2 abs(bold(a) times bold(b)) = 1 / 2 sqrt(1^2 + 1^2 + 1^2) = sqrt(3) / 2. $
   ]
@@ -185,17 +189,21 @@ where $bold(i)$, $bold(j)$, $bold(k)$ are the unit vectors along the $x$, $y$, a
 #property(name: "Permutation Symmetry of Mixed Product")[
   Cyclic permutation of the three factors of mixed product does not change its value;
   swapping any two factors changes the sign:
-  $ (bold(a), bold(b), bold(c)) = (bold(b), bold(c), bold(a))
+  $
+    (bold(a), bold(b), bold(c)) = (bold(b), bold(c), bold(a))
     = (bold(c), bold(a), bold(b)) = -(bold(b), bold(a), bold(c))
-    = -(bold(a), bold(c), bold(b)) = -(bold(c), bold(b), bold(a)). $
+    = -(bold(a), bold(c), bold(b)) = -(bold(c), bold(b), bold(a)).
+  $
 ] <prop:mixed-product-permutation>
 
 *Geometric meaning.* The absolute value of the mixed product represents the volume of the
 parallelepiped formed by the three vectors (see @fig:mixed-product-volume).
 In Cartesian coordinates, if $bold(a) = (x_1, y_1, z_1)$, $bold(b) = (x_2, y_2, z_2)$,
 and $bold(c) = (x_3, y_3, z_3)$, then
-$ (bold(a), bold(b), bold(c)) =
-  mat(delim: "|", x_1, y_1, z_1; x_2, y_2, z_2; x_3, y_3, z_3). $
+$
+  (bold(a), bold(b), bold(c)) =
+  mat(delim: "|", x_1, y_1, z_1; x_2, y_2, z_2; x_3, y_3, z_3).
+$
 $bold(a)$, $bold(b)$, $bold(c)$ are coplanar if and only if $(bold(a), bold(b), bold(c)) = 0$.
 
 #figure(
@@ -215,8 +223,10 @@ $bold(a)$, $bold(b)$, $bold(c)$ are coplanar if and only if $(bold(a), bold(b), 
     $bold(b) = arrow(O B) = (0, 1, 0)$,
     $bold(c) = arrow(O C) = (0, 0, 1)$.
     The mixed product is
-    $ (bold(a), bold(b), bold(c)) =
-      mat(delim: "|", 1, 0, 0; 0, 1, 0; 0, 0, 1) = 1. $
+    $
+      (bold(a), bold(b), bold(c)) =
+      mat(delim: "|", 1, 0, 0; 0, 1, 0; 0, 0, 1) = 1.
+    $
     The parallelepiped volume is $abs((bold(a), bold(b), bold(c))) = 1$.
     Since a tetrahedron is $1 / 6$ of the parallelepiped, the tetrahedron volume is
     $ V = 1 / 6 abs((bold(a), bold(b), bold(c))) = 1 / 6. $
@@ -243,16 +253,20 @@ $bold(a)$, $bold(b)$, $bold(c)$ are coplanar if and only if $(bold(a), bold(b), 
 
 #theorem(name: "Lagrange Identity")[
   For any four vectors $bold(a)$, $bold(b)$, $bold(c)$, $bold(d)$, the following identity holds:
-  $ (bold(a) times bold(b)) dot (bold(c) times bold(d)) =
+  $
+    (bold(a) times bold(b)) dot (bold(c) times bold(d)) =
     (bold(a) dot bold(c))(bold(b) dot bold(d)) - (bold(a) dot bold(d))(bold(b) dot bold(c))
-    = mat(delim: "|", bold(a) dot bold(c), bold(a) dot bold(d); bold(b) dot bold(c), bold(b) dot bold(d)). $
+    = mat(delim: "|", bold(a) dot bold(c), bold(a) dot bold(d); bold(b) dot bold(c), bold(b) dot bold(d)).
+  $
   Specially, when $bold(a) = bold(c)$ and $bold(b) = bold(d)$, we have:
   $ abs(bold(a) times bold(b))^2 = abs(bold(a))^2 abs(bold(b))^2 - (bold(a) dot bold(b))^2. $
 ] <thm:lagrange-identity>
 
 #theorem(name: "Jacobi Identity")[
   For any three vectors $bold(a)$, $bold(b)$, $bold(c)$, the following identity holds:
-  $ bold(a) times (bold(b) times bold(c)) + bold(b) times (bold(c) times bold(a)) + bold(c) times (bold(a) times bold(b)) = 0. $
+  $
+    bold(a) times (bold(b) times bold(c)) + bold(b) times (bold(c) times bold(a)) + bold(c) times (bold(a) times bold(b)) = 0.
+  $
 ] <thm:jacobi-identity>
 
 
@@ -320,18 +334,20 @@ The equation of the plane passing through the point $M_0$ and
 parallel to the vectors $bold(a)$ and $bold(b)$ is given by:
 $ bold(r) = arrow(O M) + lambda bold(a) + mu bold(b), $
 or in coordinate form:
-$ cases(
-  x = X_0 + lambda X_1 + mu X_2,
-  y = Y_0 + lambda Y_1 + mu Y_2,
-  z = Z_0 + lambda Z_1 + mu Z_2,
-) $
+$
+  cases(
+    x = X_0 + lambda X_1 + mu X_2,
+    y = Y_0 + lambda Y_1 + mu Y_2,
+    z = Z_0 + lambda Z_1 + mu Z_2,
+  )
+$
 where $lambda, mu in bb(R)$.
 
 Taking the dot product of both sides of the parametric vector equation with $bold(a) times bold(b)$,
 we eliminate $lambda$ and $mu$ to obtain $(bold(r) - arrow(O M_0), bold(a), bold(b)) = 0$, that is,
-#eq[
+#eq[$
   mat(delim: "|", x - X_0, y - Y_0, z - Z_0; X_1, Y_1, Z_1; X_2, Y_2, Z_2) = 0.
-] <eq:PlaneDeterminantForm>
+$] <eq:PlaneDeterminantForm>
 All above forms are called the *point-vector form* of the plane equation.
 #v(0.7cm)
 
@@ -339,11 +355,13 @@ Given three non-collinear points $M_1(X_1, Y_1, Z_1)$, $M_2(X_2, Y_2, Z_2)$ and 
 the equation of the plane passing through these three points is given by:
 $ bold(r) = arrow(O M_1) + lambda arrow(M_1 M_2) + mu arrow(M_1 M_3), $
 or in coordinate form:
-$ cases(
-  x = X_1 + lambda (X_2 - X_1) + mu (X_3 - X_1),
-  y = Y_1 + lambda (Y_2 - Y_1) + mu (Y_3 - Y_1),
-  z = Z_1 + lambda (Z_2 - Z_1) + mu (Z_3 - Z_1),
-) $
+$
+  cases(
+    x = X_1 + lambda (X_2 - X_1) + mu (X_3 - X_1),
+    y = Y_1 + lambda (Y_2 - Y_1) + mu (Y_3 - Y_1),
+    z = Z_1 + lambda (Z_2 - Z_1) + mu (Z_3 - Z_1),
+  )
+$
 where $lambda, mu in bb(R)$.
 And the determinant form is:
 $ mat(delim: "|", x - X_1, y - Y_1, z - Z_1; X_2 - X_1, Y_2 - Y_1, Z_2 - Z_1; X_3 - X_1, Y_3 - Y_1, Z_3 - Z_1) = 0, $
@@ -363,10 +381,12 @@ The general equation is obtained by expanding the determinant form of
 the parametric equation @eq:PlaneDeterminantForm of a plane:
 $ A x + B y + C z + D = 0, $
 where
-$ A = mat(delim: "|", Y_1, Z_1; Y_2, Z_2), quad
+$
+  A = mat(delim: "|", Y_1, Z_1; Y_2, Z_2), quad
   B = mat(delim: "|", Z_1, X_1; Z_2, X_2), quad
   C = mat(delim: "|", X_1, Y_1; X_2, Y_2), quad
-  D = -mat(delim: "|", X_0, Y_0, Z_0; X_1, Y_1, Z_1; X_2, Y_2, Z_2). $
+  D = -mat(delim: "|", X_0, Y_0, Z_0; X_1, Y_1, Z_1; X_2, Y_2, Z_2).
+$
 Special cases include:
 
 #theorem[
@@ -386,9 +406,9 @@ with the foot of the perpendicular being $M_0(X_0, Y_0, Z_0)$,
 and the unit normal vector of the plane being $bold(n)_0 = (cos alpha, cos beta, cos gamma)$, then
 $ bold(n) dot bold(r) - arrow(O M_0) = 0, $
 or in coordinate form:
-#eq[
+#eq[$
   x cos alpha + y cos beta + z cos gamma - abs(arrow(O M_0)) = 0.
-] <eq:PlanePointNormalUnitForm>
+$] <eq:PlanePointNormalUnitForm>
 
 For the general equation of a plane,
 it can be converted into the form @eq:PlanePointNormalUnitForm
@@ -404,27 +424,31 @@ Given a point $M_0(X_0, Y_0, Z_0)$ in space and a direction vector $bold(v) = (X
 then
 $ bold(r) = arrow(O M_0) + lambda bold(v), $
 and the parametric equations of the line can be expressed as:
-$ cases(
-  x = X_0 + lambda X,
-  y = Y_0 + lambda Y,
-  z = Z_0 + lambda Z,
-) $
+$
+  cases(
+    x = X_0 + lambda X,
+    y = Y_0 + lambda Y,
+    z = Z_0 + lambda Z,
+  )
+$
 where $lambda in bb(R)$.
 Eliminate the parameter $lambda$ to obtain the symmetric equation (standard equation):
-#eq[
+#eq[$
   (x - X_0) / X = (y - Y_0) / Y = (z - Z_0) / Z.
-] <eq:LineSymmetricForm>
+$] <eq:LineSymmetricForm>
 
 #v(0.7cm)
 Given two points $M_1(X_1, Y_1, Z_1)$ and $M_2(X_2, Y_2, Z_2)$ in space,
 the equation of the line passing through these two points is given by:
 $ bold(r) = arrow(O M_1) + lambda arrow(M_1 M_2), $
 or in coordinate form:
-$ cases(
-  x = X_1 + lambda (X_2 - X_1),
-  y = Y_1 + lambda (Y_2 - Y_1),
-  z = Z_1 + lambda (Z_2 - Z_1),
-) $
+$
+  cases(
+    x = X_1 + lambda (X_2 - X_1),
+    y = Y_1 + lambda (Y_2 - Y_1),
+    z = Z_1 + lambda (Z_2 - Z_1),
+  )
+$
 It can also be expressed in symmetric form:
 $ (x - X_1) / (X_2 - X_1) = (y - Y_1) / (Y_2 - Y_1) = (z - Z_1) / (Z_2 - Z_1). $
 
@@ -434,10 +458,12 @@ $l, m, n$ ($l : m : n = X : Y : Z$), are called the *direction numbers* of the l
 === General Form // 一般式
 
 The intersection of two planes determines a line:
-$ cases(
-  A_1 x + B_1 y + C_1 z + D_1 = 0,
-  A_2 x + B_2 y + C_2 z + D_2 = 0,
-) $
+$
+  cases(
+    A_1 x + B_1 y + C_1 z + D_1 = 0,
+    A_2 x + B_2 y + C_2 z + D_2 = 0,
+  )
+$
 where $A_1 : B_1 : C_1 != A_2 : B_2 : C_2$.
 
 #theorem[
@@ -451,10 +477,12 @@ In the symmetric equation @eq:LineSymmetricForm of a line,
 $X$, $Y$, and $Z$ are not all zero.
 Without loss of generality, let us assume $Z$ is not zero.
 Then, we have:
-$ cases(
-  x = a z + c,
-  y = b z + d,
-) $
+$
+  cases(
+    x = a z + c,
+    y = b z + d,
+  )
+$
 where $a = X / Z$, $b = Y / Z$, $c = X_0 - (X / Z) Z_0$, and $d = Y_0 - (Y / Z) Z_0$.
 This form is called the *projection form* of the line equation.
 This line can be regarded as the intersection line of the two planes represented by these two equations.
@@ -547,10 +575,12 @@ The common perpendicular can be seen as the intersection of two planes:
 $ pi_1: (bold(r) - arrow(O M_1), bold(v)_1, bold(v)_1 times bold(v)_2) = 0, $
 $ pi_2: (bold(r) - arrow(O M_2), bold(v)_2, bold(v)_1 times bold(v)_2) = 0. $
 Since the equation of the common perpendicular is:
-$ cases(
-  mat(delim: "|", x - x_1, y - y_1, z - z_1; X_1, Y_1, Z_1; X, Y, Z) = 0,
-  mat(delim: "|", x - x_2, y - y_2, z - z_2; X_2, Y_2, Z_2; X, Y, Z) = 0,
-) $
+$
+  cases(
+    mat(delim: "|", x - x_1, y - y_1, z - z_1; X_1, Y_1, Z_1; X, Y, Z) = 0,
+    mat(delim: "|", x - x_2, y - y_2, z - z_2; X_2, Y_2, Z_2; X, Y, Z) = 0,
+  )
+$
 where $(X, Y, Z) = bold(v)_1 times bold(v)_2$.
 
 #property[
@@ -603,8 +633,10 @@ can be classified into three cases:
 In Cartesian coordinates, since their normal vectors are
 $bold(n)_1 = (A_1, B_1, C_1)$ and $bold(n)_2 = (A_2, B_2, C_2)$,
 the angle $theta$ between two planes is given by:
-$ cos theta = (bold(n)_1 dot bold(n)_2) / (abs(bold(n)_1) abs(bold(n)_2))
-  = (A_1 A_2 + B_1 B_2 + C_1 C_2) / (sqrt(A_1^2 + B_1^2 + C_1^2) sqrt(A_2^2 + B_2^2 + C_2^2)). $
+$
+  cos theta = (bold(n)_1 dot bold(n)_2) / (abs(bold(n)_1) abs(bold(n)_2))
+  = (A_1 A_2 + B_1 B_2 + C_1 C_2) / (sqrt(A_1^2 + B_1^2 + C_1^2) sqrt(A_2^2 + B_2^2 + C_2^2)).
+$
 Obviously, the necessary and sufficient condition for two planes to be perpendicular is:
 $ A_1 A_2 + B_1 B_2 + C_1 C_2 = 0. $
 
@@ -659,21 +691,27 @@ $ A_1 A_2 + B_1 B_2 + C_1 C_2 = 0. $
 Cylinder can be expressed as:
 $ {x, y, z | F(x, y, z) = 0} $
 $ = union.big_(x_1, y_1, z_1) in Gamma {x, y, z | (x - x_1) / X = (y - y_1) / Y = (z - z_1) / Z} $
-$ xlongequal^(text("directrix ") Gamma: bold(r)(u) = (x(u), y(u), z(u)))
-  {bold(r) | bold(r) = bold(r)(u) + v bold(s), quad u, v in bb(R)} $
-$ xlongequal^(text("parametric form"))
+$
+  xlongequal^(text("directrix ") Gamma: bold(r)(u) = (x(u), y(u), z(u)))
+  {bold(r) | bold(r) = bold(r)(u) + v bold(s), quad u, v in bb(R)}
+$
+$
+  xlongequal^(text("parametric form"))
   {x, y, z | cases(
-    x = x(u) + v X,
-    y = y(u) + v Y,
-    z = z(u) + v Z,
-  ) quad u, v in bb(R)}. $
+      x = x(u) + v X,
+      y = y(u) + v Y,
+      z = z(u) + v Z,
+    ) quad u, v in bb(R)}.
+$
 
 To solve the equation of a cylinder,
-$ cases(
-  (x - x_1) / X = (y - y_1) / Y = (z - z_1) / Z,
-  F_1(x_1, y_1, z_1) = 0,
-  F_2(x_1, y_1, z_1) = 0,
-) $
+$
+  cases(
+    (x - x_1) / X = (y - y_1) / Y = (z - z_1) / Z,
+    F_1(x_1, y_1, z_1) = 0,
+    F_2(x_1, y_1, z_1) = 0,
+  )
+$
 
 #v(0.7cm)
 Some special cases of cylinders (see @fig:CylinderSurface):
@@ -727,22 +765,30 @@ When a plane intersects a elliptical cylinder to form an ellipse (or a circle), 
 
 Cone can be expressed as:
 $ {x, y, z | F(x, y, z) = 0} $
-$ = union.big_(x_1, y_1, z_1) in Gamma {x, y, z | (x - x_0) / (x_1 - x_0) = (y - y_0) / (y_1 - y_0) = (z - z_0) / (z_1 - z_0)} $
-$ xlongequal^(text("directrix ") Gamma: bold(r)(u) = (x(u), y(u), z(u)))
-  {bold(r) | bold(r) = bold(r)_0 + v (bold(r)(u) - bold(r)_0), quad u, v in bb(R)} $
-$ xlongequal^(text("parametric form"))
+$
+  = union.big_(x_1, y_1, z_1) in Gamma {x, y, z | (x - x_0) / (x_1 - x_0) = (y - y_0) / (y_1 - y_0) = (z - z_0) / (z_1 - z_0)}
+$
+$
+  xlongequal^(text("directrix ") Gamma: bold(r)(u) = (x(u), y(u), z(u)))
+  {bold(r) | bold(r) = bold(r)_0 + v (bold(r)(u) - bold(r)_0), quad u, v in bb(R)}
+$
+$
+  xlongequal^(text("parametric form"))
   {x, y, z | cases(
-    x = x_0 + v (x(u) - x_0),
-    y = y_0 + v (y(u) - y_0),
-    z = z_0 + v (z(u) - z_0),
-  ) quad u, v in bb(R)}. $
+      x = x_0 + v (x(u) - x_0),
+      y = y_0 + v (y(u) - y_0),
+      z = z_0 + v (z(u) - z_0),
+    ) quad u, v in bb(R)}.
+$
 
 To solve the equation of a cone,
-$ cases(
-  (x - x_0) / (x_1 - x_0) = (y - y_0) / (y_1 - y_0) = (z - z_0) / (z_1 - z_0),
-  F_1(x_1, y_1, z_1) = 0,
-  F_2(x_1, y_1, z_1) = 0,
-) $
+$
+  cases(
+    (x - x_0) / (x_1 - x_0) = (y - y_0) / (y_1 - y_0) = (z - z_0) / (z_1 - z_0),
+    F_1(x_1, y_1, z_1) = 0,
+    F_2(x_1, y_1, z_1) = 0,
+  )
+$
 
 #v(0.7cm)
 
@@ -769,11 +815,13 @@ $ cases(
 
 Surface of revolution can be expressed as:
 $ {x, y, z | F(x, y, z) = 0} $
-$ = union.big_(x_1, y_1, z_1) in Gamma
+$
+  = union.big_(x_1, y_1, z_1) in Gamma
   {x, y, z | cases(
-    X(x - x_1) + Y(y - y_1) + Z(z - z_1) = 0,
-    (x - x_0)^2 + (y - y_0)^2 + (z - z_0)^2 = (x_1 - x_0)^2 + (y_1 - y_0)^2 + (z_1 - z_0)^2,
-  )} $
+      X(x - x_1) + Y(y - y_1) + Z(z - z_1) = 0,
+      (x - x_0)^2 + (y - y_0)^2 + (z - z_0)^2 = (x_1 - x_0)^2 + (y_1 - y_0)^2 + (z_1 - z_0)^2,
+    )}
+$
 
 Taking the plane of the directrix as the coordinate plane and the axis of rotation as the coordinate axis,
 the equation of the surface of revolution assumes a special form (see @fig:SurfaceOfRevolution).
@@ -786,10 +834,12 @@ the equation of the surface of revolution assumes a special form (see @fig:Surfa
 ) <fig:SurfaceOfRevolution>
 
 As shown in the figure, the generatrix is
-$ Gamma: cases(
-  F(y, z) = 0,
-  x = 0,
-) $
+$
+  Gamma: cases(
+    F(y, z) = 0,
+    x = 0,
+  )
+$
 The equation obtained by rotating around the $y$-axis is
 $ F(y, plus.minus sqrt(x^2 + z^2)) = 0. $
 Similarly, the equation obtained by rotating around the $z$-axis is
@@ -803,10 +853,12 @@ it is also possible to determine in reverse whether an equation represents a sur
 Some special cases of surfaces of revolution:
 
 *Rotate ellipse*
-$ Gamma: cases(
-  x^2 / a^2 + y^2 / b^2 = 1, quad (a > b),
-  z = 0,
-) $
+$
+  Gamma: cases(
+    x^2 / a^2 + y^2 / b^2 = 1, quad (a > b),
+    z = 0,
+  )
+$
 - around $x$-axis (long axis): $x^2 / a^2 + y^2 / b^2 + z^2 / b^2 = 1$ (prolate spheroid)
 - around $y$-axis (short axis): $x^2 / a^2 + y^2 / b^2 + z^2 / a^2 = 1$ (oblate spheroid)
 
@@ -820,10 +872,12 @@ $ Gamma: cases(
 ) <fig:Ellipsoids>
 
 *Rotate hyperbola*
-$ Gamma: cases(
-  y^2 / b^2 - z^2 / c^2 = 1, quad (b > c),
-  x = 0,
-) $
+$
+  Gamma: cases(
+    y^2 / b^2 - z^2 / c^2 = 1, quad (b > c),
+    x = 0,
+  )
+$
 - around $y$-axis (real axis): $y^2 / b^2 - x^2 / c^2 - z^2 / b^2 = 1$
   (two-sheet hyperboloid)
 - around $z$-axis (unreal axis): $x^2 / b^2 + y^2 / b^2 - z^2 / c^2 = 1$
@@ -839,10 +893,12 @@ $ Gamma: cases(
 ) <fig:Hyperboloids>
 
 *Rotate parabola*
-$ Gamma: cases(
-  y^2 = 2 p z,
-  x = 0,
-) $
+$
+  Gamma: cases(
+    y^2 = 2 p z,
+    x = 0,
+  )
+$
 around $z$-axis (axis of symmetry): $x^2 + y^2 = 2 p z$ (paraboloid)
 (see @fig:paraboloid).
 
@@ -854,10 +910,12 @@ around $z$-axis (axis of symmetry): $x^2 + y^2 = 2 p z$ (paraboloid)
 ) <fig:paraboloid>
 
 *Rotate circle*
-$ Gamma: cases(
-  (y - b)^2 + z^2 = a^2 quad (b > a > 0),
-  x = 0,
-) $
+$
+  Gamma: cases(
+    (y - b)^2 + z^2 = a^2 quad (b > a > 0),
+    x = 0,
+  )
+$
 around $z$-axis: $(x^2 + y^2 + z^2 + b^2 - a^2)^2 = 4 b^2 (x^2 + y^2)$ (torus)
 (see @fig:torus).
 
@@ -883,11 +941,13 @@ is called an ellipsoid or an ellipsoidal surface,
 and the equation is called the standard equation.
 
 The parametric equations of the ellipsoid are:
-$ cases(
-  x = a cos theta cos psi,
-  y = b cos theta sin psi,
-  z = c sin theta,
-) quad -pi / 2 <= theta <= pi / 2, quad 0 <= psi <= 2 pi. $
+$
+  cases(
+    x = a cos theta cos psi,
+    y = b cos theta sin psi,
+    z = c sin theta,
+  ) quad -pi / 2 <= theta <= pi / 2, quad 0 <= psi <= 2 pi.
+$
 
 Any ellipsoid with two equal axes is necessarily a spheroid,
 and an ellipsoid with three equal axes is a sphere.
@@ -896,8 +956,10 @@ The surface can be studied by *the method of parallel sections*, i.e.,
 by using the cross-sections of parallel planes to study the shape of the surface.
 
 Use a set of parallel planes $z = h$ to section the ellipsoid (@fig:Ellipsoid1), i.e.,
-$ {x, y, z | F(x, y, z) = 0} =
-  union.big_(-h <= z <= h) {x, y | x^2 / a^2 + y^2 / b^2 = 1 - h^2 / c^2}. $
+$
+  {x, y, z | F(x, y, z) = 0} =
+  union.big_(-h <= z <= h) {x, y | x^2 / a^2 + y^2 / b^2 = 1 - h^2 / c^2}.
+$
 Obviously, when $abs(h) = c$, the section is a point;
 when $abs(h) < c$, the section is an ellipse.
 The other two methods of sectioning are similar.
@@ -918,8 +980,10 @@ is called a one-sheet hyperboloid.
 
 #set enum(numbering: "i.")
 + Use a set of parallel planes $z = h$ to section the one-sheet hyperboloid (@fig:OneSheetHyperboloid), i.e.,
-  $ {x, y, z | F(x, y, z) = 0} =
-    union.big_(-oo < z < oo) {x, y | x^2 / a^2 + y^2 / b^2 = 1 + h^2 / c^2}. $
+  $
+    {x, y, z | F(x, y, z) = 0} =
+    union.big_(-oo < z < oo) {x, y | x^2 / a^2 + y^2 / b^2 = 1 + h^2 / c^2}.
+  $
   The section is always an ellipse.
 
   #figure(
@@ -931,21 +995,27 @@ is called a one-sheet hyperboloid.
 
 + Use a set of parallel planes $y = h$ to section the one-sheet hyperboloid (@fig:OneSheetHyperboloid2),
   the section is
-  $ cases(
-    x^2 / a^2 + z^2 / c^2 = 1 - h^2 / b^2,
-    y = h,
-  ) $
+  $
+    cases(
+      x^2 / a^2 + z^2 / c^2 = 1 - h^2 / b^2,
+      y = h,
+    )
+  $
   When $abs(h) < b$, the section is a hyperbola; \
   when $abs(h) = b$, the section is two parallel lines, i.e.,
-  $ cases(
-    x / a plus.minus z / c = 0,
-    y = b,
-  ) $
+  $
+    cases(
+      x / a plus.minus z / c = 0,
+      y = b,
+    )
+  $
   or
-  $ cases(
-    x / a plus.minus z / c = 0,
-    y = -b,
-  ) $
+  $
+    cases(
+      x / a plus.minus z / c = 0,
+      y = -b,
+    )
+  $
   when $abs(h) > b$, the section is a hyperbola.
 
   #figure(
@@ -965,10 +1035,12 @@ is called a two-sheet hyperboloid.
 #v(0.7cm)
 Use a set of parallel planes $z = h$ ($abs(h) >= c$) to section the two-sheet hyperboloid (@fig:TwoSheetHyperboloid),
 the section is
-$ cases(
-  x^2 / a^2 + y^2 / b^2 = 1 + h^2 / c^2,
-  z = h,
-) $
+$
+  cases(
+    x^2 / a^2 + y^2 / b^2 = 1 + h^2 / c^2,
+    z = h,
+  )
+$
 When $abs(h) > c$, the section is an ellipse; \
 when $abs(h) = c$, the section is a point.
 
@@ -992,10 +1064,12 @@ is called an elliptic paraboloid.
   when $h = 0$, the section is a point.
 + Use a set of parallel planes $y = h$ to section the elliptic paraboloid (@fig:EllipticParaboloid),
   the section is a parabola, whose equation is
-  $ cases(
-    x^2 = 2 a^2 (z - h / (2 b^2)),
-    y = h,
-  ) $
+  $
+    cases(
+      x^2 = 2 a^2 (z - h / (2 b^2)),
+      y = h,
+    )
+  $
 
   #figure(
     image("img/elliptic-paraboloid.png", width: 30%),
@@ -1014,17 +1088,21 @@ is called a hyperbolic paraboloid, or a saddle surface.
 
 + Use a set of parallel planes $z = h$ to section the hyperbolic paraboloid (@fig:HyperbolicParaboloid1).
   When $h != 0$, the section is a hyperbola
-  $ cases(
-    x^2 / (2 a^2 h) - y^2 / (2 b^2 h) = 1,
-    z = h,
-  ) $
+  $
+    cases(
+      x^2 / (2 a^2 h) - y^2 / (2 b^2 h) = 1,
+      z = h,
+    )
+  $
   and if $h > 0$, the real axis of hyperbola is parallel to the $x$-axis;
   if $h < 0$, the real axis of hyperbola is parallel to the $y$-axis; \
   when $h = 0$, the section is two lines intersecting at the origin, i.e.,
-  $ cases(
-    x / a plus.minus y / b = 0,
-    z = 0,
-  ) $
+  $
+    cases(
+      x / a plus.minus y / b = 0,
+      z = 0,
+    )
+  $
 
   #figure(
     image("img/hyperbolic-paraboloid1.png", width: 30%),
@@ -1035,10 +1113,12 @@ is called a hyperbolic paraboloid, or a saddle surface.
 
 + Use a set of parallel planes $y = h$ to section the hyperbolic paraboloid (@fig:HyperbolicParaboloid2),
   the section is a parabola, whose equation is
-  $ cases(
-    x^2 = 2 a^2 (z + h / (2 b^2)),
-    y = h,
-  ) $
+  $
+    cases(
+      x^2 = 2 a^2 (z + h / (2 b^2)),
+      y = h,
+    )
+  $
 
   #figure(
     image("img/hyperbolic-paraboloid2.png", width: 30%),
@@ -1096,13 +1176,15 @@ is called a hyperbolic paraboloid, or a saddle surface.
 ] <def:conic-section>
 
 The equation above can be written in matrix form as
-#eq[
+#eq[$
   bold(x)^T A bold(x) + 2 bold(b)^T bold(x) + a_0 = 0,
-] <eq:conic-general>
+$] <eq:conic-general>
 where
-$ A = mat(a_(11), a_(12); a_(12), a_(22)), quad
+$
+  A = mat(a_(11), a_(12); a_(12), a_(22)), quad
   bold(b) = mat(a_1; a_2), quad
-  bold(x) = mat(x; y). $
+  bold(x) = mat(x; y).
+$
 
 #note[
   The matrix $A$ is a real symmetric $2 times 2$ matrix, hence orthogonally diagonalizable.
@@ -1155,9 +1237,9 @@ The three standard forms correspond to ellipses, hyperbolas, and parabolas.
 #definition(name: "Ellipse")[
   An *ellipse* with semi-major axis $a$ and semi-minor axis $b$ ($a > b > 0$)
   is the locus of points $(x, y)$ satisfying the *standard equation*:
-  #eq[
+  #eq[$
     x^2 / a^2 + y^2 / b^2 = 1.
-  ] <eq:ellipse-standard>
+  $] <eq:ellipse-standard>
 
   The ellipse has:
   - *Center*: the origin $O$.
@@ -1193,9 +1275,9 @@ The three standard forms correspond to ellipses, hyperbolas, and parabolas.
 #definition(name: "Hyperbola")[
   A *hyperbola* with semi-transverse axis $a > 0$ and semi-conjugate axis $b > 0$
   is the locus of points $(x, y)$ satisfying the *standard equation*:
-  #eq[
+  #eq[$
     x^2 / a^2 - y^2 / b^2 = 1.
-  ] <eq:hyperbola-standard>
+  $] <eq:hyperbola-standard>
 
   The hyperbola has:
   - *Center*: the origin $O$.
@@ -1230,9 +1312,9 @@ The three standard forms correspond to ellipses, hyperbolas, and parabolas.
 #definition(name: "Parabola")[
   A *parabola* with focal parameter $p > 0$ is the locus of points $(x, y)$ satisfying
   the *standard equation*:
-  #eq[
+  #eq[$
     y^2 = 2 p x.
-  ] <eq:parabola-standard>
+  $] <eq:parabola-standard>
 
   The parabola has:
   - *Vertex*: the origin $O$.
@@ -1353,8 +1435,10 @@ eliminates one linear term and reduces the other, yielding $a (y'')^2 + 2 p x'' 
 #definition(name: "Orthogonal Invariants")[
   The following three quantities are invariant under rotations and translations
   of the coordinate system, and are called the *orthogonal invariants* of the conic:
-  $ I_1 = a_(11) + a_(22), quad I_2 = mat(delim: "|", a_(11), a_(12); a_(12), a_(22)), quad
-    I_3 = mat(delim: "|", a_(11), a_(12), a_1; a_(12), a_(22), a_2; a_1, a_2, a_0). $
+  $
+    I_1 = a_(11) + a_(22), quad I_2 = mat(delim: "|", a_(11), a_(12); a_(12), a_(22)), quad
+    I_3 = mat(delim: "|", a_(11), a_(12), a_1; a_(12), a_(22), a_2; a_1, a_2, a_0).
+  $
 ] <def:invariants>
 
 #theorem(name: "Classification by Invariants")[
@@ -1383,7 +1467,9 @@ eliminates one linear term and reduces the other, yielding $a (y'')^2 + 2 p x'' 
     Compute the invariants:
     $ I_1 = 5 + 5 = 10, $
     $ I_2 = mat(delim: "|", 5, -3; -3, 5) = 25 - 9 = 16 > 0, $
-    $ I_3 = mat(delim: "|", 5, -3, 11; -3, 5, -11; 11, -11, 28) = 5(140 - 121) + 3(-84 + 121) + 11(33 - 55) = 95 - 141 - 242 = -288 != 0. $
+    $
+      I_3 = mat(delim: "|", 5, -3, 11; -3, 5, -11; 11, -11, 28) = 5(140 - 121) + 3(-84 + 121) + 11(33 - 55) = 95 - 141 - 242 = -288 != 0.
+    $
 
     Since $I_2 > 0$ and $I_3 != 0$, the conic is an *ellipse*.
 
