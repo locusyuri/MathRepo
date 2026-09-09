@@ -1087,15 +1087,312 @@ is called a hyperbolic paraboloid, or a saddle surface.
 
 == General Equation of Conic Sections // 圆锥曲线的一般方程
 
+#definition(name: "Conic Section")[
+  A *conic section* (or *conic*) is a curve in $bb(R)^2$ described by a general
+  quadratic equation in two variables:
+  $ a_(11) x^2 + 2 a_(12) x y + a_(22) y^2 + 2 a_1 x + 2 a_2 y + a_0 = 0, $
+  where $a_(11), a_(22), a_(12)$ are not all zero.
+  The set of all conic sections is called *quadric curves*.
+] <def:conic-section>
+
+The equation above can be written in matrix form as
+#eq[
+  bold(x)^T A bold(x) + 2 bold(b)^T bold(x) + a_0 = 0,
+] <eq:conic-general>
+where
+$ A = mat(a_(11), a_(12); a_(12), a_(22)), quad
+  bold(b) = mat(a_1; a_2), quad
+  bold(x) = mat(x; y). $
+
+#note[
+  The matrix $A$ is a real symmetric $2 times 2$ matrix, hence orthogonally diagonalizable.
+  This fact underlies the simplification method of §6.4 and is treated in the *Algèbre Linéaire* note
+  (chapter on quadratic forms and spectral theorem).
+]
+
+#theorem(name: "Dandelin's Theorem")[
+  The intersection of a right circular cone with a plane that does not pass through the vertex
+  is a conic section. Specifically:
+  - If the plane intersects only one nappe and is not parallel to a generator, the curve is an *ellipse*
+    (a *circle* when the plane is perpendicular to the axis).
+  - If the plane is parallel to exactly one generator, the curve is a *parabola*.
+  - If the plane intersects both nappes, the curve is a *hyperbola*.
+] <thm:dandelin>
+
+#proof[
+  The proof uses *Dandelin spheres*: spheres inscribed in the cone and tangent to the cutting plane.
+  The tangent point of a Dandelin sphere with the plane is a *focus* of the conic;
+  the intersection of the cone's base plane with the cutting plane is the corresponding *directrix*.
+  One shows that the ratio of distances from any point on the curve to the focus and to the directrix
+  is constant (the *eccentricity* $e$), which recovers the focus-directrix definition of conics.
+  The three cases (ellipse, parabola, hyperbola) correspond to $e < 1$, $e = 1$, $e > 1$ respectively.
+  The full geometric argument is omitted here.
+]
+
 #figure(
   image("img/ConicRelation.png", width: 80%),
+  caption: [Five types of conic sections: circle, ellipse, parabola, hyperbola, and degenerate cases.],
   placement: auto,
   supplement: [Fig.],
-)
+) <fig:conic-relation>
+
+== Standard Forms of Conic Sections // 圆锥曲线的标准方程
+
+Using the focus-directrix definition, or equivalently via the matrix diagonalization of
+@eq:conic-general, every non-degenerate conic section can be reduced to one of three
+standard forms under a suitable rotation and translation of the coordinate axes.
+The three standard forms correspond to ellipses, hyperbolas, and parabolas.
+
+#figure(
+  image("img/conic-standard-forms.svg", width: 80%),
+  caption: [Standard forms of the three non-degenerate conic sections: ellipse, hyperbola, and parabola.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:standard-forms>
+
+=== Ellipse // 椭圆
+
+#definition(name: "Ellipse")[
+  An *ellipse* with semi-major axis $a$ and semi-minor axis $b$ ($a > b > 0$)
+  is the locus of points $(x, y)$ satisfying the *standard equation*:
+  #eq[
+    x^2 / a^2 + y^2 / b^2 = 1.
+  ] <eq:ellipse-standard>
+
+  The ellipse has:
+  - *Center*: the origin $O$.
+  - *Foci*: $F_(plus.minus 1) = (plus.minus c, 0)$, where $c = sqrt(a^2 - b^2)$.
+  - *Eccentricity*: $e = c / a$ with $0 < e < 1$.
+  - *Directrices*: $x = plus.minus a^2 / c = plus.minus a / e$.
+] <def:ellipse>
+
+#property(name: "Properties of the Ellipse")[
+  For the ellipse @eq:ellipse-standard:
+  - The sum of distances from any point on the ellipse to the two foci is constant: $|P F_1| + |P F_2| = 2a$.
+  - The vertices are at $(plus.minus a, 0)$ and $(0, plus.minus b)$.
+  - When $a = b$, the ellipse degenerates into a circle of radius $a$.
+] <prop:ellipse-standard>
+
+#example(name: "Standard form of an ellipse")[
+  Identify the type, center, foci, and eccentricity of the curve $4 x^2 + 9 y^2 - 36 = 0$.
+  <ex:ellipse-standard>
+
+  #solution[
+    Divide both sides by $36$:
+    $ x^2 / 9 + y^2 / 4 = 1, $
+    which matches @eq:ellipse-standard with $a = 3$, $b = 2$.
+    The curve is an ellipse centered at the origin with
+    $c = sqrt(9 - 4) = sqrt(5)$,
+    foci $F_(plus.minus 1) = (plus.minus sqrt(5), 0)$,
+    and eccentricity $e = sqrt(5) / 3$.
+  ]
+]
+
+=== Hyperbola // 双曲线
+
+#definition(name: "Hyperbola")[
+  A *hyperbola* with semi-transverse axis $a > 0$ and semi-conjugate axis $b > 0$
+  is the locus of points $(x, y)$ satisfying the *standard equation*:
+  #eq[
+    x^2 / a^2 - y^2 / b^2 = 1.
+  ] <eq:hyperbola-standard>
+
+  The hyperbola has:
+  - *Center*: the origin $O$.
+  - *Foci*: $F_(plus.minus 1) = (plus.minus c, 0)$, where $c = sqrt(a^2 + b^2)$.
+  - *Eccentricity*: $e = c / a > 1$.
+  - *Asymptotes*: the two lines $y = plus.minus (b / a) x$.
+  - *Directrices*: $x = plus.minus a^2 / c = plus.minus a / e$.
+] <def:hyperbola>
+
+#property(name: "Properties of the Hyperbola")[
+  For the hyperbola @eq:hyperbola-standard:
+  - The difference of distances from any point on the hyperbola to the two foci is constant:
+    $abs(|P F_1| - |P F_2|) = 2a$.
+  - The vertices are at $(plus.minus a, 0)$.
+  - The hyperbola has two branches, each approaching the asymptotes $y = plus.minus (b / a) x$ as $x -> plus.minus infinity$.
+] <prop:hyperbola-standard>
+
+#example(name: "Asymptotes of a hyperbola")[
+  Find the asymptotes and foci of the hyperbola $9 x^2 - 16 y^2 = 144$.
+  <ex:hyperbola-asymptote>
+
+  #solution[
+    Divide by $144$:
+    $ x^2 / 16 - y^2 / 9 = 1, $
+    so $a = 4$, $b = 3$. The asymptotes are $y = plus.minus (3 / 4) x$.
+    The foci are at $c = sqrt(16 + 9) = 5$, i.e., $F_(plus.minus 1) = (plus.minus 5, 0)$.
+  ]
+]
+
+=== Parabola // 抛物线
+
+#definition(name: "Parabola")[
+  A *parabola* with focal parameter $p > 0$ is the locus of points $(x, y)$ satisfying
+  the *standard equation*:
+  #eq[
+    y^2 = 2 p x.
+  ] <eq:parabola-standard>
+
+  The parabola has:
+  - *Vertex*: the origin $O$.
+  - *Focus*: $F = (p / 2, 0)$.
+  - *Directrix*: $x = -p / 2$.
+  - *Eccentricity*: $e = 1$.
+  - *Axis of symmetry*: the $x$-axis.
+] <def:parabola>
+
+#property(name: "Properties of the Parabola")[
+  For the parabola @eq:parabola-standard:
+  - The distance from any point on the parabola to the focus equals its distance to the directrix.
+  - The parabola opens to the right (for $p > 0$) or to the left (for $p < 0$).
+  - Other standard orientations: $x^2 = 2 p y$ (axis along $y$-axis, focus at $(0, p/2)$).
+] <prop:parabola-standard>
+
+#note[
+  The three conic types are unified by the *focus-directrix definition*:
+  the locus of points where the ratio of distances to a focus and a directrix
+  equals a constant $e$ (the eccentricity):
+  - $0 < e < 1$: ellipse
+  - $e = 1$: parabola
+  - $e > 1$: hyperbola
+]
 
 == Conic Sections and Lines // 圆锥曲线与直线
 
+=== Intersection // 相交
+
+#property(name: "Line-Conic Intersection")[
+  To find the intersection of a line
+  $ x = x_0 + t l, quad y = y_0 + t m quad (t in bb(R)) $
+  with a conic @eq:conic-general, substitute the parametric equations into the conic equation
+  and obtain a quadratic in $t$:
+  $ a_t t^2 + b_t t + c_t = 0. $
+  The discriminant $Delta = b_t^2 - 4 a_t c_t$ determines the number of intersection points:
+  - $Delta > 0$: two distinct intersection points (secant line);
+  - $Delta = 0$: one intersection point of multiplicity two (tangent line);
+  - $Delta < 0$: no real intersection points (exterior line).
+] <prop:line-intersection>
+
+=== Tangent Lines // 切线
+
+#definition(name: "Tangent Line")[
+  A line $ell$ is a *tangent line* to a conic at a point $P_0$ on the conic
+  if $ell$ intersects the conic at $P_0$ with multiplicity two (i.e., $Delta = 0$).
+] <def:tangent-line>
+
+#theorem(name: "Tangent Line Equation")[
+  Let $P_0(x_0, y_0)$ be a point on a conic. The *tangent line* to the conic at $P_0$
+  is obtained from the conic equation by the *substitution rule*:
+  - Replace $x^2 -> x x_0$, $y^2 -> y y_0$, $x y -> (x y_0 + y x_0) / 2$,
+    $x -> (x + x_0) / 2$, $y -> (y + y_0) / 2$.
+] <thm:tangent-condition>
+
+#proof[
+  The substitution rule follows from the fact that the tangent is the *polar line* of $P_0$ with respect to the conic.
+  Algebraically, translating the origin to $P_0$ via $x = x_0 + u$, $y = y_0 + v$ and expanding the conic equation,
+  the linear terms vanish because $P_0$ lies on the conic;
+  the remaining linear approximation $alpha u + beta v = 0$ gives the tangent direction.
+  Re-substituting $u = x - x_0$, $v = y - y_0$ yields the substitution rule.
+]
+
+#example(name: "Tangent to an ellipse")[
+  Find the tangent line to the ellipse $x^2 / 4 + y^2 / 9 = 1$ at $P_0(1, 3 sqrt(3) / 2)$.
+  <ex:tangent-line>
+
+  #solution[
+    Apply the substitution rule to $x^2 / 4 + y^2 / 9 = 1$ at $P_0(1, 3 sqrt(3) / 2)$:
+    $ (x dot 1) / 4 + (y dot (3 sqrt(3) / 2)) / 9 = 1, $
+    i.e.,
+    $ x / 4 + (sqrt(3) y) / 6 = 1. $
+    Multiplying by $12$: $3 x + 2 sqrt(3) y - 12 = 0$.
+  ]
+]
+
+#figure(
+  image("img/tangent-construction.svg", width: 50%),
+  caption: [Tangent line to an ellipse at a point $P_0$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:tangent-construction>
+
 == Simplification of Conic Equations // 圆锥曲线方程的化简
 
+A general conic @eq:conic-general can be simplified through a *coordinate transformation*
+consisting of a *rotation* (to eliminate the cross term $x y$) followed by a *translation*
+(to eliminate the linear terms). The result is one of the standard forms of §6.2.
+
+=== Rotation: Eliminating the Cross Term // 旋转变换：消交叉项
+
+Under a rotation of the coordinate axes by angle $theta$,
+$ x = x' cos theta - y' sin theta, quad y = x' sin theta + y' cos theta, $
+the cross term $2 a_(12) x y$ is eliminated when
+$ cot 2 theta = (a_(11) - a_(22)) / (2 a_(12)). $
+After rotation, the equation becomes
+$ a'_(11) (x')^2 + a'_(22) (y')^2 + 2 a'_1 x' + 2 a'_2 y' + a_0 = 0, $
+with no $x' y'$ term.
+
+#note[
+  The rotation angle $theta$ is determined by the eigenvalues of the matrix $A$;
+  the new coefficients $a'_(11), a'_(22)$ are precisely these eigenvalues.
+  This is the geometric content of the spectral theorem for symmetric matrices
+  (see *Algèbre Linéaire*, chapter on the spectral theorem).
+]
+
+=== Translation: Eliminating Linear Terms // 平移变换：消一次项
+
+After rotation, if $a'_(11) a'_(22) != 0$ (the central conic case), a translation
+$ x' = x'' + h, quad y' = y'' + k $
+eliminates the linear terms, yielding
+$ a'_(11) (x'')^2 + a'_(22) (y'')^2 + f = 0. $
+If one of $a'_(11), a'_(22)$ is zero (the parabolic case), a single translation
+eliminates one linear term and reduces the other, yielding $a (y'')^2 + 2 p x'' = 0$.
+
+=== Invariant Method // 不变量判别法
+
+#definition(name: "Orthogonal Invariants")[
+  The following three quantities are invariant under rotations and translations
+  of the coordinate system, and are called the *orthogonal invariants* of the conic:
+  $ I_1 = a_(11) + a_(22), quad I_2 = mat(delim: "|", a_(11), a_(12); a_(12), a_(22)), quad
+    I_3 = mat(delim: "|", a_(11), a_(12), a_1; a_(12), a_(22), a_2; a_1, a_2, a_0). $
+] <def:invariants>
+
+#theorem(name: "Classification by Invariants")[
+  The type of a non-degenerate conic @eq:conic-general is determined by the signs of
+  $I_2$ and $I_3$:
+  #table(
+    columns: (auto, auto, auto, 1fr),
+    align: (center, center, center, left),
+    table.header[*$I_2$*][*$I_3$*][*Type*][*Standard form*],
+    [$> 0$], [$!= 0$], [Ellipse], [$x^2 / a^2 + y^2 / b^2 = 1$],
+    [$< 0$], [$!= 0$], [Hyperbola], [$x^2 / a^2 - y^2 / b^2 = 1$],
+    [$= 0$], [$!= 0$], [Parabola], [$y^2 = 2 p x$],
+  )
+  When $I_3 = 0$ the conic degenerates into a point, a pair of lines, or the empty set.
+] <thm:classification-by-invariants>
+
+#example(name: "Simplifying a conic equation")[
+  Identify the type and simplify the equation
+  $ 5 x^2 - 6 x y + 5 y^2 + 22 x - 22 y + 28 = 0. $
+  <ex:simplification>
+
+  #solution[
+    Read off the coefficients: $a_(11) = 5$, $a_(12) = -3$, $a_(22) = 5$,
+    $a_1 = 11$, $a_2 = -11$, $a_0 = 28$.
+
+    Compute the invariants:
+    $ I_1 = 5 + 5 = 10, $
+    $ I_2 = mat(delim: "|", 5, -3; -3, 5) = 25 - 9 = 16 > 0, $
+    $ I_3 = mat(delim: "|", 5, -3, 11; -3, 5, -11; 11, -11, 28) = 5(140 - 121) + 3(-84 + 121) + 11(33 - 55) = 95 - 141 - 242 = -288 != 0. $
+
+    Since $I_2 > 0$ and $I_3 != 0$, the conic is an *ellipse*.
+
+    The rotation angle satisfies $cot 2 theta = (5 - 5) / (2 dot (-3)) = 0$,
+    so $2 theta = pi / 2$, $theta = pi / 4$.
+    After the rotation $x = (x' - y') / sqrt(2)$, $y = (x' + y') / sqrt(2)$
+    and a subsequent translation, the equation reduces to
+    $ (x')^2 / 4 + (y')^2 / 36 = 1. $
+  ]
+]
 
 #bibliography("references.bib")
