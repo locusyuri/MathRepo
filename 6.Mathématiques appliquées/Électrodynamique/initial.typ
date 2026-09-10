@@ -2997,13 +2997,19 @@ where $bold(J)_f$ is the *free* current density, $bold(H) = bold(B) / mu_0 - bol
 //   Section 9.4: Boundary Conditions for Electromagnetic Fields (电磁场边界条件)
 //   Section 9.5: Conservation of Energy: Poynting's Theorem (能量守恒：坡印廷定理)
 
-// --- Part V: Electromagnetic Waves (电磁波) ---
+// --- Part V: Electromagnetic Waves and Optics (电磁波与光学) ---
+//   Note: The mathematical wave machinery (d'Alembert, phasors, superposition,
+//   dispersion, group velocity, Fourier analysis) is shared with the Mécanique
+//   analytique notebook (Ch4). Part V/VI here specialise to EM waves and
+//   develop the optical phenomena (interference, diffraction, polarisation)
+//   that follow from Maxwell's equations.
 
 // Chapter 10: Electromagnetic Waves in Vacuum (真空中的电磁波)
 //   Section 10.1: Wave Equation from Maxwell's Equations (由麦克斯韦方程组导出波动方程)
 //   Section 10.2: Plane Wave Solutions (平面波解)
-//   Section 10.3: Polarization of Electromagnetic Waves (电磁波的偏振)
-//   Section 10.4: Energy and Momentum of Electromagnetic Waves (电磁波的能量与动量)
+//   Section 10.3: Polarisation States of EM Waves (电磁波的偏振状态：线/圆/椭圆偏振、Jones矢量)
+//   Section 10.4: Polarisation Optics (偏振光学：Malus定律、Brewster角、波片、双折射、Stokes参量)
+//   Section 10.5: Energy and Momentum of Electromagnetic Waves (电磁波的能量与动量)
 
 // Chapter 11: Electromagnetic Waves in Media (介质中的电磁波)
 //   Section 11.1: Wave Equation in Linear Media (线性介质中的波动方程)
@@ -3012,43 +3018,58 @@ where $bold(J)_f$ is the *free* current density, $bold(H) = bold(B) / mu_0 - bol
 //   Section 11.4: Dispersion Relations (色散关系)
 //   Section 11.5: Absorption and Complex Refractive Index (吸收与复折射率)
 
-// Chapter 12: Waveguides and Cavities (波导与谐振腔)
-//   Section 12.1: Waveguides: TE and TM Modes (波导：TE模与TM模)
-//   Section 12.2: Rectangular Waveguide (矩形波导)
-//   Section 12.3: Resonant Cavities (谐振腔)
+// Chapter 12: Interference (干涉) [新增章]
+//   Section 12.1: Coherence and Superposition (相干性与叠加)
+//   Section 12.2: Young's Double-Slit Experiment (杨氏双缝实验)
+//   Section 12.3: Thin-Film Interference (薄膜干涉：等厚、等倾)
+//   Section 12.4: Michelson and Mach-Zehnder Interferometers (迈克尔逊与马赫-曾德尔干涉仪)
+//   Section 12.5: Multiple-Beam Interference and Fabry-Pérot (多光束干涉与法布里-珀罗)
 
-// --- Part VI: Potentials and Radiation (势与辐射) ---
+// Chapter 13: Waveguides and Cavities (波导与谐振腔)
+//   Section 13.1: Waveguides: TE and TM Modes (波导：TE模与TM模)
+//   Section 13.2: Rectangular Waveguide (矩形波导)
+//   Section 13.3: Resonant Cavities (谐振腔)
 
-// Chapter 13: Electromagnetic Potentials (电磁势)
-//   Section 13.1: Scalar and Vector Potentials (标势与矢势)
-//   Section 13.2: Gauge Transformations (规范变换)
-//   Section 13.3: Coulomb Gauge and Lorenz Gauge (库仑规范与洛伦兹规范)
-//   Section 13.4: Retarded Potentials (推迟势)
+// --- Part VI: Potentials, Radiation, and Diffraction (势、辐射与衍射) ---
 
-// Chapter 14: Radiation (辐射)
-//   Section 14.1: Radiation from Point Charges (点电荷的辐射)
-//   Section 14.2: Electric Dipole Radiation (电偶极辐射)
-//   Section 14.3: Magnetic Dipole Radiation (磁偶极辐射)
-//   Section 14.4: Electric Quadrupole Radiation (电四极辐射)
-//   Section 14.5: Larmor Formula (拉莫尔公式)
-//   Section 14.6: Radiation Reaction (辐射反作用)
+// Chapter 14: Electromagnetic Potentials (电磁势)
+//   Section 14.1: Scalar and Vector Potentials (标势与矢势)
+//   Section 14.2: Gauge Transformations (规范变换)
+//   Section 14.3: Coulomb Gauge and Lorenz Gauge (库仑规范与洛伦兹规范)
+//   Section 14.4: Retarded Potentials (推迟势)
 
-// Chapter 15: Scattering and Diffraction (散射与衍射)
-//   Section 15.1: Thomson Scattering (汤姆孙散射)
-//   Section 15.2: Rayleigh Scattering (瑞利散射)
-//   Section 15.3: Diffraction: Kirchhoff's Theory (衍射：基尔霍夫理论)
+// Chapter 15: Radiation (辐射)
+//   Section 15.1: Radiation from Point Charges (点电荷的辐射)
+//   Section 15.2: Electric Dipole Radiation (电偶极辐射)
+//   Section 15.3: Magnetic Dipole Radiation (磁偶极辐射)
+//   Section 15.4: Electric Quadrupole Radiation (电四极辐射)
+//   Section 15.5: Larmor Formula (拉莫尔公式)
+//   Section 15.6: Radiation Reaction (辐射反作用)
+
+// Chapter 16: Optical Diffraction (光学衍射) [新增章，原 §15.3 扩展]
+//   Section 16.1: Huygens-Fresnel Principle (惠更斯-菲涅尔原理)
+//   Section 16.2: Fraunhofer Single-Slit Diffraction (夫琅禾费单缝衍射)
+//   Section 16.3: Fraunhofer Double-Slit and Gratings (夫琅禾费双缝与多缝/光栅)
+//   Section 16.4: Fraunhofer Circular-Aperture Diffraction (夫琅禾费圆孔衍射：Airy斑、分辨率判据)
+//   Section 16.5: Fresnel Diffraction (菲涅尔衍射：半波带法、Cornu蟠线)
+//   Section 16.6: Kirchhoff Diffraction Theory (基尔霍夫衍射理论：统一框架)
+
+// Chapter 17: Scattering (散射) [原 Ch15 拆出]
+//   Section 17.1: Thomson Scattering (汤姆孙散射)
+//   Section 17.2: Rayleigh Scattering (瑞利散射)
+//   Section 17.3: Mie Scattering (米氏散射，可选)
 
 // --- Part VII: Special Relativity and Electrodynamics (狭义相对论与电动力学) ---
 
-// Chapter 16: Special Relativity (狭义相对论)
-//   Section 16.1: Lorentz Transformations (洛伦兹变换)
-//   Section 16.2: Four-Vectors and Minkowski Spacetime (四维矢量与闵可夫斯基时空)
-//   Section 16.3: Relativistic Kinematics (相对论运动学)
-//   Section 16.4: Relativistic Dynamics (相对论动力学)
+// Chapter 18: Special Relativity (狭义相对论)
+//   Section 18.1: Lorentz Transformations (洛伦兹变换)
+//   Section 18.2: Four-Vectors and Minkowski Spacetime (四维矢量与闵可夫斯基时空)
+//   Section 18.3: Relativistic Kinematics (相对论运动学)
+//   Section 18.4: Relativistic Dynamics (相对论动力学)
 
-// Chapter 17: Relativistic Electrodynamics (相对论电动力学)
-//   Section 17.1: Electromagnetic Field Tensor (电磁场张量)
-//   Section 17.2: Covariant Form of Maxwell's Equations (麦克斯韦方程组的协变形式)
-//   Section 17.3: Lorentz Transformation of Fields (电磁场的洛伦兹变换)
-//   Section 17.4: Relativistic Lagrangian and Hamiltonian (相对论拉格朗日量与哈密顿量)
-//   Section 17.5: Invariants of the Electromagnetic Field (电磁场的不变量)
+// Chapter 19: Relativistic Electrodynamics (相对论电动力学)
+//   Section 19.1: Electromagnetic Field Tensor (电磁场张量)
+//   Section 19.2: Covariant Form of Maxwell's Equations (麦克斯韦方程组的协变形式)
+//   Section 19.3: Lorentz Transformation of Fields (电磁场的洛伦兹变换)
+//   Section 19.4: Relativistic Lagrangian and Hamiltonian (相对论拉格朗日量与哈密顿量)
+//   Section 19.5: Invariants of the Electromagnetic Field (电磁场的不变量)

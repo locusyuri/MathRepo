@@ -1192,57 +1192,6 @@ Waves are classified by the direction of particle displacement relative to the p
     where $G$ is the shear modulus and $K$ is the bulk modulus. Since $G < K$ typically, $v_"long" > v_"transe"$ — this is why seismic P-waves (longitudinal) arrive before S-waves (transverse).
 ]
 
-=== Strain and Stress in Elastic Media // 弹性介质中的应变与应力
-
-To understand the restoring forces in a solid, we introduce the concepts of strain (deformation) and stress (internal force per area).
-
-#definition(name: "Three Types of Strain")[
-  - *Linear strain* (拉伸/压缩): $epsilon = Delta L / L$, the fractional change in length.
-  - *Shear strain* (切变): $gamma = Delta x / h = tan theta approx theta$, the angular distortion.
-  - *Bulk strain* (体变): $Delta V / V$, the fractional change in volume.
-]
-
-Each type of strain is related to a corresponding stress through an elastic modulus:
-
-$
-  text("Tensile stress"): sigma = E epsilon, quad
-  text("Shear stress"): tau = G gamma, quad
-  text("Pressure"): p = -K frac(Delta V, V).
-$
-
-Here $E$ is Young's modulus, $G$ the shear modulus, and $K$ the bulk modulus.
-
-=== Poisson's Ratio // 泊松比
-
-When a material is stretched in one direction, it contracts in the perpendicular directions. This coupling is quantified by *Poisson's ratio*:
-
-#definition(name: "Poisson's Ratio")[
-  $
-    nu = - frac(text("lateral strain"), text("axial strain")) = - frac(epsilon_"lat", epsilon_"ax").
-  $
-  For most materials, $0 < nu < 0.5$. Rubber has $nu approx 0.5$ (incompressible), while cork has $nu approx 0$.
-
-  The three elastic moduli are related by: $E = 2 G (1 + nu) = 3 K (1 - 2 nu)$.
-]
-
-#note[
-  Poisson's ratio explains why a stretched rubber band becomes thinner, and why a cork (used in wine bottles) can be pushed in without expanding sideways — $nu approx 0$. The relation between moduli also shows that only two of $(E, G, K, nu)$ are independent.
-]
-
-=== Helmholtz Decomposition: P-waves and S-waves // 亥姆霍兹分解：P波与S波
-
-In a solid, any deformation can be decomposed into a *dilatational* (volume-changing) part and a *distortional* (volume-preserving) part — this is the *Helmholtz decomposition* of the displacement field $bold(u)$:
-
-$
-  bold(u) = nabla phi + nabla times bold(psi), quad nabla dot bold(psi) = 0.
-$
-
-#property(name: "P-waves and S-waves")[
-  - The *irrotational* part $nabla phi$ corresponds to *P-waves* (primary / pressure waves): longitudinal, curl-free ($nabla times bold(u) = 0$). These are the fastest seismic waves.
-  - The *solenoidal* part $nabla times bold(psi)$ corresponds to *S-waves* (secondary / shear waves): transverse, divergence-free ($nabla dot bold(u) = 0$). These cannot propagate through fluids (no shear resistance).
-  - The Helmholtz decomposition shows that P-waves and S-waves propagate *independently* in a homogeneous isotropic elastic medium — they do not mix or convert into each other except at boundaries.
-]
-
 === Travelling Waves // 行波
 
 The simplest and most important special case of d'Alembert's solution is the *harmonic travelling wave*.
@@ -1281,27 +1230,6 @@ $
 $
 
 The complex amplitude $bold(U)$ encodes both the real amplitude $A$ and the initial phase $phi$. This representation makes superposition, differentiation, and impedance calculations straightforward.
-
-=== Reflection and Impedance // 反射与阻抗
-
-When a wave encounters a boundary between two media, part of the energy is reflected and part is transmitted. The determining factor is the *characteristic impedance* of each medium.
-
-#definition(name: "Characteristic Impedance")[
-  For a wave on a string: $Z = mu v = sqrt(T mu)$ (ratio of transverse force to transverse velocity).
-  For a sound wave: $Z = rho v$ (ratio of acoustic pressure to particle velocity).
-]
-
-#theorem(name: "Reflection and Transmission at a Boundary")[
-  At a boundary between two media with impedances $Z_1$ and $Z_2$:
-  $
-    R = frac(Z_1 - Z_2, Z_1 + Z_2) quad (text("amplitude reflection coefficient")),
-    T = frac(2 Z_1, Z_1 + Z_2) quad (text("amplitude transmission coefficient")).
-  $
-  Special cases:
-  - Fixed end ($Z_2 -> infinity$): $R = -1$ (reflected wave inverted, total reflection).
-  - Free end ($Z_2 = 0$): $R = +1$ (reflected wave upright, total reflection).
-  - Impedance matching ($Z_1 = Z_2$): $R = 0$, $T = 1$ (no reflection, perfect transmission).
-]
 
 === Standing Waves // 驻波
 
@@ -1413,6 +1341,91 @@ The normal modes are the *eigenfunctions* of the wave equation with given bounda
   - The Fourier series is the discrete precursor to the Fourier transform, which describes the continuous spectrum of a wave packet.
   - In quantum mechanics, the same "expand in eigenfunctions" strategy solves the Schrödinger equation for bound states.
 ]
+The preceding subsections treat the wave equation and its general mathematical machinery — d'Alembert's solution, complex (phasor) representation, superposition, standing waves, dispersion, group velocity, and Fourier analysis. These concepts are *medium-independent*: they apply equally to mechanical waves, electromagnetic waves, and quantum probability waves. The remaining subsections specialise to *mechanical waves in elastic solids*, where the restoring mechanism is material stress and the wave speed is set by elastic moduli.
+
+=== Strain and Stress in Elastic Media // 弹性介质中的应变与应力
+
+To understand the restoring forces in a solid, we introduce the concepts of strain (deformation) and stress (internal force per area).
+
+#definition(name: "Three Types of Strain")[
+  - *Linear strain* (拉伸/压缩): $epsilon = Delta L / L$, the fractional change in length.
+  - *Shear strain* (切变): $gamma = Delta x / h = tan theta approx theta$, the angular distortion.
+  - *Bulk strain* (体变): $Delta V / V$, the fractional change in volume.
+]
+
+Each type of strain is related to a corresponding stress through an elastic modulus:
+
+$
+  text("Tensile stress"): sigma = E epsilon, quad
+  text("Shear stress"): tau = G gamma, quad
+  text("Pressure"): p = -K frac(Delta V, V).
+$
+
+Here $E$ is Young's modulus, $G$ the shear modulus, and $K$ the bulk modulus.
+
+=== Poisson's Ratio // 泊松比
+
+When a material is stretched in one direction, it contracts in the perpendicular directions. This coupling is quantified by *Poisson's ratio*:
+
+#definition(name: "Poisson's Ratio")[
+  $
+    nu = - frac(text("lateral strain"), text("axial strain")) = - frac(epsilon_"lat", epsilon_"ax").
+  $
+  For most materials, $0 < nu < 0.5$. Rubber has $nu approx 0.5$ (incompressible), while cork has $nu approx 0$.
+
+  The three elastic moduli are related by: $E = 2 G (1 + nu) = 3 K (1 - 2 nu)$.
+]
+
+#note[
+  Poisson's ratio explains why a stretched rubber band becomes thinner, and why a cork (used in wine bottles) can be pushed in without expanding sideways — $nu approx 0$. The relation between moduli also shows that only two of $(E, G, K, nu)$ are independent.
+]
+
+=== Helmholtz Decomposition: P-waves and S-waves // 亥姆霍兹分解：P波与S波
+
+In a solid, any deformation can be decomposed into a *dilatational* (volume-changing) part and a *distortional* (volume-preserving) part — this is the *Helmholtz decomposition* of the displacement field $bold(u)$:
+
+$
+  bold(u) = nabla phi + nabla times bold(psi), quad nabla dot bold(psi) = 0.
+$
+
+#property(name: "P-waves and S-waves")[
+  - The *irrotational* part $nabla phi$ corresponds to *P-waves* (primary / pressure waves): longitudinal, curl-free ($nabla times bold(u) = 0$). These are the fastest seismic waves.
+  - The *solenoidal* part $nabla times bold(psi)$ corresponds to *S-waves* (secondary / shear waves): transverse, divergence-free ($nabla dot bold(u) = 0$). These cannot propagate through fluids (no shear resistance).
+  - The Helmholtz decomposition shows that P-waves and S-waves propagate *independently* in a homogeneous isotropic elastic medium — they do not mix or convert into each other except at boundaries.
+]
+
+=== Reflection and Impedance // 反射与阻抗
+
+When a wave encounters a boundary between two media, part of the energy is reflected and part is transmitted. The determining factor is the *characteristic impedance* of each medium.
+
+#definition(name: "Characteristic Impedance")[
+  For a wave on a string: $Z = mu v = sqrt(T mu)$ (ratio of transverse force to transverse velocity).
+  For a sound wave: $Z = rho v$ (ratio of acoustic pressure to particle velocity).
+]
+
+#theorem(name: "Reflection and Transmission at a Boundary")[
+  At a boundary between two media with impedances $Z_1$ and $Z_2$:
+  $
+    R = frac(Z_1 - Z_2, Z_1 + Z_2) quad (text("amplitude reflection coefficient")),
+    T = frac(2 Z_1, Z_1 + Z_2) quad (text("amplitude transmission coefficient")).
+  $
+  Special cases:
+  - Fixed end ($Z_2 -> infinity$): $R = -1$ (reflected wave inverted, total reflection).
+  - Free end ($Z_2 = 0$): $R = +1$ (reflected wave upright, total reflection).
+  - Impedance matching ($Z_1 = Z_2$): $R = 0$, $T = 1$ (no reflection, perfect transmission).
+]
+
+
+#note[
+  *Scope of this chapter and the road ahead.* This chapter develops oscillations and waves at the level of *classical mechanics and mechanical media*. Two extensions follow in later parts of the notebook series:
+
+  - *Lagrangian small oscillations (Part II of this notebook).* The SHM, damped, and driven sections above will be re-derived systematically from the Lagrangian: coupled oscillators reduce to independent normal modes via diagonalisation of the mass and stiffness matrices, recovering the Fourier / normal-mode structure above as the eigenvalue problem of a linearised system.
+
+  - *Electromagnetic waves and optics (Électrodynamique, Part V/VI).* The *mathematical* wave machinery above — d'Alembert's solution, complex representation, superposition, standing waves, dispersion and group velocity, Fourier analysis — applies verbatim to electromagnetic waves. The *optical* phenomena of interference, diffraction, and polarisation are treated there, since they are properties of EM waves in media and follow from Maxwell's equations. The elastic-medium specialisation above (strain, stress, P/S waves, mechanical impedance) stays here, as it is genuinely mechanical.
+
+  Readers interested in optical interference, diffraction, or polarisation should consult the Électrodynamique notebook directly.
+]
+
 
 // Chapter 5: Celestial Mechanics Foundations (天体力学基础)
 //   Section 5.1: Kepler's Laws (开普勒定律)
