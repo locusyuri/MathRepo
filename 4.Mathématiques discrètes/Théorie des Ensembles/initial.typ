@@ -166,6 +166,7 @@ For a binary relation $R$ on a set $X$, we define the following special properti
 
   The set $X$ is called the *domain* of $f$, and the set $Y$ is called the *codomain* of $f$.
   The set $f(X) = {f(x) | x in X}$ is called the *image* of $f$.
+  When $Y = X$, the mapping $f: X -> X$ is also called a *transformation* on $X$.
 ] <def:mapping>
 
 There are several special types of mappings:
@@ -178,6 +179,12 @@ Mappings can be classified based on their behavior:
 - *Injective (One-to-One)*: A mapping $f: X -> Y$ is *injective* if for every $x_1, x_2 in X$, $f(x_1) = f(x_2) => x_1 = x_2$.
 - *Surjective (Onto)*: A mapping $f: X -> Y$ is *surjective* if for every $y in Y$, there exists an $x in X$ such that $f(x) = y$.
 - *Bijective*: A mapping $f: X -> Y$ is *bijective* if it is both injective and surjective.
+
+#note[
+  A *bijective* transformation is also called a *permutation* of $X$.
+  For a finite set $X$ with cardinality $n$ (the notion of cardinality is studied in a later chapter; here it simply means the number of elements), the set of all transformations on $X$ is denoted $T_X$ and has cardinality $n^n$; in abstract algebra, $T_X$ is called the *transformation monoid*.
+  The set of all permutations on $X$ is denoted $S_X$ and has cardinality $n!$; it is denoted $S_X$ because in abstract algebra it forms the *symmetric group*.
+]
 
 For $A subset X$, let
 $
