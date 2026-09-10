@@ -1267,9 +1267,14 @@
     lang: "en",
   )
 
-  // 正文首行缩进（LaTeX 语义：仅"紧跟另一段落"的新段缩进，display 公式/标题/列表等块后首段不缩进。
+  // 正文首行缩进（LaTeX 语义：仅"紧跟另一段落"的新段缩进，display 公式/标题/图表等块后首段不缩进。
   // theorem-like/note/proof/exercise 组件通过尾部空段落技巧恢复缩进，见 major-box/note/reasoning-box/exercise）
   set par(first-line-indent: (amount: 2em, all: false))
+
+  // 列表后恢复首行缩进（LaTeX 在列表后空行起新段是缩进的；技巧同组件尾部，v(-1.2em) 需与 par.spacing 一致）
+  show list: it => [#it#par[#h(0pt)]#v(-1.2em)]
+  show enum: it => [#it#par[#h(0pt)]#v(-1.2em)]
+  show terms: it => [#it#par[#h(0pt)]#v(-1.2em)]
 
   // ── Chapter: 一级标题 (=) ──
   show heading.where(level: 1): it => {
