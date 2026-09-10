@@ -182,7 +182,9 @@ Mappings can be classified based on their behavior:
 
 #note[
   A *bijective* transformation is also called a *permutation* of $X$.
+
   For a finite set $X$ with cardinality $n$ (the notion of cardinality is studied in a later chapter; here it simply means the number of elements), the set of all transformations on $X$ is denoted $T_X$ and has cardinality $n^n$; in abstract algebra, $T_X$ is called the *transformation monoid*.
+
   The set of all permutations on $X$ is denoted $S_X$ and has cardinality $n!$; it is denoted $S_X$ because in abstract algebra it forms the *symmetric group*.
 ]
 

@@ -259,7 +259,7 @@ from Cayley's theorem to Galois theory — is a study of such maps.
   $S -> S$.
 ] <def:endomorphism-automorphism>
 
-The set of all automorphisms of $S$ is written $"Aut"(S)$; under composition it is closed, contains the identity map, and every element has an inverse (the inverse bijection), so $"Aut"(S)$ is a group — a fact we will use repeatedly once groups are defined in #link(<def:binary-operation>)[Chapter 2].
+The set of all automorphisms of $S$ is written $"Aut"(S)$; under composition it is closed, contains the identity map, and every element has an inverse (the inverse bijection), so $"Aut"(S)$ is a group — a fact we will use repeatedly once groups are defined in #link(<def:group>)[Chapter 2].
 
 #property(name: "Homomorphisms Preserve Identity and Inverses")[
   Let $f: (S, star) -> (T, diamond)$ be a *surjective* homomorphism,
@@ -373,7 +373,7 @@ identifying elements (§1.2), and the arrows between objects that
 preserve structure (§1.3). The axiomatic selection of the most
 important class of objects — associative operation, identity, all
 inverses — is the definition of a group, and it is where
-#link(<def:binary-operation>)[Chapter 2] begins.
+#link(<def:group>)[Chapter 2] begins.
 
 // ==========================================================================
 // Chapter 2: 群的定义与基本性质
@@ -383,17 +383,45 @@ inverses — is the definition of a group, and it is where
 
 Chapter 1 assembled the toolkit: sets with operations (§1.1), the
 quotient construction (§1.2), and structure-preserving maps (§1.3).
-We now make the axiomatic selection promised there. Among all binary
-operations we ask for the least that must be demanded so that
-computation becomes reliable: that products can be rebracketed at
-will (*associativity*), that there is a neutral element to measure
-against (*identity*), and that every element can be undone
-(*inverses*). The answer is the definition of a *group* — and the
-rest of this notebook studies how much structure these three axioms
-buy.
+We now make the axiomatic selection promised there — and we make it
+*one axiom at a time*. Reliability of computation is bought layer by
+layer: that products are defined at all yields a *magma*; adding the
+ability to rebracket products at will (*associativity*) yields a
+*semigroup*; adding a neutral element to measure against
+(*identity*) yields a *monoid*; and adding the guarantee that every
+element can be undone (*inverses*) finally yields a *group*. Each
+level inherits everything from the one below, and the rest of this
+notebook studies how much structure the top level buys.
+
+#definition(name: "Magma")[
+  A *magma* is a pair $(G, star)$ where $star$ is a binary operation
+  on the set $G$ — precisely the structures of
+  #link(<def:binary-operation>)[§1.1]. The only guarantee is
+  *closure*: every product $a star b$ is a defined element of $G$,
+  and nothing more is promised.
+] <def:magma>
+
+#definition(name: "Semigroup")[
+  A *semigroup* is a magma whose operation is *associative*:
+  $(a star b) star c = a star (b star c)$ for all $a, b, c in G$.
+  By generalised associativity (#link(<prop:operation-laws>)[§1.1])
+  the product $a_1 star a_2 star dots star a_n$ is independent of
+  how parentheses are inserted — the first measure of computational
+  reliability.
+] <def:semigroup>
+
+#definition(name: "Monoid")[
+  A *monoid* is a semigroup possessing a two-sided *identity*: an
+  element $e in G$ with $e star a = a star e = a$ for all $a in G$.
+  The identity is unique
+  (#link(<prop:operation-laws-unique>)[§1.1]). Familiar specimens:
+  $(bb(N), +)$ with identity $0$ and $(bb(N), dot)$ with identity
+  $1$.
+] <def:monoid>
 
 #definition(name: "Group")[
-  A *group* is a set $G$ equipped with a binary operation $star$
+  A *group* is a monoid in which every element is *invertible* —
+  equivalently, a set $G$ equipped with a binary operation $star$
   satisfying:
   - (G1) *associativity*: $(a star b) star c = a star (b star c)$
     for all $a, b, c in G$;
@@ -601,11 +629,13 @@ which work.
 #example[
   (Near-misses: why each axiom is needed.)
   - $(bb(N), +)$ is closed and associative with identity $0$, but no
-    positive number has an inverse: (G3) fails, everything else
-    holds.
+    positive number has an inverse: (G3) fails while (G1) and (G2)
+    hold — a *monoid* that is not a group
+    (#link(<def:monoid>)[§2.1]).
   - $(bb(Z), -)$ with $a star b = a - b$ is closed, but not
     associative ($(1 - 2) - 3 = -4$ while $1 - (2 - 3) = 2$) and
-    without identity: (G1) and (G2) fail.
+    without identity: (G1) and (G2) fail, leaving a bare *magma*
+    (#link(<def:magma>)[§2.1]).
   - $(bb(R), dot)$ has identity $1$ and inverses of every $a != 0$,
     but $0$ has none. Deleting $0$ repairs the structure — the
     identity must be invertible *for every element*, with no
@@ -615,8 +645,10 @@ which work.
     $(x star y) star z = z = x star (y star z)$. Every element is a
     *left* identity ($e star y = y$ for all $e$), yet no right
     identity exists ($x star e = e != x$), and no element has a left
-    inverse. A group fails for want of the right-handed half of the
-    axioms — compare #link(<thm:group-equivalent-axioms>)[the
+    inverse. The structure is a *semigroup* stranded one level below
+    a monoid (#link(<def:semigroup>)[§2.1]), and a group fails for
+    want of the right-handed half of the axioms — compare
+    #link(<thm:group-equivalent-axioms>)[the
       equivalent axioms], where the two *left-handed* conditions, held
     *simultaneously*, do suffice.
 ] <ex:non-groups>
