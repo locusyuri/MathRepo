@@ -180,14 +180,12 @@ Mappings can be classified based on their behavior:
 - *Bijective*: A mapping $f: X -> Y$ is *bijective* if it is both injective and surjective.
 
 For $A subset X$, let
-
 $
   chi_A (x) = cases(
     1\, quad x in A\,,
     0\, quad x in.not A.
   )
 $
-
 be the *characteristic function* of set $A$.
 
 #definition(name: "Inverse Mapping and Composition Mappings")[
@@ -204,6 +202,97 @@ be the *characteristic function* of set $A$.
 
   Conversely, if $g: A -> Y$ is a mapping and $A subset X$, an *extension* of $g$ to $X$ is a mapping $f: X -> Y$ such that $f|_A = g$.
 ] <def:restriction-extension>
+
+
+== Equivalence Relations and Quotient Sets // 等价关系与商集
+
+An equivalence relation on a set $S$ — reflexive, symmetric,
+transitive — allows us to *collapse* $S$ into the collection of its
+equivalence classes. This quotient construction is one of the most
+fundamental set-theoretic tools; in algebra it underlies quotient
+groups, quotient rings, and quotient modules.
+
+#definition(name: "Equivalence Class")[
+  Let $R$ be an equivalence relation on $S$ and $a in S$. The
+  *equivalence class* of $a$ is
+  $
+    [a]_R = {x in S | x R a}.
+  $
+  Any $x in [a]_R$ is called a *representative* of the class.
+] <def:equivalence-class>
+
+#property(name: "Basic Properties of Classes")[
+  For all $a, b in S$:
+  - $a in [a]_R$ (in particular every class is non-empty and every
+    element lies in some class);
+  - $a R b$ if and only if $[a]_R = [b]_R$;
+  - $not (a R b)$ if and only if $[a]_R ∩ [b]_R = emptyset$.
+] <prop:equivalence-class-props>
+
+#proof[
+  Reflexivity gives $a in [a]_R$. If $[a]_R = [b]_R$ then
+  $a in [a]_R = [b]_R$ gives $a R b$; conversely if $a R b$ and $x in
+  [a]_R$, then $x R a$ and $a R b$ give $x R b$, so $[a]_R subset.eq
+  [b]_R$, and symmetry reverses the inclusion. The third item follows:
+  if $x$ lies in both classes, then $a R x$ and $x R b$ force $a R b$,
+  reducing to the second item.
+]
+
+So the classes are either *equal* or *disjoint* — never partially
+overlapping. This is exactly what it takes for them to carve $S$ into
+blocks.
+
+#definition(name: "Partition")[
+  A *partition* of a set $S$ is a family ${S_i}_("i in I")$ of
+  non-empty subsets such that
+  $
+    union_(i in I) S_i = S, quad quad S_i ∩ S_j = emptyset
+    quad "for" i != j.
+  $
+] <def:partition>
+
+#theorem(name: "Partition-Class Correspondence")[
+  Every equivalence relation on $S$ determines a partition of $S$,
+  namely its family of equivalence classes; conversely, every
+  partition of $S$ arises from exactly one equivalence relation,
+  namely "$a R b$ if and only if $a$ and $b$ lie in the same block."
+] <thm:partition-correspondence>
+
+#proof[
+  ($R ==>$ partition) Reflexivity covers $S$
+  (#link(<prop:equivalence-class-props>)[first property]); classes are
+  pairwise disjoint: if $[a]_R ∩ [b]_R != emptyset$, the second
+  property forces $[a]_R = [b]_R$ — classes are equal or disjoint,
+  never partially overlapping.
+
+  (partition $==>$ $R$) Let ${S_i}$ be a partition and define $a R b$ if
+  some block contains both. Reflexivity holds since $a$ lies in the
+  block covering it, symmetry is built into "both lie", and
+  transitivity holds because if $a, b$ share one block and $b, c$ share
+  one, then both blocks contain $b$, so they coincide and contain $a$
+  and $c$. Uniqueness is clear: the relation reads off the partition
+  and conversely.
+]
+
+#figure(
+  image("img/partition-quotient.svg", width: 82%),
+  caption: [The quotient construction. Left: the set $S$ carved into
+    pairwise disjoint equivalence classes $[a], [b], [c]$, each
+    shaded region one class. Right: the classes themselves collected
+    as points of the quotient set $S \/ R$. Elements *inside* one
+    class are identified; the quotient set is the set of blocks.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:partition-quotient>
+
+#definition(name: "Quotient Set")[
+  The set of all equivalence classes of $R$ on $S$,
+  $
+    S \/ R = {[a] | a in S},
+  $
+  is the *quotient set* of $S$ by $R$. Its elements are classes, not
+  elements of $S$.
+] <def:quotient-set>
 
 == Order Relations // 序关系
 
@@ -450,95 +539,7 @@ $t = (t_1, dots, t_n)$ where $t_i$ is the value of attribute $A_i$.
   monotone sequences.
 ]
 
-== Equivalence Relations and Quotient Sets // 等价关系与商集
 
-An equivalence relation on a set $S$ — reflexive, symmetric,
-transitive — allows us to *collapse* $S$ into the collection of its
-equivalence classes. This quotient construction is one of the most
-fundamental set-theoretic tools; in algebra it underlies quotient
-groups, quotient rings, and quotient modules.
-
-#definition(name: "Equivalence Class")[
-  Let $R$ be an equivalence relation on $S$ and $a in S$. The
-  *equivalence class* of $a$ is
-  $
-    [a]_R = {x in S | x R a}.
-  $
-  Any $x in [a]_R$ is called a *representative* of the class.
-] <def:equivalence-class>
-
-#property(name: "Basic Properties of Classes")[
-  For all $a, b in S$:
-  - $a in [a]_R$ (in particular every class is non-empty and every
-    element lies in some class);
-  - $a R b$ if and only if $[a]_R = [b]_R$;
-  - $not (a R b)$ if and only if $[a]_R ∩ [b]_R = emptyset$.
-] <prop:equivalence-class-props>
-
-#proof[
-  Reflexivity gives $a in [a]_R$. If $[a]_R = [b]_R$ then
-  $a in [a]_R = [b]_R$ gives $a R b$; conversely if $a R b$ and $x in
-  [a]_R$, then $x R a$ and $a R b$ give $x R b$, so $[a]_R subset.eq
-  [b]_R$, and symmetry reverses the inclusion. The third item follows:
-  if $x$ lies in both classes, then $a R x$ and $x R b$ force $a R b$,
-  reducing to the second item.
-]
-
-So the classes are either *equal* or *disjoint* — never partially
-overlapping. This is exactly what it takes for them to carve $S$ into
-blocks.
-
-#definition(name: "Partition")[
-  A *partition* of a set $S$ is a family ${S_i}_("i in I")$ of
-  non-empty subsets such that
-  $
-    union_(i in I) S_i = S, quad quad S_i ∩ S_j = emptyset
-    quad "for" i != j.
-  $
-] <def:partition>
-
-#theorem(name: "Partition-Class Correspondence")[
-  Every equivalence relation on $S$ determines a partition of $S$,
-  namely its family of equivalence classes; conversely, every
-  partition of $S$ arises from exactly one equivalence relation,
-  namely "$a R b$ if and only if $a$ and $b$ lie in the same block."
-] <thm:partition-correspondence>
-
-#proof[
-  ($R ==>$ partition) Reflexivity covers $S$
-  (#link(<prop:equivalence-class-props>)[first property]); classes are
-  pairwise disjoint: if $[a]_R ∩ [b]_R != emptyset$, the second
-  property forces $[a]_R = [b]_R$ — classes are equal or disjoint,
-  never partially overlapping.
-
-  (partition $==>$ $R$) Let ${S_i}$ be a partition and define $a R b$ if
-  some block contains both. Reflexivity holds since $a$ lies in the
-  block covering it, symmetry is built into "both lie", and
-  transitivity holds because if $a, b$ share one block and $b, c$ share
-  one, then both blocks contain $b$, so they coincide and contain $a$
-  and $c$. Uniqueness is clear: the relation reads off the partition
-  and conversely.
-]
-
-#figure(
-  image("img/partition-quotient.svg", width: 82%),
-  caption: [The quotient construction. Left: the set $S$ carved into
-    pairwise disjoint equivalence classes $[a], [b], [c]$, each
-    shaded region one class. Right: the classes themselves collected
-    as points of the quotient set $S \/ R$. Elements *inside* one
-    class are identified; the quotient set is the set of blocks.],
-  placement: auto,
-  supplement: [Fig.],
-) <fig:partition-quotient>
-
-#definition(name: "Quotient Set")[
-  The set of all equivalence classes of $R$ on $S$,
-  $
-    S \/ R = {[a] | a in S},
-  $
-  is the *quotient set* of $S$ by $R$. Its elements are classes, not
-  elements of $S$.
-] <def:quotient-set>
 
 = Zermelo-Fraenkel Set Theory
 
@@ -962,8 +963,10 @@ right argument.
   + Commutativity: $kappa + lambda = lambda + kappa$, $kappa dot
     lambda = lambda dot kappa$.
   + Associativity and distributivity hold as for cardinals.
-  + *Absorption*: $kappa + lambda = kappa dot lambda = max(kappa,
-    lambda)$ for infinite $kappa, lambda$, provided at least one is
+  + *Absorption*: $kappa + lambda = kappa dot lambda = max(
+      kappa,
+      lambda
+    )$ for infinite $kappa, lambda$, provided at least one is
     nonzero.
   + $kappa^0 = 1$, $kappa^1 = kappa$, $1^kappa = 1$,
     $kappa^(lambda + mu) = kappa^lambda dot kappa^mu$,
