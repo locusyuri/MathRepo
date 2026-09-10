@@ -756,6 +756,9 @@
       ]
     ]
     #v(0.15em)
+    // 空段落技巧：组件后的文本被视为"紧跟段落"而保留 2em 首行缩进
+    // （v(-1.2em) 抵消空段落引入的 par spacing，需与 par.spacing 保持一致）
+    #par[#h(0pt)]#v(-1.2em)
   ]
 }
 
@@ -1019,6 +1022,8 @@
       #body
     ]
     #v(0.1em)
+    // 空段落技巧：见 major-box 内注释
+    #par[#h(0pt)]#v(-1.2em)
   ]
 }
 
@@ -1077,6 +1082,8 @@
       ]
     ]
     #v(0.1em)
+    // 空段落技巧：见 major-box 内注释
+    #par[#h(0pt)]#v(-1.2em)
   ]
 }
 
@@ -1108,6 +1115,8 @@
       #body
     ]
     #v(0.1em)
+    // 空段落技巧：见 major-box 内注释
+    #par[#h(0pt)]#v(-1.2em)
   ]
 }
 
@@ -1258,8 +1267,9 @@
     lang: "en",
   )
 
-  // 正文首行缩进（all: true 强制 block 后首段也缩进，避免 theorem/figure 后第一段丢失缩进）
-  set par(first-line-indent: (amount: 2em, all: true))
+  // 正文首行缩进（LaTeX 语义：仅"紧跟另一段落"的新段缩进，display 公式/标题/列表等块后首段不缩进。
+  // theorem-like/note/proof/exercise 组件通过尾部空段落技巧恢复缩进，见 major-box/note/reasoning-box/exercise）
+  set par(first-line-indent: (amount: 2em, all: false))
 
   // ── Chapter: 一级标题 (=) ──
   show heading.where(level: 1): it => {
