@@ -18,7 +18,7 @@
   subtitle: "A notebook for partial differential equations",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.4.0",
+  version: "v0.5.0",
   extra-info: "This is a notebook for partial differential equations.",
 )
 
@@ -27,24 +27,47 @@
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
-// 主线：基础分类 → 分布理论 → 椭圆 → 抛物 → 双曲 → 进阶专题
-// 共 6 Part、15 Chapter。
+// 主线：基础与分类 → 一阶方程 → 分布与工具 → 椭圆 → 抛物 → 双曲 → 方法与专题
+// 共 7 Part、19 Chapter。
 //
 // 职责边界：
 //   - Fourier 理论 → Analyse Harmonique（交叉引用）
-//   - Sobolev 空间 → Analyse Harmonique（交叉引用）
+//   - Sobolev 空间：嵌入定理等深层理论 → Analyse Harmonique（交叉引用；
+//     W^{k,p} 定义与基本性质在 Ch 11 简述，以支撑弱解与正则性）
 //   - Banach / Hilbert 抽象理论 → Analyse Fonctionnelle（交叉引用）
-//   - 弱形式、Lax-Milgram、Galerkin、变分方法 → Analyse Fonctionnelle（交叉引用）
+//   - 弱形式、Lax-Milgram、Galerkin、变分方法的抽象框架 → Analyse Fonctionnelle（交叉引用；
+//     在椭圆/抛物边值问题中的应用属本笔记）
 //   - 谱理论（抽象部分） → Analyse Fonctionnelle（交叉引用）
 //   - L^p / 测度论 → Analyse Réelle（交叉引用）
 //   - Hamilton-Jacobi 的力学应用 → Mécanique analytique（交叉引用）
-
+//   - 调和函数的复分析视角 → Analyse Complexe（交叉引用）
+//   - 应用 PDE（流体、薛定谔等） → 各专门笔记
+//
+// 去重裁决（相对 v0.4.0）：
+//   - 标量一维守恒律完整保留在 Ch 5（原 Ch 2.4）；Ch 17 只保留系统情形增量
+//   - 基本解统一在 Ch 7（原 Ch 4.4）构造；椭圆 Green 函数章不再重复
+//   - D'Alembert 通解：Ch 2 标准形导出、Ch 15 完整 Cauchy 理论，显式衔接
+//   - 比较原理统一在 Ch 13，非线性单调迭代并入，不再单独成节
+//
 // ==========================================================================
 // Part I — Foundations and Classification (基础与分类)
 // ==========================================================================
-// 设计思路：建立 PDE 的基本语言、适定性概念和分类框架。
-// Ch 2 完整处理一阶 PDE 理论（特征线法、Hamilton-Jacobi、守恒律）。
-// 对应教材：通常占据 PDE 教材的前 2-3 章。
+// 设计思路：建立 PDE 的基本语言、适定性概念与二阶分类框架。
+// Ch 2（分类与标准形）由原 Ch 3 前移：它是三大类型 Part（IV-VI）的共同前置
+// 框架，与 Ch 1 同属「语言层」；原一阶理论独立为 Part II。
+// 对应教材：通常占据 PDE 教材的前 2 章。
+
+// --- Chapter 1: Introduction to PDEs (偏微分方程导论) ---
+
+//   Section 1.1: Basic Concepts and Examples (基本概念与例子)
+//     - PDE 定义、多指标记号、阶与线性分类（线性/半线性/拟线性/完全非线性）
+//     - Laplace、热、波动三大模型方程及物理导出
+//   Section 1.2: Order, Linearity and Superposition (阶、线性与叠加原理)
+//     - 齐次/非齐次、线性算子、叠加原理
+//   Section 1.3: Initial and Boundary Value Problems (初值问题与边值问题)
+//     - Cauchy 问题、Dirichlet/Neumann/Robin 边界条件
+//   Section 1.4: Well-Posedness (适定性)
+//     - Hadamard 三条件、病态例子（椭圆 Cauchy 问题、反向热方程）
 
 = Introduction to PDEs // 偏微分方程导论
 
@@ -336,7 +359,7 @@ The third condition (stability) is particularly important: small changes in the 
   $
     sup_(t in [0, T]) norm(u(dot, t))_(L^2(Omega)) <= norm(g)_(L^2(Omega)) + integral_0^T norm(f(dot, s))_(L^2(Omega)) dif s.
   $
-  This stands in sharp contrast to the backward heat equation (#link(<ex:backward-heat-ill-posed>)[Example above]), where the same estimate fails catastrophically. The full proof requires energy methods developed in #link(<def:heat-equation>)[Ch 9].
+  This stands in sharp contrast to the backward heat equation (#link(<ex:backward-heat-ill-posed>)[Example above]), where the same estimate fails catastrophically. The full proof requires energy methods developed in #link(<def:heat-equation>)[Ch 12].
 ] <prop:heat-well-posed>
 
 #caution(title: "Importance of Well-Posedness")[
@@ -348,415 +371,21 @@ The third condition (stability) is particularly important: small changes in the 
 ]
 
 // ==========================================================================
-// Chapter 2: First-Order PDEs (一阶偏微分方程)
+// Chapter 2: Classification of Second-Order PDEs (二阶偏微分方程分类)
 // ==========================================================================
-
-= First-Order PDEs // 一阶偏微分方程
-
-The theory of first-order PDEs is built around a single unifying idea: _characteristic curves_ along which a PDE reduces to a system of ODEs. This chapter develops the method of characteristics in full generality and applies it to quasilinear equations, Hamilton--Jacobi equations, and conservation laws.
-
-== Quasilinear Equations // 拟线性方程
-
-Consider a first-order PDE with two independent variables:
-
-#eq[$
-  a(x, y, u) (partial u) / (partial x) + b(x, y, u) (partial u) / (partial y) = c(x, y, u).
-$] <eq:quasilinear-pde>
-
-where $u = u(x, y)$ is the unknown function and $a, b, c$ are given functions with $a$ and $b$ not both zero. By #link(<def:pde-linearity-classification>)[§1], this equation is _quasilinear_: it is linear in the first-order derivatives, but the coefficients may depend on $u$ itself.
-
-The left-hand side can be interpreted as a directional derivative:
-$
-  a u_x + b u_y = nabla u dot (a, b).
-$
-The equation states that the directional derivative of $u$ along the vector field $(a, b)$ equals $c$ at every point.
-
-=== Characteristic Equations
-
-The key idea is to find curves along which the PDE becomes an ODE. Introduce a parameter $t$ and construct curves $(x(t), y(t), u(t))$ in three-dimensional space whose tangent vector is parallel to $(a, b, c)$ at each point.
-
-#definition(name: "Characteristic Curves")[
-  The _characteristic curves_ of the quasilinear equation (#link(<eq:quasilinear-pde>)[1]) are the curves $(x(t), y(t), u(t))$ satisfying the _characteristic system_:
-] <def:characteristic-curve>
-
-#eq[$
-  (dif x) / (dif t) = a(x, y, u), quad (dif y) / (dif t) = b(x, y, u), quad (dif u) / (dif t) = c(x, y, u).
-$] <eq:char-system>
-
-Along these curves, the PDE reduces to an ODE.
-
-#lemma(name: "Solution Along Characteristics")[
-  If $u(x,y)$ satisfies (#link(<eq:quasilinear-pde>)[1]), then along any characteristic curve:
-  $
-    (dif u) / (dif t) = c(x(t), y(t), u(t)).
-  $
-] <lem:char-constant>
-
-#proof[
-  By the chain rule:
-  $
-    (dif u) / (dif t) = (partial u) / (partial x) (dif x) / (dif t) + (partial u) / (partial y) (dif y) / (dif t) = a u_x + b u_y = c.
-  $
-]
-
-This lemma is the heart of the method: it converts the PDE into an ODE system along characteristic curves. The existence and uniqueness theory for the Cauchy problem then follows from the corresponding ODE theory (Picard--Lindelöf theorem).
-
-The projection of the characteristic curve onto the $(x, y)$-plane (determined by the first two equations of (#link(<eq:char-system>)[2])) is called the _characteristic baseline_.
-
-#example(name: "Transport Equation")[
-  The simplest first-order PDE is the _transport equation_:
-  $
-    u_t + c u_x = 0, quad c in bb(R).
-  $
-  This is (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = c$, and $c(x,y,u) = 0$ (here the independent variables are $(x, t)$). The characteristic system is:
-  $
-    (dif x) / (dif t) = c, quad (dif u) / (dif t) = 0.
-  $
-  The characteristics are straight lines $x = c t + x_0$ in the $x t$-plane, and $u$ is constant along each line. The general solution is:
-  $
-    u(x, t) = f(x - c t),
-  $
-  where $f$ is an arbitrary differentiable function. The solution represents a wave profile $f$ propagating at speed $c$ without change of shape.
-] <ex:transport-equation>
-
-#note[
-  The transport equation is closely related to the wave equation #link(<def:wave-equation>)[Ch 1]: it is the simplest hyperbolic PDE and serves as a building block for understanding wave propagation. We will revisit it in Ch 3 when we classify second-order PDEs.
-]
-
-The example above illustrates the general strategy: (1) write down the characteristic equations (#link(<eq:char-system>)[2]); (2) solve the ODE system; (3) use the initial data to determine the solution. We formalize this procedure in §2.2.
-
-#note[
-  Although we have presented the theory for two independent variables, the method extends directly to $n$ variables. The characteristic system for a first-order PDE in $n$ independent variables consists of $n + 1$ ODEs, and the same geometric ideas apply.
-]
-
-== Method of Characteristics // 特征线法
-
-We now formalize the procedure illustrated in §2.1 into a systematic method for solving the Cauchy problem for first-order PDEs.
-
-=== The Cauchy Problem
-
-Given the quasilinear equation (#link(<eq:quasilinear-pde>)[1]), the _Cauchy problem_ consists of finding a solution $u(x, y)$ satisfying prescribed values on a curve $Gamma$ in the $(x, y)$-plane.
-
-#definition(name: "Cauchy Problem for First-Order PDE")[
-  Let $Gamma$ be a curve in $bb(R)^2$ parametrized by $(x_0(s), y_0(s))$ for $s in I subset bb(R)$, and let $u_0: I -> bb(R)$ be a given function. The _Cauchy problem_ for (#link(<eq:quasilinear-pde>)[1]) is:
-  $
-    cases(
-      a u_x + b u_y = c(x, y, u), "along characteristics",
-      u(x_0(s), y_0(s)) = u_0(s), "initial data on" Gamma,
-    )
-  $
-  The curve $Gamma$ is called the _initial curve_ (or _base curve_), and $u_0$ is the _initial data_.
-] <def:cauchy-first-order>
-
-=== Solving via Characteristics
-
-The method proceeds in three steps.
-
-*Step 1: Parametrize the initial data.* At each point $(x_0(s), y_0(s))$ on $Gamma$, the characteristic curve passing through this point carries the value $u_0(s)$. This gives the initial conditions for the characteristic system (#link(<eq:char-system>)[2]):
-
-#eq[$
-  x(s, 0) = x_0(s), quad y(s, 0) = y_0(s), quad u(s, 0) = u_0(s).
-$] <eq:char-initial-cond>
-
-*Step 2: Solve the characteristic ODE system.* For each fixed $s$, solve (#link(<eq:char-system>)[2]) with initial conditions (#link(<eq:char-initial-cond>)[3]) to obtain a family of characteristic curves:
-$
-  (x(s, t), y(s, t), u(s, t)).
-$
-
-*Step 3: Invert the projection.* The map $(s, t) |-> (x(s, t), y(s, t))$ sends characteristic labels to points in the plane. If this map is locally invertible, we can solve for $(s, t)$ as functions of $(x, y)$ and substitute into $u(s, t)$ to obtain the solution $u(x, y)$.
-
-=== The Transversality Condition
-
-The invertibility in Step 3 is guaranteed by the implicit function theorem provided the Jacobian is nonzero.
-
-#definition(name: "Non-characteristic Curve")[
-  The initial curve $Gamma$ is said to be _non-characteristic_ at a point $P = (x_0(s), y_0(s))$ if
-  $
-    det (mat(
-      x_0'(s), y_0'(s);
-      a(x_0(s), y_0(s), u_0(s)), b(x_0(s), y_0(s), u_0(s))
-    )) != 0.
-  $
-  Equivalently, the vector $(a, b)$ is not tangent to $Gamma$ at $P$.
-] <def:non-characteristic>
-
-Geometrically, the non-characteristic condition means that the characteristic direction $(a, b)$ is _transverse_ to the initial curve: characteristics cross $Gamma$ rather than running along it.
-
-#theorem(name: "Local Existence and Uniqueness")[
-  Let $a, b, c$ be $C^1$ functions, and let $Gamma$ be a $C^1$ non-characteristic initial curve with $C^1$ initial data $u_0$. Then the Cauchy problem #link(<def:cauchy-first-order>)[1] has a unique $C^1$ solution in a neighborhood of $Gamma$.
-] <thm:cauchy-existence-unique>
-
-#proof[
-  Since $Gamma$ is non-characteristic, the Jacobian
-  $
-    J(s, t) = det (mat(
-      partial x / partial s, partial y / partial s;
-      partial x / partial t, partial y / partial t
-    ))
-  $
-  satisfies $J(s, 0) = x_0'(s) b - y_0'(s) a != 0$ at every point of $Gamma$. By the inverse function theorem, the map $(s, t) |-> (x(s, t), y(s, t))$ is a local diffeomorphism near $t = 0$. The solution $u(x, y) = u(s(x, y), t(x, y))$ is therefore well-defined and $C^1$ in a neighborhood of $Gamma$. Uniqueness follows from the uniqueness of the characteristic ODEs (Picard--Lindelöf theorem).
-]
-
-#example(name: "Cauchy Problem for the Transport Equation")[
-  Consider the transport equation $u_t + c u_x = 0$ with initial data $u(x, 0) = g(x)$. The initial curve is the $x$-axis: $(x_0(s), t_0(s)) = (s, 0)$, with $u_0(s) = g(s)$.
-
-  The characteristic system with initial conditions is:
-  $
-    (dif x) / (dif t) = c, quad x(s, 0) = s; quad quad (dif u) / (dif t) = 0, quad u(s, 0) = g(s).
-  $
-  Solving: $x(s, t) = s + c t$ and $u(s, t) = g(s)$. The map $(s, t) |-> (x, t) = (s + c t, t)$ has Jacobian $1 != 0$, so it is globally invertible: $s = x - c t$. The solution is:
-  $
-    u(x, t) = g(x - c t).
-  $
-] <ex:transport-cauchy>
-
-=== Breakdown of Classical Solutions
-
-Even when the initial data is smooth, the solution of a _quasilinear_ (nonlinear in $u$) first-order PDE may cease to exist after a finite time. This occurs when characteristics cross, creating a _shock_.
-
-#example(name: "Shock Formation in Burgers' Equation")[
-  Consider _inviscid Burgers' equation_:
-  $
-    u_t + u u_x = 0, quad u(x, 0) = u_0(x).
-  $
-  This is (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = u$, $c = 0$. The characteristic system is:
-  $
-    (dif x) / (dif t) = u, quad (dif u) / (dif t) = 0.
-  $
-  Since $u$ is constant along characteristics, each characteristic is a straight line $x = u_0(s) t + s$ with slope $u_0(s)$. If $u_0$ is decreasing somewhere (i.e., $u_0'(s) < 0$ for some $s$), then characteristics emanating from regions where $u_0$ is larger will overtake those from regions where $u_0$ is smaller. The characteristics cross at time:
-  $
-    t^"break" = -1 / min u_0'(s),
-  $
-  provided $min u_0'(s) < 0$. At this time, the classical solution breaks down: $u_x$ becomes infinite (a _gradient catastrophe_).
-] <ex:burgers-shock>
-
-#note[
-  After the breaking time $t^"break"$, the solution must be continued as a _weak solution_ that admits discontinuities (shocks). The theory of weak solutions and shock conditions is developed in §2.4.
-]
-
-#note[
-  #figure(
-    image("./img/characteristics-crossing.svg", width: 70%),
-    caption: [Characteristic curves in the $x t$-plane for Burgers' equation $u_t + u u_x = 0$ with decreasing initial data. The characteristics converge and intersect at the breaking time $t^"break"$, where the classical solution develops a gradient catastrophe.],
-    placement: auto,
-    supplement: [Fig.]
-  ) <fig:characteristics-crossing>
-]
-
-== Hamilton--Jacobi Equations // Hamilton--Jacobi 方程
-
-We now turn to a fundamentally different class of first-order PDEs: those that are _fully nonlinear_ in the first-order derivatives.
-
-#definition(name: "Hamilton--Jacobi Equation")[
-  A _Hamilton--Jacobi equation_ is a first-order PDE of the form
-  $
-    H(x, y, u, u_x, u_y) = 0,
-  $
-  where $H: bb(R)^5 -> bb(R)$ is a given function. The equation is _fully nonlinear_ in the sense that $H$ depends nonlinearly on the gradient $(u_x, u_y)$.
-] <def:hamilton-jacobi>
-
-The most important special case arises when $H$ does not depend on $u$ explicitly:
-
-#eq[$
-  H(x, y, u_x, u_y) = 0.
-$] <eq:hj-no-u>
-
-This is the form that appears most naturally in classical mechanics and the calculus of variations.
-
-=== The Characteristic System for Hamilton--Jacobi
-
-Unlike the quasilinear case, the characteristic system for a fully nonlinear equation involves not only $(x, y, u)$ but also the derivatives $p = u_x$ and $q = u_y$.
-
-#theorem(name: "Charpit's Method")[
-  Let $F(x, y, u, p, q) = 0$ be a fully nonlinear first-order PDE, where $p = u_x$ and $q = u_y$. The _Charpit characteristic system_ is:
-  $
-    cases(
-      (dif x) / (dif t) = F_p,
-      (dif y) / (dif t) = F_q,
-      (dif u) / (dif t) = p F_p + q F_q,
-      (dif p) / (dif t) = -(F_x + p F_u),
-      (dif q) / (dif t) = -(F_y + q F_u),
-    )
-  $
-  where subscripts on $F$ denote partial derivatives. Along the characteristic curves, $F$ is conserved: $(dif F)/(dif t) = 0$.
-] <thm:charpit>
-
-#proof[
-  We verify that $F$ is conserved. By the chain rule:
-  $
-    (dif F) / (dif t) = F_x (dif x) / (dif t) + F_y (dif y) / (dif t) + F_u (dif u) / (dif t) + F_p (dif p) / (dif t) + F_q (dif q) / (dif t).
-  $
-  Substituting the characteristic equations:
-  $
-    (dif F) / (dif t) = F_x F_p + F_y F_q + F_u (p F_p + q F_q) + F_p (-(F_x + p F_u)) + F_q (-(F_y + q F_u)).
-  $
-  Expanding and collecting terms:
-  $
-    (dif F) / (dif t) = F_x F_p + F_y F_q + p F_u F_p + q F_u F_q - F_p F_x - p F_p F_u - F_q F_y - q F_q F_u = 0.
-  $
-  All terms cancel in pairs.
-]
-
-=== Connection to Classical Mechanics
-
-The Hamilton--Jacobi equation plays a central role in classical mechanics. Consider a Hamiltonian system with Hamiltonian $H(bold(q), bold(p), t)$, where $bold(q) = (q_1, dots, q_n)$ are generalized coordinates and $bold(p) = (p_1, dots, p_n)$ are conjugate momenta.
-
-#definition(name: "Hamilton--Jacobi Equation in Mechanics")[
-  The _Hamilton--Jacobi equation_ for a mechanical system with Hamiltonian $H$ is:
-  $
-    (partial S) / (partial t) + H(bold(q), nabla_(bold(q)) S, t) = 0,
-  $
-  where $S(bold(q), t)$ is _Hamilton's principal function_ and $bold(p) = nabla_(bold(q)) S$.
-] <def:hj-mechanics>
-
-#note[
-  The key insight of Hamilton--Jacobi theory is that if one can find a complete solution $S(bold(q), bold(alpha), t)$ depending on $n$ parameters $bold(alpha) = (alpha_1, dots, alpha_n)$, then the equations of motion are obtained by differentiation: $bold(p) = nabla_(bold(q)) S$ and $bold(beta) = nabla_(bold(alpha)) S$, where $bold(beta)$ are constants. This reduces the problem of solving $2n$ ODEs (Hamilton's equations) to solving a single PDE.
-]
-
-#example(name: "Hamilton--Jacobi for a Free Particle")[
-  For a free particle of mass $m$, the Hamiltonian is $H = abs(bold(p))^2 / (2m)$. The Hamilton--Jacobi equation in one dimension is:
-  $
-    (partial S) / (partial t) + 1 / (2m) ((partial S) / (partial q))^2 = 0.
-  $
-  We seek a complete solution of the form $S(q, alpha, t) = W(q, alpha) - E(alpha) t$. Substituting:
-  $
-    -E + 1 / (2m) (W'(q))^2 = 0 => W'(q) = sqrt(2 m E) => W = sqrt(2 m E) q.
-  $
-  Taking $alpha = E$, the complete solution is:
-  $
-    S(q, E, t) = sqrt(2 m E) q - E t.
-  $
-  The equation of motion follows from $beta = (partial S) / (partial E) = sqrt(m / (2E)) q - t$, giving $q = sqrt(2E/m) (t + beta)$, which is uniform motion as expected.
-] <ex:hj-free-particle>
-
-== Conservation Laws in One Space Dimension // 一维守恒律
-
-We now apply the method of characteristics to an important class of nonlinear first-order PDEs arising in fluid dynamics, traffic flow, and gas dynamics.
-
-=== Derivation of Conservation Laws
-
-Consider a quantity with density $u(x, t)$ and flux $f(u)$ in one spatial dimension. Conservation of the quantity in any interval $[a, b]$ requires:
-
-#eq[$
-  (dif) / (dif t) integral_a^b u(x, t) dif x = f(u(a, t)) - f(u(b, t)).
-$] <eq:conservation-integral>
-
-Assuming sufficient smoothness and applying the fundamental theorem of calculus to the right side:
-
-#eq[$
-  integral_a^b [u_t + (f(u))_x] dif x = 0.
-$]
-
-Since this holds for every interval $[a, b]$, the integrand must vanish:
-
-#definition(name: "Conservation Law")[
-  The _conservation law_ in one space dimension is:
-  $
-    u_t + (f(u))_x = 0,
-  $
-  where $u = u(x, t)$ is the conserved density and $f: bb(R) -> bb(R)$ is the _flux function_. Expanding the derivative:
-  $
-    u_t + f'(u) u_x = 0.
-  $
-] <def:conservation-law>
-
-This is a quasilinear equation (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = f'(u)$, and $c = 0$.
-
-=== Solution by Characteristics
-
-The characteristic system for the conservation law is:
-
-#eq[$
-  (dif x) / (dif t) = f'(u), quad (dif u) / (dif t) = 0.
-$] <eq:conservation-char>
-
-Since $u$ is constant along characteristics, each characteristic is a straight line in the $x t$-plane with slope $f'(u_0(s))$, where $u_0(s)$ is the initial data $u(x, 0) = u_0(x)$.
-
-The solution is given implicitly by:
-
-#eq[$
-  u(x, t) = u_0(x - f'(u) t).
-$] <eq:conservation-implicit>
-
-This is an implicit equation for $u$: the value of $u$ at $(x, t)$ equals the initial value at the foot of the characteristic passing through $(x, t)$.
-
-=== Traveling Wave Solutions
-
-When the flux function is linear, $f(u) = c u$, the conservation law reduces to the transport equation and the solution is a traveling wave. For nonlinear flux, we can still look for special solutions.
-
-#definition(name: "Traveling Wave Solution")[
-  A _traveling wave solution_ of the conservation law is a solution of the form $u(x, t) = phi(x - v t)$ for some profile function $phi$ and wave speed $v$. Substituting into $u_t + f'(u) u_x = 0$:
-  $
-    -v phi' + f'(phi) phi' = 0 => (f'(phi) - v) phi' = 0.
-  $
-  Either $phi' = 0$ (constant solution) or $f'(phi) = v$ (constant speed). For a _shock wave_ (discontinuous traveling wave), the speed is determined by the Rankine--Hugoniot condition.
-] <def:traveling-wave>
-
-=== The Rankine--Hugoniot Condition
-
-When characteristics cross, the classical solution breaks down and we must admit discontinuous (weak) solutions. Consider a shock located at $x = s(t)$ separating left state $u_L$ from right state $u_R$.
-
-#theorem(name: "Rankine--Hugoniot Condition")[
-  A discontinuity at $x = s(t)$ is a weak solution of the conservation law $u_t + f(u)_x = 0$ if and only if the shock speed satisfies:
-  $
-    s'(t) = (f(u_L) - f(u_R)) / (u_L - u_R),
-  $
-  where $u_L$ and $u_R$ are the values of $u$ to the left and right of the shock.
-] <thm:rankine-hugoniot>
-
-#proof[
-  Integrate the conservation law over a small rectangle $[s(t) - epsilon, s(t) + epsilon] times [t_1, t_2]$:
-  $
-    integral_(t_1)^(t_2) integral_(s(t) - epsilon)^(s(t) + epsilon) [u_t + f(u)_x] dif x dif t = 0.
-  $
-  Applying the fundamental theorem of calculus and letting $epsilon -> 0$:
-  $
-    integral_(t_1)^(t_2) [f(u_L) - f(u_R) - s'(t)(u_L - u_R)] dif t = 0.
-  $
-  Since this holds for all $[t_1, t_2]$, the integrand must vanish, yielding the result.
-]
-
-#example(name: "Burgers' Equation with Shock")[
-  Consider Burgers' equation $u_t + u u_x = 0$ (flux $f(u) = u^2 / 2$) with step initial data:
-  $
-    u(x, 0) = cases(u_L, x < 0, u_R, x > 0.)
-  $
-  where $u_L > u_R$. The characteristics from the left carry value $u_L$ with speed $u_L$, and those from the right carry $u_R$ with speed $u_R$. Since $u_L > u_R$, they intersect immediately, forming a shock at $x = 0$.
-
-  The Rankine--Hugoniot condition (#link(<thm:rankine-hugoniot>)[RH]) gives the shock speed:
-  $
-    s' = (u_L^2 / 2 - u_R^2 / 2) / (u_L - u_R) = (u_L + u_R) / 2.
-  $
-  The shock is the straight line $x = (u_L + u_R) t / 2$.
-] <ex:burgers-shock-solution>
-
-#note[
-  When $u_L < u_R$ (the opposite case), characteristics diverge rather than converge, and no shock forms. Instead, a _rarefaction wave_ (continuous self-similar solution) fills the gap:
-  $
-    u(x, t) = cases(
-      u_L, x < u_L t,
-      x / t, u_L t <= x <= u_R t,
-      u_R, x > u_R t.
-    )
-  $
-]
-
-#note[
-  #figure(
-    image("./img/burgers-shock-rarefaction.svg", width: 80%),
-    caption: [Solutions of Burgers' equation $u_t + u u_x = 0$. *Left:* Shock wave for $u_L > u_R$: characteristics converge and a shock forms at speed $s = (u_L + u_R)/2$. *Right:* Rarefaction wave for $u_L < u_R$: characteristics diverge and a fan of characteristics fills the expansion region.],
-    placement: auto,
-    supplement: [Fig.]
-  ) <fig:burgers-shock-rarefaction>
-]
-
-// ==========================================================================
-// Part II — Distribution Theory (分布理论)
-// ==========================================================================
-
-// ==========================================================================
-// Chapter 3: Classification of Second-Order PDEs (二阶偏微分方程分类)
-// ==========================================================================
+// 设计思路：由原 Ch 3 前移至此。分类框架是三大类型 Part（IV-VI）的共同前置，
+// 故紧接 Ch 1；一阶理论（原 Ch 2）已移往 Part II。
+
+//   Section 2.1: Linear Second-Order Equations (线性二阶方程)
+//     - 系数矩阵与主符号
+//     - 特征曲面
+//     - 二维特征 ODE 与判别式
+//   Section 2.2: Elliptic, Parabolic, Hyperbolic Types (椭圆型、抛物型、双曲型)
+//     - 判别式分类、Tricomi 混合型
+//   Section 2.3: Canonical Forms and Characteristics (标准形与特征线)
+//     - 双曲/抛物/椭圆标准形
+//     - 波动方程 → d'Alembert 通解（衔接 Ch 15）
+//     - 三类特征线视觉对比
 
 = Classification of Second-Order PDEs // 二阶偏微分方程分类
 
@@ -772,7 +401,7 @@ $] <eq:general-2nd-order>
 
 where $a_{i j}, b_i, c, f$ are given functions on $Omega$. By #link(<def:pde-linearity-classification>)[§1], this equation is _linear_: the unknown $u$ and all its derivatives appear to the first power. We assume $a_{i j} = a_{j i}$ throughout (any non-symmetric coefficient matrix can be symmetrized since $u_{x_i x_j} = u_{x_j x_i}$ for $C^2$ solutions).
 
-=== The Coefficient Matrix and Principal Symbol
+=== The Coefficient Matrix and Principal Symbol // 系数矩阵与主符号
 
 The second-order part of $L$ is encoded in the symmetric _coefficient matrix_:
 
@@ -798,9 +427,9 @@ and $L_1[u] = sum_i b_i(x) u_(x_i)$ is the first-order part.
 
 The principal symbol captures the highest-order behavior of the operator. Since classification depends only on the leading derivatives, the principal symbol — not the full symbol — determines the equation type.
 
-=== Characteristic Surfaces
+=== Characteristic Surfaces // 特征曲面
 
-The concept of characteristic surfaces generalizes the characteristic curves of first-order PDEs (#link(<def:characteristic-curve>)[§2.1]) to the second-order setting.
+The concept of characteristic surfaces generalizes the characteristic curves of first-order PDEs (#link(<def:characteristic-curve>)[§3.1]) to the second-order setting.
 
 #definition(name: "Characteristic Surface")[
   A hypersurface $S subset bold(R)^n$ is a _characteristic surface_ for the operator $L$ if at every point $x in S$, the principal symbol vanishes in the direction of the normal $nu(x)$ to $S$:
@@ -819,7 +448,7 @@ Characteristic surfaces are the loci along which singularities of solutions can 
   *Wave equation* $u_(t t) - c^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $A = mat((-c^2, 0), (0, 1))$. The characteristic equation $-c^2 nu_1^2 + nu_2^2 = 0$ yields $nu_2 = +- c nu_1$, giving characteristic lines $x +- c t = text("const")$ in the $(x, t)$-plane.
 ]
 
-=== The Characteristic ODE in Two Dimensions
+=== The Characteristic ODE in Two Dimensions // 二维特征 ODE
 
 For operators with two independent variables, the characteristic equation reduces to an ODE for the characteristic curves.
 
@@ -879,7 +508,7 @@ where the principal part has coefficient matrix $A = mat((a, b), (b, c))$ with $
   If the type is the same at every point of the domain $Omega$, the equation is said to be _of that type_ on $Omega$. If the type varies, the equation is of _mixed type_.
 ] <def:pde-type-2d>
 
-The connection to characteristic surfaces (#link(<def:char-surface>)[§3.1]) is direct: the characteristic equation $a (d y)^2 - 2 b dif x dif y + c (d x)^2 = 0$ from #link(<eq:char-ode-2d>)[§3.1] has real solutions if and only if $Delta >= 0$. Thus:
+The connection to characteristic surfaces (#link(<def:char-surface>)[§2.1]) is direct: the characteristic equation $a (d y)^2 - 2 b dif x dif y + c (d x)^2 = 0$ from #link(<eq:char-ode-2d>)[§2.1] has real solutions if and only if $Delta >= 0$. Thus:
 - _Elliptic_: no real characteristic curves (solutions are smooth)
 - _Parabolic_: one family of characteristic curves (one degenerate direction)
 - _Hyperbolic_: two distinct families of characteristic curves (wave-like propagation)
@@ -889,9 +518,9 @@ The connection to characteristic surfaces (#link(<def:char-surface>)[§3.1]) is 
 
   *Laplace equation* $u_(x x) + u_(y y) = 0$: Here $a = 1$, $b = 0$, $c = 1$, so $Delta = 0 - 1 = -1 < 0$. The Laplace equation is _elliptic_ everywhere.
 
-  *Heat equation* $u_t - kappa u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $a = -kappa$, $b = 0$, $c = 0$, so $Delta = 0 - 0 = 0$. The heat equation is _parabolic_ everywhere. The characteristic surfaces are $t = text("const")$, consistent with #link(<eq:char-ode-2d>)[§3.1].
+  *Heat equation* $u_t - kappa u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $a = -kappa$, $b = 0$, $c = 0$, so $Delta = 0 - 0 = 0$. The heat equation is _parabolic_ everywhere. The characteristic surfaces are $t = text("const")$, consistent with #link(<eq:char-ode-2d>)[§2.1].
 
-  *Wave equation* $u_(t t) - c^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((-c^2, 0), (0, 1))$, so $Delta = 0^2 - (-c^2)(1) = c^2 > 0$. The wave equation is _hyperbolic_ everywhere. The characteristic lines $x +- c t = text("const")$ are the two families found in #link(<eq:char-ode-2d>)[§3.1].
+  *Wave equation* $u_(t t) - c^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((-c^2, 0), (0, 1))$, so $Delta = 0^2 - (-c^2)(1) = c^2 > 0$. The wave equation is _hyperbolic_ everywhere. The characteristic lines $x +- c t = text("const")$ are the two families found in #link(<eq:char-ode-2d>)[§2.1].
 ] <ex:model-equations-type>
 
 #example(name: "Tricomi Equation and Mixed Type")[
@@ -920,21 +549,21 @@ The connection to characteristic surfaces (#link(<def:char-surface>)[§3.1]) is 
     [Hyperbolic], [$Delta > 0$], [$< 0$], [Two distinct families],
   )
 
-  The transport equation $u_t + c u_x = 0$ from #link(<ex:transport-equation>)[§2] is a _first-order_ hyperbolic equation. When viewed as a second-order equation (by differentiating), it satisfies the wave equation $u_(t t) - c^2 u_(x x) = 0$, confirming the consistency between the first-order and second-order classifications.
+  The transport equation $u_t + c u_x = 0$, introduced in #link(<ex:transport-equation>)[§3.1], is a _first-order_ hyperbolic equation. When viewed as a second-order equation (by differentiating), it satisfies the wave equation $u_(t t) - c^2 u_(x x) = 0$, confirming the consistency between the first-order and second-order classifications.
 ]
 
 == Canonical Forms and Characteristics // 标准形与特征线
 
-The classification of #link(<def:pde-type-2d>)[§3.2] is not merely a labeling scheme: it determines the _canonical form_ to which any equation of that type can be reduced by a suitable change of variables. The characteristic curves computed in #link(<eq:char-ode-2d>)[§3.1] provide exactly the coordinates needed for this reduction.
+The classification of #link(<def:pde-type-2d>)[§2.2] is not merely a labeling scheme: it determines the _canonical form_ to which any equation of that type can be reduced by a suitable change of variables. The characteristic curves computed in #link(<eq:char-ode-2d>)[§2.1] provide exactly the coordinates needed for this reduction.
 
-We work with the general linear second-order equation in two variables (#link(<eq:general-2d>)[§3.2]):
+We work with the general linear second-order equation in two variables (#link(<eq:general-2d>)[§2.2]):
 $
   a u_(x x) + 2 b u_(x y) + c u_(y y) + text("lower-order terms") = f(x, y).
 $
 
-=== Hyperbolic Equations
+=== Hyperbolic Equations // 双曲型方程
 
-When $Delta = b^2 - a c > 0$, the characteristic ODE #link(<eq:char-ode-2d>)[§3.1] has two distinct real families of solutions:
+When $Delta = b^2 - a c > 0$, the characteristic ODE #link(<eq:char-ode-2d>)[§2.1] has two distinct real families of solutions:
 $
   phi(x, y) = c_1, quad psi(x, y) = c_2.
 $
@@ -955,7 +584,7 @@ $
   $
     u_x = u_xi phi_x + u_eta psi_x, quad u_y = u_xi phi_y + u_eta psi_y.
   $
-  Computing second derivatives and substituting into #link(<eq:general-2d>)[§3.2], the coefficient of $u_(xi xi)$ is $a phi_x^2 + 2 b phi_x phi_y + c phi_y^2$, which vanishes precisely because $phi = text("const")$ satisfies the characteristic ODE #link(<eq:char-ode-2d>)[§3.1]. Similarly, the coefficient of $u_(eta eta)$ vanishes because $psi = text("const")$ is also a characteristic family. The only surviving second-order term is proportional to $u_(xi eta)$, yielding #link(<eq:canonical-hyperbolic>)[(7)]. The second form follows by a linear change of variables.
+  Computing second derivatives and substituting into #link(<eq:general-2d>)[§2.2], the coefficient of $u_(xi xi)$ is $a phi_x^2 + 2 b phi_x phi_y + c phi_y^2$, which vanishes precisely because $phi = text("const")$ satisfies the characteristic ODE #link(<eq:char-ode-2d>)[§2.1]. Similarly, the coefficient of $u_(eta eta)$ vanishes because $psi = text("const")$ is also a characteristic family. The only surviving second-order term is proportional to $u_(xi eta)$, yielding #link(<eq:canonical-hyperbolic>)[(7)]. The second form follows by a linear change of variables.
 ]
 
 #example(name: "Wave Equation in Canonical Form")[
@@ -966,7 +595,7 @@ $
   Setting $xi = x + c t$ and $eta = x - c t$, the wave equation becomes $u_(xi eta) = 0$, which integrates directly to $u = F(xi) + G(eta) = F(x + c t) + G(x - c t)$. This recovers the _d'Alembert formula_: every solution is a superposition of right- and left-traveling waves.
 ]
 
-=== Parabolic Equations
+=== Parabolic Equations // 抛物型方程
 
 When $Delta = 0$, the characteristic ODE has a single repeated family of solutions $phi(x, y) = c$.
 
@@ -988,7 +617,7 @@ The proof follows the same chain-rule computation: since $Delta = 0$, the two ch
   The variable $xi = t$ plays the role of the "evolution parameter," and $eta = x$ is the spatial variable. The absence of a $u_(xi xi)$ term reflects the irreversible nature of diffusion.
 ]
 
-=== Elliptic Equations
+=== Elliptic Equations // 椭圆型方程
 
 When $Delta < 0$, the characteristic ODE has no real solutions. However, it has two _complex conjugate_ families:
 $
@@ -1014,7 +643,7 @@ $
   The complex characteristic families are $z = y + i x$ and $bar(z) = y - i x$, giving $alpha = y$, $beta = x$. The equation is already in canonical form: $u_(alpha alpha) + u_(beta beta) = 0$. Solutions are precisely the _harmonic functions_, and the canonical form reveals why elliptic equations have no preferred direction — the operator is isotropic.
 ]
 
-=== Summary and the Transport Equation Revisited
+=== Summary and the Transport Equation Revisited // 总结：传输方程再探
 
 The following table summarizes the canonical forms and their characteristic geometry:
 
@@ -1029,7 +658,7 @@ The following table summarizes the canonical forms and their characteristic geom
 )
 
 #note[
-  *The transport equation revisited.* In #link(<ex:transport-equation>)[§2], we noted that the transport equation $u_t + c u_x = 0$ is "the simplest hyperbolic PDE" and promised to revisit it in this chapter. We can now make this precise from the second-order perspective.
+  *The transport equation previewed.* The transport equation $u_t + c u_x = 0$, developed in detail in #link(<ex:transport-equation>)[§3.1], is "the simplest hyperbolic PDE". From the second-order perspective of this chapter, we can now make this precise.
 
   Differentiating $u_t + c u_x = 0$ with respect to $t$ and $x$ yields:
   $
@@ -1040,7 +669,7 @@ The following table summarizes the canonical forms and their characteristic geom
   This confirms the classification hierarchy: first-order hyperbolic equations are the "square roots" of second-order hyperbolic equations, and the characteristic structure is consistent across both levels.
 ]
 
-=== Characteristics of the Three Types: A Visual Comparison
+=== Characteristics of the Three Types: A Visual Comparison // 三类特征线的视觉对比
 
 #figure(
   image("img/characteristics-three-types.svg", width: 90%),
@@ -1049,22 +678,478 @@ The following table summarizes the canonical forms and their characteristic geom
   supplement: [Fig.],
 ) <fig:characteristics-three-types>
 
-The figure above provides a geometric summary of the classification. The characteristic curves (#link(<def:char-surface>)[§3.1]) partition the domain differently for each type:
+The figure above provides a geometric summary of the classification. The characteristic curves (#link(<def:char-surface>)[§2.1]) partition the domain differently for each type:
 - *Elliptic*: no real characteristics. Information propagates in all directions equally; solutions are smooth.
 - *Parabolic*: one family of characteristics. Information propagates along a single preferred direction (the "time" direction); solutions smooth out in that direction.
 - *Hyperbolic*: two transverse families. Information propagates along characteristics; solutions can develop singularities along characteristic curves.
 
 // ==========================================================================
-// Part II — Distribution Theory (分布理论)
+// Part II — First-Order PDEs (一阶偏微分方程)
 // ==========================================================================
+// 设计思路：一阶 PDE 理论（特征线法、Hamilton-Jacobi、守恒律）是类型无关的
+// 完整体系，内容量足以独立成 Part。原 Ch 2 拆为三章；新增粘性解节补足
+// Hamilton-Jacobi 的现代理论（v0.4.0 中承诺却无归属的部分）。
+// 对应教材：通常占据 PDE 教材第 2-3 章。
 
-= Chapter 4: Distribution Theory (分布理论) <sec:ch4-distributions>
+// --- Chapter 3: Method of Characteristics and Quasilinear Equations (特征线法与拟线性方程) ---
+
+//   Section 3.1: Quasilinear Equations (拟线性方程)
+//     - 特征曲线与特征系统
+//     - 传输方程
+//   Section 3.2: Method of Characteristics (特征线法)
+//     - Cauchy 问题、特征线求解三步
+//     - 横截条件与非特征曲线定理
+//     - 经典解的破裂（激波形成、梯度 catastrophe）
+
+// --- Chapter 4: Hamilton--Jacobi Equations (Hamilton--Jacobi 方程) ---
+
+//   Section 4.1: The Characteristic System and Charpit's Method (特征系统与 Charpit 方法)
+//     - Charpit 特征系统
+//   Section 4.2: Connection to Classical Mechanics (与经典力学的联系)
+//     - Hamilton 主函数；力学应用 → Mécanique analytique（交叉引用）
+//   Section 4.3: Viscosity Solutions (粘性解) [新增]
+//     - Crandall-Lions 定义与唯一性
+//     - 与特征线解的关系
+
+// --- Chapter 5: Conservation Laws in One Space Dimension (一维守恒律) ---
+
+//   Section 5.1: Derivation of Conservation Laws (守恒律的推导)
+//   Section 5.2: Solution by Characteristics (特征线求解)
+//   Section 5.3: Traveling Wave Solutions (行波解)
+//   Section 5.4: The Rankine--Hugoniot Condition (Rankine--Hugoniot 条件)
+//     - 激波与稀疏波
+//   （标量一维理论在此完整处理；系统的守恒律见 Ch 17）
+
+= Method of Characteristics and Quasilinear Equations // 特征线法与拟线性方程
+
+The theory of first-order PDEs is built around a single unifying idea: _characteristic curves_ along which a PDE reduces to a system of ODEs. This part develops the method of characteristics in full generality and applies it to quasilinear equations, Hamilton--Jacobi equations, and conservation laws.
+
+== Quasilinear Equations // 拟线性方程
+
+Consider a first-order PDE with two independent variables:
+
+#eq[$
+  a(x, y, u) (partial u) / (partial x) + b(x, y, u) (partial u) / (partial y) = c(x, y, u).
+$] <eq:quasilinear-pde>
+
+where $u = u(x, y)$ is the unknown function and $a, b, c$ are given functions with $a$ and $b$ not both zero. By #link(<def:pde-linearity-classification>)[§1], this equation is _quasilinear_: it is linear in the first-order derivatives, but the coefficients may depend on $u$ itself.
+
+The left-hand side can be interpreted as a directional derivative:
+$
+  a u_x + b u_y = nabla u dot (a, b).
+$
+The equation states that the directional derivative of $u$ along the vector field $(a, b)$ equals $c$ at every point.
+
+=== Characteristic Equations // 特征方程
+
+The key idea is to find curves along which the PDE becomes an ODE. Introduce a parameter $t$ and construct curves $(x(t), y(t), u(t))$ in three-dimensional space whose tangent vector is parallel to $(a, b, c)$ at each point.
+
+#definition(name: "Characteristic Curves")[
+  The _characteristic curves_ of the quasilinear equation (#link(<eq:quasilinear-pde>)[1]) are the curves $(x(t), y(t), u(t))$ satisfying the _characteristic system_:
+] <def:characteristic-curve>
+
+#eq[$
+  (dif x) / (dif t) = a(x, y, u), quad (dif y) / (dif t) = b(x, y, u), quad (dif u) / (dif t) = c(x, y, u).
+$] <eq:char-system>
+
+Along these curves, the PDE reduces to an ODE.
+
+#lemma(name: "Solution Along Characteristics")[
+  If $u(x,y)$ satisfies (#link(<eq:quasilinear-pde>)[1]), then along any characteristic curve:
+  $
+    (dif u) / (dif t) = c(x(t), y(t), u(t)).
+  $
+] <lem:char-constant>
+
+#proof[
+  By the chain rule:
+  $
+    (dif u) / (dif t) = (partial u) / (partial x) (dif x) / (dif t) + (partial u) / (partial y) (dif y) / (dif t) = a u_x + b u_y = c.
+  $
+]
+
+This lemma is the heart of the method: it converts the PDE into an ODE system along characteristic curves. The existence and uniqueness theory for the Cauchy problem then follows from the corresponding ODE theory (Picard--Lindelöf theorem).
+
+The projection of the characteristic curve onto the $(x, y)$-plane (determined by the first two equations of (#link(<eq:char-system>)[2])) is called the _characteristic baseline_.
+
+#example(name: "Transport Equation")[
+  The simplest first-order PDE is the _transport equation_:
+  $
+    u_t + c u_x = 0, quad c in bb(R).
+  $
+  This is (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = c$, and $c(x,y,u) = 0$ (here the independent variables are $(x, t)$). The characteristic system is:
+  $
+    (dif x) / (dif t) = c, quad (dif u) / (dif t) = 0.
+  $
+  The characteristics are straight lines $x = c t + x_0$ in the $x t$-plane, and $u$ is constant along each line. The general solution is:
+  $
+    u(x, t) = f(x - c t),
+  $
+  where $f$ is an arbitrary differentiable function. The solution represents a wave profile $f$ propagating at speed $c$ without change of shape.
+] <ex:transport-equation>
+
+#note[
+  The transport equation is closely related to the wave equation #link(<def:wave-equation>)[Ch 1]: it is the simplest hyperbolic PDE and serves as a building block for understanding wave propagation; the classification of Ch 2 makes this precise.
+]
+
+The example above illustrates the general strategy: (1) write down the characteristic equations (#link(<eq:char-system>)[2]); (2) solve the ODE system; (3) use the initial data to determine the solution. We formalize this procedure in §3.2.
+
+#note[
+  Although we have presented the theory for two independent variables, the method extends directly to $n$ variables. The characteristic system for a first-order PDE in $n$ independent variables consists of $n + 1$ ODEs, and the same geometric ideas apply.
+]
+
+== Method of Characteristics // 特征线法
+
+We now formalize the procedure illustrated in §3.1 into a systematic method for solving the Cauchy problem for first-order PDEs.
+
+=== The Cauchy Problem // Cauchy 问题
+
+Given the quasilinear equation (#link(<eq:quasilinear-pde>)[1]), the _Cauchy problem_ consists of finding a solution $u(x, y)$ satisfying prescribed values on a curve $Gamma$ in the $(x, y)$-plane.
+
+#definition(name: "Cauchy Problem for First-Order PDE")[
+  Let $Gamma$ be a curve in $bb(R)^2$ parametrized by $(x_0(s), y_0(s))$ for $s in I subset bb(R)$, and let $u_0: I -> bb(R)$ be a given function. The _Cauchy problem_ for (#link(<eq:quasilinear-pde>)[1]) is:
+  $
+    cases(
+      a u_x + b u_y = c(x, y, u), "along characteristics",
+      u(x_0(s), y_0(s)) = u_0(s), "initial data on" Gamma,
+    )
+  $
+  The curve $Gamma$ is called the _initial curve_ (or _base curve_), and $u_0$ is the _initial data_.
+] <def:cauchy-first-order>
+
+=== Solving via Characteristics // 特征线求解
+
+The method proceeds in three steps.
+
+*Step 1: Parametrize the initial data.* At each point $(x_0(s), y_0(s))$ on $Gamma$, the characteristic curve passing through this point carries the value $u_0(s)$. This gives the initial conditions for the characteristic system (#link(<eq:char-system>)[2]):
+
+#eq[$
+  x(s, 0) = x_0(s), quad y(s, 0) = y_0(s), quad u(s, 0) = u_0(s).
+$] <eq:char-initial-cond>
+
+*Step 2: Solve the characteristic ODE system.* For each fixed $s$, solve (#link(<eq:char-system>)[2]) with initial conditions (#link(<eq:char-initial-cond>)[3]) to obtain a family of characteristic curves:
+$
+  (x(s, t), y(s, t), u(s, t)).
+$
+
+*Step 3: Invert the projection.* The map $(s, t) |-> (x(s, t), y(s, t))$ sends characteristic labels to points in the plane. If this map is locally invertible, we can solve for $(s, t)$ as functions of $(x, y)$ and substitute into $u(s, t)$ to obtain the solution $u(x, y)$.
+
+=== The Transversality Condition // 横截条件
+
+The invertibility in Step 3 is guaranteed by the implicit function theorem provided the Jacobian is nonzero.
+
+#definition(name: "Non-characteristic Curve")[
+  The initial curve $Gamma$ is said to be _non-characteristic_ at a point $P = (x_0(s), y_0(s))$ if
+  $
+    det (mat(
+      x_0'(s), y_0'(s);
+      a(x_0(s), y_0(s), u_0(s)), b(x_0(s), y_0(s), u_0(s))
+    )) != 0.
+  $
+  Equivalently, the vector $(a, b)$ is not tangent to $Gamma$ at $P$.
+] <def:non-characteristic>
+
+Geometrically, the non-characteristic condition means that the characteristic direction $(a, b)$ is _transverse_ to the initial curve: characteristics cross $Gamma$ rather than running along it.
+
+#theorem(name: "Local Existence and Uniqueness")[
+  Let $a, b, c$ be $C^1$ functions, and let $Gamma$ be a $C^1$ non-characteristic initial curve with $C^1$ initial data $u_0$. Then the Cauchy problem #link(<def:cauchy-first-order>)[1] has a unique $C^1$ solution in a neighborhood of $Gamma$.
+] <thm:cauchy-existence-unique>
+
+#proof[
+  Since $Gamma$ is non-characteristic, the Jacobian
+  $
+    J(s, t) = det (mat(
+      partial x / partial s, partial y / partial s;
+      partial x / partial t, partial y / partial t
+    ))
+  $
+  satisfies $J(s, 0) = x_0'(s) b - y_0'(s) a != 0$ at every point of $Gamma$. By the inverse function theorem, the map $(s, t) |-> (x(s, t), y(s, t))$ is a local diffeomorphism near $t = 0$. The solution $u(x, y) = u(s(x, y), t(x, y))$ is therefore well-defined and $C^1$ in a neighborhood of $Gamma$. Uniqueness follows from the uniqueness of the characteristic ODEs (Picard--Lindelöf theorem).
+]
+
+#example(name: "Cauchy Problem for the Transport Equation")[
+  Consider the transport equation $u_t + c u_x = 0$ with initial data $u(x, 0) = g(x)$. The initial curve is the $x$-axis: $(x_0(s), t_0(s)) = (s, 0)$, with $u_0(s) = g(s)$.
+
+  The characteristic system with initial conditions is:
+  $
+    (dif x) / (dif t) = c, quad x(s, 0) = s; quad quad (dif u) / (dif t) = 0, quad u(s, 0) = g(s).
+  $
+  Solving: $x(s, t) = s + c t$ and $u(s, t) = g(s)$. The map $(s, t) |-> (x, t) = (s + c t, t)$ has Jacobian $1 != 0$, so it is globally invertible: $s = x - c t$. The solution is:
+  $
+    u(x, t) = g(x - c t).
+  $
+] <ex:transport-cauchy>
+
+=== Breakdown of Classical Solutions // 经典解的破裂
+
+Even when the initial data is smooth, the solution of a _quasilinear_ (nonlinear in $u$) first-order PDE may cease to exist after a finite time. This occurs when characteristics cross, creating a _shock_.
+
+#example(name: "Shock Formation in Burgers' Equation")[
+  Consider _inviscid Burgers' equation_:
+  $
+    u_t + u u_x = 0, quad u(x, 0) = u_0(x).
+  $
+  This is (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = u$, $c = 0$. The characteristic system is:
+  $
+    (dif x) / (dif t) = u, quad (dif u) / (dif t) = 0.
+  $
+  Since $u$ is constant along characteristics, each characteristic is a straight line $x = u_0(s) t + s$ with slope $u_0(s)$. If $u_0$ is decreasing somewhere (i.e., $u_0'(s) < 0$ for some $s$), then characteristics emanating from regions where $u_0$ is larger will overtake those from regions where $u_0$ is smaller. The characteristics cross at time:
+  $
+    t^"break" = -1 / min u_0'(s),
+  $
+  provided $min u_0'(s) < 0$. At this time, the classical solution breaks down: $u_x$ becomes infinite (a _gradient catastrophe_).
+] <ex:burgers-shock>
+
+#note[
+  After the breaking time $t^"break"$, the solution must be continued as a _weak solution_ that admits discontinuities (shocks). The theory of weak solutions and shock conditions is developed in Ch 5.
+]
+
+#note[
+  #figure(
+    image("./img/characteristics-crossing.svg", width: 70%),
+    caption: [Characteristic curves in the $x t$-plane for Burgers' equation $u_t + u u_x = 0$ with decreasing initial data. The characteristics converge and intersect at the breaking time $t^"break"$, where the classical solution develops a gradient catastrophe.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:characteristics-crossing>
+]
+
+= Hamilton--Jacobi Equations // Hamilton--Jacobi 方程
+
+We now turn to a fundamentally different class of first-order PDEs: those that are _fully nonlinear_ in the first-order derivatives.
+
+#definition(name: "Hamilton--Jacobi Equation")[
+  A _Hamilton--Jacobi equation_ is a first-order PDE of the form
+  $
+    H(x, y, u, u_x, u_y) = 0,
+  $
+  where $H: bb(R)^5 -> bb(R)$ is a given function. The equation is _fully nonlinear_ in the sense that $H$ depends nonlinearly on the gradient $(u_x, u_y)$.
+] <def:hamilton-jacobi>
+
+The most important special case arises when $H$ does not depend on $u$ explicitly:
+
+#eq[$
+  H(x, y, u_x, u_y) = 0.
+$] <eq:hj-no-u>
+
+This is the form that appears most naturally in classical mechanics and the calculus of variations.
+
+== The Characteristic System for Hamilton--Jacobi // Hamilton--Jacobi 特征系统
+
+Unlike the quasilinear case, the characteristic system for a fully nonlinear equation involves not only $(x, y, u)$ but also the derivatives $p = u_x$ and $q = u_y$.
+
+#theorem(name: "Charpit's Method")[
+  Let $F(x, y, u, p, q) = 0$ be a fully nonlinear first-order PDE, where $p = u_x$ and $q = u_y$. The _Charpit characteristic system_ is:
+  $
+    cases(
+      (dif x) / (dif t) = F_p,
+      (dif y) / (dif t) = F_q,
+      (dif u) / (dif t) = p F_p + q F_q,
+      (dif p) / (dif t) = -(F_x + p F_u),
+      (dif q) / (dif t) = -(F_y + q F_u),
+    )
+  $
+  where subscripts on $F$ denote partial derivatives. Along the characteristic curves, $F$ is conserved: $(dif F)/(dif t) = 0$.
+] <thm:charpit>
+
+#proof[
+  We verify that $F$ is conserved. By the chain rule:
+  $
+    (dif F) / (dif t) = F_x (dif x) / (dif t) + F_y (dif y) / (dif t) + F_u (dif u) / (dif t) + F_p (dif p) / (dif t) + F_q (dif q) / (dif t).
+  $
+  Substituting the characteristic equations:
+  $
+    (dif F) / (dif t) = F_x F_p + F_y F_q + F_u (p F_p + q F_q) + F_p (-(F_x + p F_u)) + F_q (-(F_y + q F_u)).
+  $
+  Expanding and collecting terms:
+  $
+    (dif F) / (dif t) = F_x F_p + F_y F_q + p F_u F_p + q F_u F_q - F_p F_x - p F_p F_u - F_q F_y - q F_q F_u = 0.
+  $
+  All terms cancel in pairs.
+]
+
+== Connection to Classical Mechanics // 与经典力学的联系
+
+The Hamilton--Jacobi equation plays a central role in classical mechanics. Consider a Hamiltonian system with Hamiltonian $H(bold(q), bold(p), t)$, where $bold(q) = (q_1, dots, q_n)$ are generalized coordinates and $bold(p) = (p_1, dots, p_n)$ are conjugate momenta.
+
+#definition(name: "Hamilton--Jacobi Equation in Mechanics")[
+  The _Hamilton--Jacobi equation_ for a mechanical system with Hamiltonian $H$ is:
+  $
+    (partial S) / (partial t) + H(bold(q), nabla_(bold(q)) S, t) = 0,
+  $
+  where $S(bold(q), t)$ is _Hamilton's principal function_ and $bold(p) = nabla_(bold(q)) S$.
+] <def:hj-mechanics>
+
+#note[
+  The key insight of Hamilton--Jacobi theory is that if one can find a complete solution $S(bold(q), bold(alpha), t)$ depending on $n$ parameters $bold(alpha) = (alpha_1, dots, alpha_n)$, then the equations of motion are obtained by differentiation: $bold(p) = nabla_(bold(q)) S$ and $bold(beta) = nabla_(bold(alpha)) S$, where $bold(beta)$ are constants. This reduces the problem of solving $2n$ ODEs (Hamilton's equations) to solving a single PDE.
+]
+
+#example(name: "Hamilton--Jacobi for a Free Particle")[
+  For a free particle of mass $m$, the Hamiltonian is $H = abs(bold(p))^2 / (2m)$. The Hamilton--Jacobi equation in one dimension is:
+  $
+    (partial S) / (partial t) + 1 / (2m) ((partial S) / (partial q))^2 = 0.
+  $
+  We seek a complete solution of the form $S(q, alpha, t) = W(q, alpha) - E(alpha) t$. Substituting:
+  $
+    -E + 1 / (2m) (W'(q))^2 = 0 => W'(q) = sqrt(2 m E) => W = sqrt(2 m E) q.
+  $
+  Taking $alpha = E$, the complete solution is:
+  $
+    S(q, E, t) = sqrt(2 m E) q - E t.
+  $
+  The equation of motion follows from $beta = (partial S) / (partial E) = sqrt(m / (2E)) q - t$, giving $q = sqrt(2E/m) (t + beta)$, which is uniform motion as expected.
+] <ex:hj-free-particle>
+
+= Conservation Laws in One Space Dimension // 一维守恒律
+
+We now apply the method of characteristics to an important class of nonlinear first-order PDEs arising in fluid dynamics, traffic flow, and gas dynamics.
+
+== Derivation of Conservation Laws // 守恒律的推导
+
+Consider a quantity with density $u(x, t)$ and flux $f(u)$ in one spatial dimension. Conservation of the quantity in any interval $[a, b]$ requires:
+
+#eq[$
+  (dif) / (dif t) integral_a^b u(x, t) dif x = f(u(a, t)) - f(u(b, t)).
+$] <eq:conservation-integral>
+
+Assuming sufficient smoothness and applying the fundamental theorem of calculus to the right side:
+
+#eq[$
+  integral_a^b [u_t + (f(u))_x] dif x = 0.
+$]
+
+Since this holds for every interval $[a, b]$, the integrand must vanish:
+
+#definition(name: "Conservation Law")[
+  The _conservation law_ in one space dimension is:
+  $
+    u_t + (f(u))_x = 0,
+  $
+  where $u = u(x, t)$ is the conserved density and $f: bb(R) -> bb(R)$ is the _flux function_. Expanding the derivative:
+  $
+    u_t + f'(u) u_x = 0.
+  $
+] <def:conservation-law>
+
+This is a quasilinear equation (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = f'(u)$, and $c = 0$.
+
+== Solution by Characteristics // 特征线求解
+
+The characteristic system for the conservation law is:
+
+#eq[$
+  (dif x) / (dif t) = f'(u), quad (dif u) / (dif t) = 0.
+$] <eq:conservation-char>
+
+Since $u$ is constant along characteristics, each characteristic is a straight line in the $x t$-plane with slope $f'(u_0(s))$, where $u_0(s)$ is the initial data $u(x, 0) = u_0(x)$.
+
+The solution is given implicitly by:
+
+#eq[$
+  u(x, t) = u_0(x - f'(u) t).
+$] <eq:conservation-implicit>
+
+This is an implicit equation for $u$: the value of $u$ at $(x, t)$ equals the initial value at the foot of the characteristic passing through $(x, t)$.
+
+== Traveling Wave Solutions // 行波解
+
+When the flux function is linear, $f(u) = c u$, the conservation law reduces to the transport equation and the solution is a traveling wave. For nonlinear flux, we can still look for special solutions.
+
+#definition(name: "Traveling Wave Solution")[
+  A _traveling wave solution_ of the conservation law is a solution of the form $u(x, t) = phi(x - v t)$ for some profile function $phi$ and wave speed $v$. Substituting into $u_t + f'(u) u_x = 0$:
+  $
+    -v phi' + f'(phi) phi' = 0 => (f'(phi) - v) phi' = 0.
+  $
+  Either $phi' = 0$ (constant solution) or $f'(phi) = v$ (constant speed). For a _shock wave_ (discontinuous traveling wave), the speed is determined by the Rankine--Hugoniot condition.
+] <def:traveling-wave>
+
+== The Rankine--Hugoniot Condition // Rankine--Hugoniot 条件
+
+When characteristics cross, the classical solution breaks down and we must admit discontinuous (weak) solutions. Consider a shock located at $x = s(t)$ separating left state $u_L$ from right state $u_R$.
+
+#theorem(name: "Rankine--Hugoniot Condition")[
+  A discontinuity at $x = s(t)$ is a weak solution of the conservation law $u_t + f(u)_x = 0$ if and only if the shock speed satisfies:
+  $
+    s'(t) = (f(u_L) - f(u_R)) / (u_L - u_R),
+  $
+  where $u_L$ and $u_R$ are the values of $u$ to the left and right of the shock.
+] <thm:rankine-hugoniot>
+
+#proof[
+  Integrate the conservation law over a small rectangle $[s(t) - epsilon, s(t) + epsilon] times [t_1, t_2]$:
+  $
+    integral_(t_1)^(t_2) integral_(s(t) - epsilon)^(s(t) + epsilon) [u_t + f(u)_x] dif x dif t = 0.
+  $
+  Applying the fundamental theorem of calculus and letting $epsilon -> 0$:
+  $
+    integral_(t_1)^(t_2) [f(u_L) - f(u_R) - s'(t)(u_L - u_R)] dif t = 0.
+  $
+  Since this holds for all $[t_1, t_2]$, the integrand must vanish, yielding the result.
+]
+
+#example(name: "Burgers' Equation with Shock")[
+  Consider Burgers' equation $u_t + u u_x = 0$ (flux $f(u) = u^2 / 2$) with step initial data:
+  $
+    u(x, 0) = cases(u_L, x < 0, u_R, x > 0.)
+  $
+  where $u_L > u_R$. The characteristics from the left carry value $u_L$ with speed $u_L$, and those from the right carry $u_R$ with speed $u_R$. Since $u_L > u_R$, they intersect immediately, forming a shock at $x = 0$.
+
+  The Rankine--Hugoniot condition (#link(<thm:rankine-hugoniot>)[RH]) gives the shock speed:
+  $
+    s' = (u_L^2 / 2 - u_R^2 / 2) / (u_L - u_R) = (u_L + u_R) / 2.
+  $
+  The shock is the straight line $x = (u_L + u_R) t / 2$.
+] <ex:burgers-shock-solution>
+
+#note[
+  When $u_L < u_R$ (the opposite case), characteristics diverge rather than converge, and no shock forms. Instead, a _rarefaction wave_ (continuous self-similar solution) fills the gap:
+  $
+    u(x, t) = cases(
+      u_L, x < u_L t,
+      x / t, u_L t <= x <= u_R t,
+      u_R, x > u_R t.
+    )
+  $
+]
+
+#note[
+  #figure(
+    image("./img/burgers-shock-rarefaction.svg", width: 80%),
+    caption: [Solutions of Burgers' equation $u_t + u u_x = 0$. *Left:* Shock wave for $u_L > u_R$: characteristics converge and a shock forms at speed $s = (u_L + u_R)/2$. *Right:* Rarefaction wave for $u_L < u_R$: characteristics diverge and a fan of characteristics fills the expansion region.],
+    placement: auto,
+    supplement: [Fig.]
+  ) <fig:burgers-shock-rarefaction>
+]
+
+// ==========================================================================
+// Part III — Distribution Theory (分布理论)
+// ==========================================================================
+// 设计思路：分布理论是为三类方程服务的工具层，拆为两章以避免单章 Part。
+// 基本解（原 Ch 4.4）在此统一构造；椭圆 Green 函数章不再重复（去重）。
+// 对应教材：通常占据 PDE 教材 1-2 章（或附录）。
+
+// --- Chapter 6: Distributions and Weak Derivatives (分布与弱导数) ---
+
+//   Section 6.1: Test Functions and Distributions (测试函数与分布)
+//     - D(Ω)、S(R^n)、分布、正则/奇异分布、支撑
+//   Section 6.2: Weak Derivatives (弱导数)
+//     - 定义、唯一性、与经典导数一致
+//     - |x| 与 Heaviside 的例子
+
+// --- Chapter 7: Convolution and Fundamental Solutions (卷积与基本解) ---
+
+//   Section 7.1: Convolution and Approximation (卷积与逼近)
+//     - 卷积、磨光子、逼近定理
+//   Section 7.2: Fundamental Solutions (基本解)
+//     - Malgrange-Ehrenpreis 定理
+//     - Laplace/Heat/Wave 基本解（Newton 位势、热核、光锥支撑）
+//     - 三大类型传播行为对比（衔接 Ch 8/12/15）
+
+= Distributions and Weak Derivatives // 分布与弱导数 <sec:ch4-distributions>
 
 The classical theory of PDEs seeks smooth solutions. However, many physically relevant problems — point charges in electrostatics, shock waves, impulse forces — have no classical solution. Distribution theory, introduced by Schwartz in the 1940s, provides a rigorous framework that extends the notion of functions, allows differentiation of non-smooth objects, and supplies the concept of a *fundamental solution* for linear PDEs with constant coefficients.
 
 This chapter develops the foundational tools: test function spaces, distributions, weak derivatives, convolution, and fundamental solutions. These tools are then applied in subsequent chapters to study elliptic, parabolic, and hyperbolic equations.
 
-== Section 4.1: Test Functions and Distributions (测试函数与分布)
+== Test Functions and Distributions // 测试函数与分布
 
 The strategy of distribution theory is to transfer derivatives from the unknown function onto smooth "test functions" via integration by parts. This requires a space of test functions with strong regularity and support properties, and a dual space of "generalized functions."
 
@@ -1101,7 +1186,7 @@ The space $cal(D)(Omega)$ is non-trivial: it contains functions that are smooth 
 ] <lem:bump-function>
 
 #note[
-  The bump function from #link(<lem:bump-function>)[§4.1 Lemma] is the building block for partitions of unity, which are essential for localizing PDE problems and extending local results to global ones.
+  The bump function from #link(<lem:bump-function>)[§6.1 Lemma] is the building block for partitions of unity, which are essential for localizing PDE problems and extending local results to global ones.
 ]
 
 For problems on all of $R^n$, a larger test function space with controlled decay at infinity is more convenient.
@@ -1118,7 +1203,7 @@ For problems on all of $R^n$, a larger test function space with controlled decay
 ] <def:test-fn-space-S>
 
 #note[
-  The Schwartz space satisfies $cal(D)(R^n) subset cal(S)(R^n) subset C^oo(R^n)$. Functions in $cal(S)$ and all their derivatives decay faster than any polynomial at infinity — this makes $cal(S)$ the natural domain for the Fourier transform (see §4.4).
+  The Schwartz space satisfies $cal(D)(R^n) subset cal(S)(R^n) subset C^oo(R^n)$. Functions in $cal(S)$ and all their derivatives decay faster than any polynomial at infinity — this makes $cal(S)$ the natural domain for the Fourier transform (see Analyse Harmonique).
 ]
 
 We now define distributions as continuous linear functionals on test functions.
@@ -1176,7 +1261,7 @@ Distributions arising from locally integrable functions in this way are called *
     $
       integral_(R^n) f(x) phi(x) dif x = phi(0).
     $
-    Choose a sequence of test functions $phi_j in cal(D)(R^n)$ with $"supp"(phi_j) subset B(0, 1/j)$, $0 <= phi_j <= 1$, and $phi_j(0) = 1$ (constructed from the bump function in #link(<lem:bump-function>)[§4.1]). Then:
+    Choose a sequence of test functions $phi_j in cal(D)(R^n)$ with $"supp"(phi_j) subset B(0, 1/j)$, $0 <= phi_j <= 1$, and $phi_j(0) = 1$ (constructed from the bump function in #link(<lem:bump-function>)[§6.1]). Then:
     $
       abs(integral f phi_j dif x) <= integral_(B(0, 1/j)) abs(f(x)) dif x -> 0
     $
@@ -1194,7 +1279,7 @@ For example, $"supp"(delta_a) = {a}$, and for a regular distribution $T_f$, the 
   A key conceptual point: distributions do not have pointwise values in general. The expression "$T(x)$" is not defined for a general distribution. Only operations that can be transferred to test functions — differentiation, multiplication by smooth functions, convolution — are well-defined. This "duality philosophy" is the central principle of distribution theory.
 ]
 
-== Section 4.2: Weak Derivatives (弱导数)
+== Weak Derivatives // 弱导数
 
 The most important operation on distributions for PDE theory is differentiation. Classical derivatives require pointwise limits, which fail for non-smooth functions. Distribution theory extends differentiation to _all_ distributions by transferring derivatives to test functions via integration by parts.
 
@@ -1289,7 +1374,7 @@ The following two examples illustrate the power of weak derivatives: functions t
     $
       -integral_(bb(R)) H(x) phi'(x) dif x = phi(0) = ⟨ delta, phi ⟩.
     $
-    By #link(<def:weak-derivative>)[Definition 4.2], $H' = delta$ in the sense of distributions. Note that $delta$ is not a regular distribution (#link(<ex:delta-not-regular>)[Example 4.1]), so $H'$ cannot be represented by any locally integrable function.
+    By #link(<def:weak-derivative>)[Definition 6.2], $H' = delta$ in the sense of distributions. Note that $delta$ is not a regular distribution (#link(<ex:delta-not-regular>)[Example 6.1]), so $H'$ cannot be represented by any locally integrable function.
   ]
 ] <ex:weak-heaviside>
 
@@ -1297,7 +1382,9 @@ The following two examples illustrate the power of weak derivatives: functions t
   The Heaviside example is paradigmatic: the weak derivative framework allows us to differentiate discontinuous functions, with the result being a _distribution_ (not necessarily a function). This is impossible in classical analysis. For PDE theory, this means we can seek solutions in distribution spaces, dramatically enlarging the class of admissible solutions. The systematic study of function spaces built on weak derivatives — Sobolev spaces — is developed in Analyse Harmonique and Analyse Fonctionnelle; here we only establish the distribution-theoretic foundation.
 ]
 
-== Section 4.3: Convolution and Approximation (卷积与逼近)
+= Convolution and Fundamental Solutions // 卷积与基本解
+
+== Convolution and Approximation // 卷积与逼近
 
 Convolution with smooth functions provides the primary tool for approximating distributions by smooth functions. This section develops the mollification technique, which is indispensable for PDE theory: it allows us to regularize rough data and construct smooth approximate solutions.
 
@@ -1380,7 +1467,7 @@ This density result is fundamental: it means we can approximate any distribution
   supplement: [Fig.]
 ) <fig:mollifier-approx>
 
-== Section 4.4: Fundamental Solutions (基本解)
+== Fundamental Solutions // 基本解
 
 The concept of a fundamental solution transforms PDE theory: it reduces the problem of solving $P(partial) u = f$ to convolution. Every linear PDE with constant coefficients possesses a fundamental solution in the distributional sense — a fact that is far from obvious and constitutes one of the deepest results in the field.
 
@@ -1395,7 +1482,7 @@ The concept of a fundamental solution transforms PDE theory: it reduces the prob
   $
 ] <def:fundamental-solution>
 
-If $E$ is a fundamental solution, then for any $f in cal(D)(bb(R)^n)$ the convolution $u = E * f$ satisfies $P(partial) u = f$ in the sense of distributions (see #link(<def:conv-distribution>)[Definition 4.5]). This reduces solving a PDE to computing a convolution — provided the fundamental solution is known.
+If $E$ is a fundamental solution, then for any $f in cal(D)(bb(R)^n)$ the convolution $u = E * f$ satisfies $P(partial) u = f$ in the sense of distributions (see #link(<def:conv-distribution>)[Definition 7.1]). This reduces solving a PDE to computing a convolution — provided the fundamental solution is known.
 
 The fundamental solution is not unique: if $E_1$ and $E_2$ are both fundamental solutions, then $P(partial)(E_1 - E_2) = 0$, so $E_1 - E_2$ solves the homogeneous equation. This freedom is exploited in applications by selecting the fundamental solution with the most convenient properties (causal, retarded, advanced, etc.).
 
@@ -1490,7 +1577,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
   $
     E(t, x) = 1/2 H(t) H(t^2 - x^2) = cases(1/2, t > abs(x), 0, t < abs(x).),
   $
-  where $H$ is the Heaviside function (#link(<ex:weak-heaviside>)[Example 4.2]). The support of $E$ is the forward light cone ${(t, x) : t >= abs(x)}$.
+  where $H$ is the Heaviside function (#link(<ex:weak-heaviside>)[Example 6.2]). The support of $E$ is the forward light cone ${(t, x) : t >= abs(x)}$.
 
   For $n = 3$:
   $
@@ -1548,152 +1635,151 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 ] <ex:fund-wave>
 
 #note[
-  The three fundamental solutions reveal fundamentally different propagation behaviors, reflecting the classification of Chapter 3:
+  The three fundamental solutions reveal fundamentally different propagation behaviors, reflecting the classification of Chapter 2:
 
   - *Laplace* ($Delta$): $E$ is supported on _all_ of $R^n$ — elliptic equations have infinite propagation in all directions; disturbances are felt everywhere instantaneously.
   - *Heat* ($partial_t - Delta$): $E$ is supported on ${t >= 0}$ — parabolic equations have infinite spatial propagation speed but respect the arrow of time (irreversibility).
   - *Wave* ($partial_t^2 - Delta$): $E$ is supported on the forward light cone ${t >= abs(x)}$ — hyperbolic equations respect finite propagation speed and causality.
 
-  Moreover, the wave fundamental solution reveals a striking dimensional dichotomy: for odd $n$, $E$ is supported on the _surface_ of the light cone (sharp signals — the *strong Huygens' principle*); for even $n$, $E$ fills the _interior_ (after-effects — the *weak Huygens' principle*). This is explored in detail in Chapter 12.
+  Moreover, the wave fundamental solution reveals a striking dimensional dichotomy: for odd $n$, $E$ is supported on the _surface_ of the light cone (sharp signals — the *strong Huygens' principle*); for even $n$, $E$ fills the _interior_ (after-effects — the *weak Huygens' principle*). This is explored in detail in Chapter 15.
 ]
 
 // ==========================================================================
-// Part III — Elliptic Equations (椭圆型方程)
+// Part IV — Elliptic Equations (椭圆型方程)
 // ==========================================================================
 // 设计思路：从 Laplace 方程的经典理论出发，逐步过渡到
 // 一般椭圆方程的弱解理论和正则性。
-// 弱形式与 Sobolev 空间工具参见 Analyse Harmonique 和
-// Analyse Fonctionnelle 中的相关章节。
-// 与 Analyse Complexe Ch 18 的边界：复分析笔记从全纯函数角度
-// 处理调和函数；本笔记从 PDE 角度（弱解、正则性）。
+// 弱形式与 Sobolev 空间的深层理论参见 Analyse Harmonique 和
+// Analyse Fonctionnelle；本笔记仅在 Ch 11 简述 W^{k,p} 基本性质。
+// 与 Analyse Complexe 的边界：复分析笔记从全纯函数角度处理调和函数；
+// 本笔记从 PDE 角度（弱解、正则性）。
 
-// --- Chapter 5: Laplace's Equation and Harmonic Functions (拉普拉斯方程与调和函数) ---
+// --- Chapter 8: Laplace's Equation and Harmonic Functions (拉普拉斯方程与调和函数) ---
 
-//   Section 5.1: Laplace's and Poisson's Equations (拉普拉斯方程与泊松方程)
+//   Section 8.1: Laplace's and Poisson's Equations (拉普拉斯方程与泊松方程)
 //     - 方程的导出与物理背景
 //     - 基本性质
 
-//   Section 5.2: Mean Value Property (平均值性质)
+//   Section 8.2: Mean Value Property (平均值性质)
 //     - 球面平均值与球体平均值
 //     - 逆命题
 
-//   Section 5.3: Maximum and Minimum Principles (最大值与最小值原理)
+//   Section 8.3: Maximum and Minimum Principles (最大值与最小值原理)
 //     - 弱最大值原理
 //     - 强最大值原理
 //     - Hopf 引理
 
-//   Section 5.4: Green's Identities (格林恒等式)
+//   Section 8.4: Green's Identities (格林恒等式)
 //     - 第一与第二格林恒等式
 //     - 在唯一性证明中的应用
 
-// --- Chapter 6: Boundary Value Problems for Elliptic Equations (椭圆型方程边值问题) ---
+// --- Chapter 9: Boundary Value Problems for Elliptic Equations (椭圆型方程边值问题) ---
 
-//   Section 6.1: Dirichlet Problem (狄利克雷问题)
+//   Section 9.1: Dirichlet Problem (狄利克雷问题)
 //     - 弱形式与 Lax-Milgram 应用
 //     - 存在性与唯一性
 
-//   Section 6.2: Neumann Problem (纽曼问题)
+//   Section 9.2: Neumann Problem (纽曼问题)
 //     - 弱形式
 //     - 相容性条件
 
-//   Section 6.3: Robin and Mixed Conditions (Robin 与混合边界条件)
+//   Section 9.3: Robin and Mixed Conditions (Robin 与混合边界条件)
 //     - Robin 边界条件的弱形式
 //     - 混合边界条件的处理
 
-//   Section 6.4: Uniqueness via Energy Methods (能量方法的唯一性)
+//   Section 9.4: Uniqueness via Energy Methods (能量方法的唯一性)
 //     - 能量积分方法
 //     - 与最大值原理的互补
 
-// --- Chapter 7: Green Functions and Representation (格林函数与表示) ---
+// --- Chapter 10: Green Functions and Representation (格林函数与表示) ---
+// 设计思路：基本解已在 Ch 7 统一构造（去重，不再重复 Newton 位势）。
 
-//   Section 7.1: Fundamental Solutions of Elliptic Operators (椭圆算子的基本解)
-//     - 全空间基本解的构造
-//     - Newton 位势
-
-//   Section 7.2: Green's Function Construction (格林函数的构造)
+//   Section 10.1: Green's Function Construction (格林函数的构造)
 //     - 有界区域上的 Green 函数
 //     - 镜像法
 
-//   Section 7.3: Representation Formulas (表示公式)
+//   Section 10.2: Representation Formulas (表示公式)
 //     - 用 Green 函数表示解
 //     - Poisson 积分公式
 
-//   Section 7.4: Method of Images and Conformal Mapping (镜像法与保角映射)
+//   Section 10.3: Method of Images and Conformal Mapping (镜像法与保角映射)
 //     - 特殊区域的 Green 函数
 //     - 与复分析方法的联系（参见 Analyse Complexe）
 
-// --- Chapter 8: Regularity Theory (正则性理论) ---
+// --- Chapter 11: Regularity Theory (正则性理论) ---
+// 设计思路：Sobolev 空间的定义与基本性质在此简述（支撑弱解与 W^{k,p} 估计）；
+// 嵌入定理等深层理论参见 Analyse Harmonique。
 
-//   Section 8.1: Interior Regularity (内正则性)
+//   Section 11.1: Interior Regularity (内正则性)
 //     - W^{2,p} 内估计
 //     - 椭圆正则性定理
 
-//   Section 8.2: Boundary Regularity (边界正则性)
+//   Section 11.2: Boundary Regularity (边界正则性)
 //     - 边界附近的正则性
 //     - 区域光滑性的要求
 
-//   Section 8.3: Schauder Estimates (Schauder 估计)
+//   Section 11.3: Schauder Estimates (Schauder 估计)
 //     - Hölder 空间中的估计
 //     - Schauder 定理
 
-//   Section 8.4: L^p Estimates and Calderón-Zygmund Theory (L^p 估计与 Calderón-Zygmund 理论)
+//   Section 11.4: L^p Estimates and Calderón-Zygmund Theory (L^p 估计与 Calderón-Zygmund 理论)
 //     - Calderón-Zygmund 奇异积分
 //     - L^p 正则性
 
 // ==========================================================================
-// Part IV — Parabolic Equations (抛物型方程)
+// Part V — Parabolic Equations (抛物型方程)
 // ==========================================================================
 // 设计思路：以热方程为核心模型，建立抛物型方程的
 // 存在性、唯一性、正则性和长期行为理论。
-// 半群理论作为统一框架自然嵌入 Ch 10。
+// 半群理论作为统一框架自然嵌入 Ch 13。
 
-// --- Chapter 9: Heat Equation (热方程) ---
+// --- Chapter 12: Heat Equation (热方程) ---
 
-//   Section 9.1: Heat Kernel and Fundamental Solution (热核与基本解)
-//     - 热核的导出与性质
-//     - 基本解
+//   Section 12.1: Heat Kernel and Fundamental Solution (热核与基本解)
+//     - 热核的导出与性质（基本解已在 Ch 7 构造，此处给初值问题视角）
+//     - 初值问题的基本解
 
-//   Section 9.2: Cauchy Problem (Cauchy 问题)
+//   Section 12.2: Cauchy Problem (Cauchy 问题)
 //     - 初值问题的解
 //     - 正则化效应
 
-//   Section 9.3: Maximum Principle (最大值原理)
+//   Section 12.3: Maximum Principle (最大值原理)
 //     - 弱最大值原理
 //     - 强最大值原理
 
-//   Section 9.4: Energy Estimates and Smoothing Effect (能量估计与平滑效应)
+//   Section 12.4: Energy Estimates and Smoothing Effect (能量估计与平滑效应)
 //     - 能量不等式
 //     - 无穷次光滑效应
 
-// --- Chapter 10: Linear Parabolic Boundary Value Problems (线性抛物型边值问题) ---
+// --- Chapter 13: Linear Parabolic Boundary Value Problems (线性抛物型边值问题) ---
 
-//   Section 10.1: Dirichlet and Neumann Problems (狄利克雷与纽曼问题)
+//   Section 13.1: Dirichlet and Neumann Problems (狄利克雷与纽曼问题)
 //     - 弱形式与存在性
 //     - Galerkin 逼近
 
-//   Section 10.2: Semigroup Framework (半群框架)
+//   Section 13.2: Semigroup Framework (半群框架)
 //     - C_0 半群与无穷小生成元
 //     - 热方程的半群解释
 
-//   Section 10.3: Comparison Principles (比较原理)
-//     - 上下解比较
-//     - 正性保持
+//   Section 13.3: Comparison Principles and Monotone Iteration (比较原理与单调迭代)
+//     - 上下解比较、正性保持
+//     - 单调迭代格式与收敛（原 Ch 11.4 并入此处）
 
-//   Section 10.4: Long-Time Behavior (长期行为)
+//   Section 13.4: Long-Time Behavior (长期行为)
 //     - 指数衰减
 //     - 与椭圆问题的联系
 
-// --- Chapter 11: Nonlinear Parabolic Equations (非线性抛物型方程) ---
+// --- Chapter 14: Nonlinear Parabolic Equations (非线性抛物型方程) ---
 
-//   Section 11.1: Reaction-Diffusion Equations (反应-扩散方程)
+//   Section 14.1: Reaction-Diffusion Equations (反应-扩散方程)
 //     - 一般框架
 //     - 局部存在性
 
-//   Section 11.2: Fisher-KPP Equation (Fisher-KPP 方程)
+//   Section 14.2: Fisher-KPP Equation (Fisher-KPP 方程)
 //     - 行波解
 //     - 传播速度
 
-//   Section 11.3: Blow-Up and Global Existence (爆破与整体存在)
+//   Section 14.3: Blow-Up and Global Existence (爆破与整体存在)
 //     - 爆破判据
 //     - 整体存在条件
 
@@ -1702,126 +1788,150 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 //     - 迭代格式与收敛
 
 // ==========================================================================
-// Part V — Hyperbolic Equations (双曲型方程)
+// Part VI — Hyperbolic Equations (双曲型方程)
 // ==========================================================================
-// 设计思路：以波动方程为核心，建立双曲型方程的
+// 设计思路：以波动方程为核心模型，建立双曲型方程的
 // 经典理论和现代守恒律理论。
+// 去重：标量一维守恒律已在 Ch 5 完整处理，Ch 17 专注系统情形增量。
 
-// --- Chapter 12: Wave Equation (波动方程) ---
+// --- Chapter 15: Wave Equation (波动方程) ---
 
-//   Section 12.1: D'Alembert Formula (达朗贝尔公式)
-//     - 一维波动方程的通解
+//   Section 15.1: D'Alembert Formula (达朗贝尔公式)
+//     - 通解已在 Ch 2 由标准形导出，此处给出完整 Cauchy 公式
 //     - 行波解释
 
-//   Section 12.2: Initial and Boundary Value Problems (初边值问题)
+//   Section 15.2: Initial and Boundary Value Problems (初边值问题)
 //     - Cauchy 问题（高维）
 //     - 有界区域上的边值问题
 
-//   Section 12.3: Energy Conservation (能量守恒)
+//   Section 15.3: Energy Conservation (能量守恒)
 //     - 能量恒等式
 //     - 在唯一性证明中的应用
 
-//   Section 12.4: Finite Propagation Speed (有限传播速度)
+//   Section 15.4: Finite Propagation Speed (有限传播速度)
 //     - 依赖区域
 //     - 影响区域
 
-//   Section 12.5: Duhamel Principle (Duhamel 原理)
+//   Section 15.5: Duhamel Principle (Duhamel 原理)
 //     - 非齐次方程的求解
 //     - 与齐次问题的化归
 
-// --- Chapter 13: Linear Hyperbolic Systems (线性双曲系统) ---
+// --- Chapter 16: Linear Hyperbolic Systems (线性双曲系统) ---
 
-//   Section 13.1: Symmetric Hyperbolic Systems (对称双曲系统)
+//   Section 16.1: Symmetric Hyperbolic Systems (对称双曲系统)
 //     - Friedrichs 对称正系统
 //     - 能量估计
 
-//   Section 13.2: Riemann Invariants (Riemann 不变量)
+//   Section 16.2: Riemann Invariants (Riemann 不变量)
 //     - 对角化方法
 //     - 不变量的构造
 
-//   Section 13.3: Energy Methods and Well-Posedness (能量方法与适定性)
+//   Section 16.3: Energy Methods and Well-Posedness (能量方法与适定性)
 //     - 能量不等式
 //     - 适定性证明
 
-// --- Chapter 14: Nonlinear Conservation Laws (非线性守恒律) ---
+// --- Chapter 17: Conservation Laws for Systems (守恒律系统) ---
+// 设计思路：由原 Ch 14 重构。标量一维理论（弱解、RH、激波/稀疏波）
+// 已在 Ch 5 处理，此处仅保留系统情形增量并交叉引用 Ch 5。
 
-//   Section 14.1: Weak Solutions (弱解)
-//     - 弱解的定义
-//     - Rankine-Hugoniot 条件
+//   Section 17.1: Weak Solutions for Systems (系统的弱解与 Rankine-Hugoniot 条件)
+//     - 弱解的定义（标量情形见 Ch 5）
+//     - RH 条件
 
-//   Section 14.2: Shock Waves and Rarefaction Waves (激波与稀疏波)
-//     - 激波的形成
-//     - 稀疏波（中心稀疏波）
-
-//   Section 14.3: Entropy Conditions (熵条件)
+//   Section 17.2: Entropy Conditions (熵条件)
 //     - 熵不等式
 //     - Lax 熵条件与 Oleinik 条件
+
+//   Section 17.3: Riemann Problems (Riemann 问题)
+//     - Riemann 问题的定义
+//     - 标量情形与系统情形的解
 
 //   Section 14.4: Riemann Problems (Riemann 问题)
 //     - Riemann 问题的定义
 //     - 标量情形与系统情形的解
 
 // ==========================================================================
-// Part VI — Advanced Topics (进阶专题)
+// Part VII — Methods and Advanced Topics (方法与进阶专题)
 // ==========================================================================
-// 设计思路：精选数值方法作为理论与计算的桥梁。
-// 非线性 PDE 的高级主题（粘性解等）分散在 Part IV 和 Part V 中处理。
-// 应用 PDE（流体力学、薛定谔等）归属各专门笔记。
+// 设计思路：补齐经典 PDE 课程的核心方法——分离变量与谱方法（v0.4.0 缺失，
+// 但 Ch 1 已声明其为基本方法），并以数值方法收尾，作为理论与计算的桥梁。
+// 粘性解已并入 Ch 4；应用 PDE（流体力学、薛定谔等）归属各专门笔记。
 
-// --- Chapter 15: Numerical Methods for PDEs (PDE 数值方法) ---
+// --- Chapter 18: Separation of Variables and Spectral Methods (分离变量与谱方法) ---
+// 设计思路：新增章。Fourier 级数/变换的深层理论 → Analyse Harmonique（交叉引用）。
 
-//   Section 15.1: Finite Difference Methods (有限差分法)
+//   Section 18.1: Separation of Variables (分离变量法)
+//     - 齐次/非齐次问题
+//     - 特征函数展开
+
+//   Section 18.2: Sturm--Liouville Theory (Sturm--Liouville 理论)
+//     - 特征值问题
+//     - 正交性与完备性
+
+//   Section 18.3: Applications to the Model Equations (在三大模型方程中的应用)
+//     - 热方程、波动方程、Laplace 的分离变量解
+//     - 与谱方法、Fourier 方法的联系
+
+// --- Chapter 19: Numerical Methods for PDEs (PDE 数值方法) ---
+
+//   Section 19.1: Finite Difference Methods (有限差分法)
 //     - 差分格式（显式、隐式、Crank-Nicolson）
 //     - 稳定性与收敛性（Lax 等价定理）
 
-//   Section 15.2: Finite Element Methods (有限元法)
+//   Section 19.2: Finite Element Methods (有限元法)
 //     - 弱形式到离散格式
 //     - 收敛性与误差估计
 
-//   Section 15.3: Finite Volume Methods (有限体积法)
+//   Section 19.3: Finite Volume Methods (有限体积法)
 //     - 守恒格式
 //     - 在守恒律中的应用
 
-//   Section 15.4: Spectral Methods (谱方法)
+//   Section 19.4: Spectral Methods (谱方法)
 //     - 谱离散化
 //     - 与 Fourier 方法的联系
 
 // ==========================================================================
 // 结构说明 (Structure Note)
 // ==========================================================================
-// 本笔记遵循"基础分类 → 分布理论 → 椭圆 → 抛物 → 双曲 → 进阶"的
-// 六段式主线，共 6 Part、15 Chapter。
+// 本笔记遵循「基础与分类 → 一阶方程 → 分布与工具 → 椭圆 → 抛物 → 双曲 →
+// 方法与专题」的七段式主线，共 7 Part、19 Chapter。
 //
-// Part I（Ch 1-3，基础与分类）：建立 PDE 基本语言、适定性概念，
-//   完整处理一阶 PDE 理论（特征线法、Hamilton-Jacobi、守恒律），
-//   以及二阶方程的椭圆/抛物/双曲三分框架。
+// Part I（Ch 1–2，基础与分类）：PDE 基本语言、适定性概念，二阶方程的
+//   椭圆/抛物/双曲分类框架与标准形。
 //
-// Part II（Ch 4，分布理论）：PDE 中最基本的广义函数工具——
-//   测试函数、分布、弱导数、卷积与基本解。
-//   Sobolev 空间、弱形式与变分方法、谱理论等更高级的工具
-//   分别在 Analyse Harmonique 和 Analyse Fonctionnelle 中处理。
+// Part II（Ch 3–5，一阶方程）：特征线法、Hamilton-Jacobi（含粘性解）、
+//   一维守恒律与激波理论。
 //
-// Part III（Ch 5-8，椭圆型方程）：从 Laplace 方程的经典调和函数理论
-//   到一般椭圆方程的弱解、Green 函数和正则性理论。
+// Part III（Ch 6–7，分布与工具）：测试函数、分布、弱导数、卷积与基本解。
+//   Sobolev 空间的深层理论在 Analyse Harmonique 处理（本笔记仅在 Ch 11
+//   简述 W^{k,p} 基本性质）。
 //
-// Part IV（Ch 9-11，抛物型方程）：以热方程为核心，建立最大值原理、
-//   能量估计、半群框架，并推广到非线性反应-扩散方程。
+// Part IV（Ch 8–11，椭圆型方程）：Laplace 经典理论 → 边值问题 → Green 函数
+//   → 正则性。
 //
-// Part V（Ch 12-14，双曲型方程）：从波动方程的 d'Alembert 公式和
-//   能量守恒到线性双曲系统，最终到非线性守恒律和激波理论。
+// Part V（Ch 12–14，抛物型方程）：热方程 → 线性抛物边值问题（半群）→
+//   非线性反应-扩散方程。
 //
-// Part VI（Ch 15，进阶专题）：PDE 数值方法概览（有限差分、有限元、
-//   有限体积、谱方法）。
+// Part VI（Ch 15–17，双曲型方程）：波动方程 → 线性双曲系统 → 守恒律系统。
+//
+// Part VII（Ch 18–19，方法与进阶专题）：分离变量与谱方法（新增）、PDE 数值
+//   方法概览。
 //
 // 职责边界：
 //   Fourier 理论 → Analyse Harmonique（交叉引用，不重复）
-//   Sobolev 空间 → Analyse Harmonique（交叉引用）
+//   Sobolev 空间（深层理论） → Analyse Harmonique（交叉引用）
 //   Banach / Hilbert 抽象理论 → Analyse Fonctionnelle（交叉引用）
-//   弱形式、Lax-Milgram、Galerkin、变分方法 → Analyse Fonctionnelle（交叉引用）
+//   弱形式、Lax-Milgram、Galerkin、变分方法（抽象框架） → Analyse Fonctionnelle（交叉引用）
 //   谱理论（抽象部分） → Analyse Fonctionnelle（交叉引用）
 //   L^p / 测度论 → Analyse Réelle（交叉引用）
 //   Hamilton-Jacobi 的力学应用 → Mécanique analytique（交叉引用）
 //   应用 PDE → 各专门笔记（Mécanique quantique, Électrodynamique 等）
+//
+// 去重记录（相对 v0.4.0）：
+//   - Ch 5 完整承载标量一维守恒律；Ch 17 仅保留系统情形增量
+//   - 基本解统一在 Ch 7；Ch 10（Green 函数）不再重复构造
+//   - D'Alembert 通解在 Ch 2 由标准形导出，Ch 15 给出完整 Cauchy 公式
+//   - 比较原理与单调迭代统一在 Ch 13
 // ==========================================================================
 
 #bibliography("references.bib")
