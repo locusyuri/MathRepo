@@ -69,6 +69,8 @@
 //   Section 1.4: Well-Posedness (适定性)
 //     - Hadamard 三条件、病态例子（椭圆 Cauchy 问题、反向热方程）
 
+#part("Foundations and Classification") // 基础与分类
+
 = Introduction to PDEs // 偏微分方程导论
 
 == Basic Concepts and Examples // 基本概念与例子
@@ -720,6 +722,8 @@ The figure above provides a geometric summary of the classification. The charact
 //     - 激波与稀疏波
 //   （标量一维理论在此完整处理；系统的守恒律见 Ch 17）
 
+#part("First-Order PDEs") // 一阶偏微分方程
+
 = Method of Characteristics and Quasilinear Equations // 特征线法与拟线性方程
 
 The theory of first-order PDEs is built around a single unifying idea: _characteristic curves_ along which a PDE reduces to a system of ODEs. This part develops the method of characteristics in full generality and applies it to quasilinear equations, Hamilton--Jacobi equations, and conservation laws.
@@ -1142,6 +1146,8 @@ When characteristics cross, the classical solution breaks down and we must admit
 //     - Malgrange-Ehrenpreis 定理
 //     - Laplace/Heat/Wave 基本解（Newton 位势、热核、光锥支撑）
 //     - 三大类型传播行为对比（衔接 Ch 8/12/15）
+
+#part("Distribution Theory") // 分布理论
 
 = Distributions and Weak Derivatives // 分布与弱导数 <sec:ch4-distributions>
 
@@ -1726,6 +1732,8 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 //     - Calderón-Zygmund 奇异积分
 //     - L^p 正则性
 
+#part("Elliptic Equations") // 椭圆型方程
+
 // ==========================================================================
 // Part V — Parabolic Equations (抛物型方程)
 // ==========================================================================
@@ -1783,9 +1791,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 //     - 爆破判据
 //     - 整体存在条件
 
-//   Section 11.4: Monotone Iteration Methods (单调迭代法)
-//     - 上下解方法
-//     - 迭代格式与收敛
+#part("Parabolic Equations") // 抛物型方程
 
 // ==========================================================================
 // Part VI — Hyperbolic Equations (双曲型方程)
@@ -1846,9 +1852,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 //     - Riemann 问题的定义
 //     - 标量情形与系统情形的解
 
-//   Section 14.4: Riemann Problems (Riemann 问题)
-//     - Riemann 问题的定义
-//     - 标量情形与系统情形的解
+#part("Hyperbolic Equations") // 双曲型方程
 
 // ==========================================================================
 // Part VII — Methods and Advanced Topics (方法与进阶专题)
@@ -1889,6 +1893,8 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 //   Section 19.4: Spectral Methods (谱方法)
 //     - 谱离散化
 //     - 与 Fourier 方法的联系
+
+#part("Methods and Advanced Topics") // 方法与进阶专题
 
 // ==========================================================================
 // 结构说明 (Structure Note)
