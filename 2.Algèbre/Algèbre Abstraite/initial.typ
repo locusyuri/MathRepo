@@ -402,29 +402,32 @@ merely has a well-defined product; a *semigroup* adds associativity; a
 
 #definition(name: "Magma")[
   A *magma* is a pair $(G, star)$ where $star$ is a binary operation
-  on the set $G$ — precisely the structures of
-  #link(<def:binary-operation>)[§1.1]. The only guarantee is
-  *closure*: every product $a star b$ is a defined element of $G$,
-  and nothing more is promised.
+  on the set $G$.
 ] <def:magma>
+
+A magma is precisely the structure of
+#link(<def:binary-operation>)[§1.1]. The only guarantee is *closure*:
+every product $a star b$ is a defined element of $G$, and nothing more
+is promised.
 
 #definition(name: "Semigroup")[
   A *semigroup* is a magma whose operation is *associative*:
   $(a star b) star c = a star (b star c)$ for all $a, b, c in G$.
-  By generalised associativity (#link(<prop:operation-laws>)[§1.1])
-  the product $a_1 star a_2 star dots star a_n$ is independent of
-  how parentheses are inserted — the first measure of computational
-  reliability.
 ] <def:semigroup>
+
+By generalised associativity (#link(<prop:operation-laws>)[§1.1]) the
+product $a_1 star a_2 star dots star a_n$ is independent of how
+parentheses are inserted — the first measure of computational
+reliability.
 
 #definition(name: "Monoid")[
   A *monoid* is a semigroup possessing a two-sided *identity*: an
   element $e in G$ with $e star a = a star e = a$ for all $a in G$.
-  The identity is unique
-  (#link(<prop:operation-laws-unique>)[§1.1]). Familiar specimens:
-  $(bb(N), +)$ with identity $0$ and $(bb(N), dot)$ with identity
-  $1$.
 ] <def:monoid>
+
+The identity of a monoid is unique
+(#link(<prop:operation-laws-unique>)[§1.1]). Familiar specimens:
+$(bb(N), +)$ with identity $0$, and $(bb(N), dot)$ with identity $1$.
 
 #definition(name: "Group")[
   A *group* is a monoid in which every element is *invertible* —
