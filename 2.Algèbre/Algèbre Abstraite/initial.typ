@@ -121,8 +121,8 @@ decisive for rings (Chapter 8); here we only record their form.
   e star c = c$.
 ]
 
-#example[
-  (Reading a Cayley table.) The operation table (*Cayley table*) of
+#example(name: "Reading a Cayley table.")[
+  The operation table (*Cayley table*) of
   addition modulo 4 on $S = {0, 1, 2, 3}$:
   #align(center)[
     #table(
@@ -181,8 +181,8 @@ controls every quotient construction in this book — quotient groups
 (Chapter 17). We motivate it with the most important example, then
 state the general principle.
 
-#example[
-  (Residue classes.) On $bb(Z)$, declare
+#example(name: "Residue classes.")[
+  On $bb(Z)$, declare
   $
     a equiv b quad (mod n)
     quad <=> quad n "divides" a - b.
@@ -334,8 +334,8 @@ regardless — this will be systematised in
   $f$-chasing argument.
 ]
 
-#example[
-  (Two isomorphisms.)
+#example(name: "Two isomorphisms.")[
+  
   - $f: (bb(Z), +) -> (2 bb(Z), +)$, $f(n) = 2 n$: bijective, and
     $f(m + n) = 2(m + n) = 2m + 2n = f(m) + f(n)$. The even integers,
     with addition, are an algebraic copy of the integers — they are
@@ -529,8 +529,8 @@ will serve the whole notebook, checking the axioms in each case; a
 run of deliberate near-misses at the end shows which axiom does
 which work.
 
-#example[
-  (Elementary groups.) The sets $bb(Z)$, $bb(Q)$, $bb(R)$ under
+#example(name: "Elementary groups.")[
+  The sets $bb(Z)$, $bb(Q)$, $bb(R)$ under
   addition are abelian groups: closure and associativity are
   inherited from arithmetic, $0$ is the identity, and $-a$ inverts
   $a$. The non-zero rationals and reals under multiplication,
@@ -540,8 +540,8 @@ which work.
   $(bb(Q), dot)$ fail (G3).
 ] <ex:elementary-groups>
 
-#example[
-  (Residue classes form a group.) Take $bb(Z)_n$ with the addition
+#example(name: "Residue classes form a group.")[
+  Take $bb(Z)_n$ with the addition
   defined in #link(<caution:well-defined-operations>)[Chapter 1] —
   the well-definedness check made there is precisely what allows us
   to speak of an operation at all. The axioms lift from $bb(Z)$:
@@ -573,8 +573,8 @@ which work.
   are omitted, so $(1 2)$ and $(1 2)(3)$ are the same permutation.
 ] <note:cycle-notation>
 
-#example[
-  (The smallest non-abelian group.) $S_3$ has six elements:
+#example(name: "The smallest non-abelian group.")[
+  $S_3$ has six elements:
   $
     e, quad (1 2 3), quad (1 3 2), quad (1 2), quad (1 3), quad (2 3).
   $
@@ -619,8 +619,8 @@ which work.
   these groups are non-abelian.
 ] <def:general-linear-group>
 
-#example[
-  (The quaternion group.) Let
+#example(name: "The quaternion group.")[
+  Let
   $Q_8 = {plus.minus 1, plus.minus i, plus.minus j, plus.minus k}$
   with multiplication determined by
   $
@@ -636,8 +636,8 @@ which work.
   will return.
 ] <ex:quaternion-group>
 
-#example[
-  (Near-misses: why each axiom is needed.)
+#example(name: "Near-misses: why each axiom is needed.")[
+  
   - $(bb(N), +)$ is closed and associative with identity $0$, but no
     positive number has an inverse: (G3) fails while (G1) and (G2)
     hold — a *monoid* that is not a group
@@ -663,8 +663,8 @@ which work.
     *simultaneously*, do suffice.
 ] <ex:non-groups>
 
-#example[
-  (Bitwise operations on $n$-bit words.) Let $B_n = {0, 1}^n$ be the
+#example(name: "Bitwise operations on $n$-bit words.")[
+  Let $B_n = {0, 1}^n$ be the
   set of $n$-bit binary strings, equipped with the *bitwise XOR*
   operation $xor$ (componentwise addition modulo $2$). Then
   $(B_n, xor)$ is an abelian group:
@@ -819,8 +819,8 @@ notion cashes the promise.
   $n in bb(Z)$ are then distinct.
 ] <def:order-element>
 
-#example[
-  (Orders at a glance.) In $(bb(Z)_4, +)$:
+#example(name: "Orders at a glance.")[
+  In $(bb(Z)_4, +)$:
   $"ord"([1]) = 4$, $"ord"([2]) = 2$ (since $2 [2] = [4] = [0]$),
   $"ord"([0]) = 1$. In $S_3$
   (#link(<ex:s3-details>)[§2.2]): every transposition has order $2$,
@@ -1108,8 +1108,8 @@ the chapter.
   #link(<def:subgroup>)[the definition].
 ]
 
-#example[
-  (A subgroup inventory.)
+#example(name: "A subgroup inventory.")[
+  
   - For each $n >= 1$, the set $n bb(Z) = {n k | k in bb(Z)}$ is a
     subgroup of $(bb(Z), +)$: non-empty, and $a - b in n bb(Z)$
     whenever $a, b in n bb(Z)$ (in additive notation the criterion
@@ -1228,8 +1228,8 @@ general mechanism.
   partition-class correspondence.
 ]
 
-#example[
-  (Cosets in $S_3$.) Take $H = ⟨(1 2 3)⟩ = {e, (1 2 3), (1 3 2)}$.
+#example(name: "Cosets in $S_3$.")[
+  Take $H = ⟨(1 2 3)⟩ = {e, (1 2 3), (1 3 2)}$.
   Every element of $H$ gives the coset $H$ itself, and
   $
     (1 2) H = {(1 2), (1 2)(1 2 3), (1 2)(1 3 2)}
@@ -1334,8 +1334,8 @@ group lurking there.
   a rectangle.)
 ] <def:klein-four>
 
-#example[
-  (Groups of order at most $5$.) Let $abs(G) <= 5$.
+#example(name: "Groups of order at most $5$.")[
+  Let $abs(G) <= 5$.
   - $abs(G) = 1$: the trivial group.
   - $abs(G) = 2, 3, 5$ (primes): $G$ is cyclic,
     #link(<cor:prime-order-cyclic>)[by the corollary].
@@ -1531,8 +1531,8 @@ normal form carries an invariant of the first importance.
   even: $abs(A_n) = n! \/ 2$ and $[S_n : A_n] = 2$.
 ] <def:alternating-group>
 
-#example[
-  (Signs in practice.) Every 3-cycle is even:
+#example(name: "Signs in practice.")[
+  Every 3-cycle is even:
   $(a b c) = (a c)(a b)$ is a product of $2$ transpositions by
   #link(<prop:transpositions-generate>)[the factorization law]. In
   particular
@@ -1670,8 +1670,8 @@ those stable under the natural "change of frame" of the group.
   (4) is the business of #link(<ex:non-normal>)[the example below].
 ]
 
-#example[
-  (A gallery of normal subgroups.)
+#example(name: "A gallery of normal subgroups.")[
+  
   + In #link(<ex:a3-alternating>)[§3.3] we observed that $A_3 = {e,
       (1 2 3), (1 3 2)}$ has index $2$ in $S_3$, so $A_3 ⊲ S_3$ by
     #link(<prop:normal-properties>)[property (3)]. The same argument
@@ -1851,8 +1851,8 @@ hand, the rest is a verification.
   abs(N)$.
 ]
 
-#example[
-  (Residue classes as a quotient.) For $G = (bb(Z), +)$ and $N = n
+#example(name: "Residue classes as a quotient.")[
+  For $G = (bb(Z), +)$ and $N = n
   bb(Z)$ (which is normal since $bb(Z)$ is abelian), the quotient
   $G \/ N$ is precisely $bb(Z) \/ n bb(Z) = bb(Z)_n$ of
   #link(<ex:residue-classes>)[Chapter 1], now revealed as a genuine
@@ -1863,8 +1863,8 @@ hand, the rest is a verification.
   classical "mod $n$" map.
 ] <ex:quotient-zn>
 
-#example[
-  (Parity as a quotient.) The subgroup $A_3 ⊲ S_3$ has index $2$
+#example(name: "Parity as a quotient.")[
+  The subgroup $A_3 ⊲ S_3$ has index $2$
   (#link(<ex:a3-alternating>)[§3.3]), so $S_3 \/ A_3$ is a group of
   order $2$, hence isomorphic to $bb(Z)_2$ by
   #link(<ex:low-order-classification>)[the order-$2$ case]. The two
@@ -1877,8 +1877,8 @@ hand, the rest is a verification.
   every degree: $S_n \/ A_n ~= bb(Z)_2$ for $n >= 2$.
 ] <ex:s3-quotient>
 
-#example[
-  (Orientation as a quotient.) Let $D_n$ be the dihedral group of
+#example(name: "Orientation as a quotient.")[
+  Let $D_n$ be the dihedral group of
   #link(<def:dihedral-group>)[§2.2] — symmetries of a regular
   $n$-gon — and let $r$ denote the rotation by $2 pi \/ n$. The
   subgroup $⟨r⟩$ of rotations is normal in $D_n$: it has index $2$
@@ -1960,8 +1960,8 @@ process, every finite group is built.
   p$ is prime.
 ]
 
-#example[
-  (The atomic abelian groups.) For each prime $p$, the cyclic
+#example(name: "The atomic abelian groups.")[
+  For each prime $p$, the cyclic
   group $bb(Z)_p$ is the unique abelian simple group of order $p$ —
   by #link(<thm:cyclic-classification>)[Chapter 2] it is the only
   cyclic group of that order, and by
@@ -2009,8 +2009,8 @@ process, every finite group is built.
     A_n$.
 ]
 
-#example[
-  ($A_5$, the smallest non-abelian simple group.) The alternating
+#example(name: "$A_5$, the smallest non-abelian simple group.")[
+  The alternating
   group $A_5$ has order $5! \/ 2 = 60$ and is, by
   #link(<thm:an-simple>)[the theorem above], simple. It is the
   symmetry group of the icosahedron (or, equivalently, of the
@@ -2198,8 +2198,8 @@ $
   {N ⊲ G} <-> {"ker" f | f: G -> H "for some" H}.
 $
 
-#example[
-  (Determinant as a homomorphism.) The determinant map
+#example(name: "Determinant as a homomorphism.")[
+  The determinant map
   $
     det: "GL"_(n)(F) -> F^times, quad A |-> det(A),
   $
@@ -2213,8 +2213,8 @@ $
   $"SL"_(n)(F) ⊲ "GL"_(n)(F)$.
 ] <ex:det-kernel>
 
-#example[
-  (Sign as a homomorphism.) The sign map
+#example(name: "Sign as a homomorphism.")[
+  The sign map
   $
     "sign": S_n -> {plus.minus 1}, quad sigma |-> "sign"(sigma),
   $
@@ -2251,8 +2251,8 @@ kernel $N$.
   since the mapping rule is.
 ]
 
-#example[
-  (Two extreme homomorphisms.) Let $G$ be any group.
+#example(name: "Two extreme homomorphisms.")[
+  Let $G$ be any group.
   + For any subgroup $H <= G$, the *inclusion* $i: H -> G$, $i(h) =
     h$, is an injective homomorphism with $"ker" i = {e_H}$ and
     $"im" i = H$. The kernel is as small as possible — trivial — so
@@ -2346,8 +2346,8 @@ This is the sense in which #link(<ex:inclusion-projection>)[the two
 kernel (deciding what to forget) and its image (deciding where to
 land), with the quotient doing the rest.
 
-#example[
-  (Cyclic groups from $bb(Z)$.) Consider the homomorphism
+#example(name: "Cyclic groups from $bb(Z)$.")[
+  Consider the homomorphism
   $
     phi: bb(Z) -> bb(Z)_n, quad k |-> overline(k) = k + n bb(Z),
   $
@@ -2362,8 +2362,8 @@ land), with the quotient doing the rest.
   itself.
 ] <ex:zn-iso>
 
-#example[
-  (Sign map and $bb(Z)_2$.) The sign homomorphism of
+#example(name: "Sign map and $bb(Z)_2$.")[
+  The sign homomorphism of
   #link(<ex:sign-kernel>)[§5.1],
   $
     "sign": S_n -> {plus.minus 1},
@@ -2466,8 +2466,8 @@ form a diamond-shaped lattice, with $H N$ at the top, $H ∩ N$ at
 the bottom, and $H$, $N$ on the sides; opposite sides of the diamond
 have isomorphic quotients.
 
-#example[
-  (A diamond in $S_4$.) Take $G = S_4$, $H = S_3$ (the stabiliser of
+#example(name: "A diamond in $S_4$.")[
+  Take $G = S_4$, $H = S_3$ (the stabiliser of
   $4$, embedded as permutations of ${1, 2, 3}$), and
   $N = V_4 = {e, (1 2)(3 4), (1 3)(2 4), (1 4)(2 3)}$ the Klein
   four-group, normal in $S_4$ (it is the kernel of the conjugation
@@ -2513,8 +2513,8 @@ the larger normal subgroup*. The Third Isomorphism Theorem is the
 formal justification for the colloquial fact that "killing $N$ and
 then killing $K \/ N$ is the same as killing $K$ outright".
 
-#example[
-  (Modular arithmetic in stages.) Take $G = bb(Z)$ (additive), $K =
+#example(name: "Modular arithmetic in stages.")[
+  Take $G = bb(Z)$ (additive), $K =
   6 bb(Z)$, $N = 2 bb(Z)$. Both are normal since $bb(Z)$ is abelian,
   and $N subset.eq K$ since $2 | 6$. The theorem gives
   $
@@ -2574,8 +2574,8 @@ $G$ containing $N$.
   Third Isomorphism Theorem.
 ]
 
-#example[
-  (Subgroups of $bb(Z)_4$.) Take $G = bb(Z)$, $N = 4 bb(Z)$, so $G \/
+#example(name: "Subgroups of $bb(Z)_4$.")[
+  Take $G = bb(Z)$, $N = 4 bb(Z)$, so $G \/
   N = bb(Z)_4$. By the Correspondence Theorem, the subgroups of
   $bb(Z)_4$ are in bijection with the subgroups of $bb(Z)$ containing
   $4 bb(Z)$. Since every subgroup of $bb(Z)$ is of the form $d bb(Z)$
@@ -2707,8 +2707,8 @@ Three examples anchor the abstraction. They are not merely
 illustrative — each reappears as a structural tool later in the
 chapter.
 
-#example[
-  (Left regular action — the launching example.) Any group $G$
+#example(name: "Left regular action — the launching example.")[
+  Any group $G$
   acts on itself by left multiplication:
   $
     G times G -> G, quad (g, x) |-> g x.
@@ -2727,8 +2727,8 @@ chapter.
   it forgets nothing.
 ] <ex:regular-action>
 
-#example[
-  (Conjugation action.) Any group $G$ acts on itself by conjugation:
+#example(name: "Conjugation action.")[
+  Any group $G$ acts on itself by conjugation:
   $
     G times G -> G, quad (g, x) |-> g x g^(-1).
   $
@@ -2746,8 +2746,8 @@ chapter.
     x$ for all $x$, "iff" $g in Z(G)$.
 ] <ex:conjugation-action>
 
-#example[
-  (Left multiplication on cosets.) Let $H <= G$ be a subgroup. The
+#example(name: "Left multiplication on cosets.")[
+  Let $H <= G$ be a subgroup. The
   group $G$ acts on the set of left cosets $G \/ H = {g H | g in G}$
   by left multiplication:
   $
@@ -2941,8 +2941,8 @@ applies orbit-stabilizer to the conjugation action.
 The class equation is a versatile tool. Its first application is to
 $p$-groups, where it forces the centre to be non-trivial.
 
-#example[
-  (Non-trivial centre of a $p$-group.) Let $G$ be a group with
+#example(name: "Non-trivial centre of a $p$-group.")[
+  Let $G$ be a group with
   $abs(G) = p^n$ for some prime $p$ and $n >= 1$. The class equation
   gives
   $
@@ -3008,8 +3008,8 @@ Burnside's lemma turns orbit counting into the simpler problem of
 counting fixed points. Its most famous application is the
 combinatorics of colourings under symmetry.
 
-#example[
-  (Necklace colourings.) Consider $n$ beads on a necklace, each
+#example(name: "Necklace colourings.")[
+  Consider $n$ beads on a necklace, each
   coloured in one of $k$ colours. Two colourings are the same
   necklace if some rotation of the necklace turns one into the other;
   equivalently, the colourings form a set $X = {1, dots, k}^n$ on
@@ -3298,8 +3298,8 @@ its conjugacy class), and a non-trivial normal subgroup rules out
 simplicity. We illustrate this strategy on two classification
 problems.
 
-#example[
-  (Groups of order $p q$.) Let $G$ have order $p q$ with $p, q$
+#example(name: "Groups of order $p q$.")[
+  Let $G$ have order $p q$ with $p, q$
   primes, $p < q$. We claim:
   - If $q ≢ 1 \pmod p$, then $G$ is cyclic, $G ≅ bb(Z)_(p
     q)$.
@@ -3336,8 +3336,8 @@ problems.
   ⋊ bb(Z)_2$.
 ] <ex:groups-order-pq>
 
-#example[
-  (Groups of order $12$.) Let $abs(G) = 12 = 2^2 dot.c 3$. The Sylow
+#example(name: "Groups of order $12$.")[
+  Let $abs(G) = 12 = 2^2 dot.c 3$. The Sylow
   theorems constrain the possibilities:
 
   - *Sylow $2$-subgroups*: order $4$, $n_2 | 3$ and $n_2 ≡ 1 \pmod
