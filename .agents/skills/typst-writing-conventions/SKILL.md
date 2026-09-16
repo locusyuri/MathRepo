@@ -119,6 +119,32 @@ $_x$
 $""_x$
 ```
 
+#### 单字母下标后接括号（`GL_n(F)` 问题）
+
+**单字母下标后直接跟一个括号时，括号及其中内容会被 Typst 一并归入下标**，而不是作为括号表达式紧跟在右侧：
+
+```typst
+// 错误 — 整个 "n(F)" 都被当作下标，渲染成 G L 的下标下标小字
+$"GL"_n(F)$      // 实际渲染：GL_{n(F)}，且 F 被错误地放进下标
+$f_n(A)$         // f_{n(A)}，括号 (A) 被吞进下标
+$mu_P(x, y)$     // mu_{P(x,y)}
+$"Syl"_p(G)$     // Syl_{p(G)}
+$C_G(H)$         // C_{G(H)}
+
+// 正确 — 括号作为独立的函数参数贴在右侧
+$"GL"_(n)(F)$    // GL_n (F) —— n 是下标，(F) 是独立的参数
+$f_(n)(A)$       // f_n (A)
+$mu_(P)(x, y)$   // mu_P (x, y)
+$"Syl"_(p)(G)$   // Syl_p (G)
+$C_(G)(H)$       // C_G (H)
+```
+
+**判定规则**：只要遇到形如 `_<单个字母>` 且后面紧跟 `(` 的模式（`"GL"_n(F)`、`f_n(A)`、`C_G(H)`、`mu_P(x,y)`、`"Syl"_p(G)`、`N_G(H)`、`phi_g(x)` 等），一律改写为 `_<字母>(` + `)(` 形式，即 `"GL"_(n)(F)`。批量替换时注意两点：
+- 括号里的多字母（如 `"GL"_(n)(F)`）用 `{...}` 包裹下标；**真正作为函数参数的括号要写在 `)` 之后**，不与下标粘连；
+- 若下标本身是普通变量而非"名字 + 参数"，如 $x_i^2$ 或 $n_k$，则无需改动——只处理**下标后紧跟 `(`** 的情形（此时 `(` 是想作为独立参数而非下标）。
+
+**批量排查**：在全仓库 `.typ` 文件中搜索正则 `_([a-zA-Z])\(`，逐个改为 `_($1)(`。这与你之前修的 `f_n(A)` 是同一种错误，务必全局替换，不限于举例处。
+
 #### 多字母变量问题
 
 Typst 将连续字母识别为内置函数名（如 `sin`、`exp`），或把相邻的单字母变量合并为一个未知多字母变量，导致编译错误。
@@ -620,6 +646,49 @@ $liminf_(n->oo) integral_X f_n dif mu$
 
 - 物理定律用 `#law`，数学定理用 `#theorem`
 - `#proof` 可用于两者之后
+
+### 组件块内容约束（definition / example）
+
+**`#definition` 块内只放准确定义**，不得混入解释、理由、例子、直观说明或"为什么这样要求"。所有补充说明一律移出定义块，写成紧随其后的普通段落：
+
+```typst
+// 错误 — 定义块内夹带大量解释
+#definition(name: "General and Special Linear Groups")[
+  Let $F$ be a field. The *general linear group* $"GL"_(n)(F)$ is the
+  set of invertible $n times n$ matrices over $F$ under matrix
+  multiplication: the product of invertible matrices is invertible, matrix
+  multiplication is associative, the identity matrix $I$ is neutral, and
+  every invertible matrix has its inverse — the axioms are exactly linear
+  algebra. ...
+] <def:general-linear-group>
+
+// 正确 — 定义块只留纯定义，解释放块外
+#definition(name: "General and Special Linear Groups")[
+  Let $F$ be a field. The *general linear group* $"GL"_(n)(F)$ is the set
+  of invertible $n times n$ matrices over $F$ under matrix multiplication.
+] <def:general-linear-group>
+
+$"GL"_(n)(F)$ is indeed a group: the four axioms are exactly the defining
+properties of an invertible matrix ...（理由、例子、非可交换说明等都放这里）
+```
+
+凡是"这道公理在说什么""为什么这样建""这个结构把哪些公理用上了"一类的话，都不属于定义本身，应放在定义块之后的正文中。
+
+**`#example` 的标题用 `name:` 参数**，写在方块标题位置，**不要**在正文第一行写 `(Title.)` 前缀：
+
+```typst
+// 错误 — 标题写在正文里
+#example[
+  (The quaternion group.) Let $Q_8 = ...$
+]
+
+// 正确 — 标题进 name 字段，正文只留内容（除非该例确实没有标题）
+#example(name: "The quaternion group.")[
+  Let $Q_8 = ...$
+]
+```
+
+标题含数学符号（如 `Cosets in $S_3$`、`Groups of order $p q$`）时直接在 `name` 字符串里写 `$...$`，模板会自动渲染。只有真正没有标题的 example 才省略 `name:`。
 
 ### 组件选择指南
 

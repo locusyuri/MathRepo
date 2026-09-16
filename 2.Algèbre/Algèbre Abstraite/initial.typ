@@ -430,22 +430,23 @@ The identity of a monoid is unique
 $(bb(N), +)$ with identity $0$, and $(bb(N), dot)$ with identity $1$.
 
 #definition(name: "Group")[
-  A *group* is a monoid in which every element is *invertible* —
-  equivalently, a set $G$ equipped with a binary operation $star$
-  satisfying:
+  A *group* is a monoid in which every element is *invertible* — a
+  set $G$ equipped with a binary operation $star$ satisfying:
   - (G1) *associativity*: $(a star b) star c = a star (b star c)$
     for all $a, b, c in G$;
   - (G2) *identity*: there exists $e in G$ with
     $e star a = a star e = a$ for all $a in G$;
   - (G3) *inverses*: for every $a in G$ there exists $a^(-1) in G$
     with $a star a^(-1) = a^(-1) star a = e$.
-
-  Strictly the group is the pair $(G, star)$; the operation is
-  suppressed in the notation when no confusion is possible. Axioms
-  (G2) and (G3) are the two-sided versions of the laws isolated in
-  #link(<def:identity-inverse>)[Chapter 1], with associativity
-  borrowed from #link(<prop:operation-laws>)[the fundamental laws].
 ] <def:group>
+
+Strictly the group is the pair $(G, star)$; the operation is
+suppressed in the notation when no confusion is possible. Axioms (G2)
+and (G3) are the two-sided versions of the laws isolated in
+#link(<def:identity-inverse>)[Chapter 1], with associativity borrowed
+from #link(<prop:operation-laws>)[the fundamental laws] — the axioms
+are not new hypotheses but the same structural laws, now demanded on
+every element.
 
 #definition(name: "Abelian Group")[
   A group whose operation is commutative — $a star b = b star a$
@@ -596,28 +597,34 @@ which work.
   reflections that preserve the polygon, composed as mappings of the
   plane. Writing $r$ for the rotation through $(2 pi) \/ n$ and $s$
   for one fixed reflection, every element is uniquely $r^k$ or
-  $r^k s$ with $0 <= k <= n - 1$, so $abs(D_n) = 2 n$, and the two
-  generators satisfy
+  $r^k s$ with $0 <= k <= n - 1$, and the two generators satisfy
   $
     r^n = e, quad quad s^2 = e, quad quad s r = r^(-1) s.
   $
-  The last relation shows $s r != r s$ as soon as $r != r^(-1)$,
-  that is, $n >= 3$: dihedral groups are non-abelian.
 ] <def:dihedral-group>
 
+These relations give $abs(D_n) = 2 n$. Moreover the relation
+$s r = r^(-1) s$ shows $s r != r s$ as soon as $r != r^(-1)$, that is,
+$n >= 3$: dihedral groups are non-abelian.
+
 #definition(name: "General and Special Linear Groups")[
-  Let $F$ be a field — for the time being, $bb(Q)$ or $bb(R)$
-  suffices. The *general linear group* $"GL"_(n)(F)$ is the set of
-  invertible $n times n$ matrices over $F$ under matrix
-  multiplication: the product of invertible matrices is invertible,
-  matrix multiplication is associative, the identity matrix $I$ is
-  neutral, and every invertible matrix has its inverse matrix — the
-  axioms are exactly linear algebra. The *special linear group*
-  $"SL"_(n)(F)$ consists of the matrices of determinant $1$; it is a
-  group in its own right, since products and inverses of
-  determinant-$1$ matrices again have determinant $1$. For $n >= 2$
-  these groups are non-abelian.
+  Let $F$ be a field. The *general linear group* $"GL"_(n)(F)$ is the
+  set of invertible $n times n$ matrices over $F$ under matrix
+  multiplication. The *special linear group* $"SL"_(n)(F)$ is the
+  subset of $"GL"_(n)(F)$ consisting of the matrices with determinant
+  $1$.
 ] <def:general-linear-group>
+
+$"GL"_(n)(F)$ is indeed a group: the four axioms are exactly the
+defining properties of an invertible matrix — the product of
+invertible matrices is invertible (closure), matrix multiplication is
+associative, the identity matrix $I$ is neutral, and every invertible
+matrix has its inverse. Here $F$ can be any field, e.g. $bb(Q)$ or
+$bb(R)$. That $"SL"_(n)(F)$ is a group in its own right follows
+because the determinant is multiplicative:
+$det(A B) = det(A) det(B)$, so products and inverses of
+determinant-$1$ matrices again have determinant $1$. For $n >= 2$
+these groups are non-abelian.
 
 #example(name: "The quaternion group.")[
   Let
