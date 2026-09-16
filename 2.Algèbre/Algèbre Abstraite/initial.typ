@@ -464,7 +464,7 @@ every element.
   $a^n$. Additive notation is reserved for abelian groups;
   multiplicative notation serves in general. The promise made in
   #link(<note:power-notation>)[Chapter 1] — that the interplay of
-  powers and orders would become central — is redeemed in §2.3,
+  powers and orders would become central — is redeemed in §2.4,
   where the *order* of an element is defined through powers.
 ] <note:notation-convention>
 
@@ -746,14 +746,11 @@ b^(-1) a^(-1)$ *reverses* the order — forgetting the reversal is
 the standard slip, and the abelian shortcut above is a privilege,
 not a right.
 
-== Conjugate Elements // 共轭元素
-
-In a group, the *conjugate* of one element by another is the result of
-"rebinding" the element through an inner automorphism. Conjugation
-preserves the algebraic shape of an element — its order, the cycle
-structure when the group is symmetric, and more — and so partitions the
-group into *conjugacy classes*, the fundamental invariant of non-abelian
-structure.
+In a group, the *conjugate* of one element by another is the result
+of "rebinding" the element through an inner automorphism. Conjugation
+preserves the algebraic shape of an element and so partitions the
+group into *conjugacy classes*, the fundamental invariant of
+non-abelian structure.
 
 #definition(name: "Conjugate Elements")[
   Let $G$ be a group and $a, g in G$. The *conjugate* of $a$ by $g$ is
@@ -773,42 +770,12 @@ partitions $G$ into *conjugacy classes*. In an abelian group each class
 is a singleton: $g a g^(-1) = a$ for all $g$, so every element is
 conjugate only to itself.
 
-#property(name: "Conjugate Elements Have the Same Order")[
-  If $a$ and $b$ are conjugate in $G$, then $"ord"(a) = "ord"(b)$.
-] <prop:conjugate-same-order>
-
-#proof[
-  Write $b = g a g^(-1)$. By induction on $n$,
-  $
-    b^n = (g a g^(-1))^n = g a^n g^(-1),
-  $
-  since the inner $g^(-1) g$ pairs telescope away. Hence $b^n = e$ if
-  and only if $g a^n g^(-1) = e$, i.e. $a^n = e$ (multiply by $g^(-1)$
-  on the left and $g$ on the right). So the sets of exponents killing
-  $a$ and $b$ coincide, and the least positive such exponent — the
-  order — is the same.
-]
-
-#property(name: "Further Conjugation Invariants")[
-  Conjugate elements share:
-  - *the same order* (above);
-  - *the same cycle type* in $S_n$: two permutations are conjugate in
-    $S_n$ iff they have the same cycle structure — a fact used
-    systematically in the analysis of $A_n$ (Chapter 4);
-  - *isomorphic centralisers*: if $b = g a g^(-1)$, then
-    $C_(G)(b) = g C_(G)(a) g^(-1)$, so the centralisers are conjugate
-    subgroups, hence of the same order.
-] <prop:conjugation-invariants>
-
-The *conjugacy class* of $a$ is the set $"Cl"(a) = {g a g^(-1) | g in G}$;
-its size divides $abs(G)$ (a consequence of the orbit-stabiliser
-theorem, proved in Chapter 6). The *class equation*
-$
-  abs(G) = abs(Z(G)) + sum_(i) [G : C_(G)(x_i)],
-$
-where $Z(G)$ is the centre and the sum runs over representatives of
-non-central conjugacy classes, is one of the most powerful counting
-tools in finite group theory. It is the subject of §6.2.
+That conjugation preserves a measurable invariant is best seen once
+powers are at hand. In §2.4 we show conjugate elements have the same
+order. Deeper conjugacy invariants — the cycle structure in $S_n$,
+centralisers, and the class equation — demand tools of later chapters
+(orbit-stabiliser) and are treated with the group-actions material of
+§6.2.
 
 == The Order of an Element // 元素的阶
 
@@ -835,6 +802,25 @@ notion cashes the promise.
   $(bb(Z), +)$ the element $1$ has infinite order, as does every
   non-zero integer.
 ] <ex:element-orders>
+
+Conjugation, met in §2.3, is order-preserving — the reason conjugate
+elements are, in a precise sense, alike.
+
+#property(name: "Conjugate Elements Have the Same Order")[
+  If $a$ and $b$ are conjugate in $G$, then $"ord"(a) = "ord"(b)$.
+] <prop:conjugate-same-order>
+
+#proof[
+  Write $b = g a g^(-1)$. By induction on $n$,
+  $
+    b^n = (g a g^(-1))^n = g a^n g^(-1),
+  $
+  since the inner $g^(-1) g$ pairs telescope away. Hence $b^n = e$ if
+  and only if $g a^n g^(-1) = e$, i.e. $a^n = e$ (multiply by $g^(-1)$
+  on the left and $g$ on the right). So the sets of exponents killing
+  $a$ and $b$ coincide, and the least positive such exponent — the
+  order — is the same.
+]
 
 #property(name: "Powers Wrap Around")[
   Let $G$ be a group and $a in G$ an element of finite order $n =
@@ -873,7 +859,7 @@ remainder of the step count matters.
   Théorie des Ensembles note. The group is *finite* if $abs(G)$ is
   finite. Do not confuse the two orders: the order of a *group*
   counts elements, the order of an *element* measures powers. They
-  meet in the cyclic world of §2.4, where
+  meet in the cyclic world of §2.5, where
   $abs(⟨a⟩) = "ord"(a)$.
 ] <def:order-group>
 
@@ -881,7 +867,7 @@ remainder of the step count matters.
 
 We have met, repeatedly, groups in which every element is a power of
 a single element: $(bb(Z), +)$ is generated by $1$, $(bb(Z)_n, +)$
-by $[1]$, and $⟨a⟩$ of #link(<prop:order-properties>)[§2.3] is built
+by $[1]$, and $⟨a⟩$ of #link(<prop:order-properties>)[§2.4] is built
 from its own namesake. The phenomenon deserves a name, for these
 groups admit a complete classification — the first structure theorem
 of this notebook.
@@ -937,7 +923,7 @@ of this notebook.
   (#link(<def:homomorphism>)[Chapter 1]).
 
   *Finite case.* Since $g^n = e$ by the definition of order, the
-  division step in #link(<prop:order-properties>)[§2.3] gives
+  division step in #link(<prop:order-properties>)[§2.4] gives
   $⟨g⟩ = {e, g, dots, g^(n-1)}$ with these $n$ elements distinct;
   hence $abs(G) = n$. Define $psi: bb(Z)_n -> G$ by $psi([k]) = g^k$.
   *Well-definedness*: if $[j] = [k]$ then $n | j - k$, so $g^(j-k) = e$
@@ -965,7 +951,7 @@ $n = 4$ of the theorem; the theorem says such luck is *systematic*.
 ] <cor:order-divides>
 
 #proof[
-  By #link(<prop:order-properties>)[§2.3], $a^m = g^(k m) = e$
+  By #link(<prop:order-properties>)[§2.4], $a^m = g^(k m) = e$
   holds exactly when $n | k m$. Write $d = "gcd"(n, k)$, so $n = d n'$
   and $k = d k'$ with $"gcd"(n', k') = 1$; then $n | k m$ unfolds to
   $d n' | d k' m$, i.e. $n' | k' m$, i.e. $n' | m$ since $n', k'$ are
@@ -1042,10 +1028,12 @@ $n = 4$ of the theorem; the theorem says such luck is *systematic*.
 
 The chapter closes with a tally. We have the axiomatic object (§2.1),
 a stocked bestiary from $(bb(Z), +)$ to $Q_8$ (§2.2), the free
-cancellations and the two notions of order purchased by the axioms
-(§2.3), and the first classification theorem: cyclic groups are
-unique up to isomorphism, and their subgroups are laid out by the
-divisors of the order (§2.4). The next chapter steps *inside* a
+cancellations of the axioms (§2.3), the two notions of order — of an
+element and of the group — together with the conjugacy notion bought
+by the axioms (§2.4), and the first classification theorem: cyclic
+groups are unique up to isomorphism, and their subgroups are laid out
+by the divisors of the order (§2.5). The next chapter steps *inside*
+a
 group and studies the subsets it shelters: subgroups and the cosets
 they carve out lead to Lagrange's theorem — the first structural
 constraint on finite groups, and the tool with which Chapter 3 will
@@ -1307,7 +1295,7 @@ tiles. Every structural statement below is this picture in words.
   This fulfils the promise attached to
   #link(<cor:order-divides>)[the cyclic case of Chapter 2]. The
   cyclic subgroup $⟨a⟩$ has $abs(⟨a⟩) = "ord"(a)$ elements
-  (#link(<prop:order-properties>)[§2.3]), so Lagrange gives
+  (#link(<prop:order-properties>)[§2.4]), so Lagrange gives
   $"ord"(a) | abs(G)$. Writing $abs(G) = "ord"(a) dot m$, we get
   $a^(abs(G)) = (a^("ord"(a)))^m = e^m = e$.
 ]
@@ -2586,7 +2574,7 @@ $G$ containing $N$.
   N = bb(Z)_4$. By the Correspondence Theorem, the subgroups of
   $bb(Z)_4$ are in bijection with the subgroups of $bb(Z)$ containing
   $4 bb(Z)$. Since every subgroup of $bb(Z)$ is of the form $d bb(Z)$
-  for $d in bb(N) union {0}$ (#link(<thm:cyclic-subgroups>)[§2.4]),
+  for $d in bb(N) union {0}$ (#link(<thm:cyclic-subgroups>)[§2.5]),
   the containing ones are exactly $d bb(Z)$ with $d | 4$, i.e. $d in
   {1, 2, 4}$ (and $d = 0$ gives $bb(Z)$ itself, which is not in
   the range since $bb(Z)$ strictly contains $4 bb(Z)$). The lattice of
@@ -2597,7 +2585,7 @@ $G$ containing $N$.
   $
   i.e. $bb(Z)_4$ has exactly three subgroups, of orders $1, 2, 4$
   respectively — recovering the cyclic group classification of
-  #link(<cor:cyclic-generators>)[§2.4].
+  #link(<cor:cyclic-generators>)[§2.5].
 ] <ex:z4-subgroups>
 
 #note[
@@ -4474,7 +4462,7 @@ principal ideal domain $R$, classifies finitely generated $R$-modules
 // | 第二章 §3        | 变换群与置换群              | Ch 3 §3.3              | 直接对应          |
 // | 第二章 §4        | 陪集与拉格朗日定理           | Ch 3 §3.2              | 直接对应          |
 // | 第二章 §5        | 正规子群与商群              | Ch 4 §4.1–4.2          | 直接对应          |
-// | 第二章 §6        | 循环群                     | Ch 2 §2.4              | 直接对应          |
+// | 第二章 §6        | 循环群                     | Ch 2 §2.5              | 直接对应          |
 // | 第二章 §7        | Sylow定理                  | Ch 6 §6.3–6.4          | 直接对应          |
 // | 第三章 §1        | 环的定义                    | Ch 8 §8.1              | 直接对应          |
 // | 第三章 §2        | 整环与域                    | Ch 8 §8.2              | 直接对应          |
