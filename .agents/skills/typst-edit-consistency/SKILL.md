@@ -94,6 +94,17 @@ Obviously, an algebra of sets is closed under finite unions and finite intersect
 3. 用正确的方式修正
 4. 将教训记录到本技能中
 
+### ⚠️ 绝对禁止再犯：下标后紧接括号必须写 `mu_(X)(B)`（而非 `mu_X(B)`）
+
+**Typst 中 `_X(` 会把 `X(B)` 整体吞进下标**，正确写法是 `mu_(X)(B)`。这是全仓库被 Review 现场抓错率最高的 Typst 语法坑，任何编辑任务中：
+
+1. **写完任何带下标 + 括号的公式后，必须执行一次正则自查**：
+   ```powershell
+   Select-String -Path "*/initial.typ" -Pattern '_[a-zA-Z]+\(' -AllMatches
+   ```
+2. 命中即错，一律改写为 `_($1)(` 形式（`mu_X(B)` → `mu_(X)(B)`）；
+3. **自查命中数为 0 之前，禁止声明修改完成，禁止提交。**
+
 ---
 
 ## 调用方式

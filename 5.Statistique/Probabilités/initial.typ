@@ -973,12 +973,12 @@ function.
   (CDF and the distribution measure.) Associated to $X$ is its *distribution
   measure*, the push-forward of $P$ under $X$,
   $
-    mu_X(B) = P(X in B), quad B in cal(B)(RR),
+    mu_(X)(B) = P(X in B), quad B in cal(B)(RR),
   $
   a probability measure on the Borel $sigma$-algebra of the real line. In
-  terms of $mu_X$ the CDF is simply the value on unbounded intervals,
+  terms of $mu_(X)$ the CDF is simply the value on unbounded intervals,
   $
-    F(x) = P(X <= x) = mu_X((-infinity, x]),
+    F(x) = P(X <= x) = mu_(X)((-infinity, x]),
   $
   so the CDF is the cumulative function of the distribution measure. The
   characterization above is the converse: *probability measures on the real
@@ -1013,12 +1013,12 @@ Two structural types of random variable dominate the theory.
   (Density: elementary and measure-theoretic views.) The definition above is
   the elementary one: a density $f$ is the *integration kernel* of the CDF,
   $F(x) = integral_(-infinity)^x f(t) dif t$. The measure-theoretic view starts
-  instead from the distribution measure $mu_X$: $X$ is *absolutely continuous*
-  when $mu_X$ is absolutely continuous with respect to Lebesgue measure
-  $lambda$, i.e. $mu_X << lambda$, and its density is then the Radon–Nikodym
+  instead from the distribution measure $mu_(X)$: $X$ is *absolutely continuous*
+  when $mu_(X)$ is absolutely continuous with respect to Lebesgue measure
+  $lambda$, i.e. $mu_(X) << lambda$, and its density is then the Radon–Nikodym
   derivative
   $
-    f = (dif mu_X) / (dif lambda), quad mu_X(B) = integral_B f(x) dif x.
+    f = (dif mu_(X)) / (dif lambda), quad mu_(X)(B) = integral_B f(x) dif x.
   $
   The two views agree precisely when $F$ is absolutely continuous, in which
   case $F'(x) = f(x)$ holds almost everywhere. In particular the density is
@@ -1027,13 +1027,13 @@ Two structural types of random variable dominate the theory.
   to a reference measure: replacing $lambda$ by the counting measure $nu$
   recovers the PMF of a discrete variable,
   $
-    p_i = (dif mu_X) / (dif nu)(x_i), quad mu_X = sum_i p_i delta_(x_i),
+    p_i = (dif mu_(X)) / (dif nu)(x_i), quad mu_(X) = sum_i p_i delta_(x_i),
   $
   so the distribution column $p_i$ is the discrete analogue of a density.
   Absolute continuity also rules out atoms: $P(X = a) = 0$ for every point
   $a$, hence
   $P(a <= X <= b) = P(a < X < b) = P(a < X <= b)$. Not every distribution has
-  a density: the *Cantor* distribution is continuous yet $mu_X$ is not
+  a density: the *Cantor* distribution is continuous yet $mu_(X)$ is not
   absolutely continuous with respect to $lambda$ — its CDF is a singular
   continuous function with derivative $0$ almost everywhere, an instance of
   the singular type anticipated in the note below. (Radon–Nikodym and
@@ -1081,7 +1081,7 @@ Two structural types of random variable dominate the theory.
     left) accumulates into a step CDF (top right); for a continuous variable,
     the density curve (bottom left) accumulates into a smooth CDF (bottom
     right). In both cases the CDF is the running total of the mass — the
-    direct analogue of $F(x) = mu_X((-infinity, x])$.],
+    direct analogue of $F(x) = mu_(X)((-infinity, x])$.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:density-cdf-discrete-continuous>
