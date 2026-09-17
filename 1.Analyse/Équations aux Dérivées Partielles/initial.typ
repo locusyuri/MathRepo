@@ -18,7 +18,7 @@
   subtitle: "A notebook for partial differential equations",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.7.0",
+  version: "v0.8.0",
   extra-info: "This is a notebook for partial differential equations.",
 )
 
@@ -2790,6 +2790,319 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 //     - 标量情形与系统情形的解
 
 #part("Hyperbolic Equations") // 双曲型方程
+
+= Wave Equation // 波动方程
+
+The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form and general solution in one dimension were obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[§7.2]). This chapter develops the complete Cauchy theory: the d'Alembert formula, energy conservation, finite propagation speed, and the Duhamel principle. The qualitative picture is complementary to the heat equation (Part V): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
+
+== D'Alembert Formula // 达朗贝尔公式
+
+#definition(name: "The One-Dimensional Cauchy Problem")[
+  The *Cauchy problem* for the one-dimensional wave equation with speed $c > 0$ is to find $u: [0, oo) times bb(R) -> bb(R)$ with
+  $
+    partial_t^2 u = c^2 partial_x^2 u quad "in" quad (0, oo) times bb(R), quad u (0, x) = g (x), quad partial_t u (0, x) = h (x),
+  $
+  where $g, h: bb(R) -> bb(R)$ are the initial displacement and velocity.
+] <def:cauchy-wave>
+
+#theorem(name: "D'Alembert's Formula")[
+  For $g in C^2 (bb(R))$ and $h in C^1 (bb(R))$, the Cauchy problem has the unique classical solution
+  $
+    u (t, x) = (g (x + c t) + g (x - c t))/2 + 1/(2 c) integral_(x - c t)^(x + c t) h (s) dif s.
+  $
+  In particular $u in C^2 ([0, oo) times bb(R))$.
+] <thm:d-alembert>
+
+#proof[
+  *Step 1: General solution.* By the canonical form of Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), every $C^2$ solution has the form
+  $
+    u (t, x) = F (x - c t) + G (x + c t),
+  $
+  a superposition of a right-moving and a left-moving wave.
+
+  *Step 2: Fit the data.* The initial conditions give
+  $
+    F (x) + G (x) = g (x), quad -c F' (x) + c G' (x) = h (x).
+  $
+  Integrating the second equation: $F (x) - G (x) = -1/c integral_0^x h (s) dif s + "const"$. Solving for $F$ and $G$ and substituting $x = x + c t$, $x = x - c t$ yields the formula.
+]
+
+#note[
+  The two terms in the formula are traveling waves: $F (x - c t)$ moves right with speed $c$ without changing shape, $G (x + c t)$ moves left. The initial velocity $h$ contributes the integral term, whose value at $(t, x)$ depends on $h$ only on the interval $[x - c t, x + c t]$ — the first manifestation of finite propagation speed (§15.4).
+]
+
+== Initial and Boundary Value Problems // 初边值问题
+
+#theorem(name: "Poisson's Formula in Three Dimensions")[
+  For $n = 3$, the Cauchy problem $partial_t^2 u = Delta u$, $u (0, x) = g (x)$, $partial_t u (0, x) = h (x)$ has the classical solution
+  $
+    u (t, x) = partial_t (t M_g (x, t)) + t M_h (x, t), quad M_phi (x, t) = 1 / (4 pi t^2) integral_(partial B (x, t)) phi dif S,
+  $
+  where $M_phi$ is the spherical mean of $phi$ over the sphere of radius $t$. For $g in C^3$, $h in C^2$ this is a $C^2$ solution, and it is unique.
+] <thm:poisson-formula-3d>
+
+#proof[
+  (Sketch.) The proof uses the method of spherical means. For a solution $u$, the spherical mean $M_u (x, r) = 1/(4 pi r^2) integral_(partial B(x,r)) u (t, dot) dif S$ satisfies the Euler--Poisson--Darboux equation $partial_t^2 M_u = partial_r^2 M_u + (2/r) partial_r M_u$ with $M_u (0, x) = g (x)$, $partial_t M_u (0, x) = h (x)$. Writing $r M_u$ solves the one-dimensional wave equation in $(t, r)$, d'Alembert's formula gives an explicit expression for $M_u$; the identity $u (t, x) = M_u (x, 0^+)$ (the mean over a point is the value) then yields the formula. The regularity follows from differentiating the mean (one derivative on $M_g$ in the $partial_t$ term).
+]
+
+#theorem(name: "Kirchhoff's Formula in Two Dimensions")[
+  For $n = 2$, the solution of the Cauchy problem is obtained by the *method of descent* from the three-dimensional formula:
+  $
+    u (t, x) = 1/(2 pi) partial_t integral_(B (x, t)) (g (y))/(sqrt(t^2 - abs(x - y)^2)) dif y + 1/(2 pi) integral_(B (x, t)) (h (y))/(sqrt(t^2 - abs(x - y)^2)) dif y.
+  $
+] <thm:kirchhoff-formula-2d>
+
+#proof[
+  Regard $u$ as a function of three space variables independent of the third coordinate and apply Poisson's formula; the spherical means reduce to integrals over disks with the weight $1/sqrt(t^2 - r^2)$ (the Jacobian of the projection), giving the formula.
+]
+
+#note[
+  *Boundary value problems on bounded domains.* On a bounded interval (vibrating string) or domain (membrane), the wave equation is supplemented by boundary conditions. The standard tool is separation of variables: writing $u (t, x) = sum_k a_k (t) phi_k (x)$ with the eigenfunctions $phi_k$ of the Dirichlet Laplacian (Chapter 18, §18.1) reduces the problem to decoupled oscillators $a_k'' + lambda_k a_k = 0$. The spectral viewpoint is developed in Chapter 18.
+]
+
+== Energy Conservation // 能量守恒
+
+#theorem(name: "Conservation of Energy")[
+  Let $u$ be a $C^2$ solution of the wave equation $partial_t^2 u = Delta u$ in $Omega subset bb(R)^n$ with either $u = 0$ or $(partial u)/(partial nu) = 0$ on $partial Omega$. Then the energy
+  $
+    E (t) = 1/2 integral_Omega (abs(partial_t u)^2 + abs(nabla u)^2) dif x
+  $
+  is constant in time: $E (t) = E (0)$ for all $t$.
+] <thm:wave-energy>
+
+#proof[
+  Differentiate under the integral and integrate by parts:
+  $
+    (dif)/(dif t) E (t) = integral_Omega (partial_t u partial_t^2 u + nabla u dot nabla partial_t u) dif x = integral_Omega partial_t u (partial_t^2 u - Delta u) dif x + integral_(partial Omega) partial_t u (partial u)/(partial nu) dif S = 0,
+  $
+  the volume term vanishing by the equation and the boundary term by the boundary condition.
+]
+
+#corollary(name: "Uniqueness of the Cauchy Problem")[
+  Let $u, v$ be $C^2$ solutions of the wave equation on $Omega$ (or on all of $bb(R)^n$ with suitable decay) with the same initial data $u (0, dot) = v (0, dot)$ and $partial_t u (0, dot) = partial_t v (0, dot)$. Then $u = v$.
+] <cor:wave-uniqueness>
+
+#proof[
+  The difference $w = u - v$ has zero initial data and satisfies the wave equation. By conservation of energy, $E (t) = E (0) = 0$ for all $t$, so $partial_t w = 0$ and $nabla w = 0$; hence $w$ is constant in space-time, and the initial condition gives $w = 0$.
+]
+
+== Finite Propagation Speed // 有限传播速度
+
+#theorem(name: "Domain of Dependence")[
+  Let $u$ solve the wave equation $partial_t^2 u = Delta u$ in $bb(R)^n$. The value $u (t, x)$ depends only on the initial data in the ball $overline(B (x, c t))$: if $g = tilde(g)$ and $h = tilde(h)$ on $B (x, c t)$, then $u (t, x) = tilde(u) (t, x)$. The *domain of dependence* of $(t, x)$ is $B (x, c t)$; the *domain of influence* of a point $y$ is the cone ${(t, x) : abs(x - y) <= c t}$.
+] <thm:domain-of-dependence>
+
+#proof[
+  By linearity it suffices to show that data supported outside $B (x, c t)$ do not affect $u (t, x)$. Let $w$ be the solution with data supported in the exterior of $B (x, c t)$. Consider the backward cone $C = {(s, y) : 0 <= s <= t, abs(y - x) <= c (t - s)}$. The energy of $w$ on the time slice $C inter {s = tau}$ is zero at $tau = 0$ (data vanish on $B (x, c t)$); by the same computation as in Theorem 15.3, with the boundary term on the lateral cone vanishing (the normal is characteristic), the energy is non-increasing, hence zero, and $w (t, x) = 0$. For the one-dimensional formula this is immediate from d'Alembert's formula; the argument here is the general energy proof.
+]
+
+#note[
+  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (t, x)$ depends only on the data on the *sphere* $partial B (x, c t)$ — a sharp wave front with no wake: by Poisson's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Kirchhoff's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
+]
+
+== Duhamel Principle // Duhamel 原理
+
+#theorem(name: "Duhamel's Principle for the Wave Equation")[
+  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, h)$: $S (t) h = w (t, dot)$, where $partial_t^2 w = Delta w$, $w (0, dot) = 0$, $partial_t w (0, dot) = h$. Then the solution of the inhomogeneous problem
+  $
+    partial_t^2 u = Delta u + f, quad u (0, dot) = 0, quad partial_t u (0, dot) = 0,
+  $
+  is given by
+  $
+    u (t, x) = integral_0^t S (t - s) f (s, dot) (x) dif s.
+  $
+  For general data, superpose the homogeneous solution with this formula.
+] <thm:duhamel-wave>
+
+#proof[
+  Let $w (t, s; x)$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $partial_t w (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$. Define $u (t, dot) = integral_0^t w (t, s; dot) dif s$. Then $u (0, dot) = 0$, $partial_t u (0, dot) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $partial_t w (t, t; dot) = f (t, dot)$):
+  $
+    partial_t^2 u - Delta u = (partial_t w) (t, t; dot) + integral_0^t (partial_t^2 w - Delta w) dif s = f (t, dot),
+  $
+  since each $w$ is a homogeneous solution. Uniqueness (Theorem 15.3) identifies $u$ as the solution.
+]
+
+#note[
+  The same principle applies to the heat equation (Chapter 13, §13.2) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is explicitly given by the d'Alembert / Poisson / Kirchhoff formulas.
+]
+
+= Linear Hyperbolic Systems // 线性双曲系统
+
+Many physical systems — acoustics, elasticity, electromagnetism — are first-order hyperbolic systems rather than scalar second-order equations. This chapter develops the linear theory: symmetric hyperbolic systems in the sense of Friedrichs, the diagonalization via Riemann invariants, and the energy method for well-posedness.
+
+== Symmetric Hyperbolic Systems // 对称双曲系统
+
+#definition(name: "First-Order Hyperbolic Systems")[
+  Let $u: bb(R)^n times [0, oo) -> bb(R)^m$ and $A_1, dots, A_n in bb(R)^(m times m)$. The system
+  $
+    partial_t u + sum_(j=1)^n A_j partial_(x_j) u = 0
+  $
+  is *hyperbolic* if for every $xi in bb(R)^n backslash {0}$ the matrix $A (xi) = sum_j xi_j A_j$ has only real eigenvalues and is diagonalizable over $bb(R)$ (a complete set of real eigenvectors). It is *symmetric hyperbolic* (in the sense of Friedrichs) if all $A_j$ are symmetric matrices.
+] <def:hyperbolic-system>
+
+#note[
+  The wave equation is equivalent to a symmetric hyperbolic system: setting $u = (v, w)$ with $v = partial_t u$, $w = nabla u$, the second-order equation becomes a first-order system whose coefficient matrices are symmetric. More generally, any second-order hyperbolic equation can be reduced this way. The symmetry of the $A_j$ is exactly what makes the energy method (§16.3) work directly.
+]
+
+#theorem(name: "Energy Identity for Symmetric Systems")[
+  Let $u$ be a $C^1$ solution of a symmetric hyperbolic system on $bb(R)^n$ with constant symmetric $A_j$. Then the energy
+  $
+    E (t) = 1/2 integral_(bb(R)^n) abs(u (t, x))^2 dif x
+  $
+  is conserved: $E (t) = E (0)$ for all $t$.
+] <thm:symmetric-energy>
+
+#proof[
+  Multiply the equation by $u$ (scalar product in $bb(R)^m$) and integrate over $bb(R)^n$:
+  $
+    1/2 (dif)/(dif t) integral abs(u)^2 dif x = -sum_j integral u dot A_j partial_(x_j) u dif x = -1/2 sum_j integral partial_(x_j) (u dot A_j u) dif x = 0,
+  $
+  where the second equality uses the symmetry of $A_j$ and the last the divergence theorem with rapid decay (or periodic boundary conditions).
+]
+
+== Riemann Invariants // Riemann 不变量
+
+#definition(name: "Riemann Invariants")[
+  Consider the one-dimensional system $partial_t u + A partial_x u = 0$ with $A in bb(R)^(m times m)$ diagonalizable: $A = R Lambda R^(-1)$ with $Lambda = "diag"(lambda_1, dots, lambda_m)$ and $R$ the matrix of right eigenvectors. The *characteristic variables* (Riemann invariants)
+  $
+    w = R^(-1) u, quad w_i = (R^(-1) u)_i,
+  $
+  satisfy the decoupled transport equations
+  $
+    partial_t w_i + lambda_i partial_x w_i = 0, quad i = 1, dots, m.
+  $
+  Hence each $w_i$ is constant along the characteristic lines $x - lambda_i t = "const"$.
+] <def:riemann-invariants>
+
+#proof[
+  Substituting $u = R w$ into the system and multiplying by $R^(-1)$:
+  $
+    R^(-1) (R w_t + A R w_x) = w_t + Lambda w_x = 0,
+  $
+  which is the diagonal system. Each component is a scalar transport equation (Chapter 3, §3.1), solved by $w_i (t, x) = w_i (0, x - lambda_i t)$.
+]
+
+#note[
+  The Riemann invariants exhibit the hyperbolic structure: the solution is a superposition of $m$ waves, each propagating along its characteristic family with speed $lambda_i$ without interacting (linear case). In the nonlinear case (Chapter 17) the invariants are the building blocks of the solution of the Riemann problem, but the characteristic speeds then depend on the solution.
+]
+
+== Energy Methods and Well-Posedness // 能量方法与适定性
+
+#theorem(name: "Energy Inequality and Well-Posedness")[
+  Consider the symmetric hyperbolic system with lower-order terms,
+  $
+    partial_t u + sum_j A_j partial_(x_j) u = B (x) u, quad u (0, dot) = u_0,
+  $
+  with $A_j$ constant symmetric and $B$ bounded. Then for every $u_0 in L^2 (bb(R)^n; bb(R)^m)$ there is a unique weak solution $u in C ([0, oo); L^2)$, and
+  $
+    ||u (t)||_(L^2) <= e^(C t) ||u_0||_(L^2), quad C = ||B||_oo + 1.
+  $
+  In particular the Cauchy problem is well-posed: existence, uniqueness, and continuous dependence on the data.
+] <thm:energy-wellposedness>
+
+#proof[
+  *Step 1: A priori estimate for smooth solutions.* Multiplying by $u$ as in Theorem 16.1 gives
+  $
+    1/2 (dif)/(dif t) ||u||_(L^2)^2 = integral u dot B u dif x <= ||B||_oo ||u||_(L^2)^2,
+  $
+  and Grönwall's inequality yields the estimate $||u (t)||_(L^2) <= e^(||B||_oo t) ||u_0||_(L^2)$.
+
+  *Step 2: Existence.* Mollify the data, $u_0^epsilon = u_0 * rho_epsilon$; the system with smooth data has a smooth solution (by characteristics, since the system is diagonalizable, or by Picard iteration on the semigroup generated by $sum A_j partial_j$). The a priori estimate is uniform in $epsilon$, so a subsequence converges weakly to a weak solution; uniqueness follows from the estimate applied to the difference.
+]
+
+#note[
+  For systems with *variable* coefficients $A_j (t, x)$, the same energy argument works provided the matrices are symmetric and $C^1$: the derivative of $E$ produces a term $sum_j (partial_(x_j) A_j) u dot u$ bounded by $C E (t)$, giving the exponential bound. This robustness is the reason the energy method is the standard tool for well-posedness of hyperbolic problems (and for the symmetrization of nonlinear systems in Chapter 17).
+]
+
+= Conservation Laws for Systems // 守恒律系统
+
+The scalar one-dimensional conservation law was treated completely in Chapter 5 (#link(<def:conservation-law>)[Ch 5]), including weak solutions, the Rankine--Hugoniot condition (#link(<thm:rankine-hugoniot>)[§5.4]), shocks, and rarefaction waves. This chapter covers only the *system* increment: weak solutions and jump conditions for systems, entropy conditions, and the Riemann problem — cross-referencing Chapter 5 for the scalar theory.
+
+== Weak Solutions for Systems // 系统的弱解与 Rankine-Hugoniot 条件
+
+#definition(name: "Systems of Conservation Laws")[
+  A *system of conservation laws* in one space dimension is
+  $
+    partial_t u + partial_x F (u) = 0, quad u: bb(R) times [0, oo) -> bb(R)^m, quad F: bb(R)^m -> bb(R)^m,
+  $
+  where $u$ is the vector of conserved quantities and $F$ the flux. A *weak solution* satisfies, for every $phi in C_c^1 (bb(R) times [0, oo); bb(R)^m)$,
+  $
+    integral_0^oo integral_(-oo)^oo (u dot partial_t phi + F (u) dot partial_x phi) dif x dif t = 0
+  $
+  (componentwise, as in the scalar case of Chapter 5, #link(<def:conservation-law>)[§5.1]).
+] <def:conservation-system>
+
+#theorem(name: "Rankine--Hugoniot Condition for Systems")[
+  Let $u$ be a piecewise smooth weak solution of a conservation law system with a jump discontinuity across a curve $x = sigma (t)$, and set $s = sigma' (t)$. Then
+  $
+    s (u_R - u_L) = F (u_R) - F (u_L),
+  $
+  a vector identity holding componentwise; $s$ is the *shock speed* and $[u] = u_R - u_L$ the jump.
+] <thm:rh-systems>
+
+#proof[
+  The proof is identical to the scalar case (Chapter 5, #link(<thm:rankine-hugoniot>)[§5.4]): apply the weak formulation with test functions supported in a small neighborhood of a point of the curve, integrate by parts on each smooth side, and let the neighborhood shrink to the curve. Each component of the equation yields the corresponding scalar condition.
+]
+
+#note[
+  The prototype is the system of isentropic gas dynamics: $u = (rho, rho v)$ with flux $F (rho, rho v) = (rho v, rho v^2 + p (rho))$, where $rho$ is the density, $v$ the velocity, and $p$ the pressure. The system is hyperbolic whenever $p' (rho) > 0$ (sound speed $c (rho) = sqrt(p' (rho)) > 0$).
+]
+
+== Entropy Conditions // 熵条件
+
+#definition(name: "Entropy and Entropy Flux")[
+  A pair $(eta, q)$ of smooth functions $eta, q: bb(R)^m -> bb(R)$ is an *entropy--entropy flux pair* for $partial_t u + partial_x F (u) = 0$ if $eta$ is convex and
+  $
+    nabla eta (u) dot nabla F (u) = nabla q (u).
+  $
+  A weak solution is admissible (an *entropy solution*) if it satisfies the entropy inequality
+  $
+    partial_t eta (u) + partial_x q (u) <= 0
+  $
+  in the sense of distributions: $integral (eta (u) partial_t phi + q (u) partial_x phi) dif x dif t >= 0$ for all $0 <= phi in C_c^1$.
+] <def:entropy-condition>
+
+#theorem(name: "Lax Entropy Condition")[
+  A shock of speed $s$ separating states $u_L$ and $u_R$ is admissible if the characteristic speeds $lambda_k (u) = lambda_k (nabla F (u))$ satisfy
+  $
+    lambda_k (u_L) >= s >= lambda_k (u_R)
+  $
+  for the genuinely nonlinear characteristic field $k$ (the $k$-th family of waves); equivalently, characteristics impinge on the shock from both sides. This is the *Lax entropy condition*.
+] <thm:lax-entropy>
+
+#note[
+  *The Oleinik condition.* For scalar conservation laws with convex flux, the entropy inequality is equivalent to the *Oleinik condition* (Олейник, 1957): for all $a > 0$ and $t > 0$,
+  $
+    (u (x + a, t) - u (x, t))/a <= C/t,
+  $
+  a quantitative "no rarefaction-shock interaction" bound that singles out the physically relevant solution (Chapter 5, §5.4). For systems no fully equivalent scalar condition exists; the Lax condition above is the standard admissibility criterion, together with the Liu conditions for general flux.
+]
+
+== Riemann Problems // Riemann 问题
+
+#definition(name: "The Riemann Problem")[
+  The *Riemann problem* is the conservation law system with piecewise constant initial data
+  $
+    u (0, x) = cases(u_L, x < 0, u_R, x > 0,)
+  $
+  for two constant states $u_L, u_R in bb(R)^m$. Its self-similar solution $u (t, x) = v (x/t)$ is the building block of the general theory (front tracking, Godunov-type schemes, Chapter 19).
+] <def:riemann-problem>
+
+#theorem(name: "Structure of the Solution for Systems")[
+  For a strictly hyperbolic system with genuinely nonlinear or linearly degenerate characteristic fields, the solution of the Riemann problem (for states sufficiently close) consists of a finite number of elementary waves separating constant states:
+  - *shocks* (genuinely nonlinear fields, Lax entropy condition);
+  - *rarefaction waves* (genuinely nonlinear fields, self-similar continuous transitions);
+  - *contact discontinuities* (linearly degenerate fields, jumps with $s = lambda_k (u_L) = lambda_k (u_R)$).
+  The solution exists and is unique for $u_L$, $u_R$ sufficiently close; this is the Lax theorem (1957).
+] <thm:riemann-structure>
+
+#proof[
+  (Sketch.) In the genuinely nonlinear case the $k$-th characteristic field supports exactly two types of elementary waves — shocks (compressive jumps satisfying the Lax condition) and rarefactions (integral curves of the corresponding eigenvector field). For each $k$, the possible states reachable from $u_L$ by a single $k$-wave form a curve $S_k union R_k$ through $u_L$; the solution of the Riemann problem consists of finding intermediate states $u_1, dots, u_(m-1)$ such that $u_(i-1)$ and $u_i$ are connected by an $i$-th wave. The monotonicity of the speeds (genuine nonlinearity) makes the construction a contraction, and the implicit function theorem gives existence and uniqueness for small data. Linearly degenerate fields produce contact discontinuities, along which the characteristic speed is constant.
+]
+
+#note[
+  For the scalar equation ($m = 1$), the Riemann problem was solved completely in Chapter 5 (#link(<thm:rankine-hugoniot>)[§5.4]): the solution is a shock if $u_L > u_R$ and a rarefaction if $u_L < u_R$ (convex flux). The system case combines these waves, and the entropy condition (Lax or Олейник) selects the admissible configuration. The general existence theory for arbitrary large data — the Glimm scheme and front tracking — is beyond this note (see Analyse Fonctionnelle and the numerical methods of Chapter 19).
+]
 
 // ==========================================================================
 // Part VII — Methods and Advanced Topics (方法与进阶专题)
