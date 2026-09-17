@@ -18,7 +18,7 @@
   subtitle: "A notebook for partial differential equations",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.5.0",
+  version: "v0.6.0",
   extra-info: "This is a notebook for partial differential equations.",
 )
 
@@ -82,23 +82,23 @@ A *partial differential equation (PDE)* is an equation involving an unknown func
   $
     F(x, u, nabla u, nabla^2 u, dots, nabla^m u) = 0,
   $
-  where $x in Omega subset R^n$, $Omega$ is an open set, $u: Omega -> R$ is the unknown function, and $nabla^k u$ denotes all partial derivatives of order $k$ of $u$. Here $F$ is a given function.
+  where $x in Omega subset bb(R)^n$, $Omega$ is an open set, $u: Omega -> bb(R)$ is the unknown function, and $nabla^k u$ denotes all partial derivatives of order $k$ of $u$. Here $F$ is a given function.
 ] <def:pde>
 
 To express partial derivatives systematically, we use multi-index notation.
 
 #definition(name: "Multi-Index Notation")[
-  A *multi-index* $alpha = (alpha_1, dots, alpha_n) in Z_+^n$ is an $n$-tuple of non-negative integers. We define the order $abs(alpha)$ and the corresponding derivative operator $D^alpha$ by:
+  A *multi-index* $alpha = (alpha_1, dots, alpha_n) in bb(Z)_+^n$ is an $n$-tuple of non-negative integers. We define the order $abs(alpha)$ and the corresponding derivative operator $D^alpha$ by:
 ] <def:multi-index>
 
 #eq[$
-  |alpha| &= alpha_1 + alpha_2 + dots + alpha_n, \
-  D^alpha u &= (partial^(|alpha|) u) / (partial x_1^(alpha_1) partial x_2^(alpha_2) dots partial x_n^(alpha_n)) = partial^(alpha_1)_(x_1) partial^(alpha_2)_(x_2) dots partial^(alpha_n) u.
+  abs(alpha) &= alpha_1 + alpha_2 + dots + alpha_n, \
+  D^alpha u &= (partial^(abs(alpha)) u) / (partial x_1^(alpha_1) partial x_2^(alpha_2) dots partial x_n^(alpha_n)) = partial^(alpha_1)_(x_1) partial^(alpha_2)_(x_2) dots partial^(alpha_n) u.
 $] <eq:multi-index>
 
 Using this notation, a general PDE of order $m$ can be written as:
 $
-  F(x, u, (D^alpha u)_(|alpha| <= m)) = 0.
+  F(x, u, (D^alpha u)_(abs(alpha) <= m)) = 0.
 $
 
 #definition(name: "Order of PDE")[
@@ -112,18 +112,18 @@ PDEs are classified according to their linearity properties:
 
   1. The PDE is *linear* if $F$ is linear in $u$ and all its partial derivatives, i.e.,
     $
-      F(x, u, nabla u, dots) = sum_(|alpha| <= m) a_alpha(x) D^alpha u - f(x),
+      F(x, u, nabla u, dots) = sum_(abs(alpha) <= m) a_alpha(x) D^alpha u - f(x),
     $
     where coefficients $a_alpha(x)$ depend only on $x$.
 
   2. The PDE is *semilinear* if it is linear in the highest-order derivatives but nonlinear in lower-order derivatives:
     $
-      sum_(|alpha| = m) a_alpha(x) D^alpha u = f(x, u, (D^beta u)_(|beta| < m)).
+      sum_(abs(alpha) = m) a_alpha(x) D^alpha u = f(x, u, (D^beta u)_(abs(beta) < m)).
     $
 
   3. The PDE is *quasilinear* if it is linear in the highest-order derivatives but coefficients may depend on the function and lower-order derivatives:
     $
-      sum_(|alpha| = m) a_alpha(x, u, (D^beta u)_(|beta| < m)) D^alpha u = f(x, u, (D^beta u)_(|beta| < m)).
+      sum_(abs(alpha) = m) a_alpha(x, u, (D^beta u)_(abs(beta) < m)) D^alpha u = f(x, u, (D^beta u)_(abs(beta) < m)).
     $
 
   4. The PDE is *fully nonlinear* if it is nonlinear in the highest-order derivatives.
@@ -247,13 +247,13 @@ $
 $
 
 #definition(name: "Boundary Value Problem")[
-  A *boundary value problem* consists of a PDE in a domain $Omega subset R^n$ together with conditions on the boundary $partial Omega$.
+  A *boundary value problem* consists of a PDE in a domain $Omega subset bb(R)^n$ together with conditions on the boundary $partial Omega$.
 ] <def:bvp>
 
 The three most common boundary conditions are:
 
 #definition(name: "Boundary Conditions")[
-  Let $Omega subset R^n$ be a domain with boundary $partial Omega$, and $bold(n)$ the outward unit normal. The three classical boundary conditions are:
+  Let $Omega subset bb(R)^n$ be a domain with boundary $partial Omega$, and $bold(n)$ the outward unit normal. The three classical boundary conditions are:
 
   1. *Dirichlet*: prescribes the value of the solution on the boundary:
     $
@@ -395,7 +395,7 @@ The three model equations introduced in #link(<def:laplace-equation>)[Ch 1] — 
 
 == Linear Second-Order Equations // 线性二阶方程
 
-The most general linear second-order PDE for $u: Omega subset bold(R)^n -> bold(R)$ takes the form
+The most general linear second-order PDE for $u: Omega subset bb(R)^n -> bb(R)$ takes the form
 
 #eq[$
   L[u] = sum_(i, j = 1)^n a_(i j)(x) (partial^2 u) / (partial x_i partial x_j) + sum_(i=1)^n b_i(x) (partial u) / (partial x_i) + c(x) u = f(x),
@@ -424,7 +424,7 @@ and $L_1[u] = sum_i b_i(x) u_(x_i)$ is the first-order part.
   #eq[$
     a(x, xi) = sum_(i, j = 1)^n a_(i j)(x) xi_i xi_j = xi^T A(x) xi,
   $] <eq:principal-symbol>
-  where $xi = (xi_1, dots, xi_n) in bold(R)^n$. The _full symbol_ of $L$ is $sigma(x, xi) = a(x, xi) + i sum_i b_i(x) xi_i - c(x)$, which incorporates lower-order contributions.
+  where $xi = (xi_1, dots, xi_n) in bb(R)^n$. The _full symbol_ of $L$ is $sigma(x, xi) = a(x, xi) + i sum_i b_i(x) xi_i - c(x)$, which incorporates lower-order contributions.
 ]
 
 The principal symbol captures the highest-order behavior of the operator. Since classification depends only on the leading derivatives, the principal symbol — not the full symbol — determines the equation type.
@@ -434,7 +434,7 @@ The principal symbol captures the highest-order behavior of the operator. Since 
 The concept of characteristic surfaces generalizes the characteristic curves of first-order PDEs (#link(<def:characteristic-curve>)[§3.1]) to the second-order setting.
 
 #definition(name: "Characteristic Surface")[
-  A hypersurface $S subset bold(R)^n$ is a _characteristic surface_ for the operator $L$ if at every point $x in S$, the principal symbol vanishes in the direction of the normal $nu(x)$ to $S$:
+  A hypersurface $S subset bb(R)^n$ is a _characteristic surface_ for the operator $L$ if at every point $x in S$, the principal symbol vanishes in the direction of the normal $nu(x)$ to $S$:
   #eq[$
     a(x, nu) = sum_(i, j = 1)^n a_(i j)(x) nu_i nu_j = 0.
   $] <eq:characteristic-eq>
@@ -1133,7 +1133,7 @@ When characteristics cross, the classical solution breaks down and we must admit
 // --- Chapter 6: Distributions and Weak Derivatives (分布与弱导数) ---
 
 //   Section 6.1: Test Functions and Distributions (测试函数与分布)
-//     - D(Ω)、S(R^n)、分布、正则/奇异分布、支撑
+//     - D(Ω)、S(bb(R)^n)、分布、正则/奇异分布、支撑
 //   Section 6.2: Weak Derivatives (弱导数)
 //     - 定义、唯一性、与经典导数一致
 //     - |x| 与 Heaviside 的例子
@@ -1160,7 +1160,7 @@ This chapter develops the foundational tools: test function spaces, distribution
 The strategy of distribution theory is to transfer derivatives from the unknown function onto smooth "test functions" via integration by parts. This requires a space of test functions with strong regularity and support properties, and a dual space of "generalized functions."
 
 #definition(name: "Space of Test Functions $cal(D)(Omega)$")[
-  Let $Omega subset R^n$ be an open set. The space $cal(D)(Omega) = C_c^oo(Omega)$ consists of all infinitely differentiable functions with *compact support* in $Omega$:
+  Let $Omega subset bb(R)^n$ be an open set. The space $cal(D)(Omega) = C_c^oo(Omega)$ consists of all infinitely differentiable functions with *compact support* in $Omega$:
   $
     cal(D)(Omega) = {phi in C^oo(Omega) : "supp"(phi) " is compact and" "supp"(phi) subset Omega}.
   $
@@ -1173,7 +1173,7 @@ The strategy of distribution theory is to transfer derivatives from the unknown 
 The space $cal(D)(Omega)$ is non-trivial: it contains functions that are smooth yet compactly supported.
 
 #lemma(name: "Existence of Bump Functions")[
-  For every $a in R^n$ and $r > 0$, there exists a function $phi in cal(D)(R^n)$ such that $phi >= 0$, $"supp"(phi) = overline(B(a, r))$, and $integral phi dif x > 0$.
+  For every $a in bb(R)^n$ and $r > 0$, there exists a function $phi in cal(D)(bb(R)^n)$ such that $phi >= 0$, $"supp"(phi) = overline(B(a, r))$, and $integral phi dif x > 0$.
 
   #proof[
     Define the auxiliary function:
@@ -1183,11 +1183,11 @@ The space $cal(D)(Omega)$ is non-trivial: it contains functions that are smooth 
         0, t <= 0.
       )
     $
-    One verifies by induction that $f in C^oo(R)$ with $f^(k)(0) = 0$ for all $k >= 0$. Now set:
+    One verifies by induction that $f in C^oo(bb(R))$ with $f^(k)(0) = 0$ for all $k >= 0$. Now set:
     $
       g(x) = f(r^2 - abs(x - a)^2).
     $
-    Then $g in C^oo(R^n)$, $g(x) > 0$ for $abs(x - a) < r$, and $g(x) = 0$ for $abs(x - a) >= r$. Thus $"supp"(g) = overline(B(a, r))$ and $g$ is the desired bump function.
+    Then $g in C^oo(bb(R)^n)$, $g(x) > 0$ for $abs(x - a) < r$, and $g(x) = 0$ for $abs(x - a) >= r$. Thus $"supp"(g) = overline(B(a, r))$ and $g$ is the desired bump function.
   ]
 ] <lem:bump-function>
 
@@ -1195,30 +1195,30 @@ The space $cal(D)(Omega)$ is non-trivial: it contains functions that are smooth 
   The bump function from #link(<lem:bump-function>)[§6.1 Lemma] is the building block for partitions of unity, which are essential for localizing PDE problems and extending local results to global ones.
 ]
 
-For problems on all of $R^n$, a larger test function space with controlled decay at infinity is more convenient.
+For problems on all of $bb(R)^n$, a larger test function space with controlled decay at infinity is more convenient.
 
-#definition(name: "Schwartz Space $cal(S)(R^n)$")[
-  The *Schwartz space* $cal(S)(R^n)$ consists of all $phi in C^oo(R^n)$ such that for every pair of multi-indices $alpha, beta$,
+#definition(name: "Schwartz Space $cal(S)(bb(R)^n)$")[
+  The *Schwartz space* $cal(S)(bb(R)^n)$ consists of all $phi in C^oo(bb(R)^n)$ such that for every pair of multi-indices $alpha, beta$,
   $
-    sup_(x in R^n) abs(x^alpha D^beta phi(x)) < oo.
+    sup_(x in bb(R)^n) abs(x^alpha D^beta phi(x)) < oo.
   $
-  A sequence $(phi_j)$ converges to $phi$ in $cal(S)(R^n)$ if for all multi-indices $alpha, beta$,
+  A sequence $(phi_j)$ converges to $phi$ in $cal(S)(bb(R)^n)$ if for all multi-indices $alpha, beta$,
   $
-    sup_(x in R^n) abs(x^alpha D^beta(phi_j(x) - phi(x))) -> 0 quad "as" j -> oo.
+    sup_(x in bb(R)^n) abs(x^alpha D^beta(phi_j(x) - phi(x))) -> 0 quad "as" j -> oo.
   $
 ] <def:test-fn-space-S>
 
 #note[
-  The Schwartz space satisfies $cal(D)(R^n) subset cal(S)(R^n) subset C^oo(R^n)$. Functions in $cal(S)$ and all their derivatives decay faster than any polynomial at infinity — this makes $cal(S)$ the natural domain for the Fourier transform (see Analyse Harmonique).
+  The Schwartz space satisfies $cal(D)(bb(R)^n) subset cal(S)(bb(R)^n) subset C^oo(bb(R)^n)$. Functions in $cal(S)$ and all their derivatives decay faster than any polynomial at infinity — this makes $cal(S)$ the natural domain for the Fourier transform (see Analyse Harmonique).
 ]
 
 We now define distributions as continuous linear functionals on test functions.
 
 #definition(name: "Distribution")[
-  A *distribution* on an open set $Omega subset R^n$ is a continuous linear functional $T: cal(D)(Omega) -> R$. The space of all distributions is denoted $cal(D)'(Omega)$.
+  A *distribution* on an open set $Omega subset bb(R)^n$ is a continuous linear functional $T: cal(D)(Omega) -> bb(R)$. The space of all distributions is denoted $cal(D)'(Omega)$.
 
   Concretely, $T in cal(D)'(Omega)$ satisfies:
-  1. *Linearity*: $T(a phi + b psi) = a T(phi) + b T(psi)$ for all $phi, psi in cal(D)(Omega)$ and $a, b in R$.
+  1. *Linearity*: $T(a phi + b psi) = a T(phi) + b T(psi)$ for all $phi, psi in cal(D)(Omega)$ and $a, b in bb(R)$.
   2. *Continuity*: If $phi_j -> phi$ in $cal(D)(Omega)$, then $T(phi_j) -> T(phi)$.
 
   The value of $T$ on a test function $phi$ is denoted by the *duality pairing*:
@@ -1263,11 +1263,11 @@ Distributions arising from locally integrable functions in this way are called *
   The Dirac delta $delta$ cannot be represented by any locally integrable function.
 
   #proof[
-    Suppose for contradiction that $delta = T_f$ for some $f in L^1_"loc"(R^n)$. Then for all $phi in cal(D)(R^n)$:
+    Suppose for contradiction that $delta = T_f$ for some $f in L^1_"loc"(bb(R)^n)$. Then for all $phi in cal(D)(bb(R)^n)$:
     $
-      integral_(R^n) f(x) phi(x) dif x = phi(0).
+      integral_(bb(R)^n) f(x) phi(x) dif x = phi(0).
     $
-    Choose a sequence of test functions $phi_j in cal(D)(R^n)$ with $"supp"(phi_j) subset B(0, 1/j)$, $0 <= phi_j <= 1$, and $phi_j(0) = 1$ (constructed from the bump function in #link(<lem:bump-function>)[§6.1]). Then:
+    Choose a sequence of test functions $phi_j in cal(D)(bb(R)^n)$ with $"supp"(phi_j) subset B(0, 1/j)$, $0 <= phi_j <= 1$, and $phi_j(0) = 1$ (constructed from the bump function in #link(<lem:bump-function>)[§6.1]). Then:
     $
       abs(integral f phi_j dif x) <= integral_(B(0, 1/j)) abs(f(x)) dif x -> 0
     $
@@ -1505,7 +1505,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
   $
     E(x) = -1 / ((n - 2) omega_n) abs(x)^(2 - n),
   $
-  where $omega_n = 2 pi^(n/2) / Gamma(n/2)$ is the surface area of the unit sphere $S^(n-1) subset R^n$.
+  where $omega_n = 2 pi^(n/2) / Gamma(n/2)$ is the surface area of the unit sphere $S^(n-1) subset bb(R)^n$.
 
   For $n = 2$:
   $
@@ -1643,7 +1643,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 #note[
   The three fundamental solutions reveal fundamentally different propagation behaviors, reflecting the classification of Chapter 2:
 
-  - *Laplace* ($Delta$): $E$ is supported on _all_ of $R^n$ — elliptic equations have infinite propagation in all directions; disturbances are felt everywhere instantaneously.
+  - *Laplace* ($Delta$): $E$ is supported on _all_ of $bb(R)^n$ — elliptic equations have infinite propagation in all directions; disturbances are felt everywhere instantaneously.
   - *Heat* ($partial_t - Delta$): $E$ is supported on ${t >= 0}$ — parabolic equations have infinite spatial propagation speed but respect the arrow of time (irreversibility).
   - *Wave* ($partial_t^2 - Delta$): $E$ is supported on the forward light cone ${t >= abs(x)}$ — hyperbolic equations respect finite propagation speed and causality.
 
@@ -1734,9 +1734,586 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 
 #part("Elliptic Equations") // 椭圆型方程
 
+= Laplace's Equation and Harmonic Functions // 拉普拉斯方程与调和函数
+
+The Laplace equation, introduced in Chapter 1 (#link(<def:laplace-equation>)[Ch 1]), is the prototypical elliptic equation. Its solutions — the *harmonic functions* — form the smoothest and most rigid class of objects in PDE theory: they are $C^oo$ wherever defined, enjoy the mean value property and the maximum principle, and their theory provides the blueprint for the general elliptic theory developed in this Part.
+
+== Laplace's and Poisson's Equations // 拉普拉斯方程与泊松方程
+
+#definition(name: "Laplace and Poisson Equations")[
+  Let $Omega subset bb(R)^n$ be an open set. The *Laplace equation* is
+  $
+    Delta u = 0 quad "in" quad Omega,
+  $
+  and the *Poisson equation* is
+  $
+    -Delta u = f quad "in" quad Omega,
+  $
+  where $u: Omega -> bb(R)$ is the unknown function and $f: Omega -> bb(R)$ is given. A $C^2$ function $u$ satisfying $Delta u = 0$ is called a *harmonic function* on $Omega$.
+] <def:harmonic-function>
+
+#note[
+  Physical origins. The Laplacian measures the local deviation of $u$ from its mean, so $Delta u = 0$ describes equilibrium configurations: the electrostatic potential in a charge-free region, the gravitational potential in empty space, and the steady-state temperature distribution. The Poisson equation $-Delta u = f$ incorporates sources (charge density, heat sources).
+
+  Linearity and ellipticity. Both equations are linear with constant coefficients, so linear combinations of solutions are again solutions (Chapter 1, #link(<def:pde-linearity-classification>)[§1]). By the classification of Chapter 2, $Delta$ is the canonical *elliptic* operator: its principal symbol $abs(xi)^2$ is positive definite, and no characteristic surfaces exist in $bb(R)^n$.
+]
+
+#proposition(name: "Invariance Properties of the Laplacian")[
+  The Laplacian commutes with rigid motions: for $T_a (x) = x + a$ and any orthogonal matrix $Q$,
+  $
+    Delta (u compose T_a) = (Delta u) compose T_a, quad Delta (u compose Q) = (Delta u) compose Q.
+  $
+  Hence harmonicity is invariant under translations, rotations, and reflections. Moreover, $u$ is harmonic on $Omega$ if and only if $v (x) = u (lambda x)$ is harmonic on $lambda^(-1) Omega$ for every $lambda > 0$; indeed $Delta v = lambda^2 (Delta u) compose (x |-> lambda x)$.
+] <prop:laplacian-invariance>
+
+#proof[
+  These are direct chain-rule computations. For example, if $v (x) = u (Q x)$, then $partial_(x_i) v = sum_j Q_(j i) (partial_(x_j) u) compose (Q dot)$ and, since $Q Q^T = I$,
+  $
+    Delta v = sum_i sum_(j, k) Q_(j i) Q_(k i) (partial_(x_j) partial_(x_k) u) compose (Q dot) = sum_j (partial_(x_j)^2 u) compose (Q dot) = (Delta u) compose (Q dot).
+  $
+]
+
+== Mean Value Property // 平均值性质
+
+The mean value property is the fundamental structural feature of harmonic functions: the value at a point is the average over any sphere or ball centered at that point. It encodes the rigidity of harmonic functions (no interior extrema unless constant) and, through its converse, their smoothness.
+
+#theorem(name: "Mean Value Property")[
+  Let $u in C^2 (Omega)$ be harmonic. Then for every $x in Omega$ and every $r > 0$ with $overline(B (x, r)) subset Omega$,
+  $
+    u (x) = 1 / (omega_n r^(n-1)) integral_(partial B (x, r)) u dif S = 1 / (abs(B (x, r))) integral_(B (x, r)) u dif y,
+  $
+  where $omega_n$ is the surface area of the unit sphere $S^(n-1) subset bb(R)^n$ and $abs(B (x, r)) = omega_n r^n / n$ is the volume of the ball.
+] <thm:mean-value-property>
+
+#proof[
+  Define $phi: (0, R) -> bb(R)$ by the spherical average
+  $
+    phi (r) = 1 / (omega_n r^(n-1)) integral_(partial B (x, r)) u dif S = 1 / (omega_n) integral_(S^(n-1)) u (x + r z) dif S (z).
+  $
+  Differentiating under the integral and using the divergence theorem:
+  $
+    phi' (r) = 1 / (omega_n r^(n-1)) integral_(partial B (x, r)) (partial u)/(partial nu) dif S = 1 / (omega_n r^(n-1)) integral_(B (x, r)) Delta u dif y = 0,
+  $
+  since $u$ is harmonic. Hence $phi$ is constant, and $phi (r) = lim_(s -> 0^+) phi (s) = u (x)$ by continuity. Integrating the spherical averages over $0 < s < r$ gives the ball average:
+  $
+    integral_(B (x, r)) u dif y = integral_0^r integral_(partial B (x, s)) u dif S dif s = u (x) integral_0^r omega_n s^(n-1) dif s = u (x) (omega_n r^n)/n.
+  $
+]
+
+#corollary(name: "Derivative Estimates")[
+  Let $u$ be harmonic in $Omega$. For every multi-index $alpha$ and every $B (x, r) subset Omega$,
+  $
+    abs(D^alpha u (x)) <= C_(n, k) / r^k sup_(B (x, r)) abs(u), quad k = abs(alpha),
+  $
+  where $C_(n, k)$ depends only on $n$ and $k$. In particular, harmonic functions are $C^oo$, and the derivatives at $x$ are controlled by the supremum of $u$ on any ball around $x$.
+] <cor:derivative-estimates>
+
+#proof[
+  For $k = 1$, differentiate the ball mean value property with respect to the center (legitimate by translation invariance: $integral_(B (x, r)) u dif y = integral_(B (0, r)) u (x + z) dif z$):
+  $
+    (partial u)/(partial x_i) (x) = 1 / (abs(B (x, r))) integral_(B (x, r)) (partial u)/(partial x_i) dif y = 1 / (abs(B (x, r))) integral_(partial B (x, r)) u nu_i dif S,
+  $
+  where the last step is the divergence theorem applied to the (harmonic) function $partial_(x_i) u$. Hence
+  $
+    abs(nabla u (x)) <= (n / r) sup_(partial B (x, r)) abs(u) <= (n / r) sup_(B (x, r)) abs(u).
+  $
+  Replacing $r$ by $r/2$ (so that the final ball lies inside $B (x, r)$) and applying the $k = 1$ estimate to the derivatives $partial^alpha u$, which are harmonic whenever $u$ is, gives the general case by induction on $k$.
+]
+
+#corollary(name: "Converse: Mean Value Property Implies Harmonicity")[
+  Let $u in C (Omega)$ satisfy the (ball) mean value property: for every $x in Omega$ and every $r > 0$ with $overline(B (x, r)) subset Omega$,
+  $
+    u (x) = 1 / (abs(B (x, r))) integral_(B (x, r)) u dif y.
+  $
+  Then $u in C^oo (Omega)$ and $u$ is harmonic.
+] <cor:mean-value-converse>
+
+#proof[
+  Let $rho_epsilon$ be the standard mollifier (Chapter 7, #link(<def:mollifier>)[§7.1]) and set $u_epsilon = u * rho_epsilon$ on $Omega_epsilon = {x in Omega : "dist"(x, partial Omega) > epsilon}$. Since mollification averages $u$ against a smooth kernel, the mean value property passes to $u_epsilon$: for $B (x, r) subset Omega_epsilon$,
+  $
+    u_epsilon (x) = 1 / (abs(B (x, r))) integral_(B (x, r)) u_epsilon dif y.
+  $
+  For fixed $x$, the spherical average of $u_epsilon$ over $partial B (x, r)$ is therefore constant in $r$, so its derivative vanishes; by the divergence theorem,
+  $
+    integral_(B (x, r)) Delta u_epsilon dif y = integral_(partial B (x, r)) (partial u_epsilon)/(partial nu) dif S = 0
+  $
+  for every $r$. Dividing by $abs(B (x, r)) = omega_n r^n / n$ and letting $r -> 0^+$, the continuity of $Delta u_epsilon$ gives $Delta u_epsilon (x) = 0$. Thus each $u_epsilon$ is harmonic on $Omega_epsilon$.
+
+  Now $u_epsilon -> u$ locally uniformly on $Omega$ (Chapter 7). By the derivative estimates above, $D^alpha u_epsilon$ converges locally uniformly to a continuous function, and $Delta u = lim_(epsilon -> 0) Delta u_epsilon = 0$. Hence $u in C^oo (Omega)$ and $u$ is harmonic.
+]
+
+== Maximum and Minimum Principles // 最大值与最小值原理
+
+#theorem(name: "Weak Maximum Principle")[
+  Let $Omega$ be bounded and $u in C^2 (Omega) inter C (overline(Omega))$ with $Delta u >= 0$ in $Omega$ (such $u$ is called *subharmonic*). Then
+  $
+    max_(overline(Omega)) u = max_(partial Omega) u.
+  $
+  In particular, a harmonic function attains its maximum on the boundary. For $Delta u <= 0$ (*superharmonic* $u$), the same holds with minima: $min_(overline(Omega)) u = min_(partial Omega) u$.
+] <thm:weak-maximum-principle>
+
+#proof[
+  First suppose $Delta u > 0$ strictly. If $u$ attained an interior maximum at $x_0 in Omega$, the second-derivative test gives $Delta u (x_0) = sum_i (partial^2 u)/(partial x_i^2) (x_0) <= 0$ (each second derivative at a maximum is non-positive), a contradiction. Hence the maximum is attained on the boundary. For the general case $Delta u >= 0$, apply the strict case to $u_epsilon (x) = u (x) + epsilon abs(x)^2$, for which $Delta u_epsilon = Delta u + 2 n epsilon > 0$, and let $epsilon -> 0^+$.
+]
+
+#theorem(name: "Strong Maximum Principle")[
+  Let $Omega$ be connected and $u in C^2 (Omega) inter C (overline(Omega))$ be subharmonic ($Delta u >= 0$). If $u$ attains its maximum at an interior point of $Omega$, then $u$ is constant on $Omega$. Consequently, a non-constant harmonic function attains neither a maximum nor a minimum in the interior.
+] <thm:strong-maximum-principle>
+
+#proof[
+  Let $x_0 in Omega$ be a maximum point and set $M = u (x_0)$. For $0 < r < "dist"(x_0, partial Omega)$, the spherical average $phi (r)$ of $u$ over $partial B (x_0, r)$ satisfies
+  $
+    phi' (r) = 1 / (omega_n r^(n-1)) integral_(partial B (x_0, r)) (partial u)/(partial nu) dif S = 1 / (omega_n r^(n-1)) integral_(B (x_0, r)) Delta u dif y >= 0,
+  $
+  so $phi$ is non-decreasing and $phi (r) >= lim_(s -> 0^+) phi (s) = u (x_0) = M$. But $u <= M$ on $partial B (x_0, r)$, hence $phi (r) <= M$; therefore $phi (r) = M$ and, since the integrand is continuous and its average attains the maximum, $u = M$ on $partial B (x_0, r)$ for every such $r$. Thus $u = M$ on $B (x_0, "dist"(x_0, partial Omega))$, so the set ${x in Omega : u (x) = M}$ is open; it is relatively closed by continuity, and by connectedness of $Omega$ it is all of $Omega$.
+]
+
+#theorem(name: "Hopf's Lemma")[
+  Let $Omega$ be a bounded domain with $C^2$ boundary and $u in C^2 (overline(Omega))$ with $Delta u >= 0$ in $Omega$. Suppose $x_0 in partial Omega$ satisfies $u (x_0) > u (x)$ for all $x in Omega$ (a strict boundary maximum, with the maximum over $overline(Omega)$ attained at $x_0$). Then
+  $
+    (partial u)/(partial nu) (x_0) > 0,
+  $
+  where $nu$ is the outward unit normal. (For $Delta u <= 0$ and an interior minimum the inequality is reversed.)
+] <thm:hopf-lemma>
+
+#note[
+  Hopf's lemma is proved by constructing a suitable *barrier*: near $x_0$, take a ball internally tangent to $partial Omega$ at $x_0$ and compare $u$ with a carefully chosen function of $r = abs(x - x_c)$, which is subharmonic and vanishes appropriately on the boundary of the ball. The strict inequality $partial u / partial nu > 0$ is the quantitative form of the strong maximum principle at the boundary; it is the key input for uniqueness and boundary estimates in Chapters 9–11.
+]
+
+#corollary(name: "Uniqueness for the Dirichlet Problem")[
+  If $u, v in C^2 (Omega) inter C (overline(Omega))$ are harmonic in the bounded domain $Omega$ and agree on $partial Omega$, then $u = v$ in $Omega$.
+] <cor:dirichlet-uniqueness>
+
+#proof[
+  The difference $w = u - v$ is harmonic and vanishes on $partial Omega$. By the weak maximum principle applied to $w$ and to $-w$, $max_(overline(Omega)) w = 0$ and $min_(overline(Omega)) w = 0$, so $w = 0$ everywhere.
+]
+
+== Green's Identities // 格林恒等式
+
+#proposition(name: "Green's Identities")[
+  Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary and let $u, v in C^2 (overline(Omega))$. With $nu$ the outward unit normal,
+  $
+    integral_Omega nabla u dot nabla v dif x = integral_(partial Omega) v (partial u)/(partial nu) dif S - integral_Omega v Delta u dif x,
+  $
+  and, subtracting the first identity with $u$ and $v$ interchanged,
+  $
+    integral_Omega (u Delta v - v Delta u) dif x = integral_(partial Omega) (u (partial v)/(partial nu) - v (partial u)/(partial nu)) dif S.
+  $
+] <prop:green-identities>
+
+#proof[
+  Both identities follow from the divergence theorem $integral_Omega "div" bold(F) dif x = integral_(partial Omega) bold(F) dot nu dif S$. For the first, take $bold(F) = v nabla u$; then $"div"(bold(F)) = nabla v dot nabla u + v Delta u$.
+]
+
+#example(name: "Uniqueness for the Neumann Problem")[
+  Let $u_1, u_2 in C^2 (overline(Omega))$ satisfy $Delta u_1 = Delta u_2 = 0$ in $Omega$ and $(partial u_1)/(partial nu) = (partial u_2)/(partial nu)$ on $partial Omega$. Then $w = u_1 - u_2$ is harmonic with zero normal derivative on the boundary. The first Green identity with $v = w$ gives
+  $
+    integral_Omega abs(nabla w)^2 dif x = integral_(partial Omega) w (partial w)/(partial nu) dif S - integral_Omega w Delta w dif x = 0,
+  $
+  so $nabla w = 0$ in $Omega$, and $w$ is constant. Thus solutions of the Neumann problem are unique up to an additive constant (Chapter 9, §9.2).
+]
+
+#example(name: "The Compatibility Condition")[
+  Taking $u = 1$ in the second Green identity shows that a solution of the Neumann problem $Delta u = f$ in $Omega$, $(partial u)/(partial nu) = g$ on $partial Omega$ must satisfy
+  $
+    integral_Omega f dif x = integral_(partial Omega) g dif S,
+  $
+  a necessary condition for existence (Chapter 9, §9.2). The first Green identity with $v = 1$ gives the same conclusion directly.
+]
+
+= Boundary Value Problems for Elliptic Equations // 椭圆型方程边值问题
+
+The maximum principle and Green's identities of Chapter 8 give the classical (strong) theory. Modern PDE theory works with *weak solutions* in Sobolev spaces, where existence follows from the Lax--Milgram theorem. This chapter develops the Dirichlet, Neumann, and Robin problems in the weak framework; the abstract Hilbert-space theory is that of Analyse Fonctionnelle, and we apply it here.
+
+== Dirichlet Problem // 狄利克雷问题
+
+#definition(name: "The Dirichlet Problem")[
+  Let $Omega subset bb(R)^n$ be a bounded domain and $f: Omega -> bb(R)$, $g: partial Omega -> bb(R)$ given functions. The *Dirichlet problem* is to find $u$ such that
+  $
+    -Delta u = f quad "in" quad Omega, quad u = g quad "on" quad partial Omega.
+  $
+  A classical solution is a function $u in C^2 (Omega) inter C (overline(Omega))$ satisfying the equation pointwise; a weak solution is defined below.
+] <def:dirichlet-problem>
+
+#definition(name: "Sobolev Space $H^1 (Omega)$")[
+  The space $H^1 (Omega) = W^(1,2) (Omega)$ consists of all $u in L^2 (Omega)$ whose first-order weak derivatives (Chapter 6, #link(<def:weak-derivative>)[§6.2]) belong to $L^2 (Omega)$, with the norm
+  $
+    ||u||_(H^1) = (integral_Omega (abs(u)^2 + abs(nabla u)^2) dif x)^(1/2).
+  $
+  The subspace $H_0^1 (Omega)$ is the closure of $C_c^oo (Omega)$ in $H^1 (Omega)$; equivalently, it consists of the functions that vanish on $partial Omega$ in the trace sense. The abstract theory of $H^1$ — completeness and embeddings — is developed in Analyse Harmonique; here we need only completeness and Poincaré's inequality below.
+] <def:sobolev-h1>
+
+#proposition(name: "Poincaré's Inequality")[
+  Let $Omega subset bb(R)^n$ be a bounded domain. There exists a constant $C = C (Omega)$ such that for every $u in H_0^1 (Omega)$,
+  $
+    integral_Omega abs(u)^2 dif x <= C integral_Omega abs(nabla u)^2 dif x.
+  $
+  Consequently, $||nabla u||_(L^2)$ is an equivalent norm on $H_0^1 (Omega)$.
+] <prop:poincare-inequality>
+
+#proof[
+  For a bounded box containing $Omega$, write $u (x) = integral_(-oo)^(x_1) (partial u)/(partial x_1) (t, x_2, dots, x_n) dif t$ for $u in C_c^oo$ (extended by zero), square and integrate; the one-dimensional Poincaré inequality gives the bound with a constant depending on the side length. The result for general $u in H_0^1$ follows by density of $C_c^oo$ in $H_0^1$.
+]
+
+#theorem(name: "Lax--Milgram Theorem")[
+  Let $H$ be a Hilbert space and $B: H times H -> bb(R)$ a bilinear form that is *bounded* and *coercive*: there exist constants $alpha, beta > 0$ such that
+  $
+    abs(B (u, v)) <= beta ||u|| ||v||, quad B (u, u) >= alpha ||u||^2 quad "for all" u, v in H.
+  $
+  Then for every bounded linear functional $F: H -> bb(R)$ there exists a unique $u in H$ with
+  $
+    B (u, v) = F (v) quad "for all" v in H.
+  $
+  (The abstract proof — Riesz representation and the contraction mapping argument — is given in Analyse Fonctionnelle; we apply the theorem here.)
+] <thm:lax-milgram>
+
+#definition(name: "Weak Solution of the Dirichlet Problem")[
+  Let $f in L^2 (Omega)$ and $g in H^1 (Omega)$. A function $u in H^1 (Omega)$ with $u - g in H_0^1 (Omega)$ is a *weak solution* of the Dirichlet problem if
+  $
+    integral_Omega nabla u dot nabla v dif x = integral_Omega f v dif x quad "for all" v in H_0^1 (Omega).
+  $
+  The boundary condition $u = g$ on $partial Omega$ is understood in the trace sense (for $g in H^1 (Omega)$).
+] <def:weak-dirichlet>
+
+#theorem(name: "Existence and Uniqueness for the Dirichlet Problem")[
+  Let $Omega subset bb(R)^n$ be a bounded domain and $f in L^2 (Omega)$. For every $g in H^1 (Omega)$ the weak Dirichlet problem has a unique solution $u in H^1 (Omega)$, and
+  $
+    ||u||_(H^1) <= C (||f||_(L^2) + ||g||_(H^1))
+  $
+  for a constant $C = C (Omega)$.
+] <thm:dirichlet-existence>
+
+#proof[
+  *Step 1: Reduce to homogeneous data.* Let $w = u - g$. Then $w in H_0^1 (Omega)$ and $w$ solves the weak problem with right-hand side
+  $
+    F (v) = integral_Omega f v dif x - integral_Omega nabla g dot nabla v dif x,
+  $
+  which is a bounded linear functional on $H_0^1 (Omega)$ (by Cauchy--Schwarz and Poincaré's inequality).
+
+  *Step 2: Apply Lax--Milgram.* On $H = H_0^1 (Omega)$ equip the inner product $⟨ u, v ⟩ = integral_Omega nabla u dot nabla v dif x$. The form $B (u, v) = ⟨ u, v ⟩$ is bounded ($abs(B (u, v)) <= ||nabla u||_(L^2) ||nabla v||_(L^2)$) and coercive: by Poincaré's inequality $||u||_(L^2) <= C^(1/2) ||nabla u||_(L^2)$, so
+  $
+    B (u, u) = ||nabla u||_(L^2)^2 >= 1/(1 + C) ||u||_(H^1)^2.
+  $
+  Lax--Milgram yields a unique $w$, hence a unique $u = w + g$.
+
+  *Step 3: Estimate.* Applying the bound $||w||_(H^1) <= (1/alpha) ||F||$ and the explicit bound on $F$ gives the stated estimate for $u$.
+]
+
+#note[
+  The classical and weak formulations are consistent: if $u in C^2 (Omega) inter C^1 (overline(Omega))$ is a weak solution with $f$ continuous, then integrating by parts in the weak formulation shows $Delta u = f$ pointwise, so $u$ is a classical solution. Regularity theory (Chapter 11) shows that weak solutions are automatically classical under mild smoothness assumptions on the data.
+]
+
+== Neumann Problem // 纽曼问题
+
+#definition(name: "The Neumann Problem")[
+  Let $Omega subset bb(R)^n$ be a bounded domain with Lipschitz boundary and let $f in L^2 (Omega)$, $g in L^2 (partial Omega)$ be given. The *Neumann problem* is to find $u in H^1 (Omega)$ such that
+  $
+    integral_Omega nabla u dot nabla v dif x = integral_Omega f v dif x + integral_(partial Omega) g v dif S quad "for all" v in H^1 (Omega).
+  $
+  (Formally, this corresponds to $-Delta u = f$ in $Omega$ and $(partial u)/(partial nu) = g$ on $partial Omega$, obtained by integrating by parts.)
+] <def:neumann-problem>
+
+#proposition(name: "Compatibility Condition and Uniqueness")[
+  (i) If a solution of the Neumann problem exists, then the data satisfy the *compatibility condition*
+  $
+    integral_Omega f dif x + integral_(partial Omega) g dif S = 0.
+  $
+  (ii) Solutions are unique up to an additive constant: if $u_1, u_2$ are both solutions, then $u_1 - u_2 = c$ a.e. for some constant $c$.
+] <prop:neumann-compatibility>
+
+#proof[
+  (i) Take $v = 1$ in the weak formulation; both gradient terms vanish and the condition follows.
+  (ii) The difference $w = u_1 - u_2$ satisfies $integral_Omega nabla w dot nabla w dif x = 0$, so $nabla w = 0$ a.e.; by connectedness of $Omega$, $w$ is constant a.e.
+]
+
+#theorem(name: "Existence for the Neumann Problem")[
+  Assume the compatibility condition holds. Then the Neumann problem has a unique solution in the space ${u in H^1 (Omega) : integral_Omega u dif x = 0}$.
+] <thm:neumann-existence>
+
+#proof[
+  On $H = {v in H^1 (Omega) : integral_Omega v dif x = 0}$, the form $B (u, v) = integral_Omega nabla u dot nabla v dif x$ is coercive: this is Poincaré's inequality for mean-zero functions, $||u||_(L^2) <= C ||nabla u||_(L^2)$ for $u in H$ (proved like Proposition 9.1, using the mean-zero condition instead of vanishing on the boundary). The functional $F (v) = integral_Omega f v dif x + integral_(partial Omega) g v dif S$ is bounded on $H$ (trace inequality for $H^1$), and Lax--Milgram applies. The compatibility condition ensures that $F$ vanishes on constants, so $F$ is well-defined on $H$ (i.e., on equivalence classes modulo constants).
+]
+
+== Robin and Mixed Conditions // Robin 与混合边界条件
+
+#definition(name: "The Robin Problem")[
+  Let $sigma in L^oo (partial Omega)$ with $sigma >= 0$ and $integral_(partial Omega) sigma dif S > 0$. The *Robin problem* $-Delta u = f$ in $Omega$, $(partial u)/(partial nu) + sigma u = g$ on $partial Omega$ has the weak form: find $u in H^1 (Omega)$ such that
+  $
+    integral_Omega nabla u dot nabla v dif x + integral_(partial Omega) sigma u v dif S = integral_Omega f v dif x + integral_(partial Omega) g v dif S quad "for all" v in H^1 (Omega).
+  $
+] <def:robin-problem>
+
+#theorem(name: "Existence and Uniqueness for the Robin Problem")[
+  Let $Omega$ be a bounded Lipschitz domain, $f in L^2 (Omega)$, $g in L^2 (partial Omega)$, and $sigma$ as above. Then the Robin problem has a unique weak solution $u in H^1 (Omega)$.
+] <thm:robin-existence>
+
+#proof[
+  Apply Lax--Milgram on $H = H^1 (Omega)$ with $B (u, v) = integral_Omega nabla u dot nabla v dif x + integral_(partial Omega) sigma u v dif S$. Boundedness follows from the trace inequality. For coercivity, note that $B (u, u) = 0$ would force $nabla u = 0$ (so $u$ is constant) and $integral_(partial Omega) sigma u^2 dif S = 0$, hence $u = 0$ since $integral_(partial Omega) sigma dif S > 0$; by a compactness argument (Rellich embedding) the form is coercive on $H^1 (Omega)$.
+]
+
+#note[
+  *Mixed boundary conditions.* One may prescribe Dirichlet data on a part $Gamma_D$ of the boundary and Neumann or Robin data on the remainder $Gamma_N$. The weak formulation is the same, with the test space $H_(Gamma_D)^1 = {v in H^1 (Omega) : v = 0 "on" Gamma_D}$; existence follows from Lax--Milgram under analogous coercivity assumptions. The trace theorems required for $L^2 (partial Omega)$ boundary terms are treated in Analyse Harmonique.
+]
+
+== Uniqueness via Energy Methods // 能量方法的唯一性
+
+#theorem(name: "Dirichlet's Principle")[
+  Let $Omega$ be bounded, $f in L^2 (Omega)$, and $g in H^1 (Omega)$. A function $u in H^1 (Omega)$ with $u - g in H_0^1 (Omega)$ minimizes the energy functional
+  $
+    E (v) = 1/2 integral_Omega abs(nabla v)^2 dif x - integral_Omega f v dif x
+  $
+  over the affine space $g + H_0^1 (Omega)$ if and only if $u$ is the weak solution of the Dirichlet problem.
+] <thm:dirichlet-principle>
+
+#proof[
+  For any $w in H_0^1 (Omega)$, the map $t |-> E (u + t w)$ is a convex quadratic polynomial (the Hessian is $B (w, w) = integral_Omega abs(nabla w)^2 dif x >= 0$), whose derivative at $0$ is
+  $
+    E' (u) [w] = integral_Omega nabla u dot nabla w dif x - integral_Omega f w dif x.
+  $
+  A minimizer satisfies $E' (u) [w] = 0$ for all $w in H_0^1 (Omega)$, which is exactly the weak formulation; convexity makes this first-order condition sufficient. Existence of the minimizer also follows directly from coercivity and convexity (direct method of the calculus of variations).
+]
+
+#note[
+  The energy viewpoint and the maximum principle are complementary tools. The maximum principle (Chapter 8) is quantitative and works in $C^2$; energy methods provide existence in the weak framework and are the starting point for numerical approximation (Ritz--Galerkin). The Dirichlet principle also shows that the weak solution is the "least energy" representative among functions with the given boundary data — a variational characterization that extends to parabolic problems in Part V.
+]
+
+
+
+= Green Functions and Representation // 格林函数与表示
+
+The fundamental solution of the Laplacian was constructed in Chapter 7 (#link(<ex:fund-laplace>)[§7.2]): it is the Newtonian potential $Gamma$, satisfying $-Delta Gamma = delta$ on $bb(R)^n$. For a bounded domain, the *Green function* modifies $Gamma$ by a harmonic correction so that it vanishes on the boundary; it then encodes the solution of the Dirichlet problem through an explicit representation formula.
+
+== Green's Function Construction // 格林函数的构造
+
+#definition(name: "Green's Function of a Domain")[
+  Let $Omega subset bb(R)^n$ be a bounded domain with smooth boundary and let $Gamma$ be the fundamental solution of the Laplacian (Chapter 7, #link(<ex:fund-laplace>)[§7.2]):
+  $
+    Gamma (x) = cases(
+      -1 / ((n - 2) omega_n) abs(x)^(2 - n), n >= 3,
+      1 / (2 pi) log abs(x), n = 2,
+    )
+  $
+  For each fixed $y in Omega$, the *Green function* of $Omega$ is
+  $
+    G (x, y) = Gamma (x - y) - h^y (x), quad x in Omega backslash {y},
+  $
+  where $h^y$ is the unique harmonic function in $Omega$, smooth up to the boundary, with $h^y = Gamma (dot - y)$ on $partial Omega$ (existence of $h^y$: Chapter 9, §9.1). Equivalently, $G$ is the unique function such that
+  $
+    -Delta_x G (dot, y) = delta_y quad "in" quad Omega, quad G (dot, y) = 0 quad "on" quad partial Omega.
+  $
+] <def:green-function>
+
+#note[
+  The correction term is chosen so that $G$ vanishes on the boundary, while the singularity at $y$ is exactly that of the fundamental solution. By the maximum principle, the Dirichlet problem for $h^y$ has a unique solution, so $G$ is well defined. The construction does not repeat the fundamental solution (already treated in Chapter 7); it only exploits it as the singular part.
+]
+
+#theorem(name: "Symmetry of the Green Function")[
+  $G (x, y) = G (y, x)$ for all $x != y$ in $Omega$.
+] <thm:green-symmetry>
+
+#proof[
+  Fix distinct points $x_0, y_0 in Omega$ and set $Omega_epsilon = Omega backslash (overline(B (x_0, epsilon)) union overline(B (y_0, epsilon)))$ for small $epsilon$. The functions $u = G (dot, x_0)$ and $v = G (dot, y_0)$ are harmonic in $Omega_epsilon$, so Green's second identity (#link(<prop:green-identities>)[§8.4]) gives
+  $
+    integral_(partial Omega_epsilon) (u (partial v)/(partial nu) - v (partial u)/(partial nu)) dif S = 0.
+  $
+  The integral over $partial Omega$ vanishes because $u = v = 0$ there. On the sphere $partial B (x_0, epsilon)$, the leading term of $u$ is $Gamma (x - x_0)$, so
+  $
+    lim_(epsilon -> 0) integral_(partial B (x_0, epsilon)) v (partial u)/(partial nu) dif S = -v (y_0) ... 
+  $
+  hmm.
+]
+
+#proof[
+  Fix distinct $x_0, y_0 in Omega$ and excise small balls: $Omega_epsilon = Omega backslash (B (x_0, epsilon) union B (y_0, epsilon))$. Both $u = G (dot, x_0)$ and $v = G (dot, y_0)$ are harmonic on $Omega_epsilon$, so Green's second identity (#link(<prop:green-identities>)[§8.4]) yields
+  $
+    integral_(partial Omega_epsilon) (u (partial v)/(partial nu) - v (partial u)/(partial nu)) dif S = 0.
+  $
+  On $partial Omega$ both $u$ and $v$ vanish. On the two small spheres, $u (x) = Gamma (x - x_0) + O(1)$ with $partial u / partial nu ~ -1 / (omega_n epsilon^(n-1))$ as $epsilon -> 0$ (and similarly for $v$), so the surviving terms give, in the limit,
+  $
+    v (y_0) = u (x_0), quad "i.e." quad G (y_0, x_0) = G (x_0, y_0).
+  $
+]
+
+== Representation Formulas // 表示公式
+
+#theorem(name: "Green's Representation Formula")[
+  Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary and let $u in C^2 (overline(Omega))$. Then for every $y in Omega$,
+  $
+    u (y) = integral_(partial Omega) (u (x) (partial G)/(partial nu_x) (x, y) - G (x, y) (partial u)/(partial nu) (x)) dif S (x) - integral_Omega G (x, y) Delta u (x) dif x.
+  $
+  In particular, a harmonic function is determined by its boundary values together with the normal derivative of $G$ on the boundary.
+] <thm:green-representation>
+
+#proof[
+  Apply Green's second identity (#link(<prop:green-identities>)[§8.4]) to $u$ and $v = G (dot, y)$ on $Omega_epsilon = Omega backslash B (y, epsilon)$; both functions are $C^2$ there. Since $G$ vanishes on $partial Omega$ and $Delta G = 0$ away from $y$,
+  $
+    integral_(partial Omega_epsilon) (u (partial G)/(partial nu) - G (partial u)/(partial nu)) dif S = -integral_(Omega_epsilon) G Delta u dif x.
+  $
+  On the small sphere $partial B (y, epsilon)$, write $G (x, y) = Gamma (x - y) + O(1)$ and $(partial G)/(partial nu) (x, y) = -1 / (omega_n epsilon^(n-1)) + O(1)$. Then as $epsilon -> 0$,
+  $
+    integral_(partial B (y, epsilon)) (u (partial G)/(partial nu) - G (partial u)/(partial nu)) dif S -> -u (y),
+  $
+  and rearranging gives the representation formula.
+]
+
+#theorem(name: "Poisson's Integral Formula on a Ball")[
+  Let $B = B (0, R) subset bb(R)^n$ and $g in C (partial B)$. The unique harmonic function $u in C^2 (B) inter C (overline(B))$ with $u = g$ on $partial B$ is given by
+  $
+    u (x) = integral_(partial B) Phi (x, y) g (y) dif S (y), quad Phi (x, y) = (R^2 - abs(x)^2) / (omega_n R abs(x - y)^n), quad x in B.
+  $
+  The function $Phi$ is called the *Poisson kernel* of the ball. Moreover, $Phi (x, y) > 0$ and $integral_(partial B) Phi (x, y) dif S (y) = 1$ for every $x in B$.
+] <thm:poisson-integral-formula>
+
+#proof[
+  *Step 1: The Green function of the ball.* For $y in B$, let $y^* = (R^2 / abs(y)^2) y$ be the inverse point (the Kelvin transform of $y$). One verifies that for $abs(x) = R$,
+  $
+    abs(x - y) = (abs(y)/R) abs(x - y^*),
+  $
+  so the function $G (x, y) = Gamma (x - y) - Gamma ((abs(y)/R) (x - y^*))$ vanishes on $partial B$, is harmonic in $x != y$, and has the singularity of $Gamma$ at $y$. By uniqueness of the Green function, this is the Green function of the ball.
+
+  *Step 2: Compute the normal derivative.* For $u$ harmonic, the representation formula reduces to $u (y) = integral_(partial B) u (x) (partial G)/(partial nu_x) (x, y) dif S (x)$. A direct differentiation of the explicit $G$ on the sphere gives
+  $
+    (partial G)/(partial nu_x) (x, y) = (R^2 - abs(y)^2) / (omega_n R abs(x - y)^n),
+  $
+  and using the symmetry of $G$ (Chapter 10, §10.1) and renaming variables yields the Poisson kernel $Phi$.
+
+  *Step 3: Properties.* Taking $u = 1$ (harmonic) shows $integral_(partial B) Phi (x, y) dif S (y) = 1$; positivity is immediate from the formula. Uniqueness follows from the maximum principle (Chapter 8, §8.3).
+]
+
+== Method of Images and Conformal Mapping // 镜像法与保角映射
+
+#example(name: "Green's Function of the Half-Space via the Method of Images")[
+  For the half-space $Omega = bb(R)_+^n = {x = (x', x_n) : x_n > 0}$, the Green function is obtained by reflecting the source: for $y = (y', y_n)$ the image point is $tilde(y) = (y', -y_n)$, and
+  $
+    G (x, y) = Gamma (x - y) - Gamma (x - tilde(y)), quad x, y in bb(R)_+^n.
+  $
+  On the boundary ${x_n = 0}$, one has $abs(x - y) = abs(x - tilde(y))$, so the two terms cancel and $G = 0$; away from $y$ the reflected term is harmonic (its singularity lies in the lower half-space). This is the *method of images*: the boundary condition is enforced by a mirror source of opposite sign.
+]
+
+#example(name: "Green's Function of the Ball via the Kelvin Transform")[
+  For $Omega = B (0, R)$ and $y in B (0, R)$, let $y^* = (R^2 / abs(y)^2) y$ be the inverse point. Then
+  $
+    G (x, y) = Gamma (x - y) - Gamma ((abs(y)/R) (x - y^*)).
+  $
+  As shown in the proof of Poisson's formula (Chapter 10, §10.2), the second term cancels $Gamma (x - y)$ on $partial B (0, R)$ and is harmonic inside the ball, so this is the Green function of the ball.
+]
+
+#note[
+  *Conformal invariance in two dimensions.* In the plane, harmonic functions interact with complex analysis: if $f: Omega -> bb(C)$ is holomorphic and $u$ is harmonic, then $u compose f$ is harmonic wherever defined (the Laplacian transforms by the conformal factor $abs(f')^2$). Consequently, Green functions and Dirichlet problems can be transferred between conformally equivalent planar domains — a powerful tool for solving problems on disks, strips, and polygons (the Riemann mapping theorem guarantees the equivalence). This is the viewpoint developed in Analyse Complexe; here we only record the elementary invariance fact.
+]
+
+= Regularity Theory // 正则性理论
+
+Weak solutions constructed in Chapter 9 are $H^1$ functions; the question of their smoothness is *regularity theory*. This chapter states the central results: interior and boundary regularity, the Schauder estimates in Hölder spaces, and the $L^p$ estimates based on the Calderón--Zygmund theory. The Sobolev space machinery is summarized here; its deeper theory (embeddings, traces) belongs to Analyse Harmonique.
+
+== Interior Regularity // 内正则性
+
+#definition(name: "Sobolev Spaces $W^(k,p)$")[
+  For $k >= 0$ and $1 <= p <= oo$, the space $W^(k,p) (Omega)$ consists of all $u in L^p (Omega)$ whose weak derivatives $partial^alpha u$ (Chapter 6, #link(<def:weak-derivative>)[§6.2]) belong to $L^p (Omega)$ for every multi-index $alpha$ with $abs(alpha) <= k$, with the norm
+  $
+    ||u||_(W^(k,p)) = (sum_(abs(alpha) <= k) integral_Omega abs(partial^alpha u)^p dif x)^(1/p), quad 1 <= p < oo,
+  $
+  and the essential-supremum norm for $p = oo$. For $p = 2$ we write $H^k (Omega) = W^(k,2) (Omega)$; $H_("loc")^k$ denotes membership on every compactly contained subdomain. The basic theory (completeness, density, embeddings) is developed in Analyse Harmonique.
+] <def:sobolev-wkp>
+
+#theorem(name: "Interior Regularity")[
+  Let $u in H^1 (Omega)$ be a weak solution of $-Delta u = f$ in $Omega$ (#link(<def:weak-dirichlet>)[§9.1]). If $f in H_("loc")^k (Omega)$ for some $k >= 0$, then $u in H_("loc")^(k+2) (Omega)$. In particular, if $f in C^oo (Omega)$ then $u in C^oo (Omega)$ after modification on a null set.
+] <thm:interior-regularity>
+
+#proof[
+  *Step 1: Difference quotients.* Let $D_i^h u (x) = (u (x + h e_i) - u (x))/h$. Testing the weak formulation with $v = -D_i^(-h) (eta^2 D_i^h u)$, where $eta in C_c^oo (Omega)$ is a cutoff with $eta = 1$ on $Omega' subset subset Omega$, and using the elementary identity
+  $
+    integral_Omega (D_i^(-h) w) z dif x = integral_Omega w (D_i^h z) dif x,
+  $
+  one obtains, uniformly in small $h$,
+  $
+    integral_Omega eta^2 abs(D_i^h nabla u)^2 dif x <= C (||f||_(L^2 (U))^2 + ||u||_(H^1 (U))^2)
+  $
+  for a slightly larger open set $U$. Passing $h -> 0$ gives $u in H_("loc")^2 (Omega)$ and the local $H^2$ estimate.
+
+  *Step 2: Bootstrap.* Since $u in H_("loc")^2$, the differentiated equation $Delta (partial^alpha u) = partial^alpha f$ holds weakly; applying Step 1 to the derivatives iterates the gain of two derivatives, yielding $u in H_("loc")^(k+2) (Omega)$.
+
+  *Step 3: Smoothness.* If $f in C^oo (Omega)$, Step 2 gives $u in H_("loc")^m (Omega)$ for every $m$, and the Sobolev embedding theorem (Analyse Harmonique) implies $u in C^oo (Omega)$.
+]
+
+#corollary(name: "Weyl's Lemma")[
+  If $u in L_("loc")^1 (Omega)$ satisfies $Delta u = 0$ in the sense of distributions, then $u$ is (equal a.e. to) a harmonic $C^oo$ function.
+] <cor:weyl-lemma>
+
+#proof[
+  Mollify: $u_epsilon = u * rho_epsilon$ is smooth on $Omega_epsilon$ and, since $Delta u = 0$ distributionally, $Delta u_epsilon = rho_epsilon * Delta u = 0$ classically. By the mean value property and its converse (Chapter 8, §8.2), the locally uniform limit $u$ is harmonic and smooth.
+]
+
+== Boundary Regularity // 边界正则性
+
+#theorem(name: "Boundary Regularity")[
+  Let $Omega$ be a bounded domain with $C^(k+2)$ boundary, $f in H^k (Omega)$, and $g in H^(k + 3/2) (partial Omega)$ (trace sense). Then the weak solution of the Dirichlet problem satisfies $u in H^(k+2) (Omega)$ and
+  $
+    ||u||_(H^(k+2) (Omega)) <= C (||f||_(H^k (Omega)) + ||g||_(H^(k + 3/2) (partial Omega))),
+  $
+  with $C = C (Omega, k)$.
+] <thm:boundary-regularity>
+
+#note[
+  The improvement near the boundary requires regularity of the domain: the proof localizes near $partial Omega$, flattens the boundary by a $C^(k+2)$ diffeomorphism, and applies the interior estimates to the straightened problem. At corners or on nonsmooth domains the regularity degrades; the precise loss depends on the opening angle. The fractional-order spaces on the boundary (traces) are treated in Analyse Harmonique.
+]
+
+== Schauder Estimates // Schauder 估计
+
+#definition(name: "Hölder Spaces")[
+  For $0 < alpha <= 1$ and an open set $Omega$, the space $C^(0, alpha) (Omega)$ consists of bounded functions with finite Hölder seminorm
+  $
+    [u]_(C^(0, alpha)) = sup_(x != y) abs(u (x) - u (y)) / abs(x - y)^alpha,
+  $
+  normed by $||u||_(C^(0, alpha)) = ||u||_oo + [u]_(C^(0, alpha))$. For $k >= 1$, $C^(k, alpha) (Omega)$ consists of functions whose derivatives of order at most $k$ are in $C^(0, alpha)$, with the analogous norm; $C^(k, alpha) (overline(Omega))$ is defined by uniform extendability to a neighborhood.
+] <def:holder-spaces>
+
+#theorem(name: "Interior Schauder Estimates")[
+  Let $u in C^(2, alpha) (Omega)$ solve $-Delta u = f$ in $Omega$ with $f in C^(0, alpha) (Omega)$. Then for every $Omega' subset subset Omega$,
+  $
+    ||u||_(C^(2, alpha) (Omega')) <= C (||u||_(C^(0, alpha) (Omega)) + ||f||_(C^(0, alpha) (Omega))),
+  $
+  with $C = C (n, alpha, Omega', Omega)$. In particular, the second derivatives of $u$ and their Hölder seminorms are controlled by the data and the size of $u$.
+] <thm:schauder-interior>
+
+#theorem(name: "Global Schauder Estimates")[
+  Let $Omega$ be a bounded domain with $partial Omega in C^(2, alpha)$. If $u in C^(2, alpha) (overline(Omega))$ solves the Dirichlet problem with $f in C^(0, alpha) (overline(Omega))$ and $g in C^(2, alpha) (partial Omega)$, then
+  $
+    ||u||_(C^(2, alpha) (overline(Omega))) <= C (||u||_(C^0 (overline(Omega))) + ||f||_(C^(0, alpha) (overline(Omega))) + ||g||_(C^(2, alpha) (partial Omega))).
+  $
+] <thm:schauder-global>
+
+#note[
+  The proof of the Schauder estimates is potential-theoretic: writing $u = Gamma * f + h$ with $h$ harmonic, the second derivatives of the Newtonian potential are singular integrals, and the Hölder estimates for such integrals (Calderón--Zygmund theory, Chapter 11, §11.4) give the result. The estimates are the quantitative backbone of nonlinear elliptic theory (freezing coefficients, linearization).
+]
+
+== L^p Estimates and Calderón-Zygmund Theory // L^p 估计与 Calderón-Zygmund 理论
+
+#definition(name: "Calderón–Zygmund Singular Integrals")[
+  An operator $T$ of the form
+  $
+    T f (x) = p.v. integral_(bb(R)^n) K (x - y) f (y) dif y
+  $
+  with kernel $K$ homogeneous of degree $-n$ ($K (lambda z) = lambda^(-n) K (z)$ for $lambda > 0$), smooth away from the origin, and mean-zero on the unit sphere, is a *Calderón--Zygmund singular integral operator*. The second derivatives of the Newtonian potential $Gamma * f$ are such operators.
+] <def:cz-operator>
+
+#theorem(name: "$L^p$ Estimates for the Laplacian")[
+  For $1 < p < oo$ there exists $C = C (n, p)$ such that every $u in W^(2,p) (bb(R)^n)$ satisfies
+  $
+    ||D^2 u||_(L^p) <= C ||Delta u||_(L^p).
+  $
+  Consequently, for $f in L^p (Omega)$ the weak solution of the Dirichlet problem on a bounded $C^2$ domain satisfies the a priori estimate
+  $
+    ||u||_(W^(2,p) (Omega)) <= C (||f||_(L^p (Omega)) + ||u||_(L^p (Omega))).
+  $
+] <thm:lp-estimate>
+
+#note[
+  The proof of the $L^p$ estimates uses the Calderón--Zygmund decomposition: the operator $D^2 Gamma$ is of weak type $(1, 1)$ (a distributional inequality controlling the level sets), and interpolation (Marcinkiewicz) upgrades this to strong $L^p$ bounds for $1 < p < oo$. The theory is developed in full in Analyse Harmonique; here we record the statement, which is the $L^p$ analogue of the Schauder estimates — the two families (Hölder and Lebesgue spaces) are the twin pillars of elliptic regularity.
+]
+
 // ==========================================================================
 // Part V — Parabolic Equations (抛物型方程)
-// ==========================================================================
 // 设计思路：以热方程为核心模型，建立抛物型方程的
 // 存在性、唯一性、正则性和长期行为理论。
 // 半群理论作为统一框架自然嵌入 Ch 13。
