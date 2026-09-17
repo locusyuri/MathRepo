@@ -612,14 +612,16 @@ symmetries, the quaternions.
 #definition(name: "Symmetric Group")[
   Let $X$ be a set. A *permutation* of $X$ is a bijection
   $sigma: X -> X$. Under composition the permutations of $X$ form a
-  group: the composite of bijections is a bijection, composition of
-  mappings is associative (a fact of the Théorie des Ensembles
-  note), the identity map is neutral, and a bijection has an inverse
-  bijection. For $X = {1, 2, dots, n}$ this group is the *symmetric
-  group* $S_n$; its order is $n!$, since a bijection on $n$ points
-  is determined by choosing, in succession, the images of
-  $1, dots, n$.
+  group, the *symmetric group* on $X$; for $X = {1, 2, dots, n}$ it
+  is written $S_n$.
 ] <def:symmetric-group>
+
+The group axioms are read off from general set theory: the composite
+of bijections is a bijection (closure), composition of mappings is
+associative (a fact of the Théorie des Ensembles note), the identity
+map is neutral, and a bijection has an inverse bijection. The order
+of $S_n$ is $n!$: a bijection on $n$ points is determined by
+choosing, in succession, the images of $1, dots, n$.
 
 #note[
   (Cycle notation.) A permutation is written in *cycle notation*:
@@ -653,14 +655,15 @@ symmetries, the quaternions.
   Let $n >= 3$. The *dihedral group* $D_n$ is the group of symmetry
   transformations of the regular $n$-gon: the $n$ rotations and $n$
   reflections that preserve the polygon, composed as mappings of the
-  plane. Writing $r$ for the rotation through $(2 pi) \/ n$ and $s$
-  for one fixed reflection, every element is uniquely $r^k$ or
-  $r^k s$ with $0 <= k <= n - 1$, and the two generators satisfy
-  $
-    r^n = e, quad quad s^2 = e, quad quad s r = r^(-1) s.
-  $
+  plane.
 ] <def:dihedral-group>
 
+Writing $r$ for the rotation through $(2 pi) \/ n$ and $s$ for one
+fixed reflection, every element is uniquely $r^k$ or $r^k s$ with
+$0 <= k <= n - 1$, and the two generators satisfy
+$
+  r^n = e, quad quad s^2 = e, quad quad s r = r^(-1) s.
+$
 These relations give $abs(D_n) = 2 n$. Moreover the relation
 $s r = r^(-1) s$ shows $s r != r s$ as soon as $r != r^(-1)$, that is,
 $n >= 3$: dihedral groups are non-abelian.
@@ -771,24 +774,18 @@ these groups are non-abelian.
 The stock is complete. Shelved by size, with commutativity recorded,
 it reads as follows.
 
-#figure(
-  table(
-    columns: 4,
-    align: (left, auto, auto, center),
-    table.header([Group], [Operation], [$abs(G)$], [Abelian?]),
-    [$(bb(Z)_n, +)$], [addition], [$n$], [yes],
-    [$mu_n$], [multiplication], [$n$], [yes],
-    [$(B_n, xor)$], [bitwise XOR], [$2^n$], [yes],
-    [$S_n$], [composition], [$n!$], [no for $n >= 3$],
-    [$D_n$], [composition], [$2 n$], [no],
-    [$Q_8$], [quaternion product], [$8$], [no],
-    [$(bb(Z), +)$, $(bb(Q), +)$, $(bb(R), +)$], [addition], [infinite], [yes],
-    [$(bb(Q)^*, dot)$, $(bb(R)^*, dot)$], [multiplication], [infinite], [yes],
-    [$"GL"_(n)(F)$, $"SL"_(n)(F)$], [matrix multiplication], [infinite], [no for $n >= 2$],
-    [$mu_oo$], [multiplication], [infinite], [yes],
-  ),
-  caption: [The typical groups of this section, arranged by size and
-    commutativity.],
+#tex-table(
+  ("Group", "Operation", [$abs(G)$], "Abelian?"),
+  ([$(bb(Z)_n, +)$], "addition", [$n$], "yes"),
+  ([$mu_n$], "multiplication", [$n$], "yes"),
+  ([$(B_n, xor)$], "bitwise XOR", [$2^n$], "yes"),
+  ([$S_n$], "composition", [$n!$], [no for $n >= 3$]),
+  ([$D_n$], "composition", [$2 n$], "no"),
+  ([$Q_8$], "quaternion product", [$8$], "no"),
+  ([$(bb(Z), +)$, $(bb(Q), +)$, $(bb(R), +)$], "addition", "infinite", "yes"),
+  ([$(bb(Q)^*, dot)$, $(bb(R)^*, dot)$], "multiplication", "infinite", "yes"),
+  ([$"GL"_(n)(F)$, $"SL"_(n)(F)$], "matrix multiplication", "infinite", [no for $n >= 2$]),
+  ([$mu_oo$], "multiplication", "infinite", "yes"),
 )
 
 What do the axioms buy once admitted? The next section collects the
@@ -836,6 +833,53 @@ subtraction because inverses are missing. Second, $(a b)^(-1) =
 b^(-1) a^(-1)$ *reverses* the order — forgetting the reversal is
 the standard slip, and the abelian shortcut above is a privilege,
 not a right.
+
+#proposition(name: "When a Semigroup Is a Group")[
+  Let $(G, star)$ be a semigroup.
+  + $G$ is a group if and only if for all $a, b in G$ the equations
+    $a star x = b$ and $y star a = b$ have solutions in $G$ — the
+    two *unique solutions* of
+    #link(<prop:group-basic-properties>)[the property above], with
+    uniqueness now coming for free.
+  + If $G$ is finite, then $G$ is a group if and only if
+    *cancellation* holds (item (1) of
+    #link(<prop:group-basic-properties>)[the property above]).
+] <prop:semigroup-group-criteria>
+
+#proof[
+  (1) In a group, $x = a^(-1) b$ and $y = b a^(-1)$ solve the two
+  equations. Conversely, assume every such equation is solvable.
+  Fix $a in G$; solving $y star a = a$ gives $e$ with $e star a = a$.
+  For any $b in G$, solving $a star x = b$ gives
+  $e star b = e star (a star x) = (e star a) star x = a star x = b$:
+  $e$ is a *left* identity. Every $b$ has a left inverse $y$
+  ($y star b = e$), and $y$ has a left inverse $y'$
+  ($y' star y = e$). Then
+  $
+    b = e star b = (y' star y) star b = y' star (y star b) = y' star e,
+  $
+  and so
+  $
+    b star y = (y' star e) star y = y' star (e star y) = y' star y = e.
+  $
+  Thus $y$ is also a *right* inverse of $b$, and
+  $b star e = b star (y star b) = (b star y) star b = e star b = b$:
+  $e$ is a two-sided identity. Associativity is inherited from the
+  semigroup, so $G$ is a group.
+
+  (2) In a group, cancellation is item (1) of the property above.
+  Conversely, let cancellation hold in the finite semigroup $G$. For
+  fixed $a$, the map $x arrow.r.double a star x$ is injective by
+  left cancellation; finiteness makes it bijective, so
+  $a star x = b$ has a solution for every $b$. Symmetrically,
+  $x arrow.r.double x star a$ is bijective, so $y star a = b$ has a
+  solution. By (1), $G$ is a group.
+]
+
+Finiteness is essential in (2): $(bb(N), +)$ is an infinite
+cancellative semigroup, yet $2 + x = 1$ has no solution in $bb(N)$ —
+a monoid stranded below group level, as #link(<ex:non-groups>)[§2.2]
+already witnessed.
 
 In a group, the *conjugate* of one element by another is the result
 of "rebinding" the element through an inner automorphism. Conjugation
@@ -1217,15 +1261,16 @@ smallest subgroup containing it.
 #definition(name: "Generated Subgroup")[
   Let $G$ be a group and $S$ a subset of $G$ (possibly empty). The
   *subgroup generated by $S$*, written $⟨S⟩$, is the intersection of
-  all subgroups of $G$ that contain $S$. Equivalently, $⟨S⟩$ is the
-  smallest subgroup containing $S$: it contains $S$, it is a
-  subgroup, and every subgroup containing $S$ contains $⟨S⟩$.
-  Concretely, $⟨S⟩$ consists of all finite products $s_1 s_2 dots
-  s_k$ in which each factor lies in $S$ or is the inverse of an
-  element of $S$. A group $G$ is *generated by* $S$ when $G = ⟨S⟩$;
-  in particular $⟨g⟩$ is the cyclic subgroup of
-  #link(<note:subgroup-preview>)[Chapter 2].
+  all subgroups of $G$ that contain $S$. A group $G$ is *generated
+  by* $S$ when $G = ⟨S⟩$; in particular $⟨g⟩$ is the cyclic subgroup
+  of #link(<note:subgroup-preview>)[Chapter 2].
 ] <def:generated-subgroup>
+
+Equivalently, $⟨S⟩$ is the smallest subgroup containing $S$: it
+contains $S$, it is a subgroup, and every subgroup containing $S$
+contains $⟨S⟩$. Concretely, $⟨S⟩$ consists of all finite products
+$s_1 s_2 dots s_k$ in which each factor lies in $S$ or is the inverse
+of an element of $S$.
 
 #property(name: "Intersections of Subgroups")[
   Let ${H_i}_(i in I)$ be any family of subgroups of a group $G$.
@@ -1338,10 +1383,11 @@ general mechanism.
 
 #definition(name: "Index")[
   Let $H <= G$. The *index* of $H$ in $G$, written $[G : H]$, is the
-  number of left cosets of $H$ in $G$. (When $G$ is finite this
-  equals the number of right cosets, both counting the blocks of a
-  partition into sets of size $abs(H)$.)
+  number of left cosets of $H$ in $G$.
 ] <def:index>
+
+When $G$ is finite, this equals the number of right cosets: both
+count the blocks of a partition of $G$ into sets of size $abs(H)$.
 
 #theorem(name: "Lagrange's Theorem")[
   Let $G$ be a finite group and $H <= G$ a subgroup. Then
@@ -1410,11 +1456,12 @@ group lurking there.
     a^2 = b^2 = c^2 = e, quad a b = b a = c, quad b c = c b = a,
     quad c a = a c = b.
   $
-  It is abelian and non-cyclic: every non-identity element has
-  order $2$, so no single element generates the group. (The group
-  axioms are read off directly, or recognized in the symmetries of
-  a rectangle.)
 ] <def:klein-four>
+
+It is abelian and non-cyclic: every non-identity element has order
+$2$, so no single element generates the group. (The group axioms are
+read off directly from the relations, or recognized in the symmetry
+group of a rectangle.)
 
 #example(name: "Groups of order at most $5$.")[
   Let $abs(G) <= 5$.
@@ -1603,15 +1650,17 @@ normal form carries an invariant of the first importance.
   $
   well defined by #link(<lem:sign-well-defined>)[the lemma]. A
   permutation with $"sign"(sigma) = 1$ is *even*; with
-  $"sign"(sigma) = -1$, *odd*. The sign is multiplicative:
-  $"sign"(sigma tau) = "sign"(sigma) "sign"(tau)$, by concatenating
-  factorizations. The *alternating group* $A_n$ is the set of even
-  permutations. It is a subgroup of $S_n$ (the product of evens is
-  even, the identity is even, and inverses preserve parity), and
-  multiplication by the transposition $(1 2)$ pairs each even
-  permutation with a unique odd one, so exactly half of $S_n$ is
-  even: $abs(A_n) = n! \/ 2$ and $[S_n : A_n] = 2$.
+  $"sign"(sigma) = -1$, *odd*. The *alternating group* $A_n$ is the
+  set of even permutations.
 ] <def:alternating-group>
+
+The sign is multiplicative:
+$"sign"(sigma tau) = "sign"(sigma) "sign"(tau)$, by concatenating
+factorizations. Hence $A_n$ is a subgroup of $S_n$ (the product of
+evens is even, the identity is even, and inverses preserve parity),
+and multiplication by the transposition $(1 2)$ pairs each even
+permutation with a unique odd one, so exactly half of $S_n$ is even:
+$abs(A_n) = n! \/ 2$ and $[S_n : A_n] = 2$.
 
 #example(name: "Signs in practice.")[
   Every 3-cycle is even:
@@ -2008,11 +2057,11 @@ process, every finite group is built.
 
 #definition(name: "Simple Group")[
   A group $G$ is *simple* if its only normal subgroups are the
-  trivial subgroup $\\{e\\}$ and $G$ itself. An abelian simple group
-  is necessarily cyclic of prime order (see
-  #link(<thm:abelian-simple>)[below]); the non-abelian case is the
-  subtler one.
+  trivial subgroup $\\{e\\}$ and $G$ itself.
 ] <def:simple-group>
+
+For abelian groups simplicity is cheap — the theorem below gives the
+complete list — while the non-abelian case is the subtler one.
 
 #theorem(name: "Abelian Simple Groups")[
   An abelian group is simple if and only if it is cyclic of prime
@@ -2243,9 +2292,11 @@ quotients).
   $
     "im" f = {f(a) | a in G}.
   $
-  By #link(<prop:group-homomorphism-properties>)[property (4) and
-    (5)] $"ker" f <= G$ and $"im" f <= H$.
 ] <def:kernel-image>
+
+By #link(<prop:group-homomorphism-properties>)[property (4) and
+(5)] of the homomorphism properties, $"ker" f <= G$ and
+$"im" f <= H$.
 
 This formalises #link(<note:kernel-preliminary>)[§1.3]'s
 preliminary kernel. The key new fact — invisible at the level of
