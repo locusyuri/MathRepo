@@ -26,12 +26,12 @@
 #make-outline(depth: 2, title: "Contents")
 
 #part("Measure Theory") // 测度论
-= Lebesgue Measure
+= Lebesgue Measure // 勒贝格测度
 == $sigma$-Algebra and Measure // Sigma 代数和测度
 === $sigma$-Algebra // Sigma 代数
 #definition(name: "Ring and Algebra of Sets")[
   Let $S$ be a non-empty set. A non-empty collection $cal(S)$ of subsets of $S$ (i.e., $cal(S) subset scr(P)(S)$) is called an *ring of sets* on $S$ if it satisfies the following properties:
-  + If $A in cal(S)$, then $S backslash A in cal(S)$;
+  + If $A_1, A_2 in cal(S)$, then $A_1 backslash A_2 in cal(S)$;
   + If $A_1, A_2, dots A_n in cal(S)$, then $union.big_(i=1)^n A_i in cal(S)$.
 
   If a ring $cal(S)$ additionally satisfies $S in cal(S)$, then $cal(S)$ is called an *algebra of sets* (or *field*) on $S$.
@@ -40,7 +40,7 @@ Obviously, a ring of sets is closed under finite unions and finite differences. 
 
 #definition(name: "Sigma-Ring and Sigma-Algebra of Sets")[
   Let $S$ be a non-empty set. A non-empty collection $cal(S)$ of subsets of $S$ (i.e., $cal(S) subset scr(P)(S)$) is called a *$sigma$-ring of sets* on $S$ if it satisfies the following properties:
-  + If $A in cal(S)$, then $S backslash A in cal(S)$;
+  + If $A_1, A_2 in cal(S)$, then $A_1 backslash A_2 in cal(S)$;
   + If $A_1, A_2, dots in cal(S)$, then $union.big_(i=1)^infinity A_i in cal(S)$.
 
   If a $sigma$-ring $cal(S)$ additionally satisfies $S in cal(S)$, then $cal(S)$ is called a *$sigma$-algebra of sets* (or *$sigma$-field*) on $S$.
@@ -120,9 +120,9 @@ There are various types of measures,
 #definition(name: "Lebesgue Outer Measure")[
   The *Lebesgue outer measure* on $bb(R)^n$ is defined for any set $A subset bb(R)^n$ as
   $
-    m^*(A) = inf{ sum_(i=1)^infinity |I_i| : A subset union.big_(i=1)^infinity I_i, I_i "is an interval in" bb(R)^n }.
+    m^*(A) = inf{ sum_(i=1)^infinity abs(I_i) : A subset union.big_(i=1)^infinity I_i, I_i "is an interval in" bb(R)^n }.
   $
-  where $|I_i|$ denotes the volume of the interval $I_i$.
+  where $abs(I_i)$ denotes the volume of the interval $I_i$.
 ]
 
 #property(name: "Properties of Lebesgue Outer Measure")[
@@ -130,7 +130,7 @@ There are various types of measures,
   + *Countable Subadditivity*: For any sequence of sets $A_1, A_2, dots$, we have $m^*(union.big_(i=1)^infinity A_i) <= sum_(i=1)^infinity m^*(A_i)$.
   + *Translation Invariance*: For any set $A$ and any vector $v in bb(R)^n$, we have $m^*(A + v) = m^*(A)$.
   + *Scaling Invariance*: For any set $A$ and any scalar $c > 0$, we have $m^*(c A) = c^n m^*(A)$.
-  + *Interval Property*: For any interval $I$, we have $m^*(I) = |I|$.
+  + *Interval Property*: For any interval $I$, we have $m^*(I) = abs(I)$.
 ]
 
 #definition(name: "Carathéodory Measurable Condition")[ // Carathéodory 可测性条件
@@ -185,16 +185,16 @@ For example,
 
 #lemma(name: "Borel-Cantelli Lemma")[
   Let $(X, cal(S), mu)$ be a measure space.
-  // 设 {An}\{A_n\}{An​} 是一列可测集，若 ∑n=1∞m(An)<∞\sum_{n=1}^{\infty} m(A_n) < \infty∑n=1∞​m(An​)<∞，则m(lim sup⁡no∞An)=0m\left(\limsup_{n 	o \infty} A_n\right) = 0m(no∞limsup​An​)=0即几乎所有的点至多属于有限个 AnA_nAn​。
+  // 第一引理：若 ∑μ(Aₙ) < ∞，则 μ(limsup Aₙ) = 0，即几乎所有的点至多属于有限个 Aₙ。
   1. Let $A_n in cal(S)$ be a sequence of measurable sets. If $sum_(n=1)^infinity mu(A_n) < infinity$, then
   $
     mu(lim sup_(n->infinity) A_n) = 0,
   $
   that is, almost all points belong to at most a finite number of sets in the sequence.
-  // 设 {An}\{A_n\}{An​} 是一列相互独立的可测集，若 ∑n=1∞m(An)=∞\sum_{n=1}^{\infty} m(A_n) = \infty∑n=1∞​m(An​)=∞，则m(lim sup⁡no∞An)=m(E)m\left(\limsup_{n 	o \infty} A_n\right) = m(E)m(no∞limsup​An​)=m(E)即几乎所有的点属于无穷多个 AnA_nAn​。
-  2. Let $mu(X) < infinity$ and $A_n$ be a sequence of independent measurable sets. If $sum_(n=1)^infinity mu(A_n) = infinity$, then
+  // 第二引理：设 μ 为概率测度且 Aₙ 相互独立，若 ∑μ(Aₙ) = ∞，则 μ(limsup Aₙ) = 1，即几乎所有的点属于无穷多个 Aₙ。
+  2. Let $mu$ be a probability measure (i.e., $mu(X) = 1$) and $A_n$ be a sequence of independent measurable sets. If $sum_(n=1)^infinity mu(A_n) = infinity$, then
   $
-    mu(lim sup_(n->infinity) A_n) = mu(X),
+    mu(lim sup_(n->infinity) A_n) = mu(X) = 1,
   $
   that is, almost all points belong to an infinite number of sets in the sequence.
 ]
@@ -240,7 +240,7 @@ For example,
 
 == Other Views to introduce the Lebesgue Measure // 其他引入 Lebesgue 测度的视角
 
-=== The Original Definition// 原始定义
+=== The Original Definition // 原始定义
 
 #definition(name: "Measure of Bounded Open and Closed Sets")[
   For any non-empty bounded open set $G subset bb(R)$, we define its measure as
@@ -270,7 +270,7 @@ For example,
 
 
 
-=== $G_delta$ and $F_sigma$ Definition // G_delta Sets and F_sigma Sets // G_δ 集和 F_σ 集
+=== $G_delta$ and $F_sigma$ Definition // G_δ 集和 F_σ 集
 
 
 
@@ -350,7 +350,7 @@ For example,
 #proof[
   Let ${P_alpha}_{alpha < frak(c)}$ be a well-ordering of all non-empty perfect subsets of $bb(R)$ (there are exactly $frak(c)$ such sets). We construct $B$ by transfinite induction.
 
-  At each stage $alpha < frak(c)$, the set of points already chosen has cardinality $|alpha| < frak(c)$. Since $|P_alpha| = frak(c)$, we can pick two distinct points $x_alpha, y_alpha in P_alpha$ that have not been chosen at any previous stage.
+  At each stage $alpha < frak(c)$, the set of points already chosen has cardinality $abs(alpha) < frak(c)$. Since $abs(P_alpha) = frak(c)$, we can pick two distinct points $x_alpha, y_alpha in P_alpha$ that have not been chosen at any previous stage.
 
   Define
   $
@@ -365,7 +365,7 @@ For example,
 ]
 
 #proof[
-  Suppose for contradiction that $B$ is Lebesgue measurable. By the regularity of Lebesgue measure, for every $epsilon > 0$ there exists a closed set $F subset B$ such that $m^*(B inter K) <= m(F) + epsilon$ for any bounded interval $K$.
+  Suppose for contradiction that $B$ is Lebesgue measurable. By the regularity of Lebesgue measure, for every $epsilon > 0$ there exists a closed set $F subset B$ such that $m(B inter K) <= m(F) + epsilon$ for any bounded interval $K$.
 
   If $m(B inter K) > 0$ for some bounded interval $K$, then $B inter K$ contains an uncountable closed set $F$ (since any measurable set of positive measure contains an uncountable closed subset). By the Cantor–Bendixson theorem, $F$ contains a non-empty perfect set $P subset B$, contradicting the defining property of $B$.
 
@@ -383,17 +383,27 @@ For example,
 
 == Other Measure // 其他测度, 包括 Hausdorff measure, Packing measure, Jordan measure, etc.
 
-=== Hausdorff Measure
+=== Hausdorff Measure // Hausdorff 测度
 
+// Hausdorff 测度是 Lebesgue 测度在任意度量空间上的推广, 通过覆盖的直径来衡量集合的 s 维"大小".
+For $s >= 0$ and $delta > 0$, the *$s$-dimensional Hausdorff content* of a set $E subset bb(R)^n$ is defined by
+$
+  cal(H)_delta^s (E) = inf{ sum_(k=1)^infinity ("diam"(E_k))^s : E subset union.big_(k=1)^infinity E_k, "diam"(E_k) < delta },
+$
+and the *$s$-dimensional Hausdorff measure* of $E$ is
+$
+  cal(H)^s (E) = lim_(delta -> 0^+) cal(H)_delta^s (E) = sup_(delta > 0) cal(H)_delta^s (E).
+$
 
+#note[
+  For $s = n$, $cal(H)^n$ coincides with the Lebesgue measure on $bb(R)^n$ up to a constant factor. Hausdorff measures are the basic tool for measuring "fractal" sets; the full theory is developed in the Advanced Topics part.
+]
 
-// 可测函数的定义：设 (X, 𝒮) 和 (Y, 𝒯) 为可测空间，若对于 𝒯 中每个集合 B，原像 f^(-1)(B) 都属于 𝒮，则称函数 f: X → Y 为 𝒮-𝒯 可测的
-
-// 实值可测函数的特殊情况：当 Y = ℝ ̅ 且 𝒯 = ℬ(ℝ ̅) 为 ℝ 上的 Borel σ-代数时，若 f: X → ℝ 是 𝒮-ℬ(ℝ) 可测的，则称 f 为（实）可测函数
-
-= Measurable Function
+= Measurable Function // 可测函数
 == Definition and Properties of Measurable Functions // 可测函数的定义和性质
 === Measurable Function // 可测函数
+// 可测函数的定义：设 (X, 𝒮) 和 (Y, 𝒯) 为可测空间，若对于 𝒯 中每个集合 B，原像 f^(-1)(B) 都属于 𝒮，则称函数 f: X → Y 为 𝒮-𝒯 可测的
+// 实值可测函数的特殊情况：当 Y = ℝ ̅ 且 𝒯 = ℬ(ℝ ̅) 为 ℝ 上的 Borel σ-代数时，若 f: X → ℝ 是 𝒮-ℬ(ℝ) 可测的，则称 f 为（实）可测函数
 #definition(name: "Measurable Function")[
   Let $(X, cal(S))$ and $(Y, cal(T))$ be measurable spaces. A function $f: X -> Y$ is called *$cal(S)"-"cal(T)$ measurable* if for every set $B in cal(T)$, the preimage $f^(-1)(B) = {x in X : f(x) in B} in cal(S)$.
 ]
@@ -455,13 +465,13 @@ Now we present some equivalent characterizations of measurable functions that ar
 
 
 #property(name: "Algebraic Properties of Simple Functions")[
-  // 线性封闭性：如果 sss 和 ttt 是简单函数，α,β∈R\alpha, \beta \in \mathbb{R}α,β∈R，则 αs+βt\alpha s + \beta tαs+βt 也是简单函数。
+  // 线性封闭性：若 s 和 t 是简单函数，α, β ∈ R，则 αs + βt 也是简单函数。
   - *Linear Closure*: If $s$ and $t$ are simple functions, and $alpha, beta in bb(R)$, then $alpha s + beta t$ is also a simple function.
-  // 乘积封闭性：如果 sss 和 ttt 是简单函数，则 sts ttt 也是简单函数。
+  // 乘积封闭性：若 s 和 t 是简单函数，则 st 也是简单函数。
   - *Product Closure*: If $s$ and $t$ are simple functions, then $s t$ is also a simple function.
-  // 最大/最小封闭性：如果 sss 和 ttt 是简单函数，则 max⁡(s,t)\max(s, t)max(s,t) 和 min⁡(s,t)\min(s, t)min(s,t) 也是简单函数。
+  // 最大/最小封闭性：若 s 和 t 是简单函数，则 max(s, t) 和 min(s, t) 也是简单函数。
   - *Max/Min Closure*: If $s$ and $t$ are simple functions, then $max(s, t)$ and $min(s, t)$ are also simple functions.
-  // 正部与负部：对任意简单函数 sss，其正部 s+=max⁡(s,0)s^+ = \max(s, 0)s+=max(s,0) 和负部 s−=max⁡(−s,0)s^- = \max(-s, 0)s−=max(−s,0) 也是简单函数，且有 s=s+−s−s = s^+ - s^-s=s+−s−。
+  // 正部与负部：对任意简单函数 s，其正部 s⁺ = max(s, 0) 和负部 s⁻ = max(-s, 0) 也是简单函数，且 s = s⁺ - s⁻。
   - *Positive/Negative Parts*: For any simple function $s$, its positive part $s^+ = max(s, 0)$ and its negative part $s^- = max(-s, 0)$ are also simple functions, and $s = s^+ - s^-$.
 ]
 
@@ -489,7 +499,7 @@ Now we present some equivalent characterizations of measurable functions that ar
 #definition(name: "Almost Everywhere Convergence")[ // 几乎处处收敛
   Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X -> overline(bb(R))$ be measurable functions.
 
-  If $f_n (x) -> f(x)$ for almost every $x in X$, i.e. $mu({x in X : lim_(n->infinity) f_n (x) != f(x)}) = 0$, then we say that $f_n$ converges *almost everywhere* to $f$, denoted by $f_n xarrow("a.e.") f$.
+  If $f_n (x) -> f(x)$ for almost every $x in X$, i.e. $mu({x in X : f_n (x) "does not converge to" f(x)}) = 0$, then we say that $f_n$ converges *almost everywhere* to $f$, denoted by $f_n xarrow("a.e.") f$.
 ]
 
 // 下面我们介绍另外几种收敛模式, 并研究它们之间的关系.
@@ -500,7 +510,7 @@ We now introduce several other modes of convergence for sequences of measurable 
 #definition(name: "Convergence in Measure")[ // 依测度收敛
   Let $(X, cal(S), mu)$ be a measure space and $f_n, f: X -> overline(bb(R))$ be measurable functions.
 
-  If for every $epsilon > 0$, we have $lim_(n->infinity) mu({x in X : |f_n (x) - f(x)| > epsilon}) = 0$, then we say that $f_n$ converges *in measure* to $f$, denoted by $f_n (x) xarrow(mu) f(x)$.
+  If for every $epsilon > 0$, we have $lim_(n->infinity) mu({x in X : abs(f_n (x) - f(x)) > epsilon}) = 0$, then we say that $f_n$ converges *in measure* to $f$, denoted by $f_n (x) xarrow(mu) f(x)$.
 ]
 
 #property[
@@ -508,13 +518,13 @@ We now introduce several other modes of convergence for sequences of measurable 
   Let $(X, cal(S), mu)$ be a measure space and $f_n, f, g_n, g: X -> overline(bb(R))$ be measurable functions. Then:
   + *Uniqueness of the Limit*: If $f_n xarrow(mu) f$ and $f_n xarrow(mu) g$, then $f = g$ almost everywhere.
   + *Linearity*: If $f_n xarrow(mu) f$ and $g_n xarrow(mu) g$, then $f_n + g_n xarrow(mu) f + g$.
-  + *Convergence of Absolute Value*: If $f_n xarrow(mu) f$, then $|f_n| xarrow(mu) |f|$.
+  + *Convergence of Absolute Value*: If $f_n xarrow(mu) f$, then $abs(f_n) xarrow(mu) abs(f)$.
   + *Convergence of Product*: If $mu(X) < infinity$ and $f_n xarrow(mu) f$ and $g_n xarrow(mu) g$, then $f_n g_n xarrow(mu) f g$.
 ]
 
 
 #definition(name: "Cauchy Sequence in Measure")[ // 依测度基本列
-  Let $(X, cal(S), mu)$ be a measure space and $f_n: X -> overline(bb(R))$ be an a.e. finite sequence of measurable functions. We say that $f_n$ is a *Cauchy sequence in measure* if for every $epsilon > 0$, we have $lim_(m,n->infinity) mu({x in X : |f_n (x) - f_m (x)| > epsilon}) = 0$.
+  Let $(X, cal(S), mu)$ be a measure space and $f_n: X -> overline(bb(R))$ be an a.e. finite sequence of measurable functions. We say that $f_n$ is a *Cauchy sequence in measure* if for every $epsilon > 0$, we have $lim_(m,n->infinity) mu({x in X : abs(f_n (x) - f_m (x)) > epsilon}) = 0$.
 ]
 
 #theorem(name: "Completeness of Convergence in Measure")[
@@ -554,7 +564,7 @@ We now examine the relationship between convergence in measure and almost everyw
 
   *No a.e. convergence*: For every $x in [0,1]$, in each round $k$ there is exactly one interval $I_n$ containing $x$, so $f_n (x) = 1$ for infinitely many $n$. Meanwhile $f_n (x) = 0$ for infinitely many other $n$. Therefore $lim_(n->infinity) f_n (x)$ does not exist for any $x in [0,1]$, and $f_n$ does not converge almost everywhere.
 
-  Moreover, since $integral_0^1 |f_n|^p dif m = m(I_n) = 1/k -> 0$, we also have $f_n xarrow(L^p) 0$ for all $p >= 1$. Thus the typewriter sequence simultaneously demonstrates the non-implications:
+  Moreover, since $integral_0^1 abs(f_n)^p dif m = m(I_n) = 1/k -> 0$, we also have $f_n xarrow(L^p) 0$ for all $p >= 1$. Thus the typewriter sequence simultaneously demonstrates the non-implications:
   - $f_n xarrow(mu) f$ does NOT imply $f_n xarrow("a.e.") f$.
   - $f_n xarrow(L^p) f$ does NOT imply $f_n xarrow("a.e.") f$.
   - $f_n xarrow(mu) f$ does NOT imply $f_n xarrow("a.u.") f$ (since a.u. $=>$ a.e.).
@@ -568,11 +578,11 @@ We now examine the relationship between convergence in measure and almost everyw
 
   We say that $f_n$ converges *in $L^p$ norm* to $f$, denoted by $f_n xarrow(L^p) f$, if for some $p >= 1$, we have
   $
-    lim_(n->infinity) (integral_X |f_n (x) - f(x)|^p dif mu)^(1/p) = 0.
+    lim_(n->infinity) (integral_X abs(f_n (x) - f(x))^p dif mu)^(1/p) = 0.
   $
 ]
 
-#theorem(name: "Markov's Inequality")[
+#theorem(name: "Марков's Inequality")[
   Let $(X, cal(S), mu)$ be a measure space and $f: X -> [0, infinity]$ be a non-negative measurable function. Then for every $epsilon > 0$, we have
   $
     mu({x in X : f(x) >= epsilon}) <= (1/epsilon) integral_X f(x) dif mu.
@@ -594,7 +604,7 @@ We now examine the relationship between convergence in measure and almost everyw
 
   *Almost everywhere convergence*: For $x = 0$, $f_n(0) = n -> infinity$. For every $x > 0$, when $n > 1/x$ we have $x in.not [0, 1/n]$, so $f_n(x) = 0$ eventually. Thus $f_n -> 0$ a.e. (the exceptional set ${0}$ has measure zero).
 
-  *No $L^p$ convergence*: For $p > 1$, $integral_0^1 |f_n|^p dif m = n^p / n = n^(p-1) -> infinity$. For $p = 1$, $integral_0^1 |f_n| dif m = 1$ for all $n$, so $integral f_n dif m$ does not converge to $0 = integral 0 dif m$. In either case $f_n$ does not converge to $0$ in $L^p$.
+  *No $L^p$ convergence*: For $p > 1$, $integral_0^1 abs(f_n)^p dif m = n^p / n = n^(p-1) -> infinity$. For $p = 1$, $integral_0^1 abs(f_n) dif m = 1$ for all $n$, so $integral f_n dif m$ does not converge to $0 = integral 0 dif m$. In either case $f_n$ does not converge to $0$ in $L^p$.
 ]
 
 
@@ -618,16 +628,16 @@ We now examine the relationship between convergence in measure and almost everyw
   _Step 1: Define the convergence sets._
   For each $k, n in bb(N)$, define
   $
-    E_(n, k) = inter_(m = n)^infinity {x in X_0 : |f_m (x) - f(x)| < 1 / k}.
+    E_(n, k) = inter_(m = n)^infinity {x in X_0 : abs(f_m (x) - f(x)) < 1 / k}.
   $
-  Since each $f_m$ and $f$ are measurable, every set ${x in X_0 : |f_m (x) - f(x)| < 1/k}$ belongs to $cal(S)$, and hence $E_(n, k) in cal(S)$ as a countable intersection of measurable sets.
+  Since each $f_m$ and $f$ are measurable, every set ${x in X_0 : abs(f_m (x) - f(x)) < 1/k}$ belongs to $cal(S)$, and hence $E_(n, k) in cal(S)$ as a countable intersection of measurable sets.
 
   _Step 2: Monotonicity and limit of $E_(n, k)$._
   For each fixed $k$, the sequence $(E_(n, k))_(n=1)^infinity$ is increasing:
   $
     E_(1, k) subset E_(2, k) subset E_(3, k) subset dots
   $
-  Moreover, $union_(n=1)^infinity E_(n, k) = X_0$. Indeed, $x in X_0$ if and only if $f_n (x) -> f(x)$, which means for every $k$ there exists $n$ such that $|f_m (x) - f(x)| < 1/k$ for all $m >= n$, i.e. $x in E_(n, k)$.
+  Moreover, $union_(n=1)^infinity E_(n, k) = X_0$. Indeed, $x in X_0$ if and only if $f_n (x) -> f(x)$, which means for every $k$ there exists $n$ such that $abs(f_m (x) - f(x)) < 1/k$ for all $m >= n$, i.e. $x in E_(n, k)$.
 
   _Step 3: Apply continuity of measure from below._
   Since $mu(X) < infinity$, we have $mu(E_(n,k)) <= mu(X) < infinity$ for all $n, k$. By continuity of measure from below applied to the increasing sequence $(E_(n,k))_(n=1)^infinity$:
@@ -655,7 +665,7 @@ We now examine the relationship between convergence in measure and almost everyw
   $
     X backslash E_delta = inter_(k=1)^infinity E_(n_k, k).
   $
-  Let $epsilon > 0$ be given. Choose $K in bb(N)$ such that $1 / K < epsilon$. Then for all $x in X backslash E_delta$ and all $m >= n_K$: since $x in E_(n_K, K)$, we have $|f_m (x) - f(x)| < 1 / K < epsilon$. The choice of $N = n_K$ depends only on $epsilon$ (not on $x$), so $f_n$ converges uniformly to $f$ on $X backslash E_delta$.
+  Let $epsilon > 0$ be given. Choose $K in bb(N)$ such that $1 / K < epsilon$. Then for all $x in X backslash E_delta$ and all $m >= n_K$: since $x in E_(n_K, K)$, we have $abs(f_m (x) - f(x)) < 1 / K < epsilon$. The choice of $N = n_K$ depends only on $epsilon$ (not on $x$), so $f_n$ converges uniformly to $f$ on $X backslash E_delta$.
 
   Since $delta > 0$ was arbitrary, $f_n xarrow("a.u.") f$.
 ]
@@ -673,14 +683,14 @@ We now examine the relationship between convergence in measure and almost everyw
   The relationships between the four convergence modes on a measure space $(X, cal(S), mu)$ are:
 
   $
-       f_n xarrow(L^p) f=> f_n xarrow(mu) f #h(2em)    "(Markov's inequality)" \
+       f_n xarrow(L^p) f=> f_n xarrow(mu) f #h(2em)    "(Марков's inequality)" \
     f_n xarrow("a.u.") f=> f_n xarrow("a.e.") f #h(2em)            "(trivial)" \
     f_n xarrow("a.u.") f=> f_n xarrow(mu) f #h(2em)                "(trivial)" \
   $
 
   On *finite measure spaces* ($mu(X) < infinity$):
   $
-    f_n xarrow("a.e.") f=> f_n xarrow("a.u.") f #h(2em)               "(Egorov's theorem)" \
+    f_n xarrow("a.e.") f=> f_n xarrow("a.u.") f #h(2em)               "(Его́ров's theorem)" \
         f_n xarrow(mu) f=> exists f_(n_(k_i)) xarrow("a.e.") f #h(2em) "(Riesz's theorem)"
   $
 
@@ -702,9 +712,9 @@ We now examine the relationship between convergence in measure and almost everyw
 
   *Almost everywhere convergence*: For every fixed $x in bb(R)$, when $n > x$ we have $x in.not [n, n+1]$, so $f_n(x) = 0$ for all sufficiently large $n$. Thus $f_n -> 0$ everywhere (hence a.e.).
 
-  *No convergence in measure*: For $epsilon = 1/2$, $m({x : |f_n(x)| > epsilon}) = m([n, n+1]) = 1$ for all $n$, which does not tend to $0$. Thus $f_n$ does NOT converge to $0$ in measure.
+  *No convergence in measure*: For $epsilon = 1/2$, $m({x : abs(f_n(x)) > epsilon}) = m([n, n+1]) = 1$ for all $n$, which does not tend to $0$. Thus $f_n$ does NOT converge to $0$ in measure.
 
-  *No almost uniform convergence*: Suppose for contradiction that $f_n xarrow("a.u.") 0$. Then for $delta = 1/2$, there exists $E$ with $m(E) < 1/2$ such that $f_n -> 0$ uniformly on $bb(R) backslash E$. Choose $N$ such that $|f_n(x)| < 1$ for all $x in bb(R) backslash E$ and all $n >= N$. But $f_n(x) = 1$ on $[n, n+1]$, so $[n, n+1] subset E$ for all $n >= N$, giving $m(E) >= 1 > 1/2$, a contradiction.
+  *No almost uniform convergence*: Suppose for contradiction that $f_n xarrow("a.u.") 0$. Then for $delta = 1/2$, there exists $E$ with $m(E) < 1/2$ such that $f_n -> 0$ uniformly on $bb(R) backslash E$. Choose $N$ such that $abs(f_n(x)) < 1$ for all $x in bb(R) backslash E$ and all $n >= N$. But $f_n(x) = 1$ on $[n, n+1]$, so $[n, n+1] subset E$ for all $n >= N$, giving $m(E) >= 1 > 1/2$, a contradiction.
 ]
 
 
@@ -767,7 +777,7 @@ We now examine the relationship between convergence in measure and almost everyw
 ]
 
 #tex-table(
-  ("$g$ (outer)", "$f$ (inner)", "$g compose f$ (composition)"),
+  ([$g$ (outer)], [$f$ (inner)], [$g compose f$ (composition)]),
   ("Continuous", "Continuous", "Continuous"),
   ("Continuous", "Borel measurable", "Borel measurable"),
   ("Continuous", "Lebesgue measurable", "Lebesgue measurable"),
@@ -789,13 +799,13 @@ We now examine the relationship between convergence in measure and almost everyw
 
 
 #part("Integration Theory") // 积分理论
-= Lebesgue Integration
-== Lebesgue Integration
+= Lebesgue Integration // 勒贝格积分
+== Lebesgue Integration // 勒贝格积分
 === Definition of the Lebesgue Integral // 勒贝格积分的定义
 
 #definition(name: "Lebesgue Integral of Simple Functions")[ // 简单函数的 Lebesgue 积分
   Let $(X, cal(S), mu)$ be a measure space and $s: X -> [0, infinity)$ a simple function.
-  $s(x)$ can be expressed as $s(x) = sum_{i=1}^n a_i chi_{A_i}(x)$, where $a_i >= 0$ and $A_i in cal(S)$ are disjoint measurable sets. The Lebesgue integral of $s$ with respect to $mu$ is defined as:
+  $s(x)$ can be expressed as $s(x) = sum_(i=1)^n a_i chi_(A_i)(x)$, where $a_i >= 0$ and $A_i in cal(S)$ are disjoint measurable sets. The Lebesgue integral of $s$ with respect to $mu$ is defined as:
   $
     integral_X s dif mu = sum_(i=1)^n a_i mu(A_i).
   $
@@ -818,26 +828,27 @@ We now examine the relationship between convergence in measure and almost everyw
   $
     integral_X f dif mu = integral_X f^+ dif mu - integral_X f^- dif mu.
   $
+  The expression is well-defined whenever at least one of the two integrals is finite. The function $f$ is called *integrable* if both are finite (equivalently, $integral_X abs(f) dif mu < infinity$), in which case the integral is a finite real number; if exactly one is infinite, the integral is defined as $+infinity$ or $-infinity$ accordingly; if both are infinite, the expression $infinity - infinity$ is undefined.
 ]
 
 #proposition(name: "Absolute Integrability is Equivalent to Integrability")[ // 绝对可积等价可积
-  Let $(X, cal(S), mu)$ be a measure space and $f: X -> RR$ a real-valued measurable function. Then $f$ is integrable if and only if $|f|$ is integrable. In this case, we have
+  Let $(X, cal(S), mu)$ be a measure space and $f: X -> RR$ a real-valued measurable function. Then $f$ is integrable if and only if $abs(f)$ is integrable. In this case, we have
   $
     integral_X f dif mu = integral_X f^+ dif mu - integral_X f^- dif mu, \
-    integral_X |f| dif mu = integral_X f^+ dif mu + integral_X f^- dif mu.
+    integral_X abs(f) dif mu = integral_X f^+ dif mu + integral_X f^- dif mu.
   $
 ]
 
 #proposition(name: "Dominated Integrability and Bounded Integrability")[
   // 控制可积与有界可积
   Let $(X, cal(S), mu)$ be a measure space.
-  + *Comparison Principle*: Let $f, g: X -> overline(bb(R))$ be measurable functions with $g$ integrable. If $|f(x)| <= g(x)$ a.e., then $f$ is integrable and
+  + *Comparison Principle*: Let $f, g: X -> overline(bb(R))$ be measurable functions with $g$ integrable. If $abs(f(x)) <= g(x)$ a.e., then $f$ is integrable and
     $
-      |integral_X f dif mu| <= integral_X |f| dif mu <= integral_X g dif mu.
+      abs(integral_X f dif mu) <= integral_X abs(f) dif mu <= integral_X g dif mu.
     $
-  + *Bounded Measurable Functions on Finite Measure Spaces*: If $mu(X) < infinity$ and $f: X -> overline(bb(R))$ is measurable with $|f(x)| <= M$ a.e. for some constant $M > 0$, then $f$ is integrable and
+  + *Bounded Measurable Functions on Finite Measure Spaces*: If $mu(X) < infinity$ and $f: X -> overline(bb(R))$ is measurable with $abs(f(x)) <= M$ a.e. for some constant $M > 0$, then $f$ is integrable and
     $
-      |integral_X f dif mu| <= M dot mu(X).
+      abs(integral_X f dif mu) <= M dot mu(X).
     $
 ]
 
@@ -846,27 +857,27 @@ We now examine the relationship between convergence in measure and almost everyw
 ]
 
 #proof[
-  For any $M > 0$, by Markov's inequality:
+  For any $M > 0$, by Марков's inequality:
   $
-    mu({x in X : |f(x)| >= M}) <= (1/M) integral_X |f| dif mu.
+    mu({x in X : |f(x)| >= M}) <= (1/M) integral_X abs(f) dif mu.
   $
   The set ${x : |f(x)| = infinity}$ is contained in ${x : |f(x)| >= M}$ for every $M > 0$, so
   $
-    mu({x : |f(x)| = infinity}) <= (1/M) integral_X |f| dif mu quad "for all" M > 0.
+    mu({x : |f(x)| = infinity}) <= (1/M) integral_X abs(f) dif mu quad "for all" M > 0.
   $
-  Since $f$ is integrable, $integral_X |f| dif mu < infinity$. Letting $M -> infinity$ gives $mu({x : |f(x)| = infinity}) = 0$.
+  Since $f$ is integrable, $integral_X abs(f) dif mu < infinity$. Letting $M -> infinity$ gives $mu({x : |f(x)| = infinity}) = 0$.
 ]
 
 === Properties of the Lebesgue Integral // 勒贝格积分的性质
 
 #property(name: "Algebraic Properties of the Lebesgue Integral")[
   // 勒贝格积分的代数性质
-  Let $(bb(R), cal(L), m)$ be a measure space, and let $f, g: X -> overline(bb(R))$ be integrable functions.
+  Let $(X, cal(S), mu)$ be a measure space, and let $f, g: X -> overline(bb(R))$ be integrable functions.
   + *Linearity*: For any $alpha, beta in bb(R)$, the function $alpha f + beta g$ is integrable and
     $
       integral_X (alpha f + beta g) dif mu = alpha integral_X f dif mu + beta integral_X g dif mu.
     $
-  + *Uniqueness*: $integral_X |f| dif mu = 0$ if and only if $f(x) = 0$ almost everywhere.
+  + *Uniqueness*: $integral_X abs(f) dif mu = 0$ if and only if $f(x) = 0$ almost everywhere.
   + *Finite Additivity*: For any two disjoint measurable sets $A, B in cal(S)$,
     $
       integral_(A union B) f dif mu = integral_A f dif mu + integral_B f dif mu.
@@ -880,18 +891,18 @@ We now examine the relationship between convergence in measure and almost everyw
 
 #property(name: "Analytic Properties of the Lebesgue Integral")[
   // 积分的分析性质
-  Let $(bb(R), cal(L), m)$ be a measure space, and let $f: X -> overline(bb(R))$ be integrable functions.
-  + *Translation Invariance*: For any $t in bb(R)$, the translated function $f_h(x) = f(x + h)$ is integrable and
+  Let $f: bb(R) -> overline(bb(R))$ be an integrable function with respect to Lebesgue measure $m$ on $bb(R)$.
+  + *Translation Invariance*: For any $h in bb(R)$, the translated function $f_h(x) = f(x + h)$ is integrable and
     $
       integral_bb(R) f_h dif m = integral_bb(R) f dif m.
     $
   + *Continuity of Average*:
   $
-    lim_(h->0) integral_bb(R) |f_h(x) - f(x)| dif m = 0.
+    lim_(h->0) integral_bb(R) abs(f_h(x) - f(x)) dif m = 0.
   $
-  + *Absolute Continuity of the Integral*: For every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A in cal(S)$ with $mu(A) < delta$,
+  + *Absolute Continuity of the Integral*: For every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A in cal(L)$ with $m(A) < delta$,
     $
-      integral_A |f| dif mu < epsilon.
+      integral_A abs(f) dif m < epsilon.
     $
 ]
 
@@ -980,15 +991,15 @@ We now examine the relationship between convergence in measure and almost everyw
 === Lebesgue Dominated Convergence Theorem // 勒贝格控制收敛定理
 
 #theorem(name: "Lebesgue Dominated Convergence Theorem")[
-  Let $(X, cal(S), mu)$ be a measure space and $f_n: X -> overline(bb(R))$ be a sequence of measurable functions such that $f_n (x) -> f(x)$ a.e. If there exists an integrable function $g in L^1 (X, mu)$ such that $|f_n (x)| <= g(x)$ a.e. for all $n$, then $f in L^1 (X, mu)$ and
+  Let $(X, cal(S), mu)$ be a measure space and $f_n: X -> overline(bb(R))$ be a sequence of measurable functions such that $f_n (x) -> f(x)$ a.e. If there exists an integrable function $g in L^1 (X, mu)$ such that $abs(f_n (x)) <= g(x)$ a.e. for all $n$, then $f in L^1 (X, mu)$ and
   $
     lim_(n->infinity) integral_X f_n dif mu = integral_X f dif mu.
   $
-  Equivalently, $lim_(n->infinity) integral_X |f_n - f| dif mu = 0$.
+  Equivalently, $lim_(n->infinity) integral_X abs(f_n - f) dif mu = 0$.
 ]
 
 #proof[
-  Since $|f_n| <= g$ a.e. and $f_n -> f$ a.e., we have $|f| <= g$ a.e., so $f in L^1 (X, mu)$.
+  Since $abs(f_n) <= g$ a.e. and $f_n -> f$ a.e., we have $abs(f) <= g$ a.e., so $f in L^1 (X, mu)$.
 
   Consider the non-negative functions $g + f_n >= 0$ and $g - f_n >= 0$. Applying Fatou's Lemma to each:
 
@@ -1008,7 +1019,7 @@ We now examine the relationship between convergence in measure and almost everyw
 ]
 
 #corollary(name: "Bounded Convergence Theorem")[
-  Let $(X, cal(S), mu)$ be a finite measure space (i.e., $mu(X) < infinity$) and $f_n: X -> overline(bb(R))$ be a sequence of measurable functions such that $f_n (x) -> f(x)$ a.e. If there exists a constant $M > 0$ such that $|f_n (x)| <= M$ a.e. for all $n$, then
+  Let $(X, cal(S), mu)$ be a finite measure space (i.e., $mu(X) < infinity$) and $f_n: X -> overline(bb(R))$ be a sequence of measurable functions such that $f_n (x) -> f(x)$ a.e. If there exists a constant $M > 0$ such that $abs(f_n (x)) <= M$ a.e. for all $n$, then
   $
     lim_(n->infinity) integral_X f_n dif mu = integral_X f dif mu.
   $
@@ -1022,7 +1033,7 @@ We now examine the relationship between convergence in measure and almost everyw
   Let $(X, cal(S), mu)$ be a measure space, $I subset bb(R)$ an open interval, and $f: X times I -> bb(R)$ a function such that:
   + For each $t in I$, the function $x |-> f(x, t)$ is integrable.
   + For a.e. $x in X$, the partial derivative $partial / (partial t) f(x, t)$ exists for all $t in I$.
-  + There exists $g in L^1 (X, mu)$ such that $|partial / (partial t) f(x, t)| <= g(x)$ for a.e. $x$ and all $t in I$.
+  + There exists $g in L^1 (X, mu)$ such that $abs(partial / (partial t) f(x, t)) <= g(x)$ for a.e. $x$ and all $t in I$.
   Then $F(t) = integral_X f(x, t) dif mu(x)$ is differentiable on $I$ and
   $
     F'(t) = integral_X frac(partial, partial t) f(x, t) dif mu(x).
@@ -1044,20 +1055,20 @@ We now introduce two closely related concepts that generalize the domination con
 #definition(name: "Uniform Integrability")[
   Let $(X, cal(S), mu)$ be a measure space. A family of measurable functions ${f_i}_(i in I)$ is called *uniformly integrable* if
   $
-    lim_(M -> infinity) sup_(i in I) integral_({|f_i| > M}) |f_i| dif mu = 0.
+    lim_(M -> infinity) sup_(i in I) integral_({|f_i| > M}) abs(f_i) dif mu = 0.
   $
 ]
 
 #definition(name: "Equi-absolute Continuity of Integrals")[
   Let $(X, cal(S), mu)$ be a measure space. A family of integrable functions ${f_i}_(i in I)$ is said to have *equi-absolutely continuous integrals* (or to be *equi-integrable*) if for every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A$ with $mu(A) < delta$,
   $
-    sup_(i in I) integral_A |f_i| dif mu < epsilon.
+    sup_(i in I) integral_A abs(f_i) dif mu < epsilon.
   $
 ]
 
 #note[
   *Comparison of the two concepts*:
-  - *Uniform integrability* controls the "tail" at large values: the integral over the set where $|f_i|$ is large becomes uniformly small.
+  - *Uniform integrability* controls the "tail" at large values: the integral over the set where $abs(f_i)$ is large becomes uniformly small.
   - *Equi-absolute continuity* controls the integral over "small sets": the integral over any set of small measure is uniformly small.
   - On a finite measure space, the two concepts are closely related but not identical without an additional boundedness condition.
 ]
@@ -1065,25 +1076,25 @@ We now introduce two closely related concepts that generalize the domination con
 #proposition(name: "Equivalence on Finite Measure Spaces")[
   Let $(X, cal(S), mu)$ be a finite measure space and ${f_n}$ a sequence of integrable functions. Then the following are equivalent:
   + ${f_n}$ is uniformly integrable.
-  + ${f_n}$ has equi-absolutely continuous integrals and $sup_n integral_X |f_n| dif mu < infinity$.
+  + ${f_n}$ has equi-absolutely continuous integrals and $sup_n integral_X abs(f_n) dif mu < infinity$.
 ]
 
 #proof[
-  $(1) => (2)$: Suppose ${f_n}$ is uniformly integrable. For any $epsilon > 0$, choose $M$ such that $sup_n integral_({|f_n| > M}) |f_n| dif mu < epsilon / 2$. Then for any measurable set $A$ with $mu(A) < delta := epsilon / (2 M)$:
+  $(1) => (2)$: Suppose ${f_n}$ is uniformly integrable. For any $epsilon > 0$, choose $M$ such that $sup_n integral_({|f_n| > M}) abs(f_n) dif mu < epsilon / 2$. Then for any measurable set $A$ with $mu(A) < delta := epsilon / (2 M)$:
   $
-    integral_A |f_n| dif mu = integral_(A inter {|f_n| <= M}) |f_n| dif mu + integral_(A inter {|f_n| > M}) |f_n| dif mu <= M mu(A) + epsilon / 2 < epsilon.
+    integral_A abs(f_n) dif mu = integral_(A inter {|f_n| <= M}) abs(f_n) dif mu + integral_(A inter {|f_n| > M}) abs(f_n) dif mu <= M mu(A) + epsilon / 2 < epsilon.
   $
-  Also, $integral_X |f_n| dif mu <= M mu(X) + sup_n integral_({|f_n| > M}) |f_n| dif mu < infinity$.
+  Also, $integral_X abs(f_n) dif mu <= M mu(X) + sup_n integral_({|f_n| > M}) abs(f_n) dif mu < infinity$.
 
-  $(2) => (1)$: Suppose ${f_n}$ has equi-absolutely continuous integrals and $C := sup_n integral_X |f_n| dif mu < infinity$. By Chebyshev's inequality, $mu({|f_n| > M}) <= C / M$. For any $epsilon > 0$, choose $delta$ from equi-absolute continuity, then choose $M$ large enough so that $C / M < delta$. Then $mu({|f_n| > M}) < delta$, hence $sup_n integral_({|f_n| > M}) |f_n| dif mu < epsilon$.
+  $(2) => (1)$: Suppose ${f_n}$ has equi-absolutely continuous integrals and $C := sup_n integral_X abs(f_n) dif mu < infinity$. By Чебышёв's inequality, $mu({|f_n| > M}) <= C / M$. For any $epsilon > 0$, choose $delta$ from equi-absolute continuity, then choose $M$ large enough so that $C / M < delta$. Then $mu({|f_n| > M}) < delta$, hence $sup_n integral_({|f_n| > M}) abs(f_n) dif mu < epsilon$.
 ]
 
 #example[
-  *Uniform integrability does not imply uniform boundedness*: On $([0,1], cal(L), m)$, let $f_n = n chi_([0, 1\/n^2])$. Then $integral |f_n| = 1 / n -> 0$ and ${f_n}$ is uniformly integrable (since $integral_({f_n > M}) f_n dif m -> 0$ uniformly), but $sup_x |f_n (x)| = n -> infinity$.
+  *Uniform integrability does not imply uniform boundedness*: On $([0,1], cal(L), m)$, let $f_n = n chi_([0, 1\/n^2])$. Then $integral abs(f_n) = 1 / n -> 0$ and ${f_n}$ is uniformly integrable (since $integral_({f_n > M}) f_n dif m -> 0$ uniformly), but $sup_x abs(f_n (x)) = n -> infinity$.
 ]
 
 #example[
-  *LDCT implies uniform integrability*: If $|f_n| <= g in L^1$ for all $n$, then ${f_n}$ is uniformly integrable. Indeed, $integral_({|f_n| > M}) |f_n| dif mu <= integral_({g > M}) g dif mu -> 0$ as $M -> infinity$, independent of $n$.
+  *LDCT implies uniform integrability*: If $abs(f_n) <= g in L^1$ for all $n$, then ${f_n}$ is uniformly integrable. Indeed, $integral_({|f_n| > M}) abs(f_n) dif mu <= integral_({g > M}) g dif mu -> 0$ as $M -> infinity$, independent of $n$.
 ]
 
 #v(0.5em)
@@ -1096,37 +1107,37 @@ The Vitali Convergence Theorem generalizes LDCT by replacing the single dominati
   + ${f_n}$ is uniformly integrable.
   Then $f in L^1 (X, mu)$ and
   $
-    lim_(n->infinity) integral_X |f_n - f| dif mu = 0.
+    lim_(n->infinity) integral_X abs(f_n - f) dif mu = 0.
   $
   In particular, $lim_(n->infinity) integral_X f_n dif mu = integral_X f dif mu$.
 ]
 
 #proof[
-  We show $integral_X |f_n - f| dif mu -> 0$. Fix $epsilon > 0$.
+  We show $integral_X abs(f_n - f) dif mu -> 0$. Fix $epsilon > 0$.
 
-  *Step 1*: By uniform integrability, choose $M > 0$ such that $sup_n integral_({|f_n| > M}) |f_n| dif mu < epsilon / 4$.
+  *Step 1*: By uniform integrability, choose $M > 0$ such that $sup_n integral_({|f_n| > M}) abs(f_n) dif mu < epsilon / 4$.
 
-  *Step 2*: By equi-absolute continuity (which follows from uniform integrability on a finite measure space), choose $delta > 0$ such that $mu(A) < delta$ implies $sup_n integral_A |f_n| dif mu < epsilon / 4$.
+  *Step 2*: By equi-absolute continuity (which follows from uniform integrability on a finite measure space), choose $delta > 0$ such that $mu(A) < delta$ implies $sup_n integral_A abs(f_n) dif mu < epsilon / 4$.
 
-  *Step 3*: Since $f_n -> f$ in measure, by Egorov's theorem there exists a set $E$ with $mu(X backslash E) < delta$ such that $f_n -> f$ uniformly on $E$. Choose $N$ such that for $n >= N$, $|f_n (x) - f(x)| < epsilon / (2 mu(X))$ for all $x in E$.
+  *Step 3*: Since $f_n -> f$ in measure, by Его́ров's theorem there exists a set $E$ with $mu(X backslash E) < delta$ such that $f_n -> f$ uniformly on $E$. Choose $N$ such that for $n >= N$, $abs(f_n (x) - f(x)) < epsilon / (2 mu(X))$ for all $x in E$.
 
   *Step 4*: For $n >= N$:
   $
-    integral_X |f_n - f| dif mu = integral_E |f_n - f| dif mu + integral_(X backslash E) |f_n - f| dif mu.
+    integral_X abs(f_n - f) dif mu = integral_E abs(f_n - f) dif mu + integral_(X backslash E) abs(f_n - f) dif mu.
   $
-  The first term is bounded by $epsilon / 2$. For the second term, by Fatou's lemma applied to $|f|$ and the equi-absolute continuity:
+  The first term is bounded by $epsilon / 2$. For the second term, by Fatou's lemma applied to $abs(f)$ and the equi-absolute continuity:
   $
-    integral_(X backslash E) |f_n - f| dif mu <= integral_(X backslash E) |f_n| dif mu + integral_(X backslash E) |f| dif mu < epsilon / 4 + epsilon / 4 = epsilon / 2.
+    integral_(X backslash E) abs(f_n - f) dif mu <= integral_(X backslash E) abs(f_n) dif mu + integral_(X backslash E) abs(f) dif mu < epsilon / 4 + epsilon / 4 = epsilon / 2.
   $
-  Hence $integral_X |f_n - f| dif mu < epsilon$.
+  Hence $integral_X abs(f_n - f) dif mu < epsilon$.
 ]
 
 #note[
-  *Vitali vs. LDCT*: The Vitali Convergence Theorem is strictly more general than LDCT on finite measure spaces. The condition $|f_n| <= g in L^1$ implies uniform integrability, but uniform integrability does not require a single dominating function. This is particularly useful in probability theory and in situations where the "envelope" of the sequence is not integrable but the sequence still has controlled tails.
+  *Vitali vs. LDCT*: The Vitali Convergence Theorem is strictly more general than LDCT on finite measure spaces. The condition $abs(f_n) <= g in L^1$ implies uniform integrability, but uniform integrability does not require a single dominating function. This is particularly useful in probability theory and in situations where the "envelope" of the sequence is not integrable but the sequence still has controlled tails.
 ]
 
 #example[
-  *Vitali applies but LDCT does not*: On $([0,1], cal(L), m)$, let $f_n = n^(1\/2) chi_([0, 1\/n])$. Then $f_n -> 0$ a.e. and $integral |f_n| = n^(-1\/2) -> 0$. The family ${f_n}$ is uniformly integrable (since $integral_({f_n > M}) f_n dif m <= n^(-1\/2) -> 0$), so Vitali's theorem applies. However, there is no single integrable function $g$ dominating all $f_n$, since $sup_n f_n (x) = infinity$ on a set of positive measure near $0$.
+  *Vitali applies but LDCT does not*: On $([0,1], cal(L), m)$, let $f_n = (2^n / n) chi_([2^(-n-1), 2^(-n)])$. Then $f_n -> 0$ a.e. and $integral abs(f_n) dif m = 1 / (2n) -> 0$. The family ${f_n}$ is uniformly integrable: for each $M > 0$, the integral over ${f_n > M}$ is a tail of the convergent series $sum 1 / (2n)$, hence tends to $0$ uniformly in $n$. So Vitali's theorem applies. However, there is no single integrable function $g$ dominating all $f_n$: for $x in [2^(-n-1), 2^(-n)]$ we have $f_n (x) = 2^n / n$, so $sup_n f_n (x) >= 1 / (2 x (log_2(1/x) + 1))$ for all $x in (0, 1/2]$, a function that is not integrable near $0$ (its integral diverges, since $integral_0^(1/2) 1/(x log(1/x)) dif x = infinity$).
 ]
 
 == Relation to Riemann Integral // 与黎曼积分的关系
@@ -1144,7 +1155,7 @@ This section focuses on the relationship between the Riemann integral and the Le
 ]
 
 #proof[
-  Let $P_n = {a = x_0 < x_1 < dots < x_(k_n) = b}$ be a sequence of partitions with mesh $|P_n| -> 0$. Define the lower and upper step functions:
+  Let $P_n = {a = x_0 < x_1 < dots < x_(k_n) = b}$ be a sequence of partitions with mesh $abs(P_n) -> 0$. Define the lower and upper step functions:
   $
     l_n (x) = inf_(x in [x_(i-1), x_i]) f(x), quad u_n (x) = sup_(x in [x_(i-1), x_i]) f(x)
   $
@@ -1152,7 +1163,7 @@ This section focuses on the relationship between the Riemann integral and the Le
 
   Then $l_n$ and $u_n$ are measurable simple functions satisfying $l_n <= f <= u_n$ a.e. By refining partitions, we may assume $l_n <= l_(n+1)$ and $u_n >= u_(n+1)$.
 
-  Let $l = lim_(n->infinity) l_n$ and $u = lim_(n->infinity) u_n$. By the Monotone Convergence Theorem:
+  Let $l = lim_(n->infinity) l_n$ and $u = lim_(n->infinity) u_n$. Since $f$ is bounded, say $abs(f) <= M$, the functions $l_n + M$ are non-negative, measurable, and increase to $l + M$; by the Monotone Convergence Theorem:
   $
     integral_([a,b]) l dif m = lim_(n->infinity) integral_([a,b]) l_n dif m = lim_(n->infinity) L(f, P_n) = (R) integral_a^b f dif x,
   $
@@ -1197,7 +1208,7 @@ The relationship between improper Riemann integrals and Lebesgue integrals is mo
 #theorem(name: "Absolutely Convergent Improper Integrals")[
   Let $f: [a, infinity) -> bb(R)$ be locally Riemann integrable (i.e., Riemann integrable on every $[a, b]$). If the improper integral converges absolutely:
   $
-    (R) integral_a^infinity |f(x)| dif x < infinity,
+    (R) integral_a^infinity abs(f(x)) dif x < infinity,
   $
   then $f in L^1 ([a, infinity), m)$ and
   $
@@ -1206,9 +1217,9 @@ The relationship between improper Riemann integrals and Lebesgue integrals is mo
 ]
 
 #proof[
-  For each $n in bb(N)$, define $f_n = f dot chi_([a, a+n])$. Then $f_n$ is Riemann integrable on $[a, a+n]$, hence Lebesgue integrable, and $|f_n| <= |f|$ with $f_n -> f$ pointwise.
+  For each $n in bb(N)$, define $f_n = f dot chi_([a, a+n])$. Then $f_n$ is Riemann integrable on $[a, a+n]$, hence Lebesgue integrable, and $abs(f_n) <= abs(f)$ with $f_n -> f$ pointwise.
 
-  Since $(R) integral_a^infinity |f| dif x < infinity$, the function $|f|$ is Lebesgue integrable (by the same argument applied to $|f_n| arrow.t |f|$ and MCT). By the Dominated Convergence Theorem applied to $f_n$ with dominating function $|f| in L^1$:
+  Since $(R) integral_a^infinity abs(f) dif x < infinity$, the function $abs(f)$ is Lebesgue integrable (by the same argument applied to $abs(f_n) arrow.t abs(f)$ and MCT). By the Dominated Convergence Theorem applied to $f_n$ with dominating function $abs(f) in L^1$:
   $
     (L) integral_([a,infinity)) f dif m = lim_(n->infinity) integral_([a, a+n]) f dif m = lim_(n->infinity) (R) integral_a^(a+n) f(x) dif x.
   $
@@ -1221,7 +1232,7 @@ The relationship between improper Riemann integrals and Lebesgue integrals is mo
 #example[
   The function $f(x) = (sin x) / x$ on $[1, infinity)$ satisfies:
   $
-    (R) integral_1^infinity frac(sin x, x) dif x "converges" quad "but" quad (R) integral_1^infinity frac(|sin x|, x) dif x = infinity.
+    (R) integral_1^infinity frac(sin x, x) dif x "converges" quad "but" quad (R) integral_1^infinity frac(abs(sin x), x) dif x = infinity.
   $
   Therefore $(sin x) / x in.not L^1 ([1, infinity))$, and the Lebesgue integral $(L) integral_([1,infinity)) (sin x) / x dif m$ does not exist. The improper Riemann integral captures a cancellation phenomenon that the Lebesgue integral cannot express.
 ]
@@ -1375,7 +1386,7 @@ We now state the two central theorems of product integration. The first applies 
   $
     integral_(X times Y) f^+ dif (mu times nu) = integral_X (integral_Y f^+(x,y) dif nu(y)) dif mu(x) < infinity,
   $
-  and similarly for $f^-$. Finiteness implies that for $mu$-a.e. $x$, the inner integral $integral_Y f^+(x,y) dif nu(y) < infinity$, and likewise for $f^-$. Hence for $mu$-a.e. $x$, $integral_Y |f(x,y)| dif nu(y) < infinity$, so $f_x in L^1 (Y, nu)$ for a.e. $x$.
+  and similarly for $f^-$. Finiteness implies that for $mu$-a.e. $x$, the inner integral $integral_Y f^+(x,y) dif nu(y) < infinity$, and likewise for $f^-$. Hence for $mu$-a.e. $x$, $integral_Y abs(f(x,y)) dif nu(y) < infinity$, so $f_x in L^1 (Y, nu)$ for a.e. $x$.
 
   Subtracting the two Tonelli identities gives the desired equality for $f = f^+ - f^-$.
 ]
@@ -1383,8 +1394,8 @@ We now state the two central theorems of product integration. The first applies 
 #note[
   *Tonelli vs. Fubini: when to use which.*
   - Use *Tonelli* when $f >= 0$: it guarantees that the iterated integrals are equal (they may all be $infinity$), and it also proves the measurability of the section integrals.
-  - Use *Fubini* when $f$ may change sign: it requires $f in L^1$, which is often verified by applying Tonelli to $|f|$ first.
-  - *Typical workflow*: given a function $f$ on $X times Y$, first check $integral_(X times Y) |f| dif (mu times nu) < infinity$ via Tonelli applied to $|f|$, then apply Fubini to $f$.
+  - Use *Fubini* when $f$ may change sign: it requires $f in L^1$, which is often verified by applying Tonelli to $abs(f)$ first.
+  - *Typical workflow*: given a function $f$ on $X times Y$, first check $integral_(X times Y) abs(f) dif (mu times nu) < infinity$ via Tonelli applied to $abs(f)$, then apply Fubini to $f$.
 ]
 
 // 例子：经典高斯积分计算
@@ -1413,7 +1424,7 @@ We now state the two central theorems of product integration. The first applies 
   $
     integral_0^1 (integral_0^1 f(x,y) dif x) dif y = pi / 4, quad integral_0^1 (integral_0^1 f(x,y) dif y) dif x = -pi / 4.
   $
-  The two iterated integrals differ, so $f$ cannot be Lebesgue integrable on $[0,1]^2$. Indeed, $integral_( [0,1]^2) |f| dif (m times m) = infinity$. This demonstrates that the absolute integrability condition in Fubini's theorem is essential.
+  The two iterated integrals differ, so $f$ cannot be Lebesgue integrable on $[0,1]^2$. Indeed, $integral_( [0,1]^2) abs(f) dif (m times m) = infinity$. This demonstrates that the absolute integrability condition in Fubini's theorem is essential.
 ]
 
 === Measurability of Sections of Functions // 函数截口的可测性
@@ -1499,8 +1510,8 @@ Jump functions are the simplest type of function that exhibits controlled discon
 
 #note[
   Jump functions are intimately connected to two important classes of functions:
-  - *Monotone functions*: Every monotone function on $[a, b]$ has at most countably many jump discontinuities. The sum of its jump sizes is bounded by $|f(b) - f(a)|$.
-  - *Functions of bounded variation (BV)*: Every BV function can be decomposed uniquely as the sum of an absolutely continuous part, a jump part (a pure jump function), and a singular part (the Lebesgue decomposition of the distributional derivative).
+  - *Monotone functions*: Every monotone function on $[a, b]$ has at most countably many jump discontinuities. The sum of its jump sizes is bounded by $abs(f(b) - f(a))$.
+  - *Functions of bounded variation (BV)*: Every BV function can be decomposed uniquely as the sum of an absolutely continuous part, a jump part (a pure jump function), and a singular part — the so-called Lebesgue decomposition. The theory of BV functions and this decomposition are developed in Part IV.
 ]
 
 === Dini Derivatives // Dini 导数
@@ -1536,7 +1547,7 @@ When a function is not differentiable at a point, we can still extract useful lo
 ]
 
 #example[
-  Consider $f(x) = |x| sin(1 / x)$ for $x != 0$ and $f(0) = 0$. This function is not differentiable at $x = 0$ because the difference quotient $(f(h) - f(0)) / h = |h| sin(1 / h) / h = "sgn"(h) sin(1 / h)$ oscillates between $-1$ and $1$ as $h -> 0$. However, the Dini derivatives at $0$ exist:
+  Consider $f(x) = abs(x) sin(1 / x)$ for $x != 0$ and $f(0) = 0$. This function is not differentiable at $x = 0$ because the difference quotient $(f(h) - f(0)) / h = abs(h) sin(1 / h) / h = "sgn"(h) sin(1 / h)$ oscillates between $-1$ and $1$ as $h -> 0$. However, the Dini derivatives at $0$ exist:
   $
     D^+ f(0) = 1, quad D_+ f(0) = -1, quad D^- f(0) = 1, quad D_- f(0) = -1.
   $
@@ -1550,7 +1561,7 @@ When a function is not differentiable at a point, we can still extract useful lo
 Dini derivatives serve as a versatile tool for extracting local information about a function's behavior without requiring full differentiability. The following observations illustrate their role:
 
 #note[
-  - *Monotonicity*: A function $f$ is non-decreasing on $[a, b]$ if and only if $D_+ f(x) >= 0$ for all $x in (a, b)$. Similarly, $f$ is non-increasing if and only if $D^+ f(x) <= 0$ for all $x$.
+  - *Monotonicity*: A *continuous* function $f$ on $[a, b]$ is non-decreasing if and only if $D_+ f(x) >= 0$ for all $x in (a, b)$. Similarly, a continuous $f$ is non-increasing if and only if $D^+ f(x) <= 0$ for all $x$. (Continuity is essential: the downward step function $f = 0$ on $[0, 1/2)$ and $f = -1$ on $[1/2, 1]$ satisfies $D_+ f >= 0$ everywhere, yet is not non-decreasing.)
 
   - *Local Lipschitz property*: If all four Dini derivatives are uniformly bounded on $[a, b]$, then $f$ is Lipschitz continuous on $[a, b]$.
 
@@ -1569,7 +1580,7 @@ Dini derivatives tell us how to measure local slopes; the Vitali covering lemma 
 // Dini 导数只提供逐点信息，要得到几乎处处结论，需要一种把"任意小区间"的局部信息
 // 汇集为全局信息的技术手段。
 
-Dini derivatives give us pointwise information about a function's local slope, but converting this into almost-everywhere conclusions requires a covering argument. The prototypical scenario is this: let $f$ be an increasing function on $[a, b]$, and suppose at each point $x$ in a set $E$ we know $D^+ f(x) > t$. We would like to bound $|f(b) - f(a)|$ from below by $t dot m(E)$. To do this, for each $x in E$ we pick a small interval $[x, x + h]$ (or $[x - h, x]$) where the difference quotient $(f(x + h) - f(x))/h$ exceeds $t$, then select a disjoint subfamily of these intervals and sum their lengths. The Vitali covering lemma turns this intuition into a rigorous tool.
+Dini derivatives give us pointwise information about a function's local slope, but converting this into almost-everywhere conclusions requires a covering argument. The prototypical scenario is this: let $f$ be an increasing function on $[a, b]$, and suppose at each point $x$ in a set $E$ we know $D^+ f(x) > t$. We would like to bound $abs(f(b) - f(a))$ from below by $t dot m(E)$. To do this, for each $x in E$ we pick a small interval $[x, x + h]$ (or $[x - h, x]$) where the difference quotient $(f(x + h) - f(x))/h$ exceeds $t$, then select a disjoint subfamily of these intervals and sum their lengths. The Vitali covering lemma turns this intuition into a rigorous tool.
 
 #note[
   *Why a covering lemma?* Three key observations:
@@ -1581,16 +1592,18 @@ Dini derivatives give us pointwise information about a function's local slope, b
 === Vitali Coverings // Vitali 覆盖
 
 #definition(name: "Vitali Covering")[
-  Let $E subset bb(R)$ and let $cal(V)$ be a collection of closed intervals in $bb(R)$. We say that $cal(V)$ is a *Vitali covering* of $E$ if for every $x in E$ and every $epsilon > 0$, there exists $I in cal(V)$ such that $x in I$ and $|I| < epsilon$.
+  Let $E subset bb(R)$ and let $cal(V)$ be a collection of closed intervals in $bb(R)$. We say that $cal(V)$ is a *Vitali covering* of $E$ if for every $x in E$ and every $epsilon > 0$, there exists $I in cal(V)$ such that $x in I$ and $abs(I) < epsilon$.
   In other words, the collection $cal(V)$ contains intervals of arbitrarily small length that contain $x$.
 ]
 
 #example[
-  Consider $E = [0, 1]$ and let $cal(V) = {(x - delta, x + delta) : x in [0, 1], delta > 0}$. This is a Vitali covering of $[0, 1]$: every point $x$ is contained in intervals of every positive length.
+  Consider $E = [0, 1]$ and let $cal(V) = {[x - delta, x + delta] : x in [0, 1], delta > 0}$. This is a Vitali covering of $[0, 1]$: every point $x$ is contained in closed intervals of every positive length.
 ]
 
 #example[
-  Let $cal(V) = {[k 2^(-n), (k+1) 2^(-n)] : n in bb(N), 0 <= k < 2^n}$ be the family of all dyadic intervals. Then $cal(V)$ is *not* a Vitali covering of $[0, 1]$. Although the intervals become arbitrarily small, at the point $x = 1/3$ (which has a non-terminating binary expansion) there is no dyadic interval that contains $1/3$ as an interior point — the dyadic grid does not align with every point.
+  In contrast, the family of all dyadic intervals $cal(V) = {[k 2^(-n), (k+1) 2^(-n)] : n in bb(N), 0 <= k < 2^n}$ *is* a Vitali covering of $[0, 1]$: for every $x in [0, 1]$ and every $epsilon > 0$, choosing $n$ with $2^(-n) < epsilon$, the point $x$ lies in one of the $2^n$ dyadic intervals of level $n$. (Even under the stricter convention requiring $x$ to be an interior point, the property holds: since $2^n / 3$ is never an integer, the point $1/3$ lies in the interior of the dyadic interval $[floor(2^n / 3) 2^(-n), (floor(2^n / 3) + 1) 2^(-n)]$.)
+
+  A genuine counterexample: let $cal(W) = {(0, 1/n) : n in bb(N)}$. Then $cal(W)$ is *not* a Vitali covering of $[0, 1]$. Indeed, at $x = 1/2$, the only interval of $cal(W)$ containing $x$ is $(0, 1)$, of length $1$; hence for $epsilon = 1/2$ no interval of $cal(W)$ of length $< epsilon$ contains $1/2$.
 ]
 
 === Vitali Covering Lemma // Vitali 覆盖引理
@@ -1617,7 +1630,7 @@ Dini derivatives give us pointwise information about a function's local slope, b
   Since $m^*(E) < infinity$, there exists an open set $U$ such that $E subset U$ and $m(U) < infinity$. Discard all intervals of $cal(V)$ that are not contained in $U$; the remaining collection, call it $cal(V)_0$, is still a Vitali covering of $E$ (for each $x in E$, take an interval small enough to lie inside $U$).
 
   *Step 2: Greedy selection.*
-  Define a size function on intervals: $r(I) = |I|$. Let $I_1 in cal(V)_0$ be any interval such that $r(I_1) > 1/2 sup{r(I) : I in cal(V)_0}$.
+  Define a size function on intervals: $r(I) = abs(I)$. Let $I_1 in cal(V)_0$ be any interval such that $r(I_1) > 1/2 sup{r(I) : I in cal(V)_0}$.
 
   Having chosen $I_1, ..., I_n$, let
   $
@@ -1632,12 +1645,12 @@ Dini derivatives give us pointwise information about a function's local slope, b
   *Step 3: The total length is finite.*
   Since all intervals are disjoint and contained in $U$, we have
   $
-    sum_(k=1)^infinity |I_k| <= m(U) < infinity.
+    sum_(k=1)^infinity abs(I_k) <= m(U) < infinity.
   $
-  In particular, $|I_k| -> 0$ as $k -> infinity$ and the tail sums $sum_(k=N+1)^infinity |I_k| -> 0$.
+  In particular, $abs(I_k) -> 0$ as $k -> infinity$ and the tail sums $sum_(k=N+1)^infinity abs(I_k) -> 0$.
 
   *Step 4: The dilation trick.*
-  For each chosen interval $I_k$, let $J_k$ be the closed interval concentric with $I_k$ but with five times the length: $|J_k| = 5 |I_k|$. We claim that
+  For each chosen interval $I_k$, let $J_k$ be the closed interval concentric with $I_k$ but with five times the length: $abs(J_k) = 5 abs(I_k)$. We claim that
   $
     E backslash union.big_(k=1)^infinity I_k subset union.big_(k=1)^infinity J_k.
   $
@@ -1646,14 +1659,19 @@ Dini derivatives give us pointwise information about a function's local slope, b
 
   *Why $N$ is the first intersecting index:* By the greedy selection rule, when $I_N$ was chosen, we had $r(I_N) > 1/2 sup{r(J) : J in cal(V)_(N-1)}$. Since $I in cal(V)_(N-1)$ (it does not intersect $I_1, ..., I_(N-1)$ by minimality of $N$), we have $r(I) <= 2 r(I_N)$.
 
-  Now compare the positions of $I$ and $I_N$. Since they intersect and $|I| <= 2 |I_N|$, a simple geometric argument shows that $I subset J_N$ (the 5-times concentric dilation of $I_N$). Hence $x in J_N$, establishing the claim.
+  Now compare the positions of $I$ and $I_N$. Since they intersect and $abs(I) <= 2 abs(I_N)$, a simple geometric argument shows that $I subset J_N$ (the 5-times concentric dilation of $I_N$). Hence $x in J_N$, establishing the claim.
+
+  For the finite estimates we need a sharper containment. Fix $N$. For $x in E backslash union.big_(k=1)^N I_k$, since the selected intervals are closed and $x$ is not among them, the distance from $x$ to $union.big_(k=1)^N I_k$ is positive; choose $I in cal(V)_0$ with $x in I$ and $abs(I)$ so small that $I inter (union.big_(k=1)^N I_k) = emptyset$. If $I$ met none of the later selected intervals either, it would remain eligible at every step of the greedy selection, forcing $abs(I_(n+1)) >= abs(I) / 2 > 0$ for all $n$, contradicting $abs(I_k) -> 0$. Hence there is a smallest index $M > N$ with $I inter I_M != emptyset$. By minimality, $I in cal(V)_(M-1)$, so the greedy rule gives $abs(I) <= 2 abs(I_M)$, and as above $I subset J_M$. Therefore
+  $
+    E backslash union.big_(k=1)^N I_k subset union.big_(k=N+1)^infinity J_k.
+  $
 
   *Step 5: Measure estimate.*
-  For any $N$,
+  From the containment just proved, for any $N$,
   $
-    m^*(E backslash union.big_(k=1)^N I_k) <= sum_(k=N+1)^infinity |J_k| = 5 sum_(k=N+1)^infinity |I_k|.
+    m^*(E backslash union.big_(k=1)^N I_k) <= sum_(k=N+1)^infinity abs(J_k) = 5 sum_(k=N+1)^infinity abs(I_k).
   $
-  Since the tail sum tends to $0$, letting $N -> infinity$ gives $m^*(E backslash union.big_k I_k) = 0$ (the infinite version). For the finite version, given $epsilon > 0$, choose $N$ large enough so that $5 sum_(k=N+1)^infinity |I_k| < epsilon$; then ${I_1, ..., I_N}$ is the desired finite subcollection.
+  Since the tail sum tends to $0$, letting $N -> infinity$ gives $m^*(E backslash union.big_k I_k) = 0$ (the infinite version). For the finite version, given $epsilon > 0$, choose $N$ large enough so that $5 sum_(k=N+1)^infinity abs(I_k) < epsilon$; then ${I_1, ..., I_N}$ is the desired finite subcollection.
 ]
 
 #note[
@@ -1663,13 +1681,13 @@ Dini derivatives give us pointwise information about a function's local slope, b
 === Forward-Looking Remarks // 前瞻
 
 #note[
-  The Vitali Covering Lemma is the engine behind three fundamental results that follow:
-  - *Lebesgue Density Theorem*: Almost every point of a measurable set is a density point.
-  - *Differentiability of Monotone Functions*: A monotone function on $[a, b]$ is differentiable a.e. — proved by applying Vitali to the sets where the Dini derivatives differ.
+  The Vitali Covering Lemma is the engine behind three fundamental results:
+  - *Lebesgue Density Theorem*: Almost every point of a measurable set is a density point. (Deferred to Part IV, where it is proved by the same covering argument.)
+  - *Differentiability of Monotone Functions*: A monotone function on $[a, b]$ is differentiable a.e. — proved below by applying Vitali to the sets where the Dini derivatives differ.
   - *Lebesgue Differentiation Theorem*: For $f in L^1_("loc")(bb(R))$,
-    $lim_(r -> 0) 1/(2 r) integral_(x-r)^(x+r) f(t) dif t = f(x)$ for a.e. $x$.
+    $lim_(r -> 0) 1/(2 r) integral_(x-r)^(x+r) f(t) dif t = f(x)$ for a.e. $x$. (Deferred to Part IV.)
 
-  In this chapter, we will primarily use it to establish the a.e. differentiability of monotone functions, from which the remaining theory (BV decomposition, Newton-Leibniz formula) follows.
+  In this chapter, we use the lemma to establish the a.e. differentiability of monotone functions (Section 4.3) and, from that, the Newton-Leibniz formula via absolute continuity (Section 4.5). The full BV decomposition is likewise developed in Part IV.
 ]
 
 #v(0.5em)
@@ -1758,13 +1776,17 @@ The Dini derivatives provide pointwise slope information, and the Vitali coverin
   $
     {x : D^+ f(x) != D_+ f(x)} union {x : f'(x) = plus.minus infinity}.
   $
-  The first set is $union.big_(alpha < beta in bb(Q)) E_(alpha, beta)$, a countable union of measure-zero sets. The second set has measure zero: since $f$ is monotone on a compact interval, $|f(b) - f(a)| < infinity$, so $f'$ cannot be infinite on a set of positive measure. Therefore $f$ is differentiable a.e.
+  The first set is $union.big_(alpha < beta in bb(Q)) E_(alpha, beta)$, a countable union of measure-zero sets. The second set has measure zero: let $E_oo = {x : f'(x) = infinity}$. For every $alpha > 0$ and every $x in E_oo$, the difference quotient $(f(x + h) - f(x))/h$ tends to $+infinity$ as $h -> 0^+$, so there exist arbitrarily small $h > 0$ with $f(x + h) - f(x) > alpha h$; the intervals $[x, x + h]$ form a Vitali covering of $E_oo$. Applying the extraction step of Steps 2–4 to $E_oo inter (c, d)$ (with the intervals restricted to lie inside $(c, d)$) yields a finite disjoint subcollection $I_i = [x_i, x_i + h_i]$ covering $E_oo inter (c, d)$ up to an $epsilon$-error, and since $f$ is non-decreasing,
+  $
+    alpha (m^*(E_oo inter (c, d)) - epsilon) < sum_(i=1)^N (f(x_i + h_i) - f(x_i)) <= f(d) - f(c).
+  $
+  As $alpha$ is arbitrary, $m^*(E_oo inter (c, d)) = 0$ for every open interval $(c, d)$, hence $m^*(E_oo) = 0$. The case $f' = -infinity$ reduces to this one by replacing $f$ with $-f$. Therefore $f$ is differentiable a.e.
 ]
 
 #corollary[
   Let $f: [a, b] -> bb(R)$ be monotone. Then $f'$ is measurable and Lebesgue integrable on $[a, b]$, with
   $
-    integral_a^b f'(x) dif x <= |f(b) - f(a)|.
+    integral_a^b f'(x) dif x <= abs(f(b) - f(a)).
   $
 ]
 
@@ -1783,7 +1805,7 @@ The Dini derivatives provide pointwise slope information, and the Vitali coverin
   $
     integral_a^b f_n(x) dif x = n integral_a^b (f(x + 1/n) - f(x)) dif x = n integral_b^(b + 1/n) f(t) dif t - n integral_a^(a + 1/n) f(t) dif t.
   $
-  Since $f$ is non-decreasing, $n integral_b^(b + 1/n) f(t) dif t <= f(b)$ and $n integral_a^(a + 1/n) f(t) dif t >= f(a)$. Therefore $integral_a^b f_n dif x <= f(b) - f(a)$, giving the result.
+  By the extension $f(t) = f(b)$ for $t > b$, the first term equals $n integral_b^(b + 1/n) f(t) dif t = f(b)$, while the second satisfies $n integral_a^(a + 1/n) f(t) dif t >= f(a)$ since $f$ is non-decreasing. Therefore $integral_a^b f_n dif x <= f(b) - f(a)$, giving the result.
 ]
 
 #note[
@@ -1820,15 +1842,15 @@ As noted in Section 4.1, every function of bounded variation (BV) on $[a, b]$ ad
   $
   we have
   $
-    sum_(k=1)^n |f(b_k) - f(a_k)| < epsilon.
+    sum_(k=1)^n abs(f(b_k) - f(a_k)) < epsilon.
   $
   The collection of all absolutely continuous functions on $[a, b]$ is denoted $"AC"([a, b])$.
 ]
 
 #note[
   *Comparison of function classes*:
-  - *Lipschitz $=>$ AC*: If $|f(x) - f(y)| <= L|x - y|$ for all $x, y$, then $sum |f(b_k) - f(a_k)| <= L sum(b_k - a_k) < L delta$. Choosing $delta = epsilon / L$ verifies the AC condition.
-  - *AC $=>$ uniformly continuous*: Take $n = 1$ in the definition. Given $epsilon > 0$, choose $delta$ from the AC condition; then $|x - y| < delta$ implies $|f(x) - f(y)| < epsilon$.
+  - *Lipschitz $=>$ AC*: If $abs(f(x) - f(y)) <= L abs(x - y)$ for all $x, y$, then $sum abs(f(b_k) - f(a_k)) <= L sum(b_k - a_k) < L delta$. Choosing $delta = epsilon / L$ verifies the AC condition.
+  - *AC $=>$ uniformly continuous*: Take $n = 1$ in the definition. Given $epsilon > 0$, choose $delta$ from the AC condition; then $abs(x - y) < delta$ implies $abs(f(x) - f(y)) < epsilon$.
   - *Strictness*: $f(x) = sqrt(x)$ on $[0, 1]$ is AC but not Lipschitz (unbounded derivative near $0$). The function $f(x) = x sin(1/x)$ (with $f(0) = 0$) on $[0, 1]$ is uniformly continuous but *not* AC, and not BV either.
 ]
 
@@ -1839,7 +1861,7 @@ As noted in Section 4.1, every function of bounded variation (BV) on $[a, b]$ ad
   $
   *Properties*: $c$ is continuous, non-decreasing, $c(0) = 0$, and $c(1) = 1$. On the complement of the Cantor set (a union of open intervals of total measure $1$), $c$ is locally constant, so $c'(x) = 0$ a.e.
 
-  $c$ is BV (since it is monotone), but *not* absolutely continuous. At the $n$-th stage of the Cantor set construction, the remaining $2^n$ closed intervals have total length $(2/3)^n$, which can be made arbitrarily small. Yet the sum of $|c(b_k) - c(a_k)|$ over these intervals is always $1$. Thus, for $epsilon = 1/2$, no $delta > 0$ satisfies the AC condition.
+  $c$ is BV (since it is monotone), but *not* absolutely continuous. At the $n$-th stage of the Cantor set construction, the remaining $2^n$ closed intervals have total length $(2/3)^n$, which can be made arbitrarily small. Yet the sum of $abs(c(b_k) - c(a_k))$ over these intervals is always $1$. Thus, for $epsilon = 1/2$, no $delta > 0$ satisfies the AC condition.
 ]
 
 #proposition(name: "Properties of Absolutely Continuous Functions")[
@@ -1850,17 +1872,19 @@ As noted in Section 4.1, every function of bounded variation (BV) on $[a, b]$ ad
 ]
 
 #proof[
-  _(1) AC implies BV._ Choose $delta$ for $epsilon = 1$ from the AC definition. Partition $[a, b]$ into $N = ceil((b - a) / delta)$ subintervals of length at most $delta$. On each subinterval $[c, d]$, any partition into sub-subintervals has total length at most $delta$, so the variation of $f$ on $[c, d]$ is at most $1$. The total variation of $f$ on $[a, b]$ is therefore at most $N < infinity$, so $f in "BV"([a, b])$.
+  _(1) AC implies BV._ Choose $delta > 0$ for $epsilon = 1$ from the AC definition. Partition $[a, b]$ into $N = ceil(2 (b - a) / delta)$ subintervals of length at most $delta / 2$. On each subinterval $[c, d]$, any partition into sub-subintervals has total length $d - c <= delta / 2 < delta$, so by the AC condition the variation of $f$ on $[c, d]$ is at most $1$. The total variation of $f$ on $[a, b]$ is therefore at most $N < infinity$, so $f in "BV"([a, b])$.
 
   _(2) Sum and product._ The sum $f + g$ is AC by the triangle inequality applied to the AC conditions of $f$ and $g$. For the product, write
   $
     f(b_k) g(b_k) - f(a_k) g(a_k) = f(b_k)(g(b_k) - g(a_k)) + g(a_k)(f(b_k) - f(a_k)).
   $
-  Since AC functions are continuous on the compact set $[a, b]$, they are bounded: $|f|, |g| <= M$ for some $M > 0$. Then $sum |f(b_k) g(b_k) - f(a_k) g(a_k)| <= M sum |g(b_k) - g(a_k)| + M sum |f(b_k) - f(a_k)|$. Choosing $delta$ small enough for both $f$ and $g$ with $epsilon / (2M)$ gives the AC condition for $f dot g$.
+  Since AC functions are continuous on the compact set $[a, b]$, they are bounded: $abs(f), abs(g) <= M$ for some $M > 0$. Then $sum abs(f(b_k) g(b_k) - f(a_k) g(a_k)) <= M sum abs(g(b_k) - g(a_k)) + M sum abs(f(b_k) - f(a_k))$. Choosing $delta$ small enough for both $f$ and $g$ with $epsilon / (2M)$ gives the AC condition for $f dot g$.
 
-  _(3) Lusin's N property._ Let $E subset [a, b]$ with $m(E) = 0$. Given $epsilon > 0$, choose $delta > 0$ from the AC definition for this $epsilon$. Since $m(E) = 0$, there exists a cover of $E$ by open intervals $(a_k, b_k)$ with $sum(b_k - a_k) < delta$. Since $f$ is continuous, $f((a_k, b_k))$ is an interval, and its length is at most the oscillation of $f$ on $[a_k, b_k]$, which is bounded by $sup f - inf f$ on $[a_k, b_k]$. For AC functions, the oscillation on $(a_k, b_k)$ is at most $|f(b_k) - f(a_k)|$ (by the intermediate value property and the definition). Therefore,
+  _(3) Lusin's N property._ Let $E subset [a, b]$ with $m(E) = 0$. Given $epsilon > 0$, choose $delta > 0$ from the AC definition for this $epsilon$. Since $m(E) = 0$, there exists an open set $U supset E$ with $m(U) < delta$; write $U = union_(k=1)^oo (a_k, b_k)$ as a disjoint union of open intervals. By continuity, each image $f((a_k, b_k))$ is an interval, and its length is the oscillation $"osc"_((a_k, b_k))(f)$ of $f$ on $(a_k, b_k)$.
+
+  We claim $sum_(k=1)^oo "osc"_((a_k, b_k))(f) <= epsilon$. Indeed, the oscillation on $[a_k, b_k]$ never exceeds the total variation $V_(a_k)^(b_k)(f)$ of $f$ over that interval, and for any finite $N$ and any partitions of $[a_1, b_1], ..., [a_N, b_N]$, the resulting subintervals are pairwise disjoint with total length $< delta$, so the AC condition gives $sum_(k=1)^N V_(a_k)^(b_k)(f) <= epsilon$; letting $N -> oo$ yields the claim. Therefore
   $
-    m^*(f(E)) <= sum_(k=1)^oo |f(b_k) - f(a_k)| < epsilon.
+    m^*(f(E)) <= m(f(U)) <= sum_(k=1)^oo m(f((a_k, b_k))) = sum_(k=1)^oo "osc"_((a_k, b_k))(f) <= epsilon.
   $
   Since $epsilon$ is arbitrary, $m(f(E)) = 0$.
 ]
@@ -1876,11 +1900,11 @@ As noted in Section 4.1, every function of bounded variation (BV) on $[a, b]$ ad
 #proof[
   Let $epsilon > 0$. Since $g in L^1([a, b])$, the absolute continuity of the Lebesgue integral (Chapter 3, Section 3.1) provides $delta > 0$ such that for any measurable $A subset [a, b]$ with $m(A) < delta$,
   $
-    integral_A |g(t)| dif t < epsilon.
+    integral_A abs(g(t)) dif t < epsilon.
   $
   Now let $(a_1, b_1), ..., (a_n, b_n)$ be disjoint intervals in $[a, b]$ with $sum(b_k - a_k) < delta$. Set $A = union_(k=1)^n (a_k, b_k)$. Then $m(A) < delta$, so
   $
-    sum_(k=1)^n |F(b_k) - F(a_k)| = sum_(k=1)^n |integral_(a_k)^(b_k) g(t) dif t| <= sum_(k=1)^n integral_(a_k)^(b_k) |g(t)| dif t = integral_A |g(t)| dif t < epsilon.
+    sum_(k=1)^n abs(F(b_k) - F(a_k)) = sum_(k=1)^n abs(integral_(a_k)^(b_k) g(t) dif t) <= sum_(k=1)^n integral_(a_k)^(b_k) abs(g(t)) dif t = integral_A abs(g(t)) dif t < epsilon.
   $
   Hence $F in "AC"([a, b])$.
 ]
@@ -1919,7 +1943,7 @@ The results of the preceding sections converge on a single question: for which f
 
   _(a) Differentiability a.e._ Since $f in "AC"([a, b])$, by the proposition in Section 4.4, $f in "BV"([a, b])$. The total variation function $V(x) = V_a^x(f)$ is non-decreasing, and both $V(x)$ and $V(x) - f(x)$ are non-decreasing. By Lebesgue's Differentiability Theorem (Section 4.3), both are differentiable a.e., hence $f = V - (V - f)$ is differentiable a.e.
 
-  _(b) $V$ is absolutely continuous._ We claim $V in "AC"([a, b])$. Given $epsilon > 0$, choose $delta > 0$ from the AC definition of $f$ for this $epsilon$. For disjoint intervals $(a_k, b_k)$ with $sum(b_k - a_k) < delta$, any partition $a_k = t_0 < t_1 < ... < t_m = b_k$ satisfies $sum(t_j - t_(j-1)) = sum(b_k - a_k) < delta$, so $sum |f(t_j) - f(t_(j-1))| < epsilon$. Taking the supremum over all partitions gives $V(b_k) - V(a_k) <= epsilon$. Thus $sum |V(b_k) - V(a_k)| < epsilon$, and $V in "AC"([a, b])$.
+  _(b) $V$ is absolutely continuous._ We claim $V in "AC"([a, b])$. Given $epsilon > 0$, choose $delta > 0$ from the AC definition of $f$ for $epsilon / 2$. For disjoint intervals $(a_k, b_k)$ with $sum(b_k - a_k) < delta$, any partitions of these intervals combine into subintervals of total length $sum(b_k - a_k) < delta$, so $sum_k sum_j abs(f(t_j) - f(t_(j-1))) < epsilon / 2$. Taking the supremum over all partitions of each interval gives $sum_k (V(b_k) - V(a_k)) <= epsilon / 2 < epsilon$. Since $V$ is non-decreasing, $sum abs(V(b_k) - V(a_k)) < epsilon$, and $V in "AC"([a, b])$.
 
   _(c) Reduction to the key lemma._ Since $f$ and $V$ are both AC, $f = V - (V - f)$ decomposes $f$ as a difference of two non-decreasing AC functions. It therefore suffices to prove condition (2) for a non-decreasing AC function $g$. For such $g$, Lebesgue's theorem gives $g' >= 0$ a.e. and $integral_a^x g'(t) dif t <= g(x) - g(a)$ for all $x in [a, b]$. Define
   $
@@ -1930,7 +1954,7 @@ The results of the preceding sections converge on a single question: for which f
   _(d) Key lemma: $h in "AC"([a, b])$ and $h'(x) = 0$ a.e. implies $h$ is constant._
   Fix $c in (a, b]$. We show $h(c) = h(a)$. Let $E = {x in [a, c) : h'(x) = 0}$; then $m([a, c) backslash E) = 0$. Given $epsilon > 0$, choose $delta > 0$ from the AC definition of $h$ on $[a, c]$ for $epsilon / 2$.
 
-  For each $x in E$, since $h'(x) = 0$, there exist arbitrarily small $k > 0$ such that $|h(x + k) - h(x)| < (epsilon / (2(c - a))) k$. The collection of such intervals $[x, x + k]$ forms a Vitali covering of $E$. By the Vitali Covering Lemma (Section 4.2), extract a finite disjoint subcollection $I_1, ..., I_N$ with $I_i = [x_i, x_i + k_i]$ such that
+  For each $x in E$, since $h'(x) = 0$, there exist arbitrarily small $k > 0$ such that $abs(h(x + k) - h(x)) < (epsilon / (2(c - a))) k$. The collection of such intervals $[x, x + k]$ forms a Vitali covering of $E$. By the Vitali Covering Lemma (Section 4.2), extract a finite disjoint subcollection $I_1, ..., I_N$ with $I_i = [x_i, x_i + k_i]$ such that
   $
     m^*(E backslash union.big_(i=1)^N I_i) < delta.
   $
@@ -1939,9 +1963,9 @@ The results of the preceding sections converge on a single question: for which f
 
   Summing over the Vitali intervals:
   $
-    sum_(i=1)^N |h(x_i + k_i) - h(x_i)| < epsilon / (2(c - a)) sum_(i=1)^N k_i <= epsilon / 2.
+    sum_(i=1)^N abs(h(x_i + k_i) - h(x_i)) < epsilon / (2(c - a)) sum_(i=1)^N k_i <= epsilon / 2.
   $
-  Combining: $|h(c) - h(a)| < epsilon / 2 + epsilon / 2 = epsilon$. Since $epsilon$ is arbitrary, $h(c) = h(a)$. Applying this to every $c in [a, b]$, $h$ is constant.
+  Combining: $abs(h(c) - h(a)) < epsilon / 2 + epsilon / 2 = epsilon$. Since $epsilon$ is arbitrary, $h(c) = h(a)$. Applying this to every $c in [a, b]$, $h$ is constant.
 
   _(e) Conclusion of $(1) => (2)$._ By the lemma, $h(x) = h(a) = 0$ for all $x$, so $g(x) - g(a) = integral_a^x g'(t) dif t$. Since $f = V - (V - f)$ and both $V$ and $V - f$ satisfy the integral formula, subtracting gives $f(x) - f(a) = integral_a^x f'(t) dif t$.
 
@@ -1949,7 +1973,7 @@ The results of the preceding sections converge on a single question: for which f
   Trivial: take $g = f'$.
 
   _Step 4: Uniqueness — $(3)$ implies $g = f'$ a.e._
-  If $f(x) - f(a) = integral_a^x g(t) dif t$ for all $x$, then by Steps 1 and 2, $f$ is AC and $f(x) - f(a) = integral_a^x f'(t) dif t$. Therefore $integral_a^x (g(t) - f'(t)) dif t = 0$ for all $x in [a, b]$. If $g - f'$ were positive (or negative) on a set of positive measure, there would exist an interval where the integral is nonzero — a contradiction. Hence $g = f'$ a.e.
+  If $f(x) - f(a) = integral_a^x g(t) dif t$ for all $x$, then by Steps 1 and 2, $f$ is AC and $f(x) - f(a) = integral_a^x f'(t) dif t$. Therefore $h := g - f' in L^1([a, b])$ satisfies $integral_a^x h(t) dif t = 0$ for all $x in [a, b]$. Taking differences, $integral_c^d h(t) dif t = 0$ for every interval $[c, d] subset [a, b]$, hence for every finite union of intervals, and by the absolute continuity of the Lebesgue integral together with the regularity of Lebesgue measure, $integral_B h(t) dif t = 0$ for every measurable set $B subset [a, b]$. Choosing $B = {h > 0}$ and $B = {h < 0}$ gives $h^+ = 0 = h^-$ a.e., so $h = 0$ a.e., i.e. $g = f'$ a.e.
 ]
 
 #corollary(name: "Integration by Parts")[
@@ -1981,7 +2005,7 @@ The results of the preceding sections converge on a single question: for which f
     C^1([a, b]) subset.eq "Lip"([a, b]) subset.eq "AC"([a, b]) subset.eq "BV"([a, b]) subset.eq {f : f' "exists a.e."}.
   $
   Each inclusion is strict:
-  - $C^1 subset.eq "Lip"$: Mean value theorem. Strict: $f(x) = |x|$ is Lipschitz but not $C^1$.
+  - $C^1 subset.eq "Lip"$: Mean value theorem. Strict: $f(x) = abs(x)$ is Lipschitz but not $C^1$.
   - $"Lip" subset.eq "AC"$: Direct from definitions. Strict: $f(x) = sqrt(x)$ on $[0, 1]$ is AC but not Lipschitz.
   - $"AC" subset.eq "BV"$: Proposition in Section 4.4. Strict: the Cantor function is BV but not AC.
   - $"BV" subset.eq {f' "exists a.e."}$: BV functions are differences of monotone functions; apply Lebesgue's theorem. Strict: $f(x) = x^2 sin(1/x^2)$ (with $f(0) = 0$) is differentiable everywhere but not BV.
@@ -2358,8 +2382,8 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 #part("Differentiation Theory") // 微分理论
 
 
-*只有被引用的章节才会被编译和显示在目录中，因此如果你想要显示某个章节，请确保在主文件中正确引用了它。*
-refer to @zhou2016
+// 只有被引用的章节才会被编译和显示在目录中，因此如果你想要显示某个章节，请确保在主文件中正确引用了它。
+// refer to @zhou2016
 
 
 #bibliography("references.bib")
