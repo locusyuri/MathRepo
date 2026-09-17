@@ -122,12 +122,12 @@
 //     - #note 筛法是列示非测试；素性判定/π(x) → Ch8 §8.1/§8.4（前瞻）
 //   Section 2.4: Applications of Unique Factorization（唯一分解的应用）
 //     - p 进指数 v_p #definition <def:p-adic-valuation> + <eq:valuation-def>
-//       （v_p(n) = p^k || n 的最大 k；除法转指数不等式，Ch7 反复消费）
+//       （v_(p)(n) = p^k || n 的最大 k；除法转指数不等式，Ch7 反复消费）
 //     - gcd/lcm 指数公式 #corollary <cor:gcd-lcm-valuation> + <eq:gcd-lcm-valuation>
-//       （v_p(gcd) = min、v_p(lcm) = max；与 §1.5 乘积恒等式 <cor:gcd-lcm-product> 闭环验证）
+//       （v_(p)(gcd) = min、v_(p)(lcm) = max；与 §1.5 乘积恒等式 <cor:gcd-lcm-product> 闭环验证）
 //     - 例 <ex:gcd-lcm-valuation>（72 与 84 的分解式 gcd/lcm）
 //     - Legendre 公式 #theorem <thm:legendre-formula> + <eq:legendre-formula>
-//       （v_p(n!) = Σ⌊n/p^k⌋，逐层计 p^k 的倍数；回链 def:floor-ceiling §1.1）
+//       （v_(p)(n!) = Σ⌊n/p^k⌋，逐层计 p^k 的倍数；回链 def:floor-ceiling §1.1）
 //     - 例 <ex:legendre-example>（v₅(100!) = 24、v₂ = 97、末尾零 min = 24）
 //     - #note 前瞻 Ch8 §8.2（中二项式系数、Chebyshev、Bertrand）
 //   图片：fig:sieve-grid（详见 §2.3；全章仅此 1 张，占位后任务收尾给提示词）
@@ -246,7 +246,7 @@
 //     - 幂的阶 #proposition <prop:order-power>（ord(a^k) = ord(a)/gcd(ord(a), k)；
 //       供 §5.2 计数与 §5.3 幂方程反复消费）
 //     - 周期判据 #proposition <prop:order-periodicity>（a^r ≡ a^s (mod m) ⟺
-//       r ≡ s (mod ord_m(a))；指标唯一性引擎）
+//       r ≡ s (mod ord_(m)(a))；指标唯一性引擎）
 //     - LCM 可达引理 #lemma <lem:order-lcm>（ord a = r、ord b = s ⟹ 存在 c 使
 //       ord c = lcm(r, s)；内证互素阶乘积子步；供 §5.2 主定理反证）
 //     - 例 <ex:order-table>（mod 7 各元素阶表；2 的阶 3 是 φ(6) 的真因子，
@@ -1351,7 +1351,7 @@ now falls out of comparing exponents.
 
 #note[
   The exponent argument is the seed of a much more systematic language:
-  the *valuation* $v_p(n)$, the exponent of the prime $p$ in $n$,
+  the *valuation* $v_(p)(n)$, the exponent of the prime $p$ in $n$,
   introduced in §2.4. It turns every question about divisibility into a
   question about comparing small integers. We will also see §2.4 that
   the same exponent language makes the gcd and lcm formulas transparent.
@@ -1453,25 +1453,25 @@ notebook.
 
 #definition(name: "The $p$-adic Valuation")[
   Let $p$ be a prime and $n >= 1$ an integer. The *valuation of $n$ at
-  $p$*, written $v_p(n)$, is the exponent of $p$ in the standard
+  $p$*, written $v_(p)(n)$, is the exponent of $p$ in the standard
   factorization of $n$ (#link(<def:prime-factorization>)[§2.2]); in
   symbols,
   #eq[
-    $v_p(n) = max{k >= 0 : p^k | n}$.
+    $v_(p)(n) = max{k >= 0 : p^k | n}$.
   ] <eq:valuation-def>
-  For $n = 1$ the set is ${0}$, so $v_p(1) = 0$. Equivalently,
-  $p^k | n$ iff $k <= v_p(n)$, and one writes $p^(v_p(n)) "||" n$ to
-  say that $p^(v_p(n))$ divides $n$ but $p^(v_p(n)+1)$ does not.
+  For $n = 1$ the set is ${0}$, so $v_(p)(1) = 0$. Equivalently,
+  $p^k | n$ iff $k <= v_(p)(n)$, and one writes $p^(v_(p)(n)) "||" n$ to
+  say that $p^(v_(p)(n))$ divides $n$ but $p^(v_(p)(n)+1)$ does not.
 ] <def:p-adic-valuation>
 
 #note[
   With this notation the standard factorization reads
   $
-    n = product_p p^(v_p(n)),
+    n = product_p p^(v_(p)(n)),
   $
   where the product runs over all primes $p$ but only finitely many
   factors differ from $1$. The valuation turns divisibility into an
-  inequality of ordinary integers: $a | b$ iff $v_p(a) <= v_p(b)$ for
+  inequality of ordinary integers: $a | b$ iff $v_(p)(a) <= v_(p)(b)$ for
   every prime $p$. This dictionary — one inequality per prime — is the
   most useful reformulation of unique factorization in the whole
   theory; it will be exploited heavily in Chapter 7.
@@ -1484,19 +1484,19 @@ exponent and the joint part by the *larger* exponent.
 #corollary(name: "GCD and LCM from the Valuation")[
   For positive integers $a, b$ and every prime $p$,
   #eq[
-    $v_p("gcd"(a, b)) = min(v_p(a), v_p(b)), \
-     v_p("lcm"(a, b)) = max(v_p(a), v_p(b)).
+    $v_(p)("gcd"(a, b)) = min(v_(p)(a), v_(p)(b)), \
+     v_(p)("lcm"(a, b)) = max(v_(p)(a), v_(p)(b)).
   $] <eq:gcd-lcm-valuation>
 ] <cor:gcd-lcm-valuation>
 
 #proof[
-  Fix $p$ and write $alpha = v_p(a)$, $beta = v_p(b)$. Since the gcd
+  Fix $p$ and write $alpha = v_(p)(a)$, $beta = v_(p)(b)$. Since the gcd
   divides both $a$ and $b$, the valuation inequality of the previous
   note gives
-  $v_p("gcd"(a, b)) <= alpha$ and $v_p("gcd"(a, b)) <= beta$, hence
-  $v_p("gcd"(a, b)) <= min(alpha, beta)$. Conversely, the common
+  $v_(p)("gcd"(a, b)) <= alpha$ and $v_(p)("gcd"(a, b)) <= beta$, hence
+  $v_(p)("gcd"(a, b)) <= min(alpha, beta)$. Conversely, the common
   divisor $p^(min(alpha, beta))$ divides both $a$ and $b$, so it
-  divides their gcd, whence $v_p("gcd"(a, b)) >= min(alpha, beta)$.
+  divides their gcd, whence $v_(p)("gcd"(a, b)) >= min(alpha, beta)$.
   The two inequalities give equality. The argument for the lcm is
   symmetric.
 ]
@@ -1521,19 +1521,19 @@ exercise in counting multiples.
 #theorem(name: "Legendre's Formula for the Exponent of a Prime in a Factorial")[
   For a prime $p$ and an integer $n >= 1$,
   #eq[
-    $v_p(n!) = sum_(k=1)^oo floor(n\/p^k)$.
+    $v_(p)(n!) = sum_(k=1)^oo floor(n\/p^k)$.
   ] <eq:legendre-formula>
 ] <thm:legendre-formula>
 
 #proof[
-  The product $n! = 1 dot 2 dots n$ has $v_p(n!)$ factors of $p$
+  The product $n! = 1 dot 2 dots n$ has $v_(p)(n!)$ factors of $p$
   in total. Count them by "layers": among $1, 2, dots, n$ there are
   exactly $floor(n\/p)$ multiples of $p$, each contributing at least one
   factor $p$; among those, $floor(n\/p^2)$ are multiples of $p^2$, each
   contributing a *second* factor $p$; and so on. Adding the layers
-  counts every factor $p$ of $m$ exactly $v_p(m)$ times, so
+  counts every factor $p$ of $m$ exactly $v_(p)(m)$ times, so
   $
-    v_p(n!) = sum_(m=1)^n v_p(m) = sum_(k=1)^oo floor(n\/p^k),
+    v_(p)(n!) = sum_(m=1)^n v_(p)(m) = sum_(k=1)^oo floor(n\/p^k),
   $
   the series terminating as soon as $p^k > n$ (whence
   $floor(n\/p^k) = 0$). The floor function is that of
@@ -1558,7 +1558,7 @@ exercise in counting multiples.
 
 #note[
   Legendre's formula is the main engine of the estimates in Chapter 8,
-  where the exponents $v_p(n!)$ and $v_p((2n)!) - 2 v_p(n!)$ control
+  where the exponents $v_(p)(n!)$ and $v_(p)((2n)!) - 2 v_(p)(n!)$ control
   the prime factors of binomial coefficients; the same machinery is at
   the heart of the Chebyshev estimates and of Bertrand's postulate.
   Already here it shows how the abstract unique factorization becomes
@@ -2042,10 +2042,10 @@ integers is a multiple of their product.
   $m_i$ are pairwise coprime, $p$ can occur in the prime factorization
   of *at most one* of them: were $p | m_i$ and $p | m_j$ with
   $i != j$, then $p$ would divide their gcd. Hence
-  $v_p(M) = v_p(m_i)$ for the unique index $i$ with $p | m_i$ (if any),
-  and $v_p(M) = 0$ otherwise. Since $m_i | n$,
-  $v_p(m_i) <= v_p(n)$ by the exponent criterion of §2.4, and so
-  $v_p(M) <= v_p(n)$ for every prime $p$. By the same criterion,
+  $v_(p)(M) = v_(p)(m_i)$ for the unique index $i$ with $p | m_i$ (if any),
+  and $v_(p)(M) = 0$ otherwise. Since $m_i | n$,
+  $v_(p)(m_i) <= v_(p)(n)$ by the exponent criterion of §2.4, and so
+  $v_(p)(M) <= v_(p)(n)$ for every prime $p$. By the same criterion,
   $M | n$ (#link(<def:p-adic-valuation>)[§2.4]).
 ]
 
@@ -2795,7 +2795,7 @@ cycle length deserves its own name.
 
 #definition(name: "Order of an Element Modulo m")[
   Let $m >= 2$ and let $a$ be an integer with $"gcd"(a, m) = 1$. The
-  *order of $a$ modulo $m$*, written $"ord"_m(a)$, is the least
+  *order of $a$ modulo $m$*, written $"ord"_(m)(a)$, is the least
   positive integer $t$ such that
   $
     a^t equiv 1 quad ("mod" m).
@@ -2807,12 +2807,12 @@ cycle length deserves its own name.
 
 #proposition(name: "The Order Divides φ(m)")[
   Let $"gcd"(a, m) = 1$. Then
-  $"ord"_m(a) | phi(m)$.
+  $"ord"_(m)(a) | phi(m)$.
 ] <prop:order-divides-phi>
 
 #proof(name: "of the proposition")[
   The single observation that makes order arguments mechanical is the
-  following *minimality criterion*. Let $t = "ord"_m(a)$; if $a^n
+  following *minimality criterion*. Let $t = "ord"_(m)(a)$; if $a^n
   equiv 1$ (mod $m$) for some $n >= 0$, write $n = q t + r$ with
   $0 <= r < t$. Then
   $
@@ -2823,14 +2823,14 @@ cycle length deserves its own name.
   $r$ must vanish; hence $t | n$. In words: *an exponent is a period
   of $a$ if and only if it is a multiple of the order.*
   Now take $n = phi(m)$. Euler's theorem gives $a^(phi(m)) equiv 1$
-  (mod $m$), so the criterion forces $"ord"_m(a) | phi(m)$.
+  (mod $m$), so the criterion forces $"ord"_(m)(a) | phi(m)$.
 ]
 
 #proposition(name: "The Order of a Power")[
-  Let $"gcd"(a, m) = 1$ and put $t = "ord"_m(a)$. For every integer
+  Let $"gcd"(a, m) = 1$ and put $t = "ord"_(m)(a)$. For every integer
   $k >= 1$,
   $
-    "ord"_m(a^k) = t / "gcd"(t, k).
+    "ord"_(m)(a^k) = t / "gcd"(t, k).
   $
 ] <prop:order-power>
 
@@ -2838,7 +2838,7 @@ cycle length deserves its own name.
   Write $d = "gcd"(t, k)$. The power $(a^k)^(t\/d) =
   (a^t)^(k\/d)$ is $equiv 1$ (mod $m$), so by the minimality criterion
   of §5.1 the order of $a^k$ divides $t\/d$.
-  Conversely, let $u = "ord"_m(a^k)$; then $a^(k u) = (a^k)^u
+  Conversely, let $u = "ord"_(m)(a^k)$; then $a^(k u) = (a^k)^u
   equiv 1$ (mod $m$), so the criterion applied to $a$ gives
   $t | k u$. Dividing by $d$,
   $
@@ -2849,7 +2849,7 @@ cycle length deserves its own name.
 ]
 
 #proposition(name: "Congruent Powers Coincide Exactly on Periods")[
-  Let $"gcd"(a, m) = 1$ and let $t = "ord"_m(a)$. For any integers
+  Let $"gcd"(a, m) = 1$ and let $t = "ord"_(m)(a)$. For any integers
   $r, s >= 0$,
   $
     a^r equiv a^s quad ("mod" m) <=> r equiv s quad ("mod" t).
@@ -2877,10 +2877,10 @@ two elements at once.
 
 #lemma(name: "Reaching the Least Common Multiple of Two Orders")[
   Let $"gcd"(a, m) = 1$ and $"gcd"(b, m) = 1$, with
-  $r = "ord"_m(a)$ and $s = "ord"_m(b)$. Then there is an integer
+  $r = "ord"_(m)(a)$ and $s = "ord"_(m)(b)$. Then there is an integer
   $c$, coprime to $m$, with
   $
-    "ord"_m(c) = "lcm"(r, s).
+    "ord"_(m)(c) = "lcm"(r, s).
   $
 ] <lem:order-lcm>
 
@@ -2890,8 +2890,8 @@ two elements at once.
   $
     (a b)^(r s) = (a^r)^s (b^s)^r equiv 1 dot 1 = 1 quad ("mod" m),
   $
-  so $"ord"_m(a b) | r s$ by the minimality criterion. On the other
-  hand, let $n = "ord"_m(a b)$. Raising $(a b)^n equiv 1$ (mod $m$) to
+  so $"ord"_(m)(a b) | r s$ by the minimality criterion. On the other
+  hand, let $n = "ord"_(m)(a b)$. Raising $(a b)^n equiv 1$ (mod $m$) to
   the $s$-th power and using $b^s equiv 1$ gives $a^(n s) equiv 1$
   (mod $m$), hence $r | n s$; as $"gcd"(r, s) = 1$, Euclid's lemma
   yields $r | n$. The symmetric argument gives $s | n$, and the two
@@ -2906,9 +2906,9 @@ two elements at once.
   so $r_1$ and $s_1$ are coprime and $r_1 s_1 = "lcm"(r, s)$. By the
   proposition on the order of a power,
   $
-    "ord"_m(a^(r_2)) = r\/r_2 = r_1,
+    "ord"_(m)(a^(r_2)) = r\/r_2 = r_1,
     quad
-    "ord"_m(b^(s_2)) = s\/s_2 = s_1,
+    "ord"_(m)(b^(s_2)) = s\/s_2 = s_1,
   $
   and the two orders are coprime. Step 1 applied to the two powers
   yields an element $c$ of order $r_1 s_1 = "lcm"(r, s)$.
@@ -2962,7 +2962,7 @@ name.
 #definition(name: "Primitive Root")[
   Let $m >= 2$. An integer $g$ with $"gcd"(g, m) = 1$ is a *primitive
   root modulo $m$* if
-  $"ord"_m(g) = phi(m)$.
+  $"ord"_(m)(g) = phi(m)$.
   By the periodicity proposition of §5.1
   (#link(<prop:order-periodicity>)[§5.1]), its powers
   $g^0 = 1, g, g^2, ..., g^(phi(m) - 1)$ are then pairwise incongruent
@@ -2988,7 +2988,7 @@ machinery already built.
   By the proposition on the order of a power
   (#link(<prop:order-power>)[§5.1]),
   $
-    "ord"_m(g^k) = phi(m) / "gcd"(phi(m), k),
+    "ord"_(m)(g^k) = phi(m) / "gcd"(phi(m), k),
   $
   and this quotient equals $phi(m)$ exactly when the denominator is
   $1$.
@@ -3227,7 +3227,7 @@ several odd primes are structurally unable to reach the top level.
   modulo $m$, the order of $a$ modulo $m$ is the least common multiple
   of its orders modulo $u$ and modulo $v$ ($a^t equiv 1$ (mod $m$)
   holds exactly when it holds modulo both factors). Hence
-  $"ord"_m(a)$ divides $"lcm"(phi(u), phi(v)) = phi(m) /
+  $"ord"_(m)(a)$ divides $"lcm"(phi(u), phi(v)) = phi(m) /
   "gcd"(phi(u), phi(v))$. When both $phi(u)$ and $phi(v)$ are even,
   the denominator is at least $2$, so every order is at most
   $phi(m)\/2$, strictly below $phi(m)$: no primitive root exists.
@@ -3297,7 +3297,7 @@ all bases $a$ are coprime to $m$.
 
 #definition(name: "Index to a Fixed Base")[
   Let $g$ be a primitive root modulo $m$, and let $"gcd"(a, m) = 1$.
-  The *index of $a$ to the base $g$*, written $"ind"_g(a)$, is the
+  The *index of $a$ to the base $g$*, written $"ind"_(g)(a)$, is the
   unique integer $r$ with $0 <= r < phi(m)$ and
   $
     a equiv g^r quad ("mod" m).
@@ -3305,7 +3305,7 @@ all bases $a$ are coprime to $m$.
   One often says that $r$ is the *discrete logarithm of $a$ to the
   base $g$*. Uniqueness is the periodicity proposition of §5.1
   (#link(<prop:order-periodicity>)[§5.1]): two exponents are allowed
-  exactly when they are congruent modulo $"ord"_m(g) = phi(m)$.
+  exactly when they are congruent modulo $"ord"_(m)(g) = phi(m)$.
 ] <def:index-logarithm>
 
 Modulo $7$ with base $3$, the powers computed in §5.2 give
@@ -3319,16 +3319,16 @@ multiplication on the unit side and addition on the exponent side.
   Let $g$ be a primitive root modulo $m$, and let $"gcd"(a, m) = 1$
   and $"gcd"(b, m) = 1$. Then, with all congruences taken modulo
   $phi(m)$:
-  - $"ind"_g(a b) equiv "ind"_g(a) + "ind"_g(b)$;
-  - $"ind"_g(a^k) equiv k dot "ind"_g(a)$ for every integer $k$;
+  - $"ind"_(g)(a b) equiv "ind"_(g)(a) + "ind"_(g)(b)$;
+  - $"ind"_(g)(a^k) equiv k dot "ind"_(g)(a)$ for every integer $k$;
   - if $h$ is another primitive root and $h equiv g^c$, then
-    $"ind"_h(a) equiv "ind"_g(a) dot c^(-1)$, where $c^(-1)$ is the
+    $"ind"_(h)(a) equiv "ind"_(g)(a) dot c^(-1)$, where $c^(-1)$ is the
     inverse of $c$ modulo $phi(m)$.
 ] <prop:index-rules>
 
 #proof(name: "of the index rules")[
   Write $a equiv g^r$ and $b equiv g^s$ (mod $m$) with
-  $r = "ind"_g(a)$, $s = "ind"_g(b)$. Multiplying gives
+  $r = "ind"_(g)(a)$, $s = "ind"_(g)(b)$. Multiplying gives
   $a b equiv g^(r + s)$ (mod $m$), and the displayed assertion is the
   uniqueness of the index; raising $a equiv g^r$ to the $k$-th power
   gives the second rule, which covers negative $k$ as well because the
@@ -3336,8 +3336,8 @@ multiplication on the unit side and addition on the exponent side.
   $g$ and $h$ are primitive roots, so $"gcd"(c, phi(m)) = 1$ by the
   proposition of §5.2 (#link(<prop:primitive-root-power>)[§5.2]) and
   $c$ has an inverse modulo $phi(m)$. Since
-  $a equiv g^("ind"_g(a)) equiv (g^c)^("ind"_g(a) c^(-1)) equiv
-  h^("ind"_g(a) c^(-1))$ (mod $m$), uniqueness of the index to the
+  $a equiv g^("ind"_(g)(a)) equiv (g^c)^("ind"_(g)(a) c^(-1)) equiv
+  h^("ind"_(g)(a) c^(-1))$ (mod $m$), uniqueness of the index to the
   base $h$ forces the third rule.
 ]
 
@@ -3368,7 +3368,7 @@ solved in §3.3.
   $
     x^k equiv a quad ("mod" m)
   $
-  is solvable if and only if $d | "ind"_g(a)$, and in that case it has
+  is solvable if and only if $d | "ind"_(g)(a)$, and in that case it has
   exactly $d$ solutions modulo $m$.
 ] <thm:power-congruence>
 
@@ -3378,13 +3378,13 @@ solved in §3.3.
   determined modulo $phi(m)$ and all exponents taken modulo $phi(m)$.
   Then
   $
-    x^k equiv a ("mod" m) <=> g^(k y) equiv g^("ind"_g(a))
-    ("mod" m) <=> k y equiv "ind"_g(a) ("mod" phi(m)),
+    x^k equiv a ("mod" m) <=> g^(k y) equiv g^("ind"_(g)(a))
+    ("mod" m) <=> k y equiv "ind"_(g)(a) ("mod" phi(m)),
   $
   the last equivalence being the periodicity of $g$'s powers. This is
   a linear congruence in the variable $y$, and the theorem of §3.3
   (#link(<thm:linear-congruence>)[§3.3]) says it is solvable exactly
-  when $d | "ind"_g(a)$, in which case there are $d$ solutions $y$
+  when $d | "ind"_(g)(a)$, in which case there are $d$ solutions $y$
   modulo $phi(m)$. The map $y -> g^y$ sends distinct $y$ modulo
   $phi(m)$ to distinct classes, so the count survives.
 ]
@@ -3466,12 +3466,12 @@ $a$, whose exponent is the "reduced" $(p - 1)\/d$.
     equiv 1^((n\/d)) = 1 quad ("mod" p).
   $
   *Only if, by indices.* Fix a primitive root $g$ modulo $p$ and write
-  $a equiv g^s$ (mod $p$), so $s = "ind"_g(a)$. The condition reads
+  $a equiv g^s$ (mod $p$), so $s = "ind"_(g)(a)$. The condition reads
   $g^(s (p - 1)\/d) equiv 1$ (mod $p$), which holds exactly when the
   order $p - 1$ of $g$ divides $s (p - 1)\/d$ — equivalently, dividing
   by $d$, exactly when $d | s$. By the power congruence theorem of
   §5.3 (#link(<thm:power-congruence>)[§5.3]) solvability of
-  $x^n equiv a$ (mod $p$) is itself equivalent to $d | "ind"_g(a) =
+  $x^n equiv a$ (mod $p$) is itself equivalent to $d | "ind"_(g)(a) =
   d | s$. The two conditions coincide, so $a$ is a power residue.
 ]
 
