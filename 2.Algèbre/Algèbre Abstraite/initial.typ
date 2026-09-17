@@ -813,14 +813,20 @@ make.
 #proof[
   (1) Multiply $a b = a c$ by $a^(-1)$ on the left:
   $(a^(-1) a) b = (a^(-1) a) c$ gives $e b = e c$, that is, $b = c$;
-  the right-sided version multiplies on the right. (2) The element
+  the right-sided version multiplies on the right.
+
+  (2) The element
   $x_0 = a^(-1) b$ solves $a x = b$, since
   $a x_0 = (a a^(-1)) b = e b = b$; if $x$ is any solution then
   $a x = a x_0$ and cancellation in (1) gives $x = x_0$. Symmetrically
-  for $y a = b$. (3) By (G3), $a^(-1) a = e$ and $a a^(-1) = e$: so
+  for $y a = b$.
+
+  (3) By (G3), $a^(-1) a = e$ and $a a^(-1) = e$: so
   *both* $a$ and $(a^(-1))^(-1)$ are inverses of $a^(-1)$, and
   inverses are unique by #link(<cor:group-identity-uniqueness>)[the
-    corollary above]. (4) $(b^(-1) a^(-1)) (a b) = b^(-1) (a^(-1) a) b
+    corollary above].
+
+  (4) $(b^(-1) a^(-1)) (a b) = b^(-1) (a^(-1) a) b
   = b^(-1) b = e$ and dually $(a b) (b^(-1) a^(-1)) = e$, so
   $b^(-1) a^(-1)$ is the inverse of $a b$; in the abelian case
   $b^(-1) a^(-1) = a^(-1) b^(-1)$ outright.
