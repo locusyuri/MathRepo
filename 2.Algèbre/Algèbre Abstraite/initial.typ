@@ -249,7 +249,7 @@ from Cayley's theorem to Galois theory — is a study of such maps.
   $
   A homomorphism that is bijective is called an *isomorphism*; two
   systems between which an isomorphism exists are *isomorphic*,
-  written $S equiv T$.
+  written $S ≅ T$.
 ] <def:homomorphism>
 
 #definition(name: "Endomorphism and Automorphism")[
@@ -259,7 +259,11 @@ from Cayley's theorem to Galois theory — is a study of such maps.
   $S -> S$.
 ] <def:endomorphism-automorphism>
 
-The set of all automorphisms of $S$ is written $"Aut"(S)$; under composition it is closed, contains the identity map, and every element has an inverse (the inverse bijection), so $"Aut"(S)$ is a group — a fact we will use repeatedly once groups are defined in #link(<def:group>)[Chapter 2].
+The set of all automorphisms of $S$ is written $"Aut"(S)$. Under
+composition it is closed, contains the identity map, and every
+element has an inverse (the inverse bijection), so $"Aut"(S)$ is a
+group — a fact we will use repeatedly once groups are defined in
+#link(<def:group>)[Chapter 2].
 
 #property(name: "Homomorphisms Preserve Identity and Inverses")[
   Let $f: (S, star) -> (T, diamond)$ be a *surjective* homomorphism,
@@ -294,8 +298,8 @@ Surjectivity is essential in the first part: without it $f(e)$ is
 merely an idempotent of $T$, not the identity. (For homomorphisms of
 groups, where inverses exist for *every* element, the image $f(S)$
 carries the induced operation and $f(e) = e'$ holds inside $f(S)$
-regardless — this will be systematised in
-#link(<note:kernel-preliminary>)[Chapter 5].)
+regardless — this will be systematised in Chapter 5 (see
+  #link(<note:kernel-preliminary>)[the kernel note in §1.3]).)
 
 #property(name: "Surjective Homomorphisms Preserve Operation Laws")[
   Let $f: (S, star) -> (T, diamond)$ be a *surjective* homomorphism.
@@ -333,6 +337,23 @@ regardless — this will be systematised in
   associative. Commutativity and distributivity follow the same
   $f$-chasing argument.
 ]
+
+#example(name: "Surjective homomorphisms do not track laws back.")[
+  Let $f: (bb(Z), -) -> ({1}, dot)$ be the constant map $f(n) = 1$,
+  where ${1}$ is the singleton set with the trivial multiplication.
+  For all $a, b in bb(Z)$,
+  $
+    f(a - b) = 1 = 1 dot 1 = f(a) dot f(b),
+  $
+  so $f$ is a homomorphism; it is surjective, the codomain being a
+  singleton. Yet nothing is forced *backwards* by the target: the
+  trivial group $({1}, dot)$ is commutative and associative, while
+  the source $(bb(Z), -)$ is neither — not associative, since
+  $(3 - 2) - 1 = 0 != 3 - (2 - 1) = 2$, and not commutative, since
+  $2 - 1 != 1 - 2$. A surjective homomorphism transfers operation
+  laws *forward* only; it gives no information in the reverse
+  direction.
+] <ex:surjective-no-trackback>
 
 #example(name: "Two isomorphisms.")[
   
