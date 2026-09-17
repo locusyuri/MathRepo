@@ -526,20 +526,30 @@ Note the division of labour inside the proof: each upgrade uses
 == Typical Examples // 典型例子
 
 Definitions earn their keep through examples. We build a stock that
-will serve the whole notebook, checking the axioms in each case; a
-run of deliberate near-misses at the end shows which axiom does
-which work.
+will serve the whole notebook, checking the axioms in each case, and
+shelve it by size: the *finite* specimens first — the next chapter's
+Lagrange theorem counts within them — then the *infinite* ones. A run
+of deliberate near-misses at the end shows which axiom does which
+work. One piece of vocabulary is needed before shelving.
 
-#example(name: "Elementary groups.")[
-  The sets $bb(Z)$, $bb(Q)$, $bb(R)$ under
-  addition are abelian groups: closure and associativity are
-  inherited from arithmetic, $0$ is the identity, and $-a$ inverts
-  $a$. The non-zero rationals and reals under multiplication,
-  $(bb(Q)^*, dot)$ and $(bb(R)^*, dot)$, are abelian groups with
-  identity $1$ and inverse $1 \/ a$. Note the exclusion of $0$: it
-  has no multiplicative inverse, so the full structures
-  $(bb(Q), dot)$ fail (G3).
-] <ex:elementary-groups>
+#definition(name: "Order of a Group")[
+  The *order* of a group $G$ is the number of its elements, written
+  $abs(G)$ — a cardinal, for infinite groups, in the sense of the
+  Théorie des Ensembles note. The group is *finite* if $abs(G)$ is
+  finite, and *infinite* otherwise.
+] <def:order-group>
+
+A warning on words: §2.4 will attach a second meaning to *order* —
+the order of a single *element* — and the two must not be confused.
+They meet in the cyclic world of §2.5, where a generated subgroup
+has exactly as many elements as its generator has powers.
+
+=== Finite Groups // 有限群
+
+Finite specimens first. Three are abelian — one from modular
+arithmetic, one from the geometry of the circle, one from binary
+words — and three are not: the permutations, the polygon
+symmetries, the quaternions.
 
 #example(name: "Residue classes form a group.")[
   Take $bb(Z)_n$ with the addition
@@ -551,6 +561,53 @@ which work.
   abelian group $(bb(Z)_n, +)$ of order $n$ — the Cayley table of
   $(bb(Z)_4, +)$ appeared in #link(<ex:cayley-table>)[Chapter 1].
 ] <ex:residue-group>
+
+#example(name: "Roots of unity.")[
+  Let $mu_n = {z in bb(C) | z^n = 1}$ be the set of $n$-th *roots of
+  unity* — the complex solutions of $z^n = 1$, geometrically the
+  vertices of the regular $n$-gon inscribed in the unit circle:
+  $
+    mu_n = {e^((2 pi i k) / n) | 0 <= k <= n - 1}.
+  $
+  Under multiplication $mu_n$ is an abelian group of order $n$: if
+  $z^n = 1$ and $w^n = 1$ then $(z w)^n = z^n w^n = 1$, the number
+  $1$ is the identity, and the inverse $z^(-1) = overline(z)$ again
+  satisfies $z^n = 1$. The root $e^((2 pi i) / n)$ generates the
+  whole set — every root is one of its powers — so, in the
+  terminology of §2.5, $mu_n$ is cyclic, and
+  $[k] arrow.r.double e^((2 pi i k) / n)$ identifies $mu_n$ with
+  $(bb(Z)_n, +)$: the general form of the isomorphism
+  $bb(Z)_4 ≅ U_4 = mu_4$ computed in
+  #link(<ex:isomorphic-examples>)[Chapter 1].
+] <ex:roots-of-unity>
+
+#example(name: "Bitwise operations on $n$-bit words.")[
+  Let $B_n = {0, 1}^n$ be the
+  set of $n$-bit binary strings, equipped with the *bitwise XOR*
+  operation $xor$ (componentwise addition modulo $2$). Then
+  $(B_n, xor)$ is an abelian group:
+  - *associativity* and *commutativity* are inherited from
+    componentwise $bb(Z)_2$ arithmetic;
+  - the all-zero string $0^n$ is the identity;
+  - every string is its own inverse ($a xor a = 0^n$).
+
+  In contrast, bitwise AND ($and$) and OR ($or$) on $B_n$ are
+  *commutative monoids* but not groups. For AND: the all-ones string
+  $1^n$ is the identity, the operation is associative and commutative,
+  but any string with a $0$ bit has no inverse — there is no $b$ with
+  $0 and b = 1$ for that bit. For OR: the all-zero string $0^n$ is the
+  identity, but any string with a $1$ bit has no inverse — there is no
+  $b$ with $1 or b = 0$ for that bit. Both structures stall at the
+  monoid level (#link(<def:monoid>)[§2.1]).
+
+  The bitwise AND monoid does have a natural group *inside* it: the
+  invertible elements are exactly $1^n$, so the group of units is
+  trivial. For OR, the group of units is again trivial ($0^n$). The
+  group $(B_n, xor)$ strings together $n$ independent copies of
+  $(bb(Z)_2, +)$ operating side by side — Chapter 7 will study such
+  assemblies under the name *direct product* and write it
+  $(bb(Z)_2)^n$.
+] <ex:bitwise-operations>
 
 #definition(name: "Symmetric Group")[
   Let $X$ be a set. A *permutation* of $X$ is a bijection
@@ -580,7 +637,8 @@ which work.
     e, quad (1 2 3), quad (1 3 2), quad (1 2), quad (1 3), quad (2 3).
   $
   Each transposition is its own inverse and the two 3-cycles are
-  inverse to each other, so every element has order at most $3$.
+  inverse to each other, so every element $x$ satisfies $x^3 = e$ —
+  three self-multiplications always return to $e$.
   Composition is not commutative:
   $
     (1 2)(2 3) = (1 2 3), quad quad (2 3)(1 2) = (1 3 2),
@@ -607,6 +665,43 @@ These relations give $abs(D_n) = 2 n$. Moreover the relation
 $s r = r^(-1) s$ shows $s r != r s$ as soon as $r != r^(-1)$, that is,
 $n >= 3$: dihedral groups are non-abelian.
 
+#example(name: "The quaternion group.")[
+  Let
+  $Q_8 = {plus.minus 1, plus.minus i, plus.minus j, plus.minus k}$
+  with multiplication determined by
+  $
+    i^2 = j^2 = k^2 = -1, quad i j = k, quad j k = i, quad k i = j,
+  $
+  and the products in reversed order carrying a minus sign:
+  $j i = -k$, $k j = -i$, $i k = -j$. One checks that $1$ is the
+  identity, $-1$ commutes with everything and squares to $1$, and
+  each of $plus.minus i$, $plus.minus j$, $plus.minus k$ satisfies
+  $x^4 = 1$ with no smaller positive power equal to $1$; so
+  $abs(Q_8) = 8$. The group is non-abelian
+  ($i j = k != -k = j i$), yet the subsets of it that are themselves
+  groups — Chapter 3 will call them *subgroups* — are each generated
+  by a single element, a small group with a rich structure to which
+  Chapter 7 will return.
+] <ex:quaternion-group>
+
+=== Infinite Groups // 无限群
+
+The infinite shelf holds the arithmetic groups — under addition and,
+without zero, under multiplication — and the matrix groups; the union
+of all roots-of-unity groups closes it with a cautionary tale about
+infinity.
+
+#example(name: "Elementary groups.")[
+  The sets $bb(Z)$, $bb(Q)$, $bb(R)$ under
+  addition are abelian groups: closure and associativity are
+  inherited from arithmetic, $0$ is the identity, and $-a$ inverts
+  $a$. The non-zero rationals and reals under multiplication,
+  $(bb(Q)^*, dot)$ and $(bb(R)^*, dot)$, are abelian groups with
+  identity $1$ and inverse $1 \/ a$. Note the exclusion of $0$: it
+  has no multiplicative inverse, so the full structures
+  $(bb(Q), dot)$ fail (G3).
+] <ex:elementary-groups>
+
 #definition(name: "General and Special Linear Groups")[
   Let $F$ be a field. The *general linear group* $"GL"_(n)(F)$ is the
   set of invertible $n times n$ matrices over $F$ under matrix
@@ -626,22 +721,25 @@ $det(A B) = det(A) det(B)$, so products and inverses of
 determinant-$1$ matrices again have determinant $1$. For $n >= 2$
 these groups are non-abelian.
 
-#example(name: "The quaternion group.")[
-  Let
-  $Q_8 = {plus.minus 1, plus.minus i, plus.minus j, plus.minus k}$
-  with multiplication determined by
+#example(name: "All roots of unity at once.")[
+  The finite groups $mu_n$ of #link(<ex:roots-of-unity>)[above] nest
+  into one another, since $m | n$ implies $mu_m subset.eq mu_n$; their
+  union
   $
-    i^2 = j^2 = k^2 = -1, quad i j = k, quad j k = i, quad k i = j,
+    mu_oo = union.big_(n >= 1) mu_n
+    = {z in bb(C) | z^n = 1 quad "for some" quad n >= 1}
   $
-  and the products in reversed order carrying a minus sign:
-  $j i = -k$, $k j = -i$, $i k = -j$. One checks that $1$ is the
-  identity, $-1$ commutes with everything and squares to $1$, and
-  each of $plus.minus i$, $plus.minus j$, $plus.minus k$ has order
-  $4$; so $abs(Q_8) = 8$. The group is non-abelian
-  ($i j = k != -k = j i$), yet all of its proper subgroups are
-  cyclic — a small group with a rich structure to which Chapter 7
-  will return.
-] <ex:quaternion-group>
+  is again a group: if $z^m = 1$ and $w^n = 1$ then
+  $(z w)^(m n) = z^(m n) w^(m n) = 1$, and the inverse
+  $z^(-1) = overline(z)$ stays in the union. The group $mu_oo$ is
+  abelian and infinite — it contains $mu_n$ for every $n$ — yet no
+  element escapes finiteness: each $z in mu_oo$ lies in some $mu_n$,
+  so $z^n = 1$ and $z$ returns to $1$ after $n$ multiplications.
+  §2.4 will give this observation its name: $mu_oo$ is an infinite
+  group in which every element has finite order.
+] <ex:all-roots-of-unity>
+
+=== Near-Misses // 反例
 
 #example(name: "Near-misses: why each axiom is needed.")[
   
@@ -670,36 +768,29 @@ these groups are non-abelian.
     *simultaneously*, do suffice.
 ] <ex:non-groups>
 
-#example(name: "Bitwise operations on $n$-bit words.")[
-  Let $B_n = {0, 1}^n$ be the
-  set of $n$-bit binary strings, equipped with the *bitwise XOR*
-  operation $xor$ (componentwise addition modulo $2$). Then
-  $(B_n, xor)$ is an abelian group:
-  - *associativity* and *commutativity* are inherited from
-    componentwise $bb(Z)_2$ arithmetic;
-  - the all-zero string $0^n$ is the identity;
-  - every string is its own inverse ($a xor a = 0^n$).
+The stock is complete. Shelved by size, with commutativity recorded,
+it reads as follows.
 
-  In contrast, bitwise AND ($and$) and OR ($or$) on $B_n$ are
-  *commutative monoids* but not groups. For AND: the all-ones string
-  $1^n$ is the identity, the operation is associative and commutative,
-  but any string with a $0$ bit has no inverse — there is no $b$ with
-  $0 and b = 1$ for that bit. For OR: the all-zero string $0^n$ is the
-  identity, but any string with a $1$ bit has no inverse — there is no
-  $b$ with $1 or b = 0$ for that bit. Both structures stall at the
-  monoid level (#link(<def:monoid>)[§2.1]).
+#figure(
+  table(
+    columns: 4,
+    align: (left, auto, auto, center),
+    table.header([Group], [Operation], [$abs(G)$], [Abelian?]),
+    [$(bb(Z)_n, +)$], [addition], [$n$], [yes],
+    [$mu_n$], [multiplication], [$n$], [yes],
+    [$(B_n, xor)$], [bitwise XOR], [$2^n$], [yes],
+    [$S_n$], [composition], [$n!$], [no for $n >= 3$],
+    [$D_n$], [composition], [$2 n$], [no],
+    [$Q_8$], [quaternion product], [$8$], [no],
+    [$(bb(Z), +)$, $(bb(Q), +)$, $(bb(R), +)$], [addition], [infinite], [yes],
+    [$(bb(Q)^*, dot)$, $(bb(R)^*, dot)$], [multiplication], [infinite], [yes],
+    [$"GL"_(n)(F)$, $"SL"_(n)(F)$], [matrix multiplication], [infinite], [no for $n >= 2$],
+    [$mu_oo$], [multiplication], [infinite], [yes],
+  ),
+  caption: [The typical groups of this section, arranged by size and
+    commutativity.],
+)
 
-  The bitwise AND monoid does have a natural group *inside* it: the
-  invertible elements are exactly $1^n$, so the group of units is
-  trivial. For OR, the group of units is again trivial ($0^n$). The
-  group $(B_n, xor)$ is none other than $(bb(Z)_2)^n$, the direct
-  product of $n$ copies of the cyclic group of order $2$ — a structure
-  Chapter 7 will revisit.
-] <ex:bitwise-operations>
-
-The stock is complete: abelian specimens ($(bb(Z), +)$,
-$(bb(Z)_n, +)$, $(B_n, xor)$), non-abelian ones ($S_3$, $D_n$,
-$"GL"_(n)(F)$, $Q_8$), and structures dismissed at each axiom in turn.
 What do the axioms buy once admitted? The next section collects the
 first dividends — all of them free, none requiring extra hypotheses.
 
@@ -853,15 +944,11 @@ The wrap-around phenomenon is the algebraic shadow of a clock:
 after $n$ steps the walk returns to its start, and only the
 remainder of the step count matters.
 
-#definition(name: "Order of a Group")[
-  The *order* of a group $G$ is the number of its elements, written
-  $abs(G)$ — a cardinal, for infinite groups, in the sense of the
-  Théorie des Ensembles note. The group is *finite* if $abs(G)$ is
-  finite. Do not confuse the two orders: the order of a *group*
-  counts elements, the order of an *element* measures powers. They
-  meet in the cyclic world of §2.5, where
-  $abs(⟨a⟩) = "ord"(a)$.
-] <def:order-group>
+Two orders now coexist, and the distinction matters. The *order of
+the group* (#link(<def:order-group>)[§2.2]) counts elements; the
+*order of an element*, defined above, measures powers. They meet in
+the cyclic world of §2.5: there the set of powers $⟨a⟩$ has exactly
+$abs(⟨a⟩) = "ord"(a)$ elements.
 
 == Cyclic Groups // 循环群
 
@@ -1027,10 +1114,10 @@ $n = 4$ of the theorem; the theorem says such luck is *systematic*.
 ) <fig:cyclic-circle>
 
 The chapter closes with a tally. We have the axiomatic object (§2.1),
-a stocked bestiary from $(bb(Z), +)$ to $Q_8$ (§2.2), the free
-cancellations of the axioms (§2.3), the two notions of order — of an
-element and of the group — together with the conjugacy notion bought
-by the axioms (§2.4), and the first classification theorem: cyclic
+a stocked bestiary from $(bb(Z), +)$ to $mu_oo$ (§2.2), the free
+cancellations of the axioms (§2.3), the order of an element and the
+conjugacy notion bought by the axioms (§2.4), and the first
+classification theorem: cyclic
 groups are unique up to isomorphism, and their subgroups are laid out
 by the divisors of the order (§2.5). The next chapter steps *inside*
 a
