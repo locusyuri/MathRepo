@@ -18,7 +18,7 @@
   subtitle: "A notebook for partial differential equations",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.6.0",
+  version: "v0.7.0",
   extra-info: "This is a notebook for partial differential equations.",
 )
 
@@ -2369,6 +2369,366 @@ Weak solutions constructed in Chapter 9 are $H^1$ functions; the question of the
 //     - 整体存在条件
 
 #part("Parabolic Equations") // 抛物型方程
+
+= The Heat Equation // 热方程
+
+The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), is the prototypical parabolic equation. Its fundamental solution — the heat kernel — was constructed in Chapter 7 (#link(<ex:fund-heat>)[§7.2]); this chapter develops the classical theory of the initial value problem: the Cauchy problem, the maximum principle, and the energy estimates. Two features distinguish parabolic equations from hyperbolic ones (Part VI): *regularization* — arbitrary rough data become $C^oo$ instantly — and *irreversibility* — the backward problem is ill-posed.
+
+== Heat Kernel and Fundamental Solution // 热核与基本解
+
+#definition(name: "The Heat Kernel")[
+  The *heat kernel* on $bb(R)^n$ is
+  $
+    E (t, x) = cases(1 / (4 pi t)^(n/2) exp(-abs(x)^2 / (4 t)), t > 0, 0, t <= 0.)
+  $
+  It is the fundamental solution of the heat operator (Chapter 7, #link(<ex:fund-heat>)[§7.2]): $(partial_t - Delta_x) E = delta$ in $cal(D)'(bb(R)^(1+n))$.
+] <def:heat-kernel>
+
+#proposition(name: "Basic Properties of the Heat Kernel")[
+  For every $t > 0$:
+  (i) $E (t, dot) in C^oo (bb(R)^n)$ and $E (t, x) > 0$ for all $x$;
+  (ii) $integral_(bb(R)^n) E (t, x) dif x = 1$;
+  (iii) $(partial_t - Delta) E (t, x) = 0$ for $t > 0$;
+  (iv) as $t -> 0^+$, $E (t, dot) -> delta$ in $cal(D)'(bb(R)^n)$ (approximate identity).
+] <prop:heat-kernel-properties>
+
+#proof[
+  (i) and (iii) are direct computations with the Gaussian, already carried out in Chapter 7 (#link(<ex:fund-heat>)[§7.2]). For (ii), use the one-dimensional Gaussian integral $integral_(-oo)^oo e^(-s^2) dif s = sqrt(pi)$:
+  $
+    integral_(bb(R)^n) E (t, x) dif x = 1 / (4 pi t)^(n/2) product_(i=1)^n integral_(-oo)^oo exp(-x_i^2 / (4 t)) dif x_i = 1 / (4 pi t)^(n/2) (sqrt(4 pi t))^n = 1.
+  $
+  (iv) follows from (ii), positivity, and the concentration of the mass at the origin as $t -> 0^+$ (Chapter 7, §7.1).
+]
+
+== Cauchy Problem // Cauchy 问题
+
+#definition(name: "The Cauchy Problem for the Heat Equation")[
+  The *Cauchy problem* is to find $u: [0, oo) times bb(R)^n -> bb(R)$ such that
+  $
+    partial_t u = Delta u quad "in" quad (0, oo) times bb(R)^n, quad u (0, x) = g (x) quad "on" quad {t = 0},
+  $
+  where $g: bb(R)^n -> bb(R)$ is the prescribed initial datum.
+] <def:cauchy-heat>
+
+#theorem(name: "Solution of the Cauchy Problem")[
+  Let $g in C (bb(R)^n) inter L^oo (bb(R)^n)$. Then
+  $
+    u (t, x) = integral_(bb(R)^n) E (t, x - y) g (y) dif y, quad t > 0, quad u (0, x) = g (x),
+  $
+  defines $u in C^oo ((0, oo) times bb(R)^n) inter C ([0, oo) times bb(R)^n)$, which satisfies the heat equation for $t > 0$ and $u (0, dot) = g$.
+] <thm:cauchy-heat>
+
+#proof[
+  For each fixed $t > 0$, $E (t, dot) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of the heat kernel properties gives $(partial_t - Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E (t, dot)}_(t > 0)$ is an approximate identity; the standard mollifier argument (Chapter 7, #link(<def:mollifier>)[§7.1]) gives $u (t, dot) = E (t, dot) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
+]
+
+#note[
+  *Smoothing effect.* No regularity of $g$ beyond continuity is needed: $u (t, dot)$ is $C^oo$ for every $t > 0$, and by the derivative estimates of Chapter 8 the derivatives decay as $t^(-abs(alpha)/2)$ (quantified in §12.4). This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation (Part VI), which propagates the regularity of the data without improvement.
+]
+
+== Maximum Principle // 最大值原理
+
+#theorem(name: "Weak Maximum Principle for the Heat Equation")[
+  Let $Omega subset bb(R)^n$ be bounded and $T > 0$, and set $Omega_T = (0, T] times Omega$. If $u in C^2 (Omega_T) inter C (overline(Omega_T))$ satisfies $partial_t u - Delta u <= 0$ in $Omega_T$, then
+  $
+    max_(overline(Omega_T)) u = max_(Gamma_T) u,
+  $
+  where $Gamma_T = ({0} times overline(Omega)) union ([0, T] times partial Omega)$ is the *parabolic boundary* (the bottom and the lateral sides; the top $t = T$ is not part of it). For $partial_t u - Delta u >= 0$ the same holds with minima.
+] <thm:parabolic-weak-maximum>
+
+#proof[
+  *Step 1: Strict inequality.* Suppose $partial_t u - Delta u < 0$. If $u$ attained its maximum at an interior point $(t_0, x_0)$ with $0 < t_0 < T$ and $x_0 in Omega$, then $partial_t u (t_0, x_0) = 0$ (first-order condition) and $Delta u (t_0, x_0) <= 0$ (second-derivative test), contradicting the strict inequality. If the maximum occurred on the top $t = T$, say at $(T, x_0)$ with $x_0 in Omega$, then for small $h > 0$, $u (T, x_0) >= u (T - h, x_0)$ gives $(partial u)/(partial t) (T, x_0) >= 0$, while $Delta u (T, x_0) <= 0$, again contradicting $partial_t u - Delta u < 0$. Hence the maximum lies on $Gamma_T$.
+
+  *Step 2: General case.* For $epsilon > 0$ consider $u_epsilon (t, x) = u (t, x) - epsilon t$, for which $partial_t u_epsilon - Delta u_epsilon = (partial_t u - Delta u) - epsilon < 0$. By Step 1, $max_(overline(Omega_T)) u_epsilon = max_(Gamma_T) u_epsilon$. Letting $epsilon -> 0$ and using $u_epsilon <= u <= u_epsilon + epsilon T$ gives $max u = max_(Gamma_T) u$.
+]
+
+#theorem(name: "Strong Maximum Principle for the Heat Equation")[
+  Let $Omega$ be connected and $u in C^2 (Omega_T) inter C (overline(Omega_T))$ with $partial_t u - Delta u <= 0$ in $Omega_T$. If $u$ attains its maximum at a point of $Omega_T$ (i.e. with $t > 0$), then $u$ is constant on $overline(Omega) times [0, t]$. In particular, a non-constant solution of the heat equation attains its maximum only on the parabolic boundary.
+] <thm:parabolic-strong-maximum>
+
+#proof[
+  (Sketch.) The proof propagates the maximum backward in time using the positivity of the heat kernel. If $u (t_0, x_0) = M$ is the maximum, then for $0 < s < t_0$ the mean value formula for the heat equation gives
+  $
+    u (t_0, x_0) = integral_(bb(R)^n) E (s, y) u (t_0 - s, x_0 - y) dif y
+  $
+  (on the whole space; for bounded domains, boundary terms enter with the correct sign for sub-solutions). Since $E (s, y) > 0$, $integral E dif y = 1$, and $u <= M$, the average can equal $M$ only if $u (t_0 - s, dot) = M$ a.e., hence everywhere by continuity. Iterating backward in $t$ and spreading in space by connectedness yields $u = M$ on $overline(Omega) times [0, t_0]$.
+]
+
+#corollary(name: "Uniqueness of Bounded Solutions of the Cauchy Problem")[
+  Let $u, v in C^2 ((0, oo) times bb(R)^n) inter C ([0, oo) times bb(R)^n)$ be bounded solutions of the Cauchy problem with the same initial datum. Then $u = v$; in particular, the solution of Theorem 12.2 is the unique bounded solution.
+] <cor:cauchy-heat-uniqueness>
+
+#proof[
+  The difference $w = u - v$ is bounded, say $abs(w) <= 2 M$, and solves the heat equation with $w (0, dot) = 0$. Fix $(T, y)$ and $epsilon > 0$. By continuity at $t = 0$, there is $delta > 0$ with $abs(w (t, x)) < epsilon$ for $0 <= t < delta$ on every bounded set; fix $R$ so large that on the cylinder $Q = (delta, T) times {abs(x - y) < R}$ the Gaussian barrier
+  $
+    v (t, x) = 2 M (1 - exp(-(abs(x - y)^2)/(4 (T - t)))) + epsilon
+  $
+  dominates $abs(w)$ on the parabolic boundary of $Q$ (at $t = delta$ this holds for $R$ large since $v (delta, x) -> 2 M + epsilon$ as $R -> oo$; on the lateral side $v -> 2 M + epsilon$ as $t -> T^-$). A direct computation gives $partial_t v - Delta v <= 0$, so by the weak maximum principle $abs(w) <= v$ in $Q$; at the point $(T, y)$, $v = epsilon$, hence $abs(w (T, y)) <= epsilon$. Letting $epsilon -> 0$ gives $w (T, y) = 0$, and $(T, y)$ is arbitrary.
+]
+
+== Energy Estimates and Smoothing Effect // 能量估计与平滑效应
+
+#proposition(name: "Energy Dissipation")[
+  Let $u$ be a smooth solution of the heat equation on $(0, oo) times Omega$ with either $u = 0$ on $partial Omega$ (Dirichlet) or $(partial u)/(partial nu) = 0$ on $partial Omega$ (Neumann). Then
+  $
+    1/2 (dif)/(dif t) integral_Omega abs(u)^2 dif x = -integral_Omega abs(nabla u)^2 dif x.
+  $
+  In particular the $L^2$ energy is non-increasing in time.
+] <prop:energy-dissipation>
+
+#proof[
+  Differentiating under the integral, using the equation, and integrating by parts:
+  $
+    1/2 (dif)/(dif t) integral_Omega abs(u)^2 dif x = integral_Omega u partial_t u dif x = integral_Omega u Delta u dif x = -integral_Omega abs(nabla u)^2 dif x + integral_(partial Omega) u (partial u)/(partial nu) dif S.
+  $
+  The boundary term vanishes for both Dirichlet and Neumann data.
+]
+
+#theorem(name: "Smoothing Estimates")[
+  Let $g in L^2 (bb(R)^n)$ and $u = E * g$ the solution of the Cauchy problem. Then for every multi-index $alpha$ and every $t > 0$,
+  $
+    ||partial^alpha u (t, dot)||_(L^2) <= C_(n, alpha) t^(-abs(alpha)/2) ||g||_(L^2),
+  $
+  and for $g in L^1 (bb(R)^n) inter L^2 (bb(R)^n)$,
+  $
+    ||u (t, dot)||_oo <= (4 pi t)^(-n/2) ||g||_(L^1).
+  $
+  These are quantitative forms of the smoothing effect: each derivative costs the factor $t^(-abs(alpha)/2)$, which diverges only as $t -> 0^+$.
+] <thm:smoothing-estimates>
+
+#proof[
+  By the scaling of the Gaussian, $partial^alpha E (t, x) = t^(-(n + abs(alpha))/2) (partial^alpha E) (1, x / sqrt(t))$, so $||partial^alpha E (t, dot)||_(L^1) = C t^(-abs(alpha)/2)$; Young's inequality for convolutions gives
+  $
+    ||partial^alpha u (t, dot)||_(L^2) <= ||partial^alpha E (t, dot)||_(L^1) ||g||_(L^2) <= C t^(-abs(alpha)/2) ||g||_(L^2).
+  $
+  The second estimate is the trivial Young bound $||E (t, dot) * g||_oo <= ||E (t, dot)||_oo ||g||_(L^1) = (4 pi t)^(-n/2) ||g||_(L^1)$.
+]
+
+#note[
+  The smoothing effect is irreversible. The backward heat equation is ill-posed, as already noted in Chapter 1 (#link(<ex:backward-heat-ill-posed>)[§1.3]): the estimates above all blow up as $t -> 0^+$, and no bounded backward solution exists for general data. This asymmetry — regularization forward, instability backward — is characteristic of parabolic equations and underlies the arrow of time in diffusion processes.
+]
+
+= Linear Parabolic Boundary Value Problems // 线性抛物型边值问题
+
+The Cauchy problem of Chapter 12 treats the whole space. On a bounded domain one prescribes, in addition to the initial datum, boundary conditions — the initial-boundary value problems of Chapter 9, now with a time derivative. The weak framework extends the elliptic theory (Chapter 9) to parabolic equations, and the semigroup viewpoint gives the abstract structure.
+
+== Dirichlet and Neumann Problems // 狄利克雷与纽曼问题
+
+#definition(name: "The Parabolic Initial-Boundary Value Problem")[
+  Let $Omega subset bb(R)^n$ be a bounded domain and $T > 0$. The *Dirichlet initial-boundary value problem* is to find $u$ with
+  $
+    partial_t u - Delta u = f quad "in" quad (0, T) times Omega, quad u = 0 quad "on" quad (0, T) times partial Omega, quad u (0, dot) = u_0 quad "in" quad Omega.
+  $
+  The Neumann version replaces the boundary condition by $(partial u)/(partial nu) = 0$ on $(0, T) times partial Omega$.
+] <def:parabolic-ibvp>
+
+#definition(name: "Weak Formulation and Bochner Spaces")[
+  Let $H = L^2 (Omega)$ and $V = H_0^1 (Omega)$ (Dirichlet) or $V = H^1 (Omega)$ (Neumann). A function $u in L^2 (0, T; V)$ with $partial_t u in L^2 (0, T; V')$ is a *weak solution* if $u (0) = u_0$ and, for a.e. $t in (0, T)$,
+  $
+    ⟨ partial_t u, v ⟩ + integral_Omega nabla u dot nabla v dif x = integral_Omega f v dif x quad "for all" v in V,
+  $
+  where $⟨ dot, dot ⟩$ denotes the duality pairing of $V'$ and $V$, and $u_0 in L^2 (Omega)$. (The Bochner spaces $L^p (0, T; X)$ are treated in Analyse Fonctionnelle; here they provide the natural functional framework.)
+] <def:weak-parabolic>
+
+#theorem(name: "Existence and Uniqueness via Galerkin Approximation")[
+  Let $Omega$ be a bounded domain, $f in L^2 (0, T; L^2 (Omega))$, and $u_0 in L^2 (Omega)$. Then the Dirichlet problem has a unique weak solution
+  $
+    u in C ([0, T]; L^2 (Omega)) inter L^2 (0, T; H_0^1 (Omega)), quad partial_t u in L^2 (0, T; H^(-1) (Omega)),
+  $
+  satisfying the energy estimate
+  $
+    sup_(0 <= t <= T) ||u (t)||_(L^2)^2 + integral_0^T ||nabla u (t)||_(L^2)^2 dif t <= C (||u_0||_(L^2)^2 + ||f||_(L^2 (0, T; L^2))^2).
+  $
+] <thm:parabolic-existence>
+
+#proof[
+  *Step 1: The Galerkin system.* Let ${w_k}$ be an orthonormal basis of $L^2 (Omega)$ consisting of eigenfunctions of the Dirichlet Laplacian (spectral theorem for the compact resolvent, Analyse Fonctionnelle), with $-Delta w_k = lambda_k w_k$ and $0 < lambda_1 <= lambda_2 <= dots$. Look for $u_m (t) = sum_(k=1)^m c_k (t) w_k$ solving the system of ODEs
+  $
+    c_k' (t) + lambda_k c_k (t) = f_k (t), quad c_k (0) = (u_0, w_k), quad f_k (t) = (f (t), w_k).
+  $
+  By Duhamel's formula $c_k (t) = e^(-lambda_k t) c_k (0) + integral_0^t e^(-lambda_k (t - s)) f_k (s) dif s$, so $u_m$ is well defined on $[0, T]$.
+
+  *Step 2: A priori estimates.* Multiply the $k$-th equation by $c_k$ and sum over $k$: using $sum_k lambda_k c_k^2 = ||nabla u_m||_(L^2)^2$ (orthonormality),
+  $
+    1/2 (dif)/(dif t) ||u_m||_(L^2)^2 + ||nabla u_m||_(L^2)^2 = (f, u_m) <= ||f||_(L^2) ||u_m||_(L^2).
+  $
+  Grönwall's inequality gives the uniform bound
+  $
+    sup_t ||u_m (t)||_(L^2)^2 + integral_0^T ||nabla u_m (t)||_(L^2)^2 dif t <= C
+  $
+  with $C$ independent of $m$.
+
+  *Step 3: Passage to the limit.* By the uniform bounds, a subsequence converges weakly in $L^2 (0, T; H_0^1)$ and weakly-$*$ in $L^oo (0, T; L^2)$ to some $u$; the compactness lemma of Aubin--Lions (Analyse Fonctionnelle) upgrades this to the strong convergence needed to pass to the limit in the weak formulation. Uniqueness follows from the energy estimate applied to the difference of two solutions, which has zero data.
+]
+
+== Semigroup Framework // 半群框架
+
+#definition(name: "$C_0$-Semigroup and Its Generator")[
+  Let $X$ be a Banach space. A family ${S (t)}_(t >= 0)$ of bounded linear operators on $X$ is a *$C_0$-semigroup* if $S (0) = I$, $S (t + s) = S (t) S (s)$ for all $t, s >= 0$, and $t |-> S (t) x$ is continuous for every $x in X$. The *infinitesimal generator* is
+  $
+    A x = lim_(t -> 0^+) (S (t) x - x)/t,
+  $
+  defined on the set of $x$ for which the limit exists. (The abstract theory — the Hille--Yosida theorem — is developed in Analyse Fonctionnelle; here we apply it to the heat semigroup.)
+] <def:semigroup>
+
+#theorem(name: "The Heat Semigroup and Duhamel's Formula")[
+  On $X = L^2 (Omega)$, the solution operator $S (t): u_0 |-> u (t, dot)$ of the homogeneous Dirichlet problem ($f = 0$) is a $C_0$-semigroup of self-adjoint contractions whose generator is the Dirichlet Laplacian $A = Delta$ with $"dom"(A) = H^2 (Omega) inter H_0^1 (Omega)$. The solution of the inhomogeneous problem is given by *Duhamel's formula*
+  $
+    u (t) = S (t) u_0 + integral_0^t S (t - s) f (s) dif s.
+  $
+] <thm:heat-semigroup>
+
+#proof[
+  The semigroup property $S (t + s) = S (t) S (s)$ follows from uniqueness of the Cauchy problem (both sides solve the heat equation with initial datum $S (s) u_0$); contractivity from the energy estimate (Chapter 13, §13.1) with $f = 0$; self-adjointness from the symmetry of the Laplacian on $H_0^1$. That the generator is the Dirichlet Laplacian on the stated domain is the content of the boundary regularity theorem (Chapter 11, §11.2). Duhamel's formula is verified by differentiation: the right-hand side satisfies the heat equation with the correct initial and boundary data (for smooth data directly; in general, approximate).
+]
+
+#note[
+  The semigroup viewpoint recasts the heat equation as an infinite-dimensional linear ODE $u' (t) = A u (t)$ with $A = Delta$ negative self-adjoint, so $S (t) = e^(t A)$ behaves like a decaying exponential. The rate of decay is governed by the spectrum of $A$ (§13.4), and the semigroup estimates of Chapter 12 (§12.4) are exactly the $L^p -> L^q$ smoothing bounds used for nonlinear problems in Chapter 14.
+]
+
+== Comparison Principles and Monotone Iteration // 比较原理与单调迭代
+
+#theorem(name: "Comparison Principle")[
+  Let $Omega subset bb(R)^n$ be bounded and $u, v in C^2 (overline(Omega_T))$ with
+  $
+    partial_t u - Delta u <= partial_t v - Delta v quad "in" quad Omega_T, quad u <= v quad "on" quad Gamma_T.
+  $
+  Then $u <= v$ throughout $Omega_T$. In particular, if $partial_t u - Delta u <= 0$ and $u >= 0$ on $Gamma_T$, then $u >= 0$ in $Omega_T$ (*positivity preservation*).
+] <thm:comparison-principle>
+
+#proof[
+  Apply the weak maximum principle (Chapter 12, #link(<thm:parabolic-weak-maximum>)[§12.3]) to $w = u - v$: since $partial_t w - Delta w <= 0$ in $Omega_T$ and $w <= 0$ on $Gamma_T$, we get $w <= 0$ everywhere.
+]
+
+#example(name: "Monotone Iteration for Semilinear Problems")[
+  Consider the semilinear problem $partial_t u - Delta u = f (u)$ in $Omega_T$ with $u = 0$ on the lateral boundary and $u (0, dot) = u_0$, where $f$ is smooth and bounded. A pair $(underline(u), overline(u))$ of *sub- and super-solutions* satisfies
+  $
+    partial_t underline(u) - Delta underline(u) <= f (underline(u)), quad partial_t overline(u) - Delta overline(u) >= f (overline(u)),
+  $
+  with ordered data $underline(u) <= overline(u)$ on $Gamma_T$ and $underline(u) (0, dot) <= u_0 <= overline(u) (0, dot)$. The iteration
+  $
+    partial_t u_(n+1) - Delta u_(n+1) = f (u_n), quad u_(n+1) (0, dot) = u_0, quad u_(n+1) = 0 "on" (0, T) times partial Omega,
+  $
+  started from $u_0 = underline(u)$, produces — by the comparison principle and standard compactness — an increasing sequence converging to the minimal solution of the problem; starting from $overline(u)$ gives the maximal solution. This *method of monotone iteration* (the former Chapter 11.4) is the standard existence tool for semilinear parabolic equations with monotone reaction terms.
+] <ex:monotone-iteration>
+
+== Long-Time Behavior // 长期行为
+
+#theorem(name: "Exponential Decay for the Dirichlet Problem")[
+  Let $lambda_1 > 0$ be the first eigenvalue of $-Delta$ with Dirichlet data on $Omega$. Then the solution of the homogeneous heat equation satisfies
+  $
+    ||u (t)||_(L^2) <= e^(-lambda_1 t) ||u_0||_(L^2), quad t >= 0,
+  $
+  and the spectrum of the generator consists of the eigenvalues ${-lambda_k}$ with $lambda_k -> oo$. Consequently $||u (t)||_(L^2) -> 0$ exponentially as $t -> oo$.
+] <thm:exponential-decay>
+
+#proof[
+  Multiply the equation by $u$ and use Poincaré's inequality (#link(<prop:poincare-inequality>)[§9.1]), $||nabla u||_(L^2)^2 >= lambda_1 ||u||_(L^2)^2$. From the energy identity (Chapter 12, §12.4),
+  $
+    1/2 (dif)/(dif t) ||u||_(L^2)^2 = -||nabla u||_(L^2)^2 <= -lambda_1 ||u||_(L^2)^2,
+  $
+  and Grönwall's inequality gives the decay. The spectral statement follows from the spectral decomposition of the compact resolvent (Analyse Fonctionnelle): $S (t) = sum_k e^(-lambda_k t) P_k$ with the projections $P_k$ onto the eigenspaces.
+]
+
+#note[
+  *Asymptotic stabilization.* For time-independent $f$, the solution converges to the elliptic steady state: if $v_oo$ solves $-Delta v_oo = f$ in $Omega$, $v_oo = 0$ on $partial Omega$ (Chapter 9, §9.1), then $w = u - v_oo$ satisfies the homogeneous heat equation, so
+  $
+    ||u (t) - v_oo||_(L^2) <= C e^(-lambda_1 t).
+  $
+  This is the parabolic-to-elliptic connection: the long-time behavior of the heat equation is governed by the elliptic problem, tying Part V back to Chapters 8–11.
+]
+
+= Nonlinear Parabolic Equations // 非线性抛物型方程
+
+The linear theory of Chapters 12–13 is the platform for semilinear parabolic equations $partial_t u = Delta u + f (u)$, which model reaction-diffusion phenomena. Two qualitative phenomena dominate: *traveling fronts* propagating at a characteristic speed (the Fisher--KPP equation) and *finite-time blow-up* when the reaction dominates diffusion. The basic existence machinery is the contraction argument on Duhamel's formula.
+
+== Reaction-Diffusion Equations // 反应-扩散方程
+
+#definition(name: "Reaction-Diffusion Equations")[
+  A *reaction-diffusion equation* is a semilinear parabolic equation of the form
+  $
+    partial_t u = Delta u + f (u, nabla u), quad u (0, dot) = u_0,
+  $
+  where $f$ is the reaction (source) term. Standard models: $f (u) = u (1 - u)$ (Fisher--KPP, §14.2), $f (u) = u^p$ (power nonlinearity, §14.3), and systems arising in chemistry, biology, and ecology.
+] <def:reaction-diffusion>
+
+#theorem(name: "Local Existence by Contraction on Duhamel's Formula")[
+  Let $f: bb(R) -> bb(R)$ be $C^1$ with $f (0) = 0$ and $abs(f' (u)) <= C (1 + abs(u)^(q-1))$ for some $q$. Then for suitable initial data $u_0 in L^p (bb(R)^n)$ there exist $T > 0$ and a unique *mild solution* $u in C ([0, T]; L^p (bb(R)^n))$ of
+  $
+    u (t) = S (t) u_0 + integral_0^t S (t - s) f (u (s)) dif s,
+  $
+  where $S$ is the heat semigroup (Chapter 13, §13.2). The solution is obtained by the contraction mapping principle on a ball of $C ([0, T]; L^p)$, using the $L^q -> L^p$ smoothing estimates of the heat semigroup (Chapter 12, §12.4).
+] <thm:local-existence>
+
+#note[
+  The *maximal time of existence* $T_max$ satisfies the blow-up alternative: either $T_max = oo$ (the solution is global) or $||u (t)||_oo -> oo$ as $t -> T_max^-$ (finite-time blow-up). This dichotomy is the basic qualitative question for reaction-diffusion equations (§14.3).
+]
+
+== Fisher-KPP Equation // Fisher-KPP 方程
+
+#definition(name: "The Fisher--KPP Equation")[
+  The *Fisher--KPP equation* (Fisher and Колмогоров, Петровский, Пискунов) is
+  $
+    partial_t u = partial_(x x)^2 u + u (1 - u), quad x in bb(R), quad t > 0,
+  $
+  the prototype for the spread of an advantageous gene (Fisher, 1937) and of a population (KPP, 1937). The constant solutions are the unstable equilibrium $u = 0$ and the stable equilibrium $u = 1$.
+] <def:fisher-kpp>
+
+#theorem(name: "Traveling Waves for Fisher--KPP")[
+  A *traveling wave* is a solution $u (t, x) = phi (x - c t)$ with $phi (-oo) = 1$ and $phi (oo) = 0$ (a front connecting the two equilibria). Such fronts exist for the Fisher--KPP equation if and only if the speed satisfies
+  $
+    abs(c) >= 2,
+  $
+  and for $abs(c) >= 2$ the front $phi_c$ is strictly decreasing. The minimal speed $c^* = 2$ is the *spreading speed*: for compactly supported initial data $0 <= u_0 <= 1$, the solution converges to the front with speed $c^*$ in the moving frame.
+] <thm:fisher-kpp-fronts>
+
+#proof[
+  Substituting $u (t, x) = phi (x - c t)$ into the equation gives the ODE
+  $
+    phi'' + c phi' + phi (1 - phi) = 0.
+  $
+  Linearizing at the unstable equilibrium $phi = 0$ (relevant as $x -> oo$), the characteristic equation is $lambda^2 + c lambda + 1 = 0$, whose roots are real if and only if $abs(c) >= 2$; real negative roots correspond to monotone fronts without oscillations. For $abs(c) >= 2$, a phase-plane analysis of the second-order ODE yields a monotone heteroclinic connection from $1$ to $0$ (and its reflection). The convergence of compactly supported solutions to the minimal front is the classical KPP theorem (Колмогоров, Петровский, Пискунов, 1937).
+]
+
+#note[
+  The minimal speed admits the variational characterization $c^* = 2 sqrt(f' (0))$ for general monostable nonlinearities $f$ with $f (0) = f (1) = 0$ and $f > 0$ on $(0, 1)$: the speed is selected by the linearization at the unstable equilibrium. This *linear selection* principle is a hallmark of the KPP class; nonlinearities with $f' (0) = 0$ can give faster "pulled" fronts, and the analysis differs (non-KPP, pushed waves).
+]
+
+== Blow-Up and Global Existence // 爆破与整体存在
+
+#definition(name: "Finite-Time Blow-Up")[
+  A solution of a semilinear heat equation with maximal existence time $T_max < oo$ is said to *blow up in finite time*; by the blow-up alternative, $||u (t)||_oo -> oo$ as $t -> T_max^-$.
+] <def:blow-up>
+
+#theorem(name: "The Fujita Exponent")[
+  Consider $partial_t u = Delta u + u^p$ on $bb(R)^n$, $p > 1$, with $u (0, dot) = u_0 >= 0$ nontrivial. The *Fujita critical exponent* is
+  $
+    p_c = 1 + 2/n.
+  $
+  (i) If $1 < p < p_c$, every nontrivial non-negative solution blows up in finite time.
+  (ii) If $p > p_c$, small solutions exist globally and decay to zero as $t -> oo$, while large solutions may blow up.
+  At the critical value $p = p_c$, blow-up occurs for all nontrivial solutions as well.
+] <thm:fujita-exponent>
+
+#note[
+  The Fujita phenomenon exhibits the delicate balance between diffusion, which spreads mass, and the power nonlinearity, which amplifies it: for $p < p_c$ the reaction always wins, for $p > p_c$ small data are damped. The proof uses the heat kernel (Chapter 12) and the semigroup estimates: solutions are compared with self-similar subsolutions $u (t, x) = (T - t)^(-1/(p-1)) phi (x / sqrt(T - t))$, or blow-up is obtained by the Kaplan energy method below.
+]
+
+#proposition(name: "Blow-Up via the Kaplan Method")[
+  Let $Omega subset bb(R)^n$ be bounded and $u$ solve $partial_t u = Delta u + f (u)$ in $Omega_T$ with $u = 0$ on $(0, T) times partial Omega$. If $f (u) >= u^(1 + epsilon)$ for some $epsilon > 0$ and the initial datum is large in the sense of the first Dirichlet eigenfunction, then $T_max < oo$: the solution blows up in finite time.
+] <prop:blow-up-kaplan>
+
+#proof[
+  Let $phi_1 > 0$ be the first eigenfunction of the Dirichlet Laplacian, normalized by $integral_Omega phi_1 dif x = 1$, with $-Delta phi_1 = lambda_1 phi_1$. Define the moment $F (t) = integral_Omega u (t, x) phi_1 (x) dif x$. Multiplying the equation by $phi_1$ and integrating by parts,
+  $
+    F' (t) = integral_Omega (Delta u + f (u)) phi_1 dif x = integral_Omega u Delta phi_1 dif x + integral_Omega f (u) phi_1 dif x = -lambda_1 F (t) + integral_Omega f (u) phi_1 dif x.
+  $
+  Since $f (u) >= u^(1 + epsilon)$, Jensen's inequality (with the probability measure $phi_1 dif x$) gives $integral_Omega u^(1 + epsilon) phi_1 dif x >= F (t)^(1 + epsilon)$, hence the differential inequality
+  $
+    F' (t) >= F (t)^(1 + epsilon) - lambda_1 F (t),
+  $
+  which blows up in finite time whenever $F (0)$ is sufficiently large (the ODE $y' = y^(1 + epsilon) - lambda_1 y$ with large initial data has a finite explosion time).
+]
 
 // ==========================================================================
 // Part VI — Hyperbolic Equations (双曲型方程)
