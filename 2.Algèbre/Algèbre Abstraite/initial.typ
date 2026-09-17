@@ -541,8 +541,8 @@ work. One piece of vocabulary is needed before shelving.
 
 A warning on words: §2.4 will attach a second meaning to *order* —
 the order of a single *element* — and the two must not be confused.
-They meet in the cyclic world of §2.5, where a generated subgroup
-has exactly as many elements as its generator has powers.
+There they meet: §2.4 shows the set of powers $⟨a⟩$ has exactly
+$"ord"(a)$ elements, and §2.5 will recognise $⟨a⟩$ as a subgroup.
 
 === Finite Groups // 有限群
 
@@ -928,14 +928,70 @@ notion cashes the promise.
   $n in bb(Z)$ are then distinct.
 ] <def:order-element>
 
-#example(name: "Orders at a glance.")[
-  In $(bb(Z)_4, +)$:
-  $"ord"([1]) = 4$, $"ord"([2]) = 2$ (since $2 [2] = [4] = [0]$),
-  $"ord"([0]) = 1$. In $S_3$
-  (#link(<ex:s3-details>)[§2.2]): every transposition has order $2$,
-  the 3-cycles have order $3$, and $e$ has order $1$. In
-  $(bb(Z), +)$ the element $1$ has infinite order, as does every
-  non-zero integer.
+#corollary(name: "Orders in a Finite Group")[
+  Let $G$ be a finite group with $abs(G) = n$.
+  + Every element $a in G$ has finite order, and $"ord"(a) <= n$.
+  + If $"ord"(a) = n_0 < infinity$, then the set of powers
+    $⟨a⟩ = {a^k | k in bb(Z)}$ has exactly $n_0$ elements —
+    $⟨a⟩ = {e, a, a^2, dots, a^(n_0 - 1)}$ — and in particular
+    $abs(⟨a⟩) = "ord"(a)$.
+] <cor:finite-group-orders>
+
+#proof[
+  (1) The $n + 1$ powers $a^0, a^1, dots, a^n$ lie in the $n$-element
+  set $G$, so by the pigeonhole principle two of them coincide:
+  $a^i = a^j$ for some $0 <= i < j <= n$. Then $a^(j - i) = e$ with
+  $0 < j - i <= n$, so the least positive exponent of this kind —
+  the order — exists and is at most $n$.
+
+  (2) Divide with remainder: every $m$ writes uniquely as
+  $m = q n_0 + r$ with $0 <= r <= n_0 - 1$, and since $a^(n_0) = e$,
+  $
+    a^m = a^(q n_0 + r) = (a^(n_0))^q a^r = a^r.
+  $
+  Every power therefore already appears among
+  $a^0, dots, a^(n_0 - 1)$. These $n_0$ powers are distinct: if
+  $a^i = a^j$ with $0 <= i < j <= n_0 - 1$, then $a^(j - i) = e$ with
+  $0 < j - i < n_0$, contradicting the minimality of $n_0$. Hence
+  $⟨a⟩ = {e, a, dots, a^(n_0 - 1)}$, a set of $n_0$ elements.
+]
+
+The first part is the pigeonhole at work inside a group: among any
+$n + 1$ powers of a single element in an $n$-element group, two must
+agree, forcing a return to the identity. The second part turns the
+observation around — a finite-order element carries a whole finite
+set of powers on its back, a preview of the subgroups of Chapter 3.
+
+#definition(name: "Periodic, Torsion-Free, and Mixed Groups")[
+  A group $G$ is classified by the orders of its elements.
+  + *Periodic* (also called *torsion*): every element has finite
+    order.
+  + *Torsion-free*: every element except the identity has infinite
+    order.
+  + *Mixed*: neither of the above — $G$ contains a non-identity
+    element of finite order and also an element of infinite order.
+] <def:order-trichotomy>
+
+The three classes are mutually exclusive and exhaustive. Every finite
+group is periodic by #link(<cor:finite-group-orders>)[the corollary
+  above], and $(bb(Z), +)$ is torsion-free. The classification would
+be a tautology if periodicity forced finiteness; it does not.
+
+#example(name: "Orders, classified.")[
+  - *Periodic.* Every finite group is periodic, by
+    #link(<cor:finite-group-orders>)[the corollary above]: in
+    $(bb(Z)_4, +)$, $"ord"([1]) = 4$, $"ord"([2]) = 2$, and
+    $"ord"([0]) = 1$; in $S_3$
+    (#link(<ex:s3-details>)[§2.2]) every transposition has order $2$
+    and the 3-cycles have order $3$. But a periodic group need not
+    be finite: the union $mu_oo$ of all roots of unity
+    (#link(<ex:all-roots-of-unity>)[§2.2]) is infinite, yet every
+    element lies in some $mu_n$ and therefore has finite order.
+  - *Torsion-free.* In $(bb(Z), +)$, the element $1$ has infinite
+    order, as does every non-zero integer.
+  - *Mixed.* In $(bb(R)^*, dot)$, the element $-1$ has order $2$,
+    while $2$ has infinite order; so $(bb(R)^*, dot)$ is mixed, and
+    likewise $(bb(Q)^*, dot)$.
 ] <ex:element-orders>
 
 Conjugation, met in §2.3, is order-preserving — the reason conjugate
@@ -962,10 +1018,7 @@ elements are, in a precise sense, alike.
   "ord"(a)$. Then:
   - $a^m = e$ if and only if $n$ divides $m$;
   - $a^m = a^k$ if and only if $m equiv k (mod n)$;
-  - the set of powers $⟨a⟩ = {a^k | k in bb(Z)}$ — which Chapter 3
-    will recognise as a *subgroup* — has exactly $n$ elements:
-    $⟨a⟩ = {e, a, a^2, dots, a^(n-1)}$, and in particular
-    $abs(⟨a⟩) = n = "ord"(a)$.
+  - $"ord"(a^k) = n \/ ("gcd"(n, k))$.
 ] <prop:order-properties>
 
 #proof[
@@ -977,22 +1030,128 @@ elements are, in a precise sense, alike.
   So $a^m = e$ exactly when $a^r = e$, which by minimality of $n$
   happens exactly when $r = 0$ — that is, when $n$ divides $m$. The
   second item follows by subtraction: $a^m = a^k$ holds exactly when
-  $a^(m - k) = e$, i.e. $n | m - k$, i.e. $m equiv k (mod n)$. For the
-  third item: by the division step every power $a^m$ lands in
-  ${a^0, dots, a^(n-1)}$, and these $n$ powers are distinct — if
-  $a^i = a^j$ with $0 <= i < j <= n - 1$, the second item would force
-  $n | j - i$, impossible for $0 < j - i < n$.
+  $a^(m - k) = e$, i.e. $n | m - k$, i.e. $m equiv k (mod n)$.
+
+  For the third: by the first item, $(a^k)^m = e$ holds exactly when
+  $n | k m$. Write $d = "gcd"(n, k)$, so $n = d n'$ and $k = d k'$
+  with $"gcd"(n', k') = 1$; then $n | k m$ unfolds to
+  $d n' | d k' m$, i.e. $n' | k' m$, i.e. $n' | m$ since $n', k'$
+  are coprime. The smallest positive such $m$ is $n' = n \/ d$
+  — the order of $a^k$.
 ]
 
 The wrap-around phenomenon is the algebraic shadow of a clock:
 after $n$ steps the walk returns to its start, and only the
-remainder of the step count matters.
+remainder of the step count matters. The third item sharpens the
+picture: taking a larger step $k$ shortens the cycle from $n$ to
+$n \/ "gcd"(n, k)$, the number of distinct multiples of $k$ modulo
+$n$.
+
+#theorem(name: "Orders of a Product of Commuting Elements")[
+  Let $G$ be a group and $a, b in G$ with $a b = b a$. If
+  $"ord"(a) = m$ and $"ord"(b) = n$ with $"gcd"(m, n) = 1$, then
+  $"ord"(a b) = m n$.
+] <thm:coprime-order-product>
+
+#proof[
+  Commutativity brings the powers of a product under control:
+  $(a b)^t = a^t b^t$ for every $t$. Then
+  $(a b)^(m n) = a^(m n) b^(m n) = (a^m)^n (b^n)^m = e^n e^m = e$,
+  so $"ord"(a b) <= m n$.
+
+  Conversely, suppose $(a b)^t = e$. Then $a^t b^t = e$, so
+  $a^t = b^(-t) =: c$. By the third item of
+  #link(<prop:order-properties>)[the wrap-around property],
+  $"ord"(a^t) = m \/ "gcd"(m, t)$ divides $m$, and likewise
+  $"ord"(b^(-t)) = n \/ "gcd"(n, t)$ divides $n$. Both equal
+  $"ord"(c)$, which therefore divides $"gcd"(m, n) = 1$; hence $c = e$,
+  i.e. $a^t = e$ and $b^(-t) = e$. By the first item, $m | t$ and
+  $n | t$, and since $m, n$ are coprime, $m n | t$. So
+  $"ord"(a b) = m n$.
+]
+
+The commutativity hypothesis is essential, and its failure is
+spectacular — dropping it can destroy even the finiteness of the
+order, or produce a product of infinite-order elements of finite
+order.
+
+#example(name: "The order of a product: the role of commutativity.")[
+  + *Non-commuting, finite orders.* In $"GL"_2(bb(Q))$ let
+    $a = mat(0, -1; 1, 0)$ and $b = mat(0, 1; -1, -1)$. The first is
+    a quarter-turn, so $"ord"(a) = 4$; one checks $b^3 = I$, so
+    $"ord"(b) = 3$. Yet
+    $a b = mat(1, 1; 0, 1)$ has infinite order, its powers being
+    $mat(1, k; 0, 1)$. The coprime orders $4$ and $3$ give no control
+    over $a b$ because $a$ and $b$ fail to commute.
+  + *Non-commuting, infinite orders.* Let
+    $c = mat(1, 2; 0, -2)$ and $d = mat(1, 0; 0, 1 \/ 2)$. Each is
+    upper triangular with diagonal entries that are not roots of
+    unity, so each has infinite order. But
+    $c d = mat(1, 1; 0, -1)$ and $d c = mat(1, 2; 0, -1)$: each is
+    upper triangular with diagonal $(1, -1)$, whose square is the
+    identity, so $"ord"(c d) = "ord"(d c) = 2 < infinity$. And
+    $c d != d c$ — again the missing ingredient is commutativity.
+  + *Commuting, non-coprime orders.* If $"ord"(a) = n$, then
+    $"ord"(a^(-1)) = n$ as well, and $a$ commutes with $a^(-1)$; but
+    $a a^(-1) = e$ has order $1$, not $n^2$ — the coprimality
+    hypothesis fails here.
+] <ex:order-product-counterexamples>
+
+#corollary(name: "Maximal Order Divides All Orders")[
+  Let $G$ be an abelian group in which some element has order $n$,
+  and no element has order larger than $n$. Then every element of $G$
+  has order dividing $n$.
+] <cor:max-order-divides-all>
+
+#proof[
+  Let $a$ attain the maximal order $n$, and let $x$ have order $d$.
+  Write $n = product_p p^(alpha_p)$ and $d = product_p p^(beta_p)$. For each
+  prime $p$ we capture an element of order $p^("max"(alpha_p,
+    beta_p))$: if $alpha_p >= beta_p$, take $a^(n \/ p^(alpha_p))$, of
+  order $p^(alpha_p)$ by the third item of
+  #link(<prop:order-properties>)[the wrap-around property]; if
+  $beta_p > alpha_p$, take instead $x^(d \/ p^(beta_p))$, of order
+  $p^(beta_p)$. These specimens have pairwise coprime orders
+  (distinct primes), so
+  #link(<thm:coprime-order-product>)[the theorem above], iterated,
+  builds an element of order
+  $product_p p^("max"(alpha_p, beta_p)) = "lcm"(n, d)$. Maximality of $n$
+  forces $"lcm"(n, d) <= n$; since $n | "lcm"(n, d)$, equality holds,
+  and $d | n$.
+]
+
+#theorem(name: "Splitting an Element across a Coprime Factorisation")[
+  Let $a in G$ have order $m n$ with $"gcd"(m, n) = 1$. Then there
+  exist unique $b, c in G$ such that $a = b c = c b$, with
+  $"ord"(b) = m$ and $"ord"(c) = n$.
+] <thm:coprime-order-splitting>
+
+#proof[
+  *Existence.* By Bézout, $u m + v n = 1$ for some integers $u, v$.
+  Set $b = a^(v n)$ and $c = a^(u m)$; then
+  $b c = a^(v n) a^(u m) = a^(v n + u m) = a$, and $b c = c b$
+  trivially. The third item of
+  #link(<prop:order-properties>)[the wrap-around property] gives
+  $"ord"(b) = m n \/ "gcd"(m n, v n) = m n \/ (n dot "gcd"(m, v))$.
+  Now $"gcd"(m, v) = 1$: any common divisor of $m$ and $v$ divides
+  $v n$ and hence $u m + v n = 1$. So $"ord"(b) = m$, and
+  symmetrically $"ord"(c) = n$.
+
+  *Uniqueness.* Let $a = b c = c b$ with $"ord"(b) = m$, $"ord"(c) = n$.
+  Then $c^n = e$, and commutativity gives
+  $a^n = (b c)^n = b^n c^n = b^n$. Writing $b = b^(u m + v n) =
+  (b^m)^u (b^n)^v$ and using $b^m = e$ and $b^n = a^n$, we find
+  $b = (a^n)^v = a^(v n)$ — forced by the integer $v$ fixed in the
+  existence step, hence independent of $b, c$. Symmetrically
+  $c = a^(u m)$. The decomposition is unique.
+]
 
 Two orders now coexist, and the distinction matters. The *order of
 the group* (#link(<def:order-group>)[§2.2]) counts elements; the
-*order of an element*, defined above, measures powers. They meet in
-the cyclic world of §2.5: there the set of powers $⟨a⟩$ has exactly
-$abs(⟨a⟩) = "ord"(a)$ elements.
+*order of an element*, defined above, measures powers. The bridge
+between them is already built: $abs(⟨a⟩) = "ord"(a)$ in
+#link(<cor:finite-group-orders>)[the corollary above], and §2.5 will
+recognise the set $⟨a⟩$ as a subgroup.
 
 == Cyclic Groups // 循环群
 
@@ -1053,8 +1212,8 @@ of this notebook.
   A bijective operation-preserving map is an isomorphism
   (#link(<def:homomorphism>)[Chapter 1]).
 
-  *Finite case.* Since $g^n = e$ by the definition of order, the
-  division step in #link(<prop:order-properties>)[§2.4] gives
+  *Finite case.* Since $g^n = e$, item (2) of
+  #link(<cor:finite-group-orders>)[§2.4] gives
   $⟨g⟩ = {e, g, dots, g^(n-1)}$ with these $n$ elements distinct;
   hence $abs(G) = n$. Define $psi: bb(Z)_n -> G$ by $psi([k]) = g^k$.
   *Well-definedness*: if $[j] = [k]$ then $n | j - k$, so $g^(j-k) = e$
@@ -1082,12 +1241,9 @@ $n = 4$ of the theorem; the theorem says such luck is *systematic*.
 ] <cor:order-divides>
 
 #proof[
-  By #link(<prop:order-properties>)[§2.4], $a^m = g^(k m) = e$
-  holds exactly when $n | k m$. Write $d = "gcd"(n, k)$, so $n = d n'$
-  and $k = d k'$ with $"gcd"(n', k') = 1$; then $n | k m$ unfolds to
-  $d n' | d k' m$, i.e. $n' | k' m$, i.e. $n' | m$ since $n', k'$ are
-  coprime. The smallest positive such $m$ is $n'$, so
-  $"ord"(a) = n' = n \/ d$, which divides $n = d n'$.
+  This is item (3) of #link(<prop:order-properties>)[the wrap-around
+    property of §2.4], applied to the generator $g$ of order $n$:
+  $"ord"(g^k) = n \/ ("gcd"(n, k))$, which divides $n$.
 ]
 
 #corollary(name: "Generators of a Finite Cyclic Group")[
@@ -1428,7 +1584,7 @@ tiles. Every structural statement below is this picture in words.
   This fulfils the promise attached to
   #link(<cor:order-divides>)[the cyclic case of Chapter 2]. The
   cyclic subgroup $⟨a⟩$ has $abs(⟨a⟩) = "ord"(a)$ elements
-  (#link(<prop:order-properties>)[§2.4]), so Lagrange gives
+  (#link(<cor:finite-group-orders>)[§2.4]), so Lagrange gives
   $"ord"(a) | abs(G)$. Writing $abs(G) = "ord"(a) dot m$, we get
   $a^(abs(G)) = (a^("ord"(a)))^m = e^m = e$.
 ]
