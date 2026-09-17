@@ -24,7 +24,7 @@
 
 #make-outline(depth: 2, title: "Contents")
 
-#part("Fundamentals of Probability")
+#part("Fundamentals of Probability") // 概率论基础
 = Random Events and Probability // 随机事件与概率
 
 == Random Events and Operations // 随机事件及其运算
@@ -103,7 +103,7 @@ the only difference is vocabulary ("or" for union, "and" for intersection).
   $A inter overline(B) = {4, 6} != emptyset$; likewise $A$ and $B$ share the
   point $2$.
   De Morgan's law checks: $overline(A union B) = {5} = overline(A) inter
-  overline(B) = {1, 3, 5} inter {4, 5, 6} = {5}$.
+  overline(B) = {1, 3, 5} inter {4, 5, 6} = {5}$ (see @fig:venn-operations).
 ] <ex:event-operations>
 
 #figure(
@@ -120,8 +120,8 @@ In finitely many-outcome experiments it is natural to allow *every* subset as
 an event. For general sample spaces, however, one restricts attention to a
 family closed under the operations above.
 
-#definition(name: "Event Field")[
-  A *field of events* (a $sigma$-field on $Omega$) is a family $cal(F)$ of subsets of $Omega$ such that
+#definition(name: "Event $sigma$-Field")[
+  A *$sigma$-field of events* on $Omega$ is a family $cal(F)$ of subsets of $Omega$ such that
   - $Omega in cal(F)$;
   - $A in cal(F)$ implies $overline(A) in cal(F)$;
   - $A_1, A_2, dots in cal(F)$ implies $union.big_(n=1)^infinity A_n in cal(F)$.
@@ -134,7 +134,10 @@ family closed under the operations above.
   The systematic construction of $sigma$-fields belongs to measure theory and
   is developed in the Théorie des Ensembles note. Throughout this note the
   ambient $sigma$-field is tacitly fixed: $cal(F) = cal(P)(Omega)$ for finite or
-  countable $Omega$, and the Borel $sigma$-field for $Omega = RR$.
+  countable $Omega$, and the Borel $sigma$-field for $Omega = RR$. (In the
+  older literature a *field of events* sometimes denotes a family closed
+  only under *finite* unions — an algebra; in this note a field of events
+  is always a $sigma$-field.)
 ]
 
 Events describe *what can happen*; assigning numbers to events — measuring
@@ -149,9 +152,10 @@ of its occurrence. This intuition acquires mathematical meaning through an
 axiom system; before stating it, we examine the empirical notion from which
 it abstracts.
 
-#property(name: "Frequencies and Their Stability")[
-  Repeating an experiment $n$ times, let $n_A$ be the number of trials in
-  which the event $A$ occurs. The ratio
+#note[
+  (Frequencies and their stability.) Repeating an experiment $n$ times,
+  let $n_A$ be the number of trials in which the event $A$ occurs. The
+  ratio
   $
     f_(n)(A) = n_A / n
   $
@@ -195,8 +199,8 @@ derive everything else from it.
 
 #example[
   An urn contains $N$ balls, $K$ of them red; $n$ balls are drawn. Let
-  $A_(n, k)$ be the event "exactly $k$ red balls are drawn". According to the
-  drawing protocol, the classical formula gives:
+  $A_(n, k)$ be the event "exactly $k$ red balls are drawn". Depending on
+  the drawing protocol, the classical model yields:
 
   - *without replacement, unordered* (hypergeometric model):
     $
@@ -209,30 +213,15 @@ derive everything else from it.
     $
       P(A_(n, k)) = binom(n, k) (K \/ N)^k (1 - K \/ N)^(n - k);
     $
-  - *with replacement, unordered*: a third value, rarely of practical
-    interest, as physical drawing protocols are ordered.
+  - *with replacement, unordered*: here the outcomes (multisets of drawn
+    balls) are *not* equiprobable under any physical drawing protocol, so
+    the classical formula does not apply at all; treating multisets as
+    equally likely is a modelling choice, not a third probability.
 
-  The lesson: the probability depends on the *physical protocol*, and the
-  combinatorial bookkeeping must match it.
+  The lesson: the probability depends on the *probabilistic model* — which
+  outcomes are declared equiprobable — and that model must match the
+  *physical protocol*; the combinatorial bookkeeping must match both.
 ] <ex:balls-sampling>
-
-#example(name: "Matching problem")[
-  $n$ gentlemen check their hats; the hats are returned at
-  random, one to each. What is the probability that *at least one* gentleman
-  receives his own hat? Let $A_i$ be the event that gentleman $i$ gets his
-  own hat. The event of interest is $union.big_(i=1)^n A_i$, and the
-  inclusion–exclusion principle (proved in the Combinatoire note) with
-  $abs(A_(i_1) inter dots inter A_(i_k)) = (n - k)!$ gives
-  $
-    P(union.big_(i=1)^n A_i)
-    = sum_(k=1)^n (-1)^(k+1) binom(n, k) (n - k)! / n!
-    = 1 - sum_(k=0)^n (-1)^k / k!
-    -> 1 - 1 / e quad (n -> infinity),
-  $
-  where the last step uses the derangement count established in the
-  Combinatoire note. The probability is already about $0.632$ for small
-  $n$ and stays there.
-] <ex:matching-problem>
 
 #definition(name: "Geometric Probability")[
   Let $Omega subset.eq RR^d$ be a region of finite measure (length, area or
@@ -363,11 +352,7 @@ the whole theory of $P$; this section unwinds its first consequences.
     $
       P(union.big_(i=1)^n A_i) = sum_(i=1)^n P(A_i);
     $
-  - complement rule: $P(overline(A)) = 1 - P(A)$;
-  - Boole's inequality (subadditivity): for any events $A_1, dots, A_n$,
-    $
-      P(union.big_(i=1)^n A_i) <= sum_(i=1)^n P(A_i).
-    $
+  - complement rule: $P(overline(A)) = 1 - P(A)$.
 ] <prop:probability-additivity>
 
 #proof[
@@ -375,11 +360,9 @@ the whole theory of $P$; this section unwinds its first consequences.
   additivity: $1 = P(Omega) = P(Omega) + P(emptyset) + P(emptyset) + dots$,
   so $P(emptyset) = 0$. For finite additivity, extend a finite disjoint
   family by infinitely many copies of $emptyset$ and use countable
-  additivity. The complement rule follows from disjointness of $A$ and
-  $overline(A)$. For Boole's inequality, decompose $union A_i$ into
-  pairwise disjoint pieces $B_i = A_i backslash (A_1 union dots union
-    A_(i-1))$, note $B_i subset.eq A_i$, and apply finite additivity to the
-  $B_i$ together with #link(<prop:probability-monotonicity>)[monotonicity].
+  additivity. The complement rule follows by applying finite additivity to
+  the disjoint pair $A$, $overline(A)$ whose union is $Omega$:
+  $1 = P(Omega) = P(A) + P(overline(A))$.
 ]
 
 #property(name: "Monotonicity and Difference")[
@@ -391,6 +374,33 @@ the whole theory of $P$; this section unwinds its first consequences.
   $
   In particular $P(A) <= 1$ for every event $A$.
 ] <prop:probability-monotonicity>
+
+#proof[
+  If $A subset.eq B$, then $B = A union (B backslash A)$ is a disjoint
+  decomposition, so #link(<prop:probability-additivity>)[finite
+    additivity] gives $P(B) = P(A) + P(B backslash A)$; rearranging yields
+  the difference formula, and $P(B backslash A) >= 0$ yields monotonicity.
+  Taking $B = Omega$ and using $P(Omega) = 1$ gives $P(A) <= 1$.
+]
+
+#property(name: "Boole's Inequality (Subadditivity)")[
+  For any events $A_1, dots, A_n$,
+  $
+    P(union.big_(i=1)^n A_i) <= sum_(i=1)^n P(A_i).
+  $
+] <prop:boole-inequality>
+
+#proof[
+  Decompose $union.big_(i=1)^n A_i$ into the pairwise disjoint pieces
+  $B_i = A_i backslash (A_1 union dots union A_(i-1))$; each
+  $B_i subset.eq A_i$, so
+  #link(<prop:probability-additivity>)[finite additivity] applied to the
+  $B_i$ together with #link(<prop:probability-monotonicity>)[monotonicity]
+  gives
+  $
+    P(union.big_(i=1)^n A_i) = sum_(i=1)^n P(B_i) <= sum_(i=1)^n P(A_i).
+  $
+]
 
 #property(name: "Addition Formula (Inclusion–Exclusion)")[
   For any two events,
@@ -467,13 +477,18 @@ of sets from the Théorie des Ensembles note.
 
 The continuity theorem reveals a fundamental equivalence: the
 countable additivity axiom can be replaced by *finite additivity plus
-lower continuity* — that is, the requirement that $P(A_n arrow.b A)$
-implies $P(A_n) -> P(A)$.
+continuity from above at $emptyset$* — the requirement that a decreasing
+sequence $A_1 supset.eq A_2 supset.eq dots$ with empty intersection
+satisfies $lim_(n -> infinity) P(A_n) = 0$. General continuity from above
+($A_n arrow.b A$ implies $P(A_n) -> P(A)$) then follows by applying the
+$emptyset$-case to the differences $A_n backslash A$ and using the
+#link(<prop:probability-monotonicity>)[difference formula], so the two
+formulations are equivalent.
 
-#theorem(name: "Equivalence of Countable Additivity and Finite Additivity + Lower Continuity")[
+#theorem(name: "Equivalence of Countable Additivity and Finite Additivity plus Continuity from Above")[
   Let $P$ be a non-negative, normalized set function on
   $(Omega, cal(F))$. Then $P$ is countably additive if and only if $P$
-  is finitely additive and *lower continuous*:
+  is finitely additive and *continuous from above at $emptyset$*:
   $
     A_1 supset.eq A_2 supset.eq dots "with" inter.big_(n=1)^infinity A_n = emptyset
     quad arrow.r.double quad lim_(n -> infinity) P(A_n) = 0.
@@ -483,24 +498,33 @@ implies $P(A_n) -> P(A)$.
 #proof[
   ($arrow.r.double$) Countable additivity implies finite additivity
   (#link(<prop:probability-additivity>)[see above]) and, by the
-  continuity theorem
+  decreasing case of the continuity theorem
   (#link(<thm:continuity-probability>)[continuity of probability]),
-  lower continuity.
+  continuity from above at $emptyset$.
 
   ($arrow.l.double$) Given pairwise disjoint $A_1, A_2, dots$, set
   $B_n = union.big_(k=n)^infinity A_k$. Then $B_n arrow.b emptyset$
-  and $union.big_(k=1)^infinity A_k = A_1 union B_2$. By finite
-  additivity,
+  and $union.big_(k=1)^infinity A_k = A_1 union B_2$. Iterating finite
+  additivity gives, for every $N >= n$,
   $
-    P(union.big_(k=1)^infinity A_k) = P(A_1) + P(B_2).
+    P(B_n) = sum_(k=n)^N P(A_k) + P(B_(N+1)),
   $
-  Iterating, $P(B_n) = sum_(k=n)^infinity P(A_k)$; lower continuity
+  so the partial sums $sum_(k=n)^N P(A_k) = P(B_n) - P(B_(N+1))$ are
+  bounded above by $P(B_n)$ and increase with $N$; they therefore
+  converge to some $S <= P(B_n)$. Letting $N -> infinity$ in the
+  identity and using continuity from above at $emptyset$
+  ($P(B_(N+1)) -> 0$) yields $P(B_n) = S$, that is,
+  $
+    P(B_n) = sum_(k=n)^infinity P(A_k).
+  $
+  Since $B_n arrow.b emptyset$, continuity from above at $emptyset$
   gives $P(B_n) -> 0$, so
   $
     P(union.big_(k=1)^infinity A_k)
     = sum_(k=1)^(n-1) P(A_k) + P(B_n)
-    -> sum_(k=1)^infinity P(A_k).
+    -> sum_(k=1)^infinity P(A_k),
   $
+  which is countable additivity.
 ]
 
 This equivalence is of more than theoretical interest: in many
@@ -509,37 +533,43 @@ $sigma$-field via Carathéodory's extension theorem), it is
 finite additivity plus continuity that one verifies in practice.
 
 Monotone limits prepare the language of "infinitely often", on which the
-strong limit theorems of the Limit Theorems part rest.
+strong limit theorems of the Limit Theorems part rest. For a sequence of
+events $(A_n)_(n >= 1)$, the *upper limit* $lim"sup" A_n$ is the event
+"$A_n$ infinitely often" ($A_n$ "i.o." for short):
+$
+  lim"sup" A_n
+  = inter.big_(N=1)^infinity union.big_(n=N)^infinity A_n,
+$
+the set of outcomes that belong to $A_n$ for infinitely many indices $n$.
 
 #theorem(name: "Borel–Cantelli Lemmas")[
-  Let $(A_n)_(n >= 1)$ be a sequence of events. The *upper limit*
-  $lim"sup" A_n$ of the sequence is the event "$A_n$ infinitely often"
-  ($A_n$ "i.o." for short):
-  $
-    lim"sup" A_n
-    = inter.big_(N=1)^infinity union.big_(n=N)^infinity A_n.
-  $
+  Let $(A_n)_(n >= 1)$ be a sequence of events.
 
   - (First lemma) If $sum_(n=1)^infinity P(A_n) < infinity$, then
     $P(lim"sup" A_n) = 0$.
-  - (Second lemma) If the $A_n$ are mutually independent and
+  - (Second lemma) If the $A_n$ are
+    #link(<def:mutual-independence>)[mutually independent] and
     $sum_(n=1)^infinity P(A_n) = infinity$, then
     $P(lim"sup" A_n) = 1$.
 ] <thm:borel-cantelli>
 
 #proof[
   (First lemma.) For every $N$,
-  $lim"sup" A_n subset.eq union.big_(n=N)^infinity A_n$, so by
-  #link(<prop:probability-additivity>)[Boole's inequality] (iterated)
+  $lim"sup" A_n subset.eq union.big_(n=N)^infinity A_n$. By
+  #link(<prop:boole-inequality>)[Boole's inequality] applied to
+  $A_N, dots, A_M$,
+  $P(union.big_(n=N)^M A_n) <= sum_(n=N)^M P(A_n)$; letting
+  $M -> infinity$ and using the increasing case of
+  #link(<thm:continuity-probability>)[continuity of probability] gives
   $
     P(lim"sup" A_n)
+    <= P(union.big_(n=N)^infinity A_n)
     <= sum_(n=N)^infinity P(A_n)
     -> 0 quad "as" N -> infinity,
   $
-  since the tail of a convergent series tends to zero. (Second lemma:
-  independence enters through a product inequality; its proof is deferred to
-  the Limit Theorems part where independence in the limit sense has been
-  developed.)
+  since the tail of a convergent series tends to zero. (Second lemma: the
+  proof needs independence of events, defined in the Independence section
+  below; it is given in the Limit Theorems part.)
 ]
 
 == Combinatorial Methods // 组合方法
@@ -565,6 +595,24 @@ content.
     = 11 / 15.
   $
 ] <ex:inclusion-exclusion-prob>
+
+#example(name: "Matching problem")[
+  $n$ gentlemen check their hats; the hats are returned at
+  random, one to each. What is the probability that *at least one* gentleman
+  receives his own hat? Let $A_i$ be the event that gentleman $i$ gets his
+  own hat. The event of interest is $union.big_(i=1)^n A_i$, and the
+  inclusion–exclusion principle (proved in the Combinatoire note) with
+  $abs(A_(i_1) inter dots inter A_(i_k)) = (n - k)!$ gives
+  $
+    P(union.big_(i=1)^n A_i)
+    = sum_(k=1)^n (-1)^(k+1) binom(n, k) (n - k)! / n!
+    = 1 - sum_(k=0)^n (-1)^k / k!
+    -> 1 - 1 / e quad (n -> infinity),
+  $
+  where the last step uses the derangement count established in the
+  Combinatoire note. The probability is already about $0.632$ for small
+  $n$ and stays there.
+] <ex:matching-problem>
 
 #example(name: "Pólya's urn")[
   An urn initially contains $a$ red and $b$ black balls. At
@@ -780,8 +828,11 @@ is preferred because it is symmetric in $A$ and $B$.
 ] <prop:independence-preserved>
 
 #proof[
-  It suffices to prove the first pairing; the rest follow by symmetrical
-  arguments. Since $B = (A inter B) union (overline(A) inter B)$ is a
+  It suffices to prove the pairing $(overline(A), B)$: the pairing
+  $(A, overline(B))$ follows by interchanging the roles of $A$ and $B$,
+  and then the pairing $(overline(A), overline(B))$ follows by applying
+  the same argument to the independent pair $(A, overline(B))$. Since
+  $B = (A inter B) union (overline(A) inter B)$ is a
   disjoint decomposition,
   $
     P(overline(A) inter B)
@@ -835,20 +886,20 @@ The classical instance is repeated trials of the *same* experiment.
 
   - each trial has exactly two outcomes, *success* ($S$) and *failure*
     ($F$);
-  - the success probability is the same number $p in (0, 1)$ in every
+  - the success probability is the same number $p in [0, 1]$ in every
     trial;
   - the trials are independent experiments.
-
-  Writing $q = 1 - p$, the probability that exactly $k$ of the $n$ trials
-  succeed is
-  $
-    P(X = k) = binom(n, k) p^k q^(n - k),
-  $
-  since the $binom(n, k)$ sequences with exactly $k$ successes are mutually
-  exclusive, each having probability $p^k q^(n-k)$ by independence, and the
-  count of such sequences is a binomial coefficient by the multiplication
-  principle established in the Combinatoire note.
 ] <def:bernoulli-trials>
+
+Writing $q = 1 - p$, the probability that exactly $k$ of the $n$ trials
+succeed is
+$
+  P(X = k) = binom(n, k) p^k q^(n - k),
+$
+since the $binom(n, k)$ sequences with exactly $k$ successes are mutually
+exclusive, each having probability $p^k q^(n-k)$ by independence, and the
+count of such sequences is a binomial coefficient by the multiplication
+principle established in the Combinatoire note.
 
 #example(name: "At least one success")[
   In $n$ Bernoulli trials with success probability
@@ -866,7 +917,7 @@ The count $X$ of successes in Bernoulli trials inherits a life of its own —
 its distribution, the *binomial distribution*, opens the catalogue of the
 next chapter.
 
-#part("Random Variables and Distributions")
+#part("Random Variables and Distributions") // 随机变量及其分布
 = Univariate Random Variables and Distributions // 一维随机变量及其分布
 
 == Random Variables and Their Distributions // 随机变量及其分布
@@ -879,7 +930,7 @@ sample space to the real line.
 #definition(name: "Random Variable")[
   A *random variable* on a probability space $(Omega, cal(F), P)$ is a function
   $X: Omega -> RR$ that is *measurable*: for every $x in RR$, the set
-  ${omega in Omega : X(omega) <= x}$ belongs to the event field $cal(F)$.
+  ${omega in Omega : X(omega) <= x}$ belongs to the $sigma$-field $cal(F)$.
 ] <def:random-variable>
 
 The measurability condition guarantees that questions like "$X <= x$?" are
@@ -1839,7 +1890,7 @@ make the multivariate normal the structural backbone of classical
 multivariate analysis, to which the sampling distribution and regression
 chapters will return repeatedly.
 
-#part("Numerical Characteristics and Generating Tools")
+#part("Numerical Characteristics and Generating Tools") // 数字特征与生成工具
 = Numerical Characteristics // 数字特征
 
 A distribution is fully described by its CDF or density, but a few numbers
@@ -2386,7 +2437,7 @@ in a single analytic function. The CF, with its universal existence and
 the Lévy continuity theorem, is the master tool for the limit theorems
 of Part IV.
 
-#part("Limit Theorems")
+#part("Limit Theorems") // 极限定理
 = LLN and CLT // 大数定律与中心极限定理
 
 The limit theorems — Laws of Large Numbers and the Central Limit Theorem
@@ -2441,7 +2492,7 @@ Parts I–III. They answer two fundamental questions:
 #proof[
   (a.s. $arrow.r.double$ P) If $X_n -> X$ a.s., then for any $epsilon > 0$,
   ${abs(X_n - X) > epsilon}$ occurs only finitely often (outside a null
-  set). By #link(<thm:borel-cantelli>)[the first Borel-Cantelli lemma],
+  set). By #link(<thm:borel-cantelli>)[the first Borel–Cantelli lemma],
   $P(abs(X_n - X) > epsilon) -> 0$.
 
   ($L^p$ $arrow.r.double$ P) By #link(<prop:markov-inequality>)[Markov's
@@ -2495,6 +2546,44 @@ Parts I–III. They answer two fundamental questions:
   $overline(X)_n arrow.r^d mu$, which implies $overline(X)_n arrow.r^P mu$.
 ]
 
+Before turning to almost sure convergence, we fulfil the promise of
+#link(<thm:borel-cantelli>)[the Borel–Cantelli lemmas] made in Part I:
+the second lemma needs only the
+#link(<def:mutual-independence>)[mutual independence] of events from
+Chapter 2 and the continuity of probability.
+
+#lemma(name: "Second Borel–Cantelli Lemma")[
+  If the events $A_1, A_2, dots$ are
+  #link(<def:mutual-independence>)[mutually independent] and
+  $sum_(n=1)^infinity P(A_n) = infinity$, then $P(lim"sup" A_n) = 1$.
+] <lem:borel-cantelli-second>
+
+#proof[
+  For $N <= M$, the complements $overline(A_N), dots, overline(A_M)$ are
+  independent — complements of independent events are independent
+  (#link(<prop:independence-preserved>)[the closure properties],
+  iterated) — so by De Morgan's laws,
+  $
+    P(union.big_(n=N)^M A_n)
+    = 1 - P(inter.big_(n=N)^M overline(A_n))
+    = 1 - product_(n=N)^M (1 - P(A_n))
+    >= 1 - exp(-sum_(n=N)^M P(A_n)),
+  $
+  using $1 - x <= exp(-x)$. Since the series diverges, its tail
+  $sum_(n=N)^M P(A_n) -> infinity$ as $M -> infinity$, so
+  $P(union.big_(n=N)^M A_n) -> 1$. The finite unions increase with $M$ to
+  $union.big_(n=N)^infinity A_n$, hence by the increasing case of
+  #link(<thm:continuity-probability>)[continuity of probability],
+  $P(union.big_(n=N)^infinity A_n) = 1$ for every $N$. These countable
+  unions decrease with $N$ and all have probability $1$, so the
+  decreasing case of continuity gives
+  $
+    P(lim"sup" A_n)
+    = P(inter.big_(N=1)^infinity union.big_(n=N)^infinity A_n)
+    = 1.
+  $
+]
+
 #theorem(name: "Kolmogorov SLLN")[
   Let $X_1, X_2, dots$ be i.i.d. with $E[abs(X_1)] < infinity$ and
   $E[X_1] = mu$. Then
@@ -2505,15 +2594,15 @@ Parts I–III. They answer two fundamental questions:
 
 The proof requires deeper machinery than the weak law. The key tool is
 *Kolmogorov's inequality* — a maximal version of Chebyshev's inequality
-controlling $max_(k<=n) abs(S_k - k mu)$. Combined with the
-*Borel-Cantelli second lemma* (which states: if $A_n$ are independent
-and $sum P(A_n) = infinity$, then $A_n$ occur infinitely often), one
-shows that the event ${abs(overline(X)_n - mu) > epsilon quad "i.o."}$ has
-probability $0$ for every $epsilon > 0$, yielding a.s. convergence.
+controlling $max_(k<=n) abs(S_k - k mu)$. Combined with
+#link(<lem:borel-cantelli-second>)[the second Borel–Cantelli lemma] proved
+above, one shows that the event ${abs(overline(X)_n - mu) > epsilon quad
+"i.o."}$ has probability $0$ for every $epsilon > 0$, yielding a.s.
+convergence.
 
-This fulfils the promise of #link(<thm:borel-cantelli>)[the Borel-Cantelli
-  lemmas]: the second lemma, whose proof was deferred from Part I, is
-central to the SLLN.
+This fulfils the promise of #link(<thm:borel-cantelli>)[the Borel–Cantelli
+  lemmas] made in Part I: the second lemma, whose proof was deferred to
+this part, is central to the SLLN.
 
 == Central Limit Theorem // 中心极限定理
 
@@ -2694,7 +2783,7 @@ estimators.
 //     - 概率的单调性 (Monotonicity)
 //     - 加法公式 (Addition Formula)
 //     - 概率的连续性 (Continuity of Probability)
-//     - Borel-Cantelli 引理
+//     - Borel–Cantelli 引理
 
 //   Section 1.4: 组合方法 (Combinatorial Methods)
 //     - 排列与组合公式
