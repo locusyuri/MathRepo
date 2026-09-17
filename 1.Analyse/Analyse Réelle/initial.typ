@@ -272,6 +272,17 @@ For example,
 
 === $G_delta$ and $F_sigma$ Definition // G_δ 集和 F_σ 集
 
+#definition(name: "$G_delta$ and $F_sigma$ Sets")[
+  A set $G subset bb(R)$ is called a *$G_delta$ set* if it is a countable intersection of open sets:
+  $
+    G = inter.big_(n=1)^infinity G_n quad "with" quad G_n "open for all" n.
+  $
+  A set $F subset bb(R)$ is called an *$F_sigma$ set* if it is a countable union of closed sets:
+  $
+    F = union.big_(n=1)^infinity F_n quad "with" quad F_n "closed for all" n.
+  $
+]
+
 
 
 
