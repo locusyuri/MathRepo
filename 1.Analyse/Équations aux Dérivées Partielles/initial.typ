@@ -18,7 +18,7 @@
   subtitle: "A notebook for partial differential equations",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.8.0",
+  version: "v0.9.0",
   extra-info: "This is a notebook for partial differential equations.",
 )
 
@@ -3145,6 +3145,293 @@ The scalar one-dimensional conservation law was treated completely in Chapter 5 
 //     - 与 Fourier 方法的联系
 
 #part("Methods and Advanced Topics") // 方法与进阶专题
+
+= Separation of Variables and Spectral Methods // 分离变量与谱方法
+
+This closing part of the notes collects the classical method of separation of variables — announced already in Chapter 1 as a basic tool — together with its spectral formulation, and ends with an overview of numerical methods as the bridge from theory to computation. The deep theory of Fourier series and transforms belongs to Analyse Harmonique and is only used here; the abstract spectral theory of operators is referenced to Analyse Fonctionnelle.
+
+== Separation of Variables // 分离变量法
+
+#definition(name: "Separation of Variables")[
+  Let $L$ be a linear homogeneous PDE operator and consider the homogeneous problem $L u = 0$ on a product domain with homogeneous boundary conditions. The *separation of variables* ansatz seeks solutions of the product form $u (x_1, dots, x_d) = X_1 (x_1) dots X_d (x_d)$; substituting into the equation and dividing by the product reduces the PDE to $d$ ordinary differential equations coupled only through a *separation constant* $lambda$. For an evolution equation one writes $u (t, x) = T (t) X (x)$; the spatial factor leads to an eigenvalue problem of Sturm--Liouville type (§18.2).
+] <def:separation-variables>
+
+#example(name: "Heat Equation on an Interval")[
+  Consider the initial--boundary value problem
+  $
+    partial_t u = partial_x^2 u quad "in" quad (0, oo) times (0, L), quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x).
+  $
+  The ansatz $u (t, x) = T (t) X (x)$ gives $T' X = T X''$, i.e.
+  $
+    T'/T = X''/X = -lambda
+  $
+  for a constant $lambda$. The spatial problem $X'' + lambda X = 0$, $X (0) = X (L) = 0$ has nontrivial solutions only for
+  $
+    lambda_k = (k pi / L)^2, quad X_k (x) = sin (k pi x / L), quad k = 1, 2, dots,
+  $
+  and the temporal factor solves $T_k' = -lambda_k T_k$, so $T_k (t) = e^(-lambda_k t)$. Superposition gives
+  $
+    u (t, x) = sum_(k=1)^oo c_k e^(-(k pi/L)^2 t) sin (k pi x/L), quad c_k = 2/L integral_0^L g (x) sin (k pi x / L) dif x,
+  $
+  where the coefficients are fixed by the initial datum (the Fourier sine series of $g$). Each mode decays with the rate $lambda_k$; the highest modes are damped fastest, the smoothing effect of Chapter 12.
+] <ex:heat-separation>
+
+#theorem(name: "Eigenfunction Expansion")[
+  Let ${phi_k}$ be an orthonormal system of eigenfunctions of a regular Sturm--Liouville problem with weight $w$ (§18.2). Then every $f in L_w^2 (a, b)$ has the eigenfunction expansion
+  $
+    f = sum_k c_k phi_k, quad c_k = integral_a^b f phi_k w dif x, quad ||f||_(L_w^2)^2 = sum_k c_k^2,
+  $
+  where the series converges in $L_w^2$ (Parseval's identity). If $f in C^1$ satisfies the boundary conditions, the series converges uniformly on $[a, b]$.
+] <thm:spectral-expansion>
+
+#proof[
+  The identity $(L_w^2)$-norm equality is Parseval's identity for the complete orthonormal system, and the uniform convergence follows from the decay of the coefficients $c_k$ (obtained by integration by parts twice, the boundary terms vanishing by the boundary conditions) together with the uniform boundedness of the $phi_k$. The completeness of the system — the fact that $f = 0$ a.e. if all $c_k = 0$ — is a spectral theorem for compact symmetric operators; see Analyse Fonctionnelle.
+]
+
+#note[
+  The separation-of-variables solution of the heat equation is thus the eigenfunction expansion of the initial datum, propagated mode by mode. The same mechanism underlies the semigroup solution of Chapter 13: $u (t) = sum_k e^(-lambda_k t) c_k phi_k$ is the action of the heat semigroup (#link(<def:semigroup>)[§13.2]) on the eigenbasis.
+]
+
+== Sturm--Liouville Theory // Sturm--Liouville 理论
+
+#definition(name: "Regular Sturm--Liouville Problem")[
+  The *regular Sturm--Liouville problem* on the bounded interval $(a, b)$ is to find $lambda in bb(C)$ and a nonzero $y in C^2 (a, b)$ satisfying
+  $
+    -(p y')' + q y = lambda w y quad "on" quad (a, b),
+  $
+  with $p in C^1 ([a, b])$, $p > 0$, $w > 0$, $q$ real and continuous on $[a, b]$, subject to separated boundary conditions
+  $
+    alpha y (a) + beta y' (a) = 0, quad gamma y (b) + delta y' (b) = 0,
+  $
+  with $(alpha, beta) != (0, 0)$, $(gamma, delta) != (0, 0)$. The function $w$ is the *weight* and $lambda$ the *eigenvalue* (with eigenfunction $y$).
+] <def:sturm-liouville>
+
+#theorem(name: "Spectral Theorem for Sturm--Liouville Problems")[
+  The regular Sturm--Liouville problem has a sequence of real eigenvalues
+  $
+    lambda_1 < lambda_2 < dots < lambda_n -> oo, quad lambda_1 > -oo,
+  $
+  with corresponding eigenfunctions $phi_n in C^2 ([a, b])$, real-valued, forming a complete orthogonal system of $L_w^2 (a, b)$:
+  $
+    integral_a^b phi_m phi_n w dif x = 0 quad (m != n),
+  $
+  and after normalization, an orthonormal basis. In particular the eigenvalues are simple (one eigenfunction per eigenvalue, up to scaling), and the eigenfunction expansion of Theorem 18.1 applies.
+] <thm:sl-spectral-theorem>
+
+#proof[
+  *Orthogonality.* Let $L y = -(p y')' + q y$. For two eigenfunctions $phi_m$, $phi_n$ with $lambda_m != lambda_n$,
+  $
+    integral_a^b (phi_m L phi_n - phi_n L phi_m) dif x = 0
+  $
+  by integration by parts — the boundary terms vanish because $phi_m$, $phi_n$ satisfy the same separated boundary conditions (the Wronskian boundary term $p (phi_m phi_n' - phi_n phi_m')$ is zero at both endpoints). Since $L phi_k = lambda_k w phi_k$,
+  $
+    (lambda_n - lambda_m) integral_a^b w phi_m phi_n dif x = 0,
+  $
+  and the eigenvalues are real (take $m = n$, the integrand of the boundary term is $p (phi_m phi_m' - phi_m phi_m') = 0$, giving $(lambda_n - overline(lambda_n)) integral w abs(phi_n)^2 = 0$). Completeness and discreteness follow from the spectral theorem for compact self-adjoint operators applied to the resolvent $(-L)^(-1)$; see Analyse Fonctionnelle.
+]
+
+#example(name: "Legendre Polynomials")[
+  The *Legendre equation* $-( (1 - x^2) y')' = lambda y$ on $(-1, 1)$ is a *singular* Sturm--Liouville problem: $p (x) = 1 - x^2$ vanishes at the endpoints, so the regularity theory above needs modification. The eigenvalues are
+  $
+    lambda_n = n (n + 1), quad n = 0, 1, 2, dots,
+  $
+  with eigenfunctions the *Legendre polynomials* $P_n$, orthogonal in $L^2 (-1, 1)$ and normalized by $P_n (1) = 1$. This is the entry point to the theory of orthogonal polynomials and special functions, developed in Analyse Harmonique; here it illustrates that the Sturm--Liouville framework extends beyond the regular case.
+] <ex:legendre-sl>
+
+== Applications to the Model Equations // 在三大模型方程中的应用
+
+#example(name: "Wave Equation on a String")[
+  For the vibrating string of length $L$ with fixed ends,
+  $
+    partial_t^2 u = c^2 partial_x^2 u, quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x), quad partial_t u (x, 0) = h (x),
+  $
+  separation gives the same spatial problem as in Example 18.1: $lambda_k = (k pi/L)^2$, $X_k (x) = sin (k pi x/L)$, and the temporal factor solves $T_k'' + c^2 lambda_k T_k = 0$, i.e. the harmonic oscillator with frequency $omega_k = c k pi/L$. Hence
+  $
+    u (t, x) = sum_(k=1)^oo (a_k cos (omega_k t) + b_k sin (omega_k t)) sin (k pi x/L),
+  $
+  with $a_k = 2/L integral_0^L g (x) sin (k pi x/L) dif x$ and $b_k = 2/(L omega_k) integral_0^L h (x) sin (k pi x/L) dif x$. The eigenfrequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = c pi/L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (Chapter 15, #link(<thm:wave-energy>)[§15.3]).
+] <ex:wave-separation>
+
+#example(name: "Laplace Equation on a Rectangle")[
+  Consider $Delta u = 0$ in the rectangle $(0, a) times (0, b)$ with $u (0, y) = u (a, y) = 0$, $u (x, 0) = 0$, $u (x, b) = g (x)$. Writing $u = X (x) Y (y)$ gives $X''/X = -Y''/Y = -lambda$; the $x$-problem with Dirichlet conditions yields $lambda_k = (k pi/a)^2$, $X_k = sin (k pi x/a)$, and $Y_k'' - lambda_k Y_k = 0$ with $Y_k (0) = 0$ gives $Y_k (y) = sinh (k pi y/a)$. Hence
+  $
+    u (x, y) = sum_(k=1)^oo c_k sinh (k pi y/a) sin (k pi x/a), quad c_k = 2/(a sinh (k pi b/a)) integral_0^a g (x) sin (k pi x/a) dif x,
+  $
+  the coefficients being fixed by the remaining boundary datum at $y = b$.
+] <ex:laplace-rectangle>
+
+#example(name: "Laplace Equation on a Disk")[
+  In polar coordinates $(r, theta)$ on the unit disk, $Delta u = u_(r r) + 1/r u_r + 1/(r^2) u_(theta theta) = 0$. Separation $u = R (r) Theta (theta)$ gives
+  $
+    (r^2 R'' + r R')/R = -Theta''/Theta = lambda.
+  $
+  The angular problem $Theta'' + lambda Theta = 0$ with $2 pi$-periodic boundary conditions has eigenvalues $lambda = n^2$ ($n >= 0$) with eigenfunctions $cos (n theta)$, $sin (n theta)$; the radial equation $r^2 R'' + r R' - n^2 R = 0$ (Euler--Cauchy) has the bounded solution $R (r) = r^n$ for $0 <= r <= 1$. Therefore
+  $
+    u (r, theta) = a_0/2 + sum_(n=1)^oo r^n (a_n cos (n theta) + b_n sin (n theta)),
+  $
+  where the coefficients are the Fourier coefficients of the boundary datum $g (theta) = u (1, theta)$. The radial weights $r^n$ are the harmonic extension of the boundary data; this is the series form of Poisson's integral formula of Chapter 10 (#link(<thm:poisson-integral-formula>)[§10.2]).
+] <ex:laplace-disk>
+
+#note[
+  The three model equations are solved by the same machinery: the spatial part always reduces to a Sturm--Liouville problem whose eigenfunctions diagonalize the PDE, and the temporal (or remaining) factor is an ODE in the eigenbasis. This is the *spectral viewpoint*: the heat equation contracts modes ($e^(-lambda_k t)$), the wave equation rotates them ($e^(+- i sqrt(lambda_k) t)$), and the Laplace equation extends them harmonically ($r^n$). The spectral method of Chapter 19 discretizes precisely these expansions.
+]
+
+= Numerical Methods for PDEs // PDE 数值方法
+
+This chapter gives a concise overview of the four standard families of numerical methods for PDEs — finite differences, finite elements, finite volumes, and spectral methods — with their main stability, accuracy, and convergence properties. The emphasis is on the mathematical principles (consistency, stability, conservation, Galerkin projection) rather than on implementation details.
+
+== Finite Difference Methods // 有限差分法
+
+#definition(name: "Finite Difference Schemes for the Heat Equation")[
+  Let $x_j = j Delta x$ and $t_n = n Delta t$ be a uniform grid, and let $U_j^n approx u (x_j, t_n)$. Write $delta^2 U_j = U_(j+1) - 2 U_j + U_(j-1)$ for the centered second difference and set $mu = Delta t / Delta x^2$. The three classical schemes for $partial_t u = partial_x^2 u$ are the *explicit* (forward Euler) scheme, the *implicit* (backward Euler) scheme, and the *Crank--Nicolson* scheme:
+] <def:fd-schemes>
+
+#tex-table(
+  ("Scheme", "Update", "Truncation error", "Stability"),
+  ([Explicit], [$U_j^(n+1) = U_j^n + mu delta^2 U_j^n$], [$O (Delta t + Delta x^2)$], [$mu <= 1/2$]),
+  ([Implicit], [$U_j^(n+1) - mu delta^2 U_j^(n+1) = U_j^n$], [$O (Delta t + Delta x^2)$], [unconditional]),
+  ([Crank--Nicolson], [$(1 - mu/2 delta^2) U_j^(n+1) = (1 + mu/2 delta^2) U_j^n$], [$O (Delta t^2 + Delta x^2)$], [unconditional]),
+)
+
+#definition(name: "Consistency, Stability, Convergence")[
+  Let $L_(h) U = 0$ denote the finite difference scheme with mesh parameters $h = (Delta t, Delta x)$. The *truncation error* is the residual $tau_j^n = L_(h) u (x_j, t_n)$ obtained by inserting the exact solution; the scheme is *consistent* if $tau_j^n -> 0$ as $Delta t, Delta x -> 0$. The scheme is *stable* (in the sense of Lax--Richtmyer) if there is a constant $C (T)$ with
+  $
+    ||U^n|| <= C (T) ||U^0|| quad "for all" quad 0 <= n Delta t <= T,
+  $
+  uniformly in the mesh (for suitable norms; for the heat equation, the discrete maximum principle or the discrete $L^2$ norm). It is *convergent* if $U^n -> u (dot, t_n)$ in the chosen norm as the mesh is refined.
+] <def:consistency-stability>
+
+#theorem(name: "Lax Equivalence Theorem")[
+  For a consistent finite difference approximation to a well-posed linear initial value problem, *stability is necessary and sufficient for convergence* (Lax and Richtmyer, 1956).
+] <thm:lax-equivalence>
+
+#proof[
+  (Idea.) Write the scheme as $U^(n+1) = S_(h) U^n$ with the discrete evolution operator $S_(h)$. Iterating, $U^n = S_(h)^n U^0 + sum_(k=1)^n S_(h)^(n-k) tau^k$, where $tau^k$ collects the truncation errors. Stability bounds the powers of $S_(h)$, consistency bounds the accumulated truncation error, and the triangle inequality gives convergence. The necessity is immediate: convergence with arbitrary data forces uniform boundedness of $S_(h)^n$, which is stability.
+]
+
+#theorem(name: "von Neumann Stability Condition")[
+  For a constant-coefficient scheme on a periodic grid, inserting the Fourier mode $U_j^n = g^n e^(i j theta)$, $theta in [-pi, pi]$, yields the *amplification factor* $g (theta)$. The scheme is stable iff
+  $
+    abs(g (theta)) <= 1 + C Delta t quad "for all" quad theta
+  $
+  (the *von Neumann condition*; necessary in general, sufficient for one-step schemes).
+] <thm:von-neumann>
+
+#example(name: "Stability of the Three Schemes")[
+  Substituting the mode into the three schemes of Definition 19.1:
+  - *Explicit:* $g (theta) = 1 - 4 mu sin^2 (theta/2)$; the condition $abs(g) <= 1$ holds iff $mu <= 1/2$ (the CFL condition). Beyond it, high-frequency modes $theta approx pi$ are amplified.
+  - *Implicit:* $g (theta) = 1/(1 + 4 mu sin^2 (theta/2))$, always in $[-1, 1]$: unconditionally stable, with strong damping of high frequencies.
+  - *Crank--Nicolson:* $g (theta) = (1 - 2 mu sin^2 (theta/2))/(1 + 2 mu sin^2 (theta/2))$, with $abs(g) <= 1$ for all $mu >= 0$: unconditionally stable and second-order accurate in time, the standard choice for parabolic problems.
+] <ex:von-neumann-heat>
+
+== Finite Element Methods // 有限元法
+
+#definition(name: "Galerkin Finite Element Method")[
+  Let $V = H_0^1 (Omega)$ with the weak formulation of the Dirichlet problem (Chapter 9, #link(<def:weak-dirichlet>)[§9.1]): find $u in V$ with $a (u, v) = F (v)$ for all $v in V$, where $a (u, v) = integral_Omega nabla u dot nabla v dif x$ and $F (v) = integral_Omega f v dif x$. The *finite element method* chooses a finite-dimensional subspace $V_h subset V$ of piecewise polynomial functions on a triangulation of $Omega$ of mesh size $h$ and seeks the Galerkin approximation $u_h in V_h$ satisfying
+  $
+    a (u_h, v_h) = F (v_h) quad "for all" quad v_h in V_h.
+  $
+  Writing $u_h = sum_j U_j phi_j$ with the nodal basis $phi_j$ (piecewise linear hat functions for the lowest order) gives the linear system $A U = b$ with the *stiffness matrix* $A_(i j) = a (phi_j, phi_i)$ and load vector $b_i = F (phi_i)$.
+] <def:galerkin-fem>
+
+#theorem(name: "Céa's Lemma")[
+  Under the hypotheses of the Lax--Milgram theorem (#link(<thm:lax-milgram>)[§9.1]) — $V$-ellipticity with constant $alpha$ and continuity with constant $M$ of the bilinear form $a$ — the Galerkin approximation $u_h$ satisfies
+  $
+    ||u - u_h||_V <= M/alpha inf_(v_h in V_h) ||u - v_h||_V.
+  $
+  The discrete solution is *quasi-optimal*: up to the constant $M/alpha$, the error is the best-approximation error of $u$ in $V_h$.
+] <thm:cea-lemma>
+
+#proof[
+  By the Galerkin equations, $a (u - u_h, v_h) = 0$ for all $v_h in V_h$ (Galerkin orthogonality). For any $v_h in V_h$,
+  $
+    alpha ||u - u_h||_V^2 <= a (u - u_h, u - u_h) = a (u - u_h, u - v_h) <= M ||u - u_h||_V ||u - v_h||_V,
+  $
+  where the middle equality uses orthogonality with $v_h - u_h in V_h$. Dividing by $||u - u_h||_V$ and taking the infimum over $v_h$ yields the claim.
+]
+
+#theorem(name: "Error Estimates for Finite Elements")[
+  Let $V_h$ consist of continuous piecewise polynomials of degree $k$ on a regular triangulation of mesh size $h$. If $u in H^(k+1) (Omega)$, then
+  $
+    ||u - u_h||_(H^1) <= C h^k ||u||_(H^(k+1)), quad ||u - u_h||_(L^2) <= C h^(k+1) ||u||_(H^(k+1)).
+  $
+  The $H^1$ estimate follows from Céa's lemma and the interpolation error $inf_(v_h) ||u - v_h||_(H^1) <= C h^k ||u||_(H^(k+1))$; the $L^2$ estimate is obtained by the Aubin--Nitsche duality argument.
+] <thm:fe-error-estimates>
+
+== Finite Volume Methods // 有限体积法
+
+#definition(name: "Finite Volume Scheme")[
+  Consider a conservation law $partial_t u + partial_x F (u) = 0$ (Chapter 17, #link(<def:conservation-system>)[§17.1]). Divide $bb(R)$ into cells $I_i = [x_(i - 1/2), x_(i + 1/2)]$ of width $Delta x$ and let
+  $
+    U_i^n = 1/Delta x integral_(I_i) u (x, t_n) dif x
+  $
+  be the cell average. Integrating the equation over $I_i times [t_n, t_(n+1)]$ and applying the divergence theorem yields the exact conservation form
+  $
+    U_i^(n+1) = U_i^n - Delta t/Delta x (F_(i + 1/2) - F_(i - 1/2)), quad F_(i + 1/2) = 1/Delta t integral_(t_n)^(t_(n+1)) F (u (x_(i + 1/2), t)) dif t.
+  $
+  A *finite volume scheme* is obtained by replacing the exact intercell flux by a numerical flux $F_(i + 1/2) = cal(F) (U_i^n, U_(i+1)^n)$.
+] <def:finite-volume>
+
+#theorem(name: "Conservation of Finite Volume Schemes")[
+  Any scheme of flux form conserves the total mass: for periodic boundary conditions (or compactly supported data),
+  $
+    sum_i U_i^(n+1) = sum_i U_i^n.
+  $
+] <thm:fv-conservation>
+
+#proof[
+  Summing the flux form over all cells, the interior fluxes telescope:
+  $
+    sum_i U_i^(n+1) = sum_i U_i^n - Delta t/Delta x sum_i (F_(i + 1/2) - F_(i - 1/2)) = sum_i U_i^n,
+  $
+  the flux sum collapsing to the boundary terms, which vanish by periodicity or compact support. This structural conservation is the defining advantage of finite volume methods for conservation laws.
+]
+
+#theorem(name: "Godunov's Method")[
+  The *Godunov scheme* (Годунов, 1959) defines the numerical flux by solving the Riemann problem (Chapter 17, #link(<def:riemann-problem>)[§17.3]) at each interface between constant states $U_i^n$, $U_(i+1)^n$:
+  $
+    cal(F) (U_i^n, U_(i+1)^n) = F (u^R (0; U_i^n, U_(i+1)^n)),
+  $
+  where $u^R (x/t)$ is the self-similar solution. The scheme is conservative, consistent, first-order accurate, and monotone for scalar convex laws; it resolves shocks correctly and satisfies the entropy condition of Chapter 17. Its stability is governed by a CFL condition on the wave speeds. A simpler representative of the same family is the *Lax--Friedrichs flux*
+  $
+    cal(F)^("LF") (a, b) = (F (a) + F (b))/2 - Delta x/(2 Delta t) (b - a),
+  $
+  which adds numerical diffusion proportional to $Delta x/Delta t$.
+] <thm:godunov>
+
+== Spectral Methods // 谱方法
+
+#definition(name: "Spectral Galerkin Method")[
+  On the periodic domain, the *spectral method* seeks an approximation in the trigonometric subspace $S_N = "span"{e^(i k x) : abs(k) <= N}$:
+  $
+    u_N (x, t) = sum_(k = -N)^N hat(u)_k (t) e^(i k x),
+  $
+  determined by the Galerkin projection of the equation onto $S_N$. The *pseudospectral* (collocation) variant imposes the equation at $2 N + 1$ grid points and evaluates nonlinear terms with the fast Fourier transform. Since $e^(i k x)$ are the eigenfunctions of $-partial_x^2$ (eigenvalues $k^2$), the spectral method is the discretized eigenfunction expansion of Chapter 18.
+] <def:spectral-galerkin>
+
+#theorem(name: "Spectral Accuracy")[
+  Let $P_N u = sum_(abs(k) <= N) hat(u)_k e^(i k x)$ be the truncation of the Fourier series of $u$. If $u in H^s$ for $s >= 0$, then
+  $
+    ||u - P_N u||_(L^2) <= C_s N^(-s) ||u||_(H^s);
+  $
+  if $u$ is analytic, then $||u - P_N u||_(L^2) <= C e^(-c N)$ for some $c > 0$. Spectral methods thus converge faster than any algebraic order for smooth solutions, in contrast with the algebraic convergence $h^k$ of finite difference and finite element methods.
+] <thm:spectral-accuracy>
+
+#proof[
+  By Parseval's identity,
+  $
+    ||u - P_N u||_(L^2)^2 = sum_(abs(k) > N) abs(hat(u)_k)^2 <= N^(-2 s) sum_(abs(k) > N) abs(k)^(2 s) abs(hat(u)_k)^2 <= N^(-2 s) ||u||_(H^s)^2,
+  $
+  using $abs(k) > N$ on the tail. For analytic $u$ the Fourier coefficients decay exponentially, giving the second estimate.
+]
+
+#note[
+  The four families are complementary: finite differences (easiest on simple grids), finite elements (flexible on complex domains via weak forms, Chapter 9), finite volumes (structure-preserving for conservation laws, Chapter 17), and spectral methods (exponential accuracy for smooth periodic problems, directly tied to the Fourier analysis of Analyse Harmonique and the eigenfunction expansions of Chapter 18).
+]
+
+
+
+
 
 // ==========================================================================
 // 结构说明 (Structure Note)
