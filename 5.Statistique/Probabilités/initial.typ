@@ -951,7 +951,10 @@ function.
   - (monotonicity) $F$ is non-decreasing: $x_1 <= x_2 arrow.r.double F(x_1) <= F(x_2)$;
   - (limits) $lim_(x -> -infinity) F(x) = 0$ and $lim_(x -> +infinity) F(x) = 1$;
   - (right-continuity) $F$ is right-continuous: $F(x) = F(x^+)$;
-  - (range) $0 <= F(x) <= 1$, and $P(a < X <= b) = F(b) - F(a)$.
+  - (range) $0 <= F(x) <= 1$, and $P(a < X <= b) = F(b) - F(a)$;
+  - (characterization) any function satisfying monotonicity, the limits,
+    and right-continuity above is the CDF of some probability measure on the
+    real line — the measure-theoretic statement is given in the note below.
 ] <prop:cdf-properties>
 
 #proof[
@@ -965,6 +968,25 @@ function.
   $P(a < X <= b) = P(X <= b) - P(X <= a) = F(b) - F(a)$ by the difference
   formula.
 ]
+
+#note[
+  (CDF and the distribution measure.) Associated to $X$ is its *distribution
+  measure*, the push-forward of $P$ under $X$,
+  $
+    mu_X(B) = P(X in B), quad B in cal(B)(RR),
+  $
+  a probability measure on the Borel $sigma$-algebra of the real line. In
+  terms of $mu_X$ the CDF is simply the value on unbounded intervals,
+  $
+    F(x) = P(X <= x) = mu_X((-infinity, x]),
+  $
+  so the CDF is the cumulative function of the distribution measure. The
+  characterization above is the converse: *probability measures on the real
+  line and CDFs are in bijection* — every CDF arises from a unique such
+  measure, whose construction (the Lebesgue–Stieltjes measure) is carried
+  out in the Analyse Réelle note. This is why the distribution, not the
+  underlying probability space, carries all the information about $X$.
+] <note:cdf-distribution-measure>
 
 Two structural types of random variable dominate the theory.
 
@@ -987,6 +1009,37 @@ Two structural types of random variable dominate the theory.
   of continuity of $f$, $F'(x) = f(x)$.
 ] <def:continuous-rv>
 
+#note[
+  (Density: elementary and measure-theoretic views.) The definition above is
+  the elementary one: a density $f$ is the *integration kernel* of the CDF,
+  $F(x) = integral_(-infinity)^x f(t) dif t$. The measure-theoretic view starts
+  instead from the distribution measure $mu_X$: $X$ is *absolutely continuous*
+  when $mu_X$ is absolutely continuous with respect to Lebesgue measure
+  $lambda$, i.e. $mu_X << lambda$, and its density is then the Radon–Nikodym
+  derivative
+  $
+    f = (dif mu_X) / (dif lambda), quad mu_X(B) = integral_B f(x) dif x.
+  $
+  The two views agree precisely when $F$ is absolutely continuous, in which
+  case $F'(x) = f(x)$ holds almost everywhere. In particular the density is
+  *almost everywhere unique*: two representatives differing only on a
+  Lebesgue null set determine the same distribution. Densities are relative
+  to a reference measure: replacing $lambda$ by the counting measure $nu$
+  recovers the PMF of a discrete variable,
+  $
+    p_i = (dif mu_X) / (dif nu)(x_i), quad mu_X = sum_i p_i delta_(x_i),
+  $
+  so the distribution column $p_i$ is the discrete analogue of a density.
+  Absolute continuity also rules out atoms: $P(X = a) = 0$ for every point
+  $a$, hence
+  $P(a <= X <= b) = P(a < X < b) = P(a < X <= b)$. Not every distribution has
+  a density: the *Cantor* distribution is continuous yet $mu_X$ is not
+  absolutely continuous with respect to $lambda$ — its CDF is a singular
+  continuous function with derivative $0$ almost everywhere, an instance of
+  the singular type anticipated in the note below. (Radon–Nikodym and
+  absolute continuity are developed in the Analyse Réelle note.)
+] <note:density-views>
+
 #property(name: "Properties of the PDF")[
   Let $f$ be a PDF. Then:
 
@@ -1001,8 +1054,8 @@ Two structural types of random variable dominate the theory.
   Non-negativity and normalization follow from $F$ being non-decreasing
   with $lim F = 1$. The interval formula follows from additivity of the
   integral: $F(b) - F(a) = integral_a^b f(x) dif x$. For point
-  probabilities, $P(X = a) = F(a) - F(a^-) = 0$ since $F$ is continuous
-  for a continuous variable.
+  probabilities, $P(X = a) = F(a) - F(a^-) = 0$ since $F$, being an integral
+  of $f$, is continuous at every point.
 ]
 
 #note[
@@ -1021,6 +1074,17 @@ Two structural types of random variable dominate the theory.
   placement: auto,
   supplement: [Fig.],
 ) <fig:cdf-types>
+
+#figure(
+  image("img/density-cdf-discrete-continuous.svg", width: 90%),
+  caption: [For a discrete variable, the PMF $(p(x_i))$ as impulses (top
+    left) accumulates into a step CDF (top right); for a continuous variable,
+    the density curve (bottom left) accumulates into a smooth CDF (bottom
+    right). In both cases the CDF is the running total of the mass — the
+    direct analogue of $F(x) = mu_X((-infinity, x])$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:density-cdf-discrete-continuous>
 
 == Common Discrete Distributions // 常用离散分布
 
@@ -1162,6 +1226,18 @@ vanishing success probability — the *law of rare events*.
   replacement.
 ]
 
+#figure(
+  image("img/common-discrete-distributions.svg", width: 90%),
+  caption: [Probability mass functions of the common discrete families:
+    binomial (and its Poisson approximation), geometric, negative binomial,
+    and hypergeometric, shown for illustrative parameter values. The layout
+    of the genealogy note is mirrored: success-count (binomial, Poisson),
+    failure-count (geometric, negative binomial), and drawn-count
+    (hypergeometric).],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:common-discrete-distributions>
+
 == Common Continuous Distributions // 常用连续分布
 
 The discrete families of the preceding section are models for counting;
@@ -1294,6 +1370,17 @@ and conjugate Bayesian analysis.
   with one degree of freedom, to be met again in the sampling distributions
   chapter.
 ]
+
+#figure(
+  image("img/common-continuous-densities.svg", width: 90%),
+  caption: [Density curves of the common continuous families: uniform,
+    exponential, normal (with the $3 sigma$ band), Gamma, and Beta, shown for
+    illustrative shape and rate parameters. The Gamma, Exponential, and Beta
+    densities share the unit interval / non-negative half-line support, while
+    the normal lives on the whole line.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:common-continuous-densities>
 
 == Distributions of Functions of Random Variables // 随机变量函数的分布
 
