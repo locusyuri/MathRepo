@@ -1074,27 +1074,45 @@ picture: taking a larger step $k$ shortens the cycle from $n$ to
 $n \/ "gcd"(n, k)$, the number of distinct multiples of $k$ modulo
 $n$.
 
-#theorem(name: "Orders of a Product of Commuting Elements")[
-  Let $G$ be a group and $a, b in G$ with $a b = b a$. If
-  $"ord"(a) = m$ and $"ord"(b) = n$ with $"gcd"(m, n) = 1$, then
-  $"ord"(a b) = m n$.
-] <thm:coprime-order-product>
+#theorem(name: "Coprime Orders and the Order of a Product")[
+  Let $m, n >= 1$ be coprime and let $G$ be a group. Then $G$
+  contains an element of order $m n$ if and only if it contains
+  commuting elements of orders $m$ and $n$. Moreover, if $a$ has
+  order $m n$, its factorisation $a = b c = c b$ with $"ord"(b) = m$
+  and $"ord"(c) = n$ is unique.
+] <thm:coprime-order-decomposition>
 
 #proof[
-  Commutativity brings the powers of a product under control:
-  $(a b)^t = a^t b^t$ for every $t$. Then
-  $(a b)^(m n) = a^(m n) b^(m n) = (a^m)^n (b^n)^m = e^n e^m = e$,
-  so $"ord"(a b) <= m n$.
+  *(Forwards.)* Let $"ord"(a) = m n$. By Bézout, pick
+  $u, v in bb(Z)$ with $u m + v n = 1$, and set $b = a^(v n)$,
+  $c = a^(u m)$. Then
+  $b c = a^(v n + u m) = a$, with $b c = c b$ trivially. The third
+  item of #link(<prop:order-properties>)[the wrap-around property]
+  gives
+  $"ord"(b) = m n \/ "gcd"(m n, v n) = m n \/ (n dot "gcd"(m, v))$.
+  Any common divisor of $m$ and $v$ divides $u m + v n = 1$, so
+  $"gcd"(m, v) = 1$ and $"ord"(b) = m$; symmetrically $"ord"(c) = n$.
 
-  Conversely, suppose $(a b)^t = e$. Then $a^t b^t = e$, so
-  $a^t = b^(-t) =: c$. By the third item of
+  *(Backwards.)* Let $b, c in G$ commute, with $"ord"(b) = m$ and
+  $"ord"(c) = n$. Commutativity gives $(b c)^t = b^t c^t$ for every
+  $t$, so
+  $(b c)^(m n) = (b^m)^n (c^n)^m = e$
+  and $"ord"(b c) <= m n$. For the reverse, suppose $(b c)^t = e$.
+  Then $b^t c^t = e$, so $b^t = c^(-t) =: d$. By the third item of
   #link(<prop:order-properties>)[the wrap-around property],
-  $"ord"(a^t) = m \/ "gcd"(m, t)$ divides $m$, and likewise
-  $"ord"(b^(-t)) = n \/ "gcd"(n, t)$ divides $n$. Both equal
-  $"ord"(c)$, which therefore divides $"gcd"(m, n) = 1$; hence $c = e$,
-  i.e. $a^t = e$ and $b^(-t) = e$. By the first item, $m | t$ and
-  $n | t$, and since $m, n$ are coprime, $m n | t$. So
-  $"ord"(a b) = m n$.
+  $"ord"(d) = "ord"(b^t) = m \/ "gcd"(m, t)$ divides $m$, and likewise
+  $"ord"(d) = "ord"(c^(-t))$ divides $n$. Hence $"ord"(d)$ divides
+  $"gcd"(m, n) = 1$, so $d = e$, i.e. $m | t$ and $n | t$; since $m, n$
+  are coprime, $m n | t$. Therefore $"ord"(b c) = m n$.
+
+  *(Uniqueness.)* If $a = b c = c b$ with $"ord"(b) = m$,
+  $"ord"(c) = n$, then $c^n = e$, and commutativity gives
+  $a^n = (b c)^n = b^n c^n = b^n$. Writing
+  $b = b^(u m + v n) = (b^m)^u (b^n)^v$ and using $b^m = e$ and
+  $b^n = a^n$, we get $b = (a^n)^v = a^(v n)$ — fixed by the integers
+  $u, v$ chosen in the forwards step, hence independent of the
+  particular factorisation. Symmetrically $c = a^(u m)$. The
+  factorisation is unique.
 ]
 
 The commutativity hypothesis is essential, and its failure is
@@ -1140,37 +1158,11 @@ order.
   $beta_p > alpha_p$, take instead $x^(d \/ p^(beta_p))$, of order
   $p^(beta_p)$. These specimens have pairwise coprime orders
   (distinct primes), so
-  #link(<thm:coprime-order-product>)[the theorem above], iterated,
+  #link(<thm:coprime-order-decomposition>)[the theorem above], iterated,
   builds an element of order
   $product_p p^("max"(alpha_p, beta_p)) = "lcm"(n, d)$. Maximality of $n$
   forces $"lcm"(n, d) <= n$; since $n | "lcm"(n, d)$, equality holds,
   and $d | n$.
-]
-
-#theorem(name: "Splitting an Element across a Coprime Factorisation")[
-  Let $a in G$ have order $m n$ with $"gcd"(m, n) = 1$. Then there
-  exist unique $b, c in G$ such that $a = b c = c b$, with
-  $"ord"(b) = m$ and $"ord"(c) = n$.
-] <thm:coprime-order-splitting>
-
-#proof[
-  *Existence.* By Bézout, $u m + v n = 1$ for some integers $u, v$.
-  Set $b = a^(v n)$ and $c = a^(u m)$; then
-  $b c = a^(v n) a^(u m) = a^(v n + u m) = a$, and $b c = c b$
-  trivially. The third item of
-  #link(<prop:order-properties>)[the wrap-around property] gives
-  $"ord"(b) = m n \/ "gcd"(m n, v n) = m n \/ (n dot "gcd"(m, v))$.
-  Now $"gcd"(m, v) = 1$: any common divisor of $m$ and $v$ divides
-  $v n$ and hence $u m + v n = 1$. So $"ord"(b) = m$, and
-  symmetrically $"ord"(c) = n$.
-
-  *Uniqueness.* Let $a = b c = c b$ with $"ord"(b) = m$, $"ord"(c) = n$.
-  Then $c^n = e$, and commutativity gives
-  $a^n = (b c)^n = b^n c^n = b^n$. Writing $b = b^(u m + v n) =
-  (b^m)^u (b^n)^v$ and using $b^m = e$ and $b^n = a^n$, we find
-  $b = (a^n)^v = a^(v n)$ — forced by the integer $v$ fixed in the
-  existence step, hence independent of $b, c$. Symmetrically
-  $c = a^(u m)$. The decomposition is unique.
 ]
 
 Two orders now coexist, and the distinction matters. The *order of
