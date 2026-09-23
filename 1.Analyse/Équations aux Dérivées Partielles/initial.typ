@@ -846,9 +846,9 @@ The invertibility in Step 3 is guaranteed by the implicit function theorem provi
   The initial curve $Gamma$ is said to be _non-characteristic_ at a point $P = (x_0(s), y_0(s))$ if
   $
     det (mat(
-      x_0'(s), y_0'(s);
-      a(x_0(s), y_0(s), u_0(s)), b(x_0(s), y_0(s), u_0(s))
-    )) != 0.
+        x_0'(s), y_0'(s);
+        a(x_0(s), y_0(s), u_0(s)), b(x_0(s), y_0(s), u_0(s))
+      )) != 0.
   $
   Equivalently, the vector $(a, b)$ is not tangent to $Gamma$ at $P$.
 ] <def:non-characteristic>
@@ -863,9 +863,9 @@ Geometrically, the non-characteristic condition means that the characteristic di
   Since $Gamma$ is non-characteristic, the Jacobian
   $
     J(s, t) = det (mat(
-      partial x / partial s, partial y / partial s;
-      partial x / partial t, partial y / partial t
-    ))
+        partial x / partial s, partial y / partial s;
+        partial x / partial t, partial y / partial t
+      ))
   $
   satisfies $J(s, 0) = x_0'(s) b - y_0'(s) a != 0$ at every point of $Gamma$. By the inverse function theorem, the map $(s, t) |-> (x(s, t), y(s, t))$ is a local diffeomorphism near $t = 0$. The solution $u(x, y) = u(s(x, y), t(x, y))$ is therefore well-defined and $C^1$ in a neighborhood of $Gamma$. Uniqueness follows from the uniqueness of the characteristic ODEs (Picard--Lindelöf theorem).
 ]
@@ -912,7 +912,7 @@ Even when the initial data is smooth, the solution of a _quasilinear_ (nonlinear
     image("./img/characteristics-crossing.svg", width: 70%),
     caption: [Characteristic curves in the $x t$-plane for Burgers' equation $u_t + u u_x = 0$ with decreasing initial data. The characteristics converge and intersect at the breaking time $t^"break"$, where the classical solution develops a gradient catastrophe.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:characteristics-crossing>
 ]
 
@@ -1119,7 +1119,7 @@ When characteristics cross, the classical solution breaks down and we must admit
     image("./img/burgers-shock-rarefaction.svg", width: 80%),
     caption: [Solutions of Burgers' equation $u_t + u u_x = 0$. *Left:* Shock wave for $u_L > u_R$: characteristics converge and a shock forms at speed $s = (u_L + u_R)/2$. *Right:* Rarefaction wave for $u_L < u_R$: characteristics diverge and a fan of characteristics fills the expansion region.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:burgers-shock-rarefaction>
 ]
 
@@ -1439,7 +1439,7 @@ The family $(rho_epsilon)_(epsilon > 0)$ is an _approximate identity_: as $epsil
 #theorem(name: "Mollifier Approximation")[
   Let $T in cal(D)'(bb(R)^n)$ and let $(rho_epsilon)_(epsilon > 0)$ be the standard mollifier family. Then:
   $
-    T * rho_epsilon -> T quad text("in") quad cal(D)'(bb(R)^n)  quad text("as") quad epsilon -> 0,
+    T * rho_epsilon -> T quad text("in") quad cal(D)'(bb(R)^n) quad text("as") quad epsilon -> 0,
   $
   meaning $⟨ T * rho_epsilon, phi ⟩ -> ⟨ T, phi ⟩$ for all $phi in cal(D)(bb(R)^n)$.
 
@@ -1470,7 +1470,7 @@ This density result is fundamental: it means we can approximate any distribution
   image("img/mollifier-approx.svg", width: 85%),
   caption: [Mollification of the Heaviside function $H(x)$. *Left:* The discontinuous function $H(x)$ (blue) and the mollifier kernel $rho_epsilon(x)$ (red, dashed). *Right:* The convolution $H * rho_epsilon$ (green) is a smooth approximation of $H$; as $epsilon -> 0$, it converges pointwise to $H$ away from the jump.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:mollifier-approx>
 
 == Fundamental Solutions // 基本解
@@ -2118,7 +2118,7 @@ The fundamental solution of the Laplacian was constructed in Chapter 7 (#link(<e
   $
   The integral over $partial Omega$ vanishes because $u = v = 0$ there. On the sphere $partial B (x_0, epsilon)$, the leading term of $u$ is $Gamma (x - x_0)$, so
   $
-    lim_(epsilon -> 0) integral_(partial B (x_0, epsilon)) v (partial u)/(partial nu) dif S = -v (y_0) ... 
+    lim_(epsilon -> 0) integral_(partial B (x_0, epsilon)) v (partial u)/(partial nu) dif S = -v (y_0) ...
   $
   hmm.
 ]
@@ -2793,7 +2793,7 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 
 = Wave Equation // 波动方程
 
-The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form and general solution in one dimension were obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[§7.2]). This chapter develops the complete Cauchy theory: the d'Alembert formula, energy conservation, finite propagation speed, and the Duhamel principle. The qualitative picture is complementary to the heat equation (Part V): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
+The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form and general solution in one dimension were obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[§7.2]). This chapter develops the complete Cauchy theory: the d'Alembert formula in one dimension, the Kirchhoff and Poisson formulas in higher dimensions, energy conservation and the local energy method, finite propagation speed with the Huygens principle and dispersive decay, and the Duhamel principle. The qualitative picture is complementary to the heat equation (Part V): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
 
 == D'Alembert Formula // 达朗贝尔公式
 
@@ -2831,33 +2831,33 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
   The two terms in the formula are traveling waves: $F (x - c t)$ moves right with speed $c$ without changing shape, $G (x + c t)$ moves left. The initial velocity $h$ contributes the integral term, whose value at $(t, x)$ depends on $h$ only on the interval $[x - c t, x + c t]$ — the first manifestation of finite propagation speed (§15.4).
 ]
 
-== Initial and Boundary Value Problems // 初边值问题
+== The Cauchy Problem in Higher Dimensions // 高维 Cauchy 问题
 
-#theorem(name: "Poisson's Formula in Three Dimensions")[
+#theorem(name: "Kirchhoff's Formula in Three Dimensions")[
   For $n = 3$, the Cauchy problem $partial_t^2 u = Delta u$, $u (0, x) = g (x)$, $partial_t u (0, x) = h (x)$ has the classical solution
   $
     u (t, x) = partial_t (t M_g (x, t)) + t M_h (x, t), quad M_phi (x, t) = 1 / (4 pi t^2) integral_(partial B (x, t)) phi dif S,
   $
   where $M_phi$ is the spherical mean of $phi$ over the sphere of radius $t$. For $g in C^3$, $h in C^2$ this is a $C^2$ solution, and it is unique.
-] <thm:poisson-formula-3d>
+] <thm:kirchhoff-formula-3d>
 
 #proof[
   (Sketch.) The proof uses the method of spherical means. For a solution $u$, the spherical mean $M_u (x, r) = 1/(4 pi r^2) integral_(partial B(x,r)) u (t, dot) dif S$ satisfies the Euler--Poisson--Darboux equation $partial_t^2 M_u = partial_r^2 M_u + (2/r) partial_r M_u$ with $M_u (0, x) = g (x)$, $partial_t M_u (0, x) = h (x)$. Writing $r M_u$ solves the one-dimensional wave equation in $(t, r)$, d'Alembert's formula gives an explicit expression for $M_u$; the identity $u (t, x) = M_u (x, 0^+)$ (the mean over a point is the value) then yields the formula. The regularity follows from differentiating the mean (one derivative on $M_g$ in the $partial_t$ term).
 ]
 
-#theorem(name: "Kirchhoff's Formula in Two Dimensions")[
+#theorem(name: "Poisson's Formula in Two Dimensions")[
   For $n = 2$, the solution of the Cauchy problem is obtained by the *method of descent* from the three-dimensional formula:
   $
     u (t, x) = 1/(2 pi) partial_t integral_(B (x, t)) (g (y))/(sqrt(t^2 - abs(x - y)^2)) dif y + 1/(2 pi) integral_(B (x, t)) (h (y))/(sqrt(t^2 - abs(x - y)^2)) dif y.
   $
-] <thm:kirchhoff-formula-2d>
+] <thm:poisson-formula-2d>
 
 #proof[
-  Regard $u$ as a function of three space variables independent of the third coordinate and apply Poisson's formula; the spherical means reduce to integrals over disks with the weight $1/sqrt(t^2 - r^2)$ (the Jacobian of the projection), giving the formula.
+  Regard $u$ as a function of three space variables independent of the third coordinate and apply Kirchhoff's formula; the spherical means reduce to integrals over disks with the weight $1/sqrt(t^2 - r^2)$ (the Jacobian of the projection), giving the formula.
 ]
 
 #note[
-  *Boundary value problems on bounded domains.* On a bounded interval (vibrating string) or domain (membrane), the wave equation is supplemented by boundary conditions. The standard tool is separation of variables: writing $u (t, x) = sum_k a_k (t) phi_k (x)$ with the eigenfunctions $phi_k$ of the Dirichlet Laplacian (Chapter 18, §18.1) reduces the problem to decoupled oscillators $a_k'' + lambda_k a_k = 0$. The spectral viewpoint is developed in Chapter 18.
+  *Boundary value problems on bounded domains.* On a bounded interval (vibrating string) or domain (membrane), the wave equation is supplemented by boundary conditions. The standard tool is separation of variables: writing $u (t, x) = sum_k a_k (t) phi_k (x)$ with the eigenfunctions $phi_k$ of the Dirichlet Laplacian (#link(<def:separation-variables>)[Ch. 18]) reduces the problem to decoupled oscillators $a_k'' + lambda_k a_k = 0$. The spectral viewpoint is developed in #link(<def:separation-variables>)[Chapter 18].
 ]
 
 == Energy Conservation // 能量守恒
@@ -2878,26 +2878,88 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
   the volume term vanishing by the equation and the boundary term by the boundary condition.
 ]
 
+On all of $bb(R)^n$ the total energy need not be finite, and the boundary term of the preceding argument is unavailable; the wave equation nevertheless admits a *local* energy inequality on characteristic cones, which is the key to uniqueness and stability for the Cauchy problem.
+
+#theorem(name: "Local Energy Inequality on the Cone")[
+  Let $u$ be a $C^2$ solution of $partial_t^2 u = c^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $x_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(t_0, x_0)$,
+  $
+    C = {(s, y) : 0 <= s <= t_0, abs(y - x_0) <= c (t_0 - s)}.
+  $
+  Define the local energy on the time slice
+  $
+    E_C (t) = 1/2 integral_(B (x_0, c (t_0 - t))) (abs(partial_t u)^2 + c^2 abs(nabla u)^2) dif y.
+  $
+  Then $E_C (t) <= E_C (0)$ for all $t in [0, t_0]$: the energy in a backward cone is non-increasing in time.
+] <thm:local-energy-cone>
+
+#proof[
+  The pointwise energy identity
+  $
+    partial_s (1/2 (u_s^2 + c^2 abs(nabla u)^2)) - "div"(c^2 u_s nabla u) = u_s (u_(s s) - c^2 Delta u) = 0
+  $
+  holds for $s < t_0$. Integrate it over the truncated cone $C_t = C inter {s <= t}$ and apply the divergence theorem in space-time. On the lateral face the outward space-time normal is $nu = (c, e_r) / sqrt(1 + c^2)$, with $e_r$ the radial unit vector, and the boundary flux is
+  $
+    integral_("lateral") (c/2 (u_s - c u_r)^2 + (c^3/2) abs(nabla_T u)^2) / sqrt(1 + c^2) dif S >= 0,
+  $
+  a sum of squares: the lateral face is *characteristic*, so no energy flows out of the cone. Hence $E_C (t) + "flux" = E_C (0)$, and the claim follows.
+]
+
 #corollary(name: "Uniqueness of the Cauchy Problem")[
-  Let $u, v$ be $C^2$ solutions of the wave equation on $Omega$ (or on all of $bb(R)^n$ with suitable decay) with the same initial data $u (0, dot) = v (0, dot)$ and $partial_t u (0, dot) = partial_t v (0, dot)$. Then $u = v$.
+  Let $u, v$ be $C^2$ solutions of $partial_t^2 u = c^2 Delta u$ on $bb(R)^n times [0, oo)$ with the same initial data $u (0, dot) = v (0, dot)$ and $partial_t u (0, dot) = partial_t v (0, dot)$. Then $u = v$.
 ] <cor:wave-uniqueness>
 
 #proof[
-  The difference $w = u - v$ has zero initial data and satisfies the wave equation. By conservation of energy, $E (t) = E (0) = 0$ for all $t$, so $partial_t w = 0$ and $nabla w = 0$; hence $w$ is constant in space-time, and the initial condition gives $w = 0$.
+  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(x_0, t_0)$ the data of $w$ vanish on $B (x_0, c t_0)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) $E_C (t) = 0$ for all $t <= t_0$, hence $w$ is constant in the cone, and the initial condition gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
+]
+
+#corollary(name: "Continuous Dependence on the Data")[
+  Let $u, v$ be $C^2$ solutions with initial data $(g, h)$ and $(tilde(g), tilde(h))$, and let $C$ be the backward cone with apex $(t_0, x_0)$. Then for all $t in [0, t_0]$ the local energy of the difference $w = u - v$ satisfies
+  $
+    E_C (t) <= 1/2 integral_(B (x_0, c t_0)) (abs(h - tilde(h))^2 + c^2 abs(nabla (g - tilde(g)))^2) dif y.
+  $
+  Small initial data (in the energy norm, on the domain of dependence) produce a small solution: the Cauchy problem is *stable*.
+] <cor:wave-stability>
+
+#proof[
+  Immediate from the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) applied to $w = u - v$, whose initial energy is bounded by the data on $B (x_0, c t_0)$.
 ]
 
 == Finite Propagation Speed // 有限传播速度
 
-#theorem(name: "Domain of Dependence")[
-  Let $u$ solve the wave equation $partial_t^2 u = Delta u$ in $bb(R)^n$. The value $u (t, x)$ depends only on the initial data in the ball $overline(B (x, c t))$: if $g = tilde(g)$ and $h = tilde(h)$ on $B (x, c t)$, then $u (t, x) = tilde(u) (t, x)$. The *domain of dependence* of $(t, x)$ is $B (x, c t)$; the *domain of influence* of a point $y$ is the cone ${(t, x) : abs(x - y) <= c t}$.
+#theorem(name: "Finite Propagation Speed")[
+  Let $u, tilde(u)$ be $C^2$ solutions of $partial_t^2 u = c^2 Delta u$ on $[0, oo) times bb(R)^n$ with initial data $(g, h)$ and $(tilde(g), tilde(h))$. If $g = tilde(g)$ and $h = tilde(h)$ on $B (x, c t)$, then $u (t, x) = tilde(u) (t, x)$: the value at $(t, x)$ depends only on the initial data in the ball $overline(B (x, c t))$.
 ] <thm:domain-of-dependence>
 
 #proof[
-  By linearity it suffices to show that data supported outside $B (x, c t)$ do not affect $u (t, x)$. Let $w$ be the solution with data supported in the exterior of $B (x, c t)$. Consider the backward cone $C = {(s, y) : 0 <= s <= t, abs(y - x) <= c (t - s)}$. The energy of $w$ on the time slice $C inter {s = tau}$ is zero at $tau = 0$ (data vanish on $B (x, c t)$); by the same computation as in Theorem 15.3, with the boundary term on the lateral cone vanishing (the normal is characteristic), the energy is non-increasing, hence zero, and $w (t, x) = 0$. For the one-dimensional formula this is immediate from d'Alembert's formula; the argument here is the general energy proof.
+  By linearity it suffices to show that data supported outside $B (x, c t)$ do not affect $u (t, x)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(t, x)$. The data of $w$ vanish on $C inter {s = 0} = B (x, c t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (t, x) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
 ]
 
+#definition(name: "Domains of Dependence, Determinacy and Influence")[
+  The *domain of dependence* of a point $(t, x)$ is the ball $overline(B (x, c t))$: only the data in this ball can influence the value $u (t, x)$. Given a set $D$ on the initial surface, its *domain of determinacy* is the region
+  $
+    {(s, x) : 0 <= s, B (x, c s) subset D},
+  $
+  the part of space-time completely determined by the data on $D$. The *domain of influence* of a point $y$ of the initial surface is the cone
+  $
+    {(t, x) : abs(x - y) <= c t},
+  $
+  the set of space-time points whose values the data at $y$ can affect.
+] <def:domain-dependence-influence>
+
+Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $c$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior.
+
 #note[
-  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (t, x)$ depends only on the data on the *sphere* $partial B (x, c t)$ — a sharp wave front with no wake: by Poisson's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Kirchhoff's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
+  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (t, x)$ depends only on the data on the *sphere* $partial B (x, c t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
+]
+
+#theorem(name: "Dispersive Decay")[
+  Let $u$ be the solution of the Cauchy problem with smooth, compactly supported initial data.
+  - *Odd dimensions* ($n >= 3$): $u (t, x) = 0$ as soon as $t > "dist"(x, "supp"(g, h))$ — after the wave front passes, the medium returns to rest (the *strong Huygens principle*).
+  - *Even dimensions* ($n = 2$): in general $u (t, x)$ does not vanish behind the front (trailing wake), and $abs(u (t, x)) <= C t^(-1/2)$ uniformly in $x$ as $t -> oo$ (the *weak Huygens principle*, or *dispersion*).
+] <thm:dispersive-decay>
+
+#proof[
+  (Sketch.) Both statements are read off the explicit formulas of §15.2. In three dimensions, Kirchhoff's formula involves only spherical means over $partial B (x, c t)$: the sphere meets the initial support only while $c t$ lies between the nearest and the farthest distance from $x$ to the support — after that $u (t, x) = 0$. In two dimensions, Poisson's formula integrates over the full disk $B (x, c t)$ with the weight $(t^2 - abs(x - y)^2)^(-1/2)$, which is nonzero for all large $t$ (the wake); the dominant contribution as $t -> oo$ comes from the rim $abs(x - y) approx c t$, where the weight is barely integrable, and the resulting uniform bound is $O(t^(-1/2))$ — consistent with the general dispersive rate $t^(-(n-1)/2)$.
 ]
 
 == Duhamel Principle // Duhamel 原理
@@ -2919,11 +2981,15 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
   $
     partial_t^2 u - Delta u = (partial_t w) (t, t; dot) + integral_0^t (partial_t^2 w - Delta w) dif s = f (t, dot),
   $
-  since each $w$ is a homogeneous solution. Uniqueness (Theorem 15.3) identifies $u$ as the solution.
+  since each $w$ is a homogeneous solution. Uniqueness (#link(<cor:wave-uniqueness>)[Cor.]) identifies $u$ as the solution.
 ]
 
 #note[
-  The same principle applies to the heat equation (Chapter 13, §13.2) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is explicitly given by the d'Alembert / Poisson / Kirchhoff formulas.
+  The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 13]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is explicitly given by the d'Alembert / Kirchhoff / Poisson formulas of §15.1–15.2, so Duhamel's principle yields explicit solutions of the *inhomogeneous* Cauchy problem in every dimension. In three dimensions, for instance,
+  $
+    u (t, x) = partial_t (t M_g (x, t)) + t M_h (x, t) + integral_0^t 1/(4 pi (t - s)) integral_(partial B (x, t - s)) f (s, y) dif S dif s,
+  $
+  the inhomogeneous counterpart of Kirchhoff's formula; the two-dimensional analogue follows from Poisson's formula.
 ]
 
 = Linear Hyperbolic Systems // 线性双曲系统
@@ -2963,16 +3029,19 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
 == Riemann Invariants // Riemann 不变量
 
 #definition(name: "Riemann Invariants")[
-  Consider the one-dimensional system $partial_t u + A partial_x u = 0$ with $A in bb(R)^(m times m)$ diagonalizable: $A = R Lambda R^(-1)$ with $Lambda = "diag"(lambda_1, dots, lambda_m)$ and $R$ the matrix of right eigenvectors. The *characteristic variables* (Riemann invariants)
+  Consider the one-dimensional system $partial_t u + A partial_x u = 0$ with $A in bb(R)^(m times m)$ diagonalizable: $A = R Lambda R^(-1)$ with $Lambda = "diag"(lambda_1, dots, lambda_m)$ and $R$ the matrix of right eigenvectors. The *characteristic variables* (Riemann invariants) are
   $
-    w = R^(-1) u, quad w_i = (R^(-1) u)_i,
+    w = R^(-1) u, quad w_i = (R^(-1) u)_i.
   $
-  satisfy the decoupled transport equations
-  $
-    partial_t w_i + lambda_i partial_x w_i = 0, quad i = 1, dots, m.
-  $
-  Hence each $w_i$ is constant along the characteristic lines $x - lambda_i t = "const"$.
 ] <def:riemann-invariants>
+
+#proposition(name: "Diagonalization via Riemann Invariants")[
+  The Riemann invariants satisfy the decoupled transport equations
+  $
+    partial_t w_i + lambda_i partial_x w_i = 0, quad i = 1, dots, m,
+  $
+  and hence each $w_i$ is constant along the characteristic lines $x - lambda_i t = "const"$.
+] <prop:riemann-diagonalization>
 
 #proof[
   Substituting $u = R w$ into the system and multiplying by $R^(-1)$:
@@ -3001,7 +3070,7 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
 ] <thm:energy-wellposedness>
 
 #proof[
-  *Step 1: A priori estimate for smooth solutions.* Multiplying by $u$ as in Theorem 16.1 gives
+  *Step 1: A priori estimate for smooth solutions.* Multiplying by $u$ as in #link(<thm:symmetric-energy>)[Theorem 16.1] gives
   $
     1/2 (dif)/(dif t) ||u||_(L^2)^2 = integral u dot B u dif x <= ||B||_oo ||u||_(L^2)^2,
   $
@@ -3290,7 +3359,12 @@ This chapter gives a concise overview of the four standard families of numerical
   ("Scheme", "Update", "Truncation error", "Stability"),
   ([Explicit], [$U_j^(n+1) = U_j^n + mu delta^2 U_j^n$], [$O (Delta t + Delta x^2)$], [$mu <= 1/2$]),
   ([Implicit], [$U_j^(n+1) - mu delta^2 U_j^(n+1) = U_j^n$], [$O (Delta t + Delta x^2)$], [unconditional]),
-  ([Crank--Nicolson], [$(1 - mu/2 delta^2) U_j^(n+1) = (1 + mu/2 delta^2) U_j^n$], [$O (Delta t^2 + Delta x^2)$], [unconditional]),
+  (
+    [Crank--Nicolson],
+    [$(1 - mu/2 delta^2) U_j^(n+1) = (1 + mu/2 delta^2) U_j^n$],
+    [$O (Delta t^2 + Delta x^2)$],
+    [unconditional],
+  ),
 )
 
 #definition(name: "Consistency, Stability, Convergence")[
