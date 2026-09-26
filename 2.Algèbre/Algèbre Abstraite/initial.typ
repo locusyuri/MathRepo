@@ -1210,42 +1210,102 @@ the tools that produce and certify subgroups.
 
 #definition(name: "Subgroup")[
   Let $(G, star)$ be a group and $H$ a subset of $G$. Then $H$ is a
-  *subgroup* of $G$, written $H <= G$, if $H$ is a group under the
-  restricted operation — equivalently, if $H$ is non-empty and
+  *subgroup* of $G$, written $H <= G$, if $H$ is itself a group under
+  the operation of $G$ restricted to $H$. The whole group $G$ and
+  the singleton ${e}$ are the *trivial subgroups*; any other subgroup
+  is *proper*, written $H < G$.
+] <def:subgroup>
+
+At first sight this demands a full re-verification of the axioms.
+Two small observations reduce the work to a couple of closures.
+
+#property(name: "Identity and Inverses Are Inherited")[
+  Let $H <= G$. Then the identity of $H$ is the identity $e$ of $G$,
+  and for every $h in H$ the inverse of $h$ in $H$ coincides with its
+  inverse in $G$.
+] <prop:subgroup-identity-inverses>
+
+#proof[
+  Let $e_H$ be the identity of $H$. Both products below live in $G$,
+  where cancellation holds (#link(<prop:group-basic-properties>)[§2.3]):
+  $e_H e_H = e_H = e_H e$, and cancelling $e_H$ gives $e_H = e$. For
+  $h in H$, write $h_H^(-1)$ for its inverse computed inside $H$;
+  then $h h_H^(-1) = e_H = e = h h^(-1)$, and cancelling $h$ gives
+  $h_H^(-1) = h^(-1)$.
+]
+
+#theorem(name: "Subgroup Criterion")[
+  A subset $H$ of a group $G$ is a subgroup if and only if $H$ is
+  non-empty and
   $
     h_1, h_2 in H quad ==> quad h_1 h_2 in H quad "and" quad h_1^(-1)
     in H.
   $
-  The whole group $G$ and the singleton ${e}$ are the *trivial
-  subgroups*; any other subgroup is *proper*, written $H < G$.
-] <def:subgroup>
+] <thm:subgroup-criteria>
+
+#proof[
+  (==>) If $H$ is a group under the restricted operation, products
+  and inverses of elements of $H$ computed inside $H$ stay in $H$
+  and coincide with those computed in $G$
+  (#link(<prop:subgroup-identity-inverses>)[the property above]);
+  $H$ is non-empty as it contains the identity.
+
+  (<==) Suppose the two closures hold. Picking $h in H$, we get
+  $h^(-1) in H$ and then $e = h h^(-1) in H$. The restricted
+  operation is associative because $star$ is; the element $e in H$
+  acts as the identity; and every $h in H$ has its inverse in $H$.
+  All group axioms hold in $H$, so $H$ is a subgroup by
+  #link(<def:subgroup>)[the definition].
+]
 
 Checking closure and inverses separately doubles the work; the
-following criterion does both at once and will be the workhorse of
-the chapter.
+following criterion merges them into a single test and will be the
+workhorse of the chapter.
 
-#theorem(name: "One-Step Subgroup Criterion")[
+#corollary(name: "One-Step Subgroup Criterion")[
   Let $G$ be a group and $H$ a non-empty subset of $G$. Then $H$ is
   a subgroup of $G$ if and only if
   $
     a, b in H quad ==> quad a b^(-1) in H.
   $
-] <thm:subgroup-criterion>
+] <cor:subgroup-criterion>
 
 #proof[
-  Necessity is immediate: if $H$ is a subgroup and
-  $a, b in H$, then $b^(-1) in H$ by closure under inverses, and then
-  $a b^(-1) in H$ by closure under the operation.
+  Necessity: $b in H$ gives $b^(-1) in H$, and then $a b^(-1) in H$
+  by closure under products
+  (#link(<thm:subgroup-criteria>)[the theorem above]).
 
   Conversely, suppose $a b^(-1) in H$ whenever $a, b in H$. Since $H$
   is non-empty, pick $h in H$; then $e = h h^(-1) in H$, so the
   identity of $G$ lies in $H$ and acts as an identity inside $H$. For
-  $h in H$, the criterion with $a = e$ and $b = h$ gives $h^(-1) = e
+  $h in H$, the test with $a = e$ and $b = h$ gives $h^(-1) = e
   h^(-1) in H$. For $a, b in H$, we now know $b^(-1) in H$, and the
-  criterion with $b^(-1)$ in place of $b$ gives $a (b^(-1))^(-1) = a b
-  in H$. Thus $H$ is non-empty and closed under the operation and
-  under inverses — a subgroup by
-  #link(<def:subgroup>)[the definition].
+  test with $b^(-1)$ in place of $b$ gives $a (b^(-1))^(-1) = a b
+  in H$. Both closures hold, so $H$ is a subgroup by
+  #link(<thm:subgroup-criteria>)[the theorem].
+]
+
+If the candidate set is finite, even the closure under inverses comes
+for free.
+
+#corollary(name: "Finite Subgroup Criterion")[
+  Let $G$ be a group and $H$ a non-empty *finite* subset of $G$
+  closed under the operation: $a, b in H ==> a b in H$. Then $H$ is
+  a subgroup of $G$. In particular, a subset of a finite group is a
+  subgroup exactly when it is non-empty and closed under
+  multiplication.
+] <cor:finite-subgroup-criterion>
+
+#proof[
+  By #link(<thm:subgroup-criteria>)[the theorem] it remains to
+  produce inverses. Fix $a in H$; closure under products puts every
+  power $a^k$ with $k >= 1$ into $H$, and finiteness forces a
+  repetition $a^j = a^k$ with $j > k$. Cancelling $a^k$
+  (#link(<prop:group-basic-properties>)[§2.3]) yields
+  $a^(j - k) = e$ with $j - k >= 1$, so $e in H$; and then
+  $a dot a^(j - k - 1) = e$ exhibits the inverse
+  $a^(-1) = a^(j - k - 1) in H$ (when $j - k = 1$ we have $a = e$,
+  whose inverse is itself).
 ]
 
 #example(name: "A subgroup inventory.")[
@@ -1269,6 +1329,60 @@ the chapter.
     Chapter 4.
 ] <ex:subgroup-inventory>
 
+One subgroup deserves special mention because of what it measures:
+how far a group is from being abelian.
+
+#definition(name: "Center and Centralizer")[
+  Let $G$ be a group.
+  - The *center* of $G$ is
+    $
+      Z(G) = {z in G | z g = g z " for all " g in G},
+    $
+    the set of elements that commute with every element of $G$.
+  - For a fixed $a in G$, the *centralizer* of $a$ in $G$ is
+    $
+      C_(G)(a) = {x in G | x a = a x},
+    $
+    the set of elements that commute with $a$.
+] <def:center-centralizer>
+
+Evidently $C_(G)(a) = G$ exactly when $a in Z(G)$, and
+$Z(G) = inter.big_(a in G) C_(G)(a)$.
+
+#property(name: "The Center and the Centralizers Are Subgroups")[
+  For every group $G$ and every $a in G$, both $Z(G)$ and $C_(G)(a)$
+  are subgroups of $G$.
+] <prop:center-is-subgroup>
+
+#proof[
+  Both sets contain $e$, so both are non-empty. Note first that if
+  $y a = a y$, then $a y^(-1) = y^(-1) a$: multiply $y a = a y$ on
+  the left and on the right by $y^(-1)$. Now let $x, y in C_(G)(a)$;
+  then $x y^(-1) a = x a y^(-1) = a x y^(-1)$, so $C_(G)(a)$ passes
+  the one-step criterion (#link(<cor:subgroup-criterion>)[§3.1]). If
+  instead $x, y$ commute with *every* element of $G$, then for all
+  $g in G$,
+  $
+    x y^(-1) g = x g y^(-1) = g x y^(-1),
+  $
+  the middle step using $g y = y g$, i.e. $g y^(-1) = y^(-1) g$; so
+  $Z(G)$ passes the criterion as well.
+]
+
+#example(name: "Centers of the typical groups.")[
+  - If $G$ is abelian, then $Z(G) = G$ trivially; the center is only
+    informative for non-abelian groups.
+  - $Z(S_3) = {e}$. The transposition $(1 2)$ does not commute with
+    the 3-cycle $(1 2 3)$: $(1 2)(1 2 3) = (2 3)$ whereas
+    $(1 2 3)(1 2) = (1 3)$. Every non-identity element of $S_3$ is a
+    transposition or a 3-cycle, and a similar check rules out each
+    of them, so the only element commuting with everything is $e$ —
+    the center is the trivial subgroup of
+    #link(<ex:subgroup-inventory>)[the inventory above].
+]
+
+== Cyclic Groups // 循环群
+
 Subgroups beget subgroups: from any subset one can manufacture the
 smallest subgroup containing it.
 
@@ -1278,7 +1392,8 @@ smallest subgroup containing it.
   all subgroups of $G$ that contain $S$. A group $G$ is *generated
   by* $S$ when $G = ⟨S⟩$; in particular the subgroup $⟨{g}⟩$
   generated by the single element $g$ — written $⟨g⟩$ for short — is
-  the *cyclic subgroup*, the subject of #link(<def:cyclic-group>)[§3.2].
+  the *cyclic subgroup*, the subject of
+  #link(<def:cyclic-group>)[the definition below].
 ] <def:generated-subgroup>
 
 Equivalently, $⟨S⟩$ is the smallest subgroup containing $S$: it
@@ -1297,27 +1412,25 @@ of an element of $S$.
 #proof[
   The identity $e$ lies in every $H_i$, so the intersection
   is non-empty. If $a, b$ lie in the intersection, they lie in each
-  $H_i$; by #link(<thm:subgroup-criterion>)[the criterion],
+  $H_i$; by #link(<cor:subgroup-criterion>)[the criterion],
   $a b^(-1) in H_i$ for every $i$, so $a b^(-1)$ lies in the
   intersection. For the consequence: the concrete product description
   of $⟨S⟩$ is visibly closed under $a b^(-1)$ and contains $S$, so it
   coincides with the intersection.
 ]
 
-== Cyclic Groups // 循环群
-
-We have met, repeatedly, groups in which every element is a power of
-a single element: $(bb(Z), +)$ is generated by $1$, $(bb(Z)_n, +)$ by
-$[1]$, and $⟨a⟩$ of #link(<prop:order-properties>)[§2.4] is built
-from its own namesake. With subgroups now official, these power sets
-have a home: for any $a in G$ the set $⟨a⟩ = {a^k | k in bb(Z)}$
-passes the one-step criterion (#link(<thm:subgroup-criterion>)[§3.1])
-— $a^j (a^k)^(-1) = a^(j - k) in ⟨a⟩$ — so $⟨a⟩$ is a subgroup,
-namely the subgroup generated by the singleton ${a}$
-(#link(<def:generated-subgroup>)[§3.1]), the smallest subgroup
-containing $a$. The phenomenon deserves a name, for these groups
-admit a complete classification — the first structure theorem of
-this notebook.
+The construction is most profitable for a singleton — and singleton
+generation is the oldest story in this notebook: $(bb(Z), +)$ is
+generated by $1$, $(bb(Z)_n, +)$ by $[1]$, and the power set $⟨a⟩$
+of #link(<prop:order-properties>)[§2.4] is built from its own
+namesake. With subgroups now official, these power sets have a home:
+for any $a in G$ the set $⟨a⟩ = {a^k | k in bb(Z)}$ passes the
+one-step criterion (#link(<cor:subgroup-criterion>)[§3.1]) —
+$a^j (a^k)^(-1) = a^(j - k) in ⟨a⟩$ — so it is a subgroup, and the
+concrete product description above identifies it with $⟨{a}⟩$, the
+smallest subgroup containing $a$. The phenomenon deserves a name,
+for these groups admit a complete classification — the first
+structure theorem of this notebook.
 
 #definition(name: "Cyclic Group")[
   A group $G$ is *cyclic* if $G = ⟨g⟩$ for some $g in G$ — that is,
@@ -1374,24 +1487,6 @@ The isomorphism $bb(Z)_4 ≅ U_4$ computed in
 #link(<ex:isomorphic-examples>)[Chapter 1] is precisely the case
 $n = 4$ of the theorem; the theorem says such luck is *systematic*.
 
-#corollary(name: "Element Orders Divide the Group Order")[
-  Let $G = ⟨g⟩$ be cyclic of finite order $n$, and let $a = g^k$ be
-  any element of $G$. Then
-  $
-    "ord"(a) = n \/ ("gcd"(n, k)),
-  $
-  which in particular divides $n$. (That element orders divide the
-  group order in *every* finite group is Lagrange's theorem,
-  #link(<thm:lagrange>)[§3.3] below; in the cyclic world it already
-  falls out here, ahead of the coset machinery.)
-] <cor:order-divides>
-
-#proof[
-  This is item (3) of #link(<prop:order-properties>)[the wrap-around
-    property of §2.4], applied to the generator $g$ of order $n$:
-  $"ord"(g^k) = n \/ ("gcd"(n, k))$, which divides $n$.
-]
-
 #corollary(name: "Generators of a Finite Cyclic Group")[
   In a cyclic group $G = ⟨g⟩$ of order $n$, the element $g^k$ is a
   generator of $G$ if and only if $"gcd"(n, k) = 1$. Hence $G$ has
@@ -1403,7 +1498,9 @@ $n = 4$ of the theorem; the theorem says such luck is *systematic*.
 
 #proof[
   $g^k$ generates $G$ exactly when $⟨g^k⟩ = G$, i.e. when
-  $abs(⟨g^k⟩) = n$; by #link(<cor:order-divides>)[the corollary above],
+  $abs(⟨g^k⟩) = n$; by #link(<cor:finite-group-orders>)[§2.4] and
+  item (3) of #link(<prop:order-properties>)[the wrap-around
+    property],
   $abs(⟨g^k⟩) = "ord"(g^k) = n \/ ("gcd"(n, k))$, which equals $n$
   exactly when $"gcd"(n, k) = 1$. The count of such exponents $k$ in
   ${0, 1, dots, n - 1}$ is $phi(n)$ by definition.
@@ -1452,7 +1549,8 @@ $n = 4$ of the theorem; the theorem says such luck is *systematic*.
     $[2]$ — the triangle ${[0], [2], [4]}$ — and the subgroup
     generated by $[3]$ — the diameter ${[0], [3]}$ — appear as
     smaller circuits; their orders $3$ and $2$ divide $6$, as
-    #link(<cor:order-divides>)[predicted], and they are the *only*
+    #link(<prop:order-properties>)[the wrap-around property]
+    predicts, and they are the *only*
     proper subgroups, as #link(<thm:cyclic-subgroups>)[the subgroup
       theorem] guarantees.],
   placement: auto,
@@ -1512,7 +1610,7 @@ general mechanism.
 
   (3) If $x in a H ∩ b H$, write $x = a h_1 = b h_2$; then
   $a^(-1) b = h_1 h_2^(-1) in H$ by
-  #link(<thm:subgroup-criterion>)[the criterion], and (2) gives
+  #link(<cor:subgroup-criterion>)[the criterion], and (2) gives
   $a H = b H$.
 
   (4) Every $a in G$ lies in its own coset $a H$, and the cosets are
@@ -1592,9 +1690,11 @@ tiles. Every structural statement below is this picture in words.
 ] <cor:lagrange-order-divides>
 
 #proof[
-  This fulfils the promise attached to
-  #link(<cor:order-divides>)[the cyclic case of §3.2]. The
-  cyclic subgroup $⟨a⟩$ has $abs(⟨a⟩) = "ord"(a)$ elements
+  In the cyclic world this was already visible: for $G = ⟨g⟩$ the
+  wrap-around property (#link(<prop:order-properties>)[§2.4]) gives
+  $"ord"(a) = n \/ ("gcd"(n, k)) | n$ for every $a = g^k$; what is
+  new is universality. The cyclic subgroup $⟨a⟩$ has
+  $abs(⟨a⟩) = "ord"(a)$ elements
   (#link(<cor:finite-group-orders>)[§2.4]), so Lagrange gives
   $"ord"(a) | abs(G)$. Writing $abs(G) = "ord"(a) dot m$, we get
   $a^(abs(G)) = (a^("ord"(a)))^m = e^m = e$.
@@ -1710,7 +1810,7 @@ to isomorphism, a group of permutations of some set.
   subset of $"Sym"(G)$. It contains the identity map $L_e$, and for
   $L_g, L_h in L(G)$ the criterion computation gives
   $L_g circle L_h^(-1) = L_g circle L_(h^(-1)) = L_(g h^(-1)) in
-  L(G)$; by #link(<thm:subgroup-criterion>)[the one-step criterion],
+  L(G)$; by #link(<cor:subgroup-criterion>)[the one-step criterion],
   $L(G)$ is a subgroup of $"Sym"(G)$ — a transformation group.
   Finally, $g arrow.r.double L_g$ maps $G$ bijectively onto $L(G)$
   (injective: $L_g = L_h$ says $g x = h x$ for all $x$, and $x = e$
