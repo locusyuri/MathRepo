@@ -1205,8 +1205,9 @@ group, however abstract, lives inside a permutation group.
 == Subgroups // 子群
 
 A subgroup is, simply, a subset that is itself a group under the
-restricted operation. We now make the notion official, together with
-the tools that produce and certify subgroups.
+restricted operation. We first develop the criteria that certify
+subgroups, then close the section with the center — the subgroup
+that measures how far a group is from being abelian.
 
 #definition(name: "Subgroup")[
   Let $(G, star)$ be a group and $H$ a subset of $G$. Then $H$ is a
@@ -1215,6 +1216,8 @@ the tools that produce and certify subgroups.
   the singleton ${e}$ are the *trivial subgroups*; any other subgroup
   is *proper*, written $H < G$.
 ] <def:subgroup>
+
+=== Subgroup Criteria // 子群的判定
 
 At first sight this demands a full re-verification of the axioms.
 Two small observations reduce the work to a couple of closures.
@@ -1241,6 +1244,10 @@ Two small observations reduce the work to a couple of closures.
     h_1, h_2 in H quad ==> quad h_1 h_2 in H quad "and" quad h_1^(-1)
     in H.
   $
+
+  When $H$ is a finite subset of $G$, this simplifies: $H <= G$ if
+  and only if $H$ is non-empty and closed under multiplication,
+  $h_1, h_2 in H ==> h_1 h_2 in H$.
 ] <thm:subgroup-criteria>
 
 #proof[
@@ -1256,6 +1263,15 @@ Two small observations reduce the work to a couple of closures.
   acts as the identity; and every $h in H$ has its inverse in $H$.
   All group axioms hold in $H$, so $H$ is a subgroup by
   #link(<def:subgroup>)[the definition].
+
+  *Finite case.* Closure under multiplication alone: fix $a in H$;
+  every power $a^k$ with $k >= 1$ lies in $H$, and finiteness forces
+  a repetition $a^j = a^k$ with $j > k$. Cancelling $a^k$
+  (#link(<prop:group-basic-properties>)[§2.3]) yields
+  $a^(j - k) = e$ with $j - k >= 1$, so $e in H$; and then
+  $a dot a^(j - k - 1) = e$ exhibits the inverse
+  $a^(-1) = a^(j - k - 1) in H$ (when $j - k = 1$ we have $a = e$,
+  whose inverse is itself). Both closures hold.
 ]
 
 Checking closure and inverses separately doubles the work; the
@@ -1285,28 +1301,83 @@ workhorse of the chapter.
   #link(<thm:subgroup-criteria>)[the theorem].
 ]
 
-If the candidate set is finite, even the closure under inverses comes
-for free.
+It is often convenient to package the two closures in the language of
+set products. For subsets $A, B$ of a group $G$, write
+$
+  A B = {a b | a in A, b in B} quad "and" quad A^(-1) = {a^(-1) | a in A},
+$
+the set of all products of an element of $A$ with an element of $B$,
+and the set of inverses of elements of $A$. In this language the
+one-step criterion reads $H H^(-1) subset.eq H$, and it upgrades to a
+fully symmetric statement.
 
-#corollary(name: "Finite Subgroup Criterion")[
-  Let $G$ be a group and $H$ a non-empty *finite* subset of $G$
-  closed under the operation: $a, b in H ==> a b in H$. Then $H$ is
-  a subgroup of $G$. In particular, a subset of a finite group is a
-  subgroup exactly when it is non-empty and closed under
-  multiplication.
-] <cor:finite-subgroup-criterion>
+#theorem(name: "Product Criterion for Subgroups")[
+  Let $H$ be a non-empty subset of a group $G$. Then the following
+  are equivalent:
+  - $H <= G$;
+  - $H H^(-1) = H$;
+  - $H H = H$ and $H^(-1) = H$.
+
+  When $H$ is finite, the single condition $H H = H$ already implies
+  the others.
+] <thm:product-criterion>
 
 #proof[
-  By #link(<thm:subgroup-criteria>)[the theorem] it remains to
-  produce inverses. Fix $a in H$; closure under products puts every
-  power $a^k$ with $k >= 1$ into $H$, and finiteness forces a
-  repetition $a^j = a^k$ with $j > k$. Cancelling $a^k$
-  (#link(<prop:group-basic-properties>)[§2.3]) yields
-  $a^(j - k) = e$ with $j - k >= 1$, so $e in H$; and then
-  $a dot a^(j - k - 1) = e$ exhibits the inverse
-  $a^(-1) = a^(j - k - 1) in H$ (when $j - k = 1$ we have $a = e$,
-  whose inverse is itself).
+  (1 ==> 2) A subgroup contains $e$, so every $h in H$ can be written
+  $h = h e^(-1) in H H^(-1)$, and the one-step criterion gives the
+  reverse inclusion $H H^(-1) subset.eq H$.
+
+  (2 ==> 3) The inclusion $H H^(-1) subset.eq H$ is precisely the
+  one-step test, so $H$ is a subgroup by
+  #link(<cor:subgroup-criterion>)[the corollary]; a subgroup coincides
+  with its own inverse, whence $H H = H H^(-1) = H$ and $H^(-1) = H$.
+
+  (3 ==> 1) The equality $H H = H$ gives closure under products and
+  $H^(-1) = H$ gives closure under inverses, so $H$ is a subgroup by
+  #link(<thm:subgroup-criteria>)[the theorem].
+
+  *Finite case.* If $H H = H$, then $a, b in H$ gives
+  $a b in H H = H$: closure under products alone, and the finite case
+  of #link(<thm:subgroup-criteria>)[the theorem] does the rest.
 ]
+
+#theorem(name: "Product of Two Subgroups")[
+  Let $H, K <= G$ be subgroups of a group $G$. Then $H K <= G$ if and
+  only if $H K = K H$.
+] <thm:product-of-subgroups>
+
+#proof[
+  (==>) Suppose $H K$ is a subgroup. Being closed under inverses, it
+  coincides with its own inverse, and inverting a product swaps the
+  factors:
+  $
+    H K = (H K)^(-1) = K^(-1) H^(-1) = K H,
+  $
+  the last equality holding since the subgroups $H$ and $K$ satisfy
+  $H^(-1) = H$ and $K^(-1) = K$.
+
+  (<==) Suppose $H K = K H$. To pass the one-step criterion, take
+  $h, h' in H$ and $k, k' in K$. Then
+  $
+    (h k) (h' k')^(-1) = h (k k'^(-1)) h'^(-1),
+  $
+  and the middle factor $k k'^(-1)$ lies in $K$, so
+  $(k k'^(-1)) h'^(-1) in K H = H K$ can be rewritten as $h'' k''$
+  with $h'' in H$ and $k'' in K$. Hence
+  $(h k) (h' k')^(-1) = h h'' k'' in H K$, and $H K$ is a subgroup by
+  #link(<cor:subgroup-criterion>)[the one-step criterion].
+]
+
+When $H K$ is a subgroup it contains both $H$ and $K$ — insert the
+identity $e$ from the other factor — and it is contained in every
+subgroup containing both; by minimality
+(#link(<def:generated-subgroup>)[§3.2]) it therefore equals the
+subgroup generated by the union, $H K = ⟨H union K⟩$. The equality
+$H K = K H$ is automatic when $G$ is abelian — which recovers the
+fact that in an abelian group the product of two subgroups is again
+a subgroup — but in general it is a genuine restriction; the
+structural condition that guarantees it, normality, is the
+protagonist of Chapter 4.
 
 #example(name: "A subgroup inventory.")[
 
@@ -1329,16 +1400,19 @@ for free.
     Chapter 4.
 ] <ex:subgroup-inventory>
 
+=== The Center // 中心
+
 One subgroup deserves special mention because of what it measures:
 how far a group is from being abelian.
 
-#definition(name: "Center and Centralizer")[
+#definition(name: "Central Element, Center, and Centralizer")[
   Let $G$ be a group.
-  - The *center* of $G$ is
+  - An element $a in G$ is *central* if it commutes with every
+    element of $G$: $a g = g a$ for all $g in G$.
+  - The *center* of $G$ is the set of all central elements,
     $
-      Z(G) = {z in G | z g = g z " for all " g in G},
+      Z(G) = {z in G | z g = g z " for all " g in G}.
     $
-    the set of elements that commute with every element of $G$.
   - For a fixed $a in G$, the *centralizer* of $a$ in $G$ is
     $
       C_(G)(a) = {x in G | x a = a x},
@@ -1346,12 +1420,14 @@ how far a group is from being abelian.
     the set of elements that commute with $a$.
 ] <def:center-centralizer>
 
-Evidently $C_(G)(a) = G$ exactly when $a in Z(G)$, and
+Evidently $a$ is central exactly when $C_(G)(a) = G$, and the center
+is the intersection of all the centralizers,
 $Z(G) = inter.big_(a in G) C_(G)(a)$.
 
-#property(name: "The Center and the Centralizers Are Subgroups")[
-  For every group $G$ and every $a in G$, both $Z(G)$ and $C_(G)(a)$
-  are subgroups of $G$.
+#property(name: "The Center Is an Abelian Subgroup")[
+  For every group $G$, the center $Z(G)$ is an abelian subgroup of
+  $G$. Moreover, for every $a in G$ the centralizer $C_(G)(a)$ is a
+  subgroup of $G$ containing $Z(G)$.
 ] <prop:center-is-subgroup>
 
 #proof[
@@ -1366,7 +1442,11 @@ $Z(G) = inter.big_(a in G) C_(G)(a)$.
     x y^(-1) g = x g y^(-1) = g x y^(-1),
   $
   the middle step using $g y = y g$, i.e. $g y^(-1) = y^(-1) g$; so
-  $Z(G)$ passes the criterion as well.
+  $Z(G)$ passes the criterion as well. As for the advertised
+  abelianness: central elements commute with each other in
+  particular, so $Z(G)$ is an abelian subgroup; and $z a = a z$ for
+  every central $z$ shows $Z(G) subset.eq C_(G)(a)$, making the
+  centralizer a subgroup containing the center.
 ]
 
 #example(name: "Centers of the typical groups.")[
@@ -1382,6 +1462,8 @@ $Z(G) = inter.big_(a in G) C_(G)(a)$.
 ]
 
 == Cyclic Groups // 循环群
+
+=== Generated Subgroups // 生成子群
 
 Subgroups beget subgroups: from any subset one can manufacture the
 smallest subgroup containing it.
@@ -1418,6 +1500,8 @@ of an element of $S$.
   of $⟨S⟩$ is visibly closed under $a b^(-1)$ and contains $S$, so it
   coincides with the intersection.
 ]
+
+=== The Structure of Cyclic Groups // 循环群的结构
 
 The construction is most profitable for a singleton — and singleton
 generation is the oldest story in this notebook: $(bb(Z), +)$ is
