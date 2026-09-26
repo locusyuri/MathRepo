@@ -1121,7 +1121,7 @@ order, or produce a product of infinite-order elements of finite
 order.
 
 #example(name: "The order of a product: the role of commutativity.")[
-  + *Non-commuting, finite orders.* In $"GL"_2(bb(Q))$ let
+  + *Non-commuting, finite orders.* In $"GL"_(2)(bb(Q))$ let
     $a = mat(0, -1; 1, 0)$ and $b = mat(0, 1; -1, -1)$. The first is
     a quarter-turn, so $"ord"(a) = 4$; one checks $b^3 = I$, so
     $"ord"(b) = 3$. Yet
@@ -1801,10 +1801,10 @@ to isomorphism, a group of permutations of some set.
     L_g: G -> G, quad x arrow.r.double g x.
   $
   Each $L_g$ is a bijection with inverse $L_(g^(-1))$, since
-  $L_(g^(-1))(L_g(x)) = g^(-1) (g x) = x$ and similarly from the
+  $L_(g^(-1))(L_(g)(x)) = g^(-1) (g x) = x$ and similarly from the
   other side. Translations compose according to the group law:
   $
-    (L_g circle L_h)(x) = L_g(h x) = (g h) x = L_(g h)(x),
+    (L_g circle L_h)(x) = L_(g)(h x) = (g h) x = L_(g h)(x),
   $
   so $L_g circle L_h = L_(g h)$. Now let $L(G) = {L_g | g in G}$, a
   subset of $"Sym"(G)$. It contains the identity map $L_e$, and for
@@ -2432,7 +2432,7 @@ complete list — while the non-abelian case is the subtler one.
   + the alternating groups $A_n$ for $n >= 5$
     (#link(<thm:an-simple>)[above]);
   + the finite groups of Lie type (e.g. the projective special
-    linear groups $"PSL"_(n)(q)$, including $A_5 ~= "PSL"_2(4)$);
+    linear groups $"PSL"_(n)(q)$, including $A_5 ~= "PSL"_(2)(4)$);
   + $26$ *sporadic* groups, ranging from the Mathieu groups in
     degrees $12$ and $24$ up to the *Monster* of order about $8
     times 10^53$.
@@ -3902,7 +3902,7 @@ they differ, but we shall not need the infinite case.
     pi_i = "id"_G$.
   + *Universal property*: a homomorphism $f: G -> H$ is equivalent to
     a list of homomorphisms $f_i = f ∘ iota_i: G_i -> H$,
-    with $f(g_1, dots, g_n) = f_1(g_1) + dots + f_n(g_n)$.
+    with $f(g_1, dots, g_n) = f_(1)(g_1) + dots + f_(n)(g_n)$.
   + *Order (finite case)*: if each $G_i$ is finite then $abs(
       G_1
       ⊕ dots.c ⊕ G_n
@@ -4212,7 +4212,7 @@ counting elements of bounded order in each $p$-primary component.
   $delta_1 dots.c delta_r$ is preserved by the operations, so the
   iteration terminates, producing $d_1 | d_2 | dots | d_r$.
 
-  *Uniqueness (sketch).* For each $k = 1, dots, r$, let $Delta_k(A)$
+  *Uniqueness (sketch).* For each $k = 1, dots, r$, let $Delta_(k)(A)$
   be the gcd of all $k times k$ minors of $A$ (with $Delta_0 = 1$).
   Elementary row and column operations do not change $Delta_k$ (they
   multiply $k$-minors by $plus.minus 1$ or replace them with
@@ -4518,7 +4518,7 @@ principal ideal domain $R$, classifies finitely generated $R$-modules
 //     - 整数加法群、模 n 剩余类群
 //     - 对称群 $S_n$
 //     - 二面体群 $D_n$
-//     - 一般线性群 $GL_n(F)$、特殊线性群 $SL_n(F)$
+//     - 一般线性群 $GL_(n)(F)$、特殊线性群 $SL_(n)(F)$
 //     - 四元数群 $Q_8$
 
 //   Section 2.3: 群的基本性质 (Basic Properties of Groups)
@@ -4648,7 +4648,7 @@ principal ideal domain $R$, classifies finitely generated $R$-modules
 
 //   Section 8.4: 环的典型构造 (Typical Constructions of Rings)
 //     - 剩余类环 $\bb(Z)_n$
-//     - 矩阵环 $M_n(R)$
+//     - 矩阵环 $M_(n)(R)$
 //     - 直积环
 
 // --- Chapter 9: 理想与商环 (Ideals and Quotient Rings) ---
