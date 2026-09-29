@@ -1577,7 +1577,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 ] <ex:fund-heat>
 
 #example(name: "Fundamental Solution of the Wave Operator")[
-  For the wave operator $square = partial_t^2 - Delta_x$ on $bb(R)^(1+n)$, the fundamental solution depends on the spatial dimension in a qualitatively different way.
+  For the wave operator $square = (partial^2)/(partial t^2) - Delta_x$ on $bb(R)^(1+n)$, the fundamental solution depends on the spatial dimension in a qualitatively different way.
 
   For $n = 1$:
   $
@@ -1598,29 +1598,29 @@ This is a deep existence theorem; we omit the general proof (which requires tool
   #proof[
     For $n = 1$, $E(t, x) = (1/2) H(t - abs(x))$. For $phi in cal(D)(bb(R)^2)$:
     $
-      ⟨ square E, phi ⟩ = ⟨ E, square phi ⟩ = 1/2 integral_0^oo (integral_(-t)^t (partial_t^2 phi - partial_x^2 phi) dif x) dif t.
+      ⟨ square E, phi ⟩ = ⟨ E, square phi ⟩ = 1/2 integral_0^oo (integral_(-t)^t ((partial^2 phi)/(partial t^2) - (partial^2 phi)/(partial x^2)) dif x) dif t.
     $
 
-    *Step 1: The $partial_t^2$ integral.* For fixed $t > 0$, integrate in $t$ over $(0, oo)$ by parts. On each half-line:
+    *Step 1: The $(partial^2)/(partial t^2)$ integral.* For fixed $t > 0$, integrate in $t$ over $(0, oo)$ by parts. On each half-line:
     $
-      integral_0^oo integral_x^oo partial_t^2 phi dif t dif x = -integral_0^oo partial_t phi(x, x) dif x
+      integral_0^oo integral_x^oo (partial^2 phi)/(partial t^2) dif t dif x = -integral_0^oo partial_t phi(x, x) dif x
     $
     (since $phi$ has compact support, $partial_t phi(x, t) -> 0$ as $t -> oo$). Similarly:
     $
-      integral_0^oo integral_(-oo)^(-x) partial_t^2 phi dif t dif x = -integral_(-oo)^0 partial_t phi(-x, -x) dif x.
+      integral_0^oo integral_(-oo)^(-x) (partial^2 phi)/(partial t^2) dif t dif x = -integral_(-oo)^0 partial_t phi(-x, -x) dif x.
     $
     Substituting $x -> -x$ in the second integral:
     $
-      integral_0^oo integral_(-t)^t partial_t^2 phi dif x dif t = -integral_0^oo partial_t phi(x, x) dif x - integral_0^oo partial_t phi(x, -x) dif x.
+      integral_0^oo integral_(-t)^t (partial^2 phi)/(partial t^2) dif x dif t = -integral_0^oo partial_t phi(x, x) dif x - integral_0^oo partial_t phi(x, -x) dif x.
     $
 
-    *Step 2: The $partial_x^2$ integral.* For fixed $t$:
+    *Step 2: The $(partial^2)/(partial x^2)$ integral.* For fixed $t$:
     $
-      integral_(-t)^t partial_x^2 phi dif x = partial_x phi(t, t) - partial_x phi(t, -t).
+      integral_(-t)^t (partial^2 phi)/(partial x^2) dif x = partial_x phi(t, t) - partial_x phi(t, -t).
     $
     So:
     $
-      integral_0^oo integral_(-t)^t partial_x^2 phi dif x dif t = integral_0^oo partial_x phi(t, t) dif t - integral_0^oo partial_x phi(t, -t) dif t.
+      integral_0^oo integral_(-t)^t (partial^2 phi)/(partial x^2) dif x dif t = integral_0^oo partial_x phi(t, t) dif t - integral_0^oo partial_x phi(t, -t) dif t.
     $
 
     *Step 3: Combining.* Let $A = integral_0^oo partial_t phi(x, x) dif x$ and $B = integral_0^oo partial_x phi(x, x) dif x$. Since $(d / (dif x)) phi(x, x) = partial_x phi(x, x) + partial_t phi(x, x)$:
@@ -1645,7 +1645,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 
   - *Laplace* ($Delta$): $E$ is supported on _all_ of $bb(R)^n$ — elliptic equations have infinite propagation in all directions; disturbances are felt everywhere instantaneously.
   - *Heat* ($partial_t - Delta$): $E$ is supported on ${t >= 0}$ — parabolic equations have infinite spatial propagation speed but respect the arrow of time (irreversibility).
-  - *Wave* ($partial_t^2 - Delta$): $E$ is supported on the forward light cone ${t >= abs(x)}$ — hyperbolic equations respect finite propagation speed and causality.
+  - *Wave* ($(partial^2)/(partial t^2) - Delta$): $E$ is supported on the forward light cone ${t >= abs(x)}$ — hyperbolic equations respect finite propagation speed and causality.
 
   Moreover, the wave fundamental solution reveals a striking dimensional dichotomy: for odd $n$, $E$ is supported on the _surface_ of the light cone (sharp signals — the *strong Huygens' principle*); for even $n$, $E$ fills the _interior_ (after-effects — the *weak Huygens' principle*). This is explored in detail in Chapter 15.
 ]
@@ -2800,7 +2800,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 #definition(name: "The One-Dimensional Cauchy Problem")[
   The *Cauchy problem* for the one-dimensional wave equation with speed $c > 0$ is to find $u: [0, oo) times bb(R) -> bb(R)$ with
   $
-    partial_t^2 u = c^2 partial_x^2 u quad "in" quad (0, oo) times bb(R), quad u (0, x) = g (x), quad partial_t u (0, x) = h (x),
+    (partial^2 u)/(partial t^2) = c^2 (partial^2 u)/(partial x^2) quad "in" quad (0, oo) times bb(R), quad u (0, x) = g (x), quad partial_t u (0, x) = h (x),
   $
   where $g, h: bb(R) -> bb(R)$ are the initial displacement and velocity.
 ] <def:cauchy-wave>
@@ -2834,7 +2834,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 == The Cauchy Problem in Higher Dimensions // 高维 Cauchy 问题
 
 #theorem(name: "Kirchhoff's Formula in Three Dimensions")[
-  For $n = 3$, the Cauchy problem $partial_t^2 u = Delta u$, $u (0, x) = g (x)$, $partial_t u (0, x) = h (x)$ has the classical solution
+  For $n = 3$, the Cauchy problem $(partial^2 u)/(partial t^2) = Delta u$, $u (0, x) = g (x)$, $partial_t u (0, x) = h (x)$ has the classical solution
   $
     u (t, x) = partial_t (t M_g (x, t)) + t M_h (x, t), quad M_phi (x, t) = 1 / (4 pi t^2) integral_(partial B (x, t)) phi dif S,
   $
@@ -2842,7 +2842,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 ] <thm:kirchhoff-formula-3d>
 
 #proof[
-  (Sketch.) The proof uses the method of spherical means. For a solution $u$, the spherical mean $M_u (x, r) = 1/(4 pi r^2) integral_(partial B(x,r)) u (t, dot) dif S$ satisfies the Euler--Poisson--Darboux equation $partial_t^2 M_u = partial_r^2 M_u + (2/r) partial_r M_u$ with $M_u (0, x) = g (x)$, $partial_t M_u (0, x) = h (x)$. Writing $r M_u$ solves the one-dimensional wave equation in $(t, r)$, d'Alembert's formula gives an explicit expression for $M_u$; the identity $u (t, x) = M_u (x, 0^+)$ (the mean over a point is the value) then yields the formula. The regularity follows from differentiating the mean (one derivative on $M_g$ in the $partial_t$ term).
+  (Sketch.) The proof uses the method of spherical means. For a solution $u$, the spherical mean $M_u (x, r) = 1/(4 pi r^2) integral_(partial B(x,r)) u (t, dot) dif S$ satisfies the Euler--Poisson--Darboux equation $(partial^2 M_u)/(partial t^2) = (partial^2 M_u)/(partial r^2) + (2/r) partial_r M_u$ with $M_u (0, x) = g (x)$, $partial_t M_u (0, x) = h (x)$. Writing $r M_u$ solves the one-dimensional wave equation in $(t, r)$, d'Alembert's formula gives an explicit expression for $M_u$; the identity $u (t, x) = M_u (x, 0^+)$ (the mean over a point is the value) then yields the formula. The regularity follows from differentiating the mean (one derivative on $M_g$ in the $partial_t$ term).
 ]
 
 #theorem(name: "Poisson's Formula in Two Dimensions")[
@@ -2863,7 +2863,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 == Energy Conservation // 能量守恒
 
 #theorem(name: "Conservation of Energy")[
-  Let $u$ be a $C^2$ solution of the wave equation $partial_t^2 u = Delta u$ in $Omega subset bb(R)^n$ with either $u = 0$ or $(partial u)/(partial nu) = 0$ on $partial Omega$. Then the energy
+  Let $u$ be a $C^2$ solution of the wave equation $(partial^2 u)/(partial t^2) = Delta u$ in $Omega subset bb(R)^n$ with either $u = 0$ or $(partial u)/(partial nu) = 0$ on $partial Omega$. Then the energy
   $
     E (t) = 1/2 integral_Omega (abs(partial_t u)^2 + abs(nabla u)^2) dif x
   $
@@ -2873,7 +2873,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 #proof[
   Differentiate under the integral and integrate by parts:
   $
-    (dif)/(dif t) E (t) = integral_Omega (partial_t u partial_t^2 u + nabla u dot nabla partial_t u) dif x = integral_Omega partial_t u (partial_t^2 u - Delta u) dif x + integral_(partial Omega) partial_t u (partial u)/(partial nu) dif S = 0,
+    (dif)/(dif t) E (t) = integral_Omega (partial_t u (partial^2 u)/(partial t^2) + nabla u dot nabla partial_t u) dif x = integral_Omega partial_t u ((partial^2 u)/(partial t^2) - Delta u) dif x + integral_(partial Omega) partial_t u (partial u)/(partial nu) dif S = 0,
   $
   the volume term vanishing by the equation and the boundary term by the boundary condition.
 ]
@@ -2881,7 +2881,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 On all of $bb(R)^n$ the total energy need not be finite, and the boundary term of the preceding argument is unavailable; the wave equation nevertheless admits a *local* energy inequality on characteristic cones, which is the key to uniqueness and stability for the Cauchy problem.
 
 #theorem(name: "Local Energy Inequality on the Cone")[
-  Let $u$ be a $C^2$ solution of $partial_t^2 u = c^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $x_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(t_0, x_0)$,
+  Let $u$ be a $C^2$ solution of $(partial^2 u)/(partial t^2) = c^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $x_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(t_0, x_0)$,
   $
     C = {(s, y) : 0 <= s <= t_0, abs(y - x_0) <= c (t_0 - s)}.
   $
@@ -2905,7 +2905,7 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 ]
 
 #corollary(name: "Uniqueness of the Cauchy Problem")[
-  Let $u, v$ be $C^2$ solutions of $partial_t^2 u = c^2 Delta u$ on $bb(R)^n times [0, oo)$ with the same initial data $u (0, dot) = v (0, dot)$ and $partial_t u (0, dot) = partial_t v (0, dot)$. Then $u = v$.
+  Let $u, v$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = c^2 Delta u$ on $bb(R)^n times [0, oo)$ with the same initial data $u (0, dot) = v (0, dot)$ and $partial_t u (0, dot) = partial_t v (0, dot)$. Then $u = v$.
 ] <cor:wave-uniqueness>
 
 #proof[
@@ -2927,7 +2927,7 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 == Finite Propagation Speed // 有限传播速度
 
 #theorem(name: "Finite Propagation Speed")[
-  Let $u, tilde(u)$ be $C^2$ solutions of $partial_t^2 u = c^2 Delta u$ on $[0, oo) times bb(R)^n$ with initial data $(g, h)$ and $(tilde(g), tilde(h))$. If $g = tilde(g)$ and $h = tilde(h)$ on $B (x, c t)$, then $u (t, x) = tilde(u) (t, x)$: the value at $(t, x)$ depends only on the initial data in the ball $overline(B (x, c t))$.
+  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = c^2 Delta u$ on $[0, oo) times bb(R)^n$ with initial data $(g, h)$ and $(tilde(g), tilde(h))$. If $g = tilde(g)$ and $h = tilde(h)$ on $B (x, c t)$, then $u (t, x) = tilde(u) (t, x)$: the value at $(t, x)$ depends only on the initial data in the ball $overline(B (x, c t))$.
 ] <thm:domain-of-dependence>
 
 #proof[
@@ -2965,9 +2965,9 @@ Unlike the heat equation, where a disturbance is felt instantly at every distanc
 == Duhamel Principle // Duhamel 原理
 
 #theorem(name: "Duhamel's Principle for the Wave Equation")[
-  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, h)$: $S (t) h = w (t, dot)$, where $partial_t^2 w = Delta w$, $w (0, dot) = 0$, $partial_t w (0, dot) = h$. Then the solution of the inhomogeneous problem
+  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, h)$: $S (t) h = w (t, dot)$, where $(partial^2 w)/(partial t^2) = Delta w$, $w (0, dot) = 0$, $partial_t w (0, dot) = h$. Then the solution of the inhomogeneous problem
   $
-    partial_t^2 u = Delta u + f, quad u (0, dot) = 0, quad partial_t u (0, dot) = 0,
+    (partial^2 u)/(partial t^2) = Delta u + f, quad u (0, dot) = 0, quad partial_t u (0, dot) = 0,
   $
   is given by
   $
@@ -2979,7 +2979,7 @@ Unlike the heat equation, where a disturbance is felt instantly at every distanc
 #proof[
   Let $w (t, s; x)$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $partial_t w (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$. Define $u (t, dot) = integral_0^t w (t, s; dot) dif s$. Then $u (0, dot) = 0$, $partial_t u (0, dot) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $partial_t w (t, t; dot) = f (t, dot)$):
   $
-    partial_t^2 u - Delta u = (partial_t w) (t, t; dot) + integral_0^t (partial_t^2 w - Delta w) dif s = f (t, dot),
+    (partial^2 u)/(partial t^2) - Delta u = (partial_t w) (t, t; dot) + integral_0^t ((partial^2 w)/(partial t^2) - Delta w) dif s = f (t, dot),
   $
   since each $w$ is a homogeneous solution. Uniqueness (#link(<cor:wave-uniqueness>)[Cor.]) identifies $u$ as the solution.
 ]
@@ -3228,7 +3228,7 @@ This closing part of the notes collects the classical method of separation of va
 #example(name: "Heat Equation on an Interval")[
   Consider the initial--boundary value problem
   $
-    partial_t u = partial_x^2 u quad "in" quad (0, oo) times (0, L), quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x).
+    partial_t u = (partial^2 u)/(partial x^2) quad "in" quad (0, oo) times (0, L), quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x).
   $
   The ansatz $u (t, x) = T (t) X (x)$ gives $T' X = T X''$, i.e.
   $
@@ -3312,7 +3312,7 @@ This closing part of the notes collects the classical method of separation of va
 #example(name: "Wave Equation on a String")[
   For the vibrating string of length $L$ with fixed ends,
   $
-    partial_t^2 u = c^2 partial_x^2 u, quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x), quad partial_t u (x, 0) = h (x),
+    (partial^2 u)/(partial t^2) = c^2 (partial^2 u)/(partial x^2), quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x), quad partial_t u (x, 0) = h (x),
   $
   separation gives the same spatial problem as in Example 18.1: $lambda_k = (k pi/L)^2$, $X_k (x) = sin (k pi x/L)$, and the temporal factor solves $T_k'' + c^2 lambda_k T_k = 0$, i.e. the harmonic oscillator with frequency $omega_k = c k pi/L$. Hence
   $
@@ -3352,7 +3352,7 @@ This chapter gives a concise overview of the four standard families of numerical
 == Finite Difference Methods // 有限差分法
 
 #definition(name: "Finite Difference Schemes for the Heat Equation")[
-  Let $x_j = j Delta x$ and $t_n = n Delta t$ be a uniform grid, and let $U_j^n approx u (x_j, t_n)$. Write $delta^2 U_j = U_(j+1) - 2 U_j + U_(j-1)$ for the centered second difference and set $mu = Delta t / Delta x^2$. The three classical schemes for $partial_t u = partial_x^2 u$ are the *explicit* (forward Euler) scheme, the *implicit* (backward Euler) scheme, and the *Crank--Nicolson* scheme:
+  Let $x_j = j Delta x$ and $t_n = n Delta t$ be a uniform grid, and let $U_j^n approx u (x_j, t_n)$. Write $delta^2 U_j = U_(j+1) - 2 U_j + U_(j-1)$ for the centered second difference and set $mu = Delta t / Delta x^2$. The three classical schemes for $partial_t u = (partial^2 u)/(partial x^2)$ are the *explicit* (forward Euler) scheme, the *implicit* (backward Euler) scheme, and the *Crank--Nicolson* scheme:
 ] <def:fd-schemes>
 
 #tex-table(
@@ -3480,7 +3480,7 @@ This chapter gives a concise overview of the four standard families of numerical
   $
     u_N (x, t) = sum_(k = -N)^N hat(u)_k (t) e^(i k x),
   $
-  determined by the Galerkin projection of the equation onto $S_N$. The *pseudospectral* (collocation) variant imposes the equation at $2 N + 1$ grid points and evaluates nonlinear terms with the fast Fourier transform. Since $e^(i k x)$ are the eigenfunctions of $-partial_x^2$ (eigenvalues $k^2$), the spectral method is the discretized eigenfunction expansion of Chapter 18.
+  determined by the Galerkin projection of the equation onto $S_N$. The *pseudospectral* (collocation) variant imposes the equation at $2 N + 1$ grid points and evaluates nonlinear terms with the fast Fourier transform. Since $e^(i k x)$ are the eigenfunctions of $-(partial^2)/(partial x^2)$ (eigenvalues $k^2$), the spectral method is the discretized eigenfunction expansion of Chapter 18.
 ] <def:spectral-galerkin>
 
 #theorem(name: "Spectral Accuracy")[
