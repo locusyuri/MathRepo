@@ -27,8 +27,8 @@
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
-// 主线：基础与分类 → 一阶方程 → 分布与工具 → 椭圆 → 抛物 → 双曲 → 方法与专题
-// 共 7 Part、19 Chapter。
+// 主线：基础与一阶理论 → 分布与工具 → 椭圆（稳态） → 抛物/双曲（演化） → 方法与数值
+// 共 5 Part、19 Chapter。
 //
 // 职责边界：
 //   - Fourier 理论 → Analyse Harmonique（交叉引用）
@@ -50,12 +50,14 @@
 //   - 比较原理统一在 Ch 13，非线性单调迭代并入，不再单独成节
 //
 // ==========================================================================
-// Part I — Foundations and Classification (基础与分类)
+// Part I — Foundations, Classification and First-Order Theory (基础：分类与一阶理论)
 // ==========================================================================
-// 设计思路：建立 PDE 的基本语言、适定性概念与二阶分类框架。
-// Ch 2（分类与标准形）由原 Ch 3 前移：它是三大类型 Part（IV-VI）的共同前置
-// 框架，与 Ch 1 同属「语言层」；原一阶理论独立为 Part II。
-// 对应教材：通常占据 PDE 教材的前 2 章。
+// 设计思路：本 Part 是「语言层 + 一阶理论层」。先建立 PDE 的基本语言、适定性
+// 概念与二阶分类框架（Ch 1–2），再给出类型无关的一阶方程理论（Ch 3–5）。
+// Ch 2（分类与标准形）由原 Ch 3 前移：它是三大类型（Part III–IV）的共同前置框架。
+// 原「一阶偏微分方程」独立 Part 并入本 Part：二阶分类给出特征方程，一阶方程则
+// 直接沿特征线求解，两者同属基础层，合并后主线更连贯。
+// 对应教材：PDE 教材前 2 章（语言与分类）+ 第 2-3 章（一阶方程）。
 
 // --- Chapter 1: Introduction to PDEs (偏微分方程导论) ---
 
@@ -69,7 +71,7 @@
 //   Section 1.4: Well-Posedness (适定性)
 //     - Hadamard 三条件、病态例子（椭圆 Cauchy 问题、反向热方程）
 
-#part("Foundations and Classification") // 基础与分类
+#part("Foundations, Classification and First-Order Theory") // 基础：分类与一阶理论
 
 = Introduction to PDEs // 偏微分方程导论
 
@@ -375,8 +377,8 @@ The third condition (stability) is particularly important: small changes in the 
 // ==========================================================================
 // Chapter 2: Classification of Second-Order PDEs (二阶偏微分方程分类)
 // ==========================================================================
-// 设计思路：由原 Ch 3 前移至此。分类框架是三大类型 Part（IV-VI）的共同前置，
-// 故紧接 Ch 1；一阶理论（原 Ch 2）已移往 Part II。
+// 设计思路：由原 Ch 3 前移至此。分类框架是三大类型（Part III–IV）的共同前置，
+// 故紧接 Ch 1；一阶理论（原 Ch 2）作为 Part I 的后半部分紧随其后。
 
 //   Section 2.1: Linear Second-Order Equations (线性二阶方程)
 //     - 系数矩阵与主符号
@@ -685,11 +687,9 @@ The figure above provides a geometric summary of the classification. The charact
 - *Parabolic*: one family of characteristics. Information propagates along a single preferred direction (the "time" direction); solutions smooth out in that direction.
 - *Hyperbolic*: two transverse families. Information propagates along characteristics; solutions can develop singularities along characteristic curves.
 
-// ==========================================================================
-// Part II — First-Order PDEs (一阶偏微分方程)
-// ==========================================================================
+// --- Chapter Group: First-Order Theory (一阶理论, Ch 3–5) ---
 // 设计思路：一阶 PDE 理论（特征线法、Hamilton-Jacobi、守恒律）是类型无关的
-// 完整体系，内容量足以独立成 Part。原 Ch 2 拆为三章；新增粘性解节补足
+// 完整体系，构成 Part I 的后半部分。原 Ch 2 拆为三章；新增粘性解节补足
 // Hamilton-Jacobi 的现代理论（v0.4.0 中承诺却无归属的部分）。
 // 对应教材：通常占据 PDE 教材第 2-3 章。
 
@@ -721,8 +721,6 @@ The figure above provides a geometric summary of the classification. The charact
 //   Section 5.4: The Rankine--Hugoniot Condition (Rankine--Hugoniot 条件)
 //     - 激波与稀疏波
 //   （标量一维理论在此完整处理；系统的守恒律见 Ch 17）
-
-#part("First-Order PDEs") // 一阶偏微分方程
 
 = Method of Characteristics and Quasilinear Equations // 特征线法与拟线性方程
 
@@ -1124,7 +1122,7 @@ When characteristics cross, the classical solution breaks down and we must admit
 ]
 
 // ==========================================================================
-// Part III — Distribution Theory (分布理论)
+// Part II — Distributions and Fundamental Solutions (广义函数与基本解)
 // ==========================================================================
 // 设计思路：分布理论是为三类方程服务的工具层，拆为两章以避免单章 Part。
 // 基本解（原 Ch 4.4）在此统一构造；椭圆 Green 函数章不再重复（去重）。
@@ -1147,7 +1145,7 @@ When characteristics cross, the classical solution breaks down and we must admit
 //     - Laplace/Heat/Wave 基本解（Newton 位势、热核、光锥支撑）
 //     - 三大类型传播行为对比（衔接 Ch 8/12/15）
 
-#part("Distribution Theory") // 分布理论
+#part("Distributions and Fundamental Solutions") // 广义函数与基本解
 
 = Distributions and Weak Derivatives // 分布与弱导数 <sec:ch4-distributions>
 
@@ -1651,7 +1649,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 ]
 
 // ==========================================================================
-// Part IV — Elliptic Equations (椭圆型方程)
+// Part III — Elliptic Equations (椭圆型方程)
 // ==========================================================================
 // 设计思路：从 Laplace 方程的经典理论出发，逐步过渡到
 // 一般椭圆方程的弱解理论和正则性。
@@ -2074,7 +2072,7 @@ The maximum principle and Green's identities of Chapter 8 give the classical (st
 ]
 
 #note[
-  The energy viewpoint and the maximum principle are complementary tools. The maximum principle (Chapter 8) is quantitative and works in $C^2$; energy methods provide existence in the weak framework and are the starting point for numerical approximation (Ritz--Galerkin). The Dirichlet principle also shows that the weak solution is the "least energy" representative among functions with the given boundary data — a variational characterization that extends to parabolic problems in Part V.
+  The energy viewpoint and the maximum principle are complementary tools. The maximum principle (Chapter 8) is quantitative and works in $C^2$; energy methods provide existence in the weak framework and are the starting point for numerical approximation (Ritz--Galerkin). The Dirichlet principle also shows that the weak solution is the "least energy" representative among functions with the given boundary data — a variational characterization that extends to parabolic problems in Part IV.
 ]
 
 
@@ -2313,10 +2311,14 @@ Weak solutions constructed in Chapter 9 are $H^1$ functions; the question of the
 ]
 
 // ==========================================================================
-// Part V — Parabolic Equations (抛物型方程)
-// 设计思路：以热方程为核心模型，建立抛物型方程的
-// 存在性、唯一性、正则性和长期行为理论。
-// 半群理论作为统一框架自然嵌入 Ch 13。
+// Part IV — Evolution Equations: Parabolic and Hyperbolic (演化方程：抛物型与双曲型)
+// ==========================================================================
+// 设计思路：本 Part 汇集两类*演化方程*（初值问题），与 Part III 的椭圆型
+// （稳态、边值问题）相对。抛物部分（Ch 12–14）以热方程为核心模型，建立
+// 存在性、唯一性、正则性和长期行为理论，半群理论作为统一框架嵌入 Ch 13；
+// 双曲部分（Ch 15–17）以波动方程为核心模型，建立经典理论与现代守恒律理论。
+// 两类方程共享能量方法、Duhamel 原理与传播机制，合并后去重更自然。
+// 去重：标量一维守恒律已在 Ch 5 完整处理，Ch 17 专注系统情形增量。
 
 // --- Chapter 12: Heat Equation (热方程) ---
 
@@ -2368,11 +2370,11 @@ Weak solutions constructed in Chapter 9 are $H^1$ functions; the question of the
 //     - 爆破判据
 //     - 整体存在条件
 
-#part("Parabolic Equations") // 抛物型方程
+#part("Evolution Equations: Parabolic and Hyperbolic") // 演化方程：抛物型与双曲型
 
 = The Heat Equation // 热方程
 
-The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), is the prototypical parabolic equation. Its fundamental solution — the heat kernel — was constructed in Chapter 7 (#link(<ex:fund-heat>)[§7.2]); this chapter develops the classical theory of the initial value problem: the Cauchy problem, the maximum principle, and the energy estimates. Two features distinguish parabolic equations from hyperbolic ones (Part VI): *regularization* — arbitrary rough data become $C^oo$ instantly — and *irreversibility* — the backward problem is ill-posed.
+The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), is the prototypical parabolic equation. Its fundamental solution — the heat kernel — was constructed in Chapter 7 (#link(<ex:fund-heat>)[§7.2]); this chapter develops the classical theory of the initial value problem: the Cauchy problem, the maximum principle, and the energy estimates. Two features distinguish parabolic equations from hyperbolic ones (Ch 15): *regularization* — arbitrary rough data become $C^oo$ instantly — and *irreversibility* — the backward problem is ill-posed.
 
 == Heat Kernel and Fundamental Solution // 热核与基本解
 
@@ -2423,7 +2425,7 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
 ]
 
 #note[
-  *Smoothing effect.* No regularity of $g$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$, and by the derivative estimates of Chapter 8 the derivatives decay as $t^(-abs(alpha)/2)$ (quantified in §12.4). This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation (Part VI), which propagates the regularity of the data without improvement.
+  *Smoothing effect.* No regularity of $g$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$, and by the derivative estimates of Chapter 8 the derivatives decay as $t^(-abs(alpha)/2)$ (quantified in §12.4). This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation (Ch 15), which propagates the regularity of the data without improvement.
 ]
 
 == Maximum Principle // 最大值原理
@@ -2635,7 +2637,7 @@ The Cauchy problem of Chapter 12 treats the whole space. On a bounded domain one
   $
     ||u (t) - v_oo||_(L^2) <= C e^(-lambda_1 t).
   $
-  This is the parabolic-to-elliptic connection: the long-time behavior of the heat equation is governed by the elliptic problem, tying Part V back to Chapters 8–11.
+  This is the parabolic-to-elliptic connection: the long-time behavior of the heat equation is governed by the elliptic problem, tying Part IV back to Chapters 8–11.
 ]
 
 = Nonlinear Parabolic Equations // 非线性抛物型方程
@@ -2730,11 +2732,9 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
   which blows up in finite time whenever $F (0)$ is sufficiently large (the ODE $y' = y^(1 + epsilon) - lambda_1 y$ with large initial data has a finite explosion time).
 ]
 
-// ==========================================================================
-// Part VI — Hyperbolic Equations (双曲型方程)
-// ==========================================================================
-// 设计思路：以波动方程为核心模型，建立双曲型方程的
-// 经典理论和现代守恒律理论。
+// --- Chapter Group: Hyperbolic Equations (双曲型方程, Ch 15–17) ---
+// 设计思路：以波动方程为核心模型，建立双曲型方程的经典理论和现代守恒律理论；
+// 与抛物部分（Ch 12–14）同属演化方程，共享能量方法与有限传播速度机制。
 // 去重：标量一维守恒律已在 Ch 5 完整处理，Ch 17 专注系统情形增量。
 
 // --- Chapter 15: Wave Equation (波动方程) ---
@@ -2789,11 +2789,9 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 //     - Riemann 问题的定义
 //     - 标量情形与系统情形的解
 
-#part("Hyperbolic Equations") // 双曲型方程
-
 = Wave Equation // 波动方程
 
-The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form and general solution in one dimension were obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[§7.2]). This chapter develops the complete Cauchy theory: the d'Alembert formula in one dimension, the Kirchhoff and Poisson formulas in higher dimensions, energy conservation and the local energy method, finite propagation speed with the Huygens principle and dispersive decay, and the Duhamel principle. The qualitative picture is complementary to the heat equation (Part V): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
+The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form and general solution in one dimension were obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[§7.2]). This chapter develops the complete Cauchy theory: the d'Alembert formula in one dimension, the Kirchhoff and Poisson formulas in higher dimensions, energy conservation and the local energy method, finite propagation speed with the Huygens principle and dispersive decay, and the Duhamel principle. The qualitative picture is complementary to the heat equation (Ch 12): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
 
 == D'Alembert Formula // 达朗贝尔公式
 
@@ -3177,7 +3175,7 @@ The scalar one-dimensional conservation law was treated completely in Chapter 5 
 ]
 
 // ==========================================================================
-// Part VII — Methods and Advanced Topics (方法与进阶专题)
+// Part V — Solution Methods and Numerical Methods (求解方法与数值方法)
 // ==========================================================================
 // 设计思路：补齐经典 PDE 课程的核心方法——分离变量与谱方法（v0.4.0 缺失，
 // 但 Ch 1 已声明其为基本方法），并以数值方法收尾，作为理论与计算的桥梁。
@@ -3216,7 +3214,7 @@ The scalar one-dimensional conservation law was treated completely in Chapter 5 
 //     - 谱离散化
 //     - 与 Fourier 方法的联系
 
-#part("Methods and Advanced Topics") // 方法与进阶专题
+#part("Solution Methods and Numerical Methods") // 求解方法与数值方法
 
 = Separation of Variables and Spectral Methods // 分离变量与谱方法
 
@@ -3513,29 +3511,27 @@ This chapter gives a concise overview of the four standard families of numerical
 // ==========================================================================
 // 结构说明 (Structure Note)
 // ==========================================================================
-// 本笔记遵循「基础与分类 → 一阶方程 → 分布与工具 → 椭圆 → 抛物 → 双曲 →
-// 方法与专题」的七段式主线，共 7 Part、19 Chapter。
+// 本笔记遵循「基础与一阶理论 → 分布与工具 → 稳态（椭圆） → 演化（抛物/双曲）
+// → 方法与数值」的五段式主线，共 5 Part、19 Chapter。Part 划分对应主线的阶段，
+// 每篇是一个方法论层级；工具章（Part II）内嵌必要的分布理论，不单独成篇。
 //
-// Part I（Ch 1–2，基础与分类）：PDE 基本语言、适定性概念，二阶方程的
-//   椭圆/抛物/双曲分类框架与标准形。
+// Part I（Ch 1–5，基础：分类与一阶理论）：PDE 基本语言、适定性概念，二阶方程的
+//   椭圆/抛物/双曲分类框架与标准形（Ch 1–2）；类型无关的一阶方程理论——
+//   特征线法、Hamilton-Jacobi（含粘性解）、一维守恒律与激波理论（Ch 3–5）。
 //
-// Part II（Ch 3–5，一阶方程）：特征线法、Hamilton-Jacobi（含粘性解）、
-//   一维守恒律与激波理论。
+// Part II（Ch 6–7，广义函数与基本解）：测试函数、分布、弱导数、卷积与基本解，
+//   为后续两类方程共用。Sobolev 空间的深层理论在 Analyse Harmonique 处理
+//   （本笔记仅在 Ch 11 简述 W^{k,p} 基本性质）。
 //
-// Part III（Ch 6–7，分布与工具）：测试函数、分布、弱导数、卷积与基本解。
-//   Sobolev 空间的深层理论在 Analyse Harmonique 处理（本笔记仅在 Ch 11
-//   简述 W^{k,p} 基本性质）。
+// Part III（Ch 8–11，椭圆型方程，稳态）：Laplace 经典理论 → 边值问题 → Green
+//   函数 → 正则性。
 //
-// Part IV（Ch 8–11，椭圆型方程）：Laplace 经典理论 → 边值问题 → Green 函数
-//   → 正则性。
+// Part IV（Ch 12–17，演化方程：抛物型与双曲型）：抛物部分——热方程 → 线性抛物
+//   边值问题（半群）→ 非线性反应-扩散方程（Ch 12–14）；双曲部分——波动方程 →
+//   线性双曲系统 → 守恒律系统（Ch 15–17）。两者同为初值问题，与 Part III 的
+//   稳态边值问题相对，共享能量方法与 Duhamel 原理。
 //
-// Part V（Ch 12–14，抛物型方程）：热方程 → 线性抛物边值问题（半群）→
-//   非线性反应-扩散方程。
-//
-// Part VI（Ch 15–17，双曲型方程）：波动方程 → 线性双曲系统 → 守恒律系统。
-//
-// Part VII（Ch 18–19，方法与进阶专题）：分离变量与谱方法（新增）、PDE 数值
-//   方法概览。
+// Part V（Ch 18–19，求解方法与数值方法）：分离变量与谱方法、PDE 数值方法概览。
 //
 // 职责边界：
 //   Fourier 理论 → Analyse Harmonique（交叉引用，不重复）
