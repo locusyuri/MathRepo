@@ -1,57 +1,28 @@
 # MathRepo — Project Instructions
 
-Bilingual (English/Chinese) mathematics notes repository. Typst is the primary authoring format; legacy LaTeX (`.tex`) files are preserved as-is and should not be edited unless explicitly requested.
+Bilingual (English/中文) math notes. Typst is the primary format; legacy `.tex` files stay as-is.
 
-## Build & Verification
+## Environment
 
-- **No test framework**. Verify changes by compiling the subject's entrypoint:
-  ```bash
-  typst compile "<subject>/initial.typ" "<subject>/initial.pdf" --root .
-  ```
-- Always compile `initial.typ` (the entrypoint), not individual chapter files.
-- Working directory must be the repo root (`C:\Notiz\MathRepo`).
-- Common errors: `unknown variable` → check Typst symbol names; `--root .` missing → append it.
+- Python: use `uv run`（不要直接用 `python`/`py`）。
+- JavaScript/TypeScript: use `bun`（不要用 `node`/`npm`/`pnpm`）。
 
-## Project Structure
+## Build & Verify
 
-```
-<Subject>/
-  initial.typ          # Entrypoint (only compile target)
-  initial.pdf          # Generated PDF (same directory)
-  references.bib       # Bibliography (optional)
-  img/                 # Images
-  tmp/                 # Build cache (legacy)
+```bash
+typst compile "<subject>/initial.typ" "<subject>/initial.pdf" --root .
 ```
 
-- Import the shared template at the top of every `initial.typ`:
+- 只编译入口 `initial.typ`，工作目录为仓库根，以退出码 0 为成功标准。
+
+## Conventions
+
+- 每个 `initial.typ` 顶部导入模板：
   ```typst
   #import "../../TypstTemplate/math-notes.typ": *
   ```
-
-## Content Conventions
-
-- **Bilingual**: English title first, Chinese translation in parentheses, e.g. `// Lebesgue Measure (勒贝格测度)`.
-- **Theorem blocks** (from template):
-  | Component | Usage |
-  |-----------|-------|
-  | `#theorem`, `#corollary`, `#lemma` | Red (♥) — theorems |
-  | `#definition`, `#property` | Green (♣) — definitions |
-  | `#proposition`, `#example` | Blue (♠) — propositions |
-  | `#axiom`, `#postulate` | Purple (♦) — axioms |
-  | `#proof`, `#solution` | Unnumbered proofs |
-  | `#note`, `#caution` | Annotations |
-  | `#exercise` | Practice problems |
-- **Typography**: Follow `.agent/Typst.md` for Typst syntax, `.agent/Gen_Content.md` for directory structure generation.
-- **Cross-references**: Use `@label-name` tags.
-- **Edits**: Keep changes local to the active subject's `initial.typ`.
-
-## Available Skills
-
-| Skill | File | Purpose |
-|-------|------|---------|
-| typst-compile | `.github/skills/typst-compile/SKILL.md` | Compile and verify `.typ` files |
-| typst-writing-conventions | `.github/skills/typst-writing-conventions/SKILL.md` | LaTeX → Typst symbol mapping, formatting rules |
-| proof-reviewer | `.github/skills/proof-reviewer/SKILL.md` | Review mathematical proof logic and rigor |
-| code-reviewer | `.github/skills/code-reviewer/SKILL.md` | Cross-file consistency and SRP checks |
-| template-usage | `.github/skills/template-usage/SKILL.md` | Template components and conventions |
-| glossary-indexer | `.github/skills/glossary-indexer/SKILL.md` | Generate alphabetical glossary from labels |
+- 标题双语：英文在前，中文括号在后，如 `// Lebesgue Measure (勒贝格测度)`。
+- 组件：`#theorem/#corollary/#lemma`（红）、`#definition/#property`（绿）、`#proposition/#example`（蓝）、`#axiom/#postulate`（紫）、`#proof/#solution`、`#note/#caution`、`#exercise`。
+- 标签用 `<def:xxx>`、`<thm:xxx>` 等格式，交叉引用用 `@label`。
+- 修改保持局部化，只动当前 subject 的 `initial.typ`。
+- 详见 `.agent/Typst.md`、`.agent/Gen_Content.md` 与 `.github/skills/`。
