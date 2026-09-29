@@ -161,16 +161,16 @@ where $rho$ is density, $c_p$ is specific heat capacity, and $Q$ is the heat sou
 #definition(name: "Wave Equation")[
   The *wave equation* is given by
   $
-    u_(t t) - c^2 Delta u = f(x,t),
+    u_(t t) - a^2 Delta u = f(x,t),
   $
-  where $c > 0$ is the wave speed and $f(x,t)$ represents a forcing term.
+  where $a > 0$ is the wave speed and $f(x,t)$ represents a forcing term.
 ] <def:wave-equation>
 
 Physical derivation: For small amplitude waves in an elastic medium, consider the displacement $u(x,t)$ of particles from equilibrium. Newton's second law combined with Hooke's law for elastic forces leads to:
 $
-  rho (partial^2 u) / (partial t^2) = nabla dot (c^2 rho nabla u) + F,
+  rho (partial^2 u) / (partial t^2) = nabla dot (a^2 rho nabla u) + F,
 $
-where $rho$ is density, $c$ is the wave speed, and $F$ is the external force. This simplifies to $u_(t t) - c^2 Delta u = f$ after rescaling.
+where $rho$ is density, $a$ is the wave speed, and $F$ is the external force. This simplifies to $u_(t t) - a^2 Delta u = f$ after rescaling.
 
 #example(name: "Identifying PDE Properties")[
   Consider the following equations:
@@ -241,7 +241,7 @@ A PDE alone does not uniquely determine a solution. Additional conditions are re
   where $k$ is the order of the equation in time.
 ] <def:cauchy-problem>
 
-For example, the wave equation $u_(t t) - c^2 Delta u = 0$ requires two initial conditions:
+For example, the wave equation $u_(t t) - a^2 Delta u = 0$ requires two initial conditions:
 $
   u(x, 0) = g(x), quad u_t(x, 0) = h(x).
 $
@@ -447,7 +447,7 @@ Characteristic surfaces are the loci along which singularities of solutions can 
 
   *Heat equation* $u_t = kappa u_(x x)$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((kappa, 0), (0, 0))$. The characteristic equation $kappa nu_1^2 = 0$ gives $nu_1 = 0$, so surfaces $t = text("const")$ are characteristic. These are precisely the initial/boundary surfaces for the Cauchy problem (#link(<def:cauchy-problem>)[§1]).
 
-  *Wave equation* $u_(t t) - c^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $A = mat((-c^2, 0), (0, 1))$. The characteristic equation $-c^2 nu_1^2 + nu_2^2 = 0$ yields $nu_2 = +- c nu_1$, giving characteristic lines $x +- c t = text("const")$ in the $(x, t)$-plane.
+  *Wave equation* $u_(t t) - a^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $A = mat((-a^2, 0), (0, 1))$. The characteristic equation $-a^2 nu_1^2 + nu_2^2 = 0$ yields $nu_2 = +- a nu_1$, giving characteristic lines $x +- a t = text("const")$ in the $(x, t)$-plane.
 ]
 
 === The Characteristic ODE in Two Dimensions // 二维特征 ODE
@@ -522,7 +522,7 @@ The connection to characteristic surfaces (#link(<def:char-surface>)[§2.1]) is 
 
   *Heat equation* $u_t - kappa u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $a = -kappa$, $b = 0$, $c = 0$, so $Delta = 0 - 0 = 0$. The heat equation is _parabolic_ everywhere. The characteristic surfaces are $t = text("const")$, consistent with #link(<eq:char-ode-2d>)[§2.1].
 
-  *Wave equation* $u_(t t) - c^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((-c^2, 0), (0, 1))$, so $Delta = 0^2 - (-c^2)(1) = c^2 > 0$. The wave equation is _hyperbolic_ everywhere. The characteristic lines $x +- c t = text("const")$ are the two families found in #link(<eq:char-ode-2d>)[§2.1].
+  *Wave equation* $u_(t t) - a^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((-a^2, 0), (0, 1))$, so $Delta = 0^2 - (-a^2)(1) = a^2 > 0$. The wave equation is _hyperbolic_ everywhere. The characteristic lines $x +- a t = text("const")$ are the two families found in #link(<eq:char-ode-2d>)[§2.1].
 ] <ex:model-equations-type>
 
 #example(name: "Tricomi Equation and Mixed Type")[
@@ -551,7 +551,7 @@ The connection to characteristic surfaces (#link(<def:char-surface>)[§2.1]) is 
     [Hyperbolic], [$Delta > 0$], [$< 0$], [Two distinct families],
   )
 
-  The transport equation $u_t + c u_x = 0$, introduced in #link(<ex:transport-equation>)[§3.1], is a _first-order_ hyperbolic equation. When viewed as a second-order equation (by differentiating), it satisfies the wave equation $u_(t t) - c^2 u_(x x) = 0$, confirming the consistency between the first-order and second-order classifications.
+  The transport equation $u_t + a u_x = 0$, introduced in #link(<ex:transport-equation>)[§3.1], is a _first-order_ hyperbolic equation. When viewed as a second-order equation (by differentiating), it satisfies the wave equation $u_(t t) - a^2 u_(x x) = 0$, confirming the consistency between the first-order and second-order classifications.
 ]
 
 == Canonical Forms and Characteristics // 标准形与特征线
@@ -590,11 +590,11 @@ $
 ]
 
 #example(name: "Wave Equation in Canonical Form")[
-  The wave equation $u_(t t) - c^2 u_(x x) = 0$ from #link(<def:wave-equation>)[Ch 1] has $a = -c^2$, $b = 0$, $c_"coeff" = 1$ (with variables $(x, t)$), so $Delta = c^2 > 0$. The characteristic ODE gives:
+  The wave equation $u_(t t) - a^2 u_(x x) = 0$ from #link(<def:wave-equation>)[Ch 1] has $a_"coeff" = -a^2$, $b = 0$, $c_"coeff" = 1$ (with variables $(x, t)$), so $Delta = a^2 > 0$. The characteristic ODE gives:
   $
-    -c^2 (d t)^2 + (d x)^2 = 0 quad => quad x +- c t = text("const").
+    -a^2 (d t)^2 + (d x)^2 = 0 quad => quad x +- a t = text("const").
   $
-  Setting $xi = x + c t$ and $eta = x - c t$, the wave equation becomes $u_(xi eta) = 0$, which integrates directly to $u = F(xi) + G(eta) = F(x + c t) + G(x - c t)$. This recovers the _d'Alembert formula_: every solution is a superposition of right- and left-traveling waves.
+  Setting $xi = x + a t$ and $eta = x - a t$, the wave equation becomes $u_(xi eta) = 0$, which integrates directly to $u = F(xi) + G(eta) = F(x + a t) + G(x - a t)$. This recovers the _d'Alembert formula_: every solution is a superposition of right- and left-traveling waves.
 ]
 
 === Parabolic Equations // 抛物型方程
@@ -660,13 +660,13 @@ The following table summarizes the canonical forms and their characteristic geom
 )
 
 #note[
-  *The transport equation previewed.* The transport equation $u_t + c u_x = 0$, developed in detail in #link(<ex:transport-equation>)[§3.1], is "the simplest hyperbolic PDE". From the second-order perspective of this chapter, we can now make this precise.
+  *The transport equation previewed.* The transport equation $u_t + a u_x = 0$, developed in detail in #link(<ex:transport-equation>)[§3.1], is "the simplest hyperbolic PDE". From the second-order perspective of this chapter, we can now make this precise.
 
-  Differentiating $u_t + c u_x = 0$ with respect to $t$ and $x$ yields:
+  Differentiating $u_t + a u_x = 0$ with respect to $t$ and $x$ yields:
   $
-    u_(t t) + c u_(x t) = 0, quad u_(x t) + c u_(x x) = 0.
+    u_(t t) + a u_(x t) = 0, quad u_(x t) + a u_(x x) = 0.
   $
-  Eliminating the mixed derivative gives $u_(t t) - c^2 u_(x x) = 0$: every solution of the transport equation also satisfies the wave equation. The characteristic lines $x - c t = text("const")$ of the transport equation are one of the two characteristic families of the wave equation; the other family $x + c t = text("const")$ corresponds to left-traveling waves, which the transport equation does not see.
+  Eliminating the mixed derivative gives $u_(t t) - a^2 u_(x x) = 0$: every solution of the transport equation also satisfies the wave equation. The characteristic lines $x - a t = text("const")$ of the transport equation are one of the two characteristic families of the wave equation; the other family $x + a t = text("const")$ corresponds to left-traveling waves, which the transport equation does not see.
 
   This confirms the classification hierarchy: first-order hyperbolic equations are the "square roots" of second-order hyperbolic equations, and the characteristic structure is consistent across both levels.
 ]
@@ -779,17 +779,17 @@ The projection of the characteristic curve onto the $(x, y)$-plane (determined b
 #example(name: "Transport Equation")[
   The simplest first-order PDE is the _transport equation_:
   $
-    u_t + c u_x = 0, quad c in bb(R).
+    u_t + a u_x = 0, quad a in bb(R).
   $
-  This is (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = c$, and $c(x,y,u) = 0$ (here the independent variables are $(x, t)$). The characteristic system is:
+  This is (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = a$, and $c(x,y,u) = 0$ (here the independent variables are $(x, t)$). The characteristic system is:
   $
-    (dif x) / (dif t) = c, quad (dif u) / (dif t) = 0.
+    (dif x) / (dif t) = a, quad (dif u) / (dif t) = 0.
   $
-  The characteristics are straight lines $x = c t + x_0$ in the $x t$-plane, and $u$ is constant along each line. The general solution is:
+  The characteristics are straight lines $x = a t + x_0$ in the $x t$-plane, and $u$ is constant along each line. The general solution is:
   $
-    u(x, t) = f(x - c t),
+    u(x, t) = f(x - a t),
   $
-  where $f$ is an arbitrary differentiable function. The solution represents a wave profile $f$ propagating at speed $c$ without change of shape.
+  where $f$ is an arbitrary differentiable function. The solution represents a wave profile $f$ propagating at speed $a$ without change of shape.
 ] <ex:transport-equation>
 
 #note[
@@ -871,15 +871,15 @@ Geometrically, the non-characteristic condition means that the characteristic di
 ]
 
 #example(name: "Cauchy Problem for the Transport Equation")[
-  Consider the transport equation $u_t + c u_x = 0$ with initial data $u(x, 0) = g(x)$. The initial curve is the $x$-axis: $(x_0(s), t_0(s)) = (s, 0)$, with $u_0(s) = g(s)$.
+  Consider the transport equation $u_t + a u_x = 0$ with initial data $u(x, 0) = g(x)$. The initial curve is the $x$-axis: $(x_0(s), t_0(s)) = (s, 0)$, with $u_0(s) = g(s)$.
 
   The characteristic system with initial conditions is:
   $
-    (dif x) / (dif t) = c, quad x(s, 0) = s; quad quad (dif u) / (dif t) = 0, quad u(s, 0) = g(s).
+    (dif x) / (dif t) = a, quad x(s, 0) = s; quad quad (dif u) / (dif t) = 0, quad u(s, 0) = g(s).
   $
-  Solving: $x(s, t) = s + c t$ and $u(s, t) = g(s)$. The map $(s, t) |-> (x, t) = (s + c t, t)$ has Jacobian $1 != 0$, so it is globally invertible: $s = x - c t$. The solution is:
+  Solving: $x(s, t) = s + a t$ and $u(s, t) = g(s)$. The map $(s, t) |-> (x, t) = (s + a t, t)$ has Jacobian $1 != 0$, so it is globally invertible: $s = x - a t$. The solution is:
   $
-    u(x, t) = g(x - c t).
+    u(x, t) = g(x - a t).
   $
 ] <ex:transport-cauchy>
 
@@ -2798,9 +2798,12 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 == D'Alembert Formula // 达朗贝尔公式
 
 #definition(name: "The One-Dimensional Cauchy Problem")[
-  The *Cauchy problem* for the one-dimensional wave equation with speed $c > 0$ is to find $u: [0, oo) times bb(R) -> bb(R)$ with
+  The *Cauchy problem* for the one-dimensional wave equation with speed $a > 0$ is to find $u: [0, oo) times bb(R) -> bb(R)$ with
   $
-    (partial^2 u)/(partial t^2) = c^2 (partial^2 u)/(partial x^2) quad "in" quad (0, oo) times bb(R), quad u (0, x) = g (x), quad partial_t u (0, x) = h (x),
+    cases(
+      (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2) "in" (0, oo) times bb(R),
+      u (0, x) = g (x), quad partial_t u (0, x) = h (x),
+    )
   $
   where $g, h: bb(R) -> bb(R)$ are the initial displacement and velocity.
 ] <def:cauchy-wave>
@@ -2808,7 +2811,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 #theorem(name: "D'Alembert's Formula")[
   For $g in C^2 (bb(R))$ and $h in C^1 (bb(R))$, the Cauchy problem has the unique classical solution
   $
-    u (t, x) = (g (x + c t) + g (x - c t))/2 + 1/(2 c) integral_(x - c t)^(x + c t) h (s) dif s.
+    u (t, x) = (g (x + a t) + g (x - a t))/2 + 1/(2 a) integral_(x - a t)^(x + a t) h (s) dif s.
   $
   In particular $u in C^2 ([0, oo) times bb(R))$.
 ] <thm:d-alembert>
@@ -2816,19 +2819,19 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 #proof[
   *Step 1: General solution.* By the canonical form of Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), every $C^2$ solution has the form
   $
-    u (t, x) = F (x - c t) + G (x + c t),
+    u (t, x) = F (x - a t) + G (x + a t),
   $
   a superposition of a right-moving and a left-moving wave.
 
   *Step 2: Fit the data.* The initial conditions give
   $
-    F (x) + G (x) = g (x), quad -c F' (x) + c G' (x) = h (x).
+    F (x) + G (x) = g (x), quad -a F' (x) + a G' (x) = h (x).
   $
-  Integrating the second equation: $F (x) - G (x) = -1/c integral_0^x h (s) dif s + "const"$. Solving for $F$ and $G$ and substituting $x = x + c t$, $x = x - c t$ yields the formula.
+  Integrating the second equation: $F (x) - G (x) = -1/a integral_0^x h (s) dif s + "const"$. Solving for $F$ and $G$ and substituting $x = x + a t$, $x = x - a t$ yields the formula.
 ]
 
 #note[
-  The two terms in the formula are traveling waves: $F (x - c t)$ moves right with speed $c$ without changing shape, $G (x + c t)$ moves left. The initial velocity $h$ contributes the integral term, whose value at $(t, x)$ depends on $h$ only on the interval $[x - c t, x + c t]$ — the first manifestation of finite propagation speed (§15.4).
+  The two terms in the formula are traveling waves: $F (x - a t)$ moves right with speed $a$ without changing shape, $G (x + a t)$ moves left. The initial velocity $h$ contributes the integral term, whose value at $(t, x)$ depends on $h$ only on the interval $[x - a t, x + a t]$ — the first manifestation of finite propagation speed (§15.4).
 ]
 
 == The Cauchy Problem in Higher Dimensions // 高维 Cauchy 问题
@@ -2881,13 +2884,13 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 On all of $bb(R)^n$ the total energy need not be finite, and the boundary term of the preceding argument is unavailable; the wave equation nevertheless admits a *local* energy inequality on characteristic cones, which is the key to uniqueness and stability for the Cauchy problem.
 
 #theorem(name: "Local Energy Inequality on the Cone")[
-  Let $u$ be a $C^2$ solution of $(partial^2 u)/(partial t^2) = c^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $x_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(t_0, x_0)$,
+  Let $u$ be a $C^2$ solution of $(partial^2 u)/(partial t^2) = a^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $x_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(t_0, x_0)$,
   $
-    C = {(s, y) : 0 <= s <= t_0, abs(y - x_0) <= c (t_0 - s)}.
+    C = {(s, y) : 0 <= s <= t_0, abs(y - x_0) <= a (t_0 - s)}.
   $
   Define the local energy on the time slice
   $
-    E_C (t) = 1/2 integral_(B (x_0, c (t_0 - t))) (abs(partial_t u)^2 + c^2 abs(nabla u)^2) dif y.
+    E_C (t) = 1/2 integral_(B (x_0, a (t_0 - t))) (abs(partial_t u)^2 + a^2 abs(nabla u)^2) dif y.
   $
   Then $E_C (t) <= E_C (0)$ for all $t in [0, t_0]$: the energy in a backward cone is non-increasing in time.
 ] <thm:local-energy-cone>
@@ -2895,61 +2898,61 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 #proof[
   The pointwise energy identity
   $
-    partial_s (1/2 (u_s^2 + c^2 abs(nabla u)^2)) - "div"(c^2 u_s nabla u) = u_s (u_(s s) - c^2 Delta u) = 0
+    partial_s (1/2 (u_s^2 + a^2 abs(nabla u)^2)) - "div"(a^2 u_s nabla u) = u_s (u_(s s) - a^2 Delta u) = 0
   $
-  holds for $s < t_0$. Integrate it over the truncated cone $C_t = C inter {s <= t}$ and apply the divergence theorem in space-time. On the lateral face the outward space-time normal is $nu = (c, e_r) / sqrt(1 + c^2)$, with $e_r$ the radial unit vector, and the boundary flux is
+  holds for $s < t_0$. Integrate it over the truncated cone $C_t = C inter {s <= t}$ and apply the divergence theorem in space-time. On the lateral face the outward space-time normal is $nu = (a, e_r) / sqrt(1 + a^2)$, with $e_r$ the radial unit vector, and the boundary flux is
   $
-    integral_("lateral") (c/2 (u_s - c u_r)^2 + (c^3/2) abs(nabla_T u)^2) / sqrt(1 + c^2) dif S >= 0,
+    integral_("lateral") (a/2 (u_s - a u_r)^2 + (a^3/2) abs(nabla_T u)^2) / sqrt(1 + a^2) dif S >= 0,
   $
   a sum of squares: the lateral face is *characteristic*, so no energy flows out of the cone. Hence $E_C (t) + "flux" = E_C (0)$, and the claim follows.
 ]
 
 #corollary(name: "Uniqueness of the Cauchy Problem")[
-  Let $u, v$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = c^2 Delta u$ on $bb(R)^n times [0, oo)$ with the same initial data $u (0, dot) = v (0, dot)$ and $partial_t u (0, dot) = partial_t v (0, dot)$. Then $u = v$.
+  Let $u, v$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with the same initial data $u (0, dot) = v (0, dot)$ and $partial_t u (0, dot) = partial_t v (0, dot)$. Then $u = v$.
 ] <cor:wave-uniqueness>
 
 #proof[
-  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(x_0, t_0)$ the data of $w$ vanish on $B (x_0, c t_0)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) $E_C (t) = 0$ for all $t <= t_0$, hence $w$ is constant in the cone, and the initial condition gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
+  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(x_0, t_0)$ the data of $w$ vanish on $B (x_0, a t_0)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) $E_C (t) = 0$ for all $t <= t_0$, hence $w$ is constant in the cone, and the initial condition gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
 ]
 
 #corollary(name: "Continuous Dependence on the Data")[
   Let $u, v$ be $C^2$ solutions with initial data $(g, h)$ and $(tilde(g), tilde(h))$, and let $C$ be the backward cone with apex $(t_0, x_0)$. Then for all $t in [0, t_0]$ the local energy of the difference $w = u - v$ satisfies
   $
-    E_C (t) <= 1/2 integral_(B (x_0, c t_0)) (abs(h - tilde(h))^2 + c^2 abs(nabla (g - tilde(g)))^2) dif y.
+    E_C (t) <= 1/2 integral_(B (x_0, a t_0)) (abs(h - tilde(h))^2 + a^2 abs(nabla (g - tilde(g)))^2) dif y.
   $
   Small initial data (in the energy norm, on the domain of dependence) produce a small solution: the Cauchy problem is *stable*.
 ] <cor:wave-stability>
 
 #proof[
-  Immediate from the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) applied to $w = u - v$, whose initial energy is bounded by the data on $B (x_0, c t_0)$.
+  Immediate from the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) applied to $w = u - v$, whose initial energy is bounded by the data on $B (x_0, a t_0)$.
 ]
 
 == Finite Propagation Speed // 有限传播速度
 
 #theorem(name: "Finite Propagation Speed")[
-  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = c^2 Delta u$ on $[0, oo) times bb(R)^n$ with initial data $(g, h)$ and $(tilde(g), tilde(h))$. If $g = tilde(g)$ and $h = tilde(h)$ on $B (x, c t)$, then $u (t, x) = tilde(u) (t, x)$: the value at $(t, x)$ depends only on the initial data in the ball $overline(B (x, c t))$.
+  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $[0, oo) times bb(R)^n$ with initial data $(g, h)$ and $(tilde(g), tilde(h))$. If $g = tilde(g)$ and $h = tilde(h)$ on $B (x, a t)$, then $u (t, x) = tilde(u) (t, x)$: the value at $(t, x)$ depends only on the initial data in the ball $overline(B (x, a t))$.
 ] <thm:domain-of-dependence>
 
 #proof[
-  By linearity it suffices to show that data supported outside $B (x, c t)$ do not affect $u (t, x)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(t, x)$. The data of $w$ vanish on $C inter {s = 0} = B (x, c t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (t, x) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
+  By linearity it suffices to show that data supported outside $B (x, a t)$ do not affect $u (t, x)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(t, x)$. The data of $w$ vanish on $C inter {s = 0} = B (x, a t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (t, x) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
 ]
 
 #definition(name: "Domains of Dependence, Determinacy and Influence")[
-  The *domain of dependence* of a point $(t, x)$ is the ball $overline(B (x, c t))$: only the data in this ball can influence the value $u (t, x)$. Given a set $D$ on the initial surface, its *domain of determinacy* is the region
+  The *domain of dependence* of a point $(t, x)$ is the ball $overline(B (x, a t))$: only the data in this ball can influence the value $u (t, x)$. Given a set $D$ on the initial surface, its *domain of determinacy* is the region
   $
-    {(s, x) : 0 <= s, B (x, c s) subset D},
+    {(s, x) : 0 <= s, B (x, a s) subset D},
   $
   the part of space-time completely determined by the data on $D$. The *domain of influence* of a point $y$ of the initial surface is the cone
   $
-    {(t, x) : abs(x - y) <= c t},
+    {(t, x) : abs(x - y) <= a t},
   $
   the set of space-time points whose values the data at $y$ can affect.
 ] <def:domain-dependence-influence>
 
-Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $c$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior.
+Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $a$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior.
 
 #note[
-  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (t, x)$ depends only on the data on the *sphere* $partial B (x, c t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
+  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (t, x)$ depends only on the data on the *sphere* $partial B (x, a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
 ]
 
 #theorem(name: "Dispersive Decay")[
@@ -2959,7 +2962,7 @@ Unlike the heat equation, where a disturbance is felt instantly at every distanc
 ] <thm:dispersive-decay>
 
 #proof[
-  (Sketch.) Both statements are read off the explicit formulas of §15.2. In three dimensions, Kirchhoff's formula involves only spherical means over $partial B (x, c t)$: the sphere meets the initial support only while $c t$ lies between the nearest and the farthest distance from $x$ to the support — after that $u (t, x) = 0$. In two dimensions, Poisson's formula integrates over the full disk $B (x, c t)$ with the weight $(t^2 - abs(x - y)^2)^(-1/2)$, which is nonzero for all large $t$ (the wake); the dominant contribution as $t -> oo$ comes from the rim $abs(x - y) approx c t$, where the weight is barely integrable, and the resulting uniform bound is $O(t^(-1/2))$ — consistent with the general dispersive rate $t^(-(n-1)/2)$.
+  (Sketch.) Both statements are read off the explicit formulas of §15.2. In three dimensions, Kirchhoff's formula involves only spherical means over $partial B (x, a t)$: the sphere meets the initial support only while $a t$ lies between the nearest and the farthest distance from $x$ to the support — after that $u (t, x) = 0$. In two dimensions, Poisson's formula integrates over the full disk $B (x, a t)$ with the weight $(t^2 - abs(x - y)^2)^(-1/2)$, which is nonzero for all large $t$ (the wake); the dominant contribution as $t -> oo$ comes from the rim $abs(x - y) approx a t$, where the weight is barely integrable, and the resulting uniform bound is $O(t^(-1/2))$ — consistent with the general dispersive rate $t^(-(n-1)/2)$.
 ]
 
 == Duhamel Principle // Duhamel 原理
@@ -3114,7 +3117,7 @@ The scalar one-dimensional conservation law was treated completely in Chapter 5 
 ]
 
 #note[
-  The prototype is the system of isentropic gas dynamics: $u = (rho, rho v)$ with flux $F (rho, rho v) = (rho v, rho v^2 + p (rho))$, where $rho$ is the density, $v$ the velocity, and $p$ the pressure. The system is hyperbolic whenever $p' (rho) > 0$ (sound speed $c (rho) = sqrt(p' (rho)) > 0$).
+  The prototype is the system of isentropic gas dynamics: $u = (rho, rho v)$ with flux $F (rho, rho v) = (rho v, rho v^2 + p (rho))$, where $rho$ is the density, $v$ the velocity, and $p$ the pressure. The system is hyperbolic whenever $p' (rho) > 0$ (sound speed $a (rho) = sqrt(p' (rho)) > 0$).
 ]
 
 == Entropy Conditions // 熵条件
@@ -3312,13 +3315,13 @@ This closing part of the notes collects the classical method of separation of va
 #example(name: "Wave Equation on a String")[
   For the vibrating string of length $L$ with fixed ends,
   $
-    (partial^2 u)/(partial t^2) = c^2 (partial^2 u)/(partial x^2), quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x), quad partial_t u (x, 0) = h (x),
+    (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2), quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x), quad partial_t u (x, 0) = h (x),
   $
-  separation gives the same spatial problem as in Example 18.1: $lambda_k = (k pi/L)^2$, $X_k (x) = sin (k pi x/L)$, and the temporal factor solves $T_k'' + c^2 lambda_k T_k = 0$, i.e. the harmonic oscillator with frequency $omega_k = c k pi/L$. Hence
+  separation gives the same spatial problem as in Example 18.1: $lambda_k = (k pi/L)^2$, $X_k (x) = sin (k pi x/L)$, and the temporal factor solves $T_k'' + a^2 lambda_k T_k = 0$, i.e. the harmonic oscillator with frequency $omega_k = a k pi/L$. Hence
   $
     u (t, x) = sum_(k=1)^oo (a_k cos (omega_k t) + b_k sin (omega_k t)) sin (k pi x/L),
   $
-  with $a_k = 2/L integral_0^L g (x) sin (k pi x/L) dif x$ and $b_k = 2/(L omega_k) integral_0^L h (x) sin (k pi x/L) dif x$. The eigenfrequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = c pi/L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (Chapter 15, #link(<thm:wave-energy>)[§15.3]).
+  with $a_k = 2/L integral_0^L g (x) sin (k pi x/L) dif x$ and $b_k = 2/(L omega_k) integral_0^L h (x) sin (k pi x/L) dif x$. The eigenfrequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = a pi/L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (Chapter 15, #link(<thm:wave-energy>)[§15.3]).
 ] <ex:wave-separation>
 
 #example(name: "Laplace Equation on a Rectangle")[
