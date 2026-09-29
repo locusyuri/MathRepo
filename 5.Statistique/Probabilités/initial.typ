@@ -917,7 +917,7 @@ The count $X$ of successes in Bernoulli trials inherits a life of its own —
 its distribution, the *binomial distribution*, opens the catalogue of the
 next chapter.
 
-#part("Random Variables and Distributions") // 随机变量及其分布
+#part("Random Variables and Numerical Characteristics") // 随机变量及其数字特征
 = Univariate Random Variables and Distributions // 一维随机变量及其分布
 
 == Random Variables and Their Distributions // 随机变量及其分布
@@ -1086,9 +1086,312 @@ Two structural types of random variable dominate the theory.
   supplement: [Fig.],
 ) <fig:density-cdf-discrete-continuous>
 
+== Distributions of Functions of Random Variables // 随机变量函数的分布
+
+Given the distribution of $X$, what is the distribution of $Y = g(X)$? The
+answer depends on the type of $X$ and the nature of $g$.
+
+For a *discrete* $X$, the method is direct: enumerate the values of $Y$ and
+collect the probabilities of the pre-images.
+
+#example[
+  Let $X$ take $-1, 0, 1$ each with probability $1\/3$, and set $Y = X^2$.
+  Then $Y$ takes values $0$ and $1$, with
+  $
+    P(Y = 0) = P(X = 0) = 1/3, quad
+    P(Y = 1) = P(X = -1) + P(X = 1) = 2/3.
+  $
+] <ex:discrete-transform>
+
+For a *continuous* $X$, the distribution can be recovered from its CDF:
+the *distribution function method* — compute $F_(Y)(y) = P(g(X) <= y)$,
+then differentiate.
+
+#example[
+  Let $X ~ U(0, 1)$ and $Y = X^2$. For $0 <= y <= 1$,
+  $
+    F_(Y)(y) = P(X^2 <= y) = P(X <= sqrt(y)) = sqrt(y),
+  $
+  so $f_(Y)(y) = d\/(d y) sqrt(y) = 1 / (2 sqrt(y))$ for $0 < y < 1$. This
+  is the $"Be"(1\/2, 1)$ density, the square of a uniform variable being a
+  special case of the Beta–Gamma algebraic structure explored in the
+  distribution relationships of Chapter 5.
+] <ex:cdf-method>
+
+When $g$ is monotone, a direct formula avoids the detour through the CDF.
+
+#theorem(name: "Monotone Transform Formula")[
+  Let $X$ be a continuous random variable with density $f_X$, and let
+  $g$ be strictly monotone and differentiable on the range of $X$. Set
+  $Y = g(X)$ and let $h = g^(-1)$ be the inverse function. Then $Y$ has
+  density
+  $
+    f_(Y)(y) = f_(X)(h(y)) dot abs(h'(y)),
+  $
+  for $y$ in the range of $g$.
+] <thm:monotone-transform>
+
+#proof[
+  Suppose $g$ is strictly increasing (the decreasing case is symmetric).
+  Then $g^(-1)$ is also increasing, so
+  $
+    F_(Y)(y) = P(g(X) <= y) = P(X <= h(y)) = F_(X)(h(y)).
+  $
+  Differentiating by the chain rule gives
+  $f_(Y)(y) = f_(X)(h(y)) h'(y)$; since $h$ is increasing, $h'(y) >= 0$ and
+  $h'(y) = abs(h'(y))$. If $g$ is strictly decreasing, then
+  $
+    F_(Y)(y) = P(g(X) <= y) = P(X >= h(y)) = 1 - F_(X)(h(y)),
+  $
+  and differentiating gives $f_(Y)(y) = -f_(X)(h(y)) h'(y)$; since $h$ is now
+  decreasing, $h'(y) <= 0$ and $-h'(y) = abs(h'(y))$. The two cases unify
+  in the stated formula.
+]
+
+#example(name: "Linear transform")[
+  Let $X ~ N(mu, sigma^2)$ and $Y = a X + b$ with
+  $a != 0$. Then $h(y) = (y - b) / a$ and $h'(y) = 1 / a$, so
+  $
+    f_(Y)(y)
+    = f_(X)((y - b) / a) dot abs(1 / a)
+    = 1 / (abs(a) sigma sqrt(2 pi)) exp(-(y - a mu - b)^2 / (2 a^2 sigma^2)).
+  $
+  This is $N(a mu + b, a^2 sigma^2)$: linear transforms of normals are
+  normal, with scale and location transformed accordingly. In particular,
+  $Z = (X - mu) / sigma ~ N(0, 1)$ — the standardization used throughout
+  normal calculations.
+] <ex:linear-transform>
+
+The monotone transform formula extends to several variables via the
+multidimensional Jacobian — a tool to be developed in the multivariate
+chapter (Chapter 6), where the change-of-variables technique for joint
+densities takes centre stage.
+
+= Numerical Characteristics // 数字特征
+
+A distribution is fully described by its CDF or density, but a few numbers
+— the mean, the variance, the correlation — capture its essential features
+and enable comparisons. These *numerical characteristics* are the
+quantities that statistics estimates and probability theory bounds. This
+chapter develops them for a single random variable; the joint
+characteristics of several variables (covariance, correlation) follow in
+the multivariate chapter, and the common distributions of the next chapter
+will each receive their mean and variance as a complete portrait.
+
+== Mathematical Expectation // 数学期望
+
+#definition(name: "Expectation of a Discrete Random Variable")[
+  Let $X$ be discrete with PMF $p(x)$. If $sum_x abs(x) p(x) < infinity$,
+  the *expectation* (or *mean*) of $X$ is
+  $
+    E[X] = sum_x x p(x).
+  $
+  If the series is not absolutely convergent, the expectation does not
+  exist.
+] <def:expectation-discrete>
+
+#definition(name: "Expectation of a Continuous Random Variable")[
+  Let $X$ be continuous with PDF $f(x)$. If $integral_(-infinity)^infinity
+  abs(x) f(x) dif x < infinity$, the *expectation* of $X$ is
+  $
+    E[X] = integral_(-infinity)^infinity x f(x) dif x.
+  $
+] <def:expectation-continuous>
+
+The absolute-convergence requirement is essential: conditionally convergent
+series depend on summation order, which has no probabilistic meaning.
+
+#property(name: "Linearity of Expectation")[
+  For any random variables $X, Y$ with finite expectations and constants
+  $a, b in RR$,
+  $
+    E[a X + b Y] = a E[X] + b E[Y].
+  $
+  Linearity holds *without* any independence assumption — this is what
+  makes expectation so powerful.
+] <prop:expectation-linearity>
+
+#theorem(name: "LOTUS (Law of the Unconscious Statistician)")[
+  Let $X$ have PMF $p(x)$ (or PDF $f(x)$) and let $g: RR -> RR$ be
+  measurable. Then
+  $
+    E[g(X)] = sum_x g(x) p(x) quad ("or" quad integral_(-infinity)^infinity g(x) f(x) dif x).
+  $
+  No intermediate step of deriving the distribution of $Y = g(X)$ is needed
+  — the expectation of $g(X)$ is computed directly from the distribution of
+  $X$.
+] <thm:lotus>
+
+#property(name: "Markov's Inequality")[
+  If $X >= 0$ a.s. and $a > 0$, then
+  $
+    P(X >= a) <= (E[X]) / a.
+  $
+] <prop:markov-inequality>
+
+#proof[
+  $E[X] = integral_0^infinity x f(x) dif x >= integral_a^infinity x f(x) dif x
+  >= a integral_a^infinity f(x) dif x = a P(X >= a)$.
+]
+
+#example[
+  Common expectations (verified by direct computation or LOTUS):
+
+  | Distribution | $E[X]$ |
+  |---|---|
+  | $"Ber"(p)$ | $p$ |
+  | $B(n, p)$ | $n p$ |
+  | $"Pois"(lambda)$ | $lambda$ |
+  | $"Geom"(p)$ | $1 / p$ |
+  | $"NB"(r, p)$ | $r / p$ |
+  | $"Hyp"(N, K, n)$ | $n K \/ N$ |
+  | $U(a, b)$ | $(a+b) / 2$ |
+  | $"Exp"(lambda)$ | $1 / lambda$ |
+  | $N(mu, sigma^2)$ | $mu$ |
+  | $"Ga"(alpha, lambda)$ | $alpha / lambda$ |
+  | $"Be"(a, b)$ | $a / (a+b)$ |
+
+  For instance, $E["Exp"(lambda)] = integral_0^infinity x lambda exp(
+    -lambda
+    x
+  ) dif x = 1 / lambda$ by integration by parts.
+] <ex:common-expectations>
+
+== Variance and Standard Deviation // 方差与标准差
+
+#definition(name: "Variance")[
+  The *variance* of $X$ with finite $E[X^2]$ is
+  $
+    "Var"(X) = E[(X - E[X])^2] = E[X^2] - (E[X])^2,
+  $
+  and the *standard deviation* is $sigma = sqrt("Var"(X))$.
+] <def:variance>
+
+The computational form $E[X^2] - (E[X])^2$ follows from
+#link(<prop:expectation-linearity>)[linearity]: expand $E[(X - mu)^2] =
+E[X^2] - 2 mu E[X] + mu^2 = E[X^2] - mu^2$.
+
+#property(name: "Properties of Variance")[
+  - $"Var"(a X + b) = a^2 "Var"(X)$ — shift does not affect spread;
+  - if $X_1, dots, X_n$ are pairwise independent, $"Var"(sum X_i) = sum
+    "Var"(X_i)$;
+  - $"Var"(X) >= 0$, with equality iff $X = E[X]$ a.s.;
+  - $"Var"(X) < infinity$ iff $E[X^2] < infinity$.
+] <prop:variance-properties>
+
+#theorem(name: "Chebyshev's Inequality")[
+  If $"Var"(X) < infinity$, then for any $k > 0$,
+  $
+    P(abs(X - E[X]) >= k) <= ("Var"(X)) / k^2.
+  $
+  Equivalently, $P(abs(X - mu) >= k sigma) <= 1 / k^2$.
+] <thm:chebyshev-inequality>
+
+#proof[
+  Apply #link(<prop:markov-inequality>)[Markov's inequality] to the
+  non-negative random variable $(X - mu)^2$ with $a = k^2$:
+  $
+    P(abs(X - mu) >= k) = P((X - mu)^2 >= k^2) <= (E[(X - mu)^2]) / k^2 = ("Var"(X)) / k^2.
+  $
+]
+
+Chebyshev's inequality is universal — it uses only the mean and variance,
+not the full distribution. It is the bridge from finite moments to limit
+theorems: the Weak Law of Large Numbers (Chapter 9) is a direct corollary.
+
+#note[
+  (Exponential family callback.) The
+  #link(<prop:cgf-derivative>)[log-partition derivative property] states
+  $A'' = "Var"(T(X))$. This is a special case of the general principle that
+  the variance of a natural statistic is the second derivative of $A$ — a
+  fact that connects the algebraic structure of the exponential family
+  directly to the numerical characteristics developed here.
+]
+
+== Other Characterization Numbers // 其他特征数
+
+#definition(name: "Moments and Central Moments")[
+  The *$k$-th moment* of $X$ is $mu_k = E[X^k]$, and the *$k$-th central
+  moment* is
+  $
+    mu_k' = E[(X - mu)^k],
+  $
+  provided the expectations exist. The variance is the second central
+  moment: $"Var"(X) = mu_2'$.
+] <def:moments>
+
+#definition(name: "Coefficient of Variation")[
+  The *coefficient of variation* is the dimensionless ratio
+  $
+    "CV" = sigma / mu,
+  $
+  measuring relative dispersion. It is meaningful when $X > 0$ (e.g.
+  lifetimes, incomes).
+] <def:coefficient-of-variation>
+
+#definition(name: "Quantiles and Median")[
+  For $0 < p < 1$, the *$p$-th quantile* is
+  $
+    x_p = inf {x : F(x) >= p}.
+  $
+  The *median* is $x_(1\/2)$, the *quartiles* are $x_(1\/4)$ and
+  $x_(3\/4)$. The *interquartile range* $x_(3\/4) - x_(1\/4)$ is a
+  robust measure of spread.
+] <def:quantiles>
+
+#definition(name: "Skewness")[
+  The *skewness* (coefficient of skewness) is
+  $
+    gamma_1 = (mu_3') / sigma^3 = (E[(X - mu)^3]) / sigma^3.
+  $
+  It measures asymmetry: $gamma_1 > 0$ (right-skewed), $gamma_1 < 0$
+  (left-skewed), $gamma_1 = 0$ (symmetric).
+] <def:skewness>
+
+#definition(name: "Kurtosis")[
+  The *kurtosis* (excess kurtosis) is
+  $
+    gamma_2 = (mu_4') / sigma^4 - 3 = (E[(X - mu)^4]) / sigma^4 - 3.
+  $
+  The subtraction of $3$ makes the normal distribution the reference:
+  $gamma_2 = 0$ (*mesokurtic*), $gamma_2 > 0$ (*leptokurtic* — heavier
+  tails), $gamma_2 < 0$ (*platykurtic* — lighter tails).
+] <def:kurtosis>
+
+#figure(
+  image("img/skewness-kurtosis.svg", width: 90%),
+  caption: [Left: positive skewness (right tail heavy) versus negative
+    skewness (left tail heavy), with a symmetric density for reference.
+    Right: leptokurtic (peaked, heavy tails) versus platykurtic (flat,
+    light tails) densities, with the normal (mesokurtic) in between.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:skewness-kurtosis>
+
+The mean, variance, skewness, and kurtosis are the first four standardised
+moments — together they sketch the shape of a distribution: location,
+scale, asymmetry, and tail weight. Higher moments and the moment
+generating function, which encodes *all* moments in a single function, are
+the subject of the generating functions chapter (Chapter 7). First,
+however, the next chapter applies the tools just built to give the standard
+families their complete portraits — mean and variance included.
+
+
+
+= Common Distributions // 常用分布
+
+A random variable becomes useful once we can compute with it. The
+preceding chapter equipped every distribution with a mean, a variance,
+and the inequalities that control them. We now assemble the standard
+families — the working vocabulary of probability and statistics — and
+give each a complete portrait: its probability law, its origin as a
+model, its mean and variance, and the special properties that set it
+apart.
+
+
 == Common Discrete Distributions // 常用离散分布
 
-The Bernoulli scheme of #link(<def:bernoulli-trials>)[the preceding chapter]
+The Bernoulli scheme of #link(<def:bernoulli-trials>)[Chapter 2]
 produces the first and most important discrete distribution family.
 
 #definition(name: "Bernoulli Distribution")[
@@ -1382,85 +1685,10 @@ and conjugate Bayesian analysis.
   supplement: [Fig.],
 ) <fig:common-continuous-densities>
 
-== Distributions of Functions of Random Variables // 随机变量函数的分布
+== Summary of Common Distributions // 常用分布汇总
 
-Given the distribution of $X$, what is the distribution of $Y = g(X)$? The
-answer depends on the type of $X$ and the nature of $g$.
+PLACEHOLDER_CH53
 
-For a *discrete* $X$, the method is direct: enumerate the values of $Y$ and
-collect the probabilities of the pre-images.
-
-#example[
-  Let $X$ take $-1, 0, 1$ each with probability $1\/3$, and set $Y = X^2$.
-  Then $Y$ takes values $0$ and $1$, with
-  $
-    P(Y = 0) = P(X = 0) = 1/3, quad
-    P(Y = 1) = P(X = -1) + P(X = 1) = 2/3.
-  $
-] <ex:discrete-transform>
-
-For a *continuous* $X$, the distribution can be recovered from its CDF:
-the *distribution function method* — compute $F_(Y)(y) = P(g(X) <= y)$,
-then differentiate.
-
-#example[
-  Let $X ~ U(0, 1)$ and $Y = X^2$. For $0 <= y <= 1$,
-  $
-    F_(Y)(y) = P(X^2 <= y) = P(X <= sqrt(y)) = sqrt(y),
-  $
-  so $f_(Y)(y) = d\/(d y) sqrt(y) = 1 / (2 sqrt(y))$ for $0 < y < 1$. This
-  is the $"Be"(1\/2, 1)$ density, the square of a uniform variable being a
-  special case of the Beta-Gamma connection noted above.
-] <ex:cdf-method>
-
-When $g$ is monotone, a direct formula avoids the detour through the CDF.
-
-#theorem(name: "Monotone Transform Formula")[
-  Let $X$ be a continuous random variable with density $f_X$, and let
-  $g$ be strictly monotone and differentiable on the range of $X$. Set
-  $Y = g(X)$ and let $h = g^(-1)$ be the inverse function. Then $Y$ has
-  density
-  $
-    f_(Y)(y) = f_(X)(h(y)) dot abs(h'(y)),
-  $
-  for $y$ in the range of $g$.
-] <thm:monotone-transform>
-
-#proof[
-  Suppose $g$ is strictly increasing (the decreasing case is symmetric).
-  Then $g^(-1)$ is also increasing, so
-  $
-    F_(Y)(y) = P(g(X) <= y) = P(X <= h(y)) = F_(X)(h(y)).
-  $
-  Differentiating by the chain rule gives
-  $f_(Y)(y) = f_(X)(h(y)) h'(y)$; since $h$ is increasing, $h'(y) >= 0$ and
-  $h'(y) = abs(h'(y))$. If $g$ is strictly decreasing, then
-  $
-    F_(Y)(y) = P(g(X) <= y) = P(X >= h(y)) = 1 - F_(X)(h(y)),
-  $
-  and differentiating gives $f_(Y)(y) = -f_(X)(h(y)) h'(y)$; since $h$ is now
-  decreasing, $h'(y) <= 0$ and $-h'(y) = abs(h'(y))$. The two cases unify
-  in the stated formula.
-]
-
-#example(name: "Linear transform")[
-  Let $X ~ N(mu, sigma^2)$ and $Y = a X + b$ with
-  $a != 0$. Then $h(y) = (y - b) / a$ and $h'(y) = 1 / a$, so
-  $
-    f_(Y)(y)
-    = f_(X)((y - b) / a) dot abs(1 / a)
-    = 1 / (abs(a) sigma sqrt(2 pi)) exp(-(y - a mu - b)^2 / (2 a^2 sigma^2)).
-  $
-  This is $N(a mu + b, a^2 sigma^2)$: linear transforms of normals are
-  normal, with scale and location transformed accordingly. In particular,
-  $Z = (X - mu) / sigma ~ N(0, 1)$ — the standardization used throughout
-  normal calculations.
-] <ex:linear-transform>
-
-The monotone transform formula extends to several variables via the
-multidimensional Jacobian — a tool to be developed in the next chapter,
-where multivariate distributions and the change-of-variables technique for
-joint densities take centre stage.
 
 = Multivariate Random Variables and Distributions // 多维随机变量及其分布
 
@@ -1624,6 +1852,90 @@ $sigma$-fields generated by each $X_i$ are independent families.
   distinction is central to the covariance theory developed there.
 ]
 
+== Conditional Distributions // 条件分布
+
+Conditional probability restricts the sample space; conditional
+distributions restrict one variable to a fixed value and examine the
+distribution of the other.
+
+#definition(name: "Conditional PMF")[
+  For discrete $X, Y$ with joint PMF $p(x, y)$ and $p_(X)(x) > 0$, the
+  *conditional PMF* of $Y$ given $X = x$ is
+  $
+    p_(Y|X)(y|x) = (p(x, y)) / p_(X)(x).
+  $
+] <def:conditional-pmf>
+
+#definition(name: "Conditional PDF")[
+  For continuous $X, Y$ with joint PDF $f(x, y)$ and $f_(X)(x) > 0$, the
+  *conditional PDF* of $Y$ given $X = x$ is
+  $
+    f_(Y|X)(y|x) = (f(x, y)) / f_(X)(x).
+  $
+] <def:conditional-pdf>
+
+#property(name: "Properties of Conditional Distributions")[
+  - For fixed $x$ with $f_(X)(x) > 0$, $f_(Y|X)(dot|x)$ is a bona fide PDF:
+    non-negative and integrating to $1$ over $y$;
+  - (multiplication rule) $f(x, y) = f_(X)(x) f_(Y|X)(y|x) = f_(Y)(y) f_(X|Y)(x|y)$;
+  - (total density) $f_(Y)(y) = integral_(-infinity)^infinity f_(Y|X)(y|x) f_(X)(x) dif x$
+    — the density analogue of
+    #link(<thm:total-probability>)[the law of total probability];
+  - if $X$ and $Y$ are independent, $f_(Y|X)(y|x) = f_(Y)(y)$ — conditioning
+    changes nothing.
+] <prop:conditional-dist-properties>
+
+#note[
+  The conditional framework set up here becomes a computational tool once
+  expectation (Chapter 4) is applied to the conditional distribution: the
+  result is the *conditional expectation* and the laws that govern it,
+  developed immediately below.
+]
+
+#definition(name: "Conditional Expectation")[
+  Given #link(<def:conditional-pmf>)[the conditional PMF/PDF] of $Y$ given
+  $X = x$, the *conditional expectation* is
+  $
+    E[Y|X=x] = sum_y y p_(Y|X)(y|x) quad ("discrete"), quad integral_(-infinity)^infinity y f_(Y|X)(y|x) dif y quad ("continuous").
+  $
+  As a function of $x$, this defines a random variable $E[Y|X]$ — the
+  *regression function* of $Y$ on $X$.
+] <def:conditional-expectation>
+
+#theorem(name: "Law of Total Expectation (Tower Property)")[
+  If $E[abs(Y)] < infinity$, then
+  $
+    E[Y] = E[E[Y|X]].
+  $
+] <thm:total-expectation>
+
+#proof[
+  (Continuous case.) Using
+  #link(<prop:conditional-dist-properties>)[the total density formula]
+  $f_(Y)(y) = integral f_(Y|X)(y|x) f_(X)(x) dif x$:
+  $
+    E[E[Y|X]] = integral E[Y|X=x] f_(X)(x) dif x = integral (integral y f_(Y|X)(y|x) dif y) f_(X)(x) dif x = integral y (integral f_(Y|X)(y|x) f_(X)(x) dif x) dif y = integral y f_(Y)(y) dif y = E[Y].
+  $
+  The discrete case replaces integrals by sums.
+]
+
+#property(name: "Conditional Variance Decomposition")[
+  $
+    "Var"(Y) = E["Var"(Y|X)] + "Var"(E[Y|X]).
+  $
+  The total variance decomposes into the *expected conditional variance*
+  (within-group scatter) and the *variance of the conditional mean*
+  (between-group scatter).
+] <prop:variance-decomposition>
+
+#proof[
+  $E["Var"(Y|X)] = E[E[Y^2|X] - (E[Y|X])^2] = E[Y^2] - E[(E[Y|X])^2]$
+  and $"Var"(E[Y|X]) = E[(E[Y|X])^2] - (E[E[Y|X]])^2 = E[(E[Y|X])^2] -
+  (E[Y])^2$. Adding: $E[Y^2] - (E[Y])^2 = "Var"(Y)$.
+]
+
+
+
 == Distributions of Functions of Random Variables // 随机变量函数的分布
 
 Given the joint distribution of several random variables, the distribution of
@@ -1739,423 +2051,12 @@ This is the $n$-dimensional generalisation of
 #link(<thm:monotone-transform>)[the monotone transform]; the factor
 $abs(h'(y))$ is replaced by $abs(J)$, the absolute Jacobian determinant.
 
-== Conditional Distributions // 条件分布
-
-Conditional probability restricts the sample space; conditional
-distributions restrict one variable to a fixed value and examine the
-distribution of the other.
-
-#definition(name: "Conditional PMF")[
-  For discrete $X, Y$ with joint PMF $p(x, y)$ and $p_(X)(x) > 0$, the
-  *conditional PMF* of $Y$ given $X = x$ is
-  $
-    p_(Y|X)(y|x) = (p(x, y)) / p_(X)(x).
-  $
-] <def:conditional-pmf>
-
-#definition(name: "Conditional PDF")[
-  For continuous $X, Y$ with joint PDF $f(x, y)$ and $f_(X)(x) > 0$, the
-  *conditional PDF* of $Y$ given $X = x$ is
-  $
-    f_(Y|X)(y|x) = (f(x, y)) / f_(X)(x).
-  $
-] <def:conditional-pdf>
-
-#property(name: "Properties of Conditional Distributions")[
-  - For fixed $x$ with $f_(X)(x) > 0$, $f_(Y|X)(dot|x)$ is a bona fide PDF:
-    non-negative and integrating to $1$ over $y$;
-  - (multiplication rule) $f(x, y) = f_(X)(x) f_(Y|X)(y|x) = f_(Y)(y) f_(X|Y)(x|y)$;
-  - (total density) $f_(Y)(y) = integral_(-infinity)^infinity f_(Y|X)(y|x) f_(X)(x) dif x$
-    — the density analogue of
-    #link(<thm:total-probability>)[the law of total probability];
-  - if $X$ and $Y$ are independent, $f_(Y|X)(y|x) = f_(Y)(y)$ — conditioning
-    changes nothing.
-] <prop:conditional-dist-properties>
-
-#note[
-  The *conditional expectation* $E[Y|X]$ — the mean of the conditional
-  distribution — and the *law of total expectation*
-  $E[Y] = E[E[Y|X]]$ require the notion of expectation, which is developed
-  in the Numerical Characteristics chapter. There, the conditional
-  framework set up here will yield the tower property and the analysis of
-  variance via conditional variances.
-]
-
-= Characterization and Classification of Distributions // 分布的特征与分类
-
-The distributions of Chapters 3 and 4 — normal, Gamma, Beta, Poisson,
-binomial — look different on the surface, yet most of them share a hidden
-algebraic skeleton: the *exponential family*. Recognising a distribution as
-a member of this family immediately yields its sufficient statistic, its
-moment-generating structure, and its conjugate prior — three pillars of
-modern statistical inference. This chapter assembles that skeleton and then
-turns to the multivariate normal, the canonical distribution of multivariate
-statistics.
-
-== Exponential Family // 指数族
-
-#definition(name: "Exponential Family")[
-  A family of densities $f(x; theta)$ with parameter $theta in Theta
-  subset.eq RR^k$ belongs to the *exponential family* if it can be written
-  in the *canonical form*
-  $
-    f(x; theta) = h(x) exp(eta(theta) dot T(x) - A(theta)),
-  $
-  where:
-
-  - $h(x) >= 0$ is the *base measure*, independent of $theta$;
-  - $eta(theta) in RR^k$ is the *natural parameter*;
-  - $T(x) in RR^k$ is the *natural statistic* (a vector of the same
-    dimension as $eta$);
-  - $A(theta)$ is the *log-partition function* (or cumulant generating
-    function), ensuring normalisation.
-
-  The inner product $eta dot T = sum_(i=1)^k eta_i T_i$ couples parameter
-  to data.
-] <def:exponential-family>
-
-The key structural constraint is that the support ${{x : f(x; theta) > 0}}$ must not depend on $theta$; the parameter enters only
-through the exponential factor.
-
-#property(name: "Classical Distributions in the Exponential Family")[
-  Each of the following admits the canonical form; the table lists the
-  ingredients.
-
-  | Distribution | $eta$ | $T(x)$ | $A(theta)$ | $h(x)$ |
-  |---|---|---|---|---|
-  | $"Pois"(lambda)$ | $ln lambda$ | $x$ | $lambda$ | $1 / x!$ |
-  | $"Ber"(p)$ | $ln(p / (1-p))$ | $x$ | $-ln(1-p)$ | $1$ |
-  | $B(n, p)$ | $ln(p / (1-p))$ | $x$ | $-n ln(1-p)$ | $binom(n, x)$ |
-  | $"Exp"(lambda)$ | $-lambda$ | $x$ | $-ln lambda$ | $1$ |
-  | $"Ga"(alpha, lambda)$ | $(-lambda, alpha)$ | $(x, ln x)$ | $ln "Gamma"(alpha) - alpha ln lambda$ | $1 / x$ |
-  | $N(mu, sigma^2)$ ($sigma$ known) | $mu / sigma^2$ | $x$ | $mu^2 / (2 sigma^2) + ln sigma$ | $exp(-x^2 / (2 sigma^2)) / sqrt(2 pi)$ |
-  | $"Be"(a, b)$ | $(a-1, b-1)$ | $(ln x, ln(1-x))$ | $ln "B"(a, b)$ | $1$ |
-] <prop:exp-family-members>
-
-The verification is mechanical: rewrite each density by collecting the
-$theta$-dependent parts into $exp(eta dot T)$ and moving the
-$theta$-independent remainder into $h(x)$. For instance, the Poisson density
-$
-  f(k; lambda) = (lambda^k exp(-lambda)) / k! = (1 / k!) exp(k ln lambda - lambda)
-$
-has $eta = ln lambda$, $T(k) = k$, $A = lambda$, $h = 1 / k!$.
-
-#note[
-  (A notable exception.) The uniform distribution $U(0, theta)$ does *not*
-  belong to the exponential family, because its support $[0, theta]$
-  depends on $theta$. The support-independence requirement is not a
-  technicality: it is what makes the factorisation theorem and conjugate
-  Bayesian analysis work.
-]
-
-#definition(name: "Natural Parameter Space")[
-  The *natural parameter space* is the set of $eta$ for which the density is
-  normalisable:
-  $
-    H = {eta in RR^k : integral h(x) exp(eta dot T(x)) dif x < infinity}.
-  $
-  The family is *regular* if $H$ is an open set; *full* if $H$ is the
-  maximal set. The log-partition function is
-  $
-    A(theta) = ln integral h(x) exp(eta(theta) dot T(x)) dif x.
-  $
-] <def:natural-parameter-space>
-
-#property(name: "Derivative of the Log-Partition Function")[
-  Under regularity conditions,
-  $
-    (dif A) / (dif eta) = E[T(X)], quad (dif^2 A) / (dif eta^2) = "Var"(T(X)).
-  $
-  Thus the cumulant generating function $A$ encodes the mean and variance of
-  the natural statistic.
-] <prop:cgf-derivative>
-
-The proof requires interchange of differentiation and integration, which
-the regularity of the natural parameter space guarantees. The notation
-$E[T(X)]$ and $"Var"(T(X))$ — expectation and variance — is made precise in
-the Numerical Characteristics chapter; the point here is that the moments
-of the sufficient statistic are read off from the derivatives of $A$.
-
-#note[
-  (Sufficient statistic preview.) The canonical form $f(x; theta) = h(x)
-  exp(eta dot T(x) - A)$ depends on the data only through $T(x)$. This
-  means $T(X_1, dots, X_n) = sum_i T(X_i)$ is a *sufficient statistic* for
-  $theta$ — it captures all the information the sample contains about the
-  parameter. The formal proof uses the factorisation theorem, developed in
-  the Sufficient Statistics chapter. The exponential family is the natural
-  habitat of sufficiency.
-]
-
-== Multivariate Normal Distribution // 多元正态分布
-
-The univariate normal of #link(<def:normal-dist>)[Chapter 3] extends to
-vectors, and its geometry — ellipsoidal contours, linear closure,
-independence through zero covariance — makes it the workhorse of multivariate
-statistics.
-
-#definition(name: "Multivariate Normal Distribution")[
-  A random vector $bold(X) = (X_1, dots, X_n)$ has the *$n$-variate normal
-  distribution* with mean vector $bold(mu) in RR^n$ and covariance matrix
-  $Sigma$ (a symmetric positive-definite $n times n$ matrix), written
-  $bold(X) ~ N_(n)(bold(mu), Sigma)$, if its joint density is
-  $
-    f(bold(x)) = 1 / ((2 pi)^(n\/2) sqrt(abs(Sigma))) exp(-1\/2 (bold(x) - bold(mu))^T Sigma^(-1) (bold(x) - bold(mu))).
-  $
-  The quadratic form $(bold(x) - bold(mu))^T Sigma^(-1) (bold(x) - bold(mu))$
-  is the *Mahalanobis distance* from $bold(x)$ to $bold(mu)$.
-] <def:multivariate-normal>
-
-The covariance matrix $Sigma = (sigma_(i j))$ where $sigma_(i j) =
-"Cov"(X_i, X_j)$ encodes the pairwise covariances; its diagonal entries are
-the variances $sigma_(i i) = "Var"(X_i)$. These notions are formalised in
-the Numerical Characteristics chapter, but the multivariate normal can be
-understood geometrically through its density now: level sets are
-ellipsoids centred at $bold(mu)$, with axes determined by the eigenvectors
-and eigenvalues of $Sigma$.
-
-For $n = 2$ and $Sigma = [[sigma_1^2, rho sigma_1 sigma_2], [rho sigma_1
-    sigma_2, sigma_2^2]]$, the contours are ellipses tilted by the correlation
-$rho$ — the picture of #link(<fig:joint-density>)[the joint density figure].
-
-#property(name: "Linear Transformations")[
-  If $bold(X) ~ N_(n)(bold(mu), Sigma)$ and $bold(Y) = bold(A) bold(X) +
-  bold(b)$ where $bold(A)$ is an $m times n$ matrix and $bold(b) in RR^m$,
-  then $bold(Y) ~ N_(m)(bold(A) bold(mu) + bold(b), bold(A) Sigma bold(A)^T)$.
-  In particular, any linear combination of jointly normal variables is
-  normal — the *closure under linear transformation*.
-] <prop:mv-normal-linear>
-
-The proof is a direct application of
-#link(<thm:jacobian-transform>)[the multivariate change of variables] with
-$bold(g)(bold(x)) = bold(A) bold(x) + bold(b)$, whose Jacobian is
-$abs(bold(A))$.
-
-#property(name: "Marginal Distributions")[
-  Any subvector of a multivariate normal is itself multivariate normal. If
-  $bold(X) = (bold(X)_1, bold(X)_2)$ is partitioned with
-  $bold(mu) = (bold(mu)_1, bold(mu)_2)$ and
-  $
-    Sigma = [[Sigma_(11), Sigma_(12)], [Sigma_(21), Sigma_(22)]],
-  $
-  then $bold(X)_1 ~ N(bold(mu)_1, Sigma_(11))$ and $bold(X)_2 ~
-  N(bold(mu)_2, Sigma_(22))$.
-] <prop:mv-normal-marginal>
-
-#property(name: "Independence and Zero Covariance")[
-  For a multivariate normal, two subvectors $bold(X)_1$ and $bold(X)_2$ are
-  *independent* if and only if $"Cov"(bold(X)_1, bold(X)_2) = bold(0)$, i.e.
-  $Sigma_(12) = bold(0)$.
-
-  This is a *special* property of the normal: for general distributions,
-  zero covariance (uncorrelatedness) is necessary but not sufficient for
-  independence (see the note in
-  #link(<prop:independence-criterion>)[the independence criterion]). For the
-  normal, the density factorises iff $Sigma_(12) = bold(0)$, because the
-  cross term in the exponent vanishes.
-] <prop:mv-normal-independence>
-
-#property(name: "Conditional Distributions")[
-  Given $bold(X)_2 = bold(x)_2$, the conditional distribution of
-  $bold(X)_1$ is normal:
-  $
-    bold(X)_1 | bold(X)_2 = bold(x)_2 ~ N(bold(mu)_(1|2), Sigma_(1|2)),
-  $
-  with
-  $
-    bold(mu)_(1|2) = bold(mu)_1 + Sigma_(12) Sigma_(22)^(-1) (bold(x)_2 - bold(mu)_2),
-    quad
-    Sigma_(1|2) = Sigma_(11) - Sigma_(12) Sigma_(22)^(-1) Sigma_(21).
-  $
-  The conditional mean is a linear function of $bold(x)_2$ — the *linear
-  regression* of $bold(X)_1$ on $bold(X)_2$; the conditional covariance is
-  independent of $bold(x)_2$ — the regression is *homoscedastic*.
-] <prop:mv-normal-conditional>
-
-These four properties — linear closure, normal marginals, the
-equivalence of independence with zero covariance, and normal conditionals —
-make the multivariate normal the structural backbone of classical
-multivariate analysis, to which the sampling distribution and regression
-chapters will return repeatedly.
-
-#part("Numerical Characteristics and Generating Tools") // 数字特征与生成工具
-= Numerical Characteristics // 数字特征
-
-A distribution is fully described by its CDF or density, but a few numbers
-— the mean, the variance, the correlation — capture its essential features
-and enable comparisons. These *numerical characteristics* are the
-quantities that statistics estimates and probability theory bounds.
-
-== Mathematical Expectation // 数学期望
-
-#definition(name: "Expectation of a Discrete Random Variable")[
-  Let $X$ be discrete with PMF $p(x)$. If $sum_x abs(x) p(x) < infinity$,
-  the *expectation* (or *mean*) of $X$ is
-  $
-    E[X] = sum_x x p(x).
-  $
-  If the series is not absolutely convergent, the expectation does not
-  exist.
-] <def:expectation-discrete>
-
-#definition(name: "Expectation of a Continuous Random Variable")[
-  Let $X$ be continuous with PDF $f(x)$. If $integral_(-infinity)^infinity
-  abs(x) f(x) dif x < infinity$, the *expectation* of $X$ is
-  $
-    E[X] = integral_(-infinity)^infinity x f(x) dif x.
-  $
-] <def:expectation-continuous>
-
-The absolute-convergence requirement is essential: conditionally convergent
-series depend on summation order, which has no probabilistic meaning.
-
-#property(name: "Linearity of Expectation")[
-  For any random variables $X, Y$ with finite expectations and constants
-  $a, b in RR$,
-  $
-    E[a X + b Y] = a E[X] + b E[Y].
-  $
-  Linearity holds *without* any independence assumption — this is what
-  makes expectation so powerful.
-] <prop:expectation-linearity>
-
-#theorem(name: "LOTUS (Law of the Unconscious Statistician)")[
-  Let $X$ have PMF $p(x)$ (or PDF $f(x)$) and let $g: RR -> RR$ be
-  measurable. Then
-  $
-    E[g(X)] = sum_x g(x) p(x) quad ("or" quad integral_(-infinity)^infinity g(x) f(x) dif x).
-  $
-  No intermediate step of deriving the distribution of $Y = g(X)$ is needed
-  — the expectation of $g(X)$ is computed directly from the distribution of
-  $X$.
-] <thm:lotus>
-
-#definition(name: "Conditional Expectation")[
-  Given #link(<def:conditional-pmf>)[the conditional PMF/PDF] of $Y$ given
-  $X = x$, the *conditional expectation* is
-  $
-    E[Y|X=x] = sum_y y p_(Y|X)(y|x) quad ("discrete"), quad integral_(-infinity)^infinity y f_(Y|X)(y|x) dif y quad ("continuous").
-  $
-  As a function of $x$, this defines a random variable $E[Y|X]$ — the
-  *regression function* of $Y$ on $X$.
-] <def:conditional-expectation>
-
-#theorem(name: "Law of Total Expectation (Tower Property)")[
-  If $E[abs(Y)] < infinity$, then
-  $
-    E[Y] = E[E[Y|X]].
-  $
-] <thm:total-expectation>
-
-#proof[
-  (Continuous case.) Using
-  #link(<prop:conditional-dist-properties>)[the total density formula]
-  $f_(Y)(y) = integral f_(Y|X)(y|x) f_(X)(x) dif x$:
-  $
-    E[E[Y|X]] = integral E[Y|X=x] f_(X)(x) dif x = integral (integral y f_(Y|X)(y|x) dif y) f_(X)(x) dif x = integral y (integral f_(Y|X)(y|x) f_(X)(x) dif x) dif y = integral y f_(Y)(y) dif y = E[Y].
-  $
-  The discrete case replaces integrals by sums.
-]
-
-#property(name: "Conditional Variance Decomposition")[
-  $
-    "Var"(Y) = E["Var"(Y|X)] + "Var"(E[Y|X]).
-  $
-  The total variance decomposes into the *expected conditional variance*
-  (within-group scatter) and the *variance of the conditional mean*
-  (between-group scatter).
-] <prop:variance-decomposition>
-
-#proof[
-  $E["Var"(Y|X)] = E[E[Y^2|X] - (E[Y|X])^2] = E[Y^2] - E[(E[Y|X])^2]$
-  and $"Var"(E[Y|X]) = E[(E[Y|X])^2] - (E[E[Y|X]])^2 = E[(E[Y|X])^2] -
-  (E[Y])^2$. Adding: $E[Y^2] - (E[Y])^2 = "Var"(Y)$.
-]
-
-#property(name: "Markov's Inequality")[
-  If $X >= 0$ a.s. and $a > 0$, then
-  $
-    P(X >= a) <= (E[X]) / a.
-  $
-] <prop:markov-inequality>
-
-#proof[
-  $E[X] = integral_0^infinity x f(x) dif x >= integral_a^infinity x f(x) dif x
-  >= a integral_a^infinity f(x) dif x = a P(X >= a)$.
-]
-
-#example[
-  Common expectations (verified by direct computation or LOTUS):
-
-  | Distribution | $E[X]$ |
-  |---|---|
-  | $"Ber"(p)$ | $p$ |
-  | $B(n, p)$ | $n p$ |
-  | $"Pois"(lambda)$ | $lambda$ |
-  | $"Geom"(p)$ | $(1-p) / p$ |
-  | $U(a, b)$ | $(a+b) / 2$ |
-  | $"Exp"(lambda)$ | $1 / lambda$ |
-  | $N(mu, sigma^2)$ | $mu$ |
-  | $"Ga"(alpha, lambda)$ | $alpha / lambda$ |
-  | $"Be"(a, b)$ | $a / (a+b)$ |
-
-  For instance, $E["Exp"(lambda)] = integral_0^infinity x lambda exp(
-    -lambda
-    x
-  ) dif x = 1 / lambda$ by integration by parts.
-] <ex:common-expectations>
-
-== Variance and Standard Deviation // 方差与标准差
-
-#definition(name: "Variance")[
-  The *variance* of $X$ with finite $E[X^2]$ is
-  $
-    "Var"(X) = E[(X - E[X])^2] = E[X^2] - (E[X])^2,
-  $
-  and the *standard deviation* is $sigma = sqrt("Var"(X))$.
-] <def:variance>
-
-The computational form $E[X^2] - (E[X])^2$ follows from
-#link(<prop:expectation-linearity>)[linearity]: expand $E[(X - mu)^2] =
-E[X^2] - 2 mu E[X] + mu^2 = E[X^2] - mu^2$.
-
-#property(name: "Properties of Variance")[
-  - $"Var"(a X + b) = a^2 "Var"(X)$ — shift does not affect spread;
-  - if $X_1, dots, X_n$ are pairwise independent, $"Var"(sum X_i) = sum
-    "Var"(X_i)$;
-  - $"Var"(X) >= 0$, with equality iff $X = E[X]$ a.s.;
-  - $"Var"(X) < infinity$ iff $E[X^2] < infinity$.
-] <prop:variance-properties>
-
-#theorem(name: "Chebyshev's Inequality")[
-  If $"Var"(X) < infinity$, then for any $k > 0$,
-  $
-    P(abs(X - E[X]) >= k) <= ("Var"(X)) / k^2.
-  $
-  Equivalently, $P(abs(X - mu) >= k sigma) <= 1 / k^2$.
-] <thm:chebyshev-inequality>
-
-#proof[
-  Apply #link(<prop:markov-inequality>)[Markov's inequality] to the
-  non-negative random variable $(X - mu)^2$ with $a = k^2$:
-  $
-    P(abs(X - mu) >= k) = P((X - mu)^2 >= k^2) <= (E[(X - mu)^2]) / k^2 = ("Var"(X)) / k^2.
-  $
-]
-
-Chebyshev's inequality is universal — it uses only the mean and variance,
-not the full distribution. It is the bridge from finite moments to limit
-theorems: the Weak Law of Large Numbers (Part IV) is a direct corollary.
-
-#note[
-  (Exponential family callback.) The
-  #link(<prop:cgf-derivative>)[log-partition derivative property] states
-  $A'' = "Var"(T(X))$. This is a special case of the general principle that
-  the variance of a natural statistic is the second derivative of $A$ — a
-  fact that connects the algebraic structure of the exponential family
-  directly to the numerical characteristics developed here.
-]
-
 == Covariance and Correlation // 协方差与相关系数
+
+Expectation and variance summarise one variable at a time; joint
+distributions invite a summary of how two variables *co-vary*. The mean
+vector and the covariance matrix collect these summaries for random
+vectors.
 
 #definition(name: "Covariance")[
   For random variables $X, Y$ with finite second moments, the *covariance*
@@ -2206,77 +2107,14 @@ theorems: the Weak Law of Large Numbers (Part IV) is a direct corollary.
 
   $Sigma$ is symmetric and positive semi-definite. This is the object
   appearing in the
-  #link(<def:multivariate-normal>)[multivariate normal density]: the
-  abstract $Sigma$ of Chapter 5 is now grounded in the concrete notion of
+  #link(<def:multivariate-normal>)[multivariate normal density] of
+  Chapter 8: the abstract $Sigma$ is grounded in the concrete notion of
   covariance.
 ] <def:mean-vector-covariance-matrix>
 
-== Other Characterization Numbers // 其他特征数
 
-#definition(name: "Moments and Central Moments")[
-  The *$k$-th moment* of $X$ is $mu_k = E[X^k]$, and the *$k$-th central
-  moment* is
-  $
-    mu_k' = E[(X - mu)^k],
-  $
-  provided the expectations exist. The variance is the second central
-  moment: $"Var"(X) = mu_2'$.
-] <def:moments>
 
-#definition(name: "Coefficient of Variation")[
-  The *coefficient of variation* is the dimensionless ratio
-  $
-    "CV" = sigma / mu,
-  $
-  measuring relative dispersion. It is meaningful when $X > 0$ (e.g.
-  lifetimes, incomes).
-] <def:coefficient-of-variation>
-
-#definition(name: "Quantiles and Median")[
-  For $0 < p < 1$, the *$p$-th quantile* is
-  $
-    x_p = inf {x : F(x) >= p}.
-  $
-  The *median* is $x_(1\/2)$, the *quartiles* are $x_(1\/4)$ and
-  $x_(3\/4)$. The *interquartile range* $x_(3\/4) - x_(1\/4)$ is a
-  robust measure of spread.
-] <def:quantiles>
-
-#definition(name: "Skewness")[
-  The *skewness* (coefficient of skewness) is
-  $
-    gamma_1 = (mu_3') / sigma^3 = (E[(X - mu)^3]) / sigma^3.
-  $
-  It measures asymmetry: $gamma_1 > 0$ (right-skewed), $gamma_1 < 0$
-  (left-skewed), $gamma_1 = 0$ (symmetric).
-] <def:skewness>
-
-#definition(name: "Kurtosis")[
-  The *kurtosis* (excess kurtosis) is
-  $
-    gamma_2 = (mu_4') / sigma^4 - 3 = (E[(X - mu)^4]) / sigma^4 - 3.
-  $
-  The subtraction of $3$ makes the normal distribution the reference:
-  $gamma_2 = 0$ (*mesokurtic*), $gamma_2 > 0$ (*leptokurtic* — heavier
-  tails), $gamma_2 < 0$ (*platykurtic* — lighter tails).
-] <def:kurtosis>
-
-#figure(
-  image("img/skewness-kurtosis.svg", width: 90%),
-  caption: [Left: positive skewness (right tail heavy) versus negative
-    skewness (left tail heavy), with a symmetric density for reference.
-    Right: leptokurtic (peaked, heavy tails) versus platykurtic (flat,
-    light tails) densities, with the normal (mesokurtic) in between.],
-  placement: auto,
-  supplement: [Fig.],
-) <fig:skewness-kurtosis>
-
-The mean, variance, skewness, and kurtosis are the first four standardised
-moments — together they sketch the shape of a distribution: location,
-scale, asymmetry, and tail weight. Higher moments and the moment
-generating function, which encodes *all* moments in a single function, are
-the subject of the next chapter.
-
+#part("Generating Tools and Limit Theorems") // 生成工具与极限定理
 = Generating Functions and Transform Methods // 生成函数与变换方法
 
 A single function — the moment generating function, the characteristic
@@ -2436,7 +2274,7 @@ The proof strategy has two directions:
   $X$.
 
 This theorem is the *master tool* for proving limit theorems. The
-Central Limit Theorem (Part IV) reduces to showing $phi_(S_n / sqrt(n))
+Central Limit Theorem (Chapter 9) reduces to showing $phi_(S_n / sqrt(n))
 (t) -> exp(-t^2 / 2)$ — a routine computation with independent-sum CFs.
 
 #note[
@@ -2522,14 +2360,210 @@ independent variables, and analysing compound distributions.
 The three transforms — MGF, CF, PGF — each encode the full distribution
 in a single analytic function. The CF, with its universal existence and
 the Lévy continuity theorem, is the master tool for the limit theorems
-of Part IV.
+of Chapter 9.
+
+= Characterization and Classification of Distributions // 分布的特征与分类
+
+The distributions of Chapters 3 and 5 — normal, Gamma, Beta, Poisson,
+binomial — look different on the surface, yet most of them share a hidden
+algebraic skeleton: the *exponential family*. Recognising a distribution as
+a member of this family immediately yields its sufficient statistic, its
+moment-generating structure, and its conjugate prior — three pillars of
+modern statistical inference. This chapter assembles that skeleton and then
+turns to the multivariate normal, the canonical distribution of multivariate
+statistics.
+
+== Exponential Family // 指数族
+
+#definition(name: "Exponential Family")[
+  A family of densities $f(x; theta)$ with parameter $theta in Theta
+  subset.eq RR^k$ belongs to the *exponential family* if it can be written
+  in the *canonical form*
+  $
+    f(x; theta) = h(x) exp(eta(theta) dot T(x) - A(theta)),
+  $
+  where:
+
+  - $h(x) >= 0$ is the *base measure*, independent of $theta$;
+  - $eta(theta) in RR^k$ is the *natural parameter*;
+  - $T(x) in RR^k$ is the *natural statistic* (a vector of the same
+    dimension as $eta$);
+  - $A(theta)$ is the *log-partition function* (or cumulant generating
+    function), ensuring normalisation.
+
+  The inner product $eta dot T = sum_(i=1)^k eta_i T_i$ couples parameter
+  to data.
+] <def:exponential-family>
+
+The key structural constraint is that the support ${{x : f(x; theta) > 0}}$ must not depend on $theta$; the parameter enters only
+through the exponential factor.
+
+#property(name: "Classical Distributions in the Exponential Family")[
+  Each of the following admits the canonical form; the table lists the
+  ingredients.
+
+  | Distribution | $eta$ | $T(x)$ | $A(theta)$ | $h(x)$ |
+  |---|---|---|---|---|
+  | $"Pois"(lambda)$ | $ln lambda$ | $x$ | $lambda$ | $1 / x!$ |
+  | $"Ber"(p)$ | $ln(p / (1-p))$ | $x$ | $-ln(1-p)$ | $1$ |
+  | $B(n, p)$ | $ln(p / (1-p))$ | $x$ | $-n ln(1-p)$ | $binom(n, x)$ |
+  | $"Exp"(lambda)$ | $-lambda$ | $x$ | $-ln lambda$ | $1$ |
+  | $"Ga"(alpha, lambda)$ | $(-lambda, alpha)$ | $(x, ln x)$ | $ln "Gamma"(alpha) - alpha ln lambda$ | $1 / x$ |
+  | $N(mu, sigma^2)$ ($sigma$ known) | $mu / sigma^2$ | $x$ | $mu^2 / (2 sigma^2) + ln sigma$ | $exp(-x^2 / (2 sigma^2)) / sqrt(2 pi)$ |
+  | $"Be"(a, b)$ | $(a-1, b-1)$ | $(ln x, ln(1-x))$ | $ln "B"(a, b)$ | $1$ |
+] <prop:exp-family-members>
+
+The verification is mechanical: rewrite each density by collecting the
+$theta$-dependent parts into $exp(eta dot T)$ and moving the
+$theta$-independent remainder into $h(x)$. For instance, the Poisson density
+$
+  f(k; lambda) = (lambda^k exp(-lambda)) / k! = (1 / k!) exp(k ln lambda - lambda)
+$
+has $eta = ln lambda$, $T(k) = k$, $A = lambda$, $h = 1 / k!$.
+
+#note[
+  (A notable exception.) The uniform distribution $U(0, theta)$ does *not*
+  belong to the exponential family, because its support $[0, theta]$
+  depends on $theta$. The support-independence requirement is not a
+  technicality: it is what makes the factorisation theorem and conjugate
+  Bayesian analysis work.
+]
+
+#definition(name: "Natural Parameter Space")[
+  The *natural parameter space* is the set of $eta$ for which the density is
+  normalisable:
+  $
+    H = {eta in RR^k : integral h(x) exp(eta dot T(x)) dif x < infinity}.
+  $
+  The family is *regular* if $H$ is an open set; *full* if $H$ is the
+  maximal set. The log-partition function is
+  $
+    A(theta) = ln integral h(x) exp(eta(theta) dot T(x)) dif x.
+  $
+] <def:natural-parameter-space>
+
+#property(name: "Derivative of the Log-Partition Function")[
+  Under regularity conditions,
+  $
+    (dif A) / (dif eta) = E[T(X)], quad (dif^2 A) / (dif eta^2) = "Var"(T(X)).
+  $
+  Thus the cumulant generating function $A$ encodes the mean and variance of
+  the natural statistic.
+] <prop:cgf-derivative>
+
+The proof requires interchange of differentiation and integration, which
+the regularity of the natural parameter space guarantees. The notation
+$E[T(X)]$ and $"Var"(T(X))$ — expectation and variance — is made precise in
+the Numerical Characteristics chapter; the point here is that the moments
+of the sufficient statistic are read off from the derivatives of $A$.
+
+#note[
+  (Sufficient statistic preview.) The canonical form $f(x; theta) = h(x)
+  exp(eta dot T(x) - A)$ depends on the data only through $T(x)$. This
+  means $T(X_1, dots, X_n) = sum_i T(X_i)$ is a *sufficient statistic* for
+  $theta$ — it captures all the information the sample contains about the
+  parameter. The formal proof uses the factorisation theorem, developed in
+  the Sufficient Statistics chapter. The exponential family is the natural
+  habitat of sufficiency.
+]
+
+== Multivariate Normal Distribution // 多元正态分布
+
+The univariate normal of #link(<def:normal-dist>)[Chapter 5] extends to
+vectors, and its geometry — ellipsoidal contours, linear closure,
+independence through zero covariance — makes it the workhorse of multivariate
+statistics.
+
+#definition(name: "Multivariate Normal Distribution")[
+  A random vector $bold(X) = (X_1, dots, X_n)$ has the *$n$-variate normal
+  distribution* with mean vector $bold(mu) in RR^n$ and covariance matrix
+  $Sigma$ (a symmetric positive-definite $n times n$ matrix), written
+  $bold(X) ~ N_(n)(bold(mu), Sigma)$, if its joint density is
+  $
+    f(bold(x)) = 1 / ((2 pi)^(n\/2) sqrt(abs(Sigma))) exp(-1\/2 (bold(x) - bold(mu))^T Sigma^(-1) (bold(x) - bold(mu))).
+  $
+  The quadratic form $(bold(x) - bold(mu))^T Sigma^(-1) (bold(x) - bold(mu))$
+  is the *Mahalanobis distance* from $bold(x)$ to $bold(mu)$.
+] <def:multivariate-normal>
+
+The covariance matrix $Sigma = (sigma_(i j))$ where $sigma_(i j) =
+"Cov"(X_i, X_j)$ encodes the pairwise covariances; its diagonal entries are
+the variances $sigma_(i i) = "Var"(X_i)$. These notions were formalised in
+the multivariate chapter (Chapter 6), and the multivariate normal can be
+understood geometrically through its density: level sets are
+ellipsoids centred at $bold(mu)$, with axes determined by the eigenvectors
+and eigenvalues of $Sigma$.
+
+For $n = 2$ and $Sigma = [[sigma_1^2, rho sigma_1 sigma_2], [rho sigma_1
+    sigma_2, sigma_2^2]]$, the contours are ellipses tilted by the correlation
+$rho$ — the picture of #link(<fig:joint-density>)[the joint density figure].
+
+#property(name: "Linear Transformations")[
+  If $bold(X) ~ N_(n)(bold(mu), Sigma)$ and $bold(Y) = bold(A) bold(X) +
+  bold(b)$ where $bold(A)$ is an $m times n$ matrix and $bold(b) in RR^m$,
+  then $bold(Y) ~ N_(m)(bold(A) bold(mu) + bold(b), bold(A) Sigma bold(A)^T)$.
+  In particular, any linear combination of jointly normal variables is
+  normal — the *closure under linear transformation*.
+] <prop:mv-normal-linear>
+
+The proof is a direct application of
+#link(<thm:jacobian-transform>)[the multivariate change of variables] with
+$bold(g)(bold(x)) = bold(A) bold(x) + bold(b)$, whose Jacobian is
+$abs(bold(A))$.
+
+#property(name: "Marginal Distributions")[
+  Any subvector of a multivariate normal is itself multivariate normal. If
+  $bold(X) = (bold(X)_1, bold(X)_2)$ is partitioned with
+  $bold(mu) = (bold(mu)_1, bold(mu)_2)$ and
+  $
+    Sigma = [[Sigma_(11), Sigma_(12)], [Sigma_(21), Sigma_(22)]],
+  $
+  then $bold(X)_1 ~ N(bold(mu)_1, Sigma_(11))$ and $bold(X)_2 ~
+  N(bold(mu)_2, Sigma_(22))$.
+] <prop:mv-normal-marginal>
+
+#property(name: "Independence and Zero Covariance")[
+  For a multivariate normal, two subvectors $bold(X)_1$ and $bold(X)_2$ are
+  *independent* if and only if $"Cov"(bold(X)_1, bold(X)_2) = bold(0)$, i.e.
+  $Sigma_(12) = bold(0)$.
+
+  This is a *special* property of the normal: for general distributions,
+  zero covariance (uncorrelatedness) is necessary but not sufficient for
+  independence (see the note in
+  #link(<prop:independence-criterion>)[the independence criterion]). For the
+  normal, the density factorises iff $Sigma_(12) = bold(0)$, because the
+  cross term in the exponent vanishes.
+] <prop:mv-normal-independence>
+
+#property(name: "Conditional Distributions")[
+  Given $bold(X)_2 = bold(x)_2$, the conditional distribution of
+  $bold(X)_1$ is normal:
+  $
+    bold(X)_1 | bold(X)_2 = bold(x)_2 ~ N(bold(mu)_(1|2), Sigma_(1|2)),
+  $
+  with
+  $
+    bold(mu)_(1|2) = bold(mu)_1 + Sigma_(12) Sigma_(22)^(-1) (bold(x)_2 - bold(mu)_2),
+    quad
+    Sigma_(1|2) = Sigma_(11) - Sigma_(12) Sigma_(22)^(-1) Sigma_(21).
+  $
+  The conditional mean is a linear function of $bold(x)_2$ — the *linear
+  regression* of $bold(X)_1$ on $bold(X)_2$; the conditional covariance is
+  independent of $bold(x)_2$ — the regression is *homoscedastic*.
+] <prop:mv-normal-conditional>
+
+These four properties — linear closure, normal marginals, the
+equivalence of independence with zero covariance, and normal conditionals —
+make the multivariate normal the structural backbone of classical
+multivariate analysis, to which the sampling distribution and regression
+chapters will return repeatedly.
 
 #part("Limit Theorems") // 极限定理
 = LLN and CLT // 大数定律与中心极限定理
 
 The limit theorems — Laws of Large Numbers and the Central Limit Theorem
-— are the culmination of the probability-theoretic framework built in
-Parts I–III. They answer two fundamental questions:
+— are the culmination of the probability-theoretic framework built over
+the preceding chapters. They answer two fundamental questions:
 
 - *Does the sample average stabilise?* The LLN says yes: $overline(X)_n -> mu$
   (almost surely, or in probability).
@@ -2684,7 +2718,7 @@ The proof requires deeper machinery than the weak law. The key tool is
 controlling $max_(k<=n) abs(S_k - k mu)$. Combined with
 #link(<lem:borel-cantelli-second>)[the second Borel–Cantelli lemma] proved
 above, one shows that the event ${abs(overline(X)_n - mu) > epsilon quad
-"i.o."}$ has probability $0$ for every $epsilon > 0$, yielding a.s.
+  "i.o."}$ has probability $0$ for every $epsilon > 0$, yielding a.s.
 convergence.
 
 This fulfils the promise of #link(<thm:borel-cantelli>)[the Borel–Cantelli
@@ -2809,15 +2843,15 @@ but the Taylor expansion must control each term individually.
   $
     sqrt(n) (1/overline(X)_n - lambda) arrow.r^d N(0, lambda^2).
   $
-  This previews Part VI: the maximum likelihood estimator of $lambda$
+  This previews Part IV: the maximum likelihood estimator of $lambda$
   is $1/overline(X)_n$, and the Delta method establishes its asymptotic
   normality.
 ] <ex:delta-method-application>
 
 The limit theorems of this chapter are the pillars of statistical
-inference. Part V applies them to sampling distributions; Part VI uses
-the CLT and Delta method to establish the asymptotic properties of
-estimators.
+inference. Part IV applies them to sampling distributions (Chapter 11);
+the estimation chapters use the CLT and Delta method to establish the
+asymptotic properties of estimators.
 
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
