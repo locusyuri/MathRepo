@@ -1400,6 +1400,20 @@ produces the first and most important discrete distribution family.
   $P(X = 0) = 1 - p = q$. It models a single Bernoulli trial.
 ] <def:bernoulli-dist>
 
+#property(name: "Mean and Variance of the Bernoulli")[
+  If $X ~ "Ber"(p)$, then
+  $
+    E[X] = p, quad "Var"(X) = p q = p (1 - p).
+  $
+] <prop:bernoulli-mean-variance>
+
+#proof[
+  Directly from the PMF: $E[X] = 0 dot q + 1 dot p = p$ and
+  $E[X^2] = 0^2 dot q + 1^2 dot p = p$, so
+  $"Var"(X) = E[X^2] - (E[X])^2 = p - p^2 = p (1 - p)$ by
+  #link(<def:variance>)[the computational form].
+]
+
 #definition(name: "Binomial Distribution")[
   The number $X$ of successes in $n$ independent Bernoulli trials with
   success probability $p$ has the *binomial distribution*
@@ -1409,6 +1423,22 @@ produces the first and most important discrete distribution family.
   written $X ~ B(n, p)$ — the formula already established in
   #link(<def:bernoulli-trials>)[the Bernoulli definition].
 ] <def:binomial-dist>
+
+#property(name: "Mean and Variance of the Binomial")[
+  If $X ~ B(n, p)$, then
+  $
+    E[X] = n p, quad "Var"(X) = n p q.
+  $
+] <prop:binomial-mean-variance>
+
+#proof[
+  Write $X = X_1 + dots + X_n$ where $X_i$ is the indicator of a success in
+  trial $i$; the $X_i$ are independent $"Ber"(p)$ variables. By
+  #link(<prop:expectation-linearity>)[linearity of expectation] — which
+  needs no independence — $E[X] = sum_(i=1)^n E[X_i] = n p$; and by
+  #link(<prop:variance-properties>)[additivity of variance for independent
+    variables], $"Var"(X) = sum_(i=1)^n "Var"(X_i) = n p q$.
+]
 
 #property(name: "Most Probable Value of the Binomial")[
   The most probable value (mode) of $X ~ B(n, p)$ is the greatest integer
@@ -1434,6 +1464,30 @@ produces the first and most important discrete distribution family.
     P(X = k) = (lambda^k e^(-lambda)) / k!, quad k = 0, 1, 2, dots
   $
 ] <def:poisson-dist>
+
+#property(name: "Mean and Variance of the Poisson")[
+  If $X ~ "Pois"(lambda)$, then
+  $
+    E[X] = lambda, quad "Var"(X) = lambda.
+  $
+] <prop:poisson-mean-variance>
+
+#proof[
+  Shifting the index in the series ($k! = k dot (k-1)!$):
+  $
+    E[X] = sum_(k=1)^infinity k (lambda^k e^(-lambda)) / k!
+    = lambda e^(-lambda) sum_(k=1)^infinity (lambda^(k-1)) / (k-1)!
+    = lambda e^(-lambda) e^(lambda) = lambda.
+  $
+  For the second factorial moment, $k (k-1) / k! = 1 / (k-2)!$, so
+  $
+    E[X (X - 1)] = e^(-lambda) sum_(k=2)^infinity (lambda^k) / (k-2)!
+    = lambda^2 e^(-lambda) sum_(j=0)^infinity (lambda^j) / j! = lambda^2,
+  $
+  so $E[X^2] = E[X (X-1)] + E[X] = lambda^2 + lambda$ and
+  $"Var"(X) = lambda^2 + lambda - lambda^2 = lambda$: mean and variance
+  coincide, the signature of the Poisson family.
+]
 
 The Poisson distribution arises as the limit of binomial distributions with
 vanishing success probability — the *law of rare events*.
@@ -1475,6 +1529,35 @@ vanishing success probability — the *law of rare events*.
     example].
 ] <def:hypergeometric-dist>
 
+#property(name: "Mean and Variance of the Hypergeometric")[
+  If $X ~ "Hyp"(N, K, n)$, then with $p = K / N$,
+  $
+    E[X] = n p, quad "Var"(X) = n p (1 - p) (N - n) / (N - 1).
+  $
+  The factor $(N - n) / (N - 1)$ — at most $1$ — is the *finite population
+  correction*: sampling without replacement is less variable than sampling
+  with replacement.
+] <prop:hypergeometric-mean-variance>
+
+#proof[
+  Let $I_i$ indicate that the $i$-th draw is red. By symmetry each draw
+  sees a red ball with probability $K / N$ (all orderings of the drawn
+  balls are equally likely), so $E[I_i] = K / N$ and
+  $E[X] = sum_(i=1)^n E[I_i] = n K / N$ by linearity. For $i != j$,
+  $P(I_i = 1, I_j = 1) = (K (K - 1)) / (N (N - 1))$, hence
+  $"Cov"(I_i, I_j) = (K (K - 1)) / (N (N - 1)) - (K / N)^2 = -(K (N - K)) / (N^2 (N - 1))$.
+  Since
+  $"Var"(X) = sum_i "Var"(I_i) + 2 sum_(i<j) "Cov"(I_i, I_j)$ with
+  $"Var"(I_i) = (K / N)(1 - K / N)$,
+  $
+    "Var"(X) = n (K / N)(1 - K / N) + n (n - 1) dot (-(K (N - K)) / (N^2 (N - 1)))
+    = n (K / N)(1 - K / N) (N - n) / (N - 1).
+  $
+  When $N -> infinity$ with $K / N -> p$ the correction factor tends to
+  $1$, recovering the binomial variance $n p (1 - p)$ — consistent with
+  the genealogy note below.
+]
+
 #definition(name: "Geometric Distribution")[
   In a sequence of independent Bernoulli trials, the number $X$ of trials
   up to and including the first success has the *geometric distribution*
@@ -1483,6 +1566,25 @@ vanishing success probability — the *law of rare events*.
   $
   written $X ~ "Geo"(p)$.
 ] <def:geometric-dist>
+
+#property(name: "Mean and Variance of the Geometric")[
+  If $X ~ "Geo"(p)$ (trials counted up to and including the first success),
+  then
+  $
+    E[X] = 1 / p, quad "Var"(X) = q / p^2.
+  $
+] <prop:geometric-mean-variance>
+
+#proof[
+  Using the geometric series derivatives $sum_(k=1)^infinity k q^(k-1) =
+  1 / (1 - q)^2$ and $sum_(k=2)^infinity k (k - 1) q^(k-2) = 2 / (1 - q)^3$:
+  $
+    E[X] = p sum_(k=1)^infinity k q^(k-1) = p / (1 - q)^2 = 1 / p,
+  $
+  and $E[X (X - 1)] = p q sum_(k=2)^infinity k (k-1) q^(k-2) = 2 q / p^2$,
+  so $E[X^2] = 2 q / p^2 + 1 / p = (1 + q) / p^2$ and
+  $"Var"(X) = (1 + q) / p^2 - 1 / p^2 = q / p^2$.
+]
 
 #property(name: "Memorylessness of the Geometric")[
   The geometric distribution is *memoryless*: for $m, n >= 1$,
@@ -1515,6 +1617,24 @@ vanishing success probability — the *law of rare events*.
   written $X ~ "NB"(r, p)$. For $r = 1$ this reduces to the geometric
   distribution.
 ] <def:negative-binomial-dist>
+
+#property(name: "Mean and Variance of the Negative Binomial")[
+  If $X ~ "NB"(r, p)$, then
+  $
+    E[X] = r / p, quad "Var"(X) = r q / p^2.
+  $
+] <prop:negative-binomial-mean-variance>
+
+#proof[
+  Decompose the waiting time into the $r$ intervals between consecutive
+  successes: $X = Y_1 + dots + Y_r$, where each $Y_j$ (the number of trials
+  from just after the $(j-1)$-th success through the $j$-th success) is an
+  independent $"Geo"(p)$ variable — the trials are independent and each has
+  success probability $p$. By linearity and independence:
+  $E[X] = sum_(j=1)^r E[Y_j] = r / p$ and
+  $"Var"(X) = sum_(j=1)^r "Var"(Y_j) = r q / p^2$. The case $r = 1$
+  recovers the geometric moments.
+]
 
 #note[
   (Distribution genealogy.) The six discrete distributions above are
@@ -1556,6 +1676,26 @@ concentration, error.
   and zero elsewhere. The CDF is $F(x) = (x - a) / (b - a)$ on $[a, b]$.
 ] <def:uniform-dist>
 
+#property(name: "Mean and Variance of the Uniform")[
+  If $X ~ U(a, b)$, then
+  $
+    E[X] = (a + b) / 2, quad "Var"(X) = (b - a)^2 / 12.
+  $
+] <prop:uniform-mean-variance>
+
+#proof[
+  The density is constant, so
+  $
+    E[X] = integral_a^b x / (b - a) dif x = (b^2 - a^2) / (2 (b - a)) = (a + b) / 2,
+  $
+  the midpoint of the interval — as symmetry suggests. Next,
+  $E[X^2] = (b^3 - a^3) / (3 (b - a)) = (a^2 + a b + b^2) / 3$, hence
+  $
+    "Var"(X) = (a^2 + a b + b^2) / 3 - ((a + b) / 2)^2 = (b - a)^2 / 12:
+  $
+  dispersion depends only on the length of the interval.
+]
+
 #definition(name: "Exponential Distribution")[
   A random variable $X$ has the *exponential distribution* with rate
   $lambda > 0$, written $X ~ "Exp"(lambda)$, if
@@ -1564,6 +1704,28 @@ concentration, error.
   $
   The CDF is $F(x) = 1 - e^(-lambda x)$ for $x >= 0$.
 ] <def:exponential-dist>
+
+#property(name: "Mean and Variance of the Exponential")[
+  If $X ~ "Exp"(lambda)$, then
+  $
+    E[X] = 1 / lambda, quad "Var"(X) = 1 / lambda^2.
+  $
+] <prop:exponential-mean-variance>
+
+#proof[
+  Integration by parts ($u = x$, $dif v = lambda e^(-lambda x) dif x$)
+  gives
+  $
+    E[X] = integral_0^infinity x lambda e^(-lambda x) dif x
+    = integral_0^infinity e^(-lambda x) dif x = 1 / lambda,
+  $
+  the boundary term $x e^(-lambda x)$ vanishing both at $x = 0$ and in the
+  limit $x -> infinity$. Integrating by parts twice,
+  $E[X^2] = 2 integral_0^infinity x e^(-lambda x) dif x = 2 / lambda^2$, so
+  $"Var"(X) = 2 / lambda^2 - (1 / lambda)^2 = 1 / lambda^2$.
+  The mean and the standard deviation are equal — a heavy right tail
+  relative to the normal.
+]
 
 #property(name: "Memorylessness of the Exponential")[
   The exponential distribution is *memoryless*: for $s, t >= 0$,
@@ -1602,6 +1764,30 @@ Every normal variable standardizes: if $X ~ N(mu, sigma^2)$ then
 $Z = (X - mu) / sigma ~ N(0, 1)$, and $F_(X)(x) = Phi((x - mu) / sigma)$.
 Tables of $Phi$ (in the Appendix) thus serve all parameter values.
 
+#property(name: "Mean and Variance of the Normal")[
+  If $X ~ N(mu, sigma^2)$, then — as the parameter names promise —
+  $
+    E[X] = mu, quad "Var"(X) = sigma^2.
+  $
+] <prop:normal-mean-variance>
+
+#proof[
+  By the linear transform example of
+  #link(<ex:linear-transform>)[Chapter 3], $Z = (X - mu) / sigma ~ N(0, 1)$
+  and $X = sigma Z + mu$; the properties of expectation and variance
+  (#link(<prop:expectation-linearity>)[linearity],
+  #link(<prop:variance-properties>)[scaling]) reduce the claim to the
+  standard case $E[Z] = 0$, $"Var"(Z) = 1$. Symmetry of $phi$ around $0$
+  gives $E[Z] = 0$. For the variance, integrate by parts with
+  $u = z$, $dif v = z phi(z) dif z = -dif (phi(z))$:
+  $
+    E[Z^2] = (1 / sqrt(2 pi)) integral_(-infinity)^infinity z^2 e^(-z^2 / 2) dif z
+    = (1 / sqrt(2 pi)) integral_(-infinity)^infinity e^(-z^2 / 2) dif z = 1,
+  $
+  since the boundary terms vanish and the last integral equals
+  $sqrt(2 pi)$ by normalization. Hence $"Var"(Z) = E[Z^2] - 0 = 1$.
+]
+
 #property(name: "Three-Sigma Rule")[
   For $X ~ N(mu, sigma^2)$,
   $
@@ -1633,6 +1819,29 @@ Tables of $Phi$ (in the Appendix) thus serve all parameter values.
   is the Gamma function.
 ] <def:gamma-dist>
 
+#property(name: "Mean and Variance of the Gamma")[
+  If $X ~ "Ga"(alpha, lambda)$, then
+  $
+    E[X^k] = ("Gamma"(alpha + k)) / (lambda^k "Gamma"(alpha)), quad
+    E[X] = alpha / lambda, quad "Var"(X) = alpha / lambda^2.
+  $
+] <prop:gamma-mean-variance>
+
+#proof[
+  Substituting $t = lambda x$ ($x = t / lambda$, $dif x = (dif t) / lambda$)
+  turns the $k$-th moment into a Gamma function:
+  $
+    E[X^k] = (lambda^alpha) / ("Gamma"(alpha)) integral_0^infinity x^(alpha + k - 1) e^(-lambda x) dif x
+    = 1 / (lambda^k "Gamma"(alpha)) integral_0^infinity t^(alpha + k - 1) e^(-t) dif t
+    = ("Gamma"(alpha + k)) / (lambda^k "Gamma"(alpha)),
+  $
+  using $"Gamma"(alpha + 1) = alpha "Gamma"(alpha)$. Taking $k = 1$ gives
+  $E[X] = alpha / lambda$; taking $k = 2$ gives
+  $E[X^2] = (alpha (alpha + 1)) / lambda^2$, hence
+  $"Var"(X) = alpha / lambda^2$. In particular the exponential ($alpha = 1$)
+  moments are recovered.
+]
+
 #definition(name: "Beta Distribution")[
   A random variable $X$ has the *Beta distribution* with parameters
   $a > 0$, $b > 0$, written $X ~ "Be"(a, b)$, if
@@ -1641,6 +1850,31 @@ Tables of $Phi$ (in the Appendix) thus serve all parameter values.
   $
   where $"B"(a, b) = ("Gamma"(a) "Gamma"(b)) / "Gamma"(a + b)$.
 ] <def:beta-dist>
+
+#property(name: "Mean and Variance of the Beta")[
+  If $X ~ "Be"(a, b)$, then
+  $
+    E[X] = a / (a + b), quad "Var"(X) = (a b) / ((a + b)^2 (a + b + 1)).
+  $
+] <prop:beta-mean-variance>
+
+#proof[
+  The normalising constant $B(a, b)$ is the only obstruction to
+  integrating $x f(x)$; recognising an unnormalised Beta density of
+  parameters $(a+1, b)$ instead:
+  $
+    E[X] = integral_0^1 x (x^(a - 1) (1 - x)^(b - 1)) / B(a, b) dif x
+    = B(a + 1, b) / B(a, b)
+    = ("Gamma"(a + 1) "Gamma"(b)) / ("Gamma"(a + b + 1)) dot ("Gamma"(a + b)) / ("Gamma"(a) "Gamma"(b))
+    = a / (a + b).
+  $
+  Similarly $E[X^2] = B(a + 2, b) / B(a, b) = (a (a + 1)) / ((a + b)(a + b + 1))$,
+  so
+  $
+    "Var"(X) = (a (a + 1)) / ((a + b)(a + b + 1)) - (a / (a + b))^2
+    = (a b) / ((a + b)^2 (a + b + 1)).
+  $
+]
 
 #definition(name: "Kernel of a Distribution")[
   The *kernel* of a density $f(x; theta)$ is the part of $f$ that depends on
@@ -1687,7 +1921,58 @@ and conjugate Bayesian analysis.
 
 == Summary of Common Distributions // 常用分布汇总
 
-PLACEHOLDER_CH53
+The standard families, with their laws and the numerical characteristics
+derived in this chapter:
+
+#figure(
+  table(
+    columns: 5,
+    align: (left, center, center, center, center),
+    table.header([Distribution], [PMF / PDF], [Support], [$E[X]$], [$"Var"(X)$]),
+    table.hline(),
+    [$"Ber"(p)$], [$p^x q^(1-x)$], [${0, 1}$], [$p$], [$p q$],
+    [$B(n, p)$], [$binom(n, k) p^k q^(n-k)$], [${0, dots, n}$], [$n p$], [$n p q$],
+    [$"Pois"(lambda)$], [$(lambda^k e^(-lambda)) / k!$], [$ZZ_{>= 0}$], [$lambda$], [$lambda$],
+    [$"Hyp"(N, K, n)$],
+    [$(binom(K, k) binom(N - K, n - k)) / binom(N, n)$],
+    [${max(0, n+K-N), dots, min(K, n)}$],
+    [$n K \/ N$],
+    [$n p (1-p) (N-n) / (N-1)$],
+    [$"Geo"(p)$], [$q^(k-1) p$], [${1, 2, dots}$], [$1 / p$], [$q / p^2$],
+    [$"NB"(r, p)$], [$binom(k - 1, r - 1) p^r q^(k - r)$], [${r, r+1, dots}$], [$r / p$], [$r q / p^2$],
+    [$U(a, b)$], [$1 / (b - a)$], [$[a, b]$], [$(a + b) / 2$], [$(b - a)^2 / 12$],
+    [$"Exp"(lambda)$], [$lambda e^(-lambda x)$], [${x >= 0}$], [$1 / lambda$], [$1 / lambda^2$],
+    [$N(mu, sigma^2)$], [$(1 / (sigma sqrt(2 pi))) exp(-(x - mu)^2 / (2 sigma^2))$], [RR], [$mu$], [$sigma^2$],
+    [$"Ga"(alpha, lambda)$],
+    [$(lambda^alpha / "Gamma"(alpha)) x^(alpha - 1) e^(-lambda x)$],
+    [${x >= 0}$],
+    [$alpha / lambda$],
+    [$alpha / lambda^2$],
+    [$"Be"(a, b)$],
+    [$(1 / B(a, b)) x^(a - 1) (1 - x)^(b - 1)$],
+    [$[0, 1]$],
+    [$a / (a + b)$],
+    [$(a b) / ((a + b)^2 (a + b + 1))$],
+  ),
+  caption: [The common distributions with their laws, supports, means, and
+    variances. In the hypergeometric row, $p = K / N$.],
+  placement: auto,
+  supplement: [Tab.],
+) <tab:common-distributions>
+
+#note[
+  (Reading the table.) The table organises the families into the counting
+  models (Bernoulli, binomial, hypergeometric, geometric, negative
+  binomial, Poisson) and the measuring models (uniform, exponential,
+  normal, Gamma, Beta). Two structural facts stand out: the Poisson is the
+  unique family with $E[X] = "Var"(X)$, and the exponential is the unique
+  family whose mean equals its standard deviation. The table also encodes
+  the degeneracies: $"B"(1, p) = "Ber"(p)$, $"NB"(1, p) = "Geo"(p)$,
+  $"Exp"(lambda) = "Ga"(1, lambda)$, and $U(0, 1) = "Be"(1, 1)$ — the same
+  relationships noted in the genealogy discussions of
+  #link(<fig:common-discrete-distributions>)[the discrete] and
+  #link(<fig:common-continuous-densities>)[the continuous] families.
+]
 
 
 = Multivariate Random Variables and Distributions // 多维随机变量及其分布
