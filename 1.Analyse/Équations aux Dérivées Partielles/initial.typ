@@ -318,7 +318,7 @@ The third condition (stability) is particularly important: small changes in the 
   Consider the Cauchy problem for Laplace's equation in the upper half-plane:
   $
     cases(
-      u_(x x) + u_(y y) = 0 y > 0,
+      u_(x x) + u_(y y) = 0 "if" y > 0,
       u(x, 0) = f(x),
       u_y(x, 0) = g(x) .,
     )
@@ -814,8 +814,8 @@ Given the quasilinear equation (#link(<eq:quasilinear-pde>)[1]), the _Cauchy pro
   Let $Gamma$ be a curve in $bb(R)^2$ parametrized by $(x_0(s), y_0(s))$ for $s in I subset bb(R)$, and let $u_0: I -> bb(R)$ be a given function. The _Cauchy problem_ for (#link(<eq:quasilinear-pde>)[1]) is:
   $
     cases(
-      a u_x + b u_y = c(x, y, u), "along characteristics",
-      u(x_0(s), y_0(s)) = u_0(s), "initial data on" Gamma,
+      a u_x + b u_y = c(x, y, u) "along characteristics",
+      u(x_0(s), y_0(s)) = u_0(s) "initial data on" Gamma,
     )
   $
   The curve $Gamma$ is called the _initial curve_ (or _base curve_), and $u_0$ is the _initial data_.
@@ -1092,7 +1092,7 @@ When characteristics cross, the classical solution breaks down and we must admit
 #example(name: "Burgers' Equation with Shock")[
   Consider Burgers' equation $u_t + u u_x = 0$ (flux $f(u) = u^2 / 2$) with step initial data:
   $
-    u(x, 0) = cases(u_L, x < 0, u_R, x > 0.)
+    u(x, 0) = cases(u_L "if" x < 0, u_R "if" x > 0.)
   $
   where $u_L > u_R$. The characteristics from the left carry value $u_L$ with speed $u_L$, and those from the right carry $u_R$ with speed $u_R$. Since $u_L > u_R$, they intersect immediately, forming a shock at $x = 0$.
 
@@ -1107,9 +1107,9 @@ When characteristics cross, the classical solution breaks down and we must admit
   When $u_L < u_R$ (the opposite case), characteristics diverge rather than converge, and no shock forms. Instead, a _rarefaction wave_ (continuous self-similar solution) fills the gap:
   $
     u(x, t) = cases(
-      u_L, x < u_L t,
-      x / t, u_L t <= x <= u_R t,
-      u_R, x > u_R t.
+      u_L "if" x < u_L t,
+      x / t "if" u_L t <= x <= u_R t,
+      u_R "if" x > u_R t.
     )
   $
 ]
@@ -1179,8 +1179,8 @@ The space $cal(D)(Omega)$ is non-trivial: it contains functions that are smooth 
     Define the auxiliary function:
     $
       f(t) = cases(
-        e^(-1/t), t > 0,
-        0, t <= 0.
+        e^(-1/t) "if" t > 0,
+        0 "if" t <= 0.
       )
     $
     One verifies by induction that $f in C^oo(bb(R))$ with $f^(k)(0) = 0$ for all $k >= 0$. Now set:
@@ -1334,7 +1334,7 @@ The following two examples illustrate the power of weak derivatives: functions t
 #example(name: "Weak Derivative of $abs(x)$")[
   Let $u(x) = abs(x)$ on $bb(R)$. This function is not differentiable at $x = 0$ in the classical sense. We claim its weak derivative is the sign function:
   $
-    u'(x) = "sign"(x) = cases(1, x > 0, -1, x < 0, 0, x = 0.).
+    u'(x) = "sign"(x) = cases(1 "if" x > 0, -1 "if" x < 0, 0 "if" x = 0.).
   $
 
   #proof[
@@ -1367,7 +1367,7 @@ The following two examples illustrate the power of weak derivatives: functions t
 #example(name: "Weak Derivative of the Heaviside Function")[
   Let $H(x)$ be the Heaviside step function:
   $
-    H(x) = cases(1, x > 0, 0, x < 0.).
+    H(x) = cases(1 "if" x > 0, 0 "if" x < 0.).
   $
   The weak derivative of $H$ is the Dirac delta: $H' = delta$ in $cal(D)'(bb(R))$.
 
@@ -1425,7 +1425,7 @@ For distributions, we extend convolution by duality. If $T in cal(D)'(bb(R)^n)$ 
 #definition(name: "Standard Mollifier")[
   The *standard mollifier* is the function $rho in cal(D)(bb(R)^n)$ defined by:
   $
-    rho(x) = cases(c exp(-1 / (1 - abs(x)^2)), abs(x) < 1, 0, abs(x) >= 1.,)
+    rho(x) = cases(c exp(-1 / (1 - abs(x)^2)) "if" abs(x) < 1, 0 "if" abs(x) >= 1.,)
   $
   where $c > 0$ is chosen so that $integral_(bb(R)^n) rho(x) dif x = 1$. For $epsilon > 0$, define the rescaled mollifier:
   $
@@ -1549,7 +1549,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 #example(name: "Fundamental Solution of the Heat Operator")[
   For the heat operator $partial_t - Delta_x$ on $bb(R)^(1+n)$ with coordinates $(t, x) in bb(R) times bb(R)^n$, the fundamental solution is the *heat kernel*:
   $
-    E(t, x) = cases(1 / (4 pi t)^(n/2) exp(-abs(x)^2 / (4 t)), t > 0, 0, t < 0.)
+    E(t, x) = cases(1 / (4 pi t)^(n/2) exp(-abs(x)^2 / (4 t)) "if" t > 0, 0 "if" t < 0.)
   $
   Then $(partial_t - Delta_x) E = delta$ in $cal(D)'(bb(R)^(1+n))$, where $delta = delta_(0, 0)$ is the delta at the origin of spacetime.
 
@@ -1581,7 +1581,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 
   For $n = 1$:
   $
-    E(t, x) = 1/2 H(t) H(t^2 - x^2) = cases(1/2, t > abs(x), 0, t < abs(x).),
+    E(t, x) = 1/2 H(t) H(t^2 - x^2) = cases(1/2 "if" t > abs(x), 0 "if" t < abs(x).),
   $
   where $H$ is the Heaviside function (#link(<ex:weak-heaviside>)[Example 6.2]). The support of $E$ is the forward light cone ${(t, x) : t >= abs(x)}$.
 
@@ -2089,8 +2089,8 @@ The fundamental solution of the Laplacian was constructed in Chapter 7 (#link(<e
   Let $Omega subset bb(R)^n$ be a bounded domain with smooth boundary and let $Gamma$ be the fundamental solution of the Laplacian (Chapter 7, #link(<ex:fund-laplace>)[§7.2]):
   $
     Gamma (x) = cases(
-      -1 / ((n - 2) omega_n) abs(x)^(2 - n), n >= 3,
-      1 / (2 pi) log abs(x), n = 2,
+      -1 / ((n - 2) omega_n) abs(x)^(2 - n) "if" n >= 3,
+      1 / (2 pi) log abs(x) "if" n = 2,
     )
   $
   For each fixed $y in Omega$, the *Green function* of $Omega$ is
@@ -2379,7 +2379,7 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
 #definition(name: "The Heat Kernel")[
   The *heat kernel* on $bb(R)^n$ is
   $
-    E (t, x) = cases(1 / (4 pi t)^(n/2) exp(-abs(x)^2 / (4 t)), t > 0, 0, t <= 0.)
+    E (t, x) = cases(1 / (4 pi t)^(n/2) exp(-abs(x)^2 / (4 t)) "if" t > 0, 0 "if" t <= 0.)
   $
   It is the fundamental solution of the heat operator (Chapter 7, #link(<ex:fund-heat>)[§7.2]): $(partial_t - Delta_x) E = delta$ in $cal(D)'(bb(R)^(1+n))$.
 ] <def:heat-kernel>
@@ -3152,7 +3152,7 @@ The scalar one-dimensional conservation law was treated completely in Chapter 5 
 #definition(name: "The Riemann Problem")[
   The *Riemann problem* is the conservation law system with piecewise constant initial data
   $
-    u (0, x) = cases(u_L, x < 0, u_R, x > 0,)
+    u (0, x) = cases(u_L "if" x < 0, u_R "if" x > 0,)
   $
   for two constant states $u_L, u_R in bb(R)^m$. Its self-similar solution $u (t, x) = v (x/t)$ is the building block of the general theory (front tracking, Godunov-type schemes, Chapter 19).
 ] <def:riemann-problem>
