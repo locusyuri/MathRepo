@@ -2403,9 +2403,9 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
 == Cauchy Problem // Cauchy 问题
 
 #definition(name: "The Cauchy Problem for the Heat Equation")[
-  The *Cauchy problem* is to find $u: [0, oo) times bb(R)^n -> bb(R)$ such that
+  The *Cauchy problem* is to find $u: bb(R)^n times [0, oo) -> bb(R)$ such that
   $
-    partial_t u = Delta u quad "in" quad (0, oo) times bb(R)^n, quad u (0, x) = g (x) quad "on" quad {t = 0},
+    partial_t u = Delta u quad "in" quad bb(R)^n times (0, oo), quad u (x, 0) = g (x) quad "on" quad {t = 0},
   $
   where $g: bb(R)^n -> bb(R)$ is the prescribed initial datum.
 ] <def:cauchy-heat>
@@ -2413,33 +2413,33 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
 #theorem(name: "Solution of the Cauchy Problem")[
   Let $g in C (bb(R)^n) inter L^oo (bb(R)^n)$. Then
   $
-    u (t, x) = integral_(bb(R)^n) E (t, x - y) g (y) dif y, quad t > 0, quad u (0, x) = g (x),
+    u (x, t) = integral_(bb(R)^n) E (t, x - y) g (y) dif y, quad t > 0, quad u (x, 0) = g (x),
   $
-  defines $u in C^oo ((0, oo) times bb(R)^n) inter C ([0, oo) times bb(R)^n)$, which satisfies the heat equation for $t > 0$ and $u (0, dot) = g$.
+  defines $u in C^oo (bb(R)^n times (0, oo)) inter C (bb(R)^n times [0, oo))$, which satisfies the heat equation for $t > 0$ and $u (dot, 0) = g$.
 ] <thm:cauchy-heat>
 
 #proof[
-  For each fixed $t > 0$, $E (t, dot) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of the heat kernel properties gives $(partial_t - Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E (t, dot)}_(t > 0)$ is an approximate identity; the standard mollifier argument (Chapter 7, #link(<def:mollifier>)[§7.1]) gives $u (t, dot) = E (t, dot) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
+  For each fixed $t > 0$, $E (t, dot) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of the heat kernel properties gives $(partial_t - Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E (t, dot)}_(t > 0)$ is an approximate identity; the standard mollifier argument (Chapter 7, #link(<def:mollifier>)[§7.1]) gives $u (dot, t) = E (t, dot) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
 ]
 
 #note[
-  *Smoothing effect.* No regularity of $g$ beyond continuity is needed: $u (t, dot)$ is $C^oo$ for every $t > 0$, and by the derivative estimates of Chapter 8 the derivatives decay as $t^(-abs(alpha)/2)$ (quantified in §12.4). This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation (Part VI), which propagates the regularity of the data without improvement.
+  *Smoothing effect.* No regularity of $g$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$, and by the derivative estimates of Chapter 8 the derivatives decay as $t^(-abs(alpha)/2)$ (quantified in §12.4). This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation (Part VI), which propagates the regularity of the data without improvement.
 ]
 
 == Maximum Principle // 最大值原理
 
 #theorem(name: "Weak Maximum Principle for the Heat Equation")[
-  Let $Omega subset bb(R)^n$ be bounded and $T > 0$, and set $Omega_T = (0, T] times Omega$. If $u in C^2 (Omega_T) inter C (overline(Omega_T))$ satisfies $partial_t u - Delta u <= 0$ in $Omega_T$, then
+  Let $Omega subset bb(R)^n$ be bounded and $T > 0$, and set $Omega_T = Omega times (0, T]$. If $u in C^2 (Omega_T) inter C (overline(Omega_T))$ satisfies $partial_t u - Delta u <= 0$ in $Omega_T$, then
   $
     max_(overline(Omega_T)) u = max_(Gamma_T) u,
   $
-  where $Gamma_T = ({0} times overline(Omega)) union ([0, T] times partial Omega)$ is the *parabolic boundary* (the bottom and the lateral sides; the top $t = T$ is not part of it). For $partial_t u - Delta u >= 0$ the same holds with minima.
+  where $Gamma_T = (overline(Omega) times {0}) union (partial Omega times [0, T])$ is the *parabolic boundary* (the bottom and the lateral sides; the top $t = T$ is not part of it). For $partial_t u - Delta u >= 0$ the same holds with minima.
 ] <thm:parabolic-weak-maximum>
 
 #proof[
-  *Step 1: Strict inequality.* Suppose $partial_t u - Delta u < 0$. If $u$ attained its maximum at an interior point $(t_0, x_0)$ with $0 < t_0 < T$ and $x_0 in Omega$, then $partial_t u (t_0, x_0) = 0$ (first-order condition) and $Delta u (t_0, x_0) <= 0$ (second-derivative test), contradicting the strict inequality. If the maximum occurred on the top $t = T$, say at $(T, x_0)$ with $x_0 in Omega$, then for small $h > 0$, $u (T, x_0) >= u (T - h, x_0)$ gives $(partial u)/(partial t) (T, x_0) >= 0$, while $Delta u (T, x_0) <= 0$, again contradicting $partial_t u - Delta u < 0$. Hence the maximum lies on $Gamma_T$.
+  *Step 1: Strict inequality.* Suppose $partial_t u - Delta u < 0$. If $u$ attained its maximum at an interior point $(x_0, t_0)$ with $0 < t_0 < T$ and $x_0 in Omega$, then $partial_t u (x_0, t_0) = 0$ (first-order condition) and $Delta u (x_0, t_0) <= 0$ (second-derivative test), contradicting the strict inequality. If the maximum occurred on the top $t = T$, say at $(x_0, T)$ with $x_0 in Omega$, then for small $h > 0$, $u (x_0, T) >= u (x_0, T - h)$ gives $(partial u)/(partial t) (x_0, T) >= 0$, while $Delta u (x_0, T) <= 0$, again contradicting $partial_t u - Delta u < 0$. Hence the maximum lies on $Gamma_T$.
 
-  *Step 2: General case.* For $epsilon > 0$ consider $u_epsilon (t, x) = u (t, x) - epsilon t$, for which $partial_t u_epsilon - Delta u_epsilon = (partial_t u - Delta u) - epsilon < 0$. By Step 1, $max_(overline(Omega_T)) u_epsilon = max_(Gamma_T) u_epsilon$. Letting $epsilon -> 0$ and using $u_epsilon <= u <= u_epsilon + epsilon T$ gives $max u = max_(Gamma_T) u$.
+  *Step 2: General case.* For $epsilon > 0$ consider $u_epsilon (x, t) = u (x, t) - epsilon t$, for which $partial_t u_epsilon - Delta u_epsilon = (partial_t u - Delta u) - epsilon < 0$. By Step 1, $max_(overline(Omega_T)) u_epsilon = max_(Gamma_T) u_epsilon$. Letting $epsilon -> 0$ and using $u_epsilon <= u <= u_epsilon + epsilon T$ gives $max u = max_(Gamma_T) u$.
 ]
 
 #theorem(name: "Strong Maximum Principle for the Heat Equation")[
@@ -2447,29 +2447,29 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
 ] <thm:parabolic-strong-maximum>
 
 #proof[
-  (Sketch.) The proof propagates the maximum backward in time using the positivity of the heat kernel. If $u (t_0, x_0) = M$ is the maximum, then for $0 < s < t_0$ the mean value formula for the heat equation gives
+  (Sketch.) The proof propagates the maximum backward in time using the positivity of the heat kernel. If $u (x_0, t_0) = M$ is the maximum, then for $0 < s < t_0$ the mean value formula for the heat equation gives
   $
-    u (t_0, x_0) = integral_(bb(R)^n) E (s, y) u (t_0 - s, x_0 - y) dif y
+    u (x_0, t_0) = integral_(bb(R)^n) E (s, y) u (x_0 - y, t_0 - s) dif y
   $
-  (on the whole space; for bounded domains, boundary terms enter with the correct sign for sub-solutions). Since $E (s, y) > 0$, $integral E dif y = 1$, and $u <= M$, the average can equal $M$ only if $u (t_0 - s, dot) = M$ a.e., hence everywhere by continuity. Iterating backward in $t$ and spreading in space by connectedness yields $u = M$ on $overline(Omega) times [0, t_0]$.
+  (on the whole space; for bounded domains, boundary terms enter with the correct sign for sub-solutions). Since $E (s, y) > 0$, $integral E dif y = 1$, and $u <= M$, the average can equal $M$ only if $u (dot, t_0 - s) = M$ a.e., hence everywhere by continuity. Iterating backward in $t$ and spreading in space by connectedness yields $u = M$ on $overline(Omega) times [0, t_0]$.
 ]
 
 #corollary(name: "Uniqueness of Bounded Solutions of the Cauchy Problem")[
-  Let $u, v in C^2 ((0, oo) times bb(R)^n) inter C ([0, oo) times bb(R)^n)$ be bounded solutions of the Cauchy problem with the same initial datum. Then $u = v$; in particular, the solution of Theorem 12.2 is the unique bounded solution.
+  Let $u, v in C^2 (bb(R)^n times (0, oo)) inter C (bb(R)^n times [0, oo))$ be bounded solutions of the Cauchy problem with the same initial datum. Then $u = v$; in particular, the solution of Theorem 12.2 is the unique bounded solution.
 ] <cor:cauchy-heat-uniqueness>
 
 #proof[
-  The difference $w = u - v$ is bounded, say $abs(w) <= 2 M$, and solves the heat equation with $w (0, dot) = 0$. Fix $(T, y)$ and $epsilon > 0$. By continuity at $t = 0$, there is $delta > 0$ with $abs(w (t, x)) < epsilon$ for $0 <= t < delta$ on every bounded set; fix $R$ so large that on the cylinder $Q = (delta, T) times {abs(x - y) < R}$ the Gaussian barrier
+  The difference $w = u - v$ is bounded, say $abs(w) <= 2 M$, and solves the heat equation with $w (dot, 0) = 0$. Fix $(y, T)$ and $epsilon > 0$. By continuity at $t = 0$, there is $delta > 0$ with $abs(w (x, t)) < epsilon$ for $0 <= t < delta$ on every bounded set; fix $R$ so large that on the cylinder $Q = {abs(x - y) < R} times (delta, T)$ the Gaussian barrier
   $
-    v (t, x) = 2 M (1 - exp(-(abs(x - y)^2)/(4 (T - t)))) + epsilon
+    v (x, t) = 2 M (1 - exp(-(abs(x - y)^2)/(4 (T - t)))) + epsilon
   $
-  dominates $abs(w)$ on the parabolic boundary of $Q$ (at $t = delta$ this holds for $R$ large since $v (delta, x) -> 2 M + epsilon$ as $R -> oo$; on the lateral side $v -> 2 M + epsilon$ as $t -> T^-$). A direct computation gives $partial_t v - Delta v <= 0$, so by the weak maximum principle $abs(w) <= v$ in $Q$; at the point $(T, y)$, $v = epsilon$, hence $abs(w (T, y)) <= epsilon$. Letting $epsilon -> 0$ gives $w (T, y) = 0$, and $(T, y)$ is arbitrary.
+  dominates $abs(w)$ on the parabolic boundary of $Q$ (at $t = delta$ this holds for $R$ large since $v (x, delta) -> 2 M + epsilon$ as $R -> oo$; on the lateral side $v -> 2 M + epsilon$ as $t -> T^-$). A direct computation gives $partial_t v - Delta v <= 0$, so by the weak maximum principle $abs(w) <= v$ in $Q$; at the point $(y, T)$, $v = epsilon$, hence $abs(w (y, T)) <= epsilon$. Letting $epsilon -> 0$ gives $w (y, T) = 0$, and $(y, T)$ is arbitrary.
 ]
 
 == Energy Estimates and Smoothing Effect // 能量估计与平滑效应
 
 #proposition(name: "Energy Dissipation")[
-  Let $u$ be a smooth solution of the heat equation on $(0, oo) times Omega$ with either $u = 0$ on $partial Omega$ (Dirichlet) or $(partial u)/(partial nu) = 0$ on $partial Omega$ (Neumann). Then
+  Let $u$ be a smooth solution of the heat equation on $Omega times (0, oo)$ with either $u = 0$ on $partial Omega$ (Dirichlet) or $(partial u)/(partial nu) = 0$ on $partial Omega$ (Neumann). Then
   $
     1/2 (dif)/(dif t) integral_Omega abs(u)^2 dif x = -integral_Omega abs(nabla u)^2 dif x.
   $
@@ -2487,11 +2487,11 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
 #theorem(name: "Smoothing Estimates")[
   Let $g in L^2 (bb(R)^n)$ and $u = E * g$ the solution of the Cauchy problem. Then for every multi-index $alpha$ and every $t > 0$,
   $
-    ||partial^alpha u (t, dot)||_(L^2) <= C_(n, alpha) t^(-abs(alpha)/2) ||g||_(L^2),
+    ||partial^alpha u (dot, t)||_(L^2) <= C_(n, alpha) t^(-abs(alpha)/2) ||g||_(L^2),
   $
   and for $g in L^1 (bb(R)^n) inter L^2 (bb(R)^n)$,
   $
-    ||u (t, dot)||_oo <= (4 pi t)^(-n/2) ||g||_(L^1).
+    ||u (dot, t)||_oo <= (4 pi t)^(-n/2) ||g||_(L^1).
   $
   These are quantitative forms of the smoothing effect: each derivative costs the factor $t^(-abs(alpha)/2)$, which diverges only as $t -> 0^+$.
 ] <thm:smoothing-estimates>
@@ -2499,7 +2499,7 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
 #proof[
   By the scaling of the Gaussian, $partial^alpha E (t, x) = t^(-(n + abs(alpha))/2) (partial^alpha E) (1, x / sqrt(t))$, so $||partial^alpha E (t, dot)||_(L^1) = C t^(-abs(alpha)/2)$; Young's inequality for convolutions gives
   $
-    ||partial^alpha u (t, dot)||_(L^2) <= ||partial^alpha E (t, dot)||_(L^1) ||g||_(L^2) <= C t^(-abs(alpha)/2) ||g||_(L^2).
+    ||partial^alpha u (dot, t)||_(L^2) <= ||partial^alpha E (t, dot)||_(L^1) ||g||_(L^2) <= C t^(-abs(alpha)/2) ||g||_(L^2).
   $
   The second estimate is the trivial Young bound $||E (t, dot) * g||_oo <= ||E (t, dot)||_oo ||g||_(L^1) = (4 pi t)^(-n/2) ||g||_(L^1)$.
 ]
@@ -2517,9 +2517,9 @@ The Cauchy problem of Chapter 12 treats the whole space. On a bounded domain one
 #definition(name: "The Parabolic Initial-Boundary Value Problem")[
   Let $Omega subset bb(R)^n$ be a bounded domain and $T > 0$. The *Dirichlet initial-boundary value problem* is to find $u$ with
   $
-    partial_t u - Delta u = f quad "in" quad (0, T) times Omega, quad u = 0 quad "on" quad (0, T) times partial Omega, quad u (0, dot) = u_0 quad "in" quad Omega.
+    partial_t u - Delta u = f quad "in" quad Omega times (0, T), quad u = 0 quad "on" quad partial Omega times (0, T), quad u (dot, 0) = u_0 quad "in" quad Omega.
   $
-  The Neumann version replaces the boundary condition by $(partial u)/(partial nu) = 0$ on $(0, T) times partial Omega$.
+  The Neumann version replaces the boundary condition by $(partial u)/(partial nu) = 0$ on $partial Omega times (0, T)$.
 ] <def:parabolic-ibvp>
 
 #definition(name: "Weak Formulation and Bochner Spaces")[
@@ -2572,7 +2572,7 @@ The Cauchy problem of Chapter 12 treats the whole space. On a bounded domain one
 ] <def:semigroup>
 
 #theorem(name: "The Heat Semigroup and Duhamel's Formula")[
-  On $X = L^2 (Omega)$, the solution operator $S (t): u_0 |-> u (t, dot)$ of the homogeneous Dirichlet problem ($f = 0$) is a $C_0$-semigroup of self-adjoint contractions whose generator is the Dirichlet Laplacian $A = Delta$ with $"dom"(A) = H^2 (Omega) inter H_0^1 (Omega)$. The solution of the inhomogeneous problem is given by *Duhamel's formula*
+  On $X = L^2 (Omega)$, the solution operator $S (t): u_0 |-> u (dot, t)$ of the homogeneous Dirichlet problem ($f = 0$) is a $C_0$-semigroup of self-adjoint contractions whose generator is the Dirichlet Laplacian $A = Delta$ with $"dom"(A) = H^2 (Omega) inter H_0^1 (Omega)$. The solution of the inhomogeneous problem is given by *Duhamel's formula*
   $
     u (t) = S (t) u_0 + integral_0^t S (t - s) f (s) dif s.
   $
@@ -2601,13 +2601,13 @@ The Cauchy problem of Chapter 12 treats the whole space. On a bounded domain one
 ]
 
 #example(name: "Monotone Iteration for Semilinear Problems")[
-  Consider the semilinear problem $partial_t u - Delta u = f (u)$ in $Omega_T$ with $u = 0$ on the lateral boundary and $u (0, dot) = u_0$, where $f$ is smooth and bounded. A pair $(underline(u), overline(u))$ of *sub- and super-solutions* satisfies
+  Consider the semilinear problem $partial_t u - Delta u = f (u)$ in $Omega_T$ with $u = 0$ on the lateral boundary and $u (dot, 0) = u_0$, where $f$ is smooth and bounded. A pair $(underline(u), overline(u))$ of *sub- and super-solutions* satisfies
   $
     partial_t underline(u) - Delta underline(u) <= f (underline(u)), quad partial_t overline(u) - Delta overline(u) >= f (overline(u)),
   $
-  with ordered data $underline(u) <= overline(u)$ on $Gamma_T$ and $underline(u) (0, dot) <= u_0 <= overline(u) (0, dot)$. The iteration
+  with ordered data $underline(u) <= overline(u)$ on $Gamma_T$ and $underline(u) (dot, 0) <= u_0 <= overline(u) (dot, 0)$. The iteration
   $
-    partial_t u_(n+1) - Delta u_(n+1) = f (u_n), quad u_(n+1) (0, dot) = u_0, quad u_(n+1) = 0 "on" (0, T) times partial Omega,
+    partial_t u_(n+1) - Delta u_(n+1) = f (u_n), quad u_(n+1) (dot, 0) = u_0, quad u_(n+1) = 0 "on" partial Omega times (0, T),
   $
   started from $u_0 = underline(u)$, produces — by the comparison principle and standard compactness — an increasing sequence converging to the minimal solution of the problem; starting from $overline(u)$ gives the maximal solution. This *method of monotone iteration* (the former Chapter 11.4) is the standard existence tool for semilinear parabolic equations with monotone reaction terms.
 ] <ex:monotone-iteration>
@@ -2647,7 +2647,7 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 #definition(name: "Reaction-Diffusion Equations")[
   A *reaction-diffusion equation* is a semilinear parabolic equation of the form
   $
-    partial_t u = Delta u + f (u, nabla u), quad u (0, dot) = u_0,
+    partial_t u = Delta u + f (u, nabla u), quad u (dot, 0) = u_0,
   $
   where $f$ is the reaction (source) term. Standard models: $f (u) = u (1 - u)$ (Fisher--KPP, §14.2), $f (u) = u^p$ (power nonlinearity, §14.3), and systems arising in chemistry, biology, and ecology.
 ] <def:reaction-diffusion>
@@ -2675,7 +2675,7 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 ] <def:fisher-kpp>
 
 #theorem(name: "Traveling Waves for Fisher--KPP")[
-  A *traveling wave* is a solution $u (t, x) = phi (x - c t)$ with $phi (-oo) = 1$ and $phi (oo) = 0$ (a front connecting the two equilibria). Such fronts exist for the Fisher--KPP equation if and only if the speed satisfies
+  A *traveling wave* is a solution $u (x, t) = phi (x - c t)$ with $phi (-oo) = 1$ and $phi (oo) = 0$ (a front connecting the two equilibria). Such fronts exist for the Fisher--KPP equation if and only if the speed satisfies
   $
     abs(c) >= 2,
   $
@@ -2683,7 +2683,7 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 ] <thm:fisher-kpp-fronts>
 
 #proof[
-  Substituting $u (t, x) = phi (x - c t)$ into the equation gives the ODE
+  Substituting $u (x, t) = phi (x - c t)$ into the equation gives the ODE
   $
     phi'' + c phi' + phi (1 - phi) = 0.
   $
@@ -2701,7 +2701,7 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 ] <def:blow-up>
 
 #theorem(name: "The Fujita Exponent")[
-  Consider $partial_t u = Delta u + u^p$ on $bb(R)^n$, $p > 1$, with $u (0, dot) = u_0 >= 0$ nontrivial. The *Fujita critical exponent* is
+  Consider $partial_t u = Delta u + u^p$ on $bb(R)^n$, $p > 1$, with $u (dot, 0) = u_0 >= 0$ nontrivial. The *Fujita critical exponent* is
   $
     p_c = 1 + 2/n.
   $
@@ -2711,15 +2711,15 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 ] <thm:fujita-exponent>
 
 #note[
-  The Fujita phenomenon exhibits the delicate balance between diffusion, which spreads mass, and the power nonlinearity, which amplifies it: for $p < p_c$ the reaction always wins, for $p > p_c$ small data are damped. The proof uses the heat kernel (Chapter 12) and the semigroup estimates: solutions are compared with self-similar subsolutions $u (t, x) = (T - t)^(-1/(p-1)) phi (x / sqrt(T - t))$, or blow-up is obtained by the Kaplan energy method below.
+  The Fujita phenomenon exhibits the delicate balance between diffusion, which spreads mass, and the power nonlinearity, which amplifies it: for $p < p_c$ the reaction always wins, for $p > p_c$ small data are damped. The proof uses the heat kernel (Chapter 12) and the semigroup estimates: solutions are compared with self-similar subsolutions $u (x, t) = (T - t)^(-1/(p-1)) phi (x / sqrt(T - t))$, or blow-up is obtained by the Kaplan energy method below.
 ]
 
 #proposition(name: "Blow-Up via the Kaplan Method")[
-  Let $Omega subset bb(R)^n$ be bounded and $u$ solve $partial_t u = Delta u + f (u)$ in $Omega_T$ with $u = 0$ on $(0, T) times partial Omega$. If $f (u) >= u^(1 + epsilon)$ for some $epsilon > 0$ and the initial datum is large in the sense of the first Dirichlet eigenfunction, then $T_max < oo$: the solution blows up in finite time.
+  Let $Omega subset bb(R)^n$ be bounded and $u$ solve $partial_t u = Delta u + f (u)$ in $Omega_T$ with $u = 0$ on $partial Omega times (0, T)$. If $f (u) >= u^(1 + epsilon)$ for some $epsilon > 0$ and the initial datum is large in the sense of the first Dirichlet eigenfunction, then $T_max < oo$: the solution blows up in finite time.
 ] <prop:blow-up-kaplan>
 
 #proof[
-  Let $phi_1 > 0$ be the first eigenfunction of the Dirichlet Laplacian, normalized by $integral_Omega phi_1 dif x = 1$, with $-Delta phi_1 = lambda_1 phi_1$. Define the moment $F (t) = integral_Omega u (t, x) phi_1 (x) dif x$. Multiplying the equation by $phi_1$ and integrating by parts,
+  Let $phi_1 > 0$ be the first eigenfunction of the Dirichlet Laplacian, normalized by $integral_Omega phi_1 dif x = 1$, with $-Delta phi_1 = lambda_1 phi_1$. Define the moment $F (t) = integral_Omega u (x, t) phi_1 (x) dif x$. Multiplying the equation by $phi_1$ and integrating by parts,
   $
     F' (t) = integral_Omega (Delta u + f (u)) phi_1 dif x = integral_Omega u Delta phi_1 dif x + integral_Omega f (u) phi_1 dif x = -lambda_1 F (t) + integral_Omega f (u) phi_1 dif x.
   $
@@ -2798,11 +2798,11 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 == D'Alembert Formula // 达朗贝尔公式
 
 #definition(name: "The One-Dimensional Cauchy Problem")[
-  The *Cauchy problem* for the one-dimensional wave equation with speed $a > 0$ is to find $u: [0, oo) times bb(R) -> bb(R)$ with
+  The *Cauchy problem* for the one-dimensional wave equation with speed $a > 0$ is to find $u: bb(R) times [0, oo) -> bb(R)$ with
   $
     cases(
-      (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2) "in" (0, oo) times bb(R),
-      u (0, x) = g (x), quad partial_t u (0, x) = h (x),
+      (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2) "in" bb(R) times (0, oo),
+      u (x, 0) = g (x) comma quad partial_t u (x, 0) = h (x)
     )
   $
   where $g, h: bb(R) -> bb(R)$ are the initial displacement and velocity.
@@ -2811,15 +2811,15 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 #theorem(name: "D'Alembert's Formula")[
   For $g in C^2 (bb(R))$ and $h in C^1 (bb(R))$, the Cauchy problem has the unique classical solution
   $
-    u (t, x) = (g (x + a t) + g (x - a t))/2 + 1/(2 a) integral_(x - a t)^(x + a t) h (s) dif s.
+    u (x, t) = (g (x + a t) + g (x - a t))/2 + 1/(2 a) integral_(x - a t)^(x + a t) h (s) dif s.
   $
-  In particular $u in C^2 ([0, oo) times bb(R))$.
+  In particular $u in C^2 (bb(R) times [0, oo))$.
 ] <thm:d-alembert>
 
 #proof[
   *Step 1: General solution.* By the canonical form of Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), every $C^2$ solution has the form
   $
-    u (t, x) = F (x - a t) + G (x + a t),
+    u (x, t) = F (x - a t) + G (x + a t),
   $
   a superposition of a right-moving and a left-moving wave.
 
@@ -2831,27 +2831,27 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 ]
 
 #note[
-  The two terms in the formula are traveling waves: $F (x - a t)$ moves right with speed $a$ without changing shape, $G (x + a t)$ moves left. The initial velocity $h$ contributes the integral term, whose value at $(t, x)$ depends on $h$ only on the interval $[x - a t, x + a t]$ — the first manifestation of finite propagation speed (§15.4).
+  The two terms in the formula are traveling waves: $F (x - a t)$ moves right with speed $a$ without changing shape, $G (x + a t)$ moves left. The initial velocity $h$ contributes the integral term, whose value at $(x, t)$ depends on $h$ only on the interval $[x - a t, x + a t]$ — the first manifestation of finite propagation speed (§15.4).
 ]
 
 == The Cauchy Problem in Higher Dimensions // 高维 Cauchy 问题
 
 #theorem(name: "Kirchhoff's Formula in Three Dimensions")[
-  For $n = 3$, the Cauchy problem $(partial^2 u)/(partial t^2) = Delta u$, $u (0, x) = g (x)$, $partial_t u (0, x) = h (x)$ has the classical solution
+  For $n = 3$, the Cauchy problem $(partial^2 u)/(partial t^2) = Delta u$, $u (x, 0) = g (x)$, $partial_t u (x, 0) = h (x)$ has the classical solution
   $
-    u (t, x) = partial_t (t M_g (x, t)) + t M_h (x, t), quad M_phi (x, t) = 1 / (4 pi t^2) integral_(partial B (x, t)) phi dif S,
+    u (x, t) = partial_t (t M_g (x, t)) + t M_h (x, t), quad M_phi (x, t) = 1 / (4 pi t^2) integral_(partial B (x, t)) phi dif S,
   $
   where $M_phi$ is the spherical mean of $phi$ over the sphere of radius $t$. For $g in C^3$, $h in C^2$ this is a $C^2$ solution, and it is unique.
 ] <thm:kirchhoff-formula-3d>
 
 #proof[
-  (Sketch.) The proof uses the method of spherical means. For a solution $u$, the spherical mean $M_u (x, r) = 1/(4 pi r^2) integral_(partial B(x,r)) u (t, dot) dif S$ satisfies the Euler--Poisson--Darboux equation $(partial^2 M_u)/(partial t^2) = (partial^2 M_u)/(partial r^2) + (2/r) partial_r M_u$ with $M_u (0, x) = g (x)$, $partial_t M_u (0, x) = h (x)$. Writing $r M_u$ solves the one-dimensional wave equation in $(t, r)$, d'Alembert's formula gives an explicit expression for $M_u$; the identity $u (t, x) = M_u (x, 0^+)$ (the mean over a point is the value) then yields the formula. The regularity follows from differentiating the mean (one derivative on $M_g$ in the $partial_t$ term).
+  (Sketch.) The proof uses the method of spherical means. For a solution $u$, the spherical mean $M_u (x, r) = 1/(4 pi r^2) integral_(partial B(x,r)) u (dot, t) dif S$ satisfies the Euler--Poisson--Darboux equation $(partial^2 M_u)/(partial t^2) = (partial^2 M_u)/(partial r^2) + (2/r) partial_r M_u$ with $M_u (x, 0) = g (x)$, $partial_r M_u (x, 0) = h (x)$. Writing $r M_u$ solves the one-dimensional wave equation in $(t, r)$, d'Alembert's formula gives an explicit expression for $M_u$; the identity $u (x, t) = M_u (x, 0^+)$ (the mean over a point is the value) then yields the formula. The regularity follows from differentiating the mean (one derivative on $M_g$ in the $partial_t$ term).
 ]
 
 #theorem(name: "Poisson's Formula in Two Dimensions")[
   For $n = 2$, the solution of the Cauchy problem is obtained by the *method of descent* from the three-dimensional formula:
   $
-    u (t, x) = 1/(2 pi) partial_t integral_(B (x, t)) (g (y))/(sqrt(t^2 - abs(x - y)^2)) dif y + 1/(2 pi) integral_(B (x, t)) (h (y))/(sqrt(t^2 - abs(x - y)^2)) dif y.
+    u (x, t) = 1/(2 pi) partial_t integral_(B (x, t)) (g (y))/(sqrt(t^2 - abs(x - y)^2)) dif y + 1/(2 pi) integral_(B (x, t)) (h (y))/(sqrt(t^2 - abs(x - y)^2)) dif y.
   $
 ] <thm:poisson-formula-2d>
 
@@ -2860,7 +2860,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 ]
 
 #note[
-  *Boundary value problems on bounded domains.* On a bounded interval (vibrating string) or domain (membrane), the wave equation is supplemented by boundary conditions. The standard tool is separation of variables: writing $u (t, x) = sum_k a_k (t) phi_k (x)$ with the eigenfunctions $phi_k$ of the Dirichlet Laplacian (#link(<def:separation-variables>)[Ch. 18]) reduces the problem to decoupled oscillators $a_k'' + lambda_k a_k = 0$. The spectral viewpoint is developed in #link(<def:separation-variables>)[Chapter 18].
+  *Boundary value problems on bounded domains.* On a bounded interval (vibrating string) or domain (membrane), the wave equation is supplemented by boundary conditions. The standard tool is separation of variables: writing $u (x, t) = sum_k a_k (t) phi_k (x)$ with the eigenfunctions $phi_k$ of the Dirichlet Laplacian (#link(<def:separation-variables>)[Ch. 18]) reduces the problem to decoupled oscillators $a_k'' + lambda_k a_k = 0$. The spectral viewpoint is developed in #link(<def:separation-variables>)[Chapter 18].
 ]
 
 == Energy Conservation // 能量守恒
@@ -2884,9 +2884,9 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 On all of $bb(R)^n$ the total energy need not be finite, and the boundary term of the preceding argument is unavailable; the wave equation nevertheless admits a *local* energy inequality on characteristic cones, which is the key to uniqueness and stability for the Cauchy problem.
 
 #theorem(name: "Local Energy Inequality on the Cone")[
-  Let $u$ be a $C^2$ solution of $(partial^2 u)/(partial t^2) = a^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $x_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(t_0, x_0)$,
+  Let $u$ be a $C^2$ solution of $(partial^2 u)/(partial t^2) = a^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $x_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(x_0, t_0)$,
   $
-    C = {(s, y) : 0 <= s <= t_0, abs(y - x_0) <= a (t_0 - s)}.
+    C = {(y, s) : 0 <= s <= t_0, abs(y - x_0) <= a (t_0 - s)}.
   $
   Define the local energy on the time slice
   $
@@ -2908,7 +2908,7 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 ]
 
 #corollary(name: "Uniqueness of the Cauchy Problem")[
-  Let $u, v$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with the same initial data $u (0, dot) = v (0, dot)$ and $partial_t u (0, dot) = partial_t v (0, dot)$. Then $u = v$.
+  Let $u, v$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with the same initial data $u (dot, 0) = v (dot, 0)$ and $partial_t u (dot, 0) = partial_t v (dot, 0)$. Then $u = v$.
 ] <cor:wave-uniqueness>
 
 #proof[
@@ -2916,7 +2916,7 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 ]
 
 #corollary(name: "Continuous Dependence on the Data")[
-  Let $u, v$ be $C^2$ solutions with initial data $(g, h)$ and $(tilde(g), tilde(h))$, and let $C$ be the backward cone with apex $(t_0, x_0)$. Then for all $t in [0, t_0]$ the local energy of the difference $w = u - v$ satisfies
+  Let $u, v$ be $C^2$ solutions with initial data $(g, h)$ and $(tilde(g), tilde(h))$, and let $C$ be the backward cone with apex $(x_0, t_0)$. Then for all $t in [0, t_0]$ the local energy of the difference $w = u - v$ satisfies
   $
     E_C (t) <= 1/2 integral_(B (x_0, a t_0)) (abs(h - tilde(h))^2 + a^2 abs(nabla (g - tilde(g)))^2) dif y.
   $
@@ -2930,21 +2930,21 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 == Finite Propagation Speed // 有限传播速度
 
 #theorem(name: "Finite Propagation Speed")[
-  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $[0, oo) times bb(R)^n$ with initial data $(g, h)$ and $(tilde(g), tilde(h))$. If $g = tilde(g)$ and $h = tilde(h)$ on $B (x, a t)$, then $u (t, x) = tilde(u) (t, x)$: the value at $(t, x)$ depends only on the initial data in the ball $overline(B (x, a t))$.
+  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with initial data $(g, h)$ and $(tilde(g), tilde(h))$. If $g = tilde(g)$ and $h = tilde(h)$ on $B (x, a t)$, then $u (x, t) = tilde(u) (x, t)$: the value at $(x, t)$ depends only on the initial data in the ball $overline(B (x, a t))$.
 ] <thm:domain-of-dependence>
 
 #proof[
-  By linearity it suffices to show that data supported outside $B (x, a t)$ do not affect $u (t, x)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(t, x)$. The data of $w$ vanish on $C inter {s = 0} = B (x, a t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (t, x) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
+  By linearity it suffices to show that data supported outside $B (x, a t)$ do not affect $u (x, t)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(x, t)$. The data of $w$ vanish on $C inter {s = 0} = B (x, a t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (x, t) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
 ]
 
 #definition(name: "Domains of Dependence, Determinacy and Influence")[
-  The *domain of dependence* of a point $(t, x)$ is the ball $overline(B (x, a t))$: only the data in this ball can influence the value $u (t, x)$. Given a set $D$ on the initial surface, its *domain of determinacy* is the region
+  The *domain of dependence* of a point $(x, t)$ is the ball $overline(B (x, a t))$: only the data in this ball can influence the value $u (x, t)$. Given a set $D$ on the initial surface, its *domain of determinacy* is the region
   $
-    {(s, x) : 0 <= s, B (x, a s) subset D},
+    {(x, s) : 0 <= s, B (x, a s) subset D},
   $
   the part of space-time completely determined by the data on $D$. The *domain of influence* of a point $y$ of the initial surface is the cone
   $
-    {(t, x) : abs(x - y) <= a t},
+    {(x, t) : abs(x - y) <= a t},
   $
   the set of space-time points whose values the data at $y$ can affect.
 ] <def:domain-dependence-influence>
@@ -2952,35 +2952,35 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $a$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior.
 
 #note[
-  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (t, x)$ depends only on the data on the *sphere* $partial B (x, a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
+  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (x, t)$ depends only on the data on the *sphere* $partial B (x, a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
 ]
 
 #theorem(name: "Dispersive Decay")[
   Let $u$ be the solution of the Cauchy problem with smooth, compactly supported initial data.
-  - *Odd dimensions* ($n >= 3$): $u (t, x) = 0$ as soon as $t > "dist"(x, "supp"(g, h))$ — after the wave front passes, the medium returns to rest (the *strong Huygens principle*).
-  - *Even dimensions* ($n = 2$): in general $u (t, x)$ does not vanish behind the front (trailing wake), and $abs(u (t, x)) <= C t^(-1/2)$ uniformly in $x$ as $t -> oo$ (the *weak Huygens principle*, or *dispersion*).
+  - *Odd dimensions* ($n >= 3$): $u (x, t) = 0$ as soon as $t > "dist"(x, "supp"(g, h))$ — after the wave front passes, the medium returns to rest (the *strong Huygens principle*).
+  - *Even dimensions* ($n = 2$): in general $u (x, t)$ does not vanish behind the front (trailing wake), and $abs(u (x, t)) <= C t^(-1/2)$ uniformly in $x$ as $t -> oo$ (the *weak Huygens principle*, or *dispersion*).
 ] <thm:dispersive-decay>
 
 #proof[
-  (Sketch.) Both statements are read off the explicit formulas of §15.2. In three dimensions, Kirchhoff's formula involves only spherical means over $partial B (x, a t)$: the sphere meets the initial support only while $a t$ lies between the nearest and the farthest distance from $x$ to the support — after that $u (t, x) = 0$. In two dimensions, Poisson's formula integrates over the full disk $B (x, a t)$ with the weight $(t^2 - abs(x - y)^2)^(-1/2)$, which is nonzero for all large $t$ (the wake); the dominant contribution as $t -> oo$ comes from the rim $abs(x - y) approx a t$, where the weight is barely integrable, and the resulting uniform bound is $O(t^(-1/2))$ — consistent with the general dispersive rate $t^(-(n-1)/2)$.
+  (Sketch.) Both statements are read off the explicit formulas of §15.2. In three dimensions, Kirchhoff's formula involves only spherical means over $partial B (x, a t)$: the sphere meets the initial support only while $a t$ lies between the nearest and the farthest distance from $x$ to the support — after that $u (x, t) = 0$. In two dimensions, Poisson's formula integrates over the full disk $B (x, a t)$ with the weight $(t^2 - abs(x - y)^2)^(-1/2)$, which is nonzero for all large $t$ (the wake); the dominant contribution as $t -> oo$ comes from the rim $abs(x - y) approx a t$, where the weight is barely integrable, and the resulting uniform bound is $O(t^(-1/2))$ — consistent with the general dispersive rate $t^(-(n-1)/2)$.
 ]
 
 == Duhamel Principle // Duhamel 原理
 
 #theorem(name: "Duhamel's Principle for the Wave Equation")[
-  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, h)$: $S (t) h = w (t, dot)$, where $(partial^2 w)/(partial t^2) = Delta w$, $w (0, dot) = 0$, $partial_t w (0, dot) = h$. Then the solution of the inhomogeneous problem
+  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, h)$: $S (t) h = w (dot, t)$, where $(partial^2 w)/(partial t^2) = Delta w$, $w (dot, 0) = 0$, $partial_t w (dot, 0) = h$. Then the solution of the inhomogeneous problem
   $
-    (partial^2 u)/(partial t^2) = Delta u + f, quad u (0, dot) = 0, quad partial_t u (0, dot) = 0,
+    (partial^2 u)/(partial t^2) = Delta u + f, quad u (dot, 0) = 0, quad partial_t u (dot, 0) = 0,
   $
   is given by
   $
-    u (t, x) = integral_0^t S (t - s) f (s, dot) (x) dif s.
+    u (x, t) = integral_0^t S (t - s) f (s, dot) (x) dif s.
   $
   For general data, superpose the homogeneous solution with this formula.
 ] <thm:duhamel-wave>
 
 #proof[
-  Let $w (t, s; x)$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $partial_t w (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$. Define $u (t, dot) = integral_0^t w (t, s; dot) dif s$. Then $u (0, dot) = 0$, $partial_t u (0, dot) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $partial_t w (t, t; dot) = f (t, dot)$):
+  Let $w (t, s; x)$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $partial_t w (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$. Define $u (dot, t) = integral_0^t w (t, s; dot) dif s$. Then $u (dot, 0) = 0$, $partial_t u (dot, 0) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $partial_t w (t, t; dot) = f (t, dot)$):
   $
     (partial^2 u)/(partial t^2) - Delta u = (partial_t w) (t, t; dot) + integral_0^t ((partial^2 w)/(partial t^2) - Delta w) dif s = f (t, dot),
   $
@@ -2990,7 +2990,7 @@ Unlike the heat equation, where a disturbance is felt instantly at every distanc
 #note[
   The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 13]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is explicitly given by the d'Alembert / Kirchhoff / Poisson formulas of §15.1–15.2, so Duhamel's principle yields explicit solutions of the *inhomogeneous* Cauchy problem in every dimension. In three dimensions, for instance,
   $
-    u (t, x) = partial_t (t M_g (x, t)) + t M_h (x, t) + integral_0^t 1/(4 pi (t - s)) integral_(partial B (x, t - s)) f (s, y) dif S dif s,
+    u (x, t) = partial_t (t M_g (x, t)) + t M_h (x, t) + integral_0^t 1/(4 pi (t - s)) integral_(partial B (x, t - s)) f (s, y) dif S dif s,
   $
   the inhomogeneous counterpart of Kirchhoff's formula; the two-dimensional analogue follows from Poisson's formula.
 ]
@@ -3016,7 +3016,7 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
 #theorem(name: "Energy Identity for Symmetric Systems")[
   Let $u$ be a $C^1$ solution of a symmetric hyperbolic system on $bb(R)^n$ with constant symmetric $A_j$. Then the energy
   $
-    E (t) = 1/2 integral_(bb(R)^n) abs(u (t, x))^2 dif x
+    E (t) = 1/2 integral_(bb(R)^n) abs(u (x, t))^2 dif x
   $
   is conserved: $E (t) = E (0)$ for all $t$.
 ] <thm:symmetric-energy>
@@ -3051,7 +3051,7 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
   $
     R^(-1) (R w_t + A R w_x) = w_t + Lambda w_x = 0,
   $
-  which is the diagonal system. Each component is a scalar transport equation (Chapter 3, §3.1), solved by $w_i (t, x) = w_i (0, x - lambda_i t)$.
+  which is the diagonal system. Each component is a scalar transport equation (Chapter 3, §3.1), solved by $w_i (x, t) = w_i (x - lambda_i t, 0)$.
 ]
 
 #note[
@@ -3063,7 +3063,7 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
 #theorem(name: "Energy Inequality and Well-Posedness")[
   Consider the symmetric hyperbolic system with lower-order terms,
   $
-    partial_t u + sum_j A_j partial_(x_j) u = B (x) u, quad u (0, dot) = u_0,
+    partial_t u + sum_j A_j partial_(x_j) u = B (x) u, quad u (dot, 0) = u_0,
   $
   with $A_j$ constant symmetric and $B$ bounded. Then for every $u_0 in L^2 (bb(R)^n; bb(R)^m)$ there is a unique weak solution $u in C ([0, oo); L^2)$, and
   $
@@ -3083,7 +3083,7 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
 ]
 
 #note[
-  For systems with *variable* coefficients $A_j (t, x)$, the same energy argument works provided the matrices are symmetric and $C^1$: the derivative of $E$ produces a term $sum_j (partial_(x_j) A_j) u dot u$ bounded by $C E (t)$, giving the exponential bound. This robustness is the reason the energy method is the standard tool for well-posedness of hyperbolic problems (and for the symmetrization of nonlinear systems in Chapter 17).
+  For systems with *variable* coefficients $A_j (x, t)$, the same energy argument works provided the matrices are symmetric and $C^1$: the derivative of $E$ produces a term $sum_j (partial_(x_j) A_j) u dot u$ bounded by $C E (t)$, giving the exponential bound. This robustness is the reason the energy method is the standard tool for well-posedness of hyperbolic problems (and for the symmetrization of nonlinear systems in Chapter 17).
 ]
 
 = Conservation Laws for Systems // 守恒律系统
@@ -3155,9 +3155,9 @@ The scalar one-dimensional conservation law was treated completely in Chapter 5 
 #definition(name: "The Riemann Problem")[
   The *Riemann problem* is the conservation law system with piecewise constant initial data
   $
-    u (0, x) = cases(u_L "if" x < 0, u_R "if" x > 0,)
+    u (x, 0) = cases(u_L "if" x < 0, u_R "if" x > 0)
   $
-  for two constant states $u_L, u_R in bb(R)^m$. Its self-similar solution $u (t, x) = v (x/t)$ is the building block of the general theory (front tracking, Godunov-type schemes, Chapter 19).
+  for two constant states $u_L, u_R in bb(R)^m$. Its self-similar solution $u (x, t) = v (x/t)$ is the building block of the general theory (front tracking, Godunov-type schemes, Chapter 19).
 ] <def:riemann-problem>
 
 #theorem(name: "Structure of the Solution for Systems")[
@@ -3225,15 +3225,15 @@ This closing part of the notes collects the classical method of separation of va
 == Separation of Variables // 分离变量法
 
 #definition(name: "Separation of Variables")[
-  Let $L$ be a linear homogeneous PDE operator and consider the homogeneous problem $L u = 0$ on a product domain with homogeneous boundary conditions. The *separation of variables* ansatz seeks solutions of the product form $u (x_1, dots, x_d) = X_1 (x_1) dots X_d (x_d)$; substituting into the equation and dividing by the product reduces the PDE to $d$ ordinary differential equations coupled only through a *separation constant* $lambda$. For an evolution equation one writes $u (t, x) = T (t) X (x)$; the spatial factor leads to an eigenvalue problem of Sturm--Liouville type (§18.2).
+  Let $L$ be a linear homogeneous PDE operator and consider the homogeneous problem $L u = 0$ on a product domain with homogeneous boundary conditions. The *separation of variables* ansatz seeks solutions of the product form $u (x_1, dots, x_d) = X_1 (x_1) dots X_d (x_d)$; substituting into the equation and dividing by the product reduces the PDE to $d$ ordinary differential equations coupled only through a *separation constant* $lambda$. For an evolution equation one writes $u (x, t) = T (t) X (x)$; the spatial factor leads to an eigenvalue problem of Sturm--Liouville type (§18.2).
 ] <def:separation-variables>
 
 #example(name: "Heat Equation on an Interval")[
   Consider the initial--boundary value problem
   $
-    partial_t u = (partial^2 u)/(partial x^2) quad "in" quad (0, oo) times (0, L), quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x).
+    partial_t u = (partial^2 u)/(partial x^2) quad "in" quad (0, L) times (0, oo), quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x).
   $
-  The ansatz $u (t, x) = T (t) X (x)$ gives $T' X = T X''$, i.e.
+  The ansatz $u (x, t) = T (t) X (x)$ gives $T' X = T X''$, i.e.
   $
     T'/T = X''/X = -lambda
   $
@@ -3243,7 +3243,7 @@ This closing part of the notes collects the classical method of separation of va
   $
   and the temporal factor solves $T_k' = -lambda_k T_k$, so $T_k (t) = e^(-lambda_k t)$. Superposition gives
   $
-    u (t, x) = sum_(k=1)^oo c_k e^(-(k pi/L)^2 t) sin (k pi x/L), quad c_k = 2/L integral_0^L g (x) sin (k pi x / L) dif x,
+    u (x, t) = sum_(k=1)^oo c_k e^(-(k pi/L)^2 t) sin (k pi x/L), quad c_k = 2/L integral_0^L g (x) sin (k pi x / L) dif x,
   $
   where the coefficients are fixed by the initial datum (the Fourier sine series of $g$). Each mode decays with the rate $lambda_k$; the highest modes are damped fastest, the smoothing effect of Chapter 12.
 ] <ex:heat-separation>
@@ -3319,7 +3319,7 @@ This closing part of the notes collects the classical method of separation of va
   $
   separation gives the same spatial problem as in Example 18.1: $lambda_k = (k pi/L)^2$, $X_k (x) = sin (k pi x/L)$, and the temporal factor solves $T_k'' + a^2 lambda_k T_k = 0$, i.e. the harmonic oscillator with frequency $omega_k = a k pi/L$. Hence
   $
-    u (t, x) = sum_(k=1)^oo (a_k cos (omega_k t) + b_k sin (omega_k t)) sin (k pi x/L),
+    u (x, t) = sum_(k=1)^oo (a_k cos (omega_k t) + b_k sin (omega_k t)) sin (k pi x/L),
   $
   with $a_k = 2/L integral_0^L g (x) sin (k pi x/L) dif x$ and $b_k = 2/(L omega_k) integral_0^L h (x) sin (k pi x/L) dif x$. The eigenfrequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = a pi/L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (Chapter 15, #link(<thm:wave-energy>)[§15.3]).
 ] <ex:wave-separation>
