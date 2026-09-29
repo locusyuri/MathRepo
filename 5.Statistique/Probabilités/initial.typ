@@ -3138,6 +3138,191 @@ inference. Part IV applies them to sampling distributions (Chapter 11);
 the estimation chapters use the CLT and Delta method to establish the
 asymptotic properties of estimators.
 
+= Introduction to Stochastic Processes // 随机过程初步
+
+Everything so far concerns a single random variable, or a fixed vector of
+them. A *stochastic process* is a family of random variables indexed by
+time: the evolving position of a particle, the size of a population, the
+accumulated number of insurance claims. The limit theorems of the
+preceding chapter already studied one such family — the partial sums
+$S_n$ — and this chapter organises the general framework, presenting the
+three canonical processes that every application meets. The deep theory
+is developed in the Processus Stochastique note; here we lay only the
+foundations.
+
+== Definition and Classification // 定义与分类
+
+#definition(name: "Stochastic Process")[
+  A *stochastic process* is a family of random variables
+  $
+    {X(t) : t in T},
+  $
+  where $t in T$ is the *index* (interpreted as time) and $X(t)$ takes
+  values in the *state space* $S$. Equivalently, it is a random function
+  $t arrow.r.double X(t)$: for each outcome $omega$, the sample path
+  $t arrow.r.double X(t)(omega)$ is an ordinary function.
+] <def:stochastic-process>
+
+#note[
+  (Finite-dimensional distributions.) The law of a process is determined
+  by the joint distributions of $(X(t_1), dots, X(t_n))$ for all choices
+  of indices — the *finite-dimensional distributions*. This extends the
+  multivariate theory of Chapter 6 from fixed dimension to arbitrary
+  families; the consistency conditions that make such a family coherent
+  are the content of Kolmogorov's extension theorem (see the Analyse
+  Réelle and Processus Stochastique notes).
+
+  Two structural properties organise the classification: the process has
+  *independent increments* if the changes $X(t_2) - X(t_1), dots,
+  X(t_n) - X(t_(n-1))$ over disjoint intervals are independent; and it is
+  *(strictly) stationary* if all finite-dimensional distributions are
+  invariant under time shifts.
+]
+
+#figure(
+  table(
+    columns: 3,
+    align: (center, center, center),
+    table.header([], [State space discrete], [State space continuous]),
+    table.hline(),
+    [Index discrete], [random walks; Markov chains], [time series; stationary processes],
+    [Index continuous], [Poisson process], [Brownian motion],
+  ),
+  caption: [The four quadrants of the elementary classification, with the
+    canonical process of each.],
+  placement: auto,
+  supplement: [Tab.],
+) <tab:process-classification>
+
+== Discrete-Time Markov Chains // 离散时间 Markov 链
+
+#definition(name: "Markov Chain")[
+  A discrete-time process ${X_n : n = 0, 1, 2, dots}$ with countable
+  state space $S$ is a *Markov chain* if it satisfies the *Markov
+  property*:
+  $
+    P(X_(n+1) = j | X_n = i, X_(n-1) = i_(n-1), dots, X_0 = i_0)
+    = P(X_(n+1) = j | X_n = i),
+  $
+  for all states and times. The probabilities $p_(i j) = P(X_(n+1) = j |
+    X_n = i)$ form the *transition matrix* $P = (p_(i j))$ when they do not
+  depend on $n$ (*time-homogeneous* case): each row is a probability
+  vector.
+] <def:markov-chain>
+
+The Markov property is the process analogue of memorylessness
+(#link(<prop:geometric-memoryless>)[geometric],
+#link(<prop:exponential-memoryless>)[exponential]): the future depends on
+the past only through the present state.
+
+#theorem(name: "Chapman–Kolmogorov Equations")[
+  The $n$-step transition probabilities $p_(i j)^((n)) = P(X_n = j | X_0
+    = i)$ satisfy
+  $
+    p_(i j)^((m + n)) = sum_(k) p_(i k)^((m)) p_(k j)^((n)),
+  $
+  i.e. in matrix form $P^(m + n) = P^m P^n$. Consequently
+  $p_(i j)^((n))$ is the $(i, j)$-entry of $P^n$.
+] <thm:chapman-kolmogorov>
+
+#proof[
+  Condition on the state at the intermediate time $m$ and apply the law of
+  total probability:
+  $
+    P(X_(m+n) = j | X_0 = i)
+    = sum_(k) P(X_(m+n) = j | X_m = k) P(X_m = k | X_0 = i),
+  $
+  where the Markov property makes the first factor $p_(k j)^((n))$,
+  independent of how the chain reached $k$.
+]
+
+#definition(name: "Stationary Distribution")[
+  A probability distribution $pi = (pi_i)$ on $S$ is a *stationary
+  distribution* of the chain if
+  $
+    pi = pi P,
+  $
+  i.e. $sum_i pi_i p_(i j) = pi_j$ for every $j$. If the chain starts
+  with $X_0 ~ pi$, then every $X_n ~ pi$: the distribution is in
+  equilibrium.
+] <def:stationary-distribution>
+
+#note[
+  For an irreducible, aperiodic, positive-recurrent chain, the stationary
+  distribution exists, is unique, and $lim_(n -> infinity) P(X_n = j) =
+  pi_j$ regardless of the initial state — the Markov-chain counterpart of
+  the law of large numbers: time averages stabilise, here to equilibrium
+  probabilities. The proofs (recurrence theory) belong to the Processus
+  Stochastique note.
+]
+
+== Poisson Process // Poisson 过程
+
+#definition(name: "Poisson Process")[
+  A counting process ${N(t) : t >= 0}$ — $N(t)$ counts events in $[0, t]$,
+  with $N(s) <= N(t)$ for $s <= t$ — is a *Poisson process* with rate
+  $lambda > 0$ if:
+  - $N(0) = 0$;
+  - it has independent, stationary increments;
+  - for every $t >= 0$, $N(t) ~ "Pois"(lambda t)$.
+] <def:poisson-process>
+
+The Poisson process is the canonical model of "rare events arriving
+independently at a constant rate": radioactive decays, customer arrivals,
+component failures. It is the continuous-time limit of the Bernoulli
+scheme — #link(<thm:poisson-limit>)[the Poisson limit theorem] with
+$n$ trials per unit time and $p = lambda t / n$, sent through the
+binomial-to-Poisson approximation.
+
+#theorem(name: "Inter-arrival Times of the Poisson Process")[
+  Let ${N(t)}$ be a Poisson process with rate $lambda$, and let
+  $T_1, T_2, dots$ be the times between consecutive events. Then
+  $T_1, T_2, dots$ are i.i.d. $"Exp"(lambda)$ variables, and the time of
+  the $n$-th event satisfies $S_n = T_1 + dots + T_n ~ "Ga"(n, lambda)$.
+] <prop:poisson-interarrival>
+
+#proof[
+  $P(T_1 > t) = P(N(t) = 0) = e^(-lambda t)$, so $T_1 ~ "Exp"(lambda)$.
+  Given the past up to time $s$, the process restarts afresh on $[s,
+    infinity)$ by independent stationary increments, so $T_2$ is independent
+  of $T_1$ with the same law — and so on by induction. The sum of $n$
+  i.i.d. exponentials is Gamma by the convolution induction of
+  #link(<ex:exp-sum-gamma>)[the exponential-sum example].
+]
+
+This theorem identifies the Poisson process and the exponential
+inter-arrival law as two views of one object — the continuous-time
+sibling of the geometric waiting time in discrete Bernoulli trials.
+
+== Brownian Motion // Brown 运动初步
+
+#definition(name: "Standard Brownian Motion")[
+  A process ${B(t) : t >= 0}$ is a *standard Brownian motion* (Wiener
+  process) if:
+  - $B(0) = 0$;
+  - it has independent, stationary increments;
+  - for $s, t >= 0$, $B(t) - B(s) ~ N(0, t - s)$;
+  - its sample paths are continuous.
+] <def:brownian-motion>
+
+Brownian motion is the scaling limit of the symmetric random walk: as the
+step size shrinks like $1 / sqrt(n)$ and the step rate grows like $n$, the
+random walk — whose increments are the very $S_n$ of
+#link(<thm:clt>)[the CLT] — converges in distribution to $B(t)$. Its
+sample paths are continuous yet nowhere differentiable, and the process
+sits at the intersection of probability, Fourier analysis, and PDE theory
+(the heat equation). All of this — constructions, the Markov property,
+stopping times, and the Itô calculus — is the starting material of the
+Processus Stochastique note.
+
+#note[
+  (Looking ahead.) With the probability framework complete —
+  distributions, numerical characteristics, generating tools, limit
+  theorems, and the canonical processes above — we turn from "known model,
+  deduce data" to "observed data, infer model": the business of
+  mathematical statistics, to which the remainder of this note is devoted.
+]
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
