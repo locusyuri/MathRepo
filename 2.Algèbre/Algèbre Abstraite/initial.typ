@@ -1301,6 +1301,30 @@ workhorse of the chapter.
   #link(<thm:subgroup-criteria>)[the theorem].
 ]
 
+The one-step criterion makes short work of subsets that are defined
+by an order condition.
+
+#proposition(name: "Finite-Order Elements Form a Subgroup")[
+  In an abelian group $G$, the set
+  $
+    T = {g in G | "ord"(g) < infinity}
+  $
+  of elements of finite order (the *torsion* elements) is a subgroup
+  of $G$.
+] <prop:torsion-subgroup>
+
+#proof[
+  $T$ is non-empty since $"ord"(e) = 1$. Let $a, b in T$ have finite
+  orders $m$ and $n$. By the one-step criterion
+  (#link(<cor:subgroup-criterion>)[the corollary above]) it suffices
+  to show $a b^(-1) in T$; and indeed, the commutativity of $G$ gives
+  $
+    (a b^(-1))^(m n) = a^(m n) (b^(m n))^(-1) = (a^m)^n ((b^n)^m)^(-1)
+    = e,
+  $
+  so $a b^(-1)$ has finite order — at most $m n$ — and lies in $T$.
+]
+
 It is often convenient to package the two closures in the language of
 set products. For subsets $A, B$ of a group $G$, write
 $
@@ -1411,23 +1435,18 @@ how far a group is from being abelian.
     element of $G$: $a g = g a$ for all $g in G$.
   - The *center* of $G$ is the set of all central elements,
     $
-      Z(G) = {z in G | z g = g z " for all " g in G}.
+      C(G) = {z in G | z g = g z " for all " g in G}.
     $
-  - For a fixed $a in G$, the *centralizer* of $a$ in $G$ is
-    $
-      C_(G)(a) = {x in G | x a = a x},
-    $
-    the set of elements that commute with $a$.
 ] <def:center-centralizer>
 
 Evidently $a$ is central exactly when $C_(G)(a) = G$, and the center
 is the intersection of all the centralizers,
-$Z(G) = inter.big_(a in G) C_(G)(a)$.
+$C(G) = inter.big_(a in G) C_(G)(a)$.
 
 #property(name: "The Center Is an Abelian Subgroup")[
-  For every group $G$, the center $Z(G)$ is an abelian subgroup of
+  For every group $G$, the center $C(G)$ is an abelian subgroup of
   $G$. Moreover, for every $a in G$ the centralizer $C_(G)(a)$ is a
-  subgroup of $G$ containing $Z(G)$.
+  subgroup of $G$ containing $C(G)$.
 ] <prop:center-is-subgroup>
 
 #proof[
@@ -1442,17 +1461,17 @@ $Z(G) = inter.big_(a in G) C_(G)(a)$.
     x y^(-1) g = x g y^(-1) = g x y^(-1),
   $
   the middle step using $g y = y g$, i.e. $g y^(-1) = y^(-1) g$; so
-  $Z(G)$ passes the criterion as well. As for the advertised
+  $C(G)$ passes the criterion as well. As for the advertised
   abelianness: central elements commute with each other in
-  particular, so $Z(G)$ is an abelian subgroup; and $z a = a z$ for
-  every central $z$ shows $Z(G) subset.eq C_(G)(a)$, making the
+  particular, so $C(G)$ is an abelian subgroup; and $z a = a z$ for
+  every central $z$ shows $C(G) subset.eq C_(G)(a)$, making the
   centralizer a subgroup containing the center.
 ]
 
 #example(name: "Centers of the typical groups.")[
-  - If $G$ is abelian, then $Z(G) = G$ trivially; the center is only
+  - If $G$ is abelian, then $C(G) = G$ trivially; the center is only
     informative for non-abelian groups.
-  - $Z(S_3) = {e}$. The transposition $(1 2)$ does not commute with
+  - $C(S_3) = {e}$. The transposition $(1 2)$ does not commute with
     the 3-cycle $(1 2 3)$: $(1 2)(1 2 3) = (2 3)$ whereas
     $(1 2 3)(1 2) = (1 3)$. Every non-identity element of $S_3$ is a
     transposition or a 3-cycle, and a similar check rules out each
