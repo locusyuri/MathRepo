@@ -1758,9 +1758,44 @@ concentration, error.
   with density $phi(x)$ and CDF $Phi(x)$.
 ] <def:normal-dist>
 
-Every normal variable standardizes: if $X ~ N(mu, sigma^2)$ then
-$Z = (X - mu) / sigma ~ N(0, 1)$, and $F_(X)(x) = Phi((x - mu) / sigma)$.
-Tables of $Phi$ (in the Appendix) thus serve all parameter values.
+#theorem(name: "Standardization of the Normal")[
+  Every normal variable standardizes: if $X ~ N(mu, sigma^2)$, then
+  $
+    Z = (X - mu) / sigma ~ N(0, 1), quad F_(X)(x) = Phi((x - mu) / sigma).
+  $
+  Moreover, the standard normal CDF satisfies the symmetry properties
+  $
+    Phi(0) = 1 / 2, quad Phi(x) + Phi(-x) = 1, quad
+    P(abs(Z) > x) = 2 (1 - Phi(x)) quad (x > 0).
+  $
+] <thm:normal-standardization>
+
+#proof[
+  Let $X ~ N(mu, sigma^2)$ and set $Z = (X - mu) / sigma$. The change of
+  variables $z = (x - mu) / sigma$ transforms the density of $X$ into
+  $
+    f_(Z)(z) = sigma f_(X)(sigma z + mu)
+    = sigma dot 1 / (sigma sqrt(2 pi)) exp(-z^2 / 2) = phi(z),
+  $
+  so $Z ~ N(0, 1)$; integrating the CDF gives
+  $F_(X)(x) = P(X <= x) = P(Z <= (x - mu) / sigma) = Phi((x - mu) / sigma)$.
+
+  For the symmetry properties: $phi$ is even, and normalization yields
+  $Phi(0) = integral_(-infinity)^0 phi(t) dif t = 1 / 2$. The substitution
+  $t = -u$ gives
+  $
+    Phi(-x) = integral_(-infinity)^(-x) phi(t) dif t
+    = integral_x^infinity phi(t) dif t = 1 - Phi(x),
+  $
+  and adding $Phi(x)$ to both sides yields $Phi(x) + Phi(-x) = 1$.
+  Finally, $P(abs(Z) > x) = P(Z > x) + P(Z < -x) = (1 - Phi(x)) + Phi(-x)
+  = 2 (1 - Phi(x))$.
+]
+
+Tables of $Phi$ (in the Appendix) thus serve all parameter values:
+the standardization reduces every normal CDF to $Phi$, $Phi(0) = 1 / 2$
+anchors the table at its centre, $Phi(x) + Phi(-x) = 1$ extends it to
+negative arguments, and the tail identity yields two-sided probabilities.
 
 #property(name: "Mean and Variance of the Normal")[
   If $X ~ N(mu, sigma^2)$, then — as the parameter names promise —
@@ -1770,10 +1805,9 @@ Tables of $Phi$ (in the Appendix) thus serve all parameter values.
 ] <prop:normal-mean-variance>
 
 #proof[
-  By the linear transform example of
-  #link(<ex:linear-transform>)[Chapter 3], $Z = (X - mu) / sigma ~ N(0, 1)$
-  and $X = sigma Z + mu$; the properties of expectation and variance
-  (#link(<prop:expectation-linearity>)[linearity],
+  By #link(<thm:normal-standardization>)[standardization],
+  $X = sigma Z + mu$ with $Z ~ N(0, 1)$; the properties of expectation and
+  variance (#link(<prop:expectation-linearity>)[linearity],
   #link(<prop:variance-properties>)[scaling]) reduce the claim to the
   standard case $E[Z] = 0$, $"Var"(Z) = 1$. Symmetry of $phi$ around $0$
   gives $E[Z] = 0$. For the variance, integrate by parts with
@@ -1861,9 +1895,10 @@ Tables of $Phi$ (in the Appendix) thus serve all parameter values.
   integrating $x f(x)$; recognising an unnormalised Beta density of
   parameters $(a+1, b)$ instead:
   $
-    E[X] = integral_0^1 x (x^(a - 1) (1 - x)^(b - 1)) / B(a, b) dif x
-    = B(a + 1, b) / B(a, b)
-    = ("Gamma"(a + 1) "Gamma"(b)) / ("Gamma"(a + b + 1)) dot ("Gamma"(a + b)) / ("Gamma"(a) "Gamma"(b))
+    E[X] = integral_0^1 x (x^(a - 1) (1 - x)^(b - 1)) / B(a, b) dif x \
+    = B(a + 1, b) / B(a, b) \
+    = ("Gamma"(a + 1) "Gamma"(b)) / ("Gamma"(a + b + 1)) \
+    quad quad dot ("Gamma"(a + b)) / ("Gamma"(a) "Gamma"(b)) \
     = a / (a + b).
   $
   Similarly $E[X^2] = B(a + 2, b) / B(a, b) = (a (a + 1)) / ((a + b)(a + b + 1))$,
