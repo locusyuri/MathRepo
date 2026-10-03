@@ -535,7 +535,7 @@
 //     - Eisenstein 判据 #theorem <thm:eisenstein>（p ∤ a_n、p | a_i (i < n)、
 //       p^2 ∤ a_0 ⇒ ℚ 上不可约）
 //   Section 12.3: Vièta's Formulas（根与系数的关系）
-//     - #theorem <thm:vieta>（n 个根计重数：σ_i(r) = (-1)^i a_(n-i)\/a_n；
+//     - #theorem <thm:vieta>（n 个根计重数：σ_(i)(r) = (-1)^i a_(n-i)\/a_n；
 //       对称多项式语言前瞻 Ch14）
 //   Section 12.4: Roots of Unity（单位根）
 //     - #definition <def:root-of-unity>（数域上 ω^n = 1；缺省取复值：
@@ -4877,10 +4877,10 @@ finding roots.
 ]
 
 In the language of Chapter 14, the sums on the left are the
-*elementary symmetric polynomials* $sigma_k(r_1, dots, r_n)$ in the
+*elementary symmetric polynomials* $sigma_(k)(r_1, dots, r_n)$ in the
 roots, so Vièta's formulas read
 $
-  sigma_k(r_1, dots, r_n) = (-1)^k a_(n-k)\/a_n, quad k = 1, dots, n.
+  sigma_(k)(r_1, dots, r_n) = (-1)^k a_(n-k)\/a_n, quad k = 1, dots, n.
 $
 For a cubic $x^3 - 2 x^2 + x - 5$ this says: the roots add to $2$,
 pair up to add to $1$, and multiply to $5$ — the coefficients are a
@@ -5144,6 +5144,333 @@ combinations of binomial polynomials, and data points pin down
 polynomials as uniquely as primes pin down integers. The final
 chapter steps into several variables, where symmetry itself becomes
 the object of study.
+
+= Symmetric Polynomials and Inequalities // 对称多项式与对称不等式
+
+The last chapter of the notebook changes perspective one final time:
+several variables at once, and expressions invariant under every
+permutation of them. The *elementary symmetric polynomials* are the
+connecting thread — they are the quantities that Vièta's formulas
+(#link(<thm:vieta>)[§12.3]) read off the coefficients — and Newton's
+identities relate them to plain power sums. The second half applies
+this language to the classical symmetric inequalities of the
+competition tradition (power means, Muirhead, Schur, Nesbitt); the
+Muirhead material follows the exposition of Chen and Zhang
+(*Muirhead 不等式*, 数学传播 38(2), 2019).
+
+== Symmetric Polynomials // 对称多项式
+
+#definition(name: "Symmetric Polynomial")[
+  A polynomial $f(x_1, x_2, dots, x_n)$ in $n$ variables over $P$ is
+  *symmetric* if it is unchanged by every permutation of its
+  variables: for every permutation $sigma$ of ${1, dots, n}$,
+  $
+    f(x_(sigma(1)), x_(sigma(2)), dots, x_(sigma(n)))
+    = f(x_1, x_2, dots, x_n).
+  $
+] <def:symmetric-polynomial>
+
+Three families of symmetric polynomials recur everywhere.
+
+#definition(name: "Elementary, Power-Sum and Complete Homogeneous Symmetric Polynomials")[
+  For $k = 1, 2, dots, n$:
+  - the *elementary symmetric polynomials*
+    $
+      sigma_(k)(x_1, dots, x_n)
+      = sum_(1 <= i_1 < i_2 < dots < i_k <= n)
+      x_(i_1) x_(i_2) dots x_(i_k),
+    $
+    that is, $sigma_0 = 1$, $sigma_1 = x_1 + dots + x_n$, $sigma_2 =
+    sum_(i < j) x_i x_j$, ..., $sigma_n = x_1 x_2 dots x_n$ (and
+    $sigma_k = 0$ for $k > n$);
+  - the *power-sum symmetric polynomials*
+    $p_(k)(x_1, dots, x_n) = x_1^k + x_2^k + dots + x_n^k$;
+  - the *complete homogeneous symmetric polynomials*
+    $
+      h_(k)(x_1, dots, x_n) = sum_(i_1 + dots + i_n = k)
+      x_1^(i_1) x_2^(i_2) dots x_n^(i_n).
+    $
+] <def:elementary-symmetric>
+
+A fundamental theorem of the theory — the *fundamental theorem of
+symmetric polynomials* — states that every symmetric polynomial is a
+polynomial in $sigma_1, dots, sigma_n$ alone; its proof and its ring
+formulation belong to Algèbre Abstraite. For us the $sigma_k$ already
+carry arithmetic weight: by #link(<thm:vieta>)[Vièta],
+$
+  sigma_(k)(r_1, dots, r_n) = (-1)^k a_(n-k)\/a_n,
+$
+so the elementary symmetric polynomials of the roots are exactly the
+normalized coefficients.
+
+== Newton's Identities // Newton 恒等式
+
+#theorem(name: "Newton's Identities")[
+  For $k >= 1$, the elementary symmetric polynomials and the power
+  sums are related by
+  $
+    k sigma_k = sum_(i=1)^k (-1)^(i-1) sigma_(k-i) p_i.
+  $
+] <thm:newton-identities>
+
+#proof(name: "of the theorem")[
+  Consider the generating polynomial
+  $
+    F(t) = product_(i=1)^n (1 - x_i t)
+    = sum_(k=0)^n (-1)^k sigma_k t^k.
+  $
+  Taking the logarithmic derivative of both sides: on one hand,
+  $
+    -F'(t)\/F(t) = sum_(i=1)^n x_i\/(1 - x_i t)
+    = sum_(m>=0) p_(m+1) t^m,
+  $
+  by expanding each $1\/(1 - x_i t)$ as a geometric series. On the
+  other hand, multiplying $-F'(t) = F(t) sum_(m>=0) p_(m+1) t^m$
+  through and comparing the coefficient of $t^(k-1)$:
+  the left side contributes $k (-1)^(k-1) sigma_k$, while the right
+  side contributes
+  $sum_(i=1)^k (-1)^(k-i) sigma_(k-i) p_i$. Multiplying the identity
+  $k (-1)^(k-1) sigma_k = sum_(i=1)^k (-1)^(k-i) sigma_(k-i) p_i$ by
+  $(-1)^(k-1)$ yields the claim.
+]
+
+Two summation conventions used below, for $f$ a function of
+variables (not necessarily a polynomial):
+- *cyclic sum*: cycle the variables and add,
+  $
+    sum_"cyc" f(x_1, dots, x_n) = sum_(i=1)^n
+    f(x_i, x_(i+1), dots, x_(i+n-1)),
+  $
+  with indices read modulo $n$; for example
+  $sum_"cyc" a\/(b + c) = a\/(b + c) + b\/(c + a) + c\/(a + b)$ — the
+  left side of Nesbitt's inequality, proved in §14.4;
+- *symmetric sum*: sum over *all* permutations $sigma in S_n$,
+  $
+    sum_"sym" f(x_1, dots, x_n) = sum_(sigma in S_n)
+    f(x_(sigma(1)), dots, x_(sigma(n)));
+  $
+  for example $sum_"sym" a^3 = 2(a^3 + b^3 + c^3)$ (each cube arises
+  from two permutations) and
+  $sum_"sym" a^2 b = a^2 b + a^2 c + b^2 a + b^2 c + c^2 a + c^2 b$.
+
+#example(name: "Reading Newton's Identities at $n = 3$")[
+  With $k = 2$: $2 sigma_2 = sigma_1 p_1 - p_2$, i.e.
+  $2 sum_(i<j) x_i x_j = (x_1 + x_2 + x_3)^2 - (x_1^2 + x_2^2 +
+    x_3^2)$ — the identity behind completing the square. With $k = 3$:
+  $3 sigma_3 = sigma_2 p_1 - sigma_1 p_2 + p_3$.
+] <ex:newton-check>
+
+== Power Means and the Muirhead Inequality // 幂平均与 Muirhead 不等式
+
+#theorem(name: "Power Mean Inequality")[
+  For positive reals $a_1, a_2, dots, a_n$ and $p in bb(R)$ define
+  the *power mean of order $p$* by
+  $
+    M_(p)(a_1, a_2, dots, a_n) = cases(
+      ((a_1^p + a_2^p + dots.h + a_n^p)\/n)^(1\/p) quad & "if" p != 0,
+      root(n, a_1 a_2 dots.h a_n) quad & "if" p = 0,
+    )
+  $
+  Then $M_(p)$ is increasing in $p$:
+  $
+    dots <= M_(-2) <= M_(-1) <= M_0 <= M_1 <= M_2 <= dots
+  $
+  In particular, writing
+  $
+    G = root(n, a_1 a_2 dots.h a_n), quad
+    A = (a_1 + dots + a_n)\/n, quad
+    Q = sqrt((a_1^2 + dots + a_n^2)\/n), quad
+    H = n\/(1\/a_1 + 1\/a_2 + dots.h + 1\/a_n),
+  $
+  the geometric, arithmetic, quadratic and harmonic means satisfy
+  $
+    H <= G <= A <= Q.
+  $
+] <thm:power-mean>
+
+#note[
+  The monotonicity follows from the convexity of $t |-> t^r$ and
+  Jensen's inequality for $p > 0$ (and concavity for $p < 0$), with
+  the case $p = 0$ obtained by a limit; we omit the details in this
+  applied chapter. When $n = 2$ the chain can be refined by inserting
+  the *logarithmic mean*
+  $
+    L(a, b) = (a - b)\/(ln a - ln b) quad (a, b > 0, a != b),
+  $
+  for which $G(a, b) <= L(a, b) <= A(a, b)$.
+]
+
+For the Muirhead inequality the natural domain is the vector space
+$bb(R)^n$ with a partial order given by convex hulls.
+
+#definition(name: "Convex Hull and Decreasing Rearrangement")[
+  Let $V$ be a vector space over $bb(R)$. The *convex hull* of a set
+  $X subset.eq V$ is the intersection of all convex sets containing
+  $X$:
+  $
+    "conv"(X) = inter {K : X subset.eq K subset.eq V,
+      K "convex"}.
+  $
+  For a vector $alpha = (a_1, a_2, dots, a_n)$, let
+  $a_([1]) >= a_([2]) >= dots >= a_([n])$ be the entries sorted in
+  decreasing order, and write $alpha^arrow.b = (a_([1]), dots, a_([n]))$
+  for the *decreasing rearrangement*. Denoting by $S_n$ the
+  permutations of ${1, dots, n}$, define
+  $
+    H(alpha) = "conv" {(a_(sigma(1)), dots, a_(sigma(n))):
+      sigma in S_n},
+  $
+  the convex hull of the permutation orbit of $alpha$ — a polytope
+  (the *permutahedron*) whose vertices are the rearrangements of
+  $alpha$.
+] <def:convex-hull>
+
+#figure(
+  image("img/convex-hull.png", width: 42%),
+  caption: [
+    The convex hull in $bb(R)^3$ of the permutation orbit of a
+    vector: a hexagon (permutahedron) cut out by the plane
+    $x + y + z = "const"$.
+  ],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:convex-hull>
+
+#theorem(name: "Muirhead's Inequality")[
+  Let $alpha = (a_1, dots, a_n)$, $beta = (b_1, dots, b_n) in
+  bb(R)^n$ with $alpha in H(beta)$ (the *Muirhead condition*). Then
+  for all positive reals $x_1, dots, x_n > 0$:
+  $
+    sum_(sigma in S_n)
+    x_(sigma(1))^(a_1) x_(sigma(2))^(a_2) dots x_(sigma(n))^(a_n)
+    <=
+    sum_(sigma in S_n)
+    x_(sigma(1))^(b_1) x_(sigma(2))^(b_2) dots x_(sigma(n))^(b_n),
+  $
+  with equality iff $x_1 = x_2 = dots = x_n$ or
+  $alpha^arrow.b = beta^arrow.b$.
+] <thm:muirhead>
+
+#note[
+  The proof (by repeated applications of the arithmetic–geometric
+  mean inequality over the polytope $H(beta)$) is omitted here; the
+  full development, including the equality analysis, is the subject
+  of the Chen–Zhang exposition cited in the chapter opening.
+]
+
+The Muirhead condition $alpha in H(beta)$ is hard to check directly;
+it has two transparent reformulations.
+
+#definition(name: "Majorization")[
+  For $alpha, beta in bb(R)^n$, one says that $beta$ *majorizes*
+  $alpha$, written $alpha op("prec") beta$, if
+  + $a_([1]) + a_([2]) + dots + a_([n]) = b_([1]) + b_([2]) + dots +
+    b_([n])$, and
+  + for every $k = 1, dots, n - 1$:
+    $a_([1]) + dots + a_([k]) <= b_([1]) + dots + b_([k])$.
+] <def:majorization>
+
+#definition(name: "Doubly Stochastic Matrix")[
+  An $n times n$ matrix $D = (d_(i j))$ is *doubly stochastic* if
+  every row sum and every column sum equals $1$.
+] <def:doubly-stochastic>
+
+#theorem(name: "Equivalences for Majorization")[
+  For $alpha, beta in bb(R)^n$ the following are equivalent:
+  + $alpha op("prec") beta$;
+  + there is a doubly stochastic matrix $D$ with $alpha = D beta$;
+  + $alpha in H(beta)$.
+] <thm:majorization-equivalent>
+
+#note[
+  Statement (2) says the convex hull of the orbit consists exactly of
+  the doubly stochastic images of $beta$ — the finite-dimensional
+  shadow of Birkhoff's theorem on doubly stochastic matrices. The
+  proofs (Hardy–Littlewood–Pólya and Rado) are omitted in this
+  applied chapter; see again the Chen–Zhang exposition.
+]
+
+In practice one checks majorization on the sorted vectors and then
+invokes Muirhead through the chain
+$alpha op("prec") beta => alpha in H(beta)$.
+
+== Classical Applications // 经典应用
+
+#proposition(name: "Schur's Inequality")[
+  For non-negative reals $a, b, c >= 0$ and $r >= 0$:
+  $
+    a^r (a - b)(a - c) + b^r (b - c)(b - a)
+    + c^r (c - a)(c - b) >= 0.
+  $
+  For $r = 1$ this reads
+  $
+    a^3 + b^3 + c^3 + 3 a b c >=
+    a b (a + b) + b c (b + c) + c a (c + a).
+  $
+] <prop:schur>
+
+#proof(name: "of the case $r = 1$")[
+  By symmetry assume $a >= b >= c$. The difference between the right
+  side and the left side of the $r = 1$ inequality rearranges as
+  $
+    sum_"cyc" a (a - b)(a - c),
+  $
+  and we decompose:
+  $
+    a (a - b)(a - c) + b (b - c)(b - a) + c (c - a)(c - b)
+  $
+  $
+    quad = (a - b)^2 (a + b - c) + c (a - c)(b - c),
+  $
+  which follows from collecting the first two terms:
+  $a(a-b)(a-c) - b(a-b)(b-c) = (a-b)[a(a-c) - b(b-c)] =
+  (a-b)^2 (a+b-c)$. Both summands are non-negative —
+  $(a - b)^2 >= 0$ and $a + b >= c$ by assumption, and
+  $(a - c)(b - c) >= 0$ — so the total is $>= 0$.
+]
+
+#proposition(name: "Nesbitt's Inequality")[
+  For positive reals $a, b, c > 0$:
+  $
+    sum_"cyc" a\/(b + c)
+    = a\/(b + c) + b\/(c + a) + c\/(a + b) >= 3\/2,
+  $
+  with equality iff $a = b = c$.
+] <prop:nesbitt>
+
+#proof(name: "of the proposition")[
+  Bringing to a common denominator and cross-multiplying (all
+  denominators are positive), the inequality is equivalent to
+  $
+    2 sum_"cyc" a (a + b)(a + c) >= 3 (a + b)(b + c)(c + a).
+  $
+  Expanding both sides with
+  $a (a + b)(a + c) = a^3 + a^2 b + a^2 c + a b c$ and
+  $(a + b)(b + c)(c + a) = sum_"sym" a^2 b + 2 a b c$, this becomes
+  $
+    2 (a^3 + b^3 + c^3) >= sum_"sym" a^2 b.
+  $
+  The exponents $(3, 0, 0)$ and $(2, 1, 0)$ satisfy
+  $(2, 1, 0) op("prec") (3, 0, 0)$ — equal coordinate sums $3$, and
+  $2 <= 3$, $2 + 1 <= 3 + 0$ — so #link(<thm:muirhead>)[Muirhead]
+  applied through #link(<thm:majorization-equivalent>)[the
+    equivalences] gives exactly
+  $2 (a^3 + b^3 + c^3) = sum_(sigma in S_3)
+  x_(sigma(1))^3 >= sum_(sigma in S_3)
+  x_(sigma(1))^2 x_(sigma(2)) = sum_"sym" a^2 b$, with equality iff
+  $a = b = c$.
+]
+
+This closes Chapter 14 and with it the notebook. The polynomial part
+mirrored the integer arithmetic of Part I degree for degree, and its
+final chapter showed the same permutation-invariant quantities — the
+elementary symmetric polynomials — serving both as the bridge between
+roots and coefficients (Vièta, Newton) and as the engine of the
+classical symmetric inequalities. Across all five parts, one theme
+recurred at every stage: divide, look at the remainder, and let the
+decreasing quantity do the work — in $bb(Z)$, in $bb(Z)\/m bb(Z)$, in
+counting functions, in continued fractions, and in $P[x]$.
+
 
 
 
