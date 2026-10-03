@@ -29,15 +29,21 @@
 // ==========================================================================
 // 主线叙事 (Main Narrative):
 //   整除基础 → 模结构与剩余理论 → 算术函数与素数分布 → 逼近与不定方程
+//   → 多项式（ℤ 的镜像结构收束）
 //   研究对象从 ℤ 上的整除算术出发，经模结构（CRT、Fermat–Euler、
 //   原根、二次互反）逐步深化，再借算术函数把"计数与分布"工具化，
-//   最后以连分数与不定方程收束为经典应用。
+//   最后以连分数与不定方程收束为经典应用；Part V 以 P[x] 与 ℤ 的
+//   平行算术（带余除法、Bézout、唯一分解）收官，并回供 Ch5/Ch6
+//   所用多项式工具（根数界、单位根）的系统理论。
 //
 // 职责边界 (Responsibility Boundaries):
 //   - 整数的整除/同余/原根/二次剩余/数论函数/连分数/不定方程 → 本笔记核心内容
 //   - 环论视角（剩余类环 ℤ_n、CRT 的环同构、UFD/PID/ED、有限域、分圆域）
 //     → Algèbre Abstraite，本笔记用算术语言自含并作结构交叉引用
-//   - 多项式整除性、有理根、Eisenstein 判据 → Polynôme（本笔记不重复）
+//   - 多项式整除性、因式分解与根、整值多项式、对称多项式 → 本笔记 Part V
+//     （原 Polynôme 笔记整体并入，2026-10）；环论/域论视角（多项式环公理
+//     构造、UFD/ED、分裂域、Galois）仍 → Algèbre Abstraite，本 Part 用
+//     算术语言自含并作结构 note 划界
 //   - 完整解析数论（PNT 证明、L-函数）→ 本笔记仅概述，完整理论归未来解析数论笔记
 //   - p-adic 数、二元二次型、数的分拆等 → 超出范围，仅在 §8.3 展望
 //
@@ -45,7 +51,7 @@
 //   - 华罗庚《华罗庚文集 · 数论卷 II（数论导引）》科学出版社, 2010
 //   - 余红兵《数论》华东师范大学出版社, 2011
 //
-// 结构：4 Parts, 10 Chapters, 约 40 Sections
+// 结构：5 Parts, 14 Chapters, 约 48 Sections
 // ==========================================================================
 // Part I — Divisibility Theory（整除理论）
 // ==========================================================================
@@ -65,7 +71,8 @@
 //     - 数值例 <ex:floor-values>；#note 取整函数供 Ch7 求和消费（伏笔）
 //   Section 1.2: Divisibility and the Division Algorithm（整除性与带余除法）
 //     - 整除定义 #definition <def:divisibility>；运算律表 #property <prop:divisibility-rules>
-//       （真因子 prose 概念，供 Ch2 素数定义）；Polynôme 多项式版仅 #note 划界
+//       （真因子 prose 概念，供 Ch2 素数定义）；多项式镜像 → Part V Ch11
+//       （note 划界，正文见 L660-664 一带）
 //     - 带余除法定理 #theorem <thm:division-algorithm>（良序取最小剩余 + 唯一性反证）
 //     - 核心式 <eq:division-identity>；数值例 <ex:division-example>（含负数情形）
 //     - #note 带余除法引向同余 Ch3 / 欧几里得引理 Ch2（伏笔）
@@ -473,13 +480,126 @@
 //     - n = 4 情形的无穷递降证明；历史与现状展望
 
 // ==========================================================================
+// Part V — Polynomials（多项式）
+// ==========================================================================
+// 设计思路：以 ℤ ↔ P[x] 类比收束全书。多项式环 P[x] 与 ℤ 享有完全平行的
+// 算术结构——带余除法、Bézout、唯一分解——Part I 的每个定理在此都有镜像；
+// 反向地，Ch5 自含证明的多项式根数界（<lem:poly-roots-bound>）与 Ch6 的
+// 二次剩余理论在此获得系统化回归。对应教材：华罗庚 Ch4（多项式之性质）。
+// 内容来源：原独立 LaTeX 笔记 Polynôme（2026-10 整体并入）——Ch11/12/14 主体
+// 为迁移 + 扩写，Ch13 原为空壳全新补写；对称不等式（Muirhead/Schur/Nesbitt）
+// 随迁为 Ch14 应用板块，其与数论主线的连接点为对称函数语言。
+// 职责边界：环论/域论视角（多项式环公理构造、UFD/ED、分裂域）→
+// Algèbre Abstraite，本 Part 用算术语言自含，结构视角仅 note 划界。
+// 注意：Ch7–10 尚未写作，本 Part 在当前 PDF 中渲染为 Part III / Ch7–10；
+// 蓝图编号以逻辑编号（Part V / Ch11–14）为准，标签为语义命名不受影响，
+// 待 Ch7–10 补全后编号自动对齐。
+
+// --- Chapter 11: Divisibility of Polynomials（多项式的整除）---
+//   核心洞察：deg 是 P[x] 上的"绝对值"，带余除法令余式次数严格递减——
+//   Ch1 的整除引擎在 P[x] 上原样重启：ℤ 是原型，P[x] 是镜像。
+//   Section 11.1: Univariate Polynomials（一元多项式）
+//     - 多项式定义 #definition <def:polynomial>（数域 P 上系数列、次数 deg、
+//       零多项式约定；#note 运算为普通映射，单独命名仅因后续频繁使用）
+//     - 次数运算律 #property <prop:degree-rules>（deg(fg) = deg f + deg g，
+//       乘法消去律的引擎）
+//   Section 11.2: Division of Polynomials（多项式的带余除法）
+//     - 带余除法定理 #theorem <thm:poly-division>（存在性：降次归纳；
+//       唯一性：次数比较反证；镜像回链 <thm:division-algorithm>）
+//     - 整除定义 #definition <def:poly-divisibility>（余式为零）；
+//       #caution 零多项式只能整除零多项式（承原笔记）
+//   Section 11.3: GCD and Bézout's Identity（最大公因式与 Bézout 恒等式）
+//     - 最大公因式 #definition <def:poly-gcd>（首一化约定 (f, g)）
+//     - 辗转相除与 Bézout #theorem <thm:poly-bezout>（d = u f + v g；
+//       逆命题不成立；镜像回链 <thm:bezout>）
+//     - 互素 #definition <def:poly-coprime>；
+//       (f, g) = 1 ⟺ 存在 u f + v g = 1 #corollary <cor:poly-coprime-bezout>
+//   Section 11.4: Least Common Multiple（最小公倍式）
+//     - #definition <def:poly-lcm>；f g = (f, g) · [f, g]（首一化意义）
+//       #corollary <cor:poly-gcd-lcm-product>（镜像回链 <cor:gcd-lcm-product>）
+//   写作顺序：§11.1 → §11.4 逐节写入，每节编译一次
+
+// --- Chapter 12: Factorization and Roots（因式分解与根）---
+//   Section 12.1: Irreducible Polynomials（不可约多项式）
+//     - #definition <def:poly-irreducible>（deg ≥ 1 不能分解为更低次之积）
+//     - Euclid 引理镜像 #proposition <prop:irreducible-prime>
+//       （p 不可约 ⟺ p | f 或 (p, f) = 1 ⟺ p | fg ⇒ p | f ∨ p | g）
+//   Section 12.2: Polynomials with Rational Coefficients（有理系数多项式）
+//     - 本原多项式 #definition <def:primitive-polynomial>；
+//       Gauss 引理 #lemma <lem:gauss-poly-lemma>（本原 × 本原 = 本原）
+//     - ℚ 可约 ⇒ ℤ 可约 #theorem <thm:Q-Z-reducible>；
+//       Gauss 推论 #corollary <cor:primitive-factor>（g 本原、f = g h ∈ ℚ[x]
+//       ⇒ h ∈ ℤ[x]）
+//     - 有理根定理 #theorem <thm:rational-root>（r | a_0、s | a_n；首一时
+//       有理根为 a_0 的整因子；回链 <lem:poly-roots-bound> 注明系统理论）
+//     - Eisenstein 判据 #theorem <thm:eisenstein>（p ∤ a_n、p | a_i (i < n)、
+//       p^2 ∤ a_0 ⇒ ℚ 上不可约）
+//   Section 12.3: Vièta's Formulas（根与系数的关系）
+//     - #theorem <thm:vieta>（n 个根计重数：σ_i(r) = (-1)^i a_(n-i)\/a_n；
+//       对称多项式语言前瞻 Ch14）
+//   Section 12.4: Roots of Unity（单位根）
+//     - #definition <def:root-of-unity>（数域上 ω^n = 1；缺省取复值：
+//       ω_k = e^(2kπi\/n)，单位圆均匀分布）
+//     - 图 fig:roots-of-unity（img/roots-visualisation.png，复用原笔记图片）
+//     - 循环性 #property <prop:roots-cyclic>（n 次单位根在乘法下成循环群，
+//       ω = e^(2πi\/n) 生成；回链 Ch5 原根视角 note）
+//     - 幂和差公式 #proposition <prop:power-sum-difference>
+//       （a^n - b^n 恒可、a^n + b^n 仅 n 奇；x^n ∓ 1 特例与常用低次公式）
+//   图片：fig:roots-of-unity（全 Part 仅此 + Ch14 凸包图 2 张）
+//   写作顺序：§12.1 → §12.2 → §12.3 → §12.4 逐节写入，每节编译一次
+
+// --- Chapter 13: Integer-Valued Polynomials and Interpolation（整值多项式与插值）---
+//   设计注释：原 Polynôme 笔记此章为空壳，本节以下内容为补写；与 Ch8
+//   Legendre 公式的 floor 求和遥相呼应（整值性 = 离散格点上的算术）。
+//   Section 13.1: Integer-Valued Polynomials（整值多项式）
+//     - #definition <def:integer-valued>（f ∈ ℚ[x] 且 f(n) ∈ ℤ ∀n ∈ ℤ）
+//     - 例 <ex:integer-valued-example>（x(x-1)⋯(x-k+1)\/k! 整值但系数非整；
+//       ℤ[x] ⊊ Int(ℤ)）
+//   Section 13.2: The Binomial Polynomial Basis（二项式系数基）
+//     - #theorem <thm:binomial-basis>（f 整值 ⟺ f = Σ c_k binom(x, k)，
+//       c_k ∈ ℤ；差分算子 Δ 递推证明）
+//   Section 13.3: Lagrange Interpolation（Lagrange 插值）
+//     - #theorem <thm:lagrange-interpolation>（n + 1 个横坐标互异的点唯一
+//       确定 deg ≤ n 插值多项式；存在性构造 + 唯一性根数论证回链 Ch12）
+//     - 例 <ex:interpolation-example>（低次数值例）
+//   写作顺序：§13.1 → §13.2 → §13.3 逐节写入，每节编译一次
+
+// --- Chapter 14: Symmetric Polynomials and Inequalities（对称多项式与对称不等式）---
+//   设计注释：对称函数语言是本 Part 与数论主线的连接点（Vièta 的 σ_i、
+//   Newton 恒等式）；§14.3–14.4 对称不等式为经典应用（竞赛向板块，
+//   章首 prose 注明定位），主要参考陈柏宇–张福春《Muirhead 不等式》。
+//   Section 14.1: Symmetric Polynomials（对称多项式）
+//     - #definition <def:symmetric-polynomial>（变量置换不变）
+//     - 初等对称多项式 σ_k、幂和 p_k、完全齐次 h_k（定义块列举）
+//   Section 14.2: Newton's Identities（Newton 恒等式）
+//     - #theorem <thm:newton-identities>（k σ_k = Σ_(i=1)^k (-1)^(i-1)
+//       σ_(k-i) p_i；回链 <thm:vieta> 的 σ_i 记号）
+//     - 循环和 Σ_cyc 与对称和 Σ_sym 记号（#note，Nesbitt 伏笔）
+//   Section 14.3: Power Means and the Muirhead Inequality（幂平均与 Muirhead 不等式）
+//     - 幂平均链 #theorem <thm:power-mean>（M_p 单调；H ≤ G ≤ A ≤ Q；
+//       n = 2 对数均值插值 G ≤ L ≤ A prose）
+//     - 凸包 #definition <def:convex-hull>（含降序向量 α_↓ 与 H(α)）；
+//       图 fig:convex-hull（img/convex-hull.png，复用原笔记图片）
+//     - Muirhead #theorem <thm:muirhead>（α ∈ H(β) ⇒ 对称和不等式；
+//       等号条件）
+//     - 控制 #definition <def:majorization>（α ≺ β）；双随机矩阵
+//       #definition <def:doubly-stochastic>；
+//       三等价刻画 #theorem <thm:majorization-equivalent>
+//       （α ≺ β ⟺ α = Dβ ⟺ α ∈ H(β)）
+//   Section 14.4: Classical Applications（经典应用）
+//     - Schur #proposition <prop:schur>（r = 1 特例）
+//     - Nesbitt #proposition <prop:nesbitt>（Muirhead 路线：(3,0,0) ≻ (2,1,0)）
+//   图片：fig:convex-hull（img/convex-hull.png，复用原笔记图片）
+//   写作顺序：§14.1 → §14.4 逐节写入，每节编译一次
+
+// ==========================================================================
 // 教材覆盖度映射表 (Coverage Mapping)
 // ==========================================================================
 // 华罗庚《数论导引》:
 //   Ch1 整数之分解          → Part I (Ch1–Ch2)
 //   Ch2 同余式              → Part II (Ch3–Ch5)
 //   Ch3 二次剩余            → Ch6
-//   Ch4 多项式之性质        → Polynôme 笔记（本笔记省略）
+//   Ch4 多项式之性质        → Part V (Ch11–14，原 Polynôme 笔记 2026-10 并入)
 //   Ch5 素数分布概况        → Ch8
 //   Ch6 数论函数            → Ch7
 //   Ch9 素数定理            → Ch8 §8.3（概述，完整证明归解析数论）
@@ -1389,14 +1509,14 @@ at any stage is prime, and its multiples are then removed.
 
 1. Start with the list $2, 3, 4, dots, N$.
 2. Let $p$ be the smallest number in the list not yet handled. Then
-   $p$ is prime: it survived all earlier crossings, so no prime
-   $< p$ divides it, and no composite divisor can exist without a prime
-   divisor.
+  $p$ is prime: it survived all earlier crossings, so no prime
+  $< p$ divides it, and no composite divisor can exist without a prime
+  divisor.
 3. Cross out all proper multiples of $p$, i.e. $p^2, p(p+1), dots$ up
-   to $N$. (Multiples $p dot 2, dots, p dot (p-1)$ have already been
-   crossed out by smaller primes, so starting at $p^2$ saves work.)
+  to $N$. (Multiples $p dot 2, dots, p dot (p-1)$ have already been
+  crossed out by smaller primes, so starting at $p^2$ saves work.)
 4. Repeat from step 2 until $p^2 > N$; the numbers left are the primes
-   $\le N$.
+  $\le N$.
 
 The running example is the classical table of primes below $100$. Since
 $sqrt(100) = 10$ and the primes $\le 10$ are $2, 3, 5, 7$, only the
@@ -1485,8 +1605,7 @@ exponent and the joint part by the *larger* exponent.
   For positive integers $a, b$ and every prime $p$,
   #eq[
     $v_(p)("gcd"(a, b)) = min(v_(p)(a), v_(p)(b)), \
-     v_(p)("lcm"(a, b)) = max(v_(p)(a), v_(p)(b)).
-  $] <eq:gcd-lcm-valuation>
+    v_(p)("lcm"(a, b)) = max(v_(p)(a), v_(p)(b)).$] <eq:gcd-lcm-valuation>
 ] <cor:gcd-lcm-valuation>
 
 #proof[
@@ -1544,7 +1663,7 @@ exercise in counting multiples.
   By Legendre's formula,
   $
     v_5(100!) = floor(100\/5) + floor(100\/25) + floor(100\/125)
-      = 20 + 4 + 0 = 24,
+    = 20 + 4 + 0 = 24,
   $
   while
   $
@@ -1957,15 +2076,15 @@ free of trial and error.
 
 1. *Compute $d = "gcd"(a, m)$* by the Euclidean algorithm (§1.5).
 2. *Test solvability.* If $d$ does not divide $b$, there is no
-   solution. Otherwise divide $a$, $b$, $m$ by $d$, obtaining
-   $a' x equiv b'$ (mod $m'$) with $"gcd"(a', m') = 1$.
+  solution. Otherwise divide $a$, $b$, $m$ by $d$, obtaining
+  $a' x equiv b'$ (mod $m'$) with $"gcd"(a', m') = 1$.
 3. *Invert.* Obtain the inverse of $a'$ modulo $m'$ from the Bézout
-   combination produced by back-substitution in the Euclidean
-   algorithm (§1.5), and set
-   $x_0 equiv (a')^(-1) b'$ (mod $m'$).
+  combination produced by back-substitution in the Euclidean
+  algorithm (§1.5), and set
+  $x_0 equiv (a')^(-1) b'$ (mod $m'$).
 4. *List the lifts.* If $d = 1$ the solution is the single class
-   $x_0$ modulo $m$. If $d > 1$, the $d$ solutions modulo $m$ are
-   $x_0 + k m'$ for $k = 0, 1, dots, d - 1$.
+  $x_0$ modulo $m$. If $d > 1$, the $d$ solutions modulo $m$ are
+  $x_0 + k m'$ for $k = 0, 1, dots, d - 1$.
 
 #example(name: "Several Solutions, and Inversion by Back-Substitution")[
   *Three solutions modulo $21$.* Solve $6 x equiv 15$ (mod $21$). Here
@@ -1989,7 +2108,7 @@ free of trial and error.
   and read it backwards:
   $
     1 = 3 - 1 dot 2 = 3 - (14 - 4 dot 3) = 5 dot 3 - 14
-      = 5 (31 - 2 dot 14) - 14 = 5 dot 31 - 11 dot 14.
+    = 5 (31 - 2 dot 14) - 14 = 5 dot 31 - 11 dot 14.
   $
   Thus $14 dot (-11) equiv 1$ (mod $31$), i.e.
   $14^(-1) equiv -11 equiv 20$ (mod $31$), and
@@ -2102,7 +2221,7 @@ inverses, then add the pieces.
   The CRT solution is
   $
     x_0 = 2 dot 35 dot 2 + 3 dot 21 dot 1 + 2 dot 15 dot 1
-      = 140 + 63 + 30 = 233,
+    = 140 + 63 + 30 = 233,
   $
   and reducing modulo $105$,
   $
@@ -2251,7 +2370,7 @@ form.
   and the prime-power count turns each factor into
   $
     phi(p_i^(alpha_i)) = p_i^(alpha_i) - p_i^(alpha_i - 1)
-      = p_i^(alpha_i) (1 - 1\/p_i).
+    = p_i^(alpha_i) (1 - 1\/p_i).
   $
   Multiplying over $i = 1, dots, r$ and using
   $n = product_(i=1)^r p_i^(alpha_i)$ yields the formula.
@@ -2261,7 +2380,7 @@ form.
   *Small values.* The totients of $1, 2, dots, 12$ are
   $
     (phi(1), phi(2), dots, phi(12)) = (1, 1, 2, 2, 4, 2, 6, 4, 6, 4,
-    10, 4),
+      10, 4),
   $
   with $phi(n) = n - 1$ at the primes $n = 2, 3, 5, 7, 11$ and
   strictly smaller values at the composites: $phi(4) = 2$, $phi(6) =
@@ -2278,7 +2397,7 @@ form.
   while the product formula reads
   $
     360 (1 - 1\/2)(1 - 1\/3)(1 - 1\/5)
-      = 360 dot 1\/2 dot 2\/3 dot 4\/5 = 96.
+    = 360 dot 1\/2 dot 2\/3 dot 4\/5 = 96.
   $
   The two computations agree — and either one is far simpler than
   listing the $96$ integers $1 <= k <= 360$ coprime to $360$.
@@ -2368,7 +2487,7 @@ at the general level of Euler's theorem.)
   $
   every middle term $binom(p, k) a^(p - k) b^k$ with
   $1 <= k <= p - 1$ vanishes modulo $p$ by #link(<lem:binom-prime>)[the
-  lemma], and only the terms $k = 0$ and $k = p$ survive.
+    lemma], and only the terms $k = 0$ and $k = p$ survive.
 ]
 
 The joke in the name is that a novice's urge to "distribute" the
