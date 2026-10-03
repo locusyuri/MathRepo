@@ -1389,6 +1389,8 @@ apart.
 
 == Common Discrete Distributions // 常用离散分布
 
+=== Bernoulli, Binomial and Poisson Distributions // Bernoulli 分布、二项分布与 Poisson 分布
+
 The Bernoulli scheme of #link(<def:bernoulli-trials>)[Chapter 2]
 produces the first and most important discrete distribution family.
 
@@ -1514,6 +1516,12 @@ vanishing success probability — the *law of rare events*.
   $
   Multiplying the three limits recovers $(lambda^k e^(-lambda)) / k!$.
 ]
+
+=== Hypergeometric, Geometric and Negative Binomial Distributions // 超几何分布、几何分布与负二项分布
+
+The remaining three families arise from other counting schemes: draws
+*without replacement* (hypergeometric) and *waiting times* for successes
+in repeated trials (geometric, negative binomial).
 
 #definition(name: "Hypergeometric Distribution")[
   An urn contains $N$ balls, $K$ of them red; $n$ are drawn without
@@ -1665,6 +1673,8 @@ The discrete families of the preceding section are models for counting;
 the continuous families below are models for measuring — time, length,
 concentration, error.
 
+=== Uniform and Exponential Distributions // 均匀分布与指数分布
+
 #definition(name: "Uniform Distribution")[
   A random variable $X$ has the *uniform distribution* on $[a, b]$, written
   $X ~ U(a, b)$, if its density is
@@ -1747,6 +1757,12 @@ concentration, error.
   overline(F)(s) overline(F)(t)$, whose only non-trivial right-continuous
   solution is $overline(F)(t) = e^(-lambda t)$.
 ]
+
+=== Normal Distribution // 正态分布
+
+The central family of probability and statistics — the limit law toward
+which the central limit theorem will drive every sample mean — deserves
+its own subsection.
 
 #definition(name: "Normal Distribution")[
   A random variable $X$ has the *normal distribution* with mean $mu in RR$
@@ -1840,6 +1856,11 @@ negative arguments, and the tail identity yields two-sided probabilities.
   placement: auto,
   supplement: [Fig.],
 ) <fig:normal-curves>
+
+=== Gamma and Beta Distributions // Gamma 分布与 Beta 分布
+
+The last two families are built on the Gamma and Beta functions and are
+intimately related to the exponential and the uniform respectively.
 
 #definition(name: "Gamma Distribution")[
   A random variable $X$ has the *Gamma distribution* with shape $alpha > 0$
