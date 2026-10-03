@@ -22,7 +22,6 @@ This repository collects bilingual mathematics notes organized by subject. The l
 ## 2.Algèbre | 代数学
 - [Algèbre Abstraite | 抽象代数](https://lis-azure.vercel.app/notes/alg%C3%A8bre-abstraite)
 - [Algèbre Linéaire | 线性代数](https://lis-azure.vercel.app/notes/alg%C3%A8bre-lin%C3%A9aire)
-- [Polynôme | 多项式](https://lis-azure.vercel.app/notes/polyn%C3%B4me)
 - [Théorie des Nombres | 数论](https://lis-azure.vercel.app/notes/th%C3%A9orie-des-nombres)
 
 
