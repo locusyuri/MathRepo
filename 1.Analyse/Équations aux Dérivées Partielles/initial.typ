@@ -2740,24 +2740,25 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 // --- Chapter 15: Wave Equation (波动方程) ---
 
 //   Section 15.1: D'Alembert Formula (达朗贝尔公式)
-//     - 通解已在 Ch 2 由标准形导出，此处给出完整 Cauchy 公式
-//     - 行波解释
-
-//   Section 15.2: Initial and Boundary Value Problems (初边值问题)
-//     - Cauchy 问题（高维）
-//     - 有界区域上的边值问题
-
-//   Section 15.3: Energy Conservation (能量守恒)
-//     - 能量恒等式
-//     - 在唯一性证明中的应用
-
-//   Section 15.4: Finite Propagation Speed (有限传播速度)
-//     - 依赖区域
-//     - 影响区域
-
-//   Section 15.5: Duhamel Principle (Duhamel 原理)
-//     - 非齐次方程的求解
-//     - 与齐次问题的化归
+//     - Cauchy 问题、d'Alembert 公式
+//     - 传播波法：行波叠加、由初值确定左右行波
+//
+//   Section 15.2: Duhamel Principle (Duhamel 原理)
+//     - 非齐次方程、零初值
+//     - 叠加原理：一般问题 = 齐次（d'Alembert）+ 非齐次（Duhamel）
+//
+//   Section 15.3: The Cauchy Problem in Higher Dimensions (高维 Cauchy 问题)
+//     - 三维球平均法：EPD 方程 → Kirchhoff 公式
+//     - 二维降维法：→ Poisson 公式
+//     - 有界区域上的边值问题（指引 Ch 18 分离变量）
+//
+//   Section 15.4: Finite Propagation Speed and Dispersive Decay (波的传播与衰减)
+//     - 依赖区域、决定区域、影响区域
+//     - Huygens 原理（强/弱）、色散衰减
+//
+//   Section 15.5: Energy Inequality, Uniqueness and Stability (能量不等式、唯一性与稳定性)
+//     - 能量恒等式、锥上局部能量不等式
+//     - 唯一性、连续依赖（稳定性）
 
 // --- Chapter 16: Linear Hyperbolic Systems (线性双曲系统) ---
 
@@ -2791,7 +2792,7 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 
 = Wave Equation // 波动方程
 
-The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form and general solution in one dimension were obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[§7.2]). This chapter develops the complete Cauchy theory: the d'Alembert formula in one dimension, the Kirchhoff and Poisson formulas in higher dimensions, energy conservation and the local energy method, finite propagation speed with the Huygens principle and dispersive decay, and the Duhamel principle. The qualitative picture is complementary to the heat equation (Ch 12): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
+The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form and general solution in one dimension were obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[§7.2]). The chapter follows the classical route: the d'Alembert formula for the homogeneous Cauchy problem via the method of traveling waves, the Duhamel principle for the inhomogeneous problem with zero initial data, the Kirchhoff and Poisson formulas in higher dimensions via spherical means and the method of descent, and the qualitative theory — wave propagation, dispersive decay, the energy inequality, uniqueness and stability. The qualitative picture is complementary to the heat equation (Ch 12): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
 
 == D'Alembert Formula // 达朗贝尔公式
 
@@ -2832,6 +2833,44 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
   The two terms in the formula are traveling waves: $F (x - a t)$ moves right with speed $a$ without changing shape, $G (x + a t)$ moves left. The initial velocity $h$ contributes the integral term, whose value at $(x, t)$ depends on $h$ only on the interval $[x - a t, x + a t]$ — the first manifestation of finite propagation speed (§15.4).
 ]
 
+#note[
+  *Method of traveling waves (传播波法).* The two steps of the proof constitute the classical *method of traveling waves*: seek the solution as a superposition of a right-moving profile $F (x - a t)$ and a left-moving profile $G (x + a t)$, then determine the profiles from the data. Solving the equations of Step 2 gives
+  $
+    F (x) = 1/2 g (x) - 1/(2 a) integral_0^x h (s) dif s, quad G (x) = 1/2 g (x) + 1/(2 a) integral_0^x h (s) dif s,
+  $
+  up to a constant that cancels between $F$ and $G$. Thus the initial displacement splits into two half-amplitude waves running in opposite directions, while the initial velocity fills in the integral term. By the *superposition principle* (Chapter 1), the same decomposition handles the fully general problem: for nonzero data *and* a source $f (x, t)$, the solution is the sum of the d'Alembert solution of the homogeneous equation and the zero-data solution of the inhomogeneous equation — the latter is the object of the Duhamel principle in the next section.
+]
+
+== Duhamel Principle // Duhamel 原理
+
+#theorem(name: "Duhamel's Principle for the Wave Equation")[
+  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, h)$: $S (t) h = w (dot, t)$, where $(partial^2 w)/(partial t^2) = Delta w$, $w (dot, 0) = 0$, $partial_t w (dot, 0) = h$. Then the solution of the inhomogeneous problem
+  $
+    (partial^2 u)/(partial t^2) = Delta u + f, quad u (dot, 0) = 0, quad partial_t u (dot, 0) = 0,
+  $
+  is given by
+  $
+    u (x, t) = integral_0^t S (t - s) f (s, dot) (x) dif s.
+  $
+  For general data, superpose the homogeneous solution with this formula.
+] <thm:duhamel-wave>
+
+#proof[
+  Let $w (t, s; x)$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $partial_t w (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$. Define $u (dot, t) = integral_0^t w (t, s; dot) dif s$. Then $u (dot, 0) = 0$, $partial_t u (dot, 0) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $partial_t w (t, t; dot) = f (t, dot)$):
+  $
+    (partial^2 u)/(partial t^2) - Delta u = (partial_t w) (t, t; dot) + integral_0^t ((partial^2 w)/(partial t^2) - Delta w) dif s = f (t, dot),
+  $
+  since each $w$ is a homogeneous solution. Uniqueness for the Cauchy problem (#link(<cor:wave-uniqueness>)[Cor.] below) identifies $u$ as the solution.
+]
+
+#note[
+  The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 13]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is given explicitly by d'Alembert's formula in one dimension and by the Kirchhoff and Poisson formulas in higher dimensions (§15.3), so Duhamel's principle yields explicit solutions of the *inhomogeneous* Cauchy problem in every dimension. In three dimensions, for instance,
+  $
+    u (x, t) = partial_t (t M_g (x, t)) + t M_h (x, t) + integral_0^t 1/(4 pi (t - s)) integral_(partial B (x, t - s)) f (s, y) dif S dif s,
+  $
+  the inhomogeneous counterpart of Kirchhoff's formula; the two-dimensional analogue follows from Poisson's formula.
+]
+
 == The Cauchy Problem in Higher Dimensions // 高维 Cauchy 问题
 
 #theorem(name: "Kirchhoff's Formula in Three Dimensions")[
@@ -2843,7 +2882,15 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 ] <thm:kirchhoff-formula-3d>
 
 #proof[
-  (Sketch.) The proof uses the method of spherical means. For a solution $u$, the spherical mean $M_u (x, r) = 1/(4 pi r^2) integral_(partial B(x,r)) u (dot, t) dif S$ satisfies the Euler--Poisson--Darboux equation $(partial^2 M_u)/(partial t^2) = (partial^2 M_u)/(partial r^2) + (2/r) partial_r M_u$ with $M_u (x, 0) = g (x)$, $partial_r M_u (x, 0) = h (x)$. Writing $r M_u$ solves the one-dimensional wave equation in $(t, r)$, d'Alembert's formula gives an explicit expression for $M_u$; the identity $u (x, t) = M_u (x, 0^+)$ (the mean over a point is the value) then yields the formula. The regularity follows from differentiating the mean (one derivative on $M_g$ in the $partial_t$ term).
+  *Method of spherical means (球平均法).* For a solution $u$ define the spherical mean
+  $
+    M_u (x, r, t) = 1/(4 pi r^2) integral_(partial B (x, r)) u (y, t) dif S_y,
+  $
+  the average of $u (dot, t)$ over the sphere of radius $r$ about $x$. Averaging the equation over spheres and integrating by parts yields the *Euler--Poisson--Darboux equation*
+  $
+    (partial^2 M_u)/(partial t^2) = (partial^2 M_u)/(partial r^2) + 2/r (partial M_u)/(partial r),
+  $
+  with data $M_u (x, r, 0) = M_g (x, r)$ and $partial_t M_u (x, r, 0) = M_h (x, r)$. The term $2 / r$ blocks a direct use of d'Alembert's formula; the classical trick is to multiply by $r$: since $M_u$ is even in $r$, the function $v (r, t) = r M_u (x, r, t)$ extends oddly to $r < 0$ and solves the *one-dimensional wave equation* $v_(t t) = v_(r r)$ on the whole line, with data $v (r, 0) = r M_g (x, r)$ and $partial_t v (r, 0) = r M_h (x, r)$. D'Alembert's formula (#link(<thm:d-alembert>)[Th.]) gives $v$ explicitly; since $u (x, t) = M_u (x, 0, t) = lim_(r -> 0^+) v (r, t) / r = partial_r v (0, t)$ (the mean over a point is the value), evaluating the result at $r = t$ produces the formula. Regularity follows by differentiating under the integral.
 ]
 
 #theorem(name: "Poisson's Formula in Two Dimensions")[
@@ -2854,14 +2901,56 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 ] <thm:poisson-formula-2d>
 
 #proof[
-  Regard $u$ as a function of three space variables independent of the third coordinate and apply Kirchhoff's formula; the spherical means reduce to integrals over disks with the weight $1/sqrt(t^2 - r^2)$ (the Jacobian of the projection), giving the formula.
+  *Method of descent (降维法).* Extend the data to three space variables by $bar(g)(x, x_3) = g (x)$ and $bar(h)(x, x_3) = h (x)$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By uniqueness (#link(<cor:wave-uniqueness>)[Cor.] below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension. It remains to evaluate Kirchhoff's formula. The sphere $partial B ((x, 0), t)$ projects onto the disk $B (x, t)$, each point $y in B (x, t)$ corresponding to the pair $y^plus.minus = (y, plus.minus sqrt(t^2 - abs(x - y)^2))$ with $dif S = t / sqrt(t^2 - abs(x - y)^2) dif y$; the two hemispheres contribute equally, so
+  $
+    t M_bar(g) (x, t) = 1/(2 pi) integral_(B (x, t)) (g (y))/(sqrt(t^2 - abs(x - y)^2)) dif y,
+  $
+  and substituting into Kirchhoff's formula yields Poisson's formula. Note that the integral runs over the full *disk*, not the sphere: this is the mechanism behind the trailing wake and the failure of the strong Huygens principle in even dimensions (§15.4).
 ]
 
 #note[
   *Boundary value problems on bounded domains.* On a bounded interval (vibrating string) or domain (membrane), the wave equation is supplemented by boundary conditions. The standard tool is separation of variables: writing $u (x, t) = sum_k a_k (t) phi_k (x)$ with the eigenfunctions $phi_k$ of the Dirichlet Laplacian (#link(<def:separation-variables>)[Ch. 18]) reduces the problem to decoupled oscillators $a_k'' + lambda_k a_k = 0$. The spectral viewpoint is developed in #link(<def:separation-variables>)[Chapter 18].
 ]
 
-== Energy Conservation // 能量守恒
+== Finite Propagation Speed and Dispersive Decay // 波的传播与衰减
+
+#theorem(name: "Finite Propagation Speed")[
+  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with initial data $(g, h)$ and $(tilde(g), tilde(h))$. If $g = tilde(g)$ and $h = tilde(h)$ on $B (x, a t)$, then $u (x, t) = tilde(u) (x, t)$: the value at $(x, t)$ depends only on the initial data in the ball $overline(B (x, a t))$.
+] <thm:domain-of-dependence>
+
+#proof[
+  By linearity it suffices to show that data supported outside $B (x, a t)$ do not affect $u (x, t)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(x, t)$. The data of $w$ vanish on $C inter {s = 0} = B (x, a t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.], proved in the closing section below) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (x, t) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
+]
+
+#definition(name: "Domains of Dependence, Determinacy and Influence")[
+  The *domain of dependence* of a point $(x, t)$ is the ball $overline(B (x, a t))$: only the data in this ball can influence the value $u (x, t)$. Given a set $D$ on the initial surface, its *domain of determinacy* is the region
+  $
+    {(x, s) : 0 <= s, B (x, a s) subset D},
+  $
+  the part of space-time completely determined by the data on $D$. The *domain of influence* of a point $y$ of the initial surface is the cone
+  $
+    {(x, t) : abs(x - y) <= a t},
+  $
+  the set of space-time points whose values the data at $y$ can affect.
+] <def:domain-dependence-influence>
+
+Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $a$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior.
+
+#note[
+  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (x, t)$ depends only on the data on the *sphere* $partial B (x, a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
+]
+
+#theorem(name: "Dispersive Decay")[
+  Let $u$ be the solution of the Cauchy problem with smooth, compactly supported initial data.
+  - *Odd dimensions* ($n >= 3$): $u (x, t) = 0$ as soon as $t > "dist"(x, "supp"(g, h))$ — after the wave front passes, the medium returns to rest (the *strong Huygens principle*).
+  - *Even dimensions* ($n = 2$): in general $u (x, t)$ does not vanish behind the front (trailing wake), and $abs(u (x, t)) <= C t^(-1/2)$ uniformly in $x$ as $t -> oo$ (the *weak Huygens principle*, or *dispersion*).
+] <thm:dispersive-decay>
+
+#proof[
+  (Sketch.) Both statements are read off the explicit formulas of §15.3. In three dimensions, Kirchhoff's formula involves only spherical means over $partial B (x, a t)$: the sphere meets the initial support only while $a t$ lies between the nearest and the farthest distance from $x$ to the support — after that $u (x, t) = 0$. In two dimensions, Poisson's formula integrates over the full disk $B (x, a t)$ with the weight $(t^2 - abs(x - y)^2)^(-1/2)$, which is nonzero for all large $t$ (the wake); the dominant contribution as $t -> oo$ comes from the rim $abs(x - y) approx a t$, where the weight is barely integrable, and the resulting uniform bound is $O(t^(-1/2))$ — consistent with the general dispersive rate $t^(-(n-1)/2)$.
+]
+
+== Energy Inequality, Uniqueness and Stability // 能量不等式、唯一性与稳定性
 
 #theorem(name: "Conservation of Energy")[
   Let $u$ be a $C^2$ solution of the wave equation $(partial^2 u)/(partial t^2) = Delta u$ in $Omega subset bb(R)^n$ with either $u = 0$ or $(partial u)/(partial nu) = 0$ on $partial Omega$. Then the energy
@@ -2923,74 +3012,6 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 
 #proof[
   Immediate from the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) applied to $w = u - v$, whose initial energy is bounded by the data on $B (x_0, a t_0)$.
-]
-
-== Finite Propagation Speed // 有限传播速度
-
-#theorem(name: "Finite Propagation Speed")[
-  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with initial data $(g, h)$ and $(tilde(g), tilde(h))$. If $g = tilde(g)$ and $h = tilde(h)$ on $B (x, a t)$, then $u (x, t) = tilde(u) (x, t)$: the value at $(x, t)$ depends only on the initial data in the ball $overline(B (x, a t))$.
-] <thm:domain-of-dependence>
-
-#proof[
-  By linearity it suffices to show that data supported outside $B (x, a t)$ do not affect $u (x, t)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(x, t)$. The data of $w$ vanish on $C inter {s = 0} = B (x, a t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (x, t) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
-]
-
-#definition(name: "Domains of Dependence, Determinacy and Influence")[
-  The *domain of dependence* of a point $(x, t)$ is the ball $overline(B (x, a t))$: only the data in this ball can influence the value $u (x, t)$. Given a set $D$ on the initial surface, its *domain of determinacy* is the region
-  $
-    {(x, s) : 0 <= s, B (x, a s) subset D},
-  $
-  the part of space-time completely determined by the data on $D$. The *domain of influence* of a point $y$ of the initial surface is the cone
-  $
-    {(x, t) : abs(x - y) <= a t},
-  $
-  the set of space-time points whose values the data at $y$ can affect.
-] <def:domain-dependence-influence>
-
-Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $a$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior.
-
-#note[
-  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (x, t)$ depends only on the data on the *sphere* $partial B (x, a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
-]
-
-#theorem(name: "Dispersive Decay")[
-  Let $u$ be the solution of the Cauchy problem with smooth, compactly supported initial data.
-  - *Odd dimensions* ($n >= 3$): $u (x, t) = 0$ as soon as $t > "dist"(x, "supp"(g, h))$ — after the wave front passes, the medium returns to rest (the *strong Huygens principle*).
-  - *Even dimensions* ($n = 2$): in general $u (x, t)$ does not vanish behind the front (trailing wake), and $abs(u (x, t)) <= C t^(-1/2)$ uniformly in $x$ as $t -> oo$ (the *weak Huygens principle*, or *dispersion*).
-] <thm:dispersive-decay>
-
-#proof[
-  (Sketch.) Both statements are read off the explicit formulas of §15.2. In three dimensions, Kirchhoff's formula involves only spherical means over $partial B (x, a t)$: the sphere meets the initial support only while $a t$ lies between the nearest and the farthest distance from $x$ to the support — after that $u (x, t) = 0$. In two dimensions, Poisson's formula integrates over the full disk $B (x, a t)$ with the weight $(t^2 - abs(x - y)^2)^(-1/2)$, which is nonzero for all large $t$ (the wake); the dominant contribution as $t -> oo$ comes from the rim $abs(x - y) approx a t$, where the weight is barely integrable, and the resulting uniform bound is $O(t^(-1/2))$ — consistent with the general dispersive rate $t^(-(n-1)/2)$.
-]
-
-== Duhamel Principle // Duhamel 原理
-
-#theorem(name: "Duhamel's Principle for the Wave Equation")[
-  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, h)$: $S (t) h = w (dot, t)$, where $(partial^2 w)/(partial t^2) = Delta w$, $w (dot, 0) = 0$, $partial_t w (dot, 0) = h$. Then the solution of the inhomogeneous problem
-  $
-    (partial^2 u)/(partial t^2) = Delta u + f, quad u (dot, 0) = 0, quad partial_t u (dot, 0) = 0,
-  $
-  is given by
-  $
-    u (x, t) = integral_0^t S (t - s) f (s, dot) (x) dif s.
-  $
-  For general data, superpose the homogeneous solution with this formula.
-] <thm:duhamel-wave>
-
-#proof[
-  Let $w (t, s; x)$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $partial_t w (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$. Define $u (dot, t) = integral_0^t w (t, s; dot) dif s$. Then $u (dot, 0) = 0$, $partial_t u (dot, 0) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $partial_t w (t, t; dot) = f (t, dot)$):
-  $
-    (partial^2 u)/(partial t^2) - Delta u = (partial_t w) (t, t; dot) + integral_0^t ((partial^2 w)/(partial t^2) - Delta w) dif s = f (t, dot),
-  $
-  since each $w$ is a homogeneous solution. Uniqueness (#link(<cor:wave-uniqueness>)[Cor.]) identifies $u$ as the solution.
-]
-
-#note[
-  The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 13]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is explicitly given by the d'Alembert / Kirchhoff / Poisson formulas of §15.1–15.2, so Duhamel's principle yields explicit solutions of the *inhomogeneous* Cauchy problem in every dimension. In three dimensions, for instance,
-  $
-    u (x, t) = partial_t (t M_g (x, t)) + t M_h (x, t) + integral_0^t 1/(4 pi (t - s)) integral_(partial B (x, t - s)) f (s, y) dif S dif s,
-  $
-  the inhomogeneous counterpart of Kirchhoff's formula; the two-dimensional analogue follows from Poisson's formula.
 ]
 
 = Linear Hyperbolic Systems // 线性双曲系统
@@ -3319,7 +3340,7 @@ This closing part of the notes collects the classical method of separation of va
   $
     u (x, t) = sum_(k=1)^oo (a_k cos (omega_k t) + b_k sin (omega_k t)) sin (k pi x/L),
   $
-  with $a_k = 2/L integral_0^L g (x) sin (k pi x/L) dif x$ and $b_k = 2/(L omega_k) integral_0^L h (x) sin (k pi x/L) dif x$. The eigenfrequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = a pi/L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (Chapter 15, #link(<thm:wave-energy>)[§15.3]).
+  with $a_k = 2/L integral_0^L g (x) sin (k pi x/L) dif x$ and $b_k = 2/(L omega_k) integral_0^L h (x) sin (k pi x/L) dif x$. The eigenfrequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = a pi/L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (Chapter 15, #link(<thm:wave-energy>)[§15.5]).
 ] <ex:wave-separation>
 
 #example(name: "Laplace Equation on a Rectangle")[
