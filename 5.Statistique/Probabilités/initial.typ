@@ -1895,6 +1895,47 @@ intimately related to the exponential and the uniform respectively.
   moments are recovered.
 ]
 
+#definition(name: "Chi-Squared Distribution")[
+  A random variable $X$ has the *chi-squared distribution* with $n$
+  degrees of freedom, written $X ~ chi^2 (n)$, if $X ~ "Ga"(n / 2, 1 / 2)$
+  — the Gamma family restricted to the shape–rate pairs $(n / 2, 1 / 2)$:
+  $
+    f(x) = 1 / (2^(n \/ 2) "Gamma"(n \/ 2)) x^(n \/ 2 - 1) e^(-x \/ 2), quad x >= 0.
+  $
+] <def:chi-squared-dist>
+
+#property(name: "Mean, Variance and Additivity of the Chi-Squared")[
+  If $X ~ chi^2 (n)$, then
+  $
+    E[X] = n, quad "Var"(X) = 2 n.
+  $
+  Moreover, if $X_1, dots, X_k$ are independent with $X_i ~ chi^2 (n_i)$,
+  then
+  $
+    X_1 + dots + X_k ~ chi^2 (n_1 + dots + n_k).
+  $
+] <prop:chi-squared-moments>
+
+#proof[
+  The moments follow from #link(<prop:gamma-mean-variance>)[the Gamma
+    moments] with $(alpha, lambda) = (n / 2, 1 / 2)$:
+  $E[X] = (n / 2) / (1 / 2) = n$ and $"Var"(X) = (n / 2) / (1 / 2)^2 = 2 n$.
+  For additivity it suffices to establish additivity of the Gamma family
+  at a common rate. Let $X ~ "Ga"(alpha, lambda)$ and
+  $Y ~ "Ga"(beta, lambda)$ be independent; the convolution formula gives,
+  for $t >= 0$,
+  $
+    f_(X + Y)(t) = integral_0^t f_(X)(x) f_(Y)(t - x) dif x
+    = (lambda^(alpha + beta) e^(-lambda t)) / ("Gamma"(alpha) "Gamma"(beta)) integral_0^t x^(alpha - 1) (t - x)^(beta - 1) dif x,
+  $
+  and the substitution $x = t u$ turns the last integral into
+  $t^(alpha + beta - 1) "B"(alpha, beta)$; since
+  $"B"(alpha, beta) = ("Gamma"(alpha) "Gamma"(beta)) / "Gamma"(alpha + beta)$,
+  the density of $X + Y$ is exactly that of $"Ga"(alpha + beta, lambda)$.
+  Taking $(alpha, beta) = (n_1 / 2, n_2 / 2)$ with $lambda = 1 / 2$ and
+  iterating gives the claim.
+]
+
 #definition(name: "Beta Distribution")[
   A random variable $X$ has the *Beta distribution* with parameters
   $a > 0$, $b > 0$, written $X ~ "Be"(a, b)$, if
@@ -1955,8 +1996,9 @@ and conjugate Bayesian analysis.
   $X / (X + Y) ~ "Be"(a, b)$ — a Gamma-to-Beta transformation that
   generalizes the ratio of two independent chi-squared variables. The
   normal distribution connects to the Gamma family through $X^2$ for
-  $X ~ N(0, 1)$, which is $"Ga"(1\/2, 1\/2)$ — the chi-squared distribution
-  with one degree of freedom, to be met again in the sampling distributions
+  $X ~ N(0, 1)$, which is $"Ga"(1\/2, 1\/2)$ — i.e.
+  #link(<def:chi-squared-dist>)[the chi-squared distribution] with one
+  degree of freedom, to be met again in the sampling distributions
   chapter.
 ]
 
