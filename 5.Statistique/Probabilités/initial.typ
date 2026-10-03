@@ -1237,22 +1237,19 @@ series depend on summation order, which has no probabilistic meaning.
 #example[
   Common expectations (verified by direct computation or LOTUS):
 
-  #table(
-    columns: 2,
-    align: (left, center),
-    table.header([Distribution], [$E[X]$]),
-    table.hline(),
-    [$"Ber"(p)$], [$p$],
-    [$B(n, p)$], [$n p$],
-    [$"Pois"(lambda)$], [$lambda$],
-    [$"Geo"(p)$], [$1 / p$],
-    [$"NB"(r, p)$], [$r / p$],
-    [$"Hyp"(N, K, n)$], [$n K \/ N$],
-    [$U(a, b)$], [$(a+b) / 2$],
-    [$"Exp"(lambda)$], [$1 / lambda$],
-    [$N(mu, sigma^2)$], [$mu$],
-    [$"Ga"(alpha, lambda)$], [$alpha / lambda$],
-    [$"Be"(a, b)$], [$a / (a+b)$],
+  #tex-table(
+    ("Distribution", $E[X]$),
+    ($"Ber"(p)$, $p$),
+    ($B(n, p)$, $n p$),
+    ($"Pois"(lambda)$, $lambda$),
+    ($"Geo"(p)$, $1 / p$),
+    ($"NB"(r, p)$, $r / p$),
+    ($"Hyp"(N, K, n)$, $n K \/ N$),
+    ($U(a, b)$, $(a+b) / 2$),
+    ($"Exp"(lambda)$, $1 / lambda$),
+    ($N(mu, sigma^2)$, $mu$),
+    ($"Ga"(alpha, lambda)$, $alpha / lambda$),
+    ($"Be"(a, b)$, $a / (a+b)$),
   )
 
   For instance, $E["Exp"(lambda)] = integral_0^infinity x lambda exp(-lambda x) dif x = 1 / lambda$ by integration by parts.
@@ -2458,17 +2455,14 @@ probabilistic statement that the MGF determines the distribution.
 #example[
   Common MGFs (computed from the definition via LOTUS):
 
-  #table(
-    columns: 3,
-    align: (left, center, center),
-    table.header([Distribution], [$M_(X)(t)$], [Domain]),
-    table.hline(),
-    [$"Ber"(p)$], [$1 - p + p exp(t)$], [$RR$],
-    [$B(n, p)$], [$(1 - p + p exp(t))^n$], [$RR$],
-    [$"Pois"(lambda)$], [$exp(lambda (exp(t) - 1))$], [$RR$],
-    [$"Exp"(lambda)$], [$lambda / (lambda - t)$], [$t < lambda$],
-    [$"Ga"(alpha, lambda)$], [$(lambda / (lambda - t))^alpha$], [$t < lambda$],
-    [$N(mu, sigma^2)$], [$exp(mu t + sigma^2 t^2 / 2)$], [$RR$],
+  #tex-table(
+    ("Distribution", $M_(X)(t)$, "Domain"),
+    ($"Ber"(p)$, $1 - p + p exp(t)$, $RR$),
+    ($B(n, p)$, $(1 - p + p exp(t))^n$, $RR$),
+    ($"Pois"(lambda)$, $exp(lambda (exp(t) - 1))$, $RR$),
+    ($"Exp"(lambda)$, $lambda / (lambda - t)$, $t < lambda$),
+    ($"Ga"(alpha, lambda)$, $(lambda / (lambda - t))^alpha$, $t < lambda$),
+    ($N(mu, sigma^2)$, $exp(mu t + sigma^2 t^2 / 2)$, $RR$),
   )
 
   For the normal: $M_(X)(t) = E[exp(t(mu + sigma Z))] = exp(mu t)
@@ -2635,15 +2629,12 @@ independent variables, and analysing compound distributions.
 #example[
   Common PGFs:
 
-  #table(
-    columns: 2,
-    align: (left, center),
-    table.header([Distribution], [$G_(X)(s)$]),
-    table.hline(),
-    [$"Ber"(p)$], [$1 - p + p s$],
-    [$B(n, p)$], [$(1 - p + p s)^n$],
-    [$"Geo"(p)$], [$(p s) / (1 - (1-p) s)$],
-    [$"Pois"(lambda)$], [$exp(lambda (s - 1))$],
+  #tex-table(
+    ("Distribution", $G_(X)(s)$),
+    ($"Ber"(p)$, $1 - p + p s$),
+    ($B(n, p)$, $(1 - p + p s)^n$),
+    ($"Geo"(p)$, $(p s) / (1 - (1-p) s)$),
+    ($"Pois"(lambda)$, $exp(lambda (s - 1))$),
   )
 
   These are verified by direct summation. For instance, the Poisson PGF:
@@ -2696,20 +2687,21 @@ through the exponential factor.
   Each of the following admits the canonical form; the table lists the
   ingredients.
 
-  #table(
-    columns: 5,
-    align: (left, center, center, center, center),
-    table.header([Distribution], [$eta$], [$T(x)$], [$A(theta)$], [$h(x)$]),
-    table.hline(),
-    [$"Pois"(lambda)$], [$ln lambda$], [$x$], [$lambda$], [$1 / x!$],
-    [$"Ber"(p)$], [$ln(p / (1-p))$], [$x$], [$-ln(1-p)$], [$1$],
-    [$B(n, p)$], [$ln(p / (1-p))$], [$x$], [$-n ln(1-p)$], [$binom(n, x)$],
-    [$"Exp"(lambda)$], [$-lambda$], [$x$], [$-ln lambda$], [$1$],
-    [$"Ga"(alpha, lambda)$], [$(-lambda, alpha)$], [$(x, ln x)$],
-    [$ln "Gamma"(alpha) - alpha ln lambda$], [$1 / x$],
-    [$N(mu, sigma^2)$ ($sigma$ known)], [$mu / sigma^2$], [$x$],
-    [$mu^2 / (2 sigma^2) + ln sigma$], [$exp(-x^2 / (2 sigma^2)) / sqrt(2 pi)$],
-    [$"Be"(a, b)$], [$(a-1, b-1)$], [$(ln x, ln(1-x))$], [$ln "B"(a, b)$], [$1$],
+  #tex-table(
+    ("Distribution", $eta$, $T(x)$, $A(theta)$, $h(x)$),
+    ($"Pois"(lambda)$, $ln lambda$, $x$, $lambda$, $1 / x!$),
+    ($"Ber"(p)$, $ln(p / (1-p))$, $x$, $-ln(1-p)$, $1$),
+    ($B(n, p)$, $ln(p / (1-p))$, $x$, $-n ln(1-p)$, $binom(n, x)$),
+    ($"Exp"(lambda)$, $-lambda$, $x$, $-ln lambda$, $1$),
+    ($"Ga"(alpha, lambda)$, $(-lambda, alpha)$, $(x, ln x)$, $ln "Gamma"(alpha) - alpha ln lambda$, $1 / x$),
+    (
+      [$N(mu, sigma^2)$ ($sigma$ known)],
+      $mu / sigma^2$,
+      $x$,
+      $mu^2 / (2 sigma^2) + ln sigma$,
+      $exp(-x^2 / (2 sigma^2)) / sqrt(2 pi)$,
+    ),
+    ($"Be"(a, b)$, $(a-1, b-1)$, $(ln x, ln(1-x))$, $ln "B"(a, b)$, $1$),
   )
 ] <prop:exp-family-members>
 
