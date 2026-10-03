@@ -1671,6 +1671,35 @@ $(bb(Z)_6, +)$ has $phi(6) = 2$ generators, $[1]$ and $[5]$.
   supplement: [Fig.],
 ) <fig:cyclic-circle>
 
+#corollary(name: "Number of Subgroups of a Cyclic Group")[
+  A cyclic group of order $n$ has exactly $T(n)$ subgroups, where
+  $
+    T(n) = (k_1 + 1)(k_2 + 1) dots (k_m + 1)
+  $
+  for the prime factorization
+  $n = p_1^(k_1) p_2^(k_2) dots p_m^(k_m)$ — the number of positive
+  divisors of $n$.
+] <cor:cyclic-subgroup-count>
+
+#proof[
+  By the subgroup classification
+  (#link(<thm:cyclic-subgroups>)[the theorem above]), the map
+  $d arrow.r.double ⟨g^(n \/ d)⟩$ is a bijection from the positive
+  divisors of $n$ to the subgroups: every divisor $d$ yields a
+  subgroup of order $d$, and every subgroup arises from exactly one
+  divisor. Counting subgroups is therefore counting divisors. By
+  unique factorization, a positive divisor of
+  $n = p_1^(k_1) dots p_m^(k_m)$ has the form
+  $p_1^(l_1) dots p_m^(l_m)$ in which each exponent
+  $0 <= l_i <= k_i$ is chosen independently of the others: $k_1 + 1$
+  choices for the first, $dots$, $k_m + 1$ for the last. In total,
+  $(k_1 + 1) dots (k_m + 1)$ divisors, hence as many subgroups.
+]
+
+For the clock of #link(<fig:cyclic-circle>)[the figure above] this
+gives $T(6) = (1 + 1)(1 + 1) = 4$ subgroups — the whole group, the
+triangle, the diameter, and the trivial one — no more, no fewer.
+
 The cyclic groups thus close the thread left open in Chapter 2: the
 power sets hovering around $(bb(Z), +)$ and $(bb(Z)_n, +)$ are now
 groups with a complete structure theory. The chapter returns to
