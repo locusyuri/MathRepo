@@ -4983,6 +4983,169 @@ surprising question: which polynomials take integer values at
 integers — and how arbitrary data can be interpolated by a polynomial
 of the right degree.
 
+= Integer-Valued Polynomials and Interpolation // 整值多项式与插值
+
+A polynomial with rational coefficients usually produces rational
+values, yet some of them — the binomial coefficients above all — land
+on integers at every integer input. This chapter studies that
+arithmetic filter and then turns it around: just as the binomial
+basis is adapted to the integers, the Lagrange basis is adapted to
+any finite set of data points. Both are "change of basis" stories,
+and both echo themes from the rest of the notebook — the binomial
+basis stands behind the middle-binomial-coefficient estimates of
+Chapter 8, and interpolation is the uniqueness half of the root-count
+arguments of Chapter 12.
+
+== Integer-Valued Polynomials // 整值多项式
+
+#definition(name: "Integer-Valued Polynomial")[
+  A polynomial $f in bb(Q)[x]$ is *integer-valued* if
+  $
+    f(n) in bb(Z) quad "for every" quad n in bb(Z).
+  $
+  The set of integer-valued polynomials is denoted $cal("Int")(bb(Z))$.
+] <def:integer-valued>
+
+Every polynomial with integer coefficients is integer-valued, but the
+converse fails — and the failure is instructive.
+
+#example(name: "Binomial Coefficients are Integer-Valued")[
+  For $k >= 1$ define the *binomial polynomial*
+  $
+    binom(x, k) = (x (x - 1) dots (x - k + 1))\/k!.
+  $
+  Its coefficients are not integers (already
+  $binom(x, 2) = (x^2 - x)\/2$ has leading coefficient $1\/2$), yet
+  for every $n in bb(Z)$, the value $binom(n, k)$ is an integer: for
+  $n >= k$ this is the ordinary binomial coefficient counting the
+  $k$-subsets of an $n$-set, and for $n < 0$ one has the identity
+  $binom(n, k) = (-1)^k binom(k - n - 1, k)$ with $k - n - 1 >= 0$;
+  the remaining cases $0 <= n < k$ give $0$ (a factor in the
+  numerator vanishes). Hence
+  $
+    bb(Z)[x] subset.neq cal("Int")(bb(Z)).
+  $
+] <ex:integer-valued-example>
+
+#note[
+  Integer-valuedness is an arithmetic property, not an algebraic one:
+  $cal("Int")(bb(Z))$ is closed under addition and multiplication
+  (products of integer values are integers), so it is a ring strictly
+  larger than $bb(Z)[x]$. The counting argument in the example —
+  values at integers are integers because they count something — is
+  the same style of proof as the floor-sum identity
+  #link(<prop:hermite-identity>)[§1.1] and the Legendre formula of
+  Chapter 8.
+]
+
+== The Binomial Polynomial Basis // 二项式系数基
+
+The binomial polynomials form a basis of $bb(Q)[x]$ (they have
+distinct degrees), and they cut $cal("Int")(bb(Z))$ out with integer
+coordinates.
+
+#theorem(name: "Binomial Basis Theorem")[
+  A polynomial $f in bb(Q)[x]$ of degree $<= d$ is integer-valued if
+  and only if it has a unique expansion
+  $
+    f(x) = sum_(k=0)^d c_k binom(x, k) quad "with" quad c_k in bb(Z).
+  $
+] <thm:binomial-basis>
+
+#proof(name: "of the theorem")[
+  *Sufficiency* is #link(<ex:integer-valued-example>)[the example]:
+  each $binom(x, k)$ is integer-valued and $cal("Int")(bb(Z))$ is
+  closed under integer linear combinations.
+
+  *Necessity.* Since the polynomials $binom(x, k)$, $k = 0, dots, d$,
+  have distinct degrees, they are linearly independent and span the
+  polynomials of degree $<= d$; so $f$ has a unique expansion
+  $f = sum_(k=0)^d c_k binom(x, k)$ over $bb(Q)$. We prove that all
+  $c_k$ are integers, by induction on $d$. For $d = 0$,
+  $c_0 = f(0) in bb(Z)$. For $d >= 1$, apply the difference operator
+  $(Delta f)(x) = f(x + 1) - f(x)$: the leading terms cancel, so
+  $Delta f$ has degree $<= d - 1$ and is again integer-valued, and
+  the identity $binom(x + 1, k) - binom(x, k) = binom(x, k - 1)$
+  gives
+  $
+    (Delta f)(x) = sum_(k=1)^d c_k binom(x, k - 1).
+  $
+  By the induction hypothesis applied to $Delta f$, the coefficients
+  $c_2, dots, c_d$ are integers. For the two that remain: evaluating
+  the expansion at $x = 0$, where $binom(0, k) = 0$ for $k >= 1$,
+  gives $c_0 = f(0) in bb(Z)$; and
+  $(Delta f)(0) = c_1$, because $binom(0, j) = 0$ for $j >= 1$ kills
+  every other term — while $(Delta f)(0) = f(1) - f(0) in bb(Z)$, so
+  $c_1 in bb(Z)$.
+]
+
+The coefficients $c_k$ have a name: $c_k = (Delta^k f)(0)$, the
+$k$-th finite difference at $0$ — the polynomial cousin of the
+Taylor coefficients, with $Delta$ in place of the derivative.
+
+== Lagrange Interpolation // Lagrange 插值
+
+Where the binomial basis fits the lattice of integers, the Lagrange
+basis fits arbitrary data: any finite table of values is realized by
+exactly one polynomial of bounded degree.
+
+#theorem(name: "Lagrange Interpolation")[
+  Let $x_0, x_1, dots, x_n$ be $n + 1$ *distinct* elements of $P$ and
+  $y_0, y_1, dots, y_n$ arbitrary elements of $P$. There exists
+  exactly one polynomial $f in P[x]$ of degree $<= n$ with
+  $
+    f(x_i) = y_i quad "for" quad i = 0, 1, dots, n.
+  $
+  Explicitly,
+  $
+    f(x) = sum_(i=0)^n y_i L_(i)(x), quad
+    L_(i)(x) = product_(j != i) (x - x_j)\/(x_i - x_j).
+  $
+] <thm:lagrange-interpolation>
+
+#proof(name: "of the theorem")[
+  *Existence.* Each $L_(i)$ is a product of $n$ linear factors, so
+  $"deg"(L_(i)) = n$, and $L_(i)(x_i) = 1$ while $L_(i)(x_j) = 0$ for
+  $j != i$ (one factor vanishes). Hence
+  $f = sum y_i L_(i)$ has degree $<= n$ and $f(x_i) = y_i$.
+
+  *Uniqueness.* If $f$ and $g$ both work, then $f - g$ has degree
+  $<= n$ but vanishes at the $n + 1$ distinct points $x_i$. A nonzero
+  polynomial of degree $<= n$ over a field has at most $n$ roots
+  (the same induction as in #link(<lem:poly-roots-bound>)[§5.2],
+  via the factor theorem), so $f - g = 0$.
+]
+
+#example(name: "Interpolating Three Points")[
+  Fit a polynomial of degree $<= 2$ through $(0, 1)$, $(1, 2)$ and
+  $(2, 5)$. The Lagrange construction gives
+  $
+    f(x) = 1 dot ((x - 1)(x - 2))\/((0 - 1)(0 - 2))
+    + 2 dot ((x - 0)(x - 2))\/((1 - 0)(1 - 2))
+    + 5 dot ((x - 0)(x - 1))\/((2 - 0)(2 - 1)),
+  $
+  which simplifies to $f(x) = x^2 + 1$. Spot check:
+  $f(0) = 1$, $f(1) = 2$, $f(2) = 5$ — and by uniqueness no other
+  quadratic fits.
+] <ex:interpolation-example>
+
+#note[
+  Uniqueness is what makes interpolation useful in proofs: to verify
+  an identity between polynomials of degree $<= n$ it suffices to
+  check $n + 1$ values. The same principle ran under the polynomial
+  counting arguments of Chapters 5 and 6, where two degree-$<= (p -
+    1)\/2$ polynomials over $bb(Z)_p$ agreed on enough classes to be
+  identical.
+]
+
+This chapter closes the arithmetic study of $P[x]$ on its most
+concrete note: integer-valued polynomials are exactly the integer
+combinations of binomial polynomials, and data points pin down
+polynomials as uniquely as primes pin down integers. The final
+chapter steps into several variables, where symmetry itself becomes
+the object of study.
+
+
 
 
 
