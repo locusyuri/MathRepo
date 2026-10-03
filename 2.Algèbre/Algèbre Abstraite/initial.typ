@@ -1932,17 +1932,30 @@ to isomorphism, a group of permutations of some set.
   composition of maps. Equipped with this multiplication, $T_X$ is a
   monoid (#link(<def:monoid>)[§2.1]): composition is associative and
   the identity map is neutral, but a general transformation has no
-  reason to be invertible. A subset $G subset.eq T_X$ that forms a
-  group under this multiplication is called a *transformation group*
-  on $X$.
+  reason to be invertible.
+
+  A subset $G subset.eq T_X$ that forms a group under this multiplication is called a *transformation group* on $X$.
 ] <def:transformation-group>
 
-The group axioms settle invertibility on their own: every element of
-a transformation group has an inverse, and a map with a two-sided
-inverse under composition is a bijection. So a transformation group
-is automatically a subgroup of $"Sym"(X)$ — the invertible elements
-of the monoid $T_X$ are precisely the permutations of $X$, and
-$"Sym"(X)$ is their group of units.
+#definition(name: "The Symmetric Group and Permutation Groups")[
+  The invertible elements of the monoid $T_X$ are precisely the
+  bijections $X -> X$ — the *permutations* of $X$, as defined in
+  #link(<def:symmetric-group>)[Chapter 2]. Under composition they
+  form a group, the *symmetric group* $"Sym"(X)$: it is the group of
+  units of the monoid $T_X$. A *permutation group* on $X$ is a
+  subgroup of $"Sym"(X)$.
+] <def:permutation-group>
+
+#note[
+  (Must a permutation group be finite?) Some introductory textbooks
+  reserve the word "permutation" for bijections of the finite set
+  ${1, 2, dots, n}$ and by a *permutation group* mean a subgroup of
+  some $S_n$ — necessarily finite. Under the general convention
+  adopted here, a permutation group on an infinite set is perfectly
+  legitimate, and the term *transformation group* is then used as a
+  synonym. The two usages agree wherever they overlap; Cayley's
+  theorem below is a place where infinity genuinely occurs.
+] <note:permutation-group-finiteness>
 
 #theorem(name: "Cayley's Theorem")[
   Every group $G$ is isomorphic to a transformation group — indeed,
