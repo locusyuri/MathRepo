@@ -633,8 +633,8 @@ symmetries, the quaternions.
 #definition(name: "Symmetric Group")[
   Let $X$ be a set. A *permutation* of $X$ is a bijection
   $sigma: X -> X$. Under composition the permutations of $X$ form a
-  group, the *symmetric group* on $X$; for $X = {1, 2, dots, n}$ it
-  is written $S_n$.
+  group, the *symmetric group* on $X$, written $S_X$; for
+  $X = {1, 2, dots, n}$ it is written $S_n$.
 ] <def:symmetric-group>
 
 The group axioms are read off from general set theory: the composite
@@ -1941,9 +1941,9 @@ to isomorphism, a group of permutations of some set.
   The invertible elements of the monoid $T_X$ are precisely the
   bijections $X -> X$ — the *permutations* of $X$, as defined in
   #link(<def:symmetric-group>)[Chapter 2]. Under composition they
-  form a group, the *symmetric group* $"Sym"(X)$: it is the group of
+  form a group, the *symmetric group* $S_X$: it is the group of
   units of the monoid $T_X$. A *permutation group* on $X$ is a
-  subgroup of $"Sym"(X)$.
+  subgroup of $S_X$.
 ] <def:permutation-group>
 
 #note[
@@ -1957,9 +1957,82 @@ to isomorphism, a group of permutations of some set.
   theorem below is a place where infinity genuinely occurs.
 ] <note:permutation-group-finiteness>
 
+The two definitions raise the question of when a transformation
+group deserves the name permutation group, and the answer is a
+single test.
+
+#theorem(name: "The Permutation Group Criterion")[
+  Let $G$ be a transformation group on a set $X$, and let $e$ be the
+  identity element of $G$. Then the following are equivalent:
+  - $G$ is a permutation group;
+  - $e$ is the identity map $"id"_X$;
+  - $G$ contains an injective transformation;
+  - $G$ contains a surjective transformation.
+] <thm:permutation-group-criterion>
+
+#proof[
+  Throughout, $e circle g = g$ for every $g in G$.
+
+  (1 ==> 2) A permutation group is a subgroup of $S_X$, hence
+  contains the identity map; the identity element of a group being
+  unique, $e = "id"_X$.
+
+  (2 ==> 1) If $e = "id"_X$, take $g in G$ with group inverse
+  $g^(-1) in G$: then
+  $g^(-1) circle g = g circle g^(-1) = e = "id"_X$. A map with a
+  two-sided inverse under composition is a bijection, so every
+  element of $G$ is a permutation.
+
+  (3 ==> 2) Let $f in G$ be injective. From $f circle e = f$, that
+  is, $f(e(x)) = f(x)$ for all $x in X$, injectivity yields
+  $e(x) = x$ for all $x$, i.e. $e = "id"_X$.
+
+  (4 ==> 2) Let $f in G$ be surjective. From $e circle f = f$ we get
+  $e(y) = y$ for every $y in f(X) = X$, so again $e = "id"_X$.
+]
+
+The criterion forbids mixing: if a transformation group contains
+even a *single* bijective transformation, that element is injective
+and surjective, so the whole group is a permutation group. A
+transformation group is therefore either a permutation group outright
+— all of its elements bijections — or contains no bijection at all:
+the permutation groups and the non-bijective transformation groups
+are two disjoint families, with no borderline case.
+
+#example(name: "Transformation groups without bijections.")[
+  - *Finite.* Let $X = {1, 2, 3, 4}$, writing a transformation as
+    the list of its values, $sigma = (sigma(1), sigma(2), sigma(3),
+      sigma(4))$. Consider
+    $
+      alpha = (1, 1, 3, 4) quad "and" quad beta = (1, 1, 4, 3):
+    $
+    $alpha$ sends both $1$ and $2$ to $1$ and fixes $3, 4$; $beta$
+    swaps $3$ and $4$ but still crushes $2$ onto $1$. Direct
+    computation gives
+    $
+      alpha circle alpha = alpha, quad alpha circle beta = beta
+      circle alpha = beta, quad beta circle beta = alpha.
+    $
+    So ${alpha, beta}$ is closed under composition, $alpha$ serves as
+    the identity element, and $beta$ is its own inverse: a
+    transformation group of order $2$ whose identity element is *not*
+    the identity map. Neither element is injective or surjective, so
+    by the criterion the group is not a permutation group.
+  - *Infinite.* On $X = bb(R)^2$, let
+    $
+      p_a: (x, y) arrow.r.double (x + a, 0) quad (a in bb(R)).
+    $
+    Composition obeys $p_a circle p_b = p_(a + b)$, so $p_0$ is the
+    identity element — again *not* the identity map of $bb(R)^2$ —
+    and $p_a^(-1) = p_(-a)$: the $p_a$ form a transformation group
+    isomorphic to $(bb(R), +)$. Every $p_a$ compresses the whole
+    plane onto the single line $bb(R) times {0}$, so no element is
+    injective or surjective.
+] <ex:non-bijective-transformation-groups>
+
 #theorem(name: "Cayley's Theorem")[
   Every group $G$ is isomorphic to a transformation group — indeed,
-  to a subgroup of $"Sym"(G)$.
+  to a subgroup of $S_G$.
 ] <thm:cayley>
 
 #proof[
@@ -1974,21 +2047,21 @@ to isomorphism, a group of permutations of some set.
     (L_g circle L_h)(x) = L_(g)(h x) = (g h) x = L_(g h)(x),
   $
   so $L_g circle L_h = L_(g h)$. Now let $L(G) = {L_g | g in G}$, a
-  subset of $"Sym"(G)$. It contains the identity map $L_e$, and for
+  subset of $S_G$. It contains the identity map $L_e$, and for
   $L_g, L_h in L(G)$ the criterion computation gives
   $L_g circle L_h^(-1) = L_g circle L_(h^(-1)) = L_(g h^(-1)) in
   L(G)$; by #link(<cor:subgroup-criterion>)[the one-step criterion],
-  $L(G)$ is a subgroup of $"Sym"(G)$ — a transformation group.
+  $L(G)$ is a subgroup of $S_G$ — a transformation group.
   Finally, $g arrow.r.double L_g$ maps $G$ bijectively onto $L(G)$
   (injective: $L_g = L_h$ says $g x = h x$ for all $x$, and $x = e$
   gives $g = h$) and preserves the operation, $L_(g h) = L_g circle
-  L_h$. Hence $G ≅ L(G) <= "Sym"(G)$.
+  L_h$. Hence $G ≅ L(G) <= S_G$.
 ]
 
 #note[
   (What Cayley says, and what it does not.) The theorem exhibits
   every abstract group concretely: $D_3$ as symmetries of a
-  triangle, $Q_8$ inside $"Sym"(Q_8) ≅ S_8$ as $8 times 8$
+  triangle, $Q_8$ inside $S_(Q_8) ≅ S_8$ as $8 times 8$
   permutations. But the embedding is rarely economical — smaller
   permutation representations of $Q_8$ exist — so Cayley is a
   license for concreteness, not a recipe for the best
@@ -1997,8 +2070,8 @@ to isomorphism, a group of permutations of some set.
   launching example of a group action.
 ] <note:regular-action-preview>
 
-Inside $"Sym"(X)$ itself there is bookkeeping to do. For finite $X$
-the elements of $"Sym"(X)$ admit a canonical normal form, and that
+Inside $S_X$ itself there is bookkeeping to do. For finite $X$
+the elements of $S_X$ admit a canonical normal form, and that
 normal form carries an invariant of the first importance.
 
 #lemma(name: "Cycle Decomposition")[
@@ -3241,7 +3314,7 @@ Two equivalent formulations make this explicit.
 #property(name: "Actions as Permutation Representations")[
   Giving an action of $G$ on $X$ is equivalent to giving a homomorphism
   $
-    rho: G -> "Sym"(X),
+    rho: G -> S_X,
   $
   called the *permutation representation* of the action. Under this
   correspondence:
@@ -3256,7 +3329,7 @@ Two equivalent formulations make this explicit.
 The equivalence is immediate: $rho(g) = (x |-> g dot.c x)$ is a
 permutation (with inverse $rho(g^(-1))$) and compatibility says
 $rho(g h) = rho(g) ∘ rho(h)$. Conversely, any homomorphism
-$rho: G -> "Sym"(X)$ defines an action by $g dot.c x = rho(g)(x)$.
+$rho: G -> S_X$ defines an action by $g dot.c x = rho(g)(x)$.
 
 #property(name: "Basic Properties of Actions")[
   Let $G$ act on $X$. For $x in X$:
@@ -3287,7 +3360,7 @@ chapter.
   x = x$ and $(g h) dot.c x = (g h) x = g (h x) = g dot.c (h dot.c
     x)$. The action is faithful ($g dot.c e = g$, so $g dot.c x = x$
   for all $x$ forces $g = e$), and the permutation representation
-  $rho: G -> "Sym"(G)$, $rho(g) = L_g$, is the *left regular
+  $rho: G -> S_G$, $rho(g) = L_g$, is the *left regular
   representation* promised in
   #link(<note:regular-action-preview>)[§3.4].
 
