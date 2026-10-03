@@ -1977,34 +1977,37 @@ The standard families, with their laws and the numerical characteristics
 derived in this chapter:
 
 #figure(
-  table(
-    columns: 5,
-    align: (left, center, center, center, center),
-    table.header([Distribution], [PMF / PDF], [Support], [$E[X]$], [$"Var"(X)$]),
-    table.hline(),
-    [$"Ber"(p)$], [$p^x q^(1-x)$], [${0, 1}$], [$p$], [$p q$],
-    [$B(n, p)$], [$binom(n, k) p^k q^(n-k)$], [${0, dots, n}$], [$n p$], [$n p q$],
-    [$"Pois"(lambda)$], [$(lambda^k e^(-lambda)) / k!$], [$ZZ_{>= 0}$], [$lambda$], [$lambda$],
-    [$"Hyp"(N, K, n)$],
-    [$(binom(K, k) binom(N - K, n - k)) / binom(N, n)$],
-    [${max(0, n+K-N), dots, min(K, n)}$],
-    [$n K \/ N$],
-    [$n p (1-p) (N-n) / (N-1)$],
-    [$"Geo"(p)$], [$q^(k-1) p$], [${1, 2, dots}$], [$1 / p$], [$q / p^2$],
-    [$"NB"(r, p)$], [$binom(k - 1, r - 1) p^r q^(k - r)$], [${r, r+1, dots}$], [$r / p$], [$r q / p^2$],
-    [$U(a, b)$], [$1 / (b - a)$], [$[a, b]$], [$(a + b) / 2$], [$(b - a)^2 / 12$],
-    [$"Exp"(lambda)$], [$lambda e^(-lambda x)$], [${x >= 0}$], [$1 / lambda$], [$1 / lambda^2$],
-    [$N(mu, sigma^2)$], [$(1 / (sigma sqrt(2 pi))) exp(-(x - mu)^2 / (2 sigma^2))$], [RR], [$mu$], [$sigma^2$],
-    [$"Ga"(alpha, lambda)$],
-    [$(lambda^alpha / "Gamma"(alpha)) x^(alpha - 1) e^(-lambda x)$],
-    [${x >= 0}$],
-    [$alpha / lambda$],
-    [$alpha / lambda^2$],
-    [$"Be"(a, b)$],
-    [$(1 / B(a, b)) x^(a - 1) (1 - x)^(b - 1)$],
-    [$[0, 1]$],
-    [$a / (a + b)$],
-    [$(a b) / ((a + b)^2 (a + b + 1))$],
+  tex-table(
+    ([Distribution], [PMF / PDF], [Support], [$E[X]$], [$"Var"(X)$]),
+    ([$"Ber"(p)$], [$p^x q^(1-x)$], [${0, 1}$], [$p$], [$p q$]),
+    ([$B(n, p)$], [$binom(n, k) p^k q^(n-k)$], [${0, dots, n}$], [$n p$], [$n p q$]),
+    ([$"Pois"(lambda)$], [$(lambda^k e^(-lambda)) / k!$], [$ZZ_{>= 0}$], [$lambda$], [$lambda$]),
+    (
+      [$"Hyp"(N, K, n)$],
+      [$(binom(K, k) binom(N - K, n - k)) / binom(N, n)$],
+      [${max(0, n+K-N), dots, min(K, n)}$],
+      [$n K \/ N$],
+      [$n p (1-p) (N-n) / (N-1)$],
+    ),
+    ([$"Geo"(p)$], [$q^(k-1) p$], [${1, 2, dots}$], [$1 / p$], [$q / p^2$]),
+    ([$"NB"(r, p)$], [$binom(k - 1, r - 1) p^r q^(k - r)$], [${r, r+1, dots}$], [$r / p$], [$r q / p^2$]),
+    ([$U(a, b)$], [$1 / (b - a)$], [$[a, b]$], [$(a + b) / 2$], [$(b - a)^2 / 12$]),
+    ([$"Exp"(lambda)$], [$lambda e^(-lambda x)$], [${x >= 0}$], [$1 / lambda$], [$1 / lambda^2$]),
+    ([$N(mu, sigma^2)$], [$(1 / (sigma sqrt(2 pi))) exp(-(x - mu)^2 / (2 sigma^2))$], [RR], [$mu$], [$sigma^2$]),
+    (
+      [$"Ga"(alpha, lambda)$],
+      [$(lambda^alpha / "Gamma"(alpha)) x^(alpha - 1) e^(-lambda x)$],
+      [${x >= 0}$],
+      [$alpha / lambda$],
+      [$alpha / lambda^2$],
+    ),
+    (
+      [$"Be"(a, b)$],
+      [$(1 / B(a, b)) x^(a - 1) (1 - x)^(b - 1)$],
+      [$[0, 1]$],
+      [$a / (a + b)$],
+      [$(a b) / ((a + b)^2 (a + b + 1))$],
+    ),
   ),
   caption: [The common distributions with their laws, supports, means, and
     variances. In the hypergeometric row, $p = K / N$.],
@@ -3240,13 +3243,10 @@ foundations.
 ]
 
 #figure(
-  table(
-    columns: 3,
-    align: (center, center, center),
-    table.header([], [State space discrete], [State space continuous]),
-    table.hline(),
-    [Index discrete], [random walks; Markov chains], [time series; stationary processes],
-    [Index continuous], [Poisson process], [Brownian motion],
+  tex-table(
+    ([], [State space discrete], [State space continuous]),
+    ([Index discrete], [random walks; Markov chains], [time series; stationary processes]),
+    ([Index continuous], [Poisson process], [Brownian motion]),
   ),
   caption: [The four quadrants of the elementary classification, with the
     canonical process of each.],
