@@ -1926,12 +1926,23 @@ not only are permutations examples of groups — every group is, up
 to isomorphism, a group of permutations of some set.
 
 #definition(name: "Transformation Group")[
-  Let $X$ be a set. A *transformation* of $X$ is a bijection
-  $X -> X$; under composition these form the group $"Sym"(X)$
-  (the symmetric group of #link(<def:symmetric-group>)[Chapter 2],
-  for general $X$). A *transformation group* on $X$ is a subgroup
-  of $"Sym"(X)$.
+  Let $X$ be a set and let $T_X$ be the set of all transformations of
+  $X$, that is, all maps $X -> X$ (the notion was introduced in the
+  Théorie des Ensembles note), with multiplication given by
+  composition of maps. Equipped with this multiplication, $T_X$ is a
+  monoid (#link(<def:monoid>)[§2.1]): composition is associative and
+  the identity map is neutral, but a general transformation has no
+  reason to be invertible. A subset $G subset.eq T_X$ that forms a
+  group under this multiplication is called a *transformation group*
+  on $X$.
 ] <def:transformation-group>
+
+The group axioms settle invertibility on their own: every element of
+a transformation group has an inverse, and a map with a two-sided
+inverse under composition is a bijection. So a transformation group
+is automatically a subgroup of $"Sym"(X)$ — the invertible elements
+of the monoid $T_X$ are precisely the permutations of $X$, and
+$"Sym"(X)$ is their group of units.
 
 #theorem(name: "Cayley's Theorem")[
   Every group $G$ is isomorphic to a transformation group — indeed,
