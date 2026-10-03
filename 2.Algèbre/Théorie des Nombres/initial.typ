@@ -4647,6 +4647,343 @@ with the theory of roots, and which in particular explains why the
 polynomial root bound of #link(<lem:poly-roots-bound>)[§5.2] had to
 hold.
 
+= Factorization and Roots // 因式分解与根
+
+Chapter 11 transported the division engine of the integers into
+$P[x]$. This chapter collects the payoff: irreducible polynomials play
+the role of primes, every polynomial factors uniquely into them, and
+the chapter closes with two classical instruments that read arithmetic
+off the roots — Vièta's formulas and the roots of unity. Along the way
+it supplies the systematic theory behind the polynomial root bound
+that Chapter 5 proved by hand.
+
+== Irreducible Polynomials // 不可约多项式
+
+In $bb(Z)$ the atoms are the primes; in $P[x]$ they are the
+polynomials that cannot be split.
+
+#definition(name: "Irreducible Polynomial")[
+  A polynomial $p in P[x]$ with $"deg"(p) >= 1$ is *irreducible over
+  $P$* if it cannot be written as a product of two polynomials in
+  $P[x]$ of strictly smaller degree. Every polynomial of degree
+  $>= 1$ that is not irreducible is *reducible*.
+] <def:poly-irreducible>
+
+#proposition(name: "Euclid's Lemma for Irreducible Polynomials")[
+  Let $p in P[x]$ be irreducible and $f in P[x]$ arbitrary. The
+  following are equivalent:
+  + *either-or*: either $p | f$ or $(p, f) = 1$;
+  + *prime property*: $p | f g$ implies $p | f$ or $p | g$ for all
+    $f, g in P[x]$.
+] <prop:irreducible-prime>
+
+#proof(name: "of the proposition")[
+  *(1) $=>$ (2).* Suppose $p | f g$ and $p ∤ f$. Then
+  $"deg"((p, f)) < "deg"(p)$ (otherwise $p | f$), so by irreducibility
+  $(p, f) = 1$. By #link(<cor:poly-coprime-bezout>)[Bézout] there are
+  $u, v$ with $u p + v f = 1$; multiplying by $g$,
+  $f g = u p g + v f g$, and both terms on the right are divisible by
+  $p$. Hence $p | g$.
+
+  *(2) $=>$ (1).* Let $d = (p, f)$. Then $d | p$, so $p = d q$. If
+  $"deg"(d) = "deg"(p)$ then $q$ is a nonzero constant and $d | p | f$.
+  If $"deg"(d) = 0$, then $(p, f) = 1$. In both cases statement (1)
+  holds.
+]
+
+This is the exact mirror of #link(<thm:euclid-lemma>)[Euclid's lemma
+  for primes], and it drives unique factorization in $P[x]$ the same
+way: the induction of #link(<thm:fta>)[the Fundamental Theorem of
+  Arithmetic] transfers verbatim, with "prime" replaced by "irreducible"
+and absolute values by degrees. The ring-theoretic formulation of this
+state of affairs ($P[x]$ is a Euclidean domain, hence a unique
+factorization domain) belongs to Algèbre Abstraite.
+
+== Polynomials with Rational Coefficients // 有理系数多项式
+
+Over a general number field "irreducible" is hard to decide. Over
+$bb(Q)$ the decision procedure rests on a bridge between $bb(Q)[x]$
+and $bb(Z)[x]$: the notion of a primitive polynomial.
+
+#definition(name: "Primitive Polynomial")[
+  A polynomial $f(x) = a_n x^n + dots + a_1 x + a_0$ with *integer*
+  coefficients is *primitive* if the greatest common divisor of its
+  coefficients is $1$:
+  $
+    "gcd"(a_0, a_1, dots, a_n) = 1.
+  $
+] <def:primitive-polynomial>
+
+#lemma(name: "Gauss's Lemma")[
+  The product of two primitive polynomials is primitive.
+] <lem:gauss-poly-lemma>
+
+#proof(name: "of the lemma")[
+  Suppose, for contradiction, that $f$ and $g$ are primitive but some
+  prime $p$ divides every coefficient of $f g$. Reduce all
+  coefficients modulo $p$: the residue ring $bb(Z)_p$ has no zero
+  divisors. Since $f$ is primitive, some coefficient $f_i$ is the
+  first (smallest index) not divisible by $p$; likewise let $g_j$ be
+  the first coefficient of $g$ not divisible by $p$. The coefficient
+  of $x^(i + j)$ in $f g$ is
+  $
+    sum_(k) f_k g_(i + j - k),
+  $
+  and every summand with $k < i$ or $k > i$ contains a factor $f_k$
+  with $k < i$ or a factor $g_(i+j-k)$ with index $> j$, hence
+  divisible by $p$; the remaining summand $f_i g_j$ is not divisible
+  by $p$ because neither factor is. So the coefficient of $x^(i+j)$
+  is nonzero modulo $p$ — contradicting that $p$ divides every
+  coefficient of $f g$.
+]
+
+Two consequences make the bridge traffic-ready.
+
+#theorem(name: "Reduction from $bb(Q)$ to $bb(Z)$")[
+  If a polynomial $f in bb(Z)[x]$ is reducible over $bb(Q)$, then it
+  is reducible over $bb(Z)$: there are nonconstant $g, h in bb(Z)[x]$
+  with $f = g h$.
+] <thm:Q-Z-reducible>
+
+#proof[
+  Write $f = G H$ with nonconstant $G, H in bb(Q)[x]$. Clearing
+  denominators and extracting the content, each of $G$, $H$ factors as
+  a rational number times a primitive *integer* polynomial:
+  $G = alpha g$, $H = beta h$ with $g, h in bb(Z)[x]$ primitive and
+  $alpha, beta in bb(Q)$. Then $f = (alpha beta) g h$, and by
+  #link(<lem:gauss-poly-lemma>)[Gauss's lemma] the product $g h$ is
+  primitive, so its content is $1$; since $f$ has integer
+  coefficients, $alpha beta$ must be an integer. Hence
+  $f = (alpha beta g) h$ exhibits a factorization in $bb(Z)[x]$ with
+  both factors nonconstant.
+]
+
+#corollary(name: "Gauss's Lemma, Factor Form")[
+  Let $f, g in bb(Z)[x]$ with $g$ primitive. If $f = g h$ for some
+  $h in bb(Q)[x]$, then in fact $h in bb(Z)[x]$.
+] <cor:primitive-factor>
+
+#proof[
+  Write $h = beta h_0$ with $h_0 in bb(Z)[x]$ primitive and
+  $beta in bb(Q)$, so $f = beta g h_0$. The product $g h_0$ is
+  primitive by Gauss's lemma, so comparing contents in
+  $f = beta (g h_0)$ forces $beta in bb(Z)$; hence $h = beta h_0 in
+  bb(Z)[x]$.
+]
+
+#theorem(name: "Rational Root Theorem")[
+  Let $f(x) = a_n x^n + dots + a_1 x + a_0$ be a polynomial with
+  integer coefficients. If the fraction $r\/s$ in lowest terms (that
+  is, $"gcd"(r, s) = 1$) is a root of $f$, then
+  $
+    r | a_0 quad "and" quad s | a_n.
+  $
+  In particular, if $f$ is monic then every rational root of $f$ is
+  an integer divisor of $a_0$.
+] <thm:rational-root>
+
+#proof[
+  Substituting $x = r\/s$ and multiplying by $s^n$:
+  $
+    a_n r^n + a_(n-1) r^(n-1) s + dots + a_1 r s^(n-1) + a_0 s^n = 0.
+  $
+  Modulo the first term, $a_0 s^n = -r (a_n r^(n-1) + dots +
+    a_1 s^(n-1))$, so $r | a_0 s^n$; since $"gcd"(r, s) = 1$,
+  #link(<lem:coprime-divisibility>)[coprime cancellation] gives
+  $r | a_0$. Symmetrically, $a_n r^n = -s (a_(n-1) r^(n-1) + dots +
+    a_0 s^(n-1))$, so $s | a_n r^n$ and hence $s | a_n$.
+]
+
+#example(name: "Hunting Rational Roots")[
+  Let $f(x) = 2 x^3 + 3 x^2 - 1$. The candidates are $r\/s$ with
+  $r | 1$ and $s | 2$, namely $plus.minus 1, plus.minus 1\/2$.
+  Testing: $f(1\/2) = 1\/4 + 3\/4 - 1 = 0$ and $f(-1) = -2 + 3 - 1 =
+  0$, so $1\/2$ and $-1$ are roots (the other two candidates fail).
+  Every rational root was among four candidates — this is why the
+  theorem makes root-finding a finite search.
+] <ex:rational-root-hunt>
+
+The second classical instrument certifies irreducibility rather than
+finding roots.
+
+#theorem(name: "Eisenstein's Criterion")[
+  Let $f(x) = a_n x^n + dots + a_1 x + a_0$ be a polynomial with
+  integer coefficients. Suppose there is a prime $p$ such that:
+  + $p ∤ a_n$;
+  + $p | a_i$ for all $i = 0, 1, dots, n - 1$;
+  + $p^2 ∤ a_0$.
+
+  Then $f$ is irreducible over $bb(Q)$.
+] <thm:eisenstein>
+
+#proof[
+  By #link(<thm:Q-Z-reducible>)[the reduction theorem] it suffices to
+  exclude a factorization $f = g h$ in $bb(Z)[x]$ with both factors
+  nonconstant. Reduce coefficients modulo $p$: since $p$ divides
+  every coefficient except $a_n$,
+  $
+    f(x) equiv a_n x^n quad ("mod" p)
+  $
+  in $bb(Z)_p[x]$, a ring without zero divisors. Writing $b_i$, $c_j$
+  for the coefficients of $g$ and $h$, the product $g h$ reduced
+  modulo $p$ is the single monomial $a_n x^n$; this forces both
+  reduced factors to be monomials (a product of polynomials with two
+  nonzero terms each would have at least two nonzero terms). Hence
+  $p$ divides every non-leading coefficient of $g$ and of $h$.
+
+  Since $p^2 ∤ a_0$ but $p | a_0 = b_0 c_0$, exactly one of $b_0$,
+  $c_0$ escapes divisibility by $p$ — say $p ∤ c_0$. The polynomial
+  $g$ is nonconstant, so $b_0$ is a *non-leading* coefficient of $g$
+  (the leading coefficient is $b_("deg"(g))$), whence $p | b_0$. Then
+  $p^2 | b_0 c_0 = a_0$, contradicting the hypothesis.
+]
+
+#example(name: "Eisenstein in Action")[
+  The polynomial $f(x) = 2 x^4 + 3 x^3 + 6 x^2 + 9 x + 3$ is
+  irreducible over $bb(Q)$: the prime $p = 3$ divides all
+  coefficients except the leading one, and $9 ∤ 3$. The criterion
+  also produces irreducibles of every degree, e.g. $x^5 - 2$
+  (Eisenstein at $p = 2$), which no amount of root testing alone
+  could settle — $x^5 - 2$ has no rational root, yet "no rational
+  root" does not preclude a factorization into two quadratics.
+] <ex:eisenstein-action>
+
+== Vièta's Formulas // 根与系数的关系
+
+#theorem(name: "Vièta's Formulas")[
+  Let $f(x) = a_n x^n + dots + a_1 x + a_0$ have degree $n$ over $P$,
+  and suppose it factors completely as
+  $
+    f(x) = a_n (x - r_1)(x - r_2) dots (x - r_n)
+  $
+  with roots $r_1, dots, r_n$ in a field containing $P$ (counted with
+  multiplicity; over $P subset.eq bb(C)$ this always holds). Then for
+  each $k = 1, dots, n$:
+  $
+    sum_(1 <= i_1 < i_2 < dots < i_k <= n) r_(i_1) r_(i_2) dots r_(i_k)
+    = (-1)^k a_(n - k)\/a_n.
+  $
+] <thm:vieta>
+
+#proof[
+  Expand the product $a_n product_i (x - r_i)$. To obtain the
+  coefficient of $x^(n - k)$ one chooses $k$ of the factors to
+  contribute their constant term $-r_i$ and the remaining $n - k$
+  factors to contribute $x$; summing over all choices gives exactly
+  $a_n (-1)^k sum_(i_1 < dots < i_k) r_(i_1) dots r_(i_k)$ as the
+  coefficient of $x^(n-k)$. Comparing with
+  $f(x) = a_n x^n + a_(n-1) x^(n-1) + dots + a_0$ yields
+  $a_(n - k) = a_n (-1)^k sum_(i_1 < dots < i_k) r_(i_1) dots r_(i_k)$.
+]
+
+In the language of Chapter 14, the sums on the left are the
+*elementary symmetric polynomials* $sigma_k(r_1, dots, r_n)$ in the
+roots, so Vièta's formulas read
+$
+  sigma_k(r_1, dots, r_n) = (-1)^k a_(n-k)\/a_n, quad k = 1, dots, n.
+$
+For a cubic $x^3 - 2 x^2 + x - 5$ this says: the roots add to $2$,
+pair up to add to $1$, and multiply to $5$ — the coefficients are a
+complete dossier on the roots. The systematic theory of these
+symmetric expressions is developed in Chapter 14.
+
+== Roots of Unity // 单位根
+
+#definition(name: "Root of Unity")[
+  Let $P$ be a number field and $n in bb(N)^+$. An element
+  $omega in P$ is an *$n$-th root of unity* if
+  $
+    omega^n = 1,
+  $
+  i.e. if $omega$ solves $x^n - 1 = 0$ in $P$.
+] <def:root-of-unity>
+
+Unless stated otherwise the roots are taken in $bb(C)$, where the
+picture is complete: the $n$-th roots of unity are
+$
+  omega_k = exp((2 k pi i)\/n)
+  = cos((2 k pi)\/n) + i sin((2 k pi)\/n),
+  quad k = 0, 1, dots, n - 1,
+$
+all of modulus $abs(omega_k) = 1$, evenly spaced around the unit
+circle of the complex plane with angular gap $2 pi\/n$ between
+neighbours.
+
+#figure(
+  image("img/roots-visualisation.png", width: 52%),
+  caption: [
+    Visualisation of the complex roots of unity: the $n$-th roots
+    $omega_k = exp(2 k pi i\/n)$ sit on the unit circle, equally
+    spaced by the angle $2 pi\/n$.
+  ],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:roots-of-unity>
+
+#property(name: "Cyclicity of the Roots of Unity")[
+  The $n$-th roots of unity form a group under multiplication — and
+  it is *cyclic*: taking $omega = exp(2 pi i\/n)$, every root is a
+  power $omega^k$ with $0 <= k <= n - 1$.
+] <prop:roots-cyclic>
+
+#note[
+  Compare #link(<def:primitive-root>)[primitive roots modulo $m$]
+  (§5.2): there, the powers of a single element exhaust the reduced
+  residue classes; here, the powers of $omega = e^(2 pi i \/ n)$
+  exhaust the solutions of $x^n = 1$. The two cyclic phenomena are
+  the finite and the complex face of the same structure — and
+  $omega$ is a *root of the cyclotomic polynomial* $Phi_n$, whose
+  arithmetic belongs to the algebraic development of this material.
+]
+
+#proposition(name: "Sums and Differences of Powers")[
+  For $n in bb(N)^+$:
+  $
+    a^n - b^n = (a - b)(a^(n-1) + a^(n-2) b + dots + a b^(n-2) +
+      b^(n-1)).
+  $
+  If in addition $n$ is odd:
+  $
+    a^n + b^n = (a + b)(a^(n-1) - a^(n-2) b + dots - a b^(n-2) +
+      b^(n-1)).
+  $
+  In particular $x^n - 1 = (x - 1)(x^(n-1) + x^(n-2) + dots + x + 1)$
+  for all $n$, while $x^n + 1 = (x + 1)(x^(n-1) - x^(n-2) + dots -
+    x + 1)$ only for odd $n$.
+] <prop:power-sum-difference>
+
+#proof(name: "of the proposition")[
+  The first identity is telescoping: expanding
+  $(a - b) sum_(k=0)^(n-1) a^(n-1-k) b^k$, the products
+  $sum_k a^(n-k) b^k$ and $sum_k a^(n-1-k) b^(k+1)$ cancel term by
+  term, leaving $a^n - b^n$. For the second, apply the first to the
+  pair $(-a)^n = -a^n$ (since $n$ is odd) and $b$:
+  $a^n + b^n = b^n - (-a)^n = (b + a)(b^(n-1) - b^(n-2)(-a) + dots +
+    (-a)^(n-1))$, which rearranges to the stated alternating sum. The
+  $n$-even case fails because $x^n + 1$ then has no root at $x = -1$
+  to factor against — e.g. $x^2 + 1$ is irreducible over $bb(R)$.
+]
+
+Frequently used low-degree special cases:
+$
+  a^2 - b^2 = (a + b)(a - b), quad
+  a^3 plus.minus b^3 = (a plus.minus b)(a^2 minus.plus a b + b^2),
+$
+$
+  a^4 - b^4 = (a^2 + b^2)(a + b)(a - b)
+  = (a - b)(a^3 + a^2 b + a b^2 + b^3).
+$
+
+This chapter completes the factorization story begun in Part I: the
+integers factor uniquely into primes, and now polynomials factor
+uniquely into irreducibles, with the rational root theorem and
+Eisenstein's criterion as the practical instruments. The next chapter
+turns from *which* polynomials have *which* roots to a quieter but
+surprising question: which polynomials take integer values at
+integers — and how arbitrary data can be interpolated by a polynomial
+of the right degree.
+
+
 
 
 
