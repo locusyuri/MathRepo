@@ -1895,11 +1895,9 @@ negative arguments, and the tail identity yields two-sided probabilities.
   integrating $x f(x)$; recognising an unnormalised Beta density of
   parameters $(a+1, b)$ instead:
   $
-    E[X] = integral_0^1 x (x^(a - 1) (1 - x)^(b - 1)) / B(a, b) dif x \
-    = B(a + 1, b) / B(a, b) \
-    = ("Gamma"(a + 1) "Gamma"(b)) / ("Gamma"(a + b + 1)) \
-    quad quad dot ("Gamma"(a + b)) / ("Gamma"(a) "Gamma"(b)) \
-    = a / (a + b).
+    E[X] & = integral_0^1 x (x^(a - 1) (1 - x)^(b - 1)) / B(a, b) dif x = B(a + 1, b) / B(a, b) \
+         & = ("Gamma"(a + 1) "Gamma"(b)) / ("Gamma"(a + b + 1)) dot ("Gamma"(a + b)) / ("Gamma"(a) "Gamma"(b))
+           = a / (a + b).
   $
   Similarly $E[X^2] = B(a + 2, b) / B(a, b) = (a (a + 1)) / ((a + b)(a + b + 1))$,
   so
