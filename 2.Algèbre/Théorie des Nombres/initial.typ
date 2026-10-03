@@ -778,10 +778,9 @@ primes, unique factorization — is built from this definition.
 
 #note[
   For polynomials, the same notions appear with degrees in place of
-  absolute values — divisibility in $P[x]$, the polynomial GCD and the
-  Euclidean algorithm for polynomials are developed in the *Polynôme*
-  note and are not repeated here. The integer version below is the
-  prototype that the polynomial version imitates.
+  absolute values. The integer version below is the prototype: Part V
+  (Chapter 11) replays this entire engine in $P[x]$, where the degree
+  takes over the role of the absolute value.
 ]
 
 Division in the integers is only defined when the divisor divides
@@ -4407,6 +4406,247 @@ closed theorems of elementary number theory. The next part leaves the
 single-prime world behind: the arithmetic functions of Chapter 7 count
 divisors and sum them, laying the analytical groundwork for the
 distribution of primes in Chapter 8.
+
+
+#part("Polynomials") // 多项式
+
+= Divisibility of Polynomials // 多项式的整除
+
+Part I built the arithmetic of the integers on a single engine: the
+division algorithm, whose strictly decreasing remainders manufacture
+the gcd, Bézout's identity, and ultimately unique factorization. This
+closing part replays the whole story on a different stage — the
+polynomial ring $P[x]$ over a number field $P$ (typically $bb(Q)$,
+$bb(R)$, or $bb(C)$). The parallel is exact and it is the point:
+where $bb(Z)$ measures size by the absolute value, $P[x]$ measures it
+by the *degree*, and every argument of Part I that used only "the
+sizes decrease" goes through verbatim. The final two chapters will
+harvest this: Chapter 12 develops factorization and roots (including
+the rational root theorem and Eisenstein's criterion behind the root
+bound used in Chapter 5), and Chapter 14 develops the symmetric
+polynomial language behind Vièta's formulas.
+
+== Univariate Polynomials // 一元多项式
+
+Throughout this part $P$ denotes a number field. An (univariate)
+polynomial over $P$ is a finite formal sum of powers of a symbol $x$
+with coefficients in $P$; the collection of all of them is written
+$P[x]$.
+
+#definition(name: "Univariate Polynomials")[
+  A *polynomial* over $P$ is an expression
+  $
+    f(x) = a_n x^n + a_(n-1) x^(n-1) + dots + a_1 x + a_0,
+  $
+  with coefficients $a_0, dots, a_n in P$ and $n in bb(N)$. The set of
+  all polynomials over $P$ is denoted $P[x]$.
+  - The *degree* of a nonzero polynomial $f$ is the largest index $n$
+    with $a_n != 0$; it is written $"deg"(f)$, and $a_n$ is the
+    *leading coefficient*. If the leading coefficient is $1$, $f$ is
+    *monic*.
+  - The polynomial all of whose coefficients vanish is the *zero
+    polynomial* $0$; by convention it has no degree.
+  - Polynomials of degree $<= 0$ (including $0$) are *constant*; a
+    nonzero constant is a *zero-degree polynomial*.
+] <def:polynomial>
+
+Addition and multiplication of polynomials — coefficientwise addition
+and the convolution product of the usual algebra — are ordinary maps
+$P[x] times P[x] -> P[x]$: nothing more than the two binary operations
+everybody knows from school algebra. They are singled out only because
+they are the stage on which every argument of this part is performed,
+and their interaction with the degree is what makes the analogy with
+$bb(Z)$ run.
+
+#property(name: "Degree Rules")[
+  For nonzero $f, g in P[x]$:
+  - $"deg"(f + g) <= max("deg"(f), "deg"(g))$, with equality whenever
+    $"deg"(f) != "deg"(g)$;
+  - $"deg"(f g) = "deg"(f) + "deg"(g)$;
+  - *cancellation*: $f g = f h$ with $f != 0$ implies $g = h$.
+] <prop:degree-rules>
+
+#proof(name: "of the degree rules")[
+  Only the product rule needs a word. If $a_m$ and $b_n$ are the
+  leading coefficients of $f$ (degree $m$) and $g$ (degree $n$), the
+  coefficient of $x^(m + n)$ in $f g$ is $a_m b_n$, which is nonzero
+  because a field has no zero divisors; no higher power of $x$ occurs.
+  Hence $"deg"(f g) = m + n$. Cancellation follows: from $f g = f h$
+  we get $f (g - h) = 0$, and the product rule forces
+  $"deg"(g - h)$ to be undefined — that is, $g - h = 0$.
+]
+
+== Division of Polynomials // 多项式的带余除法
+
+In $bb(Z)$ the division algorithm
+(#link(<thm:division-algorithm>)[§1.2]) produced a quotient and a
+remainder with
+$0 <= r < abs(b)$. The polynomial version replaces the inequality by
+a degree condition: the remainder must be $0$ or of degree smaller
+than the divisor. Long division of polynomials is the same algorithm
+learned in school, and the proof is the same induction — this time on
+the degree rather than on the size.
+
+#theorem(name: "Euclidean Division for Polynomials")[
+  Let $f, g in P[x]$ with $g != 0$. Then there exist unique
+  $q, r in P[x]$ such that
+  $
+    f = g q + r,
+  $
+  where either $r = 0$ or $"deg"(r) < "deg"(g)$.
+] <thm:poly-division>
+
+#proof(name: "of the theorem")[
+  *Existence.* Induct on $"deg"(f)$. If $f = 0$ or
+  $"deg"(f) < "deg"(g)$, take $q = 0$, $r = f$. Otherwise let $a_m$
+  and $b_n$ be the leading coefficients of $f$ and $g$. The polynomial
+  $
+    f_1 = f - a_m b_n^(-1) x^(m - n) g
+  $
+  has degree at most $m - 1$ (the $x^m$ terms cancel), so by the
+  induction hypothesis $f_1 = g q_1 + r$ with $r = 0$ or
+  $"deg"(r) < "deg"(g)$. Setting
+  $q = a_m b_n^(-1) x^(m - n) + q_1$ gives $f = g q + r$.
+
+  *Uniqueness.* Suppose $f = g q + r = g q' + r'$ with both remainders
+  $0$ or of degree $< "deg"(g)$. Then
+  $g (q - q') = r' - r$, so if $q != q'$ the left side has degree at
+  least $"deg"(g)$ (#link(<prop:degree-rules>)[degree rules]) while
+  the right side has degree $< "deg"(g)$ — impossible. Hence
+  $q = q'$ and then $r = r'$.
+]
+
+#definition(name: "Polynomial Divisibility")[
+  Let $f, g in P[x]$. We say that $g$ *divides* $f$, written
+  $g | f$, if there exists $h in P[x]$ with $f = g h$ — equivalently,
+  if the remainder of $f$ upon division by $g$ is $0$ (an *exact
+  division*). In that case $g$ is a *divisor* (or *factor*) of $f$.
+] <def:poly-divisibility>
+
+#caution[
+  Euclidean division requires $g != 0$, but the *divisibility*
+  relation does not: if $g | f$ with $g = 0$, then
+  $f = g h = 0$, so the *zero polynomial divides only the zero
+  polynomial*. This degenerate case is harmless but must be kept in
+  mind when comparing with the integer convention of
+  #link(<def:divisibility>)[§1.2], where the divisor is required to
+  be nonzero.
+]
+
+The degree rules make the parallel with $bb(Z)$ precise: $abs(dot)$ is
+replaced by $"deg"(dot)$, $plus.minus 1$ by the nonzero constants, and
+"positive" by "degree at least $1$". Every divisibility rule of
+#link(<prop:divisibility-rules>)[§1.2] — transitivity, linear
+combinations, and the size bound $abs(a) <= abs(b)$ reading
+$"deg"(g) <= "deg"(f)$ — now transfers to $P[x]$ by the same proofs,
+with the degree rules playing the role of the size bound.
+
+== GCD and Bézout's Identity // 最大公因式与 Bézout 恒等式
+
+Exactly as in the integers, common divisors of two polynomials are
+never unique: any nonzero constant multiple of a divisor is again a
+divisor. The fix is the same as fixing signs — normalize.
+
+#definition(name: "Greatest Common Divisor of Polynomials")[
+  Let $f, g in P[x]$, not both zero. A polynomial $d in P[x]$ is a
+  *greatest common divisor* of $f$ and $g$ if:
+  + $d | f$ and $d | g$;
+  + every common divisor $h$ of $f$ and $g$ divides $d$.
+
+  The *monic* greatest common divisor is unique; it is written
+  $(f, g)$. If $(f, g) = 1$ — that is, the only monic common divisors
+  are constants — the polynomials are *relatively prime*.
+] <def:poly-gcd>
+
+#theorem(name: "Euclidean Algorithm and Bézout's Identity")[
+  For all $f, g in P[x]$ there exists a greatest common divisor
+  $d in P[x]$ of $f$ and $g$, and $d$ is a linear combination:
+  $
+    d = u f + v g
+  $
+  for some $u, v in P[x]$. The converse fails in general: a
+  polynomial combination $u f + v g$ need not be a greatest common
+  divisor.
+] <thm:poly-bezout>
+
+#proof(name: "of the theorem")[
+  Iterated division: set $r_(-1) = f$, $r_0 = g$ and define
+  $r_(k) = r_(k-2) - q_k r_(k-1)$ to be the remainder of
+  $r_(k-2)$ upon division by $r_(k-1)$. The degrees
+  $"deg"(r_1) < "deg"(r_0) = "deg"(g)$ then strictly decrease, so some
+  $r_(ell + 1) = 0$. Exactly as in the integer case
+  (#link(<lem:gcd-substitution>)[the substitution lemma], transcribed
+  with degrees), the common divisors of $r_(k-2)$ and $r_(k-1)$ are
+  precisely the common divisors of $r_(k-1)$ and $r_k$; chasing the
+  chain shows $r_ell$ is a greatest common divisor of $f$ and $g$,
+  and its monic associate is $(f, g)$.
+
+  Bézout coefficients come from back-substitution: each
+  $r_k = r_(k-2) - q_k r_(k-1)$ expresses $r_k$ as a combination of
+  the two preceding remainders, and unwinding the chain expresses
+  $r_ell$ as $u f + v g$. The monic associate differs by a constant
+  factor, which folds into $u$ and $v$.
+
+  The converse fails: for any $f$, $g$ one has $f = 1 dot f + 0 dot g$,
+  but $f$ is a greatest common divisor only for special pairs.
+]
+
+#corollary(name: "Bézout Criterion for Coprimality")[
+  For $f, g in P[x]$: $(f, g) = 1$ if and only if there exist
+  $u, v in P[x]$ with
+  $
+    u f + v g = 1.
+  $
+] <cor:poly-coprime-bezout>
+
+#proof[
+  The direction just proved gives $d = u f + v g$ with $d = (f, g)$;
+  if $(f, g) = 1$ this is $u f + v g = 1$. Conversely, if
+  $u f + v g = 1$ and $h$ is a common divisor of $f$ and $g$, then
+  $h | u f + v g = 1$, so $h$ is a nonzero constant — the monic
+  common divisors are exhausted by $1$.
+]
+
+== Least Common Multiple // 最小公倍式
+
+#definition(name: "Least Common Multiple of Polynomials")[
+  Let $f, g in P[x]$ be nonzero. A polynomial $m in P[x]$ is a *least
+  common multiple* of $f$ and $g$ if:
+  + $f | m$ and $g | m$;
+  + whenever $f | k$ and $g | k$, one has $m | k$.
+
+  The *monic* least common multiple is unique; it is written $[f, g]$.
+] <def:poly-lcm>
+
+#corollary(name: "Product Identity for Polynomials")[
+  For nonzero $f, g in P[x]$,
+  $
+    f g = (f, g) dot [f, g]
+  $
+  up to multiplication by a nonzero constant — and with the monic
+  conventions on both sides, exactly when $f$ and $g$ are monic.
+] <cor:poly-gcd-lcm-product>
+
+#proof[
+  Write $d = (f, g)$ and $f = d f_1$, $g = d g_1$ with
+  $(f_1, g_1) = 1$ (any common factor of $f_1$ and $g_1$ would
+  enlarge $d$). Then $f_1 g_1$ is a common multiple of $f_1$ and
+  $g_1$, and if $f_1 | k$ and $g_1 | k$, writing $k = f_1 t$ gives
+  $f_1 | g_1 t$, hence $f_1 | t$ by the polynomial Euclid lemma
+  (#link(<cor:poly-coprime-bezout>)[coprimality]; the full factorized
+  form is proved in Chapter 12). So $[f_1, g_1] = f_1 g_1$, and
+  multiplying back by $d$:
+  $[f, g] = d f_1 g_1$, i.e. $[f, g] = (f g)\/d = f g\/(f, g)$.
+]
+
+This closes the mirror of Part I: division with remainder, gcd,
+Bézout, and the product identity all stand in $P[x]$ exactly as they
+stand in $bb(Z)$. What is still missing is the payoff — unique
+factorization into irreducibles — which Chapter 12 develops together
+with the theory of roots, and which in particular explains why the
+polynomial root bound of #link(<lem:poly-roots-bound>)[§5.2] had to
+hold.
+
 
 
 
