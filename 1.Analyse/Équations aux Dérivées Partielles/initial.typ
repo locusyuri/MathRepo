@@ -2834,7 +2834,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 ]
 
 #note[
-  *Method of traveling waves (传播波法).* The two steps of the proof constitute the classical *method of traveling waves*: seek the solution as a superposition of a right-moving profile $F (x - a t)$ and a left-moving profile $G (x + a t)$, then determine the profiles from the data. Solving the equations of Step 2 gives
+  *Method of traveling waves.* The two steps of the proof constitute the classical *method of traveling waves*: seek the solution as a superposition of a right-moving profile $F (x - a t)$ and a left-moving profile $G (x + a t)$, then determine the profiles from the data. Solving the equations of Step 2 gives
   $
     F (x) = 1/2 phi (x) - 1/(2 a) integral_0^x psi (s) dif s, quad G (x) = 1/2 phi (x) + 1/(2 a) integral_0^x psi (s) dif s,
   $
@@ -2882,7 +2882,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 ] <thm:kirchhoff-formula-3d>
 
 #proof[
-  *Method of spherical means (球平均法).* For a solution $u$ define the spherical mean
+  *Method of spherical means.* For a solution $u$ define the spherical mean
   $
     M_u (x, r, t) = 1/(4 pi r^2) integral_(partial B (x, r)) u (y, t) dif S_y,
   $
@@ -2901,7 +2901,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 ] <thm:poisson-formula-2d>
 
 #proof[
-  *Method of descent (降维法).* Extend the data to three space variables by $bar(phi)(x, x_3) = phi (x)$ and $bar(psi)(x, x_3) = psi (x)$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By uniqueness (#link(<cor:wave-uniqueness>)[Cor.] below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension. It remains to evaluate Kirchhoff's formula. The sphere $partial B ((x, 0), t)$ projects onto the disk $B (x, t)$, each point $y in B (x, t)$ corresponding to the pair $y^plus.minus = (y, plus.minus sqrt(t^2 - abs(x - y)^2))$ with $dif S = t / sqrt(t^2 - abs(x - y)^2) dif y$; the two hemispheres contribute equally, so
+  *Method of descent.* Extend the data to three space variables by $bar(phi)(x, x_3) = phi (x)$ and $bar(psi)(x, x_3) = psi (x)$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By uniqueness (#link(<cor:wave-uniqueness>)[Cor.] below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension. It remains to evaluate Kirchhoff's formula. The sphere $partial B ((x, 0), t)$ projects onto the disk $B (x, t)$, each point $y in B (x, t)$ corresponding to the pair $y^plus.minus = (y, plus.minus sqrt(t^2 - abs(x - y)^2))$ with $dif S = t / sqrt(t^2 - abs(x - y)^2) dif y$; the two hemispheres contribute equally, so
   $
     t M_bar(phi) (x, t) = 1/(2 pi) integral_(B (x, t)) (phi (y))/(sqrt(t^2 - abs(x - y)^2)) dif y,
   $
