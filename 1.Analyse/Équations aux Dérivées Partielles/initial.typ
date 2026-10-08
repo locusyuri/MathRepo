@@ -2899,7 +2899,16 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
   $
     (partial^2 M_u)/(partial t^2) = (partial^2 M_u)/(partial r^2) + 2/r (partial M_u)/(partial r),
   $
-  with data $M_u (x, r, 0) = M_phi (x, r)$ and $partial_t M_u (x, r, 0) = M_psi (x, r)$. The term $2 / r$ blocks a direct use of d'Alembert's formula; the classical trick is to multiply by $r$: since $M_u$ is even in $r$, the function $v (r, t) = r M_u (x, r, t)$ extends oddly to $r < 0$ and solves the *one-dimensional wave equation* $v_(t t) = v_(r r)$ on the whole line, with data $v (r, 0) = r M_phi (x, r)$ and $partial_t v (r, 0) = r M_psi (x, r)$. D'Alembert's formula (#link(<thm:d-alembert>)[Th.]) gives $v$ explicitly; since $u (x, t) = M_u (x, 0, t) = lim_(r -> 0^+) v (r, t) / r = partial_r v (0, t)$ (the mean over a point is the value), evaluating the result at $r = t$ produces the formula. Regularity follows by differentiating under the integral.
+  with data $M_u (x, r, 0) = M_phi (x, r)$ and $partial_t M_u (x, r, 0) = M_psi (x, r)$. The term $2 / r$ blocks a direct use of d'Alembert's formula; the classical trick is to multiply by $r$: since $M_u$ is even in $r$, the function $v (r, t) = r M_u (x, r, t)$ extends oddly to $r < 0$ and solves the *one-dimensional wave equation* $v_(t t) = v_(r r)$ on the whole line, with data $v (r, 0) = r M_phi (x, r)$ and $partial_t v (r, 0) = r M_psi (x, r)$. D'Alembert's formula (#link(<thm:d-alembert>)[Th.]) gives $v$ explicitly; since $u (x, t) = M_u (x, 0, t) = lim_(r -> 0^+) v (r, t) / r = partial_r v (0, t)$ (the mean over a point is the value), evaluating the result at $r = t$ produces the formula. Regularity follows by differentiating under the integral. The construction is illustrated in #link(<fig:wave-spherical-means>)[Figure].
+]
+
+#note[
+  #figure(
+    image("./img/wave-spherical-means.svg", width: 92%),
+    caption: [The method of spherical means. (a) The spherical mean $M_u (x, r, t)$: the average of $u (dot, t)$ over the sphere $partial B (x, r)$. (b) The reduction $v = r M_u$: since $M_u$ is even in $r$, $v$ extends oddly to the whole $r$-line and solves the one-dimensional wave equation $v_(t t) = v_(r r)$, so d'Alembert's formula applies; the solution is recovered as $u (x, t) = partial_r v (0, t)$.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:wave-spherical-means>
 ]
 
 #theorem(name: "Poisson's Formula in Two Dimensions")[
