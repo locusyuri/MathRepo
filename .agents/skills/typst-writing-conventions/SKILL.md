@@ -509,15 +509,15 @@ Later, we refer to *#link(<def:continuous>)[Continuous Function]*.
 - 使用相对路径引用
 - SVG 注意事项：保持文件自包含（无外部引用）；Typst 通过 usvg 渲染，SVG 内的文本会被转为路径，不支持滤镜与动画
 
-### 图片生成工作流（占位 + 集中出提示词）
+### 图片生成工作流（scripts + uv）
 
 需要新图片时，不要让图片阻塞写作，按以下流程处理：
 
 1. **先写引用**：在 `.typ` 中直接写好 `#figure(image("./img/xxx.svg", ...))` 与 `<fig:xxx>` 标签，保持文档结构完整
 2. **创建占位文件**：将仓库根目录的 `0.Wiki/null.svg`（空白占位图）复制到目标 `img/` 目录，并改名为实际图片名（如 `img/xxx.svg`）。占位图是有效 SVG，期间 `typst compile` 仍可通过
-3. **登记提示词**：按 illustration-prompt 技能规范为每张图片编写绘图提示词，集中记录，不逐张打断输出
-4. **任务结束时汇总输出**：把本次所有图片的提示词一次性列给用户（含目标路径 `img/xxx.svg`、对应的 `<fig:xxx>` 标签、布局建议），由**用户手动生成** SVG 并替换占位文件
-5. **图片就位后编译验证**：全部真实图片就位后，重新 `typst compile` 确认通过
+3. **写 Python 脚本**：在对应主题目录下新建 `scripts/<图片名>.py`（matplotlib，一图一脚本），脚本将 SVG 输出到主题目录的 `img/<图片名>.svg`，文件名与 `<fig:xxx>` 标签对应。结构与规范见 make-outline 技能的 `ref/image-planning.md` §2
+4. **生成图片**：在仓库根目录执行 `uv run "<subject>/scripts/<图片名>.py"`（依赖由仓库根 `pyproject.toml` 统一管理，已含 matplotlib）。生成 PNG 预览人工核验无重叠/越界后替换占位文件
+5. **编译验证**：全部真实图片就位后，重新 `typst compile` 确认通过。注意 `img/` 已被 .gitignore 忽略，提交时只含脚本与 `.typ`，不含生成的图片
 
 ---
 
