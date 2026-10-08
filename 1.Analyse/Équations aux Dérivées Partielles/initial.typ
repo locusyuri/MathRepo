@@ -2801,16 +2801,16 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
   $
     cases(
       (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2) "in" bb(R) times (0, oo),
-      u (x, 0) = g (x) comma quad partial_t u (x, 0) = h (x)
+      u (x, 0) = phi (x) comma quad partial_t u (x, 0) = psi (x)
     )
   $
-  where $g, h: bb(R) -> bb(R)$ are the initial displacement and velocity.
+  where $phi, psi: bb(R) -> bb(R)$ are the initial displacement and velocity.
 ] <def:cauchy-wave>
 
 #theorem(name: "D'Alembert's Formula")[
-  For $g in C^2 (bb(R))$ and $h in C^1 (bb(R))$, the Cauchy problem has the unique classical solution
+  For $phi in C^2 (bb(R))$ and $psi in C^1 (bb(R))$, the Cauchy problem has the unique classical solution
   $
-    u (x, t) = (g (x + a t) + g (x - a t))/2 + 1/(2 a) integral_(x - a t)^(x + a t) h (s) dif s.
+    u (x, t) = (phi (x + a t) + phi (x - a t))/2 + 1/(2 a) integral_(x - a t)^(x + a t) psi (s) dif s.
   $
   In particular $u in C^2 (bb(R) times [0, oo))$.
 ] <thm:d-alembert>
@@ -2824,19 +2824,19 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 
   *Step 2: Fit the data.* The initial conditions give
   $
-    F (x) + G (x) = g (x), quad -a F' (x) + a G' (x) = h (x).
+    F (x) + G (x) = phi (x), quad -a F' (x) + a G' (x) = psi (x).
   $
-  Integrating the second equation: $F (x) - G (x) = -1/a integral_0^x h (s) dif s + "const"$. Solving for $F$ and $G$ and substituting $x = x + a t$, $x = x - a t$ yields the formula.
+  Integrating the second equation: $F (x) - G (x) = -1/a integral_0^x psi (s) dif s + "const"$. Solving for $F$ and $G$ and substituting $x = x + a t$, $x = x - a t$ yields the formula.
 ]
 
 #note[
-  The two terms in the formula are traveling waves: $F (x - a t)$ moves right with speed $a$ without changing shape, $G (x + a t)$ moves left. The initial velocity $h$ contributes the integral term, whose value at $(x, t)$ depends on $h$ only on the interval $[x - a t, x + a t]$ — the first manifestation of finite propagation speed (§15.4).
+  The two terms in the formula are traveling waves: $F (x - a t)$ moves right with speed $a$ without changing shape, $G (x + a t)$ moves left. The initial velocity $psi$ contributes the integral term, whose value at $(x, t)$ depends on $psi$ only on the interval $[x - a t, x + a t]$ — the first manifestation of finite propagation speed (§15.4).
 ]
 
 #note[
   *Method of traveling waves (传播波法).* The two steps of the proof constitute the classical *method of traveling waves*: seek the solution as a superposition of a right-moving profile $F (x - a t)$ and a left-moving profile $G (x + a t)$, then determine the profiles from the data. Solving the equations of Step 2 gives
   $
-    F (x) = 1/2 g (x) - 1/(2 a) integral_0^x h (s) dif s, quad G (x) = 1/2 g (x) + 1/(2 a) integral_0^x h (s) dif s,
+    F (x) = 1/2 phi (x) - 1/(2 a) integral_0^x psi (s) dif s, quad G (x) = 1/2 phi (x) + 1/(2 a) integral_0^x psi (s) dif s,
   $
   up to a constant that cancels between $F$ and $G$. Thus the initial displacement splits into two half-amplitude waves running in opposite directions, while the initial velocity fills in the integral term. By the *superposition principle* (Chapter 1), the same decomposition handles the fully general problem: for nonzero data *and* a source $f (x, t)$, the solution is the sum of the d'Alembert solution of the homogeneous equation and the zero-data solution of the inhomogeneous equation — the latter is the object of the Duhamel principle in the next section.
 ]
@@ -2844,7 +2844,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 == Duhamel Principle // Duhamel 原理
 
 #theorem(name: "Duhamel's Principle for the Wave Equation")[
-  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, h)$: $S (t) h = w (dot, t)$, where $(partial^2 w)/(partial t^2) = Delta w$, $w (dot, 0) = 0$, $partial_t w (dot, 0) = h$. Then the solution of the inhomogeneous problem
+  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$: $S (t) psi = w (dot, t)$, where $(partial^2 w)/(partial t^2) = Delta w$, $w (dot, 0) = 0$, $partial_t w (dot, 0) = psi$. Then the solution of the inhomogeneous problem
   $
     (partial^2 u)/(partial t^2) = Delta u + f, quad u (dot, 0) = 0, quad partial_t u (dot, 0) = 0,
   $
@@ -2866,7 +2866,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 #note[
   The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 13]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is given explicitly by d'Alembert's formula in one dimension and by the Kirchhoff and Poisson formulas in higher dimensions (§15.3), so Duhamel's principle yields explicit solutions of the *inhomogeneous* Cauchy problem in every dimension. In three dimensions, for instance,
   $
-    u (x, t) = partial_t (t M_g (x, t)) + t M_h (x, t) + integral_0^t 1/(4 pi (t - s)) integral_(partial B (x, t - s)) f (s, y) dif S dif s,
+    u (x, t) = partial_t (t M_phi (x, t)) + t M_psi (x, t) + integral_0^t 1/(4 pi (t - s)) integral_(partial B (x, t - s)) f (s, y) dif S dif s,
   $
   the inhomogeneous counterpart of Kirchhoff's formula; the two-dimensional analogue follows from Poisson's formula.
 ]
@@ -2874,11 +2874,11 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 == The Cauchy Problem in Higher Dimensions // 高维 Cauchy 问题
 
 #theorem(name: "Kirchhoff's Formula in Three Dimensions")[
-  For $n = 3$, the Cauchy problem $(partial^2 u)/(partial t^2) = Delta u$, $u (x, 0) = g (x)$, $partial_t u (x, 0) = h (x)$ has the classical solution
+  For $n = 3$, the Cauchy problem $(partial^2 u)/(partial t^2) = Delta u$, $u (x, 0) = phi (x)$, $partial_t u (x, 0) = psi (x)$ has the classical solution
   $
-    u (x, t) = partial_t (t M_g (x, t)) + t M_h (x, t), quad M_phi (x, t) = 1 / (4 pi t^2) integral_(partial B (x, t)) phi dif S,
+    u (x, t) = partial_t (t M_phi (x, t)) + t M_psi (x, t), quad M_phi (x, t) = 1 / (4 pi t^2) integral_(partial B (x, t)) phi dif S,
   $
-  where $M_phi$ is the spherical mean of $phi$ over the sphere of radius $t$. For $g in C^3$, $h in C^2$ this is a $C^2$ solution, and it is unique.
+  where $M_phi$ is the spherical mean of $phi$ over the sphere of radius $t$. For $phi in C^3$, $psi in C^2$ this is a $C^2$ solution, and it is unique.
 ] <thm:kirchhoff-formula-3d>
 
 #proof[
@@ -2890,20 +2890,20 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
   $
     (partial^2 M_u)/(partial t^2) = (partial^2 M_u)/(partial r^2) + 2/r (partial M_u)/(partial r),
   $
-  with data $M_u (x, r, 0) = M_g (x, r)$ and $partial_t M_u (x, r, 0) = M_h (x, r)$. The term $2 / r$ blocks a direct use of d'Alembert's formula; the classical trick is to multiply by $r$: since $M_u$ is even in $r$, the function $v (r, t) = r M_u (x, r, t)$ extends oddly to $r < 0$ and solves the *one-dimensional wave equation* $v_(t t) = v_(r r)$ on the whole line, with data $v (r, 0) = r M_g (x, r)$ and $partial_t v (r, 0) = r M_h (x, r)$. D'Alembert's formula (#link(<thm:d-alembert>)[Th.]) gives $v$ explicitly; since $u (x, t) = M_u (x, 0, t) = lim_(r -> 0^+) v (r, t) / r = partial_r v (0, t)$ (the mean over a point is the value), evaluating the result at $r = t$ produces the formula. Regularity follows by differentiating under the integral.
+  with data $M_u (x, r, 0) = M_phi (x, r)$ and $partial_t M_u (x, r, 0) = M_psi (x, r)$. The term $2 / r$ blocks a direct use of d'Alembert's formula; the classical trick is to multiply by $r$: since $M_u$ is even in $r$, the function $v (r, t) = r M_u (x, r, t)$ extends oddly to $r < 0$ and solves the *one-dimensional wave equation* $v_(t t) = v_(r r)$ on the whole line, with data $v (r, 0) = r M_phi (x, r)$ and $partial_t v (r, 0) = r M_psi (x, r)$. D'Alembert's formula (#link(<thm:d-alembert>)[Th.]) gives $v$ explicitly; since $u (x, t) = M_u (x, 0, t) = lim_(r -> 0^+) v (r, t) / r = partial_r v (0, t)$ (the mean over a point is the value), evaluating the result at $r = t$ produces the formula. Regularity follows by differentiating under the integral.
 ]
 
 #theorem(name: "Poisson's Formula in Two Dimensions")[
   For $n = 2$, the solution of the Cauchy problem is obtained by the *method of descent* from the three-dimensional formula:
   $
-    u (x, t) = 1/(2 pi) partial_t integral_(B (x, t)) (g (y))/(sqrt(t^2 - abs(x - y)^2)) dif y + 1/(2 pi) integral_(B (x, t)) (h (y))/(sqrt(t^2 - abs(x - y)^2)) dif y.
+    u (x, t) = 1/(2 pi) partial_t integral_(B (x, t)) (phi (y))/(sqrt(t^2 - abs(x - y)^2)) dif y + 1/(2 pi) integral_(B (x, t)) (psi (y))/(sqrt(t^2 - abs(x - y)^2)) dif y.
   $
 ] <thm:poisson-formula-2d>
 
 #proof[
-  *Method of descent (降维法).* Extend the data to three space variables by $bar(g)(x, x_3) = g (x)$ and $bar(h)(x, x_3) = h (x)$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By uniqueness (#link(<cor:wave-uniqueness>)[Cor.] below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension. It remains to evaluate Kirchhoff's formula. The sphere $partial B ((x, 0), t)$ projects onto the disk $B (x, t)$, each point $y in B (x, t)$ corresponding to the pair $y^plus.minus = (y, plus.minus sqrt(t^2 - abs(x - y)^2))$ with $dif S = t / sqrt(t^2 - abs(x - y)^2) dif y$; the two hemispheres contribute equally, so
+  *Method of descent (降维法).* Extend the data to three space variables by $bar(phi)(x, x_3) = phi (x)$ and $bar(psi)(x, x_3) = psi (x)$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By uniqueness (#link(<cor:wave-uniqueness>)[Cor.] below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension. It remains to evaluate Kirchhoff's formula. The sphere $partial B ((x, 0), t)$ projects onto the disk $B (x, t)$, each point $y in B (x, t)$ corresponding to the pair $y^plus.minus = (y, plus.minus sqrt(t^2 - abs(x - y)^2))$ with $dif S = t / sqrt(t^2 - abs(x - y)^2) dif y$; the two hemispheres contribute equally, so
   $
-    t M_bar(g) (x, t) = 1/(2 pi) integral_(B (x, t)) (g (y))/(sqrt(t^2 - abs(x - y)^2)) dif y,
+    t M_bar(phi) (x, t) = 1/(2 pi) integral_(B (x, t)) (phi (y))/(sqrt(t^2 - abs(x - y)^2)) dif y,
   $
   and substituting into Kirchhoff's formula yields Poisson's formula. Note that the integral runs over the full *disk*, not the sphere: this is the mechanism behind the trailing wake and the failure of the strong Huygens principle in even dimensions (§15.4).
 ]
@@ -2915,7 +2915,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 == Finite Propagation Speed and Dispersive Decay // 波的传播与衰减
 
 #theorem(name: "Finite Propagation Speed")[
-  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with initial data $(g, h)$ and $(tilde(g), tilde(h))$. If $g = tilde(g)$ and $h = tilde(h)$ on $B (x, a t)$, then $u (x, t) = tilde(u) (x, t)$: the value at $(x, t)$ depends only on the initial data in the ball $overline(B (x, a t))$.
+  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with initial data $(phi, psi)$ and $(tilde(phi), tilde(psi))$. If $phi = tilde(phi)$ and $psi = tilde(psi)$ on $B (x, a t)$, then $u (x, t) = tilde(u) (x, t)$: the value at $(x, t)$ depends only on the initial data in the ball $overline(B (x, a t))$.
 ] <thm:domain-of-dependence>
 
 #proof[
@@ -2942,7 +2942,7 @@ Unlike the heat equation, where a disturbance is felt instantly at every distanc
 
 #theorem(name: "Dispersive Decay")[
   Let $u$ be the solution of the Cauchy problem with smooth, compactly supported initial data.
-  - *Odd dimensions* ($n >= 3$): $u (x, t) = 0$ as soon as $t > "dist"(x, "supp"(g, h))$ — after the wave front passes, the medium returns to rest (the *strong Huygens principle*).
+  - *Odd dimensions* ($n >= 3$): $u (x, t) = 0$ as soon as $t > "dist"(x, "supp"(phi, psi))$ — after the wave front passes, the medium returns to rest (the *strong Huygens principle*).
   - *Even dimensions* ($n = 2$): in general $u (x, t)$ does not vanish behind the front (trailing wake), and $abs(u (x, t)) <= C t^(-1/2)$ uniformly in $x$ as $t -> oo$ (the *weak Huygens principle*, or *dispersion*).
 ] <thm:dispersive-decay>
 
@@ -3003,9 +3003,9 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 ]
 
 #corollary(name: "Continuous Dependence on the Data")[
-  Let $u, v$ be $C^2$ solutions with initial data $(g, h)$ and $(tilde(g), tilde(h))$, and let $C$ be the backward cone with apex $(x_0, t_0)$. Then for all $t in [0, t_0]$ the local energy of the difference $w = u - v$ satisfies
+  Let $u, v$ be $C^2$ solutions with initial data $(phi, psi)$ and $(tilde(phi), tilde(psi))$, and let $C$ be the backward cone with apex $(x_0, t_0)$. Then for all $t in [0, t_0]$ the local energy of the difference $w = u - v$ satisfies
   $
-    E_C (t) <= 1/2 integral_(B (x_0, a t_0)) (abs(h - tilde(h))^2 + a^2 abs(nabla (g - tilde(g)))^2) dif y.
+    E_C (t) <= 1/2 integral_(B (x_0, a t_0)) (abs(psi - tilde(psi))^2 + a^2 abs(nabla (phi - tilde(phi)))^2) dif y.
   $
   Small initial data (in the energy norm, on the domain of dependence) produce a small solution: the Cauchy problem is *stable*.
 ] <cor:wave-stability>
@@ -3334,13 +3334,13 @@ This closing part of the notes collects the classical method of separation of va
 #example(name: "Wave Equation on a String")[
   For the vibrating string of length $L$ with fixed ends,
   $
-    (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2), quad u (0, t) = u (L, t) = 0, quad u (x, 0) = g (x), quad partial_t u (x, 0) = h (x),
+    (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2), quad u (0, t) = u (L, t) = 0, quad u (x, 0) = phi (x), quad partial_t u (x, 0) = psi (x),
   $
   separation gives the same spatial problem as in Example 18.1: $lambda_k = (k pi/L)^2$, $X_k (x) = sin (k pi x/L)$, and the temporal factor solves $T_k'' + a^2 lambda_k T_k = 0$, i.e. the harmonic oscillator with frequency $omega_k = a k pi/L$. Hence
   $
     u (x, t) = sum_(k=1)^oo (a_k cos (omega_k t) + b_k sin (omega_k t)) sin (k pi x/L),
   $
-  with $a_k = 2/L integral_0^L g (x) sin (k pi x/L) dif x$ and $b_k = 2/(L omega_k) integral_0^L h (x) sin (k pi x/L) dif x$. The eigenfrequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = a pi/L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (Chapter 15, #link(<thm:wave-energy>)[§15.5]).
+  with $a_k = 2/L integral_0^L phi (x) sin (k pi x/L) dif x$ and $b_k = 2/(L omega_k) integral_0^L psi (x) sin (k pi x/L) dif x$. The eigenfrequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = a pi/L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (Chapter 15, #link(<thm:wave-energy>)[§15.5]).
 ] <ex:wave-separation>
 
 #example(name: "Laplace Equation on a Rectangle")[
