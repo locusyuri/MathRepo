@@ -1207,10 +1207,9 @@ series depend on summation order, which has no probabilistic meaning.
   $
     E[a X + b Y] = a E[X] + b E[Y].
   $
-  Linearity holds *without* any independence assumption — this is what
-  makes expectation so powerful.
 ] <prop:expectation-linearity>
 
+Linearity holds *without* any independence assumption — this is what makes expectation so powerful.
 #theorem(name: "LOTUS (Law of the Unconscious Statistician)")[
   Let $X$ have PMF $p(x)$ (or PDF $f(x)$) and let $g: RR -> RR$ be
   measurable. Then
