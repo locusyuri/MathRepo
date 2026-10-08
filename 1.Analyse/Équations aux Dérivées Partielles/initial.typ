@@ -2838,7 +2838,16 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
   $
     F (x) = 1/2 phi (x) - 1/(2 a) integral_0^x psi (s) dif s, quad G (x) = 1/2 phi (x) + 1/(2 a) integral_0^x psi (s) dif s,
   $
-  up to a constant that cancels between $F$ and $G$. Thus the initial displacement splits into two half-amplitude waves running in opposite directions, while the initial velocity fills in the integral term. By the *superposition principle* (Chapter 1), the same decomposition handles the fully general problem: for nonzero data *and* a source $f (x, t)$, the solution is the sum of the d'Alembert solution of the homogeneous equation and the zero-data solution of the inhomogeneous equation — the latter is the object of the Duhamel principle in the next section.
+  up to a constant that cancels between $F$ and $G$. Thus the initial displacement splits into two half-amplitude waves running in opposite directions, while the initial velocity fills in the integral term. By the *superposition principle* (Chapter 1), the same decomposition handles the fully general problem: for nonzero data *and* a source $f (x, t)$, the solution is the sum of the d'Alembert solution of the homogeneous equation and the zero-data solution of the inhomogeneous equation — the latter is the object of the Duhamel principle in the next section. The splitting of the initial displacement is illustrated in #link(<fig:wave-traveling-waves>)[Figure].
+]
+
+#note[
+  #figure(
+    image("./img/wave-dalembert-traveling-waves.svg", width: 88%),
+    caption: [Splitting of the initial displacement for $psi equiv 0$. (a) The half-amplitude profiles $F (x - a t)$ and $G (x + a t)$ travel to the right and to the left without changing shape. (b) The solution $u = F (x - a t) + G (x + a t)$ at increasing times: the initial pulse splits into two waves running in opposite directions.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:wave-traveling-waves>
 ]
 
 == Duhamel Principle // Duhamel 原理
@@ -2946,7 +2955,16 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $a$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior. The three domains are illustrated in #link(<fig:wave-domain-dependence>)[Figure].
 
 #note[
-  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (x, t)$ depends only on the data on the *sphere* $partial B (x, a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
+  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (x, t)$ depends only on the data on the *sphere* $partial B (x, a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions. The contrast is illustrated in #link(<fig:wave-huygens>)[Figure].
+]
+
+#note[
+  #figure(
+    image("./img/wave-huygens-principle.svg", width: 92%),
+    caption: [Huygens' principle in the $(x, t)$-plane for data supported in the red interval. (a) Odd dimensions: the value at $(x, t)$ depends only on the data on the sphere $partial B (x, a t)$, giving the two shaded characteristic strips (darker where they overlap); a fixed receiver $x_0$ is silent once the sphere has crossed the support. (b) Even dimensions: the value depends on the data on the whole disk $B (x, a t)$, filling the forward cone; the receiver feels a wake that decays like $t^(-1/2)$.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:wave-huygens>
 ]
 
 #theorem(name: "Dispersive Decay")[
