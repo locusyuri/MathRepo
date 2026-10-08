@@ -2934,7 +2934,16 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
   the set of space-time points whose values the data at $y$ can affect.
 ] <def:domain-dependence-influence>
 
-Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $a$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior.
+#note[
+  #figure(
+    image("./img/wave-domain-dependence.svg", width: 100%),
+    caption: [Dependence, determinacy and influence for $u_(t t) = a^2 u_(x x)$ in one space dimension (drawn with $a = 1$). (a) The backward characteristic cone with apex $(x_0, t_0)$ meets the initial line in the domain of dependence $B (x_0, a t_0)$. (b) The domain of determinacy of an interval $D$ of the initial line. (c) The domain of influence of a point $y$ of the initial line.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:wave-domain-dependence>
+]
+
+Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $a$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior. The three domains are illustrated in #link(<fig:wave-domain-dependence>)[Figure].
 
 #note[
   *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (x, t)$ depends only on the data on the *sphere* $partial B (x, a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions.
