@@ -64,7 +64,7 @@ def main():
 
     fig.tight_layout()
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT, format="svg", bbox_inches="tight")
+    fig.savefig(OUT, format="svg", bbox_inches="tight", transparent=True)
     print(f"saved {OUT}")
 
 

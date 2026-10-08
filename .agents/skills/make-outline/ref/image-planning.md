@@ -79,7 +79,7 @@ def main():
     # ... 每个面板一段：几何对象 → 标注 → 标题
     fig.tight_layout()
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT, format="svg", bbox_inches="tight")
+    fig.savefig(OUT, format="svg", bbox_inches="tight", transparent=True)
 
 if __name__ == "__main__":
     main()
@@ -104,6 +104,11 @@ if __name__ == "__main__":
 - 标注用 mathtext（`r"$\varphi$"` 等）；**注意 mathtext 不支持 `\bigl`/`\bigr`**，用 `\left(\right)` 代替
 - `ax.annotate` 带箭头的引出标注，文字位置与箭头终点都显式给出
 - 图内文字统一英文，与笔记正文一致；**正文与标注不得出现中文**
+
+#### 背景
+
+- **输出必须透明背景**：`savefig` 必须带 `transparent=True`（模板已含），脚本内不得绘制白色底色矩形
+- 透明背景下检查元素配色是否仍可读（浅色填充、灰色文字的对比度）
 
 #### 多面板
 - 面板数量与排列（`plt.subplots(1, N, figsize=...)`）
