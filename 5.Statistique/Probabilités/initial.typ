@@ -1592,6 +1592,23 @@ in repeated trials (geometric, negative binomial).
   $"Var"(X) = (1 + q) / p^2 - 1 / p^2 = q / p^2$.
 ]
 
+#note[
+  (Two conventions.) Some texts count instead the number $Y$ of
+  *failures* before the first success:
+  $
+    P(Y = k) = q^k p, quad k = 0, 1, 2, dots
+  $
+  The two variables are linked by $Y = X - 1$, so
+  $
+    E[Y] = E[X] - 1 = q / p, quad "Var"(Y) = "Var"(X) = q / p^2:
+  $
+  the expectation shifts by one, the variance is unchanged by any shift.
+  This note uses the "trials" convention throughout, which matches the
+  negative binomial (waiting for the $r$-th success) and keeps
+  $"NB"(1, p) = "Geo"(p)$; readers comparing sources should check which
+  convention each formula assumes.
+]
+
 #property(name: "Memorylessness of the Geometric")[
   The geometric distribution is *memoryless*: for $m, n >= 1$,
   $
