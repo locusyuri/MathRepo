@@ -2951,33 +2951,35 @@ Rather than attacking this problem directly, we exploit linearity: it decomposes
 
 === The Semi-Infinite String: The Method of Extensions // 半无界弦：延拓法
 
-The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$, provided the boundary condition at the end $x = 0$ can be encoded in the data. The tool is the *method of extensions*: extend the data from $x > 0$ to the whole line in such a way that the d'Alembert solution of the extended problem automatically satisfies the boundary condition — the same reflection principle as the method of images for Green functions (Chapter 10).
+The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$, provided the boundary condition at the end $x = 0$ can be encoded in the data. The tool is the *method of extensions*: extend the data from $x > 0$ to the whole line in such a way that the d'Alembert solution of the extended problem automatically satisfies the boundary condition — the same reflection principle as the method of images for Green functions (Chapter 10). The extension is dictated by the boundary condition: a *fixed end* $u (0, t) = 0$ calls for an *odd* extension, a *free end* $u_x (0, t) = 0$ for an *even* one.
 
-#proposition(name: "The Semi-Infinite String with a Fixed End")[
-  Let $phi, psi$ be given on $x >= 0$, with $phi (0) = 0$ for compatibility. The half-line problem
-  $
-    u_(t t) = a^2 u_(x x) quad "in" (0, oo) times (0, oo), quad u (0, t) = 0, quad u (x, 0) = phi (x), quad partial_t u (x, 0) = psi (x)
-  $
-  is solved by extending the data *oddly* to the whole line, $tilde(phi) (x) = phi (x)$, $tilde(psi) (x) = psi (x)$ for $x >= 0$ and $tilde(phi) (x) = -phi (-x)$, $tilde(psi) (x) = -psi (-x)$ for $x < 0$, and restricting the d'Alembert solution of the extended Cauchy problem to $x > 0$:
-  $
-    u (x, t) = cases(
-      1/2 (phi (x + a t) + phi (x - a t)) + 1/(2 a) integral_(x - a t)^(x + a t) psi (s) dif s quad & x >= a t comma,
-      1/2 (phi (x + a t) - phi (a t - x)) + 1/(2 a) integral_(a t - x)^(x + a t) psi (s) dif s quad & 0 < x < a t
-    )
-  $
+#proposition(name: "The Semi-Infinite String by the Method of Extensions")[
+  Let $phi, psi$ be given on $x >= 0$, and let $u$ solve the wave equation on $x > 0$ with $u (x, 0) = phi (x)$, $partial_t u (x, 0) = psi (x)$ and a boundary condition at $x = 0$. Then:
+  - *Fixed end* $u (0, t) = 0$ (with the compatibility condition $phi (0) = 0$): extend the data *oddly*, $tilde(phi) (x) = phi (x)$, $tilde(psi) (x) = psi (x)$ for $x >= 0$ and $tilde(phi) (x) = -phi (-x)$, $tilde(psi) (x) = -psi (-x)$ for $x < 0$. The restriction of the d'Alembert solution to $x > 0$ is
+    $
+      u (x, t) = cases(
+        1/2 (phi (x + a t) + phi (x - a t)) + 1/(2 a) integral_(x - a t)^(x + a t) psi (s) dif s quad & x >= a t comma,
+        1/2 (phi (x + a t) - phi (a t - x)) + 1/(2 a) integral_(a t - x)^(x + a t) psi (s) dif s quad & 0 < x < a t
+      )
+    $
+  - *Free end* $u_x (0, t) = 0$ (with the compatibility condition $phi' (0) = 0$): extend the data *evenly*, $tilde(phi) (x) = phi (abs(x))$, $tilde(psi) (x) = psi (abs(x))$. The restriction of the d'Alembert solution to $x > 0$ is
+    $
+      u (x, t) = cases(
+        1/2 (phi (x + a t) + phi (x - a t)) + 1/(2 a) integral_(x - a t)^(x + a t) psi (s) dif s quad & x >= a t comma,
+        1/2 (phi (x + a t) + phi (a t - x)) + 1/(2 a) (integral_0^(x + a t) psi (s) dif s + integral_0^(a t - x) psi (s) dif s) quad & 0 < x < a t
+      )
+    $
 ] <prop:wave-half-line>
 
 #proof[
-  Let $tilde(u)$ be the d'Alembert solution of the Cauchy problem on the whole line with the odd data $(tilde(phi), tilde(psi))$. The wave equation and odd data are invariant under the reflection $(x, u) -> (-x, -u)$, so $tilde(u) (-x, t) = -tilde(u) (x, t)$: the solution is odd in $x$. In particular $tilde(u) (0, t) = 0$, so its restriction $u = tilde(u)|_(x > 0)$ satisfies the boundary condition as well as the initial data on $x > 0$. The two branches of the formula are d'Alembert's formula written out for $x >= a t$ (both arguments $x plus.minus a t$ positive, so the tilde data agree with $phi$, $psi$) and for $0 < x < a t$ (where $tilde(phi) (x - a t) = -phi (a t - x)$ and the integral is taken over the positive segment $[a t - x, x + a t]$). Uniqueness follows from the energy method (§15.7).
+  Let $tilde(u)$ be the d'Alembert solution of the Cauchy problem on the whole line with the extended data $(tilde(phi), tilde(psi))$. For the *odd* extension the equation and the data are invariant under $(x, u) -> (-x, -u)$, so $tilde(u) (-x, t) = -tilde(u) (x, t)$: the solution is odd in $x$, whence $tilde(u) (0, t) = 0$. For the *even* extension the solution is even in $x$, $tilde(u) (-x, t) = tilde(u) (x, t)$, whence $partial_x tilde(u) (0, t) = 0$. In both cases the restriction $u = tilde(u)|_(x > 0)$ therefore satisfies the boundary condition as well as the initial data; the formulas above are d'Alembert's formula written out, using $tilde(phi) (x - a t) = -phi (a t - x)$ (odd) or $tilde(phi) (x - a t) = phi (a t - x)$ (even) and deforming the integral over the negative segment to the positive one in the region $0 < x < a t$. The compatibility conditions make the extensions $C^2$, and uniqueness follows from the energy method (§15.7).
 ]
 
 #note[
-  *Reflected waves.* In the region $0 < x < a t$ the solution contains the extra term $-1/2 phi (a t - x)$: the wave emitted by the initial displacement reaches the wall and comes back as a *reflected wave* with inverted sign — the effect of the odd extension. For a *free end*, $u_x (0, t) = 0$, one extends the data *evenly* instead ($tilde(phi) (x) = phi (abs(x))$); the reflected wave then returns without sign inversion. In both cases the boundary acts as a mirror, and the whole-line solution restricted to $x > 0$ solves the half-line problem.
+  *Reflected waves.* In the region $0 < x < a t$ the extra term $plus.minus 1/2 phi (a t - x)$ is the *reflected wave*: the wave emitted by the initial displacement reaches the end $x = 0$ and comes back, with inverted sign at a fixed end (odd extension) and without sign inversion at a free end (even extension). The boundary thus acts as a mirror whose reflection coefficient is $-1$ or $+1$ according to the boundary condition.
 ]
 
 == The Inhomogeneous Equation: Duhamel's Principle // 非齐次方程：Duhamel 原理
-
-=== The Inhomogeneous Cauchy Problem // 非齐次柯西问题
 
 The second subproblem of the superposition split keeps the source but sets the initial data to zero — the inhomogeneous counterpart of the Cauchy problem of §15.2.
 
@@ -2991,8 +2993,6 @@ The second subproblem of the superposition split keeps the source but sets the i
   $
   with a given source $f$. The fully general problem — nonzero data *and* a source — is the sum of this and the homogeneous problem of §15.2, by the superposition split (#link(<prop:wave-superposition-split>)[§15.1]).
 ] <def:cauchy-wave-inhomogeneous>
-
-=== Duhamel's Principle // Duhamel 原理
 
 #theorem(name: "Duhamel's Principle for the Wave Equation")[
   Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$: $S (t) psi = w (dot, t)$, where $w_(t t) = a^2 w_(x x)$, $w (dot, 0) = 0$, $partial_t w (dot, 0) = psi$. Then the solution of the inhomogeneous Cauchy problem (#link(<def:cauchy-wave-inhomogeneous>)[Def.]) is given by
