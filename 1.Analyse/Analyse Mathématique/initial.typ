@@ -420,7 +420,103 @@ $
 
 === Convergent Sequences // 收敛序列
 
+#definition(name: "Convergent Sequence")[
+  A sequence ${x_n}$ in a metric space $X$ is said to be *convergent* if there exists $a in X$
+  with the following property: for every $epsilon > 0$ there exists $N in bb(N)^+$
+  such that $d(x_n, a) < epsilon$ for all $n > N$.
+  In this case ${x_n}$ is said to converge to $a$, written $lim_(n -> oo) x_n = a$;
+  otherwise it is said to be *divergent*.
+] <def:convergent-sequence>
+
+#note[
+  + In the definition, both "$n > N$" and "$d(x_n, a) < epsilon$" may be replaced by "$>=$",
+    and the definition remains correct.
+  + $lim_(n -> oo) a_n = A$ if and only if, for every $epsilon > 0$,
+    there are only finitely many terms outside the interval $(A - epsilon, A + epsilon)$.
+]
+
+#note[
+  $lim_(n -> oo) x_n = 0$ if and only if $lim_(n -> oo) abs(x_n) = 0$;
+  however, for $a != 0$, $lim_(n -> oo) x_n = a$ does not imply $lim_(n -> oo) abs(x_n) = a$.
+]
+
+#definition(name: "Bounded Sequence")[
+  A sequence ${x_n}$ that has both an upper bound and a lower bound is called a *bounded sequence*;
+  equivalently, there exists $X in bb(R)^+$ such that $abs(x_n) <= X$ for $n = 1, 2, 3, dots$.
+] <def:bounded-sequence>
+
 === Properties of Convergent Sequences // 收敛序列的性质
+
+#proposition(name: "Properties of Convergent Sequences")[
+  + *Uniqueness:* the limit of a convergent sequence is unique.
+  + *Boundedness:* a convergent sequence is necessarily bounded.
+  + *Order preservation:* let ${x_n}$ and ${y_n}$ both converge with
+    $lim_(n -> oo) x_n = a$, $lim_(n -> oo) y_n = b$, and $a < b$;
+    then there exists $N in bb(N)^+$ such that $x_n < y_n$ for all $n > N$. In particular:
+    - if $lim_(n -> oo) y_n = b > 0$, then there exists $N in bb(N)^+$
+      with $y_n > b / 2 > 0$ for all $n > N$;
+    - if $lim_(n -> oo) x_n = a$, $lim_(n -> oo) y_n = b$, and $x_n < y_n$ for all $n > N$,
+      then $a <= b$.
+  + *Squeeze:* if $x_n <= y_n <= z_n$ for all $n > N_0$ and $lim_(n -> oo) x_n = lim_(n -> oo) z_n = a$,
+    then $lim_(n -> oo) y_n = a$.
+  + *Arithmetic operations:* let $lim_(n -> oo) x_n = a$ and $lim_(n -> oo) y_n = b$. Then:
+    - $lim_(n -> oo) (alpha x_n + beta y_n) = alpha a + beta b$ for constants $alpha, beta$;
+    - $lim_(n -> oo) (x_n y_n) = a b$;
+    - $lim_(n -> oo) x_n / y_n = a / b$ for $b != 0$;
+    - if $a >= 0$ and $x_n >= 0$, then $lim_(n -> oo) sqrt(x_n) = sqrt(a)$.
+] <prop:convergent-sequence-properties>
+
+#caution[
+  The limits must exist before the arithmetic rules can be applied.
+  The rules extend to finitely many sequences, but not to infinitely many:
+  for instance, $lim_(n -> oo) underbrace(1 / n + 1 / n + dots + 1 / n, n "terms") = 1$ rather than $0$.
+]
+
+#proof[
+  + Let ${x_n}$ have limits $a$ and $b$. For every $epsilon > 0$ there exist $N_1, N_2$
+    with $abs(x_n - a) < epsilon / 2$ for $n > N_1$ and $abs(x_n - b) < epsilon / 2$ for $n > N_2$.
+    Taking $N = max(N_1, N_2)$, for $n > N$ we have
+    $abs(a - b) = abs(a - x_n + x_n - b) <= abs(x_n - a) + abs(x_n - b) < epsilon$.
+    Since $epsilon$ is arbitrarily close to $0$, $a = b$.
+  + Let ${x_n}$ converge to $a$. Taking $epsilon = 1$, there exists $N$
+    with $abs(x_n - a) < 1$ for $n > N$, i.e., $a - 1 < x_n < a + 1$.
+    Taking $M = max(abs(x_1), abs(x_2), dots, abs(x_N), abs(a) + 1)$,
+    we have $abs(x_n) <= M$ for all $n$.
+  + Taking $epsilon = (b - a) / 2 > 0$, by $lim_(n -> oo) x_n = a$ there exists $N_1$
+    with $x_n < (a + b) / 2$ for $n > N_1$; similarly there exists $N_2$
+    with $y_n > (a + b) / 2$ for $n > N_2$.
+    Taking $N = max(N_1, N_2)$, for $n > N$ we have $x_n < (a + b) / 2 < y_n$.
+    - It suffices to apply the order-preservation property to the constant sequence $x_n = b / 2$.
+    - The strict inequality may be lost in the limit: for example, $a_n = 1 / (4 n)$ and $b_n = 1 / (2 n)$
+      satisfy $a_n < b_n$ for all $n >= 1$, yet $lim_(n -> oo) a_n = lim_(n -> oo) b_n = 0$.
+  + For every $epsilon > 0$, since $lim_(n -> oo) x_n = a$ there exists $N_1$
+    with $a - epsilon < x_n$ for $n > N_1$;
+    since $lim_(n -> oo) z_n = a$ there exists $N_2$ with $z_n <= a + epsilon$ for $n > N_2$.
+    Taking $N = max(N_0, N_1, N_2)$, for $n > N$ we have
+    $a - epsilon < x_n <= y_n <= z_n <= a + epsilon$, i.e., $abs(y_n - a) < epsilon$.
+  + Since $lim_(n -> oo) x_n = a$, there exists $X > 0$ with $abs(x_n) < X$ for all $n$,
+    and for every $epsilon > 0$ there exists $N_1$ with $abs(x_n - a) < epsilon$ for $n > N_1$;
+    likewise there exists $N_2$ with $abs(y_n - b) < epsilon$ for $n > N_2$.
+    Taking $N = max(N_1, N_2)$, for $n > N$ we have
+    $
+      abs(alpha x_n + beta y_n - (alpha a + beta b)) & <= abs(alpha) abs(x_n - a) + abs(beta) abs(y_n - b) \
+                                                     & < (abs(alpha) + abs(beta)) epsilon,
+    $
+    and
+    $
+      abs(x_n y_n - a b) = abs(x_n (y_n - b) + b (x_n - a)) < (X + abs(b)) epsilon,
+    $
+    so items 1 and 2 hold.
+    For item 3, by the corollary of the order-preservation property there exists $N_0$
+    with $abs(y_n) > abs(b) / 2$ for $n > N_0$; taking $N = max(N_0, N_1, N_2)$, for $n > N$ we have
+    $
+      abs(x_n / y_n - a / b)
+      = abs(b (x_n - a) - a (y_n - b)) / abs(y_n b)
+      < (2 (abs(a) + abs(b))) / abs(b)^2 epsilon.
+    $
+    For item 4, it suffices to note
+    $abs(sqrt(x_n) - sqrt(a)) <= sqrt(abs(x_n - a)) < sqrt(epsilon)$.
+]
 
 === Cauchy Proposition and Fitting Method // 柯西命题与拟合法
 
@@ -458,7 +554,45 @@ on top of that, it can also be proved by the *fitting method*.
 
 === Infinitely Large Quantities and Infinitesimal Quantities // 无穷大量与无穷小量
 
+#definition(name: "Infinitesimal Quantity")[
+  A sequence converging to $0$ is called an *infinitesimal quantity*.
+] <def:infinitesimal-quantity>
+
+#definition(name: "Infinite Quantity")[
+  A sequence ${x_n}$ is called an *infinite quantity* if for any given $G > 0$,
+  there exists $N in bb(N)^+$ such that $abs(x_n) > G$ for all $n > N$,
+  written $lim_(n -> oo) x_n = oo$.
+  If an infinite quantity ${x_n}$ is positive (negative) from some term on,
+  it is called a positive (negative) infinite quantity, written $lim_(n -> oo) x_n = plus.minus oo$;
+  they are collectively called infinite quantities of fixed sign.
+] <def:infinite-quantity>
+
+#theorem(name: "Theorems on Infinite and Infinitesimal Quantities")[
+  + Let $x_n != 0$. Then ${x_n}$ is an infinite quantity
+    if and only if ${1 / x_n}$ is an infinitesimal quantity.
+  + Let ${x_n}$ be an infinite quantity and $lim_(n -> oo) y_n = b != 0$.
+    Then both ${x_n y_n}$ and ${x_n / y_n}$ are infinite quantities.
+  + Let ${x_n}$ be an infinite quantity and $abs(y_n) >= delta > 0$ for all $n >= N_0$.
+    Then ${x_n y_n}$ is an infinite quantity.
+] <thm:infinite-infinitesimal-quantity>
+
+#proof[
+  + ($=>$) Let ${x_n}$ be an infinite quantity. For every $epsilon > 0$, take $G = 1 / epsilon > 0$;
+    there exists $N$ with $abs(x_n) > G = 1 / epsilon$ for $n > N$, hence $abs(1 / x_n) < epsilon$.
+    ($<=$) Let ${1 / x_n}$ be an infinitesimal quantity. For every $G > 0$, take $epsilon = 1 / G > 0$;
+    there exists $N$ with $abs(1 / x_n) < 1 / G = epsilon$ for $n > N$, hence $abs(x_n) > G$,
+    i.e., ${x_n}$ is an infinite quantity.
+  + The proofs of items 2 and 3 are easy and omitted.
+]
+
 === Indeterminate Forms // 未定式
+
+#definition(name: "Indeterminate Form")[
+  Using $+oo$, $-oo$, $oo$ and $0$ to denote positive infinite quantities, negative infinite quantities,
+  infinite quantities of indefinite sign, and infinitesimal quantities, respectively,
+  the limits of the types $oo plus.minus oo$, $0 dot oo$, $0 / 0$ and $oo / oo$, and so on,
+  have indeterminate outcomes; limits of such types are called *indeterminate forms*.
+] <def:indeterminate-form>
 
 #theorem(name: "Stolz-Cesàro Theorem")[
   *Type $0 / 0$:* Let ${a_n}$ and ${b_n}$ be two infinitesimal sequences,
