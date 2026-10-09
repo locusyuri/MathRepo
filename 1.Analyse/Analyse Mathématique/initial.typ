@@ -7183,7 +7183,250 @@ $
   ln(1 + x) = x dot attach(F, bl: 2, t: 1)(1, 1; 2; -x), quad quad (1 - x)^(-a) = attach(F, bl: 2, t: 1)(a, 1; 1; x), quad quad arcsin x = x dot attach(F, bl: 2, t: 1)(1/2, 1/2; 3/2; x^2).
 $
 
-// B9: ch09 Series of Functions（函数项级数）
+= Series of Functions // 函数项级数
+
+== Pointwise and Uniform Convergence // 点态收敛与一致收敛
+
+=== Pointwise Convergence // 点态收敛
+
+#definition(name: "Function Term Series")[
+  Let $u_(n)(x)$ ($n = 1, 2, 3, dots$) be a sequence of functions with a common domain $E$. The sum of these infinitely many functions
+  $
+    sum_(n=1)^oo u_(n)(x)
+  $
+  is called a /function term series/.
+
+  For any fixed point $x_0 in E$, if the numerical series $sum_(n=1)^oo u_(n)(x_0)$ converges, then the function term series is said to converge at $x_0$, or equivalently, $x_0$ is called a /convergence point/ of $sum_(n=1)^oo u_(n)(x)$. The set of all convergence points is called the /domain of convergence/ of $sum_(n=1)^oo u_(n)(x)$.
+] <def:function-term-series>
+
+#definition(name: "Pointwise Convergence")[
+  Let the domain of convergence of the function term series $sum_(n=1)^oo u_(n)(x)$ be $D subset.eq E$. Then the series defines a function $S(x)$ on $D$, where
+  $
+    S(x) = sum_(n=1)^oo u_(n)(x), quad quad x in D.
+  $
+  The function $S(x)$ is called the /sum function/ of the series, and the series is said to /converge pointwise/ to $S(x)$ on $D$.
+] <def:pointwise-convergence>
+
+Define the /partial sum function/ of the series as
+$
+  S_(n)(x) = sum_(k=1)^n u_(k)(x).
+$
+It is evident that the set of all $x$ for which $(S_(n)(x))$ converges is precisely $D$, and on $D$ we have
+$
+  S(x) = lim_(n -> oo) S_(n)(x) = lim_(n -> oo) sum_(k=1)^n u_(k)(x).
+$
+Conversely, given a sequence of functions $(S_(n)(x))$ ($x in E$), the definitions
+$
+  u_1(x) = S_1(x), quad quad u_(n+1)(x) = S_(n+1)(x) - S_(n)(x) quad quad (n = 1, 2, dots)
+$
+recover the corresponding function term series. Thus the convergence behavior of a function term series and that of the corresponding sequence of partial sum functions are essentially the same.
+
+However, pointwise convergence has certain limitations.
+
+*Continuity.* The sum of finitely many continuous functions satisfies additive continuity:
+$
+  lim_(x -> x_0) [u_1(x) + dots.c + u_(n)(x)] = lim_(x -> x_0) u_1(x) + dots.c + lim_(x -> x_0) u_(n)(x).
+$
+If this property could be extended to infinitely many functions — that is, if $u_(n)(x)$ is continuous on $D$, then the sum function $S(x) = sum_(n=1)^oo u_(n)(x)$ would also be continuous on $D$, with
+$
+  lim_(x -> x_0) sum_(n=1)^oo u_(n)(x) = sum_(n=1)^oo lim_(x -> x_0) u_(n)(x),
+$
+meaning that /the limit operation and infinite summation can be interchanged/ (the series can be evaluated termwise) — then, for the sequence of partial sums, the limit function $S(x) = lim_(n -> oo) S_(n)(x)$ would be continuous on $D$ and the two limit operations could be interchanged:
+$
+  lim_(x -> x_0) lim_(n -> oo) S_(n)(x) = lim_(n -> oo) lim_(x -> x_0) S_(n)(x).
+$
+Unfortunately, under pointwise convergence this property does /not/ hold.
+
+*Derivability.* The sum of finitely many differentiable functions satisfies additive differentiability:
+$
+  [u_1(x) + dots.c + u_(n)(x)]' = u_1'(x) + dots.c + u_n'(x).
+$
+If this property could be extended to infinitely many functions — that is, if $u_(n)(x)$ is differentiable on $D$, then the sum function would also be differentiable on $D$, with
+$
+  [sum_(n=1)^oo u_(n)(x)]' = sum_(n=1)^oo u_n'(x),
+$
+meaning that /the differentiation operation and infinite summation can be interchanged/ (the series can be differentiated termwise) — then, for the sequence of partial sums, the limit function would be differentiable on $D$ and the two operations could be interchanged:
+$
+  [lim_(n -> oo) S_(n)(x)]' = lim_(n -> oo) S_n'(x).
+$
+Unfortunately, under pointwise convergence this property does /not/ hold.
+
+*Integrability.* The sum of finitely many integrable functions satisfies additive integrability:
+$
+  integral_a^b [u_1(x) + dots.c + u_(n)(x)] dif x = integral_a^b u_1(x) dif x + dots.c + integral_a^b u_(n)(x) dif x.
+$
+If this property could be extended to infinitely many functions — that is, if $u_(n)(x)$ is integrable on $[a, b] subset.eq D$, then the sum function would also be integrable on $[a, b]$, with
+$
+  integral_a^b sum_(n=1)^oo u_(n)(x) dif x = sum_(n=1)^oo integral_a^b u_(n)(x) dif x,
+$
+meaning that /the integration operation and infinite summation can be interchanged/ (the series can be integrated termwise) — then, for the sequence of partial sums, the limit function would be integrable on $[a, b]$ and the two operations could be interchanged:
+$
+  integral_a^b lim_(n -> oo) S_(n)(x) dif x = lim_(n -> oo) integral_a^b S_(n)(x) dif x.
+$
+Unfortunately, under pointwise convergence this property does /not/ hold.
+
+#example(name: "Counter-Examples for Pointwise Convergence")[
+  *Discontinuity of the sum function.* Let $S_(n)(x) = x^n$ on the interval $-1 < x <= 1$. Then $(S_(n)(x))$ converges to
+  $
+    S(x) = cases(0 quad quad (-1 < x < 1), 1 quad quad (x = 1)),
+  $
+  and each $S_(n)(x)$ is continuous, but the limit function $S(x)$ is discontinuous (hence not differentiable) at $x = 1$.
+
+  *Failure of termwise differentiation.* Let $S_(n)(x) = sin(n x) / sqrt(n)$ on $(-oo, +oo)$. Then $(S_n)$ converges to $S(x) = 0$, so $S'(x) = 0$. But $S_n'(x) = sqrt(n) cos(n x)$ does not converge to $S'(x) = 0$.
+
+  *Non-integrability of the sum function.* Let
+  $
+    S_(n)(x) = cases(1 quad quad (x dot n! in bb(Z)), 0 quad quad (x dot n! in.not bb(Z))) quad quad x in [0, 1].
+  $
+  For every $n$, $S_(n)(x)$ is bounded on $[0, 1]$ and has at most finitely many discontinuities (at the points $x = k / n!$), so $S_(n)(x) in R[0, 1]$. However, for irrational $x$ we have $S_(n)(x) = 0$ for all $n$, while for $x = q \/ p in bb(Q)$ ($p in bb(N)^+$, $q in bb(N)$, $q <= p$) we have $S_(n)(x) = 1$ for all $n >= p$. Hence the limit function $S(x)$ is the Dirichlet function, which is not Riemann integrable on $[0, 1]$.
+
+  *Failure of termwise integration.* Let $S_(n)(x) = n x (1 - x^2)^n$ on $[0, 1]$. Then $(S_(n)(x))$ converges to $S(x) = 0$, and $S_(n)(x), S(x) in R[0, 1]$ for every $n$. But
+  $
+    integral_0^1 S_(n)(x) dif x = n / (2(n + 1)) -> 1 != integral_0^1 S(x) dif x = 0 quad quad (n -> oo).
+  $
+] <ex:pointwise-counterexamples>
+
+=== Uniform Convergence // 一致收敛
+
+#definition(name: "Uniform Convergence")[
+  Let $(S_(n)(x))$ ($x in D$) be a sequence of functions. If
+  $
+    forall epsilon > 0, exists N(epsilon) in bb(N)^+, forall n > N(epsilon): abs(S_(n)(x) - S(x)) < epsilon quad quad (forall x in D),
+  $
+  then $(S_n)$ is said to /converge uniformly/ to $S(x)$ on $D$, denoted by
+  $
+    S_(n)(x) arrows.rr^(D) S(x).
+  $
+  If the partial sum sequence of the function term series $sum_(n=1)^oo u_(n)(x)$ ($x in D$) converges uniformly to $S(x)$ on $D$, then the series is said to converge uniformly to $S(x)$ on $D$.
+] <def:uniform-convergence>
+
+Obviously, if the partial sum sequence of $sum_(n=1)^oo u_(n)(x)$ satisfies $S_(n)(x) arrows.rr^(D) S(x)$, then $u_(n)(x) arrows.rr^(D) 0$.
+
+#theorem(name: "Cauchy Criterion for Uniform Convergence")[
+  The necessary and sufficient condition for the sequence of functions $(S_(n)(x))$ to converge uniformly on $D$ is
+  $
+    forall epsilon > 0, exists N in bb(N)^+, forall m > n > N: abs(S_(m)(x) - S_(n)(x)) < epsilon quad quad (forall x in D).
+  $
+  Correspondingly, the necessary and sufficient condition for the function term series $sum_(n=1)^oo u_(n)(x)$ to converge uniformly on $D$ is
+  $
+    forall epsilon > 0, exists N in bb(N)^+, forall m > n > N: abs(sum_(i=n+1)^m u_(i)(x)) < epsilon quad quad (forall x in D).
+  $
+] <thm:cauchy-criterion-uniform-convergence>
+
+#theorem(name: "Necessary and Sufficient Conditions for Uniform Convergence")[
+  Let $(S_(n)(x))$ converge pointwise to $S(x)$ on $D$. Then $S_(n)(x) arrows.rr^(D) S(x)$ if and only if:
+  + $lim_(n -> oo) d(S_n, S) = lim_(n -> oo) sup_(x in D) abs(S_(n)(x) - S(x)) = 0$;
+  + for any sequence $(x_n)$ with $x_n in D$, it holds that
+    $
+      lim_(n -> oo) (S_(n)(x_n) - S(x_n)) = 0.
+    $
+] <thm:ns-conditions-uniform-convergence>
+
+#proof[
+  *Item 1.* Suppose first that $S_(n)(x) arrows.rr^(D) S(x)$. Then for every $epsilon > 0$ there exists $N$ such that $abs(S_(n)(x) - S(x)) < epsilon / 2$ for all $n > N$ and all $x in D$, whence $d(S_n, S) <= epsilon / 2 < epsilon$ for all $n > N$, i.e. $lim_(n -> oo) d(S_n, S) = 0$. Conversely, if $lim_(n -> oo) d(S_n, S) = 0$, then for every $epsilon > 0$ there exists $N$ such that $d(S_n, S) < epsilon$ for all $n > N$, which means $abs(S_(n)(x) - S(x)) < epsilon$ for all $x in D$, i.e. $S_(n)(x) arrows.rr^(D) S(x)$.
+
+  *Item 2.* If $S_(n)(x) arrows.rr^(D) S(x)$, then $d(S_n, S) -> 0$ ($n -> oo$), and for any sequence $(x_n)$ with $x_n in D$,
+  $
+    abs(S_(n)(x_n) - S(x_n)) <= d(S_n, S) -> 0 quad quad (n -> oo).
+  $
+  Conversely, suppose $S_n$ does /not/ converge uniformly to $S$ on $D$: there exists $epsilon_0 > 0$ such that for every $N$ there exist $n > N$ and $x in D$ with $abs(S_(n)(x) - S(x)) >= epsilon_0$. Taking $N_1 = 1$ yields $n_1 > N_1$ and $x_(n_1) in D$ with $abs(S_(n_1)(x_(n_1)) - S(x_(n_1))) >= epsilon_0$; taking $N_2 = n_1$ yields $n_2 > n_1$ and $x_(n_2)$ with the same property; and so on. For the remaining indices choose $x_m in D$ arbitrarily. The resulting sequence $(x_n)$ in $D$ has a subsequence $(x_(n_k))$ with $abs(S_(n_k)(x_(n_k)) - S(x_(n_k))) >= epsilon_0$, so $lim_(n -> oo) (S_(n)(x_n) - S(x_n)) = 0$ is impossible — a contradiction.
+]
+
+With the concept of uniform convergence, the flaws of pointwise convergence can be remedied, and the following properties can be established.
+
+#proposition(name: "Continuity under Uniform Convergence")[
+  Let $f_(n)(x) arrows.rr^(I subset.eq bb(R)) f(x)$. If $f_(n)(x)$ is continuous at $x_0 in I$ for every $n$, then $f(x)$ is also continuous at $x_0$. In particular, if $f_(n)(x) in C(I)$, then $f(x) in C(I)$.
+
+  *Termwise limit.* If $sum_(n=1)^oo u_(n)(x) arrows.rr^(I subset.eq bb(R)) S(x)$ and $u_(n)(x) in C(I)$, then the sum function $S(x) in C(I)$.
+] <prop:continuity-uniform-convergence>
+
+#proposition(name: "Integrability under Uniform Convergence")[
+  Let $f_(n)(x) arrows.rr^([a, b]) f(x)$. If $f_(n)(x) in R[a, b]$, then $f(x) in R[a, b]$, and
+  $
+    lim_(n -> oo) integral_a^b f_(n)(x) dif x = integral_a^b lim_(n -> oo) f_(n)(x) dif x = integral_a^b f(x) dif x.
+  $
+
+  *Termwise integration.* If $sum_(n=1)^oo u_(n)(x) arrows.rr^([a, b]) S(x)$ and $u_(n)(x) in R[a, b]$, then $S(x) in R[a, b]$.
+] <prop:integrability-uniform-convergence>
+
+#proposition(name: "Differentiability under Uniform Convergence")[
+  Let $f_n'(x) arrows.rr^([a, b]) sigma(x)$. If there exists $x_0 in [a, b]$ such that $lim_(n -> oo) f_(n)(x_0) = a$, then there exists a function $f$ such that $f_(n)(x) arrows.rr^([a, b]) f(x)$ and $f'(x) = sigma(x)$.
+
+  *Termwise differentiation.* If $sum_(n=1)^oo u_n'(x) arrows.rr^([a, b]) sigma(x)$ and there exists $x_0 in [a, b]$ such that $sum_(n=1)^oo u_(n)(x_0)$ converges to $a$, then there exists a function $S$ such that $sum_(n=1)^oo u_(n)(x) arrows.rr^([a, b]) S(x)$ and $S'(x) = sigma(x)$.
+
+  *Corollary.* If we add the condition $f_n'(x) in C[a, b]$, the conclusion still holds and the proof becomes simpler.
+] <prop:differentiability-uniform-convergence>
+
+#note[
+  Since continuity and differentiability are both local properties, it suffices to have uniform convergence internally closed on $(a, b)$ to ensure that $f(x)$ is continuous or differentiable.
+]
+
+=== Quasi-Uniform Convergence // 准一致收敛
+
+#definition(name: "Quasi-Uniform Convergence")[
+  The sequence of functions $(S_(n)(x))$ is said to converge /quasi-uniformly/ on the interval $[a, b]$ if it converges pointwise to $S(x)$ on $[a, b]$ and
+  $
+    forall epsilon > 0, forall N in bb(N)^+, exists N_0 > N "s.t." forall x in [a, b], exists n_x in [N, N_0] (n_x in bb(N)^+): abs(S_(n_x)(x) - S(x)) < epsilon.
+  $
+] <def:quasi-uniform-convergence>
+
+== Uniform Convergence Tests // 一致收敛判别法
+
+=== Weierstrass Test (M-Test) // Weierstrass 判别法（M-判别法）
+
+#theorem(name: "Weierstrass Test (M-Test)")[
+  If there exists a convergent positive term series $sum_(n=1)^oo a_n$ such that
+  $
+    abs(u_(n)(x)) <= a_n, quad quad forall x in E, n = 1, 2, 3, dots,
+  $
+  then the function term series $sum_(n=1)^oo u_(n)(x)$ converges uniformly on $E$. The positive term series $sum_(n=1)^oo a_n$ is called a /majorant series/ of $sum_(n=1)^oo u_(n)(x)$.
+
+  If the convergent positive term series $sum_(n=1)^oo a_n$ is replaced by a uniformly convergent series of functions $sum_(n=1)^oo a_(n)(x)$, the conclusion still holds.
+] <thm:weierstrass-m-test>
+
+=== Abel-Dirichlet Test // Abel-Dirichlet 判别法
+
+#theorem(name: "Abel-Dirichlet Test")[
+  If the series of functions $sum_(n=1)^oo a_(n)(x) b_(n)(x)$ ($x in E$) satisfies at least one of the following two conditions, then it converges uniformly on $E$:
+  + *Abel.* The sequence $(a_(n)(x_0))$ is monotonic for every $x_0 in E$, the sequence of functions $(a_(n)(x))$ is uniformly bounded on $E$, and the series $sum_(n=1)^oo b_(n)(x)$ converges uniformly on $E$.
+  + *Dirichlet.* The sequence $(a_(n)(x_0))$ is monotonic for every $x_0 in E$ and $a_(n)(x) -> 0$ uniformly on $E$, while the partial sums $B_(n)(x) = sum_(k=1)^n b_(k)(x)$ are uniformly bounded on $E$.
+] <thm:abel-dirichlet-uniform>
+
+=== Dini Theorem // Dini 定理
+
+#theorem(name: "Dini Theorem")[
+  Let the sequence of functions $(S_(n)(x))$ converge pointwise to $S(x)$ on the closed interval $[a, b]$. If
+  + $S_(n)(x) in C[a, b]$ ($n = 1, 2, 3, dots$);
+  + $S(x) in C[a, b]$;
+  + the sequence $(S_(n)(x_0))$ is monotonic for every $x_0 in [a, b]$,
+
+  then $S_(n)(x) arrows.rr^([a, b]) S(x)$.
+] <thm:dini-theorem>
+
+#proof(name: "of the Dini theorem (by contradiction)")[
+  Suppose, for contradiction, that $S_(n)(x)$ does not converge uniformly to $S(x)$ on $[a, b]$: there exists $epsilon_0 > 0$ such that for every $N$ there exist $n > N$ and $x in [a, b]$ with $abs(S_(n)(x) - S(x)) >= epsilon_0$. Taking successively $N = 1, n_1, n_2, dots$ produces indices $n_1 < n_2 < dots.c$ and points $x_1, x_2, dots.c in [a, b]$ with
+  $
+    abs(S_(n_k)(x_k) - S(x_k)) >= epsilon_0 quad quad (k = 1, 2, dots).
+  $
+  By the Bolzano-Weierstrass theorem the sequence $(x_k)$ has a convergent subsequence; without loss of generality let $x_k -> xi in [a, b]$. By pointwise convergence there exists $N$ with $abs(S_(N)(xi) - S(xi)) < epsilon_0 / 2$. Since $S_(n)(x), S(x) in C[a, b]$, the function $S_(N)(x) - S(x)$ is continuous at $xi$, so there exists $K$ such that
+  $
+    abs(S_(N)(x_k) - S(x_k)) < epsilon_0 quad quad (k > K).
+  $
+  By monotonicity of $(S_(n)(x_0))$ for every $x_0$, when $n > N$ and $k > K$,
+  $
+    abs(S_(n)(x_k) - S(x_k)) <= abs(S_(N)(x_k) - S(x_k)) < epsilon_0.
+  $
+  Since $n_k -> oo$, for $k$ large enough both $k > K$ and $n_k > N$ hold, whence $abs(S_(n_k)(x_k) - S(x_k)) < epsilon_0$ — contradicting the construction.
+]
+
+#proof(name: "of the Dini theorem (finite cover)")[
+  Let $r_(n)(x) = S(x) - S_(n)(x)$. Since $(S_(n)(x_0))$ is monotonic for every $x_0 in [a, b]$, assume without loss of generality that it is increasing; then $r_(n)(x) >= 0$, $r_(n)(x) -> 0$ pointwise, and $r_(n+1)(x) <= r_(n)(x)$ on $[a, b]$. Fix $epsilon > 0$ and let $E_n$ denote the set of points $x in [a, b]$ with $r_(n)(x) < epsilon$. Each $E_n$ is open in $[a, b]$ since $r_n$ is continuous, the sets are increasing ($E_n subset.eq E_(n+1)$), and $union_(n=1)^oo E_n = [a, b]$ by pointwise convergence. By the Heine-Borel theorem, finitely many of them cover $[a, b]$; since the sets are increasing, $E_(n_1) subset.eq dots.c subset.eq E_(n_p)$ and $union_(j=1)^p E_(n_j) = [a, b]$ for some indices $n_1 < dots.c < n_p$. Let $N = n_p$. Then for every $n > N$ and every $x in [a, b]$, we have $x in E_(n_j) subset.eq E_N subset.eq E_n$ for some $j$, i.e. $r_(n)(x) < epsilon$. Since $epsilon > 0$ was arbitrary, $S_(n)(x) arrows.rr^([a, b]) S(x)$.
+]
+
+#note[
+  Removing the condition of monotonicity, the Arzelà-Borel theorem becomes a result of quasi-uniform convergence.
+]
+
 // B10: ch10 Power Series（幂级数）
 
 // --- Part IV: 多元微积分本体（决策③：ch11–13） ---
