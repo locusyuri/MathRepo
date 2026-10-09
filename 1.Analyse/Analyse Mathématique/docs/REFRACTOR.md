@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B11 §11.1 现状迁移完成 + P0-1 大纲草案已出待确认）
+> 最后更新：2026-10-10（B12a ch12 §1–3 迁移完成）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -252,7 +252,12 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
     - `=== Limits in Euclidean Spaces`：点列极限与 Cauchy 准则、多元函数极限（Heine 归结原则）、累次极限与重极限关系
     - `=== Continuous Mappings`：连续性定义与等价刻画（开集原像/序列刻画）、运算封闭性、分量连续 ⟺ 映射连续
     - `=== Continuous Mappings on Compact Sets`（恢复 tex 空壳）：有界性、最值可达、一致连续（Cantor）、紧集连续像紧 + 连通集上介值定理（与现 §11.1 Connected Sets 内容衔接）
-- [ ] **B12a = ch12 §1–3**（约 440 行）：Directional Derivatives / Higher-Order Partial Derivatives / Differential of Vector-Valued Functions
+- [x] **B12a = ch12 §1–3**（约 440 行）：Directional Derivatives / Higher-Order Partial Derivatives / Differential of Vector-Valued Functions（✅ 2026-10-10，编译退出码 0，三正则命中 0）
+  - §12.1：方向导数定义 `<def:directional-derivative>`、标准正交基与偏导数记号、方向导数公式、$-bold(e)$ note、Jacobian 矩阵/梯度 `<def:jacobian-matrix>`、全微分 `<def:total-differential>`、可微充要条件 `<thm:conditions-of-differentiability>`、三元松弛版充分条件证明、note(At some point)（3 条含 3 反例）+ Item 2（有界⇒连续）证明
+  - §12.2：二阶偏导记号段、混合偏导相等定理 `<thm:mixed-partials-equality>`（tex L285–287 空 proof 按空壳原则不编造）、高阶可微（dz/d²z 推导、算子记号、d^k z 归纳公式、n 元推广）
+  - §12.3：向量值函数三点定义（enum）+ 统一陈述（连续/可微/有导数 ⟺ 各分量）
+  - 修正 tex 问题（均留 `//` 注）：L40 单位向量分解式笔误（`e_i = sum e_i cos alpha_i` → `e = sum_(i=1)^n bold(e)_i cos alpha_i`）；L381 "偏导存在 ⇒ 可微" 数学错误改为"一阶偏导数均存在"；footnote×2（模板不支持）转 note/正文
+  - 符号坑（Typst 0.15.1）：`angle.l/r` 不可用（unknown symbol modifier），内积尖括号用 `<< >>`；`grad` 非合法符号，∇ 写 `nabla`、文字形式写 `"grad" f`；`Jf` 连写被解析为未知变量，须写 `J f`（渲染仍紧排）；`f_m(` 触发下标吞括号，须写 `f_(m)(`
 - [ ] **B12b = ch12 §4–5**（约 250 行）：Chain Rule / Mean Value Theorem and Taylor's Formula
 - [ ] **B12c = ch12 §6**（约 370 行）：Implicit Function Theorem（长证明，单独成批）
 - [ ] **B12d = ch12 §7**（约 300 行）：Extremum of Multi-variable Functions（含 Lagrange 乘子）
