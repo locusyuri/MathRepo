@@ -884,18 +884,20 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
 === Equivalence of the Completeness Theorems // 完备性定理的等价性
 
 #theorem(name: "Equivalence of the Completeness Theorems")[
-  The following theorems are mutually equivalent: #link(<thm:dedekind>)[Dedekind's theorem],
-  #link(<thm:supremum-existence>)[the principle of existence of suprema],
-  #link(<thm:monotone-convergence>)[the monotone convergence theorem],
-  #link(<thm:nested-interval>)[the nested interval theorem],
-  #link(<thm:bolzano-weierstrass>)[the Bolzano-Weierstrass theorem],
-  #link(<thm:heine-borel>)[the Heine-Borel finite covering theorem],
-  and #link(<thm:cauchy-criterion>)[the Cauchy convergence criterion].
-  The Cauchy convergence criterion expresses the *completeness* of the real numbers,
-  while the principle of existence of suprema (Dedekind's theorem) expresses their *continuity*;
-  the mutual derivability of these theorems shows that
-  *the continuity of the real numbers is equivalent to their completeness*.
+  The following theorems are mutually equivalent:
+  + #link(<thm:dedekind>)[Dedekind's theorem];
+  + #link(<thm:supremum-existence>)[the principle of existence of suprema];
+  + #link(<thm:monotone-convergence>)[the monotone convergence theorem];
+  + #link(<thm:nested-interval>)[the nested interval theorem];
+  + #link(<thm:bolzano-weierstrass>)[the Bolzano-Weierstrass theorem];
+  + #link(<thm:heine-borel>)[the Heine-Borel finite covering theorem];
+  + #link(<thm:cauchy-criterion>)[the Cauchy convergence criterion].
 ] <thm:completeness-equivalence>
+
+The Cauchy convergence criterion expresses the *completeness* of the real numbers,
+while the principle of existence of suprema (Dedekind's theorem) expresses their *continuity*;
+the mutual derivability of these theorems shows that
+*the continuity of the real numbers is equivalent to their completeness*.
 
 #note[
   The dependency structure is:
