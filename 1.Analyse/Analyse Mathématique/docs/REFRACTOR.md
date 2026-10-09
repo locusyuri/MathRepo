@@ -258,6 +258,14 @@ typst compile "1.Analyse/Analyse Mathématique/initial.typ" \
 4. 组件内标签引用用 `#link(<label>)[...]`，不直接 `@`
 5. 绝对值 `abs(...)`、分数非单因子加括号、**下标后紧接括号必须 `{}` 包裹**（`mu_(X)(B)`，正则 `_([a-zA-Z])\(` 自查为 0 才算完）
 6. 图片保持 `img/` 目录，`#figure(image("img/...", width: ...), ...) <fig:xxx>`
+7. `\underline{...}` → **斜体** `_..._`（不用 `#underline`；用户钦定，2026-10-09）
+8. 多行对齐公式统一为用户钦定样式：`& = `（等号两侧各一空格）+ 行尾 `\` 续行（最后一行不加 `\`），块内各行不额外填充对齐空格，如
+   ```typst
+   $
+     sin alpha cos beta & = 1 / 2 [sin(alpha + beta) + sin(alpha - beta)] \
+     cos alpha sin beta & = 1 / 2 [sin(alpha + beta) - sin(alpha - beta)]
+   $
+   ```
 
 md 回收流程（批次含 🔧 R 任务时追加执行）：
 1. 按 §3.5 表定位 md 行号范围，用 `Read(offset/limit)` 读取；
