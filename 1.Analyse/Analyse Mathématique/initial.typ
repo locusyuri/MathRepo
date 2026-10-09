@@ -4043,7 +4043,340 @@ $f'(x) = 0$ (the stationary points) and the points where $f'$ does not exist.
   claim.
 ]
 
-// B5: ch05 Indefinite Integral（不定积分）
+// B5: ch05 Indefinite Integral（不定积分）——P1-1/R5：扩为 5 节
+
+== Antiderivatives and Indefinite Integrals // 原函数与不定积分
+
+The differential calculus asks: given a function, find its derivative. The
+theory of the indefinite integral asks the inverse question: given the
+derivative, recover the original function.
+
+#definition(name: "Antiderivative and Indefinite Integral")[
+  Let $f$ be defined on an interval $I$. If there exists a function $F$ such
+  that
+  $ F'(x) = f(x) quad "or equivalently" quad dif F(x) = f(x) dif x $
+  for all $x in I$, then $F$ is called an *antiderivative* of $f$ on $I$. The
+  totality of all antiderivatives of $f$ is called the *indefinite integral*
+  of $f$, denoted by
+  $ integral f(x) dif x, $
+  where $integral$ is the integral sign, $f(x)$ is the integrand, and $x$ is
+  the variable of integration.
+] <def:indefinite-integral>
+
+If $F$ is one antiderivative of $f$ on $I$, then so is $F + C$ for any
+constant $C$; conversely, any two antiderivatives of $f$ differ only by a
+constant on $I$, since a function with vanishing derivative on an interval is
+constant. Hence the indefinite integral is the whole family
+$ integral f(x) dif x = F(x) + C, $
+and in each formula below the constant $C$ denotes an arbitrary constant that
+may differ from line to line.
+
+#proposition(name: "Linearity of the Indefinite Integral")[
+  If $f$ and $g$ have antiderivatives on $I$, then for any constants
+  $k_1, k_2$, the function $k_1 f + k_2 g$ also has an antiderivative on $I$,
+  and
+  $ integral [k_1 f(x) + k_2 g(x)] dif x = k_1 integral f(x) dif x + k_2 integral g(x) dif x. $
+] <prop:linearity-integrals>
+
+#proof[
+  Differentiating the right-hand side gives $k_1 f(x) + k_2 g(x)$, so it is
+  an antiderivative of $k_1 f + k_2 g$. The identity should be understood as
+  saying that the two sides represent the same *family* of functions: the two
+  arbitrary constants on the right coalesce into a single one. In particular,
+  when $k_1 = k_2 = 0$, the right-hand side is understood as the constant
+  $C$.
+]
+
+== Basic Integration Formulas // 基本积分公式
+
+The following table collects the antiderivatives that occur most frequently;
+they should be memorized. Here and below $a$ denotes a positive constant with
+$a != 1$, and $C$ is an arbitrary constant.
+
+#tex-table(
+  ([Integral], [Result]),
+  ([$integral a dif x$], [$a x + C$]),
+  ([$integral x^n dif x$], [$(x^(n + 1)) / (n + 1) + C$ #h(1fr) ($n != -1$)]),
+  ([$integral (dif x) / x$], [$ln abs(x) + C$]),
+  ([$integral e^x dif x$], [$e^x + C$]),
+  ([$integral a^x dif x$], [$(a^x) / (ln a) + C$]),
+  ([$integral ln x dif x$], [$x ln x - x + C$]),
+  ([$integral sin x dif x$], [$-cos x + C$]),
+  ([$integral cos x dif x$], [$sin x + C$]),
+  ([$integral tan x dif x$], [$-ln abs(cos x) + C$]),
+  ([$integral cot x dif x$], [$ln abs(sin x) + C$]),
+  ([$integral sec x dif x$], [$ln abs(sec x + tan x) + C$]),
+  ([$integral csc x dif x$], [$ln abs(csc x - cot x) + C$]),
+  ([$integral sec x tan x dif x$], [$sec x + C$]),
+  ([$integral csc x cot x dif x$], [$-csc x + C$]),
+  ([$integral sec^2 x dif x$], [$tan x + C$]),
+  ([$integral csc^2 x dif x$], [$-cot x + C$]),
+  ([$integral (dif x) / sqrt(a^2 - x^2)$], [$arcsin(x / a) + C$]),
+  ([$integral (-dif x) / sqrt(a^2 - x^2)$], [$arccos(x / a) + C$]),
+  ([$integral (dif x) / (a^2 + x^2)$], [$(1 / a) arctan(x / a) + C$]),
+  ([$integral (-dif x) / (a^2 + x^2)$], [$(1 / a) "arccot"(x / a) + C$]),
+  ([$integral (dif x) / (x^2 - a^2)$], [$(1 / (2 a)) ln abs((x - a) / (x + a)) + C$]),
+  ([$integral (dif x) / sqrt(x^2 + a^2)$], [$ln abs(x + sqrt(x^2 + a^2)) + C$]),
+  ([$integral (dif x) / sqrt(x^2 - a^2)$], [$ln abs(x + sqrt(x^2 - a^2)) + C$ #h(1fr) ($x > a$ or $x < -a$)]),
+  ([$integral sinh x dif x$], [$cosh x + C$]),
+  ([$integral cosh x dif x$], [$sinh x + C$]),
+)
+
+Each entry is verified directly by differentiation.
+
+== Two Common Integration Methods // 两种常用积分法
+
+#definition(name: "Substitution Method")[
+  *First substitution (differential assembling).* If
+  $integral f(u) dif u = F(u) + C$ and $u = u(x)$ is differentiable, then
+  $ integral f(u(x)) u'(x) dif x = F(u(x)) + C. $
+
+  *Second substitution (inverse substitution).* If $integral f(x) dif x$
+  exists, $x = x(t)$ is differentiable and admits an inverse $t = t(x)$, and
+  $ integral f(x(t)) x'(t) dif t = F(t) + C, $
+  then
+  $ integral f(x) dif x = F(t(x)) + C. $
+] <def:substitution-method>
+
+#definition(name: "Integration by Parts")[
+  Let $u(x)$ and $v(x)$ be differentiable, and suppose that at least one of
+  $u(x) v'(x)$ and $u'(x) v(x)$ has an antiderivative. Then
+  $ integral u(x) v'(x) dif x = u(x) v(x) - integral v(x) u'(x) dif x, $
+  or, written with differentials,
+  $ integral u dif v = u v - integral v dif u. $
+] <def:integration-by-parts>
+
+#note[
+  In applying integration by parts, the classical mnemonic ranks the function
+  types as *inverse trigonometric -- logarithmic -- power -- trigonometric --
+  exponential*: a function standing later in this list is preferentially
+  taken together with $dif x$ to play the role of $dif v$.
+]
+
+Some common substitutions are as follows:
+
+#terms(
+  terms.item(
+    [Trigonometric substitution],
+    [When restoring variables, auxiliary right triangles are often utilized.
+      - $sqrt(a^2 - x^2)$: take $x = a sin t$ or $x = a cos t$;
+      - $sqrt(a^2 + x^2)$: take $x = a tan t$ or $x = a sinh t$;
+      - $sqrt(x^2 - a^2)$: take $x = a sec t$ or $x = a cosh t$.
+    ],
+  ),
+  terms.item(
+    [Irrational substitution],
+    [If the integrand contains $root(x, n)$, use the substitution
+      $t = root(x, n)$; if it contains
+      $root((alpha x + beta) / (gamma x + delta), n)$, use
+      $t = root((alpha x + beta) / (gamma x + delta), n)$.],
+  ),
+  terms.item(
+    [Reciprocal substitution],
+    [If the degree of the numerator in $x$ is lower than that of the
+      denominator, use the substitution $x = 1 / t$ to reduce the degree.],
+  ),
+)
+
+#example(name: "Elementary Trigonometric Integrals")[
+  Compute $integral tan x dif x$ and $integral sec x dif x$.
+] <ex:tangent-secant-integrals>
+
+#proof[
+  Assemble the differential of the denominator:
+  $ integral tan x dif x = integral (sin x)/(cos x) dif x = - integral ((cos x)')/(cos x) dif x = - ln abs(cos x) + C. $
+  For the secant, multiply numerator and denominator by $cos x$, substitute
+  $u = sin x$, and split $1 / (1 - u^2)$ into partial fractions
+  $1 / (1 - u^2) = 1 / 2 (1 / (1 - u) + 1 / (1 + u))$:
+  $
+    integral (dif x)/(cos x)
+    = integral (cos x dif x)/(cos^2 x)
+    = integral ((sin x)')/(1 - sin^2 x) dif x
+    = 1 / 2 ln ((1 + sin x)/(1 - sin x)) + C
+    = ln abs((1 + sin x)/(cos x)) + C
+    = ln abs(sec x + tan x) + C.
+  $
+]
+
+#example(name: "A Quadratic Radical by Sine Substitution")[
+  Compute $integral sqrt(a^2 - x^2) dif x$.
+] <ex:sqrt-a2-minus-x2>
+
+#proof[
+  Take $x = a sin t$ with $t in (-pi/2, pi/2)$, so that
+  $dif x = a cos t dif t$ and $sqrt(a^2 - x^2) = a cos t$. Then
+  $
+    integral sqrt(a^2 - x^2) dif x
+    = a^2 integral cos^2 t dif t
+    = a^2 / 2 integral (1 + cos 2t) dif t
+    = a^2 / 2 (t + (sin 2t) / 2) + C.
+  $
+  Restoring $t = arcsin(x / a)$ and
+  $sin 2t = 2 sin t cos t = (2 x sqrt(a^2 - x^2)) / a^2$ gives
+  $ integral sqrt(a^2 - x^2) dif x = x / 2 sqrt(a^2 - x^2) + a^2 / 2 arcsin(x / a) + C. $
+]
+
+#example(name: "A Quadratic Radical Solved by Parts")[
+  Compute $integral sqrt(x^2 + a^2) dif x$; the integral of
+  $sqrt(x^2 - a^2)$ is handled analogously.
+] <ex:sqrt-x2-plus-a2>
+
+#proof[
+  Integrate by parts with $u = sqrt(x^2 + a^2)$, $dif v = dif x$:
+  $
+    integral sqrt(x^2 + a^2) dif x
+    = x sqrt(x^2 + a^2) - integral (x^2 dif x)/(sqrt(x^2 + a^2))
+    = x sqrt(x^2 + a^2) - integral ((x^2 + a^2) - a^2)/(sqrt(x^2 + a^2)) dif x
+  $
+  $
+    = x sqrt(x^2 + a^2) - integral sqrt(x^2 + a^2) dif x + a^2 integral (dif x)/(sqrt(x^2 + a^2)).
+  $
+  The unknown integral reappears on the right, so solving for it as an
+  equation and using the table entry
+  $integral (dif x)/(sqrt(x^2 + a^2)) = ln abs(x + sqrt(x^2 + a^2))$ yields
+  $ integral sqrt(x^2 + a^2) dif x = 1 / 2 (x sqrt(x^2 + a^2) + a^2 ln abs(x + sqrt(x^2 + a^2))) + C. $
+]
+
+#example(name: "A Recurrence from Integration by Parts")[
+  Let $I_n = integral (dif x) / (x^2 + a^2)^n$ with $n >= 1$. Then
+  $
+    I_1 = 1 / a arctan(x / a) + C, quad
+    I_n = (2n - 3) / (2 a^2 (n - 1)) I_(n - 1) + x / (2 a^2 (n - 1) (x^2 + a^2)^(n - 1)) quad (n >= 2).
+  $
+] <ex:recurrence-in>
+
+#proof[
+  The case $n = 1$ is a table entry. For $n >= 2$, write
+  $a^2 = (x^2 + a^2) - x^2$:
+  $
+    a^2 I_n
+    = integral ((x^2 + a^2) - x^2)/(x^2 + a^2)^n dif x
+    = I_(n - 1) - integral (x^2 dif x)/(x^2 + a^2)^n.
+  $
+  For the last integral, integrate by parts with $u = x$ and
+  $dif v = x (dif x) / (x^2 + a^2)^n$, for which
+  $v = - 1 / (2 (n - 1) (x^2 + a^2)^(n - 1))$:
+  $
+    integral (x^2 dif x)/(x^2 + a^2)^n
+    = - x / (2 (n - 1) (x^2 + a^2)^(n - 1)) + 1 / (2 (n - 1)) I_(n - 1).
+  $
+  Substituting back and dividing by $a^2$ gives the recurrence.
+]
+
+#example(name: "A Quartic Denominator by Pairing")[
+  Compute $integral (dif x) / (1 + x^4)$.
+] <ex:pairing-fourth-degree>
+
+#proof[
+  Pair the integral with $N(x) = integral (x^2 dif x) / (1 + x^4)$ and divide
+  numerators and denominators by $x^2$. For the difference,
+  $
+    M(x) - N(x)
+    = integral (1 - x^2)/(1 + x^4) dif x
+    = - integral (1 - 1 / x^2)/(x^2 + 1 / x^2) dif x
+    = - integral (dif (x + 1 / x)) / ((x + 1 / x)^2 - 2)
+  $
+  $
+    = - 1 / (2 sqrt(2)) ln ((x^2 - sqrt(2) x + 1)/(x^2 + sqrt(2) x + 1)) + C_1,
+  $
+  where $dif (x + 1 / x) = (1 - 1 / x^2) dif x$ was used. For the sum,
+  $
+    M(x) + N(x)
+    = integral (1 + x^2)/(1 + x^4) dif x
+    = integral (1 + 1 / x^2)/(x^2 + 1 / x^2) dif x
+    = integral (dif (x - 1 / x)) / ((x - 1 / x)^2 + 2)
+    = 1 / sqrt(2) arctan((x^2 - 1) / (sqrt(2) x)) + C_2.
+  $
+  Solving this linear system for
+  $M(x) = integral (dif x) / (1 + x^4)$:
+  $
+    integral (dif x) / (1 + x^4)
+    = 1 / (4 sqrt(2)) ln ((x^2 + sqrt(2) x + 1)/(x^2 - sqrt(2) x + 1))
+    + 1 / (2 sqrt(2)) arctan((x^2 - 1) / (sqrt(2) x)) + C.
+  $
+  The formula holds on $(0, +oo)$ and on $(-oo, 0)$ separately, with the
+  constant adjusted on each interval, since the arctangent term jumps at
+  $x = 0$.
+]
+
+== Integration of Rational Functions // 有理函数的积分
+
+A *rational function* is a quotient of two polynomials. By polynomial
+division, every rational function is the sum of a polynomial and a *proper*
+rational fraction (one whose numerator has smaller degree than its
+denominator). Polynomials integrate term by term, so it suffices to integrate
+proper fractions.
+
+#theorem(name: "Integration of Rational Functions")[
+  Let $p / q$ be a proper rational fraction with real coefficients, and let
+  the denominator factor over $bb(R)$ as
+  $ q(x) = product_(k = 1)^i (x - alpha_k)^(m_k) dot product_(k = 1)^j (x^2 + 2 xi_k x + eta_k^2)^(n_k), $
+  where the quadratic factors are irreducible ($eta_k^2 > xi_k^2$) and
+  pairwise coprime. Then $p / q$ admits a unique decomposition into partial
+  fractions
+  $
+    p(x) / q(x)
+    = sum_(k = 1)^i sum_(r = 1)^(m_k) lambda_(k r) / (x - alpha_k)^r
+    + sum_(k = 1)^j sum_(r = 1)^(n_k) (mu_(k r) x + nu_(k r)) / (x^2 + 2 xi_k x + eta_k^2)^r
+  $
+  with real constants. Consequently, the integration of any rational function
+  reduces to two types only:
+  $
+    integral (dif x) / (x - alpha)^n = cases(
+      ln abs(x - alpha) + C comma & n = 1,
+      - 1 / ((n - 1) (x - alpha)^(n - 1)) + C comma & n >= 2,
+    )
+  $
+  and
+  $ integral (mu x + nu) / (x^2 + 2 xi x + eta^2)^r dif x. $
+  The latter is reduced, by completing the square
+  $x^2 + 2 xi x + eta^2 = (x + xi)^2 + (eta^2 - xi^2)$ and splitting
+  $mu x + nu = mu (x + xi) + (nu - mu xi)$, to linear terms integrated
+  directly and to the power recursion of
+  #link(<ex:recurrence-in>)[the recurrence example].
+] <thm:rational-integration>
+
+#theorem(name: "Chebyshev's Theorem")[
+  The integral of the *binomial differential*
+  $ integral x^m (a + b x^n)^p dif x quad (m, n, p in bb(Q)) $
+  can be reduced to the integral of a rational function --- that is, computed
+  in elementary terms --- if and only if one of the following holds:
+  + $p in bb(Z)$: substitute $x = t^N$, where $N$ is the common denominator
+    of the fractions $m$ and $n$;
+  + $(m + 1) / n in bb(Z)$: substitute $a + b x^n = t^N$, where $N$ is the
+    denominator of the fraction $p$;
+  + $(m + 1) / n + p in bb(Z)$: substitute $a x^(-n) + b = t^N$, where $N$ is
+    the denominator of the fraction $p$.
+] <thm:chebyshev>
+
+== Integration of Trigonometric Rational Functions // 三角有理函数的积分
+
+A *trigonometric rational function* is a quotient of polynomials in $sin x$
+and $cos x$, written $R(sin x, cos x)$.
+
+#theorem(name: "Universal Substitution")[
+  For any rational function $R$, the substitution $t = tan(x / 2)$
+  rationalizes the integrand:
+  $
+    sin x = (2 t)/(1 + t^2), quad
+    cos x = (1 - t^2)/(1 + t^2), quad
+    dif x = (2 dif t)/(1 + t^2),
+  $
+  so that
+  $
+    integral R(sin x, cos x) dif x
+    = integral R((2 t)/(1 + t^2), (1 - t^2)/(1 + t^2)) (2 dif t)/(1 + t^2),
+  $
+  which is the integral of a rational function of $t$.
+] <thm:universal-substitution>
+
+#proof[
+  These identities are the double-angle formulas rewritten: with
+  $t = tan(x / 2)$ one has
+  $sin x = (2 tan(x / 2)) / (1 + tan^2(x / 2))$ and
+  $cos x = (1 - tan^2(x / 2)) / (1 + tan^2(x / 2))$; differentiating
+  $x = 2 arctan t$ gives $dif x = (2 dif t) / (1 + t^2)$.
+]
 // B6: ch06 Definite Integral（定积分）
 // B7: ch07 Improper Integral（反常积分）
 
