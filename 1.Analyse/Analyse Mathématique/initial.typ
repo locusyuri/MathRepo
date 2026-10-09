@@ -8632,6 +8632,42 @@ If the conditions are strengthened, then a global inverse mapping theorem can be
 
 // 注：tex 中该例题未给出解答，按空壳处理原则不编造。
 
+== Extremum of Multi-variable Functions // 多元函数的极值
+
+=== Unconditional Extremum // 无条件极值（原 leftbarTitle 非空壳，升级为小节）
+
+// 注：tex 原题 "Fermat's Three Villiges Problem" 拼写有误，已改为 Villages。
+#proposition(name: "Fermat's Three Villages Problem")[
+  There are three villages located at points $A$, $B$, and $C$ on a flat plane. A supply station needs to be established at point $P$ on the plane, such that the total distance from $P$ to the three villages $A$, $B$, and $C$ is minimized. Such a point $P$ is called the /Fermat point/ of the triangle $A B C$, which can be determined as follows:
+  + If any angle of the triangle $A B C$ is greater than or equal to $120 deg$, then the Fermat point is the vertex of that angle.
+  + If all angles of the triangle $A B C$ are less than $120 deg$, then the Fermat point $P$ is located inside the triangle $A B C$, and the angles between the segments $P A$, $P B$, and $P C$ are all equal to $120 deg$.
+] <prop:fermat-point>
+
+// 注：tex 中该命题未给出证明，不编造。
+
+=== Conditional Extremum // 条件极值（原 leftbarTitle 非空壳，升级为小节）
+
+#definition(name: "Conditional Extremum")[
+  Let $f: D -> bb(R)$ be a function with $n + m$ variables defined on an open set $D subset.eq bb(R)^(n + m)$, and let $bold(Phi): D -> bb(R)^m$ be a mapping, $M = lr({bold(x) in D | bold(Phi)(bold(x)) = bold(0)})$. If there exists $bold(x)^0 in M$ satisfying the constraints such that
+  $
+    f(bold(x)^0) <= f(bold(x)) quad ("or" quad f(bold(x)^0) >= f(bold(x)))
+  $
+  for all $bold(x) in M$, then $f$ is said to have a /conditional minimum/ (or /maximum/) at the point $bold(x)^0$ under the given constraints.
+] <def:conditional-extremum>
+
+#theorem(name: "Lagrange Multiplier Method")[
+  Let $f: D -> bb(R)$ be a function with $n + m$ variables defined on an open set $D subset.eq bb(R)^(n + m)$, and let $bold(Phi): D -> bb(R)^m$ be a mapping, $M = lr({bold(x) in D | bold(Phi)(bold(x)) = bold(0)})$. If:
+  + $f in C^1 (D, bb(R))$, $bold(Phi) in C^1 (D, bb(R)^m)$;
+  + $"rank"(J bold(Phi)(bold(x)^0)) = m$;
+  + $bold(x)^0$ is a conditional extremum point of $f$ on $M$,
+
+  then there exist $lambda_1, lambda_2, dots, lambda_m in bb(R)$ such that
+  $
+    nabla f(bold(x)^0) + sum_(i=1)^m lambda_i nabla Phi_(i)(bold(x)^0) = bold(0).
+  $
+] <thm:lagrange-multiplier-method>
+// 注：tex 结论写作 "= 0"，因该式为 bb(R)^(n + m) 中的向量等式，改为 bold(0)；tex 中该定理未给出证明，不编造。
+
 // B13: ch13 Multiple Integrals（多重积分）
 
 // --- Part V: 几何应用与高级积分（决策③：ch14–16） ---
