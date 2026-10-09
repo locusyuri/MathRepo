@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B6b 完成：ch06 §5–7 迁移收口，ch06 全章完成）
+> 最后更新：2026-10-10（B7 完成：ch07 迁移收口，Part I–II 全部完成）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -203,13 +203,14 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - 修正 md 笔误 4 处：递推证明 π/1 → π/2；归纳 note "β π/2" 缺等号；5) 题分式 sin x/cos x 颠倒（应为 cos x/sin x，与后续步骤自洽）；2) 题补 1/(2√2) 系数（md 漏写 √2）
   - 放弃项：md eg.1 第 4) 题 ∫₀¹ ln x/(1−x²) dx（解仅为外链图片，且属反常积分主题，留待 B7 处理）；正交函数列例题（md eg.4，属 Fourier 正交系概念，受 §3.3 职责边界约束不迁入）；Schwarz/Young 不等式证明（md 仅为图片）；曲率小节（md 空节）；极坐标图片（外链失效）
   - 渲染坑：`#tex-table` 固定 auto 列宽不支持传参，宽表格需用 `#text(size: ...)` 包裹缩字号；`|_a^b` 求值记号、`!!` 双阶乘、`lr(\{...\})`、`norm()` 均渲染正常
-- [ ] **B7 = ch07 Improper Integral**（192 行 / 4 节）
-  - [ ] §7.1 Infinite and Defective Integrals
-  - [ ] §7.2 Convergence Tests
-  - [ ] §7.3 Special Integrals
-  - [ ] §7.4 Common Questions
-  - [ ] 🔧 P1-6/R4：从 md 回收 Cauchy 主值与"其它问题"
-- [ ] ✅ Part II 里程碑：编译 + 提交
+- [x] **B7 = ch07 Improper Integral**（192 行 / 4 节，迁移后约 600 行）（✅ 2026-10-10，`006149d`）
+  - [x] §7.1 Infinite and Defective Integrals（无穷积分 `<def:infinite-integral>` / 瑕积分 `<def:defective-integral>` 定义 + 3 条 note（性质保持 / N-L 公式与换元分部对反常积分的适用警示 / 乘积可积性，修正 md「乘积可加性」笔误）+ p 积分例题 `<ex:p-integrals>`+解；🔧 P1-6 ✅：Cauchy 主值 `<def:cauchy-principal-value>` 从 md L2171–2173 回收，`upright("cpv")` 记号）
+  - [x] §7.2 Convergence Tests（绝对/条件收敛定义 `<def:abs-cond-convergence-integral>`；=== Infinite Integrals：Cauchy 准则 `<thm:cauchy-criterion-infinite-integral>`+证明、绝对⇒收敛推论 `<cor:absolute-implies-convergence>`、比较判别法 4 型 `<thm:comparison-tests-infinite-integral>`（修正 tex 笔误：极限形式/p 积分比较的范围、`f(x) ≤ K/x^p`）、Abel-Dirichlet `<thm:abel-dirichlet-infinite-integral>`（Abel 完整证明；Dirichlet md 仅"与 Abel 类似"，已补全证明并引用 `<thm:integral-mean-value>` Bonnet 公式）；=== Defective Integrals：Cauchy 准则 `<thm:cauchy-criterion-defective-integral>`（修正 md `(b-a)^p`→`(b-x)^p`、积分上限笔误）、p 积分比较 `<thm:comparison-tests-defective-integral>`、Abel-Dirichlet `<thm:abel-dirichlet-defective-integral>`；=== Examples：敛散性例题 `<ex:improper-convergence>` 4 题完整解（修正 md 3 处笔误：1) 题 p≥2 应为发散非条件收敛、1.2) 题 `9<p≤1`→`0<p≤1`、2.1) 题 q∈(p,1)→q∈(1,p)）+ 和差收敛 note + 对数积分 exercise `<ex:logarithmic-integral>`（B6b 遗留项，仅陈述））
+  - [x] §7.3 Special Integrals（=== Definite：Dirichlet 核 `<ex:dirichlet-kernel>`+telescoping 解（修正 md `lim D_n=(2n+1)/2` 笔误为 `2n+1`）、Fejér `<ex:fejer-integral>` md 无证明保持原样；=== Improper：Euler `<ex:euler-integral>`+解、Froullani `<ex:froullani-integral>`、Dirichlet 积分 `<ex:dirichlet-integral>`+完整证明（Riemann-Lebesgue 引理以内联括号陈述，引理未迁入不编造来源）、Euler-Poisson/Poisson 仅陈述、特殊振荡积分 `<ex:special-oscillatory-integral>`+xsinx.png `<fig:special-integral-graph>`、Gamma 离散形式 `<ex:gamma-discrete>`+归纳解（修正 md `I_n n!`→`I_n = n!`，归纳步补漏 n 因子））
+  - [x] §7.4 Common Questions（=== Square Integrable：定义 `<def:square-integrable>` + rela.png `<fig:integrability-relationships>` + 关系命题 `<prop:square-integrable-relations>`+反例证明（吸收 tex `|f|⇏f²` 空壳）；=== Behaviour at Infinity：收敛 ⇏ f(+∞)=0 与 limsup=+∞ 讨论、Vanishing at Infinity `<prop:vanishing-at-infinity>` md 无证明仅陈述、一致连续判据 `<thm:uniform-continuity-vanishing>`+双证明（修正 md Proof 1 同号论证笔误为与 ε₀/2 矛盾）、练习例题 `<ex:infinity-exercises>`）
+  - 放弃项：md eg.1 的 3) 题 ∫₀^{+∞} x^{1-p}/|x-1|^{p+q} dx（无解答）；md eg.3（f,f′ 可积⇒lim f=0）与 eg.4（单调⇒xf(x)→0 等）证明为图片，仅迁陈述入 `<ex:infinity-exercises>`
+  - 渲染坑：`upright(cpv)` 多字母裸标识符被解析为变量 → 必须加引号 `upright("cpv")`；`#link(<label>)` 裸用报 "missing argument: body" → 必须带 body 文字；`limsup`/`plus.minus`/`|_eta^(1/e)` 求值记号均正常
+- [x] ✅ Part II 里程碑：编译 + 提交（✅ 2026-10-10，ch01–ch07 即 Part I–II 全部完成）
 
 ### Part III — Infinite Series
 
