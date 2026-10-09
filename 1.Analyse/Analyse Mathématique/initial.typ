@@ -34,8 +34,8 @@ For an interval $I$, an open interval $(a, b)$ and a closed interval $[a, b]$,
 we denote $C(I)$, $C(a, b)$ and $C[a, b]$
 as the set of continuous _univariate_ functions on $I$, $(a, b)$ and $[a, b]$ respectively.
 Similarly, the following notations are used#footnote[
-  Other notations include: $R[a, b]$ (dein.notg Riemann integrable functions on $[a, b]$),
-  $B[a, b]$ (dein.notg bounded functions on $[a, b]$), etc.
+  Other notations include: $R[a, b]$ (denoting Riemann integrable functions on $[a, b]$),
+  $B[a, b]$ (denoting bounded functions on $[a, b]$), etc.
 ]:
 
 #tex-table(
@@ -8668,7 +8668,243 @@ If the conditions are strengthened, then a global inverse mapping theorem can be
 ] <thm:lagrange-multiplier-method>
 // 注：tex 结论写作 "= 0"，因该式为 bb(R)^(n + m) 中的向量等式，改为 bold(0)；tex 中该定理未给出证明，不编造。
 
-// B13: ch13 Multiple Integrals（多重积分）
+= Multiple Integrals // 多重积分
+
+== Multiple Integrals on Bounded Closed Regions // 有界闭区域上的多重积分
+
+#underline[How to define a region with measurable area?] Generally speaking, there are two approaches to define regions with measurable area:
++ Consider the integral over a closed rectangle, and then extend it to a bounded closed region within the rectangle with the help of characteristic functions;
++ Define that a bounded closed region $D$ is measurable if $forall epsilon > 0$, there exist two polygonal regions $Sigma_1$ and $Sigma_2$ consisting of finite rectangles, such that $Sigma_1 subset D subset Sigma_2$ and the area of $Sigma_2 backslash Sigma_1$ is less than $epsilon$.
+
+=== Definition of Multiple Integral // 多重积分的定义（原 leftbarTitle 非空壳，升级为小节）
+
+Here, we introduce the definition of double integrals using the first approach.
+
+Initially, we define the double integral on a closed interval (rectangle).
+
+#definition(name: "Double Integral on a Closed Interval")[
+  Let $I = [a, b] times [c, d]$ be a closed interval in $bb(R)^2$ (i.e., each boundary is parallel to the coordinate axes). Partition $[a, b]$:
+  $
+    T_x: a = x_0 < x_1 < dots < x_n = b.
+  $
+  Partition $[c, d]$:
+  $
+    T_y: c = y_0 < y_1 < dots < y_m = d.
+  $
+  Two sets of parallel lines $x = x_i , (i = 0, 1, dots, n)$ and $y = y_j , (j = 0, 1, dots, m)$ divide $I$ into $n times m$ subrectangles:
+  $
+    [x_(i-1), x_i] times [y_(j-1), y_j], quad i = 1, dots, n, quad j = 1, dots, m.
+  $
+
+  The union of these $k$ subrectangles forms a partition $T = T_x times T_y = lr({I_1, I_2, dots, I_k})$. For each $bold(xi)^i in I_i , (i = 1, 2, dots, k)$, define the *Riemann sum* (also called a sum of integrals) as:
+  $
+    sum_(i=1)^k f(bold(xi)^i) v(I_i),
+  $
+  where $v(I_i)$ is the area of the rectangle $I_i$, i.e., the product of its length and width. Denote:
+  $
+    lambda = max("diam"(I_1), "diam"(I_2), dots, "diam"(I_k)),
+  $
+  where $"diam"(I)$ is the diagonal length of the rectangle $I$, and $lambda$ is called the modulus or width of the partition $T$. The points
+  $
+    bold(xi) = (bold(xi)^1, bold(xi)^2, dots, bold(xi)^k) in I_1 times I_2 times dots times I_k
+  $
+  are called sampling points for the Riemann sum.
+
+  If there exists $J in bb(R)$, such that $forall epsilon > 0$, there exists $delta > 0$, such that when $lambda < delta$, for all $bold(xi) in I_1 times I_2 times dots times I_k$, we have:
+  $
+    abs(sum_(i=1)^k f(bold(xi)^i) v(I_i) - J) < epsilon,
+  $
+  then $f$ is said to be Riemann integrable on $I$, and:
+  $
+    J = lim_(lambda -> 0) sum_(i=1)^k f(bold(xi)^i) v(I_i) =:
+    integral.double_I f(x, y) dif x dif y quad "or" quad
+    integral_I f dif v quad "or" quad integral_I f.
+  $
+
+  The function $f$ is said to have a double integral on $I$, or simply $f$ is integrable on $I$. Here $f$ is called the integrand, $I$ is called the integration region, and $dif v = dif x dif y$ is called the integration element.
+] <def:double-integral-closed-interval>
+
+The defined double integral possesses properties similar to those of single-variable integrals.
+
+On the basis of the above definition, we can extend it to the case of a bounded set.
+
+#definition(name: "Double Integral on a Bounded Set")[
+  Let $Omega subset bb(R)^2$ be a bounded set, and $f: Omega -> bb(R)$ a two-dimensional function. Define:
+  $
+    f_(Omega)(bold(x)) = f_(Omega)(x, y) = cases(
+      f(x, y)\, & "if" quad bold(x) = (x, y) in Omega comma
+                  0\, & "if" quad bold(x) = (x, y) in.not Omega comma
+    )
+  $
+  and call this the *zero extension* (or *characteristic function*) of $f$. For any closed interval $I sup Omega$, if $f_(Omega)$ is Riemann integrable on $I$, then $f$ is said to be *Riemann integrable* on $Omega$ (abbreviated as integrable). The integral of $f$ on $Omega$, denoted as:
+  $
+    integral.double_Omega f(x, y) dif x dif y =
+    integral_Omega f dif v = integral_Omega f = integral_Omega f_(Omega) =
+    integral.double_I f_(Omega)(x, y) dif x dif y,
+  $
+  represents the Riemann integral of $f$ on $Omega$.
+] <def:double-integral-bounded-set>
+// 注：tex 该式积分元素记作大写 "dV"，与前文定义的 dv 不一致，统一为 dif v。
+
+In the above definition, the integral $integral_Omega f$ is independent of the choice of the closed interval $I$ containing $Omega$ (this confirms the consistency of the definition).
+
+It is worth noting that all the definitions and properties of double integrals can be #underline[extended] to triple integrals and higher-dimensional integrals without excessive inconvenience.
+
+=== About the Second Approach // 关于第二种途径（原 leftbarTitle 非空壳，升级为小节）
+
+#definition(name: "Set with Zero Area and Set with Zero Measure (Null Set)")[
+  Let $A subset bb(R)^2$. If for any $epsilon > 0$, there exist #underline[finitely many] closed intervals $I_1, I_2, dots, I_k$ such that:
+  $
+    union_(i=1)^k I_i sup A, quad "and" quad sum_(i=1)^k v(I_i) < epsilon,
+  $
+  then $A$ is called a *set with zero area*.
+
+  Let $A subset bb(R)^2$. If for any $epsilon > 0$, there exist at most #underline[countably many] closed intervals $I_1, I_2, dots, I_k, dots$ such that:
+  $
+    union_(i=1)^oo I_i sup A, quad "and" quad sum_(i=1)^oo v(I_i) < epsilon,
+  $
+  then $A$ is called a *set with zero measure* (/null set/).
+] <def:zero-area-null-set>
+
+#definition(name: "Set with Finite Area")[
+  Let $Omega subset bb(R)^2$ be a bounded set. If the constant function $1$ is integrable on $Omega$, then $Omega$ is called a *set with finite area*, and the area of $Omega$ is defined as:
+  $
+    v(Omega) = integral_Omega 1 = integral.double_Omega dif x dif y = integral_I 1_Omega.
+  $
+] <def:set-finite-area>
+
+Obviously, $Omega$ is a set with zero area if and only if $Omega$ has finite area and $v(Omega) = integral_Omega 1 = 0$.
+
+#proposition(name: "Measurability of Bounded Closed Regions")[
+  A bounded closed region $Omega subset bb(R)^2$ is measurable if and only if its boundary $partial Omega$ is a set with zero area.
+] <prop:measurable-zero-area-boundary>
+// 注：tex 中该命题未加标签，迁移后补 <prop:measurable-zero-area-boundary>；tex 未给出证明，不编造。
+
+In the definition of multiple integrals derived from the second approach, the key point is the division $T$ of the bounded closed region $Omega$ into two polygonal regions $Sigma_1$ and $Sigma_2$. With the above statements, we can see that the division $T$ is implemented by a net of infinitely many curves with zero area.
+
+=== Necessary and Sufficient Conditions for Integrability // 可积性的充要条件（原 leftbarTitle 非空壳，升级为小节）
+
+#proposition(name: "A Necessary and Sufficient Condition for Integrability")[
+  Let $f in R(D)$ be a non-negative function. Then $integral.double_D f(x, y) dif x dif y = 0$ if and only if for any continuous point $(x, y) in D$, $f(x, y) = 0$.
+] <prop:nonnegative-zero-integral>
+// 注：tex 中该命题未加标签，迁移后补 <prop:nonnegative-zero-integral>；tex 未给出证明，不编造。
+
+== Properties of Multiple Integrals // 多重积分的性质
+
+=== Reduction of Double Integral to Iterated Integral // 化二重积分为累次积分（原 leftbarTitle 非空壳，升级为小节）
+
+// 注：tex 定理标签 "thm:Reduction of Double Integral to Iterated Integral on a Closed Interval" 含空格不合法，迁移后改为 <thm:reduction-double-iterated-closed-interval>。
+#theorem(name: "Reduction of Double Integral to Iterated Integral on a Closed Interval")[
+  Let $f$ be integrable on the closed interval $I = [a, b] times [c, d]$.
+
+  If $forall x in [a, b]$, the integral $phi(x) = integral_c^d f(x, y) dif y$ exists, then $phi$ is integrable on $[a, b]$, and:
+  $
+    integral.double_I f =
+    integral_a^b (integral_c^d f(x, y) dif y) dif x =:
+    integral_a^b dif x integral_c^d f(x, y) dif y.
+  $
+
+  Similarly, if $forall y in [c, d]$, the integral $psi(y) = integral_a^b f(x, y) dif x$ exists, then $psi$ is integrable on $[c, d]$, and:
+  $
+    integral.double_I f =
+    integral_c^d (integral_a^b f(x, y) dif x) dif y =:
+    integral_c^d dif y integral_a^b f(x, y) dif x.
+  $
+] <thm:reduction-double-iterated-closed-interval>
+
+#note[
+  That is, if $f in C(I)$, then the two iterated integrals above both exist, and they are equal to the double integral of $f$ on $I$ (they can exchange the order of integration).
+]
+
+On the basis of the above theorem, we can extend it to the case of a bounded region.
+
+// 注：tex 未给出该定理标签，迁移后补 <thm:reduction-double-iterated-bounded-set>；tex "a set with infinite area" 系笔误，改为 finite area；tex 第一式外层为 dy、内层为 dx，与切片 Omega_x（固定 x）的定义矛盾，修正为外层 dx、内层 dy。
+#theorem(name: "Reduction of Double Integral to Iterated Integral on a Bounded Set")[
+  Let $Omega subset bb(R)^2$ be a set with finite area, and $f: Omega -> bb(R)$ be bounded and continuous, as shown in @fig:double-integral-bounded-set. Denote the vertical projection of $Omega$ onto the $x$-axis as:
+  $
+    I = lr({x in bb(R) | exists y "such that" (x, y) in Omega}).
+  $
+
+  If $forall x in I$, the slice $Omega_x = lr({y in bb(R) | (x, y) in Omega})$ is an interval (possibly reducing to a single point), then:
+  $
+    integral_Omega f = integral_I dif x integral_(Omega_x) f(x, y) dif y.
+  $
+
+  Similarly, denote the vertical projection of $Omega$ onto the $y$-axis as:
+  $
+    J = lr({y in bb(R) | exists x "such that" (x, y) in Omega}).
+  $
+
+  If $forall y in J$, the slice $Omega_y = lr({x in bb(R) | (x, y) in Omega})$ is an interval (possibly reducing to a single point), then:
+  $
+    integral_Omega f = integral_J dif y integral_(Omega_y) f(x, y) dif x.
+  $
+] <thm:reduction-double-iterated-bounded-set>
+
+#figure(
+  image("img/IntegralImg.png", width: 50%),
+  caption: [Double integral on a bounded set.],
+) <fig:double-integral-bounded-set>
+// 注：tex 图片标签 "fig:Double Integral on a Bounded Set" 含空格不合法，迁移后改为 <fig:double-integral-bounded-set>。
+
+In particular, let:
+$
+  Omega = lr({(x, y) in bb(R)^2 | y_(1)(x) <= y <= y_(2)(x), a <= x <= b}),
+$
+where the functions $y_1$ and $y_2$ are continuous on $[a, b]$ (@fig:double-integral-bounded-set) and the function $f$ is integrable on $Omega$. If $forall x in [a, b]$, the single-variable integral
+$
+  integral_(y_(1)(x))^(y_(2)(x)) f(x, y) dif y
+$
+exists, then:
+$
+  integral_Omega f = integral_a^b dif x integral_(y_(1)(x))^(y_(2)(x)) f(x, y) dif y.
+$
+A region of this form is called a *type X region*; similarly, one can define a *type Y region*.
+
+According to #link(<thm:reduction-double-iterated-closed-interval>)[the reduction theorem on a closed interval], we can derive the formula of multiplicative property for double integral.
+
+#theorem(name: "Formula of Multiplicative Property for Double Integral")[
+  Let $f in C([a, b])$ and $g in C([c, d])$. Then the function $h(x, y) = f(x) g(y)$ is integrable on the closed interval $I = [a, b] times [c, d]$, and:
+  $
+    integral.double_I h(x, y) dif x dif y =
+    (integral_a^b f(x) dif x)(integral_c^d g(y) dif y).
+  $
+] <thm:double-integral-product-formula>
+// 注：tex 中该定理未给出证明，不编造。
+
+#example(name: "Chebyshev's Integral Inequality")[
+  Let $p in R[a, b]$ with $p(x) > 0$ for all $x in [a, b]$, and let $f(x)$ and $g(x)$ have the same monotonicity on $[a, b]$. Prove that
+  $
+    integral_a^b p(x) f(x) dif x integral_a^b p(x) g(x) dif x <=
+    integral_a^b p(x) dif x integral_a^b p(x) f(x) g(x) dif x.
+  $
+] <ex:chebyshev-integral-inequality>
+
+#proof[
+  Let
+  $
+    I = integral_a^b p(x) dif x integral_a^b p(x) f(x) g(x) dif x -
+    integral_a^b p(x) f(x) dif x integral_a^b p(x) g(x) dif x,
+  $
+  then
+  $
+    I = integral_a^b integral_a^b p(x) p(y) g(y) (f(y) - f(x)) dif x dif y,
+  $
+  similarly,
+  $
+    I = integral_a^b integral_a^b p(x) p(y) g(x) (f(x) - f(y)) dif x dif y.
+  $
+  Then
+  $
+    2I = integral_a^b integral_a^b p(x) p(y) (f(x) - f(y)) (g(x) - g(y)) dif x dif y >= 0,
+  $
+  which implies
+  $
+    I >= 0.
+  $
+  The proof is complete.
+]
+// 注：tex 证明第一式误作 g(y)(f(x) - f(y))（该式实为 -I），末式误作 (g(y) - g(x))(f(x) - f(y))（在 f、g 同单调时 <= 0），均已修正；由 f、g 同单调性知 (f(x) - f(y))(g(x) - g(y)) >= 0，故 I >= 0。
 
 // --- Part V: 几何应用与高级积分（决策③：ch14–16） ---
 #part("Calculus Applications in Several Variables") // 多元微积分的应用
