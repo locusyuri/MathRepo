@@ -1154,21 +1154,26 @@
   }
 
   // 构建并居中显示表格
+  // 空段落技巧：表格后的文本被视为"紧跟段落"而保留 2em 首行缩进
+  // （v(-1.2em) 抵消空段落引入的 par spacing，需与 par.spacing 保持一致）
   let col-defs = (auto,) * col-count
-  align(center)[
-    #table(
-      columns: col-defs,
-      align: center + horizon,
-      stroke: (x, y) => if y == 0 {
-        (bottom: 0.7pt + black)
-        (top: 0.7pt + black)
-      } else if y == data-rows.len() {
-        (bottom: 0.7pt + black)
-      } else {
-        none
-      },
-      ..header-cells, ..body-cells,
-    )
+  [
+    #align(center)[
+      #table(
+        columns: col-defs,
+        align: center + horizon,
+        stroke: (x, y) => if y == 0 {
+          (bottom: 0.7pt + black)
+          (top: 0.7pt + black)
+        } else if y == data-rows.len() {
+          (bottom: 0.7pt + black)
+        } else {
+          none
+        },
+        ..header-cells, ..body-cells,
+      )
+    ]
+    #par[#h(0pt)]#v(-1.2em)
   ]
 }
 
@@ -1191,19 +1196,24 @@
   }
 
   // 构建并居中显示表格
+  // 空段落技巧：表格后的文本被视为"紧跟段落"而保留 2em 首行缩进
+  // （v(-1.2em) 抵消空段落引入的 par spacing，需与 par.spacing 保持一致）
   let col-defs = (auto,) * col-count
-  align(center)[
-    #table(
-      columns: col-defs,
-      align: center + horizon,
-      stroke: gradient.linear(gray, silver),
-      gutter: 1.5pt,
-      fill: (col, row) => {
-        if row == 0 { silver } else if (col == 0) { silver } // else if (calc.rem(row, 2) == 0) { gray.lighten(76%) }
-        else { white }
-      },
-      ..header-cells, ..body-cells,
-    )
+  [
+    #align(center)[
+      #table(
+        columns: col-defs,
+        align: center + horizon,
+        stroke: gradient.linear(gray, silver),
+        gutter: 1.5pt,
+        fill: (col, row) => {
+          if row == 0 { silver } else if (col == 0) { silver } // else if (calc.rem(row, 2) == 0) { gray.lighten(76%) }
+          else { white }
+        },
+        ..header-cells, ..body-cells,
+      )
+    ]
+    #par[#h(0pt)]#v(-1.2em)
   ]
 }
 
