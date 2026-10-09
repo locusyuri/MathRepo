@@ -5616,6 +5616,358 @@ between differential and integral calculus.
     - D6: logarithmic derivatives.
 ]
 
+== Calculation of Definite Integrals // 定积分的计算
+
+The two fundamental tools for computing definite integrals are inherited
+directly from the indefinite integral.
+
+#theorem(name: "Substitution in Definite Integrals")[
+  Let $f in C[a, b]$, and let $x = phi(t)$ satisfy $phi' in R[alpha, beta]$,
+  $phi([alpha, beta]) subset [a, b]$, $phi(alpha) = a$, $phi(beta) = b$. Then
+  $ integral_a^b f(x) dif x = integral_alpha^beta f(phi(t)) phi'(t) dif t. $
+] <thm:definite-substitution>
+
+#corollary(name: "Monotone Substitution")[
+  If $f in R[a, b]$ (instead of $f in C[a, b]$), the conclusion still holds
+  provided $phi$ is strictly increasing on $[alpha, beta]$ with
+  $phi(alpha) = a$ and $phi(beta) = b$.
+] <cor:monotone-substitution>
+
+#theorem(name: "Integration by Parts for Definite Integrals")[
+  Let $u'(x), v'(x) in R[a, b]$. Then
+  $ integral_a^b u(x) dif v(x) = (u(x) v(x)) |_a^b - integral_a^b v(x) dif u(x). $
+] <thm:definite-integration-by-parts>
+
+#proof[
+  Since $u$ and $v$ are differentiable on $[a, b]$, the product rule gives
+  $(u v)' = u' v + u v'$ at every point. Moreover $u, v in C[a, b]$, so the
+  products $u' v$ and $u v'$ are integrable (one factor continuous, the other
+  integrable), whence $(u v)' in R[a, b]$ with $u v$ as an antiderivative.
+  By the #link(<thm:newton-leibniz>)[generalized Newton-Leibniz formula],
+  $ integral_a^b (u'(x) v(x) + u(x) v'(x)) dif x = u(b) v(b) - u(a) v(a), $
+  which is exactly the asserted identity after rearrangement.
+]
+
+#proposition(name: "Symmetry of Definite Integrals")[
+  Let $f in R[0, a]$.
+  + *Even reflection:* if $f(x) = f(a - x)$ for all $x in [0, a]$, then
+    $ integral_0^a f(x) dif x = 2 integral_0^(a/2) f(x) dif x. $
+  + *Odd reflection:* if $f(x) = -f(a - x)$ for all $x in [0, a]$, then
+    $ integral_0^a f(x) dif x = 0. $
+  + If $f(x) + f(a - x) = g(x)$, then
+    $ integral_0^a f(x) dif x = integral_0^(a/2) g(x) dif x; $
+    indeed, $f(x) + f(a - x)$ is always even with respect to the point
+    $x = a/2$.
+] <prop:integral-symmetry>
+
+#proposition(name: "Periodicity of Definite Integrals")[
+  Let $f$ be an integrable periodic function with period $T$. Then for every
+  $a$,
+  $ integral_a^(a + T) f(x) dif x = integral_0^T f(x) dif x. $
+] <prop:integral-periodicity>
+
+#example(name: "Wallis Formula")[
+  Prove the recursion formula (Wallis formula) by the method of recursion:
+  $
+    integral_0^(pi/2) sin^n x dif x
+    = integral_0^(pi/2) cos^n x dif x
+    = cases((n - 1)!! / n!! dot pi / 2 & "if" n "is even", (n - 1)!! / n!! & "if" n "is odd")
+  $
+] <ex:wallis>
+
+#solution[
+  The equality of the two integrals follows from the substitution
+  $t = pi/2 - x$. Integration by parts yields
+  $
+    I_n & = integral_0^(pi/2) sin^(n - 1) x dif (-cos x) \
+        & = (-sin^(n - 1) x cos x) |_0^(pi/2) + integral_0^(pi/2) cos x dif (sin^(n - 1) x) \
+        & = (n - 1) integral_0^(pi/2) sin^(n - 2) x cos^2 x dif x \
+        & = (n - 1) I_(n - 2) - (n - 1) I_n,
+  $
+  whence $I_n = (n - 1) / n I_(n - 2)$ for $n >= 2$, and therefore
+  $
+    I_n = cases((n - 1)!! / n!! & "if" n = 2k + 1, (n - 1)!! / n!! dot pi / 2 & "if" n = 2k) quad (k in bb(N)).
+  $
+]
+
+#note[
+  The first formula gives rise to the Wallis product.
+]
+
+#note[
+  For integrals of the form $integral_alpha^beta sin^m x cos^n x dif x$: when
+  one of $m, n$ is odd, the value can be obtained directly by substitution;
+  when both are even, one generally has to lower the powers to $1$ by
+  trigonometric identities first. However, when $alpha = 0$ and $beta = pi/2$,
+  the recursion above applies as soon as one of $m, n$ is even.
+]
+
+#example(name: "Simpson's Rule")[
+  // 万能公式
+  If $p(x)$ is a polynomial of degree at most $3$, then
+  $ integral_a^b p(x) dif x = 1/6 (p(a) + 4 p((a + b) / 2) + p(b)) (b - a). $
+] <ex:simpson-formula>
+
+#example(name: "A Collection of Computations")[
+  Evaluate:
+  + $I = integral_0^1 (ln(1 + x)) / (1 + x^2) dif x$;
+  + $integral_0^(pi/2) (sin^2 x) / (sin x + cos x) dif x$;
+  + $integral_0^2 ((x - 1)^2 + 1) / ((x - 1)^2 + x^2 (x - 2)^2) dif x$;
+  + $integral_0^(pi/2) sin x ln(sin x) dif x$.
+] <ex:integral-computations>
+
+#solution[
+  + Substitute $x = tan t$:
+    $
+      I & = integral_0^(pi/4) ln(1 + tan t) dif t
+          = integral_0^(pi/4) ln((sin t + cos t) / cos t) dif t \
+        & = integral_0^(pi/4) ln((sqrt(2) cos(pi/4 - t)) / cos t) dif t \
+        & = integral_0^(pi/4) ln sqrt(2) dif t
+          + integral_0^(pi/4) ln cos(pi/4 - t) dif t
+          - integral_0^(pi/4) ln cos t dif t.
+    $
+    Moreover, by the substitution $u = pi/4 - t$,
+    $integral_0^(pi/4) ln cos(pi/4 - t) dif t = integral_0^(pi/4) ln cos u dif u$.
+    The last two integrals cancel, and therefore
+    $I = integral_0^(pi/4) ln sqrt(2) dif t = pi/8 ln 2$.
+  + By the substitution $x = pi/2 - t$ the integral equals
+    $integral_0^(pi/2) (cos^2 x) / (sin x + cos x) dif x$. Hence
+    $
+      integral_0^(pi/2) (sin^2 x) / (sin x + cos x) dif x
+      & = 1/2 integral_0^(pi/2) (sin^2 x + cos^2 x) / (sin x + cos x) dif x \
+      & = 1/2 integral_0^(pi/2) (dif x) / (sin x + cos x) \
+      & = 1/(2 sqrt(2)) integral_0^(pi/2) (dif x) / (sin(x + pi/4))
+      = ln(1 + sqrt(2)) / sqrt(2),
+    $
+    the last step using
+    $integral_(pi/4)^((3 pi)/4) (dif u) / (sin u) = ln tan((3 pi)/8) - ln tan(pi/8) = 2 ln(1 + sqrt(2))$
+    under the substitution $u = x + pi/4$.
+  + Let $f(x) = ((x - 1)^2 + 1) / ((x - 1)^2 + x^2 (x - 2)^2)$. Then
+    $
+      F_1 (x) = cases(arctan((x (x - 2)) / (x - 1)) & "if" x in [0, 1), pi/2 & "if" x = 1)
+    $
+    is an antiderivative of $f$ on $[0, 1]$, and
+    $
+      F_2 (x) = cases(arctan((x (x - 2)) / (x - 1)) & "if" x in (1, 2], -pi/2 & "if" x = 1)
+    $
+    is an antiderivative of $f$ on $[1, 2]$. By additivity over sub-intervals
+    and the #link(<thm:newton-leibniz>)[Newton-Leibniz formula] on each piece,
+    $
+      integral_0^2 f(x) dif x = F_1 (x) |_0^1 + F_2 (x) |_1^2 = pi.
+    $
+  + Since $sin x ln(sin x) = O(1)$ as $x -> 0^+$, the integral is a proper
+    one. Integration by parts gives
+    $
+      I & = integral_0^(pi/2) ln(sin x) dif (1 - cos x) \
+        & = (1 - cos x) ln(sin x) |_0^(pi/2) - integral_0^(pi/2) (1 - cos x) dif (ln(sin x)) \
+        & = -integral_0^(pi/2) (1 - cos x) (cos x) / sin x dif x \
+        & = -integral_0^(pi/2) (sin x cos x) / (1 + cos x) dif x \
+        & = integral_0^(pi/2) (-sin x + sin x / (1 + cos x)) dif x \
+        & = (cos x - ln(1 + cos x)) |_0^(pi/2) \
+        & = ln 2 - 1.
+    $
+]
+
+#caution[
+  In item 3 one must not regard $arctan((x (x - 2)) / (x - 1))$ as an
+  antiderivative on $[0, 2]$ and apply the Newton-Leibniz formula directly:
+  it has a discontinuity at $x = 1$ inside $[0, 2]$, so it cannot be an
+  antiderivative there. One should split the integral over $[0, 1]$ and
+  $[1, 2]$ by additivity and apply the Newton-Leibniz formula to each piece.
+  Cauchy gave a similar example:
+  $integral_0^((3 pi)/4) (sin x) / (1 + cos^2 x) dif x$.
+]
+
+== Integral Inequalities // 积分不等式
+
+#theorem(name: "Integral Inequalities")[
+  + *Hadamard inequality.* Let $f$ be convex on $(a, b)$. Then for every pair
+    $x_1, x_2 in (a, b)$ with $x_1 < x_2$,
+    $
+      f((x_1 + x_2) / 2) <= 1/(x_2 - x_1) integral_(x_1)^(x_2) f(t) dif t
+      <= (f(x_1) + f(x_2)) / 2.
+    $
+  + *Schwarz inequality.* Let $f, g in R[a, b]$. Then
+    $
+      (integral_a^b f(x) g(x) dif x)^2
+      <= integral_a^b f^2 (x) dif x dot integral_a^b g^2 (x) dif x.
+    $
+  + *Hölder inequality.* Let $f, g in R[a, b]$, and let $p, q$ be conjugate
+    exponents, i.e. $p > 0$, $q > 0$, $1/p + 1/q = 1$. Then
+    $
+      integral_a^b abs(f(x) g(x)) dif x
+      <= (integral_a^b abs(f(x))^p dif x)^(1/p)
+      (integral_a^b abs(g(x))^q dif x)^(1/q).
+    $
+  + *Young inequality.* Let $y = f(x) in C[0, +oo)$ be strictly increasing
+    with $f(0) = 0$, and denote its inverse function by $x = f^(-1) (y)$. Then
+    $
+      integral_0^a f(x) dif x + integral_0^b f^(-1) (y) dif y >= a b
+      quad (a > 0, b > 0).
+    $
+  + *Minkowski inequality.* Let $f, g in R[a, b]$. Then
+    $
+      lr(\{integral_a^b (f(x) + g(x))^2 dif x\})^(1/2)
+      <= lr(\{integral_a^b f^2 (x) dif x\})^(1/2)
+      + lr(\{integral_a^b g^2 (x) dif x\})^(1/2).
+    $
+  + *Chebyshev inequality.* Call $f, g$ *similarly ordered* if
+    $forall x_1, x_2: (f(x_1) - f(x_2))(g(x_1) - g(x_2)) >= 0$. Then
+    $
+      integral_a^b f(x) dif x dot integral_a^b g(x) dif x
+      <= (b - a) integral_a^b f(x) g(x) dif x.
+    $
+
+    *Discrete form.* Let the sequences $\{a_n\}$ and $\{b_n\}$ be similarly
+    ordered, i.e. $forall i, j: (a_i - a_j)(b_i - b_j) >= 0$. Then
+    $
+      (sum_(i=1)^n a_i)(sum_(i=1)^n b_i) <= n sum_(i=1)^n a_i b_i.
+    $
+    If the sequences are oppositely ordered, the inequality reverses.
+] <thm:integral-inequalities>
+
+#proof[
+  We prove the Hölder inequality. If $f equiv 0$ or $g equiv 0$, the
+  inequality is trivial; otherwise set
+  $
+    phi(x) = abs(f(x)) / (integral_a^b abs(f(x))^p dif x)^(1/p), quad
+    psi(x) = abs(g(x)) / (integral_a^b abs(g(x))^q dif x)^(1/q), quad x in [a, b].
+  $
+  By the positivity part of the
+  #link(<prop:riemann-integral-properties>)[properties of the Riemann
+    integral], $integral_a^b abs(f(x))^p dif x > 0$ and
+  $integral_a^b abs(g(x))^q dif x > 0$. The elementary Hölder inequality
+  $a b <= a^p / p + b^q / q$ gives
+  $phi(x) psi(x) <= phi(x)^p / p + psi(x)^q / q$, i.e.
+  $
+    (abs(f(x) g(x))) / ((integral_a^b abs(f(x))^p dif x)^(1/p) (integral_a^b abs(g(x))^q dif x)^(1/q))
+    <= (abs(f(x))^p) / (p integral_a^b abs(f(x))^p dif x)
+    + (abs(g(x))^q) / (q integral_a^b abs(g(x))^q dif x),
+    quad x in [a, b].
+  $
+  Integrating both sides over $[a, b]$ and using the linearity of the
+  integral,
+  $
+    (integral_a^b abs(f(x) g(x)) dif x) / ((integral_a^b abs(f(x))^p dif x)^(1/p) (integral_a^b abs(g(x))^q dif x)^(1/q))
+    <= 1/p + 1/q = 1.
+  $
+  Multiplying both sides by
+  $(integral_a^b abs(f(x))^p dif x)^(1/p) (integral_a^b abs(g(x))^q dif x)^(1/q)$
+  yields the claim.
+]
+
+#example(name: "An Integral Inequality for Convex Functions")[
+  Let $f(t)$ be convex on $[0, 1]$. Prove that
+  $
+    integral_0^1 t (1 - t) f(t) dif t
+    <= 1/3 integral_0^1 (t^3 + (1 - t)^3) f(t) dif t.
+  $
+] <ex:convex-integral-inequality>
+
+#proof[
+  Since $f$ is convex on $[0, 1]$, for any $t in (0, 1)$ and $x in [0, 1]$ we
+  have the convex combination
+  $ t = (1 - t)(t x) + t (1 - x + t x), $
+  whence
+  $ f(t) <= (1 - t) f(t x) + t f(1 - x + t x). $
+  Integrating both sides with respect to $x$ from $0$ to $1$ and evaluating
+  the two integrals by the substitutions $u = t x$ and $u = 1 - (1 - t) x$,
+  respectively, we get
+  $
+    f(t) <= (1 - t) integral_0^1 f(t x) dif x + t integral_0^1 f(1 - x + t x) dif x
+    = (1 - t)/t integral_0^t f(x) dif x + t/(1 - t) integral_t^1 f(x) dif x.
+  $
+  Multiplying both sides by $t (1 - t)$ and integrating with respect to $t$
+  from $0$ to $1$, we have
+  $
+    integral_0^1 t (1 - t) f(t) dif t
+    <= integral_0^1 (1 - t)^2 [integral_0^t f(x) dif x] dif t
+    + integral_0^1 t^2 [integral_t^1 f(x) dif x] dif t.
+  $
+  Changing the order of integration on the right-hand side,
+  $
+    integral_0^1 (1 - t)^2 [integral_0^t f(x) dif x] dif t
+    = integral_0^1 f(x) [integral_x^1 (1 - t)^2 dif t] dif x
+    = 1/3 integral_0^1 (1 - x)^3 f(x) dif x,
+  $
+  and similarly
+  $integral_0^1 t^2 [integral_t^1 f(x) dif x] dif t = 1/3 integral_0^1 x^3 f(x) dif x$.
+  Thus the desired inequality is proven.
+]
+
+== Applications of Definite Integrals // 定积分的应用
+
+=== Arc Length // 弧长
+
+#definition(name: "Arc Length")[
+  Let $C$ be a curve in $bb(R)^2$ with endpoints $A$ and $B$. Take division
+  points $A = P_0, P_1, dots.c, P_n = B$ successively from $A$ to $B$ along
+  $C$; they form a partition $T$ of the curve. Joining each pair of adjacent
+  points by a segment produces the $n$ chords $P_(i-1) P_i$
+  ($i = 1, 2, dots, n$), which together constitute an inscribed polygonal
+  line of $C$. Set
+  $
+    norm(T) = max_(1 <= i <= n) abs(P_(i-1) P_i), quad
+    s_T = sum_(i=1)^n abs(P_(i-1) P_i),
+  $
+  the length of the longest chord and the total length of the polygonal line,
+  respectively. If $lim_(norm(T) -> 0) s_T = s$ exists, i.e.
+  $ forall epsilon > 0, exists delta > 0, forall norm(T) < delta: abs(s_T - s) < epsilon, $
+  then $C$ is called *rectifiable*, and the limit $s$ is called the
+  *arc length* of $C$.
+] <def:arc-length>
+
+#theorem(name: "A Sufficient Condition for Rectifiability")[
+  Let a curve $C$ in $bb(R)^2$ be given by parametric equations
+  $(x, y) = (x(t), y(t))$, $t in [alpha, beta]$, and suppose that $C$ is a
+  $C^1$ regular curve, i.e. $x(t)$ and $y(t)$ are continuously differentiable
+  with $x'^2 (t) + y'^2 (t) != 0$ (a point satisfying this condition is
+  called a regular point). Then $C$ is rectifiable, and its arc length is
+  $ s = integral_alpha^beta sqrt(x'^2 (t) + y'^2 (t)) dif t. $
+] <thm:rectifiable-condition>
+
+=== Polar Coordinate System // 极坐标系
+
+#text(size: 8.5pt)[#tex-table(
+  ([Category], [Explicit Cartesian Equation], [Parametric Cartesian Equation], [Polar Equation]),
+  (
+    [Equation],
+    [$y = f(x), x in [a, b]$],
+    [$x = x(t), y = y(t), t in [T_1, T_2]$],
+    [$r = r(theta), theta in [alpha, beta]$],
+  ),
+  (
+    [Area of a plane region],
+    [$integral_a^b f(x) dif x$],
+    [$integral_(T_1)^(T_2) abs(y(t) x'(t)) dif t$],
+    [$1/2 integral_alpha^beta r^2 (theta) dif theta$],
+  ),
+  (
+    [Infinitesimal arc length],
+    [$dif l = sqrt(1 + [f'(x)]^2) dif x$],
+    [$dif l = sqrt([x'(t)]^2 + [y'(t)]^2) dif t$],
+    [$dif l = sqrt(r^2 (theta) + r'^2 (theta)) dif theta$],
+  ),
+  (
+    [Curve length],
+    [$integral_a^b sqrt(1 + [f'(x)]^2) dif x$],
+    [$integral_(T_1)^(T_2) sqrt([x'(t)]^2 + [y'(t)]^2) dif t$],
+    [$integral_alpha^beta sqrt(r^2 (theta) + r'^2 (theta)) dif theta$],
+  ),
+  (
+    [Volume of a solid of revolution],
+    [$pi integral_a^b [f(x)]^2 dif x$],
+    [$pi integral_(T_1)^(T_2) y^2 (t) x'(t) dif t$],
+    [$2/3 pi integral_alpha^beta r^3 (theta) sin theta dif theta$],
+  ),
+  (
+    [Surface area of a solid of revolution],
+    [$2 pi integral_a^b f(x) sqrt(1 + [f'(x)]^2) dif x$],
+    [$2 pi integral_(T_1)^(T_2) y(t) sqrt([x'(t)]^2 + [y'(t)]^2) dif t$],
+    [$2 pi integral_alpha^beta r(theta) sin theta sqrt(r^2 (theta) + r'^2 (theta)) dif theta$],
+  ),
+)] // 曲率小节：md 为空节，不迁
+
 // --- Part III: 无穷级数 ---
 #part("Infinite Series") // 无穷级数
 // B8: ch08 Numerical Series（数项级数）
