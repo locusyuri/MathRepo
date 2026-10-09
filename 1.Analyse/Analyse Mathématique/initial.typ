@@ -7853,6 +7853,313 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
   Intuitively, this means that any two points in $S$ can be connected by a curve lying entirely within $S$. Clearly, a connected subset of $bb(R)$ is an interval, and a connected subset of $bb(R)$ is compact if and only if it is a closed interval.
 ]
 // B12: ch12 Multi-variable Differential Calculus（多元微分学）
+= Multi-variable Differential Calculus // 多元微分学
+
+== Directional Derivatives and Total Differential // 方向导数与全微分
+
+=== Directional Derivative // 方向导数
+
+#definition(name: "Directional Derivative")[
+  Let $U subset.eq bb(R)^n$ be an open set, $f: U -> bb(R)^1$, $bold(e)$ be a unit vector in $bb(R)^n$, and $bold(x)^0 in U$. Define
+  $
+    u(t) = f(bold(x)^0 + t bold(e)).
+  $
+  If the derivative of $u$ at $t = 0$
+  $
+    u'(0) = lim_(t -> 0) frac(u(t) - u(0), t) = lim_(t -> 0) frac(f(bold(x)^0 + t bold(e)) - f(bold(x)^0), t)
+  $
+  exists and is finite, it is called the /directional derivative/ of $f$ at $bold(x)^0$ in the direction $bold(e)$, denoted by $(partial f)/(partial bold(e))(bold(x)^0)$. It is the rate of change of $f$ at $bold(x)^0$ in the direction $bold(e)$.
+] <def:directional-derivative>
+
+Consider the following set of unit coordinate vectors: $bold(e)_1, bold(e)_2, dots, bold(e)_n$. Let $bold(e)_i = (0, 0, dots, 0, 1, 0, dots, 0)$ denote the standard orthonormal basis in $bb(R)^n$, where the 1 appears in the $i$-th position. That is,
+$
+  << bold(e)_i, bold(e)_j >> = delta_(i j) = cases(1 & i = j comma, 0 & i != j).
+$
+For a function $f$, the directional derivative of $f$ at the point $bold(x)^0$ in the direction of $bold(e)_i$ is called the $i$-th first-order /partial derivative/ of $f$ at $bold(x)^0$, denoted by
+$
+  frac(partial f, partial x_i)(bold(x)^0) quad "or" quad D_i f(bold(x)^0) quad "or" quad f_(x_i)(bold(x)^0) quad (i = 1, 2, dots, n).
+$
+$D_i = (partial)/(partial x_i)$ is called the $i$-th partial differential operator ($i = 1, 2, dots, n$).
+
+// 注：tex 原文求和式为笔误（e_i = sum_(i=0)^n e_i cos alpha_i），已修正为 e = sum_(i=1)^n e_i cos alpha_i。
+Let $bold(e) = sum_(i=1)^n bold(e)_i cos alpha_i$ be a unit vector, where $sum_(i=1)^n cos^2 alpha_i = 1$. If $(partial f)/(partial x_i)$ is continuous at $bold(x)^0$, then the directional derivative of $f$ at $bold(x)^0$ along the direction $bold(e)$ is given by:
+$
+  frac(partial f, partial bold(e))(bold(x)^0) = sum_(i=1)^n frac(partial f, partial x_i)(bold(x)^0) cos alpha_i.
+$
+This is the formula for /expressing a directional derivative using partial derivatives/.
+
+#note[
+  Let $bold(e)$ be a direction. Then $norm(-bold(e)) = norm(bold(e)) = 1$, which implies that $-bold(e)$ is also a direction. At this point, we have
+  $
+    frac(partial f, partial (-bold(e)))(bold(x)^0) = - frac(partial f, partial bold(e))(bold(x)^0).
+  $
+]
+
+#definition(name: "Jacobian Matrix (Gradient)")[
+  Let
+  $
+    J f(bold(x)) = (D_1 f(bold(x)), D_2 f(bold(x)), dots, D_n f(bold(x))),
+  $
+  which is called the /Jacobian matrix/ of the function $f$ at the point $bold(x)$ (a $1 times n$ matrix), whose counterpart is the first-order derivative of a single-variable function.
+
+  Henceforth, we represent the point $bold(x)$ in $bb(R)^n$ and its increments $bold(h)$ as column vectors. In this way, the differential of the function can be expressed using matrix multiplication as follows:
+  $
+    dif f(bold(x)^0)(Delta bold(x)) = J f(bold(x)^0) Delta bold(x).
+  $
+  The Jacobian matrix of the function $f$ is also frequently denoted as $"grad" f$ (or $nabla f$), that is,
+  $
+    nabla f(bold(x)) = "grad" f(bold(x)) = J f(bold(x)),
+  $
+  which is called the /gradient/ of the scalar function $f$.
+] <def:jacobian-matrix>
+
+=== Total Differential // 全微分
+
+#definition(name: "Total Differential")[
+  Let $U subset.eq bb(R)^n$ be an open set, $f: U -> bb(R)^1$, $bold(x)^0 in U$, and $Delta bold(x) = (Delta x_1, Delta x_2, dots, Delta x_n) in bb(R)^n$. If
+  $
+    f(bold(x)^0 + Delta bold(x)) - f(bold(x)^0) = sum_(i=1)^n A_i Delta x_i + o(norm(Delta bold(x))) quad (norm(Delta bold(x)) -> 0),
+  $
+  where $A_1, A_2, dots, A_n$ are constants independent of $Delta bold(x)$, then the function $f$ is said to be /differentiable/ at the point $bold(x)^0$, and the linear main part $sum_(i=1)^n A_i Delta x_i$ is called the /total differential/ of $f$ at $bold(x)^0$, denoted as
+  $
+    dif f(bold(x)^0)(Delta bold(x)) = sum_(i=1)^n A_i Delta x_i.
+  $
+  If $f$ is differentiable at every point in the open set $U$, then $f$ is called a differentiable function on $U$.
+] <def:total-differential>
+
+#theorem(name: "Conditions of Differentiability")[
+  + *Necessary condition.* If an $n$-variable function $f$ is differentiable at the point $bold(x)^0$, then $f$ is continuous at $bold(x)^0$ and possesses first-order partial derivatives $(partial f)/(partial x_i)(bold(x)^0)$ at $bold(x)^0$ for $i = 1, 2, dots, n$, and
+    $
+      bold(A) = (A_1, A_2, dots, A_n) = J f(bold(x)^0) = (D_1 f(bold(x)^0), D_2 f(bold(x)^0), dots, D_n f(bold(x)^0)).
+    $
+    However, the converse is not true.
+  + *Sufficient condition.* Let $U subset.eq bb(R)^n$ be an open set, and let $f: U -> bb(R)^1$ be an $n$-variable function. If $J f = (D_1 f, D_2 f, dots, D_n f)$ is continuous at $bold(x)^0$ (i.e. $(partial f)/(partial x_i)$ is continuous at $bold(x)^0$ for $i = 1, 2, dots, n$), then $f$ is differentiable at $bold(x)^0$. However, the converse is not necessarily true.
+] <thm:conditions-of-differentiability>
+
+// 注：tex 中两处 footnote（模板不支持脚注）转为下述 note 与正文。
+#note(title: "The total differential formula")[
+  The formula $dif f(bold(x)^0)(Delta bold(x)) = sum_(i=1)^n (partial f)/(partial x_i)(bold(x)^0) Delta x_i$ is referred to as the /total differential formula/, and the more common form is
+  $
+    dif f(x_0, y_0) = frac(partial f, partial x)(x_0, y_0) dif x + frac(partial f, partial y)(x_0, y_0) dif y.
+  $
+]
+
+#note[
+  The continuity of the derivative function at $bold(x)^0$ implies that the original function $f$ is differentiable in some neighborhood of $bold(x)^0$. In fact, the sufficient condition can be relaxed to require that one partial derivative exists at the point, while the remaining $n - 1$ partial derivative functions are continuous at that point.
+]
+
+#proof(name: "of the sufficient condition (relaxed version)")[
+  Take the function of three variables as an example. Assume the 3-ary function $f: bb(R)^3 -> bb(R)$ meets:
+  + There exists $f_(z)(x_0, y_0, z_0)$.
+  + The partial derivative functions $f_(x)(x, y, z)$ and $f_(y)(x, y, z)$ are continuous at $(x_0, y_0, z_0)$, i.e. there are partial derivatives in some neighborhood of $(x_0, y_0, z_0)$.
+
+  Consider the total increment of $f$ at the point $(x_0, y_0, z_0)$:
+  $
+    Delta f & = underbrace(f(x_0 + Delta x, y_0 + Delta y, z_0 + Delta z) - f(x_0, y_0 + Delta y, z_0 + Delta z), I_1) \
+            & quad + underbrace(f(x_0, y_0 + Delta y, z_0 + Delta z) - f(x_0, y_0, z_0 + Delta z), I_2) \
+            & quad + underbrace(f(x_0, y_0, z_0 + Delta z) - f(x_0, y_0, z_0), I_3).
+  $
+
+  For $I_1, I_2$, by #link(<thm:lagrange-mvt>)[Lagrange's mean value theorem] of unary functions, there exist $theta_1, theta_2 in (0, 1)$ such that
+  $
+    I_1 = f_(x)(x_0 + theta_1 Delta x, y_0 + Delta y, z_0 + Delta z) Delta x, \
+    I_2 = f_(y)(x_0, y_0 + theta_2 Delta y, z_0 + Delta z) Delta y.
+  $
+  Then, by the continuity of their partial derivatives at $(x_0, y_0, z_0)$, we have
+  $
+    lim_(Delta x, Delta y, Delta z -> 0) I_1 = f_(x)(x_0, y_0, z_0) Delta x, quad
+    lim_(Delta x, Delta y, Delta z -> 0) I_2 = f_(y)(x_0, y_0, z_0) Delta y.
+  $
+  They can be expressed in terms of infinitesimals ($rho = sqrt(Delta x^2 + Delta y^2 + Delta z^2)$):
+  $
+    I_1 = f_(x)(x_0, y_0, z_0) Delta x + alpha_1 Delta x, quad alpha_1 -> 0 (rho -> 0), \
+    I_2 = f_(y)(x_0, y_0, z_0) Delta y + alpha_2 Delta y, quad alpha_2 -> 0 (rho -> 0).
+  $
+  For $I_3$, by the definition of the partial derivative $f_(z)(x, y, z)$ at $(x_0, y_0, z_0)$, we have
+  $
+    I_3 = f_(z)(x_0, y_0, z_0) Delta z + alpha_3 Delta z, quad alpha_3 -> 0 (rho -> 0).
+  $
+  Accordingly,
+  $
+    Delta f &= (f_(x)(x_0, y_0, z_0) Delta x + alpha_1 Delta x) + (f_(y)(x_0, y_0, z_0) Delta y + alpha_2 Delta y) + (f_(z)(x_0, y_0, z_0) Delta z + alpha_3 Delta z) \
+    &= f_(x)(x_0, y_0, z_0) Delta x + f_(y)(x_0, y_0, z_0) Delta y + f_(z)(x_0, y_0, z_0) Delta z + (alpha_1 Delta x + alpha_2 Delta y + alpha_3 Delta z).
+  $
+  Apparently,
+  $
+    lim_(rho -> 0) frac(alpha_1 Delta x + alpha_2 Delta y + alpha_3 Delta z, rho) = 0,
+  $
+  i.e. $alpha_1 Delta x + alpha_2 Delta y + alpha_3 Delta z = o(rho)$. Therefore, $f(x, y, z)$ is differentiable at $(x_0, y_0, z_0)$, which completes the proof.
+]
+
+#note(title: "At some point")[
+  + The existence of partial derivatives at a point does not necessarily imply their continuity at that point. A classic counterexample is
+    $
+      f(x, y) = cases(frac(x y, x^2 + y^2) & (x, y) != (0, 0) comma, 0 & (x, y) = (0, 0)).
+    $
+    Here, $f_(x)(0, 0) = 0$ and $f_(y)(0, 0) = 0$, but $f_(x)(x, y)$ and $f_(y)(x, y)$ are not continuous at $(0, 0)$.
+  + *Partial derivatives bounded $=>$ continuous.* If the partial derivatives exist and are bounded in a neighborhood of a point, then they are continuous at that point.
+  + Even if all directional derivatives exist at a point and the function is continuous at that point, it does not necessarily imply that the function is differentiable at that point. A classic counterexample is
+    $
+      f(x, y) = cases(frac(x^3, x^2 + y^2) & (x, y) != (0, 0) comma, 0 & (x, y) = (0, 0)),
+    $
+    where all directional derivatives of $f$ exist at $(0, 0)$ and $f$ is continuous at $(0, 0)$, but $f$ is not differentiable at $(0, 0)$. Another counterexample is
+    $
+      f(x, y) = sqrt(abs(x y)),
+    $
+    which is continuous at $(0, 0)$ and has all directional derivatives equal to $0$ at $(0, 0)$, but is not differentiable at $(0, 0)$.
+]
+
+#proof(name: "of Item 2 of the note above")[
+  Take the function of two variables as an example. Assume the bivariate function $f: bb(R)^2 -> bb(R)$ meets: $(partial f)/(partial x)$ and $(partial f)/(partial y)$ exist and are bounded in some neighborhood of $(x_0, y_0)$.
+
+  Consider the total increment of $f$ at the point $(x_0, y_0)$:
+  $
+    Delta f & = (f(x_0 + Delta x, y_0 + Delta y) - f(x_0, y_0 + Delta y)) \
+            & quad + (f(x_0, y_0 + Delta y) - f(x_0, y_0)).
+  $
+  By Lagrange's mean value theorem of unary functions, there exist $theta_1, theta_2 in (0, 1)$ such that
+  $
+    Delta f = f_(x)(x_0 + theta_1 Delta x, y_0 + Delta y) Delta x + f_(y)(x_0, y_0 + theta_2 Delta y) Delta y.
+  $
+  Since $(partial f)/(partial x)$ and $(partial f)/(partial y)$ are bounded in some neighborhood of $(x_0, y_0)$,
+  $
+    lim_((Delta x, Delta y) -> (0, 0)) Delta f = 0,
+  $
+  i.e. $f(x, y)$ is continuous at $(x_0, y_0)$, which completes the proof.
+]
+
+== Higher-Order Partial Derivatives and Differentiability // 高阶偏导数与可微性
+
+=== Higher-Order Partial Derivatives // 高阶偏导数
+
+If the first-order partial derivative of $f$, $(partial f)/(partial x_i)$, itself possesses partial derivatives, then the second-order partial derivative of $f$ is defined, and is denoted as follows (the first is also called the /mixed partial derivative/):
+$
+  f_(x_i x_j) = frac(partial^2 f, partial x_i partial x_j) = frac(partial, partial x_j)(frac(partial f, partial x_i)), quad
+  f_(x_i x_i) = frac(partial^2 f, partial x_i^2) = frac(partial, partial x_i)(frac(partial f, partial x_i)), quad i, j = 1, 2, dots, n.
+$
+Similarly, higher-order partial derivatives of order $3, 4, dots, m, dots$ can be defined.
+
+The following theorem provides the conditions under which mixed partial derivatives are equal.
+
+#theorem(name: "Conditions for Equality of Mixed Partial Derivatives")[
+  + Let $U subset.eq bb(R)^2$ be an open set, and $f: U -> bb(R)$ be a function of two variables. If the partial derivatives $f_(x), f_(y)$ and $f_(x y)$ exist in some neighborhood of $(x_0, y_0) in U$, and $f_(x y)$ is continuous at $(x_0, y_0)$, then $f_(y x)$ also exists at $(x_0, y_0)$, and
+    $
+      f_(y x)(x_0, y_0) = f_(x y)(x_0, y_0).
+    $
+  + Let $U subset.eq bb(R)^n$ be an open set, and $f: U -> bb(R)$ be a function of $n$ variables. If the partial derivatives $f_(x_i), f_(x_j)$ and $f_(x_i x_j)$ exist in some neighborhood of $bold(x)^0 = (x_1^0, x_2^0, dots, x_n^0) in U$, and $f_(x_i x_j)$ is continuous at $bold(x)^0$, then $f_(x_j x_i)$ exists at $bold(x)^0$, and
+    $
+      f_(x_j x_i)(bold(x)^0) = f_(x_i x_j)(bold(x)^0).
+    $
+] <thm:mixed-partials-equality>
+
+// 注：tex 中该定理的 proof 环境为空（无内容来源），按空壳处理原则不编造证明。
+
+=== Higher-Order Differentiability // 高阶可微性
+
+Suppose $z = f(x, y)$ has continuous partial derivatives in the domain $U subset.eq bb(R)^2$. Then $z$ is differentiable, and
+$
+  dif z = frac(partial z, partial x) dif x + frac(partial z, partial y) dif y.
+$
+If $z$ also has continuous second-order partial derivatives, then $(partial z)/(partial x)$ and $(partial z)/(partial y)$ are also differentiable, and thus $dif z$ is differentiable. We call the differential of $dif z$ the /second-order differential/ of $z$, denoted as
+$
+  dif^2 z = dif(dif z).
+$
+In general, based on the $k$-th order differential $dif^k z$ of $z$, its $(k + 1)$-th order differential (if it exists) is defined as
+$
+  dif^(k + 1) z = dif(dif^k z), quad k = 1, 2, dots.
+$
+Due to the fact that for the independent variables $x$ and $y$, we always have
+$
+  dif^2 x = dif(dif x) = 0, quad dif^2 y = dif(dif y) = 0,
+$
+the second-order differential of $z = f(x, y)$ is given by
+$
+  dif^2 z &= dif(dif z) \
+  &= dif(frac(partial z, partial x)) dif x + frac(partial z, partial x) dif^2 x + dif(frac(partial z, partial y)) dif y + frac(partial z, partial y) dif^2 y \
+  &= (frac(partial^2 z, partial x^2) dif x + frac(partial^2 z, partial x partial y) dif y) dif x + (frac(partial^2 z, partial y partial x) dif x + frac(partial^2 z, partial y^2) dif y) dif y \
+  &= frac(partial^2 z, partial x^2) (dif x)^2 + 2 frac(partial^2 z, partial x partial y) dif x dif y + frac(partial^2 z, partial y^2) (dif y)^2,
+$
+where $(dif x)^2$ and $(dif y)^2$ denote $dif^2 x$ and $dif^2 y$ respectively.
+
+If we treat $partial / (partial x)$ and $partial / (partial y)$ as operators for partial differentiation and define
+$
+  (frac(partial, partial x))^2 = frac(partial^2, partial x^2), quad (frac(partial, partial y))^2 = frac(partial^2, partial y^2), quad frac(partial, partial x) frac(partial, partial y) = frac(partial^2, partial x partial y),
+$
+then the formulas for the first and second differentials can be written as
+$
+  dif z = (dif x frac(partial, partial x) + dif y frac(partial, partial y)) z,
+$
+$
+  dif^2 z = (dif x frac(partial, partial x) + dif y frac(partial, partial y))^2 z.
+$
+Similarly, we define
+$
+  (frac(partial, partial x))^p (frac(partial, partial y))^q = frac(partial^(p + q), partial x^p partial y^q) = frac(partial^q, partial y^q) (frac(partial, partial x))^p, quad (p, q = 1, 2, dots).
+$
+It is easy to use mathematical induction to prove the formula for higher-order differentials:
+$
+  dif^k z = (dif x frac(partial, partial x) + dif y frac(partial, partial y))^k z, quad k = 1, 2, dots.
+$
+For an $n$-variable function $u = f(x_1, x_2, dots, x_n)$, higher-order differentials can be similarly defined, and the following holds:
+$
+  dif^k u = (dif x_1 frac(partial, partial x_1) + dif x_2 frac(partial, partial x_2) + dots + dif x_n frac(partial, partial x_n))^k u, quad k = 1, 2, dots.
+$
+
+== Differential of Vector-Valued Functions // 向量值函数的微分
+
+Consider an $n$-dimensional vector-valued function defined on a domain $U subset.eq bb(R)^n$:
+$
+  bold(f): U -> bb(R)^m, \
+  bold(x) mapsto bold(y) = bold(f)(bold(x)).
+$
+Expressed in coordinate vector form:
+$
+  bold(y) = mat(y_1; y_2; dots.v; y_m)
+  = mat(f_1(x_1, x_2, dots, x_n); f_2(x_1, x_2, dots, x_n); dots.v; f_(m)(x_1, x_2, dots, x_n)),
+  quad bold(x) = mat(x_1; x_2; dots.v; x_n) in U.
+$
+
++ If each component function $f_(i)(x_1, x_2, dots, x_n)$ ($i = 1, 2, dots, m$) is partially differentiable at $bold(x)^0$, then all first-order partial derivatives of the vector-valued function $bold(f)$ at $bold(x)^0$ exist, and we define the matrix
+  $
+    (frac(partial f_i, partial x_j)(bold(x)^0))_(m times n) = mat(
+      frac(partial f_1, partial x_1)(bold(x)^0), frac(partial f_1, partial x_2)(bold(x)^0), dots, frac(partial f_1, partial x_n)(bold(x)^0);
+      frac(partial f_2, partial x_1)(bold(x)^0), frac(partial f_2, partial x_2)(bold(x)^0), dots, frac(partial f_2, partial x_n)(bold(x)^0);
+      dots.v, dots.v, dots.down, dots.v;
+      frac(partial f_m, partial x_1)(bold(x)^0), frac(partial f_m, partial x_2)(bold(x)^0), dots, frac(partial f_m, partial x_n)(bold(x)^0)
+    )
+  $
+
+  This matrix is called the /Jacobian matrix/ of $bold(f)$ at $bold(x)^0$, denoted by $bold(f)'(bold(x)^0)$ (or $D bold(f)(bold(x)^0)$, $J_(bold(f))(bold(x)^0)$).
+
+  For the special case $m = 1$, i.e. the $n$-variable scalar function $z = f(x_1, x_2, dots, x_n)$, the derivative at $bold(x)^0$ is
+  $
+    f'(bold(x)^0) = (frac(partial f, partial x_1)(bold(x)^0), frac(partial f, partial x_2)(bold(x)^0), dots, frac(partial f, partial x_n)(bold(x)^0)).
+  $
+  If the vector-valued function $bold(f)$ is differentiable at every point in $U$, then $bold(f)$ is said to be differentiable on $U$, and the corresponding relationship is
+  $
+    bold(x) in U mapsto bold(f)'(bold(x)) = J_(bold(f))(bold(x)),
+  $
+  where $bold(f)'(bold(x))$ (or $D bold(f)(bold(x))$, $J_(bold(f))(bold(x))$) denotes the derivative of $bold(f)$ at $bold(x)$ in $U$.
+
+// 注：tex 原文此处称"则 f 在 x⁰ 处可微"，数学上有误（偏导存在不蕴涵可微），已修正为"一阶偏导数均存在"。
++ If every component function $f_(i)(x_1, x_2, dots, x_n)$ ($i = 1, 2, dots, m$) of $bold(f)$ has continuous partial derivatives at $bold(x)^0$, then every element of the Jacobian matrix of $bold(f)$ is continuous at $bold(x)^0$. In this case, $bold(f)$ is said to have a continuous derivative at $bold(x)^0$ as a vector-valued function.
+
+  If the derivative of a vector-valued function $bold(f)$ is continuous at every point in $U$, then $bold(f)$ is said to have a continuous derivative on $U$.
++ If there exists an $m times n$ matrix $A$ that depends only on $bold(x)^0$ (and not on $Delta bold(x)$), such that in the neighborhood of $bold(x)^0$,
+  $
+    Delta bold(y) = bold(f)(bold(x)^0 + Delta bold(x)) - bold(f)(bold(x)^0) = A Delta bold(x) + o(norm(Delta bold(x)))
+  $
+  (where $Delta bold(x) = (Delta x_1, Delta x_2, dots, Delta x_n)^T$ is a column vector and $norm(Delta bold(x))$ denotes its norm), then $bold(f)$ is said to be differentiable at $bold(x)^0$ as a vector-valued function, and $A Delta bold(x)$ is called the differential of $bold(f)$ at $bold(x)^0$, denoted as $dif bold(y)$. If we denote $Delta bold(x)$ by $dif bold(x)$ ($dif bold(x) = (dif x_1, dif x_2, dots, dif x_n)^T$), then
+  $
+    dif bold(y) = A dif bold(x).
+  $
+
+  If the vector-valued function $bold(f)$ is differentiable at every point in $U$, then $bold(f)$ is said to be differentiable on $U$.
+
+Combining the above three points, we obtain the following unified statement:
+
+A vector-valued function $bold(f)$ is continuous, differentiable, and has derivatives if and only if each of its coordinate component functions $f_(i)(x_1, x_2, dots, x_n)$ ($i = 1, 2, dots, m$) is continuous, differentiable, and has derivatives.
+
 // B13: ch13 Multiple Integrals（多重积分）
 
 // --- Part V: 几何应用与高级积分（决策③：ch14–16） ---
