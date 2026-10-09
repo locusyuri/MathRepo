@@ -2608,7 +2608,700 @@ in the notation introduced in the Notations section.
 
 // --- Part II: 一元函数微积分 ---
 #part("Single-variable Calculus") // 一元函数微积分
-// B4: ch04 Differential（微分学）
+= Differential // 微分学
+
+== Differential and Derivative // 微分与导数
+
+=== Differentiability and the Derivative // 可微性与导数
+
+#definition(name: "Differential")[
+  Let $y = f(x)$ and $x_0$ be a point of its domain. If there exists a number
+  $g(x_0)$, depending only on $x_0$ and not on $Delta x$, such that
+  $
+    Delta y = g(x_0) Delta x + o(Delta x) quad quad (Delta x -> 0),
+  $
+  where $g(x_0) Delta x$ is called the *linear principal part* of $Delta y$,
+  then $f$ is said to be *differentiable* at $x_0$, and $g(x_0) Delta x$ is
+  called the *differential* of $f$ at $x_0$. If $f$ is differentiable at every
+  point of an interval, it is said to be differentiable on that interval.
+
+  When $Delta x -> 0$, the increment $Delta x$ of the independent variable is
+  written $(dif) x$, and the linear principal part $g(x) Delta x$ of $Delta y$
+  is written $(dif) y$; hence
+  $
+    (dif) y = g(x) (dif) x.
+  $
+] <def:differential>
+
+#note[
+  Differentiability at an endpoint of a closed interval is understood via
+  one-sided derivatives. Geometrically, $(dif) y$ is the increment of the
+  ordinate of the tangent line at the point. Clearly $g(x_0)$ is the limit of
+  the ratio $Delta y / Delta x$ as $Delta x -> 0$.
+]
+
+#note[
+  Differentiability implies continuity, but not conversely: the Weierstrass
+  function $W(x) = sum_(n = 0)^oo a^n cos(b^n pi x)$ with $a in (0, 1)$ and
+  $b = 2k + 1$ $(k in NN)$ is continuous everywhere and differentiable
+  nowhere.
+]
+
+#definition(name: "Derivative")[
+  Let $y = f(x)$ and $x_0$ be a point of its domain. If the limit
+  $
+    lim_(Delta x -> 0) (Delta y) / (Delta x)
+    = lim_(Delta x -> 0) (f(x_0 + Delta x) - f(x_0)) / (Delta x)
+  $
+  exists, then $f$ is said to be *derivable* at $x_0$, and the limit is called
+  the *derivative* of $f$ at $x_0$, denoted $f'(x_0)$ (also $y'(x_0)$,
+  $((dif f) / (dif x))|_(x = x_0)$). Equivalently,
+  $
+    f'(x_0) = lim_(x -> x_0) (f(x) - f(x_0)) / (x - x_0).
+  $
+] <def:derivative>
+
+#theorem(name: "Equivalence of Differentiability and Derivability")[
+  A function $y = f(x)$ is differentiable at a point $x$ if and only if it is
+  derivable at $x$. For functions of one variable, differentiability and
+  derivability at a point are equivalent notions.
+] <thm:differentiability-derivability>
+
+#proof[
+  ($=>$) Assume $Delta y = g(x_0) Delta x + o(Delta x)$. Dividing by
+  $Delta x != 0$ gives $(Delta y) / (Delta x) = g(x_0) + o(Delta x) / Delta x$,
+  so the limit of $(Delta y) / (Delta x)$ exists and equals $g(x_0)$.
+
+  ($<=$) Assume $lim_(Delta x -> 0) (Delta y) / (Delta x) = f'(x_0)$, i.e.,
+  $(Delta y) / (Delta x) = f'(x_0) + o(1)$; hence
+  $Delta y = f'(x_0) Delta x + o(1) Delta x$ with $o(1) Delta x = o(Delta x)$.
+]
+
+#note[
+  The expansion $Delta y = f'(x_0) Delta x + o(Delta x)$ $(Delta x -> 0)$ is
+  called the *infinitesimal increment formula*. It uses the equivalent
+  description of a limit
+  $lim_(x -> x_0) f(x) = A <=> f(x) = A + o(1)$ as $x -> x_0$.
+]
+
+#definition(name: "One-Sided Derivatives")[
+  The *left derivative* and *right derivative* of $f$ at $x_0$ are
+  $
+    f'_- (x_0) & = lim_(x -> x_0^-) (f(x) - f(x_0)) / (x - x_0), \
+    f'_+ (x_0) & = lim_(x -> x_0^+) (f(x) - f(x_0)) / (x - x_0).
+  $
+  The function $f$ is derivable at $x_0$ if and only if both one-sided
+  derivatives exist and are equal.
+] <def:one-sided-derivatives>
+
+#caution[
+  Distinguish $f'_+ (x_0)$, the right derivative of $f$ at $x_0$, from
+  $f'(x_0^+)$, the limit of the derivative function $f'$ at $x_0$. The two
+  notions are unrelated in general.
+]
+
+#example(name: "A Difference Quotient Criterion")[
+  Let $f$ be continuous at $x = 0$ and suppose
+  $lim_(x -> 0) (f(2 x) - f(x)) / x = A$. Then $f'(0)$ exists and
+  $f'(0) = A$.
+] <ex:difference-quotient-criterion>
+
+#proof[
+  We must show $lim_(x -> 0) (f(x) - f(0)) / x = A$. By hypothesis, for any
+  $epsilon > 0$ there is $delta > 0$ such that for all $|x| < delta$,
+  $A - epsilon / 2 < (f(2 x) - f(x)) / x < A + epsilon / 2$. Substituting
+  $x / 2^(k - 1)$ for $x$ $(k in NN)$ keeps the estimate valid, so
+  $
+    (A - epsilon / 2) / 2^k < (f(x / 2^(k - 1)) - f(x / 2^k)) / x
+    < (A + epsilon / 2) / 2^k.
+  $
+  Summing over $k = 1, dots, n$ and using
+  $sum_(k = 1)^n [f(x / 2^(k - 1)) - f(x / 2^k)] = f(x) - f(x / 2^n)$ together
+  with $sum_(k = 1)^n 1 / 2^k = 1 - 1 / 2^n$ yields
+  $
+    (1 - 1 / 2^n)(A - epsilon / 2) < (f(x) - f(x / 2^n)) / x
+    < (1 - 1 / 2^n)(A + epsilon / 2).
+  $
+  Letting $n -> oo$: since $x / 2^n -> 0$ and $f$ is continuous at $0$,
+  $f(x / 2^n) -> f(0)$, whence
+  $|(f(x) - f(0)) / x - A| <= epsilon / 2 < epsilon$. Therefore $f'(0) = A$.
+]
+
+=== Basic Differential Rules and Formulas // 基本求导与微分法则
+
+#tex-table(
+  ([], [Derivative Rules], [Differential Rules]),
+  ([Linear Combination], [$(c_1 f + c_2 g)' = c_1 f' + c_2 g'$], [$(dif)(c_1 f + c_2 g) = c_1 (dif) f + c_2 (dif) g$]),
+  ([Product Rule], [$(f g)' = f' g + f g'$], [$(dif)(f g) = g (dif) f + f (dif) g$]),
+  ([Quotient Rule], [$(f / g)' = (f' g - f g') / g^2$], [$(dif)(f / g) = (g (dif) f - f (dif) g) / g^2$]),
+  ([Inverse Function], [$[f^(-1)]'(y) = 1 / f'(x)$], [$(dif) x = (dif) y / f'(x) = [f^(-1)]'(y) (dif) y$]),
+  ([Chain Rule], [$[f(g(x))]' = f'(u) g'(x) quad (u = g(x))$], [$(dif)[f(g(x))] = f'(u) g'(x) (dif) x$]),
+)
+
+#tex-table(
+  ([Derivative], [Differential]),
+  ([$(C)' = 0$], [$(dif)(C) = 0 dot (dif) x = 0$]),
+  ([*Elementary functions*], []),
+  ([$(x^alpha)' = alpha x^(alpha - 1)$], [$(dif)(x^alpha) = alpha x^(alpha - 1) (dif) x$]),
+  ([$(sin x)' = cos x$], [$(dif)(sin x) = cos x (dif) x$]),
+  ([$(cos x)' = -sin x$], [$(dif)(cos x) = -sin x (dif) x$]),
+  ([$(tan x)' = sec^2 x$], [$(dif)(tan x) = sec^2 x (dif) x$]),
+  ([$(cot x)' = -csc^2 x$], [$(dif)(cot x) = -csc^2 x (dif) x$]),
+  ([$(sec x)' = tan x sec x$], [$(dif)(sec x) = tan x sec x (dif) x$]),
+  ([$(csc x)' = -cot x csc x$], [$(dif)(csc x) = -cot x csc x (dif) x$]),
+  ([*Inverse trigonometric functions*], []),
+  ([$(arcsin x)' = 1 / sqrt(1 - x^2)$], [$(dif)(arcsin x) = (dif) x / sqrt(1 - x^2)$]),
+  ([$(arccos x)' = -1 / sqrt(1 - x^2)$], [$(dif)(arccos x) = -(dif) x / sqrt(1 - x^2)$]),
+  ([$(arctan x)' = 1 / (1 + x^2)$], [$(dif)(arctan x) = (dif) x / (1 + x^2)$]),
+  ([ $("arccot" x)' = -1 / (1 + x^2)$], [$(dif)("arccot" x) = -(dif) x / (1 + x^2)$]),
+  ([*Exponential and logarithmic functions*], []),
+  ([$(a^x)' = ln a dot a^x, quad (e^x)' = e^x$], [$(dif)(a^x) = ln a dot a^x (dif) x, quad (dif)(e^x) = e^x (dif) x$]),
+  (
+    [$(log_a x)' = 1 / (x ln a), quad (ln x)' = 1 / x$],
+    [$(dif)(log_a x) = (dif) x / (x ln a), quad (dif)(ln x) = (dif) x / x$],
+  ),
+  ([*Hyperbolic functions*], []),
+  ([$("sh" x)' = "ch" x$], [$(dif)("sh" x) = "ch" x (dif) x$]),
+  ([$("ch" x)' = "sh" x$], [$(dif)("ch" x) = "sh" x (dif) x$]),
+  ([$("th" x)' = "sech"^2 x$], [$(dif)("th" x) = "sech"^2 x (dif) x$]),
+  ([$("cth" x)' = -"csch"^2 x$], [$(dif)("cth" x) = -"csch"^2 x (dif) x$]),
+  ([*Inverse hyperbolic functions*], []),
+  ([$("arcsh" x)' = 1 / sqrt(1 + x^2)$], [$(dif)("arcsh" x) = (dif) x / sqrt(1 + x^2)$]),
+  ([$("arcch" x)' = 1 / sqrt(x^2 - 1)$], [$(dif)("arcch" x) = (dif) x / sqrt(x^2 - 1)$]),
+  ([$("arcth" x)' = ("arccth" x)' = 1 / (1 - x^2)$], [$(dif)("arcth" x) = (dif)("arccth" x) = (dif) x / (1 - x^2)$]),
+  ([*A useful special case*], []),
+  (
+    [$[ln(x + sqrt(x^2 + a^2))]' = 1 / sqrt(x^2 + a^2)$],
+    [$(dif)[ln(x + sqrt(x^2 + a^2))] = (dif) x / sqrt(x^2 + a^2)$],
+  ),
+)
+
+=== Invariance of the Form of Differentials and Parametric Differentiation // 一阶微分形式不变性与参数方程求导
+
+#theorem(name: "Invariance of the Form of the First-Order Differential")[
+  Since $dif[f(u)] = f'(u) (dif) u$ holds whether $u$ is the independent
+  variable or an intermediate variable, the differential of $y = f(u)$ has one
+  and the same form in both cases. This property is called the *invariance of
+  the form of the first-order differential*.
+] <thm:invariance-of-differential>
+
+#example(name: "Implicit Differentiation")[
+  Find the derivative of the implicit function $y = y(x)$ determined by
+  $sin y^2 = cos sqrt(x)$.
+] <ex:implicit-differentiation>
+
+#proof[
+  *Method 1: differentiate both sides with respect to $x$.*
+  $
+    cos y^2 dot 2 y y' = -sin sqrt(x) dot 1 / (2 sqrt(x)),
+  $
+  so
+  $
+    y' = - sin sqrt(x) / (4 sqrt(x) y cos y^2).
+  $
+
+  *Method 2: take differentials of both sides.* By
+  #link(<thm:invariance-of-differential>)[the invariance of the form of the
+    first-order differential],
+  $
+    cos y^2 (dif)(y^2) = -sin sqrt(x) (dif)(sqrt(x)),
+  $
+  that is, $2 y cos y^2 (dif) y = -sin sqrt(x) dot (dif) x / (2 sqrt(x))$.
+  Dividing by $(dif) x$ gives the same result
+  $(dif y) / (dif x) = -sin sqrt(x) / (4 sqrt(x) y cos y^2)$.
+]
+
+#theorem(name: "Differentiation of Parametric Equations")[
+  Let $x$ and $y$ be determined by the parametric equations
+  $x = phi(t)$, $y = psi(t)$, $alpha <= t <= beta$, where $phi$ and $psi$ are
+  differentiable and $phi'(t) != 0$. Then
+  $
+    (dif y) / (dif x) = (dif y) / (dif t) dot (dif t) / (dif x) = (psi'(t)) / (phi'(t)).
+  $
+  This may also be viewed as the quotient of the differentials
+  $dif y = psi'(t) (dif) t$ and $dif x = phi'(t) (dif) t$.
+] <thm:parametric-differentiation>
+
+== Higher-Order Derivatives // 高阶导数
+
+#definition(name: "Derivatives of Higher Order")[
+  Let $y = f(x)$. If the $(n - 1)$-st derivative $f^((n - 1))(x)$ is still a
+  derivable function, its derivative $f^((n))(x)$ is called the *$n$-th
+  derivative* of $f$, and $f$ is said to be $n$ times derivable. Clearly, if
+  the $n$-th derivative exists, then all derivatives of order below $n$ exist.
+] <def:higher-order-derivative>
+
+Some useful formulas of higher-order derivatives:
+$
+          (a^x)^((n)) & = (ln a)^n a^x \
+  (sin alpha x)^((n)) & = alpha^n sin(alpha x + (n pi) / 2) \
+  (cos alpha x)^((n)) & = alpha^n cos(alpha x + (n pi) / 2) \
+         (ln x)^((n)) & = (-1)^(n - 1) (n - 1)! / x^n \
+      (x^alpha)^((n)) & = alpha (alpha - 1) dots (alpha - n + 1) x^(alpha - n),
+$
+
+In order to obtain the higher-order derivatives of a linear combination and a
+product of two or more functions, we need the following theorems.
+
+#theorem(name: "Linear Operation of Higher-Order Derivatives")[
+  If $f, g in D^((n))(I)$, then for any constants $c_1, c_2 in bb(R)$,
+  $
+    (c_1 f + c_2 g)^((n)) = c_1 f^((n)) + c_2 g^((n)).
+  $
+] <thm:linear-operation-higher-order>
+
+#theorem(name: "Leibniz's Formula")[
+  If $f, g in D^((n))(I)$, then
+  $
+    (f g)^((n)) = sum_(k = 0)^n binom(n, k) f^((k)) g^((n - k)).
+  $
+] <thm:leibniz-formula>
+
+#caution[
+  Note the distinction:
+  - $dif x^2$ represents the square of the differential of the independent
+    variable, i.e., $(dif x)^2$;
+  - $dif^2 x$ represents the second differential of the independent variable,
+    $dif(dif x)$;
+  - $dif(x^2)$ represents the differential of $x^2$, which is $2 x (dif) x$.
+]
+
+#note[
+  In general $(dif)^n y = f^((n))(x) (dif) x^n$. The invariance of form holds
+  only for *first-order* differentials: in fact, if $u$ is an intermediate
+  variable, then $(dif)^2 y = f''(u) (dif) u^2 + f'(u) (dif)^2 u$, and the
+  extra term $f'(u) (dif)^2 u$ breaks the invariance.
+]
+
+#example(name: "A Flat Function")[
+  Let
+  $
+    f(x) = cases(e^(-1 / x^2) & x != 0 comma, 0 & x = 0).
+  $
+  Then $f^((n))(0) = 0$ for all $n in NN^+$.
+] <ex:flat-function>
+
+#proof[
+  We argue by induction on $n$. First,
+  $
+    f'(0) = lim_(x -> 0) (e^(-1 / x^2) - 0) / (x - 0) = lim_(x -> 0) (1\/x) / e^(1\/x^2) = lim_(y -> oo) y / e^(y^2) = 0,
+  $
+  by the substitution $y = 1 / x$. Assume $f^((n - 1))(0) = 0$. By Leibniz's
+  formula, for $x != 0$,
+  $
+    f^((n - 1))(x) = p(1\/x) e^(-1 / x^2),
+  $
+  where $p(1\/x)$ denotes some polynomial in $1 / x$. Therefore
+  $
+    f^((n))(0) = lim_(x -> 0) (p(1\/x) e^(-1 / x^2) - 0) / (x - 0) = lim_(y -> oo) (y p(y)) / e^(y^2) = 0,
+  $
+  since the exponential dominates any polynomial.
+]
+
+#note[
+  The graph of $f$ is extremely flat near $x = 0$: this function shows that a
+  non-constant function may have all derivatives of every order vanish at a
+  point.
+]
+
+#example(name: "A Smooth Bridge between Two Constants")[
+  Extend the constant function $u(x) equiv 0$ on $(-oo, 0]$ and the constant
+  function $v(x) equiv 1$ on $[1, +oo)$ to an infinitely differentiable
+  function on $(-oo, +oo)$ with values in $[0, 1]$.
+] <ex:smooth-bridge>
+
+#proof[
+  Set
+  $
+    g(x) = cases(0 & x <= 0 comma, e^(-1 / x^2) & x > 0),
+  $
+  which is infinitely differentiable by #link(<ex:flat-function>)[the flat
+    function above]. Then
+  $
+    f(x) = g(x) / (g(x) + g(1 - x))
+  $
+  meets the requirements: for $x <= 0$ we have $f(x) = 0$; for $x >= 1$ we have
+  $f(x) = 1$; and for $0 < x < 1$ both $g(x)$ and $g(1 - x)$ are positive, so
+  $0 < f(x) < 1$. The denominator never vanishes, and $f$ is infinitely
+  differentiable as a quotient of infinitely differentiable functions.
+]
+
+== Differential Mean Value Theorems // 微分中值定理
+
+#definition(name: "Argmax and Argmin")[
+  Let $f$ be defined on $(a, b)$ and $x_0 in (a, b)$. If there exists a
+  neighbourhood $U(x_0, delta) subset (a, b)$ on which $f(x) <= f(x_0)$, then
+  $x_0$ is called an argument of the maximum point of $f$, and $f(x_0)$ is
+  referred to as the corresponding argument of the maximum (abbreviated
+  $"argmax"$).
+
+  The definition of the argmin is analogous.
+] <def:argmax-argmin>
+
+#note[
+  A function may have infinitely many extremum points in an interval, e.g.,
+  $f(x) = sin(1\/x)$ on $(0, 1)$. The definition of an extremum point involves
+  neither continuity nor derivability: on $(0, 1)$ every rational point of the
+  Riemann function is a maximum point and every irrational point a minimum
+  point, by the same argument as the one showing that the Riemann function has
+  limit $0$ at every point.
+]
+
+#lemma(name: "Fermat's Lemma")[
+  If $f$ is differentiable at a local extremum point $x_0$, then $f'(x_0) = 0$.
+] <lem:fermat>
+
+#proof[
+  Suppose $x_0$ is a local maximum point (the minimum case is analogous). By
+  definition there is $U(x_0, delta)$ with $f(x) <= f(x_0)$ on it. Then for
+  $x < x_0$ the difference quotient satisfies
+  $(f(x) - f(x_0)) / (x - x_0) >= 0$, while for $x > x_0$ it satisfies
+  $(f(x) - f(x_0)) / (x - x_0) <= 0$. Since $f$ is derivable at $x_0$,
+  $f'(x_0) = f'_- (x_0) >= 0$ and $f'(x_0) = f'_+ (x_0) <= 0$, whence
+  $f'(x_0) = 0$.
+]
+
+#theorem(name: "Rolle's Theorem")[
+  If $f in C[a, b]$, $f in D(a, b)$ and $f(a) = f(b)$, then there exists
+  $xi in (a, b)$ such that $f'(xi) = 0$.
+
+  #underline[*Enhanced version:*] if $f in D(a, b)$ on a finite or infinite
+  interval $(a, b)$, and $lim_(x -> a^+) f(x) = lim_(x -> b^-) f(x)$, then
+  there exists $xi in (a, b)$ such that $f'(xi) = 0$.
+] <thm:rolle>
+
+#proof[
+  By the extreme value theorem there exist $xi, eta in [a, b]$ with
+  $f(xi) = M$ and $f(eta) = m$, where $M$ and $m$ are the maximum and minimum
+  of $f$ on $[a, b]$. If $M = m$, then $f$ is constant and every point of
+  $(a, b)$ serves as $xi$. If $M > m$, then at least one of $M$, $m$ differs
+  from $f(a) = f(b)$; say $M = f(xi) > f(a) = f(b)$. Then $xi in (a, b)$ is a
+  local maximum point, and Fermat's lemma gives $f'(xi) = 0$.
+]
+
+#theorem(name: "Lagrange's Mean Value Theorem")[
+  If $f in C[a, b]$ and $f in D(a, b)$, then there exists $xi in (a, b)$ such
+  that
+  $
+    f'(xi) = (f(b) - f(a)) / (b - a).
+  $
+] <thm:lagrange-mvt>
+
+#proof[
+  *Auxiliary function.* Let
+  $phi(x) = f(x) - f(a) - (f(b) - f(a)) / (b - a) dot (x - a)$. Then
+  $phi in C[a, b]$, $phi in D(a, b)$, and $phi(a) = phi(b) = 0$. By Rolle's
+  theorem there exists $xi in (a, b)$ with $phi'(xi) = 0$, i.e.,
+  $f'(xi) = (f(b) - f(a)) / (b - a)$.
+]
+
+#proof[
+  *Determinant form.* The auxiliary function may also be written as
+  $
+    Delta(x) = mat(b - a, x - a; f(b) - f(a), f(x) - f(a)),
+  $
+  twice the signed area of the triangle through $(a, f(a))$, $(b, f(b))$ and
+  $(x, f(x))$. One checks $Delta(a) = Delta(b) = 0$, so Rolle's theorem yields
+  $xi in (a, b)$ with $Delta'(xi) = 0$. Since
+  $Delta'(x) = (b - a) f'(x) - (f(b) - f(a))$, the conclusion follows.
+]
+
+#note[
+  The conclusion of Lagrange's theorem is usually called the *Lagrange
+  formula*. Its equivalent forms, collectively known as the *finite increment
+  formula*, are
+  $
+    f(b) - f(a) = f'(xi) (b - a) = f'(a + theta (b - a)) (b - a), quad theta in (0, 1),
+  $
+  or, increment-wise, $Delta y = f'(x + theta Delta x) Delta x$ with
+  $theta in (0, 1)$.
+]
+
+#theorem(name: "Cauchy's Mean Value Theorem")[
+  If $f, g in C[a, b]$, $f, g in D(a, b)$ and $g'(x) != 0$ for all $x in (a, b)$,
+  then there exists $xi in (a, b)$ such that
+  $
+    (f'(xi)) / (g'(xi)) = (f(b) - f(a)) / (g(b) - g(a)).
+  $
+] <thm:cauchy-mvt>
+
+#proof[
+  First $g(b) != g(a)$; otherwise Rolle's theorem would give some
+  $x in (a, b)$ with $g'(x) = 0$. Let
+  $
+    F(x) = f(x) - f(a) - (f(b) - f(a)) / (g(b) - g(a)) dot (g(x) - g(a)).
+  $
+  Then $F(a) = F(b) = 0$, and Rolle's theorem provides $xi in (a, b)$ with
+  $F'(xi) = 0$, i.e.,
+  $
+    f'(xi) = (f(b) - f(a)) / (g(b) - g(a)) dot g'(xi),
+  $
+  which is the assertion after division by $g'(xi) != 0$.
+]
+
+#note[
+  Cauchy's mean value theorem can be read as the parametric form of Lagrange's
+  mean value theorem applied to the curve $(g(x), f(x))$.
+]
+
+#note[
+  The following types of problems commonly appear in proofs related to
+  intermediate values in differential calculus:
+  + Prove the existence of a point $xi$ such that $F(xi, f(xi), f'(xi)) = 0$.
+    Problems of this type are generally solved by constructing an auxiliary
+    function and applying Rolle's theorem. The commonly used auxiliary
+    functions include:
+
+    #tex-table(
+      ([Target equation], [Auxiliary function]),
+      ([$xi f'(xi) + f(xi) = 0$], [$x f(x)$]),
+      ([$xi f'(xi) + n f(xi) = 0$], [$x^n f(x)$]),
+      ([$xi f'(xi) - f(xi) = 0$], [$f(x) / x$]),
+      ([$f'(xi) + lambda f(xi) = 0$], [$e^(lambda x) f(x)$]),
+      ([$f'(xi) + f(xi) = 0$], [$e^x f(x)$]),
+      ([$f'(xi) - f(xi) = 0$], [$e^(-x) f(x)$]),
+    )
+
+  + Prove the existence of two points $xi, eta$ (i.e., two intermediate values)
+    such that $F(xi, f(xi), f'(xi), eta, f(eta), f'(eta)) = 0$. These problems
+    can be divided into the following categories:
+
+    #terms(
+      terms.item(
+        [$xi != eta$],
+        [Problems of this type usually occur on one and the same
+          interval $[a, b]$, and employ theorems of *double* differentiation
+          intermediate values such as the Lagrange mean value theorem or Cauchy's
+          mean value theorem. The specific choice of auxiliary functions often
+          includes terms like $xi$ and other variables determined after
+          *decomposition*.],
+      ),
+      terms.item(
+        [$xi = eta$],
+        [Such problems cannot occur within one and the same interval
+          $[a, b]$. They use double differentiation mean value theorems by
+          *splitting* $[a, b]$ into two intervals $[a, c]$ and $[c, b]$, and
+          applying the Lagrange mean value theorem separately to each interval.
+          Here, the *selection* of $xi$ and $eta$ is key.],
+      ),
+    )
+
+  + As a rule, when the conditions of a theorem involve additional constraints
+    about *higher-order* derivatives, it is necessary to use Taylor's
+    intermediate value theorem.
+]
+
+#example(name: "Boundedness from a Bounded Derivative")[
+  Let $f in C[1, +oo)$, $f in D(1, +oo)$, and suppose $e^(-x^2) f'(x)$ is
+  bounded on $(1, +oo)$. Then $x e^(-x^2) f(x)$ is also bounded on
+  $(1, +oo)$.
+] <ex:boundedness-mvt>
+
+#proof[
+  Write $|e^(-x^2) f'(x)| <= M$ on $(1, +oo)$. We first bound $e^(-x^2) f(x)$.
+  For $x > 1$, applying Cauchy's mean value theorem to $f$ and $e^(x^2)$ on
+  $[1, x]$ gives a point $xi in (1, x)$ with
+  $
+    abs(f(x) / e^(x^2)) <= (abs(f(x) - f(1))) / (e^(x^2) - e) + abs(f(1)) / e
+    = abs(f'(xi)) / (2 xi e^(xi^2)) + abs(f(1)) / e
+    <= M / 2 + abs(f(1)) / e.
+  $
+  Now apply Cauchy's mean value theorem to $x f(x)$ and $e^(x^2)$ on $[1, x]$:
+  $
+    abs(x f(x)) / e^(x^2) <= (abs(x f(x) - f(1))) / (e^(x^2) - e) + abs(f(1)) / e
+    = abs(xi f'(xi) + f(xi)) / (2 xi e^(xi^2)) + abs(f(1)) / e.
+  $
+  Since $xi > 1$,
+  $
+    abs(xi f'(xi) + f(xi)) / (2 xi e^(xi^2))
+    <= abs(f'(xi)) / (2 e^(xi^2)) + abs(f(xi)) / (2 e^(xi^2))
+    <= M / 2 + 1 / 2 (M / 2 + abs(f(1)) / e),
+  $
+  using the bound on $e^(-xi^2) f(xi)$ obtained in the first step. Hence
+  $abs(x f(x)) / e^(x^2) <= 3 M / 4 + 3 abs(f(1)) / (2 e)$, i.e.,
+  $x e^(-x^2) f(x)$ is bounded.
+]
+
+#example(name: "A Determinant Identity via Cauchy")[
+  Let $f in C[a, b] inter D(a, b)$ with $a b > 0$. Show that there exists
+  $xi in (a, b)$ such that
+  $
+    1 / (b - a) mat(a, b; f(a), f(b)) = xi f'(xi) - f(xi).
+  $
+] <ex:determinant-identity>
+
+#proof[
+  Since $a b > 0$, the functions $phi(x) = f(x) / x$ and $psi(x) = 1 / x$ are
+  continuous on $[a, b]$ and differentiable on $(a, b)$, with
+  $psi'(x) = -1 / x^2 != 0$. By Cauchy's mean value theorem there exists
+  $xi in (a, b)$ such that
+  $
+    (f(b) / b - f(a) / a) / (1 / b - 1 / a)
+    = (phi'(xi)) / (psi'(xi))
+    = ((xi f'(xi) - f(xi)) / xi^2) / (-1 / xi^2)
+    = f(xi) - xi f'(xi).
+  $
+  The left-hand side equals $(a f(b) - b f(a)) / (a - b)$, so after moving the
+  sign,
+  $
+    1 / (b - a) mat(a, b; f(a), f(b)) = xi f'(xi) - f(xi).
+  $
+]
+
+#example(name: "A Second-Order Mean Value Relation")[
+  Let $f in C[a, b] inter D^((2))((a, b))$. Show that there exists $eta in (a, b)$
+  such that
+  $
+    f(b) + f(a) - 2 f((a + b) / 2) = ((b - a) / 2)^2 f''(eta).
+  $
+] <ex:second-order-mvt>
+
+#proof[
+  Set $g(x) = f(x) - f(x - (b - a) / 2)$, defined for
+  $x in [(a + b) / 2, b]$. Then
+  $g((a + b) / 2) = f((a + b) / 2) - f(a)$ and
+  $g(b) = f(b) - f((a + b) / 2)$. Applying Lagrange's mean value theorem to
+  $g$ on $[(a + b) / 2, b]$ yields a point $xi in ((a + b) / 2, b)$ with
+  $
+    f(b) - 2 f((a + b) / 2) + f(a)
+    = g(b) - g((a + b) / 2)
+    = g'(xi) dot (b - a) / 2
+    = [f'(xi) - f'(xi - (b - a) / 2)] dot (b - a) / 2.
+  $
+  Since $xi - (b - a) / 2 > a$, applying Lagrange's mean value theorem once
+  more to $f'$ on $[xi - (b - a) / 2, xi]$ gives $eta in (a, b)$ with
+  $f'(xi) - f'(xi - (b - a) / 2) = f''(eta) dot (b - a) / 2$, which completes
+  the proof.
+]
+
+#example(name: "A Differential Inequality Forces Zero")[
+  Let $f in D[0, +oo)$ with $f(0) = 0$, and suppose there exists $A > 0$ such
+  that $|f'(x)| <= A |f(x)|$ for all $x in [0, +oo)$. Then $f(x) equiv 0$ for
+  $x >= 0$.
+] <ex:differential-inequality-zero>
+
+#proof[
+  *Step 1: $f$ vanishes on $[0, 1 / (2 A)]$.* Since $|f|$ is continuous, it
+  attains a maximum $M$ at some $x_1 in [0, 1 / (2 A)]$. By Lagrange's mean
+  value theorem there is $xi in (0, x_1)$ with
+  $
+    M = |f(x_1)| = |f(0) + f'(xi) x_1| = |f'(xi)| x_1 <= A |f(xi)| x_1
+    <= A M dot 1 / (2 A) = M / 2.
+  $
+  Hence $M = 0$ and $f equiv 0$ on $[0, 1 / (2 A)]$.
+
+  *Step 2: induction.* Suppose $f equiv 0$ on $[0, i / (2 A)]$. Repeating the
+  argument of Step 1 on the interval $[i / (2 A), (i + 1) / (2 A)]$—now using
+  $f(i / (2 A)) = 0$ as the base point—shows $f equiv 0$ there as well. By
+  induction $f(x) equiv 0$ for all $x >= 0$.
+]
+
+== Theorems about Derivatives // 关于导数的定理
+
+#theorem(name: "Darboux's Intermediate Value Theorem for Derivatives")[
+  If $f in D[a, b]$, then $f'$ has the intermediate value property: for every
+  real number $k$ between $f'_+ (a)$ and $f'_- (b)$, there exists at least one
+  $xi in [a, b]$ such that $f'(xi) = k$. In particular, if
+  $f'_+ (a) dot f'_- (b) < 0$, then there exists $xi in (a, b)$ with
+  $f'(xi) = 0$.
+] <thm:darboux>
+
+#proof[
+  Let $F(x) = f(x) - k x$. Then $F in D[a, b]$ and
+  $F'_+ (a) F'_- (b) <= 0$, since $k$ lies between $f'_+ (a)$ and $f'_- (b)$.
+
+  If $F'_+ (a) F'_- (b) = 0$, then $F'_+ (a) = 0$ or $F'_- (b) = 0$, and we may
+  take $xi = a$ or $xi = b$.
+
+  If $F'_+ (a) F'_- (b) < 0$, suppose for instance $F'_+ (a) > 0$ and
+  $F'_- (b) < 0$. By the sign-preserving property of limits there is
+  $delta_1 > 0$ with $(F(x) - F(a)) / (x - a) > 0$, i.e., $F(x) > F(a)$, for
+  $x in (a, a + delta_1)$; likewise there is $delta_2 > 0$ with
+  $(F(x) - F(b)) / (x - b) < 0$, i.e., $F(x) > F(b)$, for
+  $x in (b - delta_2, b)$. In particular $xi != a, b$. Since $F$ is continuous
+  on $[a, b]$, it attains its maximum at some $xi in (a, b)$, and Fermat's
+  lemma gives $F'(xi) = 0$, i.e., $f'(xi) = k$.
+]
+
+#theorem(name: "Theorem on the Limit of Derivatives")[
+  If $f in C(U(x_0))$ and $f in D(accent(U, circle)(x_0))$, and
+  $lim_(x -> x_0) f'(x) = A$, then $f$ is differentiable at $x_0$ and
+  $f'(x_0) = A$.
+] <thm:limit-of-derivative>
+
+#proof[
+  For $x in accent(U, circle)(x_0)$, Lagrange's mean value theorem applied on
+  the interval between $x_0$ and $x$ provides a point $xi$ between $x_0$ and
+  $x$ such that
+  $
+    (f(x) - f(x_0)) / (x - x_0) = f'(xi).
+  $
+  As $x -> x_0$, the point $xi$ is squeezed to $x_0$, so
+  $
+    f'(x_0) = lim_(x -> x_0) (f(x) - f(x_0)) / (x - x_0) = lim_(xi -> x_0) f'(xi) = A.
+  $
+]
+
+#corollary(name: "Derivatives Have No Discontinuities of the First Kind")[
+  If $f in D(a, b)$, then its derivative $f'$ can only have discontinuities of
+  the second kind.
+] <cor:derivative-second-kind>
+
+#proof[
+  Suppose $x_0 in (a, b)$ is a discontinuity of $f'$ which is not of the second
+  kind; then the one-sided limits $f'(x_0^-)$ and $f'(x_0^+)$ exist and are
+  finite. Since $f$ is continuous at $x_0$, the theorem on the limit of
+  derivatives (applied one-sidedly) gives
+  $
+    f'(x_0^-) = f'_- (x_0), quad f'(x_0^+) = f'_+ (x_0),
+  $
+  while derivability of $f$ at $x_0$ gives
+  $f'_- (x_0) = f'_+ (x_0) = f'(x_0)$. Hence $f'(x_0^-) = f'(x_0^+) = f'(x_0)$,
+  i.e., $f'$ is continuous at $x_0$—a contradiction.
+]
+
+#example(name: "A Derivative with a Second-Kind Discontinuity")[
+  For
+  $
+    f(x) = cases(x^2 sin(1\/x) & x != 0 comma, 0 & x = 0),
+  $
+  the derivative is
+  $
+    f'(x) = cases(2 x sin(1\/x) - cos(1\/x) & x != 0 comma, 0 & x = 0).
+  $
+  The limit $lim_(x -> 0) f'(x)$ does not exist, so $x = 0$ is a discontinuity
+  of the second kind of $f'$.
+] <ex:derivative-second-kind-discontinuity>
+
+#example(name: "Constant Functions from Vanishing Derivatives")[
+  (1) If $f in D(a, b)$ and $f'(x) equiv 0$ on $(a, b)$, then $f$ is constant
+  on $(a, b)$.
+
+  (2) If $f, g in C(I)$ and $f'(x) = g'(x)$ except at finitely many points,
+  then $f(x) = g(x) + C$ on $I$ for some constant $C$.
+] <ex:vanishing-derivative-constant>
+
+#proof[
+  (1) For any two points $x_1 < x_2$ in $(a, b)$, Lagrange's mean value theorem
+  gives $f(x_2) - f(x_1) = f'(xi) (x_2 - x_1) = 0$, so $f$ takes the same value
+  at any two points.
+
+  (2) Let $F = f - g$, and let $x_1 < x_2 < dots < x_n$ be the (at most
+  finitely many) points where possibly $F' != 0$. These points split $I$ into
+  finitely many subintervals on each of which $F' equiv 0$, so by (1) $F$ is
+  constant on each of them. Since $F$ is continuous on $I$, the constants agree
+  across the junction points, and $F$ is constant on all of $I$.
+]
+
+#note[
+  In fact, the hypothesis $lim_(x -> x_0) f'(x) = A$ already shows that
+  $f in D(accent(U, circle)(x_0))$. The mnemonic for this theorem is:
+  continuity + existence of the limit of the derivative $=>$ the derivative at
+  the point exists and equals $A$.
+]
+
+// B4b: ch04 §5–7（Taylor Theorem / Properties of Functions / Applications）
+
 // B5: ch05 Indefinite Integral（不定积分）
 // B6: ch06 Definite Integral（定积分）
 // B7: ch07 Improper Integral（反常积分）
