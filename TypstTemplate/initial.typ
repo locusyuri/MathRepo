@@ -1,4 +1,4 @@
-﻿// ==========================================================================
+// ==========================================================================
 // MATH NOTES TEMPLATE - COMPLETE ENGLISH SHOWCASE
 // ==========================================================================
 
@@ -172,7 +172,7 @@ This template currently supports:
   Use this block for commentary, migration notes, and reminders.
 ]
 
-#caution(title: "Caution")[
+#caution(title: "Divide-by-Zero Check")[
   Before dividing by an expression, ensure it is non-zero.
 ]
 

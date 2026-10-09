@@ -986,7 +986,9 @@
 ) = {
   let p = note-palette(kind: kind)
   let title-text = if title != none {
-    if type(title) == str { eval(title, mode: "markup") } else { title }
+    // 附加语义：Note (自定义标题)，与 theorem 组件 name 的风格一致
+    let t = if type(title) == str { eval(title, mode: "markup") } else { title }
+    [#p.title#h(0.35em)\(#t\)]
   } else { p.title }
   let icon-text = if icon != none { icon } else { p.icon }
   let bg-color = if bg != none { bg } else { p.bg }
