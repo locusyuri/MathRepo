@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-09（新增 §3.5 md 前身笔记对照与内容回收清单）
+> 最后更新：2026-10-09（B1 完成：ch01 迁移 + Preface 删除下沉为符号说明节 + R1 回收）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -134,13 +134,15 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 ### 阶段 A
 
 - [x] **B0 骨架**：`initial.typ` 头部（import/set document/make-cover/make-outline）+ **5 个内容 `#part` + 1 个 Appendix `#part`**（按 §3.4 决策③：Part IV = ch11–13，Part V = ch14–16）+ Preface（含记号表）+ `references.bib`（从 `thebibliography` 提取 9 条）+ `#bibliography`。编译通过后提交。（✅ 2026-10-09，`254df63`）
+  - ⚠️ 后续修订（2026-10-09 用户决策）：**取消独立 Preface 章**，其中 "For an interval" 起的记号内容（去版本表）于 B1 下沉为 Preliminaries 第一章的 "Notations" 符号说明节。
 
 ### Part I — Limits and Continuity
 
-- [ ] **B1 = ch01 Preliminaries**（109 行 / 3 节）
-  - [ ] §1.1 Trigonometric Formulas（表格 → `#tex-table`）
-  - [ ] §1.2 Common Inequalities（🔧 P1-4/R1：从 md 回收不等式专题）
-  - [ ] §1.3 Factorial Power
+- [x] **B1 = ch01 Preliminaries**（109 行 / 3 节）（✅ 2026-10-09）
+  - [x] §1.0 Notations（符号说明：由原 Preface "For an interval" 起的内容下沉而来，去掉版本表，表格单元格改 `[...]` 形式；删除 Preface 章）
+  - [x] §1.1 Trigonometric Formulas（7 组公式 align + triangle.png figure + Geometric Remarks property + Weierstrass Substitution theorem）
+  - [x] §1.2 Common Inequalities（🔧 P1-4/R1 ✅：从 md L78–262 回收不等式专题——平均值不等式（两证明）、Newton 二项式引理、Bernoulli 不等式 + 3 推论、三角不等式、Cauchy-Schwarz（含向量/积分形式）、Carlson、Lagrange 恒等式、Fan Ky + A-G 极限形式 note + 3 个例题；中文正文已译为英文；修正 md 笔误：`(1+x)^n < e^k < (1+k/n)^(n+k)`、Fan Ky 左侧补 `^n`、Lagrange 恒等式去 abs）
+  - [x] §1.3 Factorial Power（升/降阶乘 definition，`<def:factorial-power>`）
 - [ ] **B2 = ch02 Limits of Sequences**（139 行 / 5 节）
   - [ ] §2.1 Convergent Sequences
   - [ ] §2.2 Indeterminate Form
