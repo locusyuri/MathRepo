@@ -32,7 +32,7 @@
 
 For an interval $I$, an open interval $(a, b)$ and a closed interval $[a, b]$,
 we denote $C(I)$, $C(a, b)$ and $C[a, b]$
-as the set of continuous #underline[univariate] functions on $I$, $(a, b)$ and $[a, b]$ respectively.
+as the set of continuous _univariate_ functions on $I$, $(a, b)$ and $[a, b]$ respectively.
 Similarly, the following notations are used#footnote[
   Other notations include: $R[a, b]$ (denoting Riemann integrable functions on $[a, b]$),
   $B[a, b]$ (denoting bounded functions on $[a, b]$), etc.
@@ -65,52 +65,52 @@ and similarly for higher-order partial derivatives, e.g., $f_(12) := (partial^2 
 
 *Product-to-Sum Formulas:*
 $
-  sin alpha cos beta &= 1 / 2 [sin(alpha + beta) + sin(alpha - beta)]
-  cos alpha sin beta &= 1 / 2 [sin(alpha + beta) - sin(alpha - beta)]
-  cos alpha cos beta &= 1 / 2 [cos(alpha + beta) + cos(alpha - beta)]
-  sin alpha sin beta &= -1 / 2 [cos(alpha + beta) - cos(alpha - beta)]
+  sin alpha cos beta & = 1 / 2 [sin(alpha + beta) + sin(alpha - beta)] \
+  cos alpha sin beta & = 1 / 2 [sin(alpha + beta) - sin(alpha - beta)] \
+  cos alpha cos beta & = 1 / 2 [cos(alpha + beta) + cos(alpha - beta)] \
+  sin alpha sin beta & = -1 / 2 [cos(alpha + beta) - cos(alpha - beta)]
 $
 
 *Sum and Difference Formulas:*
 $
-  sin(alpha + beta) &= sin alpha cos beta + cos alpha sin beta
-  sin(alpha - beta) &= sin alpha cos beta - cos alpha sin beta
-  cos(alpha + beta) &= cos alpha cos beta - sin alpha sin beta
-  cos(alpha - beta) &= cos alpha cos beta + sin alpha sin beta
+  sin(alpha + beta) & = sin alpha cos beta + cos alpha sin beta \
+  sin(alpha - beta) & = sin alpha cos beta - cos alpha sin beta \
+  cos(alpha + beta) & = cos alpha cos beta - sin alpha sin beta \
+  cos(alpha - beta) & = cos alpha cos beta + sin alpha sin beta
 $
 
 *Sum-to-Product Formulas:*
 $
-  sin alpha + sin beta &= 2 sin((alpha + beta) / 2) cos((alpha - beta) / 2)
-  sin alpha - sin beta &= 2 sin((alpha - beta) / 2) cos((alpha + beta) / 2)
-  cos alpha + cos beta &= 2 cos((alpha + beta) / 2) cos((alpha - beta) / 2)
-  cos alpha - cos beta &= -2 sin((alpha + beta) / 2) sin((alpha - beta) / 2)
+  sin alpha + sin beta & = 2 sin((alpha + beta) / 2) cos((alpha - beta) / 2) \
+  sin alpha - sin beta & = 2 sin((alpha - beta) / 2) cos((alpha + beta) / 2) \
+  cos alpha + cos beta & = 2 cos((alpha + beta) / 2) cos((alpha - beta) / 2) \
+  cos alpha - cos beta & = -2 sin((alpha + beta) / 2) sin((alpha - beta) / 2)
 $
 
 *Double Angle Formulas:*
 $
-  sin 2 alpha & = 2 sin alpha cos alpha
-                cos 2 alpha & = cos^2 alpha - sin^2 alpha = 2 cos^2 alpha - 1 = 1 - 2 sin^2 alpha
-                              tan 2 alpha & = (2 tan alpha) / (1 - tan^2 alpha)
+  sin 2 alpha & = 2 sin alpha cos alpha \
+  cos 2 alpha & = cos^2 alpha - sin^2 alpha = 2 cos^2 alpha - 1 = 1 - 2 sin^2 alpha \
+  tan 2 alpha & = (2 tan alpha) / (1 - tan^2 alpha)
 $
 
 *Half Angle Formulas:*
 $
-  sin(alpha / 2) & = plus.minus sqrt((1 - cos alpha) / 2)
-                   cos(alpha / 2) & = plus.minus sqrt((1 + cos alpha) / 2)
-                                    tan(alpha / 2) & = (1 - cos alpha) / (sin alpha) = (sin alpha) / (1 + cos alpha)
+  sin(alpha / 2) & = plus.minus sqrt((1 - cos alpha) / 2) \
+  cos(alpha / 2) & = plus.minus sqrt((1 + cos alpha) / 2) \
+  tan(alpha / 2) & = (1 - cos alpha) / (sin alpha) = (sin alpha) / (1 + cos alpha)
 $
 
 *Power-Reducing Formulas:*
 $
-  sin^2 alpha & = (1 - cos 2 alpha) / 2
-                cos^2 alpha & = (1 + cos 2 alpha) / 2
+  sin^2 alpha & = (1 - cos 2 alpha) / 2 \
+  cos^2 alpha & = (1 + cos 2 alpha) / 2
 $
 
 *Angle Decomposition Formulas:*
 $
-  sin^2 alpha - sin^2 beta & = sin(alpha + beta) sin(alpha - beta)
-                             cos^2 alpha - sin^2 beta & = cos(alpha + beta) cos(alpha - beta)
+  sin^2 alpha - sin^2 beta & = sin(alpha + beta) sin(alpha - beta) \
+  cos^2 alpha - sin^2 beta & = cos(alpha + beta) cos(alpha - beta)
 $
 
 #figure(
@@ -128,9 +128,9 @@ $
 #theorem(name: "Weierstrass Substitution (All-Powerful Formula)")[
   Let $t = tan(x / 2)$. Then:
   $
-    sin x & = (2 t) / (1 + t^2)
-            cos x & = (1 - t^2) / (1 + t^2)
-                    dif x & = 2 / (1 + t^2) dif t.
+    sin x & = (2 t) / (1 + t^2) \
+    cos x & = (1 - t^2) / (1 + t^2) \
+    dif x & = 2 / (1 + t^2) dif t.
   $
 ] <thm:weierstrass-substitution>
 
@@ -219,9 +219,9 @@ $
   + We argue by induction on $n$. The case $n = 1$ is clear. Assume the claim for $n = k$;
     for $n = k + 1$ suppose without loss of generality $a_i > 0$ (the other sign is similar). Then
     $
-      product_(i = 1)^(k + 1) (1 + a_i) &= (1 + a_(k + 1)) product_(i = 1)^k (1 + a_i)
-      &>= (1 + a_(k + 1)) (1 + sum_(i = 1)^k a_i)
-      &>= 1 + sum_(i = 1)^(k + 1) a_i.
+      product_(i = 1)^(k + 1) (1 + a_i) & = (1 + a_(k + 1)) product_(i = 1)^k (1 + a_i) \
+                                        & = (1 + a_(k + 1)) (1 + sum_(i = 1)^k a_i) \
+                                        & = 1 + sum_(i = 1)^(k + 1) a_i.
     $
 ]
 
@@ -447,4 +447,4 @@ $
 = Glossary // 术语表
 // B17 收尾时用 violet-glossary-indexer 重建字母索引
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References // 参考文献", full: true)
