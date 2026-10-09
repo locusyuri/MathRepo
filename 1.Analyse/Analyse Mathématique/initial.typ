@@ -8160,6 +8160,216 @@ Combining the above three points, we obtain the following unified statement:
 
 A vector-valued function $bold(f)$ is continuous, differentiable, and has derivatives if and only if each of its coordinate component functions $f_(i)(x_1, x_2, dots, x_n)$ ($i = 1, 2, dots, m$) is continuous, differentiable, and has derivatives.
 
+== Derivatives of Composite Mappings (Chain Rule) // 复合映射的求导（链式法则）
+
+#theorem(name: "Chain Rule")[
+  Let $U subset.eq bb(R)^l$ and $V subset.eq bb(R)^n$ be open sets, and let $bold(g): U -> V$ and $bold(f): V -> bb(R)^m$ be mappings. If $bold(g)$ has a derivative at $bold(u)^0 in U$ and $bold(f)$ is differentiable at $bold(x)^0 = bold(g)(bold(u)^0)$, then the composite mapping $bold(f) compose bold(g)$ is differentiable at $bold(u)^0$, and
+  $
+    J(bold(f) compose bold(g))(bold(u)^0) = J bold(f)(bold(x)^0) J bold(g)(bold(u)^0).
+  $
+] <thm:chain-rule>
+
+#note[
+  + Outer differentiable + inner derivative = total derivative.
+  + Outer differentiable + inner differentiable = total differentiable.
+]
+
+Specially, define $z = f(x, y)$ with $(x, y) in D_f subset.eq bb(R)^2$, $bold(g): D_g -> bb(R)^2$, $(u, v) mapsto (x(u, v), y(u, v))$, and $bold(g)(D_g) subset.eq D_f$; then we have the composite function
+$
+  z = f compose bold(g) = f[x(u, v), y(u, v)], quad (u, v) in D_g.
+$
+$
+  bb(R)^2 ->^(bold(g): "derivative") bb(R)^2 ->^(f: "differentiable") bb(R)
+$
+If $bold(g)$ has a derivative at $(u_0, v_0) in D_g$ and $f$ is differentiable at $(x_0, y_0) = bold(g)(u_0, v_0)$, then $z = f compose bold(g)$ is differentiable at $(u_0, v_0)$, and at the point
+$
+  mat(delim: "[", frac(partial z, partial u), frac(partial z, partial v))
+  = mat(delim: "[", frac(partial z, partial x), frac(partial z, partial y))
+  mat(
+    delim: "[",
+    frac(partial x, partial u), frac(partial x, partial v);
+    frac(partial y, partial u), frac(partial y, partial v)
+  ).
+$
+
+// 注：tex 中该公式的 proof 环境为空（无内容来源），按空壳处理原则不编造证明。
+
+=== Applications // 应用
+
+As an important application of the chain rule, we have the following theorem on the /differentiation of determinants/.
+
+#theorem(name: "Differentiation of Determinants")[
+  For
+  $
+    Delta(t) = mat(
+      delim: "|",
+      a_(11)(t), a_(12)(t), dots, a_(1 n)(t);
+      a_(21)(t), a_(22)(t), dots, a_(2 n)(t);
+      dots.v, dots.v, dots.down, dots.v;
+      a_(n 1)(t), a_(n 2)(t), dots, a_(n n)(t)
+    ),
+  $
+  where each element $a_(i j)(t)$ is differentiable with respect to $t$, then $Delta(t)$ is differentiable with respect to $t$, and
+  $
+    frac(dif Delta(t), dif t) = sum_(j=1)^n
+    mat(
+      delim: "|",
+      a_(11)(t), a_(12)(t), dots, a_(1 n)(t);
+      a_(21)(t), a_(22)(t), dots, a_(2 n)(t);
+      dots.v, dots.v, dots.down, dots.v;
+      frac(dif, dif t) a_(1 j)(t), frac(dif, dif t) a_(2 j)(t), dots, frac(dif, dif t) a_(n j)(t);
+      dots.v, dots.v, dots.down, dots.v;
+      a_(n 1)(t), a_(n 2)(t), dots, a_(n n)(t)
+    ),
+  $
+  where in each determinant on the right-hand side, the $j$-th column is replaced by the derivative of the $j$-th column of $Delta(t)$.
+] <thm:determinant-differentiation>
+
+Another important application is /homogeneous functions/.
+
+// 注：tex 原文 Item 2 的"where"式漏写算子平方（(x∂/∂x + y∂/∂y) = x²∂²/∂x² + ...），已补平方。
+#proposition(name: "Homogeneous Functions")[
+  The following statements can be generalized for $n$ variables:
+  + Let $f(x, y) in C^1$. Then $f$ is a homogeneous function of degree $m$ if and only if
+    $
+      x frac(partial f, partial x) + y frac(partial f, partial y) = m f(x, y).
+    $
+  + Let $f(x, y) in C^2$ be a homogeneous function of degree $m$. Then
+    $
+      (x frac(partial, partial x) + y frac(partial, partial y))^2 f(x, y) = m(m - 1) f(x, y),
+    $
+    where
+    $
+      (x frac(partial, partial x) + y frac(partial, partial y))^2 =
+      x^2 frac(partial^2, partial x^2) + 2 x y frac(partial^2, partial x partial y) + y^2 frac(partial^2, partial y^2),
+    $
+    which is just a formal notation, not an operator multiplication.
+  + Let $f(x, y) in C^2$ be a homogeneous function of degree $m$. Then $f_(x)(x, y)$ and $f_(y)(x, y)$ are homogeneous functions of degree $m - 1$.
+  + Let $f(x, y) in C(bb(R)^2 backslash lr({(0, 0)}))$ be a homogeneous function of degree $m$. Then
+    $
+      abs(f(x, y)) <= C rho^m, quad rho = sqrt(x^2 + y^2),
+    $
+    where $C = max_(rho = 1) abs(f(x, y))$.
+] <prop:homogeneous-functions>
+
+// 注：tex 原文记 df/dx（应为偏导），且结论 "always constant" 不真（如 f = y/x 满足方程但非常值）；
+// 按 Proposition Item 1 的 Euler 恒等式，正确结论为"沿从原点出发的每条射线为常值（零次齐次）"。
+#example[
+  Let $f(x, y)$ be a differentiable function on $bb(R)^2$ satisfying the equation
+  $
+    x frac(partial f, partial x) + y frac(partial f, partial y) = 0.
+  $
+  Prove that $f(x, y)$ is constant along every ray issuing from the origin, i.e. $f$ is homogeneous of degree 0.
+] <ex:euler-equation-degree-zero>
+
+== Mean Value Theorem and Taylor's Formula // 中值定理与泰勒公式
+
+=== Mean Value Theorem // 中值定理
+
+#definition(name: "Convex Region")[
+  Let $D subset.eq bb(R)^n$ be a region. If every line segment connecting any two points $bold(x)_0, bold(x)_1 in D$ (denoted by $overline(bold(x)_0 bold(x)_1)$) is entirely contained in $D$, i.e. for any $lambda in [0, 1]$ we have
+  $
+    bold(x)_0 + lambda (bold(x)_1 - bold(x)_0) in D,
+  $
+  then $D$ is called a /convex region/.
+] <def:convex-region>
+
+#theorem(name: "Lagrange's Mean Value Theorem")[
+  Let $f$ be /differentiable/ on /a convex region/ $D subset.eq bb(R)^n$. For any two points $bold(a), bold(b) in D$, there exists a point $bold(xi) in overline(bold(a) bold(b))$ such that
+  $
+    f(bold(b)) - f(bold(a)) = J f(bold(xi))(bold(b) - bold(a)).
+  $
+] <thm:multivariable-lagrange-mvt>
+
+// 注：tex 中该定理的 proof 环境为空（无内容来源），按空壳处理原则不编造证明。
+
+For mappings, Lagrange's mean value theorem can not be generalized directly; we need to introduce the inner product:
+
+// 注：tex 原文对线段端点与内积方向向量均用 a（记号冲突），方向向量已改为 c。
+#theorem(name: "Lagrange's Mean Value Theorem for Mappings")[
+  Let $bold(f): D -> bb(R)^m$ be /differentiable/ on /an open set/ $D subset.eq bb(R)^n$. For any two points $bold(a), bold(b) in D$, there exists a point $bold(xi) in overline(bold(a) bold(b))$ such that
+  $
+    bold(c) dot [bold(f)(bold(b)) - bold(f)(bold(a))] =
+    bold(c) dot [J bold(f)(bold(xi))(bold(b) - bold(a))],
+    quad forall bold(c) in bb(R)^m.
+  $
+] <thm:lagrange-mvt-mappings>
+
+#note[
+  If it does not contain the inner product, then it is not necessarily true. For example, let
+  $
+    bold(f)(t) = (cos t, sin t), quad t in [0, 2 pi],
+  $
+  then
+  $
+    J bold(f)(t) = (-sin t, cos t).
+  $
+  Note that $bold(f)(2 pi) = bold(f)(0)$; then there does not exist $theta in (0, 1)$ such that
+  $
+    bold(f)(2 pi) - bold(f)(0) = J bold(f)(theta dot 2 pi)(2 pi - 0).
+  $
+  In fact,
+  $
+    J bold(f)(t) != 0, quad forall t in [0, 2 pi].
+  $
+]
+
+And we have a global estimation for the difference of mappings:
+
+#theorem(name: "Quasi-Differential Mean Value Theorem for Mappings")[
+  Let $bold(f): D -> bb(R)^m$ be /differentiable/ on /a convex region/ $D subset.eq bb(R)^n$. For any two points $bold(a), bold(b) in D$, there exists a point $bold(xi) in overline(bold(a) bold(b))$ such that
+  $
+    norm(bold(f)(bold(b)) - bold(f)(bold(a))) <= norm(J bold(f)(bold(xi))) dot norm(bold(b) - bold(a)).
+  $
+] <thm:quasi-differential-mvt>
+
+#corollary[
+  Let $D$ be a region in $bb(R)^n$. If for any $bold(x) in D$ we have
+  $
+    J bold(f)(bold(x)) = 0,
+  $
+  then $bold(f)$ is a constant mapping on $D$.
+]
+
+// 注：tex 中该推论的 proof 环境为空（无内容来源），按空壳处理原则不编造证明。
+
+=== Taylor's Formula // 泰勒公式
+
+#theorem(name: "Taylor's Formula")[
+  + *Lagrange's remainder.* Let $D subset.eq bb(R)^n$ be a convex region, and let $f: D -> bb(R)$ have $m + 1$ continuous partial derivatives. For $bold(x)^0 = (x_1^0, x_2^0, dots, x_n^0) in D$ and $bold(x) = (x_1, x_2, dots, x_n) in D$, there exists $bold(xi) in overline(bold(x)^0 bold(x))$ such that
+    $
+      f(bold(x)) = f(bold(x)^0)
+      + sum_(k=1)^m 1/(k!) (sum_(i=1)^n (x_i - x_i^0) frac(partial, partial x_i))^k f(bold(x)^0)
+      + 1/((m + 1)!) (sum_(i=1)^n (x_i - x_i^0) frac(partial, partial x_i))^(m + 1) f(bold(xi)).
+    $
+  + *Peano's remainder.* Let $D subset.eq bb(R)^n$ be a convex region, and let $f: D -> bb(R)$ have $m$ continuous partial derivatives. Then
+    $
+      f(bold(x)) = f(bold(x)^0)
+      + sum_(k=1)^m 1/(k!) sum_(i_1, i_2, dots, i_k = 1)^n
+      frac(partial^k f, partial x_(i_1) partial x_(i_2) dots partial x_(i_k))(bold(x)^0)
+      product_(j=1)^k (x_(i_j) - x_(i_j)^0)
+      + R_(m)(bold(x) - bold(x)^0),
+    $
+    where $R_(m)(bold(x) - bold(x)^0) = O(norm(bold(x) - bold(x)^0)^(m + 1))$ or $o(norm(bold(x) - bold(x)^0)^m)$, as $norm(bold(x) - bold(x)^0) -> 0$.
+] <thm:multivariable-taylor-formula>
+
+In applications, particularly important is the expression of the first three terms in Taylor's formula, which is given as (let $x_1 - x_1^0$ be denoted by $Delta x_1$, and similarly for other variables; $Delta bold(x) = (Delta x_1, Delta x_2, dots, Delta x_n)$):
+$
+  f(bold(x)) = f(bold(x)^0) + J f(bold(x)^0)(Delta bold(x))
+  + 1/(2!) (Delta bold(x)) H f(bold(x)^0) (Delta bold(x))^T + dots,
+$
+where the matrix
+$
+  H f(bold(x)^0) = mat(
+    delim: "[",
+    frac(partial^2 f, partial x_1^2), frac(partial^2 f, partial x_1 partial x_2), dots, frac(partial^2 f, partial x_1 partial x_n);
+    frac(partial^2 f, partial x_2 partial x_1), frac(partial^2 f, partial x_2^2), dots, frac(partial^2 f, partial x_2 partial x_n);
+    dots.v, dots.v, dots.down, dots.v;
+    frac(partial^2 f, partial x_n partial x_1), frac(partial^2 f, partial x_n partial x_2), dots, frac(partial^2 f, partial x_n^2)
+  )_(bold(x)^0)
+$
+is called the /Hessian matrix/ of the function $f$.
+
 // B13: ch13 Multiple Integrals（多重积分）
 
 // --- Part V: 几何应用与高级积分（决策③：ch14–16） ---
