@@ -7033,6 +7033,156 @@ $limsup_(x -> +oo) f(x) = +oo$.
   $
 ] <thm:absolute-convergence-product>
 
+== Comparison of Convergence Speed of Series // 级数收敛速度的比较
+
+The series $sum_(n=1)^oo a_n$ is said to converge /faster/ than the series $sum_(n=1)^oo b_n$ if
+$
+  lim_(n -> oo) a_n / b_n = 0.
+$
+
+#theorem(name: "Du Bois-Reymond Theorem")[
+  For a given convergent positive term series $sum_(n=1)^oo a_n$, there always exists a convergent strictly positive term series $sum_(n=1)^oo b_n$ such that
+  $
+    lim_(n -> oo) a_n / b_n = 0.
+  $
+] <thm:du-bois-reymond-theorem>
+
+#theorem(name: "Abel Theorem")[
+  For a given divergent positive term series $sum_(n=1)^oo a_n$, there always exists a divergent positive term series $sum_(n=1)^oo b_n$ such that
+  $
+    lim_(n -> oo) b_n / a_n = 0.
+  $
+] <thm:abel-divergence-speed>
+
+#note[
+  The above two theorems imply that neither the slowest converging nor the slowest diverging positive term series exists.
+]
+
+== Infinite Products // 无穷乘积
+
+=== Infinite Products // 无穷乘积（tex 空壳 leftbarTitle 升级；定义与收敛判别从 md 回收）
+
+#definition(name: "Infinite Product")[
+  Let $p_1, p_2, dots, p_n, dots$ ($p_n != 0$) be a countable sequence of real numbers. The product
+  $
+    p_1 dot p_2 dots.c p_n dots.c
+  $
+  is called an /infinite product/, denoted by $product_(n=1)^oo p_n$, and $p_n$ is called the general term of the product.
+
+  Let $P_n = product_(k=1)^n p_k$; the sequence $(P_n)$ is called the sequence of partial products. If $(P_n)$ converges to a non-zero finite number $P$, then the infinite product is said to converge, and $P$ is called its product, written $product_(n=1)^oo p_n = P$. If $(P_n)$ diverges or converges to $0$, then the infinite product is said to diverge.
+] <def:infinite-product>
+
+#theorem(name: "Criterion for Convergence of Infinite Products")[
+  Let $p_n > 0$ for all $n$. Then the infinite product $product_(n=1)^oo p_n$ converges if and only if the series $sum_(n=1)^oo ln p_n$ converges.
+] <thm:infinite-product-criterion>
+
+#corollary(name: "First-Order Criterion")[
+  Let $a_n > 0$ or $-1 < a_n < 0$ for all $n$. Then the infinite product $product_(n=1)^oo (1 + a_n)$ converges if and only if the series $sum_(n=1)^oo a_n$ converges.
+] <cor:infinite-product-first>
+
+#corollary(name: "Second-Order Criterion")[
+  Let $a_n > -1$ for all $n$, and suppose $sum_(n=1)^oo a_n$ converges. Then the infinite product $product_(n=1)^oo (1 + a_n)$ converges if and only if the series $sum_(n=1)^oo a_n^2$ converges.
+] <cor:infinite-product-second>
+
+#definition(name: "Absolute Convergence of Infinite Products")[
+  When the series $sum_(n=1)^oo ln p_n$ converges absolutely, the infinite product $product_(n=1)^oo p_n$ is said to converge absolutely.
+] <def:abs-convergence-infinite-product>
+
+#proposition(name: "Equivalences for Absolute Convergence")[
+  Let $a_n > -1$ ($n = 1, 2, dots$). Then the following three statements are equivalent:
+  + the infinite product $product_(n=1)^oo (1 + a_n)$ converges absolutely;
+  + the infinite product $product_(n=1)^oo (1 + abs(a_n))$ converges;
+  + the series $sum_(n=1)^oo abs(a_n)$ converges.
+] <prop:abs-convergence-product-equivalences>
+
+=== Two Formulas // 两个重要公式
+
+#theorem(name: "Wallis Formula")[
+  $
+    lim_(n -> oo) 1 / (2n + 1) ((2n)!! / (2n - 1)!!)^2 = pi / 2.
+  $
+  Equivalently, as $n -> +oo$,
+  $
+    (2n)!! / (2n - 1)!! tilde.op sqrt(pi n), quad quad (n!)^2 2^(2n) / (2n)! tilde.op sqrt(pi n).
+  $
+] <thm:wallis-formula>
+
+#note[
+  The proof is based on the recurrence of the Wallis integral $I_n = integral_0^(pi/2) sin^n x dif x$, established in #link(<ex:wallis>)[the example on the definite integral].
+]
+
+#theorem(name: "Stirling Formula")[
+  For every $m in bb(N)$, as $n -> +oo$,
+  $
+    ln n! = ln sqrt(2 pi) + (n + 1/2) ln n - n + sum_(k=1)^m B_(2k) / (2k(2k - 1) n^(2k - 1)) + theta_n dot B_(2m + 2) / ((2m + 1)(2m + 2) n^(2m + 1)), quad quad 0 < theta_n < 1,
+  $
+  where $B_(2k)$ denote the Bernoulli numbers. In particular, the simplified form reads
+  $
+    n! tilde.op sqrt(2 pi n) (n / e)^n quad quad (n -> +oo),
+  $
+  and more precisely,
+  $
+    n! = sqrt(2 pi n) (n / e)^n e^(c_n), quad quad 1 / (12n + 1) < c_n < 1 / (12n).
+  $
+] <thm:stirling-formula>
+
+== Special Series // 特殊级数
+
+*Geometric series.*
+$
+  sum_(n=0)^oo q^n = 1 / (1 - q),
+$
+which converges when $abs(q) < 1$ and diverges otherwise.
+
+*Telescoping series.*
+$
+  sum_(n=1)^oo (a_n - a_(n+1)) = a_1 - lim_(n -> oo) a_(n+1),
+$
+which converges when $lim_(n -> oo) a_n$ exists and diverges otherwise.
+
+*$p$-series (hyperharmonic series).*
+$
+  sum_(n=1)^oo 1 / n^p
+$
+converges when $p > 1$ and diverges otherwise.
+
+*$q$-series.*
+$
+  sum_(n=2)^oo 1 / (n ln^q n)
+$
+converges when $q > 1$ and diverges otherwise.
+
+*Generalized $q$-series.*
+$
+  sum_(n=3)^oo 1 / (n ln n (ln ln n) dots.c (ln^((k-1)) n)(ln^((k)) n)^q),
+$
+where $ln^((k)) n$ denotes the $k$-th iterated logarithm, converges when $q > 1$ and diverges otherwise.
+
+In mathematics, the Gauss hypergeometric function (or ordinary hypergeometric function) $attach(F, bl: 2, t: 1)(a, b; c; x)$ is a function defined by the hypergeometric series; many special functions arise as its special cases or limits, and the solutions of all second-order linear ordinary differential equations with three regular singular points can be expressed in terms of hypergeometric functions.
+
+#definition(name: "Hypergeometric Series")[
+  For $a, b, c > 0$ and $x >= 0$, the /hypergeometric series/ is
+  $
+    attach(F, bl: 2, t: 1)(a, b; c; x) = sum_(n=0)^oo (a^overline(n) b^overline(n)) / (c^overline(n)) dot x^n / n!,
+  $
+  where $x^overline(n)$ denotes the rising factorial.
+] <def:hypergeometric-series>
+
+The series converges when $0 <= x < 1$ and diverges when $x > 1$; when $x = 1$, it converges if $c > a + b$ and diverges if $c <= a + b$.
+
+#note[
+  The classification follows from the d'Alembert test when $x != 1$, since the ratio of consecutive terms tends to $x$; for $x = 1$ it follows from the Raabe test, since
+  $
+    t_n / t_(n+1) = ((n + c)(n + 1)) / ((n + a)(n + b)) = 1 + (c - a - b + 1) / n + O(1/n^2),
+  $
+  so the quantity $n (t_n / t_(n+1) - 1) -> c - a - b + 1$ exceeds $1$ exactly when $c > a + b$.
+]
+
+Many ordinary functions can be represented by hypergeometric series:
+$
+  ln(1 + x) = x dot attach(F, bl: 2, t: 1)(1, 1; 2; -x), quad quad (1 - x)^(-a) = attach(F, bl: 2, t: 1)(a, 1; 1; x), quad quad arcsin x = x dot attach(F, bl: 2, t: 1)(1/2, 1/2; 3/2; x^2).
+$
+
 // B9: ch09 Series of Functions（函数项级数）
 // B10: ch10 Power Series（幂级数）
 
