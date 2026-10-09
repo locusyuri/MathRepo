@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B5 完成：ch05 扩为 5 节，P1-1/R5 回收收口）
+> 最后更新：2026-10-10（B6a 完成：ch06 §1–4 定积分迁移收口，md 校对回收）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -186,7 +186,16 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - 修正 md 笔误 4 处：L1142 1/(1+x⁴) 最终结果缺 ln 系数 1/(4√2)（按 ½[(M−N)+(M+N)] 重算）；L1171 Type 2 分母漏 ^r 上标；L1184 万能代换 cos t → cos x；L1135 递推推导排版混乱（误写 I_n = (1/a²)I_n，正确恒等式为 a²/(x²+a²)ⁿ = 1/(x²+a²)ⁿ⁻¹ − x²/(x²+a²)ⁿ）
   - 放弃项：md L1187–1188 Poisson 积分例题（仅题目无解答）；md L1192"无理函数积分的例子"（空节，其内容已由常用代换 terms 覆盖）
   - 新环境符号坑：arccot 非预定义 → 表内改用 `"arccot"` 字符串形式
-- [ ] **B6a = ch06 §1–4**（约 300 行）：Riemann Integral / Integrability Criteria / Properties / Fundamental Theorem of Calculus
+- [x] **B6a = ch06 §1–4**（tex 约 300 行，回收后约 1230 行）：Riemann Integral / Integrability Criteria / Properties / Fundamental Theorem of Calculus（✅ 2026-10-10）
+  - md 校对回收（md L1195–2143 比 tex 全得多，按 R9 模式补全）：
+    - §1：Darboux 定理完整证明（md 独有）、可积函数基本事实+有界性证明、Dirichlet note；Riemann-Stieltjes 积分定义
+    - §2：三充要条件+完整证明 `<thm:integrability-criteria>`、可积技巧 note（Riemann 函数 `<ex:riemann-function-integrable>`、逐点为零例题 `<ex:pointwise-vanishing>`）、振荡 4 引理+证明 `<lem:oscillation-lemmas>`、Lebesgue 定理+双向证明 `<thm:lebesgue>`
+    - §3：性质 5 条+完整证明 `<prop:riemann-integral-properties>`、正积分例题 `<ex:positive-integral-subinterval>`、第一/第二积分中值定理+Abel 变换证明 `<thm:integral-mean-value>`、复合函数可积性+双证明+三反例 note `<prop:composite-integrability>`、平移连续例题 `<ex:translation-continuity>`
+    - §4：变限积分定义+性质 4 条+证明 `<def:variable-limit-integrals>`/`<prop:variable-limit-integrals>`、Riemann 函数无原函数 note、积分上限函数 note、例题 3 个（可积不连续但有原函数 `<ex:antiderivative-of-discontinuous>`、导函数不可积 `<ex:nonintegrable-derivative>`、Volterra note）、N-L 公式+广义形式+证明 `<thm:newton-leibniz>`、差商极限例题 `<ex:difference-quotient-limit>`、导函数可积充要条件 `<ex:derivative-integrability>`、"Common Questions" 空壳升级为 === 小节+A/B/C/D 分类导览 note
+  - 修正 tex/md 笔误（B6a 累计）：tex §3 性质第 5 条 "[a,b] and [c,d]" → [a,c] 与 [c,b]（tex+md 同笔误）；md L1456 t_{s_n} → t_{k_n}；L1473 零测集覆盖多余逗号；L1489 Σ₂Δx₂ → Σ₂Δxᵢ；L1552–1553 区间套长度记号混乱（按递推形式重写）；L1643 Abel 变换 g(x_{i+1})−g(x_i) → g(x_{i-1})−g(x_i)；L1649 末项 mg(a) → Mg(a)；Darboux 定理/第三充要条件证明 M=m 时 δ 分母为零 → 补 M>m 假设；平移连续例题条件不足 → 修正为 f ∈ R[a−h₀, b+h₀]（中间估计不精确已按正确计算重写）；md Lebesgue 法证明 D_{g∘f} ⊂ _f → ⊂ D_f；md L1799 导函数公式 2x sin(1/x)−(2/x²)cos(1/x²) → 2x sin(1/x²)−(2/x)cos(1/x²)
+  - 放弃项：导函数可积充要条件 md Proof 1（m ≤ F′ ≤ M 只给全区间控制，论证错误，只收 Proof 2）；md 连续点稠密例题、Bonnet 公式应用 4 小题、平移连续 Proof 2（空）、A2/B1/B2/C1/D2/D5 例题（证明均为图片）；md L1870–1875 Riemann 引理（tex 无对应，涉及周期函数平均，暂缓）
+  - B5 遗漏修复：ch05 补一级章标题 `= Indefinite Integral`；本地遗留修复：§2 的 13 处 `omega_f(` 下标违规 → `omega_f (`、§3 反例 cases 分支内 `\` 换行告警 → `"otherwise"`
+  - 新符号坑：`setminus`/`conv`/`empty` 均为非法符号 → `\`/`inter`/`emptyset`；`bigl(/bigr)` 是 LaTeX 残留 → 普通括号自动调整；cases 分支内 `\` 被解析为换行 → 避免在分支内使用集合差
 - [ ] **B6b = ch06 §5–7**（约 144 行）：Calculation / Integral Inequalities / Applications
 - [ ] **B7 = ch07 Improper Integral**（192 行 / 4 节）
   - [ ] §7.1 Infinite and Defective Integrals
