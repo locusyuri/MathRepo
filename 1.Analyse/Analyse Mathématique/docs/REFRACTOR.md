@@ -133,7 +133,7 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 ### 阶段 A
 
-- [ ] **B0 骨架**：`initial.typ` 头部（import/set document/make-cover/make-outline）+ **5 个内容 `#part` + 1 个 Appendix `#part`**（按 §3.4 决策③：Part IV = ch11–13，Part V = ch14–16）+ Preface（含记号表）+ `references.bib`（从 `thebibliography` 提取 9 条）+ `#bibliography`。编译通过后提交。
+- [x] **B0 骨架**：`initial.typ` 头部（import/set document/make-cover/make-outline）+ **5 个内容 `#part` + 1 个 Appendix `#part`**（按 §3.4 决策③：Part IV = ch11–13，Part V = ch14–16）+ Preface（含记号表）+ `references.bib`（从 `thebibliography` 提取 9 条）+ `#bibliography`。编译通过后提交。（✅ 2026-10-09，`254df63`）
 
 ### Part I — Limits and Continuity
 
