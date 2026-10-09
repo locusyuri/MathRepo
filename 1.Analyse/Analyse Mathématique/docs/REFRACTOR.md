@@ -143,12 +143,12 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - [x] §1.1 Trigonometric Formulas（7 组公式 align + triangle.png figure + Geometric Remarks property + Weierstrass Substitution theorem）
   - [x] §1.2 Common Inequalities（🔧 P1-4/R1 ✅：从 md L78–262 回收不等式专题——平均值不等式（两证明）、Newton 二项式引理、Bernoulli 不等式 + 3 推论、三角不等式、Cauchy-Schwarz（含向量/积分形式）、Carlson、Lagrange 恒等式、Fan Ky + A-G 极限形式 note + 3 个例题；中文正文已译为英文；修正 md 笔误：`(1+x)^n < e^k < (1+k/n)^(n+k)`、Fan Ky 左侧补 `^n`、Lagrange 恒等式去 abs）
   - [x] §1.3 Factorial Power（升/降阶乘 definition，`<def:factorial-power>`）
-- [ ] **B2 = ch02 Limits of Sequences**（139 行 / 5 节）
-  - [ ] §2.1 Convergent Sequences
-  - [ ] §2.2 Indeterminate Form
-  - [ ] §2.3 Subsequences（🔧 P0-5：上下极限空壳从 md R2 回收）
-  - [ ] §2.4 Completeness of The Real Numbers（🔧 P0-5：空壳 leftbarTitle 从 md R2 回收，含凝聚原理/有限覆盖）
-  - [ ] §2.5 Iterative Sequences
+- [x] **B2 = ch02 Limits of Sequences**（139 行 / 5 节）（✅ 2026-10-09）
+  - [x] §2.1 Convergent Sequences（Cauchy 命题 + 均值链 note + 拟合法 remark→note；空壳标题保留为粗体段落标签）
+  - [x] §2.2 Indeterminate Form（Stolz-Cesàro 定理两型 + Silverman-Toeplitz 定理，矩阵用 `mat()` 迁移）
+  - [x] §2.3 Subsequences（🔧 P0-5/R2 ✅：从 md L579–697 回收——子列定义与三性质及证明、上下极限第一定义（聚点集 E 的 sup/inf）+ H=max E 证明、ε 刻画定理及证明、有界收敛充要条件（H=h）、第二定义（尾项 sup/inf）+ 两定义等价定理及证明、上下极限运算（加法/乘法，md 乘法 2) 笔误 `x_n+y_n` 已修正为 `x_n y_n`；运算定理 md 无证明，保持无证明）
+  - [x] §2.4 Completeness（🔧 P0-5/R2 ✅：从 md L701–1119 回收——Dedekind 分割定义+定理+证明（md `A∩B` 笔误已修正为 `A∪B`）、确界定义+存在原理+证明、Archimedean 性质+证明（补 `x>0` 条件）、单调有界原理+证明、Bolzano-Weierstrass+二分法证明+无界情形 note、闭区间套定义+定理+证明、Cauchy 列定义+收敛准则（tex 已有）补证明+错误命题 caution+完备性定义、开覆盖+Heine-Borel 定理（md 无证明）、等价定理链 note + 三个代表性互证命题（区间套⇒确界、Cauchy⇒单调有界、Cauchy⇒区间套）；未引入 `===`，空壳 leftbarTitle 一律保留为粗体段落标签）
+  - [x] §2.5 Iterative Sequences（Banach 不动点定理 + 收敛速度估计；对 `def:Lipschitz Continuity` 的引用暂用文字提及，B3 迁移 ch03 后可改为 `#link(<def:lipschitz-continuity>)`）
 - [ ] **B3 = ch03 Limits and Continuity of Functions**（49 行 / 6 节，⚠ 含 P0-2）
   - [ ] §3.1 Limits of Functions
   - [ ] §3.2 Continuous Functions（空节 → 从 md R3 补内容或合并）
