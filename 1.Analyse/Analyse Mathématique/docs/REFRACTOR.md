@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B12b ch12 §4–5 迁移完成）
+> 最后更新：2026-10-10（B12c ch12 §6 迁移完成）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -263,7 +263,11 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - §12.5：凸区域定义 `<def:convex-region>`、多元 Lagrange 中值定理 `<thm:multivariable-lagrange-mvt>`、映射版 Lagrange MVT `<thm:lagrange-mvt-mappings>`（附圆周反例 note）、拟微分中值定理 `<thm:quasi-differential-mvt>` + 零梯度常值推论、多元 Taylor 公式 `<thm:multivariable-taylor-formula>`（Lagrange/Peano 余项两 item）+ Hessian 矩阵（mat(delim: "[")）
   - 修正 tex 问题（均留 `//` 注）：L546 算子式漏平方已补；L560 例题 "always constant" 不真改为"沿射线为常值（零次齐次）"且 df/dx 改偏导；L604 端点与方向向量记号冲突（a→c）；空 proof×4（L493/L592/L651 链式法则、多元 Lagrange MVT、零梯度推论）不编造
   - 新符号验证：`compose`（∘）、`backslash`（集合差，裸 `\` 是换行符）、`->^(label)` 箭头带标签、`mat(delim: "[|")`、`product`（∏）、`equiv.not` 可用（本批以 `!= 0` 表意更直白）
-- [ ] **B12c = ch12 §6**（约 370 行）：Implicit Function Theorem（长证明，单独成批）
+- [x] **B12c = ch12 §6**（约 370 行）：Implicit Function Theorem（✅ 2026-10-10，编译退出码 0，三正则命中 0）
+  - `=== Implicit Mapping`（leftbarTitle 升级）：隐函数存在定理 `<thm:implicit-function-theorem>`（三条件 + 四结论 + fig:implicit-function）+ 单元情形完整证明（存在性/连续性/可微性三段）+ 松弛版 note（连续性 + 严格单调）、隐映射定理 `<thm:implicit-mapping-theorem>`（Jacobian 行列式条件 + J bold(f) = -(J_y bold(F))^(-1) J_x bold(F)）+ 两道隐函数组例题（`<ex:implicit-system-derivatives>` 双方法、`<ex:implicit-u-partial-y>` 双方法）
+  - `=== Inverse Mapping`（leftbarTitle 升级）：局部逆映射定理 `<thm:local-inverse-mapping-theorem>`（C^k 微分同胚）、全局逆映射定理 `<thm:inverse-mapping-theorem>`（凸区域）、变量代换例题 `<ex:pde-substitution-transform>`（tex 无解，不编造）
+  - 修正 tex 问题（均留 `//` 注）：定理标签含空格改名；item 4 偏导 F_x → F_(x_i)（i 遍历语境）；证明中 (x_0,y_0)→(x^0,y^0)、线段条件 "x = x^0+rho" → abs(x-x^0) <= rho、O(x^0,delta)/f(x^0) → O(x̄,delta)/f(x̄)（连续性在 x̄ 处）、"x̄ = x+Δx" 与 "ȳ+Δy = f(x̄)"×2 记号混乱改为 overline(x)+Delta x 与 f(overline(x)+Delta x)；L938 分母漏减号 z(F_2G_1F_1G_2z^2) → z(F_2G_1-F_1G_2z^2)；L1036 漏右括号 f(x^0 = y^0) → f(x^0) = y^0
+  - 新符号验证：`bar(x)` 在 Typst 0.15 渲染为竖线 |x|（非 x̄），横杠必须用 `overline(x)`（经 PNG 目检确认）；`lr({(...)|...})` 集合、`mat(...)^(-1)`、`frac(...)^(-1)`、`F'_(y)(...)`（撇+下标+括号）、`bold(f) |_V` 限制记号、三分支 cases（括号内逗号安全）均验证通过
 - [ ] **B12d = ch12 §7**（约 300 行）：Extremum of Multi-variable Functions（含 Lagrange 乘子）
 - [ ] **B13a = ch13 §1–2**（约 270 行）：Multiple Integrals on Bounded Closed Regions / Properties
 - [ ] **B13b = ch13 §3–4**（约 200 行）：Calculation / Improper Multiple Integrals
