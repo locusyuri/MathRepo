@@ -67,14 +67,7 @@ Content goes here.
 
 ## Finding Packages
 
-Search the embedded index of Typst Universe packages (updated weekly):
-
-```bash
-python3 scripts/search-packages.py "what you need"
-python3 scripts/search-packages.py "chart" --category visualization
-python3 scripts/search-packages.py --category cv --top 5
-python3 scripts/search-packages.py --list-categories
-```
+Search Typst Universe packages at https://packages.typst.org (web search or the `typst search` ecosystem tooling). The skill previously shipped an embedded offline index; it has been removed to slim the repo — use the web instead.
 
 ## Common Errors
 
@@ -93,7 +86,7 @@ python3 scripts/search-packages.py --list-categories
 
 ## Examples
 
-Copy the closest starter, adjust, compile. For CVs, letters, or slides, search packages: `python3 scripts/search-packages.py --category cv` (or `letter`, `presentation`).
+Copy the closest starter, adjust, compile. For CVs, letters, or slides, search packages at https://packages.typst.org (e.g. category `cv`, `letter`, `presentation`).
 
 | Example                                             | Start here when you want...              | Next read                                        |
 | --------------------------------------------------- | ---------------------------------------- | ------------------------------------------------ |
@@ -112,20 +105,12 @@ Copy the closest starter, adjust, compile. For CVs, letters, or slides, search p
   - Linux: `cargo install typst-cli`
   - Windows: `winget install typst`
 - **pdftotext** (optional): For text-level output verification
-- **Python 3.10+** (optional): For package search and validation scripts
+- **Python 3.10+** (optional): For example validation scripts
 - **jq** (optional): For parsing JSON output from `typst query` in shell scripts
 
 ## API Reference Search
 
-Search the embedded index of Typst API functions, methods, and constructors:
-
-```bash
-python3 scripts/search-api.py "image width fit"
-python3 scripts/search-api.py "color lighten" --kind method
-python3 scripts/search-api.py --name str.position -v
-python3 scripts/search-api.py "rightarrow" --kind symbol   # LaTeX names work
-python3 scripts/search-api.py --list-categories
-```
+Consult the official Typst API docs at https://typst.app/docs/ (searchable). The embedded API index was removed along with the offline search scripts.
 
 ## Ecosystem Tools
 

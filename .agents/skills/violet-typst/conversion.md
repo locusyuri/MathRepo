@@ -318,7 +318,7 @@ Some *bold* and _italic_ text.
 
 ## Current Limitations vs LaTeX
 
-- **Plotting ecosystem**: LaTeX has mature PGF/TikZ. Typst's `cetz` is catching up but narrower. See [package search](scripts/search-packages.py) for alternatives.
+- **Plotting ecosystem**: LaTeX has mature PGF/TikZ. Typst's `cetz` is catching up but narrower. See [package search](https://packages.typst.org) for alternatives.
 - **Mid-page margin changes**: `#set page(margin: ...)` forces a page break. For local stretching, use `pad()` with negative padding.
 - **Change bars / track-changes workflows**: No first-class equivalent yet.
 - **`\input` with partial scope**: Typst `include` evaluates a whole file; scoping differs from TeX's `\input`.
