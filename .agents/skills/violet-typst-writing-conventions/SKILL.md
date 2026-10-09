@@ -777,7 +777,7 @@ The power dissipated per unit volume is $p = bold(J) dot bold(E)$.
 
 ## 9.7 编辑既有内容：一致性原则
 
-编辑既有 Typst 笔记时，除语法规范外还必须遵守以下一致性原则（原 violet-typst-edit-consistency 技能已并入本节）：
+编辑既有 Typst 笔记时，除语法规范外还必须遵守以下一致性原则：
 
 ### 符号一致性（最高优先级）
 
@@ -814,7 +814,7 @@ The power dissipated per unit volume is $p = bold(J) dot bold(E)$.
 
 ## 9.8 编译验证
 
-每次修改 `.typ` 文件后必须编译验证（原 violet-typst-compile 技能已并入本节）。
+每次修改 `.typ` 文件后必须编译验证。
 
 ### 编译命令
 

@@ -1,6 +1,7 @@
 ---
-name: "violet-review-annotation"
-description: "处理 reviewer 批注文件：解析批注、定位源码、分析问题、给出修改方案，待用户确认后执行并编译验证。当用户提供批注文件（如 temp/【批注】XXX.censoring.md）并要求处理时调用。"
+name: violet-review-annotation
+description: 处理 reviewer 批注文件：解析批注、定位源码、分析问题、给出修改方案，待用户确认后执行并编译验证。当用户提供批注文件（如 temp/【批注】XXX.censoring.md）并要求处理时调用。
+user_invocable: true
 ---
 
 # Review Annotation Processor // 批注处理

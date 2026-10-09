@@ -1,6 +1,7 @@
 ---
-name: "violet-my-content-review"
-description: "按用户给定的审查范围对笔记内容做多维度审查（数学严谨性、逻辑连贯性、术语符号一致性、模板规范、引用完整性等），先输出审查报告与改进建议，经用户确认后才实施修改。当用户要求审查、评审或检查某文件/某 Part/Chapter/Section 的内容时调用。"
+name: violet-content-review
+description: 按用户给定的审查范围对笔记内容做多维度审查（数学严谨性、逻辑连贯性、术语符号一致性、模板规范、引用完整性等），先输出审查报告与改进建议，经用户确认后才实施修改。当用户要求审查、评审或检查某文件/某 Part/Chapter/Section 的内容时调用。
+user_invocable: true
 ---
 
 # 内容审查（Content Review）
