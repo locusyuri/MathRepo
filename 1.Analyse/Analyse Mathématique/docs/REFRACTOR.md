@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-09（B3 完成：ch03 迁移 + P0-2 空节/空壳回收 + §3.5/§3.6 从 md 补全 + ch02 Lipschitz 引用改 #link）
+> 最后更新：2026-10-09（B4a 完成：ch04 §1–4 迁移 + R9 校对回收 md L16–613 未吸收内容 + 修正 md 笔误 6 处）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -160,7 +160,15 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 ### Part II — Single-variable Calculus
 
-- [ ] **B4a = ch04 §1–4**（约 190 行）：Differential and Derivative / Higher-Order Derivatives / Differential Mean Value Theorems / Theorems about Derivatives
+- [x] **B4a = ch04 §1–4**（tex 约 190 行，回收后约 690 行）：Differential and Derivative / Higher-Order Derivatives / Differential Mean Value Theorems / Theorems about Derivatives（✅ 2026-10-09）
+  - 🔧 R9 校对结论：tex 远非"基本完整"——md L16–613 有大量未吸收内容，已全部回收：
+    - §4.1：微分定义（线性主部）、导数定义、可微⇔可导定理+证明、无穷小增量公式 note、Weierstrass 函数 note、单侧导数定义+caution（f'_+(x₀) 与 f'(x₀⁺) 之辨）、差商例题（lim(f(2x)−f(x))/x=A ⟹ f'(0)=A）、一阶微分形式不变性、隐函数求导例题（双解法）、参数方程求导
+    - §4.2：n 阶可导定义、二阶微分无形式不变性 note、平坦函数 e^(−1/x²) 例题+归纳证明、光滑衔接函数例题（g(x)/(g(x)+g(1−x))）
+    - §4.3：极值点 note（sin(1/x)、Riemann 函数）、Fermat/Rolle（最值法）/Lagrange（辅助函数+行列式）/Cauchy 证明、有限增量公式 note、Cauchy 参数形式 note、例题 4 个（有界性传递、行列式恒等式、二阶中值关系、微分不等式逼零）
+    - §4.4：Darboux 升级为介值完整版+证明、导数极限定理证明、推论"导函数只可能有第二类间断点"+证明、x²sin(1/x) 例题、常函数导数例题（含有限例外点版本）
+  - 修正 md 笔误 6 处（已迁入部分）：参数方程条件 φ(t)≠0 → φ'(t)≠0；Lagrange 行列式证明中 Δ'(x) 表达错误 → 改用展开式 (b−a)f'(x)−(f(b)−f(a))；有限增量公式 θ∈(a,b) → θ∈(0,1)；行列式例题证明 f'(ξ)x−f(ξ) → ξf'(ξ)−f(ξ)（并理顺首行负号）；二阶中值例题条件 D⁽²⁾₍₀,₁₎ → D⁽²⁾₍ₐ,ᵦ₎；Darboux 证明保号性 (F(x)−F(b))/(x−b)>0 → <0
+  - 未迁例题 3 个，待用户裁决：Legendre 多项式在 (−1,1) 恰有 n 个根（md L385–400，其证明"当 n<m"应为"当 m<n"）、待定系数法证 f'''(ξ)=3（md L402–414，其陈述定义域 [0,1] 应为 [−1,1]）、Cauchy 中值变形 (f'(ξ))/(g'(ξ))=(f(ξ)−f(a))/(g(b)−g(ξ))（md L417–421，md 证明不完整仅给构造）
+  - 未迁定理笔误备忘：md L119 积函数求导法则陈述第二个 `=` 应为 `+`；md L289 Leibniz 归纳证明末行漏升 m+1（tex/Typst 侧均无此证明，不受影响）
 - [ ] **B4b = ch04 §5–7**（约 155 行）：Taylor Theorem / Properties of Functions / Applications
   - [ ] 🔧 R9 校对：与 md L16–1087 对照查漏（tex 已基本完整）
 - [ ] **B5 = ch05 Indefinite Integral**（81 行 / 1 节，⚠ P1-1）
