@@ -3196,6 +3196,73 @@ product of two or more functions, we need the following theorems.
   induction $f(x) equiv 0$ for all $x >= 0$.
 ]
 
+#example(name: "Roots of the Legendre Polynomials")[
+  The $n$-th Legendre polynomial is defined by
+  $
+    P_n (x) = 1 / (2^n n!) dot (dif^n) / (dif x^n) (x^2 - 1)^n quad (n = 0, 1, 2, dots).
+  $
+  Show that $P_n$ has exactly $n$ distinct real roots, all lying in $(-1, 1)$.
+] <ex:legendre-roots>
+
+#proof[
+  Write $q_(2 n - m)(x) = (dif^m) / (dif x^m) (x^2 - 1)^n$ for the polynomial
+  of degree $2 n - m$. By Leibniz's formula applied to
+  $(x^2 - 1)^n = (x - 1)^n (x + 1)^n$, every term of $q_(2 n - m)$ contains the
+  factors $(x - 1)$ and $(x + 1)$ whenever $m < n$; hence each
+  $q_(2 n - m)$ ($m = 0, 1, dots, n - 1$) has the roots $plus.minus 1$.
+
+  For $m = 0$, $q_(2 n) = (x^2 - 1)^n$ has exactly the two simple roots
+  $plus.minus 1$. By Rolle's theorem $q'_(2 n)$ has a root $x_(11) in (-1, 1)$;
+  applying Rolle's theorem again, $q'_(2 n - 1)$ has at least one root in each
+  of $(-1, x_(11))$ and $(x_(11), 1)$, say $x_(21)$ and $x_(22)$. Induction on
+  $m$ then shows that $q_(2 n - m)$ has at least $m + 2$ distinct roots in
+  $[-1, 1]$:
+  $
+    -1, x_(m 1), x_(m 2), dots, x_(m m), 1 quad (m = 0, 1, dots, n - 1).
+  $
+  Taking $m = n - 1$, the polynomial $q_(n + 1)$ has at least $n + 1$ distinct
+  roots in $[-1, 1]$. One further application of Rolle's theorem shows that
+  $q_n = q'_(n + 1)$ has at least $n$ distinct roots in $(-1, 1)$. Since $q_n$
+  has degree $n$, the fundamental theorem of algebra bounds its number of
+  roots by $n$, so $q_n$---and hence $P_n$---has exactly $n$ distinct real
+  roots, all of them in $(-1, 1)$.
+]
+
+The first few Legendre polynomials are
+$
+  P_0 (x) = 1, quad P_1 (x) = x, quad P_2 (x) = (3 x^2 - 1) / 2, quad
+  P_3 (x) = (5 x^3 - 3 x) / 2.
+$
+
+#example(name: "Undetermined Coefficients and a Prescribed Third Derivative")[
+  Let $f in C^((3))[-1, 1]$ with $f(-1) = 0$, $f(1) = 1$, and $f'(0) = 0$.
+  Show that there exists $xi in (-1, 1)$ such that $f'''(xi) = 3$.
+] <ex:undetermined-coefficients>
+
+#proof[
+  *Undetermined coefficients.* Set
+  $
+    F(x) = f(x) - 1 / 2 x^3 + a x^2 + b x + c,
+  $
+  so that $f'''(xi) = 3$ is equivalent to $F'''(xi) = 0$. It suffices to choose
+  $a$, $b$, $c$ so that $F$ has enough zeros. Taking $c = -f(0)$ gives
+  $F(0) = 0$; taking $a = f(0) - 1 / 2$ and $b = 0$ gives
+  $
+    F(1) = 1 - 1 / 2 + a + b + c = 0, quad F(-1) = 0 + 1 / 2 + a - b + c = 0.
+  $
+  Thus $F$ vanishes at the three distinct points $-1, 0, 1$. By Rolle's
+  theorem there exist $eta_1 in (-1, 0)$ and $eta_2 in (0, 1)$ with
+  $F'(eta_1) = F'(eta_2) = 0$. Moreover
+  $
+    F'(x) = f'(x) - 3 / 2 x^2 + 2 (f(0) - 1 / 2) x,
+  $
+  so $F'(0) = f'(0) = 0$, which gives $F'$ three distinct zeros
+  $eta_1 < 0 < eta_2$. Rolle's theorem applied twice more yields two distinct
+  zeros $zeta_1 in (eta_1, 0)$ and $zeta_2 in (0, eta_2)$ of $F''$, and finally
+  a zero $xi in (zeta_1, zeta_2) subset (-1, 1)$ of $F'''$, i.e.,
+  $f'''(xi) = 3$.
+]
+
 == Theorems about Derivatives // 关于导数的定理
 
 #theorem(name: "Darboux's Intermediate Value Theorem for Derivatives")[
