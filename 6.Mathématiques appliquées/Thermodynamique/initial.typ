@@ -304,8 +304,8 @@ classical theory of heat capacities.
   ($approx 5/2 R$), and chlorine at high temperature ($approx 7/2 R$).
 ] <ex:gas-heat-capacities>
 
-#caution[
-  (Failure of equipartition.) The vibrational contribution of the
+#caution(title: "Failure of equipartition")[
+  The vibrational contribution of the
   previous example is *frozen out* at room temperature: nitrogen does
   not reach $C_V = 7/2 R$ until far above $2000 "K"$. Worse still, the
   vibrational and rotational contributions of solids are missing
@@ -453,8 +453,8 @@ into a law with a rising front and a long tail.
   confirmation of the Maxwell distribution.
 ] <ex:stern-experiment>
 
-#note[
-  (Probabilistic structure.) The velocity density factorises into three
+#note(title: "Probabilistic structure")[
+  The velocity density factorises into three
   independent Gaussians; consequently $v^2$ is distributed as a sum of
   three squared centred Gaussians — a scaled chi-square distribution
   with three degrees of freedom, as studied in the Probabilités note.
@@ -532,8 +532,8 @@ statistical mechanics.
   reality of molecules.
 ] <ex:sedimentation>
 
-#note[
-  (Special case.) The Maxwell distribution of §1.4 is the Boltzmann
+#note(title: "Special case")[
+  The Maxwell distribution of §1.4 is the Boltzmann
   distribution specialised to a free particle — kinetic energy only,
   no potential. The two theories are not independent: the Boltzmann
   law is the general principle, the Maxwell law its corollary for a
@@ -599,8 +599,8 @@ captures both corrections.
   the liquid--gas transition.
 ] <prop:vdw-critical>
 
-#note[
-  (Maxwell construction.) The van der Waals loop below $T_c$ is
+#note(title: "Maxwell construction")[
+  The van der Waals loop below $T_c$ is
   unphysical — a real substance does not exhibit negative
   compressibility. Maxwell's *equal-area construction* replaces the
   loop by a horizontal segment at the coexistence pressure, the area
@@ -742,8 +742,8 @@ one mean free path away.
     $lambda$ is small compared with the macroscopic scale of the gradient.
 ]
 
-#note[
-  (Stochastic boundary.) The molecular-randomness picture of this
+#note(title: "Stochastic boundary")[
+  The molecular-randomness picture of this
   section is the classical precursor of fluctuation phenomena: a
   suspended particle buffeted by molecular impacts performs Brownian
   motion, whose rigorous treatment — Langevin equations,
@@ -800,8 +800,8 @@ first quantitative bridge across this gap.
   analysed systematically in Chapter 21.
 ]
 
-#caution[
-  (Loschmidt and Zermelo paradoxes.) *Loschmidt's reversibility
+#caution(title: "Loschmidt and Zermelo paradoxes")[
+  *Loschmidt's reversibility
   objection* (1876): since the microscopic dynamics is invariant under
   velocity reversal, every H-decreasing motion has an H-increasing
   twin — how can H-theorem hold? *Zermelo's recurrence objection*
@@ -816,8 +816,8 @@ first quantitative bridge across this gap.
   of Chapter 3 in statistical costume.
 ] <caution:reversibility-paradoxes>
 
-#note[
-  (Statistical interpretation.) The H function is, up to the constant
+#note(title: "Statistical interpretation")[
+  The H function is, up to the constant
   $-k_B N$, the Gibbs entropy of the one-particle distribution. The
   H-theorem thus gives the microscopic mechanism of entropy increase,
   and its equality condition — the Maxwell distribution — identifies
@@ -880,8 +880,8 @@ work calculations of §2.3. A quasi-static process need not be
 destroying quasi-statics); the precise notion of reversibility belongs
 to the second law and is developed in Chapter 3.
 
-#note[
-  (Axiomatics.) Callen reformulated classical thermodynamics as an
+#note(title: "Axiomatics")[
+  Callen reformulated classical thermodynamics as an
   axiomatic system: a handful of postulates on the existence of
   equilibrium states and on an extensive quantity — the entropy — that
   is maximised at equilibrium. Since the entropy is not yet available
@@ -944,8 +944,8 @@ equation of state (Chapter 1) supplies a system-independent standard.
   Chapter 1.
 ]
 
-#note[
-  (The absolute scale.) The identification with the *absolute
+#note(title: "The absolute scale")[
+  The identification with the *absolute
   (Kelvin) scale* was just used ahead of its proof. Properly, the
   absolute scale is constructed from the Carnot cycle, which references
   no material substance at all; the equivalence of the Carnot and
@@ -1036,8 +1036,8 @@ The distinction from work is one of mechanism, not of substance: the
 same energy transfer can be realised as work with a frictionless piston
 or as heat with a thermostat, and mixtures of the two occur in general.
 
-#caution[
-  (Path functions.) Work and heat are *process quantities*: $delta W$
+#caution(title: "Path functions")[
+  Work and heat are *process quantities*: $delta W$
   and $delta Q$ are inexact differentials, and writing $dif W$ or
   speaking of "the heat contained in a body" is a category error that
   invalidates calculations. Only increments are defined, and the
@@ -1277,8 +1277,8 @@ higher temperature than isothermal compression.
   Chapter 20.
 ] <ex:throttling>
 
-#note[
-  (Liquefaction.) The throttling cooler is the core of gas liquefaction
+#note(title: "Liquefaction")[
+  The throttling cooler is the core of gas liquefaction
   technology, and its efficiency analysis couples to the phase
   behaviour of real gases. The inversion curve, the liquefaction
   cycle, and the critical-point physics behind them are treated in
@@ -1324,8 +1324,8 @@ regularity is elevated to a law in two equivalent formulations.
   of heat, extracted from a single thermal reservoir, into work.
 ] <thm:kelvin-planck>
 
-#caution[
-  (Perpetual motion of the second kind.) An engine violating
+#caution(title: "Perpetual motion of the second kind")[
+  An engine violating
   #link(<thm:kelvin-planck>)[the Kelvin-Planck statement] would be a
   *perpetual motion machine of the second
   kind*: it respects energy conservation (extracting heat from the
@@ -1537,8 +1537,8 @@ integrating $delta Q / T$ along that process; one integrates along any
   irreversible changes between them, since only the endpoints enter.
 ] <ex:entropy-ideal-gas>
 
-#caution[
-  ($delta Q / T$ versus $dif S$.) Only on a reversible path is
+#caution(title: "$delta Q / T$ versus $dif S$")[
+  Only on a reversible path is
   $delta Q = T dif S$. Along an irreversible path the absorbed heat is
   smaller than $integral T dif S$ (for the same endpoints), and writing
   $dif S = delta Q / T$ for an irreversible step silently shrinks the
@@ -1549,8 +1549,8 @@ integrating $delta Q / T$ along that process; one integrates along any
 
 == Entropy and Irreversibility // 熵与不可逆性
 
-#note[
-  (Reversibility, formally.) A process is *reversible* if the system
+#note(title: "Reversibility, formally")[
+  A process is *reversible* if the system
   and the environment can be restored to their initial states with no
   other change. This was anticipated in
   #link(<def:quasi-static-process>)[Chapter 2]: quasi-statics plus the
@@ -1609,8 +1609,8 @@ integrating $delta Q / T$ along that process; one integrates along any
   requires reservoirs differing infinitesimally.
 ] <ex:heat-transfer-entropy>
 
-#caution[
-  (Entropy of non-isolated systems.) The entropy of a *system* may
+#caution(title: "Entropy of non-isolated systems")[
+  The entropy of a *system* may
   decrease: a refrigerator pumps heat out of its cold box, freezing
   water crystallises, living organisms build order — each at the price
   of exporting more entropy to the environment. The principle
@@ -1618,8 +1618,8 @@ integrating $delta Q / T$ along that process; one integrates along any
   holds without exception.
 ] <caution:entropy-nonisolated>
 
-#note[
-  (Statistical meaning.) The molecular origin of entropy was
+#note(title: "Statistical meaning")[
+  The molecular origin of entropy was
   anticipated by the kinetic theory of Chapter 1: Boltzmann's
   $H$-function decreases monotonically in collisions, and
   #link(<note:h-statistical>)[its interpretation] as a negative
@@ -1828,8 +1828,8 @@ law and the microscopic failure of
 faces of the same quantum reality — resolved by the quantum statistics
 of Chapters 16 and 17.
 
-#caution[
-  (Classical ideal gases violate the third law.) The classical ideal
+#caution(title: "Classical ideal gases violate the third law")[
+  The classical ideal
   gas has $C_V = f/2 nu R$ right down to $T = 0$ and an entropy of the
   Sackur-Tetrode form that diverges as $T -> 0$: classical statistical
   mechanics contradicts the third law outright. No paradox arises —
@@ -1876,8 +1876,8 @@ the content of #link(<prop:low-t-heat-capacity>)[the low-temperature
   theorem]; a classical gas with constant $C_p$ would yield a divergent
 absolute entropy.
 
-#note[
-  (Standard entropies.) Tables of chemical thermodynamics list the
+#note(title: "Standard entropies")[
+  Tables of chemical thermodynamics list the
   *standard entropy* $S degree(298.15 "K")$ of each species — the
   absolute entropy at $298.15 "K"$ in its standard state, obtained from
   the formula above with calorimetric $C_p$ and latent heats. Reaction
@@ -2001,8 +2001,8 @@ the way down.
   $3.4 "J/(mol K)"$ — one of the great back-of-envelope successes.
 ] <ex:ice-pauling>
 
-#note[
-  (Reconciling with Planck.) Residual entropy does not contradict
+#note(title: "Reconciling with Planck")[
+  Residual entropy does not contradict
   #link(<thm:planck-formulation>)[Planck's formulation] — it exposes
   the load-bearing role of the qualifier *perfect crystal*. A frozen-in
   configurational disorder is not the unique ground state, so the
@@ -2093,8 +2093,8 @@ more of the system at high energies than at moderate ones.
   reverse flow would decrease total entropy and does not occur.
 ]
 
-#caution[
-  (Existence conditions.) Negative temperatures require three things
+#caution(title: "Existence conditions")[
+  Negative temperatures require three things
   at once: a spectrum *bounded above* (otherwise $S(E)$ never turns
   over), internal equilibration among the high-energy degrees of
   freedom (the inverted population must be a genuine thermal state,
@@ -2217,8 +2217,8 @@ normalisation and $f(p) -> e^(-p^2 / 2 m k_B T)$ — exactly the
 Maxwell momentum distribution underlying
 #link(<def:maxwell-velocity>)[Chapter 1's velocity distribution].
 
-#note[
-  (Derivation deferred.) The Jüttner distribution is the $beta = 1/k_B
+#note(title: "Derivation deferred")[
+  The Jüttner distribution is the $beta = 1/k_B
   T$ member of the canonical family; its derivation from
   maximum-entropy over relativistic phase space belongs to statistical
   mechanics and is given in Chapter 14, together with the subtleties
@@ -2245,8 +2245,8 @@ Maxwell momentum distribution underlying
   therefore equates comoving temperatures.
 ]
 
-#note[
-  (Does a moving body run hot?) If one insists on asking for the
+#note(title: "Does a moving body run hot?")[
+  If one insists on asking for the
   temperature a moving body "appears" to have, the literature splits:
   the Ott proposal reads energy transformation as $T' = gamma T$
   (moving hotter), Planck-Einstein argued $T' = T / gamma$ (moving
@@ -2422,8 +2422,8 @@ full covariant theory of dissipative fluids, where heat conduction
 and viscosity entangle with relativity — belongs to relativistic
 hydrodynamics, beyond this note's scope.
 
-#note[
-  (Boundary of this chapter.) Everything above the hydrodynamic
+#note(title: "Boundary of this chapter")[
+  Everything above the hydrodynamic
   frontier is macroscopic thermodynamics: laws, equilibrium, and
   kinematics. What relativity forbids is not more laws but simpler
   bookkeeping; what it cannot supply is the *values* — the equation

@@ -146,8 +146,8 @@ decisive for rings (Chapter 8); here we only record their form.
   require $4^3 = 64$ checks. Structural laws beat brute force.
 ] <ex:cayley-table>
 
-#note[
-  (Power notation.) For an associative operation with identity $e$,
+#note(title: "Power notation")[
+  For an associative operation with identity $e$,
   define $a^n$ for $n in bb(Z)^+$ by
   $
     a^1 = a, quad a^(n+1) = a^n star a,
@@ -203,8 +203,8 @@ The quotient set $bb(Z)_n$ begs for arithmetic: surely
 $[a] + [b]$ should be $[a + b]$. The request conceals the single most
 important technical point in the theory of quotients.
 
-#caution[
-  (Well-definedness on quotient sets.) A formula
+#caution(title: "Well-definedness on quotient sets")[
+  A formula
   $[a] star [b] = [a star b]$ does not define an operation on
   $S \/ R$ until it is shown *independent of the chosen
   representatives*: replacing $a$ by $a'$ and $b$ by $b'$ must give
@@ -370,8 +370,8 @@ regardless — this will be systematised in Chapter 5 (see
     rotation of the square.
 ] <ex:isomorphic-examples>
 
-#note[
-  (The kernel, a first look.) For a homomorphism $f: (S, star) ->
+#note(title: "The kernel, a first look")[
+  For a homomorphism $f: (S, star) ->
   (T, diamond)$ where both systems have identities $e, e'$ and
   inverses, the *kernel* of $f$ is
   $
@@ -475,8 +475,8 @@ every element.
   after N. H. Abel.
 ] <def:abelian-group>
 
-#note[
-  (Notation.) In *multiplicative notation* the operation is written
+#note(title: "Notation")[
+  In *multiplicative notation* the operation is written
   as juxtaposition, $a star b = a b$, the identity as $e$ (or $1$),
   and the inverse as $a^(-1)$; powers $a^n$ follow the rules of
   #link(<note:power-notation>)[Chapter 1]. In *additive notation*
@@ -644,8 +644,8 @@ map is neutral, and a bijection has an inverse bijection. The order
 of $S_n$ is $n!$: a bijection on $n$ points is determined by
 choosing, in succession, the images of $1, dots, n$.
 
-#note[
-  (Cycle notation.) A permutation is written in *cycle notation*:
+#note(title: "Cycle notation")[
+  A permutation is written in *cycle notation*:
   $(1 2 3)$ denotes the map $1 -> 2$, $2 -> 3$, $3 -> 1$ — each
   entry mapped to the next, the last wrapping around to the first —
   and $(1 2)$ denotes a *transposition*, swapping $1$ and $2$ while
@@ -1896,8 +1896,8 @@ group of a rectangle.)
   #link(<ex:s3-details>)[Chapter 2].
 ] <ex:low-order-classification>
 
-#note[
-  (Fermat's little theorem, free of charge.) Let $p$ be prime and
+#note(title: "Fermat's little theorem, free of charge")[
+  Let $p$ be prime and
   $a$ an integer not divisible by $p$. The residue class $[a]$ is a
   non-identity element of the multiplicative group $(bb(Z)_p^*,
     dot)$ of order $p - 1$ (a group: $a$ coprime to $p$ has a
@@ -1946,8 +1946,8 @@ to isomorphism, a group of permutations of some set.
   subgroup of $S_X$.
 ] <def:permutation-group>
 
-#note[
-  (Must a permutation group be finite?) Some introductory textbooks
+#note(title: "Must a permutation group be finite?")[
+  Some introductory textbooks
   reserve the word "permutation" for bijections of the finite set
   ${1, 2, dots, n}$ and by a *permutation group* mean a subgroup of
   some $S_n$ — necessarily finite. Under the general convention
@@ -2058,8 +2058,8 @@ are two disjoint families, with no borderline case.
   L_h$. Hence $G ≅ L(G) <= S_G$.
 ]
 
-#note[
-  (What Cayley says, and what it does not.) The theorem exhibits
+#note(title: "What Cayley says, and what it does not")[
+  The theorem exhibits
   every abstract group concretely: $D_3$ as symmetries of a
   triangle, $Q_8$ inside $S_(Q_8) ≅ S_8$ as $8 times 8$
   permutations. But the embedding is rarely economical — smaller
@@ -2536,8 +2536,8 @@ hand, the rest is a verification.
   orientation type.
 ] <ex:dihedral-quotient>
 
-#note[
-  (The universal property, a first taste.) The natural projection
+#note(title: "The universal property, a first taste")[
+  The natural projection
   $pi: G -> G \/ N$ is more than a homomorphism: it is the
   *universal* homomorphism out of $G$ whose kernel contains $N$.
   Precisely, any homomorphism $f: G -> H$ with $N subset.eq "ker" f$
@@ -2662,8 +2662,8 @@ complete list — while the non-abelian case is the subtler one.
   radicals.
 ] <ex:a5-simple>
 
-#note[
-  (The classification of finite simple groups.) The simple groups
+#note(title: "The classification of finite simple groups")[
+  The simple groups
   are the periodic table of finite group theory, and the
   classification theorem — completed in $2004$ after a multi-decade,
   tens-of-thousands-of-pages effort — lists them all:
@@ -2683,8 +2683,8 @@ complete list — while the non-abelian case is the subtler one.
     following note].
 ] <note:classification-finite-simple>
 
-#note[
-  (Composition series, a preview.) A *composition series* for a
+#note(title: "Composition series, a preview")[
+  A *composition series* for a
   finite group $G$ is a chain
   $
     G = G_0 ⊳ G_1 ⊳ dots ⊳ G_k = \\{e\\}
@@ -3475,8 +3475,8 @@ carrying its own geometry. The next figure captures the picture.
     {x}$; distinct orbits do not interact.],
 ) <fig:orbit-partition>
 
-#note[
-  (Actions generalise coset counting.) The left coset action of
+#note(title: "Actions generalise coset counting")[
+  The left coset action of
   #link(<ex:left-coset-action>)[above] makes the formal connection:
   cosets of $H$ in $G$ are the *orbits* of $H$ on $G \/ H$? — no, the
   single orbit, since the action is transitive. The precise
@@ -3909,8 +3909,8 @@ class is controlled by the normaliser $N_(G)(P)$.
     constrains $n_p$ by $n_p | m$ and $n_p ≡ 1 \pmod p$.],
 ) <fig:sylow-conjugacy>
 
-#note[
-  (Sylow strategy.) The three Sylow theorems form a strategy with
+#note(title: "Sylow strategy")[
+  The three Sylow theorems form a strategy with
   three moves:
   + *Existence* (#link(<thm:sylow-first>)[first theorem]): Sylow
     $p$-subgroups exist for every prime $p | abs(G)$.

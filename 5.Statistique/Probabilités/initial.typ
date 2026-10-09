@@ -152,8 +152,8 @@ of its occurrence. This intuition acquires mathematical meaning through an
 axiom system; before stating it, we examine the empirical notion from which
 it abstracts.
 
-#note[
-  (Frequencies and their stability.) Repeating an experiment $n$ times,
+#note(title: "Frequencies and their stability")[
+  Repeating an experiment $n$ times,
   let $n_A$ be the number of trials in which the event $A$ occurs. The
   ratio
   $
@@ -330,8 +330,8 @@ derive everything else from it.
   supplement: [Fig.],
 ) <fig:bertrand-paradox>
 
-#note[
-  (Subjective probability.) In situations with no repeatable experiment —
+#note(title: "Subjective probability")[
+  In situations with no repeatable experiment —
   e.g. "the candidate will win the election" — practitioners assign
   *degrees of belief* obeying the same axioms. This Bayesian viewpoint,
   axiomatized by de Finetti and Savage, will resurface when prior
@@ -787,8 +787,8 @@ Conditional probabilities come with a dividend: the reduced space can be
   supplement: [Fig.],
 ) <fig:bayes-tree>
 
-#note[
-  (Prior and posterior.) In the language of statistics, $P(D)$ is the
+#note(title: "Prior and posterior")[
+  In the language of statistics, $P(D)$ is the
   *prior* probability — knowledge before the data — and $P(D | +)$ is
   the *posterior* probability — knowledge after observing the data. Bayes'
   theorem is precisely the rule for updating priors into posteriors; this
@@ -969,8 +969,8 @@ function.
   formula.
 ]
 
-#note[
-  (CDF and the distribution measure.) Associated to $X$ is its *distribution
+#note(title: "CDF and the distribution measure")[
+  Associated to $X$ is its *distribution
   measure*, the push-forward of $P$ under $X$,
   $
     mu_(X)(B) = P(X in B), quad B in cal(B)(RR),
@@ -1009,8 +1009,8 @@ Two structural types of random variable dominate the theory.
   of continuity of $f$, $F'(x) = f(x)$.
 ] <def:continuous-rv>
 
-#note[
-  (Density: elementary and measure-theoretic views.) The definition above is
+#note(title: "Density: elementary and measure-theoretic views")[
+  The definition above is
   the elementary one: a density $f$ is the *integration kernel* of the CDF,
   $F(x) = integral_(-infinity)^x f(t) dif t$. The measure-theoretic view starts
   instead from the distribution measure $mu_(X)$: $X$ is *absolutely continuous*
@@ -1296,8 +1296,8 @@ Chebyshev's inequality is universal — it uses only the mean and variance,
 not the full distribution. It is the bridge from finite moments to limit
 theorems: the Weak Law of Large Numbers (Chapter 9) is a direct corollary.
 
-#note[
-  (Exponential family callback.) The
+#note(title: "Exponential family callback")[
+  The
   #link(<prop:cgf-derivative>)[log-partition derivative property] states
   $A'' = "Var"(T(X))$. This is a special case of the general principle that
   the variance of a natural statistic is the second derivative of $A$ — a
@@ -1591,8 +1591,8 @@ in repeated trials (geometric, negative binomial).
   $"Var"(X) = (1 + q) / p^2 - 1 / p^2 = q / p^2$.
 ]
 
-#note[
-  (Two conventions.) Some texts count instead the number $Y$ of
+#note(title: "Two conventions")[
+  Some texts count instead the number $Y$ of
   *failures* before the first success:
   $
     P(Y = k) = q^k p, quad k = 0, 1, 2, dots
@@ -1658,8 +1658,8 @@ in repeated trials (geometric, negative binomial).
   recovers the geometric moments.
 ]
 
-#note[
-  (Distribution genealogy.) The six discrete distributions above are
+#note(title: "Distribution genealogy")[
+  The six discrete distributions above are
   organized by two axes: *what is counted* — success count (binomial,
   Poisson), failure count (negative binomial, geometric), or drawn count
   (hypergeometric); and *the sampling protocol* — with replacement
@@ -2004,8 +2004,8 @@ proportional to a normal density. This observation — "the kernel as a
 function of the parameter" — is the seed of maximum likelihood estimation
 and conjugate Bayesian analysis.
 
-#note[
-  (Distribution relationships.) The continuous families are tightly connected:
+#note(title: "Distribution relationships")[
+  The continuous families are tightly connected:
   $U(0, 1) = "Be"(1, 1)$; $"Exp"(lambda) = "Ga"(1, lambda)$; the sum of
   $n$ independent $"Exp"(lambda)$ variables is $"Ga"(n, lambda)$; if
   $X ~ "Ga"(a, lambda)$ and $Y ~ "Ga"(b, lambda)$ independently, then
@@ -2073,8 +2073,8 @@ derived in this chapter:
   supplement: [Tab.],
 ) <tab:common-distributions>
 
-#note[
-  (Reading the table.) The table organises the families into the counting
+#note(title: "Reading the table")[
+  The table organises the families into the counting
   models (Bernoulli, binomial, hypergeometric, geometric, negative
   binomial, Poisson) and the measuring models (uniform, exponential,
   normal, Gamma, Beta). Two structural facts stand out: the Poisson is the
@@ -2588,8 +2588,8 @@ probabilistic statement that the MGF determines the distribution.
   )$.
 ] <ex:common-mgf>
 
-#caution[
-  (MGF may not exist.) For the Cauchy distribution, $E[exp(t X)] =
+#caution(title: "MGF may not exist")[
+  For the Cauchy distribution, $E[exp(t X)] =
   infinity$ for every $t != 0$ — the integral diverges. The MGF fails to
   exist outside $t = 0$, so it cannot be used to identify the
   distribution or compute moments. This motivates the *characteristic
@@ -2676,8 +2676,8 @@ This theorem is the *master tool* for proving limit theorems. The
 Central Limit Theorem (Chapter 9) reduces to showing $phi_(S_n / sqrt(n))
 (t) -> exp(-t^2 / 2)$ — a routine computation with independent-sum CFs.
 
-#note[
-  (Fourier analysis boundary.) The CF is the Fourier transform of the
+#note(title: "Fourier analysis boundary")[
+  The CF is the Fourier transform of the
   distribution measure, and the inversion formula is the inverse
   transform. The full theory — $L^1$ and $L^2$ inversion, Plancherel's
   theorem, distributional Fourier transforms — is developed in the
@@ -2828,8 +2828,8 @@ $
 $
 has $eta = ln lambda$, $T(k) = k$, $A = lambda$, $h = 1 / k!$.
 
-#note[
-  (A notable exception.) The uniform distribution $U(0, theta)$ does *not*
+#note(title: "A notable exception")[
+  The uniform distribution $U(0, theta)$ does *not*
   belong to the exponential family, because its support $[0, theta]$
   depends on $theta$. The support-independence requirement is not a
   technicality: it is what makes the factorisation theorem and conjugate
@@ -2864,8 +2864,8 @@ $E[T(X)]$ and $"Var"(T(X))$ — expectation and variance — is made precise in
 the Numerical Characteristics chapter; the point here is that the moments
 of the sufficient statistic are read off from the derivatives of $A$.
 
-#note[
-  (Sufficient statistic preview.) The canonical form $f(x; theta) = h(x)
+#note(title: "Sufficient statistic preview")[
+  The canonical form $f(x; theta) = h(x)
   exp(eta dot T(x) - A)$ depends on the data only through $T(x)$. This
   means $T(X_1, dots, X_n) = sum_i T(X_i)$ is a *sufficient statistic* for
   $theta$ — it captures all the information the sample contains about the
@@ -3284,8 +3284,8 @@ foundations.
   $t arrow.r.double X(t)(omega)$ is an ordinary function.
 ] <def:stochastic-process>
 
-#note[
-  (Finite-dimensional distributions.) The law of a process is determined
+#note(title: "Finite-dimensional distributions")[
+  The law of a process is determined
   by the joint distributions of $(X(t_1), dots, X(t_n))$ for all choices
   of indices — the *finite-dimensional distributions*. This extends the
   multivariate theory of Chapter 6 from fixed dimension to arbitrary
@@ -3433,8 +3433,8 @@ sits at the intersection of probability, Fourier analysis, and PDE theory
 stopping times, and the Itô calculus — is the starting material of the
 Processus Stochastique note.
 
-#note[
-  (Looking ahead.) With the probability framework complete —
+#note(title: "Looking ahead")[
+  With the probability framework complete —
   distributions, numerical characteristics, generating tools, limit
   theorems, and the canonical processes above — we turn from "known model,
   deduce data" to "observed data, infer model": the business of
