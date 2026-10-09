@@ -1110,7 +1110,7 @@ Formally, $x_0$ is a *fixed point* of the function $f$ if $f(x_0) = x_0$.
 
 #theorem(name: "Banach Fixed-Point Theorem (Contraction Mapping Theorem)")[
   A contraction mapping (i.e., Lipschitz continuous with constant $L < 1$;
-  see the section _Uniform Continuity and Lipschitz Continuity_) $f$ on an interval $I$
+  see #link(<def:lipschitz-continuity>)[Lipschitz Continuity]) $f$ on an interval $I$
   admits a unique fixed point $x^* in I$.
   Furthermore, $x^*$ can be found as follows:
   start with an arbitrary point $x_0 in I$ and define the iterative sequence
@@ -1130,6 +1130,1481 @@ Formally, $x_0$ is a *fixed point* of the function $f$ if $f(x_0) = x_0$.
 ]
 
 // B3: ch03 Limits and Continuity of Functions（函数的极限与连续性）
+= Limits and Continuity of Functions // 函数的极限与连续性
+
+== Limits of Functions // 函数的极限
+
+=== Definition of Limit // 极限的定义
+
+#definition(name: "Limit of a Function")[
+  Let $f$ be defined on a deleted neighborhood $accent(U, circle)(x_0, rho) subset D_f$ of $x_0$,
+  where $rho > 0$. If there exists a real number $A$ such that for every $epsilon > 0$
+  there exists $delta > 0$ with
+  $
+    abs(f(x) - A) < epsilon quad quad "whenever" quad quad 0 < abs(x - x_0) < delta,
+  $
+  then $A$ is called the *limit* of $f$ at $x_0$, written $lim_(x -> x_0) f(x) = A$.
+  If no such $A$ exists, the limit of $f$ at $x_0$ is said not to exist.
+] <def:limit-of-function>
+
+#note[
+  The condition is $0 < abs(x - x_0) < delta$ rather than $0 <= abs(x - x_0) < delta$
+  because $f$ need not be defined at $x_0$ itself.
+]
+
+#definition(name: "One-Sided Limits")[
+  Let $f$ be defined on $(x_0 - rho, x_0)$ with $rho > 0$. If there exists $B in bb(R)$
+  such that for every $epsilon > 0$ there exists $delta > 0$ with $abs(f(x) - B) < epsilon$
+  whenever $-delta < x - x_0 < 0$, then $B$ is called the *left limit* of $f$ at $x_0$,
+  written $lim_(x -> x_0^-) f(x) = f(x_0^-) = B$.
+  The *right limit* $f(x_0^+)$ is defined analogously.
+] <def:one-sided-limit>
+
+#note[
+  Uniqueness, order preservation and the arithmetic rules remain valid for one-sided limits.
+  Clearly, $lim_(x -> x_0) f(x)$ exists if and only if both one-sided limits
+  $f(x_0^-)$ and $f(x_0^+)$ exist and are equal.
+]
+
+#definition(name: "Extended Limits")[
+  The definition of a limit extends to four kinds of behavior of the function value
+  and six kinds of behavior of the independent variable. Each notion of limit is obtained
+  by choosing one row from each of the two tables below, with the quantifier structure
+  "for every $epsilon > 0$ (respectively $G > 0$), there exists $delta > 0$
+  (respectively $X > 0$), such that for all $x$ satisfying the left condition,
+  the right condition holds."
+
+  #tex-table(
+    ([As $x -> dots$], [The condition on $x$]),
+    ([$x -> x_0$], [$0 < abs(x - x_0) < delta$]),
+    ([$x -> x_0^+$], [$0 < x - x_0 < delta$]),
+    ([$x -> x_0^-$], [$-delta < x - x_0 < 0$]),
+    ([$x -> oo$], [$abs(x) > X$]),
+    ([$x -> +oo$], [$x > X$]),
+    ([$x -> -oo$], [$x < -X$]),
+  )
+
+  #tex-table(
+    ([As $f(x) -> dots$], [The condition on $f(x)$]),
+    ([a finite $A$], [$abs(f(x) - A) < epsilon$]),
+    ([$oo$], [$abs(f(x)) > G$]),
+    ([$+oo$], [$f(x) > G$]),
+    ([$-oo$], [$f(x) < -G$]),
+  )
+] <def:extended-limit>
+
+#proposition(name: "Properties of Function Limits")[
+  Let $lim_(x -> x_0) f(x) = A$.
+  + *Uniqueness:* if also $lim_(x -> x_0) f(x) = B$, then $A = B$.
+  + *Order preservation:* if $lim_(x -> x_0) g(x) = B$ with $A > B$, then there exists
+    $delta > 0$ such that $f(x) > g(x)$ whenever $0 < abs(x - x_0) < delta$. In particular:
+    - if $A != 0$, then there exists $delta > 0$ with $abs(f(x)) > abs(A) / 2$
+      whenever $0 < abs(x - x_0) < delta$;
+    - if $lim_(x -> x_0) g(x) = B$ and $g(x) <= f(x)$ for all $x$ with $0 < abs(x - x_0) < r$,
+      then $B <= A$.
+  + *Local boundedness:* there exists $delta > 0$ such that $f$ is bounded on
+    $accent(U, circle)(x_0, delta)$.
+  + *Squeeze:* if $g(x) <= f(x) <= h(x)$ for all $x$ with $0 < abs(x - x_0) < r$ and
+    $lim_(x -> x_0) g(x) = lim_(x -> x_0) h(x) = A$, then $lim_(x -> x_0) f(x) = A$.
+  + *Arithmetic operations:* if $lim_(x -> x_0) g(x) = B$, then
+    $lim_(x -> x_0) (alpha f(x) + beta g(x)) = alpha A + beta B$ for constants $alpha, beta$,
+    $lim_(x -> x_0) (f(x) g(x)) = A B$, and $lim_(x -> x_0) f(x) / g(x) = A / B$ for $B != 0$.
+] <prop:limit-of-function-properties>
+
+#proof[
+  The proofs follow the pattern of #link(<prop:convergent-sequence-properties>)[those for sequences];
+  we only indicate the arguments for the first two items.
+  + For every $epsilon > 0$ there exist $delta_1, delta_2 > 0$ with $abs(f(x) - A) < epsilon / 2$
+    for $0 < abs(x - x_0) < delta_1$ and $abs(f(x) - B) < epsilon / 2$
+    for $0 < abs(x - x_0) < delta_2$. Taking $delta = min(delta_1, delta_2)$, the triangle
+    inequality gives $abs(A - B) < epsilon$ for all admissible $x$; since $epsilon$ is arbitrary,
+    $A = B$.
+  + Take $epsilon = (A - B) / 2 > 0$; then $f(x) > (A + B) / 2 > g(x)$ in some deleted
+    neighborhood of $x_0$.
+    - Since $abs(abs(f(x)) - abs(A)) <= abs(f(x) - A)$, we have $lim_(x -> x_0) abs(f(x)) = abs(A)$;
+      applying order preservation to the constant $abs(A) / 2$ yields the claim.
+    - Suppose $B > A$. By order preservation there exists $delta > 0$ with $g(x) > f(x)$
+      whenever $0 < abs(x - x_0) < delta$. Taking $eta = min(delta, r)$, on the punctured
+      neighborhood of radius $eta$ we get both $g(x) <= f(x)$ and $g(x) > f(x)$, a contradiction.
+]
+
+#example[
+  Let $lim_(x -> a) f(x) = A$ with $a >= 0$. Show that $lim_(x -> sqrt(a)) f(x^2) = A$.
+] <ex:limit-composition-square>
+
+#proof[
+  For every $epsilon > 0$ there exists $delta_1 > 0$ such that $abs(f(x) - A) < epsilon$
+  whenever $0 < abs(x - a) < delta_1$. Take $delta = min(1, delta_1 / (1 + 2 sqrt(a)))$.
+  When $0 < abs(x - sqrt(a)) < delta$ we have $0 < abs(x + sqrt(a)) < 1 + 2 sqrt(a)$, hence
+  $
+    0 < abs(x^2 - a) = abs(x - sqrt(a)) abs(x + sqrt(a)) < delta_1,
+  $
+  and therefore $abs(f(x^2) - A) < epsilon$.
+]
+
+#example(name: "Comparison of Growth Rates")[
+  As $x -> +oo$,
+  $
+    x^x >> floor(x)! >> a^x >> x^alpha >> ln^k x quad quad quad (a > 1, alpha > 0, k > 0),
+  $
+  that is, the quotient of each pair of adjacent quantities tends to $0$ in the indicated order.
+] <ex:growth-comparison>
+
+#proof[
+  + $lim_(x -> +oo) floor(x)! / x^x = 0$: let $n = floor(x)$. At least $floor(n / 2)$ of the
+    factors $1, 2, dots, n$ do not exceed $x / 2$, while every factor is at most $x$, so
+    $
+      n! <= (x / 2)^(floor(n / 2)) dot x^(n - floor(n / 2)),
+    $
+    hence $n! / x^n <= 2^(-floor(n / 2)) -> 0$ as $x -> +oo$.
+  + $lim_(x -> +oo) a^x / floor(x)! = 0$: keeping only the factors larger than $n / 2$ gives
+    $n! >= (n / 2)^(n / 2)$ for $n >= 2$, hence with $n = floor(x)$,
+    $
+      a^x / n! <= a^(x + 1) (2 / n)^(n / 2) <= a (a^4 dot 4 / x)^(x / 4),
+    $
+    which is at most $a (1 / 2)^(x / 4) -> 0$ once $x >= 8 a^4$.
+  + $lim_(x -> +oo) x^alpha / a^x = 0$: for $n = floor(x)$ we have
+    $0 < x^alpha / a^x <= (n + 1)^alpha / a^n = a t_(n + 1)$ where $t_n = n^alpha / a^n$.
+    The quotient $t_(n + 1) / t_n = (1 + 1 / n)^alpha / a$ decreases to $1 / a < 1$,
+    so $t_(n + 1) < t_n$ for all sufficiently large $n$; being eventually decreasing and bounded
+    below, ${t_n}$ converges, and passing to the limit in
+    $t_(n + 1) = t_n dot (1 + 1 / n)^alpha / a$ yields $l = l / a$, i.e., $l = 0$.
+    Hence $x^alpha / a^x -> 0$.
+  + $lim_(x -> +oo) ln^k x / x^alpha = 0$: substituting $t = ln x$, the quotient becomes
+    $t^k / e^(alpha t) = t^k / (e^alpha)^t -> 0$ by the previous item applied with $a = e^alpha > 1$.
+]
+
+#example(name: "Two Important Limits")[
+  $
+    lim_(x -> oo) (1 + 1 / x)^x = e quad quad "and" quad quad lim_(x -> 0) sin x / x = 1.
+  $
+] <ex:two-important-limits>
+
+#proof[
+  + First let $x -> +oo$. For $x >= 1$, writing $n = floor(x)$,
+    $
+      (1 + 1 / (n + 1))^n < (1 + 1 / x)^x < (1 + 1 / n)^(n + 1).
+    $
+    As $x -> +oo$ we have $n -> oo$, and both bounds tend to $e$
+    (recall $lim_(n -> oo) (1 + 1 / n)^n = e$), so the squeeze for function limits gives
+    $lim_(x -> +oo) (1 + 1 / x)^x = e$.
+    For $x -> -oo$, substitute $y = -x$:
+    $
+      lim_(x -> -oo) (1 + 1 / x)^x
+      = lim_(y -> +oo) (1 - 1 / y)^(-y)
+      = lim_(y -> +oo) (1 + 1 / (y - 1))^(y - 1) (1 + 1 / (y - 1))
+      = e.
+    $
+  + Since $sin x / x$ is an even function, it suffices to consider $x -> 0^+$.
+    For $0 < x < pi / 2$, comparing the areas of the triangle $O A B$, the circular sector
+    and the triangle spanned by the tangent line in the unit circle gives
+    $sin x < x < tan x$; dividing by $sin x > 0$ yields $cos x < sin x / x < 1$.
+    Since $0 < 1 - cos x = 2 sin^2(x / 2) <= x^2 / 2 -> 0$, we have $cos x -> 1$ as $x -> 0^+$,
+    and the squeeze gives $lim_(x -> 0^+) sin x / x = 1$.
+]
+
+#example(name: "Viète's Formula")[
+  Compute $lim_(n -> oo) product_(k = 1)^n cos(x / 2^k)$ and deduce Viète's formula
+  $
+    2 / pi
+    = sqrt(1 / 2) sqrt(1 / 2 + 1 / 2 sqrt(1 / 2))
+    sqrt(1 / 2 + 1 / 2 sqrt(1 / 2 + 1 / 2 sqrt(1 / 2))) dots.h.c
+  $
+] <ex:viete-formula>
+
+#proof[
+  Multiplying and dividing by $sin(x / 2^n)$ and iterating the double-angle formula,
+  $
+    product_(k = 1)^n cos(x / 2^k)
+    = (cos(x / 2) cos(x / 2^2) dots cos(x / 2^n) sin(x / 2^n)) / sin(x / 2^n)
+    = sin x / (2^n sin(x / 2^n)).
+  $
+  Since $lim_(t -> 0) sin t / t = 1$, with $t = x / 2^n -> 0$ we obtain
+  $lim_(n -> oo) 2^n sin(x / 2^n) = x$, hence the product tends to $sin x / x$.
+  Taking $x = pi / 2$, the limit equals $2 / pi$.
+  On the other hand, iterating $cos theta = sqrt(1 / 2 + 1 / 2 cos 2 theta)$ with $x = pi / 2$ gives
+  $cos(x / 2) = sqrt(1 / 2)$,
+  $cos(x / 4) = sqrt(1 / 2 + 1 / 2 sqrt(1 / 2))$, and so on, so the infinite product collapses
+  to Viète's formula.
+]
+
+=== Limits of Functions and Sequences // 函数极限与数列极限
+
+#theorem(name: "Heine's Theorem")[
+  Let $f$ be a function defined on a deleted neighborhood $accent(U, circle)(x_0)$ of $x_0$.
+  The following two statements are equivalent:
+  + $lim_(x -> x_0) f(x) = A$.
+  + For any sequence ${x_n} subset accent(U, circle)(x_0)$ with $lim_(n -> oo) x_n = x_0$,
+    the sequence ${f(x_n)}$ satisfies $lim_(n -> oo) f(x_n) = A$.
+] <thm:heine-theorem>
+
+#proof[
+  + ($=>$) Since $lim_(x -> x_0) f(x) = A$, for every $epsilon > 0$ there exists $delta > 0$
+    such that $abs(f(x) - A) < epsilon$ whenever $0 < abs(x - x_0) < delta$.
+    Since $lim_(n -> oo) x_n = x_0$ with $x_n != x_0$, for this $delta$ there exists $N$
+    such that $0 < abs(x_n - x_0) < delta$ for all $n > N$.
+    Hence $abs(f(x_n) - A) < epsilon$ for $n > N$, i.e., $lim_(n -> oo) f(x_n) = A$.
+  + ($<=$) Suppose $f$ does not tend to $A$ at $x_0$: there exist $epsilon_0 > 0$ and,
+    for every $delta > 0$, some $x$ with $0 < abs(x - x_0) < delta$ but $abs(f(x) - A) >= epsilon_0$.
+    Taking $delta_k = 1 / k$, we obtain inductively points $x_k$ with
+    $0 < abs(x_k - x_0) < 1 / k$ and $abs(f(x_k) - A) >= epsilon_0$.
+    Then $x_n != x_0$, $lim_(n -> oo) x_n = x_0$, yet ${f(x_n)}$ cannot converge to $A$,
+    contradicting the hypothesis.
+]
+
+#theorem(name: "Weak Heine Theorem")[
+  $lim_(x -> x_0) f(x)$ exists if and only if for any sequence
+  ${x_n} subset accent(U, circle)(x_0)$ with $lim_(n -> oo) x_n = x_0$,
+  the sequence ${f(x_n)}$ converges.
+] <thm:weak-heine-theorem>
+
+#note[
+  The weak Heine theorem does not require the sequences ${f(x_n)}$
+  to converge to the same number.
+]
+
+#proof[
+  By #link(<thm:heine-theorem>)[Heine's theorem] it suffices to show the necessity.
+  Suppose, to the contrary, that there exist two sequences ${x_n'}$ and ${x_n''}$ in
+  $accent(U, circle)(x_0)$ with $x_n' != x_0$, $x_n'' != x_0$,
+  $lim_(n -> oo) x_n' = lim_(n -> oo) x_n'' = x_0$, but
+  $lim_(n -> oo) f(x_n') != lim_(n -> oo) f(x_n'')$ (one of them may fail to converge).
+  Interleave them into ${x_n}$ by $x_(2n - 1) = x_n'$ and $x_(2n) = x_n''$.
+  Then $x_n != x_0$ and $lim_(n -> oo) x_n = x_0$, but ${f(x_n)}$ has two subsequences
+  with different limits, hence diverges -- a contradiction.
+]
+
+#theorem(name: "Cauchy Convergence Criterion for Functions")[
+  The limit $lim_(x -> +oo) f(x)$ exists and is finite if and only if
+  for every $epsilon > 0$ there exists $X > 0$ such that
+  $abs(f(x') - f(x'')) < epsilon$ for all $x', x'' > X$.
+] <thm:cauchy-criterion-function>
+
+#proof[
+  + ($=>$) Let $lim_(x -> +oo) f(x) = A$. For every $epsilon > 0$ there exists $X > 0$
+    with $abs(f(x') - A) < epsilon / 2$ and $abs(f(x'') - A) < epsilon / 2$ for all $x', x'' > X$;
+    hence $abs(f(x') - f(x'')) <= abs(f(x') - A) + abs(f(x'') - A) < epsilon$.
+  + ($<=$) For every $epsilon > 0$ choose $X > 0$ as in the criterion.
+    Pick any sequence ${x_n}$ with $x_n -> +oo$; then there exists $N$ such that
+    $x_n, x_m > X$, hence $abs(f(x_n) - f(x_m)) < epsilon$, for all $m, n > N$.
+    Thus ${f(x_n)}$ is a Cauchy sequence and converges by
+    #link(<thm:cauchy-criterion>)[the Cauchy convergence criterion for sequences].
+    If ${y_n}$ is another sequence with $y_n -> +oo$, the interleaved sequence
+    $x_1, y_1, x_2, y_2, dots$ also tends to $+oo$, so ${f(x_n)}$ and ${f(y_n)}$
+    must have the same limit. By #link(<thm:heine-theorem>)[Heine's theorem],
+    $lim_(x -> +oo) f(x)$ exists and is finite.
+]
+
+#note[
+  Heine's theorem and the Cauchy convergence criterion take different forms for different
+  extended limits, but the content is always the same.
+]
+
+== Continuous Functions // 连续函数
+
+=== Continuity at a Point // 一点连续
+
+#definition(name: "Continuity at a Point")[
+  Let $f$ be defined in a neighborhood $U(x_0)$ of $x_0$. If
+  $lim_(x -> x_0) f(x) = f(x_0)$, i.e., for every $epsilon > 0$ there exists $delta > 0$
+  such that $abs(f(x) - f(x_0)) < epsilon$ for all $x$ with $abs(x - x_0) < delta$,
+  then $f$ is said to be *continuous at* $x_0$, and $x_0$ is called a *continuity point*
+  of $f$. Equivalently, writing $Delta x = x - x_0$ and
+  $Delta y = f(x_0 + Delta x) - f(x_0)$, continuity at $x_0$ means $lim_(Delta x -> 0) Delta y = 0$.
+] <def:continuity-at-point>
+
+#caution[
+  Unlike the limit, continuity at $x_0$ presupposes that $f$ is defined at $x_0$
+  (indeed in a whole neighborhood of $x_0$).
+]
+
+#note[
+  Continuity realizes the interchange of the limit and the function symbol:
+  $lim_(x -> x_0) f(x) = f(lim_(x -> x_0) x) = f(x_0)$.
+  In essence, continuity at $x_0$ says that the *limit value equals the function value*.
+]
+
+#definition(name: "Oscillation")[
+  For $delta > 0$, the *oscillation* of $f$ on the neighborhood $U(a, delta)$ is
+  $
+    omega_(f)(a, delta) = sup_(x in U(a, delta)) f(x) - inf_(x in U(a, delta)) f(x),
+  $
+  and $omega_(f)(a) = lim_(delta -> 0^+) omega_(f)(a, delta)$ is called
+  the *oscillation of $f$ at the point $a$*.
+] <def:oscillation>
+
+#proposition[
+  The function $f$ is continuous at $a$ if and only if $omega_(f)(a) = 0$.
+] <prop:oscillation-continuity>
+
+#proof[
+  If $f$ is continuous at $a$, then for every $epsilon > 0$ there exists $delta > 0$ with
+  $abs(f(x) - f(a)) < epsilon$ on $U(a, delta)$, hence
+  $f(a) - epsilon < f(x) < f(a) + epsilon$ and $omega_(f)(a, delta) <= 2 epsilon$;
+  letting $delta -> 0^+$ and then $epsilon -> 0^+$ gives $omega_(f)(a) = 0$.
+  Conversely, if $omega_(f)(a) = 0$, then for every $epsilon > 0$ there exists $delta > 0$
+  with $omega_(f)(a, delta) < epsilon$; for $x in U(a, delta)$,
+  $f(x) - f(a) <= sup f - inf f < epsilon$, i.e., $abs(f(x) - f(a)) < epsilon$,
+  so $f$ is continuous at $a$.
+]
+
+=== Continuity on an Interval // 区间上的连续性
+
+#definition(name: "Continuity on an Interval")[
+  + $f$ is *continuous on the open interval* $(a, b)$ if it is continuous at every point
+    of $(a, b)$.
+  + $f$ is *left-continuous* (*right-continuous*) at $x_0$ if
+    $lim_(x -> x_0^-) f(x) = f(x_0)$ (respectively $lim_(x -> x_0^+) f(x) = f(x_0)$).
+  + $f$ is *continuous on the closed interval* $[a, b]$ if it is continuous on $(a, b)$,
+    right-continuous at the left endpoint $a$, and left-continuous at the right endpoint $b$.
+  + $f$ is *continuous on an interval* $I$ if it is continuous at every point of $I$,
+    with one-sided continuity required at endpoints contained in $I$; equivalently, for every
+    $x_0 in I$ and $epsilon > 0$ there exists $delta > 0$ such that
+    $abs(f(x) - f(x_0)) < epsilon$ for all $x in I$ with $abs(x - x_0) < delta$.
+] <def:continuity-on-interval>
+
+#note[
+  $f$ is continuous at $x_0$ if and only if it is both left- and right-continuous there.
+  However, the existence of both one-sided limits does not imply the existence of the limit:
+  continuity compares each one-sided limit with the function value,
+  which already forces the two one-sided limits to agree.
+]
+
+=== Discontinuity Points // 间断点
+
+#definition(name: "Discontinuity Points")[
+  If $f$ is not continuous at $x_0$, then $f$ is said to be *discontinuous* at $x_0$,
+  and $x_0$ is called a *discontinuity point* of $f$. Discontinuity points are divided
+  into three classes:
+  + *First kind:* both one-sided limits $f(x_0^-)$ and $f(x_0^+)$ exist but are unequal.
+    Such a point is also called a *jump point*, and the difference $f(x_0^+) - f(x_0^-)$
+    is called the *jump* of $f$ at $x_0$.
+  + *Second kind:* at least one of the one-sided limits does not exist.
+  + *Third kind:* both one-sided limits exist and are equal, but are different from
+    $f(x_0)$, or $f$ is not defined at $x_0$.
+] <def:discontinuity-point>
+
+#note[
+  A third-kind discontinuity can be turned into a continuity point by redefining the function
+  value there; such points are therefore also called *removable*.
+  For example, $x_0 = 0$ is a first-kind discontinuity of $f(x) = "sgn"(x)$ with jump $2$,
+  while $f(x) = x sin(1 / x)$, undefined at $0$, has both one-sided limits equal to $0$,
+  so $0$ is a removable discontinuity.
+  Many textbooks group the first and third kinds together as discontinuities of the first kind
+  (both one-sided limits exist) and call the second kind discontinuities of the second kind.
+]
+
+#example(name: "The Riemann Function")[
+  Define
+  $
+    R(x) = cases(
+      1 / p\, & x = q / p "," quad p, q "coprime integers with" p > 0, q != 0 comma
+      1\, & x = 0 comma
+      0\, & x "irrational".
+    )
+  $
+  Show that $lim_(x -> x_0) R(x) = 0$ at every point $x_0$; in other words,
+  every irrational point is a continuity point of $R$, and every rational point
+  is a third-kind discontinuity.
+] <ex:riemann-function>
+
+#proof[
+  Since $R$ is periodic with period $1$, it suffices to work on $[0, 1]$.
+  For each positive integer $k$ there are only finitely many rationals in $[0, 1]$
+  whose denominator does not exceed $k$.
+  Let $x_0 in [0, 1]$ and $epsilon > 0$ be given; set $k = floor(1 / epsilon)$ and let
+  $r_1, r_2, dots, r_n$ be the rationals in $[0, 1]$ with denominator at most $k$.
+  Take $delta = min_(1 <= i <= n, r_i != x_0) abs(r_i - x_0)$, which is positive.
+  For $x in [0, 1]$ with $0 < abs(x - x_0) < delta$: if $x$ is irrational then $R(x) = 0$;
+  if $x = q / p$ is rational, its denominator satisfies $p > k$, hence
+  $R(x) = 1 / p <= 1 / (k + 1) < epsilon$.
+  In both cases $abs(R(x) - 0) < epsilon$, so $lim_(x -> x_0) R(x) = 0$.
+]
+
+#example(name: "Discontinuities of Monotone Functions")[
+  The discontinuities of a monotone function on an interval $(a, b)$ are all of the first kind,
+  and there are at most countably many of them.
+] <ex:monotone-discontinuities>
+
+#proof[
+  Assume $f$ is increasing; since $f$ is defined everywhere, it suffices to show that
+  both one-sided limits exist at every point.
+  Let $x_0 in (a, b)$. The set ${f(x) | x in (a, x_0)}$ is bounded above, so it has a supremum
+  $alpha = sup_(x in (a, x_0)) f(x)$, and $f(x) <= alpha$ for all $x < x_0$.
+  By the definition of the supremum, for every $epsilon > 0$ there exists
+  $x' in (a, x_0)$ with $f(x') > alpha - epsilon$. Taking $delta = x_0 - x' > 0$,
+  for $-delta < x - x_0 < 0$ we have $x' < x < x_0$, hence
+  $
+    -epsilon < f(x') - alpha <= f(x) - alpha <= 0.
+  $
+  This proves $lim_(x -> x_0^-) f(x) = alpha$; similarly
+  $lim_(x -> x_0^+) f(x) = beta$ with $beta = inf_(x in (x_0, b)) f(x)$, and
+  $f(x_0^-) <= f(x_0) <= f(x_0^+)$. This is the *one-sided limit theorem for monotone functions*.
+
+  Now suppose $f$ has infinitely many discontinuities.
+  If $x_0$ is a discontinuity, then $f(x_0^-) < f(x_0^+)$, and the open interval
+  $(f(x_0^-), f(x_0^+))$ is called the *jump interval* of $x_0$.
+  We claim that the jump intervals of distinct discontinuities are pairwise disjoint.
+  Let $x_1 > x_0$ be another discontinuity and pick $x, x'$ with $x_0 < x < x' < x_1$;
+  monotonicity gives $f(x) <= f(x')$.
+  Fixing $x'$ and letting $x -> x_0^+$, the one-sided limit theorem and the comparison
+  of limits give $f(x_0^+) <= f(x')$; then letting $x' -> x_1^-$ gives
+  $f(x_0^+) <= f(x_1^-)$.
+  Therefore
+  $
+    f(x_0^-) <= f(x_0^+) <= f(x_1^-) <= f(x_1^+),
+  $
+  so $(f(x_0^-), f(x_0^+)) and (f(x_1^-), f(x_1^+))$ are disjoint.
+  Each jump interval contains a rational number, and disjoint intervals contain distinct
+  rationals; since $bb(Q)$ is countable, the set of discontinuities is at most countable.
+]
+
+#example[
+  Study the continuity of $f(x) = lim_(n -> oo) (x^n - 1) / (x^n + 1)$.
+] <ex:limit-piecewise>
+
+#solution[
+  For $abs(x) < 1$, $x^n -> 0$, so $f(x) = -1$; for $abs(x) > 1$, $x^n -> oo$, so $f(x) = 1$;
+  $f(1) = 0$; and the limit diverges at $x = -1$, where $f$ is undefined. Hence
+  $
+    f(x) = cases(
+      -1\, & abs(x) < 1 comma
+             0\, & x = 1 comma
+                   1\, & abs(x) > 1.
+    )
+  $
+  On $(-oo, -1)$, $(-1, 1)$ and $(1, +oo)$ the function is constant, hence continuous.
+  At $x = 1$ the one-sided limits are $-1$ and $1$, and at $x = -1$ they are $1$ and $-1$;
+  both points are first-kind (jump) discontinuities.
+]
+
+=== Arithmetic of Continuous Functions // 连续函数的四则运算
+
+#theorem(name: "Arithmetic of Continuous Functions")[
+  Let $lim_(x -> x_0) f(x) = f(x_0)$ and $lim_(x -> x_0) g(x) = g(x_0)$. Then:
+  + $lim_(x -> x_0) (alpha f(x) + beta g(x)) = alpha f(x_0) + beta g(x_0)$
+    for constants $alpha, beta$;
+  + $lim_(x -> x_0) f(x) g(x) = f(x_0) g(x_0)$;
+  + $lim_(x -> x_0) f(x) / g(x) = f(x_0) / g(x_0)$ for $g(x_0) != 0$.
+] <thm:arithmetic-continuous>
+
+This is an immediate consequence of the arithmetic of function limits
+(#link(<prop:limit-of-function-properties>)[item 5]).
+
+=== Inverse, Composite and Elementary Functions // 反函数、复合函数与初等函数
+
+#theorem(name: "Existence of Inverse Functions")[
+  If $y = f(x)$, $x in D_f$, is strictly increasing (strictly decreasing), then it admits
+  an inverse function $x = f^(-1)(y)$, $y in R_f$, which is also strictly increasing
+  (strictly decreasing).
+] <thm:inverse-function-existence>
+
+#proof[
+  Assume $y = f(x)$ is strictly increasing. For $x', x'' in D_f$ with $y' = f(x')$ and
+  $y'' = f(x'')$, monotonicity gives $x' < x'' ==> y' < y''$, so distinct points have
+  distinct images; this guarantees the uniqueness of the preimage, hence the inverse
+  $x = f^(-1)(y)$, $y in R_f$, exists. For $y' < y''$ the preimages satisfy $x' < x''$
+  (otherwise $x' >= x''$ would force $y' >= y''$), so $f^(-1)$ is strictly increasing.
+]
+
+#theorem(name: "Continuity of Inverse Functions")[
+  If $y = f(x)$ is continuous and strictly increasing on the closed interval $[a, b]$ with
+  $f(a) = alpha$ and $f(b) = beta$, then its inverse $x = f^(-1)(y)$ is continuous and
+  strictly increasing on $[alpha, beta]$.
+] <thm:inverse-function-continuity>
+
+#proof[
+  *Step 1: the range is $f([a, b]) = [alpha, beta]$.*
+  Monotonicity gives $f([a, b]) subset [alpha, beta]$. Conversely, let $gamma in (alpha, beta)$
+  and set $S = {x | x in (a, b), f(x) < gamma}$. By continuity of $f$ at $a$, the set $S$
+  is nonempty, and it is bounded above by $b$; hence $xi_0 = sup S$ exists and lies in $(a, b)$.
+  Since $f$ is strictly increasing, $f(x) < gamma$ for $x < xi_0$ and $f(x) > gamma$ for
+  $x > xi_0$. By the one-sided limit theorem for monotone functions
+  (#link(<ex:monotone-discontinuities>)[the first part of the example on monotone functions]),
+  $f(xi_0^-) <= gamma <= f(xi_0^+)$, and continuity of $f$ at $xi_0$ yields
+  $f(xi_0) = f(xi_0^-) = f(xi_0^+) = gamma$.
+  Hence $gamma in f([a, b])$, and together with $f(a) = alpha$, $f(b) = beta$ we conclude
+  $f([a, b]) = [alpha, beta]$. By #link(<thm:inverse-function-existence>)[the existence theorem],
+  $f^(-1)$ exists and is strictly increasing on $[alpha, beta]$.
+
+  *Step 2: continuity of $f^(-1)$ on $(alpha, beta)$.*
+  Let $y_0 in (alpha, beta)$ and $f^(-1)(y_0) = x_0 in (a, b)$. For every $epsilon > 0$
+  (taken small enough that $[x_0 - epsilon, x_0 + epsilon] subset (a, b)$), set
+  $y_1 = f(x_0 - epsilon)$ and $y_2 = f(x_0 + epsilon)$, and take
+  $delta = min(y_0 - y_1, y_2 - y_0) > 0$.
+  Whenever $abs(y - y_0) < delta$, strict monotonicity gives
+  $x_0 - epsilon < f^(-1)(y) < x_0 + epsilon$, i.e., $abs(f^(-1)(y) - f^(-1)(y_0)) < epsilon$.
+  At the endpoints it suffices to prove right-continuity at $alpha$ and left-continuity
+  at $beta$, which is analogous.
+]
+
+#theorem(name: "Continuity of Composite Functions")[
+  If $u = g(x)$ is continuous at $x_0$ with $g(x_0) = u_0$, and $y = f(u)$ is continuous
+  at $u_0$, then the composite $y = f(g(x))$ is continuous at $x_0$.
+] <thm:composite-continuity>
+
+#proof[
+  For every $epsilon > 0$ there exists $eta > 0$ such that $abs(f(u) - f(u_0)) < epsilon$
+  whenever $abs(u - u_0) < eta$. For this $eta > 0$, since $lim_(x -> x_0) g(x) = g(x_0) = u_0$,
+  there exists $delta > 0$ such that $abs(g(x) - u_0) < eta$ whenever $abs(x - x_0) < delta$.
+  Therefore $abs(f(g(x)) - f(g(x_0))) < epsilon$ whenever $abs(x - x_0) < delta$.
+]
+
+#example(name: "Continuity of the Exponential Function")[
+  The exponential function $f(x) = a^x$ with $a > 0$, $a != 1$ is continuous on $(-oo, +oo)$.
+] <ex:exponential-continuous>
+
+#proof[
+  Fix $x_0 in (-oo, +oo)$. Since $a^x - a^(x_0) = a^(x_0) (a^(x - x_0) - 1)$,
+  it suffices to prove $lim_(t -> 0) a^t = 1$.
+  + As $t -> 0^+$: if $a > 1$, then for $t in (0, 1)$,
+    $
+      1 < a^t <= a^(1 / floor(1 / t)),
+    $
+    and since $lim_(n -> oo) root(n, a) = 1$, the squeeze gives $lim_(t -> 0^+) a^t = 1$.
+    If $0 < a < 1$, then by the arithmetic of limits,
+    $lim_(t -> 0^+) a^t = 1 / lim_(t -> 0^+) (1 / a)^t = 1$.
+  + As $t -> 0^-$: substitute $u = -t$ to get
+    $lim_(t -> 0^-) a^t = lim_(u -> 0^+) 1 / a^u = 1$.
+
+  Combining the two one-sided limits gives $lim_(t -> 0) a^t = 1$, hence $f$ is continuous
+  at every $x_0$.
+]
+
+#example(name: "Continuity of Power Functions")[
+  For every real $alpha$, the power function $f(x) = x^alpha$ is continuous on $(0, +oo)$.
+] <ex:power-continuous>
+
+#proof[
+  Since $f(x) = x^alpha = e^(alpha ln x)$ for $x in (0, +oo)$, the claim follows from
+  the continuity of $e^x$ and $ln x$ together with
+  #link(<thm:composite-continuity>)[the continuity of composite functions].
+  (The continuity of $ln x$ on $(0, +oo)$ follows from
+  #link(<thm:inverse-function-continuity>)[the inverse function continuity theorem]
+  applied to $e^x$.)
+]
+
+#theorem(name: "Continuity of Elementary Functions")[
+  Every elementary function is continuous on its defining intervals.
+] <thm:elementary-continuous>
+
+#note[
+  Trigonometric and exponential functions are continuous by their definitions and
+  #link(<ex:exponential-continuous>)[the example above]; inverse trigonometric and
+  logarithmic functions are continuous by
+  #link(<thm:inverse-function-continuity>)[the inverse function continuity theorem];
+  power functions are continuous by #link(<ex:power-continuous>)[composition];
+  and the arithmetic operations preserve continuity by
+  #link(<thm:arithmetic-continuous>)[the arithmetic theorem].
+]
+
+#caution[
+  The restriction to defining *intervals* excludes degenerate domains consisting of isolated
+  points: for example, $f(x) = sqrt(x) + sqrt(-x)$ has domain ${0}$, where the notion of
+  continuity at $0$ is not applicable, since $f$ is not defined in any neighborhood of $0$.
+]
+
+=== Topological Characterization and Density Arguments // 拓扑刻画与稠密性论证
+
+#example(name: "Continuity via Inverse Images of Open Sets")[
+  Let $f$ be defined on the real axis $X = bb(R)$. Then $f$ is continuous on $bb(R)$
+  if and only if the inverse image of every open set is open, i.e., for every open set $O$
+  in the $y$-axis, the set $f^(-1)(O) = {x | f(x) in O}$ is open in $bb(R)$.
+] <ex:continuous-open-preimage>
+
+#proof[
+  + ($=>$) It suffices to show that for every $x_0 in f^(-1)(O)$ there exists $delta > 0$
+    with $(x_0 - delta, x_0 + delta) subset f^(-1)(O)$.
+    Since $x_0 in f^(-1)(O)$, we have $y_0 = f(x_0) in O$; as $O$ is open, there exists
+    $epsilon > 0$ with $(y_0 - epsilon, y_0 + epsilon) subset O$.
+    By continuity of $f$ at $x_0$ there exists $delta > 0$ such that
+    $f((x_0 - delta, x_0 + delta)) subset (y_0 - epsilon, y_0 + epsilon) subset O$.
+    Hence $(x_0 - delta, x_0 + delta) subset f^(-1)(O)$, so $f^(-1)(O)$ is open.
+  + ($<=$) Fix $x_0 in bb(R)$, $y_0 = f(x_0)$, and let $epsilon > 0$.
+    By hypothesis, $f^(-1)((y_0 - epsilon, y_0 + epsilon))$ is open and contains $x_0$;
+    hence there exists $delta > 0$ with
+    $(x_0 - delta, x_0 + delta) subset f^(-1)((y_0 - epsilon, y_0 + epsilon))$, i.e.,
+    $
+      f((x_0 - delta, x_0 + delta)) subset (f(x_0) - epsilon, f(x_0) + epsilon),
+    $
+    which is precisely the continuity of $f$ at $x_0$.
+]
+
+#note[
+  This example builds a bridge between analysis and topology:
+  continuity is characterized purely by the behavior of inverse images of open sets,
+  with no reference to $epsilon$-$delta$ quantifiers.
+]
+
+#example(name: "Functions Agreeing on a Dense Set")[
+  If $f$ and $g$ are continuous on $(-oo, +oo)$ and $f(x) = g(x)$ at every rational point,
+  then $f(x) equiv g(x)$ on $bb(R)$.
+] <ex:continuous-agree-dense>
+
+#proof[
+  It suffices to show $f(x) = g(x)$ at every irrational point $x$.
+  Choose a sequence of rationals ${r_n}$ converging to $x$, for instance the decimal
+  truncations
+  $
+    r_n = (floor(10^n x)) / 10^n = (10^n x - theta_(x, n)) / 10^n, quad quad 0 <= theta_(x, n) < 1,
+  $
+  which satisfy $r_n -> x$. Since $f(r_n) = g(r_n)$ for all $n$, continuity gives
+  $
+    f(x) = lim_(n -> oo) f(r_n) = lim_(n -> oo) g(r_n) = g(x).
+  $
+]
+
+#example(name: "Existence of the Minimal Positive Period")[
+  A nonconstant continuous periodic function on $bb(R)$ has a minimal positive period.
+] <ex:minimal-period>
+
+#proof[
+  + The set of positive periods of $f$ is bounded below by $0$, so by the completeness of
+    $bb(R)$ its infimum $T_0 = inf {T > 0 | T "is a period"}$ exists with $T_0 >= 0$.
+  + $T_0$ is a period: by the definition of the infimum there exist positive periods $T_n$
+    with $T_n -> T_0$. For every $x in bb(R)$, continuity gives
+    $
+      f(x + T_0) = f(x + lim_(n -> oo) T_n) = lim_(n -> oo) f(x + T_n) = f(x),
+    $
+    so $T_0$ is a period of $f$.
+  + $T_0 > 0$: suppose $T_0 = 0$; then $T_n -> 0$, so the integer multiples of the periods
+    of $f$ are dense in $bb(R)$. For any $x in bb(R)$ there exists a sequence of such
+    multiples ${x_n}$ with $x_n -> x$, and each $x_n$ is an integer multiple of a period,
+    so $f(x_n) = f(0)$. Hence
+    $
+      f(x) = f(lim_(n -> oo) x_n) = lim_(n -> oo) f(x_n) = f(0),
+    $
+    i.e., $f(x) equiv f(0)$, contradicting that $f$ is nonconstant. Therefore $T_0 > 0$.
+]
+
+== Infinitesimal and Infinite Quantities // 无穷大量与无穷小量
+
+=== Infinitesimal Quantities and Their Comparison // 无穷小量及其比较
+
+#definition(name: "Infinitesimal Function")[
+  If $lim_(x -> x_0) f(x) = 0$, then $f$ is called an *infinitesimal quantity* as $x -> x_0$,
+  denoted $f(x) = o(1) quad (x -> x_0)$.
+] <def:infinitesimal-function>
+
+#note[
+  An infinitesimal quantity is a variable tending to $0$; the point $x -> x_0$
+  may be replaced by any of the other five approaches in #link(<def:extended-limit>)[the table]
+  (including $x -> oo$).
+]
+
+#definition(name: "Comparison of Infinitesimals")[
+  Let $u(x)$ and $v(x)$ be two infinitesimal quantities as $x -> x_0$; compare the limit
+  of $u(x) / v(x)$:
+  + If $lim_(x -> x_0) u(x) / v(x) = 0$, then $u(x)$ tends to $0$ faster than $v(x)$;
+    $u$ is said to be an *infinitesimal of higher order* than $v$, or $v$ one of
+    *lower order* than $u$, written
+    $
+      u(x) = o(v(x)) quad quad (x -> x_0).
+    $
+  + If there exists $A > 0$ such that $abs(u(x) / v(x)) <= A$ in some deleted neighborhood
+    of $x_0$, then $u(x) / v(x)$ is said to be a *bounded quantity*, written
+    $u(x) = O(v(x)) quad (x -> x_0)$. If moreover there exists $a > 0$ with
+    $a <= abs(u(x) / v(x)) <= A$ in some deleted neighborhood, then $u$ and $v$ are said to be
+    *infinitesimals of the same order*. Clearly, if $lim_(x -> x_0) u(x) / v(x) = c != 0$,
+    then $u$ and $v$ are of the same order.
+  + If $lim_(x -> x_0) u(x) / v(x) = 1$, then $u$ and $v$ are said to be
+    *equivalent infinitesimals*, written
+    $
+      u(x) tilde.op v(x) quad quad (x -> x_0),
+    $
+    which can also be written as $u(x) = v(x) + o(v(x)) quad (x -> x_0)$.
+] <def:comparison-infinitesimals>
+
+#caution[
+  Strictly speaking, $u(x) = o(v(x))$ means $u(x) in o(v(x))$, where $o(v(x))$ is the
+  *set* of functions that are infinitesimals of higher order than $v(x)$;
+  therefore the reversed writing $o(v(x)) = u(x)$ is meaningless.
+]
+
+#proposition(name: "Rules for the $o$ Notation")[
+  As $x -> 0$, for $m > 0$ and $n > 0$ the following rules hold:
+  + *Absorption under addition:* $o(x^m) plus.minus o(x^n) = o(x^(min(m, n)))$;
+  + *Accumulation under multiplication:*
+    $x^m o(x^n) = o(x^(m + n))$ and $o(x^m) o(x^n) = o(x^(m + n))$;
+  + *Invariance under constants:* $k o(x^n) = o(x^n)$ and
+    $o(k x^n) = o(x^n)$ for $k != 0$ (where $k$ may be replaced by any bounded function);
+  + *Composition:* $o(x + o(x)) = o(x)$ and $o(o(x)) = o(x)$.
+] <prop:o-operations>
+
+#note(title: "Common Equivalent Infinitesimals")[
+  As $x -> 0$:
+  $
+    sin x tilde.op x, quad tan x tilde.op x, quad arcsin x tilde.op x, quad
+    arctan x tilde.op x, quad 1 - cos x tilde.op 1 / 2 x^2, \
+    tan x - x tilde.op 1 / 3 x^3, quad x - sin x tilde.op 1 / 6 x^3, quad
+    tan x - sin x tilde.op 1 / 2 x^3, quad arcsin x - x tilde.op 1 / 6 x^3, quad
+    x - arctan x tilde.op 1 / 3 x^3, \
+    e^x - 1 tilde.op x, quad a^x - 1 tilde.op x ln a, quad ln(1 + x) tilde.op x, quad
+    log_a (1 + x) tilde.op x / ln a, quad (1 + x)^alpha - 1 tilde.op alpha x, \
+    x - ln(1 + x) tilde.op 1 / 2 x^2, quad ln(x + sqrt(1 + x^2)) tilde.op x.
+  $
+  Here $x$ may be replaced throughout by any function tending to $0$.
+]
+
+=== Infinite Quantities and Their Comparison // 无穷大量及其比较
+
+#definition(name: "Infinite Function")[
+  If $lim_(x -> x_0) f(x) = oo$ (or $plus.minus oo$), then $f$ is called an
+  *infinite quantity* as $x -> x_0$.
+] <def:infinite-function>
+
+#definition(name: "Comparison of Infinite Quantities")[
+  Let $u(x)$ and $v(x)$ be two infinite quantities as $x -> x_0$; compare the limit
+  of $u(x) / v(x)$:
+  + If $lim_(x -> x_0) u(x) / v(x) = oo$, then $u(x)$ tends to infinity faster than $v(x)$;
+    $u$ is said to be an *infinite quantity of higher order* than $v$, or $v$ one of
+    *lower order* than $u$.
+  + If there exists $A > 0$ such that $abs(u(x) / v(x)) <= A$ in some deleted neighborhood
+    of $x_0$, then $u(x) / v(x)$ is a *bounded quantity*, written
+    $u(x) = O(v(x)) quad (x -> x_0)$. If moreover there exists $a > 0$ with
+    $a <= abs(u(x) / v(x)) <= A$ in some deleted neighborhood, then $u$ and $v$ are said to be
+    *infinite quantities of the same order*. Clearly, if $lim_(x -> x_0) u(x) / v(x) = c != 0$,
+    then $u$ and $v$ are of the same order.
+  + If $lim_(x -> x_0) u(x) / v(x) = 1$, then $u$ and $v$ are said to be
+    *equivalent infinite quantities*, written $u(x) tilde.op v(x) quad (x -> x_0)$.
+] <def:comparison-infinite>
+
+=== The Equivalence Replacement Principle // 等价量替换原理
+
+#theorem(name: "Equivalence Replacement Principle")[
+  + *Product replacement:* let $alpha(x)$, $beta(x)$, $beta'(x)$ be defined in a deleted
+    neighborhood of $x_0$ with $beta(x) tilde.op beta'(x) quad (x -> x_0)$. Then:
+    - if $lim_(x -> x_0) alpha(x) beta(x) = A$, then $lim_(x -> x_0) alpha(x) beta'(x) = A$;
+    - if $lim_(x -> x_0) alpha(x) / beta(x) = A$, then $lim_(x -> x_0) alpha(x) / beta'(x) = A$.
+  + *Sum and difference replacement:* let $alpha$, $alpha'$, $beta$, $beta'$ be defined in a
+    deleted neighborhood of $x_0$ with $alpha tilde.op alpha'$, $beta tilde.op beta'$
+    $(x -> x_0)$ and $lim_(x -> x_0) alpha'(x) / beta'(x) = c$ with $c != 1$. If
+    $lim_(x -> x_0) (alpha(x) - beta(x)) = A$, then
+    $lim_(x -> x_0) (alpha'(x) - beta'(x)) = A$.
+] <thm:equivalence-replacement>
+
+#proof[
+  For the product replacement,
+  $lim_(x -> x_0) alpha beta' = lim (alpha beta) dot (beta' / beta) = A dot 1 = A$ and
+  $lim_(x -> x_0) alpha / beta' = lim alpha / beta dot beta / beta' = A dot 1 = A$
+  by the arithmetic of limits.
+
+  For the sum and difference replacement, the hypotheses give
+  $lim_(x -> x_0) alpha / beta = lim (alpha / alpha') dot (alpha' / beta') dot (beta' / beta) = 1 dot c dot 1 = c$.
+  Since $alpha' - beta' = beta' (alpha' / beta' - 1)$ and $alpha - beta = beta (alpha / beta - 1)$,
+  we have
+  $
+    (alpha' - beta') / (alpha - beta)
+    = beta' / beta dot (alpha' / beta' - 1) / (alpha / beta - 1)
+    -> 1 dot (c - 1) / (c - 1)
+    = 1,
+  $
+  where $c != 1$ guarantees that the denominator does not vanish in the limit. Hence
+  $alpha' - beta' tilde.op alpha - beta$, and
+  $lim (alpha' - beta') = lim (alpha' - beta') / (alpha - beta) dot (alpha - beta) = 1 dot A = A$.
+]
+
+#caution(title: "Precautions for Equivalence Replacement")[
+  + The quantities being replaced must be infinitesimal quantities
+    (tending to $0$ in the limit at hand).
+  + *The replacement must be applied to the whole expression, not to a part of it.*
+    When computing $lim f(x) plus.minus g(x)$, if both limits exist they may be computed
+    separately and added; but if one of them fails to exist, the replacement
+    must be applied to the whole expression at once.
+]
+
+#note[
+  Equivalence replacement is essentially the approximation of the limit by the first term
+  of the Taylor expansion: every problem solvable by equivalent replacement is solvable
+  by Taylor's formula, but not conversely. Products and quotients are always safe, because
+  the first Taylor term (the equivalent infinitesimal) survives the multiplication;
+  sums and differences may cancel the first terms, in which case higher-order terms are
+  needed and the replacement fails. This is exactly what the sum and difference replacement
+  covers: if $lim alpha / beta = c != 1$ (the first Taylor terms do not coincide), then
+  $alpha - beta tilde.op alpha' - beta'$; if $c != -1$ (the first terms are not opposite),
+  then $alpha + beta tilde.op alpha' + beta'$.
+]
+
+#note[
+  Letting $pi(x)$ denote the number of primes not exceeding $x$, the prime number theorem
+  states that
+  $
+    pi(x) tilde.op x / ln x quad quad (x -> +oo).
+  $
+]
+
+== Continuous Functions on Closed Intervals // 闭区间上的连续函数
+
+=== Concerning Theorems // 相关定理
+
+Throughout this section, $f in C[a, b]$ denotes a function continuous on $[a, b]$
+in the notation introduced in the Notations section.
+
+#theorem(name: "Boundedness Theorem")[
+  If $f in C[a, b]$, then $f$ is bounded on $[a, b]$.
+] <thm:boundedness-closed>
+
+#proof[
+  *First proof (bisection and nested intervals).*
+  Suppose $f$ is unbounded on $[a, b]$. Bisect $[a, b]$; at least one of the two halves
+  is a closed interval on which $f$ is unbounded -- select one such half and iterate.
+  This produces a sequence of nested closed intervals $[a_n, b_n]$ with
+  $b_n - a_n = (b - a) / 2^n -> 0$, on each of which $f$ is unbounded.
+  By #link(<thm:nested-interval>)[the nested interval theorem], there exists a unique
+  $xi$ belonging to all the $[a_n, b_n]$, with
+  $lim_(n -> oo) a_n = lim_(n -> oo) b_n = xi$.
+  Since $f$ is continuous at $xi$, there exist $delta > 0$ and $M > 0$ with
+  $abs(f(x)) <= M$ for all $x in U(xi, delta) inter [a, b]$.
+  For all sufficiently large $n$ we have $[a_n, b_n] subset U(xi, delta) inter [a, b]$,
+  so $f$ is bounded on these $[a_n, b_n]$ -- a contradiction.
+
+  *Second proof (via the Bolzano-Weierstrass theorem).*
+  Suppose $f in C[a, b]$ is unbounded. Then for every $G > 0$ there exists
+  $x in [a, b]$ with $abs(f(x)) > G$; taking $G_n = n$ produces a sequence ${x_n}$
+  with $abs(f(x_n)) > n$, i.e., $f(x_n) -> oo$.
+  By #link(<thm:bolzano-weierstrass>)[the Bolzano-Weierstrass theorem], some subsequence
+  ${x_(n_(k))}$ converges: $lim_(k -> oo) x_(n_(k)) = xi in [a, b]$.
+  By continuity, $lim_(k -> oo) f(x_(n_(k))) = f(xi)$, which contradicts
+  $abs(f(x_(n_(k)))) > n_k -> oo$.
+]
+
+#theorem(name: "Extreme Value Theorem")[
+  If $f in C[a, b]$, then $f$ attains its maximum and minimum values on $[a, b]$: there exist
+  $xi, eta in [a, b]$ such that $f(xi) <= f(x) <= f(eta)$ for all $x in [a, b]$.
+] <thm:extreme-value>
+
+#proof[
+  By #link(<thm:boundedness-closed>)[the boundedness theorem], the range
+  $R_f = {f(x) | x in [a, b]}$ is bounded, so $alpha = inf R_f$ and $beta = sup R_f$ exist.
+  It suffices to show that some $xi in [a, b]$ satisfies $f(xi) = alpha$; the case of $beta$
+  is analogous.
+  For every $x in [a, b]$ we have $f(x) >= alpha$, and for every $epsilon > 0$ there exists
+  $x in [a, b]$ with $f(x) < alpha + epsilon$. Taking $epsilon_n = 1 / n$ produces a sequence
+  ${x_n} subset [a, b]$ with $alpha <= f(x_n) < alpha + 1 / n$.
+  By #link(<thm:bolzano-weierstrass>)[the Bolzano-Weierstrass theorem], some subsequence
+  ${x_(n_(k))}$ converges to some $xi in [a, b]$. By continuity of $f$ at $xi$ and the squeeze,
+  $
+    f(xi) = lim_(k -> oo) f(x_(n_(k))) = f(lim_(k -> oo) x_(n_(k))) = alpha.
+  $
+]
+
+#theorem(name: "Zero Point Existence Theorem")[
+  If $f in C[a, b]$ and $f(a) f(b) < 0$, then there exists $xi in (a, b)$
+  with $f(xi) = 0$.
+] <thm:zero-point-existence>
+
+#proof[
+  *First proof (supremum of the negative set).*
+  Assume $f(a) < 0 < f(b)$ and set $V = {x | f(x) < 0, x in [a, b]}$, which is nonempty
+  and bounded above; let $xi = sup V$. We show $xi in (a, b)$ and $f(xi) = 0$.
+  By continuity and the sign of $f$ at the endpoints, there exist $delta_1, delta_2 > 0$
+  with $f(x) < 0$ for all $x in [a, a + delta_1]$ and $f(x) > 0$ for all
+  $x in [b - delta_2, b]$. Hence $a + delta_1 <= xi <= b - delta_2$, so $xi in (a, b)$.
+  Take $x_n in V$ with $x_n -> xi$; since $f(x_n) < 0$, continuity gives
+  $f(xi) = lim_(n -> oo) f(x_n) <= 0$.
+  If $f(xi) < 0$, then by continuity there exists $delta > 0$ with $f(x) < 0$ on $U(xi, delta)$,
+  contradicting $xi = sup V$. Hence $f(xi) = 0$.
+
+  *Second proof (bisection).*
+  Set $a_1 = a$, $b_1 = b$. Whenever $f((a_k + b_k) / 2) = 0$ we are done; otherwise, if
+  $f((a_k + b_k) / 2) < 0$ set $a_(k + 1) = (a_k + b_k) / 2$, $b_(k + 1) = b_k$, while if
+  $f((a_k + b_k) / 2) > 0$ set $a_(k + 1) = a_k$, $b_(k + 1) = (a_k + b_k) / 2$.
+  If the process never hits a zero, it produces a nested sequence $[a_n, b_n]$ with
+  $f(a_n) < 0 < f(b_n)$. By #link(<thm:nested-interval>)[the nested interval theorem],
+  there exists $xi$ with $xi = lim_(n -> oo) a_n = lim_(n -> oo) b_n$, and by continuity,
+  $
+    f(xi) = lim_(n -> oo) f(a_n) <= 0, quad quad f(xi) = lim_(n -> oo) f(b_n) >= 0,
+  $
+  hence $f(xi) = 0$.
+]
+
+#theorem(name: "Intermediate Value Theorem")[
+  If $f in C[a, b]$, then $f$ attains every value between its minimum
+  $m = min_(x in [a, b]) f(x)$ and its maximum $M = max_(x in [a, b]) f(x)$.
+] <thm:intermediate-value>
+
+#proof[
+  By #link(<thm:extreme-value>)[the extreme value theorem], there exist $xi, eta in [a, b]$
+  with $f(xi) = m$ and $f(eta) = M$; assume $xi < eta$ (the case $xi > eta$ is symmetric,
+  and $xi = eta$ means $f$ is constant). Let $C$ be any value with $m < C < M$ and set
+  $phi(x) = f(x) - C$, which is continuous on $[a, b]$ with $phi(xi) < 0 < phi(eta)$.
+  By #link(<thm:zero-point-existence>)[the zero point existence theorem], there exists
+  $zeta in (xi, eta)$ with $phi(zeta) = 0$, i.e., $f(zeta) = C$.
+]
+
+#example(name: "Fixed Points of Continuous Self-Maps")[
+  If $f in C[a, b]$ and $f([a, b]) subset [a, b]$, then there exists $xi in [a, b]$
+  with $f(xi) = xi$; such a point is called a *fixed point* of $f$.
+] <ex:fixed-point-interval>
+
+#proof[
+  We show that $g(x) = f(x) - x$ has a zero. Since $f([a, b]) subset [a, b]$, we have
+  $g(a) = f(a) - a >= 0$ and $g(b) = f(b) - b <= 0$.
+  If $g(a) = 0$ or $g(b) = 0$ we are done; otherwise $g(a) > 0 > g(b)$ and the claim follows
+  from #link(<thm:zero-point-existence>)[the zero point existence theorem].
+]
+
+#note[
+  Compare with #link(<thm:banach-fixed-point>)[the Banach fixed-point theorem]:
+  there, contractivity was used to *construct* the fixed point by iteration, while here
+  mere continuity already guarantees existence.
+]
+
+=== Uniform Continuity and Lipschitz Continuity // 一致连续与 Lipschitz 连续
+
+#definition(name: "Uniform Continuity")[
+  Let $f$ be defined on an interval $I$. If for every $epsilon > 0$ there exists
+  $delta > 0$ such that
+  $
+    abs(f(x') - f(x'')) < epsilon quad quad "whenever" quad quad x', x'' in I, abs(x' - x'') < delta,
+  $
+  then $f$ is said to be *uniformly continuous* on $I$.
+] <def:uniform-continuity>
+
+#note[
+  In ordinary continuity the $delta$ depends on both $epsilon$ and the point $x_0$;
+  in uniform continuity $delta$ depends only on $epsilon$ and works for all points
+  simultaneously. Clearly, uniform continuity on $I$ implies continuity on $I$,
+  but the converse fails; geometrically, uniform continuity means that the graph is
+  "not steep without bound" over the whole interval. Counterexamples:
+  $f(x) = x^2$ is continuous but not uniformly continuous on $bb(R)$, since
+  $abs((x + h)^2 - x^2) = abs(2 x h + h^2)$ grows without bound as $x -> oo$
+  for fixed $h$; whereas $f(x) = sqrt(x)$ is uniformly continuous on $(0, 1)$
+  (extend it continuously to $[0, 1]$ and apply
+  #link(<thm:cantor-theorem>)[Cantor's theorem]) yet satisfies no Lipschitz condition,
+  since $abs(sqrt(x) - sqrt(y)) / abs(x - y) -> oo$ as $x, y -> 0^+$.
+]
+
+#theorem(name: "Uniform Continuity Theorem")[
+  Let $f$ be defined on an interval $I$. Then $f$ is uniformly continuous on $I$ if and only
+  if for any two sequences ${x_n'}$, ${x_n''}$ with $x_n', x_n'' in I$ satisfying
+  $lim_(n -> oo) (x_n' - x_n'') = 0$, we have
+  $lim_(n -> oo) (f(x_n') - f(x_n'')) = 0$.
+] <thm:uniform-continuity-criterion>
+
+#proof[
+  + ($=>$) Let $f$ be uniformly continuous on $I$. For every $epsilon > 0$ choose $delta > 0$
+    as in #link(<def:uniform-continuity>)[the definition]. For any sequences
+    ${x_n'}$, ${x_n''}$ in $I$ with $x_n' - x_n'' -> 0$, there exists $N$ such that
+    $abs(x_n' - x_n'') < delta$ for $n > N$, hence $abs(f(x_n') - f(x_n'')) < epsilon$
+    for $n > N$, i.e., $f(x_n') - f(x_n'') -> 0$.
+  + ($<=$) Suppose $f$ is not uniformly continuous on $I$: there exist $epsilon_0 > 0$ and,
+    for every $delta > 0$, points $x', x'' in I$ with $abs(x' - x'') < delta$ but
+    $abs(f(x') - f(x'')) >= epsilon_0$.
+    Taking $delta_n = 1 / n$ produces sequences ${x_n'}$, ${x_n''}$ in $I$ with
+    $abs(x_n' - x_n'') < 1 / n$ but $abs(f(x_n') - f(x_n'')) >= epsilon_0$.
+    Then $x_n' - x_n'' -> 0$ while $f(x_n') - f(x_n'')$ cannot converge to $0$,
+    contradicting the hypothesis.
+]
+
+#definition(name: "Lipschitz Continuity")[
+  If there exists a constant $L > 0$ such that for any $x_1, x_2 in I$,
+  $
+    abs(f(x_1) - f(x_2)) <= L abs(x_1 - x_2),
+  $
+  then $f$ is called *Lipschitz continuous* on $I$, and $f$ is said to satisfy
+  the *Lipschitz condition* on $I$. In particular, if $L < 1$, then $f$ is called
+  a *contraction mapping* on $I$.
+] <def:lipschitz-continuity>
+
+#note[
+  + If $f$ is Lipschitz continuous on $I$, then $f$ is uniformly continuous on $I$:
+    for every $epsilon > 0$, simply take $delta = epsilon / L$.
+  + If $f$ is uniformly continuous on $I$, then $f$ is continuous on $I$.
+  + Neither converse holds; see the counterexamples following
+    #link(<def:uniform-continuity>)[the definition of uniform continuity]
+    ($x^2$ on $bb(R)$) and above ($sqrt(x)$ on $(0, 1)$).
+  + If $f in D_I$ with $abs(f'(x)) <= M$ on $I$, then $f$ is Lipschitz continuous with
+    constant $M$ (by the mean value theorem), hence uniformly continuous; see also
+    #link(<ex:derivative-criterion>)[the derivative criterion below].
+]
+
+#theorem(name: "Cantor's Theorem")[
+  If $f in C[a, b]$, then $f$ is uniformly continuous on $[a, b]$.
+] <thm:cantor-theorem>
+
+#proof[
+  Suppose $f$ is not uniformly continuous on $[a, b]$: there exist $epsilon_0 > 0$ and,
+  for every $delta > 0$, points $x', x'' in [a, b]$ with $abs(x' - x'') < delta$ but
+  $abs(f(x') - f(x'')) >= epsilon_0$. Taking $delta_n = 1 / n$ produces sequences
+  ${x_n'}$, ${x_n''}$ in $[a, b]$ with $abs(x_n' - x_n'') < 1 / n$ and
+  $abs(f(x_n') - f(x_n'')) >= epsilon_0$.
+  Since ${x_n'}$ is bounded, #link(<thm:bolzano-weierstrass>)[the Bolzano-Weierstrass theorem]
+  provides a convergent subsequence: $lim_(k -> oo) x'_(n_(k)) = xi in [a, b]$.
+  For the subsequence ${x_n''}$ with the same indices we have
+  $
+    lim_(k -> oo) x''_(n_(k)) = lim_(k -> oo) (x'_(n_(k)) + (x''_(n_(k)) - x'_(n_(k)))) = xi,
+  $
+  since $abs(x''_(n_(k)) - x'_(n_(k))) < 1 / n_k -> 0$.
+  By continuity of $f$ at $xi$,
+  $lim_(k -> oo) f(x'_(n_(k))) = lim_(k -> oo) f(x''_(n_(k))) = f(xi)$,
+  hence $f(x'_(n_(k))) - f(x''_(n_(k))) -> 0$, contradicting
+  $abs(f(x'_(n_(k))) - f(x''_(n_(k)))) >= epsilon_0$.
+]
+
+#corollary(name: "Extension to the Endpoints of an Open Interval")[
+  Let $f$ be continuous on a finite open interval $(a, b)$. Then $f$ is uniformly continuous
+  on $(a, b)$ if and only if both one-sided limits $f(a^+)$ and $f(b^-)$ exist.
+] <cor:boundary-extension>
+
+#proof[
+  + ($<=$) Define
+    $
+      g(x) = cases(
+        f(a^+) comma & x = a,
+        f(x) comma & a < x < b,
+        f(b^-) comma & x = b,
+      )
+    $
+    The existence of the one-sided limits makes $g$ continuous on the closed interval
+    $[a, b]$, so $g$ is uniformly continuous on $[a, b]$ by
+    #link(<thm:cantor-theorem>)[Cantor's theorem]; restricting the domain preserves
+    uniform continuity, so $f = bar(g)$ is uniformly continuous on $(a, b)$.
+  + ($=>$) For every $epsilon > 0$ choose $delta > 0$ such that
+    $abs(f(x') - f(x'')) < epsilon$ for all $x', x'' in (a, b)$ with $abs(x' - x'') < delta$.
+    Pick any sequence ${x_n} subset (a, b)$ with $x_n -> a$; being convergent, ${x_n}$
+    is a Cauchy sequence, so there exists $N$ with $abs(x_n - x_m) < delta$, hence
+    $abs(f(x_n) - f(x_m)) < epsilon$, for all $m, n > N$.
+    Thus ${f(x_n)}$ is a Cauchy sequence and converges; by
+    #link(<thm:heine-theorem>)[Heine's theorem], $f(a^+) = lim_(x -> a^+) f(x)$ exists.
+    The existence of $f(b^-)$ is proved analogously.
+]
+
+#proposition(name: "Approximation Problem")[
+  Let $phi$ be uniformly continuous on $[a, +oo)$ and let $f$ be continuous on $[a, +oo)$
+  with $lim_(x -> +oo) (f(x) - phi(x)) = 0$. Then $f$ is uniformly continuous on $[a, +oo)$.
+] <prop:approximation-problem>
+
+#example(name: "A Criterion on $[a, +oo)$")[
+  If $f in C[a, +oo)$ and $lim_(x -> +oo) f(x) = A$ is finite, then $f$ is uniformly
+  continuous on $[a, +oo)$.
+] <ex:uniform-continuous-halfline>
+
+#proof[
+  By the Cauchy criterion for functions (#link(<thm:cauchy-criterion-function>)[function version]),
+  for every $epsilon > 0$ there exists $X > 0$ such that $abs(f(x') - f(x'')) < epsilon$
+  for all $x', x'' > X$ in $[a, +oo)$.
+  Since $f$ is continuous on the compact interval $[a, X + 1]$, it is uniformly continuous
+  there by #link(<thm:cantor-theorem>)[Cantor's theorem]: there exists $delta_0 > 0$ such that
+  $abs(f(x_1) - f(x_2)) < epsilon$ for all $x_1, x_2 in [a, X + 1]$ with
+  $abs(x_2 - x_1) < delta_0$.
+  Set $delta = min(delta_0, 1)$. For any $x_1, x_2$ with $abs(x_1 - x_2) < delta$,
+  there are three cases:
+  + $x_1, x_2 in [X, +oo)$: the first estimate gives $abs(f(x_1) - f(x_2)) < epsilon$;
+  + $x_1 in [X, +oo)$ and $x_2 in [a, X]$ (or vice versa): since $abs(x_1 - x_2) < delta <= 1$,
+    both points lie in $[a, X + 1]$, so the second estimate applies;
+  + $x_1, x_2 in [a, X]$: again the second estimate applies.
+
+  In all cases $abs(f(x_1) - f(x_2)) < epsilon$, so $f$ is uniformly continuous on
+  $[a, +oo)$.
+]
+
+#caution(title: "A Wrong Proof")[
+  A tempting but *wrong* argument runs as follows:
+  + by the Cauchy criterion, for every $epsilon > 0$ there exists $X > 0$ with
+    $abs(f(x') - f(x'')) < epsilon$ for $x', x'' > X$; by the arbitrariness of $epsilon$,
+    $f$ is uniformly continuous on $[X, +oo)$;
+  + by Cantor's theorem, $f$ is uniformly continuous on $[a, X + 1]$;
+  + hence $f$ is uniformly continuous on $[a, +oo)$.
+
+  The error is in the first step: the $X$ provided by the Cauchy criterion *depends on*
+  $epsilon$, so as $epsilon$ varies, $X$ moves; the fixed-interval conclusion
+  "$f$ is uniformly continuous on $[X, +oo)$" cannot be drawn.
+  The correct proof above fixes a single $X + 1$ and glues the two pieces together
+  with the overlap of width $1$.
+]
+
+#example(name: "Boundedness on an Open Interval")[
+  If $f$ is uniformly continuous on $(a, b)$, then $f$ is bounded on $(a, b)$.
+] <ex:bounded-open-interval>
+
+#proof[
+  Take $epsilon = 1$ in the definition of uniform continuity: there exists $delta > 0$
+  such that $abs(f(x_1) - f(x_2)) < 1$ for all $x_1, x_2 in (a, b)$ with
+  $abs(x_1 - x_2) < delta$.
+  Choose $n in bb(N)^+$ with $(b - a) / n < delta$ and subdivide $(a, b)$ into $n$ equal
+  parts with division points $x_k = a + k (b - a) / n$, $k = 0, 1, dots, n$.
+  For every $x in (a, b)$ there exists $k$ with $x_k <= x <= x_(k + 1)$, so
+  $
+    abs(x - (x_k + x_(k + 1)) / 2) <= x_(k + 1) - x_k < delta,
+  $
+  and hence
+  $
+    abs(f(x)) <= abs(f(x) - f((x_k + x_(k + 1)) / 2)) + abs(f((x_k + x_(k + 1)) / 2))
+    <= 1 + max_(0 <= k <= n - 1) abs(f((x_k + x_(k + 1)) / 2)),
+  $
+  which is a finite bound.
+]
+
+#example(name: "The Derivative Criterion")[
+  Let $f in C[0, +oo)$, let $f$ be differentiable on $(0, +oo)$, and suppose
+  $lim_(x -> +oo) abs(f'(x)) = A$. Then $f$ is uniformly continuous on $[0, +oo)$
+  if and only if $A$ is finite.
+] <ex:derivative-criterion>
+
+#proof[
+  + $A$ finite: since $lim_(x -> +oo) abs(f'(x)) = A$, there exists $N > 0$ with
+    $abs(f'(x)) < A + 1$ for all $x > N$.
+    By the Lagrange mean value theorem, for $x_1 > x_2 > N$ there exists
+    $xi in (x_2, x_1)$ with $f(x_1) - f(x_2) = f'(xi) (x_1 - x_2)$, hence
+    $abs(f(x_1) - f(x_2)) < (A + 1) abs(x_1 - x_2)$:
+    $f$ satisfies the Lipschitz condition on $[N, +oo)$ and is uniformly continuous there.
+    On $[0, N + 1]$, $f$ is uniformly continuous by #link(<thm:cantor-theorem>)[Cantor's theorem];
+    as in #link(<ex:uniform-continuous-halfline>)[the previous example], the two pieces glue
+    together, so $f$ is uniformly continuous on $[0, +oo)$.
+  + $A$ infinite: since $lim_(x -> +oo) abs(f'(x)) = +oo$, for every $G > 0$ there exists
+    $X > 0$ with $abs(f'(x)) > G$ for all $x > X$.
+    Fix $epsilon_0 = 1$. For any $delta > 0$, choose $G > 1 / delta$ and set
+    $x' = 2 X$, $x'' = 2 X + 1 / G$; then $x', x'' > X$ and
+    $abs(x' - x'') = 1 / G < delta$, while the mean value theorem gives some
+    $xi$ between $x'$ and $x''$ with
+    $
+      abs(f(x') - f(x'')) = abs(f'(xi)) abs(x' - x'') > G dot 1 / G = 1 = epsilon_0.
+    $
+    Hence $f$ is not uniformly continuous on $[0, +oo)$.
+]
+
+#note[
+  This provides a convenient test: for $f in D_I$, boundedness of $f'$ on $I$
+  implies uniform continuity of $f$ on $I$; and if $abs(f'(x)) -> +oo$ at infinity,
+  uniform continuity fails.
+]
+
+#example(name: "Periodic Functions Are Uniformly Continuous")[
+  A continuous periodic function on $bb(R)$ is uniformly continuous on $bb(R)$.
+] <ex:uniform-continuous-periodic>
+
+#proof[
+  Let $T$ be a period of $f$. By #link(<thm:cantor-theorem>)[Cantor's theorem] applied on
+  $[-T, 2 T]$, for every $epsilon > 0$ there exists $delta_1 > 0$ such that
+  $abs(f(x') - f(x'')) < epsilon$ for all $x', x'' in [-T, 2 T]$ with
+  $abs(x' - x'') < delta_1$.
+  Given $x', x'' in bb(R)$ with $abs(x' - x'') < delta_1$, shift $x'$ by an integer multiple
+  of $T$ into $[0, T]$; then both shifted points lie in $[-T, 2 T]$ and their distance is
+  unchanged, while periodicity leaves $f$ unchanged. Hence
+  $d = min(delta_1, T)$ works globally.
+]
+
+#example(name: "Images of Cauchy Sequences")[
+  Let $I$ be a finite interval and let $f$ be defined on $I$. Then $f$ is uniformly
+  continuous on $I$ if and only if $f$ maps every Cauchy sequence in $I$ to a Cauchy sequence.
+] <ex:cauchy-mapping>
+
+#proof[
+  + ($=>$) For every $epsilon > 0$ choose $delta > 0$ as in the definition of uniform
+    continuity. If ${x_n} subset I$ is a Cauchy sequence, there exists $N$ with
+    $abs(x_m - x_n) < delta$ for all $m, n > N$; hence $abs(f(x_m) - f(x_n)) < epsilon$
+    for all $m, n > N$, so ${f(x_n)}$ is a Cauchy sequence.
+  + ($<=$) Suppose $f$ is not uniformly continuous on $I$: there exist $epsilon_0 > 0$ and
+    sequences with $abs(x_n - x_n') < 1 / n$ but $abs(f(x_n) - f(x_n')) >= epsilon_0$.
+    Since $I$ is finite, #link(<thm:bolzano-weierstrass>)[the Bolzano-Weierstrass theorem]
+    gives a convergent subsequence $x_(n_(k)) -> eta$ with the same-index subsequence
+    satisfying $x'_(n_(k)) -> eta$ as well.
+    The interleaved sequence $x_(n_(1)), x'_(n_(1)), x_(n_(2)), x'_(n_(2)), dots$ converges
+    (both strands converge to $eta$), hence is a Cauchy sequence; but its image under $f$
+    contains pairs with $abs(f(x_(n_(k))) - f(x'_(n_(k)))) >= epsilon_0$,
+    so the image is not a Cauchy sequence -- a contradiction.
+]
+
+#note[
+  The finiteness of $I$ is used only in the sufficiency; for infinite intervals
+  the necessity still holds.
+]
+
+== Period Three Implies Chaos // 周期三蕴含混沌
+
+// §3.5：tex 中完全为空，内容取自 md L1864–1905（周期三蕴含混沌）；
+// 外链图片不可用，跳过；各引理与定理 md 均未给出证明，保持原状
+
+=== One-Dimensional Iterative Dynamical Systems // 一维迭代动力系统
+
+#definition(name: "One-Dimensional Iterative Dynamical System")[
+  A recurrence $x_(n+1) = f(x_n) quad (n in bb(N)_+)$ is called a
+  *one-dimensional iterative dynamical system* (or *one-dimensional discrete
+  dynamical system*) in the theory of dynamical systems. Starting from an
+  initial value $x_0$, iteration generates a sequence ${x_n}_(n >= 0)$, called
+  the *orbit* determined by $x_0$. If for some orbit ${x_n}$ there exists a
+  positive integer $p$ such that $x_(n+p) = x_n$ for all $n >= 0$, the orbit is
+  called a *periodic orbit* with period $p$, and its points are called
+  *periodic points*. The smallest such $p$ is the *minimal period* of the orbit.
+  A periodic orbit of period $1$ is called a *fixed point*.
+] <def:one-dimensional-iteration>
+
+=== The Li-Yorke Theorems // Li-Yorke 定理
+
+#note[
+  Throughout this subsection, $f^n$ denotes the $n$-fold iterate of $f$:
+  $
+    f^n(x) = underbrace(f(f(dots f(x) dots)), [n "folds"]).
+  $
+]
+
+#lemma(name: "Fixed-Point Lemma")[
+  Let $I$ be a bounded closed interval and $f in C(I)$. If $f(I) supset I$,
+  then $f$ has a fixed point in $I$.
+] <lem:cover-fixed-point>
+
+#lemma(name: "Subinterval Covering Lemma")[
+  Let $I, J$ be two bounded closed intervals and $f in C(I)$. If $f(I) supset J$,
+  then there exists a closed subinterval $I' subset I$ such that $f(I') = J$.
+] <lem:cover-subinterval>
+
+#lemma(name: "Cyclic Covering Lemma")[
+  Let $f$ be a continuous function defined on bounded closed intervals
+  $I_0, I_1, dots, I_(n-1)$ satisfying
+  $
+    f(I_0) supset I_1, quad f(I_1) supset I_2, quad dots, quad
+    f(I_(n-2)) supset I_(n-1), quad f(I_(n-1)) supset I_0.
+  $
+  Then there exists a point $x_0$ such that $f^n(x_0) = x_0$ and
+  $f^i(x_0) in I_i$ for $i = 1, 2, dots, n-1$.
+] <lem:cover-cyclic>
+
+#theorem(name: "The First Li-Yorke Theorem")[
+  Let $I$ be an interval, $f in C(I)$ with $f(I) subset I$. Suppose there exist
+  points $a, b, c, d in I$ such that
+  $
+    f(a) = b, quad f(b) = c, quad f(c) = d, quad quad
+    d <= a < b < c quad "or" quad d >= a > b > c.
+  $
+  Then $f$ admits periodic orbits with minimal period $p$ for every positive
+  integer $p$.
+] <thm:li-yorke-first>
+
+#theorem(name: "The Second Li-Yorke Theorem")[
+  Let $I$ be an interval, $f in C(I)$ with $f(I) subset I$. Then there exists an
+  uncountable set $S$ in the interval $I$ such that for any two points
+  $x, y in S$ with $x != y$, the orbits ${f^n(x)}$ and ${f^n(y)}$ generated by
+  iteration have the following properties:
+  + $limsup_(n -> oo) abs(f^n(x) - f^n(y)) > 0$;
+  + $liminf_(n -> oo) abs(f^n(x) - f^n(y)) = 0$;
+  + $limsup_(n -> oo) abs(f^n(x) - f^n(p)) > 0$, where $p$ is any periodic point
+    of $f$.
+] <thm:li-yorke-second>
+
+#definition(name: "Li-Yorke Chaos")[
+  Let $f$ be defined on an interval $I$ with $f(I) subset I$. If the following
+  conditions hold:
+  + The minimal periods of the periodic points of $f$ are unbounded;
+  + There exists an uncountable subset $S$ of $I$ such that for any two points
+    $x, y in S$ with $x != y$,
+    $
+      limsup_(n -> oo) abs(f^n(x) - f^n(y)) > 0, quad quad
+      liminf_(n -> oo) abs(f^n(x) - f^n(y)) = 0;
+    $
+  then the dynamical system generated by iteration of $f$ is called *chaotic*.
+] <def:li-yorke-chaos>
+
+== Functional Equations // 函数方程
+
+// §3.6：tex 中完全为空，内容取自 md L1907–2005（函数方程）
+
+=== Classical Functional Equations // 经典函数方程
+
+#proposition(name: "Classical Functional Equations")[
+  The following elementary functions give the canonical solutions of several
+  classical functional equations:
+  + $f(x) = a x$ satisfies
+    $
+      f(x + y) = f(x) + f(y) quad quad (forall x, y in bb(R));
+    $
+  + $f(x) = a^x quad (a > 0)$ satisfies
+    $
+      f(x + y) = f(x) dot f(y) quad quad (forall x, y in bb(R));
+    $
+  + $f(x) = log_a x quad (a > 0)$ satisfies
+    $
+      f(x y) = f(x) + f(y) quad quad (forall x, y > 0);
+    $
+  + $f(x) = x^a$ satisfies
+    $
+      f(x y) = f(x) dot f(y) quad quad (forall x, y > 0);
+    $
+  + $f(x) = cos a x$ and $g(x) = cosh a x$ satisfy
+    $
+      f(x + y) + f(x - y) = 2 f(x) dot f(y) quad quad (forall x, y in bb(R));
+    $
+  + $f(x) = cos a x$ and $g(x) = sin a x$ satisfy the system of functional
+    equations
+    $
+      cases(
+        f(x + y) = f(x) f(y) - g(x) g(y) comma
+        g(x + y) = f(x) g(y) + f(y) g(x),
+      ) quad quad (forall x, y in bb(R)).
+    $
+] <prop:classic-functional-equations>
+
+=== The Cauchy Equation // Cauchy 方程
+
+#example(name: "The Cauchy Equation")[
+  The unique solution of the functional equation
+  $
+    f(x + y) = f(x) + f(y) quad quad (forall x, y in bb(R))
+  $
+  that is continuous at $x = 0$ is $f(x) = a x$, where $a$ is a constant.
+] <ex:cauchy-equation>
+
+#proof[
+  *Step 1: Homogeneity, $f(c x) = c f(x)$ for all $c in bb(R)$.*
+
+  + ($n in bb(N)$) We prove $f(n x) = n f(x)$ by induction. For $n = 2$,
+    $f(2 x) = f(x + x) = f(x) + f(x)$ holds. Assume $f((n-1) x) = (n-1) f(x)$;
+    then $f(n x) = f((n-1) x + x) = (n-1) f(x) + f(x) = n f(x)$.
+  + ($r in bb(Q)^+$) Setting $y = n x$ gives $f(y) = n f(y / n)$, i.e.,
+    $f(y / n) = f(y) / n$. Combining this with the previous item yields
+    $f(m / n dot y) = m / n dot f(y)$ for all $m, n in bb(N)$, hence
+    $f(r x) = r f(x)$ for all $r in bb(Q)^+$.
+  + ($r in bb(Q)$) From $f(x) = f(0 + x) = f(0) + f(x)$ we get $f(0) = 0$;
+    hence $f(x) + f(-x) = f(0) = 0$, i.e., $f(x) = -f(-x)$. Applying the
+    previous item with $x = m / n dot y$ gives
+    $f(- m / n dot y) = -f(m / n dot y) = - m / n dot f(y)$, hence
+    $f(r x) = r f(x)$ for all $r in bb(Q)$.
+  + (Continuity everywhere) For any $x_0 in bb(R)$, write $x = x_0 + Delta x$;
+    since $f$ is continuous at $0$ and $f(0) = 0$,
+    $
+      lim_(x -> x_0) f(x) & = lim_(Delta x -> 0) f(x_0 + Delta x) \
+                          & = lim_(Delta x -> 0) [f(x_0) + f(Delta x)] \
+                          & = f(x_0) + lim_(Delta x -> 0) f(Delta x) \
+                          & = f(x_0),
+    $
+    so $f$ is continuous at every point of $bb(R)$.
+  + ($c in bb(R)$) The two continuous functions $c arrow.r f(c x)$ and
+    $c arrow.r c f(x)$ agree at every rational $c$ by the first three items; by
+    #link(<ex:continuous-agree-dense>)[the density argument] they agree for all
+    $c in bb(R)$, i.e., $f(c x) = c f(x)$.
+
+  *Step 2: Conclusion.* Taking $c = x$ and $x = 1$ in Step 1 gives
+  $f(x) = f(1 dot x) = x f(1)$; setting $a = f(1)$ yields $f(x) = a x$.
+]
+
+=== The d'Alembert Equation // d'Alembert 方程
+
+#example(name: "The d'Alembert Equation")[
+  The continuous solutions of
+  $
+    f(x + y) + f(x - y) = 2 f(x) dot f(y) quad quad (forall x, y in bb(R))
+  $
+  that are not identically zero on the real axis $bb(R)$ are $f(x) = cos a x$
+  or $f(x) = cosh a x$, where $a$ is a constant.
+] <ex:dalembert-equation>
+
+#note[
+  Indeed, $cos x = (e^(i x) + e^(-i x)) / 2$ and
+  $cosh x = (e^x + e^(-x)) / 2$: the trigonometric and hyperbolic families are
+  the two faces of one and the same functional equation.
+]
+
+#proof[
+  *Step 1: $f(0) = 1$ and $f$ is even.* Setting $y = 0$ in the equation gives
+  $2 f(x) = 2 f(x) f(0)$; since $f != 0$ identically, this forces $f(0) = 1$.
+  Setting $x = 0$ gives $f(y) + f(-y) = 2 f(y)$, i.e., $f$ is even.
+
+  *Step 2: Construction of the parameter.* Since $f(0) = 1$ and $f$ is
+  continuous, by the local sign-preserving property there exists $c > 0$ such
+  that $f(x) > 0$ for all $x in [0, c]$. Two cases:
+
+  (a) If $f(c) <= 1$: since $0 < f(c) <= 1$ and $cos$ maps $[0, pi / 2]$
+  bijectively onto $[0, 1]$, there exists $theta in [0, pi / 2]$ with
+  $f(c) = cos theta$. Rewrite the equation as
+  $f(x + y) = 2 f(x) f(y) - f(x - y)$. Setting $x = y = c$ gives
+  $
+    f(2 c) = 2 f(c)^2 - f(0) = 2 cos^2 theta - 1 = cos 2 theta.
+  $
+  We now prove $f(n c) = cos n theta$ by strong induction. The cases
+  $n = 1, 2$ have just been established. Assume
+  $f((n-2) c) = cos (n-2) theta$ and $f((n-1) c) = cos (n-1) theta$; setting
+  $x = (n-1) c$, $y = c$ gives
+  $
+    f(n c) = 2 cos (n-1)theta cos theta - cos (n-2)theta = cos n theta.
+  $
+  Hence
+  $
+    f(n c) = cos n theta quad quad forall n in bb(N). quad quad (1)
+  $
+  Setting $x = y = c / 2$ gives
+  $f(c / 2)^2 = 1 / 2 (cos theta + 1) = cos^2 (theta / 2)$; since
+  $c / 2 in [0, c]$, we have $f(c / 2) > 0$, so $f(c / 2) = cos (theta / 2)$.
+  By induction, if $f(c / 2^(n-1)) = cos (theta / 2^(n-1))$, setting
+  $x = y = c / 2^n$ gives
+  $
+    f(c / 2^n)^2 = 1 / 2 (cos (theta / 2^(n-1)) + 1) = cos^2 (theta / 2^n),
+  $
+  and again $f(c / 2^n) > 0$, so
+  $
+    f(c / 2^n) = cos (theta / 2^n). quad quad (2)
+  $
+  Combining (1) and (2), $f(m / 2^n dot c) = cos (m / 2^n dot theta)$ for all
+  $m, n$. Since the set ${p / q | p, q in bb(N)_+}$ is dense in the positive
+  real axis, for every $x > 0$ there exist numbers $x_i$ of the form
+  $m / 2^n$ with $x_i -> x$; then $f(x_i c) = cos (x_i theta)$, and by
+  continuity $f(x c) = lim_(i -> oo) f(x_i c) = cos (theta x)$. Since $f$ is
+  even and $f(0) = 1$, this holds for all $x in bb(R)$. Substituting $x c = y$
+  and writing $a = theta / c$ yields $f(y) = cos a y$.
+
+  (b) If $f(c) > 1$: the argument is entirely similar, with $cosh$ in place of
+  $cos$ (since $cosh$ maps $[0, +oo)$ bijectively onto $[1, +oo)$, there exists
+  $theta >= 0$ with $f(c) = cosh theta$, and every identity above survives with
+  $cosh$ substituting for $cos$).
+]
+
+=== Equations Reducible by Substitution // 可代入化归的方程
+
+#note[
+  The following two problems are solved by the substitution method: a suitable
+  change of variables reduces them to the results already proved above.
+]
+
+#example(name: "The Exponential Equation")[
+  The unique continuous solution of
+  $
+    f(x + y) = f(x) dot f(y) quad quad (forall x, y in bb(R))
+  $
+  that is not identically zero on the real axis $bb(R)$ is $f(x) = a^x$, where
+  $a > 0$ is a constant.
+] <ex:exponential-equation>
+
+#proof[
+  *Step 1: Positivity, $f(x) > 0$.* Since $f$ is not identically zero, there exists
+  $x_0 in bb(R)$ with $f(x_0) != 0$. Setting $y = x_0 - x$ in the equation
+  gives $f(x) dot f(x_0 - x) = f(x_0) != 0$, hence $f(x) != 0$ for all $x$.
+  Furthermore,
+  $
+    f(x) = f(x / 2 + x / 2) = f(x / 2)^2 > 0.
+  $
+
+  *Step 2: Substitution.* If $f(1) = 1$, then $f(x) = f(x / 2)^2 equiv 1 = 1^x$
+  and we are done; otherwise set $F(x) = log_a f(x)$ with $a = f(1) > 0$,
+  $a != 1$. Then $F$ is continuous and satisfies
+  $F(x + y) = F(x) + F(y)$ for all $x, y in bb(R)$. By
+  #link(<ex:cauchy-equation>)[the Cauchy equation], $F(x) = a_1 x$; but
+  $F(1) = log_a a = 1$, so $a_1 = F(1) = 1$, i.e., $F(x) = x$. Therefore
+  $f(x) = a^(F(x)) = a^x$ with $a = f(1) > 0$.
+]
+
+#example(name: "The Logarithmic Equation")[
+  The unique continuous solution of
+  $
+    f(x y) = f(x) + f(y) quad quad (forall x, y > 0)
+  $
+  that is not identically zero on $(0, +oo)$ is $f(x) = b log_a x$, where
+  $a > 0$ and $b$ are constants.
+] <ex:logarithmic-equation>
+
+#proof[
+  Fix any $a > 1$ and set $g(x) = f(a^x)$. Then $g$ is continuous on $bb(R)$
+  and
+  $
+    g(x + y) & = f(a^(x + y)) \
+             & = f(a^x dot a^y) \
+             & = f(a^x) + f(a^y) \
+             & = g(x) + g(y),
+  $
+  so by #link(<ex:cauchy-equation>)[the Cauchy equation] $g(x) = b x$ for some
+  constant $b$. For $x > 0$, writing $x = a^(log_a x)$ gives
+  $
+    f(x) = f(a^(log_a x)) = g(log_a x) = b log_a x.
+  $
+]
 
 // --- Part II: 一元函数微积分 ---
 #part("Single-variable Calculus") // 一元函数微积分
