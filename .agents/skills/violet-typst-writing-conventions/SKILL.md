@@ -773,6 +773,98 @@ The power dissipated per unit volume is $p = bold(J) dot bold(E)$.
 
 ---
 
+## 9.7 编辑既有内容：一致性原则
+
+编辑既有 Typst 笔记时，除语法规范外还必须遵守以下一致性原则（原 violet-typst-edit-consistency 技能已并入本节）：
+
+### 符号一致性（最高优先级）
+
+文档中已有的符号体系必须完全保留，不得更改。案例：`Analyse Réelle/initial.typ` 中全集 `$S$`、集类 `$cal(S)$`、元素 `$A, B, A_i$` 在全文广泛使用——不得改写为 `$X$`/`$cal(R)$`/`$E$`。编辑前先搜索该符号的全部使用位置，确认交叉引用依赖后再动手。
+
+### 格式风格一致性
+
+保留原有的排版格式与写作习惯：`+` 列表、`//` 中文注释、`Obviously, ...` 句式、缩进与标点。
+
+### 扩展而非重写
+
+用户要求修改时通常是扩展或修正，不是重写：保留原有定义的核心结构，在适当位置插入新内容，不改动已写好的部分。
+
+### 上下文检查清单
+
+1. 搜索文档中该符号的所有使用位置
+2. 确认符号在后续定义、定理中的引用
+3. 检查是否有交叉引用依赖该符号
+4. 确保修改不破坏文档的逻辑连贯性
+
+### 用户意图理解
+
+- "把这里修改为'环与代数'…"——扩展定义，不是重写
+- "语言风格、符号等等不要大改"——保持原有风格
+- "模仿现在的风格"——学习现有文档的写作模式
+
+### 错误纠正
+
+发现错误时：立即承认不辩解 → 分析原因（符号变更、风格不一致）→ 正确修正 → 将教训记录到本技能。
+
+> 下标吞括号规则见 §3 三维基准小节，此处不重复——任何编辑任务写完带下标+括号的公式必须执行该正则自查，命中数为 0 前禁止声明完成。
+
+---
+
+## 9.8 编译验证
+
+每次修改 `.typ` 文件后必须编译验证（原 violet-typst-compile 技能已并入本节）。
+
+### 编译命令
+
+```bash
+typst compile "<path-to-initial.typ>" "<output-pdf-path>" --root .
+```
+
+- `--root .` 必须指定（模板在仓库根 `TypstTemplate/` 下，需允许跨目录访问）
+- 工作目录必须是仓库根目录
+- 始终编译 `initial.typ` 主入口（单文件原则，不再使用 `chapters/` 分文件模式）
+
+### 输出路径规则
+
+PDF 输出到 `initial.typ` 同级目录，文件名 `initial.pdf`：
+
+```
+Subject/
+  initial.typ      ← 编译入口
+  initial.pdf      ← 输出 PDF（同级）
+  references.bib
+  img/
+```
+
+**不要将 PDF 输出到 `tmp/` 目录**（旧约定已废弃）。
+
+### 编译示例
+
+```bash
+# 在仓库根目录执行
+typst compile "1.Analyse/Analyse Réelle/initial.typ" "1.Analyse/Analyse Réelle/initial.pdf" --root .
+typst compile "1.Analyse/Analyse Complexe/initial.typ" "1.Analyse/Analyse Complexe/initial.pdf" --root .
+```
+
+### 常见编译错误
+
+| 错误信息 | 原因 | 解决方案 |
+|----------|------|----------|
+| `cannot read file outside of project root` | 缺少 `--root .` | 添加 `--root .` 参数 |
+| `unknown variable` | 多字母变量未加引号 | 用 `"var"` 包裹或空格分开 |
+| `expected expression` | 裸下标 `$_x$` | 改为 `$""_x$` |
+| `unexpected token` | 语法错误（括号不匹配等） | 检查 `[...]` 和 `(...)` 配对 |
+| `file not found` | `#import` 路径错误 | 检查相对路径层级 |
+| `failed to write PDF file` | 输出目录不存在 | 确保输出路径的目录已创建 |
+
+### 编译验证流程
+
+1. 修改 `.typ` 文件 → 2. 执行 `typst compile` → 3. exit code 0 即通过 → 4. 失败则按错误信息修复后重编
+
+注意事项：首次编译可能需下载外部包（如 `@preview/xarrow`）稍慢；输出为 PDF，无需构建系统。
+
+---
+
 ## 10. 强约束清单
 
 1. 所有数学公式使用正确的 Typst 语法，不保留 LaTeX 宏

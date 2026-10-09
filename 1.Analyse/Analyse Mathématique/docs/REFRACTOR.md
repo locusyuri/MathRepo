@@ -285,7 +285,7 @@ md 回收流程（批次含 🔧 R 任务时追加执行）：
 1. 不删除原始 `.tex` 与三份 `.md`（仅 P2-4 死文件例外）
 2. 不改动 `TypstTemplate/math-notes.typ` 公共接口
 3. 正文不允许中文（中文仅限 `//` 注释与本计划文档）
-4. 遵循 `violet-typst-writing-conventions` / `violet-template-usage` / `violet-typst-edit-consistency` / `violet-typst-compile` 四技能
+4. 遵循 `violet-typst-writing-conventions`（含编辑一致性与编译验证，§9.7/§9.8）/ `violet-template-usage` 两技能
 5. 一节一节推进，小步编译，**不做大批量盲转**
 6. P0 内容补全必须先 `violet-make-outline` 出大纲、经确认后写入，不凭空造内容
 7. 每批完成自动 git 提交（中文 Conventional Commits，只提交本任务改动）

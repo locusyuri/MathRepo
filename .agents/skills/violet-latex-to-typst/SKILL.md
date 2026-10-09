@@ -494,9 +494,7 @@ LaTeX 使用 `\input{chapters/chap01.tex}` 引用子文件，Typst 使用单文�
 1. **不删除原始 LaTeX 文件**（保留 `.tex` 作为存档）
 2. **不改动模板公共接口**（`TypstTemplate/math-notes.typ`）
 3. **正文中不得出现中文**（中文仅限 `//` 注释）
-4. **遵循 violet-typst-writing-conventions 技能的所有规则**
+4. **遵循 violet-typst-writing-conventions 技能的所有规则**（含 §9.7 编辑一致性原则、§9.8 编译验证流程）
 5. **遵循 violet-template-usage 技能的组件使用规范**
-6. **遵循 violet-typst-edit-consistency 技能的一致性原则**
-7. **遵循 violet-typst-compile 技能的编译验证流程**
-8. **SRP 原则**：不重复其他笔记已有的定义或定理，使用交叉引用
-9. **编译验证**：每次修改后必须编译验证
+6. **SRP 原则**：不重复其他笔记已有的定义或定理，使用交叉引用
+7. **编译验证**：每次修改后必须编译验证
