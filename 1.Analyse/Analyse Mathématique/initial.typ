@@ -8906,6 +8906,240 @@ According to #link(<thm:reduction-double-iterated-closed-interval>)[the reductio
 ]
 // 注：tex 证明第一式误作 g(y)(f(x) - f(y))（该式实为 -I），末式误作 (g(y) - g(x))(f(x) - f(y))（在 f、g 同单调时 <= 0），均已修正；由 f、g 同单调性知 (f(x) - f(y))(g(x) - g(y)) >= 0，故 I >= 0。
 
+== Calculation of Multiple Integrals // 多重积分的计算
+
+=== Variable Substitution in Multiple Integrals // 多重积分中的变量替换（原 leftbarTitle 非空壳，升级为小节）
+
+#theorem(name: "Variable Substitution in Double Integral")[
+  Let $Omega subset bb(R)^2$ be an open set, and let the mapping
+  $
+    bold(F): Omega -> bb(R)^2, quad (u, v) arrow.bar bold(F)(u, v) = (x(u, v), y(u, v))
+  $
+  satisfy the following conditions:
+  + $bold(F) in C^1 (Omega, bb(R)^2)$;
+  + $frac(partial (x, y), partial (u, v)) = det J bold(F)(u, v) != 0, quad bold(p) = (u, v) in Omega$;
+  + $bold(F)$ is injective.
+
+  If the set $Delta$ is a set with finite area and $overline(Delta) subset Omega$, and $f$ is continuous on $bold(F)(Omega)$, then $bold(F)(Delta)$ is also a set with finite area, and:
+  $
+    integral.double_(bold(F)(Delta)) f =
+    integral.double_Delta (f compose bold(F)) abs(det J bold(F)),
+  $
+  i.e.,
+  $
+    integral.double_(bold(F)(Delta)) f(x, y) dif x dif y =
+    integral.double_Delta f(x(u, v), y(u, v)) abs(frac(partial (x, y), partial (u, v))) dif u dif v.
+  $
+] <thm:variable-substitution-double-integral>
+// 注：tex 条件 2 "det JF(u, v) = det JF(p)" 两式冗余（p 即 (u, v)），合并为一式；"i.e." 式中 F(Delta) 未加粗，与定理他处不一致，统一为 bold(F)；tex 未给出证明，不编造。
+
+For triple and higher-dimensional integrals, the variable substitution theorem is similar to the above theorem.
+
+Some common variable substitutions in multiple integrals are as follows:
+
+*Polar Coordinates.*
+$
+  cases(
+    x = r cos theta comma
+    y = r sin theta comma
+  )
+  quad quad
+  cases(
+    r = sqrt(x^2 + y^2)\, & r >= 0 comma
+    theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
+  )
+$
+and
+$
+  frac(partial (x, y), partial (r, theta)) = r.
+$
+
+*Cylindrical Coordinate System.*
+$
+  cases(
+    x = r cos theta comma
+    y = r sin theta comma
+    z = z comma
+  )
+  quad quad
+  cases(
+    r = sqrt(x^2 + y^2)\, & r >= 0 comma
+    theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
+    z = z comma
+  )
+$
+and
+$
+  frac(partial (x, y, z), partial (r, theta, z)) = r.
+$
+// 注：tex 该式 Jacobian 分母误作 (r, theta, varphi)，与变换变量 (r, theta, z) 不符，已修正为 (r, theta, z)。
+
+*Spherical Coordinate System.*
+$
+  cases(
+    x = r sin phi cos theta comma
+    y = r sin phi sin theta comma
+    z = r cos phi comma
+  )
+  quad quad
+  cases(
+    r = sqrt(x^2 + y^2 + z^2)\, & r >= 0 comma
+    phi = arccos(z / r)\, & r != 0 comma phi in [0, pi] comma
+    theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
+  )
+$
+and
+$
+  frac(partial (x, y, z), partial (r, theta, phi)) = r^2 sin phi.
+$
+
+#figure(
+  image("img/coordinate.png", width: 80%),
+  caption: [Cylindrical and spherical coordinate systems.],
+) <fig:cylindrical-spherical-coordinates>
+// 注：tex 中该图未加标签，迁移后补 <fig:cylindrical-spherical-coordinates>。
+
+=== Calculation of Triple Integrals // 三重积分的计算（原 leftbarTitle 非空壳，升级为小节）
+
+#example(name: "Triple Integral of a Cone")[
+  Calculate $I = integral.triple_Omega z^2 dif x dif y dif z$, where $Omega$ is the cone defined by $z^2 = frac(h^2, R^2) (x^2 + y^2)$ and $z = h$ (@fig:cone).
+] <ex:triple-integral-cone>
+// 注：tex 例题标签 "eg:Triple Integral of Cone" 含空格不合法，迁移后改为 <ex:triple-integral-cone>；tex 未给出解答，不编造。
+
+#figure(
+  image("img/cone.png", width: 40%),
+  caption: [Cone example.],
+) <fig:cone>
+// 注：tex 图片标签 "fig:Cone" 含空格不合法，迁移后改为 <fig:cone>。
+
+#example(name: "Project Method Example")[
+  Calculate $I = integral.triple_Omega x y dif x dif y dif z$, where $Omega$ is the region defined by $0 <= z <= x y$, $0 <= y <= 1 - x$, $0 <= x <= 1$ (@fig:project-method-example).
+] <ex:project-method-example>
+// 注：tex 例题/图片标签含空格不合法，迁移后改为 <ex:project-method-example> / <fig:project-method-example>；tex 未给出解答，不编造。
+
+#figure(
+  image("img/project_method_example.png", width: 40%),
+  caption: [Project method example.],
+) <fig:project-method-example>
+
+With the help of the examples above, we can derive *two methods for calculating triple integrals*.
+
+*First 2 then 1 (Section Method).* Fix one variable (e.g., $z$), first perform a double integral over the other two variables (e.g., $x, y$) on the "section region" corresponding to the fixed variable, and then perform a definite integral over the fixed variable ($z$) within its range of values.
+
+This method is convenient when the area of the section region is easy to calculate, or when the integrand is only related to the "later-integrated variable" (e.g., only related to $z$).
+
+In #link(<ex:triple-integral-cone>)[the cone example], the following steps are taken:
+
++ Determine the range of $z$: $z in [0, h]$.
++ Determine the section region $D_z$: for a fixed $z$, $D_z$ is the region on the $x y$-plane satisfying $frac(h^2, R^2) (x^2 + y^2) <= z^2$, which is a circle with radius $frac(R, h) z$.
++ Split the integral:
+  $
+    I = integral_0^h (integral.double_(D_z) z^2 dif x dif y) dif z.
+  $
+  Since $z^2$ is independent of $x$ and $y$, it can be factored out: $I = integral_0^h z^2 (integral.double_(D_z) dif x dif y) dif z$.
++ Calculate the double integral (area of the section):
+  $
+    integral.double_(D_z) dif x dif y = pi (frac(R, h) z)^2 = pi frac(R^2, h^2) z^2.
+  $
++ Calculate the definite integral:
+  $
+    I = integral_0^h z^2 dot pi frac(R^2, h^2) z^2 dif z = frac(pi R^2 h^3, 5).
+  $
+
+*First 1 then 2 (Project Method).* Fix two variables (e.g., $x, y$), first perform a definite integral over the third variable (e.g., $z$) on the "vertical line segment" corresponding to the fixed variables, and then perform a double integral over the fixed two variables ($x, y$) on their "projection region".
+
+This method is convenient when the projection region of the integral region on a certain coordinate plane (e.g., the $x y$-plane) is easy to determine, and the upper and lower limits of a single variable (e.g., $z$) can be easily expressed by the other two variables.
+
+In #link(<ex:project-method-example>)[the project method example], the following steps are taken:
+
++ Determine the projection region $D_(x y)$: $D_(x y)$ is the region on the $x y$-plane bounded by $x + y <= 1$, $x >= 0$, and $y >= 0$, which can be expressed as $0 <= x <= 1$ and $0 <= y <= 1 - x$.
++ Determine the range of $z$: $z in [0, x y]$ (since $z$ is bounded below by $z = 0$ and above by $z = x y$).
++ Split the integral:
+  $
+    I = integral.double_(D_(x y)) (integral_0^(x y) x y dif z) dif x dif y,
+  $
+  split the double integral on $D_(x y)$ as $I = integral_0^1 dif x integral_0^(1 - x) dif y integral_0^(x y) x y dif z$. (Since $x y$ is independent of $z$, it can be factored out without affecting the integral: $I = integral_0^1 dif x integral_0^(1 - x) x y dif y integral_0^(x y) dif z$.)
++ Calculate the inner integral (with respect to $z$):
+  $
+    integral_0^(x y) x y dif z = x y dot integral_0^(x y) dif z = x y dot z bar_0^(x y) = x y dot x y = x^2 y^2.
+  $
++ Calculate the middle integral (with respect to $y$): substitute the result of the inner integral,
+  $
+    integral_0^(1 - x) x^2 y^2 dif y = x^2 dot frac(y^3, 3) bar_0^(1 - x) = frac(x^2 (1 - x)^3, 3).
+  $
++ Calculate the outer integral (with respect to $x$): substitute the result of the middle integral:
+  $
+    integral_0^1 frac(x^2 (1 - x)^3, 3) dif x & = frac(1, 3) integral_0^1 (x^2 - 3 x^3 + 3 x^4 - x^5) dif x \
+    & = frac(1, 3) (frac(x^3, 3) - frac(3 x^4, 4) + frac(3 x^5, 5) - frac(x^6, 6) bar_0^1) \
+    & = frac(1, 3) (frac(1, 3) - frac(3, 4) + frac(3, 5) - frac(1, 6)) \
+    & = frac(1, 180).
+  $
+
+Some tips for choosing between the two methods (take the two examples above as reference):
+
+#tex-table(
+  ([First 2 then 1 (Section Method)], [First 1 then 2 (Project Method)]),
+  ([Section area $D_z$ is easy to calculate], [Projection region $D_(x y)$ is easy to determine]),
+  (
+    [Integrand is only related to $z$],
+    [Upper and lower limits of $z$ can be easily expressed by the other two variables $x, y$],
+  ),
+)
+// 注：tex 表格末行第二列漏 "of"（"Upper and lower limits z"），已补。
+
+#example[
+  Find the volume of the region bounded by the half *Viviani's curve*: the sphere $x^2 + y^2 + z^2 <= a^2$ and the cylinder $x^2 + y^2 <= a x$ ($a > 0$), as shown in @fig:viviani.
+]
+// 注：tex 该例题无标题、未给出解答，不编造。
+
+#figure(
+  image("img/viviani.png", width: 40%),
+  caption: [Viviani's curve.],
+) <fig:viviani>
+// 注：tex 该图无 caption 与标签，迁移后补 caption 与 <fig:viviani>。
+
+== Improper Multiple Integrals // 反常多重积分
+
+Improper multiple integrals can also be classified into two types: infinite integrals and defective integrals.
+
+#definition(name: "Infinite Multiple Integral")[
+  Let $D subset bb(R)^2$ be an unbounded region, whose boundary consists of finite or countably many smooth curves, and $f: D -> bb(R)$ be a function which is integrable on any measurable bounded closed set $D' subset D$. If there exists an increasing sequence of bounded closed regions $lr({D_k})$ such that
+  $
+    D_1 subset D_2 subset dots subset D_k subset dots, quad
+    union_(k=1)^oo D_k = D,
+  $
+  which is called an *exhaustion* of $D$, and for each $k$ the integral $I(D_k) = integral.double_(D_k) f$ exists, and the limit
+  $
+    I = lim_(k -> oo) I(D_k)
+  $
+  exists, then $I$ is called the *improper multiple integral* of $f$ on $D$, denoted as
+  $
+    I = integral.double_D f = lim_(k -> oo) integral.double_(D_k) f.
+  $
+] <def:infinite-multiple-integral>
+// 注：tex 中该定义未加标签，迁移后补 <def:infinite-multiple-integral>。
+
+#note[
+  There are also other ways to define improper multiple integrals, such as using limit definitions based on the distance to infinity. They are equivalent to the above definition.
+]
+
+#theorem(name: "Absolute Convergence of Improper Multiple Integrals")[
+  An improper multiple integral is integrable if and only if it is absolutely integrable.
+] <thm:improper-multiple-absolute-convergence>
+// 注：tex 中该定理未加标签与证明，迁移后补标签，不编造证明。
+
+#example(name: "Poisson Integral")[
+  Calculate
+  $
+    integral.double_(bb(R)^2) e^(-(x^2 + y^2)) dif x dif y,
+  $
+  and find the value of the Poisson integral
+  $
+    integral_(-oo)^(+oo) e^(-x^2) dif x.
+  $
+] <ex:poisson-integral>
+// 注：tex 中该例题未给出解答，不编造。
+
 // --- Part V: 几何应用与高级积分（决策③：ch14–16） ---
 #part("Calculus Applications in Several Variables") // 多元微积分的应用
 // B14: ch14 Introduction to Curve and Surface Theory（曲线与曲面论导论，决策①改章名）
