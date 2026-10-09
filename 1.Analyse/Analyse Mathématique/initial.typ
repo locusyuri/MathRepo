@@ -6575,6 +6575,464 @@ $limsup_(x -> +oo) f(x) = +oo$.
 // --- Part III: 无穷级数 ---
 #part("Infinite Series") // 无穷级数
 // B8: ch08 Numerical Series（数项级数）
+= Numerical Series // 数项级数
+
+== Convergence of Numerical Series // 数项级数的收敛性
+
+// §1 tex 为空节，从 md L14–30 回收级数基本概念
+
+#definition(name: "Numerical Series and Its Convergence")[
+  Let $x_1, x_2, dots, x_n, dots$ be a countable family of real numbers. The formal sum
+  $
+    x_1 + x_2 + dots.c + x_n + dots.c
+  $
+  is called a *numerical series*, denoted by $sum_(n=1)^oo x_n$, where $x_n$ is called the general term of the series.
+
+  Let $S_n = sum_(k=1)^n x_k$. The sequence $(S_n)$ is called the *sequence of partial sums* of the series. If $(S_n)$ converges to a finite number $S$, then the series $sum_(n=1)^oo x_n$ is said to *converge*, and $S$ is called its *sum*, written $S = sum_(n=1)^oo x_n$. If $(S_n)$ diverges, then the series is said to *diverge*.
+] <def:numerical-series>
+
+#proposition(name: "Basic Properties of Convergent Series")[
+  + *Necessary condition.* If $sum_(n=1)^oo x_n$ converges, then $lim_(n -> oo) x_n = 0$.
+  + *Linearity.* If $sum_(n=1)^oo a_n$ and $sum_(n=1)^oo b_n$ both converge and $c in bb(R)$, then $sum_(n=1)^oo c a_n$ and $sum_(n=1)^oo (a_n plus.minus b_n)$ also converge, with
+    $
+      sum_(n=1)^oo c a_n = c sum_(n=1)^oo a_n, quad quad sum_(n=1)^oo (a_n plus.minus b_n) = sum_(n=1)^oo a_n plus.minus sum_(n=1)^oo b_n.
+    $
+  + *Finitely many terms.* Deleting or appending finitely many terms does not affect the convergence or divergence of a series.
+  + *Associativity.* If $sum_(n=1)^oo x_n$ converges and its terms are grouped into brackets without changing their order, the resulting series
+    $
+      (x_1 + dots.c + x_(n_1)) + (x_(n_1 + 1) + dots.c + x_(n_2)) + dots.c
+    $
+    also converges and has the same sum. Conversely, if a bracketed series converges and within each bracket the terms have one and the same sign, then the original series also converges and has the same sum.
+] <prop:series-basic-properties>
+
+== Positive Term Series and Its Convergence Tests // 正项级数及其判别法
+
+#definition(name: "Positive Term Series")[
+  If all terms of the series $sum_(n=1)^oo x_n$ are non-negative real numbers, i.e., $x_n >= 0$ (respectively $x_n > 0$) for $n = 1, 2, dots$, then the series is called a *positive term series* (respectively a *strictly positive term series*).
+] <def:positive-term-series>
+
+#note[
+  A positive term series converges if and only if the sequence of its partial sums is bounded. If the partial sums are unbounded, the series must diverge to $+oo$.
+]
+
+=== Comparison Tests // 比较判别法
+
+#theorem(name: "Comparison Test")[
+  Let $sum_(n=1)^oo a_n$ and $sum_(n=1)^oo b_n$ be positive term series.
+  + *Basic form.* If there exists $N in bb(N)$ such that $a_n <= b_n$ for all $n > N$, then:
+    + if $sum_(n=1)^oo b_n$ converges, then $sum_(n=1)^oo a_n$ also converges;
+    + if $sum_(n=1)^oo a_n$ diverges, then $sum_(n=1)^oo b_n$ also diverges.
+  + *Limit form.* Suppose
+    $
+      lim_(n -> oo) a_n / b_n = l quad quad ("allowing" \, l = +oo).
+    $
+    Then:
+    + if $0 < l < +oo$, the two series converge or diverge simultaneously;
+    + if $l = 0$ and $sum_(n=1)^oo b_n$ converges, then $sum_(n=1)^oo a_n$ also converges;
+    + if $l = +oo$ and $sum_(n=1)^oo b_n$ diverges, then $sum_(n=1)^oo a_n$ also diverges.
+] <thm:comparison-test-series>
+
+=== Cauchy and d'Alembert Tests // Cauchy 判别法与 d'Alembert 判别法
+
+#theorem(name: "Cauchy Test and d'Alembert Test")[
+  + *Cauchy test (root test).* Let $sum_(n=1)^oo a_n$ be a positive term series.
+    + If there exist $q in [0, 1)$ and $N in bb(N)$ such that $root(a_n, n) <= q < 1$ for all $n >= N$, then the series converges.
+    + If $root(a_n, n) >= 1$ for infinitely many $n$, then the series diverges.
+    + *Limit form.* If $limsup_(n -> +oo) root(a_n, n) = r$, then the series converges when $0 <= r < 1$ and diverges when $r > 1$; the test fails when $r = 1$.
+  + *d'Alembert test (ratio test).* Let $sum_(n=1)^oo a_n$ be a strictly positive term series.
+    + If there exist $q in [0, 1)$ and $N in bb(N)$ such that $a_(n+1) / a_n <= q < 1$ for all $n >= N$, then the series converges.
+    + If $a_(n+1) / a_n >= 1$ for all $n >= N$, then the series diverges.
+    + *Limit form.* The series converges if $limsup_(n -> +oo) a_(n+1) / a_n = r < 1$ and diverges if $liminf_(n -> +oo) a_(n+1) / a_n = r' > 1$; the test fails when $r = 1$ or $r' = 1$.
+] <thm:cauchy-dalembert-tests>
+
+#note[
+  Theoretically the Cauchy test is stronger than the d'Alembert test, but the latter is sometimes more convenient to apply.
+]
+
+#proof[
+  *Cauchy test.* If $root(a_n, n) <= q < 1$ for $n >= N$, then $a_n <= q^n$ for $n >= N$, and the series converges by comparison with the geometric series $sum_(n=1)^oo q^n$. If $root(a_n, n) >= 1$ for infinitely many $n$, then $a_n >= 1$ for infinitely many $n$, so $(a_n)$ does not tend to zero and the series diverges.
+
+  For the limit form, let $r = limsup_(n -> +oo) root(a_n, n)$. If $r < 1$, choose $q$ with $r < q < 1$; by the property of the limit superior there exists $N$ such that $root(a_n, n) < q$ for all $n > N$, which reduces to the basic case. If $r > 1$, then $root(a_n, n) > 1$ for infinitely many $n$, which reduces to the second case. When $r = 1$ the test fails: $sum_(n=1)^oo 1 / n^2$ converges and $sum_(n=1)^oo 1 / n$ diverges, yet both have $r = 1$.
+
+  *d'Alembert test.* The basic forms follow directly: if $a_(n+1) / a_n <= q < 1$ for $n >= N$, then $a_n <= a_N q^(n - N)$ for $n >= N$, and comparison with the geometric series yields convergence; if $a_(n+1) / a_n >= 1$ for $n >= N$, then $(a_n)$ is non-decreasing from index $N$ on with $a_n >= a_N > 0$, so $(a_n)$ does not tend to zero.
+
+  For the limit form it suffices to establish the chain
+  $
+    liminf_(n -> +oo) a_(n+1) / a_n <= liminf_(n -> +oo) root(a_n, n) <= limsup_(n -> +oo) root(a_n, n) <= limsup_(n -> +oo) a_(n+1) / a_n:
+  $
+  the middle inequality is trivial, and the right inequality combined with the Cauchy limit form proves convergence whenever $limsup a_(n+1) / a_n < 1$. To prove the right inequality, set $bar(r) = limsup_(n -> +oo) a_(n+1) / a_n$. For every $epsilon > 0$ there exists $N$ such that $a_(n+1) / a_n < bar(r) + epsilon$ for all $n > N$. Iterating gives
+  $
+    a_n < (bar(r) + epsilon)^(n - N - 1) dot a_(N+1) quad quad (n > N + 1),
+  $
+  hence
+  $
+    limsup_(n -> +oo) root(a_n, n) <= limsup_(n -> +oo) root((bar(r) + epsilon)^(n - N - 1) a_(N+1), n) = bar(r) + epsilon.
+  $
+  Letting $epsilon -> 0^+$ completes the proof. For divergence, if $r' = liminf a_(n+1) / a_n > 1$, then $limsup root(a_n, n) >= liminf root(a_n, n) >= r' > 1$, and the Cauchy test yields divergence.
+]
+
+=== Raabe, Bertrand and Gauss Tests // Raabe、Bertrand 与 Gauss 判别法
+
+#theorem(name: "Raabe and Bertrand Tests")[
+  Let $sum_(n=1)^oo a_n$ be a strictly positive term series.
+  + *Raabe test.*
+    + If there exist $r > 1$ and $N_0 in bb(N)$ such that $n (a_n / a_(n+1) - 1) >= r$ for all $n > N_0$, then the series converges.
+    + If there exists $N_0 in bb(N)$ such that $n (a_n / a_(n+1) - 1) <= 1$ for all $n > N_0$, then the series diverges.
+    + *Limit form.* The series converges if $liminf_(n -> +oo) n (a_n / a_(n+1) - 1) = l > 1$, and diverges if $limsup_(n -> +oo) n (a_n / a_(n+1) - 1) = l' < 1$; the test fails when $l = 1$ or $l' = 1$.
+  + *Bertrand test.* The series converges if
+    $
+      liminf_(n -> +oo) ln n [n (a_n / a_(n+1) - 1) - 1] = l > 1,
+    $
+    and diverges if $limsup_(n -> +oo) ln n [n (a_n / a_(n+1) - 1) - 1] = l' < 1$; the test fails when $l = 1$ or $l' = 1$.
+] <thm:raabe-bertrand-tests>
+
+#theorem(name: "Gauss Test")[
+  Let $sum_(n=1)^oo a_n$ be a strictly positive term series, and suppose
+  $
+    a_n / a_(n+1) = 1 + 1/n + delta / (n ln n) + o(1 / (n ln n)) quad quad (n -> +oo).
+  $
+  Then the series converges when $delta > 1$, diverges when $delta < 1$, and the test fails when $delta = 1$.
+] <thm:gauss-test>
+
+#theorem(name: "Generalized Gauss Test")[
+  Let $sum_(n=1)^oo a_n$ be a strictly positive term series, and suppose
+  $
+    a_n / a_(n+1) = 1 + 1/n + delta_n / (n ln n) + o(1 / (n ln n)) quad quad (n -> +oo),
+  $
+  where $lim_(n -> oo) delta_n = delta in bb(R)$. Then the series converges when $delta > 1$, diverges when $delta < 1$, and the test fails when $delta = 1$.
+] <thm:generalized-gauss-test>
+
+#proof(name: "of the Raabe test")[
+  It suffices to prove the basic forms; the limit form follows by inserting any number strictly between $1$ and the corresponding limit inferior (resp. limit superior).
+
+  *Convergence.* Assume $n (a_n / a_(n+1) - 1) >= r$ for $n > N_0$ with $r > 1$, and pick $alpha in (1, r)$. Since
+  $
+    lim_(n -> oo) ((1 + 1/n)^alpha - 1) / (1/n) = lim_(x -> 0) ((1 + x)^alpha - 1) / x = alpha < r,
+  $
+  for all sufficiently large $n$ we have $(1 + 1/n)^alpha < 1 + r / n$. Hence for $n > max{N_0, N}$,
+  $
+    a_n / a_(n+1) >= 1 + r / n > (1 + 1/n)^alpha = (n+1)^alpha / n^alpha,
+  $
+  i.e., $n^alpha a_n > (n+1)^alpha a_(n+1)$. Thus $(n^alpha a_n)$ is eventually decreasing and positive, hence bounded above: there exists $M > 0$ with $a_n <= M / n^alpha$ for all large $n$. Since $alpha > 1$, the series $sum_(n=1)^oo M / n^alpha$ converges, and the comparison test yields the convergence of $sum_(n=1)^oo a_n$.
+
+  *Divergence.* Assume $n (a_n / a_(n+1) - 1) <= 1$ for $n > N_0$. Then $a_n / a_(n+1) <= 1 + 1/n = (n+1) / n$, i.e., $n a_n <= (n+1) a_(n+1)$: the sequence $(n a_n)_(n > N_0)$ is non-decreasing, so $n a_n >= N_0 a_(N_0) > 0$ and therefore
+  $
+    a_n >= N_0 a_(N_0) / n quad quad (n > N_0).
+  $
+  Since the harmonic series diverges, the comparison test yields the divergence of $sum_(n=1)^oo a_n$.
+]
+
+#note(title: "Refinements of the Bertrand Test")[
+  Considering series such as
+  $
+    sum_(n=3)^oo 1 / (n ln n (ln ln n)^p), quad quad sum_(n=9)^oo 1 / (n ln n ln ln n (ln ln n)^p), quad quad dots.c,
+  $
+  one obtains ever finer tests of the same flavor, which are collectively known as the Bertrand tests.
+]
+
+#note(title: "Genealogy of the Tests")[
+  All the criteria above are derived from the comparison test:
+  - comparing positive term series with the geometric series yields the Cauchy test and the d'Alembert test;
+  - comparing with the slower-converging series $sum_(n=1)^oo 1 / n^alpha$ ($alpha > 1$) yields the Raabe test;
+  - comparing with the even slower-converging series $sum_(n=1)^oo 1 / (n ln^alpha n)$ ($alpha > 1$) yields the Gauss test.
+
+  In general, the slower the convergence of the series used for comparison, the sharper the derived criterion.
+]
+
+=== Integral Test // 积分判别法
+
+#theorem(name: "Cauchy Integral Test")[
+  Let $f$ be defined on $[a, +oo)$ with $f(x) >= 0$, and Riemann integrable on every finite interval $[a, A]$. Let $(a_n)$ be a monotonically increasing sequence with
+  $
+    a = a_1 < a_2 < dots.c < a_n < dots.c,
+  $
+  and set $u_n = integral_(a_n)^(a_(n+1)) f(x) dif x$. Then the improper integral $integral_a^(+oo) f(x) dif x$ and the positive term series $sum_(n=1)^oo u_n$ converge or diverge to $+oo$ simultaneously, and moreover
+  $
+    integral_a^(+oo) f(x) dif x = sum_(n=1)^oo u_n = sum_(n=1)^oo integral_(a_n)^(a_(n+1)) f(x) dif x.
+  $
+] <thm:cauchy-integral-test-series>
+
+#proof[
+  Let $(S_n)$ be the sequence of partial sums of $sum_(n=1)^oo u_n$. For every $A > a$ there exists $n in bb(N)$ with $a_n <= A < a_(n+1)$, whence
+  $
+    S_(n-1) <= integral_a^A f(x) dif x <= S_n.
+  $
+  If $(S_n)$ is bounded, i.e., $sum_(n=1)^oo u_n$ converges, then $A mapsto integral_a^A f(x) dif x$ is increasing and bounded above, so the improper integral converges and, by the squeeze theorem, shares the limit of $(S_n)$.
+  If $(S_n)$ is unbounded, i.e., $sum_(n=1)^oo u_n$ diverges to $+oo$, then $integral_a^A f(x) dif x >= S_(n-1) -> +oo$ as $A -> +oo$. This proves the equivalence and the identity $integral_a^(+oo) f(x) dif x = sum_(n=1)^oo u_n$.
+
+  In particular, when $f$ is monotonically decreasing take $a_n = n$. For $n >= N = floor(a) + 1$ one has
+  $
+    f(n+1) <= u_n = integral_n^(n+1) f(x) dif x <= f(n),
+  $
+  so by the comparison test $sum_(n=1)^oo f(n)$ and $sum_(n=1)^oo u_n$ share the same convergence behavior.
+]
+
+=== Cauchy Condensation Test // Cauchy 凝聚判别法
+
+#theorem(name: "Cauchy Condensation Test")[
+  Let $(a_n)$ be a monotonically decreasing sequence of positive numbers. Then the positive term series $sum_(n=1)^oo a_n$ converges if and only if the condensed series
+  $
+    sum_(n=0)^oo 2^n a_(2^n) = a_1 + 2 a_2 + 4 a_4 + dots.c + 2^n a_(2^n) + dots.c
+  $
+  converges.
+] <thm:cauchy-condensation>
+
+#proof[
+  Grouping the terms of a positive term series into brackets does not affect its convergence. Since $(a_n)$ is decreasing,
+  $
+    sum_(n=1)^oo a_n & = a_1 + (a_2 + a_3) + (a_4 + dots.c + a_7) + dots.c \
+                     & <= a_1 + 2 a_2 + 4 a_4 + dots.c = sum_(n=0)^oo 2^n a_(2^n),
+  $
+  while
+  $
+    sum_(n=1)^oo a_n & = a_1 + a_2 + (a_3 + a_4) + (a_5 + dots.c + a_8) + dots.c \
+                     & >= a_1 + a_2 + 2 a_4 + 4 a_8 + dots.c = a_1 + 1/2 sum_(n=1)^oo 2^n a_(2^n).
+  $
+  Hence each of the two series controls the other up to a constant factor, and they converge or diverge simultaneously.
+]
+
+== General Term Series and Its Convergence Tests // 一般项级数及其判别法
+
+=== Cauchy Convergence Criterion // 级数的 Cauchy 收敛准则
+
+#theorem(name: "Cauchy Convergence Criterion for Series")[
+  The necessary and sufficient condition for the convergence of the series $sum_(n=1)^oo x_n$ is:
+  $
+    forall epsilon > 0, exists N in bb(N), forall m > n > N:
+    |x_(n+1) + x_(n+2) + dots.c + x_m| = |sum_(k=n+1)^m x_k| < epsilon.
+  $
+] <thm:cauchy-criterion-series>
+
+=== Alternating Series and the Leibniz Test // 交错级数与 Leibniz 判别法
+
+#definition(name: "Alternating Series and Leibniz Series")[
+  A series of the form
+  $
+    sum_(n=1)^oo x_n = sum_(n=1)^oo (-1)^(n-1) u_n quad quad (u_n > 0)
+  $
+  is called an *alternating series*. If moreover $(u_n)$ is monotonically decreasing and $lim_(n -> oo) u_n = 0$, then the series is called a *Leibniz series*.
+] <def:alternative-series>
+
+#theorem(name: "Leibniz Test")[
+  Every Leibniz series converges.
+] <thm:leibniz-test>
+
+#proof[
+  We verify the Cauchy criterion. For $p in bb(N)^+$,
+  $
+    |x_(n+1) + x_(n+2) + dots.c + x_(n+p)| = |u_(n+1) - u_(n+2) + u_(n+3) - dots.c + (-1)^(p+1) u_(n+p)|.
+  $
+  If $p$ is odd, this quantity equals
+  $
+    (u_(n+1) - u_(n+2)) + (u_(n+3) - u_(n+4)) + dots.c + (u_(n+p-2) - u_(n+p-1)) + u_(n+p) > 0,
+  $
+  and also $u_(n+1) - (u_(n+2) - u_(n+3)) - dots.c - (u_(n+p-1) - u_(n+p)) <= u_(n+1)$. If $p$ is even, it equals
+  $
+    (u_(n+1) - u_(n+2)) + dots.c + (u_(n+p-1) - u_(n+p)) >= 0,
+  $
+  and also $u_(n+1) - (u_(n+2) - u_(n+3)) - dots.c - u_(n+p) < u_(n+1)$. In both cases the monotonicity of $(u_n)$ is used, and
+  $
+    |x_(n+1) + x_(n+2) + dots.c + x_(n+p)| <= u_(n+1)
+  $
+  holds for all $p in bb(N)^+$. Since $u_n -> 0$, for every $epsilon > 0$ there exists $N$ such that $u_(n+1) < epsilon$ for all $n > N$; hence $|sum_(k=n+1)^(n+p) x_k| < epsilon$ for all $p$, and the Cauchy criterion yields convergence.
+]
+
+=== Abel Transform and the Abel-Dirichlet Tests // Abel 变换与 Abel-Dirichlet 判别法
+
+#theorem(name: "Abel Transform (Discrete Integration by Parts / Summation by Parts)")[
+  Let $(a_n)$ and $(b_n)$ be two sequences, and set $B_k = sum_(i=1)^k b_i$. Then for any $p in bb(N)^+$,
+  $
+    sum_(k=1)^p a_k b_k = a_p B_p - sum_(k=1)^(p-1) (a_(k+1) - a_k) B_k.
+  $
+] <thm:abel-transform>
+
+#align(center, rotate(-180deg, image("img/AbelTransform.jpg", width: 50%)))
+
+#proof[
+  Since $b_k = B_k - B_(k-1)$ (with the convention $B_0 = 0$),
+  $
+    sum_(k=1)^p a_k b_k & = a_1 B_1 + sum_(k=2)^p a_k (B_k - B_(k-1)) \
+                        & = a_1 B_1 + sum_(k=2)^p a_k B_k - sum_(k=2)^p a_k B_(k-1) \
+                        & = sum_(k=1)^(p-1) a_k B_k - sum_(k=1)^(p-1) a_(k+1) B_k + a_p B_p \
+                        & = a_p B_p - sum_(k=1)^(p-1) (a_(k+1) - a_k) B_k.
+  $
+]
+
+#lemma(name: "Abel Lemma (Discrete Second Integral Mean Value Theorem)")[
+  Let $(a_n)$, $(b_n)$ be two sequences such that $(a_n)$ is monotonic and $(B_k) = (sum_(i=1)^k b_i)$ is bounded, say $|B_k| <= M$. Then for any $p in bb(N)^+$,
+  $
+    |sum_(k=1)^p a_k b_k| <= M (|a_1| + 2 |a_p|).
+  $
+] <lem:abel-lemma>
+
+#proof[
+  By the Abel transform,
+  $
+    |sum_(k=1)^p a_k b_k| <= |a_p B_p| + sum_(k=1)^(p-1) |a_(k+1) - a_k| dot |B_k| <= M (|a_p| + sum_(k=1)^(p-1) |a_(k+1) - a_k|).
+  $
+  Since $(a_n)$ is monotonic, the differences $a_(k+1) - a_k$ all have the same sign, so
+  $
+    sum_(k=1)^(p-1) |a_(k+1) - a_k| = |sum_(k=1)^(p-1) (a_(k+1) - a_k)| = |a_p - a_1|.
+  $
+  Combining the two estimates,
+  $
+    |sum_(k=1)^p a_k b_k| <= M (|a_p| + |a_p - a_1|) <= M (|a_1| + 2 |a_p|).
+  $
+]
+
+#theorem(name: "Abel-Dirichlet Test")[
+  The series $sum_(n=1)^oo a_n b_n$ converges provided one of the following two conditions is satisfied:
+  + *Abel.* $(a_n)$ is a bounded monotonic sequence and $sum_(n=1)^oo b_n$ converges.
+  + *Dirichlet.* $(a_n)$ is a monotonic sequence with $lim_(n -> oo) a_n = 0$, and the partial sums $B_n = sum_(k=1)^n b_k$ are bounded.
+] <thm:abel-dirichlet-series>
+
+#proof[
+  + *Abel.* Let $|a_n| <= M$. Since $sum_(n=1)^oo b_n$ converges, for every $epsilon > 0$ there exists $N$ such that $|sum_(k=n+1)^(n+p) b_k| < epsilon$ for all $n > N$ and all $p in bb(N)^+$. Applying the Abel lemma to the tails, whose $b$-partial sums are bounded by $epsilon$,
+    $
+      |sum_(k=n+1)^(n+p) a_k b_k| < epsilon (|a_(n+1)| + 2 |a_(n+p)|) <= 3 M epsilon.
+    $
+  + *Dirichlet.* Since $a_n -> 0$, for every $epsilon > 0$ there exists $N$ with $|a_n| < epsilon$ for all $n > N$. Let $|sum_(i=1)^n b_i| <= M$ for all $n$, and put $B'_k = sum_(i=n+1)^(n+k) b_i$ ($k = 1, dots, p$). Then
+    $
+      |B'_k| = |sum_(i=1)^(n+k) b_i - sum_(i=1)^n b_i| <= 2 M,
+    $
+    and the Abel lemma gives
+    $
+      |sum_(k=n+1)^(n+p) a_k b_k| < 2 M (|a_(n+1)| + 2 |a_(n+p)|) <= 6 M epsilon.
+    $
+  In both cases the Cauchy convergence criterion for series yields the convergence of $sum_(n=1)^oo a_n b_n$.
+]
+
+#example(name: "Convergence of $sum_(n=1)^oo a_n sin n x$")[
+  Let $(a_n)$ be monotonic with $lim_(n -> oo) a_n = 0$. Show that the series $sum_(n=1)^oo a_n sin n x$ converges for every real number $x$.
+] <ex:ad-test-application>
+
+#solution[
+  If $x = 2 k pi$ for some $k in bb(Z)$, every term vanishes and the series converges trivially. Assume $x$ is not an integral multiple of $2 pi$. Telescoping gives, for all $n in bb(N)^+$,
+  $
+    2 sin(x/2) dot sum_(k=1)^n sin k x = cos(x/2) - cos((2n+1) x / 2),
+  $
+  hence $|sum_(k=1)^n sin k x| <= 1 / |sin(x/2)|$ for all $n$: the partial sums of $(sin n x)$ are bounded. By the Dirichlet test (applied with $b_n = sin n x$), the series converges.
+]
+
+== Absolute and Conditional Convergence // 绝对收敛与条件收敛
+
+#definition(name: "Absolute and Conditional Convergence of Series")[
+  If the series $sum_(n=1)^oo |x_n|$ converges, then the series $sum_(n=1)^oo x_n$ is said to be *absolutely convergent*.
+
+  If the series $sum_(n=1)^oo x_n$ converges but is not absolutely convergent, then $sum_(n=1)^oo x_n$ is said to be *conditionally convergent*.
+] <def:abs-cond-convergence-series>
+
+#note[
+  Absolute convergence implies convergence: by the triangle inequality, $|sum_(k=n+1)^m x_k| <= sum_(k=n+1)^m |x_k|$, so the Cauchy criterion transfers from $sum |x_n|$ to $sum x_n$. Consequently, for a conditionally convergent series one always has $sum_(n=1)^oo |x_n| = +oo$.
+]
+
+=== Positive and Negative Derived Series // 正负导出级数
+
+#definition(name: "Positive and Negative Derived Series")[
+  For a series $sum_(n=1)^oo a_n$, the *positive derived series* $sum_(n=1)^oo a_n^+$ and the *negative derived series* $sum_(n=1)^oo a_n^-$ are defined by
+  $
+    a_n^+ = (|a_n| + a_n) / 2 = cases(a_n comma & a_n > 0, 0 comma & a_n <= 0), quad quad a_n^- = (|a_n| - a_n) / 2 = cases(-a_n comma & a_n < 0, 0 comma & a_n >= 0):
+  $
+  $a_n^+$ collects the positive terms of $(a_n)$, while $a_n^-$ collects the absolute values of the negative terms.
+] <def:positive-derived-series>
+
+#proposition(name: "Properties of the Derived Series")[
+  The decompositions
+  $
+    sum_(n=1)^oo x_n = sum_(n=1)^oo x_n^+ - sum_(n=1)^oo x_n^-, quad quad sum_(n=1)^oo |x_n| = sum_(n=1)^oo x_n^+ + sum_(n=1)^oo x_n^-
+  $
+  hold in the extended sense (the two sides are simultaneously finite or $+oo$). Moreover:
+  + If $sum_(n=1)^oo x_n$ converges absolutely, then both $sum_(n=1)^oo x_n^+$ and $sum_(n=1)^oo x_n^-$ converge.
+  + If $sum_(n=1)^oo x_n$ converges conditionally, then both $sum_(n=1)^oo x_n^+$ and $sum_(n=1)^oo x_n^-$ diverge to $+oo$.
+] <prop:derived-series-properties>
+
+#proof[
+  For the first assertion, note that $0 <= x_n^+ <= |x_n|$ and $0 <= x_n^- <= |x_n|$; since $sum_(n=1)^oo |x_n|$ converges, both derived series converge by the comparison test.
+
+  For the second assertion, suppose $sum_(n=1)^oo x_n$ converges conditionally and assume, for contradiction, that $sum_(n=1)^oo x_n^+$ converges. Then from $sum x_n^- = sum x_n^+ - sum x_n$ the series $sum_(n=1)^oo x_n^-$ would converge as well, whence $sum_(n=1)^oo |x_n| = sum x_n^+ + sum x_n^-$ would converge, contradicting the hypothesis. Hence $sum_(n=1)^oo x_n^+ = +oo$, and the same argument shows $sum_(n=1)^oo x_n^- = +oo$.
+]
+
+=== Rearrangements of Series // 级数的更序与重排
+
+#definition(name: "Rearranged Series")[
+  Let $sum_(n=1)^oo a_n$ be a series and let $phi: bb(N)^+ -> bb(N)^+$ be a bijection. The series $sum_(n=1)^oo a_(phi(n))$ is called a *rearrangement* of $sum_(n=1)^oo a_n$, denoted by $sum_(n=1)^oo a_n'$.
+] <def:rearranged-series>
+
+#theorem(name: "Commutativity for Absolutely Convergent Series")[
+  If $sum_(n=1)^oo x_n$ converges absolutely, then every rearrangement $sum_(n=1)^oo x_n'$ also converges absolutely and has the same sum:
+  $
+    sum_(n=1)^oo x_n' = sum_(n=1)^oo x_n.
+  $
+] <thm:commutative-absolute-series>
+
+#proof[
+  + First suppose $sum_(n=1)^oo x_n$ is a positive term series. For every $n$, the partial sum $sum_(k=1)^n x_k'$ consists of terms drawn from $(x_k)$, so
+    $
+      sum_(k=1)^n x_k' <= sum_(k=1)^oo x_k,
+    $
+    which shows that $sum x_n'$ converges with $sum x_n' <= sum x_n$. Conversely, $sum_(n=1)^oo x_n$ is itself a rearrangement of $sum_(n=1)^oo x_n'$, so $sum x_n <= sum x_n'$. Therefore the two sums coincide.
+  + Now suppose $sum_(n=1)^oo x_n$ is an absolutely convergent series with terms of arbitrary sign. Then $sum x_n^+$ and $sum x_n^-$ converge, with
+    $
+      sum x_n = sum x_n^+ - sum x_n^-, quad quad sum |x_n| = sum x_n^+ + sum x_n^-.
+    $
+    For the rearrangement, form $sum x_n'^+$ and $sum x_n'^-$; since $x_n'^+ = x_(phi(n))^+$ and $x_n'^- = x_(phi(n))^-$, these are rearrangements of $sum x_n^+$ and $sum x_n^-$ respectively. By the positive term case,
+    $
+      sum x_n'^+ = sum x_n^+, quad quad sum x_n'^- = sum x_n^-.
+    $
+    Hence $sum_(n=1)^oo |x_n'| = sum x_n'^+ + sum x_n'^- = sum x_n^+ + sum x_n^- < +oo$, so $sum x_n'$ converges absolutely, and
+    $
+      sum_(n=1)^oo x_n' = sum x_n'^+ - sum x_n'^- = sum x_n^+ - sum x_n^- = sum_(n=1)^oo x_n.
+    $
+]
+
+#theorem(name: "Riemann Rearrangement Theorem")[
+  Let $sum_(n=1)^oo x_n$ be conditionally convergent. Then for every $a$ with $-oo <= a <= +oo$ there exists a rearrangement $sum_(n=1)^oo x_n'$ of $sum_(n=1)^oo x_n$ such that
+  $
+    sum_(n=1)^oo x_n' = a.
+  $
+] <thm:riemann-rearrangement>
+
+#proof[
+  By #link(<prop:derived-series-properties>)[the properties of the derived series], conditional convergence yields
+  $
+    sum_(n=1)^oo x_n^+ = sum_(n=1)^oo x_n^- = +oo, quad quad lim_(n -> oo) x_n^+ = lim_(n -> oo) x_n^- = 0.
+  $
+
+  *The case of finite $a$.* Add the positive terms $x_1^+, x_2^+, dots$ in their original order until the running sum first exceeds $a$: there is a smallest $n_1$ with $x_1^+ + dots.c + x_(n_1)^+ > a$. Then subtract the absolute values of the negative terms $x_1^-, x_2^-, dots$ in their original order until the sum first drops below $a$: there is a smallest $m_1$ with
+  $
+    x_1^+ + dots.c + x_(n_1)^+ - x_1^- - dots.c - x_(m_1)^- < a.
+  $
+  Continuing in the same way produces indices $n_1 < n_2 < dots.c$ and $m_1 < m_2 < dots.c$ such that after the $k$-th round the partial sum lies between $a - x_(m_k)^-$ and $a + x_(n_k)^+$. The resulting series is a rearrangement of $sum_(n=1)^oo x_n$ whose partial sums oscillate around $a$ with amplitude $max{x_(n_k)^+, x_(m_k)^-} -> 0$ as $k -> oo$; hence its sum equals $a$.
+
+  *The cases $a = plus.minus oo$.* The construction is analogous: for $a = +oo$ one inserts blocks of positive terms large enough to push the partial sums to $+oo$, adding negative terms only to keep the process running; the case $a = -oo$ is symmetric.
+]
+
+=== Products of Series // 级数的乘法
+
+#definition(name: "Products of Series")[
+  Given two series $sum_(n=1)^oo a_n$ and $sum_(n=1)^oo b_n$, arrange all products $a_i b_j$ ($i, j = 1, 2, dots$) into the infinite matrix
+  $
+    mat(a_1 b_1, a_1 b_2, a_1 b_3, dots.c; a_2 b_1, a_2 b_2, a_2 b_3, dots.c; a_3 b_1, a_3 b_2, a_3 b_3, dots.c; dots.v, dots.v, dots.v, dots.v).
+  $
+  Since a series is not invariant under rearrangement of its terms, the sum depends on the order in which the products are added. Two classical arrangements are:
+  + *Diagonal arrangement (Cauchy product).* Set $c_n = sum_(i+j=n+1) a_i b_j$, i.e., $c_1 = a_1 b_1$, $c_2 = a_1 b_2 + a_2 b_1$, and so on. The series $sum_(n=1)^oo c_n$ is called the *Cauchy product* of the two series. Convergence of $sum_(n=1)^oo a_n$ and $sum_(n=1)^oo b_n$ alone does not guarantee convergence of the Cauchy product.
+  + *Square arrangement.* Set
+    $
+      d_n = a_1 b_n + dots.c + a_n b_n + a_n b_(n-1) + dots.c + a_n b_1 = (sum_(i=1)^n a_i) b_n + a_n (sum_(j=1)^(n-1) b_j).
+    $
+    Whenever $sum_(n=1)^oo a_n$ and $sum_(n=1)^oo b_n$ converge, the series $sum_(n=1)^oo d_n$ converges and
+    $
+      sum_(n=1)^oo d_n = (sum_(n=1)^oo a_n)(sum_(n=1)^oo b_n).
+    $
+] <def:series-product>
+
+#theorem(name: "Product of Absolutely Convergent Series")[
+  If $sum_(n=1)^oo a_n$ and $sum_(n=1)^oo b_n$ are both absolutely convergent, then the series obtained by arranging the products $a_i b_j$ ($i, j = 1, 2, dots$) in any order is absolutely convergent, and its sum equals
+  $
+    (sum_(n=1)^oo a_n)(sum_(n=1)^oo b_n).
+  $
+] <thm:absolute-convergence-product>
+
 // B9: ch09 Series of Functions（函数项级数）
 // B10: ch10 Power Series（幂级数）
 
