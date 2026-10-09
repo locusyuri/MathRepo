@@ -3367,7 +3367,681 @@ $
   the point exists and equals $A$.
 ]
 
-// B4b: ch04 §5–7（Taylor Theorem / Properties of Functions / Applications）
+== Taylor Theorem // 泰勒定理
+
+=== L'Hôpital's Rule // 洛必达法则
+
+#theorem(name: "L'Hôpital's Rule")[
+  Let $f, g$ be differentiable on $(a, a + d]$ with $g'(x) != 0$ there, and
+  suppose that $lim_(x -> a^+) f(x) = lim_(x -> a^+) g(x) = 0$, or that
+  $lim_(x -> a^+) g(x) = oo$. If $lim_(x -> a^+) (f'(x)) / (g'(x))$ exists
+  (finite or infinite), then
+  $
+    lim_(x -> a^+) (f(x)) / (g(x)) = lim_(x -> a^+) (f'(x)) / (g'(x)).
+  $
+] <thm:lhopital>
+
+#caution[
+  The rule requires $f$ and $g$ to be defined on a (one-sided) punctured
+  neighborhood of the point in question. Moreover, the non-existence of
+  $lim_(x -> a^+) (f'(x)) / (g'(x))$ says nothing about whether
+  $lim_(x -> a^+) (f(x)) / (g(x))$ exists—it only means that the rule cannot
+  be applied.
+]
+
+#proof[
+  *Case 1: $f -> 0$ and $g -> 0$.* Extend $f$ and $g$ by
+  $bar(f)(x) = cases(0 & x = a comma, f(x) & x > a)$ and likewise for
+  $bar(g)$. Then $bar(f), bar(g) in C[a, a + d]$ and both are differentiable on
+  $(a, a + d)$. For $x > a$, Cauchy's mean value theorem provides a point
+  $xi in (a, x)$ with
+  $
+    (f(x)) / (g(x)) = (bar(f)(x) - bar(f)(a)) / (bar(g)(x) - bar(g)(a)) = (f'(xi)) / (g'(xi)).
+  $
+  As $x -> a^+$ we have $xi -> a^+$, so the right-hand side tends to
+  $lim_(x -> a^+) (f'(x)) / (g'(x))$, which proves the claim.
+
+  *Case 2: $g -> oo$.* Fix $x_0 in (a, a + d]$. For $x != x_0$,
+  $
+    (f(x)) / (g(x))
+    = (f(x) - f(x_0)) / (g(x)) + (f(x_0)) / (g(x))
+    = [1 - (g(x_0)) / (g(x))] dot (f(x) - f(x_0)) / (g(x) - g(x_0)) + (f(x_0)) / (g(x)).
+  $
+  Let $A = lim_(x -> a^+) (f'(x)) / (g'(x))$. Given $epsilon > 0$, choose
+  $rho > 0$ such that $abs((f'(t)) / (g'(t)) - A) < epsilon$ whenever
+  $0 < t - a < rho$, and set $x_0 = a + rho$. By Cauchy's mean value theorem,
+  for every $x in (a, x_0)$ there is $xi in (x, x_0)$ with
+  $(f(x) - f(x_0)) / (g(x) - g(x_0)) = (f'(xi)) / (g'(xi))$, hence
+  $abs((f(x) - f(x_0)) / (g(x) - g(x_0)) - A) < epsilon$. Since
+  $g(x) -> oo$ as $x -> a^+$, replacing $rho$ by some $delta in (0, rho)$
+  ensures that for $0 < x - a < delta$,
+  $abs(1 - (g(x_0)) / (g(x))) < 2$ and $abs((f(x_0)) / (g(x))) < epsilon$.
+  Combining the estimates,
+  $
+    abs((f(x)) / (g(x)) - A) <= abs(1 - (g(x_0)) / (g(x))) dot abs((f(x) - f(x_0)) / (g(x) - g(x_0)) - A) + abs((f(x_0)) / (g(x))) < 3 epsilon,
+  $
+  which completes the proof.
+]
+
+#example(name: "A Limit from the Sum of a Function and Its Derivative")[
+  Let $f in D(bb(R))$. If $lim_(x -> +oo) [f(x) + f'(x)] = A$, then
+  $lim_(x -> +oo) f(x) = A$ and $lim_(x -> +oo) f'(x) = 0$.
+] <ex:sum-function-derivative-limit>
+
+#proof[
+  Since $e^x -> oo$ as $x -> +oo$, L'Hôpital's rule (in the
+  $oo \/ oo$ form) gives
+  $
+    lim_(x -> +oo) f(x)
+    = lim_(x -> +oo) (e^x f(x)) / (e^x)
+    = lim_(x -> +oo) (e^x f(x) + e^x f'(x)) / (e^x)
+    = lim_(x -> +oo) [f(x) + f'(x)] = A.
+  $
+  Consequently
+  $lim_(x -> +oo) f'(x) = lim_(x -> +oo) [f(x) + f'(x)] - lim_(x -> +oo) f(x) = A - A = 0$.
+]
+
+#note[
+  More generally, if $lim_(x -> +oo) [f(x) + 1 / q f'(x)] = A$ for some
+  $q > 0$, the same argument with $e^(q x)$ in place of $e^x$ yields
+  $lim_(x -> +oo) f(x) = A$.
+]
+
+=== Taylor Formula // 泰勒公式
+
+#theorem(name: "Taylor's Formula with Peano Remainder")[
+  Let $f$ have an $n$-th derivative at $x_0$. Then there is a neighborhood of
+  $x_0$ on which
+  $
+    f(x) = p_n (x) + r_n (x),
+  $
+  where
+  $
+    p_n (x) = f(x_0) + f'(x_0)(x - x_0) + (f''(x_0)) / (2!) (x - x_0)^2 + dots + (f^((n))(x_0)) / (n!) (x - x_0)^n
+  $
+  is the $n$-th Taylor polynomial of $f$ at $x_0$, and
+  $r_n (x) = o((x - x_0)^n)$ as $x -> x_0$ is called the Peano remainder.
+] <thm:taylor-peano>
+
+#note[
+  The hypothesis that $f^((n))(x_0)$ exists guarantees that $f$ is defined in
+  some neighborhood of $x_0$ and that all derivatives $f^((k))$ with
+  $k <= n - 1$ exist in that neighborhood; only $f^((n))$ is required at the
+  single point $x_0$.
+]
+
+#proof[
+  Set $r_n (x) = f(x) - sum_(k = 0)^n (f^((k))(x_0)) / (k!) (x - x_0)^k$; it
+  suffices to show $r_n (x) = o((x - x_0)^n)$. Clearly
+  $r_n (x_0) = r'_n (x_0) = dots = r_n^((n - 1))(x_0) = 0$. Applying
+  L'Hôpital's rule repeatedly, each quotient satisfying the $0 \/ 0$
+  hypothesis,
+  $
+    lim_(x -> x_0) (r_n (x)) / ((x - x_0)^n)
+    = lim_(x -> x_0) (r'_n (x)) / (n (x - x_0)^(n - 1))
+    = dots = lim_(x -> x_0) (r_n^((n - 1))(x)) / (n (n - 1) dots 2 (x - x_0)).
+  $
+  Since $r_n^((n - 1))(x) = f^((n - 1))(x) - f^((n - 1))(x_0) - f^((n))(x_0)(x - x_0)$,
+  the last limit can be rewritten—without L'Hôpital, since $f^((n))$ may
+  exist only at $x_0$—as
+  $
+    1 / n! lim_(x -> x_0) [(f^((n - 1))(x) - f^((n - 1))(x_0)) / (x - x_0) - f^((n))(x_0)]
+    = 1 / n! [f^((n))(x_0) - f^((n))(x_0)] = 0,
+  $
+  where the final step uses the definition of $f^((n))(x_0)$.
+]
+
+#theorem(name: "Taylor's Formula with Lagrange Remainder")[
+  Let $f^((n))$ be continuous on $[a, b]$ and differentiable on $(a, b)$.
+  Then for any $x_0, x in [a, b]$,
+  $
+    f(x) = p_n (x) + r_n (x), quad
+    r_n (x) = (f^((n + 1))(xi)) / ((n + 1)!) (x - x_0)^(n + 1),
+  $
+  where $p_n$ is the $n$-th Taylor polynomial of $f$ at $x_0$ and $xi$ lies
+  strictly between $x_0$ and $x$.
+] <thm:taylor-lagrange>
+
+#note[
+  For $n = 0$ this reduces to $f(x) = f(x_0) + f'(xi)(x - x_0)$, i.e., to
+  Lagrange's mean value theorem.
+]
+
+#proof[
+  Fix $x in [a, b]$ with $x != x_0$ and write $g(t) = (t - x_0)^(n + 1)$.
+  The remainder $r_n (t) = f(t) - p_n (t)$ satisfies
+  $r_n (x_0) = r'_n (x_0) = dots = r_n^((n))(x_0) = 0$, and likewise
+  $g(x_0) = g'(x_0) = dots = g^((n))(x_0) = 0$. Applying Cauchy's mean value
+  theorem $n + 1$ times,
+  $
+    (r_n (x)) / (g(x))
+    = (r'_n (xi_1)) / ((n + 1)(xi_1 - x_0)^n)
+    = (r''_n (xi_2)) / ((n + 1) n (xi_2 - x_0)^(n - 1))
+    = dots = (r_n^((n))(xi_n)) / ((n + 1)! (xi_n - x_0))
+    = (r_n^((n + 1))(xi)) / ((n + 1)!),
+  $
+  where each $xi_j$ lies strictly between its predecessor and $x$, so
+  $x_0 < xi_n < xi < x$ (the order reverses if $x < x_0$). Since
+  $r_n^((n + 1))(t) = f^((n + 1))(t)$ and $g(x) = (x - x_0)^(n + 1)$, this is
+  the asserted formula.
+]
+
+#example(name: "A Third-Derivative Mean Value Formula")[
+  Let $f in D^((3))[a, b]$. Show that there exists $c in (a, b)$ such that
+  $
+    f(b) = f(a) + f'((a + b) / 2)(b - a) + 1 / 24 f'''(c) (b - a)^3.
+  $
+] <ex:third-derivative-midpoint>
+
+#proof[
+  *Undetermined constant.* Let $k$ be the constant for which
+  $
+    f(b) = f(a) + f'((a + b) / 2)(b - a) + 1 / 24 k (b - a)^3;
+  $
+  it suffices to find $c in (a, b)$ with $f'''(c) = k$. Define
+  $
+    g(x) = f(x) - f(a) - f'((a + x) / 2)(x - a) + 1 / 24 k (x - a)^3,
+  $
+  so that $g(a) = g(b) = 0$. By Rolle's theorem there is $xi in (a, b)$ with
+  $
+    0 = g'(xi)
+    = f'(xi) - f'((a + xi) / 2) - f''((a + xi) / 2) (xi - a) / 2 + 1 / 8 k (xi - a)^2.
+  $
+  On the other hand, expanding $f'(xi)$ about the midpoint $(a + xi) / 2$ by
+  Taylor's formula with Lagrange remainder (second order) gives
+  $
+    f'(xi) = f'((a + xi) / 2) + f''((a + xi) / 2) (xi - a) / 2 + 1 / 2 f'''(c) ((xi - a) / 2)^2
+  $
+  for some $c$ between $(a + xi) / 2$ and $xi$. Substituting this into the
+  equation above yields $0 = (xi - a)^2 / 8 dot [k - f'''(c)]$, hence
+  $f'''(c) = k$.
+]
+
+=== Maclaurin Formula // 麦克劳林公式
+
+Taylor's formula at $x_0 = 0$ is called the *Maclaurin formula*.
+
+#lemma(name: "Derivative of the Taylor Polynomial")[
+  If $f$ has $n + 2$ derivatives in some neighborhood of $x_0$, then the
+  derivative of its $(n + 1)$-th degree Taylor polynomial is exactly the
+  $n$-th degree Taylor polynomial of $f'$.
+] <lem:taylor-polynomial-derivative>
+
+Some common Maclaurin formulas are as follows:
+$
+  e^x = 1 + x / 1! + x^2 / 2! + x^3 / 3! + dots + x^n / n! + o(x^n), \
+  ln(1 + x) = x - x^2 / 2 + x^3 / 3 - dots + (-1)^(n - 1) x^n / n + o(x^n), \
+  sin x = x - x^3 / 3! + x^5 / 5! - dots + (-1)^(n - 1) (x^(2 n - 1)) / ((2 n - 1)!) + o(x^(2 n)), \
+  cos x = 1 - x^2 / 2! + x^4 / 4! - dots + (-1)^n (x^(2 n)) / ((2 n)!) + o(x^(2 n + 1)), \
+  arctan x = x - x^3 / 3 + x^5 / 5 - dots + (-1)^(n - 1) (x^(2 n - 1)) / (2 n - 1) + o(x^(2 n)), \
+  arcsin x = x + 1 / 2 dot x^3 / 3 + (1 dot 3) / (2 dot 4) dot x^5 / 5 + dots + ((2 n - 1)!!) / ((2 n)!!) dot x^(2 n + 1) / (2 n + 1) + o(x^(2 n + 2)).
+$
+
+Specially,
+$
+  (1 + x)^alpha = sum_(k = 0)^n binom(alpha, k) x^k + o(x^n),
+$
+- if $alpha = n in bb(N)^+$, this is Newton's binomial formula
+  $(1 + x)^n = 1 + binom(n, 1) x + binom(n, 2) x^2 + dots + binom(n, n) x^n$;
+- if $alpha = 1 / 2$, then $(1 + x)^(1 / 2) = 1 + 1 / 2 x - 1 / 8 x^2 + dots$;
+- if $alpha = -1$, then $(1 + x)^(-1) = 1 - x + x^2 - x^3 + dots$;
+- if $alpha = -1 / 2$, then $(1 + x)^(-1 / 2) = 1 - 1 / 2 x + 3 / 8 x^2 - dots$.
+
+#note(title: "Lagrange Remainders of the Common Formulas")[
+  The same formulas with Lagrange remainder $r_n =
+  (f^((n + 1))(theta x)) / ((n + 1)!) x^(n + 1)$, $theta in (0, 1)$, read:
+  $
+    e^x = sum_(k = 0)^n x^k / k! + (e^(theta x)) / ((n + 1)!) x^(n + 1),
+  $
+  $
+    (1 + x)^alpha = sum_(k = 0)^n binom(alpha, k) x^k + binom(alpha, n + 1) x^(n + 1) (1 + theta x)^(alpha - n - 1).
+  $
+  In particular, for $alpha = plus.minus 1$,
+  $
+    1 / (1 + x) = 1 - x + x^2 - x^3 + dots + (-1)^n x^n + (-1)^(n + 1) x^(n + 1) / (1 + theta x)^(n + 2),
+  $
+  $
+    1 / (1 - x) = 1 + x + x^2 + dots + x^n + x^(n + 1) / (1 - theta x)^(n + 2).
+  $
+]
+
+=== Euler and Bernoulli Numbers // 欧拉数与伯努利数
+
+#definition(name: "Euler Numbers")[
+  The Euler numbers $E_n$ are defined by the Taylor series expansion of the
+  hyperbolic secant function:
+  $
+    "sech" x = 2 / (e^x + e^(-x)) = sum_(n = 0)^oo E_n x^n / n!.
+  $
+  The odd-indexed Euler numbers are all zero, and the even-indexed ones have
+  alternating signs. Some values are:
+  $
+    E_0 = 1, quad E_2 = -1, quad E_4 = 5, quad E_6 = -61, quad E_8 = 1385.
+  $
+] <def:euler-numbers>
+
+#definition(name: "Bernoulli Numbers")[
+  The Bernoulli numbers $B_n$ are defined by the Taylor series expansion of
+  the function $x / (e^x - 1)$:
+  $
+    x / (e^x - 1) = sum_(n = 0)^oo B_n x^n / n!.
+  $
+  Some values are:
+  $
+    B_0 = 1, quad B_2 = 1 / 6, quad B_4 = -1 / 30, quad B_6 = 1 / 42, quad B_8 = -1 / 30.
+  $
+  Notably, all odd-indexed Bernoulli numbers except $B_1 = -1 / 2$ are zero.
+] <def:bernoulli-numbers>
+
+#note[
+  Euler and Bernoulli numbers are widely used in number theory, combinatorics,
+  and numerical analysis. For example, in the infinite series
+  $
+    sum_(n = 1)^oo 1 / n^(2 k) = (-1)^(k - 1) ((2 pi)^(2 k)) / (2 (2 k)!) B_(2 k), quad k in bb(N)^+,
+  $
+  the case $k = 1$ gives the famous Basel problem result
+  $sum_(n = 1)^oo 1 / n^2 = pi^2 / 6$.
+]
+
+With the help of the Bernoulli numbers,
+$
+  tan x = sum_(n = 1)^oo ((-4)^n (1 - 4^n) B_(2 n)) / ((2 n)!) x^(2 n - 1)
+  = x + x^3 / 3 + 2 / 15 x^5 + dots.
+$
+
+== Properties of Functions // 函数的性质
+
+=== Monotonicity and Convexity // 单调性与凸性
+
+#definition(name: "Convex Function")[
+  A function $f$ is called *convex* on an interval $I$ if for any
+  $x_1, x_2 in I$ and $t in [0, 1]$, the following inequality holds:
+  $
+    f(t x_1 + (1 - t) x_2) <= t f(x_1) + (1 - t) f(x_2).
+  $
+  If the inequality is strict for $x_1 != x_2$ and $t in (0, 1)$, then $f$ is
+  called *strictly convex* on $I$. Conversely, if the inequality is reversed,
+  then $f$ is called *concave* (or *concave down*) on $I$.
+] <def:convex-function>
+
+A related concept is that of *inflection points*: a point on the graph of a
+function at which the concavity changes.
+
+#figure(
+  image("img/ConvexFunction.png", width: 80%),
+  caption: [A convex function: the chord between any two points of the graph lies above the graph.],
+) <fig:convex-function>
+
+#theorem(name: "Equivalent Definitions of Convexity")[
+  Besides the defining chord inequality, a function $f$ on an interval $I$ is
+  convex under each of the following conditions:
+  + *Jensen definition:* $f((x_1 + x_2) / 2) <= (f(x_1) + f(x_2)) / 2$ for
+    all $x_1, x_2 in I$;
+  + $f((x_1 + x_2 + dots + x_n) / n) <= (f(x_1) + f(x_2) + dots + f(x_n)) / n$
+    for all $x_1, dots, x_n in I$;
+  + the tangent line at every point of the graph lies below the graph.
+
+  Statements (2) and (3) are equivalent. When $f$ is continuous, statements
+  (1), (2), and (3) are equivalent. When $f$ is differentiable, all four
+  statements are equivalent.
+] <thm:equivalent-convexity>
+
+#proof[
+  *Step 1: (2) $<=>$ (3).* That (3) implies (2) is the case $n = 2$. For the
+  converse, first prove (3) for $n = 2^k$ by repeated halving:
+  $
+    f((x_1 + dots + x_(2^k)) / 2^k)
+    = f(((x_1 + dots + x_(2^(k - 1))) / 2^(k - 1) + (x_(2^(k - 1) + 1) + dots + x_(2^k)) / 2^(k - 1)) / 2)
+    <= 1 / 2 [f((x_1 + dots + x_(2^(k - 1))) / 2^(k - 1)) + f((x_(2^(k - 1) + 1) + dots + x_(2^k)) / 2^(k - 1))]
+    <= (f(x_1) + dots + f(x_(2^k))) / 2^k,
+  $
+  so (3) holds for every $n = 2^k$. Then proceed by downward induction:
+  assuming (3) for $n + 1$, set $A = (x_1 + dots + x_k) / k$, so that
+  $A = (x_1 + dots + x_k + A) / (k + 1)$; applying (3) with $n + 1$ points
+  $x_1, dots, x_k, A$ gives
+  $
+    f(A) <= (f(x_1) + dots + f(x_k) + f(A)) / (k + 1),
+  $
+  and after multiplying by $k + 1$, subtracting $f(A)$, and dividing by $k$,
+  $
+    f((x_1 + dots + x_k) / k) <= (f(x_1) + dots + f(x_k)) / k,
+  $
+  which is (3) for $n = k$.
+
+  *Step 2: (1) $<=>$ (2) when $f$ is continuous.* That (1) implies (2) is
+  the case $t = 1 / 2$. For the converse, combine (2) and (3) into the
+  $n$-point Jensen inequality
+  $f((x_1 + dots + x_n) / n) <= (f(x_1) + dots + f(x_n)) / n$. For a rational
+  weight $t = m / n in (0, 1)$,
+  $
+    f(t x_1 + (1 - t) x_2)
+    = f((m x_1 + (n - m) x_2) / n)
+    <= (m f(x_1) + (n - m) f(x_2)) / n
+    = t f(x_1) + (1 - t) f(x_2).
+  $
+  For an irrational $t in (0, 1)$, choose rational $t_j in (0, 1)$ with
+  $t_j -> t$; by continuity of $f$,
+  $
+    f(t x_1 + (1 - t) x_2)
+    = f(lim_(j -> oo) [t_j x_1 + (1 - t_j) x_2])
+    = lim_(j -> oo) f(t_j x_1 + (1 - t_j) x_2)
+    <= t f(x_1) + (1 - t) f(x_2),
+  $
+  which is (1).
+
+  *Step 3: (4).* In the differentiable case, the equivalence of (4) with (1)
+  follows from
+  #link(<thm:derivative-criteria-monotonicity-convexity>)[the derivative criteria theorem] below, whose sufficiency
+  proof shows that an increasing derivative forces every tangent line to lie
+  below the graph, i.e., convexity.
+]
+
+#theorem(name: "Jensen's Inequality")[
+  If $f$ is convex on an interval $I$, then for any
+  $x_1, x_2, dots, x_n in I$ and any $t_1, t_2, dots, t_n > 0$ with
+  $t_1 + t_2 + dots + t_n = 1$,
+  $
+    f(t_1 x_1 + t_2 x_2 + dots + t_n x_n) <= t_1 f(x_1) + t_2 f(x_2) + dots + t_n f(x_n).
+  $
+  Specially, when $t_1 = t_2 = dots = t_n = 1 / n$, it reduces to statement
+  (3) of #link(<thm:equivalent-convexity>)[the theorem on equivalent characterizations of convexity]. The reversed inequality holds for
+  concave functions.
+] <thm:jensen>
+
+#proof[
+  Induction on $n$. The case $n = 1$ is trivial, and $n = 2$ is exactly the
+  definition of convexity. Suppose the inequality holds for $n - 1$, and let
+  $x_1, dots, x_n in I$ with weights $t_1, dots, t_n > 0$,
+  $sum_(i = 1)^n t_i = 1$. Set
+  $
+    mu = t_n, quad bar(x) = (sum_(i = 1)^(n - 1) t_i x_i) / (1 - mu),
+  $
+  so that $sum_(i = 1)^(n - 1) t_i / (1 - mu) = 1$ and
+  $sum_(i = 1)^n t_i x_i = (1 - mu) bar(x) + mu x_n$. By convexity,
+  $
+    f(sum_(i = 1)^n t_i x_i) <= (1 - mu) f(bar(x)) + mu f(x_n),
+  $
+  and the induction hypothesis applied with weights $t_i / (1 - mu)$ gives
+  $f(bar(x)) <= sum_(i = 1)^(n - 1) t_i f(x_i) / (1 - mu)$. Combining the two
+  estimates yields the assertion.
+]
+
+#note(title: "A Taylor Proof When $f in D^((2))(I)$")[
+  Let $bar(x) = sum_(i = 1)^n t_i x_i$. Taylor's formula with Lagrange
+  remainder at $bar(x)$ gives, for each $i$,
+  $
+    f(x_i) = f(bar(x)) + f'(bar(x))(x_i - bar(x)) + 1 / 2 f''(xi_i)(x_i - bar(x))^2,
+  $
+  with $xi_i$ between $x_i$ and $bar(x)$. Multiplying by $t_i$ and summing,
+  the linear terms cancel since $sum_(i = 1)^n t_i (x_i - bar(x)) = 0$, and
+  the quadratic terms are non-negative, whence Jensen's inequality.
+]
+
+Next, we present derivative-based criteria for monotonicity and convexity:
+
+#theorem(name: "Derivative Criteria for Monotonicity and Convexity")[
+  + If $f in D(I)$, then $f$ is increasing (decreasing) on $I$ if and only if
+    $f'(x) >= 0$ ($f'(x) <= 0$) for all $x in I$.
+  + If $f in D^((2))(I)$, then $f$ is convex (concave) on $I$ if and only if
+    $f''(x) >= 0$ ($f''(x) <= 0$) for all $x in I$.
+] <thm:derivative-criteria-monotonicity-convexity>
+
+#proof[
+  (1) *Sufficiency.* For $x_1 < x_2$ in $I$, Lagrange's mean value theorem
+  gives $f(x_2) - f(x_1) = f'(xi)(x_2 - x_1)$ with $xi in (x_1, x_2)$. If
+  $f' >= 0$ on $I$, then $f(x_2) - f(x_1) >= 0$; if $f' > 0$ except possibly
+  at finitely many points, the difference is even $> 0$, giving strict
+  monotonicity. *Necessity.* If $f$ is increasing, then for
+  $x, x_0 in I$ with $x != x_0$ the difference quotient
+  $(f(x_0) - f(x)) / (x_0 - x) >= 0$; letting $x_0 -> x$ yields
+  $f'(x) >= 0$ on $I$.
+
+  (2) *Sufficiency.* Since $f'' >= 0$, the function $f'$ is increasing on
+  $I$. Let $x_1 < x_2$ in $I$ and $x_0 = lambda x_1 + (1 - lambda) x_2$ with
+  $lambda in (0, 1)$, so that $x_1 < x_0 < x_2$. By Lagrange's mean value
+  theorem on $[x_1, x_0]$ and $[x_0, x_2]$, there exist $eta_1 in (x_1, x_0)$
+  and $eta_2 in (x_0, x_2)$ with
+  $
+    f(x_1) - f(x_0) = f'(eta_1)(x_1 - x_0), quad
+    f(x_2) - f(x_0) = f'(eta_2)(x_2 - x_0).
+  $
+  Since $f'$ is increasing, $f'(eta_1) <= f'(x_0) <= f'(eta_2)$; as
+  $x_1 - x_0 < 0 < x_2 - x_0$, this gives
+  $
+    f(x_1) >= f(x_0) + f'(x_0)(x_1 - x_0), quad
+    f(x_2) >= f(x_0) + f'(x_0)(x_2 - x_0).
+  $
+  Multiplying these by $lambda$ and $1 - lambda$ respectively and adding, the
+  linear terms cancel because
+  $lambda (x_1 - x_0) + (1 - lambda)(x_2 - x_0) = 0$, whence
+  $lambda f(x_1) + (1 - lambda) f(x_2) >= f(x_0) = f(lambda x_1 + (1 - lambda) x_2)$:
+  $f$ is convex. *Necessity.* By convexity, for $x in I$ and
+  $Delta x > 0$ with $x plus.minus Delta x in I$,
+  $
+    (f(x + Delta x) + f(x - Delta x)) / 2 >= f(x),
+  $
+  i.e., $f(x + Delta x) - f(x) >= f(x) - f(x - Delta x)$. For $x_1 < x_2$ in
+  $I$ put $Delta x_n = (x_2 - x_1) / n$ and iterate:
+  $
+    f(x_2) - f(x_2 - Delta x_n)
+    >= f(x_2 - Delta x_n) - f(x_2 - 2 Delta x_n)
+    >= dots >= f(x_1 + Delta x_n) - f(x_1),
+  $
+  hence
+  $
+    (f(x_2) - f(x_2 - Delta x_n)) / (Delta x_n) >= (f(x_1 + Delta x_n) - f(x_1)) / (Delta x_n).
+  $
+  Letting $n -> oo$ gives $f'(x_2) >= f'(x_1)$, so $f'$ is increasing and
+  therefore $f'' >= 0$ on $I$.
+]
+
+#note[
+  If $f'(x) > 0$ ($f''(x) > 0$) for all $x in I$, then $f$ is strictly
+  increasing (strictly convex) on $I$. Even though the condition weakens to
+  holding except at finitely many points, the conclusion of strict
+  monotonicity (convexity) still holds. For example, $f(x) = x^3$ is strictly
+  increasing on $bb(R)$ despite $f'(0) = 0$.
+]
+
+#theorem(name: "Inflection Points")[
+  Let $f$ be twice differentiable on $(x_0 - delta, x_0) union (x_0, x_0 + delta)$.
+  If $f''$ has opposite signs on $(x_0 - delta, x_0)$ and
+  $(x_0, x_0 + delta)$, then $(x_0, f(x_0))$ is an inflection point of the
+  curve $y = f(x)$; if the signs agree, it is not. Conversely, if $f$ is
+  twice differentiable on $(x_0 - delta, x_0 + delta)$ and $(x_0, f(x_0))$ is
+  an inflection point, then $f''(x_0) = 0$.
+] <thm:inflection-points>
+
+#note[
+  When searching for inflection points, one must consider not only the points
+  where $f''(x) = 0$ but also the points where $f''$ does not exist.
+]
+
+=== Argmax and Argmin // 最大值点与最小值点
+
+#definition(name: "Stationary Point")[
+  Stationary points are points where the first derivative of a function is
+  *zero or non-existent*.
+] <def:stationary-point>
+
+Stationary points can be classified into three types:
+
+#terms(
+  terms.item([Argmax and argmin points], [Points where the function attains its local maximum or minimum values.]),
+  terms.item([Inflection points], [Points where the function changes concavity.]),
+  terms.item([Trivial points], [Points that are neither local maxima nor local minima.]),
+)
+
+=== Asymptote // 渐近线
+
+#definition(name: "Asymptotes of a Curve")[
+  If the distance from the point $(x, f(x))$ of the curve $y = f(x)$ to the
+  line $y = a x + b$ tends to $0$ as $x -> +oo$ (or $x -> -oo$), then
+  $y = a x + b$ is called an asymptote of the curve: a *horizontal asymptote*
+  when $a = 0$, and an *oblique asymptote* otherwise.
+
+  The line $y = a x + b$ is an asymptote of the curve $y = f(x)$ if and only
+  if $lim_(x -> plus.minus oo) [f(x) - (a x + b)] = 0$ (the limit being taken
+  in the direction under consideration), in which case
+  $
+    a = lim_(x -> plus.minus oo) (f(x)) / x, quad b = lim_(x -> plus.minus oo) [f(x) - a x].
+  $
+  If the relation holds as $x -> oo$ in both directions at once, the same
+  line is asymptotic to the curve in both directions.
+
+  Besides, if $lim_(x -> a^+) f(x) = plus.minus oo$ or
+  $lim_(x -> a^-) f(x) = plus.minus oo$, then the vertical line $x = a$ is
+  called a *vertical asymptote* of the curve.
+] <def:asymptote>
+
+== Applications // 应用
+
+The criteria for extreme points and the boundedness estimates below are the
+standard tools for analysing the local and global behaviour of functions.
+
+=== Extreme Value Tests // 极值点判定
+
+All extreme points of a function must lie among the points where
+$f'(x) = 0$ (the stationary points) and the points where $f'$ does not exist.
+
+#theorem(name: "Criteria for Extreme Points")[
+  Let $f$ be defined in a neighborhood of $x_0$ and continuous at $x_0$.
+
+  *First criterion.* Suppose $f in D((x_0 - delta, x_0) union (x_0, x_0 + delta))$
+  for some $delta > 0$:
+  - if $f' >= 0$ on $(x_0 - delta, x_0)$ and $f' <= 0$ on
+    $(x_0, x_0 + delta)$, then $x_0$ is a local maximum point;
+  - if $f' <= 0$ on $(x_0 - delta, x_0)$ and $f' >= 0$ on
+    $(x_0, x_0 + delta)$, then $x_0$ is a local minimum point;
+  - if $f'$ has the same sign on both sides, then $x_0$ is not an extreme
+    point.
+
+  *Second criterion.* Suppose $f'(x_0) = 0$ and $f''(x_0)$ exists:
+  - if $f''(x_0) < 0$, then $x_0$ is a local maximum point;
+  - if $f''(x_0) > 0$, then $x_0$ is a local minimum point;
+  - if $f''(x_0) = 0$, the criterion is inconclusive.
+
+  *Third criterion.* Suppose $f$ has $n + 1$ continuous derivatives in a
+  neighborhood of $x_0$ and
+  $f'(x_0) = f''(x_0) = dots = f^((n))(x_0) = 0$ with
+  $f^((n + 1))(x_0) != 0$:
+  - if $n$ is even, then $x_0$ is not an extreme point;
+  - if $n$ is odd, then $x_0$ is a strict extreme point: a strict local
+    minimum when $f^((n + 1))(x_0) > 0$, and a strict local maximum when
+    $f^((n + 1))(x_0) < 0$.
+] <thm:extreme-point-criteria>
+
+#note[
+  When $f''$ is continuous at $x_0$, the second criterion is the third
+  criterion with $n = 1$.
+]
+
+#proof[
+  We prove the third criterion. Taylor's formula with Peano remainder at
+  $x_0$ gives
+  $
+    f(x) = f(x_0) + (f^((n + 1))(x_0)) / ((n + 1)!) (x - x_0)^(n + 1) + o((x - x_0)^(n + 1)),
+  $
+  hence
+  $
+    f(x) - f(x_0) = [(f^((n + 1))(x_0)) / ((n + 1)!) + (o((x - x_0)^(n + 1))) / ((x - x_0)^(n + 1))] (x - x_0)^(n + 1).
+  $
+  The bracket tends to $(f^((n + 1))(x_0)) / ((n + 1)!)$ as $x -> x_0$, so on
+  a sufficiently small neighborhood it has the sign of
+  $f^((n + 1))(x_0)$. If $n$ is even, then $n + 1$ is odd, so
+  $(x - x_0)^(n + 1)$ changes sign across $x_0$ and so does
+  $f(x) - f(x_0)$: the point $x_0$ is not an extreme point. If $n$ is odd,
+  then $(x - x_0)^(n + 1) > 0$ on a punctured neighborhood, so
+  $f(x) - f(x_0)$ keeps the sign of $f^((n + 1))(x_0)$ throughout: a strict
+  local minimum when $f^((n + 1))(x_0) > 0$ and a strict local maximum when
+  $f^((n + 1))(x_0) < 0$.
+]
+
+=== Estimates of Bounds // 界的估计
+
+#note[
+  A typical problem of this type is to bound $f'$ using bounds for $f$ and
+  $f''$.
+]
+
+#example(name: "Bounding the Derivative on [0, 1]")[
+  Let $f in D^((2))[0, 1]$ with $|f(x)| <= A$ and $|f''(x)| <= B$ on $[0, 1]$.
+  Show that $|f'(x)| <= 2 A + 1 / 2 B$ for all $x in [0, 1]$.
+] <ex:bound-derivative-0-1>
+
+#proof[
+  Fix $c in [0, 1]$. Taylor's formula with Lagrange remainder (first order)
+  at $c$ gives, for $x in [0, 1]$,
+  $
+    f(x) = f(c) + f'(c)(x - c) + 1 / 2 f''(xi)(x - c)^2,
+  $
+  with $xi$ between $x$ and $c$. In particular,
+  $
+    f(0) = f(c) - f'(c) c + 1 / 2 f''(xi_1) c^2, quad
+    f(1) = f(c) + f'(c)(1 - c) + 1 / 2 f''(xi_2)(1 - c)^2
+  $
+  with $xi_1, xi_2 in [0, 1]$. Subtracting the first identity from the
+  second,
+  $
+    f'(c) = f(1) - f(0) - 1 / 2 [f''(xi_2)(1 - c)^2 - f''(xi_1) c^2],
+  $
+  hence, since $(1 - c)^2 + c^2 <= 1 - c + c = 1$,
+  $
+    |f'(c)| <= |f(1)| + |f(0)| + 1 / 2 [|f''(xi_2)| (1 - c)^2 + |f''(xi_1)| c^2] <= 2 A + 1 / 2 B.
+  $
+  Since $c$ was arbitrary, the claim follows.
+]
+
+#example(name: "A Landau-Type Inequality")[
+  Let $f in D^((2))(-oo, +oo)$ with $M_0 = sup_(x in bb(R)) |f(x)| < +oo$ and
+  $M_2 = sup_(x in bb(R)) |f''(x)| < +oo$. Then
+  $M_1 = sup_(x in bb(R)) |f'(x)| < +oo$ and $M_1^2 <= 2 M_0 M_2$.
+] <ex:landau-inequality>
+
+#proof[
+  Taylor's formula with Lagrange remainder gives, for $h > 0$,
+  $
+    f(x + h) = f(x) + f'(x) h + 1 / 2 f''(xi) h^2, quad
+    f(x - h) = f(x) - f'(x) h + 1 / 2 f''(eta) h^2,
+  $
+  with $xi$ between $x$ and $x + h$, and $eta$ between $x$ and $x - h$.
+  Subtracting and rearranging,
+  $
+    2 f'(x) h = f(x + h) - f(x - h) - 1 / 2 [f''(xi) - f''(eta)] h^2,
+  $
+  hence
+  $
+    2 |f'(x)| h <= 2 M_0 + h^2 M_2, quad "i.e." quad |f'(x)| <= M_0 / h + h M_2 / 2 quad "for every" h > 0.
+  $
+  If $M_0 = 0$ then $f equiv 0$ and hence $f' equiv 0$; if $M_2 = 0$, letting
+  $h -> oo$ in the estimate forces $f' equiv 0$. In both cases the claim is
+  trivial. Otherwise choose $h = sqrt(2 M_0 / M_2)$, which minimizes the
+  right-hand side, to obtain $|f'(x)| <= sqrt(2 M_0 M_2)$ for every $x$;
+  taking the supremum over $x$ yields $M_1 <= sqrt(2 M_0 M_2)$, i.e.,
+  $M_1^2 <= 2 M_0 M_2$.
+]
+
+#example(name: "The Derivative Vanishes at Infinity")[
+  Let $phi in D^((2))[0, +oo)$. If $lim_(x -> +oo) phi(x)$ exists and
+  $phi''$ is bounded on $[0, +oo)$, then $lim_(x -> +oo) phi'(x) = 0$.
+] <ex:derivative-vanishes-infinity>
+
+#proof[
+  Write $A = lim_(x -> +oo) phi(x)$ and let $M > 0$ with
+  $|phi''(x)| <= M$. For $h > 0$,
+  $
+    phi(x + h) = phi(x) + phi'(x) h + 1 / 2 phi''(xi) h^2,
+  $
+  so
+  $
+    |phi'(x)| <= 1 / h [|phi(x + h) - A| + |A - phi(x)|] + 1 / 2 M h.
+  $
+  Given $epsilon > 0$, first choose $h > 0$ so small that
+  $M h / 2 < epsilon / 2$; fixing this $h$, choose $X > 0$ so large that
+  $1 / h [|phi(x + h) - A| + |A - phi(x)|] < epsilon / 2$ for all
+  $x > X$. Then $|phi'(x)| < epsilon$ for all $x > X$, which proves the
+  claim.
+]
 
 // B5: ch05 Indefinite Integral（不定积分）
 // B6: ch06 Definite Integral（定积分）
