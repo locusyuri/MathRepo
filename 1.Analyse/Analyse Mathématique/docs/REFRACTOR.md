@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B10 完成：ch10 Power Series 迁移收口，Part III 里程碑达成）
+> 最后更新：2026-10-10（B11 §11.1 现状迁移完成 + P0-1 大纲草案已出待确认）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -246,8 +246,12 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 ### Part IV — Multivariable Calculus
 
 - [ ] **B11 = ch11 Euclidean Spaces**（26 行 / 1 节，⚠ P0-1）
-  - [ ] §11.1 Continuous Mappings（按现状迁移）
-  - [ ] 🔧 P0-1 补全：`violet-make-outline` 出大纲（$\mathbb{R}^n$ 拓扑 / 多元极限 / 连续函数性质）→ 确认 → 写入
+  - [x] §11.1 Continuous Mappings（按现状迁移）：Connected Set 定义 `<def:connected-set>`（path/路径连通/区域）+ note；tex "Continuous Mappings on Compact Sets" 空壳标题**删除**（无内容来源，紧集上连续映射性质属 P0-1 补全范围，待大纲确认后重建，已在 initial.typ 留 `//` 注释标记）
+  - [ ] 🔧 P0-1 补全：`violet-make-outline` 出大纲（$\mathbb{R}^n$ 拓扑 / 多元极限 / 连续函数性质）→ 确认 → 写入。**大纲草案（2026-10-10 已出，待用户确认）**：
+    - `=== Points and Open/Closed Sets in Euclidean Spaces`：Rⁿ 中邻域/内点/聚点/开集/闭集/有界集/区域（一元版本 ch02 已有，此处多维重述，证明可引用）
+    - `=== Limits in Euclidean Spaces`：点列极限与 Cauchy 准则、多元函数极限（Heine 归结原则）、累次极限与重极限关系
+    - `=== Continuous Mappings`：连续性定义与等价刻画（开集原像/序列刻画）、运算封闭性、分量连续 ⟺ 映射连续
+    - `=== Continuous Mappings on Compact Sets`（恢复 tex 空壳）：有界性、最值可达、一致连续（Cantor）、紧集连续像紧 + 连通集上介值定理（与现 §11.1 Connected Sets 内容衔接）
 - [ ] **B12a = ch12 §1–3**（约 440 行）：Directional Derivatives / Higher-Order Partial Derivatives / Differential of Vector-Valued Functions
 - [ ] **B12b = ch12 §4–5**（约 250 行）：Chain Rule / Mean Value Theorem and Taylor's Formula
 - [ ] **B12c = ch12 §6**（约 370 行）：Implicit Function Theorem（长证明，单独成批）
