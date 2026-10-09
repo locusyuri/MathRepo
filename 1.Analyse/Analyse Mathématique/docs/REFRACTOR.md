@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B4b 完成：ch04 §5–7 迁移 + R9 校对收口，ch04 全章完成）
+> 最后更新：2026-10-10（B5 完成：ch05 扩为 5 节，P1-1/R5 回收收口）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -176,9 +176,16 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
     - §4.7：极值点必在驻点与不可导点之中、极值三判据（第一/第二/第三）+第三判据证明（Peano 展开）+note（第二判据为第三判据 n=1 特例，需 f'' 连续）、界的估计 note（由 f、f'' 界估 f'）+ 3 例题（|f'|≤2A+B/2、Landau 不等式 M₁²≤2M₀M₂、φ'' 有界+φ 有极限 ⟹ φ'→0）
   - 修正 tex/md 笔误 12 处：tex L245 二项式展开求和上限 α → n；tex L297 tan x 展开系数公式整体错误 → `(-4)^n(1-4^n)B_(2n)/((2n)!) x^(2n-1)`（n=1,2,3 验证；md 同式 n 应从 1 起）；md L791 L'Hôpital 证明分母 g(x₀) → g(x)；md L796 「整数 δ」→ δ∈(0,ρ)；md L915 Maclaurin 余项 θ∈(0,1) 错位（未迁，tex 无此内容）；md L934 1/(1−x) 余项 (1+θx)^(n+1) → (1−θx)^(n+1)；md L1009–1010 极值判据两处均标 (i) → (i)(ii)；md L1014 第三判据展开 (x−x₀)^n → (x−x₀)^(n+1)（并补全 n 为奇数的情形）；md L1027 |f'| 例题结论定义域 [a,b] → [0,1]（与陈述一致）；md L1042 Landau 例题 M₂ 未定义 → 补 M₂ = sup|f''|；md L1053 Landau 结论 √(2M₁M₂) → √(2M₀M₂)；md L1082 斜渐近线第二极限方向 +∞ → −∞
   - 放弃项：md L818–834 例题（f''' 极限与 f 极限链，证明多处混乱）；md L837–846 例题（Rolle 应用，与 L'Hôpital 无关且 B4a 已有同类）；md L963–975 Hölder/Minkowski（仅陈述无证明）；md 求极限/近似计算小节（空）；md Euler/Bernoulli 数递推式（tex 已覆盖定义与主要值）；md sin/cos 的 Lagrange 余项（指标混乱不冒险迁入）
-- [ ] **B5 = ch05 Indefinite Integral**（81 行 / 1 节，⚠ P1-1）
-  - [ ] §5.1 Two Common Integration Methods
-  - [ ] 🔧 P1-1/R5：从 md 回收"几类可积函数"（有理函数、三角有理式、无理函数积分），评估扩为多节
+- [x] **B5 = ch05 Indefinite Integral**（tex 85 行 / 1 节，⚠ P1-1；回收后约 320 行，扩为 5 节）（✅ 2026-10-10）
+  - 🔧 P1-1/R5 ✅：按"评估扩为多节"决策，ch05 由 1 节扩为 5 节：
+    - Antiderivatives and Indefinite Integrals（新增，md L1091–1098）：原函数/不定积分定义 `<def:indefinite-integral>`、原函数仅差常数说明、线性性命题 `<prop:linearity-integrals>` + 证明（含 k₁=k₂=0 时右端理解为 C）
+    - Basic Integration Formulas（leftbarTitle 升级）：tex 基本积分表 25 条迁移为 tex-table，从 md 积分表补入 ∫ln x dx 与 ∫dx/(x²−a²)；√(a²±x²) 结果由例题给出避免重复
+    - Two Common Integration Methods（tex 主体+md 回收）：补全 Substitution Method 空壳定义（第一换元/凑微分 + 第二换元/逆代换，md L1102–1103）`<def:substitution-method>`、分部积分定义 `<def:integration-by-parts>`（tex 已有）、"反对幂三指"选择原则 note、常用代换 terms（三角/无理/倒代换，tex 已有）、例题 5 个：tan 与 sec（`<ex:tangent-secant-integrals>`）、√(a²−x²)（`<ex:sqrt-a2-minus-x2>`）、√(x²+a²)（`<ex:sqrt-x2-plus-a2>`）、I_n 递推（`<ex:recurrence-in>`）、1/(1+x⁴) 配对法（`<ex:pairing-fourth-degree>`），均出自 md eg，补 x=0 处 arctan 跳跃的区间说明
+    - Integration of Rational Functions（新增，md L1164–1178）：部分分式分解与两类基本积分定理 `<thm:rational-integration>`（Type 2 补配方与拆分说明，链接 I_n 递推例题）、Chebyshev 定理 `<thm:chebyshev>`（二项微分式三情形，按标准表述写为当且仅当）
+    - Integration of Trigonometric Rational Functions（新增，md L1181–1185）：万能代换定理 `<thm:universal-substitution>` + 双角公式证明
+  - 修正 md 笔误 4 处：L1142 1/(1+x⁴) 最终结果缺 ln 系数 1/(4√2)（按 ½[(M−N)+(M+N)] 重算）；L1171 Type 2 分母漏 ^r 上标；L1184 万能代换 cos t → cos x；L1135 递推推导排版混乱（误写 I_n = (1/a²)I_n，正确恒等式为 a²/(x²+a²)ⁿ = 1/(x²+a²)ⁿ⁻¹ − x²/(x²+a²)ⁿ）
+  - 放弃项：md L1187–1188 Poisson 积分例题（仅题目无解答）；md L1192"无理函数积分的例子"（空节，其内容已由常用代换 terms 覆盖）
+  - 新环境符号坑：arccot 非预定义 → 表内改用 `"arccot"` 字符串形式
 - [ ] **B6a = ch06 §1–4**（约 300 行）：Riemann Integral / Integrability Criteria / Properties / Fundamental Theorem of Calculus
 - [ ] **B6b = ch06 §5–7**（约 144 行）：Calculation / Integral Inequalities / Applications
 - [ ] **B7 = ch07 Improper Integral**（192 行 / 4 节）
