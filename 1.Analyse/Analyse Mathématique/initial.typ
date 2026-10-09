@@ -5968,6 +5968,610 @@ directly from the indefinite integral.
   ),
 )] // 曲率小节：md 为空节，不迁
 
+// B7: ch07 Improper Integral（反常积分）
+= Improper Integral // 反常积分
+
+The Riemann integral presupposes a bounded integrand on a finite interval.
+Relaxing either requirement leads to improper integrals: the infinite
+integrals over unbounded intervals and the defective integrals of unbounded
+functions. Throughout this chapter, "integrable" refers to this improper
+sense unless stated otherwise.
+
+== Infinite and Defective Integrals // 无穷积分与瑕积分
+
+#definition(name: "Infinite Integral")[
+  Let $f(x)$ be defined on $[a, +oo)$ and Riemann integrable on every finite
+  subinterval $[a, A] subset [a, +oo)$. If the limit
+  $ lim_(A -> +oo) integral_a^A f(x) dif x $
+  exists, then the improper integral $integral_a^(+oo) f(x) dif x$ is said to
+  *converge* (or $f(x)$ is said to be *integrable* on $[a, +oo)$), and its
+  value is
+  $ integral_a^(+oo) f(x) dif x = lim_(A -> +oo) integral_a^A f(x) dif x; $
+  otherwise the integral is said to *diverge*.
+] <def:infinite-integral>
+
+#note[
+  The integral $integral_(-oo)^(+oo) f(x) dif x$ converges only when both
+  $integral_a^(+oo) f(x) dif x$ and $integral_(-oo)^a f(x) dif x$ converge.
+]
+
+#definition(name: "Defective Integral")[
+  Let $f(x)$ be unbounded in the left neighbourhood of $x = b$. If for every
+  $eta in (0, b - a)$ the function $f(x)$ is bounded and Riemann integrable
+  on $[a, b - eta]$, and the limit
+  $ lim_(eta -> 0^+) integral_a^(b - eta) f(x) dif x $
+  exists, then the improper integral $integral_a^b f(x) dif x$ is said to
+  *converge* (or the unbounded function $f(x)$ is said to be *integrable* on
+  $[a, b]$), with
+  $ integral_a^b f(x) dif x = lim_(eta -> 0^+) integral_a^(b - eta) f(x) dif x; $
+  otherwise the integral is said to *diverge*.
+] <def:defective-integral>
+
+#note[
+  Infinite integrals and defective integrals can often be converted into one
+  another, e.g. by a substitution such as $x = 1/t$.
+]
+
+#note[
+  For improper integrals, linearity, order-preservation and additivity over
+  intervals still hold; however, two (improperly) integrable functions need
+  not have an integrable product.
+]
+
+#example(name: "p-Integrals")[
+  For the infinite integral
+  $ integral_1^(+oo) (dif x) / x^p $
+  the integral converges to $1/(p - 1)$ when $p > 1$ and diverges when
+  $p <= 1$. For the defective integral
+  $ integral_0^1 (dif x) / x^p $
+  the integral converges to $1/(1 - p)$ when $p < 1$ and diverges when
+  $p >= 1$.
+] <ex:p-integrals>
+
+#solution[
+  For $p != 1$,
+  $ integral_1^A (dif x) / x^p = (A^(1 - p) - 1) / (1 - p) $
+  has a finite limit as $A -> +oo$ exactly when $1 - p < 0$; for $p = 1$ the
+  integral equals $ln A -> +oo$. Similarly,
+  $ integral_eta^1 (dif x) / x^p = (1 - eta^(1 - p)) / (1 - p) $
+  has a finite limit as $eta -> 0^+$ exactly when $1 - p > 0$; for $p = 1$ it
+  equals $-ln eta -> +oo$.
+]
+
+#definition(name: "Cauchy Principal Value")[
+  If the limit
+  $ lim_(A -> +oo) integral_(-A)^A f(x) dif x = lim_(A -> +oo) (F(A) - F(-A)) $
+  converges, its value is called the *Cauchy principal value* of
+  $integral_(-oo)^(+oo) f(x) dif x$, denoted by
+  $ (upright("cpv")) integral_(-oo)^(+oo) f(x) dif x. $
+  When $integral_(-oo)^(+oo) f(x) dif x$ converges, it equals its Cauchy
+  principal value; however, a divergent integral may still possess a Cauchy
+  principal value.
+] <def:cauchy-principal-value>
+
+== Convergence Tests for Improper Integrals // 反常积分审敛法
+
+#definition(name: "Absolute and Conditional Convergence")[
+  Let $f(x) in R[a, A] subset [a, +oo)$, and suppose
+  $integral_a^(+oo) abs(f(x)) dif x$ converges. Then
+  $integral_a^(+oo) f(x) dif x$ is said to be *absolutely convergent* (or
+  $f(x)$ is *absolutely integrable* on $[a, +oo)$).
+
+  If $integral_a^(+oo) f(x) dif x$ converges but is not absolutely
+  convergent, then $integral_a^(+oo) f(x) dif x$ is said to be *conditionally
+  convergent*.
+] <def:abs-cond-convergence-integral>
+
+=== Infinite Integrals // 无穷积分
+
+#theorem(name: "Cauchy Convergence Criterion for Infinite Integrals")[
+  The necessary and sufficient condition for the convergence of the infinite
+  integral $integral_a^(+oo) f(x) dif x$ is
+  $
+    forall epsilon > 0, exists A_0 > max\{a, 0\}, forall A', A'' > A_0:
+    abs(integral_(A')^(A'') f(x) dif x) < epsilon.
+  $
+] <thm:cauchy-criterion-infinite-integral>
+
+#proof[
+  Set $F(A) = integral_a^A f(x) dif x$. By
+  #link(<def:infinite-integral>)[definition], the improper integral converges
+  if and only if $lim_(A -> +oo) F(A)$ exists and is finite. By the Cauchy
+  criterion for function limits, this holds if and only if for every
+  $epsilon > 0$ there is $A_0 > max\{a, 0\}$ such that for all
+  $A', A'' > A_0$,
+  $ abs(F(A') - F(A'')) = abs(integral_(A')^(A'') f(x) dif x) < epsilon, $
+  which is precisely the asserted condition.
+]
+
+#corollary(name: "Absolute Convergence Implies Convergence")[
+  If $integral_a^(+oo) abs(f(x)) dif x$ converges, then so does
+  $integral_a^(+oo) f(x) dif x$.
+] <cor:absolute-implies-convergence>
+
+#proof[
+  For $A', A'' > A_0$,
+  $ abs(integral_(A')^(A'') f(x) dif x) <= integral_(A')^(A'') abs(f(x)) dif x < epsilon, $
+  so #link(<thm:cauchy-criterion-infinite-integral>)[the Cauchy criterion]
+  applies to $f$ itself.
+]
+
+#theorem(name: "Comparison Tests for Infinite Integrals")[
+  + *Comparison test.* Let $f(x), g(x)$ be defined on $[a, +oo)$ with
+    $0 <= f(x) <= K g(x)$ for a constant $K > 0$. Then
+    (i) if $integral_a^(+oo) g(x) dif x$ converges, so does
+    $integral_a^(+oo) f(x) dif x$;
+    (ii) if $integral_a^(+oo) f(x) dif x$ diverges, so does
+    $integral_a^(+oo) g(x) dif x$.
+  + *Limit form.* Let $f(x), g(x) > 0$ on $[a, +oo)$ and
+    $lim_(x -> +oo) f(x) / g(x) = l$. Then
+    (i) if $0 <= l < +oo$ and $integral_a^(+oo) g(x) dif x$ converges, so
+    does $integral_a^(+oo) f(x) dif x$;
+    (ii) if $0 < l <= +oo$ and $integral_a^(+oo) g(x) dif x$ diverges, so
+    does $integral_a^(+oo) f(x) dif x$.
+    In particular, for $0 < l < +oo$ the two integrals converge or diverge
+    simultaneously.
+  + *Comparison with p-integrals.* Let $f(x) >= 0$ on
+    $[a, +oo) subset (0, +oo)$.
+    (i) if $f(x) <= K / x^p$ and $p > 1$, then $integral_a^(+oo) f(x) dif x$
+    converges;
+    (ii) if $f(x) >= K / x^p$ and $p <= 1$, then $integral_a^(+oo) f(x) dif x$
+    diverges.
+  + *Limit form with p-integrals.* Let $f(x) >= 0$ on
+    $[a, +oo) subset (0, +oo)$ and $lim_(x -> +oo) x^p f(x) = l$. Then
+    (i) if $0 <= l < +oo$ and $p > 1$, then $integral_a^(+oo) f(x) dif x$
+    converges;
+    (ii) if $0 < l <= +oo$ and $p <= 1$, then $integral_a^(+oo) f(x) dif x$
+    diverges.
+] <thm:comparison-tests-infinite-integral>
+
+#theorem(name: "Abel-Dirichlet Test")[
+  The infinite integral $integral_a^(+oo) f(x) g(x) dif x$ converges if
+  either of the following two conditions is satisfied:
+  - *Abel*: $integral_a^(+oo) f(x) dif x$ converges, and $g(x)$ is monotonic
+    and bounded on $[a, +oo)$.
+  - *Dirichlet*: $F(A) = integral_a^A f(x) dif x$ is bounded on $[a, +oo)$,
+    $g(x)$ is monotonic on $[a, +oo)$, and $lim_(x -> +oo) g(x) = 0$.
+] <thm:abel-dirichlet-infinite-integral>
+
+#proof[
+  *Abel.* Suppose $abs(g(x)) <= M$ for all $x in [a, +oo)$. Since
+  $integral_a^(+oo) f(x) dif x$ converges,
+  #link(<thm:cauchy-criterion-infinite-integral>)[the Cauchy criterion]
+  provides $A_0 > max\{a, 0\}$ such that for all $A'' > A' > A_0$,
+  $ abs(integral_(A')^(A'') f(x) dif x) < epsilon / (2 M). $
+  By the general form of the second integral mean value theorem
+  (#link(<thm:integral-mean-value>)[Bonnet's formula]), there exists
+  $xi in [A', A'']$ with
+  $
+    integral_(A')^(A'') f(x) g(x) dif x
+    = g(A') integral_(A')^(xi) f(x) dif x + g(A'') integral_(xi)^(A'') f(x) dif x,
+  $
+  hence
+  $
+    abs(integral_(A')^(A'') f(x) g(x) dif x) & <= abs(g(A')) abs(integral_(A')^(xi) f(x) dif x)
+                                               + abs(g(A'')) abs(integral_(xi)^(A'') f(x) dif x) \
+                                             & < M dot epsilon / (2 M) + M dot epsilon / (2 M) = epsilon.
+  $
+  By the Cauchy criterion, $integral_a^(+oo) f(x) g(x) dif x$ converges.
+
+  *Dirichlet.* Since $F(A)$ is bounded, writing
+  $M = sup_(A >= a) abs(F(A))$ gives
+  $abs(integral_u^v f(x) dif x) = abs(F(v) - F(u)) <= 2 M$ for all
+  $v > u >= a$. As $g(x) -> 0$, for every $epsilon > 0$ there is $A_0$ such
+  that $abs(g(x)) < epsilon / (4 M)$ for all $x > A_0$. For $A'' > A' > A_0$,
+  Bonnet's formula again yields $xi in [A', A'']$ with
+  $
+    abs(integral_(A')^(A'') f(x) g(x) dif x) & <= abs(g(A')) abs(integral_(A')^(xi) f(x) dif x)
+                                               + abs(g(A'')) abs(integral_(xi)^(A'') f(x) dif x) \
+                                             & < epsilon / (4 M) dot 2 M + epsilon / (4 M) dot 2 M = epsilon,
+  $
+  and the Cauchy criterion concludes the proof.
+]
+
+=== Defective Integrals // 瑕积分
+
+#theorem(name: "Cauchy Convergence Criterion for Defective Integrals")[
+  The defective integral $integral_a^b f(x) dif x$ (singularity at the upper
+  limit $b$) converges if and only if
+  $
+    forall epsilon > 0, exists delta > 0, forall eta', eta'' in (0, delta):
+    abs(integral_(b - eta')^(b - eta'') f(x) dif x) < epsilon.
+  $
+] <thm:cauchy-criterion-defective-integral>
+
+#theorem(name: "Comparison with p-Integrals for Defective Integrals")[
+  Let $f(x) >= 0$ on $[a, b)$, and suppose that on some left neighbourhood
+  $[b - eta_0, b)$ of $b$ there is a constant $K > 0$ such that:
+  + *Comparison.* (i) if $f(x) <= K / (b - x)^p$ and $p < 1$, then
+    $integral_a^b f(x) dif x$ converges; (ii) if $f(x) >= K / (b - x)^p$ and
+    $p >= 1$, then $integral_a^b f(x) dif x$ diverges.
+  + *Limit form.* If $lim_(x -> b^-) (b - x)^p f(x) = l$, then
+    (i) $0 <= l < +oo$ and $p < 1$ imply convergence;
+    (ii) $0 < l <= +oo$ and $p >= 1$ imply divergence.
+] <thm:comparison-tests-defective-integral>
+
+#theorem(name: "Abel-Dirichlet Test for Defective Integrals")[
+  The defective integral $integral_a^b f(x) g(x) dif x$ (singularity at the
+  upper limit $b$) converges if either of the following two conditions is
+  satisfied:
+  - *Abel*: $integral_a^b f(x) dif x$ converges, and $g(x)$ is monotonic and
+    bounded on $[a, b)$.
+  - *Dirichlet*: $F(eta) = integral_a^(b - eta) f(x) dif x$ is bounded on
+    $(0, b - a]$, $g(x)$ is monotonic on $[a, b)$, and
+    $lim_(x -> b^-) g(x) = 0$.
+] <thm:abel-dirichlet-defective-integral>
+
+=== Examples // 例题
+
+#example(name: "Convergence and Divergence Discussions")[
+  Discuss the convergence of the following improper integrals:
+  $
+    & (1) quad integral_0^(+oo) sin x / x^p dif x quad (p > 0), \
+    & (2) quad integral_0^(+oo) sin x / (x^p + sin x) dif x, \
+    & (3) quad integral_0^(1/e) (dif x) / (x^p ln x) quad (p > 0), \
+    & (4) quad integral_0^1 sin(1/x) / x^p dif x quad (p < 2).
+  $
+] <ex:improper-convergence>
+
+#solution[
+  *1).* First let $0 < p <= 1$. Since
+  $sin x / x^p = x^(1 - p) dot sin x / x$ has a finite limit at $x = 0^+$
+  (namely 0 for $p < 1$ and 1 for $p = 1$), $x = 0$ is not a singular point.
+  On $[1, +oo)$ the factor $1/x^p$ decreases to 0 while
+  $abs(integral_1^A sin x dif x) <= 2$ is bounded, so
+  $integral_1^(+oo) sin x / x^p dif x$ converges by
+  #link(<thm:abel-dirichlet-infinite-integral>)[Dirichlet's test]. It does
+  not converge absolutely: on $[1, +oo)$,
+  $ abs(sin x / x^p) >= sin^2 x / x^p = 1 / (2 x^p) - cos 2 x / (2 x^p), $
+  where $integral_1^(+oo) cos 2 x / (2 x^p) dif x$ converges (Dirichlet's
+  test again) while $integral_1^(+oo) 1/(2 x^p) dif x$ diverges for
+  $p <= 1$; hence $integral_1^(+oo) sin^2 x / x^p dif x$ diverges, and the
+  comparison test forces $integral_1^(+oo) abs(sin x / x^p) dif x$ to diverge
+  too. The original integral is therefore conditionally convergent for
+  $0 < p <= 1$.
+
+  Now let $p > 1$, so that $x = 0$ is a singular point. Split the integral at
+  $x = 1$:
+  $ I_1 = integral_0^1 sin x / x^p dif x, quad I_2 = integral_1^(+oo) sin x / x^p dif x. $
+  For $I_2$, $abs(sin x / x^p) <= 1/x^p$ with $p > 1$, so $I_2$ converges
+  absolutely. For $I_1$, $sin x / x^p tilde.op x^(1 - p)$ as $x -> 0^+$, so
+  by the limit-form comparison with p-integrals $I_1$ converges (the
+  integrand being of constant sign near 0, this is absolute convergence)
+  precisely when $1 - p > -1$, i.e. $p < 2$, and diverges to $+oo$ when
+  $p >= 2$. In summary, the integral is conditionally convergent for
+  $0 < p <= 1$, absolutely convergent for $1 < p < 2$, and divergent for
+  $p >= 2$.
+
+  *2).* For $p > 0$ the integrand stays bounded near $x = 0^+$ (it tends to 0
+  for $p < 1$, to $1/2$ for $p = 1$ and to 1 for $p > 1$), so only
+  $integral_1^(+oo)$ needs discussion. The identity
+  $ sin x / (x^p + sin x) = sin x / x^p - sin^2 x / (x^p (x^p + sin x)) $
+  follows by direct combination. The first term on the right converges
+  conditionally for $0 < p <= 1$ and absolutely for $p > 1$ (item 1). For the
+  second term, whose integrand is non-negative on $[1, +oo)$:
+  - if $0 < p <= 1/2$, then since $x^p + 1 <= 2 x^p$ for $x >= 1$,
+    $ sin^2 x / (x^p (x^p + sin x)) >= sin^2 x / (x^p (x^p + 1)) >= sin^2 x / (2 x^(2p)), $
+    and $integral_1^(+oo) sin^2 x / x^(2p) dif x$ diverges for $2p <= 1$
+    (write $sin^2 x = (1 - cos 2 x)/2$: the $cos$ term converges by
+    Dirichlet's test while $integral_1^(+oo) dif x / x^(2p)$ diverges);
+    hence the second integral diverges, and so does the original one;
+  - if $p > 1/2$, then for $x$ large enough (say $x >= 2^(1/p)$, so that
+    $x^p - 1 > 0$),
+    $ 0 <= sin^2 x / (x^p (x^p + sin x)) <= 1 / (x^p (x^p - 1)) tilde.op 1 / x^(2p) quad (x -> +oo), $
+    and $2p > 1$ makes the right-hand side integrable; hence the second
+    integral converges, and the original integral converges exactly as the
+    first term does.
+  In summary, the integral diverges for $0 < p <= 1/2$, converges
+  conditionally for $1/2 < p <= 1$, and converges absolutely for $p > 1$.
+
+  *3).* On $(0, 1/e]$ we have $ln x <= -1$, so $x = 0$ is the only singular
+  point.
+  - If $0 < p < 1$, take $q = (1 + p)/2 in (p, 1)$. Then
+    $ lim_(x -> 0^+) (1/(x^p abs(ln x))) / (1/x^q) = lim_(x -> 0^+) x^(q - p) / abs(ln x) = 0, $
+    and $integral_0^(1/e) dif x / x^q$ converges since $q < 1$; by the
+    limit-form comparison (#link(<thm:comparison-tests-defective-integral>)[defective version]) the original integral converges.
+  - If $p > 1$, take $q = (1 + p)/2 in (1, p)$. Then the same limit equals
+    $+oo$, while $integral_0^(1/e) dif x / x^q$ diverges since $q > 1$; by
+    the limit form (case $l = +oo$) the original integral diverges.
+  - If $p = 1$, then for every $eta in (0, 1/e)$,
+    $ integral_eta^(1/e) (dif x) / (x ln x) = ln abs(ln x) |_eta^(1/e) = -ln(- ln eta) -> -oo quad (eta -> 0^+), $
+    so the integral diverges.
+  In summary, the integral converges for $0 < p < 1$ and diverges for
+  $p >= 1$.
+
+  *4).* Substitute $t = 1/x$:
+  $ integral_0^1 sin(1/x) / x^p dif x = integral_1^(+oo) t^(p - 2) sin t dif t. $
+  Since $t^(p - 2) = 1/t^(2 - p)$ decreases to 0 (here $p < 2$) and
+  $abs(integral_1^A sin t dif t) <= 2$,
+  #link(<thm:abel-dirichlet-infinite-integral>)[Dirichlet's test] shows that
+  the integral converges. For absolute convergence: if $p < 1$, then
+  $abs(sin(1/x) / x^p) <= 1/x^p$ and $integral_0^1 dif x / x^p$ converges, so
+  the integral is absolutely convergent. If $1 <= p < 2$, then on $(0, 1]$
+  $ abs(sin(1/x) / x^p) >= sin^2(1/x) / x^p = 1 / (2 x^p) - cos(2/x) / (2 x^p), $
+  where
+  $integral_0^1 cos(2/x) / x^p dif x = integral_1^(+oo) cos 2 t dot t^(p - 2) dif t$
+  converges by Dirichlet's test while $integral_0^1 dif x / (2 x^p)$ diverges
+  for $p >= 1$; hence the integral is only conditionally convergent.
+  In summary, the integral is absolutely convergent for $p < 1$ and
+  conditionally convergent for $1 <= p < 2$.
+]
+
+#note(title: "Sums and Differences of Improper Integrals")[
+  + absolutely convergent $plus.minus$ absolutely convergent = absolutely
+    convergent;
+  + absolutely convergent $plus.minus$ conditionally convergent =
+    conditionally convergent;
+  + if one summand diverges, the sum diverges unless an exact cancellation
+    occurs.
+]
+
+#example(name: "An Exercise on the Logarithmic Integral")[
+  Show that the improper integral
+  $ integral_0^1 ln x / (1 - x^2) dif x $
+  converges, and compute its value.
+] <ex:logarithmic-integral>
+
+== Special Integrals // 特殊积分
+
+=== Definite Integrals // 特殊定积分
+
+#example(name: "The Dirichlet Kernel")[
+  Show that for every $n in bb(N)$,
+  $ integral_0^pi sin((n + 1/2) x) / sin(x/2) dif x = pi. $
+  The integrand $D_n (x) = sin((n + 1/2) x) / sin(x/2)$ is called the
+  *Dirichlet kernel*.
+] <ex:dirichlet-kernel>
+
+#solution[
+  Since $lim_(x -> 0) D_n (x) = 2 n + 1$ is finite, the integrand extends
+  continuously to $[0, pi]$ and the integral is proper. The identity
+  $ 2 sin(x/2) (1/2 + sum_(k=1)^n cos k x) = sin((n + 1/2) x) $
+  follows by telescoping, since
+  $2 sin(x/2) cos k x = sin((k + 1/2) x) - sin((k - 1/2) x)$. Hence
+  $ 1/2 D_n (x) = 1/2 + sum_(k=1)^n cos k x, $
+  and integrating term by term over $[0, pi]$ — each term satisfies
+  $integral_0^pi cos k x dif x = (sin(k pi))/k = 0$ — yields
+  $ integral_0^pi D_n (x) dif x = 2 (1/2 dot pi) = pi. $
+]
+
+#example(name: "The Fejér Integral")[
+  For every $n in bb(N)$,
+  $ integral_0^pi ((sin(n x/2)) / (sin(x/2)))^2 dif x = n pi. $
+] <ex:fejer-integral>
+
+=== Improper Integrals // 特殊反常积分
+
+#example(name: "The Euler Integral")[
+  Show that
+  $ I = integral_0^(pi/2) ln sin x dif x = -pi/2 ln 2. $
+] <ex:euler-integral>
+
+#solution[
+  The integral converges: near $x = 0$, $ln sin x tilde.op ln x$ and
+  $integral_0^epsilon abs(ln x) dif x$ converges. The substitution $x = 2 t$
+  gives
+  $
+    I & = 2 integral_0^(pi/4) ln sin 2 t dif t
+        = 2 integral_0^(pi/4) ln(2 sin t cos t) dif t \
+      & = pi/2 ln 2 + 2 integral_0^(pi/4) ln sin t dif t
+        + 2 integral_0^(pi/4) ln cos t dif t.
+  $
+  The substitution $t = pi/2 - u$ transforms the last integral into
+  $2 integral_(pi/4)^(pi/2) ln sin t dif t$. Therefore
+  $
+    I = pi/2 ln 2 + 2 (integral_0^(pi/4) + integral_(pi/4)^(pi/2)) ln sin t dif t
+    = pi/2 ln 2 + 2 I,
+  $
+  and solving for $I$ yields $I = -pi/2 ln 2$.
+]
+
+#example(name: "The Froullani Integral")[
+  Let $f(x)$ be continuous on $(0, +oo)$ with both limits $f(0)$ and
+  $f(+oo)$ existing (finite), and let $a, b > 0$. Then the integral
+  $ integral_0^(+oo) (f(a x) - f(b x)) / x dif x $
+  converges and equals $[f(0) - f(+oo)] ln(b/a)$.
+] <ex:froullani-integral>
+
+#example(name: "The Dirichlet Integral")[
+  Show that
+  $ integral_0^(+oo) sin x / x dif x = pi/2. $
+] <ex:dirichlet-integral>
+
+#solution[
+  The integral converges conditionally by
+  #link(<thm:abel-dirichlet-infinite-integral>)[Dirichlet's test], since
+  $1/x -> 0$ monotonically and $abs(integral_0^A sin x dif x) <= 2$.
+  By #link(<ex:dirichlet-kernel>)[the Dirichlet kernel integral],
+  $ integral_0^pi sin((n + 1/2) x) / (2 sin(x/2)) dif x = pi/2 quad (n in bb(N)). $
+  Compare $1/x$ with $1/(2 sin(x/2))$: the difference
+  $ f(x) = 1/x - 1/(2 sin(x/2)) = O(x) quad (x -> 0) $
+  — indeed $2 sin(x/2) - x = O(x^3)$ — so $f$ extends continuously to
+  $[0, pi]$ with $f(0) = 0$. By the Riemann-Lebesgue lemma (if
+  $h in R[0, pi]$, then
+  $lim_(lambda -> +oo) integral_0^pi h(x) sin(lambda x) dif x = 0$),
+  $ lim_(n -> oo) integral_0^pi f(x) sin((n + 1/2) x) dif x = 0. $
+  Consequently,
+  $
+    lim_(n -> oo) integral_0^pi sin((n + 1/2) x) / x dif x
+    & = lim_(n -> oo) integral_0^pi sin((n + 1/2) x) / (2 sin(x/2)) dif x \
+    & = pi/2.
+  $
+  On the other hand, the substitution $t = (n + 1/2) x$ gives
+  $ integral_0^pi sin((n + 1/2) x) / x dif x = integral_0^((n + 1/2) pi) sin t / t dif t. $
+  Letting $n -> oo$ and using the convergence of
+  $integral_0^(+oo) sin t / t dif t$, we conclude
+  $integral_0^(+oo) sin t / t dif t = pi/2$.
+]
+
+#example(name: "The Euler-Poisson Integral")[
+  $ integral_0^(+oo) e^(-x^2) dif x = sqrt(pi) / 2. $
+] <ex:euler-poisson-integral>
+
+#example(name: "The Poisson Integral")[
+  For $0 < r < 1$, the *Poisson integral* is
+  $ integral_(-pi)^pi (1 - r^2) / (1 - 2 r cos x + r^2) dif x. $
+] <ex:poisson-integral>
+
+#example(name: "A Special Oscillatory Integral")[
+  For $a > b > 0$ with $b$ even, consider
+  $ integral_0^(+oo) (dif x) / (1 + x^a sin^b x). $
+  The case $a = 6, b = 2$ is depicted in
+  #link(<fig:special-integral-graph>)[the figure below].
+] <ex:special-oscillatory-integral>
+
+#figure(
+  image("img/xsinx.png", width: 80%),
+  caption: [Graph of $y = 1 / (1 + x^6 sin^2 x)$.],
+) <fig:special-integral-graph>
+
+#example(name: "Discrete Form of the Gamma Function")[
+  For every non-negative integer $n$, show that
+  $ I_n = integral_0^(+oo) e^(-x) x^n dif x = n!. $
+] <ex:gamma-discrete>
+
+#solution[
+  For $n = 0$, $I_0 = integral_0^(+oo) e^(-x) dif x = 1$ directly from the
+  definition. For $n >= 1$, integration by parts gives
+  $ I_n = (-e^(-x) x^n) |_0^(+oo) + n integral_0^(+oo) e^(-x) x^(n - 1) dif x = n I_(n - 1), $
+  since $x^n e^(-x) -> 0$ as $x -> +oo$ and the lower limit contributes 0.
+  Induction yields $I_n = n!$ for all $n$.
+]
+
+== Common Questions // 常见问题
+
+=== Square Integrable // 平方可积
+
+#definition(name: "Square Integrable Function")[
+  If $f(x) in R[a, +oo)$ and
+  $ integral_a^(+oo) f^2 (x) dif x $
+  converges, then $f(x)$ is called a *square integrable function* on
+  $[a, +oo)$. For defective integrals the definition is similar.
+] <def:square-integrable>
+
+For one-variable functions, the relationships among the integrability of
+$f(x)$, $abs(f(x))$ and $f^2 (x)$ are depicted in
+#link(<fig:integrability-relationships>)[the diagram below] and made precise
+by the following proposition.
+
+#figure(
+  image("img/rela.png", width: 90%),
+  caption: [Relationships among integrability, absolute integrability, and square integrability.],
+) <fig:integrability-relationships>
+
+#proposition(name: "Relations among Integrability, Absolute Integrability and Square Integrability")[
+  + Integrability and square integrability imply neither the other.
+  + For infinite integrals, square integrability and absolute integrability
+    imply neither the other.
+  + For defective integrals, square integrability implies absolute
+    integrability, but not conversely.
+] <prop:square-integrable-relations>
+
+#proof[
+  + *Integrable but not square integrable.* For the infinite integral take
+    $f(x) = n^2$ on $[n, n + 1/n^4)$ and $f(x) = 0$ on
+    $[n + 1/n^4, n + 1)$ for $n = 1, 2, dots.c$. Then
+    $
+      integral_1^(+oo) f(x) dif x = sum_(n=1)^oo n^2 dot 1/n^4 = sum_(n=1)^oo 1/n^2 < +oo,
+      quad integral_1^(+oo) f^2 (x) dif x = sum_(n=1)^oo n^4 dot 1/n^4 = sum_(n=1)^oo 1 = +oo.
+    $
+    For the defective integral take $f(x) = 1/sqrt(x)$ on $(0, 1]$:
+    $integral_0^1 f(x) dif x = 2 < +oo$ but
+    $integral_0^1 f^2 (x) dif x = integral_0^1 dif x / x = +oo$.
+  + *Square integrable but not integrable.* Take $f(x) = 1/x$ on $(1, +oo)$:
+    $integral_1^(+oo) dif x / x^2$ converges while
+    $integral_1^(+oo) dif x / x$ diverges.
+  + *Square integrable but not absolutely integrable (infinite case).* Take
+    $f(x) = sin x / x$ on $(1, +oo)$: the integral converges conditionally
+    (item 1 of #link(<ex:improper-convergence>)[the example above]), yet
+    $integral_1^(+oo) sin^2 x / x dif x$ diverges by the same computation.
+  + *Absolutely integrable but not square integrable.* Take $f(x) = n$ on
+    $union_(n=2)^oo [n, n + 1/n^3]$ and $f(x) = 0$ elsewhere. Then
+    $integral_1^(+oo) abs(f(x)) dif x = sum_(n=2)^oo n dot 1/n^3 = sum_(n=2)^oo 1/n^2 < +oo$
+    while
+    $integral_1^(+oo) f^2 (x) dif x = sum_(n=2)^oo n^2 dot 1/n^3 = sum_(n=2)^oo 1/n = +oo$.
+    A smooth alternative on $(0, +oo)$ is $f(x) = x / (1 + x^6 sin^2 x)$.
+  + *Square integrable implies absolutely integrable (defective case).*
+    Since $abs(f(x)) <= (1 + f^2 (x)) / 2$ and the interval $[a, b]$ is
+    finite,
+    $ integral_a^b abs(f(x)) dif x <= (b - a)/2 + 1/2 integral_a^b f^2 (x) dif x < +oo. $
+    (On an infinite interval this argument breaks down — the constant $1$ is
+    no longer integrable — which is exactly why item 2 above is possible.)
+    The converse fails: $f(x) = 1/sqrt(x)$ on $(0, 1]$ is absolutely
+    integrable but not square integrable, as computed above.
+]
+
+=== Behaviour of the Integrand at Infinity // 无穷远处的性质
+
+Convergence of an improper integral does not force the integrand to vanish at
+infinity. For the convergent integral
+$ integral_0^(+oo) (dif x) / (1 + x^6 sin^2 x) $
+whose integrand is depicted in
+#link(<fig:special-integral-graph>)[the figure of the previous section], the
+integrand satisfies $f(k pi) = 1$ for every $k in bb(N)$, so $f(+oo)$ does
+not exist — in particular it is not $0$. Even unbounded oscillation is
+possible: the integrand $f(x) = x / (1 + x^6 sin^2 x)$ again yields a
+convergent integral (one estimates the contribution of the $k$-th period as
+$O(1/k^2)$), yet $f(k pi) = k pi -> +oo$, so
+$limsup_(x -> +oo) f(x) = +oo$.
+
+#proposition(name: "Vanishing at Infinity")[
+  Let $integral_a^(+oo) f(x) dif x$ converge. If $lim_(x -> +oo) f(x)$ exists
+  (as a finite number), then it must be equal to $0$.
+] <prop:vanishing-at-infinity>
+
+#theorem(name: "Uniform Continuity Criterion")[
+  Let $integral_a^(+oo) f(x) dif x$ converge, and let $f(x)$ be uniformly
+  continuous on $[a, +oo)$. Then $lim_(x -> +oo) f(x) = 0$.
+] <thm:uniform-continuity-vanishing>
+
+#proof[
+  *First proof (by contradiction).* Suppose $f(x)$ does not tend to $0$:
+  there exists $epsilon_0 > 0$ such that for every $A > 0$ some $x_1 > A$
+  satisfies $abs(f(x_1)) > epsilon_0$. By uniform continuity there is
+  $delta > 0$ such that $abs(x' - x'') < delta$ implies
+  $abs(f(x') - f(x'')) < epsilon_0 / 2$. By the Cauchy criterion with
+  $epsilon = epsilon_0 delta / 2$ there is $A_0 > max\{a, 0\}$ such that
+  $abs(integral_(A')^(A'') f(x) dif x) < epsilon_0 delta / 2$ for all
+  $A'' > A' > A_0$; in the negation above take $A = A_0$, obtaining
+  $x_1 > A_0$. Then for every $x in [x_1, x_1 + delta]$,
+  $ abs(f(x)) >= abs(f(x_1)) - abs(f(x) - f(x_1)) > epsilon_0 / 2, $
+  and $f(x)$ has the same sign as $f(x_1)$: otherwise
+  $abs(f(x) - f(x_1)) >= abs(f(x_1)) > epsilon_0 > epsilon_0 / 2$, contrary
+  to the choice of $delta$. Without loss of generality assume $f > 0$ on
+  $[x_1, x_1 + delta]$; then
+  $ abs(integral_(x_1)^(x_1 + delta) f(x) dif x) >= epsilon_0 / 2 dot delta, $
+  contradicting the Cauchy criterion with $A' = x_1$ and $A'' = x_1 + delta$.
+  Hence $lim_(x -> +oo) f(x) = 0$.
+
+  *Second proof (via the first mean value theorem).* Fix $epsilon > 0$. By
+  uniform continuity there is $delta > 0$ such that
+  $abs(f(x') - f(x'')) < epsilon$ whenever $abs(x' - x'') < delta$. By
+  convergence and the Cauchy criterion there is $A_0 >= a$ such that for all
+  $A'' > A > A_0$,
+  $ abs(integral_A^(A'') f(x) dif x) < (epsilon delta) / 2. $
+  Take $A'' = A + delta/2$: since $f$ is continuous (uniform continuity
+  implies continuity), #link(<thm:integral-mean-value>)[the first integral
+    mean value theorem] provides $xi in (A, A + delta/2)$ with
+  $ abs(integral_A^(A + delta/2) f(x) dif x) = abs(f(xi)) dot delta/2, $
+  whence $abs(f(xi)) < epsilon$. Since $abs(A - xi) < delta/2 < delta$,
+  $ abs(f(A)) <= abs(f(A) - f(xi)) + abs(f(xi)) < 2 epsilon. $
+  As $epsilon > 0$ was arbitrary, $lim_(x -> +oo) f(x) = 0$.
+]
+
+#example(name: "Further Behaviour at Infinity")[
+  Prove the following statements.
+  + If $integral_a^(+oo) f(x) dif x$ and $integral_a^(+oo) f'(x) dif x$ both
+    converge and $f$ is continuously differentiable, then
+    $lim_(x -> +oo) f(x) = 0$.
+  + If $integral_a^(+oo) f(x) dif x$ converges and $f$ is monotone decreasing
+    on $[a, +oo)$, then $lim_(x -> +oo) x f(x) = 0$.
+  + If $integral_a^(+oo) f(x) dif x$ converges and $x f(x)$ is monotone
+    decreasing on $[a, +oo)$, then $lim_(x -> +oo) x f(x) ln x = 0$.
+] <ex:infinity-exercises>
+
+// ✅ Part II 里程碑：ch01–ch07 全部迁移完成（B1–B7）
+
 // --- Part III: 无穷级数 ---
 #part("Infinite Series") // 无穷级数
 // B8: ch08 Numerical Series（数项级数）
