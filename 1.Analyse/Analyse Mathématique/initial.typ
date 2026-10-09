@@ -7828,6 +7828,30 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
 // --- Part IV: 多元微积分本体（决策③：ch11–13） ---
 #part("Multivariable Calculus") // 多元微积分
 // B11: ch11 Limits and Continuity in Euclidean Spaces（欧氏空间上的极限与连续性）
+= Limits and Continuity in Euclidean Spaces // 欧氏空间上的极限与连续性
+
+== Continuous Mappings
+
+// 注：tex 中 "Continuous Mappings on Compact Sets" 为空壳标题（无内容来源），
+// 紧集上连续映射的性质属 P0-1 补全范围，待大纲确认后重建。
+
+=== Continuous Mappings on Connected Sets // 连通集上的连续映射
+
+#definition(name: "Connected Set")[
+  Let $S$ be a set of points in $bb(R)^n$. If a continuous mapping
+  $
+    gamma: [0, 1] -> bb(R)^n
+  $
+  satisfies that the range $gamma([0, 1])$ lies entirely within $S$, we call $gamma$ a /path/ in $S$, where $gamma(0)$ and $gamma(1)$ are referred to as the starting point and ending point of the path, respectively.
+
+  If for any two points $bold(x), bold(y) in S$ there exists a path in $S$ with $bold(x)$ as the starting point and $bold(y)$ as the ending point, then $S$ is called /path-connected/, or equivalently, $S$ is called a /connected set/.
+
+  A connected open set is called an /(open) region/. The closure of an (open) region is referred to as a /closed region/.
+] <def:connected-set>
+
+#note[
+  Intuitively, this means that any two points in $S$ can be connected by a curve lying entirely within $S$. Clearly, a connected subset of $bb(R)$ is an interval, and a connected subset of $bb(R)$ is compact if and only if it is a closed interval.
+]
 // B12: ch12 Multi-variable Differential Calculus（多元微分学）
 // B13: ch13 Multiple Integrals（多重积分）
 
