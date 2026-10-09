@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B12d ch12 §7 迁移完成，ch12 全章收口）
+> 最后更新：2026-10-10（B13a ch13 §1–2 迁移完成）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -272,7 +272,12 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - `=== Unconditional Extremum`（leftbarTitle 升级）：Fermat 三村问题命题 `<prop:fermat-point>`（Fermat 点两情形判定，tex 无证明不编造）
   - `=== Conditional Extremum`（leftbarTitle 升级）：条件极值定义 `<def:conditional-extremum>`、Lagrange 乘数法定理 `<thm:lagrange-multiplier-method>`（tex 无证明不编造）
   - 修正 tex 问题（均留 `//` 注）：标题拼写 "Villiges" → Villages；定理结论 "= 0" 为向量等式改 bold(0)；rank 用 `"rank"(...)` 直立排版
-- [ ] **B13a = ch13 §1–2**（约 270 行）：Multiple Integrals on Bounded Closed Regions / Properties
+- [x] **B13a = ch13 §1–2**：Multiple Integrals on Bounded Closed Regions / Properties（✅ 2026-10-10，编译退出码 0，三正则命中 0；实际约 240 行）
+  - §13.1：可测区域两途径引入 enum、二重积分定义×2（闭区间 `<def:double-integral-closed-interval>`、有界集 `<def:double-integral-bounded-set>` 含零延拓 cases + in.not）、零面积/零测集 `<def:zero-area-null-set>`、有限面积集 `<def:set-finite-area>`、可测 ⟺ 边界零面积 `<prop:measurable-zero-area-boundary>`（tex 无证明不编造）、非负可积函数零积分判据 `<prop:nonnegative-zero-integral>`
+  - §13.2：累次积分还原定理×2（闭区间 `<thm:reduction-double-iterated-closed-interval>` + C(I) 可换序 note、有界集 `<thm:reduction-double-iterated-bounded-set>` + fig:double-integral-bounded-set）、type X/Y 区域特例、乘积公式 `<thm:double-integral-product-formula>`（tex 无证明不编造）、Chebyshev 积分不等式例题 `<ex:chebyshev-integral-inequality>`（含完整证明）
+  - 修正 tex 问题（均留 `//` 注）：L178 "infinite area" 笔误 → finite area；L189 第一式 dy/dx 互换（与切片 Omega_x 定义矛盾）→ 外层 dx 内层 dy；Chebyshev 证明 L254 g(y)(f(x)-f(y)) 实为 -I → g(y)(f(y)-f(x))、L262 (g(y)-g(x))(f(x)-f(y)) 同单调时 <= 0 → (f(x)-f(y))(g(x)-g(y))（均经代数验算）；定理/图片标签含空格改名 ×2、补标签 ×3；积分元素大写 dV 统一为 dv
+  - 顺带修复既有损坏文本：L37–38 "denoting" 被历史批量替换误伤为 "dein.notg"（渲染为 de∉g），已修复（2 处）
+  - 新符号验证：`integral.double` 确认为 ∬ 非 ∭（PNG 目检三符号对照）、`backslash` = ∖（裸 `\` 是换行符）、`bold(xi)^i` 粗体带上标、`=:` 定义等号均通过
 - [ ] **B13b = ch13 §3–4**（约 200 行）：Calculation / Improper Multiple Integrals
 - [ ] ✅ Part IV 里程碑：编译 + 提交
 
