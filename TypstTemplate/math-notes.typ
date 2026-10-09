@@ -546,8 +546,8 @@
       align: (left + top, left, left),
       gutter: 0pt,
       number,
-      [ #link(location, title) #box(width: 1fr, repeat(text(weight: "regular")[· #h(4pt)])) ],
-      [ #h(4pt) #link(location, page) ],
+      [ #link(location, text(fill: text-color)[#title]) #box(width: 1fr, repeat(text(weight: "regular")[· #h(4pt)])) ],
+      [ #h(4pt) #link(location, text(fill: text-color)[#page]) ],
     )
   ]
 }
@@ -632,6 +632,7 @@
                 align(center, link(p-location, text(
                   size: 1.3em,
                   weight: "bold",
+                  fill: color-main-text,
                   font: font-latin-title,
                   p-state,
                 ))),
@@ -1287,6 +1288,10 @@
   show list: it => [#it#par[#h(0pt)]#v(-1.2em)]
   show enum: it => [#it#par[#h(0pt)]#v(-1.2em)]
   show terms: it => [#it#par[#h(0pt)]#v(-1.2em)]
+
+  // 超链接样式：#link 以主题色显示，与正文区分（elegantbook 风格：着色、无下划线）
+  // 目录与 Part 行的链接在 link 内部显式固化原色，不受此规则影响
+  show link: it => text(fill: color-structure, it)
 
   // ── Chapter: 一级标题 (=) ──
   show heading.where(level: 1): it => {
