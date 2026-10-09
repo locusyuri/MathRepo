@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B8a 完成：ch08 §1–4 迁移收口，含 P1-5/R6 回收）
+> 最后更新：2026-10-10（B8b 完成：ch08 全章迁移收口，Part III 过半）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -224,8 +224,12 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - 数学验证：Gauß 判别法 δ=1 "失效"表述正确（∑1/(n ln n (ln ln n)^β) β>1 收敛与 β≤1 发散均满足 δ_n→1），未改动
   - 放弃项：Sapagof/Kummer 判别法（md L188–202，证明为图片）；md eg.1 积分判别法应用题、三级数题 2)3)、交错级数例题（证明均为图片）；md eg.1 1) ∑1/(ln n)^(ln n) 有完整证明但超出 R6 区段未迁
   - 渲染坑：`sqrt(x, n)` 非法（sqrt 仅单参数，报 unexpected argument），n 次根必须用 `root(x, n)`（本批 8 处）；模板无 `#remark` 组件，判别法源流用 `#note(title: "Genealogy of the Tests")` 呈现
-- [ ] **B8b = ch08 §5–7**（约 43 行）：Convergence Speed / Infinite Products / Special Series
-  - [ ] 🔧 R6：Special Series 补超几何级数
+- [x] **B8b = ch08 §5–7**（迁移后约 150 行）：Convergence Speed / Infinite Products / Special Series（✅ 2026-10-10，`835503c`，ch08 全章收口）
+  - §5 Comparison of Convergence Speed：收敛快慢定义 + Du Bois-Reymond 定理 `<thm:du-bois-reymond-theorem>` + Abel 定理 `<thm:abel-divergence-speed>` + note；**数学修正**：tex Abel 定理分式颠倒（a_n/b_n → b_n/a_n，与 md L409 及"不存在发散最慢级数"语义一致），note 补全为收敛/发散双向表述；两定理均无证明（md Du Bois-Reymond 证明为图片；Abel 证明仅一行引 Sapagof 判别法——B8a 已放弃，**待用户裁决是否补证**）
+  - §6 Infinite Products：tex 空壳 leftbarTitle "Infinite Products" 升级 `===` 小节，从 md L424–445 回收——无穷乘积定义 `<def:infinite-product>`、收敛充要条件 `<thm:infinite-product-criterion>`（补 p_n > 0 正性条件）、推论 1/2 `<cor:infinite-product-first>`/`<cor:infinite-product-second>`（推论 1 修正条件 a_n < 0 → -1 < a_n < 0）、绝对收敛定义 `<def:abs-convergence-infinite-product>` + 三命题等价 `<prop:abs-convergence-product-equivalences>`（md 均无证明，保持）；=== Two Formulas：Wallis 公式 `<thm:wallis-formula>` + note（指向 ch06 `#link(<ex:wallis>)` 点火公式递推证明）、Stirling 公式 `<thm:stirling-formula>`（**弃 tex 乘积展开式**——1/288n² 符号错误且 Bernoulli 通项下标混乱，改用 md L461 对数形式 + tex 简化形式；精确形式余项用 c_n 记号避免与对数形式 θ_n 同块冲突）
+  - §7 Special Series：5 类常用级数（几何/telescoping/p-级数/q-级数/广义 q-级数）；🔧 R6 ✅：超几何级数 `<def:hypergeometric-series>` 从 md L493–505 回收——₂F₁ 定义（前置下标 `attach(F, bl: 2, t: 1)`，升阶乘 `x^overline(n)` 与 ch01 `<def:factorial-power>` 一致）+ 收敛性分类 + 判别法来源 note（d'Alembert + Raabe，t_n/t_(n+1) 展开验证 c - a - b + 1）+ 3 个表示例
+  - 修正 tex 笔误：q-级数求和下限 n=1 → n=2（ln 1 = 0 使通项无定义）
+  - 渲染坑：Typst 不支持裸前置下标 `$_2 F_1$`（报 unexpected underscore），须用 `attach(F, bl: 2, t: 1)` 函数形式
 - [ ] **B9 = ch09 Series of Functions**（258 行 / 3 节，单节体量大逐节推进）
   - [ ] §9.1 Pointwise and Uniform Convergence
   - [ ] §9.2 Uniform Convergence Tests
