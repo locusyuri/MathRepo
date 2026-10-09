@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B4a 例题裁决落地：Legendre + 待定系数法补入，Cauchy 中值变形放弃）
+> 最后更新：2026-10-10（B4b 完成：ch04 §5–7 迁移 + R9 校对收口，ch04 全章完成）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -169,8 +169,13 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - 修正 md 笔误 6 处（已迁入部分）：参数方程条件 φ(t)≠0 → φ'(t)≠0；Lagrange 行列式证明中 Δ'(x) 表达错误 → 改用展开式 (b−a)f'(x)−(f(b)−f(a))；有限增量公式 θ∈(a,b) → θ∈(0,1)；行列式例题证明 f'(ξ)x−f(ξ) → ξf'(ξ)−f(ξ)（并理顺首行负号）；二阶中值例题条件 D⁽²⁾₍₀,₁₎ → D⁽²⁾₍ₐ,ᵦ₎；Darboux 证明保号性 (F(x)−F(b))/(x−b)>0 → <0
   - 未迁例题 3 个，用户裁决（2026-10-10）：Legendre 多项式与待定系数法**已补入**，Cauchy 中值变形**放弃**（md 证明不完整）。补入时另修正 md 笔误 3 处：$P_2$ 系数 (3x²−2)/2 → (3x²−1)/2；待定系数法陈述定义域 [0,1] → [−1,1]；其证明中 F'(x) 表达式含多余的 −f(0) 项（已按 b=0 重写）
   - 未迁定理笔误备忘：md L119 积函数求导法则陈述第二个 `=` 应为 `+`；md L289 Leibniz 归纳证明末行漏升 m+1（tex/Typst 侧均无此证明，不受影响）
-- [ ] **B4b = ch04 §5–7**（约 155 行）：Taylor Theorem / Properties of Functions / Applications
-  - [ ] 🔧 R9 校对：与 md L16–1087 对照查漏（tex 已基本完整）
+- [x] **B4b = ch04 §5–7**（tex 约 155 行，回收后约 690 行）：Taylor Theorem / Properties of Functions / Applications（✅ 2026-10-10）
+  - 🔧 R9 校对结论：「tex 已基本完整」假设不成立——md L614–1087 有大量 tex 未吸收内容，已全部回收：
+    - §4.5：L'Hôpital 法则定理（0/0 与 ∞/∞ 两情形）+ 双 Case 证明（延拓+Cauchy / ε 论证）+ caution（去心邻域要求、f'/g' 不存在与 f/g 极限无关）+ 例题（lim[f(x)+f'(x)]=A ⟹ f→A, f'→0）+ note（1/q 型推广用 e^(qx)）；Taylor-Peano 定理+note（n 阶导数在一点的含义）+证明（L'Hôpital 反复+导数定义收尾）、Taylor-Lagrange 定理+note（n=0 退化）+证明（固定 x 对 r_n 与 (t−x₀)^(n+1) 反复 Cauchy n+1 次——md 原证明将取极限与中值混淆，已重写为标准链）+ 例题（待定常数法 f(b)=f(a)+f'((a+b)/2)(b−a)+f'''(c)/24·(b−a)³）；Maclaurin 引理（泰勒多项式导数性质）+ 6 个常用展开（e^x、ln(1+x)、sin、cos、arctan、arcsin）+ (1+x)^α + 4 个特例 + note（常用公式的 Lagrange 余项，含 α=±1 得 1/(1±x) 完整余项）；Euler 数与 Bernoulli 数定义、∑1/n^(2k) 与 Basel note、tan x 展开
+    - §4.6：凸函数定义+ConvexFunction.png 图+拐点引入、等价表征定理（4 条件：弦不等式/Jensen 加权/n 点平均/切线below 图；2⟺3、连续时 123、可导时全部）+ 三步证明（2^k 倍增+向下归纳 / 连续性+有理数逼近 / 引用导数判据）、Jensen 不等式+归纳证明（补全——tex/md 均无完整证明；md 的 Taylor 法证明作为 f∈D⁽²⁾ 时 note 保留）、导数判据定理（单调性 f'≥0 ⟺ 增、凸性 f' 增 ⟺ 凸）+双向证明+note（严格性、有限例外点、x³）、拐点定理（两侧变号 ⟺ 拐点；拐点 ⟹ f''(x₀)=0）+note（f'' 不存在的点也要考察）、驻点定义+三分类 terms、渐近线定义（距离刻画；水平/斜/垂直三型+存在充要条件）
+    - §4.7：极值点必在驻点与不可导点之中、极值三判据（第一/第二/第三）+第三判据证明（Peano 展开）+note（第二判据为第三判据 n=1 特例，需 f'' 连续）、界的估计 note（由 f、f'' 界估 f'）+ 3 例题（|f'|≤2A+B/2、Landau 不等式 M₁²≤2M₀M₂、φ'' 有界+φ 有极限 ⟹ φ'→0）
+  - 修正 tex/md 笔误 12 处：tex L245 二项式展开求和上限 α → n；tex L297 tan x 展开系数公式整体错误 → `(-4)^n(1-4^n)B_(2n)/((2n)!) x^(2n-1)`（n=1,2,3 验证；md 同式 n 应从 1 起）；md L791 L'Hôpital 证明分母 g(x₀) → g(x)；md L796 「整数 δ」→ δ∈(0,ρ)；md L915 Maclaurin 余项 θ∈(0,1) 错位（未迁，tex 无此内容）；md L934 1/(1−x) 余项 (1+θx)^(n+1) → (1−θx)^(n+1)；md L1009–1010 极值判据两处均标 (i) → (i)(ii)；md L1014 第三判据展开 (x−x₀)^n → (x−x₀)^(n+1)（并补全 n 为奇数的情形）；md L1027 |f'| 例题结论定义域 [a,b] → [0,1]（与陈述一致）；md L1042 Landau 例题 M₂ 未定义 → 补 M₂ = sup|f''|；md L1053 Landau 结论 √(2M₁M₂) → √(2M₀M₂)；md L1082 斜渐近线第二极限方向 +∞ → −∞
+  - 放弃项：md L818–834 例题（f''' 极限与 f 极限链，证明多处混乱）；md L837–846 例题（Rolle 应用，与 L'Hôpital 无关且 B4a 已有同类）；md L963–975 Hölder/Minkowski（仅陈述无证明）；md 求极限/近似计算小节（空）；md Euler/Bernoulli 数递推式（tex 已覆盖定义与主要值）；md sin/cos 的 Lagrange 余项（指标混乱不冒险迁入）
 - [ ] **B5 = ch05 Indefinite Integral**（81 行 / 1 节，⚠ P1-1）
   - [ ] §5.1 Two Common Integration Methods
   - [ ] 🔧 P1-1/R5：从 md 回收"几类可积函数"（有理函数、三角有理式、无理函数积分），评估扩为多节
