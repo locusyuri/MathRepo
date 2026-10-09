@@ -8370,6 +8370,268 @@ $
 $
 is called the /Hessian matrix/ of the function $f$.
 
+== Implicit Function Theorem // 隐函数定理
+
+=== Implicit Mapping // 隐映射（原 leftbarTitle 非空壳，升级为小节）
+
+// 注：tex 定理标签 "thm:Implicit Function Theorem" 含空格不合法，迁移后改为 <thm:implicit-function-theorem>。
+#theorem(name: "Implicit Function Theorem")[
+  Let $U subset bb(R)^(n + 1)$ be an open set, and $F: U -> bb(R)$ be an $(n + 1)$-variable function. If:
+  + $F in C^k (U, bb(R))$, where $1 <= k <= +oo$;
+  + $F(bold(x)^0, y^0) = 0$, where $bold(x)^0 = (x_1^0, x_2^0, dots, x_n^0) in bb(R)^n$, $y^0 in bb(R)$, and $(bold(x)^0, y^0) in U$ (i.e., the equation $F(bold(x), y) = 0$ has a solution $(bold(x)^0, y^0)$);
+  + $F'_(y)(bold(x)^0, y^0) != 0$,
+
+  then there exists an open interval $I times J$ containing $(bold(x)^0, y^0)$ ($I$ being an open interval in $bb(R)^n$ containing $bold(x)^0$, and $J$ being an open interval in $bb(R)$ containing $y^0$), as shown in @fig:implicit-function, such that:
+  + $forall bold(x) in I$, the equation $F(bold(x), y) = 0$ has a unique solution $y = f(bold(x))$, where $f: I -> J$ is an $n$-variable function (called the /implicit function/ $f$, hidden within the equation $F(bold(x), f(bold(x))) = 0$, though not necessarily explicitly expressed);
+  + $y^0 = f(bold(x)^0)$;
+  + $f in C^k (I, bb(R))$;
+  + when $bold(x) in I$,
+    $
+      frac(partial f, partial x_i) = frac(partial y, partial x_i) = - frac(F_(x_i)(bold(x), y), F_(y)(bold(x), y)), quad i = 1, 2, dots, n,
+    $
+    where $y = f(bold(x))$.
+] <thm:implicit-function-theorem>
+// 注：tex 该式偏导记号为 F_x，结合 i = 1, ..., n 的遍历语境统一为 F_(x_i)。
+
+#figure(
+  image("img/ImplicitFunction.png", width: 50%),
+  caption: [Implicit function.],
+) <fig:implicit-function>
+
+#proof[
+  We prove only the single-variable implicit function theorem; the multi-variable case can be derived by mathematical induction. Without loss of generality, assume $F_(y)(x^0, y^0) > 0$.
+
+  // 注：tex 证明中矩形 D* 的点写作 (x_0, y_0)，与定理中的 (x^0, y^0) 不一致，已统一为后者。
+  /Existence of the implicit function./ By the continuity of $F_y$ and $F_(y)(x^0, y^0) > 0$, there exists a closed rectangle
+  $
+    D^* = lr({(x, y) | abs(x - x^0) <= alpha, abs(y - y^0) <= beta}) subset U
+  $
+  on which $F_(y)(x, y) > 0$. Thus, for fixed $x^0$, the function $F(x^0, y)$ is strictly monotonically increasing within $[y^0 - beta, y^0 + beta]$; furthermore, since $F(x^0, y^0) = 0$, it follows that
+  $
+    F(x^0, y^0 - beta) < 0, quad F(x^0, y^0 + beta) > 0.
+  $
+  // 注：tex 原文线段条件写作 "x = x^0 + rho"，与后文 x̄ ∈ (x^0 - rho, x^0 + rho) 矛盾，按标准证明改为 abs(x - x^0) <= rho。
+  Due to the continuity of $F(x, y)$ within $D^*$, there exists $rho > 0$ such that on the segment $abs(x - x^0) <= rho, y = y^0 + beta$ we have $F(x, y) > 0$, and on the segment $abs(x - x^0) <= rho, y = y^0 - beta$ we have $F(x, y) < 0$. Therefore, for any point $overline(x) in (x^0 - rho, x^0 + rho)$, viewing $F(overline(x), y)$ as a single-variable function of $y$, it is continuous within $[y^0 - beta, y^0 + beta]$, and from the previous discussion we know
+  $
+    F(overline(x), y^0 - beta) < 0, quad F(overline(x), y^0 + beta) > 0.
+  $
+  According to #link(<thm:zero-point-existence>)[the zero point existence theorem], there exists $overline(y) in [y^0 - beta, y^0 + beta]$ such that $F(overline(x), overline(y)) = 0$; furthermore, because $F_(y)(x, y) > 0$ within $D^*$, this $overline(y)$ is unique. Denote the corresponding relationship as $overline(y) = f(overline(x))$; then the function $y = f(x)$ is defined within $(x^0 - rho, x^0 + rho)$ and satisfies $F(x, f(x)) = 0$, and clearly $y^0 = f(x^0)$.
+
+  /Continuity of the implicit function./ We further prove that $y = f(x)$ is continuous on $(x^0 - rho, x^0 + rho)$. Let $overline(x) in (x^0 - rho, x^0 + rho)$ be any point. For any given $epsilon > 0$ ($epsilon$ sufficiently small), since $F(overline(x), overline(y)) = 0$ with $overline(y) = f(overline(x))$, from the previous discussion we know
+  $
+    F(overline(x), overline(y) - epsilon) < 0, quad F(overline(x), overline(y) + epsilon) > 0.
+  $
+  // 注：tex 原文邻域与函数值均写作 O(x^0, delta) 与 f(x^0)，而此段证明的是 f 在 x̄ 处的连续性，已统一改为 O(overline(x), delta) 与 f(overline(x))。
+  Furthermore, due to the continuity of $F(x, y)$ on $D^*$, there exists $delta > 0$ such that
+  $
+    F(x, overline(y) - epsilon) < 0, quad F(x, overline(y) + epsilon) > 0, quad "when" x in O(overline(x), delta).
+  $
+  By reasoning similar to the previous discussion, it can be obtained that when $x in O(overline(x), delta)$, the corresponding implicit function value must satisfy $f(x) in (overline(y) - epsilon, overline(y) + epsilon)$, i.e.,
+  $
+    abs(f(x) - f(overline(x))) < epsilon.
+  $
+  This implies that $y = f(x)$ is continuous on $(x^0 - rho, x^0 + rho)$.
+
+  /Differentiability of the implicit function./ Finally, we prove that $y = f(x)$ is differentiable on $(x^0 - rho, x^0 + rho)$. Let $overline(x) in (x^0 - rho, x^0 + rho)$ be any point.
+  // 注：tex 原文 "取 Δx 使 x̄ = x + Δx ∈ (x^0 - rho, x^0 + rho)" 记号混乱，且 "ȳ + Δy = f(x̄)" 误写（两处均为 f(x̄)），已分别改为 overline(x) + Delta x 与 f(overline(x) + Delta x)。
+  Take $Delta x$ sufficiently small such that $overline(x) + Delta x in (x^0 - rho, x^0 + rho)$. Denote $overline(y) = f(overline(x))$ and $overline(y) + Delta y = f(overline(x) + Delta x)$. Clearly,
+  $
+    F(overline(x), overline(y)) = 0 quad "and" quad F(overline(x) + Delta x, overline(y) + Delta y) = 0.
+  $
+  Using #link(<thm:multivariable-lagrange-mvt>)[the mean value theorem for multi-variable functions], we obtain
+  $
+    0
+    & = F(overline(x) + Delta x, overline(y) + Delta y) - F(overline(x), overline(y)) \
+    & = F_(x)(overline(x) + theta Delta x, overline(y) + theta Delta y) Delta x + F_(y)(overline(x) + theta Delta x, overline(y) + theta Delta y) Delta y,
+  $
+  where $0 < theta < 1$. Note that $F_y != 0$ on $D^*$; hence
+  $
+    frac(Delta y, Delta x) = - frac(F_(x)(overline(x) + theta Delta x, overline(y) + theta Delta y), F_(y)(overline(x) + theta Delta x, overline(y) + theta Delta y)).
+  $
+  Letting $Delta x -> 0$ and considering the continuity of $F_x$ and $F_y$, we obtain
+  $
+    frac(dif y, dif x) |_(x = overline(x)) = - frac(F_(x)(overline(x), overline(y)), F_(y)(overline(x), overline(y))),
+  $
+  that is,
+  $
+    f'(overline(x)) = - frac(F_(x)(overline(x), overline(y)), F_(y)(overline(x), overline(y))).
+  $
+]
+
+#note[
+  From the proof process of the implicit function theorem, it can be observed that if only the continuity of the implicit function $y = f(bold(x))$ is required, then the theorem can be restated as follows: if
+  + $F in C (U, bb(R))$;
+  + $F(bold(x)^0, y^0) = 0$;
+  + for fixed $bold(x) = bold(x)^0$, $F(bold(x)^0, y)$ is strictly monotonic with respect to $y$,
+
+  then the implicit function $y = f(bold(x))$ determined by the equation $F(bold(x), y) = 0$ is continuous on $I$.
+]
+
+#theorem(name: "Implicit Mapping Theorem")[
+  Let $U subset bb(R)^(n + m)$ be an open set, and $bold(F): U -> bb(R)^m$ be a mapping. If:
+  + $bold(F) in C^k (U, bb(R)^m)$, $1 <= k <= +oo$;
+  + $bold(F)(bold(x)^0, bold(y)^0) = bold(0)$, where $bold(x)^0 = (x_1^0, x_2^0, dots, x_n^0)$, $bold(y)^0 = (y_1^0, y_2^0, dots, y_m^0)$, and $(bold(x)^0, bold(y)^0) in U$ (implying that the system $bold(F)(bold(x), bold(y)) = bold(0)$ has a solution at $(bold(x)^0, bold(y)^0)$);
+  + the determinant
+    $
+      det mat(
+        frac(partial F_1, partial y_1), dots, frac(partial F_1, partial y_m);
+        dots.v, dots.down, dots.v;
+        frac(partial F_m, partial y_1), dots, frac(partial F_m, partial y_m)
+      )_((bold(x)^0, bold(y)^0)) = det J_(bold(y)) bold(F)(bold(x)^0, bold(y)^0) != 0,
+    $
+
+  then there exists an open neighborhood $I times J subset U subset bb(R)^(n + m)$ containing $(bold(x)^0, bold(y)^0)$ such that:
+  + for all $bold(x) in I$, the system $bold(F)(bold(x), bold(y)) = bold(0)$ has a unique solution $bold(y) = bold(f)(bold(x))$, where $bold(f): I -> J$ is a mapping (called the /implicit mapping/ $bold(f)$, hidden in $bold(F)(bold(x), bold(f)(bold(x))) = bold(0)$);
+  + $bold(y)^0 = bold(f)(bold(x)^0)$;
+  + $bold(f) in C^k (I, bb(R)^m)$;
+  + for $bold(x) in I$,
+    $
+      J bold(f) & = - (J_(bold(y)) bold(F))^(-1) J_(bold(x)) bold(F) \
+                & = - mat(
+                    frac(partial F_1, partial y_1), dots, frac(partial F_1, partial y_m);
+                    dots.v, dots.down, dots.v;
+                    frac(partial F_m, partial y_1), dots, frac(partial F_m, partial y_m)
+                  )^(-1)
+                  mat(
+                    frac(partial F_1, partial x_1), dots, frac(partial F_1, partial x_n);
+                    dots.v, dots.down, dots.v;
+                    frac(partial F_m, partial x_1), dots, frac(partial F_m, partial x_n)
+                  ),
+    $
+    where $bold(y) = bold(f)(bold(x))$.
+] <thm:implicit-mapping-theorem>
+
+#example[
+  The mapping
+  $
+    cases(x = x(z) comma, y = y(z))
+  $
+  is solved from the implicit functions defined by the system
+  $
+    cases(F(y - z, x + z) = 0 comma, G(y / z, x z) = 0 comma)
+  $
+  where $F, G in C^1$. Find $dif x / dif z$ and $dif y / dif z$.
+] <ex:implicit-system-derivatives>
+
+#note[
+  Here $F_1$ denotes the partial derivative of $F$ with respect to its first variable, which is equivalent to $F_u$ in $F(u, v)$; other notations follow similarly.
+]
+
+#solution[
+  *Method 1: Direct Derivative.* Differentiating both sides of the equations with respect to $z$ gives
+  $
+    F_(1)(y' - 1) + F_(2)(x' + 1) = 0, \
+    G_(1)((y' z - y) / z^2) + G_(2)(x' z + x) = 0.
+  $
+  // 注：tex 原文 Method 1 中 dx/dz 的分母误写为 z(F_2 G_1 F_1 G_2 z^2)（漏减号），已按 Method 2 及 dy/dz 的分母改为 z(F_2 G_1 - F_1 G_2 z^2)。
+  Solving the system gives
+  $
+    dif x / dif z = frac(z G_(1)(F_1 - F_2) - F_(1)(y G_1 - x z^2 G_2), z (F_2 G_1 - F_1 G_2 z^2)), \
+    dif y / dif z = frac(F_(2)(y G_1 - x z^2 G_2) - G_2 z^3 (F_1 - F_2), z (F_2 G_1 - F_1 G_2 z^2)).
+  $
+
+  *Method 2: Implicit Function Theorem.* By #link(<thm:implicit-mapping-theorem>)[the implicit mapping theorem], we have
+  $
+    mat(dif x / dif z; dif y / dif z) & = - mat(
+                                          frac(partial F, partial x), frac(partial F, partial y);
+                                          frac(partial G, partial x), frac(partial G, partial y)
+                                        )^(-1)
+                                        mat(frac(partial F, partial z); frac(partial G, partial z)) \
+                                      & = mat(
+                                          frac(z G_(1)(F_1 - F_2) - F_(1)(y G_1 - x z^2 G_2), z (F_2 G_1 - F_1 G_2 z^2));
+                                          frac(F_(2)(y G_1 - x z^2 G_2) - G_2 z^3 (F_1 - F_2), z (F_2 G_1 - F_1 G_2 z^2))
+                                        ).
+  $
+]
+
+#example[
+  Let $u(x, y)$ be the function solved from the implicit functions defined by the system
+  $
+    cases(u = f(x, y, z, t) comma, g(y, z, t) = 0 comma, h(z, t) = 0 comma)
+  $
+  where $f, g, h in C^1$ and $frac(partial(g, h), partial(z, t)) != 0$. Find $frac(partial u, partial y)$.
+] <ex:implicit-u-partial-y>
+
+#solution[
+  *Method 1.* Since $frac(partial(g, h), partial(z, t)) != 0$ and $g, h in C^1$, the system $g(y, z, t) = 0, h(z, t) = 0$ determines, by #link(<thm:implicit-mapping-theorem>)[the implicit mapping theorem], the functions
+  $
+    cases(z = z(y) comma, t = t(y))
+  $
+  Differentiating both sides with respect to $y$ gives
+  $
+    g_y + g_z dif z / dif y + g_t dif t / dif y = 0, \
+    h_z dif z / dif y + h_t dif t / dif y = 0.
+  $
+  Moreover, $u$ is a function of $x$ and $y$: $u = u(x, y) = f(x, y, z(y), t(y))$. Thus
+  $
+    frac(partial u, partial y) = f_2 + f_3 dif z / dif y + f_4 dif t / dif y.
+  $
+  Solving the above equations gives
+  $
+    frac(partial u, partial y) = f_y - g_(y)(f_z h_t - f_t h_z) frac(partial(g, h), partial(z, t))^(-1).
+  $
+
+  *Method 2.* Consider the system
+  $
+    cases(F(x, y, z, t, u) = u - f(x, y, z, t) = 0 comma, g(y, z, t) = 0 comma, h(z, t) = 0)
+  $
+  Since $frac(partial(F, g, h), partial(u, z, t)) = frac(partial(g, h), partial(z, t)) != 0$, by #link(<thm:implicit-mapping-theorem>)[the implicit mapping theorem], we have
+  $
+    cases(u = u(x, y) comma, z = z(x, y) comma, t = t(x, y))
+  $
+  Differentiating both sides with respect to $y$ gives
+  $
+    u_y - f_y - f_z z_y - f_t t_y = 0, \
+    g_y + g_z z_y + g_t t_y = 0, \
+    h_z z_y + h_t t_y = 0.
+  $
+  Solving the above equations gives the same result.
+]
+
+=== Inverse Mapping // 逆映射（原 leftbarTitle 非空壳，升级为小节）
+
+// 注：tex 原文 "bold(f)(bold(x)^0 = bold(y)^0)" 漏右括号，已改为 bold(f)(bold(x)^0) = bold(y)^0。
+#theorem(name: "Local Inverse Mapping Theorem")[
+  Let $U subset bb(R)^n$ be an open set, and $bold(f): U -> bb(R)^n$ be a mapping. If:
+  + $bold(f) in C^k (U, bb(R)^n)$, $1 <= k <= +oo$;
+  + at the point $bold(x)^0 in U$, the Jacobian determinant $det J bold(f)(bold(x)^0) != 0$,
+
+  then there exist open neighborhoods $V subset U$ of $bold(x)^0$ and $W subset bb(R)^n$ of $bold(f)(bold(x)^0) = bold(y)^0$ such that:
+  + the restriction of $bold(f)$ to $V$, denoted as $bold(f) |_V: V -> W$, is a bijection;
+  + the inverse mapping $bold(f)^(-1): W -> V$ exists and belongs to $C^k (W, bb(R)^n)$;
+  + for any $bold(y) = bold(f)(bold(x)) in W$,
+    $
+      J bold(f)^(-1)(bold(y)) = [J bold(f)(bold(x))]^(-1),
+    $
+    where $bold(x) = bold(f)^(-1)(bold(y))$.
+
+  At this time, $bold(f)$ is called a $C^k$ /diffeomorphism/.
+] <thm:local-inverse-mapping-theorem>
+
+If the conditions are strengthened, then a global inverse mapping theorem can be established.
+
+#theorem(name: "Inverse Mapping Theorem")[
+  Let $U subset bb(R)^n$ be a convex region, and $bold(f): U -> bb(R)^n$ be a mapping. If:
+  + $bold(f) in C^k (U, bb(R)^n)$, $1 <= k <= +oo$;
+  + for any $bold(x) in U$, the Jacobian determinant $det J bold(f)(bold(x)) != 0$,
+
+  then $bold(f): U -> bold(f)(U)$ is a bijection, and the inverse mapping $bold(f)^(-1): bold(f)(U) -> U$ exists and belongs to $C^k (bold(f)(U), bb(R)^n)$.
+] <thm:inverse-mapping-theorem>
+
+#example[
+  Use the substitutions
+  $
+    x = t, quad y = t / (1 + t u), quad z = t / (1 + t v)
+  $
+  to transform the equation
+  $
+    x^2 frac(partial z, partial x) + y^2 frac(partial z, partial y) = z^2
+  $
+  into an equation with dependent variable $v$ and independent variables $t, u$.
+] <ex:pde-substitution-transform>
+
+// 注：tex 中该例题未给出解答，按空壳处理原则不编造。
+
 // B13: ch13 Multiple Integrals（多重积分）
 
 // --- Part V: 几何应用与高级积分（决策③：ch14–16） ---
