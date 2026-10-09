@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B6a 完成：ch06 §1–4 定积分迁移收口，md 校对回收）
+> 最后更新：2026-10-10（B6b 完成：ch06 §5–7 迁移收口，ch06 全章完成）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -196,7 +196,13 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - 放弃项：导函数可积充要条件 md Proof 1（m ≤ F′ ≤ M 只给全区间控制，论证错误，只收 Proof 2）；md 连续点稠密例题、Bonnet 公式应用 4 小题、平移连续 Proof 2（空）、A2/B1/B2/C1/D2/D5 例题（证明均为图片）；md L1870–1875 Riemann 引理（tex 无对应，涉及周期函数平均，暂缓）
   - B5 遗漏修复：ch05 补一级章标题 `= Indefinite Integral`；本地遗留修复：§2 的 13 处 `omega_f(` 下标违规 → `omega_f (`、§3 反例 cases 分支内 `\` 换行告警 → `"otherwise"`
   - 新符号坑：`setminus`/`conv`/`empty` 均为非法符号 → `\`/`inter`/`emptyset`；`bigl(/bigr)` 是 LaTeX 残留 → 普通括号自动调整；cases 分支内 `\` 被解析为换行 → 避免在分支内使用集合差
-- [ ] **B6b = ch06 §5–7**（约 144 行）：Calculation / Integral Inequalities / Applications
+- [x] **B6b = ch06 §5–7**（约 144 行，迁移后约 350 行）：Calculation / Integral Inequalities / Applications（✅ 2026-10-10）
+  - §5 Calculation：定积分换元定理 `<thm:definite-substitution>`+严格单增推论 `<cor:monotone-substitution>`、定积分分部定理 `<thm:definite-integration-by-parts>`+证明（广义 N-L）、对称性命题（3 条）`<prop:integral-symmetry>`、周期性命题 `<prop:integral-periodicity>`（以上 tex 均无，从 md L1982–2005 回收）；Wallis 例题 `<ex:wallis>`+md 递推证明+2 条 note（I(m,n) 归纳说明）、Simpson 万能公式 `<ex:simpson-formula>`（md 独有，无证明保持原样）、计算例题组 `<ex:integral-computations>`（md eg.1 的 1)2)3)5) 四题+解+caution）
+  - §6 Integral Inequalities：六大不等式（Hadamard/Schwarz/Hölder/Young/Minkowski/Chebyshev 含离散形式）`<thm:integral-inequalities>`；Hölder 完整证明（md 独有文字证明，归一化 φ/ψ+初等 Young）；凸性积分不等式例题+完整证明（换序积分）`<ex:convex-integral-inequality>`
+  - §7 Applications：弧长定义 `<def:arc-length>`+可求长充分条件定理 `<thm:rectifiable-condition>`（md 独有，无证明保持原样）；极坐标公式表（6 行 4 列）用 `#tex-table` + 8.5pt 字号包裹（auto 列宽下长公式溢出重叠，缩小字号后整表一页）
+  - 修正 md 笔误 4 处：递推证明 π/1 → π/2；归纳 note "β π/2" 缺等号；5) 题分式 sin x/cos x 颠倒（应为 cos x/sin x，与后续步骤自洽）；2) 题补 1/(2√2) 系数（md 漏写 √2）
+  - 放弃项：md eg.1 第 4) 题 ∫₀¹ ln x/(1−x²) dx（解仅为外链图片，且属反常积分主题，留待 B7 处理）；正交函数列例题（md eg.4，属 Fourier 正交系概念，受 §3.3 职责边界约束不迁入）；Schwarz/Young 不等式证明（md 仅为图片）；曲率小节（md 空节）；极坐标图片（外链失效）
+  - 渲染坑：`#tex-table` 固定 auto 列宽不支持传参，宽表格需用 `#text(size: ...)` 包裹缩字号；`|_a^b` 求值记号、`!!` 双阶乘、`lr(\{...\})`、`norm()` 均渲染正常
 - [ ] **B7 = ch07 Improper Integral**（192 行 / 4 节）
   - [ ] §7.1 Infinite and Defective Integrals
   - [ ] §7.2 Convergence Tests
