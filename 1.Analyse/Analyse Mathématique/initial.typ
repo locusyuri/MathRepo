@@ -7427,7 +7427,403 @@ With the concept of uniform convergence, the flaws of pointwise convergence can 
   Removing the condition of monotonicity, the Arzelà-Borel theorem becomes a result of quasi-uniform convergence.
 ]
 
-// B10: ch10 Power Series（幂级数）
+= Power Series // 幂级数
+
+== Power Series and Its Convergence Radius
+
+=== Definition and Convergence Radius // 幂级数与收敛半径
+
+#definition(name: "Power Series")[
+  A /power series/ is a function term series of the form
+  $
+    sum_(n=0)^oo a_n (x - x_0)^n = a_0 + a_1 (x - x_0) + dots.c + a_n (x - x_0)^n + dots.c quad quad (a_n in bb(R)),
+  $
+  For convenience one usually takes $x_0 = 0$ and studies only series of the form
+  $
+    sum_(n=0)^oo a_n x^n = a_0 + a_1 x + dots.c + a_n x^n + dots.c,
+  $
+  since the general case reduces to this one by the substitution $y = x - x_0$.
+] <def:power-series>
+
+#theorem(name: "Cauchy-Hadamard Theorem")[
+  For the power series $sum_(n=0)^oo a_n x^n$, let
+  $
+    A = limsup_(n -> +oo) root(n, abs(a_n)),
+  $
+  and define the /radius of convergence/ $R$ by
+  $
+    R = cases(+oo quad quad (A = 0), 1/A quad quad (A in (0 comma +oo)), 0 quad quad (A = +oo)).
+  $
+  Then the power series converges absolutely when $abs(x) < R$, diverges when $abs(x) > R$, and the behaviour at the endpoints $x = plus.minus R$ must be examined separately.
+] <thm:cauchy-hadamard>
+
+#theorem(name: "d'Alembert's Formula for the Radius")[
+  If for the power series $sum_(n=0)^oo a_n x^n$ with $a_n != 0$ the limit
+  $
+    lim_(n -> oo) abs(a_(n+1) / a_n) = A
+  $
+  exists, then the radius of convergence is $R = 1 / A$.
+] <thm:dalembert-radius>
+
+#note[
+  d'Alembert's formula cannot be applied directly to power series with missing terms (those with some $a_n = 0$), since the ratio $a_(n+1) \/ a_n$ is then undefined for infinitely many indices; the Cauchy-Hadamard theorem, however, still applies.
+]
+
+#proposition(name: "Operations on Power Series and the Radius")[
+  Let $sum_(n=0)^oo a_n x^n$ and $sum_(n=0)^oo b_n x^n$ be power series with radii of convergence $R_1$ and $R_2$ respectively. Then:
+  + the sum $sum_(n=0)^oo (a_n + b_n) x^n$ has radius of convergence $R >= min(R_1, R_2)$;
+  + the termwise product $sum_(n=0)^oo a_n b_n x^n$ has radius of convergence $R >= R_1 R_2$;
+  + the Cauchy product $(sum_(n=0)^oo a_n x^n) (sum_(n=0)^oo b_n x^n)$ has radius of convergence $R >= min(R_1, R_2)$.
+] <prop:power-series-algebra>
+
+=== Abel's Theorems // Abel 定理
+
+#theorem(name: "Abel's First Theorem")[
+  If the power series $sum_(n=0)^oo a_n x^n$ converges at a point $x = x_0 != 0$, then it converges absolutely on the whole interval $abs(x) < abs(x_0)$. If it diverges at $x = x_1$, then it diverges at every point with $abs(x) > abs(x_1)$.
+] <thm:abel-first-theorem>
+
+#theorem(name: "Abel's Second Theorem")[
+  Let the power series $sum_(n=0)^oo a_n x^n$ have radius of convergence $R$. Then:
+  + the series converges uniformly on $(-R, R)$ inner-closed, i.e. uniformly on every compact subinterval of $(-R, R)$;
+  + if the series converges at $x = R$ (respectively at $x = -R$), then it converges uniformly on every closed interval $[a, R] subset.eq (-R, R]$ (respectively $[-R, a] subset.eq [-R, R)$);
+  + in other words, the power series converges uniformly on every closed interval contained in its domain of convergence.
+] <thm:abel-second-theorem>
+
+#corollary[
+  Let the power series $sum_(n=0)^oo a_n x^n$ have radius of convergence $R$. If the series converges at $x = R$ (respectively at $x = -R$), then its sum function $S(x)$ is left-continuous at $x = R$ (respectively right-continuous at $x = -R$).
+] <cor:abel-endpoint-continuity>
+
+If suitable conditions are imposed on the coefficients $a_n$, the converse of Abel's second theorem holds:
+
+#theorem(name: "Tauber's Theorem")[
+  Let $sum_(n=0)^oo a_n x^n$ be a power series with radius of convergence $1$, and suppose $lim_(x -> 1^(-)) sum_(n=0)^oo a_n x^n = A in bb(R)$. Then:
+  + if $lim_(n -> oo) n a_n = 0$, then $sum_(n=0)^oo a_n = A$;
+  + if $a_n >= 0$ ($n = 0, 1, 2, dots$), then $sum_(n=0)^oo a_n = A$.
+] <thm:tauber-theorem>
+
+#proof(name: "of Item 1")[
+  From $lim_(n -> oo) n a_n = 0$ we get, writing $b_n = n abs(a_n)$, that $lim_(n -> oo) b_n = 0$; by #link(<thm:stolz-cesaro>)[the Stolz-Cesàro theorem],
+  $
+    lim_(n -> oo) (b_1 + b_2 + dots.c + b_n) / n = lim_(n -> oo) (sum_(k=0)^n k abs(a_k)) / n = 0.
+  $
+  Since $lim_(x -> 1^(-)) sum_(n=0)^oo a_n x^n = A in bb(R)$, we also have
+  $
+    lim_(n -> oo) abs(sum_(k=0)^oo a_k (1 - 1/n)^k - A) = 0.
+  $
+  Hence for every $epsilon > 0$ there exists $N$ such that for all $n > N$,
+  $
+    0 <= (sum_(k=0)^n k abs(a_k)) / n < epsilon / 3, quad quad k abs(a_k) < epsilon / 3 quad (k > N), quad quad abs(sum_(k=0)^oo a_k (1 - 1/n)^k - A) < epsilon / 3.
+  $
+  Writing $x = 1 - 1/n$ and splitting $sum_(k=0)^n a_k - A$ into three parts,
+  $
+    abs(sum_(k=0)^n a_k - A) <= abs(sum_(k=0)^n a_k (1 - x^k)) + abs(sum_(k=n+1)^oo a_k x^k) + abs(sum_(k=0)^oo a_k x^k - A).
+  $
+  For the first term, since $1 - x^k = (1 - x)(1 + x + x^2 + dots.c + x^(k-1))$,
+  $
+    abs(sum_(k=0)^n a_k (1 - x^k)) = abs(sum_(k=1)^n a_k (1 - x)(1 + x + dots.c + x^(k-1))) <= sum_(k=1)^n abs(a_k) (1 - x) k = (sum_(k=1)^n k abs(a_k)) / n < epsilon / 3.
+  $
+  For the second term, using $k abs(a_k) < epsilon / 3$ for $k > N$,
+  $
+    abs(sum_(k=n+1)^oo a_k x^k) <= 1 / n sum_(k=n+1)^oo k abs(a_k) x^k < epsilon / (3n) sum_(k=n+1)^oo x^k <= epsilon / (3n) dot 1 / (1 - x) = epsilon / (3n dot 1/n) < epsilon / 3,
+  $
+  where the last step uses $x = 1 - 1/n$. The third term satisfies $abs(sum_(k=0)^oo a_k x^k - A) < epsilon / 3$ by construction. Combining the three estimates yields $abs(sum_(k=0)^n a_k - A) < epsilon$, i.e. $sum_(n=0)^oo a_n = A$.
+]
+
+=== Analytic Properties of the Sum Function // 和函数的分析性质
+
+#theorem(name: "Properties of the Sum Function")[
+  Let the power series $sum_(n=0)^oo a_n x^n$ have radius of convergence $R$ and sum function $S(x)$. Then:
+  + $S(x) in C(-R, R)$;
+  + $S(x)$ is differentiable on $(-R, R)$ and the series may be differentiated termwise:
+    $
+      S'(x) = (sum_(n=0)^oo a_n x^n)' = sum_(n=0)^oo n a_n x^(n-1),
+    $
+    and the differentiated series still has radius of convergence $R$;
+  + $S(x) in C^oo(-R, R)$, and termwise differentiation of any order is allowed with the radius of convergence unchanged;
+  + for every $x in (-R, R)$ the series may be integrated termwise:
+    $
+      integral_0^x S(t) dif t = integral_0^x (sum_(n=0)^oo a_n t^n) dif t = sum_(n=0)^oo a_n / (n + 1) x^(n+1),
+    $
+    and the integrated series still has radius of convergence $R$.
+] <thm:power-series-properties>
+
+#caution[
+  Although the radius of convergence is unchanged, the domain of convergence may enlarge after termwise integration and may shrink after termwise differentiation.
+]
+
+#example(name: "Computing Sums via Termwise Operations")[
+  *1.* Show that for $x in (-1, 1)$,
+  $
+    sum_(n=1)^oo (-1)^n / (2n - 1) x^(2n-1) = x - 1/3 x^3 + 1/5 x^5 - dots.c = arctan x.
+  $
+  For every $x in (-1, 1)$ there exists $delta > 0$ with $x in [-1 + delta, 1 - delta]$. For the series $sum_(n=1)^oo (-1)^(n-1) x^(2n-2)$ the partial sums are $S_(n)(x) = (1 - (-x^2)^n) / (1 + x^2)$, so $S_(n)(x) -> S(x) = 1 / (1 + x^2)$ on $[-1 + delta, 1 - delta]$. Since $d(S_(n), S) = abs(-(-x^2)^n / (1 + x^2)) -> 0$ ($n -> oo$), we have $S_(n)(x) arrows.rr^([-1 + delta, 1 - delta]) S(x)$. By termwise integration,
+  $
+    integral_0^x sum_(n=1)^oo (-1)^(n-1) t^(2n-2) dif t = sum_(n=1)^oo (-1)^n / (2n - 1) x^(2n-1) = integral_0^x (dif t) / (1 + t^2) = arctan x, quad quad x in (-1, 1).
+  $
+  #note[
+    Here the domain of convergence of $sum_(n=1)^oo (-1)^(n-1) x^(2n-2)$ is $(-1, 1)$, but after termwise integration the series $sum_(n=1)^oo (-1)^n \/ (2n - 1) x^(2n-1)$ converges on $[-1, 1]$.
+  ]
+
+  *2.* Show that for $x in (-1, 1)$, $sum_(n=1)^oo n x^n = x / (1 - x)^2$. Since $sum_(n=0)^oo x^n -> 1 / (1 - x)$ on $(-1, 1)$, termwise differentiation gives $sum_(n=1)^oo n x^(n-1)$; moreover, for every $0 < rho < 1$ and $x in [-rho, rho]$ we have $abs(n x^(n-1)) <= n rho^(n-1)$, and since $limsup_(n -> +oo) root(n, n rho^(n-1)) <= rho < 1$ the series $sum_(n=1)^oo n rho^(n-1)$ converges, so by #link(<thm:weierstrass-m-test>)[Weierstrass' test] the series $sum_(n=1)^oo n x^(n-1)$ converges uniformly on $[-rho, rho]$, i.e. inner-closed uniformly on $(-1, 1)$. By termwise differentiation,
+  $
+    (dif)/(dif x) sum_(n=1)^oo x^n = sum_(n=1)^oo n x^(n-1) = (dif)/(dif x) 1 / (1 - x) = 1 / (1 - x)^2,
+  $
+  and multiplying both sides by $x$ gives $sum_(n=1)^oo n x^n = x / (1 - x)^2$.
+
+  *3.* Compute $sum_(n=1)^oo (2n + 1) / 3^n$. Consider $sum_(n=0)^oo x^n = 1 / (1 - x)$ on $(-1, 1)$; differentiating termwise and multiplying by $x$ gives $sum_(n=1)^oo n x^n = x / (1 - x)^2$. Setting $x = 1/3$ yields $sum_(n=1)^oo (1/3)^n = 1/2$ and $sum_(n=1)^oo n (1/3)^n = 3/4$. Hence
+  $
+    sum_(n=1)^oo (2n + 1) / 3^n = 2 sum_(n=1)^oo n (1/3)^n + sum_(n=1)^oo (1/3)^n = 2 dot 3/4 + 1/2 = 2.
+  $
+
+  *4.* Compute the sum function of $sum_(n=0)^oo (n^2 + 1) / (2^n n!) x^n$. Split
+  $
+    sum_(n=0)^oo (n^2 + 1) / (2^n n!) x^n = sum_(n=1)^oo n / (2^n (n-1)!) x^n + sum_(n=1)^oo 1 / (2^n n!) x^n,
+  $
+  and all three series have convergence domain $(-oo, +oo)$. First, $sum_(n=1)^oo 1 / (2^n n!) x^n = sum_(n=1)^oo 1/(n!) (x/2)^n = e^(x/2) - 1$. Next let $S(x) = sum_(n=1)^oo n / ((n-1)!) x^(n-1)$; by termwise integration,
+  $
+    integral_0^x S(t) dif t = sum_(n=1)^oo 1 / ((n-1)!) x^n = sum_(n=0)^oo 1/(n!) x^(n+1) = x e^x,
+  $
+  so differentiating both sides gives $S(x) = e^x (1 + x)$. Therefore
+  $
+    sum_(n=1)^oo n / (2^n (n-1)!) x^n = x/2 sum_(n=1)^oo n / ((n-1)!) (x/2)^(n-1) = x/2 S(x/2) = x/2 (1 + x/2) e^(x/2),
+  $
+  and consequently
+  $
+    sum_(n=0)^oo (n^2 + 1) / (2^n n!) x^n = e^(x/2) (1 + x/2 + x^2/4).
+  $
+] <ex:power-series-sums>
+
+== Expanding Functions into Power Series
+
+#definition(name: "Smooth Function")[
+  Let $f(x)$ be a function defined on an interval $I$. If $f(x)$ is continuous, then $f(x)$ is called a $C^0$ function on $I$; if $f(x)$ has a continuous derivative of order $n$ ($n >= 1$), then $f(x)$ is called a $C^n$ function on $I$; if for any $n in bb(N)$, $f(x)$ has a continuous $n$-th derivative, then $f(x)$ is called a $C^oo$ function on $I$, also known as a /smooth function/.
+] <def:smooth-function>
+
+#definition(name: "(Real) Analytic Function")[
+  Let $f(x)$ be a function defined on an interval $I$. If for any point $x_0 in I$ there exists a power series expansion of $f(x)$ at $x_0$,
+  $
+    f(x) = sum_(n=0)^oo a_n (x - x_0)^n
+  $
+  that converges to $f(x)$ in some neighborhood of $x_0$, then $f(x)$ is called a /(real) analytic function/ on $I$.
+
+  Or equivalently, $f(x)$ is analytic on $I$ if for any point $x_0 in I$, the Taylor series of $f(x)$ at $x_0$ converges pointwise to $f(x)$ in some neighborhood of $x_0$, that is,
+  $
+    T(x) = sum_(n=0)^oo (f^((n))(x_0)) / (n!) (x - x_0)^n -> f(x).
+  $
+  The set of all real analytic functions on $I$ is usually denoted by $C^omega(I)$.
+] <def:real-analytic-function>
+
+#definition(name: "Taylor Series")[
+  Suppose $f(x)$ has derivatives of all orders at $x_0$. Then from $f(x)$ one can form the formal power series
+  $
+    sum_(n=0)^oo (f^((n))(x_0)) / (n!) (x - x_0)^n,
+  $
+  called the /Taylor series/ of $f(x)$ at $x_0$, written
+  $
+    f(x) tilde.op sum_(n=0)^oo (f^((n))(x_0)) / (n!) (x - x_0)^n.
+  $
+  In particular, when $x_0 = 0$, the series $sum_(n=0)^oo (f^((n))(0)) / (n!) x^n$ is also called the /Maclaurin series/ of $f(x)$.
+] <def:taylor-series>
+
+#theorem(name: "Uniqueness of Power Series Expansion")[
+  If $f(x)$ can be expanded on some neighborhood $U(x_0)$ as a power series $sum_(n=0)^oo a_n (x - x_0)^n$, then this expansion is unique, and it is precisely the Taylor series of $f(x)$ at $x_0$.
+
+  One says that $f(x)$ is /Taylor expandable/ on $U(x_0)$ if
+  $
+    f(x) = sum_(n=0)^oo (f^((n))(x_0)) / (n!) (x - x_0)^n, quad quad x in U(x_0).
+  $
+] <thm:uniqueness-power-series-expansion>
+
+#note[
+  Passing from smooth functions to analytic functions, the following three questions arise for a function $f(x)$ that is infinitely differentiable at $x_0$:
+  + Does there exist a neighborhood $U(x_0)$ on which $f(x)$ is infinitely differentiable?
+  + Does the formal Taylor series written down from $f(x)$ necessarily have a positive radius of convergence?
+  + If the Taylor series of $f(x)$ at $x_0$ has a positive radius of convergence, is the sum function of the series on its domain of convergence equal to $f(x)$?
+
+  The answer to all three questions is /no/; see #link(<ex:smooth-not-analytic>)[the counter-examples below].
+]
+
+#example(name: "Smooth but Not Analytic")[
+  *Counter-example 1 (failure of Item 1: $C^oo$ at a point but in no neighborhood).* For every natural number $k$, construct a function $h_k$ that is $C^k$-smooth but not $C^(k+1)$-smooth: start from a function that is continuous everywhere but nowhere differentiable (such as the Weierstrass function $f(x) = sum_(n=0)^oo a^n cos(b^n pi x)$ with $0 < a < 1$, $b$ a positive odd number and $a b > 1 + (3 pi) / 2$) and integrate it $k$ times; each integration raises the order of smoothness by one, while the original non-differentiability is preserved in a higher derivative.
+
+  Introduce a smooth function $g_k$ matching the derivatives of $h_k$ up to order $k$ at $plus.minus 1$: $g_k^((i))(plus.minus 1) = h_k^((i))(plus.minus 1)$ ($i = 0, 1, 2, dots, k$). Then $f_k = h_k - g_k$ satisfies $f_k^((i))(plus.minus 1) = 0$ ($i = 0, 1, 2, dots, k$), vanishes outside $[-1, 1]$, and is $C^k$ but not $C^(k+1)$ on $[-1, 1]$.
+
+  On each interval $(1/(n+1), 1/n)$, place a width-scaled copy $tilde(f)_n$ of $f_n$, so that it is $C^n$ but not $C^(n+1)$ on that interval and vanishes outside it; then scale its height so that $abs(tilde(f)_n^((i))) <= e^(-(n+1)^2)$ for $i = 0, 1, 2, dots, n$ (this is possible because these derivatives are bounded). Define
+  $
+    f(x) = cases(tilde(f)_n quad quad (x in (1/(n+1), 1/n)), f(-x) quad quad (x < 0), 0 quad quad (x = 0)).
+  $
+  Near the origin the derivatives of $f$ decay faster than any polynomial or exponential (similar to the classical smooth transition function $e^(-1/x^2)$), and induction shows $f^((k))(0) = 0$ for all $k >= 0$, so $f$ is infinitely differentiable at $x = 0$. However, every neighborhood $(-epsilon, epsilon)$ of the origin contains infinitely many subintervals $(1/(k+1), 1/k)$, on which $f$ is $C^k$-smooth but not $C^(k+1)$-smooth. Hence, no matter how small the neighborhood, $f$ cannot be a $C^oo$ function on it.
+
+  *Counter-example 2 (failure of Item 2: formal Taylor series divergent except at the center).* Let
+  $
+    f(x) = sum_(n=0)^oo (sin 2^n x) / (n!).
+  $
+  *Step 1: $f$ is $C^oo$.* By induction,
+  $
+    u_n^((k))(x) = ((sin 2^n x) / (n!))^((k)) = (2^n)^k sin(2^n x + (k pi) / 2) / (n!),
+  $
+  so $abs(u_n^((k))(x)) <= (2^n)^k / (n!) = (2^k)^n / (n!)$. Since $(2^k)^(n+1) / ((n+1)!) dot (n!) / (2^k)^n = (2^k) / (n+1) -> 0$ ($n -> +oo$), the series $sum_(n=0)^oo (2^k)^n / (n!)$ converges (to $e^(2^k)$), and by #link(<thm:weierstrass-m-test>)[Weierstrass' test] the series $sum_(n=0)^oo u_n^((k))(x)$ converges uniformly on $(-oo, +oo)$ for every $k$. Hence
+  $
+    f^((k))(x) = (sum_(n=0)^oo u_(n)(x))^((k)) = sum_(n=0)^oo u_n^((k))(x) = sum_(n=0)^oo ((2^n)^k sin(2^n x + (k pi) / 2)) / (n!),
+  $
+  i.e. $f(x)$ has derivatives of all orders on $(-oo, +oo)$, so $f$ is a $C^oo$ function.
+
+  *Step 2: the formal Taylor series of $f$ at $0$ diverges for every $x != 0$.* Setting $x = 0$ in the formula above,
+  $
+    f^((k))(0) = cases(sum_(n=0)^oo (-1)^l (2^(2l+1))^n / (n!) quad quad (k = 2l + 1), 0 quad quad (k = 2l)) = cases((-1)^l e^(2^(2l+1)) quad quad (k = 2l + 1), 0 quad quad (k = 2l)).
+  $
+  Therefore the Taylor series of $f(x)$ at $x_0 = 0$ can be written as
+  $
+    sum_(k=0)^oo (f^((k))(0)) / (k!) x^k = sum_(l=0)^oo (-1)^l e^(2^(2l+1)) / ((2l+1)!) x^(2l+1).
+  $
+  For its terms $a_l = (-1)^l e^(2^(2l+1)) x^(2l+1) / ((2l+1)!)$, d'Alembert's ratio test gives
+  $
+    lim_(l -> oo) abs(a_(l+1) / a_l) = lim_(l -> oo) (e^(3 dot 2^(2l+1)) x^2) / ((2l+2)(2l+3)) = cases(+oo quad quad (x != 0), 0 quad quad (x = 0)),
+  $
+  so the series diverges for every $x != 0$.
+
+  *Counter-example 3 (failure of Item 3: Taylor series convergent, but not to $f$).* Let
+  $
+    f(x) = cases(e^(-1/x) quad quad (x > 0), 0 quad quad (x <= 0)).
+  $
+  Then $f(x)$ is a $C^oo$ function, and $f^((n))(0) = 0$ for all $n = 0, 1, 2, dots$, i.e. all derivatives of $f(x)$ vanish at $x = 0$. Its Taylor series $sum_(n=0)^oo (f^((n))(0)) / (n!) x^n = sum_(n=0)^oo 0 / (n!) x^n$ therefore converges to $0$, not to $f(x)$ itself.
+] <ex:smooth-not-analytic>
+
+#theorem[
+  Every power series is a Taylor series: if $f(x) = sum_(n=0)^oo a_n (x - x_0)^n$ holds on some neighborhood of $x_0$, then $a_n = f^((n))(x_0) / (n!)$ for all $n$.
+] <thm:power-series-are-taylor-series>
+
+#theorem(name: "A Necessary and Sufficient Condition for Taylor Expansion")[
+  Let $f(x) in C^oo$ on $U(x_0)$. Then $f(x)$ is Taylor expandable on $U(x_0)$ if and only if, writing
+  $
+    f(x) = sum_(k=0)^n (f^((k))(x_0)) / (k!) (x - x_0)^k + R_(n)(x),
+  $
+  one has $lim_(n -> oo) R_(n)(x) = 0$.
+] <thm:taylor-expandable-necessary-sufficient>
+
+#theorem(name: "Sufficient Conditions for Taylor Expansion")[
+  Let $f(x) in C^oo$ on $U(x_0)$. Each of the following conditions is sufficient for $f(x)$ to be Taylor expandable on $U(x_0)$:
+  + there exist $C, R > 0$ such that $abs(f^((k))(x)) <= C dot (k!) / R^k$ for all $k$ and all $x in U(x_0)$;
+  + there exist $M > 0$ and $N$ such that $abs(f^((n))(x)) < M$ for all $n > N$ and all $x in U(x_0)$.
+] <thm:taylor-expandable-sufficient>
+
+#theorem(name: "Taylor Formula with Integral (Cauchy) Remainder")[
+  Let $f(x)$ have derivatives up to order $n$ at $x_0$. Then there exists a neighborhood of $x_0$ such that for every point $x$ in it,
+  $
+    f(x) = p_(n)(x) + r_(n)(x),
+  $
+  where
+  $
+    p_(n)(x) = f(x_0) + f'(x_0)(x - x_0) + (f''(x_0)) / (2!) (x - x_0)^2 + dots.c + (f^((n))(x_0)) / (n!) (x - x_0)^n
+  $
+  is the $n$-th Taylor polynomial of $f(x)$, and
+  $
+    r_(n)(x) = 1 / (n!) integral_(x_0)^x f^((n+1))(t) (x - t)^n dif t
+  $
+  is the /integral form of the remainder/. Applying the first mean value theorem for integrals,
+  $
+    r_(n)(x) = 1 / (n!) f^((n+1))(xi) (x - xi)^n (x - x_0),
+  $
+  where $xi$ lies between $x$ and $x_0$; the resulting expression is called the /Cauchy form of the remainder/.
+] <thm:taylor-cauchy-remainder>
+
+=== Common Maclaurin Series // 常用 Maclaurin 级数
+
+$
+  e^x = sum_(n=0)^oo x^n / (n!) = 1 + x + x^2 / (2!) + dots.c, quad quad x in (-oo, +oo), \
+  ln(1 + x) = sum_(n=1)^oo (-1)^(n-1) x^n / n = x - x^2 / 2 + x^3 / 3 - dots.c, quad quad x in (-1, 1], \
+  sin x = sum_(n=0)^oo (-1)^n x^(2n+1) / ((2n+1)!) = x - x^3 / (3!) + x^5 / (5!) - dots.c, quad quad x in (-oo, +oo), \
+  cos x = sum_(n=0)^oo (-1)^n x^(2n) / ((2n)!) = x - x^2 / (2!) + x^4 / (4!) - dots.c, quad quad x in (-oo, +oo), \
+  1 / (1 - x) = sum_(n=0)^oo x^n = 1 + x + x^2 + dots.c, quad quad x in (-1, 1), \
+  (1 + x)^alpha = sum_(n=0)^oo binom(alpha, n) x^n = 1 + alpha x + (alpha (alpha - 1)) / 2 x^2 + dots.c, quad quad cases(x in (-1, 1) quad (alpha <= -1), x in (-1, 1] quad (-1 < alpha < 0), x in [-1, 1] quad (alpha > 0)), \
+  arctan x = sum_(n=0)^oo (-1)^n x^(2n+1) / (2n + 1) = x - x^3 / 3 + x^5 / 5 - dots.c, quad quad x in [-1, 1], \
+  arcsin x = sum_(n=0)^oo ((2n)!) / (4^n (n!)^2 (2n + 1)) x^(2n+1) = x + 1/6 x^3 + 3/40 x^5 + 5/112 x^7 + 35/1152 x^9 + dots.c, quad quad x in (-1, 1), \
+  sec x = sum_(n=0)^oo (-1)^n (E_(2n)) / ((2n)!) x^(2n) = 1 + 1/2 x^2 + 5/24 x^4 + 61/720 x^6 + dots.c, \
+  tan x = sum_(n=0)^oo (B_(2n) (-4)^n (1 - 4^n)) / ((2n)!) x^(2n-1) = x + 1/3 x^3 + 2/15 x^5 + dots.c,
+$
+where $E_(2n)$ denote the Euler numbers and $B_(2n)$ the Bernoulli numbers.
+
+== Smooth Approximation of Functions
+
+We first approximate Riemann integrable functions by continuous functions, and continuous functions by smooth functions, respectively.
+
+#theorem[
+  Let $f(x) in R[a, b]$. For any $epsilon > 0$, there exists a function $g(x) in C[a, b]$ such that
+  $
+    integral_a^b abs(f(x) - g(x)) dif x < epsilon.
+  $
+] <thm:continuous-approximates-integrable>
+
+#theorem[
+  Let $f(x) in C[a, b]$. For any $epsilon > 0$, there exists a function $g(x) in C^oo[a, b]$ such that
+  $
+    abs(f(x) - g(x)) < epsilon, quad quad forall x in [a, b].
+  $
+] <thm:smooth-approximates-continuous>
+
+On this basis, the Weierstrass approximation theorems are stated as follows:
+
+#theorem(name: "Weierstrass First Approximation Theorem")[
+  Let $f(x) in C[a, b]$. For any $epsilon > 0$, there exists a polynomial $P(x)$ such that
+  $
+    abs(f(x) - P(x)) < epsilon, quad quad forall x in [a, b].
+  $
+] <thm:weierstrass-first-approximation>
+
+#theorem(name: "Weierstrass Second Approximation Theorem")[
+  Let $f(x)$ be a continuous function with period $2 pi$. For any $epsilon > 0$, there exists a trigonometric polynomial
+  $
+    T_(n)(x) = A_0 / 2 + sum_(k=1)^n A_k cos(k x) + B_k sin(k x)
+  $
+  such that
+  $
+    T_(n)(x) arrows.rr f(x).
+  $
+] <thm:weierstrass-second-approximation>
+
+#example(name: "Approximation by Step and Continuous Functions")[
+  A function $p: [a, b] -> bb(R)$ is called a /step function/ on $[a, b]$ if there exists a partition $a = x_0 < x_1 < dots.c < x_n = b$ such that $p$ is constant on each open subinterval $(x_(i-1), x_i)$, $i = 1, 2, dots, n$. Let $f(x)$ be Riemann integrable on $[a, b]$. Show that:
+
+  *1.* For every $epsilon > 0$ there exist step functions $p, q$ on $[a, b]$ with $p <= f <= q$ on $[a, b]$ and
+  $
+    integral_a^b [q(x) - p(x)] dif x < epsilon.
+  $
+  *2.* For every $epsilon > 0$ there exist $p, q in C[a, b]$ with $p(x) <= f(x) <= q(x)$ ($x in [a, b]$) and
+  $
+    integral_a^b [q(x) - p(x)] dif x < epsilon.
+  $
+
+  *Proof of Item 1.* Since $f(x) in R[a, b]$, for every $epsilon > 0$ there exists a partition $P$ with $sum_(i=1)^n omega_i Delta x_i < epsilon$, where $omega_i$ is the oscillation of $f$ on the $i$-th subinterval. Take $q(x)$ and $p(x)$ to be the supremum and infimum of $f$ on each subinterval, respectively; then $p <= f <= q$ and the integral inequality holds.
+
+  *Proof of Item 2.* Since $f(x) in R[a, b]$, for every $epsilon > 0$ there exists a partition $P$ ($a = x_0 < x_1 < dots.c < x_n = b$) with $sum_(i=1)^n omega_i Delta x_i < epsilon$, i.e. $overline(S)(P) - underline(S)(P) < epsilon$, and there exists $M > 0$ with $abs(f(x)) <= M$. Choose $delta < min_(1 <= i <= n) lr({Delta x_i / 2})$ with $4 M delta (n - 1) < epsilon / 2$.
+
+  On each closed subinterval $[x_(i-1) + delta, x_i - delta]$, set $q(x) = M_i$ and $p(x) = m_i$ (the supremum and infimum of $f$ there). In the neighborhood $[x_i - delta, x_i + delta]$ of each partition point, let $q(x)$ pass linearly from $M_i$ to $M_(i+1)$, ensuring $q(x) >= max lr({M_i, M_(i+1)}) >= f(x)$ throughout the transition region, and construct $p(x)$ analogously. The continuous functions $q(x)$ and $p(x)$ then satisfy
+  $
+    integral_a^b q(x) dif x <= overline(S)(P) + epsilon / 2, quad quad integral_a^b p(x) dif x >= underline(S)(P) - epsilon / 2,
+  $
+  and the conclusion follows.
+] <ex:step-continuous-approximation>
+
+#example(name: "Approximation by Successively Better Classes of Functions")[
+  Let $f(x) in R[a, b]$. Show that for every $epsilon > 0$ there exists a function $g$ with
+  $
+    integral_a^b abs(f(x) - g(x)) dif x < epsilon,
+  $
+  where $g$ is respectively: *1.* a step function; *2.* a piecewise linear (polygonal) function; *3.* a continuous function; *4.* a continuously differentiable function.
+
+  *Proof of Item 1.* Since $f(x) in R[a, b]$, for every $epsilon > 0$ there exists a partition $P$ with $sum_(i=1)^n omega_i Delta x_i < epsilon$. Set $g(x) = f(x_i)$ for $x in (x_(i-1), x_i)$; the values at the partition points may be chosen arbitrarily.
+
+  *Proof of Items 2 and 3.* A polygonal function is in particular continuous. For every $epsilon > 0$, divide $[a, b]$ into $n$ equal parts, let $x_i = a + (b - a) / n dot i$ ($i = 0, 1, dots, n$), and choose $n$ so large that $sum_(i=1)^n omega_i Delta x_i < epsilon$. Let $y = f_(n)(x)$ be the polygonal line joining the points $(x_i, f(x_i))$. For any $x in [x_(i-1), x_i]$,
+  $
+    abs(f_(n)(x) - f(x)) = abs((x_i - x) / (x_i - x_(i-1)) [f(x_(i-1)) - f(x)] + (x - x_(i-1)) / (x_i - x_(i-1)) [f(x_i) - f(x)]) <= (x_i - x) / (x_i - x_(i-1)) omega_i + (x - x_(i-1)) / (x_i - x_(i-1)) omega_i = omega_i.
+  $
+  Hence
+  $
+    integral_a^b abs(f_(n)(x) - f(x)) dif x = sum_(i=1)^n integral_(x_(i-1))^(x_i) abs(f_(n)(x) - f(x)) dif x <= sum_(i=1)^n omega_i Delta x_i < epsilon.
+  $
+
+  *Proof of Item 4.* A Riemann integrable function can be approximated by a continuous function, and by #link(<thm:weierstrass-first-approximation>)[the Weierstrass first approximation theorem] a continuous function can be approximated by a polynomial (in particular a continuously differentiable function); combining the two gives the result.
+] <ex:successive-approximation>
 
 // --- Part IV: 多元微积分本体（决策③：ch11–13） ---
 #part("Multivariable Calculus") // 多元微积分
