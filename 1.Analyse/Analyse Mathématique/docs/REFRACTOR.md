@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-09（B1 完成：ch01 迁移 + Preface 删除下沉为符号说明节 + R1 回收）
+> 最后更新：2026-10-09（B3 完成：ch03 迁移 + P0-2 空节/空壳回收 + §3.5/§3.6 从 md 补全 + ch02 Lipschitz 引用改 #link）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -149,13 +149,13 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - [x] §2.3 Subsequences（🔧 P0-5/R2 ✅：从 md L579–697 回收——子列定义与三性质及证明、上下极限第一定义（聚点集 E 的 sup/inf）+ H=max E 证明、ε 刻画定理及证明、有界收敛充要条件（H=h）、第二定义（尾项 sup/inf）+ 两定义等价定理及证明、上下极限运算（加法/乘法，md 乘法 2) 笔误 `x_n+y_n` 已修正为 `x_n y_n`；运算定理 md 无证明，保持无证明）
   - [x] §2.4 Completeness（🔧 P0-5/R2 ✅：从 md L701–1119 回收——Dedekind 分割定义+定理+证明（md `A∩B` 笔误已修正为 `A∪B`）、确界定义+存在原理+证明、Archimedean 性质+证明（补 `x>0` 条件）、单调有界原理+证明、Bolzano-Weierstrass+二分法证明+无界情形 note、闭区间套定义+定理+证明、Cauchy 列定义+收敛准则（tex 已有）补证明+错误命题 caution+完备性定义、开覆盖+Heine-Borel 定理（md 无证明）、等价定理链 note + 三个代表性互证命题（区间套⇒确界、Cauchy⇒单调有界、Cauchy⇒区间套）；未引入 `===`，空壳 leftbarTitle 一律保留为粗体段落标签）
   - [x] §2.5 Iterative Sequences（Banach 不动点定理 + 收敛速度估计；对 `def:Lipschitz Continuity` 的引用暂用文字提及，B3 迁移 ch03 后可改为 `#link(<def:lipschitz-continuity>)`）
-- [ ] **B3 = ch03 Limits and Continuity of Functions**（49 行 / 6 节，⚠ 含 P0-2）
-  - [ ] §3.1 Limits of Functions
-  - [ ] §3.2 Continuous Functions（空节 → 从 md R3 补内容或合并）
-  - [ ] §3.3 Infinitesimal and Infinite Quantities（空节 → 从 md R3 补：等价无穷小替换）
-  - [ ] §3.4 Continuous Functions on Closed Intervals（空壳定理 → 从 md R3 补陈述/证明，含一致连续专题）
-  - [ ] §3.5 Period Three Implies Chaos
-  - [ ] §3.6 Functional Equations
+- [x] **B3 = ch03 Limits and Continuity of Functions**（49 行 / 6 节，⚠ 含 P0-2）（✅ 2026-10-09）
+  - [x] §3.1 Limits of Functions（函数极限定义、单侧极限、广义极限两张 tex-table、极限性质+证明、增长速度比较（补全证明）、两个重要极限（补 sin x/x 夹逼证明）、Viète 公式（修正 md 第三因子漏 ½ 笔误）、Heine 定理+证明、弱 Heine+note+证明、函数版 Cauchy 准则+证明）
+  - [x] §3.2 Continuous Functions（🔧 P0-2 ✅：从 md R3 回收——点连续/振动度/区间连续定义、间断点三分类+note、Riemann 函数、单调函数间断点、反函数存在与连续（Step 1/2 证明）、复合连续、初等函数连续性、开集逆像、稠密集相等（供 §3.6 引用）、最小正周期）
+  - [x] §3.3 Infinitesimal and Infinite Quantities（🔧 P0-2 ✅：从 md R3 回收——无穷小定义与比较（o/O/同阶/等价，`tilde.op`）、o 运算法则、常见等价无穷小表（note title）、无穷大量比较、等价替换定理（md 无证明，已补全三元乘积分解证明）+两条注意事项 caution+Taylor 视角 note+素数定理 note）
+  - [x] §3.4 Continuous Functions on Closed Intervals（🔧 P0-2 ✅：空壳定理全部从 md R3 补陈述/证明——有界性（二分+区间套 / B-W 双证明）、最值、零点（上确界法/二分法双证明）、介值；一致连续专题：一致连续定义+反例 note、序列判别定理、Lipschitz 定义（`<def:lipschitz-continuity>`，ch02 引用已改为 #link）、Cantor 定理、开区间端点延拓推论、[a,+∞) 判别法+错误证明 caution、反例集（有界开区间、导数判别（修正 md「一致收敛」笔误）、周期函数、Cauchy 映射））
+  - [x] §3.5 Period Three Implies Chaos（tex 完全为空 → 从 md L1864–1905 补：一维迭代动力系统定义、Fixed-Point/Subinterval/Cyclic 三个覆盖引理（md Lemma-1 标题「扩张映射」与内容不符，改名）、Li-Yorke 第一/第二定理（limsup/liminf）、Li-Yorke 混沌定义；md 均无证明，保持原状；外链图片跳过）
+  - [x] §3.6 Functional Equations（tex 完全为空 → 从 md L1907–2005 补：经典函数方程一览（修正 md sin/cos 配对反了：f=cos ax, g=sin ax）、Cauchy 方程完整证明（引用 ex:continuous-agree-dense）、d'Alembert 方程证明（修正 md f²(c/2) 记号与 θ/2^n→c/2^n 笔误）、指数/对数方程代入化归证明）
 - [ ] ✅ Part I 里程碑：编译 + 提交
 
 ### Part II — Single-variable Calculus
