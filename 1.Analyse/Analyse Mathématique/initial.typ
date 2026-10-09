@@ -4045,6 +4045,8 @@ $f'(x) = 0$ (the stationary points) and the points where $f'$ does not exist.
 
 // B5: ch05 Indefinite Integral（不定积分）——P1-1/R5：扩为 5 节
 
+= Indefinite Integral // 不定积分
+
 == Antiderivatives and Indefinite Integrals // 原函数与不定积分
 
 The differential calculus asks: given a function, find its derivative. The
@@ -4377,8 +4379,1242 @@ and $cos x$, written $R(sin x, cos x)$.
   $cos x = (1 - tan^2(x / 2)) / (1 + tan^2(x / 2))$; differentiating
   $x = 2 arctan t$ gives $dif x = (2 dif t) / (1 + t^2)$.
 ]
-// B6: ch06 Definite Integral（定积分）
-// B7: ch07 Improper Integral（反常积分）
+= Definite Integral // 定积分
+
+== Riemann Integral // Riemann积分
+
+The definite integral is motivated by the computation of areas of curved
+regions: partition the domain, sum the areas of approximating rectangles, and
+take a limit as the partition is refined.
+
+#definition(name: "Riemann Integral")[
+  Let $f(x)$ be a bounded function defined on $[a, b]$. Take any set of
+  division points $\{x_i\}_(i=0)^n$ on $[a, b]$ to form a partition
+  $P: a = x_0 < x_1 < dots.c < x_n = b$, and choose arbitrary points
+  $xi_i in [x_(i-1), x_i]$. Denote the length of the sub-interval
+  $[x_(i-1), x_i]$ as $Delta x_i = x_i - x_(i-1)$, and let
+  $lambda = max_(1 <= i <= n) (Delta x_i)$. If the limit
+  $ lim_(lambda -> 0) sum_(i=1)^n f(xi_i) Delta x_i $
+  exists, and its value is independent of the partition $P$ and of the choice
+  of the points $xi_i$, then $f(x)$ is said to be *Riemann integrable* on
+  $[a, b]$.
+
+  The summation
+  $ S_n = sum_(i=1)^n f(xi_i) Delta x_i $
+  is called the *Riemann sum*, and its limit $I$ is called the *definite
+  integral* of $f(x)$ on $[a, b]$, denoted by
+  $ I = integral_a^b f(x) dif x, $
+  where $a$ and $b$ are called the lower and upper limits of the definite
+  integral, respectively.
+
+  Alternatively, the definition can be expressed as:
+  $
+    exists I, forall epsilon > 0, exists delta > 0, "s.t." forall P
+    (lambda = max_(1 <= i <= n) (Delta x_i) < delta), forall \{xi_i\}:
+    abs(sum_(i=1)^n f(xi_i) Delta x_i - I) < epsilon.
+  $
+] <def:riemann-integral>
+
+#note[
+  The construction of the Riemann integral follows the scheme
+  partition $->$ intermediate points $->$ summation $->$ take the limit.
+]
+
+#proposition(name: "Basic Facts on Integrable Functions")[
+  Let $f$ be Riemann integrable on $[a, b]$.
+  1. *Uniqueness*: the limit of the Riemann sums is unique.
+  2. *Boundedness*: $f$ is bounded on $[a, b]$.
+] <prop:integrable-basic-facts>
+
+#proof[
+  1. If both $I_1$ and $I_2$ were limits of the Riemann sums, then for any
+    partition fine enough the same Riemann sum $S_n$ would satisfy both
+    $|S_n - I_1| < epsilon / 2$ and $|S_n - I_2| < epsilon / 2$, whence
+    $|I_1 - I_2| < epsilon$ for all $epsilon > 0$, i.e. $I_1 = I_2$. This is
+    the same argument as for the uniqueness of limits of sequences.
+  2. Suppose, for contradiction, that $f$ is unbounded on $[a, b]$. Take
+    $epsilon = 1$ in the definition: there is $delta > 0$ such that for every
+    partition $P$ with $lambda < delta$ and every choice of intermediate
+    points,
+    $ |I| - 1 < abs(sum_(i=1)^n f(xi_i) Delta x_i) < |I| + 1. $
+    Fix such a partition and suppose $f$ is unbounded on the first
+    sub-interval $[x_0, x_1]$ (the argument is identical for any other one).
+    Then $xi_1 in [x_0, x_1]$ can be chosen so that
+    $ |f(xi_1) Delta x_1| > |I| + abs(sum_(j=2)^n f(xi_j) Delta x_j) + 1. $
+    Writing $I_1 = abs(sum_(j=2)^n f(xi_j) Delta x_j)$ for brevity, we get
+    $
+      |I| + 1 > abs(sum_(j=1)^n f(xi_j) Delta x_j)
+      >= |f(xi_1) Delta x_1| - I_1 > |I| + I_1 + 1 - I_1 = |I| + 1,
+    $
+    a contradiction.
+]
+
+#note[
+  Bounded functions need not be Riemann integrable: the Dirichlet function
+  $cases(D_1(x) = 1 &, x in QQ comma, D_1(x) = 0 &, x "irrational" comma)$
+  is bounded but not integrable, since every Riemann sum equals either $1$
+  or $0$ depending on the choice of intermediate points.
+]
+
+=== Darboux Sums // Darboux和
+
+#definition(name: "Darboux Sums")[
+  Let the supremum and infimum of $f(x)$ on $[a, b]$ be $M$ and $m$,
+  respectively, so that clearly $m <= f(x) <= M$. Let the supremum and
+  infimum of $f(x)$ on $[x_(i-1), x_i]$ be $M_i$ and $m_i$
+  ($i = 1, 2, dots.c, n$), respectively, i.e.
+  $
+    M_i = sup \{f(x) | x in [x_(i-1), x_i]\}, quad
+    m_i = inf \{f(x) | x in [x_(i-1), x_i]\}.
+  $
+
+  After fixing the partition $P$, define the sums
+  $
+    overline(S)(P) = sum_(i=1)^n M_i Delta x_i, quad
+    underline(S)(P) = sum_(i=1)^n m_i Delta x_i,
+  $
+  which are called the *Darboux upper sum* and the *Darboux lower sum*
+  corresponding to the partition $P$, respectively.
+] <def:darboux-sums>
+
+#proposition(name: "Properties of Darboux Sums")[
+  1. $underline(S)(P) <= sum_(i=1)^n f(xi_i) Delta x_i <= overline(S)(P)$.
+  2. If a new partition is formed by adding division points to the original
+    one, then the upper sum does not increase and the lower sum does not
+    decrease.
+  3. Let $bold(overline(S))$ denote the set of Darboux upper sums and
+    $bold(underline(S))$ the set of Darboux lower sums. For any
+    $overline(S)(P_1) in bold(overline(S))$,
+    $underline(S)(P_2) in bold(underline(S))$, it always holds that
+    $ m(b - a) <= underline(S)(P_2) <= overline(S)(P_1) <= M(b - a). $
+  4. Let $L = inf \{overline(S)(P) | overline(S)(P) in bold(overline(S))\}$ and
+    $l = sup \{underline(S)(P) | underline(S)(P) in bold(underline(S))\}$,
+    which are called the *upper integral* and the *lower integral*,
+    respectively. It always holds that $l <= L$.
+  5. (*Darboux's theorem*) For any $f in B[a, b]$ it always holds that
+    $
+      lim_(lambda -> 0) overline(S)(P) = L, quad
+      lim_(lambda -> 0) underline(S)(P) = l.
+    $
+] <prop:darboux-sums>
+
+#proof[
+  Statement (1) is immediate from the definition, and (4) follows from (3)
+  upon taking infimum and supremum.
+
+  *Proof of (2).* Let $P$ be a partition with division points
+  $\{x_i\}_(i=1)^n$, and let $P'$ be obtained from $P$ by inserting a single
+  new point $x' in (x_(i-1), x_i)$. Let $M'_i, M''_i$ be the suprema of $f$
+  on $[x_(i-1), x']$ and $[x', x_i]$ respectively; then clearly
+  $M'_i <= M_i$ and $M''_i <= M_i$, whence
+  $ M'_i (x' - x_(i-1)) + M''_i (x_i - x') <= M_i (x' - x_(i-1)) + M_i (x_i - x') = M_i (x_i - x_(i-1)). $
+  All other terms of $overline(S)(P')$ coincide with those of
+  $overline(S)(P)$, so $overline(S)(P') <= overline(S)(P)$; the statement for
+  lower sums is analogous. Repeated insertion yields the general claim.
+
+  *Proof of (3).* Any partition of $[a, b]$ can be viewed as arising from the
+  trivial partition $a = x_0 < x_1 = b$ by inserting division points, so by
+  (2) we get $m(b - a) <= underline(S)(P_2)$ and
+  $overline(S)(P_1) <= M(b - a)$. For the middle inequality: if $P_1 = P_2$
+  it holds with equality; otherwise, let $P$ be the common refinement of
+  $P_1$ and $P_2$; by (2),
+  $ underline(S)(P_2) <= underline(S)(P) <= overline(S)(P) <= overline(S)(P_1). $
+
+  *Proof of (5).* We prove the statement for upper sums; the lower case is
+  analogous. Suppose first $M > m$ (for $M = m$ the function is constant and
+  all sums equal $M(b-a)$).
+  + Since $L$ is the infimum of $bold(overline(S))$, for any $epsilon > 0$
+    there exists $overline(S)(P') in bold(overline(S))$ with
+    $L <= overline(S)(P') < L + epsilon / 2$, where
+    $P': a = x'_0 < x'_1 < dots.c < x'_p = b$.
+  + Take
+    $
+      delta = min \{Delta x'_1, Delta x'_2, dots.c, Delta x'_p,
+      epsilon / (2(p-1)(M-m))\}.
+    $
+  + Let $P: a = x_0 < x_1 < dots.c < x_n = b$ be any partition with
+    $lambda = max_(1 <= i <= n) (Delta x_i) < delta$.
+  + Insert the points $\{x'_j\}_(j=0)^p$ into $\{x_i\}_(i=1)^n$ (i.e. merge
+    $P'$ into $P$) to form a new partition $P^*$. Since $P^*$ refines both
+    $P$ and $P'$, statement (2) gives
+    $overline(S)(P^*) <= overline(S)(P)$ and $overline(S)(P^*) <= overline(S)(P')$.
+    Classify the intervals of $P$ into two types:
+    - $(x_(i-1), x_i)$ contains none of the inserted points: the
+      corresponding terms of $overline(S)(P)$ and $overline(S)(P^*)$ are then
+      both $M_i Delta x_i$;
+    - $(x_(i-1), x_i)$ contains an inserted point: there are at most $p - 1$
+      such intervals, since only $x'_1, dots.c, x'_(p-1)$ can lie in the
+      interior. Moreover, since $Delta x_i < delta <= Delta x'_j$ for all
+      $i, j$, each of these intervals contains exactly one inserted point
+      $x'_j$: two of them, say $x'_j, x'_(j+1)$, would force
+      $Delta x_i > x'_(j+1) - x'_j = Delta x'_(j+1) >= delta$, a
+      contradiction. For such an interval the difference of the
+      corresponding terms is at most
+      $
+        M_i (x_i - x_(i-1)) - [M'_i (x'_j - x_(i-1)) + M''_i (x_i - x'_j)]
+        <= (M - m) (x_i - x_(i-1)) < (M - m) delta,
+      $
+      where $M'_i, M''_i$ are the suprema of $f$ on the two sub-intervals cut
+      out by $x'_j$.
+    Summing over the intervals of the second type,
+    $ overline(S)(P) - overline(S)(P^*) < (p - 1)(M - m) delta <= epsilon / 2. $
+    Therefore
+    $
+      0 <= overline(S)(P) - L = [overline(S)(P) - overline(S)(P^*)]
+      + [overline(S)(P^*) - overline(S)(P')] + [overline(S)(P') - L]
+      < epsilon / 2 + 0 + epsilon / 2 = epsilon.
+    $
+    This proves $lim_(lambda -> 0) overline(S)(P) = L$.
+]
+
+=== The Riemann-Stieltjes Integral // Riemann-Stieltjes积分
+
+#definition(name: "Riemann-Stieltjes Integral")[
+  Let $alpha$ be a bounded, monotonically increasing function on $[a, b]$.
+  For every partition $P$ of $[a, b]$, let
+  $Delta alpha_i = alpha(x_i) - alpha(x_(i-1))$ (clearly $Delta alpha_i >= 0$).
+  For a bounded real function $f(x)$ on $[a, b]$, define the Stieltjes upper
+  and lower sums
+  $
+    overline(S)(P, alpha) = sum_(i=1)^n M_i Delta alpha_i, quad
+    underline(S)(P, alpha) = sum_(i=1)^n m_i Delta alpha_i,
+  $
+  and the upper and lower integrals
+  $
+    L = inf \{overline(S)(P, alpha) | overline(S)(P, alpha) in bold(overline(S))\},
+    quad
+    l = sup \{underline(S)(P, alpha) | underline(S)(P, alpha) in bold(underline(S))\},
+  $
+  where $bold(overline(S))$ and $bold(underline(S))$ are the sets of
+  Stieltjes upper and lower sums, respectively. If $L = l$, then
+  $ integral_a^b f(x) dif alpha(x) = L = l, $
+  and $f(x)$ is said to be *Riemann-Stieltjes integrable* on $[a, b]$ with
+  respect to $alpha$, or simply Stieltjes integrable.
+] <def:riemann-stieltjes-integral>
+
+When $alpha(x) = x$, this reduces to the Riemann integral. However, in
+general $alpha(x)$ need not even be continuous. The properties of Darboux
+sums carry over verbatim to Stieltjes sums.
+
+== Integrability Criteria // 可积性判据
+
+#theorem(name: "Integrability Criteria")[
+  A bounded function $f(x)$ is Riemann integrable on $[a, b]$ if and only if
+  one of the following equivalent conditions holds.
+
+  1. *First criterion (equality of upper and lower integrals)*: with the
+    notation of #link(<prop:darboux-sums>)[Darboux sums],
+    $
+      forall P (lambda = max_(1 <= i <= n) (Delta x_i) < delta):
+      lim_(lambda -> 0) overline(S)(P) = L = l
+      = lim_(lambda -> 0) underline(S)(P).
+    $
+  2. *Second criterion (vanishing of the oscillation sum)*: letting
+    $omega_i = M_i - m_i$ denote the oscillation of $f(x)$ on
+    $[x_(i-1), x_i]$, the sum of oscillations tends to zero:
+    $
+      lim_(lambda -> 0) sum_(i=1)^n omega_i Delta x_i = 0
+      quad (lambda = max_(1 <= i <= n) (Delta x_i)).
+    $
+    - *Corollary 1*: continuous functions on closed intervals are
+      integrable.
+    - *Corollary 2*: monotonic functions on closed intervals are
+      integrable.
+  3. *Third criterion (small oscillation partition)*: for every
+    $epsilon > 0$ there exists a partition $P$ such that
+    $ sum_(i=1)^n omega_i Delta x_i < epsilon. $
+    - *Corollary 1*: the total length of the sub-intervals on which the
+      oscillation cannot be made arbitrarily small can be made arbitrarily
+      small, i.e. for all $epsilon, eta > 0$ there exists $P$ such that
+      $ sum_(omega_i >= eta) Delta x_i < epsilon. $
+    - *Corollary 2*: bounded functions with only finitely many
+      discontinuities on a closed interval are integrable.
+] <thm:integrability-criteria>
+
+#proof[
+  *First criterion.* ($==>=$) By the definition of Darboux sums, for every
+  partition $P$,
+  $ underline(S)(P) <= sum_(i=1)^n f(xi_i) Delta x_i <= overline(S)(P). $
+  If $lim_(lambda -> 0) overline(S)(P) = lim_(lambda -> 0) underline(S)(P) = I$,
+  then taking the limit squeezes the Riemann sum to $I$, so $f$ is integrable
+  with integral $I$. ($==>=$) Suppose $f$ is integrable with integral $I$.
+  Given $epsilon > 0$, take $delta > 0$ as in the definition and fix a
+  partition $P$ with $lambda < delta$. Since $M_i$ is the supremum of $f$ on
+  $[x_(i-1), x_i]$, we may choose $xi_i$ with
+  $0 <= M_i - f(xi_i) < epsilon / (2(b-a))$; then
+  $|sum_(i=1)^n f(xi_i) Delta x_i - I| < epsilon / 2$. Moreover,
+  $
+    |overline(S)(P) - sum_(i=1)^n f(xi_i) Delta x_i|
+    = sum_(i=1)^n [M_i - f(xi_i)] Delta x_i
+    < epsilon / (2(b-a)) dot (b-a) = epsilon / 2.
+  $
+  Hence
+  $|overline(S)(P) - I| <= |sum f(xi_i) Delta x_i - I| + |overline(S)(P) - sum f(xi_i) Delta x_i| < epsilon$,
+  i.e. $lim_(lambda -> 0) overline(S)(P) = I$; the lower sum is treated
+  identically.
+
+  *Second criterion.* By the first criterion it suffices to observe that
+  $
+    sum_(i=1)^n omega_i Delta x_i
+    = sum_(i=1)^n (M_i - m_i) Delta x_i
+    = overline(S)(P) - underline(S)(P)
+    -> limits L - l.
+  $
+  The limit vanishes exactly when $L = l$.
+
+  *Corollary 1 (continuity).* A continuous function on $[a, b]$ is uniformly
+  continuous (Cantor's theorem, #link(<thm:cantor-theorem>)[Cantor]). Given
+  $epsilon > 0$, choose $delta > 0$ with $|f(x) - f(y)| < epsilon / (b-a)$
+  whenever $|x - y| < delta$; for any partition with $lambda < delta$ we have
+  $omega_i < epsilon / (b - a)$, whence
+  $sum omega_i Delta x_i < epsilon$.
+
+  *Corollary 2 (monotonicity).* Suppose $f$ is increasing (the other case is
+  analogous); then $omega_i = f(x_i) - f(x_(i-1))$ and
+  $
+    sum_(i=1)^n omega_i Delta x_i <= lambda sum_(i=1)^n omega_i
+    = lambda [f(b) - f(a)],
+  $
+  since every $Delta x_i <= lambda$. Taking
+  $lambda < epsilon / (f(b) - f(a))$ makes the sum $< epsilon$. (If
+  $f(b) = f(a)$ then $f$ is constant and the claim is trivial.)
+
+  *Third criterion.* ($==>$) This is immediate from the second criterion.
+  ($<==$) Suppose that for some partition
+  $P': a = x'_0 < dots.c < x'_p = b$ we have
+  $overline(S)(P') - underline(S)(P') < epsilon / 3$. Take
+  $
+    delta = min \{Delta x'_1, dots.c, Delta x'_p,
+    epsilon / (3(p-1)(M-m))\}
+  $
+  (as in Darboux's theorem we may assume $M > m$). Let
+  $P: a = x_0 < dots.c < x_n = b$ be any partition with $lambda < delta$, and
+  let $P^*$ be the common refinement of $P$ and $P'$. Repeating the estimates
+  from the proof of Darboux's theorem, the terms of
+  $overline(S)(P) - overline(S)(P^*)$ and of
+  $underline(S)(P^*) - underline(S)(P)$ coming from intervals containing an
+  inserted point add up to less than $epsilon / 3$ each, while refinement
+  never increases upper sums nor decreases lower sums, so
+  $
+    overline(S)(P^*) - overline(S)(P') <= 0, quad
+    underline(S)(P') - underline(S)(P^*) <= 0.
+  $
+  Therefore
+  $
+    0 <= overline(S)(P) - underline(S)(P)
+    = [overline(S)(P) - overline(S)(P^*)] + [overline(S)(P^*) - overline(S)(P')]
+    + [overline(S)(P') - underline(S)(P')] + [underline(S)(P') - underline(S)(P^*)]
+    + [underline(S)(P^*) - underline(S)(P)]
+    < epsilon / 3 + 0 + epsilon / 3 + 0 + epsilon / 3 = epsilon.
+  $
+  Since $sum omega_i Delta x_i = overline(S)(P) - underline(S)(P)$, the second
+  criterion yields integrability.
+
+  *Corollary 1 (small total length of large oscillation).* Assume
+  $m <= f <= M$ (the case $M = m$ being trivial). ($<==$) For
+  $epsilon > 0$ set $epsilon' = epsilon / (2(M - m))$ and
+  $eta = epsilon / (2(b - a))$. By hypothesis there is $P$ with
+  $sum_(omega_i >= eta) Delta x_i < epsilon'$, and then
+  $
+    sum_(i=1)^n omega_i Delta x_i
+    = sum_(omega_i >= eta) omega_i Delta x_i + sum_(omega_i < eta) omega_i Delta x_i
+    <= (M - m) sum_(omega_i >= eta) Delta x_i + eta sum_(omega_i < eta) Delta x_i
+    < (M - m) epsilon' + eta (b - a) < epsilon.
+  $
+  By the third criterion $f$ is integrable. ($==>$) By the third criterion,
+  for all $epsilon, eta > 0$ there is $P$ with
+  $sum omega_i Delta x_i < epsilon eta$. Then
+  $
+    eta sum_(omega_i >= eta) Delta x_i
+    <= sum_(omega_i >= eta) omega_i Delta x_i
+    <= sum_(i=1)^n omega_i Delta x_i < epsilon eta,
+  $
+  hence $sum_(omega_i >= eta) Delta x_i < epsilon$.
+
+  *Corollary 2 (finitely many discontinuities).* Let
+  $x_1 < dots.c < x_k$ be the discontinuity points of $f$ and let
+  $omega = M - m$ be the oscillation of $f$ on $[a, b]$; if $omega = 0$ then
+  $f$ is constant and integrable, so assume $omega > 0$. Given $epsilon > 0$,
+  take the $x_j$ as division points of a partition and enclose each $x_j$ in
+  an open interval, the total length of all these intervals being
+  $< epsilon / (2 omega)$. Refine the partition so that every sub-interval
+  meeting one of these neighborhoods lies inside it; the total length of the
+  sub-intervals of this first class is then $< epsilon / (2 omega)$, and on
+  them $omega_i <= omega$. On every remaining (closed) sub-interval $f$ is
+  continuous, and there are finitely many of them, so $f$ is uniformly
+  continuous on their union: after further refinement,
+  $omega_i < epsilon / (2(b - a))$ there. Splitting the oscillation sum,
+  $
+    sum_(i=1)^n omega_i Delta x_i
+    <= omega dot epsilon / (2 omega) + epsilon / (2(b-a)) dot (b - a)
+    = epsilon,
+  $
+  and the third criterion gives integrability.
+]
+
+#note(title: "Techniques for Proving Integrability")[
+  1. If $sum_(i=1)^n omega_i$ is bounded, use
+    $sum_(i=1)^n omega_i Delta x_i <= (b - a) sum_(i=1)^n omega_i$ (as in
+    the proof of integrability of monotone functions);
+  2. Prove $omega_i < epsilon$ for every $i$, whence
+    $sum omega_i Delta x_i < epsilon sum Delta x_i = epsilon (b - a)$;
+  3. Split the oscillation sum
+    $sum omega_i Delta x_i = sum' omega_i Delta x_i + sum'' omega_i Delta x_i$,
+    where $omega_i < epsilon / (b - a)$ in the first sum, while the total
+    length of the sub-intervals entering the second sum is
+    $< epsilon / Omega$, with $Omega$ the oscillation of $f$ on the whole
+    interval;
+  4. If $omega_i^f <= omega_i^g$ on each sub-interval (the oscillations of
+    $f$ and $g$), integrability of $g$ implies integrability of $f$ (e.g.
+    of $|f|$ from that of $f$).
+]
+
+#example(name: "The Riemann Function is Integrable")[
+  Prove that the Riemann function
+  $ R(x) = cases(1/q &, x = p/q "in lowest terms" comma, 0 &, x "irrational" comma) $
+  is Riemann integrable on $[0, 1]$.
+] <ex:riemann-function-integrable>
+
+#proof[
+  Given $epsilon > 0$, the condition $R(x) = 1/q >= epsilon / 2$ forces
+  $q <= 2 / epsilon$, so only finitely many points of $[0, 1]$ satisfy
+  $R(x) > epsilon / 2$; call them $x_1, dots.c, x_k$. Take
+  $delta = epsilon / (4k)$ and a partition $P$ with $lambda < delta$. Split
+  the oscillation sum $sum omega_i Delta x_i = sum' omega_i Delta x_i + sum'' omega_i Delta x_i$,
+  where $sum'$ runs over the sub-intervals containing one of the points
+  $x_1, dots.c, x_k$ and $sum''$ over the rest. On the sub-intervals counted
+  by $sum'$ we have $omega_i <= 1$, and there are at most $2k$ of them, so
+  $sum' omega_i Delta x_i <= 2k lambda < epsilon / 2$. On the remaining
+  sub-intervals every point satisfies $R(x) < epsilon / 2$, so
+  $omega_i <= epsilon / 2$ and
+  $sum'' omega_i Delta x_i <= (epsilon / 2) sum'' Delta x_i <= epsilon / 2$.
+  Hence $sum omega_i Delta x_i < epsilon$, and the third criterion gives
+  integrability.
+]
+
+#example(name: "Pointwise Vanishing Implies Zero Integral")[
+  Suppose that at every point of $[a, b]$ the function $f$ has limit $0$.
+  Prove that $f in R[a, b]$ and $integral_a^b f(x) dif x = 0$.
+] <ex:pointwise-vanishing>
+
+#proof[
+  Fix $x_0 in [a, b]$. Since $lim_(x -> x_0) f(x) = 0$, for every
+  $epsilon_1 > 0$ there is $delta_(x_0) > 0$ such that
+  $|f(x)| < epsilon_1$ for all $x in accent(U, circle)(x_0, delta_(x_0))$.
+  The open family $union_(x_0 in [a,b]) U(x_0, delta_(x_0))$ covers $[a, b]$,
+  so by the Heine-Borel theorem it admits a finite subcover; consequently,
+  outside a finite set $x_1, dots.c, x_r$ we have $|f(x)| < epsilon_1$
+  throughout $[a, b]$.
+
+  Now let $epsilon > 0$, take $epsilon_1 = epsilon / (4(b-a))$, and choose
+  $M > max\{f(x_1), dots.c, f(x_r), epsilon_1\}$ so large that
+  $|f(x)| <= M$ on all of $[a, b]$. Take a partition $P$ for which the total
+  length of the sub-intervals containing some exceptional point
+  $x_1, dots.c, x_r$ is $< epsilon / (4M)$ — possible since there are only
+  finitely many of them — and split
+  $sum omega_i Delta x_i = sum' omega_i Delta x_i + sum'' omega_i Delta x_i$
+  accordingly. On the first class $omega_i <= 2M$, so
+  $sum' omega_i Delta x_i <= 2M dot epsilon / (4M) = epsilon / 2$; on the
+  second class $omega_i <= 2 epsilon_1$, so
+  $sum'' omega_i Delta x_i <= 2 epsilon_1 (b - a) = epsilon / 2$. Hence
+  $sum omega_i Delta x_i <= epsilon$ for arbitrarily small $epsilon$, which
+  proves integrability.
+
+  Finally, for any $epsilon > 0$ only finitely many points satisfy
+  $|f(x)| >= epsilon$; choosing all intermediate points outside this finite
+  set gives $|sum f(xi_i) Delta x_i| < epsilon (b - a)$, hence
+  $lim_(lambda -> 0) sum_(i=1)^n f(xi_i) Delta x_i = 0$ and
+  $integral_a^b f(x) dif x = 0$.
+]
+
+=== Lebesgue's Theorem // Lebesgue定理
+
+#definition(name: "Null Set")[
+  A set $E subset RR$ is called a *null set* (or a set of measure zero) if
+  for any $epsilon > 0$ there exists a countable collection of open intervals
+  $\{I_n | n in NN^*\}$ such that
+  $ E subset union_(i=1)^oo I_n quad "and" quad sum_(i=1)^oo abs(I_n) < epsilon, $
+  where $abs(I_n)$ denotes the length of $I_n$.
+] <def:null-set>
+
+If some property holds for all $x in A$ except for a null set $E subset A$,
+we say that the property holds *almost everywhere* on $A$.
+
+#proposition(name: "Properties of Null Sets")[
+  1. Every at most countable set is a null set.
+  2. A countable union of null sets is again a null set.
+  3. Any subset of a null set is a null set.
+] <prop:null-sets>
+
+#lemma(name: "Oscillation Lemmas")[
+  Let $f$ be bounded on $[a, b]$.
+  1. With $omega$ the oscillation of $f$ on $[a, b]$,
+    $ omega = sup \{f(y_1) - f(y_0) | y_0, y_1 in [a, b]\}. $
+  2. $f(x)$ is continuous at a point $x_0$ if and only if the oscillation of
+    $f$ at $x_0$ is zero, i.e. $omega_f (x_0) = 0$.
+  3. Let $D(f)$ be the set of discontinuities of $f$ on $[a, b]$. For
+    $delta > 0$, denote $D_delta = \{x in [a, b] | omega_f (x) >= delta\}$.
+    Then
+    $ D(f) = union_(n=1)^oo D_(1\/n). $
+  4. If there exists a sequence of open intervals $(alpha_j, beta_j)$
+    ($j = 1, 2, dots.c$) such that
+    $D(f) subset union_(j=1)^oo (alpha_j, beta_j)$, and if
+    $K = [a, b] \ union_(j=1)^oo (alpha_j, beta_j)$, then:
+    $
+      forall epsilon > 0, exists delta > 0, "s.t." forall x in K, y in [a, b]
+      (|x - y| < delta): abs(f(x) - f(y)) < epsilon.
+    $
+] <lem:oscillation-lemmas>
+
+Recall that for $x in [a, b]$ we write $omega_f (x, delta)$ for the
+oscillation of $f$ on $U(x, delta) inter [a, b]$ and
+$omega_f (x) = inf_(delta > 0) omega_f (x, delta)$ for the oscillation of $f$
+at $x$; statement 2 above says that continuity at $x$ is equivalent to
+$omega_f (x) = 0$.
+
+#proof[
+  *Lemma 1.* Let $M, m$ be the supremum and infimum of $f$ on $[a, b]$, so
+  $omega = M - m$ by definition. For any $y_1, y_2 in [a, b]$ we have
+  $m <= f(y_i) <= M$, hence
+  $|f(y_1) - f(y_2)| <= M - m = omega$. Conversely, for any $epsilon > 0$
+  there exist $y_1, y_2$ with $f(y_1) > M - epsilon / 2$ and
+  $f(y_2) < m + epsilon / 2$, so
+  $|f(y_1) - f(y_2)| >= f(y_1) - f(y_2) > M - m - epsilon = omega - epsilon$.
+  Combining both estimates gives the claimed identity.
+
+  *Lemma 2.* ($==>$) If $f$ is continuous at $x$, then for every
+  $epsilon > 0$ there is $delta > 0$ with $|f(y) - f(x)| < epsilon / 2$ for
+  all $y in U(x, delta)$; hence for $y_1, y_2 in U(x, delta)$,
+  $ |f(y_1) - f(y_2)| <= |f(y_1) - f(x)| + |f(x) - f(y_2)| < epsilon, $
+  so $omega_f (x, delta) <= epsilon$. Letting $delta -> 0^+$ gives
+  $0 <= omega_f (x) <= epsilon$, and since $epsilon$ is arbitrary,
+  $omega_f (x) = 0$. ($<==$) If $omega_f (x) = 0$, then for every
+  $epsilon > 0$ there is $delta > 0$ with $omega_f (x, delta) < epsilon$;
+  hence $|f(x) - f(y)| <= omega_f (x, delta) < epsilon$ for all
+  $y in U(x, delta)$, which is continuity at $x$.
+
+  *Lemma 3.* By Lemma 2 every point of $D_(1\/n)$ is a discontinuity point,
+  so $union_(n=1)^oo D_(1\/n) subset D(f)$. Conversely, take $x in D(f)$;
+  then $omega_f (x) > 0$, and choosing $m$ large enough that
+  $omega_f (x) >= 1\/m$ gives $x in D_(1\/m)$. Hence
+  $D(f) subset union_(n=1)^oo D_(1\/n)$.
+
+  *Lemma 4.* Suppose the claim fails. Then there exist $epsilon_0 > 0$, a
+  sequence $delta_n = 1\/n$, and points $s_n in K$, $t_n in [a, b]$ with
+  $|s_n - t_n| < 1\/n$ but $|f(s_n) - f(t_n)| >= epsilon_0$. Since
+  $\{s_n\} subset K subset [a, b]$, the Bolzano-Weierstrass theorem yields a
+  subsequence $\{s_(k_n)\}$ converging to some $s^*$. Clearly $s^* in K$ (as
+  $K$ is closed) and
+  $
+    |t_(k_n) - s^*| <= |t_(k_n) - s_(k_n)| + |s_(k_n) - s^*|
+    < 1\/k_n + |s_(k_n) - s^*| -> 0,
+  $
+  so $t_(k_n) -> s^*$ as well. But $s^* in K$ is a continuity point of $f$,
+  so letting $n -> oo$ in $|f(s_(k_n)) - f(t_(k_n))| >= epsilon_0$ gives
+  $0 = |f(s^*) - f(s^*)| >= epsilon_0$, a contradiction.
+]
+
+#theorem(name: "Lebesgue's Theorem")[
+  Let $f in B[a, b]$. Then $f$ is Riemann integrable on $[a, b]$ if and only
+  if $f$ is continuous almost everywhere on $[a, b]$.
+] <thm:lebesgue>
+
+#proof[
+  ($==>$) It suffices to show that $D_delta$ is a null set for every
+  $delta > 0$; then each $D_(1\/n)$ is null and, by Lemma 3 and the
+  countability of null unions, so is $D(f)$. Fix $delta > 0$. By
+  integrability, for every $epsilon > 0$ there is a partition
+  $P: a = x_0 < x_1 < dots.c < x_m = b$ with
+  $sum_(i=1)^m omega_i Delta x_i < delta epsilon / 2$. If
+  $x in D_delta$ is not one of the division points, then
+  $x in (x_(i-1), x_i)$ for some $i$, and there is $r > 0$ with
+  $(x - r, x + r) subset (x_(i-1), x_i)$; hence the oscillation of $f$ on
+  $[x_(i-1), x_i]$ satisfies $omega_i >= omega_f (x) >= delta$. Writing
+  $sum'$ for the sub-sum over the $i$ with $D_delta inter (x_(i-1), x_i) != emptyset$,
+  we get
+  $
+    delta epsilon / 2 > sum_(i=1)^m omega_i Delta x_i >= sum' omega_i Delta x_i
+    >= delta sum' Delta x_i, quad "whence" quad sum' Delta x_i < epsilon / 2.
+  $
+  Consequently
+  $ D_delta subset (union' (x_(i-1), x_i)) union \{x_0, x_1, dots.c, x_m\}, $
+  and covering each division point $x_j$ by an interval of length
+  $epsilon / (2(m+1))$ gives a countable cover of $D_delta$ with total length
+  $
+    sum' Delta x_i + (m+1) epsilon / (2(m+1)) < epsilon / 2 + epsilon / 2
+    = epsilon.
+  $
+  Hence $D_delta$ is a null set.
+
+  ($<==$) Suppose $D(f)$ is a null set, and let $omega$ be the oscillation
+  of $f$ on $[a, b]$ (the case $omega = 0$ is trivial). For every
+  $epsilon > 0$ there is a family of open intervals
+  $\{(alpha_i, beta_i) | i = 1, 2, dots.c\}$ covering $D(f)$ with
+  $ sum_(i=1)^oo (beta_i - alpha_i) < epsilon / (2 omega). $
+  Set $K = [a, b] \ union_(i=1)^oo (alpha_i, beta_i)$. By Lemma 4
+  there is $delta > 0$ such that $|x - y| < delta$ with $x in K$ and
+  $y in [a, b]$ implies $|f(x) - f(y)| < epsilon / (4(b - a))$. Take a
+  partition $P: a = x_0 < x_1 < dots.c < x_n = b$ with
+  $lambda = max_(1 <= i <= n) (Delta x_i) < delta$, and split
+  $sum omega_i Delta x_i = sum_1 omega_i Delta x_i + sum_2 omega_i Delta x_i$,
+  where $sum_1$ runs over the $i$ with $K inter (x_(i-1), x_i) != emptyset$ and
+  $sum_2$ over the rest.
+  + For $sum_1$: pick $y_i in K inter (x_(i-1), x_i)$; then for
+    $z_1, z_2 in [x_(i-1), x_i]$,
+    $
+      |f(z_1) - f(z_2)| <= |f(z_1) - f(y_i)| + |f(z_2) - f(y_i)|
+      < 2 dot epsilon / (4(b-a)) = epsilon / (2(b-a)),
+    $
+    so $omega_i <= epsilon / (2(b-a))$ and
+    $sum_1 omega_i Delta x_i < epsilon / (2(b-a)) (b-a) = epsilon / 2$.
+  + For $sum_2$: since $omega_i <= omega$, we have
+    $sum_2 omega_i Delta x_i <= omega sum_2 Delta x_i$. If
+    $x in (x_(i-1), x_i)$ meets no point of $K$, then the whole interval lies
+    in $union (alpha_i, beta_i)$, so
+    $sum_2 Delta x_i <= sum_(i=1)^oo (beta_i - alpha_i) < epsilon / (2 omega)$,
+    and hence $sum_2 omega_i Delta x_i <= epsilon / 2$.
+  Combining both estimates, $sum_(i=1)^n omega_i Delta x_i < epsilon$ for
+  arbitrarily small $epsilon$, so $f$ is integrable by the third criterion.
+]
+
+== Properties of Definite Integrals // 定积分的性质
+
+#proposition(name: "Properties of Riemann Integrals")[
+  1. *Linearity*: if $f, g in R[a, b]$ and $k_1, k_2$ are constants, then
+    $k_1 f + k_2 g in R[a, b]$ and
+    $
+      integral_a^b [k_1 f(x) + k_2 g(x)] dif x
+      = k_1 integral_a^b f(x) dif x + k_2 integral_a^b g(x) dif x.
+    $
+  2. *Integrability of products*: if $f, g in R[a, b]$, then $f g in R[a, b]$.
+    In general, however,
+    $
+      integral_a^b f(x) g(x) dif x
+      != (integral_a^b f(x) dif x)(integral_a^b g(x) dif x).
+    $
+  3. *Monotonicity*: if $f, g in R[a, b]$ and $f(x) >= g(x)$ (respectively
+    $f(x) > g(x)$) on $[a, b]$, then
+    $
+      integral_a^b f(x) dif x >= integral_a^b g(x) dif x
+      quad (integral_a^b f(x) dif x > integral_a^b g(x) dif x).
+    $
+    - *Corollary 1*: if $f in C[a, b]$ with $f >= 0$ and $f$ not identically
+      zero, then $integral_a^b f(x) dif x > 0$;
+    - *Corollary 2*: if $f in R[a, b]$ with $f > 0$, then
+      $integral_a^b f(x) dif x > 0$.
+  4. *Integrability of the absolute value*: if $f in R[a, b]$, then
+    $|f| in R[a, b]$ and
+    $ abs(integral_a^b f(x) dif x) <= integral_a^b abs(f(x)) dif x; $
+    the converse of this property is false.
+  5. *Additivity over intervals*: if $f in R[a, b]$, then for every
+    $c in [a, b]$, $f$ is integrable on $[a, c]$ and on $[c, b]$;
+    conversely, if $f in R[a, c]$ and $f in R[c, b]$, then $f in R[a, b]$
+    and
+    $
+      integral_a^b f(x) dif x = integral_a^c f(x) dif x
+      + integral_c^b f(x) dif x.
+    $
+] <prop:riemann-integral-properties>
+
+#proof[
+  *Linearity.* For every partition and every choice of intermediate points,
+  $
+    sum_(i=1)^n [k_1 f(xi_i) + k_2 g(xi_i)] Delta x_i
+    = k_1 sum_(i=1)^n f(xi_i) Delta x_i + k_2 sum_(i=1)^n g(xi_i) Delta x_i.
+  $
+  Letting $lambda -> 0$ and using the integrability of $f$ and $g$ yields
+  the claim.
+
+  *Integrability of products.* Since $f, g in R[a, b]$, both are bounded:
+  $abs(f), |g| <= M$ on $[a, b]$. For any two points $hat(x), tilde(x)$ of
+  $[x_(i-1), x_i]$,
+  $
+    |f(hat(x)) g(hat(x)) - f(tilde(x)) g(tilde(x))|
+    <= |f(hat(x)) - f(tilde(x))| dot |g(hat(x))|
+    + |f(tilde(x))| dot |g(hat(x)) - g(tilde(x))|
+    <= M [|f(hat(x)) - f(tilde(x))| + |g(hat(x)) - g(tilde(x))|].
+  $
+  If $omega_i$ is the oscillation of $f g$ on $[x_(i-1), x_i]$ and
+  $omega'_i, omega''_i$ those of $f$ and $g$, this reads
+  $omega_i <= M(omega'_i + omega''_i)$, whence
+  $
+    0 <= sum_(i=1)^n omega_i Delta x_i
+    <= M (sum_(i=1)^n omega'_i Delta x_i + sum_(i=1)^n omega''_i Delta x_i)
+    -> 0 quad "as" quad lambda -> 0
+  $
+  by the second criterion.
+
+  *Monotonicity ($>=$).* It suffices to show $integral_a^b f >= 0$ for
+  $f >= 0$: every Riemann sum of a non-negative function is non-negative,
+  and the inequality survives the limit.
+
+  *Monotonicity ($>$).* By the preceding part $integral_a^b f >= 0$; it
+  remains to exclude $integral_a^b f = 0$. Suppose it vanished. Then the
+  Darboux upper sums satisfy $lim_(lambda -> 0) sum_(i=1)^n M_i Delta x_i = 0$,
+  i.e. for every $epsilon > 0$ there is $delta > 0$ with
+  $sum_(i=1)^n M_i Delta x_i < (b - a) epsilon$ for every partition with
+  $lambda < delta$; hence at least one sub-interval $[x_(i-1), x_i]$ carries
+  $0 <= M_i < epsilon$, and by additivity $integral_c^d f = 0$ for every
+  $[c, d] subset [x_(i-1), x_i]$. Inductively we construct closed intervals
+  $[a_1, b_1] supset [a_2, b_2] supset dots.c$ with $b_n - a_n < 1\/n$ and
+  $0 <= f <= 1\/n$ on $[a_n, b_n]$: at the $n$-th step apply the argument
+  above to $[a_(n-1), b_(n-1)]$ with $epsilon_n = 1\/n$ and $delta < 1\/n$.
+  The nested interval theorem yields a unique $xi$ in all of them, and
+  $0 <= f(xi) <= 1\/n$ for every $n$ forces $f(xi) = 0$, contradicting
+  $f > 0$.
+
+  *Corollary 1.* Take $x_0$ with $f(x_0) > 0$. By continuity there is
+  $[alpha, beta]$ with $x_0 in [alpha, beta] subset [a, b]$ on which
+  $f(x) >= f(x_0) / 2$. By additivity and monotonicity,
+  $
+    integral_a^b f(x) dif x >= integral_alpha^beta f(x) dif x
+    >= integral_alpha^beta f(x_0)/2 dif x = f(x_0)/2 (beta - alpha) > 0.
+  $
+
+  *Corollary 2.* Every Riemann sum is positive, so $integral_a^b f >= 0$.
+  Suppose $integral_a^b f = 0$; then $lim_(lambda -> 0) sum_(i=1)^n M_i Delta x_i = 0$
+  for the Darboux upper sums, so for every $epsilon_1 > 0$ there is a
+  partition with $sum_(i=1)^n M_i Delta x_i < epsilon_1 (b - a)$, which
+  forces $M_i < epsilon_1$ for at least one sub-interval $[a_1, b_1]$ —
+  otherwise every term would satisfy $M_i Delta x_i >= epsilon_1 Delta x_i$
+  and the sum would be $>= epsilon_1 (b - a)$. Repeating the argument inside
+  $[a_1, b_1]$ produces nested intervals $[a_n, b_n]$ with
+  $sup_(a_n <= x <= b_n) f <= epsilon_n$ and $epsilon_n -> 0$; by the nested
+  interval theorem some $xi$ belongs to all of them, and
+  $0 <= f(xi) <= epsilon_n$ for all $n$ gives $f(xi) = 0$, contradicting
+  $f > 0$.
+
+  *Integrability of $|f|$.* For any two points,
+  $||f(hat(x))| - |f(tilde(x))|| <= |f(hat(x)) - f(tilde(x))|$, so the
+  argument of the product case gives $|f| in R[a, b]$. Since
+  $-|f| <= f <= |f|$, monotonicity yields
+  $-integral_a^b |f| <= integral_a^b f <= integral_a^b |f|$, i.e.
+  $abs(integral_a^b f) <= integral_a^b |f|$.
+
+  *Additivity over intervals.* Let $f in R[a, b]$ and $c in [a, b]$. By the
+  third criterion there is a partition of $[a, b]$ with
+  $sum omega_i Delta x_i < epsilon$; inserting $c$ as an additional division
+  point (upper sums do not increase, lower sums do not decrease) we may
+  assume $c$ is one of them. Splitting the oscillation sum over $[a, c]$ and
+  over $[c, b]$ shows that each part is $< epsilon$, so $f$ is integrable on
+  both. The converse is proved by taking the common refinement of partitions
+  of $[a, c]$ and $[c, b]$. When all three integrals exist, the additivity
+  of Riemann sums passes to the limit and gives the identity.
+]
+
+#example(name: "A Positive Integral Forces a Positive Lower Bound")[
+  Let $f in R[a, b]$ with $I = integral_a^b f(x) dif x > 0$. Prove that
+  there exist $[c, d] subset [a, b]$ and $mu > 0$ such that
+  $f(x) >= mu$ on $[c, d]$.
+] <ex:positive-integral-subinterval>
+
+#proof[
+  By the order-preserving property of limits, there is a partition
+  $P: a = x_0 < x_1 < dots.c < x_n = b$ such that for every choice of
+  intermediate points $sum_(i=1)^n f(xi_i) Delta x_i > I / 2 > 0$. For this
+  fixed partition, taking the infimum over all choices of the $xi_i$ on each
+  sub-interval gives
+  $sum_(i=1)^n m_i Delta x_i >= I / 2 > 0$, where $m_i$ is the infimum of
+  $f$ on $[x_(i-1), x_i]$. Hence at least one term satisfies
+  $m_k Delta x_k > 0$, i.e. $m_k > 0$. Taking $mu = m_k$ and
+  $[c, d] = [x_(k-1), x_k]$ completes the proof.
+]
+
+#theorem(name: "Integral Mean Value Theorems")[
+  *First integral mean value theorem.* Let $f, g in R[a, b]$ with $g(x)$ of
+  constant sign on $[a, b]$. Then there exists $eta in [m, M]$ such that
+  $ integral_a^b f(x) g(x) dif x = eta integral_a^b g(x) dif x, $
+  where $m, M$ denote the infimum and supremum of $f$ on $[a, b]$,
+  respectively. In particular, if $f in C[a, b]$, then there exists
+  $xi in [a, b]$ with
+  $ integral_a^b f(x) g(x) dif x = f(xi) integral_a^b g(x) dif x. $
+  - *Corollary*: if $f in C[a, b]$, then $xi$ may be chosen in $(a, b)$.
+
+  *Second integral mean value theorem (Bonnet's formula).* Let
+  $f in R[a, b]$.
+  - If $g$ is decreasing and $g >= 0$ on $[a, b]$, then there exists
+    $xi in [a, b]$ with
+    $ integral_a^b f(x) g(x) dif x = g(a) integral_a^xi f(x) dif x. $
+  - If $g$ is increasing and $g >= 0$ on $[a, b]$, then there exists
+    $eta in [a, b]$ with
+    $ integral_a^b f(x) g(x) dif x = g(b) integral_eta^b f(x) dif x. $
+
+  In general, if $g$ is monotonic on $[a, b]$, then there exists
+  $xi in [a, b]$ with
+  $
+    integral_a^b f(x) g(x) dif x
+    = g(a) integral_a^xi f(x) dif x + g(b) integral_xi^b f(x) dif x.
+  $
+] <thm:integral-mean-value>
+
+#proof[
+  *First mean value theorem.* Since $g$ does not change sign, suppose
+  $g >= 0$ (the other case is analogous). Then
+  $m g(x) <= f(x) g(x) <= M g(x)$, and monotonicity gives
+  $
+    m integral_a^b g(x) dif x <= integral_a^b f(x) g(x) dif x
+    <= M integral_a^b g(x) dif x.
+  $
+  If $integral_a^b g > 0$, take $eta = integral_a^b f g / integral_a^b g in
+  [m, M]$; if $integral_a^b g = 0$ the inequality forces
+  $integral_a^b f g = 0$ as well and any $eta in [m, M]$ will do. When
+  $f in C[a, b]$, the intermediate value theorem provides $xi in [a, b]$
+  with $f(xi) = eta$.
+
+  *Corollary ($xi in (a, b)$).* Three situations are trivial:
+  + $integral_a^b g = 0$: then $integral_a^b f g = f(xi) integral_a^b g = 0$
+    for every $xi$, so any point of $(a, b)$ works;
+  + $M = m$: then $f$ is constant and again any $xi$ works;
+  + $eta in (m, M)$: the intermediate value theorem directly gives
+    $xi in (a, b)$ with $f(xi) = eta$.
+  Otherwise assume $g >= 0$, so that $integral_a^b g > 0$, and suppose
+  $eta = m$ (the case $eta = M$ is analogous). By
+  #link(<ex:positive-integral-subinterval>)[the auxiliary example] applied
+  to $g$, there exist $[c, d] subset [a, b]$ and $mu > 0$ with
+  $g >= mu$ on $[c, d]$. Both $f - m$ and $g$ are non-negative, and
+  $eta = m$ means $integral_a^b (f - m) g = 0$; hence
+  $
+    0 = integral_a^b (f(x) - m) g(x) dif x
+    >= integral_c^d (f(x) - m) g(x) dif x
+    >= mu integral_c^d (f(x) - m) dif x >= 0.
+  $
+  Therefore $integral_c^d (f - m) dif x = 0$ with $f - m in C[c, d]$,
+  $f - m >= 0$, so $f equiv m$ on $[c, d]$ (Corollary 1 of monotonicity).
+  Any point of $(c, d) subset (a, b)$ is then a valid choice of $xi$.
+
+  *Second mean value theorem (decreasing case).* Let
+  $P: a = x_0 < x_1 < dots.c < x_n = b$ be a partition and write
+  $
+    integral_a^b f(x) g(x) dif x
+    = sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x) dif x
+    = sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) [g(x) - g(x_i)] dif x
+    + sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x_i) dif x
+    = I_1 + I_2.
+  $
+  Since $f in R[a, b]$, it is bounded: $|f| <= L$. Since $g$ is decreasing
+  and $g >= 0$, we have $0 <= g(x_i) - g(x_(i+1))$ for every $i$ and
+  $sum_(i=0)^(n-1) omega_i^g = g(a) - g(b) =: R$ where $omega_i^g$ denotes
+  the oscillation of $g$ on $[x_i, x_(i+1)]$. With
+  $lambda = max_i Delta x_i$,
+  $
+    |I_1| <= sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) |f(x)| |g(x) - g(x_i)| dif x
+    <= L sum_(i=0)^(n-1) omega_i^g Delta x_i <= L R lambda -> 0.
+  $
+  Now set $F(x) = integral_a^x f(t) dif t$, so that
+  $integral_(x_i)^(x_(i+1)) f dif x = F(x_(i+1)) - F(x_i)$ and
+  $F(x_0) = F(a) = 0$. An Abel transform (summation by parts) gives
+  $
+    I_2 = sum_(i=0)^(n-1) g(x_i) [F(x_(i+1)) - F(x_i)]
+    = sum_(i=1)^(n-1) F(x_i) [g(x_(i-1)) - g(x_i)] + F(x_n) g(x_(n-1)).
+  $
+  Since $g$ is decreasing, $g(x_(i-1)) - g(x_i) >= 0$, and since
+  $g >= 0$ we may bound the last term by $F(x_n) g(x_(n-1)) <= M g(x_(n-1))$
+  where $m, M$ are bounds for $F$ on $[a, b]$ (which exists and is
+  continuous, hence bounded). Summing the inequalities
+  $m [g(x_(i-1)) - g(x_i)] <= F(x_i) [g(x_(i-1)) - g(x_i)] <= M [g(x_(i-1)) - g(x_i)]$
+  over $i = 1, dots.c, n-1$ and appending the last term,
+  $ m g(a) <= I_2 <= M g(a), quad "i.e." quad m <= I_2 / g(a) <= M $
+  (if $g(a) = 0$ then $g equiv 0$ and the claim is trivial). Letting
+  $lambda -> 0$ in $I = I_1 + I_2$ with $|I_1| -> 0$ yields
+  $m g(a) <= I <= M g(a)$, and by the intermediate value theorem applied to
+  the continuous function $F$, there exists $xi in [a, b]$ with
+  $F(xi) = integral_a^xi f dif x = I / g(a)$. Multiplying by $g(a)$ gives
+  $I = g(a) integral_a^xi f(x) dif x$.
+
+  The increasing case is symmetric, and the general form follows by applying
+  the decreasing case to $tilde(g)(x) = g(x) - g(b) >= 0$ (when $g$ is
+  decreasing) or $tilde(g)(x) = g(x) - g(a) >= 0$ (when $g$ is increasing)
+  and expanding.
+]
+
+#note[
+  Concerning the first integral mean value theorem:
+  - If $f in C[a, b]$ is replaced by $f in R[a, b]$, the conclusion with a
+    value $f(xi)$ fails;
+  - If $f in R[a, b]$ and $integral f(x) dif x$ exists (i.e. $f$ has an
+    antiderivative), the conclusion holds.
+]
+
+=== Integrability of Composite Functions // 复合函数的可积性
+
+#proposition(name: "Integrability of Composite Functions")[
+  - *Outer continuous, inner integrable*: if $f in R[a, b]$ with
+    $A <= f(x) <= B$ and $g in C[A, B]$, then the composite
+    $g(f(x)) in R[a, b]$.
+  - *Outer integrable, inner continuous*: the composite need not be
+    integrable.
+  - *Both inner and outer integrable*: the composite need not be integrable;
+    in fact, even when both inner and outer functions are non-integrable,
+    the composite may still be integrable.
+] <prop:composite-integrability>
+
+#proof[
+  We prove the first statement. Since $g in C[A, B]$, it is bounded, say
+  $|g| <= M$, and uniformly continuous: for every $epsilon > 0$ there is
+  $delta > 0$ with
+  $|g(u') - g(u'')| < epsilon / (2(b-a))$ whenever $u', u'' in [A, B]$,
+  $|u' - u''| < delta$. Since $f in R[a, b]$, the third criterion (in the
+  form of its Corollary 1) provides a partition $P$ with
+  $sum_(omega_i (f) >= delta) Delta x_i < epsilon / (4M)$. Splitting the
+  oscillation sum of $g dot f$,
+  $
+    sum_(i=1)^n omega_i (g dot f) Delta x_i
+    = sum_(omega_i (f) < delta) omega_i (g dot f) Delta x_i
+    + sum_(omega_i (f) >= delta) omega_i (g dot f) Delta x_i.
+  $
+  On sub-intervals with $omega_i (f) < delta$ the oscillation of $f$ is
+  below $delta$, so $omega_i (g dot f) < epsilon / (2(b-a))$; on the
+  remaining ones $omega_i (g dot f) <= 2M$. Therefore
+  $
+    sum_(i=1)^n omega_i (g dot f) Delta x_i
+    < epsilon/(2(b-a)) (b-a) + 2M dot epsilon/(4M) = epsilon,
+  $
+  and the third criterion gives $g dot f in R[a, b]$.
+
+  Alternatively, by Lebesgue's theorem: since $g$ is continuous, every
+  discontinuity of $g dot f$ is a discontinuity of $f$, so
+  $D(g dot f) subset D(f)$; the latter is a null set by integrability of
+  $f$, hence so is the former, and $g dot f$ is integrable.
+]
+
+#note(title: "Counterexamples to the Remaining Cases")[
+  - *Outer integrable, inner continuous*: let $A subset [0, 1]$ be a Cantor
+    set of positive measure with adjacent intervals $(a_i, b_i)$. Define
+    $
+      f(x) = cases(0 &, 0 <= x < 1 comma, 1 &, x = 1 comma) quad quad
+      g(x) = cases(
+        1 &, x in A comma,
+        1 - 1/2 (b_i - a_i) + abs(x - 1/2 (a_i + b_i)) &, x in (a_i, b_i) comma
+      )
+    $
+    extending $g$ by continuity onto $A$ (it satisfies a Lipschitz
+    condition). Then $f in R[0, 1]$ and $g in C[0, 1]$, yet
+    $f(g(x)) = cases(1 &, x in A comma, 0 &, "otherwise" comma)$ is
+    discontinuous at every point of $A$, and since $m(A) > 0$ the composite
+    is not integrable.
+  - *Both integrable, composite not*: on $[0, 1]$ take the Riemann function
+    $f$ and $g(y) = cases(1 &, 0 < y <= 1 comma, 0 &, y = 0 comma)$; both
+    are integrable, but $g(f(x))$ equals the Dirichlet function, which is
+    not integrable.
+  - *Both non-integrable, composite integrable*: for two Dirichlet
+    functions $f, g$, the composite $g(f(x)) equiv 0$ is integrable.
+]
+
+#example(name: "Continuity of the Integral under Translations")[
+  Let $f in R[a - h_0, b + h_0]$ for some $h_0 > 0$. Prove that
+  $ lim_(h -> 0) integral_a^b abs(f(x + h) - f(x)) dif x = 0. $
+] <ex:translation-continuity>
+
+#proof[
+  Since $f$ is integrable on a larger interval, it is bounded there: say
+  $|f| <= M$ on $[a - h_0, b + h_0]$. Given $epsilon > 0$, split $[a, b]$
+  into $n$ equal sub-intervals of length $Delta x = (b-a)/n$ with $n$ so
+  large that $Delta x < min(h_0, epsilon / (8M))$ and
+  $sum_(i=1)^n omega_i Delta x < epsilon / 6$, which is possible by the
+  second criterion. Denote by $omega_0$ and $omega_(n+1)$ the oscillations
+  of $f$ on $[a - Delta x, a]$ and $[b, b + Delta x]$; both are at most
+  $2M$. Since
+  $
+    integral_a^b abs(f(x+h) - f(x)) dif x
+    = sum_(i=1)^n integral_(x_(i-1))^(x_i) abs(f(x+h) - f(x)) dif x,
+  $
+  and for $x in [x_(i-1), x_i]$ with $|h| < Delta x$ the point $x + h$ lies
+  in $[x_(i-2), x_(i+1)]$, we have
+  $abs(f(x+h) - f(x)) <= omega_(i-1) + omega_i + omega_(i+1)$, where
+  $x_(-1) = a - Delta x$ and $x_(n+1) = b + Delta x$. Hence
+  $
+    integral_a^b abs(f(x+h) - f(x)) dif x
+    <= sum_(i=1)^n [integral_(x_(i-1))^(x_i) abs(f(x+h) - f(x_(i))) dif x
+      + integral_(x_(i-1))^(x_i) abs(f(x_i) - f(x)) dif x]
+    <= Delta x sum_(i=1)^n (omega_(i-1) + omega_i + omega_(i+1))
+    + Delta x sum_(i=1)^n omega_i
+    <= 4 sum_(i=1)^n omega_i Delta x + (omega_0 + omega_(n+1)) Delta x
+    < 4 dot epsilon/6 + 4M dot epsilon/(8M) < epsilon.
+  $
+  This proves the claim.
+]
+
+== Fundamental Theorem of Calculus // 微积分基本定理
+
+=== Newton-Leibniz Formula // Newton-Leibniz公式
+
+Having established the integrability theory, we now turn to the bridge
+between differential and integral calculus.
+
+#definition(name: "Variable Limit Integrals")[
+  Let $f(x) in R[a, b]$. Define
+  $
+    F(x) = integral_a^x f(t) dif t quad quad "and" quad quad
+    F(x) = integral_x^b f(t) dif t,
+  $
+  which are referred to as the *variable upper limit integral* and the
+  *variable lower limit integral*, respectively.
+] <def:variable-limit-integrals>
+
+#proposition(name: "Properties of Variable Limit Integrals")[
+  1. *Continuity of the primitive*: $F in C[a, b]$. In fact the variable
+    upper limit integral satisfies a Lipschitz condition on $[a, b]$ and is
+    therefore uniformly continuous on the closed interval.
+  2. (*Fundamental theorem of calculus*) Let $x_0 in [a, b]$ be a point at
+    which $f(x)$ is continuous. Then
+    $ F'(x_0) = f(x_0). $
+  3. (*Existence of primitives*) If $f in C[a, b]$, then $F in D[a, b]$ and
+    $F'(x) = f(x)$.
+  4. *Rule of derivation*: if
+    $F(x) = integral_(u(x))^(v(x)) f(t) dif t$ with $u, v$ differentiable,
+    then
+    $ F'(x) = f(v(x)) v'(x) - f(u(x)) u'(x). $
+    In fact, this formula is the simplified version of *Leibniz's rule*.
+] <prop:variable-limit-integrals>
+
+#proof[
+  1. By additivity over intervals, for $x, x + Delta x in [a, b]$,
+    $
+      F(x + Delta x) - F(x) = integral_x^(x + Delta x) f(t) dif t,
+    $
+    so, with $M, m$ the supremum and infimum of $f$ on $[a, b]$,
+    $abs(F(x + Delta x) - F(x)) <= max(abs(m), M) abs(Delta x)$: the
+    variable upper limit integral satisfies a Lipschitz condition, hence is
+    continuous (in fact uniformly continuous) on $[a, b]$.
+  2. By statement 1, $F(x_0 + h) - F(x_0) = integral_(x_0)^(x_0 + h) f(t) dif t$,
+    so for $h != 0$,
+    $
+      (F(x_0 + h) - F(x_0)) / h - f(x_0)
+      = 1/h integral_(x_0)^(x_0 + h) [f(t) - f(x_0)] dif t.
+    $
+    Since $f$ is continuous at $x_0$, for every $epsilon > 0$ there exists
+    $delta > 0$ such that $|f(t) - f(x_0)| < epsilon$ whenever
+    $|t - x_0| < delta$. For $0 < abs(h) < delta$ every $t$ between $x_0$
+    and $x_0 + h$ satisfies $|t - x_0| <= abs(h) < delta$, hence
+    $
+      abs((F(x_0 + h) - F(x_0)) / h - f(x_0))
+      <= 1/(abs(h)) integral_(x_0)^(x_0 + h) abs(f(t) - f(x_0)) dif t
+      <= 1/(abs(h)) dot epsilon abs(h) = epsilon,
+    $
+    i.e. $F'(x_0) = lim_(h -> 0) (F(x_0 + h) - F(x_0)) / h = f(x_0)$.
+  3. Immediate from statement 2: a function continuous on $[a, b]$ is
+    continuous at every point, so $F' = f$ holds at every point of
+    $[a, b]$.
+  4. Fix $c in [a, b]$ and write
+    $ F(x) = integral_c^(v(x)) f(t) dif t - integral_c^(u(x)) f(t) dif t. $
+    At every point $x$ where $f$ is continuous at $u(x)$ and $v(x)$, the
+    chain rule together with statement 2 makes the derivative of the first
+    term equal to $f(v(x)) v'(x)$ and that of the second equal to
+    $f(u(x)) u'(x)$; subtracting yields the rule. In particular the rule
+    holds throughout when $f in C[a, b]$.
+]
+
+#note[
+  Differentiation lowers the smoothness of a function (a primitive is
+  differentiable, yet its derivative may have discontinuities of the second
+  kind), whereas integration improves smoothness.
+]
+
+#note(title: "The Riemann Function has no Primitive")[
+  The variable upper limit integral of the Riemann function is identically
+  zero, hence is not a primitive of it. Indeed, every discontinuity of the
+  Riemann function is removable, while a function possessing a primitive has
+  the intermediate value property (Darboux property), and a function with
+  the Darboux property cannot have removable or jump discontinuities.
+  Therefore the Riemann function has no primitive.
+]
+
+#note[
+  If an integrable function possesses a primitive, then every primitive
+  differs from the variable upper limit integral only by a constant: the
+  difference of the two is continuous by statement 1 and has zero
+  derivative at every continuity point of $f$, and the continuity points
+  form a dense set.
+]
+
+#example(name: "Integrable and Discontinuous, yet with a Primitive")[
+  On $[-1, 1]$ let
+  $
+    f(x) = cases(sin(1/x) &, x != 0 comma, 0 &, x = 0 comma) quad quad
+    g(x) = cases(x^2 cos(1/x) &, x != 0 comma, 0 &, x = 0 comma) quad quad
+    phi(x) = cases(2x cos(1/x) &, x != 0 comma, 0 &, x = 0 comma).
+  $
+  Although $f$ has a discontinuity at $x = 0$, it possesses the primitive
+  $ F(x) = g(x) - integral_0^x phi(t) dif t. $
+] <ex:antiderivative-of-discontinuous>
+
+#proof[
+  For $x != 0$ we have $g'(x) = 2x cos(1/x) + sin(1/x) = phi(x) + f(x)$,
+  hence $F'(x) = g'(x) - phi(x) = f(x)$. At the origin, $F(0) = 0$ and, as
+  $h -> 0$,
+  $
+    abs(g(h) / h) = abs(h cos(1/h)) -> 0, quad
+    abs(1/h integral_0^h phi(t) dif t)
+    <= 1/(abs(h)) integral_0^(abs(h)) 2t dif t = abs(h) -> 0,
+  $
+  so $F'(0) = lim_(h -> 0) F(h) / h = 0 = f(0)$. Thus $F' = f$ on all of
+  $[-1, 1]$ even though $f$ is discontinuous (of oscillation type) at the
+  origin; $f$ is nevertheless integrable there, having only one
+  discontinuity.
+]
+
+#example(name: "A Derivative that is Not Integrable")[
+  Let
+  $
+    f(x) = cases(x^2 sin(1/x^2) &, x != 0 comma, 0 &, x = 0 comma) quad
+    "on" quad [-1, 1].
+  $
+  Then $f$ has a finite derivative at every point of $[-1, 1]$, namely
+  $
+    f'(x) = cases(
+      2x sin(1/x^2) - (2/x) cos(1/x^2) &, x != 0 comma,
+      0 &, x = 0 comma
+    ),
+  $
+  yet $f'$ is unbounded on $[-1, 1]$, and hence not Riemann integrable
+  there.
+] <ex:nonintegrable-derivative>
+
+#proof[
+  For $x != 0$ the chain rule gives
+  $f'(x) = 2x sin(1/x^2) - (2/x) cos(1/x^2)$, and
+  $f'(0) = lim_(h -> 0) (h^2 sin(1/h^2)) / h = lim_(h -> 0) h sin(1/h^2) = 0$.
+  Take $x_k = 1 / sqrt(2k pi)$, so that $1/(x_k^2) = 2k pi$ and
+  $cos(1/x_k^2) = 1$; then
+  $ f'(x_k) = 2x_k sin(2k pi) - 2/x_k = -2 sqrt(2k pi) -> -oo quad (k -> oo), $
+  so $f'$ is unbounded, and an unbounded function is never Riemann
+  integrable.
+]
+
+#note[
+  *A bounded function with a primitive that is not integrable.* Volterra
+  constructed a differentiable function whose derivative is bounded but not
+  Riemann integrable: the derivative is discontinuous on a set of positive
+  measure (a "fat" Cantor set), cf. Lebesgue's theorem. Together with the
+  two examples above this shows that integrability of a function and the
+  existence of a primitive imply neither the one nor the other.
+]
+
+#theorem(name: "Newton-Leibniz Formula")[
+  Let $f in C[a, b]$ and let $F(x)$ be a primitive of $f$ on $[a, b]$. Then
+  $ integral_a^b f(x) dif x = F(b) - F(a). $
+
+  *Generalized Newton-Leibniz formula.* Let $f in R[a, b]$, $F in C[a, b]$,
+  and let $F'(x) = f(x)$ hold except at finitely many points. Then again
+  $ integral_a^b f(x) dif x = F(b) - F(a). $
+] <thm:newton-leibniz>
+
+#proof[
+  For the first statement: the variable upper limit integral and $F$ are
+  both primitives of $f$ (the former by statement 3 of
+  #link(<prop:variable-limit-integrals>)[the properties of variable limit
+    integrals]), so they differ by a constant:
+  $integral_a^x f(t) dif t = F(x) + C$. Setting $x = a$ yields
+  $C = -F(a)$; setting $x = b$ then gives
+  $integral_a^b f(x) dif x = F(b) - F(a)$.
+
+  For the generalized statement: take a partition
+  $P: a = x_0 < x_1 < dots.c < x_n = b$ whose division points contain the
+  finitely many points where $F'(x) != f(x)$. On each closed interval
+  $[x_(i-1), x_i]$ the function $F$ is continuous, and on the open interval
+  it is differentiable with $F' = f$ there; by Lagrange's mean value
+  theorem there exists $xi_i in (x_(i-1), x_i)$ such that
+  $ F(x_i) - F(x_(i-1)) = F'(xi_i)(x_i - x_(i-1)) = f(xi_i) Delta x_i. $
+  Summation over $i$ gives
+  $F(b) - F(a) = sum_(i=1)^n f(xi_i) Delta x_i$. Letting
+  $lambda = max_(1 <= i <= n) (Delta x_i) -> 0$, the Riemann sums converge
+  to the integral, whence $integral_a^b f(x) dif x = F(b) - F(a)$.
+]
+
+#example(name: "Limit of a Difference Quotient of Integrals")[
+  Let $f in R[A, B]$, and let $a, b in (A, B)$ be two continuity points of
+  $f$. Prove that
+  $ lim_(h -> 0) integral_a^b (f(x + h) - f(x)) / h dif x = f(b) - f(a). $
+] <ex:difference-quotient-limit>
+
+#proof[
+  For $|h|$ small enough $[a + h, b + h] subset (A, B)$, so $f$ is
+  integrable on $[a + h, b + h]$ by additivity over intervals. Substituting
+  $u = x + h$ in the first integral,
+  $
+    integral_a^b (f(x + h) - f(x)) / h dif x
+    = 1/h (integral_(a + h)^(b + h) f(u) dif u - integral_a^b f(x) dif x).
+  $
+  Additivity over intervals rewrites the bracket as
+  $
+    integral_b^(b + h) f(x) dif x - integral_a^(a + h) f(x) dif x.
+  $
+  Since $a$ and $b$ are continuity points of $f$, statement 2 of
+  #link(<prop:variable-limit-integrals>)[the fundamental theorem of
+    calculus] gives
+  $lim_(h -> 0) 1/h integral_a^(a + h) f(x) dif x = f(a)$ and
+  $lim_(h -> 0) 1/h integral_b^(b + h) f(x) dif x = f(b)$ (the same
+  two-sided limit for $h < 0$), whence
+  $lim_(h -> 0) integral_a^b (f(x + h) - f(x)) / h dif x = f(b) - f(a)$.
+]
+
+#example(name: "Integrability Criterion for Derivatives")[
+  Let $F'(x)$ exist at every point of $[a, b]$. Then
+  $ F' in R[a, b] <=> exists g in R[a, b]: F(x) - F(a) = integral_a^x g(t) dif t. $
+] <ex:derivative-integrability>
+
+#proof[
+  (*Necessity.*) If $F' in R[a, b]$, take $g = F'$. For any partition
+  $a = x_0 < x_1 < dots.c < x_n = x$ of $[a, x]$, Lagrange's mean value
+  theorem provides $xi_i in (x_(i-1), x_i)$ with
+  $F(x_i) - F(x_(i-1)) = F'(xi_i) Delta x_i$, so
+  $F(x) - F(a) = sum_(i=1)^n F'(xi_i) Delta x_i$ is a Riemann sum of $F'$;
+  since $F'$ is integrable, letting the mesh tend to zero yields
+  $F(x) - F(a) = integral_a^x F'(t) dif t$.
+
+  (*Sufficiency.*) Suppose $g in R[a, b]$ with
+  $F(x) - F(a) = integral_a^x g(t) dif t$. Take a partition
+  $P: a = x_0 < x_1 < dots.c < x_n = b$ and denote
+  $m_i^g = inf \{g(x) | x in [x_(i-1), x_i]\}$,
+  $M_i^g = sup \{g(x) | x in [x_(i-1), x_i]\}$, and
+  $omega_i^g = M_i^g - m_i^g$. For $x, x + Delta x in [x_(i-1), x_i]$ with
+  $Delta x != 0$,
+  $
+    (F(x + Delta x) - F(x)) / (Delta x)
+    = 1/(Delta x) integral_x^(x + Delta x) g(t) dif t,
+  $
+  and since $m_i^g <= g(x) <= M_i^g$ on this sub-interval,
+  $m_i^g <= (F(x + Delta x) - F(x)) / (Delta x) <= M_i^g$. Letting
+  $Delta x -> 0$ yields $m_i^g <= F'(x) <= M_i^g$ for every
+  $x in [x_(i-1), x_i]$. Hence the oscillation of $F'$ on
+  $[x_(i-1), x_i]$ satisfies
+  $omega_i^(F') <= M_i^g - m_i^g = omega_i^g$, and therefore
+  $
+    0 <= sum_(i=1)^n omega_i^(F') Delta x_i <= sum_(i=1)^n omega_i^g Delta x_i.
+  $
+  Since $g in R[a, b]$, the right-hand side can be made smaller than
+  $epsilon$ for a suitable partition by the third criterion, and the same
+  partition makes the left-hand side smaller than $epsilon$; by the third
+  criterion again, $F' in R[a, b]$.
+]
+
+=== Common Questions concerning Integrals // 关于积分的常见问题
+
+#note[
+  Problems concerning integrals fall into the following categories.
+  - *A. Estimation of integral values*
+    - A1: estimating the value of an integral by means of Darboux sums;
+    - A2: estimates via transformations and their applications (variable
+      substitution, integration by parts, squeezing the integrand or the
+      interval of integration, differential mean value theorems, Taylor
+      formula).
+  - *B. Integral inequalities*
+    - B1: proving integral inequalities by differential methods;
+    - B2: proving integral inequalities via inequalities between the
+      integrands;
+    - B3: integrating an inequality (variable limit integrals).
+  - *C. Miscellaneous*
+    - C1: comprehensive problems;
+    - C2: solving functional equations by means of integrals;
+    - C3: integral properties of convex functions.
+  - *D. Technical tricks*
+    - D1: monotonicity;
+    - D2: symmetry;
+    - D3: differentiating so as to obtain a differential equation;
+    - D4: extremal principle;
+    - D5: zeros of the integrand;
+    - D6: logarithmic derivatives.
+]
 
 // --- Part III: 无穷级数 ---
 #part("Infinite Series") // 无穷级数
