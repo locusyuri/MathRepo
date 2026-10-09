@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B12a ch12 §1–3 迁移完成）
+> 最后更新：2026-10-10（B12b ch12 §4–5 迁移完成）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -258,7 +258,11 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - §12.3：向量值函数三点定义（enum）+ 统一陈述（连续/可微/有导数 ⟺ 各分量）
   - 修正 tex 问题（均留 `//` 注）：L40 单位向量分解式笔误（`e_i = sum e_i cos alpha_i` → `e = sum_(i=1)^n bold(e)_i cos alpha_i`）；L381 "偏导存在 ⇒ 可微" 数学错误改为"一阶偏导数均存在"；footnote×2（模板不支持）转 note/正文
   - 符号坑（Typst 0.15.1）：`angle.l/r` 不可用（unknown symbol modifier），内积尖括号用 `<< >>`；`grad` 非合法符号，∇ 写 `nabla`、文字形式写 `"grad" f`；`Jf` 连写被解析为未知变量，须写 `J f`（渲染仍紧排）；`f_m(` 触发下标吞括号，须写 `f_(m)(`
-- [ ] **B12b = ch12 §4–5**（约 250 行）：Chain Rule / Mean Value Theorem and Taylor's Formula
+- [x] **B12b = ch12 §4–5**（约 250 行）：Chain Rule / Mean Value Theorem and Taylor's Formula（✅ 2026-10-10，编译退出码 0，三正则命中 0）
+  - §12.4：链式法则定理 `<thm:chain-rule>`（tex 无环境，升级为 theorem 块）+ note 两记忆条目、z = f[x(u,v), y(u,v)] 特例矩阵公式、行列式求导定理 `<thm:determinant-differentiation>`（mat(delim: "|")）、齐次函数 proposition 四条 `<prop:homogeneous-functions>`、Euler 方程例题 `<ex:euler-equation-degree-zero>`
+  - §12.5：凸区域定义 `<def:convex-region>`、多元 Lagrange 中值定理 `<thm:multivariable-lagrange-mvt>`、映射版 Lagrange MVT `<thm:lagrange-mvt-mappings>`（附圆周反例 note）、拟微分中值定理 `<thm:quasi-differential-mvt>` + 零梯度常值推论、多元 Taylor 公式 `<thm:multivariable-taylor-formula>`（Lagrange/Peano 余项两 item）+ Hessian 矩阵（mat(delim: "[")）
+  - 修正 tex 问题（均留 `//` 注）：L546 算子式漏平方已补；L560 例题 "always constant" 不真改为"沿射线为常值（零次齐次）"且 df/dx 改偏导；L604 端点与方向向量记号冲突（a→c）；空 proof×4（L493/L592/L651 链式法则、多元 Lagrange MVT、零梯度推论）不编造
+  - 新符号验证：`compose`（∘）、`backslash`（集合差，裸 `\` 是换行符）、`->^(label)` 箭头带标签、`mat(delim: "[|")`、`product`（∏）、`equiv.not` 可用（本批以 `!= 0` 表意更直白）
 - [ ] **B12c = ch12 §6**（约 370 行）：Implicit Function Theorem（长证明，单独成批）
 - [ ] **B12d = ch12 §7**（约 300 行）：Extremum of Multi-variable Functions（含 Lagrange 乘子）
 - [ ] **B13a = ch13 §1–2**（约 270 行）：Multiple Integrals on Bounded Closed Regions / Properties
