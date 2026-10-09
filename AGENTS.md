@@ -25,4 +25,4 @@ typst compile "<subject>/initial.typ" "<subject>/initial.pdf" --root .
 - 组件：`#theorem/#corollary/#lemma`（红）、`#definition/#property`（绿）、`#proposition/#example`（蓝）、`#axiom/#postulate`（紫）、`#proof/#solution`、`#note/#caution`、`#exercise`。
 - 标签用 `<def:xxx>`、`<thm:xxx>` 等格式，交叉引用用 `@label`。
 - 修改保持局部化，只动当前 subject 的 `initial.typ`。
-- 技能见 `.agents/skills/`（`.github/skills/` 为同源镜像）；写作规范查 `typst-writing-conventions`，目录规划查 `design-note`/`make-outline`。
+- 技能见 `.agents/skills/`（均带 `violet-` 前缀，`.github/skills/` 为同源镜像）；写作规范查 `violet-typst-writing-conventions`，目录规划查 `violet-design-note`/`violet-make-outline`。

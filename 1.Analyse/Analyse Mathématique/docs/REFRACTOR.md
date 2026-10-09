@@ -3,7 +3,7 @@
 > 创建日期：2026-10-09
 > 最后更新：2026-10-09（新增 §3.5 md 前身笔记对照与内容回收清单）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
-> 技能依据：`latex-to-typst`（迁移）、`design-note`（目录体检）、`make-outline`（补全大纲）、`typst-writing-conventions`（写作规范）
+> 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
 ---
 
@@ -45,7 +45,7 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   迁移时顺带做"低成本修复"（空节删除/改名、章名对齐）
         ↓
 阶段 C：内容补全（随各章迁移完成后触发）
-  P0 硬伤补全需先按 make-outline 出大纲，经确认后写入
+  P0 硬伤补全需先按 violet-make-outline 出大纲，经确认后写入
         ↓
 收尾：附录 Glossary、死文件清理、全书终检
 ```
@@ -67,7 +67,7 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 | 编号 | 级别 | 位置 | 问题 | 处理时机 |
 |------|------|------|------|---------|
-| P0-1 | 🔴 | ch11 | 章题含 "Limits" 但全章仅 1 节（Continuous Mappings），极限内容与 $\mathbb{R}^n$ 拓扑铺垫完全缺失，标题与内容不符 | B11 批迁移后，按 `make-outline` 出大纲补全 |
+| P0-1 | 🔴 | ch11 | 章题含 "Limits" 但全章仅 1 节（Continuous Mappings），极限内容与 $\mathbb{R}^n$ 拓扑铺垫完全缺失，标题与内容不符 | B11 批迁移后，按 `violet-make-outline` 出大纲补全 |
 | P0-2 | 🔴 | ch03 §2、§3 | Continuous Functions / Infinitesimal and Infinite Quantities 为空节；§4 中 Bolzano-Cauchy、零点定理为环境空壳 | B3 批迁移时处理：空壳补内容或合并节，内容可取自 md（§3.5 R3） |
 | P0-3 | 🔴 | ch14 §Oriented Surface | 空节，且定向是 ch15 第二型曲面积分的必要前置，缺口向下游传导 | B14 批迁移后补全 |
 | P0-4 | 🔴 | ch10 §1 | Power Series and Its Convergence Radius **为空节**（收敛半径、Abel 定理、幂级数性质全缺），md 有完整内容 | B10 批迁移时从 md 回收（§3.5 R7） |
@@ -79,7 +79,7 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 | P1-5 | 🟠 | ch08 §4、§7 | 绝对/条件收敛仅有定义（约 8 行），md 有正负导出级数、Riemann 重排定理、级数乘法；Special Series 缺超几何级数 | B8 批迁移时从 md 回收（§3.5 R6） |
 | P1-6 | 🟠 | ch07 | 缺 Cauchy 主值（md 有定义与讨论），"其它问题"（md 反常积分末节）tex 未吸收 | B7 批迁移时从 md 回收（§3.5 R4） |
 | P2-1 | 🟡 | 全书 | Part IV 过重（6 章）：ch11–13 为多元微积分本体，ch14–16 为几何应用+高级积分 | ✅ 已决策：拆出第五 Part，**B0 骨架时直接按 5 Part 创建**（省去后期重构） |
-| P2-2 | 🟡 | 附录 | Glossary 仅 A–Q 且仅 1 条术语 | 收尾阶段用 `glossary-indexer` 重建 |
+| P2-2 | 🟡 | 附录 | Glossary 仅 A–Q 且仅 1 条术语 | 收尾阶段用 `violet-glossary-indexer` 重建 |
 | P2-3 | 🟡 | 全书 | `secnumdepth=2` 但全书无 `\subsection`，大章内部粒度偏粗 | 迁移时不引入 `===`，维持现状 |
 | P2-4 | 🟡 | 章文件 | `chapters/chap17.tex`、`chap18.tex` 为空且未被引用 | 迁移收尾时删除（.tex 存档原则的例外，属死文件） |
 
@@ -195,7 +195,7 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 - [ ] **B11 = ch11 Euclidean Spaces**（26 行 / 1 节，⚠ P0-1）
   - [ ] §11.1 Continuous Mappings（按现状迁移）
-  - [ ] 🔧 P0-1 补全：`make-outline` 出大纲（$\mathbb{R}^n$ 拓扑 / 多元极限 / 连续函数性质）→ 确认 → 写入
+  - [ ] 🔧 P0-1 补全：`violet-make-outline` 出大纲（$\mathbb{R}^n$ 拓扑 / 多元极限 / 连续函数性质）→ 确认 → 写入
 - [ ] **B12a = ch12 §1–3**（约 440 行）：Directional Derivatives / Higher-Order Partial Derivatives / Differential of Vector-Valued Functions
 - [ ] **B12b = ch12 §4–5**（约 250 行）：Chain Rule / Mean Value Theorem and Taylor's Formula
 - [ ] **B12c = ch12 §6**（约 370 行）：Implicit Function Theorem（长证明，单独成批）
@@ -223,7 +223,7 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 ### 收尾
 
-- [ ] **B17 附录**：Glossary 重建（`glossary-indexer`）、参考文献终检、P2 决策项执行
+- [ ] **B17 附录**：Glossary 重建（`violet-glossary-indexer`）、参考文献终检、P2 决策项执行
 - [ ] 删除死文件 `chap17.tex`/`chap18.tex`（P2-4）
 - [ ] 全书终检：迁移检查清单（§6）逐项过 + 全量编译 + 提交
 
@@ -233,7 +233,7 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 ```bash
 # 1. 脚本预转换（输出到 tmp/ 草稿，不直接写 initial.typ）
-bun .agents/skills/latex-to-typst/scripts/migrate.js \
+bun .agents/skills/violet-latex-to-typst/scripts/migrate.js \
   "1.Analyse/Analyse Mathématique/chapters/chapNN.tex" \
   "1.Analyse/Analyse Mathématique/tmp/chapNN_draft.typ"
 
@@ -285,7 +285,7 @@ md 回收流程（批次含 🔧 R 任务时追加执行）：
 1. 不删除原始 `.tex` 与三份 `.md`（仅 P2-4 死文件例外）
 2. 不改动 `TypstTemplate/math-notes.typ` 公共接口
 3. 正文不允许中文（中文仅限 `//` 注释与本计划文档）
-4. 遵循 `typst-writing-conventions` / `template-usage` / `typst-edit-consistency` / `typst-compile` 四技能
+4. 遵循 `violet-typst-writing-conventions` / `violet-template-usage` / `violet-typst-edit-consistency` / `violet-typst-compile` 四技能
 5. 一节一节推进，小步编译，**不做大批量盲转**
-6. P0 内容补全必须先 `make-outline` 出大纲、经确认后写入，不凭空造内容
+6. P0 内容补全必须先 `violet-make-outline` 出大纲、经确认后写入，不凭空造内容
 7. 每批完成自动 git 提交（中文 Conventional Commits，只提交本任务改动）
