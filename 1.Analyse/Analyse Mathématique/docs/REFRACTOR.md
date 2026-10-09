@@ -1,6 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
+> 最后更新：2026-10-09（新增 §3.5 md 前身笔记对照与内容回收清单）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`latex-to-typst`（迁移）、`design-note`（目录体检）、`make-outline`（补全大纲）、`typst-writing-conventions`（写作规范）
 
@@ -11,10 +12,11 @@
 | 项目 | 值 |
 |------|-----|
 | 源文件 | `initial.tex` + `chapters/chap01–chap16.tex`（约 4860 行，74 节，15 张图） |
+| 内容回收源 | `docs/极限与连续.md`（约 1960 行）、`docs/微分与积分.md`（约 2400 行）、`docs/级数.md`（约 1300 行）——md 为 tex 之前的前身笔记，**部分内容 tex 未吸收**，对照清单见 §3.5 |
 | 目标 | 单文件 `initial.typ`（仓库惯例，模板 `../../TypstTemplate/math-notes.typ`） |
 | 迁移粒度 | **一节一节推进**，每 1–2 节编译一次（退出码 0 为通过） |
-| 原始文件 | 全部保留 `.tex` 作为存档，不删除 |
-| 附带任务 | 迁移过程中并行修复 §3 中的目录结构问题 |
+| 原始文件 | `.tex` 与 `.md` 全部保留作为存档，不删除 |
+| 附带任务 | 迁移过程中并行修复 §3 中的目录结构问题，并按 §3.5 回收 md 独有内容 |
 
 规模速查（行数 / 节数）：
 
@@ -66,11 +68,16 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 | 编号 | 级别 | 位置 | 问题 | 处理时机 |
 |------|------|------|------|---------|
 | P0-1 | 🔴 | ch11 | 章题含 "Limits" 但全章仅 1 节（Continuous Mappings），极限内容与 $\mathbb{R}^n$ 拓扑铺垫完全缺失，标题与内容不符 | B11 批迁移后，按 `make-outline` 出大纲补全 |
-| P0-2 | 🔴 | ch03 §2、§3 | Continuous Functions / Infinitesimal and Infinite Quantities 为空节；§4 中 Bolzano-Cauchy、零点定理为环境空壳 | B3 批迁移时处理：空壳补内容或合并节 |
+| P0-2 | 🔴 | ch03 §2、§3 | Continuous Functions / Infinitesimal and Infinite Quantities 为空节；§4 中 Bolzano-Cauchy、零点定理为环境空壳 | B3 批迁移时处理：空壳补内容或合并节，内容可取自 md（§3.5 R3） |
 | P0-3 | 🔴 | ch14 §Oriented Surface | 空节，且定向是 ch15 第二型曲面积分的必要前置，缺口向下游传导 | B14 批迁移后补全 |
-| P1-1 | 🟠 | ch05 | 全章仅 1 节（换元+分部），与 ch4/ch6 的 7 节体量失衡；有理函数积分、三角替换等缺位 | B5 批迁移后评估是否扩充 |
+| P0-4 | 🔴 | ch10 §1 | Power Series and Its Convergence Radius **为空节**（收敛半径、Abel 定理、幂级数性质全缺），md 有完整内容 | B10 批迁移时从 md 回收（§3.5 R7） |
+| P0-5 | 🔴 | ch02 §2.3–2.4 | Subsequences 的上下极限、Completeness 的 Dedekind/确界/单调/Bolzano-Weierstrass/区间套/Heine-Borel 全为**空壳 leftbarTitle**（仅 Cauchy 完备性有内容），md 有完整证明与等价命题互证框架 | B2 批迁移时从 md 回收（§3.5 R2） |
+| P1-1 | 🟠 | ch05 | 全章仅 1 节（换元+分部），与 ch4/ch6 的 7 节体量失衡；md 有"几类可积函数"（有理函数、三角有理式、无理函数积分） | B5 批迁移时从 md 回收扩充（§3.5 R5） |
 | P1-2 | 🟠 | ch14 | 章题 "Introduction to Surface Theory" 但混入曲线内容（弧长、曲率），且 Preface 声称的 "curve theory" 无独立章；无 Frenet 标架 | ✅ 已决策：改章名为 "Introduction to Curve and Surface Theory"，B14 批执行 |
 | P1-3 | 🟠 | ch14 §Bounded Variation | $BV[a,b]$ 为一元实函数/调和分析内容，置于曲面论章末逻辑脱节 | ✅ 已决策：原位保留作导论，加指向 Analyse Harmonique 的文字交叉引用，B14b 批执行 |
+| P1-4 | 🟠 | ch01 §2 | Common Inequalities 仅 1 条不等式，md 有完整专题（平均值、Bernoulli、三角、Cauchy-Schwarz、Fan Ky 及例题） | B1 批迁移时从 md 回收（§3.5 R1） |
+| P1-5 | 🟠 | ch08 §4、§7 | 绝对/条件收敛仅有定义（约 8 行），md 有正负导出级数、Riemann 重排定理、级数乘法；Special Series 缺超几何级数 | B8 批迁移时从 md 回收（§3.5 R6） |
+| P1-6 | 🟠 | ch07 | 缺 Cauchy 主值（md 有定义与讨论），"其它问题"（md 反常积分末节）tex 未吸收 | B7 批迁移时从 md 回收（§3.5 R4） |
 | P2-1 | 🟡 | 全书 | Part IV 过重（6 章）：ch11–13 为多元微积分本体，ch14–16 为几何应用+高级积分 | ✅ 已决策：拆出第五 Part，**B0 骨架时直接按 5 Part 创建**（省去后期重构） |
 | P2-2 | 🟡 | 附录 | Glossary 仅 A–Q 且仅 1 条术语 | 收尾阶段用 `glossary-indexer` 重建 |
 | P2-3 | 🟡 | 全书 | `secnumdepth=2` 但全书无 `\subsection`，大章内部粒度偏粗 | 迁移时不引入 `===`，维持现状 |
@@ -92,6 +99,31 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 - **②（P1-3）有界变差去留** → **保留 + 交叉引用**：原位保留作导论，加指向 Analyse Harmonique 的文字交叉引用。
 - **③（P2-1）Part IV 拆分** → **拆出第五 Part**：Part IV = 多元微积分本体（ch11–13），Part V = 几何应用与高级积分（ch14–16）。B0 骨架直接按 5 Part 创建。
 
+### 3.5 md 前身笔记对照与内容回收清单
+
+> 三份 md 是改用 tex 之前的原始笔记，tex 未完全吸收其内容。迁移时**以 tex 为主线**，
+> 遇到下表条目时回到 md 取材，转换为 Typst 组件后并入对应批次。
+> md 使用中文正文 + 外链图片（aliyuncs OSS），回收时须翻译为英文正文（中文仅留 `//` 注释），
+> 外链图片不可用，需要的按项目图片工作流用 Python 脚本重新生成，或以文字/公式替代。
+
+| 编号 | md 来源 | md 内容（含大致行号） | tex 现状 | 回收目标批次 |
+|------|---------|----------------------|---------|-------------|
+| R1 | 极限与连续.md L78–260 | 不等式专题：平均值不等式、Bernoulli、三角不等式、Cauchy-Schwarz、Fan Ky 及例题证明 | ch01 §2 仅 1 条 ln 不等式（P1-4） | B1（ch01） |
+| R2 | 极限与连续.md L579–1120 | 收敛准则与实数连续性：上下极限、单调有界、闭区间套、**凝聚原理**、Cauchy 收敛原理、Dedekind 分割、确界原理、**有限覆盖原理**、连续性⇔完备性等价互证框架 | ch02 大量空壳 leftbarTitle（P0-5）；凝聚原理 tex 未见 | B2（ch02） |
+| R3 | 极限与连续.md L1126–1860 | 函数极限与连续性：单侧/广义极限、无穷小（含**等价无穷小替换规则与注意事项**）、闭区间连续函数定理、一致连续专题（Lipschitz、开区间端点判别、$[a,+\infty)$ 判别法、反例集） | ch03 §2/§3 空节、§4 空壳（P0-2）；一致连续 tex 有基础版 | B3（ch03） |
+| R4 | 微分与积分.md L2143–2400 | 反常积分：**Cauchy 主值**定义与讨论、"其它问题"小节 | ch07 未吸收（P1-6） | B7（ch07） |
+| R5 | 微分与积分.md L1089–1195 | 不定积分扩充：基本积分表、**几类可积函数**（有理函数、三角有理式、无理函数积分） | ch05 仅换元+分部（P1-1） | B5（ch05） |
+| R6 | 级数.md L307–508 | 绝对收敛扩展：正负导出级数、**Riemann 重排定理**、级数乘法；特殊级数含**超几何级数** | ch08 §4 仅定义、§7 缺超几何（P1-5） | B8（ch08） |
+| R7 | 级数.md L985–1141 | 幂级数：收敛半径求法、**Abel 定理**、幂级数的分析性质 | ch10 §1 空节（P0-4） | B10（ch10） |
+| R8 | 级数.md L509–980 | 函数项级数：准一致收敛、Dini 定理、一致收敛充要条件、Abel-Dirichlet 一致收敛版 | ch09 已有大部分（准一致收敛、Dini 均在），**仅作校对参考，无必迁项** | B9（ch09）校对 |
+| R9 | 微分与积分.md L16–1087 | 微分主体：导数运算、中值定理、凸性、L'Hôpital、Taylor | ch04 已完整吸收，**无必迁项** | B4（ch04）校对 |
+
+**回收原则**：
+1. tex 已有更完整表述的，以 tex 为准，不重复迁入；
+2. md 独有内容（R1–R7 标注"缺/空/仅"者）迁移时**必须**回收，勾选对应批次时一并勾选；
+3. md 例题若质量高且 tex 无对应，可作为 `#example` 补入；拿不准的先列入批次 TODO 请用户裁决；
+4. md 中与 §3.3 职责边界冲突的内容（如有 Fourier 相关）不迁入——已扫描，三份 md 未发现 Fourier 专章，边界干净。
+
 ---
 
 ## 4. 迁移批次与进度追踪
@@ -107,19 +139,19 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 - [ ] **B1 = ch01 Preliminaries**（109 行 / 3 节）
   - [ ] §1.1 Trigonometric Formulas（表格 → `#tex-table`）
-  - [ ] §1.2 Common Inequalities
+  - [ ] §1.2 Common Inequalities（🔧 P1-4/R1：从 md 回收不等式专题）
   - [ ] §1.3 Factorial Power
 - [ ] **B2 = ch02 Limits of Sequences**（139 行 / 5 节）
   - [ ] §2.1 Convergent Sequences
   - [ ] §2.2 Indeterminate Form
-  - [ ] §2.3 Subsequences
-  - [ ] §2.4 Completeness of The Real Numbers
+  - [ ] §2.3 Subsequences（🔧 P0-5：上下极限空壳从 md R2 回收）
+  - [ ] §2.4 Completeness of The Real Numbers（🔧 P0-5：空壳 leftbarTitle 从 md R2 回收，含凝聚原理/有限覆盖）
   - [ ] §2.5 Iterative Sequences
 - [ ] **B3 = ch03 Limits and Continuity of Functions**（49 行 / 6 节，⚠ 含 P0-2）
   - [ ] §3.1 Limits of Functions
-  - [ ] §3.2 Continuous Functions（空节 → 补内容或合并）
-  - [ ] §3.3 Infinitesimal and Infinite Quantities（空节 → 补内容或合并）
-  - [ ] §3.4 Continuous Functions on Closed Intervals（空壳定理 → 补证明/陈述）
+  - [ ] §3.2 Continuous Functions（空节 → 从 md R3 补内容或合并）
+  - [ ] §3.3 Infinitesimal and Infinite Quantities（空节 → 从 md R3 补：等价无穷小替换）
+  - [ ] §3.4 Continuous Functions on Closed Intervals（空壳定理 → 从 md R3 补陈述/证明，含一致连续专题）
   - [ ] §3.5 Period Three Implies Chaos
   - [ ] §3.6 Functional Equations
 - [ ] ✅ Part I 里程碑：编译 + 提交
@@ -128,8 +160,10 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 - [ ] **B4a = ch04 §1–4**（约 190 行）：Differential and Derivative / Higher-Order Derivatives / Differential Mean Value Theorems / Theorems about Derivatives
 - [ ] **B4b = ch04 §5–7**（约 155 行）：Taylor Theorem / Properties of Functions / Applications
-- [ ] **B5 = ch05 Indefinite Integral**（81 行 / 1 节，⚠ P1-1 体量评估）
+  - [ ] 🔧 R9 校对：与 md L16–1087 对照查漏（tex 已基本完整）
+- [ ] **B5 = ch05 Indefinite Integral**（81 行 / 1 节，⚠ P1-1）
   - [ ] §5.1 Two Common Integration Methods
+  - [ ] 🔧 P1-1/R5：从 md 回收"几类可积函数"（有理函数、三角有理式、无理函数积分），评估扩为多节
 - [ ] **B6a = ch06 §1–4**（约 300 行）：Riemann Integral / Integrability Criteria / Properties / Fundamental Theorem of Calculus
 - [ ] **B6b = ch06 §5–7**（约 144 行）：Calculation / Integral Inequalities / Applications
 - [ ] **B7 = ch07 Improper Integral**（192 行 / 4 节）
@@ -137,18 +171,22 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - [ ] §7.2 Convergence Tests
   - [ ] §7.3 Special Integrals
   - [ ] §7.4 Common Questions
+  - [ ] 🔧 P1-6/R4：从 md 回收 Cauchy 主值与"其它问题"
 - [ ] ✅ Part II 里程碑：编译 + 提交
 
 ### Part III — Infinite Series
 
 - [ ] **B8a = ch08 §1–4**（约 250 行）：Convergence / Positive Term / General Term / Absolute and Conditional
+  - [ ] 🔧 P1-5/R6：§4 从 md 回收正负导出级数、Riemann 重排定理、级数乘法
 - [ ] **B8b = ch08 §5–7**（约 43 行）：Convergence Speed / Infinite Products / Special Series
+  - [ ] 🔧 R6：Special Series 补超几何级数
 - [ ] **B9 = ch09 Series of Functions**（258 行 / 3 节，单节体量大逐节推进）
   - [ ] §9.1 Pointwise and Uniform Convergence
   - [ ] §9.2 Uniform Convergence Tests
   - [ ] §9.3 Special Cases
+  - [ ] 🔧 R8 校对：与 md L509–980 对照查漏（tex 已有准一致收敛、Dini）
 - [ ] **B10 = ch10 Power Series**（64 行 / 3 节）
-  - [ ] §10.1 Power Series and Its Convergence Radius
+  - [ ] §10.1 Power Series and Its Convergence Radius（⚠ P0-4 空节 → 从 md R7 回收：收敛半径、Abel 定理、分析性质）
   - [ ] §10.2 Expanding Functions into Power Series
   - [ ] §10.3 Smooth Appropriation of Functions
 - [ ] ✅ Part III 里程碑：编译 + 提交
@@ -219,6 +257,13 @@ typst compile "1.Analyse/Analyse Mathématique/initial.typ" \
 5. 绝对值 `abs(...)`、分数非单因子加括号、**下标后紧接括号必须 `{}` 包裹**（`mu_(X)(B)`，正则 `_([a-zA-Z])\(` 自查为 0 才算完）
 6. 图片保持 `img/` 目录，`#figure(image("img/...", width: ...), ...) <fig:xxx>`
 
+md 回收流程（批次含 🔧 R 任务时追加执行）：
+1. 按 §3.5 表定位 md 行号范围，用 `Read(offset/limit)` 读取；
+2. **中文正文 → 翻译为英文**，md 内的 `$...$` LaTeX 公式 → Typst 语法；
+3. 外链图片一律不迁：可用文字/公式表达的替代，必须配图的走 Python 脚本生成到 `img/`；
+4. 套用对应组件（`#definition`/`#theorem`/`#example`…）并加标签；
+5. 与 tex 已有内容比对，重复的舍弃，只补 tex 缺失部分。
+
 ---
 
 ## 6. 迁移检查清单（每批自检）
@@ -237,7 +282,7 @@ typst compile "1.Analyse/Analyse Mathématique/initial.typ" \
 
 ## 7. 强约束
 
-1. 不删除原始 `.tex`（仅 P2-4 死文件例外）
+1. 不删除原始 `.tex` 与三份 `.md`（仅 P2-4 死文件例外）
 2. 不改动 `TypstTemplate/math-notes.typ` 公共接口
 3. 正文不允许中文（中文仅限 `//` 注释与本计划文档）
 4. 遵循 `typst-writing-conventions` / `template-usage` / `typst-edit-consistency` / `typst-compile` 四技能
