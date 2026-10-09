@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B12c ch12 §6 迁移完成）
+> 最后更新：2026-10-10（B12d ch12 §7 迁移完成，ch12 全章收口）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -268,7 +268,10 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - `=== Inverse Mapping`（leftbarTitle 升级）：局部逆映射定理 `<thm:local-inverse-mapping-theorem>`（C^k 微分同胚）、全局逆映射定理 `<thm:inverse-mapping-theorem>`（凸区域）、变量代换例题 `<ex:pde-substitution-transform>`（tex 无解，不编造）
   - 修正 tex 问题（均留 `//` 注）：定理标签含空格改名；item 4 偏导 F_x → F_(x_i)（i 遍历语境）；证明中 (x_0,y_0)→(x^0,y^0)、线段条件 "x = x^0+rho" → abs(x-x^0) <= rho、O(x^0,delta)/f(x^0) → O(x̄,delta)/f(x̄)（连续性在 x̄ 处）、"x̄ = x+Δx" 与 "ȳ+Δy = f(x̄)"×2 记号混乱改为 overline(x)+Delta x 与 f(overline(x)+Delta x)；L938 分母漏减号 z(F_2G_1F_1G_2z^2) → z(F_2G_1-F_1G_2z^2)；L1036 漏右括号 f(x^0 = y^0) → f(x^0) = y^0
   - 新符号验证：`bar(x)` 在 Typst 0.15 渲染为竖线 |x|（非 x̄），横杠必须用 `overline(x)`（经 PNG 目检确认）；`lr({(...)|...})` 集合、`mat(...)^(-1)`、`frac(...)^(-1)`、`F'_(y)(...)`（撇+下标+括号）、`bold(f) |_V` 限制记号、三分支 cases（括号内逗号安全）均验证通过
-- [ ] **B12d = ch12 §7**（约 300 行）：Extremum of Multi-variable Functions（含 Lagrange 乘子）
+- [x] **B12d = ch12 §7**：Extremum of Multi-variable Functions（✅ 2026-10-10，编译退出码 0，三正则命中 0；实际仅 48 行，此前"约 300 行"为估算偏差）
+  - `=== Unconditional Extremum`（leftbarTitle 升级）：Fermat 三村问题命题 `<prop:fermat-point>`（Fermat 点两情形判定，tex 无证明不编造）
+  - `=== Conditional Extremum`（leftbarTitle 升级）：条件极值定义 `<def:conditional-extremum>`、Lagrange 乘数法定理 `<thm:lagrange-multiplier-method>`（tex 无证明不编造）
+  - 修正 tex 问题（均留 `//` 注）：标题拼写 "Villiges" → Villages；定理结论 "= 0" 为向量等式改 bold(0)；rank 用 `"rank"(...)` 直立排版
 - [ ] **B13a = ch13 §1–2**（约 270 行）：Multiple Integrals on Bounded Closed Regions / Properties
 - [ ] **B13b = ch13 §3–4**（约 200 行）：Calculation / Improper Multiple Integrals
 - [ ] ✅ Part IV 里程碑：编译 + 提交
