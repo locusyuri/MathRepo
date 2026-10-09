@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B7 完成：ch07 迁移收口，Part I–II 全部完成）
+> 最后更新：2026-10-10（B8a 完成：ch08 §1–4 迁移收口，含 P1-5/R6 回收）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -214,8 +214,16 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 ### Part III — Infinite Series
 
-- [ ] **B8a = ch08 §1–4**（约 250 行）：Convergence / Positive Term / General Term / Absolute and Conditional
-  - [ ] 🔧 P1-5/R6：§4 从 md 回收正负导出级数、Riemann 重排定理、级数乘法
+- [x] **B8a = ch08 §1–4**（迁移后约 460 行）：Convergence / Positive Term / General Term / Absolute and Conditional（✅ 2026-10-10，`15d75fa`）
+  - §1 Convergence：tex 空节，从 md L14–30 回收级数定义 `<def:numerical-series>` + 4 条基本性质 `<prop:series-basic-properties>`
+  - §2 Positive Term：正项级数定义 + note + 比较判别法 `<thm:comparison-test-series>`（含极限形式）；=== Cauchy and d'Alembert Tests `<thm:cauchy-dalembert-tests>`（limsup 链完整证明）+ 强弱 note；=== Raabe, Bertrand and Gauss Tests：`<thm:raabe-bertrand-tests>`（Raabe 证明 `#proof(name: "of the Raabe test")` + Bertrand 精细化 note + 判别法源流 note）、`<thm:gauss-test>`、`<thm:generalized-gauss-test>`（tex 大 theorem 按证明关联性拆分）；=== Integral Test `<thm:cauchy-integral-test-series>`+证明；=== Cauchy Condensation Test `<thm:cauchy-condensation>`+证明
+  - §3 General Term：=== Cauchy Criterion `<thm:cauchy-criterion-series>`；=== Alternating Series `<def:alternative-series>`/`<thm:leibniz-test>`（p 奇偶分类证明）；=== Abel-Dirichlet：`<thm:abel-transform>`+AbelTransform.jpg（180° 旋转保留）+证明、`<lem:abel-lemma>`+证明、`<thm:abel-dirichlet-series>`（3Mε/6Mε 证明）、`<ex:ad-test-application>`+solution
+  - §4 Absolute and Conditional：定义 `<def:abs-cond-convergence-series>`+note；正负导出级数 `<def:positive-derived-series>`/`<prop:derived-series-properties>`+证明；更序 `<def:rearranged-series>`/`<thm:commutative-absolute-series>`+证明、Riemann 重排 `<thm:riemann-rearrangement>`+证明；级数乘法 `<def:series-product>`（mat() 矩阵 + Cauchy 乘积 + 正方形排列）/`<thm:absolute-convergence-product>` 仅陈述
+  - 🔧 P1-5/R6 ✅：§4 从 md L307–508 回收正负导出级数、更序/重排、级数乘法（tex 仅 8 行定义）
+  - 数学修正：Bertrand 判别法补漏 "- 1"（tex/md 同源笔误，∑1/(n ln n) 验证发散性）；d'Alembert 极限形式统一为 r < 1（tex 原写 r∈(0,1) 与 Cauchy 形式不一致）；md 三处笔误（L352 x_n'^- 下标、L359 ∑x_n^- = +∞、L365–367 摆动论证）；tex Abel 变换 L215 符号错误（`+ ∑(a_(k+1)-a_k)B_k` → 负号，用 md 版）
+  - 数学验证：Gauß 判别法 δ=1 "失效"表述正确（∑1/(n ln n (ln ln n)^β) β>1 收敛与 β≤1 发散均满足 δ_n→1），未改动
+  - 放弃项：Sapagof/Kummer 判别法（md L188–202，证明为图片）；md eg.1 积分判别法应用题、三级数题 2)3)、交错级数例题（证明均为图片）；md eg.1 1) ∑1/(ln n)^(ln n) 有完整证明但超出 R6 区段未迁
+  - 渲染坑：`sqrt(x, n)` 非法（sqrt 仅单参数，报 unexpected argument），n 次根必须用 `root(x, n)`（本批 8 处）；模板无 `#remark` 组件，判别法源流用 `#note(title: "Genealogy of the Tests")` 呈现
 - [ ] **B8b = ch08 §5–7**（约 43 行）：Convergence Speed / Infinite Products / Special Series
   - [ ] 🔧 R6：Special Series 补超几何级数
 - [ ] **B9 = ch09 Series of Functions**（258 行 / 3 节，单节体量大逐节推进）
