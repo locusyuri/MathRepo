@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B8b 完成：ch08 全章迁移收口，Part III 过半）
+> 最后更新：2026-10-10（B9 完成：ch09 Series of Functions 迁移收口）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -230,11 +230,12 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - §7 Special Series：5 类常用级数（几何/telescoping/p-级数/q-级数/广义 q-级数）；🔧 R6 ✅：超几何级数 `<def:hypergeometric-series>` 从 md L493–505 回收——₂F₁ 定义（前置下标 `attach(F, bl: 2, t: 1)`，升阶乘 `x^overline(n)` 与 ch01 `<def:factorial-power>` 一致）+ 收敛性分类 + 判别法来源 note（d'Alembert + Raabe，t_n/t_(n+1) 展开验证 c - a - b + 1）+ 3 个表示例
   - 修正 tex 笔误：q-级数求和下限 n=1 → n=2（ln 1 = 0 使通项无定义）
   - 渲染坑：Typst 不支持裸前置下标 `$_2 F_1$`（报 unexpected underscore），须用 `attach(F, bl: 2, t: 1)` 函数形式
-- [ ] **B9 = ch09 Series of Functions**（258 行 / 3 节，单节体量大逐节推进）
-  - [ ] §9.1 Pointwise and Uniform Convergence
-  - [ ] §9.2 Uniform Convergence Tests
-  - [ ] §9.3 Special Cases
-  - [ ] 🔧 R8 校对：与 md L509–980 对照查漏（tex 已有准一致收敛、Dini）
+- [x] **B9 = ch09 Series of Functions**（258 行 / 3 节，单节体量大逐节推进）
+  - [x] §9.1 Pointwise and Uniform Convergence（三 leftbarTitle 升级 `===` 小节；函数项级数/点态收敛/一致收敛/准一致收敛 4 定义 + Cauchy 准则 + 充要条件两刻画 + 连续/可积/可导三性质）
+  - [x] §9.2 Uniform Convergence Tests（Weierstrass M-test、Abel-Dirichlet 一致版、Dini 定理 + Arzelà-Borel note，tex 空 `\ref{thm:}` 已去除改文字提及）
+  - [x] §9.3 Special Cases：**空节删除**（tex L301 与 md L974–984 双空壳，仅 3 个无内容标题，不编造内容）
+  - [x] 🔧 R8 校对 ✅：与 md L509–980 对照查漏——回收 4 类内容：①点态收敛缺陷 4 个完整反例 `<ex:pointwise-counterexamples>`（x^n 间断、sin(nx)/√n 逐项求导失效、Dirichlet 函数不可积、nx(1-x²)ⁿ 逐项积分失效）；②充要条件定理完整双刻画证明（修正 md L604「点态收敛」笔误为一致收敛）；③Dini 定理双证明（反证法 + 有限覆盖法）；④放弃项：Cauchy 准则证明（md 仅一行"与数列类似"）、例题 eg.1–6（证明多为外链图片；eg.4 六小题一致连续性讨论与 eg.6 Abel+Dirichlet 连环例质量高但超出 R8 定位，**待用户裁决是否补入**）
+  - 渲染坑：双箭头 ⇉ 须用 `arrows.rr^(D)`（`arrow.rr` 报 unknown symbol modifier）；下标后紧接括号 `_n(` 批量修复为 `_(n)(`（含大写 `_N(`，Group-Object 大小写不敏感曾漏检）
 - [ ] **B10 = ch10 Power Series**（64 行 / 3 节）
   - [ ] §10.1 Power Series and Its Convergence Radius（⚠ P0-4 空节 → 从 md R7 回收：收敛半径、Abel 定理、分析性质）
   - [ ] §10.2 Expanding Functions into Power Series
