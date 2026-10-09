@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B9 完成：ch09 Series of Functions 迁移收口）
+> 最后更新：2026-10-10（B10 完成：ch10 Power Series 迁移收口，Part III 里程碑达成）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -236,11 +236,12 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - [x] §9.3 Special Cases：**空节删除**（tex L301 与 md L974–984 双空壳，仅 3 个无内容标题，不编造内容）
   - [x] 🔧 R8 校对 ✅：与 md L509–980 对照查漏——回收 4 类内容：①点态收敛缺陷 4 个完整反例 `<ex:pointwise-counterexamples>`（x^n 间断、sin(nx)/√n 逐项求导失效、Dirichlet 函数不可积、nx(1-x²)ⁿ 逐项积分失效）；②充要条件定理完整双刻画证明（修正 md L604「点态收敛」笔误为一致收敛）；③Dini 定理双证明（反证法 + 有限覆盖法）；④放弃项：Cauchy 准则证明（md 仅一行"与数列类似"）、例题 eg.1–6（证明多为外链图片；eg.4 六小题一致连续性讨论与 eg.6 Abel+Dirichlet 连环例质量高但超出 R8 定位，**待用户裁决是否补入**）
   - 渲染坑：双箭头 ⇉ 须用 `arrows.rr^(D)`（`arrow.rr` 报 unknown symbol modifier）；下标后紧接括号 `_n(` 批量修复为 `_(n)(`（含大写 `_N(`，Group-Object 大小写不敏感曾漏检）
-- [ ] **B10 = ch10 Power Series**（64 行 / 3 节）
-  - [ ] §10.1 Power Series and Its Convergence Radius（⚠ P0-4 空节 → 从 md R7 回收：收敛半径、Abel 定理、分析性质）
-  - [ ] §10.2 Expanding Functions into Power Series
-  - [ ] §10.3 Smooth Appropriation of Functions
-- [ ] ✅ Part III 里程碑：编译 + 提交
+- [x] **B10 = ch10 Power Series**（64 行 / 3 节）
+  - [x] §10.1 Power Series and Its Convergence Radius：**P0-4 空节回收完成**（md L986–1140）——幂级数定义 `<def:power-series>`、Cauchy-Hadamard 定理 `<thm:cauchy-hadamard>`、d'Alembert 半径公式 `<thm:dalembert-radius>` + 缺项 note、和/逐项积/Cauchy 乘积半径估计 `<prop:power-series-algebra>`（md 2) 处 `x_n` 笔误修正为 `x^n`）、Abel 第一定理 `<thm:abel-first-theorem>`、Abel 第二定理 `<thm:abel-second-theorem>`（内闭一致收敛）+ 端点单侧连续推论 `<cor:abel-endpoint-continuity>`、Tauber 定理 `<thm:tauber-theorem>`（两版本，Item 1 完整证明迁移，引用 `#link(<thm:stolz-cesaro>)`）、和函数分析性质 `<thm:power-series-properties>`（连续/逐项求导/逐项积分 + 收敛域扩大缩小 caution）、逐项运算求和 4 小题完整例题 `<ex:power-series-sums>`（arctan 展开、x/(1-x)²、Σ(2n+1)/3ⁿ=2——md 末尾 `(1/3)^3` 笔误修正为 `(1/3)^n`、Σ(n²+1)/(2ⁿn!)）
+  - [x] §10.2 Expanding Functions into Power Series：tex 2 定义保留（`<def:smooth-function>`、`<def:real-analytic-function>`）+ md 回收——Taylor 级数定义 `<def:taylor-series>`（含 Maclaurin）、展开唯一性 `<thm:uniqueness-power-series-expansion>`、光滑→解析三问 note、三反例 `<ex:smooth-not-analytic>`（CE1 逐区间缩放构造：一点 C^oo 而任何邻域内非 C^oo；CE2 Σsin2ⁿx/n! 完整两步证明：形式 Taylor 级数除中心处处发散；CE3 e^(-1/x)：Taylor 级数收敛于 0 而非 f）、幂级数皆 Taylor 级数 `<thm:power-series-are-taylor-series>`、可展开充要条件（R_n→0）`<thm:taylor-expandable-necessary-sufficient>`、两充分条件 `<thm:taylor-expandable-sufficient>`、积分型/Cauchy 型余项 `<thm:taylor-cauchy-remainder>`、常用 Maclaurin 级数表（10 条，Euler 数 E_(2n) / Bernoulli 数 B_(2n)）
+  - [x] §10.3 Smooth Appropriation of Functions：**节名修正为 "Smooth Approximation of Functions"**（tex "Appropriation" 为用词错误）；4 定理（连续逼近可积 `<thm:continuous-approximates-integrable>`、光滑逼近连续 `<thm:smooth-approximates-continuous>`、Weierstrass 第一/第二逼近定理）+ R7 回收 2 完整例题：阶梯/连续函数上下包夹 `<ex:step-continuous-approximation>`、四类函数逐级逼近 `<ex:successive-approximation>`
+  - 渲染坑：文本模式裸数学符号（`overline(S)`、`min_(...){...}`、`max{...}`）须包裹 `$...$` 并用 `lr({…})` 显示花括号；cases 分支内区间 `(0, +oo)` 等含逗号时用 `comma`
+- [x] ✅ Part III 里程碑：编译 + 提交（ch07–ch10 全部迁入，Part III 级数篇收口）
 
 ### Part IV — Multivariable Calculus
 
