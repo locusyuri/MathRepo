@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B13a ch13 §1–2 迁移完成）
+> 最后更新：2026-10-10（B13b ch13 §3–4 迁移完成，ch13 全章收口，✅ Part IV 里程碑达成）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -278,8 +278,12 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - 修正 tex 问题（均留 `//` 注）：L178 "infinite area" 笔误 → finite area；L189 第一式 dy/dx 互换（与切片 Omega_x 定义矛盾）→ 外层 dx 内层 dy；Chebyshev 证明 L254 g(y)(f(x)-f(y)) 实为 -I → g(y)(f(y)-f(x))、L262 (g(y)-g(x))(f(x)-f(y)) 同单调时 <= 0 → (f(x)-f(y))(g(x)-g(y))（均经代数验算）；定理/图片标签含空格改名 ×2、补标签 ×3；积分元素大写 dV 统一为 dv
   - 顺带修复既有损坏文本：L37–38 "denoting" 被历史批量替换误伤为 "dein.notg"（渲染为 de∉g），已修复（2 处）
   - 新符号验证：`integral.double` 确认为 ∬ 非 ∭（PNG 目检三符号对照）、`backslash` = ∖（裸 `\` 是换行符）、`bold(xi)^i` 粗体带上标、`=:` 定义等号均通过
-- [ ] **B13b = ch13 §3–4**（约 200 行）：Calculation / Improper Multiple Integrals
-- [ ] ✅ Part IV 里程碑：编译 + 提交
+- [x] **B13b = ch13 §3–4**：Calculation / Improper Multiple Integrals（✅ 2026-10-10，编译退出码 0，三正则命中 0；实际约 230 行）
+  - §13.3：变量替换定理 `<thm:variable-substitution-double-integral>`（三条件 + f compose F 乘 abs(det JF)）、极坐标/柱坐标/球坐标三组变换与 Jacobian、坐标图 `<fig:cylindrical-spherical-coordinates>`、三重积分两例题（锥体 `<ex:triple-integral-cone>`、投影法 `<ex:project-method-example>`，tex 无解不编造）、先 2 后 1（截面法）/先 1 后 2（投影法）两法各五步完整演算、方法选择 tex-table 对照表、Viviani 曲线围成体积例题（`<fig:viviani>`，tex 无解不编造）
+  - §13.4：无穷型反常多重积分定义 `<def:infinite-multiple-integral>`（exhaustion 渐涨枚举）+ 等价定义 remark→note、绝对可积等价定理 `<thm:improper-multiple-absolute-convergence>`（tex 无证明不编造）、Poisson 积分例题 `<ex:poisson-integral>`（tex 无解不编造）
+  - 修正 tex 问题（均留 `//` 注）：柱坐标 Jacobian 分母 (r,θ,φ) 与变换变量 (r,θ,z) 不符，已修正；"i.e." 式 F(Delta) 未加粗统一为 bold(F)；条件 2 "det JF(u,v) = det JF(p)" 冗余合并为一式；表格末行漏 "of" 已补；含空格标签改名 / 补标签共 6 处；§4 首句语序修正
+  - 新符号验证（PNG 目检）：`maps.to` 不存在，↦ 用 `arrow.bar`（与 `|->` 渲染等价）；`qquad` 非法符号，用 `quad quad`；求值竖线 `z bar_0^(x y)` 可用（Typst 0.15 中 bar 即竖线）；cases 分支行尾 `\` 触发 "linebreaks ignored" warning，分支内仅靠 comma 分隔
+- [x] ✅ Part IV 里程碑：编译 + 提交（随 B13b docs 提交收口）
 
 ### Part V — Calculus Applications in Several Variables（几何应用与高级积分，决策③新增）
 
