@@ -418,11 +418,11 @@ $
 
 == Convergent Sequences // 收敛序列
 
-*Convergent Sequences:*
+=== Convergent Sequences // 收敛序列
 
-*Properties of Convergent Sequences:*
+=== Properties of Convergent Sequences // 收敛序列的性质
 
-*Cauchy Proposition and Fitting Method:*
+=== Cauchy Proposition and Fitting Method // 柯西命题与拟合法
 
 #proposition(name: "Cauchy's Proposition")[
   Let $lim_(n -> oo) x_n = l$. Then
@@ -449,15 +449,16 @@ on top of that, it can also be proved by the *fitting method*.
   To prove $lim_(n -> oo) x_n = A$, the key is to show that $abs(x_n - A)$ can be arbitrarily small.
   For this purpose, it is generally recommended to simplify the expression of $x_n$ as much as possible.
   However, in some cases, $A$ can also be transformed into a form similar to $x_n$.
+
   This method is called the *fitting method*.
   The core idea behind the method of fitting is to appropriately divide into units of $1$ for analysis.
 ]
 
 == Indeterminate Form // 未定式
 
-*Infinitely Large Quantities and Infinitesimal Quantities:*
+=== Infinitely Large Quantities and Infinitesimal Quantities // 无穷大量与无穷小量
 
-*Indeterminate Forms:*
+=== Indeterminate Forms // 未定式
 
 #theorem(name: "Stolz-Cesàro Theorem")[
   *Type $0 / 0$:* Let ${a_n}$ and ${b_n}$ be two infinitesimal sequences,
@@ -504,7 +505,7 @@ on top of that, it can also be proved by the *fitting method*.
 
 == Subsequences // 子列
 
-*Subsequences:*
+=== Subsequences // 子列
 
 #definition(name: "Subsequence")[
   Let ${x_n}$ be a sequence and let $n_1 < n_2 < dots < n_k < n_(k + 1) < dots$
@@ -535,7 +536,7 @@ on top of that, it can also be proved by the *fitting method*.
     Hence $alpha = beta$, and ${x_n}$ converges to the same limit by item 2.
 ]
 
-*Upper Limits and Lower Limits:*
+=== Upper Limits and Lower Limits // 上极限与下极限
 
 A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluster point) of the sequence.
 
@@ -555,12 +556,14 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
 
 #proof[
   It suffices to show $H = sup E in E$; suppose instead $H in.not E$.
+
   *Step 1.* We first construct a strictly increasing sequence ${xi_k} subset E$ with $lim_(k -> oo) xi_k = H$.
   Since $H in.not E$, for every $epsilon > 0$ there exists $x in E$ with $H - epsilon < x < H$.
   Taking $epsilon_1 = 1$, there is $xi_1 in E$ with $H - 1 < xi_1 < H$.
   Taking $epsilon_2 = min(1 / 2, H - xi_1) > 0$, there is $xi_2 in E$ with $H - epsilon_2 < xi_2 < H$,
   where $xi_1 <= H - epsilon_2 < xi_2$. Iterating with $epsilon_k = min(1 / k, H - xi_(k - 1)) > 0$
   produces a strictly increasing sequence ${xi_k}$ in $E$ with $lim_(k -> oo) xi_k = H$.
+
   *Step 2.* Since each $xi_k$ is a cluster point of ${x_n}$, there exist indices $n_1 < n_2 < dots$
   with $xi_k - 1 / k < x_(n_k) < xi_k + 1 / k$ for every $k$.
   Letting $k -> oo$ gives $lim_(k -> oo) x_(n_k) = lim_(k -> oo) xi_k = H$, i.e., $H in E$,
@@ -585,6 +588,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   gives $x_n < H + epsilon$ for all $n > N$, which is (i).
   Since $H$ is a cluster point of ${x_n}$, infinitely many terms lie in the $epsilon$-neighborhood of $H$,
   and these satisfy $x_n > H - epsilon$, which is (ii).
+
   ($<=$) By (i), $limsup_(n -> oo) x_n <= H + epsilon$ for every $epsilon > 0$,
   hence $limsup_(n -> oo) x_n <= H$.
   By (ii), $limsup_(n -> oo) x_n >= H - epsilon$ for every $epsilon > 0$,
@@ -622,6 +626,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   *Step 1.* Let $xi$ be any cluster point of ${x_n}$ (finite, $+oo$ or $-oo$). We show $h <= xi <= H$.
   Let $lim_(k -> oo) x_(n_k) = xi$. For every $k$ we have $a_(n_k) <= x_(n_k) <= b_(n_k)$;
   letting $k -> oo$ yields $h <= xi <= H$.
+
   *Step 2.* We construct subsequences with limits $H$ and $h$; consider $H$.
   - If $H$ is finite, take $epsilon_k = 1 / k$ for $k = 1, 2, dots$.
     From $b_1 = sup_(i >= 1) x_i$ choose $n_1$ with $b_1 - 1 < x_(n_1) <= b_1$;
@@ -653,22 +658,25 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
 
 == Completeness of the Real Numbers // 实数系的完备性
 
-*Dedekind Completeness:*
+=== Dedekind Completeness // 戴德金完备性
 
 #definition(name: "Dedekind Cut")[
   Let $bb(A)$ and $bb(B)$ be two nonempty sets of rational numbers such that
   $bb(Q) = bb(A) union bb(B)$ and $a < b$ for all $a in bb(A)$, $b in bb(B)$;
   then $bb(A)$ and $bb(B)$ are said to form a *cut* of $bb(Q)$, denoted $bb(A) | bb(B)$.
+
   For any cut $bb(A) | bb(B)$ of $bb(Q)$, exactly one of the following four cases holds:
-  (i) $bb(A)$ has a largest element and $bb(B)$ has no smallest;
-  (ii) $bb(A)$ has no largest element and $bb(B)$ has a smallest;
-  (iii) $bb(A)$ has no largest element and $bb(B)$ has no smallest;
-  (iv) $bb(A)$ has a largest element and $bb(B)$ has a smallest.
-  Case (iv) is impossible.
-  If case (iii) occurs, the cut $bb(A) | bb(B)$ is said to define an *irrational number* $c$,
-  with $a < c < b$ for all $a in bb(A)$, $b in bb(B)$.
-  The set consisting of all rationals together with all irrational numbers defined in (iii)
+  + $bb(A)$ has a largest element and $bb(B)$ has no smallest;
+  + $bb(A)$ has no largest element and $bb(B)$ has a smallest;
+  + $bb(A)$ has no largest element and $bb(B)$ has no smallest;
+  + $bb(A)$ has a largest element and $bb(B)$ has a smallest.
+
+  Case 4 is impossible. If case 3 occurs, the cut $bb(A) | bb(B)$ is said to define an
+  *irrational number* $c$, with $a < c < b$ for all $a in bb(A)$, $b in bb(B)$.
+
+  The set consisting of all rationals together with all irrational numbers defined in case 3
   is called the set of real numbers, denoted $bb(R)$.
+
   Similarly, two nonempty sets of real numbers $tilde(bb(A))$ and $tilde(bb(B))$
   with $tilde(bb(A)) union tilde(bb(B)) = bb(R)$ and $a < b$ for all $a in tilde(bb(A))$, $b in tilde(bb(B))$
   are said to form a *cut* of $bb(R)$, denoted $tilde(bb(A)) | tilde(bb(B))$.
@@ -681,16 +689,19 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
 
 #proof[
   Let $bb(A)$ and $bb(B)$ be the sets of rational numbers in $tilde(bb(A))$ and $tilde(bb(B))$, respectively;
-  they form a cut $bb(A) | bb(B)$ of $bb(Q)$, which falls into one of the cases (i)--(iii)
+  they form a cut $bb(A) | bb(B)$ of $bb(Q)$, which falls into one of the cases 1--3
   of #link(<def:dedekind-cut>)[the definition of a Dedekind cut].
-  *Case (i).* Let $a_0$ be the largest element of $bb(A)$. Then $a_0$ is also the largest element of $tilde(bb(A))$:
+
+  *Case 1.* Let $a_0$ be the largest element of $bb(A)$. Then $a_0$ is also the largest element of $tilde(bb(A))$:
   if some $tilde(a) in tilde(bb(A))$ satisfied $a_0 < tilde(a)$, by the density of the rationals
   there would exist a rational $a$ with $a_0 < a < tilde(a)$, contradicting the maximality of $a_0$ in $bb(A)$.
   Moreover $tilde(bb(B))$ has no smallest element: for any $tilde(b) in tilde(bb(B))$,
   since $a_0 < tilde(b)$ there exists a rational $b$ with $a_0 < b < tilde(b)$,
   and then $b in bb(B) subset tilde(bb(B))$ with $b < tilde(b)$.
-  *Case (ii).* Symmetric to case (i).
-  *Case (iii).* Let $c$ be the irrational number determined by the cut, with $a < c < b$
+
+  *Case 2.* Symmetric to case 1.
+
+  *Case 3.* Let $c$ be the irrational number determined by the cut, with $a < c < b$
   for all $a in bb(A)$, $b in bb(B)$. Since $c in bb(R) = tilde(bb(A)) union tilde(bb(B))$,
   either $c in tilde(bb(A))$ or $c in tilde(bb(B))$.
   If $c in tilde(bb(A))$, then $c$ must be the largest element of $tilde(bb(A))$:
@@ -698,7 +709,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   contradicting the definition of $c$; similarly, $c in tilde(bb(B))$ forces $c$ to be the smallest element of $tilde(bb(B))$.
 ]
 
-*Least Upper Bound Property:*
+=== Least Upper Bound Property // 确界原理
 
 #definition(name: "Supremum and Infimum")[
   Let $S$ be a set of real numbers. A number $beta$ is called the *supremum* (least upper bound) of $S$,
@@ -718,6 +729,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   $tilde(bb(B)) = {y \| y >= t" for all "t in S}$ be the set of upper bounds of $S$, with $tilde(bb(A))$ its complement.
   Then $tilde(bb(A)) | tilde(bb(B))$ is a cut of $bb(R)$, so by #link(<thm:dedekind>)[Dedekind's theorem]
   either $tilde(bb(A))$ has a largest element or $tilde(bb(B))$ has a smallest one.
+
   For any $x in tilde(bb(A))$, $x$ is not an upper bound of $S$, so there exists $t in S$ with $x < t$.
   Then $x^* = (x + t) / 2$ satisfies $x < x^* < t$, and $x^* < t$ shows that $x^*$ is still not an upper bound of $S$,
   i.e., $x^* in tilde(bb(A))$; since $x < x^*$, $x$ is not the largest element of $tilde(bb(A))$.
@@ -737,7 +749,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   but $(m + 1) x in A$, a contradiction.
 ]
 
-*Monotone Convergence Theorem:*
+=== Monotone Convergence Theorem // 单调有界原理
 
 #theorem(name: "Monotone Convergence Theorem")[
   A monotone bounded sequence of real numbers converges.
@@ -753,7 +765,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   Hence $lim_(n -> oo) x_n = beta$. The decreasing case is symmetric.
 ]
 
-*Bolzano-Weierstrass Theorem:*
+=== Bolzano-Weierstrass Theorem // 列紧性
 
 #theorem(name: "Bolzano-Weierstrass Theorem")[
   Every bounded sequence of real numbers has a convergent subsequence.
@@ -768,6 +780,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   Repeating this construction yields a nested sequence of closed intervals ${[a_k, b_k]}$,
   each containing infinitely many terms of ${x_n}$. By #link(<thm:nested-interval>)[the nested interval theorem],
   there exists $xi in bb(R)$ with $xi = lim_(k -> oo) a_k = lim_(k -> oo) b_k$.
+
   Now choose $x_(n_1)$ among the terms lying in $[a_1, b_1]$;
   since $[a_2, b_2]$ contains infinitely many terms, choose one with index $n_2 > n_1$, and so on.
   This produces a subsequence with $a_k <= x_(n_k) <= b_k$ for every $k$,
@@ -781,7 +794,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   picking one for $M = 1, 2, 3, dots$ in turn yields a subsequence diverging to infinity.
 ]
 
-*Nested Interval Theorem:*
+=== Nested Interval Theorem // 闭区间套定理
 
 #definition(name: "Nested Closed Intervals")[
   A sequence of closed intervals ${[a_n, b_n]}$ is called a *nested sequence of closed intervals* if:
@@ -810,7 +823,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   $xi' = lim_(n -> oo) a_n = lim_(n -> oo) b_n = xi$, proving uniqueness.
 ]
 
-*Cauchy Completeness:*
+=== Cauchy Completeness // 柯西完备性
 
 #definition(name: "Cauchy Sequence")[
   A sequence ${x_n}$ is called a *Cauchy sequence* if for any $epsilon > 0$,
@@ -834,6 +847,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   *Sufficiency.* First, a Cauchy sequence is bounded: taking $epsilon_0 = 1$,
   there exists $N_0$ with $abs(x_n - x_(N_0 + 1)) < 1$ for all $n > N_0$.
   Let $M = max(abs(x_1), abs(x_2), dots, abs(x_(N_0 + 1))) + 1$; then $abs(x_n) < M$ for all $n$.
+
   By #link(<thm:bolzano-weierstrass>)[the Bolzano-Weierstrass theorem], ${x_n}$ has a convergent subsequence
   ${x_(n_k)}$ with $lim_(k -> oo) x_(n_k) = xi$.
   Furthermore, for every $epsilon > 0$ there exists $N in bb(N)$ such that $abs(x_n - x_m) < epsilon$
@@ -853,7 +867,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   convergent sequences in $E$.
 ] <def:completeness>
 
-*Heine-Borel Theorem:*
+=== Heine-Borel Theorem // 有限覆盖定理
 
 #definition(name: "Open Cover")[
   Let $[a, b] subset union_(alpha) cal(O)_alpha$, where each $cal(O)_alpha$ is an open set.
@@ -867,7 +881,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   In brief: every open cover of $[a, b]$ admits a finite subcover.
 ] <thm:heine-borel>
 
-*Equivalence of the Completeness Theorems:*
+=== Equivalence of the Completeness Theorems // 完备性定理的等价性
 
 #theorem(name: "Equivalence of the Completeness Theorems")[
   The following theorems are mutually equivalent: #link(<thm:dedekind>)[Dedekind's theorem],
@@ -889,6 +903,7 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   $->$ the nested interval theorem $->$ the Bolzano-Weierstrass theorem $->$ the Cauchy convergence criterion.
   Each theorem can also be used as the starting point to derive the others,
   so any one of them may be taken as the foundation of the real number system.
+
   Several implications have already been established above:
   suprema $=>$ monotone convergence (its proof), monotone convergence $=>$ nested intervals (its proof),
   nested intervals $=>$ Bolzano-Weierstrass (its proof),
@@ -908,8 +923,10 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
   $[a_(n + 1), b_(n + 1)] = [a_n, m_n]$ if $m_n in T$, and $[a_(n + 1), b_(n + 1)] = [m_n, b_n]$ otherwise.
   This produces a nested sequence of closed intervals ${[a_n, b_n]}$
   with $a_n in.not T$ and $b_n in T$ for all $n = 1, 2, 3, dots$.
+
   By #link(<thm:nested-interval>)[the nested interval theorem], there exists a unique real number $xi$
   belonging to all the intervals, with $xi = lim_(n -> oo) a_n = lim_(n -> oo) b_n$.
+
   It remains to show that $xi$ is the smallest element of $T$, i.e., the supremum of $S$.
   If $xi in.not T$, i.e., $xi$ is not an upper bound of $S$, then there exists $x in S$ with $xi < x$;
   since $lim_(n -> oo) b_n = xi$, for $n$ large enough we have $b_n < x$, contradicting $b_n in T$. Hence $xi in T$.
