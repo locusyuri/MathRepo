@@ -81,6 +81,8 @@ user_invocable: false
 
 ## 6. 定理类组件（Major Components）
 
+> 组件 API、参数与编号规则以本技能为准；**何时用/不用哪个组件、组件块内容约束（定义块只放定义等）、写作风格**见 `violet-typst-writing-conventions` §9。
+
 所有定理类组件自动编号，格式为 `章号.序号`（如 `1.3`）。每个 Chapter 开始时计数器重置。
 
 ### 定理族（红色系 ♥）
@@ -286,9 +288,9 @@ Content here.
 ```
 Subject/
   initial.typ        # 主入口（唯一构建入口，所有内容写在此文件）
+  initial.pdf        # 编译输出（与 initial.typ 同级；不要输出到 tmp/，旧约定已废弃）
   references.bib     # 参考文献
   img/               # 图片资源
-  tmp/               # 构建输出
 ```
 
 ---

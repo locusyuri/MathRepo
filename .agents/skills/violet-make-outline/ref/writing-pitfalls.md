@@ -2,6 +2,8 @@
 
 从 Analyse Complexe Ch2-9 的写作过程中提炼的常见陷阱，分为 Typst 语法陷阱、内容组织陷阱和工程陷阱三类。
 
+> 本文件是案例集；**语法规则的单一事实源是 `violet-typst-writing-conventions`**（符号映射表、下标吞括号、`abs()`、分数括号等以该技能为准），此处仅列实际踩过的坑。
+
 ---
 
 ## 1. Typst 语法陷阱

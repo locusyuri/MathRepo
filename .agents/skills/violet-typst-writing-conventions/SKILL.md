@@ -701,6 +701,8 @@ properties of an invertible matrix ...（理由、例子、非可交换说明等
 
 ### 组件选择指南
 
+> 组件的 API、参数（`name:`/`body`）与编号规则见 `violet-template-usage` §6–§7；本节只规定**何时用/不用**与内容约束。
+
 组件不能滥用。参考项目现有内容的分工：
 
 | 组件 | 用途 | 何时使用 | 何时不用 |
