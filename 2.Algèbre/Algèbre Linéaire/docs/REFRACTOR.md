@@ -1,8 +1,8 @@
 # Algèbre Linéaire 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-10
-> 最后更新：2026-10-10（B7 完成：Ch7 Diagonalization，Part III 进行中）
-> 状态：✅ Part I 完成（B2–B4），✅ Part II 完成（B5–B6），✅ B7 Ch7 Diagonalization 完成，待 B8 Ch8 Jordan 标准型
+> 最后更新：2026-10-10（B8 完成：Ch8 Jordan 标准型，Part III 全部完成）
+> 状态：✅ Part I 完成（B2–B4），✅ Part II 完成（B5–B6），✅ Part III 完成（B7–B8），待开始 Part IV（B9 = Ch9 Quadratic Forms）
 > **项目约定：每次完成批次后自动 git 提交（中文 Conventional Commits），无需用户手动确认。**
 > 技能依据：`violet-design-note`（目录体检与结构设计）、`violet-latex-to-typst`（迁移）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 > 参考文档：[`1.Analyse/Analyse Mathématique/docs/REFRACTOR.md`](../../1.Analyse/Analyse%20Mathématique/docs/REFRACTOR.md)
@@ -227,13 +227,14 @@ Part IV 二次型与内积空间（几何结构）
   - [x] §6 Diagonalization of Special Matrices（可逆/幂等/幂零/对合/全1/循环移位/循环/三角矩阵的对角化性质）
   - [x] §7 Simultaneous Characteristics（特征空间互为不变子空间、公共特征向量、同时上三角化、同时对角化、多种情形推广）
   - 备注：§1–§7 从 chap07.tex 迁移；踩坑记录：双字符下标需引号（alpha_("i1"), alpha_("ij"), delta_("ij"), alpha_("ir"_i)）、langle/rangle 需引号、dots.d 应为 dots.down、\quad 在数学模式中不可用需用空格替代
-- [ ] **B8 = Ch8 Jordan Canonical Form**（382 行 / 5 节）
-  - [ ] §1 Polynomial Matrices
-  - [ ] §2 Invariant Divisors and Rational Canonical Form
-  - [ ] §3 Elementary Divisors and Jordan Canonical Form
-  - [ ] §4 Finding Jordan Form and Transition Matrices
-  - [ ] §5 Complete Set of Invariant Quantities
-- [ ] ✅ Part III 里程碑：编译 + 提交
+- [x] **B8 = Ch8 Jordan Canonical Form**（382 行 / 5 节）✅ 2026-10-10
+  - [x] §1 Polynomial Matrices（多项式矩阵定义、可逆性 caution、等价多项式矩阵、Smith 标准型）
+  - [x] §2 Invariant Divisors and Rational Canonical Form（行列式因子、不变因子、伴随矩阵、Frobenius 标准型、循环子空间定义+性质+命题+几何解释）
+  - [x] §3 Elementary Divisors and Jordan Canonical Form（初等因子定义、幂零 Jordan 形式引理、Jordan 标准型存在性定理+几何解释）
+  - [x] §4 Finding Jordan Canonical Form and Transition Matrices（求标准型与过渡矩阵的方法说明）
+  - [x] §5 Complete Set of Invariant Quantities for Matrix Similarity（完全相似不变量定理+note）
+  - 备注：§1–§5 从 chap08.tex 迁移；踩坑记录：双字符下标需引号（p_("i1"), k_("ij"), p_("is"_i)）、langle/rangle/bigoplus 需引号、\quad 在数学模式中不可用需移除、批量替换 langle/rangle 破坏了已有引号需修复双重引号
+- [x] ✅ Part III 里程碑：编译 + 提交（B7–B8 完成）
 
 ### Part IV — Quadratic Forms and Inner Product Spaces
 
