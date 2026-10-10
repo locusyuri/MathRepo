@@ -9137,7 +9137,7 @@ Improper multiple integrals can also be classified into two types: infinite inte
   $
     integral_(-oo)^(+oo) e^(-x^2) dif x.
   $
-] <ex:poisson-integral>
+] <ex:poisson-integral-gaussian>
 // 注：tex 中该例题未给出解答，不编造。
 
 // --- Part V: 几何应用与高级积分（决策③：ch14–16） ---
@@ -10120,6 +10120,472 @@ Next, we give three important formulas about the Gamma function, which can be ex
 #part("Appendix") // 附录
 
 = Glossary // 术语表
-// B17 收尾时用 violet-glossary-indexer 重建字母索引
+
+== A
+- *#link(<thm:abel-dirichlet-defective-integral>)[Abel Dirichlet Defective Integral]*
+- *#link(<thm:abel-dirichlet-infinite-integral>)[Abel Dirichlet Infinite Integral]*
+- *#link(<thm:abel-dirichlet-series>)[Abel Dirichlet Series]*
+- *#link(<thm:abel-dirichlet-uniform>)[Abel Dirichlet Uniform]*
+- *#link(<thm:abel-divergence-speed>)[Abel Divergence Speed]*
+- *#link(<cor:abel-endpoint-continuity>)[Abel Endpoint Continuity]*
+- *#link(<thm:abel-first-theorem>)[Abel First Theorem]*
+- *#link(<lem:abel-lemma>)[Abel Lemma]*
+- *#link(<thm:abel-second-theorem>)[Abel Second Theorem]*
+- *#link(<thm:abel-transform>)[Abel Transform]*
+- *#link(<def:abs-cond-convergence-integral>)[Abs Cond Convergence Integral]*
+- *#link(<def:abs-cond-convergence-series>)[Abs Cond Convergence Series]*
+- *#link(<def:abs-convergence-infinite-product>)[Abs Convergence Infinite Product]*
+- *#link(<prop:abs-convergence-product-equivalences>)[Abs Convergence Product Equivalences]*
+- *#link(<thm:absolute-convergence-product>)[Absolute Convergence Product]*
+- *#link(<cor:absolute-implies-convergence>)[Absolute Implies Convergence]*
+- *#link(<ex:ad-test-application>)[Ad Test Application]*
+- *#link(<def:alternative-series>)[Alternative Series]*
+- *#link(<ex:angle-form-integral>)[Angle Form Integral]*
+- *#link(<ex:antiderivative-of-discontinuous>)[Antiderivative of Discontinuous]*
+- *#link(<prop:approximation-problem>)[Approximation Problem]*
+- *#link(<def:arc-length>)[Arc Length]*
+- *#link(<thm:archimedean>)[Archimedean]*
+- *#link(<def:argmax-argmin>)[Argmax Argmin]*
+- *#link(<thm:arithmetic-continuous>)[Arithmetic Continuous]*
+- *#link(<def:asymptote>)[Asymptote]*
+
+== B
+- *#link(<thm:banach-fixed-point>)[Banach Fixed Point]*
+- *#link(<thm:bernoulli>)[Bernoulli]*
+- *#link(<cor:bernoulli-consequences>)[Bernoulli Consequences]*
+- *#link(<def:bernoulli-numbers>)[Bernoulli Numbers]*
+- *#link(<prop:beta-function-properties>)[Beta Function Properties]*
+- *#link(<thm:beta-gamma-relation>)[Beta Gamma Relation]*
+- *#link(<thm:bohr-mollerup>)[Bohr Mollerup]*
+- *#link(<thm:bolzano-weierstrass>)[Bolzano Weierstrass]*
+- *#link(<ex:bound-derivative-0-1>)[Bound Derivative 0 1]*
+- *#link(<cor:boundary-extension>)[Boundary Extension]*
+- *#link(<thm:bounded-convergence-limsup>)[Bounded Convergence Limsup]*
+- *#link(<ex:bounded-open-interval>)[Bounded Open Interval]*
+- *#link(<def:bounded-sequence>)[Bounded Sequence]*
+- *#link(<def:bounded-variation>)[Bounded Variation]*
+- *#link(<thm:boundedness-closed>)[Boundedness Closed]*
+- *#link(<ex:boundedness-mvt>)[Boundedness Mvt]*
+- *#link(<prop:bv-properties>)[Bv Properties]*
+
+== C
+- *#link(<thm:cantor-theorem>)[Cantor Theorem]*
+- *#link(<thm:carlson>)[Carlson]*
+- *#link(<thm:cauchy-condensation>)[Cauchy Condensation]*
+- *#link(<thm:cauchy-criterion>)[Cauchy Criterion]*
+- *#link(<thm:cauchy-criterion-defective-integral>)[Cauchy Criterion Defective Integral]*
+- *#link(<thm:cauchy-criterion-function>)[Cauchy Criterion Function]*
+- *#link(<thm:cauchy-criterion-infinite-integral>)[Cauchy Criterion Infinite Integral]*
+- *#link(<thm:cauchy-criterion-parameter>)[Cauchy Criterion Parameter]*
+- *#link(<thm:cauchy-criterion-series>)[Cauchy Criterion Series]*
+- *#link(<thm:cauchy-criterion-uniform-convergence>)[Cauchy Criterion Uniform Convergence]*
+- *#link(<thm:cauchy-dalembert-tests>)[Cauchy Dalembert Tests]*
+- *#link(<ex:cauchy-equation>)[Cauchy Equation]*
+- *#link(<thm:cauchy-hadamard>)[Cauchy Hadamard]*
+- *#link(<prop:cauchy-implies-monotone>)[Cauchy Implies Monotone]*
+- *#link(<prop:cauchy-implies-nested>)[Cauchy Implies Nested]*
+- *#link(<thm:cauchy-integral-test-series>)[Cauchy Integral Test Series]*
+- *#link(<ex:cauchy-mapping>)[Cauchy Mapping]*
+- *#link(<thm:cauchy-mvt>)[Cauchy Mvt]*
+- *#link(<def:cauchy-principal-value>)[Cauchy Principal Value]*
+- *#link(<prop:cauchy-proposition>)[Cauchy Proposition]*
+- *#link(<thm:cauchy-schwarz>)[Cauchy Schwarz]*
+- *#link(<cor:cauchy-schwarz-forms>)[Cauchy Schwarz Forms]*
+- *#link(<def:cauchy-sequence>)[Cauchy Sequence]*
+- *#link(<thm:chain-rule>)[Chain Rule]*
+- *#link(<thm:chebyshev>)[Chebyshev]*
+- *#link(<ex:chebyshev-integral-inequality>)[Chebyshev Integral Inequality]*
+- *#link(<prop:classic-functional-equations>)[Classic Functional Equations]*
+- *#link(<def:closed-exact-forms>)[Closed Exact Forms]*
+- *#link(<thm:commutative-absolute-series>)[Commutative Absolute Series]*
+- *#link(<def:comparison-infinite>)[Comparison Infinite]*
+- *#link(<def:comparison-infinitesimals>)[Comparison Infinitesimals]*
+- *#link(<thm:comparison-test-series>)[Comparison Test Series]*
+- *#link(<thm:comparison-tests-defective-integral>)[Comparison Tests Defective Integral]*
+- *#link(<thm:comparison-tests-infinite-integral>)[Comparison Tests Infinite Integral]*
+- *#link(<def:completeness>)[Completeness]*
+- *#link(<thm:completeness-equivalence>)[Completeness Equivalence]*
+- *#link(<thm:composite-continuity>)[Composite Continuity]*
+- *#link(<prop:composite-integrability>)[Composite Integrability]*
+- *#link(<def:conditional-extremum>)[Conditional Extremum]*
+- *#link(<thm:conditions-of-differentiability>)[Conditions of Differentiability]*
+- *#link(<fig:cone>)[Cone]*
+- *#link(<def:connected-set>)[Connected Set]*
+- *#link(<def:continuity-at-point>)[Continuity At Point]*
+- *#link(<def:continuity-on-interval>)[Continuity on Interval]*
+- *#link(<thm:continuity-parameter>)[Continuity Parameter]*
+- *#link(<prop:continuity-uniform-convergence>)[Continuity Uniform Convergence]*
+- *#link(<ex:continuous-agree-dense>)[Continuous Agree Dense]*
+- *#link(<thm:continuous-approximates-integrable>)[Continuous Approximates Integrable]*
+- *#link(<ex:continuous-open-preimage>)[Continuous Open Preimage]*
+- *#link(<def:convergent-sequence>)[Convergent Sequence]*
+- *#link(<prop:convergent-sequence-properties>)[Convergent Sequence Properties]*
+- *#link(<def:convex-function>)[Convex Function]*
+- *#link(<fig:convex-function>)[Convex Function]*
+- *#link(<ex:convex-integral-inequality>)[Convex Integral Inequality]*
+- *#link(<def:convex-region>)[Convex Region]*
+- *#link(<lem:cover-cyclic>)[Cover Cyclic]*
+- *#link(<lem:cover-fixed-point>)[Cover Fixed Point]*
+- *#link(<lem:cover-subinterval>)[Cover Subinterval]*
+- *#link(<def:curvature-of-curve>)[Curvature of Curve]*
+- *#link(<fig:cylindrical-spherical-coordinates>)[Cylindrical Spherical Coordinates]*
+
+== D
+- *#link(<ex:dalembert-equation>)[Dalembert Equation]*
+- *#link(<thm:dalembert-radius>)[Dalembert Radius]*
+- *#link(<thm:darboux>)[Darboux]*
+- *#link(<prop:darboux-sums>)[Darboux Sums]*
+- *#link(<def:darboux-sums>)[Darboux Sums]*
+- *#link(<thm:dedekind>)[Dedekind]*
+- *#link(<def:dedekind-cut>)[Dedekind Cut]*
+- *#link(<def:defective-integral>)[Defective Integral]*
+- *#link(<def:definite-integral-variable-parameter>)[Definite Integral Variable Parameter]*
+- *#link(<thm:definite-integration-by-parts>)[Definite Integration by Parts]*
+- *#link(<thm:definite-substitution>)[Definite Substitution]*
+- *#link(<def:derivative>)[Derivative]*
+- *#link(<thm:derivative-criteria-monotonicity-convexity>)[Derivative Criteria Monotonicity Convexity]*
+- *#link(<ex:derivative-criterion>)[Derivative Criterion]*
+- *#link(<ex:derivative-integrability>)[Derivative Integrability]*
+- *#link(<cor:derivative-second-kind>)[Derivative Second Kind]*
+- *#link(<ex:derivative-second-kind-discontinuity>)[Derivative Second Kind Discontinuity]*
+- *#link(<ex:derivative-vanishes-infinity>)[Derivative Vanishes Infinity]*
+- *#link(<prop:derived-series-properties>)[Derived Series Properties]*
+- *#link(<thm:determinant-differentiation>)[Determinant Differentiation]*
+- *#link(<ex:determinant-identity>)[Determinant Identity]*
+- *#link(<ex:difference-quotient-criterion>)[Difference Quotient Criterion]*
+- *#link(<ex:difference-quotient-limit>)[Difference Quotient Limit]*
+- *#link(<thm:differentiability-derivability>)[Differentiability Derivability]*
+- *#link(<prop:differentiability-uniform-convergence>)[Differentiability Uniform Convergence]*
+- *#link(<def:differential>)[Differential]*
+- *#link(<ex:differential-inequality-zero>)[Differential Inequality Zero]*
+- *#link(<thm:differentiation-parameter>)[Differentiation Parameter]*
+- *#link(<thm:dini-theorem>)[Dini Theorem]*
+- *#link(<def:directional-derivative>)[Directional Derivative]*
+- *#link(<ex:dirichlet-integral>)[Dirichlet Integral]*
+- *#link(<ex:dirichlet-integral-parameter>)[Dirichlet Integral Parameter]*
+- *#link(<ex:dirichlet-kernel>)[Dirichlet Kernel]*
+- *#link(<def:discontinuity-point>)[Discontinuity Point]*
+- *#link(<def:double-integral-bounded-set>)[Double Integral Bounded Set]*
+- *#link(<fig:double-integral-bounded-set>)[Double Integral Bounded Set]*
+- *#link(<def:double-integral-closed-interval>)[Double Integral Closed Interval]*
+- *#link(<thm:double-integral-product-formula>)[Double Integral Product Formula]*
+- *#link(<thm:du-bois-reymond-theorem>)[Du Bois Reymond Theorem]*
+
+== E
+- *#link(<thm:elementary-continuous>)[Elementary Continuous]*
+- *#link(<thm:equivalence-replacement>)[Equivalence Replacement]*
+- *#link(<thm:equivalent-convexity>)[Equivalent Convexity]*
+- *#link(<ex:euler-equation-degree-zero>)[Euler Equation Degree Zero]*
+- *#link(<ex:euler-integral>)[Euler Integral]*
+- *#link(<def:euler-numbers>)[Euler Numbers]*
+- *#link(<ex:euler-poisson-integral>)[Euler Poisson Integral]*
+- *#link(<thm:exact-implies-closed>)[Exact Implies Closed]*
+- *#link(<ex:exponential-continuous>)[Exponential Continuous]*
+- *#link(<ex:exponential-equation>)[Exponential Equation]*
+- *#link(<def:extended-limit>)[Extended Limit]*
+- *#link(<def:exterior-differentiation>)[Exterior Differentiation]*
+- *#link(<prop:exterior-differentiation-properties>)[Exterior Differentiation Properties]*
+- *#link(<thm:extreme-point-criteria>)[Extreme Point Criteria]*
+- *#link(<thm:extreme-value>)[Extreme Value]*
+
+== F
+- *#link(<ex:fa-cos-bt>)[Fa Cos Bt]*
+- *#link(<ex:factorial-bounds>)[Factorial Bounds]*
+- *#link(<def:factorial-power>)[Factorial Power]*
+- *#link(<thm:fan-ky>)[Fan Ky]*
+- *#link(<ex:fejer-integral>)[Fejer Integral]*
+- *#link(<lem:fermat>)[Fermat]*
+- *#link(<prop:fermat-point>)[Fermat Point]*
+- *#link(<def:first-fundamental-form>)[First Fundamental Form]*
+- *#link(<ex:fixed-point-interval>)[Fixed Point Interval]*
+- *#link(<ex:flat-function>)[Flat Function]*
+- *#link(<ex:froullani-integral>)[Froullani Integral]*
+- *#link(<def:function-term-series>)[Function Term Series]*
+
+== G
+- *#link(<ex:gamma-discrete>)[Gamma Discrete]*
+- *#link(<prop:gamma-function-properties>)[Gamma Function Properties]*
+- *#link(<thm:gamma-reflection>)[Gamma Reflection]*
+- *#link(<lem:gauss-special-regions>)[Gauss Special Regions]*
+- *#link(<thm:gauss-test>)[Gauss Test]*
+- *#link(<thm:gauss-theorem>)[Gauss Theorem]*
+- *#link(<thm:generalized-gauss-test>)[Generalized Gauss Test]*
+- *#link(<lem:green-special-regions>)[Green Special Regions]*
+- *#link(<thm:green-theorem>)[Green Theorem]*
+- *#link(<ex:growth-comparison>)[Growth Comparison]*
+
+== H
+- *#link(<thm:heine-borel>)[Heine Borel]*
+- *#link(<thm:heine-theorem>)[Heine Theorem]*
+- *#link(<def:higher-order-derivative>)[Higher Order Derivative]*
+- *#link(<prop:homogeneous-functions>)[Homogeneous Functions]*
+- *#link(<def:hypergeometric-series>)[Hypergeometric Series]*
+
+== I
+- *#link(<ex:imbedding-ln1px>)[Imbedding Ln1px]*
+- *#link(<ex:implicit-differentiation>)[Implicit Differentiation]*
+- *#link(<fig:implicit-function>)[Implicit Function]*
+- *#link(<thm:implicit-function-theorem>)[Implicit Function Theorem]*
+- *#link(<thm:implicit-mapping-theorem>)[Implicit Mapping Theorem]*
+- *#link(<ex:implicit-system-derivatives>)[Implicit System Derivatives]*
+- *#link(<ex:implicit-u-partial-y>)[Implicit U Partial Y]*
+- *#link(<ex:improper-convergence>)[Improper Convergence]*
+- *#link(<def:improper-integral-variable-parameter>)[Improper Integral Variable Parameter]*
+- *#link(<thm:improper-multiple-absolute-convergence>)[Improper Multiple Absolute Convergence]*
+- *#link(<def:indefinite-integral>)[Indefinite Integral]*
+- *#link(<def:indeterminate-form>)[Indeterminate Form]*
+- *#link(<note:induced-orientation>)[Induced Orientation]*
+- *#link(<def:infinite-function>)[Infinite Function]*
+- *#link(<thm:infinite-infinite-interchange>)[Infinite Infinite Interchange]*
+- *#link(<thm:infinite-infinitesimal-quantity>)[Infinite Infinitesimal Quantity]*
+- *#link(<def:infinite-integral>)[Infinite Integral]*
+- *#link(<def:infinite-multiple-integral>)[Infinite Multiple Integral]*
+- *#link(<def:infinite-product>)[Infinite Product]*
+- *#link(<thm:infinite-product-criterion>)[Infinite Product Criterion]*
+- *#link(<cor:infinite-product-first>)[Infinite Product First]*
+- *#link(<cor:infinite-product-second>)[Infinite Product Second]*
+- *#link(<def:infinite-quantity>)[Infinite Quantity]*
+- *#link(<def:infinitesimal-function>)[Infinitesimal Function]*
+- *#link(<def:infinitesimal-quantity>)[Infinitesimal Quantity]*
+- *#link(<ex:infinity-exercises>)[Infinity Exercises]*
+- *#link(<thm:inflection-points>)[Inflection Points]*
+- *#link(<thm:integrability-criteria>)[Integrability Criteria]*
+- *#link(<fig:integrability-relationships>)[Integrability Relationships]*
+- *#link(<prop:integrability-uniform-convergence>)[Integrability Uniform Convergence]*
+- *#link(<prop:integrable-basic-facts>)[Integrable Basic Facts]*
+- *#link(<ex:integral-computations>)[Integral Computations]*
+- *#link(<thm:integral-inequalities>)[Integral Inequalities]*
+- *#link(<thm:integral-mean-value>)[Integral Mean Value]*
+- *#link(<prop:integral-periodicity>)[Integral Periodicity]*
+- *#link(<prop:integral-symmetry>)[Integral Symmetry]*
+- *#link(<def:integration-by-parts>)[Integration by Parts]*
+- *#link(<thm:intermediate-value>)[Intermediate Value]*
+- *#link(<thm:invariance-of-differential>)[Invariance of Differential]*
+- *#link(<thm:inverse-function-continuity>)[Inverse Function Continuity]*
+- *#link(<thm:inverse-function-existence>)[Inverse Function Existence]*
+- *#link(<thm:inverse-mapping-theorem>)[Inverse Mapping Theorem]*
+
+== J
+- *#link(<def:jacobian-matrix>)[Jacobian Matrix]*
+- *#link(<thm:jensen>)[Jensen]*
+- *#link(<thm:jordan-decomposition>)[Jordan Decomposition]*
+- *#link(<thm:jordan-rectifiable-curves>)[Jordan Rectifiable Curves]*
+
+== L
+- *#link(<thm:lagrange-identity>)[Lagrange Identity]*
+- *#link(<thm:lagrange-multiplier-method>)[Lagrange Multiplier Method]*
+- *#link(<thm:lagrange-mvt>)[Lagrange Mvt]*
+- *#link(<thm:lagrange-mvt-mappings>)[Lagrange Mvt Mappings]*
+- *#link(<ex:landau-inequality>)[Landau Inequality]*
+- *#link(<thm:lebesgue>)[Lebesgue]*
+- *#link(<thm:legendre-duplication>)[Legendre Duplication]*
+- *#link(<ex:legendre-roots>)[Legendre Roots]*
+- *#link(<thm:leibniz-formula>)[Leibniz Formula]*
+- *#link(<thm:leibniz-test>)[Leibniz Test]*
+- *#link(<thm:lhopital>)[Lhopital]*
+- *#link(<def:li-yorke-chaos>)[Li Yorke Chaos]*
+- *#link(<thm:li-yorke-first>)[Li Yorke First]*
+- *#link(<thm:li-yorke-second>)[Li Yorke Second]*
+- *#link(<ex:limit-composition-square>)[Limit Composition Square]*
+- *#link(<thm:limit-of-derivative>)[Limit of Derivative]*
+- *#link(<def:limit-of-function>)[Limit of Function]*
+- *#link(<prop:limit-of-function-properties>)[Limit of Function Properties]*
+- *#link(<ex:limit-piecewise>)[Limit Piecewise]*
+- *#link(<thm:limsup-arithmetic>)[Limsup Arithmetic]*
+- *#link(<prop:limsup-epsilon>)[Limsup Epsilon]*
+- *#link(<thm:limsup-equivalence>)[Limsup Equivalence]*
+- *#link(<def:limsup-first>)[Limsup First]*
+- *#link(<prop:limsup-maximal>)[Limsup Maximal]*
+- *#link(<def:limsup-second>)[Limsup Second]*
+- *#link(<thm:line-integral-scalar-computation>)[Line Integral Scalar Computation]*
+- *#link(<def:line-integral-scalar-field>)[Line Integral Scalar Field]*
+- *#link(<thm:line-integral-vector-computation>)[Line Integral Vector Computation]*
+- *#link(<def:line-integral-vector-field>)[Line Integral Vector Field]*
+- *#link(<thm:linear-operation-higher-order>)[Linear Operation Higher Order]*
+- *#link(<prop:linearity-integrals>)[Linearity Integrals]*
+- *#link(<def:lipschitz-continuity>)[Lipschitz Continuity]*
+- *#link(<thm:local-inverse-mapping-theorem>)[Local Inverse Mapping Theorem]*
+- *#link(<ex:log-inequality>)[Log Inequality]*
+- *#link(<ex:logarithmic-equation>)[Logarithmic Equation]*
+- *#link(<ex:logarithmic-integral>)[Logarithmic Integral]*
+
+== M
+- *#link(<thm:mean-inequalities>)[Mean Inequalities]*
+- *#link(<prop:measurable-zero-area-boundary>)[Measurable Zero Area Boundary]*
+- *#link(<ex:minimal-period>)[Minimal Period]*
+- *#link(<thm:mixed-partials-equality>)[Mixed Partials Equality]*
+- *#link(<fig:mobius-strip>)[Mobius Strip]*
+- *#link(<thm:monotone-convergence>)[Monotone Convergence]*
+- *#link(<ex:monotone-discontinuities>)[Monotone Discontinuities]*
+- *#link(<cor:monotone-substitution>)[Monotone Substitution]*
+- *#link(<thm:multivariable-lagrange-mvt>)[Multivariable Lagrange Mvt]*
+- *#link(<thm:multivariable-taylor-formula>)[Multivariable Taylor Formula]*
+
+== N
+- *#link(<prop:nested-implies-suprema>)[Nested Implies Suprema]*
+- *#link(<thm:nested-interval>)[Nested Interval]*
+- *#link(<def:nested-intervals>)[Nested Intervals]*
+- *#link(<lem:newton-binomial>)[Newton Binomial]*
+- *#link(<thm:newton-leibniz>)[Newton Leibniz]*
+- *#link(<ex:nonintegrable-derivative>)[Nonintegrable Derivative]*
+- *#link(<prop:nonnegative-zero-integral>)[Nonnegative Zero Integral]*
+- *#link(<thm:ns-conditions-uniform-convergence>)[Ns Conditions Uniform Convergence]*
+- *#link(<def:null-set>)[Null Set]*
+- *#link(<prop:null-sets>)[Null Sets]*
+- *#link(<def:numerical-series>)[Numerical Series]*
+
+== O
+- *#link(<prop:o-operations>)[O Operations]*
+- *#link(<def:one-dimensional-iteration>)[One Dimensional Iteration]*
+- *#link(<def:one-sided-derivatives>)[One Sided Derivatives]*
+- *#link(<def:one-sided-limit>)[One Sided Limit]*
+- *#link(<def:open-cover>)[Open Cover]*
+- *#link(<def:oscillation>)[Oscillation]*
+- *#link(<prop:oscillation-continuity>)[Oscillation Continuity]*
+- *#link(<lem:oscillation-lemmas>)[Oscillation Lemmas]*
+
+== P
+- *#link(<ex:p-integrals>)[P Integrals]*
+- *#link(<ex:pairing-fourth-degree>)[Pairing Fourth Degree]*
+- *#link(<prop:parameterization-induced-orientation>)[Parameterization Induced Orientation]*
+- *#link(<thm:parametric-differentiation>)[Parametric Differentiation]*
+- *#link(<thm:path-independence-criteria>)[Path Independence Criteria]*
+- *#link(<ex:pde-substitution-transform>)[Pde Substitution Transform]*
+- *#link(<def:pointwise-convergence>)[Pointwise Convergence]*
+- *#link(<ex:pointwise-counterexamples>)[Pointwise Counterexamples]*
+- *#link(<ex:pointwise-vanishing>)[Pointwise Vanishing]*
+- *#link(<ex:poisson-integral>)[Poisson Integral]*
+- *#link(<def:positive-derived-series>)[Positive Derived Series]*
+- *#link(<ex:positive-integral-subinterval>)[Positive Integral Subinterval]*
+- *#link(<def:positive-term-series>)[Positive Term Series]*
+- *#link(<ex:power-continuous>)[Power Continuous]*
+- *#link(<def:power-series>)[Power Series]*
+- *#link(<prop:power-series-algebra>)[Power Series Algebra]*
+- *#link(<thm:power-series-are-taylor-series>)[Power Series Are Taylor Series]*
+- *#link(<thm:power-series-properties>)[Power Series Properties]*
+- *#link(<ex:power-series-sums>)[Power Series Sums]*
+- *#link(<ex:power-sum-bounds>)[Power Sum Bounds]*
+- *#link(<ex:project-method-example>)[Project Method Example]*
+- *#link(<fig:project-method-example>)[Project Method Example]*
+
+== Q
+- *#link(<thm:quasi-differential-mvt>)[Quasi Differential Mvt]*
+- *#link(<def:quasi-uniform-convergence>)[Quasi Uniform Convergence]*
+
+== R
+- *#link(<thm:raabe-bertrand-tests>)[Raabe Bertrand Tests]*
+- *#link(<thm:rational-integration>)[Rational Integration]*
+- *#link(<def:real-analytic-function>)[Real Analytic Function]*
+- *#link(<def:rearranged-series>)[Rearranged Series]*
+- *#link(<thm:rectifiability-of-curves>)[Rectifiability of Curves]*
+- *#link(<thm:rectifiable-condition>)[Rectifiable Condition]*
+- *#link(<def:rectifiable-curve>)[Rectifiable Curve]*
+- *#link(<ex:recurrence-in>)[Recurrence in]*
+- *#link(<thm:reduction-double-iterated-bounded-set>)[Reduction Double Iterated Bounded Set]*
+- *#link(<thm:reduction-double-iterated-closed-interval>)[Reduction Double Iterated Closed Interval]*
+- *#link(<ex:riemann-function>)[Riemann Function]*
+- *#link(<ex:riemann-function-integrable>)[Riemann Function Integrable]*
+- *#link(<def:riemann-integral>)[Riemann Integral]*
+- *#link(<prop:riemann-integral-properties>)[Riemann Integral Properties]*
+- *#link(<thm:riemann-rearrangement>)[Riemann Rearrangement]*
+- *#link(<def:riemann-stieltjes-integral>)[Riemann Stieltjes Integral]*
+- *#link(<thm:rolle>)[Rolle]*
+
+== S
+- *#link(<fig:schwarzs-lantern>)[Schwarzs Lantern]*
+- *#link(<fig:schwarzs-lantern-refined>)[Schwarzs Lantern Refined]*
+- *#link(<def:second-fundamental-form>)[Second Fundamental Form]*
+- *#link(<ex:second-order-mvt>)[Second Order Mvt]*
+- *#link(<prop:series-basic-properties>)[Series Basic Properties]*
+- *#link(<def:series-product>)[Series Product]*
+- *#link(<def:set-finite-area>)[Set Finite Area]*
+- *#link(<thm:silverman-toeplitz>)[Silverman Toeplitz]*
+- *#link(<ex:simpson-formula>)[Simpson Formula]*
+- *#link(<thm:smooth-approximates-continuous>)[Smooth Approximates Continuous]*
+- *#link(<ex:smooth-bridge>)[Smooth Bridge]*
+- *#link(<def:smooth-function>)[Smooth Function]*
+- *#link(<ex:smooth-not-analytic>)[Smooth Not Analytic]*
+- *#link(<fig:special-integral-graph>)[Special Integral Graph]*
+- *#link(<ex:special-oscillatory-integral>)[Special Oscillatory Integral]*
+- *#link(<fig:special-region-1>)[Special Region 1]*
+- *#link(<fig:special-region-2>)[Special Region 2]*
+- *#link(<ex:sqrt-a2-minus-x2>)[Sqrt A2 Minus X2]*
+- *#link(<ex:sqrt-x2-plus-a2>)[Sqrt X2 Plus A2]*
+- *#link(<def:square-integrable>)[Square Integrable]*
+- *#link(<prop:square-integrable-relations>)[Square Integrable Relations]*
+- *#link(<def:stationary-point>)[Stationary Point]*
+- *#link(<ex:step-continuous-approximation>)[Step Continuous Approximation]*
+- *#link(<thm:stirling-formula>)[Stirling Formula]*
+- *#link(<thm:stirling-formula-gamma>)[Stirling Formula Gamma]*
+- *#link(<thm:stokes-theorem>)[Stokes Theorem]*
+- *#link(<thm:stolz-cesaro>)[Stolz Cesaro]*
+- *#link(<def:subsequence>)[Subsequence]*
+- *#link(<prop:subsequence-properties>)[Subsequence Properties]*
+- *#link(<def:substitution-method>)[Substitution Method]*
+- *#link(<ex:successive-approximation>)[Successive Approximation]*
+- *#link(<ex:sum-function-derivative-limit>)[Sum Function Derivative Limit]*
+- *#link(<def:sup-inf>)[Sup Inf]*
+- *#link(<thm:supremum-existence>)[Supremum Existence]*
+- *#link(<thm:surface-integral-scalar-computation>)[Surface Integral Scalar Computation]*
+- *#link(<def:surface-integral-scalar-field>)[Surface Integral Scalar Field]*
+- *#link(<thm:surface-integral-vector-computation>)[Surface Integral Vector Computation]*
+- *#link(<def:surface-integral-vector-field>)[Surface Integral Vector Field]*
+- *#link(<def:surface-orientation>)[Surface Orientation]*
+- *#link(<def:surface-parameterization>)[Surface Parameterization]*
+
+== T
+- *#link(<def:tangent-normal-space>)[Tangent Normal Space]*
+- *#link(<ex:tangent-secant-integrals>)[Tangent Secant Integrals]*
+- *#link(<thm:tauber-theorem>)[Tauber Theorem]*
+- *#link(<thm:taylor-cauchy-remainder>)[Taylor Cauchy Remainder]*
+- *#link(<thm:taylor-expandable-necessary-sufficient>)[Taylor Expandable Necessary Sufficient]*
+- *#link(<thm:taylor-expandable-sufficient>)[Taylor Expandable Sufficient]*
+- *#link(<thm:taylor-lagrange>)[Taylor Lagrange]*
+- *#link(<thm:taylor-peano>)[Taylor Peano]*
+- *#link(<lem:taylor-polynomial-derivative>)[Taylor Polynomial Derivative]*
+- *#link(<def:taylor-series>)[Taylor Series]*
+- *#link(<ex:third-derivative-midpoint>)[Third Derivative Midpoint]*
+- *#link(<def:total-differential>)[Total Differential]*
+- *#link(<ex:translation-continuity>)[Translation Continuity]*
+- *#link(<thm:triangle-inequality>)[Triangle Inequality]*
+- *#link(<fig:trig-triangle>)[Trig Triangle]*
+- *#link(<prop:trig-triangle-remarks>)[Trig Triangle Remarks]*
+- *#link(<ex:triple-integral-cone>)[Triple Integral Cone]*
+- *#link(<ex:two-important-limits>)[Two Important Limits]*
+
+== U
+- *#link(<ex:undetermined-coefficients>)[Undetermined Coefficients]*
+- *#link(<def:uniform-continuity>)[Uniform Continuity]*
+- *#link(<thm:uniform-continuity-criterion>)[Uniform Continuity Criterion]*
+- *#link(<thm:uniform-continuity-vanishing>)[Uniform Continuity Vanishing]*
+- *#link(<ex:uniform-continuous-halfline>)[Uniform Continuous Halfline]*
+- *#link(<ex:uniform-continuous-periodic>)[Uniform Continuous Periodic]*
+- *#link(<def:uniform-convergence>)[Uniform Convergence]*
+- *#link(<def:uniform-convergence-parameter>)[Uniform Convergence Parameter]*
+- *#link(<thm:uniqueness-power-series-expansion>)[Uniqueness Power Series Expansion]*
+- *#link(<thm:universal-substitution>)[Universal Substitution]*
+
+== V
+- *#link(<prop:vanishing-at-infinity>)[Vanishing At Infinity]*
+- *#link(<ex:vanishing-derivative-constant>)[Vanishing Derivative Constant]*
+- *#link(<def:variable-limit-integrals>)[Variable Limit Integrals]*
+- *#link(<prop:variable-limit-integrals>)[Variable Limit Integrals]*
+- *#link(<thm:variable-substitution-double-integral>)[Variable Substitution Double Integral]*
+- *#link(<ex:viete-formula>)[Viete Formula]*
+- *#link(<fig:viviani>)[Viviani]*
+
+== W
+- *#link(<ex:wallis>)[Wallis]*
+- *#link(<thm:wallis-formula>)[Wallis Formula]*
+- *#link(<thm:weak-heine-theorem>)[Weak Heine Theorem]*
+- *#link(<thm:weierstrass-first-approximation>)[Weierstrass First Approximation]*
+- *#link(<thm:weierstrass-m-test>)[Weierstrass M Test]*
+- *#link(<thm:weierstrass-second-approximation>)[Weierstrass Second Approximation]*
+- *#link(<thm:weierstrass-substitution>)[Weierstrass Substitution]*
+
+== Z
+- *#link(<def:zero-area-null-set>)[Zero Area Null Set]*
+- *#link(<thm:zero-point-existence>)[Zero Point Existence]*
+- *#link(<ex:zeta-integral-form>)[Zeta Integral Form]*
 
 #bibliography("references.bib", title: "References", full: true)
