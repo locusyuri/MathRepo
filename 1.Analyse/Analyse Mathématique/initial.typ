@@ -1436,10 +1436,14 @@ Formally, $x_0$ is a *fixed point* of the function $f$ if $f(x_0) = x_0$.
 
 #definition(name: "Continuity at a Point")[
   Let $f$ be defined in a neighborhood $U(x_0)$ of $x_0$. If
-  $lim_(x -> x_0) f(x) = f(x_0)$, i.e., for every $epsilon > 0$ there exists $delta > 0$
-  such that $abs(f(x) - f(x_0)) < epsilon$ for all $x$ with $abs(x - x_0) < delta$,
+  $lim_(x -> x_0) f(x) = f(x_0)$, i.e.,
+  $
+    forall epsilon > 0, exists delta > 0, forall x (abs(x - x_0) < delta) : abs(f(x) - f(x_0)) < epsilon,
+  $
   then $f$ is said to be *continuous at* $x_0$, and $x_0$ is called a *continuity point*
-  of $f$. Equivalently, writing $Delta x = x - x_0$ and
+  of $f$.
+
+  Equivalently, writing $Delta x = x - x_0$ and
   $Delta y = f(x_0 + Delta x) - f(x_0)$, continuity at $x_0$ means $lim_(Delta x -> 0) Delta y = 0$.
 ] <def:continuity-at-point>
 
@@ -1511,15 +1515,17 @@ Formally, $x_0$ is a *fixed point* of the function $f$ if $f(x_0) = x_0$.
     is called the *jump* of $f$ at $x_0$.
   + *Second kind:* at least one of the one-sided limits does not exist.
   + *Third kind:* both one-sided limits exist and are equal, but are different from
-    $f(x_0)$, or $f$ is not defined at $x_0$.
+    $f(x_0)$, or $f$ is not defined at $x_0$. Such a point is called a *removable* discontinuity.
 ] <def:discontinuity-point>
 
 #note[
   A third-kind discontinuity can be turned into a continuity point by redefining the function
   value there; such points are therefore also called *removable*.
+
   For example, $x_0 = 0$ is a first-kind discontinuity of $f(x) = "sgn"(x)$ with jump $2$,
   while $f(x) = x sin(1 / x)$, undefined at $0$, has both one-sided limits equal to $0$,
   so $0$ is a removable discontinuity.
+
   Many textbooks group the first and third kinds together as discontinuities of the first kind
   (both one-sided limits exist) and call the second kind discontinuities of the second kind.
 ]
@@ -2657,9 +2663,9 @@ in the notation introduced in the Notations section.
 
   When $Delta x -> 0$, the increment $Delta x$ of the independent variable is
   written $(dif) x$, and the linear principal part $g(x) Delta x$ of $Delta y$
-  is written $(dif) y$; hence
+  is written $dif y$; hence
   $
-    (dif) y = g(x) (dif) x.
+    dif y = g(x) dif x.
   $
 ] <def:differential>
 
@@ -2667,7 +2673,7 @@ in the notation introduced in the Notations section.
   Differentiability at an endpoint of a closed interval is understood via
   one-sided derivatives. Geometrically, $(dif) y$ is the increment of the
   ordinate of the tangent line at the point. Clearly $g(x_0)$ is the limit of
-  the ratio $Delta y / Delta x$ as $Delta x -> 0$.
+  the ratio $(Delta y) / (Delta x)$ as $Delta x -> 0$.
 ]
 
 #note[
