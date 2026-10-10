@@ -9522,11 +9522,26 @@ Choosing $bold(n)$ (rather than $-bold(n)$) as the unit normal is called the *up
 Some common bounded variation functions include:
 
 #terms(
-  terms.item([Monotonic functions], [Any monotonic function on a closed interval is of bounded variation, and $V_a^b (f) = abs(f(b) - f(a))$.]),
-  terms.item([Piecewise monotonic functions], [Functions that are monotonic on each subinterval of a finite partition of $[a, b]$ are also of bounded variation.]),
-  terms.item([Lipschitz continuous functions], [Any Lipschitz continuous function on $[a, b]$ is of bounded variation (see #link(<def:lipschitz-continuity>)[the definition of Lipschitz continuity]).]),
-  terms.item([Functions with finite discontinuities], [Functions that have only a finite number of jump discontinuities on $[a, b]$ are of bounded variation.]),
-  terms.item([Absolutely continuous functions], [Any absolutely continuous function on $[a, b]$ is of bounded variation.]),
+  terms.item(
+    [Monotonic functions],
+    [Any monotonic function on a closed interval is of bounded variation, and $V_a^b (f) = abs(f(b) - f(a))$.],
+  ),
+  terms.item(
+    [Piecewise monotonic functions],
+    [Functions that are monotonic on each subinterval of a finite partition of $[a, b]$ are also of bounded variation.],
+  ),
+  terms.item(
+    [Lipschitz continuous functions],
+    [Any Lipschitz continuous function on $[a, b]$ is of bounded variation (see #link(<def:lipschitz-continuity>)[the definition of Lipschitz continuity]).],
+  ),
+  terms.item(
+    [Functions with finite discontinuities],
+    [Functions that have only a finite number of jump discontinuities on $[a, b]$ are of bounded variation.],
+  ),
+  terms.item(
+    [Absolutely continuous functions],
+    [Any absolutely continuous function on $[a, b]$ is of bounded variation.],
+  ),
 )
 
 #theorem(name: "Jordan Decomposition Theorem")[
@@ -9567,7 +9582,7 @@ Bounded variation functions have important applications. For example, in harmoni
   Let $L$ be a $C^1$ smooth regular curve parameterized by $bold(x)(t) = (x(t), y(t), z(t))$, $t in [alpha, beta]$, and let $f$ be continuous on $L$. Then
   $
     integral_L f dif s & = integral_alpha^beta f(bold(x)(t)) norm(bold(x)'(t)) dif t \
-    & = integral_alpha^beta f(x(t), y(t), z(t)) sqrt((x'(t))^2 + (y'(t))^2 + (z'(t))^2) dif t.
+                       & = integral_alpha^beta f(x(t), y(t), z(t)) sqrt((x'(t))^2 + (y'(t))^2 + (z'(t))^2) dif t.
   $
 ] <thm:line-integral-scalar-computation>
 
@@ -9604,7 +9619,9 @@ $ integral_L f dif s = integral_a^b f(x, y(x)) sqrt(1 + (y'(x))^2) dif x. $
 // 注：tex 原定理称 Sigma 为 "closed surface"，但参数化计算公式并不要求封闭性，判定为误植，已去除。
 
 Specially, if the surface $Sigma$ is given by $z = z(x, y)$, $(x, y) in D$, then
-$ integral.double_Sigma f dif S = integral.double_D f(x, y, z(x, y)) sqrt(1 + lr((frac(partial z, partial x)))^2 + lr((frac(partial z, partial y)))^2) dif x dif y. $
+$
+  integral.double_Sigma f dif S = integral.double_D f(x, y, z(x, y)) sqrt(1 + lr((frac(partial z, partial x)))^2 + lr((frac(partial z, partial y)))^2) dif x dif y.
+$
 
 == Differential Form and Exterior Differentiation // 微分形式与外微分
 
@@ -9660,8 +9677,14 @@ A *differential form* is a skew symmetric tensor on a vector space.
 
 #property(name: "Properties of Exterior Differentiation")[
   #terms(
-    terms.item([Linearity], [$dif(alpha omega + beta eta) = alpha dif omega + beta dif eta$, where $alpha, beta$ are constants.]),
-    terms.item([Leibniz Rule], [$dif(omega and eta) = dif omega and eta + (-1)^k omega and dif eta$, where $omega$ is a $k$-form.]),
+    terms.item(
+      [Linearity],
+      [$dif(alpha omega + beta eta) = alpha dif omega + beta dif eta$, where $alpha, beta$ are constants.],
+    ),
+    terms.item(
+      [Leibniz Rule],
+      [$dif(omega and eta) = dif omega and eta + (-1)^k omega and dif eta$, where $omega$ is a $k$-form.],
+    ),
     terms.item([Nilpotency], [$dif(dif omega) = 0$.]),
   )
 ] <prop:exterior-differentiation-properties>
@@ -9737,13 +9760,15 @@ $ integral.double_(attach(Sigma, t: ⇀)) omega. $
     & = integral.double_(attach(Sigma, t: ⇀)) [P cos alpha + Q cos beta + R cos gamma] dif S \
     & = integral.double_D bold(f)(bold(r)(u, v)) dot lr((frac(partial bold(r), partial u) times frac(partial bold(r), partial v))) dif u dif v \
     & = plus.minus integral.double_D [P(x(u, v), y(u, v), z(u, v)) frac(partial (y, z), partial (u, v)) + Q(x(u, v), y(u, v), z(u, v)) frac(partial (z, x), partial (u, v)) \
-    & quad quad + R(x(u, v), y(u, v), z(u, v)) frac(partial (x, y), partial (u, v))] dif u dif v,
+      & quad quad + R(x(u, v), y(u, v), z(u, v)) frac(partial (x, y), partial (u, v))] dif u dif v,
   $
   where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is consistent with the direction of $lr((frac(partial bold(r), partial u) times frac(partial bold(r), partial v)))$ (cf. #link(<prop:parameterization-induced-orientation>)[the orientation induced by a parameterization]).
 ] <thm:surface-integral-vector-computation>
 
 Specially, if the surface $attach(Sigma, t: ⇀)$ is given by $z = z(x, y)$, $(x, y) in D_(x y)$, where $D_(x y)$ is a closed region with piecewise smooth boundary in the $x y$-plane, and $R(x, y, z)$ is continuous on $D_(x y)$, then
-$ integral.double_(attach(Sigma, t: ⇀)) R(x, y, z) dif x dif y = plus.minus integral.double_(D_(x y)) R(x, y, z(x, y)) dif x dif y, $
+$
+  integral.double_(attach(Sigma, t: ⇀)) R(x, y, z) dif x dif y = plus.minus integral.double_(D_(x y)) R(x, y, z(x, y)) dif x dif y,
+$
 where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is upward or downward.
 
 == Stokes' Formula // 斯托克斯公式
@@ -9772,9 +9797,13 @@ Denote $integral.cont_(attach(partial M, t: ⇀))$ as the line integral along th
 
 #lemma[
   + Let $attach(partial M, t: ⇀)$ be the boundary of the first region in @fig:special-region-1, and let $P(x, y) in C^1 (M)$. Then
-    $ integral.cont_(attach(partial M, t: ⇀)) P dif x = -integral.double_(attach(M, t: ⇀)) frac(partial P, partial y) dif x and dif y. $
+    $
+      integral.cont_(attach(partial M, t: ⇀)) P dif x = -integral.double_(attach(M, t: ⇀)) frac(partial P, partial y) dif x and dif y.
+    $
   + Let $attach(partial M, t: ⇀)$ be the boundary of the second region in @fig:special-region-1, and let $Q(x, y) in C^1 (M)$. Then
-    $ integral.cont_(attach(partial M, t: ⇀)) Q dif y = integral.double_(attach(M, t: ⇀)) frac(partial Q, partial x) dif x and dif y. $
+    $
+      integral.cont_(attach(partial M, t: ⇀)) Q dif y = integral.double_(attach(M, t: ⇀)) frac(partial Q, partial x) dif x and dif y.
+    $
 ] <lem:green-special-regions>
 
 #theorem(name: "Green's Theorem")[
@@ -9803,7 +9832,10 @@ Consider three kinds of special oriented closed surfaces in $bb(R)^3$, as shown 
 #terms(
   terms.item([$attach(Sigma_1, t: ⇀)$], [$z = phi_1 (x, y)$, $(x, y) in Delta_1$.]),
   terms.item([$attach(Sigma_2, t: ⇀)$], [$z = phi_2 (x, y)$, $(x, y) in Delta_1$.]),
-  terms.item([$attach(Sigma_3, t: ⇀)$], [A cylindrical surface taking $partial Delta_1$ as the directrix, with the generatrix paralleling to the $O z$-axis; of course, it can also be reduced to a closed curve.]),
+  terms.item(
+    [$attach(Sigma_3, t: ⇀)$],
+    [A cylindrical surface taking $partial Delta_1$ as the directrix, with the generatrix paralleling to the $O z$-axis; of course, it can also be reduced to a closed curve.],
+  ),
 )
 
 The second and third surfaces are similar.
@@ -9817,11 +9849,17 @@ Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over 
 
 #lemma[
   + Let $attach(partial M, t: ⇀)$ be the boundary of the first surface in @fig:special-region-2, and let $R(x, y, z) in C^1 (M)$. Then
-    $ integral.surf_(attach(partial M, t: ⇀)) R dif x and dif y = integral.vol_(attach(M, t: ⇀)) frac(partial R, partial z) dif x and dif y and dif z. $
+    $
+      integral.surf_(attach(partial M, t: ⇀)) R dif x and dif y = integral.vol_(attach(M, t: ⇀)) frac(partial R, partial z) dif x and dif y and dif z.
+    $
   + Let $attach(partial M, t: ⇀)$ be the boundary of the second surface in @fig:special-region-2, and let $P(x, y, z) in C^1 (M)$. Then
-    $ integral.surf_(attach(partial M, t: ⇀)) P dif y and dif z = integral.vol_(attach(M, t: ⇀)) frac(partial P, partial x) dif x and dif y and dif z. $
+    $
+      integral.surf_(attach(partial M, t: ⇀)) P dif y and dif z = integral.vol_(attach(M, t: ⇀)) frac(partial P, partial x) dif x and dif y and dif z.
+    $
   + Let $attach(partial M, t: ⇀)$ be the boundary of the third surface in @fig:special-region-2, and let $Q(x, y, z) in C^1 (M)$. Then
-    $ integral.surf_(attach(partial M, t: ⇀)) Q dif z and dif x = integral.vol_(attach(M, t: ⇀)) frac(partial Q, partial y) dif x and dif y and dif z. $
+    $
+      integral.surf_(attach(partial M, t: ⇀)) Q dif z and dif x = integral.vol_(attach(M, t: ⇀)) frac(partial Q, partial y) dif x and dif y and dif z.
+    $
 ] <lem:gauss-special-regions>
 
 #theorem(name: "Gauß's Theorem")[
@@ -9846,12 +9884,14 @@ Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over 
     integral.cont_(attach(partial M, t: ⇀)) P dif x + Q dif y + R dif z
     & = integral.double_(attach(M, t: ⇀)) (frac(partial R, partial y) - frac(partial Q, partial z)) dif y and dif z \
     & quad + (frac(partial P, partial z) - frac(partial R, partial x)) dif z and dif x + (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y \
-    & = integral.double_(attach(M, t: ⇀)) mat(delim: "|",
+    & = integral.double_(attach(M, t: ⇀)) mat(
+      delim: "|",
       dif y and dif z, dif z and dif x, dif x and dif y;
       frac(partial, partial x), frac(partial, partial y), frac(partial, partial z);
       P, Q, R,
     ) \
-    & = integral.double_(attach(M, t: ⇀)) mat(delim: "|",
+    & = integral.double_(attach(M, t: ⇀)) mat(
+      delim: "|",
       cos alpha, cos beta, cos gamma;
       frac(partial, partial x), frac(partial, partial y), frac(partial, partial z);
       P, Q, R,
@@ -9890,7 +9930,9 @@ where the right-hand side is independent of the choice of the path $attach(L, t:
   + $omega$ is exact on $U$, i.e., there exists a $C^2$ function $F(x, y)$ on $U$ such that
     $ dif F = omega = P dif x + Q dif y. $
     At this time, $F(x, y)$ is called a *potential function* of $omega$ on $U$, and
-    $ F(x, y) = integral_((x_0, y_0))^((x, y)) omega + C = integral_(x_0)^x P(t, y_0) dif t + integral_(y_0)^y Q(x, s) dif s + C, $
+    $
+      F(x, y) = integral_((x_0, y_0))^((x, y)) omega + C = integral_(x_0)^x P(t, y_0) dif t + integral_(y_0)^y Q(x, s) dif s + C,
+    $
     where $(x_0, y_0)$ is a fixed point in $U$ and $C$ is an arbitrary constant.
   + $omega$ is closed on $U$, i.e.,
     $ frac(partial P, partial y) = frac(partial Q, partial x). $
@@ -9908,6 +9950,217 @@ where the right-hand side is independent of the choice of the path $attach(L, t:
 // 注：tex 原文该例题仅给出问题陈述，未提供解答。
 
 // B16: ch16 Integrals with Variable Parameters（变参积分）
+
+= Integrals with Variable Parameters // 变参积分
+
+== Definite Integrals with Variable Parameters // 变限定积分
+
+#definition(name: "Definite Integral with Variable Parameters")[
+  Let $f(x, y)$ be defined on $[a, b] times [c, d]$. For each fixed $y in [c, d]$, if the definite integral
+  $ I(y) = integral_a^b f(x, y) dif x $
+  exists, then $I(y)$ is called a *definite integral with variable parameter $y$*.
+] <def:definite-integral-variable-parameter>
+
+// 注：tex 原文 §16.2 "Elliptic Integrals" 仅有标题、无任何内容（docs/微分与积分.md 亦无相关素材），按空壳处理原则未迁移该节。
+
+== Improper Integrals with Variable Parameters // 变参反常积分
+
+There are two types of improper integrals with variable parameters: those on infinite intervals and those with unbounded integrands. Here we only give the definition of improper integrals on infinite intervals with variable parameters.
+
+#definition(name: "Improper Integral with Variable Parameters")[
+  Let $f(x, y)$ be defined on $[a, +oo) times [c, d]$. For some fixed $y_0 in [c, d]$, if the improper integral
+  $ I(y_0) = integral_a^(+oo) f(x, y_0) dif x $
+  converges, then $integral_a^(+oo) f(x, y) dif x$ is called convergent at $y_0$, and $y_0$ is called its *convergence point*.
+
+  Let the set of all convergence points be $E$; then $E$ is the domain of definition of the improper integral with variable parameters
+  $ I(y) = integral_a^(+oo) f(x, y) dif x, $
+  also called the *convergence domain* of the improper integral $integral_a^(+oo) f(x, y) dif x$.
+] <def:improper-integral-variable-parameter>
+
+=== Uniform Convergence and Its Tests // 一致收敛及其判别（原 leftbarTitle 非空壳，升级为小节）
+
+#definition(name: "Uniform Convergence of Improper Integrals with Variable Parameters")[
+  Let $f(x, y)$ be defined on $[a, +oo) times [c, d]$, where $[c, d]$ is the convergence domain of the improper integral $integral_a^(+oo) f(x, y) dif x$. If for every $epsilon > 0$ there exists a number $A_0 > a$ independent of $y$, such that for all $A > A_0$ and for all $y in [c, d]$,
+  $ abs(integral_a^A f(x, y) dif x - I(y)) = abs(integral_A^(+oo) f(x, y) dif x) < epsilon, $
+  then the improper integral $integral_a^(+oo) f(x, y) dif x$ is said to be *uniformly convergent* on $[c, d]$.
+] <def:uniform-convergence-parameter>
+
+#theorem(name: "Cauchy Criterion for Uniform Convergence of Improper Integrals with Variable Parameters")[
+  Let $f(x, y)$ be defined on $[a, +oo) times [c, d]$, where $[c, d]$ is the convergence domain of the improper integral $integral_a^(+oo) f(x, y) dif x$. The improper integral $integral_a^(+oo) f(x, y) dif x$ is uniformly convergent on $[c, d]$ if and only if for every $epsilon > 0$ there exists a number $A_0 > a$ independent of $y$, such that for all $A_1, A_2 > A_0$ and for all $y in [c, d]$,
+  $ abs(integral_(A_1)^(A_2) f(x, y) dif x) < epsilon. $
+] <thm:cauchy-criterion-parameter>
+
+== Analysis Properties of Uniform Convergence // 一致收敛的分析性质
+
+// 注：tex 原文该节开头存在一个空的 lemma 环境（无任何内容来源），按空壳处理原则删除。
+
+#theorem(name: "Uniform Convergence and Continuity")[
+  Let $f(x, y)$ be continuous on $[a, +oo) times [c, d]$, and let $integral_a^(+oo) f(x, y) dif x$ be uniformly convergent on $[c, d]$ with respect to $y$. Then:
+  + $
+      I(y) = integral_a^(+oo) f(x, y) dif x
+    $
+    is continuous on $[c, d]$, i.e.,
+    $
+      lim_(y -> y_0) integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) lim_(y -> y_0) f(x, y) dif x, quad y_0 in [c, d],
+    $
+    that is, the limit and the integral can be interchanged.
+  + $
+      integral_c^d dif y integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) dif x integral_c^d f(x, y) dif y,
+    $
+    that is, the order of integration can be interchanged.
+] <thm:continuity-parameter>
+
+When $[c, d]$ is replaced by $[c, +oo)$, the above theorem fails, but we have the following theorem.
+
+#theorem[
+  On the region $D = [a, +oo) times [c, +oo)$:
+  + If $f(x, y)$ satisfies:
+    + $f(x, y) in C(D)$;
+    + $integral_a^(+oo) f(x, y) dif x$ converges inner-closed uniformly with respect to $y$ (i.e., uniformly on every compact subinterval of $[c, +oo)$), and $integral_c^(+oo) f(x, y) dif y$ converges inner-closed uniformly with respect to $x$ (i.e., uniformly on every compact subinterval of $[a, +oo)$);
+    + one of the two integrals $integral_a^(+oo) dif x integral_c^(+oo) abs(f(x, y)) dif y$ or $integral_c^(+oo) dif y integral_a^(+oo) abs(f(x, y)) dif x$ converges;
+
+    then
+    $ integral_c^(+oo) dif y integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) dif x integral_c^(+oo) f(x, y) dif y. $
+  + If $f(x, y)$ satisfies:
+    + $f(x, y) in C(D)$ and $f(x, y) >= 0$ on $D$;
+    + the integral $integral_a^(+oo) f(x, y) dif x$, viewed as a function of $y$, belongs to $C[c, +oo)$, and the integral $integral_c^(+oo) f(x, y) dif y$, viewed as a function of $x$, belongs to $C[a, +oo)$;
+    + one of the two integrals $integral_a^(+oo) dif x integral_c^(+oo) f(x, y) dif y$ or $integral_c^(+oo) dif y integral_a^(+oo) f(x, y) dif x$ converges;
+
+    then
+    $ integral_c^(+oo) dif y integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) dif x integral_c^(+oo) f(x, y) dif y. $
+] <thm:infinite-infinite-interchange>
+// 注：tex 原文 Item 2 条件 (a) 写作 "f(x) >= 0 on D"，按上下文应为二元函数 f(x, y)，已修正。
+
+#note(title: "Remark")[
+  In both cases, the convergence of one of the two iterated integrals implies that the other converges as well and that the equality holds.
+]
+
+#theorem(name: "Uniform Convergence and Differentiation")[
+  On the region $D = [a, +oo) times [c, d]$, if the following conditions are satisfied:
+  + $frac(partial f, partial y)(x, y) in C(D)$;
+  + $integral_a^(+oo) frac(partial f, partial y)(x, y) dif x$ converges uniformly with respect to $y$ on $[c, d]$;
+  + there exists a point $y_0 in [c, d]$ such that $integral_a^(+oo) f(x, y_0) dif x$ converges;
+  + for any $[alpha, beta] subset.eq [a, +oo)$, the integral $integral_alpha^beta f(x, y) dif x$ exists.
+
+  Then $I(y) = integral_a^(+oo) f(x, y) dif x$ is differentiable on $[c, d]$, and
+  $ frac(dif, dif y) integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) frac(partial f, partial y)(x, y) dif x. $
+] <thm:differentiation-parameter>
+// 注：tex 原文该定理的区域写作 D = [a, +\infty] × [c, d]，无穷端点误用闭括号，已修正为 [a, +∞)。
+
+#example[
+  Let
+  $ F(a) = integral_0^(+oo) 1 / t (1 - e^(-a t)) cos b t dif t, quad b != 0. $
+  + Prove that $F(a) in C[0, +oo) inter D(0, +oo)$.
+  + Find the expression of $F(a)$.
+] <ex:fa-cos-bt>
+// 注：tex 原文该例题未提供解答。
+
+=== Imbedding Method // 嵌入法（原 leftbarTitle 非空壳，升级为小节）
+
+If $I = integral_a^b f(x) dif x$ is difficult to calculate directly, we can introduce a parameter $y$ and consider the integral
+$ I(y) = integral_a^b f(x, y) dif x, $
+and let $I = I(y_0)$ for some specific $y_0$. If we can calculate $I(y)$ and then take $y = y_0$, then we can obtain the value of $I$. This method is called the *imbedding method*.
+
+#example[
+  Compute the integral
+  $ I = integral_0^1 frac(ln(1 + x), 1 + x^2) dif x. $
+] <ex:imbedding-ln1px>
+
+#example[
+  Compute Dirichlet's integral
+  $ I = integral_0^(+oo) frac(sin x, x) dif x. $
+] <ex:dirichlet-integral-parameter>
+// 注：tex 原文该例题的 solution 环境为空；反常积分章已有 #link(<ex:dirichlet-integral>)[the Dirichlet integral] 及其完整证明（Riemann-Lebesgue 引理方法），此处是否需按嵌入法补写解答待用户裁决。
+
+== Euler Integrals // Euler 积分
+
+=== Beta Function // Beta 函数（原 leftbarTitle 非空壳，升级为小节）
+
+The Beta function can be defined in the following equivalent forms:
++ For $p > 0$, $q > 0$:
+  $ B(p, q) = integral_0^1 t^(p - 1) (1 - t)^(q - 1) dif t. $
++ Via the substitution $t = u / (1 + u)$:
+  $
+    B(p, q) = integral_0^(+oo) frac(u^(p - 1), (1 + u)^(p + q)) dif u = integral_0^(+oo) frac(u^(q - 1), (1 + u)^(p + q)) dif u.
+  $
++ Via the substitution $t = sin^2 theta$:
+  $ B(p, q) = 2 integral_0^(pi / 2) sin^(2p - 1) theta cos^(2q - 1) theta dif theta. $
+
+In particular, we have
+$ B(1/2, 1/2) = pi, quad B(3/2, 1/2) = pi/2, quad B(1, 1) = 1. $
+
+#property(name: "Properties of the Beta Function")[
+  #terms(
+    terms.item([Continuity], [$B(p, q) in C(U)$, where $U = {(p, q) | p > 0, q > 0}$.]),
+    terms.item([Symmetry], [$B(p, q) = B(q, p)$.]),
+    terms.item([Recurrence Relation], [$B(p, q) = (q - 1) / (p + q - 1) B(p, q - 1)$ for $p > 0$, $q > 1$.]),
+  )
+] <prop:beta-function-properties>
+
+=== Gamma Function // Gamma 函数（原 leftbarTitle 非空壳，升级为小节）
+
+The Gamma function can be defined in the following equivalent forms:
++ For $s > 0$:
+  $ Gamma(s) = integral_0^(+oo) x^(s - 1) e^(-x) dif x. $
++ Via the limit:
+  $ Gamma(s) = lim_(n -> oo) n! / (s(s + 1)(s + 2) ... (s + n)). $
++ Via the substitution $x = t^2$:
+  $ Gamma(s) = 1 / 2 integral_0^(+oo) t^(2s - 1) e^(-t^2) dif t. $
+
+In particular, we have
+$ Gamma(1/2) = sqrt(pi), quad Gamma(3/2) = sqrt(pi) / 2, quad Gamma(1) = 1. $
+
+#property(name: "Properties of the Gamma Function")[
+  #terms(
+    terms.item([Continuity], [$Gamma(s) in C(0, +oo)$.]),
+    terms.item([Recurrence Relation], [$Gamma(s + 1) = s Gamma(s)$ for $s > 0$.]),
+  )
+] <prop:gamma-function-properties>
+
+The Gamma function can be _extended_ to the whole complex plane except for the non-positive integers, where it has simple poles.
+
+=== Relation between Beta and Gamma Functions // Beta 函数与 Gamma 函数的关系（原 leftbarTitle 非空壳，升级为小节）
+
+#theorem[
+  There holds the following relation between the Beta and Gamma functions:
+  $ B(p, q) = frac(Gamma(p) Gamma(q), Gamma(p + q)), quad p > 0, q > 0. $
+] <thm:beta-gamma-relation>
+
+Next, we give three important formulas about the Gamma function, which can be extended to the complex domain as well.
+
+#theorem(name: "Bohr-Mollerup Theorem")[
+  The Gamma function is the unique function $f$ defined on $(0, +oo)$ satisfying the following three conditions:
+  + $f(x) > 0$ and $f(1) = 1$;
+  + $f(x + 1) = x f(x)$ for all $x > 0$;
+  + $ln f(x)$ is convex on $(0, +oo)$.
+] <thm:bohr-mollerup>
+
+#theorem(name: "Legendre's Duplication Formula")[
+  For $s > 0$, there holds:
+  $ Gamma(s) Gamma(s + 1/2) = frac(sqrt(pi), 2^(2s - 1)) Gamma(2s). $
+] <thm:legendre-duplication>
+
+#theorem(name: "Reflection Formula")[
+  For $0 < s < 1$, there holds:
+  $ Gamma(s) Gamma(1 - s) = pi / sin(pi s). $
+] <thm:gamma-reflection>
+
+#theorem(name: "Stirling's Formula")[
+  $
+    Gamma(s + 1) = sqrt(2 pi s) (s / e)^s exp(theta / (12 s)),
+  $
+  where $0 < theta < 1$. Specially, when $s = n in bb(N)$,
+  $
+    Gamma(n + 1) = n! = sqrt(2 pi n) (n / e)^n exp(theta / (12 n)),
+  $
+  where $0 < theta < 1$.
+] <thm:stirling-formula-gamma>
+// 注：级数章已有 <thm:stirling-formula>（n! 的渐近展开），此处标签追加 -gamma 后缀以避免冲突。
+
+#example[
+  Prove the integral form of the Riemann $zeta$ function:
+  $ zeta(s) = sum_(n = 1)^oo 1 / n^s = 1 / Gamma(s) integral_0^(+oo) frac(x^(s - 1), e^x - 1) dif x, quad s > 1. $
+] <ex:zeta-integral-form>
 
 // --- Appendix ---
 #part("Appendix") // 附录
