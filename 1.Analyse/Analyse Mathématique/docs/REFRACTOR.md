@@ -330,7 +330,7 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - tex 修正（留注 2 处）：interchange 定理 Item 2 条件 "f(x) ≥ 0 on D" 修正为二元函数 f(x, y)；differentiation 定理区域 "[a, +∞]" 闭括号笔误修正为 "[a, +∞)"
   - 新符号验证（PNG 目检 pg212–218）：`varepsilon` 非法，统一替换为 `epsilon`（全库惯例）；嵌套有序枚举（外层 `+` 2 空格 / 内层 4 空格）+ 枚举项内 display math 4 空格缩进渲染正常；`{(p, q) | p > 0, q > 0}` 集合构建记法正常
   - 标签避让：级数章已有 `<thm:stirling-formula>` 与 `<ex:dirichlet-integral>`，分别以 `-gamma` 后缀与 `-parameter` 后缀避让
-  - 工程规避：tmp 内容文件 + PowerShell ReadAllLines/WriteAllText 拼接写入（UTF-8 无 BOM + LF），行级核验接缝干净
+  - 工程规避：tmp 内容文件 + PowerShell ReadAllLines/WriteAllText 拼接写入（UTF-8 无 BOM + LF），行级核验接缝干净；⚠ 事故记录：拼接后用 Edit 对 initial.typ 做 varepsilon→epsilon 全局替换，再次触发拆行 bug 误改 B14b/B15b 区域 20 行（提交 5f72c21），已从父提交恢复重拼并修复（提交 dcb5bc2）——**对 initial.typ 的批量替换必须走 PowerShell，禁用 Edit replace_all**
   - 验证：编译退出码 0，三正则命中 0（B16 区间），PNG 目检 pg212–218 通过（含 Appendix Part VI 接缝页）
 - [x] ✅ Part V 里程碑：编译 + 提交（✅ 2026-10-10，随 B16 docs 提交收口，ch14–ch16 全部迁入，正文 16 章迁移全部完成）
 
