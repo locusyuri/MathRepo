@@ -8946,7 +8946,7 @@ $
   quad quad
   cases(
     r = sqrt(x^2 + y^2)\, & r >= 0 comma
-    theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
+                            theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
   )
 $
 and
@@ -8964,8 +8964,8 @@ $
   quad quad
   cases(
     r = sqrt(x^2 + y^2)\, & r >= 0 comma
-    theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
-    z = z comma
+                            theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
+                                                      z = z comma
   )
 $
 and
@@ -8984,8 +8984,8 @@ $
   quad quad
   cases(
     r = sqrt(x^2 + y^2 + z^2)\, & r >= 0 comma
-    phi = arccos(z / r)\, & r != 0 comma phi in [0, pi] comma
-    theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
+                                  phi = arccos(z / r)\, & r != 0 comma phi in [0, pi] comma
+                                                          theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
   )
 $
 and
@@ -9143,6 +9143,255 @@ Improper multiple integrals can also be classified into two types: infinite inte
 // --- Part V: 几何应用与高级积分（决策③：ch14–16） ---
 #part("Calculus Applications in Several Variables") // 多元微积分的应用
 // B14: ch14 Introduction to Curve and Surface Theory（曲线与曲面论导论，决策①改章名）
+= Introduction to Curve and Surface Theory // 曲线与曲面论导论
+// 注（P1-2）：原章名 "Introduction to Surface Theory"，因本章混入曲线内容（弧长、曲率），
+// 按 §3.4 决策①改名为 "Introduction to Curve and Surface Theory"，与 Preface 表述对齐。
+
+== Parameterization of Surface // 参数化曲面
+
+#definition(name: "Parameterization of Surface")[
+  Let $Delta$ be an open subset in $bb(R)^s$, and $bold(r): Delta -> bb(R)^n$ be a mapping, where
+  $
+    bold(u) = (u_1, u_2, dots, u_s) -> bold(x)(bold(u)) = (x_1 (u_1, u_2, dots, u_s), x_2 (u_1, u_2, dots, u_s), dots, x_n (u_1, u_2, dots, u_s)).
+  $
+  Then $M = bold(r)(Delta) = {bold(r)(bold(u)) | bold(u) in Delta}$ is called an $s$-dimensional *surface (patch)*, and $bold(r)(bold(u))$ is referred to as the parameterization of $M$.
+
+  When $bold(r)(bold(u)) in C^k$ ($k >= 0$), $bold(r)$ or $M$ is called an $s$-dimensional $C^k$ surface.
+
+  If $bold(r) in C^k$ ($k >= 1$), $bold(r)$ or $M$ is called an *$s$-dimensional $C^k$ smooth surface*.
+
+  When
+  $
+    "rank"(bold(r)'_1 (bold(u)^0), bold(r)'_2 (bold(u)^0), dots, bold(r)'_s (bold(u)^0)) = "rank" mat(
+      frac(partial r_1, partial u_1), dots.c, frac(partial r_1, partial u_s);
+      dots.v, dots.down, dots.v;
+      frac(partial r_n, partial u_1), dots.c, frac(partial r_n, partial u_s),
+    )_(bold(u)^0) = s,
+  $
+  we call $bold(u)^0$ or $bold(r)(bold(u)^0)$ a *regular point* of the surface $M$. Otherwise, it is called a *singular point*.
+
+  Every point that is a regular point of the surface is referred to as an *$s$-dimensional $C^k$ regular surface*.
+
+  At regular points, ${bold(r)'_1, dots, bold(r)'_s}$ are linearly independent.
+] <def:surface-parameterization>
+// 注：tex 标签 "def:Parameterization of Surface" 含空格，迁移时改名为 def:surface-parameterization。
+
+When $s = 1$, $t$ represents the parameter, a one-dimensional surface is commonly referred to as a *curve*. Considering a $C^k$ ($k >= 1$) curve $bold(r)(t)$, we have
+$ bold(r)'(t) = (r_1' (t), r_2' (t), dots, r_n' (t)). $
+If $t$ is a regular point, then
+$ "rank"(bold(r)'(t)) = "rank"(r_1' (t), r_2' (t), dots, r_n' (t)) = 1, $
+which is equivalent to $bold(r)'(t) != 0$, which means $r_1' (t), r_2' (t), dots, r_n' (t)$ are not all zero.
+
+We refer to $bold(r)'(t)$ as the *tangent vector* of the curve $bold(r)(t)$ at point $t$. When $t$ varies, a tangent vector field along the curve $bold(r)(t)$ is obtained. If $bold(r)(t)$ is a regular curve, $frac(bold(r)'(t), norm(bold(r)'(t)))$ is the unit tangent vector field along the curve $bold(r)(t)$. It should be emphasized that $bold(r)'(t)$ or $frac(bold(r)'(t), norm(bold(r)'(t)))$ always points outward from point $t$.
+
+== Tangent Space and Normal Space // 切空间与法空间
+
+#definition(name: "Tangent Space and Normal Space")[
+  Let $M$ be an $s$-dimensional smooth surface in $bb(R)^n$ defined above, and $bold(u)^0$ be a regular point of $M$. The *tangent space* of $M$ at point $bold(r)(bold(u)^0)$ is the linear space spanned by $s$ tangent vectors:
+  $ T_(bold(u)^0) M = "span"{bold(r)'_1 (bold(u)^0), bold(r)'_2 (bold(u)^0), dots, bold(r)'_s (bold(u)^0)}. $
+  Accordingly, the *normal space* of $M$ at point $bold(r)(bold(u)^0)$ is the orthogonal complement of the tangent space:
+  $ N_(bold(u)^0) M = (T_(bold(u)^0) M)^perp. $
+] <def:tangent-normal-space>
+// 注：tex 中该定义无标签，迁移时补加。
+
+Some special cases of tangent space and normal space expressions are given below:
+
+=== Curve // 曲线的切线与法平面
+
+When $n = 3, s = 1$, $M$ is a curve in three-dimensional space.
+
++ If the curve is parameterized as
+  $ bold(r)(t) = (x(t), y(t), z(t)), quad t in I subset.eq bb(R), $
+  at the regular point $bold(r)(t^0) = (x(t^0), y(t^0), z(t^0))$, the tangent line and normal plane are:
+  $
+    T_(t^0) M = "span"{bold(r)'(t^0)}: quad frac(x - x(t^0), x' (t^0)) = frac(y - y(t^0), y' (t^0)) = frac(z - z(t^0), z' (t^0)),
+  $
+  $
+    N_(t^0) M: quad & x' (t^0)(x - x(t^0)) + y' (t^0)(y - y(t^0)) + z' (t^0)(z - z(t^0)) = 0 \
+    & <=> quad bold(r)'(t^0) dot (bold(r) - bold(r)(t^0)) = 0.
+  $
+
++ If the curve is described by the system
+  $ cases(F(x, y, z) = 0, G(x, y, z) = 0) $
+  and the regular point is $bold(x)^0 = (x^0, y^0, z^0)$. For the Jacobian matrix
+  $
+    J = mat(
+      F_x (bold(x)^0), F_y (bold(x)^0), F_z (bold(x)^0);
+      G_x (bold(x)^0), G_y (bold(x)^0), G_z (bold(x)^0),
+    ),
+  $
+  since $"rank" J = 2$, without loss of generality, assume
+  $
+    frac(partial (F, G), partial (y, z)) = mat(
+      delim: "|",
+      F_y (bold(x)^0), F_z (bold(x)^0);
+      G_y (bold(x)^0), G_z (bold(x)^0),
+    ) != 0.
+  $
+  By #link(<thm:implicit-mapping-theorem>)[the implicit mapping theorem], we can express
+  $ y = f(x), quad z = g(x), quad x in U(x^0) subset.eq bb(R). $
+  Then
+  $
+    f' (x^0) = frac(frac(partial (F, G), partial (z, x))(bold(x)^0), frac(partial (F, G), partial (y, z))(bold(x)^0)), quad
+    g' (x^0) = frac(frac(partial (F, G), partial (x, y))(bold(x)^0), frac(partial (F, G), partial (y, z))(bold(x)^0)).
+  $
+  Therefore, the tangent line and normal plane at point $bold(x)^0$ are:
+  $
+    T_(x^0) M: quad frac(x - x^0, 1) = frac(y - y^0, f' (x^0)) = frac(z - z^0, g' (x^0))
+    <=> frac(x - x^0, frac(partial (F, G), partial (y, z))(bold(x)^0)) = frac(y - y^0, frac(partial (F, G), partial (z, x))(bold(x)^0)) = frac(z - z^0, frac(partial (F, G), partial (x, y))(bold(x)^0)),
+  $
+  $
+    N_(x^0) M: quad frac(partial (F, G), partial (y, z))(bold(x)^0)(x - x^0) + frac(partial (F, G), partial (z, x))(bold(x)^0)(y - y^0) + frac(partial (F, G), partial (x, y))(bold(x)^0)(z - z^0) = 0.
+  $
+
+=== Surface // 曲面的切平面与法线
+
+When $n = 3, s = 2$, $M$ is a surface in three-dimensional space.
+
++ If the surface can be described explicitly as
+  $ z = f(x, y), quad (x, y) in D subset.eq bb(R)^2, $
+  at the regular point $overline(bold(x))^0 = (x^0, y^0, z^0)$ ($bold(x)^0 = (x^0, y^0)$), the tangent plane and normal line are:
+  $ T_(bold(x)^0) M: quad z - z^0 = f_x (bold(x)^0)(x - x^0) + f_y (bold(x)^0)(y - y^0), $
+  $ N_(bold(x)^0) M: quad frac(x - x^0, f_x (bold(x)^0)) = frac(y - y^0, f_y (bold(x)^0)) = frac(z - z^0, -1), $
+  where the expression of $T_(bold(x)^0) M$ is derived from the total differential of $z = f(x, y)$ at point $bold(x)^0$:
+  $ dif z = f_x (bold(x)^0) dif x + f_y (bold(x)^0) dif y. $
+
++ If the surface is parameterized as
+  $ bold(r)(u, v) = (x(u, v), y(u, v), z(u, v)), quad (u, v) in D subset.eq bb(R)^2, $
+  at the regular point $bold(x)^0 = (x^0, y^0, z^0)$. For the Jacobian matrix
+  $
+    J = mat(
+      x_u (bold(x)^0), x_v (bold(x)^0);
+      y_u (bold(x)^0), y_v (bold(x)^0);
+      z_u (bold(x)^0), z_v (bold(x)^0),
+    ),
+  $
+  since $"rank" J = 2$, without loss of generality, assume
+  $
+    frac(partial (x, y), partial (u, v))(bold(x)^0) = mat(
+      delim: "|",
+      x_u (bold(x)^0), x_v (bold(x)^0);
+      y_u (bold(x)^0), y_v (bold(x)^0),
+    ) != 0.
+  $
+  By #link(<thm:inverse-mapping-theorem>)[the inverse mapping theorem], we can determine the inverse mapping of the system
+  $ cases(x = x(u, v), y = y(u, v)) $
+  in a neighborhood of point $bold(x)^0$:
+  $ cases(u = u(x, y), v = v(x, y)) $
+  where $u^0 = u(x^0, y^0)$, $v^0 = v(x^0, y^0)$. Then we obtain the explicit representation of the surface:
+  $ z = z(u(x, y), v(x, y)). $
+  Therefore, the tangent plane and normal line at point $bold(x)^0$ are:
+  $
+    T_(bold(x)^0) M: quad frac(partial (y, z), partial (u, v)) bar_((u^0, v^0))(x - x^0) + frac(partial (z, x), partial (u, v)) bar_((u^0, v^0))(y - y^0) + frac(partial (x, y), partial (u, v)) bar_((u^0, v^0))(z - z^0) = 0,
+  $
+  $
+    N_(bold(x)^0) M: quad frac(x - x^0, frac(partial (y, z), partial (u, v)) bar_((u^0, v^0))) = frac(y - y^0, frac(partial (z, x), partial (u, v)) bar_((u^0, v^0))) = frac(z - z^0, frac(partial (x, y), partial (u, v)) bar_((u^0, v^0))).
+  $
+
+== Intrinsic Geometry // 内在几何
+// 注：tex 首句 "This two sections" 语法笔误已修正为 "These two sections"。
+
+These two sections will introduce the first and second fundamental forms of surfaces, which can be all generalized to higher-dimensional manifolds; here, we only discuss the case of two-dimensional surfaces in three-dimensional space.
+
+Let $Delta subset bb(R)^2$ be an open set, and $bold(r): Delta -> bb(R)^3$ be a $C^k$ ($k >= 2$) smooth regular surface parameterization, $M = bold(r)(Delta)$, where $bold(u) = (u, v) -> bold(r)(u, v) = (x(u, v), y(u, v), z(u, v))$. We can obtain that:
+
++ $bold(r) in C^k (Delta, bb(R)^3)$;
++ For any $p = (u, v) in Delta$, $"rank"(bold(r)'_u (u, v), bold(r)'_v (u, v)) = 2$, that is, $bold(r)'_u (u, v)$ and $bold(r)'_v (u, v)$ are linearly independent, where
+  $
+    bold(r)'_u (u, v) = lr((frac(partial x, partial u), frac(partial y, partial u), frac(partial z, partial u))), quad
+    bold(r)'_v (u, v) = lr((frac(partial x, partial v), frac(partial y, partial v), frac(partial z, partial v))).
+  $
+
+At this time, the tangent space $T_p M = "span"(bold(r)'_u (u, v), bold(r)'_v (u, v))$, which is a subspace of $bb(R)^3$. Hence, it inherits the inner product from $bb(R)^3$.
+
+The first fundamental form is the metric that a surface inherits from its ambient Euclidean space $bb(R)^3$. It is essentially a symmetric positive-definite bilinear form defined on the tangent space, which allows us to #underline[measure lengths, angles, and areas on the surface].
+
+#definition(name: "The First Fundamental Form")[
+  In the above conditions, for any point $p = (u, v) in Delta$, the *first fundamental form* of the surface $M$ at point $p$ is defined as: for any tangent vectors $bold(w)_1, bold(w)_2 in T_p M$,
+  $ upright(I)_p (bold(w)_1, bold(w)_2) =: bold(w)_1 dot bold(w)_2, $
+  which is a symmetric positive-definite bilinear form on the tangent space $T_p M$. This form is also called the *Riemann metric* or *metric tensor*, denoted as $upright(I)_p$ or $g_p$.
+] <def:first-fundamental-form>
+// 注：tex 中 "Riemann metric of metric tensor" 的 "of" 为笔误，已修正为 "or"。
+
+For convenience, we express $upright(I)_p$ in the basis ${bold(r)'_u, bold(r)'_v}$ of the tangent space $T_p M$. Define:
+$
+  & E(u, v) =: upright(I)_p (bold(r)_u, bold(r)_u) = bold(r)_u dot bold(r)_u = norm(bold(r)_u)^2, \
+  & F(u, v) =: upright(I)_p (bold(r)_u, bold(r)_v) = bold(r)_u dot bold(r)_v, \
+  & G(u, v) =: upright(I)_p (bold(r)_v, bold(r)_v) = bold(r)_v dot bold(r)_v = norm(bold(r)_v)^2,
+$
+which are called the *Gauß coefficients*.
+
+Then the matrix representation of the first fundamental form $upright(I)_p$ under the basis ${bold(r)'_u, bold(r)'_v}$ is
+$ upright(I)_p = mat(E, F; F, G), $
+which is symmetric and positive-definite.
+
+The quadratic form corresponding to this bilinear form is also commonly called the first fundamental form, denoted as $dif s^2$. For a tangent vector $bold(w) in T_p M$, it represents the square of the length of that vector:
+$ dif s^2 =: upright(I)_p (bold(w), bold(w)) = norm(bold(w))^2. $
+If $bold(w)$ is the tangent vector to the curve $gamma(t) = bold(r)(u(t), v(t))$, given by $gamma'(t) = bold(r)_u u' (t) + bold(r)_v v' (t)$, then $dif s^2$ is conventionally written as
+$ dif s^2 = E dif u^2 + 2F dif u dif v + G dif v^2. $
+Here, $dif u$ and $dif v$ are the coordinates under the basis ${dif u, dif v}$, representing the components of the tangent vector $(u', v')$. This is a long-standing notation, and strictly speaking, it represents the value of the quadratic form on the vector $(u', v')$.
+
+=== Arc Length // 弧长
+
+#definition(name: "Arc Length")[
+  Let $C = overparen(A B)$ be a curve in the $bb(R)^2$ plane (or in $bb(R)^3$ space, even in a higher-dimensional Euclidean space), take any partition $A = P_0, P_1, dots, P_n = B$, which divides the curve $C$ into $n$ segments, denoted as $T$. Then connect every two adjacent points $P_(i-1)$ and $P_i$ with a straight line segment, obtaining $n$ chords $overline(P_(i-1) P_i)$ ($i = 1, 2, dots, n$), which in turn form an inscribed polygonal line of $C$. Let
+  $ norm(T) = max_(1 <= i <= n) norm(P_(i-1) P_i), quad s_T = sum_(i=1)^n norm(P_(i-1) P_i). $
+  If the limit
+  $ lim_(norm(T) -> 0) s_T = s, $
+  namely,
+  $ forall epsilon > 0, exists delta > 0 "s.t." forall T (norm(T) < delta): abs(s_T - s) < epsilon, $
+  and the limit is independent of the choice of partition $T$, then $C$ is said to be *rectifiable*, and the limit $s$ is called the *arc length* of the curve $C$.
+] <def:rectifiable-curve>
+// 注：tex 中两处 footnote（模板不支持脚注）已并入定义正文（括号补充）与下述定理；
+// 本定义与 ch06 的 def:arc-length 内容重复（tex 两章均保留），此处为内在几何语境下的正式定义（含分割独立性条件），标签改名以避免冲突。
+
+#theorem(name: "Sufficient Condition for Rectifiability of Curves")[
+  Let the curve $C$ in $bb(R)^2$ be given by the parametric equations $(x, y) = (x(t), y(t))$, $t in [alpha, beta]$, and let it be a $C^1$ smooth regular curve, i.e. $x(t)$ and $y(t)$ are continuously differentiable and $x'^2 (t) + y'^2 (t) != 0$ (a curve $C$ satisfying this condition is called a regular curve; also see #link(<def:surface-parameterization>)[the definition of surface parameterization]). Then $C$ is rectifiable, and its arc length is
+  $ s = integral_alpha^beta sqrt(x'^2 (t) + y'^2 (t)) dif t. $
+] <thm:rectifiability-of-curves>
+// 注：tex 原文 "called a regular point" 按语义修正为 "called a regular curve"。
+
+=== Area // 面积
+// 注：tex 中 "Schwartz" 为拼写笔误，数学史通名为 Schwarz（Schwarz lantern），已统一修正；
+// tex 中两处 "????" 占位垃圾行已删除。
+
+For convenience, we study the area of a surface patch $M$ parameterized by $bold(r)(u, v): Delta -> bb(R)^3$ over the domain $Delta subset.eq bb(R)^2$.
+
+Similar to the definition of arc length, we try to define the area of surface patch $M$ by approximating it with inscribed polygonal surfaces. However, this definition does not hold, as demonstrated by Schwarz's counterexample that is called *Schwarz's lantern* vividly.
+
+In this counterexample, we can obtain the incorrect conclusion that $pi = 4$. Here is a brief description of the construction of Schwarz's lantern:
+
+Consider a cylinder with height $1$ and base radius $1/2$ (the left in @fig:schwarzs-lantern). Its lateral surface area is $2 pi r h = 2 pi times 1/2 times 1 = pi$.
+
+Divide the cylinder into four equal cylinders, and place seven equally spaced red dots on each circle (the middle in @fig:schwarzs-lantern). Then connect these red dots to form a polygonal surface (the right in @fig:schwarzs-lantern).
+
+#figure(
+  image("img/Schwartz1.png", width: 60%),
+  caption: [Schwarz's lantern construction on a cylinder.],
+) <fig:schwarzs-lantern>
+
+This particular lantern has $4$ horizontal triangular bands, and on each level there are $7$ equally spaced red dots, which can be expressed as $b = 4, p = 7$.
+
+To obtain increasingly precise approximations of the cylindrical lanterns, simply increase the number of bands and points (@fig:schwarzs-lantern-refined).
+
+#figure(
+  image("img/Schwartz2.png", width: 80%),
+  caption: [More precise approximations of Schwarz's lantern.],
+) <fig:schwarzs-lantern-refined>
+
+In fact, we can assign particular values to $b$ and $p$ to make the area of the polygonal surface approach any value greater than $pi$:
+$ A(b, p) = (b p) / 2 sin(pi / p) sqrt((2/b)^2 + (sin(pi / p))^2). $
+
+We derive the area of $M$ using the first fundamental form. Consider a small rectangle $Delta u times Delta v$ in the parameter domain $Delta$, which is mapped to a small parallelogram on the surface $M$ by the parameterization $bold(r)(u, v)$. The two adjacent sides of this parallelogram can be approximated by the tangent vectors
+$ bold(r)_u Delta u, quad bold(r)_v Delta v. $
+The area of this parallelogram is given by the magnitude of the cross product of these two vectors:
+$ norm(bold(r)_u times bold(r)_v) Delta u Delta v. $
+Using the properties of the dot product and the first fundamental form, we have
+$ norm(bold(r)_u times bold(r)_v) = sqrt(E G - F^2). $
+Therefore, the area element $dif A$ on the surface $M$ is
+$ dif A = sqrt(E G - F^2) dif u dif v. $
+Integrating over the entire parameter domain $Delta$, we obtain the total area of the surface patch $M$:
+$ "Area"(M) = integral.double_Delta sqrt(E G - F^2) dif u dif v. $
 // B15: ch15 Line Integrals and Surface Integrals（曲线积分与曲面积分）
 // B16: ch16 Integrals with Variable Parameters（变参积分）
 
