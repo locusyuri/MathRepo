@@ -2676,17 +2676,16 @@ in the notation introduced in the Notations section.
   the ratio $(Delta y) / (Delta x)$ as $Delta x -> 0$.
 ]
 
-#note[
+#note(title: "Weierstrass Function")[
   Differentiability implies continuity, but not conversely: the Weierstrass
   function $W(x) = sum_(n = 0)^oo a^n cos(b^n pi x)$ with $a in (0, 1)$ and
   $b = 2k + 1$ $(k in NN)$ is continuous everywhere and differentiable
   nowhere.
+  #figure(
+    image("img/weierstrass-function.svg", width: 100%),
+    caption: [The Weierstrass function with $a = 1 / 2$, $b = 3$ (partial sums): continuous everywhere but differentiable nowhere. Panel (b) zooms into the shaded window of (a); the graph exhibits the same oscillatory character at every scale.],
+  ) <fig:weierstrass-function>
 ]
-
-#figure(
-  image("img/weierstrass-function.svg", width: 100%),
-  caption: [The Weierstrass function with $a = 1 / 2$, $b = 3$ (partial sums): continuous everywhere but differentiable nowhere. Panel (b) zooms into the shaded window of (a); the graph exhibits the same oscillatory character at every scale.],
-) <fig:weierstrass-function>
 
 #definition(name: "Derivative")[
   Let $y = f(x)$ and $x_0$ be a point of its domain. If the limit
@@ -3731,10 +3730,10 @@ function at which the concavity changes.
   *Step 1: (2) $<=>$ (3).* That (3) implies (2) is the case $n = 2$. For the
   converse, first prove (3) for $n = 2^k$ by repeated halving:
   $
-    f((x_1 + dots + x_(2^k)) / 2^k)
-    = f(((x_1 + dots + x_(2^(k - 1))) / 2^(k - 1) + (x_(2^(k - 1) + 1) + dots + x_(2^k)) / 2^(k - 1)) / 2)
-    <= 1 / 2 [f((x_1 + dots + x_(2^(k - 1))) / 2^(k - 1)) + f((x_(2^(k - 1) + 1) + dots + x_(2^k)) / 2^(k - 1))]
-    <= (f(x_1) + dots + f(x_(2^k))) / 2^k,
+       & f((x_1 + dots + x_(2^k)) / 2^k)
+         = f(((x_1 + dots + x_(2^(k - 1))) / 2^(k - 1) + (x_(2^(k - 1) + 1) + dots + x_(2^k)) / 2^(k - 1)) / 2) \
+    <= & 1 / 2 [f((x_1 + dots + x_(2^(k - 1))) / 2^(k - 1)) + f((x_(2^(k - 1) + 1) + dots + x_(2^k)) / 2^(k - 1))]
+         <= (f(x_1) + dots + f(x_(2^k))) / 2^k,
   $
   so (3) holds for every $n = 2^k$. Then proceed by downward induction:
   assuming (3) for $n + 1$, set $A = (x_1 + dots + x_k) / k$, so that
@@ -3763,10 +3762,10 @@ function at which the concavity changes.
   For an irrational $t in (0, 1)$, choose rational $t_j in (0, 1)$ with
   $t_j -> t$; by continuity of $f$,
   $
-    f(t x_1 + (1 - t) x_2)
-    = f(lim_(j -> oo) [t_j x_1 + (1 - t_j) x_2])
-    = lim_(j -> oo) f(t_j x_1 + (1 - t_j) x_2)
-    <= t f(x_1) + (1 - t) f(x_2),
+      & f(t x_1 + (1 - t) x_2)
+        = f(lim_(j -> oo) [t_j x_1 + (1 - t_j) x_2]) \
+    = & lim_(j -> oo) f(t_j x_1 + (1 - t_j) x_2)
+        <= t f(x_1) + (1 - t) f(x_2),
   $
   which is (1).
 
@@ -4139,7 +4138,7 @@ $a != 1$, and $C$ is an arbitrary constant.
 #tex-table(
   ([Integral], [Result]),
   ([$integral a dif x$], [$a x + C$]),
-  ([$integral x^n dif x$], [$(x^(n + 1)) / (n + 1) + C$ #h(1fr) ($n != -1$)]),
+  ([$integral x^n dif x$], [$(x^(n + 1)) / (n + 1) + C$ #h(1em) ($n != -1$)]),
   ([$integral (dif x) / x$], [$ln abs(x) + C$]),
   ([$integral e^x dif x$], [$e^x + C$]),
   ([$integral a^x dif x$], [$(a^x) / (ln a) + C$]),
@@ -4160,7 +4159,7 @@ $a != 1$, and $C$ is an arbitrary constant.
   ([$integral (-dif x) / (a^2 + x^2)$], [$(1 / a) "arccot"(x / a) + C$]),
   ([$integral (dif x) / (x^2 - a^2)$], [$(1 / (2 a)) ln abs((x - a) / (x + a)) + C$]),
   ([$integral (dif x) / sqrt(x^2 + a^2)$], [$ln abs(x + sqrt(x^2 + a^2)) + C$]),
-  ([$integral (dif x) / sqrt(x^2 - a^2)$], [$ln abs(x + sqrt(x^2 - a^2)) + C$ #h(1fr) ($x > a$ or $x < -a$)]),
+  ([$integral (dif x) / sqrt(x^2 - a^2)$], [$ln abs(x + sqrt(x^2 - a^2)) + C$ #h(1em) ($x > a$ or $x < -a$)]),
   ([$integral sinh x dif x$], [$cosh x + C$]),
   ([$integral cosh x dif x$], [$sinh x + C$]),
 )
@@ -4232,12 +4231,12 @@ Some common substitutions are as follows:
   $u = sin x$, and split $1 / (1 - u^2)$ into partial fractions
   $1 / (1 - u^2) = 1 / 2 (1 / (1 - u) + 1 / (1 + u))$:
   $
-    integral (dif x)/(cos x)
-    = integral (cos x dif x)/(cos^2 x)
-    = integral ((sin x)')/(1 - sin^2 x) dif x
-    = 1 / 2 ln ((1 + sin x)/(1 - sin x)) + C
-    = ln abs((1 + sin x)/(cos x)) + C
-    = ln abs(sec x + tan x) + C.
+      & integral (dif x)/(cos x)
+        = integral (cos x dif x)/(cos^2 x)
+        = integral ((sin x)')/(1 - sin^2 x) dif x \
+    = & 1 / 2 ln ((1 + sin x)/(1 - sin x)) + C
+        = ln abs((1 + sin x)/(cos x)) + C
+        = ln abs(sec x + tan x) + C.
   $
 ]
 
@@ -4492,7 +4491,9 @@ take a limit as the partition is refined.
 
 #note[
   Bounded functions need not be Riemann integrable: the Dirichlet function
-  $cases(D_1(x) = 1 &, x in QQ comma, D_1(x) = 0 &, x "irrational" comma)$
+  $
+    cases(D_1(x) = 1 quad x in QQ comma, D_1(x) = 0 quad x "irrational" comma)
+  $
   is bounded but not integrable, since every Riemann sum equals either $1$
   or $0$ depending on the choice of intermediate points.
 ]
@@ -4742,11 +4743,12 @@ sums carry over verbatim to Stieltjes sums.
   $
   Therefore
   $
-    0 <= overline(S)(P) - underline(S)(P)
-    = [overline(S)(P) - overline(S)(P^*)] + [overline(S)(P^*) - overline(S)(P')]
-    + [overline(S)(P') - underline(S)(P')] + [underline(S)(P') - underline(S)(P^*)]
-    + [underline(S)(P^*) - underline(S)(P)]
-    < epsilon / 3 + 0 + epsilon / 3 + 0 + epsilon / 3 = epsilon.
+       & 0 \
+    <= & overline(S)(P) - underline(S)(P) \
+     = & [overline(S)(P) - overline(S)(P^*)] + [overline(S)(P^*) - overline(S)(P')]
+         + [overline(S)(P') - underline(S)(P')] + [underline(S)(P') - underline(S)(P^*)]
+         + [underline(S)(P^*) - underline(S)(P)] \
+     < & epsilon / 3 + 0 + epsilon / 3 + 0 + epsilon / 3 = epsilon.
   $
   Since $sum omega_i Delta x_i = overline(S)(P) - underline(S)(P)$, the second
   criterion yields integrability.
@@ -4812,7 +4814,7 @@ sums carry over verbatim to Stieltjes sums.
 
 #example(name: "The Riemann Function is Integrable")[
   Prove that the Riemann function
-  $ R(x) = cases(1/q &, x = p/q "in lowest terms" comma, 0 &, x "irrational" comma) $
+  $ R(x) = cases(1/q quad x = p/q "in lowest terms" comma, 0 quad x "irrational" comma) $
   is Riemann integrable on $[0, 1]$.
 ] <ex:riemann-function-integrable>
 
@@ -4829,6 +4831,7 @@ sums carry over verbatim to Stieltjes sums.
   sub-intervals every point satisfies $R(x) < epsilon / 2$, so
   $omega_i <= epsilon / 2$ and
   $sum'' omega_i Delta x_i <= (epsilon / 2) sum'' Delta x_i <= epsilon / 2$.
+
   Hence $sum omega_i Delta x_i < epsilon$, and the third criterion gives
   integrability.
 ]
