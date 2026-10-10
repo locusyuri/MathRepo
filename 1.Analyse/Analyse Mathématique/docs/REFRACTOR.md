@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B14b ch14 §4+§6 迁移完成；P0-3 Oriented Surface 空节待大纲确认）
+> 最后更新：2026-10-10（B14b + P0-3 补全完成，ch14 全章收口）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -295,7 +295,11 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - 新符号验证（PNG 目检 6 页）：`subseteq` 非法须用 `subset.eq`（5 处）；`vmatrix` 不存在，行列式用 `mat(delim: "|")`（2 处）；`overset`/`widehat` 不存在，弧记号用 `overparen(A B)`；圆括号内逗号 + frac 元素会被渲染为竖排列向量，含 frac 行向量须用 `lr((...))` 包裹横排（2 处）
   - 编译退出码 0，三正则命中 0，B14a 区域缩进损坏修复 1 处（L9211 续行 20→4 空格）
 - [x] **B14b = ch14 §4–6**（迁移 +120 行）：Extrinsic Geometry / Oriented Surface（⚠ P0-3 空节留待大纲）/ Bounded Variation（✅ 2026-10-10）
-  - [ ] 🔧 P0-3 补全：Oriented Surface 大纲 → 确认 → 写入（B14b 已在 §4 与 §6 之间留占位注释）
+  - [x] 🔧 P0-3 补全 ✅（2026-10-10）：§5 Oriented Surface 按 violet-make-outline 大纲补全（用户确认"按推荐执行"：Möbius 带配图、边界诱导定向仅 note 前瞻），+39 行
+    - 标签：`<def:surface-orientation>` / `<prop:parameterization-induced-orientation>` / `<fig:mobius-strip>`；大纲微调：two-sided surface 并入 orientation 定义末段，不单独设定义
+    - 内容：定向 = 连续单位法向量场选取（复用 §4 Gauß map）、可定向性、两侧、Möbius 带反例 note + 配图、参数化诱导定向 property（衔接 ch15 ± 号定理与上/下侧）、显式曲面法向量公式、边界诱导定向前瞻 note（留待 B15b 兑现）
+    - 图片：新增 `scripts/mobius_strip.py`（matplotlib 3D，含 n(2π,0)=−n(0,0) 数值断言）生成 `img/mobius-strip.svg`（替换 null.svg 占位）
+    - 验证：编译退出码 0，三正则 0，PNG 目检 pg199–200 通过；terms 块再次发生 Edit 拆行损坏，PowerShell 修复（同 B14b 模式）
   - [x] 🔧 P1-3 执行：BV 节保留原位，应用段加指向 Analyse Harmonique 的文字交叉引用
   - 标签：`<def:second-fundamental-form>` / `<def:curvature-of-curve>` / `<def:bounded-variation>` / `<prop:bv-properties>` / `<thm:jordan-decomposition>` / `<thm:jordan-rectifiable-curves>`；Curvature / Rectifiable Curves 两处非空壳 leftbarTitle 升级为 `===` 小节
   - tex 空壳/footnote 处理：property enumerate 第 3 项空项删除（留注）；§6 末尾 "Stieltjes Integral" leftbarTitle 空壳未迁移（留注）；第二基本形式定义后 2 条 footnote（点积良定义、负号约定）移至正文 remark 列表
