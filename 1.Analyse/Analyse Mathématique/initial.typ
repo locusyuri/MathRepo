@@ -2683,6 +2683,11 @@ in the notation introduced in the Notations section.
   nowhere.
 ]
 
+#figure(
+  image("img/weierstrass-function.svg", width: 100%),
+  caption: [The Weierstrass function with $a = 1 / 2$, $b = 3$ (partial sums): continuous everywhere but differentiable nowhere. Panel (b) zooms into the shaded window of (a); the graph exhibits the same oscillatory character at every scale.],
+) <fig:weierstrass-function>
+
 #definition(name: "Derivative")[
   Let $y = f(x)$ and $x_0$ be a point of its domain. If the limit
   $
