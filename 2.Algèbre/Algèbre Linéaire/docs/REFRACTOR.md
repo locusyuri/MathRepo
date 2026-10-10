@@ -1,8 +1,8 @@
 # Algèbre Linéaire 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-10
-> 最后更新：2026-10-10（B8 完成：Ch8 Jordan 标准型，Part III 全部完成）
-> 状态：✅ Part I 完成（B2–B4），✅ Part II 完成（B5–B6），✅ Part III 完成（B7–B8），待开始 Part IV（B9 = Ch9 Quadratic Forms）
+> 最后更新：2026-10-10（B9-B10 完成：Part IV 全部完成）
+> 状态：✅ Part I–IV 全部完成，待收尾（Glossary 重建、死文件清理、全书终检）
 > **项目约定：每次完成批次后自动 git 提交（中文 Conventional Commits），无需用户手动确认。**
 > 技能依据：`violet-design-note`（目录体检与结构设计）、`violet-latex-to-typst`（迁移）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 > 参考文档：[`1.Analyse/Analyse Mathématique/docs/REFRACTOR.md`](../../1.Analyse/Analyse%20Mathématique/docs/REFRACTOR.md)
@@ -238,14 +238,16 @@ Part IV 二次型与内积空间（几何结构）
 
 ### Part IV — Quadratic Forms and Inner Product Spaces
 
-- [ ] **B9 = Ch9 Quadratic Forms**（69 行 / 3 节，⚠ 含空节）
-  - [ ] §1 Quadratic Forms and Their Standard Forms
-  - [ ] §2 Canonical Forms
-  - [ ] §3 Definite Quadratic Forms
-- [ ] **B10 = Ch10 Inner Product Spaces**（568 行 / 8 节，拆为 2 个子批）
-  - [ ] B10a §1 Bilinear Forms + §2 Real Inner Product Spaces + §3 Metric Matrices and Orthonormal Bases
-  - [ ] B10b §4 Orthogonal Completion + §5 Orthogonal and Symmetric Transformations + §6 Unitary Spaces + §7 Symplectic Spaces
-- [ ] ✅ Part IV 里程碑：编译 + 提交
+- [x] **B9 = Ch9 Quadratic Forms**（69 行 / 3 节）✅ 2026-10-10
+  - [x] §1 Quadratic Forms and Their Standard Forms（二次型定义、矩阵表示、对称矩阵 note、合同变换、配方法与初等变换法 note）
+  - [x] §2 Canonical Forms（复二次型规范形、实二次型惯性定理+note、符号差）
+  - [x] §3 Definite Quadratic Forms（正定定义、半正定/负定/不定定义、正定充要条件定理）
+  - 备注：§1+§3 从 chap09.tex 迁移；§2 原 tex 为空节，按决策④从教材补全
+- [x] **B10 = Ch10 Inner Product Spaces**（568 行 / 8 节，拆为 2 个子批）✅ 2026-10-10
+  - [x] B10a §1 Bilinear Forms + §2 Real Inner Product Spaces + §3 Metric Matrices and Orthonormal Bases
+  - [x] B10b §4 Orthogonal Completion + §5 Orthogonal and Symmetric Transformations + §6 Unitary Spaces + §7 Symplectic Spaces
+  - 备注：§1–§7 从 chap10.tex 迁移；§4–§5 含例题解答（对称矩阵特征向量+全1矩阵特征值）；踩坑记录：||...|| 范数记号在 Typst 中需用 "lVert"/"rVert"、conjugate 需加引号、\quad 在数学模式中不可用、langle/rangle 需引号
+- [x] ✅ Part IV 里程碑：编译 + 提交（B9–B10 完成）
 
 ### 收尾
 

@@ -2411,15 +2411,89 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 
 == Quadratic Forms and Their Standard Forms // 二次型及其标准形
 
-// TODO: 二次型定义、矩阵表示（对称矩阵）、合同变换、配方法、初等变换法
+#definition(name: "Quadratic Form")[
+  Let $P$ be a number field. A quadratic homogeneous polynomial in $n$ variables
+  over $P$:
+
+  $
+  f(x_1, ..., x_n) = sum_(i=1)^n sum_(j=1)^n a_("ij") x_i x_j
+  = X^T A X,
+  $
+
+  where $X = (x_1, ..., x_n)^T$ and $A = (a_("ij"))_(n times n)$ with $a_("ij") = a_("ji")$,
+  is called a *quadratic form* in $n$ variables over $P$.
+] <def:quadratic-form>
+
+#note[
+  The matrix $A$ of a quadratic form is symmetric. For any square matrix $B$,
+  $X^T B X = X^T ((B + B^T)/2) X$, so any quadratic form can be represented by a
+  symmetric matrix.
+]
+
+#definition(name: "Congruent Transformation")[
+  Two $n$-order square matrices $A$ and $B$ are called *congruent* if there exists an
+  invertible matrix $C$ such that $B = C^T A C$.
+] <def:congruent-transformation>
+
+#note[
+  The main methods for reducing a quadratic form to standard form:
+  - *Completing the square* (配方法): eliminate cross terms by completing the square.
+  - *Elementary transformation method* (初等变换法): apply simultaneous row and column
+    operations to $A$ until it becomes diagonal.
+]
 
 == Canonical Forms // 规范形
 
-// TODO: 复二次型的规范形、实二次型的规范形（惯性定理）、惯性指数
+#definition(name: "Canonical Form over $C$")[
+  Any complex quadratic form $f$ is congruent to the canonical form
+
+  $
+  f = y_1^2 + y_2^2 + ... + y_r^2,
+  $
+
+  where $r$ is the rank of $A$.
+] <def:canonical-form-complex>
+
+#theorem(name: "Inertia Theorem (Real)")[
+  Any real quadratic form $f$ is congruent to the canonical form
+
+  $
+  f = y_1^2 + ... + y_p^2 - y_(p+1)^2 - ... - y_(p+q)^2,
+  $
+
+  where $p$ is the *positive inertia index* and $q$ is the *negative inertia index*,
+  with $r = p + q$ being the rank. The pair $(p, q)$ is uniquely determined by $f$.
+] <thm:inertia-theorem>
+
+#note[
+  The difference $s = p - q$ is called the *signature* (符号差).
+  The canonical form is also written as
+  $y_1^2 + ... + y_p^2 - y_(p+1)^2 - ... - y_r^2$ with zeros appended to reach $n$ variables.
+]
 
 == Definite Quadratic Forms // 正定二次型
 
-// TODO: 正定/半正定/负定/不定二次型定义、正定的充要条件（特征值 / 合同于单位阵 / 顺序主子式 > 0）
+#definition(name: "Positive Definite Quadratic Form")[
+  A real quadratic form $f(x_1, ..., x_n) = X^T A X$ is *positive definite* if
+  $f(x_1, ..., x_n) > 0$ for all $X != 0$.
+  The matrix $A$ is then called a *positive definite matrix*.
+] <def:positive-definite-quadratic-form>
+
+#definition(name: "Other Definiteness Types")[
+  A real quadratic form $f = X^T A X$ is:
+  - *positive semi-definite* if $f >= 0$ for all $X$;
+  - *negative definite* if $f < 0$ for all $X != 0$;
+  - *negative semi-definite* if $f <= 0$ for all $X$;
+  - *indefinite* (不定) if $f$ takes both positive and negative values.
+] <def:other-definiteness-types>
+
+#theorem(name: "Sufficient and Necessary Conditions for Positive Definiteness")[
+  A real quadratic form $f = X^T A X$ is positive definite if and only if:
+  - The positive inertia index of $f$ is $n$;
+  - $A$ is congruent to the identity matrix $E$;
+  - All eigenvalues of $A$ are positive;
+  - All leading principal minors of $A$ are positive.
+] <thm:positive-definite-conditions>
 
 = Inner Product Spaces // 内积空间
 
@@ -2428,31 +2502,264 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 
 == Bilinear Forms // 双线性型
 
-// TODO: 双线性型定义、双线性型的矩阵表示、对称双线性型与二次型的关系
+#definition(name: "Bilinear Form")[
+  Let $V$ be a linear space over $F$. A function $f: V × V -> F$ is called a
+  *bilinear form* on $V$ if:
+  - For any fixed $beta in V$, $f(·, beta): V -> F$ defined by $f(alpha, beta)$
+    is a linear function on $V$;
+  - For any fixed $alpha in V$, $f(alpha, ·): V -> F$ defined by $f(alpha, beta)$
+    is a linear function on $V$.
+] <def:bilinear-form>
+
+#note[
+  If $B$ is the matrix of $f$ under a basis ${epsilon_1, ..., epsilon_n}$ of $V$,
+  i.e. $B = (f(epsilon_i, epsilon_j))$, then $f(alpha, beta) = X^T B Y$ where
+  $X, Y$ are the coordinate vectors of $alpha, beta$. A bilinear form is *symmetric*
+  if $f(alpha, beta) = f(beta, alpha)$ for all $alpha, beta$. Every quadratic form
+  arises from a symmetric bilinear form (over fields of characteristic $\ != 2$).
+]
 
 == Real Inner Product Spaces // 实内积空间
 
-// TODO: 内积定义与公理、范数、Cauchy-Schwarz 不等式、距离、角度、正交性、Euclidean 空间
+#definition(name: "Real Inner Product Space")[
+  A *real inner product space* is a real linear space $V$ equipped with a function
+  $(·, ·): V × V -> bb(R)$ satisfying:
+  - *Positivity*: $(alpha, alpha) >= 0$ for all $alpha in V$, with equality iff $alpha = 0$;
+  - *Symmetry*: $(alpha, beta) = (beta, alpha)$ for all $alpha, beta in V$;
+  - *Linearity in the first argument*:
+    $(k_1 alpha_1 + k_2 alpha_2, beta) = k_1 (alpha_1, beta) + k_2 (alpha_2, beta)$.
+
+  Finite-dimensional real inner product spaces are called *Euclidean spaces*.
+] <def:real-inner-product>
+
+#definition(name: "Normed Linear Space")[
+  A *normed linear space* is a real linear space $V$ equipped with
+  $||·||: V -> bb(R)$ satisfying positivity, homogeneity ($||k alpha|| = abs(k) ||alpha||$),
+  and the triangle inequality. The norm induced by an inner product is
+  $||alpha|| = (alpha, alpha)^(1/2)$, called the *Euclidean norm*.
+] <def:normed-linear-space>
+
+#theorem(name: "Cauchy-Bunyakovsky-Schwarz Inequality")[
+  For any vectors $alpha, beta$ in an inner product space,
+
+  $
+  abs((alpha, beta)) <= ||alpha|| ||beta||,
+  $
+
+  with equality if and only if $alpha$ and $beta$ are linearly dependent.
+] <thm:cauchy-schwarz>
+
+#note[
+  Distance: $d(alpha, beta) = ||alpha - beta||$.
+  Angle: $cos(theta) = (alpha, beta) / (||alpha|| ||beta||)$, $0 <= theta <= pi$.
+  Orthogonality: $alpha ⊥ beta$ iff $(alpha, beta) = 0$.
+]
 
 == Metric Matrices and Orthonormal Bases // 度量矩阵与标准正交基
 
-// TODO: Gram 矩阵、标准正交基、正交矩阵、Gram-Schmidt 正交化
+#definition(name: "Gram Matrix")[
+  Let ${epsilon_1, ..., epsilon_n}$ be a basis of an $n$-dimensional Euclidean space $V$.
+  The matrix $G = ((epsilon_i, epsilon_j))_(n times n)$ is called the *Gram matrix*
+  (or metric matrix) of the inner product under this basis. Then
+  $(alpha, beta) = X^T G Y$ for coordinate vectors $X, Y$.
+] <def:gram-matrix>
+
+#property(name: "Properties of Gram Matrix")[
+  - $G$ is symmetric;
+  - $G$ is positive semi-definite;
+  - Gram matrices under different bases are congruent;
+  - $abs(G) >= 0$, with equality iff the basis is linearly dependent.
+] <prop:gram-matrix-properties>
+
+#definition(name: "Orthonormal Basis")[
+  A set ${epsilon_1, ..., epsilon_n}$ of non-zero vectors is an *orthonormal basis*
+  if they are pairwise orthogonal and each has unit length.
+] <def:orthonormal-basis>
+
+#property(name: "Properties of Orthonormal Bases")[
+  - An orthonormal vector set is linearly independent;
+  - A basis is orthonormal iff its Gram matrix is the identity;
+  - A standard orthonormal basis always exists;
+  - Any orthonormal vector set can be extended to an orthonormal basis.
+] <prop:orthonormal-basis-properties>
+
+#note[
+  Under an orthonormal basis, $alpha = sum_(i=1)^n (alpha, epsilon_i) epsilon_i$
+  (Fourier expansion), and $(alpha, beta) = X^T Y = sum_(i=1)^n x_i y_i$.
+]
+
+#definition(name: "Orthogonal Matrix")[
+  A square matrix $T in bb(R)^(n times n)$ is an *orthogonal matrix* if
+  $T^T T = T T^T = E$.
+] <def:orthogonal-matrix>
+
+#theorem(name: "Orthonormal Basis Transition")[
+  Let ${epsilon_1, ..., epsilon_n}$ and ${eta_1, ..., eta_n}$ be orthonormal bases
+  with transition matrix $T$. Then ${eta_1, ..., eta_n}$ is an orthonormal basis
+  if and only if $T$ is an orthogonal matrix.
+] <thm:orthonormal-transition>
+
+=== Gram-Schmidt Process // Gram-Schmidt 正交化
+
+#theorem(name: "Gram-Schmidt Orthogonalization")[
+  For any basis ${epsilon_1, ..., epsilon_n}$ of an $n$-dimensional Euclidean space $V$,
+  there exists an orthonormal basis ${eta_1, ..., eta_n}$ such that
+
+  $
+  "langle"(epsilon_1, ..., epsilon_k)"rangle" = "langle"(eta_1, ..., eta_k)"rangle",
+   k = 1, 2, ..., n.
+  $
+] <thm:gram-schmidt>
+
+#example[
+  Let $n >= 2$, $A$ be an $n$-order real symmetric matrix, and $alpha, beta$ be two
+  eigenvectors corresponding to distinct eigenvalues $lambda_1, lambda_2$.
+  Let $B = (a_i + b_j)_(n times n)$. Find all eigenvalues of $B$.
+
+  *Solution.* Normalize to orthonormal unit vectors $xi_1 = alpha/||alpha||$,
+  $xi_2 = beta/||beta||$, extend to an orthonormal basis, and express $B = alpha e^T + e beta^T$.
+  Then $B xi_1 = S_a ||alpha|| xi_1$ and $B xi_2 = S_b ||beta|| xi_2$, so the eigenvalues
+  of $B$ are $lambda_1 = S_a$, $lambda_2 = S_b$, $lambda_3 = ... = lambda_n = 0$.
+]
 
 == Orthogonal Completion and Orthogonal Projection // 正交补与正交投影
 
-// TODO: 正交补定义与性质、最小二乘法、最佳逼近元、正交投影
+#definition(name: "Orthogonal Complement")[
+  Let $W$ be a subspace of a real inner product space $V$. The set
+
+  $
+  W^⊥ = {alpha in V : (alpha, beta) = 0, ∀ beta in W}
+  $
+
+  is the *orthogonal complement* of $W$, which is itself a subspace of $V$.
+] <def:orthogonal-complement>
+
+#property(name: "Properties of Orthogonal Complement")[
+  - The orthogonal complement $W^⊥$ of $W$ exists and is unique in Euclidean space $V$;
+  - $W ⊕ W^⊥ = V$;
+  - $(W^⊥)^⊥ = W$;
+  - $(V_1 + V_2)^⊥ = V_1^⊥ ∩ V_2^⊥$ and $(V_1 ∩ V_2)^⊥ = V_1^⊥ + V_2^⊥$.
+] <prop:orthogonal-complement-properties>
+
+#definition(name: "Orthogonal Projection")[
+  For any $alpha in V$, if there exists $beta in W$ such that
+  $alpha - beta in W^⊥$, then $beta$ is the *orthogonal projection* of $alpha$
+  onto $W$, denoted $beta = "proj"_W(alpha)$.
+] <def:orthogonal-projection>
+
+#definition(name: "Best Approximation Element")[
+  $beta in W$ is the *best approximation element* of $alpha$ in $W$ if
+  $||alpha - beta|| = "min"_(gamma in W) ||alpha - gamma||$.
+] <def:best-approximation>
+
+#property(name: "Properties of Orthogonal Projection")[
+  - The orthogonal projection of $alpha$ onto $W$ exists and is unique, and equals
+    the best approximation element;
+  - "proj"_W(alpha) = sum_(i=1)^n (alpha, epsilon_i) / (epsilon_i, epsilon_i) epsilon_i
+    for an orthogonal basis ${epsilon_1, ..., epsilon_n}$ of $W$;
+  - $("lVert"(alpha - "proj"_W(alpha)) "rVert")^2 = ("lVert"(alpha) "rVert")^2 - ("lVert"("proj"_W(alpha)) "rVert")^2$
+    $= ("lVert"(alpha) "rVert")^2 - sum_(i=1)^n c_i^2 ("lVert"(epsilon_i) "rVert")^2$.
+] <prop:orthogonal-projection-properties>
 
 == Orthogonal Transformations and Symmetric Transformations // 正交变换与对称变换
 
-// TODO: 正交变换定义与性质、对称变换定义、对称变换的正交对角化
+#definition(name: "Symmetric Transformation")[
+  A linear transformation $A$ on a real inner product space $V$ is *symmetric* if
+  $(A alpha, beta) = (alpha, A beta)$ for all $alpha, beta in V$.
+] <def:symmetric-transformation>
+
+#lemma(name: "Properties of Symmetric Transformations")[
+  - A real symmetric matrix has only real eigenvalues (counting multiplicities);
+  - $A$ is symmetric iff its matrix representation under some orthonormal basis is
+    a symmetric matrix;
+  - If $W$ is an invariant subspace of $A$, then $W^⊥$ is also invariant;
+  - Eigenvectors corresponding to distinct eigenvalues of $A$ are orthogonal.
+] <lem:symmetric-properties>
+
+#theorem(name: "Orthogonal Diagonalization of Symmetric Transformations")[
+  Let $V$ be an $n$-dimensional Euclidean space and $A$ a symmetric transformation.
+  Then there exists an orthonormal basis of $V$ such that the matrix of $A$ is diagonal.
+  Equivalently, for a real symmetric matrix $A$, there exists an orthogonal matrix $T$
+  such that $T^(-1) A T = T^T A T = Lambda$ (diagonal with eigenvalues).
+] <thm:symmetric-diagonalization>
+
+#note[
+  For any real quadratic form $f(x_1, ..., x_n) = X^T A X$, there exists an orthogonal
+  transformation $X = T Y$ such that $f = Y^T Lambda Y = sum_(i=1)^n lambda_i y_i^2$.
+]
 
 == Unitary Spaces and Normal Transformations // 酉空间与正规变换
 
-// TODO: 复内积空间、酉矩阵、Hermitian 变换、正规变换与正规矩阵的对角化
+=== Unitary Spaces // 酉空间
+
+#definition(name: "Complex Inner Product Space")[
+  A *complex inner product space* is a complex linear space $V$ equipped with
+  $(·, ·): V × V -> bb(C)$ satisfying:
+  - *Positivity*: $(alpha, alpha) >= 0$, equality iff $alpha = 0$;
+  - *"conjugate" symmetry (Hermitian)*: $(alpha, beta) = "conjugate"((beta, alpha))$;
+  - *Linearity in the first argument*:
+    $(k_1 alpha_1 + k_2 alpha_2, beta) = k_1 (alpha_1, beta) + k_2 (alpha_2, beta)$.
+
+  Finite-dimensional complex inner product spaces are called *unitary spaces*.
+] <def:complex-inner-product>
+
+#note[
+  The norm in unitary spaces is $||alpha|| = (alpha, alpha)^(1/2)$.
+  The *adjoint transformation* $A^†$ of $A$ satisfies
+  $(A alpha, beta) = (alpha, A^† beta)$ for all $alpha, beta$.
+  The "conjugate" transpose of a complex matrix $A$ is $A^† = "conjugate"(A)^T$.
+]
+
+=== Normal Transformation and Diagonalization // 正规变换与对角化
+
+#definition(name: "Normal Transformation and Normal Matrix")[
+  A linear transformation $A$ on a complex inner product space $V$ is *normal* if
+  $A A^† = A^† A$. A square matrix $A$ is *normal* if $A A^† = A^† A$.
+] <def:normal-transformation>
+
+#theorem(name: "Diagonalization of Normal Transformations")[
+  Let $A$ be a normal transformation on a unitary space $V$. Then there exists an
+  orthonormal basis of $V$ such that the matrix of $A$ is diagonal. Equivalently,
+  for a normal matrix $A in bb(C)^(n times n)$, there exists a unitary matrix $U$
+  such that $U^(-1) A U = U^† A U = Lambda$ (diagonal with eigenvalues).
+] <thm:normal-diagonalization>
+
+=== Special Normal Transformations // 特殊正规变换
+
+#definition(name: "Unitary Transformation and Unitary Matrix")[
+  $A$ is a *unitary transformation* if $A^† = A^(-1)$, or equivalently
+  $(A alpha, A beta) = (alpha, beta)$ for all $alpha, beta$.
+  A matrix $A$ is *unitary* if $A^† = A^(-1)$.
+] <def:unitary-transformation>
+
+#definition(name: "Hermitian Transformation and Hermitian Matrix")[
+  $A$ is a *Hermitian transformation* if $(A alpha, beta) = (alpha, A beta)$
+  for all $alpha, beta$, equivalently $A^† = A$.
+  A matrix $A$ is *Hermitian* if $A^† = A$.
+] <def:hermitian-transformation>
+
+#note[
+  Unitary transformations generalize orthogonal transformations.
+  Hermitian transformations generalize symmetric transformations.
+]
 
 == Symplectic Spaces // 辛空间
 
-// TODO: 辛内积定义、辛空间的基本性质
+#definition(name: "Symplectic Inner Product")[
+  Let $V$ be a linear space over a field $F$ of characteristic $\ != 2$.
+  A bilinear form $f: V × V -> F$ is *alternating* if $f(alpha, alpha) = 0$
+  for all $alpha in V$. A non-degenerate alternating bilinear form is called
+  a *symplectic inner product*.
+] <def:symplectic-inner-product>
+
+#property(name: "Properties of Symplectic Spaces")[
+  - An alternating bilinear form satisfies $f(alpha, beta) = -f(beta, alpha)$;
+  - A symplectic space has even dimension $2n$;
+  - There exists a basis ${e_1, ..., e_n, f_1, ..., f_n}$ such that the matrix of
+    the symplectic inner product takes the standard form
+    $J = mat((O, E), (-E, O))$ where $E$ is the $n times n$ identity matrix;
+  - The standard symplectic matrix satisfies $J^2 = -E$ and $J^T = -J = J^(-1)$.
+] <prop:symplectic-space-properties>
 
 // ==========================================================================
 // Appendix (附录)
