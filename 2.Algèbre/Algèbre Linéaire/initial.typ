@@ -711,11 +711,101 @@ is a nilpotent matrix with nilpotent index $n$.
 
 == Operations of Rank // 秩的运算
 
-// TODO: 加法不等式、乘法不等式（Sylvester、Frobenius）、转置与逆的秩
+#proposition(name: "Operations of Rank")[
+  The matrices $A$ and $B$ below need not be square; they only need to be compatible for
+  multiplication or addition.
+  - *1. Addition*:
+
+    $
+    abs(upright("rank")(A) - upright("rank")(B)) <= upright("rank")(A + B) <=
+    upright("rank")(A) + upright("rank")(B).
+    $
+
+    On the basis of the dimension formula,
+    $upright("rank")(A + B) = upright("rank")(A) + upright("rank")(B) -
+    "dim"(R(A) inter R(B))$, where $R(A)$ and $R(B)$ are the column spaces of $A$ and $B$.
+  - *2. Multiplication*: $upright("rank")(A B) <= upright("rank")(A)$ and
+    $upright("rank")(A B) <= upright("rank")(B)$.
+  - *2.1 Sylvester's Inequality*: for $A_{s times n}$ and $B_{n times m}$,
+    $upright("rank")(A B) >= upright("rank")(A) + upright("rank")(B) - n$.
+    In particular, if $A B = O$, then $upright("rank")(A) + upright("rank")(B) <= n$.
+  - *2.2 Frobenius Inequality*:
+    $upright("rank")(A B C) >= upright("rank")(A B) + upright("rank")(B C) -
+    upright("rank")(B)$.
+  - *3. Transpose*:
+    $upright("rank")(A A^T) = upright("rank")(A^T A) = upright("rank")(A) =
+    upright("rank")(A^T)$.
+  - *4. Inverse*: if $A$ is invertible, then $upright("rank")(A) = upright("rank")(A^(-1)) = n$.
+  - *5. Block Matrix*:
+    $upright("rank")(mat((A, O), (O, D))) = upright("rank")(A) + upright("rank")(D)$.
+] <prop:operations-of-rank>
 
 == Low-Rank Corrections // 低秩修正
 
-// TODO: 秩 1 矩阵的性质、Sherman-Morrison 公式、Woodbury 恒等式
+Since all the row and column vectors of a rank-$1$ matrix are linearly dependent, it can be
+expressed as the outer product of two non-zero vectors; in other words, a rank-$1$ matrix can
+be written as $alpha beta^T$, where $alpha$ and $beta$ are non-zero column vectors.
+
+Based on the decomposition $A = alpha beta^T$, the rank-$1$ matrix has the following simplified
+calculation rules:
+
+#property(name: "Calculation Rules for Rank-1 Matrices")[
+  - *Exponentiation*: for any positive integer $k >= 1$,
+    $A^k = (beta^T alpha)^(k-1) dot A$, where $beta^T alpha$ is a scalar (the inner product
+    of the vectors).
+  - *Rank Transmission*: if $B$ is any matrix, then $upright("rank")(A B) <= 1$ and
+    $upright("rank")(B A) <= 1$; multiplying a rank-$1$ matrix by arbitrary matrices yields
+    rank not exceeding $1$.
+] <prop:rank-one-matrix>
+
+#theorem(name: "Sherman-Morrison Formula")[
+  If $A$ in $bb(R)^(n times n)$ is invertible and $alpha, beta$ in $bb(R)^n$ are column
+  vectors, then $A + alpha beta^T$ is invertible if and only if $1 + beta^T A^(-1) alpha != 0$.
+  In this case, the inverse of $A + alpha beta^T$ is
+
+  $
+  (A + alpha beta^T)^(-1) = A^(-1) -
+  (A^(-1) alpha beta^T A^(-1)) / (1 + beta^T A^(-1) alpha).
+  $
+
+  Here $alpha beta^T$ is the outer product of $alpha$ and $beta$.
+] <thm:sherman-morrison>
+
+#note[
+  Combining the properties of determinants, we obtain the determinant version of the
+  Sherman-Morrison formula, known as the *matrix determinant lemma*:
+
+  $
+  abs(A + alpha beta^T) = abs(A) (1 + beta^T A^(-1) alpha).
+  $
+
+  The theorem can also be stated in terms of the adjugate of $A$ as
+
+  $
+  abs(A + u v^T) = abs(A) + v^T "adj"(A) u,
+  $
+
+  in which case it applies whether or not $A$ is invertible.
+]
+
+#theorem(name: "Woodbury Matrix Identity")[
+  If $A$ in $bb(R)^(n times n)$ and $C$ in $bb(R)^(k times k)$ are invertible and
+  $U, V$ in $bb(R)^(n times k)$, then $A + U C V^T$ is invertible if and only if
+  $C^(-1) + V^T A^(-1) U$ is invertible. In this case, the inverse of $A + U C V^T$ is
+
+  $
+  (A + U C V^T)^(-1) = A^(-1) - A^(-1) U (C^(-1) + V^T A^(-1) U)^(-1) V^T A^(-1).
+  $
+] <thm:woodbury-identity>
+
+Without loss of generality, let $A = E_n$ and $C = E_k$. Then the Woodbury identity simplifies
+to
+
+$
+(E_n + U V^T)^(-1) = E_n - U (E_k + V^T U)^(-1) V^T.
+$
+
+This form is particularly useful in applications involving low-rank updates to identity matrices.
 
 = Linear Systems // 线性方程组
 
