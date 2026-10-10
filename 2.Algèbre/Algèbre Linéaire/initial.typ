@@ -298,11 +298,176 @@ $
 
 == Basic Operations // 基本运算
 
-// TODO: 加法、数乘、转置、乘法、行列式乘积公式、Cauchy-Binet 公式、矩阵等价
+=== Addition // 加法
+
+Two $m times n$ matrices $A = (a_("ij"))$ and $B = (b_("ij"))$ over $P$ can be added entry-wise: $A + B = (a_("ij") + b_("ij"))$, which is again an $m times n$ matrix.
+
+=== Scalar Multiplication // 数乘
+
+The *scalar product* of $A$ by a scalar $k$ in $P$ is $k A = (k a_("ij"))$, again an $m times n$ matrix.
+
+=== Transpose // 转置
+
+The *transpose* of an $m times n$ matrix $A = (a_("ij"))$ is the $n times m$ matrix $A^T = (a_("ji"))$, obtained by swapping rows and columns.
+
+=== Matrix Multiplication // 矩阵乘法
+
+The *product* of an $m times n$ matrix $A$ and an $n times p$ matrix $B$ is the $m times p$ matrix $A B = (c_("ij"))$ with
+
+$
+c_("ij") = sum_(k=1)^n a_("ik") b_("kj").
+$
+
+=== Determinants of Products // 行列式乘积公式
+
+The determinant of a product equals the product of the determinants — see #link(<thm:det-product>)[Theorem]. By induction it extends to any number of matrices:
+
+#corollary(name: "Product Formula for k Matrices")[
+  For $n times n$ matrices $A_1, ..., A_k$ over $P$,
+
+  $
+  abs(A_1 ... A_k) = product_(i=1)^k abs(A_i).
+  $
+] <cor:det-product-multiple>
+
+#theorem(name: "Cauchy-Binet Formula")[
+  Let $A$ be an $m times n$ matrix and $B$ an $n times m$ matrix.
+  - If $m > n$, then $abs(A B) = 0$.
+  - If $m <= n$, then
+
+  $
+  abs(A B) = sum_(1 <= v_1 < ... < v_m <= n)
+  abs("A"(1, 2, ..., m; v_1, ..., v_m)) abs("B"(v_1, ..., v_m; 1, 2, ..., m)),
+  $
+
+  where the sum runs over all strictly increasing index tuples, and $"A"(1, 2, ..., m; v_1, ..., v_m)$ denotes the minor of $A$ on rows $1, ..., m$ and columns $v_1, ..., v_m$.
+] <thm:cauchy-binet-formula>
+
+=== Matrix Equivalence // 矩阵等价
+
+#definition(name: "Matrix Equivalence")[
+  Two matrices $A$ and $B$ of the same size are called *equivalent*, denoted $A equiv B$,
+  if they can be transformed into one another by a combination of elementary row and column
+  operations.
+] <def:matrix-equivalence>
+
+#note[
+  Two matrices are equivalent if and only if they have the same rank.
+]
+
+#definition(name: "Canonical Form of Matrix Equivalence")[
+  Any $m times n$ matrix $A$ of rank $r$ is equivalent to the matrix
+
+  $
+  J_r = mat((I_r, O), (O, O)),
+  $
+
+  which is called the *canonical form* of matrix equivalence.
+] <def:canonical-form-of-equivalence>
 
 == Special Square Matrices // 特殊方阵
 
-// TODO: 对角矩阵、基本矩阵、三角矩阵（含 LU 分解）、初等矩阵、对称矩阵、循环矩阵、幂零矩阵、满秩矩阵
+=== Diagonal Matrix // 对角矩阵
+
+#definition(name: "Diagonal and Skew-Diagonal Matrices")[
+  An $n times n$ matrix $A = (a_("ij"))$ is called a *diagonal matrix* if $a_("ij") = 0$
+  for $i != j$, denoted
+
+  $
+  A = upright("diag")(a_(11), a_(22), ..., a_("nn")).
+  $
+
+  If $a_(i, n+1-i) = 0$ for all $i = 1, ..., n$, then $A$ is called a *skew-diagonal matrix*,
+  denoted
+
+  $
+  A = upright("sdiag")(a_(1n), a_("2, n-1"), ..., a_("n1")).
+  $
+] <def:diagonal-matrix>
+
+#property(name: "Properties of Diagonal Matrices")[
+  - The sum, difference and product of two diagonal matrices of the same order are still diagonal.
+  - Multiplying $A$ on the left (right) by a diagonal matrix multiplies the corresponding
+    rows (columns) of $A$ by the diagonal entries.
+  - $upright("diag")(a_1, ..., a_n)^(-1) = upright("diag")(1/a_1, ..., 1/a_n)$;
+  - $upright("sdiag")(a_1, ..., a_n)^(-1) = upright("sdiag")(1/a_n, ..., 1/a_1)$;
+  - $mat((A, O), (O, C))^(-1) = mat((A^(-1), O), (O, C^(-1)))$;
+  - $mat((O, B), (D, O))^(-1) = mat((O, D^(-1)), (B^(-1), O))$.
+] <prop:diagonal-matrix>
+
+=== Fundamental Matrix // 基本矩阵
+
+#definition(name: "Fundamental Matrix")[
+  $E_("ij")$ is called a *fundamental matrix* if its entry in row $i$ and column $j$ is $1$
+  and all other entries are $0$.
+] <def:fundamental-matrix>
+
+#property(name: "Properties of Fundamental Matrices")[
+  - Multiplying $A$ on the left by $E_("ij")$ moves row $j$ of $A$ to row $i$, with all other
+    entries zero; multiplying $A$ on the right by $E_("ij")$ moves column $i$ of $A$ to column
+    $j$, with all other entries zero.
+  - If $A$ commutes with all fundamental matrices, then $A$ is a scalar matrix.
+] <prop:fundamental-matrix>
+
+#note[
+  The mnemonic is: *moves row*: $E_(i <- j) A$; *moves column*: $A E_(i -> j)$.
+]
+
+=== Triangular Matrix // 三角矩阵
+
+#definition(name: "Upper and Lower Triangular Matrices")[
+  An $n times n$ matrix $A = (a_("ij"))$ is called an *upper triangular matrix* if
+  $a_("ij") = 0$ for $i > j$:
+
+  $
+  A = mat(
+    (a_(11), a_(12), ..., a_(1n)),
+    (0, a_(22), ..., a_(2n)),
+    (dots.v, dots.v, dots.down, dots.v),
+    (0, 0, ..., a_("nn")),
+  )
+  $
+
+  Similarly, if $a_("ij") = 0$ for $i < j$, then $A$ is called a *lower triangular matrix*:
+
+  $
+  A = mat(
+    (a_(11), 0, ..., 0),
+    (a_(21), a_(22), ..., 0),
+    (dots.v, dots.v, dots.down, dots.v),
+    (a_("n1"), a_("n2"), ..., a_("nn")),
+  )
+  $
+] <def:triangular-matrix>
+
+#property(name: "Properties of Triangular Matrices")[
+  - The sum, difference and product of two upper (lower) triangular matrices of the same order
+    are still upper (lower) triangular.
+  - Every square matrix $A$ can be expressed as the sum of an upper triangular matrix and a
+    lower triangular matrix:
+    $A = (A + A^T)/2 + (A - A^T)/2$.
+  - *($"LU"$ Decomposition)* If all leading principal minors of a square matrix $A$ are non-zero,
+    then $A$ can be uniquely decomposed as $A = L U$, where $L$ is a lower triangular matrix
+    with all diagonal entries equal to $1$ and $U$ is an invertible upper triangular matrix.
+    The converse is also true.
+] <prop:triangular-matrix>
+
+=== Elementary Matrix // 初等矩阵
+
+#definition(name: "Elementary Matrix")[
+  An *elementary matrix* is obtained by performing a single elementary row operation on the
+  identity matrix $E$. There are three types (the same holds for column operations):
+  - *Row swapping* $P(i, j)$: interchanges rows $i$ and $j$ of $E$.
+  - *Row scaling* $P(i(c))$: multiplies row $i$ of $E$ by a non-zero scalar $c$.
+  - *Row addition* $P(i, j(k))$: adds $k$ times row $j$ to row $i$ of $E$.
+] <def:elementary-matrix>
+
+#note[
+  It can be proven that $P(i, j)$ can be implemented by a sequence of $P(i(c))$ and
+  $P(i, j(k))$ operations.
+]
+
+// TODO（后半，B3b 批次）: 对称矩阵、循环矩阵、幂零矩阵、满秩矩阵
 
 == Inverse Matrix // 逆矩阵
 
