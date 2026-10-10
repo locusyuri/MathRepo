@@ -63,19 +63,233 @@ such that $m(A) = 0$.
 
 == Permutations // 排列
 
-// TODO: 排列、逆序数、奇偶性、n 阶行列式的定义
+#definition(name: "Permutations of Order $n$")[
+  A *permutation of order* $n$ is a bijection $"sigma": {1, 2, ..., n} -> {1, 2, ..., n}$.
+  The set of all permutations of order $n$ is denoted by $S_n$.
+] <def:permutation>
+
+#definition(name: "Inversion Number")[
+  An *inversion* of a permutation $"sigma"$ is an ordered pair $(i, j)$ satisfying
+  $1 <= i < j <= n$ and $"sigma"(i) > "sigma"(j)$. The number of inversions of $"sigma"$,
+  denoted $"tau"("sigma")$, is called the *inversion number*.
+] <def:inversion-number>
+
+#definition(name: "Parity and Sign of a Permutation")[
+  The permutation $"sigma"$ is called *even* if $"tau"("sigma")$ is even, and *odd* otherwise.
+  Its *sign* (Leibniz symbol) is $"sgn"("sigma") = (-1)^("tau"("sigma"))$, which is $1$ for
+  even permutations and $-1$ for odd ones.
+] <def:sign-of-permutation>
+
+#property(name: "Properties of Parity")[
+  Let $"sigma"$ and $"tau"$ be permutations of order $n$.
+  - *Transposition*: swapping two elements of a permutation changes its parity.
+  - *Identity*: the identity permutation is even.
+  - *Composition*: $"sgn"("sigma" "tau") = "sgn"("sigma") "sgn"("tau")$; in particular $"sgn"("sigma") = "sgn"("sigma"^(-1))$.
+  - *Decomposition*: every permutation is a product of transpositions, and its parity agrees with
+    the parity of the number of transpositions used.
+] <prop:parity-properties>
 
 == Determinant and Its Properties // 行列式及其性质
 
-// TODO: 行列式的基本性质（转置、交换行、倍乘、倍加、拆分）
+#definition(name: "Determinant of Order $n$")[
+  Let $A = (a_("ij"))$ be an $n times n$ matrix over the number field $P$.
+  The *determinant* of $A$ is the scalar
+
+  $
+  abs(A) = sum_("sigma" in S_n) "sgn"("sigma") product_(i=1)^n a_(i, "sigma"(i)).
+  $
+] <def:determinant>
+
+#property(name: "Basic Properties of Determinants")[
+  Let $A$ be an $n times n$ matrix.
+  - *Transpose*: $abs(A^T) = abs(A)$.
+  - *Row exchange*: interchanging two rows (or two columns) of $A$ changes the sign of $abs(A)$.
+  - *Scalar multiplication*: multiplying one row of $A$ by a scalar $k$ multiplies $abs(A)$ by $k$.
+  - *Row addition*: adding a scalar multiple of one row to another row leaves $abs(A)$ unchanged.
+  - *Proportional rows*: if two rows (or two columns) of $A$ are proportional, then $abs(A) = 0$.
+] <prop:determinant-properties>
+
+#theorem(name: "Multiplicativity of Determinants")[
+  If $A$ and $B$ are $n times n$ matrices over $P$, then
+
+  $
+  abs(A B) = abs(A) abs(B).
+  $
+] <thm:det-product>
+
+#proof[
+  Every elementary matrix $E$ satisfies $abs(E A) = abs(E) abs(A)$: this is immediate for
+  the three types of elementary row operations, with $abs(E) = -1$, $k$, and $1$, respectively.
+  If $A$ is invertible, then $A$ is a product of elementary matrices, and applying the previous
+  step to $A = E_1 ... E_k$ against $I$ gives $abs(A) = abs(E_1) ... abs(E_k)$.
+  Hence, for invertible $A$ and $B$, writing $B = F_1 ... F_m$ as a product of elementary
+  matrices yields $abs(A B) = abs(A) abs(F_1) ... abs(F_m) = abs(A) abs(B)$.
+  If one of $A$ and $B$ is singular, then $A B$ is singular as well, so both sides are zero.
+]
+
+#corollary(name: "Determinant and Invertibility")[
+  An $n times n$ matrix $A$ is invertible if and only if $abs(A) != 0$.
+] <cor:determinant-invertibility>
 
 == Expanding by Rows and Columns // 按行（列）展开
 
-// TODO: 余子式与代数余子式、Laplace 展开、Cramer 法则
+#definition(name: "Minors and Cofactors")[
+  The *minor* $M_("ij")$ of $A$ is the determinant of the $(n-1) times (n-1)$ matrix obtained
+  from $A$ by deleting row $i$ and column $j$. The *cofactor* of entry $a_("ij")$ is
+  $A_("ij") = (-1)^(i + j) M_("ij")$.
+] <def:minor-and-cofactor>
+
+#theorem(name: "Laplace Expansion Theorem")[
+  For every row $i$ and every column $j$ of $A$,
+
+  $
+  abs(A) = sum_(j=1)^n a_("ij") A_("ij"),
+  $
+
+  $
+  abs(A) = sum_(i=1)^n a_("ij") A_("ij").
+  $
+] <thm:laplace-expansion>
+
+#proof[
+  We prove the expansion along row $i$; the column version follows from $abs(A^T) = abs(A)$.
+  Grouping the Leibniz terms by $j = "sigma"(i)$ gives
+
+  $
+  abs(A) = sum_(j=1)^n a_("ij") sum_("sigma"(i) = j) "sgn"("sigma") product_(k != i) a_(k, "sigma"(k)).
+  $
+
+  For a permutation $"sigma"$ with $"sigma"(i) = j$, removing the pair $(i, j)$ leaves a
+  permutation $"tau"$ of the remaining indices, and $"sgn"("sigma") = (-1)^(i+j) "sgn"("tau")$.
+  The inner sum therefore equals $(-1)^(i+j) M_("ij") = A_("ij")$.
+]
+
+=== Cramer's Rule // 克拉默法则
+
+#theorem(name: "Cramer's Rule")[
+  Let $A x = b$ be a linear system of $n$ equations in $n$ unknowns with $abs(A) != 0$,
+  and let $A_(j)$ denote the matrix obtained from $A$ by replacing column $j$ with $b$.
+  Then the unique solution is
+
+  $
+  x_j = abs(A_(j)) / abs(A), j = 1, 2, ..., n.
+  $
+] <thm:cramer-rule>
+
+#proof[
+  Since $b = sum_(k=1)^n x_k "col"_(k)(A)$, column $j$ of $A_(j)$ is $sum_(k=1)^n x_k "col"_(k)(A)$
+  while the other columns coincide with those of $A$. Expanding $abs(A_(j))$ along column $j$
+  and using the linearity of the determinant in that column,
+
+  $
+  abs(A_(j)) = sum_(k=1)^n x_k abs(A_(j, k)),
+  $
+
+  where $A_(j, k)$ is $A$ with column $j$ replaced by column $k$. For $k != j$ the matrix
+  $A_(j, k)$ has two identical columns, hence determinant zero; for $k = j$ it is $A$.
+  Thus $abs(A_(j)) = x_j abs(A)$.
+]
+
+=== Expanding by k Rows // 按 k 行展开
+
+#property(name: "Laplace Expansion by k Rows")[
+  Fix $k$ rows with indices $I = {i_1 < i_2 < ... < i_k}$. For a $k$-element subset
+  $J = {j_1 < ... < j_k}$ of columns, write $M(I, J)$ for the $k$-th order minor on rows $I$
+  and columns $J$, and $M^*(I, J)$ for the complementary minor on the remaining rows and columns.
+  Then
+
+  $
+  abs(A) = sum_J (-1)^(i_1 + ... + i_k + j_1 + ... + j_k) M(I, J) M^*(I, J),
+  $
+
+  where the sum runs over all $k$-element subsets $J$ of ${1, 2, ..., n}$.
+] <prop:laplace-expansion-by-k-rows>
 
 == Special Determinants // 特殊行列式
 
-// TODO: Vandermonde 行列式、Arrow 行列式、Two-Triangular 行列式
+#definition(name: "Vandermonde Determinant")[
+  The *Vandermonde determinant* of order $n$ is defined as
+
+  $
+  V_(n) = abs(
+    mat(
+      (1, 1, 1, dots, 1),
+      (x_1, x_2, x_3, dots, x_n),
+      (x_1^2, x_2^2, x_3^2, dots, x_n^2),
+      (dots.v, dots.v, dots.v, dots.down, dots.v),
+      (x_1^(n-1), x_2^(n-1), x_3^(n-1), dots, x_n^(n-1)),
+    )
+  ),
+  $
+
+  where $x_1, x_2, ..., x_n$ are distinct variables.
+] <def:vandermonde-determinant>
+
+The value of the Vandermonde determinant is given by
+
+$
+V_(n) = product_(1 <= i < j <= n) (x_j - x_i).
+$
+
+#definition(name: "Arrow Determinant")[
+  The *Arrow determinant* is defined as
+
+  $
+  A_(n) = abs(
+    mat(
+      (a_(11), a_(12), a_(13), dots, a_(1n)),
+      (a_(21), a_(22), 0, dots, 0),
+      (a_(31), 0, a_(33), dots, 0),
+      (dots.v, dots.v, dots.v, dots.down, dots.v),
+      (a_("n1"), 0, 0, dots, a_("nn")),
+    )
+  ).
+  $
+
+  Its value is given by
+
+  $
+  A_(n) = (a_(11) - sum_(k=2)^n (a_("1k") a_("k1"))/a_("kk")) product_(k=2)^n a_("kk").
+  $
+] <def:arrow-determinant>
+
+From the first column sequentially, subtract $a_(21)/a_(22)$ times the second column, ...,
+$a_("n1")/a_("nn")$ times the $n$-th column, so that the first column becomes
+
+$
+(a_(11) - sum_(k=2)^n (a_("1k") a_("k1"))/a_("kk"), 0, 0, dots, 0)^T.
+$
+
+Then expand along the first column.
+
+#definition(name: "Two-Triangular Determinant")[
+  If the entries of a determinant satisfy
+
+  $
+  a_("ij") = cases(a, i < j, x_i, i = j, b, i > j),
+  $
+
+  then $D_n$ is called a *two-triangular determinant*.
+] <def:two-triangular-determinant>
+
+The value of the two-triangular determinant is given by
+
+$
+abs(
+  mat(
+    (x_1, a, a, dots, a),
+    (b, x_2, a, dots, a),
+    (b, b, x_3, dots, a),
+    (dots.v, dots.v, dots.v, dots.down, dots.v),
+    (b, b, b, dots, x_n),
+  )
+)
+=
+cases(
+  (x_1 + a sum_(k=2)^n (x_1 - a)/(x_k - a)) dot product_(k=2)^n (x_k - a), a = b,
+  (x_n - b) D_(n-1) + product_(k=1)^(n-1) (x_k - a), a != b,
+).
+$
 
 = Matrices // 矩阵
 
@@ -322,4 +536,4 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 
 #pagebreak()
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)

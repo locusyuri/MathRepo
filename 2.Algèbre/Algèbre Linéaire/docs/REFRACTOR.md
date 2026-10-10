@@ -1,8 +1,8 @@
 # Algèbre Linéaire 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-10
-> 最后更新：2026-10-10（B0 骨架完成：Preliminaries 章 + Notations + bibliography，编译通过）
-> 状态：✅ B0 骨架完成，待开始 Part I 迁移（B2 = Determinants）
+> 最后更新：2026-10-10（B2 Determinants 完成：§1–§3 教材补全 + §4 tex 迁移，编译通过）
+> 状态：✅ B2 Determinants 完成，待开始 B3 = Ch3 Matrices
 > **项目约定：每次完成批次后自动 git 提交（中文 Conventional Commits），无需用户手动确认。**
 > 技能依据：`violet-design-note`（目录体检与结构设计）、`violet-latex-to-typst`（迁移）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 > 参考文档：[`1.Analyse/Analyse Mathématique/docs/REFRACTOR.md`](../../1.Analyse/Analyse%20Mathématique/docs/REFRACTOR.md)
@@ -177,11 +177,12 @@ Part IV 二次型与内积空间（几何结构）
 
 ### Part I — Determinants, Matrices and Linear Systems
 
-- [ ] **B2 = Ch2 Determinants**（90 行 / 4 节）
-  - [ ] §1 Permutations
-  - [ ] §2 Determinant and Its Properties
-  - [ ] §3 Expanding by Rows (Columns)（含 === Cramer's Rule / === Expanding by k Rows）
-  - [ ] §4 Special Determinants（Vandermonde, Arrow, Two-Triangular）
+- [x] **B2 = Ch2 Determinants**（90 行 / 4 节）✅ 2026-10-10
+  - [x] §1 Permutations（tex 空节 → 按决策④从教材补全：排列定义、逆序数、奇偶性与符号）
+  - [x] §2 Determinant and Its Properties（tex 空节 → 按决策④从教材补全：Leibniz 定义、五性质、乘积定理+证明、可逆性推论）
+  - [x] §3 Expanding by Rows (Columns)（tex 空节 → 按决策④从教材补全：余子式/代数余子式、Laplace 展开+证明、=== Cramer's Rule 定理+证明、=== Expanding by k Rows）
+  - [x] §4 Special Determinants（tex 迁移：Vandermonde / Arrow / Two-Triangular 定义与值）
+  - 备注：§1–§3 无 md 来源，内容取自三本教材标准内容；迁移踩坑记录：Typst 0.15 的 ∏ 写作 `product`（非 `prod`）、多字母标识符需引号（`"sgn"`/`"tau"`/`"sigma"`/`"col"`）、双字母下标需 `_("ij")` 形式
 - [ ] **B3 = Ch3 Matrices**（549 行 / 7 节，⚠ 含空节，拆为 2–3 个子批）
   - [ ] B3a §1 Basic Operations + §2 Special Square Matrices（前半）
   - [ ] B3b §2 Special Square Matrices（后半）+ §3 Inverse Matrix + §4 Block Matrix
