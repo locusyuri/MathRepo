@@ -44,6 +44,11 @@ Similarly, the following notations are used#footnote[
   ([$D(a, b)$], [Set of derivative (differential) functions on $(a, b)$]),
   ([$D[a, b]$], [Set of derivative (differential) functions on $[a, b]$]),
   ([$D^(k)(I)$], [Set of $k$-th order derivative (differential) functions on $I$]),
+  ([$U(x_0, rho)$], [Neighborhood of $x_0$ with radius $rho$: ${x : abs(x - x_0) < rho}$]),
+  (
+    [$accent(U, circle)(x_0, rho)$],
+    [Deleted (punctured) neighborhood of $x_0$ with radius $rho$: ${x : 0 < abs(x - x_0) < rho}$],
+  ),
 )
 
 Let $U subset bb(R)^n$ be an open set, and $bold(f): U -> bb(R)^m$ be a $C^k$ mapping:
@@ -554,7 +559,9 @@ on top of that, it can also be proved by the *fitting method*.
   so that
   $ abs((x_1 + x_2 + dots + x_n) / n - l) = frac(abs((x_1 - l) + (x_2 - l) + dots + (x_n - l)), n). $
   Let $epsilon > 0$. Since $lim_(n -> oo) x_n = l$, there exists $N in bb(N)^+$ such that $abs(x_n - l) < epsilon$ for all $n > N$; in particular, the sequence $(x_n - l)$ is bounded, so there exists $M > 0$ such that $abs(x_k - l) <= M$ for all $k in bb(N)^+$. Now divide the sum into two units at the index $N$: for $n > N$,
-  $ abs((x_1 + x_2 + dots + x_n) / n - l) <= frac(abs(x_1 - l) + dots + abs(x_N - l), n) + frac((n - N) epsilon, n) <= frac(N M, n) + epsilon. $
+  $
+    abs((x_1 + x_2 + dots + x_n) / n - l) <= frac(abs(x_1 - l) + dots + abs(x_N - l), n) + frac((n - N) epsilon, n) <= frac(N M, n) + epsilon.
+  $
   Hence $limsup_(n -> oo) abs((x_1 + x_2 + dots + x_n) / n - l) <= epsilon$. Since $epsilon > 0$ is arbitrary, the limit is $0$, i.e.,
   $ lim_(n -> oo) (x_1 + x_2 + dots + x_n) / n = l. $
 
@@ -584,6 +591,7 @@ on top of that, it can also be proved by the *fitting method*.
   A sequence ${x_n}$ is called an *infinite quantity* if for any given $G > 0$,
   there exists $N in bb(N)^+$ such that $abs(x_n) > G$ for all $n > N$,
   written $lim_(n -> oo) x_n = oo$.
+
   If an infinite quantity ${x_n}$ is positive (negative) from some term on,
   it is called a positive (negative) infinite quantity, written $lim_(n -> oo) x_n = plus.minus oo$;
   they are collectively called infinite quantities of fixed sign.
@@ -870,9 +878,9 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
 #definition(name: "Supremum and Infimum")[
   Let $S$ be a set of real numbers. A number $beta$ is called the *supremum* (least upper bound) of $S$,
   written $beta = sup S$, if:
-  (1) $beta$ is an upper bound of $S$: $x <= beta$ for all $x in S$;
-  (2) no number smaller than $beta$ is an upper bound of $S$:
-  for every $epsilon > 0$ there exists $x in S$ with $x > beta - epsilon$.
+  + $beta$ is an upper bound of $S$: $x <= beta$ for all $x in S$;
+  + no number smaller than $beta$ is an upper bound of $S$: $forall epsilon > 0, exists x in S : x > beta - epsilon$.
+
   The *infimum* (greatest lower bound) $inf S$ is defined similarly.
 ] <def:sup-inf>
 
