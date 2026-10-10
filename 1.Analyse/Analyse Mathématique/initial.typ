@@ -9208,7 +9208,7 @@ When $n = 3, s = 1$, $M$ is a curve in three-dimensional space.
   $
   $
     N_(t^0) M: quad & x' (t^0)(x - x(t^0)) + y' (t^0)(y - y(t^0)) + z' (t^0)(z - z(t^0)) = 0 \
-    & <=> quad bold(r)'(t^0) dot (bold(r) - bold(r)(t^0)) = 0.
+                    & <=> quad bold(r)'(t^0) dot (bold(r) - bold(r)(t^0)) = 0.
   $
 
 + If the curve is described by the system
@@ -9392,6 +9392,125 @@ Therefore, the area element $dif A$ on the surface $M$ is
 $ dif A = sqrt(E G - F^2) dif u dif v. $
 Integrating over the entire parameter domain $Delta$, we obtain the total area of the surface patch $M$:
 $ "Area"(M) = integral.double_Delta sqrt(E G - F^2) dif u dif v. $
+
+== Extrinsic Geometry // 外在几何
+
+The *second fundamental form* is a symmetric bilinear form defined on the tangent space that measures the change in the normal vector of a surface, thereby describing the #underline[extrinsic curvature] of the surface relative to its ambient space $bb(R)^3$.
+
+On the regular surface patch $M$ defined at the beginning of the last section, we can define a continuous unit normal vector field $bold(n): M -> bb(S)^2$, where $bb(S)^2$ is the unit sphere in $bb(R)^3$:
+$ bold(n)(p) = frac(bold(r)_u times bold(r)_v, norm(bold(r)_u times bold(r)_v)) (p). $
+This mapping $bold(n)$ from the surface to the unit sphere is called the *Gauß map*. The second fundamental form is defined by studying the differential of the Gauß map.
+
+#definition(name: "The Second Fundamental Form")[
+  Under the above conditions, for any point $p = (u, v) in Delta$, the *second fundamental form* of the surface $M$ at point $p$ is a symmetric bilinear form on the tangent space $T_p M$, which is defined as: for any tangent vectors $bold(w)_1, bold(w)_2 in T_p M$,
+  $ upright(II)_p (bold(w)_1, bold(w)_2) := -dif_p bold(n) (bold(w)_1) dot bold(w)_2, $
+  where $dif_p bold(n): T_p M -> T_(bold(n)(p)) bb(S)^2$ is the differential (or Jacobian) of the Gauß map at point $p$.
+
+  The linear operator associated with $dif_p bold(n)$, defined as $W_p (bold(w)) = -dif_p bold(n) (bold(w))$, is called the *Weingarten map* or *shape operator*, and it is a linear operator from $T_p M$ to itself. Therefore, the second fundamental form can also be written as
+  $ upright(II)_p (bold(w)_1, bold(w)_2) = W_p (bold(w)_1) dot bold(w)_2. $
+] <def:second-fundamental-form>
+// 注：tex 中定义后的两条 footnote（模板不支持脚注）移至下方正文说明。
+
+Two remarks on this definition are in order:
+
+- Since $bold(n)(p)$ is a unit vector, $T_(bold(n)(p)) bb(S)^2$ is the plane orthogonal to $bold(n)(p)$, and $T_p M$ itself is also orthogonal to $bold(n)(p)$; it follows that $dif_p bold(n) (bold(w)_1)$ and $bold(w)_2$ lie in the same plane, and their dot product is well-defined.
+- The negative sign in this definition is a convention, which makes the principal curvatures of a convex surface (like a sphere) positive.
+
+For convenience, we express $upright(II)_p$ in the basis ${bold(r)'_u, bold(r)'_v}$ of the tangent space $T_p M$. Define:
+$
+  & L(u, v) := upright(II)_p (bold(r)_u, bold(r)_u) = W_p (bold(r)_u) dot bold(r)_u = bold(r)_(u u) dot bold(n); \
+  & M(u, v) := upright(II)_p (bold(r)_u, bold(r)_v) = W_p (bold(r)_u) dot bold(r)_v = bold(r)_(u v) dot bold(n); \
+  & N(u, v) := upright(II)_p (bold(r)_v, bold(r)_v) = W_p (bold(r)_v) dot bold(r)_v = bold(r)_(v v) dot bold(n),
+$
+Then the matrix representation of the second fundamental form $upright(II)_p$ under the basis ${bold(r)'_u, bold(r)'_v}$ is
+$ upright(II)_p = mat(L, M; M, N), $
+which is symmetric, but not necessarily positive-definite. And its sign reflects the way the surface is curved.
+
+The associated second fundamental form, also denoted by $upright(II)$, is an expression for the normal curvature:
+$ upright(II) = L dif u^2 + 2M dif u dif v + N dif v^2. $
+For a unit tangent vector $bold(w) in T_p M$, the value of $upright(II)_p (bold(w), bold(w))$ is the normal curvature of the surface in the direction of $bold(w)$, denoted $k_n (bold(w))$.
+
+=== Curvature // 曲率（原 leftbarTitle 非空壳，升级为小节）
+
+Curvature is a mathematical quantity describing the "bending" degree of a geometric object, such as a curve or a surface.
+
+The meaning of curvature varies for geometric objects of different dimensions:
+
+- Curvature on a curve: describes the degree to which the curve deviates from a straight line.
+- Description of curvature by a surface: is more complex, involving directionality—the bending of a surface can be completely different in different directions.
+
+The curvature of a surface is usually classified into the following typical types: normal curvature, principal curvatures, mean curvature, Gaussian curvature, etc.
+
+#definition(name: "Curvature of Curve")[
+  Let $C$ be a $C^2$ smooth regular curve in $bb(R)^3$, parameterized by arc length $t$:
+  $ bold(r)(t) = (x(t), y(t), z(t)), quad t in [a, b]. $
+  The unit tangent vector of the curve at point $t$ is
+  $ bold(T)(t) = bold(r)'(t) = (x' (t), y' (t), z' (t)). $
+  The *curvature* of the curve at point $t$ is defined as the magnitude of the derivative of the unit tangent vector with respect to arc length:
+  $ kappa(t) = norm(frac(dif bold(T)(t), dif t)) = frac(norm(bold(r)'(t) times bold(r)''(t)), norm(bold(r)'(t))^3). $
+  Geometrically, curvature measures how quickly the curve changes direction at point $t$.
+
+  If the best-fit circle is found based on the tangent and normal at a certain point, the radius of this circle is called the *radius of curvature* $R$, and the curvature is its reciprocal:
+  $ kappa = 1 / R. $
+  This fitted circle is called the *osculating circle* of the curve at that point.
+] <def:curvature-of-curve>
+
+Some special cases of curvature are given below:
+
++ For a plane curve given by $y = f(x)$, the curvature at point $x$ is
+  $ kappa(x) = frac(abs(f'' (x)), (1 + (f' (x))^2)^(3/2)). $
++ For a circle with radius $R$, the curvature is constant:
+  $ kappa = 1 / R. $
+
+// 注（P0-3）：原 tex §5 "Oriented Surface"（定向曲面）为空节，且定向是 ch15 第二型曲面积分的必要前置，
+// 待大纲经用户确认后补全于此（REFRACTOR.md P0-3）。
+
+== Bounded Variation Functions // 有界变差函数
+
+#definition(name: "Bounded Variation")[
+  Let $f: [a, b] -> bb(R)$ be a real-valued function defined on the closed interval $[a, b]$. For any partition $P = {x_0, x_1, dots, x_n}$ of $[a, b]$ with $a = x_0 < x_1 < dots < x_n = b$, define the variation of $f$ on the partition $P$ as
+  $ V(f, P) = sum_(i=1)^n abs(f(x_i) - f(x_(i-1))). $
+
+  The total variation of $f$ on $[a, b]$ is defined as
+  $ V_a^b (f) = sup_P V(f, P), $
+  where the supremum is taken over all possible partitions $P$ of $[a, b]$. If $V_a^b (f) < oo$, then $f$ is said to be of *bounded variation* on $[a, b]$, denoted as $f in "BV"[a, b]$.
+] <def:bounded-variation>
+
+#property[
+  + $"BV"[a, b] subset B[a, b]$, where $B[a, b]$ denotes the set of all bounded functions on $[a, b]$.
+  + For any $f, g in "BV"[a, b]$ and any scalars $alpha, beta in bb(R)$, the linear combination $alpha f + beta g in "BV"[a, b]$, and
+    $ V_a^b (alpha f + beta g) <= abs(alpha) V_a^b (f) + abs(beta) V_a^b (g). $
+    Specially, if $abs(g(x)) >= sigma > 0$, then $frac(f(x), g(x)) in "BV"[a, b]$.
+] <prop:bv-properties>
+// 注：tex 中该 property 的 enumerate 原含第 3 项但内容为空，已删除。
+
+Some common bounded variation functions include:
+
+#terms(
+  terms.item([Monotonic functions], [Any monotonic function on a closed interval is of bounded variation, and $V_a^b (f) = abs(f(b) - f(a))$.]),
+  terms.item([Piecewise monotonic functions], [Functions that are monotonic on each subinterval of a finite partition of $[a, b]$ are also of bounded variation.]),
+  terms.item([Lipschitz continuous functions], [Any Lipschitz continuous function on $[a, b]$ is of bounded variation (see #link(<def:lipschitz-continuity>)[the definition of Lipschitz continuity]).]),
+  terms.item([Functions with finite discontinuities], [Functions that have only a finite number of jump discontinuities on $[a, b]$ are of bounded variation.]),
+  terms.item([Absolutely continuous functions], [Any absolutely continuous function on $[a, b]$ is of bounded variation.]),
+)
+
+#theorem(name: "Jordan Decomposition Theorem")[
+  $f in "BV"[a, b]$ if and only if there exist two monotonic increasing functions $g, h: [a, b] -> bb(R)$ such that
+  $ f(x) = g(x) - h(x). $
+] <thm:jordan-decomposition>
+
+Bounded variation functions have important applications. For example, in harmonic analysis, the Fourier series of a bounded variation function converges pointwise (the detailed convergence theory is established in the Analyse Harmonique note); other typical applications are as follows:
+
+=== Rectifiable Curves // 可求长曲线（原 leftbarTitle 非空壳，升级为小节）
+
+#theorem(name: "Jordan's Theorem on Rectifiable Curves")[
+  A curve $C$ in $bb(R)^2$ defined by the parametric equations
+  $ (x, y) = (x(t), y(t)), quad t in [a, b], $
+  is rectifiable if and only if both $x(t)$ and $y(t)$ are of bounded variation on $[a, b]$.
+] <thm:jordan-rectifiable-curves>
+
+// 注：tex 中本节末尾的 "Stieltjes Integral" leftbarTitle 为空壳（无任何内容），未迁移。
+
 // B15: ch15 Line Integrals and Surface Integrals（曲线积分与曲面积分）
 // B16: ch16 Integrals with Variable Parameters（变参积分）
 
