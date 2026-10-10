@@ -2769,7 +2769,219 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 
 = Glossary // 术语表
 
-// TODO: 迁移完成后用 violet-glossary-indexer 自动生成
+== A
+- *#link(<def:adjugate-matrix>)[Adjugate Matrix]*
+- *#link(<def:algebra-over-field>)[Algebra Over Field]*
+- *#link(<def:arrow-determinant>)[Arrow Determinant]*
+- *#link(<def:ascending-chain>)[Ascending Chain]*
+- *#link(<prop:ascending-chain-properties>)[Ascending Chain Properties]*
+
+== B
+- *#link(<def:basis-and-coordinates>)[Basis And Coordinates]*
+- *#link(<def:best-approximation>)[Best Approximation]*
+- *#link(<def:bilinear-form>)[Bilinear Form]*
+- *#link(<thm:block-decomposition>)[Block Decomposition]*
+
+== C
+- *#link(<def:canonical-form-complex>)[Canonical Form Complex]*
+- *#link(<def:canonical-form-of-equivalence>)[Canonical Form Of Equivalence]*
+- *#link(<thm:cauchy-binet-formula>)[Cauchy Binet Formula]*
+- *#link(<thm:cauchy-schwarz>)[Cauchy Schwarz]*
+- *#link(<def:circulant-matrix>)[Circulant Matrix]*
+- *#link(<cor:classification-of-finite-dim-spaces>)[Classification Of Finite Dim Spaces]*
+- *#link(<def:cokernel>)[Cokernel]*
+- *#link(<def:commutative-space>)[Commutative Space]*
+- *#link(<prop:commutative-space-properties>)[Commutative Space Properties]*
+- *#link(<def:companion-matrix>)[Companion Matrix]*
+- *#link(<thm:complete-similarity-invariants>)[Complete Similarity Invariants]*
+- *#link(<def:complex-inner-product>)[Complex Inner Product]*
+- *#link(<def:congruent-transformation>)[Congruent Transformation]*
+- *#link(<thm:cramer-rule>)[Cramer Rule]*
+- *#link(<prop:cyclic-space-conditions>)[Cyclic Space Conditions]*
+- *#link(<def:cyclic-subspace>)[Cyclic Subspace]*
+- *#link(<prop:cyclic-subspace-criterion>)[Cyclic Subspace Criterion]*
+
+== D
+- *#link(<thm:det-product>)[Det Product]*
+- *#link(<cor:det-product-multiple>)[Det Product Multiple]*
+- *#link(<def:determinant>)[Determinant]*
+- *#link(<def:determinant-divisor>)[Determinant Divisor]*
+- *#link(<cor:determinant-invertibility>)[Determinant Invertibility]*
+- *#link(<prop:determinant-properties>)[Determinant Properties]*
+- *#link(<thm:determinant-reduction-formula>)[Determinant Reduction Formula]*
+- *#link(<prop:diagonal-matrix>)[Diagonal Matrix]*
+- *#link(<def:diagonal-matrix>)[Diagonal Matrix]*
+- *#link(<thm:diagonalization-conditions>)[Diagonalization Conditions]*
+- *#link(<def:dimension>)[Dimension]*
+- *#link(<thm:dimension-formula>)[Dimension Formula]*
+- *#link(<def:direct-sum>)[Direct Sum]*
+- *#link(<prop:direct-sum-conditions>)[Direct Sum Conditions]*
+- *#link(<prop:double-dual>)[Double Dual]*
+- *#link(<def:dual-basis>)[Dual Basis]*
+- *#link(<def:dual-space>)[Dual Space]*
+- *#link(<thm:dual-space-dimension>)[Dual Space Dimension]*
+
+== E
+- *#link(<def:eigenpolynomial>)[Eigenpolynomial]*
+- *#link(<prop:eigenpolynomial-properties>)[Eigenpolynomial Properties]*
+- *#link(<def:eigenspace>)[Eigenspace]*
+- *#link(<prop:eigenvalues-of-matrix-functions>)[Eigenvalues Of Matrix Functions]*
+- *#link(<def:eigenvector-eigenvalue>)[Eigenvector Eigenvalue]*
+- *#link(<lem:eigenvector-independence>)[Eigenvector Independence]*
+- *#link(<def:elementary-divisors>)[Elementary Divisors]*
+- *#link(<def:elementary-matrix>)[Elementary Matrix]*
+- *#link(<def:equivalent-polynomial-matrices>)[Equivalent Polynomial Matrices]*
+- *#link(<thm:existence-of-solutions>)[Existence Of Solutions]*
+
+== F
+- *#link(<thm:first-isomorphism-theorem>)[First Isomorphism Theorem]*
+- *#link(<def:frobenius-normal-form>)[Frobenius Normal Form]*
+- *#link(<def:full-row-rank-matrix>)[Full Row Rank Matrix]*
+- *#link(<prop:full-row-rank-matrix>)[Full Row Rank Matrix]*
+- *#link(<prop:fundamental-matrix>)[Fundamental Matrix]*
+- *#link(<def:fundamental-matrix>)[Fundamental Matrix]*
+- *#link(<def:fundamental-system-of-solutions>)[Fundamental System Of Solutions]*
+
+== G
+- *#link(<def:generalized-inverse>)[Generalized Inverse]*
+- *#link(<thm:gerschgorin-1>)[Gerschgorin 1]*
+- *#link(<thm:gerschgorin-2>)[Gerschgorin 2]*
+- *#link(<def:gram-matrix>)[Gram Matrix]*
+- *#link(<prop:gram-matrix-properties>)[Gram Matrix Properties]*
+- *#link(<thm:gram-schmidt>)[Gram Schmidt]*
+
+== H
+- *#link(<thm:hamilton-cayley>)[Hamilton Cayley]*
+- *#link(<def:hermitian-transformation>)[Hermitian Transformation]*
+
+== I
+- *#link(<prop:idempotent-involutional-characterization>)[Idempotent Involutional Characterization]*
+- *#link(<def:idempotent-transformation>)[Idempotent Transformation]*
+- *#link(<def:induced-mapping>)[Induced Mapping]*
+- *#link(<thm:inertia-theorem>)[Inertia Theorem]*
+- *#link(<def:intersection-and-sum>)[Intersection And Sum]*
+- *#link(<def:invariant-divisors>)[Invariant Divisors]*
+- *#link(<def:invariant-subspace>)[Invariant Subspace]*
+- *#link(<prop:invariant-subspace-properties>)[Invariant Subspace Properties]*
+- *#link(<def:inverse-matrix>)[Inverse Matrix]*
+- *#link(<thm:inverse-via-adjugate>)[Inverse Via Adjugate]*
+- *#link(<def:inversion-number>)[Inversion Number]*
+- *#link(<prop:invertibility-conditions>)[Invertibility Conditions]*
+- *#link(<thm:invertibility-equivalent-propositions>)[Invertibility Equivalent Propositions]*
+- *#link(<def:isomorphism>)[Isomorphism]*
+- *#link(<prop:isomorphism-properties>)[Isomorphism Properties]*
+- *#link(<thm:isomorphism-theorem>)[Isomorphism Theorem]*
+
+== J
+- *#link(<thm:jordan-existence>)[Jordan Existence]*
+
+== K
+- *#link(<def:kernel-and-image>)[Kernel And Image]*
+- *#link(<prop:kernel-decomposition-coprime>)[Kernel Decomposition Coprime]*
+- *#link(<def:kronecker-product>)[Kronecker Product]*
+
+== L
+- *#link(<thm:laplace-expansion>)[Laplace Expansion]*
+- *#link(<prop:laplace-expansion-by-k-rows>)[Laplace Expansion By K Rows]*
+- *#link(<def:linear-combination>)[Linear Combination]*
+- *#link(<def:linear-dependence-and-independence>)[Linear Dependence And Independence]*
+- *#link(<thm:linear-extension>)[Linear Extension]*
+- *#link(<def:linear-function>)[Linear Function]*
+- *#link(<def:linear-mapping>)[Linear Mapping]*
+- *#link(<def:linear-representation>)[Linear Representation]*
+- *#link(<def:linear-space>)[Linear Space]*
+- *#link(<def:linear-subspace>)[Linear Subspace]*
+
+== M
+- *#link(<def:matrix-equivalence>)[Matrix Equivalence]*
+- *#link(<def:maximal-independent-group>)[Maximal Independent Group]*
+- *#link(<def:minimal-polynomial>)[Minimal Polynomial]*
+- *#link(<def:minor-and-cofactor>)[Minor And Cofactor]*
+- *#link(<def:multiplicity>)[Multiplicity]*
+- *#link(<prop:multiplicity-bounds>)[Multiplicity Bounds]*
+
+== N
+- *#link(<lem:nilpotent-jordan-form>)[Nilpotent Jordan Form]*
+- *#link(<def:nilpotent-matrix>)[Nilpotent Matrix]*
+- *#link(<prop:nilpotent-triangular-matrix>)[Nilpotent Triangular Matrix]*
+- *#link(<thm:normal-diagonalization>)[Normal Diagonalization]*
+- *#link(<def:normal-transformation>)[Normal Transformation]*
+- *#link(<def:normed-linear-space>)[Normed Linear Space]*
+
+== O
+- *#link(<prop:one-dim-invariant-subspace>)[One Dim Invariant Subspace]*
+- *#link(<prop:operations-of-inverse>)[Operations Of Inverse]*
+- *#link(<prop:operations-of-rank>)[Operations Of Rank]*
+- *#link(<def:orthogonal-complement>)[Orthogonal Complement]*
+- *#link(<prop:orthogonal-complement-properties>)[Orthogonal Complement Properties]*
+- *#link(<def:orthogonal-matrix>)[Orthogonal Matrix]*
+- *#link(<def:orthogonal-projection>)[Orthogonal Projection]*
+- *#link(<prop:orthogonal-projection-properties>)[Orthogonal Projection Properties]*
+- *#link(<def:orthonormal-basis>)[Orthonormal Basis]*
+- *#link(<prop:orthonormal-basis-properties>)[Orthonormal Basis Properties]*
+- *#link(<thm:orthonormal-transition>)[Orthonormal Transition]*
+- *#link(<def:other-definiteness-types>)[Other Definiteness Types]*
+
+== P
+- *#link(<prop:parity-properties>)[Parity Properties]*
+- *#link(<def:permutation>)[Permutation]*
+- *#link(<def:polynomial-matrix>)[Polynomial Matrix]*
+- *#link(<thm:positive-definite-conditions>)[Positive Definite Conditions]*
+- *#link(<def:positive-definite-quadratic-form>)[Positive Definite Quadratic Form]*
+- *#link(<prop:projection-and-idempotent>)[Projection And Idempotent]*
+- *#link(<def:projection-transformation>)[Projection Transformation]*
+- *#link(<prop:properties-of-linear-independence>)[Properties Of Linear Independence]*
+
+== Q
+- *#link(<def:quadratic-form>)[Quadratic Form]*
+- *#link(<thm:quotient-dimension>)[Quotient Dimension]*
+- *#link(<def:quotient-space>)[Quotient Space]*
+
+== R
+- *#link(<thm:rank-nullity>)[Rank Nullity]*
+- *#link(<def:rank-of-matrices>)[Rank Of Matrices]*
+- *#link(<def:rank-of-vector-groups>)[Rank Of Vector Groups]*
+- *#link(<prop:rank-one-matrix>)[Rank One Matrix]*
+- *#link(<def:real-inner-product>)[Real Inner Product]*
+- *#link(<thm:root-space-decomposition>)[Root Space Decomposition]*
+- *#link(<def:root-subspace>)[Root Subspace]*
+- *#link(<def:row-echelon-form>)[Row Echelon Form]*
+- *#link(<thm:row-rank-equals-column-rank>)[Row Rank Equals Column Rank]*
+
+== S
+- *#link(<thm:sherman-morrison>)[Sherman Morrison]*
+- *#link(<def:sign-of-permutation>)[Sign Of Permutation]*
+- *#link(<def:similar-matrices>)[Similar Matrices]*
+- *#link(<prop:similarity-arithmetic>)[Similarity Arithmetic]*
+- *#link(<def:smith-normal-form>)[Smith Normal Form]*
+- *#link(<prop:span-of-union>)[Span Of Union]*
+- *#link(<def:span-of-vectors>)[Span Of Vectors]*
+- *#link(<prop:subspace-criterion>)[Subspace Criterion]*
+- *#link(<thm:symmetric-diagonalization>)[Symmetric Diagonalization]*
+- *#link(<def:symmetric-matrix>)[Symmetric Matrix]*
+- *#link(<prop:symmetric-matrix>)[Symmetric Matrix]*
+- *#link(<lem:symmetric-properties>)[Symmetric Properties]*
+- *#link(<def:symmetric-transformation>)[Symmetric Transformation]*
+- *#link(<def:symplectic-inner-product>)[Symplectic Inner Product]*
+- *#link(<prop:symplectic-space-properties>)[Symplectic Space Properties]*
+- *#link(<def:system-of-linear-equations>)[System Of Linear Equations]*
+
+== T
+- *#link(<def:trace>)[Trace]*
+- *#link(<prop:trace-arithmetic>)[Trace Arithmetic]*
+- *#link(<prop:triangular-matrix>)[Triangular Matrix]*
+- *#link(<def:triangular-matrix>)[Triangular Matrix]*
+- *#link(<def:two-triangular-determinant>)[Two Triangular Determinant]*
+
+== U
+- *#link(<thm:uniqueness-of-rref>)[Uniqueness Of Rref]*
+- *#link(<def:unitary-transformation>)[Unitary Transformation]*
+
+== V
+- *#link(<def:vandermonde-determinant>)[Vandermonde Determinant]*
+
+== W
+- *#link(<thm:woodbury-identity>)[Woodbury Identity]*
 
 #pagebreak()
 

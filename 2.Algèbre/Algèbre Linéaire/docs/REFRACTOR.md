@@ -1,8 +1,8 @@
 # Algèbre Linéaire 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-10
-> 最后更新：2026-10-10（B9-B10 完成：Part IV 全部完成）
-> 状态：✅ Part I–IV 全部完成，待收尾（Glossary 重建、死文件清理、全书终检）
+> 最后更新：2026-10-10（收尾完成：Glossary 生成 + 全书编译通过）
+> 状态：✅ 全部完成（Part I–IV + Glossary + 参考文献）
 > **项目约定：每次完成批次后自动 git 提交（中文 Conventional Commits），无需用户手动确认。**
 > 技能依据：`violet-design-note`（目录体检与结构设计）、`violet-latex-to-typst`（迁移）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 > 参考文档：[`1.Analyse/Analyse Mathématique/docs/REFRACTOR.md`](../../1.Analyse/Analyse%20Mathématique/docs/REFRACTOR.md)
@@ -251,7 +251,7 @@ Part IV 二次型与内积空间（几何结构）
 
 ### 收尾
 
-- [ ] Glossary 重建（用 `violet-glossary-indexer`）
+- [x] Glossary 重建（用 `violet-glossary-indexer`）✅ 2026-10-10
 - [ ] 死文件清理（`chapters/` 目录、`tmp/` 目录）
 - [ ] 全书终检（编译 + 三正则命中 0 + 标签完整性）
 
