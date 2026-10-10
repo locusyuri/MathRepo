@@ -9547,6 +9547,205 @@ Bounded variation functions have important applications. For example, in harmoni
 // 注：tex 中本节末尾的 "Stieltjes Integral" leftbarTitle 为空壳（无任何内容），未迁移。
 
 // B15: ch15 Line Integrals and Surface Integrals（曲线积分与曲面积分）
+
+= Line Integrals and Surface Integrals // 曲线积分与曲面积分
+
+== Line Integrals and Surface Integrals of Scalar Fields // 标量场的曲线积分与曲面积分
+
+=== Line Integral of Scalar Field // 标量场的曲线积分（原 leftbarTitle 非空壳，升级为小节）
+
+#definition(name: "Line Integral of Scalar Field")[
+  Let $L$ be a rectifiable continuous curve in $bb(R)^3$, whose endpoints are $A$ and $B$, and let $f(x, y, z)$ be bounded on $L$. Partition $L$ into $n$ segments by the points $A = P_0, P_1, ..., P_n = B$, and select a point $bold(xi)_i$ on each segment $P_(i-1) P_i$ ($i = 1, 2, ..., n$). Denote the length of the segment $P_(i-1) P_i$ by $Delta s_i$ ($i = 1, 2, ..., n$), and form the sum:
+  $ sum_(i=1)^n f(bold(xi)_i) Delta s_i. $
+  If when $lambda$ (the length of the longest segment) tends to $0$, the above sum tends to a limit $I$ independent of the partition and the choice of the points $bold(xi)_i$, then $I$ is called the *line integral of the scalar field $f$ along the curve $L$*, denoted as
+  $ integral_L f dif s, $
+  that is,
+  $ I = integral_L f(bold(xi)) dif s = lim_(lambda -> 0) sum_(i=1)^n f(bold(xi)_i) Delta s_i. $
+] <def:line-integral-scalar-field>
+
+#theorem[
+  Let $L$ be a $C^1$ smooth regular curve parameterized by $bold(x)(t) = (x(t), y(t), z(t))$, $t in [alpha, beta]$, and let $f$ be continuous on $L$. Then
+  $
+    integral_L f dif s & = integral_alpha^beta f(bold(x)(t)) norm(bold(x)'(t)) dif t \
+    & = integral_alpha^beta f(x(t), y(t), z(t)) sqrt((x'(t))^2 + (y'(t))^2 + (z'(t))^2) dif t.
+  $
+] <thm:line-integral-scalar-computation>
+
+Specially, if the plane curve $L$ is given by $y = y(x)$, $x in [a, b]$, then
+$ integral_L f dif s = integral_a^b f(x, y(x)) sqrt(1 + (y'(x))^2) dif x. $
+
+=== Surface Integrals of Scalar Fields // 标量场的曲面积分（原 leftbarTitle 非空壳，升级为小节）
+
+#definition(name: "Surface Integral of Scalar Field")[
+  Let $Sigma$ be a piecewise smooth surface in $bb(R)^3$, and let $f(x, y, z)$ be bounded on $Sigma$. Partition $Sigma$ into $n$ small pieces $Delta Sigma_1, Delta Sigma_2, ..., Delta Sigma_n$ with smooth curve webs, and select a point $bold(xi)_i$ on each piece $Delta Sigma_i$ ($i = 1, 2, ..., n$). Denote the area of the piece $Delta Sigma_i$ by $Delta S_i$ ($i = 1, 2, ..., n$), and form the sum:
+  $ sum_(i=1)^n f(bold(xi)_i) Delta S_i. $
+  If when $lambda$ (the area of the largest piece) tends to $0$, the above sum tends to a limit $I$ independent of the partition and the choice of the points $bold(xi)_i$, then $I$ is called the *surface integral of the scalar field $f$ over the surface $Sigma$*, denoted as
+  $ integral.double_Sigma f dif S, $
+  that is,
+  $ I = integral.double_Sigma f(bold(xi)) dif S = lim_(lambda -> 0) sum_(i=1)^n f(bold(xi)_i) Delta S_i. $
+] <def:surface-integral-scalar-field>
+
+#theorem[
+  Let $Sigma$ be a piecewise smooth surface parameterized by $bold(r)(u, v) = (x(u, v), y(u, v), z(u, v))$, $(u, v) in D$, and let $f$ be continuous on $Sigma$. Suppose $x, y, z$ have continuous first-order partial derivatives with respect to $u$ and $v$ on $D$, and the associated Jacobian matrix
+  $
+    J = mat(
+      frac(partial x, partial u), frac(partial x, partial v);
+      frac(partial y, partial u), frac(partial y, partial v);
+      frac(partial z, partial u), frac(partial z, partial v),
+    )
+  $
+  is of full rank. Then
+  $
+    integral.double_Sigma f dif S & = integral.double_D f(bold(r)(u, v)) norm(frac(partial bold(r), partial u) times frac(partial bold(r), partial v)) dif u dif v \
+    & = integral.double_D f(x(u, v), y(u, v), z(u, v)) sqrt(E G - F^2) dif u dif v,
+  $
+  where $E, G, F$ are the Gauß coefficients of the surface $Sigma$.
+] <thm:surface-integral-scalar-computation>
+// 注：tex 原定理称 Sigma 为 "closed surface"，但参数化计算公式并不要求封闭性，判定为误植，已去除。
+
+Specially, if the surface $Sigma$ is given by $z = z(x, y)$, $(x, y) in D$, then
+$ integral.double_Sigma f dif S = integral.double_D f(x, y, z(x, y)) sqrt(1 + lr((frac(partial z, partial x)))^2 + lr((frac(partial z, partial y)))^2) dif x dif y. $
+
+== Differential Form and Exterior Differentiation // 微分形式与外微分
+
+Let $dif x_i, dif x_j$ be the differentials of the independent variables $x_i, x_j$.
+
+In $bb(R)^1$:
+$
+  & "0-form:" quad f(x), \
+  & "1-form:" quad omega = f(x) dif x, \
+  & "k-form" (k >= 2): quad omega = sum_(1 <= i_1 < i_2 < ... < i_k <= n) f_(i_1 i_2 ... i_k)(x_1, x_2, ..., x_n) dif x_(i_1) and dif x_(i_2) and ... and dif x_(i_k) = 0.
+$
+
+In $bb(R)^2$:
+$
+  & "0-form:" quad f(x, y), \
+  & "1-form:" quad omega = P(x, y) dif x + Q(x, y) dif y, \
+  & "2-form:" quad omega = f(x, y) dif x and dif y, \
+  & "k-form" (k >= 3): quad omega = sum_(1 <= i_1 < i_2 < ... < i_k <= n) f_(i_1 i_2 ... i_k)(x_1, x_2, ..., x_n) dif x_(i_1) and dif x_(i_2) and ... and dif x_(i_k) = 0.
+$
+
+In $bb(R)^3$:
+$
+  & "0-form:" quad f(x, y, z), \
+  & "1-form:" quad omega = P(x, y, z) dif x + Q(x, y, z) dif y + R(x, y, z) dif z, \
+  & "2-form:" quad omega = P(x, y, z) dif y and dif z + Q(x, y, z) dif z and dif x + R(x, y, z) dif x and dif y, \
+  & "3-form:" quad omega = f(x, y, z) dif x and dif y and dif z, \
+  & "k-form" (k >= 4): quad omega = sum_(1 <= i_1 < i_2 < ... < i_k <= n) f_(i_1 i_2 ... i_k)(x_1, x_2, ..., x_n) dif x_(i_1) and dif x_(i_2) and ... and dif x_(i_k) = 0.
+$
+
+Here, $and$ is called the *wedge product*, which satisfies:
+
++ *Skew symmetric*: $dif x_i and dif x_j = -dif x_j and dif x_i$.
++ *Associative*: $(dif x_i and dif x_j) and dif x_k = dif x_i and (dif x_j and dif x_k)$.
++ In a fixed dimension, the wedge product of $k$-forms becomes zero (as higher forms are not defined); for example, in $3$-dimensional space, a $4$-form is equal to $0$.
+
+A *differential form* is a skew symmetric tensor on a vector space.
+
+#definition(name: "Exterior Differentiation")[
+  Let $omega$ be a $k$-form on $bb(R)^n$,
+  $
+    omega = sum_(1 <= i_1 < i_2 < ... < i_k <= n) f_(i_1 i_2 ... i_k)(x_1, x_2, ..., x_n) dif x_(i_1) and dif x_(i_2) and ... and dif x_(i_k),
+  $
+  where $f_(i_1 i_2 ... i_k)$ are functions with continuous first-order partial derivatives. The *exterior differentiation* of $omega$ is defined as
+  $
+    dif omega = sum_(1 <= i_1 < i_2 < ... < i_k <= n) dif f_(i_1 i_2 ... i_k)(x_1, x_2, ..., x_n) and dif x_(i_1) and dif x_(i_2) and ... and dif x_(i_k),
+  $
+  where
+  $
+    dif f = frac(partial f, partial x_1) dif x_1 + frac(partial f, partial x_2) dif x_2 + ... + frac(partial f, partial x_n) dif x_n.
+  $
+  Note that the exterior differentiation of a $k$-form is a $(k+1)$-form.
+] <def:exterior-differentiation>
+
+#property(name: "Properties of Exterior Differentiation")[
+  #terms(
+    terms.item([Linearity], [$dif(alpha omega + beta eta) = alpha dif omega + beta dif eta$, where $alpha, beta$ are constants.]),
+    terms.item([Leibniz Rule], [$dif(omega and eta) = dif omega and eta + (-1)^k omega and dif eta$, where $omega$ is a $k$-form.]),
+    terms.item([Nilpotency], [$dif(dif omega) = 0$.]),
+  )
+] <prop:exterior-differentiation-properties>
+
+== Line Integrals and Surface Integrals of Vector Fields // 向量场的曲线积分与曲面积分
+
+=== Line Integral of Vector Field // 向量场的曲线积分（原 leftbarTitle 非空壳，升级为小节）
+
+#definition(name: "Line Integral of Vector Field")[
+  Let $attach(L, t: ⇀)$ be an oriented smooth curve in $bb(R)^3$, whose endpoints are $A$ and $B$. Take the unit tangent vector $bold(tau) = (cos alpha, cos beta, cos gamma)$ at each point of $attach(L, t: ⇀)$, making it consistent with the orientation of $attach(L, t: ⇀)$. Let $bold(f)(x, y, z) = P(x, y, z) bold(i) + Q(x, y, z) bold(j) + R(x, y, z) bold(k)$ be a vector-valued function on $attach(L, t: ⇀)$. Then
+  $
+    integral_(attach(L, t: ⇀)) bold(f) dot bold(tau) dif bold(s)
+    = integral_(attach(L, t: ⇀)) [P cos alpha + Q cos beta + R cos gamma] dif s
+  $
+  is called the *line integral of the vector field $bold(f)$ along the oriented curve $attach(L, t: ⇀)$* (if the right-hand side exists).
+] <def:line-integral-vector-field>
+
+Consider a differential arc length element $dif s$ at a point $(x, y, z)$ on the curve $L$. We form the vector $dif bold(s) = bold(tau) dif s$, where $bold(tau) = (cos alpha, cos beta, cos gamma)$ represents the unit tangent vector of the curve $L$ at $(x, y, z)$, pointing along the direction of $L$. The projection of $dif s$ onto the $x$-axis is given by $cos alpha dif s$. Therefore, we denote
+$ dif x = cos alpha dif s, quad dif y = cos beta dif s, quad dif z = cos gamma dif s. $
+Thus, the second type of line integral can be expressed as
+$
+  integral_(attach(L, t: ⇀)) bold(f) dot bold(tau) dif s
+  = integral_(attach(L, t: ⇀)) bold(f) dif bold(s)
+  = integral_(attach(L, t: ⇀)) P(x, y, z) dif x + Q(x, y, z) dif y + R(x, y, z) dif z.
+$
+This line integral is also referred to as the integral of the $1$-form
+$ omega = P(x, y, z) dif x + Q(x, y, z) dif y + R(x, y, z) dif z. $
+The second type of line integral of $omega$ along the curve $attach(L, t: ⇀)$ is denoted as
+$ integral_(attach(L, t: ⇀)) omega. $
+
+#theorem[
+  Let $attach(L, t: ⇀)$ be a $C^1$ smooth regular oriented curve parameterized by $bold(x)(t) = (x(t), y(t), z(t))$, $t in [alpha, beta]$, and let $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ be continuous on $attach(L, t: ⇀)$. Then
+  $
+    integral_(attach(L, t: ⇀)) bold(f) dot bold(tau) dif s
+    & = integral_alpha^beta bold(f)(bold(x)(t)) dot bold(x)'(t) dif t \
+    & = integral_alpha^beta [P(x(t), y(t), z(t)) x'(t) + Q(x(t), y(t), z(t)) y'(t) + R(x(t), y(t), z(t)) z'(t)] dif t.
+  $
+] <thm:line-integral-vector-computation>
+
+Specially, if the plane curve $attach(L, t: ⇀)$ is given by $y = y(x)$, $x: a -> b$, then
+$ integral_(attach(L, t: ⇀)) bold(f) dot bold(tau) dif s = integral_a^b bold(f)(x, y(x)) dot (1, y'(x)) dif x. $
+// 注：tex 原式在 dot (1, y'(x)) 后多乘了 sqrt(1 + (y'(x))^2)，由 tau dif bold(s) = (1, y'(x)) dif x 可知该因子应已消去，判定为笔误，已删除。
+
+=== Surface Integral of Vector Field // 向量场的曲面积分（原 leftbarTitle 非空壳，升级为小节）
+
+#definition(name: "Surface Integral of Vector Field")[
+  Let $attach(Sigma, t: ⇀)$ be an oriented smooth surface in $bb(R)^3$ (see #link(<def:surface-orientation>)[surface orientation]), and let $bold(f)(x, y, z) = P(x, y, z) bold(i) + Q(x, y, z) bold(j) + R(x, y, z) bold(k)$ be a vector-valued function on $attach(Sigma, t: ⇀)$. Each point of the surface is assigned a unit normal vector $bold(n) = (cos alpha, cos beta, cos gamma)$. Then
+  $
+    integral.double_(attach(Sigma, t: ⇀)) bold(f) dot bold(n) dif S
+    = integral.double_(attach(Sigma, t: ⇀)) [P cos alpha + Q cos beta + R cos gamma] dif S
+  $
+  is called the *surface integral of the vector field $bold(f)$ over the oriented surface $attach(Sigma, t: ⇀)$* (if the right-hand side exists).
+] <def:surface-integral-vector-field>
+
+Consider a differential area element $dif S$ at a point $(x, y, z)$ on the surface $Sigma$. We form the vector $dif bold(S) = bold(n) dif S$, where $bold(n) = (cos alpha, cos beta, cos gamma)$ represents the unit normal vector of the surface $Sigma$ at $(x, y, z)$, pointing along the orientation of $Sigma$. The projection of $dif S$ onto the $y z$-plane is given by $cos alpha dif S$. Therefore, we denote
+$ dif y and dif z = cos alpha dif S, quad dif z and dif x = cos beta dif S, quad dif x and dif y = cos gamma dif S. $
+// 注：tex 原文写作 "onto the x-axis"（且该处 dif 误加粗），按 dy∧dz = cos alpha dif S 的几何含义改为向 yz 平面的投影。
+Thus, the surface integral can be expressed as
+$
+  integral.double_(attach(Sigma, t: ⇀)) bold(f) dot bold(n) dif S
+  = integral.double_(attach(Sigma, t: ⇀)) P dif y and dif z + Q dif z and dif x + R dif x and dif y
+  = integral.double_(attach(Sigma, t: ⇀)) P dif y dif z + Q dif z dif x + R dif x dif y,
+$
+where $dif y dif z$ is the simplified notation for $dif y and dif z$, etc. This surface integral is also referred to as the integral of the $2$-form
+$ omega = P(x, y, z) dif y and dif z + Q(x, y, z) dif z and dif x + R(x, y, z) dif x and dif y. $
+The second type of surface integral of $omega$ over the surface $attach(Sigma, t: ⇀)$ is denoted as
+$ integral.double_(attach(Sigma, t: ⇀)) omega. $
+
+#theorem[
+  Let $attach(Sigma, t: ⇀)$ be a smooth oriented surface parameterized by $bold(r)(u, v) = (x(u, v), y(u, v), z(u, v))$, $(u, v) in D$, where $D$ is a closed region with piecewise smooth boundary in the $u v$-plane, and let $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ be continuous on $attach(Sigma, t: ⇀)$. Suppose $x, y, z$ have continuous first-order partial derivatives with respect to $u$ and $v$ on $D$, and the associated Jacobian matrix is of full rank. Then
+  $
+    integral.double_(attach(Sigma, t: ⇀)) bold(f) dot bold(n) dif S
+    & = integral.double_(attach(Sigma, t: ⇀)) [P cos alpha + Q cos beta + R cos gamma] dif S \
+    & = integral.double_D bold(f)(bold(r)(u, v)) dot lr((frac(partial bold(r), partial u) times frac(partial bold(r), partial v))) dif u dif v \
+    & = plus.minus integral.double_D [P(x(u, v), y(u, v), z(u, v)) frac(partial (y, z), partial (u, v)) + Q(x(u, v), y(u, v), z(u, v)) frac(partial (z, x), partial (u, v)) \
+    & quad quad + R(x(u, v), y(u, v), z(u, v)) frac(partial (x, y), partial (u, v))] dif u dif v,
+  $
+  where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is consistent with the direction of $lr((frac(partial bold(r), partial u) times frac(partial bold(r), partial v)))$ (cf. #link(<prop:parameterization-induced-orientation>)[the orientation induced by a parameterization]).
+] <thm:surface-integral-vector-computation>
+
+Specially, if the surface $attach(Sigma, t: ⇀)$ is given by $z = z(x, y)$, $(x, y) in D_(x y)$, where $D_(x y)$ is a closed region with piecewise smooth boundary in the $x y$-plane, and $R(x, y, z)$ is continuous on $D_(x y)$, then
+$ integral.double_(attach(Sigma, t: ⇀)) R(x, y, z) dif x dif y = plus.minus integral.double_(D_(x y)) R(x, y, z(x, y)) dif x dif y, $
+where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is upward or downward.
+
 // B16: ch16 Integrals with Variable Parameters（变参积分）
 
 // --- Appendix ---
