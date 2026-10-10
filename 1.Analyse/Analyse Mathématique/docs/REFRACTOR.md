@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B13b ch13 §3–4 迁移完成，ch13 全章收口，✅ Part IV 里程碑达成）
+> 最后更新：2026-10-10（B14a ch14 §1–3 迁移完成，P1-2 章名决策①已执行）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -287,8 +287,13 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 ### Part V — Calculus Applications in Several Variables（几何应用与高级积分，决策③新增）
 
-- [ ] **B14a = ch14 §1–3**（约 400 行）：Parameterization / Tangent and Normal Space / Intrinsic Geometry（含弧长）
-  - [ ] 🔧 P1-2 执行：章名改为 "Introduction to Curve and Surface Theory"，Preface 中 "curve theory" 表述对齐
+- [x] **B14a = ch14 §1–3**（迁移 +241 行）：Parameterization / Tangent Space and Normal Space / Intrinsic Geometry（含弧长、Schwarz 灯笼与面积）
+  - [x] 🔧 P1-2 执行：章名改为 "Introduction to Curve and Surface Theory"（留注），Preface 中 "curve theory" 表述对齐
+  - 标签：`def:Parameterization of Surface`（含空格）改名 `<def:surface-parameterization>`；切空间/法空间定义补 `<def:tangent-normal-space>`；`<def:first-fundamental-form>`；弧长定义/定理与 ch06 重复（原标签已占用），ch14 版改名 `<def:rectifiable-curve>` / `<thm:rectifiability-of-curves>`，tex 两章均保留；两图 `<fig:schwarzs-lantern>` / `<fig:schwarzs-lantern-refined>`（img/Schwartz1.png 60%、Schwartz2.png 80%）
+  - 交叉引用：隐映射/逆映射定理用 `#link(<thm:implicit-mapping-theorem>)` / `#link(<thm:inverse-mapping-theorem>)`（B12c 已迁移）
+  - tex footnote 2 处（模板不支持）：并入定义/定理正文（括号补充）；tex 笔误修正（均留注）："This two sections"→"These two sections"、"Riemann metric of metric tensor"→"or"、T_p S→T_p M、"called a regular point"→"regular curve"、"Schwartz"→"Schwarz"（4 处 + 2 图注）、两处 "?????" 占位垃圾行删除
+  - 新符号验证（PNG 目检 6 页）：`subseteq` 非法须用 `subset.eq`（5 处）；`vmatrix` 不存在，行列式用 `mat(delim: "|")`（2 处）；`overset`/`widehat` 不存在，弧记号用 `overparen(A B)`；圆括号内逗号 + frac 元素会被渲染为竖排列向量，含 frac 行向量须用 `lr((...))` 包裹横排（2 处）
+  - 编译退出码 0，三正则命中 0，B14a 区域缩进损坏修复 1 处（L9211 续行 20→4 空格）
 - [ ] **B14b = ch14 §4–6**（约 150 行）：Extrinsic Geometry / Oriented Surface（⚠ P0-3 空节）/ Bounded Variation
   - [ ] 🔧 P0-3 补全：Oriented Surface 大纲 → 确认 → 写入
   - [ ] 🔧 P1-3 执行：BV 节保留原位，加指向 Analyse Harmonique 的文字交叉引用
