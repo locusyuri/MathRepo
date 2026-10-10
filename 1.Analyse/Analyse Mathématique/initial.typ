@@ -9522,26 +9522,11 @@ Choosing $bold(n)$ (rather than $-bold(n)$) as the unit normal is called the *up
 Some common bounded variation functions include:
 
 #terms(
-  terms.item(
-    [Monotonic functions],
-    [Any monotonic function on a closed interval is of bounded variation, and $V_a^b (f) = abs(f(b) - f(a))$.],
-  ),
-  terms.item(
-    [Piecewise monotonic functions],
-    [Functions that are monotonic on each subinterval of a finite partition of $[a, b]$ are also of bounded variation.],
-  ),
-  terms.item(
-    [Lipschitz continuous functions],
-    [Any Lipschitz continuous function on $[a, b]$ is of bounded variation (see #link(<def:lipschitz-continuity>)[the definition of Lipschitz continuity]).],
-  ),
-  terms.item(
-    [Functions with finite discontinuities],
-    [Functions that have only a finite number of jump discontinuities on $[a, b]$ are of bounded variation.],
-  ),
-  terms.item(
-    [Absolutely continuous functions],
-    [Any absolutely continuous function on $[a, b]$ is of bounded variation.],
-  ),
+  terms.item([Monotonic functions], [Any monotonic function on a closed interval is of bounded variation, and $V_a^b (f) = abs(f(b) - f(a))$.]),
+  terms.item([Piecewise monotonic functions], [Functions that are monotonic on each subinterval of a finite partition of $[a, b]$ are also of bounded variation.]),
+  terms.item([Lipschitz continuous functions], [Any Lipschitz continuous function on $[a, b]$ is of bounded variation (see #link(<def:lipschitz-continuity>)[the definition of Lipschitz continuity]).]),
+  terms.item([Functions with finite discontinuities], [Functions that have only a finite number of jump discontinuities on $[a, b]$ are of bounded variation.]),
+  terms.item([Absolutely continuous functions], [Any absolutely continuous function on $[a, b]$ is of bounded variation.]),
 )
 
 #theorem(name: "Jordan Decomposition Theorem")[
@@ -9582,7 +9567,7 @@ Bounded variation functions have important applications. For example, in harmoni
   Let $L$ be a $C^1$ smooth regular curve parameterized by $bold(x)(t) = (x(t), y(t), z(t))$, $t in [alpha, beta]$, and let $f$ be continuous on $L$. Then
   $
     integral_L f dif s & = integral_alpha^beta f(bold(x)(t)) norm(bold(x)'(t)) dif t \
-                       & = integral_alpha^beta f(x(t), y(t), z(t)) sqrt((x'(t))^2 + (y'(t))^2 + (z'(t))^2) dif t.
+    & = integral_alpha^beta f(x(t), y(t), z(t)) sqrt((x'(t))^2 + (y'(t))^2 + (z'(t))^2) dif t.
   $
 ] <thm:line-integral-scalar-computation>
 
@@ -9619,9 +9604,7 @@ $ integral_L f dif s = integral_a^b f(x, y(x)) sqrt(1 + (y'(x))^2) dif x. $
 // 注：tex 原定理称 Sigma 为 "closed surface"，但参数化计算公式并不要求封闭性，判定为误植，已去除。
 
 Specially, if the surface $Sigma$ is given by $z = z(x, y)$, $(x, y) in D$, then
-$
-  integral.double_Sigma f dif S = integral.double_D f(x, y, z(x, y)) sqrt(1 + lr((frac(partial z, partial x)))^2 + lr((frac(partial z, partial y)))^2) dif x dif y.
-$
+$ integral.double_Sigma f dif S = integral.double_D f(x, y, z(x, y)) sqrt(1 + lr((frac(partial z, partial x)))^2 + lr((frac(partial z, partial y)))^2) dif x dif y. $
 
 == Differential Form and Exterior Differentiation // 微分形式与外微分
 
@@ -9677,14 +9660,8 @@ A *differential form* is a skew symmetric tensor on a vector space.
 
 #property(name: "Properties of Exterior Differentiation")[
   #terms(
-    terms.item(
-      [Linearity],
-      [$dif(alpha omega + beta eta) = alpha dif omega + beta dif eta$, where $alpha, beta$ are constants.],
-    ),
-    terms.item(
-      [Leibniz Rule],
-      [$dif(omega and eta) = dif omega and eta + (-1)^k omega and dif eta$, where $omega$ is a $k$-form.],
-    ),
+    terms.item([Linearity], [$dif(alpha omega + beta eta) = alpha dif omega + beta dif eta$, where $alpha, beta$ are constants.]),
+    terms.item([Leibniz Rule], [$dif(omega and eta) = dif omega and eta + (-1)^k omega and dif eta$, where $omega$ is a $k$-form.]),
     terms.item([Nilpotency], [$dif(dif omega) = 0$.]),
   )
 ] <prop:exterior-differentiation-properties>
@@ -9760,15 +9737,13 @@ $ integral.double_(attach(Sigma, t: ⇀)) omega. $
     & = integral.double_(attach(Sigma, t: ⇀)) [P cos alpha + Q cos beta + R cos gamma] dif S \
     & = integral.double_D bold(f)(bold(r)(u, v)) dot lr((frac(partial bold(r), partial u) times frac(partial bold(r), partial v))) dif u dif v \
     & = plus.minus integral.double_D [P(x(u, v), y(u, v), z(u, v)) frac(partial (y, z), partial (u, v)) + Q(x(u, v), y(u, v), z(u, v)) frac(partial (z, x), partial (u, v)) \
-      & quad quad + R(x(u, v), y(u, v), z(u, v)) frac(partial (x, y), partial (u, v))] dif u dif v,
+    & quad quad + R(x(u, v), y(u, v), z(u, v)) frac(partial (x, y), partial (u, v))] dif u dif v,
   $
   where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is consistent with the direction of $lr((frac(partial bold(r), partial u) times frac(partial bold(r), partial v)))$ (cf. #link(<prop:parameterization-induced-orientation>)[the orientation induced by a parameterization]).
 ] <thm:surface-integral-vector-computation>
 
 Specially, if the surface $attach(Sigma, t: ⇀)$ is given by $z = z(x, y)$, $(x, y) in D_(x y)$, where $D_(x y)$ is a closed region with piecewise smooth boundary in the $x y$-plane, and $R(x, y, z)$ is continuous on $D_(x y)$, then
-$
-  integral.double_(attach(Sigma, t: ⇀)) R(x, y, z) dif x dif y = plus.minus integral.double_(D_(x y)) R(x, y, z(x, y)) dif x dif y,
-$
+$ integral.double_(attach(Sigma, t: ⇀)) R(x, y, z) dif x dif y = plus.minus integral.double_(D_(x y)) R(x, y, z(x, y)) dif x dif y, $
 where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is upward or downward.
 
 == Stokes' Formula // 斯托克斯公式
@@ -9797,13 +9772,9 @@ Denote $integral.cont_(attach(partial M, t: ⇀))$ as the line integral along th
 
 #lemma[
   + Let $attach(partial M, t: ⇀)$ be the boundary of the first region in @fig:special-region-1, and let $P(x, y) in C^1 (M)$. Then
-    $
-      integral.cont_(attach(partial M, t: ⇀)) P dif x = -integral.double_(attach(M, t: ⇀)) frac(partial P, partial y) dif x and dif y.
-    $
+    $ integral.cont_(attach(partial M, t: ⇀)) P dif x = -integral.double_(attach(M, t: ⇀)) frac(partial P, partial y) dif x and dif y. $
   + Let $attach(partial M, t: ⇀)$ be the boundary of the second region in @fig:special-region-1, and let $Q(x, y) in C^1 (M)$. Then
-    $
-      integral.cont_(attach(partial M, t: ⇀)) Q dif y = integral.double_(attach(M, t: ⇀)) frac(partial Q, partial x) dif x and dif y.
-    $
+    $ integral.cont_(attach(partial M, t: ⇀)) Q dif y = integral.double_(attach(M, t: ⇀)) frac(partial Q, partial x) dif x and dif y. $
 ] <lem:green-special-regions>
 
 #theorem(name: "Green's Theorem")[
@@ -9832,10 +9803,7 @@ Consider three kinds of special oriented closed surfaces in $bb(R)^3$, as shown 
 #terms(
   terms.item([$attach(Sigma_1, t: ⇀)$], [$z = phi_1 (x, y)$, $(x, y) in Delta_1$.]),
   terms.item([$attach(Sigma_2, t: ⇀)$], [$z = phi_2 (x, y)$, $(x, y) in Delta_1$.]),
-  terms.item(
-    [$attach(Sigma_3, t: ⇀)$],
-    [A cylindrical surface taking $partial Delta_1$ as the directrix, with the generatrix paralleling to the $O z$-axis; of course, it can also be reduced to a closed curve.],
-  ),
+  terms.item([$attach(Sigma_3, t: ⇀)$], [A cylindrical surface taking $partial Delta_1$ as the directrix, with the generatrix paralleling to the $O z$-axis; of course, it can also be reduced to a closed curve.]),
 )
 
 The second and third surfaces are similar.
@@ -9849,17 +9817,11 @@ Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over 
 
 #lemma[
   + Let $attach(partial M, t: ⇀)$ be the boundary of the first surface in @fig:special-region-2, and let $R(x, y, z) in C^1 (M)$. Then
-    $
-      integral.surf_(attach(partial M, t: ⇀)) R dif x and dif y = integral.vol_(attach(M, t: ⇀)) frac(partial R, partial z) dif x and dif y and dif z.
-    $
+    $ integral.surf_(attach(partial M, t: ⇀)) R dif x and dif y = integral.vol_(attach(M, t: ⇀)) frac(partial R, partial z) dif x and dif y and dif z. $
   + Let $attach(partial M, t: ⇀)$ be the boundary of the second surface in @fig:special-region-2, and let $P(x, y, z) in C^1 (M)$. Then
-    $
-      integral.surf_(attach(partial M, t: ⇀)) P dif y and dif z = integral.vol_(attach(M, t: ⇀)) frac(partial P, partial x) dif x and dif y and dif z.
-    $
+    $ integral.surf_(attach(partial M, t: ⇀)) P dif y and dif z = integral.vol_(attach(M, t: ⇀)) frac(partial P, partial x) dif x and dif y and dif z. $
   + Let $attach(partial M, t: ⇀)$ be the boundary of the third surface in @fig:special-region-2, and let $Q(x, y, z) in C^1 (M)$. Then
-    $
-      integral.surf_(attach(partial M, t: ⇀)) Q dif z and dif x = integral.vol_(attach(M, t: ⇀)) frac(partial Q, partial y) dif x and dif y and dif z.
-    $
+    $ integral.surf_(attach(partial M, t: ⇀)) Q dif z and dif x = integral.vol_(attach(M, t: ⇀)) frac(partial Q, partial y) dif x and dif y and dif z. $
 ] <lem:gauss-special-regions>
 
 #theorem(name: "Gauß's Theorem")[
@@ -9884,14 +9846,12 @@ Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over 
     integral.cont_(attach(partial M, t: ⇀)) P dif x + Q dif y + R dif z
     & = integral.double_(attach(M, t: ⇀)) (frac(partial R, partial y) - frac(partial Q, partial z)) dif y and dif z \
     & quad + (frac(partial P, partial z) - frac(partial R, partial x)) dif z and dif x + (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y \
-    & = integral.double_(attach(M, t: ⇀)) mat(
-      delim: "|",
+    & = integral.double_(attach(M, t: ⇀)) mat(delim: "|",
       dif y and dif z, dif z and dif x, dif x and dif y;
       frac(partial, partial x), frac(partial, partial y), frac(partial, partial z);
       P, Q, R,
     ) \
-    & = integral.double_(attach(M, t: ⇀)) mat(
-      delim: "|",
+    & = integral.double_(attach(M, t: ⇀)) mat(delim: "|",
       cos alpha, cos beta, cos gamma;
       frac(partial, partial x), frac(partial, partial y), frac(partial, partial z);
       P, Q, R,
@@ -9930,9 +9890,7 @@ where the right-hand side is independent of the choice of the path $attach(L, t:
   + $omega$ is exact on $U$, i.e., there exists a $C^2$ function $F(x, y)$ on $U$ such that
     $ dif F = omega = P dif x + Q dif y. $
     At this time, $F(x, y)$ is called a *potential function* of $omega$ on $U$, and
-    $
-      F(x, y) = integral_((x_0, y_0))^((x, y)) omega + C = integral_(x_0)^x P(t, y_0) dif t + integral_(y_0)^y Q(x, s) dif s + C,
-    $
+    $ F(x, y) = integral_((x_0, y_0))^((x, y)) omega + C = integral_(x_0)^x P(t, y_0) dif t + integral_(y_0)^y Q(x, s) dif s + C, $
     where $(x_0, y_0)$ is a fixed point in $U$ and $C$ is an arbitrary constant.
   + $omega$ is closed on $U$, i.e.,
     $ frac(partial P, partial y) = frac(partial Q, partial x). $
@@ -9997,15 +9955,13 @@ There are two types of improper integrals with variable parameters: those on inf
 #theorem(name: "Uniform Convergence and Continuity")[
   Let $f(x, y)$ be continuous on $[a, +oo) times [c, d]$, and let $integral_a^(+oo) f(x, y) dif x$ be uniformly convergent on $[c, d]$ with respect to $y$. Then:
   + $
-      I(y) = integral_a^(+oo) f(x, y) dif x
+    I(y) = integral_a^(+oo) f(x, y) dif x
     $
     is continuous on $[c, d]$, i.e.,
-    $
-      lim_(y -> y_0) integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) lim_(y -> y_0) f(x, y) dif x, quad y_0 in [c, d],
-    $
+    $ lim_(y -> y_0) integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) lim_(y -> y_0) f(x, y) dif x, quad y_0 in [c, d], $
     that is, the limit and the integral can be interchanged.
   + $
-      integral_c^d dif y integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) dif x integral_c^d f(x, y) dif y,
+    integral_c^d dif y integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) dif x integral_c^d f(x, y) dif y,
     $
     that is, the order of integration can be interchanged.
 ] <thm:continuity-parameter>
@@ -10080,9 +10036,7 @@ The Beta function can be defined in the following equivalent forms:
 + For $p > 0$, $q > 0$:
   $ B(p, q) = integral_0^1 t^(p - 1) (1 - t)^(q - 1) dif t. $
 + Via the substitution $t = u / (1 + u)$:
-  $
-    B(p, q) = integral_0^(+oo) frac(u^(p - 1), (1 + u)^(p + q)) dif u = integral_0^(+oo) frac(u^(q - 1), (1 + u)^(p + q)) dif u.
-  $
+  $ B(p, q) = integral_0^(+oo) frac(u^(p - 1), (1 + u)^(p + q)) dif u = integral_0^(+oo) frac(u^(q - 1), (1 + u)^(p + q)) dif u. $
 + Via the substitution $t = sin^2 theta$:
   $ B(p, q) = 2 integral_0^(pi / 2) sin^(2p - 1) theta cos^(2q - 1) theta dif theta. $
 
