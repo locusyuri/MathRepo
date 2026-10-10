@@ -30,6 +30,9 @@
 # Pictures
 **/img/*
 **/fig/*
+*.png
+*.jpg
+*.svg
 
 # Other
 temp/
