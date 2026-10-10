@@ -1289,9 +1289,16 @@
   show enum: it => [#it#par[#h(0pt)]#v(-1.2em)]
   show terms: it => [#it#par[#h(0pt)]#v(-1.2em)]
 
-  // 超链接样式：#link 以主题色显示，与正文区分（elegantbook 风格：着色、无下划线）
-  // 目录与 Part 行的链接在 link 内部显式固化原色，不受此规则影响
-  show link: it => text(fill: color-structure, it)
+  // 超链接样式：正文 #link（label / URL 目标）以主题色+细下划线显示，与正文区分；
+  // 目录、Part 行等以 location 为目标的链接不受影响（保持各自的既有配色）
+  show link: it => {
+    let d = it.dest
+    if type(d) == label or type(d) == str {
+      text(fill: color-structure, underline(stroke: 0.5pt + color-structure.lighten(25%), offset: 2.5pt, it))
+    } else {
+      it
+    }
+  }
 
   // ── Chapter: 一级标题 (=) ──
   show heading.where(level: 1): it => {
