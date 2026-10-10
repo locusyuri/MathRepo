@@ -9462,8 +9462,43 @@ Some special cases of curvature are given below:
 + For a circle with radius $R$, the curvature is constant:
   $ kappa = 1 / R. $
 
-// 注（P0-3）：原 tex §5 "Oriented Surface"（定向曲面）为空节，且定向是 ch15 第二型曲面积分的必要前置，
-// 待大纲经用户确认后补全于此（REFRACTOR.md P0-3）。
+== Oriented Surface // 定向曲面（原 tex 空节，P0-3 补全）
+
+The second type of surface integral in the next chapter requires selecting a *side* of the surface: the value of the integral changes sign when the side is flipped. This section gives the precise mathematical meaning of such a selection, namely the *orientation* of a surface.
+
+Recall that a regular surface patch $M$ admits the Gauß map $bold(n)(p) = frac(bold(r)_u times bold(r)_v, norm(bold(r)_u times bold(r)_v)) (p)$, which is a continuous unit normal vector field on $M$. An orientation is nothing but a continuous choice of such a field.
+
+#definition(name: "Orientation of a Surface")[
+  Let $M$ be a $C^1$ smooth regular surface patch in $bb(R)^3$. A *continuous unit normal vector field* on $M$ is a continuous mapping $bold(n): M -> bb(S)^2$ such that $bold(n)(p) perp T_p M$ for every $p in M$. If such a field exists on all of $M$, then $M$ is called *orientable*, and the choice of one such field $bold(n)$ is called an *orientation* of $M$; the pair $(M, bold(n))$ is called an *oriented surface*.
+
+  A connected orientable surface admits exactly two orientations: if $bold(n)$ is an orientation, then so is $-bold(n)$, and there are no others. The two choices are called the two *sides* of the surface; a surface with two sides is also called a *two-sided surface*.
+] <def:surface-orientation>
+// 注：原 tex 本节为空（P0-3），本节内容为补全；"two-sided surface" 并入本定义末段，不再单独设定义。
+
+#note[
+  Not every surface is orientable. The standard counterexample is the *Möbius strip*: gluing a rectangular paper strip with a half twist produces a surface on which a unit normal vector, transported continuously around the strip, returns pointing in the opposite direction (@fig:mobius-strip). Hence no continuous unit normal vector field exists on the Möbius strip; it is *non-orientable* and has only one side.
+]
+
+#figure(
+  image("img/mobius-strip.svg", width: 55%),
+  caption: [The Möbius strip: transporting a unit normal vector continuously around the strip returns the opposite vector.],
+) <fig:mobius-strip>
+
+#property(name: "Induced Orientation of a Parameterization")[
+  Let $bold(r): Delta -> bb(R)^3$ be a regular parameterization of a surface patch $M$. Then
+  $ bold(n)(p) = frac(bold(r)_u times bold(r)_v, norm(bold(r)_u times bold(r)_v)) (p) $
+  defines a continuous unit normal vector field on $M$; hence every regular parameterization induces an orientation on its image, called the *induced orientation*. The positive side is the one into which $bold(r)_u times bold(r)_v$ points.
+
+  Swapping the parameters $(u, v) -> (v, u)$ reverses the cross product and thus flips the induced orientation. More generally, a change of parameters $(u, v) = (u(tilde(u), tilde(v)), v(tilde(u), tilde(v)))$ preserves the induced orientation if and only if its Jacobian determinant is positive.
+] <prop:parameterization-induced-orientation>
+
+In particular, for a surface given explicitly by $z = g(x, y)$ over a domain $D subset.eq bb(R)^2$, taking $x, y$ as the parameters yields the unit normal
+$ bold(n) = frac(lr((-g_x, -g_y, 1)), sqrt(1 + g_x^2 + g_y^2)). $
+Choosing $bold(n)$ (rather than $-bold(n)$) as the unit normal is called the *upward side* of the surface, and the opposite choice is the *downward side*. This is precisely the convention used when the second type of surface integral is reduced to a double integral over the projection domain in the next chapter.
+
+#note[
+  If an oriented surface has a piecewise smooth boundary curve, its orientation induces an orientation on the boundary, which prescribes how the boundary is traversed relative to the chosen normal field. The precise convention will be made explicit in the next chapter, when Stokes' formula is established.
+]
 
 == Bounded Variation Functions // 有界变差函数
 
