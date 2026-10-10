@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B14b + P0-3 补全完成，ch14 全章收口）
+> 最后更新：2026-10-10（B15a 完成：ch15 §1–3 迁移）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -305,7 +305,13 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - tex 空壳/footnote 处理：property enumerate 第 3 项空项删除（留注）；§6 末尾 "Stieltjes Integral" leftbarTitle 空壳未迁移（留注）；第二基本形式定义后 2 条 footnote（点积良定义、负号约定）移至正文 remark 列表
   - 新符号验证（PNG 目检 pg197–199）：`BV` 等多字母数学标识符非法，须用 `"BV"[a, b]` 引号包裹（6 处）；`dif_p`（微分算子带基点下标）、`norm(frac(...))` 均正常渲染
   - 编译退出码 0，三正则命中 0，terms 块 Edit 拆行损坏修复 1 处（PowerShell 单行恢复）
-- [ ] **B15a = ch15 §1–3**（约 310 行）：Scalar Field 积分 / Differential Form / Vector Field 积分
+- [x] **B15a = ch15 §1–3**（迁移 +197 行）：Scalar Field 积分 / Differential Form / Vector Field 积分 ✅（2026-10-10）
+  - 标签：`<def:line-integral-scalar-field>` / `<thm:line-integral-scalar-computation>` / `<def:surface-integral-scalar-field>` / `<thm:surface-integral-scalar-computation>` / `<def:exterior-differentiation>` / `<prop:exterior-differentiation-properties>` / `<def:line-integral-vector-field>` / `<thm:line-integral-vector-computation>` / `<def:surface-integral-vector-field>` / `<thm:surface-integral-vector-computation>`；4 处非空壳 leftbarTitle 升级为 `===` 小节
+  - 跨文档内链：§15.3 曲面积分定义链 `#link(<def:surface-orientation>)`、± 号定理链 `#link(<prop:parameterization-induced-orientation>)`（兑现 P0-3 "衔接 ch15 ± 号定理" 承诺）
+  - tex 修正（留注 3 处）：§15.1 曲面定理 "closed surface" 去除（参数化公式不要求封闭性）；§15.3 平面曲线第二型线积分公式删去多余 `sqrt(1 + (y'(x))^2)`（由 tau dif bold(s) = (1, y'(x)) dif x 知属笔误）；"projection onto the x-axis" 改为向 yz 平面投影（按 dy∧dz = cos α dif S 几何含义）；另静默修正 orientated→oriented、Let...is→be 等语法
+  - 新符号验证（tmp 预测试 + PNG 目检 pg202–208）：`wedge` 在当前 Typst 版本非法，替换为 `and`（同为 ∧ U+2227，同 cap/sect 情形）；overset 替代方案为 `attach(L, t: ⇀)`（U+21C0 字面量；arrow.rightharpoonup / arrow.rharpoon 等修饰符均不存在），积分域下标写 `integral_(attach(L, t: ⇀))`；`integral.double_(attach(...))`、含 frac 的 `lr((...))`、3×2 `mat` 均渲染正常
+  - 工程规避：初稿经 tmp 内容文件 + PowerShell ReadAllLines/WriteAllText 拼接写入（UTF-8 无 BOM + LF），规避本会话已发生 2 次的 Edit 拆行损坏 bug；行级核验接缝干净
+  - 验证：编译退出码 0，三正则命中 0（B15a 区间）
 - [ ] **B15b = ch15 §4–5**（约 200 行）：Stokes' Formula（含 Green/Gauß）/ Closed and Exact Forms
 - [ ] **B16 = ch16 Variable Parameters**（279 行 / 5 节）
   - [ ] §16.1 Definite Integrals with Variable Parameters
