@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B14a ch14 §1–3 迁移完成，P1-2 章名决策①已执行）
+> 最后更新：2026-10-10（B14b ch14 §4+§6 迁移完成；P0-3 Oriented Surface 空节待大纲确认）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -294,9 +294,13 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - tex footnote 2 处（模板不支持）：并入定义/定理正文（括号补充）；tex 笔误修正（均留注）："This two sections"→"These two sections"、"Riemann metric of metric tensor"→"or"、T_p S→T_p M、"called a regular point"→"regular curve"、"Schwartz"→"Schwarz"（4 处 + 2 图注）、两处 "?????" 占位垃圾行删除
   - 新符号验证（PNG 目检 6 页）：`subseteq` 非法须用 `subset.eq`（5 处）；`vmatrix` 不存在，行列式用 `mat(delim: "|")`（2 处）；`overset`/`widehat` 不存在，弧记号用 `overparen(A B)`；圆括号内逗号 + frac 元素会被渲染为竖排列向量，含 frac 行向量须用 `lr((...))` 包裹横排（2 处）
   - 编译退出码 0，三正则命中 0，B14a 区域缩进损坏修复 1 处（L9211 续行 20→4 空格）
-- [ ] **B14b = ch14 §4–6**（约 150 行）：Extrinsic Geometry / Oriented Surface（⚠ P0-3 空节）/ Bounded Variation
-  - [ ] 🔧 P0-3 补全：Oriented Surface 大纲 → 确认 → 写入
-  - [ ] 🔧 P1-3 执行：BV 节保留原位，加指向 Analyse Harmonique 的文字交叉引用
+- [x] **B14b = ch14 §4–6**（迁移 +120 行）：Extrinsic Geometry / Oriented Surface（⚠ P0-3 空节留待大纲）/ Bounded Variation（✅ 2026-10-10）
+  - [ ] 🔧 P0-3 补全：Oriented Surface 大纲 → 确认 → 写入（B14b 已在 §4 与 §6 之间留占位注释）
+  - [x] 🔧 P1-3 执行：BV 节保留原位，应用段加指向 Analyse Harmonique 的文字交叉引用
+  - 标签：`<def:second-fundamental-form>` / `<def:curvature-of-curve>` / `<def:bounded-variation>` / `<prop:bv-properties>` / `<thm:jordan-decomposition>` / `<thm:jordan-rectifiable-curves>`；Curvature / Rectifiable Curves 两处非空壳 leftbarTitle 升级为 `===` 小节
+  - tex 空壳/footnote 处理：property enumerate 第 3 项空项删除（留注）；§6 末尾 "Stieltjes Integral" leftbarTitle 空壳未迁移（留注）；第二基本形式定义后 2 条 footnote（点积良定义、负号约定）移至正文 remark 列表
+  - 新符号验证（PNG 目检 pg197–199）：`BV` 等多字母数学标识符非法，须用 `"BV"[a, b]` 引号包裹（6 处）；`dif_p`（微分算子带基点下标）、`norm(frac(...))` 均正常渲染
+  - 编译退出码 0，三正则命中 0，terms 块 Edit 拆行损坏修复 1 处（PowerShell 单行恢复）
 - [ ] **B15a = ch15 §1–3**（约 310 行）：Scalar Field 积分 / Differential Form / Vector Field 积分
 - [ ] **B15b = ch15 §4–5**（约 200 行）：Stokes' Formula（含 Green/Gauß）/ Closed and Exact Forms
 - [ ] **B16 = ch16 Variable Parameters**（279 行 / 5 节）
