@@ -9746,6 +9746,167 @@ Specially, if the surface $attach(Sigma, t: ⇀)$ is given by $z = z(x, y)$, $(x
 $ integral.double_(attach(Sigma, t: ⇀)) R(x, y, z) dif x dif y = plus.minus integral.double_(D_(x y)) R(x, y, z(x, y)) dif x dif y, $
 where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is upward or downward.
 
+== Stokes' Formula // 斯托克斯公式
+
+// 注：tex 中本节开头的 "Newton-Leibniz Formula" leftbarTitle 为空壳（无任何内容），未迁移。
+
+=== Green's Formula // 格林公式（原 leftbarTitle 非空壳，升级为小节）
+
+Consider two kinds of special oriented closed regions in the $x y$-plane, as shown in @fig:special-region-1. As for the first region $attach(M, t: ⇀)$, it consists of four oriented curves:
+
+#terms(
+  terms.item([$attach(C_1, t: ⇀)$], [$y = phi_1 (x)$, $x in [a, b]$.]),
+  terms.item([$attach(C_2, t: ⇀)$], [$x = b$, $y in [phi_1 (b), phi_2 (b)]$; it can be reduced to a point.]),
+  terms.item([$attach(C_3, t: ⇀)$], [$y = phi_2 (x)$, $x in [a, b]$.]),
+  terms.item([$attach(C_4, t: ⇀)$], [$x = a$, $y in [phi_1 (a), phi_2 (a)]$; it can be reduced to a point.]),
+)
+
+The second region is similar.
+
+#figure(
+  image("img/SpecialRegion1.png", width: 80%),
+  caption: [Two special oriented closed regions.],
+) <fig:special-region-1>
+
+Denote $integral.cont_(attach(partial M, t: ⇀))$ as the line integral along the boundary of the region $attach(M, t: ⇀)$; then we have the following lemma.
+
+#lemma[
+  + Let $attach(partial M, t: ⇀)$ be the boundary of the first region in @fig:special-region-1, and let $P(x, y) in C^1 (M)$. Then
+    $ integral.cont_(attach(partial M, t: ⇀)) P dif x = -integral.double_(attach(M, t: ⇀)) frac(partial P, partial y) dif x and dif y. $
+  + Let $attach(partial M, t: ⇀)$ be the boundary of the second region in @fig:special-region-1, and let $Q(x, y) in C^1 (M)$. Then
+    $ integral.cont_(attach(partial M, t: ⇀)) Q dif y = integral.double_(attach(M, t: ⇀)) frac(partial Q, partial x) dif x and dif y. $
+] <lem:green-special-regions>
+
+#theorem(name: "Green's Theorem")[
+  Let $attach(M, t: ⇀)$ be an oriented closed region in $bb(R)^2$, and $omega = P dif x + Q dif y in C^1 (M)$. If $attach(partial M, t: ⇀)$ can be split into finitely many first and second regions in @fig:special-region-1 simultaneously (non-overlapping, no shared interior points), then
+  $
+    integral.cont_(attach(partial M, t: ⇀)) P dif x + Q dif y
+    & = integral.double_(attach(M, t: ⇀)) (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y \
+    & = integral.double_M (frac(partial Q, partial x) - frac(partial P, partial y)) dif x dif y,
+  $
+  where $dif x and dif y$ is the directed area element, while $dif x dif y$ is the unsigned area element. Equivalently,
+  $
+    integral.cont_(attach(partial M, t: ⇀)) omega = integral.double_(attach(M, t: ⇀)) dif omega,
+  $
+  where $attach(partial M, t: ⇀)$ is the induced orientation of $attach(M, t: ⇀)$.
+] <thm:green-theorem>
+
+#note[
+  The induced orientation mentioned above is characterized as follows. For a plane region $attach(M, t: ⇀)$ with positive (counterclockwise) orientation, the induced orientation of the boundary $attach(partial M, t: ⇀)$ is such that the region always lies on the left when one walks along the boundary with this orientation. For an oriented surface $attach(M, t: ⇀)$ in $bb(R)^3$ (as in Gauß's and Stokes' theorems below), the induced orientation of the boundary curve $attach(partial M, t: ⇀)$ is determined by the chosen unit normal field of the surface: walking along the boundary with the head pointing along the normal, the surface lies on the left; in particular, for Gauß's formula, the boundary surface $attach(partial M, t: ⇀)$ adopts the outward normal orientation.
+] <note:induced-orientation>
+// 兑现 P0-3（§14.5）边界诱导定向前瞻承诺。
+
+=== Gauß's Formula // 高斯公式（原 leftbarTitle 非空壳，升级为小节）
+
+Consider three kinds of special oriented closed surfaces in $bb(R)^3$, as shown in @fig:special-region-2. As for the first surface $attach(M, t: ⇀)$ ($attach(M, t: ⇀)$ adopts the positive orientation (right-hand system), and $attach(partial M, t: ⇀)$ adopts the outward normal orientation), it consists of three oriented surfaces:
+
+#terms(
+  terms.item([$attach(Sigma_1, t: ⇀)$], [$z = phi_1 (x, y)$, $(x, y) in Delta_1$.]),
+  terms.item([$attach(Sigma_2, t: ⇀)$], [$z = phi_2 (x, y)$, $(x, y) in Delta_1$.]),
+  terms.item([$attach(Sigma_3, t: ⇀)$], [A cylindrical surface taking $partial Delta_1$ as the directrix, with the generatrix paralleling to the $O z$-axis; of course, it can also be reduced to a closed curve.]),
+)
+
+The second and third surfaces are similar.
+
+#figure(
+  image("img/SpecialRegion2.png", width: 80%),
+  caption: [Three special oriented closed surfaces (only the first two are shown).],
+) <fig:special-region-2>
+
+Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over the boundary of the region $attach(M, t: ⇀)$; then we have the following lemma.
+
+#lemma[
+  + Let $attach(partial M, t: ⇀)$ be the boundary of the first surface in @fig:special-region-2, and let $R(x, y, z) in C^1 (M)$. Then
+    $ integral.surf_(attach(partial M, t: ⇀)) R dif x and dif y = integral.vol_(attach(M, t: ⇀)) frac(partial R, partial z) dif x and dif y and dif z. $
+  + Let $attach(partial M, t: ⇀)$ be the boundary of the second surface in @fig:special-region-2, and let $P(x, y, z) in C^1 (M)$. Then
+    $ integral.surf_(attach(partial M, t: ⇀)) P dif y and dif z = integral.vol_(attach(M, t: ⇀)) frac(partial P, partial x) dif x and dif y and dif z. $
+  + Let $attach(partial M, t: ⇀)$ be the boundary of the third surface in @fig:special-region-2, and let $Q(x, y, z) in C^1 (M)$. Then
+    $ integral.surf_(attach(partial M, t: ⇀)) Q dif z and dif x = integral.vol_(attach(M, t: ⇀)) frac(partial Q, partial y) dif x and dif y and dif z. $
+] <lem:gauss-special-regions>
+
+#theorem(name: "Gauß's Theorem")[
+  Let $attach(M, t: ⇀)$ be an oriented closed region in $bb(R)^3$, and $omega = P dif y and dif z + Q dif z and dif x + R dif x and dif y in C^1 (M)$. If $attach(partial M, t: ⇀)$ can be split into finitely many first, second and third regions in @fig:special-region-2 simultaneously (non-overlapping, no shared interior points), then
+  $
+    integral.surf_(attach(partial M, t: ⇀)) P dif y and dif z + Q dif z and dif x + R dif x and dif y
+    = integral.vol_(attach(M, t: ⇀)) (frac(partial P, partial x) + frac(partial Q, partial y) + frac(partial R, partial z)) dif x and dif y and dif z,
+  $
+  or equivalently,
+  $
+    integral.surf_(attach(partial M, t: ⇀)) omega = integral.vol_(attach(M, t: ⇀)) dif omega,
+  $
+  where $attach(partial M, t: ⇀)$ is the induced orientation of $attach(M, t: ⇀)$.
+] <thm:gauss-theorem>
+// 注：tex 中该定理 "then:" 连续重复两次，且分割条件误引 fig:SpecialRegion1（应为 fig:SpecialRegion2），均已修正。
+
+=== Stokes' Formula // 斯托克斯定理（原 leftbarTitle 非空壳，升级为小节）
+
+#theorem(name: "Stokes' Theorem")[
+  Let $attach(M, t: ⇀)$ be an oriented smooth surface in $bb(R)^3$ with boundary $attach(partial M, t: ⇀)$, and $omega = P dif x + Q dif y + R dif z in C^1 (M)$. Then
+  $
+    integral.cont_(attach(partial M, t: ⇀)) P dif x + Q dif y + R dif z
+    & = integral.double_(attach(M, t: ⇀)) (frac(partial R, partial y) - frac(partial Q, partial z)) dif y and dif z \
+    & quad + (frac(partial P, partial z) - frac(partial R, partial x)) dif z and dif x + (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y \
+    & = integral.double_(attach(M, t: ⇀)) mat(delim: "|",
+      dif y and dif z, dif z and dif x, dif x and dif y;
+      frac(partial, partial x), frac(partial, partial y), frac(partial, partial z);
+      P, Q, R,
+    ) \
+    & = integral.double_(attach(M, t: ⇀)) mat(delim: "|",
+      cos alpha, cos beta, cos gamma;
+      frac(partial, partial x), frac(partial, partial y), frac(partial, partial z);
+      P, Q, R,
+    ) dif S,
+  $
+  or equivalently,
+  $
+    integral.cont_(attach(partial M, t: ⇀)) omega = integral.double_(attach(M, t: ⇀)) dif omega,
+  $
+  where $attach(partial M, t: ⇀)$ is the induced orientation of $attach(M, t: ⇀)$.
+] <thm:stokes-theorem>
+// 注：tex 中该定理条件写作 omega in C^1(Sigma)，与曲面记号 M 不一致，已统一为 C^1(M)。
+
+== Closed and Exact Differential Forms // 闭形式与恰当微分形式
+
+#definition(name: "Closed and Exact Differential Forms")[
+  Let $U subset.eq bb(R)^n$ be an open set and $omega$ be a $C^r$ ($r >= 1$) $k$-form on $U$.
+  + If $dif omega = 0$, then $omega$ is called a *closed form*.
+  + If there exists a $C^(r+1)$ $(k-1)$-form $eta$ such that $omega = dif eta$, then $omega$ is called an *exact differential form*.
+] <def:closed-exact-forms>
+
+#theorem(name: "Necessary Condition for Exactness")[
+  Let $U subset.eq bb(R)^n$ be an open set and $omega$ be a $C^1$ $k$-form on $U$. If $omega$ is exact, then $omega$ is closed. The converse is not necessarily true.
+] <thm:exact-implies-closed>
+
+We only discuss the case of $1$-forms in $bb(R)^2$ below.
+
+Let $omega = P(x, y) dif x + Q(x, y) dif y$ be a $C^1$ $1$-form on an open set $U subset.eq bb(R)^2$. For any points $A, B in U$, a piecewise smooth simple closed curve on $U$ is called a *path* from $A$ to $B$ if it starts at $A$ and ends at $B$.
+
+For any path $attach(L, t: ⇀)$ from $A$ to $B$, if
+$ integral_(attach(L, t: ⇀)) omega = integral_A^B omega, $
+where the right-hand side is independent of the choice of the path $attach(L, t: ⇀)$, then the line integral of $omega$ is said to be *path-independent* on $U$.
+
+#theorem[
+  Let $U subset.eq bb(R)^2$ be a simply connected open region, and $omega = P(x, y) dif x + Q(x, y) dif y$ be a $C^1$ $1$-form on $U$. Then the following statements are equivalent:
+  + $omega$ is exact on $U$, i.e., there exists a $C^2$ function $F(x, y)$ on $U$ such that
+    $ dif F = omega = P dif x + Q dif y. $
+    At this time, $F(x, y)$ is called a *potential function* of $omega$ on $U$, and
+    $ F(x, y) = integral_((x_0, y_0))^((x, y)) omega + C = integral_(x_0)^x P(t, y_0) dif t + integral_(y_0)^y Q(x, s) dif s + C, $
+    where $(x_0, y_0)$ is a fixed point in $U$ and $C$ is an arbitrary constant.
+  + $omega$ is closed on $U$, i.e.,
+    $ frac(partial P, partial y) = frac(partial Q, partial x). $
+  + The line integral of $omega$ is path-independent on $U$.
+  + For any piecewise smooth simple closed curve $attach(L, t: ⇀)$ on $U$,
+    $ integral.cont_(attach(L, t: ⇀)) omega = 0. $
+] <thm:path-independence-criteria>
+// 注：tex 原文写作 "U in R^2"，按单连通开集含义应为 "U subset.eq R^2"，已修正。
+
+#example[
+  Calculate
+  $ I = integral.cont_(attach(C, t: ⇀)) frac(cos(bold(r), bold(n)), r) dif s, $
+  where $attach(C, t: ⇀)$ is a piecewise smooth simple closed curve, $bold(r) = (x, y)$, $r = norm(bold(r)) = sqrt(x^2 + y^2)$, and $bold(n)$ is the unit outward normal vector of $attach(C, t: ⇀)$.
+] <ex:angle-form-integral>
+// 注：tex 原文该例题仅给出问题陈述，未提供解答。
+
 // B16: ch16 Integrals with Variable Parameters（变参积分）
 
 // --- Appendix ---
