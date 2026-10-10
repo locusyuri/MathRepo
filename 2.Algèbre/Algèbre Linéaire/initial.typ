@@ -1708,32 +1708,443 @@ $
 
 == Similarity of Matrices // 矩阵的相似
 
-// TODO: 相似矩阵定义、相似不变量（行列式、秩、迹、特征多项式）、相似变换的应用
+#definition(name: "Similar Matrices")[
+  Let $A, B in F^(n times n)$ be two square matrices over the field $F$.
+  If there exists an invertible matrix $P in F^(n times n)$ such that
+
+  $
+  B = P^(-1) A P,
+  $
+
+  then $A$ is said to be *similar* to $B$, denoted $A ~ B$, and $B$ is called a
+  *similarity transformation* of $A$.
+] <def:similar-matrices>
+
+#definition(name: "Trace")[
+  Let $A = (a_("ij"))_(n times n) in F^(n times n)$. The sum of the diagonal elements:
+
+  $
+  "tr"(A) = a_("11") + a_("22") + ... + a_("nn"),
+  $
+
+  is called the *trace* of $A$.
+] <def:trace>
+
+Similarity is an equivalence relation on the set of square matrices of the same order
+(reflexive, symmetric, and transitive).
+
+#property(name: "Arithmetic Properties of Trace")[
+  For any $A, B in F^(n times n)$ and $k in F$:
+  - $"tr"(A + B) = "tr"(A) + "tr"(B)$;
+  - $"tr"(k A) = k "tr"(A)$;
+  - $"tr"(A B) = "tr"(B A)$.
+] <prop:trace-arithmetic>
+
+#note[
+  From the third property, the trace of an $n times n$ matrix is a commutative quantity
+  extracted from the non-commutativity of matrix multiplication.
+]
+
+#property(name: "Arithmetic Properties of Similarity")[
+  If $B_1 = P^(-1) A_1 P$ and $B_2 = P^(-1) A_2 P$, then:
+  - $B_1 + B_2 = P^(-1)(A_1 + A_2) P$;
+  - $B_1 B_2 = P^(-1)(A_1 A_2) P$;
+  - $B_1^k = P^(-1) A_1^k P$ for $k = 1, 2, ...$ (similarity invariance of matrix powers).
+] <prop:similarity-arithmetic>
+
+#note[
+  The similarity invariance of powers yields important applications:
+  - *Eigenvalue invariance*: if $A ~ B$, the eigenvalues of $A^k$ and $B^k$ coincide.
+  - *Diagonalization simplifies powers*: if $A = P^(-1) D P$ with $D$ diagonal,
+    then $A^k = P^(-1) D^k P$.
+  - *Jordan form for non-diagonalizable matrices*: $A^k = P^(-1) J^k P$ where $J$ is
+    the Jordan form, and $J^k$ can be computed block by block.
+  - *Matrix functions*: if $B = P^(-1) A P$, then $exp(B) = P^(-1) exp(A) P$.
+]
+
+#note[
+  In summary, the *determinant*, *rank*, and *trace* of a matrix are invariants
+  under similarity, collectively called *similarity invariants*.
+  The *characteristic polynomial*, *eigenvalues*, and *eigenvectors*
+  (discussed in the next section) are also similarity invariants.
+]
 
 == Eigenvectors and Eigenvalues // 特征向量与特征值
 
-// TODO: 特征值与特征向量定义、特征多项式、特征值的性质（和=迹、积=行列式）、
-//       几何重数与代数重数、特征子空间、Gerschgorin 圆盘定理
+#definition(name: "Eigenvalues and Eigenvectors")[
+  Let $V$ be a linear space over $F$ and $A in upright("End")(V)$.
+  A non-zero vector $xi in V$ is called an *eigenvector* of $A$ if there exists
+  a scalar $lambda in F$ such that
+
+  $
+  A(xi) = lambda xi.
+  $
+
+  The scalar $lambda$ is called the *eigenvalue* corresponding to $xi$.
+
+  From the matrix perspective, let $A in F^(n times n)$. A non-zero vector
+  $x in F^n$ is an *eigenvector* of $A$ if $A x = lambda x$ for some $lambda in F$.
+] <def:eigenvector-eigenvalue>
+
+#property(name: "Eigenvalues of Matrix Functions")[
+  If $lambda$ is an eigenvalue of $A$ with eigenvector $xi$, then for matrix functions
+  of $A$ (the eigenvector $xi$ remains the same):
+  - $A + k E$: eigenvalue is $lambda + k$;
+  - $k A$: eigenvalue is $k lambda$;
+  - $A^m$ ($m in N^*$): eigenvalue is $lambda^m$;
+  - $A^(-1)$: eigenvalue is $1/lambda$;
+  - $f(A)$ where $f(x)$ is a polynomial: eigenvalue is $f(lambda)$.
+] <prop:eigenvalues-of-matrix-functions>
+
+#definition(name: "Eigenpolynomial")[
+  The polynomial
+
+  $
+  f(lambda) = abs(lambda E - A) = det(lambda E - A)
+  $
+
+  is called the *eigenpolynomial* (or *characteristic polynomial*) of $A$,
+  where $A = (a_("ij"))_(n times n)$ and $E$ is the identity matrix.
+] <def:eigenpolynomial>
+
+#note[
+  For example, in $P[x]_n$ ($n > 1$), the eigenpolynomial of the derivation
+  operator $D$ is $f(lambda) = lambda^n$.
+]
+
+The roots of the eigenpolynomial $abs(lambda E - A)$ are the eigenvalues of $A$;
+the non-zero solutions of $(lambda_0 E - A) x = 0$ are the eigenvectors
+corresponding to $lambda_0$. The eigenpolynomial, eigenvalues, and eigenvectors
+are invariant under similarity.
+
+#proposition(name: "Properties of the Eigenpolynomial")[
+  Let $A in F^(n times n)$ with eigenpolynomial $f(lambda) = abs(lambda E - A)$.
+  Then $f(lambda)$ is a monic polynomial of degree $n$:
+
+  $
+  f(lambda) = lambda^n - "tr"(A) lambda^(n-1) + ... + (-1)^n abs(A),
+  $
+
+  where the coefficient of $lambda^(n-k)$ ($1 <= k < n$) is $(-1)^k$ times
+  the sum of all $k$-order principal minors of $A$.
+] <prop:eigenpolynomial-properties>
+
+#note[
+  Combining with Viète's formulas:
+  - The sum of eigenvalues (counting multiplicities) equals $"tr"(A)$.
+  - The product of eigenvalues (counting multiplicities) equals $abs(A)$.
+]
+
+=== Multiplicity and Eigenspaces // 重数与特征子空间
+
+#definition(name: "Eigenspace")[
+  For an eigenvalue $lambda$ of $A$, the set of all eigenvectors corresponding to
+  $lambda$ along with the zero vector:
+
+  $
+  V_lambda = {alpha : alpha in V, A(alpha) = lambda alpha} =
+  "ker"(A - lambda E),
+  $
+
+  is called the *eigenspace* corresponding to $lambda$, denoted $E_lambda$.
+  It is a subspace of $V$ and the solution space of $(lambda E - A) X = 0$.
+] <def:eigenspace>
+
+#definition(name: "Geometric and Algebraic Multiplicity")[
+  For an eigenvalue $lambda$ of $A$:
+  - The dimension of the eigenspace $V_lambda = "ker"(A - lambda E)$ is called the
+    *geometric multiplicity* of $lambda$.
+  - The multiplicity of $lambda$ as a root of the eigenpolynomial $f(lambda)$ is called
+    the *algebraic multiplicity* of $lambda$.
+] <def:multiplicity>
+
+#property(name: "Multiplicity Bounds")[
+  For an eigenvalue $lambda$ of $A$, let $g(lambda)$ and $a(lambda)$ be the geometric
+  and algebraic multiplicities respectively. Then
+
+  $
+  1 <= g(lambda) <= a(lambda) <= n.
+  $
+] <prop:multiplicity-bounds>
+
+=== Estimation of Eigenvalues // 特征值的估计
+
+#theorem(name: "Gerschgorin Disks First Theorem")[
+  Let $A = (a_("ij"))_(n times n)$ be a square matrix over the complex field $C$.
+  Then all eigenvalues of $A$ lie within the disks
+
+  $
+  abs(z - a_("ii")) <= R_i,   1 <= i <= n,
+  $
+
+  where $R_i = abs(a_("i1")) + ... + abs(a_(i,i-1)) + abs(a_(i,i+1)) + ... + abs(a_("in"))$.
+] <thm:gerschgorin-1>
+
+#theorem(name: "Gerschgorin Disks Second Theorem")[
+  If the $n$ Gerschgorin disks of $A$ form $k$ connected regions, and one connected
+  region contains $k$ Gerschgorin disks, then there are exactly $k$ eigenvalues
+  (counting multiplicities) in this connected region.
+] <thm:gerschgorin-2>
 
 == Minimal Polynomial // 极小多项式
 
-// TODO: 零化多项式、极小多项式定义与性质、Cayley-Hamilton 定理
+#definition(name: "Annihilating and Minimal Polynomial")[
+  Let $V$ be a linear space over $F$ and $A in upright("End")(V)$.
+  A polynomial $f(lambda)$ is called an *annihilating polynomial* of $A$ if
+  $f(A) = 0$.
+
+  The monic polynomial $m(lambda)$ of least degree such that $m(A) = 0$ is called
+  the *minimal polynomial* of $A$.
+  The same definition applies to a square matrix $A in F^(n times n)$.
+] <def:minimal-polynomial>
 
 == Space Decomposition // 空间分解
 
-// TODO: 不变子空间、块上三角与块对角、根子空间、根空间分解定理
+Studying linear transformations through invariant subspaces is a commonly used method,
+as it reduces problems on the whole space to problems on lower-dimensional subspaces.
+
+=== Invariant Subspace // 不变子空间
+
+#definition(name: "Invariant Subspace")[
+  Let $V$ be a linear space over $F$ and $A in upright("End")(V)$.
+  A subspace $W subset V$ is called an *invariant subspace* of $V$ under $A$ if
+  $A(alpha) subset W$ for all $alpha in W$, also called an *$A$-subspace*.
+] <def:invariant-subspace>
+
+#note[
+  The kernel and image of $A$, as well as eigenspaces (including generalized eigenspaces)
+  and cyclic subspaces, are all invariant subspaces of $V$ under $A$.
+]
+
+#property(name: "Properties of Invariant Subspaces")[
+  - The zero subspace ${0}$ and the entire space $V$ are invariant under any $A$
+    (trivial invariant subspaces).
+  - If $A, B in upright("End")(V)$ commute ($A B = B A$), then
+    $"ker"(A)$, $"im"(A)$, and eigenspaces of $A$ are invariant under $B$.
+  - Any subspace of a scalar transformation is an invariant subspace.
+  - The intersection and sum of any two invariant subspaces are also invariant subspaces.
+] <prop:invariant-subspace-properties>
+
+#proposition(name: "One-Dimensional Invariant Subspace")[
+  Let $W = "langle"(xi)"rangle"$ ($xi != 0$). Then $W$ is an $A$-subspace if and only if
+  $xi$ is an eigenvector of $A$.
+] <prop:one-dim-invariant-subspace>
+
+#theorem(name: "Block Triangular and Block Diagonal Representation")[
+  Let $V$ be an $n$-dimensional linear space over $F$ and $A in upright("End")(V)$.
+
+  - Let $W$ be a nontrivial $A$-subspace. Take a basis ${epsilon_1, ..., epsilon_r}$
+    of $W$ and extend it to a basis ${epsilon_1, ..., epsilon_n}$ of $V$.
+    Then the matrix representation of $A$ takes the block upper triangular form
+    $mat((A, B), (O, C))$, where $A$ represents $A|_W$ and $C$ represents the induced
+    transformation on $V/W$. The characteristic polynomial factorizes as
+    $f(lambda) = f_1(lambda) f_2(lambda)$.
+
+  - If the matrix representation of $A$ takes the block diagonal form
+    $mat((A_1, O, ..., O), (O, A_2, ..., O), (dots.v, dots.v, dots.down, dots.v), (O, O, ..., A_s))$
+    under some basis, then $V$ decomposes as a direct sum
+    $V = W_1 ⊕ W_2 ⊕ ... ⊕ W_s$ of nontrivial $A$-subspaces.
+] <thm:block-decomposition>
+
+#proposition(name: "Kernel Decomposition by Coprime Polynomials")[
+  Let $V$ be a linear space over $F$ and $A in upright("End")(V)$.
+  On $F[x]$, if $f(x) = f_1(x) f_2(x) ... f_s(x)$ where $f_i(x)$ are pairwise coprime,
+  then
+
+  $
+  "ker"(f(A)) = "ker"(f_1(A)) ⊕ "ker"(f_2(A)) ⊕ ... ⊕ "ker"(f_s(A)).
+  $
+] <prop:kernel-decomposition-coprime>
+
+=== Hamilton-Cayley Theorem // Hamilton-Cayley 定理
+
+#theorem(name: "Hamilton-Cayley Theorem")[
+  Let $V$ be an $n$-dimensional linear space over $F$ and $A in upright("End")(V)$.
+  Let $A$ be the matrix representation of $A$ under some basis, and let
+  $f(lambda) = abs(lambda E - A)$ be the characteristic polynomial. Then
+
+  $
+  f(A) = 0.
+  $
+] <thm:hamilton-cayley>
+
+#note[
+  The Hamilton-Cayley theorem states that the characteristic polynomial of a linear
+  transformation annihilates the transformation itself. The characteristic polynomial is
+  a special annihilating polynomial — one of the highest degree ones — and it is divisible
+  by the minimal polynomial of $A$.
+]
+
+#definition(name: "Root Subspaces")[
+  For an eigenvalue $lambda$ of $A$, the set
+
+  $
+  V_lambda^(r) = "ker"((A - lambda E)^r) =
+  {alpha : alpha in V, (A - lambda E)^r(alpha) = 0},
+  $
+
+  is called the *root subspace* (or *generalized eigenspace*) of order $r$
+  corresponding to $lambda$.
+] <def:root-subspace>
+
+#note[
+  Here $r$ has two equivalent definitions: (1) the smallest positive integer such that
+  $(A - lambda E)^r(alpha) = 0$; (2) the algebraic multiplicity of $lambda$.
+  The minimal such $r$ is precisely the algebraic multiplicity.
+]
+
+#theorem(name: "Root Space Decomposition Theorem")[
+  Let $V$ be an $n$-dimensional linear space over $F$ and $A in upright("End")(V)$.
+  If the characteristic polynomial of $A$ factors into linear factors over $F$:
+
+  $
+  f(lambda) = (lambda - lambda_1)^(r_1) (lambda - lambda_2)^(r_2) ... (lambda - lambda_k)^(r_k),
+  $
+
+  then $V$ decomposes as a direct sum of root subspaces:
+
+  $
+  V = V_(lambda_1)^(r_1) ⊕ V_(lambda_2)^(r_2) ⊕ ... ⊕ V_(lambda_k)^(r_k).
+  $
+] <thm:root-space-decomposition>
 
 == Diagonalization // 对角化
 
-// TODO: 对角化的等价条件（n 个线性无关特征向量 / 几何重数=代数重数 / 直和分解 / 极小多项式无重根）
+#lemma(name: "Linear Independence of Eigenvectors")[
+  Eigenvectors corresponding to distinct eigenvalues are linearly independent.
+  Furthermore, if $A$ on $V$ has $k$ distinct eigenvalues $lambda_1, ..., lambda_k$,
+  and $alpha_("i1"), ..., alpha_("ir"_i)$ are the corresponding linearly independent eigenvectors
+  of $lambda_i$, then the set ${alpha_("ij") : i = 1, ..., k, j = 1, ..., r_i}$ is linearly independent.
+] <lem:eigenvector-independence>
+
+#theorem(name: "Equivalent Conditions for Diagonalization")[
+  Let $V$ be an $n$-dimensional linear space over $F$ and $A in upright("End")(V)$.
+  The following are equivalent:
+  - $A$ is diagonalizable (there exists a basis of $V$ such that the matrix representation
+    of $A$ is diagonal);
+  - There are $n$ linearly independent eigenvectors of $A$;
+  - For each eigenvalue of $A$, the geometric multiplicity equals the algebraic multiplicity;
+  - $V = V_(lambda_1) ⊕ V_(lambda_2) ⊕ ... ⊕ V_(lambda_k)$, where $lambda_1, ..., lambda_k$
+    are the distinct eigenvalues of $A$;
+  - The minimal polynomial of $A$ has no repeated roots, i.e. it factors into distinct
+    linear factors over $F$: $m(lambda) = (lambda - lambda_1)(lambda - lambda_2)...(lambda - lambda_k)$.
+] <thm:diagonalization-conditions>
 
 == Diagonalization of Special Matrices // 特殊矩阵的对角化
 
-// TODO: 可逆矩阵、幂等矩阵、幂零矩阵、对合矩阵、全 1 矩阵、循环移位矩阵、循环矩阵、三角矩阵的对角化
+#note[
+  Let $V$ be a linear space over $F$ (possibly infinite-dimensional) and
+  $A in upright("End")(V)$, with matrix representation $A$.
+  Some properties below require $V$ to be finite-dimensional or $F$ to be a number field
+  ($bb(R)$ or $bb(C)$). The constraint on $F$ can sometimes be relaxed to
+  "the characteristic of $F$ is not $2$".
+]
+
+=== Invertible Matrix // 可逆矩阵
+
+- $0$ is not an eigenvalue of $A$ (and conversely).
+- If $lambda$ is an eigenvalue of $A$, then $1/lambda$ is an eigenvalue of $A^(-1)$,
+  and the eigenvector $xi$ of $A$ is also an eigenvector of $A^(-1)$.
+- (When $F$ is a number field) If $A$ is diagonalizable, then $A^(-1)$ is also diagonalizable.
+
+=== Idempotent Matrix // 幂等矩阵
+
+Let $A$ be idempotent, i.e. $A^2 = A$.
+- Any eigenvalue of $A$ is either $0$ or $1$.
+- ($V$ finite-dimensional) $A$ is diagonalizable and
+  $V = E_1 ⊕ E_0 = "ker"(A - E) ⊕ "ker"(A) = "im"(A) ⊕ "ker"(A)$.
+- (When $F$ is a number field and $V$ finite-dimensional) The rank equals the trace:
+  $upright("rank")(A) = "tr"(A)$.
+
+=== Nilpotent Matrix // 幂零矩阵
+
+Let $A$ be nilpotent, i.e. $A^k = 0$ for some positive integer $k$
+(the smallest such $k$ is the *index of nilpotency*).
+- All eigenvalues of $A$ are $0$.
+- ($V$ finite-dimensional) $A$ is diagonalizable if and only if $A = 0$, i.e. $k = 1$.
+
+=== Involution Matrix // 对合矩阵
+
+Let $V$ be finite-dimensional, $F$ a number field, and $A$ an involution matrix,
+i.e. $A^2 = E$. In geometry, an involution corresponds to a reflection or symmetry,
+since $A^2 = E$ implies $A = A^(-1)$.
+- All eigenvalues of $A$ are either $1$ or $-1$.
+- $A$ is diagonalizable and $V = E_1 ⊕ E_(-1) = "ker"(A - E) ⊕ "ker"(A + E)$.
+
+=== All-Ones Matrix // 全 1 矩阵
+
+Let $F = bb(Q)$ and $A$ be the all-ones matrix. Denote
+$1_n = (1, 1, ..., 1)^T$ (column vector of $n$ ones).
+- All eigenvalues are $n$ (algebraic multiplicity $1$) or $0$ (algebraic multiplicity $n - 1$).
+- The eigenvectors for $n$ are ${k 1_n : k in bb(Q), k != 0}$; the eigenvectors for $0$ are
+  linear combinations of $eta_1, ..., eta_(n-1)$ where $eta_i$ has $1$ in position $1$,
+  $-1$ in position $i+1$, and $0$ elsewhere.
+- $A$ is diagonalizable.
+
+#note[
+  Note that $(1/n) A$ is an idempotent orthonormal projection matrix.
+]
+
+=== Cyclic Shift Matrix // 循环移位矩阵
+
+Let $F = bb(C)$ and $A$ be the cyclic shift matrix (ones on the superdiagonal
+and in position $(n, 1)$, zeros elsewhere). All properties are closely related to
+the discrete Fourier transform (DFT) and roots of unity.
+- The eigenvalues are the $n$-th roots of unity $omega^(k) = exp(2 pi i k / n)$
+  for $k = 0, 1, ..., n - 1$.
+- The eigenvector for $omega^(k)$ is $xi^(k) = (1, omega^(k), (omega^(k))^2, ..., (omega^(k))^(n-1))^T$.
+- $A$ is diagonalizable, and can be unitarily diagonalized.
+
+=== Circulant Matrix // 循环矩阵
+
+Let $F = bb(C)$ and $A$ be a circulant matrix, i.e.
+$A = a_0 E + a_1 C + a_2 C^2 + ... + a_(n-1) C^(n-1)$ where $C$ is the cyclic shift matrix.
+- The eigenvalues are $lambda_k = f(omega^(k))$ where $f(x) = a_0 + a_1 x + ... + a_(n-1) x^(n-1)$.
+- Circulant matrices share the same eigenvectors as the cyclic shift matrix.
+- $A$ is diagonalizable, and can be unitarily diagonalized by the same DFT matrix.
+
+#note[
+  The eigenvalues of a circulant matrix are the discrete Fourier transform of its first row.
+]
+
+=== Triangular Matrix // 三角矩阵
+
+Let $F$ be a number field and $A$ an upper triangular matrix.
+- The eigenvalues of $A$ are the diagonal entries $a_("ii")$.
+- If all diagonal entries are distinct, $A$ is diagonalizable. If there are repeated
+  diagonal entries, $A$ may or may not be diagonalizable.
+- If all diagonal entries are equal and there exists a non-zero entry above the diagonal,
+  then $A$ is not diagonalizable.
 
 == Simultaneous Characteristics Induced by Commutativity // 交换性诱导的同时性质
 
-// TODO: 特征空间互为不变子空间、公共特征向量、同时上三角化、同时对角化
+In this section we explore properties of matrices and linear transformations under
+similarity relations induced by commutativity of multiplication. We call these
+*simultaneous characteristics*.
+
+=== Eigenspaces are Mutually Invariant Subspaces // 特征空间互为不变子空间
+
+If $A$ and $B$ commute ($A B = B A$), then for any eigenvalue $lambda$ of $A$,
+the eigenspace $V_lambda$ of $A$ is an invariant subspace of $B$.
+
+=== Shared Eigenvectors // 公共特征向量
+
+If $A$ and $B$ are diagonalizable and commute, then they share a common basis of
+eigenvectors.
+
+=== Simultaneous Upper Triangularization // 同时上三角化
+
+Any commuting family of matrices over $bb(C)$ can be simultaneously upper triangularized.
+
+=== Simultaneous Diagonalization // 同时对角化
+
+Two diagonalizable linear transformations $A$ and $B$ can be simultaneously diagonalized
+if and only if they commute ($A B = B A$).
+
+=== Generalization in Multiple Cases // 多种情形的推广
+
+The simultaneous diagonalization result extends to commuting families of normal matrices
+(over $bb(C)$) and symmetric matrices (over $bb(R)$).
 
 = Jordan Canonical Form // Jordan 标准型
 

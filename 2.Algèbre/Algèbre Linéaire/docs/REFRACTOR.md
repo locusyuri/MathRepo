@@ -1,8 +1,8 @@
 # Algèbre Linéaire 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-10
-> 最后更新：2026-10-10（B6 完成：Ch6 Linear Mappings，Part II 全部完成）
-> 状态：✅ Part I 完成（B2–B4），✅ Part II 完成（B5–B6），待开始 Part III（B7 = Ch7 Diagonalization）
+> 最后更新：2026-10-10（B7 完成：Ch7 Diagonalization，Part III 进行中）
+> 状态：✅ Part I 完成（B2–B4），✅ Part II 完成（B5–B6），✅ B7 Ch7 Diagonalization 完成，待 B8 Ch8 Jordan 标准型
 > **项目约定：每次完成批次后自动 git 提交（中文 Conventional Commits），无需用户手动确认。**
 > 技能依据：`violet-design-note`（目录体检与结构设计）、`violet-latex-to-typst`（迁移）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 > 参考文档：[`1.Analyse/Analyse Mathématique/docs/REFRACTOR.md`](../../1.Analyse/Analyse%20Mathématique/docs/REFRACTOR.md)
@@ -215,10 +215,18 @@ Part IV 二次型与内积空间（几何结构）
 
 ### Part III — Structure Theory of Linear Operators
 
-- [ ] **B7 = Ch7 Diagonalization**（685 行 / 7 节，⚠ 全书最重，拆为 3 个子批）
-  - [ ] B7a §1 Similarity + §2 Eigenvectors and Eigenvalues
-  - [ ] B7b §3 Minimal Polynomial + §4 Space Decomposition
-  - [ ] B7c §5 Diagonalization + §6 Diagonalization of Special Matrices + §7 Simultaneous Characteristics
+- [x] **B7 = Ch7 Diagonalization**（685 行 / 7 节，拆为 3 个子批）✅ 2026-10-10
+  - [x] **B7a** §1 Similarity + §2 Eigenvectors and Eigenvalues ✅ 2026-10-10
+  - [x] §1 Similarity of Matrices（相似定义、迹定义、迹运算性质、相似运算性质、相似不变量 note）
+  - [x] §2 Eigenvectors and Eigenvalues（特征值/特征向量定义、矩阵函数特征值性质、特征多项式定义+性质、重数与特征子空间、Gerschgorin 圆盘定理两定理）
+  - [x] **B7b** §3 Minimal Polynomial + §4 Space Decomposition ✅ 2026-10-10
+  - [x] §3 Minimal Polynomial（零化多项式、极小多项式定义）
+  - [x] §4 Space Decomposition（不变子空间定义+性质、一维不变子空间命题、块上三角/块对角表示定理、互素多项式核分解命题、Hamilton-Cayley 定理、根子空间定义+根空间分解定理）
+  - [x] **B7c** §5 Diagonalization + §6 Diagonalization of Special Matrices + §7 Simultaneous Characteristics ✅ 2026-10-10
+  - [x] §5 Diagonalization（特征向量线性无关引理、对角化等价条件定理）
+  - [x] §6 Diagonalization of Special Matrices（可逆/幂等/幂零/对合/全1/循环移位/循环/三角矩阵的对角化性质）
+  - [x] §7 Simultaneous Characteristics（特征空间互为不变子空间、公共特征向量、同时上三角化、同时对角化、多种情形推广）
+  - 备注：§1–§7 从 chap07.tex 迁移；踩坑记录：双字符下标需引号（alpha_("i1"), alpha_("ij"), delta_("ij"), alpha_("ir"_i)）、langle/rangle 需引号、dots.d 应为 dots.down、\quad 在数学模式中不可用需用空格替代
 - [ ] **B8 = Ch8 Jordan Canonical Form**（382 行 / 5 节）
   - [ ] §1 Polynomial Matrices
   - [ ] §2 Invariant Divisors and Rational Canonical Form
