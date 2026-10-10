@@ -814,15 +814,194 @@ This form is particularly useful in applications involving low-rank updates to i
 
 == Elimination Method // 消元法
 
-// TODO: Gauss 消元法、行阶梯形与行最简形
+#definition(name: "System of Linear Equations")[
+  A *system of linear equations* is a collection of one or more linear equations involving the
+  same set of variables. For example, a system of $m$ linear equations in $n$ variables can be
+  written as
+
+  $
+  cases(
+    a_(11) x_1 + a_(12) x_2 + ... + a_(1n) x_n = b_1,
+    a_(21) x_1 + a_(22) x_2 + ... + a_(2n) x_n = b_2,
+    dots.v,
+    a_("m1") x_1 + a_("m2") x_2 + ... + a_("mn") x_n = b_m,
+  )
+  $
+
+  where $x_1, ..., x_n$ are the variables, $a_("ij")$ are the coefficients, and $b_i$ are the
+  constants. A *solution* is an ordered set of values for the variables satisfying all equations
+  simultaneously; two systems with the same solution set are called *equivalent systems*.
+] <def:system-of-linear-equations>
+
+A linear system can be solved by *elimination*: applying elementary row operations to the
+augmented matrix of the system, so that the coefficient part becomes triangular, and then
+solving by back-substitution. *Gauss-Jordan elimination* continues until the reduced row
+echelon form is reached.
+
+#definition(name: "Row Echelon Form")[
+  A matrix is in *row echelon form* if every zero row lies below all non-zero rows and the
+  leading entry of each non-zero row lies to the right of that of the row above. It is in
+  *reduced row echelon form* if, in addition, every leading entry is $1$ and the only non-zero
+  entry in its column.
+] <def:row-echelon-form>
+
+#theorem(name: "Uniqueness of Reduced Row Echelon Form")[
+  Every matrix is row-equivalent to a unique matrix in reduced row echelon form.
+] <thm:uniqueness-of-rref>
+
+#proof[
+  The row operations preserve the solution set of every linear system, and the reduction to
+  reduced row echelon form is a deterministic procedure: the pivot positions are fixed by the
+  row space of the matrix, each pivot is normalized to $1$, and the entries above it are
+  eliminated. Hence the result is unique.
+]
 
 == Rank of Vector Groups and Matrices // 向量组与矩阵的秩
 
-// TODO: 极大线性无关组、向量组的秩、矩阵的秩（行秩=列秩）、初等变换不改变秩
+#note[
+  The notions of linear combination, linear representation and linear (in)dependence used in
+  this section are defined in Chapter 5 (Linear Spaces).
+]
+
+=== Maximal Independent Group // 极大线性无关组
+
+#definition(name: "Maximal Linearly Independent Group")[
+  A subset of a vector group is called a *maximal linearly independent group* if it is linearly
+  independent and adding any vector of the vector group makes the enlarged subset linearly
+  dependent.
+] <def:maximal-independent-group>
+
+#property(name: "Properties of Maximal Independent Groups")[
+  - The maximal linearly independent group is not unique; any maximal linearly independent group
+    is equivalent to the original vector group.
+  - All maximal linearly independent groups of a vector group contain the same number of vectors.
+]
+
+#definition(name: "Rank of Vector Groups")[
+  The number of vectors contained in a maximal linearly independent group of a vector group is
+  called the *rank* of the vector group.
+] <def:rank-of-vector-groups>
+
+#property(name: "Properties of the Rank of Vector Groups")[
+  - A vector group is linearly independent if and only if its rank equals the number of vectors
+    it contains.
+  - Equivalent vector groups have the same rank, but vector groups with the same rank are not
+    necessarily equivalent.
+  - If the rank of a vector group is $r$, then any $r$ linearly independent vectors of the group
+    form a maximal linearly independent group.
+  - A vector group of non-zero vectors always has a maximal linearly independent group, and any
+    linearly independent subset can be extended to one.
+  - If vector group (I) can be linearly expressed by vector group (II), then the rank of (I)
+    does not exceed the rank of (II).
+]
+
+=== Rank of Matrices // 矩阵的秩
+
+#definition(name: "Rank of Matrices")[
+  The *row rank* of a matrix is the rank of its row vectors; the *column rank* is the rank of
+  its column vectors. The *rank* of a matrix is defined as the highest order of its non-zero
+  minors.
+] <def:rank-of-matrices>
+
+#theorem(name: "Row Rank Equals Column Rank")[
+  The row rank and the column rank of any matrix are equal.
+] <thm:row-rank-equals-column-rank>
+
+#property(name: "Properties of Matrix Rank")[
+  - Elementary row and column transformations do not change the rank of a matrix.
+  - The rank of a matrix equals the number of non-zero rows in its row (column) echelon form.
+  - Elementary row (column) operations do not alter the linear relations among the column (row)
+    vectors.
+  - For a square matrix $(a_("ij"))$ of order $n$, its row vectors (or column vectors) are
+    linearly independent if and only if $abs(A) != 0$.
+]
+
+The third property gives a method for finding a maximal linearly independent group of the row
+(or column) vectors of a matrix; take the column vectors as an example:
+
+1. Transform the matrix into its row echelon form (REF) or reduced row echelon form (RREF)
+   using elementary row operations. For example, for the matrix $(alpha_1, alpha_2, alpha_3,
+   alpha_4, alpha_5)$, its REF is shown below:
+
+   $
+   mat(
+     (a_(11), a_(12), 0, 0, 0),
+     (0, 0, a_(23), 0, 0),
+     (0, 0, 0, 0, a_(35)),
+   )
+   $
+
+2. Identify the leading entries (pivots) of the rows. The columns containing these pivots
+   correspond to a maximal linearly independent group of the column vectors. In the example,
+   $alpha_1, alpha_3, alpha_5$ form a maximal linearly independent group.
 
 == Solution to Linear Systems // 线性方程组的解
 
-// TODO: 解的存在性判定（系数矩阵秩=增广矩阵秩）、齐次方程组的解空间与基础解系、非齐次方程组的解结构
+=== Existence of Solutions // 解的存在性判定
+
+#theorem(name: "Existence of Solutions")[
+  A linear system $A x = b$ is solvable if and only if the rank of the coefficient matrix $A$
+  equals the rank of the augmented matrix $(A | b)$. If both ranks equal $r$, then the system
+  has a unique solution when $r = n$, and infinitely many solutions with $n - r$ free variables
+  when $r < n$.
+] <thm:existence-of-solutions>
+
+=== Homogeneous Systems // 齐次方程组
+
+For a homogeneous system of linear equations, it is evident that the linear combination of
+solutions is still a solution to the system. Thus the concept of a *fundamental system of
+solutions* is introduced.
+
+#definition(name: "Fundamental System of Solutions")[
+  For the homogeneous system $A x = O$, that is
+
+  $
+  cases(
+    a_(11) x_1 + a_(12) x_2 + ... + a_(1n) x_n = 0,
+    a_(21) x_1 + a_(22) x_2 + ... + a_(2n) x_n = 0,
+    dots.v,
+    a_("s1") x_1 + a_("s2") x_2 + ... + a_("sn") x_n = 0,
+  )
+  $
+
+  a set of solutions $eta_1, ..., eta_t$ is called a *fundamental system of solutions* if:
+  - any solution of the system can be expressed as a linear combination of
+    $eta_1, ..., eta_t$;
+  - $eta_1, ..., eta_t$ are linearly independent.
+] <def:fundamental-system-of-solutions>
+
+#note[
+  This definition mirrors that of the maximal linearly independent group of a vector group: the
+  fundamental solution set is a maximal linearly independent group of the solution vector group,
+  so the number of solutions it contains equals the rank of that group.
+]
+
+All solutions of the homogeneous system $A x = O$ form a linear space, called the *solution
+space*, whose basis is any fundamental system of solutions. The dimension of the solution space
+is $n - upright("rank")(A)$, where $n$ is the number of variables. Thus a fundamental system of
+solutions contains exactly $n - upright("rank")(A)$ solutions.
+
+=== Nonhomogeneous Systems // 非齐次方程组
+
+The homogeneous system $A x = O$ is called the *derived system* of the nonhomogeneous system
+$A x = b$.
+
+#property(name: "Structure of Solutions")[
+  - The difference between two solutions of $A x = b$ is a solution of its derived system
+    $A x = O$.
+  - The sum of a solution of $A x = b$ and a solution of $A x = O$ is still a solution of
+    $A x = b$.
+]
+
+If $gamma_0$ is a particular solution of $A x = b$, then any solution $gamma$ of $A x = b$ can
+be expressed as
+
+$
+gamma = gamma_0 + eta,
+$
+
+where $eta$ is a solution of $A x = O$. Thus, when $eta$ takes all the solutions of the derived
+system, the above formula gives all the solutions of $A x = b$.
 
 // ==========================================================================
 // Part II — Linear Spaces and Linear Mappings (线性空间与线性映射)

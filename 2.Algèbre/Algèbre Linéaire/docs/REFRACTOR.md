@@ -1,8 +1,8 @@
 # Algèbre Linéaire 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-10
-> 最后更新：2026-10-10（B3c 完成：§5 秩的运算 + §6 低秩修正，Ch3 Matrices 全部迁移完成）
-> 状态：✅ B3 Ch3 Matrices 全部完成（B3a/B3b/B3c），待开始 B4 = Ch4 Linear Systems
+> 最后更新：2026-10-10（B4 完成：Ch4 Linear Systems，Part I 全部迁移完成）
+> 状态：✅ Part I 完成（B2–B4），待开始 Part II（B5 = Ch5 Linear Spaces）
 > **项目约定：每次完成批次后自动 git 提交（中文 Conventional Commits），无需用户手动确认。**
 > 技能依据：`violet-design-note`（目录体检与结构设计）、`violet-latex-to-typst`（迁移）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 > 参考文档：[`1.Analyse/Analyse Mathématique/docs/REFRACTOR.md`](../../1.Analyse/Analyse%20Mathématique/docs/REFRACTOR.md)
@@ -182,17 +182,18 @@ Part IV 二次型与内积空间（几何结构）
   - [x] §2 Determinant and Its Properties（tex 空节 → 按决策④从教材补全：Leibniz 定义、五性质、乘积定理+证明、可逆性推论）
   - [x] §3 Expanding by Rows (Columns)（tex 空节 → 按决策④从教材补全：余子式/代数余子式、Laplace 展开+证明、=== Cramer's Rule 定理+证明、=== Expanding by k Rows）
   - [x] §4 Special Determinants（tex 迁移：Vandermonde / Arrow / Two-Triangular 定义与值）
-  - 备注：§1–§3 无 md 来源，内容取自三本教材标准内容；迁移踩坑记录：Typst 0.15 的 ∏ 写作 `product`（非 `prod`）、多字母标识符需引号（`"sgn"`/`"tau"`/`"sigma"`/`"col"`）、双字母下标需 `_("ij")` 形式
+  - 备注：§1–§3 无 md 来源，内容取自三本教材标准内容；迁移踩坑记录：Typst 0.15 的 ∏ 写作 `product`（非 `prod`）、多字母标识符需引号（`"sgn"`/`"col"`）、双字母下标需 `_("ij")` 形式、Greek 字母 sigma/tau 为内置符号裸用即可
 - [x] **B3 = Ch3 Matrices**（549 行 / 7 节，⚠ 含空节，拆为 3 个子批）
   - [x] B3a §1 Basic Operations + §2 Special Square Matrices（前半：对角/基本/三角/初等矩阵）✅ 2026-10-10
   - [x] B3b §2 Special Square Matrices（后半：对称/循环/幂零/满秩）+ §3 Inverse Matrix + §4 Block Matrix ✅ 2026-10-10
   - [x] B3c §5 Operations of Rank + §6 Low-Rank Corrections ✅ 2026-10-10
   - 备注：tex §1 的 Addition/Scalar Multiplication/Transpose/Multiplication 为空 leftbarTitle → 按教材补一句定义并升级为 ===；Determinant of a Product 与 Ch2 `<thm:det-product>` 重复，仅保留 k 矩阵推广（`<cor:det-product-multiple>`）并用 #link 回指；§3 逆矩阵 tex 全空 → 按教材补全（逆矩阵定义与运算性质、可逆性等价命题定理+证明、伴随矩阵与 adj 公式、求逆两法、广义逆定义）；§6 秩的运算 tex 脚注（维数公式细化 rank(A+B) 等式）内联为命题内文字；踩坑记录：\cong 在 Typst 0.15 无对应符号（矩阵等价改用 `equiv`）、`$LU$` 需引号、Cauchy-Binet 的 minors 记号用 `abs("A"(1, 2, ..., m; v_1, ..., v_m))` 表达；B3b 踩坑：\otimes/\oplus 在 Typst 0.15 无符号函数（Kronecker 积用 Unicode `⊗`，直和用 `⊕`，均实测可渲染）；Greek 字母是 Typst 内置符号（sigma/tau/lambda/alpha/beta 裸用即可，不要加引号——加引号反而渲染成文本字体）；`quad` 在数学模式不存在（用空格或分列公式）；rank 记号统一 `upright("rank")(A)`（与 Ch1 Notations 一致）
-- [ ] **B4 = Ch4 Linear Systems**（ch03 清洗后约 200 行 / 3 节，⚠ 移除 §2 Linear Space）
-  - [ ] §1 Elimination Method
-  - [ ] §2 Rank of Vector Groups and Matrices
-  - [ ] §3 Solution to Linear Systems
-- [ ] ✅ Part I 里程碑：编译 + 提交
+- [x] **B4 = Ch4 Linear Systems**（ch03 清洗后约 200 行 / 3 节）✅ 2026-10-10
+  - [x] §1 Elimination Method（tex 空节 → 教材补全：线性方程组定义 + cases 系统、初等行变换、行阶梯形/行最简形定义、RREF 唯一性定理+sketch 证明；tex §2 Linear Space 整段留待 B5）
+  - [x] §2 Rank of Vector Groups and Matrices（tex 迁移：极大无关组/向量组的秩五性质、矩阵的秩定义、行秩=列秩定理、初等变换不改变秩 + 求极大无关组方法；tex "of row vectors" 笔误修正为 column vectors）
+  - [x] §3 Solution to Linear Systems（tex 迁移：基础解系定义+note、解空间维数 $n - rank(A)$、导出方程组与通解；tex 空 leftbarTitle "解的存在性判定" → 按决策④补 Rouché–Capelli 定理）
+  - 备注：§2 使用 Ch5 的线性组合/线性相关概念，加 note 前向指引；augmented matrix 记号 $(A | b)$ 的竖线非绝对值，按规范保留
+- [x] ✅ Part I 里程碑：编译 + 提交（B2–B4 完成）
 
 ### Part II — Linear Spaces and Linear Mappings
 
