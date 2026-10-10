@@ -1,8 +1,8 @@
 # Algèbre Linéaire 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-10
-> 最后更新：2026-10-10（B4 完成：Ch4 Linear Systems，Part I 全部迁移完成）
-> 状态：✅ Part I 完成（B2–B4），待开始 Part II（B5 = Ch5 Linear Spaces）
+> 最后更新：2026-10-10（B6 完成：Ch6 Linear Mappings，Part II 全部完成）
+> 状态：✅ Part I 完成（B2–B4），✅ Part II 完成（B5–B6），待开始 Part III（B7 = Ch7 Diagonalization）
 > **项目约定：每次完成批次后自动 git 提交（中文 Conventional Commits），无需用户手动确认。**
 > 技能依据：`violet-design-note`（目录体检与结构设计）、`violet-latex-to-typst`（迁移）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 > 参考文档：[`1.Analyse/Analyse Mathématique/docs/REFRACTOR.md`](../../1.Analyse/Analyse%20Mathématique/docs/REFRACTOR.md)
@@ -197,19 +197,21 @@ Part IV 二次型与内积空间（几何结构）
 
 ### Part II — Linear Spaces and Linear Mappings
 
-- [ ] **B5 = Ch5 Linear Spaces**（ch03 §2 + ch05 合并，约 400 行 / 5 节，⚠ 含空节）
-  - [ ] §1 Linear Spaces and Their Bases
-  - [ ] §2 Subspaces
-  - [ ] §3 Isomorphisms
-  - [ ] §4 Quotient Spaces
-  - [ ] §5 Special Linear Spaces
-- [ ] **B6 = Ch6 Linear Mappings**（388 行 / 5 节）
-  - [ ] §1 Linear Mappings and Their Computation
-  - [ ] §2 Kernel and Image of Linear Mappings
-  - [ ] §3 Matrix Representation of Linear Mappings
-  - [ ] §4 Special Linear Transformations
-  - [ ] §5 Linear Functions and Dual Spaces
-- [ ] ✅ Part II 里程碑：编译 + 提交
+- [x] **B5 = Ch5 Linear Spaces**（ch03 §2 + ch05 合并）✅ 2026-10-10
+  - [x] §1 Linear Spaces and Their Bases（线性空间定义+8公理、例、线性组合/表示/等价、线性相关/无关、性质命题+证明、维数/基/坐标）
+  - [x] §2 Subspaces（子空间定义+判定、Span、交与和、维数公式、直和定义+充要条件）
+  - [x] §3 Isomorphisms（同构定义、同构定理+证明、有限维分类推论、性质）
+  - [x] §4 Quotient Spaces（商空间定义、商空间维数定理+证明、诱导映射、第一同构定理）
+  - [x] §5 Special Linear Spaces（交换空间 C(A) 定义+性质+例题，从 chap05.tex 迁移）
+  - 备注：§1–§2 核心内容来自 chap03.tex §2 Linear Space + chap05.tex 合并；§3–§4 原 tex 为空节，按决策④从教材补全；§5 从 chap05.tex 迁移；踩坑记录：双字符下标需引号（a_("i1")）、langle/rangle 需引号、mat() 替代 pmatrix、\quad 在数学模式中不可用需用空格替代
+- [x] **B6 = Ch6 Linear Mappings**（388 行 / 5 节）✅ 2026-10-10
+  - [x] §1 Linear Mappings and Their Computation（线性映射定义、存在唯一性定理/线性延拓、加法/数乘/复合运算、代数定义）
+  - [x] §2 Kernel and Image of Linear Mappings（核与像定义、秩-零度定理、余核、升链定义+性质）
+  - [x] §3 Matrix Representation of Linear Mappings（矩阵表示定义、基变换与坐标变换、相似矩阵、例题）
+  - [x] §4 Special Linear Transformations（常见变换、幂等变换与投影变换定义+命题、对合/可逆等价命题）
+  - [x] §5 Linear Functions and Dual Spaces（线性函数、对偶空间、对偶基、维数定理+证明、双重对偶）
+  - 备注：§1–§4 从 chap06.tex 迁移；§5 原 tex 为空节，按决策④从教材补全；踩坑记录：\quad 在数学模式中不可用需用空格替代、dots.d 应为 dots.down、subseteq 需加引号 "subseteq"、双字符下标需引号（delta_("ij")）
+- [x] ✅ Part II 里程碑：编译 + 提交（B5–B6 完成）
 
 ### Part III — Structure Theory of Linear Operators
 

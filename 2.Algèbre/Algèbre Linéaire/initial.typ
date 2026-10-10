@@ -1019,24 +1019,353 @@ system, the above formula gives all the solutions of $A x = b$.
 
 == Linear Spaces and Their Bases // 线性空间与基
 
-// TODO: 线性空间定义与公理、线性组合与线性表示、线性相关与线性无关、极大无关组、
-//       维数、基与坐标、Steinitz 替换定理
+#definition(name: "Linear Space over Field $F$")[
+  Let $V$ be a non-empty set and $F$ a field. If two operations (binary mappings) are defined
+  on $V$:
+  - *Vector addition*: for any $alpha, beta in V$, there exists $gamma in V$ such that
+    $gamma = alpha + beta$.
+  - *Scalar multiplication*: for any $alpha in V$ and $c in F$, there exists $gamma in V$
+    such that $gamma = c dot alpha$.
+
+  and the following axioms hold (for any $alpha, beta, gamma in V$ and $k, l in F$):
+  - *A1. Commutativity of Addition*: $alpha + beta = beta + alpha$.
+  - *A2. Associativity of Addition*: $(alpha + beta) + gamma = alpha + (beta + gamma)$.
+  - *A3. Existence of Additive Identity*: there exists $0 in V$ such that
+    $alpha + 0 = 0 + alpha = alpha$.
+  - *A4. Existence of Additive Inverse*: there exists $-alpha in V$ such that
+    $alpha + (-alpha) = (-alpha) + alpha = 0$.
+  - *M1. Compatibility of Scalar Multiplication with Field Multiplication*:
+    $k(l alpha) = (k l) alpha$.
+  - *M2. Identity Element of Scalar Multiplication*: $1 dot alpha = alpha$, where $1$ is the
+    multiplicative identity in $F$.
+  - *D1. Distributivity over Vector Addition*: $k(alpha + beta) = k alpha + k beta$.
+  - *D2. Distributivity over Field Addition*: $(k + l) alpha = k alpha + l alpha$.
+
+  Then $V$ is called a *linear space* (or *vector space*) over the field $F$.
+] <def:linear-space>
+
+#note[
+  In the definition, *A1 (commutativity of addition)* can be derived from the other axioms,
+  so it is not strictly necessary to include it as an axiom.
+]
+
+Examples of linear spaces:
+
+- The univariate polynomials $P[x]$ over the number field $P$, with the usual polynomial
+  addition and scalar multiplication, form a linear space over $P$; restricting to polynomials
+  of degree less than $n$ together with the zero polynomial gives $P[x]_n$, also a linear
+  space over $P$.
+- The positive reals $bb(R)^+$ with $a ⊕ b = a b$ and $k ∘ a = a^k$ forms a linear space
+  over $bb(R)$.
+- The set of all real-valued functions, with function addition and scalar multiplication,
+  forms a linear space over $bb(R)$.
+- The field $P$ itself, under its own addition and multiplication, forms a linear space
+  over itself.
+- The set $P^n$ of all ordered $n$-tuples of elements of $P$, with the usual vector addition
+  and scalar multiplication, forms a linear space over $P$.
+
+In this section we primarily work with spaces of $n$-dimensional vectors over $bb(R)$; all
+elements of a linear space can be called vectors, and the definitions and properties of
+vectors in $bb(R)^n$ generalize to any linear space.
+
+=== Linear Combination and Dependence // 线性组合与线性相关
+
+#definition(name: "Linear Combination")[
+  Let $V$ be a linear space over $F$ and $alpha_1, ..., alpha_n in V$. For any scalars
+  $k_1, ..., k_n in F$, the vector $beta = k_1 alpha_1 + ... + k_n alpha_n$ is called a
+  *linear combination* of $alpha_1, ..., alpha_n$ (we also say $beta$ is linearly expressed
+  by them), and the $k_i$ are called the *coefficients* of the linear combination.
+] <def:linear-combination>
+
+#definition(name: "Linear Representation and Equivalence")[
+  If every vector $alpha_i$ ($i = 1, ..., t$) of the vector group $alpha_1, ..., alpha_t$
+  can be linearly expressed by the vector group $beta_1, ..., beta_s$, then
+  $alpha_1, ..., alpha_t$ is said to be linearly expressed by $beta_1, ..., beta_s$.
+  If two vector groups can be linearly expressed by each other, they are called *equivalent*.
+] <def:linear-representation>
+
+#note[
+  Linear representation identifies redundant equations in a linear system: if one equation can
+  be linearly expressed by the other equations, its row in the matrix reduces to a zero row
+  under elementary transformations. If two vector groups are equivalent, their corresponding
+  linear systems are equivalent.
+]
+
+#definition(name: "Linear Dependence and Independence")[
+  A vector group $alpha_1, ..., alpha_t$ ($t >= 2$) is *linearly dependent* if one of its
+  vectors can be linearly expressed by the others. Equivalently, the group is linearly
+  dependent if there exist scalars $k_1, ..., k_t in F$, not all zero, such that
+  $k_1 alpha_1 + ... + k_t alpha_t = 0$.
+
+  Conversely, $alpha_1, ..., alpha_t$ ($t >= 1$) is *linearly independent* if
+  $k_1 alpha_1 + ... + k_t alpha_t = 0$ implies $k_1 = ... = k_t = 0$.
+] <def:linear-dependence-and-independence>
+
+#note[
+  If a subset of a vector group is linearly dependent, the whole group is linearly dependent;
+  if the group is linearly independent, any non-empty subset is linearly independent
+  (*partial dependence implies overall dependence; overall independence implies partial
+  independence*). In particular, a linearly independent group cannot contain two proportional
+  vectors.
+]
+
+#proposition(name: "Properties of Linear Independence")[
+  - Let $alpha_i = (a_("i1"), ..., a_("in"))$, $i = 1, ..., s$. The group is linearly dependent
+    if and only if the homogeneous system $x_1 alpha_1 + ... + x_s alpha_s = 0$ (entrywise,
+    a system of $n$ equations in $s$ unknowns) has a non-zero solution.
+  - Adding one component to each vector of a linearly independent group preserves independence.
+  - *Steinitz Replacement Principle*: if $alpha_1, ..., alpha_r$ can be linearly expressed
+    by $beta_1, ..., beta_s$, then:
+    - if $r > s$, the group $alpha_1, ..., alpha_r$ is linearly dependent;
+    - if $alpha_1, ..., alpha_r$ is linearly independent, then $r <= s$, and replacing the
+      first $r$ vectors of $beta_1, ..., beta_s$ by $alpha_1, ..., alpha_r$ gives a vector
+      group equivalent to $beta_1, ..., beta_s$.
+  - Any $n + 1$ vectors of dimension $n$ are linearly dependent.
+  - Two equivalent linearly independent vector groups contain the same number of vectors.
+  - If $alpha_1, ..., alpha_r$ is linearly independent and $beta$ is another vector, then
+    either $beta$ can be uniquely linearly expressed by $alpha_1, ..., alpha_r$, or
+    $alpha_1, ..., alpha_r, beta$ is linearly independent.
+  - If $beta$ can be linearly expressed by $alpha_1, ..., alpha_r$, then
+    $alpha_1, ..., alpha_r$ is linearly independent if and only if the expression of $beta$
+    is unique.
+] <prop:properties-of-linear-independence>
+
+#proof[
+  *Item 1.* This is exactly the equivalent definition of dependence, written entrywise.
+
+  *Item 2.* A nontrivial relation among the enlarged vectors would restrict to one among the
+  original vectors.
+
+  *Item 3.* Write $alpha_i = sum_(j=1)^s c_("ij") beta_j$. For $r > s$, the $s$ equations
+  $sum_(i=1)^r c_("ij") x_i = 0$ ($j = 1, ..., s$) have a non-zero solution $x$, and
+  $sum_(i=1)^r x_i alpha_i = sum_(j=1)^s (sum_(i=1)^r c_("ij") x_i) beta_j = 0$, so the group
+  is dependent. For the replacement claim, exchange the $alpha$'s into the $beta$-list from
+  $alpha_r$ down to $alpha_1$: when processing $alpha_i$, its expression in the current list
+  must involve some remaining $beta$, otherwise $alpha_i$ would lie in the span of the
+  already-placed $alpha$'s, contradicting independence; replacing that $beta$ by $alpha_i$
+  preserves the span. The resulting group is equivalent to $beta_1, ..., beta_s$.
+
+  *Item 4.* Apply item 1 to the $n$-dimensional vectors: the homogeneous system of $n$
+  equations in $n + 1$ unknowns always has a non-zero solution.
+
+  *Item 5.* Each direction follows from item 3: an independent group expressible by another
+  group cannot contain more vectors than the latter.
+
+  *Item 6.* If $alpha_1, ..., alpha_r, beta$ is linearly independent, the conclusion is
+  immediate. Otherwise they are dependent: there exist scalars $k_1, ..., k_r, k$, not all
+  zero, with $k_1 alpha_1 + ... + k_r alpha_r + k beta = 0$. If $k = 0$, then
+  $sum_(i=1)^r k_i alpha_i = 0$ with not all $k_i$ zero, contradicting the independence of
+  the $alpha$'s; hence $k != 0$ and $beta = -sum_(i=1)^r (k_i/k) alpha_i$. If $beta$ had
+  another expression $sum_(i=1)^r l_i alpha_i$, subtracting gives
+  $sum_(i=1)^r (l_i + k_i/k) alpha_i = 0$, hence $l_i = -k_i/k$ for all $i$, so the
+  expression is unique.
+
+  *Item 7.* If $alpha_1, ..., alpha_r$ is dependent, a nontrivial relation
+  $sum_(i=1)^r k_i alpha_i = 0$ gives another expression
+  $beta = sum_(i=1)^r (c_i + t k_i) alpha_i$ for any $t$, so uniqueness fails. Conversely,
+  item 6 shows that independence forces uniqueness.
+]
+
+=== Dimension, Basis, Coordinates // 维数、基与坐标
+
+#definition(name: "Dimension")[
+  If a linear space $V$ over $F$ contains $n$ linearly independent vectors but any
+  $n + 1$ vectors are linearly dependent, then $V$ is called an *$n$-dimensional linear space*,
+  written $"dim"(V) = n$. If $V$ contains arbitrarily many linearly independent vectors, it
+  is called an *infinite-dimensional linear space*.
+] <def:dimension>
+
+#definition(name: "Basis and Coordinates")[
+  In an $n$-dimensional linear space $V$, $n$ linearly independent vectors $alpha_1, ...,
+  alpha_n$ form a *basis* of $V$. Any vector $alpha in V$ can be uniquely expressed as a
+  linear combination of the basis vectors,
+  $alpha = k_1 alpha_1 + ... + k_n alpha_n$, and the $k_i in F$ are called the *coordinates*
+  of $alpha$ with respect to the basis.
+] <def:basis-and-coordinates>
+
+The definition immediately gives the following criterion: if $V$ contains $n$ linearly
+independent vectors and every vector of $V$ can be expressed as a linear combination of them,
+then these vectors form a basis and $V$ is $n$-dimensional.
 
 == Subspaces // 子空间
 
-// TODO: 子空间定义与判定、交与和、维数公式、直和（定义与充要条件）
+#definition(name: "Linear Subspace")[
+  Let $V$ be a linear space over $F$ and $W subset V$ a non-empty subset. If $W$ is itself a
+  linear space under the same addition and scalar multiplication as $V$, then $W$ is called
+  a *linear subspace* of $V$. The zero subspace and $V$ itself are called *trivial subspaces*.
+] <def:linear-subspace>
+
+#property(name: "Subspace Criterion")[
+  A non-empty subset $W$ of $V$ is a linear subspace if and only if:
+  - $alpha + beta in W$ for all $alpha, beta in W$;
+  - $k alpha in W$ for all $alpha in W$ and $k in F$.
+] <prop:subspace-criterion>
+
+#definition(name: "Span of Vectors")[
+  Let $V$ be a linear space over $F$ and $alpha_1, ..., alpha_s in V$. The set of all their
+  linear combinations
+
+  $
+  W = {k_1 alpha_1 + ... + k_s alpha_s : k_1, ..., k_s in F},
+  $
+
+  is called the *span* of $alpha_1, ..., alpha_s$, denoted
+  $upright("span")({alpha_1, ..., alpha_s})$ or $"langle"(alpha_1, ..., alpha_s)"rangle"$
+  (sometimes $L(alpha_1, ..., alpha_s)$ is also used).
+] <def:span-of-vectors>
+
+=== Intersection and Sum // 交与和
+
+#definition(name: "Intersection and Sum of Subspaces")[
+  Let $V_1, V_2 subset V$ be two subspaces of $V$. Their *intersection* is
+  $V_1 inter V_2 = {alpha : alpha in V_1 text("and") alpha in V_2}$, and their *sum* is
+  $V_1 + V_2 = {alpha_1 + alpha_2 : alpha_1 in V_1, alpha_2 in V_2}$.
+] <def:intersection-and-sum>
+
+Both the intersection and the sum of two subspaces are again subspaces of $V$, and
+$V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
+
+#proposition(name: "Span of a Union")[
+  $"langle"(alpha_1, ..., alpha_s)"rangle" + "langle"(beta_1, ..., beta_t)"rangle" =
+  "langle"(alpha_1, ..., alpha_s, beta_1, ..., beta_t)"rangle"$.
+] <prop:span-of-union>
+
+#theorem(name: "Dimension Formula")[
+  Let $V$ be a finite-dimensional linear space over $F$ and $V_1, V_2 subset V$ two subspaces
+  of $V$. Then
+
+  $
+  "dim"(V_1) + "dim"(V_2) = "dim"(V_1 + V_2) + "dim"(V_1 inter V_2).
+  $
+] <thm:dimension-formula>
+
+=== Direct Sum // 直和
+
+#definition(name: "Direct Sum of Subspaces")[
+  Let $V_1, V_2 subset V$ be two subspaces of $V$. If every vector $alpha in V_1 + V_2$ can
+  be uniquely expressed as $alpha = alpha_1 + alpha_2$ with $alpha_1 in V_1$ and
+  $alpha_2 in V_2$, then $V_1 + V_2$ is called the *direct sum* of $V_1$ and $V_2$,
+  denoted $V_1 ⊕ V_2$.
+] <def:direct-sum>
+
+#proposition(name: "Conditions for a Direct Sum")[
+  The following conditions are equivalent to $V_1 + V_2$ being a direct sum:
+  - the zero vector can be expressed only as $0 = 0 + 0$;
+  - $V_1 inter V_2 = {0}$;
+  - $"dim"(V_1 + V_2) = "dim"(V_1) + "dim"(V_2)$, or equivalently $"dim"(V_1 inter V_2) = 0$;
+  - the union of any basis of $V_1$ and any basis of $V_2$ forms a basis of $V_1 + V_2$.
+] <prop:direct-sum-conditions>
 
 == Isomorphisms // 同构
 
-// TODO: 同构映射、同构定理、有限维空间的同构分类
+#definition(name: "Isomorphism of Linear Spaces")[
+  Let $V$ and $V'$ be two linear spaces over the field $F$.
+  A bijection $sigma: V -> V'$ is called an *isomorphism* if for all
+  $alpha, beta in V$ and $k in F$:
+  - $sigma(alpha + beta) = sigma(alpha) + sigma(beta)$;
+  - $sigma(k alpha) = k sigma(alpha)$.
+  If such an isomorphism exists, $V$ and $V'$ are called *isomorphic*,
+  denoted $V ≈ V'$.
+] <def:isomorphism>
+
+#theorem(name: "Isomorphism Theorem")[
+  Two finite-dimensional linear spaces over the same field $F$ are isomorphic
+  if and only if they have the same dimension.
+] <thm:isomorphism-theorem>
+
+#corollary(name: "Classification of Finite-Dimensional Spaces")[
+  Every $n$-dimensional linear space over $F$ is isomorphic to $F^n$.
+  Hence, finite-dimensional linear spaces over $F$ are classified up to
+  isomorphism by their dimension.
+] <cor:classification-of-finite-dim-spaces>
+
+#proof[
+  *Necessity.* An isomorphism maps a basis of $V$ to a basis of $V'$,
+  so the dimensions coincide.
+
+  *Sufficiency.* Let $dim(V) = dim(V') = n$, and let
+  $alpha_1, ..., alpha_n$ and $beta_1, ..., beta_n$ be bases of $V$ and $V'$
+  respectively. The map $sigma(sum_(i=1)^n k_i alpha_i) = sum_(i=1)^n k_i beta_i$
+  is a linear bijection, hence an isomorphism.
+]
+
+#proposition(name: "Properties of Isomorphisms")[
+  - An isomorphism maps the zero vector to the zero vector.
+  - An isomorphism maps linearly independent vector groups to linearly independent ones.
+  - The inverse of an isomorphism is again an isomorphism.
+  - Isomorphism is an equivalence relation on the class of linear spaces.
+] <prop:isomorphism-properties>
 
 == Quotient Spaces // 商空间
 
-// TODO: 商空间定义、商空间的维数、线性映射的诱导映射
+#definition(name: "Cosets and Quotient Space")[
+  Let $V$ be a linear space over $F$ and $W subset V$ a subspace.
+  Define an equivalence relation on $V$ by
+  $alpha ∼ beta$ if and only if $alpha - beta in W$.
+  The equivalence class $[alpha] = alpha + W = {alpha + gamma : gamma in W}$
+  is called a *coset* of $W$ in $V$. The set of all cosets, denoted
+  $V / W$, with the operations
+
+  $
+  [alpha] + [beta] = [alpha + beta],   k [alpha] = [k alpha],
+  $
+
+  forms a linear space over $F$, called the *quotient space* of $V$ by $W$.
+] <def:quotient-space>
+
+#theorem(name: "Dimension of Quotient Space")[
+  Let $V$ be a finite-dimensional linear space and $W subset V$ a subspace. Then
+
+  $
+  "dim"(V / W) = "dim"(V) - "dim"(W).
+  $
+] <thm:quotient-dimension>
+
+#proof[
+  Extend a basis $w_1, ..., w_r$ of $W$ to a basis $w_1, ..., w_r, v_1, ..., v_k$
+  of $V$. Then the cosets $[v_1], ..., [v_k]$ form a basis of $V / W$,
+  so $"dim"(V / W) = k = "dim"(V) - r = "dim"(V) - "dim"(W)$.
+]
+
+#definition(name: "Induced Mapping")[
+  Let $sigma: V -> V'$ be a linear mapping with kernel $W = ker(sigma)$.
+  The map $bar(sigma): V / W -> "im"(sigma)$ defined by
+  $bar(sigma)([alpha]) = sigma(alpha)$ is a well-defined linear isomorphism,
+  called the *induced mapping* of $sigma$.
+] <def:induced-mapping>
+
+#theorem(name: "First Isomorphism Theorem")[
+  Let $sigma: V -> V'$ be a linear mapping. Then
+
+  $
+  V / ker(sigma) ≈ "im"(sigma).
+  $
+] <thm:first-isomorphism-theorem>
 
 == Special Linear Spaces // 特殊线性空间
 
-// TODO: 交换空间 C(A)、其他由矩阵方程定义的子空间
+=== Commutative Spaces // 交换空间
+
+#definition(name: "Commutative Space $C(A)$")[
+  Let $A$ be an $n$-order matrix over the number field $P$. The set of all
+  matrices satisfying $A X = X A$ is a subspace of $M_(n times n)(P)$,
+  denoted $C(A)$ and called the *commutative space* of $A$.
+] <def:commutative-space>
+
+#property(name: "Properties of $C(A)$")[
+  For any $n$-order matrices $A, B$ over $P$, if $A$ is similar to $B$
+  ($A ~ B$), then $C(A)$ is isomorphic to $C(B)$ ($C(A) ≈ C(B)$),
+  and furthermore $"dim"(C(A)) = "dim"(C(B))$.
+] <prop:commutative-space-properties>
+
+#example[
+  Find the dimension and a basis of $C(A)$ where:
+
+  (i) $A$ is a $3$-order matrix over the number field $P$ with three distinct
+  eigenvalues.
+
+  (ii) $A = mat( (1, 0, 4), (0, 1, 2), (0, 1, 2) )$.
+]
 
 = Linear Mappings // 线性映射
 
@@ -1045,23 +1374,323 @@ system, the above formula gives all the solutions of $A x = b$.
 
 == Linear Mappings and Their Computation // 线性映射及其运算
 
-// TODO: 线性映射定义、存在唯一性定理（线性延拓）、加法与数乘、复合（线性变换的代数结构）、代数
+#definition(name: "Linear Mapping")[
+  Let $V$ and $V'$ be linear spaces over the field $F$. A mapping
+  $A: V -> V'$ is called a *linear mapping* if for all $alpha, beta in V$ and
+  $k in F$:
+
+  $
+  A(alpha + beta) = A(alpha) + A(beta),   A(k alpha) = k A(alpha).
+  $
+
+  If $V = V'$, then $A$ is called a *linear transformation* of $V$.
+  The linear mapping from $V$ over $F$ to $F$ itself is called a *linear function* on $V$.
+] <def:linear-mapping>
+
+#note[
+  The field $F$ naturally constitutes a one-dimensional linear space over itself,
+  so a linear function is a special case of a linear mapping.
+]
+
+=== Existence and Uniqueness (Linear Extension Theorem) // 存在唯一性定理
+
+#theorem(name: "Existence and Uniqueness of Linear Mappings")[
+  Let $V$ and $V'$ be linear spaces over $F$, and let
+  ${epsilon_1, ..., epsilon_n}$ be a basis of $V$. For any set of vectors
+  ${alpha_1, ..., alpha_n} subset V'$, there exists a unique linear mapping
+
+  $
+  A: V -> V',   alpha = sum_(i=1)^n x_i epsilon_i ↝ A(alpha) = sum_(i=1)^n x_i alpha_i
+  $
+
+  such that $A(epsilon_i) = alpha_i$ for $i = 1, ..., n$.
+] <thm:linear-extension>
+
+=== Operations of Linear Mappings // 线性映射的运算
+
+*Addition.* For $A, B in upright("Hom")(V, V')$, the sum $A + B$ is defined by
+$(A + B)(alpha) = A(alpha) + B(alpha)$ for all $alpha in V$, and satisfies
+commutativity, associativity, existence of additive identity (zero map), and
+existence of additive inverse.
+
+*Scalar multiplication.* For $k in F$ and $A in upright("Hom")(V, V')$, the
+scalar product $k A$ is defined by $(k A)(alpha) = k A(alpha)$, and satisfies
+the unit identity, associativity of scalars, and both distributive properties.
+
+*Composition.* For $A in upright("Hom")(V', W)$ and $B in upright("Hom")(U, V')$,
+the composition $A B$ is defined by $(A B)(alpha) = A(B(alpha))$, and satisfies
+associativity, left/right distributivity, and non-commutativity in general.
+The identity transformation $E$ satisfies $E A = A E = A$ for all
+$A in upright("Hom")(V)$.
+
+The collection $upright("Hom")(V, V')$ of all linear mappings from $V$ to $V'$
+forms a linear space over $F$. The collection $upright("End")(V)$ of all linear
+transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V$.
+
+#definition(name: "Algebra over a Field")[
+  Let $V$ be a linear space over $F$ equipped with an additional binary operation
+  $dot: V × V -> V$. Then $V$ is called an *algebra over $F$* if for all
+  $alpha, beta, gamma in V$ and $k, l in F$:
+  - *Right distributivity*: $(alpha + beta) dot gamma = alpha dot gamma + beta dot gamma$;
+  - *Left distributivity*: $gamma dot (alpha + beta) = gamma dot alpha + gamma dot beta$;
+  - *Compatibility with scalar multiplication*: $(k alpha) dot (l beta) = (k l)(alpha dot beta)$.
+] <def:algebra-over-field>
+
+#note[
+  The left and right distributivity conditions can be combined into a single condition:
+  $V$ forms a unital ring under the addition and scalar multiplication.
+  It is evident that $upright("End")(V)$ is an algebra over $F$.
+]
 
 == Kernel and Image of Linear Mappings // 线性映射的核与像
 
-// TODO: 核与像、秩-零度定理、余核、升链
+#definition(name: "Kernel and Image")[
+  Let $V$ and $V'$ be linear spaces over $F$, and $A: V -> V'$ a linear mapping.
+  The *kernel* of $A$ is
+
+  $
+  "ker"(A) = {alpha : alpha in V, A(alpha) = 0},
+  $
+
+  and the *image* of $A$ is
+
+  $
+  "im"(A) = {beta : beta = A(alpha), alpha in V, beta in V'},
+  $
+
+  also denoted $A^(-1)(0)$ and $A(V)$ respectively.
+  The rank of $"im"(A)$ is called the *rank* of $A$;
+  the dimension of $"ker"(A)$ is called the *nullity* of $A$.
+] <def:kernel-and-image>
+
+#theorem(name: "Rank-Nullity Theorem")[
+  Let $V$ and $V'$ be finite-dimensional linear spaces over $F$, and
+  $A: V -> V'$ a linear mapping. Then
+
+  $
+  "dim"("ker"(A)) + "dim"("im"(A)) = "dim"(V).
+  $
+] <thm:rank-nullity>
+
+#definition(name: "Cokernel")[
+  Let $V$ and $V'$ be linear spaces over $F$, and $A: V -> V'$ a linear mapping.
+  The *cokernel* of $A$ is the quotient space
+
+  $
+  "coker"(A) = V' / "im"(A).
+  $
+] <def:cokernel>
+
+=== Ascending Chain of Subspaces // 子空间升链
+
+#definition(name: "Ascending Chain of Subspaces")[
+  Let $V$ be a finite-dimensional linear space over $F$, and
+  $A in upright("End")(V)$. For $k = 1, 2, 3, ...$, define
+
+  $
+  V_k = "ker"(A^k) = {alpha in V : A^k(alpha) = 0},
+  $
+
+  then the sequence of subspaces
+
+  $
+  V_1 ⊆ V_2 ⊆ ... ⊆ V_k ⊆ ...
+  $
+
+  is called the *ascending chain of subspaces* induced by $A$.
+] <def:ascending-chain>
+
+#property(name: "Properties of the Ascending Chain")[
+  - The dimensions are non-decreasing: $"dim"(V_1) <= "dim"(V_2) <= ...$.
+  - Since $V$ is finite-dimensional, there exists a positive integer $k_0$ such that
+    $"dim"(V_(k_0)) = "dim"(V_(k_0 + 1)) = ...$, and for all $k >= k_0$,
+    $V_k = V_(k_0)$ — the ascending chain stabilizes at $V_(k_0)$.
+  - This $k_0$ is a stability index for the corresponding linear operator
+    (for example, an upper bound on the degree of its annihilating polynomial or
+    a restriction on the size of its Jordan blocks).
+] <prop:ascending-chain-properties>
+
+#note[
+  In some cases, the stability index $k_0$ can be equal to $"dim"(V)$.
+  For instance, when $A$ is nilpotent or all eigenvalues of $A$ are zero.
+]
 
 == Matrix Representation of Linear Mappings // 线性映射的矩阵表示
 
-// TODO: 矩阵表示的定义、基变换与坐标变换、相似矩阵
+Let $V$ and $V'$ be finite-dimensional linear spaces over $F$ with
+$"dim"(V) = n$ and $"dim"(V') = m$, and let $A: V -> V'$ be a linear mapping.
+Let ${epsilon_1, ..., epsilon_n}$ be a basis of $V$ and
+${eta_1, ..., eta_m}$ a basis of $V'$.
+Then the image of each basis vector of $V$ under $A$ can be expressed in terms
+of the basis vectors of $V'$:
+
+$
+A(epsilon_i) = sum_(j=1)^m a_("ji") eta_j,   i = 1, ..., n.
+$
+
+This can be written in matrix form as
+
+$
+A(epsilon_1, ..., epsilon_n) = (A epsilon_1, ..., A epsilon_n) =
+(eta_1, ..., eta_m) A,
+$
+
+where
+
+$
+A = (a_("ij"))_(m times n) =
+mat(
+  (a_("11"), a_("12"), ..., a_("1n")),
+  (a_("21"), a_("22"), ..., a_("2n")),
+  (dots.v, dots.v, dots.down, dots.v),
+  (a_("m1"), a_("m2"), ..., a_("mn")),
+).
+$
+
+The matrix $A$ is called the *matrix representation* of the linear mapping $A$
+under the given bases.
+
+#example[
+  Let $A, B in M_(s times n)(F)$. Prove that homogeneous linear systems
+  $A X = 0$ and $B X = 0$ have the same solution space if and only if there
+  exists an invertible matrix $P in M_(s times s)(F)$ such that $B = P A$.
+]
+
+=== Base Change and Coordinate Change // 基变换与坐标变换
+
+Let $B = {epsilon_1, ..., epsilon_n}$ and $B' = {epsilon'_1, ..., epsilon'_n}$ be two
+bases of $V$, and let $S$ be the *transition matrix* (change-of-basis matrix) from
+$B'$ to $B$, i.e.
+
+$
+(epsilon'_1, ..., epsilon'_n) = (epsilon_1, ..., epsilon_n) S.
+$
+
+If $alpha = sum_(i=1)^n x_i epsilon_i = sum_(i=1)^n x'_i epsilon'_i$, then the coordinate
+vectors satisfy $x = S x'$, where $x = (x_1, ..., x_n)^T$ and $x' = (x'_1, ..., x'_n)^T$.
+This is the *coordinate transformation formula*.
+
+If $A$ has matrix representation $A$ under bases $B, B'$ of $V, V'$, and $B$ is changed
+to $B_1 = B P$ and $B'$ to $B'_1 = B' Q$, then the new matrix representation is
+
+$
+A' = Q^(-1) A P.
+$
+
+In particular, if $V = V'$ and the same basis change $P$ is applied to both, then
+
+$
+A' = P^(-1) A P,
+$
+
+i.e. $A$ and $A'$ are *similar* matrices.
 
 == Special Linear Transformations // 特殊线性变换
 
-// TODO: 常见线性变换、幂等变换与投影变换、对合变换、可逆变换的等价命题
+=== Common Linear Transformations // 常见线性变换
+
+- *Identity transformation* $E$: $E(alpha) = alpha$ for all $alpha in V$.
+- *Zero transformation* $O$: $O(alpha) = 0$ for all $alpha in V$.
+- *Scalar transformation* $K$: $K(alpha) = k alpha$ for fixed $k in F$.
+  When $k = 1$, it is the identity; when $k = 0$, it is the zero transformation.
+- *Rotation transformation*: rotating a plane counterclockwise by an angle $theta$
+  around the origin defines a linear transformation $P_(theta)$ on the 2D space.
+  Similarly, rotating around a fixed axis in 3D space also defines a linear transformation.
+
+=== Idempotent and Projection Transformations // 幂等变换与投影变换
+
+#definition(name: "Idempotent Transformation")[
+  A linear transformation $A$ on $V$ is called an *idempotent transformation* if
+  $A^2 = A$.
+] <def:idempotent-transformation>
+
+Two linear transformations $A$ and $B$ on $V$ are called *orthogonal* if
+$A B = B A = O$.
+
+#definition(name: "Projection Transformation")[
+  Let $V$ be a linear space over $F$, and let $U, W "subseteq" V$ be subspaces with
+  $V = U ⊕ W$. For all $alpha in V$, there exist unique $alpha_1 in U$ and
+  $alpha_2 in W$ such that $alpha = alpha_1 + alpha_2$.
+  The map
+
+  $
+  P_U: V -> V,   alpha ↝ alpha_1
+  $
+
+  is called the *projection* onto $U$ along $W$, which is a linear transformation on $V$.
+] <def:projection-transformation>
+
+$P_U$ satisfies and uniquely satisfies:
+
+$
+P_U(alpha) = cases(
+  alpha, & alpha in U,
+  0, & alpha in W,
+).
+$
+
+#proposition(name: "Projection and Idempotent")[
+  Let $V$ be a linear space over $F$.
+  - Let $U, W "subseteq" V$ with $V = U ⊕ W$. Then the projections $P_U$ and $P_W$
+    are orthogonal idempotent transformations with $P_U + P_W = E$.
+  - Let $A, B in upright("End")(V)$ be orthogonal idempotent transformations with
+    $A + B = E$. Then $V = "im"(A) ⊕ "im"(B)$.
+] <prop:projection-and-idempotent>
+
+#proposition(name: "Idempotent and Involutional Characterization")[
+  Let $V$ be a linear space over $F$, and $A in upright("End")(V)$.
+  - $A$ is idempotent if and only if
+    $upright("rank")(A) + upright("rank")(E - A) = "dim"(V)$.
+  - $A$ is involutional ($A^2 = E$) if and only if
+    $upright("rank")(A) + upright("rank")(E - A) = "dim"(V)$.
+] <prop:idempotent-involutional-characterization>
+
+#proposition(name: "Equivalent Conditions for Invertibility")[
+  Let $V$ be a linear space over $F$, and $A in upright("End")(V)$.
+  The following are equivalent:
+  - $A$ is invertible;
+  - if ${epsilon_1, ..., epsilon_n}$ is a basis of $V$, then
+    $A epsilon_1, ..., A epsilon_n$ is also a basis of $V$;
+  - if $alpha != 0$, then $A alpha != 0$;
+  - if $V = V_1 ⊕ V_2$, then $V = A V_1 ⊕ A V_2$.
+] <prop:invertibility-conditions>
 
 == Linear Functions and Dual Spaces // 线性函数与对偶空间
 
-// TODO: 线性函数、对偶空间、对偶基
+#definition(name: "Linear Function")[
+  A linear mapping from $V$ over $F$ to $F$ itself is called a *linear function*
+  (or *linear functional*) on $V$. The set of all linear functions on $V$ is
+  denoted $V^*$.
+] <def:linear-function>
+
+#definition(name: "Dual Space")[
+  The set $V^* = upright("Hom")(V, F)$ of all linear functions on $V$, with the
+  usual addition and scalar multiplication of mappings, forms a linear space over $F$,
+  called the *dual space* of $V$.
+] <def:dual-space>
+
+#theorem(name: "Dimension of the Dual Space")[
+  Let $V$ be an $n$-dimensional linear space over $F$. Then $V^*$ is also
+  $n$-dimensional.
+] <thm:dual-space-dimension>
+
+#proof[
+  Let ${epsilon_1, ..., epsilon_n}$ be a basis of $V$. Define linear functions
+  $epsilon_i^*$ by $epsilon_i^*(epsilon_j) = delta_("ij")$ (Kronecker delta).
+  Then ${epsilon_1^*, ..., epsilon_n^*}$ is a basis of $V^*$, called the *dual basis*
+  corresponding to ${epsilon_1, ..., epsilon_n}$.
+]
+
+#definition(name: "Dual Basis")[
+  The basis ${epsilon_1^*, ..., epsilon_n^*}$ of $V^*$ satisfying
+  $epsilon_i^*(epsilon_j) = delta_("ij")$ is called the *dual basis* corresponding
+  to the basis ${epsilon_1, ..., epsilon_n}$ of $V$.
+] <def:dual-basis>
+
+#property(name: "Double Dual")[
+  The map $phi: V -> V^(*)$ defined by $phi(alpha)(f) = f(alpha)$ for all
+  $f in V^*$ is an isomorphism. Thus $V ≈ V^(*)$ when $V$ is finite-dimensional.
+] <prop:double-dual>
 
 // ==========================================================================
 // Part III — Structure Theory of Linear Operators (线性算子的结构理论)
