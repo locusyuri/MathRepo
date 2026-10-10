@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B15a 完成：ch15 §1–3 迁移）
+> 最后更新：2026-10-10（B15b 完成：ch15 §4–5 迁移，ch15 全章收口）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -312,7 +312,13 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - 新符号验证（tmp 预测试 + PNG 目检 pg202–208）：`wedge` 在当前 Typst 版本非法，替换为 `and`（同为 ∧ U+2227，同 cap/sect 情形）；overset 替代方案为 `attach(L, t: ⇀)`（U+21C0 字面量；arrow.rightharpoonup / arrow.rharpoon 等修饰符均不存在），积分域下标写 `integral_(attach(L, t: ⇀))`；`integral.double_(attach(...))`、含 frac 的 `lr((...))`、3×2 `mat` 均渲染正常
   - 工程规避：初稿经 tmp 内容文件 + PowerShell ReadAllLines/WriteAllText 拼接写入（UTF-8 无 BOM + LF），规避本会话已发生 2 次的 Edit 拆行损坏 bug；行级核验接缝干净
   - 验证：编译退出码 0，三正则命中 0（B15a 区间）
-- [ ] **B15b = ch15 §4–5**（约 200 行）：Stokes' Formula（含 Green/Gauß）/ Closed and Exact Forms
+- [x] **B15b = ch15 §4–5**（迁移 +160 行）：Stokes' Formula（含 Green/Gauß）/ Closed and Exact Forms ✅（2026-10-10）
+  - 标签：`<lem:green-special-regions>` / `<thm:green-theorem>` / `<note:induced-orientation>` / `<lem:gauss-special-regions>` / `<thm:gauss-theorem>` / `<thm:stokes-theorem>` / `<def:closed-exact-forms>` / `<thm:exact-implies-closed>` / `<thm:path-independence-criteria>` / `<ex:angle-form-integral>` / `<fig:special-region-1>` / `<fig:special-region-2>`；3 处非空壳 leftbarTitle 升级为 `===` 小节；"Newton-Leibniz Formula" leftbarTitle 为空壳未迁移（留注）
+  - P0-3 兑现：`<note:induced-orientation>` 边界诱导定向 note（平面区域行走左侧约定 / 曲面法向量约定 / Gauß 外法向特例）
+  - tex 修正（留注 4 处）：Gauß 定理 "then:" 重复删除且分割条件误引 fig:SpecialRegion1 改为 fig:SpecialRegion2；Stokes 定理 $C^1(\Sigma)$ 统一为 $C^1(M)$；§15.5 "U in R^2" 改为 "U subset.eq R^2"；末尾例题 tex 未提供解答（留注，待用户裁决是否补解）
+  - 新符号验证（tmp 预测试 + PNG 目检 pg207–212）：`integral.cont`（∮）/ `integral.surf`（∯）/ `integral.vol`（∭）可用，`integral.cont.double` 非法；3×3 行列式 `mat(delim: "|")`（含 frac(partial, partial x) 行）渲染正常；**枚举项内 display math 须缩进 4 空格**（2 空格会中断枚举导致编号全部为 1，已修复 5 处）
+  - 图片：直接引用已有 `img/SpecialRegion1.png` / `SpecialRegion2.png`（图片不入库），caption 中 orientated→oriented 已修正
+  - 验证：编译退出码 0，三正则命中 0（B15b 区间），PNG 目检 pg207–212 通过（Appendix 接缝干净）；⚠ 待用户裁决：`<ex:angle-form-integral>` 是否补写解答
 - [ ] **B16 = ch16 Variable Parameters**（279 行 / 5 节）
   - [ ] §16.1 Definite Integrals with Variable Parameters
   - [ ] §16.2 Elliptic Integrals
