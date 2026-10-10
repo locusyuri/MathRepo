@@ -449,7 +449,7 @@ In this case ${x_n}$ is said to converge to $a$, written $lim_(n -> oo) x_n = a$
 
 #definition(name: "Bounded Sequence")[
   A sequence ${x_n}$ that has both an upper bound and a lower bound is called a *bounded sequence*;
-  equivalently, there exists $X in bb(R)^+$ such that $abs(x_n) <= X$ for $n = 1, 2, 3, dots$.
+  equivalently, there exists $M in bb(R)^+$ such that $abs(x_n) <= M$ for $n = 1, 2, 3, dots$.
 ] <def:bounded-sequence>
 
 === Properties of Convergent Sequences // 收敛序列的性质
@@ -547,6 +547,21 @@ In this case ${x_n}$ is said to converge to $a$, written $lim_(n -> oo) x_n = a$
 
 This can be proved directly by #link(<thm:stolz-cesaro>)[the Stolz theorem];
 on top of that, it can also be proved by the *fitting method*.
+
+#proof[
+  First suppose that $l$ is finite. The fitting method fits the limit $l$ into the same average form: write
+  $ l = frac(l + l + dots + l, n) quad (n "terms"), $
+  so that
+  $ abs((x_1 + x_2 + dots + x_n) / n - l) = frac(abs((x_1 - l) + (x_2 - l) + dots + (x_n - l)), n). $
+  Let $epsilon > 0$. Since $lim_(n -> oo) x_n = l$, there exists $N in bb(N)^+$ such that $abs(x_n - l) < epsilon$ for all $n > N$; in particular, the sequence $(x_n - l)$ is bounded, so there exists $M > 0$ such that $abs(x_k - l) <= M$ for all $k in bb(N)^+$. Now divide the sum into two units at the index $N$: for $n > N$,
+  $ abs((x_1 + x_2 + dots + x_n) / n - l) <= frac(abs(x_1 - l) + dots + abs(x_N - l), n) + frac((n - N) epsilon, n) <= frac(N M, n) + epsilon. $
+  Hence $limsup_(n -> oo) abs((x_1 + x_2 + dots + x_n) / n - l) <= epsilon$. Since $epsilon > 0$ is arbitrary, the limit is $0$, i.e.,
+  $ lim_(n -> oo) (x_1 + x_2 + dots + x_n) / n = l. $
+
+  For $l = +oo$: for any $M > 0$ there exists $N in bb(N)^+$ such that $x_n > 2 M$ for all $n > N$. Let $C = abs(x_1) + dots + abs(x_N)$. For $n > N$,
+  $ (x_1 + x_2 + dots + x_n) / n >= frac((n - N) dot 2 M - C, n) = 2 M - frac(2 M N + C, n), $
+  hence $liminf_(n -> oo) (x_1 + x_2 + dots + x_n) / n >= 2 M$; since $M > 0$ is arbitrary, the limit is $+ oo$. The case $l = -oo$ is analogous.
+]
 
 #note[
   To prove $lim_(n -> oo) x_n = A$, the key is to show that $abs(x_n - A)$ can be arbitrarily small.
