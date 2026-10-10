@@ -1,8 +1,8 @@
 # Algèbre Linéaire 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-10
-> 最后更新：2026-10-10（B3a 完成：§1 Basic Operations + §2 前半特殊方阵，编译通过）
-> 状态：✅ B3a 完成，待开始 B3b（§2 后半 + §3 Inverse Matrix + §4 Block Matrix）
+> 最后更新：2026-10-10（B3b 完成：§2 后半特殊方阵 + §3 逆矩阵 + §4 分块矩阵，编译通过）
+> 状态：✅ B3b 完成，待开始 B3c（§5 秩的运算 + §6 低秩修正）
 > **项目约定：每次完成批次后自动 git 提交（中文 Conventional Commits），无需用户手动确认。**
 > 技能依据：`violet-design-note`（目录体检与结构设计）、`violet-latex-to-typst`（迁移）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 > 参考文档：[`1.Analyse/Analyse Mathématique/docs/REFRACTOR.md`](../../1.Analyse/Analyse%20Mathématique/docs/REFRACTOR.md)
@@ -185,9 +185,9 @@ Part IV 二次型与内积空间（几何结构）
   - 备注：§1–§3 无 md 来源，内容取自三本教材标准内容；迁移踩坑记录：Typst 0.15 的 ∏ 写作 `product`（非 `prod`）、多字母标识符需引号（`"sgn"`/`"tau"`/`"sigma"`/`"col"`）、双字母下标需 `_("ij")` 形式
 - [x] **B3 = Ch3 Matrices**（549 行 / 7 节，⚠ 含空节，拆为 3 个子批）
   - [x] B3a §1 Basic Operations + §2 Special Square Matrices（前半：对角/基本/三角/初等矩阵）✅ 2026-10-10
-  - [ ] B3b §2 Special Square Matrices（后半：对称/循环/幂零/满秩）+ §3 Inverse Matrix + §4 Block Matrix
+  - [x] B3b §2 Special Square Matrices（后半：对称/循环/幂零/满秩）+ §3 Inverse Matrix + §4 Block Matrix ✅ 2026-10-10
   - [ ] B3c §5 Operations of Rank + §6 Low-Rank Corrections
-  - 备注：tex §1 的 Addition/Scalar Multiplication/Transpose/Multiplication 为空 leftbarTitle → 按教材补一句定义并升级为 ===；Determinant of a Product 与 Ch2 `<thm:det-product>` 重复，仅保留 k 矩阵推广（`<cor:det-product-multiple>`）并用 #link 回指；踩坑记录：\cong 在 Typst 0.15 无对应符号（矩阵等价改用 `equiv`）、`$LU$` 需引号、Cauchy-Binet 的 minors 记号用 `abs("A"(1, 2, ..., m; v_1, ..., v_m))` 表达
+  - 备注：tex §1 的 Addition/Scalar Multiplication/Transpose/Multiplication 为空 leftbarTitle → 按教材补一句定义并升级为 ===；Determinant of a Product 与 Ch2 `<thm:det-product>` 重复，仅保留 k 矩阵推广（`<cor:det-product-multiple>`）并用 #link 回指；§3 逆矩阵 tex 全空 → 按教材补全（逆矩阵定义与运算性质、可逆性等价命题定理+证明、伴随矩阵与 adj 公式、求逆两法、广义逆定义）；踩坑记录：\cong 在 Typst 0.15 无对应符号（矩阵等价改用 `equiv`）、`$LU$` 需引号、Cauchy-Binet 的 minors 记号用 `abs("A"(1, 2, ..., m; v_1, ..., v_m))` 表达；B3b 踩坑：\otimes/\oplus 在 Typst 0.15 无符号函数（Kronecker 积用 Unicode `⊗`，直和用 `⊕`，均实测可渲染）；Greek 字母是 Typst 内置符号（sigma/tau/lambda 裸用即可，不要加引号——加引号反而渲染成文本字体）
 - [ ] **B4 = Ch4 Linear Systems**（ch03 清洗后约 200 行 / 3 节，⚠ 移除 §2 Linear Space）
   - [ ] §1 Elimination Method
   - [ ] §2 Rank of Vector Groups and Matrices

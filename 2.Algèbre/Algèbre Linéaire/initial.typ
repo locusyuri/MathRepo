@@ -64,27 +64,27 @@ such that $m(A) = 0$.
 == Permutations // 排列
 
 #definition(name: "Permutations of Order $n$")[
-  A *permutation of order* $n$ is a bijection $"sigma": {1, 2, ..., n} -> {1, 2, ..., n}$.
+  A *permutation of order* $n$ is a bijection $sigma: {1, 2, ..., n} -> {1, 2, ..., n}$.
   The set of all permutations of order $n$ is denoted by $S_n$.
 ] <def:permutation>
 
 #definition(name: "Inversion Number")[
-  An *inversion* of a permutation $"sigma"$ is an ordered pair $(i, j)$ satisfying
-  $1 <= i < j <= n$ and $"sigma"(i) > "sigma"(j)$. The number of inversions of $"sigma"$,
-  denoted $"tau"("sigma")$, is called the *inversion number*.
+  An *inversion* of a permutation $sigma$ is an ordered pair $(i, j)$ satisfying
+  $1 <= i < j <= n$ and $sigma(i) > sigma(j)$. The number of inversions of $sigma$,
+  denoted $tau(sigma)$, is called the *inversion number*.
 ] <def:inversion-number>
 
 #definition(name: "Parity and Sign of a Permutation")[
-  The permutation $"sigma"$ is called *even* if $"tau"("sigma")$ is even, and *odd* otherwise.
-  Its *sign* (Leibniz symbol) is $"sgn"("sigma") = (-1)^("tau"("sigma"))$, which is $1$ for
+  The permutation $sigma$ is called *even* if $tau(sigma)$ is even, and *odd* otherwise.
+  Its *sign* (Leibniz symbol) is $"sgn"(sigma) = (-1)^(tau(sigma))$, which is $1$ for
   even permutations and $-1$ for odd ones.
 ] <def:sign-of-permutation>
 
 #property(name: "Properties of Parity")[
-  Let $"sigma"$ and $"tau"$ be permutations of order $n$.
+  Let $sigma$ and $tau$ be permutations of order $n$.
   - *Transposition*: swapping two elements of a permutation changes its parity.
   - *Identity*: the identity permutation is even.
-  - *Composition*: $"sgn"("sigma" "tau") = "sgn"("sigma") "sgn"("tau")$; in particular $"sgn"("sigma") = "sgn"("sigma"^(-1))$.
+  - *Composition*: $"sgn"(sigma tau) = "sgn"(sigma) "sgn"(tau)$; in particular $"sgn"(sigma) = "sgn"(sigma^(-1))$.
   - *Decomposition*: every permutation is a product of transpositions, and its parity agrees with
     the parity of the number of transpositions used.
 ] <prop:parity-properties>
@@ -96,7 +96,7 @@ such that $m(A) = 0$.
   The *determinant* of $A$ is the scalar
 
   $
-  abs(A) = sum_("sigma" in S_n) "sgn"("sigma") product_(i=1)^n a_(i, "sigma"(i)).
+  abs(A) = sum_(sigma in S_n) "sgn"(sigma) product_(i=1)^n a_(i, sigma(i)).
   $
 ] <def:determinant>
 
@@ -153,14 +153,14 @@ such that $m(A) = 0$.
 
 #proof[
   We prove the expansion along row $i$; the column version follows from $abs(A^T) = abs(A)$.
-  Grouping the Leibniz terms by $j = "sigma"(i)$ gives
+  Grouping the Leibniz terms by $j = sigma(i)$ gives
 
   $
-  abs(A) = sum_(j=1)^n a_("ij") sum_("sigma"(i) = j) "sgn"("sigma") product_(k != i) a_(k, "sigma"(k)).
+  abs(A) = sum_(j=1)^n a_("ij") sum_(sigma(i) = j) "sgn"(sigma) product_(k != i) a_(k, sigma(k)).
   $
 
-  For a permutation $"sigma"$ with $"sigma"(i) = j$, removing the pair $(i, j)$ leaves a
-  permutation $"tau"$ of the remaining indices, and $"sgn"("sigma") = (-1)^(i+j) "sgn"("tau")$.
+  For a permutation $sigma$ with $sigma(i) = j$, removing the pair $(i, j)$ leaves a
+  permutation $tau$ of the remaining indices, and $"sgn"(sigma) = (-1)^(i+j) "sgn"(tau)$.
   The inner sum therefore equals $(-1)^(i+j) M_("ij") = A_("ij")$.
 ]
 
@@ -337,10 +337,10 @@ The determinant of a product equals the product of the determinants — see #lin
 
   $
   abs(A B) = sum_(1 <= v_1 < ... < v_m <= n)
-  abs("A"(1, 2, ..., m; v_1, ..., v_m)) abs("B"(v_1, ..., v_m; 1, 2, ..., m)),
+  abs(A(1, 2, ..., m; v_1, ..., v_m)) abs(B(v_1, ..., v_m; 1, 2, ..., m)),
   $
 
-  where the sum runs over all strictly increasing index tuples, and $"A"(1, 2, ..., m; v_1, ..., v_m)$ denotes the minor of $A$ on rows $1, ..., m$ and columns $v_1, ..., v_m$.
+  where the sum runs over all strictly increasing index tuples, and $A(1, 2, ..., m; v_1, ..., v_m)$ denotes the minor of $A$ on rows $1, ..., m$ and columns $v_1, ..., v_m$.
 ] <thm:cauchy-binet-formula>
 
 === Matrix Equivalence // 矩阵等价
@@ -467,15 +467,247 @@ The determinant of a product equals the product of the determinants — see #lin
   $P(i, j(k))$ operations.
 ]
 
-// TODO（后半，B3b 批次）: 对称矩阵、循环矩阵、幂零矩阵、满秩矩阵
+=== Symmetric Matrix // 对称矩阵
+
+#definition(name: "Symmetric and Skew-Symmetric Matrices")[
+  An $n times n$ matrix $A = (a_("ij"))$ is called a *symmetric matrix* if
+  $a_("ij") = a_("ji")$ for all $i, j = 1, ..., n$, or equivalently $A = A^T$.
+  Similarly, if $A = -A^T$, then $A$ is called a *skew-symmetric matrix*.
+] <def:symmetric-matrix>
+
+#property(name: "Properties of Symmetric Matrices")[
+  - The linear combination of two symmetric (skew-symmetric) matrices of the same order is
+    still a symmetric (skew-symmetric) matrix.
+  - Every square matrix $A$ can be expressed as the sum of a symmetric matrix and a
+    skew-symmetric matrix: $A = (A + A^T)/2 + (A - A^T)/2$.
+  - The determinant of an odd-order skew-symmetric matrix is zero; the rank of a
+    skew-symmetric matrix is even.
+] <prop:symmetric-matrix>
+
+=== Circulant Matrix // 循环矩阵
+
+Let
+
+$
+C = mat(
+  (0, 1, 0, 0, ..., 0),
+  (0, 0, 1, 0, ..., 0),
+  (dots.v, dots.v, dots.v, dots.v, dots.down, dots.v),
+  (0, 0, 0, 0, ..., 1),
+  (1, 0, 0, 0, ..., 0),
+)
+$,
+
+which is called a *cyclic shift matrix*.
+
+The matrix $C$ performs specific cyclic operations when multiplied by another matrix:
+
+- *Left multiplication*: $C A$ cyclically shifts the rows of $A$ upwards by one position;
+  the first row of $A$ moves to the last row.
+- *Right multiplication*: $A C$ cyclically shifts the columns of $A$ to the right by one
+  position; the last column of $A$ moves to the first column.
+
+#definition(name: "Circulant Matrix")[
+  A matrix $A$ is called a *circulant matrix* if it can be expressed as
+
+  $
+  A = mat(
+    (a_0, a_1, a_2, ..., a_(n-1)),
+    (a_(n-1), a_0, a_1, ..., a_(n-2)),
+    (a_(n-2), a_(n-1), a_0, ..., a_(n-3)),
+    (dots.v, dots.v, dots.v, dots.down, dots.v),
+    (a_1, a_2, a_3, ..., a_0),
+  ),
+  $
+
+  where each row is obtained by cyclically shifting the elements of the first row one position
+  to the right. It can also be expressed as
+
+  $
+  A = a_0 E + a_1 C + ... + a_(n-1) C^(n-1) = sum_(i=0)^(n-1) a_i C^i,
+  $
+
+  where $E$ is the identity matrix and $C$ is the cyclic shift matrix.
+] <def:circulant-matrix>
+
+=== Nilpotent Matrix // 幂零矩阵
+
+#definition(name: "Nilpotent Matrix")[
+  A square matrix $A$ is called a *nilpotent matrix* if there exists $l in bb(N)^(+)$ such
+  that $A^l = O$, where $O$ is the zero matrix. The smallest such $l$ is called the *nilpotent
+  index* of $A$.
+] <def:nilpotent-matrix>
+
+#proposition(name: "Nilpotency of Triangular Matrices")[
+  - A triangular matrix is nilpotent if and only if all its diagonal entries are zero.
+  - If an $n$-order triangular matrix is nilpotent, then its nilpotent index $l$ must satisfy
+    $l <= n$.
+] <prop:nilpotent-triangular-matrix>
+
+Some special nilpotent matrices:
+
+$
+A_n = mat(
+  (0, 1, 0, ..., 0),
+  (0, 0, 1, ..., 0),
+  (dots.v, dots.v, dots.v, dots.down, dots.v),
+  (0, 0, 0, ..., 1),
+  (0, 0, 0, ..., 0),
+)
+$
+
+is a nilpotent matrix with nilpotent index $n$.
+
+=== Full Row Rank Matrix // 满秩矩阵
+
+#definition(name: "Full Row Rank and Full Column Rank Matrices")[
+  A matrix $A$ is called a *full row rank matrix* if its row vectors are linearly independent.
+  Similarly, if its column vectors are linearly independent, then $A$ is called a *full column
+  rank matrix*.
+] <def:full-row-rank-matrix>
+
+#property(name: "Properties of Full Row Rank Matrices")[
+  - An $A_{m times n}$ is a full row rank matrix if and only if there exists an invertible
+    matrix $Q_{n times n}$ such that $A = mat((E_m, O)) Q$.
+  - An $A_{m times n}$ is a full column rank matrix if and only if there exists an invertible
+    matrix $P_{m times m}$ such that $A = P mat((E_n), (O))$.
+] <prop:full-row-rank-matrix>
 
 == Inverse Matrix // 逆矩阵
 
-// TODO: 逆矩阵的定义与运算、等价命题与求逆方法、广义逆
+=== Inverse Matrix and Its Operations // 逆矩阵及其运算
+
+#definition(name: "Inverse Matrix")[
+  Let $A$ be an $n times n$ matrix over $P$. If there exists an $n times n$ matrix $B$ such
+  that $A B = B A = E$, then $A$ is called *invertible* (or *non-singular*), and $B$ is called
+  the *inverse matrix* of $A$, denoted $A^(-1)$. A matrix that is not invertible is called
+  *singular*.
+] <def:inverse-matrix>
+
+#property(name: "Operations of Inverse Matrices")[
+  - $(A^(-1))^(-1) = A$.
+  - $(lambda A)^(-1) = (1/lambda) A^(-1)$ for a non-zero scalar $lambda$ in $P$.
+  - $(A^T)^(-1) = (A^(-1))^T$.
+  - $(A B)^(-1) = B^(-1) A^(-1)$, and more generally $(A_1 ... A_k)^(-1) = A_k^(-1) ... A_1^(-1)$.
+] <prop:operations-of-inverse>
+
+=== Equivalent Propositions and Method of Inversion // 等价命题与求逆方法
+
+#theorem(name: "Equivalent Propositions of Invertibility")[
+  For an $n times n$ matrix $A$ over $P$, the following statements are equivalent:
+  - $A$ is invertible;
+  - $A$ is equivalent to the identity matrix $E$;
+  - $A$ is a product of elementary matrices;
+  - the homogeneous system $A x = 0$ has only the zero solution;
+  - the row vectors (and the column vectors) of $A$ are linearly independent.
+] <thm:invertibility-equivalent-propositions>
+
+#proof[
+  If $A$ is invertible, then $abs(A) != 0$ by #link(<cor:determinant-invertibility>)[Corollary],
+  so row reduction of $A$ ends at $E$ rather than at a singular matrix; hence $A$ is equivalent
+  to $E$, and $A = E_1 ... E_k$ is the product of the corresponding elementary matrices.
+  Conversely, every elementary matrix is invertible, so a product of elementary matrices is
+  invertible, and if $A equiv E$ then $A = P E Q$ with $P$ and $Q$ products of elementary
+  matrices, hence $A$ is invertible.
+  Finally, $A x = 0$ has only the zero solution iff the columns of $A$ are linearly independent
+  iff $abs(A) != 0$, which is equivalent to invertibility by
+  #link(<cor:determinant-invertibility>)[Corollary].
+]
+
+#definition(name: "Adjugate Matrix")[
+  Let $A$ be an $n times n$ matrix with cofactors $A_("ij")$. The *adjugate* of $A$ is the
+  matrix $"adj"(A) = (A_("ji"))$, the transpose of the cofactor matrix.
+] <def:adjugate-matrix>
+
+#theorem(name: "Inverse via Adjugate")[
+  For an invertible $n times n$ matrix $A$,
+
+  $
+  A "adj"(A) = "adj"(A) A = abs(A) E,
+  $
+
+  and therefore
+
+  $
+  A^(-1) = "adj"(A) / abs(A).
+  $
+] <thm:inverse-via-adjugate>
+
+#proof[
+  The $(i, j)$-entry of $A "adj"(A)$ is $sum_(k=1)^n a_("ik") A_("jk")$: it equals $abs(A)$
+  when $i = j$ by the Laplace expansion, and $0$ when $i != j$, since it is the expansion of a
+  determinant whose $j$-th row has been replaced by the $i$-th row, hence has two equal rows.
+]
+
+#property(name: "Methods of Finding the Inverse")[
+  - *Adjugate method*: $A^(-1) = "adj"(A) / abs(A)$, given by #link(<thm:inverse-via-adjugate>)[Theorem].
+  - *Elementary row operation method*: apply the same elementary row operations to the augmented
+    matrix $mat((A, E))$ until the left half becomes $E$; the right half is then $A^(-1)$. If
+    $A$ cannot be reduced to $E$, then $A$ is singular.
+]
+
+=== Generalized Inverse // 广义逆
+
+#definition(name: "Generalized Inverse")[
+  Let $A$ be an $m times n$ matrix. An $n times m$ matrix $X$ satisfying $A X A = A$ is called
+  a *generalized inverse* of $A$.
+] <def:generalized-inverse>
+
+#note[
+  The generalized inverse reduces to the usual inverse when $A$ is invertible. Among all
+  generalized inverses, the Moore-Penrose inverse is the uniquely defined one satisfying
+  additional symmetry conditions.
+]
 
 == Block Matrix // 分块矩阵
 
-// TODO: 分块运算、Kronecker 积、行列式降阶公式
+=== Kronecker Product // Kronecker 积
+
+#definition(name: "Kronecker Product")[
+  Let $A = (a_("ij"))$ be an $m times n$ matrix and $B = (b_("ij"))$ a $p times q$ matrix.
+  The *Kronecker product* of $A$ and $B$, denoted $A ⊗ B$, is the block matrix
+
+  $
+  A ⊗ B = mat(
+    (a_(11) B, a_(12) B, ..., a_(1n) B),
+    (a_(21) B, a_(22) B, ..., a_(2n) B),
+    (dots.v, dots.v, dots.down, dots.v),
+    (a_("m1") B, a_("m2") B, ..., a_("mn") B),
+  )
+  $
+
+  of size $m p times n q$.
+] <def:kronecker-product>
+
+=== Determinant Reduction Formula // 行列式降阶公式
+
+#theorem(name: "Determinant Reduction Formula")[
+  Let $A$ be $m times m$, $B$ be $m times n$, $C$ be $n times m$, and $D$ be $n times n$.
+  Then:
+  - If $A$ is invertible, then
+
+    $
+    abs(mat((A, B), (C, D))) = abs(A) abs(D - C A^(-1) B).
+    $
+
+  - If $D$ is invertible, then
+
+    $
+    abs(mat((A, B), (C, D))) = abs(D) abs(A - B D^(-1) C).
+    $
+
+  - If both $A$ and $D$ are invertible, then
+
+    $
+    abs(D) abs(A - B D^(-1) C) = abs(A) abs(D - C A^(-1) B).
+    $
+] <thm:determinant-reduction-formula>
+
+#note[
+  The mnemonic is: for $abs(mat((A, B), (C, D)))$, if $A$ is invertible, one factor is
+  $abs(A)$ and the other factor is $D$ minus the product of the other three terms arranged
+  *clockwise*, where the middle one is the inverse matrix.
+]
 
 == Operations of Rank // 秩的运算
 
