@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B15b 完成：ch15 §4–5 迁移，ch15 全章收口）
+> 最后更新：2026-10-10（B16 完成：ch16 变参积分迁移，正文批次全部收口）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -319,13 +319,20 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - 新符号验证（tmp 预测试 + PNG 目检 pg207–212）：`integral.cont`（∮）/ `integral.surf`（∯）/ `integral.vol`（∭）可用，`integral.cont.double` 非法；3×3 行列式 `mat(delim: "|")`（含 frac(partial, partial x) 行）渲染正常；**枚举项内 display math 须缩进 4 空格**（2 空格会中断枚举导致编号全部为 1，已修复 5 处）
   - 图片：直接引用已有 `img/SpecialRegion1.png` / `SpecialRegion2.png`（图片不入库），caption 中 orientated→oriented 已修正
   - 验证：编译退出码 0，三正则命中 0（B15b 区间），PNG 目检 pg207–212 通过（Appendix 接缝干净）；⚠ 待用户裁决：`<ex:angle-form-integral>` 是否补写解答
-- [ ] **B16 = ch16 Variable Parameters**（279 行 / 5 节）
-  - [ ] §16.1 Definite Integrals with Variable Parameters
-  - [ ] §16.2 Elliptic Integrals
-  - [ ] §16.3 Improper Integrals with Variable Parameters
-  - [ ] §16.4 Analysis Properties of Uniform Convergence
-  - [ ] §16.5 Euler Integrals
-- [ ] ✅ Part V 里程碑：编译 + 提交
+- [x] **B16 = ch16 Variable Parameters**（迁移 +206 行 / 5 节）✅（2026-10-10）
+  - [x] §16.1 Definite Integrals with Variable Parameters
+  - [x] §16.2 Elliptic Integrals（**空壳未迁移**：tex 仅标题无内容，md 亦无素材，留注处理；后续小节编号相应前移）
+  - [x] §16.3 Improper Integrals with Variable Parameters
+  - [x] §16.4 Analysis Properties of Uniform Convergence
+  - [x] §16.5 Euler Integrals
+  - 标签：`<def:definite-integral-variable-parameter>` / `<def:improper-integral-variable-parameter>` / `<def:uniform-convergence-parameter>` / `<thm:cauchy-criterion-parameter>` / `<thm:continuity-parameter>` / `<thm:infinite-infinite-interchange>` / `<thm:differentiation-parameter>` / `<ex:fa-cos-bt>` / `<ex:imbedding-ln1px>` / `<ex:dirichlet-integral-parameter>` / `<prop:beta-function-properties>` / `<prop:gamma-function-properties>` / `<thm:beta-gamma-relation>` / `<thm:bohr-mollerup>` / `<thm:legendre-duplication>` / `<thm:gamma-reflection>` / `<thm:stirling-formula-gamma>` / `<ex:zeta-integral-form>`；5 处非空壳 leftbarTitle 升级为 `===` 小节
+  - tex 空壳处理：§16.2 Elliptic Integrals 全节空壳未迁移（留注）；§16.4 开头空 lemma 环境删除（留注）；`<ex:dirichlet-integral-parameter>` 的 solution 为空，且反常积分章 `<ex:dirichlet-integral>` 已有完整证明（Riemann-Lebesgue 方法），是否按嵌入法补写解答**待用户裁决**
+  - tex 修正（留注 2 处）：interchange 定理 Item 2 条件 "f(x) ≥ 0 on D" 修正为二元函数 f(x, y)；differentiation 定理区域 "[a, +∞]" 闭括号笔误修正为 "[a, +∞)"
+  - 新符号验证（PNG 目检 pg212–218）：`varepsilon` 非法，统一替换为 `epsilon`（全库惯例）；嵌套有序枚举（外层 `+` 2 空格 / 内层 4 空格）+ 枚举项内 display math 4 空格缩进渲染正常；`{(p, q) | p > 0, q > 0}` 集合构建记法正常
+  - 标签避让：级数章已有 `<thm:stirling-formula>` 与 `<ex:dirichlet-integral>`，分别以 `-gamma` 后缀与 `-parameter` 后缀避让
+  - 工程规避：tmp 内容文件 + PowerShell ReadAllLines/WriteAllText 拼接写入（UTF-8 无 BOM + LF），行级核验接缝干净
+  - 验证：编译退出码 0，三正则命中 0（B16 区间），PNG 目检 pg212–218 通过（含 Appendix Part VI 接缝页）
+- [x] ✅ Part V 里程碑：编译 + 提交（✅ 2026-10-10，随 B16 docs 提交收口，ch14–ch16 全部迁入，正文 16 章迁移全部完成）
 
 ### 收尾
 
