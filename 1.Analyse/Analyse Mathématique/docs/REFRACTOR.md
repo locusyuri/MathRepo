@@ -1,7 +1,7 @@
 # Analyse Mathématique 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-09
-> 最后更新：2026-10-10（B16 完成：ch16 变参积分迁移，正文批次全部收口）
+> 最后更新：2026-10-10（B17 收尾完成：Glossary 重建 + P2-4 死文件清理，迁移计划全部完成）
 > 状态：✅ 计划已确认（3 项决策已定，见 §3.4）
 > 技能依据：`violet-latex-to-typst`（迁移）、`violet-design-note`（目录体检）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 
@@ -79,9 +79,9 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 | P1-5 | 🟠 | ch08 §4、§7 | 绝对/条件收敛仅有定义（约 8 行），md 有正负导出级数、Riemann 重排定理、级数乘法；Special Series 缺超几何级数 | B8 批迁移时从 md 回收（§3.5 R6） |
 | P1-6 | 🟠 | ch07 | 缺 Cauchy 主值（md 有定义与讨论），"其它问题"（md 反常积分末节）tex 未吸收 | B7 批迁移时从 md 回收（§3.5 R4） |
 | P2-1 | 🟡 | 全书 | Part IV 过重（6 章）：ch11–13 为多元微积分本体，ch14–16 为几何应用+高级积分 | ✅ 已决策：拆出第五 Part，**B0 骨架时直接按 5 Part 创建**（省去后期重构） |
-| P2-2 | 🟡 | 附录 | Glossary 仅 A–Q 且仅 1 条术语 | 收尾阶段用 `violet-glossary-indexer` 重建 |
+| P2-2 | 🟡 | 附录 | Glossary 仅 A–Q 且仅 1 条术语 | ✅ 已完成（B17）：421 标签 23 字母组重建 |
 | P2-3 | 🟡 | 全书 | `secnumdepth=2` 但全书无 `\subsection`，大章内部粒度偏粗 | 迁移时不引入 `===`，维持现状 |
-| P2-4 | 🟡 | 章文件 | `chapters/chap17.tex`、`chap18.tex` 为空且未被引用 | 迁移收尾时删除（.tex 存档原则的例外，属死文件） |
+| P2-4 | 🟡 | 章文件 | `chapters/chap17.tex`、`chap18.tex` 为空且未被引用 | ✅ 已删除（B17） |
 
 ### 3.3 职责边界表（迁移时校验，不得越界）
 
@@ -336,9 +336,11 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
 
 ### 收尾
 
-- [ ] **B17 附录**：Glossary 重建（`violet-glossary-indexer`）、参考文献终检、P2 决策项执行
-- [ ] 删除死文件 `chap17.tex`/`chap18.tex`（P2-4）
-- [ ] 全书终检：迁移检查清单（§6）逐项过 + 全量编译 + 提交
+- [x] **B17 附录**：Glossary 重建（`violet-glossary-indexer`）✅（2026-10-10）、参考文献终检 ✅（9 条正常渲染，full: true）、P2 决策项执行 ✅（P2-2 / P2-4 完成）
+  - Glossary：PowerShell 扫描 421 个唯一标签 → 23 个字母组（A–Z 跳空），`== 字母` + `- *#link(<label>)[Display Name]*` 格式；Display Name 由 kebab-case 机械转换（Title Case，介词小写）；PNG 目检 pg219–230 通过
+  - 附带修复：发现 `<ex:poisson-integral>` 重复定义（ch07 平面 Poisson 积分 / ch12 高斯型），ch12 侧重命名为 `<ex:poisson-integral-gaussian>`（该标签无既有 #link 引用）
+  - 全书终检（§6 清单全文件执行）：编译退出码 0；LaTeX 宏残留正则命中 0；下标括号正则命中 0；`#link(<..>)` 嵌套括号正则命中 0；image() 路径全部存在（0 缺失）
+- [x] 删除死文件 `chap17.tex`/`chap18.tex`（P2-4）✅（2026-10-10，两文件均 0 字节且 initial.tex 无引用）
 
 ---
 
