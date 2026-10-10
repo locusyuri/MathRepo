@@ -24,8 +24,6 @@
 
 #make-outline(depth: 2, title: "Contents")
 
-#bibliography("references.bib")
-
 // 目录
 
 // ==========================================================================
@@ -37,10 +35,11 @@
 
 #part("Determinants, Matrices and Linear Systems") // 行列式、矩阵与线性方程组
 
-= Determinants // 行列式
+= Preliminaries // 预备知识
 
-行列式是方阵的一个标量值，既是矩阵可逆性的判据，也是 Cramer 法则和特征值理论的基础。
-本章从排列的逆序数出发定义行列式，逐步建立其性质、展开法则与特殊行列式的计算。
+This chapter collects the notational conventions used throughout the notebook.
+Set-theoretic and mapping basics are quoted from the Théorie des Ensembles note
+rather than redefined here.
 
 == Notations // 符号说明
 
@@ -56,6 +55,11 @@ if there exists an invertible matrix $P$ such that $B = P^(-1) A P$.
 The characteristic polynomial of $A$ is $f(lambda) = |lambda E - A|$,
 and the minimal polynomial is the monic polynomial $m(lambda)$ of least degree
 such that $m(A) = 0$.
+
+= Determinants // 行列式
+
+行列式是方阵的一个标量值，既是矩阵可逆性的判据，也是 Cramer 法则和特征值理论的基础。
+本章从排列的逆序数出发定义行列式，逐步建立其性质、展开法则与特殊行列式的计算。
 
 == Permutations // 排列
 
@@ -315,3 +319,7 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 = Glossary // 术语表
 
 // TODO: 迁移完成后用 violet-glossary-indexer 自动生成
+
+#pagebreak()
+
+#bibliography("references.bib")
