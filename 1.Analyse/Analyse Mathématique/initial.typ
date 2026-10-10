@@ -9905,7 +9905,27 @@ where the right-hand side is independent of the choice of the path $attach(L, t:
   $ I = integral.cont_(attach(C, t: ⇀)) frac(cos(bold(r), bold(n)), r) dif s, $
   where $attach(C, t: ⇀)$ is a piecewise smooth simple closed curve, $bold(r) = (x, y)$, $r = norm(bold(r)) = sqrt(x^2 + y^2)$, and $bold(n)$ is the unit outward normal vector of $attach(C, t: ⇀)$.
 ] <ex:angle-form-integral>
-// 注：tex 原文该例题仅给出问题陈述，未提供解答。
+// 注：tex 原文未提供解答，此处解答为迁移时补写（经用户确认）。
+
+#solution[
+  Assume that $attach(C, t: ⇀)$ is positively oriented. Since $bold(n) dif s = (dif y, -dif x)$, we have
+  $ I = integral.cont_(attach(C, t: ⇀)) frac(x dif y - y dif x, x^2 + y^2), $
+  whose integrand is the *angle form* $omega = dif theta$, where $theta$ denotes the polar angle. Let $P = frac(-y, x^2 + y^2)$ and $Q = frac(x, x^2 + y^2)$; then
+  $ frac(partial Q, partial x) - frac(partial P, partial y) = frac(y^2 - x^2, (x^2 + y^2)^2) - frac(y^2 - x^2, (x^2 + y^2)^2) = 0, $
+  wherever $(x, y) != (0, 0)$.
+
+  + *The origin lies outside $attach(C, t: ⇀)$.* Let $D$ be the interior of $attach(C, t: ⇀)$. Since $P, Q in C^1$ on a neighborhood of the closed region $overline(D)$, #link(<thm:green-theorem>)[Green's theorem] yields
+    $ I = integral.double_D 0 dif x dif y = 0. $
+  + *The origin lies inside $attach(C, t: ⇀)$.* Let $C_epsilon$ be the circle $x^2 + y^2 = epsilon^2$ oriented clockwise, with $epsilon > 0$ small enough that the disk it bounds lies inside $attach(C, t: ⇀)$. Applying Green's theorem to the annular region between $attach(C, t: ⇀)$ and $C_epsilon$, on whose closure $P, Q in C^1$, gives
+    $ 0 = I + integral.cont_(attach(C_epsilon, t: ⇀)) omega, $
+    and the parametrization $x = epsilon cos t, y = epsilon sin t$ $(t: 2 pi -> 0)$ gives
+    $ integral.cont_(attach(C_epsilon, t: ⇀)) omega = integral_(2 pi)^0 dif t = -2 pi, $
+    hence $I = 2 pi$.
+
+  In summary,
+  $ I = cases(2 pi comma & "if the origin lies inside" attach(C, t: ⇀), 0 comma & "otherwise") $
+  (with the sign reversed if $attach(C, t: ⇀)$ is negatively oriented), i.e., $I slash 2 pi$ is the number of turns that $attach(C, t: ⇀)$ makes around the origin.
+]
 
 // B16: ch16 Integrals with Variable Parameters（变参积分）
 
@@ -10026,7 +10046,27 @@ and let $I = I(y_0)$ for some specific $y_0$. If we can calculate $I(y)$ and the
   Compute Dirichlet's integral
   $ I = integral_0^(+oo) frac(sin x, x) dif x. $
 ] <ex:dirichlet-integral-parameter>
-// 注：tex 原文该例题的 solution 环境为空；反常积分章已有 #link(<ex:dirichlet-integral>)[the Dirichlet integral] 及其完整证明（Riemann-Lebesgue 引理方法），此处是否需按嵌入法补写解答待用户裁决。
+// 注：tex 原文该例题的 solution 环境为空；此处解答按嵌入法补写（经用户确认），与反常积分章 #link(<ex:dirichlet-integral>)[the Dirichlet integral] 的 Riemann-Lebesgue 证明互为参照。
+
+#solution[
+  Introduce the parameter $y$ and define, for $y >= 0$,
+  $ F(y) = integral_0^(+oo) e^(-y x) frac(sin x, x) dif x, $
+  so that the desired value is $I = F(0)$.
+
+  + *Differentiation under the integral ($y > 0$).* Let $f(x, y) = e^(-y x) sin x / x$ on $D = [0, +oo) times [c, d]$ with $0 < c < d$. Then $f$ and $frac(partial f, partial y)(x, y) = -e^(-y x) sin x$ are continuous on $D$ (with $f(0, y) = 1$), $integral_0^(+oo) f(x, y_0) dif x$ converges for any $y_0 > 0$ since $abs(f(x, y_0)) <= e^(-y_0 x)$, and $integral_0^(+oo) frac(partial f, partial y)(x, y) dif x$ converges uniformly on $[c, d]$ since $abs(frac(partial f, partial y)(x, y)) <= e^(-c x)$. By #link(<thm:differentiation-parameter>)[differentiation under the integral sign],
+    $ F'(y) = -integral_0^(+oo) e^(-y x) sin x dif x = -frac(1, 1 + y^2), $
+    where the last equality follows from the antiderivative
+    $ integral e^(-y x) sin x dif x = -frac(e^(-y x) (y sin x + cos x), 1 + y^2) + C. $
+  + *Determine $F$ on $(0, +oo)$.* Since $F'(y) = -1/(1+y^2)$ for all $y > 0$,
+    $ F(y) = C - arctan y quad (y > 0). $
+    Moreover, $abs(F(y)) <= integral_0^(+oo) e^(-y x) dif x = 1 / y -> 0$ as $y -> +oo$, so $C = pi / 2$ and
+    $ F(y) = pi / 2 - arctan y quad (y > 0). $
+  + *Continuity at $y = 0$.* We verify the Cauchy condition uniformly on $[0, 1]$. For $0 <= y <= 1$ and $0 < A_1 < A_2$, integrate by parts with $u(x) = e^(-y x) / x$, which is decreasing with $0 < u(x) <= 1 / x$ and $abs(u'(x)) <= 2 / x^2$ uniformly in $y$:
+    $ abs(integral_(A_1)^(A_2) e^(-y x) frac(sin x, x) dif x) = abs(integral_(A_1)^(A_2) u(x) sin x dif x) <= u(A_1) + u(A_2) + integral_(A_1)^(A_2) abs(u'(x)) dif x <= frac(4, A_1), $
+    which tends to $0$ independently of $y$. Hence $integral_0^(+oo) f(x, y) dif x$ converges uniformly on $[0, 1]$ by #link(<thm:cauchy-criterion-parameter>)[the Cauchy criterion], and $F$ is continuous on $[0, 1]$ by #link(<thm:continuity-parameter>)[the continuity theorem].
+  + *Conclusion.* Letting $y -> 0^+$,
+    $ I = F(0) = lim_(y -> 0^+) (pi / 2 - arctan y) = pi / 2. $
+]
 
 == Euler Integrals // Euler 积分
 
