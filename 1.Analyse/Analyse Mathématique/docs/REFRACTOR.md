@@ -318,7 +318,7 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - tex 修正（留注 4 处）：Gauß 定理 "then:" 重复删除且分割条件误引 fig:SpecialRegion1 改为 fig:SpecialRegion2；Stokes 定理 $C^1(\Sigma)$ 统一为 $C^1(M)$；§15.5 "U in R^2" 改为 "U subset.eq R^2"；末尾例题 tex 未提供解答（留注，待用户裁决是否补解）
   - 新符号验证（tmp 预测试 + PNG 目检 pg207–212）：`integral.cont`（∮）/ `integral.surf`（∯）/ `integral.vol`（∭）可用，`integral.cont.double` 非法；3×3 行列式 `mat(delim: "|")`（含 frac(partial, partial x) 行）渲染正常；**枚举项内 display math 须缩进 4 空格**（2 空格会中断枚举导致编号全部为 1，已修复 5 处）
   - 图片：直接引用已有 `img/SpecialRegion1.png` / `SpecialRegion2.png`（图片不入库），caption 中 orientated→oriented 已修正
-  - 验证：编译退出码 0，三正则命中 0（B15b 区间），PNG 目检 pg207–212 通过（Appendix 接缝干净）；⚠ 待用户裁决：`<ex:angle-form-integral>` 是否补写解答
+  - 验证：编译退出码 0，三正则命中 0（B15b 区间），PNG 目检 pg207–212 通过（Appendix 接缝干净）；✅ `<ex:angle-form-integral>` 解答已于 B17x 补写（经用户确认，Green 定理环量形式 + 内圆顺时针参数化，I = 2π/0 分情形）
 - [x] **B16 = ch16 Variable Parameters**（迁移 +206 行 / 5 节）✅（2026-10-10）
   - [x] §16.1 Definite Integrals with Variable Parameters
   - [x] §16.2 Elliptic Integrals（**空壳未迁移**：tex 仅标题无内容，md 亦无素材，留注处理；后续小节编号相应前移）
@@ -326,7 +326,7 @@ ch13 478/4   ch14 549/6   ch15 508/5    ch16 279/5
   - [x] §16.4 Analysis Properties of Uniform Convergence
   - [x] §16.5 Euler Integrals
   - 标签：`<def:definite-integral-variable-parameter>` / `<def:improper-integral-variable-parameter>` / `<def:uniform-convergence-parameter>` / `<thm:cauchy-criterion-parameter>` / `<thm:continuity-parameter>` / `<thm:infinite-infinite-interchange>` / `<thm:differentiation-parameter>` / `<ex:fa-cos-bt>` / `<ex:imbedding-ln1px>` / `<ex:dirichlet-integral-parameter>` / `<prop:beta-function-properties>` / `<prop:gamma-function-properties>` / `<thm:beta-gamma-relation>` / `<thm:bohr-mollerup>` / `<thm:legendre-duplication>` / `<thm:gamma-reflection>` / `<thm:stirling-formula-gamma>` / `<ex:zeta-integral-form>`；5 处非空壳 leftbarTitle 升级为 `===` 小节
-  - tex 空壳处理：§16.2 Elliptic Integrals 全节空壳未迁移（留注）；§16.4 开头空 lemma 环境删除（留注）；`<ex:dirichlet-integral-parameter>` 的 solution 为空，且反常积分章 `<ex:dirichlet-integral>` 已有完整证明（Riemann-Lebesgue 方法），是否按嵌入法补写解答**待用户裁决**
+  - tex 空壳处理：§16.2 Elliptic Integrals 全节空壳未迁移（留注）；§16.4 开头空 lemma 环境删除（留注）；✅ `<ex:dirichlet-integral-parameter>` 解答已于 B17x 按嵌入法补写（经用户确认：F(y)=∫e^(-yx)·sin x/x 求导得 F'(y)=-1/(1+y²)，F(y)=π/2-arctan y，再用一致 Cauchy 估计 4/A₁ 证 y=0 处连续取极限；与 `<ex:dirichlet-integral>` 的 Riemann-Lebesgue 证明互为参照）
   - tex 修正（留注 2 处）：interchange 定理 Item 2 条件 "f(x) ≥ 0 on D" 修正为二元函数 f(x, y)；differentiation 定理区域 "[a, +∞]" 闭括号笔误修正为 "[a, +∞)"
   - 新符号验证（PNG 目检 pg212–218）：`varepsilon` 非法，统一替换为 `epsilon`（全库惯例）；嵌套有序枚举（外层 `+` 2 空格 / 内层 4 空格）+ 枚举项内 display math 4 空格缩进渲染正常；`{(p, q) | p > 0, q > 0}` 集合构建记法正常
   - 标签避让：级数章已有 `<thm:stirling-formula>` 与 `<ex:dirichlet-integral>`，分别以 `-gamma` 后缀与 `-parameter` 后缀避让
