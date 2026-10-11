@@ -9125,10 +9125,10 @@ Some tips for choosing between the two methods (take the two examples above as r
 // 注：tex 该例题无标题、未给出解答，不编造。
 
 #figure(
-  image("img/viviani.png", width: 40%),
+  image("img/viviani.svg", width: 40%),
   caption: [Viviani's curve.],
 ) <fig:viviani>
-// 注：tex 该图无 caption 与标签，迁移后补 caption 与 <fig:viviani>。
+// 注：tex 该图无 caption 与标签，迁移后补 caption 与 <fig:viviani>；原位图重绘为脚本绘制 SVG（scripts/viviani.py）。
 
 == Improper Multiple Integrals // 反常多重积分
 
