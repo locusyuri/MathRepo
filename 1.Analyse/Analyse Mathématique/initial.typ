@@ -7052,7 +7052,7 @@ $limsup_(x -> +oo) f(x) = +oo$.
 
 == Comparison of Convergence Speed of Series // 级数收敛速度的比较
 
-The series $sum_(n=1)^oo a_n$ is said to converge /faster/ than the series $sum_(n=1)^oo b_n$ if
+The series $sum_(n=1)^oo a_n$ is said to converge *faster* than the series $sum_(n=1)^oo b_n$ if
 $
   lim_(n -> oo) a_n / b_n = 0.
 $
@@ -7084,7 +7084,7 @@ $
   $
     p_1 dot p_2 dots.c p_n dots.c
   $
-  is called an /infinite product/, denoted by $product_(n=1)^oo p_n$, and $p_n$ is called the general term of the product.
+  is called an *infinite product*, denoted by $product_(n=1)^oo p_n$, and $p_n$ is called the general term of the product.
 
   Let $P_n = product_(k=1)^n p_k$; the sequence $(P_n)$ is called the sequence of partial products. If $(P_n)$ converges to a non-zero finite number $P$, then the infinite product is said to converge, and $P$ is called its product, written $product_(n=1)^oo p_n = P$. If $(P_n)$ diverges or converges to $0$, then the infinite product is said to diverge.
 ] <def:infinite-product>
@@ -7131,7 +7131,8 @@ $
 #theorem(name: "Stirling Formula")[
   For every $m in bb(N)$, as $n -> +oo$,
   $
-    ln n! = ln sqrt(2 pi) + (n + 1/2) ln n - n + sum_(k=1)^m B_(2k) / (2k(2k - 1) n^(2k - 1)) + theta_n dot B_(2m + 2) / ((2m + 1)(2m + 2) n^(2m + 1)), quad quad 0 < theta_n < 1,
+    &ln n! \
+    =&ln sqrt(2 pi) + (n + 1/2) ln n - n \ &+ sum_(k=1)^m B_(2k) / (2k(2k - 1) n^(2k - 1)) + theta_n dot B_(2m + 2) / ((2m + 1)(2m + 2) n^(2m + 1)), quad quad 0 < theta_n < 1,
   $
   where $B_(2k)$ denote the Bernoulli numbers. In particular, the simplified form reads
   $
@@ -7178,7 +7179,7 @@ where $ln^((k)) n$ denotes the $k$-th iterated logarithm, converges when $q > 1$
 In mathematics, the Gauss hypergeometric function (or ordinary hypergeometric function) $attach(F, bl: 2, t: 1)(a, b; c; x)$ is a function defined by the hypergeometric series; many special functions arise as its special cases or limits, and the solutions of all second-order linear ordinary differential equations with three regular singular points can be expressed in terms of hypergeometric functions.
 
 #definition(name: "Hypergeometric Series")[
-  For $a, b, c > 0$ and $x >= 0$, the /hypergeometric series/ is
+  For $a, b, c > 0$ and $x >= 0$, the *hypergeometric series* is
   $
     attach(F, bl: 2, t: 1)(a, b; c; x) = sum_(n=0)^oo (a^overline(n) b^overline(n)) / (c^overline(n)) dot x^n / n!,
   $
@@ -7211,9 +7212,9 @@ $
   $
     sum_(n=1)^oo u_(n)(x)
   $
-  is called a /function term series/.
+  is called a *function term series*.
 
-  For any fixed point $x_0 in E$, if the numerical series $sum_(n=1)^oo u_(n)(x_0)$ converges, then the function term series is said to converge at $x_0$, or equivalently, $x_0$ is called a /convergence point/ of $sum_(n=1)^oo u_(n)(x)$. The set of all convergence points is called the /domain of convergence/ of $sum_(n=1)^oo u_(n)(x)$.
+  For any fixed point $x_0 in E$, if the numerical series $sum_(n=1)^oo u_(n)(x_0)$ converges, then the function term series is said to converge at $x_0$, or equivalently, $x_0$ is called a *convergence point* of $sum_(n=1)^oo u_(n)(x)$. The set of all convergence points is called the *domain of convergence* of $sum_(n=1)^oo u_(n)(x)$.
 ] <def:function-term-series>
 
 #definition(name: "Pointwise Convergence")[
@@ -7221,10 +7222,10 @@ $
   $
     S(x) = sum_(n=1)^oo u_(n)(x), quad quad x in D.
   $
-  The function $S(x)$ is called the /sum function/ of the series, and the series is said to /converge pointwise/ to $S(x)$ on $D$.
+  The function $S(x)$ is called the *sum function* of the series, and the series is said to *converge pointwise* to $S(x)$ on $D$.
 ] <def:pointwise-convergence>
 
-Define the /partial sum function/ of the series as
+Define the *partial sum function* of the series as
 $
   S_(n)(x) = sum_(k=1)^n u_(k)(x).
 $
@@ -7248,11 +7249,11 @@ If this property could be extended to infinitely many functions — that is, if 
 $
   lim_(x -> x_0) sum_(n=1)^oo u_(n)(x) = sum_(n=1)^oo lim_(x -> x_0) u_(n)(x),
 $
-meaning that /the limit operation and infinite summation can be interchanged/ (the series can be evaluated termwise) — then, for the sequence of partial sums, the limit function $S(x) = lim_(n -> oo) S_(n)(x)$ would be continuous on $D$ and the two limit operations could be interchanged:
+meaning that *the limit operation and infinite summation can be interchanged* (the series can be evaluated termwise) — then, for the sequence of partial sums, the limit function $S(x) = lim_(n -> oo) S_(n)(x)$ would be continuous on $D$ and the two limit operations could be interchanged:
 $
   lim_(x -> x_0) lim_(n -> oo) S_(n)(x) = lim_(n -> oo) lim_(x -> x_0) S_(n)(x).
 $
-Unfortunately, under pointwise convergence this property does /not/ hold.
+Unfortunately, under pointwise convergence this property does *not* hold.
 
 *Derivability.* The sum of finitely many differentiable functions satisfies additive differentiability:
 $
@@ -7262,11 +7263,11 @@ If this property could be extended to infinitely many functions — that is, if 
 $
   [sum_(n=1)^oo u_(n)(x)]' = sum_(n=1)^oo u_n'(x),
 $
-meaning that /the differentiation operation and infinite summation can be interchanged/ (the series can be differentiated termwise) — then, for the sequence of partial sums, the limit function would be differentiable on $D$ and the two operations could be interchanged:
+meaning that *the differentiation operation and infinite summation can be interchanged* (the series can be differentiated termwise) — then, for the sequence of partial sums, the limit function would be differentiable on $D$ and the two operations could be interchanged:
 $
   [lim_(n -> oo) S_(n)(x)]' = lim_(n -> oo) S_n'(x).
 $
-Unfortunately, under pointwise convergence this property does /not/ hold.
+Unfortunately, under pointwise convergence this property does *not* hold.
 
 *Integrability.* The sum of finitely many integrable functions satisfies additive integrability:
 $
@@ -7276,11 +7277,11 @@ If this property could be extended to infinitely many functions — that is, if 
 $
   integral_a^b sum_(n=1)^oo u_(n)(x) dif x = sum_(n=1)^oo integral_a^b u_(n)(x) dif x,
 $
-meaning that /the integration operation and infinite summation can be interchanged/ (the series can be integrated termwise) — then, for the sequence of partial sums, the limit function would be integrable on $[a, b]$ and the two operations could be interchanged:
+meaning that *the integration operation and infinite summation can be interchanged* (the series can be integrated termwise) — then, for the sequence of partial sums, the limit function would be integrable on $[a, b]$ and the two operations could be interchanged:
 $
   integral_a^b lim_(n -> oo) S_(n)(x) dif x = lim_(n -> oo) integral_a^b S_(n)(x) dif x.
 $
-Unfortunately, under pointwise convergence this property does /not/ hold.
+Unfortunately, under pointwise convergence this property does *not* hold.
 
 #example(name: "Counter-Examples for Pointwise Convergence")[
   *Discontinuity of the sum function.* Let $S_(n)(x) = x^n$ on the interval $-1 < x <= 1$. Then $(S_(n)(x))$ converges to
@@ -7310,7 +7311,7 @@ Unfortunately, under pointwise convergence this property does /not/ hold.
   $
     forall epsilon > 0, exists N(epsilon) in bb(N)^+, forall n > N(epsilon): abs(S_(n)(x) - S(x)) < epsilon quad quad (forall x in D),
   $
-  then $(S_n)$ is said to /converge uniformly/ to $S(x)$ on $D$, denoted by
+  then $(S_n)$ is said to *converge uniformly* to $S(x)$ on $D$, denoted by
   $
     S_(n)(x) arrows.rr^(D) S(x).
   $
@@ -7346,7 +7347,7 @@ Obviously, if the partial sum sequence of $sum_(n=1)^oo u_(n)(x)$ satisfies $S_(
   $
     abs(S_(n)(x_n) - S(x_n)) <= d(S_n, S) -> 0 quad quad (n -> oo).
   $
-  Conversely, suppose $S_n$ does /not/ converge uniformly to $S$ on $D$: there exists $epsilon_0 > 0$ such that for every $N$ there exist $n > N$ and $x in D$ with $abs(S_(n)(x) - S(x)) >= epsilon_0$. Taking $N_1 = 1$ yields $n_1 > N_1$ and $x_(n_1) in D$ with $abs(S_(n_1)(x_(n_1)) - S(x_(n_1))) >= epsilon_0$; taking $N_2 = n_1$ yields $n_2 > n_1$ and $x_(n_2)$ with the same property; and so on. For the remaining indices choose $x_m in D$ arbitrarily. The resulting sequence $(x_n)$ in $D$ has a subsequence $(x_(n_k))$ with $abs(S_(n_k)(x_(n_k)) - S(x_(n_k))) >= epsilon_0$, so $lim_(n -> oo) (S_(n)(x_n) - S(x_n)) = 0$ is impossible — a contradiction.
+  Conversely, suppose $S_n$ does *not* converge uniformly to $S$ on $D$: there exists $epsilon_0 > 0$ such that for every $N$ there exist $n > N$ and $x in D$ with $abs(S_(n)(x) - S(x)) >= epsilon_0$. Taking $N_1 = 1$ yields $n_1 > N_1$ and $x_(n_1) in D$ with $abs(S_(n_1)(x_(n_1)) - S(x_(n_1))) >= epsilon_0$; taking $N_2 = n_1$ yields $n_2 > n_1$ and $x_(n_2)$ with the same property; and so on. For the remaining indices choose $x_m in D$ arbitrarily. The resulting sequence $(x_n)$ in $D$ has a subsequence $(x_(n_k))$ with $abs(S_(n_k)(x_(n_k)) - S(x_(n_k))) >= epsilon_0$, so $lim_(n -> oo) (S_(n)(x_n) - S(x_n)) = 0$ is impossible — a contradiction.
 ]
 
 With the concept of uniform convergence, the flaws of pointwise convergence can be remedied, and the following properties can be established.
@@ -7381,7 +7382,7 @@ With the concept of uniform convergence, the flaws of pointwise convergence can 
 === Quasi-Uniform Convergence // 准一致收敛
 
 #definition(name: "Quasi-Uniform Convergence")[
-  The sequence of functions $(S_(n)(x))$ is said to converge /quasi-uniformly/ on the interval $[a, b]$ if it converges pointwise to $S(x)$ on $[a, b]$ and
+  The sequence of functions $(S_(n)(x))$ is said to converge *quasi-uniformly* on the interval $[a, b]$ if it converges pointwise to $S(x)$ on $[a, b]$ and
   $
     forall epsilon > 0, forall N in bb(N)^+, exists N_0 > N "s.t." forall x in [a, b], exists n_x in [N, N_0] (n_x in bb(N)^+): abs(S_(n_x)(x) - S(x)) < epsilon.
   $
@@ -7396,7 +7397,7 @@ With the concept of uniform convergence, the flaws of pointwise convergence can 
   $
     abs(u_(n)(x)) <= a_n, quad quad forall x in E, n = 1, 2, 3, dots,
   $
-  then the function term series $sum_(n=1)^oo u_(n)(x)$ converges uniformly on $E$. The positive term series $sum_(n=1)^oo a_n$ is called a /majorant series/ of $sum_(n=1)^oo u_(n)(x)$.
+  then the function term series $sum_(n=1)^oo u_(n)(x)$ converges uniformly on $E$. The positive term series $sum_(n=1)^oo a_n$ is called a *majorant series* of $sum_(n=1)^oo u_(n)(x)$.
 
   If the convergent positive term series $sum_(n=1)^oo a_n$ is replaced by a uniformly convergent series of functions $sum_(n=1)^oo a_(n)(x)$, the conclusion still holds.
 ] <thm:weierstrass-m-test>
@@ -7451,7 +7452,7 @@ With the concept of uniform convergence, the flaws of pointwise convergence can 
 === Definition and Convergence Radius // 幂级数与收敛半径
 
 #definition(name: "Power Series")[
-  A /power series/ is a function term series of the form
+  A *power series* is a function term series of the form
   $
     sum_(n=0)^oo a_n (x - x_0)^n = a_0 + a_1 (x - x_0) + dots.c + a_n (x - x_0)^n + dots.c quad quad (a_n in bb(R)),
   $
@@ -7467,7 +7468,7 @@ With the concept of uniform convergence, the flaws of pointwise convergence can 
   $
     A = limsup_(n -> +oo) root(n, abs(a_n)),
   $
-  and define the /radius of convergence/ $R$ by
+  and define the *radius of convergence* $R$ by
   $
     R = cases(+oo quad quad (A = 0), 1/A quad quad (A in (0 comma +oo)), 0 quad quad (A = +oo)).
   $
@@ -7613,7 +7614,7 @@ If suitable conditions are imposed on the coefficients $a_n$, the converse of Ab
 == Expanding Functions into Power Series
 
 #definition(name: "Smooth Function")[
-  Let $f(x)$ be a function defined on an interval $I$. If $f(x)$ is continuous, then $f(x)$ is called a $C^0$ function on $I$; if $f(x)$ has a continuous derivative of order $n$ ($n >= 1$), then $f(x)$ is called a $C^n$ function on $I$; if for any $n in bb(N)$, $f(x)$ has a continuous $n$-th derivative, then $f(x)$ is called a $C^oo$ function on $I$, also known as a /smooth function/.
+  Let $f(x)$ be a function defined on an interval $I$. If $f(x)$ is continuous, then $f(x)$ is called a $C^0$ function on $I$; if $f(x)$ has a continuous derivative of order $n$ ($n >= 1$), then $f(x)$ is called a $C^n$ function on $I$; if for any $n in bb(N)$, $f(x)$ has a continuous $n$-th derivative, then $f(x)$ is called a $C^oo$ function on $I$, also known as a *smooth function*.
 ] <def:smooth-function>
 
 #definition(name: "(Real) Analytic Function")[
@@ -7621,7 +7622,7 @@ If suitable conditions are imposed on the coefficients $a_n$, the converse of Ab
   $
     f(x) = sum_(n=0)^oo a_n (x - x_0)^n
   $
-  that converges to $f(x)$ in some neighborhood of $x_0$, then $f(x)$ is called a /(real) analytic function/ on $I$.
+  that converges to $f(x)$ in some neighborhood of $x_0$, then $f(x)$ is called a *(real) analytic function* on $I$.
 
   Or equivalently, $f(x)$ is analytic on $I$ if for any point $x_0 in I$, the Taylor series of $f(x)$ at $x_0$ converges pointwise to $f(x)$ in some neighborhood of $x_0$, that is,
   $
@@ -7635,17 +7636,17 @@ If suitable conditions are imposed on the coefficients $a_n$, the converse of Ab
   $
     sum_(n=0)^oo (f^((n))(x_0)) / (n!) (x - x_0)^n,
   $
-  called the /Taylor series/ of $f(x)$ at $x_0$, written
+  called the *Taylor series* of $f(x)$ at $x_0$, written
   $
     f(x) tilde.op sum_(n=0)^oo (f^((n))(x_0)) / (n!) (x - x_0)^n.
   $
-  In particular, when $x_0 = 0$, the series $sum_(n=0)^oo (f^((n))(0)) / (n!) x^n$ is also called the /Maclaurin series/ of $f(x)$.
+  In particular, when $x_0 = 0$, the series $sum_(n=0)^oo (f^((n))(0)) / (n!) x^n$ is also called the *Maclaurin series* of $f(x)$.
 ] <def:taylor-series>
 
 #theorem(name: "Uniqueness of Power Series Expansion")[
   If $f(x)$ can be expanded on some neighborhood $U(x_0)$ as a power series $sum_(n=0)^oo a_n (x - x_0)^n$, then this expansion is unique, and it is precisely the Taylor series of $f(x)$ at $x_0$.
 
-  One says that $f(x)$ is /Taylor expandable/ on $U(x_0)$ if
+  One says that $f(x)$ is *Taylor expandable* on $U(x_0)$ if
   $
     f(x) = sum_(n=0)^oo (f^((n))(x_0)) / (n!) (x - x_0)^n, quad quad x in U(x_0).
   $
@@ -7657,7 +7658,7 @@ If suitable conditions are imposed on the coefficients $a_n$, the converse of Ab
   + Does the formal Taylor series written down from $f(x)$ necessarily have a positive radius of convergence?
   + If the Taylor series of $f(x)$ at $x_0$ has a positive radius of convergence, is the sum function of the series on its domain of convergence equal to $f(x)$?
 
-  The answer to all three questions is /no/; see #link(<ex:smooth-not-analytic>)[the counter-examples below].
+  The answer to all three questions is *no*; see #link(<ex:smooth-not-analytic>)[the counter-examples below].
 ]
 
 #example(name: "Smooth but Not Analytic")[
@@ -7737,11 +7738,11 @@ If suitable conditions are imposed on the coefficients $a_n$, the converse of Ab
   $
     r_(n)(x) = 1 / (n!) integral_(x_0)^x f^((n+1))(t) (x - t)^n dif t
   $
-  is the /integral form of the remainder/. Applying the first mean value theorem for integrals,
+  is the *integral form of the remainder*. Applying the first mean value theorem for integrals,
   $
     r_(n)(x) = 1 / (n!) f^((n+1))(xi) (x - xi)^n (x - x_0),
   $
-  where $xi$ lies between $x$ and $x_0$; the resulting expression is called the /Cauchy form of the remainder/.
+  where $xi$ lies between $x$ and $x_0$; the resulting expression is called the *Cauchy form of the remainder*.
 ] <thm:taylor-cauchy-remainder>
 
 === Common Maclaurin Series // 常用 Maclaurin 级数
@@ -7799,7 +7800,7 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
 ] <thm:weierstrass-second-approximation>
 
 #example(name: "Approximation by Step and Continuous Functions")[
-  A function $p: [a, b] -> bb(R)$ is called a /step function/ on $[a, b]$ if there exists a partition $a = x_0 < x_1 < dots.c < x_n = b$ such that $p$ is constant on each open subinterval $(x_(i-1), x_i)$, $i = 1, 2, dots, n$. Let $f(x)$ be Riemann integrable on $[a, b]$. Show that:
+  A function $p: [a, b] -> bb(R)$ is called a *step function* on $[a, b]$ if there exists a partition $a = x_0 < x_1 < dots.c < x_n = b$ such that $p$ is constant on each open subinterval $(x_(i-1), x_i)$, $i = 1, 2, dots, n$. Let $f(x)$ be Riemann integrable on $[a, b]$. Show that:
 
   *1.* For every $epsilon > 0$ there exist step functions $p, q$ on $[a, b]$ with $p <= f <= q$ on $[a, b]$ and
   $
@@ -7859,11 +7860,11 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
   $
     gamma: [0, 1] -> bb(R)^n
   $
-  satisfies that the range $gamma([0, 1])$ lies entirely within $S$, we call $gamma$ a /path/ in $S$, where $gamma(0)$ and $gamma(1)$ are referred to as the starting point and ending point of the path, respectively.
+  satisfies that the range $gamma([0, 1])$ lies entirely within $S$, we call $gamma$ a *path* in $S$, where $gamma(0)$ and $gamma(1)$ are referred to as the starting point and ending point of the path, respectively.
 
-  If for any two points $bold(x), bold(y) in S$ there exists a path in $S$ with $bold(x)$ as the starting point and $bold(y)$ as the ending point, then $S$ is called /path-connected/, or equivalently, $S$ is called a /connected set/.
+  If for any two points $bold(x), bold(y) in S$ there exists a path in $S$ with $bold(x)$ as the starting point and $bold(y)$ as the ending point, then $S$ is called *path-connected*, or equivalently, $S$ is called a *connected set*.
 
-  A connected open set is called an /(open) region/. The closure of an (open) region is referred to as a /closed region/.
+  A connected open set is called an *(open) region*. The closure of an (open) region is referred to as a *closed region*.
 ] <def:connected-set>
 
 #note[
@@ -7885,14 +7886,14 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
   $
     u'(0) = lim_(t -> 0) frac(u(t) - u(0), t) = lim_(t -> 0) frac(f(bold(x)^0 + t bold(e)) - f(bold(x)^0), t)
   $
-  exists and is finite, it is called the /directional derivative/ of $f$ at $bold(x)^0$ in the direction $bold(e)$, denoted by $(partial f)/(partial bold(e))(bold(x)^0)$. It is the rate of change of $f$ at $bold(x)^0$ in the direction $bold(e)$.
+  exists and is finite, it is called the *directional derivative* of $f$ at $bold(x)^0$ in the direction $bold(e)$, denoted by $(partial f)/(partial bold(e))(bold(x)^0)$. It is the rate of change of $f$ at $bold(x)^0$ in the direction $bold(e)$.
 ] <def:directional-derivative>
 
 Consider the following set of unit coordinate vectors: $bold(e)_1, bold(e)_2, dots, bold(e)_n$. Let $bold(e)_i = (0, 0, dots, 0, 1, 0, dots, 0)$ denote the standard orthonormal basis in $bb(R)^n$, where the 1 appears in the $i$-th position. That is,
 $
   << bold(e)_i, bold(e)_j >> = delta_(i j) = cases(1 quad & i = j, 0 quad & i != j).
 $
-For a function $f$, the directional derivative of $f$ at the point $bold(x)^0$ in the direction of $bold(e)_i$ is called the $i$-th first-order /partial derivative/ of $f$ at $bold(x)^0$, denoted by
+For a function $f$, the directional derivative of $f$ at the point $bold(x)^0$ in the direction of $bold(e)_i$ is called the $i$-th first-order *partial derivative* of $f$ at $bold(x)^0$, denoted by
 $
   frac(partial f, partial x_i)(bold(x)^0) quad "or" quad D_i f(bold(x)^0) quad "or" quad f_(x_i)(bold(x)^0) quad (i = 1, 2, dots, n).
 $
@@ -7903,7 +7904,7 @@ Let $bold(e) = sum_(i=1)^n bold(e)_i cos alpha_i$ be a unit vector, where $sum_(
 $
   frac(partial f, partial bold(e))(bold(x)^0) = sum_(i=1)^n frac(partial f, partial x_i)(bold(x)^0) cos alpha_i.
 $
-This is the formula for /expressing a directional derivative using partial derivatives/.
+This is the formula for *expressing a directional derivative using partial derivatives*.
 
 #note[
   Let $bold(e)$ be a direction. Then $norm(-bold(e)) = norm(bold(e)) = 1$, which implies that $-bold(e)$ is also a direction. At this point, we have
@@ -7917,7 +7918,7 @@ This is the formula for /expressing a directional derivative using partial deriv
   $
     J f(bold(x)) = (D_1 f(bold(x)), D_2 f(bold(x)), dots, D_n f(bold(x))),
   $
-  which is called the /Jacobian matrix/ of the function $f$ at the point $bold(x)$ (a $1 times n$ matrix), whose counterpart is the first-order derivative of a single-variable function.
+  which is called the *Jacobian matrix* of the function $f$ at the point $bold(x)$ (a $1 times n$ matrix), whose counterpart is the first-order derivative of a single-variable function.
 
   Henceforth, we represent the point $bold(x)$ in $bb(R)^n$ and its increments $bold(h)$ as column vectors. In this way, the differential of the function can be expressed using matrix multiplication as follows:
   $
@@ -7927,7 +7928,7 @@ This is the formula for /expressing a directional derivative using partial deriv
   $
     nabla f(bold(x)) = "grad" f(bold(x)) = J f(bold(x)),
   $
-  which is called the /gradient/ of the scalar function $f$.
+  which is called the *gradient* of the scalar function $f$.
 ] <def:jacobian-matrix>
 
 === Total Differential // 全微分
@@ -7937,7 +7938,7 @@ This is the formula for /expressing a directional derivative using partial deriv
   $
     f(bold(x)^0 + Delta bold(x)) - f(bold(x)^0) = sum_(i=1)^n A_i Delta x_i + o(norm(Delta bold(x))) quad (norm(Delta bold(x)) -> 0),
   $
-  where $A_1, A_2, dots, A_n$ are constants independent of $Delta bold(x)$, then the function $f$ is said to be /differentiable/ at the point $bold(x)^0$, and the linear main part $sum_(i=1)^n A_i Delta x_i$ is called the /total differential/ of $f$ at $bold(x)^0$, denoted as
+  where $A_1, A_2, dots, A_n$ are constants independent of $Delta bold(x)$, then the function $f$ is said to be *differentiable* at the point $bold(x)^0$, and the linear main part $sum_(i=1)^n A_i Delta x_i$ is called the *total differential* of $f$ at $bold(x)^0$, denoted as
   $
     dif f(bold(x)^0)(Delta bold(x)) = sum_(i=1)^n A_i Delta x_i.
   $
@@ -7955,7 +7956,7 @@ This is the formula for /expressing a directional derivative using partial deriv
 
 // 注：tex 中两处 footnote（模板不支持脚注）转为下述 note 与正文。
 #note(title: "The total differential formula")[
-  The formula $dif f(bold(x)^0)(Delta bold(x)) = sum_(i=1)^n (partial f)/(partial x_i)(bold(x)^0) Delta x_i$ is referred to as the /total differential formula/, and the more common form is
+  The formula $dif f(bold(x)^0)(Delta bold(x)) = sum_(i=1)^n (partial f)/(partial x_i)(bold(x)^0) Delta x_i$ is referred to as the *total differential formula*, and the more common form is
   $
     dif f(x_0, y_0) = frac(partial f, partial x)(x_0, y_0) dif x + frac(partial f, partial y)(x_0, y_0) dif y.
   $
@@ -8049,7 +8050,7 @@ This is the formula for /expressing a directional derivative using partial deriv
 
 === Higher-Order Partial Derivatives // 高阶偏导数
 
-If the first-order partial derivative of $f$, $(partial f)/(partial x_i)$, itself possesses partial derivatives, then the second-order partial derivative of $f$ is defined, and is denoted as follows (the first is also called the /mixed partial derivative/):
+If the first-order partial derivative of $f$, $(partial f)/(partial x_i)$, itself possesses partial derivatives, then the second-order partial derivative of $f$ is defined, and is denoted as follows (the first is also called the *mixed partial derivative*):
 $
   f_(x_i x_j) = frac(partial^2 f, partial x_i partial x_j) = frac(partial, partial x_j)(frac(partial f, partial x_i)), quad
   f_(x_i x_i) = frac(partial^2 f, partial x_i^2) = frac(partial, partial x_i)(frac(partial f, partial x_i)), quad i, j = 1, 2, dots, n.
@@ -8077,7 +8078,7 @@ Suppose $z = f(x, y)$ has continuous partial derivatives in the domain $U subset
 $
   dif z = frac(partial z, partial x) dif x + frac(partial z, partial y) dif y.
 $
-If $z$ also has continuous second-order partial derivatives, then $(partial z)/(partial x)$ and $(partial z)/(partial y)$ are also differentiable, and thus $dif z$ is differentiable. We call the differential of $dif z$ the /second-order differential/ of $z$, denoted as
+If $z$ also has continuous second-order partial derivatives, then $(partial z)/(partial x)$ and $(partial z)/(partial y)$ are also differentiable, and thus $dif z$ is differentiable. We call the differential of $dif z$ the *second-order differential* of $z$, denoted as
 $
   dif^2 z = dif(dif z).
 $
@@ -8146,7 +8147,7 @@ $
     )
   $
 
-  This matrix is called the /Jacobian matrix/ of $bold(f)$ at $bold(x)^0$, denoted by $bold(f)'(bold(x)^0)$ (or $D bold(f)(bold(x)^0)$, $J_(bold(f))(bold(x)^0)$).
+  This matrix is called the *Jacobian matrix* of $bold(f)$ at $bold(x)^0$, denoted by $bold(f)'(bold(x)^0)$ (or $D bold(f)(bold(x)^0)$, $J_(bold(f))(bold(x)^0)$).
 
   For the special case $m = 1$, i.e. the $n$-variable scalar function $z = f(x_1, x_2, dots, x_n)$, the derivative at $bold(x)^0$ is
   $
@@ -8213,7 +8214,7 @@ $
 
 === Applications // 应用
 
-As an important application of the chain rule, we have the following theorem on the /differentiation of determinants/.
+As an important application of the chain rule, we have the following theorem on the *differentiation of determinants*.
 
 #theorem(name: "Differentiation of Determinants")[
   For
@@ -8242,7 +8243,7 @@ As an important application of the chain rule, we have the following theorem on 
   where in each determinant on the right-hand side, the $j$-th column is replaced by the derivative of the $j$-th column of $Delta(t)$.
 ] <thm:determinant-differentiation>
 
-Another important application is /homogeneous functions/.
+Another important application is *homogeneous functions*.
 
 // 注：tex 原文 Item 2 的"where"式漏写算子平方（(x∂/∂x + y∂/∂y) = x²∂²/∂x² + ...），已补平方。
 #proposition(name: "Homogeneous Functions")[
@@ -8288,11 +8289,11 @@ Another important application is /homogeneous functions/.
   $
     bold(x)_0 + lambda (bold(x)_1 - bold(x)_0) in D,
   $
-  then $D$ is called a /convex region/.
+  then $D$ is called a *convex region*.
 ] <def:convex-region>
 
 #theorem(name: "Lagrange's Mean Value Theorem")[
-  Let $f$ be /differentiable/ on /a convex region/ $D subset.eq bb(R)^n$. For any two points $bold(a), bold(b) in D$, there exists a point $bold(xi) in overline(bold(a) bold(b))$ such that
+  Let $f$ be *differentiable* on *a convex region* $D subset.eq bb(R)^n$. For any two points $bold(a), bold(b) in D$, there exists a point $bold(xi) in overline(bold(a) bold(b))$ such that
   $
     f(bold(b)) - f(bold(a)) = J f(bold(xi))(bold(b) - bold(a)).
   $
@@ -8304,7 +8305,7 @@ For mappings, Lagrange's mean value theorem can not be generalized directly; we 
 
 // 注：tex 原文对线段端点与内积方向向量均用 a（记号冲突），方向向量已改为 c。
 #theorem(name: "Lagrange's Mean Value Theorem for Mappings")[
-  Let $bold(f): D -> bb(R)^m$ be /differentiable/ on /an open set/ $D subset.eq bb(R)^n$. For any two points $bold(a), bold(b) in D$, there exists a point $bold(xi) in overline(bold(a) bold(b))$ such that
+  Let $bold(f): D -> bb(R)^m$ be *differentiable* on *an open set* $D subset.eq bb(R)^n$. For any two points $bold(a), bold(b) in D$, there exists a point $bold(xi) in overline(bold(a) bold(b))$ such that
   $
     bold(c) dot [bold(f)(bold(b)) - bold(f)(bold(a))] =
     bold(c) dot [J bold(f)(bold(xi))(bold(b) - bold(a))],
@@ -8334,7 +8335,7 @@ For mappings, Lagrange's mean value theorem can not be generalized directly; we 
 And we have a global estimation for the difference of mappings:
 
 #theorem(name: "Quasi-Differential Mean Value Theorem for Mappings")[
-  Let $bold(f): D -> bb(R)^m$ be /differentiable/ on /a convex region/ $D subset.eq bb(R)^n$. For any two points $bold(a), bold(b) in D$, there exists a point $bold(xi) in overline(bold(a) bold(b))$ such that
+  Let $bold(f): D -> bb(R)^m$ be *differentiable* on *a convex region* $D subset.eq bb(R)^n$. For any two points $bold(a), bold(b) in D$, there exists a point $bold(xi) in overline(bold(a) bold(b))$ such that
   $
     norm(bold(f)(bold(b)) - bold(f)(bold(a))) <= norm(J bold(f)(bold(xi))) dot norm(bold(b) - bold(a)).
   $
@@ -8385,7 +8386,7 @@ $
     frac(partial^2 f, partial x_n partial x_1), frac(partial^2 f, partial x_n partial x_2), dots, frac(partial^2 f, partial x_n^2)
   )_(bold(x)^0)
 $
-is called the /Hessian matrix/ of the function $f$.
+is called the *Hessian matrix* of the function $f$.
 
 == Implicit Function Theorem // 隐函数定理
 
@@ -8399,7 +8400,7 @@ is called the /Hessian matrix/ of the function $f$.
   + $F'_(y)(bold(x)^0, y^0) != 0$,
 
   then there exists an open interval $I times J$ containing $(bold(x)^0, y^0)$ ($I$ being an open interval in $bb(R)^n$ containing $bold(x)^0$, and $J$ being an open interval in $bb(R)$ containing $y^0$), as shown in @fig:implicit-function, such that:
-  + $forall bold(x) in I$, the equation $F(bold(x), y) = 0$ has a unique solution $y = f(bold(x))$, where $f: I -> J$ is an $n$-variable function (called the /implicit function/ $f$, hidden within the equation $F(bold(x), f(bold(x))) = 0$, though not necessarily explicitly expressed);
+  + $forall bold(x) in I$, the equation $F(bold(x), y) = 0$ has a unique solution $y = f(bold(x))$, where $f: I -> J$ is an $n$-variable function (called the *implicit function* $f$, hidden within the equation $F(bold(x), f(bold(x))) = 0$, though not necessarily explicitly expressed);
   + $y^0 = f(bold(x)^0)$;
   + $f in C^k (I, bb(R))$;
   + when $bold(x) in I$,
@@ -8498,7 +8499,7 @@ is called the /Hessian matrix/ of the function $f$.
     $
 
   then there exists an open neighborhood $I times J subset U subset bb(R)^(n + m)$ containing $(bold(x)^0, bold(y)^0)$ such that:
-  + for all $bold(x) in I$, the system $bold(F)(bold(x), bold(y)) = bold(0)$ has a unique solution $bold(y) = bold(f)(bold(x))$, where $bold(f): I -> J$ is a mapping (called the /implicit mapping/ $bold(f)$, hidden in $bold(F)(bold(x), bold(f)(bold(x))) = bold(0)$);
+  + for all $bold(x) in I$, the system $bold(F)(bold(x), bold(y)) = bold(0)$ has a unique solution $bold(y) = bold(f)(bold(x))$, where $bold(f): I -> J$ is a mapping (called the *implicit mapping* $bold(f)$, hidden in $bold(F)(bold(x), bold(f)(bold(x))) = bold(0)$);
   + $bold(y)^0 = bold(f)(bold(x)^0)$;
   + $bold(f) in C^k (I, bb(R)^m)$;
   + for $bold(x) in I$,
@@ -8622,7 +8623,7 @@ is called the /Hessian matrix/ of the function $f$.
     $
     where $bold(x) = bold(f)^(-1)(bold(y))$.
 
-  At this time, $bold(f)$ is called a $C^k$ /diffeomorphism/.
+  At this time, $bold(f)$ is called a $C^k$ *diffeomorphism*.
 ] <thm:local-inverse-mapping-theorem>
 
 If the conditions are strengthened, then a global inverse mapping theorem can be established.
@@ -8655,7 +8656,7 @@ If the conditions are strengthened, then a global inverse mapping theorem can be
 
 // 注：tex 原题 "Fermat's Three Villiges Problem" 拼写有误，已改为 Villages。
 #proposition(name: "Fermat's Three Villages Problem")[
-  There are three villages located at points $A$, $B$, and $C$ on a flat plane. A supply station needs to be established at point $P$ on the plane, such that the total distance from $P$ to the three villages $A$, $B$, and $C$ is minimized. Such a point $P$ is called the /Fermat point/ of the triangle $A B C$, which can be determined as follows:
+  There are three villages located at points $A$, $B$, and $C$ on a flat plane. A supply station needs to be established at point $P$ on the plane, such that the total distance from $P$ to the three villages $A$, $B$, and $C$ is minimized. Such a point $P$ is called the *Fermat point* of the triangle $A B C$, which can be determined as follows:
   + If any angle of the triangle $A B C$ is greater than or equal to $120 deg$, then the Fermat point is the vertex of that angle.
   + If all angles of the triangle $A B C$ are less than $120 deg$, then the Fermat point $P$ is located inside the triangle $A B C$, and the angles between the segments $P A$, $P B$, and $P C$ are all equal to $120 deg$.
 ] <prop:fermat-point>
@@ -8669,7 +8670,7 @@ If the conditions are strengthened, then a global inverse mapping theorem can be
   $
     f(bold(x)^0) <= f(bold(x)) quad ("or" quad f(bold(x)^0) >= f(bold(x)))
   $
-  for all $bold(x) in M$, then $f$ is said to have a /conditional minimum/ (or /maximum/) at the point $bold(x)^0$ under the given constraints.
+  for all $bold(x) in M$, then $f$ is said to have a *conditional minimum* (or *maximum*) at the point $bold(x)^0$ under the given constraints.
 ] <def:conditional-extremum>
 
 #theorem(name: "Lagrange Multiplier Method")[
@@ -8780,7 +8781,7 @@ It is worth noting that all the definitions and properties of double integrals c
   $
     union.big_(i=1)^oo I_i sup A, quad "and" quad sum_(i=1)^oo v(I_i) < epsilon,
   $
-  then $A$ is called a *set with zero measure* (/null set/).
+  then $A$ is called a *set with zero measure* (*null set*).
 ] <def:zero-area-null-set>
 
 #definition(name: "Set with Finite Area")[
