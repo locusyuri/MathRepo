@@ -181,7 +181,13 @@ Mappings can be classified based on their behavior:
 - *Bijective*: A mapping $f: X -> Y$ is *bijective* if it is both injective and surjective.
 
 #note[
-  A *bijective* transformation is also called a *permutation* of $X$.
+  A *bijective* transformation is also called a *permutation* of $X$. For a finite set $X = {x_1, x_2, dots, x_n}$, a permutation $sigma$ of $X$ is conveniently displayed as a *two-row array*, the top row listing the elements of $X$ and the bottom row their images:
+  $
+    sigma = mat(
+      x_1, x_2, dots, x_n;
+      sigma(x_1), sigma(x_2), dots, sigma(x_n);
+    )
+  $
 
   For a finite set $X$ with cardinality $n$ (the notion of cardinality is studied in a later chapter; here it simply means the number of elements), the set of all transformations on $X$ is denoted $T_X$ and has cardinality $n^n$; in abstract algebra, $T_X$ is called the *transformation monoid*.
 
