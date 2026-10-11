@@ -1925,45 +1925,27 @@ Cayley's theorem closes the circle opened by the symmetric groups:
 not only are permutations examples of groups — every group is, up
 to isomorphism, a group of permutations of some set.
 
-#definition(name: "Transformation Group")[
-  Let $X$ be a set and let $T_X$ be the set of all transformations of
-  $X$, that is, all maps $X -> X$ (the notion was introduced in the
-  Théorie des Ensembles note), with multiplication given by
-  composition of maps. Equipped with this multiplication, $T_X$ is a
-  monoid (#link(<def:monoid>)[§2.1]): composition is associative and
-  the identity map is neutral, but a general transformation has no
-  reason to be invertible.
+Let $X$ be a set and let $T_X$ be the set of all transformations of $X$, that is, all maps $X -> X$ (the notion was introduced in the Théorie des Ensembles note), with multiplication given by composition of maps. Equipped with this multiplication, *$T_X$ is a monoid*  (#link(<def:monoid>)[§2.1]): composition is associative and the identity map is neutral, but a general transformation has no reason to be invertible.
 
+#definition(name: "Transformation Group")[
   A subset $G subset.eq T_X$ that forms a group under this multiplication is called a *transformation group* on $X$.
 ] <def:transformation-group>
 
+The invertible elements of the monoid $T_X$ are precisely the bijections $X -> X$ — the *permutations* of $X$, as defined in #link(<def:symmetric-group>)[Chapter 2].
 #definition(name: "The Symmetric Group and Permutation Groups")[
-  The invertible elements of the monoid $T_X$ are precisely the
-  bijections $X -> X$ — the *permutations* of $X$, as defined in
-  #link(<def:symmetric-group>)[Chapter 2]. Under composition they
-  form a group, the *symmetric group* $S_X$: it is the group of
-  units of the monoid $T_X$. A *permutation group* on $X$ is a
-  subgroup of $S_X$.
+  Under composition the permutations of $X$ form a group, the *symmetric group* $S_X$: it is the group of units of the monoid $T_X$.
+
+  A *permutation group* on $X$ is a subgroup of $S_X$.
 ] <def:permutation-group>
 
 #note(title: "Must a permutation group be finite?")[
-  Some introductory textbooks
-  reserve the word "permutation" for bijections of the finite set
-  ${1, 2, dots, n}$ and by a *permutation group* mean a subgroup of
-  some $S_n$ — necessarily finite. Under the general convention
-  adopted here, a permutation group on an infinite set is perfectly
-  legitimate, and the term *transformation group* is then used as a
-  synonym. The two usages agree wherever they overlap; Cayley's
-  theorem below is a place where infinity genuinely occurs.
+  Some introductory textbooks restrict "permutation" to bijections of the finite set ${1, 2, dots, n}$, making every permutation group a subgroup of some $S_n$ and hence finite. In this note permutations may live on any set — Cayley's theorem below is a place where infinity genuinely occurs.
 ] <note:permutation-group-finiteness>
 
-The two definitions raise the question of when a transformation
-group deserves the name permutation group, and the answer is a
-single test.
+The two definitions raise the question of when a transformation group deserves the name permutation group, and the answer is a single test.
 
 #theorem(name: "The Permutation Group Criterion")[
-  Let $G$ be a transformation group on a set $X$, and let $e$ be the
-  identity element of $G$. Then the following are equivalent:
+  Let $G$ be a transformation group on a set $X$, and let $e$ be the identity element of $G$. Then the following are equivalent:
   - $G$ is a permutation group;
   - $e$ is the identity map $"id"_X$;
   - $G$ contains an injective transformation;
@@ -1973,61 +1955,32 @@ single test.
 #proof[
   Throughout, $e circle g = g$ for every $g in G$.
 
-  (1 ==> 2) A permutation group is a subgroup of $S_X$, hence
-  contains the identity map; the identity element of a group being
-  unique, $e = "id"_X$.
+  (1 ==> 2) A permutation group is a subgroup of $S_X$, hence contains the identity map; the identity element of a group being unique, $e = "id"_X$.
 
-  (2 ==> 1) If $e = "id"_X$, take $g in G$ with group inverse
-  $g^(-1) in G$: then
-  $g^(-1) circle g = g circle g^(-1) = e = "id"_X$. A map with a
-  two-sided inverse under composition is a bijection, so every
-  element of $G$ is a permutation.
+  (2 ==> 1) If $e = "id"_X$, take $g in G$ with group inverse $g^(-1) in G$: then $g^(-1) circle g = g circle g^(-1) = e = "id"_X$. A map with a two-sided inverse under composition is a bijection, so every element of $G$ is a permutation.
 
-  (3 ==> 2) Let $f in G$ be injective. From $f circle e = f$, that
-  is, $f(e(x)) = f(x)$ for all $x in X$, injectivity yields
-  $e(x) = x$ for all $x$, i.e. $e = "id"_X$.
+  (3 ==> 2) Let $f in G$ be injective. From $f circle e = f$, that is, $f(e(x)) = f(x)$ for all $x in X$, injectivity yields $e(x) = x$ for all $x$, i.e. $e = "id"_X$.
 
-  (4 ==> 2) Let $f in G$ be surjective. From $e circle f = f$ we get
-  $e(y) = y$ for every $y in f(X) = X$, so again $e = "id"_X$.
+  (4 ==> 2) Let $f in G$ be surjective. From $e circle f = f$ we get $e(y) = y$ for every $y in f(X) = X$, so again $e = "id"_X$.
 ]
 
-The criterion forbids mixing: if a transformation group contains
-even a *single* bijective transformation, that element is injective
-and surjective, so the whole group is a permutation group. A
-transformation group is therefore either a permutation group outright
-— all of its elements bijections — or contains no bijection at all:
-the permutation groups and the non-bijective transformation groups
-are two disjoint families, with no borderline case.
+The criterion forbids mixing: if a transformation group contains even a *single* bijective transformation, that element is injective and surjective, so the whole group is a permutation group. A transformation group is therefore either a permutation group outright — all of its elements bijections — or contains no bijection at all: the permutation groups and the non-bijective transformation groups are two disjoint families, with no borderline case.
 
 #example(name: "Transformation groups without bijections.")[
-  - *Finite.* Let $X = {1, 2, 3, 4}$, writing a transformation as
-    the list of its values, $sigma = (sigma(1), sigma(2), sigma(3),
-      sigma(4))$. Consider
+  - *Finite.* Let $X = {1, 2, 3, 4}$, writing a transformation as the list of its values, $sigma = (sigma(1), sigma(2), sigma(3), sigma(4))$. Consider
     $
       alpha = (1, 1, 3, 4) quad "and" quad beta = (1, 1, 4, 3):
     $
-    $alpha$ sends both $1$ and $2$ to $1$ and fixes $3, 4$; $beta$
-    swaps $3$ and $4$ but still crushes $2$ onto $1$. Direct
-    computation gives
+    $alpha$ sends both $1$ and $2$ to $1$ and fixes $3, 4$; $beta$ swaps $3$ and $4$ but still crushes $2$ onto $1$. Direct computation gives
     $
-      alpha circle alpha = alpha, quad alpha circle beta = beta
-      circle alpha = beta, quad beta circle beta = alpha.
+      alpha circle alpha = alpha, quad alpha circle beta = beta circle alpha = beta, quad beta circle beta = alpha.
     $
-    So ${alpha, beta}$ is closed under composition, $alpha$ serves as
-    the identity element, and $beta$ is its own inverse: a
-    transformation group of order $2$ whose identity element is *not*
-    the identity map. Neither element is injective or surjective, so
-    by the criterion the group is not a permutation group.
+    So ${alpha, beta}$ is closed under composition, $alpha$ serves as the identity element, and $beta$ is its own inverse: a transformation group of order $2$ whose identity element is *not* the identity map. Neither element is injective or surjective, so by the criterion the group is not a permutation group.
   - *Infinite.* On $X = bb(R)^2$, let
     $
       p_a: (x, y) arrow.r.double (x + a, 0) quad (a in bb(R)).
     $
-    Composition obeys $p_a circle p_b = p_(a + b)$, so $p_0$ is the
-    identity element — again *not* the identity map of $bb(R)^2$ —
-    and $p_a^(-1) = p_(-a)$: the $p_a$ form a transformation group
-    isomorphic to $(bb(R), +)$. Every $p_a$ compresses the whole
-    plane onto the single line $bb(R) times {0}$, so no element is
-    injective or surjective.
+    Composition obeys $p_a circle p_b = p_(a + b)$, so $p_0$ is the identity element — again *not* the identity map of $bb(R)^2$ — and $p_a^(-1) = p_(-a)$: the $p_a$ form a transformation group isomorphic to $(bb(R), +)$. Every $p_a$ compresses the whole plane onto the single line $bb(R) times {0}$, so no element is injective or surjective.
 ] <ex:non-bijective-transformation-groups>
 
 #theorem(name: "Cayley's Theorem")[
