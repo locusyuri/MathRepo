@@ -2749,7 +2749,7 @@ in the notation introduced in the Notations section.
 
 #proof[
   We must show $lim_(x -> 0) (f(x) - f(0)) / x = A$. By hypothesis, for any
-  $epsilon > 0$ there is $delta > 0$ such that for all $|x| < delta$,
+  $epsilon > 0$ there is $delta > 0$ such that for all $abs(x) < delta$,
   $A - epsilon / 2 < (f(2 x) - f(x)) / x < A + epsilon / 2$. Substituting
   $x / 2^(k - 1)$ for $x$ $(k in NN)$ keeps the estimate valid, so
   $
@@ -2765,7 +2765,7 @@ in the notation introduced in the Notations section.
   $
   Letting $n -> oo$: since $x / 2^n -> 0$ and $f$ is continuous at $0$,
   $f(x / 2^n) -> f(0)$, whence
-  $|(f(x) - f(0)) / x - A| <= epsilon / 2 < epsilon$. Therefore $f'(0) = A$.
+  $abs((f(x) - f(0)) / x - A) <= epsilon / 2 < epsilon$. Therefore $f'(0) = A$.
 ]
 
 === Basic Differential Rules and Formulas // 基本求导与微分法则
@@ -3139,7 +3139,7 @@ product of two or more functions, we need the following theorems.
 ] <ex:boundedness-mvt>
 
 #proof[
-  Write $|e^(-x^2) f'(x)| <= M$ on $(1, +oo)$. We first bound $e^(-x^2) f(x)$.
+  Write $abs(e^(-x^2) f'(x)) <= M$ on $(1, +oo)$. We first bound $e^(-x^2) f(x)$.
   For $x > 1$, applying Cauchy's mean value theorem to $f$ and $e^(x^2)$ on
   $[1, x]$ gives a point $xi in (1, x)$ with
   $
@@ -3217,16 +3217,16 @@ product of two or more functions, we need the following theorems.
 
 #example(name: "A Differential Inequality Forces Zero")[
   Let $f in D[0, +oo)$ with $f(0) = 0$, and suppose there exists $A > 0$ such
-  that $|f'(x)| <= A |f(x)|$ for all $x in [0, +oo)$. Then $f(x) equiv 0$ for
+  that $abs(f'(x)) <= A abs(f(x))$ for all $x in [0, +oo)$. Then $f(x) equiv 0$ for
   $x >= 0$.
 ] <ex:differential-inequality-zero>
 
 #proof[
-  *Step 1: $f$ vanishes on $[0, 1 / (2 A)]$.* Since $|f|$ is continuous, it
+  *Step 1: $f$ vanishes on $[0, 1 / (2 A)]$.* Since $abs(f)$ is continuous, it
   attains a maximum $M$ at some $x_1 in [0, 1 / (2 A)]$. By Lagrange's mean
   value theorem there is $xi in (0, x_1)$ with
   $
-    M = |f(x_1)| = |f(0) + f'(xi) x_1| = |f'(xi)| x_1 <= A |f(xi)| x_1
+    M = abs(f(x_1)) = abs(f(0) + f'(xi) x_1) = abs(f'(xi)) x_1 <= A abs(f(xi)) x_1
     <= A M dot 1 / (2 A) = M / 2.
   $
   Hence $M = 0$ and $f equiv 0$ on $[0, 1 / (2 A)]$.
@@ -4006,8 +4006,8 @@ $f'(x) = 0$ (the stationary points) and the points where $f'$ does not exist.
 ]
 
 #example(name: "Bounding the Derivative on [0, 1]")[
-  Let $f in D^((2))[0, 1]$ with $|f(x)| <= A$ and $|f''(x)| <= B$ on $[0, 1]$.
-  Show that $|f'(x)| <= 2 A + 1 / 2 B$ for all $x in [0, 1]$.
+  Let $f in D^((2))[0, 1]$ with $abs(f(x)) <= A$ and $abs(f''(x)) <= B$ on $[0, 1]$.
+  Show that $abs(f'(x)) <= 2 A + 1 / 2 B$ for all $x in [0, 1]$.
 ] <ex:bound-derivative-0-1>
 
 #proof[
@@ -4028,15 +4028,15 @@ $f'(x) = 0$ (the stationary points) and the points where $f'$ does not exist.
   $
   hence, since $(1 - c)^2 + c^2 <= 1 - c + c = 1$,
   $
-    |f'(c)| <= |f(1)| + |f(0)| + 1 / 2 [|f''(xi_2)| (1 - c)^2 + |f''(xi_1)| c^2] <= 2 A + 1 / 2 B.
+    abs(f'(c)) <= abs(f(1)) + abs(f(0)) + 1 / 2 [abs(f''(xi_2)) (1 - c)^2 + abs(f''(xi_1)) c^2] <= 2 A + 1 / 2 B.
   $
   Since $c$ was arbitrary, the claim follows.
 ]
 
 #example(name: "A Landau-Type Inequality")[
-  Let $f in D^((2))(-oo, +oo)$ with $M_0 = sup_(x in bb(R)) |f(x)| < +oo$ and
-  $M_2 = sup_(x in bb(R)) |f''(x)| < +oo$. Then
-  $M_1 = sup_(x in bb(R)) |f'(x)| < +oo$ and $M_1^2 <= 2 M_0 M_2$.
+  Let $f in D^((2))(-oo, +oo)$ with $M_0 = sup_(x in bb(R)) abs(f(x)) < +oo$ and
+  $M_2 = sup_(x in bb(R)) abs(f''(x)) < +oo$. Then
+  $M_1 = sup_(x in bb(R)) abs(f'(x)) < +oo$ and $M_1^2 <= 2 M_0 M_2$.
 ] <ex:landau-inequality>
 
 #proof[
@@ -4052,12 +4052,12 @@ $f'(x) = 0$ (the stationary points) and the points where $f'$ does not exist.
   $
   hence
   $
-    2 |f'(x)| h <= 2 M_0 + h^2 M_2, quad "i.e." quad |f'(x)| <= M_0 / h + h M_2 / 2 quad "for every" h > 0.
+    2 abs(f'(x)) h <= 2 M_0 + h^2 M_2, quad "i.e." quad abs(f'(x)) <= M_0 / h + h M_2 / 2 quad "for every" h > 0.
   $
   If $M_0 = 0$ then $f equiv 0$ and hence $f' equiv 0$; if $M_2 = 0$, letting
   $h -> oo$ in the estimate forces $f' equiv 0$. In both cases the claim is
   trivial. Otherwise choose $h = sqrt(2 M_0 / M_2)$, which minimizes the
-  right-hand side, to obtain $|f'(x)| <= sqrt(2 M_0 M_2)$ for every $x$;
+  right-hand side, to obtain $abs(f'(x)) <= sqrt(2 M_0 M_2)$ for every $x$;
   taking the supremum over $x$ yields $M_1 <= sqrt(2 M_0 M_2)$, i.e.,
   $M_1^2 <= 2 M_0 M_2$.
 ]
@@ -4069,18 +4069,18 @@ $f'(x) = 0$ (the stationary points) and the points where $f'$ does not exist.
 
 #proof[
   Write $A = lim_(x -> +oo) phi(x)$ and let $M > 0$ with
-  $|phi''(x)| <= M$. For $h > 0$,
+  $abs(phi''(x)) <= M$. For $h > 0$,
   $
     phi(x + h) = phi(x) + phi'(x) h + 1 / 2 phi''(xi) h^2,
   $
   so
   $
-    |phi'(x)| <= 1 / h [|phi(x + h) - A| + |A - phi(x)|] + 1 / 2 M h.
+    abs(phi'(x)) <= 1 / h [abs(phi(x + h) - A) + abs(A - phi(x))] + 1 / 2 M h.
   $
   Given $epsilon > 0$, first choose $h > 0$ so small that
   $M h / 2 < epsilon / 2$; fixing this $h$, choose $X > 0$ so large that
-  $1 / h [|phi(x + h) - A| + |A - phi(x)|] < epsilon / 2$ for all
-  $x > X$. Then $|phi'(x)| < epsilon$ for all $x > X$, which proves the
+  $1 / h [abs(phi(x + h) - A) + abs(A - phi(x))] < epsilon / 2$ for all
+  $x > X$. Then $abs(phi'(x)) < epsilon$ for all $x > X$, which proves the
   claim.
 ]
 
@@ -4470,22 +4470,22 @@ take a limit as the partition is refined.
 #proof[
   1. If both $I_1$ and $I_2$ were limits of the Riemann sums, then for any
     partition fine enough the same Riemann sum $S_n$ would satisfy both
-    $|S_n - I_1| < epsilon / 2$ and $|S_n - I_2| < epsilon / 2$, whence
-    $|I_1 - I_2| < epsilon$ for all $epsilon > 0$, i.e. $I_1 = I_2$. This is
+    $abs(S_n - I_1) < epsilon / 2$ and $abs(S_n - I_2) < epsilon / 2$, whence
+    $abs(I_1 - I_2) < epsilon$ for all $epsilon > 0$, i.e. $I_1 = I_2$. This is
     the same argument as for the uniqueness of limits of sequences.
   2. Suppose, for contradiction, that $f$ is unbounded on $[a, b]$. Take
     $epsilon = 1$ in the definition: there is $delta > 0$ such that for every
     partition $P$ with $lambda < delta$ and every choice of intermediate
     points,
-    $ |I| - 1 < abs(sum_(i=1)^n f(xi_i) Delta x_i) < |I| + 1. $
+    $ abs(I) - 1 < abs(sum_(i=1)^n f(xi_i) Delta x_i) < abs(I) + 1. $
     Fix such a partition and suppose $f$ is unbounded on the first
     sub-interval $[x_0, x_1]$ (the argument is identical for any other one).
     Then $xi_1 in [x_0, x_1]$ can be chosen so that
-    $ |f(xi_1) Delta x_1| > |I| + abs(sum_(j=2)^n f(xi_j) Delta x_j) + 1. $
+    $ abs(f(xi_1) Delta x_1) > abs(I) + abs(sum_(j=2)^n f(xi_j) Delta x_j) + 1. $
     Writing $I_1 = abs(sum_(j=2)^n f(xi_j) Delta x_j)$ for brevity, we get
     $
-      |I| + 1 > abs(sum_(j=1)^n f(xi_j) Delta x_j)
-      >= |f(xi_1) Delta x_1| - I_1 > |I| + I_1 + 1 - I_1 = |I| + 1,
+      abs(I) + 1 > abs(sum_(j=1)^n f(xi_j) Delta x_j)
+      >= abs(f(xi_1) Delta x_1) - I_1 > abs(I) + I_1 + 1 - I_1 = abs(I) + 1,
     $
     a contradiction.
 ]
@@ -4685,14 +4685,14 @@ sums carry over verbatim to Stieltjes sums.
   partition $P$ with $lambda < delta$. Since $M_i$ is the supremum of $f$ on
   $[x_(i-1), x_i]$, we may choose $xi_i$ with
   $0 <= M_i - f(xi_i) < epsilon / (2(b-a))$; then
-  $|sum_(i=1)^n f(xi_i) Delta x_i - I| < epsilon / 2$. Moreover,
+  $abs(sum_(i=1)^n f(xi_i) Delta x_i - I) < epsilon / 2$. Moreover,
   $
-    |overline(S)(P) - sum_(i=1)^n f(xi_i) Delta x_i|
+    abs(overline(S)(P) - sum_(i=1)^n f(xi_i) Delta x_i)
     = sum_(i=1)^n [M_i - f(xi_i)] Delta x_i
     < epsilon / (2(b-a)) dot (b-a) = epsilon / 2.
   $
   Hence
-  $|overline(S)(P) - I| <= |sum f(xi_i) Delta x_i - I| + |overline(S)(P) - sum f(xi_i) Delta x_i| < epsilon$,
+  $abs(overline(S)(P) - I) <= abs(sum f(xi_i) Delta x_i - I) + abs(overline(S)(P) - sum f(xi_i) Delta x_i) < epsilon$,
   i.e. $lim_(lambda -> 0) overline(S)(P) = I$; the lower sum is treated
   identically.
 
@@ -4707,8 +4707,8 @@ sums carry over verbatim to Stieltjes sums.
 
   *Corollary 1 (continuity).* A continuous function on $[a, b]$ is uniformly
   continuous (Cantor's theorem, #link(<thm:cantor-theorem>)[Cantor]). Given
-  $epsilon > 0$, choose $delta > 0$ with $|f(x) - f(y)| < epsilon / (b-a)$
-  whenever $|x - y| < delta$; for any partition with $lambda < delta$ we have
+  $epsilon > 0$, choose $delta > 0$ with $abs(f(x) - f(y)) < epsilon / (b-a)$
+  whenever $abs(x - y) < delta$; for any partition with $lambda < delta$ we have
   $omega_i < epsilon / (b - a)$, whence
   $sum omega_i Delta x_i < epsilon$.
 
@@ -4810,7 +4810,7 @@ sums carry over verbatim to Stieltjes sums.
     interval;
   4. If $omega_i^f <= omega_i^g$ on each sub-interval (the oscillations of
     $f$ and $g$), integrability of $g$ implies integrability of $f$ (e.g.
-    of $|f|$ from that of $f$).
+    of $abs(f)$ from that of $f$).
 ]
 
 #example(name: "The Riemann Function is Integrable")[
@@ -4845,15 +4845,15 @@ sums carry over verbatim to Stieltjes sums.
 #proof[
   Fix $x_0 in [a, b]$. Since $lim_(x -> x_0) f(x) = 0$, for every
   $epsilon_1 > 0$ there is $delta_(x_0) > 0$ such that
-  $|f(x)| < epsilon_1$ for all $x in accent(U, circle)(x_0, delta_(x_0))$.
+  $abs(f(x)) < epsilon_1$ for all $x in accent(U, circle)(x_0, delta_(x_0))$.
   The open family $union.big_(x_0 in [a,b]) U(x_0, delta_(x_0))$ covers $[a, b]$,
   so by the Heine-Borel theorem it admits a finite subcover; consequently,
-  outside a finite set $x_1, dots.c, x_r$ we have $|f(x)| < epsilon_1$
+  outside a finite set $x_1, dots.c, x_r$ we have $abs(f(x)) < epsilon_1$
   throughout $[a, b]$.
 
   Now let $epsilon > 0$, take $epsilon_1 = epsilon / (4(b-a))$, and choose
   $M > max\{f(x_1), dots.c, f(x_r), epsilon_1\}$ so large that
-  $|f(x)| <= M$ on all of $[a, b]$. Take a partition $P$ for which the total
+  $abs(f(x)) <= M$ on all of $[a, b]$. Take a partition $P$ for which the total
   length of the sub-intervals containing some exceptional point
   $x_1, dots.c, x_r$ is $< epsilon / (4M)$ — possible since there are only
   finitely many of them — and split
@@ -4866,8 +4866,8 @@ sums carry over verbatim to Stieltjes sums.
   proves integrability.
 
   Finally, for any $epsilon > 0$ only finitely many points satisfy
-  $|f(x)| >= epsilon$; choosing all intermediate points outside this finite
-  set gives $|sum f(xi_i) Delta x_i| < epsilon (b - a)$, hence
+  $abs(f(x)) >= epsilon$; choosing all intermediate points outside this finite
+  set gives $abs(sum f(xi_i) Delta x_i) < epsilon (b - a)$, hence
   $lim_(lambda -> 0) sum_(i=1)^n f(xi_i) Delta x_i = 0$ and
   $integral_a^b f(x) dif x = 0$.
 ]
@@ -4907,7 +4907,7 @@ we say that the property holds *almost everywhere* on $A$.
     $K = [a, b] \ union.big_(j=1)^oo (alpha_j, beta_j)$, then:
     $
       forall epsilon > 0, exists delta > 0, "s.t." forall x in K, y in [a, b]
-      (|x - y| < delta): abs(f(x) - f(y)) < epsilon.
+      (abs(x - y) < delta): abs(f(x) - f(y)) < epsilon.
     $
 ] <lem:oscillation-lemmas>
 
@@ -4921,21 +4921,21 @@ $omega_f (x) = 0$.
   *Lemma 1.* Let $M, m$ be the supremum and infimum of $f$ on $[a, b]$, so
   $omega = M - m$ by definition. For any $y_1, y_2 in [a, b]$ we have
   $m <= f(y_i) <= M$, hence
-  $|f(y_1) - f(y_2)| <= M - m = omega$. Conversely, for any $epsilon > 0$
+  $abs(f(y_1) - f(y_2)) <= M - m = omega$. Conversely, for any $epsilon > 0$
   there exist $y_1, y_2$ with $f(y_1) > M - epsilon / 2$ and
   $f(y_2) < m + epsilon / 2$, so
-  $|f(y_1) - f(y_2)| >= f(y_1) - f(y_2) > M - m - epsilon = omega - epsilon$.
+  $abs(f(y_1) - f(y_2)) >= f(y_1) - f(y_2) > M - m - epsilon = omega - epsilon$.
   Combining both estimates gives the claimed identity.
 
   *Lemma 2.* ($==>$) If $f$ is continuous at $x$, then for every
-  $epsilon > 0$ there is $delta > 0$ with $|f(y) - f(x)| < epsilon / 2$ for
+  $epsilon > 0$ there is $delta > 0$ with $abs(f(y) - f(x)) < epsilon / 2$ for
   all $y in U(x, delta)$; hence for $y_1, y_2 in U(x, delta)$,
-  $ |f(y_1) - f(y_2)| <= |f(y_1) - f(x)| + |f(x) - f(y_2)| < epsilon, $
+  $ abs(f(y_1) - f(y_2)) <= abs(f(y_1) - f(x)) + abs(f(x) - f(y_2)) < epsilon, $
   so $omega_f (x, delta) <= epsilon$. Letting $delta -> 0^+$ gives
   $0 <= omega_f (x) <= epsilon$, and since $epsilon$ is arbitrary,
   $omega_f (x) = 0$. ($<==$) If $omega_f (x) = 0$, then for every
   $epsilon > 0$ there is $delta > 0$ with $omega_f (x, delta) < epsilon$;
-  hence $|f(x) - f(y)| <= omega_f (x, delta) < epsilon$ for all
+  hence $abs(f(x) - f(y)) <= omega_f (x, delta) < epsilon$ for all
   $y in U(x, delta)$, which is continuity at $x$.
 
   *Lemma 3.* By Lemma 2 every point of $D_(1\/n)$ is a discontinuity point,
@@ -4946,17 +4946,17 @@ $omega_f (x) = 0$.
 
   *Lemma 4.* Suppose the claim fails. Then there exist $epsilon_0 > 0$, a
   sequence $delta_n = 1\/n$, and points $s_n in K$, $t_n in [a, b]$ with
-  $|s_n - t_n| < 1\/n$ but $|f(s_n) - f(t_n)| >= epsilon_0$. Since
+  $abs(s_n - t_n) < 1\/n$ but $abs(f(s_n) - f(t_n)) >= epsilon_0$. Since
   $\{s_n\} subset K subset [a, b]$, the Bolzano-Weierstrass theorem yields a
   subsequence $\{s_(k_n)\}$ converging to some $s^*$. Clearly $s^* in K$ (as
   $K$ is closed) and
   $
-    |t_(k_n) - s^*| <= |t_(k_n) - s_(k_n)| + |s_(k_n) - s^*|
-    < 1\/k_n + |s_(k_n) - s^*| -> 0,
+    abs(t_(k_n) - s^*) <= abs(t_(k_n) - s_(k_n)) + abs(s_(k_n) - s^*)
+    < 1\/k_n + abs(s_(k_n) - s^*) -> 0,
   $
   so $t_(k_n) -> s^*$ as well. But $s^* in K$ is a continuity point of $f$,
-  so letting $n -> oo$ in $|f(s_(k_n)) - f(t_(k_n))| >= epsilon_0$ gives
-  $0 = |f(s^*) - f(s^*)| >= epsilon_0$, a contradiction.
+  so letting $n -> oo$ in $abs(f(s_(k_n)) - f(t_(k_n))) >= epsilon_0$ gives
+  $0 = abs(f(s^*) - f(s^*)) >= epsilon_0$, a contradiction.
 ]
 
 #theorem(name: "Lebesgue's Theorem")[
@@ -4997,8 +4997,8 @@ $omega_f (x) = 0$.
   $\{(alpha_i, beta_i) | i = 1, 2, dots.c\}$ covering $D(f)$ with
   $ sum_(i=1)^oo (beta_i - alpha_i) < epsilon / (2 omega). $
   Set $K = [a, b] \ union.big_(i=1)^oo (alpha_i, beta_i)$. By Lemma 4
-  there is $delta > 0$ such that $|x - y| < delta$ with $x in K$ and
-  $y in [a, b]$ implies $|f(x) - f(y)| < epsilon / (4(b - a))$. Take a
+  there is $delta > 0$ such that $abs(x - y) < delta$ with $x in K$ and
+  $y in [a, b]$ implies $abs(f(x) - f(y)) < epsilon / (4(b - a))$. Take a
   partition $P: a = x_0 < x_1 < dots.c < x_n = b$ with
   $lambda = max_(1 <= i <= n) (Delta x_i) < delta$, and split
   $sum omega_i Delta x_i = sum_1 omega_i Delta x_i + sum_2 omega_i Delta x_i$,
@@ -5007,7 +5007,7 @@ $omega_f (x) = 0$.
   + For $sum_1$: pick $y_i in K inter (x_(i-1), x_i)$; then for
     $z_1, z_2 in [x_(i-1), x_i]$,
     $
-      |f(z_1) - f(z_2)| <= |f(z_1) - f(y_i)| + |f(z_2) - f(y_i)|
+      abs(f(z_1) - f(z_2)) <= abs(f(z_1) - f(y_i)) + abs(f(z_2) - f(y_i))
       < 2 dot epsilon / (4(b-a)) = epsilon / (2(b-a)),
     $
     so $omega_i <= epsilon / (2(b-a))$ and
@@ -5048,7 +5048,7 @@ $omega_f (x) = 0$.
     - *Corollary 2*: if $f in R[a, b]$ with $f > 0$, then
       $integral_a^b f(x) dif x > 0$.
   4. *Integrability of the absolute value*: if $f in R[a, b]$, then
-    $|f| in R[a, b]$ and
+    $abs(f) in R[a, b]$ and
     $ abs(integral_a^b f(x) dif x) <= integral_a^b abs(f(x)) dif x; $
     the converse of this property is false.
   5. *Additivity over intervals*: if $f in R[a, b]$, then for every
@@ -5071,13 +5071,13 @@ $omega_f (x) = 0$.
   the claim.
 
   *Integrability of products.* Since $f, g in R[a, b]$, both are bounded:
-  $abs(f), |g| <= M$ on $[a, b]$. For any two points $hat(x), tilde(x)$ of
+  $abs(f), abs(g) <= M$ on $[a, b]$. For any two points $hat(x), tilde(x)$ of
   $[x_(i-1), x_i]$,
   $
-    |f(hat(x)) g(hat(x)) - f(tilde(x)) g(tilde(x))|
-    <= |f(hat(x)) - f(tilde(x))| dot |g(hat(x))|
-    + |f(tilde(x))| dot |g(hat(x)) - g(tilde(x))|
-    <= M [|f(hat(x)) - f(tilde(x))| + |g(hat(x)) - g(tilde(x))|].
+    abs(f(hat(x)) g(hat(x)) - f(tilde(x)) g(tilde(x)))
+    <= abs(f(hat(x)) - f(tilde(x))) dot abs(g(hat(x)))
+    + abs(f(tilde(x))) dot abs(g(hat(x)) - g(tilde(x)))
+    <= M [abs(f(hat(x)) - f(tilde(x))) + abs(g(hat(x)) - g(tilde(x)))].
   $
   If $omega_i$ is the oscillation of $f g$ on $[x_(i-1), x_i]$ and
   $omega'_i, omega''_i$ those of $f$ and $g$, this reads
@@ -5129,12 +5129,12 @@ $omega_f (x) = 0$.
   $0 <= f(xi) <= epsilon_n$ for all $n$ gives $f(xi) = 0$, contradicting
   $f > 0$.
 
-  *Integrability of $|f|$.* For any two points,
-  $||f(hat(x))| - |f(tilde(x))|| <= |f(hat(x)) - f(tilde(x))|$, so the
-  argument of the product case gives $|f| in R[a, b]$. Since
-  $-|f| <= f <= |f|$, monotonicity yields
-  $-integral_a^b |f| <= integral_a^b f <= integral_a^b |f|$, i.e.
-  $abs(integral_a^b f) <= integral_a^b |f|$.
+  *Integrability of $abs(f)$.* For any two points,
+  $abs(abs(f(hat(x))) - abs(f(tilde(x)))) <= abs(f(hat(x)) - f(tilde(x)))$, so the
+  argument of the product case gives $abs(f) in R[a, b]$. Since
+  $-abs(f) <= f <= abs(f)$, monotonicity yields
+  $-integral_a^b abs(f) <= integral_a^b f <= integral_a^b abs(f)$, i.e.
+  $abs(integral_a^b f) <= integral_a^b abs(f)$.
 
   *Additivity over intervals.* Let $f in R[a, b]$ and $c in [a, b]$. By the
   third criterion there is a partition of $[a, b]$ with
@@ -5236,13 +5236,13 @@ $omega_f (x) = 0$.
          + sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x_i) dif x \
     := & I_1 + I_2.
   $
-  Since $f in R[a, b]$, it is bounded: $|f| <= L$. Since $g$ is decreasing
+  Since $f in R[a, b]$, it is bounded: $abs(f) <= L$. Since $g$ is decreasing
   and $g >= 0$, we have $0 <= g(x_i) - g(x_(i+1))$ for every $i$ and
   $sum_(i=0)^(n-1) omega_i^g = g(a) - g(b) =: R$ where $omega_i^g$ denotes
   the oscillation of $g$ on $[x_i, x_(i+1)]$. With
   $lambda = max_i Delta x_i$,
   $
-    |I_1| <= sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) |f(x)| |g(x) - g(x_i)| dif x
+    abs(I_1) <= sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) abs(f(x)) abs(g(x) - g(x_i)) dif x
     <= L sum_(i=0)^(n-1) omega_i^g Delta x_i <= L R lambda -> 0.
   $
   Now set $F(x) = integral_a^x f(t) dif t$, so that
@@ -5260,7 +5260,7 @@ $omega_f (x) = 0$.
   over $i = 1, dots.c, n-1$ and appending the last term,
   $ m g(a) <= I_2 <= M g(a), quad "i.e." quad m <= I_2 / g(a) <= M $
   (if $g(a) = 0$ then $g equiv 0$ and the claim is trivial). Letting
-  $lambda -> 0$ in $I = I_1 + I_2$ with $|I_1| -> 0$ yields
+  $lambda -> 0$ in $I = I_1 + I_2$ with $abs(I_1) -> 0$ yields
   $m g(a) <= I <= M g(a)$, and by the intermediate value theorem applied to
   the continuous function $F$, there exists $xi in [a, b]$ with
   $F(xi) = integral_a^xi f dif x = I / g(a)$. Multiplying by $g(a)$ gives
@@ -5295,10 +5295,10 @@ $omega_f (x) = 0$.
 
 #proof[
   We prove the first statement. Since $g in C[A, B]$, it is bounded, say
-  $|g| <= M$, and uniformly continuous: for every $epsilon > 0$ there is
+  $abs(g) <= M$, and uniformly continuous: for every $epsilon > 0$ there is
   $delta > 0$ with
-  $|g(u') - g(u'')| < epsilon / (2(b-a))$ whenever $u', u'' in [A, B]$,
-  $|u' - u''| < delta$. Since $f in R[a, b]$, the third criterion (in the
+  $abs(g(u') - g(u'')) < epsilon / (2(b-a))$ whenever $u', u'' in [A, B]$,
+  $abs(u' - u'') < delta$. Since $f in R[a, b]$, the third criterion (in the
   form of its Corollary 1) provides a partition $P$ with
   $sum_(omega_i (f) >= delta) Delta x_i < epsilon / (4M)$. Splitting the
   oscillation sum of $g dot f$,
@@ -5352,7 +5352,7 @@ $omega_f (x) = 0$.
 
 #proof[
   Since $f$ is integrable on a larger interval, it is bounded there: say
-  $|f| <= M$ on $[a - h_0, b + h_0]$. Given $epsilon > 0$, split $[a, b]$
+  $abs(f) <= M$ on $[a - h_0, b + h_0]$. Given $epsilon > 0$, split $[a, b]$
   into $n$ equal sub-intervals of length $Delta x = (b-a)/n$ with $n$ so
   large that $Delta x < min(h_0, epsilon / (8M))$ and
   $sum_(i=1)^n omega_i Delta x < epsilon / 6$, which is possible by the
@@ -5363,7 +5363,7 @@ $omega_f (x) = 0$.
     integral_a^b abs(f(x+h) - f(x)) dif x
     = sum_(i=1)^n integral_(x_(i-1))^(x_i) abs(f(x+h) - f(x)) dif x,
   $
-  and for $x in [x_(i-1), x_i]$ with $|h| < Delta x$ the point $x + h$ lies
+  and for $x in [x_(i-1), x_i]$ with $abs(h) < Delta x$ the point $x + h$ lies
   in $[x_(i-2), x_(i+1)]$, we have
   $abs(f(x+h) - f(x)) <= omega_(i-1) + omega_i + omega_(i+1)$, where
   $x_(-1) = a - Delta x$ and $x_(n+1) = b + Delta x$. Hence
@@ -5427,9 +5427,9 @@ between differential and integral calculus.
       = 1/h integral_(x_0)^(x_0 + h) [f(t) - f(x_0)] dif t.
     $
     Since $f$ is continuous at $x_0$, for every $epsilon > 0$ there exists
-    $delta > 0$ such that $|f(t) - f(x_0)| < epsilon$ whenever
-    $|t - x_0| < delta$. For $0 < abs(h) < delta$ every $t$ between $x_0$
-    and $x_0 + h$ satisfies $|t - x_0| <= abs(h) < delta$, hence
+    $delta > 0$ such that $abs(f(t) - f(x_0)) < epsilon$ whenever
+    $abs(t - x_0) < delta$. For $0 < abs(h) < delta$ every $t$ between $x_0$
+    and $x_0 + h$ satisfies $abs(t - x_0) <= abs(h) < delta$, hence
     $
       abs((F(x_0 + h) - F(x_0)) / h - f(x_0))
       <= 1/(abs(h)) integral_(x_0)^(x_0 + h) abs(f(t) - f(x_0)) dif t
@@ -5572,7 +5572,7 @@ between differential and integral calculus.
 ] <ex:difference-quotient-limit>
 
 #proof[
-  For $|h|$ small enough $[a + h, b + h] subset (A, B)$, so $f$ is
+  For $abs(h)$ small enough $[a + h, b + h] subset (A, B)$, so $f$ is
   integrable on $[a + h, b + h]$ by additivity over intervals. Substituting
   $u = x + h$ in the first integral,
   $
@@ -6815,7 +6815,7 @@ $limsup_(x -> +oo) f(x) = +oo$.
   The necessary and sufficient condition for the convergence of the series $sum_(n=1)^oo x_n$ is:
   $
     forall epsilon > 0, exists N in bb(N), forall m > n > N:
-    |x_(n+1) + x_(n+2) + dots.c + x_m| = |sum_(k=n+1)^m x_k| < epsilon.
+    abs(x_(n+1) + x_(n+2) + dots.c + x_m) = abs(sum_(k=n+1)^m x_k) < epsilon.
   $
 ] <thm:cauchy-criterion-series>
 
@@ -6836,7 +6836,7 @@ $limsup_(x -> +oo) f(x) = +oo$.
 #proof[
   We verify the Cauchy criterion. For $p in bb(N)^+$,
   $
-    |x_(n+1) + x_(n+2) + dots.c + x_(n+p)| = |u_(n+1) - u_(n+2) + u_(n+3) - dots.c + (-1)^(p+1) u_(n+p)|.
+    abs(x_(n+1) + x_(n+2) + dots.c + x_(n+p)) = abs(u_(n+1) - u_(n+2) + u_(n+3) - dots.c + (-1)^(p+1) u_(n+p)).
   $
   If $p$ is odd, this quantity equals
   $
@@ -6848,9 +6848,9 @@ $limsup_(x -> +oo) f(x) = +oo$.
   $
   and also $u_(n+1) - (u_(n+2) - u_(n+3)) - dots.c - u_(n+p) < u_(n+1)$. In both cases the monotonicity of $(u_n)$ is used, and
   $
-    |x_(n+1) + x_(n+2) + dots.c + x_(n+p)| <= u_(n+1)
+    abs(x_(n+1) + x_(n+2) + dots.c + x_(n+p)) <= u_(n+1)
   $
-  holds for all $p in bb(N)^+$. Since $u_n -> 0$, for every $epsilon > 0$ there exists $N$ such that $u_(n+1) < epsilon$ for all $n > N$; hence $|sum_(k=n+1)^(n+p) x_k| < epsilon$ for all $p$, and the Cauchy criterion yields convergence.
+  holds for all $p in bb(N)^+$. Since $u_n -> 0$, for every $epsilon > 0$ there exists $N$ such that $u_(n+1) < epsilon$ for all $n > N$; hence $abs(sum_(k=n+1)^(n+p) x_k) < epsilon$ for all $p$, and the Cauchy criterion yields convergence.
 ]
 
 === Abel Transform and the Abel-Dirichlet Tests // Abel 变换与 Abel-Dirichlet 判别法
@@ -6876,24 +6876,24 @@ $limsup_(x -> +oo) f(x) = +oo$.
 ]
 
 #lemma(name: "Abel Lemma (Discrete Second Integral Mean Value Theorem)")[
-  Let $(a_n)$, $(b_n)$ be two sequences such that $(a_n)$ is monotonic and $(B_k) = (sum_(i=1)^k b_i)$ is bounded, say $|B_k| <= M$. Then for any $p in bb(N)^+$,
+  Let $(a_n)$, $(b_n)$ be two sequences such that $(a_n)$ is monotonic and $(B_k) = (sum_(i=1)^k b_i)$ is bounded, say $abs(B_k) <= M$. Then for any $p in bb(N)^+$,
   $
-    |sum_(k=1)^p a_k b_k| <= M (|a_1| + 2 |a_p|).
+    abs(sum_(k=1)^p a_k b_k) <= M (abs(a_1) + 2 abs(a_p)).
   $
 ] <lem:abel-lemma>
 
 #proof[
   By the Abel transform,
   $
-    |sum_(k=1)^p a_k b_k| <= |a_p B_p| + sum_(k=1)^(p-1) |a_(k+1) - a_k| dot |B_k| <= M (|a_p| + sum_(k=1)^(p-1) |a_(k+1) - a_k|).
+    abs(sum_(k=1)^p a_k b_k) <= abs(a_p B_p) + sum_(k=1)^(p-1) abs(a_(k+1) - a_k) dot abs(B_k) <= M (abs(a_p) + sum_(k=1)^(p-1) abs(a_(k+1) - a_k)).
   $
   Since $(a_n)$ is monotonic, the differences $a_(k+1) - a_k$ all have the same sign, so
   $
-    sum_(k=1)^(p-1) |a_(k+1) - a_k| = |sum_(k=1)^(p-1) (a_(k+1) - a_k)| = |a_p - a_1|.
+    sum_(k=1)^(p-1) abs(a_(k+1) - a_k) = abs(sum_(k=1)^(p-1) (a_(k+1) - a_k)) = abs(a_p - a_1).
   $
   Combining the two estimates,
   $
-    |sum_(k=1)^p a_k b_k| <= M (|a_p| + |a_p - a_1|) <= M (|a_1| + 2 |a_p|).
+    abs(sum_(k=1)^p a_k b_k) <= M (abs(a_p) + abs(a_p - a_1)) <= M (abs(a_1) + 2 abs(a_p)).
   $
 ]
 
@@ -6904,17 +6904,17 @@ $limsup_(x -> +oo) f(x) = +oo$.
 ] <thm:abel-dirichlet-series>
 
 #proof[
-  + *Abel.* Let $|a_n| <= M$. Since $sum_(n=1)^oo b_n$ converges, for every $epsilon > 0$ there exists $N$ such that $|sum_(k=n+1)^(n+p) b_k| < epsilon$ for all $n > N$ and all $p in bb(N)^+$. Applying the Abel lemma to the tails, whose $b$-partial sums are bounded by $epsilon$,
+  + *Abel.* Let $abs(a_n) <= M$. Since $sum_(n=1)^oo b_n$ converges, for every $epsilon > 0$ there exists $N$ such that $abs(sum_(k=n+1)^(n+p) b_k) < epsilon$ for all $n > N$ and all $p in bb(N)^+$. Applying the Abel lemma to the tails, whose $b$-partial sums are bounded by $epsilon$,
     $
-      |sum_(k=n+1)^(n+p) a_k b_k| < epsilon (|a_(n+1)| + 2 |a_(n+p)|) <= 3 M epsilon.
+      abs(sum_(k=n+1)^(n+p) a_k b_k) < epsilon (abs(a_(n+1)) + 2 abs(a_(n+p))) <= 3 M epsilon.
     $
-  + *Dirichlet.* Since $a_n -> 0$, for every $epsilon > 0$ there exists $N$ with $|a_n| < epsilon$ for all $n > N$. Let $|sum_(i=1)^n b_i| <= M$ for all $n$, and put $B'_k = sum_(i=n+1)^(n+k) b_i$ ($k = 1, dots, p$). Then
+  + *Dirichlet.* Since $a_n -> 0$, for every $epsilon > 0$ there exists $N$ with $abs(a_n) < epsilon$ for all $n > N$. Let $abs(sum_(i=1)^n b_i) <= M$ for all $n$, and put $B'_k = sum_(i=n+1)^(n+k) b_i$ ($k = 1, dots, p$). Then
     $
-      |B'_k| = |sum_(i=1)^(n+k) b_i - sum_(i=1)^n b_i| <= 2 M,
+      abs(B'_k) = abs(sum_(i=1)^(n+k) b_i - sum_(i=1)^n b_i) <= 2 M,
     $
     and the Abel lemma gives
     $
-      |sum_(k=n+1)^(n+p) a_k b_k| < 2 M (|a_(n+1)| + 2 |a_(n+p)|) <= 6 M epsilon.
+      abs(sum_(k=n+1)^(n+p) a_k b_k) < 2 M (abs(a_(n+1)) + 2 abs(a_(n+p))) <= 6 M epsilon.
     $
   In both cases the Cauchy convergence criterion for series yields the convergence of $sum_(n=1)^oo a_n b_n$.
 ]
@@ -6928,19 +6928,19 @@ $limsup_(x -> +oo) f(x) = +oo$.
   $
     2 sin(x/2) dot sum_(k=1)^n sin k x = cos(x/2) - cos((2n+1) x / 2),
   $
-  hence $|sum_(k=1)^n sin k x| <= 1 / |sin(x/2)|$ for all $n$: the partial sums of $(sin n x)$ are bounded. By the Dirichlet test (applied with $b_n = sin n x$), the series converges.
+  hence $abs(sum_(k=1)^n sin k x) <= 1 / abs(sin(x/2))$ for all $n$: the partial sums of $(sin n x)$ are bounded. By the Dirichlet test (applied with $b_n = sin n x$), the series converges.
 ]
 
 == Absolute and Conditional Convergence // 绝对收敛与条件收敛
 
 #definition(name: "Absolute and Conditional Convergence of Series")[
-  If the series $sum_(n=1)^oo |x_n|$ converges, then the series $sum_(n=1)^oo x_n$ is said to be *absolutely convergent*.
+  If the series $sum_(n=1)^oo abs(x_n)$ converges, then the series $sum_(n=1)^oo x_n$ is said to be *absolutely convergent*.
 
   If the series $sum_(n=1)^oo x_n$ converges but is not absolutely convergent, then $sum_(n=1)^oo x_n$ is said to be *conditionally convergent*.
 ] <def:abs-cond-convergence-series>
 
 #note[
-  Absolute convergence implies convergence: by the triangle inequality, $|sum_(k=n+1)^m x_k| <= sum_(k=n+1)^m |x_k|$, so the Cauchy criterion transfers from $sum |x_n|$ to $sum x_n$. Consequently, for a conditionally convergent series one always has $sum_(n=1)^oo |x_n| = +oo$.
+  Absolute convergence implies convergence: by the triangle inequality, $abs(sum_(k=n+1)^m x_k) <= sum_(k=n+1)^m abs(x_k)$, so the Cauchy criterion transfers from $sum abs(x_n)$ to $sum x_n$. Consequently, for a conditionally convergent series one always has $sum_(n=1)^oo abs(x_n) = +oo$.
 ]
 
 === Positive and Negative Derived Series // 正负导出级数
@@ -6948,7 +6948,7 @@ $limsup_(x -> +oo) f(x) = +oo$.
 #definition(name: "Positive and Negative Derived Series")[
   For a series $sum_(n=1)^oo a_n$, the *positive derived series* $sum_(n=1)^oo a_n^+$ and the *negative derived series* $sum_(n=1)^oo a_n^-$ are defined by
   $
-    a_n^+ = (|a_n| + a_n) / 2 = cases(a_n quad & a_n > 0, 0 quad & a_n <= 0), quad quad a_n^- = (|a_n| - a_n) / 2 = cases(-a_n quad & a_n < 0, 0 quad & a_n >= 0):
+    a_n^+ = (abs(a_n) + a_n) / 2 = cases(a_n quad & a_n > 0, 0 quad & a_n <= 0), quad quad a_n^- = (abs(a_n) - a_n) / 2 = cases(-a_n quad & a_n < 0, 0 quad & a_n >= 0):
   $
   $a_n^+$ collects the positive terms of $(a_n)$, while $a_n^-$ collects the absolute values of the negative terms.
 ] <def:positive-derived-series>
@@ -6956,7 +6956,7 @@ $limsup_(x -> +oo) f(x) = +oo$.
 #proposition(name: "Properties of the Derived Series")[
   The decompositions
   $
-    sum_(n=1)^oo x_n = sum_(n=1)^oo x_n^+ - sum_(n=1)^oo x_n^-, quad quad sum_(n=1)^oo |x_n| = sum_(n=1)^oo x_n^+ + sum_(n=1)^oo x_n^-
+    sum_(n=1)^oo x_n = sum_(n=1)^oo x_n^+ - sum_(n=1)^oo x_n^-, quad quad sum_(n=1)^oo abs(x_n) = sum_(n=1)^oo x_n^+ + sum_(n=1)^oo x_n^-
   $
   hold in the extended sense (the two sides are simultaneously finite or $+oo$). Moreover:
   + If $sum_(n=1)^oo x_n$ converges absolutely, then both $sum_(n=1)^oo x_n^+$ and $sum_(n=1)^oo x_n^-$ converge.
@@ -6964,9 +6964,9 @@ $limsup_(x -> +oo) f(x) = +oo$.
 ] <prop:derived-series-properties>
 
 #proof[
-  For the first assertion, note that $0 <= x_n^+ <= |x_n|$ and $0 <= x_n^- <= |x_n|$; since $sum_(n=1)^oo |x_n|$ converges, both derived series converge by the comparison test.
+  For the first assertion, note that $0 <= x_n^+ <= abs(x_n)$ and $0 <= x_n^- <= abs(x_n)$; since $sum_(n=1)^oo abs(x_n)$ converges, both derived series converge by the comparison test.
 
-  For the second assertion, suppose $sum_(n=1)^oo x_n$ converges conditionally and assume, for contradiction, that $sum_(n=1)^oo x_n^+$ converges. Then from $sum x_n^- = sum x_n^+ - sum x_n$ the series $sum_(n=1)^oo x_n^-$ would converge as well, whence $sum_(n=1)^oo |x_n| = sum x_n^+ + sum x_n^-$ would converge, contradicting the hypothesis. Hence $sum_(n=1)^oo x_n^+ = +oo$, and the same argument shows $sum_(n=1)^oo x_n^- = +oo$.
+  For the second assertion, suppose $sum_(n=1)^oo x_n$ converges conditionally and assume, for contradiction, that $sum_(n=1)^oo x_n^+$ converges. Then from $sum x_n^- = sum x_n^+ - sum x_n$ the series $sum_(n=1)^oo x_n^-$ would converge as well, whence $sum_(n=1)^oo abs(x_n) = sum x_n^+ + sum x_n^-$ would converge, contradicting the hypothesis. Hence $sum_(n=1)^oo x_n^+ = +oo$, and the same argument shows $sum_(n=1)^oo x_n^- = +oo$.
 ]
 
 === Rearrangements of Series // 级数的更序与重排
@@ -6990,13 +6990,13 @@ $limsup_(x -> +oo) f(x) = +oo$.
     which shows that $sum x_n'$ converges with $sum x_n' <= sum x_n$. Conversely, $sum_(n=1)^oo x_n$ is itself a rearrangement of $sum_(n=1)^oo x_n'$, so $sum x_n <= sum x_n'$. Therefore the two sums coincide.
   + Now suppose $sum_(n=1)^oo x_n$ is an absolutely convergent series with terms of arbitrary sign. Then $sum x_n^+$ and $sum x_n^-$ converge, with
     $
-      sum x_n = sum x_n^+ - sum x_n^-, quad quad sum |x_n| = sum x_n^+ + sum x_n^-.
+      sum x_n = sum x_n^+ - sum x_n^-, quad quad sum abs(x_n) = sum x_n^+ + sum x_n^-.
     $
     For the rearrangement, form $sum x_n'^+$ and $sum x_n'^-$; since $x_n'^+ = x_(phi(n))^+$ and $x_n'^- = x_(phi(n))^-$, these are rearrangements of $sum x_n^+$ and $sum x_n^-$ respectively. By the positive term case,
     $
       sum x_n'^+ = sum x_n^+, quad quad sum x_n'^- = sum x_n^-.
     $
-    Hence $sum_(n=1)^oo |x_n'| = sum x_n'^+ + sum x_n'^- = sum x_n^+ + sum x_n^- < +oo$, so $sum x_n'$ converges absolutely, and
+    Hence $sum_(n=1)^oo abs(x_n') = sum x_n'^+ + sum x_n'^- = sum x_n^+ + sum x_n^- < +oo$, so $sum x_n'$ converges absolutely, and
     $
       sum_(n=1)^oo x_n' = sum x_n'^+ - sum x_n'^- = sum x_n^+ - sum x_n^- = sum_(n=1)^oo x_n.
     $
