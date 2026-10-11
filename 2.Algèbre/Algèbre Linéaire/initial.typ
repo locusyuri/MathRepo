@@ -58,8 +58,10 @@ such that $m(A) = 0$.
 
 = Determinants // 行列式
 
-行列式是方阵的一个标量值，既是矩阵可逆性的判据，也是 Cramer 法则和特征值理论的基础。
-本章从排列的逆序数出发定义行列式，逐步建立其性质、展开法则与特殊行列式的计算。
+The determinant is a scalar value assigned to a square matrix. It serves both as a
+criterion for matrix invertibility and as the foundation for Cramer's rule and eigenvalue theory.
+This chapter defines the determinant starting from the inversion number of permutations,
+and gradually develops its properties, expansion rules, and computation of special determinants.
 
 == Permutations // 排列
 
@@ -293,8 +295,10 @@ $
 
 = Matrices // 矩阵
 
-矩阵是线性映射的坐标表示，也是线性方程组的系数载体。
-本章涵盖矩阵的基本运算、特殊方阵的性质、逆矩阵的求法、分块矩阵技巧以及秩的运算性质。
+Matrices are the coordinate representation of linear mappings and also serve as
+coefficient carriers for linear systems. This chapter covers basic matrix operations,
+properties of special square matrices, methods for finding inverse matrices, block
+matrix techniques, and operations of rank.
 
 == Basic Operations // 基本运算
 
@@ -342,6 +346,12 @@ The determinant of a product equals the product of the determinants — see #lin
 
   where the sum runs over all strictly increasing index tuples, and $A(1, 2, ..., m; v_1, ..., v_m)$ denotes the minor of $A$ on rows $1, ..., m$ and columns $v_1, ..., v_m$.
 ] <thm:cauchy-binet-formula>
+
+#note[
+  The proof expands $abs(A B)$ using the Leibniz formula and groups terms by
+  the column indices selected from $B$, yielding the sum of products of
+  corresponding minors.
+]
 
 === Matrix Equivalence // 矩阵等价
 
@@ -772,6 +782,12 @@ calculation rules:
 ] <thm:sherman-morrison>
 
 #note[
+  Direct verification: multiply
+  $(A + alpha beta^T)(A^(-1) - (A^(-1) alpha beta^T A^(-1))/(1 + beta^T A^(-1) alpha))$
+  and simplify to $E$.
+]
+
+#note[
   Combining the properties of determinants, we obtain the determinant version of the
   Sherman-Morrison formula, known as the *matrix determinant lemma*:
 
@@ -779,10 +795,11 @@ calculation rules:
   abs(A + alpha beta^T) = abs(A) (1 + beta^T A^(-1) alpha).
   $
 
-  The theorem can also be stated in terms of the adjugate of $A$ as
+  The theorem can also be stated in terms of the adjugate of $A$ (writing
+  $u = alpha$, $v = beta$) as
 
   $
-  abs(A + u v^T) = abs(A) + v^T "adj"(A) u,
+  abs(A + alpha beta^T) = abs(A) + beta^T "adj"(A) alpha,
   $
 
   in which case it applies whether or not $A$ is invertible.
@@ -798,6 +815,11 @@ calculation rules:
   $
 ] <thm:woodbury-identity>
 
+#note[
+  Follows from the Sherman-Morrison formula by induction on the rank of $U C V^T$,
+  or by direct verification using block matrix inversion.
+]
+
 Without loss of generality, let $A = E_n$ and $C = E_k$. Then the Woodbury identity simplifies
 to
 
@@ -809,8 +831,9 @@ This form is particularly useful in applications involving low-rank updates to i
 
 = Linear Systems // 线性方程组
 
-线性方程组是线性代数最直接的应用对象。
-本章用矩阵的初等变换和秩理论刻画线性方程组解的存在性与结构。
+Linear systems are the most direct application of linear algebra. This chapter
+characterizes the existence and structure of solutions to linear systems using
+elementary transformations and rank theory.
 
 == Elimination Method // 消元法
 
@@ -1014,8 +1037,10 @@ system, the above formula gives all the solutions of $A x = b$.
 
 = Linear Spaces // 线性空间
 
-线性空间是线性代数的抽象基础——将所有具有加法和数乘结构的集合统一到一个公理框架下。
-本章建立线性空间的定义、基与维数理论，并讨论子空间的结构性质。
+Linear spaces form the abstract foundation of linear algebra — unifying all sets
+equipped with addition and scalar multiplication under a single axiomatic framework.
+This chapter establishes the definition of linear spaces, the theory of bases and
+dimensions, and discusses the structural properties of subspaces.
 
 == Linear Spaces and Their Bases // 线性空间与基
 
@@ -1369,8 +1394,10 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
 
 = Linear Mappings // 线性映射
 
-线性映射是保持线性结构的空间之间的映射，是矩阵与空间之间的桥梁。
-本章讨论线性映射的定义、运算、核与像、矩阵表示以及特殊线性变换。
+Linear mappings are mappings between spaces that preserve linear structure,
+serving as a bridge between matrices and spaces. This chapter discusses the
+definition and operations of linear mappings, their kernels and images, matrix
+representations, and special linear transformations.
 
 == Linear Mappings and Their Computation // 线性映射及其运算
 
@@ -1471,6 +1498,11 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   "dim"("ker"(A)) + "dim"("im"(A)) = "dim"(V).
   $
 ] <thm:rank-nullity>
+
+#note[
+  Extend a basis of $"ker"(A)$ to a basis of $V$. The images of the extension
+  vectors under $A$ form a basis of $"im"(A)$, and the count gives the formula.
+]
 
 #definition(name: "Cokernel")[
   Let $V$ and $V'$ be linear spaces over $F$, and $A: V -> V'$ a linear mapping.
@@ -1623,7 +1655,7 @@ $A B = B A = O$.
 $P_U$ satisfies and uniquely satisfies:
 
 $
-P_U(alpha) = cases(
+P_(U)(alpha) = cases(
   alpha, & alpha in U,
   0, & alpha in W,
 ).
@@ -1703,8 +1735,10 @@ $
 
 = Diagonalization // 对角化
 
-对角化是线性算子结构理论的第一步——寻找一组基使线性算子的矩阵表示最简化。
-本章讨论相似关系、特征值与特征向量、极小多项式、空间分解以及对角化的充要条件。
+Diagonalization is the first step in the structure theory of linear operators —
+finding a basis that simplifies the matrix representation of a linear operator.
+This chapter discusses similarity relations, eigenvalues and eigenvectors, minimal
+polynomials, space decomposition, and necessary and sufficient conditions for diagonalization.
 
 == Similarity of Matrices // 矩阵的相似
 
@@ -1800,7 +1834,7 @@ Similarity is an equivalence relation on the set of square matrices of the same 
   The polynomial
 
   $
-  f(lambda) = abs(lambda E - A) = det(lambda E - A)
+  f(lambda) = abs(lambda E - A)
   $
 
   is called the *eigenpolynomial* (or *characteristic polynomial*) of $A$,
@@ -1880,11 +1914,21 @@ are invariant under similarity.
   where $R_i = abs(a_("i1")) + ... + abs(a_(i,i-1)) + abs(a_(i,i+1)) + ... + abs(a_("in"))$.
 ] <thm:gerschgorin-1>
 
+#note[
+  From $A x = lambda x$, let $|x_k| = max_i |x_i|$. The $k$-th equation gives
+  $abs(lambda - a_("kk")) <= sum_(j != k) abs(a_("kj"))$.
+]
+
 #theorem(name: "Gerschgorin Disks Second Theorem")[
   If the $n$ Gerschgorin disks of $A$ form $k$ connected regions, and one connected
   region contains $k$ Gerschgorin disks, then there are exactly $k$ eigenvalues
   (counting multiplicities) in this connected region.
 ] <thm:gerschgorin-2>
+
+#note[
+  Uses the continuity of eigenvalues: deform $A$ to its diagonal $D$ and track
+  how eigenvalues move through the connected regions of the Gerschgorin disks.
+]
 
 == Minimal Polynomial // 极小多项式
 
@@ -1948,11 +1992,11 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 
 #proposition(name: "Kernel Decomposition by Coprime Polynomials")[
   Let $V$ be a linear space over $F$ and $A in upright("End")(V)$.
-  On $F[x]$, if $f(x) = f_1(x) f_2(x) ... f_s(x)$ where $f_i(x)$ are pairwise coprime,
+  On $F[x]$, if $f(x) = f_1(x) f_2(x) ... f_(s)(x)$ where $f_(i)(x)$ are pairwise coprime,
   then
 
   $
-  "ker"(f(A)) = "ker"(f_1(A)) ⊕ "ker"(f_2(A)) ⊕ ... ⊕ "ker"(f_s(A)).
+  "ker"(f(A)) = "ker"(f_1(A)) ⊕ "ker"(f_2(A)) ⊕ ... ⊕ "ker"(f_(s)(A)).
   $
 ] <prop:kernel-decomposition-coprime>
 
@@ -1967,6 +2011,12 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   f(A) = 0.
   $
 ] <thm:hamilton-cayley>
+
+#note[
+  Substitute $lambda = A$ into the identity
+  $"adj"(lambda E - A) dot (lambda E - A) = f(lambda) E$.
+  Since $"adj"(lambda E - A)$ is a polynomial in $lambda$, this gives $f(A) = 0$.
+]
 
 #note[
   The Hamilton-Cayley theorem states that the characteristic polynomial of a linear
@@ -1988,9 +2038,11 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 ] <def:root-subspace>
 
 #note[
-  Here $r$ has two equivalent definitions: (1) the smallest positive integer such that
-  $(A - lambda E)^r(alpha) = 0$; (2) the algebraic multiplicity of $lambda$.
-  The minimal such $r$ is precisely the algebraic multiplicity.
+  For a vector $alpha$ in the generalized eigenspace, the smallest positive integer
+  $r$ such that $(A - lambda E)^r(alpha) = 0$ is called the *height* of $alpha$.
+  The maximum height over all vectors equals the algebraic multiplicity of $lambda$,
+  and the chain $V_(lambda)^(1) subset V_(lambda)^(2) subset ...$ stabilizes
+  at this value.
 ]
 
 #theorem(name: "Root Space Decomposition Theorem")[
@@ -2007,6 +2059,11 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   V = V_(lambda_1)^(r_1) ⊕ V_(lambda_2)^(r_2) ⊕ ... ⊕ V_(lambda_k)^(r_k).
   $
 ] <thm:root-space-decomposition>
+
+#note[
+  Apply the kernel decomposition by coprime polynomials to
+  $f(lambda) = (lambda - lambda_1)^(r_1) ... (lambda - lambda_k)^(r_k)$.
+]
 
 == Diagonalization // 对角化
 
@@ -2029,6 +2086,12 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   - The minimal polynomial of $A$ has no repeated roots, i.e. it factors into distinct
     linear factors over $F$: $m(lambda) = (lambda - lambda_1)(lambda - lambda_2)...(lambda - lambda_k)$.
 ] <thm:diagonalization-conditions>
+
+#note[
+  Necessity: the eigenspaces must span $V$. Sufficiency: eigenvectors from the
+  eigenspaces form a basis. The minimal polynomial condition follows from the
+  root space decomposition.
+]
 
 == Diagonalization of Special Matrices // 特殊矩阵的对角化
 
@@ -2148,8 +2211,11 @@ The simultaneous diagonalization result extends to commuting families of normal 
 
 = Jordan Canonical Form // Jordan 标准型
 
-Jordan 标准型是线性算子结构理论的普适结果——任意方阵相似于 Jordan 块的直和。
-本章通过多项式矩阵的 Smith 标准型建立不变因子与初等因子理论，最终导出 Jordan 标准型的存在性与计算方法。
+The Jordan canonical form is the universal result of the structure theory of linear
+operators — every square matrix is similar to a direct sum of Jordan blocks. This
+chapter establishes the theory of invariant divisors and elementary divisors through
+the Smith normal form of polynomial matrices, and ultimately derives the existence
+and computation method of the Jordan canonical form.
 
 == Polynomial Matrices // 多项式矩阵
 
@@ -2196,15 +2262,15 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
     (d_1(lambda), 0, ..., 0),
     (0, d_2(lambda), ..., 0),
     (dots.v, dots.v, dots.down, dots.v),
-    (0, 0, ..., d_r(lambda), 0, ..., 0),
+    (0, 0, ..., d_(r)(lambda), 0, ..., 0),
     (0, 0, ..., 0, 0, ..., 0),
     (dots.v, dots.v, dots.down, dots.v),
     (0, 0, ..., 0, 0, ..., 0),
   ),
   $
 
-  where $d_1(lambda), ..., d_r(lambda)$ are monic polynomials with
-  $d_1(lambda) | d_2(lambda) | ... | d_r(lambda)$,
+  where $d_1(lambda), ..., d_(r)(lambda)$ are monic polynomials with
+  $d_1(lambda) | d_2(lambda) | ... | d_(r)(lambda)$,
   then this matrix is the *Smith normal form* of $A(lambda)$.
 ] <def:smith-normal-form>
 
@@ -2218,18 +2284,18 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 
 #definition(name: "$k$-th Order Determinant Divisor")[
   The monic greatest common divisor of all $k$-order minors of $A(lambda)$ is called
-  the *$k$-th order determinant divisor*, denoted $D_k(lambda)$.
+  the *$k$-th order determinant divisor*, denoted $D_(k)(lambda)$.
 ] <def:determinant-divisor>
 
 #definition(name: "Invariant Divisors")[
-  Let $D_1(lambda), ..., D_r(lambda)$ be the determinant divisors of $A(lambda)$
+  Let $D_1(lambda), ..., D_(r)(lambda)$ be the determinant divisors of $A(lambda)$
   (where $r = upright("rank")(A(lambda))$). The polynomials
 
   $
   d_1(lambda) = D_1(lambda), 
   d_2(lambda) = D_2(lambda) / D_1(lambda), 
   ..., 
-  d_r(lambda) = D_r(lambda) / D_(r-1)(lambda)
+  d_(r)(lambda) = D_(r)(lambda) / D_(r-1)(lambda)
   $
 
   are called the *invariant divisors* of $A(lambda)$.
@@ -2319,11 +2385,11 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 == Elementary Divisors and Jordan Canonical Form // 初等因子与 Jordan 标准型
 
 #definition(name: "Elementary Divisors")[
-  Let $d_1(lambda), ..., d_r(lambda)$ be the invariant divisors of $A(lambda)$.
+  Let $d_1(lambda), ..., d_(r)(lambda)$ be the invariant divisors of $A(lambda)$.
   If the factorization of each into irreducible polynomials over $F$ is
 
   $
-  d_i(lambda) = p_("i1")(lambda)^(k_("i1")) p_("i2")(lambda)^(k_("i2")) ... p_("is"_i)(lambda)^(k_("is"_i)),
+  d_(i)(lambda) = p_("i1")(lambda)^(k_("i1")) p_("i2")(lambda)^(k_("i2")) ... p_("is"_i)(lambda)^(k_("is"_i)),
   $
 
   then the polynomials $p_("ij")(lambda)^(k_("ij"))$
@@ -2348,6 +2414,11 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 
   where $J_(r_i)(lambda_i)$ is the Jordan block of size $r_i$ for eigenvalue $lambda_i$.
 ] <thm:jordan-existence>
+
+#note[
+  Decompose $V$ into root subspaces $V = V_(lambda_1)^(r_1) ⊕ ... ⊕ V_(lambda_k)^(r_k)$,
+  then apply the nilpotent Jordan form to each root subspace.
+]
 
 #note[
   From the space decomposition perspective, $V$ decomposes into a direct sum of cyclic
@@ -2406,8 +2477,10 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 
 = Quadratic Forms // 二次型
 
-二次型是多元函数的二次齐次多项式，在优化、几何和物理中有广泛应用。
-本章讨论二次型的矩阵表示、合同变换下的标准形与规范形，以及正定二次型的判定。
+Quadratic forms are homogeneous quadratic polynomials in multiple variables, with
+wide applications in optimization, geometry, and physics. This chapter discusses
+the matrix representation of quadratic forms, standard forms and canonical forms
+under congruent transformations, and criteria for positive definite quadratic forms.
 
 == Quadratic Forms and Their Standard Forms // 二次型及其标准形
 
@@ -2466,6 +2539,11 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 ] <thm:inertia-theorem>
 
 #note[
+  Uniqueness of $(p, q)$ follows from considering the maximum and minimum of the
+  quadratic form on the unit sphere.
+]
+
+#note[
   The difference $s = p - q$ is called the *signature* (符号差).
   The canonical form is also written as
   $y_1^2 + ... + y_p^2 - y_(p+1)^2 - ... - y_r^2$ with zeros appended to reach $n$ variables.
@@ -2495,10 +2573,18 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
   - All leading principal minors of $A$ are positive.
 ] <thm:positive-definite-conditions>
 
+#note[
+  Follows from the inertia theorem: positive definite $<=>$ $p = n$ $<=>$ all
+  eigenvalues positive $<=>$ all leading principal minors positive (Sylvester).
+]
+
 = Inner Product Spaces // 内积空间
 
-内积空间为向量引入了长度与角度概念，是 Euclidean 几何的代数推广。
-本章涵盖双线性型、实内积空间、标准正交基、正交补与投影、正交变换与对称变换，以及酉空间与正规变换。
+Inner product spaces introduce the concepts of length and angle for vectors,
+serving as an algebraic generalization of Euclidean geometry. This chapter covers
+bilinear forms, real inner product spaces, orthonormal bases, orthogonal complements
+and projections, orthogonal and symmetric transformations, as well as unitary spaces
+and normal transformations.
 
 == Bilinear Forms // 双线性型
 
@@ -2548,6 +2634,11 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 
   with equality if and only if $alpha$ and $beta$ are linearly dependent.
 ] <thm:cauchy-schwarz>
+
+#note[
+  Consider $||alpha - t beta||^2 >= 0$ for all $t$ in $bb(R)$; the discriminant
+  of this quadratic in $t$ must be non-positive.
+]
 
 #note[
   Distance: $d(alpha, beta) = ||alpha - beta||$.
@@ -2611,15 +2702,14 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
   $
 ] <thm:gram-schmidt>
 
-#example[
-  Let $n >= 2$, $A$ be an $n$-order real symmetric matrix, and $alpha, beta$ be two
-  eigenvectors corresponding to distinct eigenvalues $lambda_1, lambda_2$.
-  Let $B = (a_i + b_j)_(n times n)$. Find all eigenvalues of $B$.
+#note[
+  Inductively define $eta_k = epsilon_k - sum_(i=1)^(k-1) (epsilon_k, eta_i) /
+  (eta_i, eta_i) eta_i$. Verify orthogonality and that the spans are equal.
+]
 
-  *Solution.* Normalize to orthonormal unit vectors $xi_1 = alpha/||alpha||$,
-  $xi_2 = beta/||beta||$, extend to an orthonormal basis, and express $B = alpha e^T + e beta^T$.
-  Then $B xi_1 = S_a ||alpha|| xi_1$ and $B xi_2 = S_b ||beta|| xi_2$, so the eigenvalues
-  of $B$ are $lambda_1 = S_a$, $lambda_2 = S_b$, $lambda_3 = ... = lambda_n = 0$.
+#example[
+  Let $B = (a_i + b_j)_(n times n)$ where $a_1, ..., a_n$ and $b_1, ..., b_n$
+  are real numbers. Find all eigenvalues of $B$.
 ]
 
 == Orthogonal Completion and Orthogonal Projection // 正交补与正交投影
@@ -2644,7 +2734,7 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 #definition(name: "Orthogonal Projection")[
   For any $alpha in V$, if there exists $beta in W$ such that
   $alpha - beta in W^⊥$, then $beta$ is the *orthogonal projection* of $alpha$
-  onto $W$, denoted $beta = "proj"_W(alpha)$.
+  onto $W$, denoted $beta = "proj"_(W)(alpha)$.
 ] <def:orthogonal-projection>
 
 #definition(name: "Best Approximation Element")[
@@ -2655,9 +2745,9 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 #property(name: "Properties of Orthogonal Projection")[
   - The orthogonal projection of $alpha$ onto $W$ exists and is unique, and equals
     the best approximation element;
-  - "proj"_W(alpha) = sum_(i=1)^n (alpha, epsilon_i) / (epsilon_i, epsilon_i) epsilon_i
+  - "proj"_(W)(alpha) = sum_(i=1)^n (alpha, epsilon_i) / (epsilon_i, epsilon_i) epsilon_i
     for an orthogonal basis ${epsilon_1, ..., epsilon_n}$ of $W$;
-  - $("lVert"(alpha - "proj"_W(alpha)) "rVert")^2 = ("lVert"(alpha) "rVert")^2 - ("lVert"("proj"_W(alpha)) "rVert")^2$
+  - $("lVert"(alpha - "proj"_(W)(alpha)) "rVert")^2 = ("lVert"(alpha) "rVert")^2 - ("lVert"("proj"_(W)(alpha)) "rVert")^2$
     $= ("lVert"(alpha) "rVert")^2 - sum_(i=1)^n c_i^2 ("lVert"(epsilon_i) "rVert")^2$.
 ] <prop:orthogonal-projection-properties>
 
@@ -2682,6 +2772,11 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
   Equivalently, for a real symmetric matrix $A$, there exists an orthogonal matrix $T$
   such that $T^(-1) A T = T^T A T = Lambda$ (diagonal with eigenvalues).
 ] <thm:symmetric-diagonalization>
+
+#note[
+  Induction on dimension: take an eigenvector for the largest eigenvalue, restrict
+  to its orthogonal complement, and apply the induction hypothesis.
+]
 
 #note[
   For any real quadratic form $f(x_1, ..., x_n) = X^T A X$, there exists an orthogonal
@@ -2723,6 +2818,11 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
   for a normal matrix $A in bb(C)^(n times n)$, there exists a unitary matrix $U$
   such that $U^(-1) A U = U^† A U = Lambda$ (diagonal with eigenvalues).
 ] <thm:normal-diagonalization>
+
+#note[
+  Follows from the Schur decomposition and the fact that a normal triangular matrix
+  must be diagonal.
+]
 
 === Special Normal Transformations // 特殊正规变换
 
@@ -2986,3 +3086,4 @@ Jordan 标准型是线性算子结构理论的普适结果——任意方阵相�
 #pagebreak()
 
 #bibliography("references.bib", title: "References", full: true)
+
