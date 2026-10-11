@@ -3006,7 +3006,7 @@ product of two or more functions, we need the following theorems.
   If $f in C[a, b]$, $f in D(a, b)$ and $f(a) = f(b)$, then there exists
   $xi in (a, b)$ such that $f'(xi) = 0$.
 
-  #underline[*Enhanced version:*] if $f in D(a, b)$ on a finite or infinite
+  _*Enhanced version:*_ if $f in D(a, b)$ on a finite or infinite
   interval $(a, b)$, and $lim_(x -> a^+) f(x) = lim_(x -> b^-) f(x)$, then
   there exists $xi in (a, b)$ such that $f'(xi) = 0$.
 ] <thm:rolle>
@@ -7833,7 +7833,10 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
 
   *Proof of Items 2 and 3.* A polygonal function is in particular continuous. For every $epsilon > 0$, divide $[a, b]$ into $n$ equal parts, let $x_i = a + (b - a) / n dot i$ ($i = 0, 1, dots, n$), and choose $n$ so large that $sum_(i=1)^n omega_i Delta x_i < epsilon$. Let $y = f_(n)(x)$ be the polygonal line joining the points $(x_i, f(x_i))$. For any $x in [x_(i-1), x_i]$,
   $
-    abs(f_(n)(x) - f(x)) = abs((x_i - x) / (x_i - x_(i-1)) [f(x_(i-1)) - f(x)] + (x - x_(i-1)) / (x_i - x_(i-1)) [f(x_i) - f(x)]) <= (x_i - x) / (x_i - x_(i-1)) omega_i + (x - x_(i-1)) / (x_i - x_(i-1)) omega_i = omega_i.
+       & abs(f_(n)(x) - f(x)) \
+     = & abs((x_i - x) / (x_i - x_(i-1)) [f(x_(i-1)) - f(x)] + (x - x_(i-1)) / (x_i - x_(i-1)) [f(x_i) - f(x)]) \
+    <= & (x_i - x) / (x_i - x_(i-1)) omega_i + (x - x_(i-1)) / (x_i - x_(i-1)) omega_i \
+     = & omega_i.
   $
   Hence
   $
@@ -7891,7 +7894,7 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
 
 Consider the following set of unit coordinate vectors: $bold(e)_1, bold(e)_2, dots, bold(e)_n$. Let $bold(e)_i = (0, 0, dots, 0, 1, 0, dots, 0)$ denote the standard orthonormal basis in $bb(R)^n$, where the 1 appears in the $i$-th position. That is,
 $
-  << bold(e)_i, bold(e)_j >> = delta_(i j) = cases(1 quad & i = j, 0 quad & i != j).
+  chevron.l bold(e)_i, bold(e)_j chevron.r = & delta_(i j) = cases(1 quad & i = j, 0 quad & i != j).
 $
 For a function $f$, the directional derivative of $f$ at the point $bold(x)^0$ in the direction of $bold(e)_i$ is called the $i$-th first-order *partial derivative* of $f$ at $bold(x)^0$, denoted by
 $
@@ -8690,7 +8693,7 @@ If the conditions are strengthened, then a global inverse mapping theorem can be
 
 == Multiple Integrals on Bounded Closed Regions // 有界闭区域上的多重积分
 
-#underline[How to define a region with measurable area?] Generally speaking, there are two approaches to define regions with measurable area:
+_How to define a region with measurable area?_ Generally speaking, there are two approaches to define regions with measurable area:
 + Consider the integral over a closed rectangle, and then extend it to a bounded closed region within the rectangle with the help of characteristic functions;
 + Define that a bounded closed region $D$ is measurable if $forall epsilon > 0$, there exist two polygonal regions $Sigma_1$ and $Sigma_2$ consisting of finite rectangles, such that $Sigma_1 subset D subset Sigma_2$ and the area of $Sigma_2 backslash Sigma_1$ is less than $epsilon$.
 
@@ -8766,18 +8769,18 @@ On the basis of the above definition, we can extend it to the case of a bounded 
 
 In the above definition, the integral $integral_Omega f$ is independent of the choice of the closed interval $I$ containing $Omega$ (this confirms the consistency of the definition).
 
-It is worth noting that all the definitions and properties of double integrals can be #underline[extended] to triple integrals and higher-dimensional integrals without excessive inconvenience.
+It is worth noting that all the definitions and properties of double integrals can be _extended_ to triple integrals and higher-dimensional integrals without excessive inconvenience.
 
 === About the Second Approach // 关于第二种途径（原 leftbarTitle 非空壳，升级为小节）
 
 #definition(name: "Set with Zero Area and Set with Zero Measure (Null Set)")[
-  Let $A subset bb(R)^2$. If for any $epsilon > 0$, there exist #underline[finitely many] closed intervals $I_1, I_2, dots, I_k$ such that:
+  Let $A subset bb(R)^2$. If for any $epsilon > 0$, there exist _finitely many_ closed intervals $I_1, I_2, dots, I_k$ such that:
   $
     union.big_(i=1)^k I_i sup A, quad "and" quad sum_(i=1)^k v(I_i) < epsilon,
   $
   then $A$ is called a *set with zero area*.
 
-  Let $A subset bb(R)^2$. If for any $epsilon > 0$, there exist at most #underline[countably many] closed intervals $I_1, I_2, dots, I_k, dots$ such that:
+  Let $A subset bb(R)^2$. If for any $epsilon > 0$, there exist at most _countably many_ closed intervals $I_1, I_2, dots, I_k, dots$ such that:
   $
     union.big_(i=1)^oo I_i sup A, quad "and" quad sum_(i=1)^oo v(I_i) < epsilon,
   $
@@ -9322,7 +9325,7 @@ Let $Delta subset bb(R)^2$ be an open set, and $bold(r): Delta -> bb(R)^3$ be a 
 
 At this time, the tangent space $T_p M = "span"(bold(r)'_u (u, v), bold(r)'_v (u, v))$, which is a subspace of $bb(R)^3$. Hence, it inherits the inner product from $bb(R)^3$.
 
-The first fundamental form is the metric that a surface inherits from its ambient Euclidean space $bb(R)^3$. It is essentially a symmetric positive-definite bilinear form defined on the tangent space, which allows us to #underline[measure lengths, angles, and areas on the surface].
+The first fundamental form is the metric that a surface inherits from its ambient Euclidean space $bb(R)^3$. It is essentially a symmetric positive-definite bilinear form defined on the tangent space, which allows us to _measure lengths, angles, and areas on the surface_.
 
 #definition(name: "The First Fundamental Form")[
   In the above conditions, for any point $p = (u, v) in Delta$, the *first fundamental form* of the surface $M$ at point $p$ is defined as: for any tangent vectors $bold(w)_1, bold(w)_2 in T_p M$,
@@ -9414,7 +9417,7 @@ $ "Area"(M) = integral.double_Delta sqrt(E G - F^2) dif u dif v. $
 
 == Extrinsic Geometry // 外在几何
 
-The *second fundamental form* is a symmetric bilinear form defined on the tangent space that measures the change in the normal vector of a surface, thereby describing the #underline[extrinsic curvature] of the surface relative to its ambient space $bb(R)^3$.
+The *second fundamental form* is a symmetric bilinear form defined on the tangent space that measures the change in the normal vector of a surface, thereby describing the _extrinsic curvature_ of the surface relative to its ambient space $bb(R)^3$.
 
 On the regular surface patch $M$ defined at the beginning of the last section, we can define a continuous unit normal vector field $bold(n): M -> bb(S)^2$, where $bb(S)^2$ is the unit sphere in $bb(R)^3$:
 $ bold(n)(p) = frac(bold(r)_u times bold(r)_v, norm(bold(r)_u times bold(r)_v)) (p). $
