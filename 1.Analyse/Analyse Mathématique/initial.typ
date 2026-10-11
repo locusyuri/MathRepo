@@ -9125,7 +9125,7 @@ Some tips for choosing between the two methods (take the two examples above as r
 // 注：tex 该例题无标题、未给出解答，不编造。
 
 #figure(
-  image("img/viviani.svg", width: 40%),
+  image("img/viviani.svg", width: 70%),
   caption: [Viviani's curve.],
 ) <fig:viviani>
 // 注：tex 该图无 caption 与标签，迁移后补 caption 与 <fig:viviani>；原位图重绘为脚本绘制 SVG（scripts/viviani.py）。
@@ -9158,7 +9158,15 @@ Improper multiple integrals can also be classified into two types: infinite inte
 #theorem(name: "Absolute Convergence of Improper Multiple Integrals")[
   An improper multiple integral is integrable if and only if it is absolutely integrable.
 ] <thm:improper-multiple-absolute-convergence>
-// 注：tex 中该定理未加标签与证明，迁移后补标签，不编造证明。
+// 注：tex 中该定理未加标签与证明，迁移后补标签，证明暂留空，不编造。
+
+#note(
+  title: [Absolute versus conditional convergence in one and several variables],
+)[
+  This theorem reveals a genuine difference between one-dimensional and multi-dimensional improper integrals, and it is worth emphasizing because the statement runs counter to the intuition built in the one-dimensional theory. For improper integrals on $bb(R)$, absolute convergence and (conditional) convergence are two distinct notions: for example, $integral_1^oo (sin x)/x dif x$ converges, yet its absolute value diverges. In several variables, however, the theorem asserts that the two notions coincide: an improper multiple integral converges precisely when it converges absolutely, so *conditional convergence can never occur*.
+
+  The heuristic reason is that one-dimensional conditional convergence relies essentially on a *specific order* in which the domain is exhausted (the cancellation between the positive and the negative parts is arranged along the single direction of the real line). For a domain in $bb(R)^n$ there is no canonical order of exhaustion: convergence must hold regardless of how the domain is enlarged, and this order-independence forces the positive and the negative parts each to be integrable, which is exactly absolute convergence.
+]
 
 #example(name: "Poisson Integral")[
   Calculate
