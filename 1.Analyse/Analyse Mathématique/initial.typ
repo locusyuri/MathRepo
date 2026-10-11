@@ -6860,9 +6860,10 @@ $limsup_(x -> +oo) f(x) = +oo$.
   $
     sum_(k=1)^p a_k b_k = a_p B_p - sum_(k=1)^(p-1) (a_(k+1) - a_k) B_k.
   $
+  #align(center, image("img/abel-transform.svg", width: 50%))
 ] <thm:abel-transform>
 
-#align(center, image("img/abel-transform.svg", width: 50%))
+
 
 #proof[
   Since $b_k = B_k - B_(k-1)$ (with the convention $B_0 = 0$),
