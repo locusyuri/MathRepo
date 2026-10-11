@@ -644,14 +644,15 @@ map is neutral, and a bijection has an inverse bijection. The order
 of $S_n$ is $n!$: a bijection on $n$ points is determined by
 choosing, in succession, the images of $1, dots, n$.
 
-#note(title: "Cycle notation")[
-  A permutation is written in *cycle notation*:
-  $(1 2 3)$ denotes the map $1 -> 2$, $2 -> 3$, $3 -> 1$ — each
-  entry mapped to the next, the last wrapping around to the first —
-  and $(1 2)$ denotes a *transposition*, swapping $1$ and $2$ while
-  fixing all other points. Products are read right to left:
-  $sigma tau$ means "apply $tau$ first, then $sigma$". Fixed points
-  are omitted, so $(1 2)$ and $(1 2)(3)$ are the same permutation.
+#note(title: "Notation for permutations")[
+  A permutation $sigma in S_n$ is displayed as a *two-row array*, the top row listing the points $1, dots, n$ and the bottom row their images:
+  $
+    sigma = mat(
+      1, 2, dots, n;
+      sigma(1), sigma(2), dots, sigma(n);
+    )
+  $
+  Equivalently, a permutation is written in *cycle notation*: $(1 2 3)$ denotes the map $1 -> 2$, $2 -> 3$, $3 -> 1$ — each entry mapped to the next, the last wrapping around to the first — and $(1 2)$ denotes a *transposition*, swapping $1$ and $2$ while fixing all other points. Products are read right to left: $sigma tau$ means "apply $tau$ first, then $sigma$". Fixed points are omitted, so $(1 2)$ and $(1 2)(3)$ are the same permutation.
 ] <note:cycle-notation>
 
 #example(name: "The smallest non-abelian group.")[
@@ -2031,9 +2032,16 @@ normal form carries an invariant of the first importance.
 === Cycles and Transpositions // 轮换与对换
 
 #definition(name: "Cycles and Transpositions")[
-  Let $a_1, a_2, dots, a_k$ be distinct elements of $X$, $k >= 1$. The *$k$-cycle* $(a_1 a_2 dots a_k)$ is the permutation of $X$ that maps $a_1 arrow.r.double a_2$, $a_2 arrow.r.double a_3$, $dots$, $a_(k-1) arrow.r.double a_k$, $a_k arrow.r.double a_1$, and fixes every other element — the cycle notation of #link(<note:cycle-notation>)[Chapter 2], now over a general set. As there, fixed points are omitted and 1-cycles suppressed, the identity being the empty product. A *2-cycle* $(a b)$, which swaps $a$ and $b$ and fixes all other points, is called a *transposition*.
+  The permutation
+  $
+    sigma = mat(
+      a_1, a_2, dots, a_k, a_(k+1), a_(k+2), dots, a_n;
+      a_2, a_3, dots, a_1, a_(k+1), a_(k+2), dots, a_n;
+    )
+  $
+  is called a $k$-cycle permutation, denoted $sigma = (a_1 a_2 dots a_k) = (a_2 a_3 dots a_k a_1) = dots$.
 
-  Cycles with disjoint supports never interfere — each fixes the other's points — so disjoint cycles commute. This is what makes the decomposition of the lemma below readable and its uniqueness proof work.
+  Specially, $(a_1 a_2)$ is called a *transposition*; $(a_1)$ is called a $1$-*cycle*, namely the identity map.
 ] <def:cycle-transposition>
 
 #lemma(name: "Cycle Decomposition")[
