@@ -1535,9 +1535,9 @@ Formally, $x_0$ is a *fixed point* of the function $f$ if $f(x_0) = x_0$.
   Define
   $
     R(x) = cases(
-      1 / p\, & x = q / p "," quad p, q "coprime integers with" p > 0, q != 0 comma
-      1\, & x = 0 comma
-      0\, & x "irrational".
+      1 / p quad & x = q / p quad (p, q "coprime integers with" p > 0, q != 0),
+      1 quad & x = 0,
+      0 quad & x "irrational".
     )
   $
   Show that $lim_(x -> x_0) R(x) = 0$ at every point $x_0$; in other words,
@@ -1605,9 +1605,9 @@ Formally, $x_0$ is a *fixed point* of the function $f$ if $f(x_0) = x_0$.
   $f(1) = 0$; and the limit diverges at $x = -1$, where $f$ is undefined. Hence
   $
     f(x) = cases(
-      -1\, & abs(x) < 1 comma
-             0\, & x = 1 comma
-                   1\, & abs(x) > 1.
+      -1 quad & abs(x) < 1,
+      0 quad & x = 1,
+      1 quad & abs(x) > 1.
     )
   $
   On $(-oo, -1)$, $(-1, 1)$ and $(1, +oo)$ the function is constant, hence continuous.
@@ -2188,9 +2188,9 @@ in the notation introduced in the Notations section.
   + ($<=$) Define
     $
       g(x) = cases(
-        f(a^+) comma & x = a,
-        f(x) comma & a < x < b,
-        f(b^-) comma & x = b,
+        f(a^+) quad & x = a,
+        f(x) quad & a < x < b,
+        f(b^-) quad & x = b,
       )
     $
     The existence of the one-sided limits makes $g$ continuous on the closed interval
@@ -2465,7 +2465,7 @@ in the notation introduced in the Notations section.
     equations
     $
       cases(
-        f(x + y) = f(x) f(y) - g(x) g(y) comma
+        f(x + y) = f(x) f(y) - g(x) g(y),
         g(x + y) = f(x) g(y) + f(y) g(x),
       ) quad quad (forall x, y in bb(R)).
     $
@@ -2917,7 +2917,7 @@ product of two or more functions, we need the following theorems.
 #example(name: "A Flat Function")[
   Let
   $
-    f(x) = cases(e^(-1 / x^2) & x != 0 comma, 0 & x = 0).
+    f(x) = cases(e^(-1 / x^2) quad & x != 0, 0 quad & x = 0).
   $
   Then $f^((n))(0) = 0$ for all $n in NN^+$.
 ] <ex:flat-function>
@@ -2954,7 +2954,7 @@ product of two or more functions, we need the following theorems.
 #proof[
   Set
   $
-    g(x) = cases(0 & x <= 0 comma, e^(-1 / x^2) & x > 0),
+    g(x) = cases(0 quad & x <= 0, e^(-1 / x^2) quad & x > 0),
   $
   which is infinitely differentiable by #link(<ex:flat-function>)[the flat
     function above]. Then
@@ -3371,11 +3371,11 @@ $
 #example(name: "A Derivative with a Second-Kind Discontinuity")[
   For
   $
-    f(x) = cases(x^2 sin(1\/x) & x != 0 comma, 0 & x = 0),
+    f(x) = cases(x^2 sin(1\/x) quad & x != 0, 0 quad & x = 0),
   $
   the derivative is
   $
-    f'(x) = cases(2 x sin(1\/x) - cos(1\/x) & x != 0 comma, 0 & x = 0).
+    f'(x) = cases(2 x sin(1\/x) - cos(1\/x) quad & x != 0, 0 quad & x = 0).
   $
   The limit $lim_(x -> 0) f'(x)$ does not exist, so $x = 0$ is a discontinuity
   of the second kind of $f'$.
@@ -3432,7 +3432,7 @@ $
 
 #proof[
   *Case 1: $f -> 0$ and $g -> 0$.* Extend $f$ and $g$ by
-  $bar(f)(x) = cases(0 & x = a comma, f(x) & x > a)$ and likewise for
+  $bar(f)(x) = cases(0 quad & x = a, f(x) quad & x > a)$ and likewise for
   $bar(g)$. Then $bar(f), bar(g) in C[a, a + d]$ and both are differentiable on
   $(a, a + d)$. For $x > a$, Cauchy's mean value theorem provides a point
   $xi in (a, x)$ with
@@ -4366,8 +4366,8 @@ proper fractions.
   reduces to two types only:
   $
     integral (dif x) / (x - alpha)^n = cases(
-      ln abs(x - alpha) + C comma & n = 1,
-      - 1 / ((n - 1) (x - alpha)^(n - 1)) + C comma & n >= 2,
+      ln abs(x - alpha) + C quad & n = 1,
+      - 1 / ((n - 1) (x - alpha)^(n - 1)) + C quad & n >= 2,
     )
   $
   and
@@ -4493,7 +4493,7 @@ take a limit as the partition is refined.
 #note[
   Bounded functions need not be Riemann integrable: the Dirichlet function
   $
-    cases(D_1(x) = 1 quad x in QQ comma, D_1(x) = 0 quad x "irrational" comma)
+    cases(D_1(x) = 1 quad & x in QQ, D_1(x) = 0 quad & x "irrational")
   $
   is bounded but not integrable, since every Riemann sum equals either $1$
   or $0$ depending on the choice of intermediate points.
@@ -4815,7 +4815,7 @@ sums carry over verbatim to Stieltjes sums.
 
 #example(name: "The Riemann Function is Integrable")[
   Prove that the Riemann function
-  $ R(x) = cases(1/q quad x = p/q "in lowest terms" comma, 0 quad x "irrational" comma) $
+  $ R(x) = cases(1/q quad & x = p/q "in lowest terms", 0 quad & x "irrational") $
   is Riemann integrable on $[0, 1]$.
 ] <ex:riemann-function-integrable>
 
@@ -5326,19 +5326,19 @@ $omega_f (x) = 0$.
   - *Outer integrable, inner continuous*: let $A subset [0, 1]$ be a Cantor
     set of positive measure with adjacent intervals $(a_i, b_i)$. Define
     $
-      f(x) = cases(0 &, 0 <= x < 1 comma, 1 &, x = 1 comma) quad quad
+      f(x) = cases(0 quad & 0 <= x < 1, 1 quad & x = 1) quad quad
       g(x) = cases(
-        1 &, x in A comma,
-        1 - 1/2 (b_i - a_i) + abs(x - 1/2 (a_i + b_i)) &, x in (a_i, b_i) comma
+        1 quad & x in A,
+        1 - 1/2 (b_i - a_i) + abs(x - 1/2 (a_i + b_i)) quad & x in (a_i, b_i)
       )
     $
     extending $g$ by continuity onto $A$ (it satisfies a Lipschitz
     condition). Then $f in R[0, 1]$ and $g in C[0, 1]$, yet
-    $f(g(x)) = cases(1 &, x in A comma, 0 &, "otherwise" comma)$ is
+    $f(g(x)) = cases(1 quad & x in A, 0 quad & "otherwise")$ is
     discontinuous at every point of $A$, and since $m(A) > 0$ the composite
     is not integrable.
   - *Both integrable, composite not*: on $[0, 1]$ take the Riemann function
-    $f$ and $g(y) = cases(1 &, 0 < y <= 1 comma, 0 &, y = 0 comma)$; both
+    $f$ and $g(y) = cases(1 quad & 0 < y <= 1, 0 quad & y = 0)$; both
     are integrable, but $g(f(x))$ equals the Dirichlet function, which is
     not integrable.
   - *Both non-integrable, composite integrable*: for two Dirichlet
@@ -5475,9 +5475,9 @@ between differential and integral calculus.
 #example(name: "Integrable and Discontinuous, yet with a Primitive")[
   On $[-1, 1]$ let
   $
-    f(x) = cases(sin(1/x) &, x != 0 comma, 0 &, x = 0 comma) quad quad
-    g(x) = cases(x^2 cos(1/x) &, x != 0 comma, 0 &, x = 0 comma) quad quad
-    phi(x) = cases(2x cos(1/x) &, x != 0 comma, 0 &, x = 0 comma).
+    f(x) = cases(sin(1/x) quad & x != 0, 0 quad & x = 0) quad quad
+    g(x) = cases(x^2 cos(1/x) quad & x != 0, 0 quad & x = 0) quad quad
+    phi(x) = cases(2x cos(1/x) quad & x != 0, 0 quad & x = 0).
   $
   Although $f$ has a discontinuity at $x = 0$, it possesses the primitive
   $ F(x) = g(x) - integral_0^x phi(t) dif t. $
@@ -5501,14 +5501,14 @@ between differential and integral calculus.
 #example(name: "A Derivative that is Not Integrable")[
   Let
   $
-    f(x) = cases(x^2 sin(1/x^2) &, x != 0 comma, 0 &, x = 0 comma) quad
+    f(x) = cases(x^2 sin(1/x^2) quad & x != 0, 0 quad & x = 0) quad
     "on" quad [-1, 1].
   $
   Then $f$ has a finite derivative at every point of $[-1, 1]$, namely
   $
     f'(x) = cases(
-      2x sin(1/x^2) - (2/x) cos(1/x^2) &, x != 0 comma,
-      0 &, x = 0 comma
+      2x sin(1/x^2) - (2/x) cos(1/x^2) quad & x != 0,
+      0 quad & x = 0
     ),
   $
   yet $f'$ is unbounded on $[-1, 1]$, and hence not Riemann integrable
@@ -5716,7 +5716,7 @@ directly from the indefinite integral.
   $
     integral_0^(pi/2) sin^n x dif x
     = integral_0^(pi/2) cos^n x dif x
-    = cases((n - 1)!! / n!! dot pi / 2 & "if" n "is even", (n - 1)!! / n!! & "if" n "is odd")
+    = cases((n - 1)!! / n!! dot pi / 2 quad & "if" n "is even", (n - 1)!! / n!! quad & "if" n "is odd")
   $
 ] <ex:wallis>
 
@@ -5731,7 +5731,7 @@ directly from the indefinite integral.
   $
   whence $I_n = (n - 1) / n I_(n - 2)$ for $n >= 2$, and therefore
   $
-    I_n = cases((n - 1)!! / n!! & "if" n = 2k + 1, (n - 1)!! / n!! dot pi / 2 & "if" n = 2k) quad (k in bb(N)).
+    I_n = cases((n - 1)!! / n!! quad & "if" n = 2k + 1, (n - 1)!! / n!! dot pi / 2 quad & "if" n = 2k) quad (k in bb(N)).
   $
 ]
 
@@ -5789,11 +5789,11 @@ directly from the indefinite integral.
     under the substitution $u = x + pi/4$.
   + Let $f(x) = ((x - 1)^2 + 1) / ((x - 1)^2 + x^2 (x - 2)^2)$. Then
     $
-      F_1 (x) = cases(arctan((x (x - 2)) / (x - 1)) & "if" x in [0, 1), pi/2 & "if" x = 1)
+      F_1 (x) = cases(arctan((x (x - 2)) / (x - 1)) quad & "if" x in [0, 1), pi/2 quad & "if" x = 1)
     $
     is an antiderivative of $f$ on $[0, 1]$, and
     $
-      F_2 (x) = cases(arctan((x (x - 2)) / (x - 1)) & "if" x in (1, 2], -pi/2 & "if" x = 1)
+      F_2 (x) = cases(arctan((x (x - 2)) / (x - 1)) quad & "if" x in (1, 2], -pi/2 quad & "if" x = 1)
     $
     is an antiderivative of $f$ on $[1, 2]$. By additivity over sub-intervals
     and the #link(<thm:newton-leibniz>)[Newton-Leibniz formula] on each piece,
@@ -6976,7 +6976,7 @@ $limsup_(x -> +oo) f(x) = +oo$.
 #definition(name: "Positive and Negative Derived Series")[
   For a series $sum_(n=1)^oo a_n$, the *positive derived series* $sum_(n=1)^oo a_n^+$ and the *negative derived series* $sum_(n=1)^oo a_n^-$ are defined by
   $
-    a_n^+ = (|a_n| + a_n) / 2 = cases(a_n comma & a_n > 0, 0 comma & a_n <= 0), quad quad a_n^- = (|a_n| - a_n) / 2 = cases(-a_n comma & a_n < 0, 0 comma & a_n >= 0):
+    a_n^+ = (|a_n| + a_n) / 2 = cases(a_n quad & a_n > 0, 0 quad & a_n <= 0), quad quad a_n^- = (|a_n| - a_n) / 2 = cases(-a_n quad & a_n < 0, 0 quad & a_n >= 0):
   $
   $a_n^+$ collects the positive terms of $(a_n)$, while $a_n^-$ collects the absolute values of the negative terms.
 ] <def:positive-derived-series>
@@ -7918,7 +7918,7 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
 
 Consider the following set of unit coordinate vectors: $bold(e)_1, bold(e)_2, dots, bold(e)_n$. Let $bold(e)_i = (0, 0, dots, 0, 1, 0, dots, 0)$ denote the standard orthonormal basis in $bb(R)^n$, where the 1 appears in the $i$-th position. That is,
 $
-  << bold(e)_i, bold(e)_j >> = delta_(i j) = cases(1 & i = j comma, 0 & i != j).
+  << bold(e)_i, bold(e)_j >> = delta_(i j) = cases(1 quad & i = j, 0 quad & i != j).
 $
 For a function $f$, the directional derivative of $f$ at the point $bold(x)^0$ in the direction of $bold(e)_i$ is called the $i$-th first-order /partial derivative/ of $f$ at $bold(x)^0$, denoted by
 $
@@ -8039,13 +8039,13 @@ This is the formula for /expressing a directional derivative using partial deriv
 #note(title: "At some point")[
   + The existence of partial derivatives at a point does not necessarily imply their continuity at that point. A classic counterexample is
     $
-      f(x, y) = cases(frac(x y, x^2 + y^2) & (x, y) != (0, 0) comma, 0 & (x, y) = (0, 0)).
+      f(x, y) = cases(frac(x y, x^2 + y^2) quad & (x, y) != (0, 0), 0 quad & (x, y) = (0, 0)).
     $
     Here, $f_(x)(0, 0) = 0$ and $f_(y)(0, 0) = 0$, but $f_(x)(x, y)$ and $f_(y)(x, y)$ are not continuous at $(0, 0)$.
   + *Partial derivatives bounded $=>$ continuous.* If the partial derivatives exist and are bounded in a neighborhood of a point, then they are continuous at that point.
   + Even if all directional derivatives exist at a point and the function is continuous at that point, it does not necessarily imply that the function is differentiable at that point. A classic counterexample is
     $
-      f(x, y) = cases(frac(x^3, x^2 + y^2) & (x, y) != (0, 0) comma, 0 & (x, y) = (0, 0)),
+      f(x, y) = cases(frac(x^3, x^2 + y^2) quad & (x, y) != (0, 0), 0 quad & (x, y) = (0, 0)),
     $
     where all directional derivatives of $f$ exist at $(0, 0)$ and $f$ is continuous at $(0, 0)$, but $f$ is not differentiable at $(0, 0)$. Another counterexample is
     $
@@ -8549,11 +8549,11 @@ is called the /Hessian matrix/ of the function $f$.
 #example[
   The mapping
   $
-    cases(x = x(z) comma, y = y(z))
+    cases(x = x(z), y = y(z))
   $
   is solved from the implicit functions defined by the system
   $
-    cases(F(y - z, x + z) = 0 comma, G(y / z, x z) = 0 comma)
+    cases(F(y - z, x + z) = 0, G(y / z, x z) = 0)
   $
   where $F, G in C^1$. Find $dif x / dif z$ and $dif y / dif z$.
 ] <ex:implicit-system-derivatives>
@@ -8592,7 +8592,7 @@ is called the /Hessian matrix/ of the function $f$.
 #example[
   Let $u(x, y)$ be the function solved from the implicit functions defined by the system
   $
-    cases(u = f(x, y, z, t) comma, g(y, z, t) = 0 comma, h(z, t) = 0 comma)
+    cases(u = f(x, y, z, t), g(y, z, t) = 0, h(z, t) = 0)
   $
   where $f, g, h in C^1$ and $frac(partial(g, h), partial(z, t)) != 0$. Find $frac(partial u, partial y)$.
 ] <ex:implicit-u-partial-y>
@@ -8600,7 +8600,7 @@ is called the /Hessian matrix/ of the function $f$.
 #solution[
   *Method 1.* Since $frac(partial(g, h), partial(z, t)) != 0$ and $g, h in C^1$, the system $g(y, z, t) = 0, h(z, t) = 0$ determines, by #link(<thm:implicit-mapping-theorem>)[the implicit mapping theorem], the functions
   $
-    cases(z = z(y) comma, t = t(y))
+    cases(z = z(y), t = t(y))
   $
   Differentiating both sides with respect to $y$ gives
   $
@@ -8618,11 +8618,11 @@ is called the /Hessian matrix/ of the function $f$.
 
   *Method 2.* Consider the system
   $
-    cases(F(x, y, z, t, u) = u - f(x, y, z, t) = 0 comma, g(y, z, t) = 0 comma, h(z, t) = 0)
+    cases(F(x, y, z, t, u) = u - f(x, y, z, t) = 0, g(y, z, t) = 0, h(z, t) = 0)
   $
   Since $frac(partial(F, g, h), partial(u, z, t)) = frac(partial(g, h), partial(z, t)) != 0$, by #link(<thm:implicit-mapping-theorem>)[the implicit mapping theorem], we have
   $
-    cases(u = u(x, y) comma, z = z(x, y) comma, t = t(x, y))
+    cases(u = u(x, y), z = z(x, y), t = t(x, y))
   $
   Differentiating both sides with respect to $y$ gives
   $
@@ -8777,8 +8777,8 @@ On the basis of the above definition, we can extend it to the case of a bounded 
   Let $Omega subset bb(R)^2$ be a bounded set, and $f: Omega -> bb(R)$ a two-dimensional function. Define:
   $
     f_(Omega)(bold(x)) = f_(Omega)(x, y) = cases(
-      f(x, y)\, & "if" quad bold(x) = (x, y) in Omega comma
-                  0\, & "if" quad bold(x) = (x, y) in.not Omega comma
+      f(x, y) quad & "if" quad bold(x) = (x, y) in Omega,
+      0 quad & "if" quad bold(x) = (x, y) in.not Omega,
     )
   $
   and call this the *zero extension* (or *characteristic function*) of $f$. For any closed interval $I sup Omega$, if $f_(Omega)$ is Riemann integrable on $I$, then $f$ is said to be *Riemann integrable* on $Omega$ (abbreviated as integrable). The integral of $f$ on $Omega$, denoted as:
@@ -8985,13 +8985,13 @@ Some common variable substitutions in multiple integrals are as follows:
 *Polar Coordinates.*
 $
   cases(
-    x = r cos theta comma
-    y = r sin theta comma
+    x = r cos theta,
+    y = r sin theta,
   )
   quad quad
   cases(
-    r = sqrt(x^2 + y^2)\, & r >= 0 comma
-                            theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
+    r = sqrt(x^2 + y^2) quad & r >= 0,
+    theta = arctan(y / x) quad & x != 0 "and" theta in [0, 2pi],
   )
 $
 and
@@ -9002,15 +9002,15 @@ $
 *Cylindrical Coordinate System.*
 $
   cases(
-    x = r cos theta comma
-    y = r sin theta comma
-    z = z comma
+    x = r cos theta,
+    y = r sin theta,
+    z = z,
   )
   quad quad
   cases(
-    r = sqrt(x^2 + y^2)\, & r >= 0 comma
-                            theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
-                                                      z = z comma
+    r = sqrt(x^2 + y^2) quad & r >= 0,
+    theta = arctan(y / x) quad & x != 0 "and" theta in [0, 2pi],
+    z = z,
   )
 $
 and
@@ -9022,15 +9022,15 @@ $
 *Spherical Coordinate System.*
 $
   cases(
-    x = r sin phi cos theta comma
-    y = r sin phi sin theta comma
-    z = r cos phi comma
+    x = r sin phi cos theta,
+    y = r sin phi sin theta,
+    z = r cos phi,
   )
   quad quad
   cases(
-    r = sqrt(x^2 + y^2 + z^2)\, & r >= 0 comma
-                                  phi = arccos(z / r)\, & r != 0 comma phi in [0, pi] comma
-                                                          theta = arctan(y / x)\, & x != 0 comma theta in [0, 2pi] comma
+    r = sqrt(x^2 + y^2 + z^2) quad & r >= 0,
+    phi = arccos(z / r) quad & r != 0 "and" phi in [0, pi],
+    theta = arctan(y / x) quad & x != 0 "and" theta in [0, 2pi],
   )
 $
 and
@@ -10012,7 +10012,7 @@ where the right-hand side is independent of the choice of the path $attach(L, t:
     hence $I = 2 pi$.
 
   In summary,
-  $ I = cases(2 pi comma & "if the origin lies inside" attach(C, t: ⇀), 0 comma & "otherwise") $
+  $ I = cases(2 pi quad & "if the origin lies inside" attach(C, t: ⇀), 0 quad & "otherwise") $
   (with the sign reversed if $attach(C, t: ⇀)$ is negatively oriented), i.e., $I slash 2 pi$ is the number of turns that $attach(C, t: ⇀)$ makes around the origin.
 ]
 
