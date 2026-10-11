@@ -5941,34 +5941,6 @@ directly from the indefinite integral.
 
 == Applications of Definite Integrals // 定积分的应用
 
-=== Arc Length // 弧长
-
-#definition(name: "Arc Length")[
-  Let $C$ be a curve in $bb(R)^2$ with endpoints $A$ and $B$. Take division
-  points $A = P_0, P_1, dots.c, P_n = B$ successively from $A$ to $B$ along
-  $C$; they form a partition $T$ of the curve. Joining each pair of adjacent
-  points by a segment produces the $n$ chords $P_(i-1) P_i$
-  ($i = 1, 2, dots, n$), which together constitute an inscribed polygonal
-  line of $C$. Set
-  $
-    norm(T) = max_(1 <= i <= n) abs(P_(i-1) P_i), quad
-    s_T = sum_(i=1)^n abs(P_(i-1) P_i),
-  $
-  the length of the longest chord and the total length of the polygonal line,
-  respectively. If $lim_(norm(T) -> 0) s_T = s$ exists, i.e.
-  $ forall epsilon > 0, exists delta > 0, forall norm(T) < delta: abs(s_T - s) < epsilon, $
-  then $C$ is called *rectifiable*, and the limit $s$ is called the
-  *arc length* of $C$.
-] <def:arc-length>
-
-#theorem(name: "A Sufficient Condition for Rectifiability")[
-  Let a curve $C$ in $bb(R)^2$ be given by parametric equations
-  $(x, y) = (x(t), y(t))$, $t in [alpha, beta]$, and suppose that $C$ is a
-  $C^1$ regular curve, i.e. $x(t)$ and $y(t)$ are continuously differentiable
-  with $x'^2 (t) + y'^2 (t) != 0$ (a point satisfying this condition is
-  called a regular point). Then $C$ is rectifiable, and its arc length is
-  $ s = integral_alpha^beta sqrt(x'^2 (t) + y'^2 (t)) dif t. $
-] <thm:rectifiable-condition>
 
 === Polar Coordinate System // 极坐标系
 
@@ -9387,7 +9359,8 @@ Here, $dif u$ and $dif v$ are the coordinates under the basis ${dif u, dif v}$, 
   and the limit is independent of the choice of partition $T$, then $C$ is said to be *rectifiable*, and the limit $s$ is called the *arc length* of the curve $C$.
 ] <def:rectifiable-curve>
 // 注：tex 中两处 footnote（模板不支持脚注）已并入定义正文（括号补充）与下述定理；
-// 本定义与 ch06 的 def:arc-length 内容重复（tex 两章均保留），此处为内在几何语境下的正式定义（含分割独立性条件），标签改名以避免冲突。
+// 2026-10-11：ch06 应用章的同名定义与定理（def:arc-length、thm:rectifiable-condition）已按用户裁决删除，
+// 本节成为全库唯一定义（含分割独立性条件），Glossary 索引已改指本节标签。
 
 #theorem(name: "Sufficient Condition for Rectifiability of Curves")[
   Let the curve $C$ in $bb(R)^2$ be given by the parametric equations $(x, y) = (x(t), y(t))$, $t in [alpha, beta]$, and let it be a $C^1$ smooth regular curve, i.e. $x(t)$ and $y(t)$ are continuously differentiable and $x'^2 (t) + y'^2 (t) != 0$ (a curve $C$ satisfying this condition is called a regular curve; also see #link(<def:surface-parameterization>)[the definition of surface parameterization]). Then $C$ is rectifiable, and its arc length is
@@ -10319,7 +10292,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:angle-form-integral>)[Angle Form Integral]*
 - *#link(<ex:antiderivative-of-discontinuous>)[Antiderivative of Discontinuous]*
 - *#link(<prop:approximation-problem>)[Approximation Problem]*
-- *#link(<def:arc-length>)[Arc Length]*
+- *#link(<def:rectifiable-curve>)[Arc Length]*
 - *#link(<thm:archimedean>)[Archimedean]*
 - *#link(<def:argmax-argmin>)[Argmax Argmin]*
 - *#link(<thm:arithmetic-continuous>)[Arithmetic Continuous]*
@@ -10654,7 +10627,6 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<def:real-analytic-function>)[Real Analytic Function]*
 - *#link(<def:rearranged-series>)[Rearranged Series]*
 - *#link(<thm:rectifiability-of-curves>)[Rectifiability of Curves]*
-- *#link(<thm:rectifiable-condition>)[Rectifiable Condition]*
 - *#link(<def:rectifiable-curve>)[Rectifiable Curve]*
 - *#link(<ex:recurrence-in>)[Recurrence in]*
 - *#link(<thm:reduction-double-iterated-bounded-set>)[Reduction Double Iterated Bounded Set]*
