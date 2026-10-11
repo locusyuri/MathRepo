@@ -215,11 +215,11 @@ and gradually develops its properties, expansion rules, and computation of speci
   $
   V_(n) = abs(
     mat(
-      (1, 1, 1, dots, 1),
-      (x_1, x_2, x_3, dots, x_n),
-      (x_1^2, x_2^2, x_3^2, dots, x_n^2),
-      (dots.v, dots.v, dots.v, dots.down, dots.v),
-      (x_1^(n-1), x_2^(n-1), x_3^(n-1), dots, x_n^(n-1)),
+      1, 1, 1, dots, 1;
+      x_1, x_2, x_3, dots, x_n;
+      x_1^2, x_2^2, x_3^2, dots, x_n^2;
+      dots.v, dots.v, dots.v, dots.down, dots.v;
+      x_1^(n-1), x_2^(n-1), x_3^(n-1), dots, x_n^(n-1);
     )
   ),
   $
@@ -239,11 +239,11 @@ $
   $
   A_(n) = abs(
     mat(
-      (a_(11), a_(12), a_(13), dots, a_(1n)),
-      (a_(21), a_(22), 0, dots, 0),
-      (a_(31), 0, a_(33), dots, 0),
-      (dots.v, dots.v, dots.v, dots.down, dots.v),
-      (a_("n1"), 0, 0, dots, a_("nn")),
+      a_(11), a_(12), a_(13), dots, a_(1n);
+      a_(21), a_(22), 0, dots, 0;
+      a_(31), 0, a_(33), dots, 0;
+      dots.v, dots.v, dots.v, dots.down, dots.v;
+      a_("n1"), 0, 0, dots, a_("nn");
     )
   ).
   $
@@ -279,11 +279,11 @@ The value of the two-triangular determinant is given by
 $
 abs(
   mat(
-    (x_1, a, a, dots, a),
-    (b, x_2, a, dots, a),
-    (b, b, x_3, dots, a),
-    (dots.v, dots.v, dots.v, dots.down, dots.v),
-    (b, b, b, dots, x_n),
+    x_1, a, a, dots, a;
+    b, x_2, a, dots, a;
+    b, b, x_3, dots, a;
+    dots.v, dots.v, dots.v, dots.down, dots.v;
+    b, b, b, dots, x_n;
   )
 )
 =
@@ -369,7 +369,7 @@ The determinant of a product equals the product of the determinants — see #lin
   Any $m times n$ matrix $A$ of rank $r$ is equivalent to the matrix
 
   $
-  J_r = mat((I_r, O), (O, O)),
+  J_r = mat(I_r, O; O, O),
   $
 
   which is called the *canonical form* of matrix equivalence.
@@ -401,8 +401,8 @@ The determinant of a product equals the product of the determinants — see #lin
     rows (columns) of $A$ by the diagonal entries.
   - $upright("diag")(a_1, ..., a_n)^(-1) = upright("diag")(1/a_1, ..., 1/a_n)$;
   - $upright("sdiag")(a_1, ..., a_n)^(-1) = upright("sdiag")(1/a_n, ..., 1/a_1)$;
-  - $mat((A, O), (O, C))^(-1) = mat((A^(-1), O), (O, C^(-1)))$;
-  - $mat((O, B), (D, O))^(-1) = mat((O, D^(-1)), (B^(-1), O))$.
+  - $mat(A, O; O, C)^(-1) = mat(A^(-1), O; O, C^(-1))$;
+  - $mat(O, B; D, O)^(-1) = mat(O, D^(-1); B^(-1), O)$.
 ] <prop:diagonal-matrix>
 
 === Fundamental Matrix // 基本矩阵
@@ -431,10 +431,10 @@ The determinant of a product equals the product of the determinants — see #lin
 
   $
   A = mat(
-    (a_(11), a_(12), ..., a_(1n)),
-    (0, a_(22), ..., a_(2n)),
-    (dots.v, dots.v, dots.down, dots.v),
-    (0, 0, ..., a_("nn")),
+    a_(11), a_(12), ..., a_(1n);
+    0, a_(22), ..., a_(2n);
+    dots.v, dots.v, dots.down, dots.v;
+    0, 0, ..., a_("nn");
   )
   $
 
@@ -442,10 +442,10 @@ The determinant of a product equals the product of the determinants — see #lin
 
   $
   A = mat(
-    (a_(11), 0, ..., 0),
-    (a_(21), a_(22), ..., 0),
-    (dots.v, dots.v, dots.down, dots.v),
-    (a_("n1"), a_("n2"), ..., a_("nn")),
+    a_(11), 0, ..., 0;
+    a_(21), a_(22), ..., 0;
+    dots.v, dots.v, dots.down, dots.v;
+    a_("n1"), a_("n2"), ..., a_("nn");
   )
   $
 ] <def:triangular-matrix>
@@ -500,11 +500,11 @@ Let
 
 $
 C = mat(
-  (0, 1, 0, 0, ..., 0),
-  (0, 0, 1, 0, ..., 0),
-  (dots.v, dots.v, dots.v, dots.v, dots.down, dots.v),
-  (0, 0, 0, 0, ..., 1),
-  (1, 0, 0, 0, ..., 0),
+  0, 1, 0, 0, ..., 0;
+  0, 0, 1, 0, ..., 0;
+  dots.v, dots.v, dots.v, dots.v, dots.down, dots.v;
+  0, 0, 0, 0, ..., 1;
+  1, 0, 0, 0, ..., 0;
 )
 $,
 
@@ -522,11 +522,11 @@ The matrix $C$ performs specific cyclic operations when multiplied by another ma
 
   $
   A = mat(
-    (a_0, a_1, a_2, ..., a_(n-1)),
-    (a_(n-1), a_0, a_1, ..., a_(n-2)),
-    (a_(n-2), a_(n-1), a_0, ..., a_(n-3)),
-    (dots.v, dots.v, dots.v, dots.down, dots.v),
-    (a_1, a_2, a_3, ..., a_0),
+    a_0, a_1, a_2, ..., a_(n-1);
+    a_(n-1), a_0, a_1, ..., a_(n-2);
+    a_(n-2), a_(n-1), a_0, ..., a_(n-3);
+    dots.v, dots.v, dots.v, dots.down, dots.v;
+    a_1, a_2, a_3, ..., a_0;
   ),
   $
 
@@ -558,11 +558,11 @@ Some special nilpotent matrices:
 
 $
 A_n = mat(
-  (0, 1, 0, ..., 0),
-  (0, 0, 1, ..., 0),
-  (dots.v, dots.v, dots.v, dots.down, dots.v),
-  (0, 0, 0, ..., 1),
-  (0, 0, 0, ..., 0),
+  0, 1, 0, ..., 0;
+  0, 0, 1, ..., 0;
+  dots.v, dots.v, dots.v, dots.down, dots.v;
+  0, 0, 0, ..., 1;
+  0, 0, 0, ..., 0;
 )
 $
 
@@ -578,9 +578,9 @@ is a nilpotent matrix with nilpotent index $n$.
 
 #property(name: "Properties of Full Row Rank Matrices")[
   - An $A_{m times n}$ is a full row rank matrix if and only if there exists an invertible
-    matrix $Q_{n times n}$ such that $A = mat((E_m, O)) Q$.
+    matrix $Q_{n times n}$ such that $A = mat(E_m, O) Q$.
   - An $A_{m times n}$ is a full column rank matrix if and only if there exists an invertible
-    matrix $P_{m times m}$ such that $A = P mat((E_n), (O))$.
+    matrix $P_{m times m}$ such that $A = P mat(E_n; O)$.
 ] <prop:full-row-rank-matrix>
 
 == Inverse Matrix // 逆矩阵
@@ -652,7 +652,7 @@ is a nilpotent matrix with nilpotent index $n$.
 #property(name: "Methods of Finding the Inverse")[
   - *Adjugate method*: $A^(-1) = "adj"(A) / abs(A)$, given by #link(<thm:inverse-via-adjugate>)[Theorem].
   - *Elementary row operation method*: apply the same elementary row operations to the augmented
-    matrix $mat((A, E))$ until the left half becomes $E$; the right half is then $A^(-1)$. If
+    matrix $mat(A, E)$ until the left half becomes $E$; the right half is then $A^(-1)$. If
     $A$ cannot be reduced to $E$, then $A$ is singular.
 ]
 
@@ -679,10 +679,10 @@ is a nilpotent matrix with nilpotent index $n$.
 
   $
   A ⊗ B = mat(
-    (a_(11) B, a_(12) B, ..., a_(1n) B),
-    (a_(21) B, a_(22) B, ..., a_(2n) B),
-    (dots.v, dots.v, dots.down, dots.v),
-    (a_("m1") B, a_("m2") B, ..., a_("mn") B),
+    a_(11) B, a_(12) B, ..., a_(1n) B;
+    a_(21) B, a_(22) B, ..., a_(2n) B;
+    dots.v, dots.v, dots.down, dots.v;
+    a_("m1") B, a_("m2") B, ..., a_("mn") B;
   )
   $
 
@@ -697,13 +697,13 @@ is a nilpotent matrix with nilpotent index $n$.
   - If $A$ is invertible, then
 
     $
-    abs(mat((A, B), (C, D))) = abs(A) abs(D - C A^(-1) B).
+    abs(mat(A, B; C, D)) = abs(A) abs(D - C A^(-1) B).
     $
 
   - If $D$ is invertible, then
 
     $
-    abs(mat((A, B), (C, D))) = abs(D) abs(A - B D^(-1) C).
+    abs(mat(A, B; C, D)) = abs(D) abs(A - B D^(-1) C).
     $
 
   - If both $A$ and $D$ are invertible, then
@@ -714,7 +714,7 @@ is a nilpotent matrix with nilpotent index $n$.
 ] <thm:determinant-reduction-formula>
 
 #note[
-  The mnemonic is: for $abs(mat((A, B), (C, D)))$, if $A$ is invertible, one factor is
+  The mnemonic is: for $abs(mat(A, B; C, D))$, if $A$ is invertible, one factor is
   $abs(A)$ and the other factor is $D$ minus the product of the other three terms arranged
   *clockwise*, where the middle one is the inverse matrix.
 ]
@@ -747,7 +747,7 @@ is a nilpotent matrix with nilpotent index $n$.
     upright("rank")(A^T)$.
   - *4. Inverse*: if $A$ is invertible, then $upright("rank")(A) = upright("rank")(A^(-1)) = n$.
   - *5. Block Matrix*:
-    $upright("rank")(mat((A, O), (O, D))) = upright("rank")(A) + upright("rank")(D)$.
+    $upright("rank")(mat(A, O; O, D)) = upright("rank")(A) + upright("rank")(D)$.
 ] <prop:operations-of-rank>
 
 == Low-Rank Corrections // 低秩修正
@@ -960,9 +960,9 @@ The third property gives a method for finding a maximal linearly independent gro
 
    $
    mat(
-     (a_(11), a_(12), 0, 0, 0),
-     (0, 0, a_(23), 0, 0),
-     (0, 0, 0, 0, a_(35)),
+     a_(11), a_(12), 0, 0, 0;
+     0, 0, a_(23), 0, 0;
+     0, 0, 0, 0, a_(35);
    )
    $
 
@@ -1411,7 +1411,7 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
   (i) $A$ is a $3$-order matrix over the number field $P$ with three distinct
   eigenvalues.
 
-  (ii) $A = mat( (1, 0, 4), (0, 1, 2), (0, 1, 2) )$.
+  (ii) $A = mat(1, 0, 4; 0, 1, 2; 0, 1, 2)$.
 ]
 
 = Linear Mappings // 线性映射
@@ -1594,10 +1594,10 @@ where
 $
 A = (a_("ij"))_(m times n) =
 mat(
-  (a_("11"), a_("12"), ..., a_("1n")),
-  (a_("21"), a_("22"), ..., a_("2n")),
-  (dots.v, dots.v, dots.down, dots.v),
-  (a_("m1"), a_("m2"), ..., a_("mn")),
+  a_("11"), a_("12"), ..., a_("1n");
+  a_("21"), a_("22"), ..., a_("2n");
+  dots.v, dots.v, dots.down, dots.v;
+  a_("m1"), a_("m2"), ..., a_("mn");
 ).
 $
 
@@ -2002,12 +2002,12 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   - Let $W$ be a nontrivial $A$-subspace. Take a basis ${epsilon_1, ..., epsilon_r}$
     of $W$ and extend it to a basis ${epsilon_1, ..., epsilon_n}$ of $V$.
     Then the matrix representation of $A$ takes the block upper triangular form
-    $mat((A, B), (O, C))$, where $A$ represents $A|_W$ and $C$ represents the induced
+    $mat(A, B; O, C)$, where $A$ represents $A|_W$ and $C$ represents the induced
     transformation on $V/W$. The characteristic polynomial factorizes as
     $f(lambda) = f_1(lambda) f_2(lambda)$.
 
   - If the matrix representation of $A$ takes the block diagonal form
-    $mat((A_1, O, ..., O), (O, A_2, ..., O), (dots.v, dots.v, dots.down, dots.v), (O, O, ..., A_s))$
+    $mat(A_1, O, ..., O; O, A_2, ..., O; dots.v, dots.v, dots.down, dots.v; O, O, ..., A_s)$
     under some basis, then $V$ decomposes as a direct sum
     $V = W_1 ⊕ W_2 ⊕ ... ⊕ W_s$ of nontrivial $A$-subspaces.
 ] <thm:block-decomposition>
@@ -2253,10 +2253,10 @@ and computation method of the Jordan canonical form.
 
   $
   A(lambda) = mat(
-    (a_("11")(lambda), ..., a_("1n")(lambda)),
-    (a_("21")(lambda), ..., a_("2n")(lambda)),
-    (dots.v, dots.v, dots.down, dots.v),
-    (a_("m1")(lambda), ..., a_("mn")(lambda)),
+    a_("11")(lambda), ..., a_("1n")(lambda);
+    a_("21")(lambda), ..., a_("2n")(lambda);
+    dots.v, dots.v, dots.down, dots.v;
+    a_("m1")(lambda), ..., a_("mn")(lambda);
   ),
   $
 
@@ -2288,13 +2288,13 @@ and computation method of the Jordan canonical form.
 
   $
   mat(
-    (d_1(lambda), 0, ..., 0),
-    (0, d_2(lambda), ..., 0),
-    (dots.v, dots.v, dots.down, dots.v),
-    (0, 0, ..., d_(r)(lambda), 0, ..., 0),
-    (0, 0, ..., 0, 0, ..., 0),
-    (dots.v, dots.v, dots.down, dots.v),
-    (0, 0, ..., 0, 0, ..., 0),
+    d_1(lambda), 0, ..., 0;
+    0, d_2(lambda), ..., 0;
+    dots.v, dots.v, dots.down, dots.v;
+    0, 0, ..., d_(r)(lambda), 0, ..., 0;
+    0, 0, ..., 0, 0, ..., 0;
+    dots.v, dots.v, dots.down, dots.v;
+    0, 0, ..., 0, 0, ..., 0;
   ),
   $
 
@@ -2342,11 +2342,11 @@ and computation method of the Jordan canonical form.
 
   $
   C(p) = mat(
-    (0, 0, ..., 0, -a_0),
-    (1, 0, ..., 0, -a_1),
-    (0, 1, ..., 0, -a_2),
-    (dots.v, dots.v, dots.down, dots.v),
-    (0, 0, ..., 1, -a_(n-1)),
+    0, 0, ..., 0, -a_0;
+    1, 0, ..., 0, -a_1;
+    0, 1, ..., 0, -a_2;
+    dots.v, dots.v, dots.down, dots.v;
+    0, 0, ..., 1, -a_(n-1);
   ),
   $
 
@@ -2360,10 +2360,10 @@ and computation method of the Jordan canonical form.
 
   $
   F = mat(
-    (C(p_1), 0, ..., 0),
-    (0, C(p_2), ..., 0),
-    (dots.v, dots.v, dots.down, dots.v),
-    (0, 0, ..., C(p_s)),
+    C(p_1), 0, ..., 0;
+    0, C(p_2), ..., 0;
+    dots.v, dots.v, dots.down, dots.v;
+    0, 0, ..., C(p_s);
   ),
   $
 
@@ -2866,7 +2866,7 @@ and normal transformations.
   $
   "diag"({lambda_1, ..., lambda_r, R(theta_1), ..., R(theta_m)})
   $,
-  where $lambda_i = ±1$ for $i = 1, ..., r$ and $R(theta) = mat((cos(theta), -sin(theta)), (sin(theta), cos(theta)))$
+  where $lambda_i = ±1$ for $i = 1, ..., r$ and $R(theta) = mat(cos(theta), -sin(theta); sin(theta), cos(theta))$
   for $j = 1, ..., m$, with $r + 2m = n$.
 ] <thm:orthogonal-diagonalization>
 
@@ -2927,7 +2927,7 @@ and normal transformations.
   Let $A$ be a skew-symmetric transformation on an $n$-dimensional Euclidean space $V$.
   Then there exists an orthonormal basis of $V$ such that the matrix of $A$ has the form
   $
-  "diag"({mat((0, a_1), (-a_1, 0)), ..., mat((0, a_s), (-a_s, 0)), 0, ..., 0})
+  "diag"({mat(0, a_1; -a_1, 0), ..., mat(0, a_s; -a_s, 0), 0, ..., 0})
   $,
   where $a_i != 0$ for $i = 1, ..., s$ and $2s + t = n$ ($t$ is the number of zero
   blocks). In particular, the eigenvalues of $A$ are $0$ or pure imaginary numbers.
@@ -3007,7 +3007,7 @@ and normal transformations.
   - A symplectic space has even dimension $2n$;
   - There exists a basis ${e_1, ..., e_n, f_1, ..., f_n}$ such that the matrix of
     the symplectic inner product takes the standard form
-    $J = mat((O, E), (-E, O))$ where $E$ is the $n times n$ identity matrix;
+    $J = mat(O, E; -E, O)$ where $E$ is the $n times n$ identity matrix;
   - The standard symplectic matrix satisfies $J^2 = -E$ and $J^T = -J = J^(-1)$.
 ] <prop:symplectic-space-properties>
 
