@@ -1,8 +1,8 @@
 # Algèbre Linéaire 重构与 Typst 迁移计划
 
 > 创建日期：2026-10-10
-> 最后更新：2026-10-10（收尾完成：Glossary 生成 + 全书编译通过）
-> 状态：✅ 全部完成（Part I–IV + Glossary + 参考文献）
+> 最后更新：2026-10-11（遗漏补全：正交变换、实内积空间同构、反对称变换、最小二乘法、Jordan 角度对角化条件、Gauss-Jordan 流程、基础解系证明）
+> 状态：✅ 全部完成（Part I–IV + Glossary + 参考文献 + 遗漏补全）
 > **项目约定：每次完成批次后自动 git 提交（中文 Conventional Commits），无需用户手动确认。**
 > 技能依据：`violet-design-note`（目录体检与结构设计）、`violet-latex-to-typst`（迁移）、`violet-make-outline`（补全大纲）、`violet-typst-writing-conventions`（写作规范）
 > 参考文档：[`1.Analyse/Analyse Mathématique/docs/REFRACTOR.md`](../../1.Analyse/Analyse%20Mathématique/docs/REFRACTOR.md)
@@ -272,3 +272,103 @@ Part IV 二次型与内积空间（几何结构）
 | 欧几里得空间 | 内积、标准正交基、正交变换 | Ch10 §1–7 |
 
 教材覆盖结论：三本教材全部知识点均已覆盖，无遗漏。
+
+---
+
+## 6. 遗漏内容分析（对照 docs/线性代数.md）
+
+> 分析日期：2026-10-11
+> 参考文档：[`线性代数.md`](./线性代数.md)（3710 行，41 个 `##`/`###` 标题）
+> 对照目标：`initial.typ`（3089 行，5 Part / 10 章 + Glossary）
+
+### 6.1 结构性遗漏（参考文档有独立章节，Typst 笔记完全缺失）
+
+| 编号 | 参考文档位置 | 遗漏内容 | 建议处理 |
+|------|-------------|---------|---------|
+| S1 | L3432–3445 | **实内积空间的同构**：保距同构（isometry）定义 + 同构本质特征定理（两个 Euclid 空间同构 ⟺ 维数相同） | 在 Inner Product Spaces 章新增 `=== Isomorphism of Real Inner Product Spaces` |
+| S2 | L3540–3596 | **正交变换**：定义（保持内积的满射）、性质（线性、单射、逆与乘积、四个等价条件）、行列式 ±1、第一类/第二类正交变换、实正交阵正交对角化定理（含旋转块标准型） | 在现有 "Orthogonal Transformations and Symmetric Transformations" section 前补 `=== Orthogonal Transformations` |
+| S3 | L3665–3679 | **反对称变换**（skew-symmetric transformation）：定义、性质（线性、$(\mathcal{A}\alpha,\alpha)=0$、$\mathcal{A}\pm\mathcal{I}$ 可逆）、斜对称阵正交对角化定理 | 新增 `=== Skew-Symmetric Transformations` |
+| S4 | L3468–3538 | **最小二乘法**：垂线段最短定理、最佳逼近元定义、最小二乘问题定义、正规方程 $(A^TA)x=A^T\beta$ | 在 Orthogonal Completion and Orthogonal Projection section 下补 `=== Least Squares Method` |
+| S5 | L3706–3710 | **参考资料**：4 本教材的完整引用信息 | 确认 `references.bib` 已收录；在文末补充 `#bibliography` |
+
+### 6.2 内容性遗漏（章节存在但内容不完整）
+
+| 编号 | Typst 位置 | 遗漏内容 | 严重度 |
+|------|-----------|---------|--------|
+| C1 | § Diagonalization (L2077) | 可对角化充要条件缺少 **Jordan 标准形角度**：Jordan 块均一阶、初等因子均一次、不变因子无重根（参考 L2877–2882） | 🟠 |
+| C2 | § Orthogonal Completion (L2727) | 正交补性质缺少：**包含关系性质** $V_1 \subset V_2 \Rightarrow V_1^\perp \supset V_2^\perp$（参考 L3466） | 🟡 |
+| C3 | § Orthogonal Completion (L2727) | 正交补性质缺少：**等价定义** $V_1 \perp V_2$ 且 $V_1 + V_2 = V$（参考 L3461） | 🟡 |
+| C4 | § Existence of Solutions (L963) | 缺少 **Gauss-Jordan 算法流程图**（三种解的情况判定）和齐次方程组推论 $r < n \Rightarrow$ 非零解（参考 L392–413） | 🟡 |
+| C5 | § Homogeneous Systems (L972) | 基础解系定理缺少**完整证明**（参考 L677–697，Typst 仅有定义和 note） | 🟡 |
+| C6 | § Real Inner Product Spaces (L2608) | 缺少 **Euclid 空间的同构** 定理（参考 L3443–3444） | 🔴（与 S1 相关） |
+| C7 | § Orthogonal Transformations (L2754) | 现有 section 标题含 "Orthogonal Transformations" 但**实际只定义了 Symmetric Transformation**，完全没有讨论正交变换本身 | 🔴 |
+
+### 6.3 Typst 笔记超出参考文档的内容
+
+| 内容 | Typst 位置 | 说明 |
+|------|-----------|------|
+| Low-Rank Corrections (Sherman-Morrison, Woodbury) | § Matrices (L753) | 参考文档无 |
+| Special Linear Spaces (Commutative spaces) | § Linear Spaces (L1370) | 参考文档无 |
+| Simultaneous Characteristics | § Diagonalization (L2182) | 参考文档无 |
+| Ascending Chain of Subspaces | § Linear Mappings (L1516) | 参考文档无 |
+| Gerschgorin Disk Theorem | § Diagonalization (L1904) | 参考文档无 |
+| Geometric Interpretation (Rational Canonical Form) | § Jordan (L2345) | 参考文档无 |
+| Complete Set of Invariant Quantities | § Jordan (L2453) | 参考文档有类似内容但组织不同 |
+| Symplectic Spaces（有完整内容） | § Inner Product Spaces (L2846) | 参考文档辛空间为空节（L3700–3703） |
+| Unitary Spaces and Normal Transformations（有完整内容） | § Inner Product Spaces (L2786) | 参考文档酉空间与酉变换为空节（L3697–3699） |
+
+### 6.4 章节映射对照表
+
+| 参考文档章节 | 参考文档行号 | Typst 对应位置 | 状态 |
+|-------------|-------------|---------------|------|
+| 排列 | L4 | § Permutations (L66) | ✅ |
+| 行列式及其性质 | L33 | § Determinant and Its Properties (L94) | ✅ |
+| 行列式按一行(列)展开 | L157 | § Expanding by Rows and Columns (L136) | ✅ |
+| Cramer法则 | L201 | === Cramer's Rule (L169) | ✅ |
+| 行列式按k行(列)展开 | L220 | === Expanding by k Rows (L195) | ✅ |
+| 特殊行列式 | L240 | § Special Determinants (L210) | ✅ |
+| 用消元法研究线性方程组 | L338 | § Elimination Method (L838) | ✅ |
+| 向量代数 | L435 | § Linear Spaces and Their Bases (L1045) | ✅（内容分散到 Ch5） |
+| 用矩阵研究线性方程组 | L524 | § Rank of Vector Groups + § Solution to Linear Systems | ✅ |
+| 基本运算 | L769 | § Basic Operations (L303) | ✅ |
+| 特殊矩阵 | L952 | § Special Square Matrices (L378) | ✅ |
+| 特殊运算 | L1076 | 分散在 Inverse Matrix + Block Matrix + Operations of Rank | ✅ |
+| 数域P上的线性空间 | L1320 | § Linear Spaces and Their Bases (L1045) | ✅ |
+| 子空间 | L1474 | § Subspaces (L1215) | ✅ |
+| 同构 | L1671 | § Isomorphisms (L1284) | ✅ |
+| 商空间 | L1758 | § Quotient Spaces (L1324) | ✅ |
+| 线性映射及其计算 | L1762 | § Linear Mappings and Their Computation (L1402) | ✅ |
+| 线性映射的核与像 | L1947 | § Kernel and Image (L1472) | ✅ |
+| 线性映射的矩阵表示 | L2098 | § Matrix Representation (L1550) | ✅ |
+| 线性函数与对偶空间 | L2253 | § Linear Functions and Dual Spaces (L1690) | ✅ |
+| 矩阵的相似 | L2268 | § Similarity of Matrices (L1743) | ✅ |
+| 特征向量与对角化 | L2294 | § Eigenvectors and Eigenvalues (L1806) | ✅ |
+| 空间分解与对角化 | L2563 | § Space Decomposition (L1945) | ✅ |
+| 最小多项式与对角化 | L2763 | § Minimal Polynomial (L1933) | ✅ |
+| 多项式矩阵 | L2781 | § Polynomial Matrices (L2220) | ✅ |
+| 不变因子 | L2819 | === Invariant Divisors (L2283) | ✅ |
+| 有理标准型 | L2838 | === Rational Canonical Form (L2308) | ✅ |
+| 初等因子 | L2852 | § Elementary Divisors and Jordan Canonical Form (L2385) | ✅ |
+| Jordan标准形 | L2864 | § Finding Jordan Canonical Form (L2434) + § Complete Set of Invariant Quantities (L2453) | ✅ |
+| 二次型及其标准型 | L2896 | § Quadratic Forms and Their Standard Forms (L2485) | ✅ |
+| 规范型 | L3045 | § Canonical Forms (L2518) | ✅ |
+| 正定二次型 | L3110 | § Definite Quadratic Forms (L2552) | ✅ |
+| 双线性函数 | L3295 | § Bilinear Forms (L2589) | ✅ |
+| 实内积空间 | L3307 | § Real Inner Product Spaces (L2608) | ✅ |
+| 度量矩阵与标准正交基 | L3352 | § Metric Matrices and Orthonormal Bases (L2649) | ✅ |
+| **实内积空间的同构** | **L3432** | § Isomorphism of Real Inner Product Spaces (L2715) | ✅ **已补全** |
+| 正交补与正交投影 | L3446 | § Orthogonal Completion and Orthogonal Projection (L2715) | ✅ **已补全（含最小二乘法）** |
+| 正交变换与对称变换 | L3539 | § Orthogonal Transformations and Symmetric Transformations (L2754) | ✅ **已补全（含正交变换+反对称变换）** |
+| **反对称变换** | **L3665** | === Skew-Symmetric Transformations | ✅ **已补全** |
+| 酉空间与酉变换 | L3697 | § Unitary Spaces and Normal Transformations (L2786) | ✅（Typst 内容更丰富） |
+| 辛空间 | L3700 | § Symplectic Spaces (L2846) | ✅（Typst 内容更丰富） |
+| 参考资料 | L3706 | #bibliography("references.bib") (L3238) | ✅ **已确认** |
+
+### 6.5 优先级建议
+
+| 优先级 | 编号 | 理由 |
+|--------|------|------|
+| P0 🔴 | S2, C7 | 现有 section 标题承诺覆盖正交变换但实际缺失，影响章节完整性 |
+| P1 🟠 | S1, S3, C1 | 独立章节缺失或重要定理角度不全 |
+| P2 🟡 | S4, C2, C3, C4, C5 | 重要但非核心；可在后续批次中补全 |
+| P3 🟢 | S5 | 确认 references.bib 已收录即可 |

@@ -879,6 +879,18 @@ echelon form is reached.
   eliminated. Hence the result is unique.
 ]
 
+#note[
+  *Gauss-Jordan algorithm*: For a linear system $A x = b$, form the augmented matrix $(A | b)$
+  and apply elementary row operations until the coefficient part is in reduced row echelon form.
+  The solution falls into exactly one of three cases:
+  - If a row has the form $0 ... 0 | d$ with $d ≠ 0$, the system is *inconsistent* (no solution);
+  - If the number of non-zero rows equals the number of variables, there is a *unique solution*;
+  - Otherwise, there are $n - r$ free variables and *infinitely many solutions*, where $r$ is
+    the number of non-zero rows (i.e., the rank of $A$).
+  For a homogeneous system $A x = 0$, the corollary is: there exists a non-zero solution
+  if and only if $r < n$.
+]
+
 == Rank of Vector Groups and Matrices // 向量组与矩阵的秩
 
 #note[
@@ -1003,6 +1015,16 @@ All solutions of the homogeneous system $A x = O$ form a linear space, called th
 space*, whose basis is any fundamental system of solutions. The dimension of the solution space
 is $n - upright("rank")(A)$, where $n$ is the number of variables. Thus a fundamental system of
 solutions contains exactly $n - upright("rank")(A)$ solutions.
+
+#proof[
+  Let $upright("rank")(A) = r$. After row reduction to reduced row echelon form, assume the
+  top-left $r × r$ submatrix is the identity (otherwise permute columns). The system becomes
+  equivalent to $r$ equations in which $x_1, ..., x_r$ are determined by the free variables
+  $x_{r+1}, ..., x_n$. Setting each free variable to $1$ (with all others $0$) yields $n - r$
+  solutions. These are linearly independent (by inspection of the trailing $n - r$ coordinates
+  of each) and every solution is a linear combination of them (by matching the free variable
+  values). Hence they form a fundamental system of exactly $n - r$ solutions.
+]
 
 === Nonhomogeneous Systems // 非齐次方程组
 
@@ -2093,6 +2115,13 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   root space decomposition.
 ]
 
+#note[
+  Over $bb(C)$, the following are also equivalent to $A$ being diagonalizable:
+  - All Jordan blocks in the Jordan canonical form of $A$ are of size $1$;
+  - All elementary divisors of $A$ are linear;
+  - All invariant divisors of $A$ have no repeated roots.
+]
+
 == Diagonalization of Special Matrices // 特殊矩阵的对角化
 
 #note[
@@ -2712,6 +2741,38 @@ and normal transformations.
   are real numbers. Find all eigenvalues of $B$.
 ]
 
+== Isomorphism of Real Inner Product Spaces // 实内积空间的同构
+
+#definition(name: "Isomorphism of Inner Product Spaces")[
+  Let $V$ and $V'$ be real inner product spaces. A bijection
+  $sigma: V -> V'$ is an *isomorphism* (or *isometry*) of inner product spaces
+  if for all $alpha, beta in V$ and $k in bb(R)$:
+  - $sigma(alpha + beta) = sigma(alpha) + sigma(beta)$;
+  - $sigma(k alpha) = k sigma(alpha)$;
+  - $(alpha, beta) = (sigma(alpha), sigma(beta))$.
+  If such an isomorphism exists, $V$ and $V'$ are called *isomorphic*,
+  denoted $V ≈ V'$.
+] <def:isometry>
+
+#note[
+  A bijective linear map that preserves the inner product is called a *linear isomorphism*
+  or *isometry*. Two real inner product spaces that are isomorphic as linear spaces may
+  fail to be isomorphic as inner product spaces.
+]
+
+#theorem(name: "Isomorphism Theorem for Euclidean Spaces")[
+  Two Euclidean spaces are isomorphic (as inner product spaces) if and only if
+  they have the same dimension.
+] <thm:isometry-theorem>
+
+#proof[
+  If $dim V = dim V' = n$, let ${epsilon_1, ..., epsilon_n}$ and
+  ${epsilon'_1, ..., epsilon'_n}$ be orthonormal bases of $V$ and $V'$ respectively.
+  Define $sigma(sum_(i=1)^n x_i epsilon_i) = sum_(i=1)^n x_i epsilon'_i$.
+  This is a bijection preserving linear operations and inner products.
+  Conversely, an isometry preserves dimension.
+]
+
 == Orthogonal Completion and Orthogonal Projection // 正交补与正交投影
 
 #definition(name: "Orthogonal Complement")[
@@ -2725,10 +2786,13 @@ and normal transformations.
 ] <def:orthogonal-complement>
 
 #property(name: "Properties of Orthogonal Complement")[
+  - An equivalent definition: $W_2$ is an orthogonal complement of $W_1$ if
+    $W_1 ⊥ W_2$ and $W_1 + W_2 = V$;
   - The orthogonal complement $W^⊥$ of $W$ exists and is unique in Euclidean space $V$;
   - $W ⊕ W^⊥ = V$;
   - $(W^⊥)^⊥ = W$;
-  - $(V_1 + V_2)^⊥ = V_1^⊥ ∩ V_2^⊥$ and $(V_1 ∩ V_2)^⊥ = V_1^⊥ + V_2^⊥$.
+  - $(V_1 + V_2)^⊥ = V_1^⊥ ∩ V_2^⊥$ and $(V_1 ∩ V_2)^⊥ = V_1^⊥ + V_2^⊥$;
+  - If $W_1 ⊂ W_2$, then $W_1^⊥ ⊃ W_2^⊥$.
 ] <prop:orthogonal-complement-properties>
 
 #definition(name: "Orthogonal Projection")[
@@ -2751,7 +2815,68 @@ and normal transformations.
     $= ("lVert"(alpha) "rVert")^2 - sum_(i=1)^n c_i^2 ("lVert"(epsilon_i) "rVert")^2$.
 ] <prop:orthogonal-projection-properties>
 
+=== Least Squares Method // 最小二乘法
+
+#theorem(name: "Shortest Distance Theorem")[
+  Let $U$ be a subspace of a real inner product space $V$ with $V = U ⊕ U^⊥$.
+  For $alpha in V$ and $alpha_1 in U$, $alpha_1$ is the orthogonal projection of $alpha$
+  onto $U$ if and only if $d(alpha, alpha_1) ≤ d(alpha, gamma)$ for all $gamma in U$.
+] <thm:shortest-distance>
+
+#note[
+  The *least squares problem* asks: given a linear system $A x = beta$ with more equations
+  than unknowns (which may be inconsistent), find $c_1, ..., c_n$ minimizing
+  $sum_(i=1)^s (sum_(j=1)^n a_("ij") c_j - beta_i)^2$.
+]
+
+#note[
+  The least squares solution of $A x = beta$ is equivalent to solving the *normal equations*
+  $(A^T A) x = A^T beta$.
+]
+
 == Orthogonal Transformations and Symmetric Transformations // 正交变换与对称变换
+
+=== Orthogonal Transformations // 正交变换
+
+#definition(name: "Orthogonal Transformation")[
+  A surjective map $A: V -> V$ on a real inner product space $V$ is an *orthogonal
+  transformation* if it preserves the inner product:
+  $(A alpha, A beta) = (alpha, beta)$ for all $alpha, beta in V$.
+] <def:orthogonal-transformation>
+
+#lemma(name: "Properties of Orthogonal Transformations")[
+  - An orthogonal transformation is linear and injective (hence bijective on finite-dimensional $V$);
+  - The inverse and product of orthogonal transformations are orthogonal;
+  - The following are equivalent for a linear transformation $A$ on $V$:
+    * $A$ is orthogonal;
+    * $A$ preserves lengths: $||A alpha|| = ||alpha||$ for all $alpha$;
+    * $A$ maps an orthonormal basis to an orthonormal basis;
+    * The matrix of $A$ under any orthonormal basis is an orthogonal matrix.
+] <lem:orthogonal-transformation-properties>
+
+#note[
+  The determinant of an orthogonal transformation is $\pm 1$. Those with determinant $1$
+  are called *first-kind* (rotations); those with determinant $-1$ are called *second-kind*
+  (reflections or improper rotations).
+]
+
+#theorem(name: "Orthogonal Diagonalization of Real Orthogonal Matrices")[
+  Let $A$ be an orthogonal transformation on an $n$-dimensional Euclidean space $V$.
+  Then there exists an orthonormal basis of $V$ such that the matrix of $A$ has the form
+  $
+  "diag"({lambda_1, ..., lambda_r, R(theta_1), ..., R(theta_m)})
+  $,
+  where $lambda_i = ±1$ for $i = 1, ..., r$ and $R(theta) = mat((cos(theta), -sin(theta)), (sin(theta), cos(theta)))$
+  for $j = 1, ..., m$, with $r + 2m = n$.
+] <thm:orthogonal-diagonalization>
+
+#note[
+  The eigenvalues of a real orthogonal matrix are $±1$ or $cos(theta) ± i sin(theta)$
+  with $0 < theta < pi$. This decomposition generalizes the spectral theorem for
+  symmetric transformations.
+]
+
+=== Symmetric Transformations // 对称变换
 
 #definition(name: "Symmetric Transformation")[
   A linear transformation $A$ on a real inner product space $V$ is *symmetric* if
@@ -2782,6 +2907,31 @@ and normal transformations.
   For any real quadratic form $f(x_1, ..., x_n) = X^T A X$, there exists an orthogonal
   transformation $X = T Y$ such that $f = Y^T Lambda Y = sum_(i=1)^n lambda_i y_i^2$.
 ]
+
+=== Skew-Symmetric Transformations // 反对称变换
+
+#definition(name: "Skew-Symmetric Transformation")[
+  A linear transformation $A$ on a real inner product space $V$ is *skew-symmetric*
+  (or *antisymmetric*) if
+  $(A alpha, beta) = -(alpha, A beta)$ for all $alpha, beta in V$.
+] <def:skew-symmetric-transformation>
+
+#lemma(name: "Properties of Skew-Symmetric Transformations")[
+  - A skew-symmetric transformation is linear;
+  - $(A alpha, alpha) = 0$ for all $alpha in V$;
+  - Both $A - E$ and $A + E$ are invertible;
+  - $(A + E)(A - E)^(-1)$ is an orthogonal transformation.
+] <lem:skew-symmetric-properties>
+
+#theorem(name: "Orthogonal Diagonalization of Skew-Symmetric Matrices")[
+  Let $A$ be a skew-symmetric transformation on an $n$-dimensional Euclidean space $V$.
+  Then there exists an orthonormal basis of $V$ such that the matrix of $A$ has the form
+  $
+  "diag"({mat((0, a_1), (-a_1, 0)), ..., mat((0, a_s), (-a_s, 0)), 0, ..., 0})
+  $,
+  where $a_i != 0$ for $i = 1, ..., s$ and $2s + t = n$ ($t$ is the number of zero
+  blocks). In particular, the eigenvalues of $A$ are $0$ or pure imaginary numbers.
+] <thm:skew-symmetric-diagonalization>
 
 == Unitary Spaces and Normal Transformations // 酉空间与正规变换
 
