@@ -49,6 +49,14 @@ Similarly, the following notations are used#footnote[
     [$accent(U, circle)(x_0, rho)$],
     [Deleted (punctured) neighborhood of $x_0$ with radius $rho$: ${x : 0 < abs(x - x_0) < rho}$],
   ),
+  ([$bb(N), bb(Z), bb(Q), bb(R), bb(C)$], [Sets of natural, integer, rational, real and complex numbers]),
+  ([$norm(bold(x))$], [Euclidean norm of $bold(x) in bb(R)^n$: $norm(bold(x)) = sqrt(bold(x) dot bold(x))$]),
+  ([$dif x$], [Differential of the variable $x$]),
+  (
+    [$bold(e)$, $bold(e)_i$],
+    [Unit vector in $bb(R)^n$; $bold(e)_i$: the standard orthonormal basis vector with $1$ in the $i$-th position],
+  ),
+  ([$bold(i), bold(j), bold(k)$], [Coordinate unit vectors of $bb(R)^3$]),
   ([$colon.eq$], ["Is defined as": the left-hand side is defined to be the right-hand side]),
 )
 
@@ -64,8 +72,8 @@ Let $U subset bb(R)^n$ be an open set, and $bold(f): U -> bb(R)^m$ be a $C^k$ ma
 Let $C^(k)(U, bb(R)^m)$ denote the set of $C^k$ mappings from $U$ to $bb(R)^m$.
 
 Sometimes, we use subscripts $i$ to denote the partial derivative with respect to the $i$-th variable,
-for example, for the function $f(x^2 + y^2 + z^2, x y z)$, we write $f_2 := (partial f) / (partial (x y z))$,
-and similarly for higher-order partial derivatives, e.g., $f_(12) := (partial^2 f(u, v)) / (partial v partial u)$.
+for example, for the function $f(x^2 + y^2 + z^2, x y z)$, we write $f_2 colon.eq (partial f) / (partial (x y z))$,
+and similarly for higher-order partial derivatives, e.g., $f_(12) colon.eq (partial^2 f(u, v)) / (partial v partial u)$.
 
 == Trigonometric Formulas // 三角公式
 
@@ -5230,15 +5238,15 @@ $omega_f (x) = 0$.
   *Second mean value theorem (decreasing case).* Let
   $P: a = x_0 < x_1 < dots.c < x_n = b$ be a partition and write
   $
-       & integral_a^b f(x) g(x) dif x
-         = sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x) dif x \
-     = & sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) [g(x) - g(x_i)] dif x
-         + sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x_i) dif x \
-    := & I_1 + I_2.
+             & integral_a^b f(x) g(x) dif x
+               = sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x) dif x \
+           = & sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) [g(x) - g(x_i)] dif x
+               + sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x_i) dif x \
+    colon.eq & I_1 + I_2.
   $
   Since $f in R[a, b]$, it is bounded: $abs(f) <= L$. Since $g$ is decreasing
   and $g >= 0$, we have $0 <= g(x_i) - g(x_(i+1))$ for every $i$ and
-  $sum_(i=0)^(n-1) omega_i^g = g(a) - g(b) := R$ where $omega_i^g$ denotes
+  $sum_(i=0)^(n-1) omega_i^g = g(a) - g(b) colon.eq R$ where $omega_i^g$ denotes
   the oscillation of $g$ on $[x_i, x_(i+1)]$. With
   $lambda = max_i Delta x_i$,
   $
@@ -8737,7 +8745,7 @@ Initially, we define the double integral on a closed interval (rectangle).
   $
   then $f$ is said to be Riemann integrable on $I$, and:
   $
-    J = lim_(lambda -> 0) sum_(i=1)^k f(bold(xi)^i) v(I_i) :=
+    J = lim_(lambda -> 0) sum_(i=1)^k f(bold(xi)^i) v(I_i) colon.eq
     integral.double_I f(x, y) dif x dif y quad "or" quad
     integral_I f dif v quad "or" quad integral_I f.
   $
@@ -8821,14 +8829,14 @@ In the definition of multiple integrals derived from the second approach, the ke
   If $forall x in [a, b]$, the integral $phi(x) = integral_c^d f(x, y) dif y$ exists, then $phi$ is integrable on $[a, b]$, and:
   $
     integral.double_I f =
-    integral_a^b (integral_c^d f(x, y) dif y) dif x :=
+    integral_a^b (integral_c^d f(x, y) dif y) dif x colon.eq
     integral_a^b dif x integral_c^d f(x, y) dif y.
   $
 
   Similarly, if $forall y in [c, d]$, the integral $psi(y) = integral_a^b f(x, y) dif x$ exists, then $psi$ is integrable on $[c, d]$, and:
   $
     integral.double_I f =
-    integral_c^d (integral_a^b f(x, y) dif x) dif y :=
+    integral_c^d (integral_a^b f(x, y) dif x) dif y colon.eq
     integral_c^d dif y integral_a^b f(x, y) dif x.
   $
 ] <thm:reduction-double-iterated-closed-interval>
@@ -9348,7 +9356,7 @@ The first fundamental form is the metric that a surface inherits from its ambien
 
 #definition(name: "The First Fundamental Form")[
   In the above conditions, for any point $p = (u, v) in Delta$, the *first fundamental form* of the surface $M$ at point $p$ is defined as: for any tangent vectors $bold(w)_1, bold(w)_2 in T_p M$,
-  $ upright(I)_p (bold(w)_1, bold(w)_2) := bold(w)_1 dot bold(w)_2, $
+  $ upright(I)_p (bold(w)_1, bold(w)_2) colon.eq bold(w)_1 dot bold(w)_2, $
   which is a symmetric positive-definite bilinear form on the tangent space $T_p M$. This form is also called the *Riemann metric* or *metric tensor*, denoted as $upright(I)_p$ or $g_p$.
 ] <def:first-fundamental-form>
 // 注：tex 中 "Riemann metric of metric tensor" 的 "of" 为笔误，已修正为 "or"。
