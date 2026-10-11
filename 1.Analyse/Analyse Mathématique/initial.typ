@@ -9039,7 +9039,7 @@ $
 // 注：tex 例题标签 "eg:Triple Integral of Cone" 含空格不合法，迁移后改为 <ex:triple-integral-cone>；tex 未给出解答，不编造。
 
 #figure(
-  image("img/cone.png", width: 40%),
+  image("img/cone.svg", width: 40%),
   caption: [Cone example.],
 ) <fig:cone>
 // 注：tex 图片标签 "fig:Cone" 含空格不合法，迁移后改为 <fig:cone>。
@@ -9050,7 +9050,7 @@ $
 // 注：tex 例题/图片标签含空格不合法，迁移后改为 <ex:project-method-example> / <fig:project-method-example>；tex 未给出解答，不编造。
 
 #figure(
-  image("img/project_method_example.png", width: 40%),
+  image("img/project-method-example.svg", width: 40%),
   caption: [Project method example.],
 ) <fig:project-method-example>
 
