@@ -5368,13 +5368,12 @@ $omega_f (x) = 0$.
   $abs(f(x+h) - f(x)) <= omega_(i-1) + omega_i + omega_(i+1)$, where
   $x_(-1) = a - Delta x$ and $x_(n+1) = b + Delta x$. Hence
   $
-    integral_a^b abs(f(x+h) - f(x)) dif x
-    <= sum_(i=1)^n [integral_(x_(i-1))^(x_i) abs(f(x+h) - f(x_(i))) dif x
-      + integral_(x_(i-1))^(x_i) abs(f(x_i) - f(x)) dif x]
-    <= Delta x sum_(i=1)^n (omega_(i-1) + omega_i + omega_(i+1))
-    + Delta x sum_(i=1)^n omega_i
-    <= 4 sum_(i=1)^n omega_i Delta x + (omega_0 + omega_(n+1)) Delta x
-    < 4 dot epsilon/6 + 4M dot epsilon/(8M) < epsilon.
+       & integral_a^b abs(f(x+h) - f(x)) dif x \
+    <= & sum_(i=1)^n [integral_(x_(i-1))^(x_i) abs(f(x+h) - f(x_(i))) dif x
+           + integral_(x_(i-1))^(x_i) abs(f(x_i) - f(x)) dif x] \
+    <= & Delta x sum_(i=1)^n (omega_(i-1) + omega_i + omega_(i+1)) + Delta x sum_(i=1)^n omega_i \
+    <= & 4 sum_(i=1)^n omega_i Delta x + (omega_0 + omega_(n+1)) Delta x \
+     < & 4 dot epsilon/6 + 4M dot epsilon/(8M) < epsilon.
   $
   This proves the claim.
 ]
@@ -5409,7 +5408,7 @@ between differential and integral calculus.
     $F(x) = integral_(u(x))^(v(x)) f(t) dif t$ with $u, v$ differentiable,
     then
     $ F'(x) = f(v(x)) v'(x) - f(u(x)) u'(x). $
-    In fact, this formula is the simplified version of *Leibniz's rule*.
+    In fact, this formula is the simplified version of #link(<thm:leibniz-rule-parameter>)[Leibniz's rule].
 ] <prop:variable-limit-integrals>
 
 #proof[
@@ -10113,6 +10112,48 @@ When $[c, d]$ is replaced by $[c, +oo)$, the above theorem fails, but we have th
   $ frac(dif, dif y) integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) frac(partial f, partial y)(x, y) dif x. $
 ] <thm:differentiation-parameter>
 // 注：tex 原文该定理的区域写作 D = [a, +\infty] × [c, d]，无穷端点误用闭括号，已修正为 [a, +∞)。
+
+#theorem(name: "Leibniz's Rule")[
+  Let $f$ and $frac(partial f, partial x)$ be continuous on the rectangle
+  $D = [alpha, beta] times [p, q]$, and let $a(x), b(x)$ be differentiable on
+  $[alpha, beta]$ with values in $[p, q]$. Then
+  $ F(x) = integral_(a(x))^(b(x)) f(x, t) dif t $
+  is differentiable on $[alpha, beta]$, and
+  $ F'(x) = f(x, b(x)) b'(x) - f(x, a(x)) a'(x) + integral_(a(x))^(b(x)) frac(partial f, partial x)(x, t) dif t. $
+] <thm:leibniz-rule-parameter>
+
+#proof[
+  Write $F(x) = G(x, a(x), b(x))$ with
+  $ G(x, u, v) = integral_u^v f(x, t) dif t. $
+  By the fundamental theorem of calculus,
+  $frac(partial G, partial v)(x, u, v) = f(x, v)$ and
+  $frac(partial G, partial u)(x, u, v) = -f(x, u)$.
+
+  For the partial derivative in $x$, uniform continuity of
+  $frac(partial f, partial x)$ on $D$ gives, as $h -> 0$,
+  $
+    (G(x + h, u, v) - G(x, u, v)) / h
+    = frac(1, h) integral_u^v integral_x^(x + h) frac(partial f, partial x)(s, t) dif s dif t
+    -> integral_u^v frac(partial f, partial x)(x, t) dif t,
+  $
+  hence $frac(partial G, partial x)(x, u, v) = integral_u^v frac(partial f, partial x)(x, t) dif t$.
+
+  All three partial derivatives of $G$ are continuous and $a, b$ are
+  differentiable, so the chain rule yields
+  $
+    F'(x) = frac(partial G, partial x) + frac(partial G, partial u) a'(x) + frac(partial G, partial v) b'(x)
+    = f(x, b(x)) b'(x) - f(x, a(x)) a'(x) + integral_(a(x))^(b(x)) frac(partial f, partial x)(x, t) dif t.
+  $
+]
+
+#note(title: "Remark")[
+  The rule unifies the two special cases proved earlier: with $a, b$ fixed and
+  $f$ independent of $x$ it reduces to
+  #link(<prop:variable-limit-integrals>)[the variable-limit derivation rule],
+  while with fixed limits it is exactly
+  #link(<thm:differentiation-parameter>)[differentiation under the integral
+    sign] in the compact-limit form.
+]
 
 #example[
   Let
