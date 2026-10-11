@@ -1251,7 +1251,7 @@ Two small observations reduce the work to a couple of closures.
 ] <thm:subgroup-criteria>
 
 #proof[
-  (==>) If $H$ is a group under the restricted operation, products
+  ($==>$) If $H$ is a group under the restricted operation, products
   and inverses of elements of $H$ computed inside $H$ stay in $H$
   and coincide with those computed in $G$
   (#link(<prop:subgroup-identity-inverses>)[the property above]);
@@ -1347,16 +1347,16 @@ fully symmetric statement.
 ] <thm:product-criterion>
 
 #proof[
-  (1 ==> 2) A subgroup contains $e$, so every $h in H$ can be written
+  (1 $==>$ 2) A subgroup contains $e$, so every $h in H$ can be written
   $h = h e^(-1) in H H^(-1)$, and the one-step criterion gives the
   reverse inclusion $H H^(-1) subset.eq H$.
 
-  (2 ==> 3) The inclusion $H H^(-1) subset.eq H$ is precisely the
+  (2 $==>$ 3) The inclusion $H H^(-1) subset.eq H$ is precisely the
   one-step test, so $H$ is a subgroup by
   #link(<cor:subgroup-criterion>)[the corollary]; a subgroup coincides
   with its own inverse, whence $H H = H H^(-1) = H$ and $H^(-1) = H$.
 
-  (3 ==> 1) The equality $H H = H$ gives closure under products and
+  (3 $==>$ 1) The equality $H H = H$ gives closure under products and
   $H^(-1) = H$ gives closure under inverses, so $H$ is a subgroup by
   #link(<thm:subgroup-criteria>)[the theorem].
 
@@ -1371,7 +1371,7 @@ fully symmetric statement.
 ] <thm:product-of-subgroups>
 
 #proof[
-  (==>) Suppose $H K$ is a subgroup. Being closed under inverses, it
+  ($==>$) Suppose $H K$ is a subgroup. Being closed under inverses, it
   coincides with its own inverse, and inverting a product swaps the
   factors:
   $
@@ -1955,13 +1955,13 @@ The two definitions raise the question of when a transformation group deserves t
 #proof[
   Throughout, $e circle g = g$ for every $g in G$.
 
-  (1 ==> 2) A permutation group is a subgroup of $S_X$, hence contains the identity map; the identity element of a group being unique, $e = "id"_X$.
+  (1 $==>$ 2) A permutation group is a subgroup of $S_X$, hence contains the identity map; the identity element of a group being unique, $e = "id"_X$.
 
-  (2 ==> 1) If $e = "id"_X$, take $g in G$ with group inverse $g^(-1) in G$: then $g^(-1) circle g = g circle g^(-1) = e = "id"_X$. A map with a two-sided inverse under composition is a bijection, so every element of $G$ is a permutation.
+  (2 $==>$ 1) If $e = "id"_X$, take $g in G$ with group inverse $g^(-1) in G$: then $g^(-1) circle g = g circle g^(-1) = e = "id"_X$. A map with a two-sided inverse under composition is a bijection, so every element of $G$ is a permutation.
 
-  (3 ==> 2) Let $f in G$ be injective. From $f circle e = f$, that is, $f(e(x)) = f(x)$ for all $x in X$, injectivity yields $e(x) = x$ for all $x$, i.e. $e = "id"_X$.
+  (3 $==>$ 2) Let $f in G$ be injective. From $f circle e = f$, that is, $f(e(x)) = f(x)$ for all $x in X$, injectivity yields $e(x) = x$ for all $x$, i.e. $e = "id"_X$.
 
-  (4 ==> 2) Let $f in G$ be surjective. From $e circle f = f$ we get $e(y) = y$ for every $y in f(X) = X$, so again $e = "id"_X$.
+  (4 $==>$ 2) Let $f in G$ be surjective. From $e circle f = f$ we get $e(y) = y$ for every $y in f(X) = X$, so again $e = "id"_X$.
 ]
 
 The criterion forbids mixing: if a transformation group contains even a *single* bijective transformation, that element is injective and surjective, so the whole group is a permutation group. A transformation group is therefore either a permutation group outright — all of its elements bijections — or contains no bijection at all: the permutation groups and the non-bijective transformation groups are two disjoint families, with no borderline case.
