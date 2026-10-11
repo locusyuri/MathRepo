@@ -8975,6 +8975,11 @@ $
   frac(partial (x, y), partial (r, theta)) = r.
 $
 
+#figure(
+  image("img/polar-coordinates.svg", width: 38%),
+  caption: [Polar coordinates.],
+) <fig:polar-coordinates>
+
 *Cylindrical Coordinate System.*
 $
   cases(
@@ -8994,6 +8999,11 @@ $
   frac(partial (x, y, z), partial (r, theta, z)) = r.
 $
 // 注：tex 该式 Jacobian 分母误作 (r, theta, varphi)，与变换变量 (r, theta, z) 不符，已修正为 (r, theta, z)。
+
+#figure(
+  image("img/cylindrical-coordinates.svg", width: 42%),
+  caption: [Cylindrical coordinate system.],
+) <fig:cylindrical-coordinates>
 
 *Spherical Coordinate System.*
 $
@@ -9015,10 +9025,11 @@ $
 $
 
 #figure(
-  image("img/coordinate.png", width: 80%),
-  caption: [Cylindrical and spherical coordinate systems.],
-) <fig:cylindrical-spherical-coordinates>
-// 注：tex 中该图未加标签，迁移后补 <fig:cylindrical-spherical-coordinates>。
+  image("img/spherical-coordinates.svg", width: 42%),
+  caption: [Spherical coordinate system.],
+) <fig:spherical-coordinates>
+// 注：tex 原为柱面+球面合绘的 coordinate.png（未加标签），现按用户要求拆分为三张独立配图，
+// 分别置于三种坐标变换公式之后：<fig:polar-coordinates>、<fig:cylindrical-coordinates>、<fig:spherical-coordinates>。
 
 === Calculation of Triple Integrals // 三重积分的计算（原 leftbarTitle 非空壳，升级为小节）
 
@@ -10382,7 +10393,9 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<lem:cover-fixed-point>)[Cover Fixed Point]*
 - *#link(<lem:cover-subinterval>)[Cover Subinterval]*
 - *#link(<def:curvature-of-curve>)[Curvature of Curve]*
-- *#link(<fig:cylindrical-spherical-coordinates>)[Cylindrical Spherical Coordinates]*
+- *#link(<fig:cylindrical-coordinates>)[Cylindrical Coordinates]*
+- *#link(<fig:spherical-coordinates>)[Spherical Coordinates]*
+- *#link(<fig:polar-coordinates>)[Polar Coordinates]*
 
 == D
 - *#link(<ex:dalembert-equation>)[Dalembert Equation]*
