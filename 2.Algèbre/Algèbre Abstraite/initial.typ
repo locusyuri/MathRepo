@@ -1257,7 +1257,7 @@ Two small observations reduce the work to a couple of closures.
   (#link(<prop:subgroup-identity-inverses>)[the property above]);
   $H$ is non-empty as it contains the identity.
 
-  (<==) Suppose the two closures hold. Picking $h in H$, we get
+  ($<==>$) Suppose the two closures hold. Picking $h in H$, we get
   $h^(-1) in H$ and then $e = h h^(-1) in H$. The restricted
   operation is associative because $star$ is; the element $e in H$
   acts as the identity; and every $h in H$ has its inverse in $H$.
@@ -1380,7 +1380,7 @@ fully symmetric statement.
   the last equality holding since the subgroups $H$ and $K$ satisfy
   $H^(-1) = H$ and $K^(-1) = K$.
 
-  (<==) Suppose $H K = K H$. To pass the one-step criterion, take
+  ($<==>$) Suppose $H K = K H$. To pass the one-step criterion, take
   $h, h' in H$ and $k, k' in K$. Then
   $
     (h k) (h' k')^(-1) = h (k k'^(-1)) h'^(-1),
