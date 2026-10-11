@@ -49,6 +49,7 @@ Similarly, the following notations are used#footnote[
     [$accent(U, circle)(x_0, rho)$],
     [Deleted (punctured) neighborhood of $x_0$ with radius $rho$: ${x : 0 < abs(x - x_0) < rho}$],
   ),
+  ([$colon.eq$], ["Is defined as": the left-hand side is defined to be the right-hand side]),
 )
 
 Let $U subset bb(R)^n$ be an open set, and $bold(f): U -> bb(R)^m$ be a $C^k$ mapping:
@@ -5229,11 +5230,11 @@ $omega_f (x) = 0$.
   *Second mean value theorem (decreasing case).* Let
   $P: a = x_0 < x_1 < dots.c < x_n = b$ be a partition and write
   $
-    integral_a^b f(x) g(x) dif x
-    = sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x) dif x
-    = sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) [g(x) - g(x_i)] dif x
-    + sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x_i) dif x
-    = I_1 + I_2.
+       & integral_a^b f(x) g(x) dif x
+         = sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x) dif x \
+     = & sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) [g(x) - g(x_i)] dif x
+         + sum_(i=0)^(n-1) integral_(x_i)^(x_(i+1)) f(x) g(x_i) dif x \
+    := & I_1 + I_2.
   $
   Since $f in R[a, b]$, it is bounded: $|f| <= L$. Since $g$ is decreasing
   and $g >= 0$, we have $0 <= g(x_i) - g(x_(i+1))$ for every $i$ and
