@@ -98,39 +98,39 @@ and gradually develops its properties, expansion rules, and computation of speci
   The *determinant* of $A$ is the scalar
 
   $
-  abs(A) = sum_(sigma in S_n) "sgn"(sigma) product_(i=1)^n a_(i, sigma(i)).
+  "det"(A) = sum_(sigma in S_n) "sgn"(sigma) product_(i=1)^n a_(i, sigma(i)).
   $
 ] <def:determinant>
 
 #property(name: "Basic Properties of Determinants")[
   Let $A$ be an $n times n$ matrix.
-  - *Transpose*: $abs(A^T) = abs(A)$.
-  - *Row exchange*: interchanging two rows (or two columns) of $A$ changes the sign of $abs(A)$.
-  - *Scalar multiplication*: multiplying one row of $A$ by a scalar $k$ multiplies $abs(A)$ by $k$.
-  - *Row addition*: adding a scalar multiple of one row to another row leaves $abs(A)$ unchanged.
-  - *Proportional rows*: if two rows (or two columns) of $A$ are proportional, then $abs(A) = 0$.
+  - *Transpose*: $"det"(A^T) = "det"(A)$.
+  - *Row exchange*: interchanging two rows (or two columns) of $A$ changes the sign of $"det"(A)$.
+  - *Scalar multiplication*: multiplying one row of $A$ by a scalar $k$ multiplies $"det"(A)$ by $k$.
+  - *Row addition*: adding a scalar multiple of one row to another row leaves $"det"(A)$ unchanged.
+  - *Proportional rows*: if two rows (or two columns) of $A$ are proportional, then $"det"(A) = 0$.
 ] <prop:determinant-properties>
 
 #theorem(name: "Multiplicativity of Determinants")[
   If $A$ and $B$ are $n times n$ matrices over $P$, then
 
   $
-  abs(A B) = abs(A) abs(B).
+  "det"(A B) = "det"(A) "det"(B).
   $
 ] <thm:det-product>
 
 #proof[
-  Every elementary matrix $E$ satisfies $abs(E A) = abs(E) abs(A)$: this is immediate for
-  the three types of elementary row operations, with $abs(E) = -1$, $k$, and $1$, respectively.
+  Every elementary matrix $E$ satisfies $"det"(E A) = "det"(E) "det"(A)$: this is immediate for
+  the three types of elementary row operations, with $"det"(E) = -1$, $k$, and $1$, respectively.
   If $A$ is invertible, then $A$ is a product of elementary matrices, and applying the previous
-  step to $A = E_1 ... E_k$ against $I$ gives $abs(A) = abs(E_1) ... abs(E_k)$.
+  step to $A = E_1 ... E_k$ against $I$ gives $"det"(A) = "det"(E_1) ... "det"(E_k)$.
   Hence, for invertible $A$ and $B$, writing $B = F_1 ... F_m$ as a product of elementary
-  matrices yields $abs(A B) = abs(A) abs(F_1) ... abs(F_m) = abs(A) abs(B)$.
+  matrices yields $"det"(A B) = "det"(A) "det"(F_1) ... "det"(F_m) = "det"(A) "det"(B)$.
   If one of $A$ and $B$ is singular, then $A B$ is singular as well, so both sides are zero.
 ]
 
 #corollary(name: "Determinant and Invertibility")[
-  An $n times n$ matrix $A$ is invertible if and only if $abs(A) != 0$.
+  An $n times n$ matrix $A$ is invertible if and only if $"det"(A) != 0$.
 ] <cor:determinant-invertibility>
 
 == Expanding by Rows and Columns // 按行（列）展开
@@ -145,20 +145,20 @@ and gradually develops its properties, expansion rules, and computation of speci
   For every row $i$ and every column $j$ of $A$,
 
   $
-  abs(A) = sum_(j=1)^n a_("ij") A_("ij"),
+  "det"(A) = sum_(j=1)^n a_("ij") A_("ij"),
   $
 
   $
-  abs(A) = sum_(i=1)^n a_("ij") A_("ij").
+  "det"(A) = sum_(i=1)^n a_("ij") A_("ij").
   $
 ] <thm:laplace-expansion>
 
 #proof[
-  We prove the expansion along row $i$; the column version follows from $abs(A^T) = abs(A)$.
+  We prove the expansion along row $i$; the column version follows from $"det"(A^T) = "det"(A)$.
   Grouping the Leibniz terms by $j = sigma(i)$ gives
 
   $
-  abs(A) = sum_(j=1)^n a_("ij") sum_(sigma(i) = j) "sgn"(sigma) product_(k != i) a_(k, sigma(k)).
+  "det"(A) = sum_(j=1)^n a_("ij") sum_(sigma(i) = j) "sgn"(sigma) product_(k != i) a_(k, sigma(k)).
   $
 
   For a permutation $sigma$ with $sigma(i) = j$, removing the pair $(i, j)$ leaves a
@@ -169,27 +169,27 @@ and gradually develops its properties, expansion rules, and computation of speci
 === Cramer's Rule // 克拉默法则
 
 #theorem(name: "Cramer's Rule")[
-  Let $A x = b$ be a linear system of $n$ equations in $n$ unknowns with $abs(A) != 0$,
+  Let $A x = b$ be a linear system of $n$ equations in $n$ unknowns with $"det"(A) != 0$,
   and let $A_(j)$ denote the matrix obtained from $A$ by replacing column $j$ with $b$.
   Then the unique solution is
 
   $
-  x_j = abs(A_(j)) / abs(A), j = 1, 2, ..., n.
+  x_j = "det"(A_(j)) / "det"(A), j = 1, 2, ..., n.
   $
 ] <thm:cramer-rule>
 
 #proof[
   Since $b = sum_(k=1)^n x_k "col"_(k)(A)$, column $j$ of $A_(j)$ is $sum_(k=1)^n x_k "col"_(k)(A)$
-  while the other columns coincide with those of $A$. Expanding $abs(A_(j))$ along column $j$
+  while the other columns coincide with those of $A$. Expanding $"det"(A_(j))$ along column $j$
   and using the linearity of the determinant in that column,
 
   $
-  abs(A_(j)) = sum_(k=1)^n x_k abs(A_(j, k)),
+  "det"(A_(j)) = sum_(k=1)^n x_k "det"(A_(j, k)),
   $
 
   where $A_(j, k)$ is $A$ with column $j$ replaced by column $k$. For $k != j$ the matrix
   $A_(j, k)$ has two identical columns, hence determinant zero; for $k = j$ it is $A$.
-  Thus $abs(A_(j)) = x_j abs(A)$.
+  Thus $"det"(A_(j)) = x_j "det"(A)$.
 ]
 
 === Expanding by k Rows // 按 k 行展开
@@ -201,7 +201,7 @@ and gradually develops its properties, expansion rules, and computation of speci
   Then
 
   $
-  abs(A) = sum_J (-1)^(i_1 + ... + i_k + j_1 + ... + j_k) M(I, J) M^*(I, J),
+  "det"(A) = sum_J (-1)^(i_1 + ... + i_k + j_1 + ... + j_k) M(I, J) M^*(I, J),
   $
 
   where the sum runs over all $k$-element subsets $J$ of ${1, 2, ..., n}$.
@@ -213,14 +213,13 @@ and gradually develops its properties, expansion rules, and computation of speci
   The *Vandermonde determinant* of order $n$ is defined as
 
   $
-  V_(n) = abs(
-    mat(
-      1, 1, 1, dots, 1;
-      x_1, x_2, x_3, dots, x_n;
-      x_1^2, x_2^2, x_3^2, dots, x_n^2;
-      dots.v, dots.v, dots.v, dots.down, dots.v;
-      x_1^(n-1), x_2^(n-1), x_3^(n-1), dots, x_n^(n-1);
-    )
+  V_(n) = mat(
+    delim: "|",
+    1, 1, 1, dots, 1;
+    x_1, x_2, x_3, dots, x_n;
+    x_1^2, x_2^2, x_3^2, dots, x_n^2;
+    dots.v, dots.v, dots.v, dots.down, dots.v;
+    x_1^(n-1), x_2^(n-1), x_3^(n-1), dots, x_n^(n-1);
   ),
   $
 
@@ -237,14 +236,13 @@ $
   The *Arrow determinant* is defined as
 
   $
-  A_(n) = abs(
-    mat(
-      a_(11), a_(12), a_(13), dots, a_(1n);
-      a_(21), a_(22), 0, dots, 0;
-      a_(31), 0, a_(33), dots, 0;
-      dots.v, dots.v, dots.v, dots.down, dots.v;
-      a_("n1"), 0, 0, dots, a_("nn");
-    )
+  A_(n) = mat(
+    delim: "|",
+    a_(11), a_(12), a_(13), dots, a_(1n);
+    a_(21), a_(22), 0, dots, 0;
+    a_(31), 0, a_(33), dots, 0;
+    dots.v, dots.v, dots.v, dots.down, dots.v;
+    a_("n1"), 0, 0, dots, a_("nn");
   ).
   $
 
@@ -268,7 +266,7 @@ Then expand along the first column.
   If the entries of a determinant satisfy
 
   $
-  a_("ij") = cases(a, i < j, x_i, i = j, b, i > j),
+  a_("ij") = cases(a quad & i < j, x_i quad & i = j, b quad & i > j),
   $
 
   then $D_n$ is called a *two-triangular determinant*.
@@ -277,19 +275,18 @@ Then expand along the first column.
 The value of the two-triangular determinant is given by
 
 $
-abs(
-  mat(
-    x_1, a, a, dots, a;
-    b, x_2, a, dots, a;
-    b, b, x_3, dots, a;
-    dots.v, dots.v, dots.v, dots.down, dots.v;
-    b, b, b, dots, x_n;
-  )
+mat(
+  delim: "|",
+  x_1, a, a, dots, a;
+  b, x_2, a, dots, a;
+  b, b, x_3, dots, a;
+  dots.v, dots.v, dots.v, dots.down, dots.v;
+  b, b, b, dots, x_n;
 )
 =
 cases(
-  (x_1 + a sum_(k=2)^n (x_1 - a)/(x_k - a)) dot product_(k=2)^n (x_k - a), a = b,
-  (x_n - b) D_(n-1) + product_(k=1)^(n-1) (x_k - a), a != b,
+  (x_1 + a sum_(k=2)^n (x_1 - a)/(x_k - a)) dot product_(k=2)^n (x_k - a) quad & a = b,
+  (x_n - b) D_(n-1) + product_(k=1)^(n-1) (x_k - a) quad & a != b,
 ).
 $
 
@@ -330,25 +327,25 @@ The determinant of a product equals the product of the determinants — see #lin
   For $n times n$ matrices $A_1, ..., A_k$ over $P$,
 
   $
-  abs(A_1 ... A_k) = product_(i=1)^k abs(A_i).
+  "det"(A_1 ... A_k) = product_(i=1)^k "det"(A_i).
   $
 ] <cor:det-product-multiple>
 
 #theorem(name: "Cauchy-Binet Formula")[
   Let $A$ be an $m times n$ matrix and $B$ an $n times m$ matrix.
-  - If $m > n$, then $abs(A B) = 0$.
+  - If $m > n$, then $"det"(A B) = 0$.
   - If $m <= n$, then
 
   $
-  abs(A B) = sum_(1 <= v_1 < ... < v_m <= n)
-  abs(A(1, 2, ..., m; v_1, ..., v_m)) abs(B(v_1, ..., v_m; 1, 2, ..., m)),
+  "det"(A B) = sum_(1 <= v_1 < ... < v_m <= n)
+  "det"(A(1, 2, ..., m; v_1, ..., v_m)) "det"(B(v_1, ..., v_m; 1, 2, ..., m)),
   $
 
   where the sum runs over all strictly increasing index tuples, and $A(1, 2, ..., m; v_1, ..., v_m)$ denotes the minor of $A$ on rows $1, ..., m$ and columns $v_1, ..., v_m$.
 ] <thm:cauchy-binet-formula>
 
 #note[
-  The proof expands $abs(A B)$ using the Leibniz formula and groups terms by
+  The proof expands $"det"(A B)$ using the Leibniz formula and groups terms by
   the column indices selected from $B$, yielding the sum of products of
   corresponding minors.
 ]
@@ -613,14 +610,14 @@ is a nilpotent matrix with nilpotent index $n$.
 ] <thm:invertibility-equivalent-propositions>
 
 #proof[
-  If $A$ is invertible, then $abs(A) != 0$ by #link(<cor:determinant-invertibility>)[Corollary],
+  If $A$ is invertible, then $"det"(A) != 0$ by #link(<cor:determinant-invertibility>)[Corollary],
   so row reduction of $A$ ends at $E$ rather than at a singular matrix; hence $A$ is equivalent
   to $E$, and $A = E_1 ... E_k$ is the product of the corresponding elementary matrices.
   Conversely, every elementary matrix is invertible, so a product of elementary matrices is
   invertible, and if $A equiv E$ then $A = P E Q$ with $P$ and $Q$ products of elementary
   matrices, hence $A$ is invertible.
   Finally, $A x = 0$ has only the zero solution iff the columns of $A$ are linearly independent
-  iff $abs(A) != 0$, which is equivalent to invertibility by
+  iff $"det"(A) != 0$, which is equivalent to invertibility by
   #link(<cor:determinant-invertibility>)[Corollary].
 ]
 
@@ -633,24 +630,24 @@ is a nilpotent matrix with nilpotent index $n$.
   For an invertible $n times n$ matrix $A$,
 
   $
-  A "adj"(A) = "adj"(A) A = abs(A) E,
+  A "adj"(A) = "adj"(A) A = "det"(A) E,
   $
 
   and therefore
 
   $
-  A^(-1) = "adj"(A) / abs(A).
+  A^(-1) = "adj"(A) / "det"(A).
   $
 ] <thm:inverse-via-adjugate>
 
 #proof[
-  The $(i, j)$-entry of $A "adj"(A)$ is $sum_(k=1)^n a_("ik") A_("jk")$: it equals $abs(A)$
+  The $(i, j)$-entry of $A "adj"(A)$ is $sum_(k=1)^n a_("ik") A_("jk")$: it equals $"det"(A)$
   when $i = j$ by the Laplace expansion, and $0$ when $i != j$, since it is the expansion of a
   determinant whose $j$-th row has been replaced by the $i$-th row, hence has two equal rows.
 ]
 
 #property(name: "Methods of Finding the Inverse")[
-  - *Adjugate method*: $A^(-1) = "adj"(A) / abs(A)$, given by #link(<thm:inverse-via-adjugate>)[Theorem].
+  - *Adjugate method*: $A^(-1) = "adj"(A) / "det"(A)$, given by #link(<thm:inverse-via-adjugate>)[Theorem].
   - *Elementary row operation method*: apply the same elementary row operations to the augmented
     matrix $mat(A, E)$ until the left half becomes $E$; the right half is then $A^(-1)$. If
     $A$ cannot be reduced to $E$, then $A$ is singular.
@@ -697,25 +694,25 @@ is a nilpotent matrix with nilpotent index $n$.
   - If $A$ is invertible, then
 
     $
-    abs(mat(A, B; C, D)) = abs(A) abs(D - C A^(-1) B).
+    mat(A, B; C, D, delim: "|") = "det"(A) "det"(D - C A^(-1) B).
     $
 
   - If $D$ is invertible, then
 
     $
-    abs(mat(A, B; C, D)) = abs(D) abs(A - B D^(-1) C).
+    mat(A, B; C, D, delim: "|") = "det"(D) "det"(A - B D^(-1) C).
     $
 
   - If both $A$ and $D$ are invertible, then
 
     $
-    abs(D) abs(A - B D^(-1) C) = abs(A) abs(D - C A^(-1) B).
+    "det"(D) "det"(A - B D^(-1) C) = "det"(A) "det"(D - C A^(-1) B).
     $
 ] <thm:determinant-reduction-formula>
 
 #note[
-  The mnemonic is: for $abs(mat(A, B; C, D))$, if $A$ is invertible, one factor is
-  $abs(A)$ and the other factor is $D$ minus the product of the other three terms arranged
+  The mnemonic is: for $mat(A, B; C, D, delim: "|")$, if $A$ is invertible, one factor is
+  $"det"(A)$ and the other factor is $D$ minus the product of the other three terms arranged
   *clockwise*, where the middle one is the inverse matrix.
 ]
 
@@ -792,14 +789,14 @@ calculation rules:
   Sherman-Morrison formula, known as the *matrix determinant lemma*:
 
   $
-  abs(A + alpha beta^T) = abs(A) (1 + beta^T A^(-1) alpha).
+  "det"(A + alpha beta^T) = "det"(A) (1 + beta^T A^(-1) alpha).
   $
 
   The theorem can also be stated in terms of the adjugate of $A$ (writing
   $u = alpha$, $v = beta$) as
 
   $
-  abs(A + alpha beta^T) = abs(A) + beta^T "adj"(A) alpha,
+  "det"(A + alpha beta^T) = "det"(A) + beta^T "adj"(A) alpha,
   $
 
   in which case it applies whether or not $A$ is invertible.
@@ -948,7 +945,7 @@ echelon form is reached.
   - Elementary row (column) operations do not alter the linear relations among the column (row)
     vectors.
   - For a square matrix $(a_("ij"))$ of order $n$, its row vectors (or column vectors) are
-    linearly independent if and only if $abs(A) != 0$.
+    linearly independent if and only if $"det"(A) != 0$.
 ]
 
 The third property gives a method for finding a maximal linearly independent group of the row
@@ -1678,8 +1675,8 @@ $P_U$ satisfies and uniquely satisfies:
 
 $
 P_(U)(alpha) = cases(
-  alpha, & alpha in U,
-  0, & alpha in W,
+  alpha quad & alpha in U,
+  0 quad & alpha in W,
 ).
 $
 
@@ -1856,7 +1853,7 @@ Similarity is an equivalence relation on the set of square matrices of the same 
   The polynomial
 
   $
-  f(lambda) = abs(lambda E - A)
+  f(lambda) = "det"(lambda E - A)
   $
 
   is called the *eigenpolynomial* (or *characteristic polynomial*) of $A$,
@@ -1868,17 +1865,17 @@ Similarity is an equivalence relation on the set of square matrices of the same 
   operator $D$ is $f(lambda) = lambda^n$.
 ]
 
-The roots of the eigenpolynomial $abs(lambda E - A)$ are the eigenvalues of $A$;
+The roots of the eigenpolynomial $"det"(lambda E - A)$ are the eigenvalues of $A$;
 the non-zero solutions of $(lambda_0 E - A) x = 0$ are the eigenvectors
 corresponding to $lambda_0$. The eigenpolynomial, eigenvalues, and eigenvectors
 are invariant under similarity.
 
 #proposition(name: "Properties of the Eigenpolynomial")[
-  Let $A in F^(n times n)$ with eigenpolynomial $f(lambda) = abs(lambda E - A)$.
+  Let $A in F^(n times n)$ with eigenpolynomial $f(lambda) = "det"(lambda E - A)$.
   Then $f(lambda)$ is a monic polynomial of degree $n$:
 
   $
-  f(lambda) = lambda^n - "tr"(A) lambda^(n-1) + ... + (-1)^n abs(A),
+  f(lambda) = lambda^n - "tr"(A) lambda^(n-1) + ... + (-1)^n "det"(A),
   $
 
   where the coefficient of $lambda^(n-k)$ ($1 <= k < n$) is $(-1)^k$ times
@@ -1888,7 +1885,7 @@ are invariant under similarity.
 #note[
   Combining with Viète's formulas:
   - The sum of eigenvalues (counting multiplicities) equals $"tr"(A)$.
-  - The product of eigenvalues (counting multiplicities) equals $abs(A)$.
+  - The product of eigenvalues (counting multiplicities) equals $"det"(A)$.
 ]
 
 === Multiplicity and Eigenspaces // 重数与特征子空间
@@ -2027,7 +2024,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 #theorem(name: "Hamilton-Cayley Theorem")[
   Let $V$ be an $n$-dimensional linear space over $F$ and $A in upright("End")(V)$.
   Let $A$ be the matrix representation of $A$ under some basis, and let
-  $f(lambda) = abs(lambda E - A)$ be the characteristic polynomial. Then
+  $f(lambda) = "det"(lambda E - A)$ be the characteristic polynomial. Then
 
   $
   f(A) = 0.
@@ -2269,7 +2266,7 @@ and computation method of the Jordan canonical form.
 ]
 
 #caution[
-  $A(lambda)$ is invertible if and only if $abs(A(lambda))$ is a non-zero constant
+  $A(lambda)$ is invertible if and only if $"det"(A(lambda))$ is a non-zero constant
   (not just any non-zero polynomial).
 ]
 
@@ -2464,7 +2461,7 @@ and computation method of the Jordan canonical form.
 
 #note[
   To find the Jordan canonical form:
-  1. Compute the characteristic polynomial $f(lambda) = abs(lambda E - A)$
+  1. Compute the characteristic polynomial $f(lambda) = "det"(lambda E - A)$
      and factor it into irreducible factors.
   2. For each eigenvalue $lambda$, determine the sizes of Jordan blocks from
      the ranks of $(lambda E - A)^k$.
@@ -2688,7 +2685,7 @@ and normal transformations.
   - $G$ is symmetric;
   - $G$ is positive semi-definite;
   - Gram matrices under different bases are congruent;
-  - $abs(G) >= 0$, with equality iff the basis is linearly dependent.
+  - $"det"(G) >= 0$, with equality iff the basis is linearly dependent.
 ] <prop:gram-matrix-properties>
 
 #definition(name: "Orthonormal Basis")[
