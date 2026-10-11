@@ -928,10 +928,11 @@ conjugate only to itself.
 
 That conjugation preserves a measurable invariant is best seen once
 powers are at hand. In §2.4 we show conjugate elements have the same
-order. Deeper conjugacy invariants — the cycle structure in $S_n$,
-centralisers, and the class equation — demand tools of later chapters
-(orbit-stabiliser) and are treated with the group-actions material of
-§6.2.
+order. Deeper conjugacy invariants — centralisers and the class
+equation — demand tools of later chapters (orbit-stabiliser) and are
+treated with the group-actions material of §6.2; the cycle structure
+in $S_n$, the flagship example, is settled already in
+#link(<prop:conjugation-renames>)[§3.4].
 
 == The Order of an Element // 元素的阶
 
@@ -2034,8 +2035,10 @@ normal form carries an invariant of the first importance.
   $
   is called a $k$-cycle permutation, denoted $sigma = (a_1 a_2 dots a_k) = (a_2 a_3 dots a_k a_1) = dots$.
 
-  Specially, $(a_1 a_2)$ is called a *transposition*; $(a_1)$ is called a $1$-*cycle*, namely the identity map.
+  In particular, $(a_1 a_2)$ is called a *transposition*; $(a_1)$ is called a $1$-*cycle*, namely the identity map.
 ] <def:cycle-transposition>
+
+Two cycles with disjoint supports do not interact — each fixes the other's moving points — so disjoint cycles commute, and a product of disjoint cycles may be read in any order. This is what makes the decomposition of the lemma below well defined and its uniqueness proof work.
 
 #lemma(name: "Cycle Decomposition")[
   Every permutation $sigma$ of a finite set is a product of
@@ -2060,8 +2063,33 @@ normal form carries an invariant of the first importance.
 
   *Uniqueness.* Any decomposition into disjoint cycles determines the
   orbit of each point, hence the cycles on orbits of size $>= 2$ are
-  forced; points fixed by $sigma$ appear as 1-cycles or are omitted,
-  a harmless ambiguity.
+  forced; reordering the factors merely exercises their commutativity,
+  and points fixed by $sigma$ appear as 1-cycles or are omitted, a
+  harmless ambiguity.
+]
+
+#proposition(name: "Order of a Permutation")[
+  A $k$-cycle has order $k$. More generally, a product $sigma = c_1 c_2 dots c_r$ of pairwise disjoint cycles of lengths $k_1, dots, k_r$ has order
+  $
+    "ord"(sigma) = "lcm"(k_1, dots, k_r),
+  $
+  the least common multiple of the cycle lengths.
+] <prop:permutation-order>
+
+#proof[
+  For a cycle $c = (a_1 a_2 dots a_k)$, the power $c^m$ sends each $a_i arrow.r.double a_(i + m)$, the index being read modulo $k$. Thus $c^k = "id"$, while for $0 < m < k$ the point $a_1$ is not fixed, since $c^m$ moves it to $a_(1 + m)$; hence $"ord"(c) = k$. Now let $sigma = c_1 c_2 dots c_r$ with the $c_i$ pairwise disjoint. Commutativity gives $sigma^m = c_1^m c_2^m dots c_r^m$, and a product of disjoint cycles is the identity exactly when each factor is — every other factor fixes that factor's support. So $sigma^m = "id"$ holds exactly when $k_i | m$ for every $i$, by #link(<prop:order-properties>)[the wrap-around property], and the least such $m$ is $"lcm"(k_1, dots, k_r)$.
+]
+
+#proposition(name: "Conjugation Renames Cycles")[
+  Let $sigma, tau in S_X$ and suppose $tau = (a_1 a_2 dots a_k)$ is a cycle. Then
+  $
+    sigma tau sigma^(-1) = (sigma(a_1) sigma(a_2) dots sigma(a_k)),
+  $
+  the cycle obtained by applying $sigma$ to every entry. Hence conjugate permutations have the same *cycle type* — the same multiset of cycle lengths — and, conversely, two permutations of a finite set with the same cycle type are conjugate. This delivers the promise of #link(<def:conjugate-elements>)[§2.3]: cycle structure is the conjugacy invariant announced there.
+] <prop:conjugation-renames>
+
+#proof[
+  For each $i$, the composite $sigma tau sigma^(-1)$ sends $sigma(a_i)$ back to $a_i$, then around the cycle to $a_(i + 1)$, and finally out to $sigma(a_(i + 1))$ — so it maps $sigma(a_i) arrow.r.double sigma(a_(i + 1))$, the index being read modulo $k$. A point outside ${sigma(a_1), dots, sigma(a_k)}$ pulls back under $sigma^(-1)$ to a point outside the support of $tau$ and is therefore fixed; the conjugate is precisely the renamed cycle. Products of cycles rename entry-wise, so conjugation preserves cycle type; conversely, if $tau$ and $tau'$ have the same cycle type, line up their cycles of equal lengths pairwise and let $sigma$ map each entry of $tau$'s cycle to the corresponding entry of $tau'$ — renaming gives $sigma tau sigma^(-1) = tau'$.
 ]
 
 #property(name: "Transpositions Generate")[
@@ -2080,7 +2108,7 @@ normal form carries an invariant of the first importance.
   untouched until $(a_1 a_i)$ sends it to $a_1$, after which
   $(a_1 a_(i+1))$ sends it to $a_(i+1)$, and so on — giving the
   cycle's action $a_i arrow.r.double a_(i+1)$ with $a_k arrow.r.double
-  a_1$. Points outside $\{a_1, dots, a_k\}$ are fixed throughout.
+  a_1$. Points outside ${a_1, dots, a_k}$ are fixed throughout.
   Existence of a factorization for $sigma$ then follows by decomposing
   into cycles first.
 ]
@@ -2124,13 +2152,15 @@ normal form carries an invariant of the first importance.
   set of even permutations.
 ] <def:alternating-group>
 
-The sign is multiplicative:
-$"sign"(sigma tau) = "sign"(sigma) "sign"(tau)$, by concatenating
-factorizations. Hence $A_n$ is a subgroup of $S_n$ (the product of
-evens is even, the identity is even, and inverses preserve parity),
-and multiplication by the transposition $(1 2)$ pairs each even
-permutation with a unique odd one, so exactly half of $S_n$ is even:
-$abs(A_n) = n! \/ 2$ and $[S_n : A_n] = 2$.
+The sign is multiplicative: $"sign"(sigma tau) = "sign"(sigma) "sign"(tau)$, by concatenating factorizations. Hence $A_n$ is a subgroup of $S_n$ — the product of evens is even, the identity is even, and inverses preserve parity.
+
+#corollary(name: "Parity in a Permutation Group")[
+  A subgroup $G$ of $S_n$ either consists entirely of even permutations, or exactly half of its elements are even; in the second case $G inter A_n$ is a subgroup of index $2$ in $G$.
+] <cor:parity-subgroup>
+
+#proof[
+  The even elements of $G$ form the subgroup $G inter A_n$. If $G$ contains an odd permutation $tau$, left multiplication by $tau$ pairs the even elements with the odd ones — $tau sigma$ is odd when $sigma$ is even and even when $sigma$ is odd — so the two parts are equinumerous and $[G : G inter A_n] = 2$. Taking $G = S_n$ recovers $abs(A_n) = n! \/ 2$: multiplication by $(1 2)$ pairs each even permutation with a unique odd one.
+]
 
 #example(name: "Signs in practice.")[
   Every 3-cycle is even:
