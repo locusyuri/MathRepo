@@ -300,7 +300,11 @@ function convertMathEnvs(text) {
   text = replaceAllEnvsSafe(text, 'equation*', alignReplacer);
 
   text = replaceAllEnvsSafe(text, 'cases', (body) => {
-    const branches = body.split(/\\\\/).map(b => b.trim()).filter(Boolean);
+    // 约定：quad & 对齐、裸逗号分行；分支内首个 & 前补 quad；行内渲染逗号由人工复核（不允许 comma/\,/"," 作行内标点）
+    const branches = body
+      .split(/\\\\/)
+      .map(b => b.trim().replace(/&/, 'quad &'))
+      .filter(Boolean);
     return `cases(\n  ${branches.join(',\n  ')},\n)`;
   });
 

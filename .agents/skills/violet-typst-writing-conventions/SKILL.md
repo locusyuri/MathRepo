@@ -414,12 +414,12 @@ $n -> infinity$
 $n -> oo$
 ```
 
-#### `cases()` 不用 `&` 对齐，逗号是分行符
+#### `cases()` 用 `quad &` 对齐，裸逗号是分行符
 
-Typst 的 `cases()` 函数中，**逗号是分行符**（等价于换行），同一行内的多列用**空格**分隔。不能使用 LaTeX 风格的 `&` 对齐语法。
+Typst 的 `cases()` 函数中，**裸逗号是分行符**（等价于换行）；值与条件之间用 `quad &` 对齐（留空一段距离并对齐）。**行内禁止出现渲染逗号**——` comma`、`\,`、`","` 都不得用作行内标点（2026-10-11 用户定稿，全库 40 处已按此迁移）。
 
 ```typst
-// 错误 — LaTeX \begin{cases} 的 & 对齐语法
+// 错误 — 行内逗号是分行符，会把值和条件拆成两行
 $
   cases(
     Delta u = 0, & text("in ") Omega,
@@ -427,22 +427,23 @@ $
   )
 $
 
-// 错误 — 逗号是分行符，会把表达式和条件拆成两行
+// 正确 — 每个条件独占一行，quad & 对齐，行末裸逗号分行
 $
   cases(
-    Delta u = 0, text("in ") Omega,
-    u = g, text("on ") partial Omega,
+    Delta u = 0 quad & text("in ") Omega,
+    u = g quad & text("on ") partial Omega,
   )
 $
 
-// 正确 — 同行内用空格分隔列，逗号只在行末用于换行
+// 同一行的两个条件用文字 "and" 连接，不用逗号
 $
   cases(
-    Delta u = 0 text("in ") Omega,
-    u = g text("on ") partial Omega,
+    theta = arctan(y / x) quad & x != 0 "and" theta in [0, 2pi],
   )
 $
 ```
+
+括号内的逗号（如 `(x, y)`、`[0, 1)`、`p, q`）会被括号分组，安全、不需转义、不会分行。
 
 ---
 

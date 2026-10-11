@@ -104,10 +104,10 @@ $ frac(a + b, c) $
 // Matrix
 $ mat(1, 2; 3, 4) $
 
-// Cases
+// Cases（quad & 对齐，裸逗号分行，行内不用渲染逗号）
 $ f(x) = cases(
-  x^2 "if" x > 0,
-  0 "otherwise"
+  x^2 quad & "if" x > 0,
+  0 quad & "otherwise",
 ) $
 
 // Aligned equations
