@@ -1925,6 +1925,7 @@ Cayley's theorem closes the circle opened by the symmetric groups:
 not only are permutations examples of groups — every group is, up
 to isomorphism, a group of permutations of some set.
 
+=== Transformation Groups and Permutation Groups // 变换群与置换群
 Let $X$ be a set and let $T_X$ be the set of all transformations of $X$, that is, all maps $X -> X$ (the notion was introduced in the Théorie des Ensembles note), with multiplication given by composition of maps. Equipped with this multiplication, *$T_X$ is a monoid*  (#link(<def:monoid>)[§2.1]): composition is associative and the identity map is neutral, but a general transformation has no reason to be invertible.
 
 #definition(name: "Transformation Group")[
@@ -2026,6 +2027,14 @@ The criterion forbids mixing: if a transformation group contains even a *single*
 Inside $S_X$ itself there is bookkeeping to do. For finite $X$
 the elements of $S_X$ admit a canonical normal form, and that
 normal form carries an invariant of the first importance.
+
+=== Cycles and Transpositions // 轮换与对换
+
+#definition(name: "Cycles and Transpositions")[
+  Let $a_1, a_2, dots, a_k$ be distinct elements of $X$, $k >= 1$. The *$k$-cycle* $(a_1 a_2 dots a_k)$ is the permutation of $X$ that maps $a_1 arrow.r.double a_2$, $a_2 arrow.r.double a_3$, $dots$, $a_(k-1) arrow.r.double a_k$, $a_k arrow.r.double a_1$, and fixes every other element — the cycle notation of #link(<note:cycle-notation>)[Chapter 2], now over a general set. As there, fixed points are omitted and 1-cycles suppressed, the identity being the empty product. A *2-cycle* $(a b)$, which swaps $a$ and $b$ and fixes all other points, is called a *transposition*.
+
+  Cycles with disjoint supports never interfere — each fixes the other's points — so disjoint cycles commute. This is what makes the decomposition of the lemma below readable and its uniqueness proof work.
+] <def:cycle-transposition>
 
 #lemma(name: "Cycle Decomposition")[
   Every permutation $sigma$ of a finite set is a product of
