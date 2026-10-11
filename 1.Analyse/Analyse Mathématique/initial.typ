@@ -5238,7 +5238,7 @@ $omega_f (x) = 0$.
   $
   Since $f in R[a, b]$, it is bounded: $abs(f) <= L$. Since $g$ is decreasing
   and $g >= 0$, we have $0 <= g(x_i) - g(x_(i+1))$ for every $i$ and
-  $sum_(i=0)^(n-1) omega_i^g = g(a) - g(b) =: R$ where $omega_i^g$ denotes
+  $sum_(i=0)^(n-1) omega_i^g = g(a) - g(b) := R$ where $omega_i^g$ denotes
   the oscillation of $g$ on $[x_i, x_(i+1)]$. With
   $lambda = max_i Delta x_i$,
   $
@@ -8737,7 +8737,7 @@ Initially, we define the double integral on a closed interval (rectangle).
   $
   then $f$ is said to be Riemann integrable on $I$, and:
   $
-    J = lim_(lambda -> 0) sum_(i=1)^k f(bold(xi)^i) v(I_i) =:
+    J = lim_(lambda -> 0) sum_(i=1)^k f(bold(xi)^i) v(I_i) :=
     integral.double_I f(x, y) dif x dif y quad "or" quad
     integral_I f dif v quad "or" quad integral_I f.
   $
@@ -8821,14 +8821,14 @@ In the definition of multiple integrals derived from the second approach, the ke
   If $forall x in [a, b]$, the integral $phi(x) = integral_c^d f(x, y) dif y$ exists, then $phi$ is integrable on $[a, b]$, and:
   $
     integral.double_I f =
-    integral_a^b (integral_c^d f(x, y) dif y) dif x =:
+    integral_a^b (integral_c^d f(x, y) dif y) dif x :=
     integral_a^b dif x integral_c^d f(x, y) dif y.
   $
 
   Similarly, if $forall y in [c, d]$, the integral $psi(y) = integral_a^b f(x, y) dif x$ exists, then $psi$ is integrable on $[c, d]$, and:
   $
     integral.double_I f =
-    integral_c^d (integral_a^b f(x, y) dif x) dif y =:
+    integral_c^d (integral_a^b f(x, y) dif x) dif y :=
     integral_c^d dif y integral_a^b f(x, y) dif x.
   $
 ] <thm:reduction-double-iterated-closed-interval>
@@ -9329,16 +9329,16 @@ The first fundamental form is the metric that a surface inherits from its ambien
 
 #definition(name: "The First Fundamental Form")[
   In the above conditions, for any point $p = (u, v) in Delta$, the *first fundamental form* of the surface $M$ at point $p$ is defined as: for any tangent vectors $bold(w)_1, bold(w)_2 in T_p M$,
-  $ upright(I)_p (bold(w)_1, bold(w)_2) =: bold(w)_1 dot bold(w)_2, $
+  $ upright(I)_p (bold(w)_1, bold(w)_2) := bold(w)_1 dot bold(w)_2, $
   which is a symmetric positive-definite bilinear form on the tangent space $T_p M$. This form is also called the *Riemann metric* or *metric tensor*, denoted as $upright(I)_p$ or $g_p$.
 ] <def:first-fundamental-form>
 // 注：tex 中 "Riemann metric of metric tensor" 的 "of" 为笔误，已修正为 "or"。
 
 For convenience, we express $upright(I)_p$ in the basis ${bold(r)'_u, bold(r)'_v}$ of the tangent space $T_p M$. Define:
 $
-  & E(u, v) =: upright(I)_p (bold(r)_u, bold(r)_u) = bold(r)_u dot bold(r)_u = norm(bold(r)_u)^2, \
-  & F(u, v) =: upright(I)_p (bold(r)_u, bold(r)_v) = bold(r)_u dot bold(r)_v, \
-  & G(u, v) =: upright(I)_p (bold(r)_v, bold(r)_v) = bold(r)_v dot bold(r)_v = norm(bold(r)_v)^2,
+  & E(u, v) := upright(I)_p (bold(r)_u, bold(r)_u) = bold(r)_u dot bold(r)_u = norm(bold(r)_u)^2, \
+  & F(u, v) := upright(I)_p (bold(r)_u, bold(r)_v) = bold(r)_u dot bold(r)_v, \
+  & G(u, v) := upright(I)_p (bold(r)_v, bold(r)_v) = bold(r)_v dot bold(r)_v = norm(bold(r)_v)^2,
 $
 which are called the *Gauß coefficients*.
 
@@ -9347,7 +9347,7 @@ $ upright(I)_p = mat(E, F; F, G), $
 which is symmetric and positive-definite.
 
 The quadratic form corresponding to this bilinear form is also commonly called the first fundamental form, denoted as $dif s^2$. For a tangent vector $bold(w) in T_p M$, it represents the square of the length of that vector:
-$ dif s^2 =: upright(I)_p (bold(w), bold(w)) = norm(bold(w))^2. $
+$ dif s^2 := upright(I)_p (bold(w), bold(w)) = norm(bold(w))^2. $
 If $bold(w)$ is the tangent vector to the curve $gamma(t) = bold(r)(u(t), v(t))$, given by $gamma'(t) = bold(r)_u u' (t) + bold(r)_v v' (t)$, then $dif s^2$ is conventionally written as
 $ dif s^2 = E dif u^2 + 2F dif u dif v + G dif v^2. $
 Here, $dif u$ and $dif v$ are the coordinates under the basis ${dif u, dif v}$, representing the components of the tangent vector $(u', v')$. This is a long-standing notation, and strictly speaking, it represents the value of the quadratic form on the vector $(u', v')$.
