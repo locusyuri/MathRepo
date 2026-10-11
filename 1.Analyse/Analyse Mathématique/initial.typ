@@ -1034,14 +1034,14 @@ A limit of a convergent subsequence of ${x_n}$ is called a *limit point* (cluste
 === Heine-Borel Theorem // 有限覆盖定理
 
 #definition(name: "Open Cover")[
-  Let $[a, b] subset union_(alpha) cal(O)_alpha$, where each $cal(O)_alpha$ is an open set.
+  Let $[a, b] subset union.big_(alpha) cal(O)_alpha$, where each $cal(O)_alpha$ is an open set.
   Then ${cal(O)_alpha}$ is called an *open cover* of $[a, b]$.
 ] <def:open-cover>
 
 #theorem(name: "Heine-Borel Finite Covering Theorem")[
   If ${cal(O)_alpha}$ is an open cover of $[a, b]$, then there exists a finite subcollection
   ${cal(O)_1, cal(O)_2, dots, cal(O)_n}$ of ${cal(O)_alpha}$ that still covers $[a, b]$,
-  i.e., $[a, b] subset union_(i = 1)^n cal(O)_i$.
+  i.e., $[a, b] subset union.big_(i = 1)^n cal(O)_i$.
   In brief: every open cover of $[a, b]$ admits a finite subcover.
 ] <thm:heine-borel>
 
@@ -4845,7 +4845,7 @@ sums carry over verbatim to Stieltjes sums.
   Fix $x_0 in [a, b]$. Since $lim_(x -> x_0) f(x) = 0$, for every
   $epsilon_1 > 0$ there is $delta_(x_0) > 0$ such that
   $|f(x)| < epsilon_1$ for all $x in accent(U, circle)(x_0, delta_(x_0))$.
-  The open family $union_(x_0 in [a,b]) U(x_0, delta_(x_0))$ covers $[a, b]$,
+  The open family $union.big_(x_0 in [a,b]) U(x_0, delta_(x_0))$ covers $[a, b]$,
   so by the Heine-Borel theorem it admits a finite subcover; consequently,
   outside a finite set $x_1, dots.c, x_r$ we have $|f(x)| < epsilon_1$
   throughout $[a, b]$.
@@ -4877,7 +4877,7 @@ sums carry over verbatim to Stieltjes sums.
   A set $E subset RR$ is called a *null set* (or a set of measure zero) if
   for any $epsilon > 0$ there exists a countable collection of open intervals
   $\{I_n | n in NN^*\}$ such that
-  $ E subset union_(i=1)^oo I_n quad "and" quad sum_(i=1)^oo abs(I_n) < epsilon, $
+  $ E subset union.big_(i=1)^oo I_n quad "and" quad sum_(i=1)^oo abs(I_n) < epsilon, $
   where $abs(I_n)$ denotes the length of $I_n$.
 ] <def:null-set>
 
@@ -4899,11 +4899,11 @@ we say that the property holds *almost everywhere* on $A$.
   3. Let $D(f)$ be the set of discontinuities of $f$ on $[a, b]$. For
     $delta > 0$, denote $D_delta = \{x in [a, b] | omega_f (x) >= delta\}$.
     Then
-    $ D(f) = union_(n=1)^oo D_(1\/n). $
+    $ D(f) = union.big_(n=1)^oo D_(1\/n). $
   4. If there exists a sequence of open intervals $(alpha_j, beta_j)$
     ($j = 1, 2, dots.c$) such that
-    $D(f) subset union_(j=1)^oo (alpha_j, beta_j)$, and if
-    $K = [a, b] \ union_(j=1)^oo (alpha_j, beta_j)$, then:
+    $D(f) subset union.big_(j=1)^oo (alpha_j, beta_j)$, and if
+    $K = [a, b] \ union.big_(j=1)^oo (alpha_j, beta_j)$, then:
     $
       forall epsilon > 0, exists delta > 0, "s.t." forall x in K, y in [a, b]
       (|x - y| < delta): abs(f(x) - f(y)) < epsilon.
@@ -4938,10 +4938,10 @@ $omega_f (x) = 0$.
   $y in U(x, delta)$, which is continuity at $x$.
 
   *Lemma 3.* By Lemma 2 every point of $D_(1\/n)$ is a discontinuity point,
-  so $union_(n=1)^oo D_(1\/n) subset D(f)$. Conversely, take $x in D(f)$;
+  so $union.big_(n=1)^oo D_(1\/n) subset D(f)$. Conversely, take $x in D(f)$;
   then $omega_f (x) > 0$, and choosing $m$ large enough that
   $omega_f (x) >= 1\/m$ gives $x in D_(1\/m)$. Hence
-  $D(f) subset union_(n=1)^oo D_(1\/n)$.
+  $D(f) subset union.big_(n=1)^oo D_(1\/n)$.
 
   *Lemma 4.* Suppose the claim fails. Then there exist $epsilon_0 > 0$, a
   sequence $delta_n = 1\/n$, and points $s_n in K$, $t_n in [a, b]$ with
@@ -4981,7 +4981,7 @@ $omega_f (x) = 0$.
     >= delta sum' Delta x_i, quad "whence" quad sum' Delta x_i < epsilon / 2.
   $
   Consequently
-  $ D_delta subset (union' (x_(i-1), x_i)) union \{x_0, x_1, dots.c, x_m\}, $
+  $ D_delta subset (union.big' (x_(i-1), x_i)) union \{x_0, x_1, dots.c, x_m\}, $
   and covering each division point $x_j$ by an interval of length
   $epsilon / (2(m+1))$ gives a countable cover of $D_delta$ with total length
   $
@@ -4995,7 +4995,7 @@ $omega_f (x) = 0$.
   $epsilon > 0$ there is a family of open intervals
   $\{(alpha_i, beta_i) | i = 1, 2, dots.c\}$ covering $D(f)$ with
   $ sum_(i=1)^oo (beta_i - alpha_i) < epsilon / (2 omega). $
-  Set $K = [a, b] \ union_(i=1)^oo (alpha_i, beta_i)$. By Lemma 4
+  Set $K = [a, b] \ union.big_(i=1)^oo (alpha_i, beta_i)$. By Lemma 4
   there is $delta > 0$ such that $|x - y| < delta$ with $x in K$ and
   $y in [a, b]$ implies $|f(x) - f(y)| < epsilon / (4(b - a))$. Take a
   partition $P: a = x_0 < x_1 < dots.c < x_n = b$ with
@@ -6530,7 +6530,7 @@ by the following proposition.
     (item 1 of #link(<ex:improper-convergence>)[the example above]), yet
     $integral_1^(+oo) sin^2 x / x dif x$ diverges by the same computation.
   + *Absolutely integrable but not square integrable.* Take $f(x) = n$ on
-    $union_(n=2)^oo [n, n + 1/n^3]$ and $f(x) = 0$ elsewhere. Then
+    $union.big_(n=2)^oo [n, n + 1/n^3]$ and $f(x) = 0$ elsewhere. Then
     $integral_1^(+oo) abs(f(x)) dif x = sum_(n=2)^oo n dot 1/n^3 = sum_(n=2)^oo 1/n^2 < +oo$
     while
     $integral_1^(+oo) f^2 (x) dif x = sum_(n=2)^oo n^2 dot 1/n^3 = sum_(n=2)^oo 1/n = +oo$.
@@ -7464,7 +7464,7 @@ With the concept of uniform convergence, the flaws of pointwise convergence can 
 ]
 
 #proof(name: "of the Dini theorem (finite cover)")[
-  Let $r_(n)(x) = S(x) - S_(n)(x)$. Since $(S_(n)(x_0))$ is monotonic for every $x_0 in [a, b]$, assume without loss of generality that it is increasing; then $r_(n)(x) >= 0$, $r_(n)(x) -> 0$ pointwise, and $r_(n+1)(x) <= r_(n)(x)$ on $[a, b]$. Fix $epsilon > 0$ and let $E_n$ denote the set of points $x in [a, b]$ with $r_(n)(x) < epsilon$. Each $E_n$ is open in $[a, b]$ since $r_n$ is continuous, the sets are increasing ($E_n subset.eq E_(n+1)$), and $union_(n=1)^oo E_n = [a, b]$ by pointwise convergence. By the Heine-Borel theorem, finitely many of them cover $[a, b]$; since the sets are increasing, $E_(n_1) subset.eq dots.c subset.eq E_(n_p)$ and $union_(j=1)^p E_(n_j) = [a, b]$ for some indices $n_1 < dots.c < n_p$. Let $N = n_p$. Then for every $n > N$ and every $x in [a, b]$, we have $x in E_(n_j) subset.eq E_N subset.eq E_n$ for some $j$, i.e. $r_(n)(x) < epsilon$. Since $epsilon > 0$ was arbitrary, $S_(n)(x) arrows.rr^([a, b]) S(x)$.
+  Let $r_(n)(x) = S(x) - S_(n)(x)$. Since $(S_(n)(x_0))$ is monotonic for every $x_0 in [a, b]$, assume without loss of generality that it is increasing; then $r_(n)(x) >= 0$, $r_(n)(x) -> 0$ pointwise, and $r_(n+1)(x) <= r_(n)(x)$ on $[a, b]$. Fix $epsilon > 0$ and let $E_n$ denote the set of points $x in [a, b]$ with $r_(n)(x) < epsilon$. Each $E_n$ is open in $[a, b]$ since $r_n$ is continuous, the sets are increasing ($E_n subset.eq E_(n+1)$), and $union.big_(n=1)^oo E_n = [a, b]$ by pointwise convergence. By the Heine-Borel theorem, finitely many of them cover $[a, b]$; since the sets are increasing, $E_(n_1) subset.eq dots.c subset.eq E_(n_p)$ and $union.big_(j=1)^p E_(n_j) = [a, b]$ for some indices $n_1 < dots.c < n_p$. Let $N = n_p$. Then for every $n > N$ and every $x in [a, b]$, we have $x in E_(n_j) subset.eq E_N subset.eq E_n$ for some $j$, i.e. $r_(n)(x) < epsilon$. Since $epsilon > 0$ was arbitrary, $S_(n)(x) arrows.rr^([a, b]) S(x)$.
 ]
 
 #note[
@@ -8799,13 +8799,13 @@ It is worth noting that all the definitions and properties of double integrals c
 #definition(name: "Set with Zero Area and Set with Zero Measure (Null Set)")[
   Let $A subset bb(R)^2$. If for any $epsilon > 0$, there exist #underline[finitely many] closed intervals $I_1, I_2, dots, I_k$ such that:
   $
-    union_(i=1)^k I_i sup A, quad "and" quad sum_(i=1)^k v(I_i) < epsilon,
+    union.big_(i=1)^k I_i sup A, quad "and" quad sum_(i=1)^k v(I_i) < epsilon,
   $
   then $A$ is called a *set with zero area*.
 
   Let $A subset bb(R)^2$. If for any $epsilon > 0$, there exist at most #underline[countably many] closed intervals $I_1, I_2, dots, I_k, dots$ such that:
   $
-    union_(i=1)^oo I_i sup A, quad "and" quad sum_(i=1)^oo v(I_i) < epsilon,
+    union.big_(i=1)^oo I_i sup A, quad "and" quad sum_(i=1)^oo v(I_i) < epsilon,
   $
   then $A$ is called a *set with zero measure* (/null set/).
 ] <def:zero-area-null-set>
@@ -9150,7 +9150,7 @@ Improper multiple integrals can also be classified into two types: infinite inte
   Let $D subset bb(R)^2$ be an unbounded region, whose boundary consists of finite or countably many smooth curves, and $f: D -> bb(R)$ be a function which is integrable on any measurable bounded closed set $D' subset D$. If there exists an increasing sequence of bounded closed regions $lr({D_k})$ such that
   $
     D_1 subset D_2 subset dots subset D_k subset dots, quad
-    union_(k=1)^oo D_k = D,
+    union.big_(k=1)^oo D_k = D,
   $
   which is called an *exhaustion* of $D$, and for each $k$ the integral $I(D_k) = integral.double_(D_k) f$ exists, and the limit
   $
