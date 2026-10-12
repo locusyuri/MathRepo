@@ -534,6 +534,27 @@ matrix techniques, and operations of rank.
   $
 ] <def:matrix-multiplication>
 
+=== Block Partition of a Matrix // 矩阵的分块
+
+A matrix can also be viewed as an array of smaller *blocks*: a *block partition* of an
+$m times n$ matrix is achieved by drawing horizontal and vertical lines between certain
+rows and columns, subdividing it into submatrices (blocks). The resulting object, whose
+entries are themselves matrices, is called a *block matrix*; we write e.g.
+$A = mat(A_1, A_2; A_3, A_4)$, where each $A_i$ has a size determined by the subdivision.
+
+Matrix addition, scalar multiplication and transpose extend to block matrices block by
+block, provided the blocks have matching sizes. For multiplication, if $A$ and $B$ are
+partitioned so that the column partition of $A$ matches the row partition of $B$, then
+$A B$ can be computed block-wise exactly like ordinary scalar multiplication.
+
+```typst
+// 分块矩阵写法（mat 可作为分块元素）
+$A = mat(A_1, A_2; A_3, A_4)$
+```
+
+> A detailed treatment, including block inverses and the determinant of block matrices,
+> is given in the Block Matrix section below.
+
 === Determinants of Products // 行列式乘积公式
 
 The determinant of a product equals the product of the determinants — see #link(<thm:det-product>)[Theorem]. By induction it extends to any number of matrices:
@@ -590,12 +611,10 @@ Applying a single elementary operation to the identity matrix produces an *eleme
 ] <def:elementary-matrix>
 
 #property(name: "Properties of Elementary Matrices")[
-  - For an $s times n$ matrix $A$, performing an elementary *row* operation on $A$ amounts
-    to multiplying $A$ on the left by the corresponding $s times s$ elementary row matrix;
-    an elementary *column* operation amounts to multiplying $A$ on the right by the
-    corresponding $n times n$ elementary column matrix.
-  - Elementary matrices are invertible, with $P(i, j)^(-1) = P(i, j)$,
-    $P(i(c))^(-1) = P(i(c^(-1)))$, and $P(i, j(k))^(-1) = P(i, j(-k))$.
+  For an $s times n$ matrix $A$, performing an elementary *row* operation on $A$ amounts
+  to multiplying $A$ on the left by the corresponding $s times s$ elementary row matrix;
+  an elementary *column* operation amounts to multiplying $A$ on the right by the
+  corresponding $n times n$ elementary column matrix.
 ] <prop:elementary-matrix>
 
 The row swap $P(i, j)$ is already obtainable from the other two types:
@@ -841,6 +860,7 @@ is a nilpotent matrix with nilpotent index $n$.
 ] <prop:operations-of-inverse>
 
 #proposition[
+  Elementary matrices are invertible, with
   $
     P(i ,j)^(-1) = P(j, i), quad P(i(c))^(-1) = P(i(c^(-1))), quad P(i ,j(k))^(-1) = P(i, j(-k)).
   $
