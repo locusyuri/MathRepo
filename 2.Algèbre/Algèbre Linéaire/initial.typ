@@ -566,6 +566,7 @@ The determinant of a product equals the product of the determinants — see #lin
 ]
 
 === Matrix Equivalence // 矩阵等价
+
 #definition(name: "Elementary Row and Column Operations")[
   The following three operations, applied to the rows (resp. columns) of a matrix, are
   called *elementary row* (resp. *column*) *operations*:
@@ -573,8 +574,10 @@ The determinant of a product equals the product of the determinants — see #lin
   - *Row scaling*: multiply a row (resp. column) by a non-zero scalar.
   - *Row addition*: add a scalar multiple of one row (resp. column) to another;
 
-    A *combination of elementary row and column operations* is any finite sequence of these.
+  A *combination of elementary row and column operations* is any finite sequence of these.
 ] <def:elementary-operations>
+
+Applying a single elementary operation to the identity matrix produces an *elementary matrix*:
 
 #definition(name: "Elementary Matrix")[
   An *elementary matrix* is obtained by performing a single elementary row operation on the
@@ -586,20 +589,30 @@ The determinant of a product equals the product of the determinants — see #lin
   - $P(i, j(k))$: adds $k$ times row $j$ of $E$ to row $i$.
 ] <def:elementary-matrix>
 
-#property[
-  // 对一 s x n 矩阵 A 作一初等行变换相当于左乘对应的 s x s的初等行矩阵; 对 A 作一初等列变换相当于右乘对应的 n x n 的初等列矩阵;
+#property(name: "Properties of Elementary Matrices")[
+  - For an $s times n$ matrix $A$, performing an elementary *row* operation on $A$ amounts
+    to multiplying $A$ on the left by the corresponding $s times s$ elementary row matrix;
+    an elementary *column* operation amounts to multiplying $A$ on the right by the
+    corresponding $n times n$ elementary column matrix.
+  - Elementary matrices are invertible, with $P(i, j)^(-1) = P(i, j)$,
+    $P(i(c))^(-1) = P(i(c^(-1)))$, and $P(i, j(k))^(-1) = P(i, j(-k))$.
+] <prop:elementary-matrix>
 
-]
+The row swap $P(i, j)$ is already obtainable from the other two types:
 
 #proposition[
   $P(i, j)$ can be implemented by a sequence of $P(i(c))$ and $P(i, j(k))$ operations.
 ]
+
+Using elementary row and column operations, we can now compare matrices of the same size:
 
 #definition(name: "Matrix Equivalence")[
   Two matrices $A$ and $B$ of the same size are called *equivalent*, denoted $A equiv B$,
   if they can be transformed into one another by a combination of elementary row and column
   operations.
 ] <def:matrix-equivalence>
+
+Equivalence is completely determined by the rank:
 
 #theorem(name: "Matrix Equivalence and Rank")[
   Two matrices are equivalent if and only if they have the same rank.
