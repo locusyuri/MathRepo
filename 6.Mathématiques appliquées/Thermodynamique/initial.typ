@@ -236,12 +236,13 @@ classical theory of heat capacities.
   #tex-table(
     ("Molecule", "Translational", "Rotational", "Vibrational", [$f$]),
     ("monatomic", [$3$], [$0$], [$0$], [$3$]),
-    ("rigid diatomic", [$3$], [$2$], [$0$], [$5$]),
-    ("non-rigid diatomic", [$3$], [$2$], [$2$], [$7$]),
+    ("linear, rigid", [$3$], [$2$], [$0$], [$5$]),
+    ("linear, non-rigid", [$3$], [$2$], [$2$], [$7$]),
+    ("non-linear, rigid", [$3$], [$3$], [$0$], [$6$]),
   )
 ] <def:degrees-of-freedom>
 
-Two details of the table deserve comment. The rotation about the bond axis of a diatomic molecule is omitted because the two atoms are points on that axis, carrying no moment of inertia; and the vibrational entry counts quadratic terms rather than coordinates — a single vibrational mode contributes one kinetic and one potential quadratic term, hence two degrees.
+Two details of the table deserve comment. A *linear* molecule (monatomic aside) has only two rotational degrees of freedom, because rotation about the molecular axis carries no moment of inertia — the atoms lie on that axis — whereas a *non-linear* molecule has three. The vibrational entry counts quadratic terms rather than coordinates: each vibrational mode contributes one kinetic and one potential quadratic term, hence two degrees; for a non-rigid molecule of $N$ atoms there are $3 N - 6$ modes ($3 N - 5$ if linear), so that $f = 3 N$ in all.
 
 #theorem(name: "Equipartition Theorem")[
   Let the energy of a classical system be
