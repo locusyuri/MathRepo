@@ -2185,17 +2185,29 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   "the characteristic of $F$ is not $2$".
 ]
 
+#note[
+  The diagonalizability statements below are verified via the minimal polynomial criterion
+  (#link(<thm:diagonalization-conditions>)[Equivalent Conditions for Diagonalization]): the
+  minimal polynomial of an idempotent matrix divides $x(x - 1)$, that of an involution matrix
+  divides $x^2 - 1$, that of the all-ones matrix divides $x(x - n)$, and that of the cyclic
+  shift matrix divides $x^n - 1$, each with no repeated roots under the stated hypotheses.
+]
+
+#proposition(name: "Unique Eigenvalue of Diagonalizable Matrices")[
+  Let $V$ be a linear space over $F$ and $A in upright("End")(V)$ be diagonalizable. If $lambda$ is the unique eigenvalue of $A$, then $A = lambda E$.
+] <prop:diagonalizable-unique-eigenvalue>
+
 #proposition(name: "Invertible Matrix")[
-  - $0$ is not an eigenvalue of $A$ (and conversely).
+  - $A$ is injective if and only if $0$ is not an eigenvalue of $A$; when $V$ is finite-dimensional, this is equivalent to $A$ being invertible.
   - If $lambda$ is an eigenvalue of $A$, then $1/lambda$ is an eigenvalue of $A^(-1)$, and the eigenvector $xi$ of $A$ is also an eigenvector of $A^(-1)$.
-  - (When $F$ is a number field) If $A$ is diagonalizable, then $A^(-1)$ is also diagonalizable.
+  - If $A$ is diagonalizable, then $A^k$ is diagonalizable and shares the same basis of eigenvectors for every $k in ZZ$; in particular, $A^(-1)$ is diagonalizable (see #link(<prop:eigenvalues-of-matrix-functions>)[Eigenvalues of Matrix Functions]).
 ] <prop:invertible-matrix>
 
 #proposition(name: "Idempotent Matrix")[
   Let $A$ be idempotent, i.e. $A^2 = A$.
   - Any eigenvalue of $A$ is either $0$ or $1$.
-  - ($V$ finite-dimensional) $A$ is diagonalizable and $V = E_1 ⊕ E_0 = "Ker"(A - E) ⊕ "Ker"(A) = "Im"(A) ⊕ "Ker"(A)$.
-  - (When $F$ is a number field and $V$ finite-dimensional) The rank equals the trace: $upright("rank")(A) = "tr"(A)$.
+  - $A$ is diagonalizable and $V = E_1 ⊕ E_0 = "Ker"(A - E) ⊕ "Ker"(A) = "Im"(A) ⊕ "Ker"(A)$.
+  - ($V$ finite-dimensional) The rank equals the trace: $upright("rank")(A) = "tr"(A)$.
 ] <prop:idempotent-matrix>
 
 #proposition(name: "Nilpotent Matrix")[
@@ -2205,7 +2217,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 ] <prop:nilpotent-matrix>
 
 #proposition(name: "Involution Matrix")[
-  Let $V$ be finite-dimensional, $F$ a number field, and $A$ an involution matrix, i.e. $A^2 = E$.
+  Let $V$ be finite-dimensional over a field $F$ of characteristic not $2$, and $A$ an involution matrix, i.e. $A^2 = E$.
   - All eigenvalues of $A$ are either $1$ or $-1$.
   - $A$ is diagonalizable and $V = E_1 ⊕ E_(-1) = "Ker"(A - E) ⊕ "Ker"(A + E)$.
 ] <prop:involution-matrix>
@@ -2213,14 +2225,14 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 In geometry, an involution corresponds to a reflection or symmetry, since $A^2 = E$ implies $A = A^(-1)$.
 
 #proposition(name: "All-Ones Matrix")[
-  Let $F = bb(Q)$ and $A$ be the all-ones matrix. Denote $1_n = (1, 1, ..., 1)^"T"$ (column vector of $n$ ones).
+  Let $F$ be a number field and $A$ be the all-ones matrix. Denote $1_n = (1, 1, ..., 1)^"T"$ (column vector of $n$ ones).
   - All eigenvalues are $n$ (algebraic multiplicity $1$) or $0$ (algebraic multiplicity $n - 1$).
-  - The eigenvectors for $n$ are ${k 1_n : k in bb(Q), k != 0}$; the eigenvectors for $0$ are linear combinations of $eta_1, ..., eta_(n-1)$ where $eta_i$ has $1$ in position $1$, $-1$ in position $i+1$, and $0$ elsewhere.
+  - The eigenvectors for $n$ are ${k 1_n : k in F, k != 0}$; the eigenvectors for $0$ are linear combinations of $eta_1, ..., eta_(n-1)$ where $eta_i$ has $1$ in position $1$, $-1$ in position $i+1$, and $0$ elsewhere.
   - $A$ is diagonalizable.
 ] <prop:all-ones-matrix>
 
 #note[
-  Note that $(1/n) A$ is an idempotent orthonormal projection matrix.
+  Note that $(1/n) A$ is an idempotent symmetric matrix, hence an orthogonal projection matrix.
 ]
 
 #proposition(name: "Cyclic Shift Matrix")[
@@ -2230,7 +2242,7 @@ In geometry, an involution corresponds to a reflection or symmetry, since $A^2 =
   - $A$ is diagonalizable, and can be unitarily diagonalized.
 ] <prop:cyclic-shift-matrix>
 
-All properties above are closely related to the discrete Fourier transform (DFT) and roots of unity.
+All properties above are closely related to the discrete Fourier transform (DFT) and roots of unity; the eigenvectors $xi^((k))$ form the DFT basis, which is orthogonal with each vector of norm $sqrt(n)$.
 
 #proposition(name: "Circulant Matrix")[
   Let $F = bb(C)$ and $A$ be a circulant matrix, i.e. $A = a_0 E + a_1 C + a_2 C^2 + ... + a_(n-1) C^(n-1)$ where $C$ is the cyclic shift matrix.
@@ -2247,7 +2259,7 @@ All properties above are closely related to the discrete Fourier transform (DFT)
   Let $F$ be a number field and $A$ an upper triangular matrix.
   - The eigenvalues of $A$ are the diagonal entries $a_(i i)$.
   - If all diagonal entries are distinct, $A$ is diagonalizable. If there are repeated diagonal entries, $A$ may or may not be diagonalizable.
-  - If all diagonal entries are equal and there exists a non-zero entry above the diagonal, then $A$ is not diagonalizable.
+  - If all diagonal entries are equal and there exists a non-zero entry above the diagonal, then $A$ is not diagonalizable, since otherwise #link(<prop:diagonalizable-unique-eigenvalue>)[the unique-eigenvalue principle] would force $A = lambda E$.
 ] <prop:triangular-matrix-diagonalizability>
 
 == Simultaneous Characteristics Induced by Commutativity // 交换性诱导的同时性质
