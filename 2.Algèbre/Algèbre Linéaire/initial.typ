@@ -1584,7 +1584,7 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   The *cokernel* of $A$ is the quotient space
 
   $
-    "coker"(A) = V' / "Im"(A).
+    "Coker"(A) = V' / "Im"(A).
   $
 ] <def:cokernel>
 
