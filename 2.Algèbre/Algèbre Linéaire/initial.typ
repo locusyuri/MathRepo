@@ -536,16 +536,50 @@ matrix techniques, and operations of rank.
 
 === Block Partition of a Matrix // 矩阵的分块
 
-A matrix can also be viewed as an array of smaller *blocks*: a *block partition* of an
-$m times n$ matrix is achieved by drawing horizontal and vertical lines between certain
-rows and columns, subdividing it into submatrices (blocks). The resulting object, whose
-entries are themselves matrices, is called a *block matrix*; we write e.g.
-$A = mat(A_1, A_2; A_3, A_4)$, where each $A_i$ has a size determined by the subdivision.
+#definition(name: "Kronecker Product")[
+  Let $A = (a_(i j))_(m times n)$ be an $m times n$ matrix and $B = (b_(i j))_(p times q)$ a $p times q$ matrix.
+  The *Kronecker product* of $A$ and $B$, denoted $A ⊗ B$, is the block matrix
 
-Matrix addition, scalar multiplication and transpose extend to block matrices block by
-block, provided the blocks have matching sizes. For multiplication, if $A$ and $B$ are
-partitioned so that the column partition of $A$ matches the row partition of $B$, then
-$A B$ can be computed block-wise exactly like ordinary scalar multiplication.
+  $
+    A ⊗ B = mat(
+      a_(11) B, a_(12) B, ..., a_(1n) B;
+      a_(21) B, a_(22) B, ..., a_(2n) B;
+      dots.v, dots.v, dots.down, dots.v;
+      a_(m 1) B, a_(m 2) B, ..., a_(m n) B;
+    )
+  $
+
+  of size $m p times n q$.
+] <def:kronecker-product>
+
+#theorem(name: "Determinant Reduction Formula")[
+  Let $A$ be $m times m$, $B$ be $m times n$, $C$ be $n times m$, and $D$ be $n times n$.
+  Then:
+  - If $A$ is invertible, then
+
+    $
+      mat(A, B; C, D, delim: "|") = "det"(A) "det"(D - C A^(-1) B).
+    $
+
+  - If $D$ is invertible, then
+
+    $
+      mat(A, B; C, D, delim: "|") = "det"(D) "det"(A - B D^(-1) C).
+    $
+
+  - If both $A$ and $D$ are invertible, then
+
+    $
+      "det"(D) "det"(A - B D^(-1) C) = "det"(A) "det"(D - C A^(-1) B).
+    $
+] <thm:determinant-reduction-formula>
+
+#note[
+  The mnemonic is: for $mat(A, B; C, D, delim: "|")$, if $A$ is invertible, one factor is
+  $"det"(A)$ and the other factor is $D$ minus the product of the other three terms arranged
+  *clockwise*, where the middle one is the inverse matrix.
+]
+
 
 === Determinants of Products // 行列式乘积公式
 
@@ -578,7 +612,122 @@ The determinant of a product equals the product of the determinants — see #lin
   corresponding minors.
 ]
 
-=== Matrix Equivalence // 矩阵等价
+== Inverse Matrix // 逆矩阵
+
+=== Inverse Matrix and Its Operations // 逆矩阵及其运算
+
+#definition(name: "Inverse Matrix")[
+  Let $A$ be an $n times n$ matrix over $F$. If there exists an $n times n$ matrix $B$ such
+  that $A B = B A = E$, then $A$ is called *invertible* (or *non-singular*), and $B$ is called
+  the *inverse matrix* of $A$, denoted $A^(-1)$. A matrix that is not invertible is called
+  *singular*.
+] <def:inverse-matrix>
+
+#property(name: "Operations of Inverse Matrices")[
+  - $(A^(-1))^(-1) = A$.
+  - $(lambda A)^(-1) = (1/lambda) A^(-1)$ for a non-zero scalar $lambda$ in $F$.
+  - $(A^"T")^(-1) = (A^(-1))^"T"$.
+  - $(A B)^(-1) = B^(-1) A^(-1)$, and more generally $(A_1 ... A_k)^(-1) = A_k^(-1) ... A_1^(-1)$.
+] <prop:operations-of-inverse>
+
+#proposition[
+  Elementary matrices are invertible, with
+  $
+    P(i ,j)^(-1) = P(j, i), quad P(i(c))^(-1) = P(i(c^(-1))), quad P(i ,j(k))^(-1) = P(i, j(-k)).
+  $
+]
+
+=== Equivalent Propositions and Method of Inversion // 等价命题与求逆方法
+
+#corollary(name: "Determinant and Invertibility")[
+  An $n times n$ matrix $A$ is invertible if and only if $"det"(A) != 0$.
+] <cor:determinant-invertibility>
+
+#theorem(name: "Equivalent Propositions of Invertibility")[
+  For an $n times n$ matrix $A$ over $F$, the following statements are equivalent:
+  - $A$ is invertible;
+  - $A$ is equivalent to the identity matrix $E$;
+  - $A$ is a product of elementary matrices;
+  - the homogeneous system $A x = 0$ has only the zero solution;
+  - the row vectors (and the column vectors) of $A$ are linearly independent.
+] <thm:invertibility-equivalent-propositions>
+
+#proof[
+  If $A$ is invertible, then $"det"(A) != 0$ by #link(<cor:determinant-invertibility>)[Corollary],
+  so row reduction of $A$ ends at $E$ rather than at a singular matrix; hence $A$ is equivalent
+  to $E$, and $A = E_1 ... E_k$ is the product of the corresponding elementary matrices.
+  Conversely, every elementary matrix is invertible, so a product of elementary matrices is
+  invertible, and if $A equiv E$ then $A = P E Q$ with $P$ and $Q$ products of elementary
+  matrices, hence $A$ is invertible.
+  Finally, $A x = 0$ has only the zero solution iff the columns of $A$ are linearly independent
+  iff $"det"(A) != 0$, which is equivalent to invertibility by
+  #link(<cor:determinant-invertibility>)[Corollary].
+]
+
+#theorem(name: "Multiplicativity of Determinants")[
+  If $A$ and $B$ are $n times n$ matrices over $F$, then
+
+  $
+    "det"(A B) = "det"(A) "det"(B).
+  $
+] <thm:det-product>
+
+#proof[
+  Every elementary matrix $E$ satisfies $"det"(E A) = "det"(E) "det"(A)$: this is immediate for
+  the three types of elementary row operations, with $"det"(E) = -1$, $k$, and $1$, respectively.
+  If $A$ is invertible, then $A$ is a product of elementary matrices, and applying the previous
+  step to $A = E_1 ... E_k$ against $I$ gives $"det"(A) = "det"(E_1) ... "det"(E_k)$.
+  Hence, for invertible $A$ and $B$, writing $B = F_1 ... F_m$ as a product of elementary
+  matrices yields $"det"(A B) = "det"(A) "det"(F_1) ... "det"(F_m) = "det"(A) "det"(B)$.
+  If one of $A$ and $B$ is singular, then $A B$ is singular as well, so both sides are zero.
+]
+
+#definition(name: "Adjugate Matrix")[
+  Let $A$ be an $n times n$ matrix with cofactors $A_(i j)$. The *adjugate* of $A$ is the
+  matrix $"adj"(A) = (A_(j i))$, the transpose of the cofactor matrix.
+] <def:adjugate-matrix>
+
+#theorem(name: "Inverse via Adjugate")[
+  For an invertible $n times n$ matrix $A$,
+
+  $
+    A "adj"(A) = "adj"(A) A = "det"(A) E,
+  $
+
+  and therefore
+
+  $
+    A^(-1) = "adj"(A) / "det"(A).
+  $
+] <thm:inverse-via-adjugate>
+
+#proof[
+  The $(i, j)$-entry of $A "adj"(A)$ is $sum_(k=1)^n a_(i k) A_(j k)$: it equals $"det"(A)$
+  when $i = j$ by the Laplace expansion, and $0$ when $i != j$, since it is the expansion of a
+  determinant whose $j$-th row has been replaced by the $i$-th row, hence has two equal rows.
+]
+
+#property(name: "Methods of Finding the Inverse")[
+  - *Adjugate method*: $A^(-1) = "adj"(A) / "det"(A)$, given by #link(<thm:inverse-via-adjugate>)[Theorem].
+  - *Elementary row operation method*: apply the same elementary row operations to the augmented
+    matrix $mat(A, E)$ until the left half becomes $E$; the right half is then $A^(-1)$. If
+    $A$ cannot be reduced to $E$, then $A$ is singular.
+]
+
+=== Generalized Inverse // 广义逆
+
+#definition(name: "Generalized Inverse")[
+  Let $A$ be an $m times n$ matrix. An $n times m$ matrix $X$ satisfying $A X A = A$ is called
+  a *generalized inverse* of $A$.
+] <def:generalized-inverse>
+
+#note[
+  The generalized inverse reduces to the usual inverse when $A$ is invertible. Among all
+  generalized inverses, the Moore-Penrose inverse is the uniquely defined one satisfying
+  additional symmetry conditions.
+]
+
+== Elementary Matrix and Matrix Equivalence // 矩阵等价
 
 #definition(name: "Elementary Row and Column Operations")[
   The following three operations, applied to the rows (resp. columns) of a matrix, are
@@ -750,14 +899,15 @@ Equivalence is completely determined by the rank:
 
 Let
 
-$ C = mat(
-  0, 1, 0, 0, ..., 0;
-  0, 0, 1, 0, ..., 0;
-  dots.v, dots.v, dots.v, dots.v, dots.down, dots.v;
-  0, 0, 0, 0, ..., 1;
-  1, 0, 0, 0, ..., 0;
-) $,
-
+$
+  C = mat(
+    0, 1, 0, 0, ..., 0;
+    0, 0, 1, 0, ..., 0;
+    dots.v, dots.v, dots.v, dots.v, dots.down, dots.v;
+    0, 0, 0, 0, ..., 1;
+    1, 0, 0, 0, ..., 0;
+  ),
+$
 which is called a *cyclic shift matrix*.
 
 The matrix $C$ performs specific cyclic operations when multiplied by another matrix:
@@ -833,177 +983,14 @@ is a nilpotent matrix with nilpotent index $n$.
     matrix $P_{m times m}$ such that $A = P mat(E_n; O)$.
 ] <prop:full-row-rank-matrix>
 
-== Inverse Matrix // 逆矩阵
 
-=== Inverse Matrix and Its Operations // 逆矩阵及其运算
-
-#definition(name: "Inverse Matrix")[
-  Let $A$ be an $n times n$ matrix over $F$. If there exists an $n times n$ matrix $B$ such
-  that $A B = B A = E$, then $A$ is called *invertible* (or *non-singular*), and $B$ is called
-  the *inverse matrix* of $A$, denoted $A^(-1)$. A matrix that is not invertible is called
-  *singular*.
-] <def:inverse-matrix>
-
-#property(name: "Operations of Inverse Matrices")[
-  - $(A^(-1))^(-1) = A$.
-  - $(lambda A)^(-1) = (1/lambda) A^(-1)$ for a non-zero scalar $lambda$ in $F$.
-  - $(A^"T")^(-1) = (A^(-1))^"T"$.
-  - $(A B)^(-1) = B^(-1) A^(-1)$, and more generally $(A_1 ... A_k)^(-1) = A_k^(-1) ... A_1^(-1)$.
-] <prop:operations-of-inverse>
-
-#proposition[
-  Elementary matrices are invertible, with
-  $
-    P(i ,j)^(-1) = P(j, i), quad P(i(c))^(-1) = P(i(c^(-1))), quad P(i ,j(k))^(-1) = P(i, j(-k)).
-  $
-]
-
-=== Equivalent Propositions and Method of Inversion // 等价命题与求逆方法
-
-#corollary(name: "Determinant and Invertibility")[
-  An $n times n$ matrix $A$ is invertible if and only if $"det"(A) != 0$.
-] <cor:determinant-invertibility>
-
-#theorem(name: "Equivalent Propositions of Invertibility")[
-  For an $n times n$ matrix $A$ over $F$, the following statements are equivalent:
-  - $A$ is invertible;
-  - $A$ is equivalent to the identity matrix $E$;
-  - $A$ is a product of elementary matrices;
-  - the homogeneous system $A x = 0$ has only the zero solution;
-  - the row vectors (and the column vectors) of $A$ are linearly independent.
-] <thm:invertibility-equivalent-propositions>
-
-#proof[
-  If $A$ is invertible, then $"det"(A) != 0$ by #link(<cor:determinant-invertibility>)[Corollary],
-  so row reduction of $A$ ends at $E$ rather than at a singular matrix; hence $A$ is equivalent
-  to $E$, and $A = E_1 ... E_k$ is the product of the corresponding elementary matrices.
-  Conversely, every elementary matrix is invertible, so a product of elementary matrices is
-  invertible, and if $A equiv E$ then $A = P E Q$ with $P$ and $Q$ products of elementary
-  matrices, hence $A$ is invertible.
-  Finally, $A x = 0$ has only the zero solution iff the columns of $A$ are linearly independent
-  iff $"det"(A) != 0$, which is equivalent to invertibility by
-  #link(<cor:determinant-invertibility>)[Corollary].
-]
-
-#theorem(name: "Multiplicativity of Determinants")[
-  If $A$ and $B$ are $n times n$ matrices over $F$, then
-
-  $
-    "det"(A B) = "det"(A) "det"(B).
-  $
-] <thm:det-product>
-
-#proof[
-  Every elementary matrix $E$ satisfies $"det"(E A) = "det"(E) "det"(A)$: this is immediate for
-  the three types of elementary row operations, with $"det"(E) = -1$, $k$, and $1$, respectively.
-  If $A$ is invertible, then $A$ is a product of elementary matrices, and applying the previous
-  step to $A = E_1 ... E_k$ against $I$ gives $"det"(A) = "det"(E_1) ... "det"(E_k)$.
-  Hence, for invertible $A$ and $B$, writing $B = F_1 ... F_m$ as a product of elementary
-  matrices yields $"det"(A B) = "det"(A) "det"(F_1) ... "det"(F_m) = "det"(A) "det"(B)$.
-  If one of $A$ and $B$ is singular, then $A B$ is singular as well, so both sides are zero.
-]
-
-#definition(name: "Adjugate Matrix")[
-  Let $A$ be an $n times n$ matrix with cofactors $A_(i j)$. The *adjugate* of $A$ is the
-  matrix $"adj"(A) = (A_(j i))$, the transpose of the cofactor matrix.
-] <def:adjugate-matrix>
-
-#theorem(name: "Inverse via Adjugate")[
-  For an invertible $n times n$ matrix $A$,
-
-  $
-    A "adj"(A) = "adj"(A) A = "det"(A) E,
-  $
-
-  and therefore
-
-  $
-    A^(-1) = "adj"(A) / "det"(A).
-  $
-] <thm:inverse-via-adjugate>
-
-#proof[
-  The $(i, j)$-entry of $A "adj"(A)$ is $sum_(k=1)^n a_(i k) A_(j k)$: it equals $"det"(A)$
-  when $i = j$ by the Laplace expansion, and $0$ when $i != j$, since it is the expansion of a
-  determinant whose $j$-th row has been replaced by the $i$-th row, hence has two equal rows.
-]
-
-#property(name: "Methods of Finding the Inverse")[
-  - *Adjugate method*: $A^(-1) = "adj"(A) / "det"(A)$, given by #link(<thm:inverse-via-adjugate>)[Theorem].
-  - *Elementary row operation method*: apply the same elementary row operations to the augmented
-    matrix $mat(A, E)$ until the left half becomes $E$; the right half is then $A^(-1)$. If
-    $A$ cannot be reduced to $E$, then $A$ is singular.
-]
-
-=== Generalized Inverse // 广义逆
-
-#definition(name: "Generalized Inverse")[
-  Let $A$ be an $m times n$ matrix. An $n times m$ matrix $X$ satisfying $A X A = A$ is called
-  a *generalized inverse* of $A$.
-] <def:generalized-inverse>
-
-#note[
-  The generalized inverse reduces to the usual inverse when $A$ is invertible. Among all
-  generalized inverses, the Moore-Penrose inverse is the uniquely defined one satisfying
-  additional symmetry conditions.
-]
-
-== Block Matrix // 分块矩阵
-
-=== Kronecker Product // Kronecker 积
-
-#definition(name: "Kronecker Product")[
-  Let $A = (a_(i j))_(m times n)$ be an $m times n$ matrix and $B = (b_(i j))_(p times q)$ a $p times q$ matrix.
-  The *Kronecker product* of $A$ and $B$, denoted $A ⊗ B$, is the block matrix
-
-  $
-    A ⊗ B = mat(
-      a_(11) B, a_(12) B, ..., a_(1n) B;
-      a_(21) B, a_(22) B, ..., a_(2n) B;
-      dots.v, dots.v, dots.down, dots.v;
-      a_(m 1) B, a_(m 2) B, ..., a_(m n) B;
-    )
-  $
-
-  of size $m p times n q$.
-] <def:kronecker-product>
-
-=== Determinant Reduction Formula // 行列式降阶公式
-
-#theorem(name: "Determinant Reduction Formula")[
-  Let $A$ be $m times m$, $B$ be $m times n$, $C$ be $n times m$, and $D$ be $n times n$.
-  Then:
-  - If $A$ is invertible, then
-
-    $
-      mat(A, B; C, D, delim: "|") = "det"(A) "det"(D - C A^(-1) B).
-    $
-
-  - If $D$ is invertible, then
-
-    $
-      mat(A, B; C, D, delim: "|") = "det"(D) "det"(A - B D^(-1) C).
-    $
-
-  - If both $A$ and $D$ are invertible, then
-
-    $
-      "det"(D) "det"(A - B D^(-1) C) = "det"(A) "det"(D - C A^(-1) B).
-    $
-] <thm:determinant-reduction-formula>
-
-#note[
-  The mnemonic is: for $mat(A, B; C, D, delim: "|")$, if $A$ is invertible, one factor is
-  $"det"(A)$ and the other factor is $D$ minus the product of the other three terms arranged
-  *clockwise*, where the middle one is the inverse matrix.
-]
 
 == Operations of Rank // 秩的运算
 
 #proposition(name: "Operations of Rank")[
   The matrices $A$ and $B$ below need not be square; they only need to be compatible for
   multiplication or addition.
-  - *1. Addition*:
+  + *Addition*:
 
     $
       abs(upright("rank")(A) - upright("rank")(B)) <= upright("rank")(A + B) <=
@@ -1013,20 +1000,16 @@ is a nilpotent matrix with nilpotent index $n$.
     On the basis of the dimension formula,
     $upright("rank")(A + B) = upright("rank")(A) + upright("rank")(B) -
     "dim"(R(A) inter R(B))$, where $R(A)$ and $R(B)$ are the column spaces of $A$ and $B$.
-  - *2. Multiplication*: $upright("rank")(A B) <= upright("rank")(A)$ and
-    $upright("rank")(A B) <= upright("rank")(B)$.
-  - *2.1 Sylvester's Inequality*: for $A_{s times n}$ and $B_{n times m}$,
-    $upright("rank")(A B) >= upright("rank")(A) + upright("rank")(B) - n$.
-    In particular, if $A B = O$, then $upright("rank")(A) + upright("rank")(B) <= n$.
-  - *2.2 Frobenius Inequality*:
-    $upright("rank")(A B C) >= upright("rank")(A B) + upright("rank")(B C) -
-    upright("rank")(B)$.
-  - *3. Transpose*:
+  + *Multiplication*: $upright("rank")(A B) <= upright("rank")(A)$ and $upright("rank")(A B) <= upright("rank")(B)$.
+    + *Sylvester's Inequality*: for $A_{s times n}$ and $B_{n times m}$, $ upright("rank")(A B) >= upright("rank")(A) + upright("rank")(B) - n. $ In particular, if $A B = O$, then $upright("rank")(A) + upright("rank")(B) <= n$.
+    + *Frobenius Inequality*: $upright("rank")(A B C) >= upright("rank")(A B) + upright("rank")(B C) -
+      upright("rank")(B)$.
+  + *Transpose*:
     $upright("rank")(A A^"T") = upright("rank")(A^"T" A) = upright("rank")(A) =
     upright("rank")(A^"T")$.
-  - *4. Inverse*: if $A$ is invertible, then $upright("rank")(A) = upright("rank")(A^(-1)) = n$.
-  - *5. Block Matrix*:
-    $upright("rank")(mat(A, O; O, D)) = upright("rank")(A) + upright("rank")(D)$.
+  + *Inverse*: if $A$ is invertible, then $upright("rank")(A) = upright("rank")(A^(-1)) = n$.
+  + *Block Matrix*:
+    $upright("rank")mat(A, O; O, D) = upright("rank")(A) + upright("rank")(D)$.
 ] <prop:operations-of-rank>
 
 == Low-Rank Corrections // 低秩修正
