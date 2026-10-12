@@ -52,7 +52,7 @@ it is commonly denoted by $upright("Hom")(V)$, $upright("L")(V)$, or $upright("E
 The rank of a matrix $A$ is denoted by $upright("rank")(A)$ or $r(A)$.
 Two square matrices $A$ and $B$ are called *similar*, denoted $A ~ B$,
 if there exists an invertible matrix $P$ such that $B = P^(-1) A P$.
-The characteristic polynomial of $A$ is $f(lambda) = |lambda E - A|$,
+The characteristic polynomial of $A$ is $f(lambda) = "det"(lambda E - A)$,
 and the minimal polynomial is the monic polynomial $m(lambda)$ of least degree
 such that $m(A) = 0$.
 
@@ -98,7 +98,7 @@ and gradually develops its properties, expansion rules, and computation of speci
   The *determinant* of $A$ is the scalar
 
   $
-  "det"(A) = sum_(sigma in S_n) "sgn"(sigma) product_(i=1)^n a_(i, sigma(i)).
+    "det"(A) = sum_(sigma in S_n) "sgn"(sigma) product_(i=1)^n a_(i, sigma(i)).
   $
 ] <def:determinant>
 
@@ -115,7 +115,7 @@ and gradually develops its properties, expansion rules, and computation of speci
   If $A$ and $B$ are $n times n$ matrices over $P$, then
 
   $
-  "det"(A B) = "det"(A) "det"(B).
+    "det"(A B) = "det"(A) "det"(B).
   $
 ] <thm:det-product>
 
@@ -145,11 +145,11 @@ and gradually develops its properties, expansion rules, and computation of speci
   For every row $i$ and every column $j$ of $A$,
 
   $
-  "det"(A) = sum_(j=1)^n a_("ij") A_("ij"),
+    "det"(A) = sum_(j=1)^n a_("ij") A_("ij"),
   $
 
   $
-  "det"(A) = sum_(i=1)^n a_("ij") A_("ij").
+    "det"(A) = sum_(i=1)^n a_("ij") A_("ij").
   $
 ] <thm:laplace-expansion>
 
@@ -158,7 +158,7 @@ and gradually develops its properties, expansion rules, and computation of speci
   Grouping the Leibniz terms by $j = sigma(i)$ gives
 
   $
-  "det"(A) = sum_(j=1)^n a_("ij") sum_(sigma(i) = j) "sgn"(sigma) product_(k != i) a_(k, sigma(k)).
+    "det"(A) = sum_(j=1)^n a_("ij") sum_(sigma(i) = j) "sgn"(sigma) product_(k != i) a_(k, sigma(k)).
   $
 
   For a permutation $sigma$ with $sigma(i) = j$, removing the pair $(i, j)$ leaves a
@@ -174,7 +174,7 @@ and gradually develops its properties, expansion rules, and computation of speci
   Then the unique solution is
 
   $
-  x_j = "det"(A_(j)) / "det"(A), j = 1, 2, ..., n.
+    x_j = "det"(A_(j)) / "det"(A), j = 1, 2, ..., n.
   $
 ] <thm:cramer-rule>
 
@@ -184,7 +184,7 @@ and gradually develops its properties, expansion rules, and computation of speci
   and using the linearity of the determinant in that column,
 
   $
-  "det"(A_(j)) = sum_(k=1)^n x_k "det"(A_(j, k)),
+    "det"(A_(j)) = sum_(k=1)^n x_k "det"(A_(j, k)),
   $
 
   where $A_(j, k)$ is $A$ with column $j$ replaced by column $k$. For $k != j$ the matrix
@@ -201,7 +201,7 @@ and gradually develops its properties, expansion rules, and computation of speci
   Then
 
   $
-  "det"(A) = sum_J (-1)^(i_1 + ... + i_k + j_1 + ... + j_k) M(I, J) M^*(I, J),
+    "det"(A) = sum_J (-1)^(i_1 + ... + i_k + j_1 + ... + j_k) M(I, J) M^*(I, J),
   $
 
   where the sum runs over all $k$-element subsets $J$ of ${1, 2, ..., n}$.
@@ -213,14 +213,14 @@ and gradually develops its properties, expansion rules, and computation of speci
   The *Vandermonde determinant* of order $n$ is defined as
 
   $
-  V_(n) = mat(
-    delim: "|",
-    1, 1, 1, dots, 1;
-    x_1, x_2, x_3, dots, x_n;
-    x_1^2, x_2^2, x_3^2, dots, x_n^2;
-    dots.v, dots.v, dots.v, dots.down, dots.v;
-    x_1^(n-1), x_2^(n-1), x_3^(n-1), dots, x_n^(n-1);
-  ),
+    V_(n) = mat(
+      delim: "|",
+      1, 1, 1, dots, 1;
+      x_1, x_2, x_3, dots, x_n;
+      x_1^2, x_2^2, x_3^2, dots, x_n^2;
+      dots.v, dots.v, dots.v, dots.down, dots.v;
+      x_1^(n-1), x_2^(n-1), x_3^(n-1), dots, x_n^(n-1);
+    ),
   $
 
   where $x_1, x_2, ..., x_n$ are distinct variables.
@@ -229,27 +229,27 @@ and gradually develops its properties, expansion rules, and computation of speci
 The value of the Vandermonde determinant is given by
 
 $
-V_(n) = product_(1 <= i < j <= n) (x_j - x_i).
+  V_(n) = product_(1 <= i < j <= n) (x_j - x_i).
 $
 
 #definition(name: "Arrow Determinant")[
   The *Arrow determinant* is defined as
 
   $
-  A_(n) = mat(
-    delim: "|",
-    a_(11), a_(12), a_(13), dots, a_(1n);
-    a_(21), a_(22), 0, dots, 0;
-    a_(31), 0, a_(33), dots, 0;
-    dots.v, dots.v, dots.v, dots.down, dots.v;
-    a_("n1"), 0, 0, dots, a_("nn");
-  ).
+    A_(n) = mat(
+      delim: "|",
+      a_(11), a_(12), a_(13), dots, a_(1n);
+      a_(21), a_(22), 0, dots, 0;
+      a_(31), 0, a_(33), dots, 0;
+      dots.v, dots.v, dots.v, dots.down, dots.v;
+      a_("n1"), 0, 0, dots, a_("nn");
+    ).
   $
 
   Its value is given by
 
   $
-  A_(n) = (a_(11) - sum_(k=2)^n (a_("1k") a_("k1"))/a_("kk")) product_(k=2)^n a_("kk").
+    A_(n) = (a_(11) - sum_(k=2)^n (a_("1k") a_("k1"))/a_("kk")) product_(k=2)^n a_("kk").
   $
 ] <def:arrow-determinant>
 
@@ -257,7 +257,7 @@ From the first column sequentially, subtract $a_(21)/a_(22)$ times the second co
 $a_("n1")/a_("nn")$ times the $n$-th column, so that the first column becomes
 
 $
-(a_(11) - sum_(k=2)^n (a_("1k") a_("k1"))/a_("kk"), 0, 0, dots, 0)^T.
+  (a_(11) - sum_(k=2)^n (a_("1k") a_("k1"))/a_("kk"), 0, 0, dots, 0)^T.
 $
 
 Then expand along the first column.
@@ -266,7 +266,7 @@ Then expand along the first column.
   If the entries of a determinant satisfy
 
   $
-  a_("ij") = cases(a quad & i < j, x_i quad & i = j, b quad & i > j),
+    a_("ij") = cases(a quad & i < j, x_i quad & i = j, b quad & i > j),
   $
 
   then $D_n$ is called a *two-triangular determinant*.
@@ -275,19 +275,19 @@ Then expand along the first column.
 The value of the two-triangular determinant is given by
 
 $
-mat(
-  delim: "|",
-  x_1, a, a, dots, a;
-  b, x_2, a, dots, a;
-  b, b, x_3, dots, a;
-  dots.v, dots.v, dots.v, dots.down, dots.v;
-  b, b, b, dots, x_n;
-)
-=
-cases(
-  (x_1 + a sum_(k=2)^n (x_1 - a)/(x_k - a)) dot product_(k=2)^n (x_k - a) quad & a = b,
-  (x_n - b) D_(n-1) + product_(k=1)^(n-1) (x_k - a) quad & a != b,
-).
+  mat(
+    delim: "|",
+    x_1, a, a, dots, a;
+    b, x_2, a, dots, a;
+    b, b, x_3, dots, a;
+    dots.v, dots.v, dots.v, dots.down, dots.v;
+    b, b, b, dots, x_n;
+  )
+  =
+  cases(
+    (x_1 + a sum_(k=2)^n (x_1 - a)/(x_k - a)) dot product_(k=2)^n (x_k - a) quad & a = b,
+    (x_n - b) D_(n-1) + product_(k=1)^(n-1) (x_k - a) quad & a != b,
+  ).
 $
 
 = Matrices // 矩阵
@@ -316,7 +316,7 @@ The *transpose* of an $m times n$ matrix $A = (a_("ij"))$ is the $n times m$ mat
 The *product* of an $m times n$ matrix $A$ and an $n times p$ matrix $B$ is the $m times p$ matrix $A B = (c_("ij"))$ with
 
 $
-c_("ij") = sum_(k=1)^n a_("ik") b_("kj").
+  c_("ij") = sum_(k=1)^n a_("ik") b_("kj").
 $
 
 === Determinants of Products // 行列式乘积公式
@@ -327,7 +327,7 @@ The determinant of a product equals the product of the determinants — see #lin
   For $n times n$ matrices $A_1, ..., A_k$ over $P$,
 
   $
-  "det"(A_1 ... A_k) = product_(i=1)^k "det"(A_i).
+    "det"(A_1 ... A_k) = product_(i=1)^k "det"(A_i).
   $
 ] <cor:det-product-multiple>
 
@@ -337,8 +337,8 @@ The determinant of a product equals the product of the determinants — see #lin
   - If $m <= n$, then
 
   $
-  "det"(A B) = sum_(1 <= v_1 < ... < v_m <= n)
-  "det"(A(1, 2, ..., m; v_1, ..., v_m)) "det"(B(v_1, ..., v_m; 1, 2, ..., m)),
+    "det"(A B) = sum_(1 <= v_1 < ... < v_m <= n)
+    "det"(A(1, 2, ..., m; v_1, ..., v_m)) "det"(B(v_1, ..., v_m; 1, 2, ..., m)),
   $
 
   where the sum runs over all strictly increasing index tuples, and $A(1, 2, ..., m; v_1, ..., v_m)$ denotes the minor of $A$ on rows $1, ..., m$ and columns $v_1, ..., v_m$.
@@ -366,7 +366,7 @@ The determinant of a product equals the product of the determinants — see #lin
   Any $m times n$ matrix $A$ of rank $r$ is equivalent to the matrix
 
   $
-  J_r = mat(I_r, O; O, O),
+    J_r = mat(I_r, O; O, O),
   $
 
   which is called the *canonical form* of matrix equivalence.
@@ -381,14 +381,14 @@ The determinant of a product equals the product of the determinants — see #lin
   for $i != j$, denoted
 
   $
-  A = upright("diag")(a_(11), a_(22), ..., a_("nn")).
+    A = upright("diag")(a_(11), a_(22), ..., a_("nn")).
   $
 
   If $a_(i, n+1-i) = 0$ for all $i = 1, ..., n$, then $A$ is called a *skew-diagonal matrix*,
   denoted
 
   $
-  A = upright("sdiag")(a_(1n), a_("2, n-1"), ..., a_("n1")).
+    A = upright("sdiag")(a_(1n), a_("2, n-1"), ..., a_("n1")).
   $
 ] <def:diagonal-matrix>
 
@@ -427,23 +427,23 @@ The determinant of a product equals the product of the determinants — see #lin
   $a_("ij") = 0$ for $i > j$:
 
   $
-  A = mat(
-    a_(11), a_(12), ..., a_(1n);
-    0, a_(22), ..., a_(2n);
-    dots.v, dots.v, dots.down, dots.v;
-    0, 0, ..., a_("nn");
-  )
+    A = mat(
+      a_(11), a_(12), ..., a_(1n);
+      0, a_(22), ..., a_(2n);
+      dots.v, dots.v, dots.down, dots.v;
+      0, 0, ..., a_("nn");
+    )
   $
 
   Similarly, if $a_("ij") = 0$ for $i < j$, then $A$ is called a *lower triangular matrix*:
 
   $
-  A = mat(
-    a_(11), 0, ..., 0;
-    a_(21), a_(22), ..., 0;
-    dots.v, dots.v, dots.down, dots.v;
-    a_("n1"), a_("n2"), ..., a_("nn");
-  )
+    A = mat(
+      a_(11), 0, ..., 0;
+      a_(21), a_(22), ..., 0;
+      dots.v, dots.v, dots.down, dots.v;
+      a_("n1"), a_("n2"), ..., a_("nn");
+    )
   $
 ] <def:triangular-matrix>
 
@@ -495,15 +495,13 @@ The determinant of a product equals the product of the determinants — see #lin
 
 Let
 
-$
-C = mat(
+$ C = mat(
   0, 1, 0, 0, ..., 0;
   0, 0, 1, 0, ..., 0;
   dots.v, dots.v, dots.v, dots.v, dots.down, dots.v;
   0, 0, 0, 0, ..., 1;
   1, 0, 0, 0, ..., 0;
-)
-$,
+) $,
 
 which is called a *cyclic shift matrix*.
 
@@ -518,20 +516,20 @@ The matrix $C$ performs specific cyclic operations when multiplied by another ma
   A matrix $A$ is called a *circulant matrix* if it can be expressed as
 
   $
-  A = mat(
-    a_0, a_1, a_2, ..., a_(n-1);
-    a_(n-1), a_0, a_1, ..., a_(n-2);
-    a_(n-2), a_(n-1), a_0, ..., a_(n-3);
-    dots.v, dots.v, dots.v, dots.down, dots.v;
-    a_1, a_2, a_3, ..., a_0;
-  ),
+    A = mat(
+      a_0, a_1, a_2, ..., a_(n-1);
+      a_(n-1), a_0, a_1, ..., a_(n-2);
+      a_(n-2), a_(n-1), a_0, ..., a_(n-3);
+      dots.v, dots.v, dots.v, dots.down, dots.v;
+      a_1, a_2, a_3, ..., a_0;
+    ),
   $
 
   where each row is obtained by cyclically shifting the elements of the first row one position
   to the right. It can also be expressed as
 
   $
-  A = a_0 E + a_1 C + ... + a_(n-1) C^(n-1) = sum_(i=0)^(n-1) a_i C^i,
+    A = a_0 E + a_1 C + ... + a_(n-1) C^(n-1) = sum_(i=0)^(n-1) a_i C^i,
   $
 
   where $E$ is the identity matrix and $C$ is the cyclic shift matrix.
@@ -554,13 +552,13 @@ The matrix $C$ performs specific cyclic operations when multiplied by another ma
 Some special nilpotent matrices:
 
 $
-A_n = mat(
-  0, 1, 0, ..., 0;
-  0, 0, 1, ..., 0;
-  dots.v, dots.v, dots.v, dots.down, dots.v;
-  0, 0, 0, ..., 1;
-  0, 0, 0, ..., 0;
-)
+  A_n = mat(
+    0, 1, 0, ..., 0;
+    0, 0, 1, ..., 0;
+    dots.v, dots.v, dots.v, dots.down, dots.v;
+    0, 0, 0, ..., 1;
+    0, 0, 0, ..., 0;
+  )
 $
 
 is a nilpotent matrix with nilpotent index $n$.
@@ -630,13 +628,13 @@ is a nilpotent matrix with nilpotent index $n$.
   For an invertible $n times n$ matrix $A$,
 
   $
-  A "adj"(A) = "adj"(A) A = "det"(A) E,
+    A "adj"(A) = "adj"(A) A = "det"(A) E,
   $
 
   and therefore
 
   $
-  A^(-1) = "adj"(A) / "det"(A).
+    A^(-1) = "adj"(A) / "det"(A).
   $
 ] <thm:inverse-via-adjugate>
 
@@ -675,12 +673,12 @@ is a nilpotent matrix with nilpotent index $n$.
   The *Kronecker product* of $A$ and $B$, denoted $A ⊗ B$, is the block matrix
 
   $
-  A ⊗ B = mat(
-    a_(11) B, a_(12) B, ..., a_(1n) B;
-    a_(21) B, a_(22) B, ..., a_(2n) B;
-    dots.v, dots.v, dots.down, dots.v;
-    a_("m1") B, a_("m2") B, ..., a_("mn") B;
-  )
+    A ⊗ B = mat(
+      a_(11) B, a_(12) B, ..., a_(1n) B;
+      a_(21) B, a_(22) B, ..., a_(2n) B;
+      dots.v, dots.v, dots.down, dots.v;
+      a_("m1") B, a_("m2") B, ..., a_("mn") B;
+    )
   $
 
   of size $m p times n q$.
@@ -694,19 +692,19 @@ is a nilpotent matrix with nilpotent index $n$.
   - If $A$ is invertible, then
 
     $
-    mat(A, B; C, D, delim: "|") = "det"(A) "det"(D - C A^(-1) B).
+      mat(A, B; C, D, delim: "|") = "det"(A) "det"(D - C A^(-1) B).
     $
 
   - If $D$ is invertible, then
 
     $
-    mat(A, B; C, D, delim: "|") = "det"(D) "det"(A - B D^(-1) C).
+      mat(A, B; C, D, delim: "|") = "det"(D) "det"(A - B D^(-1) C).
     $
 
   - If both $A$ and $D$ are invertible, then
 
     $
-    "det"(D) "det"(A - B D^(-1) C) = "det"(A) "det"(D - C A^(-1) B).
+      "det"(D) "det"(A - B D^(-1) C) = "det"(A) "det"(D - C A^(-1) B).
     $
 ] <thm:determinant-reduction-formula>
 
@@ -724,8 +722,8 @@ is a nilpotent matrix with nilpotent index $n$.
   - *1. Addition*:
 
     $
-    abs(upright("rank")(A) - upright("rank")(B)) <= upright("rank")(A + B) <=
-    upright("rank")(A) + upright("rank")(B).
+      abs(upright("rank")(A) - upright("rank")(B)) <= upright("rank")(A + B) <=
+      upright("rank")(A) + upright("rank")(B).
     $
 
     On the basis of the dimension formula,
@@ -771,8 +769,8 @@ calculation rules:
   In this case, the inverse of $A + alpha beta^T$ is
 
   $
-  (A + alpha beta^T)^(-1) = A^(-1) -
-  (A^(-1) alpha beta^T A^(-1)) / (1 + beta^T A^(-1) alpha).
+    (A + alpha beta^T)^(-1) = A^(-1) -
+    (A^(-1) alpha beta^T A^(-1)) / (1 + beta^T A^(-1) alpha).
   $
 
   Here $alpha beta^T$ is the outer product of $alpha$ and $beta$.
@@ -789,14 +787,14 @@ calculation rules:
   Sherman-Morrison formula, known as the *matrix determinant lemma*:
 
   $
-  "det"(A + alpha beta^T) = "det"(A) (1 + beta^T A^(-1) alpha).
+    "det"(A + alpha beta^T) = "det"(A) (1 + beta^T A^(-1) alpha).
   $
 
   The theorem can also be stated in terms of the adjugate of $A$ (writing
   $u = alpha$, $v = beta$) as
 
   $
-  "det"(A + alpha beta^T) = "det"(A) + beta^T "adj"(A) alpha,
+    "det"(A + alpha beta^T) = "det"(A) + beta^T "adj"(A) alpha,
   $
 
   in which case it applies whether or not $A$ is invertible.
@@ -808,7 +806,7 @@ calculation rules:
   $C^(-1) + V^T A^(-1) U$ is invertible. In this case, the inverse of $A + U C V^T$ is
 
   $
-  (A + U C V^T)^(-1) = A^(-1) - A^(-1) U (C^(-1) + V^T A^(-1) U)^(-1) V^T A^(-1).
+    (A + U C V^T)^(-1) = A^(-1) - A^(-1) U (C^(-1) + V^T A^(-1) U)^(-1) V^T A^(-1).
   $
 ] <thm:woodbury-identity>
 
@@ -821,7 +819,7 @@ Without loss of generality, let $A = E_n$ and $C = E_k$. Then the Woodbury ident
 to
 
 $
-(E_n + U V^T)^(-1) = E_n - U (E_k + V^T U)^(-1) V^T.
+  (E_n + U V^T)^(-1) = E_n - U (E_k + V^T U)^(-1) V^T.
 $
 
 This form is particularly useful in applications involving low-rank updates to identity matrices.
@@ -840,12 +838,12 @@ elementary transformations and rank theory.
   written as
 
   $
-  cases(
-    a_(11) x_1 + a_(12) x_2 + ... + a_(1n) x_n = b_1,
-    a_(21) x_1 + a_(22) x_2 + ... + a_(2n) x_n = b_2,
-    dots.v,
-    a_("m1") x_1 + a_("m2") x_2 + ... + a_("mn") x_n = b_m,
-  )
+    cases(
+      a_(11) x_1 + a_(12) x_2 + ... + a_(1n) x_n = b_1,
+      a_(21) x_1 + a_(22) x_2 + ... + a_(2n) x_n = b_2,
+      dots.v,
+      a_("m1") x_1 + a_("m2") x_2 + ... + a_("mn") x_n = b_m,
+    )
   $
 
   where $x_1, ..., x_n$ are the variables, $a_("ij")$ are the coefficients, and $b_i$ are the
@@ -880,7 +878,7 @@ echelon form is reached.
   *Gauss-Jordan algorithm*: For a linear system $A x = b$, form the augmented matrix $(A | b)$
   and apply elementary row operations until the coefficient part is in reduced row echelon form.
   The solution falls into exactly one of three cases:
-  - If a row has the form $0 ... 0 | d$ with $d ≠ 0$, the system is *inconsistent* (no solution);
+  - If a row has the form $0 ... 0 | d$ with $d != 0$, the system is *inconsistent* (no solution);
   - If the number of non-zero rows equals the number of variables, there is a *unique solution*;
   - Otherwise, there are $n - r$ free variables and *infinitely many solutions*, where $r$ is
     the number of non-zero rows (i.e., the rank of $A$).
@@ -952,20 +950,20 @@ The third property gives a method for finding a maximal linearly independent gro
 (or column) vectors of a matrix; take the column vectors as an example:
 
 1. Transform the matrix into its row echelon form (REF) or reduced row echelon form (RREF)
-   using elementary row operations. For example, for the matrix $(alpha_1, alpha_2, alpha_3,
-   alpha_4, alpha_5)$, its REF is shown below:
+  using elementary row operations. For example, for the matrix $(alpha_1, alpha_2, alpha_3,
+    alpha_4, alpha_5)$, its REF is shown below:
 
-   $
-   mat(
-     a_(11), a_(12), 0, 0, 0;
-     0, 0, a_(23), 0, 0;
-     0, 0, 0, 0, a_(35);
-   )
-   $
+  $
+    mat(
+      a_(11), a_(12), 0, 0, 0;
+      0, 0, a_(23), 0, 0;
+      0, 0, 0, 0, a_(35);
+    )
+  $
 
 2. Identify the leading entries (pivots) of the rows. The columns containing these pivots
-   correspond to a maximal linearly independent group of the column vectors. In the example,
-   $alpha_1, alpha_3, alpha_5$ form a maximal linearly independent group.
+  correspond to a maximal linearly independent group of the column vectors. In the example,
+  $alpha_1, alpha_3, alpha_5$ form a maximal linearly independent group.
 
 == Solution to Linear Systems // 线性方程组的解
 
@@ -988,12 +986,12 @@ solutions* is introduced.
   For the homogeneous system $A x = O$, that is
 
   $
-  cases(
-    a_(11) x_1 + a_(12) x_2 + ... + a_(1n) x_n = 0,
-    a_(21) x_1 + a_(22) x_2 + ... + a_(2n) x_n = 0,
-    dots.v,
-    a_("s1") x_1 + a_("s2") x_2 + ... + a_("sn") x_n = 0,
-  )
+    cases(
+      a_(11) x_1 + a_(12) x_2 + ... + a_(1n) x_n = 0,
+      a_(21) x_1 + a_(22) x_2 + ... + a_(2n) x_n = 0,
+      dots.v,
+      a_("s1") x_1 + a_("s2") x_2 + ... + a_("sn") x_n = 0,
+    )
   $
 
   a set of solutions $eta_1, ..., eta_t$ is called a *fundamental system of solutions* if:
@@ -1015,7 +1013,7 @@ solutions contains exactly $n - upright("rank")(A)$ solutions.
 
 #proof[
   Let $upright("rank")(A) = r$. After row reduction to reduced row echelon form, assume the
-  top-left $r × r$ submatrix is the identity (otherwise permute columns). The system becomes
+  top-left $r times r$ submatrix is the identity (otherwise permute columns). The system becomes
   equivalent to $r$ equations in which $x_1, ..., x_r$ are determined by the free variables
   $x_{r+1}, ..., x_n$. Setting each free variable to $1$ (with all others $0$) yields $n - r$
   solutions. These are linearly independent (by inspection of the trailing $n - r$ coordinates
@@ -1039,7 +1037,7 @@ If $gamma_0$ is a particular solution of $A x = b$, then any solution $gamma$ of
 be expressed as
 
 $
-gamma = gamma_0 + eta,
+  gamma = gamma_0 + eta,
 $
 
 where $eta$ is a solution of $A x = O$. Thus, when $eta$ takes all the solutions of the derived
@@ -1250,7 +1248,7 @@ then these vectors form a basis and $V$ is $n$-dimensional.
   linear combinations
 
   $
-  W = {k_1 alpha_1 + ... + k_s alpha_s : k_1, ..., k_s in F},
+    W = {k_1 alpha_1 + ... + k_s alpha_s : k_1, ..., k_s in F},
   $
 
   is called the *span* of $alpha_1, ..., alpha_s$, denoted
@@ -1279,7 +1277,7 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
   of $V$. Then
 
   $
-  "dim"(V_1) + "dim"(V_2) = "dim"(V_1 + V_2) + "dim"(V_1 inter V_2).
+    "dim"(V_1) + "dim"(V_2) = "dim"(V_1 + V_2) + "dim"(V_1 inter V_2).
   $
 ] <thm:dimension-formula>
 
@@ -1351,7 +1349,7 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
   $V / W$, with the operations
 
   $
-  [alpha] + [beta] = [alpha + beta],   k [alpha] = [k alpha],
+    [alpha] + [beta] = [alpha + beta], k [alpha] = [k alpha],
   $
 
   forms a linear space over $F$, called the *quotient space* of $V$ by $W$.
@@ -1361,7 +1359,7 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
   Let $V$ be a finite-dimensional linear space and $W subset V$ a subspace. Then
 
   $
-  "dim"(V / W) = "dim"(V) - "dim"(W).
+    "dim"(V / W) = "dim"(V) - "dim"(W).
   $
 ] <thm:quotient-dimension>
 
@@ -1382,7 +1380,7 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
   Let $sigma: V -> V'$ be a linear mapping. Then
 
   $
-  V / ker(sigma) ≈ "im"(sigma).
+    V / ker(sigma) ≈ "im"(sigma).
   $
 ] <thm:first-isomorphism-theorem>
 
@@ -1426,7 +1424,7 @@ representations, and special linear transformations.
   $k in F$:
 
   $
-  A(alpha + beta) = A(alpha) + A(beta),   A(k alpha) = k A(alpha).
+    A(alpha + beta) = A(alpha) + A(beta), A(k alpha) = k A(alpha).
   $
 
   If $V = V'$, then $A$ is called a *linear transformation* of $V$.
@@ -1446,7 +1444,7 @@ representations, and special linear transformations.
   ${alpha_1, ..., alpha_n} subset V'$, there exists a unique linear mapping
 
   $
-  A: V -> V',   alpha = sum_(i=1)^n x_i epsilon_i ↝ A(alpha) = sum_(i=1)^n x_i alpha_i
+    A: V -> V', alpha = sum_(i=1)^n x_i epsilon_i ↝ A(alpha) = sum_(i=1)^n x_i alpha_i
   $
 
   such that $A(epsilon_i) = alpha_i$ for $i = 1, ..., n$.
@@ -1475,7 +1473,7 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
 
 #definition(name: "Algebra over a Field")[
   Let $V$ be a linear space over $F$ equipped with an additional binary operation
-  $dot: V × V -> V$. Then $V$ is called an *algebra over $F$* if for all
+  $dot: V times V -> V$. Then $V$ is called an *algebra over $F$* if for all
   $alpha, beta, gamma in V$ and $k, l in F$:
   - *Right distributivity*: $(alpha + beta) dot gamma = alpha dot gamma + beta dot gamma$;
   - *Left distributivity*: $gamma dot (alpha + beta) = gamma dot alpha + gamma dot beta$;
@@ -1495,13 +1493,13 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   The *kernel* of $A$ is
 
   $
-  "ker"(A) = {alpha : alpha in V, A(alpha) = 0},
+    "ker"(A) = {alpha : alpha in V, A(alpha) = 0},
   $
 
   and the *image* of $A$ is
 
   $
-  "im"(A) = {beta : beta = A(alpha), alpha in V, beta in V'},
+    "im"(A) = {beta : beta = A(alpha), alpha in V, beta in V'},
   $
 
   also denoted $A^(-1)(0)$ and $A(V)$ respectively.
@@ -1514,7 +1512,7 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   $A: V -> V'$ a linear mapping. Then
 
   $
-  "dim"("ker"(A)) + "dim"("im"(A)) = "dim"(V).
+    "dim"("ker"(A)) + "dim"("im"(A)) = "dim"(V).
   $
 ] <thm:rank-nullity>
 
@@ -1528,7 +1526,7 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   The *cokernel* of $A$ is the quotient space
 
   $
-  "coker"(A) = V' / "im"(A).
+    "coker"(A) = V' / "im"(A).
   $
 ] <def:cokernel>
 
@@ -1539,13 +1537,13 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   $A in upright("End")(V)$. For $k = 1, 2, 3, ...$, define
 
   $
-  V_k = "ker"(A^k) = {alpha in V : A^k(alpha) = 0},
+    V_k = "ker"(A^k) = {alpha in V : A^k(alpha) = 0},
   $
 
   then the sequence of subspaces
 
   $
-  V_1 ⊆ V_2 ⊆ ... ⊆ V_k ⊆ ...
+    V_1 ⊆ V_2 ⊆ ... ⊆ V_k ⊆ ...
   $
 
   is called the *ascending chain of subspaces* induced by $A$.
@@ -1576,26 +1574,26 @@ Then the image of each basis vector of $V$ under $A$ can be expressed in terms
 of the basis vectors of $V'$:
 
 $
-A(epsilon_i) = sum_(j=1)^m a_("ji") eta_j,   i = 1, ..., n.
+  A(epsilon_i) = sum_(j=1)^m a_("ji") eta_j, i = 1, ..., n.
 $
 
 This can be written in matrix form as
 
 $
-A(epsilon_1, ..., epsilon_n) = (A epsilon_1, ..., A epsilon_n) =
-(eta_1, ..., eta_m) A,
+  A(epsilon_1, ..., epsilon_n) = (A epsilon_1, ..., A epsilon_n) =
+  (eta_1, ..., eta_m) A,
 $
 
 where
 
 $
-A = (a_("ij"))_(m times n) =
-mat(
-  a_("11"), a_("12"), ..., a_("1n");
-  a_("21"), a_("22"), ..., a_("2n");
-  dots.v, dots.v, dots.down, dots.v;
-  a_("m1"), a_("m2"), ..., a_("mn");
-).
+  A = (a_("ij"))_(m times n) =
+  mat(
+    a_("11"), a_("12"), ..., a_("1n");
+    a_("21"), a_("22"), ..., a_("2n");
+    dots.v, dots.v, dots.down, dots.v;
+    a_("m1"), a_("m2"), ..., a_("mn");
+  ).
 $
 
 The matrix $A$ is called the *matrix representation* of the linear mapping $A$
@@ -1614,7 +1612,7 @@ bases of $V$, and let $S$ be the *transition matrix* (change-of-basis matrix) fr
 $B'$ to $B$, i.e.
 
 $
-(epsilon'_1, ..., epsilon'_n) = (epsilon_1, ..., epsilon_n) S.
+  (epsilon'_1, ..., epsilon'_n) = (epsilon_1, ..., epsilon_n) S.
 $
 
 If $alpha = sum_(i=1)^n x_i epsilon_i = sum_(i=1)^n x'_i epsilon'_i$, then the coordinate
@@ -1625,13 +1623,13 @@ If $A$ has matrix representation $A$ under bases $B, B'$ of $V, V'$, and $B$ is 
 to $B_1 = B P$ and $B'$ to $B'_1 = B' Q$, then the new matrix representation is
 
 $
-A' = Q^(-1) A P.
+  A' = Q^(-1) A P.
 $
 
 In particular, if $V = V'$ and the same basis change $P$ is applied to both, then
 
 $
-A' = P^(-1) A P,
+  A' = P^(-1) A P,
 $
 
 i.e. $A$ and $A'$ are *similar* matrices.
@@ -1665,7 +1663,7 @@ $A B = B A = O$.
   The map
 
   $
-  P_U: V -> V,   alpha ↝ alpha_1
+    P_U: V -> V, alpha ↝ alpha_1
   $
 
   is called the *projection* onto $U$ along $W$, which is a linear transformation on $V$.
@@ -1674,10 +1672,10 @@ $A B = B A = O$.
 $P_U$ satisfies and uniquely satisfies:
 
 $
-P_(U)(alpha) = cases(
-  alpha quad & alpha in U,
-  0 quad & alpha in W,
-).
+  P_(U)(alpha) = cases(
+    alpha quad & alpha in U,
+    0 quad & alpha in W,
+  ).
 $
 
 #proposition(name: "Projection and Idempotent")[
@@ -1766,7 +1764,7 @@ polynomials, space decomposition, and necessary and sufficient conditions for di
   If there exists an invertible matrix $P in F^(n times n)$ such that
 
   $
-  B = P^(-1) A P,
+    B = P^(-1) A P,
   $
 
   then $A$ is said to be *similar* to $B$, denoted $A ~ B$, and $B$ is called a
@@ -1777,7 +1775,7 @@ polynomials, space decomposition, and necessary and sufficient conditions for di
   Let $A = (a_("ij"))_(n times n) in F^(n times n)$. The sum of the diagonal elements:
 
   $
-  "tr"(A) = a_("11") + a_("22") + ... + a_("nn"),
+    "tr"(A) = a_("11") + a_("22") + ... + a_("nn"),
   $
 
   is called the *trace* of $A$.
@@ -1830,7 +1828,7 @@ Similarity is an equivalence relation on the set of square matrices of the same 
   a scalar $lambda in F$ such that
 
   $
-  A(xi) = lambda xi.
+    A(xi) = lambda xi.
   $
 
   The scalar $lambda$ is called the *eigenvalue* corresponding to $xi$.
@@ -1853,7 +1851,7 @@ Similarity is an equivalence relation on the set of square matrices of the same 
   The polynomial
 
   $
-  f(lambda) = "det"(lambda E - A)
+    f(lambda) = "det"(lambda E - A)
   $
 
   is called the *eigenpolynomial* (or *characteristic polynomial*) of $A$,
@@ -1875,7 +1873,7 @@ are invariant under similarity.
   Then $f(lambda)$ is a monic polynomial of degree $n$:
 
   $
-  f(lambda) = lambda^n - "tr"(A) lambda^(n-1) + ... + (-1)^n "det"(A),
+    f(lambda) = lambda^n - "tr"(A) lambda^(n-1) + ... + (-1)^n "det"(A),
   $
 
   where the coefficient of $lambda^(n-k)$ ($1 <= k < n$) is $(-1)^k$ times
@@ -1895,8 +1893,8 @@ are invariant under similarity.
   $lambda$ along with the zero vector:
 
   $
-  V_lambda = {alpha : alpha in V, A(alpha) = lambda alpha} =
-  "ker"(A - lambda E),
+    V_lambda = {alpha : alpha in V, A(alpha) = lambda alpha} =
+    "ker"(A - lambda E),
   $
 
   is called the *eigenspace* corresponding to $lambda$, denoted $E_lambda$.
@@ -1916,7 +1914,7 @@ are invariant under similarity.
   and algebraic multiplicities respectively. Then
 
   $
-  1 <= g(lambda) <= a(lambda) <= n.
+    1 <= g(lambda) <= a(lambda) <= n.
   $
 ] <prop:multiplicity-bounds>
 
@@ -1927,14 +1925,14 @@ are invariant under similarity.
   Then all eigenvalues of $A$ lie within the disks
 
   $
-  abs(z - a_("ii")) <= R_i,   1 <= i <= n,
+    abs(z - a_("ii")) <= R_i, 1 <= i <= n,
   $
 
   where $R_i = abs(a_("i1")) + ... + abs(a_(i,i-1)) + abs(a_(i,i+1)) + ... + abs(a_("in"))$.
 ] <thm:gerschgorin-1>
 
 #note[
-  From $A x = lambda x$, let $|x_k| = max_i |x_i|$. The $k$-th equation gives
+  From $A x = lambda x$, let $abs(x_k) = max_i abs(x_i)$. The $k$-th equation gives
   $abs(lambda - a_("kk")) <= sum_(j != k) abs(a_("kj"))$.
 ]
 
@@ -2015,7 +2013,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   then
 
   $
-  "ker"(f(A)) = "ker"(f_1(A)) ⊕ "ker"(f_2(A)) ⊕ ... ⊕ "ker"(f_(s)(A)).
+    "ker"(f(A)) = "ker"(f_1(A)) ⊕ "ker"(f_2(A)) ⊕ ... ⊕ "ker"(f_(s)(A)).
   $
 ] <prop:kernel-decomposition-coprime>
 
@@ -2027,7 +2025,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   $f(lambda) = "det"(lambda E - A)$ be the characteristic polynomial. Then
 
   $
-  f(A) = 0.
+    f(A) = 0.
   $
 ] <thm:hamilton-cayley>
 
@@ -2048,8 +2046,8 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   For an eigenvalue $lambda$ of $A$, the set
 
   $
-  V_lambda^(r) = "ker"((A - lambda E)^r) =
-  {alpha : alpha in V, (A - lambda E)^r(alpha) = 0},
+    V_lambda^(r) = "ker"((A - lambda E)^r) =
+    {alpha : alpha in V, (A - lambda E)^r(alpha) = 0},
   $
 
   is called the *root subspace* (or *generalized eigenspace*) of order $r$
@@ -2069,13 +2067,13 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   If the characteristic polynomial of $A$ factors into linear factors over $F$:
 
   $
-  f(lambda) = (lambda - lambda_1)^(r_1) (lambda - lambda_2)^(r_2) ... (lambda - lambda_k)^(r_k),
+    f(lambda) = (lambda - lambda_1)^(r_1) (lambda - lambda_2)^(r_2) ... (lambda - lambda_k)^(r_k),
   $
 
   then $V$ decomposes as a direct sum of root subspaces:
 
   $
-  V = V_(lambda_1)^(r_1) ⊕ V_(lambda_2)^(r_2) ⊕ ... ⊕ V_(lambda_k)^(r_k).
+    V = V_(lambda_1)^(r_1) ⊕ V_(lambda_2)^(r_2) ⊕ ... ⊕ V_(lambda_k)^(r_k).
   $
 ] <thm:root-space-decomposition>
 
@@ -2084,7 +2082,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   $f(lambda) = (lambda - lambda_1)^(r_1) ... (lambda - lambda_k)^(r_k)$.
 ]
 
-== Diagonalization // 对角化
+== Diagonalization of Matrices // 矩阵的对角化
 
 #lemma(name: "Linear Independence of Eigenvectors")[
   Eigenvectors corresponding to distinct eigenvalues are linearly independent.
@@ -2249,12 +2247,12 @@ and computation method of the Jordan canonical form.
   A matrix of the form
 
   $
-  A(lambda) = mat(
-    a_("11")(lambda), ..., a_("1n")(lambda);
-    a_("21")(lambda), ..., a_("2n")(lambda);
-    dots.v, dots.v, dots.down, dots.v;
-    a_("m1")(lambda), ..., a_("mn")(lambda);
-  ),
+    A(lambda) = mat(
+      a_("11")(lambda), ..., a_("1n")(lambda);
+      a_("21")(lambda), ..., a_("2n")(lambda);
+      dots.v, dots.v, dots.down, dots.v;
+      a_("m1")(lambda), ..., a_("mn")(lambda);
+    ),
   $
 
   where each $a_("ij")(lambda) in F[lambda]$, is called a *polynomial matrix* over $F$.
@@ -2284,15 +2282,15 @@ and computation method of the Jordan canonical form.
   Let $A(lambda)$ be a polynomial matrix of rank $r >= 1$. If $A(lambda)$ is equivalent to
 
   $
-  mat(
-    d_1(lambda), 0, ..., 0;
-    0, d_2(lambda), ..., 0;
-    dots.v, dots.v, dots.down, dots.v;
-    0, 0, ..., d_(r)(lambda), 0, ..., 0;
-    0, 0, ..., 0, 0, ..., 0;
-    dots.v, dots.v, dots.down, dots.v;
-    0, 0, ..., 0, 0, ..., 0;
-  ),
+    mat(
+      d_1(lambda), 0, ..., 0;
+      0, d_2(lambda), ..., 0;
+      dots.v, dots.v, dots.down, dots.v;
+      0, 0, ..., d_(r)(lambda), 0, ..., 0;
+      0, 0, ..., 0, 0, ..., 0;
+      dots.v, dots.v, dots.down, dots.v;
+      0, 0, ..., 0, 0, ..., 0;
+    ),
   $
 
   where $d_1(lambda), ..., d_(r)(lambda)$ are monic polynomials with
@@ -2318,10 +2316,10 @@ and computation method of the Jordan canonical form.
   (where $r = upright("rank")(A(lambda))$). The polynomials
 
   $
-  d_1(lambda) = D_1(lambda), 
-  d_2(lambda) = D_2(lambda) / D_1(lambda), 
-  ..., 
-  d_(r)(lambda) = D_(r)(lambda) / D_(r-1)(lambda)
+    d_1(lambda) = D_1(lambda),
+    d_2(lambda) = D_2(lambda) / D_1(lambda),
+    ...,
+    d_(r)(lambda) = D_(r)(lambda) / D_(r-1)(lambda)
   $
 
   are called the *invariant divisors* of $A(lambda)$.
@@ -2338,13 +2336,13 @@ and computation method of the Jordan canonical form.
   $p(x) = x^n + a_(n-1) x^(n-1) + ... + a_1 x + a_0$ is
 
   $
-  C(p) = mat(
-    0, 0, ..., 0, -a_0;
-    1, 0, ..., 0, -a_1;
-    0, 1, ..., 0, -a_2;
-    dots.v, dots.v, dots.down, dots.v;
-    0, 0, ..., 1, -a_(n-1);
-  ),
+    C(p) = mat(
+      0, 0, ..., 0, -a_0;
+      1, 0, ..., 0, -a_1;
+      0, 1, ..., 0, -a_2;
+      dots.v, dots.v, dots.down, dots.v;
+      0, 0, ..., 1, -a_(n-1);
+    ),
   $
 
   Some authors use $C(p)^T$ instead. The characteristic and minimal polynomials of
@@ -2356,12 +2354,12 @@ and computation method of the Jordan canonical form.
   If there exists a basis of $V$ such that the matrix representation of $A$ is
 
   $
-  F = mat(
-    C(p_1), 0, ..., 0;
-    0, C(p_2), ..., 0;
-    dots.v, dots.v, dots.down, dots.v;
-    0, 0, ..., C(p_s);
-  ),
+    F = mat(
+      C(p_1), 0, ..., 0;
+      0, C(p_2), ..., 0;
+      dots.v, dots.v, dots.down, dots.v;
+      0, 0, ..., C(p_s);
+    ),
   $
 
   where $p_1, ..., p_s$ are monic polynomials with $p_1 | p_2 | ... | p_s$,
@@ -2374,8 +2372,8 @@ and computation method of the Jordan canonical form.
   For $xi != 0$ in $V$, the subspace
 
   $
-  C(A, xi) = "langle"(xi, A(xi), A^2(xi), ...)"rangle"
-  = {f(A)(xi) : f(x) in F[x]}
+    C(A, xi) = "langle"(xi, A(xi), A^2(xi), ...)"rangle"
+    = {f(A)(xi) : f(x) in F[x]}
   $
 
   is the *cyclic subspace* generated by $xi$ under $A$.
@@ -2415,7 +2413,7 @@ and computation method of the Jordan canonical form.
   If the factorization of each into irreducible polynomials over $F$ is
 
   $
-  d_(i)(lambda) = p_("i1")(lambda)^(k_("i1")) p_("i2")(lambda)^(k_("i2")) ... p_("is"_i)(lambda)^(k_("is"_i)),
+    d_(i)(lambda) = p_("i1")(lambda)^(k_("i1")) p_("i2")(lambda)^(k_("i2")) ... p_("is"_i)(lambda)^(k_("is"_i)),
   $
 
   then the polynomials $p_("ij")(lambda)^(k_("ij"))$
@@ -2435,7 +2433,7 @@ and computation method of the Jordan canonical form.
   the Jordan canonical form:
 
   $
-  J = "diag"({J_(r_1)(lambda_1), J_(r_2)(lambda_2), ..., J_(r_s)(lambda_s)}),
+    J = "diag"({J_(r_1)(lambda_1), J_(r_2)(lambda_2), ..., J_(r_s)(lambda_s)}),
   $
 
   where $J_(r_i)(lambda_i)$ is the Jordan block of size $r_i$ for eigenvalue $lambda_i$.
@@ -2451,7 +2449,7 @@ and computation method of the Jordan canonical form.
   subspaces generated by generalized eigenvectors:
 
   $
-  V = C(A - lambda_1 E, xi_1) ⊕ ... ⊕ C(A - lambda_s E, xi_s),
+    V = C(A - lambda_1 E, xi_1) ⊕ ... ⊕ C(A - lambda_s E, xi_s),
   $
 
   where each cyclic subspace corresponds one-to-one to a Jordan block.
@@ -2462,17 +2460,17 @@ and computation method of the Jordan canonical form.
 #note[
   To find the Jordan canonical form:
   1. Compute the characteristic polynomial $f(lambda) = "det"(lambda E - A)$
-     and factor it into irreducible factors.
+    and factor it into irreducible factors.
   2. For each eigenvalue $lambda$, determine the sizes of Jordan blocks from
-     the ranks of $(lambda E - A)^k$.
+    the ranks of $(lambda E - A)^k$.
   3. The sizes of Jordan blocks are determined by the differences
-     $upright("rank")((lambda E - A)^(k-1)) - upright("rank")((lambda E - A)^k)$.
+    $upright("rank")((lambda E - A)^(k-1)) - upright("rank")((lambda E - A)^k)$.
 
   To find the transition matrix $P$:
   1. For each Jordan block, find a *Jordan chain* of generalized eigenvectors.
   2. A Jordan chain of length $r$ for eigenvalue $lambda$ is
-     ${xi_1, xi_2, ..., xi_r}$ satisfying
-     $(A - lambda E) xi_1 = 0$, $(A - lambda E) xi_i = xi_(i-1)$.
+    ${xi_1, xi_2, ..., xi_r}$ satisfying
+    $(A - lambda E) xi_1 = 0$, $(A - lambda E) xi_i = xi_(i-1)$.
   3. The columns of $P$ are the Jordan chains arranged by blocks.
 ]
 
@@ -2515,8 +2513,8 @@ under congruent transformations, and criteria for positive definite quadratic fo
   over $P$:
 
   $
-  f(x_1, ..., x_n) = sum_(i=1)^n sum_(j=1)^n a_("ij") x_i x_j
-  = X^T A X,
+    f(x_1, ..., x_n) = sum_(i=1)^n sum_(j=1)^n a_("ij") x_i x_j
+    = X^T A X,
   $
 
   where $X = (x_1, ..., x_n)^T$ and $A = (a_("ij"))_(n times n)$ with $a_("ij") = a_("ji")$,
@@ -2536,8 +2534,8 @@ under congruent transformations, and criteria for positive definite quadratic fo
 
 #note[
   The main methods for reducing a quadratic form to standard form:
-  - *Completing the square* (配方法): eliminate cross terms by completing the square.
-  - *Elementary transformation method* (初等变换法): apply simultaneous row and column
+  - *Completing the square*: eliminate cross terms by completing the square.
+  - *Elementary transformation method*: apply simultaneous row and column
     operations to $A$ until it becomes diagonal.
 ]
 
@@ -2547,7 +2545,7 @@ under congruent transformations, and criteria for positive definite quadratic fo
   Any complex quadratic form $f$ is congruent to the canonical form
 
   $
-  f = y_1^2 + y_2^2 + ... + y_r^2,
+    f = y_1^2 + y_2^2 + ... + y_r^2,
   $
 
   where $r$ is the rank of $A$.
@@ -2557,7 +2555,7 @@ under congruent transformations, and criteria for positive definite quadratic fo
   Any real quadratic form $f$ is congruent to the canonical form
 
   $
-  f = y_1^2 + ... + y_p^2 - y_(p+1)^2 - ... - y_(p+q)^2,
+    f = y_1^2 + ... + y_p^2 - y_(p+1)^2 - ... - y_(p+q)^2,
   $
 
   where $p$ is the *positive inertia index* and $q$ is the *negative inertia index*,
@@ -2570,7 +2568,7 @@ under congruent transformations, and criteria for positive definite quadratic fo
 ]
 
 #note[
-  The difference $s = p - q$ is called the *signature* (符号差).
+  The difference $s = p - q$ is called the *signature*.
   The canonical form is also written as
   $y_1^2 + ... + y_p^2 - y_(p+1)^2 - ... - y_r^2$ with zeros appended to reach $n$ variables.
 ]
@@ -2588,7 +2586,7 @@ under congruent transformations, and criteria for positive definite quadratic fo
   - *positive semi-definite* if $f >= 0$ for all $X$;
   - *negative definite* if $f < 0$ for all $X != 0$;
   - *negative semi-definite* if $f <= 0$ for all $X$;
-  - *indefinite* (不定) if $f$ takes both positive and negative values.
+  - *indefinite* if $f$ takes both positive and negative values.
 ] <def:other-definiteness-types>
 
 #theorem(name: "Sufficient and Necessary Conditions for Positive Definiteness")[
@@ -2615,7 +2613,7 @@ and normal transformations.
 == Bilinear Forms // 双线性型
 
 #definition(name: "Bilinear Form")[
-  Let $V$ be a linear space over $F$. A function $f: V × V -> F$ is called a
+  Let $V$ be a linear space over $F$. A function $f: V times V -> F$ is called a
   *bilinear form* on $V$ if:
   - For any fixed $beta in V$, $f(·, beta): V -> F$ defined by $f(alpha, beta)$
     is a linear function on $V$;
@@ -2628,14 +2626,14 @@ and normal transformations.
   i.e. $B = (f(epsilon_i, epsilon_j))$, then $f(alpha, beta) = X^T B Y$ where
   $X, Y$ are the coordinate vectors of $alpha, beta$. A bilinear form is *symmetric*
   if $f(alpha, beta) = f(beta, alpha)$ for all $alpha, beta$. Every quadratic form
-  arises from a symmetric bilinear form (over fields of characteristic $\ != 2$).
+  arises from a symmetric bilinear form (over fields of characteristic != 2).
 ]
 
 == Real Inner Product Spaces // 实内积空间
 
 #definition(name: "Real Inner Product Space")[
   A *real inner product space* is a real linear space $V$ equipped with a function
-  $(·, ·): V × V -> bb(R)$ satisfying:
+  $(·, ·): V times V -> bb(R)$ satisfying:
   - *Positivity*: $(alpha, alpha) >= 0$ for all $alpha in V$, with equality iff $alpha = 0$;
   - *Symmetry*: $(alpha, beta) = (beta, alpha)$ for all $alpha, beta in V$;
   - *Linearity in the first argument*:
@@ -2655,7 +2653,7 @@ and normal transformations.
   For any vectors $alpha, beta$ in an inner product space,
 
   $
-  abs((alpha, beta)) <= ||alpha|| ||beta||,
+    abs((alpha, beta)) <= ||alpha|| ||beta||,
   $
 
   with equality if and only if $alpha$ and $beta$ are linearly dependent.
@@ -2723,8 +2721,8 @@ and normal transformations.
   there exists an orthonormal basis ${eta_1, ..., eta_n}$ such that
 
   $
-  "langle"(epsilon_1, ..., epsilon_k)"rangle" = "langle"(eta_1, ..., eta_k)"rangle",
-   k = 1, 2, ..., n.
+    "langle"(epsilon_1, ..., epsilon_k)"rangle" = "langle"(eta_1, ..., eta_k)"rangle",
+    k = 1, 2, ..., n.
   $
 ] <thm:gram-schmidt>
 
@@ -2776,7 +2774,7 @@ and normal transformations.
   Let $W$ be a subspace of a real inner product space $V$. The set
 
   $
-  W^⊥ = {alpha in V : (alpha, beta) = 0, ∀ beta in W}
+    W^⊥ = {alpha in V : (alpha, beta) = 0, forall beta in W}
   $
 
   is the *orthogonal complement* of $W$, which is itself a subspace of $V$.
@@ -2788,8 +2786,8 @@ and normal transformations.
   - The orthogonal complement $W^⊥$ of $W$ exists and is unique in Euclidean space $V$;
   - $W ⊕ W^⊥ = V$;
   - $(W^⊥)^⊥ = W$;
-  - $(V_1 + V_2)^⊥ = V_1^⊥ ∩ V_2^⊥$ and $(V_1 ∩ V_2)^⊥ = V_1^⊥ + V_2^⊥$;
-  - If $W_1 ⊂ W_2$, then $W_1^⊥ ⊃ W_2^⊥$.
+  - $(V_1 + V_2)^⊥ = V_1^⊥ inter V_2^⊥$ and $(V_1 inter V_2)^⊥ = V_1^⊥ + V_2^⊥$;
+  - If $W_1 subset W_2$, then $W_1^⊥ supset W_2^⊥$.
 ] <prop:orthogonal-complement-properties>
 
 #definition(name: "Orthogonal Projection")[
@@ -2808,8 +2806,10 @@ and normal transformations.
     the best approximation element;
   - "proj"_(W)(alpha) = sum_(i=1)^n (alpha, epsilon_i) / (epsilon_i, epsilon_i) epsilon_i
     for an orthogonal basis ${epsilon_1, ..., epsilon_n}$ of $W$;
-  - $("lVert"(alpha - "proj"_(W)(alpha)) "rVert")^2 = ("lVert"(alpha) "rVert")^2 - ("lVert"("proj"_(W)(alpha)) "rVert")^2$
-    $= ("lVert"(alpha) "rVert")^2 - sum_(i=1)^n c_i^2 ("lVert"(epsilon_i) "rVert")^2$.
+  - $
+    ||alpha - "proj"_(W)(alpha)||^2 = ||alpha||^2 - ||"proj"_(W)(alpha)||^2
+    = ||alpha||^2 - sum_(i=1)^n c_i^2 ||epsilon_i||^2.
+  $
 ] <prop:orthogonal-projection-properties>
 
 === Least Squares Method // 最小二乘法
@@ -2817,7 +2817,7 @@ and normal transformations.
 #theorem(name: "Shortest Distance Theorem")[
   Let $U$ be a subspace of a real inner product space $V$ with $V = U ⊕ U^⊥$.
   For $alpha in V$ and $alpha_1 in U$, $alpha_1$ is the orthogonal projection of $alpha$
-  onto $U$ if and only if $d(alpha, alpha_1) ≤ d(alpha, gamma)$ for all $gamma in U$.
+  onto $U$ if and only if $d(alpha, alpha_1) <= d(alpha, gamma)$ for all $gamma in U$.
 ] <thm:shortest-distance>
 
 #note[
@@ -2852,7 +2852,7 @@ and normal transformations.
 ] <lem:orthogonal-transformation-properties>
 
 #note[
-  The determinant of an orthogonal transformation is $\pm 1$. Those with determinant $1$
+  The determinant of an orthogonal transformation is $±1$. Those with determinant $1$
   are called *first-kind* (rotations); those with determinant $-1$ are called *second-kind*
   (reflections or improper rotations).
 ]
@@ -2860,9 +2860,7 @@ and normal transformations.
 #theorem(name: "Orthogonal Diagonalization of Real Orthogonal Matrices")[
   Let $A$ be an orthogonal transformation on an $n$-dimensional Euclidean space $V$.
   Then there exists an orthonormal basis of $V$ such that the matrix of $A$ has the form
-  $
-  "diag"({lambda_1, ..., lambda_r, R(theta_1), ..., R(theta_m)})
-  $,
+  $ "diag"({lambda_1, ..., lambda_r, R(theta_1), ..., R(theta_m)}) $,
   where $lambda_i = ±1$ for $i = 1, ..., r$ and $R(theta) = mat(cos(theta), -sin(theta); sin(theta), cos(theta))$
   for $j = 1, ..., m$, with $r + 2m = n$.
 ] <thm:orthogonal-diagonalization>
@@ -2923,9 +2921,7 @@ and normal transformations.
 #theorem(name: "Orthogonal Diagonalization of Skew-Symmetric Matrices")[
   Let $A$ be a skew-symmetric transformation on an $n$-dimensional Euclidean space $V$.
   Then there exists an orthonormal basis of $V$ such that the matrix of $A$ has the form
-  $
-  "diag"({mat(0, a_1; -a_1, 0), ..., mat(0, a_s; -a_s, 0), 0, ..., 0})
-  $,
+  $ "diag"({mat(0, a_1; -a_1, 0), ..., mat(0, a_s; -a_s, 0), 0, ..., 0}) $,
   where $a_i != 0$ for $i = 1, ..., s$ and $2s + t = n$ ($t$ is the number of zero
   blocks). In particular, the eigenvalues of $A$ are $0$ or pure imaginary numbers.
 ] <thm:skew-symmetric-diagonalization>
@@ -2936,7 +2932,7 @@ and normal transformations.
 
 #definition(name: "Complex Inner Product Space")[
   A *complex inner product space* is a complex linear space $V$ equipped with
-  $(·, ·): V × V -> bb(C)$ satisfying:
+  $(·, ·): V times V -> bb(C)$ satisfying:
   - *Positivity*: $(alpha, alpha) >= 0$, equality iff $alpha = 0$;
   - *"conjugate" symmetry (Hermitian)*: $(alpha, beta) = "conjugate"((beta, alpha))$;
   - *Linearity in the first argument*:
@@ -2993,8 +2989,8 @@ and normal transformations.
 == Symplectic Spaces // 辛空间
 
 #definition(name: "Symplectic Inner Product")[
-  Let $V$ be a linear space over a field $F$ of characteristic $\ != 2$.
-  A bilinear form $f: V × V -> F$ is *alternating* if $f(alpha, alpha) = 0$
+  Let $V$ be a linear space over a field $F$ of characteristic != 2.
+  A bilinear form $f: V times V -> F$ is *alternating* if $f(alpha, alpha) = 0$
   for all $alpha in V$. A non-degenerate alternating bilinear form is called
   a *symplectic inner product*.
 ] <def:symplectic-inner-product>
@@ -3115,6 +3111,8 @@ and normal transformations.
 - *#link(<def:inversion-number>)[Inversion Number]*
 - *#link(<prop:invertibility-conditions>)[Invertibility Conditions]*
 - *#link(<thm:invertibility-equivalent-propositions>)[Invertibility Equivalent Propositions]*
+- *#link(<def:isometry>)[Isometry]*
+- *#link(<thm:isometry-theorem>)[Isometry Theorem]*
 - *#link(<def:isomorphism>)[Isomorphism]*
 - *#link(<prop:isomorphism-properties>)[Isomorphism Properties]*
 - *#link(<thm:isomorphism-theorem>)[Isomorphism Theorem]*
@@ -3161,9 +3159,12 @@ and normal transformations.
 - *#link(<prop:operations-of-rank>)[Operations Of Rank]*
 - *#link(<def:orthogonal-complement>)[Orthogonal Complement]*
 - *#link(<prop:orthogonal-complement-properties>)[Orthogonal Complement Properties]*
+- *#link(<thm:orthogonal-diagonalization>)[Orthogonal Diagonalization]*
 - *#link(<def:orthogonal-matrix>)[Orthogonal Matrix]*
 - *#link(<def:orthogonal-projection>)[Orthogonal Projection]*
 - *#link(<prop:orthogonal-projection-properties>)[Orthogonal Projection Properties]*
+- *#link(<def:orthogonal-transformation>)[Orthogonal Transformation]*
+- *#link(<lem:orthogonal-transformation-properties>)[Orthogonal Transformation Properties]*
 - *#link(<def:orthonormal-basis>)[Orthonormal Basis]*
 - *#link(<prop:orthonormal-basis-properties>)[Orthonormal Basis Properties]*
 - *#link(<thm:orthonormal-transition>)[Orthonormal Transition]*
@@ -3197,7 +3198,11 @@ and normal transformations.
 
 == S
 - *#link(<thm:sherman-morrison>)[Sherman Morrison]*
+- *#link(<thm:shortest-distance>)[Shortest Distance]*
 - *#link(<def:sign-of-permutation>)[Sign Of Permutation]*
+- *#link(<thm:skew-symmetric-diagonalization>)[Skew Symmetric Diagonalization]*
+- *#link(<lem:skew-symmetric-properties>)[Skew Symmetric Properties]*
+- *#link(<def:skew-symmetric-transformation>)[Skew Symmetric Transformation]*
 - *#link(<def:similar-matrices>)[Similar Matrices]*
 - *#link(<prop:similarity-arithmetic>)[Similarity Arithmetic]*
 - *#link(<def:smith-normal-form>)[Smith Normal Form]*
