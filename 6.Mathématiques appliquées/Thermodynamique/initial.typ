@@ -233,14 +233,15 @@ classical theory of heat capacities.
 
   For the ideal-gas models used below:
 
-  - a *monatomic* molecule has $f = 3$ (translation only);
-  - a *rigid diatomic* molecule has $f = 5$ (three translations plus
-    two rotations — the axis along the bond carries no moment of
-    inertia);
-  - a *non-rigid diatomic* molecule has $f = 7$ (adding one
-    vibrational coordinate, which contributes both a kinetic and a
-    potential quadratic term, hence two quadratic degrees).
+  #tex-table(
+    ("Molecule", "Translational", "Rotational", "Vibrational", [$f$]),
+    ("monatomic", [$3$], [$0$], [$0$], [$3$]),
+    ("rigid diatomic", [$3$], [$2$], [$0$], [$5$]),
+    ("non-rigid diatomic", [$3$], [$2$], [$2$], [$7$]),
+  )
 ] <def:degrees-of-freedom>
+
+Two details of the table deserve comment. The rotation about the bond axis of a diatomic molecule is omitted because the two atoms are points on that axis, carrying no moment of inertia; and the vibrational entry counts quadratic terms rather than coordinates — a single vibrational mode contributes one kinetic and one potential quadratic term, hence two degrees.
 
 #theorem(name: "Equipartition Theorem")[
   Let the energy of a classical system be
