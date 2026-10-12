@@ -62,6 +62,34 @@ The determinant is a scalar value assigned to a square matrix. It serves both as
 criterion for matrix invertibility and as the foundation for Cramer's rule and eigenvalue theory.
 This chapter defines the determinant starting from the inversion number of permutations,
 and gradually develops its properties, expansion rules, and computation of special determinants.
+As with sets, the matrix is taken here as an elementary, self-evident object; the few
+matrix notions used in this chapter are recalled below.
+
+== Matrices // 矩阵
+
+A *matrix* is a rectangular array of elements of the number field $P$, written
+$A = (a_("ij"))$, where $a_("ij") in P$ is the entry in row $i$ and column $j$; an
+$m times n$ matrix has $m$ rows and $n$ columns, and is *square* of order $n$ when
+$m = n$. The notation $M_(m times n)(P)$ fixed in the Preliminaries is assumed, together
+with the entry-wise operations of addition and scalar multiplication.
+
+The *transpose* of $A = (a_("ij"))$ is the matrix $A^T = (a_("ji"))$ obtained by
+swapping rows and columns. The *product* of an $m times n$ matrix $A$ and an $n times p$
+matrix $B$ is the $m times p$ matrix $A B = (c_("ij"))$ with
+
+$
+  c_("ij") = sum_(k=1)^n a_("ik") b_("kj").
+$
+
+The *identity matrix* $E$ is the square matrix with diagonal entries $1$ and all other
+entries $0$; whenever the products are defined it satisfies $A E = A$ and $E A = A$.
+
+A square matrix $A$ is *invertible* (or *non-singular*) if some square matrix $B$
+satisfies $A B = B A = E$; then $B$ is unique and is written $A^(-1)$, and $A$ is called
+*singular* otherwise. An *elementary matrix* is the matrix obtained by performing a
+single elementary row (or column) operation on $E$, and every invertible matrix is a
+product of elementary matrices. These operations are stated here only to the extent
+needed for the determinant; their full treatment is deferred to the Matrices chapter.
 
 == Permutations // 排列
 
