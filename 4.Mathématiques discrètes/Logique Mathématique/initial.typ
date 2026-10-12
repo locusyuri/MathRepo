@@ -18,14 +18,14 @@
   subtitle: "A notebook for mathematical logic",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v1.1.0",
+  version: "v1.2.0",
   extra-info: "This is a notebook for mathematical logic.",
 )
 
 #make-outline(depth: 2, title: "Contents")
 
 // ==========================================================================
-// 目录蓝图 (Planned Outline) — v1.1.0
+// 目录蓝图 (Planned Outline) — v1.2.0
 // 主线：语言基础 → 主体理论 → 元数学 → 扩展（四段式）
 // 参照 Analyse Mathématique：每个 Part 容纳 2–4 章实质内容
 // 状态标记：[已写] 已完成 · [计划] 待写作 · [可选] 按需取舍
@@ -121,11 +121,11 @@
 //   非经典逻辑为未来 Non-Classical Logic 笔记搭桥（桥梁模式）。
 // 对应教材：Hedman Ch 6–7（扩展主题）
 
-// --- Chapter 10: Second-Order Logic（二阶逻辑）--- [升级：原占位 Part]
-//   Section 10.1: Syntax and Semantics（二阶语法与语义）
-//   Section 10.2: Standard vs. Henkin Semantics（标准语义 vs Henkin 语义）
-//   Section 10.3: Failure of Compactness and Completeness（紧致性与完全性失效）
-//   Section 10.4: Categoricity of Second-Order Arithmetic（二阶算术的范畴性）[可选]
+// --- Chapter 10: Second-Order Logic（二阶逻辑）--- [已写，v1.2.0]
+//   Section 10.1: Syntax and Semantics（二阶语法与语义；二阶可定义性示例）
+//   Section 10.2: Standard vs. Henkin Semantics（标准语义 vs Henkin 语义；Henkin 完全性）
+//   Section 10.3: Failure of Compactness and Completeness（紧致性与完全性失效；兑现 L2015）
+//   Section 10.4: Categoricity of Second-Order Arithmetic（二阶算术的范畴性；兑现 L2549）
 
 // --- Chapter 11: Non-Classical Logics: An Introduction（非经典逻辑导论）--- [可选]
 //   Section 11.1: Intuitionistic Logic and Kripke Semantics（直觉主义逻辑与 Kripke 语义）
@@ -150,8 +150,9 @@
 //   Ch 8 可计算性与不可判定性（v1.0.0）、Ch 9 Gödel 不完备定理（v1.1.0：
 //   算术化/对角化/两不完备定理/Tarski）均已写就——Part III 收官。
 //
-// Part IV（扩展，Ch 10–11）：二阶逻辑（标准语义下无完全性，降级为扩展章）
-//   与非经典逻辑导论（为未来笔记搭桥）。
+// Part IV（扩展，Ch 10–11）：二阶逻辑（Ch 10 已写 v1.2.0：标准语义下无完全性/
+//   紧致性/L-S，Henkin 语义恢复元定理，PA₂ 范畴性）与非经典逻辑导论
+//   （Ch 11 待写：直觉主义/Kripke、模态、多值——为未来笔记搭桥）。
 //
 // 教材覆盖：Enderton《A Mathematical Introduction to Logic》全部章节知识点
 //   已纳入；Mendelson 公理化路线与 Hedman 扩展主题取并集。
@@ -3429,14 +3430,334 @@ the liar paradox, formalized.
 
 #part("Extensions")  // 扩展：二阶逻辑与非经典逻辑
 
-= Extensions  // 扩展
+= Second-Order Logic  // 二阶逻辑
+
+Chapter 9 located the limits of first-order logic: every consistent
+r.e. extension of arithmetic is incomplete, and truth is not
+definable. This chapter asks whether a *stronger* logic can escape
+those limits. It can — at a price. Allowing quantifiers over
+relations and functions (*second-order logic* with *standard
+semantics*) pins down the structure of arithmetic completely, but the
+metatheorems of Part II collapse: compactness, completeness, and the
+Löwenheim–Skolem theorems all fail. The trade is best read as a
+single moral: the model class and the metatheory are bought and sold
+together.
+
+== Syntax and Semantics // 二阶语法与语义
+
+Second-order logic adds to a first-order signature (#link(<def:signature>)[Definition 3.1])
+new *variables* ranging over relations and functions, with their own
+quantifiers.
+
+#definition(name: "Second-Order Language")[
+  Let $L$ be a first-order signature. The *second-order language*
+  $L_2$ adds to the terms and formulas of $L$:
+  - relation variables $X_1^n, X_2^n, dots$ and function variables
+    $F_1^n, F_2^n, dots$ of every arity $n >= 1$;
+  - atomic formulas $X_i^n (t_1, dots, t_n)$ and terms
+    $F_i^n (t_1, dots, t_n)$;
+  - second-order quantifiers: if $phi$ is a formula, so are
+    $
+      forall X_i^n phi, quad exists X_i^n phi,
+      quad forall F_i^n phi, quad exists F_i^n phi.
+    $
+  The notions of free and bound variable extend in the obvious way
+  (variables bound by second-order quantifiers are second-order
+  variables).
+] <def:second-order-language>
+
+#eq[
+  $
+    forall X^n phi, quad exists X^n phi.
+  $
+] <eq:second-order-quantifier>
+
+#definition(name: "Standard Structure and Standard Semantics")[
+  A *standard structure* for $L_2$ is a first-order structure
+  #link(<def:structure>)[$M = (A, dots)$] for the underlying
+  signature $L$. In *standard semantics*, a relation variable $X^n$
+  ranges over *all* subsets of $A^n$, a function variable $F^n$
+  over *all* functions $A^n -> A$, and the satisfaction relation
+  (#link(<def:satisfaction>)[Definition 4.2]) is extended by
+  $
+    M models forall X^n phi
+    <=> M models phi [X^n / R]
+    " for every " R subset A^n,
+  $
+  and similarly for $exists$, $F^n$, and all functions $A^n -> A$.
+] <def:standard-structure>
+
+#proposition(name: "Second-Order Definability")[
+  A property is *second-order definable* in the standard semantics
+  if it is expressible by a second-order formula. Second-order
+  quantifiers can scan all subsets, so structural properties that
+  first-order logic cannot express become definable: finiteness,
+  well-ordering, completeness, and the natural numbers themselves.
+] <prop:second-order-definability-basics>
+
+#example(name: "Second-Order Definitions")[
+  - *Infinity.* A set $A$ is infinite iff it admits an injective
+    non-surjective self-map:
+    $
+      exists F forall x forall y (F x = F y -> x = y)
+      and exists z forall x (F x != z).
+    $
+    No first-order sentence has this property in every model
+    (#link(<prop:finitude-not-axiomatizable>)[Proposition 6.1]).
+  - *Finite.* $A$ is finite iff the negation of the above holds.
+  - *Well-ordering.* A linear order is a well-order iff every
+    nonempty subset has a least element:
+    $
+      forall X (exists x X x -> exists x (X x and forall y (X y -> x <= y))).
+    $
+  - *Completeness of the reals.* The Dedekind completeness axiom —
+    every nonempty bounded subset has a least upper bound — is a
+    single second-order sentence; it is the content of
+    #link(<ex:connectedness-not-axiomatizable>)[Example 6.3] that no
+    first-order theory can express it.
+] <ex:second-order-definable-examples>
 
 #note[
-  Placeholder: Beyond classical logic. Planned as two chapters:
-  second-order logic (Ch 10: standard vs. Henkin semantics, failure of
-  compactness and completeness) and an introduction to non-classical
-  logics (Ch 11: intuitionistic logic, modal logic). It will be
-  developed in a subsequent revision.
+  The price of this expressive power is already visible in §10.4: a
+  second-order sentence that *pins down* $bb(N)$ also encodes all
+  true arithmetic, and by #link(<thm:tarski-undefinability>)[Tarski's
+  theorem] no r.e. set of formulas can capture that. Expressiveness
+  and metatheory move inversely.
+]
+
+== Standard vs. Henkin Semantics // 标准语义 vs Henkin 语义
+
+The failures of §10.3 all stem from one feature of standard
+semantics: the second-order quantifiers range over the *full* power
+set, which is too rich to be controlled by syntax. Henkin's remedy is
+to treat the second-order objects as ordinary elements of a
+first-order structure — to *first-orderize* the logic.
+
+#definition(name: "Henkin Structure")[
+  A *Henkin structure* for $L_2$ is a first-order structure
+  $M = (A, S, I)$ where $S$ is a nonempty set of relations and
+  functions on $A$ (the *second-order domain*), and the
+  second-order quantifiers range only over $S$:
+  $
+    M models forall X^n phi
+    <=> M models phi [X^n / R]
+    " for every " R in S.
+  $
+  A Henkin structure is *full* if $S$ contains all relations and
+  functions on $A$ — exactly the standard case.
+] <def:henkin-structure>
+
+#theorem(name: "Henkin Completeness for Second-Order Logic")[
+  Second-order logic with Henkin semantics is complete: a sentence
+  $phi$ is valid in all Henkin structures iff it is provable in a
+  natural second-order Hilbert system extending that of Ch 5.
+] <thm:henkin-completeness-so>
+
+#proof[
+  *Outline.* The Henkin structure is an ordinary first-order
+  structure in a two-sorted signature: one sort for individuals, one
+  sort for the elements of $S$, with an evaluation relation
+  $\in$ linking them. The second-order quantifiers become first-order
+  quantifiers over the second sort, so a derivation in the
+  second-order Hilbert system is a derivation in a first-order
+  system, and the Henkin proof of Ch 5
+  (#link(<thm:henkin-completeness>)[Theorem 5.1]) applies verbatim:
+  Lindembaum, Henkin constants, the term model, the truth lemma. The
+  details are exactly those of Ch 5 with the second sort carried
+  along.
+]
+
+#note[
+  The two semantics are therefore two different logics wearing the
+  same syntax. With Henkin semantics the classical metatheory of
+  Part II survives intact (compactness, L-S, completeness all hold),
+  but categoricity is lost: a Henkin structure can cut $S$ down
+  arbitrarily, so $"PA"_2$ admits many non-isomorphic Henkin models.
+  With standard semantics the metatheory collapses but the structures
+  are pinned down (§10.4). This is the whole trade, in miniature.
+  Figure 10.1 summarizes the three logics side by side.
+]
+
+#figure(
+  image("img/second-order-vs-first-order.svg", width: 82%),
+  caption: [
+    Three logics, five properties. First-order logic and Henkin
+    second-order logic share the classical metatheory; standard
+    second-order logic trades compactness, completeness, and
+    Löwenheim–Skolem for categoricity of $"PA"_2$.
+  ],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:second-order-vs-first-order>
+
+== Failure of Compactness and Completeness // 紧致性与完全性失效
+
+With standard semantics, the three pillars of the first-order
+metatheory — compactness, completeness, and the Löwenheim–Skolem
+theorems — all fail. Each failure is a facet of the same fact: the
+full power set cannot be controlled by finitary syntax.
+
+#theorem(name: "Failure of Compactness")[
+  Second-order logic with standard semantics is not compact: there
+  is a set $Sigma$ of second-order sentences such that every finite
+  subset of $Sigma$ has a model but $Sigma$ itself has none.
+] <thm:compactness-fails-so>
+
+#proof[
+  Let $"Inf"$ be the second-order sentence of
+  #link(<ex:second-order-definable-examples>)[Example 10.1] asserting
+  that the domain is infinite, and let $sigma_n$ be the first-order
+  sentence "there are at least $n$ elements", for $n >= 2$. Put
+  $
+    Sigma = {not "Inf"} union {sigma_n : n >= 2}.
+  $
+  Every finite subset of $Sigma$ contains $not "Inf"$ and finitely
+  many $sigma_n$; it is satisfied by any finite model with at least
+  the required number of elements. But $Sigma$ itself has no model: a
+  model of $not "Inf"$ is finite, while a model of all $sigma_n$ is
+  infinite. The compactness theorem of
+  #link(<thm:compactness>)[Ch 6] therefore fails for standard
+  semantics (promised at L2015).
+]
+
+#theorem(name: "Failure of Completeness")[
+  The set of valid second-order sentences (standard semantics) is
+  not recursively enumerable: second-order logic has no complete,
+  effective proof system.
+] <thm:completeness-fails-so>
+
+#proof[
+  By #link(<thm:categoricity-so-arithmetic>)[the categoricity of
+  second-order arithmetic] (§10.4), every standard model of $"PA"_2$
+  is isomorphic to $bb(N)$, so for every arithmetic sentence $phi$,
+  $
+    "PA"_2 models phi <=> bb(N) models phi,
+  $
+  and, by #link(<thm:deduction-theorem-fol>)[the deduction theorem],
+  $phi$ is a valid consequence of $"PA"_2$ iff it is true in
+  $bb(N)$. If validity were recursively enumerable, the set of true
+  arithmetic sentences would be recursively enumerable, hence
+  $Sigma_1$-definable, contradicting
+  #link(<thm:tarski-undefinability>)[Tarski's undefinability theorem]
+  (Ch 9). So the set of valid second-order sentences is not
+  recursively enumerable, and no effective proof system is complete
+  for it.
+]
+
+#theorem(name: "Failure of Löwenheim–Skolem")[
+  The downward and upward Löwenheim–Skolem theorems
+  (#link(<thm:downward-ls>)[Theorem 6.2],
+  #link(<thm:upward-ls>)[Theorem 6.3]) fail for second-order logic
+  with standard semantics: $"PA"_2$ has a countable model but no
+  uncountable one.
+] <thm:ls-fails-so>
+
+#proof[
+  $bb(N)$ is a countable model of $"PA"_2$. By
+  #link(<thm:categoricity-so-arithmetic>)[the categoricity theorem]
+  (§10.4) every model of $"PA"_2$ is isomorphic to $bb(N)$, hence
+  countable — so no uncountable model exists, and neither the
+  downward nor the upward theorem can hold.
+]
+
+#corollary(name: "Consequence is Not Enumerable")[
+  The consequence relation of second-order logic (standard
+  semantics) is not recursively enumerable, in sharp contrast to
+  first-order logic, where validity is r.e.
+  (#link(<prop:r-e-closed>)[Proposition 8.1]).
+] <cor:consequence-not-enumerable>
+
+== Categoricity of Second-Order Arithmetic // 二阶算术的范畴性
+
+The failures of §10.3 are the price of a success: second-order
+arithmetic pins down $bb(N)$ exactly. The induction axiom, which in
+first-order logic is an infinite scheme, becomes a single sentence,
+and it is strong enough to make every model isomorphic.
+
+#definition(name: "Second-Order Arithmetic")[
+  *Second-order arithmetic* $"PA"_2$ is the second-order theory in
+  the language of arithmetic whose axioms are the Peano axioms of
+  #link(<ex:language-of-arithmetic>)[Example 3.1] — successor,
+  addition, multiplication — together with the *second-order
+  induction axiom*
+  $
+    forall X [(X (0) and forall x (X x -> X (S x))) -> forall x X x].
+  $
+] <def:second-order-arithmetic>
+
+#eq[
+  $
+    forall X [(X (0) and forall x (X x -> X (S x))) -> forall x X x].
+  $
+] <eq:pa2-axioms>
+
+#theorem(name: "Categoricity of Second-Order Arithmetic")[
+  All standard models of $"PA"_2$ are isomorphic; in particular,
+  every model of $"PA"_2$ is isomorphic to $bb(N)$.
+] <thm:categoricity-so-arithmetic>
+
+#proof[
+  *Step 1: the map.* Let $M$ and $N$ be standard models of $"PA"_2$.
+  Define the relation $f subset M times N$ by the recursive clauses
+  $f (0^M) = 0^N$ and $f (S^M x) = S^N f (x)$.
+
+  *Step 2: $f$ is defined on all of $M$.* Let
+  $X = {x in M : f (x) " is defined"}$. Then $0^M in X$, and
+  $x in X$ implies $S^M x in X$; by the second-order induction axiom
+  applied in $M$, $X = M$.
+
+  *Step 3: $f$ is injective.* Let
+  $Y = {x in M : f " is injective on " {z : z <=_M x}}$ — a
+  second-order definable set. $0^M in Y$ (no earlier elements), and
+  if $x in Y$ then $S^M x in Y$: two elements $u, v <=_M S^M x$
+  with $f (u) = f (v)$ lie in ${z : z <=_M x}$ unless one is
+  $S^M x$, in which case $u = S^M z$ and $f (u) = S^N f (z)$, and
+  injectivity of $S^N$ forces the missing case into the induction
+  hypothesis. So $Y = M$ and $f$ is injective.
+
+  *Step 4: $f$ is surjective.* Let
+  $Z = {y in N : exists x in M f (x) = y}$. Then $0^N in Z$, and
+  $y in Z$ with $y = f (x)$ gives $S^N y = f (S^M x) in Z$; the
+  induction axiom in $N$ yields $Z = N$.
+
+  The map $f$ is therefore a bijection preserving $0$, $S$, and —
+  by induction, as in §10.1 — the recursive definitions of $+$ and
+  $dot$; it is an isomorphism.
+]
+
+#corollary(name: "Gödel's Theorems in Second-Order Disguise")[
+  The Gödel sentence $G$ of Chapter 9 is a *logical consequence* of
+  $"PA"_2$ (in standard semantics): $"PA"_2 models G$. But no r.e.
+  theory captures that consequence relation
+  (#link(<thm:completeness-fails-so>)[Theorem 10.2]): the semantic
+  completeness of the model class and the syntactic incompleteness
+  of every effective axiom system are two sides of the same coin
+  (promised at L2549).
+] <cor:godel-fails-so>
+
+#example(name: "No Nonstandard Models")[
+  In first-order arithmetic, compactness produces nonstandard models
+  (#link(<ex:nonstandard-arithmetic>)[Example 6.2]) and incompleteness
+  forces them (Chapter 9, Example 9.2). Second-order arithmetic has
+  none: the second-order induction axiom excludes every nonstandard
+  element, because the set of standard elements it generates is a
+  definable subset. The nonstandard universe of §6.3, §7.2, and §9.2
+  is precisely the territory that first-order logic opens up and that
+  second-order logic — at the price of losing all its metatheorems —
+  closes off.
+] <ex:nonstandard-excluded>
+
+#note[
+  *Second-order logic and set theory.* Standard semantics quantifies
+  over the full power set, so the truth value of a second-order
+  sentence depends on which sets exist — on the ambient set theory
+  (ZFC). Quine's quip that second-order logic is "set theory in
+  sheep's clothing" is exactly this: what looks like a logic is a
+  theory of $P (A)$ smuggled in through the semantics. Henkin
+  semantics (§10.2) removes the dependence by making the second-order
+  domain part of the model. This is also the hinge to Chapter 11:
+  non-classical logics generalize the *semantics* rather than the
+  syntax, exactly as Henkin generalized the models of Ch 5.
 ]
 
 #part("Appendix")
@@ -3486,6 +3807,7 @@ the liar paradox, formalized.
 == H
 - *#link(<thm:halting-undecidable>)[Halting Problem]*
 - *#link(<thm:henkin-completeness>)[Henkin Completeness Theorem]*
+- *#link(<def:henkin-structure>)[Henkin Semantics]*
 - *#link(<thm:herbrand>)[Herbrand's Theorem]*
 - *#link(<cor:hypothetical-syllogism>)[Hypothetical Syllogism (HS)]*
 
@@ -3525,10 +3847,13 @@ the liar paradox, formalized.
 == S
 - *#link(<def:satisfaction>)[Satisfaction]*
 - *#link(<def:tautology>)[Satisfiable]*- *#link(<def:tautology>)[Semantic Consequence]*
+- *#link(<def:second-order-arithmetic>)[Second-Order Arithmetic]*
+- *#link(<def:second-order-language>)[Second-Order Logic]*
 - *#link(<def:sentence>)[Sentence]*
 - *#link(<def:signature>)[Signature]*
 - *#link(<def:skolem-form>)[Skolem Normal Form]*
 - *#link(<thm:soundness-completeness>)[Soundness and Completeness]*
+- *#link(<def:standard-structure>)[Standard Semantics]*
 - *#link(<def:structure>)[Structure]*
 - *#link(<def:substitutable>)[Substitutable]*
 - *#link(<def:substitution>)[Substitution]*
