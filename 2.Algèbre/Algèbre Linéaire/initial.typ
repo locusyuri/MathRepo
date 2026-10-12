@@ -111,7 +111,7 @@ special determinants.
 == Determinant and Its Properties // 行列式及其性质
 
 #definition(name: "Determinant of Order $n$")[
-  Let $A = (a_(i j))$ be an $n times n$ matrix over the number field $F$.
+  Let $A = (a_(i j))_(n times n)$ be an $n times n$ matrix over the number field $F$.
   The *determinant* of $A$ is the scalar
 
   $
@@ -297,18 +297,18 @@ matrix techniques, and operations of rank.
 === Matrix Basic Operations // 矩阵的基本运算
 
 #definition(name: "Matrix Addition")[
-  Two $m times n$ matrices $A = (a_(i j))$ and $B = (b_(i j))$ over $F$ can be added
-  entry-wise: $A + B = (a_(i j) + b_(i j))$, which is again an $m times n$ matrix.
+  Two $m times n$ matrices $A = (a_(i j))_(m times n)$ and $B = (b_(i j))_(m times n)$ over $F$ can be added
+  entry-wise: $A + B = (a_(i j) + b_(i j))_(m times n)$, which is again an $m times n$ matrix.
 ] <def:matrix-addition>
 
 #definition(name: "Scalar Multiplication")[
-  The *scalar product* of $A$ by a scalar $k$ in $F$ is $k A = (k a_(i j))$, again an
+  The *scalar product* of $A$ by a scalar $k$ in $F$ is $k A = (k a_(i j))_(m times n)$, again an
   $m times n$ matrix.
 ] <def:matrix-scalar-multiplication>
 
 #definition(name: "Matrix Multiplication")[
   The *product* of an $m times n$ matrix $A$ and an $n times p$ matrix $B$ is the
-  $m times p$ matrix $A B = (c_(i j))$ with
+  $m times p$ matrix $A B = (c_(i j))_(m times p)$ with
 
   $
     c_(i j) = sum_(k=1)^n a_(i k) b_(k j).
@@ -373,7 +373,7 @@ The determinant of a product equals the product of the determinants — see #lin
 === Diagonal Matrix // 对角矩阵
 
 #definition(name: "Diagonal and Skew-Diagonal Matrices")[
-  An $n times n$ matrix $A = (a_(i j))$ is called a *diagonal matrix* if $a_(i j) = 0$
+  An $n times n$ matrix $A = (a_(i j))_(n times n)$ is called a *diagonal matrix* if $a_(i j) = 0$
   for $i != j$, denoted
 
   $
@@ -419,7 +419,7 @@ The determinant of a product equals the product of the determinants — see #lin
 === Triangular Matrix // 三角矩阵
 
 #definition(name: "Upper and Lower Triangular Matrices")[
-  An $n times n$ matrix $A = (a_(i j))$ is called an *upper triangular matrix* if
+  An $n times n$ matrix $A = (a_(i j))_(n times n)$ is called an *upper triangular matrix* if
   $a_(i j) = 0$ for $i > j$:
 
   $
@@ -473,7 +473,7 @@ The determinant of a product equals the product of the determinants — see #lin
 === Symmetric Matrix // 对称矩阵
 
 #definition(name: "Symmetric and Skew-Symmetric Matrices")[
-  An $n times n$ matrix $A = (a_(i j))$ is called a *symmetric matrix* if
+  An $n times n$ matrix $A = (a_(i j))_(n times n)$ is called a *symmetric matrix* if
   $a_(i j) = a_(j i)$ for all $i, j = 1, ..., n$, or equivalently $A = A^"T"$.
   Similarly, if $A = -A^"T"$, then $A$ is called a *skew-symmetric matrix*.
 ] <def:symmetric-matrix>
@@ -687,7 +687,7 @@ is a nilpotent matrix with nilpotent index $n$.
 === Kronecker Product // Kronecker 积
 
 #definition(name: "Kronecker Product")[
-  Let $A = (a_(i j))$ be an $m times n$ matrix and $B = (b_(i j))$ a $p times q$ matrix.
+  Let $A = (a_(i j))_(m times n)$ be an $m times n$ matrix and $B = (b_(i j))_(p times q)$ a $p times q$ matrix.
   The *Kronecker product* of $A$ and $B$, denoted $A ⊗ B$, is the block matrix
 
   $
@@ -960,7 +960,7 @@ echelon form is reached.
   - The rank of a matrix equals the number of non-zero rows in its row (column) echelon form.
   - Elementary row (column) operations do not alter the linear relations among the column (row)
     vectors.
-  - For a square matrix $(a_(i j))$ of order $n$, its row vectors (or column vectors) are
+  - For a square matrix $(a_(i j))_(n times n)$ of order $n$, its row vectors (or column vectors) are
     linearly independent if and only if $"det"(A) != 0$.
 ]
 
