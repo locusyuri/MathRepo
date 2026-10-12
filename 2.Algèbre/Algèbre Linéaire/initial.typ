@@ -62,34 +62,9 @@ The determinant is a scalar value assigned to a square matrix. It serves both as
 criterion for matrix invertibility and as the foundation for Cramer's rule and eigenvalue theory.
 This chapter defines the determinant starting from the inversion number of permutations,
 and gradually develops its properties, expansion rules, and computation of special determinants.
-As with sets, the matrix is taken here as an elementary, self-evident object; the few
-matrix notions used in this chapter are recalled below.
-
-== Matrices // 矩阵
-
-A *matrix* is a rectangular array of elements of the number field $P$, written
-$A = (a_("ij"))$, where $a_("ij") in P$ is the entry in row $i$ and column $j$; an
-$m times n$ matrix has $m$ rows and $n$ columns, and is *square* of order $n$ when
-$m = n$. The notation $M_(m times n)(P)$ fixed in the Preliminaries is assumed, together
-with the entry-wise operations of addition and scalar multiplication.
-
-The *transpose* of $A = (a_("ij"))$ is the matrix $A^T = (a_("ji"))$ obtained by
-swapping rows and columns. The *product* of an $m times n$ matrix $A$ and an $n times p$
-matrix $B$ is the $m times p$ matrix $A B = (c_("ij"))$ with
-
-$
-  c_("ij") = sum_(k=1)^n a_("ik") b_("kj").
-$
-
-The *identity matrix* $E$ is the square matrix with diagonal entries $1$ and all other
-entries $0$; whenever the products are defined it satisfies $A E = A$ and $E A = A$.
-
-A square matrix $A$ is *invertible* (or *non-singular*) if some square matrix $B$
-satisfies $A B = B A = E$; then $B$ is unique and is written $A^(-1)$, and $A$ is called
-*singular* otherwise. An *elementary matrix* is the matrix obtained by performing a
-single elementary row (or column) operation on $E$, and every invertible matrix is a
-product of elementary matrices. These operations are stated here only to the extent
-needed for the determinant; their full treatment is deferred to the Matrices chapter.
+Throughout, an $n times n$ matrix $A = (a_("ij"))$ is an array of entries from the field
+$P$, with notation $M_(m times n)(P)$ as in the Preliminaries; the only matrix notion
+used beyond this is the transpose $A^T$.
 
 == Permutations // 排列
 
@@ -138,28 +113,6 @@ needed for the determinant; their full treatment is deferred to the Matrices cha
   - *Row addition*: adding a scalar multiple of one row to another row leaves $"det"(A)$ unchanged.
   - *Proportional rows*: if two rows (or two columns) of $A$ are proportional, then $"det"(A) = 0$.
 ] <prop:determinant-properties>
-
-#theorem(name: "Multiplicativity of Determinants")[
-  If $A$ and $B$ are $n times n$ matrices over $P$, then
-
-  $
-    "det"(A B) = "det"(A) "det"(B).
-  $
-] <thm:det-product>
-
-#proof[
-  Every elementary matrix $E$ satisfies $"det"(E A) = "det"(E) "det"(A)$: this is immediate for
-  the three types of elementary row operations, with $"det"(E) = -1$, $k$, and $1$, respectively.
-  If $A$ is invertible, then $A$ is a product of elementary matrices, and applying the previous
-  step to $A = E_1 ... E_k$ against $I$ gives $"det"(A) = "det"(E_1) ... "det"(E_k)$.
-  Hence, for invertible $A$ and $B$, writing $B = F_1 ... F_m$ as a product of elementary
-  matrices yields $"det"(A B) = "det"(A) "det"(F_1) ... "det"(F_m) = "det"(A) "det"(B)$.
-  If one of $A$ and $B$ is singular, then $A B$ is singular as well, so both sides are zero.
-]
-
-#corollary(name: "Determinant and Invertibility")[
-  An $n times n$ matrix $A$ is invertible if and only if $"det"(A) != 0$.
-] <cor:determinant-invertibility>
 
 == Expanding by Rows and Columns // 按行（列）展开
 
@@ -626,6 +579,10 @@ is a nilpotent matrix with nilpotent index $n$.
 
 === Equivalent Propositions and Method of Inversion // 等价命题与求逆方法
 
+#corollary(name: "Determinant and Invertibility")[
+  An $n times n$ matrix $A$ is invertible if and only if $"det"(A) != 0$.
+] <cor:determinant-invertibility>
+
 #theorem(name: "Equivalent Propositions of Invertibility")[
   For an $n times n$ matrix $A$ over $P$, the following statements are equivalent:
   - $A$ is invertible;
@@ -645,6 +602,24 @@ is a nilpotent matrix with nilpotent index $n$.
   Finally, $A x = 0$ has only the zero solution iff the columns of $A$ are linearly independent
   iff $"det"(A) != 0$, which is equivalent to invertibility by
   #link(<cor:determinant-invertibility>)[Corollary].
+]
+
+#theorem(name: "Multiplicativity of Determinants")[
+  If $A$ and $B$ are $n times n$ matrices over $P$, then
+
+  $
+    "det"(A B) = "det"(A) "det"(B).
+  $
+] <thm:det-product>
+
+#proof[
+  Every elementary matrix $E$ satisfies $"det"(E A) = "det"(E) "det"(A)$: this is immediate for
+  the three types of elementary row operations, with $"det"(E) = -1$, $k$, and $1$, respectively.
+  If $A$ is invertible, then $A$ is a product of elementary matrices, and applying the previous
+  step to $A = E_1 ... E_k$ against $I$ gives $"det"(A) = "det"(E_1) ... "det"(E_k)$.
+  Hence, for invertible $A$ and $B$, writing $B = F_1 ... F_m$ as a product of elementary
+  matrices yields $"det"(A B) = "det"(A) "det"(F_1) ... "det"(F_m) = "det"(A) "det"(B)$.
+  If one of $A$ and $B$ is singular, then $A B$ is singular as well, so both sides are zero.
 ]
 
 #definition(name: "Adjugate Matrix")[
