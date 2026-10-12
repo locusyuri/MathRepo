@@ -301,37 +301,11 @@ Two details of the table deserve comment. A *linear* molecule (monatomic aside) 
   temperature identification of §1.2 summed over all molecules.
 ]
 
-#corollary(name: "Heat Capacity of an Ideal Gas")[
-  The molar heat capacities of an ideal gas of $f$ degrees of freedom
-  are
-  $
-    C_V = f/2 R, quad C_p = C_V + R = (f/2 + 1) R, quad
-    gamma = C_p / C_V = (f + 2) / f.
-  $
-] <cor:ideal-gas-heat-capacity>
-
-#example(name: "Heat capacities of dilute gases")[
-  Each translational or rotational
-  degree of freedom contributes $1/2 k_B T$ to the mean energy per
-  molecule, so
-
-  - *monatomic gas* ($f = 3$ translations): $lr(⟨ E ⟩) = 3/2 k_B T$
-    per molecule and $C_V = 3/2 R$ per mole;
-  - *rigid diatomic gas* ($f = 5$: three translations + two rotations,
-    the axis along the bond carrying no moment of inertia):
-    $C_V = 5/2 R$;
-  - *diatomic gas with vibrational mode* ($f = 7$: adding one kinetic +
-    one potential quadratic term): $C_V = 7/2 R$.
-
-  These are precisely the classical values tabulated for gases such as
-  helium ($C_V approx 3/2 R$), nitrogen at room temperature
-  ($approx 5/2 R$), and chlorine at high temperature ($approx 7/2 R$).
-] <ex:gas-heat-capacities>
-
 #caution(title: "Failure of equipartition")[
-  The vibrational contribution of the
-  previous example is *frozen out* at room temperature: nitrogen does
-  not reach $C_V = 7/2 R$ until far above $2000 "K"$. Worse still, the
+  The vibrational degrees of freedom counted in the table above are
+  *frozen out* at room temperature: nitrogen behaves as a rigid
+  diatomic gas ($f = 5$) under room conditions and does not activate
+  its vibrational mode until far above $2000 "K"$. Worse still, the
   vibrational and rotational contributions of solids are missing
   entirely at low temperatures, and the classical prediction of the
   specific heat of a crystal — $3 R$ per mole at *all* temperatures
@@ -1107,10 +1081,11 @@ from nothing — is ruled out.
   become the molar quantities $c_V$, $c_p$.
 ] <def:heat-capacities>
 
-For a dilute gas, the kinetic theory of Chapter 1 already computed
-$C_V = f/2 R$ from #link(<thm:equipartition>)[the equipartition
-  theorem]; §2.4 and §2.5 treat $C_V$ and $C_p$ as thermodynamic
-quantities, defined for any substance.
+For a dilute gas, the kinetic theory of Chapter 1 already computed the
+internal energy $U = f/2 nu R T$ from #link(<thm:equipartition>)[the
+  equipartition theorem]; #link(<prop:joule-law>)[Joule's law] below
+turns it into a heat capacity, while §2.4 and §2.5 treat $C_V$ and
+$C_p$ as thermodynamic quantities, defined for any substance.
 
 #property(name: "Joule's Law: Internal Energy of an Ideal Gas")[
   The internal energy of an ideal gas depends on temperature alone:
@@ -1200,6 +1175,39 @@ The inequality $C_p > C_V$ has a direct reading: heating at constant
 pressure must pay for the expansion work in addition to raising the
 internal energy. The ratio $gamma = C_p / C_V$ governs the adiabatic
 processes of §2.6.
+
+#corollary(name: "Heat Capacity of an Ideal Gas")[
+  Combining #link(<prop:joule-law>)[Joule's law] with the equipartition
+  internal energy $U = f/2 nu R T$ of
+  #link(<prop:ideal-gas-internal-energy>)[Chapter 1] gives
+  $C_V = f/2 R$; together with #link(<prop:cp-cv>)[Mayer's relation],
+  the molar heat capacities of an ideal gas of $f$ degrees of freedom
+  are
+  $
+    C_V = f/2 R, quad C_p = C_V + R = (f/2 + 1) R, quad
+    gamma = C_p / C_V = (f + 2) / f.
+  $
+] <cor:ideal-gas-heat-capacity>
+
+#example(name: "Heat capacities of dilute gases")[
+  Each translational or rotational degree of freedom contributes
+  $1/2 k_B T$ to the mean energy per molecule, so
+
+  - *monatomic gas* ($f = 3$ translations): $lr(⟨ E ⟩) = 3/2 k_B T$
+    per molecule and $C_V = 3/2 R$ per mole;
+  - *rigid diatomic gas* ($f = 5$: three translations + two rotations,
+    the axis along the bond carrying no moment of inertia):
+    $C_V = 5/2 R$;
+  - *diatomic gas with vibrational mode* ($f = 7$: adding one kinetic +
+    one potential quadratic term): $C_V = 7/2 R$.
+
+  These are precisely the classical values tabulated for gases such as
+  helium ($C_V approx 3/2 R$), nitrogen at room temperature
+  ($approx 5/2 R$), and chlorine at high temperature ($approx 7/2 R$).
+  The vibrational value, however, is reached only at high temperature —
+  the freezing-out phenomenon anticipated in
+  #link(<caution:equipartition-failure>)[Chapter 1].
+] <ex:gas-heat-capacities>
 
 == Applications: Free Expansion, Adiabatic Process and Throttling // 应用：自由膨胀、绝热过程与节流
 
