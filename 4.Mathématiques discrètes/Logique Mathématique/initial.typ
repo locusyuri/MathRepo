@@ -18,14 +18,14 @@
   subtitle: "A notebook for mathematical logic",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.7.0",
+  version: "v0.8.0",
   extra-info: "This is a notebook for mathematical logic.",
 )
 
 #make-outline(depth: 2, title: "Contents")
 
 // ==========================================================================
-// 目录蓝图 (Planned Outline) — v0.7.0
+// 目录蓝图 (Planned Outline) — v0.8.0
 // 主线：语言基础 → 主体理论 → 元数学 → 扩展（四段式）
 // 参照 Analyse Mathématique：每个 Part 容纳 2–4 章实质内容
 // 状态标记：[已写] 已完成 · [计划] 待写作 · [可选] 按需取舍
@@ -80,8 +80,8 @@
 //   Section 5.3: Soundness（可靠性）
 //   Section 5.4: Henkin Completeness（Henkin 完全性；全书核心定理，已证）
 
-// --- Chapter 6: Compactness and Löwenheim–Skolem（紧致性与 L-S）--- [计划]
-//   Section 6.1: Compactness Theorem（紧致性定理）
+// --- Chapter 6: Compactness and Löwenheim–Skolem（紧致性与 L-S）--- [已写，v0.8.0]
+//   Section 6.1: Compactness Theorem（紧致性定理；兑现 Ch 3 Herbrand 有限方向）
 //   Section 6.2: Löwenheim–Skolem Theorems（上升/下降 L-S 与 Skolem 悖论）
 //   Section 6.3: Applications（应用：非标准模型）
 //   Section 6.4: Definability（可定义性初步）
@@ -139,8 +139,8 @@
 //   （范式、归结、紧致性），形成命题层闭环。
 //
 // Part II（主体理论，Ch 3–6）：一阶逻辑。语法 → 语义 → 证明论 →
-//   紧致性/L-S。Ch 3 语法、Ch 4 语义、Ch 5 证明论与 Henkin 完全性
-//   已完成（v0.7.0）；Ch 5.4 Henkin 完全性（全书核心定理）已证。
+//   紧致性/L-S。Ch 3–6 全部完成（v0.8.0）：语法、语义、证明论与
+//   Henkin 完全性（Ch 5.4，全书核心定理）、紧致性与 L-S（Ch 6）均已写就。
 //
 // Part III（元数学，Ch 7–9）：模型论（理论有哪些模型）→ 可计算性（能算什么）
 //   → 不完备性（证不出什么），元理论两翼递进。
@@ -1947,6 +1947,269 @@ Löwenheim–Skolem phenomenon, to be studied in Ch 6.
   consequence coincide.
 ]
 
+= Compactness and Löwenheim–Skolem // 紧致性与 Löwenheim–Skolem
+
+Ch 5 closed the loop between syntax and semantics; this chapter harvests
+the two direct corollaries of Henkin completeness and puts them to
+work. The compactness theorem says that satisfiability is a finitary
+property; the Löwenheim–Skolem theorems say that the cardinality of
+models can be controlled. Together they are the workhorse of model
+theory: they produce nonstandard models, refute axiomatizability, and
+delimit what first-order logic can define. This chapter closes Part II.
+
+== The Compactness Theorem // 紧致性定理
+
+#theorem(name: "Compactness Theorem")[
+  A set $Gamma$ of sentences has a model if and only if every finite
+  subset of $Gamma$ has a model.
+] <thm:compactness>
+
+#proof[
+  The forward direction is immediate. Conversely, suppose $Gamma$ has
+  no model. Then $Gamma models bot$ (vacuously, by
+  #link(<def:logical-consequence>)[Definition 4.6]), so by
+  #link(<cor:completeness-form>)[completeness in consequence form]
+  $Gamma tack bot$. A derivation of a contradiction uses only
+  finitely many formulas of $Gamma$, say $Gamma_0$; hence
+  $Gamma_0 tack bot$ and, by
+  #link(<thm:soundness-fol>)[soundness], $Gamma_0$ has no model — a
+  finite subset of $Gamma$ without a model. Contrapositively, if every
+  finite subset has a model, so does $Gamma$.
+]
+
+#corollary(name: "Compactness in Consequence Form")[
+  If $Gamma models phi$, then $Gamma_0 models phi$ for some finite
+  $Gamma_0 subset Gamma$.
+] <cor:compactness-consequence>
+
+#proof[
+  Otherwise every finite $Gamma_0 subset Gamma$ would have a model of
+  $not phi$, so by compactness $Gamma union {not phi}$ would have a
+  model, contradicting $Gamma models phi$.
+]
+
+The compactness theorem redeems the deferred direction of Herbrand's
+theorem (promised at L1159). Recall from §3.4 that the Herbrand
+expansion of a Skolemized sentence $sigma$ is the set of all ground
+instances of its matrix, and that $sigma$ is satisfiable iff some
+Herbrand structure satisfies the expansion
+(#link(<eq:herbrand-expansion>)[Equation 3.5]). Clause (ii), proved
+there only in the direction "finite unsatisfiability implies
+unsatisfiability", now follows by compactness: if $sigma$ were
+unsatisfiable, no finite subset of the expansion would be satisfiable
+in a Herbrand structure (by the finite-direction argument of §3.4),
+hence no finite subset would be satisfiable at all, and compactness
+forces the full expansion to be unsatisfiable — the direct statement of
+clause (ii). The finite direction of Herbrand's theorem is thus closed.
+
+#note[
+  Compactness is a topological phenomenon in disguise: the set of
+  complete theories in a countable signature forms a compact Stone
+  space, and the theorem is its compactness. The propositional analogue
+  was announced in Ch 2 (§2.3); the first-order theorem, via
+  completeness, is its infinitary counterpart. It fails for second-order
+  logic with standard semantics (Ch 10) — a first sign that full
+  second-order logic outruns finitary provability.
+]
+
+== The Löwenheim–Skolem Theorems // Löwenheim–Skolem 定理
+
+Compactness controls *existence* of models; the Löwenheim–Skolem
+theorems control their *cardinalities*. A theory that has a model at
+all has models of every cardinality within a wide range — a stark
+contrast with, say, the theory of finite fields. The cardinality
+spectrum is sketched in Figure 6.1.
+
+#figure(
+  image("img/ls-cardinality.svg", width: 80%),
+  caption: [
+    Model cardinalities allowed by Löwenheim–Skolem: DLO has models of
+    every infinite cardinality, PA has countable models and arbitrarily
+    large ones, and a consistent ZFC even has a countable model despite
+    proving the existence of uncountable sets.
+  ],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:ls-cardinality>
+
+#theorem(name: "Downward Löwenheim–Skolem Theorem")[
+  Let $Gamma$ be a consistent set of sentences in a countable
+  signature. Then $Gamma$ has a model whose domain is countable.
+] <thm:downward-ls>
+
+#proof[
+  This is the #link(<cor:model-existence>)[Countable Model Existence
+  Corollary] of Ch 5 restated: the Henkin construction produces a term
+  model whose domain consists of equivalence classes of closed terms,
+  and a countable signature has only countably many closed terms. The
+  same construction, applied to a signature of cardinality $lambda$,
+  yields a model of cardinality at most $lambda$. The general downward
+  Löwenheim–Skolem theorem — if $T$ has a model of cardinality
+  $lambda$ and $|L| <= kappa <= lambda$, then $T$ has a model of
+  cardinality $kappa$ — follows by closing under Skolem functions; the
+  resulting elementary submodel is developed in Ch 7 (§7.1).
+]
+
+#theorem(name: "Upward Löwenheim–Skolem Theorem")[
+  Let $Gamma$ be a consistent set of sentences with an infinite model.
+  Then $Gamma$ has a model of every infinite cardinality
+  $kappa >= |L|$.
+] <thm:upward-ls>
+
+#proof[
+  Fix a cardinal $kappa$ and add $kappa$ new constant symbols
+  $c_alpha$ ($alpha < kappa$). Consider
+  $Gamma' = Gamma union {c_alpha != c_beta : alpha < beta < kappa}$.
+  Every finite subset of $Gamma'$ mentions finitely many of the new
+  constants, so it is satisfiable in any infinite model of $Gamma$ by
+  interpreting the finitely many constants as distinct elements. By
+  #link(<thm:compactness>)[compactness], $Gamma'$ has a model $M$; the
+  constants witness $kappa$ distinct elements, so $|M| >= kappa$, and
+  its reduct to the original signature is a model of $Gamma$.
+]
+
+#example(name: "Skolem's Paradox")[
+  Zermelo–Fraenkel set theory with choice (ZFC) is a theory in the
+  countable signature ${in}$. If ZFC is consistent, the downward
+  Löwenheim–Skolem theorem gives a *countable* model $M models "ZFC"$.
+  Yet ZFC proves the existence of uncountable sets — for instance
+  $bb(R)$ — and inside $M$ the set that $M$ believes to be $bb(R)$ is
+  uncountable from $M$'s point of view. The paradox dissolves once one
+  notes that "countable" is a relational notion: a set $x in M$ is
+  countable in $M$ iff $M$ contains a bijection $x -> bb(N)$. The
+  bijection witnessing the external countability of $M$'s "reals" is
+  simply not an element of $M$. Countability is not absolute; this
+  relativity is characteristic of first-order set theory and a leitmotif
+  of Ch 7.
+] <ex:skolem-paradox>
+
+#note[
+  The two theorems delimit the spectrum of model cardinalities: from a
+  single infinite model, downward Löwenheim–Skolem supplies models as
+  small as the language, upward Löwenheim–Skolem models of every larger
+  cardinality. Complete theories with a single model in every
+  cardinality — the *categorical* ones — are rigid enough to pin down
+  their models; the study of such theories begins in Ch 7 (§7.3).
+]
+
+== Applications // 应用
+
+Compactness and Löwenheim–Skolem power a standard repertoire of
+arguments: add new constants with prescribed inequalities, check
+finite satisfiability, and let compactness deliver a model that
+*witnesses* the desired failure. Two classical applications follow:
+nonstandard models of arithmetic, and the non-axiomatizability of
+connectedness.
+
+#example(name: "Nonstandard Models of Arithmetic")[
+  Let $L$ be the language of arithmetic
+  (#link(<ex:language-of-arithmetic>)[Example 3.1]) and let $"PA"$ be
+  Peano arithmetic formulated in $L$. Add a new constant $c$ and the
+  sentences $c != 0$, $c != S(0)$, $c != S(S(0))$, and so on — "c is
+  greater than every numeral". Every finite subset of
+  $"PA" union {c != S^n (0) : n in bb(N)}$ is satisfiable in the
+  standard model $bb(N)$ by interpreting $c$ as a sufficiently large
+  natural number. By compactness, the whole set has a model $M$; $M$
+  satisfies $"PA"$ but contains an element $c^M$ distinct from every
+  numeral — a *nonstandard* element, greater than every standard
+  natural number in the internal order. Such models exist for every
+  consistent arithmetic theory; their detailed structure is taken up
+  in Ch 9.
+] <ex:nonstandard-arithmetic>
+
+#example(name: "Connectedness is Not Axiomatizable")[
+  Let $L = {E}$ be the language of graphs. Suppose a set $Sigma$ of
+  sentences axiomatized connectedness: a graph satisfies $Sigma$ iff it
+  is connected. For each $n >= 0$ there is a connected graph $G_n$ with
+  two distinguished elements $a_n, b_n$ whose distance is at least $n$
+  (a long path, say). The formula $P_n (x, y)$ — "there is a path from
+  $x$ to $y$ of length at most $n$" — is first-order: a finite
+  disjunction of existential conjunctions over $E$. Now consider
+  $Sigma union {not P_(n-1) (a, b) : n in bb(N)}$, where $a, b$ are
+  new constants. Every finite subset is satisfied by the appropriate
+  $G_n$ with $a, b$ mapped to $a_n, b_n$. By compactness, some model
+  $M$ satisfies $Sigma$ and $not P_(n-1) (a, b)$ for every $n$; but $M$
+  is connected (it satisfies $Sigma$), so the distance of $a^M, b^M$
+  is some finite $d$, contradicting $not P_d (a, b) in M$. Therefore
+  connectedness — unlike, say, the theory of equivalence relations —
+  is not expressible by any set of first-order sentences.
+] <ex:connectedness-not-axiomatizable>
+
+#note[
+  Both arguments follow the same template: force a property on
+  finitely many elements (an element above all numerals; two elements
+  arbitrarily far apart), verify finite satisfiability, and let
+  compactness convert it into a genuine model. The first example is
+  the seed of nonstandard analysis and of the model theory of
+  arithmetic (Ch 9); the second is the reason infinitary properties
+  such as connectedness, well-foundedness, and finiteness resist
+  first-order axiomatization.
+]
+
+== Definability // 可定义性初步
+
+Compactness and Löwenheim–Skolem also delimit what first-order logic
+can *say about* a structure: which subsets of a model can be picked out
+by formulas. Definability is the interface between model theory and the
+structure itself — the notions defined here are used throughout Part
+III, and quantified elimination (Ch 7.4) will describe definable sets
+for special theories.
+
+#definition(name: "Definable Set")[
+  Let $M$ be a structure and $phi (x_1, dots, x_n)$ a formula. The set
+  *defined by* $phi$ in $M$ is
+  $phi^M = {(a_1, dots, a_n) in |M|^n : M models phi[a_1, dots, a_n]}$.
+  A set $X subset |M|^n$ is *definable* (without parameters) in $M$ if
+  $X = phi^M$ for some formula $phi$.
+] <def:definable-set>
+
+#definition(name: "Definable Relation with Parameters")[
+  If the formula is allowed constants from a finite set $A subset |M|$,
+  $X$ is *definable with parameters from* $A$; the parameters are
+  treated as constant symbols interpreted in $M$.
+] <def:definable-relation>
+
+#proposition(name: "Finiteness is Not Axiomatizable")[
+  There is no set of sentences $Sigma$ such that a structure satisfies
+  $Sigma$ if and only if it is finite.
+] <prop:finitude-not-axiomatizable>
+
+#proof[
+  Suppose such $Sigma$ exists. Let $sigma_n$ be the sentence asserting
+  "there are at least $n$ elements" — a finite conjunction of
+  inequalities of $n$ existential variables. Every finite subset of
+  $Sigma union {sigma_n : n in bb(N)}$ contains $Sigma_0$ and finitely
+  many $sigma_n$; it is satisfied by any finite structure with enough
+  elements (all finite structures satisfy $Sigma$). By
+  #link(<thm:compactness>)[compactness], the whole set has a model
+  $M$; but $M$ satisfies every $sigma_n$, so $M$ is infinite, while it
+  also satisfies $Sigma$ — contradiction. Finiteness, unlike
+  "having at least $n$ elements", is not a first-order property.
+]
+
+#example(name: "Definable Sets in Arithmetic")[
+  In the standard model $(bb(N), +, dot)$ of arithmetic
+  (#link(<ex:language-of-arithmetic>)[Example 3.1]), the even numbers
+  are definable by $exists y (x = y + y)$; the perfect squares by
+  $exists y (x = y dot y)$; the primes by
+  $x > 1 and forall y forall z (x = y dot z -> (y = 1 or z = 1))$.
+  Each definable set is a finite Boolean combination of sets picked out
+  by quantifier-free formulas after quantification is removed — the
+  theme of quantifier elimination in Ch 7.4. In contrast, the set of
+  Gödel numbers of true sentences is *not* definable in arithmetic:
+  Tarski's undefinability theorem (Ch 9).
+] <ex:definable-arithmetic>
+
+#note[
+  Definability is the bridge to the rest of Part III: quantifier
+  elimination (Ch 7.4) characterizes the definable sets of DLO and of
+  algebraically closed fields; Tarski's undefinability of truth (Ch 9)
+  shows that the language of arithmetic cannot talk about its own
+  semantics. Together with compactness and Löwenheim–Skolem, the three
+  chapters of Part II close with a complete picture of what
+  first-order logic can and cannot do.
+]
+
 #part("Metamathematics")  // 元数学：模型论、可计算性与不完备性
 
 = Metamathematics  // 元数学
@@ -1983,11 +2246,13 @@ Löwenheim–Skolem phenomenon, to be studied in Ch 6.
 - *#link(<prop:algebraic-laws>)[Boolean Algebra]*
 
 == C
+- *#link(<thm:compactness>)[Compactness Theorem]*
 - *#link(<def:consistency>)[Consistency]*
 - *#link(<def:conjunction>)[Conjunction]*
 
 == D
 - *#link(<thm:deduction-theorem>)[Deduction Theorem]*
+- *#link(<def:definable-set>)[Definable Set]*
 - *#link(<def:derived-connectives>)[Derived Connectives]*
 - *#link(<def:disjunction>)[Disjunction]*
 - *#link(<cor:double-negation>)[Double Negation]*
@@ -2014,6 +2279,7 @@ Löwenheim–Skolem phenomenon, to be studied in Ch 6.
 == L
 - *#link(<def:logical-consequence>)[Logical Consequence]*
 - *#link(<def:logical-equivalence>)[Logical Equivalence]*
+- *#link(<thm:downward-ls>)[Löwenheim–Skolem Theorems]*
 
 == M
 - *#link(<def:model>)[Model]*
