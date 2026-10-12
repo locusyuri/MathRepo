@@ -18,14 +18,14 @@
   subtitle: "A notebook for mathematical logic",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.5.0",
+  version: "v0.6.0",
   extra-info: "This is a notebook for mathematical logic.",
 )
 
 #make-outline(depth: 2, title: "Contents")
 
 // ==========================================================================
-// 目录蓝图 (Planned Outline) — v0.5.0
+// 目录蓝图 (Planned Outline) — v0.6.0
 // 主线：语言基础 → 主体理论 → 元数学 → 扩展（四段式）
 // 参照 Analyse Mathématique：每个 Part 容纳 2–4 章实质内容
 // 状态标记：[已写] 已完成 · [计划] 待写作 · [可选] 按需取舍
@@ -67,10 +67,11 @@
 //   Section 3.3: Prenex Normal Forms and Skolemization（前束范式与斯科伦化）
 //   Section 3.4: Herbrand's Theorem（Herbrand 定理）
 
-// --- Chapter 4: Semantics of First-Order Logic（一阶逻辑语义）--- [计划]
+// --- Chapter 4: Semantics of First-Order Logic（一阶逻辑语义）--- [已写，v0.6.0]
 //   Section 4.1: Structures and Interpretations（结构与解释）
 //   Section 4.2: Satisfaction and Truth（满足与 Tarski 真定义）
-//   Section 4.3: Semantic Consequence and Theories（逻辑后承与理论）
+//   Section 4.3: Semantic Consequence, Equivalence and Normal Form Correctness
+//     （逻辑后承、等价与范式正确性；兑现 Ch 3 前束/斯科伦验证承诺）
 //   Section 4.4: Elementary Equivalence（初等等价）
 
 // --- Chapter 5: Proof Theory and Completeness（证明论与完全性）--- [计划]
@@ -138,8 +139,8 @@
 //   （范式、归结、紧致性），形成命题层闭环。
 //
 // Part II（主体理论，Ch 3–6）：一阶逻辑。语法 → 语义 → 证明论 →
-//   紧致性/L-S；Henkin 完全性为全书核心定理。Ch 3 语法章已完成
-//   （v0.5.0）。
+//   紧致性/L-S；Henkin 完全性为全书核心定理。Ch 3 语法章与 Ch 4 语义章
+//   已完成（v0.6.0）。
 //
 // Part III（元数学，Ch 7–9）：模型论（理论有哪些模型）→ 可计算性（能算什么）
 //   → 不完备性（证不出什么），元理论两翼递进。
@@ -1188,6 +1189,401 @@ closes the loop back to the propositional layer of Ch 1.
   makes such enumeration terminate in principle.
 ]
 
+= Semantics of First-Order Logic  // 一阶逻辑语义
+
+Ch 3 built the language; this chapter gives it meaning. The central
+notion is the *satisfaction relation* of Tarski: a recursive definition
+that assigns a truth value to every formula relative to a structure and
+an assignment of its free variables. Everything semantic — truth,
+models, logical consequence, logical equivalence, satisfiability,
+theories — is derived from this single definition. The proof system of
+Ch 5 is built on top of the semantic notions established here, and the
+compactness theorem (Ch 6) and the model theory of Part III consume
+them. This chapter also redeems the verification promises made in
+Ch 3: the equality convention, the quantifier satisfaction clauses, and
+the correctness of the prenex and Skolem transformations.
+
+== Structures and Interpretations  // 结构与解释
+
+A signature declares the non-logical vocabulary; a *structure* supplies
+the objects over which variables range and the interpretation of that
+vocabulary.
+
+#definition(name: "Structure")[
+  A *structure* for a signature $sigma$ is a pair $M = (|M|, I)$, where
+  $|M| != emptyset$ is the *domain* (or universe) of $M$ and $I$ is an
+  *interpretation* assigning:
+  + to every constant symbol $c$, an element $c^M in |M|$;
+  + to every $n$-ary function symbol $f$, a function
+    $f^M: |M|^n -> |M|$;
+  + to every $n$-ary relation symbol $R$, an $n$-ary relation
+    $R^M subset.eq |M|^n$.
+] <def:structure>
+
+The domain is required to be nonempty, so that every structure has at
+least one element to interpret constants by. We write $|M|$ for the
+domain of $M$ and superscript the interpretations with $M$.
+
+#definition(name: "Assignment")[
+  An *assignment* in $M$ is a function $s: "Var" -> |M|$ from the set
+  of variables to the domain. Given $a in |M|$ and a variable $x$, the
+  *modified assignment* $s[x/a]$ is the assignment that agrees with $s$
+  except at $x$, where it takes the value $a$:
+  $
+    s[x/a](y) = cases(
+      a quad & text("if") y = x,
+      s(y) quad & text("if") y != x,
+    )
+  $
+] <def:assignment>
+
+#definition(name: "Term Evaluation")[
+  Let $M$ be a structure, $s$ an assignment, and $t$ a term. The
+  *evaluation* of $t$ in $M$ under $s$ is the element
+  $t^M [s] in |M|$ defined recursively on the construction of $t$
+  (#link(<def:term>)[Definition 3.2]):
+] <def:term-evaluation>
+
+#eq[
+  $
+    x^M [s] = s(x), quad
+    c^M [s] = c^M, \
+    f(t_1, dots, t_n)^M [s] = f^M (t_1^M [s], dots, t_n^M [s]).
+  $
+] <eq:term-evaluation-def>
+
+#note[
+  In accordance with the convention of §3.1, the equality symbol $=$ is
+  a logical symbol present in every signature; its interpretation is
+  fixed once and for all: in every structure $M$ the formula $t_1 = t_2$
+  will be declared satisfied exactly when $t_1^M [s]$ and $t_2^M [s]$ are
+  the same element of $|M|$ (the satisfaction clause for $=$ in §4.2).
+  This is the semantic content of the convention adopted in
+  #link(<def:signature>)[Definition 3.1]. The alternative convention,
+  treating $=$ as an ordinary relation symbol of the signature, is
+  inter-translatable with this one.
+]
+
+#note[
+  A structure for $sigma$ is also called an $L(sigma)$-structure.
+  Enlarging the signature (e.g. adding Skolem symbols, §3.3) enlarges
+  the class of structures; restricting a structure to a smaller
+  signature forgets the interpretations of the removed symbols (the
+  *reduct*), a device used throughout Part II.
+]
+
+== Satisfaction and Truth  // 满足与 Tarski 真定义
+
+The satisfaction relation assigns a truth value to every formula
+relative to a structure and an assignment. It is defined recursively on
+the construction of formulas (#link(<lem:formula-induction>)[Lemma
+3.2]), mirroring the recursion in the definition of the formulas
+themselves (#link(<def:first-order-formula>)[Definition 3.4]).
+
+#definition(name: "Satisfaction")[
+  Let $M$ be a structure and $s$ an assignment. The *satisfaction
+  relation* $M models phi[s]$ is defined recursively on the
+  construction of the formula $phi$:
+] <def:satisfaction>
+
+#eq[
+  $
+    M models t_1 = t_2 [s] quad &"iff" quad t_1^M [s] = t_2^M [s], \
+    M models R(t_1, dots, t_n)[s] quad &"iff" quad R^M (t_1^M [s], dots, t_n^M [s]), \
+    M models ¬ phi[s] quad &"iff" quad M ⊭ phi[s], \
+    M models (phi -> psi)[s] quad &"iff" quad M ⊭ phi[s] "or" M models psi[s], \
+    M models forall x phi[s] quad &"iff" quad M models phi[s[x/a]] "for all" a in |M|.
+  $
+] <eq:satisfaction-def>
+
+The first two clauses are the atomic cases: equality is interpreted as
+genuine identity of evaluations (the convention of
+#link(<def:signature>)[Definition 3.1]), and a relation symbol holds of
+the tuple exactly when the tuple of evaluations lies in the relation.
+The quantifier clause quantifies over the domain: $forall x phi$ holds
+under $s$ precisely when $phi$ holds under every modification of $s$ at
+$x$. The remaining connectives $and$, $or$, $<=>$ and the existential
+quantifier are handled through their definitions as abbreviations
+(#link(<def:derived-connectives>)[§1.1],
+#link(<def:exists-abbreviation>)[§3.1]).
+
+#definition(name: "Model")[
+  A sentence $phi$ is *true* in $M$ — written $M models phi$ — if
+  $M models phi[s]$ for some (and hence every, by the Coincidence
+  Lemma below) assignment $s$. A structure $M$ is a *model* of a set
+  $Gamma$ of sentences, written $M models Gamma$, if $M models phi$
+  for every $phi in Gamma$.
+] <def:model>
+
+#proposition(name: "Quantifier Satisfaction")[
+  For every formula $phi$, every variable $x$, every structure $M$,
+  and every assignment $s$:
+  $
+    M models forall x phi[s] quad &"iff" quad M models phi[s[x/a]] "for all" a in |M|, \
+    M models exists x phi[s] quad &"iff" quad M models phi[s[x/a]] "for some" a in |M|.
+  $
+  The first clause is the satisfaction clause for $forall$; the second
+  is its consequence via the abbreviation
+  $exists x phi := ¬ forall x ¬ phi$
+  (#link(<def:exists-abbreviation>)[§3.1]).
+] <prop:quantifier-satisfaction>
+
+#proof[
+  Only the existential clause needs a proof. By the abbreviation and
+  the clauses for $¬$ and $forall$:
+  $M models exists x phi[s]$ iff $M ⊭ forall x ¬ phi[s]$ iff it
+  is not the case that for all $a in |M|$, $M models ¬ phi[s[x/a]]$ iff
+  there is $a in |M|$ with $M ⊭ ¬ phi[s[x/a]]$ iff there is
+  $a in |M|$ with $M models phi[s[x/a]]$.
+]
+
+This clause is the one invoked in the proof of Herbrand's theorem
+(§3.4): the satisfaction of a universal sentence over the Herbrand
+universe reduces to the satisfaction of all its ground instances.
+
+#lemma(name: "Coincidence Lemma")[
+  Let $M$ be a structure.
+  + If assignments $s$ and $s'$ agree on the variables of a term $t$,
+    then $t^M [s] = t^M [s']$.
+  + If assignments $s$ and $s'$ agree on $"FV"(phi)$ for a formula
+    $phi$, then $M models phi[s]$ iff $M models phi[s']$.
+] <lem:coincidence>
+
+#proof[
+  Both claims are proved by induction, on terms and on formulas
+  respectively. The term clauses are immediate from the recursion of
+  #link(<eq:term-evaluation-def>)[term evaluation]; the atomic formula
+  clauses follow from the term claim, and the clauses for $¬$ and $->$
+  use the induction hypothesis directly. For the quantifier clause:
+  if $s$ and $s'$ agree on $"FV"(forall x phi) = "FV"(phi) ∖ {x}$,
+  then $s[x/a]$ and $s'[x/a]$ agree on $"FV"(phi)$ for every
+  $a in |M|$, so by the induction hypothesis $M models phi[s[x/a]]$
+  iff $M models phi[s'[x/a]]$ for all $a$; hence
+  $M models forall x phi[s]$ iff $M models forall x phi[s']$.
+]
+
+#lemma(name: "Satisfaction Respects Substitution")[
+  Let $t$ be a term and $x$ a variable, with $t$ substitutable for $x$
+  in the formulas involved (#link(<def:substitutable>)[§3.2]). For
+  every term $u$, every structure $M$, and every assignment $s$,
+  $
+    (u[t/x])^M [s] = u^M [s[x/t^M [s]]],
+  $
+  and for every formula $phi$,
+  $
+    M models phi[t/x][s] quad "iff" quad M models phi[s[x/t^M [s]]].
+  $
+] <lem:satisfaction-substitution>
+
+#proof[
+  The term claim follows by induction on $u$ from the recursion of
+  #link(<eq:term-evaluation-def>)[term evaluation]. The formula claim
+  is proved by induction on $phi$; the quantifier clause is the point
+  where substitutability is used: for $phi = forall y psi$ with
+  $y != x$ and $y not in "FV"(t)$, the assignments $s[y/a]$ and
+  $s[x/t^M [s]][y/a]$ agree with the induction hypothesis for $psi$,
+  and the substitution $phi[t/x] = forall y psi[t/x]$ is evaluated
+  under $s$ by quantifying over $a in |M|$ at $y$.
+]
+
+#proposition(name: "α-Equivalence Preserves Satisfaction")[
+  If $phi$ and $psi$ are α-equivalent
+  (#link(<def:alpha-equivalent>)[§3.2]), then for every structure $M$
+  and every assignment $s$: $M models phi[s]$ iff $M models psi[s]$.
+  In particular, satisfaction is well-defined on α-classes of formulas
+  — the requirement anticipated in the note closing §3.2.
+] <prop:alpha-invariance>
+
+#proof[
+  α-equivalence is generated by renaming a bound variable to a fresh
+  one; each renaming step is a substitution of a fresh variable for the
+  bound one, which is trivially substitutable and preserves
+  satisfaction by
+  #link(<lem:satisfaction-substitution>)[the Substitution Lemma]. The
+  claim follows by induction on the number of renaming steps, using
+  the α-class structure of
+  #link(<prop:alpha-equiv-class>)[§3.2].
+]
+
+#example(name: "The Standard Model of Arithmetic")[
+  Let $sigma_"ar"$ be the language of arithmetic
+  (#link(<ex:language-of-arithmetic>)[Example 3.1]) and $bb(N)$ the
+  structure with domain $bb(N)$, $0^M = 0$, $S^M (n) = n + 1$, $+^M$
+  and $dot^M$ the usual addition and multiplication, and $<^M$ the
+  usual ordering. The two Peano axioms of Example 3.1 are true in
+  $bb(N)$: $bb(N) models forall x forall y (S x = S y -> x = y)$ (the
+  successor map is injective on $bb(N)$) and
+  $bb(N) models forall x (¬ S x = 0)$ ($0$ is not a successor). These
+  verifications are purely semantic — they inspect the domain without
+  any proof system. Ch 9 returns to this structure and shows that no
+  finite set of first-order axioms characterizes it uniquely
+  (non-standard models).
+] <ex:model-arithmetic>
+
+== Semantic Consequence, Equivalence and Normal Form Correctness  // 逻辑后承、等价与范式正确性
+
+The satisfaction relation yields the semantic relations between
+formulas — logical consequence and logical equivalence — and the
+semantic classification of formulas and sets of sentences. This section
+also redeems the deferred verifications of §3.3: the quantifier duality,
+the prenex rules, and the satisfiability-preservation of Skolemization
+are now proved from the satisfaction clauses.
+
+#definition(name: "Logical Consequence")[
+  Let $Gamma$ be a set of formulas and $phi$ a formula. $phi$ is a
+  *logical consequence* of $Gamma$, written $Gamma models phi$, if for
+  every structure $M$ and every assignment $s$: whenever
+  $M models psi[s]$ for every $psi in Gamma$, also $M models phi[s]$.
+  For a singleton ${psi}$ we write $psi models phi$. If the
+  consequence holds for every structure and assignment, we say the
+  implication is *valid*.
+] <def:logical-consequence>
+
+This is the first-order analogue of the propositional notion
+(#link(<def:tautology>)[§1.8]): where Ch 1 quantified over truth-value
+valuations, we now quantify over structures and assignments.
+
+#definition(name: "Logical Equivalence")[
+  Formulas $phi$ and $psi$ are *logically equivalent*, written
+  $phi equiv psi$, if $phi models psi$ and $psi models phi$;
+  equivalently, $M models phi[s]$ iff $M models psi[s]$ for every
+  structure $M$ and every assignment $s$.
+] <def:logical-equivalence>
+
+#definition(name: "Theory")[
+  A *theory* is a set of sentences. A *model* of a theory $Gamma$ is a
+  structure $M$ with $M models Gamma$; the class of models is
+  $"Mod"(Gamma) = {M : M models Gamma}$. A theory is *consistent* if it
+  has a model, *complete* if for every sentence $phi$ exactly one of
+  $phi$, $¬ phi$ follows from it — these notions are revisited with the
+  proof system (Ch 5) and the compactness theorem (Ch 6).
+] <def:theory>
+
+#proposition(name: "Prenex and Duality Rules Verified")[
+  Let $phi, psi$ be formulas with $x not in "FV"(psi)$. Then the
+  duality identities and the eight prenex rules of §3.3 hold as logical
+  equivalences; in particular, by
+  #link(<thm:prenex-normal-form>)[the Prenex Normal Form Theorem of
+  §3.3], every formula is logically equivalent to a formula in prenex
+  normal form.
+] <prop:prenex-correctness>
+
+#proof[
+  This proves the equivalences whose verification was deferred in §3.3.
+  Each rule is verified directly from the satisfaction clauses of
+  #link(<eq:satisfaction-def>)[§4.2]; the condition $x not in "FV"(psi)$
+  enters through the Coincidence Lemma. As a representative case
+  consider the conjunction rule:
+  $M models (forall x phi) and psi[s]$ iff $M models forall x phi[s]$
+  and $M models psi[s]$ iff for all $a in |M|$, $M models phi[s[x/a]]$
+  and $M models psi[s]$ — and since $psi$ does not depend on the value
+  at $x$ (coincidence), the last conjunction is
+  $M models (phi and psi)[s[x/a]]$ for all $a in |M|$ — iff
+  $M models forall x (phi and psi)[s]$. The remaining rules are
+  checked identically; the implication rules use
+  $phi -> psi equiv ¬ phi or psi$
+  (#link(<def:implication>)[Definition 1.4]) together with the duality
+  identities.
+]
+
+#proposition(name: "Skolemization Preserves Satisfiability: Proof")[
+  Let $phi$ be a formula in prenex normal form and $phi^S$ its Skolem
+  form (in the language enlarged by the fresh Skolem symbols). Then
+  $phi$ is satisfiable if and only if $phi^S$ is satisfiable.
+] <prop:skolem-correctness>
+
+#proof[
+  This completes the proof deferred in §3.3. ($<=$) Any model of
+  $phi^S$ is a model of $phi$: the fresh Skolem symbols occur only in
+  the Skolem functions, and a model of $phi^S$ satisfies, for each
+  eliminated quantifier $exists y$, the matrix with the Skolem term in
+  place of $y$, so the existential quantifier is witnessed and the
+  original prenex formula holds. ($=>$) Let $M$ be a model of $phi$
+  and process the eliminated existential quantifiers from the left.
+  For a quantifier $forall x_1 dots forall x_k exists y$ with matrix
+  $psi$, the axiom of choice selects, for every tuple
+  $(a_1, dots, a_k) in |M|^k$, an element $b in |M|$ such that
+  $M models psi[s[x_1 / a_1] dots [x_k / a_k][y / b]]$ — such a $b$
+  exists because $M models phi$. Interpreting the fresh $k$-ary Skolem
+  function $f$ by $f^M (a_1, dots, a_k) = b$ and expanding $M$ with all
+  the chosen functions yields a model of $phi^S$.
+]
+
+#example(name: "Consequence in Action")[
+  In a signature with a constant $c$ and a unary relation symbol $R$,
+  the universal sentence implies its instances:
+  $forall x R(x) models R(c)$, since $c^M in |M|$ is an element of the
+  domain over which the universal quantifier ranges. As an illustration
+  that quantifier order cannot be reversed, take a structure with
+  domain $bb(N)$ and $R^M$ the relation $<=$: then
+  $bb(N) models forall x exists y R(x, y)$ but
+  $bb(N) ⊭ exists y forall x R(x, y)$ (no natural number is
+  <= all others), so $forall x exists y R(x, y) ⊭ exists y forall x R(x, y)$.
+] <ex:consequence-example>
+
+== Elementary Equivalence  // 初等等价
+
+Two structures for the same signature may be quite different as sets
+and yet agree on every first-order sentence. The relation capturing
+"indistinguishable by the first-order language" is elementary
+equivalence — the first notion of model theory proper. This section
+introduces it; its systematic study (elementary embeddings, the
+Tarski–Vaught test) belongs to Ch 7.
+
+#definition(name: "Elementary Equivalence")[
+  Structures $M$ and $N$ for the same signature $sigma$ are
+  *elementarily equivalent*, written $M equiv N$, if for every
+  sentence $phi$: $M models phi$ iff $N models phi$.
+] <def:elementary-equivalence>
+
+The symbol $equiv$ is shared with logical equivalence of formulas
+(§4.3); the context — structures or formulas — disambiguates the two
+notions. Elementary equivalence is an equivalence relation on the class
+of $sigma$-structures, by construction.
+
+#proposition(name: "Isomorphic Structures are Elementarily Equivalent")[
+  If $M$ and $N$ are isomorphic — there is a bijection
+  $h: |M| -> |N|$ preserving constants, functions, and relations, so
+  that $h (c^M) = c^N$, $h (f^M (a_1, dots, a_n)) =
+  f^N (h(a_1), dots, h(a_n))$, and
+  $R^M (a_1, dots, a_n)$ iff $R^N (h(a_1), dots, h(a_n))$ — then
+  $M equiv N$.
+] <prop:isomorphism-elementary>
+
+#proof[
+  By induction on formulas: for every isomorphism $h: M -> N$, every
+  assignment $s$ in $M$, and every formula $phi$,
+  $M models phi[s]$ iff $N models phi[h compose s]$, where
+  $h compose s$ is the assignment $v mapsto h(s(v))$. The term claim
+  $h (t^M [s]) = t^N [h compose s]$ is an induction on terms; the atomic
+  clauses then follow from the preservation of relations and equality;
+  the clauses for $¬$ and $->$ are immediate; and the quantifier clause
+  uses that $h$ is a bijection, so quantification over $a in |M|$ and
+  over $h(a) in |N|$ coincide. For sentences the claim reads
+  $M models phi$ iff $N models phi$, i.e. $M equiv N$.
+]
+
+#example(name: "Elementary Equivalence")[
+  For *finite* structures the converse holds: two finite structures
+  are elementarily equivalent if and only if they are isomorphic.
+  Indeed, one can write down a single sentence describing the
+  isomorphism type of a finite structure (an existential sentence
+  listing the elements up to equality and the truth values of all
+  atomic formulas), which is satisfied exactly by its isomorphic
+  copies. As a non-finite example, the dense linear orders
+  $(bb(Q), <)$ and $(bb(R), <)$ are elementarily equivalent: both
+  satisfy the theory of dense linear orders without endpoints, whose
+  completeness is established in Ch 7.
+] <ex:elementary-equivalence-example>
+
+#note[
+  Elementary equivalence is the entry point of Ch 7: elementary
+  embeddings refine the notion (they preserve all formulas, not only
+  sentences), the Tarski–Vaught test characterizes when a substructure
+  is elementary, and the completeness of DLO proved there makes the
+  example above rigorous.
+]
+
 #part("Metamathematics")  // 元数学：模型论、可计算性与不完备性
 
 = Metamathematics  // 元数学
@@ -1234,6 +1630,7 @@ closes the loop back to the propositional layer of Ch 1.
 - *#link(<cor:double-negation>)[Double Negation]*
 
 == E
+- *#link(<def:elementary-equivalence>)[Elementary Equivalence]*
 - *#link(<def:exists-abbreviation>)[Existential Quantifier]*
 
 == F
@@ -1247,7 +1644,12 @@ closes the loop back to the propositional layer of Ch 1.
 == I
 - *#link(<def:implication>)[Implication]*
 
+== L
+- *#link(<def:logical-consequence>)[Logical Consequence]*
+- *#link(<def:logical-equivalence>)[Logical Equivalence]*
+
 == M
+- *#link(<def:model>)[Model]*
 - *#link(<def:lukasiewicz-system>)[Modus Ponens (MP)]*
 
 == N
@@ -1263,12 +1665,14 @@ closes the loop back to the propositional layer of Ch 1.
 - *#link(<thm:reductio-ad-absurdum>)[Reductio ad Absurdum]*
 
 == S
+- *#link(<def:satisfaction>)[Satisfaction]*
 - *#link(<def:tautology>)[Satisfiable]*
 - *#link(<def:tautology>)[Semantic Consequence]*
 - *#link(<def:sentence>)[Sentence]*
 - *#link(<def:signature>)[Signature]*
 - *#link(<def:skolem-form>)[Skolem Normal Form]*
 - *#link(<thm:soundness-completeness>)[Soundness and Completeness]*
+- *#link(<def:structure>)[Structure]*
 - *#link(<def:substitutable>)[Substitutable]*
 - *#link(<def:substitution>)[Substitution]*
 
@@ -1276,6 +1680,7 @@ closes the loop back to the propositional layer of Ch 1.
 - *#link(<def:tautology>)[Tautology]*
 - *#link(<def:term>)[Term]*
 - *#link(<def:theorem>)[Theorem]*
+- *#link(<def:model>)[Truth]*
 
 == V
 - *#link(<def:valuation>)[Valuation]*
