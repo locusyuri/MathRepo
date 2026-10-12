@@ -2309,7 +2309,7 @@ and computation method of the Jordan canonical form.
     A(lambda) = mat(
       a_(11)(lambda), ..., a_(1 n)(lambda);
       a_(21)(lambda), ..., a_(2 n)(lambda);
-      dots.v, dots.v, dots.down, dots.v;
+      dots.v, dots.down, dots.v;
       a_(m 1)(lambda), ..., a_(m n)(lambda);
     ),
   $
@@ -2342,12 +2342,12 @@ and computation method of the Jordan canonical form.
 
   $
     mat(
-      d_1(lambda), 0, ..., 0;
-      0, d_2(lambda), ..., 0;
-      dots.v, dots.v, dots.down, dots.v;
+      d_1(lambda), 0, ..., 0, 0, ..., 0;
+      0, d_2(lambda), ..., 0, 0, ..., 0;
+      dots.v, dots.v, dots.down, dots.v, dots.v, dots.down, dots.v;
       0, 0, ..., d_(r)(lambda), 0, ..., 0;
       0, 0, ..., 0, 0, ..., 0;
-      dots.v, dots.v, dots.down, dots.v;
+      dots.v, dots.v, dots.down, dots.v, dots.v, dots.down, dots.v;
       0, 0, ..., 0, 0, ..., 0;
     ),
   $
