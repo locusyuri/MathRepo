@@ -535,6 +535,16 @@ matrix techniques, and operations of rank.
 ] <def:matrix-multiplication>
 
 === Block Partition of a Matrix // 矩阵的分块
+A matrix can also be viewed as an array of smaller *blocks*: a *block partition* of an
+$m times n$ matrix is achieved by drawing horizontal and vertical lines between certain
+rows and columns, subdividing it into submatrices (blocks). The resulting object, whose
+entries are themselves matrices, is called a *block matrix*; we write e.g.
+$A = mat(A_1, A_2; A_3, A_4)$, where each $A_i$ has a size determined by the subdivision.
+
+Matrix addition, scalar multiplication and transpose extend to block matrices block by
+block, provided the blocks have matching sizes. For multiplication, if $A$ and $B$ are
+partitioned so that the column partition of $A$ matches the row partition of $B$, then
+$A B$ can be computed block-wise exactly like ordinary scalar multiplication.
 
 #definition(name: "Kronecker Product")[
   Let $A = (a_(i j))_(m times n)$ be an $m times n$ matrix and $B = (b_(i j))_(p times q)$ a $p times q$ matrix.
@@ -551,34 +561,6 @@ matrix techniques, and operations of rank.
 
   of size $m p times n q$.
 ] <def:kronecker-product>
-
-#theorem(name: "Determinant Reduction Formula")[
-  Let $A$ be $m times m$, $B$ be $m times n$, $C$ be $n times m$, and $D$ be $n times n$.
-  Then:
-  - If $A$ is invertible, then
-
-    $
-      mat(A, B; C, D, delim: "|") = "det"(A) "det"(D - C A^(-1) B).
-    $
-
-  - If $D$ is invertible, then
-
-    $
-      mat(A, B; C, D, delim: "|") = "det"(D) "det"(A - B D^(-1) C).
-    $
-
-  - If both $A$ and $D$ are invertible, then
-
-    $
-      "det"(D) "det"(A - B D^(-1) C) = "det"(A) "det"(D - C A^(-1) B).
-    $
-] <thm:determinant-reduction-formula>
-
-#note[
-  The mnemonic is: for $mat(A, B; C, D, delim: "|")$, if $A$ is invertible, one factor is
-  $"det"(A)$ and the other factor is $D$ minus the product of the other three terms arranged
-  *clockwise*, where the middle one is the inverse matrix.
-]
 
 
 === Determinants of Products // 行列式乘积公式
@@ -612,7 +594,7 @@ The determinant of a product equals the product of the determinants — see #lin
   corresponding minors.
 ]
 
-== Inverse Matrix // 逆矩阵
+== Inverse Matrix and Matrix Equivalence // 逆矩阵与矩阵等价
 
 === Inverse Matrix and Its Operations // 逆矩阵及其运算
 
@@ -630,14 +612,85 @@ The determinant of a product equals the product of the determinants — see #lin
   - $(A B)^(-1) = B^(-1) A^(-1)$, and more generally $(A_1 ... A_k)^(-1) = A_k^(-1) ... A_1^(-1)$.
 ] <prop:operations-of-inverse>
 
+=== Elementary Matrix and Matrix Equivalence // 矩阵等价
+
+#definition(name: "Elementary Row and Column Operations")[
+  The following three operations, applied to the rows (resp. columns) of a matrix, are
+  called *elementary row* (resp. *column*) *operations*:
+  - *Row swapping*: interchange two rows (resp. columns);
+  - *Row scaling*: multiply a row (resp. column) by a non-zero scalar.
+  - *Row addition*: add a scalar multiple of one row (resp. column) to another;
+
+  A *combination of elementary row and column operations* is any finite sequence of these.
+] <def:elementary-operations>
+
+Applying a single elementary operation to the identity matrix produces an *elementary matrix*:
+
+#definition(name: "Elementary Matrix")[
+  An *elementary matrix* is obtained by performing a single elementary row operation on the
+  identity matrix $E$.
+
+  There are $3$ types of elementary row matrices (resp. column matrices):
+  - $P(i, j)$: interchanges rows $i$ and $j$ of $E$.
+  - $P(i(c))$: multiplies row $i$ of $E$ by a non-zero scalar $c$ of $E$.
+  - $P(i, j(k))$: adds $k$ times row $j$ of $E$ to row $i$.
+] <def:elementary-matrix>
+
+#property(name: "Properties of Elementary Matrices")[
+  For an $s times n$ matrix $A$, performing an elementary *row* operation on $A$ amounts
+  to multiplying $A$ on the left by the corresponding $s times s$ elementary row matrix;
+  an elementary *column* operation amounts to multiplying $A$ on the right by the
+  corresponding $n times n$ elementary column matrix.
+] <prop:elementary-matrix>
+
+The row swap $P(i, j)$ is already obtainable from the other two types:
+
 #proposition[
-  Elementary matrices are invertible, with
+  + $P(i, j)$ can be implemented by a sequence of $P(i(c))$ and $P(i, j(k))$ operations.
+  + Elementary matrices are invertible, with
   $
     P(i ,j)^(-1) = P(j, i), quad P(i(c))^(-1) = P(i(c^(-1))), quad P(i ,j(k))^(-1) = P(i, j(-k)).
   $
 ]
+Using elementary row and column operations, we can now compare matrices of the same size:
 
-=== Equivalent Propositions and Method of Inversion // 等价命题与求逆方法
+#definition(name: "Matrix Equivalence")[
+  Two matrices $A$ and $B$ of the same size are called *equivalent*, denoted $A equiv B$,
+  if they can be transformed into one another by a combination of elementary row and column
+  operations.
+] <def:matrix-equivalence>
+
+Equivalence is completely determined by the rank:
+
+#theorem(name: "Matrix Equivalence and Rank")[
+  Two matrices are equivalent if and only if they have the same rank.
+]
+
+#definition(name: "Canonical Form of Matrix Equivalence")[
+  Any $m times n$ matrix $A$ of rank $r$ is equivalent to the matrix
+
+  $
+    J_r = mat(I_r, O; O, O),
+  $
+
+  which is called the *canonical form* of matrix equivalence.
+] <def:canonical-form-of-equivalence>
+
+=== Generalized Inverse // 广义逆
+
+#definition(name: "Generalized Inverse")[
+  Let $A$ be an $m times n$ matrix. An $n times m$ matrix $X$ satisfying $A X A = A$ is called
+  a *generalized inverse* of $A$.
+] <def:generalized-inverse>
+
+#note[
+  The generalized inverse reduces to the usual inverse when $A$ is invertible. Among all
+  generalized inverses, the Moore-Penrose inverse is the uniquely defined one satisfying
+  additional symmetry conditions.
+]
+
+== Method of Inversion // 求逆方法
+=== Equivalent Propositions // 等价命题
 
 #corollary(name: "Determinant and Invertibility")[
   An $n times n$ matrix $A$ is invertible if and only if $"det"(A) != 0$.
@@ -714,79 +767,34 @@ The determinant of a product equals the product of the determinants — see #lin
     $A$ cannot be reduced to $E$, then $A$ is singular.
 ]
 
-=== Generalized Inverse // 广义逆
+=== Determinant Reduction Formula // 行列式约简公式
+#theorem(name: "Determinant Reduction Formula")[
+  Let $A$ be $m times m$, $B$ be $m times n$, $C$ be $n times m$, and $D$ be $n times n$.
+  Then:
+  - If $A$ is invertible, then
 
-#definition(name: "Generalized Inverse")[
-  Let $A$ be an $m times n$ matrix. An $n times m$ matrix $X$ satisfying $A X A = A$ is called
-  a *generalized inverse* of $A$.
-] <def:generalized-inverse>
+    $
+      mat(A, B; C, D, delim: "|") = "det"(A) "det"(D - C A^(-1) B).
+    $
+
+  - If $D$ is invertible, then
+
+    $
+      mat(A, B; C, D, delim: "|") = "det"(D) "det"(A - B D^(-1) C).
+    $
+
+  - If both $A$ and $D$ are invertible, then
+
+    $
+      "det"(D) "det"(A - B D^(-1) C) = "det"(A) "det"(D - C A^(-1) B).
+    $
+] <thm:determinant-reduction-formula>
 
 #note[
-  The generalized inverse reduces to the usual inverse when $A$ is invertible. Among all
-  generalized inverses, the Moore-Penrose inverse is the uniquely defined one satisfying
-  additional symmetry conditions.
+  The mnemonic is: for $mat(A, B; C, D, delim: "|")$, if $A$ is invertible, one factor is
+  $"det"(A)$ and the other factor is $D$ minus the product of the other three terms arranged
+  *clockwise*, where the middle one is the inverse matrix.
 ]
-
-== Elementary Matrix and Matrix Equivalence // 矩阵等价
-
-#definition(name: "Elementary Row and Column Operations")[
-  The following three operations, applied to the rows (resp. columns) of a matrix, are
-  called *elementary row* (resp. *column*) *operations*:
-  - *Row swapping*: interchange two rows (resp. columns);
-  - *Row scaling*: multiply a row (resp. column) by a non-zero scalar.
-  - *Row addition*: add a scalar multiple of one row (resp. column) to another;
-
-  A *combination of elementary row and column operations* is any finite sequence of these.
-] <def:elementary-operations>
-
-Applying a single elementary operation to the identity matrix produces an *elementary matrix*:
-
-#definition(name: "Elementary Matrix")[
-  An *elementary matrix* is obtained by performing a single elementary row operation on the
-  identity matrix $E$.
-
-  There are $3$ types of elementary row matrices (resp. column matrices):
-  - $P(i, j)$: interchanges rows $i$ and $j$ of $E$.
-  - $P(i(c))$: multiplies row $i$ of $E$ by a non-zero scalar $c$ of $E$.
-  - $P(i, j(k))$: adds $k$ times row $j$ of $E$ to row $i$.
-] <def:elementary-matrix>
-
-#property(name: "Properties of Elementary Matrices")[
-  For an $s times n$ matrix $A$, performing an elementary *row* operation on $A$ amounts
-  to multiplying $A$ on the left by the corresponding $s times s$ elementary row matrix;
-  an elementary *column* operation amounts to multiplying $A$ on the right by the
-  corresponding $n times n$ elementary column matrix.
-] <prop:elementary-matrix>
-
-The row swap $P(i, j)$ is already obtainable from the other two types:
-
-#proposition[
-  $P(i, j)$ can be implemented by a sequence of $P(i(c))$ and $P(i, j(k))$ operations.
-]
-
-Using elementary row and column operations, we can now compare matrices of the same size:
-
-#definition(name: "Matrix Equivalence")[
-  Two matrices $A$ and $B$ of the same size are called *equivalent*, denoted $A equiv B$,
-  if they can be transformed into one another by a combination of elementary row and column
-  operations.
-] <def:matrix-equivalence>
-
-Equivalence is completely determined by the rank:
-
-#theorem(name: "Matrix Equivalence and Rank")[
-  Two matrices are equivalent if and only if they have the same rank.
-]
-
-#definition(name: "Canonical Form of Matrix Equivalence")[
-  Any $m times n$ matrix $A$ of rank $r$ is equivalent to the matrix
-
-  $
-    J_r = mat(I_r, O; O, O),
-  $
-
-  which is called the *canonical form* of matrix equivalence.
-] <def:canonical-form-of-equivalence>
 
 == Special Square Matrices // 特殊方阵
 
