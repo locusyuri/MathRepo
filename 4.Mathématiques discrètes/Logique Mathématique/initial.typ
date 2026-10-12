@@ -18,14 +18,14 @@
   subtitle: "A notebook for mathematical logic",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.6.0",
+  version: "v0.7.0",
   extra-info: "This is a notebook for mathematical logic.",
 )
 
 #make-outline(depth: 2, title: "Contents")
 
 // ==========================================================================
-// 目录蓝图 (Planned Outline) — v0.6.0
+// 目录蓝图 (Planned Outline) — v0.7.0
 // 主线：语言基础 → 主体理论 → 元数学 → 扩展（四段式）
 // 参照 Analyse Mathématique：每个 Part 容纳 2–4 章实质内容
 // 状态标记：[已写] 已完成 · [计划] 待写作 · [可选] 按需取舍
@@ -74,11 +74,11 @@
 //     （逻辑后承、等价与范式正确性；兑现 Ch 3 前束/斯科伦验证承诺）
 //   Section 4.4: Elementary Equivalence（初等等价）
 
-// --- Chapter 5: Proof Theory and Completeness（证明论与完全性）--- [计划]
+// --- Chapter 5: Proof Theory and Completeness（证明论与完全性）--- [已写，v0.7.0]
 //   Section 5.1: Hilbert System for FOL（一阶 Hilbert 系统：量词公理 + Generalization）
 //   Section 5.2: Deduction Theorem for FOL（一阶演绎定理与推广规则约束）
 //   Section 5.3: Soundness（可靠性）
-//   Section 5.4: Henkin Completeness（Henkin 完全性）
+//   Section 5.4: Henkin Completeness（Henkin 完全性；全书核心定理，已证）
 
 // --- Chapter 6: Compactness and Löwenheim–Skolem（紧致性与 L-S）--- [计划]
 //   Section 6.1: Compactness Theorem（紧致性定理）
@@ -139,8 +139,8 @@
 //   （范式、归结、紧致性），形成命题层闭环。
 //
 // Part II（主体理论，Ch 3–6）：一阶逻辑。语法 → 语义 → 证明论 →
-//   紧致性/L-S；Henkin 完全性为全书核心定理。Ch 3 语法章与 Ch 4 语义章
-//   已完成（v0.6.0）。
+//   紧致性/L-S。Ch 3 语法、Ch 4 语义、Ch 5 证明论与 Henkin 完全性
+//   已完成（v0.7.0）；Ch 5.4 Henkin 完全性（全书核心定理）已证。
 //
 // Part III（元数学，Ch 7–9）：模型论（理论有哪些模型）→ 可计算性（能算什么）
 //   → 不完备性（证不出什么），元理论两翼递进。
@@ -273,7 +273,7 @@ system whose formulas are constructed from a fixed alphabet.
   for $n >= 0$,
   $
     L_(n+1)(A) = L_(n)(A) union {(f p_1 dots p_j) | p_i in L_(n)(A) "for all" i,
-      "and" p_k not in L_(n-1)(A) "for some" k},
+      "and" p_k in.not L_(n-1)(A) "for some" k},
   $
   with $L_(-1)(A) = emptyset$. Then
   $L(A) = union.big_(n >= 0) L_(n)(A)$, and every formula first appears
@@ -551,7 +551,7 @@ hold for all formulas $p, q, r$:
     consistent; since every proof uses only finitely many formulas, a
     contradiction from $Gamma^*$ would already arise from some
     $Gamma_n$, so $Gamma^*$ is consistent. Moreover $Gamma^*$ is
-    *maximal consistent*: if $q not in Gamma^*$, then $q = p_k$ for
+    *maximal consistent*: if $q in.not Gamma^*$, then $q = p_k$ for
     some $k$, and $Gamma_k union {q}$ was inconsistent at step $k$,
     so $Gamma^* union {q}$ is inconsistent.
 
@@ -559,7 +559,7 @@ hold for all formulas $p, q, r$:
     $Gamma^*$:
     - *Deductive closure.* $Gamma^* ⊢ q$ iff $q in Gamma^*$. The
       "if" direction is the assumption rule. Conversely, if
-      $Gamma^* ⊢ q$ but $q not in Gamma^*$, then
+      $Gamma^* ⊢ q$ but $q in.not Gamma^*$, then
       $Gamma^* union {q}$ is inconsistent, so for some $r$ both
       $Gamma^* union {q} ⊢ r$ and $Gamma^* union {q} ⊢ ¬ r$ hold; by
       the #link(<thm:deduction-theorem>)[Deduction Theorem],
@@ -585,17 +585,17 @@ hold for all formulas $p, q, r$:
     $
     - If $p in A$, this is the definition of $v$.
     - If $p = ¬ q$, then $v(¬ q) = 1$ iff $v(q) = 0$ iff
-      $q not in Gamma^*$ iff $¬ q in Gamma^*$ (by Step 2).
-    - If $p = q -> r$: if $q not in Gamma^*$, then $¬ q in Gamma^*$
+      $q in.not Gamma^*$ iff $¬ q in Gamma^*$ (by Step 2).
+    - If $p = q -> r$: if $q in.not Gamma^*$, then $¬ q in Gamma^*$
       and $⊢ ¬ q -> (q -> r)$ (Principle of Explosion), so
       $q -> r in Gamma^*$; if $r in Gamma^*$, then
       $r -> (q -> r)$ is an instance of (L1), so
       $q -> r in Gamma^*$. Conversely, if $q -> r in Gamma^*$ and
       $q in Gamma^*$, then $r in Gamma^*$ by MP and deductive closure;
-      hence $q -> r in Gamma^*$ implies $q not in Gamma^*$ or
+      hence $q -> r in Gamma^*$ implies $q in.not Gamma^*$ or
       $r in Gamma^*$. This matches the truth table of $->$.
 
-  + *Step 4.* If $Gamma ⊬ p$, then $p not in Gamma^*$ (deductive
+  + *Step 4.* If $Gamma ⊬ p$, then $p in.not Gamma^*$ (deductive
     closure, as $Gamma subset.eq Gamma^*$), so $v(p) = 0$ by the truth
     lemma, while $v$ satisfies every formula of $Gamma$. Hence
     $Gamma ⊭ p$, and the contrapositive is proved.
@@ -861,7 +861,7 @@ axioms of Ch 5 will consume.
 #lemma(name: "Basic Properties of Substitution")[
   Let $phi in "Fml"(sigma)$, $t in "Term"(sigma)$, and
   $x in "Var"$.
-  + If $x not in "FV"(phi)$, then $phi[t / x] = phi$.
+  + If $x in.not "FV"(phi)$, then $phi[t / x] = phi$.
   + If $t$ is closed, then
     $"FV"(phi[t / x]) subset.eq "FV"(phi) backslash {x}$.
   + If $t$ is substitutable for $x$ in $phi$, then
@@ -904,7 +904,7 @@ axioms of Ch 5 will consume.
   Reflexivity, symmetry, and transitivity hold because $~_alpha$ is
   by definition the smallest equivalence relation containing the
   renaming steps. For the single step $forall x phi ~
-  forall y (phi[y / x])$ with $y not in phi$, the variable $y$ is
+  forall y (phi[y / x])$ with $y in.not phi$, the variable $y$ is
   substitutable for $x$ in $phi$, so by
   #link(<lem:substitution-basic>)[substitution (c)],
   $
@@ -972,7 +972,7 @@ at hand; the algorithms themselves are purely syntactic.
 ] <lem:quantifier-duality>
 
 #proposition(name: "Prenex Rules")[
-  Let $phi, psi$ be formulas and $x not in "FV"(psi)$. Then the
+  Let $phi, psi$ be formulas and $x in.not "FV"(psi)$. Then the
   following logical equivalences hold — the condition on $x$ is what
   licenses pulling the quantifier past $psi$:
   $
@@ -1380,7 +1380,7 @@ universe reduces to the satisfaction of all its ground instances.
   #link(<eq:term-evaluation-def>)[term evaluation]. The formula claim
   is proved by induction on $phi$; the quantifier clause is the point
   where substitutability is used: for $phi = forall y psi$ with
-  $y != x$ and $y not in "FV"(t)$, the assignments $s[y/a]$ and
+  $y != x$ and $y in.not "FV"(t)$, the assignments $s[y/a]$ and
   $s[x/t^M [s]][y/a]$ agree with the induction hypothesis for $psi$,
   and the substitution $phi[t/x] = forall y psi[t/x]$ is evaluated
   under $s$ by quantifying over $a in |M|$ at $y$.
@@ -1460,7 +1460,7 @@ valuations, we now quantify over structures and assignments.
 ] <def:theory>
 
 #proposition(name: "Prenex and Duality Rules Verified")[
-  Let $phi, psi$ be formulas with $x not in "FV"(psi)$. Then the
+  Let $phi, psi$ be formulas with $x in.not "FV"(psi)$. Then the
   duality identities and the eight prenex rules of §3.3 hold as logical
   equivalences; in particular, by
   #link(<thm:prenex-normal-form>)[the Prenex Normal Form Theorem of
@@ -1471,7 +1471,7 @@ valuations, we now quantify over structures and assignments.
 #proof[
   This proves the equivalences whose verification was deferred in §3.3.
   Each rule is verified directly from the satisfaction clauses of
-  #link(<eq:satisfaction-def>)[§4.2]; the condition $x not in "FV"(psi)$
+  #link(<eq:satisfaction-def>)[§4.2]; the condition $x in.not "FV"(psi)$
   enters through the Coincidence Lemma. As a representative case
   consider the conjunction rule:
   $M models (forall x phi) and psi[s]$ iff $M models forall x phi[s]$
@@ -1584,6 +1584,369 @@ of $sigma$-structures, by construction.
   example above rigorous.
 ]
 
+= Proof Theory and Completeness // 证明论与完全性
+
+Ch 3 built the language and Ch 4 gave it meaning; this chapter builds a
+*proof system* on top of the syntax and proves that the two notions of
+consequence coincide: the semantic $models$ of Ch 4 and the syntactic
+$tack$ defined here. The climax is the Henkin completeness theorem, the
+central theorem of the book: a set of sentences is consistent exactly
+when it has a model. Everything downstream — compactness (Ch 6), the
+model theory of Part III, the undecidability of first-order logic
+(Ch 8) — rests on this identification.
+
+== The Hilbert System for First-Order Logic // 一阶 Hilbert 系统
+
+The proof system is the axiomatic one of Ch 1, lifted to first-order
+logic: logical axiom schemata plus the rules of inference. The
+propositional fragment of Ch 1 is reused verbatim, and two new axiom
+schemata govern the quantifier and the equality symbol. The equality
+axiom is the proof-theoretic content of the convention of §3.1
+(promised at L645).
+
+#definition(name: "Logical Axioms of First-Order Logic")[
+  The *logical axioms* of first-order logic consist of three groups.
+  (A1) *Propositional tautologies*: every instance of a tautology of
+  propositional logic, i.e. every formula of the form of a tautology of
+  §1.8 with propositional variables replaced by first-order formulas.
+  (A2) *Universal instantiation*: for every formula $phi$, every
+  variable $x$, and every term $t$ substitutable for $x$ in $phi$,
+  $forall x phi -> phi[t/x]$.
+  (A3) *Equality axioms*: for all variables $x$, $y$,
+  $forall x (x = x)$, and
+  $forall x forall y (x = y -> (phi -> phi'))$,
+  where $phi'$ results from $phi$ by replacing some free occurrences of
+  $x$ by $y$.
+] <def:fol-axioms>
+
+#definition(name: "Generalization")[
+  The rule of *generalization* (Gen) allows deriving $forall x phi$
+  from $phi$, provided that the variable $x$ does not occur free in any
+  premise of the derivation in which $phi$ occurs.
+] <def:generalization>
+
+#definition(name: "Derivation in First-Order Logic")[
+  A *derivation* of $phi$ from $Gamma$ — written $Gamma tack phi$ — is
+  a finite sequence of formulas ending in $phi$, each of which is either
+  a logical axiom (Definition 5.1), a formula of $Gamma$, or obtained
+  from earlier formulas by Modus Ponens (Definition 1.3) or by
+  Generalization (Definition 5.2). As in §1.4, $tack phi$ abbreviates
+  $emptyset tack phi$; a *theorem* is a formula derivable from
+  $emptyset$. The formulas of $Gamma$ are the *premises* (or *hypotheses*)
+  of the derivation.
+] <def:fol-derivation>
+
+#example(name: "First Derivations")[
+  The axiom (A2) with $phi = R(x, x)$ and $t = c$ yields
+  $tack forall x R(x, x) -> R(c, c)$, an instance of universal
+  instantiation. To see Generalization at work: the formula
+  $R(x, x) -> (S(x) -> R(x, x))$ is an instance of the propositional
+  tautology $p -> (q -> p)$ of (A1). Since this derivation has no
+  premises, $x$ is not free in any premise, and Generalization yields
+  $tack forall x (R(x, x) -> (S(x) -> R(x, x)))$.
+] <ex:fol-proof-example>
+
+#note[
+  The equality axioms (A3) are the proof-theoretic counterpart of the
+  convention of §3.1 that $=$ is a logical symbol interpreted as genuine
+  identity (§4.2); they redeem the promise made at L645. The
+  existential quantifier is not primitive: a formula $exists x phi$
+  abbreviates $not forall x not phi$ (§3.1), so existential reasoning in
+  derivations flows through the negation and the axiom (A2). The
+  deduction theorem of §5.2 will hinge on the restriction built into
+  Generalization.
+]
+
+== The Deduction Theorem for First-Order Logic // 一阶演绎定理
+
+The deduction theorem of Ch 1 carries over to first-order logic with
+one qualification: Generalization can export a variable that is free in
+the discharged hypothesis. The classical formulation restricts exactly
+that step.
+
+#theorem(name: "Deduction Theorem for First-Order Logic")[
+  If $Gamma, phi tack psi$ and no application of Generalization in the
+  derivation quantifies a variable free in $phi$, then
+  $Gamma tack phi -> psi$.
+] <thm:deduction-theorem-fol>
+
+#proof[
+  As in §1.5, induct on the length of the derivation of $psi$ from
+  $Gamma union {phi}$. The cases where $psi$ is a logical axiom, a
+  formula of $Gamma$, or the hypothesis $phi$ itself are as before
+  (the last uses the tautology $phi -> phi$). The case of Modus Ponens
+  uses the propositional tautology
+  $(chi -> psi) -> ((phi -> chi) -> (phi -> psi))$. The new case is
+  Generalization: $psi = forall x chi$ is obtained from $chi$ by Gen,
+  and by hypothesis $x$ is not free in $phi$. By the induction
+  hypothesis $Gamma tack phi -> chi$. The scheme
+  $forall x (phi -> chi) -> (phi -> forall x chi)$, valid when $x$ is
+  not free in $phi$, is derivable from (A1)–(A2): universally
+  instantiate (A2) to pass $phi -> chi$ under $forall x$, then use the
+  tautologies to rearrange, and discharge with Gen. Applying Gen to
+  $phi -> chi$ (allowed, since $x$ is not free in any premise of the
+  subderivation and not free in $phi$) and then Modus Ponens with this
+  scheme yields $Gamma tack phi -> forall x chi$.
+]
+
+The qualification cannot be dropped: with $x$ free in $phi$,
+$phi -> forall x phi$ is not a logical consequence of $phi$'s being
+derivable. Semantically, in a structure $M$ with two elements and a
+unary relation $R$ holding of exactly one element, the assignment
+$s(x) = a$ with $not R(a)$ satisfies $R(x)$ but not $forall x R(x)$,
+so $M ⊭ R(x) -> forall x R(x)$ under $s$ (Ch 4). Any system proving
+$R(x) -> forall x R(x)$ would therefore be unsound.
+
+#caution[
+  The restriction "no Gen quantifies a variable free in the discharged
+  hypothesis" is the *only* obstacle: without it the deduction theorem
+  fails, and with it the theorem holds for arbitrary premises
+  $Gamma$. This is precisely the condition recorded in
+  #link(<def:generalization>)[Generalization (Definition 5.2)].
+] <caution:gen-restriction>
+
+#note[
+  All derived rules of propositional logic — Hypothetical Syllogism,
+  Reductio ad Absurdum, Negation Reversal (§1.5) — remain valid inside
+  first-order derivations, since they are proved from tautologies and
+  Modus Ponens only. The deduction theorem makes them available under
+  hypotheses as well, subject to the Gen restriction above.
+]
+
+== Soundness // 可靠性
+
+Soundness asserts that the proof system proves no falsehood: whatever
+is derivable is a genuine logical consequence. The proof checks each
+axiom schema against the satisfaction relation of Ch 4 and each rule
+against validity.
+
+#theorem(name: "Soundness of First-Order Logic")[
+  If $Gamma tack phi$, then $Gamma models phi$.
+] <thm:soundness-fol>
+
+#proof[
+  Induct on the length of the derivation; it suffices to verify the
+  axioms and the two rules. (A1) An instance of a propositional
+  tautology is satisfied by every structure under every assignment:
+  substituting first-order formulas for propositional variables in a
+  tautology preserves truth under any truth assignment induced by
+  satisfaction. (A2) Fix $M$ and $s$; assume $M models forall x phi[s]$.
+  By the satisfaction clause for $forall x$ (Definition 4.4),
+  $M models phi[s[x/a]]$ for every $a in |M|$, in particular for
+  $a = t^M [s]$. The Substitution Lemma
+  (#link(<lem:satisfaction-substitution>)[Ch 4]) — applicable because
+  $t$ is substitutable for $x$ in $phi$ — yields
+  $M models phi[t/x][s]$, hence $M models (forall x phi -> phi[t/x])[s]$.
+  (A3) The clause $forall x (x = x)$ is immediate from the equality
+  clause of satisfaction. For $x = y -> (phi -> phi')$: if
+  $M models x = y[s]$, then $s(x) = s(y)$, and the Substitution Lemma
+  again gives $M models phi[s]$ iff $M models phi'[s]$, so the
+  implication holds. Rules: Modus Ponens preserves truth by the clause
+  for $->$. For Generalization, assume $x$ is not free in any premise
+  of the derivation and $M models phi[s]$ follows from $Gamma models phi$
+  for every $M, s$. Then $M models forall x phi[s]$ by the quantifier
+  clause, since modifying $s$ at $x$ changes nothing that $phi$ reads.
+]
+
+The dual formulation — consistency is a semantic notion in disguise —
+is the stepping stone to completeness:
+
+#lemma(name: "Consistency Implies Satisfiability")[
+  If $Gamma$ is a consistent set of sentences in a countable signature,
+  then $Gamma$ is satisfiable.
+] <lem:consistency-satisfiable>
+
+The proof is the Henkin construction of §5.4: extend $Gamma$ to a
+maximal consistent set with witnesses, form the term model, and verify
+that it satisfies $Gamma$. The lemma is stated here to mark the pivot:
+soundness says "derivable implies valid", this lemma says "not
+derivable-consistent implies has a model", and the two meet in the
+completeness theorem.
+
+#note[
+  Soundness has a practical reading: any $Gamma$ with a model cannot
+  be inconsistent, and any formula $phi$ with $Gamma tack phi$ is true
+  in every model of $Gamma$ (#link(<def:model>)[Definition 4.5]). The
+  semantic notions of Ch 4 — consequence, equivalence, theory — are
+  therefore the yardstick against which the proof system is measured;
+  the converse direction is the content of §5.4.
+]
+
+== Henkin Completeness // Henkin 完全性
+
+The completeness theorem closes the loop: everything semantically
+entailed is syntactically derivable. The proof, due to Henkin, is
+constructive in a strong sense — it *builds* a model out of the syntax
+of a consistent theory. The figure below sketches the four stages.
+
+#figure(
+  image("img/henkin-flow.svg", width: 85%),
+  caption: [
+    The Henkin construction: extend to a maximal consistent set with
+    witnesses, form the term model, verify truth, and conclude.
+  ],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:henkin-flow>
+
+We work with a countable signature (a countably infinite set of
+sentences can then be enumerated); the uncountable case follows the
+same pattern with transfinite iteration, which we do not need.
+
+#lemma(name: "Lindenbaum's Lemma")[
+  Every consistent set $Gamma$ of sentences extends to a *maximal
+  consistent* set $Gamma^+$: $Gamma subset Gamma^+$, $Gamma^+$ is
+  consistent, and for every sentence $phi$ exactly one of $phi$ and
+  $not phi$ belongs to $Gamma^+$.
+] <lem:lindenbaum>
+
+#proof[
+  Enumerate all sentences of the language: $phi_0, phi_1, phi_2, dots$.
+  Define $Gamma_0 = Gamma$ and, given $Gamma_n$, let
+  $Gamma_(n+1) = Gamma_n union {phi_n}$ if this set is consistent, and
+  $Gamma_(n+1) = Gamma_n$ otherwise. Let
+  $Gamma^+ = union_(n in bb(N)) Gamma_n$. Consistency of $Gamma^+$
+  follows by compactness of finite subderivations: a contradiction from
+  $Gamma^+$ would use finitely many formulas, all already present in
+  some $Gamma_n$. Maximality: if $phi_n$ were added, it was consistent
+  to do so; if not, $Gamma_n union {phi_n}$ was inconsistent, so
+  $Gamma_n tack not phi_n$ by the propositional metatheorem of §1.6,
+  and $not phi_n in Gamma^+$ by a further closure argument. Hence for
+  every $n$ exactly one of $phi_n, not phi_n$ is in $Gamma^+$. Moreover
+  $Gamma^+$ is *deductively closed*: if $Gamma^+ tack psi$, then
+  $psi in Gamma^+$ — otherwise $Gamma^+ union {psi}$ would be
+  consistent, contradicting maximality.
+]
+
+#lemma(name: "Henkin Expansion")[
+  Let $Gamma^+$ be a maximal consistent set. Adding to the language a
+  countable set of new constant symbols, one witness constant $c$ for
+  each formula of the form $exists x phi$, and adding every sentence
+  $exists x phi -> phi[c/x]$, yields a maximal consistent set
+  $Gamma^*$ with the *witness property*: if $exists x phi in Gamma^*$,
+  then $phi[c/x] in Gamma^*$ for the witness constant $c$ of
+  $exists x phi$.
+] <lem:henkin-expansion>
+
+#proof[
+  Add the witnesses one at a time and show each addition preserves
+  consistency. Suppose $Gamma$ is consistent, $exists x phi$ is a
+  sentence, $c$ is a new constant, and
+  $Gamma union {exists x phi -> phi[c/x]}$ were inconsistent. Then
+  $Gamma tack not (exists x phi -> phi[c/x])$, i.e.
+  $Gamma tack exists x phi$ and $Gamma tack not phi[c/x]$ (tautology
+  rearrangement). Since $c$ occurs nowhere in $Gamma$ or in $phi$, the
+  derivation of $not phi[c/x]$ can be generalized: replacing $c$ by a
+  variable $y$ not occurring anywhere in the derivation shows
+  $Gamma tack forall y not phi[y/x]$, whence $Gamma tack not exists x phi$,
+  contradicting consistency. Repeating countably many times keeps the
+  whole process consistent, and maximality is preserved since the added
+  sentences are forced by $Gamma^+$.
+]
+
+#definition(name: "Term Model")[
+  Let $Gamma^*$ be a maximal consistent set with the witness property.
+  The *term model* $M$ of $Gamma^*$ is the structure whose domain is the
+  set of equivalence classes of closed terms under the relation
+  $t approx u$ iff $(t = u) in Gamma^*$; constants and function symbols
+  act on classes by $c^M = [c]$ and
+  $f^M ([t_1], dots, [t_n]) = [f(t_1, dots, t_n)]$; and
+  $R^M ([t_1], dots, [t_n])$ holds iff $R(t_1, dots, t_n) in Gamma^*$.
+] <def:term-model>
+
+The relation $approx$ is well behaved: the equality axiom
+$forall x (x = x)$ and the replacement scheme (A3) make $approx$
+reflexive, symmetric, and transitive, and make the definitions of
+$f^M$ and $R^M$ independent of the chosen representatives — two classes
+agreeing on $=$ satisfy the same atomic formulas by the substitution
+part of (A3).
+
+#lemma(name: "Truth Lemma")[
+  Let $M$ be the term model of $Gamma^*$. For every closed term $t$ and
+  every sentence $phi$:
+  $t^M = [t]$, and $M models phi$ iff $phi in Gamma^*$.
+] <lem:truth-lemma>
+
+#proof[
+  The term claim is an induction on closed terms. For sentences,
+  induct on the construction of $phi$. Atomic: $M models t_1 = t_2$
+  iff $[t_1] = [t_2]$ iff $(t_1 = t_2) in Gamma^*$; and
+  $M models R(t_1, dots, t_n)$ iff
+  $R^M ([t_1], dots, [t_n])$ iff $R(t_1, dots, t_n) in Gamma^*$.
+  The clauses for $¬$ and $->$ use maximal consistency. For
+  $forall x phi(x)$, first relativize to closed instances: by induction
+  $M models forall x phi(x)$ iff $M models phi(t)$ for every closed
+  term $t$ (the domain consists of classes of closed terms), iff
+  $phi(t) in Gamma^*$ for every closed $t$. If
+  $forall x phi(x) in Gamma^*$, then each $phi(t) in Gamma^*$ by (A2)
+  and deductive closure. Conversely, if every $phi(t) in Gamma^*$ but
+  $forall x phi(x) in.not Gamma^*$, then
+  $exists x not phi(x) in Gamma^*$ by maximality; the witness property
+  gives a constant $c$ with $not phi[c/x] in Gamma^*$, contradicting
+  $phi(c) in Gamma^*$. Hence $M models forall x phi(x)$ iff
+  $forall x phi(x) in Gamma^*$.
+]
+
+#theorem(name: "Henkin Completeness Theorem")[
+  Every consistent set $Gamma$ of sentences in a countable signature
+  has a model.
+] <thm:henkin-completeness>
+
+#proof[
+  Extend $Gamma$ to a maximal consistent $Gamma^+$
+  (#link(<lem:lindenbaum>)[Lindenbaum]), then to
+  $Gamma^*$ with witnesses (#link(<lem:henkin-expansion>)[Henkin
+  Expansion]). The term model $M$ of $Gamma^*$
+  (#link(<def:term-model>)[Definition 5.4]) satisfies every sentence of
+  $Gamma^*$ by the #link(<lem:truth-lemma>)[Truth Lemma]; since
+  $Gamma subset Gamma^+ subset Gamma^*$, $M models Gamma$.
+]
+
+#corollary(name: "Completeness in Consequence Form")[
+  If $Gamma models phi$ for a countable signature, then
+  $Gamma tack phi$.
+] <cor:completeness-form>
+
+#proof[
+  Suppose $Gamma tack phi$ fails. Then $Gamma union {not phi}$ is
+  consistent (otherwise $Gamma tack phi$ by Reductio ad Absurdum and
+  the deduction theorem), so by the Henkin theorem it has a model $M$
+  with $M models Gamma$ and $M ⊭ phi$, contradicting
+  $Gamma models phi$.
+]
+
+#corollary(name: "Countable Model Existence")[
+  Every satisfiable countable theory has a countable model.
+] <cor:model-existence>
+
+The term model of a countable theory is countable: its domain is made of
+countably many closed terms modulo $approx$. This is the downward
+Löwenheim–Skolem phenomenon, to be studied in Ch 6.
+
+#example(name: "A Term Model in Miniature")[
+  Let $Gamma = {exists x R(x)}$ with $R$ a unary relation symbol and no
+  other symbols. Lindenbaum completes $Gamma$, and Henkin expansion adds
+  a witness constant $c$ with $exists x R(x) -> R(c) in Gamma^*$. The
+  only closed terms are $c$ (and, if present, the original constants),
+  so the domain of the term model is the single class $[c]$ (modulo
+  equality with any original constant it is forced to equal).
+  $R^M ([c])$ holds iff $R(c) in Gamma^*$, which the witness property
+  guarantees: $M models exists x R(x)$. The construction realizes the
+  existential witness as an element of the model — the essence of the
+  Henkin method.
+] <ex:henkin-model>
+
+#note[
+  Henkin completeness is the engine of the rest of the book. Compactness
+  and the Löwenheim–Skolem theorems are direct corollaries (Ch 6); the
+  theory of complete theories and categoricity, and the completeness of
+  DLO, are developed in Ch 7; and the undecidability of first-order
+  logic (Ch 8) combines completeness with computability. Together with
+  Soundness (§5.3), it closes the loop $Gamma models phi$ iff
+  $Gamma tack phi$ — the syntactic and the semantic notions of
+  consequence coincide.
+]
+
 #part("Metamathematics")  // 元数学：模型论、可计算性与不完备性
 
 = Metamathematics  // 元数学
@@ -1637,7 +2000,11 @@ of $sigma$-structures, by construction.
 - *#link(<def:first-order-formula>)[First-Order Formula]*
 - *#link(<def:free-bound-variable>)[Free and Bound Variables]*
 
+== G
+- *#link(<def:generalization>)[Generalization (Gen)]*
+
 == H
+- *#link(<thm:henkin-completeness>)[Henkin Completeness Theorem]*
 - *#link(<thm:herbrand>)[Herbrand's Theorem]*
 - *#link(<cor:hypothetical-syllogism>)[Hypothetical Syllogism (HS)]*
 
@@ -1679,6 +2046,7 @@ of $sigma$-structures, by construction.
 == T
 - *#link(<def:tautology>)[Tautology]*
 - *#link(<def:term>)[Term]*
+- *#link(<def:term-model>)[Term Model]*
 - *#link(<def:theorem>)[Theorem]*
 - *#link(<def:model>)[Truth]*
 
