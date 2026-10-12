@@ -395,17 +395,41 @@ assumptions alone.
 ]
 
 #definition(name: "Speed Distribution")[
-  The probability density of the speed $v = norm(bold(v))$ follows by
-  integrating the velocity density over the spherical shell
-  $v < norm(bold(v)) < v + dif v$ of volume $4 pi v^2 dif v$:
+  In a gas of $N$ molecules whose velocities follow the Maxwell
+  distribution, the number of molecules with speeds in $[v, v + dif v]$
+  is
   $
-    F(v) = 4 pi v^2 (m / (2 pi k_B T))^(3/2)
-    exp(- m v^2 / (2 k_B T)).
+    dif N = N f(v) dif v,
   $
+  which defines the *speed distribution function*
+  $
+    f(v) = (dif N)/(N dif v) = 4 pi v^2 (m / (2 pi k_B T))^(3/2)
+    exp(- m v^2 / (2 k_B T)),
+  $
+  normalised so that $integral_0^infinity f(v) dif v = 1$.
 ] <def:speed-distribution>
 
-The factor $4 pi v^2$ — the volume of the shell — reshapes the Gaussian
+The formula follows by integrating the velocity density over the
+spherical shell $v < norm(bold(v)) < v + dif v$ of volume
+$4 pi v^2 dif v$. That factor — the shell volume — reshapes the Gaussian
 into a law with a rising front and a long tail.
+
+#property(name: "Reading the Distribution")[
+  The distribution function $f(v)$ answers four counting questions:
+
+  - $N f(v) dif v$ is the *number of molecules* with speeds in
+    $[v, v + dif v]$;
+  - $n f(v) dif v$ is the corresponding *number density* of such
+    molecules;
+  - $integral_(v_1)^(v_2) N f(v) dif v$ is the *number of molecules*
+    with speeds in $[v_1, v_2]$;
+  - $integral_(v_1)^(v_2) n f(v) dif v$ is the corresponding *number
+    density*.
+
+  Dividing the count by $N$ gives the *fraction* of molecules in the
+  interval, $integral_(v_1)^(v_2) f(v) dif v$ — literally the area
+  under the curve $f(v)$ between $v_1$ and $v_2$.
+] <prop:reading-speed-distribution>
 
 #property(name: "Characteristic Speeds")[
   Three speeds characterise the Maxwell distribution:
@@ -422,7 +446,7 @@ into a law with a rising front and a long tail.
 ] <prop:characteristic-speeds>
 
 #proof[
-  The most probable speed maximises $F$: setting
+  The most probable speed maximises $f(v)$: setting
   $dif (v^2 exp(-alpha v^2)) / dif v = 0$ gives $2/v - 2 alpha v = 0$,
   hence $v_p = 1 / sqrt(alpha)$. The mean speed uses the integral
   $integral_0^infinity v^3 exp(-alpha v^2) dif v = 1 / (2 alpha^2)$:
@@ -434,11 +458,14 @@ into a law with a rising front and a long tail.
 ]
 
 #figure(
-  image("img/maxwell-speed-distribution.svg", width: 75%),
-  caption: [Maxwell speed distribution $F(v)$ at three temperatures. The
-    most probable speed $v_p$ (the peak), the mean speed $overline(v)$
-    and the root-mean-square speed $v_("rms")$ all scale as $sqrt(T)$, and
-    the distribution spreads towards higher speeds as $T$ rises.],
+  image("img/maxwell-speed-distribution.svg", width: 85%),
+  caption: [The Maxwell speed distribution $f(v)$ versus $v$. *Left:* at
+    a single temperature, the dark strip is the number
+    $dif N = N f(v) dif v$ of molecules with speeds in $[v, v + dif v]$,
+    and the shaded area is the fraction of molecules with speeds in
+    $[v_1, v_2]$; the peak sits at the most probable speed $v_p$.
+    *Right:* as $T$ rises the peak shifts to higher speeds and
+    flattens, the total area under the curve staying $1$.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:maxwell-speed>
@@ -447,7 +474,7 @@ into a law with a rising front and a long tail.
   Silver atoms evaporating from an oven pass
   through a slit into a rotating drum; the deposit on the inner wall is
   spread according to flight time, hence according to speed. The
-  measured deposit profile matches $F(v)$, providing direct experimental
+  measured deposit profile matches $f(v)$, providing direct experimental
   confirmation of the Maxwell distribution.
 ] <ex:stern-experiment>
 
@@ -456,7 +483,7 @@ into a law with a rising front and a long tail.
   independent Gaussians; consequently $v^2$ is distributed as a sum of
   three squared centred Gaussians — a scaled chi-square distribution
   with three degrees of freedom, as studied in the Probabilités note.
-  The speed distribution $F(v)$ is thus a scaled chi distribution, and
+  The speed distribution $f(v)$ is thus a scaled chi distribution, and
   the characteristic speeds of
   #link(<prop:characteristic-speeds>)[the preceding property] are its
   shape parameters in disguise.
