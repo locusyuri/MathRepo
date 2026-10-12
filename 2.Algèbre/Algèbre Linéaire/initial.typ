@@ -547,14 +547,6 @@ block, provided the blocks have matching sizes. For multiplication, if $A$ and $
 partitioned so that the column partition of $A$ matches the row partition of $B$, then
 $A B$ can be computed block-wise exactly like ordinary scalar multiplication.
 
-```typst
-// 分块矩阵写法（mat 可作为分块元素）
-$A = mat(A_1, A_2; A_3, A_4)$
-```
-
-> A detailed treatment, including block inverses and the determinant of block matrices,
-> is given in the Block Matrix section below.
-
 === Determinants of Products // 行列式乘积公式
 
 The determinant of a product equals the product of the determinants — see #link(<thm:det-product>)[Theorem]. By induction it extends to any number of matrices:
