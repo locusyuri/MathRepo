@@ -18,14 +18,14 @@
   subtitle: "A notebook for mathematical logic",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v1.2.0",
+  version: "v1.3.0",
   extra-info: "This is a notebook for mathematical logic.",
 )
 
 #make-outline(depth: 2, title: "Contents")
 
 // ==========================================================================
-// 目录蓝图 (Planned Outline) — v1.2.0
+// 目录蓝图 (Planned Outline) — v1.3.0
 // 主线：语言基础 → 主体理论 → 元数学 → 扩展（四段式）
 // 参照 Analyse Mathématique：每个 Part 容纳 2–4 章实质内容
 // 状态标记：[已写] 已完成 · [计划] 待写作 · [可选] 按需取舍
@@ -120,6 +120,7 @@
 // 设计思路：二阶逻辑在标准语义下无完全性，不宜与经典主线并列，降级为扩展章；
 //   非经典逻辑为未来 Non-Classical Logic 笔记搭桥（桥梁模式）。
 // 对应教材：Hedman Ch 6–7（扩展主题）
+// 状态：Ch 10（v1.2.0）与 Ch 11（v1.3.0）均已写就，Part IV 收官。
 
 // --- Chapter 10: Second-Order Logic（二阶逻辑）--- [已写，v1.2.0]
 //   Section 10.1: Syntax and Semantics（二阶语法与语义；二阶可定义性示例）
@@ -127,10 +128,10 @@
 //   Section 10.3: Failure of Compactness and Completeness（紧致性与完全性失效；兑现 L2015）
 //   Section 10.4: Categoricity of Second-Order Arithmetic（二阶算术的范畴性；兑现 L2549）
 
-// --- Chapter 11: Non-Classical Logics: An Introduction（非经典逻辑导论）--- [可选]
-//   Section 11.1: Intuitionistic Logic and Kripke Semantics（直觉主义逻辑与 Kripke 语义）
-//   Section 11.2: Modal Logic: Basics（模态逻辑基础）
-//   Section 11.3: Many-Valued Logics（多值逻辑）[可选]
+// --- Chapter 11: Non-Classical Logics: An Introduction（非经典逻辑导论）--- [已写，v1.3.0]
+//   Section 11.1: Intuitionistic Logic and Kripke Semantics（直觉主义逻辑与 Kripke 语义；反例图）
+//   Section 11.2: Modal Logic: Basics（模态逻辑基础；对应理论；框架性质图）
+//   Section 11.3: Many-Valued Logics（多值逻辑；Kleene/Łukasiewicz；模糊一瞥）
 
 // ==========================================================================
 // 结构说明 (Structure Note)
@@ -152,7 +153,8 @@
 //
 // Part IV（扩展，Ch 10–11）：二阶逻辑（Ch 10 已写 v1.2.0：标准语义下无完全性/
 //   紧致性/L-S，Henkin 语义恢复元定理，PA₂ 范畴性）与非经典逻辑导论
-//   （Ch 11 待写：直觉主义/Kripke、模态、多值——为未来笔记搭桥）。
+//   （Ch 11 已写 v1.3.0：直觉主义/Kripke、模态对应理论、多值——为未来笔记搭桥）。
+//   Part IV 收官：Ch 10–11 全部写就。
 //
 // 教材覆盖：Enderton《A Mathematical Introduction to Logic》全部章节知识点
 //   已纳入；Mendelson 公理化路线与 Hedman 扩展主题取并集。
@@ -3760,6 +3762,431 @@ and it is strong enough to make every model isomorphic.
   syntax, exactly as Henkin generalized the models of Ch 5.
 ]
 
+= Non-Classical Logics: An Introduction // 非经典逻辑导论
+
+Classical first-order logic is not the only logic: it is one
+particular choice of semantics. The three systems of this chapter
+keep the syntax of Ch 1 and change the meaning of truth.
+Intuitionistic logic constrains the truth functions (truth becomes
+constructive provability), modal logic makes truth world-relative
+(what is true depends on which possible world we are in), and
+many-valued logic replaces the set of truth values. The metatheorems
+of Part II — completeness, compactness, Löwenheim–Skolem — are
+properties of a *semantics*, not of logic as such: change the
+semantics and the metatheory changes with it, exactly as it did for
+standard vs. Henkin semantics in Ch 10. This chapter keeps every
+proof short and every technical completeness proof at the level of a
+sketch, in the spirit of §10.2.
+
+== Intuitionistic Logic and Kripke Semantics // 直觉主义逻辑与 Kripke 语义
+
+Intuitionism, founded by Brouwer, refuses to treat a mathematical
+statement as true unless it has a construction behind it. The law of
+excluded middle $phi or not phi$ is rejected: "either $phi$ holds
+or its negation holds" is a claim about a fact of the matter that,
+for an intuitionist, has not been exhibited. What makes the
+rejection formal is that it is not a philosophical footnote: the
+logic obtained by dropping the law from Ch 1 has a semantics of its
+own, and that semantics is the modern (Kripke's, 1965) formulation
+of "truth as knowledge growth".
+
+#definition(name: "Intuitionistic Propositional Calculus")[
+  The *intuitionistic propositional calculus* $"IPC"$ is the
+  Hilbert-style system of Ch 1 whose axioms are the standard schemes
+  for implication, conjunction, and disjunction, the two negation
+  schemes
+  $
+    (phi -> psi) -> ((phi -> not psi) -> not phi),
+    quad not phi -> (phi -> psi),
+  $
+  and the rule of modus ponens — but *without* the law of excluded
+  middle $phi or not phi$. Classical propositional logic is exactly
+  $"IPC"$ plus the law of excluded middle (or, equivalently, plus
+  double negation elimination $not not phi -> phi$).
+] <def:intuitionistic-axioms>
+
+#example(name: "Classical Validities that are not Intuitionistic")[
+  The law of excluded middle $p or not p$ and double negation
+  elimination $not not p -> p$ are theorems of classical logic
+  (#link(<cor:double-negation>)[Corollary 1.1]) but are not theorems
+  of $"IPC"$: both are equivalent to the excluded middle over $"IPC"$
+  and the scheme is exactly what we dropped. Peirce's law
+  $((p -> q) -> p) -> p$ is classical (it is equivalent to excluded
+  middle) but fails intuitionistically. The classical proof that there
+  exist irrational $a, b$ with $a^b$ rational — take
+  $sqrt(2)^(sqrt(2))$ and argue by cases — is non-constructive: the
+  proof shows that *one of* two numbers works without saying which.
+] <ex:constructive-examples>
+
+Truth tables cannot describe this logic. A two-valued valuation
+fixes every formula absolutely; but intuitionistic truth is not
+absolute, it grows. The insight that makes the semantics
+mathematical is due to Kripke: a formula is true at a *stage* of
+information, and later stages may verify more atoms.
+
+#definition(name: "Kripke Frames and Models")[
+  An *intuitionistic Kripke frame* is a nonempty poset $(W, <=)$;
+  its elements are *worlds* or *stages*. A *Kripke model* is a frame
+  together with a forcing relation $models$ between worlds and
+  atomic formulas that is *hereditary*: if $w models p$ and
+  $w <= v$, then $v models p$. Truth never disappears as knowledge
+  grows.
+] <def:kripke-frame>
+
+#definition(name: "Kripke Forcing")[
+  The forcing relation is extended to all formulas by
+  $
+    w models phi and psi quad & "iff" quad w models phi "and" w models psi,
+    w models phi or psi quad & "iff" quad w models phi "or" w models psi,
+  $
+  and — this is the point — the implication and the negation look at
+  every future stage:
+  $
+    w models phi -> psi quad & "iff" quad forall v >= w (v models phi => v models psi),
+    w models not phi quad & "iff" quad forall v >= w (v tack.not phi).
+  $
+  A formula is *valid* in a model if it is forced at every world, and
+  *intuitionistically valid* if it is valid in every Kripke model.
+] <def:kripke-forcing>
+
+#eq[
+  $
+    w models phi -> psi & <=> forall v >= w (v models phi => v models psi), \
+    w models not phi & <=> forall v >= w (v tack.not phi).
+  $
+] <eq:kripke-forcing>
+
+#example(name: "The Law of Excluded Middle Fails")[
+  Let $W = {w_1, w_2}$ with $w_1 <= w_2$, and let $p$ be forced only
+  at $w_2$: at $w_1$ the atom $p$ is not yet decided. Then $w_1$ does
+  not force $p$ (nothing forces it below), and $w_1$ does not force
+  $not p$ either, because $w_2 >= w_1$ forces $p$. Hence
+  $w_1 tack.not p or not p$: the law of excluded middle is not
+  intuitionistically valid. The same frame shows why truth tables
+  are blind here: $p$ is not simply "true" or "false", it is
+  *undecided at $w_1$ and decided at $w_2$*.
+] <ex:kripke-lem-counterexample>
+
+#figure(
+  image("img/kripke-counterexample.svg", width: 78%),
+  caption: [
+    The two-world counterexample. At $w_1$ the atom $p$ is undecided;
+    the stage $w_2$ decides it. Since $w_2$ forces $p$, the world
+    $w_1$ forces neither $p$ nor $not p$, so $p or not p$ fails there.
+  ],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:kripke-counterexample>
+
+#theorem(name: "Kripke Completeness for IPC")[
+  For every formula $phi$: $"IPC"$ proves $phi$ if and only if $phi$
+  is valid in every Kripke model.
+] <thm:kripke-completeness-ipc>
+
+#proof[
+  *Soundness* is a routine induction on proofs: each axiom is valid
+  and modus ponens preserves validity. *Completeness* is the Henkin
+  method of Ch 5 in disguise. The *canonical model* has as worlds the
+  prime theories of $"IPC"$ — consistent theories closed under
+  disjunction, ordered by inclusion — with $Gamma models p$ iff
+  $p in Gamma$. The Truth Lemma is proved by induction, the
+  implication case using the closure properties of prime theories.
+  The canonical model may be uncountable; a filtration argument
+  (identifying worlds that agree on the subformulas of $phi$) cuts it
+  down to a finite model. This is exactly the Ch 5 route — Lindenbaum,
+  then witnesses, then the term model — with a prime theory playing
+  the role of a Henkin theory
+  (#link(<thm:henkin-completeness>)[Theorem 5.1]).
+]
+
+#theorem(name: "Glivenko's Theorem")[
+  For every formula $phi$,
+  $
+    "IPC" tack not not phi "iff" "CPC" tack phi,
+  $
+  where $"CPC"$ is classical propositional logic: a formula is
+  classical if and only if its double negation is intuitionistic.
+] <thm:glivenko>
+
+#proof[
+  The forward direction is trivial: $"IPC" subset "CPC"$, and in
+  $"CPC"$ the double negation $not not phi$ implies $phi$ by
+  #link(<cor:double-negation>)[Corollary 1.1]. For the converse,
+  two facts are provable in $"IPC"$:
+  $
+    "IPC" tack not not (phi -> psi) -> (not not phi -> not not psi), \
+    "IPC" tack not not (phi or not phi).
+  $
+  The first is the contrapositive closure of implication; the second
+  says that the double negation of the excluded middle is
+  intuitionistic. Now induct on the classical derivation of $phi$:
+  every axiom scheme of $"IPC"$ is an $"IPC"$-theorem, hence has an
+  $"IPC"$-provable double negation (each $psi -> not not psi$ is
+  intuitionistic); modus ponens is preserved by the first fact; and
+  the one extra classical axiom, $chi or not chi$, is handled by the
+  second fact. Thus $"CPC" tack phi$ implies $"IPC" tack not not phi$.
+]
+
+#theorem(name: "The Disjunction Property")[
+  If $"IPC"$ proves $phi or psi$, then $"IPC"$ proves $phi$ or
+  $"IPC"$ proves $psi$.
+] <thm:disjunction-property>
+
+#proof[
+  Suppose $"IPC" tack.not phi$ and $"IPC" tack.not psi$. By
+  #link(<thm:kripke-completeness-ipc>)[Kripke completeness], there
+  are Kripke models $(W_1, <=_1, models_1)$ and $(W_2, <=_2, models_2)$
+  with worlds $w_1 in W_1$, $w_2 in W_2$ such that
+  $w_1 tack.not_1 phi$ and $w_2 tack.not_2 psi$. Glue the two trees
+  under a new root $r$: $W = {r} union W_1 union W_2$ with
+  $r <= v$ for every $v$, the two partial orders otherwise unchanged,
+  and no atom forced at $r$. This is a Kripke model. Since $w_1 >= r$
+  and $w_1 tack.not phi$, the world $r$ cannot force $phi$ — forcing
+  is hereditary upward — and likewise $r tack.not psi$. By the local
+  clause for disjunction, $r tack.not phi or psi$. But
+  $"IPC" tack phi or psi$ would force it at every world of every
+  model, contradiction.
+]
+
+#note[
+  *Why the law fails.* The Kripke clause for $not phi$ reads "no
+  future stage verifies $phi$", and the clause for $phi -> psi$ reads
+  "every future stage that verifies $phi$ verifies $psi$". The
+  excluded middle would assert $forall v >= w (v models phi)$ or
+  $forall v >= w (v tack.not phi)$ — a statement about the *whole
+  future*, which no finite stage can justify. The disjunction
+  property is the semantic reflection of this: an intuitionistic
+  proof of a disjunction always contains a proof of a disjunct. This
+  is why intuitionistic logic is the logic of constructive
+  mathematics: existence and disjunction carry information.
+]
+
+#caution[
+  In intuitionistic logic, $not phi$ does *not* mean "we know
+  $phi$ is false": it means "we can derive a contradiction from
+  assuming $phi$" — a proof of impossibility. The double negation
+  $not not phi$ means "assuming $phi$ leads to a contradiction is
+  itself contradictory", which is *not* a proof of $phi$. Classical
+  logic collapses these two readings; intuitionistic logic keeps
+  them apart.
+]
+
+== Modal Logic: Basics // 模态逻辑基础
+
+Modal logic reads a sentence relative to a *possible world*: "it is
+necessary that $phi$" ($square phi$), "it is always the case"
+(temporal reading), "it is known that" (epistemic reading), "it is
+obligatory that" (deontic reading). The formal semantics is again
+due to Kripke — and it is the same construction as §11.1, with the
+poset replaced by an arbitrary relation.
+
+#definition(name: "Modal Language and Diamond")[
+  The *modal language* extends the propositional language of Ch 1 by
+  a unary connective $square$ ("box"). The *diamond* is defined:
+  $
+    diamond phi := not square not phi,
+  $
+  so that "possibly $phi$" is "not necessarily not $phi$".
+] <def:modal-language>
+
+#eq[
+  $diamond phi := not square not phi$
+] <eq:diamond-def>
+
+#definition(name: "Modal Frames and Models")[
+  A *modal frame* is a nonempty set $W$ of *worlds* together with a
+  binary *accessibility relation* $R subset W times W$. A *modal
+  model* adds a valuation of atoms at worlds (no hereditariness: in
+  modal logic atoms are plain truth values). Truth at a world is
+  defined by the classical clauses of Ch 1 plus
+  $
+    w models square phi quad & "iff" quad forall v (w R v => v models phi), \
+    w models diamond phi quad & "iff" quad exists v (w R v and v models phi).
+  $
+  A formula is *valid on a frame* if it is true at every world of
+  every model on it.
+] <def:modal-frame>
+
+#definition(name: "Modal Axioms and Systems")[
+  The basic system $"K"$ has the propositional axioms of Ch 1, the
+  *distribution axiom* $square (phi -> psi) -> (square phi -> square psi)$,
+  and the rules of modus ponens and *necessitation* ($tack phi$
+  implies $tack square phi$). The important extensions add axiom
+  schemes:
+  $
+    "T": square phi -> phi, quad
+    "4": square phi -> square square phi, quad
+    "B": phi -> square diamond phi, \
+    "D": square phi -> diamond phi, quad
+    "5": diamond phi -> square diamond phi.
+  $
+  $"T" = "K" + "T"$, $"S4" = "T" + "4"$, and
+  $"S5" = "T" + "4" + "5"$ are the standard systems.
+] <def:modal-axioms>
+
+#theorem(name: "Correspondence Theory")[
+  Each of the five schemes characterizes a first-order property of
+  the accessibility relation:
+  $
+    "T valid on " (W, R) & <=> R " is reflexive", \
+    "4 valid on " (W, R) & <=> R " is transitive", \
+    "B valid on " (W, R) & <=> R " is symmetric", \
+    "D valid on " (W, R) & <=> R " is serial", \
+    "5 valid on " (W, R) & <=> R " is euclidean".
+  $
+] <thm:modal-correspondence>
+
+#proof[
+  We show the reflexive case in full; the others are the same
+  pattern. If $R$ is reflexive, then $w models square phi$ gives
+  $w models phi$ by the clause for $square$ (take $v = w$), so T
+  holds. Conversely, if $w$ is not reflexive but has an accessible
+  $v$, let $p$ be true only at $v$; then $w models square p$ while
+  $w tack.not p$, so T fails. Transitivity: $square phi -> square square phi$
+  fails when $w R v$, $v R u$ but not $w R u$, by making $p$ false at
+  $u$ only. Symmetry for B: $phi -> square diamond phi$ fails when
+  $w R v$ but no successor of $v$ reaches $w$. Seriality for D:
+  $square phi -> diamond phi$ fails at a world with no successor.
+  Euclideanness for 5: $diamond phi -> square diamond phi$ fails
+  when $w R v$, $w R u$ but $v$ cannot reach $u$ (make $p$ true only
+  at $u$).
+]
+
+#figure(
+  image("img/modal-frames.svg", width: 82%),
+  caption: [
+    The frame conditions behind the systems: reflexive (T), transitive
+    (4), symmetric (B), serial (D), euclidean (5). The system S5 is
+    exactly the class of equivalence relations.
+  ],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:modal-frames>
+
+#example(name: "Natural Frames")[
+  *Time.* The frame $(bb(N), <=)$ with the usual order validates S4:
+  accessibility is reflexive and transitive, so "always in the
+  future" behaves like $square$ in S4. *Knowledge.* The frame of
+  equivalence classes of indistinguishable situations validates S5:
+  "agent $a$ knows that" is $square$ on the equivalence relation of
+  worlds the agent cannot tell apart, which is exactly the S5
+  condition. *Obligation.* The frame of "ideal worlds" relative to a
+  normative system gives a serial frame validating K + D.
+] <ex:modal-frames-examples>
+
+#theorem(name: "Kripke Completeness for Modal Systems")[
+  The system $"K"$ is sound and complete for the class of all frames;
+  $"T"$ for the reflexive frames; $"S4"$ for the reflexive transitive
+  frames; $"S5"$ for the frames whose accessibility relation is an
+  equivalence relation.
+] <thm:modal-completeness>
+
+#proof[
+  Soundness is immediate from the correspondence theorem. For
+  completeness, the Henkin method applies once more: the *canonical
+  model* has as worlds the maximal consistent sets of the system,
+  with $w R v$ iff every $square phi in w$ has $phi in v$. One verifies
+  by induction the Truth Lemma (the modal clause uses the maximality
+  of the sets), and the accessibility relation of the canonical model
+  inherits exactly the frame conditions forced by the axioms: T makes
+  it reflexive, 4 transitive, B symmetric, D serial, 5 euclidean.
+  The route is the Ch 5 route once again
+  (#link(<thm:henkin-completeness>)[Theorem 5.1]) — maximal
+  consistent sets play the role of Henkin theories.
+]
+
+#note[
+  *Modal semantics and second-order semantics.* Modal logic and the
+  Henkin semantics of Ch 10 are two faces of the same move: instead
+  of fixing one universe, the semantics lets the relevant domain
+  vary — a set of possible worlds in one case, an arbitrary
+  second-order domain in the other. The correspondence theorem adds
+  a genuinely first-order aspect: each modal axiom is equivalent to a
+  first-order condition on frames, so model theory of Ch 6
+  (definability, compactness, completeness) applies to the *frame
+  classes* themselves. This is the hinge promised in §10.4: changing
+  the semantics is a choice about what counts as a model, and the
+  metatheory follows.
+]
+
+== Many-Valued Logics // 多值逻辑
+
+The third way to change the meaning of truth is the most literal:
+replace the set of truth values. Where intuitionistic logic keeps
+two values but makes truth world-relative, many-valued logic keeps
+one flat world but admits a third value — "undefined", "unknown",
+"future" — or a continuum of them.
+
+#definition(name: "Kleene's Strong Three-Valued Tables")[
+  Let the truth values be ${T, U, F}$, with $U$ ("undefined")
+  between $F$ and $T$. *Kleene's strong three-valued logic* extends
+  the classical tables by the rule that $U$ *propagates*: a
+  connective whose classical output is already determined ignores
+  $U$, and otherwise yields $U$. Concretely,
+  $p and U = U = U and p$ (unless $p = F$, giving $F$),
+  $p or U = U = U or p$ (unless $p = T$, giving $T$), and
+  $not U = U$.
+] <def:many-valued-valuation>
+
+#tex-table(
+  ([$p$], [$¬p$]),
+  ([$T$], [$F$]),
+  ([$U$], [$U$]),
+  ([$F$], [$T$]),
+)
+
+#definition(name: "Łukasiewicz Three-Valued Implication")[
+  *Łukasiewicz's* three-valued implication differs from Kleene's:
+  the classical truth table is preserved on ${T, F}$, and the
+  "undefined" cases read
+  $
+    U -> U = T, quad T -> U = U, quad U -> F = U, quad F -> U = T.
+  $
+  The scheme $phi -> (psi -> phi)$ remains valid, but the excluded
+  middle $phi or not phi$ takes the value $U$ when $phi$ does, and is
+  therefore not a validity.
+] <def:lukasiewicz-logic>
+
+#tex-table(
+  ([$p$], [$q$], [$p → q$]),
+  ([$T$], [$T$], [$T$]),
+  ([$T$], [$U$], [$U$]),
+  ([$T$], [$F$], [$F$]),
+  ([$U$], [$T$], [$T$]),
+  ([$U$], [$U$], [$T$]),
+  ([$U$], [$F$], [$U$]),
+  ([$F$], [$T$], [$T$]),
+  ([$F$], [$U$], [$T$]),
+  ([$F$], [$F$], [$T$]),
+)
+
+#example(name: "Where the Third Value Comes From")[
+  Division by zero: "$1 / 0 > 0$" is neither true nor false in the
+  intended reading — it is *undefined*, and the strong tables model
+  how undefinedness spreads through conjunction and disjunction.
+  The liar paradox "this sentence is false" cannot be assigned
+  $T$ or $F$ without contradiction; a third value breaks the
+  dichotomy. Future contingents ("there will be a sea battle
+  tomorrow") are classically forced to $T$ or $F$ by bivalence, a
+  commitment some philosophers reject; $U$ ("undetermined") is the
+  natural reading. In all three cases the logic did not change — the
+  set of truth values did.
+] <ex:three-valued-examples>
+
+#note[
+  *The continuum: fuzzy logic.* Replace ${T, U, F}$ by the whole
+  interval $[0, 1]$ and read truth as *degree*: $p and q = min (p, q)$,
+  $p or q = max (p, q)$, $not p = 1 - p$, and the continuous
+  Łukasiewicz implication $p -> q = min (1, 1 - p + q)$. This is
+  fuzzy logic — not a logic of degrees of belief but a truth
+  functional logic on a continuum of values. The uniform picture of
+  this chapter stands: intuitionism made truth world-relative, modal
+  logic made it relational, many-valued logic made it graded. In
+  every case the syntax of Ch 1 is untouched, and in every case the
+  metatheory of Part II must be re-examined — completeness and
+  compactness are theorems about a semantics, not about logic.
+]
+
 #part("Appendix")
 
 = Glossary
@@ -3800,6 +4227,7 @@ and it is strong enough to make every model isomorphic.
 
 == G
 - *#link(<def:generalization>)[Generalization (Gen)]*
+- *#link(<thm:glivenko>)[Glivenko's Theorem]*
 - *#link(<def:godel-numbering>)[Gödel Numbering]*
 - *#link(<thm:first-incompleteness>)[Gödel's First Incompleteness Theorem]*
 - *#link(<thm:second-incompleteness>)[Gödel's Second Incompleteness Theorem]*
@@ -3813,15 +4241,23 @@ and it is strong enough to make every model isomorphic.
 
 == I
 - *#link(<def:implication>)[Implication]*
+- *#link(<def:intuitionistic-axioms>)[Intuitionistic Logic]*
+
+== K
+- *#link(<thm:kripke-completeness-ipc>)[Kripke Completeness (IPC)]*
+- *#link(<def:kripke-frame>)[Kripke Semantics]*
 
 == L
 - *#link(<def:logical-consequence>)[Logical Consequence]*
 - *#link(<def:logical-equivalence>)[Logical Equivalence]*
 - *#link(<thm:downward-ls>)[Löwenheim–Skolem Theorems]*
+- *#link(<def:lukasiewicz-logic>)[Łukasiewicz Logic]*
 - *#link(<thm:los>)[Łoś's Theorem]*
 
 == M
+- *#link(<def:many-valued-valuation>)[Many-Valued Logics]*
 - *#link(<def:mu-operator>)[Minimalization]*
+- *#link(<def:modal-language>)[Modal Logic]*
 - *#link(<def:model>)[Model]*
 - *#link(<def:lukasiewicz-system>)[Modus Ponens (MP)]*
 
