@@ -18,14 +18,14 @@
   subtitle: "A notebook for mathematical logic",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v1.0.0",
+  version: "v1.1.0",
   extra-info: "This is a notebook for mathematical logic.",
 )
 
 #make-outline(depth: 2, title: "Contents")
 
 // ==========================================================================
-// 目录蓝图 (Planned Outline) — v1.0.0
+// 目录蓝图 (Planned Outline) — v1.1.0
 // 主线：语言基础 → 主体理论 → 元数学 → 扩展（四段式）
 // 参照 Analyse Mathématique：每个 Part 容纳 2–4 章实质内容
 // 状态标记：[已写] 已完成 · [计划] 待写作 · [可选] 按需取舍
@@ -108,11 +108,11 @@
 //   Section 8.3: Turing Machines and the Halting Problem（图灵机与停机问题）
 //   Section 8.4: Undecidability of First-Order Logic（一阶逻辑的不可判定性；兑现 Ch 5/Ch 7 承诺）
 
-// --- Chapter 9: Gödel's Incompleteness Theorems（Gödel 不完备定理）--- [计划]
-//   Section 9.1: Arithmetization of Syntax（语法算术化：Gödel 编码、可表示性）
-//   Section 9.2: The First Incompleteness Theorem（第一不完备定理）
-//   Section 9.3: The Second Incompleteness Theorem（第二不完备定理）
-//   Section 9.4: Tarski's Undefinability of Truth（真值不可定义性）[可选]
+// --- Chapter 9: Gödel's Incompleteness Theorems（Gödel 不完备定理）--- [已写，v1.1.0]
+//   Section 9.1: Arithmetization of Syntax（语法算术化：Gödel 编码、可表示性；兑现 §8.4 β-函数承诺）
+//   Section 9.2: The First Incompleteness Theorem（第一不完备定理：对角化、ω-一致性；兑现 L1423/L2122）
+//   Section 9.3: The Second Incompleteness Theorem（第二不完备定理：可证性条件 D1–D3、Con 不可证）
+//   Section 9.4: Tarski's Undefinability of Truth（真值不可定义性；兑现 L2204/L2211）
 
 // ==========================================================================
 // Part IV — Extensions（扩展：二阶与非经典逻辑）— 展望
@@ -146,9 +146,9 @@
 //   Henkin 完全性（Ch 5.4，全书核心定理）、紧致性与 L-S（Ch 6）均已写就。
 //
 // Part III（元数学，Ch 7–9）：模型论（理论有哪些模型）→ 可计算性（能算什么）
-//   → 不完备性（证不出什么），元理论两翼递进。Ch 7 初等模型论（v0.9.0）与
-//   Ch 8 可计算性与不可判定性（v1.0.0：原始递归/部分递归/图灵机/Church 定理）
-//   均已写就；Ch 9 待写。
+//   → 不完备性（证不出什么），元理论两翼递进。Ch 7 初等模型论（v0.9.0）、
+//   Ch 8 可计算性与不可判定性（v1.0.0）、Ch 9 Gödel 不完备定理（v1.1.0：
+//   算术化/对角化/两不完备定理/Tarski）均已写就——Part III 收官。
 //
 // Part IV（扩展，Ch 10–11）：二阶逻辑（标准语义下无完全性，降级为扩展章）
 //   与非经典逻辑导论（为未来笔记搭桥）。
@@ -3014,13 +3014,417 @@ classes in the spectrum of computability.
 
 = Gödel's Incompleteness Theorems  // Gödel 不完备定理
 
+Chapter 8 proved that computability is faithfully mirrored inside
+arithmetic: every partial recursive function is representable, and
+validity is enumerable but undecidable. This chapter turns the mirror
+onto logic itself. Gödel's central discovery is that *provability* —
+not just computability — can be expressed by an arithmetic formula;
+once provability lives inside the language, the theory can talk about
+its own proofs, and a self-referential sentence escapes them. The
+chapter closes Part III with the two limits of formal proof:
+incompleteness (Gödel) and the undefinability of truth (Tarski).
+
+== Arithmetization of Syntax // 语法算术化
+
+The first step is to code the syntax of the language — symbols,
+formulas, and proofs — by natural numbers, so that the metalanguage
+becomes part of the object language. This is *arithmetization*.
+
+#definition(name: "Gödel Numbering")[
+  Fix an enumeration of the symbols of the language of arithmetic
+  (#link(<ex:language-of-arithmetic>)[Example 3.1]) and of the
+  variables. The *Gödel number* of an expression $e = s_1 s_2 dots.c
+  s_k$ (a sequence of symbols) is
+  $
+    angle e angle = product_(i = 1)^k p_i^(c_i),
+  $
+  where $p_i$ is the $i$-th prime and $c_i$ the code of the symbol
+  $s_i$. The Gödel number of a *proof* is the Gödel number of the
+  sequence of its formulas. The function $e |-> angle e angle$ is
+  injective, and the basic syntactic predicates ("$x$ is a formula",
+  "$x$ is a term", "$x$ is a proof of $y$") are primitive recursive.
+] <def:godel-numbering>
+
+#eq[
+  $
+    angle e angle = product_(i = 1)^k p_i^(c_i).
+  $
+] <eq:godel-numbering-def>
+
+#example(name: "The Gödel Number of a Formula")[
+  Suppose $0$, $=$, and the variable $x_1$ receive codes $1$, $5$,
+  and $9$ respectively. Then
+  $angle 0 = x_1 angle = 2^1 dot 3^5 dot 5^9$,
+  a number with more than $2.5 times 10^6$ digits. The enormous size
+  is irrelevant: the coding is *effective* in the sense that decoding
+  is a primitive recursive computation, and it is *unique* in the
+  sense that distinct expressions receive distinct numbers.
+] <ex:godel-number-example>
+
+#theorem(name: "Gödel's β-Function")[
+  There is a primitive recursive function $beta (a, b, i)$ such that
+  for every finite sequence of natural numbers
+  $n_0, dots, n_k$ there exist $a, b$ with
+  $beta (a, b, i) = n_i$ for all $i <= k$.
+] <thm:beta-function>
+
+#proof[
+  *Step 1: definition.* Let $beta (a, b, i)$ be the remainder of $a$
+  upon division by $1 + (i + 1) b$:
+  $
+    beta (a, b, i) = a mod (1 + (i + 1) b),
+  $
+  a primitive recursive function of $(a, b, i)$ by the results of
+  §8.1.
+
+  *Step 2: surjectivity onto finite sequences.* Given
+  $n_0, dots, n_k$, choose $b$ divisible by $k + 1$! and so large
+  that the numbers $d_i = 1 + (i + 1) b$ are pairwise coprime (they
+  are: any prime dividing both $d_i$ and $d_j$ with $i < j$ divides
+  $(j - i) b$, hence divides $b$, contradicting the coprimality built
+  into the choice of $b$). Then, by the Chinese remainder theorem,
+  there is an $a$ satisfying
+  $a equiv n_i quad ("mod" d_i)$ for every $i <= k$, which is exactly
+  $beta (a, b, i) = n_i$.
+]
+
+#definition(name: "Provability Predicate")[
+  Let $"Proof" (y, x)$ be the primitive recursive relation "$y$ is
+  the Gödel number of a proof of the formula with Gödel number $x$"
+  and define the *provability predicate*
+  $
+    "Bew" (x) :<=> exists y "Proof" (y, x).
+  $
+  By #link(<lem:recursive-representable>)[Lemma 8.1], the relation
+  $"Proof"$ is representable in $"PA"$, hence $"Bew" (x)$ is a
+  $Sigma_1$ formula of the language of arithmetic satisfying, for
+  every sentence $phi$,
+  $
+    "PA" tack phi <=> bb(N) models "Bew" (angle phi angle).
+  $
+] <def:provability-predicate>
+
+#eq[
+  $
+    "PA" tack phi <=> bb(N) models "Bew" (angle phi angle).
+  $
+] <eq:provability-def>
+
 #note[
-  Placeholder: The limits of provability. Planned as four sections:
-  arithmetization of syntax (Gödel coding, representability — begun in
-  §8.4), the first incompleteness theorem, the second incompleteness
-  theorem, and Tarski's undefinability of truth. The blueprint is at
-  the head of this file; the chapter will be developed in a subsequent
-  revision.
+  The equivalence just displayed is the content of arithmetization: the
+  metamathematical fact "$phi$ is provable" has become a *truth of
+  arithmetic* about the number $angle phi angle$. Gödel's revolution
+  is precisely this collapse of levels — the theory of numbers now
+  contains a formula that speaks about the theory's own proofs, and
+  it is on this self-reference that the next sections build.
+]
+
+== The First Incompleteness Theorem // 第一不完备定理
+
+With provability expressible inside the language, we can construct a
+sentence that asserts its own unprovability. The engine is the
+*diagonalization lemma* — the arithmetic form of self-reference,
+diagrammed in Figure 9.1.
+
+#figure(
+  image("img/godel-self-reference.svg", width: 72%),
+  caption: [
+    The self-reference loop: a formula $phi$ is coded by the number
+    $angle phi angle$; the provability predicate $"Bew"$ applies to
+    codes; diagonalization feeds a formula its own code, producing
+    the Gödel sentence $G :<=> not "Bew" (angle G angle)$ — true in
+    $bb(N)$ but unprovable in $"PA"$.
+  ],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:godel-self-reference>
+
+#lemma(name: "Diagonalization Lemma")[
+  For every formula $psi (x)$ with one free variable there is a
+  sentence $G$ such that
+  $
+    "PA" tack G <=> psi (angle G angle).
+  $
+] <lem:diagonalization>
+
+#eq[
+  $
+    "PA" tack G <=> psi (angle G angle).
+  $
+] <eq:diagonalization-def>
+
+#proof[
+  *Step 1: the substitution function.* Let $"sub" (m, n)$ be the
+  Gödel number of the expression obtained from the formula with code
+  $m$ by replacing the free variable with the numeral for $n$. The
+  function $"sub"$ is primitive recursive (it is a bounded
+  computation over the coding of §9.1).
+
+  *Step 2: diagonalization.* Let $d (x) = "sub" (x, x)$. For a fixed
+  $psi$, put
+  $G := psi (d (angle psi (d (x)) angle))$.
+  Then $angle G angle = d (angle psi (d (x)) angle)$, and since
+  $d (angle psi (d (x)) angle) = "sub" (angle psi (d (x)) angle,
+  angle psi (d (x)) angle)$ is the Gödel number of $psi$ applied to
+  the numeral of its own code,
+  $G$ is the sentence $psi (angle G angle)$. The equivalence
+  $G <=> psi (angle G angle)$ is provable in $"PA"$, which formalizes
+  the computation of $"sub"$ (representability of primitive
+  recursion, §8.4).
+]
+
+#theorem(name: "Gödel's First Incompleteness Theorem")[
+  If $"PA"$ is consistent and $omega$-consistent, there is a
+  sentence $G$ of arithmetic such that neither $G$ nor $not G$ is
+  provable in $"PA"$. The sentence $G$ is true in the standard model.
+] <thm:first-incompleteness>
+
+#proof[
+  Apply #link(<lem:diagonalization>)[Lemma 9.1] to
+  $psi (x) = not "Bew" (x)$ and obtain
+  $
+    "PA" tack G <=> not "Bew" (angle G angle).
+  $
+  ($omega$-consistency is the condition: whenever $"PA"$ proves
+  $exists x phi (x)$, it fails to prove $not phi (overline(n))$ for
+  every numeral $overline(n)$; it implies consistency.)
+
+  *Step 1: $G$ is not provable.* Suppose $"PA" tack G$. Then by the
+  provability equivalence
+  $bb(N) models "Bew" (angle G angle)$, and by
+  #link(<lem:recursive-representable>)[Lemma 8.1] this truth is
+  proved by $"PA"$: $"PA" tack "Bew" (angle G angle)$. But $"PA"$
+  also proves $not "Bew" (angle G angle)$ (the equivalence), so
+  $"PA"$ is inconsistent — contradiction.
+
+  *Step 2: $not G$ is not provable.* Suppose $"PA" tack not G$, i.e.
+  $"PA" tack "Bew" (angle G angle)$ by the equivalence. If some
+  numeral $overline(n)$ satisfied $"Proof" (overline(n), angle G
+  angle)$, representability would give
+  $"PA" tack "Proof" (overline(n), angle G angle)$, hence
+  $"PA" tack "Bew" (angle G angle)$ and, with the equivalence,
+  $"PA" tack G$ — contradicting Step 1. So for every $n$,
+  $bb(N) models not "Proof" (overline(n), angle G angle)$, and by
+  representability $"PA" tack not "Proof" (overline(n), angle G
+  angle)$ for every $n$. By $omega$-consistency,
+  $"PA" tack.not exists y "Proof" (y, angle G angle)$, i.e.
+  $"PA" tack not "Bew" (angle G angle)$, i.e. $"PA" tack G$ by the
+  equivalence — again contradicting Step 1. Hence $not G$ is not
+  provable.
+
+  *Truth of $G$.* Since $"PA"$ does not prove $G$, no numeral codes a
+  proof of $G$, so $bb(N) models not "Bew" (angle G angle)$ and
+  therefore $bb(N) models G$ by the equivalence. The sentence that
+  says "I am not provable" is *true* — and unprovable.
+]
+
+#corollary(name: "Incompleteness of Peano Arithmetic")[
+  $"PA"$ is incomplete: there are sentences of arithmetic (such as
+  $G$) that are neither provable nor refutable in $"PA"$.
+] <cor:incompleteness-of-pa>
+
+#theorem(name: "Peano Arithmetic is Not Categorical")[
+  $"PA"$ is not categorical: there are two countable models of
+  $"PA"$ that are not elementarily equivalent, in particular models
+  not isomorphic to $bb(N)$.
+] <thm:pa-not-categorical>
+
+#proof[
+  A complete theory decides every sentence: for each $phi$, either
+  $phi$ or $not phi$ is provable, hence either holds in all models or
+  fails in all models — all models are elementarily equivalent. By
+  #link(<cor:incompleteness-of-pa>)[Corollary 9.1], $"PA"$ is not
+  complete, so it has two models $M_1, M_2$ disagreeing on some
+  sentence; by #link(<thm:downward-ls>)[the downward
+  Löwenheim–Skolem theorem] they may be taken countable, and they are
+  not elementarily equivalent, hence not isomorphic.
+]
+
+#example(name: "Nonstandard Models Revisited")[
+  The incompleteness of $"PA"$ and its nonstandard models are two
+  faces of the same phenomenon (promised at L1423 and in §6.3). The
+  Gödel sentence $G$ is true in $bb(N)$; by
+  #link(<cor:model-existence>)[the model existence theorem], the
+  consistent theory $"PA" union {not G}$ has a model $M$, necessarily
+  nonstandard. In $M$ the sentence $"Bew" (angle G angle)$ holds, yet
+  no *standard* natural number codes a proof of $G$ — the witnessing
+  "proof" must be a nonstandard element, a code of infinite
+  "length" in the internal sense. Incompleteness and nonstandardness
+  are inseparable: any consistent extension of $"PA"$ that is
+  incomplete (and every consistent r.e. extension is, by Rosser's
+  strengthening) admits nonstandard models, and the fine structure of
+  those models — first glimpsed with compactness in §6.3 and
+  ultraproducts in §7.2 — is what the provability predicate looks
+  like from inside.
+] <ex:nonstandard-reprise>
+
+#note[
+  *Rosser's strengthening.* Gödel's proof uses $omega$-consistency
+  only to rule out $"PA" tack not G$. Rosser replaced $G$ by a
+  sentence asserting "any proof of me is outnumbered by a shorter
+  refutation of me", which separates proofs of $G$ from proofs of
+  $not G$ inside the arithmetic; with it, *consistency* alone
+  suffices for the first incompleteness theorem. The sharper theorem
+  holds for every consistent recursively enumerable extension of
+  $"PA"$.
+]
+
+== The Second Incompleteness Theorem // 第二不完备定理
+
+The first theorem shows that a sentence speaking about its own
+provability escapes proof. The second theorem shows that the
+*consistency of arithmetic* is such a sentence: the theory cannot
+prove its own consistency. The argument formalizes the first theorem
+inside $"PA"$, which requires the provability predicate to satisfy
+three *derivability conditions*.
+
+#lemma(name: "Derivability Conditions")[
+  The provability predicate $"Bew"$ of §9.1 satisfies, provably in
+  $"PA"$:
+  $
+    "(D1)" quad "PA" tack phi => "PA" tack "Bew" (angle phi angle),
+  $
+  $
+    "(D2)" quad "PA" tack "Bew" (angle phi -> psi angle)
+    -> ("Bew" (angle phi angle) -> "Bew" (angle psi angle)),
+  $
+  $
+    "(D3)" quad "PA" tack "Bew" (angle phi angle)
+    -> "Bew" (angle "Bew" (angle phi angle) angle).
+  $
+] <lem:derivability-conditions>
+
+#proof[
+  *D1* is representability applied to $"Proof"$
+  (#link(<lem:recursive-representable>)[Lemma 8.1]): if $"PA"$
+  proves $phi$, some numeral $overline(n)$ satisfies
+  $"Proof" (overline(n), angle phi angle)$ in $bb(N)$, hence this
+  fact is provable in $"PA"$, so $"PA" tack exists y "Proof" (y,
+  angle phi angle)$, i.e. D1.
+
+  *D2* formalizes modus ponens inside the coding: given Gödel numbers
+  of proofs of $phi -> psi$ and of $phi$, concatenating them (a
+  primitive recursive operation on codes, §9.1) yields a proof of
+  $psi$; the implication is provable by the representability of this
+  concatenation operation.
+
+  *D3* is D1 *formalized*: the proof of D1 is uniform in $phi$ and
+  itself a mathematical argument, which $"PA"$ can carry out for the
+  formula $"Bew" (angle phi angle)$ in place of $phi$. This is the
+  deepest of the three conditions — it says the theory knows that it
+  proves what it proves.
+]
+
+#definition(name: "Consistency Sentence")[
+  The *consistency sentence* of $"PA"$ is
+  $
+    "Con"("PA") :<=> not "Bew" (angle bot angle),
+  $
+  the arithmetic statement "there is no proof of the false sentence
+  $bot$".
+] <def:con-sentence>
+
+#theorem(name: "Gödel's Second Incompleteness Theorem")[
+  If $"PA"$ is consistent, then
+  $
+    "PA" tack.not "Con"("PA").
+  $
+] <thm:second-incompleteness>
+
+#proof[
+  Let $G$ be the Gödel sentence, $"PA" tack G <=> not "Bew" (angle G
+  angle)$.
+
+  *Step 1: formalizing the first theorem.* The argument of
+  #link(<thm:first-incompleteness>)[Theorem 9.2] that "if $"PA"$ is
+  consistent then $G$ is not provable" is a proof in ordinary
+  mathematics about $"PA"$; inspecting it, every step is itself
+  formalizable in $"PA"$ using (D1)–(D3) — the first theorem is
+  provable *inside* $"PA"$. Hence
+  $
+    "PA" tack "Con"("PA") -> not "Bew" (angle G angle).
+  $
+
+  *Step 2: consistency implies $G$.* From Step 1 and the defining
+  equivalence of $G$,
+  $
+    "PA" tack "Con"("PA") -> G.
+  $
+
+  *Step 3: contradiction.* If $"PA" tack "Con"("PA")$, then Step 2
+  gives $"PA" tack G$, contradicting
+  #link(<thm:first-incompleteness>)[Theorem 9.2]. Therefore
+  $"PA" tack.not "Con"("PA")$.
+]
+
+#corollary(name: "Consistency of Richer Theories")[
+  The same proof applies to any consistent recursively enumerable
+  extension $T$ of $"PA"$ (with its consistency sentence
+  $"Con"(T)$): $T tack.not "Con"(T)$. In particular, no consistent
+  theory that can do arithmetic proves its own consistency.
+] <cor:consistency-unprovable>
+
+#note[
+  *Löb's theorem.* The second theorem is the special case
+  $phi = bot$ of a stronger principle: if
+  $"PA" tack "Bew" (angle phi angle) -> phi$, then
+  $"PA" tack phi$ — the only sentences the theory can prove "safe"
+  are those it actually proves. The philosophical upshot (recalling
+  §8.4, where recursive enumerability made $"Bew"$ possible at all):
+  Hilbert's program of justifying mathematics by a *finitistic*
+  consistency proof cannot be carried out within the theory itself;
+  consistency of a rich theory can only be established in a stronger
+  theory (relative consistency), a hierarchy without bottom.
+]
+
+== Tarski's Undefinability of Truth // 真值不可定义性
+
+Gödel's theorems concern *provability*, a syntactic notion coded by
+the arithmetic formula $"Bew"$. Tarski's theorem concerns *truth*
+itself: no arithmetic formula can define the set of true sentences.
+The proof is the diagonalization lemma applied to a truth predicate —
+the liar paradox, formalized.
+
+#definition(name: "Truth Predicate")[
+  A formula $T (x)$ of the language of arithmetic is a *truth
+  predicate* for arithmetic if it satisfies the *Tarski
+  biconditionals*: for every sentence $phi$ of the language,
+  $
+    bb(N) models T (angle phi angle) <=> bb(N) models phi.
+  $
+] <def:truth-predicate>
+
+#theorem(name: "Tarski's Undefinability Theorem")[
+  No formula $T (x)$ of the language of arithmetic defines truth:
+  there is no truth predicate for arithmetic.
+] <thm:tarski-undefinability>
+
+#proof[
+  Suppose $T (x)$ satisfies the Tarski biconditionals. Apply
+  #link(<lem:diagonalization>)[Lemma 9.1] to $not T (x)$: there is a
+  sentence $L$ (the *liar sentence*) such that
+  $
+    bb(N) models L <=> not T (angle L angle).
+  $
+  By the Tarski biconditional applied to $L$,
+  $bb(N) models T (angle L angle) <=> bb(N) models L$, so
+  $bb(N) models T (angle L angle) <=> not T (angle L angle)$ — a
+  contradiction. Hence no such $T$ exists.
+]
+
+#note[
+  *Provability versus truth.* The contrast sharpens the two limits of
+  Part III. The Gödel sentence $G$ says "I am not provable": it is
+  *true but unprovable* — provability is expressible, yet incomplete.
+  The liar sentence $L$ says "I am false": it can exist only because
+  *truth is not expressible at all*. Formally, $bb(N) models G$ and
+  $"PA" tack.not G$ (an internal, syntactic gap); $T$ cannot even be
+  defined (a semantic, expressive gap). This is why the true sentences
+  of arithmetic — recall the definable sets of §6.4 — form no
+  definable set: the set of Gödel numbers of true sentences is
+  undefinable in the standard model, a far stronger failure than
+  undecidability (Ch 8), which concerns provability rather than
+  truth.
 ]
 
 #part("Extensions")  // 扩展：二阶逻辑与非经典逻辑
@@ -3053,12 +3457,14 @@ classes in the spectrum of computability.
 - *#link(<def:complete-theory>)[Complete Theory]*
 - *#link(<def:computable-function>)[Computable Function]*
 - *#link(<def:consistency>)[Consistency]*
+- *#link(<def:con-sentence>)[Consistency Sentence]*
 - *#link(<def:conjunction>)[Conjunction]*
 
 == D
 - *#link(<thm:deduction-theorem>)[Deduction Theorem]*
 - *#link(<def:definable-set>)[Definable Set]*
 - *#link(<def:derived-connectives>)[Derived Connectives]*
+- *#link(<lem:diagonalization>)[Diagonalization Lemma]*
 - *#link(<def:disjunction>)[Disjunction]*
 - *#link(<cor:double-negation>)[Double Negation]*
 
@@ -3073,6 +3479,9 @@ classes in the spectrum of computability.
 
 == G
 - *#link(<def:generalization>)[Generalization (Gen)]*
+- *#link(<def:godel-numbering>)[Gödel Numbering]*
+- *#link(<thm:first-incompleteness>)[Gödel's First Incompleteness Theorem]*
+- *#link(<thm:second-incompleteness>)[Gödel's Second Incompleteness Theorem]*
 
 == H
 - *#link(<thm:halting-undecidable>)[Halting Problem]*
@@ -3104,6 +3513,7 @@ classes in the spectrum of computability.
 - *#link(<def:primitive-recursive>)[Primitive Recursive Function]*
 - *#link(<prop:basic-theorems>)[Principle of Explosion]*
 - *#link(<def:proof>)[Proof]*
+- *#link(<def:provability-predicate>)[Provability Predicate]*
 
 == Q
 - *#link(<def:quantifier-elimination>)[Quantifier Elimination]*
@@ -3114,8 +3524,7 @@ classes in the spectrum of computability.
 
 == S
 - *#link(<def:satisfaction>)[Satisfaction]*
-- *#link(<def:tautology>)[Satisfiable]*
-- *#link(<def:tautology>)[Semantic Consequence]*
+- *#link(<def:tautology>)[Satisfiable]*- *#link(<def:tautology>)[Semantic Consequence]*
 - *#link(<def:sentence>)[Sentence]*
 - *#link(<def:signature>)[Signature]*
 - *#link(<def:skolem-form>)[Skolem Normal Form]*
@@ -3125,6 +3534,7 @@ classes in the spectrum of computability.
 - *#link(<def:substitution>)[Substitution]*
 
 == T
+- *#link(<thm:tarski-undefinability>)[Tarski's Undefinability Theorem]*
 - *#link(<def:tautology>)[Tautology]*
 - *#link(<def:term>)[Term]*
 - *#link(<def:term-model>)[Term Model]*
