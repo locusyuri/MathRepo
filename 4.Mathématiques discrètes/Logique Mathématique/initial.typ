@@ -18,14 +18,14 @@
   subtitle: "A notebook for mathematical logic",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v1.3.0",
+  version: "v1.4.0",
   extra-info: "This is a notebook for mathematical logic.",
 )
 
 #make-outline(depth: 2, title: "Contents")
 
 // ==========================================================================
-// 目录蓝图 (Planned Outline) — v1.3.0
+// 目录蓝图 (Planned Outline) — v1.4.0
 // 主线：语言基础 → 主体理论 → 元数学 → 扩展（四段式）
 // 参照 Analyse Mathématique：每个 Part 容纳 2–4 章实质内容
 // 状态标记：[已写] 已完成 · [计划] 待写作 · [可选] 按需取舍
@@ -35,7 +35,7 @@
 // Part I — Propositional Logic（命题逻辑）— 语言基础
 // ==========================================================================
 // 设计思路：最简单的形式语言。Ch 1 已完整写作（v0.3.0 完成修复）；
-//   Ch 2 为方法章，承接紧致性与归结，形成命题层闭环。
+//   Ch 2 为方法章，承接紧致性与归结，形成命题层闭环（已写 v1.4.0）。
 // 对应教材：Enderton Ch 1；Mendelson Ch 1
 
 // --- Chapter 1: The Propositional Calculus（命题演算）--- [已写]
@@ -48,10 +48,10 @@
 //   Section 1.7: Propositional Algebra（命题代数）
 //   Section 1.8: Semantics: Valuations and Tautologies（语义：赋值与重言式，含完全性证明）
 
-// --- Chapter 2: Normal Forms, Resolution and Compactness（范式、归结与紧致性）--- [计划]
+// --- Chapter 2: Normal Forms, Resolution and Compactness（范式、归结与紧致性）--- [已写，v1.4.0]
 //   Section 2.1: Normal Forms and Truth-Functional Completeness（范式与真值函数完备性）
-//   Section 2.2: Resolution（归结原理：可靠性/完全性）
-//   Section 2.3: Propositional Compactness（命题紧致性）
+//   Section 2.2: Resolution（归结原理：可靠性/完全性完整证明）
+//   Section 2.3: Propositional Compactness（命题紧致性；König 引理由 §2.4 移入）
 //   Section 2.4: Applications（应用：SAT、König 引理）
 
 // ==========================================================================
@@ -140,7 +140,8 @@
 // 共 4 个内容 Part、11 章（加附录共 5 个 Part、约 47 节）。
 //
 // Part I（语言基础，Ch 1–2）：命题逻辑。Ch 1 已完整写作；Ch 2 为方法章
-//   （范式、归结、紧致性），形成命题层闭环。
+//   （范式、归结、紧致性），形成命题层闭环——Part I 收官（Ch 1 v0.3.0、
+//   Ch 2 v1.4.0）。
 //
 // Part II（主体理论，Ch 3–6）：一阶逻辑。语法 → 语义 → 证明论 →
 //   紧致性/L-S。Ch 3–6 全部完成（v0.8.0）：语法、语义、证明论与
@@ -611,12 +612,393 @@ hold for all formulas $p, q, r$:
 
 = Normal Forms, Resolution and Compactness  // 范式、归结与紧致性
 
+Chapter 1 answered the *semantic* and *proof-theoretic* questions:
+which formulas are tautologies, which are provable, and why the two
+answers coincide. This chapter answers the *algorithmic* question:
+how do we decide satisfiability, and what combinatorial principle
+underlies the decision? The truth tables of Ch 1 give an exponential
+enumeration; normal forms reorganize the search, resolution
+mechanizes it, and the propositional compactness theorem — a purely
+combinatorial fact about finite satisfiability — turns out to be the
+seed of the first-order compactness theorem of Ch 6 (promised there
+at §6.1).
+
+== Normal Forms and Truth-Functional Completeness // 范式与真值函数完备性
+
+The connectives of Ch 1 are interdefinable in a strong sense: every
+truth function can be built from a few of them, and every formula
+can be rearranged, without changing its truth table, into a
+canonical shape. The shapes are the *normal forms*, and they are the
+raw material of the resolution method of §2.2.
+
+#definition(name: "Literals and Clauses")[
+  A *literal* is an atom $p$ or its negation $not p$. A *clause* is a
+  disjunction of literals $ell_1 or ell_2 or dots or ell_n$ (the
+  empty clause, written $bot$, is the disjunction of nothing and is
+  unsatisfiable). A *clause set* is a conjunction of clauses.
+] <def:literal>
+
+#definition(name: "Conjunctive and Disjunctive Normal Forms")[
+  A formula is in *conjunctive normal form* ($"CNF"$) if it is a
+  conjunction of clauses; in *disjunctive normal form* ($"DNF"$) if
+  it is a disjunction of conjunctions of literals:
+  $
+    "CNF": phi = ⋀_(i=1)^m (⋁_(j=1)^(n_i) ell_(i j)), quad
+    "DNF": phi = ⋁_(i=1)^m (⋀_(j=1)^(n_i) ell_(i j)).
+  $
+] <def:cnf>
+
+#eq[
+  $
+    phi = ⋀_(i=1)^m (⋁_(j=1)^(n_i) ell_(i j)).
+  $
+] <eq:cnf-representation>
+
+#theorem(name: "Existence of CNF and DNF")[
+  Every formula $phi$ with atoms $p_1, ..., p_n$ is logically
+  equivalent to a formula in CNF and to a formula in DNF.
+] <thm:cnf-dnf-existence>
+
+#proof[
+  Read $phi$ as a truth function of $p_1, ..., p_n$
+  (#link(<def:valuation>)[Definition 1.8]).
+
+  *Step 1: the DNF.* For every row of the truth table in which
+  $phi$ evaluates to $1$, form the conjunction of literals that is
+  true exactly on that row: the conjunct is $p_i$ if $p_i = 1$ on
+  the row and $not p_i$ if $p_i = 0$. The disjunction of these
+  conjunctions agrees with $phi$ on every row: on a row where
+  $phi = 1$ one disjunct is true; on a row where $phi = 0$ no
+  disjunct is true.
+
+  *Step 2: the CNF.* Dually, for every row where $phi = 0$ form the
+  disjunction of literals that is false exactly on that row — the
+  disjunct is $p_i$ if $p_i = 0$ and $not p_i$ if $p_i = 1$. The
+  conjunction of these disjunctions agrees with $phi$ on every row.
+
+  *Step 3: equivalence.* Both constructions produce formulas whose
+  truth table is the truth table of $phi$; by the completeness of
+  the truth-table criterion (#link(<thm:soundness-completeness>)[Theorem 1.2]
+  for the propositional layer), each is logically
+  equivalent to $phi$. If $phi$ is a tautology, the DNF is the empty
+  disjunction's worth of rows and one may take, e.g., $p_1 or not p_1$.
+]
+
+#example(name: "Normal Forms")[
+  For $phi = (p -> q) and not r$, the truth table has $1$'s exactly
+  on the rows $(1, 1, 0)$, $(0, 1, 0)$, $(0, 0, 0)$, so
+  $
+    "DNF": (p and q and not r) or (not p and q and not r) or (not p and not q and not r),
+  $
+  and the $0$'s give the CNF
+  $
+    (not p or q or r) and (p or not q or r) and (p or q or r).
+  $
+  Both are satisfiability-equivalent to $phi$, as required.
+] <ex:cnf-examples>
+
+#definition(name: "Truth Functions")[
+  An *n-ary truth function* is a function
+  ${0, 1}^n -> {0, 1}$. Every formula with atoms $p_1, ..., p_n$
+  defines one.
+] <def:truth-function>
+
+#theorem(name: "Truth-Functional Completeness")[
+  The set ${not, and, or}$ of connectives is *truth-functionally
+  complete*: every n-ary truth function is realized by a formula
+  built from $not$, $and$, $or$ only.
+] <thm:truth-functional-completeness>
+
+#proof[
+  By #link(<thm:cnf-dnf-existence>)[the existence theorem], the DNF
+  of any formula uses only $not$, $and$, $or$. For an arbitrary truth
+  function $f$, take a formula $phi$ with the truth table of $f$
+  (e.g., a disjunction of the appropriate variable signs) and apply
+  the theorem. Hence $f$ is realized. Moreover the set can be cut
+  down: $p and q$ is equivalent to $not (not p or not q)$ (de
+  Morgan, #link(<prop:algebraic-laws>)[Proposition 1.4]), so
+  ${not, or}$ suffices, and by duality ${not, and}$ does too; even a
+  single connective works — the Sheffer stroke $p ↑ q := not (p and q)$
+  alone is complete, since $not p$ is $p ↑ p$ and $p or q$ is
+  $(p ↑ p) ↑ (q ↑ q)$.
+]
+
+#example(name: "Complete Sets of Connectives")[
+  The intuitionistic and modal languages of Ch 11 use $not$ and
+  $or$/$and$ as primitive exactly because of such reductions. The
+  classical truth-functional base of Ch 1 — five connectives — is
+  thus redundant: $not$ and $or$ (or the Sheffer stroke alone) carry
+  the whole expressive power of propositional truth.
+] <ex:functional-completeness-examples>
+
+== Resolution // 归结原理
+
+Resolution is a proof search on clause sets: it derives new clauses
+from old ones, and the empty clause — a contradiction — appears
+exactly when the set is unsatisfiable. It is the engine of modern SAT
+solvers and the propositional skeleton of the first-order resolution
+methods announced in Ch 3 (§3.4–3.5).
+
+#definition(name: "Clause Sets")[
+  A *clause set* is a finite set of clauses
+  (#link(<def:literal>)[Definition 2.1]). The set is *satisfiable*
+  if its conjunction is; the empty clause $bot$ is satisfiable by
+  no valuation, so a set containing $bot$ is unsatisfiable. A clause
+  containing complementary literals ($p$ and $not p$) is a
+  *tautological clause* and may be deleted without changing
+  satisfiability.
+] <def:clause-set>
+
+#definition(name: "The Resolution Rule")[
+  If $C$ and $D$ are clauses and $ell$ is a literal, the *resolvent*
+  of $C or ell$ and $D or overline(ell)$ is the clause
+  $C or D$, obtained by cancelling the complementary pair:
+  $
+    (C or ell) quad "and" quad (D or overline(ell)) models C or D.
+  $
+] <def:resolution-rule>
+
+#eq[
+  $
+    (C or ell), quad (D or overline(ell)) slash (C or D).
+  $
+] <eq:resolution-rule>
+
+#definition(name: "Resolution Derivations and Refutations")[
+  A *resolution derivation* from a clause set $S$ is a sequence of
+  clauses in which each entry is either a clause of $S$ or a
+  resolvent of two earlier entries. A *refutation* is a derivation
+  ending in the empty clause $bot$.
+] <def:resolution-refutation>
+
+#lemma(name: "Soundness of One Step")[
+  Every resolvent of two clauses of $S$ is a logical consequence of
+  $S$: if a valuation satisfies $C or ell$ and $D or overline(ell)$,
+  it satisfies $C or D$.
+] <lem:resolution-basic>
+
+#proof[
+  Let $v$ satisfy both premises. If $v$ satisfies $ell$, then it must
+  satisfy $D$ (since $D or overline(ell)$ holds and $overline(ell)$
+  fails), so it satisfies $C or D$. If $v$ fails $ell$, then it must
+  satisfy $C$ from the first premise, again giving $C or D$. Either
+  way the resolvent holds.
+]
+
+#theorem(name: "Soundness of Resolution")[
+  If a clause set $S$ has a refutation, then $S$ is unsatisfiable.
+] <thm:resolution-soundness>
+
+#proof[
+  By #link(<lem:resolution-basic>)[Lemma 2.1], every derivable clause
+  is a logical consequence of $S$; induction on the length of the
+  derivation shows that a valuation satisfying $S$ satisfies every
+  derivable clause. A refutation derives $bot$, which no valuation
+  satisfies — contradiction. Hence no valuation satisfies $S$.
+]
+
+#theorem(name: "Completeness of Resolution")[
+  Every unsatisfiable clause set $S$ has a refutation.
+] <thm:resolution-completeness>
+
+#proof[
+  *Step 1: saturation.* Let $S^*$ be the smallest set containing $S$
+  and closed under resolution. Since every resolvent consists of
+  literals already occurring in $S$, the closure is finite: at most
+  $2^(2 m)$ clauses for $m$ atoms. Suppose $bot in.not S^*$; we show
+  that $S^*$ — hence $S$ — is satisfiable, a contradiction.
+
+  *Step 2: the valuation.* Define $v$ by $v (p) = 1$ iff ${p} in S^*$.
+  This is well defined: if both ${p}$ and ${not p}$ were in $S^*$,
+  their resolvent $bot$ would be in $S^*$, contradicting the
+  assumption. We claim $v$ satisfies every clause of $S^*$.
+
+  *Step 3: the claim.* Suppose $C in S^*$ is false under $v$; we
+  derive $bot in S^*$, contradiction. If $C$ contains a literal
+  $overline(ell)$ with ${ell} in S^*$, then the resolvent of $C$ and
+  ${ell}$ is $C ∖ {overline(ell)}$ — again in $S^*$ by
+  closure and again false under $v$; repeat until no such literal
+  remains. The surviving clause has at most one literal: if it still
+  contained two literals $ell_1, ell_2$, falsity under $v$ forces
+  ${overline(ell_1)}$ and ${overline(ell_2)}$ into $S^*$, and the
+  argument applies again. A single literal $ell$ in $S^*$ with
+  $v (ell) = 0$ means ${overline(ell)} in S^*$, and the resolvent is
+  $bot$. Hence $bot in S^*$, contradiction. So $v$ satisfies $S^*$,
+  and $S$ is satisfiable. Therefore unsatisfiability forces
+  $bot in S^*$: a refutation exists.
+]
+
+#example(name: "A Refutation")[
+  The set ${p or q, not p or q, p or not q, not p or not q}$ is
+  unsatisfiable (every valuation falsifies one of the four clauses).
+  Resolution finds this: from $p or q$ and $not p or q$ resolve
+  $q$; from $p or not q$ and $not p or not q$ resolve $not q$; and
+  $q$ with $not q$ resolve $bot$. Figure 2.1 draws the refutation
+  tree.
+] <ex:resolution-example>
+
+#figure(
+  image("img/resolution-tree.svg", width: 80%),
+  caption: [
+    A resolution refutation tree. The four clauses of Example 2.2
+    resolve in two layers to $q$ and $not q$, and finally to the
+    empty clause $bot$ — the certificate of unsatisfiability.
+  ],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:resolution-tree>
+
+== Propositional Compactness // 命题紧致性
+
+A set of sentences is satisfiable if *every finite part* of it is:
+there is no way to build an unsatisfiable set except from a finite
+core of contradictions. This is the *propositional compactness
+theorem*, announced at §6.1 of Ch 6 as the seed of the first-order
+compactness theorem. Its proof is a purely combinatorial fact about
+infinite trees.
+
+#lemma(name: "König's Lemma")[
+  Every infinite tree in which each node has finitely many
+  successors has an infinite branch.
+] <lem:konig-lemma>
+
+#proof[
+  A *tree* here is a set of finite sequences, closed under taking
+  prefixes; a node is a sequence, its successors are the one-step
+  extensions in the tree. Build the branch greedily. Let $x_0$ be the
+  root (the empty sequence); the set of nodes extending $x_0$ is
+  infinite because the tree is infinite. Given $x_n$ whose set of
+  extensions $E_n = {y in T : y " extends " x_n}$ is infinite, the
+  finitely many immediate successors of $x_n$ partition $E_n$
+  (apart from $x_n$ itself), so at least one successor $x_(n+1)$ has
+  infinitely many extensions; choose it. The sequence
+  $(x_0, x_1, x_2, ...)$ is an infinite branch: every prefix lies in
+  the tree, and the choices never stop.
+]
+
+#theorem(name: "Propositional Compactness")[
+  A set $Sigma$ of propositional sentences is satisfiable if and only
+  if every finite subset of $Sigma$ is satisfiable.
+] <thm:propositional-compactness>
+
+#proof[
+  One direction is trivial. For the converse, enumerate the countably
+  many sentences of $Sigma$ as $sigma_1, sigma_2, ...$ and the atoms
+  as $p_1, p_2, ...$. Build a tree $T$ whose nodes of level $n$ are
+  the finite valuations $alpha = (alpha_1, ..., alpha_n)$ (each
+  $alpha_i in {0, 1}$) that satisfy every sentence among
+  ${sigma_1, ..., sigma_n}$ whose atoms lie among $p_1, ..., p_n$.
+
+  *Step 1: $T$ is a tree.* Prefixes of a valuation are valuations,
+  and a longer valuation satisfies at least as many of the
+  $sigma_i$ as its prefixes, so prefix closure holds.
+
+  *Step 2: every level is nonempty.* Fix $n$. The finite set
+  ${sigma_1, ..., sigma_n}$ uses finitely many atoms, hence atoms
+  among $p_1, ..., p_N$ for some $N$. By hypothesis it has a
+  satisfying valuation; its first $n$ coordinates satisfy every
+  $sigma_i$ ($i <= n$) whose atoms lie among $p_1, ..., p_n$ — so
+  level $n$ of $T$ is nonempty.
+
+  *Step 3: König.* Each node has at most two successors. Since $T$ is
+  infinite (infinitely many nonempty levels), König's lemma yields an
+  infinite branch $(alpha_1, alpha_2, ...)$.
+
+  *Step 4: the valuation.* Define $v (p_n) = alpha_n$. For any
+  $sigma_k in Sigma$ with atoms among $p_1, ..., p_N$, take
+  $n >= max (k, N)$: the level-$n$ node of the branch satisfies
+  $sigma_k$ (it satisfies all of $sigma_1, ..., sigma_n$ with atoms
+  among $p_1, ..., p_n$), and $v$ agrees with it on those atoms.
+  Hence $v models sigma_k$, and $v$ satisfies all of $Sigma$.
+]
+
+#figure(
+  image("img/konig-lemma.svg", width: 78%),
+  caption: [
+    König's lemma: an infinite tree with finite branching contains an
+    infinite branch. The greedy choice at each level keeps the
+    infinite part of the tree.
+  ],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:konig-lemma>
+
 #note[
-  Placeholder: This chapter closes the propositional layer with the
-  method and meta-theoretic tools: normal forms and truth-functional
-  completeness (§2.1), resolution (§2.2), propositional compactness
-  (§2.3), and applications such as SAT and König's lemma (§2.4).
-  It will be developed in a subsequent revision.
+  *The seed of Ch 6.* The propositional compactness theorem is the
+  propositional analogue of the first-order theorem of Ch 6
+  (#link(<thm:compactness>)[Theorem 6.1]), where the finite
+  satisfiability hypothesis is lifted through completeness and the
+  Henkin construction. Both theorems express the same finiteness
+  principle: contradiction is always witnessed by a finite set. The
+  principle fails in second-order logic with standard semantics
+  (Ch 10), where a finite set $Sigma = {not "Inf"} union {sigma_n}$
+  is finitely satisfiable but unsatisfiable as a whole — the
+  propositional core of that counterexample is precisely what the
+  compactness theorem rules out here.
+]
+
+== Applications: SAT and König's Lemma // 应用：SAT 与 König 引理
+
+The machinery of this chapter has two faces: decision and
+construction. SAT asks whether a given formula can be satisfied at
+all; compactness turns local satisfiability into global
+satisfiability, building objects of infinite size from finite data.
+
+#definition(name: "The Satisfiability Problem")[
+  The *satisfiability problem* ($"SAT"$) asks, given a formula $phi$
+  (equivalently, a clause set), whether $phi$ is satisfiable.
+] <def:sat>
+
+The problem is decidable by brute force: with $n$ atoms the truth
+table of Ch 1 enumerates $2^n$ valuations, and resolution
+(#link(<thm:resolution-soundness>)[Theorem 2.3] +
+#link(<thm:resolution-completeness>)[2.4]) gives the same answer by
+search. This is the sharpest contrast with first-order logic, whose
+satisfiability is undecidable (Ch 8, Theorem 8.2): propositional
+truth is finite and combinatorial, first-order truth is not.
+
+#example(name: "Infinite Graphs are Colorable iff Finite Parts Are")[
+  Let $G$ be an infinite (countable) graph and $k$ a positive
+  integer. *$G$ is $k$-colorable if and only if every finite
+  subgraph of $G$ is $k$-colorable.*
+
+  One direction is trivial. For the converse, fix atoms $p_(v, i)$
+  meaning "vertex $v$ has color $i$", for $v in V(G)$ and
+  $1 <= i <= k$. Let $Sigma$ contain, for every $v$, the sentence
+  $p_(v,1) or dots or p_(v,k)$ ("some color"); for every $v$ and
+  $i != j$, the sentence $not (p_(v,i) and p_(v,j))$ ("at most one
+  color"); and for every edge $u v$ and every $i$, the sentence
+  $not (p_(u,i) and p_(v,i))$ ("adjacent vertices differ"). A
+  valuation satisfying $Sigma$ is exactly a proper $k$-coloring.
+
+  Any finite subset of $Sigma$ mentions only finitely many vertices
+  and edges, so it concerns a finite subgraph $H$ of $G$. By
+  hypothesis $H$ is $k$-colorable; the coloring of $H$ satisfies the
+  finite subset. By #link(<thm:propositional-compactness>)[propositional compactness],
+  $Sigma$ is satisfiable, and $G$ is
+  $k$-colorable.
+] <ex:graph-coloring>
+
+#example(name: "Uniform Satisfiability")[
+  Suppose $Sigma$ is a set of sentences such that every finite subset
+  is satisfiable *uniformly* — by a single valuation satisfying all
+  finite subsets. Compactness gives more: $Sigma$ itself is
+  satisfiable. Applications range from finite model theory to the
+  existence of infinite combinatorial objects whose existence is
+  first checked on finite pieces.
+] <ex:compactness-applications>
+
+#note[
+  *What this chapter built.* Ch 1 gave truth tables and proofs; this
+  chapter added the algorithmic spine. Normal forms reorganize
+  formulas without changing satisfiability (§2.1); resolution decides
+  satisfiability by search and certifies unsatisfiability with a
+  finite refutation (§2.2); compactness lifts the finiteness of
+  satisfiability to infinite sets (§2.3); König's lemma — the
+  combinatorial heart of that lifting — turns local data into global
+  objects (§2.4). The three chapters of Part I are the complete
+  theory of propositional logic: syntax, semantics, proofs,
+  algorithms, and the infinitary limit.
 ]
 
 #part("First-Order Logic")  // 一阶逻辑
@@ -4201,9 +4583,11 @@ one flat world but admits a third value — "undefined", "unknown",
 == C
 - *#link(<def:categoricity>)[Categoricity]*
 - *#link(<def:church-thesis>)[Church's Thesis]*
+- *#link(<thm:propositional-compactness>)[Compactness (Propositional)]*
 - *#link(<thm:compactness>)[Compactness Theorem]*
 - *#link(<def:complete-theory>)[Complete Theory]*
 - *#link(<def:computable-function>)[Computable Function]*
+- *#link(<def:cnf>)[Conjunctive Normal Form]*
 - *#link(<def:consistency>)[Consistency]*
 - *#link(<def:con-sentence>)[Consistency Sentence]*
 - *#link(<def:conjunction>)[Conjunction]*
@@ -4214,6 +4598,7 @@ one flat world but admits a third value — "undefined", "unknown",
 - *#link(<def:derived-connectives>)[Derived Connectives]*
 - *#link(<lem:diagonalization>)[Diagonalization Lemma]*
 - *#link(<def:disjunction>)[Disjunction]*
+- *#link(<def:cnf>)[Disjunctive Normal Form]*
 - *#link(<cor:double-negation>)[Double Negation]*
 
 == E
@@ -4244,6 +4629,7 @@ one flat world but admits a third value — "undefined", "unknown",
 - *#link(<def:intuitionistic-axioms>)[Intuitionistic Logic]*
 
 == K
+- *#link(<lem:konig-lemma>)[König's Lemma]*
 - *#link(<thm:kripke-completeness-ipc>)[Kripke Completeness (IPC)]*
 - *#link(<def:kripke-frame>)[Kripke Semantics]*
 
@@ -4263,6 +4649,7 @@ one flat world but admits a third value — "undefined", "unknown",
 
 == N
 - *#link(<def:negation>)[Negation]*
+- *#link(<def:cnf>)[Normal Form]*
 
 == P
 - *#link(<def:partial-recursive>)[Partial Recursive Function]*
@@ -4279,13 +4666,16 @@ one flat world but admits a third value — "undefined", "unknown",
 == R
 - *#link(<thm:reductio-ad-absurdum>)[Reductio ad Absurdum]*
 - *#link(<def:representable>)[Representable Function]*
+- *#link(<thm:resolution-completeness>)[Resolution]*
 
 == S
 - *#link(<def:satisfaction>)[Satisfaction]*
+- *#link(<def:sat>)[SAT]*
 - *#link(<def:tautology>)[Satisfiable]*- *#link(<def:tautology>)[Semantic Consequence]*
 - *#link(<def:second-order-arithmetic>)[Second-Order Arithmetic]*
 - *#link(<def:second-order-language>)[Second-Order Logic]*
 - *#link(<def:sentence>)[Sentence]*
+- *#link(<thm:truth-functional-completeness>)[Sheffer Stroke]*
 - *#link(<def:signature>)[Signature]*
 - *#link(<def:skolem-form>)[Skolem Normal Form]*
 - *#link(<thm:soundness-completeness>)[Soundness and Completeness]*
