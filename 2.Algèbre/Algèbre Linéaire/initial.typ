@@ -2185,81 +2185,70 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   "the characteristic of $F$ is not $2$".
 ]
 
-=== Invertible Matrix // 可逆矩阵
+#proposition(name: "Invertible Matrix")[
+  - $0$ is not an eigenvalue of $A$ (and conversely).
+  - If $lambda$ is an eigenvalue of $A$, then $1/lambda$ is an eigenvalue of $A^(-1)$, and the eigenvector $xi$ of $A$ is also an eigenvector of $A^(-1)$.
+  - (When $F$ is a number field) If $A$ is diagonalizable, then $A^(-1)$ is also diagonalizable.
+] <prop:invertible-matrix>
 
-- $0$ is not an eigenvalue of $A$ (and conversely).
-- If $lambda$ is an eigenvalue of $A$, then $1/lambda$ is an eigenvalue of $A^(-1)$,
-  and the eigenvector $xi$ of $A$ is also an eigenvector of $A^(-1)$.
-- (When $F$ is a number field) If $A$ is diagonalizable, then $A^(-1)$ is also diagonalizable.
+#proposition(name: "Idempotent Matrix")[
+  Let $A$ be idempotent, i.e. $A^2 = A$.
+  - Any eigenvalue of $A$ is either $0$ or $1$.
+  - ($V$ finite-dimensional) $A$ is diagonalizable and $V = E_1 ⊕ E_0 = "Ker"(A - E) ⊕ "Ker"(A) = "Im"(A) ⊕ "Ker"(A)$.
+  - (When $F$ is a number field and $V$ finite-dimensional) The rank equals the trace: $upright("rank")(A) = "tr"(A)$.
+] <prop:idempotent-matrix>
 
-=== Idempotent Matrix // 幂等矩阵
+#proposition(name: "Nilpotent Matrix")[
+  Let $A$ be nilpotent, i.e. $A^k = 0$ for some positive integer $k$ (the smallest such $k$ is the *index of nilpotency*).
+  - All eigenvalues of $A$ are $0$.
+  - ($V$ finite-dimensional) $A$ is diagonalizable if and only if $A = 0$, i.e. $k = 1$.
+] <prop:nilpotent-matrix>
 
-Let $A$ be idempotent, i.e. $A^2 = A$.
-- Any eigenvalue of $A$ is either $0$ or $1$.
-- ($V$ finite-dimensional) $A$ is diagonalizable and
-  $V = E_1 ⊕ E_0 = "Ker"(A - E) ⊕ "Ker"(A) = "Im"(A) ⊕ "Ker"(A)$.
-- (When $F$ is a number field and $V$ finite-dimensional) The rank equals the trace:
-  $upright("rank")(A) = "tr"(A)$.
+#proposition(name: "Involution Matrix")[
+  Let $V$ be finite-dimensional, $F$ a number field, and $A$ an involution matrix, i.e. $A^2 = E$.
+  - All eigenvalues of $A$ are either $1$ or $-1$.
+  - $A$ is diagonalizable and $V = E_1 ⊕ E_(-1) = "Ker"(A - E) ⊕ "Ker"(A + E)$.
+] <prop:involution-matrix>
 
-=== Nilpotent Matrix // 幂零矩阵
+In geometry, an involution corresponds to a reflection or symmetry, since $A^2 = E$ implies $A = A^(-1)$.
 
-Let $A$ be nilpotent, i.e. $A^k = 0$ for some positive integer $k$
-(the smallest such $k$ is the *index of nilpotency*).
-- All eigenvalues of $A$ are $0$.
-- ($V$ finite-dimensional) $A$ is diagonalizable if and only if $A = 0$, i.e. $k = 1$.
-
-=== Involution Matrix // 对合矩阵
-
-Let $V$ be finite-dimensional, $F$ a number field, and $A$ an involution matrix,
-i.e. $A^2 = E$. In geometry, an involution corresponds to a reflection or symmetry,
-since $A^2 = E$ implies $A = A^(-1)$.
-- All eigenvalues of $A$ are either $1$ or $-1$.
-- $A$ is diagonalizable and $V = E_1 ⊕ E_(-1) = "Ker"(A - E) ⊕ "Ker"(A + E)$.
-
-=== All-Ones Matrix // 全 1 矩阵
-
-Let $F = bb(Q)$ and $A$ be the all-ones matrix. Denote
-$1_n = (1, 1, ..., 1)^"T"$ (column vector of $n$ ones).
-- All eigenvalues are $n$ (algebraic multiplicity $1$) or $0$ (algebraic multiplicity $n - 1$).
-- The eigenvectors for $n$ are ${k 1_n : k in bb(Q), k != 0}$; the eigenvectors for $0$ are
-  linear combinations of $eta_1, ..., eta_(n-1)$ where $eta_i$ has $1$ in position $1$,
-  $-1$ in position $i+1$, and $0$ elsewhere.
-- $A$ is diagonalizable.
+#proposition(name: "All-Ones Matrix")[
+  Let $F = bb(Q)$ and $A$ be the all-ones matrix. Denote $1_n = (1, 1, ..., 1)^"T"$ (column vector of $n$ ones).
+  - All eigenvalues are $n$ (algebraic multiplicity $1$) or $0$ (algebraic multiplicity $n - 1$).
+  - The eigenvectors for $n$ are ${k 1_n : k in bb(Q), k != 0}$; the eigenvectors for $0$ are linear combinations of $eta_1, ..., eta_(n-1)$ where $eta_i$ has $1$ in position $1$, $-1$ in position $i+1$, and $0$ elsewhere.
+  - $A$ is diagonalizable.
+] <prop:all-ones-matrix>
 
 #note[
   Note that $(1/n) A$ is an idempotent orthonormal projection matrix.
 ]
 
-=== Cyclic Shift Matrix // 循环移位矩阵
+#proposition(name: "Cyclic Shift Matrix")[
+  Let $F = bb(C)$ and $A$ be the cyclic shift matrix (ones on the superdiagonal and in position $(n, 1)$, zeros elsewhere).
+  - The eigenvalues are the $n$-th roots of unity $omega^(k) = exp(2 pi i k / n)$ for $k = 0, 1, ..., n - 1$.
+  - The eigenvector for $omega^(k)$ is $xi^(k) = (1, omega^(k), (omega^(k))^2, ..., (omega^(k))^(n-1))^"T"$.
+  - $A$ is diagonalizable, and can be unitarily diagonalized.
+] <prop:cyclic-shift-matrix>
 
-Let $F = bb(C)$ and $A$ be the cyclic shift matrix (ones on the superdiagonal
-and in position $(n, 1)$, zeros elsewhere). All properties are closely related to
-the discrete Fourier transform (DFT) and roots of unity.
-- The eigenvalues are the $n$-th roots of unity $omega^(k) = exp(2 pi i k / n)$
-  for $k = 0, 1, ..., n - 1$.
-- The eigenvector for $omega^(k)$ is $xi^(k) = (1, omega^(k), (omega^(k))^2, ..., (omega^(k))^(n-1))^"T"$.
-- $A$ is diagonalizable, and can be unitarily diagonalized.
+All properties above are closely related to the discrete Fourier transform (DFT) and roots of unity.
 
-=== Circulant Matrix // 循环矩阵
-
-Let $F = bb(C)$ and $A$ be a circulant matrix, i.e.
-$A = a_0 E + a_1 C + a_2 C^2 + ... + a_(n-1) C^(n-1)$ where $C$ is the cyclic shift matrix.
-- The eigenvalues are $lambda_k = f(omega^(k))$ where $f(x) = a_0 + a_1 x + ... + a_(n-1) x^(n-1)$.
-- Circulant matrices share the same eigenvectors as the cyclic shift matrix.
-- $A$ is diagonalizable, and can be unitarily diagonalized by the same DFT matrix.
+#proposition(name: "Circulant Matrix")[
+  Let $F = bb(C)$ and $A$ be a circulant matrix, i.e. $A = a_0 E + a_1 C + a_2 C^2 + ... + a_(n-1) C^(n-1)$ where $C$ is the cyclic shift matrix.
+  - The eigenvalues are $lambda_k = f(omega^(k))$ where $f(x) = a_0 + a_1 x + ... + a_(n-1) x^(n-1)$.
+  - Circulant matrices share the same eigenvectors as the cyclic shift matrix.
+  - $A$ is diagonalizable, and can be unitarily diagonalized by the same DFT matrix.
+] <prop:circulant-matrix>
 
 #note[
   The eigenvalues of a circulant matrix are the discrete Fourier transform of its first row.
 ]
 
-=== Triangular Matrix // 三角矩阵
-
-Let $F$ be a number field and $A$ an upper triangular matrix.
-- The eigenvalues of $A$ are the diagonal entries $a_(i i)$.
-- If all diagonal entries are distinct, $A$ is diagonalizable. If there are repeated
-  diagonal entries, $A$ may or may not be diagonalizable.
-- If all diagonal entries are equal and there exists a non-zero entry above the diagonal,
-  then $A$ is not diagonalizable.
+#proposition(name: "Triangular Matrix")[
+  Let $F$ be a number field and $A$ an upper triangular matrix.
+  - The eigenvalues of $A$ are the diagonal entries $a_(i i)$.
+  - If all diagonal entries are distinct, $A$ is diagonalizable. If there are repeated diagonal entries, $A$ may or may not be diagonalizable.
+  - If all diagonal entries are equal and there exists a non-zero entry above the diagonal, then $A$ is not diagonalizable.
+] <prop:triangular-matrix-diagonalizability>
 
 == Simultaneous Characteristics Induced by Commutativity // 交换性诱导的同时性质
 
