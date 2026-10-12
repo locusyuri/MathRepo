@@ -36,7 +36,7 @@ flux, temperature as mean kinetic energy — before the formal
 thermodynamic framework of Chapters 2–4.
 
 == Ideal Gas Equation of State // 理想气体状态方程
-
+=== Thermodynamic System // 热力学系统
 #definition(name: "Equilibrium State and State Variables")[
   A thermodynamic system is in an *equilibrium state* if its measurable properties are independent of time and of the system's history.
 
@@ -68,6 +68,7 @@ $
   simple system.
 ] <def:equation-of-state>
 
+=== Ideal Gas
 The *ideal gas* is the limiting case of a gas at low density, where
 intermolecular forces and molecular volumes are negligible. Its
 equation of state, established empirically by Boyle, Charles and
@@ -86,9 +87,11 @@ where $N$ is the number of molecules and
 $k_B = 1.38 times 10^(-23) "J/K"$ is the Boltzmann constant. The two
 forms are linked by the conversion relations
 $
-  nu = N / N_A, quad k_B = R / N_A,
+  nu = N / N_A = m / M, quad M = m_0 N_A, quad k_B = R / N_A, quad k / m = R / M,
 $
-where $N_A = 6.022 times 10^23 "mol"^(-1)$ is the Avogadro constant.
+where $N_A = 6.022 times 10^23 "mol"^(-1)$ is the Avogadro constant,
+standing for the number of molecules in one mole of any substance. The mass of a mole of any substance is called the molar mass, and it is denoted by the symbol $M$.
+
 The three families of curves $p V = "const"$ (isotherms),
 $p = "const"$ (isobars) and $V = "const"$ (isochores) partition the
 $p$-$V$ plane; see @fig:pv-isotherms.
@@ -125,25 +128,28 @@ molecular picture to thermodynamic variables — is the founding gesture
 of kinetic theory.
 
 #definition(name: "Ideal Gas Microscopic Model")[
-  The kinetic-theory model of an ideal gas rests on four assumptions:
+  The kinetic-theory model of an ideal gas rests on two groups of assumptions.
 
-  - molecules are point particles — their volume is negligible compared
-    with the volume they occupy;
-  - except during the brief instants of collision, molecules exert no
-    force on one another;
-  - all collisions, both with the walls and between molecules, are
-    perfectly elastic;
-  - the molecules are in perpetual, disordered thermal motion, with no
-    preferred direction and no preferred subset.
+  *Mechanical assumptions on individual molecules.*
+
+  - molecules are point particles — their own volume is negligible compared with the volume they occupy;
+  - except during the brief instants of collision, molecules exert no force on one another;
+  - all collisions, both with the walls and between molecules, are perfectly elastic.
+
+  *Statistical assumptions on the ensemble.*
+
+  - the molecules are in perpetual random motion, their velocities changing from instant to instant through collisions;
+  - *spatial homogeneity*: in equilibrium the molecules are distributed uniformly over the volume, $n = (dif N)/(dif V) = N / V$;
+  - *isotropy of directions*: no direction is preferred, $chevron.l v_x chevron.r = chevron.l v_y chevron.r = chevron.l v_z chevron.r = 0$ and $chevron.l v_x^2 chevron.r = chevron.l v_y^2 chevron.r = chevron.l v_z^2 chevron.r = 1/3 chevron.l v^2 chevron.r$.
 ] <def:ideal-gas-model>
 
 #property(name: "Pressure Formula")[
   For a gas of number density $n = N / V$ and molecular mass $m$ in
   equilibrium, the pressure exerted on any wall is
   $
-    p = 1/3 n m lr(⟨ v^2 ⟩),
+    p = 1/3 n m chevron.l v^2 chevron.r,
   $
-  where $lr(⟨ v^2 ⟩)$ is the mean squared molecular speed.
+  where $chevron.l v^2 chevron.r$ is the mean squared molecular speed.
 ] <prop:pressure-formula>
 
 #proof[
