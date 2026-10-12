@@ -317,6 +317,7 @@ Two details of the table deserve comment. A *linear* molecule (monatomic aside) 
 
 == Maxwell-Boltzmann Velocity Distribution // 麦克斯韦-玻尔兹曼速度分布
 
+=== Speed Distribution Function // 速率分布函数
 In an equilibrium gas the molecular speeds take a whole range of
 values, and collisions constantly redistribute them among the
 molecules; yet at a fixed temperature the fraction of molecules found
@@ -334,33 +335,40 @@ $
 $
 defines the *speed distribution function*.
 
-The distribution function answers four counting questions at once:
-$N f(v) dif v$ is the number of molecules with speeds in
-$[v, v + dif v]$; $n f(v) dif v$, with $n = N / V$ the number density,
-is the number of such molecules per unit volume; and over a finite
-interval, $integral_(v_1)^(v_2) N f(v) dif v$ and
-$integral_(v_1)^(v_2) n f(v) dif v$ are the number of molecules,
-respectively the number of molecules per unit volume, with speeds in
-$[v_1, v_2]$. Dividing the count by $N$ gives the fraction
-$integral_(v_1)^(v_2) f(v) dif v$ of molecules in the interval —
-literally the area under the curve $f(v)$ between $v_1$ and $v_2$. The
-total area is one, $integral_0^infinity f(v) dif v = 1$, since every
-molecule has some speed. At this stage $f(v)$ is a purely statistical
-notion; its explicit form is derived below.
+In terms of $f(v)$, four counting statements follow at once:
+
+- $N f(v) dif v$ is the number of molecules with speeds in
+  $[v, v + dif v]$;
+- $n f(v) dif v$ — with $n = N / V$ the number density — is the number
+  of such molecules per unit volume;
+- $integral_(v_1)^(v_2) N f(v) dif v$ and
+  $integral_(v_1)^(v_2) n f(v) dif v$ extend the two counts to the
+  finite interval $[v_1, v_2]$;
+- dividing by $N$, the fraction of molecules with speeds in
+  $[v_1, v_2]$ is $integral_(v_1)^(v_2) f(v) dif v$ — the area under
+  the curve between $v_1$ and $v_2$.
+
+The total area is one, $integral_0^infinity f(v) dif v = 1$: every
+molecule has some speed.
+
+At this stage $f(v)$ is a purely statistical notion; its explicit form
+is derived below.
 
 #figure(
   image("img/speed-distribution-experimental.svg", width: 58%),
-  caption: [The speed distribution function $f(v)$ as an experimental
-    curve. The dark strip is the number $dif N = N f(v) dif v$ of
-    molecules with speeds in $[v, v + dif v]$, and the shaded area is
-    the fraction of molecules with speeds in $[v_1, v_2]$. The curve
-    rises from the origin, peaks at the most probable speed $v_p$, and
-    decays along a long tail that approaches the $v$-axis
+  caption: [The speed distribution function $f(v)$ of nitrogen
+    ($M = 28 "g/mol"$) at $T = 300 "K"$, as measured experimentally.
+    The dark strip is the number $dif N = N f(v) dif v$ of molecules
+    with speeds in $[v, v + dif v]$, and the shaded area is the
+    fraction of molecules with speeds in $[v_1, v_2]$. The curve rises
+    from the origin, peaks at the most probable speed $v_p approx 422
+    "m/s"$, and decays along a long tail that approaches the $v$-axis
     asymptotically: very slow and very fast molecules are both rare.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:speed-distribution-experimental>
 
+=== Maxwell Velocity Distribution Function // 麦克斯韦速度分布函数
 Maxwell derived the explicit form of the distribution in 1860, on the
 basis of probability theory alone, before any direct measurement
 existed. His argument concerns the *velocity* $bold(v) = (v_x, v_y,
@@ -401,43 +409,21 @@ three Cartesian components are statistically independent.
   $
     g(v) = A exp(-alpha v^2).
   $
-  Normalisation fixes $A = sqrt(alpha / pi)$ per component. The parameter
-  $alpha$ is fixed by the pressure computation below to be
+  Normalisation fixes $A = sqrt(alpha / pi)$ per component. The
+  parameter $alpha$ is fixed below by the ideal-gas law to be
   $alpha = m / (2 k_B T)$.
 ]
 
-#property(name: "Pressure as Momentum Flux")[
-  The Maxwell distribution rederives the pressure formula of §1.2 by
-  direct integration. In a gas of number density $n$ whose velocities
-  follow the Maxwell distribution, the pressure exerted on a container
-  wall is
-  $
-    p = n m lr(⟨ v_x^2 ⟩) = 1/3 n m lr(⟨ v^2 ⟩).
-  $
-] <prop:kinetic-pressure>
-
-#proof[
-  Molecules striking the wall transfer $2 m v_x$ of momentum,
-  the normal component being reversed. The flux of molecules arriving with
-  normal component in $(v_x, v_x + dif v_x)$, $v_x > 0$, is
-  $n v_x g(v_x) dif v_x$, so
-  $
-    p = integral_0^infinity 2 m v_x dot n v_x g(v_x) dif v_x
-    = n m integral_(-infinity)^infinity v_x^2 g(v_x) dif v_x
-    = n m lr(⟨ v_x^2 ⟩).
-  $
-  Isotropy gives $lr(⟨ v_x^2 ⟩) = lr(⟨ v_y^2 ⟩) =
-  lr(⟨ v_z^2 ⟩) = lr(⟨ v^2 ⟩) / 3$. Comparing with the
-  ideal gas law $p = n k_B T$ forces
-  $
-    1/3 m lr(⟨ v^2 ⟩) = k_B T, quad "i.e." quad
-    1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T,
-  $
-  so $alpha = m / (2 k_B T)$. Temperature is thereby *identified* with the
-  mean kinetic energy per molecule — the dictionary entry announcing the
-  equipartition theorem of §1.3. The argument does not merely use the
-  ideal gas law; it *explains* it.
-]
+The only undetermined constant is $alpha$. Its value follows from the
+pressure formula of §1.2, $p = 1/3 n m lr(⟨ v^2 ⟩)$, which combined
+with the ideal-gas law $p = n k_B T$ gave
+#link(<prop:temperature-kinetic>)[the mean translational kinetic
+  energy] $1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T$; hence
+$
+  alpha = m / (2 k_B T).
+$
+Temperature thereby enters the Maxwell distribution as the mean kinetic
+energy per molecule — announcing the equipartition theorem of §1.3.
 
 The velocity distribution lives on three-dimensional velocity space;
 the experimentally measured $f(v)$ is its marginal along the speed.
@@ -463,17 +449,20 @@ higher speeds and must simultaneously lower.
 
 #figure(
   image("img/maxwell-temperature-family.svg", width: 66%),
-  caption: [The Maxwell speed distribution at three temperatures. The
-    factor $v^2$ drives each curve up from the origin, the exponential
-    tail decays towards the $v$-axis asymptotically, and the area under
-    every curve is $1$. Raising $T$ shifts the most probable speed
-    $v_p$ to the right while lowering the peak: slow molecules
-    concentrate to the left of $v_p$, and the broadening tail carries
-    the small fraction of fast molecules to higher speeds.],
+  caption: [The Maxwell speed distribution of nitrogen at $T_1 = 300$
+    "K", $T_2 = 600 "K"$ and $T_3 = 900 "K"$. The factor $v^2$ drives
+    each curve up from the origin, the exponential tail decays towards
+    the $v$-axis asymptotically, and the area under every curve is $1$.
+    Raising $T$ shifts the most probable speed
+    $v_p = sqrt(2 R T / M)$ — marked by the dotted lines — to the
+    right while lowering the peak: slow molecules concentrate to the
+    left of $v_p$, and the broadening tail carries the small fraction
+    of fast molecules to higher speeds.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:maxwell-temperature>
 
+=== Characteristic Speeds // 三种统计速率
 #theorem(name: "Characteristic Speeds")[
   Three speeds characterise the Maxwell distribution, each expressible
   through the molar mass $M$ as well as the molecular mass $m$:
@@ -2290,7 +2279,7 @@ the covariant formulation that closes Part I.
   isotropic solid angle gives $p = n < p v cos^2 theta >$ averaged over
   directions, i.e. $p = n < p v > / 3$ since $< cos^2 theta > = 1/3$.
   This is the relativistic completion of
-  #link(<prop:kinetic-pressure>)[the kinetic-theory derivation]. Now
+  #link(<prop:pressure-formula>)[the kinetic-theory derivation]. Now
   insert the dispersion: non-relativistically, $p v = p^2 / m = 2
   E_"kin"$, while ultra-relativistically, $p v = p c = E$.
 ]

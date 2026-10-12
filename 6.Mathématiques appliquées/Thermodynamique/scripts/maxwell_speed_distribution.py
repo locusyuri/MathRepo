@@ -1,10 +1,10 @@
-"""Two figures for the Maxwell-Boltzmann section.
+"""Two figures for the Maxwell-Boltzmann section (nitrogen, real units).
 
-1. speed-distribution-experimental.svg — f(v) as an experimental curve:
-   strip dN = N f(v) dv, shaded fraction in [v1, v2], peak at v_p, long
+1. speed-distribution-experimental.svg — f(v) of N2 at 300 K: strip
+   dN = N f(v) dv, shaded fraction in [v1, v2], peak at v_p ~ 422 m/s,
    tail asymptotic to the v-axis.
-2. maxwell-temperature-family.svg — Maxwell speed distribution at three
-   temperatures. Since integral f dv = 1, raising T shifts v_p right
+2. maxwell-temperature-family.svg — f(v) of N2 at T = 300/600/900 K.
+   Since integral f dv = 1, raising T shifts v_p = sqrt(2RT/M) right
    AND lowers the peak (height ~ 1/v_p): the curves cannot merely slide.
 
 Output: ../img/*.svg (transparent). Set PREVIEW=1 to also save PNG
@@ -16,58 +16,64 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+R = 8.314        # J/(mol K)
+M = 28e-3        # kg/mol, nitrogen N2
 BLUE = "#1f4e9c"
 SHADE = "#aec7e8"
 STRIP = "#d9534f"
 COLORS = ["#9ecae1", "#4a90d9", "#1f4e9c"]
 
 
-def f(x):
-    # Maxwell speed distribution in units of 1/v_p, with x = v / v_p
-    return 4.0 / np.sqrt(np.pi) * x**2 * np.exp(-(x**2))
+def f_v(v, T):
+    """Maxwell speed distribution in s/m, exact expression."""
+    vp = np.sqrt(2 * R * T / M)
+    return (4.0 / np.sqrt(np.pi)) / vp * (v / vp) ** 2 * np.exp(
+        -((v / vp) ** 2))
 
 
 # ------------------------------------------------------- experimental
-x = np.linspace(0, 4.6, 1000)
+T1 = 300.0
+v = np.linspace(0, 1600, 1200)
+y = f_v(v, T1) * 1e3  # in units of 1e-3 s/m
 
-fig, ax = plt.subplots(figsize=(5.8, 3.9))
-ax.plot(x, f(x), color=BLUE, lw=2, zorder=3)
+fig, ax = plt.subplots(figsize=(6.2, 4.0))
+ax.plot(v, y, color=BLUE, lw=2, zorder=3)
 
-v1, v2 = 1.3, 2.0
-mask = (x >= v1) & (x <= v2)
-ax.fill_between(x[mask], f(x)[mask], color=SHADE, alpha=0.55, zorder=1)
+v_a, v_b = 600.0, 900.0  # [v1, v2]
+mask = (v >= v_a) & (v <= v_b)
+ax.fill_between(v[mask], y[mask], color=SHADE, alpha=0.55, zorder=1)
 
-v0, dv = 0.48, 0.06
-mask_strip = (x >= v0) & (x <= v0 + dv)
-ax.fill_between(x[mask_strip], f(x)[mask_strip], color=STRIP, alpha=0.9,
+v0, dv = 280.0, 50.0  # strip [v, v + dv]
+mask_strip = (v >= v0) & (v <= v0 + dv)
+ax.fill_between(v[mask_strip], y[mask_strip], color=STRIP, alpha=0.9,
                 zorder=2)
 
-ax.axvline(1.0, color="gray", lw=0.9, ls="--", zorder=1)
-ax.annotate("$v_p$", xy=(1.0, f(1.0)), xytext=(1.22, 0.86),
+vp = np.sqrt(2 * R * T1 / M)  # ~422 m/s
+ax.axvline(vp, color="gray", lw=0.9, ls="--", zorder=1)
+ax.annotate("$v_p$", xy=(vp, f_v(vp, T1) * 1e3), xytext=(vp + 30, 2.12),
             color="dimgray", fontsize=12)
 
 ax.annotate("$\\mathrm{d}N = N f(v)\\,\\mathrm{d}v$",
-            xy=(v0 + dv / 2, f(v0 + dv / 2)), xytext=(0.08, 0.88),
-            fontsize=11, color=STRIP,
+            xy=(v0 + dv / 2, f_v(v0 + dv / 2, T1) * 1e3),
+            xytext=(60, 1.95), fontsize=11, color=STRIP,
             arrowprops=dict(arrowstyle="->", color=STRIP, lw=1.0))
 
 ax.annotate("fraction in $[v_1, v_2]$",
-            xy=(1.62, f(1.62)), xytext=(2.15, 0.58),
+            xy=(750, f_v(750, T1) * 1e3), xytext=(880, 1.15),
             fontsize=11, color="#2b5d8c",
             arrowprops=dict(arrowstyle="->", color="#2b5d8c", lw=1.0))
 
 ax.annotate("$f(v) \\to 0$ as $v \\to \\infty$\n(asymptotic to the $v$-axis)",
-            xy=(3.0, f(3.0) + 0.012), xytext=(2.7, 0.26),
+            xy=(1080, 0.03), xytext=(980, 0.62),
             fontsize=10, color="dimgray",
             arrowprops=dict(arrowstyle="->", color="dimgray", lw=1.0))
 
-ax.set_xticks([1.0, v1, v2])
-ax.set_xticklabels(["$v_p$", "$v_1$", "$v_2$"])
-ax.set_yticks([])
-ax.set_xlim(0, 4.6)
-ax.set_ylim(0, 0.98)
-ax.set_xlabel("$v$")
-ax.set_ylabel("$f(v)$")
+ax.set_xticks([0, 400, 800, 1200, 1600])
+ax.set_yticks([0, 0.5, 1.0, 1.5, 2.0])
+ax.set_xlim(0, 1600)
+ax.set_ylim(0, 2.35)
+ax.set_xlabel("$v$ (m/s)")
+ax.set_ylabel("$f(v)$ ($10^{-3}\\,\\mathrm{s/m}$)")
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
 
@@ -79,38 +85,40 @@ if os.environ.get("PREVIEW"):
 plt.close(fig)
 
 # -------------------------------------------------- temperature family
-xx = np.linspace(0, 6.8, 1400)
-scales = [1.0, 1.6, 2.5]  # v_p proportional to sqrt(T)
-labels = ["$T_1$", "$T_2$", "$T_3$"]
+temps = [300.0, 600.0, 900.0]
+labels = ["$T_1 = 300\\,\\mathrm{K}$", "$T_2 = 600\\,\\mathrm{K}$",
+          "$T_3 = 900\\,\\mathrm{K}$"]
 
-fig, ax = plt.subplots(figsize=(6.6, 3.9))
-for s, lab, c in zip(scales, labels, COLORS):
-    # peak height = f(1) / v_p  ->  strictly decreasing in T
-    ax.plot(xx, f(xx / s) / s, color=c, lw=2, label=lab)
-    ax.axvline(s, color=c, lw=0.8, ls=":")
+v = np.linspace(0, 1550, 1500)
+
+fig, ax = plt.subplots(figsize=(6.6, 4.0))
+for T, lab, c in zip(temps, labels, COLORS):
+    # peak height = f(v_p) ~ 1/v_p  ->  strictly decreasing in T
+    ax.plot(v, f_v(v, T) * 1e3, color=c, lw=2, label=lab)
+    ax.axvline(np.sqrt(2 * R * T / M), color=c, lw=0.8, ls=":")
 
 ax.annotate("$T$ rises: $v_p$ shifts right,\npeak lowers, area stays $1$",
-            xy=(2.52, 0.36), xytext=(3.55, 0.55),
+            xy=(740, 1.10), xytext=(860, 1.55),
             fontsize=10, color="dimgray",
             arrowprops=dict(arrowstyle="->", color="dimgray", lw=1.0))
 
 ax.annotate("long tail: a few\nfast molecules",
-            xy=(4.6, 0.045), xytext=(4.85, 0.20),
+            xy=(1250, 0.18), xytext=(1150, 0.85),
             fontsize=10, color="dimgray",
             arrowprops=dict(arrowstyle="->", color="dimgray", lw=1.0))
 
 ax.annotate("$f(v) \\to 0$ only as $v \\to \\infty$",
-            xy=(6.1, 0.008), xytext=(4.6, 0.09),
+            xy=(1480, 0.03), xytext=(1300, 0.60),
             fontsize=10, color="dimgray",
             arrowprops=dict(arrowstyle="->", color="dimgray", lw=1.0))
 
-ax.legend(frameon=False, fontsize=11, loc="upper right")
-ax.set_xticks([])
-ax.set_yticks([])
-ax.set_xlim(0, 6.8)
-ax.set_ylim(0, 0.95)
-ax.set_xlabel("$v$")
-ax.set_ylabel("$f(v)$")
+ax.legend(frameon=False, fontsize=10, loc="upper right")
+ax.set_xticks([0, 500, 1000, 1500])
+ax.set_yticks([0, 0.5, 1.0, 1.5, 2.0])
+ax.set_xlim(0, 1550)
+ax.set_ylim(0, 2.35)
+ax.set_xlabel("$v$ (m/s)")
+ax.set_ylabel("$f(v)$ ($10^{-3}\\,\\mathrm{s/m}$)")
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
 
