@@ -96,7 +96,7 @@ bun .agents/skills/violet-latex-to-typst/scripts/migrate.js chapters/chap01.tex 
 5. **中文注释**：在标题后添加 `// 中文翻译` 注释
 6. **自定义运算符**：如 `\mathrm{Arg}` 等需要在文件顶部用 `#let` 定义
 7. **分数简化**：脚本生成的 `(\1) / (\2)` 可能需要在简单情况下去掉括号
-8. **绝对值**：检查 `|...|` 是否需要改为 `abs(...)`
+8. **竖线符号语义**：检查 `|...|` 的语义——标量绝对值 → `abs(...)`；矩阵行列式 → `"det"(A)`（符号）或 `mat(delim: "|", ...)`（显式），**禁止用 `abs()` 表示行列式**
 
 ### Step 5: 合并到单文件
 
@@ -184,6 +184,19 @@ typst compile "Subject/initial.typ" "Subject/initial.pdf" --root .
 | `\begin{align*} ... \end{align*}` | `$ ... $`（删除 `\\` 和 `&`） |
 | `\begin{gather*} ... \end{gather*}` | 多个 `$ ... $`（按 `\\` 拆分） |
 | `\begin{align} ... \end{align}` | `$ ... $`（删除 `\\` 和 `&`） |
+| `\begin{matrix} ... \end{matrix}` | `mat(...)`（无分隔符，`\\` → `;`，`&` → `,`） |
+| `\begin{pmatrix} ... \end{pmatrix}` | `mat(delim: "(", ...)` |
+| `\begin{bmatrix} ... \end{bmatrix}` | `mat(delim: "[", ...)` |
+| `\begin{Bmatrix} ... \end{Bmatrix}` | `mat(delim: "{", ...)` |
+| `\begin{vmatrix} ... \end{vmatrix}` | `mat(delim: "|", ...)`（行列式，见 §3.8） |
+| `\begin{Vmatrix} ... \end{Vmatrix}` | `mat(delim: "||", ...)`（范数） |
+| `\begin{array} ... \end{array}` | `mat(...)`（`\\` → `;`，`&` → `,`，手动） |
+
+**矩阵环境转换规则**：
+- 行分隔 `\\` → `;`，列分隔 `&` → `,`
+- 行内元素不加多余括号：`mat((a, b), (c, d))` 是错误的，应为 `mat(a, b; c, d)`
+- 省略号行用 `dots.v, dots.v, dots.down, dots.v` 保证对齐
+- `matrix` 和 `array` 环境脚本不自动处理，需手动转换
 
 **注意**：`align*` 中的 `\\`（换行）和 `&`（对齐）在 Typst 中需要特殊处理：
 - 简单情况：拆分为多个 display math
@@ -306,7 +319,8 @@ typst compile "Subject/initial.typ" "Subject/initial.pdf" --root .
 |-------|-------|
 | `\cdot` | `dot` |
 | `\times` | `times` |
-| `\pm` | `plus.minus` |
+| `\pm` | `±`（Unicode 字符，不用 `plus.minus`） |
+| `\mp` | `minus.plus` |
 | `\circ` | `compose` |
 | `\oplus` | `plus.o` |
 
@@ -339,6 +353,25 @@ typst compile "Subject/initial.typ" "Subject/initial.pdf" --root .
 | `\sqrt{X}` | `sqrt(X)` |
 | `\frac{A}{B}` | `(A) / (B)` |
 
+### 3.8 行列式与矩阵符号
+
+| LaTeX | Typst | 说明 |
+|-------|-------|------|
+| `\det A` / `\det(A)` | `"det"(A)` | 符号矩阵的行列式 |
+| `\operatorname{det}(A)` | `"det"(A)` | 同上 |
+| `\begin{vmatrix}...\end{vmatrix}` | `mat(delim: "|", ...)` | 显式矩阵的行列式 |
+| `|A|`（A 为矩阵） | `"det"(A)`（符号）或 `mat(delim: "|", ...)`（显式） | **禁止用 `abs()` 表示行列式** |
+| `\begin{pmatrix}...\end{pmatrix}` | `mat(delim: "(", ...)` | 圆括号矩阵 |
+| `\begin{bmatrix}...\end{bmatrix}` | `mat(delim: "[", ...)` | 方括号矩阵 |
+| `\begin{Vmatrix}...\end{Vmatrix}` | `mat(delim: "||", ...)` | 范数 |
+
+**关键规则**（详见 `violet-typst-writing-conventions` §3 `mat()` 矩阵写法与行列式写法）：
+
+- `abs()` 仅用于真正的绝对值（标量、复数模、内积模），**永远不是行列式**
+- `"det"(A)` 用于符号矩阵（A 是变量名）；显式矩阵的行列式用 `mat(delim: "|", ...)` 让竖线自动缩放
+- 行分隔用 `;`、行内元素用 `,`，不给行加多余括号：`mat((a, b), (c, d))` 错误
+- 范数用 `||...||`，不是 `abs()` 也不是行列式
+
 ---
 
 ## 4. 脚本使用指南
@@ -367,12 +400,13 @@ typst compile "Subject/initial.typ" "Subject/initial.pdf" --root .
 5. **证明/解答**：`proof`/`solution` 环境 → `#proof`/`#solution`
 6. **列表**：`enumerate`/`itemize`/`description` → Typst 列表
 7. **数学环境**：`align*`/`gather*`/`\[...\]`/`\(...\)` → `$ ... $`
-8. **图片**：`figure` 环境 → `#figure(...)`
-9. **标签/引用**：`\label` → `<>`，`\ref` → `@`
-10. **字体命令**：`\textbf` → `*...*`，`\mathbb` → `bb()` 等
-11. **数学符号**：所有希腊字母、关系符、集合符、箭头等
-12. **间距命令**：`\vspace` → `#v()`
-13. **杂项命令**：`\noindent`、`\centering` 等删除
+8. **矩阵环境**：`pmatrix`/`bmatrix`/`Bmatrix`/`vmatrix`/`Vmatrix` → `mat(delim: ..., ...)`（`\\` → `;`，`&` → `,`）
+9. **图片**：`figure` 环境 → `#figure(...)`
+10. **标签/引用**：`\label` → `<>`，`\ref` → `@`
+11. **字体命令**：`\textbf` → `*...*`，`\mathbb` → `bb()` 等
+12. **数学符号**：所有希腊字母、关系符、集合符、箭头等（`\pm` → `±`）
+13. **间距命令**：`\vspace` → `#v()`
+14. **杂项命令**：`\noindent`、`\centering` 等删除
 
 ### 4.4 脚本不处理的内容（需 AI 手动）
 
@@ -383,6 +417,10 @@ typst compile "Subject/initial.typ" "Subject/initial.pdf" --root .
 5. **BibTeX**：`\begin{thebibliography}` → `#bibliography("references.bib")`
 6. **Preamble**：`\documentclass`、`\usepackage` 等需要手动转为 Typst 头部
 7. **中文翻译注释**：需要在标题后手动添加 `// 中文翻译`
+8. **裸 `matrix`/`array` 环境**：脚本不自动处理，需手动转 `mat(...)`
+9. **行列式语义复核**：`vmatrix` 转为 `mat(delim: "|", ...)`；LaTeX 中 `|A|` 表示行列式的，需按上下文改为 `"det"(A)`（符号矩阵）或 `mat(delim: "|", ...)`（显式矩阵），**禁止 `abs()`**
+10. **`\det` 宏复核**：脚本将 `\det` 转为裸 `det`（Typst 中渲染为斜体字母，错误），需手动改为 `"det"(A)` 形式
+11. **`\pm` 复核**：脚本已输出 Unicode `±`；若脚本输出 `plus.minus` 属旧映射，应改为 `±`
 
 ---
 
@@ -480,6 +518,10 @@ LaTeX 使用 `\input{chapters/chap01.tex}` 引用子文件，Typst 使用单文�
 - [ ] 标题后有中文翻译注释（`// 中文翻译`）
 - [ ] 正文无中文（中文仅出现在 `//` 注释中）
 - [ ] 数学语法硬规则逐条自查（多字母变量、`integral`、`dif`、`abs()`、分数括号、下标吞括号等）：详见 `violet-typst-writing-conventions` §3 与 §10
+- [ ] 矩阵均使用 `mat(...)`（行间 `;`、行内 `,`、不加多余括号），分隔符环境对应 `delim:`
+- [ ] 行列式写法正确：符号矩阵 `"det"(A)`，显式矩阵 `mat(delim: "|", ...)`，**无 `abs()` 表示行列式**
+- [ ] `\pm` 已转为 Unicode `±`（非 `plus.minus`）
+- [ ] `×`/`∩`/`∪`/`⊂`/`⊆`/`∀`/`≠`/`≤`/`≥` 等 Unicode 符号已按规范转为 Typst 函数名（详见 `violet-typst-writing-conventions` §3）
 - [ ] 编译通过（`typst compile` 退出码 0）
 - [ ] 与已有笔记的 SRP 边界一致（不重复其他笔记已有的定义/定理）
 

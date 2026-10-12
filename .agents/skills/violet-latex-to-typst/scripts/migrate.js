@@ -513,7 +513,7 @@ function convertSymbols(text) {
     [/\\cdot(?![a-zA-Z])/g, 'dot'],
     [/\\times(?![a-zA-Z])/g, 'times'],
     [/\\div(?![a-zA-Z])/g, 'div'],
-    [/\\pm(?![a-zA-Z])/g, 'plus.minus'],
+    [/\\pm(?![a-zA-Z])/g, '±'],
     [/\\mp(?![a-zA-Z])/g, 'minus.plus'],
     [/\\circ(?![a-zA-Z])/g, 'compose'],
     [/\\bullet(?![a-zA-Z])/g, 'bullet'],
