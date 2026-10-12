@@ -294,25 +294,26 @@ matrix techniques, and operations of rank.
 
 == Basic Operations // 基本运算
 
-=== Addition // 加法
+=== Matrix Basic Operations // 矩阵的基本运算
 
-Two $m times n$ matrices $A = (a_(i j))$ and $B = (b_(i j))$ over $F$ can be added entry-wise: $A + B = (a_(i j) + b_(i j))$, which is again an $m times n$ matrix.
+#definition(name: "Matrix Addition")[
+  Two $m times n$ matrices $A = (a_(i j))$ and $B = (b_(i j))$ over $F$ can be added
+  entry-wise: $A + B = (a_(i j) + b_(i j))$, which is again an $m times n$ matrix.
+] <def:matrix-addition>
 
-=== Scalar Multiplication // 数乘
+#definition(name: "Scalar Multiplication")[
+  The *scalar product* of $A$ by a scalar $k$ in $F$ is $k A = (k a_(i j))$, again an
+  $m times n$ matrix.
+] <def:matrix-scalar-multiplication>
 
-The *scalar product* of $A$ by a scalar $k$ in $F$ is $k A = (k a_(i j))$, again an $m times n$ matrix.
+#definition(name: "Matrix Multiplication")[
+  The *product* of an $m times n$ matrix $A$ and an $n times p$ matrix $B$ is the
+  $m times p$ matrix $A B = (c_(i j))$ with
 
-=== Transpose // 转置
-
-The *transpose* of an $m times n$ matrix $A = (a_(i j))$ is the $n times m$ matrix $A^"T" = (a_(j i))$, obtained by swapping rows and columns.
-
-=== Matrix Multiplication // 矩阵乘法
-
-The *product* of an $m times n$ matrix $A$ and an $n times p$ matrix $B$ is the $m times p$ matrix $A B = (c_(i j))$ with
-
-$
-  c_(i j) = sum_(k=1)^n a_(i k) b_(k j).
-$
+  $
+    c_(i j) = sum_(k=1)^n a_(i k) b_(k j).
+  $
+] <def:matrix-multiplication>
 
 === Determinants of Products // 行列式乘积公式
 
