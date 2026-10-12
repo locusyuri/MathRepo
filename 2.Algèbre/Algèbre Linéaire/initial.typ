@@ -346,6 +346,16 @@ The determinant of a product equals the product of the determinants — see #lin
   corresponding minors.
 ]
 
+#definition(name: "Elementary Row and Column Operations")[
+  The following three operations, applied to the rows (resp. columns) of a matrix, are
+  called *elementary row* (resp. *column*) *operations*:
+  - add a scalar multiple of one row (resp. column) to another;
+  - interchange two rows (resp. columns);
+  - multiply a row (resp. column) by a non-zero scalar.
+
+  A *combination of elementary row and column operations* is any finite sequence of these.
+] <def:elementary-operations>
+
 === Matrix Equivalence // 矩阵等价
 
 #definition(name: "Matrix Equivalence")[
