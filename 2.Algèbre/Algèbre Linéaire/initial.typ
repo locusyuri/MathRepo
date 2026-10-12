@@ -2451,7 +2451,7 @@ and computation method of the Jordan canonical form.
 
 #note[
   Combining with the rational canonical form theory, $V$ decomposes as a direct sum
-  of cyclic subspaces: $V = "bigoplus"_(i=1)^k C(A, xi_i)$, where
+  of cyclic subspaces: $V = plus.o.big_(i=1)^k C(A, xi_i)$, where
   the matrix of $A|_(C(A, xi_i))$ in the basis
   ${xi_i, A(xi_i), ..., A^(r_i-1)(xi_i)}$ is the companion matrix $C(d_i)$.
 ]
@@ -2482,7 +2482,7 @@ and computation method of the Jordan canonical form.
 #lemma(name: "Nilpotent Jordan Form")[
   Let $V$ be a linear space over $C$ and $A in upright("End")(V)$ nilpotent.
   Then there exists a basis of $V$ such that the matrix of $A$ is
-  $"diag"({J_(r_1)(0), J_(r_2)(0), ..., J_(r_s)(0)})$,
+  $"diag"(J_(r_1)(0), J_(r_2)(0), ..., J_(r_s)(0))$,
   where $J_(r_i)(0)$ is the Jordan block of size $r_i$ for eigenvalue $0$.
 ] <lem:nilpotent-jordan-form>
 
@@ -2492,7 +2492,7 @@ and computation method of the Jordan canonical form.
   the Jordan canonical form:
 
   $
-    J = "diag"({J_(r_1)(lambda_1), J_(r_2)(lambda_2), ..., J_(r_s)(lambda_s)}),
+    J = "diag"(J_(r_1)(lambda_1), J_(r_2)(lambda_2), ..., J_(r_s)(lambda_s)),
   $
 
   where $J_(r_i)(lambda_i)$ is the Jordan block of size $r_i$ for eigenvalue $lambda_i$.
