@@ -18,14 +18,14 @@
   subtitle: "A notebook for mathematical logic",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.8.0",
+  version: "v0.9.0",
   extra-info: "This is a notebook for mathematical logic.",
 )
 
 #make-outline(depth: 2, title: "Contents")
 
 // ==========================================================================
-// 目录蓝图 (Planned Outline) — v0.8.0
+// 目录蓝图 (Planned Outline) — v0.9.0
 // 主线：语言基础 → 主体理论 → 元数学 → 扩展（四段式）
 // 参照 Analyse Mathématique：每个 Part 容纳 2–4 章实质内容
 // 状态标记：[已写] 已完成 · [计划] 待写作 · [可选] 按需取舍
@@ -93,11 +93,14 @@
 //   不完备性：证不出什么）合为一 Part，递进：模型 → 计算 → 极限。
 // 对应教材：Enderton Ch 3 模型论部分 + Ch 4；Mendelson Ch 3–4
 
-// --- Chapter 7: Elementary Model Theory（初等模型论）--- [计划]
-//   Section 7.1: Substructures and Elementary Substructures（子结构与初等子结构，Tarski–Vaught）
-//   Section 7.2: Ultraproducts and Łoś's Theorem（超积与 Łoś 定理；交叉引用 Théorie des Ensembles §7.1 超滤）
-//   Section 7.3: Complete Theories and Categoricity（完备理论与范畴性）
-//   Section 7.4: Quantifier Elimination（量词消去：DLO、ACF）[可选]
+// --- Chapter 7: Elementary Model Theory（初等模型论）--- [已写，v0.9.0]
+//   Section 7.1: Substructures and Elementary Substructures（子结构与初等子结构，Tarski–Vaught；
+//     一般基数 L-S（Skolem 闭包）兑现 Ch 6 L2050）
+//   Section 7.2: Ultraproducts and Łoś's Theorem（超积与 Łoś 定理；交叉引用 Théorie des Ensembles 超滤；
+//     紧致性构造化证明）
+//   Section 7.3: Complete Theories and Categoricity（完备理论与范畴性；Vaught 检验；
+//     DLO 完备性兑现 Ch 4 L1576 / Ch 5 L1943）
+//   Section 7.4: Quantifier Elimination（量词消去：DLO 完整证明、ACF 陈述；兑现 Ch 3/Ch 6 承诺）
 
 // --- Chapter 8: Computable Functions and Undecidability（可计算函数与不可判定性）--- [计划]
 //   Section 8.1: Primitive Recursive Functions（原始递归函数）
@@ -143,7 +146,9 @@
 //   Henkin 完全性（Ch 5.4，全书核心定理）、紧致性与 L-S（Ch 6）均已写就。
 //
 // Part III（元数学，Ch 7–9）：模型论（理论有哪些模型）→ 可计算性（能算什么）
-//   → 不完备性（证不出什么），元理论两翼递进。
+//   → 不完备性（证不出什么），元理论两翼递进。Ch 7 初等模型论已写就（v0.9.0）：
+//   初等子结构/Tarski–Vaught/一般 L-S、超积与 Łoś、完备理论与范畴性（DLO 完备）、
+//   量词消去（DLO 完整、ACF 陈述）。Ch 8–9 待写。
 //
 // Part IV（扩展，Ch 10–11）：二阶逻辑（标准语义下无完全性，降级为扩展章）
 //   与非经典逻辑导论（为未来笔记搭桥）。
@@ -2212,14 +2217,469 @@ for special theories.
 
 #part("Metamathematics")  // 元数学：模型论、可计算性与不完备性
 
-= Metamathematics  // 元数学
+= Elementary Model Theory  // 初等模型论
+
+Ch 6 closed Part II with the two structural theorems of first-order
+logic; Part III turns to the metamathematics that rests on them. This
+chapter is the model-theoretic wing: given a theory, what do its models
+look like, and how are they related? Two construction principles —
+elementary substructures (downward) and ultraproducts (upward, via
+Łoś) — and three yardsticks on theories — completeness, categoricity,
+and quantifier elimination — give the first systematic picture.
+Elementary equivalence, introduced in Ch 4, is the entry point: we now
+study the elementary relations *between* models rather than the
+satisfaction of single formulas.
+
+== Substructures and Elementary Substructures // 子结构与初等子结构
+
+#definition(name: "Substructure")[
+  Let $M$ and $N$ be structures for the same signature $L$. $N$ is a
+  *substructure* of $M$ ($N subset M$) if $|N| subset |M|$, every
+  constant of $L$ is interpreted as the same element in both, every
+  function symbol is interpreted in $N$ as the restriction of its
+  interpretation in $M$, and every relation symbol likewise.
+] <def:substructure>
+
+#definition(name: "Elementary Substructure")[
+  $N$ is an *elementary substructure* of $M$ ($N prec.eq M$) if $N$
+  is a substructure of $M$ and for every formula $phi (x_1, dots,
+  x_n)$ and all $a_1, dots, a_n in |N|$,
+  $M models phi [a_1, dots, a_n]$
+  if and only if
+  $N models phi [a_1, dots, a_n]$.
+  The embedding $|N| -> |M|$ is then an *elementary embedding*.
+] <def:elementary-substructure>
+
+Being an elementary substructure is much stronger than being a
+substructure: it requires $N$ and $M$ to agree on all first-order
+formulas with parameters in $N$ — in particular, on all sentences, so
+$N models T$ iff $M models T$ for every theory $T$. The substructure
+relation alone guarantees agreement only on quantifier-free formulas.
+
+#theorem(name: "Tarski–Vaught Test")[
+  Let $N subset M$. Then $N prec.eq M$ if and only if for every
+  formula $phi (x, y_1, dots, y_n)$ and all $b_1, dots, b_n in |N|$,
+  if $M models exists x phi (x, b_1, dots, b_n)$, then there exists
+  $a in |N|$ with $M models phi (a, b_1, dots, b_n)$.
+] <thm:tarski-vaught>
+
+#proof[
+  *Sufficiency.* Suppose the witness condition holds. We prove by
+  induction on $phi$ that $M models phi [a_1, dots, a_n]$ iff
+  $N models phi [a_1, dots, a_n]$ for all parameters from $N$. The
+  atomic, conjunction, and negation steps are immediate from
+  $N subset M$. For the existential step, if
+  $M models exists x psi (x, b_1, dots, b_n)$, the condition gives
+  $a in |N|$ with $M models psi (a, b_1, dots, b_n)$; by induction
+  $N models psi (a, b_1, dots, b_n)$, hence $N models exists x psi$.
+  Conversely, if $N models exists x psi (x, b_1, dots, b_n)$, some
+  $a in |N|$ witnesses it, induction transfers the satisfaction to
+  $M$, and $M models exists x psi$.
+  *Necessity.* If $N prec.eq M$ and
+  $M models exists x phi (x, b_1, dots, b_n)$, then by elementarity
+  $N models exists x phi (x, b_1, dots, b_n)$; the witnessing element
+  of $N$ is the required $a$.
+]
+
+#definition(name: "Elementary Embedding")[
+  An *elementary embedding* of $N$ into $M$ is an injective function
+  $h : |N| -> |M|$ such that for every formula $phi (x_1, dots,
+  x_n)$ and all $a_1, dots, a_n in |N|$,
+  $N models phi [a_1, dots, a_n]$
+  iff
+  $M models phi [h (a_1), dots, h (a_n)]$.
+  Its image is an elementary substructure of $M$ isomorphic to $N$.
+] <def:elementary-embedding>
+
+Elementary embeddings generalize isomorphisms
+(#link(<prop:isomorphism-elementary>)[Proposition 4.8]): an
+isomorphism is an elementary embedding, and an elementary embedding
+need not be surjective, nor need it preserve cardinality — the Skolem
+paradox below turns exactly this slack into a construction principle.
+
+#theorem(name: "Downward Löwenheim–Skolem, General Cardinality")[
+  Let $T$ be a consistent theory in a signature $L$ of cardinality
+  $|L|$, and let $M models T$ with $|M| = lambda$. Then for every
+  cardinal $kappa$ with $|L| <= kappa <= lambda$, $T$ has a model of
+  cardinality $kappa$ which is an elementary substructure of $M$.
+] <thm:downward-ls-general>
+
+#proof[
+  *Step 1: Skolemization.* Add a function symbol $f_phi$ of arity
+  $n$ for each formula $phi (x, y_1, dots, y_n)$, with the Skolem
+  axiom
+  $forall y_1 dots forall y_n (exists x phi (x, y_1, dots, y_n) ->
+  phi (f_phi (y_1, dots, y_n), y_1, dots, y_n))$.
+  By #link(<prop:skolem-satisfiability>)[Proposition 3.4] the
+  expansion $T^S$ is satisfiable iff $T$ is; $M$ expands to a model
+  of $T^S$, still denoted $M$.
+  *Step 2: Skolem closure.* Fix a set $X_0 subset |M|$ of cardinality
+  $kappa$. Let $X_(n+1)$ be $X_n$ together with
+  $f_phi (b_1, dots, b_n)$ for all $b_1, dots, b_n in X_n$ and all
+  Skolem functions $f_phi$. Each $X_n$ has cardinality at most
+  $kappa$ (there are at most $|L| + aleph_0 <= kappa$ formulas), so
+  $X = union_(n in bb(N)) X_n$ has cardinality $kappa$, and $X$ is
+  closed under all Skolem functions; interpreting the symbols of $L$
+  on $X$ gives a substructure $N subset M$ of cardinality $kappa$.
+  *Step 3: Tarski–Vaught.* If
+  $M models exists x phi (x, b_1, dots, b_n)$ with
+  $b_1, dots, b_n in X$, the Skolem axiom gives
+  $M models phi (f_phi (b_1, dots, b_n), b_1, dots, b_n)$, and
+  $f_phi (b_1, dots, b_n) in X$ by closure. By
+  #link(<thm:tarski-vaught>)[the Tarski–Vaught test],
+  $N prec.eq M$, so $N models T$ and $|N| = kappa$.
+]
+
+#example(name: "Skolem's Paradox, Reprise")[
+  Apply the general downward theorem to a consistent ZFC with a model
+  $M$: it yields a countable elementary substructure
+  $N prec.eq M$. Inside $N$, the set $N$ believes to be $bb(R)$ is
+  uncountable, yet $N$ itself is countable from the outside — the
+  bijection witnessing external countability is absent from $N$. The
+  paradox of Ch 6 is now seen as a theorem about elementary
+  substructures: $N$ contains all the *definable* witnesses of $M$
+  that the language can name, and nothing more.
+] <ex:skolem-paradox-reprise>
 
 #note[
-  Placeholder: The two wings of metamathematics. Planned as three
-  chapters: elementary model theory (Ch 7: substructures, ultraproducts
-  and Łoś, categoricity) → computable functions and undecidability
-  (Ch 8) → Gödel's incompleteness theorems (Ch 9). It will be
-  developed in a subsequent revision.
+  The countable version of Ch 6
+  (#link(<thm:downward-ls>)[Theorem 6.2]) is the special case
+  $kappa = aleph_0 = |L|$; the general form above is the one promised
+  at L2050. Elementary substructures are the model-theoretic core of
+  the downward principle, and their further applications — the
+  amalgamation of models and the analysis of complete theories —
+  drive §7.3.
+]
+
+== Ultraproducts and Łoś's Theorem // 超积与 Łoś 定理
+
+A second construction principle builds models *upward*, out of many
+small models. Filters and ultrafilters are developed in the notes on
+*Théorie des Ensembles* (chapter "Filters and Boolean Algebras",
+section "Filters and Ultrafilters"); we use the standard facts: a
+filter $U$ on a set $I$ is a family of subsets closed under finite
+intersection and supersets, and an *ultrafilter* is a filter that
+contains, for every $X subset I$, exactly one of $X$ and $I ∖
+X$. Ultrafilters on a set exist by Zorn's lemma.
+
+#definition(name: "Ultraproduct")[
+  Let $(M_i)_(i in I)$ be structures for the signature $L$ and let
+  $U$ be an ultrafilter on $I$. On the Cartesian product
+  $product_(i in I) |M_i|$, declare $f ~ g$ iff
+  ${i in I : f (i) = g (i)} in U$; this is an equivalence relation.
+  The *ultraproduct* $product_U M_i$ is the quotient structure: its
+  domain is the set of equivalence classes $[f]$, and for each
+  relation symbol $R$, function symbol $g$, and constant $c$,
+  $R^M ([f_1], dots, [f_n])$ holds iff
+  ${i in I : R^(M_i) (f_1 (i), dots, f_n (i))} in U$,
+  $g^M ([f_1], dots, [f_n]) = [g^(M_i) (f_1 (i), dots, f_n (i))]_(i)$,
+  and $c^M = [c^(M_i)]_(i)$. If all $M_i = M$, the ultraproduct is the
+  *ultrapower* $M^I / U$.
+] <def:ultraproduct>
+
+The definitions of the relations and functions are well-defined:
+ultrafilters are closed under finite intersections and under
+supersets, so the truth or value of a coordinate-wise definition does
+not depend on the chosen representatives. The three stages of the
+construction are summarized in Figure 7.1.
+
+#figure(
+  image("img/ultraproduct-flow.svg", width: 80%),
+  caption: [
+    The ultraproduct construction: the product of the domains,
+    the equivalence relation induced by the ultrafilter, and the
+    quotient structure; Łoś's theorem transfers truth
+    coordinate-wise.
+  ],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:ultraproduct-flow>
+
+The defining property of
+the ultraproduct — the transfer of truth — is Łoś's theorem.
+
+#theorem(name: "Łoś's Theorem")[
+  For every formula $phi (x_1, dots, x_n)$ and all
+  $f_1, dots, f_n$ in $product_(i in I) |M_i|$,
+  $
+    product_U M_i models phi [f_1, dots, f_n]
+    <=> {i in I : M_i models phi [f_1 (i), dots, f_n (i)]} in U.
+  $
+] <thm:los>
+
+#eq[
+  $
+    product_U M_i models phi [f_1, dots, f_n]
+    <=> {i in I : M_i models phi [f_1 (i), dots, f_n (i)]} in U.
+  $
+] <eq:los-condition>
+
+#proof[
+  Induction on $phi$. The atomic case is the definition of the
+  ultraproduct structure. For $phi = psi and chi$ and $phi = not
+  psi$, the claim follows from closure of $U$ under finite
+  intersections and under complements (ultrafilters decide every
+  subset). For $phi = exists y psi (y, x_1, dots, x_n)$: if the set
+  $J = {i : M_i models exists y psi (y, f_1 (i), dots, f_n (i))}$ is
+  in $U$, choose, for each $i in J$, a witness $a_i$ with
+  $M_i models psi (a_i, f_1 (i), dots, f_n (i))$ (and an arbitrary
+  value outside $J$); the coordinate function $f$ with $f (i) = a_i$
+  satisfies ${i : M_i models psi (f (i), f_1 (i), dots, f_n (i))}
+  supset.eq J in U$, so by induction $product_U M_i models psi (f,
+  f_1, dots, f_n)$ and the ultraproduct satisfies the existential.
+  Conversely, if $product_U M_i models exists y psi (y, f_1, dots,
+  f_n)$, some $g$ witnesses it; by induction
+  ${i : M_i models psi (g (i), f_1 (i), dots, f_n (i))} in U$, and
+  this set is contained in $J$, which therefore lies in $U$.
+]
+
+#corollary(name: "Consequences of Łoś's Theorem")[
+  If all $M_i$ are elementarily equivalent to a structure $M$, then
+  $product_U M_i equiv M$. In particular, for any structure $M$,
+  the ultrapower $M^I / U$ is elementarily equivalent to $M$.
+] <cor:los-consequences>
+
+#example(name: "Nonstandard Arithmetic via Ultrapowers")[
+  Let $M = bb(N)$ in the language of arithmetic
+  (#link(<ex:language-of-arithmetic>)[Example 3.1]) and let $U$ be a
+  nonprincipal ultrafilter on $bb(N)$ (one extending the cofinite
+  filter). The ultrapower $bb(N)^bb(N) / U$ is elementarily
+  equivalent to $bb(N)$, so it satisfies $"PA"$, but it contains the
+  class of the identity function $[id]$, which is greater than every
+  standard numeral: ${n : n > m} in U$ for each fixed $m$. This is a
+  *canonical* nonstandard model — a single uniform construction that
+  reproduces, from the compactness side, the nonstandard models of
+  Ch 6, and whose fine structure is studied in Ch 9.
+] <ex:ultraproduct-nonstandard>
+
+#note[
+  Compactness is a corollary of Łoś's theorem in disguise: if every
+  finite subset of a theory $Sigma$ has a model, take $I$ to be the
+  set of finite subsets of $Sigma$, choose a model $M_F models F$ for
+  each $F in I$, and let $U$ be an ultrafilter on $I$ extending the
+  family of "upward cones" ${F : phi in F}$ for each $phi in Sigma$.
+  Then $product_U M_F models phi$ for every $phi in Sigma$ by Łoś — a
+  direct constructional proof of compactness (Ch 6) that builds the
+  model rather than proving its existence via completeness.
+]
+
+== Complete Theories and Categoricity // 完备理论与范畴性
+
+With the two construction principles in place we turn to the
+yardsticks: which theories are *rigid* enough that their models are
+determined? A complete theory decides every sentence; a categorical
+theory has (up to isomorphism) only one model of a given cardinality.
+The results below — Vaught's test and the completeness of DLO —
+connect these notions and close two promises from Ch 4 and Ch 5.
+
+#definition(name: "Complete Theory")[
+  A theory $T$ is *complete* if for every sentence $phi$ of its
+  signature, exactly one of $T models phi$ and $T models not phi$
+  holds — equivalently, all models of $T$ are elementarily equivalent
+  (#link(<def:elementary-equivalence>)[Definition 4.7]).
+] <def:complete-theory>
+
+#definition(name: "Categoricity")[
+  A theory $T$ is *categorical in cardinality* $kappa$ (or
+  $kappa$-categorical) if all models of $T$ of cardinality $kappa$
+  are isomorphic.
+] <def:categoricity>
+
+#theorem(name: "Vaught's Test")[
+  Let $T$ be a consistent theory in a countable signature with no
+  finite models. If $T$ is $aleph_0$-categorical, then $T$ is
+  complete.
+] <thm:vaught-test>
+
+#proof[
+  Suppose $T$ is not complete: some sentence $phi$ satisfies both
+  $T union {phi}$ and $T union {not phi}$ consistently. Since $T$ has
+  no finite models, each of the two extensions has a model of
+  cardinality $aleph_0$ by the downward Löwenheim–Skolem theorem
+  (#link(<thm:downward-ls>)[Theorem 6.2]); these models disagree on
+  $phi$, hence are not elementarily equivalent. But $aleph_0$
+  categoricity requires them to be isomorphic, and isomorphic
+  structures are elementarily equivalent
+  (#link(<prop:isomorphism-elementary>)[Proposition 4.8]) —
+  contradiction.
+]
+
+#lemma(name: "Cantor's Back-and-Forth")[
+  Any two countable dense linear orders without endpoints are
+  isomorphic.
+] <lem:cantor-back-forth>
+
+#proof[
+  Let $A = (A, <)$ and $B = (B, <)$ be countable dense linear orders
+  without endpoints, with enumerations $A = {a_0, a_1, dots}$ and
+  $B = {b_0, b_1, dots}$. We build a partial isomorphism $f$ by
+  alternating two steps. At even stages take the first unused $a_n$
+  and place its image between the images of its $<$-neighbours: by
+  density, $B$ contains an element strictly between the two (or beyond
+  the single neighbour, since $B$ has no endpoints). At odd stages do
+  the same in the other direction, taking the first unused $b_m$ and
+  finding a preimage between the appropriate $A$-elements. Each stage
+  preserves the order relation on the finite partial map, and both
+  enumerations are exhausted by the alternation, so the union of the
+  finite partial isomorphisms is an isomorphism $A -> B$.
+]
+
+#theorem(name: "Completeness of DLO")[
+  The theory of dense linear orders without endpoints (DLO) is
+  complete.
+] <thm:dlo-completeness>
+
+#proof[
+  DLO has no finite models (every finite linear order has endpoints
+  and is not dense). By Cantor's back-and-forth, every countable
+  model of DLO is isomorphic, so DLO is $aleph_0$-categorical; Vaught's
+  test gives completeness. Thus
+  $(bb(Q), <) equiv (bb(R), <)$ — the example of Ch 4
+  (#link(<ex:elementary-equivalence-example>)[Example 4.9]) is now a
+  theorem rather than a computation.
+]
+
+#note[
+  DLO is $aleph_0$-categorical but *not* $aleph_1$-categorical: there
+  are $2^(aleph_0)$ pairwise non-isomorphic dense linear orders
+  without endpoints of cardinality $aleph_1$. Complete theories with
+  a unique model in every cardinality — strongly minimal ones such as
+  algebraically closed fields of a fixed characteristic — are the
+  subject of deeper structure theory (quantifier elimination, §7.4,
+  is the first tool). The contrast with second-order arithmetic,
+  which *is* categorical and therefore escapes compactness and
+  completeness (Ch 10), is the moral boundary of this chapter.
+]
+
+== Quantifier Elimination // 量词消去
+
+Completeness and categoricity measure how rigid a theory is; quantifier
+elimination describes what its *definable sets* look like. A theory
+with quantifier elimination is one in which every formula is equivalent
+to a quantifier-free one — the simplest possible form — so that the
+definable sets of its models are exactly the Boolean combinations of
+basic (quantifier-free) sets. This section proves quantifier
+elimination for DLO and states it for algebraically closed fields,
+closing the promises of Ch 6 (§6.4).
+
+#definition(name: "Quantifier Elimination")[
+  A theory $T$ *has quantifier elimination* if for every formula
+  $phi (x_1, dots, x_n)$ there is a quantifier-free formula
+  $psi (x_1, dots, x_n)$ such that $T models phi <=> psi$.
+] <def:quantifier-elimination>
+
+#eq[
+  $
+    T models forall x_1 dots forall x_n (phi (x_1, dots, x_n)
+    <=> psi (x_1, dots, x_n)).
+  $
+] <eq:qe-form>
+
+#proposition(name: "Elimination Criterion")[
+  A theory $T$ has quantifier elimination if every formula of the
+  form $exists y (psi_1 and dots and psi_n)$, where each $psi_k$ is
+  atomic or the negation of an atomic formula, is equivalent in $T$
+  to a quantifier-free formula.
+] <prop:qe-criterion>
+
+#proof[
+  Write every quantifier-free formula in disjunctive normal form;
+  the existential quantifier distributes over disjunction, so it
+  suffices to eliminate $exists y$ from conjunctions of atomic and
+  negated-atomic formulas. Induction on the formula structure then
+  removes quantifiers one at a time, innermost first.
+]
+
+#lemma(name: "Elimination of One Existential in DLO")[
+  In the theory DLO of dense linear orders without endpoints, every
+  formula $exists y (psi_1 and dots and psi_n)$ as in the criterion
+  is equivalent to a quantifier-free formula.
+] <lem:qe-dlo-exists>
+
+#proof[
+  Atoms over ${<}$ are of the forms $u < v$ and $u = v$ with $u, v$
+  terms (variables or parameters; DLO has no function symbols).
+  Degenerate atoms are decided outright: $u < u$ and $u = v$ with $u
+  != v$ are false, $u = u$ is true. Discard the decided atoms. If some
+  conjunct is $y = t$ with $t$ free of $y$, substitute $t$ for $y$
+  throughout and the formula is already quantifier-free. Otherwise $y$
+  occurs only in comparisons $t_1 < y, dots, t_p < y, y < s_1, dots,
+  y < s_q$. The existential is then equivalent to
+  $and_(i, j) (t_i < s_j)$ together with the $y$-free part: each
+  inequality $t_i < s_j$ is necessary, and density plus the absence
+  of endpoints supplies a witness $y$ strictly between the largest
+  lower bound and the smallest upper bound — and, when $p = 0$ or
+  $q = 0$, the axioms $forall x exists z (z < x)$ and
+  $forall x exists z (x < z)$ provide the witness. The result is
+  quantifier-free.
+]
+
+#theorem(name: "Quantifier Elimination for DLO")[
+  The theory DLO has quantifier elimination.
+] <thm:qe-dlo>
+
+#proof[
+  Combine #link(<prop:qe-criterion>)[the criterion] with
+  #link(<lem:qe-dlo-exists>)[Lemma 7.2].
+]
+
+#theorem(name: "Quantifier Elimination for Algebraically Closed Fields")[
+  The theory ACF of algebraically closed fields (in the language
+  ${+ , dot, -, 0, 1}$) has quantifier elimination.
+] <thm:qe-acf>
+
+ACF — as a theory in the language of rings, axiomatized by the field
+axioms plus "every nonconstant polynomial has a root" for each degree
+$n$ — is treated here at statement level, with the proof framework:
+the elimination criterion reduces the task to conjunctions of
+polynomial equations and inequations, and one eliminates an
+existential $exists y$ by polynomial pseudo-division (the Euclidean
+algorithm over the field), which produces a quantifier-free condition
+equivalent to "the system has a solution in the algebraic closure".
+This is Chevalley's theorem in disguise — the projection of a
+constructible set is constructible. The details are standard (see
+Enderton, Ch 3; the field-theoretic background is developed in the
+algebra notes).
+
+#corollary(name: "Definable Sets under Quantifier Elimination")[
+  If $T$ has quantifier elimination and $M models T$, then every
+  definable subset of $|M|^n$ is a Boolean combination of
+  quantifier-free definable sets.
+] <cor:qe-definable-sets>
+
+#example(name: "Definable Sets in DLO")[
+  In any model of DLO, the definable subsets of the domain are
+  exactly the finite unions of intervals with endpoints in the model
+  (each interval open, closed, or half-open): quantifier-free formulas
+  are Boolean combinations of inequalities $x < t$ and $x = t$, which
+  carve out intervals and singletons. This is the promised structure
+  of §6.4, #link(<def:definable-set>)[Definition 6.1] now made
+  explicit.
+] <ex:dlo-definable>
+
+#note[
+  Quantifier elimination implies decidability for the model classes
+  it governs: in DLO, every sentence is equivalent to a
+  quantifier-free sentence, hence (there being no closed terms) to
+  $top$ or $bot$ — a second proof of completeness
+  (#link(<thm:dlo-completeness>)[Theorem 7.3]) and the seed of the
+  decidability arguments of Ch 8. Likewise, ACF_p is complete and
+  decidable for each characteristic $p$ (Lefschetz's principle: a
+  first-order sentence true in one algebraically closed field of
+  characteristic $p$ is true in all of them).
+]
+
+= Computable Functions and Undecidability  // 可计算函数与不可判定性
+
+#note[
+  Placeholder: The syntactical wing of metamathematics. Planned as two
+  further chapters: computable functions and undecidability (Ch 8:
+  primitive recursive functions, Turing machines, the halting problem,
+  undecidability of first-order logic) and Gödel's incompleteness
+  theorems (Ch 9: arithmetization, the first and second incompleteness
+  theorems, Tarski's undefinability of truth). The blueprint is at the
+  head of this file; both chapters will be developed in subsequent
+  revisions.
 ]
 
 #part("Extensions")  // 扩展：二阶逻辑与非经典逻辑
@@ -2246,7 +2706,9 @@ for special theories.
 - *#link(<prop:algebraic-laws>)[Boolean Algebra]*
 
 == C
+- *#link(<def:categoricity>)[Categoricity]*
 - *#link(<thm:compactness>)[Compactness Theorem]*
+- *#link(<def:complete-theory>)[Complete Theory]*
 - *#link(<def:consistency>)[Consistency]*
 - *#link(<def:conjunction>)[Conjunction]*
 
@@ -2259,6 +2721,7 @@ for special theories.
 
 == E
 - *#link(<def:elementary-equivalence>)[Elementary Equivalence]*
+- *#link(<def:elementary-substructure>)[Elementary Substructure]*
 - *#link(<def:exists-abbreviation>)[Existential Quantifier]*
 
 == F
@@ -2280,6 +2743,7 @@ for special theories.
 - *#link(<def:logical-consequence>)[Logical Consequence]*
 - *#link(<def:logical-equivalence>)[Logical Equivalence]*
 - *#link(<thm:downward-ls>)[Löwenheim–Skolem Theorems]*
+- *#link(<thm:los>)[Łoś's Theorem]*
 
 == M
 - *#link(<def:model>)[Model]*
@@ -2293,6 +2757,9 @@ for special theories.
 - *#link(<def:prenex-form>)[Prenex Normal Form]*
 - *#link(<prop:basic-theorems>)[Principle of Explosion]*
 - *#link(<def:proof>)[Proof]*
+
+== Q
+- *#link(<def:quantifier-elimination>)[Quantifier Elimination]*
 
 == R
 - *#link(<thm:reductio-ad-absurdum>)[Reductio ad Absurdum]*
@@ -2315,6 +2782,9 @@ for special theories.
 - *#link(<def:term-model>)[Term Model]*
 - *#link(<def:theorem>)[Theorem]*
 - *#link(<def:model>)[Truth]*
+
+== U
+- *#link(<def:ultraproduct>)[Ultraproduct]*
 
 == V
 - *#link(<def:valuation>)[Valuation]*
