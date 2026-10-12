@@ -58,13 +58,26 @@ such that $m(A) = 0$.
 
 = Determinants // 行列式
 
+#definition(name: "Matrix over $F$")[
+  Let $F$ be a field. An $m times n$ *matrix over* $F$ is an array of elements of $F$
+  arranged in $m$ rows and $n$ columns, written $A = (a_("ij"))$, where the entry
+  $a_("ij") in F$ lies in row $i$ and column $j$ ($1 <= i <= m$, $1 <= j <= n$).
+  When $m = n$, the matrix is called *square* of order $n$.
+] <def:matrix>
+
+The set of all $m times n$ matrices over $F$ is denoted by $M_(m times n)(F)$, or simply
+$F^(m times n)$; the set of square $n times n$ matrices is written $M_(n)(F)$.
+
+#definition(name: "Transpose of a Matrix")[
+  The *transpose* of an $m times n$ matrix $A = (a_("ij"))$ over $F$ is the $n times m$
+  matrix $A^T = (a_("ji"))$, obtained by interchanging rows and columns.
+] <def:transpose-matrix>
+
 The determinant is a scalar value assigned to a square matrix. It serves both as a
-criterion for matrix invertibility and as the foundation for Cramer's rule and eigenvalue theory.
-This chapter defines the determinant starting from the inversion number of permutations,
-and gradually develops its properties, expansion rules, and computation of special determinants.
-Throughout, an $n times n$ matrix $A = (a_("ij"))$ is an array of entries from the field
-$P$, with notation $M_(m times n)(P)$ as in the Preliminaries; the only matrix notion
-used beyond this is the transpose $A^T$.
+criterion for matrix invertibility and as the foundation for Cramer's rule and eigenvalue
+theory. This chapter defines the determinant starting from the inversion number of
+permutations, and gradually develops its properties, expansion rules, and computation of
+special determinants.
 
 == Permutations // 排列
 
