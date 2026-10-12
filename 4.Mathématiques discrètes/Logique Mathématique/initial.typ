@@ -737,7 +737,7 @@ Resolution is a proof search on clause sets: it derives new clauses
 from old ones, and the empty clause — a contradiction — appears
 exactly when the set is unsatisfiable. It is the engine of modern SAT
 solvers and the propositional skeleton of the first-order resolution
-methods announced in Ch 3 (§3.4–3.5).
+methods announced in Ch 3 (§3.4).
 
 #definition(name: "Clause Sets")[
   A *clause set* is a finite set of clauses
@@ -954,7 +954,7 @@ table of Ch 1 enumerates $2^n$ valuations, and resolution
 (#link(<thm:resolution-soundness>)[Theorem 2.3] +
 #link(<thm:resolution-completeness>)[2.4]) gives the same answer by
 search. This is the sharpest contrast with first-order logic, whose
-satisfiability is undecidable (Ch 8, Theorem 8.2): propositional
+satisfiability is undecidable (Ch 8, Theorem 8.4): propositional
 truth is finite and combinatorial, first-order truth is not.
 
 #example(name: "Infinite Graphs are Colorable iff Finite Parts Are")[
