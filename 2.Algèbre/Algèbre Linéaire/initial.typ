@@ -2807,9 +2807,9 @@ and normal transformations.
   - "proj"_(W)(alpha) = sum_(i=1)^n (alpha, epsilon_i) / (epsilon_i, epsilon_i) epsilon_i
     for an orthogonal basis ${epsilon_1, ..., epsilon_n}$ of $W$;
   - $
-    ||alpha - "proj"_(W)(alpha)||^2 = ||alpha||^2 - ||"proj"_(W)(alpha)||^2
-    = ||alpha||^2 - sum_(i=1)^n c_i^2 ||epsilon_i||^2.
-  $
+      ||alpha - "proj"_(W)(alpha)||^2 = ||alpha||^2 - ||"proj"_(W)(alpha)||^2
+      = ||alpha||^2 - sum_(i=1)^n c_i^2 ||epsilon_i||^2.
+    $
 ] <prop:orthogonal-projection-properties>
 
 === Least Squares Method // 最小二乘法
