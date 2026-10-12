@@ -18,14 +18,14 @@
   subtitle: "A notebook for mathematical logic",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.9.0",
+  version: "v1.0.0",
   extra-info: "This is a notebook for mathematical logic.",
 )
 
 #make-outline(depth: 2, title: "Contents")
 
 // ==========================================================================
-// 目录蓝图 (Planned Outline) — v0.9.0
+// 目录蓝图 (Planned Outline) — v1.0.0
 // 主线：语言基础 → 主体理论 → 元数学 → 扩展（四段式）
 // 参照 Analyse Mathématique：每个 Part 容纳 2–4 章实质内容
 // 状态标记：[已写] 已完成 · [计划] 待写作 · [可选] 按需取舍
@@ -102,11 +102,11 @@
 //     DLO 完备性兑现 Ch 4 L1576 / Ch 5 L1943）
 //   Section 7.4: Quantifier Elimination（量词消去：DLO 完整证明、ACF 陈述；兑现 Ch 3/Ch 6 承诺）
 
-// --- Chapter 8: Computable Functions and Undecidability（可计算函数与不可判定性）--- [计划]
+// --- Chapter 8: Computable Functions and Undecidability（可计算函数与不可判定性）--- [已写，v1.0.0]
 //   Section 8.1: Primitive Recursive Functions（原始递归函数）
 //   Section 8.2: Partial Recursive Functions and Church's Thesis（部分递归函数与 Church 论题）
 //   Section 8.3: Turing Machines and the Halting Problem（图灵机与停机问题）
-//   Section 8.4: Undecidability of First-Order Logic（一阶逻辑的不可判定性）
+//   Section 8.4: Undecidability of First-Order Logic（一阶逻辑的不可判定性；兑现 Ch 5/Ch 7 承诺）
 
 // --- Chapter 9: Gödel's Incompleteness Theorems（Gödel 不完备定理）--- [计划]
 //   Section 9.1: Arithmetization of Syntax（语法算术化：Gödel 编码、可表示性）
@@ -146,9 +146,9 @@
 //   Henkin 完全性（Ch 5.4，全书核心定理）、紧致性与 L-S（Ch 6）均已写就。
 //
 // Part III（元数学，Ch 7–9）：模型论（理论有哪些模型）→ 可计算性（能算什么）
-//   → 不完备性（证不出什么），元理论两翼递进。Ch 7 初等模型论已写就（v0.9.0）：
-//   初等子结构/Tarski–Vaught/一般 L-S、超积与 Łoś、完备理论与范畴性（DLO 完备）、
-//   量词消去（DLO 完整、ACF 陈述）。Ch 8–9 待写。
+//   → 不完备性（证不出什么），元理论两翼递进。Ch 7 初等模型论（v0.9.0）与
+//   Ch 8 可计算性与不可判定性（v1.0.0：原始递归/部分递归/图灵机/Church 定理）
+//   均已写就；Ch 9 待写。
 //
 // Part IV（扩展，Ch 10–11）：二阶逻辑（标准语义下无完全性，降级为扩展章）
 //   与非经典逻辑导论（为未来笔记搭桥）。
@@ -2671,15 +2671,356 @@ algebra notes).
 
 = Computable Functions and Undecidability  // 可计算函数与不可判定性
 
+Ch 7 measured what a *theory* can do; this chapter measures what a
+*logic* can do as a decision procedure. Its central question — which
+sets of sentences can be decided by an algorithm? — forces a precise
+notion of computability. We develop three equivalent characterizations
+(primitive recursive functions, partial recursive functions via
+minimalization, and Turing machines), prove the undecidability of the
+halting problem, and then prove the two central negative results of
+metamathematics: the valid formulas of first-order logic are
+recursively enumerable but not decidable, and — with the arithmetic
+language of Ch 3 as vehicle — any theory strong enough to represent
+the computable functions is undecidable.
+
+== Primitive Recursive Functions // 原始递归函数
+
+The simplest robust class of computable functions is generated from a
+few initial functions by two closure operations: composition and
+primitive recursion.
+
+#definition(name: "Initial Functions")[
+  The *initial functions* are the zero function $Z (x) = 0$, the
+  successor function $S (x) = x + 1$, and the projection functions
+  $P_i^n (x_1, dots, x_n) = x_i$ ($1 <= i <= n$).
+] <def:initial-functions>
+
+#definition(name: "Primitive Recursion")[
+  A function $f$ of arity $n + 1$ is defined by *primitive recursion*
+  from $g$ of arity $n$ and $h$ of arity $n + 2$ if
+  $
+    f (x_1, dots, x_n, 0) = g (x_1, dots, x_n),
+  $
+  $
+    f (x_1, dots, x_n, y + 1) = h (x_1, dots, x_n, y, f (x_1, dots, x_n, y)).
+  $
+] <def:primitive-recursion>
+
+#eq[
+  $
+    f (x_1, dots, x_n, 0) = g (x_1, dots, x_n),
+    quad
+    f (x_1, dots, x_n, y + 1) = h (x_1, dots, x_n, y, f (x_1, dots, x_n, y)).
+  $
+] <eq:primitive-recursion-scheme>
+
+#definition(name: "Primitive Recursive Functions")[
+  A function is *primitive recursive* if it can be obtained from the
+  initial functions by finitely many applications of composition and
+  primitive recursion.
+] <def:primitive-recursive>
+
+#theorem(name: "Closure of Primitive Recursive Functions")[
+  The primitive recursive functions are closed under composition and
+  primitive recursion, and include addition, multiplication,
+  exponentiation, the predecessor function
+  $"pred" (0) = 0$, $"pred" (y + 1) = y$, and truncated subtraction.
+] <thm:primitive-recursive-closure>
+
+#proof[
+  Closure under the two schemata is by definition. Addition:
+  $f (x, 0) = x$ and $f (x, y + 1) = f (x, y) + 1$, i.e. $f = "add"$
+  is defined by primitive recursion from $P_1^1$ and
+  $S compose P_3^3$. Multiplication: $x dot 0 = 0$ and
+  $x dot (y + 1) = x dot y + x$, using addition. Predecessor: as
+  above. Truncated subtraction — the function equal to $x - y$
+  when $x >= y$ and to $0$ otherwise — is defined by recursion on its
+  second argument using the predecessor function, and exponentiation
+  by recursion using multiplication. Iterating these constructions
+  yields all the usual elementary functions.
+]
+
+#example(name: "Primitive Recursive Examples")[
+  The characteristic function of a relation is primitive recursive
+  whenever the relation is decidable by a primitive recursive test;
+  equality and order on $bb(N)$ are such relations:
+  $"eq" (x, y) = 1$ iff $x = y$, and $"lt" (x, y) = 1$ iff $x < y$,
+  via iteration of the predecessor. The factorial $x !$ satisfies
+  $0 ! = 1$ and $(y + 1) ! = (y + 1) dot y !$.
+] <ex:primitive-recursive-examples>
+
 #note[
-  Placeholder: The syntactical wing of metamathematics. Planned as two
-  further chapters: computable functions and undecidability (Ch 8:
-  primitive recursive functions, Turing machines, the halting problem,
-  undecidability of first-order logic) and Gödel's incompleteness
-  theorems (Ch 9: arithmetization, the first and second incompleteness
-  theorems, Tarski's undefinability of truth). The blueprint is at the
-  head of this file; both chapters will be developed in subsequent
-  revisions.
+  Every primitive recursive function is total (defined on all of
+  $bb(N)$), and the class is enormous — it contains every function
+  ever needed in elementary number theory. Yet it is not all of
+  computability: the Ackermann function, defined by the double
+  recursion $A (0, y) = y + 1$, $A (x + 1, 0) = A (x, 1)$,
+  $A (x + 1, y + 1) = A (x, A (x + 1, y))$, grows faster than any
+  primitive recursive function and is therefore not primitive
+  recursive, although it is perfectly computable. This motivates the
+  larger class of the next section.
+]
+
+== Partial Recursive Functions and Church's Thesis // 部分递归函数与 Church 论题
+
+The Ackermann example shows that primitive recursion is too narrow.
+Adjoining the *minimalization operator* yields the full class of
+computable functions — partial ones included.
+
+#definition(name: "Minimalization")[
+  For a partial function $g$ of arity $n + 1$, the function defined
+  by *minimalization* is
+  $
+    f (x_1, dots, x_n) = mu y [g (x_1, dots, x_n, y) = 0],
+  $
+  the least $y$ such that $g (x_1, dots, x_n, y) = 0$ and all values
+  $g (x_1, dots, x_n, z)$ with $z < y$ are defined and nonzero. If no
+  such $y$ exists, $f (x_1, dots, x_n)$ is undefined.
+] <def:mu-operator>
+
+#eq[
+  $
+    f (x_1, dots, x_n) = mu y [g (x_1, dots, x_n, y) = 0].
+  $
+] <eq:mu-operator-def>
+
+#definition(name: "Partial Recursive Functions")[
+  A *partial recursive* function is one obtainable from the initial
+  functions by finitely many applications of composition, primitive
+  recursion, and minimalization. A partial recursive function that is
+  total is *recursive* (or *computable*).
+] <def:partial-recursive>
+
+#definition(name: "Computable Function")[
+  A total function $f : bb(N)^n -> bb(N)$ is *computable* if it is
+  partial recursive. A relation is *decidable* if its characteristic
+  function is computable, and *recursively enumerable* if it is the
+  domain (or the range) of a partial recursive function.
+] <def:computable-function>
+
+#example(name: "Functions Defined by Minimalization")[
+  Division with remainder: the quotient
+  $"quot" (x, y) = mu z [x < y dot (z + 1)]$ with the convention
+  $"quot" (x, 0) = 0$; the discrete logarithm
+  $log_2 (x) = mu z [2^(z+1) > x]$; the square root
+  $sqrt (x) = mu z [(z + 1)^2 > x]$. Each minimalization is bounded by
+  the argument, so the resulting functions are total.
+] <ex:mu-example>
+
+#definition(name: "Church's Thesis")[
+  *Church's thesis* is the assertion that the partial recursive
+  functions — equivalently, any of the equivalent characterizations
+  developed in this chapter — exhaust the intuitively computable
+  functions.
+] <def:church-thesis>
+
+It is not a theorem of mathematics but a hypothesis about the
+empirical notion of computation, confirmed by decades of convergent
+evidence and universally accepted; its mathematical content lies in
+the *equivalences* between the formal characterizations, one of which
+is proved in the next section.
+
+== Turing Machines and the Halting Problem // 图灵机与停机问题
+
+The most concrete model of computation is Turing's: a finite control,
+a tape, and a read-write head. The equivalence with partial recursive
+functions is the bridge between the algebraic and the mechanical
+view of computability.
+
+#definition(name: "Turing Machine")[
+  A *Turing machine* is a tuple
+  $M = (Q, Sigma, Gamma, delta, q_0, F)$, where $Q$ is a finite set of
+  states, $Sigma subset Gamma$ the input alphabet, $Gamma$ the tape
+  alphabet containing the blank symbol $B$ (with $B in.not
+  Sigma$), $q_0 in Q$ the initial state, $F subset Q$ the accepting
+  states, and $delta$ a partial function
+  $delta : Q times Gamma -> Q times Gamma times {L, R}$ (the
+  transition function, $L$ and $R$ the head moves). A configuration
+  is a word over $Gamma$ together with a state and a head position; a
+  computation is a finite or infinite sequence of configurations
+  obtained by applying $delta$. $M$ *halts* on input $x$ if the
+  computation starting in the initial configuration reaches a
+  configuration from which $delta$ is undefined (in particular, on
+  accepting).
+] <def:turing-machine>
+
+#definition(name: "Turing-Computable Function")[
+  A function $f$ is *Turing-computable* if there is a Turing machine
+  $M$ such that, on input the (encoded) tuple $x_1, dots, x_n$, $M$
+  halts with the (encoded) value $f (x_1, dots, x_n)$ written on the
+  tape whenever $f$ is defined, and $M$ does not halt when it is
+  undefined.
+] <def:turing-computable>
+
+#theorem(name: "Turing Machines and Partial Recursive Functions")[
+  A function is Turing-computable if and only if it is partial
+  recursive.
+] <thm:turing-rosser-equivalence>
+
+#proof[
+  *Turing-computable implies partial recursive.* Encode configurations
+  as natural numbers (the tape as a word over $Gamma$, the state and
+  head position in the tuple). One verifies that the relation "the
+  machine passes from configuration $c$ to configuration $c'$ in one
+  step" is primitive recursive — it is a bounded search over the
+  finite transition table — and that the configuration after $t$
+  steps is a primitive recursive function of $t$. Whether a
+  configuration is accepting is likewise primitive recursive, so the
+  output function is obtained from these by minimalization over the
+  halting time. *Partial recursive implies Turing-computable.* Each
+  initial function is trivially a machine; composition, primitive
+  recursion, and minimalization are simulated by composing machines,
+  with the tape holding the intermediate values. The simulation is
+  uniform: a machine is built by structural recursion on the
+  definition of the function.
+]
+
+#theorem(name: "Undecidability of the Halting Problem")[
+  There is no Turing machine that decides, given the code of a Turing
+  machine $M$ and an input $x$, whether $M$ halts on $x$.
+] <thm:halting-undecidable>
+
+#proof[
+  Fix a coding of Turing machines and inputs as natural numbers, and
+  suppose a machine $H$ decides the halting problem: $H$ halts with
+  1 on input $(angle M angle, x)$ iff $M$ halts on $x$, and with 0
+  otherwise. Build the machine $D$: on input $angle M angle$,
+  simulate $H$ on $(angle M angle, angle M angle)$; if $H$ outputs 1,
+  $D$ enters an infinite loop, and if $H$ outputs 0, $D$ halts.
+  Now run $D$ on its own code $angle D angle$: $D$ halts on
+  $angle D angle$ iff $H$ outputs 0 on $(angle D angle, angle D
+  angle)$ iff $D$ does not halt on $angle D angle$ — a contradiction.
+]
+
+#note[
+  The halting problem is recursively enumerable (simulate machines in
+  parallel and report those that halt) but not decidable; this is the
+  canonical example of the gap between enumerability and decision,
+  which recurs in §8.4 for the valid formulas of first-order logic.
+]
+
+== Undecidability of First-Order Logic // 一阶逻辑的不可判定性
+
+We now connect computability with the logic of Part II. Two facts
+converge: validity is recursively enumerable because of completeness
+(promised at L1600), and — for languages rich enough to do
+arithmetic — validity is not decidable. Figure 8.1 locates these
+classes in the spectrum of computability.
+
+#figure(
+  image("img/computability-spectrum.svg", width: 72%),
+  caption: [
+    The spectrum of computability: decidable relations sit inside
+    the total computable functions, which sit inside the partial
+    recursive functions. The valid formulas of first-order logic are
+    recursively enumerable but not decidable.
+  ],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:computability-spectrum>
+
+#definition(name: "Representable Functions")[
+  Let $T$ be a theory in the language of arithmetic
+  (#link(<ex:language-of-arithmetic>)[Example 3.1]) and let
+  $f : bb(N)^n -> bb(N)$ be a total function. $f$ is *representable*
+  in $T$ if there is a formula $phi (x_1, dots, x_n, y)$ such that
+  for all $a_1, dots, a_n, b in bb(N)$,
+  $f (a_1, dots, a_n) = b$ implies
+  $T tack forall y (phi (a_1, dots, a_n, y) <=> y = b)$.
+] <def:representable>
+
+#eq[
+  $
+    f (a_1, dots, a_n) = b
+    => T tack forall y (phi (a_1, dots, a_n, y) <=> y = b).
+  $
+] <eq:representability-def>
+
+#lemma(name: "Representability of Computable Functions")[
+  Every partial recursive function is representable in the theory of
+  arithmetic ($"PA"$, or any consistent theory proving the basic
+  arithmetic axioms used in the proof).
+] <lem:recursive-representable>
+
+#proof[
+  *Outline.* Gödel's β-function trick encodes finite sequences of
+  natural numbers into single numbers, so the "computation of $f$
+  at step $t$" — a primitive recursive relation on codes — becomes an
+  arithmetic formula; the initial functions, composition, primitive
+  recursion, and minimalization are each translated into arithmetic
+  definitions, and the defining equations of $f$ become theorems of
+  $"PA"$. The claim that $f (a_1, dots, a_n) = b$ implies
+  $T tack phi (a_1, dots, a_n, b)$ — and that $T$ proves the
+  uniqueness of $b$ — follows by induction on the construction of
+  $f$. The full details are the starting point of Ch 9.1
+  (arithmetization).
+]
+
+#proposition(name: "Validity is Recursively Enumerable")[
+  The set $"Val" = {phi : models phi}$ of valid formulas of
+  first-order logic (in a finite signature) is recursively enumerable.
+] <prop:r-e-closed>
+
+#proof[
+  By #link(<cor:completeness-form>)[completeness in consequence
+  form], $phi$ is valid iff $tack phi$ is derivable in the Hilbert  system of Ch 5. Enumerate all finite sequences of formulas; each
+  sequence is a derivation iff a primitive recursive check of the
+  axioms and rules succeeds, so the set of derivable formulas is the
+  range of a partial recursive function enumerating valid proofs —
+  hence recursively enumerable.
+]
+
+#theorem(name: "Church's Theorem: Undecidability of Validity")[
+  The set of valid formulas of first-order logic in the language of
+  arithmetic is not decidable.
+] <thm:first-order-undecidable>
+
+#proof[
+  It suffices to reduce the halting problem to validity. Fix an
+  enumeration of Turing machines $M_e$ by code $e$. By
+  #link(<lem:recursive-representable>)[representability], there is a
+  formula $theta (x, y, z)$ such that, for each $e$ and each input
+  $x$, "$M_e$ halts on $x$" is equivalent to
+  $exists y theta (e, x, y)$ being true in the standard model.
+  Moreover representability plus completeness
+  gives: $M_e$ halts
+  on $x$ iff $models exists y theta (e, x, y)$ — the sentence is
+  *valid*, not merely true, because $exists y theta (e, x, y)$ is
+  provable whenever it holds. If validity were decidable, the halting
+  problem would be decidable, contradicting
+  #link(<thm:halting-undecidable>)[the undecidability of the halting
+  problem].
+]
+
+#proposition(name: "Decidable Theories versus Validity")[
+  The theories DLO and ACF are decidable (quantifier elimination,
+  Ch 7 §7.4), while validity in any language containing arithmetic is
+  undecidable. The decision problem of a specific theory is
+  *easier* than the validity problem: a theory decides its own
+  sentences, whereas validity ranges over all formulas of a rich
+  language.
+] <prop:effective-enumerable>
+
+#note[
+  The results of this section are the pivot to Ch 9: representability
+  is exactly the "arithmetization" needed for Gödel's
+  incompleteness theorems, and the recursive enumerability of
+  validity underlies the second incompleteness theorem (no consistent
+  theory can prove its own consistency — the consistency statement,
+  though true, escapes provability). First-order logic is
+  complete, enumerable, and undecidable — the three properties
+  together delimit the metamathematics of Part III.
+]
+
+= Gödel's Incompleteness Theorems  // Gödel 不完备定理
+
+#note[
+  Placeholder: The limits of provability. Planned as four sections:
+  arithmetization of syntax (Gödel coding, representability — begun in
+  §8.4), the first incompleteness theorem, the second incompleteness
+  theorem, and Tarski's undefinability of truth. The blueprint is at
+  the head of this file; the chapter will be developed in a subsequent
+  revision.
 ]
 
 #part("Extensions")  // 扩展：二阶逻辑与非经典逻辑
@@ -2707,8 +3048,10 @@ algebra notes).
 
 == C
 - *#link(<def:categoricity>)[Categoricity]*
+- *#link(<def:church-thesis>)[Church's Thesis]*
 - *#link(<thm:compactness>)[Compactness Theorem]*
 - *#link(<def:complete-theory>)[Complete Theory]*
+- *#link(<def:computable-function>)[Computable Function]*
 - *#link(<def:consistency>)[Consistency]*
 - *#link(<def:conjunction>)[Conjunction]*
 
@@ -2732,6 +3075,7 @@ algebra notes).
 - *#link(<def:generalization>)[Generalization (Gen)]*
 
 == H
+- *#link(<thm:halting-undecidable>)[Halting Problem]*
 - *#link(<thm:henkin-completeness>)[Henkin Completeness Theorem]*
 - *#link(<thm:herbrand>)[Herbrand's Theorem]*
 - *#link(<cor:hypothetical-syllogism>)[Hypothetical Syllogism (HS)]*
@@ -2746,6 +3090,7 @@ algebra notes).
 - *#link(<thm:los>)[Łoś's Theorem]*
 
 == M
+- *#link(<def:mu-operator>)[Minimalization]*
 - *#link(<def:model>)[Model]*
 - *#link(<def:lukasiewicz-system>)[Modus Ponens (MP)]*
 
@@ -2753,8 +3098,10 @@ algebra notes).
 - *#link(<def:negation>)[Negation]*
 
 == P
+- *#link(<def:partial-recursive>)[Partial Recursive Function]*
 - *#link(<prop:derived-theorems>)[Peirce's Law]*
 - *#link(<def:prenex-form>)[Prenex Normal Form]*
+- *#link(<def:primitive-recursive>)[Primitive Recursive Function]*
 - *#link(<prop:basic-theorems>)[Principle of Explosion]*
 - *#link(<def:proof>)[Proof]*
 
@@ -2763,6 +3110,7 @@ algebra notes).
 
 == R
 - *#link(<thm:reductio-ad-absurdum>)[Reductio ad Absurdum]*
+- *#link(<def:representable>)[Representable Function]*
 
 == S
 - *#link(<def:satisfaction>)[Satisfaction]*
@@ -2781,6 +3129,7 @@ algebra notes).
 - *#link(<def:term>)[Term]*
 - *#link(<def:term-model>)[Term Model]*
 - *#link(<def:theorem>)[Theorem]*
+- *#link(<def:turing-machine>)[Turing Machine]*
 - *#link(<def:model>)[Truth]*
 
 == U
