@@ -121,7 +121,7 @@ special determinants.
 
 #property(name: "Basic Properties of Determinants")[
   Let $A$ be an $n times n$ matrix.
-  - *Transpose*: $"det"(A^T) = "det"(A)$.
+  - *Transpose*: $"det"(A^"T") = "det"(A)$.
   - *Row exchange*: interchanging two rows (or two columns) of $A$ changes the sign of $"det"(A)$.
   - *Scalar multiplication*: multiplying one row of $A$ by a scalar $k$ multiplies $"det"(A)$ by $k$.
   - *Row addition*: adding a scalar multiple of one row to another row leaves $"det"(A)$ unchanged.
@@ -149,7 +149,7 @@ special determinants.
 ] <thm:laplace-expansion>
 
 #proof[
-  We prove the expansion along row $i$; the column version follows from $"det"(A^T) = "det"(A)$.
+  We prove the expansion along row $i$; the column version follows from $"det"(A^"T") = "det"(A)$.
   Grouping the Leibniz terms by $j = sigma(i)$ gives
 
   $
@@ -252,7 +252,7 @@ From the first column sequentially, subtract $a_(21)/a_(22)$ times the second co
 $a_(n 1)/a_(n n)$ times the $n$-th column, so that the first column becomes
 
 $
-  (a_(11) - sum_(k=2)^n (a_(1 k) a_(k 1))/a_(k k), 0, 0, dots, 0)^T.
+  (a_(11) - sum_(k=2)^n (a_(1 k) a_(k 1))/a_(k k), 0, 0, dots, 0)^"T".
 $
 
 Then expand along the first column.
@@ -304,7 +304,7 @@ The *scalar product* of $A$ by a scalar $k$ in $F$ is $k A = (k a_(i j))$, again
 
 === Transpose // 转置
 
-The *transpose* of an $m times n$ matrix $A = (a_(i j))$ is the $n times m$ matrix $A^T = (a_(j i))$, obtained by swapping rows and columns.
+The *transpose* of an $m times n$ matrix $A = (a_(i j))$ is the $n times m$ matrix $A^"T" = (a_(j i))$, obtained by swapping rows and columns.
 
 === Matrix Multiplication // 矩阵乘法
 
@@ -447,7 +447,7 @@ The determinant of a product equals the product of the determinants — see #lin
     are still upper (lower) triangular.
   - Every square matrix $A$ can be expressed as the sum of an upper triangular matrix and a
     lower triangular matrix:
-    $A = (A + A^T)/2 + (A - A^T)/2$.
+    $A = (A + A^"T")/2 + (A - A^"T")/2$.
   - *($"LU"$ Decomposition)* If all leading principal minors of a square matrix $A$ are non-zero,
     then $A$ can be uniquely decomposed as $A = L U$, where $L$ is a lower triangular matrix
     with all diagonal entries equal to $1$ and $U$ is an invertible upper triangular matrix.
@@ -473,15 +473,15 @@ The determinant of a product equals the product of the determinants — see #lin
 
 #definition(name: "Symmetric and Skew-Symmetric Matrices")[
   An $n times n$ matrix $A = (a_(i j))$ is called a *symmetric matrix* if
-  $a_(i j) = a_(j i)$ for all $i, j = 1, ..., n$, or equivalently $A = A^T$.
-  Similarly, if $A = -A^T$, then $A$ is called a *skew-symmetric matrix*.
+  $a_(i j) = a_(j i)$ for all $i, j = 1, ..., n$, or equivalently $A = A^"T"$.
+  Similarly, if $A = -A^"T"$, then $A$ is called a *skew-symmetric matrix*.
 ] <def:symmetric-matrix>
 
 #property(name: "Properties of Symmetric Matrices")[
   - The linear combination of two symmetric (skew-symmetric) matrices of the same order is
     still a symmetric (skew-symmetric) matrix.
   - Every square matrix $A$ can be expressed as the sum of a symmetric matrix and a
-    skew-symmetric matrix: $A = (A + A^T)/2 + (A - A^T)/2$.
+    skew-symmetric matrix: $A = (A + A^"T")/2 + (A - A^"T")/2$.
   - The determinant of an odd-order skew-symmetric matrix is zero; the rank of a
     skew-symmetric matrix is even.
 ] <prop:symmetric-matrix>
@@ -587,7 +587,7 @@ is a nilpotent matrix with nilpotent index $n$.
 #property(name: "Operations of Inverse Matrices")[
   - $(A^(-1))^(-1) = A$.
   - $(lambda A)^(-1) = (1/lambda) A^(-1)$ for a non-zero scalar $lambda$ in $F$.
-  - $(A^T)^(-1) = (A^(-1))^T$.
+  - $(A^"T")^(-1) = (A^(-1))^"T"$.
   - $(A B)^(-1) = B^(-1) A^(-1)$, and more generally $(A_1 ... A_k)^(-1) = A_k^(-1) ... A_1^(-1)$.
 ] <prop:operations-of-inverse>
 
@@ -755,8 +755,8 @@ is a nilpotent matrix with nilpotent index $n$.
     $upright("rank")(A B C) >= upright("rank")(A B) + upright("rank")(B C) -
     upright("rank")(B)$.
   - *3. Transpose*:
-    $upright("rank")(A A^T) = upright("rank")(A^T A) = upright("rank")(A) =
-    upright("rank")(A^T)$.
+    $upright("rank")(A A^"T") = upright("rank")(A^"T" A) = upright("rank")(A) =
+    upright("rank")(A^"T")$.
   - *4. Inverse*: if $A$ is invertible, then $upright("rank")(A) = upright("rank")(A^(-1)) = n$.
   - *5. Block Matrix*:
     $upright("rank")(mat(A, O; O, D)) = upright("rank")(A) + upright("rank")(D)$.
@@ -766,14 +766,14 @@ is a nilpotent matrix with nilpotent index $n$.
 
 Since all the row and column vectors of a rank-$1$ matrix are linearly dependent, it can be
 expressed as the outer product of two non-zero vectors; in other words, a rank-$1$ matrix can
-be written as $alpha beta^T$, where $alpha$ and $beta$ are non-zero column vectors.
+be written as $alpha beta^"T"$, where $alpha$ and $beta$ are non-zero column vectors.
 
-Based on the decomposition $A = alpha beta^T$, the rank-$1$ matrix has the following simplified
+Based on the decomposition $A = alpha beta^"T"$, the rank-$1$ matrix has the following simplified
 calculation rules:
 
 #property(name: "Calculation Rules for Rank-1 Matrices")[
   - *Exponentiation*: for any positive integer $k >= 1$,
-    $A^k = (beta^T alpha)^(k-1) dot A$, where $beta^T alpha$ is a scalar (the inner product
+    $A^k = (beta^"T" alpha)^(k-1) dot A$, where $beta^"T" alpha$ is a scalar (the inner product
     of the vectors).
   - *Rank Transmission*: if $B$ is any matrix, then $upright("rank")(A B) <= 1$ and
     $upright("rank")(B A) <= 1$; multiplying a rank-$1$ matrix by arbitrary matrices yields
@@ -782,20 +782,20 @@ calculation rules:
 
 #theorem(name: "Sherman-Morrison Formula")[
   If $A$ in $bb(R)^(n times n)$ is invertible and $alpha, beta$ in $bb(R)^n$ are column
-  vectors, then $A + alpha beta^T$ is invertible if and only if $1 + beta^T A^(-1) alpha != 0$.
-  In this case, the inverse of $A + alpha beta^T$ is
+  vectors, then $A + alpha beta^"T"$ is invertible if and only if $1 + beta^"T" A^(-1) alpha != 0$.
+  In this case, the inverse of $A + alpha beta^"T"$ is
 
   $
-    (A + alpha beta^T)^(-1) = A^(-1) -
-    (A^(-1) alpha beta^T A^(-1)) / (1 + beta^T A^(-1) alpha).
+    (A + alpha beta^"T")^(-1) = A^(-1) -
+    (A^(-1) alpha beta^"T" A^(-1)) / (1 + beta^"T" A^(-1) alpha).
   $
 
-  Here $alpha beta^T$ is the outer product of $alpha$ and $beta$.
+  Here $alpha beta^"T"$ is the outer product of $alpha$ and $beta$.
 ] <thm:sherman-morrison>
 
 #note[
   Direct verification: multiply
-  $(A + alpha beta^T)(A^(-1) - (A^(-1) alpha beta^T A^(-1))/(1 + beta^T A^(-1) alpha))$
+  $(A + alpha beta^"T")(A^(-1) - (A^(-1) alpha beta^"T" A^(-1))/(1 + beta^"T" A^(-1) alpha))$
   and simplify to $E$.
 ]
 
@@ -804,14 +804,14 @@ calculation rules:
   Sherman-Morrison formula, known as the *matrix determinant lemma*:
 
   $
-    "det"(A + alpha beta^T) = "det"(A) (1 + beta^T A^(-1) alpha).
+    "det"(A + alpha beta^"T") = "det"(A) (1 + beta^"T" A^(-1) alpha).
   $
 
   The theorem can also be stated in terms of the adjugate of $A$ (writing
   $u = alpha$, $v = beta$) as
 
   $
-    "det"(A + alpha beta^T) = "det"(A) + beta^T "adj"(A) alpha,
+    "det"(A + alpha beta^"T") = "det"(A) + beta^"T" "adj"(A) alpha,
   $
 
   in which case it applies whether or not $A$ is invertible.
@@ -819,16 +819,16 @@ calculation rules:
 
 #theorem(name: "Woodbury Matrix Identity")[
   If $A$ in $bb(R)^(n times n)$ and $C$ in $bb(R)^(k times k)$ are invertible and
-  $U, V$ in $bb(R)^(n times k)$, then $A + U C V^T$ is invertible if and only if
-  $C^(-1) + V^T A^(-1) U$ is invertible. In this case, the inverse of $A + U C V^T$ is
+  $U, V$ in $bb(R)^(n times k)$, then $A + U C V^"T"$ is invertible if and only if
+  $C^(-1) + V^"T" A^(-1) U$ is invertible. In this case, the inverse of $A + U C V^"T"$ is
 
   $
-    (A + U C V^T)^(-1) = A^(-1) - A^(-1) U (C^(-1) + V^T A^(-1) U)^(-1) V^T A^(-1).
+    (A + U C V^"T")^(-1) = A^(-1) - A^(-1) U (C^(-1) + V^"T" A^(-1) U)^(-1) V^"T" A^(-1).
   $
 ] <thm:woodbury-identity>
 
 #note[
-  Follows from the Sherman-Morrison formula by induction on the rank of $U C V^T$,
+  Follows from the Sherman-Morrison formula by induction on the rank of $U C V^"T"$,
   or by direct verification using block matrix inversion.
 ]
 
@@ -836,7 +836,7 @@ Without loss of generality, let $A = E_n$ and $C = E_k$. Then the Woodbury ident
 to
 
 $
-  (E_n + U V^T)^(-1) = E_n - U (E_k + V^T U)^(-1) V^T.
+  (E_n + U V^"T")^(-1) = E_n - U (E_k + V^"T" U)^(-1) V^"T".
 $
 
 This form is particularly useful in applications involving low-rank updates to identity matrices.
@@ -1633,7 +1633,7 @@ $
 $
 
 If $alpha = sum_(i=1)^n x_i epsilon_i = sum_(i=1)^n x'_i epsilon'_i$, then the coordinate
-vectors satisfy $x = S x'$, where $x = (x_1, ..., x_n)^T$ and $x' = (x'_1, ..., x'_n)^T$.
+vectors satisfy $x = S x'$, where $x = (x_1, ..., x_n)^"T"$ and $x' = (x'_1, ..., x'_n)^"T"$.
 This is the *coordinate transformation formula*.
 
 If $A$ has matrix representation $A$ under bases $B, B'$ of $V, V'$, and $B$ is changed
@@ -2178,7 +2178,7 @@ since $A^2 = E$ implies $A = A^(-1)$.
 === All-Ones Matrix // 全 1 矩阵
 
 Let $F = bb(Q)$ and $A$ be the all-ones matrix. Denote
-$1_n = (1, 1, ..., 1)^T$ (column vector of $n$ ones).
+$1_n = (1, 1, ..., 1)^"T"$ (column vector of $n$ ones).
 - All eigenvalues are $n$ (algebraic multiplicity $1$) or $0$ (algebraic multiplicity $n - 1$).
 - The eigenvectors for $n$ are ${k 1_n : k in bb(Q), k != 0}$; the eigenvectors for $0$ are
   linear combinations of $eta_1, ..., eta_(n-1)$ where $eta_i$ has $1$ in position $1$,
@@ -2196,7 +2196,7 @@ and in position $(n, 1)$, zeros elsewhere). All properties are closely related t
 the discrete Fourier transform (DFT) and roots of unity.
 - The eigenvalues are the $n$-th roots of unity $omega^(k) = exp(2 pi i k / n)$
   for $k = 0, 1, ..., n - 1$.
-- The eigenvector for $omega^(k)$ is $xi^(k) = (1, omega^(k), (omega^(k))^2, ..., (omega^(k))^(n-1))^T$.
+- The eigenvector for $omega^(k)$ is $xi^(k) = (1, omega^(k), (omega^(k))^2, ..., (omega^(k))^(n-1))^"T"$.
 - $A$ is diagonalizable, and can be unitarily diagonalized.
 
 === Circulant Matrix // 循环矩阵
@@ -2362,7 +2362,7 @@ and computation method of the Jordan canonical form.
     ),
   $
 
-  Some authors use $C(p)^T$ instead. The characteristic and minimal polynomials of
+  Some authors use $C(p)^"T"$ instead. The characteristic and minimal polynomials of
   $C(p)$ are both $p(x)$.
 ] <def:companion-matrix>
 
@@ -2531,22 +2531,22 @@ under congruent transformations, and criteria for positive definite quadratic fo
 
   $
     f(x_1, ..., x_n) = sum_(i=1)^n sum_(j=1)^n a_(i j) x_i x_j
-    = X^T A X,
+    = X^"T" A X,
   $
 
-  where $X = (x_1, ..., x_n)^T$ and $A = (a_(i j))_(n times n)$ with $a_(i j) = a_(j i)$,
+  where $X = (x_1, ..., x_n)^"T"$ and $A = (a_(i j))_(n times n)$ with $a_(i j) = a_(j i)$,
   is called a *quadratic form* in $n$ variables over $F$.
 ] <def:quadratic-form>
 
 #note[
   The matrix $A$ of a quadratic form is symmetric. For any square matrix $B$,
-  $X^T B X = X^T ((B + B^T)/2) X$, so any quadratic form can be represented by a
+  $X^"T" B X = X^"T" ((B + B^"T")/2) X$, so any quadratic form can be represented by a
   symmetric matrix.
 ]
 
 #definition(name: "Congruent Transformation")[
   Two $n$-order square matrices $A$ and $B$ are called *congruent* if there exists an
-  invertible matrix $C$ such that $B = C^T A C$.
+  invertible matrix $C$ such that $B = C^"T" A C$.
 ] <def:congruent-transformation>
 
 #note[
@@ -2593,13 +2593,13 @@ under congruent transformations, and criteria for positive definite quadratic fo
 == Definite Quadratic Forms // 正定二次型
 
 #definition(name: "Positive Definite Quadratic Form")[
-  A real quadratic form $f(x_1, ..., x_n) = X^T A X$ is *positive definite* if
+  A real quadratic form $f(x_1, ..., x_n) = X^"T" A X$ is *positive definite* if
   $f(x_1, ..., x_n) > 0$ for all $X != 0$.
   The matrix $A$ is then called a *positive definite matrix*.
 ] <def:positive-definite-quadratic-form>
 
 #definition(name: "Other Definiteness Types")[
-  A real quadratic form $f = X^T A X$ is:
+  A real quadratic form $f = X^"T" A X$ is:
   - *positive semi-definite* if $f >= 0$ for all $X$;
   - *negative definite* if $f < 0$ for all $X != 0$;
   - *negative semi-definite* if $f <= 0$ for all $X$;
@@ -2607,7 +2607,7 @@ under congruent transformations, and criteria for positive definite quadratic fo
 ] <def:other-definiteness-types>
 
 #theorem(name: "Sufficient and Necessary Conditions for Positive Definiteness")[
-  A real quadratic form $f = X^T A X$ is positive definite if and only if:
+  A real quadratic form $f = X^"T" A X$ is positive definite if and only if:
   - The positive inertia index of $f$ is $n$;
   - $A$ is congruent to the identity matrix $E$;
   - All eigenvalues of $A$ are positive;
@@ -2640,7 +2640,7 @@ and normal transformations.
 
 #note[
   If $B$ is the matrix of $f$ under a basis ${epsilon_1, ..., epsilon_n}$ of $V$,
-  i.e. $B = (f(epsilon_i, epsilon_j))$, then $f(alpha, beta) = X^T B Y$ where
+  i.e. $B = (f(epsilon_i, epsilon_j))$, then $f(alpha, beta) = X^"T" B Y$ where
   $X, Y$ are the coordinate vectors of $alpha, beta$. A bilinear form is *symmetric*
   if $f(alpha, beta) = f(beta, alpha)$ for all $alpha, beta$. Every quadratic form
   arises from a symmetric bilinear form (over fields of characteristic != 2).
@@ -2693,7 +2693,7 @@ and normal transformations.
   Let ${epsilon_1, ..., epsilon_n}$ be a basis of an $n$-dimensional Euclidean space $V$.
   The matrix $G = ((epsilon_i, epsilon_j))_(n times n)$ is called the *Gram matrix*
   (or metric matrix) of the inner product under this basis. Then
-  $(alpha, beta) = X^T G Y$ for coordinate vectors $X, Y$.
+  $(alpha, beta) = X^"T" G Y$ for coordinate vectors $X, Y$.
 ] <def:gram-matrix>
 
 #property(name: "Properties of Gram Matrix")[
@@ -2717,12 +2717,12 @@ and normal transformations.
 
 #note[
   Under an orthonormal basis, $alpha = sum_(i=1)^n (alpha, epsilon_i) epsilon_i$
-  (Fourier expansion), and $(alpha, beta) = X^T Y = sum_(i=1)^n x_i y_i$.
+  (Fourier expansion), and $(alpha, beta) = X^"T" Y = sum_(i=1)^n x_i y_i$.
 ]
 
 #definition(name: "Orthogonal Matrix")[
   A square matrix $T in bb(R)^(n times n)$ is an *orthogonal matrix* if
-  $T^T T = T T^T = E$.
+  $T^"T" T = T T^"T" = E$.
 ] <def:orthogonal-matrix>
 
 #theorem(name: "Orthonormal Basis Transition")[
@@ -2845,7 +2845,7 @@ and normal transformations.
 
 #note[
   The least squares solution of $A x = beta$ is equivalent to solving the *normal equations*
-  $(A^T A) x = A^T beta$.
+  $(A^"T" A) x = A^"T" beta$.
 ]
 
 == Orthogonal Transformations and Symmetric Transformations // 正交变换与对称变换
@@ -2907,7 +2907,7 @@ and normal transformations.
   Let $V$ be an $n$-dimensional Euclidean space and $A$ a symmetric transformation.
   Then there exists an orthonormal basis of $V$ such that the matrix of $A$ is diagonal.
   Equivalently, for a real symmetric matrix $A$, there exists an orthogonal matrix $T$
-  such that $T^(-1) A T = T^T A T = Lambda$ (diagonal with eigenvalues).
+  such that $T^(-1) A T = T^"T" A T = Lambda$ (diagonal with eigenvalues).
 ] <thm:symmetric-diagonalization>
 
 #note[
@@ -2916,8 +2916,8 @@ and normal transformations.
 ]
 
 #note[
-  For any real quadratic form $f(x_1, ..., x_n) = X^T A X$, there exists an orthogonal
-  transformation $X = T Y$ such that $f = Y^T Lambda Y = sum_(i=1)^n lambda_i y_i^2$.
+  For any real quadratic form $f(x_1, ..., x_n) = X^"T" A X$, there exists an orthogonal
+  transformation $X = T Y$ such that $f = Y^"T" Lambda Y = sum_(i=1)^n lambda_i y_i^2$.
 ]
 
 === Skew-Symmetric Transformations // 反对称变换
@@ -2962,7 +2962,7 @@ and normal transformations.
   The norm in unitary spaces is $||alpha|| = (alpha, alpha)^(1/2)$.
   The *adjoint transformation* $A^†$ of $A$ satisfies
   $(A alpha, beta) = (alpha, A^† beta)$ for all $alpha, beta$.
-  The "conjugate" transpose of a complex matrix $A$ is $A^† = "conjugate"(A)^T$.
+  The "conjugate" transpose of a complex matrix $A$ is $A^† = "conjugate"(A)^"T"$.
 ]
 
 === Normal Transformation and Diagonalization // 正规变换与对角化
@@ -3018,7 +3018,7 @@ and normal transformations.
   - There exists a basis ${e_1, ..., e_n, f_1, ..., f_n}$ such that the matrix of
     the symplectic inner product takes the standard form
     $J = mat(O, E; -E, O)$ where $E$ is the $n times n$ identity matrix;
-  - The standard symplectic matrix satisfies $J^2 = -E$ and $J^T = -J = J^(-1)$.
+  - The standard symplectic matrix satisfies $J^2 = -E$ and $J^"T" = -J = J^(-1)$.
 ] <prop:symplectic-space-properties>
 
 // ==========================================================================
