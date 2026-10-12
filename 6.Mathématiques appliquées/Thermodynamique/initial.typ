@@ -317,20 +317,65 @@ Two details of the table deserve comment. A *linear* molecule (monatomic aside) 
 
 == Maxwell-Boltzmann Velocity Distribution // 麦克斯韦-玻尔兹曼速度分布
 
-In equilibrium the molecules of a gas are distributed over velocities
-according to a law so universal that it has survived every subsequent
-revolution in physics. Maxwell derived it in 1860 from two symmetry
-assumptions alone.
+In an equilibrium gas the molecular speeds take a whole range of
+values, and collisions constantly redistribute them among the
+molecules; yet at a fixed temperature the fraction of molecules found
+in any given speed interval is perfectly stable. This statistical
+regularity is directly accessible to experiment — Stern's
+molecular-beam experiment and its refinements measure it — and it is
+the starting point of the whole theory.
 
-#definition(name: "Maxwell Velocity Distribution")[
+The experimentally tabulated quantity is the *speed distribution
+function*. In a gas of $N$ molecules at equilibrium, let $dif N$ be
+the number of molecules whose speeds lie in $[v, v + dif v]$; the
+ratio $(dif N) / N$ is the fraction of molecules in that interval, and
+$
+  f(v) = (dif N)/(N dif v)
+$
+defines the *speed distribution function*.
+
+The distribution function answers four counting questions at once:
+$N f(v) dif v$ is the number of molecules with speeds in
+$[v, v + dif v]$; $n f(v) dif v$, with $n = N / V$ the number density,
+is the number of such molecules per unit volume; and over a finite
+interval, $integral_(v_1)^(v_2) N f(v) dif v$ and
+$integral_(v_1)^(v_2) n f(v) dif v$ are the number of molecules,
+respectively the number of molecules per unit volume, with speeds in
+$[v_1, v_2]$. Dividing the count by $N$ gives the fraction
+$integral_(v_1)^(v_2) f(v) dif v$ of molecules in the interval —
+literally the area under the curve $f(v)$ between $v_1$ and $v_2$. The
+total area is one, $integral_0^infinity f(v) dif v = 1$, since every
+molecule has some speed. At this stage $f(v)$ is a purely statistical
+notion; its explicit form is derived below.
+
+#figure(
+  image("img/speed-distribution-experimental.svg", width: 58%),
+  caption: [The speed distribution function $f(v)$ as an experimental
+    curve. The dark strip is the number $dif N = N f(v) dif v$ of
+    molecules with speeds in $[v, v + dif v]$, and the shaded area is
+    the fraction of molecules with speeds in $[v_1, v_2]$. The curve
+    rises from the origin, peaks at the most probable speed $v_p$, and
+    decays along a long tail that approaches the $v$-axis
+    asymptotically: very slow and very fast molecules are both rare.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:speed-distribution-experimental>
+
+Maxwell derived the explicit form of the distribution in 1860, on the
+basis of probability theory alone, before any direct measurement
+existed. His argument concerns the *velocity* $bold(v) = (v_x, v_y,
+  v_z)$ — a point in three-dimensional velocity space — and rests on two
+symmetry assumptions: the gas selects no preferred direction, and the
+three Cartesian components are statistically independent.
+
+#theorem(name: "Maxwell Velocity Distribution")[
   In a gas at thermal equilibrium, the probability density of the
-  velocity $bold(v) = (v_x, v_y, v_z)$ of a molecule of mass $m$ at
-  temperature $T$ is
+  velocity $bold(v)$ of a molecule of mass $m$ at temperature $T$ is
   $
     f(bold(v)) = (m / (2 pi k_B T))^(3/2) exp(- m v^2 / (2 k_B T)),
   $
   where $v^2 = v_x^2 + v_y^2 + v_z^2$.
-] <def:maxwell-velocity>
+] <thm:maxwell-velocity>
 
 #proof(name: "Maxwell's argument")[
   Write the density as
@@ -394,81 +439,103 @@ assumptions alone.
   ideal gas law; it *explains* it.
 ]
 
-#definition(name: "Speed Distribution")[
-  In a gas of $N$ molecules whose velocities follow the Maxwell
-  distribution, the number of molecules with speeds in $[v, v + dif v]$
-  is
+The velocity distribution lives on three-dimensional velocity space;
+the experimentally measured $f(v)$ is its marginal along the speed.
+Integrating the velocity density over the spherical shell
+$v < norm(bold(v)) < v + dif v$, of volume $4 pi v^2 dif v$, converts
+one into the other.
+
+#corollary(name: "Maxwell Speed Distribution")[
+  The speed distribution function of a gas in equilibrium at
+  temperature $T$ is
   $
-    dif N = N f(v) dif v,
-  $
-  which defines the *speed distribution function*
-  $
-    f(v) = (dif N)/(N dif v) = 4 pi v^2 (m / (2 pi k_B T))^(3/2)
+    f(v) = 4 pi v^2 (m / (2 pi k_B T))^(3/2)
     exp(- m v^2 / (2 k_B T)),
   $
   normalised so that $integral_0^infinity f(v) dif v = 1$.
-] <def:speed-distribution>
+] <cor:maxwell-speed>
 
-The formula follows by integrating the velocity density over the
-spherical shell $v < norm(bold(v)) < v + dif v$ of volume
-$4 pi v^2 dif v$. That factor — the shell volume — reshapes the Gaussian
-into a law with a rising front and a long tail.
+The shell factor $4 pi v^2$ reshapes the Gaussian of the velocity
+distribution into a law with a rising front and a long tail. Because
+the total area is fixed at $1$, the family of curves at different
+temperatures cannot merely slide: as $T$ rises, the peak moves to
+higher speeds and must simultaneously lower.
 
-#property(name: "Reading the Distribution")[
-  The distribution function $f(v)$ answers four counting questions:
+#figure(
+  image("img/maxwell-temperature-family.svg", width: 66%),
+  caption: [The Maxwell speed distribution at three temperatures. The
+    factor $v^2$ drives each curve up from the origin, the exponential
+    tail decays towards the $v$-axis asymptotically, and the area under
+    every curve is $1$. Raising $T$ shifts the most probable speed
+    $v_p$ to the right while lowering the peak: slow molecules
+    concentrate to the left of $v_p$, and the broadening tail carries
+    the small fraction of fast molecules to higher speeds.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:maxwell-temperature>
 
-  - $N f(v) dif v$ is the *number of molecules* with speeds in
-    $[v, v + dif v]$;
-  - $n f(v) dif v$ is the corresponding *number density* of such
-    molecules;
-  - $integral_(v_1)^(v_2) N f(v) dif v$ is the *number of molecules*
-    with speeds in $[v_1, v_2]$;
-  - $integral_(v_1)^(v_2) n f(v) dif v$ is the corresponding *number
-    density*.
-
-  Dividing the count by $N$ gives the *fraction* of molecules in the
-  interval, $integral_(v_1)^(v_2) f(v) dif v$ — literally the area
-  under the curve $f(v)$ between $v_1$ and $v_2$.
-] <prop:reading-speed-distribution>
-
-#property(name: "Characteristic Speeds")[
-  Three speeds characterise the Maxwell distribution:
+#theorem(name: "Characteristic Speeds")[
+  Three speeds characterise the Maxwell distribution, each expressible
+  through the molar mass $M$ as well as the molecular mass $m$:
   $
-    v_p = sqrt(2 k_B T / m), quad
-    overline(v) = sqrt(8 k_B T / (pi m)), quad
-    v_("rms") = sqrt(3 k_B T / m),
+    v_p = sqrt(2 k_B T / m) = sqrt(2 R T / M), quad
+    overline(v) = sqrt(8 k_B T / (pi m)) = sqrt(8 R T / (pi M)), quad
+    v_("rms") = sqrt(3 k_B T / m) = sqrt(3 R T / M),
   $
   the *most probable*, *mean* and *root-mean-square* speeds, in the
   fixed ratio
   $
     v_p : overline(v) : v_("rms") = 1 : 1.128 : 1.225.
   $
-] <prop:characteristic-speeds>
+] <thm:characteristic-speeds>
 
 #proof[
-  The most probable speed maximises $f(v)$: setting
-  $dif (v^2 exp(-alpha v^2)) / dif v = 0$ gives $2/v - 2 alpha v = 0$,
-  hence $v_p = 1 / sqrt(alpha)$. The mean speed uses the integral
-  $integral_0^infinity v^3 exp(-alpha v^2) dif v = 1 / (2 alpha^2)$:
-  $
-    overline(v) = 4 pi A^3 dot 1 / (2 alpha^2) = 2 / sqrt(pi alpha).
-  $
-  Finally $v_("rms")^2 = lr(⟨ v^2 ⟩) = 3 / (2 alpha)$ from the
-  pressure derivation above.
-]
+  Throughout, write $alpha = m / (2 k_B T)$, so that
+  $f(v) = 4 pi (alpha / pi)^(3/2) v^2 exp(-alpha v^2)$.
 
-#figure(
-  image("img/maxwell-speed-distribution.svg", width: 85%),
-  caption: [The Maxwell speed distribution $f(v)$ versus $v$. *Left:* at
-    a single temperature, the dark strip is the number
-    $dif N = N f(v) dif v$ of molecules with speeds in $[v, v + dif v]$,
-    and the shaded area is the fraction of molecules with speeds in
-    $[v_1, v_2]$; the peak sits at the most probable speed $v_p$.
-    *Right:* as $T$ rises the peak shifts to higher speeds and
-    flattens, the total area under the curve staying $1$.],
-  placement: auto,
-  supplement: [Fig.],
-) <fig:maxwell-speed>
+  *Most probable speed.* $v_p$ maximises $f(v)$; since the prefactor is
+  constant, set
+  $
+    (dif)/(dif v) (v^2 exp(-alpha v^2)) = (2 v - 2 alpha v^3)
+    exp(-alpha v^2) = 0,
+  $
+  giving $v_p^2 = 1 / alpha$, i.e. $v_p = sqrt(2 k_B T / m)$.
+
+  *Mean speed.* The mean is the first moment of the distribution,
+  $
+    overline(v) = integral_0^infinity v f(v) dif v
+    = 4 pi (alpha / pi)^(3/2) integral_0^infinity v^3
+    exp(-alpha v^2) dif v.
+  $
+  The substitution $u = alpha v^2$, for which
+  $v dif v = (dif u) / (2 alpha)$, reduces the integral to the gamma
+  function
+  $
+    integral_0^infinity v^3 exp(-alpha v^2) dif v
+    = 1/(2 alpha^2) integral_0^infinity u exp(-u) dif u
+    = 1/(2 alpha^2),
+  $
+  hence $overline(v) = 2 / sqrt(pi alpha) = sqrt(8 k_B T / (pi m))$.
+
+  *Root-mean-square speed.* The mean square is the second moment,
+  $
+    lr(⟨ v^2 ⟩) = integral_0^infinity v^2 f(v) dif v
+    = 4 pi (alpha / pi)^(3/2) integral_0^infinity v^4
+    exp(-alpha v^2) dif v,
+  $
+  and the same substitution turns the remaining integral into
+  $integral_0^infinity u^(3/2) exp(-u) dif u = Gamma(5/2) =
+  3 sqrt(pi) / 4$, so $lr(⟨ v^2 ⟩) = 3 / (2 alpha) = 3 k_B T / m$ and
+  $v_("rms") = sqrt(3 k_B T / m)$.
+
+  The ordering follows from the ratios $overline(v) / v_p = 2 / sqrt(pi)
+  approx 1.128$ and $v_("rms") / v_p = sqrt(3 / 2) approx 1.225$: the
+  long tail drags the mean, and still more the root-mean-square speed,
+  above the peak. The three speeds answer different questions —
+  $v_("rms")$ enters the mean kinetic energy and the pressure,
+  $overline(v)$ enters collision and effusion rates, and $v_p$ marks
+  the peak of the distribution.
+]
 
 #example(name: "Stern experiment, 1920")[
   Silver atoms evaporating from an oven pass
@@ -485,7 +552,7 @@ into a law with a rising front and a long tail.
   with three degrees of freedom, as studied in the Probabilités note.
   The speed distribution $f(v)$ is thus a scaled chi distribution, and
   the characteristic speeds of
-  #link(<prop:characteristic-speeds>)[the preceding property] are its
+  #link(<thm:characteristic-speeds>)[the preceding theorem] are its
   shape parameters in disguise.
 ] <note:mb-probability>
 
@@ -2264,7 +2331,7 @@ with the same $T$ and $k_B$ as in the non-relativistic theory. In the
 limit $p < < m c$ the factor $e^(-m c^2 / k_B T)$ is absorbed into the
 normalisation and $f(p) -> e^(-p^2 / 2 m k_B T)$ — exactly the
 Maxwell momentum distribution underlying
-#link(<def:maxwell-velocity>)[Chapter 1's velocity distribution].
+#link(<thm:maxwell-velocity>)[Chapter 1's velocity distribution].
 
 #note(title: "Derivation deferred")[
   The Jüttner distribution is the $beta = 1/k_B
