@@ -43,6 +43,15 @@ thermodynamic framework of Chapters 2–4.
   For a simple compressible system of fixed composition, the state is characterised by a small set of *state variables* — the pressure $p$, the volume $V$, and the temperature $T$.
 ] <def:equilibrium-state>
 
+The *volume* $V$ is the space occupied by the gas; its SI unit is the cubic metre ($m^3$), with the litre ($1 L = 10^(-3) m^3$) as the common practical unit.
+
+The *pressure* $p$ is the normal force exerted by the gas on unit area of the container wall. Microscopically, it is the macroscopic manifestation of the average impulse delivered by the countless random collisions of gas molecules with the wall, and it is therefore governed by both the frequency and the intensity of the molecular thermal motion. Its SI unit is the pascal ($"Pa"$); other units in use are $1 "cmHg" = 1.333 times 10^3 "Pa"$ (centimetres of mercury) and $1 "atm" = 76 "cmHg" = 1.013 times 10^5 "Pa"$ (standard atmosphere).
+
+The *temperature* measures, microscopically, the intensity of the molecular thermal motion. Its definition rests on the *zeroth law of thermodynamics*: if $A$ is in thermal equilibrium with $C$, and $B$ is also in thermal equilibrium with $C$, then $A$ and $B$ are in thermal equilibrium with each other — so a single thermometer (system $C$) assigns a common temperature to all systems. The numerical realisation of temperature is called a *temperature scale*: the Celsius scale uses $t$ in degrees Celsius (°C), the thermodynamic scale uses $T$ in kelvins (K), and the two are related by
+$
+  T = t + 273.15.
+$
+
 #definition(name: "Equation of State")[
   The *equation of state* is the functional relation among the state
   variables,
