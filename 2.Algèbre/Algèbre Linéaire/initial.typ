@@ -43,7 +43,7 @@ rather than redefined here.
 
 == Notations // 符号说明
 
-The set of all $m times n$ matrices over the number field $P$ is denoted by $M_(m times n)(P)$ or $P^(m times n)$.
+The set of all $m times n$ matrices over the number field $F$ is denoted by $M_(m times n)(F)$ or $F^(m times n)$.
 Similarly, the set of all linear mappings from $V$ to $V'$ over the field $F$
 is represented by $upright("Hom")(V, V')$ or $upright("L")(V, V')$.
 Furthermore, when considering the set of all linear transformations,
@@ -60,8 +60,9 @@ such that $m(A) = 0$.
 
 #definition(name: "Matrix over $F$")[
   Let $F$ be a field. An $m times n$ *matrix over* $F$ is an array of elements of $F$
-  arranged in $m$ rows and $n$ columns, written $A = (a_("ij"))$, where the entry
-  $a_("ij") in F$ lies in row $i$ and column $j$ ($1 <= i <= m$, $1 <= j <= n$).
+  arranged in $m$ rows and $n$ columns, written $A = (a_(i j))_(m times n)$, where the entry
+  $a_(i j) in F$ lies in row $i$ and column $j$ ($1 <= i <= m$, $1 <= j <= n$).
+
   When $m = n$, the matrix is called *square* of order $n$.
 ] <def:matrix>
 
@@ -69,8 +70,8 @@ The set of all $m times n$ matrices over $F$ is denoted by $M_(m times n)(F)$, o
 $F^(m times n)$; the set of square $n times n$ matrices is written $M_(n)(F)$.
 
 #definition(name: "Transpose of a Matrix")[
-  The *transpose* of an $m times n$ matrix $A = (a_("ij"))$ over $F$ is the $n times m$
-  matrix $A^T = (a_("ji"))$, obtained by interchanging rows and columns.
+  The *transpose* of an $m times n$ matrix $A = (a_(i j))_(m times n)$ over $F$ is the $n times m$
+  matrix $A^"T" = (a_((j i))_(n times m)$, obtained by interchanging rows and columns.
 ] <def:transpose-matrix>
 
 The determinant is a scalar value assigned to a square matrix. It serves both as a
@@ -110,7 +111,7 @@ special determinants.
 == Determinant and Its Properties // 行列式及其性质
 
 #definition(name: "Determinant of Order $n$")[
-  Let $A = (a_("ij"))$ be an $n times n$ matrix over the number field $P$.
+  Let $A = (a_(i j))$ be an $n times n$ matrix over the number field $F$.
   The *determinant* of $A$ is the scalar
 
   $
@@ -130,20 +131,20 @@ special determinants.
 == Expanding by Rows and Columns // 按行（列）展开
 
 #definition(name: "Minors and Cofactors")[
-  The *minor* $M_("ij")$ of $A$ is the determinant of the $(n-1) times (n-1)$ matrix obtained
-  from $A$ by deleting row $i$ and column $j$. The *cofactor* of entry $a_("ij")$ is
-  $A_("ij") = (-1)^(i + j) M_("ij")$.
+  The *minor* $M_(i j)$ of $A$ is the determinant of the $(n-1) times (n-1)$ matrix obtained
+  from $A$ by deleting row $i$ and column $j$. The *cofactor* of entry $a_(i j)$ is
+  $A_(i j) = (-1)^(i + j) M_(i j)$.
 ] <def:minor-and-cofactor>
 
 #theorem(name: "Laplace Expansion Theorem")[
   For every row $i$ and every column $j$ of $A$,
 
   $
-    "det"(A) = sum_(j=1)^n a_("ij") A_("ij"),
+    "det"(A) = sum_(j=1)^n a_(i j) A_(i j),
   $
 
   $
-    "det"(A) = sum_(i=1)^n a_("ij") A_("ij").
+    "det"(A) = sum_(i=1)^n a_(i j) A_(i j).
   $
 ] <thm:laplace-expansion>
 
@@ -152,12 +153,12 @@ special determinants.
   Grouping the Leibniz terms by $j = sigma(i)$ gives
 
   $
-    "det"(A) = sum_(j=1)^n a_("ij") sum_(sigma(i) = j) "sgn"(sigma) product_(k != i) a_(k, sigma(k)).
+    "det"(A) = sum_(j=1)^n a_(i j) sum_(sigma(i) = j) "sgn"(sigma) product_(k != i) a_(k, sigma(k)).
   $
 
   For a permutation $sigma$ with $sigma(i) = j$, removing the pair $(i, j)$ leaves a
   permutation $tau$ of the remaining indices, and $"sgn"(sigma) = (-1)^(i+j) "sgn"(tau)$.
-  The inner sum therefore equals $(-1)^(i+j) M_("ij") = A_("ij")$.
+  The inner sum therefore equals $(-1)^(i+j) M_(i j) = A_(i j)$.
 ]
 
 === Cramer's Rule // 克拉默法则
@@ -236,22 +237,22 @@ $
       a_(21), a_(22), 0, dots, 0;
       a_(31), 0, a_(33), dots, 0;
       dots.v, dots.v, dots.v, dots.down, dots.v;
-      a_("n1"), 0, 0, dots, a_("nn");
+      a_(n 1), 0, 0, dots, a_(n n);
     ).
   $
 
   Its value is given by
 
   $
-    A_(n) = (a_(11) - sum_(k=2)^n (a_("1k") a_("k1"))/a_("kk")) product_(k=2)^n a_("kk").
+    A_(n) = (a_(11) - sum_(k=2)^n (a_(1 k) a_(k 1))/a_(k k)) product_(k=2)^n a_(k k).
   $
 ] <def:arrow-determinant>
 
 From the first column sequentially, subtract $a_(21)/a_(22)$ times the second column, ...,
-$a_("n1")/a_("nn")$ times the $n$-th column, so that the first column becomes
+$a_(n 1)/a_(n n)$ times the $n$-th column, so that the first column becomes
 
 $
-  (a_(11) - sum_(k=2)^n (a_("1k") a_("k1"))/a_("kk"), 0, 0, dots, 0)^T.
+  (a_(11) - sum_(k=2)^n (a_(1 k) a_(k 1))/a_(k k), 0, 0, dots, 0)^T.
 $
 
 Then expand along the first column.
@@ -260,7 +261,7 @@ Then expand along the first column.
   If the entries of a determinant satisfy
 
   $
-    a_("ij") = cases(a quad & i < j, x_i quad & i = j, b quad & i > j),
+    a_(i j) = cases(a quad & i < j, x_i quad & i = j, b quad & i > j),
   $
 
   then $D_n$ is called a *two-triangular determinant*.
@@ -295,22 +296,22 @@ matrix techniques, and operations of rank.
 
 === Addition // 加法
 
-Two $m times n$ matrices $A = (a_("ij"))$ and $B = (b_("ij"))$ over $P$ can be added entry-wise: $A + B = (a_("ij") + b_("ij"))$, which is again an $m times n$ matrix.
+Two $m times n$ matrices $A = (a_(i j))$ and $B = (b_(i j))$ over $F$ can be added entry-wise: $A + B = (a_(i j) + b_(i j))$, which is again an $m times n$ matrix.
 
 === Scalar Multiplication // 数乘
 
-The *scalar product* of $A$ by a scalar $k$ in $P$ is $k A = (k a_("ij"))$, again an $m times n$ matrix.
+The *scalar product* of $A$ by a scalar $k$ in $F$ is $k A = (k a_(i j))$, again an $m times n$ matrix.
 
 === Transpose // 转置
 
-The *transpose* of an $m times n$ matrix $A = (a_("ij"))$ is the $n times m$ matrix $A^T = (a_("ji"))$, obtained by swapping rows and columns.
+The *transpose* of an $m times n$ matrix $A = (a_(i j))$ is the $n times m$ matrix $A^T = (a_(j i))$, obtained by swapping rows and columns.
 
 === Matrix Multiplication // 矩阵乘法
 
-The *product* of an $m times n$ matrix $A$ and an $n times p$ matrix $B$ is the $m times p$ matrix $A B = (c_("ij"))$ with
+The *product* of an $m times n$ matrix $A$ and an $n times p$ matrix $B$ is the $m times p$ matrix $A B = (c_(i j))$ with
 
 $
-  c_("ij") = sum_(k=1)^n a_("ik") b_("kj").
+  c_(i j) = sum_(k=1)^n a_(i k) b_(k j).
 $
 
 === Determinants of Products // 行列式乘积公式
@@ -318,7 +319,7 @@ $
 The determinant of a product equals the product of the determinants — see #link(<thm:det-product>)[Theorem]. By induction it extends to any number of matrices:
 
 #corollary(name: "Product Formula for k Matrices")[
-  For $n times n$ matrices $A_1, ..., A_k$ over $P$,
+  For $n times n$ matrices $A_1, ..., A_k$ over $F$,
 
   $
     "det"(A_1 ... A_k) = product_(i=1)^k "det"(A_i).
@@ -371,18 +372,18 @@ The determinant of a product equals the product of the determinants — see #lin
 === Diagonal Matrix // 对角矩阵
 
 #definition(name: "Diagonal and Skew-Diagonal Matrices")[
-  An $n times n$ matrix $A = (a_("ij"))$ is called a *diagonal matrix* if $a_("ij") = 0$
+  An $n times n$ matrix $A = (a_(i j))$ is called a *diagonal matrix* if $a_(i j) = 0$
   for $i != j$, denoted
 
   $
-    A = upright("diag")(a_(11), a_(22), ..., a_("nn")).
+    A = upright("diag")(a_(11), a_(22), ..., a_(n n)).
   $
 
   If $a_(i, n+1-i) = 0$ for all $i = 1, ..., n$, then $A$ is called a *skew-diagonal matrix*,
   denoted
 
   $
-    A = upright("sdiag")(a_(1n), a_("2, n-1"), ..., a_("n1")).
+    A = upright("sdiag")(a_(1n), a_(2, n-1), ..., a_(n 1)).
   $
 ] <def:diagonal-matrix>
 
@@ -399,13 +400,13 @@ The determinant of a product equals the product of the determinants — see #lin
 === Fundamental Matrix // 基本矩阵
 
 #definition(name: "Fundamental Matrix")[
-  $E_("ij")$ is called a *fundamental matrix* if its entry in row $i$ and column $j$ is $1$
+  $E_(i j)$ is called a *fundamental matrix* if its entry in row $i$ and column $j$ is $1$
   and all other entries are $0$.
 ] <def:fundamental-matrix>
 
 #property(name: "Properties of Fundamental Matrices")[
-  - Multiplying $A$ on the left by $E_("ij")$ moves row $j$ of $A$ to row $i$, with all other
-    entries zero; multiplying $A$ on the right by $E_("ij")$ moves column $i$ of $A$ to column
+  - Multiplying $A$ on the left by $E_(i j)$ moves row $j$ of $A$ to row $i$, with all other
+    entries zero; multiplying $A$ on the right by $E_(i j)$ moves column $i$ of $A$ to column
     $j$, with all other entries zero.
   - If $A$ commutes with all fundamental matrices, then $A$ is a scalar matrix.
 ] <prop:fundamental-matrix>
@@ -417,26 +418,26 @@ The determinant of a product equals the product of the determinants — see #lin
 === Triangular Matrix // 三角矩阵
 
 #definition(name: "Upper and Lower Triangular Matrices")[
-  An $n times n$ matrix $A = (a_("ij"))$ is called an *upper triangular matrix* if
-  $a_("ij") = 0$ for $i > j$:
+  An $n times n$ matrix $A = (a_(i j))$ is called an *upper triangular matrix* if
+  $a_(i j) = 0$ for $i > j$:
 
   $
     A = mat(
       a_(11), a_(12), ..., a_(1n);
       0, a_(22), ..., a_(2n);
       dots.v, dots.v, dots.down, dots.v;
-      0, 0, ..., a_("nn");
+      0, 0, ..., a_(n n);
     )
   $
 
-  Similarly, if $a_("ij") = 0$ for $i < j$, then $A$ is called a *lower triangular matrix*:
+  Similarly, if $a_(i j) = 0$ for $i < j$, then $A$ is called a *lower triangular matrix*:
 
   $
     A = mat(
       a_(11), 0, ..., 0;
       a_(21), a_(22), ..., 0;
       dots.v, dots.v, dots.down, dots.v;
-      a_("n1"), a_("n2"), ..., a_("nn");
+      a_(n 1), a_(n 2), ..., a_(n n);
     )
   $
 ] <def:triangular-matrix>
@@ -471,8 +472,8 @@ The determinant of a product equals the product of the determinants — see #lin
 === Symmetric Matrix // 对称矩阵
 
 #definition(name: "Symmetric and Skew-Symmetric Matrices")[
-  An $n times n$ matrix $A = (a_("ij"))$ is called a *symmetric matrix* if
-  $a_("ij") = a_("ji")$ for all $i, j = 1, ..., n$, or equivalently $A = A^T$.
+  An $n times n$ matrix $A = (a_(i j))$ is called a *symmetric matrix* if
+  $a_(i j) = a_(j i)$ for all $i, j = 1, ..., n$, or equivalently $A = A^T$.
   Similarly, if $A = -A^T$, then $A$ is called a *skew-symmetric matrix*.
 ] <def:symmetric-matrix>
 
@@ -577,7 +578,7 @@ is a nilpotent matrix with nilpotent index $n$.
 === Inverse Matrix and Its Operations // 逆矩阵及其运算
 
 #definition(name: "Inverse Matrix")[
-  Let $A$ be an $n times n$ matrix over $P$. If there exists an $n times n$ matrix $B$ such
+  Let $A$ be an $n times n$ matrix over $F$. If there exists an $n times n$ matrix $B$ such
   that $A B = B A = E$, then $A$ is called *invertible* (or *non-singular*), and $B$ is called
   the *inverse matrix* of $A$, denoted $A^(-1)$. A matrix that is not invertible is called
   *singular*.
@@ -585,7 +586,7 @@ is a nilpotent matrix with nilpotent index $n$.
 
 #property(name: "Operations of Inverse Matrices")[
   - $(A^(-1))^(-1) = A$.
-  - $(lambda A)^(-1) = (1/lambda) A^(-1)$ for a non-zero scalar $lambda$ in $P$.
+  - $(lambda A)^(-1) = (1/lambda) A^(-1)$ for a non-zero scalar $lambda$ in $F$.
   - $(A^T)^(-1) = (A^(-1))^T$.
   - $(A B)^(-1) = B^(-1) A^(-1)$, and more generally $(A_1 ... A_k)^(-1) = A_k^(-1) ... A_1^(-1)$.
 ] <prop:operations-of-inverse>
@@ -597,7 +598,7 @@ is a nilpotent matrix with nilpotent index $n$.
 ] <cor:determinant-invertibility>
 
 #theorem(name: "Equivalent Propositions of Invertibility")[
-  For an $n times n$ matrix $A$ over $P$, the following statements are equivalent:
+  For an $n times n$ matrix $A$ over $F$, the following statements are equivalent:
   - $A$ is invertible;
   - $A$ is equivalent to the identity matrix $E$;
   - $A$ is a product of elementary matrices;
@@ -618,7 +619,7 @@ is a nilpotent matrix with nilpotent index $n$.
 ]
 
 #theorem(name: "Multiplicativity of Determinants")[
-  If $A$ and $B$ are $n times n$ matrices over $P$, then
+  If $A$ and $B$ are $n times n$ matrices over $F$, then
 
   $
     "det"(A B) = "det"(A) "det"(B).
@@ -636,8 +637,8 @@ is a nilpotent matrix with nilpotent index $n$.
 ]
 
 #definition(name: "Adjugate Matrix")[
-  Let $A$ be an $n times n$ matrix with cofactors $A_("ij")$. The *adjugate* of $A$ is the
-  matrix $"adj"(A) = (A_("ji"))$, the transpose of the cofactor matrix.
+  Let $A$ be an $n times n$ matrix with cofactors $A_(i j)$. The *adjugate* of $A$ is the
+  matrix $"adj"(A) = (A_(j i))$, the transpose of the cofactor matrix.
 ] <def:adjugate-matrix>
 
 #theorem(name: "Inverse via Adjugate")[
@@ -655,7 +656,7 @@ is a nilpotent matrix with nilpotent index $n$.
 ] <thm:inverse-via-adjugate>
 
 #proof[
-  The $(i, j)$-entry of $A "adj"(A)$ is $sum_(k=1)^n a_("ik") A_("jk")$: it equals $"det"(A)$
+  The $(i, j)$-entry of $A "adj"(A)$ is $sum_(k=1)^n a_(i k) A_(j k)$: it equals $"det"(A)$
   when $i = j$ by the Laplace expansion, and $0$ when $i != j$, since it is the expansion of a
   determinant whose $j$-th row has been replaced by the $i$-th row, hence has two equal rows.
 ]
@@ -685,7 +686,7 @@ is a nilpotent matrix with nilpotent index $n$.
 === Kronecker Product // Kronecker 积
 
 #definition(name: "Kronecker Product")[
-  Let $A = (a_("ij"))$ be an $m times n$ matrix and $B = (b_("ij"))$ a $p times q$ matrix.
+  Let $A = (a_(i j))$ be an $m times n$ matrix and $B = (b_(i j))$ a $p times q$ matrix.
   The *Kronecker product* of $A$ and $B$, denoted $A ⊗ B$, is the block matrix
 
   $
@@ -693,7 +694,7 @@ is a nilpotent matrix with nilpotent index $n$.
       a_(11) B, a_(12) B, ..., a_(1n) B;
       a_(21) B, a_(22) B, ..., a_(2n) B;
       dots.v, dots.v, dots.down, dots.v;
-      a_("m1") B, a_("m2") B, ..., a_("mn") B;
+      a_(m 1) B, a_(m 2) B, ..., a_(m n) B;
     )
   $
 
@@ -858,11 +859,11 @@ elementary transformations and rank theory.
       a_(11) x_1 + a_(12) x_2 + ... + a_(1n) x_n = b_1,
       a_(21) x_1 + a_(22) x_2 + ... + a_(2n) x_n = b_2,
       dots.v,
-      a_("m1") x_1 + a_("m2") x_2 + ... + a_("mn") x_n = b_m,
+      a_(m 1) x_1 + a_(m 2) x_2 + ... + a_(m n) x_n = b_m,
     )
   $
 
-  where $x_1, ..., x_n$ are the variables, $a_("ij")$ are the coefficients, and $b_i$ are the
+  where $x_1, ..., x_n$ are the variables, $a_(i j)$ are the coefficients, and $b_i$ are the
   constants. A *solution* is an ordered set of values for the variables satisfying all equations
   simultaneously; two systems with the same solution set are called *equivalent systems*.
 ] <def:system-of-linear-equations>
@@ -958,7 +959,7 @@ echelon form is reached.
   - The rank of a matrix equals the number of non-zero rows in its row (column) echelon form.
   - Elementary row (column) operations do not alter the linear relations among the column (row)
     vectors.
-  - For a square matrix $(a_("ij"))$ of order $n$, its row vectors (or column vectors) are
+  - For a square matrix $(a_(i j))$ of order $n$, its row vectors (or column vectors) are
     linearly independent if and only if $"det"(A) != 0$.
 ]
 
@@ -1006,7 +1007,7 @@ solutions* is introduced.
       a_(11) x_1 + a_(12) x_2 + ... + a_(1n) x_n = 0,
       a_(21) x_1 + a_(22) x_2 + ... + a_(2n) x_n = 0,
       dots.v,
-      a_("s1") x_1 + a_("s2") x_2 + ... + a_("sn") x_n = 0,
+      a_(s 1) x_1 + a_(s 2) x_2 + ... + a_(s n) x_n = 0,
     )
   $
 
@@ -1109,18 +1110,18 @@ dimensions, and discusses the structural properties of subspaces.
 
 Examples of linear spaces:
 
-- The univariate polynomials $P[x]$ over the number field $P$, with the usual polynomial
-  addition and scalar multiplication, form a linear space over $P$; restricting to polynomials
-  of degree less than $n$ together with the zero polynomial gives $P[x]_n$, also a linear
-  space over $P$.
+- The univariate polynomials $F[x]$ over the number field $F$, with the usual polynomial
+  addition and scalar multiplication, form a linear space over $F$; restricting to polynomials
+  of degree less than $n$ together with the zero polynomial gives $F[x]_n$, also a linear
+  space over $F$.
 - The positive reals $bb(R)^+$ with $a ⊕ b = a b$ and $k ∘ a = a^k$ forms a linear space
   over $bb(R)$.
 - The set of all real-valued functions, with function addition and scalar multiplication,
   forms a linear space over $bb(R)$.
-- The field $P$ itself, under its own addition and multiplication, forms a linear space
+- The field $F$ itself, under its own addition and multiplication, forms a linear space
   over itself.
-- The set $P^n$ of all ordered $n$-tuples of elements of $P$, with the usual vector addition
-  and scalar multiplication, forms a linear space over $P$.
+- The set $F^n$ of all ordered $n$-tuples of elements of $F$, with the usual vector addition
+  and scalar multiplication, forms a linear space over $F$.
 
 In this section we primarily work with spaces of $n$-dimensional vectors over $bb(R)$; all
 elements of a linear space can be called vectors, and the definitions and properties of
@@ -1168,7 +1169,7 @@ vectors in $bb(R)^n$ generalize to any linear space.
 ]
 
 #proposition(name: "Properties of Linear Independence")[
-  - Let $alpha_i = (a_("i1"), ..., a_("in"))$, $i = 1, ..., s$. The group is linearly dependent
+  - Let $alpha_i = (a_(i 1), ..., a_(i n))$, $i = 1, ..., s$. The group is linearly dependent
     if and only if the homogeneous system $x_1 alpha_1 + ... + x_s alpha_s = 0$ (entrywise,
     a system of $n$ equations in $s$ unknowns) has a non-zero solution.
   - Adding one component to each vector of a linearly independent group preserves independence.
@@ -1194,9 +1195,9 @@ vectors in $bb(R)^n$ generalize to any linear space.
   *Item 2.* A nontrivial relation among the enlarged vectors would restrict to one among the
   original vectors.
 
-  *Item 3.* Write $alpha_i = sum_(j=1)^s c_("ij") beta_j$. For $r > s$, the $s$ equations
-  $sum_(i=1)^r c_("ij") x_i = 0$ ($j = 1, ..., s$) have a non-zero solution $x$, and
-  $sum_(i=1)^r x_i alpha_i = sum_(j=1)^s (sum_(i=1)^r c_("ij") x_i) beta_j = 0$, so the group
+  *Item 3.* Write $alpha_i = sum_(j=1)^s c_(i j) beta_j$. For $r > s$, the $s$ equations
+  $sum_(i=1)^r c_(i j) x_i = 0$ ($j = 1, ..., s$) have a non-zero solution $x$, and
+  $sum_(i=1)^r x_i alpha_i = sum_(j=1)^s (sum_(i=1)^r c_(i j) x_i) beta_j = 0$, so the group
   is dependent. For the replacement claim, exchange the $alpha$'s into the $beta$-list from
   $alpha_r$ down to $alpha_1$: when processing $alpha_i$, its expression in the current list
   must involve some remaining $beta$, otherwise $alpha_i$ would lie in the span of the
@@ -1405,13 +1406,13 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
 === Commutative Spaces // 交换空间
 
 #definition(name: "Commutative Space $C(A)$")[
-  Let $A$ be an $n$-order matrix over the number field $P$. The set of all
-  matrices satisfying $A X = X A$ is a subspace of $M_(n times n)(P)$,
+  Let $A$ be an $n$-order matrix over the number field $F$. The set of all
+  matrices satisfying $A X = X A$ is a subspace of $M_(n times n)(F)$,
   denoted $C(A)$ and called the *commutative space* of $A$.
 ] <def:commutative-space>
 
 #property(name: "Properties of $C(A)$")[
-  For any $n$-order matrices $A, B$ over $P$, if $A$ is similar to $B$
+  For any $n$-order matrices $A, B$ over $F$, if $A$ is similar to $B$
   ($A ~ B$), then $C(A)$ is isomorphic to $C(B)$ ($C(A) ≈ C(B)$),
   and furthermore $"dim"(C(A)) = "dim"(C(B))$.
 ] <prop:commutative-space-properties>
@@ -1419,7 +1420,7 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
 #example[
   Find the dimension and a basis of $C(A)$ where:
 
-  (i) $A$ is a $3$-order matrix over the number field $P$ with three distinct
+  (i) $A$ is a $3$-order matrix over the number field $F$ with three distinct
   eigenvalues.
 
   (ii) $A = mat(1, 0, 4; 0, 1, 2; 0, 1, 2)$.
@@ -1590,7 +1591,7 @@ Then the image of each basis vector of $V$ under $A$ can be expressed in terms
 of the basis vectors of $V'$:
 
 $
-  A(epsilon_i) = sum_(j=1)^m a_("ji") eta_j, i = 1, ..., n.
+  A(epsilon_i) = sum_(j=1)^m a_(j i) eta_j, i = 1, ..., n.
 $
 
 This can be written in matrix form as
@@ -1603,12 +1604,12 @@ $
 where
 
 $
-  A = (a_("ij"))_(m times n) =
+  A = (a_(i j))_(m times n) =
   mat(
-    a_("11"), a_("12"), ..., a_("1n");
-    a_("21"), a_("22"), ..., a_("2n");
+    a_(11), a_(12), ..., a_(1 n);
+    a_(21), a_(22), ..., a_(2 n);
     dots.v, dots.v, dots.down, dots.v;
-    a_("m1"), a_("m2"), ..., a_("mn");
+    a_(m 1), a_(m 2), ..., a_(m n);
   ).
 $
 
@@ -1741,14 +1742,14 @@ $
 
 #proof[
   Let ${epsilon_1, ..., epsilon_n}$ be a basis of $V$. Define linear functions
-  $epsilon_i^*$ by $epsilon_i^*(epsilon_j) = delta_("ij")$ (Kronecker delta).
+  $epsilon_i^*$ by $epsilon_i^*(epsilon_j) = delta_(i j)$ (Kronecker delta).
   Then ${epsilon_1^*, ..., epsilon_n^*}$ is a basis of $V^*$, called the *dual basis*
   corresponding to ${epsilon_1, ..., epsilon_n}$.
 ]
 
 #definition(name: "Dual Basis")[
   The basis ${epsilon_1^*, ..., epsilon_n^*}$ of $V^*$ satisfying
-  $epsilon_i^*(epsilon_j) = delta_("ij")$ is called the *dual basis* corresponding
+  $epsilon_i^*(epsilon_j) = delta_(i j)$ is called the *dual basis* corresponding
   to the basis ${epsilon_1, ..., epsilon_n}$ of $V$.
 ] <def:dual-basis>
 
@@ -1788,10 +1789,10 @@ polynomials, space decomposition, and necessary and sufficient conditions for di
 ] <def:similar-matrices>
 
 #definition(name: "Trace")[
-  Let $A = (a_("ij"))_(n times n) in F^(n times n)$. The sum of the diagonal elements:
+  Let $A = (a_(i j))_(n times n) in F^(n times n)$. The sum of the diagonal elements:
 
   $
-    "tr"(A) = a_("11") + a_("22") + ... + a_("nn"),
+    "tr"(A) = a_(11) + a_(22) + ... + a_(n n),
   $
 
   is called the *trace* of $A$.
@@ -1871,11 +1872,11 @@ Similarity is an equivalence relation on the set of square matrices of the same 
   $
 
   is called the *eigenpolynomial* (or *characteristic polynomial*) of $A$,
-  where $A = (a_("ij"))_(n times n)$ and $E$ is the identity matrix.
+  where $A = (a_(i j))_(n times n)$ and $E$ is the identity matrix.
 ] <def:eigenpolynomial>
 
 #note[
-  For example, in $P[x]_n$ ($n > 1$), the eigenpolynomial of the derivation
+  For example, in $F[x]_n$ ($n > 1$), the eigenpolynomial of the derivation
   operator $D$ is $f(lambda) = lambda^n$.
 ]
 
@@ -1937,19 +1938,19 @@ are invariant under similarity.
 === Estimation of Eigenvalues // 特征值的估计
 
 #theorem(name: "Gerschgorin Disks First Theorem")[
-  Let $A = (a_("ij"))_(n times n)$ be a square matrix over the complex field $C$.
+  Let $A = (a_(i j))_(n times n)$ be a square matrix over the complex field $C$.
   Then all eigenvalues of $A$ lie within the disks
 
   $
-    abs(z - a_("ii")) <= R_i, 1 <= i <= n,
+    abs(z - a_(i i)) <= R_i, 1 <= i <= n,
   $
 
-  where $R_i = abs(a_("i1")) + ... + abs(a_(i,i-1)) + abs(a_(i,i+1)) + ... + abs(a_("in"))$.
+  where $R_i = abs(a_(i 1)) + ... + abs(a_(i,i-1)) + abs(a_(i,i+1)) + ... + abs(a_(i n))$.
 ] <thm:gerschgorin-1>
 
 #note[
   From $A x = lambda x$, let $abs(x_k) = max_i abs(x_i)$. The $k$-th equation gives
-  $abs(lambda - a_("kk")) <= sum_(j != k) abs(a_("kj"))$.
+  $abs(lambda - a_(k k)) <= sum_(j != k) abs(a_(k j))$.
 ]
 
 #theorem(name: "Gerschgorin Disks Second Theorem")[
@@ -2103,8 +2104,8 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 #lemma(name: "Linear Independence of Eigenvectors")[
   Eigenvectors corresponding to distinct eigenvalues are linearly independent.
   Furthermore, if $A$ on $V$ has $k$ distinct eigenvalues $lambda_1, ..., lambda_k$,
-  and $alpha_("i1"), ..., alpha_("ir"_i)$ are the corresponding linearly independent eigenvectors
-  of $lambda_i$, then the set ${alpha_("ij") : i = 1, ..., k, j = 1, ..., r_i}$ is linearly independent.
+  and $alpha_(i 1), ..., alpha_((i r)_i)$ are the corresponding linearly independent eigenvectors
+  of $lambda_i$, then the set ${alpha_(i j) : i = 1, ..., k, j = 1, ..., r_i}$ is linearly independent.
 ] <lem:eigenvector-independence>
 
 #theorem(name: "Equivalent Conditions for Diagonalization")[
@@ -2213,7 +2214,7 @@ $A = a_0 E + a_1 C + a_2 C^2 + ... + a_(n-1) C^(n-1)$ where $C$ is the cyclic sh
 === Triangular Matrix // 三角矩阵
 
 Let $F$ be a number field and $A$ an upper triangular matrix.
-- The eigenvalues of $A$ are the diagonal entries $a_("ii")$.
+- The eigenvalues of $A$ are the diagonal entries $a_(i i)$.
 - If all diagonal entries are distinct, $A$ is diagonalizable. If there are repeated
   diagonal entries, $A$ may or may not be diagonalizable.
 - If all diagonal entries are equal and there exists a non-zero entry above the diagonal,
@@ -2264,14 +2265,14 @@ and computation method of the Jordan canonical form.
 
   $
     A(lambda) = mat(
-      a_("11")(lambda), ..., a_("1n")(lambda);
-      a_("21")(lambda), ..., a_("2n")(lambda);
+      a_(11)(lambda), ..., a_(1 n)(lambda);
+      a_(21)(lambda), ..., a_(2 n)(lambda);
       dots.v, dots.v, dots.down, dots.v;
-      a_("m1")(lambda), ..., a_("mn")(lambda);
+      a_(m 1)(lambda), ..., a_(m n)(lambda);
     ),
   $
 
-  where each $a_("ij")(lambda) in F[lambda]$, is called a *polynomial matrix* over $F$.
+  where each $a_(i j)(lambda) in F[lambda]$, is called a *polynomial matrix* over $F$.
 ] <def:polynomial-matrix>
 
 #note[
@@ -2429,10 +2430,10 @@ and computation method of the Jordan canonical form.
   If the factorization of each into irreducible polynomials over $F$ is
 
   $
-    d_(i)(lambda) = p_("i1")(lambda)^(k_("i1")) p_("i2")(lambda)^(k_("i2")) ... p_("is"_i)(lambda)^(k_("is"_i)),
+    d_(i)(lambda) = p_(i 1)(lambda)^(k_(i 1)) p_(i 2)(lambda)^(k_(i 2)) ... p_((i s)_i)(lambda)^(k_((i s)_i)),
   $
 
-  then the polynomials $p_("ij")(lambda)^(k_("ij"))$
+  then the polynomials $p_(i j)(lambda)^(k_(i j))$
   ($i = 1, ..., r$; $j = 1, ..., s_i$) are the *elementary divisors* of $A(lambda)$.
 ] <def:elementary-divisors>
 
@@ -2525,16 +2526,16 @@ under congruent transformations, and criteria for positive definite quadratic fo
 == Quadratic Forms and Their Standard Forms // 二次型及其标准形
 
 #definition(name: "Quadratic Form")[
-  Let $P$ be a number field. A quadratic homogeneous polynomial in $n$ variables
-  over $P$:
+  Let $F$ be a number field. A quadratic homogeneous polynomial in $n$ variables
+  over $F$:
 
   $
-    f(x_1, ..., x_n) = sum_(i=1)^n sum_(j=1)^n a_("ij") x_i x_j
+    f(x_1, ..., x_n) = sum_(i=1)^n sum_(j=1)^n a_(i j) x_i x_j
     = X^T A X,
   $
 
-  where $X = (x_1, ..., x_n)^T$ and $A = (a_("ij"))_(n times n)$ with $a_("ij") = a_("ji")$,
-  is called a *quadratic form* in $n$ variables over $P$.
+  where $X = (x_1, ..., x_n)^T$ and $A = (a_(i j))_(n times n)$ with $a_(i j) = a_(j i)$,
+  is called a *quadratic form* in $n$ variables over $F$.
 ] <def:quadratic-form>
 
 #note[
@@ -2839,7 +2840,7 @@ and normal transformations.
 #note[
   The *least squares problem* asks: given a linear system $A x = beta$ with more equations
   than unknowns (which may be inconsistent), find $c_1, ..., c_n$ minimizing
-  $sum_(i=1)^s (sum_(j=1)^n a_("ij") c_j - beta_i)^2$.
+  $sum_(i=1)^s (sum_(j=1)^n a_(i j) c_j - beta_i)^2$.
 ]
 
 #note[
