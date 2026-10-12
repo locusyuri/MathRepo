@@ -47,7 +47,13 @@ The *volume* $V$ is the space occupied by the gas; its SI unit is the cubic metr
 
 The *pressure* $p$ is the normal force exerted by the gas on unit area of the container wall. Microscopically, it is the macroscopic manifestation of the average impulse delivered by the countless random collisions of gas molecules with the wall, and it is therefore governed by both the frequency and the intensity of the molecular thermal motion. Its SI unit is the pascal ($"Pa"$); other units in use are $1 "cmHg" = 1.333 times 10^3 "Pa"$ (centimetres of mercury) and $1 "atm" = 76 "cmHg" = 1.013 times 10^5 "Pa"$ (standard atmosphere).
 
-The *temperature* measures, microscopically, the intensity of the molecular thermal motion. Its definition rests on the *zeroth law of thermodynamics*: if $A$ is in thermal equilibrium with $C$, and $B$ is also in thermal equilibrium with $C$, then $A$ and $B$ are in thermal equilibrium with each other — so a single thermometer (system $C$) assigns a common temperature to all systems. The numerical realisation of temperature is called a *temperature scale*: the Celsius scale uses $t$ in degrees Celsius (°C), the thermodynamic scale uses $T$ in kelvins (K), and the two are related by
+The *temperature* measures, microscopically, the intensity of the molecular thermal motion. That it is a meaningful state variable rests on an empirical regularity so basic that it was formalised last, after the first law, and therefore numbered zero.
+
+#law(name: "Zeroth Law of Thermodynamics")[
+  Two systems each in thermal equilibrium with a third are in thermal equilibrium with each other. Consequently, thermal equilibrium is an equivalence relation on the set of all systems, and to each equivalence class one may attach a number — the *temperature* — common to all its members.
+] <def:zeroth-law>
+
+The existence of the equivalence-class label is the *existence of temperature*; its numerical realisation is called a *temperature scale*: the Celsius scale uses $t$ in degrees Celsius (°C), the thermodynamic scale uses $T$ in kelvins (K), and the two are related by
 $
   T = t + 273.15.
 $
@@ -902,20 +908,10 @@ to the second law and is developed in Chapter 3.
 
 == Zeroth Law and Temperature // 第零定律与温度
 
-That "temperature" is a meaningful state variable rests on an empirical
-regularity so basic it was formalised last, after the first law, and
-therefore numbered zero.
-
-#definition(name: "Zeroth Law")[
-  Two systems each in thermal equilibrium with a third are in thermal
-  equilibrium with each other. Consequently, thermal equilibrium is an
-  equivalence relation on the set of all systems, and to each
-  equivalence class one may attach a number — the *temperature* —
-  common to all its members.
-] <def:zeroth-law>
-
-The existence of an equivalence class label is the *existence of
-temperature*; the choice of labelling scheme is a *temperature scale*.
+Chapter 1 attached a temperature to every equilibrium state through the
+#link(<def:zeroth-law>)[zeroth law]. This section makes thermometry
+precise: how a concrete body realises that assignment, and how the
+ideal gas supplies a substance-independent scale.
 
 #definition(name: "Empirical Temperature")[
   A *thermometer* is a small test body with one conveniently measurable
@@ -2245,7 +2241,7 @@ Maxwell momentum distribution underlying
 ] <prop:temperature-invariance>
 
 #proof[
-  The zeroth law (#link(<def:zeroth-law>)[Chapter 2])
+  The zeroth law (#link(<def:zeroth-law>)[Chapter 1])
   defines temperature through the transitivity of mutual equilibrium,
   and the principle of relativity demands that equilibrium be an
   observer-independent state of affairs — whether two bodies exchange
