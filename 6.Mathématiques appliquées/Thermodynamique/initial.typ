@@ -147,9 +147,9 @@ of kinetic theory.
   For a gas of number density $n = N / V$ and molecular mass $m$ in
   equilibrium, the pressure exerted on any wall is
   $
-    p = 1/3 n m chevron.l v^2 chevron.r,
+    p = 1/3 n m chevron.l v^2 chevron.r = 2/3 n overline(epsilon)_t,
   $
-  where $chevron.l v^2 chevron.r$ is the mean squared molecular speed.
+  where $chevron.l v^2 chevron.r$ is the mean squared molecular speed, and $overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩)$ is the mean translational kinetic energy of a molecule.
 ] <prop:pressure-formula>
 
 #proof[
@@ -175,14 +175,15 @@ of kinetic theory.
   $
   since the three Cartesian components contribute equally,
   $lr(⟨ v_x^2 ⟩) = lr(⟨ v_y^2 ⟩) = lr(⟨ v_z^2 ⟩) = lr(⟨ v^2 ⟩) / 3$.
-  Hence $p = 1/3 n m lr(⟨ v^2 ⟩)$.
+  Hence $p = 1/3 n m lr(⟨ v^2 ⟩)$, or, in terms of the mean translational kinetic energy $overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩)$, the compact form $p = 2/3 n overline(epsilon)_t$.
 ]
 
 #property(name: "Microscopic Meaning of Temperature")[
-  Comparing the kinetic pressure formula with the ideal-gas equation of
-  state $p V = N k_B T$, i.e. $p = n k_B T$, gives the identification
+  Comparing the form $p = 2/3 n overline(epsilon)_t$ with the ideal-gas
+  equation of state $p V = N k_B T$, i.e. $p = n k_B T$, gives the
+  identification
   $
-    1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T.
+    overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T.
   $
   The temperature of an ideal gas is, up to the constant $3/2 k_B$ per
   molecule, the mean translational kinetic energy per molecule.
@@ -191,11 +192,11 @@ of kinetic theory.
 #proof[
   Equate the two expressions for the pressure,
   $
-    1/3 n m lr(⟨ v^2 ⟩) = n k_B T.
+    2/3 n overline(epsilon)_t = n k_B T.
   $
-  Cancelling $n$ and rearranging yields
+  Cancelling $n$ yields
   $
-    1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T.
+    overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T.
   $
   This is the kinetic definition of temperature.
 ]
