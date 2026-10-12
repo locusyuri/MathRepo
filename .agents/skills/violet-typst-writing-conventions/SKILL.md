@@ -4,6 +4,14 @@ description: 当编辑/创建 .typ 文件时，必须使用本技能以确保符
 user_invocable: false
 ---
 
+> **符号与陷阱按家族拆分到 `fields/` 目录。** 主文件只保留通用硬规则与符号路由表。写某一科笔记前，按 [fields/README.md](fields/README.md) 的「科目 → 建议加载组合」加载对应 family 文件：
+>
+> - **始终加载** [fields/general.md](fields/general.md)（下标、多字母变量、分数、`abs()`、`cases()`、字体、LaTeX 残留扫描等一切通用硬规则）
+> - 关系符号（`∈`、`subset`、`!=`、`<=`、`≈` 等）→ [fields/relations.md](fields/relations.md)
+> - 箭头（`->`、`=>`、`\mapsto`、`xarrow` 等）→ [fields/arrows.md](fields/arrows.md)
+> - 集合与逻辑（`union`、`inter`、`forall`、集合描述等）→ [fields/sets-logic.md](fields/sets-logic.md)
+> - 微积分（`integral`、`partial`、`dif`、`oo`、`limsup` 等）→ [fields/calculus.md](fields/calculus.md)
+> - 矩阵对象（`mat()`、行列式、范数、内积、`†⊕⊗⊥` 等）→ [fields/linear-algebra.md](fields/linear-algebra.md)
 
 ## 1. 文档结构
 
@@ -49,502 +57,37 @@ user_invocable: false
 - 行内公式：`$ ... $`（与文本同行）
 - 行间公式（display math）：`$ ... $`（单独成段，前后有空行或换行）
 
-### 符号映射（LaTeX → Typst）
-
-| LaTeX | Typst |
-|-------|-------|
-| `\mathbb{R}` | `bb(R)` |
-| `\mathcal{F}` | `cal(F)` |
-| `\mathscr{M}` | `scr(M)` |
-| `\to`, `\rightarrow` | `->` |
-| `\Rightarrow` | `=>` |
-| `\Leftrightarrow` | `<=>` |
-| `\infty` | `oo` |
-| `\subseteq` | `subset` |
-| `\cup` | `union` |
-| `\cap` | `inter` |
-| `\notin` | `in.not` |
-| `\neq` | `!=` |
-| `\land` | `and` |
-| `\lor` | `or` |
-| `\lnot` | `not` |
-| `\circ`（复合） | `compose` |
-| `\preceq` | `prec.eq` |
-| `\oplus`（对称差） | `plus.o` |
-| `\forall` | `forall` |
-| `\exists` | `exists` |
-| `\partial` | `partial` |
-| `\mathrm{d}x` | `dif x` |
-| `\liminf` | `liminf` |
-| `\limsup` | `limsup` |
-| `\sup` | `sup` |
-| `\inf` | `inf` |
-| `\overline{X}` | `overline(X)` |
-| `\chi_A`（特征函数） | `chi_A` |
-| `\backslash` | `backslash` |
-| `\int` | `integral` |
-| `\iint`, `\iiint` | `integral.double`, `integral.triple` |
-| `\oint` | `integral.cont`（闭合环路线积分） |
-| `\cdot` | `dot` |
-| `\sim` | `~` 或 `approx` |
-| `\text{...}` | `text("...")`（**必须用字符串引号**） |
-| `\left(`, `\right)` | 无对应命令，Typst 自动缩放括号 |
-| `\left[`, `\right]` | 无对应命令，Typst 自动缩放方括号 |
-
-### 硬规则（必须遵守）
-
-1. **不属于符号**：写 `$in.not$`，不要写 `$notin$`
-2. **子集**：统一写 `$subset$`
-3. **箭头**：`$->$`、`$<=>$`，不保留 LaTeX 宏名
-4. **不等于**：`$!=$`（注意空格：`$!= $` 或 `$a != b$`）
-5. **函数复合**：`$compose$`
-6. **微分符号**：使用正体 `dif x`、`dif t`
-7. **导数点记号**：`dot(x)`、`dot.double(x)`、`dot.triple(x)`
-8. **积分号**：用 `integral`，不是 `int`。二重/三重：`integral.double`、`integral.triple`
-9. **`text()` 必须用字符串参数**：写 `text("something")`，不是 `text(something)`
-10. **点乘**：写 `a dot b`，不用 `a cdot b`（`cdot` 不存在）
-11. **下标后紧接括号，下标必须用 `{}` 包裹，否则括号会被吞进下标**：写 `mu_(X)(B)`，**绝对禁止** `mu_X(B)`。判定用正则 `_([a-zA-Z])\(` → `_($1)(`（见下方专门小节）。这是全仓库出现频率最高、AI 最易再犯的 Typst 语法错误，每次写完公式必须逐条自查。
-12. **`\left(`/`\right)` 不存在**：Typst 自动缩放括号，不需要 `\left`/`\right`
-
-### 常见陷阱
-
-#### 裸下标问题
-
-Typst 不支持 `$_x$`，下标 `_` 前必须有主体。
-
-```typst
-// 错误
-$_x$
-
-// 正确：空主体下标
-$""_x$
-```
-
-#### ⚠️⚠️⚠️ 绝对禁止：下标后紧接括号必须用 `{}` 包裹下标（三维基准） ⚠️⚠️⚠️
-
-> 🔴🔴🔴 **这是全仓库最高频、AI 反复再犯、被用户在 Review 中当场抓出的错误。每次写完任何带下标 + 括号的数学公式，必须立刻用正则 `_([a-zA-Z])\(` 自查，不做这一步禁止提交。** 🔴🔴🔴
-
-**任何"下标是一个符号、后面紧跟一个括号作为函数参数"的写法，都必须把下标用 `{}` 裹起来**，否则 Typst 会把整个 `下标+括号+括号内容` 全部归入下标，渲染成叠成小字的错误结果。
-
-#### 单字母下标后接括号（`GL_n(F)` 问题）
-
-**单字母下标后直接跟一个括号时，括号及其中内容会被 Typst 一并归入下标**，而不是作为括号表达式紧跟在右侧：
-
-```typst
-// 错误 — 整个 "n(F)" 都被当作下标，渲染成 G L 的下标下标小字
-$"GL"_n(F)$      // 实际渲染：GL_{n(F)}，且 F 被错误地放进下标
-$f_n(A)$         // f_{n(A)}，括号 (A) 被吞进下标
-$mu_P(x, y)$     // mu_{P(x,y)}
-$mu_X(B)$        // mu_{X(B)} —— 本次 Probabilités 实际踩中的坑！
-$"Syl"_p(G)$     // Syl_{p(G)}
-$C_G(H)$         // C_{G(H)}
-
-// 正确 — 括号作为独立的函数参数贴在右侧
-$"GL"_(n)(F)$    // GL_n (F) —— n 是下标，(F) 是独立的参数
-$f_(n)(A)$       // f_n (A)
-$mu_(P)(x, y)$   // mu_P (x, y)
-$mu_(X)(B)$      // mu_X (B) —— X 是下标，(B) 是独立参数
-$"Syl"_(p)(G)$   // Syl_p (G)
-$C_(G)(H)$       // C_G (H)
-```
-
-**判定规则**：只要遇到形如 `_<单个字母>` 且后面紧跟 `(` 的模式（`"GL"_n(F)`、`f_n(A)`、`C_G(H)`、`mu_P(x,y)`、`"Syl"_p(G)`、`N_G(H)`、`phi_g(x)` 等），一律改写为 `_<字母>(` + `)(` 形式，即 `"GL"_(n)(F)`。批量替换时注意两点：
-- 括号里的多字母（如 `"GL"_(n)(F)`）用 `{...}` 包裹下标；**真正作为函数参数的括号要写在 `)` 之后**，不与下标粘连；
-- 若下标本身是普通变量而非"名字 + 参数"，如 $x_i^2$ 或 $n_k$，则无需改动——只处理**下标后紧跟 `(`** 的情形（此时 `(` 是想作为独立参数而非下标）。
-
-**批量排查**：在全仓库 `.typ` 文件中搜索正则 `_([a-zA-Z])\(`，逐个改为 `_($1)(`。这与你之前修的 `f_n(A)` 是同一种错误，务必全局替换，不限于举例处。
-
-#### 多字母变量问题
-
-Typst 将连续字母识别为内置函数名（如 `sin`、`exp`），或把相邻的单字母变量合并为一个未知多字母变量，导致编译错误。
-
-```typst
-// 正体多字母变量：用引号包裹
-$"ext"$, $"const"$, $"max"$
-
-// 斜体多字母变量：用空格分开
-$e x t$
-
-// 示例
-$bold(F)_i^("ext")$  // 外力
-```
-
-**相邻单字母变量之间必须用空格分隔**，否则整体被识别为一个未知变量（报 `unknown variable: xy` 等）：
-
-```typst
-// 错误 — 字母连写被合并为单个未知变量
-$xy$     // → unknown variable: xy
-$2xy$    // → unknown variable: xy
-$2 x y z$ 若写成 $2xyz$
-
-// 正确 — 变量与变量之间留空格
-$x y$
-$2 x y$
-```
-
-数字紧跟单个变量（如 `$2x$`）本身合法，但建议统一写成 `$2 x$` 保持风格一致。
-
-**排查指南**：遇到 `unknown variable` 错误时，优先排查两类根因——多字母连写（如 `xy`、`2xy`）与 LaTeX 宏残留（如 `cdot`、`int`、`infty`）。
-
-#### 组件参数中的引号嵌套
-
-组件的 `name:` / `title:` 等字符串参数内部**不能直接嵌套双引号**，否则字符串提前终止，报 `unclosed delimiter` / `expected comma`：
-
-```typst
-// 错误 — 内层双引号截断了外层字符串
-#note(title: "On the Usage of "Holomorphic" and "Analytic")[...]
-
-// 正确 — 内层改用单引号
-#note(title: "On the Usage of 'Holomorphic' and 'Analytic'")[...]
-```
-
-#### 组件 name/title 参数中的数学公式
-
-`name:` / `title:` 参数可以传字符串（`"..."`）或 content（`[...]`），两种形式都能正确渲染其中的 `$...$` 数学公式。模板已通过 `eval(name, mode: "markup")` 自动解析字符串中的 markup 语法。
-
-```typst
-// 两种写法都正确，数学正常渲染
-#definition(name: "$L^p$ Space")[...]
-#definition(name: [$L^p$ Space])[...]
-
-// 推荐：字符串形式更简洁
-#theorem(name: "Properties of $sin$ and $cos$")[...]
-```
-
-**注意**：使用字符串形式时，`$...$` 内的 Typst 数学符号必须正确（如 `!=` 而非 `neq`），否则 `eval` 解析时会报 `unknown variable` 错误。
-
-#### 分数的分子/分母非单因子时必须加括号
-
-`/` 只把紧邻的**单个因子**作为分子和分母。分母（或分子）含多字符结构或运算时必须加括号，否则解析错误。
-
-**绝对值的特殊处理**：使用 `abs()` 函数形式后无需再加外层括号（`abs()` 自身作为一个完整因子）。但若使用 `|...|` 形式则必须加外层括号（见下方「绝对值用 abs(xxx)，不用 |xxx|」陷阱）：
-
-```typst
-// 错误 — 分母只解析出单个因子，多字符结构被截断
-$z^5 / |z|^4$      // 分母只取到 "|"，剩余 "z|^4" 并排在分数旁
-$x + y / 2$         // 实际是 x 加上分数 y/2
-
-// 正确 — abs() 形式（推荐，无需额外括号）
-$z^5 / abs(z)^4$
-$z / abs(z)$
-$x / abs(z)$
-$abs(f(z)) / abs(g(z))$
-
-// 正确 — 普通非单因子加括号
-$(x + y) / 2$       // 想要 (x+y)/2 必须加括号
-$z^5 / (w^4)$       // 含运算的幂次也加括号保险
-```
-
-**判定规则**：分子/分母只要不是单个字母或数字（可带上下标，如 `x_i`、`z^2`），就必须加括号。**但 `abs(...)` 作为一个整体函数调用，可以视为单个因子**——这就是统一使用 `abs()` 形式的另一优势。
-
-#### 绝对值用 abs(xxx)，不用 |xxx|
-
-Typst 数学模式中的 `|...|` **不会自动调整大小**，且在分式、根号、嵌套结构中容易被解析为独立竖线元素（见上文"分数的分子/分母非单因子时必须加括号"陷阱）。**统一使用函数形式 `abs(xxx)`**，自动缩放并避免歧义：
-
-```typst
-// 错误 — |xxx| 不会自动缩放，且容易被误解为单字符
-$|z - z_0|$
-$|f(z)| / |g(z)|$
-$root(n, |a_n|)$
-
-// 正确 — abs() 自动缩放，且作为整体单元参与解析
-$abs(z - z_0)$
-$abs(f(z)) / abs(g(z))$
-$root(n, abs(a_n))$
-```
-
-**判定规则**：所有形如 `|表达式|` 的绝对值（含 `|z|`、`|c_n|`、`|z - z_0|`、`|f(z)|` 等）一律改写为 `abs(表达式)`，不论出现在正文公式、分式分子分母、根号内、积分限、求和限等任何位置。
-
-**非绝对值的竖线严禁转换**：`|` 在数学模式中还有其他用途，批量替换前必须逐行分类排查（统计每行 `|` 个数，奇数行必然含非绝对值竖线）：
-
-| 用途 | 示例 | 处理 |
-|------|------|------|
-| 集合构建分隔符 | `{(x, y) \| x, y in bb(R)}` | 保留原样（本仓库写法为 `\|`） |
-| 整除符号 | `$q \| k_1 - k_2$`（q 整除 k₁−k₂） | 保留原样 |
-| 分隔符参数 | `delim: "\|"` | 保留原样 |
-
-**批量替换流程要求**：先全量统计含 `|` 的行并按奇偶分类 → 偶数行逐行配对转换（行内配对，禁止跨行正则）→ 奇数行逐行人工判定 → 转换后 grep 检查 `abs(` 内是否误含 ` in `、`\|` 等集合构建特征 → `typst compile` 验证退出码为 0。跨行正则（如 `\|([^|]+)\|` 直接作用于全文）会把不同行的孤立竖线错误配对，造成大面积损坏。
-
-**积分/求和限中的集合描述例外**：形如 `integral_({|f| > M})` 的集合描述中的 `|f|` 表示集合定义中的属性条件，作为花括号集合构造语法的一部分，**保持原样不改**——这是集合描述的语法元素，不是绝对值表达式：
-
-```typst
-// 保持原样 — 花括号内的集合描述语法
-$integral_({|f| > M}) |f| dif mu$  // 集合 {|f| > M} 内的积分
-
-// 但若此处出现了真正的绝对值计算且需要自动缩放，仍应改用 abs()
-$abs(f)$
-```
-
-#### n 次方根用 root(n, x)，不用 sqrt 二参形式
-
-`sqrt(x, n)` 的第二参数（根指数）不能是函数调用或含绝对值的表达式（如 `abs(a_n)`），会报 `unexpected argument`。统一改用 `root(指数, 被开方数)`：
-
-```typst
-// 错误 — sqrt 第二参数不接受函数调用
-$sqrt(n, abs(a_n))$
-
-// 正确 — root(指数, 被开方数)
-$root(n, abs(a_n))$
-$root(n, n)$  // n 次根号 n
-```
-
-#### 标点位置
-
-独立数学公式的句号等标点必须写在数学环境内部：
-
-```typst
-// 错误
-$
-  G(a_n; x) = sum_(n=0)^oo a_n x^n
-$.
-
-// 正确
-$
-  G(a_n; x) = sum_(n=0)^oo a_n x^n.
-$
-```
-
-#### Display math 保持原样
-
-如果原内容是 display math，不要擅自改写成行内数学。
-
-#### 括号自动缩放
-
-Typst 自动缩放普通括号，通常不需要 LaTeX 的 `\left`/`\right`。需要长竖线时使用 `lr(...)`。
-
-#### `int` → `integral` 遗忘
-
-LaTeX 习惯用 `\int`，Typst 必须写 `integral`。`int` 是未知变量，会报错。
-
-```typst
-// 错误
-$int_0^1 f(x) dif x$
-
-// 正确
-$integral_0^1 f(x) dif x$
-
-// 二重积分
-$integral.double_S f dif S$
-
-// 闭合曲面积分（无 oint 符号）
-$integral_(partial V) bold(E) dot dif bold(S)$
-```
-
-#### `text()` 字符串参数
-
-Typst 的 `text()` 函数必须传入字符串，未加引号的参数会被当作变量：
-
-```typst
-// 错误 — "self" 被当作变量名
-$U_(text(self))$
-
-// 正确
-$U_(text("self"))$
-```
-
-#### `sim`/`cdot` 等 LaTeX 宏不存在
-
-Typst 数学模式不识别 `\sim`、`\cdot` 等 LaTeX 宏名。使用原生操作符：
-
-| 意图 | 错误写法 | 正确写法 |
-|------|---------|---------|
-| 约等于/相似 | `$a sim b$` | `$a ~ b$` 或 `$a approx b$` |
-| 点乘 | `$a cdot b$` | `$a dot b$` |
-| 趋向 | `$x to oo$` | `$x arrow oo$` 或 `$x -> oo$` |
-
-**占位符场景**同样报 `unknown variable: cdot`：
-
-```typst
-// 错误 — cdot 作为绝对值/范数中间的占位符也是未知变量
-$abs(cdot)$
-
-// 可行 — 用 dot 充当占位符
-$abs(dot)$
-
-// 更推荐 — 在正文中改用自然语言描述（如 "the complex modulus"），避免占位符
-```
-
-#### `ll`, `gg` 等比较符号不存在
-
-Typst 数学模式不识别 `\ll`、`\gg` 等 LaTeX 宏名。使用原生比较操作符：
-
-| 意图 | 错误写法 | 正确写法 |
-|------|---------|---------|
-| 远小于 | `$d \ll \sqrt(A)$` | `$d << \sqrt(A)$` |
-| 远大于 | `$a \gg b$` | `$a >> b$` |
-
-#### `laplacian`, `oint` 等非标准符号不存在
-
-Typst 数学模式不识别 `\laplacian`、`\oint` 等 LaTeX 宏名。使用等价表达：
-
-| 意图 | 错误写法 | 正确写法 |
-|------|---------|---------|
-| 拉普拉斯算子 | `$\laplacian V = 0$` | `$nabla^2 V = 0$` |
-  | 闭合环路线积分 | `$\oint_sigma bold(f) dot d bold(l)$` | `$integral.cont_sigma bold(f) dot d bold(l)$` |
-  | 闭合曲面积分 | `$\oint_sigma dif a$` | `$integral_(partial sigma) dif a$` 或 `$integral_sigma dif a$` |
-
-#### `const` 等多字母标识符未加引号
-
-在数学模式中使用 `text()` 包裹的文本参数必须加引号，否则被当作未定义变量：
-
-| 意图 | 错误写法 | 正确写法 |
-|------|---------|---------|
-| 常数符号 | `$sigma approx frac(const, R_c)$` | `$sigma approx frac("const", R_c)$` |
-| 文本标签 | `$V_(text(self))$` | `$V_(text("self"))$` |
-
-#### 未知符号查阅官网
-
-遇到不确定的数学符号时，查阅 Typst 官方符号文档：
-https://typst.app/docs/reference/symbols/sym/
-
-常见需要查阅的情况：
-- `\laplacian` 等非标准 LaTeX 宏 — Typst 不支持，需用等价表达
-- `\ll`、`\gg`、`\lll` 等罕见比较符号 — 可用 `<<`、`>>`、`<<<` 替代
-- `\hbar`、`\ell` 等物理/数学特殊符号 — 查阅官网确认可用名称
-
-#### `infty` → `oo`
-
-无限大符号是 `oo`（两个字母 o），不是 `infty` 也不是 `infinity`：
-
-```typst
-// 错误
-$n -> infinity$
-
-// 正确
-$n -> oo$
-```
-
-#### `cases()` 用 `quad &` 对齐，裸逗号是分行符
-
-Typst 的 `cases()` 函数中，**裸逗号是分行符**（等价于换行）；值与条件之间用 `quad &` 对齐（留空一段距离并对齐）。**行内禁止出现渲染逗号**——` comma`、`\,`、`","` 都不得用作行内标点（2026-10-11 用户定稿，全库 40 处已按此迁移）。
-
-```typst
-// 错误 — 行内逗号是分行符，会把值和条件拆成两行
-$
-  cases(
-    Delta u = 0, & text("in ") Omega,
-    u = g, & text("on ") partial Omega,
-  )
-$
-
-// 正确 — 每个条件独占一行，quad & 对齐，行末裸逗号分行
-$
-  cases(
-    Delta u = 0 quad & text("in ") Omega,
-    u = g quad & text("on ") partial Omega,
-  )
-$
-
-// 同一行的两个条件用文字 "and" 连接，不用逗号
-$
-  cases(
-    theta = arctan(y / x) quad & x != 0 "and" theta in [0, 2pi],
-  )
-$
-```
-
-括号内的逗号（如 `(x, y)`、`[0, 1)`、`p, q`）会被括号分组，安全、不需转义、不会分行。
-
-#### `mat()` 矩阵写法
-
-Typst 使用 `mat()` 函数写矩阵。**行之间用分号 `;` 分隔，行内元素用逗号 `,` 分隔。**
-
-```typst
-// 2×2 矩阵（单行紧凑写法）
-$mat(a, b; c, d)$
-
-// n×n 矩阵（多行写法，每行以分号结尾）
-$mat(
-  a_(11), a_(12), ..., a_(1n);
-  a_(21), a_(22), ..., a_(2n);
-  dots.v, dots.v, dots.down, dots.v;
-  a_("n1"), a_("n2"), ..., a_("nn");
-)
-
-// 单行矩阵（不加多余括号）
-$mat(a_1, a_2, ..., a_n)$
-
-// 分块矩阵（mat 可以作为分块元素）
-$mat(I_r, O; O, O)$
-$mat(A, B; C, D)$
-```
-
-**规则**：
-- 行间分隔用 `;`，行内元素用 `,`——不要给行加多余括号：`mat((a, b), (c, d))` 是错误的
-- 省略号行用 `dots.v, dots.v, dots.down, dots.v` 保证对齐
-- `mat()` 可以嵌套作为分块矩阵的元素
-- 行末必须有 `;`（包括最后一行，除非是单行矩阵）
-
-#### 行列式写法
-
-行列式有两种场景，分别使用不同的 Typst 写法。**绝对不要用 `abs()` 或 `|...|` 表示行列式。**
-
-| 场景 | 写法 | 示例 |
-|------|------|------|
-| 符号矩阵的行列式 | `"det"(A)` | $"det"(A) = 0$ |
-| 显式矩阵的行列式 | `mat(delim: "|", ...)` | $mat(delim: "|", a, b; c, d)$ |
-
-```typst
-// 符号矩阵行列式（A 是变量名）
-$"det"(A) != 0$
-$"det"(A B) = "det"(A) "det"(B)$
-$f(lambda) = "det"(lambda E - A)$
-
-// 显式矩阵行列式（Vandermonde，竖线自动缩放）
-$mat(
-  delim: "|",
-  1, 1, 1, dots, 1;
-  x_1, x_2, x_3, dots, x_n;
-  x_1^2, x_2^2, x_3^2, dots, x_n^2;
-)
-
-// 范数（双竖线，不是行列式）——用 ||...|| 或 abs()
-$abs((alpha, beta)) <= ||alpha|| ||beta||$
-```
-
-**规则**：
-- `"det"(A)` 用于符号矩阵（A 是变量名），不是 `abs(A)` 或 `|A|`
-- 显式矩阵的行列式用 `mat(delim: "|", ...)` 让竖线自动缩放，不是 `abs(mat(...))`
-- `abs()` 仅用于真正的绝对值（标量、复数模、内积模），**不是**行列式
-- `||...||` 用于范数（如 $||alpha||$），不是绝对值也不是行列式
-
-#### Unicode 数学符号转换
-
-Typst 数学模式中，部分 Unicode 符号**必须**转换为 Typst 函数名，部分**可以**直接使用。
-
-**必须转换**（写成 Unicode 会渲染异常或不符合仓库规范）：
-
-| Unicode | Typst 函数 | 正确示例 | 错误示例 |
-|---------|-----------|----------|----------|
-| `×` | `times` | $V times V$ | $V × V$ |
-| `∩` | `inter` | $A inter B$ | $A ∩ B$ |
-| `∪` | `union` | $A union B$ | $A ∪ B$ |
-| `⊂` | `subset` | $A subset B$ | $A ⊂ B$ |
-| `⊃` | `supset` | $A supset B$ | $A ⊃ B$ |
-| `⊆` | `subset.eq` | $A subset.eq B$ | $A ⊆ B$ |
-| `∀` | `forall` | $forall x in X$ | $∀ x in X$ |
-| `≠` | `!=` | $a != b$ | $a ≠ b$ |
-| `≤` | `<=` | $a <= b$ | $a ≤ b$ |
-| `≥` | `>=` | $a >= b$ | $a ≥ b$ |
-
-**可以直接使用**（Typst 数学模式原生支持，渲染正确）：
-
-| Unicode | 含义 | 示例 |
-|---------|------|------|
-| `±` | 正负号 | $±1$ |
-| `⊥` | 正交/正交补 | $W^⊥$、$alpha ⊥ beta$ |
-| `†` | 伴随矩阵/共轭转置 | $A^†$ |
-| `≈` | 同构/等价 | $V ≈ V'$ |
-| `⊕` | 直和 | $V_1 ⊕ V_2$ |
-| `·` | 点乘占位符/内积占位 | $(·, ·)$ |
-| `∘` | 复合 | $f ∘ g$ |
-| `∂` | 偏导 | $partial f / partial x$ |
-| `↝` | 映射箭头 | $alpha ↝ beta$ |
-
-**LaTeX 宏残留扫描**：迁移或编辑后，用以下正则扫描残留 LaTeX 宏，命中即为错误：
-- `\$\` （反斜杠在数学模式中不是转义符，会渲染为字面 `\`）
-- `\bmod`、`\pmod`、`\mod` → 分别用 `bmod`、`pmod`、`mod`
-- `\pm` → Unicode `±`（不是 `plus.minus`，Typst 数学模式直接接受 `±` 字符）
+### 3.1 符号路由（负载哪个 family 文件）
+
+写数学公式前，必须先加载 [fields/general.md](fields/general.md) 及本公式涉及家族的 field 文件：
+
+| 你想写的符号 | 加载文件 |
+|-------------|---------|
+| 下标、多字母变量、分数、`abs()`、`root()`、`cases()`、`±`/`·`/`∘`、字体（`bb`/`cal`/`text`） | [fields/general.md](fields/general.md) |
+| `∈` `⊂` `≠` `≤` `≥` `~` `≈` `≡` `∝` `<<` `>>` | [fields/relations.md](fields/relations.md) |
+| `->` `=>` `<=>` `\|->` `↝` `xarrow` | [fields/arrows.md](fields/arrows.md) |
+| `union` `inter` `emptyset` `forall` `exists` `and` `or`、集合描述 | [fields/sets-logic.md](fields/sets-logic.md) |
+| `integral` `partial` `dif` `nabla` `oo` `limsup` `sup` `inf`、积分记号 | [fields/calculus.md](fields/calculus.md) |
+| `mat()` 矩阵、行列式、范数 `\|\|`、内积、`†` `⊕` `⊗` `⊥` | [fields/linear-algebra.md](fields/linear-algebra.md) |
+
+### 3.2 通用硬规则（主文件内摘要，详见 general.md）
+
+1. **下标后紧接括号必须用 `{}` 包裹**：`mu_(X)(B)`，**绝对禁止** `mu_X(B)`。写完带下标+括号的公式必须用正则 `_([a-zA-Z])\(` 自查，命中数为 0 前不得提交。这是全仓库最高频错误（详见 general.md §3）。
+2. **多字母变量**：正体用引号 `"ext"`，斜体用空格 `e x t`；相邻单字母间留空格 `$x y$`。
+3. **分数/分子非单因子加括号**：`$(x + y) / 2$`；`abs(...)` 可作为整体因子。
+4. **绝对值用 `abs(xxx)`**，不用 `|xxx|`；**行列式绝不能用 `abs()`**（用 `"det"(A)` 或 `mat(delim: "|", ...)`，见 linear-algebra.md）。
+5. **`n` 次方根用 `root(n, x)`**，不用 `sqrt(x, n)` 二参形式。
+6. **`text()` 必须用字符串**：`text("...")`。
+7. **`cases()` 裸逗号是分行符**，值与条件用 `quad &` 对齐（详见 general.md §11）。
+8. **标点写在数学环境内部**；display math 保持原样。
+9. **`\left(`/`\right)` 不存在**；Typst 自动缩放，长竖线用 `lr(...)`。
+10. **不保留 LaTeX 宏**：`int`→`integral`、`cdot`→`dot`、`times`→`times`、`sim`→`~`，`pm`→`±`。
+
+### 3.3 LaTeX 宏残留扫描
+
+编辑/迁移后扫描以下残留（详见 general.md §13）：`\$\`、`\bmod/\pmod/\mod`、`\pm`（应改 `±`）、`\cdot`、`\times`、`\circ`、`\int`。遇到 `unknown variable` 优先查多字母连写（`xy`）与宏残留（`cdot`/`int`/`infty`）。
+
+> 行列式、矩阵、范数、`†⊕⊗⊥` 等写法**必须**查 linear-algebra.md，不要臆测。
 
 ---
 
@@ -668,48 +211,7 @@ $]
 
 编号格式为 `(章号.公式序号)`，如 `(1.1)`。
 
----
-
-## 8.5 收敛箭头（xarrow 包）
-
-使用 `@preview/xarrow:0.4.0` 包实现带标注的收敛箭头：
-
-```typst
-#import "@preview/xarrow:0.4.0": xarrow
-
-// 几乎处处收敛
-$f_n xarrow("a.e.") f$
-
-// 依测度收敛
-$f_n xarrow(mu) f$
-
-// 几乎一致收敛
-$f_n xarrow("a.u.") f$
-
-// L^p 范数收敛
-$f_n xarrow(L^p) f$
-```
-
----
-
-## 8.6 积分记号惯例
-
-```typst
-// 基本积分
-$integral_X f dif mu$
-
-// 集合上的积分
-$integral_A f dif mu$
-$integral_(E_n) f dif mu$
-
-// 集合描述作为积分下标（注意花括号）
-$integral_({|f| > M}) |f| dif mu$
-$integral_({x in X : f(x) >= epsilon}) f dif mu$
-
-// 上确界/下确界带下标
-$sup_(s <= f) integral_X s dif mu$
-$liminf_(n->oo) integral_X f_n dif mu$
-```
+> 收敛箭头（xarrow 包）、积分记号惯例等记号写法已移至 [fields/arrows.md](fields/arrows.md) §3 与 [fields/calculus.md](fields/calculus.md) §3.2。
 
 ---
 
@@ -863,18 +365,7 @@ The power dissipated per unit volume is $p = bold(J) dot bold(E)$.
 - `#caution`：容易出错的地方、条件不能省略的警告
 - `#example`：反例（说明条件不可去掉）、典型应用
 
-### 集合与函数空间记号
-
-- 集合描述：`${x in X : P(x)}$`（使用冒号 `:` 而非竖线）
-- $L^p$ 空间：`$L^1 (X, mu)$`（空格分隔参数）
-- 特征函数/指示函数：`$chi_A$` 或 `$chi_(A)$`
-- 几乎处处：正文中写 `a.e.`，公式中写 `"a.e."`
-
-### 积分记号
-
-- 积分微元使用正体：`$integral_X f dif mu$`
-- 积分区域用下标：`$integral_A f dif mu$`、`$integral_(E_n) f dif mu$`
-- 集合上的积分限制：`$integral_({|f| > M}) |f| dif mu$`（注意花括号内的集合描述）
+> 集合描述、`L^p` 空间等记号写法已移至 [fields/sets-logic.md](fields/sets-logic.md) §3 与 [fields/calculus.md](fields/calculus.md) §6。
 
 ---
 
@@ -911,7 +402,7 @@ The power dissipated per unit volume is $p = bold(J) dot bold(E)$.
 
 发现错误时：立即承认不辩解 → 分析原因（符号变更、风格不一致）→ 正确修正 → 将教训记录到本技能。
 
-> 下标吞括号规则见 §3 三维基准小节，此处不重复——任何编辑任务写完带下标+括号的公式必须执行该正则自查，命中数为 0 前禁止声明完成。
+> 下标吞括号规则见 general.md §3 三维基准小节，此处不重复——任何编辑任务写完带下标+括号的公式必须执行该正则自查，命中数为 0 前禁止声明完成。
 
 ---
 
@@ -974,7 +465,7 @@ typst compile "1.Analyse/Analyse Complexe/initial.typ" "1.Analyse/Analyse Comple
 
 1. 所有数学公式使用正确的 Typst 语法，不保留 LaTeX 宏
 2. 多字母变量必须用引号包裹或空格分开
-3. 下标前必须有主体
+3. 下标前必须有主体；下标后紧跟括号必须用 `{}` 包裹（`_([a-zA-Z])\(` 自查）
 4. Display math 标点写在环境内部
 5. 不改动模板公共接口名称
 6. 保持与现有内容的风格一致性
@@ -983,3 +474,4 @@ typst compile "1.Analyse/Analyse Complexe/initial.typ" "1.Analyse/Analyse Comple
 9. 不删除或修改已有内容，除非明确要求
 10. **修改保持局部化**：只动当前 subject 的 `initial.typ`（及其 `scripts/`、`img/` 资源），不改其他笔记、不改模板公共接口
 11. 正文中的过渡段落（连接定理之间的逻辑）直接写为普通文本，不使用组件包裹
+12. 行列式用 `"det"(A)` / `mat(delim: "|", ...)`，**禁止用 `abs()` 表示行列式**（详见 general.md §7 与 linear-algebra.md §2）

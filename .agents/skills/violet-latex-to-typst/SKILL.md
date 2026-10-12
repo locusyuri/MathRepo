@@ -188,7 +188,7 @@ typst compile "Subject/initial.typ" "Subject/initial.pdf" --root .
 | `\begin{pmatrix} ... \end{pmatrix}` | `mat(delim: "(", ...)` |
 | `\begin{bmatrix} ... \end{bmatrix}` | `mat(delim: "[", ...)` |
 | `\begin{Bmatrix} ... \end{Bmatrix}` | `mat(delim: "{", ...)` |
-| `\begin{vmatrix} ... \end{vmatrix}` | `mat(delim: "|", ...)`（行列式，见 §3.8） |
+| `\begin{vmatrix} ... \end{vmatrix}` | `mat(delim: "|", ...)`（行列式，见 §3.8 与 fields/linear-algebra.md） |
 | `\begin{Vmatrix} ... \end{Vmatrix}` | `mat(delim: "||", ...)`（范数） |
 | `\begin{array} ... \end{array}` | `mat(...)`（`\\` → `;`，`&` → `,`，手动） |
 
@@ -270,7 +270,7 @@ typst compile "Subject/initial.typ" "Subject/initial.pdf" --root .
 
 ## 3. 符号映射
 
-完整映射参考 `violet-typst-writing-conventions` 技能。脚本自动处理以下类别：
+完整映射见 `violet-typst-writing-conventions` 技能，符号按家族拆分为 `fields/` 下的多个文件（[README](../violet-typst-writing-conventions/fields/README.md) 有路由表）。脚本自动处理以下类别：
 
 ### 3.1 集合与逻辑
 
@@ -365,7 +365,7 @@ typst compile "Subject/initial.typ" "Subject/initial.pdf" --root .
 | `\begin{bmatrix}...\end{bmatrix}` | `mat(delim: "[", ...)` | 方括号矩阵 |
 | `\begin{Vmatrix}...\end{Vmatrix}` | `mat(delim: "||", ...)` | 范数 |
 
-**关键规则**（详见 `violet-typst-writing-conventions` §3 `mat()` 矩阵写法与行列式写法）：
+**关键规则**（语法型构造的规范已按家族拆分到 `violet-typst-writing-conventions/fields/`，附表见 [fields/linear-algebra.md](../violet-typst-writing-conventions/fields/linear-algebra.md)，通用 `abs()`/下标规则见 [fields/general.md](../violet-typst-writing-conventions/fields/general.md)）：
 
 - `abs()` 仅用于真正的绝对值（标量、复数模、内积模），**永远不是行列式**
 - `"det"(A)` 用于符号矩阵（A 是变量名）；显式矩阵的行列式用 `mat(delim: "|", ...)` 让竖线自动缩放
@@ -517,11 +517,11 @@ LaTeX 使用 `\input{chapters/chap01.tex}` 引用子文件，Typst 使用单文�
 - [ ] 所有图片使用 `#figure(image(...))` 格式
 - [ ] 标题后有中文翻译注释（`// 中文翻译`）
 - [ ] 正文无中文（中文仅出现在 `//` 注释中）
-- [ ] 数学语法硬规则逐条自查（多字母变量、`integral`、`dif`、`abs()`、分数括号、下标吞括号等）：详见 `violet-typst-writing-conventions` §3 与 §10
-- [ ] 矩阵均使用 `mat(...)`（行间 `;`、行内 `,`、不加多余括号），分隔符环境对应 `delim:`
+- [ ] 数学语法硬规则逐条自查（多字母变量、`integral`、`dif`、`abs()`、分数括号、下标吞括号等）：详见 `violet-typst-writing-conventions/fields/general.md`
+- [ ] 矩阵均使用 `mat(...)`（行间 `;`、行内 `,`、不加多余括号），分隔符环境对应 `delim:`（见 fields/linear-algebra.md）
 - [ ] 行列式写法正确：符号矩阵 `"det"(A)`，显式矩阵 `mat(delim: "|", ...)`，**无 `abs()` 表示行列式**
 - [ ] `\pm` 已转为 Unicode `±`（非 `plus.minus`）
-- [ ] `×`/`∩`/`∪`/`⊂`/`⊆`/`∀`/`≠`/`≤`/`≥` 等 Unicode 符号已按规范转为 Typst 函数名（详见 `violet-typst-writing-conventions` §3）
+- [ ] `×`/`∩`/`∪`/`⊂`/`⊆`/`∀`/`≠`/`≤`/`≥` 等 Unicode 符号已按规范转为 Typst 函数名（分别见 `violet-typst-writing-conventions/fields/` 的 general / relations / sets-logic）
 - [ ] 编译通过（`typst compile` 退出码 0）
 - [ ] 与已有笔记的 SRP 边界一致（不重复其他笔记已有的定义/定理）
 
