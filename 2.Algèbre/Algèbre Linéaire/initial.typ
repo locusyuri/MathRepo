@@ -1428,8 +1428,8 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
 ]
 
 #definition(name: "Induced Mapping")[
-  Let $sigma: V -> V'$ be a linear mapping with kernel $W = ker(sigma)$.
-  The map $bar(sigma): V / W -> "im"(sigma)$ defined by
+  Let $sigma: V -> V'$ be a linear mapping with kernel $W = "Ker"(sigma)$.
+  The map $bar(sigma): V / W -> "Im"(sigma)$ defined by
   $bar(sigma)([alpha]) = sigma(alpha)$ is a well-defined linear isomorphism,
   called the *induced mapping* of $sigma$.
 ] <def:induced-mapping>
@@ -1438,7 +1438,7 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
   Let $sigma: V -> V'$ be a linear mapping. Then
 
   $
-    V / ker(sigma) ≈ "im"(sigma).
+    V / "Ker"(sigma) ≈ "Im"(sigma).
   $
 ] <thm:first-isomorphism-theorem>
 
@@ -1502,7 +1502,7 @@ representations, and special linear transformations.
   ${alpha_1, ..., alpha_n} subset V'$, there exists a unique linear mapping
 
   $
-    A: V -> V', alpha = sum_(i=1)^n x_i epsilon_i ↝ A(alpha) = sum_(i=1)^n x_i alpha_i
+    A: V -> V', alpha = sum_(i=1)^n x_i epsilon_i mapsto A(alpha) = sum_(i=1)^n x_i alpha_i
   $
 
   such that $A(epsilon_i) = alpha_i$ for $i = 1, ..., n$.
@@ -1551,18 +1551,18 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   The *kernel* of $A$ is
 
   $
-    "ker"(A) = {alpha : alpha in V, A(alpha) = 0},
+    "Ker"(A) = {alpha : alpha in V, A(alpha) = 0},
   $
 
   and the *image* of $A$ is
 
   $
-    "im"(A) = {beta : beta = A(alpha), alpha in V, beta in V'},
+    "Im"(A) = {beta : beta = A(alpha), alpha in V, beta in V'},
   $
 
   also denoted $A^(-1)(0)$ and $A(V)$ respectively.
-  The rank of $"im"(A)$ is called the *rank* of $A$;
-  the dimension of $"ker"(A)$ is called the *nullity* of $A$.
+  The rank of $"Im"(A)$ is called the *rank* of $A$;
+  the dimension of $"Ker"(A)$ is called the *nullity* of $A$.
 ] <def:kernel-and-image>
 
 #theorem(name: "Rank-Nullity Theorem")[
@@ -1570,13 +1570,13 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   $A: V -> V'$ a linear mapping. Then
 
   $
-    "dim"("ker"(A)) + "dim"("im"(A)) = "dim"(V).
+    "dim"("Ker"(A)) + "dim"("Im"(A)) = "dim"(V).
   $
 ] <thm:rank-nullity>
 
 #note[
-  Extend a basis of $"ker"(A)$ to a basis of $V$. The images of the extension
-  vectors under $A$ form a basis of $"im"(A)$, and the count gives the formula.
+  Extend a basis of $"Ker"(A)$ to a basis of $V$. The images of the extension
+  vectors under $A$ form a basis of $"Im"(A)$, and the count gives the formula.
 ]
 
 #definition(name: "Cokernel")[
@@ -1584,7 +1584,7 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   The *cokernel* of $A$ is the quotient space
 
   $
-    "coker"(A) = V' / "im"(A).
+    "coker"(A) = V' / "Im"(A).
   $
 ] <def:cokernel>
 
@@ -1595,7 +1595,7 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   $A in upright("End")(V)$. For $k = 1, 2, 3, ...$, define
 
   $
-    V_k = "ker"(A^k) = {alpha in V : A^k(alpha) = 0},
+    V_k = "Ker"(A^k) = {alpha in V : A^k(alpha) = 0},
   $
 
   then the sequence of subspaces
@@ -1741,7 +1741,7 @@ $
   - Let $U, W "subseteq" V$ with $V = U ⊕ W$. Then the projections $P_U$ and $P_W$
     are orthogonal idempotent transformations with $P_U + P_W = E$.
   - Let $A, B in upright("End")(V)$ be orthogonal idempotent transformations with
-    $A + B = E$. Then $V = "im"(A) ⊕ "im"(B)$.
+    $A + B = E$. Then $V = "Im"(A) ⊕ "Im"(B)$.
 ] <prop:projection-and-idempotent>
 
 #proposition(name: "Idempotent and Involutional Characterization")[
@@ -1952,7 +1952,7 @@ are invariant under similarity.
 
   $
     V_lambda = {alpha : alpha in V, A(alpha) = lambda alpha} =
-    "ker"(A - lambda E),
+    "Ker"(A - lambda E),
   $
 
   is called the *eigenspace* corresponding to $lambda$, denoted $E_lambda$.
@@ -1961,7 +1961,7 @@ are invariant under similarity.
 
 #definition(name: "Geometric and Algebraic Multiplicity")[
   For an eigenvalue $lambda$ of $A$:
-  - The dimension of the eigenspace $V_lambda = "ker"(A - lambda E)$ is called the
+  - The dimension of the eigenspace $V_lambda = "Ker"(A - lambda E)$ is called the
     *geometric multiplicity* of $lambda$.
   - The multiplicity of $lambda$ as a root of the eigenpolynomial $f(lambda)$ is called
     the *algebraic multiplicity* of $lambda$.
@@ -2039,7 +2039,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   - The zero subspace ${0}$ and the entire space $V$ are invariant under any $A$
     (trivial invariant subspaces).
   - If $A, B in upright("End")(V)$ commute ($A B = B A$), then
-    $"ker"(A)$, $"im"(A)$, and eigenspaces of $A$ are invariant under $B$.
+    $"Ker"(A)$, $"Im"(A)$, and eigenspaces of $A$ are invariant under $B$.
   - Any subspace of a scalar transformation is an invariant subspace.
   - The intersection and sum of any two invariant subspaces are also invariant subspaces.
 ] <prop:invariant-subspace-properties>
@@ -2071,7 +2071,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   then
 
   $
-    "ker"(f(A)) = "ker"(f_1(A)) ⊕ "ker"(f_2(A)) ⊕ ... ⊕ "ker"(f_(s)(A)).
+    "Ker"(f(A)) = "Ker"(f_1(A)) ⊕ "Ker"(f_2(A)) ⊕ ... ⊕ "Ker"(f_(s)(A)).
   $
 ] <prop:kernel-decomposition-coprime>
 
@@ -2104,7 +2104,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   For an eigenvalue $lambda$ of $A$, the set
 
   $
-    V_lambda^(r) = "ker"((A - lambda E)^r) =
+    V_lambda^(r) = "Ker"((A - lambda E)^r) =
     {alpha : alpha in V, (A - lambda E)^r(alpha) = 0},
   $
 
@@ -2197,7 +2197,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 Let $A$ be idempotent, i.e. $A^2 = A$.
 - Any eigenvalue of $A$ is either $0$ or $1$.
 - ($V$ finite-dimensional) $A$ is diagonalizable and
-  $V = E_1 ⊕ E_0 = "ker"(A - E) ⊕ "ker"(A) = "im"(A) ⊕ "ker"(A)$.
+  $V = E_1 ⊕ E_0 = "Ker"(A - E) ⊕ "Ker"(A) = "Im"(A) ⊕ "Ker"(A)$.
 - (When $F$ is a number field and $V$ finite-dimensional) The rank equals the trace:
   $upright("rank")(A) = "tr"(A)$.
 
@@ -2214,7 +2214,7 @@ Let $V$ be finite-dimensional, $F$ a number field, and $A$ an involution matrix,
 i.e. $A^2 = E$. In geometry, an involution corresponds to a reflection or symmetry,
 since $A^2 = E$ implies $A = A^(-1)$.
 - All eigenvalues of $A$ are either $1$ or $-1$.
-- $A$ is diagonalizable and $V = E_1 ⊕ E_(-1) = "ker"(A - E) ⊕ "ker"(A + E)$.
+- $A$ is diagonalizable and $V = E_1 ⊕ E_(-1) = "Ker"(A - E) ⊕ "Ker"(A + E)$.
 
 === All-Ones Matrix // 全 1 矩阵
 
