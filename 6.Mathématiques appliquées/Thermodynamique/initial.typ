@@ -302,12 +302,13 @@ Two details of the table deserve comment. A *linear* molecule (monatomic aside) 
 ]
 
 In general the internal energy of a gas collects both contributions,
-$E = E_k + E_p = E(T, V)$: the kinetic part depends only on
-temperature, while the potential part — the energy of the
+$U(T, V) = U_k + U_p$: the kinetic part $U_k$ depends only on
+temperature, while the potential part $U_p$ — the energy of the
 intermolecular forces — depends on the mean molecular separation and
-hence on the volume. For an ideal gas, however, intermolecular forces
-are negligible by assumption, so $E_p = 0$ and the internal energy is
-a single-valued function of temperature alone, $E = E(T)$ — which is
+hence on the volume.
+
+For an ideal gas, however, intermolecular forces are negligible by assumption, so $U_p = 0$ and the internal energy is
+a single-valued function of temperature alone, $U = U(T)$ — which is
 exactly why the formula above comes out independent of $V$. This is
 the microscopic counterpart of #link(<prop:joule-law>)[Joule's law]
 (Chapter 2), where the same statement is obtained purely
