@@ -557,6 +557,7 @@ energy, kinetic or otherwise, through the universal Boltzmann factor.
 The resulting *Boltzmann distribution* is the cornerstone of
 statistical mechanics.
 
+=== Boltzmann Distribution // 玻尔兹曼分布
 #theorem(name: "Boltzmann Distribution")[
   In thermal equilibrium at temperature $T$, the probability that a
   system occupies a state of energy $E$ is proportional to the
@@ -568,37 +569,79 @@ statistical mechanics.
 ] <thm:boltzmann-distribution>
 
 #proof[
-  Begin with the Maxwell velocity density of §1.4,
+  In energy form, the Maxwell velocity distribution of §1.4 reads
   $
-    f(bold(v)) prop exp(- m v^2 / (2 k_B T)).
+    dif N = N (m / (2 pi k_B T))^(3/2) exp(- epsilon_k / (k_B T))
+    dif v_x dif v_y dif v_z,
   $
-  Recognise the exponent as the kinetic energy $E = 1/2 m v^2$, so
+  a law over *velocity space* weighted by the kinetic energy alone.
+  Now place the gas in a potential field $Phi(bold(r))$ and consider
+  the joint event that a molecule has velocity in
+  $dif v_x dif v_y dif v_z$ *and* position in $dif x dif y dif z$. The
+  equilibrium weight is the total energy $epsilon_k + epsilon_p =
+  1/2 m v^2 + Phi(bold(r))$, so the joint distribution over the
+  six-dimensional velocity-plus-position space is
   $
-    f(bold(v)) prop exp(- E / (k_B T)).
+    dif N = n_0 (m / (2 pi k_B T))^(3/2)
+    exp(- (epsilon_k + epsilon_p) / (k_B T))
+    dif v_x dif v_y dif v_z dif x dif y dif z,
   $
-  This is a law about energy, not about velocity: it generalises to
-  *any* system whose state has energy $E$, with the same exponential
-  weight. The generalisation is a fundamental postulate of statistical
-  mechanics — it will be derived from the microcanonical ensemble in
-  Chapter 13 — and the Maxwell distribution is recovered as the special
-  case of a free particle, $E = p^2 / (2 m)$ with no potential energy.
+  where $n_0$ is the molecular number density at the zero of potential
+  energy. Normalising the velocity part — integrating
+  $dif v_x dif v_y dif v_z$ over all velocities, where the Maxwell
+  factor contributes exactly $1$ — leaves the *position-space*
+  distribution
+  $
+    dif N' = n_0 exp(- epsilon_p / (k_B T)) dif x dif y dif z,
+  $
+  whence the number density at position $bold(r)$ is
+  $
+    n = (dif N') / (dif x dif y dif z)
+    = n_0 exp(- epsilon_p / (k_B T)).
+  $
+  Both spaces carry the same exponential energy weight: *velocity
+  space* gives the Maxwell distribution of §1.4, *position space* the
+  Boltzmann potential-energy distribution just derived. The
+  generalisation of the energy weight to *any* system whose state has
+  energy $E$ is a fundamental postulate of statistical mechanics — it
+  will be derived from the microcanonical ensemble in Chapter 13 — and
+  the Maxwell distribution is recovered as the special case of a free
+  particle, $E = p^2 / (2 m)$ with no potential energy.
 ]
 
+=== The Gas in a Gravitational Field // 重力场中的气体
+In a gravitational field $g$ directed along $+z$, the potential energy
+of a molecule of mass $m$ at altitude $z$ is $epsilon_p = m g z$, and
+the position-space distribution specialises to the *molecular number
+density formula* of the gravitational field
+$
+  n = n_0 exp(- m g z / (k_B T)) = n_0 exp(- M g z / (R T)),
+$
+with $n_0$ the number density at ground level ($z = 0$, the zero of
+potential energy) and $M$ the molar mass — the *Boltzmann
+potential-energy distribution* in the Earth's gravity.
+
 #example(name: "Isothermal atmosphere")[
-  In a gravitational field $g$ directed along $+z$, a molecule of mass
-  $m$ at altitude $h$ has potential energy $E = m g h$. The Boltzmann
-  distribution gives the number density
+  The density formula combines with the ideal-gas law $p = n k_B T$ to
+  give the *isothermal pressure formula*
   $
-    n(h) = n_0 exp(- m g h / (k_B T)),
+    p = p_0 exp(- m g z / (k_B T)) = p_0 exp(- M g z / (R T)),
   $
-  the *barometric formula*. Defining the *scale height*
-  $H = k_B T / (m g) = R T / (M g)$ with $M$ the molar mass, this reads
-  $n(h) = n_0 exp(- h / H)$. For the Earth's atmosphere
-  ($T approx 280 "K"$, $M approx 29 "g/mol"$) one finds
-  $H approx 8 "km"$ — density falls by a factor of $exp(1)$ every
-  eight kilometres, in fair agreement with observation below about
-  $20 "km"$, where temperature and composition are still roughly
-  constant.
+  where $p_0 = n_0 k_B T$ is the pressure at ground level: pressure
+  falls by the same exponential law as density. Inverting it expresses
+  the altitude through the pressure ratio,
+  $
+    z = (R T)/(M g) ln(p_0 / p),
+  $
+  the *barometric altimetry formula* — the working principle of the
+  pressure altimeter. Defining the *scale height*
+  $H = k_B T / (m g) = R T / (M g)$, both laws read
+  $n = n_0 exp(- z / H)$ and $p = p_0 exp(- z / H)$. For the Earth's
+  atmosphere ($T approx 280 "K"$, $M approx 29 "g/mol"$) one finds
+  $H approx 8 "km"$ — density and pressure fall by a factor of
+  $exp(1)$ every eight kilometres, in fair agreement with observation
+  below about $20 "km"$, where temperature and composition are still
+  roughly constant.
 ] <ex:barometric-formula>
 
 #example(name: "Sedimentation equilibrium")[
@@ -615,14 +658,6 @@ statistical mechanics.
   Nobel Prize in 1926 and settling the long controversy over the
   reality of molecules.
 ] <ex:sedimentation>
-
-#note(title: "Special case")[
-  The Maxwell distribution of §1.4 is the Boltzmann
-  distribution specialised to a free particle — kinetic energy only,
-  no potential. The two theories are not independent: the Boltzmann
-  law is the general principle, the Maxwell law its corollary for a
-  point mass in field-free space.
-] <note:mb-to-boltzmann>
 
 == Van der Waals Equation // 范德瓦尔斯方程
 
