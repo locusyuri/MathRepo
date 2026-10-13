@@ -1844,6 +1844,55 @@ tiles. Every structural statement below is this picture in words.
   supplement: [Fig.],
 ) <fig:cosets-partition>
 
+#theorem(name: "Multiplicativity of the Index")[
+  Let $K <= H <= G$ be subgroups with $G$ finite. Then
+  $
+    [G : H] dot [H : K] = [G : K].
+  $
+] <thm:index-tower>
+
+#proof[
+  Take representatives $g_1, dots, g_r$ with $r = [G : H]$ for the
+  left cosets of $H$ in $G$, and representatives $h_1, dots, h_s$
+  with $s = [H : K]$ for the left cosets of $K$ in $H$. Every $g in
+  G$ lies in some $g_i H$, and $g_i^(-1) g in H$ then lies in some
+  $h_j K$; hence $g in g_i h_j K$, so the $r s$ cosets $g_i h_j K$
+  cover $G$. They are pairwise disjoint: if $g_i h_j K = g_(i')
+  h_(j') K$, then $g_i^(-1) g_(i') = h_j k k'^(-1) h_(j')^(-1) in
+  H$ (all four factors lie in $H$ since $K <= H$), so $i = i'$ by
+  the choice of the $g_i$; cancelling $g_i$ then leaves $h_j K =
+  h_(j') K$, so $j = j'$ by the choice of the $h_j$. Hence $[G : K]
+  = r dot s$.
+]
+
+The tower rule says the tiling by $H$ refines into the tiling by
+$K$: each $H$-tile splits into $[H : K]$ pieces of size $abs(K)$.
+Lagrange's theorem is the special case $K = {e}$, where $[G : {e}]
+= abs(G)$.
+
+#theorem(name: "Counting Formula for Products")[
+  Let $H$ and $K$ be finite subgroups of a group $G$. Then
+  $
+    abs(H K) = (abs(H) abs(K)) / abs(H inter K).
+  $
+] <thm:product-counting>
+
+#proof[
+  $H K$ is a union of left cosets of $K$: $H K = union.big_(h in H)
+  h K$. Two of these coincide exactly when $h^(-1) h' in K$; since
+  $h^(-1) h' in H$ as well, this says $h (H inter K) = h' (H inter
+    K)$. So the distinct cosets $h K$ are in bijection with the left
+  cosets of $H inter K$ in $H$ — there are $[H : H inter K]$ of
+  them, each of size $abs(K)$ — and $abs(H K) = [H : H inter K]
+  dot abs(K)$. Lagrange applied to $H inter K <= H$ turns the index
+  into $abs(H) \/ abs(H inter K)$.
+]
+
+The formula counts a mere subset — no assumption that $H K$ is a
+subgroup. When it is one (for instance when $H K = K H$, by
+#link(<thm:product-of-subgroups>)[§3.1]), it specializes to the
+index identity $[H K : K] = [H : H inter K]$.
+
 #corollary(name: "Element Orders Divide the Group Order")[
   In a finite group $G$, the order of every element $a$ divides
   $abs(G)$; in particular $a^(abs(G)) = e$ for all $a in G$.
