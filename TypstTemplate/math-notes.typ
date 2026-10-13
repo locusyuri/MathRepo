@@ -1232,7 +1232,6 @@
     #box(
       fill: color-highlight.lighten(60%),
       inset: (x: 2pt, y: 2pt),
-      baseline: 2pt,
       radius: 2pt,
     )[
       #body
