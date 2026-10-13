@@ -1715,8 +1715,7 @@ the cosets, and their counting is Lagrange's theorem.
   $
     a H = {a h | h in H},
   $
-  and the *right coset* is $H a = {h a | h in H}$. In additive
-  notation these read $a + H$ and $H + a$.
+  and the *right coset* is $H a = {h a | h in H}$.
 ] <def:coset>
 
 The definition specializes a familiar construction: for $G =
@@ -1727,35 +1726,42 @@ general mechanism.
 
 #lemma(name: "Cosets Tile the Group")[
   Let $H <= G$ and $a, b in G$.
-  - $a in a H$, and the map $h arrow.r.double a h$ is a bijection
-    $H -> a H$; in particular every left coset has the same
-    cardinality as $H$.
-  - $a H = b H$ if and only if $a^(-1) b in H$, equivalently if and
+  + $a in a H$, and the map $h arrow.r.double a h$ is a bijection $H -> a H$; in particular every left coset has the same cardinality as $H$.
+  + $a in H$ if and only if $a H = H$.
+  + $b in a H$ if and only if $a H = b H$.
+  + $a H = b H$ if and only if $a^(-1) b in H$, equivalently if and
     only if $b in a H$.
-  - Two left cosets are either equal or disjoint.
-  - The left cosets of $H$ partition $G$.
+  + Two left cosets are either equal or disjoint.
+  + *The left cosets of $H$ partition $G$.*
 ] <lem:coset-equivalent>
 
 #proof[
   (1) $a = a e in a H$. The map $h arrow.r.double a h$ has
   inverse $x arrow.r.double a^(-1) x$, so it is a bijection.
 
-  (2) If $a H = b H$, then $b in b H = a H$, so $b = a h$ for some
-  $h in H$ and $a^(-1) b = h in H$. Conversely, if $a^(-1) b = h in
-  H$, then $b = a h in a H$, and for any $b h'$ with $h' in H$ we get
-  $b h' = a h h' in a H$; so $b H subset.eq a H$, and symmetry of the
-  argument reverses the inclusion.
+  (2) If $a in H$, then $a h in H$ for every $h in H$ by closure, so
+  $a H subset.eq H$; conversely every $h in H$ writes $h = a
+  (a^(-1) h)$ with $a^(-1) h in H$, so $H subset.eq a H$. Thus $a H
+  = H$. Conversely, $a H = H$ gives $a = a e in a H = H$.
 
-  (3) If $x in a H ∩ b H$, write $x = a h_1 = b h_2$; then
+  (3) If $b in a H$, write $b = a h$ with $h in H$; then $b H = a
+  (h H) = a H$ by (2), since $h H = H$. Conversely, $a H = b H$
+  gives $b in b H = a H$ by (1).
+
+  (4) If $a H = b H$, then $b in b H = a H$ by (1), so $b = a h$ for
+  some $h in H$ and $a^(-1) b = h in H$. Conversely, $a^(-1) b = h
+  in H$ gives $b = a h in a H$, and (3) yields $a H = b H$.
+
+  (5) If $x in a H inter b H$, write $x = a h_1 = b h_2$; then
   $a^(-1) b = h_1 h_2^(-1) in H$ by
-  #link(<cor:subgroup-criterion>)[the criterion], and (2) gives
+  #link(<cor:subgroup-criterion>)[the criterion], and (4) gives
   $a H = b H$.
 
-  (4) Every $a in G$ lies in its own coset $a H$, and the cosets are
-  pairwise disjoint: a partition of $G$ (in the sense of the
-  *Théorie des Ensembles* note). The equivalence relation behind
-  it, "$a tilde b$ if and only if $a^(-1) b in H$", matches the
-  partition-class correspondence.
+  (6) Every $a in G$ lies in its own coset $a H$ by (1), and the
+  cosets are pairwise disjoint by (5): a partition of $G$ (in the
+  sense of the *Théorie des Ensembles* note). The equivalence
+  relation behind it, "$a tilde b$ if and only if $a^(-1) b in H$",
+  matches the partition-class correspondence.
 ]
 
 #example(name: "Cosets in $S_3$.")[
