@@ -647,7 +647,9 @@ potential-energy distribution* in the Earth's gravity.
     z = (R T)/(M g) ln(p_0 / p),
   $
   the *barometric altimetry formula* — the working principle of the
-  pressure altimeter. Defining the *scale height*
+  pressure altimeter.
+
+  Defining the *scale height*
   $H = k_B T / (m g) = R T / (M g)$, both laws read
   $n = n_0 exp(- z / H)$ and $p = p_0 exp(- z / H)$. For the Earth's
   atmosphere ($T approx 280 "K"$, $M approx 29 "g/mol"$) one finds
@@ -762,9 +764,18 @@ structure is captured by a single geometric quantity.
   A molecule of a gas with number density $n$ travels, between
   successive collisions, an average distance
   $
-    lambda = 1 / (sqrt(2) n sigma).
+    lambda = overline(v) / overline(Z) = 1 / (sqrt(2) n sigma).
   $
 ] <prop:mean-free-path>
+
+Here $overline(Z)$ is the *collision frequency* — the average number
+of collisions one molecule undergoes per unit time — and $lambda$ the
+*mean free path*, the average distance travelled between successive
+collisions. Since a molecule spends the time between two collisions
+travelling at the mean speed $overline(v)$, its path decomposes as
+distance $=$ speed $times$ time, $lambda = overline(v) / overline(Z)$.
+The content of the formula is the factor $sqrt(2)$, which the proof
+below traces to the motion of the targets.
 
 #proof[
   In a time $dif t$, a molecule moving with speed $v$ sweeps
@@ -774,17 +785,17 @@ structure is captured by a single geometric quantity.
   targets are themselves moving: the relevant quantity is the *relative*
   speed, whose mean over two Maxwell-distributed velocities is
   $sqrt(2) overline(v)$ (the difference of two independent Gaussians is
-  Gaussian, with doubled variance). Hence the collision rate
+  Gaussian, with doubled variance). Hence the collision frequency
   $
-    z = sqrt(2) n sigma overline(v), quad "so that" quad lambda =
-    overline(v) / z = 1 / (sqrt(2) n sigma).
+    overline(Z) = sqrt(2) n sigma overline(v), quad "so that" quad
+    lambda = overline(v) / overline(Z) = 1 / (sqrt(2) n sigma).
   $
   The mean free path depends only on density and molecular size — at
   atmospheric conditions $lambda approx 70 "nm"$, some $200$ molecular
   diameters, which is why the dilute-gas picture is self-consistent.
 ]
 
-The *collision frequency* $z$ will do little explicit work below, but
+The *collision frequency* $overline(Z)$ will do little explicit work below, but
 the mean free path $lambda$ and the mean speed $overline(v)$ are the
 two ingredients from which all transport coefficients of §1.8 are
 assembled.
