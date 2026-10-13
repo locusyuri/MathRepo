@@ -449,8 +449,7 @@ higher speeds and must simultaneously lower.
 
 #figure(
   image("img/maxwell-temperature-family.svg", width: 66%),
-  caption: [The Maxwell speed distribution of nitrogen at $T_1 = 300$
-    "K", $T_2 = 600 "K"$ and $T_3 = 900 "K"$. The factor $v^2$ drives
+  caption: [The Maxwell speed distribution of nitrogen at $T_1 = 300 "K"$, $T_2 = 600 "K"$ and $T_3 = 900 "K"$. The factor $v^2$ drives
     each curve up from the origin, the exponential tail decays towards
     the $v$-axis asymptotically, and the area under every curve is $1$.
     Raising $T$ shifts the most probable speed
@@ -489,11 +488,8 @@ higher speeds and must simultaneously lower.
   giving $v_p^2 = 1 / alpha$, i.e. $v_p = sqrt(2 k_B T / m)$.
 
   *Mean speed.* The mean is the first moment of the distribution,
-  $
-    overline(v) = integral_0^infinity v f(v) dif v
-    = 4 pi (alpha / pi)^(3/2) integral_0^infinity v^3
-    exp(-alpha v^2) dif v.
-  $
+  $$overline(v) = integral_0^infinity v f(v) dif v$ = 4 pi (alpha / pi)^(3/2) integral_0^infinity v^3
+  exp(-alpha v^2) dif v. $
   The substitution $u = alpha v^2$, for which
   $v dif v = (dif u) / (2 alpha)$, reduces the integral to the gamma
   function
@@ -513,16 +509,9 @@ higher speeds and must simultaneously lower.
   and the same substitution turns the remaining integral into
   $integral_0^infinity u^(3/2) exp(-u) dif u = Gamma(5/2) =
   3 sqrt(pi) / 4$, so $lr(⟨ v^2 ⟩) = 3 / (2 alpha) = 3 k_B T / m$ and
-  $v_("rms") = sqrt(3 k_B T / m)$.
-
-  The ordering follows from the ratios $overline(v) / v_p = 2 / sqrt(pi)
-  approx 1.128$ and $v_("rms") / v_p = sqrt(3 / 2) approx 1.225$: the
-  long tail drags the mean, and still more the root-mean-square speed,
-  above the peak. The three speeds answer different questions —
-  $v_("rms")$ enters the mean kinetic energy and the pressure,
-  $overline(v)$ enters collision and effusion rates, and $v_p$ marks
-  the peak of the distribution.
+  $v_("rms") = sqrt(⟨ v^2 ⟩) = sqrt(3 k_B T / m)$.
 ]
+The ordering follows from the ratios $overline(v) / v_p = 2 / sqrt(pi) approx 1.128$ and $v_("rms") / v_p = sqrt(3 / 2) approx 1.225$: the long tail drags the mean, and still more the root-mean-square speed, above the peak. The three speeds answer different questions — $v_("rms")$ enters the mean kinetic energy and the pressure, $overline(v)$ enters collision and effusion rates, and $v_p$ marks the peak of the distribution.
 
 #note(title: "Mean speed over an interval")[
   The proof above averages $v$ over the whole range of speeds,
