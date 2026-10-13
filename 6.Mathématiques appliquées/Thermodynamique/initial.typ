@@ -761,17 +761,14 @@ structure is captured by a single geometric quantity.
 ] <def:collision-cross-section>
 
 #property(name: "Mean Free Path")[
-  A molecule of a gas with number density $n$ travels, between
-  successive collisions, an average distance
+  A molecule of a gas with number density $n$ travels, between successive collisions, an average distance
   $
-    lambda = overline(v) / overline(Z) = 1 / (sqrt(2) n sigma).
+    lambda = overline(v) / overline(Z) = 1 / (sqrt(2) n sigma),
   $
+  where $overline(Z)$ is the *collision frequency* — the average number of collisions one molecule undergoes per unit time — and $lambda$ the *mean free path*, the average distance travelled between successive collisions.
 ] <prop:mean-free-path>
 
-Here $overline(Z)$ is the *collision frequency* — the average number
-of collisions one molecule undergoes per unit time — and $lambda$ the
-*mean free path*, the average distance travelled between successive
-collisions. Since a molecule spends the time between two collisions
+Since a molecule spends the time between two collisions
 travelling at the mean speed $overline(v)$, its path decomposes as
 distance $=$ speed $times$ time, $lambda = overline(v) / overline(Z)$.
 The content of the formula is the factor $sqrt(2)$, which the proof
@@ -808,17 +805,16 @@ energy and particles across any surface, smoothing out the inhomogeneity.
 Three gradient-driven relaxation processes result, each governed by a
 *transport coefficient*.
 
-#table(
-  columns: (auto, auto, auto, auto),
-  align: (left, left, center, left),
-  [Phenomenon], [Graded quantity], [Flux law], [Coefficient],
-  [Momentum transport (viscosity)], [flow velocity $u(z)$], [$Pi = -eta dif u / dif z$], [shear viscosity $eta$],
-  [Energy transport (heat conduction)],
-  [temperature $T(z)$],
-  [$q = -kappa dif T / dif z$],
-  [thermal conductivity $kappa$],
-
-  [Mass transport (diffusion)], [number density $n(z)$], [$J = -D dif n / dif z$], [diffusion coefficient $D$],
+#tex-table(
+  ("Phenomenon", "Graded quantity", "Flux law", "Coefficient"),
+  ("Momentum transport (viscosity)", [flow velocity $u(z)$], [$Pi = -eta dif u / dif z$], [shear viscosity $eta$]),
+  (
+    "Energy transport (heat conduction)",
+    [temperature $T(z)$],
+    [$q = -kappa dif T / dif z$],
+    [thermal conductivity $kappa$],
+  ),
+  ("Mass transport (diffusion)", [number density $n(z)$], [$J = -D dif n / dif z$], [diffusion coefficient $D$]),
 )
 
 Each law is written for transport along $z$; the flux $Pi$ carries
