@@ -331,7 +331,7 @@ function*. In a gas of $N$ molecules at equilibrium, let $dif N$ be
 the number of molecules whose speeds lie in $[v, v + dif v]$; the
 ratio $(dif N) / N$ is the fraction of molecules in that interval, and
 $
-  f(v) = (dif N)/(N dif v)
+  f(v) = lim_(Delta v -> 0) (Delta N) / (N Delta v) = (dif N)/(N dif v)
 $
 defines the *speed distribution function*.
 
@@ -479,11 +479,9 @@ higher speeds and must simultaneously lower.
 ] <thm:characteristic-speeds>
 
 #proof[
-  Throughout, write $alpha = m / (2 k_B T)$, so that
-  $f(v) = 4 pi (alpha / pi)^(3/2) v^2 exp(-alpha v^2)$.
+  Throughout, write $alpha = m / (2 k_B T)$, so that $f(v) = 4 pi (alpha / pi)^(3/2) v^2 exp(-alpha v^2)$.
 
-  *Most probable speed.* $v_p$ maximises $f(v)$; since the prefactor is
-  constant, set
+  *Most probable speed.* $v_p$ maximises $f(v)$; since the prefactor is constant, set
   $
     (dif)/(dif v) (v^2 exp(-alpha v^2)) = (2 v - 2 alpha v^3)
     exp(-alpha v^2) = 0,
@@ -524,6 +522,22 @@ higher speeds and must simultaneously lower.
   $v_("rms")$ enters the mean kinetic energy and the pressure,
   $overline(v)$ enters collision and effusion rates, and $v_p$ marks
   the peak of the distribution.
+]
+
+#note(title: "Mean speed over an interval")[
+  The proof above averages $v$ over the whole range of speeds,
+  $overline(v) = integral_0^infinity v f(v) dif v$. To average only
+  over the molecules whose speeds lie in a finite interval $[v_1,
+    v_2]$, restrict both integrals to that interval: the numerator
+  $integral_(v_1)^(v_2) v f(v) dif v$ sums the speeds of the molecules
+  inside it, and the denominator $integral_(v_1)^(v_2) f(v) dif v$ —
+  the fraction of molecules in $[v_1, v_2]$ — restores the normalisation
+  to that sub-population. The interval mean speed is therefore
+  $
+    overline(v)_([v_1, v_2]) =
+    (integral_(v_1)^(v_2) v f(v) dif v) / (integral_(v_1)^(v_2) f(v) dif v).
+  $
+  Molecules outside $[v_1, v_2]$ contribute to neither integral.
 ]
 
 #example(name: "Stern experiment, 1920")[
