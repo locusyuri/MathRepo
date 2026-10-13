@@ -918,7 +918,7 @@ its distribution, the *binomial distribution*, opens the catalogue of the
 next chapter.
 
 #part("Random Variables and Numerical Characteristics") // 随机变量及其数字特征
-= Univariate Random Variables and Distributions // 一维随机变量及其分布
+= Univariate Random Variables and Their Numerical Characteristics // 一元随机变量及其数字特征
 
 == Random Variables and Their Distributions // 随机变量及其分布
 
@@ -938,12 +938,24 @@ The measurability condition guarantees that questions like "$X <= x$?" are
 probabilistic profile is completely determined by a single real-valued
 function.
 
-#definition(name: "Cumulative Distribution Function")[
-  The *cumulative distribution function* (CDF) of a random variable $X$ is
+#definition(name: "Distribution Measure and CDF")[
+  The *distribution measure* of a random variable $X$ is the push-forward
+  of $P$ under $X$,
   $
-    F(x) = P(X <= x), quad x in RR.
+    mu_(X)(B) = P(X in B), quad B in cal(B)(RR),
   $
-] <def:cdf>
+  a probability measure on the Borel $sigma$-algebra of the real line. Its
+  cumulative function,
+  $
+    F(x) = mu_(X)((-infinity, x]) = P(X <= x), quad x in RR,
+  $
+  is the *cumulative distribution function* (CDF) of $X$. Probability
+  measures on the real line and CDFs are in bijection — every CDF arises
+  from a unique distribution measure, whose construction (the
+  Lebesgue–Stieltjes measure) is carried out in the Analyse Réelle note.
+  This is why the distribution, not the underlying probability space,
+  carries all the information about $X$.
+] <def:distribution-measure>
 
 #property(name: "Properties of the CDF")[
   Let $F$ be a CDF. Then:
@@ -954,7 +966,8 @@ function.
   - (range) $0 <= F(x) <= 1$, and $P(a < X <= b) = F(b) - F(a)$;
   - (characterization) any function satisfying monotonicity, the limits,
     and right-continuity above is the CDF of some probability measure on the
-    real line — the measure-theoretic statement is given in the note below.
+    real line — the measure-theoretic statement is contained in
+    #link(<def:distribution-measure>)[the definition above].
 ] <prop:cdf-properties>
 
 #proof[
@@ -969,76 +982,65 @@ function.
   formula.
 ]
 
-#note(title: "CDF and the distribution measure")[
-  Associated to $X$ is its *distribution
-  measure*, the push-forward of $P$ under $X$,
-  $
-    mu_(X)(B) = P(X in B), quad B in cal(B)(RR),
-  $
-  a probability measure on the Borel $sigma$-algebra of the real line. In
-  terms of $mu_(X)$ the CDF is simply the value on unbounded intervals,
-  $
-    F(x) = P(X <= x) = mu_(X)((-infinity, x]),
-  $
-  so the CDF is the cumulative function of the distribution measure. The
-  characterization above is the converse: *probability measures on the real
-  line and CDFs are in bijection* — every CDF arises from a unique such
-  measure, whose construction (the Lebesgue–Stieltjes measure) is carried
-  out in the Analyse Réelle note. This is why the distribution, not the
-  underlying probability space, carries all the information about $X$.
-] <note:cdf-distribution-measure>
+Two reference measures dominate the description of distributions on the
+real line, and the next definition treats them uniformly.
 
-Two structural types of random variable dominate the theory.
+#definition(name: "Density with Respect to a Reference Measure")[
+  Let $nu$ be a $sigma$-finite reference measure on $(RR, cal(B)(RR))$.
+  The random variable $X$ has *density* $f$ with respect to $nu$ if
+  $mu_(X) << nu$ (absolute continuity) and
+  $
+    mu_(X)(B) = integral_B f dif nu quad "for every" B in cal(B)(RR),
+  $
+  in which case $f = (dif mu_(X)) / (dif nu)$ is the Radon–Nikodym
+  derivative. Two choices of reference measure cover the classical
+  theory:
 
-#definition(name: "Discrete Random Variable")[
-  A random variable $X$ is *discrete* if it takes values in a finite or
-  countable set ${x_1, x_2, dots}$. Its *probability mass function* (PMF) is
-  $
-    p(x_i) = P(X = x_i), quad sum_(i) p(x_i) = 1.
-  $
-  The CDF is a step function: $F(x) = sum_(x_i <= x) p(x_i)$.
-] <def:discrete-rv>
+  - $nu = lambda$ (Lebesgue measure): $f$ is the *probability density
+    function* (PDF) of $X$;
+  - $nu$ = the counting measure on a finite or countable set
+    ${x_1, x_2, dots}$: the density $p_i = f(x_i)$ is the *probability
+    mass function* (PMF), and $mu_(X) = sum_i p_i delta_(x_i)$.
+] <def:density>
 
-#definition(name: "Continuous Random Variable")[
-  A random variable $X$ is *continuous* if there exists a non-negative
-  integrable function $f$ such that
-  $
-    F(x) = integral_(-infinity)^x f(t) dif t, quad x in RR.
-  $
-  The function $f$ is the *probability density function* (PDF); at points
-  of continuity of $f$, $F'(x) = f(x)$.
-] <def:continuous-rv>
+The general definition is deliberately concise: it covers both structural
+types at once and exhibits the PMF as the discrete analogue of the PDF —
+both are Radon–Nikodym derivatives, differing only in the reference
+measure. In the probability part of this book, however, we work
+exclusively in the two elementary regimes below, where the framework
+collapses to familiar formulas; singular and more exotic types appear
+only in remarks.
 
-#note(title: "Density: elementary and measure-theoretic views")[
-  The definition above is
-  the elementary one: a density $f$ is the *integration kernel* of the CDF,
-  $F(x) = integral_(-infinity)^x f(t) dif t$. The measure-theoretic view starts
-  instead from the distribution measure $mu_(X)$: $X$ is *absolutely continuous*
-  when $mu_(X)$ is absolutely continuous with respect to Lebesgue measure
-  $lambda$, i.e. $mu_(X) << lambda$, and its density is then the Radon–Nikodym
-  derivative
+#definition(name: "PMF and PDF: Elementary Forms")[
+  $X$ is *discrete* if it takes values in a finite or countable set
+  ${x_1, x_2, dots}$. Its law is given by the PMF
   $
-    f = (dif mu_(X)) / (dif lambda), quad mu_(X)(B) = integral_B f(x) dif x.
+    p(x_i) = P(X = x_i), quad sum_(i) p(x_i) = 1,
   $
-  The two views agree precisely when $F$ is absolutely continuous, in which
-  case $F'(x) = f(x)$ holds almost everywhere. In particular the density is
-  *almost everywhere unique*: two representatives differing only on a
-  Lebesgue null set determine the same distribution. Densities are relative
-  to a reference measure: replacing $lambda$ by the counting measure $nu$
-  recovers the PMF of a discrete variable,
+  and the CDF is the step function $F(x) = sum_(x_i <= x) p(x_i)$.
+
+  $X$ is *(absolutely) continuous* if there is a non-negative integrable
+  function $f$ with
   $
-    p_i = (dif mu_(X)) / (dif nu)(x_i), quad mu_(X) = sum_i p_i delta_(x_i),
+    F(x) = integral_(-infinity)^x f(t) dif t, quad x in RR;
   $
-  so the distribution column $p_i$ is the discrete analogue of a density.
-  Absolute continuity also rules out atoms: $P(X = a) = 0$ for every point
-  $a$, hence
-  $P(a <= X <= b) = P(a < X < b) = P(a < X <= b)$. Not every distribution has
-  a density: the *Cantor* distribution is continuous yet $mu_(X)$ is not
-  absolutely continuous with respect to $lambda$ — its CDF is a singular
-  continuous function with derivative $0$ almost everywhere, an instance of
-  the singular type anticipated in the note below. (Radon–Nikodym and
-  absolute continuity are developed in the Analyse Réelle note.)
-] <note:density-views>
+  $f$ is the PDF, and at every continuity point of $f$, $F'(x) = f(x)$.
+] <def:pmf-pdf>
+
+#note[
+  (Remarks on densities.) The density is determined only *almost
+  everywhere*: two representatives differing on a null set define the
+  same distribution, and any version may be used. Absolute continuity
+  rules out atoms — $P(X = a) = 0$ for every single point — so the
+  endpoints of an interval do not matter in the continuous regime. Not
+  every distribution admits a density with respect to Lebesgue measure:
+  the *Cantor* distribution is continuous (no atoms) yet its CDF has
+  derivative $0$ almost everywhere — the singular type. (Radon–Nikodym
+  theory and absolute continuity are developed in the Analyse Réelle
+  note; the counting-measure instance of
+  #link(<def:density>)[the general definition] is exactly the discrete
+  regime above.)
+] <note:density-remarks>
 
 #property(name: "Properties of the PDF")[
   Let $f$ be a PDF. Then:
@@ -1086,97 +1088,15 @@ Two structural types of random variable dominate the theory.
   supplement: [Fig.],
 ) <fig:density-cdf-discrete-continuous>
 
-== Distributions of Functions of Random Variables // 随机变量函数的分布
-
-Given the distribution of $X$, what is the distribution of $Y = g(X)$? The
-answer depends on the type of $X$ and the nature of $g$.
-
-For a *discrete* $X$, the method is direct: enumerate the values of $Y$ and
-collect the probabilities of the pre-images.
-
-#example[
-  Let $X$ take $-1, 0, 1$ each with probability $1\/3$, and set $Y = X^2$.
-  Then $Y$ takes values $0$ and $1$, with
-  $
-    P(Y = 0) = P(X = 0) = 1/3, quad
-    P(Y = 1) = P(X = -1) + P(X = 1) = 2/3.
-  $
-] <ex:discrete-transform>
-
-For a *continuous* $X$, the distribution can be recovered from its CDF:
-the *distribution function method* — compute $F_(Y)(y) = P(g(X) <= y)$,
-then differentiate.
-
-#example[
-  Let $X ~ U(0, 1)$ and $Y = X^2$. For $0 <= y <= 1$,
-  $
-    F_(Y)(y) = P(X^2 <= y) = P(X <= sqrt(y)) = sqrt(y),
-  $
-  so $f_(Y)(y) = d\/(d y) sqrt(y) = 1 / (2 sqrt(y))$ for $0 < y < 1$. This
-  is the $"Be"(1\/2, 1)$ density, the square of a uniform variable being a
-  special case of the Beta–Gamma algebraic structure explored in the
-  distribution relationships of Chapter 5.
-] <ex:cdf-method>
-
-When $g$ is monotone, a direct formula avoids the detour through the CDF.
-
-#theorem(name: "Monotone Transform Formula")[
-  Let $X$ be a continuous random variable with density $f_X$, and let
-  $g$ be strictly monotone and differentiable on the range of $X$. Set
-  $Y = g(X)$ and let $h = g^(-1)$ be the inverse function. Then $Y$ has
-  density
-  $
-    f_(Y)(y) = f_(X)(h(y)) dot abs(h'(y)),
-  $
-  for $y$ in the range of $g$.
-] <thm:monotone-transform>
-
-#proof[
-  Suppose $g$ is strictly increasing (the decreasing case is symmetric).
-  Then $g^(-1)$ is also increasing, so
-  $
-    F_(Y)(y) = P(g(X) <= y) = P(X <= h(y)) = F_(X)(h(y)).
-  $
-  Differentiating by the chain rule gives
-  $f_(Y)(y) = f_(X)(h(y)) h'(y)$; since $h$ is increasing, $h'(y) >= 0$ and
-  $h'(y) = abs(h'(y))$. If $g$ is strictly decreasing, then
-  $
-    F_(Y)(y) = P(g(X) <= y) = P(X >= h(y)) = 1 - F_(X)(h(y)),
-  $
-  and differentiating gives $f_(Y)(y) = -f_(X)(h(y)) h'(y)$; since $h$ is now
-  decreasing, $h'(y) <= 0$ and $-h'(y) = abs(h'(y))$. The two cases unify
-  in the stated formula.
-]
-
-#example(name: "Linear transform")[
-  Let $X ~ N(mu, sigma^2)$ and $Y = a X + b$ with
-  $a != 0$. Then $h(y) = (y - b) / a$ and $h'(y) = 1 / a$, so
-  $
-    f_(Y)(y)
-    = f_(X)((y - b) / a) dot abs(1 / a)
-    = 1 / (abs(a) sigma sqrt(2 pi)) exp(-(y - a mu - b)^2 / (2 a^2 sigma^2)).
-  $
-  This is $N(a mu + b, a^2 sigma^2)$: linear transforms of normals are
-  normal, with scale and location transformed accordingly. In particular,
-  $Z = (X - mu) / sigma ~ N(0, 1)$ — the standardization used throughout
-  normal calculations.
-] <ex:linear-transform>
-
-The monotone transform formula extends to several variables via the
-multidimensional Jacobian — a tool to be developed in the multivariate
-chapter (Chapter 6), where the change-of-variables technique for joint
-densities takes centre stage.
-
-= Numerical Characteristics // 数字特征
-
 A distribution is fully described by its CDF or density, but a few numbers
-— the mean, the variance, the correlation — capture its essential features
-and enable comparisons. These *numerical characteristics* are the
-quantities that statistics estimates and probability theory bounds. This
-chapter develops them for a single random variable; the joint
-characteristics of several variables (covariance, correlation) follow in
-the multivariate chapter, and the common distributions of the next chapter
-will each receive their mean and variance as a complete portrait.
+— the mean, the variance, the moments — capture its essential features and
+enable comparisons. These *numerical characteristics* are the quantities
+that statistics estimates and probability theory bounds. The remaining
+sections of this chapter develop them for a single random variable; the
+joint characteristics of several variables (covariance, correlation)
+follow in the multivariate chapter, and the common distributions of the
+next chapter will each receive their mean and variance as a complete
+portrait.
 
 == Mathematical Expectation // 数学期望
 
@@ -1294,7 +1214,7 @@ E[X^2] - 2 mu E[X] + mu^2 = E[X^2] - mu^2$.
 
 Chebyshev's inequality is universal — it uses only the mean and variance,
 not the full distribution. It is the bridge from finite moments to limit
-theorems: the Weak Law of Large Numbers (Chapter 9) is a direct corollary.
+theorems: the Weak Law of Large Numbers (Chapter 8) is a direct corollary.
 
 #note(title: "Exponential family callback")[
   The
@@ -1369,7 +1289,7 @@ The mean, variance, skewness, and kurtosis are the first four standardised
 moments — together they sketch the shape of a distribution: location,
 scale, asymmetry, and tail weight. Higher moments and the moment
 generating function, which encodes *all* moments in a single function, are
-the subject of the generating functions chapter (Chapter 7). First,
+the subject of the generating functions chapter (Chapter 6). First,
 however, the next chapter applies the tools just built to give the standard
 families their complete portraits — mean and variance included.
 
@@ -2016,7 +1936,7 @@ and conjugate Bayesian analysis.
   #link(<def:chi-squared-dist>)[the chi-squared distribution] with one
   degree of freedom, to be met again in the sampling distributions
   chapter.
-]
+] <note:continuous-relationships>
 
 #figure(
   image("img/common-continuous-densities.svg", width: 90%),
@@ -2086,6 +2006,185 @@ derived in this chapter:
   #link(<fig:common-discrete-distributions>)[the discrete] and
   #link(<fig:common-continuous-densities>)[the continuous] families.
 ]
+
+
+== Distributions of Functions of Random Variables // 随机变量函数的分布
+
+The families catalogued in the preceding sections are more than a
+reference table: applying a function $g$ to a random variable with a
+known law produces a new random variable, and the machinery of this
+chapter — CDFs, densities, expectations — computes its law. We proceed
+from the simplest situation to the most general: the discrete case, then
+monotone transformations of continuous variables, then the general
+continuous case.
+
+=== The Discrete Case // 离散型
+
+For a *discrete* $X$, the method is direct: enumerate the values of $Y$ and
+collect the probabilities of the pre-images.
+
+#example[
+  Let $X$ take $-1, 0, 1$ each with probability $1\/3$, and set $Y = X^2$.
+  Then $Y$ takes values $0$ and $1$, with
+  $
+    P(Y = 0) = P(X = 0) = 1/3, quad
+    P(Y = 1) = P(X = -1) + P(X = 1) = 2/3.
+  $
+] <ex:discrete-transform>
+
+=== Monotone Transforms // 连续型：$g$ 单调
+
+Let $X$ be continuous. When $g$ is strictly monotone and differentiable,
+a direct formula avoids the detour through the CDF.
+
+#theorem(name: "Monotone Transform Formula")[
+  Let $X$ be a continuous random variable with density $f_X$, and let
+  $g$ be strictly monotone and differentiable on the range of $X$. Set
+  $Y = g(X)$ and let $h = g^(-1)$ be the inverse function. Then $Y$ has
+  density
+  $
+    f_(Y)(y) = f_(X)(h(y)) dot abs(h'(y)),
+  $
+  for $y$ in the range of $g$.
+] <thm:monotone-transform>
+
+#proof[
+  Suppose $g$ is strictly increasing (the decreasing case is symmetric).
+  Then $g^(-1)$ is also increasing, so
+  $
+    F_(Y)(y) = P(g(X) <= y) = P(X <= h(y)) = F_(X)(h(y)).
+  $
+  Differentiating by the chain rule gives
+  $f_(Y)(y) = f_(X)(h(y)) h'(y)$; since $h$ is increasing, $h'(y) >= 0$ and
+  $h'(y) = abs(h'(y))$. If $g$ is strictly decreasing, then
+  $
+    F_(Y)(y) = P(g(X) <= y) = P(X >= h(y)) = 1 - F_(X)(h(y)),
+  $
+  and differentiating gives $f_(Y)(y) = -f_(X)(h(y)) h'(y)$; since $h$ is now
+  decreasing, $h'(y) <= 0$ and $-h'(y) = abs(h'(y))$. The two cases unify
+  in the stated formula.
+]
+
+#example(name: "Linear transform")[
+  Let $X ~ N(mu, sigma^2)$ and $Y = a X + b$ with
+  $a != 0$. Then $h(y) = (y - b) / a$ and $h'(y) = 1 / a$, so
+  $
+    f_(Y)(y)
+    = f_(X)((y - b) / a) dot abs(1 / a)
+    = 1 / (abs(a) sigma sqrt(2 pi)) exp(-(y - a mu - b)^2 / (2 a^2 sigma^2)).
+  $
+  This is $N(a mu + b, a^2 sigma^2)$: linear transforms of normals are
+  normal, with scale and location transformed accordingly. In particular,
+  $Z = (X - mu) / sigma ~ N(0, 1)$ — the standardization used throughout
+  normal calculations.
+] <ex:linear-transform>
+
+#corollary(name: "Scaling of the Gamma Family")[
+  If $X ~ "Ga"(alpha, lambda)$ and $k > 0$, then
+  $
+    k X ~ "Ga"(alpha, lambda / k).
+  $
+  In particular, with $k = 2 lambda$,
+  $
+    2 lambda X ~ chi^2 (2 alpha):
+  $
+  every Gamma variable can be rescaled into a chi-squared variable. This
+  is the bridge from the Gamma family to the sampling distributions of
+  Part IV.
+] <cor:gamma-scaling>
+
+#proof[
+  The map $g(x) = k x$ is strictly increasing with inverse $h(y) = y / k$
+  and $abs(h'(y)) = 1 / k$. The monotone formula gives
+  $
+    f_(k X)(y) = f_(X)(y / k) dot 1 / k
+    = lambda^alpha / "Gamma"(alpha) dot (y / k)^(alpha - 1) e^(-lambda y \/ k) dot 1 / k
+    = (lambda / k)^alpha / "Gamma"(alpha) dot y^(alpha - 1) e^(-(lambda \/ k) y),
+  $
+  which is the $"Ga"(alpha, lambda / k)$ density. With $k = 2 lambda$ the
+  pair $(alpha, lambda / k) = (alpha, 1 / 2)$ is exactly the chi-squared
+  family of #link(<def:chi-squared-dist>)[the definition above] with
+  $2 alpha$ degrees of freedom.
+]
+
+#definition(name: "Lognormal Distribution")[
+  A random variable $Y$ has the *lognormal distribution* $"LN"(mu, sigma^2)$
+  if $Y = e^X$ for some $X ~ N(mu, sigma^2)$ — the logarithm of $Y$ is
+  normal. Since $g(x) = e^x$ is strictly increasing with inverse
+  $h(y) = ln y$, the monotone formula yields the density
+  $
+    f_(Y)(y) = 1 / (y sigma sqrt(2 pi)) exp(- (ln y - mu)^2 / (2 sigma^2)), quad y > 0.
+  $
+] <def:lognormal-dist>
+
+#property(name: "Mean and Variance of the Lognormal")[
+  If $Y ~ "LN"(mu, sigma^2)$, then
+  $
+    E[Y] = exp(mu + sigma^2 / 2), quad
+    "Var"(Y) = (exp(sigma^2) - 1) exp(2 mu + sigma^2).
+  $
+] <prop:lognormal-mean-variance>
+
+#proof[
+  By LOTUS, $E[Y] = E[e^X]$ with $X ~ N(mu, sigma^2)$. Completing the
+  square in the exponent,
+  $
+    x - (x - mu)^2 / (2 sigma^2)
+    = mu + sigma^2 / 2 - (x - mu - sigma^2)^2 / (2 sigma^2),
+  $
+  so the remaining factor is an unnormalised normal density and
+  $E[Y] = exp(mu + sigma^2 / 2)$. The same computation with $2 x$ in place
+  of $x$ gives $E[Y^2] = E[e^(2 X)] = exp(2 mu + 2 sigma^2)$, and
+  $"Var"(Y) = E[Y^2] - E[Y]^2 = (exp(sigma^2) - 1) exp(2 mu + sigma^2)$.
+]
+
+=== The CDF Method // 连续型：一般 $g$ 与分布函数法
+
+When $g$ fails to be monotone, the two-step *distribution function
+method* still works: compute $F_(Y)(y) = P(g(X) <= y)$ directly, then
+differentiate.
+
+#example[
+  Let $X ~ U(-1, 1)$ and $Y = X^2$. For $0 <= y <= 1$,
+  $
+    F_(Y)(y) = P(X^2 <= y) = P(-sqrt(y) <= X <= sqrt(y)) = sqrt(y),
+  $
+  so $f_(Y)(y) = d\/(d y) sqrt(y) = 1 / (2 sqrt(y))$ for $0 < y < 1$. This
+  is the $"Be"(1\/2, 1)$ density, the square of a uniform variable being a
+  special case of the Beta–Gamma algebraic structure explored in
+  #link(<note:continuous-relationships>)[the distribution relationships]
+  of the preceding sections.
+] <ex:cdf-method>
+
+#theorem(name: "Probability Integral Transform")[
+  Let $X$ have a continuous CDF $F$ that is strictly increasing on its
+  support. Then $Y = F(X) ~ U(0, 1)$. Conversely, if $U ~ U(0, 1)$ and
+  $F$ is any CDF with generalized inverse
+  $F^(-1)(u) = inf{x : F(x) >= u}$, then $F^(-1)(U)$ has CDF $F$.
+] <thm:probability-integral-transform>
+
+#proof[
+  For $0 <= y <= 1$, strict monotonicity lets us apply $F^(-1)$ to the
+  event ${F(X) <= y}$:
+  $
+    F_(Y)(y) = P(F(X) <= y) = P(X <= F^(-1)(y)) = F(F^(-1)(y)) = y,
+  $
+  which is exactly the $U(0, 1)$ distribution function. Conversely,
+  $P(F^(-1)(U) <= x) = P(U <= F(x)) = F(x)$ since $U$ is uniform.
+]
+
+#note[
+  (Inverse transform sampling.) The converse direction is the workhorse
+  of simulation: to sample from an arbitrary law with CDF $F$, draw
+  $U ~ U(0, 1)$ and return $F^(-1)(U)$. The same inversion underlies the
+  quantile tables of the Appendix: a table of $Phi$ read backwards
+  produces quantiles of the normal law.
+]
+
+The monotone transform formula extends to several variables via the
+multidimensional Jacobian — a tool to be developed in the multivariate
+chapter (Chapter 5), where the change-of-variables technique for joint
+densities takes centre stage.
 
 
 = Multivariate Random Variables and Distributions // 多维随机变量及其分布
@@ -2285,7 +2384,7 @@ distribution of the other.
 
 #note[
   The conditional framework set up here becomes a computational tool once
-  expectation (Chapter 4) is applied to the conditional distribution: the
+  expectation (Chapter 3) is applied to the conditional distribution: the
   result is the *conditional expectation* and the laws that govern it,
   developed immediately below.
 ]
@@ -2506,7 +2605,7 @@ vectors.
   $Sigma$ is symmetric and positive semi-definite. This is the object
   appearing in the
   #link(<def:multivariate-normal>)[multivariate normal density] of
-  Chapter 8: the abstract $Sigma$ is grounded in the concrete notion of
+  Chapter 7: the abstract $Sigma$ is grounded in the concrete notion of
   covariance.
 ] <def:mean-vector-covariance-matrix>
 
@@ -2673,7 +2772,7 @@ The proof strategy has two directions:
   $X$.
 
 This theorem is the *master tool* for proving limit theorems. The
-Central Limit Theorem (Chapter 9) reduces to showing $phi_(S_n / sqrt(n))
+Central Limit Theorem (Chapter 8) reduces to showing $phi_(S_n / sqrt(n))
 (t) -> exp(-t^2 / 2)$ — a routine computation with independent-sum CFs.
 
 #note(title: "Fourier analysis boundary")[
@@ -2760,11 +2859,11 @@ independent variables, and analysing compound distributions.
 The three transforms — MGF, CF, PGF — each encode the full distribution
 in a single analytic function. The CF, with its universal existence and
 the Lévy continuity theorem, is the master tool for the limit theorems
-of Chapter 9.
+of Chapter 8.
 
 = Characterization and Classification of Distributions // 分布的特征与分类
 
-The distributions of Chapters 3 and 5 — normal, Gamma, Beta, Poisson,
+The distributions of Chapter 4 — normal, Gamma, Beta, Poisson,
 binomial — look different on the surface, yet most of them share a hidden
 algebraic skeleton: the *exponential family*. Recognising a distribution as
 a member of this family immediately yields its sufficient statistic, its
@@ -2876,7 +2975,7 @@ of the sufficient statistic are read off from the derivatives of $A$.
 
 == Multivariate Normal Distribution // 多元正态分布
 
-The univariate normal of #link(<def:normal-dist>)[Chapter 5] extends to
+The univariate normal of #link(<def:normal-dist>)[Chapter 4] extends to
 vectors, and its geometry — ellipsoidal contours, linear closure,
 independence through zero covariance — makes it the workhorse of multivariate
 statistics.
@@ -2896,7 +2995,7 @@ statistics.
 The covariance matrix $Sigma = (sigma_(i j))$ where $sigma_(i j) =
 "Cov"(X_i, X_j)$ encodes the pairwise covariances; its diagonal entries are
 the variances $sigma_(i i) = "Var"(X_i)$. These notions were formalised in
-the multivariate chapter (Chapter 6), and the multivariate normal can be
+the multivariate chapter (Chapter 5), and the multivariate normal can be
 understood geometrically through its density: level sets are
 ellipsoids centred at $bold(mu)$, with axes determined by the eigenvectors
 and eigenvalues of $Sigma$.
@@ -3255,7 +3354,7 @@ but the Taylor expansion must control each term individually.
 ] <ex:delta-method-application>
 
 The limit theorems of this chapter are the pillars of statistical
-inference. Part IV applies them to sampling distributions (Chapter 11);
+inference. Part IV applies them to sampling distributions (Chapter 10);
 the estimation chapters use the CLT and Delta method to establish the
 asymptotic properties of estimators.
 
@@ -3288,7 +3387,7 @@ foundations.
   The law of a process is determined
   by the joint distributions of $(X(t_1), dots, X(t_n))$ for all choices
   of indices — the *finite-dimensional distributions*. This extends the
-  multivariate theory of Chapter 6 from fixed dimension to arbitrary
+  multivariate theory of Chapter 5 from fixed dimension to arbitrary
   families; the consistency conditions that make such a family coherent
   are the content of Kolmogorov's extension theorem (see the Analyse
   Réelle and Processus Stochastique notes).
@@ -3521,75 +3620,80 @@ Processus Stochastique note.
 // ==========================================================================
 // Part II — 随机变量及其数字特征 (Random Variables and Numerical Characteristics)  [已写出]
 // ==========================================================================
-// 设计思路：先建立随机变量与分布的一般理论，立即发展期望与方差，
-// 再以完整肖像（含 E/Var）呈现常用分布族，最后推广到多维。
+// 设计思路：一章之内先建立随机变量与分布的一般理论（测度论定义先行、
+// 初等形式随后），随即发展期望与方差等数字特征；再以完整肖像（含 E/Var）
+// 呈现常用分布族，并以"随机变量函数的分布"收束（利用刚建立的分布族
+// 导出对数正态、Gamma 数乘归化卡方、概率积分变换等结论）。
 // 期望/方差前置于常用分布，是本笔记区别于茆诗松教材顺序的关键设计。
 // 对应教材：第二章 §2.1–§2.7 + 第三章 §3.1–§3.5 + 第四章 §4.1–§4.3
 
-// --- Chapter 3: 随机变量及其分布 (Random Variables and Their Distributions) ---
+// --- Chapter 3: 一元随机变量及其数字特征 (Univariate Random Variables and Their Numerical Characteristics) ---
 
 //   Section 3.1: 随机变量及其分布 (Random Variables and Their Distributions)
-//     - 随机变量的概念；分布测度与分布函数 (CDF)
-//     - 离散型随机变量与分布列 (PMF)；连续型随机变量与密度函数 (PDF)
-//     - 混合型；密度的高级观点（Radon–Nikodym，参见 Analyse Réelle）
+//     - 随机变量的概念；分布测度与分布函数 (CDF)——通用定义
+//     - 关于参考测度的密度——PDF 与 PMF 统一定义（Radon–Nikodym）
+//     - 初等形式：PMF / PDF；密度备注（a.e. 唯一性、Cantor 奇异型）
+//     - 混合型；两张示意图
 
-//   Section 3.2: 随机变量函数的分布 (Distributions of Functions of RVs)
-//     - 离散型：直接枚举
-//     - 连续型：分布函数法
-//     - 单调变换公式 (Monotone Transform Formula)
-
-
-// --- Chapter 4: 数字特征 (Numerical Characteristics) ---
-
-//   Section 4.1: 数学期望 (Mathematical Expectation)
+//   Section 3.2: 数学期望 (Mathematical Expectation)
 //     - 定义（离散 / 连续）；线性性；LOTUS
 //     - 马尔可夫不等式 (Markov's Inequality)
 //     - 常见分布的期望表
 
-//   Section 4.2: 方差与标准差 (Variance and Standard Deviation)
+//   Section 3.3: 方差与标准差 (Variance and Standard Deviation)
 //     - 定义与性质；切比雪夫不等式 (Chebyshev's Inequality)
 
-//   Section 4.3: 分布的其他特征数 (Other Characterization Numbers)
+//   Section 3.4: 分布的其他特征数 (Other Characterization Numbers)
 //     - k 阶矩与中心矩
 //     - 变异系数 (Coefficient of Variation)
 //     - 分位数与中位数 (Quantiles and Median)
 //     - 偏度系数 (Skewness)；峰度系数 (Kurtosis)
 
 
-// --- Chapter 5: 常用分布 (Common Distributions) ---
+// --- Chapter 4: 常用分布 (Common Distributions) ---
 
-//   Section 5.1: 常用离散分布 (Common Discrete Distributions)
+//   Section 4.1: 常用离散分布 (Common Discrete Distributions)
 //     - Bernoulli / 二项 / Poisson / 超几何 / 几何 / 负二项
 //     - 每个分布的 Mean and Variance 性质与证明
+//     - 几何分布双约定 note（计成功 vs 计失败）
 //     - 分布谱系（计数轴 × 抽样协议轴）
 
-//   Section 5.2: 常用连续分布 (Common Continuous Distributions)
-//     - 均匀 / 指数 / 正态 / Gamma / Beta
+//   Section 4.2: 常用连续分布 (Common Continuous Distributions)
+//     - 均匀 / 指数 / 正态 / Gamma / Beta（含卡方分布作为 Gamma 特例）
 //     - 每个分布的 Mean and Variance 性质与证明
 //     - 分布的核 (Kernel)；分布间关系
 
-//   Section 5.3: 常用分布汇总 (Summary of Common Distributions)
+//   Section 4.3: 常用分布汇总 (Summary of Common Distributions)
 //     - 汇总表：分布律 / 支撑 / 期望 / 方差
 
+//   Section 4.4: 随机变量函数的分布 (Distributions of Functions of Random Variables)
+//     - 离散型：直接枚举
+//     - 连续型：单调变换公式 (Monotone Transform Formula)
+//       · 线性变换；Gamma 数乘 kX ~ Ga(alpha, lambda/k)，2λX ~ chi²(2α)
+//       · 对数正态分布 (Lognormal)：密度 + E/Var
+//     - 连续型：一般 g 与分布函数法 (CDF Method)
+//       · 概率积分变换 (Probability Integral Transform)；逆变换采样
+//     - 过渡：多维 Jacobian 见 Chapter 5
 
-// --- Chapter 6: 多维随机变量及其分布 (Multivariate Random Variables and Distributions) ---
 
-//   Section 6.1: 联合分布 (Joint Distributions)
+// --- Chapter 5: 多维随机变量及其分布 (Multivariate Random Variables and Distributions) ---
+
+//   Section 5.1: 联合分布 (Joint Distributions)
 //     - 随机向量；联合分布函数 / 联合分布列 / 联合密度函数
 
-//   Section 6.2: 边缘分布与独立性 (Marginal Distributions and Independence)
+//   Section 5.2: 边缘分布与独立性 (Marginal Distributions and Independence)
 //     - 边缘分布；随机变量间的独立性
 
-//   Section 6.3: 条件分布与条件期望 (Conditional Distributions and Conditional Expectation)
+//   Section 5.3: 条件分布与条件期望 (Conditional Distributions and Conditional Expectation)
 //     - 条件分布列 / 条件密度
 //     - 条件数学期望；全期望公式（塔性质）；全方差公式
 
-//   Section 6.4: 多维随机变量函数的分布 (Distributions of Functions of Several RVs)
+//   Section 5.4: 多维随机变量函数的分布 (Distributions of Functions of Several RVs)
 //     - 最大值与最小值的分布
 //     - 卷积公式 (Convolution Formula)
 //     - 变量变换法 (Jacobian Method)
 
-//   Section 6.5: 协方差与相关系数 (Covariance and Correlation)
+//   Section 5.5: 协方差与相关系数 (Covariance and Correlation)
 //     - 协方差的定义与性质；相关系数；不相关与独立的关系
 //     - 随机向量的期望向量与协方差矩阵
 
@@ -3603,57 +3707,57 @@ Processus Stochastique note.
 // 特征函数在极限定理中扮演关键角色（证明 CLT）。
 // 对应教材：§2.4（特征函数）+ 第四章 §4.1–§4.4 + 拓展
 
-// --- Chapter 7: 生成函数与变换方法 (Generating Functions and Transform Methods) ---
+// --- Chapter 6: 生成函数与变换方法 (Generating Functions and Transform Methods) ---
 
-//   Section 7.1: 矩母函数 (Moment Generating Functions)
+//   Section 6.1: 矩母函数 (Moment Generating Functions)
 //     - 定义与性质；唯一性定理
 
-//   Section 7.2: 特征函数 (Characteristic Functions)
+//   Section 6.2: 特征函数 (Characteristic Functions)
 //     - 定义与基本性质；反转公式；连续性定理
 //     - 注：Fourier 分析工具详见 Processus Stochastique
 
-//   Section 7.3: 概率生成函数 (Probability Generating Functions)
+//   Section 6.3: 概率生成函数 (Probability Generating Functions)
 //     - 离散情形；复合分布的应用
 
 
-// --- Chapter 8: 指数族与多元正态 (Exponential Family and Multivariate Normal) ---
+// --- Chapter 7: 指数族与多元正态 (Exponential Family and Multivariate Normal) ---
 
-//   Section 8.1: 指数族 (Exponential Family)
+//   Section 7.1: 指数族 (Exponential Family)
 //     - 典范形式；自然参数空间；充分统计量与 cgf 的联系
 
-//   Section 8.2: 多元正态分布 (Multivariate Normal Distribution)
+//   Section 7.2: 多元正态分布 (Multivariate Normal Distribution)
 //     - 定义与性质（线性闭包、边缘、条件分布）
 //     - 不相关与独立的等价性
 
 
-// --- Chapter 9: 大数定律与中心极限定理 (LLN and CLT) ---
+// --- Chapter 8: 大数定律与中心极限定理 (LLN and CLT) ---
 
-//   Section 9.1: 收敛概念 (Concepts of Convergence)
+//   Section 8.1: 收敛概念 (Concepts of Convergence)
 //     - 依概率 / 依分布 / 几乎必然 / L^p 收敛及其关系
 
-//   Section 9.2: 大数定律 (Laws of Large Numbers)
+//   Section 8.2: 大数定律 (Laws of Large Numbers)
 //     - Bernoulli / Chebyshev / Khinchin / Kolmogorov 强大数定律
 
-//   Section 9.3: 中心极限定理 (Central Limit Theorem)
+//   Section 8.3: 中心极限定理 (Central Limit Theorem)
 //     - Lindeberg-Lévy CLT；De Moivre-Laplace；Lindeberg / Lyapunov 条件
 //     - CLT 的应用与近似计算
 
-//   Section 9.4: Delta 方法 (Delta Method)
+//   Section 8.4: Delta 方法 (Delta Method)
 //     - 一阶 Delta 方法；在统计量渐近分布中的应用
 
 
-// --- Chapter 10: 随机过程初步 (Introduction to Stochastic Processes) ---
+// --- Chapter 9: 随机过程初步 (Introduction to Stochastic Processes) ---
 
-//   Section 10.1: 定义与分类 (Definition and Classification)
+//   Section 9.1: 定义与分类 (Definition and Classification)
 //     - 有限维分布；平稳性；独立增量；四象限分类
 
-//   Section 10.2: 离散时间 Markov 链 (Discrete-Time Markov Chains)
+//   Section 9.2: 离散时间 Markov 链 (Discrete-Time Markov Chains)
 //     - 转移概率矩阵；Chapman–Kolmogorov；平稳分布
 
-//   Section 10.3: Poisson 过程 (Poisson Processes)
+//   Section 9.3: Poisson 过程 (Poisson Processes)
 //     - 定义与性质；到达时间间隔（i.i.d. Exp；Erlang）
 
-//   Section 10.4: Brown 运动初步 (Introduction to Brownian Motion)
+//   Section 9.4: Brown 运动初步 (Introduction to Brownian Motion)
 
 
 // ==========================================================================
@@ -3664,161 +3768,161 @@ Processus Stochastique note.
 // 这是从"已知模型推数据"到"从数据推模型"的转折。
 // 对应教材：第五至八章
 
-// --- Chapter 11: 抽样与经验分布 (Sampling and Empirical Distributions) ---
+// --- Chapter 10: 抽样与经验分布 (Sampling and Empirical Distributions) ---
 
-//   Section 11.1: 总体与样本 (Population and Samples)
+//   Section 10.1: 总体与样本 (Population and Samples)
 //     - 总体与个体；样本与统计量
 //     - 经验分布函数 (Empirical Distribution Function)
 //     - Glivenko-Cantelli 定理
 
-//   Section 11.2: 样本矩与抽样分布 (Sample Moments and Sampling Distributions)
+//   Section 10.2: 样本矩与抽样分布 (Sample Moments and Sampling Distributions)
 //     - 统计量与抽样分布的概念
 //     - 样本均值及其抽样分布；样本方差与样本标准差
 //     - 样本矩及其函数；蒙特卡罗方法 (Monte Carlo Methods)
 
-//   Section 11.3: 次序统计量 (Order Statistics)
+//   Section 10.3: 次序统计量 (Order Statistics)
 //     - 次序统计量的概念；单个/多个次序统计量的分布
 //     - 样本中位数与样本分位数
 //     - 五数概括 (Five-Number Summary) 与箱线图 (Box Plot)
 
-//   Section 11.4: 三大抽样分布 (Three Major Sampling Distributions)
+//   Section 10.4: 三大抽样分布 (Three Major Sampling Distributions)
 //     - χ² 分布 (Chi-Squared)：定义、性质、分位数
 //     - t 分布 (Student's t)：定义、性质、分位数
 //     - F 分布 (Fisher's F)：定义、性质、分位数
 
-//   Section 11.5: 正态总体下的抽样分布 (Sampling Distributions under Normality)
+//   Section 10.5: 正态总体下的抽样分布 (Sampling Distributions under Normality)
 //     - X̄ 与 S² 的独立性；基于正态总体的经典抽样分布结论
 
 
-// --- Chapter 12: 充分统计量 (Sufficient Statistics) ---
+// --- Chapter 11: 充分统计量 (Sufficient Statistics) ---
 
-//   Section 12.1: 充分性的概念 (Concept of Sufficiency)
+//   Section 11.1: 充分性的概念 (Concept of Sufficiency)
 
-//   Section 12.2: 因子分解定理 (Factorization Theorem)
+//   Section 11.2: 因子分解定理 (Factorization Theorem)
 
-//   Section 12.3: 完备统计量 (Complete Statistics)
+//   Section 11.3: 完备统计量 (Complete Statistics)
 //     - 完备性定义；Bahadur 定理
 
-//   Section 12.4: Ancillary 统计量与 Basu 定理 (Ancillary Statistics and Basu's Theorem)
+//   Section 11.4: Ancillary 统计量与 Basu 定理 (Ancillary Statistics and Basu's Theorem)
 
 
-// --- Chapter 13: 点估计方法 (Methods of Point Estimation) ---
+// --- Chapter 12: 点估计方法 (Methods of Point Estimation) ---
 
-//   Section 13.1: 矩估计法 (Method of Moments)
+//   Section 12.1: 矩估计法 (Method of Moments)
 //     - 替换原理；概率函数已知时的矩估计
 
-//   Section 13.2: 极大似然估计法 (Maximum Likelihood Estimation)
+//   Section 12.2: 极大似然估计法 (Maximum Likelihood Estimation)
 //     - 似然函数与 MLE；EM 算法 (EM Algorithm)
 //     - MLE 的渐近正态性 (Asymptotic Normality)；不变性原理
 
-//   Section 13.3: 最小二乘法 (Least Squares Method)
+//   Section 12.3: 最小二乘法 (Least Squares Method)
 
-//   Section 13.4: Bayes 估计 (Bayesian Estimation)
+//   Section 12.4: Bayes 估计 (Bayesian Estimation)
 //     - 统计推断的贝叶斯范式；先验分布的选择与共轭先验族
 //     - 后验分布的密度函数形式
 
 
-// --- Chapter 14: 估计的评价与改进 (Evaluation and Improvement of Estimators) ---
+// --- Chapter 13: 估计的评价与改进 (Evaluation and Improvement of Estimators) ---
 
-//   Section 14.1: 无偏性 (Unbiasedness)
+//   Section 13.1: 无偏性 (Unbiasedness)
 
-//   Section 14.2: 有效性与 Cramér-Rao 不等式 (Efficiency and Cramér-Rao Inequality)
+//   Section 13.2: 有效性与 Cramér-Rao 不等式 (Efficiency and Cramér-Rao Inequality)
 //     - Fisher 信息量；Cramér-Rao 下界的推导与等号成立条件
 
-//   Section 14.3: 一致性 / 相合性 (Consistency)
+//   Section 13.3: 一致性 / 相合性 (Consistency)
 //     - 弱一致性与强一致性；矩估计与 MLE 的相合性
 
-//   Section 14.4: 均方误差 (Mean Squared Error)
+//   Section 13.4: 均方误差 (Mean Squared Error)
 
-//   Section 14.5: 一致最小方差无偏估计 (UMVUE)
+//   Section 13.5: 一致最小方差无偏估计 (UMVUE)
 //     - 充分性原则；Rao-Blackwell 定理
 //     - Lehmann-Scheffé 定理（基于完备充分统计量）
 
 
-// --- Chapter 15: 区间估计 (Interval Estimation) ---
+// --- Chapter 14: 区间估计 (Interval Estimation) ---
 
-//   Section 15.1: 置信区间的概念 (Concept of Confidence Intervals)
+//   Section 14.1: 置信区间的概念 (Concept of Confidence Intervals)
 //     - 置信水平与频率诠释；枢轴量法 (Pivotal Quantity Method)
 
-//   Section 15.2: 单个正态总体参数的置信区间 (CIs for Single Normal Population)
+//   Section 14.2: 单个正态总体参数的置信区间 (CIs for Single Normal Population)
 //     - μ 的置信区间（σ 已知 / σ 未知）；σ² 的置信区间
 
-//   Section 15.3: 两个正态总体参数的置信区间 (CIs for Two Normal Populations)
+//   Section 14.3: 两个正态总体参数的置信区间 (CIs for Two Normal Populations)
 //     - μ₁ - μ₂ 的置信区间（含配对样本）；σ₁² / σ₂² 的置信区间
 
-//   Section 15.4: 大样本置信区间 (Large-Sample CIs)
+//   Section 14.4: 大样本置信区间 (Large-Sample CIs)
 
-//   Section 15.5: 样本量的确定 (Sample Size Determination)
+//   Section 14.5: 样本量的确定 (Sample Size Determination)
 
 
-// --- Chapter 16: 假设检验的理论与方法 (Theory and Methods of Hypothesis Testing) ---
+// --- Chapter 15: 假设检验的理论与方法 (Theory and Methods of Hypothesis Testing) ---
 
-//   Section 16.1: 假设检验的基本概念 (Basic Concepts)
+//   Section 15.1: 假设检验的基本概念 (Basic Concepts)
 //     - 假设检验问题与基本步骤；第一类错误与第二类错误；P 值
 
-//   Section 16.2: Neyman-Pearson 范式 (Neyman-Pearson Paradigm)
+//   Section 15.2: Neyman-Pearson 范式 (Neyman-Pearson Paradigm)
 //     - 功效函数 (Power Function)；Neyman-Pearson 引理
 
-//   Section 16.3: 似然比检验 (Likelihood Ratio Tests)
+//   Section 15.3: 似然比检验 (Likelihood Ratio Tests)
 //     - 广义似然比检验的思想
 
-//   Section 16.4: 正态总体参数的假设检验 (Tests for Normal Population Parameters)
+//   Section 15.4: 正态总体参数的假设检验 (Tests for Normal Population Parameters)
 //     - 单个正态总体均值的检验（Z 检验、t 检验）
 //     - 两个正态总体均值差的检验（含成对数据检验）
 //     - 正态总体方差的检验（χ² 检验、F 检验）
 
-//   Section 16.5: 假设检验与置信区间的对偶性 (Duality of Tests and CIs)
+//   Section 15.5: 假设检验与置信区间的对偶性 (Duality of Tests and CIs)
 
-//   Section 16.6: 其他分布参数的假设检验 (Tests for Other Distribution Parameters)
+//   Section 15.6: 其他分布参数的假设检验 (Tests for Other Distribution Parameters)
 //     - 指数分布参数的检验；比率 p 的检验；大样本检验
 
 
-// --- Chapter 17: 拟合检验与非参数检验 (Goodness-of-Fit and Nonparametric Tests) ---
+// --- Chapter 16: 拟合检验与非参数检验 (Goodness-of-Fit and Nonparametric Tests) ---
 
-//   Section 17.1: 正态性检验 (Normality Tests)
+//   Section 16.1: 正态性检验 (Normality Tests)
 //     - 正态概率纸 (Normal Probability Paper)；W 检验 (Shapiro-Wilk)；EP 检验
 
-//   Section 17.2: χ² 拟合优度与独立性检验 (Chi-Squared Tests)
+//   Section 16.2: χ² 拟合优度与独立性检验 (Chi-Squared Tests)
 //     - 分类数据的 χ² 拟合优度检验；分布的 χ² 拟合优度检验
 //     - 列联表的独立性检验
 
-//   Section 17.3: 方差齐性检验 (Tests for Homogeneity of Variances)
+//   Section 16.3: 方差齐性检验 (Tests for Homogeneity of Variances)
 //     - Hartley 检验；Bartlett 检验；修正的 Bartlett 检验
 
-//   Section 17.4: 非参数检验 (Nonparametric Tests)
+//   Section 16.4: 非参数检验 (Nonparametric Tests)
 //     - 游程检验 (Runs Test)；符号检验 (Sign Test)
 //     - Wilcoxon 秩和检验 (Wilcoxon Rank-Sum Test)；Mann-Whitney U 检验
 
 
-// --- Chapter 18: 方差分析 (Analysis of Variance) ---
+// --- Chapter 17: 方差分析 (Analysis of Variance) ---
 
-//   Section 18.1: 单因素方差分析 (One-Way ANOVA)
+//   Section 17.1: 单因素方差分析 (One-Way ANOVA)
 //     - 统计模型；平方和分解；F 检验；参数估计；重复数不等的情形
 
-//   Section 18.2: 多重比较 (Multiple Comparisons)
+//   Section 17.2: 多重比较 (Multiple Comparisons)
 //     - 水平均值差的置信区间
 //     - 重复数相等时的 T 法 (Tukey HSD)；不等时的 S 法 (Scheffé)
 
-//   Section 18.3: 方差齐性检验 (Tests for Homogeneity of Variances)
-//     - Hartley 检验、Bartlett 检验；与 §17.3 的联系与区别
+//   Section 17.3: 方差齐性检验 (Tests for Homogeneity of Variances)
+//     - Hartley 检验、Bartlett 检验；与 §16.3 的联系与区别
 
-//   Section 18.4: 双因素方差分析 (Two-Way ANOVA)
+//   Section 17.4: 双因素方差分析 (Two-Way ANOVA)
 //     - 无交互作用模型；有交互作用模型
 
 
-// --- Chapter 19: 回归分析 (Regression Analysis) ---
+// --- Chapter 18: 回归分析 (Regression Analysis) ---
 
-//   Section 19.1: 一元线性回归 (Simple Linear Regression)
+//   Section 18.1: 一元线性回归 (Simple Linear Regression)
 //     - 变量间的两类关系；回归模型与最小二乘估计
 //     - 回归方程的显著性检验；估计与预测
 
-//   Section 19.2: 一元非线性回归 (Simple Nonlinear Regression)
+//   Section 18.2: 一元非线性回归 (Simple Nonlinear Regression)
 //     - 确定可能的函数形式；参数估计（线性化方法）；曲线回归方程的比较
 
-//   Section 19.3: 多元线性回归 (Multiple Linear Regression)
+//   Section 18.3: 多元线性回归 (Multiple Linear Regression)
 //     - 矩阵表示；参数估计与统计推断
 
-//   Section 19.4: 回归诊断 (Regression Diagnostics)
+//   Section 18.4: 回归诊断 (Regression Diagnostics)
 //     - 拟合优度 R²；残差分析
 
 
