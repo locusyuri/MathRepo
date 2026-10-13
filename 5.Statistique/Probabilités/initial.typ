@@ -2203,16 +2203,27 @@ in the same system. The theory extends from one variable to many by
   $X_i$ is a random variable on the same probability space.
 ] <def:multivariate-rv>
 
-The joint behaviour of the components is captured by a multivariate
-distribution function, exactly as a single variable was captured by its CDF.
+The law of a random vector is again best described through a distribution
+measure — the same push-forward construction as in the univariate case,
+now landing on $RR^n$.
 
-#definition(name: "Joint Cumulative Distribution Function")[
-  The *joint CDF* of a random vector $bold(X) = (X_1, dots, X_n)$ is
+#definition(name: "Joint Distribution Measure and CDF")[
+  The *joint distribution measure* of a random vector
+  $bold(X) = (X_1, dots, X_n)$ is the push-forward of $P$ under
+  $bold(X)$,
   $
-    F(bold(x)) = P(X_1 <= x_1, X_2 <= x_2, dots, X_n <= x_n).
+    mu_(bold(X))(A) = P(bold(X) in A), quad A in cal(B)(RR^n),
   $
-  For $n = 2$ we write $F(x, y) = P(X <= x, Y <= y)$.
-] <def:joint-cdf>
+  a probability measure on the Borel $sigma$-algebra of $RR^n$. Its
+  cumulative function, the *joint cumulative distribution function*
+  (joint CDF), is
+  $
+    F(bold(x)) = mu_(bold(X))((-infinity, x_1] times dots times (-infinity, x_n])
+    = P(X_1 <= x_1, dots, X_n <= x_n).
+  $
+  For $n = 2$ we write $F(x, y) = P(X <= x, Y <= y)$. As in one dimension,
+  joint distribution measures and joint CDFs determine each other.
+] <def:joint-distribution-measure>
 
 #property(name: "Properties of the Joint CDF")[
   Let $F(x, y)$ be a bivariate CDF.
@@ -2237,23 +2248,50 @@ distribution function, exactly as a single variable was captured by its CDF.
   arguments as in the univariate case.
 ]
 
-As in one dimension, two structural types carry most of the theory.
+The univariate pattern — a density with respect to a reference measure —
+carries over verbatim once the Borel $sigma$-algebra of $RR$ is replaced
+by that of $RR^n$.
 
-#definition(name: "Joint Probability Mass Function")[
-  Discrete random variables $X_1, dots, X_n$ have a *joint PMF*
+#definition(name: "Joint Density with Respect to a Reference Measure")[
+  Let $nu$ be a $sigma$-finite reference measure on
+  $(RR^n, cal(B)(RR^n))$. The random vector $bold(X)$ has *joint density*
+  $f$ with respect to $nu$ if $mu_(bold(X)) << nu$ and
+  $
+    mu_(bold(X))(A) = integral_A f dif nu quad "for every" A in cal(B)(RR^n),
+  $
+  in which case $f = (dif mu_(bold(X))) / (dif nu)$ is the Radon–Nikodym
+  derivative. Two choices of reference measure cover the classical
+  theory:
+
+  - $nu = lambda^n$ ($n$-dimensional Lebesgue measure): $f$ is the *joint
+    probability density function* (joint PDF);
+  - $nu$ = the counting measure on a finite or countable grid
+    ${bold(x)_1, bold(x)_2, dots}$ in $RR^n$: the density is the *joint
+    probability mass function* (joint PMF).
+] <def:joint-density>
+
+As in the univariate chapter, the probability part of this book works in
+the two elementary regimes below; the general definition explains why the
+joint PMF and the joint PDF are the same kind of object.
+
+#definition(name: "Joint PMF and PDF: Elementary Forms")[
+  The components are *discrete* if they take values in a finite or
+  countable grid. The joint law is given by the joint PMF
   $
     p(x_1, dots, x_n) = P(X_1 = x_1, dots, X_n = x_n),
   $
-  with $sum p(x_1, dots, x_n) = 1$. The joint CDF is a multivariate step
-  function: $F(bold(x)) = sum_(x_i <= x_i "for all" i) p(bold(x))$.
-] <def:joint-pmf>
+  with $sum p(x_1, dots, x_n) = 1$, and the joint CDF is the multivariate
+  step function $F(bold(x)) = sum_(bold(y) <= bold(x)) p(bold(y))$, where
+  $bold(y) <= bold(x)$ means $y_i <= x_i$ for every component.
 
-#definition(name: "Joint Probability Density Function")[
-  Continuous random variables $X_1, dots, X_n$ have a *joint PDF* $f$ if
+  The components are *(absolutely) continuous* if there is a non-negative
+  integrable $f$ with
   $
-    F(bold(x)) = integral_(-infinity)^(x_1) dots integral_(-infinity)^(x_n) f(t_1, dots, t_n) dif t_n dots dif t_1.
+    F(bold(x)) = integral_(-infinity)^(x_1) dots integral_(-infinity)^(x_n) f(t_1, dots, t_n) dif t_n dots dif t_1;
   $
-] <def:joint-pdf>
+  $f$ is the joint PDF, and at continuity points of $f$ the mixed
+  derivative $partial^n F \/ (partial x_1 dots partial x_n)$ equals $f$.
+] <def:joint-pmf-pdf>
 
 #property(name: "Properties of the Joint PDF")[
   - (non-negativity) $f(x_1, dots, x_n) >= 0$;
@@ -2261,6 +2299,17 @@ As in one dimension, two structural types carry most of the theory.
   - (region probabilities) for a region $D subset.eq RR^n$,
     $P(bold(X) in D) = integral_D f(bold(x)) dif bold(x)$.
 ] <prop:joint-pdf-properties>
+
+#proof[
+  The argument repeats the univariate one dimension by dimension.
+  Non-negativity is built into the definition. Normalization follows from
+  $F(+infinity, dots, +infinity) = 1$. On any rectangle
+  $R = (a_1, b_1] times dots times (a_n, b_n]$, iterating the fundamental
+  theorem of calculus gives $P(bold(X) in R) = integral_R f(bold(x)) dif bold(x)$,
+  and general regions $D$ follow by approximating with finite unions of
+  rectangles and using #link(<thm:continuity-probability>)[continuity of
+  probability].
+]
 
 #definition(name: "Multivariate Uniform Distribution")[
   A random vector $bold(X)$ is *uniformly distributed* on a region
@@ -2277,7 +2326,8 @@ As in one dimension, two structural types carry most of the theory.
   image("img/joint-density.svg", width: 75%),
   caption: [A bivariate joint density $f(x, y)$ visualised by contour lines
     in the $(x, y)$ plane; the marginal densities $f_(X)(x)$ and $f_(Y)(y)$
-    appear as projections on the side panels.],
+    appear as projections on the side panels (the marginals are defined
+    in the next section).],
   placement: auto,
   supplement: [Fig.],
 ) <fig:joint-density>
@@ -2331,6 +2381,12 @@ This is the random-variable instantiation of
 #link(<def:mutual-independence>)[mutual independence of events]: the
 $sigma$-fields generated by each $X_i$ are independent families.
 
+This settles the promise made in
+#link(<def:multivariate-uniform>)[the multivariate uniform distribution]:
+on a rectangle the joint density factors into a product of univariate
+uniform densities, so the components are indeed independent — the
+factorization criterion above applies verbatim.
+
 #property(name: "Independence Criterion")[
   Independent random variables satisfy:
 
@@ -2344,8 +2400,8 @@ $sigma$-fields generated by each $X_i$ are independent families.
 
 #note[
   Independence of random variables is stronger than *uncorrelatedness*: two
-  variables can be uncorrelated (a condition involving expectations, to be
-  defined in the Numerical Characteristics chapter) yet dependent. The
+  variables can be uncorrelated (a condition involving expectations,
+  defined in Chapter 3) yet dependent. The
   distinction is central to the covariance theory developed there.
 ]
 
