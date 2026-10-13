@@ -1709,6 +1709,7 @@ remarkable fact is that the whole group is tiled by translated
 copies of $H$, one for each "position" of the tile. These copies are
 the cosets, and their counting is Lagrange's theorem.
 
+=== Cosets
 #definition(name: "Cosets")[
   Let $H <= G$ and $a in G$. The *left coset* of $H$ by $a$ is the
   subset
@@ -1790,13 +1791,28 @@ general mechanism.
   is blind to the difference; Chapter 4 will not be.
 ] <ex:s3-cosets>
 
+#proposition(name: "Cosets Are Equinumerous")[
+  Let $H <= G$ and $a, b in G$.
+  + The left coset $a H$ and the right coset $H a$ are equinumerous: the map $a h arrow.r.double h a$ is a bijection $a H -> H a$.
+  + The left cosets of $H$ are pairwise equinumerous, and so are the right cosets: for all $a, b in G$, the map $x arrow.r.double b a^(-1) x$ is a bijection $a H -> b H$, and $x arrow.r.double x a^(-1) b$ is a bijection $H a -> H b$.
+] <prop:coset-equinumerous>
+
+#proof[
+  (1) The map $a h arrow.r.double h a$ takes $a H$ onto $H a$ and is reversed by $h a arrow.r.double a h$, so it is a bijection.
+
+  (2) By item (1) of #link(<lem:coset-equivalent>)[the lemma], $h arrow.r.double a h$ is a bijection $H -> a H$ and $h arrow.r.double b h$ is a bijection $H -> b H$; composing them gives a bijection $a H -> b H$, explicitly $a h arrow.r.double b h$, i.e. $x arrow.r.double b a^(-1) x$, with inverse $y arrow.r.double a b^(-1) y$. The same argument on the right — $h arrow.r.double h a$ and $h arrow.r.double h b$ — gives the bijection $H a -> H b$.
+]
+
+=== Lagrange's Theorem // 拉格朗日定理
 #definition(name: "Index")[
   Let $H <= G$. The *index* of $H$ in $G$, written $[G : H]$, is the
   number of left cosets of $H$ in $G$.
 ] <def:index>
 
 When $G$ is finite, this equals the number of right cosets: both
-count the blocks of a partition of $G$ into sets of size $abs(H)$.
+count the blocks of a partition of $G$ into sets of size $abs(H)$ —
+and #link(<prop:coset-equinumerous>)[the proposition above] pairs the
+two families up explicitly.
 
 #theorem(name: "Lagrange's Theorem")[
   Let $G$ be a finite group and $H <= G$ a subgroup. Then
