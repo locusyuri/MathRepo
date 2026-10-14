@@ -1255,7 +1255,7 @@ $C_(p,m)$ as thermodynamic quantities, defined for any substance.
 ] <prop:joule-law>
 
 *Justification.* Experimentally, Joule's free-expansion measurement
-(§2.6) found no temperature change when a dilute gas expanded into a
+(§2.5) found no temperature change when a dilute gas expanded into a
 vacuum, suggesting $U$ is independent of $V$. Kinetically, the
 internal energy is the sum of molecular kinetic energies,
 $U = f/2 N k_B T$ by #link(<thm:equipartition>)[equipartition], with
@@ -1338,7 +1338,7 @@ changes measure reaction heats in chemistry.
 The inequality $C_(p,m) > C_(V,m)$ has a direct reading: heating at constant
 pressure must pay for the expansion work in addition to raising the
 internal energy. The ratio $gamma = C_(p,m) / C_(V,m)$ governs the adiabatic
-processes of §2.6.
+processes of §2.5.
 
 #corollary(name: "Heat Capacity of an Ideal Gas")[
   Combining #link(<prop:joule-law>)[Joule's law] with the equipartition
@@ -1373,22 +1373,44 @@ processes of §2.6.
   #link(<caution:equipartition-failure>)[Chapter 1].
 ] <ex:gas-heat-capacities>
 
-== Applications: Free Expansion, Adiabatic Process and Throttling // 应用：自由膨胀、绝热过程与节流
+== Common Thermodynamic Processes // 常见热力学过程
 
-#example(name: "Adiabatic free expansion")[
-  An ideal gas initially at $(T_1, V_1)$
-  expands into a vacuum inside an insulated vessel, reaching volume
-  $V_2$. No work is done ($dif V$ of the *system* is unresisted; the
-  process is not quasi-static, but $W = 0$ regardless), and no heat
-  flows ($Q = 0$ by insulation). The first law gives
-  $
-    Delta U = 0 quad "and hence" quad T_2 = T_1
-  $
-  by #link(<prop:joule-law>)[Joule's law]. The free expansion is
-  *irreversible* — a fact invisible to the first law, whose explanation
-  requires the entropy of Chapter 3. (For a real gas the temperature
-  changes slightly: the fingerprint of intermolecular forces.)
-] <ex:free-expansion>
+A constraint that pins one state quantity — the volume, the pressure, the temperature, or the heat exchange — reduces the first law to a complete energy accounting. The standard quasi-static processes of an ideal gas worked out below are the building blocks from which the cycles of §2.6 and the engines of Chapter 3 are assembled.
+
+#tex-table(
+  ("Process", "Constraint", [$W$], [$Q$], [$Delta U$]),
+  ([isochoric], [$V = "const"$], [$0$], [$nu C_(V,m) Delta T$], [$nu C_(V,m) Delta T$]),
+  ([isobaric], [$p = "const"$], [$p (V_2 - V_1)$], [$nu C_(p,m) Delta T$], [$nu C_(V,m) Delta T$]),
+  ([isothermal], [$T = "const"$], [$nu R T ln(V_2 / V_1)$], [$nu R T ln(V_2 / V_1)$], [$0$]),
+  ([reversible adiabatic], [$Q = 0$], [$-nu C_(V,m) Delta T$], [$0$], [$nu C_(V,m) Delta T$]),
+  ([free expansion], ["into vacuum"], [$0$], [$0$], [$0$]),
+)
+
+=== The Isochoric Process // 等容过程
+
+With $dif V = 0$ no volume work is done, $W = 0$, and the first law equates heat with the internal-energy increase:
+$
+  Q = Delta U = nu C_(V,m) (T_2 - T_1).
+$
+On the $p$-$V$ diagram the isochore is a vertical segment enclosing no area — heating at fixed volume simply raises the pressure, and every joule absorbed goes into the random motion of the molecules.
+
+=== The Isobaric Process // 等压过程
+
+At fixed pressure the work is $W = p (V_2 - V_1) = nu R (T_2 - T_1)$, and the heat absorbed equals the increase of #link(<def:enthalpy>)[the enthalpy]:
+$
+  Q = Delta H = nu C_(p,m) (T_2 - T_1).
+$
+That $Q$ exceeds $Delta U$ exactly by the expansion work $nu R (T_2 - T_1)$ is the process-level reading of #link(<thm:mayer-formula>)[Mayer's formula].
+
+=== The Isothermal Process // 等温过程
+
+Couple the gas to a thermostat and let it expand slowly enough that $T$ stays uniform; by #link(<prop:joule-law>)[Joule's law] $Delta U = 0$, and heat and work balance exactly:
+$
+  Q = W = nu R T ln(V_2 / V_1).
+$
+The conversion of heat into work is complete but not repeatable: the gas ends at a larger volume, and only a cycle — in which the leftover change is undone — can deliver work steadily. Making this observation precise is the seed of the second law (Chapter 3).
+
+=== The Reversible Adiabatic Process // 绝热可逆过程
 
 #property(name: "Quasi-Static Adiabatic Process")[
   A quasi-static adiabatic process ($delta Q = 0$) of an ideal gas with
@@ -1420,6 +1442,64 @@ and $gamma > 1$: expansion cools the gas, so its pressure falls faster
 than isothermally — see @fig:work-path, right panel. Correspondingly,
 adiabatic compression to a given volume attains a higher pressure and a
 higher temperature than isothermal compression.
+
+=== Free Expansion // 自由膨胀
+
+#example(name: "Adiabatic free expansion")[
+  An ideal gas initially at $(T_1, V_1)$
+  expands into a vacuum inside an insulated vessel, reaching volume
+  $V_2$. No work is done ($dif V$ of the *system* is unresisted; the
+  process is not quasi-static, but $W = 0$ regardless), and no heat
+  flows ($Q = 0$ by insulation). The first law gives
+  $
+    Delta U = 0 quad "and hence" quad T_2 = T_1
+  $
+  by #link(<prop:joule-law>)[Joule's law]. The free expansion is
+  *irreversible* — a fact invisible to the first law, whose explanation
+  requires the entropy of Chapter 3. (For a real gas the temperature
+  changes slightly: the fingerprint of intermolecular forces.)
+] <ex:free-expansion>
+
+=== The Polytropic Process // 多方过程
+
+The four processes above are the canonical members of a one-parameter family.
+
+#definition(name: "Polytropic Process")[
+  A quasi-static process of an ideal gas in which pressure and volume satisfy
+  $
+    p V^n = "const"
+  $
+  for a constant exponent $n$ is called a *polytropic process*.
+] <def:polytropic-process>
+
+The exponent $n$ interpolates between the canonical cases: $n = 0$ gives the isobar, $n = 1$ the isotherm, $n = gamma$ the reversible adiabat, and $n -> oo$ the isochore; intermediate exponents describe unregulated processes — heat is exchanged, but neither $T$ nor $p$ is pinned — as @fig:polytropic-family shows.
+
+#figure(
+  image("img/polytropic-family.svg", width: 72%),
+  caption: [The polytropic family $p V^n = "const"$ through a common
+    state: as $n$ grows from $0$ to $oo$ the curve steepens from the
+    isobar through the isotherm ($n = 1$), the adiabat ($n = gamma$),
+    and beyond to the vertical isochore.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:polytropic-family>
+
+#property(name: "Work and Heat of a Polytropic Process")[
+  Along a polytropic process with $n != 1$ taking the gas from $(p_1, V_1)$ to $(p_2, V_2)$, the work done by the gas and the molar heat capacity of the process are
+  $
+    W = (p_1 V_1 - p_2 V_2) / (n - 1), quad
+    C_(n, m) = C_(V,m) + R / (1 - n).
+  $
+  The special cases are consistent: $C_(n,m) = C_(p,m)$ at $n = 0$, $C_(n,m) -> oo$ at $n = 1$ (finite heat absorbed at constant temperature), and $C_(n,m) = C_(V,m)$ at $n = gamma$, the adiabat.
+] <prop:polytropic-process>
+
+#proof[
+  Write $p = K V^(-n)$; integrating, $W = K (V_2^(1-n) - V_1^(1-n)) / (1-n) = (p_2 V_2 - p_1 V_1) / (1-n)$. For the heat capacity, logarithmic differentiation of $p v^n = "const"$ (per mole) gives $v dif p = - n p dif v$, while the equation of state yields $p dif v + v dif p = R dif T$; eliminating $dif p$ gives $p dif v = R dif T / (1 - n)$. Substituting into $delta q = C_(V,m) dif T + p dif v$ produces $delta q = [C_(V,m) + R / (1-n)] dif T$, which is the claimed $C_(n,m)$.
+]
+
+== Throttling, Cycles and the Carnot Cycle // 节流、循环过程与卡诺循环
+
+=== Throttling and the Joule-Thomson Effect // 节流与焦耳-汤姆逊效应
 
 #definition(name: "Joule-Thomson (Throttle) Coefficient")[
   In a *throttling process*, a fluid is pushed steadily through a
@@ -1473,6 +1553,103 @@ higher temperature than isothermal compression.
   cycle, and the critical-point physics behind them are treated in
   Chapter 20 on phase transitions.
 ] <note:jt-liquefaction>
+
+=== Cyclic Processes // 循环过程
+
+A process that returns the system to its initial state is called a *cyclic process*. Since $U$ is a state quantity, $Delta U = 0$ over a cycle and the first law collapses to $W = Q$: the net work delivered equals the net heat absorbed, drawn from some reservoirs and dumped into others.
+
+#property(name: "Net Work as Enclosed Area")[
+  For a quasi-static cycle the net work per cycle equals the area enclosed by the closed curve in the $p$-$V$ plane,
+  $
+    W = integral.cont p dif V,
+  $
+  positive for a clockwise traversal (an engine) and negative for an anticlockwise one (a refrigerator or heat pump).
+] <prop:cycle-area>
+
+=== Heat Engines and Refrigerators // 热机与制冷机
+
+For an engine the figure of merit is the fraction of the absorbed heat converted into work; for a refrigerator or heat pump, the useful heat delivered per unit of work paid.
+
+#definition(name: "Efficiency and Coefficients of Performance")[
+  For a heat engine absorbing $Q_h$ and delivering $W = Q_h - Q_c$ per
+  cycle, the *efficiency* is
+  $
+    eta = W / Q_h.
+  $
+  For a refrigerator pumping $Q_c$ out of the cold space at a work
+  cost $W = Q_h - Q_c$, the *coefficient of performance* is
+  $
+    "COP"_R = Q_c / W;
+  $
+  for a heat pump delivering $Q_h$ into the warm space,
+  $
+    "COP"_"HP" = Q_h / W.
+  $
+  (COP can exceed 1; efficiency cannot.)
+] <def:efficiency-cop>
+
+=== The Carnot Cycle // 卡诺循环
+
+The Carnot cycle is the most efficient cycle conceivable between two reservoirs; its efficiency can be computed from the first law alone.
+
+#definition(name: "Carnot Cycle")[
+  The *Carnot cycle* is the reversible cycle of an ideal gas consisting
+  of four quasi-static legs:
+  $
+    a -> b quad "isothermal expansion at" T_h,
+  $
+  absorbing $Q_h = nu R T_h ln(V_b / V_a)$ from the hot reservoir;
+  $
+    b -> c quad "adiabatic expansion," T_h -> T_c;
+  $
+  $
+    c -> d quad "isothermal compression at" T_c,
+  $
+  rejecting $Q_c = nu R T_c ln(V_c / V_d)$ to the cold reservoir;
+  $
+    d -> a quad "adiabatic compression," T_c -> T_h,
+  $
+  closing the cycle.
+] <def:carnot-cycle>
+
+#property(name: "Carnot Efficiency")[
+  The efficiency of a Carnot engine depends only on the two reservoir
+  temperatures:
+  $
+    eta_C = 1 - T_c / T_h.
+  $
+] <prop:carnot-efficiency>
+
+#proof[
+  Work and heat per cycle: $W = Q_h - Q_c$ with
+  $Q_h, Q_c$ as above. The two adiabatic legs of
+  #link(<prop:adiabatic-process>)[the quasi-static adiabatic relation]
+  give $T_h V_b^(gamma-1) = T_c V_c^(gamma-1)$ and
+  $T_c V_d^(gamma-1) = T_h V_a^(gamma-1)$; dividing,
+  $
+    (V_b / V_a)^(gamma - 1) = (V_c / V_d)^(gamma - 1)
+    quad "hence" quad V_b / V_a = V_c / V_d.
+  $
+  Therefore
+  $
+    eta_C = 1 - Q_c / Q_h
+    = 1 - (T_c ln(V_c/V_d)) / (T_h ln(V_b/V_a))
+    = 1 - T_c / T_h.
+  $
+]
+
+#figure(
+  image("img/carnot-cycle.svg", width: 78%),
+  caption: [The Carnot cycle in the $p$-$V$ plane: isothermal expansion
+    $a -> b$ at $T_h$ (absorbing $Q_h$), adiabatic expansion $b -> c$
+    to $T_c$, isothermal compression $c -> d$ (rejecting $Q_c$), and
+    adiabatic compression $d -> a$. The enclosed area is the net work
+    per cycle.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:carnot-cycle>
+
+The derivation used nothing but the first law and the adiabatic relation. That no engine between the same reservoirs can beat $eta_C$ is a statement of the second law, proved as #link(<thm:carnot-theorem>)[Carnot's theorem] in §3.2.
 
 = Second Law of Thermodynamics // 热力学第二定律
 
@@ -1560,51 +1737,7 @@ The two statements look different; they are the same law.
 
 == Carnot's Theorem // 卡诺定理
 
-#definition(name: "Carnot Cycle")[
-  The *Carnot cycle* is the reversible cycle of an ideal gas consisting
-  of four quasi-static legs:
-  $
-    a -> b quad "isothermal expansion at" T_h,
-  $
-  absorbing $Q_h = nu R T_h ln(V_b / V_a)$ from the hot reservoir;
-  $
-    b -> c quad "adiabatic expansion," T_h -> T_c;
-  $
-  $
-    c -> d quad "isothermal compression at" T_c,
-  $
-  rejecting $Q_c = nu R T_c ln(V_c / V_d)$ to the cold reservoir;
-  $
-    d -> a quad "adiabatic compression," T_c -> T_h,
-  $
-  closing the cycle.
-] <def:carnot-cycle>
-
-#property(name: "Carnot Efficiency")[
-  The efficiency of a Carnot engine depends only on the two reservoir
-  temperatures:
-  $
-    eta_C = 1 - T_c / T_h.
-  $
-] <prop:carnot-efficiency>
-
-#proof[
-  Work and heat per cycle: $W = Q_h - Q_c$ with
-  $Q_h, Q_c$ as above. The two adiabatic legs of
-  #link(<prop:adiabatic-process>)[the quasi-static adiabatic relation]
-  give $T_h V_b^(gamma-1) = T_c V_c^(gamma-1)$ and
-  $T_c V_d^(gamma-1) = T_h V_a^(gamma-1)$; dividing,
-  $
-    (V_b / V_a)^(gamma - 1) = (V_c / V_d)^(gamma - 1)
-    quad "hence" quad V_b / V_a = V_c / V_d.
-  $
-  Therefore
-  $
-    eta_C = 1 - Q_c / Q_h
-    = 1 - (T_c ln(V_c/V_d)) / (T_h ln(V_b/V_a))
-    = 1 - T_c / T_h.
-  $
-]
+The Carnot cycle was defined and its efficiency $eta_C = 1 - T_c / T_h$ computed in §2.6 from the first law alone. What the second law contributes is universality: no engine operating between the same two reservoirs, however ingenious its design, can exceed the Carnot efficiency.
 
 #theorem(name: "Carnot's Theorem")[
   All reversible engines operating between the same two reservoirs
@@ -1630,17 +1763,6 @@ The two statements look different; they are the same law.
   yields the strict inequality $eta_I < eta_R$; equality would make the
   composite reversible, forcing $I$ itself reversible.
 ]
-
-#figure(
-  image("img/carnot-cycle.svg", width: 78%),
-  caption: [The Carnot cycle in the $p$-$V$ plane: isothermal expansion
-    $a -> b$ at $T_h$ (absorbing $Q_h$), adiabatic expansion $b -> c$
-    to $T_c$, isothermal compression $c -> d$ (rejecting $Q_c$), and
-    adiabatic compression $d -> a$. The enclosed area is the net work
-    per cycle.],
-  placement: auto,
-  supplement: [Fig.],
-) <fig:carnot-cycle>
 
 Carnot's theorem caps every real engine: no cleverness of design beats
 $1 - T_c / T_h$ — the only levers are the reservoir temperatures. What
@@ -1872,7 +1994,7 @@ triple point of water — the same convention as the gas scale.
 ] <prop:scales-equivalence>
 
 #proof[
-  Compute the Carnot cycle of #link(<def:carnot-cycle>)[§3.2]
+  Compute the Carnot cycle of #link(<def:carnot-cycle>)[§2.6]
   using the *gas* scale $theta$ throughout the equation of state
   $p V = nu R theta$: the derivation of
   #link(<prop:carnot-efficiency>)[the Carnot efficiency] never used any
@@ -1891,23 +2013,7 @@ gas, resistance, or otherwise — measures the same $T$.
 
 == Heat Engines and Refrigeration Cycles // 热机与制冷循环
 
-#definition(name: "Efficiency and Coefficients of Performance")[
-  For a heat engine absorbing $Q_h$ and delivering $W = Q_h - Q_c$ per
-  cycle, the *efficiency* is
-  $
-    eta = W / Q_h.
-  $
-  For a refrigerator pumping $Q_c$ out of the cold space at a work
-  cost $W = Q_h - Q_c$, the *coefficient of performance* is
-  $
-    "COP"_R = Q_c / W;
-  $
-  for a heat pump delivering $Q_h$ into the warm space,
-  $
-    "COP"_"HP" = Q_h / W.
-  $
-  (COP can exceed 1; efficiency cannot.)
-] <def:efficiency-cop>
+The efficiency and the coefficients of performance were defined in §2.6; combined with #link(<thm:carnot-theorem>)[Carnot's theorem] they become absolute bounds on any cyclic device operating between two reservoirs.
 
 #property(name: "Carnot Bounds")[
   Any engine between reservoirs at $T_h, T_c$ satisfies
@@ -1971,7 +2077,7 @@ at low temperature.
   For any isothermal process $A -> B$ involving only condensed systems
   (liquids and solids) in internal equilibrium,
   $
-    lim_(T -> 0) Delta S = lim_(T -> 0) [S_B(T) - S_A(T)] = 0.
+    lim_(T -> 0) Delta S = lim_(T -> 0) [S_(B)(T) - S_(A)(T)] = 0.
   $
 ] <thm:nernst-heat-theorem>
 
@@ -1981,7 +2087,7 @@ at low temperature.
   paths joining each state to a common low-temperature reference:
   $
     Delta S(T)
-    = Delta S(T_0) + integral_(T_0)^T (C_A(T') - C_B(T')) / T' dif T'.
+    = Delta S(T_0) + integral_(T_0)^T (C_(A)(T') - C_(B)(T')) / T' dif T'.
   $
   Now let $T_0 -> 0$. If both heat capacities remained finite as $T' ->
   0$, the integral would diverge logarithmically and $|Delta S| -> oo$ —
@@ -1989,7 +2095,7 @@ at low temperature.
   finite. Consistency demands the integral converge as the lower limit
   recedes, which for arbitrary pairs of states is possible only if
   $
-    lim_(T -> 0) [C_A(T) - C_B(T)] = 0
+    lim_(T -> 0) [C_(A)(T) - C_(B)(T)] = 0
     quad "and, in the strengthened form below," quad
     lim_(T -> 0) C(T) = 0.
   $
@@ -2507,7 +2613,7 @@ to keep fixed.
     $dif V' = dif V dot (T / (T - dif T))^3$.
 
   Carnot's efficiency
-  (#link(<prop:carnot-efficiency>)[Chapter 3]) demands
+  (#link(<prop:carnot-efficiency>)[Chapter 2]) demands
   $delta Q' / delta Q = (T - dif T) / T$:
   $
     (u(T - dif T)) / u(T) dot (T / (T - dif T))^3 = (T - dif T) / T,
