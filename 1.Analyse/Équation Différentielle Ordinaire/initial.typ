@@ -829,4 +829,209 @@ $
 These formulas show how sensitive the solution is to changes in the initial conditions. The derivative with respect to $y_0$ is a solution of the variational equation $z' = f_y(x, phi(x)) z$, which is the linearization of the original ODE along the solution trajectory. This variational equation plays a central role in stability theory (Part III).
 ]
 
+#part("Linear Systems Theory") // 线性系统理论
+
+= First-Order Linear Systems // 一阶线性方程组
+
+This chapter develops the general theory of first-order linear systems. We introduce the matrix notation that unifies the treatment of $n$ coupled equations, establish the structure of the solution space for homogeneous systems, derive the variation-of-constants formula for non-homogeneous systems, and solve explicitly the constant-coefficient case using the matrix exponential.
+
+== Systems and Matrix Notation // 线性方程组的矩阵形式
+
+A general first-order system of $n$ equations has the form
+$
+  cases(
+    (d y_1) / (d x) = f_1(x, y_1, y_2, dots, y_n),
+    (d y_2) / (d x) = f_2(x, y_1, y_2, dots, y_n),
+    quad quad dots.v,
+    (d y_n) / (d x) = f_n(x, y_1, y_2, dots, y_n),
+  )
+$
+If the right-hand side does not depend explicitly on $x$, the system is called *autonomous*.
+
+For compactness, we write the system in matrix form. Let
+$
+  bold(Y) = mat(y_1, y_2, dots.v, y_n), quad quad bold(F)(x, bold(Y)) = mat(f_1, f_2, dots.v, f_n).
+$
+Then the system becomes
+#eq[
+  (d bold(Y)) / (d x) = bold(F)(x, bold(Y)),
+] <eq:general-system>
+and the Cauchy problem is
+$
+  cases((d bold(Y)) / (d x) = bold(F)(x, bold(Y)), bold(Y)(x_0) = bold(Y)_0).
+$
+
+A system is *linear* if the right-hand side is linear in $bold(Y)$:
+#eq[
+  (d bold(Y)) / (d x) = bold(A)(x) bold(Y) + bold(F)(x),
+] <eq:linear-system>
+where $bold(A)(x) = (a_(i j)(x))$ is an $n times n$ matrix and $bold(F)(x)$ is an $n$-dimensional vector, both continuous on an interval $I$.
+
+When $bold(F)(x) equiv bold(0)$, the system is *homogeneous*:
+#eq[
+  (d bold(Y)) / (d x) = bold(A)(x) bold(Y),
+] <eq:homogeneous-system>
+otherwise it is *non-homogeneous*.
+
+#theorem(name: "Existence and Uniqueness for Linear Systems")[
+If $bold(A)(x)$ and $bold(F)(x)$ are continuous on an interval $I$ containing $x_0$, then the Cauchy problem for @eq:linear-system has a unique solution on the entire interval $I$.
+] <thm:linear-existence-uniqueness>
+
+#note[
+Unlike the general Picard-Lindelöf theorem (which gives only a local solution), for linear systems the solution exists on the whole interval of continuity of the coefficients. This is because linear growth automatically satisfies a global Lipschitz condition.
+]
+
+== General Theory of Homogeneous Systems // 齐次线性方程组的一般理论
+
+The solution set of the homogeneous system @eq:homogeneous-system has a rich algebraic structure.
+
+*Superposition principle.* If $bold(Y)_1(x)$ and $bold(Y)_2(x)$ are solutions of @eq:homogeneous-system, then any linear combination
+$
+  bold(Y)(x) = c_1 bold(Y)_1(x) + c_2 bold(Y)_2(x)
+$
+is also a solution. It follows that the set of all solutions forms an $n$-dimensional vector space.
+
+#definition(name: "Fundamental Solution Matrix")[
+Let $bold(Y)_1(x), dots, bold(Y)_n(x)$ be $n$ linearly independent solutions of the homogeneous system @eq:homogeneous-system. The $n times n$ matrix
+$
+  bold(Phi)(x) = mat(bold(Y)_1(x), dots, bold(Y)_n(x))
+$
+whose columns are these solutions is called a *fundamental solution matrix*. The set ${bold(Y)_1, dots, bold(Y)_n}$ is called a *fundamental system of solutions*.
+] <def:fundamental-matrix>
+
+#definition(name: "Wronskian Determinant")[
+For $n$ vector functions $bold(Y)_1(x), dots, bold(Y)_n(x)$, their *Wronskian determinant* is
+$
+  W(x) = "det" lr(mat(bold(Y)_1(x), dots, bold(Y)_n(x))).
+$
+] <def:wronskian>
+
+#theorem(name: "Liouville's Formula")[
+Let $W(x)$ be the Wronskian of $n$ solutions of the homogeneous system @eq:homogeneous-system. Then
+$
+  W(x) = W(x_0) exp(lr(integral_(x_0)^x "tr"(bold(A)(t)) dif t)).
+$
+] <thm:liouville>
+
+#note[
+Liouville's formula implies that $W(x)$ either vanishes identically on $I$ or never vanishes on $I$. For solutions of the homogeneous system, linear dependence is equivalent to $W(x) equiv 0$. Thus a fundamental solution matrix is precisely a matrix whose Wronskian is non-zero.
+]
+
+#theorem(name: "General Solution of Homogeneous Linear Systems")[
+If $bold(Phi)(x)$ is a fundamental solution matrix of @eq:homogeneous-system, then the general solution is
+$
+  bold(Y)(x) = bold(Phi)(x) bold(C),
+$
+where $bold(C) in bb(R)^n$ is an arbitrary constant vector.
+] <thm:homogeneous-general-solution>
+
+== Non-Homogeneous Systems and Variation of Constants // 非齐次方程组与常数变易法
+
+For the non-homogeneous system @eq:linear-system, the structure of solutions is analogous to the scalar case:
+
+- The difference of two solutions of the non-homogeneous system is a solution of the corresponding homogeneous system.
+- The general solution is the sum of the general solution of the homogeneous system and any particular solution of the non-homogeneous system.
+
+#theorem(name: "General Solution of Non-Homogeneous Linear Systems")[
+Let $bold(Phi)(x)$ be a fundamental matrix of the homogeneous system @eq:homogeneous-system. Then the general solution of @eq:linear-system is
+$
+  bold(Y)(x) = bold(Phi)(x) bold(C) + tilde(bold(Y))(x),
+$
+where $tilde(bold(Y))(x)$ is any particular solution.
+] <thm:nonhomogeneous-general-solution>
+
+The particular solution can be found by *variation of constants*. Assume the solution has the form
+$
+  bold(Y)(x) = bold(Phi)(x) bold(C)(x),
+$
+where the constant vector $bold(C)$ is now allowed to vary. Substituting into @eq:linear-system and using the fact that $bold(Phi)'(x) = bold(A)(x) bold(Phi)(x)$, we obtain
+$
+  bold(Phi)(x) (d bold(C)) / (d x) = bold(F)(x).
+$
+Since $bold(Phi)(x)$ is invertible,
+$
+  (d bold(C)) / (d x) = bold(Phi)^(-1)(x) bold(F)(x).
+$
+Integrating from $x_0$ to $x$ gives the variation-of-constants formula:
+
+$
+  tilde(bold(Y))(x) = bold(Phi)(x) integral_(x_0)^x bold(Phi)^(-1)(t) bold(F)(t) dif t.
+$
+
+where $bold(Phi)$ is a fundamental matrix.
+
+With initial condition $bold(Y)(x_0) = bold(Y)_0$, the solution becomes
+$
+  bold(Y)(x) = bold(Phi)(x) bold(Phi)^(-1)(x_0) bold(Y)_0 + bold(Phi)(x) integral_(x_0)^x bold(Phi)^(-1)(t) bold(F)(t) dif t.
+$
+
+== Constant-Coefficient Systems // 常系数线性方程组
+
+For the constant-coefficient homogeneous system
+#eq[
+  (d bold(Y)) / (d x) = bold(A) bold(Y),
+] <eq:constant-coefficient>
+where $bold(A)$ is a constant matrix, the fundamental solution matrix is given by the *matrix exponential*:
+$
+  bold(Phi)(x) = e^(bold(A) x).
+$
+
+#theorem(name: "Matrix Exponential as Fundamental Matrix")[
+The matrix exponential $e^(bold(A) x)$ is a fundamental solution matrix of @eq:constant-coefficient, with $e^(bold(A) * 0) = bold(I)$.
+] <thm:matrix-exponential-fundamental>
+
+For the non-homogeneous constant-coefficient system, the variation-of-constants formula simplifies to:
+
+$
+  bold(Y)(x) = e^(bold(A) x) bold(C) + integral_(x_0)^x e^(bold(A) (x - s)) bold(F)(s) dif s.
+$ <eq:constant-coefficient-solution>
+
+With initial condition $bold(Y)(x_0) = bold(Y)_0$:
+$
+  bold(Y)(x) = e^(bold(A) (x - x_0)) bold(Y)_0 + integral_(x_0)^x e^(bold(A) (x - s)) bold(F)(s) dif s.
+$
+
+=== Computing $e^(bold(A) x)$ // 矩阵指数的计算
+
+The matrix exponential can be computed in finite form using the Jordan canonical form of $bold(A)$.
+
+For a single Jordan block of size $n$ with eigenvalue $lambda$,
+$
+  e^(bold(J) x) = e^(lambda x) mat(
+    1, x, x^2 / 2!, dots, x^(n-1) / (n-1)!,
+    0, 1, x, dots, x^(n-2) / (n-2)!,
+    dots.v, dots.v, dots.v, dots.down, dots.v,
+    0, 0, 0, dots, 1
+  ).
+$
+
+More generally, if $bold(A)$ has Jordan canonical form $bold(J) = bold(P)^(-1) bold(A) bold(P)$, then
+$
+  e^(bold(A) x) = bold(P) e^(bold(J) x) bold(P)^(-1).
+$
+
+#note[
+The full theory of Jordan canonical form belongs to linear algebra (see the *Algèbre Linéaire* notes). Here we only use the result: any matrix is similar to a block-diagonal matrix of Jordan blocks, and the exponential of a block-diagonal matrix is block-diagonal with the exponentials of the blocks on the diagonal.
+]
+
+#theorem(name: "Generalized Eigenvector Solutions")[
+If $lambda_i$ is an eigenvalue of $bold(A)$ with algebraic multiplicity $k_i$, then @eq:constant-coefficient has $k_i$ linearly independent solutions of the form
+$
+  bold(Y)(x) = (bold(R)_0 + bold(R)_1 x + dots + bold(R)_(k_i - 1) x^(k_i - 1)) e^(lambda_i x),
+$
+where the vectors $bold(R)_j$ are determined recursively from the generalized eigenvector chain.
+] <thm:generalized-eigenvector-solutions>
+
+== Periodic Coefficient Systems // 周期系数线性方程组
+
+For linear systems with periodic coefficients — i.e., $bold(A)(x + T) = bold(A)(x)$ for some period $T$ — the structure of solutions is described by *Floquet theory*. The fundamental result is that any fundamental matrix can be written in the form
+$
+  bold(Phi)(x) = bold(P)(x) e^(bold(B) x),
+$
+where $bold(P)(x)$ is periodic with period $T$ and $bold(B)$ is a constant matrix. The eigenvalues of $bold(B)$ (or equivalently, the Floquet multipliers $e^(lambda_i T)$) determine the stability of the system.
+
+#note[
+Floquet theory connects the behavior of periodic linear systems to constant-coefficient systems via a periodic change of variables. This is a foundational tool in the study of oscillatory systems and parametric resonance.
+]
+
 #bibliography("references.bib")
