@@ -843,7 +843,7 @@ $
     (d y_1) / (d x) = f_1(x, y_1, y_2, dots, y_n),
     (d y_2) / (d x) = f_2(x, y_1, y_2, dots, y_n),
     quad quad dots.v,
-    (d y_n) / (d x) = f_n(x, y_1, y_2, dots, y_n),
+    (d y_n) / (d x) = f_(n)(x, y_1, y_2, dots, y_n),
   )
 $
 If the right-hand side does not depend explicitly on $x$, the system is called *autonomous*.
@@ -1086,10 +1086,10 @@ translate to $bold(Y)(x_0) = bold(Y)_0$.
 All the results of Chapter 4 carry over to higher-order equations via the equivalence #link(<thm:higher-order-equivalence>)[theorem].
 
 #definition(name: "Wronskian of Higher-Order Equations")[
-For $n$ solutions $y_1(x), dots, y_n(x)$ of the homogeneous equation @eq:higher-order-homogeneous, their *Wronskian determinant* is
+For $n$ solutions $y_1(x), dots, y_(n)(x)$ of the homogeneous equation @eq:higher-order-homogeneous, their *Wronskian determinant* is
 $
   W(x) = mat(
-    y_1(x), y_2(x), dots, y_n(x),
+    y_1(x), y_2(x), dots, y_(n)(x),
     y_1'(x), y_2'(x), dots, y_n'(x),
     dots.v, dots.v, dots.down, dots.v,
     y_1^((n-1))(x), y_2^((n-1))(x), dots, y_n^((n-1))(x)
@@ -1105,9 +1105,9 @@ $
 ] <thm:liouville-higher-order>
 
 #theorem(name: "General Solution of Higher-Order Linear Equations")[
-Let $y_1(x), dots, y_n(x)$ be $n$ linearly independent solutions of the homogeneous equation @eq:higher-order-homogeneous. Then the general solution of @eq:higher-order-nonhomogeneous is
+Let $y_1(x), dots, y_(n)(x)$ be $n$ linearly independent solutions of the homogeneous equation @eq:higher-order-homogeneous. Then the general solution of @eq:higher-order-nonhomogeneous is
 $
-  y(x) = C_1 y_1(x) + C_2 y_2(x) + dots + C_n y_n(x) + y_p(x),
+  y(x) = C_1 y_1(x) + C_2 y_2(x) + dots + C_n y_(n)(x) + y_p(x),
 $
 where $C_1, dots, C_n$ are arbitrary constants and $y_p(x)$ is a particular solution.
 
@@ -1349,13 +1349,13 @@ For a regular Sturm-Liouville problem:
 2. All eigenvalues are real.
 3. Eigenfunctions corresponding to distinct eigenvalues are orthogonal with respect to the weight function $r(x)$:
    $
-     integral_a^b y_m(x) y_n(x) r(x) dif x = 0, quad quad m != n.
+     integral_a^b y_m(x) y_(n)(x) r(x) dif x = 0, quad quad m != n.
    $
 4. The eigenfunctions form a complete orthogonal basis: any piecewise smooth function $f(x)$ can be expanded as a generalized Fourier series
    $
-     f(x) = sum_(n=1)^oo c_n y_n(x),
+     f(x) = sum_(n=1)^oo c_n y_(n)(x),
    $
-   where $c_n = (integral_a^b f(x) y_n(x) r(x) dif x) / (integral_a^b y_n^2(x) r(x) dif x)$.
+   where $c_n = (integral_a^b f(x) y_(n)(x) r(x) dif x) / (integral_a^b y_n^2(x) r(x) dif x)$.
 ] <thm:sl-properties>
 
 #note[
@@ -1367,7 +1367,7 @@ The classic Fourier sine series is the Sturm-Liouville problem
 $
   y'' + lambda y = 0, quad quad y(0) = 0, quad quad y(pi) = 0.
 $
-The eigenvalues are $lambda_n = n^2$, and the eigenfunctions are $y_n(x) = sin(n x)$. Orthogonality is with respect to the weight $r(x) = 1$:
+The eigenvalues are $lambda_n = n^2$, and the eigenfunctions are $y_(n)(x) = sin(n x)$. Orthogonality is with respect to the weight $r(x) = 1$:
 $
   integral_0^pi sin(m x) sin(n x) dif x = pi / 2 delta_(m n).
 $
