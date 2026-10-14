@@ -227,9 +227,9 @@ Crucially, the order determines how many initial conditions are needed to single
 #definition(name: "Linear Differential Equation")[
 An $n$-th order differential equation is *linear* if it can be written in the form
 $
-  a_n(x) y^(n) + a_(n-1)(x) y^(n-1) + dots + a_1(x) y' + a_0(x) y = g(x),
+  a_(n)(x) y^(n) + a_(n-1)(x) y^(n-1) + dots + a_1(x) y' + a_0(x) y = g(x),
 $
-where the coefficients $a_i(x)$ and the inhomogeneous term $g(x)$ depend only on the independent variable $x$. Otherwise, the equation is *nonlinear*.
+where the coefficients $a_(i)(x)$ and the inhomogeneous term $g(x)$ depend only on the independent variable $x$. Otherwise, the equation is *nonlinear*.
 ] <def:linear-ode>
 
 #note[
@@ -697,7 +697,7 @@ The proof proceeds by *Picard iteration*:
 
 2. Construct a sequence of approximations:
    $
-     phi_(n + 1)(x) = y_0 + integral_(x_0)^x f(t, phi_n(t)) dif t, quad quad phi_0(x) = y_0.
+     phi_(n + 1)(x) = y_0 + integral_(x_0)^x f(t, phi_(n)(t)) dif t, quad quad phi_0(x) = y_0.
    $
 
 3. Show that ${phi_n}$ converges uniformly on $[x_0 - h, x_0 + h]$. The error between successive terms satisfies
@@ -816,7 +816,7 @@ on the common interval of existence.
 ] <def:continuous-dependence>
 
 #theorem(name: "Differentiability with Respect to Initial Data")[
-Suppose $f(x, y)$ and $f_y(x, y)$ are continuous in a closed rectangle $D$. Then the solution $y = phi(x; x_0, y_0)$ is of class $C^1$ as a function of $(x, x_0, y_0)$. Moreover,
+Suppose $f(x, y)$ and $f_(y)(x, y)$ are continuous in a closed rectangle $D$. Then the solution $y = phi(x; x_0, y_0)$ is of class $C^1$ as a function of $(x, x_0, y_0)$. Moreover,
 $
   (partial phi) / (partial y_0) = exp(lr(integral_(x_0)^x f_y(t, phi(t; x_0, y_0)) dif t)),
 $
@@ -892,17 +892,17 @@ $
 is also a solution. It follows that the set of all solutions forms an $n$-dimensional vector space.
 
 #definition(name: "Fundamental Solution Matrix")[
-Let $bold(Y)_1(x), dots, bold(Y)_n(x)$ be $n$ linearly independent solutions of the homogeneous system @eq:homogeneous-system. The $n times n$ matrix
+Let $bold(Y)_1(x), dots, bold(Y)_(n)(x)$ be $n$ linearly independent solutions of the homogeneous system @eq:homogeneous-system. The $n times n$ matrix
 $
-  bold(Phi)(x) = mat(bold(Y)_1(x), dots, bold(Y)_n(x))
+  bold(Phi)(x) = mat(bold(Y)_1(x), dots, bold(Y)_(n)(x))
 $
 whose columns are these solutions is called a *fundamental solution matrix*. The set ${bold(Y)_1, dots, bold(Y)_n}$ is called a *fundamental system of solutions*.
 ] <def:fundamental-matrix>
 
 #definition(name: "Wronskian Determinant")[
-For $n$ vector functions $bold(Y)_1(x), dots, bold(Y)_n(x)$, their *Wronskian determinant* is
+For $n$ vector functions $bold(Y)_1(x), dots, bold(Y)_(n)(x)$, their *Wronskian determinant* is
 $
-  W(x) = "det" lr(mat(bold(Y)_1(x), dots, bold(Y)_n(x))).
+  W(x) = "det" lr(mat(bold(Y)_1(x), dots, bold(Y)_(n)(x))).
 $
 ] <def:wronskian>
 
@@ -1042,12 +1042,12 @@ This chapter extends the theory of first-order linear systems to $n$-th order sc
 
 The general $n$-th order linear differential equation has the form
 #eq[$
-  (d^n y) / (d x^n) + p_1(x) (d^(n-1) y) / (d x^(n-1)) + dots + p_(n-1)(x) (d y) / (d x) + p_n(x) y = f(x).
+  (d^n y) / (d x^n) + p_1(x) (d^(n-1) y) / (d x^(n-1)) + dots + p_(n-1)(x) (d y) / (d x) + p_(n)(x) y = f(x).
 $] <eq:higher-order-nonhomogeneous>
 
 When $f(x) equiv 0$, we obtain the homogeneous case:
 #eq[$
-  (d^n y) / (d x^n) + p_1(x) (d^(n-1) y) / (d x^(n-1)) + dots + p_(n-1)(x) (d y) / (d x) + p_n(x) y = 0.
+  (d^n y) / (d x^n) + p_1(x) (d^(n-1) y) / (d x^(n-1)) + dots + p_(n-1)(x) (d y) / (d x) + p_(n)(x) y = 0.
 $] <eq:higher-order-homogeneous>
 
 To reduce this to a first-order system, introduce the state vector
@@ -1064,7 +1064,7 @@ $
     0, 1, 0, dots, 0,
     0, 0, 1, dots, 0,
     dots.v, dots.v, dots.v, dots.down, dots.v,
-    -p_n(x), -p_(n-1)(x), -p_(n-2)(x), dots, -p_1(x)
+    -p_(n)(x), -p_(n-1)(x), -p_(n-2)(x), dots, -p_1(x)
   ),
 $
 and $bold(F)(x) = mat(0, 0, dots, f(x))^T$.
@@ -1107,15 +1107,15 @@ $
 #theorem(name: "General Solution of Higher-Order Linear Equations")[
 Let $y_1(x), dots, y_(n)(x)$ be $n$ linearly independent solutions of the homogeneous equation @eq:higher-order-homogeneous. Then the general solution of @eq:higher-order-nonhomogeneous is
 $
-  y(x) = C_1 y_1(x) + C_2 y_2(x) + dots + C_n y_(n)(x) + y_p(x),
+  y(x) = C_1 y_1(x) + C_2 y_2(x) + dots + C_n y_(n)(x) + y_(p)(x),
 $
-where $C_1, dots, C_n$ are arbitrary constants and $y_p(x)$ is a particular solution.
+where $C_1, dots, C_n$ are arbitrary constants and $y_(p)(x)$ is a particular solution.
 
 The particular solution can be found by variation of parameters:
 $
-  y_p(x) = sum_(i=1)^n y_i(x) integral (W_i(x) / W(x)) f(x) dif x,
+  y_(p)(x) = sum_(i=1)^n y_(i)(x) integral (W_(i)(x) / W(x)) f(x) dif x,
 $
-where $W_i(x)$ is the algebraic cofactor of the element in the $n$-th row and $i$-th column of $W(x)$.
+where $W_(i)(x)$ is the algebraic cofactor of the element in the $n$-th row and $i$-th column of $W(x)$.
 ] <thm:higher-order-general-solution>
 
 #example(name: "Reduction of Order")[
@@ -1164,17 +1164,17 @@ For complex roots $lambda = alpha + beta i$, the corresponding complex solutions
 For non-homogeneous constant-coefficient equations, the variation-of-constants formula is computationally expensive. When the forcing term $f(x)$ has a special form, the *method of undetermined coefficients* provides a much simpler approach.
 
 #lemma(name: "Superposition Principle")[
-If $y_(text("p1"))(x)$ and $y_(text("p2"))(x)$ are particular solutions of $L_n y = f_1(x)$ and $L_n y = f_2(x)$ respectively, then $y_p(x) = y_(text("p1"))(x) + y_(text("p2"))(x)$ is a particular solution of $L_n y = f_1(x) + f_2(x)$.
+If $y_(text("p1"))(x)$ and $y_(text("p2"))(x)$ are particular solutions of $L_n y = f_1(x)$ and $L_n y = f_2(x)$ respectively, then $y_(p)(x) = y_(text("p1"))(x) + y_(text("p2"))(x)$ is a particular solution of $L_n y = f_1(x) + f_2(x)$.
 ] <lem:superposition>
 
 #theorem(name: "Form of the Particular Solution")[
 Suppose the forcing term has the form
 $
-  f(x) = e^(alpha x) [P_m(x) cos(beta x) + Q_m(x) sin(beta x)],
+  f(x) = e^(alpha x) [P_(m)(x) cos(beta x) + Q_(m)(x) sin(beta x)],
 $
 where $P_m$ and $Q_m$ are polynomials of degree at most $m$. Then a particular solution has the form
 $
-  y_p(x) = x^k e^(alpha x) [R_m(x) cos(beta x) + S_m(x) sin(beta x)],
+  y_(p)(x) = x^k e^(alpha x) [R_(m)(x) cos(beta x) + S_(m)(x) sin(beta x)],
 $
 where $R_m$ and $S_m$ are polynomials of degree at most $m$, and $k$ is the multiplicity of $alpha + beta i$ as a root of the characteristic polynomial ($k = 0$ if $alpha + beta i$ is not a root).
 ] <thm:undetermined-coefficients>
@@ -1237,7 +1237,7 @@ Direct Lyapunov methods allow us to determine stability without solving the equa
 A continuously differentiable function $V: D -> bb(R)$ is called a *Lyapunov function* for the equilibrium $bold(x)^*$ if:
 - $V(bold(x)^*) = 0$,
 - $V(bold(x)) > 0$ for all $bold(x) != bold(x)^*$ in some neighborhood of $bold(x)^*$,
-- The derivative along trajectories $dot(V)(bold(x)) = nabla V(bold(x)) dot bold(x) = sum_(i=1)^n (partial V) / (partial x_i) f_i(bold(x))$ satisfies $dot(V)(bold(x)) <= 0$ in that neighborhood.
+- The derivative along trajectories $dot(V)(bold(x)) = nabla V(bold(x)) dot bold(x) = sum_(i=1)^n (partial V) / (partial x_i) f_(i)(bold(x))$ satisfies $dot(V)(bold(x)) <= 0$ in that neighborhood.
 ] <def:lyapunov-function>
 
 #theorem(name: "Lyapunov's Stability Theorem")[
@@ -1255,14 +1255,15 @@ For two-dimensional systems, the behavior near a critical point can be classifie
 
 The local behavior is determined by the eigenvalues of $bold(A)$:
 
-| Eigenvalues | Type of Critical Point | Stability |
-|-------------|-------------------------|-----------|
-| Real, both positive | Unstable node | Unstable |
-| Real, both negative | Stable node | Asymptotically stable |
-| Real, opposite signs | Saddle | Unstable |
-| Complex, positive real part | Unstable focus | Unstable |
-| Complex, negative real part | Stable focus | Asymptotically stable |
-| Purely imaginary | Center | Lyapunov stable |
+#tex-table(
+  ("Eigenvalues", "Type of Critical Point", "Stability"),
+  ("Real, both positive", "Unstable node", "Unstable"),
+  ("Real, both negative", "Stable node", "Asymptotically stable"),
+  ("Real, opposite signs", "Saddle", "Unstable"),
+  ("Complex, positive real part", "Unstable focus", "Unstable"),
+  ("Complex, negative real part", "Stable focus", "Asymptotically stable"),
+  ("Purely imaginary", "Center", "Lyapunov stable"),
+)
 
 #definition(name: "Limit Cycle")[
 A *limit cycle* is an isolated closed trajectory (periodic orbit) in the phase plane.
@@ -1349,7 +1350,7 @@ For a regular Sturm-Liouville problem:
 2. All eigenvalues are real.
 3. Eigenfunctions corresponding to distinct eigenvalues are orthogonal with respect to the weight function $r(x)$:
    $
-     integral_a^b y_m(x) y_(n)(x) r(x) dif x = 0, quad quad m != n.
+     integral_a^b y_(m)(x) y_(n)(x) r(x) dif x = 0, quad quad m != n.
    $
 4. The eigenfunctions form a complete orthogonal basis: any piecewise smooth function $f(x)$ can be expanded as a generalized Fourier series
    $
