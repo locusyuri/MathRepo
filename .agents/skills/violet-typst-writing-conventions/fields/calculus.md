@@ -28,7 +28,7 @@
 
 | Unicode | 含义 | 示例 |
 |---------|------|------|
-| `∂` | 偏导 | $partial f / partial x$ |
+| `∂` | **禁止**——渲染数学中一律用 `partial`（见下方规则 4） | — |
 | `∫` | 建议 `integral` | — |
 
 > `∞`（无穷）**必须**用 `oo`，写成 Unicode `∞` 不符合规范。
@@ -112,5 +112,5 @@ $L^1 (X, mu)$
 1. **积分一律 `integral`**，`int` 不存在；多重积分用 `integral.double` / `integral.triple` / `integral.cont`。
 2. **微分用正体 `dif`**，如 `dif x`、`dif mu`。
 3. **无穷用 `oo`**，不是 `infty`、`infinity`、`∞`。
-4. **偏导用 `partial`**（`∂` 可直接用但建议 `partial` 统一）。
+4. **偏导一律用 `partial`**，**禁止**在渲染数学中直接使用 Unicode `∂`；含下标的偏导整体按"先组内配对、再挂下标"写：`((partial U)/(partial T))_V`，见 [general.md §6.1](general.md)。
 5. 拉普拉斯算子写 `nabla^2 V`，闭合积分写 `integral.cont` / `integral_(partial sigma)`，无 `oint` 符号。
