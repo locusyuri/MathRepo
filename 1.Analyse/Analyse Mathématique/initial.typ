@@ -8485,7 +8485,7 @@ is called the *Hessian matrix* of the function $f$.
 ) <fig:implicit-function>
 
 #proof[
-  We prove only the single-variable implicit function theorem; the multi-variable case can be derived by mathematical induction. Without loss of generality, assume $F_(y)(x^0, y^0) > 0$.
+  We give the proof for the single-variable case $n = 1$ in full; the general case $n > 1$ follows by induction on $n$, and we omit the routine details. Without loss of generality, assume $F_(y)(x^0, y^0) > 0$.
 
   // 注：tex 证明中矩形 D* 的点写作 (x_0, y_0)，与定理中的 (x^0, y^0) 不一致，已统一为后者。
   /Existence of the implicit function./ By the continuity of $F_y$ and $F_(y)(x^0, y^0) > 0$, there exists a closed rectangle
@@ -8542,13 +8542,15 @@ is called the *Hessian matrix* of the function $f$.
   $
     f'(overline(x)) = - frac(F_(x)(overline(x), overline(y)), F_(y)(overline(x), overline(y))).
   $
+
+  Since $F_(x)$ and $F_(y)$ are continuous, $f$ is continuous, and $F_(y) != 0$ on $D^*$, the right-hand side is a continuous function of $overline(x)$; hence $f'$ is continuous, i.e. $f in C^1$ on $(x^0 - rho, x^0 + rho)$. For $k >= 2$, repeatedly differentiating this formula and invoking $F in C^k$ yields $f in C^k$ by induction on $k$.
 ]
 
 #note[
   From the proof process of the implicit function theorem, it can be observed that if only the continuity of the implicit function $y = f(bold(x))$ is required, then the theorem can be restated as follows: if
   + $F in C (U, bb(R))$;
   + $F(bold(x)^0, y^0) = 0$;
-  + for fixed $bold(x) = bold(x)^0$, $F(bold(x)^0, y)$ is strictly monotonic with respect to $y$,
+  + $F(bold(x)^0, y)$ is strictly monotonic with respect to $y$,
 
   then the implicit function $y = f(bold(x))$ determined by the equation $F(bold(x), y) = 0$ is continuous on $I$.
 ]
@@ -8586,17 +8588,18 @@ is called the *Hessian matrix* of the function $f$.
     $
     where $bold(y) = bold(f)(bold(x))$.
 ] <thm:implicit-mapping-theorem>
+// 注：tex 未提供本定理的证明，按空壳处理原则不编造证明。
 
 #example[
-  The mapping
-  $
-    cases(x = x(z), y = y(z))
-  $
-  is solved from the implicit functions defined by the system
+  Suppose that the system
   $
     cases(F(y - z, x + z) = 0, G(y / z, x z) = 0)
   $
-  where $F, G in C^1$. Find $dif x / dif z$ and $dif y / dif z$.
+  where $F, G in C^1$, defines implicit functions
+  $
+    cases(x = x(z), y = y(z)).
+  $
+  Find $dif x / dif z$ and $dif y / dif z$.
 ] <ex:implicit-system-derivatives>
 
 #note[
@@ -8691,18 +8694,25 @@ is called the *Hessian matrix* of the function $f$.
     $
     where $bold(x) = bold(f)^(-1)(bold(y))$.
 
-  At this time, $bold(f)$ is called a $C^k$ *diffeomorphism*.
+  In this case, the restriction $bold(f) |_V$ is called a *local $C^k$ diffeomorphism*.
 ] <thm:local-inverse-mapping-theorem>
+// 注：tex 未提供本定理的证明，按空壳处理原则不编造证明。
 
-If the conditions are strengthened, then a global inverse mapping theorem can be established.
+If, in addition, the mapping is injective on the entire domain, then a global inverse mapping theorem can be established.
 
 #theorem(name: "Inverse Mapping Theorem")[
   Let $U subset bb(R)^n$ be a convex region, and $bold(f): U -> bb(R)^n$ be a mapping. If:
   + $bold(f) in C^k (U, bb(R)^n)$, $1 <= k <= +oo$;
+  + $bold(f)$ is injective on $U$;
   + for any $bold(x) in U$, the Jacobian determinant $det J bold(f)(bold(x)) != 0$,
 
   then $bold(f): U -> bold(f)(U)$ is a bijection, and the inverse mapping $bold(f)^(-1): bold(f)(U) -> U$ exists and belongs to $C^k (bold(f)(U), bb(R)^n)$.
 ] <thm:inverse-mapping-theorem>
+// 注：tex 原文无单射条件，条件不足——反例：指数映射 (e^x cos y, e^x sin y) 在凸区域 bb(R)^2 上 Jacobian 处处非零但因 y 方向周期 2π 而不单射；本次修正补充单射条件。
+
+#note[
+  The injectivity assumption cannot be dropped: the exponential mapping $(e^x cos y, e^x sin y)$ has a nowhere-vanishing Jacobian determinant on the convex domain $bb(R)^2$, yet it is not injective due to its $2 pi$-periodicity in $y$.
+]
 
 #example[
   Use the substitutions
