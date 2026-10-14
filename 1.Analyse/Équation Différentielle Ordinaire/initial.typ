@@ -644,4 +644,189 @@ and higher derivatives follow similarly. The equation becomes a constant-coeffic
 When an equation is written in symmetric form $M(x, y) dif x + N(x, y) dif y = 0$, the roles of $x$ and $y$ are symmetric. It is sometimes easier to treat $x$ as the unknown function of $y$, especially when the resulting equation becomes linear in $x$.
 ]
 
+= Existence, Uniqueness and Dependence // 存在唯一性与解的依赖性
+
+The previous chapter provided elementary methods for solving specific classes of first-order ODEs. This chapter addresses a more fundamental question: *when does a solution exist, when is it unique, and how does it depend on the initial data?* We prove the Picard-Lindelöf theorem using Picard iteration, study how far a solution can be extended, introduce singular solutions and envelopes, and conclude with the continuous dependence of solutions on initial values.
+
+== Picard-Lindelöf Theorem // Picard-Lindelöf 定理
+
+We begin with an auxiliary inequality that will be used repeatedly.
+
+#theorem(name: "Bellman-Gronwall Inequality")[
+Let $f(x)$ and $g(x)$ be continuous on $[a, b]$, with $g(x) >= 0$, and let $c >= 0$ be a constant. If
+$
+  f(x) <= c + integral_a^x f(t) g(t) dif t,
+$
+then
+$
+  f(x) <= c exp(lr(integral_a^x g(t) dif t)).
+$
+] <thm:bellman-gronwall>
+
+Now consider the Cauchy problem
+#eq[
+  cases((d y) / (d x) = f(x, y), y(x_0) = y_0),
+] <eq:cauchy-problem>
+
+#definition(name: "Lipschitz Condition")[
+A function $f(x, y)$ satisfies the *Lipschitz condition* with respect to $y$ in a domain $D$ if there exists a constant $L > 0$ such that for all $(x, y_1), (x, y_2) in D$,
+$
+  abs(f(x, y_1) - f(x, y_2)) <= L abs(y_1 - y_2).
+$
+] <def:lipschitz>
+
+#theorem(name: "Picard-Lindelöf Theorem")[
+Let $D = [x_0 - a, x_0 + a] times [y_0 - b, y_0 + b]$ be a closed rectangle. Suppose:
+
+1. $f(x, y)$ is continuous in $D$.
+2. $f(x, y)$ satisfies the Lipschitz condition with respect to $y$ in $D$.
+
+Then there exists a unique solution $y = phi(x)$ (with $phi(x_0) = y_0$) to @eq:cauchy-problem on the interval $[x_0 - h, x_0 + h]$, where
+$
+  h = min(a, b / M), quad quad M = max_((x, y) in D) abs(f(x, y)).
+$
+] <thm:picard-lindelof>
+
+#note[
+The proof proceeds by *Picard iteration*:
+
+1. Convert the Cauchy problem into an equivalent integral equation:
+   $
+     y = y_0 + integral_(x_0)^x f(t, y) dif t.
+   $
+
+2. Construct a sequence of approximations:
+   $
+     phi_(n + 1)(x) = y_0 + integral_(x_0)^x f(t, phi_n(t)) dif t, quad quad phi_0(x) = y_0.
+   $
+
+3. Show that ${phi_n}$ converges uniformly on $[x_0 - h, x_0 + h]$. The error between successive terms satisfies
+   $
+     abs(phi_(n + 1) - phi_n) <= (M L^n) / ((n + 1)!) abs(x - x_0)^(n + 1),
+   $
+   which decays factorially and guarantees uniform convergence.
+
+4. Verify that the limit function satisfies the integral equation, and hence the ODE.
+
+5. Uniqueness follows by applying the Lipschitz condition and Bellman-Gronwall to the difference of two solutions.
+]
+
+=== Peano and Osgood Theorems // Peano 定理与 Osgood 定理
+
+The Picard-Lindelöf theorem requires both continuity and Lipschitz continuity. If we drop the Lipschitz condition, we lose uniqueness but may still retain existence.
+
+#definition(name: "Osgood Condition")[
+Let $f(x, y)$ be continuous in $D$. If there exists a continuous function $F(t) > 0$ for $t > 0$ such that
+$
+  abs(f(x, y_1) - f(x, y_2)) <= F(abs(y_1 - y_2))
+$
+and
+$
+  integral_0^epsilon (1 / F(t)) dif t = +oo quad quad text("for all") epsilon > 0,
+$
+then $f$ satisfies the *Osgood condition* with respect to $y$.
+] <def:osgood-condition>
+
+#note[
+Every Lipschitz-continuous function satisfies the Osgood condition, since we may take $F(t) = L t$.
+]
+
+#theorem(name: "Peano Existence Theorem")[
+Let $D = [x_0 - a, x_0 + a] times [y_0 - b, y_0 + b]$. If $f(x, y)$ is continuous in $D$, then there exists *at least one* solution to @eq:cauchy-problem on $[x_0 - h, x_0 + h]$, where
+$
+  h = min(a, b / M), quad quad M = max_((x, y) in D) abs(f(x, y)).
+$
+] <thm:peano>
+
+#theorem(name: "Osgood Uniqueness Theorem")[
+If $f(x, y)$ satisfies the Osgood condition with respect to $y$ in $D$, then the solution to @eq:cauchy-problem is unique on $[x_0 - h, x_0 + h]$.
+] <thm:osgood>
+
+#note[
+The Peano theorem guarantees existence but not uniqueness. The classic counterexample is $y' = sqrt(y)$ with $y(0) = 0$, which has infinitely many solutions (including piecewise solutions that stay at zero for an arbitrary interval before taking off). The Osgood theorem gives the weakest known condition for uniqueness.
+]
+
+== Continuation of Solutions // 解的延拓
+
+#definition(name: "Saturated (Uncontinuable) Solution")[
+Let $y = phi(x)$ be a solution on interval $I_1$. If there exists another solution $y = tilde(phi)(x)$ on a strictly larger interval $I_2 supset I_1$ that agrees with $phi$ on $I_1$, then $phi$ is called *continuable*, and $tilde(phi)$ is a *continuation*. If no such extension exists, $phi$ is called *uncontinuable* or *saturated*.
+] <def:saturated-solution>
+
+#theorem(name: "Continuation Theorem")[
+Let $D$ be a bounded closed rectangle. Suppose $f(x, y)$ is continuous in $D$ and satisfies the *local Lipschitz condition* with respect to $y$ — that is, every point has a neighborhood in which $f$ is Lipschitz. Then any solution passing through $(x_0, y_0) in D$ can be continued until it approaches arbitrarily close to the boundary of $D$.
+] <thm:continuation>
+
+#theorem(name: "Comparison Theorem")[
+Let $f(x, y)$ and $g(x, y)$ be continuous and Lipschitz in $y$ in a region $D$. If $f(x, y) <= g(x, y)$ for all $(x, y) in D$, then the solutions $y = phi(x)$ and $y = psi(x)$ passing through the same point $(x_0, y_0)$ satisfy
+$
+  phi(x) <= psi(x)
+$
+on their common interval of existence. The same holds for strict inequalities.
+] <thm:comparison>
+
+== Singular Solutions and Envelopes // 奇解与包络
+
+#definition(name: "Singular Solution")[
+Let $Phi(x, y, c) = 0$ be the general solution of $F(x, y, y') = 0$. An integral curve $S$ is called a *singular solution* if:
+
+1. $S$ satisfies the differential equation.
+2. $S$ is not a member of the family $Phi(x, y, c) = 0$.
+3. At every point of $S$, at least two distinct solutions pass through (thus violating uniqueness).
+] <def:singular-solution>
+
+#definition(name: "Envelope")[
+Given a family of curves $Phi(x, y, c) = 0$, a curve $S$ is called the *envelope* of the family if at every point of $S$, there is a member of the family tangent to $S$.
+] <def:envelope>
+
+#caution[
+A singular solution is not necessarily an envelope (it may be the locus of singular points of the family), and an envelope is not necessarily a singular solution. The two concepts are closely related but not identical.
+]
+
+#theorem(name: "c-Test (Envelope Condition)")[
+Given the general solution $Phi(x, y, c) = 0$, eliminate $c$ from the system
+$
+  Phi(x, y, c) = 0, quad quad (partial Phi) / (partial c) = 0.
+$
+The resulting *c-test curve* is a candidate for the envelope. If, in addition:
+
+1. The curve is regular (parametric form $x = phi(c), y = psi(c)$ with $phi'^2 + psi'^2 != 0$).
+2. The gradient $nabla Phi = (Phi_x, Phi_y)$ is non-zero.
+
+then the c-test curve is indeed the envelope of the family, and is also a singular solution of the ODE.
+] <thm:c-test>
+
+#theorem(name: "p-Test (Singular Solution Condition)")[
+For the differential equation $F(x, y, y') = 0$ (where $p = y'$), eliminate $p$ from
+$
+  F(x, y, p) = 0, quad quad (partial F) / (partial p) = 0.
+$
+If the resulting curve $y = psi(x)$ is a solution of the equation, and $F_y != 0$ and $F_(p p) != 0$, then it is a singular solution.
+] <thm:p-test>
+
+== Dependence on Initial Values // 解对初值的依赖性
+
+Denote by $y = phi(x; x_0, y_0)$ the solution to the Cauchy problem passing through $(x_0, y_0)$.
+
+#definition(name: "Continuous Dependence on Initial Values")[
+The solution depends continuously on the initial values $(x_0, y_0)$ if, for every $epsilon > 0$, there exists $delta > 0$ such that whenever $abs(x_0 - x_1) < delta$ and $abs(y_0 - y_1) < delta$, we have
+$
+  abs(phi(x; x_0, y_0) - phi(x; x_1, y_1)) < epsilon
+$
+on the common interval of existence.
+] <def:continuous-dependence>
+
+#theorem(name: "Differentiability with Respect to Initial Data")[
+Suppose $f(x, y)$ and $f_y(x, y)$ are continuous in a closed rectangle $D$. Then the solution $y = phi(x; x_0, y_0)$ is of class $C^1$ as a function of $(x, x_0, y_0)$. Moreover,
+$
+  (partial phi) / (partial y_0) = exp(lr(integral_(x_0)^x f_y(t, phi(t; x_0, y_0)) dif t)),
+$
+$
+  (partial phi) / (partial x_0) = -f(x_0, y_0) exp(lr(integral_(x_0)^x f_y(t, phi(t; x_0, y_0)) dif t)).
+$
+] <thm:dependence-derivatives>
+
+#note[
+These formulas show how sensitive the solution is to changes in the initial conditions. The derivative with respect to $y_0$ is a solution of the variational equation $z' = f_y(x, phi(x)) z$, which is the linearization of the original ODE along the solution trajectory. This variational equation plays a central role in stability theory (Part III).
+]
+
 #bibliography("references.bib")
