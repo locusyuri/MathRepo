@@ -1173,10 +1173,9 @@ or as heat with a thermostat, and mixtures of the two occur in general.
 #definition(name: "Internal Energy")[
   Every equilibrium state of a system admits a state quantity $U$, the
   *internal energy*, such that the energy the system receives in any
-  process equals the increase of $U$ between the endpoint states. $U$
-  is extensive, and is defined up to an additive constant (only
-  differences $Delta U$ are measurable).
+  process equals the increase of $U$ between the endpoint states.
 ] <def:internal-energy>
+$U$ is extensive, and is defined up to an additive constant (only differences $Delta U$ are measurable).
 
 The physical motivation is Joule's paddle-wheel experiment: stir an
 insulated (adiabatic) vessel with a falling weight, and a given amount
@@ -1184,7 +1183,7 @@ of mechanical work always raises the state — measured by any thermometer
 — identically, regardless of how the stirring is arranged. The
 endpoints are characterised by a number $U$.
 
-#theorem(name: "First Law of Thermodynamics")[
+#law(name: "First Law of Thermodynamics")[
   For any process of a closed system,
   $
     Q = Delta U + W,
@@ -1196,7 +1195,7 @@ endpoints are characterised by a number $U$.
   $
     delta Q = dif U + p dif V.
   $
-] <thm:first-law>
+] <law:first-law>
 
 In words: the heat absorbed by a system divides into a rise of its
 internal energy and work delivered to the outside — energy is
@@ -1204,30 +1203,41 @@ conserved once both transfer channels are counted. Every
 perpetual-motion machine of the first kind — one producing work
 from nothing — is ruled out.
 
-#definition(name: "Heat Capacities")[
-  The *heat capacities* measure the heat required per unit temperature
-  change along a specified path:
+#definition(name: "Heat Capacity")[
+  Provided no phase change or chemical reaction occurs, the *heat
+  capacity* of a system is the ratio of the heat $Q$ exchanged with
+  the environment to the resulting temperature change $Delta T$,
   $
-    C_V = (∂ Q)_V / (dif T) = (∂ U / ∂ T)_V, quad
-    C_p = (∂ Q)_p / (dif T) = (∂ H / ∂ T)_p,
+    C = Q / (Delta T) quad "or, in differential form," quad
+    C = delta Q / (dif T),
   $
-  the second equality of each defining the constant-volume and
-  constant-pressure heat capacities through the state functions $U$ and
-  $H$ of §2.5. They are extensive; per unit amount of substance they
-  become the molar quantities $c_V$, $c_p$.
+  measured in J/K. Heat capacity is extensive and depends on the
+  constraint along which the heat is supplied. The *molar heat
+  capacities* at constant volume and at constant pressure — the heat
+  capacities of one mole, measured in J/(K mol) — are
+  $
+    C_(V, m) = ((partial Q)_V) / (nu dif T) =
+    1 / nu ((partial U)/(partial T))_V, quad
+    C_(p, m) = ((partial Q)_p) / (nu dif T) =
+    1 / nu ((partial H)/(partial T))_p,
+  $
+  the second equality of each following from $delta Q = dif U$ at
+  $dif V = 0$ and $delta Q = dif H$ at $dif p = 0$ (§2.5).
 ] <def:heat-capacities>
 
 For a dilute gas, the kinetic theory of Chapter 1 already computed the
 internal energy $U = f/2 nu R T$ from #link(<thm:equipartition>)[the
   equipartition theorem]; #link(<prop:joule-law>)[Joule's law] below
-turns it into a heat capacity, while §2.4 and §2.5 treat $C_V$ and
-$C_p$ as thermodynamic quantities, defined for any substance.
+turns it into a heat capacity, while §2.4 and §2.5 treat $C_(V,m)$ and
+$C_(p,m)$ as thermodynamic quantities, defined for any substance.
 
 #property(name: "Joule's Law: Internal Energy of an Ideal Gas")[
   The internal energy of an ideal gas depends on temperature alone:
   $
-    U = U(T) quad "and hence" quad C_V = (dif U) / (dif T).
+    U = U(T) quad "and hence" quad C_(V, m) = (dif u)/(dif T), quad
+    u = U / nu,
   $
+  with $u$ the molar internal energy.
 ] <prop:joule-law>
 
 *Justification.* Experimentally, Joule's free-expansion measurement
@@ -1237,7 +1247,7 @@ internal energy is the sum of molecular kinetic energies,
 $U = f/2 N k_B T$ by #link(<thm:equipartition>)[equipartition], with
 no dependence on the intermolecular distance because an ideal gas has
 no intermolecular potential energy at all. The full thermodynamic
-identity $(∂ U / ∂ V)_T = T (∂ p / ∂ T)_V - p$, from which
+identity $((partial U)/(partial V))_T = T ((partial p)/(partial T))_V - p$, from which
 Joule's law follows in one line for an ideal gas, is derived with the
 Maxwell relations in Chapter 6.
 
@@ -1264,10 +1274,10 @@ pipeline; this is why enthalpy, not internal energy, is the conserved
 per-mass quantity in steady-flow devices, and it is the quantity whose
 changes measure reaction heats in chemistry.
 
-#property(name: "The Relation between C_p and C_V")[
+#theorem(name: "Mayer's Formula")[
   For any simple compressible system,
   $
-    C_p - C_V = T V alpha^2 / kappa_T > 0,
+    C_(p, m) - C_(V, m) = T V_m alpha^2 / kappa_T > 0,
   $
   where
   $
@@ -1275,53 +1285,57 @@ changes measure reaction heats in chemistry.
     kappa_T = - 1/V (partial V / partial p)_T
   $
   are the thermal expansion coefficient and the isothermal
-  compressibility. For an ideal gas the relation collapses to
+  compressibility, and $V_m$ the molar volume. For an ideal gas the
+  relation collapses to
   $
-    C_p - C_V = nu R.
+    C_(p, m) - C_(V, m) = R.
   $
-] <prop:cp-cv>
+] <thm:mayer-formula>
 
 #proof[
-  Start from $U = U(T, V)$ and
-  $C_V = (partial U / partial T)_V$. Then for any quasi-static process
+  Write $u(T, v)$ for the molar internal energy and
+  $C_(V, m) = ((partial u)/(partial T))_v$. Then for any quasi-static
+  process per mole
   $
-    delta Q = dif U + p dif V
-    = C_V dif T + [(partial U / partial V)_T + p] dif V.
+    delta q = dif u + p dif v
+    = C_(V,m) dif T + [((partial u)/(partial v))_T + p] dif v.
   $
-  At constant pressure, $dif V = (partial V / partial T)_p dif T$, so
+  At constant pressure, $dif v = (partial v / partial T)_p dif T$, so
   $
-    C_p = C_V + [(partial U / partial V)_T + p] (partial V / partial T)_p.
+    C_(p,m) = C_(V,m)
+    + [((partial u)/(partial v))_T + p] (partial v / partial T)_p.
   $
   The bracket is rewritten using the identity (proved in Chapter 6 with
   the Maxwell relations)
   $
-    (partial U / partial V)_T = T (partial p / partial T)_V - p,
+    ((partial u)/(partial v))_T = T ((partial p)/(partial T))_v - p,
   $
-  so the bracket becomes $T (partial p / partial T)_V$. With the cyclic
-  identity $(partial p / partial T)_V = alpha / kappa_T$ and
-  $(partial V / partial T)_p = alpha V$,
+  so the bracket becomes $T ((partial p)/(partial T))_v$. With the cyclic
+  identity $((partial p)/(partial T))_v = alpha / kappa_T$ and
+  $(partial v / partial T)_p = alpha v$,
   $
-    C_p - C_V = T dot alpha / kappa_T dot alpha V = T V alpha^2 / kappa_T.
+    C_(p,m) - C_(V,m) = T dot alpha / kappa_T dot alpha v
+    = T v alpha^2 / kappa_T.
   $
-  For the ideal gas, $p = nu R T / V$ gives $alpha = 1/T$ and
-  $kappa_T = 1/p$, hence $C_p - C_V = T V (1/T^2) p = nu R$.
+  For the ideal gas, $p v = R T$ gives $alpha = 1/T$ and
+  $kappa_T = 1/p$, hence $C_(p,m) - C_(V,m) = T v (1/T^2) p = R$.
 ]
 
-The inequality $C_p > C_V$ has a direct reading: heating at constant
+The inequality $C_(p,m) > C_(V,m)$ has a direct reading: heating at constant
 pressure must pay for the expansion work in addition to raising the
-internal energy. The ratio $gamma = C_p / C_V$ governs the adiabatic
+internal energy. The ratio $gamma = C_(p,m) / C_(V,m)$ governs the adiabatic
 processes of §2.6.
 
 #corollary(name: "Heat Capacity of an Ideal Gas")[
   Combining #link(<prop:joule-law>)[Joule's law] with the equipartition
   internal energy $U = f/2 nu R T$ of
   #link(<prop:ideal-gas-internal-energy>)[Chapter 1] gives
-  $C_V = f/2 R$; together with #link(<prop:cp-cv>)[Mayer's relation],
-  the molar heat capacities of an ideal gas of $f$ degrees of freedom
-  are
+  $C_(V,m) = f/2 R$; together with
+  #link(<thm:mayer-formula>)[Mayer's formula], the molar heat
+  capacities of an ideal gas of $f$ degrees of freedom are
   $
-    C_V = f/2 R, quad C_p = C_V + R = (f/2 + 1) R, quad
-    gamma = C_p / C_V = (f + 2) / f.
+    C_(V,m) = f/2 R, quad C_(p,m) = C_(V,m) + R = (f/2 + 1) R, quad
+    gamma = C_(p,m) / C_(V,m) = (f + 2) / f.
   $
 ] <cor:ideal-gas-heat-capacity>
 
@@ -1330,15 +1344,15 @@ processes of §2.6.
   $1/2 k_B T$ to the mean energy per molecule, so
 
   - *monatomic gas* ($f = 3$ translations): $lr(⟨ E ⟩) = 3/2 k_B T$
-    per molecule and $C_V = 3/2 R$ per mole;
+    per molecule and $C_(V,m) = 3/2 R$;
   - *rigid diatomic gas* ($f = 5$: three translations + two rotations,
     the axis along the bond carrying no moment of inertia):
-    $C_V = 5/2 R$;
+    $C_(V,m) = 5/2 R$;
   - *diatomic gas with vibrational mode* ($f = 7$: adding one kinetic +
-    one potential quadratic term): $C_V = 7/2 R$.
+    one potential quadratic term): $C_(V,m) = 7/2 R$.
 
   These are precisely the classical values tabulated for gases such as
-  helium ($C_V approx 3/2 R$), nitrogen at room temperature
+  helium ($C_(V,m) approx 3/2 R$), nitrogen at room temperature
   ($approx 5/2 R$), and chlorine at high temperature ($approx 7/2 R$).
   The vibrational value, however, is reached only at high temperature —
   the freezing-out phenomenon anticipated in
@@ -1369,16 +1383,16 @@ processes of §2.6.
     p V^gamma = "const", quad T V^(gamma - 1) = "const", quad
     T^gamma p^(1 - gamma) = "const",
   $
-  where $gamma = C_p / C_V > 1$.
+  where $gamma = C_(p,m) / C_(V,m) > 1$.
 ] <prop:adiabatic-process>
 
 #proof[
   The first law with $delta Q = 0$ gives
-  $C_V dif T = - p dif V$. Substituting $p = nu R T / V$ and dividing by
-  $T$,
+  $nu C_(V,m) dif T = - p dif V$. Substituting $p = nu R T / V$ and
+  dividing by $nu T$,
   $
-    C_V (dif T) / T = - nu R (dif V) / V
-    quad "with" quad nu R = C_p - C_V = (gamma - 1) C_V,
+    C_(V,m) (dif T) / T = - R (dif V) / V
+    quad "with" quad R = C_(p,m) - C_(V,m) = (gamma - 1) C_(V,m),
   $
   so $(dif T) / T = -(gamma - 1)(dif V) / V$, which integrates to
   $T V^(gamma - 1) = "const"$; eliminating $T$ with the equation of state
@@ -1408,16 +1422,19 @@ higher temperature than isothermal compression.
 ] <def:jt-coefficient>
 
 #proof[
-  Treat $H = H(T, p)$: at constant $H$,
+  Treat $h = h(T, p)$ for the molar enthalpy ($h = H / nu$): at
+  constant $h$,
   $
-    0 = (partial H / partial T)_p dif T + (partial H / partial p)_T dif p
+    0 = ((partial h)/(partial T))_p dif T
+    + ((partial h)/(partial p))_T dif p
     quad "so" quad
-    mu_("JT") = - (partial H / partial p)_T / C_p.
+    mu_("JT") = - ((partial h)/(partial p))_T / C_(p,m).
   $
-  With $H = U + p V$ and the identity
-  $(partial U / partial p)_T = - T (partial V / partial T)_p - p (partial V / partial p)_T$ (Chapter 6),
+  With $h = u + p v$ and the identity
+  $((partial u)/(partial p))_T = - T ((partial v)/(partial T))_p - p ((partial v)/(partial p))_T$ (Chapter 6),
   $
-    mu_("JT") = 1/C_p [T (partial V / partial T)_p - V] = V / C_p (T alpha - 1).
+    mu_("JT") = 1/C_(p,m) [T ((partial v)/(partial T))_p - v]
+    = v / C_(p,m) (T alpha - 1).
   $
 ]
 
@@ -1683,13 +1700,13 @@ integrating $delta Q / T$ along that process; one integrates along any
 
 #example(name: "Entropy of an ideal gas")[
   For a reversible change of $nu$ moles,
-  $delta Q = dif U + p dif V = C_V dif T + nu R T (dif V) / V$, so
+  $delta Q = dif U + p dif V = nu C_(V,m) dif T + nu R T (dif V) / V$, so
   $
-    dif S = C_V (dif T) / T + nu R (dif V) / V,
+    dif S = C_(V,m) (dif T) / T + nu R (dif V) / V,
   $
   and integrating,
   $
-    Delta S = C_V ln(T_2 / T_1) + nu R ln(V_2 / V_1).
+    Delta S = C_(V,m) ln(T_2 / T_1) + nu R ln(V_2 / V_1).
   $
   Between any two states this formula holds — including for
   irreversible changes between them, since only the endpoints enter.
@@ -1970,7 +1987,7 @@ at low temperature.
   The Nernst theorem implies that the heat capacities of condensed
   systems vanish in the zero-temperature limit,
   $
-    lim_(T -> 0) C_V = lim_(T -> 0) C_p = 0.
+    lim_(T -> 0) C_(V,m) = lim_(T -> 0) C_(p,m) = 0.
   $
 ] <prop:low-t-heat-capacity>
 
@@ -1988,7 +2005,7 @@ of Chapters 16 and 17.
 
 #caution(title: "Classical ideal gases violate the third law")[
   The classical ideal
-  gas has $C_V = f/2 nu R$ right down to $T = 0$ and an entropy of the
+  gas has $C_(V,m) = f/2 R$ right down to $T = 0$ and an entropy of the
   Sackur-Tetrode form that diverges as $T -> 0$: classical statistical
   mechanics contradicts the third law outright. No paradox arises —
   the classical description itself fails long before, when the thermal
@@ -2021,7 +2038,7 @@ reference — thermodynamics' only absolute energy-like scale.
   The entropy of a substance at temperature $T$ is computed from
   calorimetric data alone:
   $
-    S(T) = integral_0^T (C_p(T')) / T' dif T'
+    S(T) = integral_0^T (C_(p,m)(T')) / T' dif T'
     + sum_("transitions") (L_i) / T_i,
   $
   where each transition (crystal structure change, melting, vaporisation)
@@ -2029,16 +2046,16 @@ reference — thermodynamics' only absolute energy-like scale.
   jump, and $S(0) = 0$.
 ] <def:absolute-entropy>
 
-The integral converges at the origin because $C_p -> 0$ — precisely
+The integral converges at the origin because $C_(p,m) -> 0$ — precisely
 the content of #link(<prop:low-t-heat-capacity>)[the low-temperature
-  theorem]; a classical gas with constant $C_p$ would yield a divergent
+  theorem]; a classical gas with constant $C_(p,m)$ would yield a divergent
 absolute entropy.
 
 #note(title: "Standard entropies")[
   Tables of chemical thermodynamics list the
   *standard entropy* $S degree(298.15 "K")$ of each species — the
   absolute entropy at $298.15 "K"$ in its standard state, obtained from
-  the formula above with calorimetric $C_p$ and latent heats. Reaction
+  the formula above with calorimetric $C_(p,m)$ and latent heats. Reaction
   entropies follow by summation over species, without any reference
   state ambiguity. This unambiguous bookkeeping is what makes the
   equilibrium constants of Chapter 8 computable from data tables.
@@ -2060,8 +2077,8 @@ absolute entropy.
   entropy). By #link(<def:absolute-entropy>)[the absolute entropy
     formula], a system with any fixed entropy $S > S(0)$ sits at $T > 0$:
   $
-    S - S(0) = integral_0^T (C_p(T')) / T' dif T' > 0
-    quad "for" T > 0 quad ("since" C_p > 0).
+    S - S(0) = integral_0^T (C_(p,m)(T')) / T' dif T' > 0
+    quad "for" T > 0 quad ("since" C_(p,m) > 0).
   $
   An adiabatic leg preserves $S$, so to land on $T = 0$ it must preserve
   $S = S(0)$ — but every reachable state above zero temperature has
@@ -2072,7 +2089,7 @@ absolute entropy.
 ]
 
 The argument is the standard heuristic one — it assumes cooling cycles
-built from isothermal and adiabatic legs and $C_p > 0$ throughout —
+built from isothermal and adiabatic legs and $C_(p,m) > 0$ throughout —
 and its status among the formulations of the third law is discussed in
 the literature; we adopt it as the operational reading of the law.
 
@@ -2347,12 +2364,13 @@ regime, and it reappears below as the equation of state of radiation.
   while the energy density is regime-dependent. Ultra-relativistically
   $U = 3 p V = 3 nu R T$, so
   $
-    C_V = 3 nu R, quad C_p = 4 nu R, quad gamma = C_p / C_V = 4/3,
+    C_(V,m) = 3 R, quad C_(p,m) = 4 R, quad
+    gamma = C_(p,m) / C_(V,m) = 4/3,
   $
   and quasi-static adiabats satisfy $p V^(4/3) = "const"$ — repeating
   the derivation of #link(<prop:adiabatic-process>)[Chapter 2] with
-  the new $C_V$. Compare the non-relativistic monatomic values
-  $C_V = 3 nu R / 2$, $gamma = 5/3$. The generalized equipartition
+  the new $C_(V,m)$. Compare the non-relativistic monatomic values
+  $C_(V,m) = 3 R / 2$, $gamma = 5/3$. The generalized equipartition
   $< p dot v > = 3 k_B T$ (the relativistic form of
   #link(<thm:equipartition>)[the equipartition theorem]) accommodates
   both: each degree contributes $< p dot v > / 2$-type bookkeeping
@@ -2571,7 +2589,7 @@ and the convention that Greek indices run over spacetime.
   comoving frame, $dif P^mu = (dif U / c, 0, 0, 0)$ and
   $beta_mu dif P^mu = dif U / T$, recovering
   $dif S = (dif U + p dif V) / T$ — the first law of
-  #link(<thm:first-law>)[Chapter 2] together with the entropy of
+  #link(<law:first-law>)[Chapter 2] together with the entropy of
   #link(<def:entropy>)[Chapter 3].
 ] <thm:covariant-first-law>
 
@@ -2691,7 +2709,7 @@ hydrodynamics, beyond this note's scope.
 //   Section 2.4: First Law: Internal Energy (第一定律：内能)
 //     - 第一定律的表述
 //     - 内能作为状态函数
-//     - 热容: C_V 与 C_p
+//     - 热容: C_(V,m) 与 C_(p,m)
 //     - 绝热过程
 
 //   Section 2.5: Heat Capacity and Enthalpy (热容与焓)
@@ -2814,7 +2832,7 @@ hydrodynamics, beyond this note's scope.
 //   Section 6.5: Thermodynamic Identities and Calculation Strategies (热力学恒等式与计算策略)
 //     - 常用热力学恒等式汇总
 //     - 热力学计算的系统方法 (Jacobian 方法)
-//     - α, κ_T, C_p - C_V 关系
+//     - α, κ_T, C_(p,m) - C_(V,m) 关系
 
 // --- Chapter 7: Multi-Component Systems and Phase Equilibrium (多组分系统与相平衡) ---
 
@@ -2874,8 +2892,8 @@ hydrodynamics, beyond this note's scope.
 
 //   Section 9.1: Intrinsic Stability Conditions (内禀稳定性条件)
 //     - 熵的极大值原理与稳定性
-//     - 热稳定性: C_V > 0
-//     - 力学稳定性: (∂p/∂V)_T < 0
+//     - 热稳定性: C_(V,m) > 0
+//     - 力学稳定性: (∂p/∂V)_T < 0（注释，非渲染内容）
 //     - 稳定性条件的矩阵形式
 
 //   Section 9.2: Le Chatelier-Braun Principle (勒夏特列-布朗原理)
