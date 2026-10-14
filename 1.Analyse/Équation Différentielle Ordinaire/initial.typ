@@ -1276,4 +1276,101 @@ Let $D$ be a bounded region in the plane, and let $bold(x)(t)$ be a trajectory t
 The Poincaré-Bendixson theorem is a deep result that restricts the possible asymptotic behavior of planar flows. In dimensions three and higher, chaotic behavior is possible, which is excluded in the plane.
 ]
 
+#part("Boundary Value Problems and Spectral Theory") // 边值问题与谱论
+
+= Boundary Value Problems // 边值问题
+
+This chapter studies boundary value problems (BVPs) for linear ODEs, where conditions are specified at two endpoints of an interval rather than at a single initial point. The central object is the Sturm-Liouville problem, whose eigenfunctions form an orthogonal basis for expanding arbitrary functions — the foundation of Fourier series and spectral methods.
+
+== Boundary Value Problems vs. Initial Value Problems // 边值问题与初值问题
+
+An initial value problem (IVP) specifies all conditions at a single point $x = x_0$:
+$
+  y(x_0) = y_0, quad quad y'(x_0) = y_(1, 0), quad quad dots, quad quad y^((n-1))(x_0) = y_((n-1), 0).
+$
+
+A boundary value problem specifies conditions at two endpoints $x = a$ and $x = b$:
+$
+  cases(
+    alpha_1 y(a) + alpha_2 y'(a) = c_1,
+    beta_1 y(b) + beta_2 y'(b) = c_2,
+  )
+$
+
+Unlike IVPs, which always have a unique solution (under mild conditions), BVPs may have no solution, a unique solution, or infinitely many solutions — depending on the parameter values.
+
+#example(name: "A Simple BVP")[
+Consider the second-order equation
+$
+  y'' + lambda y = 0, quad quad y(0) = 0, quad quad y(pi) = 0.
+$
+- If $lambda < 0$, the only solution is $y equiv 0$.
+- If $lambda = 0$, the only solution is $y equiv 0$.
+- If $lambda = n^2$ for integer $n$, there are non-trivial solutions $y(x) = C sin(n x)$.
+- If $lambda > 0$ is not a perfect square, the only solution is $y equiv 0$.
+] <ex:simple-bvp>
+
+This example shows that non-trivial solutions exist only for special values of $lambda$, called *eigenvalues*.
+
+== Sturm-Liouville Problems // Sturm-Liouville 问题
+
+#definition(name: "Sturm-Liouville Equation")[
+A *Sturm-Liouville equation* has the form
+#eq[$
+  - (d) / (d x) lr(p(x) (d y) / (d x)) + q(x) y = lambda r(x) y,
+$] <eq:sturm-liouville>
+where $p(x) > 0$, $r(x) > 0$, and $q(x)$ are continuous on $[a, b]$.
+] <def:sturm-liouville>
+
+The functions $p$, $q$, and $r$ are the coefficients of the Sturm-Liouville operator, and $r(x)$ is called the *weight function*.
+
+#definition(name: "Regular Sturm-Liouville Problem")[
+A *regular Sturm-Liouville problem* on $[a, b]$ consists of the equation @eq:sturm-liouville together with boundary conditions
+$
+  cases(
+    alpha_1 y(a) + alpha_2 y'(a) = 0,
+    beta_1 y(b) + beta_2 y'(b) = 0,
+  )
+$
+where $alpha_1, alpha_2$ are not both zero, and $beta_1, beta_2$ are not both zero.
+] <def:regular-slp>
+
+These are *homogeneous* boundary conditions (the right-hand side is zero).
+
+== Eigenvalues and Eigenfunctions // 特征值与特征函数
+
+#definition(name: "Eigenvalues and Eigenfunctions")[
+A value of $lambda$ for which the regular Sturm-Liouville problem has a non-trivial solution is called an *eigenvalue*. The corresponding non-trivial solution is called an *eigenfunction*.
+] <def:sl-eigenvalue>
+
+#theorem(name: "Properties of Sturm-Liouville Eigenvalues")[
+For a regular Sturm-Liouville problem:
+1. The eigenvalues form an infinite sequence $lambda_1 < lambda_2 < lambda_3 < dots$ with $lambda_n -> oo$.
+2. All eigenvalues are real.
+3. Eigenfunctions corresponding to distinct eigenvalues are orthogonal with respect to the weight function $r(x)$:
+   $
+     integral_a^b y_m(x) y_n(x) r(x) dif x = 0, quad quad m != n.
+   $
+4. The eigenfunctions form a complete orthogonal basis: any piecewise smooth function $f(x)$ can be expanded as a generalized Fourier series
+   $
+     f(x) = sum_(n=1)^oo c_n y_n(x),
+   $
+   where $c_n = (integral_a^b f(x) y_n(x) r(x) dif x) / (integral_a^b y_n^2(x) r(x) dif x)$.
+] <thm:sl-properties>
+
+#note[
+This theorem is the spectral theorem for self-adjoint differential operators. The Sturm-Liouville operator is self-adjoint with respect to the inner product weighted by $r(x)$, which is why its eigenvalues are real and its eigenfunctions are orthogonal.
+]
+
+#example(name: "Fourier Sine Series")[
+The classic Fourier sine series is the Sturm-Liouville problem
+$
+  y'' + lambda y = 0, quad quad y(0) = 0, quad quad y(pi) = 0.
+$
+The eigenvalues are $lambda_n = n^2$, and the eigenfunctions are $y_n(x) = sin(n x)$. Orthogonality is with respect to the weight $r(x) = 1$:
+$
+  integral_0^pi sin(m x) sin(n x) dif x = pi / 2 delta_(m n).
+$
+] <ex:fourier-sine>
+
 #bibliography("references.bib")
