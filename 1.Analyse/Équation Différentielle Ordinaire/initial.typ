@@ -1034,4 +1034,149 @@ where $bold(P)(x)$ is periodic with period $T$ and $bold(B)$ is a constant matri
 Floquet theory connects the behavior of periodic linear systems to constant-coefficient systems via a periodic change of variables. This is a foundational tool in the study of oscillatory systems and parametric resonance.
 ]
 
+= Higher-Order Linear Equations // 高阶线性方程
+
+This chapter extends the theory of first-order linear systems to $n$-th order scalar linear differential equations. The key insight is that any higher-order equation can be rewritten as a first-order system via the companion matrix, which means all the results of Chapter 4 apply directly. We then specialize to the constant-coefficient case, where explicit solutions can be constructed from the characteristic polynomial.
+
+== Reduction to First-Order Systems // 化为一阶方程组
+
+The general $n$-th order linear differential equation has the form
+#eq[$
+  (d^n y) / (d x^n) + p_1(x) (d^(n-1) y) / (d x^(n-1)) + dots + p_(n-1)(x) (d y) / (d x) + p_n(x) y = f(x).
+$] <eq:higher-order-nonhomogeneous>
+
+When $f(x) equiv 0$, we obtain the homogeneous case:
+#eq[$
+  (d^n y) / (d x^n) + p_1(x) (d^(n-1) y) / (d x^(n-1)) + dots + p_(n-1)(x) (d y) / (d x) + p_n(x) y = 0.
+$] <eq:higher-order-homogeneous>
+
+To reduce this to a first-order system, introduce the state vector
+$
+  bold(Y) = mat(y, y', y'', dots, y^((n-1)))^T.
+$
+Then the system becomes
+$
+  (d bold(Y)) / (d x) = bold(A)(x) bold(Y) + bold(F)(x),
+$
+where $bold(A)(x)$ is the *companion matrix*
+$
+  bold(A)(x) = mat(
+    0, 1, 0, dots, 0,
+    0, 0, 1, dots, 0,
+    dots.v, dots.v, dots.v, dots.down, dots.v,
+    -p_n(x), -p_(n-1)(x), -p_(n-2)(x), dots, -p_1(x)
+  ),
+$
+and $bold(F)(x) = mat(0, 0, dots, f(x))^T$.
+
+#theorem(name: "Equivalence of Higher-Order Equations and First-Order Systems")[
+Equation @eq:higher-order-nonhomogeneous is equivalent to the first-order system @eq:linear-system with companion matrix.
+That is, if $y(x)$ is a solution of @eq:higher-order-nonhomogeneous, then
+$bold(Y)(x) = mat(y, y', y'', dots, y^((n-1)))^T$ is a solution of the corresponding first-order system; conversely, the first component of any solution of the system is a solution of the higher-order equation.
+] <thm:higher-order-equivalence>
+
+The initial conditions
+$
+  y(x_0) = y_0, quad quad y'(x_0) = y_(1, 0), quad quad dots, quad quad y^((n-1))(x_0) = y_((n-1), 0)
+$
+translate to $bold(Y)(x_0) = bold(Y)_0$.
+
+== General Theory // 一般理论
+
+All the results of Chapter 4 carry over to higher-order equations via the equivalence #link(<thm:higher-order-equivalence>)[theorem].
+
+#definition(name: "Wronskian of Higher-Order Equations")[
+For $n$ solutions $y_1(x), dots, y_n(x)$ of the homogeneous equation @eq:higher-order-homogeneous, their *Wronskian determinant* is
+$
+  W(x) = mat(
+    y_1(x), y_2(x), dots, y_n(x),
+    y_1'(x), y_2'(x), dots, y_n'(x),
+    dots.v, dots.v, dots.down, dots.v,
+    y_1^((n-1))(x), y_2^((n-1))(x), dots, y_n^((n-1))(x)
+  ),
+$
+where the matrix is interpreted as a determinant.
+] <def:wronskian-higher-order>
+
+#theorem(name: "Liouville's Formula for Higher-Order Equations")[
+$
+  W(x) = W(x_0) exp(- integral_(x_0)^x p_1(s) dif s).
+$
+] <thm:liouville-higher-order>
+
+#theorem(name: "General Solution of Higher-Order Linear Equations")[
+Let $y_1(x), dots, y_n(x)$ be $n$ linearly independent solutions of the homogeneous equation @eq:higher-order-homogeneous. Then the general solution of @eq:higher-order-nonhomogeneous is
+$
+  y(x) = C_1 y_1(x) + C_2 y_2(x) + dots + C_n y_n(x) + y_p(x),
+$
+where $C_1, dots, C_n$ are arbitrary constants and $y_p(x)$ is a particular solution.
+
+The particular solution can be found by variation of parameters:
+$
+  y_p(x) = sum_(i=1)^n y_i(x) integral (W_i(x) / W(x)) f(x) dif x,
+$
+where $W_i(x)$ is the algebraic cofactor of the element in the $n$-th row and $i$-th column of $W(x)$.
+] <thm:higher-order-general-solution>
+
+#example(name: "Reduction of Order")[
+Suppose $y = phi(x)$ is a known non-zero solution of the second-order homogeneous equation
+$
+  y'' + p(x) y' + q(x) y = 0.
+$
+Then a second linearly independent solution is
+$
+  y_2(x) = phi(x) integral (exp(- integral p(x) dif x) / phi^2(x)) dif x.
+$
+This is known as *reduction of order*: knowing one solution reduces the order of the equation.
+] <ex:reduction-of-order>
+
+== Constant-Coefficient Homogeneous Equations // 常系数齐次方程
+
+For constant-coefficient equations, the companion matrix is constant, and the theory of the matrix exponential simplifies dramatically. Introduce the differential operator
+$
+  L_n = (d^n) / (d x^n) + a_1 (d^(n-1)) / (d x^(n-1)) + dots + a_(n-1) (d) / (d x) + a_n,
+$
+where $a_1, dots, a_n$ are constants. The homogeneous equation is then $L_n y = 0$.
+
+The *characteristic polynomial* is
+$
+  f(lambda) = lambda^n + a_1 lambda^(n-1) + dots + a_(n-1) lambda + a_n.
+$
+
+#theorem(name: "Characteristic Roots and Fundamental Solutions")[
+Let $lambda_1, dots, lambda_s$ be the distinct roots of $f(lambda)$, with algebraic multiplicities $n_1, dots, n_s$ respectively (where $n_1 + dots + n_s = n$). Then a fundamental system of solutions is given by:
+$
+  mat(
+    e^(lambda_1 x), x e^(lambda_1 x), dots, x^(n_1 - 1) e^(lambda_1 x),
+    e^(lambda_2 x), x e^(lambda_2 x), dots, x^(n_2 - 1) e^(lambda_2 x),
+    dots.v,
+    e^(lambda_s x), x e^(lambda_s x), dots, x^(n_s - 1) e^(lambda_s x)
+  ).
+$
+] <thm:characteristic-roots>
+
+#note[
+For complex roots $lambda = alpha + beta i$, the corresponding complex solutions $e^((alpha + beta i) x)$ can be combined to give real solutions $e^(alpha x) cos(beta x)$ and $e^(alpha x) sin(beta x)$.
+]
+
+== Method of Undetermined Coefficients // 待定系数法
+
+For non-homogeneous constant-coefficient equations, the variation-of-constants formula is computationally expensive. When the forcing term $f(x)$ has a special form, the *method of undetermined coefficients* provides a much simpler approach.
+
+#lemma(name: "Superposition Principle")[
+If $y_(text("p1"))(x)$ and $y_(text("p2"))(x)$ are particular solutions of $L_n y = f_1(x)$ and $L_n y = f_2(x)$ respectively, then $y_p(x) = y_(text("p1"))(x) + y_(text("p2"))(x)$ is a particular solution of $L_n y = f_1(x) + f_2(x)$.
+] <lem:superposition>
+
+#theorem(name: "Form of the Particular Solution")[
+Suppose the forcing term has the form
+$
+  f(x) = e^(alpha x) [P_m(x) cos(beta x) + Q_m(x) sin(beta x)],
+$
+where $P_m$ and $Q_m$ are polynomials of degree at most $m$. Then a particular solution has the form
+$
+  y_p(x) = x^k e^(alpha x) [R_m(x) cos(beta x) + S_m(x) sin(beta x)],
+$
+where $R_m$ and $S_m$ are polynomials of degree at most $m$, and $k$ is the multiplicity of $alpha + beta i$ as a root of the characteristic polynomial ($k = 0$ if $alpha + beta i$ is not a root).
+] <thm:undetermined-coefficients>
+
 #bibliography("references.bib")
