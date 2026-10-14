@@ -8081,6 +8081,11 @@ The following theorem provides the conditions under which mixed partial derivati
     $
 ] <thm:mixed-partials-equality>
 
+#note[
+  A more commonly used (though stronger) sufficient condition is that *both* mixed partial derivatives $f_(x y)$ and $f_(y x)$ exist and are continuous in a neighborhood of the point. Under this condition the conclusion follows immediately by applying the theorem twice, and in practice most functions encountered (polynomials, exponentials, trigonometric functions, etc.) satisfy it automatically.
+]
+
+
 // 注：tex 中该定理的 proof 环境为空（无内容来源），按空壳处理原则不编造证明。
 
 === Higher-Order Differentiability // 高阶可微性
