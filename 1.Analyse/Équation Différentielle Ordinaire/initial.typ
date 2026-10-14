@@ -27,8 +27,8 @@
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
-// 主线：基础与一阶理论 → 线性系统 → 定性与非线性 → 边值谱论 → PDE 导论
-// 共 5 Part、8 Chapter。
+// 主线：基础与一阶理论 → 线性系统 → 定性与非线性 → 边值谱论
+// 共 4 Part、7 Chapter。
 //
 // 职责边界：
 //   - Banach 不动点 / Picard 迭代的抽象理论 → Analyse Réelle / Analyse Fonctionnelle
@@ -38,15 +38,14 @@
 //     本笔记仅给出 ODE 求解所需的最小版本）
 //   - 谱理论抽象框架 → Analyse Fonctionnelle（交叉引用；
 //     Sturm-Liouville 作为具体应用出现在本笔记）
-//   - 一阶偏微分方程的完整理论 → Équations aux Dérivées Partielles
-//     （本 Part V 仅作导论，完整特征理论、Hamilton-Jacobi 等见 PDE 笔记）
+//   - 一阶偏微分方程全部内容 → Équations aux Dérivées Partielles
+//     （本笔记不包含，完整理论见 PDE 笔记）
 //   - 相平面分支、混沌等深入内容 → 后续专门笔记（如有）
 //
 // 设计决策：
 //   - 原 tex 笔记中 chap06（边值问题）被错误置于 chap08（一阶PDE）之后，
-//     本设计按逻辑顺序纠正为 Part IV → Part V
-//   - 一阶 PDE 从「一章」提升为独立 Part V，突出其桥梁地位：
-//     特征线法本质是 ODE 解曲线的延伸，是连接 EDO 与 PDE 的天然过渡
+//     本设计删除原 chap08（一阶PDE）——该内容完全归属 PDE 笔记，
+//     边值问题（原 chap06）按逻辑顺序归入 Part IV
 //   - 存在唯一性定理（Ch 3）放在一阶初等解法（Ch 2）之后，
 //     符合「先直观后严格」的认知顺序
 //   - 高阶线性方程（Ch 5）与一阶线性系统（Ch 4）虽数学上等价，
@@ -171,31 +170,10 @@
 //     - Sturm 比较定理、振动定理
 
 // ==========================================================================
-// Part V — Introduction to First-Order PDEs (一阶偏微分方程导论)
-// ==========================================================================
-// 设计思路：本 Part 是 EDO 到 PDE 的桥梁。一阶偏微分方程的特征线法本质上
-// 是沿着 ODE 的解曲线（特征线）求解 PDE，是 ODE 理论的直接延伸。
-// 放在最后：既收束 EDO 全书，又为 Équations aux Dérivées Partielles 笔记铺路。
-// 本 Part 仅作导论；完整的一阶非线性 PDE、Hamilton-Jacobi 理论、
-// 守恒律与激波等内容见 PDE 笔记。
-// 对应教材：一阶偏微分方程一章。
-
-// --- Chapter 8: First-Order Partial Differential Equations (一阶偏微分方程) ---
-
-//   Section 8.1: Characteristics Method (特征线法)
-//     - 特征方程、特征线
-//   Section 8.2: First Integrals (首次积分)
-//     - 首次积分的概念与应用
-//   Section 8.3: Linear Homogeneous First-Order PDEs (一阶线性齐次偏微分方程)
-//     - 通解结构、Cauchy 问题
-//   Section 8.4: Quasilinear First-Order PDEs (一阶拟线性偏微分方程)
-//     - 拟线性方程的特征线解法
-
-// ==========================================================================
 // 结构说明 (Structure Note)
 // ==========================================================================
-// 本笔记遵循「基础与一阶理论 → 线性系统 → 定性与非线性 → 边值谱论 → PDE 导论」
-// 的五段式主线，共 5 Part、8 Chapter。
+// 本笔记遵循「基础与一阶理论 → 线性系统 → 定性与非线性 → 边值谱论」
+// 的四段式主线，共 4 Part、7 Chapter。
 //
 // Part I（Ch 1–3，基础与一阶理论）：ODE 基本语言、一阶方程全套初等解法、
 //   存在唯一性与解的依赖性，奠定严格基础。
@@ -209,11 +187,9 @@
 // Part IV（Ch 7，边值问题）：Sturm-Liouville 特征值问题，
 //   连接 ODE 与谱理论，为 PDE 分离变量法铺路。
 //
-// Part V（Ch 8，PDE 导论）：一阶偏微分方程的特征线法，
-//   作为 EDO 到 PDE 的桥梁，完整理论见 Équations aux Dérivées Partielles 笔记。
-//
 // 教材覆盖：柳彬《常微分方程》、王高雄《常微分方程》、Boyce & DiPrima
 //   《Elementary Differential Equations》全部核心知识点均已覆盖。
+//   （注：原 tex 笔记中一阶 PDE 一章已全部移入 Équations aux Dérivées Partielles 笔记）
 // ==========================================================================
 
 #bibliography("references.bib")
