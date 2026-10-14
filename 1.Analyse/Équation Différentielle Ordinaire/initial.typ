@@ -318,4 +318,330 @@ $
 Since this holds for all $x in J$, the function $y = psi(x)$ satisfies the ODE and is therefore a solution.
 ]
 
+= First-Order Equations // 一阶方程
+
+This chapter presents the elementary solution methods for first-order ODEs. We proceed from the symmetric differential form (§2.1), then derive several important special classes: separable equations, homogeneous equations, and linear equations. The method of integrating factors unifies these approaches by converting non-exact forms into exact ones. Finally, we treat implicit equations and the reduction of higher-order equations.
+
+== Exact Equations // 恰当方程
+
+#definition(name: "Exact Equation")[
+An equation of the form
+#eq[
+  M(x, y) dif x + N(x, y) dif y = 0,
+] <eq:symmetric-form>
+is called the *symmetric form* (or *differential form*) of a first-order differential equation.
+
+If there exists a continuously differentiable function $U(x, y)$ such that
+$
+  dif U(x, y) = M(x, y) dif x + N(x, y) dif y,
+$
+then @eq:symmetric-form is said to be an *exact equation* (or *total differential equation*). When this holds, the equation can be rewritten as $d(U(x, y)) = 0$, which implies
+#eq[
+  U(x, y) = c,
+] <eq:exact-general-integral>
+where $c$ is an arbitrary constant. @eq:exact-general-integral is called the *general integral* of the equation.
+] <def:exact-equation>
+
+#note[
+Strictly speaking, the symmetric form is not a differential equation in the traditional sense. However, expressing a first-order ODE in this form is extremely convenient for analysis, as it does not require $y$ to be expressed as a function of $x$. For simplicity, we often refer to the symmetric form itself as a differential equation.
+]
+
+#theorem(name: "Exactness Criterion")[
+Let $M(x, y)$ and $N(x, y)$ be continuous in a simply connected domain $D subset.eq bb(R)^2$, and suppose their first-order partial derivatives $partial M / partial y$ and $partial N / partial x$ are also continuous. Then a necessary and sufficient condition for @eq:symmetric-form to be exact is
+$
+  (partial M) / (partial y) = (partial N) / (partial x) quad quad text("in") D.
+$
+When this condition holds, a general integral is given by
+$
+  integral_gamma M(x, y) dif x + N(x, y) dif y = c,
+$
+where $gamma$ is any piecewise smooth curve in $D$ connecting $(x_0, y_0)$ to $(x, y)$.
+] <thm:exactness-criterion>
+
+#proof[
+This is a standard result from multivariable calculus — the equivalence of closed and exact 1-forms on simply connected domains. For a complete proof, see *Analyse Mathématique*, Theorem 15.9.
+]
+
+Beyond the line-integral method, there are two practical methods for finding $U(x, y)$:
+
+- *Term combination method*: Using known exact differentials, we group terms of the equation into a total differential. Useful identities include:
+  $
+    y dif x + x dif y = dif(x y), quad quad (y dif x - x dif y) / y^2 = dif(x / y),
+  $
+  $
+    (1 / x) dif x + (1 / y) dif y = dif(ln abs(x y)), quad quad (y dif x + x dif y) / (x^2 + y^2) = dif(arctan(y / x)).
+  $
+
+In differential form language, the 1-form $omega = M(x, y) dif x + N(x, y) dif y$ is *closed* if its exterior derivative vanishes, and *exact* if it is the differential of some function $U(x, y)$. By Poincaré's lemma, on the simply connected domain $bb(R)^2$, a 1-form is exact if and only if it is closed — which is precisely the condition $(partial M) / (partial y) = (partial N) / (partial x)$.
+
+== Separable Equations // 可分离变量方程
+
+#definition(name: "Separable Equation")[
+If $M(x, y)$ and $N(x, y)$ in @eq:symmetric-form can both be written as the product of a function of $x$ and a function of $y$,
+$
+  M(x, y) = M_1(x) M_2(y), quad quad N(x, y) = N_1(x) N_2(y),
+$
+then @eq:symmetric-form is called a *separable equation*. In the more familiar derivative notation, this becomes
+#eq[
+  (d y) / (d x) = f(x) g(y),
+] <eq:separable-form>
+where $f(x) = -M_1(x) / N_1(x)$ and $g(y) = N_2(y) / M_2(y)$.
+] <def:separable-equation>
+
+#theorem(name: "Solutions to Separable Equations")[
+All solutions to the separable equation @eq:separable-form are given by
+$
+  integral_(x_0)^x (M_1(t)) / (N_1(t)) dif t + integral_(y_0)^y (N_2(s)) / (M_2(s)) dif s = c,
+$
+together with the constant solutions
+$
+  y equiv b_i, quad quad i = 1, 2, dots, m, quad quad x equiv a_j, quad quad j = 1, 2, dots, n,
+$
+where $M_2(b_i) = 0$ and $N_1(a_j) = 0$, and $c$ is an arbitrary constant.
+] <thm:separable-solutions>
+
+#caution[
+When separating variables, we must divide by $M_2(y)$ and $N_1(x)$. The roots of $M_2(y) = 0$ and $N_1(x) = 0$ give constant solutions that are lost during division. These must be checked separately and added back to the solution set.
+]
+
+== Homogeneous Equations // 齐次方程
+
+#definition(name: "Homogeneous Function")[
+A function $f(x, y)$ is called a *homogeneous function* of degree $n$ if
+$
+  f(t x, t y) = t^n f(x, y) quad quad text("for all") t > 0.
+$
+] <def:homogeneous-function>
+
+#definition(name: "Homogeneous Equation")[
+A first-order equation $M(x, y) dif x + N(x, y) dif y = 0$ is called a *homogeneous equation* if both $M$ and $N$ are homogeneous functions of the same degree. Equivalently, in derivative form
+$
+  (d y) / (d x) = f(x, y),
+$
+the right-hand side can be written as $g(y / x)$.
+] <def:homogeneous-equation>
+
+Homogeneous equations are solved by the substitution $u = y / x$, i.e., $y = u x$. Differentiating with respect to $x$ gives
+$
+  (d y) / (d x) = x (d u) / (d x) + u.
+$
+Substituting into the equation yields
+$
+  x (d u) / (d x) + u = g(u) quad quad => quad quad (d u) / (d x) = (g(u) - u) / x,
+$
+which is a separable equation in $u$ and $x$. After solving for $u(x)$, substitute back $u = y / x$ to obtain $y(x)$.
+
+A more general form is
+#eq[
+  (d y) / (d x) = f((a_1 x + b_1 y + c_1) / (a_2 x + b_2 y + c_2)),
+] <eq:linear-fraction-equation>
+which can be reduced to a homogeneous or separable equation by coordinate translation and scaling.
+
+== Linear Equations // 线性方程
+
+#definition(name: "First-Order Linear Equation")[
+A *first-order linear equation* has the form
+#eq[
+  (d y) / (d x) + p(x) y = q(x),
+] <eq:first-order-linear>
+where $p(x)$ and $q(x)$ are continuous on an interval $(a, b)$. When $q(x) equiv 0$, the equation
+$
+  (d y) / (d x) + p(x) y = 0
+$
+is called the *homogeneous* linear equation; otherwise it is *non-homogeneous*.
+] <def:first-order-linear>
+
+#note[
+The term "homogeneous" here means the right-hand side is zero — this is a different usage from the "homogeneous equation" of §2.3, where homogeneity refers to the scaling property of $f(x, y)$.
+]
+
+First solve the homogeneous equation. Since it is separable, its general solution is
+$
+  y = c e^(- integral p(x) dif x).
+$
+
+For the non-homogeneous equation, we use the *method of variation of constants*: assume the solution has the form
+$
+  y = c(x) e^(- integral p(x) dif x),
+$
+where the constant $c$ is now allowed to vary. Substituting into @eq:first-order-linear and simplifying gives
+#eq[
+  y = e^(- integral p(x) dif x) lr(c + integral q(x) e^(integral p(x) dif x) dif x).
+] <eq:linear-general-solution>
+
+With an initial condition $y(x_0) = y_0$, the solution becomes
+$
+  y = e^(- integral_(x_0)^x p(t) dif t) y_0 + integral_(x_0)^x q(t) e^(- integral_t^x p(s) dif s) dif t.
+$
+
+This expression has a natural interpretation: *the fundamental solution times the initial value, plus the convolution of the fundamental solution with the forcing term*.
+
+#note[
+The method of variation of constants generalizes to non-homogeneous linear PDEs, where it is known as *Duhamel's principle*.
+]
+
+#definition(name: "Bernoulli Equation")[
+A *Bernoulli equation* is a first-order equation of the form
+$
+  (d y) / (d x) + p(x) y = q(x) y^n, quad quad n != 0, 1,
+$
+where $n$ is a real constant.
+] <def:bernoulli-equation>
+
+Bernoulli equations are transformed into linear equations by the substitution $z = y^(1 - n)$. Differentiating gives
+$
+  (d z) / (d x) = (1 - n) y^(-n) (d y) / (d x).
+$
+Substituting from the Bernoulli equation yields
+$
+  (d z) / (d x) + (1 - n) p(x) z = (1 - n) q(x),
+$
+which is a linear equation in $z$, solvable by the method above.
+
+== Integrating Factors // 积分因子
+
+#definition(name: "Integrating Factor")[
+For a non-exact differential form $omega = M(x, y) dif x + N(x, y) dif y$, if there exists a non-zero differentiable function $mu(x, y)$ such that $mu(x, y) omega$ is exact, then $mu(x, y)$ is called an *integrating factor* of $omega$. That is, there exists $U(x, y)$ such that
+$
+  mu(x, y) omega = dif U(x, y).
+$
+] <def:integrating-factor>
+
+The condition for $mu$ to be an integrating factor is
+$
+  (partial (mu M)) / (partial y) = (partial (mu N)) / (partial x),
+$
+which expands to the first-order PDE
+#eq[
+  N (partial mu) / (partial x) - M (partial mu) / (partial y) = lr((partial M) / (partial y) - (partial N) / (partial x)) mu.
+] <eq:integrating-factor-pde>
+
+#theorem(name: "Special Forms of Integrating Factors")[
+1. If the integrating factor depends only on $x$, i.e., $mu = mu(x)$, then a necessary and sufficient condition is that
+   $
+     G(x) = - (1 / N) lr((partial N) / (partial x) - (partial M) / (partial y))
+   $
+   depends only on $x$. In this case,
+   $
+     mu(x) = e^( integral G(x) dif x).
+   $
+
+2. If the integrating factor depends only on $y$, i.e., $mu = mu(y)$, then a necessary and sufficient condition is that
+   $
+     H(y) = (1 / M) lr((partial N) / (partial x) - (partial M) / (partial y))
+   $
+   depends only on $y$. In this case,
+   $
+     mu(y) = e^( integral H(y) dif y).
+   $
+] <thm:integrating-factor-special>
+
+#theorem(name: "Integrating Factor Ratio")[
+Suppose $mu_1(x, y)$ and $mu_2(x, y)$ are two integrating factors of the same equation, and their ratio $mu_1 / mu_2$ is not constant. Then
+$
+  (mu_1(x, y)) / (mu_2(x, y)) = c
+$
+is a general solution of the equation, where $c$ is an arbitrary constant.
+] <thm:integrating-factor-ratio>
+
+== Implicit Equations // 隐式方程
+
+This section treats first-order implicit equations of the form
+$
+  F(x, y, y') = 0,
+$
+where $F$ is continuously differentiable. Denote $p = y' = d y / d x$.
+
+Depending on which variable can be solved explicitly, there are several cases:
+
+- *Case (a): $p = f(x, y)$ solvable.* The equation reduces to an explicit first-order ODE, solvable by the methods above.
+
+- *Case (b): $y = f(x, p)$ solvable.* Differentiate both sides with respect to $x$:
+  $
+    p = (d y) / (d x) = (partial f) / (partial x) + (partial f) / (partial p) (d p) / (d x).
+  $
+  Rearranging gives
+  $
+    (d p) / (d x) = (p - (partial f) / (partial x)) / ((partial f) / (partial p)),
+  $
+  which is a first-order equation in $p$. Solve for $p(x)$, then substitute back into $y = f(x, p)$.
+
+- *Case (c): $x = f(y, p)$ solvable.* Differentiate with respect to $x$ and derive an equation for $p$ as a function of $y$.
+
+=== Clairaut and Lagrange Equations // Clairaut 方程与 Lagrange 方程
+
+#definition(name: "Clairaut Equation")[
+A *Clairaut equation* has the form
+$
+  y = x p + g(p), quad quad p = y', quad quad g in C^1.
+$
+] <def:clairaut-equation>
+
+Differentiating both sides with respect to $x$ gives
+$
+  p = p + x (d p) / (d x) + g'(p) (d p) / (d x),
+$
+which simplifies to
+$
+  lr(x + g'(p)) (d p) / (d x) = 0.
+$
+
+There are two cases:
+
+1. *$d p / d x = 0$*: Then $p = c$ (constant), and substituting back gives the general solution
+   $
+     y = c x + g(c).
+   $
+
+2. *$x + g'(p) = 0$*: Then $x = -g'(p)$. Substituting back gives the *singular solution* in parametric form:
+   $
+     x = -g'(p), quad quad y = -p g'(p) + g(p).
+   $
+
+The Clairaut equation generalizes to the *Lagrange equation*:
+$
+  y = x f(p) + g(p),
+$
+where $f(p) not equiv p$. The solution procedure is analogous: differentiate, factor, and treat the two cases separately.
+
+== Reducible Higher-Order Equations // 可降阶的高阶方程
+
+Some higher-order equations can be reduced to lower order by variable substitution. We consider three types:
+
+1. *Equations missing the dependent variable and its lower derivatives*: If the equation has the form
+   $
+     F(x, y^(k), y^(k+1), dots, y^(n)) = 0,
+   $
+   let $p = y^(k)$. Then the equation reduces to order $n - k$ in the new unknown $p$.
+
+2. *Equations missing the independent variable*: If
+   $
+     F(y, y', y'', dots, y^(n)) = 0,
+   $
+   let $p = y'$ and treat $y$ as the independent variable. Then
+   $
+     y'' = p (d p) / (d y), quad quad y''' = p^2 (d^2 p) / (d y^2) + p lr((d p) / (d y))^2,
+   $
+   and so on. The equation reduces to order $n - 1$ in $p(y)$.
+
+3. *Equations missing a particular derivative*: Similar substitution techniques apply depending on which derivative is absent.
+
+#definition(name: "Euler-Cauchy Equation")[
+An *Euler-Cauchy equation* (or equidimensional equation) has the form
+$
+  x^n y^(n) + a_(n-1) x^(n-1) y^(n-1) + dots + a_1 x y' + a_0 y = f(x),
+$
+where $a_0, a_1, dots, a_(n-1)$ are constants.
+] <def:euler-cauchy>
+
+Euler-Cauchy equations are transformed into constant-coefficient linear equations by the substitution $x = e^t$. Under this change of variable,
+$
+  (d y) / (d x) = (1 / x) (d y) / (d t), quad quad (d^2 y) / (d x^2) = (1 / x^2) lr((d^2 y) / (d t^2) - (d y) / (d t)),
+$
+and higher derivatives follow similarly. The equation becomes a constant-coefficient linear ODE in $t$, solvable by the methods of Part II.
+
+#caution[
+When an equation is written in symmetric form $M(x, y) dif x + N(x, y) dif y = 0$, the roles of $x$ and $y$ are symmetric. It is sometimes easier to treat $x$ as the unknown function of $y$, especially when the resulting equation becomes linear in $x$.
+]
+
 #bibliography("references.bib")
