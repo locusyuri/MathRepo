@@ -304,6 +304,13 @@ At each point $P = (x, y)$ in the region $G$, draw a short line segment with slo
 The direction field gives a geometric portrait of all solutions even when we cannot solve the equation explicitly. Integral curves are precisely the curves that are everywhere tangent to the direction field. This geometric viewpoint is the foundation of qualitative theory, which we develop in Part III.
 ]
 
+#figure(
+  image("img/direction-field.svg", width: 80%),
+  caption: [Direction field and typical integral curves for the ODE $y' = x - y$. The dashed line shows the particular solution $y = x - 1$, which is an equilibrium of the transformed system.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:direction-field>
+
 #theorem(name: "Integral Curve Criterion")[
 A continuously differentiable curve $Gamma = { (x, y) : y = psi(x), x in J }$ in the plane is an integral curve of @eq:first-order-ode if and only if, at every point $(x, y) in Gamma$, its tangent line coincides with the line element prescribed by the ODE at that point.
 ] <thm:integral-curve-criterion>
@@ -710,6 +717,13 @@ The proof proceeds by *Picard iteration*:
 
 5. Uniqueness follows by applying the Lipschitz condition and Bellman-Gronwall to the difference of two solutions.
 ]
+
+#figure(
+  image("img/picard-iteration.svg", width: 75%),
+  caption: [Picard iteration convergence for the simple ODE $y' = y, y(0) = 1$. The iterates $phi_0, phi_1, phi_2, phi_3$ approach the exact solution $y = e^x$ factorially fast.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:picard-iteration>
 
 === Peano and Osgood Theorems // Peano 定理与 Osgood 定理
 
@@ -1159,6 +1173,13 @@ $
 For complex roots $lambda = alpha + beta i$, the corresponding complex solutions $e^((alpha + beta i) x)$ can be combined to give real solutions $e^(alpha x) cos(beta x)$ and $e^(alpha x) sin(beta x)$.
 ]
 
+#figure(
+  image("img/characteristic-roots-solutions.svg", width: 90%),
+  caption: [Solution behavior for different characteristic root types: real distinct roots (top-left), complex conjugate roots with negative real part (top-right), repeated roots (bottom-left), and purely imaginary roots (bottom-right).],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:characteristic-roots>
+
 == Method of Undetermined Coefficients // 待定系数法
 
 For non-homogeneous constant-coefficient equations, the variation-of-constants formula is computationally expensive. When the forcing term $f(x)$ has a special form, the *method of undetermined coefficients* provides a much simpler approach.
@@ -1249,6 +1270,13 @@ If additionally $dot(V)(bold(x)) < 0$ for all $bold(x) != bold(x)^*$, then $bold
 The function $V$ can be thought of as a generalized "energy" or "distance" from the equilibrium. The condition $dot(V) <= 0$ means that this "energy" does not increase along trajectories.
 ]
 
+#figure(
+  image("img/lyapunov-function.svg", width: 75%),
+  caption: [Lyapunov function $V(x,y) = x^2 + y^2$ (dashed contours) and a typical trajectory. The trajectory moves toward lower level sets of $V$, converging to the equilibrium at the origin.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:lyapunov-function>
+
 == Critical Points and Limit Cycles // 奇点与极限环
 
 For two-dimensional systems, the behavior near a critical point can be classified by linearization. Let $bold(x)^*$ be a critical point, and let $bold(A) = bold(D) bold(f)(bold(x)^*)$ be the Jacobian matrix at $bold(x)^*$.
@@ -1265,6 +1293,13 @@ The local behavior is determined by the eigenvalues of $bold(A)$:
   ("Purely imaginary", "Center", "Lyapunov stable"),
 )
 
+#figure(
+  image("img/phase-plane-types.svg", width: 90%),
+  caption: [Phase portraits of the four main critical point types: stable node (top-left), saddle (top-right), stable focus (bottom-left), and center (bottom-right).],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:critical-point-types>
+
 #definition(name: "Limit Cycle")[
 A *limit cycle* is an isolated closed trajectory (periodic orbit) in the phase plane.
 ] <def:limit-cycle>
@@ -1276,6 +1311,13 @@ Let $D$ be a bounded region in the plane, and let $bold(x)(t)$ be a trajectory t
 #note[
 The Poincaré-Bendixson theorem is a deep result that restricts the possible asymptotic behavior of planar flows. In dimensions three and higher, chaotic behavior is possible, which is excluded in the plane.
 ]
+
+#figure(
+  image("img/limit-cycle.svg", width: 75%),
+  caption: [Limit cycle in the Van der Pol oscillator. Trajectories starting inside the cycle spiral outward, while those starting outside spiral inward, all approaching the same closed orbit.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:limit-cycle>
 
 #part("Boundary Value Problems and Spectral Theory") // 边值问题与谱论
 
@@ -1362,6 +1404,13 @@ For a regular Sturm-Liouville problem:
 #note[
 This theorem is the spectral theorem for self-adjoint differential operators. The Sturm-Liouville operator is self-adjoint with respect to the inner product weighted by $r(x)$, which is why its eigenvalues are real and its eigenfunctions are orthogonal.
 ]
+
+#figure(
+  image("img/sturm-liouville-eigenfunctions.svg", width: 85%),
+  caption: [First three eigenfunctions of the Sturm-Liouville problem $y'' + lambda y = 0, y(0) = y(pi) = 0$. Each higher eigenfunction has one additional node (zero crossing) in the interval $(0, pi)$.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:sl-eigenfunctions>
 
 #example(name: "Fourier Sine Series")[
 The classic Fourier sine series is the Sturm-Liouville problem
