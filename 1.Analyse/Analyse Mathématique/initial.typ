@@ -8082,7 +8082,9 @@ The following theorem provides the conditions under which mixed partial derivati
 ] <thm:mixed-partials-equality>
 
 #note[
-  A more commonly used (though stronger) sufficient condition is that *both* mixed partial derivatives $f_(x y)$ and $f_(y x)$ exist and are continuous in a neighborhood of the point. Under this condition the conclusion follows immediately by applying the theorem twice, and in practice most functions encountered (polynomials, exponentials, trigonometric functions, etc.) satisfy it automatically.
+  A more commonly used (though stronger) sufficient condition is that *both* mixed partial derivatives $f_(x y)$ and $f_(y x)$ exist and are continuous in a neighborhood of the point.
+
+  Under this condition the conclusion follows immediately by applying the theorem twice, and in practice most functions encountered (polynomials, exponentials, trigonometric functions, etc.) satisfy it automatically.
 ]
 
 
@@ -8141,7 +8143,7 @@ $
 
 == Differential of Vector-Valued Functions // 向量值函数的微分
 
-Consider an $n$-dimensional vector-valued function defined on a domain $U subset.eq bb(R)^n$:
+Consider a vector-valued function (mapping) $bold(f): U -> bb(R)^m$ defined on a domain $U subset.eq bb(R)^n$:
 $
   bold(f): U -> bb(R)^m, \
   bold(x) mapsto bold(y) = bold(f)(bold(x)).
@@ -8153,46 +8155,91 @@ $
   quad bold(x) = mat(x_1; x_2; dots.v; x_n) in U.
 $
 
-+ If each component function $f_(i)(x_1, x_2, dots, x_n)$ ($i = 1, 2, dots, m$) is partially differentiable at $bold(x)^0$, then all first-order partial derivatives of the vector-valued function $bold(f)$ at $bold(x)^0$ exist, and we define the matrix
+#definition(name: "Jacobian Matrix")[
+  If each component function $f_(i)(x_1, x_2, dots, x_n)$ ($i = 1, 2, dots, m$) is partially differentiable at $bold(x)^0$, then all first-order partial derivatives of the vector-valued function $bold(f)$ at $bold(x)^0$ exist, and we define the $m times n$ matrix
   $
-    (frac(partial f_i, partial x_j)(bold(x)^0))_(m times n) = mat(
+    J bold(f)(bold(x)^0) = (frac(partial f_i, partial x_j)(bold(x)^0))_(m times n) = mat(
       frac(partial f_1, partial x_1)(bold(x)^0), frac(partial f_1, partial x_2)(bold(x)^0), dots, frac(partial f_1, partial x_n)(bold(x)^0);
       frac(partial f_2, partial x_1)(bold(x)^0), frac(partial f_2, partial x_2)(bold(x)^0), dots, frac(partial f_2, partial x_n)(bold(x)^0);
       dots.v, dots.v, dots.down, dots.v;
       frac(partial f_m, partial x_1)(bold(x)^0), frac(partial f_m, partial x_2)(bold(x)^0), dots, frac(partial f_m, partial x_n)(bold(x)^0)
     )
   $
-
-  This matrix is called the *Jacobian matrix* of $bold(f)$ at $bold(x)^0$, denoted by $bold(f)'(bold(x)^0)$ (or $D bold(f)(bold(x)^0)$, $J_(bold(f))(bold(x)^0)$).
-
-  For the special case $m = 1$, i.e. the $n$-variable scalar function $z = f(x_1, x_2, dots, x_n)$, the derivative at $bold(x)^0$ is
+  called the *Jacobian matrix* of $bold(f)$ at $bold(x)^0$, also denoted by $bold(f)'(bold(x)^0)$ or $D bold(f)(bold(x)^0)$. This generalizes #link(<def:jacobian-matrix>)[the Jacobian matrix (gradient) of scalar functions]: for the special case $m = 1$, i.e. the $n$-variable scalar function $z = f(x_1, x_2, dots, x_n)$, the Jacobian matrix is the $1 times n$ row vector
   $
-    f'(bold(x)^0) = (frac(partial f, partial x_1)(bold(x)^0), frac(partial f, partial x_2)(bold(x)^0), dots, frac(partial f, partial x_n)(bold(x)^0)).
+    f'(bold(x)^0) = (frac(partial f, partial x_1)(bold(x)^0), frac(partial f, partial x_2)(bold(x)^0), dots, frac(partial f, partial x_n)(bold(x)^0)),
   $
-  If the vector-valued function $bold(f)$ is differentiable at every point in $U$, then $bold(f)$ is said to be differentiable on $U$, and the corresponding relationship is
-  $
-    bold(x) in U mapsto bold(f)'(bold(x)) = J_(bold(f))(bold(x)),
-  $
-  where $bold(f)'(bold(x))$ (or $D bold(f)(bold(x))$, $J_(bold(f))(bold(x))$) denotes the derivative of $bold(f)$ at $bold(x)$ in $U$.
-
+  which is exactly the gradient $"grad" f(bold(x)^0) = nabla f(bold(x)^0)$.
+] <def:jacobian-matrix-mapping>
 // 注：tex 原文此处称"则 f 在 x⁰ 处可微"，数学上有误（偏导存在不蕴涵可微），已修正为"一阶偏导数均存在"。
-+ If every component function $f_(i)(x_1, x_2, dots, x_n)$ ($i = 1, 2, dots, m$) of $bold(f)$ has continuous partial derivatives at $bold(x)^0$, then every element of the Jacobian matrix of $bold(f)$ is continuous at $bold(x)^0$. In this case, $bold(f)$ is said to have a continuous derivative at $bold(x)^0$ as a vector-valued function.
 
-  If the derivative of a vector-valued function $bold(f)$ is continuous at every point in $U$, then $bold(f)$ is said to have a continuous derivative on $U$.
-+ If there exists an $m times n$ matrix $A$ that depends only on $bold(x)^0$ (and not on $Delta bold(x)$), such that in the neighborhood of $bold(x)^0$,
+#definition(name: "Differentiability of Vector-Valued Functions")[
+  Let $bold(f): U -> bb(R)^m$ and $bold(x)^0 in U$. If there exists an $m times n$ matrix $A$ that depends only on $bold(x)^0$ (and not on $Delta bold(x)$), such that in the neighborhood of $bold(x)^0$,
   $
     Delta bold(y) = bold(f)(bold(x)^0 + Delta bold(x)) - bold(f)(bold(x)^0) = A Delta bold(x) + o(norm(Delta bold(x)))
   $
-  (where $Delta bold(x) = (Delta x_1, Delta x_2, dots, Delta x_n)^T$ is a column vector and $norm(Delta bold(x))$ denotes its norm), then $bold(f)$ is said to be differentiable at $bold(x)^0$ as a vector-valued function, and $A Delta bold(x)$ is called the differential of $bold(f)$ at $bold(x)^0$, denoted as $dif bold(y)$. If we denote $Delta bold(x)$ by $dif bold(x)$ ($dif bold(x) = (dif x_1, dif x_2, dots, dif x_n)^T$), then
+  (where $Delta bold(x) = (Delta x_1, Delta x_2, dots, Delta x_n)^T$ is a column vector and $norm(Delta bold(x))$ denotes its norm), then $bold(f)$ is said to be *differentiable at* $bold(x)^0$ as a vector-valued function, and $A Delta bold(x)$ is called the *differential* of $bold(f)$ at $bold(x)^0$, denoted as $dif bold(y)$. If we denote $Delta bold(x)$ by $dif bold(x)$ ($dif bold(x) = (dif x_1, dif x_2, dots, dif x_n)^T$), then
   $
     dif bold(y) = A dif bold(x).
   $
 
   If the vector-valued function $bold(f)$ is differentiable at every point in $U$, then $bold(f)$ is said to be differentiable on $U$.
+] <def:vector-differentiability>
 
-Combining the above three points, we obtain the following unified statement:
+#proposition(name: "Differential and Jacobian Matrix")[
+  If the vector-valued function $bold(f)$ is differentiable at $bold(x)^0$, then each component function $f_(i)$ is differentiable at $bold(x)^0$ (in particular, all first-order partial derivatives of $bold(f)$ exist there), and the matrix $A$ in the definition is uniquely determined:
+  $
+    A = J bold(f)(bold(x)^0), quad quad dif bold(y) = J bold(f)(bold(x)^0) dif bold(x).
+  $
+] <prop:vector-differential-jacobian>
 
-A vector-valued function $bold(f)$ is continuous, differentiable, and has derivatives if and only if each of its coordinate component functions $f_(i)(x_1, x_2, dots, x_n)$ ($i = 1, 2, dots, m$) is continuous, differentiable, and has derivatives.
+#proof[
+  Fix $j in {1, 2, dots, n}$ and take the increment $Delta bold(x) = t bold(e)_j$ ($t in bb(R)$, $t -> 0$), where $bold(e)_j$ is the $j$-th standard basis vector. The differentiability condition gives
+  $
+    bold(f)(bold(x)^0 + t bold(e)_j) - bold(f)(bold(x)^0) = t A bold(e)_j + o(abs(t)).
+  $
+  Its $i$-th component reads
+  $
+    f_(i)(bold(x)^0 + t bold(e)_j) - f_(i)(bold(x)^0) = t A_(i j) + o(abs(t)),
+  $
+  which is precisely the differentiability at $t = 0$ of the single-variable function $t mapsto f_(i)(bold(x)^0 + t bold(e)_j)$, with derivative $A_(i j)$. Hence all partial derivatives $frac(partial f_i, partial x_j)(bold(x)^0) = A_(i j)$ exist, and $A$ coincides entrywise with the Jacobian matrix $J bold(f)(bold(x)^0)$. Since these limits are uniquely determined by $bold(f)$ and $bold(x)^0$, the matrix $A$ is unique.
+]
+
+Consequently, if $bold(f)$ is differentiable on $U$, the *derivative* of $bold(f)$ on $U$ is the mapping
+$
+  bold(x) in U mapsto J bold(f)(bold(x)),
+$
+whose value at each point is the Jacobian matrix.
+
+#definition(name: "Continuous Differentiability ($C^1$ class)")[
+  If every component function $f_(i)(x_1, x_2, dots, x_n)$ ($i = 1, 2, dots, m$) of $bold(f)$ has continuous partial derivatives at $bold(x)^0$, then every entry of the Jacobian matrix $J bold(f)$ is continuous at $bold(x)^0$. In this case, $bold(f)$ is said to have a *continuous derivative* at $bold(x)^0$ as a vector-valued function. If $J bold(f)$ is continuous at every point in $U$, then $bold(f)$ is said to have a continuous derivative on $U$, written $bold(f) in C^1(U)$ (or simply $bold(f) in C^1$).
+] <def:vector-continuous-differentiability>
+
+#corollary(name: "Continuous Partial Derivatives Imply Differentiability")[
+  If every component function $f_(i)$ of $bold(f)$ has continuous partial derivatives at $bold(x)^0$, then $bold(f)$ is differentiable at $bold(x)^0$, and
+  $
+    dif bold(y) = J bold(f)(bold(x)^0) dif bold(x).
+  $
+] <cor:vector-continuous-differentiable>
+
+#proof[
+  By the sufficient condition in #link(<thm:conditions-of-differentiability>)[the conditions of differentiability], each component $f_(i)$ is differentiable at $bold(x)^0$, with
+  $
+    dif f_(i) = sum_(j=1)^n frac(partial f_i, partial x_j)(bold(x)^0) dif x_j, quad i = 1, 2, dots, m.
+  $
+  Collecting the components in matrix form,
+  $
+    Delta bold(y) = J bold(f)(bold(x)^0) dif bold(x) + bold(o)(rho), quad quad frac(norm(bold(o)(rho)), rho) -> 0 quad (rho = norm(dif bold(x)) -> 0),
+  $
+  so $bold(f)$ is differentiable at $bold(x)^0$ in the sense of #link(<def:vector-differentiability>)[the definition above], and the matrix $A$ equals $J bold(f)(bold(x)^0)$ by #link(<prop:vector-differential-jacobian>)[the proposition above].
+]
+
+#proposition(name: "Componentwise Criterion")[
+  A vector-valued function $bold(f): U -> bb(R)^m$ is continuous at $bold(x)^0$, possesses first-order partial derivatives at $bold(x)^0$, or is differentiable at $bold(x)^0$, if and only if each of its component functions $f_(i)(x_1, x_2, dots, x_n)$ ($i = 1, 2, dots, m$) is continuous at $bold(x)^0$, possesses first-order partial derivatives at $bold(x)^0$, or is differentiable at $bold(x)^0$, respectively.
+] <prop:vector-componentwise-criterion>
+
+Indeed, continuity and the existence of partial derivatives are defined through componentwise limits, so they hold if and only if they hold for every component; for differentiability, the necessity is #link(<prop:vector-differential-jacobian>)[the proposition above], while the sufficiency follows by applying the definition to each component and collecting the terms in matrix form.
+// 注：tex 原文将 Jacobian 矩阵、连续导数与可微性三个定义以编号列表混排，未使用 definition 组件与标签，且未建立可微性定义中矩阵 A 与 Jacobian 矩阵的联系；本次重构按"Jacobian 定义 → 可微性定义 → 桥梁命题 → C¹ 定义 → 充分条件推论 → 分量判据"重排，补充标签与短证明，并将 $bold(f)'$、$D bold(f)$、$J_(bold(f))$ 记号统一为 $J bold(f)$。
 
 == Derivatives of Composite Mappings (Chain Rule) // 复合映射的求导（链式法则）
 
