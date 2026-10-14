@@ -827,14 +827,14 @@ Three gradient-driven relaxation processes result, each governed by a
 
 #tex-table(
   ("Phenomenon", "Graded quantity", "Flux law", "Coefficient"),
-  ("Momentum transport (viscosity)", [flow velocity $u(z)$], [$Pi = -eta dif u / dif z$], [shear viscosity $eta$]),
+  ("Momentum transport (viscosity)", [flow velocity $u(z)$], [$Pi = -eta (dif u)/(dif z)$], [shear viscosity $eta$]),
   (
     "Energy transport (heat conduction)",
     [temperature $T(z)$],
-    [$q = -kappa dif T / dif z$],
+    [$q = -kappa (dif T)/(dif z)$],
     [thermal conductivity $kappa$],
   ),
-  ("Mass transport (diffusion)", [number density $n(z)$], [$J = -D dif n / dif z$], [diffusion coefficient $D$]),
+  ("Mass transport (diffusion)", [number density $n(z)$], [$J = -D (dif n)/(dif z)$], [diffusion coefficient $D$]),
 )
 
 Each law is written for transport along $z$; the flux $Pi$ carries
@@ -856,10 +856,10 @@ one mean free path away.
   number density $n$ and molecular mass $m$,
   $
     eta = 1/3 rho overline(v) lambda, quad
-    kappa = 1/3 n overline(v) lambda c_V^("mol") , quad
+    kappa = 1/3 n overline(v) lambda C_(V,m), quad
     D = 1/3 overline(v) lambda,
   $
-  where $rho = n m$ is the mass density and $c_V^("mol")$ the molar
+  where $rho = n m$ is the mass density and $C_(V,m)$ the molar
   heat capacity at constant volume.
 ] <prop:kinetic-transport>
 
@@ -876,12 +876,12 @@ one mean free path away.
   $+z$ direction is
   $
     Pi = 1/2 n overline(v) [m u(z - lambda) - m u(z + lambda)]
-    = - n m overline(v) lambda dif u / dif z,
+    = - n m overline(v) lambda (dif u)/(dif z),
   $
   with the sign convention that positive $Pi$ transports $x$-momentum
-  towards $+z$. Comparing with $Pi = -eta dif u / dif z$ yields
+  towards $+z$. Comparing with $Pi = -eta (dif u)/(dif z)$ yields
   $eta = rho overline(v) lambda / 3$. The conductivity follows by
-  replacing the transported property by the mean energy $c_V^("mol") T / N_A$
+  replacing the transported property by the mean energy $C_(V,m) T / N_A$
   per molecule, and the diffusivity by the particle property itself.
 
   Three consequences are worth recording:
@@ -1209,9 +1209,11 @@ from nothing — is ruled out.
   the environment to the resulting temperature change $Delta T$,
   $
     C = Q / (Delta T) quad "or, in differential form," quad
-    C = delta Q / (dif T),
+    C = (delta Q)/(dif T),
   $
-  measured in J/K. Heat capacity is extensive and depends on the
+  measured in J/K.
+
+  Heat capacity is extensive and depends on the
   constraint along which the heat is supplied. The *molar heat
   capacities* at constant volume and at constant pressure — the heat
   capacities of one mole, measured in J/(K mol) — are
@@ -1224,6 +1226,18 @@ from nothing — is ruled out.
   the second equality of each following from $delta Q = dif U$ at
   $dif V = 0$ and $delta Q = dif H$ at $dif p = 0$ (§2.5).
 ] <def:heat-capacities>
+
+A related intensive quantity is the *specific heat* $c$ — the heat capacity per unit mass, $c = C / m$, measured in J/(K kg); for a substance of molar mass $M$ it relates to the molar values by $c_V = C_(V,m) / M$ and $c_p = C_(p,m) / M$. The specific heats of common substances at room temperature and ambient pressure are tabulated below — the anomalously large value of water moderates coastal climates and makes it an efficient coolant.
+
+#tex-table(
+  ("Substance", [$c_p$ / (J/(K kg))]),
+  ([water], [4186]),
+  ([ice], [2090]),
+  ([aluminium], [900]),
+  ([iron], [450]),
+  ([copper], [385]),
+  ([dry air], [1005]),
+)
 
 For a dilute gas, the kinetic theory of Chapter 1 already computed the
 internal energy $U = f/2 nu R T$ from #link(<thm:equipartition>)[the
@@ -1281,8 +1295,8 @@ changes measure reaction heats in chemistry.
   $
   where
   $
-    alpha = 1/V (partial V / partial T)_p quad "and" quad
-    kappa_T = - 1/V (partial V / partial p)_T
+    alpha = 1/V ((partial V)/(partial T))_p quad "and" quad
+    kappa_T = - 1/V ((partial V)/(partial p))_T
   $
   are the thermal expansion coefficient and the isothermal
   compressibility, and $V_m$ the molar volume. For an ideal gas the
@@ -1300,10 +1314,10 @@ changes measure reaction heats in chemistry.
     delta q = dif u + p dif v
     = C_(V,m) dif T + [((partial u)/(partial v))_T + p] dif v.
   $
-  At constant pressure, $dif v = (partial v / partial T)_p dif T$, so
+  At constant pressure, $dif v = ((partial v)/(partial T))_p dif T$, so
   $
     C_(p,m) = C_(V,m)
-    + [((partial u)/(partial v))_T + p] (partial v / partial T)_p.
+    + [((partial u)/(partial v))_T + p] ((partial v)/(partial T))_p.
   $
   The bracket is rewritten using the identity (proved in Chapter 6 with
   the Maxwell relations)
@@ -1312,7 +1326,7 @@ changes measure reaction heats in chemistry.
   $
   so the bracket becomes $T ((partial p)/(partial T))_v$. With the cyclic
   identity $((partial p)/(partial T))_v = alpha / kappa_T$ and
-  $(partial v / partial T)_p = alpha v$,
+  $((partial v)/(partial T))_p = alpha v$,
   $
     C_(p,m) - C_(V,m) = T dot alpha / kappa_T dot alpha v
     = T v alpha^2 / kappa_T.
@@ -1401,7 +1415,7 @@ processes of §2.6.
 
 On the $p$-$V$ diagram the adiabat through a point is *steeper* than
 the isotherm through the same point, since
-$(partial p / partial V)_("adiabatic") = gamma (partial p / partial V)_T$
+$((partial p)/(partial V))_("adiabatic") = gamma ((partial p)/(partial V))_T$
 and $gamma > 1$: expansion cools the gas, so its pressure falls faster
 than isothermally — see @fig:work-path, right panel. Correspondingly,
 adiabatic compression to a given volume attains a higher pressure and a
@@ -1417,7 +1431,7 @@ higher temperature than isothermal compression.
   The temperature response is quantified by the *Joule-Thomson
   coefficient*
   $
-    mu_("JT") = (partial T / partial p)_H.
+    mu_("JT") = ((partial T)/(partial p))_H.
   $
 ] <def:jt-coefficient>
 
@@ -1695,7 +1709,7 @@ the equality case of #link(<prop:clausius-inequality>)[the Clausius
 ]
 
 The entropy of an irreversible process is *not* obtained by
-integrating $delta Q / T$ along that process; one integrates along any
+integrating $(delta Q)/T$ along that process; one integrates along any
 *reversible* path connecting the same endpoints.
 
 #example(name: "Entropy of an ideal gas")[
@@ -1712,11 +1726,11 @@ integrating $delta Q / T$ along that process; one integrates along any
   irreversible changes between them, since only the endpoints enter.
 ] <ex:entropy-ideal-gas>
 
-#caution(title: "$delta Q / T$ versus $dif S$")[
+#caution(title: "$(delta Q)/T$ versus $dif S$")[
   Only on a reversible path is
   $delta Q = T dif S$. Along an irreversible path the absorbed heat is
   smaller than $integral T dif S$ (for the same endpoints), and writing
-  $dif S = delta Q / T$ for an irreversible step silently shrinks the
+  $dif S = (delta Q)/T$ for an irreversible step silently shrinks the
   entropy. The safe route is always: compute $Delta S$ on a reversible
   path between the endpoints, regardless of how the actual process
   ran.
@@ -2198,16 +2212,16 @@ infinite temperature.
 #definition(name: "Negative Temperature")[
   The thermodynamic temperature is defined by
   $
-    1/T = (partial S / partial E)_("V, N").
+    1/T = ((partial S)/(partial E))_("V, N").
   $
   A system whose entropy $S(E)$ *decreases* with energy — possible
   only when the energy spectrum is bounded from above — has
-  $partial S / partial E < 0$ at high energies and therefore
+  $((partial S)/(partial E)) < 0$ at high energies and therefore
   $T < 0$: a *negative temperature*.
 ] <def:negative-temperature>
 
 For ordinary systems $S(E)$ increases without bound (the spectrum is
-unbounded above), $partial S / partial E > 0$ always, and $T > 0$
+unbounded above), $((partial S)/(partial E)) > 0$ always, and $T > 0$
 throughout. Negative temperature requires a *population inversion*:
 more of the system at high energies than at moderate ones.
 
@@ -2222,7 +2236,7 @@ more of the system at high energies than at moderate ones.
   $
   rises from $0$ at $E = -N mu B$, peaks at $E = 0$ (half up, half
   down: maximal disorder), and falls back to $0$ at $E = +N mu B$ —
-  see @fig:negative-t. Reading $T$ off the slope $1/T = partial S / partial E$:
+  see @fig:negative-t. Reading $T$ off the slope $1/T = ((partial S)/(partial E))$:
 
   - $E = -N mu B$: slope $+oo$, $T = 0^+$ (all up — cold end);
   - $E = 0$: slope $0$, $T = +- oo$ (the same state from both sides!);
@@ -2261,8 +2275,8 @@ more of the system at high energies than at moderate ones.
 #proof[
   When the negative-temperature system loses a small energy
   $delta E > 0$ to the positive-temperature one, its entropy change is
-  $(partial S_1 / partial E)(-delta E) = -delta E / T_1 > 0$ (since
-  $T_1 < 0$), while the receiver gains $delta E / T_2 > 0$. The total
+  $((partial S_1)/(partial E))(-delta E) = (-delta E)/T_1 > 0$ (since
+  $T_1 < 0$), while the receiver gains $(delta E)/T_2 > 0$. The total
   entropy increases — the process runs forward by
   #link(<thm:entropy-increase>)[the entropy increase principle]. The
   reverse flow would decrease total entropy and does not occur.
@@ -2282,7 +2296,7 @@ more of the system at high energies than at moderate ones.
   negative temperature is a contradiction in terms.
 ] <caution:negative-t-conditions>
 
-The microcanonical definition $1/T = partial S / partial E$ used here
+The microcanonical definition $1/T = ((partial S)/(partial E))$ used here
 will be rebuilt from the counting of microstates in
 Chapter 12 — where negative temperatures reappear as a corollary of
 Boltzmann's formula, and the hotness scale of
@@ -2542,7 +2556,7 @@ We close Part I by writing the first law in the language spacetime
 demands. Only the minimal toolkit is assembled here — four-vectors,
 the metric $eta = mat(+, 0, 0, 0; 0, -, 0, 0; 0, 0, -, 0; 0, 0, 0, -)$
 with signature $(+, -, -, -)$, four
-velocity $u^mu = dif x^mu / dif tau$ normalised by $u^mu u_mu = c^2$,
+velocity $u^mu = (dif x^mu)/(dif tau)$ normalised by $u^mu u_mu = c^2$,
 and the convention that Greek indices run over spacetime.
 
 #definition(name: "Energy-Momentum Tensor of a Perfect Fluid")[
