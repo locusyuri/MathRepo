@@ -1179,4 +1179,101 @@ $
 where $R_m$ and $S_m$ are polynomials of degree at most $m$, and $k$ is the multiplicity of $alpha + beta i$ as a root of the characteristic polynomial ($k = 0$ if $alpha + beta i$ is not a root).
 ] <thm:undetermined-coefficients>
 
+#part("Qualitative and Nonlinear Theory") // 定性与非线性理论
+
+= Nonlinear Equations and Stability // 非线性方程与稳定性
+
+This chapter develops the qualitative theory of nonlinear autonomous systems. Instead of seeking explicit solutions, we study the geometric behavior of trajectories in the phase space: equilibrium points, stability, periodic orbits, and limit cycles. This approach is especially powerful when explicit solutions are unavailable.
+
+== The Phase Plane // 相平面
+
+We consider two-dimensional autonomous systems of the form
+#eq[$
+  cases(
+    (d x) / (d t) = F(x, y),
+    (d y) / (d t) = G(x, y),
+  )
+$] <eq:phase-plane-system>
+
+where $F$ and $G$ are continuously differentiable in a domain $D$. In vector form,
+#eq[$
+  (d bold(x)) / (d t) = bold(f)(bold(x)), quad quad bold(x)(t_0) = bold(x)^0,
+$] <eq:autonomous-system>
+
+where $bold(x) = (x, y)^T$ and $bold(f)(bold(x)) = (F(x, y), G(x, y))^T$.
+
+#definition(name: "Phase Space and Trajectories")[
+- The *phase space* is the domain $D subset.eq bb(R)^2$.
+- A *phase trajectory* (or *orbit*) is the curve traced by a solution $bold(x)(t)$ in the phase space as $t$ varies.
+- A *phase portrait* is the collection of all typical trajectories, with arrows indicating the direction of increasing $t$.
+] <def:phase-space>
+
+#definition(name: "Critical Points")[
+A point $bold(x)^*$ where $bold(f)(bold(x)^*) = bold(0)$ is called a *critical point* (or *equilibrium point*, *singular point*).
+] <def:critical-point>
+
+At a critical point, the solution is constant: $bold(x)(t) = bold(x)^*$ for all $t$. The local behavior of trajectories near a critical point determines the qualitative dynamics of the system.
+
+== Lyapunov Stability // Lyapunov 稳定性
+
+We now define stability concepts for an equilibrium point $bold(x)^*$ of the autonomous system @eq:autonomous-system.
+
+#definition(name: "Lyapunov Stability")[
+The equilibrium point $bold(x)^*$ is
+- *Lyapunov stable* if for every $epsilon > 0$, there exists $delta = delta(epsilon) > 0$ such that every solution $bold(x)(t)$ with $norm(bold(x)(t_0) - bold(x)^*) < delta$ satisfies $norm(bold(x)(t) - bold(x)^*) < epsilon$ for all $t >= t_0$.
+- *asymptotically stable* if it is Lyapunov stable, and there exists $delta_0 > 0$ such that $norm(bold(x)(t_0) - bold(x)^*) < delta_0$ implies $lim_(t -> oo) bold(x)(t) = bold(x)^*$.
+- *unstable* if it is not Lyapunov stable.
+] <def:lyapunov-stability>
+
+#note[
+These definitions are geometric: stability means trajectories starting nearby stay nearby; asymptotic stability means trajectories starting nearby actually converge to the equilibrium.
+]
+
+== Lyapunov Methods // Lyapunov 方法
+
+Direct Lyapunov methods allow us to determine stability without solving the equations explicitly.
+
+#definition(name: "Lyapunov Function")[
+A continuously differentiable function $V: D -> bb(R)$ is called a *Lyapunov function* for the equilibrium $bold(x)^*$ if:
+- $V(bold(x)^*) = 0$,
+- $V(bold(x)) > 0$ for all $bold(x) != bold(x)^*$ in some neighborhood of $bold(x)^*$,
+- The derivative along trajectories $dot(V)(bold(x)) = nabla V(bold(x)) dot bold(x) = sum_(i=1)^n (partial V) / (partial x_i) f_i(bold(x))$ satisfies $dot(V)(bold(x)) <= 0$ in that neighborhood.
+] <def:lyapunov-function>
+
+#theorem(name: "Lyapunov's Stability Theorem")[
+If there exists a Lyapunov function $V$ for the equilibrium $bold(x)^*$, then $bold(x)^*$ is Lyapunov stable.
+If additionally $dot(V)(bold(x)) < 0$ for all $bold(x) != bold(x)^*$, then $bold(x)^*$ is asymptotically stable.
+] <thm:lyapunov-stability>
+
+#note[
+The function $V$ can be thought of as a generalized "energy" or "distance" from the equilibrium. The condition $dot(V) <= 0$ means that this "energy" does not increase along trajectories.
+]
+
+== Critical Points and Limit Cycles // 奇点与极限环
+
+For two-dimensional systems, the behavior near a critical point can be classified by linearization. Let $bold(x)^*$ be a critical point, and let $bold(A) = bold(D) bold(f)(bold(x)^*)$ be the Jacobian matrix at $bold(x)^*$.
+
+The local behavior is determined by the eigenvalues of $bold(A)$:
+
+| Eigenvalues | Type of Critical Point | Stability |
+|-------------|-------------------------|-----------|
+| Real, both positive | Unstable node | Unstable |
+| Real, both negative | Stable node | Asymptotically stable |
+| Real, opposite signs | Saddle | Unstable |
+| Complex, positive real part | Unstable focus | Unstable |
+| Complex, negative real part | Stable focus | Asymptotically stable |
+| Purely imaginary | Center | Lyapunov stable |
+
+#definition(name: "Limit Cycle")[
+A *limit cycle* is an isolated closed trajectory (periodic orbit) in the phase plane.
+] <def:limit-cycle>
+
+#theorem(name: "Poincaré-Bendixson Theorem")[
+Let $D$ be a bounded region in the plane, and let $bold(x)(t)$ be a trajectory that remains in $D$ for all $t >= t_0$. Then the trajectory either approaches a critical point, or approaches a periodic orbit (limit cycle).
+] <thm:poincare-bendixson>
+
+#note[
+The Poincaré-Bendixson theorem is a deep result that restricts the possible asymptotic behavior of planar flows. In dimensions three and higher, chaotic behavior is possible, which is excluded in the plane.
+]
+
 #bibliography("references.bib")
