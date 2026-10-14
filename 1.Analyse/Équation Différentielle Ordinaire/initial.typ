@@ -1355,6 +1355,72 @@ $
 
 This example shows that non-trivial solutions exist only for special values of $lambda$, called *eigenvalues*.
 
+== Linear BVPs and Green's Functions // 线性边值问题与格林函数
+
+Consider the general second-order linear non-homogeneous boundary value problem
+$
+  y'' + p(x) y' + q(x) y = f(x), quad quad y(a) = c_1, quad quad y(b) = c_2.
+$
+
+Unlike IVPs, which always have a unique solution under mild conditions, BVPs have a more nuanced existence theory.
+
+#theorem(name: "Fredholm Alternative")[
+For the linear BVP
+$
+  L y = f, quad quad B_(1)(y) = c_1, quad quad B_(2)(y) = c_2,
+$
+exactly one of the following holds:
+1. The homogeneous problem $L y = 0, B_(1)(y) = 0, B_(2)(y) = 0$ has only the trivial solution $y equiv 0$. Then the non-homogeneous problem has a unique solution for any $f, c_1, c_2$.
+2. The homogeneous problem has $k$ linearly independent non-trivial solutions. Then the non-homogeneous problem has solutions if and only if $f$ is orthogonal (with respect to the appropriate inner product) to all solutions of the adjoint homogeneous problem. In that case, there are infinitely many solutions.
+] <thm:fredholm-alternative>
+
+#note[
+The Fredholm alternative is the infinite-dimensional analog of the linear algebra fact: a square matrix $A$ is either invertible (unique solution for every right-hand side) or has a nontrivial null space (solutions exist only for right-hand sides orthogonal to the left null space).
+]
+
+When the homogeneous BVP has only the trivial solution, we can construct the solution explicitly using the *Green's function*.
+
+#definition(name: "Green's Function")[
+Let the homogeneous BVP
+$
+  y'' + p(x) y' + q(x) y = 0, quad quad y(a) = 0, quad quad y(b) = 0
+$
+have only the trivial solution. The *Green's function* $G(x, xi)$ for this BVP is the function satisfying:
+1. For each fixed $xi in (a, b)$, $G(x, xi)$ satisfies the homogeneous ODE in $x$ on both intervals $(a, xi)$ and $(xi, b)$.
+2. $G(x, xi)$ satisfies the boundary conditions $G(a, xi) = G(b, xi) = 0$.
+3. $G(x, xi)$ is continuous at $x = xi$.
+4. The derivative has a jump discontinuity at $x = xi$:
+   $
+     (partial G) / (partial x) |_(xi^+) - (partial G) / (partial x) |_(xi^-) = 1.
+   $
+] <def:greens-function>
+
+#theorem(name: "Solution Representation via Green's Function")[
+If $G(x, xi)$ is the Green's function for the homogeneous BVP, then the unique solution of
+$
+  y'' + p(x) y' + q(x) y = f(x), quad quad y(a) = 0, quad quad y(b) = 0
+$
+is given by
+#eq[$
+  y(x) = integral_a^b G(x, xi) f(xi) dif xi.
+$] <eq:greens-solution>
+] <thm:greens-representation>
+
+#note[
+The Green's function is the continuous analog of the matrix inverse: the solution operator $f mapsto y$ is an integral operator with kernel $G(x, xi)$, just as solving $A bold(x) = bold(bold(b))$ in linear algebra gives $bold(x) = A^(-1) bold(b)$.
+]
+
+#example(name: "Green's Function for $y'' = 0$ with Dirichlet BCs")[
+Consider the BVP $y'' = 0, y(0) = 0, y(1) = 0$. The Green's function is
+$
+  G(x, xi) = cases(
+    x(1 - xi), & x <= xi,
+    xi(1 - x), & x >= xi.
+  )
+$
+It is symmetric: $G(x, xi) = G(xi, x)$, which reflects the self-adjointness of the differential operator.
+] <ex:greens-simple>
+
 == Sturm-Liouville Problems // Sturm-Liouville 问题
 
 #definition(name: "Sturm-Liouville Equation")[
@@ -1380,11 +1446,76 @@ where $alpha_1, alpha_2$ are not both zero, and $beta_1, beta_2$ are not both ze
 
 These are *homogeneous* boundary conditions (the right-hand side is zero).
 
+=== Self-Adjointness and the Inner Product // 自伴性与内积
+
+The Sturm-Liouville equation can be written in operator form:
+$
+  L y = lambda r(x) y,
+$
+where the *Sturm-Liouville operator* is
+$
+  L = - (d) / (d x) lr(p(x) (d) / (d x)) + q(x).
+$
+
+#definition(name: "Weighted Inner Product")[
+For two functions $u(x), v(x)$ on $[a, b]$, the *weighted inner product* with weight $r(x)$ is
+$
+  ⟨ u, v ⟩_(r) = integral_a^b u(x) v(x) r(x) dif x.
+$
+Two functions are *orthogonal* with respect to this inner product if $⟨ u, v ⟩_(r) = 0$.
+] <def:weighted-inner-product>
+
+#theorem(name: "Self-Adjointness of the Sturm-Liouville Operator")[
+For functions $u, v$ satisfying the regular Sturm-Liouville boundary conditions, the operator $L$ is self-adjoint with respect to the weighted inner product:
+$
+  ⟨ L u, v ⟩_(r) = ⟨ u, L v ⟩_(r).
+$
+] <thm:self-adjoint>
+
+#proof[
+Integrate by parts twice:
+$
+  integral_a^b (L u) v r dif x = - integral_a^b (p u')' v dif x + integral_a^b q u v r dif x
+  = - p u' v |_a^b + integral_a^b p u' v' dif x + integral_a^b q u v r dif x.
+$
+The boundary term $-p u' v |_a^b$ vanishes because of the boundary conditions. Repeating the integration by parts for $u v'$ gives the symmetric expression, hence $⟨ L u, v ⟩_(r) = ⟨ u, L v ⟩_(r)$.
+]
+
+=== Periodic and Singular Sturm-Liouville Problems // 周期与奇异 Sturm-Liouville 问题
+
+#definition(name: "Periodic Sturm-Liouville Problem")[
+A *periodic Sturm-Liouville problem* has periodic boundary conditions:
+$
+  y(a) = y(b), quad quad y'(a) = y'(b),
+$
+in addition to $p(a) = p(b)$. This is the setting for the full Fourier series (sine and cosine).
+] <def:periodic-slp>
+
+#definition(name: "Singular Sturm-Liouville Problem")[
+A Sturm-Liouville problem is *singular* if at least one endpoint is singular: either $p(a) = 0$ or $p(b) = 0$, or the interval is unbounded. The boundary conditions are replaced by appropriate boundedness/integrability conditions.
+] <def:singular-slp>
+
+#note[
+Singular Sturm-Liouville problems give rise to classical special functions: Legendre's equation (singular endpoints at $x = +-1$), Bessel's equation (singular at $x = 0$), and Hermite/Laguerre equations (unbounded intervals).
+]
+
 == Eigenvalues and Eigenfunctions // 特征值与特征函数
 
 #definition(name: "Eigenvalues and Eigenfunctions")[
 A value of $lambda$ for which the regular Sturm-Liouville problem has a non-trivial solution is called an *eigenvalue*. The corresponding non-trivial solution is called an *eigenfunction*.
 ] <def:sl-eigenvalue>
+
+#theorem(name: "Real Eigenvalues")[
+All eigenvalues of a regular Sturm-Liouville problem are real.
+] <thm:real-eigenvalues>
+
+#proof[
+Suppose $lambda = alpha + i beta$ is a complex eigenvalue with eigenfunction $y = u + i v$. Taking the complex conjugate, $overline(lambda) = alpha - i beta$ is also an eigenvalue with eigenfunction $overline(y) = u - i v$. By orthogonality,
+$
+  integral_a^b y overline(y) r dif x = 0,
+$
+since $lambda != overline(lambda)$. But $y overline(y) = abs(y)^2 > 0$ unless $y equiv 0$, a contradiction. Hence $beta = 0$, so $lambda$ is real.
+]
 
 #theorem(name: "Properties of Sturm-Liouville Eigenvalues")[
 For a regular Sturm-Liouville problem:
@@ -1400,6 +1531,26 @@ For a regular Sturm-Liouville problem:
    $
    where $c_n = (integral_a^b f(x) y_(n)(x) r(x) dif x) / (integral_a^b y_n^2(x) r(x) dif x)$.
 ] <thm:sl-properties>
+
+#theorem(name: "Sturm Oscillation Theorem")[
+For the $n$-th eigenfunction $y_(n)(x)$ of a regular Sturm-Liouville problem:
+- $y_(n)(x)$ has exactly $n - 1$ zeros in the open interval $(a, b)$.
+- Consecutive eigenfunctions' zeros interlace: between any two consecutive zeros of $y_(n)(x)$ there is exactly one zero of $y_(n+1)(x)$.
+] <thm:sturm-oscillation>
+
+#note[
+The oscillation theorem explains the ordering of eigenvalues: higher eigenfunctions oscillate faster, hence correspond to larger eigenvalues. This is also the origin of the uncertainty principle intuition: more oscillation = higher energy = higher eigenvalue.
+]
+
+#theorem(name: "Asymptotic Behavior of Eigenvalues")[
+For large $n$, the eigenvalues of a regular Sturm-Liouville problem satisfy
+$
+  lambda_n ~ (n pi / L)^2, quad quad L = integral_a^b sqrt(r(x) / p(x)) dif x.
+$
+The eigenfunctions oscillate asymptotically like $sin(n pi (x - a) / L)$.
+] <thm:eigenvalue-asymptotics>
+
+== Generalized Fourier Series // 广义傅里叶级数
 
 #note[
 This theorem is the spectral theorem for self-adjoint differential operators. The Sturm-Liouville operator is self-adjoint with respect to the inner product weighted by $r(x)$, which is why its eigenvalues are real and its eigenfunctions are orthogonal.
@@ -1422,5 +1573,47 @@ $
   integral_0^pi sin(m x) sin(n x) dif x = pi / 2 delta_(m n).
 $
 ] <ex:fourier-sine>
+
+=== Convergence of Generalized Fourier Series // 广义傅里叶级数的收敛性
+
+#theorem(name: "Mean Square Convergence")[
+The generalized Fourier series converges in the mean-square sense:
+$
+  lim_(N -> oo) integral_a^b abs(f(x) - sum_(n=1)^N c_n y_(n)(x))^2 r(x) dif x = 0.
+$
+This is the Hilbert space interpretation: the eigenfunctions form an orthonormal basis in $L^2([a, b], r(x) dif x)$.
+] <thm:l2-convergence>
+
+#theorem(name: "Pointwise Convergence")[
+If $f(x)$ is piecewise smooth on $[a, b]$, then the generalized Fourier series converges pointwise:
+- At points where $f$ is continuous, the series converges to $f(x)$.
+- At jump discontinuities, the series converges to the average $(f(x^+) + f(x^-)) / 2$.
+] <thm:pointwise-convergence>
+
+=== Other Examples // 其他例子
+
+#example(name: "Fourier Cosine Series (Neumann Boundary)")[
+The problem
+$
+  y'' + lambda y = 0, quad quad y'(0) = 0, quad quad y'(pi) = 0
+$
+has eigenvalues $lambda_n = n^2$ and eigenfunctions $y_(n)(x) = cos(n x)$. The corresponding expansion is the Fourier cosine series, which represents even functions on $[0, pi]$ extended to $[-pi, pi]$.
+] <ex:fourier-cosine>
+
+#example(name: "Full Fourier Series (Periodic Boundary)")[
+The periodic problem
+$
+  y'' + lambda y = 0, quad quad y(-pi) = y(pi), quad quad y'(-pi) = y'(pi)
+$
+has eigenvalues $lambda_0 = 0$ and $lambda_n = n^2$ for $n >= 1$. The eigenfunctions are $1, cos(x), sin(x), cos(2x), sin(2x), dots$ — the full Fourier series basis.
+] <ex:fourier-full>
+
+#example(name: "Legendre Polynomials (Singular SL Problem)")[
+Legendre's equation
+$
+  - (d) / (d x) lr((1 - x^2) y') = lambda y, quad quad x in (-1, 1)
+$
+is a singular Sturm-Liouville problem with $p(x) = 1 - x^2$ vanishing at both endpoints. The eigenvalues are $lambda_n = n(n + 1)$, and the eigenfunctions are the Legendre polynomials $P_n(x)$. They are orthogonal with weight $r(x) = 1$ on $[-1, 1]$.
+] <ex:legendre>
 
 #bibliography("references.bib")
