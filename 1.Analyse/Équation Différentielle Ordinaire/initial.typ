@@ -192,4 +192,130 @@
 //   （注：原 tex 笔记中一阶 PDE 一章已全部移入 Équations aux Dérivées Partielles 笔记）
 // ==========================================================================
 
+#part("Foundations and First-Order Theory") // 基础与一阶理论
+
+= Introduction // 导论
+
+This chapter establishes the basic language of ordinary differential equations (ODEs). We begin with the classification of differential equations, then formalize what it means for a function to be a solution. The geometric interpretation of solutions as integral curves and the direction field provides the intuition that will guide our later study of existence theory and qualitative analysis.
+
+== Classification of Differential Equations // 微分方程的分类
+
+An equation involving one dependent variable and its derivatives with respect to one or more independent variables is called a *differential equation*. Differential equations can be classified according to several criteria.
+
+#definition(name: "Ordinary Differential Equation (ODE)")[
+An *ordinary differential equation* (ODE) is an equation of the form
+$
+  F(x, y, y', y'', dots, y^(n)) = 0, quad n in bb(N),
+$
+where $x$ is the independent variable, $y$ is the unknown function of $x$, and $y^(k) = d^k y / d x^k$ denotes the $k$-th derivative.
+] <def:ode>
+
+If the unknown function depends on two or more independent variables, and the equation involves partial derivatives, it is called a *partial differential equation* (PDE). PDEs are studied in the companion volume *Équations aux Dérivées Partielles*.
+
+#definition(name: "Order of a Differential Equation")[
+The *order* of a differential equation is the order of the highest derivative appearing in the equation.
+] <def:ode-order>
+
+- A first-order equation has the form $F(x, y, y') = 0$.
+- A second-order equation has the form $F(x, y, y', y'') = 0$.
+- Higher-order equations involve derivatives of order three or more.
+
+#note[
+Crucially, the order determines how many initial conditions are needed to single out a unique solution. An $n$-th order equation requires $n$ initial conditions.
+]
+
+#definition(name: "Linear Differential Equation")[
+An $n$-th order differential equation is *linear* if it can be written in the form
+$
+  a_n(x) y^(n) + a_(n-1)(x) y^(n-1) + dots + a_1(x) y' + a_0(x) y = g(x),
+$
+where the coefficients $a_i(x)$ and the inhomogeneous term $g(x)$ depend only on the independent variable $x$. Otherwise, the equation is *nonlinear*.
+] <def:linear-ode>
+
+#note[
+For a linear equation, if $g(x) = 0$, the equation is called *homogeneous*; otherwise it is *non-homogeneous*. This distinction is central to the theory of linear systems developed in Part II.
+]
+
+== Solution to an ODE // 常微分方程的解
+
+Let $J subset.eq bb(R)$ be an interval.
+
+#definition(name: "Solution of an ODE")[
+A function $y = phi(x)$ defined on $J$ is called a *solution* to the ODE $F(x, y, y', dots, y^(n)) = 0$ if it satisfies
+$
+  F(x, phi(x), phi'(x), phi''(x), dots, phi^(n)(x)) = 0 quad quad text("for all") x in J.
+$
+The interval $J$ is called the *interval of existence* of the solution.
+] <def:solution>
+
+#definition(name: "General and Particular Solutions")[
+Suppose $y = phi(x; c_1, c_2, dots, c_n)$ is a solution depending on $n$ arbitrary constants $c_1, dots, c_n$. If these constants are *mutually independent* — meaning the Jacobian determinant
+$
+  "det" (partial(phi, phi', dots, phi^(n-1))) / (partial(c_1, c_2, dots, c_n)) != 0 quad quad text("for all") x in J
+$
+is non-vanishing — then $y = phi(x; c_1, dots, c_n)$ is called the *general solution* of the ODE.
+
+A solution obtained by fixing specific values of the arbitrary constants is called a *particular solution*.
+] <def:general-solution>
+
+#definition(name: "Initial Conditions and Cauchy Problem")[
+Let $y = phi(x)$ be a solution of an $n$-th order ODE. The conditions
+$
+  phi(x_0) = y_0, quad phi'(x_0) = y_0', quad dots, quad phi^(n-1)(x_0) = y_0^(n-1)
+$
+are called *initial conditions* at $x = x_0$. An ODE together with a set of initial conditions is called an *initial value problem* (IVP), also known as a *Cauchy problem*.
+] <def:cauchy-problem>
+
+#definition(name: "Explicit and Implicit Solutions")[
+A solution $y = phi(x)$ written directly as a function of $x$ is called an *explicit solution*. If the solution is determined by a relation $Phi(x, y) = 0$ that cannot (or need not) be solved for $y$ in terms of $x$, then $Phi(x, y) = 0$ is called an *implicit solution*. An implicit solution is also referred to as an *integral* of the equation.
+] <def:implicit-solution>
+
+=== Integral Curves and Direction Fields // 积分曲线与方向场
+
+Consider the first-order ODE
+#eq[
+  (d y) / (d x) = f(x, y),
+] <eq:first-order-ode>
+where $f$ is continuous in a planar region $G subset.eq bb(R)^2$.
+
+#definition(name: "Integral Curve")[
+If $y = phi(x)$, $x in J$, is a solution to @eq:first-order-ode, then the set of points
+$
+  Gamma = { (x, y) : y = phi(x), x in J }
+$
+forms a differentiable curve in the plane. This curve is called a *solution curve* or an *integral curve* of the ODE.
+] <def:integral-curve>
+
+At any point $(x_0, y_0)$ on the integral curve, the slope of the tangent line is
+$
+  phi'(x_0) = f(x_0, y_0).
+$
+Thus the tangent line at $(x_0, y_0)$ has equation
+$
+  y - y_0 = f(x_0, y_0) (x - x_0).
+$
+Remarkably, we can determine the tangent slope at any point from the equation alone, without knowing the explicit solution.
+
+#definition(name: "Direction Field (Line Element Field)")[
+At each point $P = (x, y)$ in the region $G$, draw a short line segment with slope $f(P)$. This segment is called the *line element* (or *direction element*) of the ODE at $P$. The region $G$ together with the collection of all line elements is called the *direction field* (or *slope field* or *line element field*) of the ODE.
+] <def:direction-field>
+
+#note[
+The direction field gives a geometric portrait of all solutions even when we cannot solve the equation explicitly. Integral curves are precisely the curves that are everywhere tangent to the direction field. This geometric viewpoint is the foundation of qualitative theory, which we develop in Part III.
+]
+
+#theorem(name: "Integral Curve Criterion")[
+A continuously differentiable curve $Gamma = { (x, y) : y = psi(x), x in J }$ in the plane is an integral curve of @eq:first-order-ode if and only if, at every point $(x, y) in Gamma$, its tangent line coincides with the line element prescribed by the ODE at that point.
+] <thm:integral-curve-criterion>
+
+#proof[
+*Necessity.* If $y = psi(x)$ is a solution, then by definition $psi'(x) = f(x, psi(x))$, which means the tangent slope at each point matches the line element.
+
+*Sufficiency.* Suppose the tangent line of $Gamma$ at every point coincides with the line element. Then at each point $(x, y) = (x, psi(x))$ on the curve, we have
+$
+  psi'(x) = f(x, y) = f(x, psi(x)).
+$
+Since this holds for all $x in J$, the function $y = psi(x)$ satisfies the ODE and is therefore a solution.
+]
+
 #bibliography("references.bib")
