@@ -8242,6 +8242,7 @@ Indeed, continuity and the existence of partial derivatives are defined through 
 // 注：tex 原文将 Jacobian 矩阵、连续导数与可微性三个定义以编号列表混排，未使用 definition 组件与标签，且未建立可微性定义中矩阵 A 与 Jacobian 矩阵的联系；本次重构按"Jacobian 定义 → 可微性定义 → 桥梁命题 → C¹ 定义 → 充分条件推论 → 分量判据"重排，补充标签与短证明，并将 $bold(f)'$、$D bold(f)$、$J_(bold(f))$ 记号统一为 $J bold(f)$。
 
 == Derivatives of Composite Mappings (Chain Rule) // 复合映射的求导（链式法则）
+// 注：tex 原文中二元复合特例（含链式图与矩阵公式）为裸文本且 proof 为空（按空壳处理原则不编造证明），"Homogeneous Functions" 命题混合了 Euler 特征方程与三条推广性质且齐次函数本身未定义；本次重构将特例升级为命题组件，齐次函数部分拆分为"Euler 定理 + 进一步性质"独立小节（齐次函数定义见常微分方程笔记，按跨笔记规范以文字提及），口诀式 note 改写为完整陈述句。
 
 #theorem(name: "Chain Rule")[
   Let $U subset.eq bb(R)^l$ and $V subset.eq bb(R)^n$ be open sets, and let $bold(g): U -> V$ and $bold(f): V -> bb(R)^m$ be mappings. If $bold(g)$ has a derivative at $bold(u)^0 in U$ and $bold(f)$ is differentiable at $bold(x)^0 = bold(g)(bold(u)^0)$, then the composite mapping $bold(f) compose bold(g)$ is differentiable at $bold(u)^0$, and
@@ -8251,29 +8252,30 @@ Indeed, continuity and the existence of partial derivatives are defined through 
 ] <thm:chain-rule>
 
 #note[
-  + Outer differentiable + inner derivative = total derivative.
-  + Outer differentiable + inner differentiable = total differentiable.
+  In short: the outer function is required to be differentiable, the inner function is required to have a derivative (i.e., to be differentiable as a mapping); under these conditions the composite is differentiable, and its Jacobian matrix is the product of the two Jacobians.
 ]
 
-Specially, define $z = f(x, y)$ with $(x, y) in D_f subset.eq bb(R)^2$, $bold(g): D_g -> bb(R)^2$, $(u, v) mapsto (x(u, v), y(u, v))$, and $bold(g)(D_g) subset.eq D_f$; then we have the composite function
-$
-  z = f compose bold(g) = f[x(u, v), y(u, v)], quad (u, v) in D_g.
-$
-$
-  bb(R)^2 ->^(bold(g): "derivative") bb(R)^2 ->^(f: "differentiable") bb(R)
-$
-If $bold(g)$ has a derivative at $(u_0, v_0) in D_g$ and $f$ is differentiable at $(x_0, y_0) = bold(g)(u_0, v_0)$, then $z = f compose bold(g)$ is differentiable at $(u_0, v_0)$, and at the point
-$
-  mat(delim: "[", frac(partial z, partial u), frac(partial z, partial v))
-  = mat(delim: "[", frac(partial z, partial x), frac(partial z, partial y))
-  mat(
-    delim: "[",
-    frac(partial x, partial u), frac(partial x, partial v);
-    frac(partial y, partial u), frac(partial y, partial v)
-  ).
-$
+#proposition(name: "Chain Rule for Two-Variable Composite Functions")[
+  Let $z = f(x, y)$ with $(x, y) in D_f subset.eq bb(R)^2$, $bold(g): D_g -> bb(R)^2$, $(u, v) mapsto (x(u, v), y(u, v))$, and $bold(g)(D_g) subset.eq D_f$; then we have the composite function
+  $
+    z = f compose bold(g) = f[x(u, v), y(u, v)], quad (u, v) in D_g.
+  $
+  $
+    bb(R)^2 ->^(bold(g): "derivative") bb(R)^2 ->^(f: "differentiable") bb(R)
+  $
+  If $bold(g)$ has a derivative at $(u_0, v_0) in D_g$ and $f$ is differentiable at $(x_0, y_0) = bold(g)(u_0, v_0)$, then $z = f compose bold(g)$ is differentiable at $(u_0, v_0)$, and at the point
+  $
+    mat(delim: "[", frac(partial z, partial u), frac(partial z, partial v))
+    = mat(delim: "[", frac(partial z, partial x), frac(partial z, partial y))
+    mat(
+      delim: "[",
+      frac(partial x, partial u), frac(partial x, partial v);
+      frac(partial y, partial u), frac(partial y, partial v)
+    ).
+  $
+] <prop:chain-rule-two-variable>
 
-// 注：tex 中该公式的 proof 环境为空（无内容来源），按空壳处理原则不编造证明。
+This follows from #link(<thm:chain-rule>)[the chain rule] by substituting the Jacobians $J bold(f) = (frac(partial f, partial x), frac(partial f, partial y))$ and $J bold(g) = mat(delim: "[", frac(partial x, partial u), frac(partial x, partial v); frac(partial y, partial u), frac(partial y, partial v))$ into the matrix product.
 
 === Applications // 应用
 
@@ -8306,15 +8308,20 @@ As an important application of the chain rule, we have the following theorem on 
   where in each determinant on the right-hand side, the $j$-th column is replaced by the derivative of the $j$-th column of $Delta(t)$.
 ] <thm:determinant-differentiation>
 
-Another important application is *homogeneous functions*.
+=== Homogeneous Functions and Euler's Theorem // 齐次函数与 Euler 定理
 
-// 注：tex 原文 Item 2 的"where"式漏写算子平方（(x∂/∂x + y∂/∂y) = x²∂²/∂x² + ...），已补平方。
-#proposition(name: "Homogeneous Functions")[
-  The following statements can be generalized for $n$ variables:
-  + Let $f(x, y) in C^1$. Then $f$ is a homogeneous function of degree $m$ if and only if
-    $
-      x frac(partial f, partial x) + y frac(partial f, partial y) = m f(x, y).
-    $
+Recall that $f(x, y)$ is called a *homogeneous function of degree $m$* if $f(t x, t y) = t^m f(x, y)$ for all $t > 0$; the formal definition is given in the Homogeneous Equations section of the Ordinary Differential Equations note. The following theorem characterizes homogeneity through a first-order partial differential equation.
+
+#theorem(name: "Euler's Theorem for Homogeneous Functions")[
+  Let $f(x, y) in C^1$. Then $f$ is a homogeneous function of degree $m$ if and only if
+  $
+    x frac(partial f, partial x) + y frac(partial f, partial y) = m f(x, y).
+  $
+] <thm:euler-homogeneous>
+
+// 注：tex 原文将 Euler 特征方程、二阶推广、偏导齐次性与增长估计合并为一个 "Homogeneous Functions" 命题，本次拆分为上述 Euler 定理与下述进一步性质命题；tex 原文两处 proof 环境均为空（无内容来源），按空壳处理原则不编造证明。
+
+#proposition(name: "Further Properties of Homogeneous Functions")[
   + Let $f(x, y) in C^2$ be a homogeneous function of degree $m$. Then
     $
       (x frac(partial, partial x) + y frac(partial, partial y))^2 f(x, y) = m(m - 1) f(x, y),
@@ -8331,10 +8338,9 @@ Another important application is *homogeneous functions*.
       abs(f(x, y)) <= C rho^m, quad rho = sqrt(x^2 + y^2),
     $
     where $C = max_(rho = 1) abs(f(x, y))$.
-] <prop:homogeneous-functions>
+] <prop:homogeneous-properties>
+// 注：tex 原文 Item 2 的"where"式漏写算子平方（(x∂/∂x + y∂/∂y) = x²∂²/∂x² + ...），已补平方。
 
-// 注：tex 原文记 df/dx（应为偏导），且结论 "always constant" 不真（如 f = y/x 满足方程但非常值）；
-// 按 Proposition Item 1 的 Euler 恒等式，正确结论为"沿从原点出发的每条射线为常值（零次齐次）"。
 #example[
   Let $f(x, y)$ be a differentiable function on $bb(R)^2$ satisfying the equation
   $
@@ -8342,7 +8348,6 @@ Another important application is *homogeneous functions*.
   $
   Prove that $f(x, y)$ is constant along every ray issuing from the origin, i.e. $f$ is homogeneous of degree 0.
 ] <ex:euler-equation-degree-zero>
-
 == Mean Value Theorem and Taylor's Formula // 中值定理与泰勒公式
 
 === Mean Value Theorem // 中值定理
@@ -10512,6 +10517,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<thm:equivalent-convexity>)[Equivalent Convexity]*
 - *#link(<ex:euler-equation-degree-zero>)[Euler Equation Degree Zero]*
 - *#link(<ex:euler-integral>)[Euler Integral]*
+- *#link(<thm:euler-homogeneous>)[Euler's Theorem for Homogeneous Functions]*
 - *#link(<def:euler-numbers>)[Euler Numbers]*
 - *#link(<ex:euler-poisson-integral>)[Euler Poisson Integral]*
 - *#link(<thm:exact-implies-closed>)[Exact Implies Closed]*
@@ -10529,6 +10535,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<def:factorial-power>)[Factorial Power]*
 - *#link(<thm:fan-ky>)[Fan Ky]*
 - *#link(<ex:fejer-integral>)[Fejer Integral]*
+- *#link(<prop:homogeneous-properties>)[Further Properties of Homogeneous Functions]*
 - *#link(<lem:fermat>)[Fermat]*
 - *#link(<prop:fermat-point>)[Fermat Point]*
 - *#link(<def:first-fundamental-form>)[First Fundamental Form]*
@@ -10553,7 +10560,6 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<thm:heine-borel>)[Heine Borel]*
 - *#link(<thm:heine-theorem>)[Heine Theorem]*
 - *#link(<def:higher-order-derivative>)[Higher Order Derivative]*
-- *#link(<prop:homogeneous-functions>)[Homogeneous Functions]*
 - *#link(<def:hypergeometric-series>)[Hypergeometric Series]*
 
 == I
