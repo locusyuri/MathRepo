@@ -37,6 +37,26 @@ thermodynamic framework of Chapters 2–4.
 
 == Ideal Gas Equation of State // 理想气体状态方程
 === Thermodynamic System // 热力学系统
+#definition(name: "Thermodynamic System")[
+  A *thermodynamic system* is the macroscopic body singled out for
+  study; everything outside is the *environment*, and the surface
+  separating the two is the *boundary*. Systems are classified by what
+  crosses the boundary:
+
+  - an *isolated* system exchanges neither matter nor energy;
+  - a *closed* system exchanges energy but not matter;
+  - an *open* system exchanges both.
+] <def:thermodynamic-system>
+
+#definition(name: "Extensive and Intensive Quantities")[
+  A state quantity is *extensive* if it doubles when two copies of the
+  system are combined into one, and *intensive* if it is unchanged
+  under such a scaling. Volume $V$, amount of substance $nu$, internal
+  energy $U$, entropy $S$ are extensive; pressure $p$, temperature
+  $T$, density $rho$ are intensive. The quotient of two extensive
+  quantities is intensive.
+] <def:extensive-intensive>
+
 #definition(name: "Equilibrium State and State Variables")[
   A thermodynamic system is in an *equilibrium state* if its measurable properties are independent of time and of the system's history.
 
@@ -970,7 +990,6 @@ first quantitative bridge across this gap.
 ] <note:h-statistical>
 
 = Zeroth and First Laws of Thermodynamics // 热力学第零与第一定律
-
 The kinetic theory of Chapter 1 derived macroscopic quantities from
 molecular motion. Classical thermodynamics takes the opposite route: it
 organises the macroscopic regularities themselves into a logical
@@ -978,32 +997,6 @@ structure — four laws — from which measurable consequences follow
 without any assumption about molecules. This chapter establishes the
 temperature scale (zeroth law) and the balance sheet of energy (first
 law).
-
-== Thermodynamic Systems and State Variables // 热力学系统与状态变量
-
-#definition(name: "Thermodynamic System")[
-  A *thermodynamic system* is the macroscopic body singled out for
-  study; everything outside is the *environment*, and the surface
-  separating the two is the *boundary*. Systems are classified by what
-  crosses the boundary:
-
-  - an *isolated* system exchanges neither matter nor energy;
-  - a *closed* system exchanges energy but not matter;
-  - an *open* system exchanges both.
-] <def:thermodynamic-system>
-
-#definition(name: "Extensive and Intensive Quantities")[
-  A state quantity is *extensive* if it doubles when two copies of the
-  system are combined into one, and *intensive* if it is unchanged
-  under such a scaling. Volume $V$, amount of substance $nu$, internal
-  energy $U$, entropy $S$ are extensive; pressure $p$, temperature
-  $T$, density $rho$ are intensive. The quotient of two extensive
-  quantities is intensive.
-] <def:extensive-intensive>
-
-The equilibrium states in which the laws operate were characterised in
-#link(<def:equilibrium-state>)[Chapter 1]: state variables that are
-independent of time and history.
 
 #definition(name: "Quasi-Static Process")[
   A *quasi-static process* is one that proceeds through a continuous
@@ -1092,13 +1085,13 @@ heat, which is transfer exploiting a temperature difference. Neither is
 a property of the state — they characterise the *process*.
 
 #definition(name: "Work")[
-  For a simple compressible system, the work done *on* the system by
+  For a simple compressible system, the work done *by* the system on
   the environment during a quasi-static volume change is
   $
-    delta W = - p dif V,
+    delta W = p dif V,
   $
-  the sign convention being that compression ($dif V < 0$) does
-  positive work on the system. More generally, for a system with
+  the sign convention being that expansion ($dif V > 0$) does
+  positive work on the environment. More generally, for a system with
   generalised force $Y$ and displacement $X$,
   $
     delta W = sum_i Y_i dif X_i,
@@ -1113,9 +1106,9 @@ whose differential it would be.
 
 #property(name: "Work as Area in the State Diagram")[
   For a quasi-static process taking the system along a curve $C$ in the
-  $p$-$V$ plane, the work done *by* the system is
+  $p$-$V$ plane, the work done by the system is
   $
-    W_("by") = integral_C p dif V,
+    W = integral_C p dif V,
   $
   the area under the path. Work therefore depends on the path, not
   merely on the endpoints.
@@ -1194,19 +1187,21 @@ endpoints are characterised by a number $U$.
 #theorem(name: "First Law of Thermodynamics")[
   For any process of a closed system,
   $
-    Delta U = Q + W,
+    Q = Delta U + W,
   $
-  where $Q$ is the heat absorbed and $W$ the work done *on* the system
-  (equivalently, $Delta U = Q - W_("by")$). For infinitesimal
-  quasi-static processes of a simple compressible system,
+  where $Q$ is the heat absorbed by the system, $Delta U$ the increase
+  of its internal energy, and $W$ the work done *by* the system on the
+  environment. For infinitesimal quasi-static processes of a simple
+  compressible system,
   $
-    dif U = delta Q - p dif V.
+    delta Q = dif U + p dif V.
   $
 ] <thm:first-law>
 
-In words: energy is conserved once both transfer channels are counted;
-$U$ is the bookkeeping quantity whose increases balance the net inflow.
-Every perpetual-motion machine of the first kind — one producing work
+In words: the heat absorbed by a system divides into a rise of its
+internal energy and work delivered to the outside — energy is
+conserved once both transfer channels are counted. Every
+perpetual-motion machine of the first kind — one producing work
 from nothing — is ruled out.
 
 #definition(name: "Heat Capacities")[
