@@ -1939,7 +1939,9 @@ In each case the reverse process is not forbidden by energy conservation — the
   The dynamical input of the whole construction is a single assumption: for an isolated system in equilibrium, all microstates occur with equal probability. It is the statistical counterpart of "no position in the box is special".
 ] <note:equal-a-priori>
 
-With equal weights, the probability of finding the macrostate with $k$ molecules on the left is $P(k) = Omega / 2^4 = binom(4, k) / 16$, giving $1/16, 4/16, 6/16, 4/16, 1/16$ across the five macrostates. The equilibrium macrostate — here $2 | 2$, where the gas fills both halves uniformly — is the one with the *largest* $Omega$, and as $N$ grows to macroscopic values $N tilde 10^23$ the maximum sharpens so much that fluctuations away from uniformity become unobservably rare. The conclusion is general: $Omega$ measures the *disorder* of molecular motion, and the equilibrium state is the most disordered one.
+With equal weights, the probability of finding the macrostate with $k$ molecules on the left is $P(k) = Omega / 2^4 = binom(4, k) / 16$, giving $1/16, 4/16, 6/16, 4/16, 1/16$ across the five macrostates. The equilibrium macrostate — here $2 | 2$, where the gas fills both halves uniformly — is the one with the *largest* $Omega$, and as $N$ grows to macroscopic values $N tilde 10^23$ the maximum sharpens so much that fluctuations away from uniformity become unobservably rare.
+
+The conclusion is general: $Omega$ measures the *disorder* of molecular motion, and the equilibrium state is the most disordered one.
 
 === Boltzmann Entropy // 玻尔兹曼熵
 
@@ -2009,7 +2011,9 @@ Which processes actually realise $Delta S > 0$? By #link(<def:reversible-process
   isolated, and their entropy sum obeys the same inequality.
 ]
 
-Microscopically, the principle is a statement about probability. An isolated system wanders through its microstates with equal weights, so macrostates with larger $Omega$ are visited overwhelmingly more often: a system found in a macrostate of small $Omega$ drifts, with overwhelming probability, towards one with larger $Omega$. In Boltzmann's language the entropy change of any spontaneous process reads $Delta S = k_B ln (Omega_2 / Omega_1) >= 0$ — *irreversibility is the drift towards the probable*, and a reversible process is one that leaves $Omega$ unchanged. This is the microscopic reading of the three phenomena with which this section opened.
+Microscopically, the principle is a statement about probability. An isolated system wanders through its microstates with equal weights, so macrostates with larger $Omega$ are visited overwhelmingly more often: a system found in a macrostate of small $Omega$ drifts, with overwhelming probability, towards one with larger $Omega$.
+
+In Boltzmann's language the entropy change of any spontaneous process reads $Delta S = k_B ln (Omega_2 / Omega_1) >= 0$ — *irreversibility is the drift towards the probable*, and a reversible process is one that leaves $Omega$ unchanged. This is the microscopic reading of the three phenomena with which this section opened.
 
 #example(name: "Free expansion, explained")[
   An ideal gas doubling its volume in
@@ -2078,15 +2082,20 @@ by the second law itself, independent of any material.
   $
     f(theta_1, theta_3) = f(theta_1, theta_2) dot f(theta_2, theta_3).
   $
-  With $theta_3$ fixed as a reference, the left side is independent of
-  $theta_2$; hence $f(theta_1, theta_2)$ must factor as
-  $phi(theta_1) / phi(theta_2)$ for a single function $phi$. Choosing
+  Fix an arbitrary reference $theta_0$; the identity
+  $f(theta_1, theta_0) = f(theta_1, theta_2) dot f(theta_2, theta_0)$
+  then forces $f(theta_1, theta_2) = phi(theta_1) / phi(theta_2)$ with
+  $phi(theta) := f(theta, theta_0)$, a single function, positive
+  because engines exchange positive heats. Choosing
   $T := c dot phi(theta)$ (constant fixed by convention) gives
   $Q_h / Q_c = T_h / T_c$.
 ]
 
 The reference constant is fixed by assigning $T = 273.16 "K"$ to the
-triple point of water — the same convention as the gas scale.
+triple point of water — the same convention as the gas scale. (Since
+the 2019 SI revision the kelvin is defined by fixing $k_B$ instead,
+and the triple point has become a measured quantity; the construction
+above is how the scale was established historically.)
 
 #property(name: "Equivalence of the Carnot and Ideal-Gas Scales")[
   The absolute temperature of #link(<thm:absolute-scale>)[the Carnot
@@ -2110,11 +2119,12 @@ triple point of water — the same convention as the gas scale.
 
 This closes the account opened in #link(<note:kelvin-scale>)[§2.2]:
 temperature now rests on the second law alone, and every thermometer —
-gas, resistance, or otherwise — measures the same $T$.
+gas, resistance, or otherwise — measures the same $T$. The numerical
+work-out of #link(<ex:engine-numerical>)[§3.6] puts the scale to use.
 
 == Heat Engines and Refrigeration Cycles // 热机与制冷循环
 
-The efficiency and the coefficients of performance were defined in §2.6; combined with #link(<thm:carnot-theorem>)[Carnot's theorem] they become absolute bounds on any cyclic device operating between two reservoirs.
+The efficiency and the coefficients of performance were defined in #link(<def:efficiency-cop>)[§2.6]; combined with #link(<thm:carnot-theorem>)[Carnot's theorem] they become absolute bounds on any cyclic device operating between two reservoirs.
 
 #property(name: "Carnot Bounds")[
   Any engine between reservoirs at $T_h, T_c$ satisfies
@@ -2129,12 +2139,17 @@ The efficiency and the coefficients of performance were defined in §2.6; combin
 #proof[
   The efficiency bound is
   #link(<thm:carnot-theorem>)[Carnot's theorem] itself. For a
-  refrigerator, run the same accounting in reverse: a refrigerator with
-  $"COP"_R > T_c / (T_h - T_c)$, driven by a Carnot engine of efficiency
-  $eta_C$ fed by the same heat $Q_h' = W$, would form a composite
-  transferring heat from cold to hot with no other effect — violating
-  #link(<law:clausius-statement>)[the Clausius statement]. The heat-pump
-  bound follows from $"COP"_"HP" = "COP"_R + 1$.
+  refrigerator, suppose the bound were violated,
+  $"COP"_R > T_c / (T_h - T_c)$, and drive the refrigerator with a
+  Carnot engine between the same reservoirs, sized to deliver the work
+  $W$ it consumes — the engine absorbs $Q_h' = W / eta_C$ and, being
+  reversible, rejects exactly $W T_c / (T_h - T_c)$ to the cold
+  reservoir, strictly less than the $Q_c = W dot "COP"_R$ the
+  refrigerator extracts. The composite transfers
+  $Q_c - W T_c / (T_h - T_c) > 0$ from cold to hot with no other
+  effect — violating #link(<law:clausius-statement>)[the Clausius
+    statement]. The heat-pump bound follows from
+  $"COP"_"HP" = "COP"_R + 1$.
 ]
 
 #example(name: "Numerical work-out")[
@@ -2927,21 +2942,24 @@ hydrodynamics, beyond this note's scope.
 //     - 准静态过程中的功与热
 //     - 热与功的路径依赖性
 
-//   Section 2.4: First Law: Internal Energy (第一定律：内能)
-//     - 第一定律的表述
+//   Section 2.4: First Law: Internal Energy (第一定律与内能)
+//     - 第一定律的表述 (Q = ΔU + W)
 //     - 内能作为状态函数
-//     - 热容: C_(V,m) 与 C_(p,m)
-//     - 绝热过程
+//     - 热容: C_(V,m) 与 C_(p,m)，比热容
+//     - Joule 定律
+//     - Mayer 公式
 
-//   Section 2.5: Heat Capacity and Enthalpy (热容与焓)
-//     - 定容热容与定压热容的关系
-//     - 焓的定义与物理意义
-//     - 焦耳-汤姆孙效应
+//   Section 2.5: Common Thermodynamic Processes (常见热力学过程)
+//     - 等容、等压、等温过程
+//     - 绝热可逆过程
+//     - 绝热自由膨胀
+//     - 多方过程及其与四个特殊过程的统一
 
-//   Section 2.6: Applications (应用：绝热过程与节流过程)
-//     - 理想气体的绝热自由膨胀
-//     - 理想气体的准静态绝热过程
+//   Section 2.6: Throttling, Cycles and the Carnot Cycle (节流、循环过程与卡诺循环)
 //     - 节流过程与焦耳-汤姆孙系数
+//     - 循环过程
+//     - 热机、制冷机与热泵：效率与制冷系数
+//     - 卡诺循环与卡诺效率
 
 // --- Chapter 3: Second Law of Thermodynamics (热力学第二定律) ---
 
@@ -2950,9 +2968,8 @@ hydrodynamics, beyond this note's scope.
 //     - 两种表述的等价性证明
 
 //   Section 3.2: Carnot's Theorem (卡诺定理)
-//     - 卡诺循环
-//     - 卡诺定理的表述与证明
-//     - 卡诺效率
+//     - 卡诺定理的表述与证明（卡诺循环见 §2.6）
+//     - 卡诺定理与第二定律的等价性
 
 //   Section 3.3: Entropy and the Clausius Inequality (熵与克劳修斯不等式)
 //     - 克劳修斯不等式 ∮ δQ/T ≤ 0
@@ -2972,9 +2989,8 @@ hydrodynamics, beyond this note's scope.
 //     - 与理想气体温标的等价性
 
 //   Section 3.6: Heat Engines and Refrigeration Cycles (热机与制冷循环)
-//     - 热机效率
-//     - 制冷系数与热泵系数
-//     - 典型循环: Otto, Diesel, Brayton
+//     - Carnot bounds: η、COP_R、COP_HP 的上界
+//     - 数值算例
 
 // --- Chapter 4: Third Law of Thermodynamics (热力学第三定律) ---
 
