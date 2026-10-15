@@ -46,6 +46,7 @@ This repository collects bilingual mathematics notes organized by subject. The l
 - [Latex | Latex 教程](https://lis-azure.vercel.app/notes/latex)
 - [Mécanique analytique | 分析力学](https://lis-azure.vercel.app/notes/m%C3%A9canique-analytique)
 - [Mécanique quantique | 量子力学](https://lis-azure.vercel.app/notes/m%C3%A9canique-quantique)
+- [Optique | 光学](https://lis-azure.vercel.app/notes/optique)
 
 
 ---
