@@ -2205,6 +2205,8 @@ It redeems the promise of Chapter 7 that the wavelength dependence $n(lambda)$ b
   This closes Part III: from the Helmholtz equation through diffraction, interference, Fourier optics, polarization, to the material response, the scalar wave theory of optics is complete, and the quantum theory of light (Part IV) begins.
 ]
 
+#part("Quantum Optics") // 量子光学
+
 // --- Chapter 14: Old Quantum Theory of Light (光的旧量子论) ---
 
 = Old Quantum Theory of Light // 光的旧量子论
