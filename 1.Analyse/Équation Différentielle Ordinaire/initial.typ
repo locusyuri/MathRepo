@@ -207,7 +207,7 @@ An *ordinary differential equation* (ODE) is an equation of the form
 $
   F(x, y, y', dot.double(y), dots, y^(n)) = 0, quad n in bb(N),
 $
-where $x$ is the independent variable, $y$ is the unknown function of $x$, and $y^(k) = d^k y / d x^k$ denotes the $k$-th derivative.
+where $x$ is the independent variable, $y$ is the unknown function of $x$, and $y^(k) = dif^k y / dif x^k$ denotes the $k$-th derivative.
 ] <def:ode>
 
 If the unknown function depends on two or more independent variables, and the equation involves partial derivatives, it is called a *partial differential equation* (PDE). PDEs are studied in the companion volume *Équations aux Dérivées Partielles*.
@@ -277,9 +277,9 @@ In classical terminology, an implicit solution is also called an *integral* of t
 === Integral Curves and Direction Fields // 积分曲线与方向场
 
 Consider the first-order ODE
-#eq[
-  (d y) / (d x) = f(x, y),
-] <eq:first-order-ode>
+#eq[$
+  dif y / dif x = f(x, y),
+$] <eq:first-order-ode>
 where $f$ is continuous in a planar region $G subset.eq bb(R)^2$.
 
 #definition(name: "Integral Curve")[
@@ -337,9 +337,9 @@ This chapter presents the elementary solution methods for first-order ODEs. We p
 
 #definition(name: "Exact Equation")[
 An equation of the form
-#eq[
+#eq[$
   M(x, y) dif x + N(x, y) dif y = 0,
-] <eq:symmetric-form>
+$] <eq:symmetric-form>
 is called the *symmetric form* (or *differential form*) of a first-order differential equation.
 
 If there exists a continuously differentiable function $U(x, y)$ such that
@@ -347,9 +347,9 @@ $
   dif U(x, y) = M(x, y) dif x + N(x, y) dif y,
 $
 then @eq:symmetric-form is said to be an *exact equation* (or *total differential equation*). When this holds, the equation can be rewritten as $d(U(x, y)) = 0$, which implies
-#eq[
+#eq[$
   U(x, y) = c,
-] <eq:exact-general-integral>
+$] <eq:exact-general-integral>
 where $c$ is an arbitrary constant. @eq:exact-general-integral is called the *general integral* of the equation.
 ] <def:exact-equation>
 
@@ -393,9 +393,9 @@ $
   M(x, y) = M_1(x) M_2(y), quad quad N(x, y) = N_1(x) N_2(y),
 $
 then @eq:symmetric-form is called a *separable equation*. In the more familiar derivative notation, this becomes
-#eq[
-  (d y) / (d x) = f(x) g(y),
-] <eq:separable-form>
+#eq[$
+  dif y / dif x = f(x) g(y),
+$] <eq:separable-form>
 where $f(x) = -M_1(x) / N_1(x)$ and $g(y) = N_2(y) / M_2(y)$.
 ] <def:separable-equation>
 
@@ -427,37 +427,37 @@ $
 #definition(name: "Homogeneous Equation")[
 A first-order equation $M(x, y) dif x + N(x, y) dif y = 0$ is called a *homogeneous equation* if both $M$ and $N$ are homogeneous functions of the same degree. Equivalently, in derivative form
 $
-  (d y) / (d x) = f(x, y),
+  dif y / dif x = f(x, y),
 $
 the right-hand side can be written as $g(y / x)$.
 ] <def:homogeneous-equation>
 
 Homogeneous equations are solved by the substitution $u = y / x$, i.e., $y = u x$. Differentiating with respect to $x$ gives
 $
-  (d y) / (d x) = x (d u) / (d x) + u.
+  dif y / dif x = x dif u / dif x + u.
 $
 Substituting into the equation yields
 $
-  x (d u) / (d x) + u = g(u) quad quad => quad quad (d u) / (d x) = (g(u) - u) / x,
+  x dif u / dif x + u = g(u) quad quad => quad quad dif u / dif x = (g(u) - u) / x,
 $
 which is a separable equation in $u$ and $x$. After solving for $u(x)$, substitute back $u = y / x$ to obtain $y(x)$.
 
 A more general form is
-#eq[
-  (d y) / (d x) = f((a_1 x + b_1 y + c_1) / (a_2 x + b_2 y + c_2)),
-] <eq:linear-fraction-equation>
+#eq[$
+  dif y / dif x = f((a_1 x + b_1 y + c_1) / (a_2 x + b_2 y + c_2)),
+$] <eq:linear-fraction-equation>
 which can be reduced to a homogeneous or separable equation by coordinate translation and scaling.
 
 == Linear Equations // 线性方程
 
 #definition(name: "First-Order Linear Equation")[
 A *first-order linear equation* has the form
-#eq[
-  (d y) / (d x) + p(x) y = q(x),
-] <eq:first-order-linear>
+#eq[$
+  dif y / dif x + p(x) y = q(x),
+$] <eq:first-order-linear>
 where $p(x)$ and $q(x)$ are continuous on an interval $(a, b)$. When $q(x) equiv 0$, the equation
 $
-  (d y) / (d x) + p(x) y = 0
+  dif y / dif x + p(x) y = 0
 $
 is called the *homogeneous* linear equation; otherwise it is *non-homogeneous*.
 ] <def:first-order-linear>
@@ -476,9 +476,9 @@ $
   y = c(x) e^(- integral p(x) dif x),
 $
 where the constant $c$ is now allowed to vary. Substituting into @eq:first-order-linear and simplifying gives
-#eq[
+#eq[$
   y = e^(- integral p(x) dif x) lr(c + integral q(x) e^(integral p(x) dif x) dif x).
-] <eq:linear-general-solution>
+$] <eq:linear-general-solution>
 
 With an initial condition $y(x_0) = y_0$, the solution becomes
 $
@@ -494,18 +494,18 @@ The method of variation of constants generalizes to non-homogeneous linear PDEs,
 #definition(name: "Bernoulli Equation")[
 A *Bernoulli equation* is a first-order equation of the form
 $
-  (d y) / (d x) + p(x) y = q(x) y^n, quad quad n != 0, 1,
+  dif y / dif x + p(x) y = q(x) y^n, quad quad n != 0, 1,
 $
 where $n$ is a real constant.
 ] <def:bernoulli-equation>
 
 Bernoulli equations are transformed into linear equations by the substitution $z = y^(1 - n)$. Differentiating gives
 $
-  (d z) / (d x) = (1 - n) y^(-n) (d y) / (d x).
+  dif z / dif x = (1 - n) y^(-n) dif y / dif x.
 $
 Substituting from the Bernoulli equation yields
 $
-  (d z) / (d x) + (1 - n) p(x) z = (1 - n) q(x),
+  dif z / dif x + (1 - n) p(x) z = (1 - n) q(x),
 $
 which is a linear equation in $z$, solvable by the method above.
 
@@ -523,9 +523,9 @@ $
   (partial (mu M)) / (partial y) = (partial (mu N)) / (partial x),
 $
 which expands to the first-order PDE
-#eq[
+#eq[$
   N (partial mu) / (partial x) - M (partial mu) / (partial y) = lr((partial M) / (partial y) - (partial N) / (partial x)) mu.
-] <eq:integrating-factor-pde>
+$] <eq:integrating-factor-pde>
 
 #theorem(name: "Special Forms of Integrating Factors")[
 1. If the integrating factor depends only on $x$, i.e., $mu = mu(x)$, then a necessary and sufficient condition is that
@@ -569,11 +569,11 @@ Depending on which variable can be solved explicitly, there are several cases:
 
 - *Case (b): $y = f(x, p)$ solvable.* Differentiate both sides with respect to $x$:
   $
-    p = (d y) / (d x) = (partial f) / (partial x) + (partial f) / (partial p) (d p) / (d x).
+    p = dif y / dif x = (partial f) / (partial x) + (partial f) / (partial p) dif p / dif x.
   $
   Rearranging gives
   $
-    (d p) / (d x) = (p - (partial f) / (partial x)) / ((partial f) / (partial p)),
+    dif p / dif x = (p - (partial f) / (partial x)) / ((partial f) / (partial p)),
   $
   which is a first-order equation in $p$. Solve for $p(x)$, then substitute back into $y = f(x, p)$.
 
@@ -590,11 +590,11 @@ $
 
 Differentiating both sides with respect to $x$ gives
 $
-  p = p + x (d p) / (d x) + g'(p) (d p) / (d x),
+  p = p + x dif p / dif x + g'(p) dif p / dif x,
 $
 which simplifies to
 $
-  lr(x + g'(p)) (d p) / (d x) = 0.
+  lr(x + g'(p)) dif p / dif x = 0.
 $
 
 There are two cases:
@@ -631,7 +631,7 @@ Some higher-order equations can be reduced to lower order by variable substituti
    $
    let $p = y'$ and treat $y$ as the independent variable. Then
    $
-     dot.double(y) = p (d p) / (d y), quad quad dot.triple(y) = p^2 (d^2 p) / (d y^2) + p lr((d p) / (d y))^2,
+     dot.double(y) = p dif p / dif y, quad quad dot.triple(y) = p^2 dif^2 p / dif y^2 + p lr(dif p / dif y)^2,
    $
    and so on. The equation reduces to order $n - 1$ in $p(y)$.
 
@@ -647,7 +647,7 @@ where $a_0, a_1, dots, a_(n-1)$ are constants.
 
 Euler-Cauchy equations are transformed into constant-coefficient linear equations by the substitution $x = e^t$. Under this change of variable,
 $
-  (d y) / (d x) = (1 / x) (d y) / (d t), quad quad (d^2 y) / (d x^2) = (1 / x^2) lr((d^2 y) / (d t^2) - (d y) / (d t)),
+  dif y / dif x = (1 / x) dif y / dif t, quad quad dif^2 y / dif x^2 = (1 / x^2) lr(dif^2 y / dif t^2 - dif y / dif t),
 $
 and higher derivatives follow similarly. The equation becomes a constant-coefficient linear ODE in $t$, solvable by the methods of Part II.
 
@@ -675,9 +675,9 @@ $
 ] <thm:bellman-gronwall>
 
 Now consider the Cauchy problem
-#eq[
-  cases((d y) / (d x) = f(x, y), y(x_0) = y_0),
-] <eq:cauchy-problem>
+#eq[$
+  cases(dif y / dif x = f(x, y), y(x_0) = y_0),
+$] <eq:cauchy-problem>
 
 #definition(name: "Lipschitz Condition")[
 A function $f(x, y)$ satisfies the *Lipschitz condition* with respect to $y$ in a domain $D$ if there exists a constant $L > 0$ such that for all $(x, y_1), (x, y_2) in D$,
@@ -871,24 +871,24 @@ $
   bold(Y) = mat(y_1, y_2, dots.v, y_n), quad quad bold(F)(x, bold(Y)) = mat(f_1, f_2, dots.v, f_n).
 $
 Then the system becomes
-#eq[
-  (d bold(Y)) / (d x) = bold(F)(x, bold(Y)),
-] <eq:general-system>
+#eq[$
+  dif bold(Y) / dif x = bold(F)(x, bold(Y)),
+$] <eq:general-system>
 and the Cauchy problem is
 $
-  cases((d bold(Y)) / (d x) = bold(F)(x, bold(Y)), bold(Y)(x_0) = bold(Y)_0).
+  cases(dif bold(Y) / dif x = bold(F)(x, bold(Y)), bold(Y)(x_0) = bold(Y)_0).
 $
 
 A system is *linear* if the right-hand side is linear in $bold(Y)$:
-#eq[
-  (d bold(Y)) / (d x) = bold(A)(x) bold(Y) + bold(F)(x),
-] <eq:linear-system>
+#eq[$
+  dif bold(Y) / dif x = bold(A)(x) bold(Y) + bold(F)(x),
+$] <eq:linear-system>
 where $bold(A)(x) = (a_(i j)(x))$ is an $n times n$ matrix and $bold(F)(x)$ is an $n$-dimensional vector, both continuous on an interval $I$.
 
 When $bold(F)(x) equiv bold(0)$, the system is *homogeneous*:
-#eq[
-  (d bold(Y)) / (d x) = bold(A)(x) bold(Y),
-] <eq:homogeneous-system>
+#eq[$
+  dif bold(Y) / dif x = bold(A)(x) bold(Y),
+$] <eq:homogeneous-system>
 otherwise it is *non-homogeneous*.
 
 #theorem(name: "Existence and Uniqueness for Linear Systems")[
@@ -964,11 +964,11 @@ $
 $
 where the constant vector $bold(C)$ is now allowed to vary. Substituting into @eq:linear-system and using the fact that $bold(Phi)'(x) = bold(A)(x) bold(Phi)(x)$, we obtain
 $
-  bold(Phi)(x) (d bold(C)) / (d x) = bold(F)(x).
+  bold(Phi)(x) dif bold(C) / dif x = bold(F)(x).
 $
 Since $bold(Phi)(x)$ is invertible,
 $
-  (d bold(C)) / (d x) = bold(Phi)^(-1)(x) bold(F)(x).
+  dif bold(C) / dif x = bold(Phi)^(-1)(x) bold(F)(x).
 $
 Integrating from $x_0$ to $x$ gives the variation-of-constants formula:
 
@@ -986,9 +986,9 @@ $
 == Constant-Coefficient Systems // 常系数线性方程组
 
 For the constant-coefficient homogeneous system
-#eq[
-  (d bold(Y)) / (d x) = bold(A) bold(Y),
-] <eq:constant-coefficient>
+#eq[$
+  dif bold(Y) / dif x = bold(A) bold(Y),
+$] <eq:constant-coefficient>
 where $bold(A)$ is a constant matrix, the fundamental solution matrix is given by the *matrix exponential*:
 $
   bold(Phi)(x) = e^(bold(A) x).
@@ -1060,12 +1060,12 @@ This chapter extends the theory of first-order linear systems to $n$-th order sc
 
 The general $n$-th order linear differential equation has the form
 #eq[$
-  (d^n y) / (d x^n) + p_1(x) (d^(n-1) y) / (d x^(n-1)) + dots + p_(n-1)(x) (d y) / (d x) + p_(n)(x) y = f(x).
+  dif^n y / dif x^n + p_1(x) dif^(n-1) y / dif x^(n-1) + dots + p_(n-1)(x) dif y / dif x + p_(n)(x) y = f(x).
 $] <eq:higher-order-nonhomogeneous>
 
 When $f(x) equiv 0$, we obtain the homogeneous case:
 #eq[$
-  (d^n y) / (d x^n) + p_1(x) (d^(n-1) y) / (d x^(n-1)) + dots + p_(n-1)(x) (d y) / (d x) + p_(n)(x) y = 0.
+  dif^n y / dif x^n + p_1(x) dif^(n-1) y / dif x^(n-1) + dots + p_(n-1)(x) dif y / dif x + p_(n)(x) y = 0.
 $] <eq:higher-order-homogeneous>
 
 To reduce this to a first-order system, introduce the state vector
@@ -1074,7 +1074,7 @@ $
 $
 Then the system becomes
 $
-  (d bold(Y)) / (d x) = bold(A)(x) bold(Y) + bold(F)(x),
+  dif bold(Y) / dif x = bold(A)(x) bold(Y) + bold(F)(x),
 $
 where $bold(A)(x)$ is the *companion matrix*
 $
@@ -1152,7 +1152,7 @@ This is known as *reduction of order*: knowing one solution reduces the order of
 
 For constant-coefficient equations, the companion matrix is constant, and the theory of the matrix exponential simplifies dramatically. Introduce the differential operator
 $
-  L_n = (d^n) / (d x^n) + a_1 (d^(n-1)) / (d x^(n-1)) + dots + a_(n-1) (d) / (d x) + a_n,
+  L_n = (d^n) / (d x^n) + a_1 (d^(n-1)) / (d x^(n-1)) + dots + a_(n-1) dif / dif x + a_n,
 $
 where $a_1, dots, a_n$ are constants. The homogeneous equation is then $L_n y = 0$.
 
@@ -1215,14 +1215,14 @@ This chapter develops the qualitative theory of nonlinear autonomous systems. In
 We consider two-dimensional autonomous systems of the form
 #eq[$
   cases(
-    (d x) / (d t) = F(x, y),
-    (d y) / (d t) = G(x, y),
+    dif x / dif t = F(x, y),
+    dif y / dif t = G(x, y),
   )
 $] <eq:phase-plane-system>
 
 where $F$ and $G$ are continuously differentiable in a domain $D$. In vector form,
 #eq[$
-  (d bold(x)) / (d t) = bold(f)(bold(x)), quad quad bold(x)(t_0) = bold(x)^0,
+  dif bold(x) / dif t = bold(f)(bold(x)), quad quad bold(x)(t_0) = bold(x)^0,
 $] <eq:autonomous-system>
 
 where $bold(x) = (x, y)^T$ and $bold(f)(bold(x)) = (F(x, y), G(x, y))^T$.
@@ -1430,7 +1430,7 @@ It is symmetric: $G(x, xi) = G(xi, x)$, which reflects the self-adjointness of t
 #definition(name: "Sturm-Liouville Equation")[
 A *Sturm-Liouville equation* has the form
 #eq[$
-  - (d) / (d x) lr(p(x) (d y) / (d x)) + q(x) y = lambda r(x) y,
+  - dif / dif x lr(p(x) dif y / dif x) + q(x) y = lambda r(x) y,
 $] <eq:sturm-liouville>
 where $p(x) > 0$, $r(x) > 0$, and $q(x)$ are continuous on $[a, b]$.
 ] <def:sturm-liouville>
@@ -1458,7 +1458,7 @@ $
 $
 where the *Sturm-Liouville operator* is
 $
-  L = - (d) / (d x) lr(p(x) (d) / (d x)) + q(x).
+  L = - dif / dif x lr(p(x) dif / dif x) + q(x).
 $
 
 #definition(name: "Weighted Inner Product")[
@@ -1615,7 +1615,7 @@ has eigenvalues $lambda_0 = 0$ and $lambda_n = n^2$ for $n >= 1$. The eigenfunct
 #example(name: "Legendre Polynomials (Singular SL Problem)")[
 Legendre's equation
 $
-  - (d) / (d x) lr((1 - x^2) y') = lambda y, quad quad x in (-1, 1)
+  - dif / dif x lr((1 - x^2) y') = lambda y, quad quad x in (-1, 1)
 $
 is a singular Sturm-Liouville problem with $p(x) = 1 - x^2$ vanishing at both endpoints. The eigenvalues are $lambda_n = n(n + 1)$, and the eigenfunctions are the Legendre polynomials $P_(n)(x)$. They are orthogonal with weight $r(x) = 1$ on $[-1, 1]$.
 ] <ex:legendre>
