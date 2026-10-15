@@ -205,7 +205,7 @@ An equation involving derivatives of a function of one or more independent varia
 #definition(name: "Ordinary Differential Equation (ODE)")[
 An *ordinary differential equation* (ODE) is an equation of the form
 $
-  F(x, y, y', y'', dots, y^(n)) = 0, quad n in bb(N),
+  F(x, y, y', dot.double(y), dots, y^(n)) = 0, quad n in bb(N),
 $
 where $x$ is the independent variable, $y$ is the unknown function of $x$, and $y^(k) = d^k y / d x^k$ denotes the $k$-th derivative.
 ] <def:ode>
@@ -217,7 +217,7 @@ The *order* of a differential equation is the order of the highest derivative ap
 ] <def:ode-order>
 
 - A first-order equation has the form $F(x, y, y') = 0$.
-- A second-order equation has the form $F(x, y, y', y'') = 0$.
+- A second-order equation has the form $F(x, y, y', dot.double(y)) = 0$.
 - Higher-order equations involve derivatives of order three or more.
 
 #note[
@@ -243,7 +243,7 @@ Let $J subset.eq bb(R)$ be an interval.
 #definition(name: "Solution of an ODE")[
 A smooth function $y = phi(x)$ defined on $J$ is called a *solution* to the ODE $F(x, y, y', dots, y^(n)) = 0$ if it satisfies
 $
-  F(x, phi(x), phi'(x), phi''(x), dots, phi^(n)(x)) = 0 quad quad text("for all") x in J.
+  F(x, phi(x), phi'(x), dot.double(phi)(x), dots, phi^(n)(x)) = 0 quad quad text("for all") x in J.
 $
 The interval $J$ is called the *interval of existence* of the solution.
 ] <def:solution>
@@ -627,11 +627,11 @@ Some higher-order equations can be reduced to lower order by variable substituti
 
 2. *Equations missing the independent variable*: If
    $
-     F(y, y', y'', dots, y^(n)) = 0,
+     F(y, y', dot.double(y), dots, y^(n)) = 0,
    $
    let $p = y'$ and treat $y$ as the independent variable. Then
    $
-     y'' = p (d p) / (d y), quad quad y''' = p^2 (d^2 p) / (d y^2) + p lr((d p) / (d y))^2,
+     dot.double(y) = p (d p) / (d y), quad quad dot.triple(y) = p^2 (d^2 p) / (d y^2) + p lr((d p) / (d y))^2,
    $
    and so on. The equation reduces to order $n - 1$ in $p(y)$.
 
@@ -836,15 +836,15 @@ on the common interval of existence.
 #theorem(name: "Differentiability with Respect to Initial Data")[
 Suppose $f(x, y)$ and $f_(y)(x, y)$ are continuous in a closed rectangle $D$. Then the solution $y = phi(x; x_0, y_0)$ is of class $C^1$ as a function of $(x, x_0, y_0)$. Moreover,
 $
-  (partial phi) / (partial y_0) = exp(lr(integral_(x_0)^x f_y(t, phi(t; x_0, y_0)) dif t)),
+  (partial phi) / (partial y_0) = exp(lr(integral_(x_0)^x f_(y)(t, phi(t; x_0, y_0)) dif t)),
 $
 $
-  (partial phi) / (partial x_0) = -f(x_0, y_0) exp(lr(integral_(x_0)^x f_y(t, phi(t; x_0, y_0)) dif t)).
+  (partial phi) / (partial x_0) = -f(x_0, y_0) exp(lr(integral_(x_0)^x f_(y)(t, phi(t; x_0, y_0)) dif t)).
 $
 ] <thm:dependence-derivatives>
 
 #note[
-These formulas show how sensitive the solution is to changes in the initial conditions. The derivative with respect to $y_0$ is a solution of the variational equation $z' = f_y(x, phi(x)) z$, which is the linearization of the original ODE along the solution trajectory. This variational equation plays a central role in stability theory (Part III).
+These formulas show how sensitive the solution is to changes in the initial conditions. The derivative with respect to $y_0$ is a solution of the variational equation $z' = f_(y)(x, phi(x)) z$, which is the linearization of the original ODE along the solution trajectory. This variational equation plays a central role in stability theory (Part III).
 ]
 
 #part("Linear Systems Theory") // 线性系统理论
@@ -1070,7 +1070,7 @@ $] <eq:higher-order-homogeneous>
 
 To reduce this to a first-order system, introduce the state vector
 $
-  bold(Y) = mat(y, y', y'', dots, y^((n-1)))^T.
+  bold(Y) = mat(y, y', dot.double(y), dots, y^((n-1)))^T.
 $
 Then the system becomes
 $
@@ -1090,7 +1090,7 @@ and $bold(F)(x) = mat(0, 0, dots, f(x))^T$.
 #theorem(name: "Equivalence of Higher-Order Equations and First-Order Systems")[
 Equation @eq:higher-order-nonhomogeneous is equivalent to the first-order system @eq:linear-system with companion matrix.
 That is, if $y(x)$ is a solution of @eq:higher-order-nonhomogeneous, then
-$bold(Y)(x) = mat(y, y', y'', dots, y^((n-1)))^T$ is a solution of the corresponding first-order system; conversely, the first component of any solution of the system is a solution of the higher-order equation.
+$bold(Y)(x) = mat(y, y', dot.double(y), dots, y^((n-1)))^T$ is a solution of the corresponding first-order system; conversely, the first component of any solution of the system is a solution of the higher-order equation.
 ] <thm:higher-order-equivalence>
 
 The initial conditions
@@ -1139,7 +1139,7 @@ where $W_(i)(x)$ is the algebraic cofactor of the element in the $n$-th row and 
 #example(name: "Reduction of Order")[
 Suppose $y = phi(x)$ is a known non-zero solution of the second-order homogeneous equation
 $
-  y'' + p(x) y' + q(x) y = 0.
+  dot.double(y) + p(x) y' + q(x) y = 0.
 $
 Then a second linearly independent solution is
 $
@@ -1349,7 +1349,7 @@ Unlike IVPs, which always have a unique solution (under mild conditions), BVPs m
 #example(name: "A Simple BVP")[
 Consider the second-order equation
 $
-  y'' + lambda y = 0, quad quad y(0) = 0, quad quad y(pi) = 0.
+  dot.double(y) + lambda y = 0, quad quad y(0) = 0, quad quad y(pi) = 0.
 $
 - If $lambda < 0$, the only solution is $y equiv 0$.
 - If $lambda = 0$, the only solution is $y equiv 0$.
@@ -1363,7 +1363,7 @@ This example shows that non-trivial solutions exist only for special values of $
 
 Consider the general second-order linear non-homogeneous boundary value problem
 $
-  y'' + p(x) y' + q(x) y = f(x), quad quad y(a) = c_1, quad quad y(b) = c_2.
+  dot.double(y) + p(x) y' + q(x) y = f(x), quad quad y(a) = c_1, quad quad y(b) = c_2.
 $
 
 Unlike IVPs, which always have a unique solution under mild conditions, BVPs have a more nuanced existence theory.
@@ -1387,7 +1387,7 @@ When the homogeneous BVP has only the trivial solution, we can construct the sol
 #definition(name: "Green's Function")[
 Let the homogeneous BVP
 $
-  y'' + p(x) y' + q(x) y = 0, quad quad y(a) = 0, quad quad y(b) = 0
+  dot.double(y) + p(x) y' + q(x) y = 0, quad quad y(a) = 0, quad quad y(b) = 0
 $
 have only the trivial solution. The *Green's function* $G(x, xi)$ for this BVP is the function satisfying:
 1. For each fixed $xi in (a, b)$, $G(x, xi)$ satisfies the homogeneous ODE in $x$ on both intervals $(a, xi)$ and $(xi, b)$.
@@ -1402,7 +1402,7 @@ have only the trivial solution. The *Green's function* $G(x, xi)$ for this BVP i
 #theorem(name: "Solution Representation via Green's Function")[
 If $G(x, xi)$ is the Green's function for the homogeneous BVP, then the unique solution of
 $
-  y'' + p(x) y' + q(x) y = f(x), quad quad y(a) = 0, quad quad y(b) = 0
+  dot.double(y) + p(x) y' + q(x) y = f(x), quad quad y(a) = 0, quad quad y(b) = 0
 $
 is given by
 #eq[$
@@ -1414,8 +1414,8 @@ $] <eq:greens-solution>
 The Green's function is the continuous analog of the matrix inverse: the solution operator $f mapsto y$ is an integral operator with kernel $G(x, xi)$, just as solving $A bold(x) = bold(bold(b))$ in linear algebra gives $bold(x) = A^(-1) bold(b)$.
 ]
 
-#example(name: "Green's Function for $y'' = 0$ with Dirichlet BCs")[
-Consider the BVP $y'' = 0, y(0) = 0, y(1) = 0$. The Green's function is
+#example(name: "Green's Function for $dot.double(y) = 0$ with Dirichlet BCs")[
+Consider the BVP $dot.double(y) = 0, y(0) = 0, y(1) = 0$. The Green's function is
 $
   G(x, xi) = cases(
     x(1 - xi), & x <= xi,
@@ -1562,7 +1562,7 @@ This theorem is the spectral theorem for self-adjoint differential operators. Th
 
 #figure(
   image("img/sturm-liouville-eigenfunctions.svg", width: 85%),
-  caption: [First three eigenfunctions of the Sturm-Liouville problem $y'' + lambda y = 0, y(0) = y(pi) = 0$. Each higher eigenfunction has one additional node (zero crossing) in the interval $(0, pi)$.],
+  caption: [First three eigenfunctions of the Sturm-Liouville problem $dot.double(y) + lambda y = 0, y(0) = y(pi) = 0$. Each higher eigenfunction has one additional node (zero crossing) in the interval $(0, pi)$.],
   placement: auto,
   supplement: [Fig.]
 ) <fig:sl-eigenfunctions>
@@ -1570,7 +1570,7 @@ This theorem is the spectral theorem for self-adjoint differential operators. Th
 #example(name: "Fourier Sine Series")[
 The classic Fourier sine series is the Sturm-Liouville problem
 $
-  y'' + lambda y = 0, quad quad y(0) = 0, quad quad y(pi) = 0.
+  dot.double(y) + lambda y = 0, quad quad y(0) = 0, quad quad y(pi) = 0.
 $
 The eigenvalues are $lambda_n = n^2$, and the eigenfunctions are $y_(n)(x) = sin(n x)$. Orthogonality is with respect to the weight $r(x) = 1$:
 $
@@ -1599,7 +1599,7 @@ If $f(x)$ is piecewise smooth on $[a, b]$, then the generalized Fourier series c
 #example(name: "Fourier Cosine Series (Neumann Boundary)")[
 The problem
 $
-  y'' + lambda y = 0, quad quad y'(0) = 0, quad quad y'(pi) = 0
+  dot.double(y) + lambda y = 0, quad quad y'(0) = 0, quad quad y'(pi) = 0
 $
 has eigenvalues $lambda_n = n^2$ and eigenfunctions $y_(n)(x) = cos(n x)$. The corresponding expansion is the Fourier cosine series, which represents even functions on $[0, pi]$ extended to $[-pi, pi]$.
 ] <ex:fourier-cosine>
@@ -1607,7 +1607,7 @@ has eigenvalues $lambda_n = n^2$ and eigenfunctions $y_(n)(x) = cos(n x)$. The c
 #example(name: "Full Fourier Series (Periodic Boundary)")[
 The periodic problem
 $
-  y'' + lambda y = 0, quad quad y(-pi) = y(pi), quad quad y'(-pi) = y'(pi)
+  dot.double(y) + lambda y = 0, quad quad y(-pi) = y(pi), quad quad y'(-pi) = y'(pi)
 $
 has eigenvalues $lambda_0 = 0$ and $lambda_n = n^2$ for $n >= 1$. The eigenfunctions are $1, cos(x), sin(x), cos(2x), sin(2x), dots$ — the full Fourier series basis.
 ] <ex:fourier-full>
@@ -1617,7 +1617,7 @@ Legendre's equation
 $
   - (d) / (d x) lr((1 - x^2) y') = lambda y, quad quad x in (-1, 1)
 $
-is a singular Sturm-Liouville problem with $p(x) = 1 - x^2$ vanishing at both endpoints. The eigenvalues are $lambda_n = n(n + 1)$, and the eigenfunctions are the Legendre polynomials $P_n(x)$. They are orthogonal with weight $r(x) = 1$ on $[-1, 1]$.
+is a singular Sturm-Liouville problem with $p(x) = 1 - x^2$ vanishing at both endpoints. The eigenvalues are $lambda_n = n(n + 1)$, and the eigenfunctions are the Legendre polynomials $P_(n)(x)$. They are orthogonal with weight $r(x) = 1$ on $[-1, 1]$.
 ] <ex:legendre>
 
 #bibliography("references.bib")
