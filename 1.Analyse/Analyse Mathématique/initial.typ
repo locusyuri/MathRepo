@@ -9106,6 +9106,123 @@ $
 // 注：tex 原为柱面+球面合绘的 coordinate.png（未加标签），现按用户要求拆分为三张独立配图，
 // 分别置于三种坐标变换公式之后：<fig:polar-coordinates>、<fig:cylindrical-coordinates>、<fig:spherical-coordinates>。
 
+=== Calculation of Double Integrals // 二重积分的计算
+
+#example(name: "A Double Integral in Polar Coordinates")[
+  Calculate $I = integral.double_D e^(-(x^2 + y^2)) dif x dif y$,
+  where $D$ is the disk $x^2 + y^2 <= R^2$.
+] <ex:double-integral-polar>
+
+#solution[
+  The region $D$ and the integrand $e^(-(x^2 + y^2))$ are both naturally expressed in polar coordinates.
+  Under $x = r cos theta$, $y = r sin theta$,
+  the disk becomes $0 <= r <= R$, $0 <= theta <= 2 pi$,
+  and the area element is $dif x dif y = r dif r dif theta$.
+  Hence
+  $
+    I = integral_0^(2 pi) dif theta integral_0^R e^(-r^2) r dif r
+      = 2 pi dot [-1/2 e^(-r^2)]_0^R
+      = pi (1 - e^(-R^2)).
+  $
+  Passing to the limit $R -> oo$ gives the improper integral
+  $integral.double_(bb(R)^2) e^(-(x^2 + y^2)) dif x dif y = pi$,
+  which is used in #link(<ex:poisson-integral-gaussian>)[the Poisson integral example] below.
+]
+
+#note[
+  Polar coordinates are the first choice when the region is a disk, an annulus or a sector,
+  or when the integrand contains $x^2 + y^2$ or $y/x$.
+]
+
+#example(name: "Swapping the Order of Integration")[
+  Calculate $I = integral_0^1 dif x integral_x^1 e^(-y^2) dif y$.
+] <ex:swap-order-integration>
+
+#solution[
+  The function $e^(-y^2)$ has no elementary antiderivative in $y$,
+  so the iterated integral cannot be evaluated in the given order.
+  The region of integration is the type X region
+  $D = lr({(x, y) in bb(R)^2 | 0 <= x <= 1, x <= y <= 1})$.
+  Rewriting it as a type Y region gives
+  $D = lr({(x, y) in bb(R)^2 | 0 <= y <= 1, 0 <= x <= y})$.
+  Hence
+  $
+    I = integral_0^1 dif y integral_0^y e^(-y^2) dif x
+      = integral_0^1 y e^(-y^2) dif y
+      = 1/2 (1 - e^(-1)).
+  $
+]
+
+*Symmetry shortcuts.* Before any computation, check the following three devices.
+
+- *Odd/even symmetry.* If $D$ is symmetric about the $y$-axis and $f$ is odd in $x$,
+  then $integral.double_D f = 0$;
+  if $f$ is even in $x$, then $integral.double_D f = 2 integral.double_(D inter {x >= 0}) f$.
+  The analogous statements hold for symmetry about the $x$-axis and parity in $y$.
+- *Cyclic symmetry.* If $D$ is symmetric about the line $y = x$ (for instance a disk),
+  then $integral.double_D f(x, y) = integral.double_D f(y, x)$;
+  in particular $integral.double_D x^2 = integral.double_D y^2 = 1/2 integral.double_D (x^2 + y^2)$.
+- *Centroid formula.* For a region $D$ with area $S_D$ and centroid $(bar(x), bar(y))$,
+  $integral.double_D x = bar(x) S_D$ and $integral.double_D y = bar(y) S_D$.
+
+#example(name: "Symmetry in a Double Integral")[
+  Calculate $I = integral.double_D (x + y + x^2 y) dif x dif y$,
+  where $D$ is the disk $x^2 + y^2 <= R^2$.
+] <ex:double-integral-symmetry>
+
+#solution[
+  The disk is symmetric about both coordinate axes.
+  + The term $x$ is odd in $x$, so its integral over $D$ vanishes.
+  + The term $y$ is odd in $y$, so its integral over $D$ vanishes.
+  + For each fixed $x$, the term $x^2 y$ is odd in $y$, so its integral vanishes as well.
+  It remains to compute $integral.double_D x^2 dif x dif y$.
+  By cyclic symmetry,
+  $
+    integral.double_D x^2 dif x dif y
+    = 1/2 integral.double_D (x^2 + y^2) dif x dif y.
+  $
+  In polar coordinates the latter is
+  $
+    1/2 integral_0^(2 pi) dif theta integral_0^R r^2 dot r dif r
+    = 1/2 dot 2 pi dot R^4/4
+    = (pi R^4)/4.
+  $
+  Hence $I = (pi R^4)/4$.
+]
+
+#example(name: "The Centroid Formula")[
+  Calculate $I = integral.double_D x dif x dif y$,
+  where $D$ is the disk $(x - 2)^2 + (y - 3)^2 <= 4$.
+] <ex:double-integral-centroid>
+
+#solution[
+  The centroid of $D$ is $(2, 3)$ and its area is $4 pi$.
+  By the centroid formula $integral.double_D x dif x dif y = bar(x) S_D$,
+  we get $I = 2 dot 4 pi = 8 pi$ without any integration.
+]
+
+*Generalized polar coordinates.* For the ellipse $x^2/a^2 + y^2/b^2 <= 1$,
+use the substitution $x = a r cos theta$, $y = b r sin theta$,
+whose Jacobian is $frac(partial (x, y), partial (r, theta)) = a b r$,
+with $0 <= r <= 1$, $0 <= theta <= 2 pi$.
+
+#example(name: "Generalized Polar Coordinates")[
+  Calculate $I = integral.double_D (1 - x^2/a^2 - y^2/b^2) dif x dif y$,
+  where $D$ is the ellipse $x^2/a^2 + y^2/b^2 <= 1$.
+] <ex:generalized-polar-coordinates>
+
+#solution[
+  Under the substitution above, $D$ becomes the unit disk and the integrand becomes $1 - r^2$.
+  Hence
+  $
+    I = integral_0^(2 pi) dif theta integral_0^1 (1 - r^2) a b r dif r
+      = 2 pi a b dot 1/4
+      = (pi a b)/2.
+  $
+  As a check, taking the integrand $1$ gives the area of the ellipse:
+  $integral.double_D 1 dif x dif y = 2 pi a b integral_0^1 r dif r = pi a b.$
+]
+
 === Calculation of Triple Integrals // 三重积分的计算（原 leftbarTitle 非空壳，升级为小节）
 
 #example(name: "Triple Integral of a Cone")[
@@ -9194,6 +9311,52 @@ Some tips for choosing between the two methods (take the two examples above as r
 )
 // 注：tex 表格末行第二列漏 "of"（"Upper and lower limits z"），已补。
 
+#example(name: "A Triple Integral in Spherical Coordinates")[
+  Calculate $I = integral.triple_Omega (x^2 + y^2 + z^2) dif V$,
+  where $Omega$ is the ball $x^2 + y^2 + z^2 <= R^2$.
+] <ex:triple-integral-spherical>
+
+#solution[
+  In spherical coordinates $x = r sin phi cos theta$, $y = r sin phi sin theta$, $z = r cos phi$,
+  the ball is $0 <= r <= R$, $0 <= phi <= pi$, $0 <= theta <= 2 pi$,
+  and the volume element is $dif V = r^2 sin phi dif r dif phi dif theta$.
+  The integrand becomes $r^2$, hence
+  $
+    I = integral_0^(2 pi) dif theta integral_0^pi sin phi dif phi integral_0^R r^4 dif r
+      = 2 pi dot 2 dot R^5/5
+      = (4 pi R^5)/5.
+  $
+]
+
+#example(name: "A Region between a Cone and a Sphere")[
+  Calculate $I = integral.triple_Omega z dif V$,
+  where $Omega$ is the region above the cone $z = sqrt(x^2 + y^2)$
+  and inside the sphere $x^2 + y^2 + z^2 <= R^2$.
+] <ex:triple-integral-cone-sphere>
+
+#solution[
+  In spherical coordinates the cone $z = sqrt(x^2 + y^2)$ is given by $phi = pi/4$,
+  and the sphere by $r = R$.
+  Hence
+  $
+    I = integral_0^(2 pi) dif theta integral_0^(pi/4) sin phi dif phi integral_0^R r cos phi dot r^2 dif r
+      = 2 pi dot (integral_0^(pi/4) sin phi cos phi dif phi) dot R^4/4
+      = 2 pi dot 1/4 dot R^4/4
+      = (pi R^4)/8.
+  $
+]
+
+A rough guide for choosing coordinates is collected below.
+
+#tex-table(
+  ("Situation", "Recommended coordinates"),
+  ([Disk, annulus, sector; integrand contains $x^2 + y^2$ or $y/x$], [Polar coordinates]),
+  ([Cylinder, cone, paraboloid of revolution; integrand contains $x^2 + y^2$], [Cylindrical coordinates]),
+  ([Ball, spherical shell, cone; integrand contains $x^2 + y^2 + z^2$], [Spherical coordinates]),
+  ([Ellipse, ellipsoid], [Generalized polar / spherical coordinates]),
+  ([Rectangle, triangle, polygon], [Cartesian coordinates]),
+)
+
 #example[
   Find the volume of the region bounded by the half *Viviani's curve*: the sphere $x^2 + y^2 + z^2 <= a^2$ and the cylinder $x^2 + y^2 <= a x$ ($a > 0$), as shown in @fig:viviani.
 ]
@@ -9204,6 +9367,45 @@ Some tips for choosing between the two methods (take the two examples above as r
   caption: [Viviani's curve.],
 ) <fig:viviani>
 // 注：tex 该图无 caption 与标签，迁移后补 caption 与 <fig:viviani>；原位图重绘为脚本绘制 SVG（scripts/viviani.py）。
+
+#solution[
+  Use cylindrical coordinates $x = r cos theta$, $y = r sin theta$, $z = z$.
+  The cylinder $x^2 + y^2 <= a x$ becomes $r^2 <= a r cos theta$,
+  i.e. $0 <= r <= a cos theta$ with $-pi/2 <= theta <= pi/2$,
+  while the sphere gives $-sqrt(a^2 - r^2) <= z <= sqrt(a^2 - r^2)$.
+  Hence the volume is
+  $
+    V = integral_(-pi/2)^(pi/2) dif theta integral_0^(a cos theta) r dif r integral_(-sqrt(a^2 - r^2))^(sqrt(a^2 - r^2)) dif z
+      = 2 integral_(-pi/2)^(pi/2) dif theta integral_0^(a cos theta) r sqrt(a^2 - r^2) dif r.
+  $
+  The inner integral evaluates to
+  $
+    integral_0^(a cos theta) r sqrt(a^2 - r^2) dif r
+    = [-1/3 (a^2 - r^2)^(3/2)]_0^(a cos theta)
+    = a^3/3 (1 - abs(sin theta)^3),
+  $
+  so
+  $
+    V = (2 a^3)/3 integral_(-pi/2)^(pi/2) (1 - abs(sin theta)^3) dif theta
+      = (2 a^3)/3 (pi - 4/3)
+      = (2 pi a^3)/3 - (8 a^3)/9.
+  $
+]
+
+A standard pipeline for computing a multiple integral:
+
+1. *Inspect symmetry.* Kill zero terms by odd/even parity, use cyclic symmetry or the centroid formula.
+2. *Choose coordinates.* Match the region and the integrand (see the table above).
+3. *Determine the region.* Write the region as inequalities in the chosen coordinates.
+4. *Reduce to iterated integrals.* For triple integrals decide between the section method and the projection method.
+5. *Evaluate from the inside out.* Apply the one-variable integration rules at each stage.
+
+#caution(title: "Common Mistakes in Multiple Integrals")[
+  - Forgetting the Jacobian factor: $r$ in polar and cylindrical coordinates, $r^2 sin phi$ in spherical coordinates.
+  - Writing inconsistent limits when swapping the order of integration; redraw the region first.
+  - Applying symmetry without checking both the symmetry of the region and the parity of the integrand.
+  - Confusing the spherical angle: the cone $z = sqrt(x^2 + y^2)$ corresponds to $phi = pi/4$, not $pi/2$.
+]
 
 == Improper Multiple Integrals // 反常多重积分
 
@@ -9253,7 +9455,28 @@ Improper multiple integrals can also be classified into two types: infinite inte
     integral_(-oo)^(+oo) e^(-x^2) dif x.
   $
 ] <ex:poisson-integral-gaussian>
-// 注：tex 中该例题未给出解答，不编造。
+// 注：tex 中该例题未给出解答；以下解答为按 P2 计划补全。
+
+#solution[
+  First evaluate the double integral in polar coordinates:
+  $
+    integral.double_(bb(R)^2) e^(-(x^2 + y^2)) dif x dif y
+    = integral_0^(2 pi) dif theta integral_0^oo e^(-r^2) r dif r
+    = 2 pi dot 1/2
+    = pi.
+  $
+  On the other hand, by the multiplicative property of double integrals on rectangles
+  (used here in the improper sense),
+  $
+    integral.double_(bb(R)^2) e^(-(x^2 + y^2)) dif x dif y
+    = (integral_(-oo)^(+oo) e^(-x^2) dif x)(integral_(-oo)^(+oo) e^(-y^2) dif y)
+    = (integral_(-oo)^(+oo) e^(-x^2) dif x)^2.
+  $
+  Equating the two expressions and noting that the single integral is positive yields
+  $
+    integral_(-oo)^(+oo) e^(-x^2) dif x = sqrt(pi).
+  $
+]
 
 // --- Part V: 几何应用与高级积分（决策③：ch14–16） ---
 #part("Calculus Applications in Several Variables") // 多元微积分的应用
@@ -9705,6 +9928,43 @@ Bounded variation functions have important applications. For example, in harmoni
 Specially, if the plane curve $L$ is given by $y = y(x)$, $x in [a, b]$, then
 $ integral_L f dif s = integral_a^b f(x, y(x)) sqrt(1 + (y'(x))^2) dif x. $
 
+#example(name: "Line Integral of a Scalar Field over an Upper Semicircle")[
+  Calculate $I = integral_L (x + y) dif s$,
+  where $L$ is the upper semicircle $x^2 + y^2 = R^2$ with $y >= 0$.
+] <ex:line-integral-scalar-semicircle>
+
+#solution[
+  Parametrize $L$ by $x = R cos t$, $y = R sin t$, $t in [0, pi]$.
+  Then $dif s = sqrt(x'^2 + y'^2) dif t = R dif t$, and
+  $
+    I = integral_0^pi (R cos t + R sin t) R dif t
+      = R^2 [(sin t - cos t)]_0^pi
+      = 2 R^2.
+  $
+  Alternatively, the term $x$ vanishes by odd symmetry,
+  and the centroid formula for $y$ gives the same value:
+  $integral_L y dif s = bar(y) s = (2 R)/pi dot pi R = 2 R^2.$
+]
+
+#example(name: "Arc Length of a Cycloid")[
+  Find the length of one arch of the cycloid
+  $x = a (t - sin t)$, $y = a (1 - cos t)$, $0 <= t <= 2 pi$.
+] <ex:cycloid-arclength>
+
+#solution[
+  The arc length is $s = integral_L 1 dif s$.
+  Since
+  $
+    sqrt(x'^2 + y'^2) = sqrt(a^2 (1 - cos t)^2 + a^2 sin^2 t)
+    = 2 a sin(t/2),
+  $
+  we obtain
+  $
+    s = integral_0^(2 pi) 2 a sin(t/2) dif t
+      = 8 a.
+  $
+]
+
 === Surface Integrals of Scalar Fields // 标量场的曲面积分（原 leftbarTitle 非空壳，升级为小节）
 
 #definition(name: "Surface Integral of Scalar Field")[
@@ -9738,6 +9998,50 @@ Specially, if the surface $Sigma$ is given by $z = z(x, y)$, $(x, y) in D$, then
 $
   integral.double_Sigma f dif S = integral.double_D f(x, y, z(x, y)) sqrt(1 + lr((frac(partial z, partial x)))^2 + lr((frac(partial z, partial y)))^2) dif x dif y.
 $
+
+#example(name: "Surface Integral over a Sphere")[
+  Calculate $I = integral.double_Sigma z^2 dif S$,
+  where $Sigma$ is the sphere $x^2 + y^2 + z^2 = R^2$.
+] <ex:surface-integral-scalar-sphere>
+
+#solution[
+  By cyclic symmetry,
+  $integral.double_Sigma x^2 dif S = integral.double_Sigma y^2 dif S = integral.double_Sigma z^2 dif S$,
+  so
+  $
+    I = 1/3 integral.double_Sigma (x^2 + y^2 + z^2) dif S
+      = 1/3 R^2 "Area"(Sigma)
+      = 1/3 R^2 dot 4 pi R^2
+      = (4 pi R^4)/3.
+  $
+  A direct computation via the parametrization
+  $x = R sin phi cos theta$, $y = R sin phi sin theta$, $z = R cos phi$
+  (with $dif S = R^2 sin phi dif phi dif theta$) confirms the value:
+  $
+    I = integral_0^(2 pi) dif theta integral_0^pi R^2 cos^2 phi dot R^2 sin phi dif phi
+      = 2 pi R^4 dot 2/3
+      = (4 pi R^4)/3.
+  $
+]
+
+#example(name: "Surface Integral over a Cone")[
+  Calculate $I = integral.double_Sigma z dif S$,
+  where $Sigma$ is the part of the cone $z = sqrt(x^2 + y^2)$ with $0 <= z <= h$.
+] <ex:surface-integral-scalar-cone>
+
+#solution[
+  Write $z = z(x, y) = sqrt(x^2 + y^2)$ and let $D$ be the projection $x^2 + y^2 <= h^2$.
+  Then
+  $
+    dif S = sqrt(1 + z_x^2 + z_y^2) dif x dif y = sqrt(2) dif x dif y,
+  $
+  and the integral becomes
+  $
+    I = integral.double_D sqrt(x^2 + y^2) dot sqrt(2) dif x dif y
+      = sqrt(2) integral_0^(2 pi) dif theta integral_0^h r^2 dif r
+      = (2 sqrt(2) pi h^3)/3.
+  $
+]
 
 == Differential Form and Exterior Differentiation // 微分形式与外微分
 
@@ -9844,6 +10148,47 @@ Specially, if the plane curve $attach(L, t: ⇀)$ is given by $y = y(x)$, $x: a 
 $ integral_(attach(L, t: ⇀)) bold(f) dot bold(tau) dif s = integral_a^b bold(f)(x, y(x)) dot (1, y'(x)) dif x. $
 // 注：tex 原式在 dot (1, y'(x)) 后多乘了 sqrt(1 + (y'(x))^2)，由 tau dif bold(s) = (1, y'(x)) dif x 可知该因子应已消去，判定为笔误，已删除。
 
+The two kinds of line integrals are related by
+$
+  integral_(attach(L, t: ⇀)) P dif x + Q dif y + R dif z
+  = integral_L (P cos alpha + Q cos beta + R cos gamma) dif s,
+$
+where $cos alpha$, $cos beta$, $cos gamma$ are the direction cosines of the unit tangent vector consistent with the orientation of $attach(L, t: ⇀)$.
+This relation allows the symmetry devices of scalar integrals to be applied to vector integrals.
+
+#example(name: "Line Integral of a Vector Field")[
+  Calculate $I = integral_(attach(L, t: ⇀)) y dif x - x dif y$,
+  where $attach(L, t: ⇀)$ is the ellipse $x^2/a^2 + y^2/b^2 = 1$ traversed counterclockwise.
+] <ex:line-integral-vector-ellipse>
+
+#solution[
+  Parametrize the ellipse by $x = a cos t$, $y = b sin t$, $t: 0 -> 2 pi$.
+  Then $dif x = -a sin t dif t$, $dif y = b cos t dif t$, and
+  $
+    I = integral_0^(2 pi) (b sin t)(-a sin t) - (a cos t)(b cos t) dif t
+      = -a b integral_0^(2 pi) (sin^2 t + cos^2 t) dif t
+      = -2 pi a b.
+  $
+  As a check, Green's theorem gives the same value:
+  $
+    I = integral.double_D (frac(partial Q, partial x) - frac(partial P, partial y)) dif x dif y
+      = integral.double_D (-1 - 1) dif x dif y
+      = -2 pi a b.
+  $
+]
+
+#example(name: "A Path-Independent Line Integral")[
+  Calculate $I = integral_(attach(L, t: ⇀)) y dif x + x dif y$,
+  where $attach(L, t: ⇀)$ is any smooth curve from $(0, 0)$ to $(1, 1)$.
+] <ex:line-integral-path-independent>
+
+#solution[
+  Here $P = y$ and $Q = x$ satisfy $frac(partial Q, partial x) = 1 = frac(partial P, partial y)$,
+  so the integral is independent of the path.
+  The form is exact with potential $u(x, y) = x y$,
+  hence $I = u(1, 1) - u(0, 0) = 1$.
+]
+
 === Surface Integral of Vector Field // 向量场的曲面积分（原 leftbarTitle 非空壳，升级为小节）
 
 #definition(name: "Surface Integral of Vector Field")[
@@ -9886,6 +10231,45 @@ $
   integral.double_(attach(Sigma, t: ⇀)) R(x, y, z) dif x dif y = plus.minus integral.double_(D_(x y)) R(x, y, z(x, y)) dif x dif y,
 $
 where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is upward or downward.
+
+The two kinds of surface integrals are related by
+$
+  integral.double_(attach(Sigma, t: ⇀)) P dif y dif z + Q dif z dif x + R dif x dif y
+  = integral.double_Sigma (P cos alpha + Q cos beta + R cos gamma) dif S,
+$
+where $cos alpha$, $cos beta$, $cos gamma$ are the direction cosines of the unit normal consistent with the orientation of $attach(Sigma, t: ⇀)$.
+
+For a surface $z = z(x, y)$ oriented upward, the unit normal is
+$bold(n) = (-z_x, -z_y, 1) / sqrt(1 + z_x^2 + z_y^2)$,
+and the three terms reduce to one double integral over the projection $D_(x y)$:
+$
+  integral.double_(attach(Sigma, t: ⇀)) P dif y dif z + Q dif z dif x + R dif x dif y
+  = integral.double_(D_(x y)) (-P z_x - Q z_y + R) dif x dif y,
+$
+with the whole sign reversed for the downward orientation.
+This *one-projection method* avoids projecting onto three coordinate planes separately.
+
+#example(name: "Surface Integral of a Vector Field by One Projection")[
+  Calculate $I = integral.double_(attach(Sigma, t: ⇀)) x dif y dif z + y dif z dif x + z dif x dif y$,
+  where $attach(Sigma, t: ⇀)$ is the upper hemisphere $z = sqrt(R^2 - x^2 - y^2)$ oriented upward.
+] <ex:surface-integral-vector-one-projection>
+
+#solution[
+  For $z = sqrt(R^2 - x^2 - y^2)$ we have $z_x = -x/z$ and $z_y = -y/z$.
+  By the one-projection formula,
+  $
+    I = integral.double_(D_(x y)) (x^2/z + y^2/z + z) dif x dif y
+      = integral.double_(D_(x y)) (x^2 + y^2 + z^2)/z dif x dif y
+      = integral.double_(D_(x y)) R^2/z dif x dif y,
+  $
+  where $D_(x y)$ is the disk $x^2 + y^2 <= R^2$.
+  In polar coordinates,
+  $
+    I = integral_0^(2 pi) dif theta integral_0^R R^2/sqrt(R^2 - r^2) r dif r
+      = 2 pi R^2 dot [-sqrt(R^2 - r^2)]_0^R
+      = 2 pi R^3.
+  $
+]
 
 == Stokes' Formula // 斯托克斯公式
 
@@ -9941,6 +10325,29 @@ Denote $integral.cont_(attach(partial M, t: ⇀))$ as the line integral along th
 ] <note:induced-orientation>
 // 兑现 P0-3（§14.5）边界诱导定向前瞻承诺。
 
+#example(name: "Green's Theorem with a Completing Line Segment")[
+  Calculate $I = integral_L (e^x sin y - y) dif x + (e^x cos y - 1) dif y$,
+  where $L$ is the upper semicircle $x^2 + y^2 = 2 x$ ($y >= 0$) from $O(0, 0)$ to $A(2, 0)$.
+] <ex:green-completion>
+
+#solution[
+  Let $P = e^x sin y - y$ and $Q = e^x cos y - 1$.
+  Then
+  $
+    frac(partial Q, partial x) - frac(partial P, partial y) = e^x cos y - (e^x cos y - 1) = 1.
+  $
+  The curve $L$ is not closed.
+  Complete it with the line segment $L_1$ from $A(2, 0)$ back to $O(0, 0)$ along the $x$-axis;
+  then $L + L_1$ is the positively oriented boundary of the upper half disk
+  $D = lr({(x, y) in bb(R)^2 | (x - 1)^2 + y^2 <= 1, y >= 0})$.
+  On $L_1$ we have $y = 0$ and $dif y = 0$, so $P dif x + Q dif y = 0$,
+  and Green's theorem yields
+  $
+    I + integral_(L_1) P dif x + Q dif y = integral.double_D 1 dif x dif y = pi/2.
+  $
+  Therefore $I = pi/2$.
+]
+
 === Gauß's Formula // 高斯公式（原 leftbarTitle 非空壳，升级为小节）
 
 Consider three kinds of special oriented closed surfaces in $bb(R)^3$, as shown in @fig:special-region-2. As for the first surface $attach(M, t: ⇀)$ ($attach(M, t: ⇀)$ adopts the positive orientation (right-hand system), and $attach(partial M, t: ⇀)$ adopts the outward normal orientation), it consists of three oriented surfaces:
@@ -9992,6 +10399,27 @@ Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over 
 ] <thm:gauss-theorem>
 // 注：tex 中该定理 "then:" 连续重复两次，且分割条件误引 fig:SpecialRegion1（应为 fig:SpecialRegion2），均已修正。
 
+#example(name: "Gauß's Theorem with a Completing Disk")[
+  Calculate $I = integral.double_(attach(Sigma, t: ⇀)) x dif y dif z + y dif z dif x + z dif x dif y$,
+  where $attach(Sigma, t: ⇀)$ is the upper hemisphere $z = sqrt(R^2 - x^2 - y^2)$ oriented upward.
+] <ex:gauss-completion>
+
+#solution[
+  The surface $attach(Sigma, t: ⇀)$ is not closed.
+  Add the disk $Sigma_1 = lr({(x, y, z) in bb(R)^3 | x^2 + y^2 <= R^2, z = 0})$ oriented downward;
+  then $Sigma + Sigma_1$ bounds the upper half ball $Omega$ with the outward orientation.
+  By Gauß's theorem,
+  $
+    I + integral.double_(attach(Sigma_1, t: ⇀)) x dif y dif z + y dif z dif x + z dif x dif y
+    = integral.triple_Omega (1 + 1 + 1) dif V
+    = 3 dot (2 pi R^3)/3
+    = 2 pi R^3.
+  $
+  On $Sigma_1$ the normal is $(0, 0, -1)$,
+  so only the $z$-term survives; since $z = 0$ on $Sigma_1$, the integral over $Sigma_1$ vanishes.
+  Hence $I = 2 pi R^3$.
+]
+
 === Stokes' Formula // 斯托克斯定理（原 leftbarTitle 非空壳，升级为小节）
 
 #theorem(name: "Stokes' Theorem")[
@@ -10020,6 +10448,60 @@ Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over 
   where $attach(partial M, t: ⇀)$ is the induced orientation of $attach(M, t: ⇀)$.
 ] <thm:stokes-theorem>
 // 注：tex 中该定理条件写作 omega in C^1(Sigma)，与曲面记号 M 不一致，已统一为 C^1(M)。
+
+#example(name: "Stokes' Formula for a Triangle")[
+  Calculate $I = integral.cont_(attach(Gamma, t: ⇀)) z dif x + x dif y + y dif z$,
+  where $attach(Gamma, t: ⇀)$ is the boundary of the triangle cut from the plane $x + y + z = 1$
+  by the coordinate planes,
+  oriented counterclockwise as seen from the positive $z$-axis.
+] <ex:stokes-triangle>
+
+#solution[
+  Let $Sigma$ be the triangular part of the plane $x + y + z = 1$ in the first octant.
+  The unit normal induced by the orientation of $attach(Gamma, t: ⇀)$ is
+  $bold(n) = 1/sqrt(3) (1, 1, 1)$,
+  so $cos alpha = cos beta = cos gamma = 1/sqrt(3)$.
+  By Stokes' formula,
+  $
+    I = integral.double_Sigma (dif y dif z + dif z dif x + dif x dif y)
+      = integral.double_Sigma (cos alpha + cos beta + cos gamma) dif S
+      = sqrt(3) "Area"(Sigma).
+  $
+  The triangle has vertices $(1, 0, 0)$, $(0, 1, 0)$, $(0, 0, 1)$
+  and side length $sqrt(2)$, hence $"Area"(Sigma) = sqrt(3)/2$.
+  Therefore $I = sqrt(3) dot sqrt(3)/2 = 3/2$.
+]
+
+#note[
+  The choice among the computational tools can be summarized as follows:
+]
+
+#tex-table(
+  ("Situation", "Recommended tool"),
+  ([Closed plane curve], [Green's theorem]),
+  ([Non-closed plane curve, exact or simple integrand], [Parametrization, potential function, or completing line segment + Green]),
+  ([Closed surface], [Gauß's theorem]),
+  ([Open surface with an easy completion], [Adding a disk or plane + Gauß]),
+  ([Closed space curve], [Stokes' formula]),
+  ([Space curve that is not closed], [Parametrization]),
+)
+
+#caution(title: "Common Mistakes in Line and Surface Integrals")[
+  - Orientation signs: Green's theorem requires the positive boundary, Gauß's theorem the outward normal, Stokes' formula the right-hand orientation.
+  - Singularities: never apply Green's or Gauß's theorem when the integrand is singular inside the region; dig a small hole instead.
+  - After completing a curve or surface, subtract the integral over the added piece, with its correct sign.
+  - For scalar integrals the lower limit of the parameter must be less than the upper limit; for vector integrals the limits follow the orientation, not their size.
+]
+
+A standard pipeline for a line or surface integral:
+
+1. *Identify the kind.* Scalar integral (arc length / area) or vector integral (work / flux).
+2. *Scalar integrals.* Parametrize or project, then evaluate the resulting one- or two-dimensional integral.
+3. *Vector integrals.* Check closure first:
+   - closed curve -> Green (plane) or Stokes (space);
+   - closed surface -> Gauß;
+   - otherwise parametrize directly, or complete the curve/surface and subtract.
+4. *Check orientation and singularities* throughout the computation.
 
 == Closed and Exact Differential Forms // 闭形式与恰当微分形式
 

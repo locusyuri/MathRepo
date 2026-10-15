@@ -240,6 +240,26 @@ $]
 - 组件 `name` 参数使用英文
 - 数学术语使用学科通用英文表述
 
+### 排版与可读性
+
+以下三条为强约束，写任何笔记时都要遵守（用户明确要求的写作习惯）：
+
+1. **一整句话占一行**。每个句子（或每个子句级单位）独占一行，不要在一行里连写多句话。原因：Typst 编辑器对 `.typ` 文件不会自动换行，长行会横向溢出、难以阅读；每句一行让 diff、跳转、引用行号都更清晰。同一句内折行（如一个长段落跨多行）要避免——一行一个语义单元。
+2. **勤分段**。逻辑上能独立成段的内容就另起一段（空一行分隔），不要在段落间把不同论点揉在一起。一段只讲一件事：陈述、理由、推论、示例各占独立段落。
+3. **善于使用结构化组件**。凡是"并列条目、分类、流程步骤、对比、映射关系"等有结构的内容，优先用列表（`-` / `1.`）、表格（`#tex-table`）、组件（`#note` / `#caution`）等结构化形式表达，而不是写成一大段连续文字。判据：能拆成条目就不用流水句；能对照就不用排比句。
+
+示例（推荐写法）：
+
+```typst
+Symmetry shortcuts. Before any computation, check the following three devices.
+
+- *Odd/even symmetry.* If $D$ is symmetric about the $y$-axis and $f$ is odd in $x$, then $integral.double_D f = 0$.
+- *Cyclic symmetry.* If $D$ is symmetric about the line $y = x$, then $integral.double_D f(x, y) = integral.double_D f(y, x)$.
+- *Centroid formula.* For a region $D$ with area $S_D$, $integral.double_D x = bar(x) S_D$.
+```
+
+而不是把三条对称性技巧揉成一个长段落。
+
 ### 证明写作
 
 - 证明步骤之间用空行分隔，保持逻辑段落清晰
