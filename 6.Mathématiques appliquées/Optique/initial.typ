@@ -165,7 +165,7 @@
 // ==========================================================================
 // 设计思路：光的量子化与光子统计；Ch 14 为桥接章（旧量子论），Ch 15-18 为核心，
 //           Ch 19 为应用与前沿导论，标注"深入参见后续"。
-//           写作大纲已定稿（见 OUTLINE.md）：Ch 15 单模完整+多模简述、18.4 精简保留、4 张核心配图。
+//           正文已按规划写入 Ch 14-19（Ch 15 单模完整+多模简述、18.4 精简保留、4 张核心配图）。
 // 前置：Mécanique quantique（希尔伯特空间、算符、相干态定义）
 // 对应教材：Loudon, The Quantum Theory of Light；Scully & Zubairy, Quantum Optics
 
@@ -217,6 +217,7 @@
 // Part III（Ch 8-13）：波动光学核心，标量衍射理论为统一框架，展开干涉、衍射、傅里叶光学、偏振、介质传播。
 //   正文已写入（框架先行 / Ch 11 完整 / 8 张核心配图）。
 // Part IV（Ch 14-19）：量子光学，场量子化、相干态与压缩态、光子统计、光与物质相互作用、应用与前沿。
+//   正文已写入（单模完整 / 18.4 精简保留 / 4 张核心配图）。
 //
 // 教材覆盖：A. P. French（振动与波动）、Hecht / Born & Wolf（几何与波动光学）、
 //           Goodman（傅里叶光学）、Loudon / Scully & Zubairy（量子光学）知识点均已覆盖。
@@ -2202,4 +2203,636 @@ It redeems the promise of Chapter 7 that the wavelength dependence $n(lambda)$ b
 #note[
   Rayleigh scattering by air is why the sky is blue; Mie scattering by water droplets and aerosols is why clouds and milk are white — comparable particle sizes scatter all wavelengths equally.
   This closes Part III: from the Helmholtz equation through diffraction, interference, Fourier optics, polarization, to the material response, the scalar wave theory of optics is complete, and the quantum theory of light (Part IV) begins.
+]
+
+// --- Chapter 14: Old Quantum Theory of Light (光的旧量子论) ---
+
+= Old Quantum Theory of Light // 光的旧量子论
+
+Part III treated light as a classical wave field.
+Between 1900 and 1925, three experiments forced the conclusion that light exchanges energy with matter in quantized packets $h nu$: blackbody radiation, the photoelectric effect, and Compton scattering.
+This bridging chapter establishes the particle side of light; Chapter 15 shows how the quantized field reconciles it with the wave picture.
+
+== Blackbody Radiation and Planck's Law // 黑体辐射与普朗克定律
+
+A cavity at temperature $T$ emits radiation whose spectral energy density $u(nu, T)$ depends only on $T$ and the frequency $nu$.
+Classical physics (Rayleigh–Jeans) predicts the low-frequency behaviour correctly but diverges at high frequencies:
+
+$
+  u_("RJ")(nu, T) = (8 pi nu^2 k_B T) / c^3.
+$
+
+#definition(name: "Planck's Law")[
+  The spectral energy density of blackbody radiation is
+  $
+    u(nu, T) = (8 pi h nu^3) / c^3 dot 1 / (e^(h nu / (k_B T)) - 1),
+  $
+  with Planck's constant $h = 6.626 times 10^(-34) "J s"$.
+] <def:planck-law>
+
+#theorem(name: "Derivation of Planck's Law")[
+  The law follows from the density of cavity modes $8 pi nu^2 / c^3$ times the average energy of a quantized oscillator.
+  Assigning each mode the discrete energies $epsilon_n = n h nu$ gives the Bose–Einstein average
+  $
+    ⟨ E ⟩ = h nu / (e^(h nu / (k_B T)) - 1),
+  $
+  and multiplying by the mode density yields the formula above.
+] <thm:planck-derivation>
+
+#note[
+  *The ultraviolet catastrophe.* The Rayleigh–Jeans law diverges as $nu -> oo$ — the classical prediction that every hot body emits infinite energy at high frequency.
+  The quantization $epsilon_n = n h nu$ cuts the high-frequency contribution off exponentially and removes the divergence.
+]
+
+#figure(
+  image("img/planck-spectrum.svg", width: 100%),
+  caption: [Blackbody spectral energy density at three temperatures; the classical Rayleigh–Jeans curve diverges at high frequency.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:planck-spectrum>
+
+#note[
+  The law reduces to Rayleigh–Jeans for $h nu << k_B T$ (low frequencies) and to Wien's law for $h nu >> k_B T$.
+  The peak shifts as $lambda_max T = 2.898 times 10^(-3) "m K"$ (Wien's displacement law), which is why a hotter body glows bluer.
+]
+
+== The Photoelectric Effect // 光电效应
+
+Light shining on a metal surface ejects electrons.
+The kinetic energy of the fastest electrons and the existence of a threshold frequency are independent of intensity — facts inexplicable classically.
+
+#law(name: "Photoelectric Effect")[
+  The maximum kinetic energy of the ejected electrons is
+  $
+    K_max = h nu - W,
+  $
+  where $W$ is the work function of the metal.
+  No electrons are emitted below the cutoff frequency $nu_0 = W / h$, whatever the intensity.
+] <law:photoelectric>
+
+#example(name: "Cutoff Frequency")[ // 截止频率
+  Sodium has work function $W = 2.28 "eV"$.
+  Its cutoff frequency is $nu_0 = W / h = (2.28 dot 1.602 times 10^(-19)) / (6.626 times 10^(-34)) "Hz" approx 5.5 times 10^14 "Hz"$, corresponding to green light.
+  Red light, no matter how intense, ejects no electrons.
+] <ex:photoelectric-cutoff>
+
+#note[
+  Classically the electron energy should grow with intensity, and emission should occur at any frequency once the field is strong enough.
+  Einstein's 1905 hypothesis — light consists of quanta of energy $h nu$, one quantum per absorbed electron — explains both facts at once.
+]
+
+== Compton Scattering // 康普顿散射
+
+X-rays scattered by free electrons emerge with a longer wavelength, the shift growing with scattering angle.
+
+#theorem(name: "Compton Shift")[
+  A photon of energy $h nu$ scattered by an electron at rest emerges with wavelength
+  $
+    lambda' = lambda + h / (m_e c) (1 - cos theta),
+  $
+  where $theta$ is the scattering angle and $m_e$ the electron mass.
+] <thm:compton-shift>
+
+#proof[
+  *Step 1 — Conserve energy.*
+  The photon loses energy $h nu - h nu'$, which the electron gains as kinetic energy:
+  $
+    h nu - h nu' = (m_e c^2) / sqrt(1 - beta^2) - m_e c^2.
+  $
+  *Step 2 — Conserve momentum.*
+  Resolving photon momenta along the initial direction and perpendicular to it:
+  $
+    h / lambda = h / lambda' cos theta + p_e cos phi, quad 0 = h / lambda' sin theta - p_e sin phi.
+  $
+  *Step 3 — Eliminate the electron.*
+  Using the relativistic identity $p_e^2 c^2 = K^2 + 2 K m_e c^2$ and eliminating $phi$ gives the stated shift.
+]
+
+#example(name: "Compton Wavelength")[ // 康普顿波长
+  At $theta = 90°$, the shift is $h / (m_e c) approx 2.43 "pm"$, the Compton wavelength of the electron.
+  The shift is measurable for X-rays ($lambda ~ 0.1 "nm"$) but negligible for visible light.
+] <ex:compton-scattering>
+
+== Wave-Particle Duality // 波粒二象性
+
+#definition(name: "Photon Momentum")[
+  A photon of frequency $nu$ carries momentum
+  $
+    bold(p) = h / lambda bold(hat(n)),
+  $
+  with magnitude $p = h / lambda = h nu / c$.
+] <def:photon-momentum>
+
+#note[
+  *The single-photon double slit.*
+  In Young's experiment (Chapter 9) the fringe pattern appears even when the intensity is so low that photons arrive one at a time — each photon interferes with itself, and the pattern builds up as a statistical accumulation of detections.
+  The wave picture (Part III) governs the probability distribution; the particle picture governs the individual detection events.
+]
+
+#note[
+  Wave–particle duality is not a paradox to be resolved by choosing one picture per experiment: Chapter 15 quantizes the field so that a single quantum object — the photon — carries both the wave-like mode structure and the particle-like energy quanta $h nu$.
+]
+
+// --- Chapter 15: Quantization of the Electromagnetic Field (电磁场量子化) ---
+
+= Quantization of the Electromagnetic Field // 电磁场量子化
+
+Einstein's photon carries the energy quantum $h nu$, yet interference and diffraction (Part III) demand a wave field.
+The resolution is to quantize the field itself: every field mode is a harmonic oscillator, and photons are the excitation quanta of these oscillators.
+This chapter performs the canonical quantization for a single mode in full and summarizes the multimode extension; it uses the harmonic oscillator formalism of *Mécanique quantique* and of Chapter 1.
+
+== Classical Field Modes // 经典场模
+
+The electromagnetic field inside a cavity can be expanded in spatial modes (the plane-wave expansion of Chapter 4, or the cavity modes of Chapter 7).
+In each mode the field factors into a time-dependent amplitude and a fixed spatial pattern:
+
+$
+  bold(E)(r, t) = q(t) bold(E)_0 (r),
+$
+
+where $q(t)$ is the generalized coordinate of the mode.
+
+#definition(name: "Field Mode Hamiltonian")[
+  The electromagnetic energy of the mode reduces to that of a harmonic oscillator:
+  $
+    H = 1/2 integral (epsilon_0 bold(E)^2 + bold(B)^2 / mu_0) dif V = (p^2 + omega^2 q^2) / 2,
+  $
+  with generalized momentum $p = dot(q)$ and mode frequency $omega$.
+  In dimensionless variables $Q = sqrt(omega / planck) q$ and $P = p / sqrt(planck omega)$,
+  $
+    H = planck omega (P^2 + Q^2) / 2.
+  $
+] <def:field-mode>
+
+== Canonical Quantization of the Field // 场的正则量子化
+
+Quantization promotes the coordinate and momentum to operators satisfying the canonical commutation relation:
+
+$
+  [hat(Q), hat(P)] = i.
+$
+
+#definition(name: "Ladder Operators")[
+  The *annihilation* and *creation* operators are
+  $
+    hat(a) = (hat(Q) + i hat(P)) / sqrt(2), quad hat(a)^dagger = (hat(Q) - i hat(P)) / sqrt(2),
+  $
+  and satisfy
+  $
+    [hat(a), hat(a)^dagger] = 1.
+  $
+] <def:number-operator>
+
+#theorem(name: "Quantization of the Field Hamiltonian")[
+  In terms of the number operator $hat(N) = hat(a)^dagger hat(a)$, the field Hamiltonian is
+  $
+    hat(H) = planck omega (hat(N) + 1/2).
+  $
+] <thm:field-quantization>
+
+#proof[
+  *Step 1 — Substitute the ladder operators.*
+  With $hat(Q) = (hat(a) + hat(a)^dagger) / sqrt(2)$ and $hat(P) = (hat(a) - hat(a)^dagger) / (i sqrt(2))$, the dimensionless sum $hat(P)^2 + hat(Q)^2$ becomes $hat(a)^dagger hat(a) + hat(a) hat(a)^dagger$.
+  *Step 2 — Use the commutator.*
+  The relation $[hat(a), hat(a)^dagger] = 1$ gives $hat(a) hat(a)^dagger = hat(a)^dagger hat(a) + 1$, hence $hat(H) = planck omega (hat(N) + 1/2)$.
+]
+
+#note[
+  *Multimode extension.*
+  Independent modes carry independent ladder operators with $[hat(a)_k, hat(a)_l^dagger] = delta_(k l)$.
+  The full field Hamiltonian is the sum $hat(H) = sum_k planck omega_k (hat(N)_k + 1/2)$ — the field is a collection of independent quantum oscillators.
+]
+
+== Photon Number (Fock) States // 光子数态
+
+#definition(name: "Fock States")[
+  The *number states* (Fock states) are the eigenstates of $hat(N)$:
+  $
+    | n ⟩ = (hat(a)^dagger)^n / sqrt(n!) | 0 ⟩,
+  $
+  with
+  $
+    hat(a)| n ⟩ = sqrt(n) | n - 1 ⟩, quad hat(a)^dagger | n ⟩ = sqrt(n + 1) | n + 1 ⟩, quad hat(N)| n ⟩ = n | n ⟩.
+  $
+] <def:fock-state>
+
+#property(name: "Properties of the Number States")[
+  - Orthonormality: $⟨ m | n ⟩ = delta_(m n)$.
+  - Completeness: $sum_(n=0)^oo | n ⟩ ⟨ n | = 1$.
+  - Energy: each state $| n ⟩$ carries energy $E_n = (n + 1/2) planck omega$, an integer number of quanta $planck omega$ above the zero-point energy.
+] <prop:number-state-properties>
+
+#example(name: "Single-Mode Energy")[ // 单模能量
+  A single mode at optical frequency $nu = 5 times 10^14 "Hz"$ has photon energy $h nu approx 2 "eV"$.
+  The state $| 3 ⟩$ carries three quanta, $E_3 = 3 h nu$ above the zero-point energy.
+] <ex:single-mode-energy>
+
+== Vacuum Fluctuations and Zero-Point Energy // 真空涨落与零点能
+
+#definition(name: "Zero-Point Energy")[
+  The ground state $| 0 ⟩$ has energy $1/2 planck omega$ per mode, so the vacuum of a multimode field carries the *zero-point energy*
+  $
+    E_0 = sum_k planck omega_k / 2,
+  $
+  which formally diverges in the continuum limit.
+] <def:zero-point-energy>
+
+#note[
+  *Vacuum fluctuations.*
+  The vacuum expectation of the field vanishes, $⟨ 0 | hat(bold(E)) | 0 ⟩ = 0$, but its square does not: $⟨ 0 | hat(bold(E))^2 | 0 ⟩ != 0$.
+  The empty field therefore exhibits fluctuating fields of zero mean — the physical origin of spontaneous emission (Chapter 18) and of the Casimir force between conducting plates.
+  The polarization states of Chapter 12 become, in this language, superpositions of the two Fock modes of orthogonal polarization — the Bloch-sphere picture promised in Chapter 12.
+]
+
+// --- Chapter 16: Coherent and Squeezed States (相干态与压缩态) ---
+
+= Coherent and Squeezed States // 相干态与压缩态
+
+The number states of Chapter 15 have a definite photon number but an ill-defined phase.
+A laser, however, produces a field with a stable classical amplitude and phase.
+The Glauber coherent states — eigenstates of the annihilation operator — are the quantum states closest to a classical wave; the squeezed states go further and redistribute the vacuum uncertainty between the field quadratures.
+
+== Glauber Coherent States // Glauber 相干态
+
+#definition(name: "Coherent State")[
+  A *coherent state* $| alpha ⟩$ is the eigenstate of the annihilation operator,
+  $
+    hat(a)| alpha ⟩ = alpha | alpha ⟩, quad alpha in CC,
+  $
+  obtained by acting on the vacuum with the displacement operator
+  $
+    hat(D)(alpha) = exp(alpha hat(a)^dagger - alpha^"*" hat(a)), quad | alpha ⟩ = hat(D)(alpha)| 0 ⟩.
+  $
+] <def:coherent-state>
+
+#theorem(name: "Properties of Coherent States")[
+  The coherent state has the number-state expansion
+  $
+    | alpha ⟩ = e^(- abs(alpha)^2 / 2) sum_(n=0)^oo alpha^n / sqrt(n!) | n ⟩,
+  $
+  and therefore:
+  - the photon statistics are Poissonian: $P(n) = abs(⟨ n | alpha ⟩)^2 = e^(- abs(alpha)^2) abs(alpha)^(2 n) / n!$, with mean $bar(n) = abs(alpha)^2$;
+  - the quadrature uncertainties are minimal: $Delta X Delta P = 1/4$;
+  - the states are not orthogonal: $⟨ beta | alpha ⟩ = exp(- 1/2 (abs(alpha)^2 + abs(beta)^2 - 2 beta^"*" alpha))$.
+] <thm:coherent-state-properties>
+
+#proof[
+  *Step 1 — Expand in number states.*
+  Write $| alpha ⟩ = sum_n c_n | n ⟩$ and apply $hat(a)$: the eigenvalue equation forces $c_(n+1) = alpha c_n / sqrt(n + 1)$, giving $c_n = alpha^n / sqrt(n!) c_0$.
+  *Step 2 — Normalize.*
+  The normalization $sum | c_n |^2 = e^(abs(alpha)^2) | c_0 |^2 = 1$ fixes $c_0 = e^(- abs(alpha)^2 / 2)$.
+  *Step 3 — Statistics.*
+  Squaring $⟨ n | alpha ⟩$ yields the Poisson distribution; the quadrature variance follows from the Baker–Campbell–Hausdorff formula applied to the displacement operator.
+]
+
+#note[
+  The coherent state is the quantum image of the classical field: its mean field $⟨ alpha | hat(E) | alpha ⟩$ oscillates sinusoidally with amplitude proportional to $abs(alpha)$, and its photon statistics are those of independent random emissions — exactly what a laser produces.
+]
+
+== Squeezed States // 压缩态
+
+#definition(name: "Squeezed State")[
+  Acting with the *squeeze operator*
+  $
+    hat(S)(zeta) = exp(1/2 (zeta^"*" hat(a)^2 - zeta hat(a)^(dagger 2))), quad zeta = r e^(i phi),
+  $
+  on a coherent state gives the squeezed state $| zeta, alpha ⟩ = hat(S)(zeta) hat(D)(alpha)| 0 ⟩$.
+] <def:squeezed-state>
+
+#example(name: "Squeezed Vacuum")[ // 压缩真空
+  The squeezed vacuum $| zeta, 0 ⟩$ contains only even numbers of photons: it is a superposition of $| 0 ⟩, | 2 ⟩, | 4 ⟩, dots.c$ with zero mean field but nonzero variance — the vacuum noise has been redistributed.
+] <ex:squeezed-vacuum>
+
+== Uncertainty Relations for Quadratures // 正交分量不确定性
+
+#definition(name: "Quadrature Operators")[
+  The *quadrature operators*
+  $
+    hat(X) = (hat(a) + hat(a)^dagger) / 2, quad hat(P) = (hat(a) - hat(a)^dagger) / (2 i),
+  $
+  satisfy $[hat(X), hat(P)] = i / 2$, hence the uncertainty relation
+  $
+    Delta X Delta P >= 1/4.
+  $
+] <def:quadrature-operators>
+
+#property(name: "Squeezed Uncertainty")[
+  For a squeezed state with squeeze parameter $r$ and $phi = 0$,
+  $
+    (Delta X)^2 = e^(-2 r) / 4, quad (Delta P)^2 = e^(2 r) / 4.
+  $
+  One quadrature falls below the standard quantum limit $1/4$; a state with $Delta X < 1/2$ has no classical counterpart and is a signature of nonclassical light.
+] <prop:squeezed-uncertainty>
+
+== Phase-Space Representations: The Wigner Function // 相空间表示与 Wigner 函数
+
+#definition(name: "Wigner Function")[
+  The *Wigner function* of a state $rho$ is the phase-space quasiprobability
+  $
+    W(x, p) = 1 / (pi planck) integral_(-oo)^oo ⟨ x + y/2 | rho | x - y/2 ⟩ e^(- i p y / planck) dif y,
+  $
+  normalized so that $integral.double W(x, p) dif x dif p = 1$.
+] <def:wigner-function>
+
+#note[
+  *Negativity is nonclassical.*
+  A coherent state has a positive Gaussian Wigner function; a single-photon state $| 1 ⟩$ has a Wigner function with a negative dip at the origin.
+  Since a genuine classical probability must be nonnegative, negative values of $W$ certify nonclassical light — the quantum feature probed in homodyne tomography.
+]
+
+#figure(
+  image("img/wigner-function.svg", width: 100%),
+  caption: [Wigner functions: a coherent state (smooth Gaussian hump) versus a single-photon Fock state (negative dip at the origin).],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:wigner-function>
+
+// --- Chapter 17: Photon Statistics and Correlation Functions (光子统计与关联函数) ---
+
+= Photon Statistics and Correlation Functions // 光子统计与关联函数
+
+Chapters 15 and 16 built the quantum states of the field; measurement reveals them through photon statistics and correlation functions.
+The first-order correlation governs interference (the quantum version of the coherence degree of Chapter 9); the second-order correlation probes intensity correlations and separates classical from quantum light.
+
+== Thermal, Poisson and Sub-Poisson Statistics // 热/泊松/亚泊松统计
+
+#definition(name: "Photon Number Distribution")[
+  The *photon number distribution* $P(n)$ is the probability of detecting $n$ photons of a given mode.
+  - *Thermal light* (blackbody, incoherent sources): Bose–Einstein statistics,
+    $
+      P(n) = bar(n)^n / (bar(n) + 1)^(n + 1),
+    $
+    with variance $"Var"(n) = bar(n) + bar(n)^2$;
+  - *Coherent light* (a laser far above threshold): Poisson statistics, $P(n) = e^(- bar(n)) bar(n)^n / n!$, with $"Var"(n) = bar(n)$;
+  - *Number states*: $P(n) = delta_(n m)$ for $| m ⟩$, with $"Var"(n) = 0 < bar(n)$ — sub-Poisson statistics.
+] <def:photon-number-distribution>
+
+#theorem(name: "Thermal Statistics")[
+  Thermal light is an incoherent mixture of coherent states with random phase: $rho = integral P(alpha)| alpha ⟩ ⟨ alpha | dif^2 alpha$ with the Gaussian $P$-function $P(alpha) = 1/(pi bar(n)) e^(- abs(alpha)^2 / bar(n))$.
+  Averaging the Poisson distribution of $| alpha ⟩$ over this phase-space mixture yields the Bose–Einstein distribution above.
+] <thm:thermal-statistics>
+
+#note[
+  *Classicality of Poisson statistics.*
+  A Poisson distribution describes independent, random emissions; thermal light shows *super-Poisson* bunching ($"Var" > bar(n)$), while number states and other nonclassical states show *sub-Poisson* statistics ($"Var" < bar(n)$).
+  Sub-Poisson light has no classical stochastic model.
+]
+
+== First- and Second-Order Correlation Functions // 一、二阶关联函数
+
+#definition(name: "Correlation Functions")[
+  The normalized *first-order* and *second-order* correlation functions are
+  $
+    g^((1))(tau) = (⟨ hat(a)^dagger (t) hat(a) (t + tau) ⟩) / (⟨ hat(a)^dagger hat(a) ⟩),
+  $
+  $
+    g^((2))(tau) = (⟨ hat(a)^dagger (t) hat(a)^dagger (t + tau) hat(a) (t + tau) hat(a) (t) ⟩) / (⟨ hat(a)^dagger hat(a) ⟩^2).
+  $
+] <def:second-order-correlation>
+
+#note[
+  The first-order function is the quantum version of the complex degree of coherence of Chapter 9: its modulus $abs(g^((1))(tau))$ equals the fringe visibility in an interferometer.
+  The second-order function measures the joint probability of detecting photons separated by $tau$ — insensitive to phase, but decisive for photon statistics.
+]
+
+#property(name: "Values of $g^((2))(0)$")[
+  At zero delay, with $bar(n) = ⟨ hat(N) ⟩$,
+  $
+    g^((2))(0) = 1 + ("Var"(n) - bar(n)) / (bar(n)^2).
+  $
+  - Coherent light: $g^((2))(0) = 1$;
+  - Thermal light: $g^((2))(0) = 2$ (bunching);
+  - Number state $| n ⟩$: $g^((2))(0) = 1 - 1/n$ (antibunching).
+] <prop:g2-values>
+
+#note[
+  *The classical bound.*
+  For any classical stochastic field, the Cauchy–Schwarz inequality forces $g^((2))(0) >= 1$.
+  A measured value $g^((2))(0) < 1$ therefore proves that the light has no classical description — a direct witness of nonclassicality.
+]
+
+== The Hanbury Brown-Twiss Experiment // 强度干涉实验
+
+#definition(name: "HBT Setup")[
+  In the Hanbury Brown–Twiss (HBT) experiment, light is split by a beam splitter, detected by two photodetectors, and the coincidences are counted as a function of the delay $tau$.
+  The normalized coincidence rate measures exactly $g^((2))(tau)$.
+] <def:hbt-setup>
+
+#theorem(name: "Thermal Bunching")[
+  For thermal light, $g^((2))(0) = 2$: photons arrive preferentially in bunches.
+  The bunching peak decays to $g^((2))(tau) = 1$ over the coherence time $tau_c$ of Chapter 9.
+] <thm:hbt-thermal>
+
+#figure(
+  image("img/hbt-experiment.svg", width: 100%),
+  caption: [Hanbury Brown–Twiss setup (beam splitter, two detectors, coincidence counter) and the bunching peak $g^((2))(tau)$ of thermal light.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:hbt-experiment>
+
+#note[
+  *Intensity interferometry.*
+  Because HBT measures intensity correlations rather than phase, it tolerates atmospheric turbulence: stellar interferometry measures the angular diameter of stars from the slit separation at which the bunching peak vanishes — the spatial-coherence idea of Chapter 9 in photon-counting form.
+]
+
+== Photon Antibunching and Single-Photon Sources // 反聚束与单光子源
+
+#definition(name: "Antibunching")[
+  A source exhibits *antibunching* when $g^((2))(0) < g^((2))(tau)$: successive photons are anticorrelated, arriving more regularly than a Poisson stream.
+] <def:antibunching>
+
+#definition(name: "Single-Photon Source")[
+  A *single-photon source* emits exactly one photon per pulse, characterized by $g^((2))(0) -> 0$.
+] <def:single-photon-source>
+
+#example(name: "Single-Photon Emission")[ // 单光子源
+  A single quantum dot or single molecule emits at most one photon per excitation cycle: the detector records $g^((2))(0) << 1$, the hallmark of antibunched, single-photon emission.
+  Such sources are the building blocks of quantum key distribution (Chapter 19); an alternative source is the pair production of spontaneous parametric down-conversion, where detecting one photon of a pair heralds the other.
+] <ex:single-photon-source-example>
+
+// --- Chapter 18: Light-Matter Interaction (光与物质相互作用) ---
+
+= Light-Matter Interaction // 光与物质相互作用
+
+This chapter couples the quantized field (Chapter 15) to atoms.
+Absorption and stimulated emission follow from a semiclassical treatment; spontaneous emission — an atom radiating with no driving field at all — requires the quantized vacuum, whose fluctuations (Section 15.4) stimulate the decay.
+The Jaynes–Cummings model is the simplest exactly solvable atom-field system, and the rate-equation laser theory closes the chapter.
+
+== Two-Level Atoms and Rabi Oscillations // 二能级原子与拉比振荡
+
+#definition(name: "Two-Level Atom")[
+  An atom restricted to its ground state $| g ⟩$ and excited state $| e ⟩$, split by energy $planck omega_0$, is a two-level system with Hamiltonian
+  $
+    hat(H)_("at") = 1/2 planck omega_0 hat(sigma)_z,
+  $
+  where $hat(sigma)_z = | e ⟩ ⟨ e | - | g ⟩ ⟨ g |$.
+  A classical field $E_0 cos(omega t)$ couples the levels through the dipole term $- bold(d) dot bold(E)$.
+] <def:two-level-atom>
+
+#theorem(name: "Rabi Oscillations")[
+  In the rotating-wave approximation, an atom initially in the ground state driven by a field detuned by $Delta = omega - omega_0$ has excitation probability
+  $
+    P_e (t) = (Omega_0^2) / (Omega^2) sin^2 (Omega t / 2),
+  $
+  with the generalized Rabi frequency
+  $
+    Omega = sqrt(Omega_0^2 + Delta^2), quad Omega_0 = (2 abs(bold(d)) E_0) / planck.
+  $
+] <thm:rabi-oscillation>
+
+#proof[
+  *Step 1 — Schrödinger equation in the interaction picture.*
+  Writing the state as $c_g (t)| g ⟩ + c_e (t) e^(- i omega_0 t)| e ⟩$ and applying the rotating-wave approximation (dropping the $2 omega$ terms), the amplitudes satisfy $dot(c)_e = - i Omega_0 / 2 e^(i Delta t) c_g$.
+  *Step 2 — Solve the two-level system.*
+  Eliminating $c_g$ gives a second-order equation for $c_e$; with $c_e (0) = 0$ the solution is the stated Rabi formula.
+  *Step 3 — Interpret.*
+  On resonance ($Delta = 0$), the population oscillates fully: $P_e (t) = sin^2 (Omega_0 t / 2)$; a pulse of duration $pi / Omega_0$ (a $pi$-pulse) inverts the atom completely.
+] 
+
+#example(name: "Rabi Flopping")[ // 拉比振荡
+  A resonant pulse of area $Omega_0 t = pi$ transfers the atom from $| g ⟩$ to $| e ⟩$ with unit probability; a $pi/2$-pulse places it in the superposition $(| g ⟩ + | e ⟩) / sqrt(2)$.
+] <ex:rabi-flopping>
+
+== Spontaneous Emission: Wigner-Weisskopf Theory // 自发辐射
+
+An excited atom in otherwise empty space decays, emitting a photon — even though no classical field drives it.
+The decay is stimulated by the vacuum fluctuations of Section 15.4.
+
+#theorem(name: "Wigner-Weisskopf Decay")[
+  Coupling the atom to the continuum of field modes yields exponential decay
+  $
+    P_e (t) = e^(- Gamma t),
+  $
+  with the spontaneous emission rate (Fermi's golden rule)
+  $
+    Gamma = (omega_0^3 abs(bold(d))^2) / (3 pi epsilon_0 planck c^3).
+  $
+] <thm:wigner-weisskopf>
+
+#proof[
+  *Step 1 — Golden rule.*
+  The transition rate into all final field states is $Gamma = (2 pi) / planck sum_f abs(⟨ f | hat(V) | i ⟩)^2 delta (E_f - E_i)$.
+  *Step 2 — Dipole matrix element.*
+  The coupling $hat(V) = - hat(bold(d)) dot hat(bold(E))$ gives $abs(⟨ g, 1_k | hat(V) | e, 0 ⟩)^2 = abs(bold(d))^2 (planck omega_k) / (2 epsilon_0 V)$.
+  *Step 3 — Sum over modes.*
+  The density of modes and the dipole orientation average produce the stated rate; the exponential decay follows from the Markov approximation on the amplitude.
+]
+
+#note[
+  The quantum rate $Gamma$ is the field-quantized version of the classical Lorentz linewidth of Chapter 13: the damping $gamma$ of the Lorentz oscillator is the same physics — radiation reaction — seen semiclassically.
+]
+
+== The Jaynes-Cummings Model // Jaynes-Cummings 模型
+
+#definition(name: "Jaynes-Cummings Hamiltonian")[
+  Quantizing the field (Chapter 15) and coupling it to the atom gives the *Jaynes–Cummings Hamiltonian*
+  $
+    hat(H) = planck omega hat(a)^dagger hat(a) + 1/2 planck omega_0 hat(sigma)_z + planck g (hat(a) hat(sigma)_+ + hat(a)^dagger hat(sigma)_-),
+  $
+  where $hat(sigma)_+ = | e ⟩ ⟨ g |$, $hat(sigma)_- = | g ⟩ ⟨ e |$, and $g$ is the atom-field coupling strength.
+] <def:jaynes-cummings-hamiltonian>
+
+#theorem(name: "Jaynes-Cummings Dynamics")[
+  On resonance, the JC Hamiltonian couples only the pairs $| e, n ⟩ <-> | g, n + 1 ⟩$ with effective coupling $g sqrt(n + 1)$.
+  The excited-state population oscillates at the vacuum Rabi frequency $2 g$ for $n = 0$; for a coherent initial field the oscillations collapse and revive on a longer time scale.
+] <thm:jc-dynamics>
+
+#note[
+  The JC model is exactly solvable, which makes it the "hydrogen atom" of quantum optics: it predicts vacuum Rabi splitting, collapse and revival, and photon blockade — effects with no semiclassical explanation.
+]
+
+== Semiclassical Laser Theory // 激光半经典理论
+
+#definition(name: "Laser Rate Equations")[
+  With populations $N_2$ (upper) and $N_1$ (lower), pump rate $R$, and field intensity $I$, the simplest rate equations are
+  $
+    (dif N_2) / (dif t) = R - Gamma N_2 - B (N_2 - N_1) I, quad (dif I) / (dif t) = B (N_2 - N_1) I - kappa I,
+  $
+  where $B$ is the stimulated-emission coefficient and $kappa$ the cavity loss rate.
+] <def:laser-rate-equations>
+
+#note[
+  *Threshold.*
+  Lasing begins when gain balances loss, $B (N_2 - N_1) = kappa$.
+  The laser cavity selects the mode — the Fabry-Perot etalon of Chapter 9 with the stability condition of Chapter 7 — and the coherent field that emerges is, quantum-mechanically, a coherent state of Chapter 16.
+  The engineering details and applications are taken up in Chapter 19.
+]
+
+// --- Chapter 19: Applications and Frontiers (应用与前沿) ---
+
+= Applications and Frontiers // 应用与前沿
+
+This concluding chapter is an introduction: it shows how the tools of Part IV become technology — lasers, quantum cryptography, entanglement — and marks the frontiers.
+Each section is deliberately brief and points beyond this notebook.
+
+== Lasers // 激光器
+
+#definition(name: "Laser Principle")[
+  A *laser* (light amplification by stimulated emission of radiation) amplifies light by stimulated emission in a gain medium inside an optical resonator.
+  Above the threshold of Section 18.4, the cavity selects a single mode of the Fabry-Perot etalon (Chapter 9) that satisfies the stability condition (Chapter 7), and the output is a coherent state (Chapter 16).
+] <def:laser-principle>
+
+#example(name: "A Helium-Neon Laser")[ // 氦氖激光器
+  A helium-neon laser at $lambda = 632.8 "nm"$ amplifies the $2 s -> 2 p$ neon transition; the cavity length selects the longitudinal mode, and the output linewidth is set by the cavity finesse — the same physics as the Fabry-Perot resolution of Chapter 9.
+] <ex:laser-example>
+
+#note[
+  The laser is the physical realization of the coherent state: far above threshold its photon statistics are Poissonian (Chapter 17), its field has a well-defined phase, and its spectrum is limited by phase diffusion.
+]
+
+== Quantum Key Distribution // 量子密钥分发
+
+#definition(name: "Quantum Key Distribution")[
+  *Quantum key distribution* (QKD) distributes a secret key between two parties using single photons.
+  In the BB84 protocol, Alice encodes bits in four polarization states drawn from two conjugate bases ($H/V$ and $±45°$); Bob measures in a randomly chosen basis, and the two publicly compare bases to distill a key.
+] <def:qkd>
+
+#example(name: "BB84 and Eavesdropping")[ // BB84 与窃听
+  An eavesdropper who measures a photon in the wrong basis disturbs it irreversibly, raising the error rate between Alice and Bob.
+  A measured error above a threshold reveals the eavesdropper; combined with a one-time pad, the distilled key is unconditionally secure.
+] <ex:bb84-protocol>
+
+#note[
+  QKD uses exactly the polarization states of Chapter 12 and the single-photon sources of Chapter 17: it is quantum optics made into cryptography.
+]
+
+== Photon Entanglement and Bell Tests // 光子纠缠与贝尔检验
+
+#definition(name: "Entangled Photon Pair")[
+  Two photons in the Bell state
+  $
+    | Phi^(+) ⟩ = (| H H ⟩ + | V V ⟩) / sqrt(2)
+  $
+  are *entangled*: the joint state cannot be factored into a product of single-photon states, and neither photon has a definite polarization of its own.
+] <def:entangled-photon-pair>
+
+#theorem(name: "Bell Inequality (CHSH)")[
+  Any local hidden-variable theory satisfies the Clauser-Horne-Shimony-Holt inequality
+  $
+    S = E(a, b) - E(a, b') + E(a', b) + E(a', b') <= 2,
+  $
+  where $E(a, b)$ is the correlation of polarization measurements at settings $a, b$.
+  Quantum entanglement predicts $S = 2 sqrt(2) > 2$ — a violation confirmed experimentally.
+] <thm:bell-inequality>
+
+#example(name: "Bell Test")[ // 贝尔检验
+  Entangled photon pairs produced by spontaneous parametric down-conversion are sent to two distant detectors; rotating the polarization analyzers (Chapter 12) and accumulating coincidences yields $S approx 2.4$, violating the local bound and confirming entanglement.
+] <ex:bell-test>
+
+== Spontaneous Parametric Down-Conversion // 自发参量下转换
+
+#definition(name: "Spontaneous Parametric Down-Conversion")[
+  In a crystal with nonzero second-order susceptibility $chi^((2))$, a pump photon of frequency $omega_p$ can split into two lower-frequency photons (signal and idler) obeying energy and momentum (phase-matching) conservation:
+  $
+    omega_p = omega_s + omega_i, quad bold(k)_p = bold(k)_s + bold(k)_i.
+  $
+] <def:spdc>
+
+#note[
+  *Heralded single photons and entanglement.*
+  Detecting the idler photon heralds the signal photon — a single-photon source of the type discussed in Chapter 17 — and the pair inherits the polarization correlations of Section 19.3, the workhorse of quantum information experiments.
+]
+
+#note[
+  This closes Part IV, and with it the whole notebook: from the vibrations of Chapter 1 through geometric and wave optics to the quantized field, the photon, and its entanglement, the four-part line — vibrations, rays, waves, quanta — is complete.
 ]
