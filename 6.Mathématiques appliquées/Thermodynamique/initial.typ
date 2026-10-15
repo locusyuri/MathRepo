@@ -1587,7 +1587,7 @@ Intermediate exponents describe unregulated processes — heat is exchanged, but
 
 === Cyclic Processes // 循环过程
 
-A process that returns the system to its initial state is called a *cyclic process*. Since $U$ is a state quantity, $Delta U = 0$ over a cycle and the first law collapses to $W = Q$: the net work delivered equals the net heat absorbed, drawn from some reservoirs and dumped into others.
+A process that returns the system to its initial state is called a *cyclic process*. Since $U$ is a state quantity, $Delta U = 0$ over *any* cycle — quasi-static or not — and the first law collapses to $W = Q$: the net work delivered equals the net heat absorbed, drawn from some reservoirs and dumped into others. Only when every leg of the cycle is quasi-static does the state of the system trace a closed curve in the $p$-$V$ plane; that picture, and the area it encloses, is what the property below quantifies.
 
 #property(name: "Net Work as Enclosed Area")[
   For a quasi-static cycle the net work per cycle equals the area enclosed by the closed curve in the $p$-$V$ plane,
@@ -1597,27 +1597,27 @@ A process that returns the system to its initial state is called a *cyclic proce
   positive for a clockwise traversal (an engine) and negative for an anticlockwise one (a refrigerator or heat pump).
 ] <prop:cycle-area>
 
-=== Heat Engines and Refrigerators // 热机与制冷机
-
-For an engine the figure of merit is the fraction of the absorbed heat converted into work; for a refrigerator or heat pump, the useful heat delivered per unit of work paid.
-
 #definition(name: "Efficiency and Coefficients of Performance")[
-  For a heat engine absorbing $Q_h$ and delivering $W = Q_h - Q_c$ per
-  cycle, the *efficiency* is
+  A heat engine absorbs $Q_h$ and delivers work $W = Q_h - Q_c$ per cycle; its purpose is to *deliver work*, so the natural figure of merit is the fraction of the absorbed heat converted into work — the *efficiency*:
   $
     eta = W / Q_h.
   $
-  For a refrigerator pumping $Q_c$ out of the cold space at a work
-  cost $W = Q_h - Q_c$, the *coefficient of performance* is
+  A refrigerator pumps $Q_c$ out of the cold space at a work cost $W = Q_h - Q_c$; its purpose is to *remove heat from the cold space*, so the figure of merit is the heat removed per unit of work paid — the *coefficient of performance*:
   $
     "COP"_R = Q_c / W;
   $
-  for a heat pump delivering $Q_h$ into the warm space,
+  a heat pump delivers $Q_h$ into the warm space; its purpose is to *deliver heat into the warm space*, so
   $
     "COP"_"HP" = Q_h / W.
   $
   (COP can exceed 1; efficiency cannot.)
 ] <def:efficiency-cop>
+
+#note[
+  Throughout, the subscripts label the reservoirs: $Q_h$ is the heat
+  drawn from the *hot* reservoir (temperature $T_h$) and $Q_c$ the heat
+  rejected to the *cold* one (temperature $T_c$).
+]
 
 === The Carnot Cycle // 卡诺循环
 
@@ -1641,6 +1641,16 @@ The Carnot cycle is the most efficient cycle conceivable between two reservoirs;
     d -> a quad "adiabatic compression," T_c -> T_h,
   $
   closing the cycle.
+  #figure(
+    image("img/carnot-cycle.svg", width: 85%),
+    caption: [The Carnot cycle in the $p$-$V$ plane: isothermal expansion
+      $a -> b$ at $T_h$ (absorbing $Q_h$), adiabatic expansion $b -> c$
+      to $T_c$, isothermal compression $c -> d$ (rejecting $Q_c$), and
+      adiabatic compression $d -> a$. The enclosed area is the net work
+      per cycle.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:carnot-cycle>
 ] <def:carnot-cycle>
 
 #property(name: "Carnot Efficiency")[
@@ -1669,16 +1679,7 @@ The Carnot cycle is the most efficient cycle conceivable between two reservoirs;
   $
 ]
 
-#figure(
-  image("img/carnot-cycle.svg", width: 78%),
-  caption: [The Carnot cycle in the $p$-$V$ plane: isothermal expansion
-    $a -> b$ at $T_h$ (absorbing $Q_h$), adiabatic expansion $b -> c$
-    to $T_c$, isothermal compression $c -> d$ (rejecting $Q_c$), and
-    adiabatic compression $d -> a$. The enclosed area is the net work
-    per cycle.],
-  placement: auto,
-  supplement: [Fig.],
-) <fig:carnot-cycle>
+
 
 The derivation used nothing but the first law and the adiabatic relation. That no engine between the same reservoirs can beat $eta_C$ is a statement of the second law, proved as #link(<thm:carnot-theorem>)[Carnot's theorem] in §3.2.
 
