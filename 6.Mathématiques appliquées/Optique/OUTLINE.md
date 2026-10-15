@@ -149,3 +149,116 @@ Ch 4 亥姆霍兹+角谱 ──► Ch 8 格林函数衍射积分 ──► Ch 9 
 
 Ch 8 → 9 → 10 → 11 → 12 → 13；章内"定义 → 定理 → 例题 → note"，每写完 1–2 节编译一次。
 完成后：更新蓝图注释（Part III 设计思路 + Structure Note 标注"正文已写入"）→ 逐页 PDF 预览 → 提交。
+
+---
+
+# Optique — Part IV Quantum Optics (量子光学) 写作大纲
+
+> 状态：大纲已定稿（2026-10-15）。决策记录：① Ch 15 场量子化取**单模完整推导 + 多模简述**（连续场
+> 量子场论式推导不做，避免与 Mécanique quantique 重复）；② Ch 18.4 半经典激光理论**保留精简版**
+> （速率方程 + 阈值条件，支撑 Ch 19.1 激光器）；③ 配图 **4 张 A 级核心图**，B 级不制作。
+> 前置：Part I-III 全部写入并编译通过；Mécanique quantique（希尔伯特空间/算符/谐振子）提供形式体系。
+
+## 零、Part 定位与核心洞察
+
+- **定位**：整书主线最后一段"场的量子化"。旧量子论三实验（Ch 14）确立光的粒子性动机 →
+  场的正则量子化（Ch 15）→ 量子态与相空间（Ch 16）→ 测量统计（Ch 17）→ 光与物质（Ch 18）→
+  应用与前沿导论（Ch 19）。Ch 14 桥接章、Ch 19 导论章。
+- **核心洞察**：经典波动光学（Part III）量子化后成为自洽图像——每个场模是一个谐振子（Ch 15）；
+  相干态是量子场中最接近经典波的状态（Ch 16）；一阶关联是干涉、二阶关联是强度统计，g⁽²⁾ 区分
+  经典光与量子光（Ch 17）；自发辐射不是原子的内禀过程而是真空场的受激发射（Ch 18）。
+- **预估规模**：~1400–1700 行，6 章 24 节，约 30 个新标签，4 张配图。
+
+## 一、章节结构与定位
+
+| 章 | 标题 | 节数 | 角色 |
+|---|---|---|---|
+| Ch 14 | Old Quantum Theory of Light // 光的旧量子论 | 4 | 桥接章：粒子性动机 |
+| Ch 15 | Quantization of the EM Field // 电磁场量子化 | 4 | 核心第一章：场=谐振子集合 |
+| Ch 16 | Coherent and Squeezed States // 相干态与压缩态 | 4 | 量子态工具箱（连接经典波） |
+| Ch 17 | Photon Statistics and Correlation Functions // 光子统计与关联函数 | 4 | 测量统计（兑现 Ch 9.6 承诺） |
+| Ch 18 | Light-Matter Interaction // 光与物质相互作用 | 4 | Rabi/自发辐射/JC/激光速率方程 |
+| Ch 19 | Applications and Frontiers // 应用与前沿 | 4 | 导论章：激光/QKD/纠缠/SPDC |
+
+## 二、组件频率预估
+
+| 组件 | 数量 |
+|---|---|
+| `#definition` | ~20 |
+| `#theorem` | ~8 |
+| `#law` | 1（光电效应） |
+| `#example` | ~8 |
+| `#figure` | 4 |
+| `#note` | ~10 |
+
+## 三、标签系统（写作清单）
+
+- **Ch 14**：`def:planck-law` `thm:planck-derivation` `law:photoelectric` `thm:compton-shift` `def:photon-momentum` `ex:photoelectric-cutoff` `ex:compton-scattering` `fig:planck-spectrum`
+- **Ch 15**：`def:field-mode` `thm:field-quantization` `def:number-operator` `def:fock-state` `prop:number-state-properties` `def:zero-point-energy` `ex:single-mode-energy`
+- **Ch 16**：`def:coherent-state` `thm:coherent-state-properties` `def:squeezed-state` `def:quadrature-operators` `prop:squeezed-uncertainty` `def:wigner-function` `ex:squeezed-vacuum` `fig:wigner-function`
+- **Ch 17**：`def:photon-number-distribution` `thm:thermal-statistics` `def:first-order-correlation` `def:second-order-correlation` `prop:g2-values` `thm:hbt-thermal` `def:antibunching` `def:single-photon-source` `ex:single-photon-source-example` `fig:hbt-experiment`
+- **Ch 18**：`def:two-level-atom` `thm:rabi-oscillation` `thm:wigner-weisskopf` `def:jaynes-cummings-hamiltonian` `thm:jc-dynamics` `def:laser-rate-equations` `ex:rabi-flopping` `fig:rabi-oscillation`
+- **Ch 19**：`def:laser-principle` `def:qkd` `def:entangled-photon-pair` `thm:bell-inequality` `def:spdc` `ex:bb84-protocol` `ex:bell-test`
+
+（命名已与现有 84 个标签核对无冲突。）
+
+## 四、逻辑链路
+
+- **向上**：Ch 14 无前置（桥接）；Ch 15 用 `@thm:helmholtz`/Part I 谐振子（Ch 1.2）与
+  Mécanique quantique 算符；Ch 16 用 Ch 15 Fock 态；Ch 17 回链 `@def:complex-coherence-degree`（Ch 9.6）；
+  Ch 18 用 Ch 17 统计与 Mécanique quantique 二能级；Ch 19 用 Ch 9.4（FP 腔）、Ch 7.1（稳定性）、Ch 17/18。
+- **横向**：15→16→17 为"态 → 相空间 → 测量"推进；18 独立于 16/17 但用 15；19 汇聚全部。
+- **向下**：Ch 15 真空涨落 → Casimir 效应（远期，Mécanique quantique 边缘）；Ch 19 量子信息
+  （QKD/纠缠）标注"深入参见后续"。
+
+## 五、承诺追踪
+
+| 类型 | 位置 | 内容 | 处理 |
+|---|---|---|---|
+| 兑现 | Ch 9.6 L1656 | HBT/二阶关联 → Ch 17 | 17.3/17.2 |
+| 兑现 | Ch 9.4 L1602 | Fabry-Perot → Ch 19 激光腔 | 19.1 |
+| 兑现 | Ch 7.1 L1213 | 稳定性判据 → Ch 19 谐振腔 | 19.1 |
+| 兑现 | Ch 12.1 L1983 | Poincaré 球 → 光子偏振 Bloch 球 | Ch 15/16 |
+| 兑现 | Ch 12.6 L2097 | 光子螺旋度 → Part IV | Ch 15/17 |
+| 埋下 | Ch 17.4 | 单光子源 → SPDC | Ch 19.4 |
+| 埋下 | Ch 15.4 | 真空涨落 → Casimir | 远期 note |
+
+## 六、证明策略
+
+| 定理 | 策略 | 关键工具 |
+|---|---|---|
+| `thm:planck-derivation` | 腔模计数 + 玻色统计（简述，非完整统计力学） | `@def:field-mode` 前置直觉 |
+| `thm:compton-shift` | 四动量守恒（相对论能量-动量） | 光子动量 |
+| `thm:field-quantization` | 模式展开 → 哈密顿 → 对易子 → 升降算符（单模完整） | 谐振子（Part I / 量力） |
+| `thm:coherent-state-properties` | BCH 公式展开位移算符 → 泊松分布 | `@def:coherent-state` |
+| `thm:thermal-statistics` | 热态=相干态混合（P 表示）→ 玻色-爱因斯坦 | 相空间方法 |
+| `thm:hbt-thermal` | g⁽²⁾(0)=2 由热态二阶矩计算 | `@def:second-order-correlation` |
+| `thm:rabi-oscillation` | Schrödinger 方程 + RWA → sin²(Ωt/2) | 二能级哈密顿 |
+| `thm:wigner-weisskopf` | 耦合连续态 → 指数衰减 Γ（费米黄金规则） | 微扰论 |
+| `thm:jc-dynamics` | 对角化 JC 哈密顿 → 真空 Rabi 分裂（简述） | `def:jaynes-cummings-hamiltonian` |
+| `thm:bell-inequality` | CHSH 不等式陈述（不证明，导论） | 纠缠态 |
+
+## 七、公式编号规划
+
+- `eq:planck-law`（14.1）、`eq:compton-shift`（14.3）
+- `eq:field-hamiltonian`（15.1）、`eq:field-commutator`（15.2）、`eq:fock-basis`（15.3）
+- `eq:coherent-expansion`（16.1）、`eq:squeezed-operator`（16.2）、`eq:wigner-def`（16.4）
+- `eq:thermal-distribution`（17.1）、`eq:g2-def`（17.2）、`eq:g2-values`（17.2）
+- `eq:rabi-frequency`（18.1）、`eq:decay-rate`（18.2）、`eq:jc-hamiltonian`（18.3）
+- `eq:bell-inequality`（19.3）
+
+## 八、图片规划（4 张 A 级）
+
+| 文件 | 标签 | 内容 | 优先级 |
+|---|---|---|---|
+| planck-spectrum.svg | `fig:planck-spectrum` | 黑体谱多温度曲线 + 经典极限（瑞利-金斯）标注 | A |
+| wigner-function.svg | `fig:wigner-function` | 相干态（高斯）vs Fock 态（负值）相空间密度 | A |
+| hbt-experiment.svg | `fig:hbt-experiment` | 分束器+双探测器+符合计数装置示意与 g⁽²⁾(τ) 聚束曲线 | A |
+| rabi-oscillation.svg | `fig:rabi-oscillation` | 共振/失谐 Rabi 振荡 P_e(t) 曲线 | A |
+
+（B 级 fock-distribution、squeezed-ellipse、qkd-scheme 明确不制作。）
+
+## 九、写作顺序
+
+Ch 14 → 15 → 16 → 17 → 18 → 19；章内"定义 → 定理 → 证明 → 例题 → note"，每写完 1–2 节编译一次。
+完成后：更新蓝图注释（Part IV 设计思路 + Structure Note 标注"正文已写入"）→ 逐页 PDF 预览 → smart-commit 中文提交。
