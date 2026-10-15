@@ -158,6 +158,8 @@ Later, we refer to *#link(<def:continuous>)[Continuous Function]*.
 
 需要新图片时，不要让图片阻塞写作，按以下流程处理：
 
+**严禁使用内联脚本绘图**（临时脚本、`python -c`、shell heredoc、notebook 单元格等一律禁止）：所有绘图代码必须落盘为主题目录下的 `scripts/<图片名>.py`（一图一脚本），保证图片可随时重复生成与修改。
+
 1. **先写引用**：在 `.typ` 中直接写好 `#figure(image("./img/xxx.svg", ...))` 与 `<fig:xxx>` 标签，保持文档结构完整
 2. **创建占位文件**：将仓库根目录的 `0.Wiki/null.svg`（空白占位图）复制到目标 `img/` 目录，并改名为实际图片名（如 `img/xxx.svg`）。占位图是有效 SVG，期间 `typst compile` 仍可通过
 3. **写 Python 脚本**：在对应主题目录下新建 `scripts/<图片名>.py`（matplotlib，一图一脚本），脚本将 SVG 输出到主题目录的 `img/<图片名>.svg`，文件名与 `<fig:xxx>` 标签对应。结构与规范见 violet-make-outline 技能的 `ref/image-planning.md` §2

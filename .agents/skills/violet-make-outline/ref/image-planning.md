@@ -55,7 +55,7 @@
 
 ### 2.1 工作流
 
-图片由本仓库内的 **Python/Matplotlib 脚本**直接生成，不再经过"提示词 → 外部生成"中转：
+图片由本仓库内的 **Python/Matplotlib 脚本**直接生成，不再经过"提示词 → 外部生成"中转。**严禁内联脚本绘图**（临时脚本、`python -c`、shell heredoc 等一律禁止）——规则详见 violet-typst-writing-conventions 技能的"图片生成工作流"一节：
 
 1. **脚本位置**：对应主题目录下的 `scripts/<图片名>.py`，一图一脚本，文件名与规划清单及 `<fig:xxx>` 标签一致
 2. **输出位置**：脚本将 SVG 写到主题目录的 `img/<图片名>.svg`（用 `Path(__file__).resolve().parent.parent / "img"` 定位，输出前确保目录存在）

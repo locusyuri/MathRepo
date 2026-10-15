@@ -62,25 +62,6 @@ ax.plot(v_bc, p_bc, color=RED, lw=2.2, zorder=3, label="adiabatic")
 ax.plot(v_cd, p_cd, color=BLUE, lw=2.2, zorder=3)
 ax.plot(v_da, p_da, color=RED, lw=2.2, zorder=3)
 
-# direction arrows, offset slightly outside the loop for legibility
-centroid = (np.mean(v_loop), np.mean(p_loop))
-for vv, pp in [(v_ab, p_ab), (v_bc, p_bc), (v_cd, p_cd), (v_da, p_da)]:
-    i = len(vv) // 2
-    dv, dp = vv[i + 1] - vv[i - 1], pp[i + 1] - pp[i - 1]
-    norm = np.hypot(dv, dp)
-    ux, uy = dv / norm, dp / norm
-    # radial offset away from the enclosed region, scaled to the axes
-    ox, oy = vv[i] - centroid[0], pp[i] - centroid[1]
-    onorm = np.hypot(ox, oy) or 1.0
-    off = 0.075
-    bx, by = vv[i] + off * ox / onorm, pp[i] + off * oy / onorm * 2.2
-    ax.annotate(
-        "", xy=(bx + 0.45 * ux, by + 0.45 * uy),
-        xytext=(bx - 0.45 * ux, by - 0.45 * uy),
-        arrowprops=dict(arrowstyle="-|>", color=INK, lw=1.4),
-        zorder=4,
-    )
-
 # vertices
 for v, p, name, (dx, dy) in [
     (VA, TH, "$a$", (-0.16, 0.02)),
