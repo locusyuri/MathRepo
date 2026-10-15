@@ -1227,16 +1227,21 @@ from nothing — is ruled out.
   $dif V = 0$ and $delta Q = dif H$ at $dif p = 0$ (§2.5).
 ] <def:heat-capacities>
 
-A related intensive quantity is the *specific heat* $c$ — the heat capacity per unit mass, $c = C / m$, measured in J/(K kg); for a substance of molar mass $M$ it relates to the molar values by $c_V = C_(V,m) / M$ and $c_p = C_(p,m) / M$. The specific heats of common substances at room temperature and ambient pressure are tabulated below — the anomalously large value of water moderates coastal climates and makes it an efficient coolant.
+A related intensive quantity is the *specific heat* $c$ — the heat capacity per unit mass,
+$
+  c = C / m = Q/(m Delta T), quad "that is," quad
+  Q = c m Delta T,
+$
+measured in J/(K kg); for a substance of molar mass $M$ it relates to the molar values by
+$
+  c_V = C_(V,m) / M, quad c_p = C_(p,m) / M.
+$
+
+The specific heats of common substances at room temperature and ambient pressure are tabulated below — the anomalously large value of water moderates coastal climates and makes it an efficient coolant.
 
 #tex-table(
-  ("Substance", [$c_p$ / (J/(K kg))]),
-  ([water], [4186]),
-  ([ice], [2090]),
-  ([aluminium], [900]),
-  ([iron], [450]),
-  ([copper], [385]),
-  ([dry air], [1005]),
+  ("Substance", "water", "ice", "dry air", "aluminium", "iron", "copper"),
+  ([$c_p$ / (J/(K kg))], [4186], [2090], [1005], [900], [450], [385]),
 )
 
 For a dilute gas, the kinetic theory of Chapter 1 already computed the
@@ -1380,9 +1385,15 @@ A constraint that pins one state quantity — the volume, the pressure, the temp
 #tex-table(
   ("Process", "Constraint", [$W$], [$Q$], [$Delta U$]),
   ([isochoric], [$V = "const"$], [$0$], [$nu C_(V,m) Delta T$], [$nu C_(V,m) Delta T$]),
-  ([isobaric], [$p = "const"$], [$p (V_2 - V_1)$], [$nu C_(p,m) Delta T$], [$nu C_(V,m) Delta T$]),
+  ([isobaric], [$p = "const"$], [$p Delta V = nu R Delta T$], [$nu C_(p,m) Delta T$], [$nu C_(V,m) Delta T$]),
   ([isothermal], [$T = "const"$], [$nu R T ln(V_2 / V_1)$], [$nu R T ln(V_2 / V_1)$], [$0$]),
-  ([reversible adiabatic], [$Q = 0$], [$-nu C_(V,m) Delta T$], [$0$], [$nu C_(V,m) Delta T$]),
+  (
+    [reversible adiabatic],
+    [$Q = 0$],
+    [$-nu C_(V,m) Delta T = (p_1 V_1 - p_2 V_2)/ (gamma - 1)$],
+    [$0$],
+    [$nu C_(V,m) Delta T = - (p_1 V_1 - p_2 V_2)/ (gamma - 1)$],
+  ),
   ([free expansion], ["into vacuum"], [$0$], [$0$], [$0$]),
 )
 
