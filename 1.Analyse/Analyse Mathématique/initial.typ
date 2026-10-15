@@ -3626,7 +3626,7 @@ $
   arcsin x = x + 1 / 2 dot x^3 / 3 + (1 dot 3) / (2 dot 4) dot x^5 / 5 + dots + ((2 n - 1)!!) / ((2 n)!!) dot x^(2 n + 1) / (2 n + 1) + o(x^(2 n + 2)).
 $
 
-Specially,
+In particular,
 $
   (1 + x)^alpha = sum_(k = 0)^n binom(alpha, k) x^k + o(x^n),
 $
@@ -3792,7 +3792,7 @@ function at which the concavity changes.
   $
     f(t_1 x_1 + t_2 x_2 + dots + t_n x_n) <= t_1 f(x_1) + t_2 f(x_2) + dots + t_n f(x_n).
   $
-  Specially, when $t_1 = t_2 = dots = t_n = 1 / n$, it reduces to statement
+  In particular, when $t_1 = t_2 = dots = t_n = 1 / n$, it reduces to statement
   (3) of #link(<thm:equivalent-convexity>)[the theorem on equivalent characterizations of convexity]. The reversed inequality holds for
   concave functions.
 ] <thm:jensen>
@@ -9121,8 +9121,8 @@ $
   Hence
   $
     I = integral_0^(2 pi) dif theta integral_0^R e^(-r^2) r dif r
-      = 2 pi dot [-1/2 e^(-r^2)]_0^R
-      = pi (1 - e^(-R^2)).
+    = 2 pi dot [-1/2 e^(-r^2)]_0^R
+    = pi (1 - e^(-R^2)).
   $
   Passing to the limit $R -> oo$ gives the improper integral
   $integral.double_(bb(R)^2) e^(-(x^2 + y^2)) dif x dif y = pi$,
@@ -9148,8 +9148,8 @@ $
   Hence
   $
     I = integral_0^1 dif y integral_0^y e^(-y^2) dif x
-      = integral_0^1 y e^(-y^2) dif y
-      = 1/2 (1 - e^(-1)).
+    = integral_0^1 y e^(-y^2) dif y
+    = 1/2 (1 - e^(-1)).
   $
 ]
 
@@ -9216,8 +9216,8 @@ with $0 <= r <= 1$, $0 <= theta <= 2 pi$.
   Hence
   $
     I = integral_0^(2 pi) dif theta integral_0^1 (1 - r^2) a b r dif r
-      = 2 pi a b dot 1/4
-      = (pi a b)/2.
+    = 2 pi a b dot 1/4
+    = (pi a b)/2.
   $
   As a check, taking the integrand $1$ gives the area of the ellipse:
   $integral.double_D 1 dif x dif y = 2 pi a b integral_0^1 r dif r = pi a b.$
@@ -9323,8 +9323,8 @@ Some tips for choosing between the two methods (take the two examples above as r
   The integrand becomes $r^2$, hence
   $
     I = integral_0^(2 pi) dif theta integral_0^pi sin phi dif phi integral_0^R r^4 dif r
-      = 2 pi dot 2 dot R^5/5
-      = (4 pi R^5)/5.
+    = 2 pi dot 2 dot R^5/5
+    = (4 pi R^5)/5.
   $
 ]
 
@@ -9340,9 +9340,9 @@ Some tips for choosing between the two methods (take the two examples above as r
   Hence
   $
     I = integral_0^(2 pi) dif theta integral_0^(pi/4) sin phi dif phi integral_0^R r cos phi dot r^2 dif r
-      = 2 pi dot (integral_0^(pi/4) sin phi cos phi dif phi) dot R^4/4
-      = 2 pi dot 1/4 dot R^4/4
-      = (pi R^4)/8.
+    = 2 pi dot (integral_0^(pi/4) sin phi cos phi dif phi) dot R^4/4
+    = 2 pi dot 1/4 dot R^4/4
+    = (pi R^4)/8.
   $
 ]
 
@@ -9376,7 +9376,7 @@ A rough guide for choosing coordinates is collected below.
   Hence the volume is
   $
     V = integral_(-pi/2)^(pi/2) dif theta integral_0^(a cos theta) r dif r integral_(-sqrt(a^2 - r^2))^(sqrt(a^2 - r^2)) dif z
-      = 2 integral_(-pi/2)^(pi/2) dif theta integral_0^(a cos theta) r sqrt(a^2 - r^2) dif r.
+    = 2 integral_(-pi/2)^(pi/2) dif theta integral_0^(a cos theta) r sqrt(a^2 - r^2) dif r.
   $
   The inner integral evaluates to
   $
@@ -9387,8 +9387,8 @@ A rough guide for choosing coordinates is collected below.
   so
   $
     V = (2 a^3)/3 integral_(-pi/2)^(pi/2) (1 - abs(sin theta)^3) dif theta
-      = (2 a^3)/3 (pi - 4/3)
-      = (2 pi a^3)/3 - (8 a^3)/9.
+    = (2 a^3)/3 (pi - 4/3)
+    = (2 pi a^3)/3 - (8 a^3)/9.
   $
 ]
 
@@ -9508,7 +9508,7 @@ Improper multiple integrals can also be classified into two types: infinite inte
   $
   we call $bold(u)^0$ or $bold(r)(bold(u)^0)$ a *regular point* of the surface $M$. Otherwise, it is called a *singular point*.
 
-  Every point that is a regular point of the surface is referred to as an *$s$-dimensional $C^k$ regular surface*.
+  If every point of $M$ is a regular point, then $M$ is called an *$s$-dimensional $C^k$ regular surface*.
 
   At regular points, ${bold(r)'_1, dots, bold(r)'_s}$ are linearly independent.
 ] <def:surface-parameterization>
@@ -9516,11 +9516,11 @@ Improper multiple integrals can also be classified into two types: infinite inte
 
 When $s = 1$, $t$ represents the parameter, a one-dimensional surface is commonly referred to as a *curve*. Considering a $C^k$ ($k >= 1$) curve $bold(r)(t)$, we have
 $ bold(r)'(t) = (r_1' (t), r_2' (t), dots, r_n' (t)). $
-If $t$ is a regular point, then
+If $bold(r)(t)$ is a regular point, then
 $ "rank"(bold(r)'(t)) = "rank"(r_1' (t), r_2' (t), dots, r_n' (t)) = 1, $
 which is equivalent to $bold(r)'(t) != 0$, which means $r_1' (t), r_2' (t), dots, r_n' (t)$ are not all zero.
 
-We refer to $bold(r)'(t)$ as the *tangent vector* of the curve $bold(r)(t)$ at point $t$. When $t$ varies, a tangent vector field along the curve $bold(r)(t)$ is obtained. If $bold(r)(t)$ is a regular curve, $frac(bold(r)'(t), norm(bold(r)'(t)))$ is the unit tangent vector field along the curve $bold(r)(t)$. It should be emphasized that $bold(r)'(t)$ or $frac(bold(r)'(t), norm(bold(r)'(t)))$ always points outward from point $t$.
+We refer to $bold(r)'(t)$ as the *tangent vector* of the curve $bold(r)(t)$ at point $t$. When $t$ varies, a tangent vector field along the curve $bold(r)(t)$ is obtained. If $bold(r)(t)$ is a regular curve, $frac(bold(r)'(t), norm(bold(r)'(t)))$ is the unit tangent vector field along the curve $bold(r)(t)$. It should be emphasized that $bold(r)'(t)$ or $frac(bold(r)'(t), norm(bold(r)'(t)))$ always points in the direction of increasing parameter $t$.
 
 == Tangent Space and Normal Space // 切空间与法空间
 
@@ -9596,29 +9596,29 @@ When $n = 3, s = 2$, $M$ is a surface in three-dimensional space.
 
 + If the surface is parameterized as
   $ bold(r)(u, v) = (x(u, v), y(u, v), z(u, v)), quad (u, v) in D subset.eq bb(R)^2, $
-  at the regular point $bold(x)^0 = (x^0, y^0, z^0)$. For the Jacobian matrix
+  let $overline(bold(x))^0 = (x^0, y^0, z^0)$ be a regular point, and let $(u^0, v^0)$ be the corresponding parameters, i.e. $bold(r)(u^0, v^0) = overline(bold(x))^0$. For the Jacobian matrix
   $
     J = mat(
-      x_u (bold(x)^0), x_v (bold(x)^0);
-      y_u (bold(x)^0), y_v (bold(x)^0);
-      z_u (bold(x)^0), z_v (bold(x)^0),
+      x_u bar_((u^0, v^0)), x_v bar_((u^0, v^0));
+      y_u bar_((u^0, v^0)), y_v bar_((u^0, v^0));
+      z_u bar_((u^0, v^0)), z_v bar_((u^0, v^0)),
     ),
   $
   since $"rank" J = 2$, without loss of generality, assume
   $
-    frac(partial (x, y), partial (u, v))(bold(x)^0) = mat(
+    frac(partial (x, y), partial (u, v)) bar_((u^0, v^0)) = mat(
       delim: "|",
-      x_u (bold(x)^0), x_v (bold(x)^0);
-      y_u (bold(x)^0), y_v (bold(x)^0),
+      x_u bar_((u^0, v^0)), x_v bar_((u^0, v^0));
+      y_u bar_((u^0, v^0)), y_v bar_((u^0, v^0)),
     ) != 0.
   $
-  By #link(<thm:inverse-mapping-theorem>)[the inverse mapping theorem], we can determine the inverse mapping of the system
+  By #link(<thm:inverse-mapping-theorem>)[the inverse mapping theorem], the system
   $ cases(x = x(u, v), y = y(u, v)) $
-  in a neighborhood of point $bold(x)^0$:
+  admits an inverse mapping in a neighborhood of $(u^0, v^0)$:
   $ cases(u = u(x, y), v = v(x, y)) $
-  where $u^0 = u(x^0, y^0)$, $v^0 = v(x^0, y^0)$. Then we obtain the explicit representation of the surface:
+  with $u(x^0, y^0) = u^0$ and $v(x^0, y^0) = v^0$. Then we obtain the explicit representation of the surface:
   $ z = z(u(x, y), v(x, y)). $
-  Therefore, the tangent plane and normal line at point $bold(x)^0$ are:
+  Therefore, the tangent plane and normal line at point $overline(bold(x))^0$ are:
   $
     T_(bold(x)^0) M: quad frac(partial (y, z), partial (u, v)) bar_((u^0, v^0))(x - x^0) + frac(partial (z, x), partial (u, v)) bar_((u^0, v^0))(y - y^0) + frac(partial (x, y), partial (u, v)) bar_((u^0, v^0))(z - z^0) = 0,
   $
@@ -9634,13 +9634,14 @@ These two sections will introduce the first and second fundamental forms of surf
 Let $Delta subset bb(R)^2$ be an open set, and $bold(r): Delta -> bb(R)^3$ be a $C^k$ ($k >= 2$) smooth regular surface parameterization, $M = bold(r)(Delta)$, where $bold(u) = (u, v) -> bold(r)(u, v) = (x(u, v), y(u, v), z(u, v))$. We can obtain that:
 
 + $bold(r) in C^k (Delta, bb(R)^3)$;
-+ For any $p = (u, v) in Delta$, $"rank"(bold(r)'_u (u, v), bold(r)'_v (u, v)) = 2$, that is, $bold(r)'_u (u, v)$ and $bold(r)'_v (u, v)$ are linearly independent, where
++ For any $p = (u, v) in Delta$, write $bold(r)_u$ and $bold(r)_v$ for the partial derivatives of $bold(r)$ with respect to $u$ and $v$:
   $
-    bold(r)'_u (u, v) = lr((frac(partial x, partial u), frac(partial y, partial u), frac(partial z, partial u))), quad
-    bold(r)'_v (u, v) = lr((frac(partial x, partial v), frac(partial y, partial v), frac(partial z, partial v))).
+    bold(r)_u (u, v) = lr((frac(partial x, partial u), frac(partial y, partial u), frac(partial z, partial u))), quad
+    bold(r)_v (u, v) = lr((frac(partial x, partial v), frac(partial y, partial v), frac(partial z, partial v))).
   $
+  Then $"rank"(bold(r)_u (u, v), bold(r)_v (u, v)) = 2$, that is, $bold(r)_u (u, v)$ and $bold(r)_v (u, v)$ are linearly independent.
 
-At this time, the tangent space $T_p M = "span"(bold(r)'_u (u, v), bold(r)'_v (u, v))$, which is a subspace of $bb(R)^3$. Hence, it inherits the inner product from $bb(R)^3$.
+At this time, the tangent space $T_p M = "span"(bold(r)_u (u, v), bold(r)_v (u, v))$, which is a subspace of $bb(R)^3$. Hence, it inherits the inner product from $bb(R)^3$.
 
 The first fundamental form is the metric that a surface inherits from its ambient Euclidean space $bb(R)^3$. It is essentially a symmetric positive-definite bilinear form defined on the tangent space, which allows us to _measure lengths, angles, and areas on the surface_.
 
@@ -9651,7 +9652,7 @@ The first fundamental form is the metric that a surface inherits from its ambien
 ] <def:first-fundamental-form>
 // 注：tex 中 "Riemann metric of metric tensor" 的 "of" 为笔误，已修正为 "or"。
 
-For convenience, we express $upright(I)_p$ in the basis ${bold(r)'_u, bold(r)'_v}$ of the tangent space $T_p M$. Define:
+For convenience, we express $upright(I)_p$ in the basis ${bold(r)_u, bold(r)_v}$ of the tangent space $T_p M$. Define:
 $
   & E(u, v) := upright(I)_p (bold(r)_u, bold(r)_u) = bold(r)_u dot bold(r)_u = norm(bold(r)_u)^2, \
   & F(u, v) := upright(I)_p (bold(r)_u, bold(r)_v) = bold(r)_u dot bold(r)_v, \
@@ -9690,19 +9691,30 @@ Here, $dif u$ and $dif v$ are the coordinates under the basis ${dif u, dif v}$, 
 ] <thm:rectifiability-of-curves>
 // 注：tex 原文 "called a regular point" 按语义修正为 "called a regular curve"。
 
+The theorem above gives a sufficient condition for rectifiability. The following theorem of Jordan gives a characterization of rectifiable curves in terms of functions of bounded variation, a class of functions defined and studied systematically in the Analyse Réelle note.
+
+#theorem(name: "Jordan's Theorem on Rectifiable Curves")[
+  A curve $C$ in $bb(R)^2$ defined by the parametric equations
+  $ (x, y) = (x(t), y(t)), quad t in [a, b], $
+  is rectifiable if and only if both $x(t)$ and $y(t)$ are of bounded variation on $[a, b]$.
+] <thm:jordan-rectifiable-curves>
+
+// 注：ch14 原末尾 "Bounded Variation Functions" 一节（定义、性质、常见例子、Jordan 分解）已迁至 Analyse Réelle 笔记 Section 4.4；本定理依赖的 BV 概念以文字提及来源（跨笔记不使用 #link）。
+// 注：tex 中本节末尾的 "Stieltjes Integral" leftbarTitle 为空壳（无任何内容），未迁移。
+
 === Area // 面积
 // 注：tex 中 "Schwartz" 为拼写笔误，数学史通名为 Schwarz（Schwarz lantern），已统一修正；
 // tex 中两处 "????" 占位垃圾行已删除。
 
 For convenience, we study the area of a surface patch $M$ parameterized by $bold(r)(u, v): Delta -> bb(R)^3$ over the domain $Delta subset.eq bb(R)^2$.
 
-Similar to the definition of arc length, we try to define the area of surface patch $M$ by approximating it with inscribed polygonal surfaces. However, this definition does not hold, as demonstrated by Schwarz's counterexample that is called *Schwarz's lantern* vividly.
+Similar to the definition of arc length, we try to define the area of surface patch $M$ by approximating it with inscribed polygonal surfaces. However, this definition does not hold, as demonstrated by Schwarz's counterexample, known as *Schwarz's lantern*.
 
 In this counterexample, we can obtain the incorrect conclusion that $pi = 4$. Here is a brief description of the construction of Schwarz's lantern:
 
 Consider a cylinder with height $1$ and base radius $1/2$ (the left in @fig:schwarzs-lantern). Its lateral surface area is $2 pi r h = 2 pi times 1/2 times 1 = pi$.
 
-Divide the cylinder into four equal cylinders, and place seven equally spaced red dots on each circle (the middle in @fig:schwarzs-lantern). Then connect these red dots to form a polygonal surface (the right in @fig:schwarzs-lantern).
+Divide the cylinder into four cylinders of equal height, and place seven equally spaced red dots on each circle (the middle in @fig:schwarzs-lantern). Then connect these red dots to form a polygonal surface (the right in @fig:schwarzs-lantern).
 
 #figure(
   image("img/Schwartz1.png", width: 60%),
@@ -9719,7 +9731,8 @@ To obtain increasingly precise approximations of the cylindrical lanterns, simpl
 ) <fig:schwarzs-lantern-refined>
 
 In fact, we can assign particular values to $b$ and $p$ to make the area of the polygonal surface approach any value greater than $pi$:
-$ A(b, p) = (b p) / 2 sin(pi / p) sqrt((2/b)^2 + (sin(pi / p))^2). $
+$ A(b, p) = b p sin(pi / p) sqrt((1/b)^2 + ((1 - cos(pi / p)) / 2)^2). $
+In particular, if $b / p^2 -> c$ as $b, p -> oo$, then $A(b, p) -> pi sqrt(1 + pi^4 c^2 / 16)$, so by choosing the ratio $c$ appropriately, the areas of the approximating polyhedral surfaces can converge to any number not less than $pi$.
 
 We derive the area of $M$ using the first fundamental form. Consider a small rectangle $Delta u times Delta v$ in the parameter domain $Delta$, which is mapped to a small parallelogram on the surface $M$ by the parameterization $bold(r)(u, v)$. The two adjacent sides of this parallelogram can be approximated by the tangent vectors
 $ bold(r)_u Delta u, quad bold(r)_v Delta v. $
@@ -9755,17 +9768,17 @@ Two remarks on this definition are in order:
 - Since $bold(n)(p)$ is a unit vector, $T_(bold(n)(p)) bb(S)^2$ is the plane orthogonal to $bold(n)(p)$, and $T_p M$ itself is also orthogonal to $bold(n)(p)$; it follows that $dif_p bold(n) (bold(w)_1)$ and $bold(w)_2$ lie in the same plane, and their dot product is well-defined.
 - The negative sign in this definition is a convention, which makes the principal curvatures of a convex surface (like a sphere) positive.
 
-For convenience, we express $upright(II)_p$ in the basis ${bold(r)'_u, bold(r)'_v}$ of the tangent space $T_p M$. Define:
+For convenience, we express $upright(II)_p$ in the basis ${bold(r)_u, bold(r)_v}$ of the tangent space $T_p M$. Define:
 $
   & L(u, v) := upright(II)_p (bold(r)_u, bold(r)_u) = W_p (bold(r)_u) dot bold(r)_u = bold(r)_(u u) dot bold(n); \
   & M(u, v) := upright(II)_p (bold(r)_u, bold(r)_v) = W_p (bold(r)_u) dot bold(r)_v = bold(r)_(u v) dot bold(n); \
   & N(u, v) := upright(II)_p (bold(r)_v, bold(r)_v) = W_p (bold(r)_v) dot bold(r)_v = bold(r)_(v v) dot bold(n),
 $
-Then the matrix representation of the second fundamental form $upright(II)_p$ under the basis ${bold(r)'_u, bold(r)'_v}$ is
+Then the matrix representation of the second fundamental form $upright(II)_p$ under the basis ${bold(r)_u, bold(r)_v}$ is
 $ upright(II)_p = mat(L, M; M, N), $
 which is symmetric, but not necessarily positive-definite. And its sign reflects the way the surface is curved.
 
-The associated second fundamental form, also denoted by $upright(II)$, is an expression for the normal curvature:
+The quadratic form associated with this bilinear form, also denoted by $upright(II)$, is an expression for the normal curvature:
 $ upright(II) = L dif u^2 + 2M dif u dif v + N dif v^2. $
 For a unit tangent vector $bold(w) in T_p M$, the value of $upright(II)_p (bold(w), bold(w))$ is the normal curvature of the surface in the direction of $bold(w)$, denoted $k_n (bold(w))$.
 
@@ -9776,7 +9789,7 @@ Curvature is a mathematical quantity describing the "bending" degree of a geomet
 The meaning of curvature varies for geometric objects of different dimensions:
 
 - Curvature on a curve: describes the degree to which the curve deviates from a straight line.
-- Description of curvature by a surface: is more complex, involving directionality—the bending of a surface can be completely different in different directions.
+- For a surface, the description of curvature is more complex, involving directionality—the bending of a surface can be completely different in different directions.
 
 The curvature of a surface is usually classified into the following typical types: normal curvature, principal curvatures, mean curvature, Gaussian curvature, etc.
 
@@ -9808,7 +9821,7 @@ The second type of surface integral in the next chapter requires selecting a *si
 Recall that a regular surface patch $M$ admits the Gauß map $bold(n)(p) = frac(bold(r)_u times bold(r)_v, norm(bold(r)_u times bold(r)_v)) (p)$, which is a continuous unit normal vector field on $M$. An orientation is nothing but a continuous choice of such a field.
 
 #definition(name: "Orientation of a Surface")[
-  Let $M$ be a $C^1$ smooth regular surface patch in $bb(R)^3$. A *continuous unit normal vector field* on $M$ is a continuous mapping $bold(n): M -> bb(S)^2$ such that $bold(n)(p) perp T_p M$ for every $p in M$. If such a field exists on all of $M$, then $M$ is called *orientable*, and the choice of one such field $bold(n)$ is called an *orientation* of $M$; the pair $(M, bold(n))$ is called an *oriented surface*.
+  Let $M$ be a $C^1$ regular surface in $bb(R)^3$, i.e. a surface covered by regular surface patches (see #link(<def:surface-parameterization>)[the definition of surface parameterization]). A *continuous unit normal vector field* on $M$ is a continuous mapping $bold(n): M -> bb(S)^2$ such that $bold(n)(p) perp T_p M$ for every $p in M$. If such a field exists on all of $M$, then $M$ is called *orientable*, and the choice of one such field $bold(n)$ is called an *orientation* of $M$; the pair $(M, bold(n))$ is called an *oriented surface*.
 
   A connected orientable surface admits exactly two orientations: if $bold(n)$ is an orientation, then so is $-bold(n)$, and there are no others. The two choices are called the two *sides* of the surface; a surface with two sides is also called a *two-sided surface*.
 ] <def:surface-orientation>
@@ -9839,66 +9852,6 @@ Choosing $bold(n)$ (rather than $-bold(n)$) as the unit normal is called the *up
   If an oriented surface has a piecewise smooth boundary curve, its orientation induces an orientation on the boundary, which prescribes how the boundary is traversed relative to the chosen normal field. The precise convention will be made explicit in the next chapter, when Stokes' formula is established.
 ]
 
-== Bounded Variation Functions // 有界变差函数
-
-#definition(name: "Bounded Variation")[
-  Let $f: [a, b] -> bb(R)$ be a real-valued function defined on the closed interval $[a, b]$. For any partition $P = {x_0, x_1, dots, x_n}$ of $[a, b]$ with $a = x_0 < x_1 < dots < x_n = b$, define the variation of $f$ on the partition $P$ as
-  $ V(f, P) = sum_(i=1)^n abs(f(x_i) - f(x_(i-1))). $
-
-  The total variation of $f$ on $[a, b]$ is defined as
-  $ V_a^b (f) = sup_P V(f, P), $
-  where the supremum is taken over all possible partitions $P$ of $[a, b]$. If $V_a^b (f) < oo$, then $f$ is said to be of *bounded variation* on $[a, b]$, denoted as $f in "BV"[a, b]$.
-] <def:bounded-variation>
-
-#property[
-  + $"BV"[a, b] subset B[a, b]$, where $B[a, b]$ denotes the set of all bounded functions on $[a, b]$.
-  + For any $f, g in "BV"[a, b]$ and any scalars $alpha, beta in bb(R)$, the linear combination $alpha f + beta g in "BV"[a, b]$, and
-    $ V_a^b (alpha f + beta g) <= abs(alpha) V_a^b (f) + abs(beta) V_a^b (g). $
-    Specially, if $abs(g(x)) >= sigma > 0$, then $frac(f(x), g(x)) in "BV"[a, b]$.
-] <prop:bv-properties>
-// 注：tex 中该 property 的 enumerate 原含第 3 项但内容为空，已删除。
-
-Some common bounded variation functions include:
-
-#terms(
-  terms.item(
-    [Monotonic functions],
-    [Any monotonic function on a closed interval is of bounded variation, and $V_a^b (f) = abs(f(b) - f(a))$.],
-  ),
-  terms.item(
-    [Piecewise monotonic functions],
-    [Functions that are monotonic on each subinterval of a finite partition of $[a, b]$ are also of bounded variation.],
-  ),
-  terms.item(
-    [Lipschitz continuous functions],
-    [Any Lipschitz continuous function on $[a, b]$ is of bounded variation (see #link(<def:lipschitz-continuity>)[the definition of Lipschitz continuity]).],
-  ),
-  terms.item(
-    [Functions with finite discontinuities],
-    [Functions that have only a finite number of jump discontinuities on $[a, b]$ are of bounded variation.],
-  ),
-  terms.item(
-    [Absolutely continuous functions],
-    [Any absolutely continuous function on $[a, b]$ is of bounded variation.],
-  ),
-)
-
-#theorem(name: "Jordan Decomposition Theorem")[
-  $f in "BV"[a, b]$ if and only if there exist two monotonic increasing functions $g, h: [a, b] -> bb(R)$ such that
-  $ f(x) = g(x) - h(x). $
-] <thm:jordan-decomposition>
-
-Bounded variation functions have important applications. For example, in harmonic analysis, the Fourier series of a bounded variation function converges pointwise (the detailed convergence theory is established in the Analyse Harmonique note); other typical applications are as follows:
-
-=== Rectifiable Curves // 可求长曲线（原 leftbarTitle 非空壳，升级为小节）
-
-#theorem(name: "Jordan's Theorem on Rectifiable Curves")[
-  A curve $C$ in $bb(R)^2$ defined by the parametric equations
-  $ (x, y) = (x(t), y(t)), quad t in [a, b], $
-  is rectifiable if and only if both $x(t)$ and $y(t)$ are of bounded variation on $[a, b]$.
-] <thm:jordan-rectifiable-curves>
-
-// 注：tex 中本节末尾的 "Stieltjes Integral" leftbarTitle 为空壳（无任何内容），未迁移。
 
 // B15: ch15 Line Integrals and Surface Integrals（曲线积分与曲面积分）
 
@@ -9925,7 +9878,7 @@ Bounded variation functions have important applications. For example, in harmoni
   $
 ] <thm:line-integral-scalar-computation>
 
-Specially, if the plane curve $L$ is given by $y = y(x)$, $x in [a, b]$, then
+In particular, if the plane curve $L$ is given by $y = y(x)$, $x in [a, b]$, then
 $ integral_L f dif s = integral_a^b f(x, y(x)) sqrt(1 + (y'(x))^2) dif x. $
 
 #example(name: "Line Integral of a Scalar Field over an Upper Semicircle")[
@@ -9938,8 +9891,8 @@ $ integral_L f dif s = integral_a^b f(x, y(x)) sqrt(1 + (y'(x))^2) dif x. $
   Then $dif s = sqrt(x'^2 + y'^2) dif t = R dif t$, and
   $
     I = integral_0^pi (R cos t + R sin t) R dif t
-      = R^2 [(sin t - cos t)]_0^pi
-      = 2 R^2.
+    = R^2 [(sin t - cos t)]_0^pi
+    = 2 R^2.
   $
   Alternatively, the term $x$ vanishes by odd symmetry,
   and the centroid formula for $y$ gives the same value:
@@ -9961,7 +9914,7 @@ $ integral_L f dif s = integral_a^b f(x, y(x)) sqrt(1 + (y'(x))^2) dif x. $
   we obtain
   $
     s = integral_0^(2 pi) 2 a sin(t/2) dif t
-      = 8 a.
+    = 8 a.
   $
 ]
 
@@ -9994,7 +9947,7 @@ $ integral_L f dif s = integral_a^b f(x, y(x)) sqrt(1 + (y'(x))^2) dif x. $
 ] <thm:surface-integral-scalar-computation>
 // 注：tex 原定理称 Sigma 为 "closed surface"，但参数化计算公式并不要求封闭性，判定为误植，已去除。
 
-Specially, if the surface $Sigma$ is given by $z = z(x, y)$, $(x, y) in D$, then
+In particular, if the surface $Sigma$ is given by $z = z(x, y)$, $(x, y) in D$, then
 $
   integral.double_Sigma f dif S = integral.double_D f(x, y, z(x, y)) sqrt(1 + lr((frac(partial z, partial x)))^2 + lr((frac(partial z, partial y)))^2) dif x dif y.
 $
@@ -10010,17 +9963,17 @@ $
   so
   $
     I = 1/3 integral.double_Sigma (x^2 + y^2 + z^2) dif S
-      = 1/3 R^2 "Area"(Sigma)
-      = 1/3 R^2 dot 4 pi R^2
-      = (4 pi R^4)/3.
+    = 1/3 R^2 "Area"(Sigma)
+    = 1/3 R^2 dot 4 pi R^2
+    = (4 pi R^4)/3.
   $
   A direct computation via the parametrization
   $x = R sin phi cos theta$, $y = R sin phi sin theta$, $z = R cos phi$
   (with $dif S = R^2 sin phi dif phi dif theta$) confirms the value:
   $
     I = integral_0^(2 pi) dif theta integral_0^pi R^2 cos^2 phi dot R^2 sin phi dif phi
-      = 2 pi R^4 dot 2/3
-      = (4 pi R^4)/3.
+    = 2 pi R^4 dot 2/3
+    = (4 pi R^4)/3.
   $
 ]
 
@@ -10038,8 +9991,8 @@ $
   and the integral becomes
   $
     I = integral.double_D sqrt(x^2 + y^2) dot sqrt(2) dif x dif y
-      = sqrt(2) integral_0^(2 pi) dif theta integral_0^h r^2 dif r
-      = (2 sqrt(2) pi h^3)/3.
+    = sqrt(2) integral_0^(2 pi) dif theta integral_0^h r^2 dif r
+    = (2 sqrt(2) pi h^3)/3.
   $
 ]
 
@@ -10144,7 +10097,7 @@ $ integral_(attach(L, t: ⇀)) omega. $
   $
 ] <thm:line-integral-vector-computation>
 
-Specially, if the plane curve $attach(L, t: ⇀)$ is given by $y = y(x)$, $x: a -> b$, then
+In particular, if the plane curve $attach(L, t: ⇀)$ is given by $y = y(x)$, $x: a -> b$, then
 $ integral_(attach(L, t: ⇀)) bold(f) dot bold(tau) dif s = integral_a^b bold(f)(x, y(x)) dot (1, y'(x)) dif x. $
 // 注：tex 原式在 dot (1, y'(x)) 后多乘了 sqrt(1 + (y'(x))^2)，由 tau dif bold(s) = (1, y'(x)) dif x 可知该因子应已消去，判定为笔误，已删除。
 
@@ -10166,14 +10119,14 @@ This relation allows the symmetry devices of scalar integrals to be applied to v
   Then $dif x = -a sin t dif t$, $dif y = b cos t dif t$, and
   $
     I = integral_0^(2 pi) (b sin t)(-a sin t) - (a cos t)(b cos t) dif t
-      = -a b integral_0^(2 pi) (sin^2 t + cos^2 t) dif t
-      = -2 pi a b.
+    = -a b integral_0^(2 pi) (sin^2 t + cos^2 t) dif t
+    = -2 pi a b.
   $
   As a check, Green's theorem gives the same value:
   $
     I = integral.double_D (frac(partial Q, partial x) - frac(partial P, partial y)) dif x dif y
-      = integral.double_D (-1 - 1) dif x dif y
-      = -2 pi a b.
+    = integral.double_D (-1 - 1) dif x dif y
+    = -2 pi a b.
   $
 ]
 
@@ -10226,7 +10179,7 @@ $ integral.double_(attach(Sigma, t: ⇀)) omega. $
   where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is consistent with the direction of $lr((frac(partial bold(r), partial u) times frac(partial bold(r), partial v)))$ (cf. #link(<prop:parameterization-induced-orientation>)[the orientation induced by a parameterization]).
 ] <thm:surface-integral-vector-computation>
 
-Specially, if the surface $attach(Sigma, t: ⇀)$ is given by $z = z(x, y)$, $(x, y) in D_(x y)$, where $D_(x y)$ is a closed region with piecewise smooth boundary in the $x y$-plane, and $R(x, y, z)$ is continuous on $D_(x y)$, then
+In particular, if the surface $attach(Sigma, t: ⇀)$ is given by $z = z(x, y)$, $(x, y) in D_(x y)$, where $D_(x y)$ is a closed region with piecewise smooth boundary in the $x y$-plane, and $R(x, y, z)$ is continuous on $D_(x y)$, then
 $
   integral.double_(attach(Sigma, t: ⇀)) R(x, y, z) dif x dif y = plus.minus integral.double_(D_(x y)) R(x, y, z(x, y)) dif x dif y,
 $
@@ -10259,15 +10212,15 @@ This *one-projection method* avoids projecting onto three coordinate planes sepa
   By the one-projection formula,
   $
     I = integral.double_(D_(x y)) (x^2/z + y^2/z + z) dif x dif y
-      = integral.double_(D_(x y)) (x^2 + y^2 + z^2)/z dif x dif y
-      = integral.double_(D_(x y)) R^2/z dif x dif y,
+    = integral.double_(D_(x y)) (x^2 + y^2 + z^2)/z dif x dif y
+    = integral.double_(D_(x y)) R^2/z dif x dif y,
   $
   where $D_(x y)$ is the disk $x^2 + y^2 <= R^2$.
   In polar coordinates,
   $
     I = integral_0^(2 pi) dif theta integral_0^R R^2/sqrt(R^2 - r^2) r dif r
-      = 2 pi R^2 dot [-sqrt(R^2 - r^2)]_0^R
-      = 2 pi R^3.
+    = 2 pi R^2 dot [-sqrt(R^2 - r^2)]_0^R
+    = 2 pi R^3.
   $
 ]
 
@@ -10464,8 +10417,8 @@ Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over 
   By Stokes' formula,
   $
     I = integral.double_Sigma (dif y dif z + dif z dif x + dif x dif y)
-      = integral.double_Sigma (cos alpha + cos beta + cos gamma) dif S
-      = sqrt(3) "Area"(Sigma).
+    = integral.double_Sigma (cos alpha + cos beta + cos gamma) dif S
+    = sqrt(3) "Area"(Sigma).
   $
   The triangle has vertices $(1, 0, 0)$, $(0, 1, 0)$, $(0, 0, 1)$
   and side length $sqrt(2)$, hence $"Area"(Sigma) = sqrt(3)/2$.
@@ -10479,7 +10432,10 @@ Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over 
 #tex-table(
   ("Situation", "Recommended tool"),
   ([Closed plane curve], [Green's theorem]),
-  ([Non-closed plane curve, exact or simple integrand], [Parametrization, potential function, or completing line segment + Green]),
+  (
+    [Non-closed plane curve, exact or simple integrand],
+    [Parametrization, potential function, or completing line segment + Green],
+  ),
   ([Closed surface], [Gauß's theorem]),
   ([Open surface with an easy completion], [Adding a disk or plane + Gauß]),
   ([Closed space curve], [Stokes' formula]),
@@ -10498,9 +10454,9 @@ A standard pipeline for a line or surface integral:
 1. *Identify the kind.* Scalar integral (arc length / area) or vector integral (work / flux).
 2. *Scalar integrals.* Parametrize or project, then evaluate the resulting one- or two-dimensional integral.
 3. *Vector integrals.* Check closure first:
-   - closed curve -> Green (plane) or Stokes (space);
-   - closed surface -> Gauß;
-   - otherwise parametrize directly, or complete the curve/surface and subtract.
+  - closed curve -> Green (plane) or Stokes (space);
+  - closed surface -> Gauß;
+  - otherwise parametrize directly, or complete the curve/surface and subtract.
 4. *Check orientation and singularities* throughout the computation.
 
 == Closed and Exact Differential Forms // 闭形式与恰当微分形式
@@ -10833,7 +10789,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
   $
     Gamma(s + 1) = sqrt(2 pi s) (s / e)^s exp(theta / (12 s)),
   $
-  where $0 < theta < 1$. Specially, when $s = n in bb(N)$,
+  where $0 < theta < 1$. In particular, when $s = n in bb(N)$,
   $
     Gamma(n + 1) = n! = sqrt(2 pi n) (n / e)^n exp(theta / (12 n)),
   $
@@ -10893,10 +10849,8 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<thm:bounded-convergence-limsup>)[Bounded Convergence Limsup]*
 - *#link(<ex:bounded-open-interval>)[Bounded Open Interval]*
 - *#link(<def:bounded-sequence>)[Bounded Sequence]*
-- *#link(<def:bounded-variation>)[Bounded Variation]*
 - *#link(<thm:boundedness-closed>)[Boundedness Closed]*
 - *#link(<ex:boundedness-mvt>)[Boundedness Mvt]*
-- *#link(<prop:bv-properties>)[Bv Properties]*
 
 == C
 - *#link(<thm:cantor-theorem>)[Cantor Theorem]*
@@ -11101,7 +11055,6 @@ Next, we give three important formulas about the Gamma function, which can be ex
 == J
 - *#link(<def:jacobian-matrix>)[Jacobian Matrix]*
 - *#link(<thm:jensen>)[Jensen]*
-- *#link(<thm:jordan-decomposition>)[Jordan Decomposition]*
 - *#link(<thm:jordan-rectifiable-curves>)[Jordan Rectifiable Curves]*
 
 == L
