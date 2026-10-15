@@ -9998,7 +9998,7 @@ $
 
 == Differential Forms and Exterior Differentiation // 微分形式与外微分
 
-In the previous subsection, the second type of line integral was re-expressed as the integral of a $1$-form $omega = P dif x + Q dif y + R dif z$ along the oriented curve, and the surface integrals to be defined below are built on symbols such as $dif y and dif z$. All these integrands are instances of *differential forms*; moreover, Green's formula admits the unified shape $integral.cont_(attach(partial M, t: ⇀)) omega = integral.double_(attach(M, t: ⇀)) dif omega$, and so will Stokes' and Gauß's formulas. This section sets up the algebra of differential forms together with its computation engine, the *exterior differentiation*.
+In the previous subsection, the second type of line integral was re-expressed as the integral of a $1$-form $omega = P dif x + Q dif y + R dif z$ along the oriented curve, and the surface integrals to be defined below are built on symbols such as $dif y and dif z$. All these integrands are instances of *differential forms*; moreover, Green's formula admits the unified shape $integral.cont_(limits(partial M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega$, and so will Stokes' and Gauß's formulas. This section sets up the algebra of differential forms together with its computation engine, the *exterior differentiation*.
 
 #definition(name: "Differential Forms")[
   Let $omega$ be an expression of the form
@@ -10117,9 +10117,9 @@ The nilpotency is the alternating-algebra avatar of the equality of mixed second
   $
     dif omega = (frac(partial(-x y^2), partial x) - frac(partial(x^2 y), partial y)) dif x and dif y = (-y^2 - x^2) dif x and dif y.
   $
-  Substituting this into Green's formula yields, for every oriented closed region $attach(M, t: ⇀)$,
+  Substituting this into Green's formula yields, for every oriented closed region $limits(M)^harpoon.rt$,
   $
-    integral.cont_(attach(partial M, t: ⇀)) x^2 y dif x - x y^2 dif y = -integral.double_(attach(M, t: ⇀)) (x^2 + y^2) dif x dif y,
+    integral.cont_(limits(partial M)^harpoon.rt) x^2 y dif x - x y^2 dif y = -integral.double_(limits(M)^harpoon.rt) (x^2 + y^2) dif x dif y,
   $
   which the reader may compare with the direct statement of #link(<thm:green-theorem>)[Green's theorem].
 ]
@@ -10142,58 +10142,58 @@ The nilpotency is the alternating-algebra avatar of the equality of mixed second
     This is precisely the $2$-form whose integral over a closed surface was evaluated through Gauß's formula in #link(<ex:gauss-completion>)[an earlier example]; its exterior derivative is the form integrated over the enclosed volume there.
 ]
 
-The integration of differential forms is defined in the next section: a $1$-form is integrated along an oriented curve, and a $2$-form over an oriented surface. With this in place, Green's, Stokes', and Gauß's formulas all take the unified shape $integral_(attach(partial M, t: ⇀)) omega = integral_(attach(M, t: ⇀)) dif omega$.
+The integration of differential forms is defined in the next section: a $1$-form is integrated along an oriented curve, and a $2$-form over an oriented surface. With this in place, Green's, Stokes', and Gauß's formulas all take the unified shape $integral_(limits(partial M)^harpoon.rt) omega = integral_(limits(M)^harpoon.rt) dif omega$.
 
 == Line Integrals and Surface Integrals of Vector Fields // 向量场的曲线积分与曲面积分
 
 === Line Integral of Vector Field // 向量场的曲线积分（原 leftbarTitle 非空壳，升级为小节）
 
 #definition(name: "Line Integral of Vector Field")[
-  Let $attach(L, t: ⇀)$ be an oriented smooth curve in $bb(R)^3$, whose endpoints are $A$ and $B$. Take the unit tangent vector $bold(tau) = (cos alpha, cos beta, cos gamma)$ at each point of $attach(L, t: ⇀)$, making it consistent with the orientation of $attach(L, t: ⇀)$. Let $bold(f)(x, y, z) = P(x, y, z) bold(i) + Q(x, y, z) bold(j) + R(x, y, z) bold(k)$ be a vector-valued function on $attach(L, t: ⇀)$. Then
+  Let $limits(L)^harpoon.rt$ be an oriented smooth curve in $bb(R)^3$, whose endpoints are $A$ and $B$. Take the unit tangent vector $bold(tau) = (cos alpha, cos beta, cos gamma)$ at each point of $limits(L)^harpoon.rt$, making it consistent with the orientation of $limits(L)^harpoon.rt$. Let $bold(f)(x, y, z) = P(x, y, z) bold(i) + Q(x, y, z) bold(j) + R(x, y, z) bold(k)$ be a vector-valued function on $limits(L)^harpoon.rt$. Then
   $
-    integral_(attach(L, t: ⇀)) bold(f) dot bold(tau) dif bold(s)
-    = integral_(attach(L, t: ⇀)) [P cos alpha + Q cos beta + R cos gamma] dif s
+    integral_(limits(L)^harpoon.rt) bold(f) dot bold(tau) dif bold(s)
+    = integral_(limits(L)^harpoon.rt) [P cos alpha + Q cos beta + R cos gamma] dif s
   $
-  is called the *line integral of the vector field $bold(f)$ along the oriented curve $attach(L, t: ⇀)$* (if the right-hand side exists).
+  is called the *line integral of the vector field $bold(f)$ along the oriented curve $limits(L)^harpoon.rt$* (if the right-hand side exists).
 ] <def:line-integral-vector-field>
 
 Consider a differential arc length element $dif s$ at a point $(x, y, z)$ on the curve $L$. We form the vector $dif bold(s) = bold(tau) dif s$, where $bold(tau) = (cos alpha, cos beta, cos gamma)$ represents the unit tangent vector of the curve $L$ at $(x, y, z)$, pointing along the direction of $L$. The projection of $dif s$ onto the $x$-axis is given by $cos alpha dif s$. Therefore, we denote
 $ dif x = cos alpha dif s, quad dif y = cos beta dif s, quad dif z = cos gamma dif s. $
 Thus, the second type of line integral can be expressed as
 $
-  integral_(attach(L, t: ⇀)) bold(f) dot bold(tau) dif s
-  = integral_(attach(L, t: ⇀)) bold(f) dif bold(s)
-  = integral_(attach(L, t: ⇀)) P(x, y, z) dif x + Q(x, y, z) dif y + R(x, y, z) dif z.
+  integral_(limits(L)^harpoon.rt) bold(f) dot bold(tau) dif s
+  = integral_(limits(L)^harpoon.rt) bold(f) dif bold(s)
+  = integral_(limits(L)^harpoon.rt) P(x, y, z) dif x + Q(x, y, z) dif y + R(x, y, z) dif z.
 $
 This line integral is also referred to as the integral of the $1$-form
 $ omega = P(x, y, z) dif x + Q(x, y, z) dif y + R(x, y, z) dif z. $
-The second type of line integral of $omega$ along the curve $attach(L, t: ⇀)$ is denoted as
-$ integral_(attach(L, t: ⇀)) omega. $
+The second type of line integral of $omega$ along the curve $limits(L)^harpoon.rt$ is denoted as
+$ integral_(limits(L)^harpoon.rt) omega. $
 
 #theorem[
-  Let $attach(L, t: ⇀)$ be a $C^1$ smooth regular oriented curve parameterized by $bold(x)(t) = (x(t), y(t), z(t))$, $t in [alpha, beta]$, and let $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ be continuous on $attach(L, t: ⇀)$. Then
+  Let $limits(L)^harpoon.rt$ be a $C^1$ smooth regular oriented curve parameterized by $bold(x)(t) = (x(t), y(t), z(t))$, $t in [alpha, beta]$, and let $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ be continuous on $limits(L)^harpoon.rt$. Then
   $
-    integral_(attach(L, t: ⇀)) bold(f) dot bold(tau) dif s
+    integral_(limits(L)^harpoon.rt) bold(f) dot bold(tau) dif s
     & = integral_alpha^beta bold(f)(bold(x)(t)) dot bold(x)'(t) dif t \
     & = integral_alpha^beta [P(x(t), y(t), z(t)) x'(t) + Q(x(t), y(t), z(t)) y'(t) + R(x(t), y(t), z(t)) z'(t)] dif t.
   $
 ] <thm:line-integral-vector-computation>
 
-In particular, if the plane curve $attach(L, t: ⇀)$ is given by $y = y(x)$, $x: a -> b$, then
-$ integral_(attach(L, t: ⇀)) bold(f) dot bold(tau) dif s = integral_a^b bold(f)(x, y(x)) dot (1, y'(x)) dif x. $
+In particular, if the plane curve $limits(L)^harpoon.rt$ is given by $y = y(x)$, $x: a -> b$, then
+$ integral_(limits(L)^harpoon.rt) bold(f) dot bold(tau) dif s = integral_a^b bold(f)(x, y(x)) dot (1, y'(x)) dif x. $
 // 注：tex 原式在 dot (1, y'(x)) 后多乘了 sqrt(1 + (y'(x))^2)，由 tau dif bold(s) = (1, y'(x)) dif x 可知该因子应已消去，判定为笔误，已删除。
 
 The two kinds of line integrals are related by
 $
-  integral_(attach(L, t: ⇀)) P dif x + Q dif y + R dif z
+  integral_(limits(L)^harpoon.rt) P dif x + Q dif y + R dif z
   = integral_L (P cos alpha + Q cos beta + R cos gamma) dif s,
 $
-where $cos alpha$, $cos beta$, $cos gamma$ are the direction cosines of the unit tangent vector consistent with the orientation of $attach(L, t: ⇀)$.
+where $cos alpha$, $cos beta$, $cos gamma$ are the direction cosines of the unit tangent vector consistent with the orientation of $limits(L)^harpoon.rt$.
 This relation allows the symmetry devices of scalar integrals to be applied to vector integrals.
 
 #example(name: "Line Integral of a Vector Field")[
-  Calculate $I = integral_(attach(L, t: ⇀)) y dif x - x dif y$,
-  where $attach(L, t: ⇀)$ is the ellipse $x^2/a^2 + y^2/b^2 = 1$ traversed counterclockwise.
+  Calculate $I = integral_(limits(L)^harpoon.rt) y dif x - x dif y$,
+  where $limits(L)^harpoon.rt$ is the ellipse $x^2/a^2 + y^2/b^2 = 1$ traversed counterclockwise.
 ] <ex:line-integral-vector-ellipse>
 
 #solution[
@@ -10213,8 +10213,8 @@ This relation allows the symmetry devices of scalar integrals to be applied to v
 ]
 
 #example(name: "A Path-Independent Line Integral")[
-  Calculate $I = integral_(attach(L, t: ⇀)) y dif x + x dif y$,
-  where $attach(L, t: ⇀)$ is any smooth curve from $(0, 0)$ to $(1, 1)$.
+  Calculate $I = integral_(limits(L)^harpoon.rt) y dif x + x dif y$,
+  where $limits(L)^harpoon.rt$ is any smooth curve from $(0, 0)$ to $(1, 1)$.
 ] <ex:line-integral-path-independent>
 
 #solution[
@@ -10227,12 +10227,12 @@ This relation allows the symmetry devices of scalar integrals to be applied to v
 === Surface Integral of Vector Field // 向量场的曲面积分（原 leftbarTitle 非空壳，升级为小节）
 
 #definition(name: "Surface Integral of Vector Field")[
-  Let $attach(Sigma, t: ⇀)$ be an oriented smooth surface in $bb(R)^3$ (see #link(<def:surface-orientation>)[surface orientation]), and let $bold(f)(x, y, z) = P(x, y, z) bold(i) + Q(x, y, z) bold(j) + R(x, y, z) bold(k)$ be a vector-valued function on $attach(Sigma, t: ⇀)$. Each point of the surface is assigned a unit normal vector $bold(n) = (cos alpha, cos beta, cos gamma)$. Then
+  Let $limits(Sigma)^harpoon.rt$ be an oriented smooth surface in $bb(R)^3$ (see #link(<def:surface-orientation>)[surface orientation]), and let $bold(f)(x, y, z) = P(x, y, z) bold(i) + Q(x, y, z) bold(j) + R(x, y, z) bold(k)$ be a vector-valued function on $limits(Sigma)^harpoon.rt$. Each point of the surface is assigned a unit normal vector $bold(n) = (cos alpha, cos beta, cos gamma)$. Then
   $
-    integral.double_(attach(Sigma, t: ⇀)) bold(f) dot bold(n) dif S
-    = integral.double_(attach(Sigma, t: ⇀)) [P cos alpha + Q cos beta + R cos gamma] dif S
+    integral.double_(limits(Sigma)^harpoon.rt) bold(f) dot bold(n) dif S
+    = integral.double_(limits(Sigma)^harpoon.rt) [P cos alpha + Q cos beta + R cos gamma] dif S
   $
-  is called the *surface integral of the vector field $bold(f)$ over the oriented surface $attach(Sigma, t: ⇀)$* (if the right-hand side exists).
+  is called the *surface integral of the vector field $bold(f)$ over the oriented surface $limits(Sigma)^harpoon.rt$* (if the right-hand side exists).
 ] <def:surface-integral-vector-field>
 
 Consider a differential area element $dif S$ at a point $(x, y, z)$ on the surface $Sigma$. We form the vector $dif bold(S) = bold(n) dif S$, where $bold(n) = (cos alpha, cos beta, cos gamma)$ represents the unit normal vector of the surface $Sigma$ at $(x, y, z)$, pointing along the orientation of $Sigma$. The projection of $dif S$ onto the $y z$-plane is given by $cos alpha dif S$. Therefore, we denote
@@ -10240,53 +10240,53 @@ $ dif y and dif z = cos alpha dif S, quad dif z and dif x = cos beta dif S, quad
 // 注：tex 原文写作 "onto the x-axis"（且该处 dif 误加粗），按 dy∧dz = cos alpha dif S 的几何含义改为向 yz 平面的投影。
 Thus, the surface integral can be expressed as
 $
-  integral.double_(attach(Sigma, t: ⇀)) bold(f) dot bold(n) dif S
-  = integral.double_(attach(Sigma, t: ⇀)) P dif y and dif z + Q dif z and dif x + R dif x and dif y
-  = integral.double_(attach(Sigma, t: ⇀)) P dif y dif z + Q dif z dif x + R dif x dif y,
+  integral.double_(limits(Sigma)^harpoon.rt) bold(f) dot bold(n) dif S
+  = integral.double_(limits(Sigma)^harpoon.rt) P dif y and dif z + Q dif z and dif x + R dif x and dif y
+  = integral.double_(limits(Sigma)^harpoon.rt) P dif y dif z + Q dif z dif x + R dif x dif y,
 $
 where $dif y dif z$ is the simplified notation for $dif y and dif z$, etc. This surface integral is also referred to as the integral of the $2$-form
 $ omega = P(x, y, z) dif y and dif z + Q(x, y, z) dif z and dif x + R(x, y, z) dif x and dif y. $
-The second type of surface integral of $omega$ over the surface $attach(Sigma, t: ⇀)$ is denoted as
-$ integral.double_(attach(Sigma, t: ⇀)) omega. $
+The second type of surface integral of $omega$ over the surface $limits(Sigma)^harpoon.rt$ is denoted as
+$ integral.double_(limits(Sigma)^harpoon.rt) omega. $
 
 #theorem[
-  Let $attach(Sigma, t: ⇀)$ be a smooth oriented surface parameterized by $bold(r)(u, v) = (x(u, v), y(u, v), z(u, v))$, $(u, v) in D$, where $D$ is a closed region with piecewise smooth boundary in the $u v$-plane, and let $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ be continuous on $attach(Sigma, t: ⇀)$. Suppose $x, y, z$ have continuous first-order partial derivatives with respect to $u$ and $v$ on $D$, and the associated Jacobian matrix is of full rank. Then
+  Let $limits(Sigma)^harpoon.rt$ be a smooth oriented surface parameterized by $bold(r)(u, v) = (x(u, v), y(u, v), z(u, v))$, $(u, v) in D$, where $D$ is a closed region with piecewise smooth boundary in the $u v$-plane, and let $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ be continuous on $limits(Sigma)^harpoon.rt$. Suppose $x, y, z$ have continuous first-order partial derivatives with respect to $u$ and $v$ on $D$, and the associated Jacobian matrix is of full rank. Then
   $
-    integral.double_(attach(Sigma, t: ⇀)) bold(f) dot bold(n) dif S
-    & = integral.double_(attach(Sigma, t: ⇀)) [P cos alpha + Q cos beta + R cos gamma] dif S \
+    integral.double_(limits(Sigma)^harpoon.rt) bold(f) dot bold(n) dif S
+    & = integral.double_(limits(Sigma)^harpoon.rt) [P cos alpha + Q cos beta + R cos gamma] dif S \
     & = integral.double_D bold(f)(bold(r)(u, v)) dot lr((frac(partial bold(r), partial u) times frac(partial bold(r), partial v))) dif u dif v \
     & = plus.minus integral.double_D [P(x(u, v), y(u, v), z(u, v)) frac(partial (y, z), partial (u, v)) + Q(x(u, v), y(u, v), z(u, v)) frac(partial (z, x), partial (u, v)) \
       & quad quad + R(x(u, v), y(u, v), z(u, v)) frac(partial (x, y), partial (u, v))] dif u dif v,
   $
-  where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is consistent with the direction of $lr((frac(partial bold(r), partial u) times frac(partial bold(r), partial v)))$ (cf. #link(<prop:parameterization-induced-orientation>)[the orientation induced by a parameterization]).
+  where the sign $plus.minus$ depends on whether the orientation of $limits(Sigma)^harpoon.rt$ is consistent with the direction of $lr((frac(partial bold(r), partial u) times frac(partial bold(r), partial v)))$ (cf. #link(<prop:parameterization-induced-orientation>)[the orientation induced by a parameterization]).
 ] <thm:surface-integral-vector-computation>
 
-In particular, if the surface $attach(Sigma, t: ⇀)$ is given by $z = z(x, y)$, $(x, y) in D_(x y)$, where $D_(x y)$ is a closed region with piecewise smooth boundary in the $x y$-plane, and $R(x, y, z)$ is continuous on $D_(x y)$, then
+In particular, if the surface $limits(Sigma)^harpoon.rt$ is given by $z = z(x, y)$, $(x, y) in D_(x y)$, where $D_(x y)$ is a closed region with piecewise smooth boundary in the $x y$-plane, and $R(x, y, z)$ is continuous on $D_(x y)$, then
 $
-  integral.double_(attach(Sigma, t: ⇀)) R(x, y, z) dif x dif y = plus.minus integral.double_(D_(x y)) R(x, y, z(x, y)) dif x dif y,
+  integral.double_(limits(Sigma)^harpoon.rt) R(x, y, z) dif x dif y = plus.minus integral.double_(D_(x y)) R(x, y, z(x, y)) dif x dif y,
 $
-where the sign $plus.minus$ depends on whether the orientation of $attach(Sigma, t: ⇀)$ is upward or downward.
+where the sign $plus.minus$ depends on whether the orientation of $limits(Sigma)^harpoon.rt$ is upward or downward.
 
 The two kinds of surface integrals are related by
 $
-  integral.double_(attach(Sigma, t: ⇀)) P dif y dif z + Q dif z dif x + R dif x dif y
+  integral.double_(limits(Sigma)^harpoon.rt) P dif y dif z + Q dif z dif x + R dif x dif y
   = integral.double_Sigma (P cos alpha + Q cos beta + R cos gamma) dif S,
 $
-where $cos alpha$, $cos beta$, $cos gamma$ are the direction cosines of the unit normal consistent with the orientation of $attach(Sigma, t: ⇀)$.
+where $cos alpha$, $cos beta$, $cos gamma$ are the direction cosines of the unit normal consistent with the orientation of $limits(Sigma)^harpoon.rt$.
 
 For a surface $z = z(x, y)$ oriented upward, the unit normal is
 $bold(n) = (-z_x, -z_y, 1) / sqrt(1 + z_x^2 + z_y^2)$,
 and the three terms reduce to one double integral over the projection $D_(x y)$:
 $
-  integral.double_(attach(Sigma, t: ⇀)) P dif y dif z + Q dif z dif x + R dif x dif y
+  integral.double_(limits(Sigma)^harpoon.rt) P dif y dif z + Q dif z dif x + R dif x dif y
   = integral.double_(D_(x y)) (-P z_x - Q z_y + R) dif x dif y,
 $
 with the whole sign reversed for the downward orientation.
 This *one-projection method* avoids projecting onto three coordinate planes separately.
 
 #example(name: "Surface Integral of a Vector Field by One Projection")[
-  Calculate $I = integral.double_(attach(Sigma, t: ⇀)) x dif y dif z + y dif z dif x + z dif x dif y$,
-  where $attach(Sigma, t: ⇀)$ is the upper hemisphere $z = sqrt(R^2 - x^2 - y^2)$ oriented upward.
+  Calculate $I = integral.double_(limits(Sigma)^harpoon.rt) x dif y dif z + y dif z dif x + z dif x dif y$,
+  where $limits(Sigma)^harpoon.rt$ is the upper hemisphere $z = sqrt(R^2 - x^2 - y^2)$ oriented upward.
 ] <ex:surface-integral-vector-one-projection>
 
 #solution[
@@ -10312,13 +10312,13 @@ This *one-projection method* avoids projecting onto three coordinate planes sepa
 
 === Green's Formula // 格林公式（原 leftbarTitle 非空壳，升级为小节）
 
-Consider two kinds of special oriented closed regions in the $x y$-plane, as shown in @fig:special-region-1. As for the first region $attach(M, t: ⇀)$, it consists of four oriented curves:
+Consider two kinds of special oriented closed regions in the $x y$-plane, as shown in @fig:special-region-1. As for the first region $limits(M)^harpoon.rt$, it consists of four oriented curves:
 
 #terms(
-  terms.item([$attach(C_1, t: ⇀)$], [$y = phi_1 (x)$, $x in [a, b]$.]),
-  terms.item([$attach(C_2, t: ⇀)$], [$x = b$, $y in [phi_1 (b), phi_2 (b)]$; it can be reduced to a point.]),
-  terms.item([$attach(C_3, t: ⇀)$], [$y = phi_2 (x)$, $x in [a, b]$.]),
-  terms.item([$attach(C_4, t: ⇀)$], [$x = a$, $y in [phi_1 (a), phi_2 (a)]$; it can be reduced to a point.]),
+  terms.item([$limits(C_1)^harpoon.rt$], [$y = phi_1 (x)$, $x in [a, b]$.]),
+  terms.item([$limits(C_2)^harpoon.rt$], [$x = b$, $y in [phi_1 (b), phi_2 (b)]$; it can be reduced to a point.]),
+  terms.item([$limits(C_3)^harpoon.rt$], [$y = phi_2 (x)$, $x in [a, b]$.]),
+  terms.item([$limits(C_4)^harpoon.rt$], [$x = a$, $y in [phi_1 (a), phi_2 (a)]$; it can be reduced to a point.]),
 )
 
 The second region is similar.
@@ -10328,35 +10328,35 @@ The second region is similar.
   caption: [Two special oriented closed regions.],
 ) <fig:special-region-1>
 
-Denote $integral.cont_(attach(partial M, t: ⇀))$ as the line integral along the boundary of the region $attach(M, t: ⇀)$; then we have the following lemma.
+Denote $integral.cont_(limits(partial M)^harpoon.rt)$ as the line integral along the boundary of the region $limits(M)^harpoon.rt$; then we have the following lemma.
 
 #lemma[
-  + Let $attach(partial M, t: ⇀)$ be the boundary of the first region in @fig:special-region-1, and let $P(x, y) in C^1 (M)$. Then
+  + Let $limits(partial M)^harpoon.rt$ be the boundary of the first region in @fig:special-region-1, and let $P(x, y) in C^1 (M)$. Then
     $
-      integral.cont_(attach(partial M, t: ⇀)) P dif x = -integral.double_(attach(M, t: ⇀)) frac(partial P, partial y) dif x and dif y.
+      integral.cont_(limits(partial M)^harpoon.rt) P dif x = -integral.double_(limits(M)^harpoon.rt) frac(partial P, partial y) dif x and dif y.
     $
-  + Let $attach(partial M, t: ⇀)$ be the boundary of the second region in @fig:special-region-1, and let $Q(x, y) in C^1 (M)$. Then
+  + Let $limits(partial M)^harpoon.rt$ be the boundary of the second region in @fig:special-region-1, and let $Q(x, y) in C^1 (M)$. Then
     $
-      integral.cont_(attach(partial M, t: ⇀)) Q dif y = integral.double_(attach(M, t: ⇀)) frac(partial Q, partial x) dif x and dif y.
+      integral.cont_(limits(partial M)^harpoon.rt) Q dif y = integral.double_(limits(M)^harpoon.rt) frac(partial Q, partial x) dif x and dif y.
     $
 ] <lem:green-special-regions>
 
 #theorem(name: "Green's Theorem")[
-  Let $attach(M, t: ⇀)$ be an oriented closed region in $bb(R)^2$, and $omega = P dif x + Q dif y in C^1 (M)$. If $attach(partial M, t: ⇀)$ can be split into finitely many first and second regions in @fig:special-region-1 simultaneously (non-overlapping, no shared interior points), then
+  Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^2$, and $omega = P dif x + Q dif y in C^1 (M)$. If $limits(partial M)^harpoon.rt$ can be split into finitely many first and second regions in @fig:special-region-1 simultaneously (non-overlapping, no shared interior points), then
   $
-    integral.cont_(attach(partial M, t: ⇀)) P dif x + Q dif y
-    & = integral.double_(attach(M, t: ⇀)) (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y \
+    integral.cont_(limits(partial M)^harpoon.rt) P dif x + Q dif y
+    & = integral.double_(limits(M)^harpoon.rt) (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y \
     & = integral.double_M (frac(partial Q, partial x) - frac(partial P, partial y)) dif x dif y,
   $
   where $dif x and dif y$ is the directed area element, while $dif x dif y$ is the unsigned area element. Equivalently,
   $
-    integral.cont_(attach(partial M, t: ⇀)) omega = integral.double_(attach(M, t: ⇀)) dif omega,
+    integral.cont_(limits(partial M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega,
   $
-  where $attach(partial M, t: ⇀)$ is the induced orientation of $attach(M, t: ⇀)$.
+  where $limits(partial M)^harpoon.rt$ is the induced orientation of $limits(M)^harpoon.rt$.
 ] <thm:green-theorem>
 
 #note[
-  The induced orientation mentioned above is characterized as follows. For a plane region $attach(M, t: ⇀)$ with positive (counterclockwise) orientation, the induced orientation of the boundary $attach(partial M, t: ⇀)$ is such that the region always lies on the left when one walks along the boundary with this orientation. For an oriented surface $attach(M, t: ⇀)$ in $bb(R)^3$ (as in Gauß's and Stokes' theorems below), the induced orientation of the boundary curve $attach(partial M, t: ⇀)$ is determined by the chosen unit normal field of the surface: walking along the boundary with the head pointing along the normal, the surface lies on the left; in particular, for Gauß's formula, the boundary surface $attach(partial M, t: ⇀)$ adopts the outward normal orientation.
+  The induced orientation mentioned above is characterized as follows. For a plane region $limits(M)^harpoon.rt$ with positive (counterclockwise) orientation, the induced orientation of the boundary $limits(partial M)^harpoon.rt$ is such that the region always lies on the left when one walks along the boundary with this orientation. For an oriented surface $limits(M)^harpoon.rt$ in $bb(R)^3$ (as in Gauß's and Stokes' theorems below), the induced orientation of the boundary curve $limits(partial M)^harpoon.rt$ is determined by the chosen unit normal field of the surface: walking along the boundary with the head pointing along the normal, the surface lies on the left; in particular, for Gauß's formula, the boundary surface $limits(partial M)^harpoon.rt$ adopts the outward normal orientation.
 ] <note:induced-orientation>
 // 兑现 P0-3（§14.5）边界诱导定向前瞻承诺。
 
@@ -10385,13 +10385,13 @@ Denote $integral.cont_(attach(partial M, t: ⇀))$ as the line integral along th
 
 === Gauß's Formula // 高斯公式（原 leftbarTitle 非空壳，升级为小节）
 
-Consider three kinds of special oriented closed surfaces in $bb(R)^3$, as shown in @fig:special-region-2. As for the first surface $attach(M, t: ⇀)$ ($attach(M, t: ⇀)$ adopts the positive orientation (right-hand system), and $attach(partial M, t: ⇀)$ adopts the outward normal orientation), it consists of three oriented surfaces:
+Consider three kinds of special oriented closed surfaces in $bb(R)^3$, as shown in @fig:special-region-2. As for the first surface $limits(M)^harpoon.rt$ ($limits(M)^harpoon.rt$ adopts the positive orientation (right-hand system), and $limits(partial M)^harpoon.rt$ adopts the outward normal orientation), it consists of three oriented surfaces:
 
 #terms(
-  terms.item([$attach(Sigma_1, t: ⇀)$], [$z = phi_1 (x, y)$, $(x, y) in Delta_1$.]),
-  terms.item([$attach(Sigma_2, t: ⇀)$], [$z = phi_2 (x, y)$, $(x, y) in Delta_1$.]),
+  terms.item([$limits(Sigma_1)^harpoon.rt$], [$z = phi_1 (x, y)$, $(x, y) in Delta_1$.]),
+  terms.item([$limits(Sigma_2)^harpoon.rt$], [$z = phi_2 (x, y)$, $(x, y) in Delta_1$.]),
   terms.item(
-    [$attach(Sigma_3, t: ⇀)$],
+    [$limits(Sigma_3)^harpoon.rt$],
     [A cylindrical surface taking $partial Delta_1$ as the directrix, with the generatrix paralleling to the $O z$-axis; of course, it can also be reduced to a closed curve.],
   ),
 )
@@ -10403,49 +10403,49 @@ The second and third surfaces are similar.
   caption: [Three special oriented closed surfaces (only the first two are shown).],
 ) <fig:special-region-2>
 
-Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over the boundary of the region $attach(M, t: ⇀)$; then we have the following lemma.
+Denote $integral.surf_(limits(partial M)^harpoon.rt)$ as the surface integral over the boundary of the region $limits(M)^harpoon.rt$; then we have the following lemma.
 
 #lemma[
-  + Let $attach(partial M, t: ⇀)$ be the boundary of the first surface in @fig:special-region-2, and let $R(x, y, z) in C^1 (M)$. Then
+  + Let $limits(partial M)^harpoon.rt$ be the boundary of the first surface in @fig:special-region-2, and let $R(x, y, z) in C^1 (M)$. Then
     $
-      integral.surf_(attach(partial M, t: ⇀)) R dif x and dif y = integral.vol_(attach(M, t: ⇀)) frac(partial R, partial z) dif x and dif y and dif z.
+      integral.surf_(limits(partial M)^harpoon.rt) R dif x and dif y = integral.vol_(limits(M)^harpoon.rt) frac(partial R, partial z) dif x and dif y and dif z.
     $
-  + Let $attach(partial M, t: ⇀)$ be the boundary of the second surface in @fig:special-region-2, and let $P(x, y, z) in C^1 (M)$. Then
+  + Let $limits(partial M)^harpoon.rt$ be the boundary of the second surface in @fig:special-region-2, and let $P(x, y, z) in C^1 (M)$. Then
     $
-      integral.surf_(attach(partial M, t: ⇀)) P dif y and dif z = integral.vol_(attach(M, t: ⇀)) frac(partial P, partial x) dif x and dif y and dif z.
+      integral.surf_(limits(partial M)^harpoon.rt) P dif y and dif z = integral.vol_(limits(M)^harpoon.rt) frac(partial P, partial x) dif x and dif y and dif z.
     $
-  + Let $attach(partial M, t: ⇀)$ be the boundary of the third surface in @fig:special-region-2, and let $Q(x, y, z) in C^1 (M)$. Then
+  + Let $limits(partial M)^harpoon.rt$ be the boundary of the third surface in @fig:special-region-2, and let $Q(x, y, z) in C^1 (M)$. Then
     $
-      integral.surf_(attach(partial M, t: ⇀)) Q dif z and dif x = integral.vol_(attach(M, t: ⇀)) frac(partial Q, partial y) dif x and dif y and dif z.
+      integral.surf_(limits(partial M)^harpoon.rt) Q dif z and dif x = integral.vol_(limits(M)^harpoon.rt) frac(partial Q, partial y) dif x and dif y and dif z.
     $
 ] <lem:gauss-special-regions>
 
 #theorem(name: "Gauß's Theorem")[
-  Let $attach(M, t: ⇀)$ be an oriented closed region in $bb(R)^3$, and $omega = P dif y and dif z + Q dif z and dif x + R dif x and dif y in C^1 (M)$. If $attach(partial M, t: ⇀)$ can be split into finitely many first, second and third regions in @fig:special-region-2 simultaneously (non-overlapping, no shared interior points), then
+  Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^3$, and $omega = P dif y and dif z + Q dif z and dif x + R dif x and dif y in C^1 (M)$. If $limits(partial M)^harpoon.rt$ can be split into finitely many first, second and third regions in @fig:special-region-2 simultaneously (non-overlapping, no shared interior points), then
   $
-    integral.surf_(attach(partial M, t: ⇀)) P dif y and dif z + Q dif z and dif x + R dif x and dif y
-    = integral.vol_(attach(M, t: ⇀)) (frac(partial P, partial x) + frac(partial Q, partial y) + frac(partial R, partial z)) dif x and dif y and dif z,
+    integral.surf_(limits(partial M)^harpoon.rt) P dif y and dif z + Q dif z and dif x + R dif x and dif y
+    = integral.vol_(limits(M)^harpoon.rt) (frac(partial P, partial x) + frac(partial Q, partial y) + frac(partial R, partial z)) dif x and dif y and dif z,
   $
   or equivalently,
   $
-    integral.surf_(attach(partial M, t: ⇀)) omega = integral.vol_(attach(M, t: ⇀)) dif omega,
+    integral.surf_(limits(partial M)^harpoon.rt) omega = integral.vol_(limits(M)^harpoon.rt) dif omega,
   $
-  where $attach(partial M, t: ⇀)$ is the induced orientation of $attach(M, t: ⇀)$.
+  where $limits(partial M)^harpoon.rt$ is the induced orientation of $limits(M)^harpoon.rt$.
 ] <thm:gauss-theorem>
 // 注：tex 中该定理 "then:" 连续重复两次，且分割条件误引 fig:SpecialRegion1（应为 fig:SpecialRegion2），均已修正。
 
 #example(name: "Gauß's Theorem with a Completing Disk")[
-  Calculate $I = integral.double_(attach(Sigma, t: ⇀)) x dif y dif z + y dif z dif x + z dif x dif y$,
-  where $attach(Sigma, t: ⇀)$ is the upper hemisphere $z = sqrt(R^2 - x^2 - y^2)$ oriented upward.
+  Calculate $I = integral.double_(limits(Sigma)^harpoon.rt) x dif y dif z + y dif z dif x + z dif x dif y$,
+  where $limits(Sigma)^harpoon.rt$ is the upper hemisphere $z = sqrt(R^2 - x^2 - y^2)$ oriented upward.
 ] <ex:gauss-completion>
 
 #solution[
-  The surface $attach(Sigma, t: ⇀)$ is not closed.
+  The surface $limits(Sigma)^harpoon.rt$ is not closed.
   Add the disk $Sigma_1 = lr({(x, y, z) in bb(R)^3 | x^2 + y^2 <= R^2, z = 0})$ oriented downward;
   then $Sigma + Sigma_1$ bounds the upper half ball $Omega$ with the outward orientation.
   By Gauß's theorem,
   $
-    I + integral.double_(attach(Sigma_1, t: ⇀)) x dif y dif z + y dif z dif x + z dif x dif y
+    I + integral.double_(limits(Sigma_1)^harpoon.rt) x dif y dif z + y dif z dif x + z dif x dif y
     = integral.triple_Omega (1 + 1 + 1) dif V
     = 3 dot (2 pi R^3)/3
     = 2 pi R^3.
@@ -10458,18 +10458,18 @@ Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over 
 === Stokes' Formula // 斯托克斯定理（原 leftbarTitle 非空壳，升级为小节）
 
 #theorem(name: "Stokes' Theorem")[
-  Let $attach(M, t: ⇀)$ be an oriented smooth surface in $bb(R)^3$ with boundary $attach(partial M, t: ⇀)$, and $omega = P dif x + Q dif y + R dif z in C^1 (M)$. Then
+  Let $limits(M)^harpoon.rt$ be an oriented smooth surface in $bb(R)^3$ with boundary $limits(partial M)^harpoon.rt$, and $omega = P dif x + Q dif y + R dif z in C^1 (M)$. Then
   $
-    integral.cont_(attach(partial M, t: ⇀)) P dif x + Q dif y + R dif z
-    & = integral.double_(attach(M, t: ⇀)) (frac(partial R, partial y) - frac(partial Q, partial z)) dif y and dif z \
+    integral.cont_(limits(partial M)^harpoon.rt) P dif x + Q dif y + R dif z
+    & = integral.double_(limits(M)^harpoon.rt) (frac(partial R, partial y) - frac(partial Q, partial z)) dif y and dif z \
     & quad + (frac(partial P, partial z) - frac(partial R, partial x)) dif z and dif x + (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y \
-    & = integral.double_(attach(M, t: ⇀)) mat(
+    & = integral.double_(limits(M)^harpoon.rt) mat(
       delim: "|",
       dif y and dif z, dif z and dif x, dif x and dif y;
       frac(partial, partial x), frac(partial, partial y), frac(partial, partial z);
       P, Q, R,
     ) \
-    & = integral.double_(attach(M, t: ⇀)) mat(
+    & = integral.double_(limits(M)^harpoon.rt) mat(
       delim: "|",
       cos alpha, cos beta, cos gamma;
       frac(partial, partial x), frac(partial, partial y), frac(partial, partial z);
@@ -10478,22 +10478,22 @@ Denote $integral.surf_(attach(partial M, t: ⇀))$ as the surface integral over 
   $
   or equivalently,
   $
-    integral.cont_(attach(partial M, t: ⇀)) omega = integral.double_(attach(M, t: ⇀)) dif omega,
+    integral.cont_(limits(partial M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega,
   $
-  where $attach(partial M, t: ⇀)$ is the induced orientation of $attach(M, t: ⇀)$.
+  where $limits(partial M)^harpoon.rt$ is the induced orientation of $limits(M)^harpoon.rt$.
 ] <thm:stokes-theorem>
 // 注：tex 中该定理条件写作 omega in C^1(Sigma)，与曲面记号 M 不一致，已统一为 C^1(M)。
 
 #example(name: "Stokes' Formula for a Triangle")[
-  Calculate $I = integral.cont_(attach(Gamma, t: ⇀)) z dif x + x dif y + y dif z$,
-  where $attach(Gamma, t: ⇀)$ is the boundary of the triangle cut from the plane $x + y + z = 1$
+  Calculate $I = integral.cont_(limits(Gamma)^harpoon.rt) z dif x + x dif y + y dif z$,
+  where $limits(Gamma)^harpoon.rt$ is the boundary of the triangle cut from the plane $x + y + z = 1$
   by the coordinate planes,
   oriented counterclockwise as seen from the positive $z$-axis.
 ] <ex:stokes-triangle>
 
 #solution[
   Let $Sigma$ be the triangular part of the plane $x + y + z = 1$ in the first octant.
-  The unit normal induced by the orientation of $attach(Gamma, t: ⇀)$ is
+  The unit normal induced by the orientation of $limits(Gamma)^harpoon.rt$ is
   $bold(n) = 1/sqrt(3) (1, 1, 1)$,
   so $cos alpha = cos beta = cos gamma = 1/sqrt(3)$.
   By Stokes' formula,
@@ -10557,9 +10557,9 @@ We only discuss the case of $1$-forms in $bb(R)^2$ below.
 
 Let $omega = P(x, y) dif x + Q(x, y) dif y$ be a $C^1$ $1$-form on an open set $U subset.eq bb(R)^2$. For any points $A, B in U$, a piecewise smooth simple closed curve on $U$ is called a *path* from $A$ to $B$ if it starts at $A$ and ends at $B$.
 
-For any path $attach(L, t: ⇀)$ from $A$ to $B$, if
-$ integral_(attach(L, t: ⇀)) omega = integral_A^B omega, $
-where the right-hand side is independent of the choice of the path $attach(L, t: ⇀)$, then the line integral of $omega$ is said to be *path-independent* on $U$.
+For any path $limits(L)^harpoon.rt$ from $A$ to $B$, if
+$ integral_(limits(L)^harpoon.rt) omega = integral_A^B omega, $
+where the right-hand side is independent of the choice of the path $limits(L)^harpoon.rt$, then the line integral of $omega$ is said to be *path-independent* on $U$.
 
 #theorem[
   Let $U subset.eq bb(R)^2$ be a simply connected open region, and $omega = P(x, y) dif x + Q(x, y) dif y$ be a $C^1$ $1$-form on $U$. Then the following statements are equivalent:
@@ -10573,38 +10573,38 @@ where the right-hand side is independent of the choice of the path $attach(L, t:
   + $omega$ is closed on $U$, i.e.,
     $ frac(partial P, partial y) = frac(partial Q, partial x). $
   + The line integral of $omega$ is path-independent on $U$.
-  + For any piecewise smooth simple closed curve $attach(L, t: ⇀)$ on $U$,
-    $ integral.cont_(attach(L, t: ⇀)) omega = 0. $
+  + For any piecewise smooth simple closed curve $limits(L)^harpoon.rt$ on $U$,
+    $ integral.cont_(limits(L)^harpoon.rt) omega = 0. $
 ] <thm:path-independence-criteria>
 // 注：tex 原文写作 "U in R^2"，按单连通开集含义应为 "U subset.eq R^2"，已修正。
 
 #example[
   Calculate
-  $ I = integral.cont_(attach(C, t: ⇀)) frac(cos(bold(r), bold(n)), r) dif s, $
-  where $attach(C, t: ⇀)$ is a piecewise smooth simple closed curve, $bold(r) = (x, y)$, $r = norm(bold(r)) = sqrt(x^2 + y^2)$, and $bold(n)$ is the unit outward normal vector of $attach(C, t: ⇀)$.
+  $ I = integral.cont_(limits(C)^harpoon.rt) frac(cos(bold(r), bold(n)), r) dif s, $
+  where $limits(C)^harpoon.rt$ is a piecewise smooth simple closed curve, $bold(r) = (x, y)$, $r = norm(bold(r)) = sqrt(x^2 + y^2)$, and $bold(n)$ is the unit outward normal vector of $limits(C)^harpoon.rt$.
 ] <ex:angle-form-integral>
 // 注：tex 原文未提供解答，此处解答为迁移时补写（经用户确认）。
 
 #solution[
-  Assume that $attach(C, t: ⇀)$ is positively oriented. Since $bold(n) dif s = (dif y, -dif x)$, we have
-  $ I = integral.cont_(attach(C, t: ⇀)) frac(x dif y - y dif x, x^2 + y^2), $
+  Assume that $limits(C)^harpoon.rt$ is positively oriented. Since $bold(n) dif s = (dif y, -dif x)$, we have
+  $ I = integral.cont_(limits(C)^harpoon.rt) frac(x dif y - y dif x, x^2 + y^2), $
   whose integrand is the *angle form* $omega = dif theta$, where $theta$ denotes the polar angle. Let $P = frac(-y, x^2 + y^2)$ and $Q = frac(x, x^2 + y^2)$; then
   $
     frac(partial Q, partial x) - frac(partial P, partial y) = frac(y^2 - x^2, (x^2 + y^2)^2) - frac(y^2 - x^2, (x^2 + y^2)^2) = 0,
   $
   wherever $(x, y) != (0, 0)$.
 
-  + *The origin lies outside $attach(C, t: ⇀)$.* Let $D$ be the interior of $attach(C, t: ⇀)$. Since $P, Q in C^1$ on a neighborhood of the closed region $overline(D)$, #link(<thm:green-theorem>)[Green's theorem] yields
+  + *The origin lies outside $limits(C)^harpoon.rt$.* Let $D$ be the interior of $limits(C)^harpoon.rt$. Since $P, Q in C^1$ on a neighborhood of the closed region $overline(D)$, #link(<thm:green-theorem>)[Green's theorem] yields
     $ I = integral.double_D 0 dif x dif y = 0. $
-  + *The origin lies inside $attach(C, t: ⇀)$.* Let $C_epsilon$ be the circle $x^2 + y^2 = epsilon^2$ oriented clockwise, with $epsilon > 0$ small enough that the disk it bounds lies inside $attach(C, t: ⇀)$. Applying Green's theorem to the annular region between $attach(C, t: ⇀)$ and $C_epsilon$, on whose closure $P, Q in C^1$, gives
-    $ 0 = I + integral.cont_(attach(C_epsilon, t: ⇀)) omega, $
+  + *The origin lies inside $limits(C)^harpoon.rt$.* Let $C_epsilon$ be the circle $x^2 + y^2 = epsilon^2$ oriented clockwise, with $epsilon > 0$ small enough that the disk it bounds lies inside $limits(C)^harpoon.rt$. Applying Green's theorem to the annular region between $limits(C)^harpoon.rt$ and $C_epsilon$, on whose closure $P, Q in C^1$, gives
+    $ 0 = I + integral.cont_(limits(C_epsilon)^harpoon.rt) omega, $
     and the parametrization $x = epsilon cos t, y = epsilon sin t$ $(t: 2 pi -> 0)$ gives
-    $ integral.cont_(attach(C_epsilon, t: ⇀)) omega = integral_(2 pi)^0 dif t = -2 pi, $
+    $ integral.cont_(limits(C_epsilon)^harpoon.rt) omega = integral_(2 pi)^0 dif t = -2 pi, $
     hence $I = 2 pi$.
 
   In summary,
-  $ I = cases(2 pi quad & "if the origin lies inside" attach(C, t: ⇀), 0 quad & "otherwise") $
-  (with the sign reversed if $attach(C, t: ⇀)$ is negatively oriented), i.e., $I slash 2 pi$ is the number of turns that $attach(C, t: ⇀)$ makes around the origin.
+  $ I = cases(2 pi quad & "if the origin lies inside" limits(C)^harpoon.rt, 0 quad & "otherwise") $
+  (with the sign reversed if $limits(C)^harpoon.rt$ is negatively oriented), i.e., $I slash 2 pi$ is the number of turns that $limits(C)^harpoon.rt$ makes around the origin.
 ]
 
 // B16: ch16 Integrals with Variable Parameters（变参积分）
