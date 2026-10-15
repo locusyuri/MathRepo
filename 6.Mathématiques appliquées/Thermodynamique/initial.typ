@@ -1902,95 +1902,48 @@ integrating $(delta Q)/T$ along that process; one integrates along any
   ran.
 ] <caution:heat-vs-entropy>
 
-== Entropy and Irreversibility // 熵与不可逆性
+== The Microscopic Meaning of Entropy // 熵的微观意义
 
-#note(title: "Reversibility, formally")[
-  A process is *reversible* if the system
-  and the environment can be restored to their initial states with no
-  other change. This was anticipated in
-  #link(<def:quasi-static-process>)[Chapter 2]: quasi-statics plus the
-  absence of dissipative effects (friction, unhindered heat flow
-  across finite temperature differences, free expansion) is the
-  practical recipe for reversibility. Every irreversibility mechanism
-  generates entropy, as the theorem below makes quantitative.
-] <note:reversibility-defined>
+The second law so far is a set of macroscopic prohibitions. This section opens the box and looks at the molecules: the three signature irreversibilities of nature all push a system of many molecules from ordered towards disordered motion, and the quantity that measures this disorder turns out to be nothing other than the entropy itself.
 
-#law(name: "Principle of Entropy Increase")[
-  For any process of an isolated system,
-  $
-    Delta S >= 0 quad "with equality iff the process is reversible."
-  $
-  Equivalently, for any process whatsoever,
-  $
-    Delta S_("system") + Delta S_("environment") >= 0.
-  $
-] <law:entropy-increase>
+=== From Order to Disorder // 从有序到无序
 
-#proof[
-  Take an irreversible process carrying an isolated system from
-  $A$ to $B$; the Clausius inequality applied to the cycle formed by the
-  actual process and an arbitrary reversible return path $B -> A$ gives
-  $
-    integral_A^B (delta Q) / T + integral_B^A (delta Q_("rev")) / T <= 0,
-  $
-  and the first integral vanishes ($delta Q = 0$ in isolation), so
-  $Delta S = S_B - S_A >= 0$, strict for the irreversible process. For a
-  non-isolated system, enlarge the boundary: system plus environment is
-  isolated, and their entropy sum obeys the same inequality.
-]
+Three everyday irreversibilities make the pattern visible:
 
-#example(name: "Free expansion, explained")[
-  An ideal gas doubling its volume in
-  adiabatic free expansion (§2.6: $W = Q = 0$, $Delta U = 0$, hence
-  $T$ unchanged) has entropy change — computed on the reversible
-  isothermal path between the same endpoints —
-  $
-    Delta S = nu R ln(V_2 / V_1) = nu R ln 2 > 0.
-  $
-  The first law saw nothing ($Delta U = 0$); the entropy increase
-  declares the process irreversible and predicts it never runs
-  backwards. This fulfils the promissory note of
-  #link(<ex:free-expansion>)[the free-expansion example].
-] <ex:free-expansion-entropy>
+- *work-heat conversion*: work can be converted completely into heat — rub your hands and they warm up — but heat can never be converted completely into work in a cycle, as #link(<law:kelvin-planck>)[the Kelvin-Planck statement] forbids;
+- *heat conduction*: heat flows spontaneously from hot to cold and never back of its own accord;
+- *free expansion*: a gas released into vacuum expands spontaneously and never recompresses itself.
 
-#example(name: "Heat conduction")[
-  Heat $Q$ flows directly from a body at $T_h$ to a
-  body at $T_c < T_h$. Each body changes at fixed temperature, so
-  $
-    Delta S = Q / T_c - Q / T_h = Q (1/T_c - 1/T_h) > 0:
-  $
-  conduction across a finite temperature difference generates entropy
-  — precisely why it is irreversible, and why reversible heat exchange
-  requires reservoirs differing infinitesimally.
-] <ex:heat-transfer-entropy>
+In each case the reverse process is not forbidden by energy conservation — the first law would happily allow it — yet it never happens. What the three share is the fate of the molecules: motion initially concentrated (a falling weight, a hot body, a gas confined to one corner) spreads out over many molecules moving incoherently. Natural processes always proceed in the direction that carries the motion of large numbers of molecules from *order* towards *disorder*.
 
-#caution(title: "Entropy of non-isolated systems")[
-  The entropy of a *system* may
-  decrease: a refrigerator pumps heat out of its cold box, freezing
-  water crystallises, living organisms build order — each at the price
-  of exporting more entropy to the environment. The principle
-  constrains only the *total*: $Delta S_("system") + Delta S_("environment") >= 0$
-  holds without exception.
-] <caution:entropy-nonisolated>
+=== Thermodynamic Probability // 热力学概率
 
-#note(title: "Statistical meaning")[
-  The molecular origin of entropy was
-  anticipated by the kinetic theory of Chapter 1: Boltzmann's
-  $H$-function decreases monotonically in collisions, and
-  #link(<note:h-statistical>)[its interpretation] as a negative
-  logarithm of molecular disorder prefigures the identity
-  $
-    S = k_B ln W,
-  $
-  where $W$ counts the microscopic configurations compatible with the
-  macrostate. Free expansion then increases entropy because more
-  microstates fit the larger volume; the second law becomes a
-  probability statement. The rigorous construction — microstates,
-  ensembles, and the derivation of all thermodynamic potentials — is
-  the programme of Part III (Chapters 12-13).
-] <note:statistical-meaning>
+"Disorder" must be made countable. Distinguish the two levels of description: a *microstate* specifies the position and velocity of every molecule, while a *macrostate* specifies only coarse quantities — the pressure, the temperature, and how the molecules are distributed. Many microstates typically correspond to one macrostate.
 
-The logarithm in the identity above is not an ansatz but a necessity. For two *independent* systems the compatible microstates multiply, $Omega_12 = Omega_1 Omega_2$, while entropy as an extensive quantity must add, $S_12 = S_1 + S_2$; only the logarithm turns products into sums, so $S prop ln Omega$ up to one universal constant.
+#definition(name: "Thermodynamic Probability")[
+  The *thermodynamic probability* of a macrostate is the number $Omega$ of microstates (microscopic configurations) compatible with it.
+] <def:thermodynamic-probability>
+
+#example(name: "Four Molecules in a Two-Compartment Box")[
+  Divide an isolated box into left and right halves and place $N = 4$ distinguishable molecules $a, b, c, d$ inside. A microstate assigns each molecule to a side; a macrostate only counts them: $k$ molecules on the left and $4 - k$ on the right. There are $2^4 = 16$ microstates in all, distributed among the five macrostates as
+
+  #tex-table(
+    ([macrostate $k | 4 - k$], [$0 | 4$], [$1 | 3$], [$2 | 2$], [$3 | 1$], [$4 | 0$]),
+    ([microstates $Omega$], [$1$], [$4$], [$6$], [$4$], [$1$]),
+  )
+
+  The counts are the binomial coefficients $binom(4, k)$ — one row of Pascal's triangle.
+] <ex:four-molecule-model>
+
+#note(title: "Equal a priori probabilities")[
+  The dynamical input of the whole construction is a single assumption: for an isolated system in equilibrium, all microstates occur with equal probability. It is the statistical counterpart of "no position in the box is special".
+] <note:equal-a-priori>
+
+With equal weights, the probability of finding the macrostate with $k$ molecules on the left is $P(k) = Omega / 2^4 = binom(4, k) / 16$, giving $1/16, 4/16, 6/16, 4/16, 1/16$ across the five macrostates. The equilibrium macrostate — here $2 | 2$, where the gas fills both halves uniformly — is the one with the *largest* $Omega$, and as $N$ grows to macroscopic values $N tilde 10^23$ the maximum sharpens so much that fluctuations away from uniformity become unobservably rare. The conclusion is general: $Omega$ measures the *disorder* of molecular motion, and the equilibrium state is the most disordered one.
+
+=== Boltzmann Entropy // 玻尔兹曼熵
+
+The logarithm is not an ansatz but a necessity. For two *independent* systems the compatible microstates multiply, $Omega_12 = Omega_1 Omega_2$, while entropy as an extensive quantity must add, $S_12 = S_1 + S_2$; only the logarithm turns products into sums, so $S prop ln Omega$ up to one universal constant.
 
 #definition(name: "Boltzmann Entropy")[
   For a macrostate of an isolated system, let $Omega$ be the number of
@@ -2024,10 +1977,75 @@ The logarithm in the identity above is not an ansatz but a necessity. For two *i
   $Delta S = k_B ln (Omega_2 / Omega_1) = N k_B ln (V_2 / V_1) = nu N_A k_B ln (V_2 / V_1) = nu R ln (V_2 / V_1)$. On the thermodynamic side, the quasi-static isothermal expansion of an ideal gas absorbs $Q_"rev" = W = nu R T ln (V_2 / V_1)$ (§2.5), so the Clausius definition gives $Delta S = Q_"rev" / T = nu R ln (V_2 / V_1)$ — the two agree identically, and the proportionality constant of $S prop ln Omega$ is thereby fixed as $k_B$.
 ]
 
-The identification extends far beyond this example — the entropy of
-mixing, the equilibration of heat flow, all of Part III — and it is
-this agreement that makes $k_B$ the exchange rate between information
-and heat.
+This dovetails with the kinetic theory of Chapter 1: Boltzmann's $H$-function decreases monotonically under collisions, and #link(<note:h-statistical>)[its interpretation] as a negative logarithm of molecular disorder prefigures exactly the construction above.
+
+The identification extends far beyond this example — the entropy of mixing, the equilibration of heat flow, all of Part III — and it is this agreement that makes $k_B$ the exchange rate between information and heat.
+
+=== The Entropy Increase Principle // 熵增原理
+
+Which processes actually realise $Delta S > 0$? By #link(<def:reversible-process>)[the criterion of Chapter 2], exactly the irreversible ones — and the microscopic picture now makes the principle quantitative.
+
+#law(name: "Principle of Entropy Increase")[
+  For any process of an isolated system,
+  $
+    Delta S >= 0 quad "with equality iff the process is reversible."
+  $
+  Equivalently, for any process whatsoever,
+  $
+    Delta S_("system") + Delta S_("environment") >= 0.
+  $
+] <law:entropy-increase>
+
+#proof[
+  Take an irreversible process carrying an isolated system from
+  $A$ to $B$; the Clausius inequality applied to the cycle formed by the
+  actual process and an arbitrary reversible return path $B -> A$ gives
+  $
+    integral_A^B (delta Q) / T + integral_B^A (delta Q_("rev")) / T <= 0,
+  $
+  and the first integral vanishes ($delta Q = 0$ in isolation), so
+  $Delta S = S_B - S_A >= 0$, strict for the irreversible process. For a
+  non-isolated system, enlarge the boundary: system plus environment is
+  isolated, and their entropy sum obeys the same inequality.
+]
+
+Microscopically, the principle is a statement about probability. An isolated system wanders through its microstates with equal weights, so macrostates with larger $Omega$ are visited overwhelmingly more often: a system found in a macrostate of small $Omega$ drifts, with overwhelming probability, towards one with larger $Omega$. In Boltzmann's language the entropy change of any spontaneous process reads $Delta S = k_B ln (Omega_2 / Omega_1) >= 0$ — *irreversibility is the drift towards the probable*, and a reversible process is one that leaves $Omega$ unchanged. This is the microscopic reading of the three phenomena with which this section opened.
+
+#example(name: "Free expansion, explained")[
+  An ideal gas doubling its volume in
+  adiabatic free expansion (§2.6: $W = Q = 0$, $Delta U = 0$, hence
+  $T$ unchanged) has entropy change — computed on the reversible
+  isothermal path between the same endpoints —
+  $
+    Delta S = nu R ln(V_2 / V_1) = nu R ln 2 > 0.
+  $
+  The first law saw nothing ($Delta U = 0$); the entropy increase
+  declares the process irreversible and predicts it never runs
+  backwards. Microscopically, $Omega prop V^N$: doubling the volume
+  multiplies the accessible microstates by $2^N$, and the gas never
+  finds its way back among them. This fulfils the promissory note of
+  #link(<ex:free-expansion>)[the free-expansion example].
+] <ex:free-expansion-entropy>
+
+#example(name: "Heat conduction")[
+  Heat $Q$ flows directly from a body at $T_h$ to a
+  body at $T_c < T_h$. Each body changes at fixed temperature, so
+  $
+    Delta S = Q / T_c - Q / T_h = Q (1/T_c - 1/T_h) > 0:
+  $
+  conduction across a finite temperature difference generates entropy
+  — precisely why it is irreversible, and why reversible heat exchange
+  requires reservoirs differing infinitesimally.
+] <ex:heat-transfer-entropy>
+
+#caution(title: "Entropy of non-isolated systems")[
+  The entropy of a *system* may
+  decrease: a refrigerator pumps heat out of its cold box, freezing
+  water crystallises, living organisms build order — each at the price
+  of exporting more entropy to the environment. The principle
+  constrains only the *total*: $Delta S_("system") + Delta S_("environment") >= 0$
+  holds without exception.
+] <caution:entropy-nonisolated>
 
 == Thermodynamic Temperature Scale // 热力学温标
 
@@ -2387,7 +2405,7 @@ the way down.
   substance never occupies the perfectly ordered state the theorem
   assumes; thermodynamic measurements probe the frozen ensemble. The
   counting $S = k_B ln W_0$ is
-  #link(<note:statistical-meaning>)[Boltzmann's formula] doing real
+  #link(<def:boltzmann-entropy>)[Boltzmann's formula] doing real
   thermodynamic work; its derivation from first principles is the
   business of Chapter 12.
 ] <note:third-law-statistical>
@@ -2942,10 +2960,12 @@ hydrodynamics, beyond this note's scope.
 //     - 熵是状态函数的证明
 //     - 熵的计算方法
 
-//   Section 3.4: Entropy and Irreversibility (熵与不可逆性)
-//     - 熵增原理
+//   Section 3.4: The Microscopic Meaning of Entropy (熵的微观意义)
+//     - 从有序到无序：功热转换、热传导、绝热自由膨胀三现象
+//     - 热力学概率 Ω（四分子模型、等概率假设）
+//     - 玻尔兹曼熵及其与 Clausius 熵的一致性
+//     - 熵增原理及其微观意义
 //     - 不可逆过程中的熵变计算
-//     - 热力学第二定律的统计意义概述
 
 //   Section 3.5: Thermodynamic Temperature Scale (热力学温标)
 //     - 基于卡诺循环的绝对温标
