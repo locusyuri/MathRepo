@@ -422,7 +422,7 @@ $
 In another definition, $f$ is defined on a measurable subset $E$ of $X$, then we can view $f$ as a globally measurable function on the subspace $(E, cal(S)|E)$, where $cal(S)|E = {A inter E : A in cal(S)}$ is the trace $sigma$-algebra on $E$. Thus, the two definitions are equivalent.
 
 
-Specially, if $Y = overline(bb(R))$#footnote[Here, $overline(bb(R))$ denotes the extended real line] and $cal(T) = cal(B)(overline(bb(R)))$ is the Borel $sigma$-algebra on $bb(R)$, then a function $f: X -> bb(R)$ is called *(real) measurable* if it is $cal(S)"-"cal(B)(bb(R))$ measurable.
+In particular, if $Y = overline(bb(R))$#footnote[Here, $overline(bb(R))$ denotes the extended real line] and $cal(T) = cal(B)(overline(bb(R)))$ is the Borel $sigma$-algebra on $bb(R)$, then a function $f: X -> bb(R)$ is called *(real) measurable* if it is $cal(S)"-"cal(B)(bb(R))$ measurable.
 
 #proposition(name: "Borel and Lebesgue Measurable Functions")[
   // 当定义域配备不同的 σ-代数时，可测函数有不同的名称。
@@ -1841,10 +1841,60 @@ The Dini derivatives provide pointwise slope information, and the Vitali coverin
 
 == Functions of Bounded Variation and Absolute Continuity // 有界变差函数与绝对连续函数
 
-// 本节引入绝对连续函数作为 BV 函数的"表现良好"的子类，
-// 不重新定义 BV（留给 Part IV），只聚焦 AC 与 BV 的关系和 AC 的结构性质
+// 本节先正式定义有界变差（BV）函数，给出其基本性质、典型例子与 Jordan 分解
+// （该部分迁移自数学分析笔记 ch14 原末节）；
+// 再引入绝对连续函数作为 BV 函数的"表现良好"的子类，聚焦 AC 与 BV 的关系和 AC 的结构性质
 
-As noted in Section 4.1, every function of bounded variation (BV) on $[a, b]$ admits a decomposition into an absolutely continuous part, a jump part, and a singular part. This section introduces *absolute continuity* as the well-behaved subclass of BV functions — the class for which the Newton-Leibniz formula holds. We do not re-define BV or re-state the Jordan decomposition here (these belong to Part IV); instead, we focus on the intrinsic properties of absolutely continuous functions and their relationship to integration.
+As noted in Section 4.1, every function of bounded variation on $[a, b]$ admits a decomposition into an absolutely continuous part, a jump part, and a singular part. This section first defines *bounded variation* precisely, presents the basic properties of BV functions and the Jordan decomposition, and then introduces *absolute continuity* as the well-behaved subclass of BV functions — the class for which the Newton-Leibniz formula holds. We focus on the intrinsic properties of absolutely continuous functions and their relationship to integration.
+
+#definition(name: "Bounded Variation")[
+  Let $f: [a, b] -> bb(R)$ be a real-valued function defined on the closed interval $[a, b]$. For any partition $P = {x_0, x_1, dots, x_n}$ of $[a, b]$ with $a = x_0 < x_1 < dots < x_n = b$, define the variation of $f$ on the partition $P$ as
+  $ V(f, P) = sum_(i=1)^n abs(f(x_i) - f(x_(i-1))). $
+
+  The total variation of $f$ on $[a, b]$ is defined as
+  $ V_a^b(f) = sup_P V(f, P), $
+  where the supremum is taken over all possible partitions $P$ of $[a, b]$. If $V_a^b(f) < oo$, then $f$ is said to be of *bounded variation* on $[a, b]$, denoted as $f in "BV"([a, b])$.
+] <def:bounded-variation>
+
+#property[
+  + $"BV"([a, b]) subset B([a, b])$, where $B([a, b])$ denotes the set of all bounded functions on $[a, b]$.
+  + For any $f, g in "BV"([a, b])$ and any scalars $alpha, beta in bb(R)$, the linear combination $alpha f + beta g in "BV"([a, b])$, and
+    $ V_a^b(alpha f + beta g) <= abs(alpha) V_a^b(f) + abs(beta) V_a^b(g). $
+    In particular, if $abs(g(x)) >= sigma > 0$, then $frac(f(x), g(x)) in "BV"([a, b])$.
+] <prop:bv-properties>
+// 注：tex 中该 property 的 enumerate 原含第 3 项但内容为空，已删除。
+
+Some common functions of bounded variation include:
+
+#terms(
+  terms.item(
+    [Monotonic functions],
+    [Any monotonic function on a closed interval is of bounded variation, and $V_a^b(f) = abs(f(b) - f(a))$.],
+  ),
+  terms.item(
+    [Piecewise monotonic functions],
+    [Functions that are monotonic on each subinterval of a finite partition of $[a, b]$ are also of bounded variation.],
+  ),
+  terms.item(
+    [Lipschitz continuous functions],
+    [Any Lipschitz continuous function on $[a, b]$ is of bounded variation (for the definition of Lipschitz continuity, see the Analyse Mathématique note).],
+  ),
+  terms.item(
+    [Functions with finite discontinuities],
+    [Functions that have only a finite number of jump discontinuities on $[a, b]$ are of bounded variation.],
+  ),
+  terms.item(
+    [Absolutely continuous functions],
+    [Any absolutely continuous function on $[a, b]$ is of bounded variation (defined below).],
+  ),
+)
+
+#theorem(name: "Jordan Decomposition Theorem")[
+  $f in "BV"([a, b])$ if and only if there exist two monotonic increasing functions $g, h: [a, b] -> bb(R)$ such that
+  $ f(x) = g(x) - h(x). $
+] <thm:jordan-decomposition>
+
+Bounded variation functions have important applications. For example, in harmonic analysis, the Fourier series of a bounded variation function converges pointwise (the detailed convergence theory is established in the Analyse Harmonique note). Among BV functions, the following subclass plays a central role in integration theory.
 
 #definition(name: "Absolutely Continuous Function")[
   A function $f: [a, b] -> bb(R)$ is called *absolutely continuous* on $[a, b]$ if for every $epsilon > 0$, there exists $delta > 0$ such that for any finite collection of pairwise disjoint open intervals $(a_1, b_1), ..., (a_n, b_n)$ in $[a, b]$ satisfying
