@@ -9445,6 +9445,40 @@ Improper multiple integrals can also be classified into two types: infinite inte
   The heuristic reason is that one-dimensional conditional convergence relies essentially on a *specific order* in which the domain is exhausted (the cancellation between the positive and the negative parts is arranged along the single direction of the real line). For a domain in $bb(R)^n$ there is no canonical order of exhaustion: convergence must hold regardless of how the domain is enlarged, and this order-independence forces the positive and the negative parts each to be integrable, which is exactly absolute convergence.
 ]
 
+
+#theorem(name: "Reduction of Improper Double Integrals to Iterated Integrals")[
+  Let $f(x, y)$ be continuous on $D = [a, +oo) times [c, +oo)$. If both iterated integrals
+  $
+    integral_a^(+oo) dif x integral_c^(+oo) f(x, y) dif y quad "and" quad integral_a^(+oo) dif x integral_c^(+oo) abs(f(x, y)) dif y
+  $
+  exist, then $f$ is integrable in the improper sense on $D$, and
+  $ integral.double_(D) f(x, y) dif x dif y = integral_a^(+oo) dif x integral_c^(+oo) f(x, y) dif y. $
+] <thm:improper-double-iterated>
+
+#proof[
+  Write $G(x) = integral_c^(+oo) abs(f(x, y)) dif y$ (convergent for every $x$ by hypothesis) and $M = integral_a^(+oo) G(x) dif x < oo$.
+
+  + *The absolute value integral exists and equals $M$.* For the rectangular exhaustion $D_(A, B) = [a, A] times [c, B]$ with $A > a$, $B > c$, the reduction theorem on bounded closed rectangles gives
+    $ integral.double_(D_(A, B)) abs(f(x, y)) dif x dif y = integral_a^A dif x integral_c^B abs(f(x, y)) dif y, $
+    whose right-hand side is nondecreasing in each of $A$ and $B$ and bounded by $M$; letting first $B -> +oo$ and then $A -> +oo$ shows that its supremum equals $M$. Hence $integral.double_D abs(f) dif x dif y$ exists and equals $M$ (since $abs(f) >= 0$, the value is independent of the chosen exhaustion).
+
+  + *Integrability of $f$.* Since $f$ is absolutely integrable on $D$, #link(<thm:improper-multiple-absolute-convergence>)[the absolute convergence theorem] shows that $f$ itself is integrable in the improper sense on $D$.
+
+  + *Identification with the iterated integral.* By the reduction theorem on rectangles and the triangle inequality,
+    $
+      abs(integral.double_D f dif x dif y - integral_a^A dif x integral_c^B f dif y) <= M - integral.double_(D_(A, B)) abs(f) dif x dif y -> 0 quad (A, B -> +oo),
+    $
+    while on the other hand
+    $
+      abs(integral_a^(+oo) dif x integral_c^(+oo) f dif y - integral_a^A dif x integral_c^B f dif y)
+      & <= integral_A^(+oo) dif x integral_c^(+oo) abs(f) dif y + integral_a^A dif x integral_B^(+oo) abs(f) dif y \
+      & <= integral_A^(+oo) G(x) dif x + M - integral.double_(D_(A, B)) abs(f) dif x dif y -> 0,
+    $
+    since the tail of the convergent integral $M$ and the defect $M - integral.double_(D_(A, B)) abs(f) dif x dif y$ both tend to $0$. Comparing the two estimates yields the asserted equality.
+]
+
+This result, combined with the same argument with the roles of $x$ and $y$ exchanged, also yields the equality of the two iterated integrals. Compare #link(<thm:infinite-infinite-interchange>)[the interchange theorem for parameter integrals], which treats the same problem under inner-closed uniform convergence instead of absolute convergence, and can therefore also handle conditionally convergent iterated integrals.
+
 #example(name: "Poisson Integral")[
   Calculate
   $
@@ -9465,8 +9499,7 @@ Improper multiple integrals can also be classified into two types: infinite inte
     = 2 pi dot 1/2
     = pi.
   $
-  On the other hand, by the multiplicative property of double integrals on rectangles
-  (used here in the improper sense),
+  On the other hand, by the multiplicative property of double integrals on rectangles (used here in the improper sense, in accordance with #link(<thm:improper-double-iterated>)[the reduction theorem for improper double integrals]),
   $
     integral.double_(bb(R)^2) e^(-(x^2 + y^2)) dif x dif y
     = (integral_(-oo)^(+oo) e^(-x^2) dif x)(integral_(-oo)^(+oo) e^(-y^2) dif y)
@@ -10635,7 +10668,9 @@ In the *proper* setting of the definition above, no uniform convergence is neede
 
 #theorem(name: "Interchange of the Order of Integration")[
   Let $f in C([a, b] times [c, d])$ and $D = [a, b] times [c, d]$. Then $I(y) = integral_a^b f(x, y) dif x$ is integrable on $[c, d]$, and
-  $ integral.double_D f(x, y) dif x dif y = integral_c^d dif y integral_a^b f(x, y) dif x = integral_a^b dif x integral_c^d f(x, y) dif y, $
+  $
+    integral.double_D f(x, y) dif x dif y = integral_c^d dif y integral_a^b f(x, y) dif x = integral_a^b dif x integral_c^d f(x, y) dif y,
+  $
   that is, continuity guarantees integrability of the parameter integral, and the order of integration can be interchanged.
 ] <thm:interchange-proper-parameter>
 
@@ -10650,7 +10685,9 @@ This is precisely #link(<thm:reduction-double-iterated-closed-interval>)[the red
   Fix $y in [c, d]$ and let $h != 0$ be small. For each $x in [a, b]$, the mean value theorem applied to $t -> f(x, t)$ between $y$ and $y + h$ provides $theta(x) in (0, 1)$ with
   $ frac(f(x, y + h) - f(x, y), h) = frac(partial f, partial y)(x, y + theta(x) h). $
   Since $frac(partial f, partial y)$ is continuous on the compact rectangle $[a, b] times [c, d]$, it is uniformly continuous there: for every $epsilon > 0$ there is $delta > 0$ such that $abs(h) < delta$ implies $abs(frac(partial f, partial y)(x, y + theta(x) h) - frac(partial f, partial y)(x, y)) < epsilon$ for all $x$. Consequently,
-  $ abs(frac(I(y + h) - I(y), h) - integral_a^b frac(partial f, partial y)(x, y) dif x) <= (b - a) epsilon -> 0 quad "as" h -> 0, $
+  $
+    abs(frac(I(y + h) - I(y), h) - integral_a^b frac(partial f, partial y)(x, y) dif x) <= (b - a) epsilon -> 0 quad "as" h -> 0,
+  $
   which proves the formula.
 ]
 
@@ -10696,7 +10733,9 @@ The full version of Leibniz's rule below additionally allows the limits of integ
   The functions $ln(1 + y cos x)$ and its $y$-derivative $frac(cos x, 1 + y cos x)$ are continuous on $[0, pi] times [-1 + delta, 1 - delta]$ for every $delta in (0, 1)$, so #link(<thm:differentiability-proper-parameter>)[differentiation under the integral sign] applies at every point $y_0$ with $abs(y_0) < 1$:
   $ I'(y) = integral_0^pi frac(cos x, 1 + y cos x) dif x. $
   For $y != 0$, rewrite the integrand as $frac(cos x, 1 + y cos x) = frac(1, y)(1 - frac(1, 1 + y cos x))$. The half-angle substitution $t = tan(x / 2)$ turns the remaining integral into
-  $ integral_0^pi frac(dif x, 1 + y cos x) = integral_0^(+oo) frac(2 dif t, (1 + y) + (1 - y) t^2) = frac(pi, sqrt(1 - y^2)), $
+  $
+    integral_0^pi frac(dif x, 1 + y cos x) = integral_0^(+oo) frac(2 dif t, (1 + y) + (1 - y) t^2) = frac(pi, sqrt(1 - y^2)),
+  $
   where the last step uses $integral_0^(+oo) frac(dif t, a + b t^2) = frac(pi, 2 sqrt(a b))$ for $a, b > 0$. Hence
   $ I'(y) = frac(1, y)(pi - frac(pi, sqrt(1 - y^2))) quad (y != 0). $
   By #link(<thm:continuity-proper-parameter>)[continuity of the parameter integral], $I(0) = integral_0^pi ln 1 dif x = 0$. Since $I'(y) -> 0$ as $y -> 0$, the derivative extends continuously to $y = 0$, and integrating from $0$ to $y$ yields
@@ -10777,6 +10816,9 @@ When $[c, d]$ is replaced by $[c, +oo)$, the above theorem fails, but we have th
 #note(title: "Remark")[
   In both cases, the convergence of one of the two iterated integrals implies that the other converges as well and that the equality holds.
 ]
+
+This theorem and #link(<thm:improper-double-iterated>)[the reduction theorem for improper double integrals] address the same interchange problem from two angles: the latter assumes absolute convergence of one iterated integral and directly yields the existence of the improper double integral, while the present result admits conditionally convergent iterated integrals at the price of inner-closed uniform convergence in both directions.
+
 
 #theorem(name: "Uniform Convergence and Differentiation")[
   On the region $D = [a, +oo) times [c, d]$, if the following conditions are satisfied:
@@ -11150,6 +11192,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:implicit-u-partial-y>)[Implicit U Partial Y]*
 - *#link(<ex:improper-convergence>)[Improper Convergence]*
 - *#link(<def:improper-integral-variable-parameter>)[Improper Integral Variable Parameter]*
+- *#link(<thm:improper-double-iterated>)[Improper Double Iterated]*
 - *#link(<thm:improper-multiple-absolute-convergence>)[Improper Multiple Absolute Convergence]*
 - *#link(<def:indefinite-integral>)[Indefinite Integral]*
 - *#link(<def:indeterminate-form>)[Indeterminate Form]*
