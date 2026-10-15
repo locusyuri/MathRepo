@@ -9996,41 +9996,41 @@ $
   $
 ]
 
-== Differential Form and Exterior Differentiation // 微分形式与外微分
+== Differential Forms and Exterior Differentiation // 微分形式与外微分
 
-Let $dif x_i, dif x_j$ be the differentials of the independent variables $x_i, x_j$.
+In the previous subsection, the second type of line integral was re-expressed as the integral of a $1$-form $omega = P dif x + Q dif y + R dif z$ along the oriented curve, and the surface integrals to be defined below are built on symbols such as $dif y and dif z$. All these integrands are instances of *differential forms*; moreover, Green's formula admits the unified shape $integral.cont_(attach(partial M, t: ⇀)) omega = integral.double_(attach(M, t: ⇀)) dif omega$, and so will Stokes' and Gauß's formulas. This section sets up the algebra of differential forms together with its computation engine, the *exterior differentiation*.
 
-In $bb(R)^1$:
-$
-  & "0-form:" quad f(x), \
-  & "1-form:" quad omega = f(x) dif x, \
-  & "k-form" (k >= 2): quad omega = sum_(1 <= i_1 < i_2 < ... < i_k <= n) f_(i_1 i_2 ... i_k)(x_1, x_2, ..., x_n) dif x_(i_1) and dif x_(i_2) and ... and dif x_(i_k) = 0.
-$
+#definition(name: "Differential Forms")[
+  Let $omega$ be an expression of the form
+  $
+    omega = sum_(1 <= i_1 < i_2 < ... < i_k <= n) f_(i_1 i_2 ... i_k)(x_1, x_2, ..., x_n) dif x_(i_1) and dif x_(i_2) and ... and dif x_(i_k),
+  $
+  where the coefficient functions $f_(i_1 i_2 ... i_k)$ are defined on $U subset.eq bb(R)^n$. If the coefficients are continuous (resp. of class $C^r$), $omega$ is called a continuous (resp. $C^r$) *differential $k$-form* on $U$. A *$0$-form* is simply a function $f: U -> bb(R)$. By convention, every $k$-form with $k > n$ on $bb(R)^n$ is $0$.
+] <def:differential-form>
 
-In $bb(R)^2$:
-$
-  & "0-form:" quad f(x, y), \
-  & "1-form:" quad omega = P(x, y) dif x + Q(x, y) dif y, \
-  & "2-form:" quad omega = f(x, y) dif x and dif y, \
-  & "k-form" (k >= 3): quad omega = sum_(1 <= i_1 < i_2 < ... < i_k <= n) f_(i_1 i_2 ... i_k)(x_1, x_2, ..., x_n) dif x_(i_1) and dif x_(i_2) and ... and dif x_(i_k) = 0.
-$
+The low-dimensional forms used throughout this chapter are the following.
 
-In $bb(R)^3$:
-$
-  & "0-form:" quad f(x, y, z), \
-  & "1-form:" quad omega = P(x, y, z) dif x + Q(x, y, z) dif y + R(x, y, z) dif z, \
-  & "2-form:" quad omega = P(x, y, z) dif y and dif z + Q(x, y, z) dif z and dif x + R(x, y, z) dif x and dif y, \
-  & "3-form:" quad omega = f(x, y, z) dif x and dif y and dif z, \
-  & "k-form" (k >= 4): quad omega = sum_(1 <= i_1 < i_2 < ... < i_k <= n) f_(i_1 i_2 ... i_k)(x_1, x_2, ..., x_n) dif x_(i_1) and dif x_(i_2) and ... and dif x_(i_k) = 0.
-$
+#tex-table(
+  ([Space], [$0$-form], [$1$-form], [$2$-form], [$3$-form]),
+  ([$bb(R)$], [$f(x)$], [$P(x) dif x$], [$0$], [$0$]),
+  ([$bb(R)^2$], [$f(x, y)$], [$P dif x + Q dif y$], [$P dif x and dif y$], [$0$]),
+  (
+    [$bb(R)^3$],
+    [$f(x, y, z)$],
+    [$P dif x + Q dif y + R dif z$],
+    [$P dif y and dif z + Q dif z and dif x + R dif x and dif y$],
+    [$f dif x and dif y and dif z$],
+  ),
+)
 
-Here, $and$ is called the *wedge product*, which satisfies:
+#definition(name: "Wedge Product")[
+  The wedge product $and$ of differentials is subject to the following rules:
+  + *Anticommutativity*: $dif x_i and dif x_j = -dif x_j and dif x_i$; in particular, $dif x_i and dif x_i = 0$.
+  + *Associativity*: $(dif x_i and dif x_j) and dif x_k = dif x_i and (dif x_j and dif x_k)$.
+  + *Bilinearity*: the wedge product is linear in each factor; in particular, wedging with a $0$-form is ordinary multiplication, $f and dif x_i = f dif x_i$.
+] <def:wedge-product>
 
-+ *Skew symmetric*: $dif x_i and dif x_j = -dif x_j and dif x_i$.
-+ *Associative*: $(dif x_i and dif x_j) and dif x_k = dif x_i and (dif x_j and dif x_k)$.
-+ In a fixed dimension, the wedge product of $k$-forms becomes zero (as higher forms are not defined); for example, in $3$-dimensional space, a $4$-form is equal to $0$.
-
-A *differential form* is a skew symmetric tensor on a vector space.
+In computational terms, $dif x_i$ records the increment of the $i$-th coordinate, and a $k$-form attaches a signed number to each $k$-dimensional volume element; the three rules above are all that is needed for calculation. Two consequences follow immediately: the wedge product of a $k$-form and an $l$-form is a $(k + l)$-form, and every wedge product involving more than $n$ differentials in $bb(R)^n$ vanishes, which explains the last convention in #link(<def:differential-form>)[the definition of differential forms].
 
 #definition(name: "Exterior Differentiation")[
   Let $omega$ be a $k$-form on $bb(R)^n$,
@@ -10043,10 +10043,42 @@ A *differential form* is a skew symmetric tensor on a vector space.
   $
   where
   $
-    dif f = frac(partial f, partial x_1) dif x_1 + frac(partial f, partial x_2) dif x_2 + ... + frac(partial f, partial x_n) dif x_n.
+    dif f = frac(partial f, partial x_1) dif x_1 + frac(partial f, partial x_2) dif x_2 + ... + frac(partial f, partial x_n) dif x_n,
   $
-  Note that the exterior differentiation of a $k$-form is a $(k+1)$-form.
+  which is precisely the total differential of the coefficient function.
 ] <def:exterior-differentiation>
+
+By the definition, the exterior differentiation of a $k$-form is a $(k + 1)$-form; it generalizes the total differential $dif f$, whose coefficients are precisely the components of the gradient of $f$. The following theorem unwraps the general definition into the coordinate formulas used in actual computation.
+
+#theorem(name: "Coordinate Formulas for Exterior Differentiation")[
+  + For a $1$-form $omega = P dif x + Q dif y$ in $bb(R)^2$,
+    $
+      dif omega = (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y.
+    $
+  + For a $1$-form $omega = P dif x + Q dif y + R dif z$ in $bb(R)^3$,
+    $
+      dif omega = (frac(partial R, partial y) - frac(partial Q, partial z)) dif y and dif z + (frac(partial P, partial z) - frac(partial R, partial x)) dif z and dif x + (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y.
+    $
+  + For a $2$-form $omega = P dif y and dif z + Q dif z and dif x + R dif x and dif y$ in $bb(R)^3$,
+    $
+      dif omega = (frac(partial P, partial x) + frac(partial Q, partial y) + frac(partial R, partial z)) dif x and dif y and dif z.
+    $
+] <thm:exterior-derivative-computation>
+
+#proof[
+  It suffices to illustrate the computation on the first formula; the other two follow from the same procedure. By the definition of the exterior differentiation and bilinearity,
+  $
+    dif omega = (frac(partial P, partial x) dif x + frac(partial P, partial y) dif y) and dif x + (frac(partial Q, partial x) dif x + frac(partial Q, partial y) dif y) and dif y.
+  $
+  The anticommutativity rule kills the terms containing $dif x and dif x$ and $dif y and dif y$, and converts $dif y and dif x$ into $-dif x and dif y$; collecting the remaining coefficients yields the formula. For the second formula one collects the coefficients of $dif y and dif z$, $dif z and dif x$, and $dif x and dif y$; for the third, those of $dif x and dif y and dif z$. In each case, the equality of mixed second-order partial derivatives is what merges the contributions of a single coefficient.
+]
+
+These formulas are the computational core of the theorems of the next section: the coefficient in the first formula is exactly the integrand obtained by #link(<thm:green-theorem>)[Green's theorem]; the three coefficients in the second formula are the entries of the determinant appearing in #link(<thm:stokes-theorem>)[Stokes' theorem]; and the coefficient in the third formula is the integrand of #link(<thm:gauss-theorem>)[Gauß's theorem]. The whole ladder is illustrated in @fig:exterior-ladder.
+
+#figure(
+  image("img/exterior-ladder.svg", width: 90%),
+  caption: [The ladder of differential forms: exterior differentiation raises the degree by one, and each rung corresponds to one of the coordinate formulas; the integral theorems of the next section compare a $k$-form integral over an oriented region with a $(k + 1)$-form integral over its boundary.],
+) <fig:exterior-ladder>
 
 #property(name: "Properties of Exterior Differentiation")[
   #terms(
@@ -10061,6 +10093,56 @@ A *differential form* is a skew symmetric tensor on a vector space.
     terms.item([Nilpotency], [$dif(dif omega) = 0$.]),
   )
 ] <prop:exterior-differentiation-properties>
+
+The nilpotency is the alternating-algebra avatar of the equality of mixed second-order partial derivatives: every term of $dif(dif omega)$ either contains two identical differentials or cancels by anticommutativity.
+
+#example(name: "Wedge Products")[
+  Simplify the $2$-form $omega = (x^2 dif y - y^2 dif x) and (dif x + dif z)$ in $bb(R)^3$.
+] <ex:wedge-computation>
+
+#solution[
+  Distribute the product by bilinearity and drop the vanishing terms:
+  $
+    omega = x^2 dif y and dif x - y^2 dif x and dif x + x^2 dif y and dif z - y^2 dif x and dif z = -x^2 dif x and dif y + x^2 dif y and dif z - y^2 dif x and dif z,
+  $
+  where $dif y and dif x = -dif x and dif y$ and $dif x and dif x = 0$ were used. The result is indeed a $2$-form, as the degree rule predicts.
+]
+
+#example(name: "Exterior Differentiation in the Plane")[
+  Compute $dif omega$ for the $1$-form $omega = x^2 y dif x - x y^2 dif y$ on $bb(R)^2$.
+] <ex:exterior-derivative-2d>
+
+#solution[
+  By the first coordinate formula,
+  $
+    dif omega = (frac(partial(-x y^2), partial x) - frac(partial(x^2 y), partial y)) dif x and dif y = (-y^2 - x^2) dif x and dif y.
+  $
+  Substituting this into Green's formula yields, for every oriented closed region $attach(M, t: ⇀)$,
+  $
+    integral.cont_(attach(partial M, t: ⇀)) x^2 y dif x - x y^2 dif y = -integral.double_(attach(M, t: ⇀)) (x^2 + y^2) dif x dif y,
+  $
+  which the reader may compare with the direct statement of #link(<thm:green-theorem>)[Green's theorem].
+]
+
+#example(name: "Exterior Differentiation in Space")[
+  Compute $dif omega$ in $bb(R)^3$ for the following forms:
+  + $omega = -y dif x + x dif y$;
+  + $omega = x dif y and dif z + y dif z and dif x + z dif x and dif y$.
+] <ex:exterior-derivative-3d>
+
+#solution[
+  + For the first form, all terms of the second coordinate formula vanish except the $dif x and dif y$ one:
+    $
+      dif omega = (frac(partial x, partial x) - frac(partial(-y), partial y)) dif x and dif y = 2 dif x and dif y.
+    $
+  + For the second form, the third coordinate formula gives
+    $
+      dif omega = (1 + 1 + 1) dif x and dif y and dif z = 3 dif x and dif y and dif z.
+    $
+    This is precisely the $2$-form whose integral over a closed surface was evaluated through Gauß's formula in #link(<ex:gauss-completion>)[an earlier example]; its exterior derivative is the form integrated over the enclosed volume there.
+]
+
+The integration of differential forms is defined in the next section: a $1$-form is integrated along an oriented curve, and a $2$-form over an oriented surface. With this in place, Green's, Stokes', and Gauß's formulas all take the unified shape $integral_(attach(partial M, t: ⇀)) omega = integral_(attach(M, t: ⇀)) dif omega$.
 
 == Line Integrals and Surface Integrals of Vector Fields // 向量场的曲线积分与曲面积分
 
@@ -10943,6 +11025,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<thm:differentiability-derivability>)[Differentiability Derivability]*
 - *#link(<prop:differentiability-uniform-convergence>)[Differentiability Uniform Convergence]*
 - *#link(<def:differential>)[Differential]*
+- *#link(<def:differential-form>)[Differential Forms]*
 - *#link(<ex:differential-inequality-zero>)[Differential Inequality Zero]*
 - *#link(<thm:differentiation-parameter>)[Differentiation Parameter]*
 - *#link(<thm:dini-theorem>)[Dini Theorem]*
@@ -10970,8 +11053,12 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:exponential-continuous>)[Exponential Continuous]*
 - *#link(<ex:exponential-equation>)[Exponential Equation]*
 - *#link(<def:extended-limit>)[Extended Limit]*
+- *#link(<thm:exterior-derivative-computation>)[Exterior Derivative Computation]*
+- *#link(<ex:exterior-derivative-2d>)[Exterior Derivative in the Plane]*
+- *#link(<ex:exterior-derivative-3d>)[Exterior Derivative in Space]*
 - *#link(<def:exterior-differentiation>)[Exterior Differentiation]*
 - *#link(<prop:exterior-differentiation-properties>)[Exterior Differentiation Properties]*
+- *#link(<fig:exterior-ladder>)[Exterior Ladder]*
 - *#link(<thm:extreme-point-criteria>)[Extreme Point Criteria]*
 - *#link(<thm:extreme-value>)[Extreme Value]*
 
@@ -11262,6 +11349,8 @@ Next, we give three important formulas about the Gamma function, which can be ex
 == W
 - *#link(<ex:wallis>)[Wallis]*
 - *#link(<thm:wallis-formula>)[Wallis Formula]*
+- *#link(<ex:wedge-computation>)[Wedge Computation]*
+- *#link(<def:wedge-product>)[Wedge Product]*
 - *#link(<thm:weak-heine-theorem>)[Weak Heine Theorem]*
 - *#link(<thm:weierstrass-first-approximation>)[Weierstrass First Approximation]*
 - *#link(<thm:weierstrass-m-test>)[Weierstrass M Test]*
