@@ -1007,10 +1007,29 @@ law).
 
 Every quasi-static process can be drawn as a curve in the state
 diagram ($p$-$V$ plane for a simple fluid), which is the arena for the
-work calculations of §2.3. A quasi-static process need not be
-*reversible* (friction inside the system spoils reversibility without
-destroying quasi-statics); the precise notion of reversibility belongs
-to the second law and is developed in Chapter 3.
+work calculations of §2.3.
+
+#definition(name: "Reversible Process")[
+  A process is *reversible* if the system *and its surroundings* can be
+  restored to their initial states with no other change anywhere in the
+  universe; otherwise it is *irreversible*. A quasi-static process free
+  of dissipative effects is reversible; conversely, a process that is
+  not quasi-static, or involves dissipation, is irreversible.
+] <def:reversible-process>
+
+A quasi-static process need not be reversible — friction inside the
+system spoils reversibility without destroying quasi-statics. The
+common sources of irreversibility, to be quantified by the second law
+(Chapter 3), are:
+
+- *dissipation*: friction, viscosity, inelastic deformation, Joule heating;
+- *heat flow across a finite temperature difference*;
+- *unrestricted expansion*: free expansion, throttling;
+- *mixing and diffusion* of distinct substances;
+- *chemical reactions* (e.g. combustion) far from equilibrium.
+
+The precise accounting of irreversibility is the business of the
+second law and is developed in Chapter 3.
 
 #note(title: "Axiomatics")[
   Callen reformulated classical thermodynamics as an
@@ -1597,6 +1616,25 @@ A process that returns the system to its initial state is called a *cyclic proce
   positive for a clockwise traversal (an engine) and negative for an anticlockwise one (a refrigerator or heat pump).
 ] <prop:cycle-area>
 
+#definition(name: "Thermal Reservoir and Heat Engine")[
+  A *thermal reservoir* is an idealised body of fixed temperature whose
+  state is unaltered by exchanging any finite amount of heat. A *heat
+  engine* is a cyclic device that absorbs heat $Q_h$ from a hot
+  reservoir at $T_h$, rejects heat $Q_c$ to a cold reservoir at
+  $T_c < T_h$, and delivers net work $W = Q_h - Q_c$ per cycle;
+  a *refrigerator* (or heat pump) is the same device run backwards.
+] <def:heat-engine>
+
+#figure(
+  image("img/reservoir-schematic.svg", width: 88%),
+  caption: [Left: a heat engine absorbing $Q_h$ from the hot reservoir,
+    delivering work $W$ and rejecting $Q_c$ to the cold reservoir. Right:
+    the same device run as a refrigerator, consuming work $W$ to pump
+    heat $Q_c$ from the cold to the hot reservoir.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:reservoir-schematic>
+
 #definition(name: "Efficiency and Coefficients of Performance")[
   A heat engine absorbs $Q_h$ and delivers work $W = Q_h - Q_c$ per cycle; its purpose is to *deliver work*, so the natural figure of merit is the fraction of the absorbed heat converted into work — the *efficiency*:
   $
@@ -1694,37 +1732,18 @@ thereby produces the entropy, the quantity that grades the direction.
 
 == Clausius and Kelvin-Planck Statements // 克劳修斯与开尔文-普朗克表述
 
-#definition(name: "Thermal Reservoir and Heat Engine")[
-  A *thermal reservoir* is an idealised body of fixed temperature whose
-  state is unaltered by exchanging any finite amount of heat. A *heat
-  engine* is a cyclic device that absorbs heat $Q_h$ from a hot
-  reservoir at $T_h$, rejects heat $Q_c$ to a cold reservoir at
-  $T_c < T_h$, and delivers net work $W = Q_h - Q_c$ per cycle;
-  a *refrigerator* (or heat pump) is the same device run backwards.
-] <def:heat-engine>
-
-#figure(
-  image("img/reservoir-schematic.svg", width: 88%),
-  caption: [Left: a heat engine absorbing $Q_h$ from the hot reservoir,
-    delivering work $W$ and rejecting $Q_c$ to the cold reservoir. Right:
-    the same device run as a refrigerator, consuming work $W$ to pump
-    heat $Q_c$ from the cold to the hot reservoir.],
-  placement: auto,
-  supplement: [Fig.],
-) <fig:reservoir-schematic>
-
-Experience: no cyclic device absorbs heat from a single reservoir and
+The cast is the one assembled in §2.6 — thermal reservoirs at fixed temperatures, and cyclic devices shuttling heat between them (#link(<def:heat-engine>)[thermal reservoirs and heat engines], @fig:reservoir-schematic). Experience: no cyclic device absorbs heat from a single reservoir and
 converts it entirely into work, however ingeniously designed. This
 regularity is elevated to a law in two equivalent formulations.
 
-#theorem(name: "Kelvin-Planck Statement")[
+#law(name: "Kelvin-Planck Statement")[
   No process is possible whose sole result is the complete conversion
   of heat, extracted from a single thermal reservoir, into work.
-] <thm:kelvin-planck>
+] <law:kelvin-planck>
 
 #caution(title: "Perpetual motion of the second kind")[
   An engine violating
-  #link(<thm:kelvin-planck>)[the Kelvin-Planck statement] would be a
+  #link(<law:kelvin-planck>)[the Kelvin-Planck statement] would be a
   *perpetual motion machine of the second
   kind*: it respects energy conservation (extracting heat from the
   ocean would power a ship forever) yet is impossible. The first law
@@ -1735,10 +1754,10 @@ regularity is elevated to a law in two equivalent formulations.
   changes.
 ] <caution:perpetual-motion-ii>
 
-#theorem(name: "Clausius Statement")[
+#law(name: "Clausius Statement")[
   No process is possible whose sole result is the transfer of heat
   from a colder body to a hotter body.
-] <thm:clausius-statement>
+] <law:clausius-statement>
 
 Note that a refrigerator *does* pump heat from cold to hot — but only
 at the cost of work input, so the *sole* result clause is not violated.
@@ -1767,14 +1786,11 @@ The two statements look different; they are the same law.
   effect — violating the Clausius statement.
 ]
 
-== Carnot's Theorem // 卡诺定理
-
 The Carnot cycle was defined and its efficiency $eta_C = 1 - T_c / T_h$ computed in §2.6 from the first law alone. What the second law contributes is universality: no engine operating between the same two reservoirs, however ingenious its design, can exceed the Carnot efficiency.
 
 #theorem(name: "Carnot's Theorem")[
-  All reversible engines operating between the same two reservoirs
-  have the same efficiency $eta_C = 1 - T_c / T_h$; every irreversible
-  engine operating between them has strictly smaller efficiency.
+  + All reversible engines operating between the same two reservoirs have the same efficiency $eta_C = 1 - T_c / T_h$;
+  + every irreversible engine operating between them has strictly smaller efficiency.
 ] <thm:carnot-theorem>
 
 #proof[
@@ -1789,7 +1805,7 @@ The Carnot cycle was defined and its efficiency $eta_C = 1 - T_c / T_h$ computed
   $Q_h - Q_h'$ from the hot one. If $eta_I > eta_R$, then
   $Q_h' / Q_c > Q_h / Q_c$, i.e. $Q_h' > Q_h$: the composite would be a
   sole-result work producer from one reservoir — violating
-  #link(<thm:kelvin-planck>)[Kelvin-Planck]. Hence
+  #link(<law:kelvin-planck>)[Kelvin-Planck]. Hence
   $eta_I <= eta_R$. If $I$ is irreversible, running a *reversible* $R$
   forward and $I$ backward in the same coupling (now with roles swapped)
   yields the strict inequality $eta_I < eta_R$; equality would make the
@@ -1903,7 +1919,7 @@ integrating $(delta Q)/T$ along that process; one integrates along any
   generates entropy, as the theorem below makes quantitative.
 ] <note:reversibility-defined>
 
-#theorem(name: "Principle of Entropy Increase")[
+#law(name: "Principle of Entropy Increase")[
   For any process of an isolated system,
   $
     Delta S >= 0 quad "with equality iff the process is reversible."
@@ -1912,7 +1928,7 @@ integrating $(delta Q)/T$ along that process; one integrates along any
   $
     Delta S_("system") + Delta S_("environment") >= 0.
   $
-] <thm:entropy-increase>
+] <law:entropy-increase>
 
 #proof[
   Take an irreversible process carrying an isolated system from
@@ -1977,6 +1993,45 @@ integrating $(delta Q)/T$ along that process; one integrates along any
   ensembles, and the derivation of all thermodynamic potentials — is
   the programme of Part III (Chapters 12-13).
 ] <note:statistical-meaning>
+
+The logarithm in the identity above is not an ansatz but a necessity. For two *independent* systems the compatible microstates multiply, $Omega_12 = Omega_1 Omega_2$, while entropy as an extensive quantity must add, $S_12 = S_1 + S_2$; only the logarithm turns products into sums, so $S prop ln Omega$ up to one universal constant.
+
+#definition(name: "Boltzmann Entropy")[
+  For a macrostate of an isolated system, let $Omega$ be the number of
+  microstates (microscopic configurations) compatible with it. The
+  *Boltzmann entropy* of the macrostate is
+  $
+    S = k_B ln Omega,
+  $
+  where $k_B = R / N_A$ is the Boltzmann constant of Chapter 1.
+] <def:boltzmann-entropy>
+
+#theorem(name: "Identification with the Clausius Entropy")[
+  For a dilute gas, the Boltzmann entropy reproduces the
+  thermodynamic entropy of #link(<def:entropy>)[the Clausius
+    definition]: in a quasi-static isothermal expansion from $V_1$ to
+  $V_2$,
+  $
+    Delta S = k_B ln (Omega_2 / Omega_1)
+    = N k_B ln (V_2 / V_1)
+    = nu R ln (V_2 / V_1),
+  $
+  which equals $Q_"rev" / T$.
+] <thm:boltzmann-identification>
+
+#proof[
+  At fixed temperature the momentum part of the phase-space volume is
+  unaffected by a change of volume, and each of the $N$ molecules is
+  free to roam the whole container, so the number of microstates
+  compatible with a macrostate at volume $V$ scales as
+  $Omega prop V^N$; hence
+  $Delta S = k_B ln (Omega_2 / Omega_1) = N k_B ln (V_2 / V_1) = nu N_A k_B ln (V_2 / V_1) = nu R ln (V_2 / V_1)$. On the thermodynamic side, the quasi-static isothermal expansion of an ideal gas absorbs $Q_"rev" = W = nu R T ln (V_2 / V_1)$ (§2.5), so the Clausius definition gives $Delta S = Q_"rev" / T = nu R ln (V_2 / V_1)$ — the two agree identically, and the proportionality constant of $S prop ln Omega$ is thereby fixed as $k_B$.
+]
+
+The identification extends far beyond this example — the entropy of
+mixing, the equilibration of heat flow, all of Part III — and it is
+this agreement that makes $k_B$ the exchange rate between information
+and heat.
 
 == Thermodynamic Temperature Scale // 热力学温标
 
@@ -2064,7 +2119,7 @@ The efficiency and the coefficients of performance were defined in §2.6; combin
   $"COP"_R > T_c / (T_h - T_c)$, driven by a Carnot engine of efficiency
   $eta_C$ fed by the same heat $Q_h' = W$, would form a composite
   transferring heat from cold to hot with no other effect — violating
-  #link(<thm:clausius-statement>)[the Clausius statement]. The heat-pump
+  #link(<law:clausius-statement>)[the Clausius statement]. The heat-pump
   bound follows from $"COP"_"HP" = "COP"_R + 1$.
 ]
 
@@ -2171,7 +2226,7 @@ of Chapters 16 and 17.
 Nernst's theorem fixes entropy *differences* at $T = 0$ but not their
 common value. Planck supplied the normalisation.
 
-#theorem(name: "Planck Formulation")[
+#law(name: "Planck Formulation")[
   For a perfect crystalline substance,
   $
     lim_(T -> 0) S = 0,
@@ -2179,7 +2234,7 @@ common value. Planck supplied the normalisation.
   the entropy at absolute zero being zero regardless of all other
   state variables. Hence the entropy is an *absolute* quantity, free
   of additive constants.
-] <thm:planck-formulation>
+] <law:planck-formulation>
 
 The contrast with internal energy is instructive: $U$ retains an
 undeterminable additive constant because only its *changes* enter the
@@ -2215,12 +2270,12 @@ absolute entropy.
 
 == Unattainability of Absolute Zero // 绝对零度不可达性
 
-#theorem(name: "Unattainability of Absolute Zero")[
+#law(name: "Unattainability of Absolute Zero")[
   No finite sequence of processes can bring any system to
   $
     T = 0.
   $
-] <thm:unattainability>
+] <law:unattainability>
 
 #proof(name: "sketch")[
   Any cooling operation reduces to two ingredients on the
@@ -2330,7 +2385,7 @@ the way down.
 
 #note(title: "Reconciling with Planck")[
   Residual entropy does not contradict
-  #link(<thm:planck-formulation>)[Planck's formulation] — it exposes
+  #link(<law:planck-formulation>)[Planck's formulation] — it exposes
   the load-bearing role of the qualifier *perfect crystal*. A frozen-in
   configurational disorder is not the unique ground state, so the
   substance never occupies the perfectly ordered state the theorem
@@ -2416,7 +2471,7 @@ more of the system at high energies than at moderate ones.
   $((partial S_1)/(partial E))(-delta E) = (-delta E)/T_1 > 0$ (since
   $T_1 < 0$), while the receiver gains $(delta E)/T_2 > 0$. The total
   entropy increases — the process runs forward by
-  #link(<thm:entropy-increase>)[the entropy increase principle]. The
+  #link(<law:entropy-increase>)[the entropy increase principle]. The
   reverse flow would decrease total entropy and does not occur.
 ]
 
@@ -2616,7 +2671,7 @@ to keep fixed.
     formula], with $E = p c$ holding exactly for every photon.
 ]
 
-#theorem(name: "Stefan-Boltzmann Law")[
+#law(name: "Stefan-Boltzmann Law")[
   The energy density of equilibrium radiation is a universal function
   of temperature alone, quartic in $T$:
   $
@@ -2624,7 +2679,7 @@ to keep fixed.
   $
   with $a$ a universal constant. The emissive power of a black surface
   is $j = sigma T^4$ with $sigma = a c / 4$.
-] <thm:stefan-boltzmann>
+] <law:stefan-boltzmann>
 
 #proof(name: "Boltzmann 1884, purely thermodynamic")[
   Let radiation be
@@ -2732,7 +2787,7 @@ and the convention that Greek indices run over spacetime.
   entropy bookkeeping becomes frame-independent.
 ] <def:inverse-temperature-vector>
 
-#theorem(name: "Covariant First Law")[
+#law(name: "Covariant First Law")[
   For an infinitesimal reversible change of a fluid element,
   $
     dif S = beta_mu dif P^mu + p / T dif V,
@@ -2743,7 +2798,7 @@ and the convention that Greek indices run over spacetime.
   $dif S = (dif U + p dif V) / T$ — the first law of
   #link(<law:first-law>)[Chapter 2] together with the entropy of
   #link(<def:entropy>)[Chapter 3].
-] <thm:covariant-first-law>
+] <law:covariant-first-law>
 
 This is the Israel form of the first law. The derivation — and the
 full covariant theory of dissipative fluids, where heat conduction

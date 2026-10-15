@@ -92,10 +92,16 @@ user_invocable: false
   Statement of the theorem.
 ]
 
+#law(name: "Law Name")[
+  Statement of the physical law.
+]
+
 #corollary(name: "...")[...]
 
 #lemma(name: "...")[...]
 ```
+
+> 物理笔记中基本规律（定律/原理/表述）优先用 `#law`；`#theorem` 仅用于经推导得到的命题。判定标准见 `violet-typst-writing-conventions` §9 组件选择指南。
 
 ### 定义族（绿色系 ♣）
 
