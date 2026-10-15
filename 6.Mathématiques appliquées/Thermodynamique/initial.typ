@@ -1397,6 +1397,19 @@ A constraint that pins one state quantity — the volume, the pressure, the temp
   ([free expansion], ["into vacuum"], [$0$], [$0$], [$0$]),
 )
 
+#note[
+  A shortcut valid across *all* the processes of this section: by
+  #link(<prop:joule-law>)[Joule's law] the internal energy of an ideal
+  gas is a function of temperature alone, so
+  $
+    Delta U = nu C_(V,m) Delta T
+  $
+  holds whatever the path — isochoric, isobaric, isothermal, adiabatic,
+  or free expansion alike. What distinguishes the processes is only how
+  $W$ and $Q$ are realized; $Delta U$ depends on the endpoints
+  $T_1$, $T_2$ alone.
+]
+
 === The Isochoric Process // 等容过程
 
 With $dif V = 0$ no volume work is done, $W = 0$, and the first law equates heat with the internal-energy increase:
@@ -1483,7 +1496,14 @@ The four processes above are the canonical members of a one-parameter family.
   for a constant exponent $n$ is called a *polytropic process*.
 ] <def:polytropic-process>
 
-The exponent $n$ interpolates between the canonical cases: $n = 0$ gives the isobar, $n = 1$ the isotherm, $n = gamma$ the reversible adiabat, and $n -> oo$ the isochore; intermediate exponents describe unregulated processes — heat is exchanged, but neither $T$ nor $p$ is pinned — as @fig:polytropic-family shows.
+The exponent $n$ recovers the canonical processes as special cases:
+
++ $n = 0$: $p V^0 = p = "const"$ — the *isobaric* process;
++ $n = 1$: $p V = "const"$, which for an ideal gas ($p V = nu R T$) means $T = "const"$ — the *isothermal* process;
++ $n = gamma$: precisely the #link(<prop:adiabatic-process>)[*reversible adiabatic*] process;
++ $n -> oo$: the constraint forces $V$ to stay constant — the *isochoric* process.
+
+Intermediate exponents describe unregulated processes — heat is exchanged, but neither $T$ nor $p$ is pinned — as @fig:polytropic-family shows.
 
 #figure(
   image("img/polytropic-family.svg", width: 72%),
