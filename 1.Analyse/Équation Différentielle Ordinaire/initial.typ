@@ -205,9 +205,9 @@ An equation involving derivatives of a function of one or more independent varia
 #definition(name: "Ordinary Differential Equation (ODE)")[
 An *ordinary differential equation* (ODE) is an equation of the form
 $
-  F(x, y, y', dot.double(y), dots, y^(n)) = 0, quad n in bb(N),
+  F(x, y, dot(y), dot.double(y), dots, y^(n)) = 0, quad n in bb(N),
 $
-where $x$ is the independent variable, $y$ is the unknown function of $x$, and $y^(k) = dif^k y / dif x^k$ denotes the $k$-th derivative.
+where $x$ is the independent variable, $y$ is the unknown function of $x$, and $y^(k) = (dif^k y) / (dif x^k)$ denotes the $k$-th derivative.
 ] <def:ode>
 
 If the unknown function depends on two or more independent variables, and the equation involves partial derivatives, it is called a *partial differential equation* (PDE). PDEs are studied in the companion volume *Équations aux Dérivées Partielles*.
@@ -216,8 +216,8 @@ If the unknown function depends on two or more independent variables, and the eq
 The *order* of a differential equation is the order of the highest derivative appearing in the equation.
 ] <def:ode-order>
 
-- A first-order equation has the form $F(x, y, y') = 0$.
-- A second-order equation has the form $F(x, y, y', dot.double(y)) = 0$.
+- A first-order equation has the form $F(x, y, dot(y)) = 0$.
+- A second-order equation has the form $F(x, y, dot(y), dot.double(y)) = 0$.
 - Higher-order equations involve derivatives of order three or more.
 
 #note[
@@ -227,7 +227,7 @@ Crucially, the order determines how many initial conditions are needed to single
 #definition(name: "Linear Differential Equation")[
 An $n$-th order differential equation is *linear* if it can be written in the form
 $
-  a_(n)(x) y^(n) + a_(n-1)(x) y^(n-1) + dots + a_1(x) y' + a_0(x) y = g(x),
+  a_(n)(x) y^(n) + a_(n-1)(x) y^(n-1) + dots + a_1(x) dot(y) + a_0(x) y = g(x),
 $
 where the coefficients $a_(i)(x)$ and the inhomogeneous term $g(x)$ depend only on the independent variable $x$. Otherwise, the equation is *nonlinear*.
 ] <def:linear-ode>
@@ -241,7 +241,7 @@ For a linear equation, if $g(x) = 0$, the equation is called *homogeneous*; othe
 Let $J subset.eq bb(R)$ be an interval.
 
 #definition(name: "Solution of an ODE")[
-A smooth function $y = phi(x)$ defined on $J$ is called a *solution* to the ODE $F(x, y, y', dots, y^(n)) = 0$ if it satisfies
+A smooth function $y = phi(x)$ defined on $J$ is called a *solution* to the ODE $F(x, y, dot(y), dots, y^(n)) = 0$ if it satisfies
 $
   F(x, phi(x), phi'(x), dot.double(phi)(x), dots, phi^(n)(x)) = 0 quad quad text("for all") x in J.
 $
@@ -278,7 +278,7 @@ In classical terminology, an implicit solution is also called an *integral* of t
 
 Consider the first-order ODE
 #eq[$
-  dif y / dif x = f(x, y),
+  (dif y) / (dif x) = f(x, y),
 $] <eq:first-order-ode>
 where $f$ is continuous in a planar region $G subset.eq bb(R)^2$.
 
@@ -298,7 +298,7 @@ Thus the tangent line at $(x_0, y_0)$ has equation
 $
   y - y_0 = f(x_0, y_0) (x - x_0).
 $
-Remarkably, we can determine the tangent slope at any point from the equation alone, without knowing the explicit solution. @fig:direction-field illustrates this idea for the ODE $y' = x - y$.
+Remarkably, we can determine the tangent slope at any point from the equation alone, without knowing the explicit solution. @fig:direction-field illustrates this idea for the ODE $dot(y) = x - y$.
 
 #definition(name: "Direction Field (Line Element Field)")[
 At each point $P = (x, y)$ in the region $G$, draw a short line segment with slope $f(P)$. This segment is called the *line element* (or *direction element*) of the ODE at $P$. The region $G$ together with the collection of all line elements is called the *direction field* (or *slope field* or *line element field*) of the ODE.
@@ -310,7 +310,7 @@ The direction field gives a geometric portrait of all solutions even when we can
 
 #figure(
   image("img/direction-field.svg", width: 80%),
-  caption: [Direction field and typical integral curves for the ODE $y' = x - y$. The dashed line shows the particular solution $y = x - 1$: under the substitution $z = y - x + 1$, this is the equilibrium $z = 0$ of the linearized equation $z' = -z$.],
+  caption: [Direction field and typical integral curves for the ODE $dot(y) = x - y$. The dashed line shows the particular solution $y = x - 1$: under the substitution $z = y - x + 1$, this is the equilibrium $z = 0$ of the linearized equation $z' = -z$.],
   placement: auto,
   supplement: [Fig.]
 ) <fig:direction-field>
@@ -394,7 +394,7 @@ $
 $
 then @eq:symmetric-form is called a *separable equation*. In the more familiar derivative notation, this becomes
 #eq[$
-  dif y / dif x = f(x) g(y),
+  (dif y) / (dif x) = f(x) g(y),
 $] <eq:separable-form>
 where $f(x) = -M_1(x) / N_1(x)$ and $g(y) = N_2(y) / M_2(y)$.
 ] <def:separable-equation>
@@ -427,24 +427,24 @@ $
 #definition(name: "Homogeneous Equation")[
 A first-order equation $M(x, y) dif x + N(x, y) dif y = 0$ is called a *homogeneous equation* if both $M$ and $N$ are homogeneous functions of the same degree. Equivalently, in derivative form
 $
-  dif y / dif x = f(x, y),
+  (dif y) / (dif x) = f(x, y),
 $
 the right-hand side can be written as $g(y / x)$.
 ] <def:homogeneous-equation>
 
 Homogeneous equations are solved by the substitution $u = y / x$, i.e., $y = u x$. Differentiating with respect to $x$ gives
 $
-  dif y / dif x = x dif u / dif x + u.
+  (dif y) / (dif x) = x (dif u) / (dif x) + u.
 $
 Substituting into the equation yields
 $
-  x dif u / dif x + u = g(u) quad quad => quad quad dif u / dif x = (g(u) - u) / x,
+  x (dif u) / (dif x) + u = g(u) quad quad => quad quad (dif u) / (dif x) = (g(u) - u) / x,
 $
 which is a separable equation in $u$ and $x$. After solving for $u(x)$, substitute back $u = y / x$ to obtain $y(x)$.
 
 A more general form is
 #eq[$
-  dif y / dif x = f((a_1 x + b_1 y + c_1) / (a_2 x + b_2 y + c_2)),
+  (dif y) / (dif x) = f((a_1 x + b_1 y + c_1) / (a_2 x + b_2 y + c_2)),
 $] <eq:linear-fraction-equation>
 which can be reduced to a homogeneous or separable equation by coordinate translation and scaling.
 
@@ -453,11 +453,11 @@ which can be reduced to a homogeneous or separable equation by coordinate transl
 #definition(name: "First-Order Linear Equation")[
 A *first-order linear equation* has the form
 #eq[$
-  dif y / dif x + p(x) y = q(x),
+  (dif y) / (dif x) + p(x) y = q(x),
 $] <eq:first-order-linear>
 where $p(x)$ and $q(x)$ are continuous on an interval $(a, b)$. When $q(x) equiv 0$, the equation
 $
-  dif y / dif x + p(x) y = 0
+  (dif y) / (dif x) + p(x) y = 0
 $
 is called the *homogeneous* linear equation; otherwise it is *non-homogeneous*.
 ] <def:first-order-linear>
@@ -494,18 +494,18 @@ The method of variation of constants generalizes to non-homogeneous linear PDEs,
 #definition(name: "Bernoulli Equation")[
 A *Bernoulli equation* is a first-order equation of the form
 $
-  dif y / dif x + p(x) y = q(x) y^n, quad quad n != 0, 1,
+  (dif y) / (dif x) + p(x) y = q(x) y^n, quad quad n != 0, 1,
 $
 where $n$ is a real constant.
 ] <def:bernoulli-equation>
 
 Bernoulli equations are transformed into linear equations by the substitution $z = y^(1 - n)$. Differentiating gives
 $
-  dif z / dif x = (1 - n) y^(-n) dif y / dif x.
+  (dif z) / (dif x) = (1 - n) y^(-n) (dif y) / (dif x).
 $
 Substituting from the Bernoulli equation yields
 $
-  dif z / dif x + (1 - n) p(x) z = (1 - n) q(x),
+  (dif z) / (dif x) + (1 - n) p(x) z = (1 - n) q(x),
 $
 which is a linear equation in $z$, solvable by the method above.
 
@@ -559,9 +559,9 @@ is a general solution of the equation, where $c$ is an arbitrary constant.
 
 This section treats first-order implicit equations of the form
 $
-  F(x, y, y') = 0,
+  F(x, y, dot(y)) = 0,
 $
-where $F$ is continuously differentiable. Denote $p = y' = d y / d x$.
+where $F$ is continuously differentiable. Denote $p = dot(y) = (dif y) / (dif x)$.
 
 Depending on which variable can be solved explicitly, there are several cases:
 
@@ -569,11 +569,11 @@ Depending on which variable can be solved explicitly, there are several cases:
 
 - *Case (b): $y = f(x, p)$ solvable.* Differentiate both sides with respect to $x$:
   $
-    p = dif y / dif x = (partial f) / (partial x) + (partial f) / (partial p) dif p / dif x.
+    p = (dif y) / (dif x) = (partial f) / (partial x) + (partial f) / (partial p) (dif p) / (dif x).
   $
   Rearranging gives
   $
-    dif p / dif x = (p - (partial f) / (partial x)) / ((partial f) / (partial p)),
+    (dif p) / (dif x) = (p - (partial f) / (partial x)) / ((partial f) / (partial p)),
   $
   which is a first-order equation in $p$. Solve for $p(x)$, then substitute back into $y = f(x, p)$.
 
@@ -584,17 +584,17 @@ Depending on which variable can be solved explicitly, there are several cases:
 #definition(name: "Clairaut Equation")[
 A *Clairaut equation* has the form
 $
-  y = x p + g(p), quad quad p = y', quad quad g in C^1.
+  y = x p + g(p), quad quad p = dot(y), quad quad g in C^1.
 $
 ] <def:clairaut-equation>
 
 Differentiating both sides with respect to $x$ gives
 $
-  p = p + x dif p / dif x + g'(p) dif p / dif x,
+  p = p + x (dif p) / (dif x) + g'(p) (dif p) / (dif x),
 $
 which simplifies to
 $
-  lr(x + g'(p)) dif p / dif x = 0.
+  lr(x + g'(p)) (dif p) / (dif x) = 0.
 $
 
 There are two cases:
@@ -627,11 +627,11 @@ Some higher-order equations can be reduced to lower order by variable substituti
 
 2. *Equations missing the independent variable*: If
    $
-     F(y, y', dot.double(y), dots, y^(n)) = 0,
+     F(y, dot(y), dot.double(y), dots, y^(n)) = 0,
    $
-   let $p = y'$ and treat $y$ as the independent variable. Then
+   let $p = dot(y)$ and treat $y$ as the independent variable. Then
    $
-     dot.double(y) = p dif p / dif y, quad quad dot.triple(y) = p^2 dif^2 p / dif y^2 + p lr(dif p / dif y)^2,
+     dot.double(y) = p (dif p) / (dif y), quad quad dot.triple(y) = p^2 (dif^2 p) / (dif y^2) + p lr((dif p) / (dif y))^2,
    $
    and so on. The equation reduces to order $n - 1$ in $p(y)$.
 
@@ -640,14 +640,14 @@ Some higher-order equations can be reduced to lower order by variable substituti
 #definition(name: "Euler-Cauchy Equation")[
 An *Euler-Cauchy equation* (or equidimensional equation) has the form
 $
-  x^n y^(n) + a_(n-1) x^(n-1) y^(n-1) + dots + a_1 x y' + a_0 y = f(x),
+  x^n y^(n) + a_(n-1) x^(n-1) y^(n-1) + dots + a_1 x dot(y) + a_0 y = f(x),
 $
 where $a_0, a_1, dots, a_(n-1)$ are constants.
 ] <def:euler-cauchy>
 
 Euler-Cauchy equations are transformed into constant-coefficient linear equations by the substitution $x = e^t$. Under this change of variable,
 $
-  dif y / dif x = (1 / x) dif y / dif t, quad quad dif^2 y / dif x^2 = (1 / x^2) lr(dif^2 y / dif t^2 - dif y / dif t),
+  (dif y) / (dif x) = (1 / x) (dif y) / (dif t), quad quad (dif^2 y) / (dif x^2) = (1 / x^2) lr((dif^2 y) / (dif t^2) - (dif y) / (dif t)),
 $
 and higher derivatives follow similarly. The equation becomes a constant-coefficient linear ODE in $t$, solvable by the methods of Part II.
 
@@ -676,7 +676,7 @@ $
 
 Now consider the Cauchy problem
 #eq[$
-  cases(dif y / dif x = f(x, y), y(x_0) = y_0),
+  cases((dif y) / (dif x) = f(x, y), y(x_0) = y_0),
 $] <eq:cauchy-problem>
 
 #definition(name: "Lipschitz Condition")[
@@ -724,7 +724,7 @@ The proof proceeds by *Picard iteration*:
 
 #figure(
   image("img/picard-iteration.svg", width: 75%),
-  caption: [Picard iteration convergence for the simple ODE $y' = y, y(0) = 1$. The iterates $phi_0, phi_1, phi_2, phi_3$ approach the exact solution $y = e^x$ factorially fast.],
+  caption: [Picard iteration convergence for the simple ODE $dot(y) = y, y(0) = 1$. The iterates $phi_0, phi_1, phi_2, phi_3$ approach the exact solution $y = e^x$ factorially fast.],
   placement: auto,
   supplement: [Fig.]
 ) <fig:picard-iteration>
@@ -761,7 +761,7 @@ If $f(x, y)$ satisfies the Osgood condition with respect to $y$ in $D$, then the
 ] <thm:osgood>
 
 #note[
-The Peano theorem guarantees existence but not uniqueness. The classic counterexample is $y' = sqrt(y)$ with $y(0) = 0$, which has infinitely many solutions (including piecewise solutions that stay at zero for an arbitrary interval before taking off). The Osgood theorem gives the weakest known condition for uniqueness.
+The Peano theorem guarantees existence but not uniqueness. The classic counterexample is $dot(y) = sqrt(y)$ with $y(0) = 0$, which has infinitely many solutions (including piecewise solutions that stay at zero for an arbitrary interval before taking off). The Osgood theorem gives the weakest known condition for uniqueness.
 ]
 
 == Continuation of Solutions // 解的延拓
@@ -785,7 +785,7 @@ on their common interval of existence. The same holds for strict inequalities.
 == Singular Solutions and Envelopes // 奇解与包络
 
 #definition(name: "Singular Solution")[
-Let $Phi(x, y, c) = 0$ be the general solution of $F(x, y, y') = 0$. An integral curve $S$ is called a *singular solution* if:
+Let $Phi(x, y, c) = 0$ be the general solution of $F(x, y, dot(y)) = 0$. An integral curve $S$ is called a *singular solution* if:
 
 1. $S$ satisfies the differential equation.
 2. $S$ is not a member of the family $Phi(x, y, c) = 0$.
@@ -814,7 +814,7 @@ then the c-test curve is indeed the envelope of the family, and is also a singul
 ] <thm:c-test>
 
 #theorem(name: "p-Test (Singular Solution Condition)")[
-For the differential equation $F(x, y, y') = 0$ (where $p = y'$), eliminate $p$ from
+For the differential equation $F(x, y, dot(y)) = 0$ (where $p = dot(y)$), eliminate $p$ from
 $
   F(x, y, p) = 0, quad quad (partial F) / (partial p) = 0.
 $
@@ -858,10 +858,10 @@ This chapter develops the general theory of first-order linear systems. We intro
 A general first-order system of $n$ equations has the form
 $
   cases(
-    dif y_1 / dif x = f_1(x, y_1, y_2, dots, y_n),
-    dif y_2 / dif x = f_2(x, y_1, y_2, dots, y_n),
+    (dif y_1) / (dif x) = f_1(x, y_1, y_2, dots, y_n),
+    (dif y_2) / (dif x) = f_2(x, y_1, y_2, dots, y_n),
     quad quad dots.v,
-    dif y_n / dif x = f_(n)(x, y_1, y_2, dots, y_n),
+    (dif y_n) / (dif x) = f_(n)(x, y_1, y_2, dots, y_n),
   )
 $
 If the right-hand side does not depend explicitly on $x$, the system is called *autonomous*.
@@ -872,22 +872,22 @@ $
 $
 Then the system becomes
 #eq[$
-  dif bold(Y) / dif x = bold(F)(x, bold(Y)),
+  (dif bold(Y)) / (dif x) = bold(F)(x, bold(Y)),
 $] <eq:general-system>
 and the Cauchy problem is
 $
-  cases(dif bold(Y) / dif x = bold(F)(x, bold(Y)), bold(Y)(x_0) = bold(Y)_0).
+  cases((dif bold(Y)) / (dif x) = bold(F)(x, bold(Y)), bold(Y)(x_0) = bold(Y)_0).
 $
 
 A system is *linear* if the right-hand side is linear in $bold(Y)$:
 #eq[$
-  dif bold(Y) / dif x = bold(A)(x) bold(Y) + bold(F)(x),
+  (dif bold(Y)) / (dif x) = bold(A)(x) bold(Y) + bold(F)(x),
 $] <eq:linear-system>
 where $bold(A)(x) = (a_(i j)(x))$ is an $n times n$ matrix and $bold(F)(x)$ is an $n$-dimensional vector, both continuous on an interval $I$.
 
 When $bold(F)(x) equiv bold(0)$, the system is *homogeneous*:
 #eq[$
-  dif bold(Y) / dif x = bold(A)(x) bold(Y),
+  (dif bold(Y)) / (dif x) = bold(A)(x) bold(Y),
 $] <eq:homogeneous-system>
 otherwise it is *non-homogeneous*.
 
@@ -964,11 +964,11 @@ $
 $
 where the constant vector $bold(C)$ is now allowed to vary. Substituting into @eq:linear-system and using the fact that $bold(Phi)'(x) = bold(A)(x) bold(Phi)(x)$, we obtain
 $
-  bold(Phi)(x) dif bold(C) / dif x = bold(F)(x).
+  bold(Phi)(x) (dif bold(C)) / (dif x) = bold(F)(x).
 $
 Since $bold(Phi)(x)$ is invertible,
 $
-  dif bold(C) / dif x = bold(Phi)^(-1)(x) bold(F)(x).
+  (dif bold(C)) / (dif x) = bold(Phi)^(-1)(x) bold(F)(x).
 $
 Integrating from $x_0$ to $x$ gives the variation-of-constants formula:
 
@@ -987,7 +987,7 @@ $
 
 For the constant-coefficient homogeneous system
 #eq[$
-  dif bold(Y) / dif x = bold(A) bold(Y),
+  (dif bold(Y)) / (dif x) = bold(A) bold(Y),
 $] <eq:constant-coefficient>
 where $bold(A)$ is a constant matrix, the fundamental solution matrix is given by the *matrix exponential*:
 $
@@ -1060,21 +1060,21 @@ This chapter extends the theory of first-order linear systems to $n$-th order sc
 
 The general $n$-th order linear differential equation has the form
 #eq[$
-  dif^n y / dif x^n + p_1(x) dif^(n-1) y / dif x^(n-1) + dots + p_(n-1)(x) dif y / dif x + p_(n)(x) y = f(x).
+  (dif^n y) / (dif x^n) + p_1(x) (dif^(n-1) y) / (dif x^(n-1)) + dots + p_(n-1)(x) (dif y) / (dif x) + p_(n)(x) y = f(x).
 $] <eq:higher-order-nonhomogeneous>
 
 When $f(x) equiv 0$, we obtain the homogeneous case:
 #eq[$
-  dif^n y / dif x^n + p_1(x) dif^(n-1) y / dif x^(n-1) + dots + p_(n-1)(x) dif y / dif x + p_(n)(x) y = 0.
+  (dif^n y) / (dif x^n) + p_1(x) (dif^(n-1) y) / (dif x^(n-1)) + dots + p_(n-1)(x) (dif y) / (dif x) + p_(n)(x) y = 0.
 $] <eq:higher-order-homogeneous>
 
 To reduce this to a first-order system, introduce the state vector
 $
-  bold(Y) = mat(y, y', dot.double(y), dots, y^((n-1)))^T.
+  bold(Y) = mat(y, dot(y), dot.double(y), dots, y^((n-1)))^T.
 $
 Then the system becomes
 $
-  dif bold(Y) / dif x = bold(A)(x) bold(Y) + bold(F)(x),
+  (dif bold(Y)) / (dif x) = bold(A)(x) bold(Y) + bold(F)(x),
 $
 where $bold(A)(x)$ is the *companion matrix*
 $
@@ -1090,12 +1090,12 @@ and $bold(F)(x) = mat(0, 0, dots, f(x))^T$.
 #theorem(name: "Equivalence of Higher-Order Equations and First-Order Systems")[
 Equation @eq:higher-order-nonhomogeneous is equivalent to the first-order system @eq:linear-system with companion matrix.
 That is, if $y(x)$ is a solution of @eq:higher-order-nonhomogeneous, then
-$bold(Y)(x) = mat(y, y', dot.double(y), dots, y^((n-1)))^T$ is a solution of the corresponding first-order system; conversely, the first component of any solution of the system is a solution of the higher-order equation.
+$bold(Y)(x) = mat(y, dot(y), dot.double(y), dots, y^((n-1)))^T$ is a solution of the corresponding first-order system; conversely, the first component of any solution of the system is a solution of the higher-order equation.
 ] <thm:higher-order-equivalence>
 
 The initial conditions
 $
-  y(x_0) = y_0, quad quad y'(x_0) = y_(1, 0), quad quad dots, quad quad y^((n-1))(x_0) = y_((n-1), 0)
+  y(x_0) = y_0, quad quad dot(y)(x_0) = y_(1, 0), quad quad dots, quad quad y^((n-1))(x_0) = y_((n-1), 0)
 $
 translate to $bold(Y)(x_0) = bold(Y)_0$.
 
@@ -1139,7 +1139,7 @@ where $W_(i)(x)$ is the algebraic cofactor of the element in the $n$-th row and 
 #example(name: "Reduction of Order")[
 Suppose $y = phi(x)$ is a known non-zero solution of the second-order homogeneous equation
 $
-  dot.double(y) + p(x) y' + q(x) y = 0.
+  dot.double(y) + p(x) dot(y) + q(x) y = 0.
 $
 Then a second linearly independent solution is
 $
@@ -1152,7 +1152,7 @@ This is known as *reduction of order*: knowing one solution reduces the order of
 
 For constant-coefficient equations, the companion matrix is constant, and the theory of the matrix exponential simplifies dramatically. Introduce the differential operator
 $
-  L_n = dif^n / dif x^n + a_1 dif^(n-1) / dif x^(n-1) + dots + a_(n-1) dif / dif x + a_n,
+  L_n = (dif^n) / (dif x^n) + a_1 (dif^(n-1)) / (dif x^(n-1)) + dots + a_(n-1) (dif) / (dif x) + a_n,
 $
 where $a_1, dots, a_n$ are constants. The homogeneous equation is then $L_n y = 0$.
 
@@ -1215,14 +1215,14 @@ This chapter develops the qualitative theory of nonlinear autonomous systems. In
 We consider two-dimensional autonomous systems of the form
 #eq[$
   cases(
-    dif x / dif t = F(x, y),
-    dif y / dif t = G(x, y),
+    (dif x) / (dif t) = F(x, y),
+    (dif y) / (dif t) = G(x, y),
   )
 $] <eq:phase-plane-system>
 
 where $F$ and $G$ are continuously differentiable in a domain $D$. In vector form,
 #eq[$
-  dif bold(x) / dif t = bold(f)(bold(x)), quad quad bold(x)(t_0) = bold(x)^0,
+  (dif bold(x)) / (dif t) = bold(f)(bold(x)), quad quad bold(x)(t_0) = bold(x)^0,
 $] <eq:autonomous-system>
 
 where $bold(x) = (x, y)^T$ and $bold(f)(bold(x)) = (F(x, y), G(x, y))^T$.
@@ -1333,14 +1333,14 @@ This chapter studies boundary value problems (BVPs) for linear ODEs, where condi
 
 An initial value problem (IVP) specifies all conditions at a single point $x = x_0$:
 $
-  y(x_0) = y_0, quad quad y'(x_0) = y_(1, 0), quad quad dots, quad quad y^((n-1))(x_0) = y_((n-1), 0).
+  y(x_0) = y_0, quad quad dot(y)(x_0) = y_(1, 0), quad quad dots, quad quad y^((n-1))(x_0) = y_((n-1), 0).
 $
 
 A boundary value problem specifies conditions at two endpoints $x = a$ and $x = b$:
 $
   cases(
-    alpha_1 y(a) + alpha_2 y'(a) = c_1,
-    beta_1 y(b) + beta_2 y'(b) = c_2,
+    alpha_1 y(a) + alpha_2 dot(y)(a) = c_1,
+    beta_1 y(b) + beta_2 dot(y)(b) = c_2,
   )
 $
 
@@ -1363,7 +1363,7 @@ This example shows that non-trivial solutions exist only for special values of $
 
 Consider the general second-order linear non-homogeneous boundary value problem
 $
-  dot.double(y) + p(x) y' + q(x) y = f(x), quad quad y(a) = c_1, quad quad y(b) = c_2.
+  dot.double(y) + p(x) dot(y) + q(x) y = f(x), quad quad y(a) = c_1, quad quad y(b) = c_2.
 $
 
 Unlike IVPs, which always have a unique solution under mild conditions, BVPs have a more nuanced existence theory.
@@ -1387,7 +1387,7 @@ When the homogeneous BVP has only the trivial solution, we can construct the sol
 #definition(name: "Green's Function")[
 Let the homogeneous BVP
 $
-  dot.double(y) + p(x) y' + q(x) y = 0, quad quad y(a) = 0, quad quad y(b) = 0
+  dot.double(y) + p(x) dot(y) + q(x) y = 0, quad quad y(a) = 0, quad quad y(b) = 0
 $
 have only the trivial solution. The *Green's function* $G(x, xi)$ for this BVP is the function satisfying:
 1. For each fixed $xi in (a, b)$, $G(x, xi)$ satisfies the homogeneous ODE in $x$ on both intervals $(a, xi)$ and $(xi, b)$.
@@ -1402,7 +1402,7 @@ have only the trivial solution. The *Green's function* $G(x, xi)$ for this BVP i
 #theorem(name: "Solution Representation via Green's Function")[
 If $G(x, xi)$ is the Green's function for the homogeneous BVP, then the unique solution of
 $
-  dot.double(y) + p(x) y' + q(x) y = f(x), quad quad y(a) = 0, quad quad y(b) = 0
+  dot.double(y) + p(x) dot(y) + q(x) y = f(x), quad quad y(a) = 0, quad quad y(b) = 0
 $
 is given by
 #eq[$
@@ -1430,7 +1430,7 @@ It is symmetric: $G(x, xi) = G(xi, x)$, which reflects the self-adjointness of t
 #definition(name: "Sturm-Liouville Equation")[
 A *Sturm-Liouville equation* has the form
 #eq[$
-  - dif / dif x lr(p(x) dif y / dif x) + q(x) y = lambda r(x) y,
+  - (dif) / (dif x) lr(p(x) (dif y) / (dif x)) + q(x) y = lambda r(x) y,
 $] <eq:sturm-liouville>
 where $p(x) > 0$, $r(x) > 0$, and $q(x)$ are continuous on $[a, b]$.
 ] <def:sturm-liouville>
@@ -1441,8 +1441,8 @@ The functions $p$, $q$, and $r$ are the coefficients of the Sturm-Liouville oper
 A *regular Sturm-Liouville problem* on $[a, b]$ consists of the equation @eq:sturm-liouville together with boundary conditions
 $
   cases(
-    alpha_1 y(a) + alpha_2 y'(a) = 0,
-    beta_1 y(b) + beta_2 y'(b) = 0,
+    alpha_1 y(a) + alpha_2 dot(y)(a) = 0,
+    beta_1 y(b) + beta_2 dot(y)(b) = 0,
   )
 $
 where $alpha_1, alpha_2$ are not both zero, and $beta_1, beta_2$ are not both zero.
@@ -1458,7 +1458,7 @@ $
 $
 where the *Sturm-Liouville operator* is
 $
-  L = - dif / dif x lr(p(x) dif / dif x) + q(x).
+  L = - (dif) / (dif x) lr(p(x) (dif) / (dif x)) + q(x).
 $
 
 #definition(name: "Weighted Inner Product")[
@@ -1490,7 +1490,7 @@ The boundary term $-p u' v |_a^b$ vanishes because of the boundary conditions. R
 #definition(name: "Periodic Sturm-Liouville Problem")[
 A *periodic Sturm-Liouville problem* has periodic boundary conditions:
 $
-  y(a) = y(b), quad quad y'(a) = y'(b),
+  y(a) = y(b), quad quad dot(y)(a) = dot(y)(b),
 $
 in addition to $p(a) = p(b)$. This is the setting for the full Fourier series (sine and cosine).
 ] <def:periodic-slp>
@@ -1599,7 +1599,7 @@ If $f(x)$ is piecewise smooth on $[a, b]$, then the generalized Fourier series c
 #example(name: "Fourier Cosine Series (Neumann Boundary)")[
 The problem
 $
-  dot.double(y) + lambda y = 0, quad quad y'(0) = 0, quad quad y'(pi) = 0
+  dot.double(y) + lambda y = 0, quad quad dot(y)(0) = 0, quad quad dot(y)(pi) = 0
 $
 has eigenvalues $lambda_n = n^2$ and eigenfunctions $y_(n)(x) = cos(n x)$. The corresponding expansion is the Fourier cosine series, which represents even functions on $[0, pi]$ extended to $[-pi, pi]$.
 ] <ex:fourier-cosine>
@@ -1607,7 +1607,7 @@ has eigenvalues $lambda_n = n^2$ and eigenfunctions $y_(n)(x) = cos(n x)$. The c
 #example(name: "Full Fourier Series (Periodic Boundary)")[
 The periodic problem
 $
-  dot.double(y) + lambda y = 0, quad quad y(-pi) = y(pi), quad quad y'(-pi) = y'(pi)
+  dot.double(y) + lambda y = 0, quad quad y(-pi) = y(pi), quad quad dot(y)(-pi) = dot(y)(pi)
 $
 has eigenvalues $lambda_0 = 0$ and $lambda_n = n^2$ for $n >= 1$. The eigenfunctions are $1, cos(x), sin(x), cos(2x), sin(2x), dots$ — the full Fourier series basis.
 ] <ex:fourier-full>
@@ -1615,7 +1615,7 @@ has eigenvalues $lambda_0 = 0$ and $lambda_n = n^2$ for $n >= 1$. The eigenfunct
 #example(name: "Legendre Polynomials (Singular SL Problem)")[
 Legendre's equation
 $
-  - dif / dif x lr((1 - x^2) y') = lambda y, quad quad x in (-1, 1)
+  - (dif) / (dif x) lr((1 - x^2) dot(y)) = lambda y, quad quad x in (-1, 1)
 $
 is a singular Sturm-Liouville problem with $p(x) = 1 - x^2$ vanishing at both endpoints. The eigenvalues are $lambda_n = n(n + 1)$, and the eigenfunctions are the Legendre polynomials $P_(n)(x)$. They are orthogonal with weight $r(x) = 1$ on $[-1, 1]$.
 ] <ex:legendre>

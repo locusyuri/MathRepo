@@ -33,9 +33,9 @@
 
 > `∞`（无穷）**必须**用 `oo`，写成 Unicode `∞` 不符合规范。
 
-## 3. 微分符号：`dif` 而非 `(d ...) / (d ...)`
+## 3. 微分符号：`dif` 而非 `d`，且分数分子分母非单因子时必须加括号
 
-任何涉及微分的分数写法（如 `dy/dx`、`d²y/dx²`）都必须用 `dif`：
+任何涉及微分的分数写法（如 `dy/dx`、`d²y/dx²`）都必须用 `dif` 作为微分符号，且分子/分母是多字符结构（`dif y`、`dif x` 等）时必须各自加括号——见 [general.md §6.1](general.md)：
 
 ```typst
 // ❌ 错误 — LaTeX 风格的 (d y) / (d x)
@@ -43,12 +43,16 @@ $#eq[$
   (d y) / (d x) = f(x, y),
 $]$
 
-// ✅ 正确 — dif
+// ❌ 错误 — dif y 不是单因子，不加括号会被 / 拆坏
 $dif y / dif x = f(x, y)$
-$dif^n y / dif x^n$          // n 阶导数
-$dif^2 p / dif y^2$          // 高阶微分
-$dif bold(Y) / dif x$        // 向量值函数
-$dif / dif x$                // 算子写法
+$dif^n y / dif x^n$
+
+// ✅ 正确 — dif 正体 + 分子分母各自加括号
+$(dif y) / (dif x) = f(x, y)$
+$(dif^n y) / (dif x^n)$          // n 阶导数
+$(dif^2 p) / (dif y^2)$          // 高阶微分
+$(dif bold(Y)) / (dif x)$        // 向量值函数
+$(dif) / (dif x)$                // 算子写法（纯算子也要加括号）
 ```
 
 ## 4. 积分写法
