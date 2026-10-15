@@ -200,7 +200,7 @@ This chapter establishes the basic language of ordinary differential equations (
 
 == Classification of Differential Equations // 微分方程的分类
 
-An equation involving one dependent variable and its derivatives with respect to one or more independent variables is called a *differential equation*. Differential equations can be classified according to several criteria.
+An equation involving derivatives of a function of one or more independent variables is called a *differential equation*. Differential equations can be classified according to several criteria.
 
 #definition(name: "Ordinary Differential Equation (ODE)")[
 An *ordinary differential equation* (ODE) is an equation of the form
@@ -241,7 +241,7 @@ For a linear equation, if $g(x) = 0$, the equation is called *homogeneous*; othe
 Let $J subset.eq bb(R)$ be an interval.
 
 #definition(name: "Solution of an ODE")[
-A function $y = phi(x)$ defined on $J$ is called a *solution* to the ODE $F(x, y, y', dots, y^(n)) = 0$ if it satisfies
+A smooth function $y = phi(x)$ defined on $J$ is called a *solution* to the ODE $F(x, y, y', dots, y^(n)) = 0$ if it satisfies
 $
   F(x, phi(x), phi'(x), phi''(x), dots, phi^(n)(x)) = 0 quad quad text("for all") x in J.
 $
@@ -266,9 +266,13 @@ $
 are called *initial conditions* at $x = x_0$. An ODE together with a set of initial conditions is called an *initial value problem* (IVP), also known as a *Cauchy problem*.
 ] <def:cauchy-problem>
 
+In contrast, if the conditions are prescribed at both ends of an interval $[a, b]$ — such as $phi(a) = y_a$ and $phi(b) = y_b$ — they are called *boundary conditions*, and an ODE together with such conditions is called a *boundary value problem* (BVP). We study BVPs in Part IV.
+
 #definition(name: "Explicit and Implicit Solutions")[
 A solution $y = phi(x)$ written directly as a function of $x$ is called an *explicit solution*. If the solution is determined by a relation $Phi(x, y) = 0$ that cannot (or need not) be solved for $y$ in terms of $x$, then $Phi(x, y) = 0$ is called an *implicit solution*. An implicit solution is also referred to as an *integral* of the equation.
 ] <def:implicit-solution>
+
+In classical terminology, an implicit solution is also called an *integral* of the equation; this usage is distinct from the integral of calculus.
 
 === Integral Curves and Direction Fields // 积分曲线与方向场
 
@@ -294,7 +298,7 @@ Thus the tangent line at $(x_0, y_0)$ has equation
 $
   y - y_0 = f(x_0, y_0) (x - x_0).
 $
-Remarkably, we can determine the tangent slope at any point from the equation alone, without knowing the explicit solution.
+Remarkably, we can determine the tangent slope at any point from the equation alone, without knowing the explicit solution. @fig:direction-field illustrates this idea for the ODE $y' = x - y$.
 
 #definition(name: "Direction Field (Line Element Field)")[
 At each point $P = (x, y)$ in the region $G$, draw a short line segment with slope $f(P)$. This segment is called the *line element* (or *direction element*) of the ODE at $P$. The region $G$ together with the collection of all line elements is called the *direction field* (or *slope field* or *line element field*) of the ODE.
@@ -306,7 +310,7 @@ The direction field gives a geometric portrait of all solutions even when we can
 
 #figure(
   image("img/direction-field.svg", width: 80%),
-  caption: [Direction field and typical integral curves for the ODE $y' = x - y$. The dashed line shows the particular solution $y = x - 1$, which is an equilibrium of the transformed system.],
+  caption: [Direction field and typical integral curves for the ODE $y' = x - y$. The dashed line shows the particular solution $y = x - 1$: under the substitution $z = y - x + 1$, this is the equilibrium $z = 0$ of the linearized equation $z' = -z$.],
   placement: auto,
   supplement: [Fig.]
 ) <fig:direction-field>
