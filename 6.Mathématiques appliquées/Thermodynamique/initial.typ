@@ -1010,11 +1010,9 @@ diagram ($p$-$V$ plane for a simple fluid), which is the arena for the
 work calculations of §2.3.
 
 #definition(name: "Reversible Process")[
-  A process is *reversible* if the system *and its surroundings* can be
-  restored to their initial states with no other change anywhere in the
-  universe; otherwise it is *irreversible*. A quasi-static process free
-  of dissipative effects is reversible; conversely, a process that is
-  not quasi-static, or involves dissipation, is irreversible.
+  A process is *reversible* if the system *and its surroundings* can be restored to their initial states with no other change anywhere in the universe; otherwise it is *irreversible*.
+
+  A quasi-static process free of dissipative effects is reversible; conversely, a process that is not quasi-static, or involves dissipation, is irreversible.
 ] <def:reversible-process>
 
 A quasi-static process need not be reversible — friction inside the
@@ -1618,11 +1616,9 @@ A process that returns the system to its initial state is called a *cyclic proce
 
 #definition(name: "Thermal Reservoir and Heat Engine")[
   A *thermal reservoir* is an idealised body of fixed temperature whose
-  state is unaltered by exchanging any finite amount of heat. A *heat
-  engine* is a cyclic device that absorbs heat $Q_h$ from a hot
-  reservoir at $T_h$, rejects heat $Q_c$ to a cold reservoir at
-  $T_c < T_h$, and delivers net work $W = Q_h - Q_c$ per cycle;
-  a *refrigerator* (or heat pump) is the same device run backwards.
+  state is unaltered by exchanging any finite amount of heat.
+
+  A *heat engine* is a cyclic device that absorbs heat $Q_h$ from a hot reservoir at $T_h$, rejects heat $Q_c$ to a cold reservoir at $T_c < T_h$, and delivers net work $W = Q_h - Q_c$ per cycle; a *refrigerator* (or heat pump) is the same device run backwards.
 ] <def:heat-engine>
 
 #figure(
