@@ -2381,7 +2381,7 @@ $
   $
     [hat(a), hat(a)^dagger] = 1.
   $
-] <def:number-operator>
+] <def:ladder-operators>
 
 #theorem(name: "Quantization of the Field Hamiltonian")[
   In terms of the number operator $hat(N) = hat(a)^dagger hat(a)$, the field Hamiltonian is
@@ -2441,7 +2441,7 @@ $
   *Vacuum fluctuations.*
   The vacuum expectation of the field vanishes, $⟨ 0 | hat(bold(E)) | 0 ⟩ = 0$, but its square does not: $⟨ 0 | hat(bold(E))^2 | 0 ⟩ != 0$.
   The empty field therefore exhibits fluctuating fields of zero mean — the physical origin of spontaneous emission (Chapter 18) and of the Casimir force between conducting plates.
-  The polarization states of Chapter 12 become, in this language, superpositions of the two Fock modes of orthogonal polarization — the Bloch-sphere picture promised in Chapter 12.
+  The polarization states of Chapter 12 become, in this language, superpositions of the two Fock modes of orthogonal polarization — the Bloch-sphere picture promised in Chapter 12, and the photon helicity of Section 12.6 is the circular-polarization superposition of the same modes.
 ]
 
 // --- Chapter 16: Coherent and Squeezed States (相干态与压缩态) ---
