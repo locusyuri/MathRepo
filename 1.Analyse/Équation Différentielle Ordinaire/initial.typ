@@ -858,10 +858,10 @@ This chapter develops the general theory of first-order linear systems. We intro
 A general first-order system of $n$ equations has the form
 $
   cases(
-    (d y_1) / (d x) = f_1(x, y_1, y_2, dots, y_n),
-    (d y_2) / (d x) = f_2(x, y_1, y_2, dots, y_n),
+    dif y_1 / dif x = f_1(x, y_1, y_2, dots, y_n),
+    dif y_2 / dif x = f_2(x, y_1, y_2, dots, y_n),
     quad quad dots.v,
-    (d y_n) / (d x) = f_(n)(x, y_1, y_2, dots, y_n),
+    dif y_n / dif x = f_(n)(x, y_1, y_2, dots, y_n),
   )
 $
 If the right-hand side does not depend explicitly on $x$, the system is called *autonomous*.
@@ -1152,7 +1152,7 @@ This is known as *reduction of order*: knowing one solution reduces the order of
 
 For constant-coefficient equations, the companion matrix is constant, and the theory of the matrix exponential simplifies dramatically. Introduce the differential operator
 $
-  L_n = (d^n) / (d x^n) + a_1 (d^(n-1)) / (d x^(n-1)) + dots + a_(n-1) dif / dif x + a_n,
+  L_n = dif^n / dif x^n + a_1 dif^(n-1) / dif x^(n-1) + dots + a_(n-1) dif / dif x + a_n,
 $
 where $a_1, dots, a_n$ are constants. The homogeneous equation is then $L_n y = 0$.
 

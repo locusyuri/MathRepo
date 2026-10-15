@@ -33,9 +33,27 @@
 
 > `∞`（无穷）**必须**用 `oo`，写成 Unicode `∞` 不符合规范。
 
-## 3. 积分写法
+## 3. 微分符号：`dif` 而非 `(d ...) / (d ...)`
 
-### 3.1 `int` → `integral` 遗忘
+任何涉及微分的分数写法（如 `dy/dx`、`d²y/dx²`）都必须用 `dif`：
+
+```typst
+// ❌ 错误 — LaTeX 风格的 (d y) / (d x)
+$#eq[$
+  (d y) / (d x) = f(x, y),
+$]$
+
+// ✅ 正确 — dif
+$dif y / dif x = f(x, y)$
+$dif^n y / dif x^n$          // n 阶导数
+$dif^2 p / dif y^2$          // 高阶微分
+$dif bold(Y) / dif x$        // 向量值函数
+$dif / dif x$                // 算子写法
+```
+
+## 4. 积分写法
+
+### 4.1 `int` → `integral` 遗忘
 
 LaTeX 习惯用 `\int`，Typst 必须写 `integral`。`int` 是未知变量，会报错。
 
@@ -53,7 +71,7 @@ $integral.double_S f dif S$
 $integral_(partial V) bold(E) dot dif bold(S)$
 ```
 
-### 3.2 积分记号惯例
+### 4.2 积分记号惯例
 
 ```typst
 // 基本积分
@@ -77,7 +95,7 @@ $liminf_(n->oo) integral_X f_n dif mu$
 - 积分区域用下标：`$integral_A f dif mu$`、`$integral_(E_n) f dif mu$`
 - 集合上的积分限制：`$integral_({|f| > M}) |f| dif mu$`（注意花括号内的集合描述）
 
-## 4. 非标准符号的等价表达
+## 5. 非标准符号的等价表达
 
 | 意图 | LaTeX | Typst |
 |------|-------|-------|
@@ -87,7 +105,7 @@ $liminf_(n->oo) integral_X f_n dif mu$
 
 `\laplacian`、`\oint` 等非标准 LaTeX 宏在 Typst 中不存在，必须用等价表达。
 
-## 5. 导数点记号
+## 6. 导数点记号
 
 ```typst
 $dot(x)$           // x'
@@ -97,7 +115,7 @@ $dot.triple(x)$    // x'''
 
 时间导数、一阶/二阶/三阶都用 `dot` / `dot.double` / `dot.triple`。
 
-## 6. 函数空间记号（分析风格）
+## 7. 函数空间记号（分析风格）
 
 ```typst
 // L^p 空间（空格分隔参数）
@@ -107,7 +125,7 @@ $L^1 (X, mu)$
 文本中写 `a.e.`，公式中写 `"a.e."`
 ```
 
-## 7. 规则要点
+## 8. 规则要点
 
 1. **积分一律 `integral`**，`int` 不存在；多重积分用 `integral.double` / `integral.triple` / `integral.cont`。
 2. **微分用正体 `dif`**，如 `dif x`、`dif mu`。
