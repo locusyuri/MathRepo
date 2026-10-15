@@ -58,7 +58,7 @@
 //     - 正弦级数与余弦级数
 
 //   Section 1.3: Dirichlet Kernel and Convolution (Dirichlet 核与卷积)
-//     - Dirichlet 核 D_N(x) 的定义与性质（偶性、归一化）
+//     - Dirichlet 核 D_(N)(x) 的定义与性质（偶性、归一化）
 //     - Lebesgue 常数与 D_N 的"坏核"本质
 //     - 卷积的定义与基本性质（交换律、结合律、分配律、平移不变性）
 //     - 卷积定理：频域乘积 ↔ 时域卷积
@@ -83,7 +83,7 @@
 
 //   Section 2.1: Cesàro Summation and Fejér Kernel (Cesàro 求和与 Fejér 核)
 //     - Cesàro 求和的定义
-//     - Fejér 核 F_N(t) 的定义与四大性质（正性、归一化、集中性、有界性）
+//     - Fejér 核 F_(N)(t) 的定义与四大性质（正性、归一化、集中性、有界性）
 //     - Dirichlet 核 vs Fejér 核对比表
 //     - Fejér 定理（含 Weierstrass 逼近定理推论）
 
@@ -386,20 +386,20 @@ $
 
 For partial sum of the first $N$ terms of the Fourier series of $f(x)$:
 $
-  S_N(f; x) = sum_(n=-N)^(N) hat(f)(n) e^(i n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ],
+  S_(N)(f; x) = sum_(n=-N)^(N) hat(f)(n) e^(i n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ],
 $
 in order to study its convergence, we can transform it into integral form.
 By Euler-Fourier formula, we have:
 $
-  S_N(f; x) \
+  S_(N)(f; x) \
   & = sum_(n=-N)^(N) hat(f)(n) e^(i n x) \
   & = sum_(n=-N)^(N) ( (1) / (2pi) integral_(-pi)^(pi) f(t) e^(-i n t) dif t ) e^(i n x) \
   & = (1) / (2pi) integral_(-pi)^(pi) f(t) ( sum_(n=-N)^(N) e^(i n (x - t)) ) dif t \
-  & = (1) / (2pi) integral_(-pi)^(pi) f(t) D_N(x - t) dif t, \
+  & = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t, \
 $
 where
 $
-  D_N(x) = sum_(n=-N)^(N) e^(i n x) = sum_(n=1)^(N) 2 cos(n x) + 1 = \
+  D_(N)(x) = sum_(n=-N)^(N) e^(i n x) = sum_(n=1)^(N) 2 cos(n x) + 1 = \
   ( sin((2N + 1) / (2) x) ) / ( sin(x / (2)) ), \
 $
 is called the *Dirichlet kernel*.
@@ -408,10 +408,10 @@ Dirichlet kernel possesses the following important properties:
 
 #property[
   1. *Evenness.*
-    $ D_N(-x) = D_N(x). $
+    $ D_(N)(-x) = D_(N)(x). $
 
   2. *Normalization.*
-    $ (1) / (2pi) integral_(-pi)^(pi) D_N(x) dif x = 1. $
+    $ (1) / (2pi) integral_(-pi)^(pi) D_(N)(x) dif x = 1. $
 ]
 
 #figure(
@@ -421,37 +421,37 @@ Dirichlet kernel possesses the following important properties:
   supplement: [Fig.],
 ) <fig:Dirichlet_kernels>
 
-However, $D_N(x)$ is like water waves, with both positive and negative values.
+However, $D_(N)(x)$ is like water waves, with both positive and negative values.
 This means that during convolution (weighted averaging), positive and negative offsets may lead to extremely unstable results.
 For example, for integral mean of the absolute value of the Dirichlet kernel,
 which is called the *Lebesgue constant*:
 $
-  L_n := (1) / (2pi) integral_(-pi)^(pi) abs(D_N(x)) dif x approx (4) / (pi^2) ln N, quad (N -> +oo).
+  L_n := (1) / (2pi) integral_(-pi)^(pi) abs(D_(N)(x)) dif x approx (4) / (pi^2) ln N, quad (N -> +oo).
 $
-It is precisely because the absolute integral of $D_N(x)$ tends to infinity
+It is precisely because the absolute integral of $D_(N)(x)$ tends to infinity
 that it is a "bad kernel function".
 It amplifies errors, causing #underline[the Fourier series of a continuous function to potentially diverge].
 
 #v(0.7cm)
 With the help of convolution theorem, we have:
 $
-  S_N(f; x) &= (1) / (2pi) integral_(-pi)^(pi) f(t) D_N(x - t) dif t \
-  & =^("Let " u = t - x) (1) / (2pi) integral_(-pi)^(pi) f(x + u) D_N(-u) dif u \
-  & =^(D_N(-u) = D_N(u)) (1) / (2pi) integral_(-pi)^(pi) f(x + u) D_N(u) dif u \
-  & =^("Divide by " 2) (1) / (2pi) integral_(0)^(pi) [ f(x + u) + f(x - u) ] D_N(u) dif u. \
+  S_(N)(f; x) &= (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t \
+  & =^("Let " u = t - x) (1) / (2pi) integral_(-pi)^(pi) f(x + u) D_(N)(-u) dif u \
+  & =^(D_(N)(-u) = D_(N)(u)) (1) / (2pi) integral_(-pi)^(pi) f(x + u) D_(N)(u) dif u \
+  & =^("Divide by " 2) (1) / (2pi) integral_(0)^(pi) [ f(x + u) + f(x - u) ] D_(N)(u) dif u. \
 $
-Then the convergence of $S_N(f; x)$ can be analyzed through the properties of the last integral
+Then the convergence of $S_(N)(f; x)$ can be analyzed through the properties of the last integral
 that is called the *Dirichlet integral*.
 
 Since the normalization property of Dirichlet kernel, we can analyze the difference between
-$S_N(f; x)$ and any a function $sigma(x)$:
+$S_(N)(f; x)$ and any a function $sigma(x)$:
 $
-  S_N(f; x) - sigma(x) = (1) / (2pi) integral_(0)^(pi) [ f(x + u) + f(x - u) - 2sigma(x) ] D_N(u) dif u.
+  S_(N)(f; x) - sigma(x) = (1) / (2pi) integral_(0)^(pi) [ f(x + u) + f(x - u) - 2sigma(x) ] D_(N)(u) dif u.
 $
 Denote $phi_sigma(u, x) = f(x + u) + f(x - u) - 2sigma(x)$,
-then the convergence of $S_N(f; x)$ to $sigma(x)$ is equivalent to:
+then the convergence of $S_(N)(f; x)$ to $sigma(x)$ is equivalent to:
 $
-  lim_(N -> +oo) integral_(0)^(pi) phi_sigma(u, x) D_N(u) dif u = 0.
+  lim_(N -> +oo) integral_(0)^(pi) phi_sigma(u, x) D_(N)(u) dif u = 0.
 $
 
 === Convolution
@@ -490,7 +490,7 @@ $
 #v(0.7cm)
 With the definition of convolution, we can rewrite the partial sum of Fourier series as:
 $
-  S_N(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(t) D_N(x - t) dif t = (f * D_N)(x).
+  S_(N)(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t = (f * D_N)(x).
 $
 Actually, this is a special case of convolution theorem,
 and we have the following general conclusion:
@@ -599,22 +599,22 @@ Then we can state Riemann's Localization Theorem:
     lim_(N -> oo) integral_(delta)^(pi) \
     [ f(x + u) + f(x - u) ] (sin((N + (1) / (2)) u)) / (sin(u / (2))) dif u = 0. \
   $
-  Thus, divided the integral interval of $S_N(f; x)$ into $[0, delta]$ and $[delta, pi]$, that is:
+  Thus, divided the integral interval of $S_(N)(f; x)$ into $[0, delta]$ and $[delta, pi]$, that is:
   $
-    S_N(f; x) = (1) / (2pi) integral_(0)^(delta) [ f(x + u) + f(x - u) ] D_N(u) dif u \
+    S_(N)(f; x) = (1) / (2pi) integral_(0)^(delta) [ f(x + u) + f(x - u) ] D_(N)(u) dif u \
     + (1) / (2pi) integral_(delta)^(pi) \
     [ f(x + u) + f(x - u) ] (sin((N + (1) / (2)) u)) / (sin(u / (2))) dif u. \
   $
   When $N -> +oo$, the second term tends to zero, i.e.,
-  the convergence of $S_N(f; x)$ only depends on the first term:
+  the convergence of $S_(N)(f; x)$ only depends on the first term:
   $
-    lim_(N -> +oo) S_N(f; x) = lim_(N -> +oo) (1) / (2pi) integral_(0)^(delta) \
-    [ f(x + u) + f(x - u) ] D_N(u) dif u. \
+    lim_(N -> +oo) S_(N)(f; x) = lim_(N -> +oo) (1) / (2pi) integral_(0)^(delta) \
+    [ f(x + u) + f(x - u) ] D_(N)(u) dif u. \
   $
 ]
 
 #v(0.7cm)
-Since the oscillation of $D_N(x)$ is so severe that it causes poor convergence, is there a way to "smooth it out"?
+Since the oscillation of $D_(N)(x)$ is so severe that it causes poor convergence, is there a way to "smooth it out"?
 In fact, we can use *Cesàro summation* and *Fejér kernel* to achieve this goal,
 which will be discussed in the next chapter.
 
@@ -805,7 +805,7 @@ $
     (f(x+) + f(x-)) / (2) x " is discontinuous". ,
   ) 
 $
-Regarding the partial sum of the $N$-term Fourier series $S_N(f; x)$,
+Regarding the partial sum of the $N$-term Fourier series $S_(N)(f; x)$,
 it will exhibit significant overshoot near the discontinuity points (@fig:gibbs).
 Even if more sine terms are used, this approximation error will only converge to a limit of
 approximately $9 percent$ of the jump height,
@@ -931,50 +931,50 @@ Here we introduce Cesàro summation, which is a method to assign sums to some di
 
 Due to
 $
-  S_N(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(x - t) D_N(t) dif t,
+  S_(N)(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(x - t) D_(N)(t) dif t,
 $
 then
 $
-  sigma_N(f; x) &= (1) / (N) sum_(k=0)^(N-1) S_k(f; x) ,
-  &= (1) / (N) sum_(k=0)^(N-1) (1) / (2pi) integral_(-pi)^(pi) f(x - t) D_k(t) dif t ,
-  &= (1) / (2pi) integral_(-pi)^(pi) f(x - t) ( (1) / (N) sum_(k=0)^(N-1) D_k(t) ) dif t ,
-  &= (1) / (2pi) integral_(-pi)^(pi) f(x - t) F_N(t) dif t,
+  sigma_(N)(f; x) &= (1) / (N) sum_(k=0)^(N-1) S_(k)(f; x) ,
+  &= (1) / (N) sum_(k=0)^(N-1) (1) / (2pi) integral_(-pi)^(pi) f(x - t) D_(k)(t) dif t ,
+  &= (1) / (2pi) integral_(-pi)^(pi) f(x - t) ( (1) / (N) sum_(k=0)^(N-1) D_(k)(t) ) dif t ,
+  &= (1) / (2pi) integral_(-pi)^(pi) f(x - t) F_(N)(t) dif t,
 $
 where
 $
-  F_N(t) = (1) / (N) sum_(k=0)^(N-1) D_k(t) = (1) / (N) ( (sin((N t) / (2))) / (sin(t / (2))) )^2,
+  F_(N)(t) = (1) / (N) sum_(k=0)^(N-1) D_(k)(t) = (1) / (N) ( (sin((N t) / (2))) / (sin(t / (2))) )^2,
 $
 is called the *Fejér kernel*.
 
 #figure(
   image("img/Fejér_kernels.png", width: 60%),
-  caption: [Fejér kernels $F_N(t)$ for $N = 2, 4, 6, 8, 10$.],
+  caption: [Fejér kernels $F_(N)(t)$ for $N = 2, 4, 6, 8, 10$.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:Fejer-kernels>
 
 Fejér kernel has the following excellent properties:
 #property[
-  1. *Positivity.* For any integer $N$ and real number $t$, $F_N(t) >= 0$.
+  1. *Positivity.* For any integer $N$ and real number $t$, $F_(N)(t) >= 0$.
     This property significantly distinguishes Fejér kernel from Dirichlet kernel.
 
   2. *Normalization.* For any integer $N$,
     $
-      (1) / (2pi) integral_(-pi)^(pi) F_N(t) dif t = 1.
+      (1) / (2pi) integral_(-pi)^(pi) F_(N)(t) dif t = 1.
     $
 
   3. *Concentration.* For any $delta in (0, pi)$,
     $
-      lim_(N -> oo) integral_(delta)^(pi) F_N(t) dif t = 0.
+      lim_(N -> oo) integral_(delta)^(pi) F_(N)(t) dif t = 0.
     $
 
   4. *Bounded.* Its $L^1$ norm is bounded:
     $
-      (1) / (2pi) integral_(-pi)^(pi) abs(F_N(t)) dif t = 1.
+      (1) / (2pi) integral_(-pi)^(pi) abs(F_(N)(t)) dif t = 1.
     $
     Distinct from Dirichlet kernel, whose $L^1$ norm grows logarithmically with $N$:
     $
-      (1) / (2pi) integral_(-pi)^(pi) abs(D_N(t)) dif t ~ (4) / (pi^2) log N.
+      (1) / (2pi) integral_(-pi)^(pi) abs(D_(N)(t)) dif t ~ (4) / (pi^2) log N.
     $
 ]
 
@@ -995,16 +995,16 @@ Fejér kernel has the following excellent properties:
 With such a "good kernel", we can develop the following theorem:
 #theorem(name: "Fejér Theorem")[
   If $f(x)$ is a continuous function defined on $bb(T)$,
-  then its Cesàro means $sigma_N(f; x)$ converge uniformly to $f(x)$ on $bb(T)$, i.e.,
+  then its Cesàro means $sigma_(N)(f; x)$ converge uniformly to $f(x)$ on $bb(T)$, i.e.,
   $
-    lim_(N -> oo) sup_(x in bb(T)) abs(sigma_N(f; x) - f(x)) = 0.
+    lim_(N -> oo) sup_(x in bb(T)) abs(sigma_(N)(f; x) - f(x)) = 0.
   $
 
   The generalized version is:
   if $f(x) in cal(R)[-pi, pi]$, and $f$ has left and right limits at point $x_0 in [-pi, pi]$,
-  then its Cesàro means $sigma_N(f; x_0)$ converge to the average of the left and right limits, i.e.,
+  then its Cesàro means $sigma_(N)(f; x_0)$ converge to the average of the left and right limits, i.e.,
   $
-    lim_(N -> oo) sigma_N(f; x_0) = (f(x_0^+) + f(x_0^-)) / (2).
+    lim_(N -> oo) sigma_(N)(f; x_0) = (f(x_0^+) + f(x_0^-)) / (2).
   $
 ]
 
@@ -1032,15 +1032,15 @@ can be proved easily.
 
 #theorem(name: "Square Approximation Property of Fourier Series")[
   Let $f(x) in cal(R)^2[-pi, pi]$, and $W$ be an $N$-degree subspace of $cal(R)^2[-pi, pi]$,
-  then the best approximation of $f(x)$ in $W$ is just given by its Fourier series partial sum $S_N(f; x)$:
+  then the best approximation of $f(x)$ in $W$ is just given by its Fourier series partial sum $S_(N)(f; x)$:
   $
-    S_N(f; x) = sum_(n=-N)^(N) hat(f)(n) e^(i n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ].
+    S_(N)(f; x) = sum_(n=-N)^(N) hat(f)(n) e^(i n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ].
   $
-  And the remainder $E_N(f; x) = f(x) - S_N(f; x)$ satisfies#footnote[
+  And the remainder $E_(N)(f; x) = f(x) - S_(N)(f; x)$ satisfies#footnote[
     Refer to _Algèbre Linéaire - Section 10.5: Orthogonal Completion and Orthogonal Projection_.
   ]:
   $
-    || E_N(f; x) ||^2 = || f ||^2 - sum_(n=-N)^(N) abs(hat(f)(n))^2 ,
+    || E_(N)(f; x) ||^2 = || f ||^2 - sum_(n=-N)^(N) abs(hat(f)(n))^2 ,
     = (1) / (pi) integral_(-pi)^(pi) f^2(x) dif x - [ (a_0^2) / (2) + sum_(n=1)^(N) (a_n^2 + b_n^2) ]. ,
   $
 ]
@@ -1111,12 +1111,12 @@ can be proved easily.
 === Square Mean Convergence
 
 #definition(name: "Square Mean Convergence")[
-  A sequence of functions $f_n(x)$ is said to converge to $f(x)$
+  A sequence of functions $f_(n)(x)$ is said to converge to $f(x)$
   in the square mean (or $L^2$) sense on interval $[a, b]$,
   if
   $
     lim_(n -> oo) || f_n - f ||^2 = ,
-    lim_(n -> oo) integral_(a)^(b) abs(f_n(x) - f(x))^2 dif x = 0. ,
+    lim_(n -> oo) integral_(a)^(b) abs(f_(n)(x) - f(x))^2 dif x = 0. ,
   $
 ]
 
@@ -1124,7 +1124,7 @@ can be proved easily.
   If $f(x) in cal(R)^2[-pi, pi]$,
   then its Fourier series converges to $f(x)$ in the square mean sense on $[-pi, pi]$, i.e.,
   $
-    lim_(N -> oo) integral_(-pi)^(pi) abs(f(x) - S_N(f; x))^2 dif x = 0.
+    lim_(N -> oo) integral_(-pi)^(pi) abs(f(x) - S_(N)(f; x))^2 dif x = 0.
   $
 ]
 
@@ -1202,14 +1202,14 @@ leading to the definition of the Fourier transform.
 
 For a function $f(x)$ with period $T$, its Fourier series representation is given by
 $
-  f_T(x) = sum_(n=-oo)^(oo) [ (1) / (2T) integral_(-T)^(T) f(x) e^(-i (pi n) / (T) x) dif x ] ,
+  f_(T)(x) = sum_(n=-oo)^(oo) [ (1) / (2T) integral_(-T)^(T) f(x) e^(-i (pi n) / (T) x) dif x ] ,
   e^(i (pi n) / (T) x). ,
 $
 Define the frequency variable $omega_n = (n) / (2T)$,
 and the frequency increment $Delta omega = omega_(n+1) - omega_n = (1) / (2T)$.
 Then we can rewrite the Fourier series as
 $
-  f_T(x) = sum_(n=-oo)^(oo) [ integral_(-T)^(T) f(x) e^(-i 2 pi omega_n x) dif x ] ,
+  f_(T)(x) = sum_(n=-oo)^(oo) [ integral_(-T)^(T) f(x) e^(-i 2 pi omega_n x) dif x ] ,
   e^(i 2 pi omega_n x) Delta omega. ,
 $
 Let $T -> oo$, we have $Delta omega -> 0$ and the sum becomes an integral:

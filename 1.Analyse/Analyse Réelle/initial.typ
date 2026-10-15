@@ -613,7 +613,7 @@ We now examine the relationship between convergence in measure and almost everyw
 
   Consider $([0,1], cal(L), m)$ and let $f_n = n chi_([0, 1/n])$.
 
-  *Almost everywhere convergence*: For $x = 0$, $f_n(0) = n -> infinity$. For every $x > 0$, when $n > 1/x$ we have $x in.not [0, 1/n]$, so $f_n(x) = 0$ eventually. Thus $f_n -> 0$ a.e. (the exceptional set ${0}$ has measure zero).
+  *Almost everywhere convergence*: For $x = 0$, $f_(n)(0) = n -> infinity$. For every $x > 0$, when $n > 1/x$ we have $x in.not [0, 1/n]$, so $f_(n)(x) = 0$ eventually. Thus $f_n -> 0$ a.e. (the exceptional set ${0}$ has measure zero).
 
   *No $L^p$ convergence*: For $p > 1$, $integral_0^1 abs(f_n)^p dif m = n^p / n = n^(p-1) -> infinity$. For $p = 1$, $integral_0^1 abs(f_n) dif m = 1$ for all $n$, so $integral f_n dif m$ does not converge to $0 = integral 0 dif m$. In either case $f_n$ does not converge to $0$ in $L^p$.
 ]
@@ -721,11 +721,11 @@ We now examine the relationship between convergence in measure and almost everyw
   // 无穷测度空间上, 几乎处处收敛既不蕴含依测度收敛, 也不蕴含近一致收敛
   Consider $(bb(R), cal(L), m)$ with Lebesgue measure and let $f_n = chi_([n, n+1])$.
 
-  *Almost everywhere convergence*: For every fixed $x in bb(R)$, when $n > x$ we have $x in.not [n, n+1]$, so $f_n(x) = 0$ for all sufficiently large $n$. Thus $f_n -> 0$ everywhere (hence a.e.).
+  *Almost everywhere convergence*: For every fixed $x in bb(R)$, when $n > x$ we have $x in.not [n, n+1]$, so $f_(n)(x) = 0$ for all sufficiently large $n$. Thus $f_n -> 0$ everywhere (hence a.e.).
 
-  *No convergence in measure*: For $epsilon = 1/2$, $m({x : abs(f_n(x)) > epsilon}) = m([n, n+1]) = 1$ for all $n$, which does not tend to $0$. Thus $f_n$ does NOT converge to $0$ in measure.
+  *No convergence in measure*: For $epsilon = 1/2$, $m({x : abs(f_(n)(x)) > epsilon}) = m([n, n+1]) = 1$ for all $n$, which does not tend to $0$. Thus $f_n$ does NOT converge to $0$ in measure.
 
-  *No almost uniform convergence*: Suppose for contradiction that $f_n xarrow("a.u.") 0$. Then for $delta = 1/2$, there exists $E$ with $m(E) < 1/2$ such that $f_n -> 0$ uniformly on $bb(R) backslash E$. Choose $N$ such that $abs(f_n(x)) < 1$ for all $x in bb(R) backslash E$ and all $n >= N$. But $f_n(x) = 1$ on $[n, n+1]$, so $[n, n+1] subset E$ for all $n >= N$, giving $m(E) >= 1 > 1/2$, a contradiction.
+  *No almost uniform convergence*: Suppose for contradiction that $f_n xarrow("a.u.") 0$. Then for $delta = 1/2$, there exists $E$ with $m(E) < 1/2$ such that $f_n -> 0$ uniformly on $bb(R) backslash E$. Choose $N$ such that $abs(f_(n)(x)) < 1$ for all $x in bb(R) backslash E$ and all $n >= N$. But $f_(n)(x) = 1$ on $[n, n+1]$, so $[n, n+1] subset E$ for all $n >= N$, giving $m(E) >= 1 > 1/2$, a contradiction.
 ]
 
 
@@ -903,13 +903,13 @@ We now examine the relationship between convergence in measure and almost everyw
 #property(name: "Analytic Properties of the Lebesgue Integral")[
   // 积分的分析性质
   Let $f: bb(R) -> overline(bb(R))$ be an integrable function with respect to Lebesgue measure $m$ on $bb(R)$.
-  + *Translation Invariance*: For any $h in bb(R)$, the translated function $f_h(x) = f(x + h)$ is integrable and
+  + *Translation Invariance*: For any $h in bb(R)$, the translated function $f_(h)(x) = f(x + h)$ is integrable and
     $
       integral_bb(R) f_h dif m = integral_bb(R) f dif m.
     $
   + *Continuity of Average*:
   $
-    lim_(h->0) integral_bb(R) abs(f_h(x) - f(x)) dif m = 0.
+    lim_(h->0) integral_bb(R) abs(f_(h)(x) - f(x)) dif m = 0.
   $
   + *Absolute Continuity of the Integral*: For every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A in cal(L)$ with $m(A) < delta$,
     $
@@ -920,7 +920,7 @@ We now examine the relationship between convergence in measure and almost everyw
 #note[
   // Translation Invariance vs. Continuity of Average
   - *Translation Invariance* is an equality: the integral value is unchanged under any translation. It is a structural property of the Lebesgue measure itself.
-  - *Continuity of Average* is a limit statement: it asserts that the $L^1$ distance between $f$ and its translate $f_h(x)$ tends to $0$ as $h -> 0$. This is the $L^1$-continuity of the translation operator.
+  - *Continuity of Average* is a limit statement: it asserts that the $L^1$ distance between $f$ and its translate $f_(h)(x)$ tends to $0$ as $h -> 0$. This is the $L^1$-continuity of the translation operator.
   - Translation invariance is a necessary condition for the continuity statement to be meaningful (otherwise the integrals would not even be comparable), but it does not imply continuity of average. The latter requires $f in L^1$ and is a non-trivial approximation property.
 ]
 
@@ -1357,9 +1357,9 @@ We now state the two central theorems of product integration. The first applies 
 #proof[
   We prove the theorem in three standard steps.
 
-  *Step 1: Indicator functions.* For $E in cal(S) times.o cal(T)$, define $f = chi_E$. By the section lemma, $chi_E(x, dot) = chi_(E_x)$ is $cal(T)$-measurable, and
+  *Step 1: Indicator functions.* For $E in cal(S) times.o cal(T)$, define $f = chi_E$. By the section lemma, $chi_(E)(x, dot) = chi_(E_x)$ is $cal(T)$-measurable, and
   $
-    integral_Y chi_E(x, y) dif nu(y) = nu(E_x).
+    integral_Y chi_(E)(x, y) dif nu(y) = nu(E_x).
   $
   The function $x |-> nu(E_x)$ is $cal(S)$-measurable (a consequence of the monotone class lemma or a direct $pi$-$lambda$ argument). Moreover,
   $
@@ -1447,7 +1447,7 @@ We now state the two central theorems of product integration. The first applies 
 ]
 
 #proof[
-  For any $alpha in bb(R)$, ${y : f_x(y) > alpha} = {y : f(x,y) > alpha} = ({(x',y') : f(x',y') > alpha})_x$.
+  For any $alpha in bb(R)$, ${y : f_(x)(y) > alpha} = {y : f(x,y) > alpha} = ({(x',y') : f(x',y') > alpha})_x$.
   Since ${f > alpha} in cal(S) times.o cal(T)$ by measurability of $f$, its $x$-section is in $cal(T)$ by the section lemma. The same argument applies to $f^y$.
 ]
 
@@ -1516,7 +1516,7 @@ Jump functions are the simplest type of function that exhibits controlled discon
   $
     H(x) = cases(0 "if" x < 0, 1 "if" x >= 0)
   $
-  has a single jump at $x = 0$ with jump size $j_H(0) = 1$. It is the prototypical example of a jump function: piecewise constant, with one point of discontinuity where the function jumps from one value to another.
+  has a single jump at $x = 0$ with jump size $j_(H)(0) = 1$. It is the prototypical example of a jump function: piecewise constant, with one point of discontinuity where the function jumps from one value to another.
 ]
 
 #note[
@@ -1804,17 +1804,17 @@ The Dini derivatives provide pointwise slope information, and the Vitali coverin
 #proof[
   Assume $f$ is non-decreasing. Extend $f$ to $[a, b + 1]$ by setting $f(x) = f(b)$ for $x > b$. Define
   $
-    f_n(x) = n(f(x + 1/n) - f(x)), quad x in [a, b].
+    f_(n)(x) = n(f(x + 1/n) - f(x)), quad x in [a, b].
   $
-  Each $f_n$ is measurable (as a composition of measurable functions), $f_n >= 0$, and $f_n(x) -> f'(x)$ a.e. by Lebesgue's Differentiability Theorem. Since $f'$ is the a.e. limit of measurable functions, it is measurable.
+  Each $f_n$ is measurable (as a composition of measurable functions), $f_n >= 0$, and $f_(n)(x) -> f'(x)$ a.e. by Lebesgue's Differentiability Theorem. Since $f'$ is the a.e. limit of measurable functions, it is measurable.
 
   For integrability, apply Fatou's Lemma:
   $
-    integral_a^b f'(x) dif x = integral_a^b liminf_(n -> oo) f_n(x) dif x <= liminf_(n -> oo) integral_a^b f_n(x) dif x.
+    integral_a^b f'(x) dif x = integral_a^b liminf_(n -> oo) f_(n)(x) dif x <= liminf_(n -> oo) integral_a^b f_(n)(x) dif x.
   $
   Computing the integral of $f_n$:
   $
-    integral_a^b f_n(x) dif x = n integral_a^b (f(x + 1/n) - f(x)) dif x = n integral_b^(b + 1/n) f(t) dif t - n integral_a^(a + 1/n) f(t) dif t.
+    integral_a^b f_(n)(x) dif x = n integral_a^b (f(x + 1/n) - f(x)) dif x = n integral_b^(b + 1/n) f(t) dif t - n integral_a^(a + 1/n) f(t) dif t.
   $
   By the extension $f(t) = f(b)$ for $t > b$, the first term equals $n integral_b^(b + 1/n) f(t) dif t = f(b)$, while the second satisfies $n integral_a^(a + 1/n) f(t) dif t >= f(a)$ since $f$ is non-decreasing. Therefore $integral_a^b f_n dif x <= f(b) - f(a)$, giving the result.
 ]
@@ -1832,9 +1832,9 @@ The Dini derivatives provide pointwise slope information, and the Vitali coverin
 ]
 
 #proof[
-  Assume $f$ is non-decreasing. At each discontinuity $x$, the jump $j_f(x) = f(x^+) - f(x^-) > 0$. For any $n in bb(N)$, the number of points with $j_f(x) > 1/n$ is at most $n(f(b) - f(a)) < infinity$, since the sum of all jumps cannot exceed $f(b) - f(a)$. The set of all discontinuities is
+  Assume $f$ is non-decreasing. At each discontinuity $x$, the jump $j_(f)(x) = f(x^+) - f(x^-) > 0$. For any $n in bb(N)$, the number of points with $j_(f)(x) > 1/n$ is at most $n(f(b) - f(a)) < infinity$, since the sum of all jumps cannot exceed $f(b) - f(a)$. The set of all discontinuities is
   $
-    union.big_(n=1)^oo {x : j_f(x) > 1/n},
+    union.big_(n=1)^oo {x : j_(f)(x) > 1/n},
   $
   a countable union of finite sets, hence countable.
 ]
@@ -2269,7 +2269,7 @@ Throughout the preceding chapters, the expression $(integral_X |f|^p dif mu)^(1/
 
   _Step 2: Define the telescoping series._ Let
   $
-    g_K(x) = sum_(k=1)^K |f_(n_(k+1))(x) - f_(n_k)(x)|, quad g(x) = lim_(K -> oo) g_K(x) = sum_(k=1)^oo |f_(n_(k+1))(x) - f_(n_k)(x)|.
+    g_(K)(x) = sum_(k=1)^K |f_(n_(k+1))(x) - f_(n_k)(x)|, quad g(x) = lim_(K -> oo) g_(K)(x) = sum_(k=1)^oo |f_(n_(k+1))(x) - f_(n_k)(x)|.
   $
 
   _Step 3: Show $g in L^p$._ By Minkowski's inequality, $||g_K||_p <= sum_(k=1)^K 1/2^k < 1$. By Fatou's Lemma applied to $(g_K^p)$:
@@ -2349,15 +2349,15 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 #proof[
   _Step 1: Truncate to bounded functions._ Define
   $
-    f_N(x) = cases(f(x) "if" |f(x)| <= N, 0 "if" |f(x)| > N).
+    f_(N)(x) = cases(f(x) "if" |f(x)| <= N, 0 "if" |f(x)| > N).
   $
-  Then $|f(x) - f_N(x)|^p -> 0$ pointwise as $N -> oo$, and $|f - f_N|^p <= |f|^p in L^1$. By the Dominated Convergence Theorem, $||f - f_N||_p -> 0$. Choose $N$ large enough so that $||f - f_N||_p < epsilon / 2$.
+  Then $|f(x) - f_(N)(x)|^p -> 0$ pointwise as $N -> oo$, and $|f - f_N|^p <= |f|^p in L^1$. By the Dominated Convergence Theorem, $||f - f_N||_p -> 0$. Choose $N$ large enough so that $||f - f_N||_p < epsilon / 2$.
 
   _Step 2: Approximate bounded functions by simple functions._ Since $f_N$ is bounded and measurable, by the Approximation Theorem for measurable functions (Section 2.1), there exists a sequence of simple functions $(s_n)$ such that $s_n -> f_N$ pointwise and $|s_n| <= ||f_N||_oo$. Then $|f_N - s_n|^p -> 0$ pointwise and $|f_N - s_n|^p <= (2 ||f_N||_oo)^p$. Since $f_N in L^p$, the support of $f_N$ has finite measure or $f_N$ decays sufficiently, so $(2 ||f_N||_oo)^p chi_("supp"(f_N)) in L^1$. By LDCT, $||f_N - s_n||_p -> 0$. Choose $n$ so that $||f_N - s_n||_p < epsilon / 2$. Then $||f - s_n||_p < epsilon$.
 ]
 
-#theorem(name: "$C_c(bb(R)^n)$ is Dense in $L^p(bb(R)^n)$")[
-  For $1 <= p < infinity$, the space $C_c(bb(R)^n)$ of continuous functions with compact support is dense in $L^p(bb(R)^n, m)$.
+#theorem(name: "$C_(c)(bb(R)^n)$ is Dense in $L^p(bb(R)^n)$")[
+  For $1 <= p < infinity$, the space $C_(c)(bb(R)^n)$ of continuous functions with compact support is dense in $L^p(bb(R)^n, m)$.
 ]
 
 #proof[
@@ -2365,13 +2365,13 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 
   _Step 2: Regularity of Lebesgue measure._ Given $epsilon > 0$, by the regularity of Lebesgue measure, there exist a compact set $K subset E$ and an open set $U supset E$ such that $m(U backslash K) < epsilon^p$.
 
-  _Step 3: Urysohn's lemma._ Since $K subset U$ with $K$ compact and $U$ open, there exists $phi in C_c(bb(R)^n)$ with $0 <= phi <= 1$, $phi = 1$ on $K$, and $"supp"(phi) subset U$.
+  _Step 3: Urysohn's lemma._ Since $K subset U$ with $K$ compact and $U$ open, there exists $phi in C_(c)(bb(R)^n)$ with $0 <= phi <= 1$, $phi = 1$ on $K$, and $"supp"(phi) subset U$.
 
-  _Step 4: Norm estimate._ Since $|chi_E(x) - phi(x)| = 0$ on $K$ and on $U^c$, and $|chi_E - phi| <= 1$ on $U backslash K$:
+  _Step 4: Norm estimate._ Since $|chi_(E)(x) - phi(x)| = 0$ on $K$ and on $U^c$, and $|chi_E - phi| <= 1$ on $U backslash K$:
   $
     ||chi_E - phi||_p^p = integral_(U backslash K) |chi_E - phi|^p dif m <= m(U backslash K) < epsilon^p.
   $
-  Hence $||chi_E - phi||_p < epsilon$, and $C_c(bb(R)^n)$ is dense in $L^p(bb(R)^n, m)$.
+  Hence $||chi_E - phi||_p < epsilon$, and $C_(c)(bb(R)^n)$ is dense in $L^p(bb(R)^n, m)$.
 ]
 
 #corollary[
@@ -2397,9 +2397,9 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 
   _Step 2: $cal(D)$ is dense in the step functions._ Any step function with real coefficients and measurable rectangles can be approximated by elements of $cal(D)$: rational coefficients approximate real ones, and rational rectangles approximate measurable ones in measure.
 
-  _Step 3: $cal(D)$ is dense in $C_c(bb(R)^n)$._ Let $phi in C_c(bb(R)^n)$ with $"supp"(phi) subset K$ compact. By uniform continuity on $K$, for any $delta > 0$, there exists a partition of $K$ into small rectangles on which $phi$ varies by at most $delta$. A step function from $cal(D)$ on this partition satisfies $||phi - s||_oo < delta$.
+  _Step 3: $cal(D)$ is dense in $C_(c)(bb(R)^n)$._ Let $phi in C_(c)(bb(R)^n)$ with $"supp"(phi) subset K$ compact. By uniform continuity on $K$, for any $delta > 0$, there exists a partition of $K$ into small rectangles on which $phi$ varies by at most $delta$. A step function from $cal(D)$ on this partition satisfies $||phi - s||_oo < delta$.
 
-  _Step 4: $cal(D)$ is dense in $L^p$._ Since $||phi - s||_p <= ||phi - s||_oo m(K)^(1/p)$, uniform approximation on bounded support gives $L^p$ approximation. Since $C_c(bb(R)^n)$ is dense in $L^p$ (previous theorem) and $cal(D)$ is dense in $C_c(bb(R)^n)$, $cal(D)$ is dense in $L^p(bb(R)^n, m)$.
+  _Step 4: $cal(D)$ is dense in $L^p$._ Since $||phi - s||_p <= ||phi - s||_oo m(K)^(1/p)$, uniform approximation on bounded support gives $L^p$ approximation. Since $C_(c)(bb(R)^n)$ is dense in $L^p$ (previous theorem) and $cal(D)$ is dense in $C_(c)(bb(R)^n)$, $cal(D)$ is dense in $L^p(bb(R)^n, m)$.
 ]
 
 #theorem(name: [$L^infinity$ is NOT Separable])[
@@ -2429,7 +2429,7 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
   ("Normed space", "Yes (Minkowski)", "Yes"),
   ("Complete (Banach)", "Yes (Riesz-Fischer)", "Yes"),
   ("Separable (on $bb(R)^n$)", "Yes", "No"),
-  ("Dense subspace", "Simple functions, $C_c(bb(R)^n)$", "No countable dense subset"),
+  ("Dense subspace", "Simple functions, $C_(c)(bb(R)^n)$", "No countable dense subset"),
 )
 
 #note[
