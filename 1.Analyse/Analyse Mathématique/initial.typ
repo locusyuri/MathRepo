@@ -10619,6 +10619,91 @@ where the right-hand side is independent of the choice of the path $limits(L)^ha
   exists, then $I(y)$ is called a *definite integral with variable parameter $y$*.
 ] <def:definite-integral-variable-parameter>
 
+In the *proper* setting of the definition above, no uniform convergence is needed: continuity of $f$ alone already guarantees the existence, continuity, and integrability of $I(y)$, and differentiability follows under mild extra hypotheses. The next theorems collect these facts; their counterparts for improper integrals, where uniform convergence becomes essential, are developed in the subsequent sections.
+
+#theorem(name: "Continuity of the Parameter Integral")[
+  Let $f in C([a, b] times [c, d])$. Then $I(y) = integral_a^b f(x, y) dif x$ exists for every $y in [c, d]$ and belongs to $C[c, d]$; equivalently, for every $y_0 in [c, d]$,
+  $ lim_(y -> y_0) integral_a^b f(x, y) dif x = integral_a^b lim_(y -> y_0) f(x, y) dif x, $
+  that is, the limit and the integral can be interchanged.
+] <thm:continuity-proper-parameter>
+
+#proof[
+  For each fixed $y in [c, d]$ the function $x -> f(x, y)$ is continuous on $[a, b]$, hence Riemann integrable (this is also immediate from #link(<thm:lebesgue>)[Lebesgue's criterion]), so $I(y)$ is well defined. Since $[a, b] times [c, d]$ is compact, $f$ is uniformly continuous on it: given $epsilon > 0$ there is $delta > 0$ such that $abs(f(x, y) - f(x, y_0)) < epsilon$ for all $x in [a, b]$ whenever $abs(y - y_0) < delta$. Then
+  $ abs(I(y) - I(y_0)) <= integral_a^b abs(f(x, y) - f(x, y_0)) dif x <= (b - a) epsilon, $
+  and since $epsilon > 0$ is arbitrary, $I$ is continuous at $y_0$. The interchange formula follows from $lim_(y -> y_0) f(x, y) = f(x, y_0)$ for every $x$.
+]
+
+#theorem(name: "Interchange of the Order of Integration")[
+  Let $f in C([a, b] times [c, d])$ and $D = [a, b] times [c, d]$. Then $I(y) = integral_a^b f(x, y) dif x$ is integrable on $[c, d]$, and
+  $ integral.double_D f(x, y) dif x dif y = integral_c^d dif y integral_a^b f(x, y) dif x = integral_a^b dif x integral_c^d f(x, y) dif y, $
+  that is, continuity guarantees integrability of the parameter integral, and the order of integration can be interchanged.
+] <thm:interchange-proper-parameter>
+
+This is precisely #link(<thm:reduction-double-iterated-closed-interval>)[the reduction theorem for double integrals] applied to a continuous integrand on a rectangle; compare the improper case, where the analogous exchange (#link(<thm:continuity-parameter>)[item (ii) of the continuity theorem]) requires uniform convergence.
+
+#theorem(name: "Differentiation under the Integral Sign")[
+  Let $f$ and $frac(partial f, partial y)$ be continuous on $[a, b] times [c, d]$. Then $I(y) = integral_a^b f(x, y) dif x$ is differentiable on $[c, d]$, and
+  $ frac(dif I, dif y)(y) = integral_a^b frac(partial f, partial y)(x, y) dif x. $
+] <thm:differentiability-proper-parameter>
+
+#proof[
+  Fix $y in [c, d]$ and let $h != 0$ be small. For each $x in [a, b]$, the mean value theorem applied to $t -> f(x, t)$ between $y$ and $y + h$ provides $theta(x) in (0, 1)$ with
+  $ frac(f(x, y + h) - f(x, y), h) = frac(partial f, partial y)(x, y + theta(x) h). $
+  Since $frac(partial f, partial y)$ is continuous on the compact rectangle $[a, b] times [c, d]$, it is uniformly continuous there: for every $epsilon > 0$ there is $delta > 0$ such that $abs(h) < delta$ implies $abs(frac(partial f, partial y)(x, y + theta(x) h) - frac(partial f, partial y)(x, y)) < epsilon$ for all $x$. Consequently,
+  $ abs(frac(I(y + h) - I(y), h) - integral_a^b frac(partial f, partial y)(x, y) dif x) <= (b - a) epsilon -> 0 quad "as" h -> 0, $
+  which proves the formula.
+]
+
+The full version of Leibniz's rule below additionally allows the limits of integration to depend on the parameter.
+
+#theorem(name: "Leibniz's Rule")[
+  Let $f$ and $frac(partial f, partial x)$ be continuous on the rectangle $D = [alpha, beta] times [p, q]$, and let $a(x), b(x)$ be differentiable on $[alpha, beta]$ with values in $[p, q]$. Then
+  $ F(x) = integral_(a(x))^(b(x)) f(x, t) dif t $
+  is differentiable on $[alpha, beta]$, and
+  $ F'(x) = f(x, b(x)) b'(x) - f(x, a(x)) a'(x) + integral_(a(x))^(b(x)) frac(partial f, partial x)(x, t) dif t. $
+] <thm:leibniz-rule-parameter>
+
+#proof[
+  Write $F(x) = G(x, a(x), b(x))$ with
+  $ G(x, u, v) = integral_u^v f(x, t) dif t. $
+  By the fundamental theorem of calculus, $frac(partial G, partial v)(x, u, v) = f(x, v)$ and $frac(partial G, partial u)(x, u, v) = -f(x, u)$.
+
+  For the partial derivative in $x$, uniform continuity of $frac(partial f, partial x)$ on $D$ gives, as $h -> 0$,
+  $
+    (G(x + h, u, v) - G(x, u, v)) / h
+    = frac(1, h) integral_u^v integral_x^(x + h) frac(partial f, partial x)(s, t) dif s dif t
+    -> integral_u^v frac(partial f, partial x)(x, t) dif t,
+  $
+  hence $frac(partial G, partial x)(x, u, v) = integral_u^v frac(partial f, partial x)(x, t) dif t$.
+
+  All three partial derivatives of $G$ are continuous and $a, b$ are differentiable, so the chain rule yields
+  $
+    F'(x) = frac(partial G, partial x) + frac(partial G, partial u) a'(x) + frac(partial G, partial v) b'(x)
+    = f(x, b(x)) b'(x) - f(x, a(x)) a'(x) + integral_(a(x))^(b(x)) frac(partial f, partial x)(x, t) dif t.
+  $
+]
+
+#note(title: "Remark")[
+  The rule unifies the two special cases recorded in #link(<prop:variable-limit-integrals>)[the variable-limit derivation rule] and in the improper theory of the next sections: with $a, b$ fixed and $f$ independent of $x$ it reduces to the former, while with fixed limits it matches the compact-limit form of #link(<thm:differentiation-parameter>)[differentiation under the integral sign].
+]
+
+#example[
+  For $abs(y) < 1$, compute
+  $ I(y) = integral_0^pi ln(1 + y cos x) dif x. $
+] <ex:ln1pycosx>
+
+#solution[
+  The functions $ln(1 + y cos x)$ and its $y$-derivative $frac(cos x, 1 + y cos x)$ are continuous on $[0, pi] times [-1 + delta, 1 - delta]$ for every $delta in (0, 1)$, so #link(<thm:differentiability-proper-parameter>)[differentiation under the integral sign] applies at every point $y_0$ with $abs(y_0) < 1$:
+  $ I'(y) = integral_0^pi frac(cos x, 1 + y cos x) dif x. $
+  For $y != 0$, rewrite the integrand as $frac(cos x, 1 + y cos x) = frac(1, y)(1 - frac(1, 1 + y cos x))$. The half-angle substitution $t = tan(x / 2)$ turns the remaining integral into
+  $ integral_0^pi frac(dif x, 1 + y cos x) = integral_0^(+oo) frac(2 dif t, (1 + y) + (1 - y) t^2) = frac(pi, sqrt(1 - y^2)), $
+  where the last step uses $integral_0^(+oo) frac(dif t, a + b t^2) = frac(pi, 2 sqrt(a b))$ for $a, b > 0$. Hence
+  $ I'(y) = frac(1, y)(pi - frac(pi, sqrt(1 - y^2))) quad (y != 0). $
+  By #link(<thm:continuity-proper-parameter>)[continuity of the parameter integral], $I(0) = integral_0^pi ln 1 dif x = 0$. Since $I'(y) -> 0$ as $y -> 0$, the derivative extends continuously to $y = 0$, and integrating from $0$ to $y$ yields
+  $ I(y) = pi ln frac(1 + sqrt(1 - y^2), 2). $
+  Differentiating the right-hand side reproduces the expression for $I'(y)$ above and gives $I'(0) = integral_0^pi cos x dif x = 0$, confirming the computation.
+]
+
 // 注：tex 原文 §16.2 "Elliptic Integrals" 仅有标题、无任何内容（docs/微分与积分.md 亦无相关素材），按空壳处理原则未迁移该节。
 
 == Improper Integrals with Variable Parameters // 变参反常积分
@@ -10704,48 +10789,6 @@ When $[c, d]$ is replaced by $[c, +oo)$, the above theorem fails, but we have th
   $ frac(dif, dif y) integral_a^(+oo) f(x, y) dif x = integral_a^(+oo) frac(partial f, partial y)(x, y) dif x. $
 ] <thm:differentiation-parameter>
 // 注：tex 原文该定理的区域写作 D = [a, +\infty] × [c, d]，无穷端点误用闭括号，已修正为 [a, +∞)。
-
-#theorem(name: "Leibniz's Rule")[
-  Let $f$ and $frac(partial f, partial x)$ be continuous on the rectangle
-  $D = [alpha, beta] times [p, q]$, and let $a(x), b(x)$ be differentiable on
-  $[alpha, beta]$ with values in $[p, q]$. Then
-  $ F(x) = integral_(a(x))^(b(x)) f(x, t) dif t $
-  is differentiable on $[alpha, beta]$, and
-  $ F'(x) = f(x, b(x)) b'(x) - f(x, a(x)) a'(x) + integral_(a(x))^(b(x)) frac(partial f, partial x)(x, t) dif t. $
-] <thm:leibniz-rule-parameter>
-
-#proof[
-  Write $F(x) = G(x, a(x), b(x))$ with
-  $ G(x, u, v) = integral_u^v f(x, t) dif t. $
-  By the fundamental theorem of calculus,
-  $frac(partial G, partial v)(x, u, v) = f(x, v)$ and
-  $frac(partial G, partial u)(x, u, v) = -f(x, u)$.
-
-  For the partial derivative in $x$, uniform continuity of
-  $frac(partial f, partial x)$ on $D$ gives, as $h -> 0$,
-  $
-    (G(x + h, u, v) - G(x, u, v)) / h
-    = frac(1, h) integral_u^v integral_x^(x + h) frac(partial f, partial x)(s, t) dif s dif t
-    -> integral_u^v frac(partial f, partial x)(x, t) dif t,
-  $
-  hence $frac(partial G, partial x)(x, u, v) = integral_u^v frac(partial f, partial x)(x, t) dif t$.
-
-  All three partial derivatives of $G$ are continuous and $a, b$ are
-  differentiable, so the chain rule yields
-  $
-    F'(x) = frac(partial G, partial x) + frac(partial G, partial u) a'(x) + frac(partial G, partial v) b'(x)
-    = f(x, b(x)) b'(x) - f(x, a(x)) a'(x) + integral_(a(x))^(b(x)) frac(partial f, partial x)(x, t) dif t.
-  $
-]
-
-#note(title: "Remark")[
-  The rule unifies the two special cases proved earlier: with $a, b$ fixed and
-  $f$ independent of $x$ it reduces to
-  #link(<prop:variable-limit-integrals>)[the variable-limit derivation rule],
-  while with fixed limits it is exactly
-  #link(<thm:differentiation-parameter>)[differentiation under the integral
-    sign] in the compact-limit form.
-]
 
 #example[
   Let
@@ -10980,6 +11023,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<def:continuity-at-point>)[Continuity At Point]*
 - *#link(<def:continuity-on-interval>)[Continuity on Interval]*
 - *#link(<thm:continuity-parameter>)[Continuity Parameter]*
+- *#link(<thm:continuity-proper-parameter>)[Continuity Proper Parameter]*
 - *#link(<prop:continuity-uniform-convergence>)[Continuity Uniform Convergence]*
 - *#link(<ex:continuous-agree-dense>)[Continuous Agree Dense]*
 - *#link(<thm:continuous-approximates-integrable>)[Continuous Approximates Integrable]*
@@ -11027,6 +11071,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<def:differential>)[Differential]*
 - *#link(<def:differential-form>)[Differential Forms]*
 - *#link(<ex:differential-inequality-zero>)[Differential Inequality Zero]*
+- *#link(<thm:differentiability-proper-parameter>)[Differentiability Proper Parameter]*
 - *#link(<thm:differentiation-parameter>)[Differentiation Parameter]*
 - *#link(<thm:dini-theorem>)[Dini Theorem]*
 - *#link(<def:directional-derivative>)[Directional Derivative]*
@@ -11133,6 +11178,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<prop:integral-periodicity>)[Integral Periodicity]*
 - *#link(<prop:integral-symmetry>)[Integral Symmetry]*
 - *#link(<def:integration-by-parts>)[Integration by Parts]*
+- *#link(<thm:interchange-proper-parameter>)[Interchange Proper Parameter]*
 - *#link(<thm:intermediate-value>)[Intermediate Value]*
 - *#link(<thm:invariance-of-differential>)[Invariance of Differential]*
 - *#link(<thm:inverse-function-continuity>)[Inverse Function Continuity]*
@@ -11155,6 +11201,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:legendre-roots>)[Legendre Roots]*
 - *#link(<thm:leibniz-formula>)[Leibniz Formula]*
 - *#link(<thm:leibniz-test>)[Leibniz Test]*
+- *#link(<thm:leibniz-rule-parameter>)[Leibniz Rule Parameter]*
 - *#link(<thm:lhopital>)[Lhopital]*
 - *#link(<def:li-yorke-chaos>)[Li Yorke Chaos]*
 - *#link(<thm:li-yorke-first>)[Li Yorke First]*
@@ -11181,6 +11228,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:log-inequality>)[Log Inequality]*
 - *#link(<ex:logarithmic-equation>)[Logarithmic Equation]*
 - *#link(<ex:logarithmic-integral>)[Logarithmic Integral]*
+- *#link(<ex:ln1pycosx>)[Integral ln(1 + y cos x)]*
 
 == M
 - *#link(<thm:mean-inequalities>)[Mean Inequalities]*
