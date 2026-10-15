@@ -463,7 +463,7 @@ $
     (f * g)(x) = integral_(-oo)^(+oo) f(t) g(x - t) dif t.
   $
 
-  Specially, if the functions are periodically defined on a finite interval $bb(T)$ with period $2pi$,
+  In particular, if the functions are periodically defined on a finite interval $bb(T)$ with period $2pi$,
   then the convolution is defined as:
   $
     (f * g)(x) = (1) / (2pi) integral_(-pi)^(pi) f(t) g(x - t) dif t.
@@ -713,7 +713,7 @@ In this section, we will discuss several important convergence tests from coarse
     where $S = (f(x+) + f(x-)) / (2)$.
 
   3. *Dirichlet-Jordan Test.* If $f(x)$ is of bounded variation on some neighborhood of point $x$,
-    i.e., there exists a $delta > 0$, such that $f in "BV"(x - delta, x + delta)$.
+    i.e., there exists a $delta > 0$, such that $f in "BV"(x - delta, x + delta)$ (for the definition and basic properties of functions of bounded variation, see the Analyse Réelle note).
 ]
 
 
