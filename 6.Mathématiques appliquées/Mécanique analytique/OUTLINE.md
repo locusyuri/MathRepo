@@ -34,7 +34,7 @@
 | 广义动量守恒 → 还原动量/角动量 | Ch5.1 → Ch3.1-3.2 | Momentum & Angular Momentum |
 | 能量守恒 → 时间平移对称性 (Noether) | Ch5.2 → Ch3.3 | Work-Energy Theorem |
 | 中心力问题用 Lagrangian 求解 | Ch6.2 → Ch5 | Celestial Mechanics |
-| 小振动 → 简正模 → 从 Hooke 定律到耦合振子 | Ch6.3-6.5 → Ch4 | Oscillations |
+| 小振动 → 简正模 → 从 Hooke 定律到耦合振子 | Ch6.3-6.5 → Optique Part I | Vibrations and Waves（已迁至 Optique） |
 
 ---
 
@@ -61,10 +61,13 @@
   - 3.4 Isomorphism between Translational and Rotational Structures // 平动与转动的同构性 ← **核心对比章节**
   - 3.5 Potential Energy and Force Fields // 势能与力场
 
-#### Chapter 4: Oscillations and Waves // 振动与波动
-  - 4.1 Simple Harmonic Motion // 简谐运动
-  - 4.2 Damped and Driven Oscillations // 阻尼与受驱振动
-  - 4.3 Wave Propagation // 波动传播
+#### Chapter 4: Elastic Waves in Solids // 固体中的弹性波（原 Oscillations and Waves 的弹性介质部分）
+  - 4.1 Strain and Stress in Elastic Media // 应变与应力
+  - 4.2 Poisson's Ratio // 泊松比
+  - 4.3 Helmholtz Decomposition: P-waves and S-waves // 亥姆霍兹分解：P波与S波
+  - 4.4 Reflection and Impedance // 反射与阻抗
+> 迁移说明：振动与波动的介质无关部分（简谐运动、波动传播、色散与傅里叶简正模）
+> 已迁至 Optique 笔记 Part I（Vibrations and Waves），弹性介质专用内容保留在本章。
 
 #### Chapter 5: Celestial Mechanics Foundations // 天体力学基础
   - 5.1 Kepler's Laws // 开普勒定律
@@ -235,7 +238,8 @@
 | Part | 章节 | 状态 |
 |------|------|------|
 | Part 0 | Ch1-3 | ✅ 已完成 |
-| Part 0 | Ch4-6 | ❌ 未写（仅目录） |
+| Part 0 | Ch4 | ✅ 已完成（弹性介质部分；原振动与波动已迁至 Optique） |
+| Part 0 | Ch5-6 | ❌ 未写（仅目录） |
 | Part I | Ch1-3 | ✅ 已完成 |
 | Part II | Ch4-6 | ✅ 已完成 |
 | Part III | Ch7-9 | ❌ 未写 |

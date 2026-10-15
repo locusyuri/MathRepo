@@ -954,396 +954,17 @@ Central forces conserve angular momentum (since $bold(tau) = bold(r) times bold(
   This chapter has established the three pillars of conservation — momentum, angular momentum, and energy — each linked to a fundamental symmetry of space and time. These conservation laws are not just convenient shortcuts; they are deeper than the equations of motion themselves. In Part II, Noether's theorem will reveal the direct connection: every continuous symmetry of the action implies a conserved quantity.
 ]
 
-// Chapter 4: Oscillations and Waves (振动与波动)
-//   Section 4.1: Simple Harmonic Motion (简谐运动)
-//   Section 4.2: Damped and Driven Oscillations (阻尼与受驱振动)
-//   Section 4.3: Wave Propagation (波动传播)
-= Oscillations and Waves // 振动与波动
-
-Oscillatory motion is ubiquitous in physics — from a swinging pendulum to vibrating molecules and electromagnetic waves. This chapter develops the fundamental concepts of simple harmonic motion, damped and driven oscillations, and wave propagation. These ideas will be revisited in Part II, where Lagrangian methods provide a systematic approach to small oscillations and normal modes.
-
-== Simple Harmonic Motion // 简谐运动
-
-=== Equation of Motion // 运动方程
-
-The simplest oscillatory system is a mass $m$ attached to a spring of stiffness $k$. When displaced from equilibrium, Hooke's law gives $F = - k x$, and Newton's second law yields:
-
-$
-  m dot.double(x) + k x = 0.
-$
-
-This is the equation of *simple harmonic motion* (SHM). Dividing by $m$ and defining the *angular frequency* $omega_0 = sqrt(k / m)$:
-
-#definition(name: "Simple Harmonic Motion")[
-  The equation of SHM and its general solution:
-  $
-    dot.double(x) + omega_0^2 x = 0, quad x(t) = A cos(omega_0 t + phi),
-  $
-  where $A$ is the amplitude and $phi$ is the initial phase. The period and frequency are:
-  $
-    T = frac(2 pi, omega_0) = 2 pi sqrt(frac(m, k)), quad f = frac(1, T) = frac(omega_0, 2 pi).
-  $
-]
-
-=== Energy of the Simple Harmonic Oscillator // 简谐振子的能量
-
-The total mechanical energy is conserved and oscillates between kinetic and potential forms:
-
-$
-  E = frac(1,2) m dot(x)^2 + frac(1,2) k x^2 = frac(1,2) k A^2.
-$
-
-#example(name: "Mass-Spring System")[ // 弹簧振子
-  A mass $m = 0.5 "kg"$ on a spring of stiffness $k = 32 "N/m"$ is pulled $A = 0.1 "m"$ from equilibrium and released.
-
-  Angular frequency: $omega_0 = sqrt(k / m) = sqrt(32 / 0.5) = 8 "rad/s"$.
-  Period: $T = 2 pi / omega_0 = pi / 4 approx 0.785 "s"$.
-  Maximum speed: $v_"max" = omega_0 A = 0.8 "m/s"$.
-  Total energy: $E = frac(1,2) k A^2 = frac(1,2) times 32 times 0.1^2 = 0.16 "J"$.
-]
-
-=== Rotating Vector and Complex Representation // 旋转矢量法与复数表示
-
-The solution $x(t) = A cos(omega_0 t + phi)$ can be visualised as the projection of a rotating vector (phasor) of length $A$ rotating at angular speed $omega_0$.
-
-#definition(name: "Rotating Vector / Phasor")[
-  The SHM displacement is the real part of a complex exponential:
-  $
-    x(t) = Re(bold(A) e^(i omega_0 t)), quad bold(A) = A e^(i phi).
-  $
-  Here $bold(A)$ is the *complex amplitude* (phasor) encoding both amplitude $A$ and initial phase $phi$. The velocity and acceleration are:
-  $
-    dot(x) = Re(i omega_0 bold(A) e^(i omega_0 t)), quad
-    dot.double(x) = Re(- omega_0^2 bold(A) e^(i omega_0 t)).
-  $
-]
-
-#note[
-  The complex representation turns differentiation into multiplication by $i omega$, and superposition into complex addition. This is the foundation of phasor analysis in AC circuits and of Fourier methods in normal mode analysis (Part II, Ch6.4).
-]
-
-The rotating vector makes phase relationships geometrically obvious: velocity leads displacement by $pi/2$ (the tangent direction), and acceleration leads displacement by $pi$ (opposite direction).
-
-=== Superposition of SHM and Beats // 简谐运动的合成与拍频
-
-Because the wave equation is linear, the sum of two SHM solutions is also a solution. This leads to two important phenomena.
-
-#definition(name: "Superposition of Two SHMs (Same Frequency)")[
-  The sum of two SHMs with the same frequency $omega$ but different amplitudes $A_1, A_2$ and phases $phi_1, phi_2$ is another SHM at the same frequency:
-  $
-    x(t) = A_1 cos(omega t + phi_1) + A_2 cos(omega t + phi_2) = A cos(omega t + phi),
-  $
-  where $A = sqrt(A_1^2 + A_2^2 + 2 A_1 A_2 cos(Delta phi))$ and $tan phi = frac(A_1 sin phi_1 + A_2 sin phi_2, A_1 cos phi_1 + A_2 cos phi_2)$.
-]
-
-#definition(name: "Beats")[
-  When two SHMs have *slightly different* frequencies $omega_1$ and $omega_2 = omega_1 + Delta omega$:
-  $
-    x(t) = A cos(omega_1 t) + A cos(omega_2 t) = 2 A cos(frac(Delta omega, 2) t) cos(bar(omega) t),
-  $
-  where $bar(omega) = (omega_1 + omega_2) / 2$. The amplitude is modulated at the *beat frequency* $Delta omega = |omega_2 - omega_1|$.
-]
-
-#note[
-  Beats are the simplest example of *amplitude modulation*. In Part II, we will see that the normal mode splitting of coupled oscillators follows the same mathematics — two resonant frequencies produce a "beat-like" energy transfer between the two masses.
-]
-
-=== The Simple Pendulum // 单摆
-
-The simple pendulum (mass $m$, length $L$) obeys $dot.double(theta) + (g / L) sin theta = 0$. For small angles, $sin theta approx theta$, giving SHM:
-
-$
-  dot.double(theta) + omega_0^2 theta = 0, quad omega_0 = sqrt(frac(g, L)).
-$
-
-#note[
-  The small-angle approximation $sin theta approx theta$ is the first term of the Taylor expansion. For larger amplitudes, corrections appear: the period becomes $T = 2 pi sqrt(L/g) (1 + theta_0^2 / 16 + ...)$, as derived from the energy integral in Chapter 3.
-]
-
-=== Relation to the Physical Pendulum // 与物理摆的联系
-
-The physical pendulum (Chapter 2) has $omega_0 = sqrt(M g d / I)$. For a simple pendulum, $I = M L^2$ and $d = L$, recovering $omega_0 = sqrt(g / L)$. The SHM framework thus unifies all systems with a linear restoring torque.
-
-== Damped and Driven Oscillations // 阻尼与受驱振动
-
-=== Damped Harmonic Oscillator // 阻尼振子
-
-Real oscillators experience energy loss due to friction or drag. For a velocity-dependent damping force $F_d = - b dot(x)$, the equation of motion becomes:
-
-$
-  m dot.double(x) + b dot(x) + k x = 0.
-$
-
-Dividing by $m$ and defining $beta = b / (2m)$ (damping coefficient) and $omega_0 = sqrt(k / m)$:
-
-$
-  dot.double(x) + 2 beta dot(x) + omega_0^2 x = 0.
-$
-
-The characteristic equation $r^2 + 2 beta r + omega_0^2 = 0$ has roots $r = - beta plus.minus sqrt(beta^2 - omega_0^2)$.
-
-#definition(name: "Damping Regimes")[
-  - *Underdamped* ($beta < omega_0$): $x(t) = e^(-beta t) [A cos(omega_1 t) + B sin(omega_1 t)]$, where $omega_1 = sqrt(omega_0^2 - beta^2)$. The amplitude decays exponentially with time constant $1 / beta$.
-  - *Critically damped* ($beta = omega_0$): $x(t) = (A + B t) e^(-omega_0 t)$. The system returns to equilibrium fastest without oscillating.
-  - *Overdamped* ($beta > omega_0$): $x(t) = A e^(-r_1 t) + B e^(-r_2 t)$, with $r_1, r_2 > 0$. The system returns slowly without oscillating.
-]
-
-#figure(
-  image("img/damped_oscillation.png", width: 100%),
-  caption: [Damped oscillation: underdamped (blue), critically damped (green), and overdamped (orange).],
-  placement: auto,
-  supplement: [Fig.]
-) <fig:damped_oscillation>
-
-=== Driven Oscillator and Resonance // 受驱振子与共振
-
-When an external driving force $F(t) = F_0 cos(omega t)$ is applied:
-
-$
-  dot.double(x) + 2 beta dot(x) + omega_0^2 x = frac(F_0, m) cos(omega t).
-$
-
-The steady-state solution is $x(t) = A(omega) cos(omega t - delta)$, with:
-
-$
-  A(omega) = frac(F_0 / m, sqrt((omega_0^2 - omega^2)^2 + (2 beta omega)^2)), quad
-  tan delta = frac(2 beta omega, omega_0^2 - omega^2).
-$
-
-#theorem(name: "Resonance")[
-  The amplitude $A(omega)$ reaches a maximum at the *resonance frequency*:
-  $
-    omega_"res" = sqrt(omega_0^2 - 2 beta^2).
-  $
-  For weak damping ($beta << omega_0$), $omega_"res" approx omega_0$ and the peak amplitude is:
-  $
-    A_"max" approx frac(F_0, 2 m beta omega_0).
-  $
-  The width of the resonance curve (full width at half maximum) is $Delta omega approx 2 beta$, giving a quality factor $Q = omega_0 / (2 beta)$.
-]
-
-#figure(
-  image("img/resonance_curves.png", width: 100%),
-  caption: [Resonance curves for different damping ratios $beta / omega_0$. Sharp peaks correspond to weak damping; broad curves correspond to strong damping.],
-  placement: auto,
-  supplement: [Fig.]
-) <fig:resonance_curves>
-
-#note[
-  Resonance is a crucial phenomenon across physics: it explains why a small force at the right frequency can produce large oscillations (e.g., pushing a child on a swing, tuning a radio receiver, or the Tacoma Narrows Bridge collapse).
-]
-
-=== Power Absorption and Linewidth // 功率吸收与线宽
-
-The rate at which the driving force does work on the oscillator is $P(t) = F(t) dot(x)(t)$. The *average power* absorbed is:
-
-$
-  〈P(omega)〉 = frac(F_0^2, 2 m) frac(beta omega^2, (omega_0^2 - omega^2)^2 + (2 beta omega)^2).
-$
-
-#property(name: "Power Absorption Characteristics")[
-  - The peak absorbed power occurs at $omega = omega_0$ (not at $omega_"res"$): $P_"max" = F_0^2 / (4 m beta)$.
-  - The full width at half maximum (FWHM) of the power curve is $Delta omega = 2 beta$.
-  - The quality factor $Q = omega_0 / (2 beta) = omega_0 / Delta omega$ measures the sharpness of resonance.
-  - A high-$Q$ oscillator rings for many cycles after the driving force is removed; the number of oscillations for the amplitude to decay to $1/e$ is approximately $Q / pi$.
-]
-
-#note[
-  The $Q$ factor connects driven oscillations to free decay: $Q = pi$ times the number of oscillations for energy to decay to $1/e$. This same concept reappears in quantum mechanics (resonance width &lt;-&gt; particle lifetime) and in electrical engineering (bandwidth of RLC circuits).
-]
-
-== Wave Propagation // 波动传播
-
-While oscillators describe the motion of individual particles, *waves* describe the propagation of disturbances through a continuous medium. The key conceptual shift is from a function of time alone $x(t)$ to a function of both space and time $u(x,t)$.
-
-=== The Wave Equation // 波动方程
-
-#definition(name: "One-Dimensional Wave Equation")[
-  The displacement $u(x, t)$ of a wave travelling along the $x$-axis satisfies:
-  $
-    frac(partial^2 u, partial t^2) = v^2 frac(partial^2 u, partial x^2).
-  $
-  For a wave on a string of tension $T$ and linear density $mu$: $v = sqrt(T / mu)$.
-  For a sound wave in a fluid of bulk modulus $K$ and density $rho$: $v = sqrt(K / rho)$.
-]
-
-=== d'Alembert's Solution // 达朗贝尔解
-
-The wave equation admits a general solution in terms of travelling waves:
-
-$
-  u(x, t) = f(x - v t) + g(x + v t),
-$
-
-where $f$ and $g$ are arbitrary twice-differentiable functions. The function $f(x - v t)$ represents a wave travelling to the right at speed $v$ without changing shape; $g(x + v t)$ travels to the left. This is *d'Alembert's solution*, and it reveals that the wave equation is fundamentally a statement that the waveform propagates without distortion in a non-dispersive medium.
-
-=== Transverse and Longitudinal Waves // 横波与纵波
-
-Waves are classified by the direction of particle displacement relative to the propagation direction.
-
-#definition(name: "Transverse and Longitudinal Waves")[
-  - *Transverse wave*: particle displacement is *perpendicular* to the direction of wave propagation (e.g., waves on a string, electromagnetic waves). The restoring mechanism is *shear stress*.
-  - *Longitudinal wave*: particle displacement is *parallel* to the direction of wave propagation (e.g., sound waves in air, compression waves in a spring). The restoring mechanism is *bulk (compression) stress*.
-  - In solids, both types coexist, giving rise to distinct wave speeds:
-    $
-      v_"transverse" = sqrt(frac(G, rho)), quad
-      v_"longitudinal" = sqrt(frac(K + 4G/3, rho)),
-    $
-    where $G$ is the shear modulus and $K$ is the bulk modulus. Since $G < K$ typically, $v_"long" > v_"transe"$ — this is why seismic P-waves (longitudinal) arrive before S-waves (transverse).
-]
-
-=== Travelling Waves // 行波
-
-The simplest and most important special case of d'Alembert's solution is the *harmonic travelling wave*.
-
-#definition(name: "Harmonic Travelling Wave")[
-  $
-    u(x, t) = A cos(k x - omega t + phi),
-  $
-  where $k = 2 pi / lambda$ is the wavenumber, $lambda$ the wavelength, and $omega = v k$ the angular frequency.
-]
-
-A travelling wave has three defining features:
-
-#property(name: "Three Characteristics of Travelling Waves")[
-  1. *Morphology*: The entire waveform translates rigidly at speed $v$. A snapshot at time $t+Delta t$ is identical to the snapshot at $t$ shifted by $v Delta t$.
-  2. *Phase*: Each particle lags behind the particle to its left (for $+x$ propagation). The phase difference between two points separated by $Delta x$ is $Delta phi = k Delta x$.
-  3. *Energy*: Traveling waves carry energy unidirectionally — there is a net energy flux from source to receiver, unlike standing waves which store energy locally.
-]
-
-=== Three Types of Wave Solutions // 三类波解
-
-Depending on the geometry of the wave source, the solutions of the wave equation take different forms.
-
-#definition(name: "Plane, Spherical, and Cylindrical Waves")[
-  - *Plane wave*: wavefronts are infinite planes. $u = A cos(omega t - bold(k) dot bold(r) + phi)$. Energy does not spread — amplitude is constant.
-  - *Spherical wave* (point source): wavefronts are expanding spheres. $u(r, t) = frac(A, r) cos(omega t - k r + phi)$. Amplitude decays as $1/r$ to conserve energy (intensity $prop 1/r^2$).
-  - *Cylindrical wave* (line source): wavefronts are coaxial cylinders. $u(r, t) prop frac(1, sqrt(r)) cos(omega t - k r + phi)$. Amplitude decays as $1/sqrt(r)$.
-]
-
-=== Complex Representation of Waves // 波的复数表示
-
-Just as for SHM, harmonic waves are most conveniently written using complex exponentials:
-
-$
-  u(x, t) = Re(bold(U) e^(i(k x - omega t))), quad bold(U) = A e^(i phi).
-$
-
-The complex amplitude $bold(U)$ encodes both the real amplitude $A$ and the initial phase $phi$. This representation makes superposition, differentiation, and impedance calculations straightforward.
-
-=== Standing Waves // 驻波
-
-When two identical waves travel in opposite directions, they interfere to form a *standing wave*:
-
-$
-  u(x, t) = 2 A cos(k x) cos(omega t).
-$
-
-The points where $cos(k x) = 0$ (nodes) are stationary; the points where $|cos(k x)| = 1$ (antinodes) oscillate with maximum amplitude.
-
-#example(name: "Standing Waves on a String Fixed at Both Ends")[ // 两端固定弦的驻波
-  For a string of length $L$ fixed at $x = 0$ and $x = L$, the boundary conditions $u(0, t) = u(L, t) = 0$ require $k L = n pi$, $n = 1, 2, 3, ...$.
-
-  The *normal modes* are:
-  $
-    u_n(x, t) = A_n sin(frac(n pi x, L)) cos(omega_n t), quad omega_n = n omega_1, quad omega_1 = frac(pi v, L).
-  $
-
-  The fundamental frequency is $f_1 = omega_1 / (2 pi) = v / (2 L)$, and the higher harmonics are integer multiples: $f_n = n f_1$.
-]
-
-#figure(
-  image("img/string_normal_modes.png", width: 100%),
-  caption: [Normal modes of a string fixed at both ends: $n = 1$ (fundamental), $n = 2$ (second harmonic), $n = 3$ (third harmonic).],
-  placement: auto,
-  supplement: [Fig.]
-) <fig:string_normal_modes>
-
-=== Superposition Principle // 叠加原理
-
-#property(name: "Superposition for Waves")[
-  The wave equation is *linear*: if $u_1$ and $u_2$ are solutions, then $u_1 + u_2$ is also a solution. This allows complex wave patterns to be built from simple harmonic components.
-]
-
-=== Energy and Intensity in Waves // 波的能量与强度
-
-A travelling wave carries both kinetic and potential energy. For a wave on a string:
-
-$
-  text("Kinetic energy density"): cal(K) = frac(1,2) mu (partial u / partial t)^2,
-  quad
-  text("Potential energy density"): cal(V) = frac(1,2) T (partial u / partial x)^2.
-$
-
-For a harmonic travelling wave $u = A cos(k x - omega t)$:
-
-$
-  cal(K) = cal(V) = frac(1,4) mu omega^2 A^2,
-  quad
-  text("Total energy density"): cal(E) = frac(1,2) mu omega^2 A^2.
-$
-
-#definition(name: "Wave Intensity")[
-  The *intensity* (average power per unit area) of a harmonic wave is:
-  $
-    I = frac(1,2) rho v omega^2 A^2 = frac(1,2) Z omega^2 A^2.
-  $
-  For a point source emitting power $P$, the intensity at distance $r$ is $I = P / (4 pi r^2)$, consistent with the $1/r$ amplitude decay of spherical waves.
-]
-
-#note[
-  The energy flux of a mechanical wave is the analogue of the Poynting vector in electromagnetism. In Part V, we will see that the same structure — energy density, energy flux, and conservation law — appears in the electromagnetic field.
-]
-
-=== Dispersion and Group Velocity // 色散与群速度
-
-For the ideal string, the wave speed $v = sqrt(T / mu)$ is independent of frequency — all frequency components travel at the same speed. In many real media, however, the wave speed depends on frequency; this is called *dispersion*.
-
-#definition(name: "Dispersion Relation and Wave Velocities")[
-  The *dispersion relation* $omega(k)$ links angular frequency and wavenumber:
-  - Non-dispersive: $omega = v k$ (constant $v$), e.g., ideal string.
-  - Dispersive: $omega(k)$ is nonlinear, e.g., deep water waves $omega = sqrt(g k)$, bending waves on a beam $omega prop k^2$.
-
-  Two velocities are defined:
-  $
-    v_p = frac(omega, k) quad text("(phase velocity — speed of a single crest)"),
-    v_g = frac(dif omega, dif k) quad text("(group velocity — speed of a wave packet / energy)").
-  $
-  In a non-dispersive medium, $v_p = v_g$. In a dispersive medium, $v_p != v_g$; a wave packet spreads as it propagates.
-]
-
-#example(name: "Deep Water Waves")[ // 深水波
-  For deep water waves, the dispersion relation is $omega = sqrt(g k)$. The phase velocity $v_p = omega / k = sqrt(g / k)$ increases with wavelength (longer waves travel faster). The group velocity $v_g = dif omega / dif k = frac(1,2) sqrt(g / k) = v_p / 2$ — energy travels at half the speed of the crests.
-]
-
-=== Fourier Analysis and Normal Modes // 傅里叶分析与简正模
-
-Any standing wave configuration on a string can be expressed as a sum of normal modes — this is the essence of *Fourier analysis*.
-
-#definition(name: "Fourier Series for Standing Waves")[
-  The general solution for a string fixed at both ends is a superposition of normal modes:
-  $
-    u(x, t) = sum_(n=1)^oo (a_n cos(omega_n t) + b_n sin(omega_n t)) sin(frac(n pi x, L)).
-  $
-  The coefficients $a_n, b_n$ are determined by the initial conditions $u(x, 0)$ and $dot(u)(x, 0)$ through the Fourier integrals:
-  $
-    a_n = frac(2, L) integral_0^L u(x, 0) sin(frac(n pi x, L)) dif x,
-    quad
-    b_n = frac(2, L omega_n) integral_0^L dot(u)(x, 0) sin(frac(n pi x, L)) dif x.
-  $
-]
-
-The normal modes are the *eigenfunctions* of the wave equation with given boundary conditions. This concept — expanding a general solution in eigenfunctions — is one of the most powerful ideas in mathematical physics, reappearing in quantum mechanics (particle in a box), electromagnetism (waveguide modes), and structural engineering (modal analysis).
-
-#note[
-  *Connection to later topics:*
-  - The normal modes of a string are the first example of a discrete eigenvalue problem. In Part II (Lagrangian mechanics, Ch6), we will generalise this to coupled oscillators and normal mode analysis using matrix methods.
-  - The Fourier series is the discrete precursor to the Fourier transform, which describes the continuous spectrum of a wave packet.
-  - In quantum mechanics, the same "expand in eigenfunctions" strategy solves the Schrödinger equation for bound states.
-]
-The preceding subsections treat the wave equation and its general mathematical machinery — d'Alembert's solution, complex (phasor) representation, superposition, standing waves, dispersion, group velocity, and Fourier analysis. These concepts are *medium-independent*: they apply equally to mechanical waves, electromagnetic waves, and quantum probability waves. The remaining subsections specialise to *mechanical waves in elastic solids*, where the restoring mechanism is material stress and the wave speed is set by elastic moduli.
-
-=== Strain and Stress in Elastic Media // 弹性介质中的应变与应力
+// Chapter 4: Elastic Waves in Solids (固体中的弹性波)
+//   Section 4.1: Strain and Stress in Elastic Media (应变与应力)
+//   Section 4.2: Poisson's Ratio (泊松比)
+//   Section 4.3: Helmholtz Decomposition: P-waves and S-waves (亥姆霍兹分解：P波与S波)
+//   Section 4.4: Reflection and Impedance (反射与阻抗)
+// 说明：本章原名 "Oscillations and Waves (振动与波动)"，其介质无关部分（简谐运动、阻尼受驱振动、
+//       波动传播、色散与傅里叶简正模）已整体迁移至 Optique 笔记 Part I
+//       （6.Mathématiques appliquées/Optique）。此处仅保留弹性介质中的机械波内容，
+//       波动方程、横纵波与波速等基础概念参见 Optique Part I。
+= Elastic Waves in Solids // 固体中的弹性波
+== Strain and Stress in Elastic Media // 弹性介质中的应变与应力
 
 To understand the restoring forces in a solid, we introduce the concepts of strain (deformation) and stress (internal force per area).
 
@@ -1363,7 +984,7 @@ $
 
 Here $E$ is Young's modulus, $G$ the shear modulus, and $K$ the bulk modulus.
 
-=== Poisson's Ratio // 泊松比
+== Poisson's Ratio // 泊松比
 
 When a material is stretched in one direction, it contracts in the perpendicular directions. This coupling is quantified by *Poisson's ratio*:
 
@@ -1380,7 +1001,7 @@ When a material is stretched in one direction, it contracts in the perpendicular
   Poisson's ratio explains why a stretched rubber band becomes thinner, and why a cork (used in wine bottles) can be pushed in without expanding sideways — $nu approx 0$. The relation between moduli also shows that only two of $(E, G, K, nu)$ are independent.
 ]
 
-=== Helmholtz Decomposition: P-waves and S-waves // 亥姆霍兹分解：P波与S波
+== Helmholtz Decomposition: P-waves and S-waves // 亥姆霍兹分解：P波与S波
 
 In a solid, any deformation can be decomposed into a *dilatational* (volume-changing) part and a *distortional* (volume-preserving) part — this is the *Helmholtz decomposition* of the displacement field $bold(u)$:
 
@@ -1394,7 +1015,7 @@ $
   - The Helmholtz decomposition shows that P-waves and S-waves propagate *independently* in a homogeneous isotropic elastic medium — they do not mix or convert into each other except at boundaries.
 ]
 
-=== Reflection and Impedance // 反射与阻抗
+== Reflection and Impedance // 反射与阻抗
 
 When a wave encounters a boundary between two media, part of the energy is reflected and part is transmitted. The determining factor is the *characteristic impedance* of each medium.
 
@@ -1417,13 +1038,11 @@ When a wave encounters a boundary between two media, part of the energy is refle
 
 
 #note[
-  *Scope of this chapter and the road ahead.* This chapter develops oscillations and waves at the level of *classical mechanics and mechanical media*. Two extensions follow in later parts of the notebook series:
+  *Scope of this chapter and the road ahead.* This chapter covers elastic waves in solids. The medium-independent wave machinery — simple harmonic motion, damped and driven oscillations, the wave equation, d'Alembert's solution, superposition, standing waves, dispersion and group velocity, and Fourier normal modes — has been migrated to the *Optique* notebook (Part I, Vibrations and Waves).
 
-  - *Lagrangian small oscillations (Part II of this notebook).* The SHM, damped, and driven sections above will be re-derived systematically from the Lagrangian: coupled oscillators reduce to independent normal modes via diagonalisation of the mass and stiffness matrices, recovering the Fourier / normal-mode structure above as the eigenvalue problem of a linearised system.
+  - *Lagrangian small oscillations (Part II of this notebook).* The SHM, damped, and driven sections (now in Optique Part I) are re-derived systematically from the Lagrangian: coupled oscillators reduce to independent normal modes via diagonalisation of the mass and stiffness matrices, recovering the Fourier / normal-mode structure as the eigenvalue problem of a linearised system.
 
-  - *Electromagnetic waves and optics (Électrodynamique, Part V/VI).* The *mathematical* wave machinery above — d'Alembert's solution, complex representation, superposition, standing waves, dispersion and group velocity, Fourier analysis — applies verbatim to electromagnetic waves. The *optical* phenomena of interference, diffraction, and polarisation are treated there, since they are properties of EM waves in media and follow from Maxwell's equations. The elastic-medium specialisation above (strain, stress, P/S waves, mechanical impedance) stays here, as it is genuinely mechanical.
-
-  Readers interested in optical interference, diffraction, or polarisation should consult the Électrodynamique notebook directly.
+  - *Electromagnetic waves and optics (Optique).* The *optical* phenomena of interference, diffraction, and polarisation are treated in the Optique notebook. The elastic-medium specialisation here (strain, stress, P/S waves, mechanical impedance) stays in this notebook, as it is genuinely mechanical.
 ]
 
 
