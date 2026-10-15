@@ -117,7 +117,7 @@
 // ==========================================================================
 // 设计思路：本体理论，体量最大；以标量衍射理论（Helmholtz 方程 + 格林函数）为统一框架，
 //           干涉、衍射、傅里叶光学、偏振、介质传播依次展开。
-//           写作大纲已定稿（见 OUTLINE.md）：框架先行顺序、Ch 11 完整 5 节、8 张核心配图。
+//           正文已按规划写入 Ch 8-13（框架先行顺序、Ch 11 完整 5 节、8 张核心配图）。
 // 对应教材：Born & Wolf Ch 7-10, 13-15；Goodman, Introduction to Fourier Optics
 
 // --- Chapter 8: Scalar Diffraction Theory (标量衍射理论) ---
@@ -214,7 +214,7 @@
 //   为波动光学提供波动方程、叠加、色散、傅里叶简正模等数学基础；Ch 4 引入时谐场与 Helmholtz 方程。
 // Part II（Ch 5-7）：几何光学，作为 Part III 的短波长极限 λ→0；正文已写入（含 6 张配图）。
 // Part III（Ch 8-13）：波动光学核心，标量衍射理论为统一框架，展开干涉、衍射、傅里叶光学、偏振、介质传播。
-//   写作大纲已定稿（框架先行 / Ch 11 完整 / 8 张核心配图），正文待写。
+//   正文已写入（框架先行 / Ch 11 完整 / 8 张核心配图）。
 // Part IV（Ch 14-19）：量子光学，场量子化、相干态与压缩态、光子统计、光与物质相互作用、应用与前沿。
 //
 // 教材覆盖：A. P. French（振动与波动）、Hecht / Born & Wolf（几何与波动光学）、
@@ -1310,4 +1310,895 @@ Optical instruments are sequences of lenses analysed with the matrix formalism o
 #note[
   The modes of a fibre — the discrete transverse patterns it can support — are a wave phenomenon invisible to geometric optics; they are governed by the Helmholtz equation with cylindrical symmetry and belong to Part III.
   The evanescent field outside the core is the same phenomenon as in Section 5.5.
+]
+
+// --------------------------------------------------------------------------
+// Part III: Wave Optics (波动光学)
+// --------------------------------------------------------------------------
+
+#part("Wave Optics") // 波动光学
+
+// --- Chapter 8: Scalar Diffraction Theory (标量衍射理论) ---
+
+= Scalar Diffraction Theory // 标量衍射理论
+
+Geometric optics traced rays; wave optics propagates fields.
+This chapter builds the unifying framework for the whole of Part III: the diffraction integral, obtained as the Green-function solution of the Helmholtz equation.
+Every phenomenon studied in Part III — interference, diffraction patterns, imaging by lenses, resolution limits — is this integral evaluated in a suitable approximation.
+
+== The Helmholtz Equation for Optical Fields // 光场的亥姆霍兹方程
+
+The electromagnetic field is a vector field, but in free space and in media whose index varies slowly each Cartesian component satisfies the same scalar wave equation (see Électrodynamique).
+We therefore work with a single complex scalar amplitude $U(bold(r))$.
+
+#definition(name: "Scalar Optical Field")[
+  A *scalar optical field* $U(bold(r))$ is a solution of the Helmholtz equation
+  $
+    (nabla^2 + k^2) U = 0,
+  $
+  where $k = 2 pi n / lambda_0$ is the wavenumber in the medium.
+  The physical field is recovered as $u(bold(r), t) = "Re"(U(bold(r)) e^(-i omega t))$, with the time-harmonic convention of Chapter 4.
+] <def:scalar-field>
+
+A unique solution requires boundary conditions.
+On an aperture or screen we prescribe the field or its normal derivative; for radiation problems we add the Sommerfeld radiation condition of Chapter 4, which selects the outgoing solutions.
+
+#note[
+  The scalar approximation fails near sharp edges, in strongly absorbing media, and for tightly focused beams, where the vector character of the field (Chapter 12) must be retained.
+]
+
+== The Huygens-Fresnel Principle // 惠更斯-菲涅耳原理
+
+#definition(name: "Huygens-Fresnel Principle")[
+  Every point $P_0$ of a wavefront acts as a source of secondary spherical wavelets with amplitude proportional to $e^(i k r) / r$, weighted by an obliquity factor $K(theta)$ depending on the angle $theta$ between the direction of propagation and the normal to the wavefront.
+  The field at a later point $P$ is the superposition of all secondary wavelets.
+] <def:huygens-fresnel>
+
+The principle converts propagation into an integral over the wavefront:
+
+$
+  U(P) = 1 / (i lambda) integral_Sigma U(P_0) e^(i k r) / r K(theta) dif S.
+$
+
+The factor $1 / (i lambda)$ and the obliquity factor $K(theta)$ cannot be obtained from the intuitive argument alone; they emerge from the rigorous diffraction theory of Section 8.3.
+
+#figure(
+  image("img/huygens-fresnel.svg", width: 80%),
+  caption: [The Huygens-Fresnel construction: secondary spherical wavelets emitted from a wavefront, whose envelope forms the new wavefront.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:huygens-fresnel>
+
+== Kirchhoff and Rayleigh-Sommerfeld Integrals // 基尔霍夫与瑞利-索末菲积分
+
+The diffraction integral follows from Green's theorem applied to the Helmholtz equation.
+
+#theorem(name: "Kirchhoff Diffraction Integral")[
+  Let $Sigma$ be an aperture in an opaque screen, and let $U$ be a field that satisfies the Helmholtz equation behind the screen.
+  With the free-space Green's function $G = e^(i k r) / r$, the field at a point $P$ is
+  $
+    U(P) = 1 / (4 pi) integral_Sigma [U (partial G)/(partial n) - G (partial U)/(partial n)] dif S,
+  $
+  where $partial / partial n$ is the outward normal derivative and $r$ is the distance from the integration point to $P$.
+] <thm:kirchhoff-integral>
+
+#proof[
+  *Step 1 — Green's second identity.*
+  For two smooth functions $U$ and $G$ on a volume $V$ bounded by a surface $S$:
+  $
+    integral_V (U nabla^2 G - G nabla^2 U) dif V = integral_S (U (partial G)/(partial n) - G (partial U)/(partial n)) dif S.
+  $
+
+  *Step 2 — Apply to the Helmholtz equation.*
+  Both $U$ and $G$ solve the Helmholtz equation away from the singular point of $G$, so $U nabla^2 G - G nabla^2 U = 0$ on the integration region.
+  The surface integral therefore reduces to the boundary $Sigma$ (the aperture) together with the point $P$ itself.
+
+  *Step 3 — Pick up the singularity.*
+  Surrounding $P$ by a small sphere of radius $epsilon$ and using $G = e^(i k r) / r$ on it, the integral over the small sphere gives $4 pi U(P)$ as $epsilon -> 0$.
+  Rearranging yields the Kirchhoff integral.
+]
+
+The theorem as stated uses the *Kirchhoff boundary conditions*: on the aperture $U$ and $partial U / partial n$ take the values of the incident field, and on the screen they vanish.
+
+#note[
+  *Inconsistency.* The Kirchhoff conditions assign both $U$ and its normal derivative on the screen, which over-determines the elliptic problem: a Helmholtz solution is fixed by one boundary condition alone.
+  Moreover the formula fails to reproduce the incident field in the absence of a screen (the so-called *obliquity paradox*).
+  The Rayleigh-Sommerfeld theory repairs both defects.
+]
+
+#theorem(name: "Rayleigh-Sommerfeld Diffraction Integral")[
+  Choose the Green's function with vanishing value on the screen, $G_D = e^(i k r) / r - e^(i k r') / r'$, where $r'$ is the distance to the mirror image of $P$ in the plane of the screen.
+  Then the Dirichlet problem has the solution
+  $
+    U(P) = 1 / (i lambda) integral_Sigma U(P_0) e^(i k r) / r cos theta dif S,
+  $
+  where $theta$ is the angle between the segment $P_0 P$ and the normal to the screen.
+] <thm:rayleigh-sommerfeld>
+
+#proof[
+  *Step 1 — A Dirichlet Green's function.*
+  The mirrored source makes $G_D$ vanish identically on the screen, so the boundary term containing $G_D (partial U)/(partial n)$ disappears from Green's identity.
+
+  *Step 2 — Normal derivative on the screen.*
+  For a point $P_0$ in the aperture and observation point $P$, a direct differentiation gives
+  $
+    (partial G_D)/(partial n) = - 2 i k cos theta e^(i k r) / r,
+  $
+  up to terms of higher order in $1 / r$.
+
+  *Step 3 — Conclude.*
+  Substitution into Green's identity yields
+  $
+    U(P) = 1 / (i lambda) integral_Sigma U(P_0) e^(i k r) / r cos theta dif S.
+  $
+]
+
+The Rayleigh-Sommerfeld integral uses only the field on the aperture — a mathematically consistent Dirichlet problem — and automatically produces the correct obliquity factor $K(theta) = cos theta$.
+
+#note[
+  The Kirchhoff and Rayleigh-Sommerfeld integrals differ in their obliquity factors ($(1 + cos theta) / 2$ versus $cos theta$) and in their treatment of the boundary data.
+  For apertures large compared with the wavelength, and for observation points not too oblique, the two agree to leading order.
+]
+
+== Green's Functions for Diffraction // 衍射的格林函数
+
+#definition(name: "Free-Space Green's Function")[
+  The *free-space Green's function* for the Helmholtz equation satisfies
+  $
+    (nabla^2 + k^2) G = - 4 pi delta(bold(r) - bold(r)'),
+  $
+  and is given by
+  $
+    G(bold(r), bold(r)') = e^(i k abs(bold(r) - bold(r)')) / abs(bold(r) - bold(r)').
+  $
+] <def:green-diffraction>
+
+The Green's function admits a plane-wave (angular-spectrum) representation: it is the superposition of the outgoing plane waves of Chapter 4.
+This is the precise sense in which the diffraction integrals of this chapter are the angular-spectrum representation evaluated at a distant observation plane, redeeming the promise of Chapter 4.
+
+#note[
+  *Evanescent waves.* The angular-spectrum form of the Green's function contains the evanescent components identified in Section 4.4.
+  Their full wave description — exponential decay away from the aperture, frustrated total internal reflection — was promised at the end of Chapter 5 and is now accounted for by the exact diffraction theory.
+]
+
+#note[
+  *Guided modes.* In cylindrical symmetry (fibres, Chapter 7), the Helmholtz equation separates with Bessel functions, and the transverse patterns are the discrete guided modes promised in Section 7.5.
+  The same Green-function machinery, with the appropriate modal basis, describes their propagation.
+]
+
+// --- Chapter 9: Interference and Coherence (干涉与相干性) ---
+
+= Interference and Coherence // 干涉与相干性
+
+Interference is the superposition of coherent fields: when two or more light waves meet, their amplitudes add and the intensity shows stationary bright and dark fringes.
+This chapter develops two-beam and multiple-beam interference, and then asks how stable the phase relationship must be — leading from deterministic interference to the statistical theory of coherence.
+
+== Two-Beam Interference: Young's Experiment // 杨氏双缝
+
+#definition(name: "Optical Path Difference")[
+  The *optical path difference* (OPD) between two rays reaching a common point is
+  $
+    Delta = n_2 s_2 - n_1 s_1,
+  $
+  the difference of their optical paths.
+  A phase difference $delta = k_0 Delta$ accompanies it, where $k_0 = 2 pi / lambda_0$ is the vacuum wavenumber.
+] <def:optical-path-difference>
+
+In Young's experiment two slits separated by $d$, illuminated by a common source, emit secondary waves.
+At a point on a screen at distance $R$, the path difference is $Delta = d sin theta approx d y / R$, where $y$ is the height of the point above the axis.
+
+For equal amplitudes $U_0$, the two-beam intensity is
+
+$
+  I(y) = 4 I_0 cos^2 (pi d y / (lambda R)).
+$
+
+Bright fringes occur where $d sin theta = m lambda$ ($m in bb(Z)$), with spacing $Delta y = lambda R / d$.
+
+#example(name: "Young's Fringes")[ // 杨氏双缝
+  Two slits $d = 1 "mm"$ apart, illuminated with green light $lambda = 550 "nm"$, project fringes on a screen $R = 2 "m"$ away.
+  The fringe spacing is $Delta y = lambda R / d = (550 times 10^(-9) dot 2) / (10^(-3)) = 1.1 "mm"$, comfortably visible to the naked eye.
+]
+
+#figure(
+  image("img/young-double-slit.svg", width: 80%),
+  caption: [Young's double-slit experiment: geometry (top) and the cosine-squared fringe intensity (bottom).],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:young-double-slit>
+
+#definition(name: "Fringe Visibility")[
+  The *visibility* (contrast) of an interference pattern is
+  $
+    V = (I_"max" - I_"min") / (I_"max" + I_"min"),
+  $
+  with $0 <= V <= 1$.
+  Perfectly coherent equal-amplitude beams give $V = 1$; incoherent superposition gives $V = 0$.
+] <def:fringe-visibility>
+
+#note[
+  Real slits have finite width: each slit diffracts, and the two-beam pattern is modulated by the single-slit diffraction envelope (Chapter 10).
+  The diffraction envelope answers "where the light goes"; the interference term answers "how it distributes within the envelope".
+]
+
+== Interference of Thin Films // 薄膜干涉
+
+A thin film of thickness $t$ and index $n$ between two media reflects light from both surfaces.
+The reflected waves interfere with phase difference from the extra optical path $2 n t cos theta_t$ and from any phase jump at reflection:
+
+$
+  Delta = 2 n t cos theta_t + (lambda_0) / 2,
+$
+
+where the $lambda_0 / 2$ term accounts for a phase jump of $pi$ when light reflects off a denser medium.
+
+#example(name: "Newton's Rings")[ // 牛顿环
+  A plano-convex lens of radius $R$ resting on a flat plate creates a film of thickness $t(r) approx r^2 / (2 R)$.
+  Bright rings occur where $2 t = (m + 1/2) lambda$, giving ring radii $r_m approx sqrt(m lambda R)$.
+  Newton's rings were decisive evidence for the wave nature of light.
+] <ex:newton-rings>
+
+#note[
+  Films of constant thickness produce *equal-inclination* fringes (colours varying with viewing angle, as in soap bubbles); films of varying thickness produce *equal-thickness* fringes (as in Newton's rings and oil slicks).
+]
+
+== The Michelson Interferometer // 迈克耳孙干涉仪
+
+A Michelson interferometer splits a beam at a half-silvered mirror, sends the two parts to fixed and movable mirrors, and recombines them.
+The optical path difference is twice the displacement $Delta L$ of the movable mirror:
+
+$
+  Delta = 2 Delta L.
+$
+
+Moving the mirror by $lambda / 2$ shifts the pattern by one full fringe, so the interferometer measures lengths and wavelengths with interferometric precision.
+
+#note[
+  The Michelson interferometer is the archetype of amplitude-splitting interferometers.
+  Its modern descendants include Fourier-transform spectrometers, gravitational-wave detectors (LIGO-type cavities), and the coherence measurements of Section 9.6.
+]
+
+== Multiple-Beam Interference: Fabry-Perot // 多光束干涉与法布里-珀罗
+
+A Fabry-Perot interferometer is a pair of parallel, highly reflecting surfaces.
+Light bounces many times between them; the transmitted field is the coherent sum of all transmitted partial waves.
+
+#theorem(name: "Airy Function")[
+  For a Fabry-Perot etalon with amplitude reflectivity $r$ (intensity reflectivity $R = r^2$) and round-trip phase $delta = 2 k n d cos theta_t$, the transmitted intensity is
+  $
+    I = I_"max" / (1 + F sin^2 (delta / 2)),
+  $
+  where $I_"max" = T^2 / (1 - R)^2 I_"in"$ and the *coefficient of finesse* is
+  $
+    F = (4 R) / (1 - R)^2.
+  $
+] <thm:airy-function>
+
+#proof[
+  *Step 1 — Sum the partial waves.*
+  The transmitted field is the geometric series
+  $
+    E_t = E_0 t^2 (1 + r^2 e^(i delta) + r^4 e^(i 2 delta) + dots.c) = (E_0 t^2) / (1 - r^2 e^(i delta)).
+  $
+
+  *Step 2 — Take the modulus squared.*
+  With $R = r^2$ and $T = t^2$,
+  $
+    I = I_"in" T^2 / abs(1 - R e^(i delta))^2 = (I_"in" T^2) / (1 - 2 R cos delta + R^2).
+  $
+
+  *Step 3 — Express in the finesse form.*
+  Using $1 - 2 R cos delta + R^2 = (1 - R)^2 (1 + F sin^2 (delta / 2))$ completes the proof.
+]
+
+#example(name: "Fabry-Perot Resolution")[ // 法布里-珀罗分光本领
+  The finesse $cal(F) = pi sqrt(F) / 2$ measures the sharpness of the transmission peaks.
+  For $R = 0.97$, $F = 4 R / (1 - R)^2 approx 4300$ and $cal(F) approx 100$.
+  A Fabry-Perot of plate spacing $d = 1 "cm"$ then resolves wavelengths separated by $Delta lambda approx lambda^2 / (2 d cal(F))$, far beyond what a grating of the same size can do.
+] <ex:fabry-perot-resolution>
+
+#note[
+  The two-beam pattern is a broad $cos^2$; the multiple-beam pattern is a comb of sharp peaks.
+  The sharpness is what makes the Fabry-Perot the standard tool for high-resolution spectroscopy and for laser cavities (Chapter 19).
+]
+
+== Temporal and Spatial Coherence // 时间/空间相干性
+
+Real sources are not perfectly monochromatic, and their wavefronts are not perfectly correlated.
+Two independent notions of coherence describe the two defects.
+
+#definition(name: "Coherence Time and Length")[
+  A source with bandwidth $Delta nu$ has *coherence time*
+  $
+    tau_c approx 1 / (Delta nu),
+  $
+  and *coherence length*
+  $
+    L_c = c tau_c approx c / (Delta nu) approx lambda_0^2 / (Delta lambda).
+  $
+  Waves separated by more than $L_c$ have lost their fixed phase relationship.
+] <def:coherence-time-length>
+
+A thermal source is temporally incoherent: its coherence length is tiny ($L_c ~ 1 mu "m"$ for white light).
+A laser is highly coherent: a narrow linewidth $Delta nu ~ 1 "MHz"$ gives $L_c ~ 300 "m"$.
+
+#definition(name: "Spatial Coherence")[
+  A source has *spatial coherence* over a transverse separation if the fields at two points of a wavefront maintain a fixed phase relationship.
+  In Young's experiment, spatial coherence is measured by the visibility as the slit separation $d$ grows: fringes disappear when $d$ exceeds the transverse coherence width, $d_c approx lambda R / sigma_s$, where $sigma_s$ is the source size.
+] <def:spatial-coherence>
+
+#note[
+  The sun subtends a small angle, so sunlight is partially spatially coherent: Young's fringes are visible with slits close together but vanish as the slits are separated.
+  Stellar interferometry exploits exactly this: measuring the slit separation at which fringes vanish yields the angular diameter of a star.
+]
+
+== Coherence Length and Visibility // 相干长度与可见度
+
+#definition(name: "Complex Degree of Coherence")[
+  The normalized first-order correlation of two fields is the *complex degree of coherence*
+  $
+    gamma_(12)(tau) = (⟨ U_(1)(t + tau) U_(2)^"*"(t) ⟩) / sqrt(⟨ abs(U_(1))^2 ⟩ ⟨ abs(U_(2))^2 ⟩),
+  $
+  where the averages are over time.
+  Its modulus satisfies $0 <= abs(gamma_(12)) <= 1$.
+] <def:complex-coherence-degree>
+
+For quasi-monochromatic fields, the visibility of the interference pattern equals the modulus of the degree of coherence:
+
+$
+  V = abs(gamma_(12)(0)) .
+$
+
+Perfect coherence ($abs(gamma) = 1$) gives unit visibility; incoherence ($abs(gamma) = 0$) gives none.
+The fringe phase carries the argument of $gamma$, which encodes the optical path difference.
+
+#note[
+  The degree of coherence is the classical precursor of the first-order correlation function of quantum optics: the Hanbury Brown–Twiss experiments of Chapter 17 measure the second-order analogue, and photon statistics sharpen the classical average into a quantum expectation.
+]
+
+// --- Chapter 10: Diffraction (衍射) ---
+
+= Diffraction // 衍射
+
+The diffraction integral of Chapter 8 is exact but rarely evaluated in closed form.
+This chapter introduces the two standard approximations — Fresnel (near field) and Fraunhofer (far field) — and applies them to slits, apertures, gratings, and imaging.
+The Fraunhofer patterns are nothing but Fourier transforms of the aperture, which prepares the Fourier optics of Chapter 11.
+
+== Fresnel Diffraction and Zone Plates // 菲涅耳衍射与波带片
+
+#definition(name: "Fresnel Approximation")[
+  For an aperture at $z = 0$ and observation at distance $z$, the *Fresnel approximation* keeps quadratic phase terms in the diffraction integral:
+  $
+    U(x, y) = e^(i k z) / (i lambda z) integral.double U_0(x_0, y_0) e^(i k / (2 z) [(x - x_0)^2 + (y - y_0)^2]) dif x_0 dif y_0.
+  $
+  It is valid when the Fresnel number $F_N = a^2 / (lambda z)$ is of order unity or larger, i.e., in the near field.
+] <def:fresnel-approximation>
+
+#definition(name: "Fresnel Integrals")[
+  The *Fresnel integrals* are
+  $
+    C(s) = integral_0^s cos(pi u^2 / 2) dif u, quad S(s) = integral_0^s sin(pi u^2 / 2) dif u.
+  $
+  They describe the one-dimensional near-field patterns, e.g., diffraction by a straight edge.
+] <def:fresnel-integral>
+
+The Fresnel integral has no elementary closed form, but it is well tabulated; its limit at infinity is $C(oo) = S(oo) = 1/2$.
+
+#note[
+  *Zone plates.* Divide the wavefront into concentric *half-period zones* so that waves from successive zones arrive out of phase.
+  Blocking every other zone turns the remaining zones into an approximate converging lens: a zone plate focuses light even though it contains no refracting material.
+]
+
+== Fraunhofer Diffraction: Single Slit and Circular Aperture // 夫琅禾费衍射
+
+#definition(name: "Fraunhofer Approximation")[
+  The *Fraunhofer (far-field) approximation* holds when $z >> a^2 / lambda$, where $a$ is the largest aperture dimension.
+  Then the quadratic phase terms in the Fresnel integral reduce to
+  $
+    U(u, v) = e^(i k z) / (i lambda z) e^(i k (u^2 + v^2) / (2 z)) integral.double U_0(x_0, y_0) e^(- i k (x_0 u + y_0 v) / z) dif x_0 dif y_0.
+  $
+  Apart from a phase factor, the far field is the *two-dimensional Fourier transform* of the aperture field.
+] <def:fraunhofer-approximation>
+
+The Fourier structure explains everything that follows: the far-field pattern is the spatial-frequency content of the aperture.
+
+#theorem(name: "Fraunhofer Diffraction by a Single Slit")[
+  A slit of width $a$ illuminated by a plane wave produces the far-field intensity
+  $
+    I(theta) = I_0 "sinc"^2 (beta), quad beta = (k a sin theta) / 2,
+  $
+  where $"sinc"(x) = sin x / x$.
+  The first zeros lie at $sin theta = ± lambda / a$.
+] <thm:fraunhofer-single-slit>
+
+#proof[
+  *Step 1 — Fourier transform of a rectangle.*
+  The aperture field is $U_0(x_0) = U_0$ on $|x_0| <= a/2$ and zero elsewhere.
+  Its Fourier transform is proportional to the integral $integral_(-a/2)^(a/2) e^(- i k x_0 sin theta) dif x_0 = a "sinc"(k a sin theta / 2)$.
+
+  *Step 2 — Intensity.*
+  Squaring the modulus gives $I(theta) prop "sinc"^2(k a sin theta / 2)$, hence the stated form with $beta = k a sin theta / 2$.
+]
+
+#theorem(name: "Fraunhofer Diffraction by a Circular Aperture")[
+  A circular aperture of diameter $D$ produces the *Airy pattern*
+  $
+    I(theta) = I_0 (2 J_(1)(x) / x)^2, quad x = (k D sin theta) / 2,
+  $
+  where $J_(1)$ is the Bessel function of the first kind of order one.
+  The first dark ring lies at $x = 3.832$, i.e.,
+  $
+    sin theta_(1) = 1.22 lambda / D.
+  $
+] <thm:airy-pattern>
+
+#proof[
+  *Step 1 — Fourier transform in polar coordinates.*
+  The circular aperture is the indicator of a disk; its two-dimensional Fourier transform is the Hankel transform of the disk, which evaluates to $2 J_(1)(x) / x$.
+
+  *Step 2 — First zero.*
+  The first zero of $J_(1)(x)$ is at $x = 3.8317 approx 1.22 pi$, giving $sin theta_(1) = 1.22 lambda / D$.
+]
+
+#example(name: "Airy Disc Diameter")[ // 艾里斑直径
+  A camera lens of diameter $D = 25 "mm"$ at $lambda = 550 "nm"$ has an Airy disc of angular radius $theta_(1) = 1.22 lambda / D approx 2.7 times 10^(-5) "rad"$, i.e., about $5.4 "mm"$ at a focal distance of $200 "mm"$.
+  Stopping the lens down increases the Airy disc — smaller aperture, worse diffraction resolution.
+] <ex:airy-disc-diameter>
+
+#figure(
+  image("img/fraunhofer-patterns.svg", width: 100%),
+  caption: [Fraunhofer diffraction patterns: single slit (sinc²), double slit (interference modulated by diffraction), and circular aperture (Airy pattern).],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:fraunhofer-patterns>
+
+#note[
+  The double-slit pattern is the product of the two-slit interference term of Chapter 9 and the single-slit diffraction envelope of this section:
+  $
+    I(theta) = 4 I_0 cos^2(pi d sin theta / lambda) "sinc"^2(k a sin theta / 2).
+  $
+]
+
+== Diffraction Gratings and Spectroscopy // 衍射光栅与光谱学
+
+#definition(name: "Grating Equation")[
+  A grating of period $d$ (slits or grooves) produces principal maxima at angles satisfying
+  $
+    d sin theta = m lambda, quad m in bb(Z).
+  $
+] <def:grating-equation>
+
+#theorem(name: "Grating Resolution")[
+  A grating with $N$ illuminated grooves resolves wavelengths differing by
+  $
+    (lambda) / (Delta lambda) = m N,
+  $
+  the *resolving power* at order $m$.
+] <thm:grating-resolution>
+
+#proof[
+  *Step 1 — Principal maximum.*
+  For $N$ equally spaced slits, the intensity is
+  $
+    I = I_0 (sin(N delta / 2) / sin(delta / 2))^2, quad delta = (2 pi d sin theta) / lambda.
+  $
+  Principal maxima occur at $delta = 2 pi m$, i.e., $d sin theta = m lambda$.
+
+  *Step 2 — Nearest zero.*
+  The first zero next to the maximum is at $N delta / 2 = m N pi ± pi$, i.e., at $Delta delta = 2 pi / N$.
+
+  *Step 3 — Resolving power.*
+  Differentiating the grating equation at fixed $theta$: $Delta delta = 2 pi m (Delta lambda) / lambda$.
+  Setting this equal to $2 pi / N$ gives $lambda / Delta lambda = m N$.
+]
+
+#example(name: "Grating Spectral Resolution")[ // 光栅分光
+  A grating with $N = 10^4$ grooves at order $m = 2$ has resolving power $lambda / Delta lambda = 2 times 10^4$.
+  At $lambda = 500 "nm"$, it separates lines $Delta lambda = 0.025 "nm"$ apart — enough to resolve the sodium doublet ($589.0$ and $589.6 "nm"$).
+] <ex:grating-spectral-resolution>
+
+#note[
+  When $d$ is an integer multiple of the slit width $a$, certain orders are *missing*: the diffraction envelope has a zero exactly where the interference has a maximum.
+  This is the textbook mechanism of the missing orders $m = ± d / a, ± 2 d / a, dots.c$.
+]
+
+== Resolution: Rayleigh and Abbe Criteria // 分辨极限
+
+The finite size of any aperture sets a fundamental limit on imaging: the image of a point is an Airy pattern, not a point.
+
+#definition(name: "Rayleigh Criterion")[
+  Two point sources are *resolved* when the first dark ring of one Airy pattern falls on the maximum of the other:
+  $
+    theta_"min" = 1.22 lambda / D.
+  $
+  The two patterns are then separated by the half-width of the Airy disc.
+] <def:rayleigh-criterion>
+
+#definition(name: "Abbe Resolution Limit")[
+  For a microscope with numerical aperture $"NA" = n sin theta$ (Section 7.5), the finest resolvable spacing is
+  $
+    d_"min" = (lambda) / (2 "NA").
+  $
+] <def:abbe-limit>
+
+#figure(
+  image("img/resolution-criterion.svg", width: 100%),
+  caption: [The Rayleigh criterion: two Airy patterns at separations below, equal to, and above $theta_"min"$ — unresolved, just resolved, and resolved.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:resolution-criterion>
+
+#note[
+  *Why the limit is fundamental.* The angular-spectrum analysis of Section 4.4 showed that fine spatial detail generates evanescent waves that do not propagate to the far field.
+  The Rayleigh and Abbe criteria are exactly that statement in imaging language: the aperture collects only the propagating components, so detail finer than $lambda / (2 "NA")$ is lost — the wave-optical limit promised in Chapter 7.
+]
+
+// --- Chapter 11: Fourier Optics (傅里叶光学) ---
+
+= Fourier Optics // 傅里叶光学
+
+Section 10.2 showed that the Fraunhofer pattern is the Fourier transform of the aperture.
+This chapter makes that observation operational: a lens performs the transform optically, and two lenses in a row build a complete filtering system.
+Fourier optics is the engineering branch of wave optics, and it redeems the promise of Chapter 4 that the lens implements the angular-spectrum representation as a physical Fourier transform.
+
+== The Lens as a Fourier Transformer // 透镜作为傅里叶变换器
+
+A thin lens of focal length $f$ delays the wave by a thickness proportional to $x^2 + y^2$.
+Its transmission function is the quadratic phase factor
+
+$
+  t(x, y) = e^(- i k (x^2 + y^2) / (2 f)).
+$
+
+#theorem(name: "Lens Fourier Transform")[
+  Place an input field $U_(i n)(x, y)$ in the front focal plane of a lens ($z = - f$) and observe the field in the back focal plane ($z = f$).
+  Then
+  $
+    U_(f)(u, v) = 1 / (i lambda f) integral.double U_(i n)(x, y) e^(- i k (x u + y v) / f) dif x dif y,
+  $
+  the two-dimensional Fourier transform of the input evaluated at spatial frequencies $f_x = u / (lambda f)$, $f_y = v / (lambda f)$.
+] <thm:lens-fourier-transform>
+
+#proof[
+  *Step 1 — Lens phase.*
+  Immediately after the lens the field is $U_(i n)(x, y) t(x, y)$, with $t$ the quadratic phase factor above.
+
+  *Step 2 — Fresnel propagation to the focal plane.*
+  Propagate this field a distance $f$ with the Fresnel integral of Section 10.1.
+  The quadratic phase of $t$ cancels the quadratic phase of the Fresnel kernel exactly, leaving only the cross term.
+
+  *Step 3 — Conclude.*
+  The surviving term is the stated integral: the lens converts the quadratic Fresnel kernel into the linear Fourier kernel.
+]
+
+The magic of the result is the cancellation: without the lens the Fresnel kernel keeps its quadratic phase and no clean transform appears.
+
+#note[
+  *The 2f system.* With the input in the front focal plane, the output is a *strict* Fourier transform with no residual phase factor.
+  If the input is placed elsewhere, the output carries an additional quadratic phase, so the standard configuration for Fourier processing is the 2f system.
+  This is the lens analysis promised in Chapter 4, where the angular-spectrum representation is physically implemented by the lens.
+]
+
+#figure(
+  image("img/lens-fourier.svg", width: 90%),
+  caption: [The 2f Fourier system: an input placed one focal length in front of the lens produces its Fourier transform in the back focal plane.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:lens-fourier>
+
+== Aperture Functions and Pupil Transforms // 孔径函数与光瞳变换
+
+#definition(name: "Pupil Function")[
+  The *pupil (aperture) function* $P(x, y)$ is the complex transmission of the limiting aperture of an optical system: it is 1 inside the aperture and 0 outside, with possible additional phase (aberrations).
+  The far field of the aperture is the Fourier transform of $P$.
+] <def:pupil-function>
+
+The pupil function unifies the diffraction results of Chapter 10: the single slit, the circular aperture, and every grating are special pupils.
+An imaging system with pupil $P$ acts as a linear filter on the field, and its impulse response is the Fraunhofer pattern of $P$.
+
+== Spatial Filtering // 空间滤波
+
+A *4f system* chains two Fourier transforms: lens 1 produces the spectrum of the input in its focal plane, where a filter is inserted, and lens 2 Fourier-transforms the filtered spectrum back to an image.
+
+#example(name: "4f Spatial Filtering")[ // 4f 空间滤波
+  - *Low-pass filter*: a circular stop on the axis blocks high spatial frequencies — the image is blurred and speckle and periodicity are suppressed.
+  - *High-pass filter*: an opaque disc on the axis blocks the DC and low frequencies — edges are enhanced, since edges live in the high-frequency content.
+  - *Phase filter*: a phase plate alters the spectrum, e.g., for phase contrast microscopy of transparent specimens.
+] <ex:4f-spatial-filtering>
+
+The 4f system is the physical image of the statement "multiplication in the frequency domain" that underlies all linear filtering, and it is the basis of optical information processing.
+
+== PSF, OTF and the Coherent Transfer Function // 点扩散函数与光学传递函数
+
+#definition(name: "PSF and OTF")[
+  The *point spread function* (PSF) of an incoherent imaging system is the intensity pattern produced by a point source, the squared modulus of the pupil's Fraunhofer pattern:
+  $
+    "PSF"(x, y) = abs(cal(F)[P](x, y))^2.
+  $
+  The *optical transfer function* (OTF) is the normalized Fourier transform of the PSF:
+  $
+    "OTF"(f_x, f_y) = cal(F)["PSF"](f_x, f_y) / cal(F)["PSF"](0, 0).
+  $
+  The image is the convolution of the ideal image with the PSF, so the OTF multiplies the object spectrum.
+] <def:psf-otf>
+
+#definition(name: "Coherent Transfer Function")[
+  For coherent illumination the field amplitudes add, and the system is linear in the *field* rather than the intensity.
+  The transfer function is then the pupil function itself:
+  $
+    "CTF"(f_x, f_y) = P(lambda f f_x, lambda f f_y).
+  $
+] <def:coherent-transfer-function>
+
+#note[
+  The distinction is sharp: coherent imaging is linear in amplitude (CTF = P), incoherent imaging is linear in intensity (OTF = |P| ⊛ |P|, the autocorrelation of the pupil).
+  The Abbe limit of Section 10.4 is the support of the CTF: spatial frequencies beyond the pupil support are simply cut off.
+]
+
+== Holography // 全息 [简要]
+
+#definition(name: "Holography")[
+  A *hologram* is an interference record of the object wave with a known reference wave, recorded on a photographic plate.
+  Illuminating the record with the reference wave reconstructs the object wave by diffraction: the plate acts as a complicated grating whose first-order diffraction reproduces the original wavefront, with full phase information.
+] <def:holography>
+
+#note[
+  Ordinary photography records intensity only, losing the phase; the hologram records both, because the reference wave converts phase into intensity fringes.
+  Reconstructing the wavefront makes the holographic image three-dimensional: moving one's viewpoint reveals parallax, exactly as for the original object.
+]
+
+// --- Chapter 12: Polarization (偏振) ---
+
+= Polarization // 偏振
+
+So far the field was scalar. Light, however, is a vector field, and its transverse structure is the polarization.
+This chapter returns to the vector character promised in Chapter 4, describes polarization states by two compact algebras — Jones (2 × 2, coherent) and Mueller (4 × 4, incoherent) — and studies how matter modifies them.
+
+== Polarization States of Light // 光的偏振态
+
+#definition(name: "Polarization State")[
+  A plane wave along $z$ has an electric field confined to the transverse plane:
+  $
+    bold(E)(z, t) = "Re" [mat(E_x; E_y) e^(i (k z - omega t))],
+  $
+  with complex amplitudes $E_x, E_y$.
+  The *polarization state* is the relative amplitude and phase of the two components.
+] <def:polarization-state>
+
+Writing $E_y / E_x = tan chi e^(i delta)$, the tip of the field vector traces an ellipse:
+
+- $delta = 0$ or $pi$: *linear polarization*;
+- $delta = ± pi / 2$ with $chi = pi / 4$: *circular polarization* (right or left);
+- otherwise: *elliptical polarization*.
+
+#figure(
+  image("img/polarization-ellipse.svg", width: 100%),
+  caption: [Polarization ellipses traced by the electric vector for phase differences $delta = 0, pi / 2$, and a general value, with $E_y / E_x = 1$.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:polarization-ellipse>
+
+#note[
+  The polarization state is a point on the *Poincaré sphere*: the equator carries the linear states, the poles the circular states, and every other point an elliptical state.
+  This geometric picture becomes the quantum Bloch-sphere picture of photon polarization in Part IV.
+]
+
+== Jones Calculus // 琼斯运算
+
+#definition(name: "Jones Vector and Jones Matrix")[
+  The *Jones vector* is the column of complex amplitudes
+  $
+    bold(J) = mat(E_x; E_y).
+  $
+  A polarizing element is represented by a $2 times 2$ complex *Jones matrix* $M$, and the output state is
+  $
+    bold(J)' = M bold(J).
+  $
+] <def:jones-vector>
+
+#definition(name: "Jones Matrices of Basic Elements")[
+  - *Linear polarizer* at angle $theta$: $M = mat(cos^2 theta, cos theta sin theta; cos theta sin theta, sin^2 theta)$.
+  - *Retarder* (wave plate) with fast-axis angle $phi$ and retardance $delta$: a phase-only unitary matrix; for fast axis along $x$:
+    $
+      M = mat(e^(- i delta / 2), 0; 0, e^(i delta / 2)).
+    $
+  - *Rotator* by angle $alpha$: $M = mat(cos alpha, - sin alpha; sin alpha, cos alpha)$.
+] <def:jones-matrix>
+
+The Jones calculus is valid for fully polarized, coherent light: amplitudes add, and matrices compose by multiplication in order.
+
+== Stokes Parameters and Mueller Calculus // 斯托克斯参量与缪勒矩阵
+
+#definition(name: "Stokes Parameters")[
+  The *Stokes parameters* of a field are the four real quantities
+  $
+    S_0 = abs(E_x)^2 + abs(E_y)^2, quad S_1 = abs(E_x)^2 - abs(E_y)^2,
+    S_2 = 2 "Re"(E_x^"*" E_y), quad S_3 = 2 "Im"(E_x^"*" E_y).
+  $
+  They measure total intensity, linear polarization along the axes, linear polarization at $45°$, and circular polarization, respectively.
+] <def:stokes-parameters>
+
+For completely polarized light $S_0^2 = S_1^2 + S_2^2 + S_3^2$; for partially polarized light the inequality holds, and the degree of polarization is
+
+$
+  P = sqrt(S_1^2 + S_2^2 + S_3^2) / S_0.
+$
+
+#definition(name: "Mueller Matrix")[
+  A polarizing element acts on the Stokes vector by a real $4 times 4$ *Mueller matrix* $M$:
+  $
+    bold(S)' = M bold(S).
+  $
+  Unlike the Jones calculus, the Mueller calculus handles partially polarized and incoherent light.
+] <def:mueller-matrix>
+
+== Birefringence and Wave Plates // 双折射与波片
+
+#definition(name: "Birefringence")[
+  A uniaxial *birefringent* crystal has two refractive indices: the ordinary index $n_o$ for polarization perpendicular to the optic axis, and the extraordinary index $n_e$ for polarization along it.
+  The two polarizations propagate with different speeds and accumulate a relative phase
+  $
+    delta = (2 pi (n_e - n_o) d) / lambda
+  $
+  over a thickness $d$.
+] <def:birefringence>
+
+#definition(name: "Wave Plate")[
+  A *wave plate* of thickness $d$ is a birefringent plate that introduces a chosen retardance $delta$.
+  - *Quarter-wave plate* ($delta = pi / 2$): converts linear to circular polarization and vice versa.
+  - *Half-wave plate* ($delta = pi$): rotates linear polarization; it flips the handedness of circular polarization.
+] <def:wave-plate>
+
+#example(name: "Quarter-Wave Plate Conversion")[ // 四分之一波片
+  Linearly polarized light at $45°$ to the fast axis enters a $lambda/4$ plate: the two components emerge with a relative phase $pi / 2$ and equal amplitudes, i.e., circularly polarized.
+  Rotating the plate by $90°$ reverses the handedness.
+] <ex:quarter-wave-plate>
+
+== Production and Analysis of Polarized Light // 起偏与检偏
+
+#law(name: "Malus's Law")[
+  A linear polarizer transmits the component of the field along its axis.
+  The transmitted intensity is
+  $
+    I(theta) = I_0 cos^2 theta,
+  $
+  where $theta$ is the angle between the incident polarization and the polarizer axis.
+] <law:malus>
+
+#definition(name: "Brewster's Angle")[
+  At the interface between media of indices $n_1$ and $n_2$, the reflected beam is fully $s$-polarized when the refracted and reflected rays are perpendicular, which occurs at
+  $
+    tan theta_B = n_2 / n_1.
+  $
+] <def:brewster-angle>
+
+#example(name: "Brewster Reflection")[ // 布儒斯特角
+  For an air–glass interface ($n_2 / n_1 = 1.5$), $theta_B = arctan 1.5 approx 56.3°$.
+  Unpolarized light incident at this angle reflects with $p$-polarization completely suppressed — the basis of polarizing windows and laser cavity windows.
+] <ex:brewster-reflection>
+
+#note[
+  Malus's law is the amplitude-splitting analogue of the interference visibility of Chapter 9: both measure how much of a field survives a projection.
+  For partially polarized light the transmitted intensity follows from the Mueller calculus, generalizing Malus.
+]
+
+== Optical Activity // 旋光 [简要]
+
+#definition(name: "Optical Activity")[
+  In a *chiral* medium the two circular polarizations propagate with different speeds, and linearly polarized light has its plane of polarization rotated by
+  $
+    theta = alpha d,
+  $
+  where $alpha$ is the specific rotation and $d$ the path length.
+] <def:optical-activity>
+
+#note[
+  Optical activity is a difference of refractive indices for opposite circular polarizations — the circular analogue of birefringence.
+  Its quantum counterpart, the coupling of photon helicity to chiral matter, returns in Part IV alongside the polarization states of single photons.
+]
+
+// --- Chapter 13: Propagation in Media (介质中的传播) ---
+
+= Propagation in Media // 介质中的传播
+
+So far the medium entered through a given refractive index $n$.
+This final chapter of Part III asks where $n$ comes from: light drives the charges of the medium, and the driven response — dispersive, absorptive, causal, scattering — is the material side of wave optics.
+It redeems the promise of Chapter 7 that the wavelength dependence $n(lambda)$ belongs here.
+
+== Dispersion and Absorption // 色散与吸收
+
+#definition(name: "Lorentz Oscillator Model")[
+  In the *Lorentz oscillator model*, each electron is a damped harmonic oscillator driven by the electric field:
+  $
+    dot.double(x) + gamma dot(x) + omega_0^2 x = q/m E_0 e^(- i omega t),
+  $
+  with damping rate $gamma$ and resonance frequency $omega_0$.
+  The induced polarization gives the dielectric function
+  $
+    epsilon(omega) = 1 + (N q^2) / (epsilon_0 m) dot 1 / (omega_0^2 - omega^2 - i gamma omega),
+  $
+  where $N$ is the number density of oscillators.
+] <def:lorentz-oscillator>
+
+#definition(name: "Complex Refractive Index")[
+  The *complex refractive index* is
+  $
+    tilde(n)(omega) = n + i kappa = sqrt(epsilon(omega)),
+  $
+  with real part $n$ governing phase velocity and imaginary part $kappa$ (the extinction coefficient) governing absorption.
+  A wave attenuates as $e^(- kappa k_0 z)$.
+] <def:complex-refractive-index>
+
+#figure(
+  image("img/dispersion-curves.svg", width: 100%),
+  caption: [Refractive index $n(omega)$ near a single resonance: normal dispersion far from resonance, anomalous dispersion within the absorption band.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:dispersion-curves>
+
+#note[
+  *Normal vs anomalous dispersion.* Far from resonance, $n(omega)$ increases with frequency (normal dispersion, familiar from prism spectra, Section 7.2).
+  Inside the absorption band the real part *decreases* with frequency — anomalous dispersion — and absorption is strongest.
+  The damping $gamma$ is what makes $epsilon$ complex and couples the two effects.
+]
+
+== Kramers-Kronig Relations // Kramers-Kronig 关系
+
+#theorem(name: "Kramers-Kronig Relations")[
+  Causality — the response at time $t$ depends only on the field at earlier times — forces the real and imaginary parts of the susceptibility to be linked:
+  $
+    chi_1(omega) = 2/pi cal(P) integral_0^oo (omega' chi_2(omega')) / (omega'^2 - omega^2) dif omega',
+  $
+  $
+    chi_2(omega) = - 2/pi cal(P) integral_0^oo (omega chi_1(omega')) / (omega'^2 - omega^2) dif omega',
+  $
+  where $cal(P)$ denotes the Cauchy principal value.
+] <thm:kramers-kronig>
+
+#proof[
+  *Step 1 — Analyticity.*
+  Causality makes the susceptibility $chi(omega)$ analytic in the upper half-plane: the Fourier transform of a retarded response has no poles for $"Im"(omega) > 0$.
+
+  *Step 2 — Contour integration.*
+  Integrate $chi(omega') / (omega' - omega)$ over a large semicircle in the upper half-plane, indented around the pole on the real axis.
+  The analyticity plus the decay of $chi$ at infinity leaves only the principal-value integral and the residue.
+
+  *Step 3 — Take real and imaginary parts.*
+  Separating $chi = chi_1 + i chi_2$ in the resulting identity yields the two dispersion relations.
+]
+
+#note[
+  The Kramers-Kronig relations are the physics statement of the general principle that real and imaginary parts of a causal linear response cannot be chosen independently: measure absorption at all frequencies and the refractive index is determined, and vice versa.
+]
+
+== Rayleigh and Mie Scattering // 瑞利与米氏散射
+
+#law(name: "Rayleigh Scattering")[
+  A small particle (size $d << lambda$) illuminated by light of wavelength $lambda$ scatters with cross section
+  $
+    sigma_R prop (d^6) / (lambda^4),
+  $
+  i.e., $sigma_R prop omega^4$.
+  Short wavelengths are scattered far more strongly than long ones.
+] <law:rayleigh-scattering>
+
+#example(name: "Why the Sky Is Blue")[ // 天空为什么是蓝的
+  Sunlight passes through the atmosphere; molecules scatter blue light ($lambda approx 450 "nm"$) roughly $(700 / 450)^4 approx 6$ times more strongly than red light ($lambda approx 700 "nm"$).
+  Scattered light reaching the eye from all directions is therefore blue; the transmitted sunlight, depleted of blue, appears red at sunset.
+] <ex:sky-color>
+
+#definition(name: "Mie Scattering")[
+  When the particle size is comparable to the wavelength ($d ~ lambda$), scattering enters the *Mie regime*: the cross section oscillates with size and becomes weakly wavelength-dependent, with pronounced forward scattering.
+] <def:mie-scattering>
+
+#figure(
+  image("img/rayleigh-scattering.svg", width: 70%),
+  caption: [Rayleigh scattering strength versus wavelength: the $lambda^(-4)$ law suppresses long wavelengths relative to short ones.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:rayleigh-scattering>
+
+#note[
+  Rayleigh scattering by air is why the sky is blue; Mie scattering by water droplets and aerosols is why clouds and milk are white — comparable particle sizes scatter all wavelengths equally.
+  This closes Part III: from the Helmholtz equation through diffraction, interference, Fourier optics, polarization, to the material response, the scalar wave theory of optics is complete, and the quantum theory of light (Part IV) begins.
 ]
