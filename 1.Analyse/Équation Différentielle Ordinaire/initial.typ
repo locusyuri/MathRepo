@@ -147,11 +147,10 @@
 //     - 相平面、相轨迹、平面自治系统
 //   Section 6.2: Lyapunov Stability (Lyapunov 稳定性)
 //     - 稳定/渐近稳定/不稳定的定义
-//     - 线性近似稳定性
 //   Section 6.3: Lyapunov Methods (Lyapunov 直接法)
 //     - Lyapunov 函数、V 函数判定
 //   Section 6.4: Critical Points and Limit Cycles (奇点与极限环)
-//     - 平面奇点分类（结点、鞍点、焦点、中心）
+//     - 线性化定理与平面奇点分类（结点、鞍点、焦点、中心）
 //     - 极限环、Poincaré-Bendixson 定理
 
 // ==========================================================================
@@ -1717,7 +1716,9 @@ If $f$ is of exponential order, i.e. $abs(f(x)) <= M e^(c x)$ for large $x$, the
 
 = Nonlinear Equations and Stability // 非线性方程与稳定性
 
-This chapter develops the qualitative theory of nonlinear autonomous systems. Instead of seeking explicit solutions, we study the geometric behavior of trajectories in the phase space: equilibrium points, stability, periodic orbits, and limit cycles. This approach is especially powerful when explicit solutions are unavailable.
+This chapter develops the qualitative theory of nonlinear autonomous systems.
+Instead of seeking explicit solutions, we study the geometric behavior of trajectories in the phase space: equilibrium points, stability, periodic orbits, and limit cycles.
+This approach is especially powerful when explicit solutions are unavailable.
 
 == The Phase Plane // 相平面
 
@@ -1729,7 +1730,7 @@ We consider two-dimensional autonomous systems of the form
   )
 $] <eq:phase-plane-system>
 
-where $F$ and $G$ are continuously differentiable in a domain $D$. In vector form,
+where $F$ and $G$ are continuously differentiable in a domain $D$. The phase-plane analysis of this chapter is based on the planar system @eq:phase-plane-system; in vector form,
 #eq[$
   (dif bold(x)) / (dif t) = bold(f)(bold(x)), quad quad bold(x)(t_0) = bold(x)^0,
 $] <eq:autonomous-system>
@@ -1746,7 +1747,8 @@ where $bold(x) = (x, y)^"T"$ and $bold(f)(bold(x)) = (F(x, y), G(x, y))^"T"$.
   A point $bold(x)^*$ where $bold(f)(bold(x)^*) = bold(0)$ is called a *critical point* (or *equilibrium point*, *singular point*).
 ] <def:critical-point>
 
-At a critical point, the solution is constant: $bold(x)(t) = bold(x)^*$ for all $t$. The local behavior of trajectories near a critical point determines the qualitative dynamics of the system.
+At a critical point, the solution is constant: $bold(x)(t) = bold(x)^*$ for all $t$.
+The local behavior of trajectories near a critical point determines the qualitative dynamics of the system.
 
 == Lyapunov Stability // Lyapunov 稳定性
 
@@ -1760,28 +1762,51 @@ We now define stability concepts for an equilibrium point $bold(x)^*$ of the aut
 ] <def:lyapunov-stability>
 
 #note[
-  These definitions are geometric: stability means trajectories starting nearby stay nearby; asymptotic stability means trajectories starting nearby actually converge to the equilibrium.
+  These definitions are geometric: stability means trajectories starting nearby stay nearby.
+
+  Asymptotic stability means trajectories starting nearby actually converge to the equilibrium.
 ]
 
 == Lyapunov Methods // Lyapunov 方法
 
 Direct Lyapunov methods allow us to determine stability without solving the equations explicitly.
 
+For notational economy, the method is stated for a general $n$-dimensional autonomous system $dot(bold(x)) = bold(f)(bold(x))$; it applies to the planar systems of this chapter with $n = 2$.
+
 #definition(name: "Lyapunov Function")[
-  A continuously differentiable function $V: D -> bb(R)$ is called a *Lyapunov function* for the equilibrium $bold(x)^*$ if:
-  - $V(bold(x)^*) = 0$,
-  - $V(bold(x)) > 0$ for all $bold(x) != bold(x)^*$ in some neighborhood of $bold(x)^*$,
-  - The derivative along trajectories $dot(V)(bold(x)) = nabla V(bold(x)) dot bold(x) = sum_(i=1)^n (partial V) / (partial x_i) f_(i)(bold(x))$ satisfies $dot(V)(bold(x)) <= 0$ in that neighborhood.
+  A function $V$ defined in a neighborhood of $bold(x)^*$ is called a *Lyapunov function* if:
+
+  - $V(bold(x)^*) = 0$ and $V(bold(x)) > 0$ for all $bold(x) != bold(x)^*$ in the neighborhood;
+  - the derivative along trajectories $dot(V)(bold(x)) = nabla V(bold(x)) dot bold(x) = sum_(i=1)^n (partial V) / (partial x_i) f_(i)(bold(x))$ satisfies $dot(V)(bold(x)) <= 0$ in the neighborhood.
 ] <def:lyapunov-function>
 
 #theorem(name: "Lyapunov's Stability Theorem")[
   If there exists a Lyapunov function $V$ for the equilibrium $bold(x)^*$, then $bold(x)^*$ is Lyapunov stable.
+
   If additionally $dot(V)(bold(x)) < 0$ for all $bold(x) != bold(x)^*$, then $bold(x)^*$ is asymptotically stable.
 ] <thm:lyapunov-stability>
 
-#note[
-  The function $V$ can be thought of as a generalized "energy" or "distance" from the equilibrium. The condition $dot(V) <= 0$ means that this "energy" does not increase along trajectories.
+#proof[
+  *Stability.* Let $epsilon > 0$. Since $V$ is positive definite and continuous, the sphere $S_epsilon = {norm(bold(x) - bold(x)^*) = epsilon}$ carries a positive minimum $m = min_(S_epsilon) V > 0$.
+
+  By continuity of $V$ at $bold(x)^*$, choose $delta > 0$ with $V(bold(x)) < m$ whenever $norm(bold(x) - bold(x)^*) < delta$.
+
+  The sublevel set ${V < m}$ lies inside the $epsilon$-ball, and since $dot(V) <= 0$ along trajectories, a solution starting in the $delta$-ball satisfies $norm(bold(x)(t) - bold(x)^*) < epsilon$ for all $t >= t_0$.
+
+  *Asymptotic stability.* Now assume $dot(V) < 0$ off $bold(x)^*$. Along any trajectory starting in the $delta$-ball, $V(bold(x)(t))$ decreases and converges to some limit $V_0 >= 0$.
+
+  If $V_0 > 0$, the trajectory remains in a compact set on which $V >= V_0$ and $bold(x) != bold(x)^*$; there $dot(V)$ attains a maximum $-eta < 0$, forcing $V(bold(x)(t)) <= V(bold(x)(t_0)) - eta (t - t_0) -> -oo$, a contradiction.
+
+  Hence $V_0 = 0$; positive definiteness of $V$ then forces $bold(x)(t) -> bold(x)^*$ as $t -> oo$.
 ]
+
+#note[
+  The function $V$ can be thought of as a generalized "energy" or "distance" from the equilibrium.
+
+  The condition $dot(V) <= 0$ means that this "energy" does not increase along trajectories.
+]
+
+The level sets of a Lyapunov function and a trajectory trapped inside them are illustrated in @fig:lyapunov-function.
 
 #figure(
   image("img/lyapunov-function.svg", width: 75%),
@@ -1790,9 +1815,46 @@ Direct Lyapunov methods allow us to determine stability without solving the equa
   supplement: [Fig.],
 ) <fig:lyapunov-function>
 
+#example(name: "A Lyapunov Function Where Linearization Fails")[
+  Consider the system
+  $
+    cases(
+      dot(x) = y - x^3,
+      dot(y) = -x - y^3.
+    )
+  $
+
+  The Jacobian matrix at the origin is $mat(0, 1; -1, 0)$, whose eigenvalues are purely imaginary, so the linearization theorem (to be stated in §6.4) does not apply.
+
+  Take $V = x^2 + y^2$, which is positive definite with $V(bold(0)) = 0$.
+
+  Along trajectories,
+  $
+    dot(V) = 2 x dot(x) + 2 y dot(y) = 2 x (y - x^3) + 2 y (-x - y^3) = -2 x^4 - 2 y^4 < 0 quad quad text("for") (x, y) != bold(0).
+  $
+
+  By #link(<thm:lyapunov-stability>)[Lyapunov's stability theorem], the origin is asymptotically stable.
+] <ex:lyapunov-function>
+
 == Critical Points and Limit Cycles // 奇点与极限环
 
-For two-dimensional systems, the behavior near a critical point can be classified by linearization. Let $bold(x)^*$ be a critical point, and let $bold(A) = bold(D) bold(f)(bold(x)^*)$ be the Jacobian matrix at $bold(x)^*$.
+For two-dimensional systems, the behavior near a critical point can be classified by linearization.
+
+Let $bold(x)^*$ be a critical point, and consider the *Jacobian matrix* of $bold(f)$ at $bold(x)^*$,
+$
+  bold(A) = mat(
+    (partial F) / (partial x), (partial F) / (partial y);
+    (partial G) / (partial x), (partial G) / (partial y);
+  )_(bold(x) = bold(x)^*).
+$
+
+#theorem(name: "Linearization Theorem")[
+  Let $bold(x)^*$ be a critical point of @eq:autonomous-system and let $bold(A)$ be the Jacobian matrix of $bold(f)$ at $bold(x)^*$.
+
+  If all eigenvalues of $bold(A)$ have non-zero real part, then the phase portrait of the nonlinear system near $bold(x)^*$ is topologically equivalent to that of the linearized system $dot(bold(y)) = bold(A) bold(y)$.
+
+  In particular, the type and stability of the critical point are correctly read off from the eigenvalues of $bold(A)$.
+] <thm:linearization>
 
 The local behavior is determined by the eigenvalues of $bold(A)$:
 
@@ -1801,10 +1863,13 @@ The local behavior is determined by the eigenvalues of $bold(A)$:
   ("Real, both positive", "Unstable node", "Unstable"),
   ("Real, both negative", "Stable node", "Asymptotically stable"),
   ("Real, opposite signs", "Saddle", "Unstable"),
+  ("Real, repeated", "Node (star or improper)", "Asymptotically stable if negative, unstable if positive"),
   ("Complex, positive real part", "Unstable focus", "Unstable"),
   ("Complex, negative real part", "Stable focus", "Asymptotically stable"),
   ("Purely imaginary", "Center", "Lyapunov stable"),
 )
+
+Four of the main critical point types (stable node, saddle, stable focus, and center) are illustrated in @fig:critical-point-types.
 
 #figure(
   image("img/phase-plane-types.svg", width: 90%),
@@ -1813,17 +1878,51 @@ The local behavior is determined by the eigenvalues of $bold(A)$:
   supplement: [Fig.],
 ) <fig:critical-point-types>
 
+#note[
+  The purely imaginary row deserves caution: for a *nonlinear* system the linearization alone cannot decide between a center and a focus, since the nonlinear terms may either preserve the closed orbits or cause slow spiraling.
+
+  The linearization theorem guarantees the table only when the eigenvalues of $bold(A)$ have non-zero real part; in the degenerate cases (repeated or purely imaginary eigenvalues) the nonlinear terms must be examined separately.
+]
+
+#example(name: "Stable Focus by Linearization")[
+  Consider the system
+  $
+    cases(
+      dot(x) = y,
+      dot(y) = -x - y + x^2.
+    )
+  $
+
+  The origin is a critical point, and the Jacobian matrix there is $bold(A) = mat(0, 1; -1, -1)$, with characteristic polynomial $lambda^2 + lambda + 1 = 0$.
+
+  The eigenvalues are $lambda = (-1 +- i sqrt(3)) / 2$, which have negative real part $-1/2$.
+
+  By #link(<thm:linearization>)[the linearization theorem], the origin is an asymptotically stable focus, and the nonlinear term $x^2$ does not change the local classification.
+] <ex:linearization-classification>
+
 #definition(name: "Limit Cycle")[
   A *limit cycle* is an isolated closed trajectory (periodic orbit) in the phase plane.
 ] <def:limit-cycle>
 
+Here *isolated* means that some neighborhood of the orbit contains no other closed trajectory: neighboring trajectories spiral toward or away from it as $t$ increases.
+
+Like equilibria, a limit cycle is called *stable* (respectively *unstable*) if neighboring trajectories approach it (respectively move away from it) as $t -> oo$.
+
 #theorem(name: "Poincaré-Bendixson Theorem")[
-  Let $D$ be a bounded region in the plane, and let $bold(x)(t)$ be a trajectory that remains in $D$ for all $t >= t_0$. Then the trajectory either approaches a critical point, or approaches a periodic orbit (limit cycle).
+  Let $bold(x)(t)$ be a trajectory of a planar system that remains in a bounded closed region containing only finitely many critical points, for all $t >= t_0$.
+
+  Then its $omega$-limit set is one of the following: a critical point, a periodic orbit, or a graph consisting of critical points together with orbits connecting them.
 ] <thm:poincare-bendixson>
 
 #note[
-  The Poincaré-Bendixson theorem is a deep result that restricts the possible asymptotic behavior of planar flows. In dimensions three and higher, chaotic behavior is possible, which is excluded in the plane.
+  In particular, a trajectory that remains bounded away from critical points must accumulate on a periodic orbit — this is the standard tool for proving the existence of limit cycles.
+
+  The proof is a deep result of planar topology and is beyond the scope of this notebook; see Perko, *Differential Equations and Dynamical Systems*, §3.8.
+
+  In dimensions three and higher, chaotic behavior is possible, which is excluded in the plane.
 ]
+
+A concrete example is provided by the Van der Pol oscillator, whose unique limit cycle is illustrated in @fig:limit-cycle.
 
 #figure(
   image("img/limit-cycle.svg", width: 75%),
