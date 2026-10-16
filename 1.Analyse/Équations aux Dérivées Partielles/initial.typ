@@ -2462,24 +2462,35 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 
 // --- Chapter 16: Wave Equation (波动方程) ---
 
-//   Section 15.1: D'Alembert Formula (达朗贝尔公式)
-//     - Cauchy 问题、d'Alembert 公式
-//     - 传播波法：行波叠加、由初值确定左右行波
+//   Section 16.1: Derivation of the Wave Equation and the Cauchy Problem (波动方程的导出与柯西问题)
+//     - R^n 上一般柯西问题（粗体向量、波速 a）
+//     - 物理导出：弦振动（一维）、三维声波
+//     - 定解条件：两个初值条件 + 边界条件（Dirichlet/Neumann/Robin）
 //
-//   Section 15.2: Duhamel Principle (Duhamel 原理)
-//     - 非齐次方程、零初值
-//     - 叠加原理：一般问题 = 齐次（d'Alembert）+ 非齐次（Duhamel）
+//   Section 16.2: The Homogeneous Equation: D'Alembert's Formula (齐次方程：达朗贝尔公式)
+//     - 一维柯西问题、d'Alembert 公式、传播波法
+//     - 半无界弦：延拓法（奇/偶延拓、反射波）
+//     - 提及 Laplace 变换法与特征线法；多维半空间概述（奇/偶延拓→半空间 Poisson 公式，说明过于复杂故不展开）
 //
-//   Section 15.3: The Cauchy Problem in Higher Dimensions (高维 Cauchy 问题)
-//     - 三维球平均法：EPD 方程 → Kirchhoff 公式
-//     - 二维降维法：→ Poisson 公式
-//     - 有界区域上的边值问题（指引 Ch 18 分离变量）
+//   Section 16.3: The Cauchy Problem in Higher Dimensions (高维柯西问题)
+//     - 球平均法：EPD 方程 → Kirchhoff 公式（三维，球坐标用 phi.alt/theta）
+//     - 降维法：→ Poisson 公式（二维）；降维到一维（由三维公式导出 d'Alembert）
+//     - 向 §16.4 非齐次问题的过渡
 //
-//   Section 15.4: Finite Propagation Speed and Dispersive Decay (波的传播与衰减)
+//   Section 16.4: The Inhomogeneous Equation: Duhamel's Principle (非齐次方程：Duhamel 原理)
+//     - 叠加原理：一般问题 = 齐次 + 非齐次拆解
+//     - Duhamel 原理；一维、二维、三维非齐次显式公式
+//
+//   Section 16.5: Separation of Variables for the Wave Equation (波动方程的分离变量法)
+//     - 混合问题（初边值问题）定义
+//     - 齐次 Dirichlet/Neumann 特征展开；Robin（弹性连接）情形
+//     - 非齐次边界条件约化
+//
+//   Section 16.6: Finite Propagation Speed and Dispersive Decay (波的传播与衰减)
 //     - 依赖区域、决定区域、影响区域
 //     - Huygens 原理（强/弱）、色散衰减
 //
-//   Section 15.5: Energy Inequality, Uniqueness and Stability (能量不等式、唯一性与稳定性)
+//   Section 16.7: Energy Inequality, Uniqueness and Stability (能量不等式、唯一性与稳定性)
 //     - 能量恒等式、锥上局部能量不等式
 //     - 唯一性、连续依赖（稳定性）
 
@@ -2939,11 +2950,28 @@ When characteristics cross, the classical solution breaks down and we must admit
 
 = Wave Equation // 波动方程
 
-The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form and general solution in one dimension were obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[Ch 7]). The chapter is organized around one fully general problem — the Cauchy problem with a source term *and* nonzero initial data. We first derive the equation itself from mechanics — the vibrating string by Newton's second law, acoustic waves by conservation of momentum — and discuss the initial and boundary conditions that select a well-posed problem. The *superposition principle* then splits the general problem into two standard subproblems, each with a dedicated method: the homogeneous equation with nonzero data is solved by *d'Alembert's formula* via the method of traveling waves, and the inhomogeneous equation with zero data by *Duhamel's principle*. On a bounded interval the mixed initial-boundary value problem is treated by *separation of variables*. The chapter closes with the Cauchy problem in higher dimensions (spherical means and the method of descent), the qualitative theory — finite propagation speed, Huygens' principle, dispersive decay — and the energy inequality with its uniqueness and stability corollaries. The qualitative picture is complementary to the heat equation (Ch 10): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
+The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form in one dimension was obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[Ch 7]). The chapter is organized around one fully general problem — the Cauchy problem on $bb(R)^n$ with a source term *and* nonzero initial data. We first derive the equation itself from mechanics — the vibrating string by Newton's second law, acoustic waves by conservation of momentum — and discuss the initial and boundary conditions that select a well-posed problem (§16.1). The solution is then built in three stages. First the *homogeneous* equation is solved: in one dimension by *d'Alembert's formula* via the method of traveling waves, including the semi-infinite string by the method of extensions (§16.2), and in higher dimensions by spherical means and the method of descent (§16.3). The *superposition principle* then reduces the inhomogeneous problem to the homogeneous one, and *Duhamel's principle* supplies the source contribution in every dimension (§16.4). On a bounded interval the mixed initial-boundary value problem is treated by *separation of variables* (§16.5). The chapter closes with the qualitative theory — finite propagation speed, Huygens' principle, dispersive decay (§16.6) — and the energy inequality with its uniqueness and stability corollaries (§16.7). The qualitative picture is complementary to the heat equation (Ch 10): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
 
 == Derivation of the Wave Equation and the Cauchy Problem // 波动方程的导出与柯西问题
 
-Before studying solutions we derive the equation from mechanics. Both derivations below follow the same pattern — apply Newton's second law, equivalently the balance of momentum, to an infinitesimal material element, and then linearize for small disturbances. The equation being second order in time, the Cauchy problem is then formulated in the last subsection of this section, together with the superposition principle that organizes the whole chapter.
+We now fix the object of the chapter. This section first formulates the general Cauchy problem in space dimension $n$, then derives the wave equation from mechanics — both derivations follow the same pattern, applying Newton's second law, equivalently the balance of momentum, to an infinitesimal material element and then linearizing for small disturbances — and finally discusses the initial and boundary conditions that select a well-posed problem.
+
+=== The Cauchy Problem in bb(R)^n // R^n 上的柯西问题
+
+Throughout the chapter we work in dimension $n$, writing $bold(x) = (x_1, dots, x_n)$ for a point of $bb(R)^n$; in one dimension $bold(x)$ is the single variable $x$, and we write it without boldface. The wave speed is $a > 0$. In its most general form the problem carries both a source and arbitrary initial data.
+
+#definition(name: "The General Cauchy Problem")[
+  The *general Cauchy problem* for the wave equation in $bb(R)^n$ with speed $a > 0$ is to find $u: bb(R)^n times [0, oo) -> bb(R)$ with
+  $
+    cases(
+      u_(t t) = a^2 Delta u + f (bold(x), t) quad "in" bb(R)^n times (0, oo),
+      u (bold(x), 0) = phi (bold(x)) comma quad partial_t u (bold(x), 0) = psi (bold(x))
+    )
+  $
+  where $Delta$ is the Laplacian in $bold(x)$, $f$ a given source, and $phi, psi$ the initial displacement and velocity.
+] <def:general-cauchy-wave>
+
+The chapter solves this problem for $n = 1, 2, 3$; the same pattern governs higher dimensions, and we indicate the general structure where it clarifies the picture. The *homogeneous* equation with nonzero data is solved in §16.2 (one dimension) and §16.3 (higher dimensions); the *inhomogeneous* equation with zero data is reduced to the homogeneous one in §16.4. Boundary conditions replace the Cauchy formulation entirely once the medium has an end, and are the subject of §16.2 (half-line) and §16.5 (bounded interval).
 
 === The Vibrating String // 弦振动
 
@@ -2990,51 +3018,9 @@ is the prototype of the symmetric hyperbolic systems studied in Chapter 17; its 
 
 === Well-Posedness: Initial and Boundary Conditions // 定解条件
 
-The wave equation is second order in time: a well-posed problem must prescribe *two* initial conditions, the initial displacement $u (x, 0) = phi (x)$ and the initial velocity $partial_t u (x, 0) = psi (x)$. If the string has finite length with fixed ends, the solution is further constrained on the spatial boundary. The two families of data give rise to the two standard problems of this chapter: the *Cauchy problem* on the whole line, formulated in the next subsection, and the *mixed initial-boundary value problem* on a bounded interval.
+The wave equation is second order in time, so a well-posed problem must prescribe *two* initial conditions: the initial displacement $u (bold(x), 0) = phi (bold(x))$ and the initial velocity $partial_t u (bold(x), 0) = psi (bold(x))$. These data, together with the equation, select the *Cauchy problem* on $bb(R)^n$ — the object of the next three sections.
 
-#definition(name: "The Mixed Problem for the String")[
-  The *mixed problem* for the wave equation on a bounded interval with fixed ends is to find $u: [0, L] times [0, oo) -> bb(R)$ with
-  $
-    cases(
-      u_(t t) = a^2 u_(x x) quad "in" (0, L) times (0, oo),
-      u (0, t) = u (L, t) = 0 quad t > 0,
-      u (x, 0) = phi (x) comma quad partial_t u (x, 0) = psi (x) quad x in (0, L)
-    )
-  $
-  with the compatibility conditions $phi (0) = phi (L) = psi (0) = psi (L) = 0$ at the corners. Other boundary conditions are physically meaningful — a free end prescribes $u_x = 0$ (Neumann), an elastic attachment a linear combination of $u$ and $u_x$ — and are treated alongside the Dirichlet case in §16.4.
-] <def:mixed-problem-wave>
-
-=== The General Cauchy Problem and Superposition // 一般柯西问题与叠加原理
-
-We now pass from the equation to the problem. Throughout this and the next two sections we work on the whole line and consider the *fully general* one-dimensional problem: the equation carries a source and the data are arbitrary.
-
-#definition(name: "The General Cauchy Problem")[
-  The *general Cauchy problem* for the one-dimensional wave equation with speed $a > 0$ is to find $u: bb(R) times [0, oo) -> bb(R)$ with
-  $
-    cases(
-      u_(t t) = a^2 u_(x x) + f (x, t) quad "in" bb(R) times (0, oo),
-      u (x, 0) = phi (x) comma quad partial_t u (x, 0) = psi (x)
-    )
-  $
-  where $f$ is a given source and $phi, psi$ the initial displacement and velocity.
-] <def:general-cauchy-wave>
-
-Rather than attacking this problem directly, we exploit linearity: it decomposes into two standard subproblems, each of which admits a dedicated method.
-
-#proposition(name: "Superposition Split")[
-  Let $u_1$ solve the homogeneous problem $u_(t t) = a^2 u_(x x)$ with data $(phi, psi)$, and $u_2$ solve the inhomogeneous problem $u_(t t) = a^2 u_(x x) + f$ with zero data $u_2 (dot, 0) = partial_t u_2 (dot, 0) = 0$. Then $u = u_1 + u_2$ solves the general Cauchy problem (#link(<def:general-cauchy-wave>)[Def.]); conversely, every classical solution of the general problem is this sum.
-] <prop:wave-superposition-split>
-
-#proof[
-  The sum satisfies the equation and the initial data by linearity — differentiate term by term. Conversely, if $u$ solves the general problem and $u_1$ solves the homogeneous problem with the same data, then $w = u - u_1$ satisfies the inhomogeneous equation with zero initial data, i.e. $w = u_2$.
-]
-
-#note[
-  *Roadmap.* The two subproblems are solved in the next two sections:
-  - *Homogeneous equation, nonzero data* — d'Alembert's formula via the method of traveling waves (§16.2);
-  - *Inhomogeneous equation, zero data* — Duhamel's principle (§16.3).
-  Both extend to higher dimensions (§16.5), where the same split applies verbatim. The semi-infinite string is handled by the method of extensions, an application of the traveling-wave method (§16.2). For the mixed problem on a bounded interval the method of choice is separation of variables (§16.4).
-]
+If the medium is bounded, the solution is further constrained on the spatial boundary and the problem is no longer of Cauchy type. Three boundary conditions are physically meaningful: a *fixed* end prescribes $u = 0$ (Dirichlet), a *free* end $partial_n u = 0$ (Neumann), and an *elastic attachment* a linear combination of $u$ and $partial_n u$ (Robin), where $partial_n$ denotes the outward normal derivative. A single end already modifies the solution, as the semi-infinite string of §16.2 shows; two ends — a bounded interval — require the spectral method of §16.5, where the bounded problem is formulated precisely.
 
 == The Homogeneous Equation: D'Alembert's Formula // 齐次方程：达朗贝尔公式
 
@@ -3084,7 +3070,7 @@ Rather than attacking this problem directly, we exploit linearity: it decomposes
   $
     F (x) = 1/2 phi (x) - 1/(2 a) integral_0^x psi (s) dif s, quad G (x) = 1/2 phi (x) + 1/(2 a) integral_0^x psi (s) dif s,
   $
-  up to a constant that cancels between $F$ and $G$. Thus the initial displacement splits into two half-amplitude waves running in opposite directions, while the initial velocity fills in the integral term. The fully general problem — nonzero data *and* a source $f (x, t)$ — is handled by the superposition split of §16.1 (#link(<prop:wave-superposition-split>)[Prop.]): the d'Alembert solution supplies the homogeneous part, and the zero-data part is the object of Duhamel's principle in the next section. The splitting of the initial displacement is illustrated in #link(<fig:wave-traveling-waves>)[Figure].
+  up to a constant that cancels between $F$ and $G$. Thus the initial displacement splits into two half-amplitude waves running in opposite directions, while the initial velocity fills in the integral term. The fully general problem — nonzero data *and* a source $f (x, t)$ — is handled by the superposition split of §16.4 (#link(<prop:wave-superposition-split>)[Prop.]): the d'Alembert solution supplies the homogeneous part, and the zero-data part is the object of Duhamel's principle in the next section. The splitting of the initial displacement is illustrated in #link(<fig:wave-traveling-waves>)[Figure].
 ]
 
 #note[
@@ -3126,31 +3112,126 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
   *Reflected waves.* In the region $0 < x < a t$ the extra term $plus.minus 1/2 phi (a t - x)$ is the *reflected wave*: the wave emitted by the initial displacement reaches the end $x = 0$ and comes back, with inverted sign at a fixed end (odd extension) and without sign inversion at a free end (even extension). The boundary thus acts as a mirror whose reflection coefficient is $-1$ or $+1$ according to the boundary condition.
 ]
 
+#note[
+  *Other methods for the semi-infinite string.* The extension method is the most elementary route to the semi-infinite string, but the same reflection is described by two further techniques. When the end is driven rather than held — a prescribed displacement $u (0, t) = g (t)$ — the Laplace transform in $t$ turns the problem into an ordinary differential equation in $x$, whose solution is selected by boundedness as $x -> oo$, matched to the boundary condition, and inverted back to $t$. The method of characteristics reads the reflection off the $(x, t)$-plane instead: a characteristic that meets the boundary $x = 0$ turns back, and the jump carried along it is the reflected wave. Both routes reproduce the reflected-wave formula above, and the extension method remains the one we carry out in detail.
+]
+
+#note[
+  *Half-spaces in higher dimensions.* The reflection principle is not confined to one dimension. On the half-space $bb(R)_+^n = {bold(x) : x_n > 0}$ with Dirichlet data on the wall $x_n = 0$, one extends the data oddly across the wall and applies the Kirchhoff or Poisson formula of §16.3; Neumann data call for an even extension, exactly as on the half-line. The resulting *half-space Poisson formula* is, however, far more complicated than its one-dimensional counterpart: the reflected sphere (or disk) meets the wall over a region that must be integrated explicitly, and the contributions pile up as the wave reflects repeatedly off the wall. We therefore record the reflection principle in higher dimensions only at this conceptual level and carry out the explicit computation in one dimension alone.
+]
+
+== The Cauchy Problem in Higher Dimensions // 高维 Cauchy 问题
+
+=== The Method of Spherical Means // 球平均法
+
+#theorem(name: "Kirchhoff's Formula in Three Dimensions")[
+  For $n = 3$, $bold(x) in bb(R)^3$, and wave speed $a > 0$, the Cauchy problem $(partial^2 u)/(partial t^2) = a^2 Delta u$, $u (bold(x), 0) = phi (bold(x))$, $partial_t u (bold(x), 0) = psi (bold(x))$ has the classical solution
+  $
+    u (bold(x), t) = partial_t (t M_phi (bold(x), t)) + t M_psi (bold(x), t), quad M_phi (bold(x), t) = 1 / (4 pi a^2 t^2) integral_(partial B (bold(x), a t)) phi dif S,
+  $
+  where $M_phi$ is the spherical mean of $phi$ over the sphere of radius $a t$. For $phi in C^3$, $psi in C^2$ this is a $C^2$ solution, and it is unique.
+] <thm:kirchhoff-formula-3d>
+
+#proof[
+  For a solution $u$ define the spherical mean
+  $
+    M_u (bold(x), r, t) = 1/(4 pi r^2) integral_(partial B (bold(x), r)) u (bold(y), t) dif S_(bold(y)),
+  $
+  the average of $u (dot, t)$ over the sphere of radius $r$ about $bold(x)$; in coordinates centered at $bold(x)$, a point of that sphere is $bold(y) = bold(x) + r (sin phi.alt cos theta, sin phi.alt sin theta, cos phi.alt)$ with $phi.alt in [0, pi]$, $theta in [0, 2 pi)$, and surface element $dif S = r^2 sin phi.alt dif phi.alt dif theta$. Averaging the equation over spheres and integrating by parts yields the *Euler--Poisson--Darboux equation*
+  $
+    (partial^2 M_u)/(partial t^2) = a^2 ((partial^2 M_u)/(partial r^2) + 2/r (partial M_u)/(partial r)),
+  $
+  with data $M_u (bold(x), r, 0) = M_phi (bold(x), r)$ and $partial_t M_u (bold(x), r, 0) = M_psi (bold(x), r)$. The term $2 / r$ blocks a direct use of d'Alembert's formula; the classical trick is to multiply by $r$: since $M_u$ is even in $r$, the function $v (r, t) = r M_u (bold(x), r, t)$ extends oddly to $r < 0$ and solves the *one-dimensional wave equation* $v_(t t) = a^2 v_(r r)$ on the whole line, with data $v (r, 0) = r M_phi (bold(x), r)$ and $partial_t v (r, 0) = r M_psi (bold(x), r)$. D'Alembert's formula (#link(<thm:d-alembert>)[Th.]) gives $v$ explicitly; since $u (bold(x), t) = M_u (bold(x), 0, t) = lim_(r -> 0^+) v (r, t) / r = partial_r v (0, t)$ (the mean over a point is the value), evaluating the result at $r = a t$ produces the formula. Regularity follows by differentiating under the integral. The construction is illustrated in #link(<fig:wave-spherical-means>)[Figure].
+]
+
+#note[
+  #figure(
+    image("./img/wave-spherical-means.svg", width: 92%),
+    caption: [The method of spherical means. (a) The spherical mean $M_u (bold(x), r, t)$: the average of $u (dot, t)$ over the sphere $partial B (bold(x), r)$. (b) The reduction $v = r M_u$: since $M_u$ is even in $r$, $v$ extends oddly to the whole $r$-line and solves the one-dimensional wave equation $v_(t t) = a^2 v_(r r)$, so d'Alembert's formula applies; the solution is recovered as $u (bold(x), t) = partial_r v (0, t)$.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:wave-spherical-means>
+]
+
+=== The Method of Descent // 降维法
+
+#theorem(name: "Poisson's Formula in Two Dimensions")[
+  For $n = 2$, $bold(x) in bb(R)^2$, and wave speed $a > 0$, the solution of the Cauchy problem is obtained by the *method of descent* from the three-dimensional formula:
+  $
+    u (bold(x), t) = 1/(2 pi) partial_t integral_(B (bold(x), a t)) (phi (bold(y)))/(sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2)) dif bold(y) + 1/(2 pi) integral_(B (bold(x), a t)) (psi (bold(y)))/(sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2)) dif bold(y).
+  $
+] <thm:poisson-formula-2d>
+
+#proof[
+  Extend the data to three space variables by $bar(phi)(bold(x), x_3) = phi (bold(x))$ and $bar(psi)(bold(x), x_3) = psi (bold(x))$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By uniqueness (#link(<cor:wave-uniqueness>)[Cor.] below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension. It remains to evaluate Kirchhoff's formula. The sphere $partial B ((bold(x), 0), a t)$ projects onto the disk $B (bold(x), a t)$, each point $bold(y) in B (bold(x), a t)$ corresponding to the pair $bold(y)^plus.minus = (bold(y), plus.minus sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2))$ with $dif S = (a t) / sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2) dif bold(y)$; the two hemispheres contribute equally, so
+  $
+    t M_bar(phi) (bold(x), t) = 1/(2 pi) integral_(B (bold(x), a t)) (phi (bold(y)))/(sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2)) dif bold(y),
+  $
+  and substituting into Kirchhoff's formula yields Poisson's formula. Note that the integral runs over the full *disk*, not the sphere: this is the mechanism behind the trailing wake and the failure of the strong Huygens principle in even dimensions (§16.6).
+]
+
+#example(name: "Descent to One Dimension: D'Alembert's Formula")[
+  Descend once more, to $n = 1$. Suppose the data depend on $x_1$ alone, $phi (bold(x)) = phi (x_1)$ and $psi (bold(x)) = psi (x_1)$, so the three-dimensional solution is independent of $x_2, x_3$ and its restriction to the $x_1$-axis solves the one-dimensional Cauchy problem. Evaluating Kirchhoff's formula on that axis with spherical coordinates centered at $bold(x) = (x_1, 0, 0)$, the sphere points are $bold(y) = bold(x) + a t (sin phi.alt cos theta, sin phi.alt sin theta, cos phi.alt)$, so $y_1 = x_1 + a t cos phi.alt$ and the spherical mean collapses to a one-dimensional average:
+  $
+    M_phi (bold(x), t) = 1/(4 pi) integral_0^(2 pi) integral_0^pi phi (x_1 + a t cos phi.alt) sin phi.alt dif phi.alt dif theta = 1/(2 a t) integral_(x_1 - a t)^(x_1 + a t) phi (xi) dif xi,
+  $
+  after the substitution $xi = x_1 + a t cos phi.alt$. Hence $t M_phi (bold(x), t) = 1/(2 a) integral_(x_1 - a t)^(x_1 + a t) phi (xi) dif xi$ and likewise $t M_psi (bold(x), t) = 1/(2 a) integral_(x_1 - a t)^(x_1 + a t) psi (xi) dif xi$. Substituting into Kirchhoff's formula,
+  $
+    u (bold(x), t) = 1/2 (phi (x_1 + a t) + phi (x_1 - a t)) + 1/(2 a) integral_(x_1 - a t)^(x_1 + a t) psi (xi) dif xi,
+  $
+  which is exactly d'Alembert's formula (#link(<thm:d-alembert>)[Th.]): the two-dimensional and one-dimensional formulas are both descended from the three-dimensional one.
+] <ex:wave-dalembert-by-descent>
+
+The homogeneous Cauchy problem is now solved in every dimension. The *inhomogeneous* problem with zero data is reduced to the homogeneous one in §16.4 by the superposition principle and Duhamel's principle (#link(<thm:duhamel-wave>)[Th.]), and for general data the two contributions are simply added. Boundary value problems on bounded domains — membranes, acoustic resonators — call instead for separation of variables, along the lines of §16.5; the general spectral framework is developed in Chapter 19.
+
+#note[
+  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (bold(x), t)$ depends only on the data on the *sphere* $partial B (bold(x), a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions. The contrast is illustrated in #link(<fig:wave-huygens>)[Figure].
+]
+
+#note[
+  #figure(
+    image("./img/wave-huygens-principle.svg", width: 92%),
+    caption: [Huygens' principle in the $(x, t)$-plane for data supported in the red interval. (a) Odd dimensions: the value at $(x, t)$ depends only on the data on the sphere $partial B (x, a t)$, giving the two shaded characteristic strips (darker where they overlap); a fixed receiver $x_0$ is silent once the sphere has crossed the support. (b) Even dimensions: the value depends on the data on the whole disk $B (x, a t)$, filling the forward cone; the receiver feels a wake that decays like $t^(-1/2)$.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:wave-huygens>
+]
+
 == The Inhomogeneous Equation: Duhamel's Principle // 非齐次方程：Duhamel 原理
 
-The second subproblem of the superposition split keeps the source but sets the initial data to zero — the inhomogeneous counterpart of the Cauchy problem of §16.2.
+We now treat the *inhomogeneous* equation — the second subproblem of the general Cauchy problem of §16.1. By linearity the general problem decomposes into a homogeneous part, solved in §16.2 and §16.3, and an inhomogeneous part with zero data; the decomposition is the form taken here by the linear superposition principle (#link(<prop:superposition-principle>)[Ch 1]).
+
+#proposition(name: "Superposition Split")[
+  Let $u_1$ solve the homogeneous problem $u_(t t) = a^2 Delta u$ with data $(phi, psi)$, and $u_2$ solve the inhomogeneous problem $u_(t t) = a^2 Delta u + f$ with zero data $u_2 (bold(x), 0) = partial_t u_2 (bold(x), 0) = 0$. Then $u = u_1 + u_2$ solves the general Cauchy problem (#link(<def:general-cauchy-wave>)[Def.]); conversely, every classical solution of the general problem is this sum.
+] <prop:wave-superposition-split>
+
+#proof[
+  The sum satisfies the equation and the initial data by linearity — differentiate term by term. Conversely, if $u$ solves the general problem and $u_1$ solves the homogeneous problem with the same data, then $w = u - u_1$ satisfies the inhomogeneous equation with zero initial data, i.e. $w = u_2$.
+]
+
+It remains to solve the second subproblem.
 
 #definition(name: "The Inhomogeneous Cauchy Problem")[
-  The *inhomogeneous Cauchy problem* for the one-dimensional wave equation with speed $a > 0$ is to find $u: bb(R) times [0, oo) -> bb(R)$ with
+  The *inhomogeneous Cauchy problem* for the wave equation in $bb(R)^n$ with speed $a > 0$ is to find $u: bb(R)^n times [0, oo) -> bb(R)$ with
   $
     cases(
-      u_(t t) = a^2 u_(x x) + f (x, t) quad "in" bb(R) times (0, oo),
-      u (x, 0) = 0 comma quad partial_t u (x, 0) = 0
+      u_(t t) = a^2 Delta u + f (bold(x), t) quad "in" bb(R)^n times (0, oo),
+      u (bold(x), 0) = 0 comma quad partial_t u (bold(x), 0) = 0
     )
   $
-  with a given source $f$. The fully general problem — nonzero data *and* a source — is the sum of this and the homogeneous problem of §16.2, by the superposition split (#link(<prop:wave-superposition-split>)[§16.1]).
+  with a given source $f$. The fully general problem — nonzero data *and* a source — is the sum of this and the homogeneous problem (solved in §16.2 and §16.3), by the superposition split (#link(<prop:wave-superposition-split>)[§16.4]).
 ] <def:cauchy-wave-inhomogeneous>
 
 #theorem(name: "Duhamel's Principle for the Wave Equation")[
-  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$: $S (t) psi = w (dot, t)$, where $w_(t t) = a^2 w_(x x)$, $w (dot, 0) = 0$, $partial_t w (dot, 0) = psi$. Then the solution of the inhomogeneous Cauchy problem (#link(<def:cauchy-wave-inhomogeneous>)[Def.]) is given by
+  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$: $S (t) psi = w (dot, t)$, where $w_(t t) = a^2 Delta w$, $w (dot, 0) = 0$, $partial_t w (dot, 0) = psi$. Then the solution of the inhomogeneous Cauchy problem (#link(<def:cauchy-wave-inhomogeneous>)[Def.]) is given by
   $
-    u (x, t) = integral_0^t S (t - s) f (s, dot) (x) dif s,
+    u (bold(x), t) = integral_0^t S (t - s) f (s, dot) (bold(x)) dif s,
   $
-  where $f (s, dot)$ denotes the function $y -> f (s, y)$ of the spatial variable, and the bracket $(x)$ means that $S (t - s)$ is evaluated at the point $x$.
+  where $f (s, dot)$ denotes the function $bold(y) -> f (s, bold(y))$ of the spatial variable, and the bracket $(bold(x))$ means that $S (t - s)$ is evaluated at the point $bold(x)$.
 ] <thm:duhamel-wave>
 
 #proof[
-  Let $w (t, s; x)$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $partial_t w (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$. Define $u (dot, t) = integral_0^t w (t, s; dot) dif s$. Then $u (dot, 0) = 0$, $partial_t u (dot, 0) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $partial_t w (t, t; dot) = f (t, dot)$):
+  Let $w (t, s; bold(x))$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $partial_t w (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$. Define $u (dot, t) = integral_0^t w (t, s; dot) dif s$. Then $u (dot, 0) = 0$, $partial_t u (dot, 0) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $partial_t w (t, t; dot) = f (t, dot)$):
   $
     (partial^2 u)/(partial t^2) - a^2 Delta u = (partial_t w) (t, t; dot) + integral_0^t ((partial^2 w)/(partial t^2) - a^2 Delta w) dif s = f (t, dot),
   $
@@ -3158,16 +3239,46 @@ The second subproblem of the superposition split keeps the source but sets the i
 ]
 
 #note[
-  The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 10]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is given explicitly by d'Alembert's formula in one dimension and by the Kirchhoff and Poisson formulas in higher dimensions (§16.5), so Duhamel's principle yields explicit solutions of the *inhomogeneous* Cauchy problem in every dimension. In three dimensions, for instance,
-  $
-    u (x, t) = partial_t (t M_phi (x, t)) + t M_psi (x, t) + integral_0^t 1/(4 pi (t - s)) integral_(partial B (x, t - s)) f (s, y) dif S dif s,
-  $
-  the inhomogeneous counterpart of Kirchhoff's formula; the two-dimensional analogue follows from Poisson's formula.
+  The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 10]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is given explicitly by d'Alembert's formula in one dimension and by the Kirchhoff and Poisson formulas in higher dimensions (§16.3), so Duhamel's principle yields explicit solutions of the inhomogeneous Cauchy problem in every dimension — the formulas are recorded in the next subsection.
 ]
+
+=== Explicit Formulas by Dimension // 各维度的显式公式
+
+Substituting the homogeneous solution operator into Duhamel's principle turns the abstract integral into a quadrature in each dimension.
+
+For $n = 1$, d'Alembert's formula gives $S (t - s) f (s, dot) (x) = 1/(2 a) integral_(x - a (t - s))^(x + a (t - s)) f (y, s) dif y$, so
+$
+  u (x, t) = 1/(2 a) integral_0^t integral_(x - a (t - s))^(x + a (t - s)) f (y, s) dif y dif s,
+$ <eq:duhamel-1d>
+the integral running over the characteristic triangle $0 <= s <= t$ with $abs(y - x) <= a (t - s)$.
+
+For $n = 3$, Kirchhoff's formula gives
+$
+  u (bold(x), t) = integral_0^t 1/(4 pi a^2 (t - s)) integral_(partial B (bold(x), a (t - s))) f (bold(y), s) dif S_(bold(y)) dif s,
+$ <eq:duhamel-3d>
+a superposition of spherical waves: the value at $(bold(x), t)$ collects, from every emission time $s$, the data on the sphere that has travelled for the elapsed time $t - s$.
+
+For $n = 2$, Poisson's formula gives
+$
+  u (bold(x), t) = integral_0^t 1/(2 pi) integral_(B (bold(x), a (t - s))) (f (bold(y), s))/(sqrt(a^2 (t - s)^2 - abs(bold(x) - bold(y))^2)) dif bold(y) dif s.
+$ <eq:duhamel-2d>
+In even dimensions the wave carries a trailing wake: at each emission time the value at $(bold(x), t)$ receives contributions from a whole disk, not merely from its boundary.
 
 == Separation of Variables for the Wave Equation // 波动方程的分离变量法
 
 For the mixed problem (#link(<def:mixed-problem-wave>)[Def.]) the traveling-wave method of §16.2 no longer applies directly: waves reflect at the endpoints, and the interaction of incident and reflected waves is awkward to describe in the $F (x - a t) + G (x + a t)$ representation. The classical tool on bounded intervals is *separation of variables* (the general framework is developed in Chapter 19, #link(<def:separation-variables>)[Ch 19]): the solution is expanded in the eigenfunctions of the spatial boundary value problem, reducing the PDE to decoupled oscillators.
+
+#definition(name: "The Mixed Problem for the String")[
+  The *mixed problem* for the wave equation on a bounded interval with fixed ends is to find $u: [0, L] times [0, oo) -> bb(R)$ with
+  $
+    cases(
+      u_(t t) = a^2 u_(x x) quad "in" (0, L) times (0, oo),
+      u (0, t) = u (L, t) = 0 quad t > 0,
+      u (x, 0) = phi (x) comma quad partial_t u (x, 0) = psi (x) quad x in (0, L)
+    )
+  $
+  with the compatibility conditions $phi (0) = phi (L) = psi (0) = psi (L) = 0$ at the corners. A free end prescribes the Neumann conditions $u_x = 0$ instead, and an elastic attachment the Robin conditions, a linear combination of $u$ and $u_x$; the same spectral method handles all three, as the two examples below show.
+] <def:mixed-problem-wave>
 
 === Homogeneous Boundary Conditions // 齐次边界条件
 
@@ -3231,6 +3342,10 @@ For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' 
   the coefficients being the Fourier cosine coefficients of $phi$ and of $psi$ (with $B_k$ divided by $omega_k$). The term $B_0 t$ corresponds to a nonzero total momentum of the string, which is conserved by the free-end dynamics.
 ] <ex:wave-neumann-separation>
 
+#example(name: "Elastic Attachment: Robin Conditions")[
+  If each end is attached to a spring of stiffness $k >= 0$, the boundary conditions read $u_x (0, t) = k u (0, t)$ and $u_x (L, t) = -k u (L, t)$ — a linear combination of $u$ and $u_x$ at each end, the Robin conditions. Separation of variables again reduces the problem to the spatial equation $X'' + lambda X = 0$ with $X' (0) - k X (0) = 0$ and $X' (L) + k X (L) = 0$. This is a regular Sturm--Liouville problem (#link(<def:sturm-liouville>)[Ch 19]): its eigenvalues are positive and form an increasing sequence tending to infinity, and its eigenfunctions are orthogonal on $[0, L]$. The eigenvalues have no closed form — they are the roots of a transcendental equation — but once they are known the temporal oscillators and the mode expansion proceed exactly as in the Dirichlet case. The limit $k = 0$ recovers the free-end (Neumann) conditions, while $k -> oo$ recovers the fixed-end (Dirichlet) ones, so the Robin family interpolates between the two cases treated above.
+] <ex:wave-robin-separation>
+
 === Inhomogeneous Boundary Conditions // 非齐次边界条件
 
 #example(name: "Reduction of Nonhomogeneous Boundary Conditions")[
@@ -3246,94 +3361,29 @@ For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' 
   $
     q_k'' + omega_k^2 q_k = f_k (t),
   $
-  where $f_k (t)$ is the $k$-th sine coefficient of the right-hand side; each $q_k$ is recovered by the one-dimensional Duhamel formula of §16.3. Nonhomogeneous boundary conditions thus reduce to the homogeneous case at the price of a source term — the two standard subproblems of §16.1 reappear.
+  where $f_k (t)$ is the $k$-th sine coefficient of the right-hand side; each $q_k$ is recovered by the one-dimensional Duhamel formula of §16.4. Nonhomogeneous boundary conditions thus reduce to the homogeneous case at the price of a source term — the two standard subproblems of §16.4 reappear.
 ] <ex:wave-nonhomogeneous-boundary>
-
-== The Cauchy Problem in Higher Dimensions // 高维 Cauchy 问题
-
-=== The Method of Spherical Means // 球平均法
-
-#theorem(name: "Kirchhoff's Formula in Three Dimensions")[
-  For $n = 3$, the Cauchy problem $(partial^2 u)/(partial t^2) = Delta u$, $u (x, 0) = phi (x)$, $partial_t u (x, 0) = psi (x)$ has the classical solution
-  $
-    u (x, t) = partial_t (t M_phi (x, t)) + t M_psi (x, t), quad M_phi (x, t) = 1 / (4 pi t^2) integral_(partial B (x, t)) phi dif S,
-  $
-  where $M_phi$ is the spherical mean of $phi$ over the sphere of radius $t$. For $phi in C^3$, $psi in C^2$ this is a $C^2$ solution, and it is unique.
-] <thm:kirchhoff-formula-3d>
-
-#proof[
-  For a solution $u$ define the spherical mean
-  $
-    M_u (x, r, t) = 1/(4 pi r^2) integral_(partial B (x, r)) u (y, t) dif S_y,
-  $
-  the average of $u (dot, t)$ over the sphere of radius $r$ about $x$. Averaging the equation over spheres and integrating by parts yields the *Euler--Poisson--Darboux equation*
-  $
-    (partial^2 M_u)/(partial t^2) = (partial^2 M_u)/(partial r^2) + 2/r (partial M_u)/(partial r),
-  $
-  with data $M_u (x, r, 0) = M_phi (x, r)$ and $partial_t M_u (x, r, 0) = M_psi (x, r)$. The term $2 / r$ blocks a direct use of d'Alembert's formula; the classical trick is to multiply by $r$: since $M_u$ is even in $r$, the function $v (r, t) = r M_u (x, r, t)$ extends oddly to $r < 0$ and solves the *one-dimensional wave equation* $v_(t t) = v_(r r)$ on the whole line, with data $v (r, 0) = r M_phi (x, r)$ and $partial_t v (r, 0) = r M_psi (x, r)$. D'Alembert's formula (#link(<thm:d-alembert>)[Th.]) gives $v$ explicitly; since $u (x, t) = M_u (x, 0, t) = lim_(r -> 0^+) v (r, t) / r = partial_r v (0, t)$ (the mean over a point is the value), evaluating the result at $r = t$ produces the formula. Regularity follows by differentiating under the integral. The construction is illustrated in #link(<fig:wave-spherical-means>)[Figure].
-]
-
-#note[
-  #figure(
-    image("./img/wave-spherical-means.svg", width: 92%),
-    caption: [The method of spherical means. (a) The spherical mean $M_u (x, r, t)$: the average of $u (dot, t)$ over the sphere $partial B (x, r)$. (b) The reduction $v = r M_u$: since $M_u$ is even in $r$, $v$ extends oddly to the whole $r$-line and solves the one-dimensional wave equation $v_(t t) = v_(r r)$, so d'Alembert's formula applies; the solution is recovered as $u (x, t) = partial_r v (0, t)$.],
-    placement: auto,
-    supplement: [Fig.],
-  ) <fig:wave-spherical-means>
-]
-
-=== The Method of Descent // 降维法
-
-#theorem(name: "Poisson's Formula in Two Dimensions")[
-  For $n = 2$, the solution of the Cauchy problem is obtained by the *method of descent* from the three-dimensional formula:
-  $
-    u (x, t) = 1/(2 pi) partial_t integral_(B (x, t)) (phi (y))/(sqrt(t^2 - abs(x - y)^2)) dif y + 1/(2 pi) integral_(B (x, t)) (psi (y))/(sqrt(t^2 - abs(x - y)^2)) dif y.
-  $
-] <thm:poisson-formula-2d>
-
-#proof[
-  Extend the data to three space variables by $bar(phi)(x, x_3) = phi (x)$ and $bar(psi)(x, x_3) = psi (x)$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By uniqueness (#link(<cor:wave-uniqueness>)[Cor.] below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension. It remains to evaluate Kirchhoff's formula. The sphere $partial B ((x, 0), t)$ projects onto the disk $B (x, t)$, each point $y in B (x, t)$ corresponding to the pair $y^plus.minus = (y, plus.minus sqrt(t^2 - abs(x - y)^2))$ with $dif S = t / sqrt(t^2 - abs(x - y)^2) dif y$; the two hemispheres contribute equally, so
-  $
-    t M_bar(phi) (x, t) = 1/(2 pi) integral_(B (x, t)) (phi (y))/(sqrt(t^2 - abs(x - y)^2)) dif y,
-  $
-  and substituting into Kirchhoff's formula yields Poisson's formula. Note that the integral runs over the full *disk*, not the sphere: this is the mechanism behind the trailing wake and the failure of the strong Huygens principle in even dimensions (§16.5).
-]
-
-The superposition split of §16.1 extends verbatim to higher dimensions: Duhamel's principle (#link(<thm:duhamel-wave>)[Th.]) reduces the inhomogeneous problem with zero data to the homogeneous problem solved above, and for general data the two contributions are added. For boundary value problems on bounded domains — membranes, acoustic resonators — the method of choice is again separation of variables, along the lines of §16.4; the general spectral framework is developed in Chapter 19.
-
-#note[
-  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (x, t)$ depends only on the data on the *sphere* $partial B (x, a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions. The contrast is illustrated in #link(<fig:wave-huygens>)[Figure].
-]
-
-#note[
-  #figure(
-    image("./img/wave-huygens-principle.svg", width: 92%),
-    caption: [Huygens' principle in the $(x, t)$-plane for data supported in the red interval. (a) Odd dimensions: the value at $(x, t)$ depends only on the data on the sphere $partial B (x, a t)$, giving the two shaded characteristic strips (darker where they overlap); a fixed receiver $x_0$ is silent once the sphere has crossed the support. (b) Even dimensions: the value depends on the data on the whole disk $B (x, a t)$, filling the forward cone; the receiver feels a wake that decays like $t^(-1/2)$.],
-    placement: auto,
-    supplement: [Fig.],
-  ) <fig:wave-huygens>
-]
 
 == Finite Propagation Speed and Dispersive Decay // 波的传播与衰减
 
 === Finite Propagation Speed and the Three Domains // 有限传播速度与三个区域
 
 #theorem(name: "Finite Propagation Speed")[
-  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with initial data $(phi, psi)$ and $(tilde(phi), tilde(psi))$. If $phi = tilde(phi)$ and $psi = tilde(psi)$ on $B (x, a t)$, then $u (x, t) = tilde(u) (x, t)$: the value at $(x, t)$ depends only on the initial data in the ball $overline(B (x, a t))$.
+  Let $u, tilde(u)$ be $C^2$ solutions of $(partial^2 u)/(partial t^2) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with initial data $(phi, psi)$ and $(tilde(phi), tilde(psi))$. If $phi = tilde(phi)$ and $psi = tilde(psi)$ on $B (bold(x), a t)$, then $u (bold(x), t) = tilde(u) (bold(x), t)$: the value at $(bold(x), t)$ depends only on the initial data in the ball $overline(B (bold(x), a t))$.
 ] <thm:domain-of-dependence>
 
 #proof[
-  By linearity it suffices to show that data supported outside $B (x, a t)$ do not affect $u (x, t)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(x, t)$. The data of $w$ vanish on $C inter {s = 0} = B (x, a t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.], proved in the closing section below) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (x, t) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
+  By linearity it suffices to show that data supported outside $B (bold(x), a t)$ do not affect $u (bold(x), t)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(bold(x), t)$. The data of $w$ vanish on $C inter {s = 0} = B (bold(x), a t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.], proved in the closing section below) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (bold(x), t) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
 ]
 
 #definition(name: "Domains of Dependence, Determinacy and Influence")[
-  The *domain of dependence* of a point $(x, t)$ is the ball $overline(B (x, a t))$: only the data in this ball can influence the value $u (x, t)$. Given a set $D$ on the initial surface, its *domain of determinacy* is the region
+  The *domain of dependence* of a point $(bold(x), t)$ is the ball $overline(B (bold(x), a t))$: only the data in this ball can influence the value $u (bold(x), t)$. Given a set $D$ on the initial surface, its *domain of determinacy* is the region
   $
-    {(x, s) : 0 <= s, B (x, a s) subset D},
+    {(bold(x), s) : 0 <= s, B (bold(x), a s) subset D},
   $
-  the part of space-time completely determined by the data on $D$. The *domain of influence* of a point $y$ of the initial surface is the cone
+  the part of space-time completely determined by the data on $D$. The *domain of influence* of a point $bold(y)$ of the initial surface is the cone
   $
-    {(x, t) : abs(x - y) <= a t},
+    {(bold(x), t) : abs(bold(x) - bold(y)) <= a t},
   $
   the set of space-time points whose values the data at $y$ can affect.
 ] <def:domain-dependence-influence>
@@ -3353,12 +3403,12 @@ Unlike the heat equation, where a disturbance is felt instantly at every distanc
 
 #theorem(name: "Dispersive Decay")[
   Let $u$ be the solution of the Cauchy problem with smooth, compactly supported initial data.
-  - *Odd dimensions* ($n >= 3$): $u (x, t) = 0$ as soon as $t > "dist"(x, "supp"(phi, psi))$ — after the wave front passes, the medium returns to rest (the *strong Huygens principle*).
-  - *Even dimensions* ($n = 2$): in general $u (x, t)$ does not vanish behind the front (trailing wake), and $abs(u (x, t)) <= C t^(-1/2)$ uniformly in $x$ as $t -> oo$ (the *weak Huygens principle*, or *dispersion*).
+  - *Odd dimensions* ($n >= 3$): $u (bold(x), t) = 0$ as soon as $t > "dist"(bold(x), "supp"(phi, psi))$ — after the wave front passes, the medium returns to rest (the *strong Huygens principle*).
+  - *Even dimensions* ($n = 2$): in general $u (bold(x), t)$ does not vanish behind the front (trailing wake), and $abs(u (bold(x), t)) <= C t^(-1/2)$ uniformly in $bold(x)$ as $t -> oo$ (the *weak Huygens principle*, or *dispersion*).
 ] <thm:dispersive-decay>
 
 #proof[
-  (Sketch.) Both statements are read off the explicit formulas of §16.5. In three dimensions, Kirchhoff's formula involves only spherical means over $partial B (x, a t)$: the sphere meets the initial support only while $a t$ lies between the nearest and the farthest distance from $x$ to the support — after that $u (x, t) = 0$. In two dimensions, Poisson's formula integrates over the full disk $B (x, a t)$ with the weight $(t^2 - abs(x - y)^2)^(-1/2)$, which is nonzero for all large $t$ (the wake); the dominant contribution as $t -> oo$ comes from the rim $abs(x - y) approx a t$, where the weight is barely integrable, and the resulting uniform bound is $O(t^(-1/2))$ — consistent with the general dispersive rate $t^(-(n-1)/2)$.
+  (Sketch.) Both statements are read off the explicit formulas of §16.3. In three dimensions, Kirchhoff's formula involves only spherical means over $partial B (bold(x), a t)$: the sphere meets the initial support only while $a t$ lies between the nearest and the farthest distance from $bold(x)$ to the support — after that $u (bold(x), t) = 0$. In two dimensions, Poisson's formula integrates over the full disk $B (bold(x), a t)$ with the weight $(a^2 t^2 - abs(bold(x) - bold(y))^2)^(-1/2)$, which is nonzero for all large $t$ (the wake); the dominant contribution as $t -> oo$ comes from the rim $abs(bold(x) - bold(y)) approx a t$, where the weight is barely integrable, and the resulting uniform bound is $O(t^(-1/2))$ — consistent with the general dispersive rate $t^(-(n-1)/2)$.
 ]
 
 == Energy Inequality, Uniqueness and Stability // 能量不等式、唯一性与稳定性
@@ -3368,7 +3418,7 @@ Unlike the heat equation, where a disturbance is felt instantly at every distanc
 #theorem(name: "Conservation of Energy")[
   Let $u$ be a $C^2$ solution of the wave equation $(partial^2 u)/(partial t^2) = a^2 Delta u$ in $Omega subset bb(R)^n$ with either $u = 0$ or $(partial u)/(partial nu) = 0$ on $partial Omega$. Then the energy
   $
-    E (t) = 1/2 integral_Omega (abs(partial_t u)^2 + a^2 abs(nabla u)^2) dif x
+    E (t) = 1/2 integral_Omega (abs(partial_t u)^2 + a^2 abs(nabla u)^2) dif bold(x)
   $
   is constant in time: $E (t) = E (0)$ for all $t$.
 ] <thm:wave-energy>
@@ -3376,7 +3426,7 @@ Unlike the heat equation, where a disturbance is felt instantly at every distanc
 #proof[
   Differentiate under the integral and integrate by parts:
   $
-    (dif)/(dif t) E (t) = integral_Omega (partial_t u (partial^2 u)/(partial t^2) + a^2 nabla u dot nabla partial_t u) dif x = integral_Omega partial_t u ((partial^2 u)/(partial t^2) - a^2 Delta u) dif x + integral_(partial Omega) partial_t u a^2 (partial u)/(partial nu) dif S = 0,
+    (dif)/(dif t) E (t) = integral_Omega (partial_t u (partial^2 u)/(partial t^2) + a^2 nabla u dot nabla partial_t u) dif bold(x) = integral_Omega partial_t u ((partial^2 u)/(partial t^2) - a^2 Delta u) dif bold(x) + integral_(partial Omega) partial_t u a^2 (partial u)/(partial nu) dif S = 0,
   $
   the volume term vanishing by the equation and the boundary term by the boundary condition.
 ]
@@ -3394,13 +3444,13 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 === The Cauchy Problem: Local Energy, Uniqueness and Stability // 柯西问题：局部能量、唯一性与稳定性
 
 #theorem(name: "Local Energy Inequality on the Cone")[
-  Let $u$ be a $C^2$ solution of $(partial^2 u)/(partial t^2) = a^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $x_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(x_0, t_0)$,
+  Let $u$ be a $C^2$ solution of $(partial^2 u)/(partial t^2) = a^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $bold(x)_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(bold(x)_0, t_0)$,
   $
-    C = {(y, s) : 0 <= s <= t_0, abs(y - x_0) <= a (t_0 - s)}.
+    C = {(bold(y), s) : 0 <= s <= t_0, abs(bold(y) - bold(x)_0) <= a (t_0 - s)}.
   $
   Define the local energy on the time slice
   $
-    E_C (t) = 1/2 integral_(B (x_0, a (t_0 - t))) (abs(partial_t u)^2 + a^2 abs(nabla u)^2) dif y.
+    E_C (t) = 1/2 integral_(B (bold(x)_0, a (t_0 - t))) (abs(partial_t u)^2 + a^2 abs(nabla u)^2) dif bold(y).
   $
   Then $E_C (t) <= E_C (0)$ for all $t in [0, t_0]$: the energy in a backward cone is non-increasing in time.
 ] <thm:local-energy-cone>
@@ -3422,7 +3472,7 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 ] <cor:wave-uniqueness>
 
 #proof[
-  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(x_0, t_0)$ the data of $w$ vanish on $B (x_0, a t_0)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) $E_C (t) = 0$ for all $t <= t_0$, hence $w$ is constant in the cone, and the initial condition gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
+  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(bold(x)_0, t_0)$ the data of $w$ vanish on $B (bold(x)_0, a t_0)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) $E_C (t) = 0$ for all $t <= t_0$, hence $w$ is constant in the cone, and the initial condition gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
 ]
 
 #corollary(name: "Continuous Dependence on the Data")[
@@ -3452,7 +3502,7 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
 ] <def:hyperbolic-system>
 
 #note[
-  The wave equation is equivalent to a symmetric hyperbolic system: setting $u = (v, w)$ with $v = partial_t u$, $w = nabla u$, the second-order equation becomes a first-order system whose coefficient matrices are symmetric. More generally, any second-order hyperbolic equation can be reduced this way. The symmetry of the $A_j$ is exactly what makes the energy method (§16.3) work directly.
+  The wave equation is equivalent to a symmetric hyperbolic system: setting $u = (v, w)$ with $v = partial_t u$, $w = nabla u$, the second-order equation becomes a first-order system whose coefficient matrices are symmetric. More generally, any second-order hyperbolic equation can be reduced this way. The symmetry of the $A_j$ is exactly what makes the energy method (§16.7) work directly.
 ]
 
 #theorem(name: "Energy Identity for Symmetric Systems")[
