@@ -7913,9 +7913,9 @@ $D_i = (partial)/(partial x_i)$ is called the $i$-th partial differential operat
 // 注：tex 原文求和式为笔误（e_i = sum_(i=0)^n e_i cos alpha_i），已修正为 e = sum_(i=1)^n e_i cos alpha_i。
 Let $bold(e) = sum_(i=1)^n bold(e)_i cos alpha_i$ be a unit vector, where $sum_(i=1)^n cos^2 alpha_i = 1$. If $(partial f)/(partial x_i)$ is continuous at $bold(x)^0$, then the directional derivative of $f$ at $bold(x)^0$ along the direction $bold(e)$ is given by:
 $
-  frac(partial f, partial bold(e))(bold(x)^0) = sum_(i=1)^n frac(partial f, partial x_i)(bold(x)^0) cos alpha_i.
+  frac(partial f, partial bold(e))(bold(x)^0) = sum_(i=1)^n frac(partial f, partial x_i)(bold(x)^0) cos alpha_i = nabla f(bold(x)^0) dot bold(e).
 $
-This is the formula for *expressing a directional derivative using partial derivatives*.
+This is the formula for *expressing a directional derivative using partial derivatives*. The symbol $nabla$ is called "nabla" which will be introduced as follows.
 
 #note[
   Let $bold(e)$ be a direction. Then $norm(-bold(e)) = norm(bold(e)) = 1$, which implies that $-bold(e)$ is also a direction. At this point, we have
@@ -7927,7 +7927,7 @@ This is the formula for *expressing a directional derivative using partial deriv
 #definition(name: "Jacobian Matrix (Gradient)")[
   Let
   $
-    J f(bold(x)) = (D_1 f(bold(x)), D_2 f(bold(x)), dots, D_n f(bold(x))),
+    J f(bold(x)) = mat(D_1 f(bold(x)), D_2 f(bold(x)), dots, D_n f(bold(x))),
   $
   which is called the *Jacobian matrix* of the function $f$ at the point $bold(x)$ (a $1 times n$ matrix), whose counterpart is the first-order derivative of a single-variable function.
 
@@ -7945,13 +7945,13 @@ This is the formula for *expressing a directional derivative using partial deriv
 === Total Differential // 全微分
 
 #definition(name: "Total Differential")[
-  Let $U subset.eq bb(R)^n$ be an open set, $f: U -> bb(R)^1$, $bold(x)^0 in U$, and $Delta bold(x) = (Delta x_1, Delta x_2, dots, Delta x_n) in bb(R)^n$. If
+  Let $U subset.eq bb(R)^n$ be an open set, $f: U -> bb(R)^1$, $bold(x)^0 in U$, and $Delta bold(x) = mat(Delta x_1, Delta x_2, dots, Delta x_n)^"T" in bb(R)^n$. If
   $
-    f(bold(x)^0 + Delta bold(x)) - f(bold(x)^0) = sum_(i=1)^n A_i Delta x_i + o(norm(Delta bold(x))) quad (norm(Delta bold(x)) -> 0),
+    f(bold(x)^0 + Delta bold(x)) - f(bold(x)^0) = bold(A) Delta bold(x) + o(norm(Delta bold(x))) quad (norm(Delta bold(x)) -> 0),
   $
-  where $A_1, A_2, dots, A_n$ are constants independent of $Delta bold(x)$, then the function $f$ is said to be *differentiable* at the point $bold(x)^0$, and the linear main part $sum_(i=1)^n A_i Delta x_i$ is called the *total differential* of $f$ at $bold(x)^0$, denoted as
+  where $bold(A) = mat(A_1, A_2, dots, A_n)$ are constants independent of $Delta bold(x)$, then the function $f$ is said to be *differentiable* at the point $bold(x)^0$, and the linear main part $bold(A) Delta bold(x) = sum_(i=1)^n A_i Delta x_i$ is called the *total differential* of $f$ at $bold(x)^0$, denoted as
   $
-    dif f(bold(x)^0)(Delta bold(x)) = sum_(i=1)^n A_i Delta x_i.
+    dif f(bold(x)^0)(Delta bold(x)) = bold(A) Delta bold(x).
   $
   If $f$ is differentiable at every point in the open set $U$, then $f$ is called a differentiable function on $U$.
 ] <def:total-differential>
