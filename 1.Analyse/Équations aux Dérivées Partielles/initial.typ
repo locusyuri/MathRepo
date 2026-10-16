@@ -3191,7 +3191,7 @@ The homogeneous Cauchy problem is now solved in every dimension. The *inhomogene
 #note[
   #figure(
     image("./img/wave-huygens-principle.svg", width: 92%),
-    caption: [Huygens' principle in the $(x, t)$-plane for data supported in the red interval. (a) Odd dimensions: the value at $(x, t)$ depends only on the data on the sphere $partial B (x, a t)$, giving the two shaded characteristic strips (darker where they overlap); a fixed receiver $x_0$ is silent once the sphere has crossed the support. (b) Even dimensions: the value depends on the data on the whole disk $B (x, a t)$, filling the forward cone; the receiver feels a wake that decays like $t^(-1/2)$.],
+    caption: [Huygens' principle in the $(bold(x), t)$-plane for data supported in the red interval. (a) Odd dimensions: the value at $(bold(x), t)$ depends only on the data on the sphere $partial B (bold(x), a t)$, giving the two shaded characteristic strips (darker where they overlap); a fixed receiver $bold(x)_0$ is silent once the sphere has crossed the support. (b) Even dimensions: the value depends on the data on the whole disk $B (bold(x), a t)$, filling the forward cone; the receiver feels a wake that decays like $t^(-1/2)$.],
     placement: auto,
     supplement: [Fig.],
   ) <fig:wave-huygens>
