@@ -1055,7 +1055,7 @@ A system is *linear* if the right-hand side is linear in $bold(Y)$:
 #eq[$
   (dif bold(Y)) / (dif x) = bold(A)(x) bold(Y) + bold(F)(x),
 $] <eq:linear-system>
-where $bold(A)(x) = (a_(i j)(x))$ is an $n times n$ matrix and $bold(F)(x)$ is an $n$-dimensional vector, both continuous on an interval $I$.
+where $bold(A)(x) = (a_(i j)(x))_(n times n)$ is an $n times n$ matrix and $bold(F)(x)$ is an $n$-dimensional vector, both continuous on an interval $I$.
 
 When $bold(F)(x) equiv bold(0)$, the system is *homogeneous*:
 #eq[$
@@ -1104,11 +1104,14 @@ is also a solution, so the set of all solutions forms a vector space.
 ] <thm:liouville>
 
 #proof[
-  Write $bold(Phi)(x) = mat(bold(Y)_1(x), dots, bold(Y)_(n)(x))$ for the matrix whose columns are the given solutions, so that $W(x) = "det" bold(Phi)(x)$ and $(dif bold(Phi)) / (dif x) = bold(A)(x) bold(Phi)(x)$. Jacobi's formula for the derivative of a determinant gives
+  Write $bold(Phi)(x) = mat(bold(Y)_1(x), dots, bold(Y)_(n)(x))$ for the matrix whose columns are the given solutions.
+
+  Then $W(x) = "det"(bold(Phi)(x))$ and $(dif bold(Phi)) / (dif x) = bold(A)(x) bold(Phi)(x)$, so Jacobi's formula for the derivative of a determinant gives
   $
     (dif W) / (dif x) = "tr"(bold(Phi)^(-1)(x) (dif bold(Phi)) / (dif x)) W(x) = "tr"(bold(A)(x)) W(x),
   $
-  and this scalar linear equation integrates to $W(x) = W(x_0) exp(lr(integral_(x_0)^x "tr"(bold(A)(t)) dif t))$.
+
+  This scalar linear equation integrates to $W(x) = W(x_0) exp(lr(integral_(x_0)^x "tr"(bold(A)(t)) dif t))$.
 ]
 
 #note[
@@ -1120,7 +1123,17 @@ is also a solution, so the set of all solutions forms a vector space.
 ] <thm:fundamental-matrix-existence>
 
 #proof[
-  For $j = 1, dots, n$, let $bold(Y)_(j)(x)$ denote the unique solution of @eq:homogeneous-system with initial value $bold(Y)_(j)(x_0) = bold(e)_j$, where $bold(e)_1, dots, bold(e)_n$ is the standard basis of $bb(R)^n$; these solutions exist on all of $I$ by #link(<thm:linear-existence-uniqueness>)[the existence and uniqueness theorem for linear systems]. Since $bold(Y)_1(x_0), dots, bold(Y)_(n)(x_0)$ are exactly the standard basis vectors, their Wronskian is $W(x_0) = "det" bold(I) = 1 != 0$, so these solutions are linearly independent and $bold(Phi)(x) = mat(bold(Y)_1(x), dots, bold(Y)_(n)(x))$ is a fundamental matrix. To prove that they span, let $bold(Y)(x)$ be an arbitrary solution and write $bold(Y)(x_0) = c_1 bold(e)_1 + dots + c_n bold(e)_n$; then $bold(Z)(x) = bold(Y)(x) - c_1 bold(Y)_1(x) - dots - c_n bold(Y)_(n)(x)$ is a solution of @eq:homogeneous-system with $bold(Z)(x_0) = bold(0)$, so $bold(Z) equiv bold(0)$ by uniqueness, i.e. $bold(Y)(x) = c_1 bold(Y)_1(x) + dots + c_n bold(Y)_(n)(x)$.
+  For $j = 1, dots, n$, let $bold(Y)_(j)(x)$ denote the unique solution of @eq:homogeneous-system with initial value $bold(Y)_(j)(x_0) = bold(e)_j$, where $bold(e)_1, dots, bold(e)_n$ is the standard basis of $bb(R)^n$.
+
+  These solutions exist on all of $I$ by #link(<thm:linear-existence-uniqueness>)[the existence and uniqueness theorem for linear systems].
+
+  Since $bold(Y)_1(x_0), dots, bold(Y)_(n)(x_0)$ are exactly the standard basis vectors, their Wronskian is $W(x_0) = "det" bold(I) = 1 != 0$, so these solutions are linearly independent and $bold(Phi)(x) = mat(bold(Y)_1(x), dots, bold(Y)_(n)(x))$ is a fundamental matrix.
+
+  To prove that they span, let $bold(Y)(x)$ be an arbitrary solution and write $bold(Y)(x_0) = c_1 bold(e)_1 + dots + c_n bold(e)_n$.
+
+  Then $bold(Z)(x) = bold(Y)(x) - c_1 bold(Y)_1(x) - dots - c_n bold(Y)_(n)(x)$ is a solution of @eq:homogeneous-system with $bold(Z)(x_0) = bold(0)$, so $bold(Z) equiv bold(0)$ by uniqueness.
+
+  Hence $bold(Y)(x) = c_1 bold(Y)_1(x) + dots + c_n bold(Y)_(n)(x)$.
 ]
 
 #theorem(name: "General Solution of Homogeneous Linear Systems")[
@@ -1132,11 +1145,17 @@ is also a solution, so the set of all solutions forms a vector space.
 ] <thm:homogeneous-general-solution>
 
 #proof[
-  Let $bold(Y)(x)$ be any solution and write $bold(Y)(x) = bold(Phi)(x) bold(Z)(x)$. Differentiating and using $(dif bold(Phi)) / (dif x) = bold(A)(x) bold(Phi)(x)$,
+  Let $bold(Y)(x)$ be any solution and write $bold(Y)(x) = bold(Phi)(x) bold(Z)(x)$.
+
+  Differentiating and using $(dif bold(Phi)) / (dif x) = bold(A)(x) bold(Phi)(x)$,
   $
     bold(A)(x) bold(Phi)(x) bold(Z)(x) = (dif bold(Y)) / (dif x) = ((dif bold(Phi)) / (dif x)) bold(Z)(x) + bold(Phi)(x) (dif bold(Z)) / (dif x) = bold(A)(x) bold(Phi)(x) bold(Z)(x) + bold(Phi)(x) (dif bold(Z)) / (dif x),
   $
-  so $bold(Phi)(x) (dif bold(Z)) / (dif x) = bold(0)$. Since $bold(Phi)(x)$ is invertible, $bold(Z)(x) = bold(C)$ is constant. Conversely, $bold(Phi)(x) bold(C)$ is a solution for every constant vector $bold(C)$ by the superposition principle.
+  so $bold(Phi)(x) (dif bold(Z)) / (dif x) = bold(0)$.
+
+  Since $bold(Phi)(x)$ is invertible, $bold(Z)(x) = bold(C)$ is constant.
+
+  Conversely, $bold(Phi)(x) bold(C)$ is a solution for every constant vector $bold(C)$ by the superposition principle.
 ]
 
 == Non-Homogeneous Systems and Variation of Constants // 非齐次方程组与常数变易法
@@ -1192,7 +1211,11 @@ $
 ] <thm:matrix-exponential-fundamental>
 
 #proof[
-  The series $e^(bold(A) x) = sum_(k = 0)^oo (bold(A) x)^k / (k!)$ converges for every $x$ and may be differentiated term by term, giving $(dif e^(bold(A) x)) / (dif x) = bold(A) e^(bold(A) x)$. Hence every column of $e^(bold(A) x)$ solves @eq:constant-coefficient. At $x = 0$ we have $e^(bold(0)) = bold(I)$, so the Wronskian of the columns is $W(0) = "det" bold(I) = 1 != 0$ and the columns are linearly independent: $e^(bold(A) x)$ is a fundamental matrix.
+  The series $e^(bold(A) x) = sum_(k = 0)^oo (bold(A) x)^k / (k!)$ converges for every $x$ and may be differentiated term by term, giving $(dif e^(bold(A) x)) / (dif x) = bold(A) e^(bold(A) x)$.
+
+  Hence every column of $e^(bold(A) x)$ solves @eq:constant-coefficient.
+
+  At $x = 0$ we have $e^(bold(0)) = bold(I)$, so the Wronskian of the columns is $W(0) = "det" bold(I) = 1 != 0$ and the columns are linearly independent: $e^(bold(A) x)$ is a fundamental matrix.
 ]
 
 For the non-homogeneous constant-coefficient system, the variation-of-constants formula simplifies to:
@@ -1212,10 +1235,10 @@ The matrix exponential can be computed in finite form using the Jordan canonical
 For a single Jordan block of size $n$ with eigenvalue $lambda$,
 $
   e^(bold(J) x) = e^(lambda x) mat(
-    1, x, x^2 / 2!, dots, x^(n-1) / (n-1)!,
-    0, 1, x, dots, x^(n-2) / (n-2)!,
-    dots.v, dots.v, dots.v, dots.down, dots.v,
-    0, 0, 0, dots, 1
+    1, x, x^2 / 2!, dots, x^(n-1) / (n-1)!;
+    0, 1, x, dots, x^(n-2) / (n-2)!;
+    dots.v, dots.v, dots.v, dots.down, dots.v;
+    0, 0, 0, dots, 1;
   ).
 $
 
@@ -1252,7 +1275,9 @@ $
   $
     bold(Y)(x) = e^(bold(A) x) bold(Y)_0 = e^x mat(1, x; 0, 1) mat(0; 1) = e^x mat(x; 1),
   $
-  that is, $y_1(x) = x e^x$ and $y_2(x) = e^x$. This agrees with #link(<thm:generalized-eigenvector-solutions>)[the generalized eigenvector construction]: $bold(v)_1 = mat(1; 0)$ is an eigenvector, the chain is completed by $bold(v)_2 = mat(0; 1)$, and the chain solution $(x bold(v)_1 + bold(v)_2) e^x$ reproduces $bold(Y)(x)$ above.
+  that is, $y_1(x) = x e^x$ and $y_2(x) = e^x$.
+
+  This agrees with #link(<thm:generalized-eigenvector-solutions>)[the generalized eigenvector construction]: $bold(v)_1 = mat(1; 0)$ is an eigenvector, the chain is completed by $bold(v)_2 = mat(0; 1)$, and the chain solution $(x bold(v)_1 + bold(v)_2) e^x$ reproduces $bold(Y)(x)$ above.
 ]
 
 == Periodic Coefficient Systems // 周期系数线性方程组
@@ -1285,7 +1310,7 @@ $] <eq:higher-order-homogeneous>
 
 To reduce this to a first-order system, introduce the state vector
 $
-  bold(Y) = mat(y, dot(y), dot.double(y), dots, y^((n-1)))^T.
+  bold(Y) = mat(y; dot(y); dot.double(y); dots.v; y^((n-1))).
 $
 Then the system becomes
 $
@@ -1294,21 +1319,30 @@ $
 where $bold(A)(x)$ is the *companion matrix*
 $
   bold(A)(x) = mat(
-    0, 1, 0, dots, 0,
-    0, 0, 1, dots, 0,
-    dots.v, dots.v, dots.v, dots.down, dots.v,
-    -p_(n)(x), -p_(n-1)(x), -p_(n-2)(x), dots, -p_1(x)
+    0, 1, 0, dots, 0;
+    0, 0, 1, dots, 0;
+    dots.v, dots.v, dots.v, dots.down, dots.v;
+    -p_(n)(x), -p_(n-1)(x), -p_(n-2)(x), dots, -p_1(x);
   ),
 $
-and $bold(F)(x) = mat(0, 0, dots, f(x))^T$.
+and $bold(F)(x) = mat(0; 0; dots.v; f(x))$.
 
 #theorem(name: "Equivalence of Higher-Order Equations and First-Order Systems")[
   Equation @eq:higher-order-nonhomogeneous is equivalent to the first-order system @eq:linear-system with companion matrix.
-  That is, if $y(x)$ is a solution of @eq:higher-order-nonhomogeneous, then
-  $bold(Y)(x) = mat(y, dot(y), dot.double(y), dots, y^((n-1)))^T$ is a solution of the corresponding first-order system; conversely, the first component of any solution of the system is a solution of the higher-order equation.
+
+  That is, if $y(x)$ is a solution of @eq:higher-order-nonhomogeneous, then $bold(Y)(x) = mat(y; dot(y); dot.double(y); dots.v; y^((n-1)))$ is a solution of the corresponding first-order system.
+
+  Conversely, the first component of any solution of the system is a solution of the higher-order equation.
 ] <thm:higher-order-equivalence>
+
 #proof[
-  For $y in C^n(I)$, the components of $(dif bold(Y)) / (dif x)$ with $bold(Y) = mat(y, dot(y), dots, y^((n-1)))^T$ are $dot(y), dot.double(y), dots, y^((n))$, and the first $n - 1$ rows of $bold(A)(x) bold(Y) + bold(F)(x)$ reproduce exactly these derivatives, while the last row, $-p_(n) y - p_(n-1) dot(y) - dots - p_1 y^((n-1)) + f$, equals $y^((n))$ precisely when $y$ satisfies @eq:higher-order-nonhomogeneous. Hence $bold(Y)$ solves the system if and only if $y$ solves the equation. Conversely, if $bold(Y) = mat(Y_(1), dots, Y_(n))^T$ solves the system, the first $n - 1$ rows give $Y_(j + 1) = dot(Y_(j))$, so by induction $Y_(j) = Y_(1)^((j - 1))$; substituting into the last row shows that $y = Y_(1)$ satisfies @eq:higher-order-nonhomogeneous.
+  For $y in C^n(I)$, the components of $(dif bold(Y)) / (dif x)$ with $bold(Y) = mat(y; dot(y); dots.v; y^((n-1)))$ are $dot(y), dot.double(y), dots, y^((n))$, and the first $n - 1$ rows of $bold(A)(x) bold(Y) + bold(F)(x)$ reproduce exactly these derivatives, while the last row, $-p_(n) y - p_(n-1) dot(y) - dots - p_1 y^((n-1)) + f$, equals $y^((n))$ precisely when $y$ satisfies @eq:higher-order-nonhomogeneous.
+
+  Hence $bold(Y)$ solves the system if and only if $y$ solves the equation.
+
+  Conversely, if $bold(Y) = mat(Y_(1); dots; Y_(n))$ solves the system, the first $n - 1$ rows give $Y_(j + 1) = dot(Y_(j))$, so by induction $Y_(j) = Y_(1)^((j - 1))$.
+
+  Substituting into the last row shows that $y = Y_(1)$ satisfies @eq:higher-order-nonhomogeneous.
 ]
 
 The initial conditions
@@ -1325,13 +1359,13 @@ All the results of Chapter 4 carry over to higher-order equations via the equiva
   For $n$ solutions $y_1(x), dots, y_(n)(x)$ of the homogeneous equation @eq:higher-order-homogeneous, their *Wronskian determinant* is
   $
     W(x) = mat(
-      y_1(x), y_2(x), dots, y_(n)(x),
-      dot(y_1)(x), dot(y_2)(x), dots, dot(y_(n))(x),
-      dots.v, dots.v, dots.down, dots.v,
-      y_1^((n-1))(x), y_2^((n-1))(x), dots, y_(n)^((n-1))(x)
-    ),
+      delim: "|",
+      y_1(x), y_2(x), dots, y_(n)(x);
+      dot(y_1)(x), dot(y_2)(x), dots, dot(y_(n))(x);
+      dots.v, dots.v, dots.down, dots.v;
+      y_1^((n-1))(x), y_2^((n-1))(x), dots, y_(n)^((n-1))(x);
+    ).
   $
-  where the matrix is interpreted as a determinant.
 ] <def:wronskian-higher-order>
 
 #theorem(name: "Liouville's Formula for Higher-Order Equations")[
@@ -1341,7 +1375,9 @@ All the results of Chapter 4 carry over to higher-order equations via the equiva
   $
 ] <thm:liouville-higher-order>
 #proof[
-  By #link(<thm:higher-order-equivalence>)[the equivalence theorem], $y_1, dots, y_(n)$ solve @eq:higher-order-homogeneous precisely when $bold(Y)_1, dots, bold(Y)_(n)$ solve the homogeneous companion system $(dif bold(Y)) / (dif x) = bold(A)(x) bold(Y)$, and the fundamental matrix $bold(Phi) = mat(bold(Y)_1, dots, bold(Y)_(n))$ satisfies $W(x) = det bold(Phi)(x)$. Since $"tr"(bold(A)(x)) = -p_1(x)$, #link(<thm:liouville>)[Liouville's formula for systems] gives
+  By #link(<thm:higher-order-equivalence>)[the equivalence theorem], $y_1, dots, y_(n)$ solve @eq:higher-order-homogeneous precisely when $bold(Y)_1, dots, bold(Y)_(n)$ solve the homogeneous companion system $(dif bold(Y)) / (dif x) = bold(A)(x) bold(Y)$, and the fundamental matrix $bold(Phi) = mat(bold(Y)_1, dots, bold(Y)_(n))$ satisfies $W(x) = "det"(bold(Phi)(x))$.
+
+  Since $"tr"(bold(A)(x)) = -p_1(x)$, #link(<thm:liouville>)[Liouville's formula for systems] gives
   $
     W(x) = W(x_0) exp(lr(integral_(x_0)^x "tr"(bold(A)(s)) dif s)) = W(x_0) exp(- integral_(x_0)^x p_1(s) dif s).
   $
@@ -1354,11 +1390,19 @@ All the results of Chapter 4 carry over to higher-order equations via the equiva
 ] <thm:wronskian-criterion>
 
 #proof[
-  Via #link(<thm:higher-order-equivalence>)[the equivalence theorem], solutions $y_1, dots, y_(n)$ of @eq:higher-order-homogeneous correspond to solutions $bold(Y)_1, dots, bold(Y)_(n)$ of the homogeneous companion system, and the matrix $bold(Phi)(x) = mat(bold(Y)_1, dots, bold(Y)_(n))$ has determinant exactly $W(x)$. For claim 1, #link(<thm:fundamental-matrix-existence>)[the dimension theorem for linear systems] provides a fundamental matrix with $det bold(Phi)(x_0) = 1$, and its columns translate back to $n$ solutions with $W(x_0) = 1 != 0$. For claim 2, a nontrivial combination $sum_(i=1)^n c_i y_(i) equiv 0$ corresponds to a nontrivial combination $sum_(i=1)^n c_i bold(Y)_(i) equiv bold(0)$; such a combination exists if and only if the columns of $bold(Phi)(x)$ are linearly dependent for some $x$, i.e. $W(x) = 0$, and by Liouville's formula this occurs for some $x$ if and only if it occurs for every $x$.
+  Via #link(<thm:higher-order-equivalence>)[the equivalence theorem], solutions $y_1, dots, y_(n)$ of @eq:higher-order-homogeneous correspond to solutions $bold(Y)_1, dots, bold(Y)_(n)$ of the homogeneous companion system, and the matrix $bold(Phi)(x) = mat(bold(Y)_1, dots, bold(Y)_(n))$ has determinant exactly $W(x)$.
+
+  For claim 1, #link(<thm:fundamental-matrix-existence>)[the dimension theorem for linear systems] provides a fundamental matrix with $"det"(bold(Phi)(x_0)) = 1$, and its columns translate back to $n$ solutions with $W(x_0) = 1 != 0$.
+
+  For claim 2, a nontrivial combination $sum_(i=1)^n c_i y_(i) equiv 0$ corresponds to a nontrivial combination $sum_(i=1)^n c_i bold(Y)_(i) equiv bold(0)$.
+
+  Such a combination exists if and only if the columns of $bold(Phi)(x)$ are linearly dependent for some $x$, i.e. $W(x) = 0$, and by Liouville's formula this occurs for some $x$ if and only if it occurs for every $x$.
 ]
 
 #theorem(name: "General Solution of Higher-Order Linear Equations")[
-  Let $p_1, dots, p_(n)$ and $f$ be continuous on an interval $I$, and let $y_1(x), dots, y_(n)(x)$ be $n$ linearly independent solutions of the homogeneous equation @eq:higher-order-homogeneous. Then the general solution of @eq:higher-order-nonhomogeneous is
+  Let $p_1, dots, p_(n)$ and $f$ be continuous on an interval $I$, and let $y_1(x), dots, y_(n)(x)$ be $n$ linearly independent solutions of the homogeneous equation @eq:higher-order-homogeneous.
+
+  Then the general solution of @eq:higher-order-nonhomogeneous is
   $
     y(x) = C_1 y_1(x) + C_2 y_2(x) + dots + C_n y_(n)(x) + y_(p)(x),
   $
@@ -1371,7 +1415,13 @@ All the results of Chapter 4 carry over to higher-order equations via the equiva
   where $W_(i)(x)$ is the algebraic cofactor of the element in the $n$-th row and $i$-th column of $W(x)$.
 ] <thm:higher-order-general-solution>
 #proof[
-  The homogeneous part is #link(<thm:homogeneous-general-solution>)[the general solution of the companion system] translated back through #link(<thm:higher-order-equivalence>)[the equivalence]: the first component of $bold(Phi)(x) bold(C)$ is $C_1 y_1 + dots + C_n y_(n)$. For the particular solution, the variation-of-constants formula gives $tilde(bold(Y))(x) = bold(Phi)(x) integral_(x_0)^x bold(Phi)^(-1)(s) bold(F)(s) dif s$. Since $bold(F)(s) = mat(0, dots, 0, f(s))^T$, the $i$-th component of $bold(Phi)^(-1)(s) bold(F)(s)$ equals $f(s)$ times the $(i, n)$-entry of $bold(Phi)^(-1)(s)$, which by Cramer's rule is the cofactor of the $(n, i)$-entry of $bold(Phi)(s)$ divided by $W(s)$, i.e. $W_(i)(s) / W(s)$. Taking the first component yields the stated formula.
+  The homogeneous part is #link(<thm:homogeneous-general-solution>)[the general solution of the companion system] translated back through #link(<thm:higher-order-equivalence>)[the equivalence]: the first component of $bold(Phi)(x) bold(C)$ is $C_1 y_1 + dots + C_n y_(n)$.
+
+  For the particular solution, the variation-of-constants formula gives $tilde(bold(Y))(x) = bold(Phi)(x) integral_(x_0)^x bold(Phi)^(-1)(s) bold(F)(s) dif s$.
+
+  Since $bold(F)(s) = mat(0; dots.v; 0; f(s))$, the $i$-th component of $bold(Phi)^(-1)(s) bold(F)(s)$ equals $f(s)$ times the $(i, n)$-entry of $bold(Phi)^(-1)(s)$, which by Cramer's rule is the cofactor of the $(n, i)$-entry of $bold(Phi)(s)$ divided by $W(s)$, i.e. $W_(i)(s) / W(s)$.
+
+  Taking the first component yields the stated formula.
 ]
 
 #example(name: "Reduction of Order")[
@@ -1379,14 +1429,18 @@ All the results of Chapter 4 carry over to higher-order equations via the equiva
   $
     dot.double(y) + p(x) dot(y) + q(x) y = 0,
   $
-  with $phi(x) != 0$ on the interval and $p, q$ continuous. Seek a second solution of the form $y_2 = v phi$. Substituting, the terms containing $v$ cancel because $phi$ solves the equation, and there remains
+  with $phi(x) != 0$ on the interval and $p, q$ continuous.
+
+  Seek a second solution of the form $y_2 = v phi$. Substituting, the terms containing $v$ cancel because $phi$ solves the equation, and there remains
   $
     phi dot.double(v) + (2 dot(phi) + p phi) dot(v) = 0.
   $
+
   This is a first-order linear equation for $w = dot(v)$; solving it gives $w = (exp(- integral p(s) dif s)) / phi^2$, and one integration yields a second linearly independent solution
   $
     y_2(x) = phi(x) integral ((exp(- integral p(s) dif s)) / phi^2(x)) dif x.
   $
+
   This is known as *reduction of order*: knowing one solution reduces the order of the equation.
 ] <ex:reduction-of-order>
 
@@ -1404,14 +1458,22 @@ $
 $
 
 #theorem(name: "Characteristic Roots and Fundamental Solutions")[
-  Let the coefficients $a_1, dots, a_n$ be constants and let $lambda_1, dots, lambda_s$ be the distinct roots of the characteristic polynomial $chi(lambda)$, with multiplicities $n_1, dots, n_s$ ($n_1 + dots + n_s = n$). For each root $lambda_j$, the functions
+  Let the coefficients $a_1, dots, a_n$ be constants and let $lambda_1, dots, lambda_s$ be the distinct roots of the characteristic polynomial $chi(lambda)$, with multiplicities $n_1, dots, n_s$ ($n_1 + dots + n_s = n$).
+
+  For each root $lambda_j$, the functions
   $
     e^(lambda_j x), x e^(lambda_j x), dots, x^(n_j - 1) e^(lambda_j x)
   $
   are solutions of @eq:higher-order-homogeneous, and the union over $j = 1, dots, s$ is a fundamental system of solutions.
 ] <thm:characteristic-roots>
 #proof[
-  Since the coefficients are constant, $L_n e^(lambda x) = chi(lambda) e^(lambda x)$, so $e^(lambda_j x)$ is a solution for each root $lambda_j$. For the repeated factors, use the operator identity $L_n e^(gamma x) u = e^(gamma x) chi(D + gamma) u$, which follows by induction from $(dif / (dif x))^k (e^(gamma x) u) = e^(gamma x) (D + gamma)^k u$ applied to each term of $L_n$. Factoring $chi(z) = product_(j = 1)^s (z - lambda_j)^(n_j)$ and setting $gamma = lambda_i$, the shifted operator $chi(D + lambda_i)$ contains the factor $D^(n_i)$, while every other factor $(D + lambda_i - lambda_j)^(n_j)$ takes a non-zero value at $D = 0$; hence $chi(D + lambda_i) x^k = 0$ for $k < n_i$, proving that $x^k e^(lambda_i x)$ is a solution for each $k < n_i$. For linear independence, the Wronskian of the $n$ listed functions at $x = 0$ is a generalized Vandermonde determinant, equal to $product_(i < j) (lambda_j - lambda_i)^(n_i n_j)$ times a non-zero constant, so $W(0) != 0$ and #link(<thm:wronskian-criterion>)[the Wronskian criterion] applies.
+  *Step 1: Solutions.* Since the coefficients are constant, $L_n e^(lambda x) = chi(lambda) e^(lambda x)$, so $e^(lambda_j x)$ is a solution for each root $lambda_j$.
+
+  For the repeated factors, use the operator identity $L_n e^(gamma x) u = e^(gamma x) chi(D + gamma) u$, which follows by induction from $(dif / (dif x))^k (e^(gamma x) u) = e^(gamma x) (D + gamma)^k u$ applied to each term of $L_n$.
+
+  Factoring $chi(z) = product_(j = 1)^s (z - lambda_j)^(n_j)$ and setting $gamma = lambda_i$, the shifted operator $chi(D + lambda_i)$ contains the factor $D^(n_i)$, while every other factor $(D + lambda_i - lambda_j)^(n_j)$ takes a non-zero value at $D = 0$; hence $chi(D + lambda_i) x^k = 0$ for $k < n_i$, proving that $x^k e^(lambda_i x)$ is a solution for each $k < n_i$.
+
+  *Step 2: Linear independence.* The Wronskian of the $n$ listed functions at $x = 0$ is a generalized Vandermonde determinant, equal to $product_(i < j) (lambda_j - lambda_i)^(n_i n_j)$ times a non-zero constant, so $W(0) != 0$ and #link(<thm:wronskian-criterion>)[the Wronskian criterion] applies.
 ]
 
 
@@ -1420,11 +1482,15 @@ $
 ]
 
 #example(name: "Distinct and Repeated Real Roots")[
-  Solve $dot.triple(y) - 3 dot.double(y) + 4 y = 0$. The characteristic polynomial factors as
+  Solve $dot.triple(y) - 3 dot.double(y) + 4 y = 0$.
+
+  The characteristic polynomial factors as
   $
     chi(lambda) = lambda^3 - 3 lambda^2 + 4 = (lambda - 2)^2 (lambda + 1),
   $
-  so $lambda_1 = 2$ is a double root and $lambda_2 = -1$ is a simple root. By #link(<thm:characteristic-roots>)[the theorem above], a fundamental system is $e^(2 x), x e^(2 x), e^(-x)$, and the general solution is
+  so $lambda_1 = 2$ is a double root and $lambda_2 = -1$ is a simple root.
+
+  By #link(<thm:characteristic-roots>)[the theorem above], a fundamental system is $e^(2 x), x e^(2 x), e^(-x)$, and the general solution is
   $
     y(x) = (C_1 + C_2 x) e^(2 x) + C_3 e^(-x).
   $
@@ -1449,7 +1515,9 @@ For non-homogeneous constant-coefficient equations, the variation-of-constants f
   If $y_(text("p1"))(x)$ and $y_(text("p2"))(x)$ are particular solutions of $L_n y = f_1(x)$ and $L_n y = f_2(x)$ respectively, then $y_(p)(x) = y_(text("p1"))(x) + y_(text("p2"))(x)$ is a particular solution of $L_n y = f_1(x) + f_2(x)$.
 ] <lem:superposition>
 #proof[
-  By linearity of $L_n$, $L_n (y_(text("p1")) + y_(text("p2"))) = L_n y_(text("p1")) + L_n y_(text("p2")) = f_1 + f_2$, so $y_(p) = y_(text("p1")) + y_(text("p2"))$ is a particular solution of $L_n y = f_1 + f_2$.
+  By linearity of $L_n$, $L_n (y_(text("p1")) + y_(text("p2"))) = L_n y_(text("p1")) + L_n y_(text("p2")) = f_1 + f_2$.
+
+  Hence $y_(p) = y_(text("p1")) + y_(text("p2"))$ is a particular solution of $L_n y = f_1 + f_2$.
 ]
 
 #theorem(name: "Form of the Particular Solution")[
@@ -1464,15 +1532,29 @@ For non-homogeneous constant-coefficient equations, the variation-of-constants f
   where $R_m$ and $S_m$ are polynomials of degree at most $m$, and $k$ is the multiplicity of $alpha + beta i$ as a root of the characteristic polynomial ($k = 0$ if $alpha + beta i$ is not a root).
 ] <thm:undetermined-coefficients>
 #proof[
-  Write $f(x) = "Re"(P(x) e^(gamma x))$ with $gamma = alpha + beta i$ and the complex polynomial $P = P_m - i Q_m$ of degree at most $m$; by linearity it suffices to solve $L_n y = P(x) e^(gamma x)$ and take real parts. Substituting $y = e^(gamma x) u$ and using the operator identity of #link(<thm:characteristic-roots>)[the characteristic root theorem] turns the equation into $chi(D + gamma) u = P(x)$. Let $k$ be the multiplicity of $gamma$ as a root of $chi$, so that $chi(D + gamma) = D^k g(D)$ with $g(0) != 0$. For $u = x^k R(x)$ with $deg R <= m$, the polynomial $g(D)(x^k R)$ has degree at most $k + m$, and its coefficients of degrees $k, dots, k + m$ depend on those of $R$ through a triangular system whose diagonal entries are all $g(0)$; hence matching $D^k g(D) (x^k R) = P$ determines the coefficients of $R$ uniquely from the top down. Thus $y_(p) = x^k e^(gamma x) R(x)$ solves the complex equation, and taking real and imaginary parts yields the stated form with $R_m$ and $S_m$ of degree at most $m$.
+  *Step 1: Complexification.* Write $f(x) = "Re"(P(x) e^(gamma x))$ with $gamma = alpha + beta i$ and the complex polynomial $P = P_m - i Q_m$ of degree at most $m$; by linearity it suffices to solve $L_n y = P(x) e^(gamma x)$ and take real parts.
+
+  Substituting $y = e^(gamma x) u$ and using the operator identity of #link(<thm:characteristic-roots>)[the characteristic root theorem] turns the equation into $chi(D + gamma) u = P(x)$.
+
+  *Step 2: Solving the shifted equation.* Let $k$ be the multiplicity of $gamma$ as a root of $chi$, so that $chi(D + gamma) = D^k g(D)$ with $g(0) != 0$.
+
+  For $u = x^k R(x)$ with $deg R <= m$, the polynomial $g(D)(x^k R)$ has degree at most $k + m$, and its coefficients of degrees $k, dots, k + m$ depend on those of $R$ through a triangular system whose diagonal entries are all $g(0)$; hence matching $D^k g(D) (x^k R) = P$ determines the coefficients of $R$ uniquely from the top down.
+
+  Thus $y_(p) = x^k e^(gamma x) R(x)$ solves the complex equation, and taking real and imaginary parts yields the stated form with $R_m$ and $S_m$ of degree at most $m$.
 ]
 
 #example(name: "Resonant Forcing")[
-  Solve $dot.double(y) - 2 dot(y) + y = e^x$. The characteristic polynomial $chi(lambda) = (lambda - 1)^2$ has $lambda = 1$ as a double root, and the forcing term corresponds to $alpha = 1$, $beta = 0$, $m = 0$; hence $k = 2$ and we try $y_(p)(x) = A x^2 e^x$. Substituting,
+  Solve $dot.double(y) - 2 dot(y) + y = e^x$.
+
+  The characteristic polynomial $chi(lambda) = (lambda - 1)^2$ has $lambda = 1$ as a double root, and the forcing term corresponds to $alpha = 1$, $beta = 0$, $m = 0$; hence $k = 2$ and we try $y_(p)(x) = A x^2 e^x$.
+
+  Substituting,
   $
     dot.double(y) - 2 dot(y) + y = A (x^2 + 4x + 2 - 2x^2 - 4x + x^2) e^x = 2A e^x,
   $
-  so $2A = 1$ and $y_(p)(x) = (1/2) x^2 e^x$. The general solution is
+  so $2A = 1$ and $y_(p)(x) = (1/2) x^2 e^x$.
+
+  The general solution is
   $
     y(x) = (C_1 + C_2 x) e^x + (1/2) x^2 e^x.
   $
@@ -1501,15 +1583,21 @@ If $f$ is of exponential order, i.e. $abs(f(x)) <= M e^(c x)$ for large $x$, the
 ] <thm:laplace-properties>
 
 #proof[
-  Linearity is linearity of the integral. For the derivative rule, integrate by parts:
+  Linearity is linearity of the integral.
+
+  For the derivative rule, integrate by parts:
   $
     cal(L) dot(f)(s) = integral_0^oo e^(-s x) dot(f)(x) dif x = [e^(-s x) f(x)]_0^oo + s integral_0^oo e^(-s x) f(x) dif x = -f(0) + s cal(L) f(s),
   $
-  where the boundary term at infinity vanishes by exponential order and $s > c$; applying the rule twice gives the second derivative rule. The pairs are direct computations: $integral_0^oo e^(-(s - a) x) dif x = 1 / (s - a)$ for $s > a$, and the trigonometric pairs follow from the complex exponential representations of $cos$ and $sin$ together with linearity.
+  where the boundary term at infinity vanishes by exponential order and $s > c$; applying the rule twice gives the second derivative rule.
+
+  The pairs are direct computations: $integral_0^oo e^(-(s - a) x) dif x = 1 / (s - a)$ for $s > a$, and the trigonometric pairs follow from the complex exponential representations of $cos$ and $sin$ together with linearity.
 ]
 
 #theorem(name: "Convolution Theorem")[
-  The *convolution* of $f$ and $g$ on $[0, oo)$ is $(f ast g)(x) = integral_0^x f(x - t) g(t) dif t$. If $f$ and $g$ are of exponential order, then
+  The *convolution* of $f$ and $g$ on $[0, oo)$ is $(f ast g)(x) = integral_0^x f(x - t) g(t) dif t$.
+
+  If $f$ and $g$ are of exponential order, then
   $
     cal(L)(f ast g)(s) = cal(L) f(s) dot.op cal(L) g(s).
   $
@@ -1520,14 +1608,19 @@ If $f$ is of exponential order, i.e. $abs(f(x)) <= M e^(c x)$ for large $x$, the
   $
     cal(L) f(s) cal(L) g(s) = integral_0^oo integral_0^oo e^(-s (x + t)) f(x) g(t) dif x dif t = integral_0^oo e^(-s x) (integral_0^x f(x - t) g(t) dif t) dif x = cal(L)(f ast g)(s),
   $
-  where the substitution maps the quadrant $x, t >= 0$ to the half-plane $x >= t >= 0$, and the interchange of integration is justified by absolute convergence, which follows from the exponential-order bounds.
+  where the substitution maps the quadrant $x, t >= 0$ to the half-plane $x >= t >= 0$.
+
+  The interchange of integration is justified by absolute convergence, which follows from the exponential-order bounds.
 ]
 
 #example(name: "Solving an Initial Value Problem")[
-  Solve $dot.double(y) + y = e^x$ with $y(0) = 1$ and $dot(y)(0) = 0$. Taking transforms and using #link(<thm:laplace-properties>)[the operational properties],
+  Solve $dot.double(y) + y = e^x$ with $y(0) = 1$ and $dot(y)(0) = 0$.
+
+  Taking transforms and using #link(<thm:laplace-properties>)[the operational properties],
   $
     (s^2 + 1) cal(L) y(s) - s = 1 / (s - 1).
   $
+
   Partial fractions give $1 / ((s - 1)(s^2 + 1)) = (1/2) / (s - 1) - (1/2) (s + 1) / (s^2 + 1)$, hence
   $
     cal(L) y(s) = s / (s^2 + 1) + (1/2) / (s - 1) - (1/2) (s + 1) / (s^2 + 1),
@@ -1559,7 +1652,7 @@ where $F$ and $G$ are continuously differentiable in a domain $D$. In vector for
   (dif bold(x)) / (dif t) = bold(f)(bold(x)), quad quad bold(x)(t_0) = bold(x)^0,
 $] <eq:autonomous-system>
 
-where $bold(x) = (x, y)^T$ and $bold(f)(bold(x)) = (F(x, y), G(x, y))^T$.
+where $bold(x) = (x, y)^"T"$ and $bold(f)(bold(x)) = (F(x, y), G(x, y))^"T"$.
 
 #definition(name: "Phase Space and Trajectories")[
   - The *phase space* is the domain $D subset.eq bb(R)^2$.
@@ -1816,7 +1909,10 @@ $
     integral_a^b (L u) v r dif x = - integral_a^b (p u')' v dif x + integral_a^b q u v r dif x
     = - p u' v |_a^b + integral_a^b p u' v' dif x + integral_a^b q u v r dif x.
   $
-  The boundary term $-p u' v |_a^b$ vanishes because of the boundary conditions. Repeating the integration by parts for $u v'$ gives the symmetric expression, hence $⟨ L u, v ⟩_(r) = ⟨ u, L v ⟩_(r)$.
+
+  The boundary term $-p u' v |_a^b$ vanishes because of the boundary conditions.
+
+  Repeating the integration by parts for $u v'$ gives the symmetric expression, hence $⟨ L u, v ⟩_(r) = ⟨ u, L v ⟩_(r)$.
 ]
 
 === Periodic and Singular Sturm-Liouville Problems // 周期与奇异 Sturm-Liouville 问题
@@ -1848,11 +1944,19 @@ $
 ] <thm:real-eigenvalues>
 
 #proof[
-  Suppose $lambda = alpha + i beta$ is a complex eigenvalue with eigenfunction $y = u + i v$. Taking the complex conjugate, $overline(lambda) = alpha - i beta$ is also an eigenvalue with eigenfunction $overline(y) = u - i v$. By orthogonality,
+  Suppose $lambda = alpha + i beta$ is a complex eigenvalue with eigenfunction $y = u + i v$.
+
+  Taking the complex conjugate, $overline(lambda) = alpha - i beta$ is also an eigenvalue with eigenfunction $overline(y) = u - i v$.
+
+  By orthogonality,
   $
     integral_a^b y overline(y) r dif x = 0,
   $
-  since $lambda != overline(lambda)$. But $y overline(y) = abs(y)^2 > 0$ unless $y equiv 0$, a contradiction. Hence $beta = 0$, so $lambda$ is real.
+  since $lambda != overline(lambda)$.
+
+  But $y overline(y) = abs(y)^2 > 0$ unless $y equiv 0$, a contradiction.
+
+  Hence $beta = 0$, so $lambda$ is real.
 ]
 
 #theorem(name: "Properties of Sturm-Liouville Eigenvalues")[
