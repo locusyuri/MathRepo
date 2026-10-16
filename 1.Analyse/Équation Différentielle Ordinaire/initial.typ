@@ -197,7 +197,9 @@
 
 = Introduction // 导论
 
-This chapter establishes the basic language of ordinary differential equations (ODEs). We begin with the classification of differential equations, then formalize what it means for a function to be a solution. The geometric interpretation of solutions as integral curves and the direction field provides the intuition that will guide our later study of existence theory and qualitative analysis.
+This chapter establishes the basic language of ordinary differential equations (ODEs).
+We begin with the classification of differential equations, then formalize what it means for a function to be a solution.
+The geometric interpretation of solutions as integral curves and the direction field provides the intuition that will guide our later study of existence theory and qualitative analysis.
 
 == Classification of Differential Equations // 微分方程的分类
 
@@ -270,7 +272,11 @@ Let $J subset.eq bb(R)$ be an interval.
 In contrast, if the conditions are prescribed at both ends of an interval $[a, b]$ — such as $phi(a) = y_a$ and $phi(b) = y_b$ — they are called *boundary conditions*, and an ODE together with such conditions is called a *boundary value problem* (BVP). We study BVPs in Part IV.
 
 #definition(name: "Explicit and Implicit Solutions")[
-  A solution $y = phi(x)$ written directly as a function of $x$ is called an *explicit solution*. If the solution is determined by a relation $Phi(x, y) = 0$ that cannot (or need not) be solved for $y$ in terms of $x$, then $Phi(x, y) = 0$ is called an *implicit solution*. An implicit solution is also referred to as an *integral* of the equation.
+  A solution $y = phi(x)$ written directly as a function of $x$ is called an *explicit solution*.
+
+  If the solution is determined by a relation $Phi(x, y) = 0$ that cannot (or need not) be solved for $y$ in terms of $x$, then $Phi(x, y) = 0$ is called an *implicit solution*.
+
+  An implicit solution is also referred to as an *integral* of the equation.
 ] <def:implicit-solution>
 
 In classical terminology, an implicit solution is also called an *integral* of the equation; this usage is distinct from the integral of calculus.
@@ -299,14 +305,22 @@ Thus the tangent line at $(x_0, y_0)$ has equation
 $
   y - y_0 = f(x_0, y_0) (x - x_0).
 $
-Remarkably, we can determine the tangent slope at any point from the equation alone, without knowing the explicit solution. @fig:direction-field illustrates this idea for the ODE $dot(y) = x - y$.
+Remarkably, we can determine the tangent slope at any point from the equation alone, without knowing the explicit solution.
+
+@fig:direction-field illustrates this idea for the ODE $dot(y) = x - y$.
 
 #definition(name: "Direction Field (Line Element Field)")[
-  At each point $P = (x, y)$ in the region $G$, draw a short line segment with slope $f(P)$. This segment is called the *line element* (or *direction element*) of the ODE at $P$. The region $G$ together with the collection of all line elements is called the *direction field* (or *slope field* or *line element field*) of the ODE.
+  At each point $P = (x, y)$ in the region $G$, draw a short line segment with slope $f(P)$. This segment is called the *line element* (or *direction element*) of the ODE at $P$.
+
+  The region $G$ together with the collection of all line elements is called the *direction field* (or *slope field* or *line element field*) of the ODE.
 ] <def:direction-field>
 
 #note[
-  The direction field gives a geometric portrait of all solutions even when we cannot solve the equation explicitly. Integral curves are precisely the curves that are everywhere tangent to the direction field. This geometric viewpoint is the foundation of qualitative theory, which we develop in Part III.
+  The direction field gives a geometric portrait of all solutions even when we cannot solve the equation explicitly.
+
+  Integral curves are precisely the curves that are everywhere tangent to the direction field.
+
+  This geometric viewpoint is the foundation of qualitative theory, which we develop in Part III.
 ]
 
 #figure(
@@ -332,7 +346,10 @@ Remarkably, we can determine the tangent slope at any point from the equation al
 
 = First-Order Equations // 一阶方程
 
-This chapter presents the elementary solution methods for first-order ODEs. We proceed from the symmetric differential form (§2.1), then derive several important special classes: separable equations, homogeneous equations, and linear equations. The method of integrating factors unifies these approaches by converting non-exact forms into exact ones. Finally, we treat implicit equations and the reduction of higher-order equations.
+This chapter presents the elementary solution methods for first-order ODEs.
+We proceed from the symmetric differential form (§2.1), then derive several important special classes: separable equations, homogeneous equations, and linear equations.
+The method of integrating factors unifies these approaches by converting non-exact forms into exact ones.
+Finally, we treat implicit equations and the reduction of higher-order equations.
 
 == Exact Equations // 恰当方程
 
@@ -355,7 +372,11 @@ This chapter presents the elementary solution methods for first-order ODEs. We p
 ] <def:exact-equation>
 
 #note[
-  Strictly speaking, the symmetric form is not a differential equation in the traditional sense. However, expressing a first-order ODE in this form is extremely convenient for analysis, as it does not require $y$ to be expressed as a function of $x$. For simplicity, we often refer to the symmetric form itself as a differential equation.
+  Strictly speaking, the symmetric form is not a differential equation in the traditional sense.
+
+  However, expressing a first-order ODE in this form is extremely convenient for analysis, as it does not require $y$ to be expressed as a function of $x$.
+
+  For simplicity, we often refer to the symmetric form itself as a differential equation.
 ]
 
 #theorem(name: "Exactness Criterion")[
@@ -371,12 +392,29 @@ This chapter presents the elementary solution methods for first-order ODEs. We p
 ] <thm:exactness-criterion>
 
 #proof[
-  The sufficiency is a direct consequence of the chain rule. Since $M$ and $N$ are the partial derivatives of the unknown $U$, integrating $U_x = M$ and $U_y = N$ along any path from $(x_0, y_0)$ to $(x, y)$ yields a single-valued $U(x, y)$, because $M_y = N_x$ makes the integral independent of the chosen path. Necessity follows by reversing the argument: if @eq:symmetric-form is exact, then $U_x = M$ and $U_y = N$, so $M_y = U_(x y) = U_(y x) = N_x$. For a complete proof, see *Analyse Mathématique*, Theorem 15.9.
+  *Sufficiency.* Since $M$ and $N$ are the partial derivatives of the unknown $U$, integrating $U_x = M$ and $U_y = N$ along any path from $(x_0, y_0)$ to $(x, y)$ yields a single-valued $U(x, y)$, because $M_y = N_x$ makes the integral independent of the chosen path.
+
+  This is a direct consequence of the chain rule.
+
+  *Necessity.* If @eq:symmetric-form is exact, then $U_x = M$ and $U_y = N$, so $M_y = U_(x y) = U_(y x) = N_x$.
+
+  For a complete proof, see *Analyse Mathématique*, Theorem 15.9.
 ]
 
 #example(name: "Exact Equation")[
   Solve $ (3 x^2 + 2 x y) dif x + (x^2 + 2 y) dif y = 0. $
-  Here $M = 3 x^2 + 2 x y$ and $N = x^2 + 2 y$. Since $(partial M) / (partial y) = 2 x = (partial N) / (partial x)$, the equation is exact. We seek $U$ with $U_x = M$ and $U_y = N$. Integrating $U_x = 3 x^2 + 2 x y$ with respect to $x$ gives $U = x^3 + x^2 y + h(y)$. Differentiating with respect to $y$ and matching $U_y = N$ gives $h'(y) = 2 y$, so $h(y) = y^2$. The general integral is
+
+  Here $M = 3 x^2 + 2 x y$ and $N = x^2 + 2 y$.
+
+  Since $(partial M) / (partial y) = 2 x = (partial N) / (partial x)$, the equation is exact.
+
+  We seek $U$ with $U_x = M$ and $U_y = N$.
+
+  Integrating $U_x = 3 x^2 + 2 x y$ with respect to $x$ gives $U = x^3 + x^2 y + h(y)$.
+
+  Differentiating with respect to $y$ and matching $U_y = N$ gives $h'(y) = 2 y$, so $h(y) = y^2$.
+
+  The general integral is
   $
     x^3 + x^2 y + y^2 = c.
   $
@@ -392,7 +430,9 @@ Beyond the line-integral method, there are two practical methods for finding $U(
     (1 / x) dif x + (1 / y) dif y = dif(ln abs(x y)), quad quad (y dif x + x dif y) / (x^2 + y^2) = dif(arctan(y / x)).
   $
 
-In differential form language, the 1-form $omega = M(x, y) dif x + N(x, y) dif y$ is *closed* if its exterior derivative vanishes, and *exact* if it is the differential of some function $U(x, y)$. By Poincaré's lemma, on the simply connected domain $bb(R)^2$, a 1-form is exact if and only if it is closed — which is precisely the condition $(partial M) / (partial y) = (partial N) / (partial x)$.
+In differential form language, the 1-form $omega = M(x, y) dif x + N(x, y) dif y$ is *closed* if its exterior derivative vanishes, and *exact* if it is the differential of some function $U(x, y)$.
+
+By Poincaré's lemma, on the simply connected domain $bb(R)^2$, a 1-form is exact if and only if it is closed — which is precisely the condition $(partial M) / (partial y) = (partial N) / (partial x)$.
 
 == Separable Equations // 可分离变量方程
 
@@ -578,7 +618,11 @@ which is a linear equation in $z$, solvable by the method above.
   where $q_0(x)$, $q_1(x)$, and $q_2(x)$ are given functions.
 ] <def:riccati-equation>
 
-Riccati equations are generally non-linear and cannot be solved by the linear methods above. However, if one particular solution $y_1(x)$ is known, the substitution $y = y_1 + 1 / z$ reduces the equation to a linear equation in $z$. Indeed, substituting and using that $y_1$ satisfies the Riccati equation, the non-linear terms cancel and one obtains
+Riccati equations are generally non-linear and cannot be solved by the linear methods above.
+
+However, if one particular solution $y_1(x)$ is known, the substitution $y = y_1 + 1 / z$ reduces the equation to a linear equation in $z$.
+
+Indeed, substituting and using that $y_1$ satisfies the Riccati equation, the non-linear terms cancel and one obtains
 $
   (dif z) / (dif x) + (q_1(x) + 2 q_2(x) y_1(x)) z = -q_2(x),
 $
@@ -729,7 +773,11 @@ Since $f(p) not equiv p$, the right-hand side is not identically zero. Treat $x$
 $
   (p - f(p)) (dif x) / (dif p) = x f'(p) + g'(p).
 $
-This is a linear equation for $x(p)$. Solving it yields $x$ and then $y = x f(p) + g(p)$ in parametric form. Additionally, any root $p_*$ of $f(p_*) = p_*$ gives the constant-slope solutions $y = p_* x + g(p_*)$, which play the role of the general solution's family.
+This is a linear equation for $x(p)$.
+
+Solving it yields $x$ and then $y = x f(p) + g(p)$ in parametric form.
+
+Additionally, any root $p_*$ of $f(p_*) = p_*$ gives the constant-slope solutions $y = p_* x + g(p_*)$, which play the role of the general solution's family.
 
 #example(name: "Clairaut Equation")[
   Solve $y = x dot(y) - dot(y)^2$.
@@ -802,7 +850,11 @@ and higher derivatives follow similarly. The equation becomes a constant-coeffic
 
 = Existence, Uniqueness and Dependence // 存在唯一性与解的依赖性
 
-The previous chapter provided elementary methods for solving specific classes of first-order ODEs. This chapter addresses a more fundamental question: *when does a solution exist, when is it unique, and how does it depend on the initial data?* We prove the Picard-Lindelöf theorem using Picard iteration, study how far a solution can be extended, introduce singular solutions and envelopes, and conclude with the continuous dependence of solutions on initial values.
+The previous chapter provided elementary methods for solving specific classes of first-order ODEs.
+
+This chapter addresses a more fundamental question: *when does a solution exist, when is it unique, and how does it depend on the initial data?*
+
+We prove the Picard-Lindelöf theorem using Picard iteration, study how far a solution can be extended, introduce singular solutions and envelopes, and conclude with the continuous dependence of solutions on initial values.
 
 == Picard-Lindelöf Theorem // Picard-Lindelöf 定理
 
@@ -820,7 +872,9 @@ We begin with an auxiliary inequality that will be used repeatedly.
 ] <thm:bellman-gronwall>
 
 #proof[
-  The inequality follows from Gronwall's lemma applied to the continuous function $u(x) = integral_a^x g(t) dif t$. The complete proof is deferred to Analyse Réelle / Analyse Fonctionnelle (Bellman-Gronwall lemma is a standard result in integral inequality theory).
+  The inequality follows from Gronwall's lemma applied to the continuous function $u(x) = integral_a^x g(t) dif t$.
+
+  The complete proof is deferred to Analyse Réelle / Analyse Fonctionnelle (Bellman-Gronwall lemma is a standard result in integral inequality theory).
 ]
 
 Now consider the Cauchy problem
@@ -883,10 +937,14 @@ $] <eq:cauchy-problem>
 
 === Peano and Osgood Theorems // Peano 定理与 Osgood 定理
 
-The Picard-Lindelöf theorem requires both continuity and Lipschitz continuity. If we drop the Lipschitz condition, we lose uniqueness but may still retain existence.
+The Picard-Lindelöf theorem requires both continuity and Lipschitz continuity.
+
+If we drop the Lipschitz condition, we lose uniqueness but may still retain existence.
 
 #definition(name: "Osgood Condition")[
-  Let $f(x, y)$ be continuous in $D$. If there exists a continuous function $F(t) > 0$ for $t > 0$ such that
+  Let $f(x, y)$ be continuous in $D$.
+
+  If there exists a continuous function $F(t) > 0$ for $t > 0$ such that
   $
     abs(f(x, y_1) - f(x, y_2)) <= F(abs(y_1 - y_2))
   $
@@ -913,11 +971,15 @@ The Picard-Lindelöf theorem requires both continuity and Lipschitz continuity. 
 ] <thm:osgood>
 
 #example(name: "Non-Uniqueness for Peano")[
-  The ODE $dot(y) = sqrt(y)$ with $y(0) = 0$ satisfies the Peano existence theorem's hypotheses ($f(y) = sqrt(y)$ is continuous) but violates uniqueness. Indeed, $y equiv 0$ is a solution, and for any $c >= 0$,
+  The ODE $dot(y) = sqrt(y)$ with $y(0) = 0$ satisfies the Peano existence theorem's hypotheses ($f(y) = sqrt(y)$ is continuous) but violates uniqueness.
+
+  Indeed, $y equiv 0$ is a solution, and for any $c >= 0$,
   $
     y = ((x - c) / 2)^2 quad quad text("for") x >= c, quad quad y = 0 quad quad text("for") x < c
   $
-  is also a solution. Since $c$ is arbitrary, there are infinitely many solutions.
+  is also a solution.
+
+  Since $c$ is arbitrary, there are infinitely many solutions.
 ] <ex:peano-counterexample>
 
 #note[
@@ -925,28 +987,44 @@ The Picard-Lindelöf theorem requires both continuity and Lipschitz continuity. 
 ]
 
 #theorem(name: "Global Existence for Linear Equations")[
-  Consider the linear equation $(dif y) / (dif x) = A(x) y + g(x)$ on an interval $I$ where $A(x)$ and $g(x)$ are continuous. Then for any $(x_0, y_0) in I times bb(R)^n$, there exists a unique solution defined on the *entire* interval $I$, not merely on a local subinterval.
+  Consider the linear equation $(dif y) / (dif x) = A(x) y + g(x)$ on an interval $I$ where $A(x)$ and $g(x)$ are continuous.
+
+  Then for any $(x_0, y_0) in I times bb(R)^n$, there exists a unique solution defined on the *entire* interval $I$, not merely on a local subinterval.
 ] <thm:linear-global-existence>
 
 #proof[
-  This follows from the fact that the integral kernel $A(t)$ remains bounded on compact subintervals of $I$, so the local Picard-Lindelöf theorem can be iterated to extend the solution to all of $I$ without encountering blow-up. A direct proof via successive approximations is standard (see Coddington, *Theory of Ordinary Differential Equations*, §1.9).
+  This follows from the fact that the integral kernel $A(t)$ remains bounded on compact subintervals of $I$, so the local Picard-Lindelöf theorem can be iterated to extend the solution to all of $I$ without encountering blow-up.
+
+  A direct proof via successive approximations is standard (see Coddington, *Theory of Ordinary Differential Equations*, §1.9).
 ]
 
 == Continuation of Solutions // 解的延拓
 #definition(name: "Saturated (Uncontinuable) Solution")[
-  Let $y = phi(x)$ be a solution on interval $I_1$. If there exists another solution $y = tilde(phi)(x)$ on a strictly larger interval $I_2 supset I_1$ that agrees with $phi$ on $I_1$, then $phi$ is called *continuable*, and $tilde(phi)$ is a *continuation*. If no such extension exists, $phi$ is called *uncontinuable* or *saturated*.
+  Let $y = phi(x)$ be a solution on interval $I_1$.
+
+  If there exists another solution $y = tilde(phi)(x)$ on a strictly larger interval $I_2 supset I_1$ that agrees with $phi$ on $I_1$, then $phi$ is called *continuable*, and $tilde(phi)$ is a *continuation*.
+
+  If no such extension exists, $phi$ is called *uncontinuable* or *saturated*.
 ] <def:saturated-solution>
 
 #theorem(name: "Continuation Theorem")[
-  Let $D$ be a bounded closed rectangle. Suppose $f(x, y)$ is continuous in $D$ and satisfies the *local Lipschitz condition* with respect to $y$ — that is, every point has a neighborhood in which $f$ is Lipschitz. Then any solution passing through $(x_0, y_0) in D$ can be continued until it approaches arbitrarily close to the boundary of $D$.
+  Let $D$ be a bounded closed rectangle.
+
+  Suppose $f(x, y)$ is continuous in $D$ and satisfies the *local Lipschitz condition* with respect to $y$ — that is, every point has a neighborhood in which $f$ is Lipschitz.
+
+  Then any solution passing through $(x_0, y_0) in D$ can be continued until it approaches arbitrarily close to the boundary of $D$.
 ] <thm:continuation>
 
 #theorem(name: "Comparison Theorem")[
-  Let $f(x, y)$ and $g(x, y)$ be continuous and Lipschitz in $y$ in a region $D$. If $f(x, y) <= g(x, y)$ for all $(x, y) in D$, then the solutions $y = phi(x)$ and $y = psi(x)$ passing through the same point $(x_0, y_0)$ satisfy
+  Let $f(x, y)$ and $g(x, y)$ be continuous and Lipschitz in $y$ in a region $D$.
+
+  If $f(x, y) <= g(x, y)$ for all $(x, y) in D$, then the solutions $y = phi(x)$ and $y = psi(x)$ passing through the same point $(x_0, y_0)$ satisfy
   $
     phi(x) <= psi(x)
   $
-  for $x >= x_0$ on their common interval of existence. The same holds for strict inequalities (for $x > x_0$).
+  for $x >= x_0$ on their common interval of existence.
+
+  The same holds for strict inequalities (for $x > x_0$).
 ] <thm:comparison>
 
 == Singular Solutions and Envelopes // 奇解与包络
@@ -1011,7 +1089,11 @@ Denote by $y = phi(x; x_0, y_0)$ the solution to the Cauchy problem passing thro
 ] <thm:dependence-derivatives>
 
 #note[
-  These formulas show how sensitive the solution is to changes in the initial conditions. The derivative with respect to $y_0$ is a solution of the variational equation $z' = f_(y)(x, phi(x)) z$, which is the linearization of the original ODE along the solution trajectory. This variational equation plays a central role in stability theory (Part III).
+  These formulas show how sensitive the solution is to changes in the initial conditions.
+
+  The derivative with respect to $y_0$ is a solution of the variational equation $z' = f_(y)(x, phi(x)) z$, which is the linearization of the original ODE along the solution trajectory.
+
+  This variational equation plays a central role in stability theory (Part III).
 ]
 
 When $f$ also depends on a parameter $lambda$, i.e., $f = f(x, y, lambda)$, the same argument shows that the solution $y = phi(x; x_0, y_0, lambda)$ depends continuously and differentiably on $lambda$ as well, provided $f$ and $f_y$ are continuous in all arguments.
