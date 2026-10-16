@@ -1935,7 +1935,8 @@ A concrete example is provided by the Van der Pol oscillator, whose unique limit
 
 = Boundary Value Problems // 边值问题
 
-This chapter studies boundary value problems (BVPs) for linear ODEs, where conditions are specified at two endpoints of an interval rather than at a single initial point. The central object is the Sturm-Liouville problem, whose eigenfunctions form an orthogonal basis for expanding arbitrary functions — the foundation of Fourier series and spectral methods.
+This chapter studies boundary value problems (BVPs) for linear ODEs, where conditions are specified at two endpoints of an interval rather than at a single initial point.
+The central object is the Sturm-Liouville problem, whose eigenfunctions form an orthogonal basis for expanding arbitrary functions — the foundation of Fourier series and spectral methods.
 
 == Boundary Value Problems vs. Initial Value Problems // 边值问题与初值问题
 
@@ -1974,7 +1975,7 @@ $
   dot.double(y) + p(x) dot(y) + q(x) y = f(x), quad quad y(a) = c_1, quad quad y(b) = c_2.
 $
 
-Unlike IVPs, which always have a unique solution under mild conditions, BVPs have a more nuanced existence theory.
+In contrast to the initial value problems of Part I, the existence theory for BVPs is more nuanced: the Fredholm alternative below distinguishes precisely the solvable and unsolvable cases.
 
 #theorem(name: "Fredholm Alternative")[
   For the linear BVP
@@ -1987,10 +1988,16 @@ Unlike IVPs, which always have a unique solution under mild conditions, BVPs hav
 ] <thm:fredholm-alternative>
 
 #note[
-  The Fredholm alternative is the infinite-dimensional analog of the linear algebra fact: a square matrix $A$ is either invertible (unique solution for every right-hand side) or has a nontrivial null space (solutions exist only for right-hand sides orthogonal to the left null space).
+  The Fredholm alternative is the infinite-dimensional analog of the linear algebra fact: a square matrix $bold(A)$ is either invertible (unique solution for every right-hand side) or has a nontrivial null space (solutions exist only for right-hand sides orthogonal to the left null space).
+
+  The *adjoint homogeneous problem* in alternative 2 is obtained by replacing the operator $L$ with its formal adjoint $L^*$ together with the adjoint boundary conditions; for the self-adjoint problems of the next section the adjoint problem coincides with the original one, and the orthogonality condition simply reads $⟨ f, y ⟩ = 0$ for every solution $y$ of the homogeneous problem.
+
+  The proof belongs to the theory of compact operators on Hilbert spaces and is beyond the scope of this notebook.
 ]
 
 When the homogeneous BVP has only the trivial solution, we can construct the solution explicitly using the *Green's function*.
+
+For definiteness we work with homogeneous boundary conditions $y(a) = y(b) = 0$; a problem with inhomogeneous boundary data $c_1, c_2$ is reduced to this case by subtracting any smooth function that satisfies the boundary conditions.
 
 #definition(name: "Green's Function")[
   Let the homogeneous BVP
@@ -2003,7 +2010,7 @@ When the homogeneous BVP has only the trivial solution, we can construct the sol
   3. $G(x, xi)$ is continuous at $x = xi$.
   4. The derivative has a jump discontinuity at $x = xi$:
     $
-      (partial G) / (partial x) |_(xi^+) - (partial G) / (partial x) |_(xi^-) = 1.
+      (partial G) / (partial x) |_(xi^-) - (partial G) / (partial x) |_(xi^+) = 1.
     $
 ] <def:greens-function>
 
@@ -2018,8 +2025,20 @@ When the homogeneous BVP has only the trivial solution, we can construct the sol
   $] <eq:greens-solution>
 ] <thm:greens-representation>
 
+#proof[
+  Let $y(x) = integral_a^b G(x, xi) f(xi) dif xi$. Since $G$ is continuous in $x$ and satisfies the boundary conditions, $y(a) = y(b) = 0$.
+
+  Differentiating under the integral sign with the integral split at $xi = x$ gives $y'(x) = integral_a^b G_(x)(x, xi) f(xi) dif xi$ and
+  $
+    y''(x) = integral_a^b G_(x x)(x, xi) f(xi) dif xi + lr(G_(x)(x, x^-) - G_(x)(x, x^+)) f(x) = integral_a^b G_(x x)(x, xi) f(xi) dif xi + f(x),
+  $
+  where the jump term is exactly property 4.
+
+  Since $G$ satisfies the homogeneous equation in $x$ on $(a, xi)$ and $(xi, b)$, we have $integral_a^b (G_(x x) + p G_(x) + q G) f dif xi = 0$, and assembling the pieces yields $y'' + p y' + q y = f$.
+]
+
 #note[
-  The Green's function is the continuous analog of the matrix inverse: the solution operator $f mapsto y$ is an integral operator with kernel $G(x, xi)$, just as solving $A bold(x) = bold(bold(b))$ in linear algebra gives $bold(x) = A^(-1) bold(b)$.
+  The Green's function is the continuous analog of the matrix inverse: the solution operator $f mapsto y$ is an integral operator with kernel $G(x, xi)$, just as solving $bold(A) bold(x) = bold(b)$ in linear algebra gives $bold(x) = bold(A)^(-1) bold(b)$.
 ]
 
 #example(name: "Green's Function for $dot.double(y) = 0$ with Dirichlet BCs")[
@@ -2078,23 +2097,28 @@ $
 ] <def:weighted-inner-product>
 
 #theorem(name: "Self-Adjointness of the Sturm-Liouville Operator")[
-  For functions $u, v$ satisfying the regular Sturm-Liouville boundary conditions, the operator $L$ is self-adjoint with respect to the weighted inner product:
+  The Sturm-Liouville operator $L$ is self-adjoint with respect to the (unweighted) inner product $⟨ u, v ⟩ = integral_a^b u v dif x$: for functions $u, v$ satisfying the regular Sturm-Liouville boundary conditions,
   $
-    ⟨ L u, v ⟩_(r) = ⟨ u, L v ⟩_(r).
+    ⟨ L u, v ⟩ = ⟨ u, L v ⟩.
   $
 ] <thm:self-adjoint>
 
 #proof[
   Integrate by parts twice:
   $
-    integral_a^b (L u) v r dif x = - integral_a^b (p u')' v dif x + integral_a^b q u v r dif x
-    = - p u' v |_a^b + integral_a^b p u' v' dif x + integral_a^b q u v r dif x.
+    ⟨ L u, v ⟩ = - integral_a^b (p u')' v dif x + integral_a^b q u v dif x = - p u' v |_a^b + integral_a^b p u' v' dif x + integral_a^b q u v dif x.
   $
 
-  The boundary term $-p u' v |_a^b$ vanishes because of the boundary conditions.
+  The boundary form is $p (u v' - u' v) |_a^b$: under separated homogeneous boundary conditions the pair $(u, u')$ is parallel to $(v, v')$ at each endpoint, so the bracket vanishes there; periodic boundary conditions give the same conclusion.
 
-  Repeating the integration by parts for $u v'$ gives the symmetric expression, hence $⟨ L u, v ⟩_(r) = ⟨ u, L v ⟩_(r)$.
+  Repeating the computation with $u$ and $v$ interchanged and subtracting, the remaining terms coincide term by term, hence $⟨ L u, v ⟩ = ⟨ u, L v ⟩$.
+
+  The computation extends to complex-valued functions by linearity.
 ]
+
+Self-adjointness is the engine behind all spectral properties below: if $L y = lambda r y$ and $L z = mu r z$, then pairing the first equation with $z$ and the second with $y$ gives $lambda ⟨ y, z ⟩_(r) = ⟨ L y, z ⟩ = ⟨ y, L z ⟩ = mu ⟨ y, z ⟩_(r)$, so $(lambda - mu) ⟨ y, z ⟩_(r) = 0$.
+
+For complex-valued functions the weighted inner product is amended to $⟨ u, v ⟩_(r) = integral_a^b u overline(v) r dif x$; this is the convention used in the proof of real eigenvalues below.
 
 === Periodic and Singular Sturm-Liouville Problems // 周期与奇异 Sturm-Liouville 问题
 
@@ -2103,8 +2127,10 @@ $
   $
     y(a) = y(b), quad quad dot(y)(a) = dot(y)(b),
   $
-  in addition to $p(a) = p(b)$. This is the setting for the full Fourier series (sine and cosine).
+  in addition to $p(a) = p(b)$.
 ] <def:periodic-slp>
+
+This is the setting for the full Fourier series (sine and cosine).
 
 #definition(name: "Singular Sturm-Liouville Problem")[
   A Sturm-Liouville problem is *singular* if at least one endpoint is singular: either $p(a) = 0$ or $p(b) = 0$, or the interval is unbounded. The boundary conditions are replaced by appropriate boundedness/integrability conditions.
@@ -2125,19 +2151,17 @@ $
 ] <thm:real-eigenvalues>
 
 #proof[
-  Suppose $lambda = alpha + i beta$ is a complex eigenvalue with eigenfunction $y = u + i v$.
+  Suppose $L y = lambda r y$ with $y$ non-trivial and $lambda$ complex.
 
-  Taking the complex conjugate, $overline(lambda) = alpha - i beta$ is also an eigenvalue with eigenfunction $overline(y) = u - i v$.
-
-  By orthogonality,
+  Pairing the equation with $overline(y)$ and using the self-adjointness of $L$ (#link(<thm:self-adjoint>)[Theorem, extended to complex-valued functions by linearity]),
   $
-    integral_a^b y overline(y) r dif x = 0,
+    lambda integral_a^b y overline(y) r dif x = integral_a^b (L y) overline(y) dif x = integral_a^b y (L overline(y)) dif x = overline(lambda) integral_a^b y overline(y) r dif x,
   $
-  since $lambda != overline(lambda)$.
+  where $L overline(y) = overline(lambda) r overline(y)$ holds because the coefficients $p, q, r$ are real.
 
-  But $y overline(y) = abs(y)^2 > 0$ unless $y equiv 0$, a contradiction.
+  The integral $integral_a^b abs(y)^2 r dif x$ is strictly positive unless $y equiv 0$ (a solution vanishing at one interior point is identically zero, by uniqueness).
 
-  Hence $beta = 0$, so $lambda$ is real.
+  Hence $lambda = overline(lambda)$, so $lambda$ is real.
 ]
 
 #theorem(name: "Properties of Sturm-Liouville Eigenvalues")[
@@ -2152,8 +2176,26 @@ $
     $
       f(x) = sum_(n=1)^oo c_n y_(n)(x),
     $
-    where $c_n = (integral_a^b f(x) y_(n)(x) r(x) dif x) / (integral_a^b y_n^2(x) r(x) dif x)$.
+    where $c_n = (integral_a^b f(x) y_(n)(x) r(x) dif x) / (integral_a^b y_(n)^2(x) r(x) dif x)$.
 ] <thm:sl-properties>
+
+#note[
+  Property 2 was proved in #link(<thm:real-eigenvalues>)[the theorem on real eigenvalues], and property 3 follows from self-adjointness exactly as sketched after #link(<thm:self-adjoint>)[the self-adjointness theorem].
+
+  Properties 1 and 4 belong to the spectral theory of compact self-adjoint operators and are beyond the scope of this notebook.
+]
+
+#theorem(name: "Sturm Comparison Theorem")[
+  Let $u$ and $v$ be non-trivial solutions of $u'' + q_1(x) u = 0$ and $v'' + q_2(x) v = 0$ on $(a, b)$, with $q_1(x) < q_2(x)$ on $(a, b)$.
+
+  Then between any two consecutive zeros of $u$ there lies at least one zero of $v$.
+] <thm:sturm-comparison>
+
+#note[
+  Intuitively, the equation with the larger coefficient $q_2$ is "stiffer" and oscillates faster, so its solutions cannot avoid crossing zero between two consecutive zeros of $u$.
+
+  The oscillation theorem below is obtained by applying this comparison to consecutive eigenfunctions; the full proof belongs to the classical theory (see Coddington & Levinson, *Theory of Ordinary Differential Equations*, Chapter 8).
+]
 
 #theorem(name: "Sturm Oscillation Theorem")[
   For the $n$-th eigenfunction $y_(n)(x)$ of a regular Sturm-Liouville problem:
@@ -2162,7 +2204,9 @@ $
 ] <thm:sturm-oscillation>
 
 #note[
-  The oscillation theorem explains the ordering of eigenvalues: higher eigenfunctions oscillate faster, hence correspond to larger eigenvalues. This is also the origin of the uncertainty principle intuition: more oscillation = higher energy = higher eigenvalue.
+  The oscillation theorem explains the ordering of eigenvalues: higher eigenfunctions oscillate faster, hence correspond to larger eigenvalues.
+
+  This is also the origin of the uncertainty principle intuition: more oscillation = higher energy = higher eigenvalue.
 ]
 
 #theorem(name: "Asymptotic Behavior of Eigenvalues")[
@@ -2171,13 +2215,13 @@ $
     lambda_n ~ (n pi / L)^2, quad quad L = integral_a^b sqrt(r(x) / p(x)) dif x.
   $
   The eigenfunctions oscillate asymptotically like $sin(n pi (x - a) / L)$.
+
+  The proof relies on a detailed analysis of the Green's function and is beyond the scope of this notebook.
 ] <thm:eigenvalue-asymptotics>
 
 == Generalized Fourier Series // 广义傅里叶级数
 
-#note[
-  This theorem is the spectral theorem for self-adjoint differential operators. The Sturm-Liouville operator is self-adjoint with respect to the inner product weighted by $r(x)$, which is why its eigenvalues are real and its eigenfunctions are orthogonal.
-]
+The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfunctions.
 
 #figure(
   image("img/sturm-liouville-eigenfunctions.svg", width: 85%),
@@ -2187,7 +2231,7 @@ $
 ) <fig:sl-eigenfunctions>
 
 #example(name: "Fourier Sine Series")[
-  The classic Fourier sine series is the Sturm-Liouville problem
+  The classic Fourier sine series arises from the Sturm-Liouville problem
   $
     dot.double(y) + lambda y = 0, quad quad y(0) = 0, quad quad y(pi) = 0.
   $
@@ -2204,8 +2248,16 @@ $
   $
     lim_(N -> oo) integral_a^b abs(f(x) - sum_(n=1)^N c_n y_(n)(x))^2 r(x) dif x = 0.
   $
-  This is the Hilbert space interpretation: the eigenfunctions form an orthonormal basis in $L^2([a, b], r(x) dif x)$.
+  This is the Hilbert space interpretation: the normalized eigenfunctions form an orthonormal basis of $L^2([a, b], r(x) dif x)$.
 ] <thm:l2-convergence>
+
+#note[
+  This is the spectral theorem for self-adjoint differential operators.
+
+  The Sturm-Liouville operator is self-adjoint in the sense of #link(<thm:self-adjoint>)[the self-adjointness theorem], which is why its eigenvalues are real and its eigenfunctions are orthogonal.
+
+  The proof relies on the completeness of the eigenfunctions (property 4 of the eigenvalue theorem) and is beyond the scope of this notebook.
+]
 
 #theorem(name: "Pointwise Convergence")[
   If $f(x)$ is piecewise smooth on $[a, b]$, then the generalized Fourier series converges pointwise:
@@ -2220,7 +2272,7 @@ $
   $
     dot.double(y) + lambda y = 0, quad quad dot(y)(0) = 0, quad quad dot(y)(pi) = 0
   $
-  has eigenvalues $lambda_n = n^2$ and eigenfunctions $y_(n)(x) = cos(n x)$. The corresponding expansion is the Fourier cosine series, which represents even functions on $[0, pi]$ extended to $[-pi, pi]$.
+  has eigenvalues $lambda_0 = 0$ (with the constant eigenfunction $y_0 equiv 1$) and $lambda_n = n^2$ with eigenfunctions $y_(n)(x) = cos(n x)$ for $n >= 1$. The corresponding expansion is the Fourier cosine series, which represents even functions on $[0, pi]$ extended to $[-pi, pi]$.
 ] <ex:fourier-cosine>
 
 #example(name: "Full Fourier Series (Periodic Boundary)")[
@@ -2236,7 +2288,7 @@ $
   $
     - (dif) / (dif x) lr((1 - x^2) dot(y)) = lambda y, quad quad x in (-1, 1)
   $
-  is a singular Sturm-Liouville problem with $p(x) = 1 - x^2$ vanishing at both endpoints. The eigenvalues are $lambda_n = n(n + 1)$, and the eigenfunctions are the Legendre polynomials $P_(n)(x)$. They are orthogonal with weight $r(x) = 1$ on $[-1, 1]$.
+  is a singular Sturm-Liouville problem with $p(x) = 1 - x^2$ vanishing at both endpoints; the boundary conditions are replaced by the requirement that solutions remain bounded at $x = +-1$. The eigenvalues are $lambda_n = n(n + 1)$, and the eigenfunctions are the Legendre polynomials $P_(n)(x)$. They are orthogonal with weight $r(x) = 1$ on $[-1, 1]$.
 ] <ex:legendre>
 
 #bibliography("references.bib")
