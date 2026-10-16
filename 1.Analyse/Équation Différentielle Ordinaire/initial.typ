@@ -346,7 +346,7 @@ If there exists a continuously differentiable function $U(x, y)$ such that
 $
   dif U(x, y) = M(x, y) dif x + N(x, y) dif y,
 $
-then @eq:symmetric-form is said to be an *exact equation* (or *total differential equation*). When this holds, the equation can be rewritten as $d(U(x, y)) = 0$, which implies
+then @eq:symmetric-form is said to be an *exact equation* (or *total differential equation*). When this holds, the equation can be rewritten as $dif U(x, y) = 0$, which implies
 #eq[$
   U(x, y) = c,
 $] <eq:exact-general-integral>
@@ -396,7 +396,7 @@ then @eq:symmetric-form is called a *separable equation*. In the more familiar d
 #eq[$
   (dif y) / (dif x) = f(x) g(y),
 $] <eq:separable-form>
-where $f(x) = -M_1(x) / N_1(x)$ and $g(y) = N_2(y) / M_2(y)$.
+where $f(x) = -M_1(x) / N_1(x)$ and $g(y) = M_2(y) / N_2(y)$.
 ] <def:separable-equation>
 
 #theorem(name: "Solutions to Separable Equations")[
@@ -599,7 +599,7 @@ $
 
 There are two cases:
 
-1. *$d p / d x = 0$*: Then $p = c$ (constant), and substituting back gives the general solution
+1. *$(dif p) / (dif x) = 0$*: Then $p = c$ (constant), and substituting back gives the general solution
    $
      y = c x + g(c).
    $
