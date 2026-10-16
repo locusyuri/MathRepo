@@ -84,7 +84,8 @@
 //   Section 2.6: Implicit Equations (隐式方程)
 //     - 可解出导数的隐式方程、参数法
 //   Section 2.7: Reducible Higher-Order Equations (可降阶的高阶方程)
-//     - 不显含未知函数、不显含自变量的降阶法
+//     - 不显含未知函数、不显含自变量、缺特定导数的降阶法
+//     - Euler-Cauchy 方程（等维方程，换元化为常系数线性方程）
 
 // --- Chapter 3: Existence, Uniqueness and Dependence (存在唯一性与解的依赖性) ---
 
@@ -370,8 +371,18 @@ where $gamma$ is any piecewise smooth curve in $D$ connecting $(x_0, y_0)$ to $(
 ] <thm:exactness-criterion>
 
 #proof[
-This is a standard result from multivariable calculus — the equivalence of closed and exact 1-forms on simply connected domains. For a complete proof, see *Analyse Mathématique*, Theorem 15.9.
+The sufficiency is a direct consequence of the chain rule. Since $M$ and $N$ are the partial derivatives of the unknown $U$, integrating $U_x = M$ and $U_y = N$ along any path from $(x_0, y_0)$ to $(x, y)$ yields a single-valued $U(x, y)$, because $M_y = N_x$ makes the integral independent of the chosen path. Necessity follows by reversing the argument: if @eq:symmetric-form is exact, then $U_x = M$ and $U_y = N$, so $M_y = U_(x y) = U_(y x) = N_x$. For a complete proof, see *Analyse Mathématique*, Theorem 15.9.
 ]
+
+#example(name: "Exact Equation")[
+Solve $
+  (3 x^2 + 2 x y) dif x + (x^2 + 2 y) dif y = 0.
+$
+Here $M = 3 x^2 + 2 x y$ and $N = x^2 + 2 y$. Since $(partial M) / (partial y) = 2 x = (partial N) / (partial x)$, the equation is exact. We seek $U$ with $U_x = M$ and $U_y = N$. Integrating $U_x = 3 x^2 + 2 x y$ with respect to $x$ gives $U = x^3 + x^2 y + h(y)$. Differentiating with respect to $y$ and matching $U_y = N$ gives $h'(y) = 2 y$, so $h(y) = y^2$. The general integral is
+$
+  x^3 + x^2 y + y^2 = c.
+$
+] <ex:exact-equation>
 
 Beyond the line-integral method, there are two practical methods for finding $U(x, y)$:
 
@@ -399,6 +410,15 @@ $] <eq:separable-form>
 where $f(x) = -M_1(x) / N_1(x)$ and $g(y) = M_2(y) / N_2(y)$.
 ] <def:separable-equation>
 
+In practice it is often clearer to separate directly from @eq:separable-form: dividing by $g(y)$ and $f(x)$ gives
+$
+  (1 / g(y)) dif y = f(x) dif x,
+$
+which integrates to
+$
+  integral (1 / g(y)) dif y = integral f(x) dif x + c.
+$
+
 #theorem(name: "Solutions to Separable Equations")[
 All solutions to the separable equation @eq:separable-form are given by
 $
@@ -414,6 +434,15 @@ where $M_2(b_i) = 0$ and $N_1(a_j) = 0$, and $c$ is an arbitrary constant.
 #caution[
 When separating variables, we must divide by $M_2(y)$ and $N_1(x)$. The roots of $M_2(y) = 0$ and $N_1(x) = 0$ give constant solutions that are lost during division. These must be checked separately and added back to the solution set.
 ]
+
+#example(name: "Separable Equation")[
+Solve $(dif y) / (dif x) = x^2 y$ with $y(0) = 1$.
+
+Separating variables gives $(1 / y) dif y = x^2 dif x$. Integrating both sides yields $ln abs(y) = x^3 / 3 + c$. Applying $y(0) = 1$ gives $c = 0$, so
+$
+  y = e^(x^3 / 3).
+$
+] <ex:separable-equation>
 
 == Homogeneous Equations // 齐次方程
 
@@ -447,6 +476,19 @@ A more general form is
   (dif y) / (dif x) = f((a_1 x + b_1 y + c_1) / (a_2 x + b_2 y + c_2)),
 $] <eq:linear-fraction-equation>
 which can be reduced to a homogeneous or separable equation by coordinate translation and scaling.
+
+#example(name: "Homogeneous Equation")[
+Solve $(x + y) dif x - x dif y = 0$.
+
+The equation is homogeneous of degree one. Rewriting in derivative form gives $(dif y) / (dif x) = (x + y) / x = 1 + y / x$. With $u = y / x$, we have $(dif y) / (dif x) = x (dif u) / (dif x) + u$, so
+$
+  x (dif u) / (dif x) + u = 1 + u quad quad => quad quad (dif u) / (dif x) = 1 / x.
+$
+This is separable: $dif u = (1 / x) dif x$, hence $u = ln abs(x) + c$. Substituting back $u = y / x$ gives the general solution
+$
+  y = x (ln abs(x) + c).
+$
+] <ex:homogeneous-equation>
 
 == Linear Equations // 线性方程
 
@@ -491,6 +533,23 @@ This expression has a natural interpretation: *the fundamental solution times th
 The method of variation of constants generalizes to non-homogeneous linear PDEs, where it is known as *Duhamel's principle*.
 ]
 
+#example(name: "First-Order Linear Equation")[
+Solve $(dif y) / (dif x) + y = x$ with $y(0) = 0$.
+
+Here $p(x) = 1$ and $q(x) = x$, so the integrating factor of the standard form is $e^(integral 1 dif x) = e^x$. Multiplying the equation by $e^x$ gives
+$
+  (dif / dif x)(e^x y) = x e^x.
+$
+Integrating from $0$ to $x$ and using $y(0) = 0$,
+$
+  e^x y = integral_0^x t e^t dif t = e^x (x - 1) + 1,
+$
+so
+$
+  y = x - 1 + e^(-x).
+$
+] <ex:first-order-linear>
+
 #definition(name: "Bernoulli Equation")[
 A *Bernoulli equation* is a first-order equation of the form
 $
@@ -508,6 +567,24 @@ $
   (dif z) / (dif x) + (1 - n) p(x) z = (1 - n) q(x),
 $
 which is a linear equation in $z$, solvable by the method above.
+
+#note[
+The Bernoulli equation is a special case of the *Riccati equation* below, obtained by setting the zero-order term $q_0(x) equiv 0$.
+]
+
+#definition(name: "Riccati Equation")[
+A *Riccati equation* is a first-order equation of the form
+$
+  (dif y) / (dif x) = q_0(x) + q_1(x) y + q_2(x) y^2,
+$
+where $q_0(x)$, $q_1(x)$, and $q_2(x)$ are given functions.
+] <def:riccati-equation>
+
+Riccati equations are generally non-linear and cannot be solved by the linear methods above. However, if one particular solution $y_1(x)$ is known, the substitution $y = y_1 + 1 / z$ reduces the equation to a linear equation in $z$. Indeed, substituting and using that $y_1$ satisfies the Riccati equation, the non-linear terms cancel and one obtains
+$
+  (dif z) / (dif x) + (q_1(x) + 2 q_2(x) y_1(x)) z = -q_2(x),
+$
+which is linear in $z$ and solvable by the integrating-factor method.
 
 == Integrating Factors // 积分因子
 
@@ -555,6 +632,27 @@ $
 is a general solution of the equation, where $c$ is an arbitrary constant.
 ] <thm:integrating-factor-ratio>
 
+#example(name: "Integrating Factor")[
+Solve $(x + y) dif x - x dif y = 0$.
+
+Here $M = x + y$, $N = -x$. Since $(partial M) / (partial y) = 1 \neq -1 = (partial N) / (partial x)$, the equation is not exact. Try an integrating factor depending only on $x$:
+$
+  G(x) = - (1 / N) lr((partial N) / (partial x) - (partial M) / (partial y)) = - (1 / (-x)) (-1 - 1) = -2 / x,
+$
+which depends only on $x$. Thus
+$
+  mu(x) = e^( integral (-2 / x) dif x) = x^(-2).
+$
+Multiplying the original equation by $mu = 1 / x^2$ gives
+$
+  (1 / x + y / x^2) dif x - (1 / x) dif y = 0,
+$
+which is exact. Integrating $U_x = 1 / x + y / x^2$ gives $U = ln abs(x) - y / x + h(y)$. Since $U_y = -1 / x + h'(y) = N' = -1 / x$, we have $h'(y) = 0$, so the general solution is
+$
+  ln abs(x) - y / x = c, quad quad text("i.e.") quad quad y = x (ln abs(x) - c).
+$
+] <ex:integrating-factor>
+
 == Implicit Equations // 隐式方程
 
 This section treats first-order implicit equations of the form
@@ -577,7 +675,15 @@ Depending on which variable can be solved explicitly, there are several cases:
   $
   which is a first-order equation in $p$. Solve for $p(x)$, then substitute back into $y = f(x, p)$.
 
-- *Case (c): $x = f(y, p)$ solvable.* Differentiate with respect to $x$ and derive an equation for $p$ as a function of $y$.
+- *Case (c): $x = f(y, p)$ solvable.* Differentiate both sides with respect to $y$:
+  $
+    (dif x) / (dif y) = (partial f) / (partial y) + (partial f) / (partial p) (dif p) / (dif y).
+  $
+  Since $(dif x) / (dif y) = 1 / p$, this becomes
+  $
+    1 / p = (partial f) / (partial y) + (partial f) / (partial p) (dif p) / (dif y),
+  $
+  which is a first-order equation in $p(y)$. Solve for $p(y)$, then substitute back into $x = f(y, p)$ to obtain the solution in parametric form.
 
 === Clairaut and Lagrange Equations // Clairaut 方程与 Lagrange 方程
 
@@ -613,7 +719,30 @@ The Clairaut equation generalizes to the *Lagrange equation*:
 $
   y = x f(p) + g(p),
 $
-where $f(p) not equiv p$. The solution procedure is analogous: differentiate, factor, and treat the two cases separately.
+where $f(p) not equiv p$. Differentiating both sides with respect to $x$ gives
+$
+  p = f(p) + (x f'(p) + g'(p)) (dif p) / (dif x),
+$
+which rearranges to
+$
+  (x f'(p) + g'(p)) (dif p) = (p - f(p)) dif x.
+$
+Since $f(p) not equiv p$, the right-hand side is not identically zero. Treat $x$ as a function of $p$ (dividing by $dif p$, when nonzero):
+$
+  (p - f(p)) (dif x) / (dif p) = x f'(p) + g'(p).
+$
+This is a linear equation for $x(p)$. Solving it yields $x$ and then $y = x f(p) + g(p)$ in parametric form. Additionally, any root $p_*$ of $f(p_*) = p_*$ gives the constant-slope solutions $y = p_* x + g(p_*)$, which play the role of the general solution's family.
+
+#example(name: "Clairaut Equation")[
+Solve $y = x dot(y) - dot(y)^2$.
+
+This is a Clairaut equation with $g(p) = -p^2$. Differentiating gives
+$
+  p = p + x (dif p) / (dif x) - 2 p (dif p) / (dif x) quad quad => quad quad (x - 2 p) (dif p) / (dif x) = 0.
+$
+- From $(dif p) / (dif x) = 0$ we get $p = c$, hence the general solution $y = c x - c^2$.
+- From $x - 2 p = 0$ we get $p = x / 2$. Substituting back gives the singular solution $y = x^2 / 4$.
+] <ex:clairaut-equation>
 
 == Reducible Higher-Order Equations // 可降阶的高阶方程
 
@@ -636,6 +765,24 @@ Some higher-order equations can be reduced to lower order by variable substituti
    and so on. The equation reduces to order $n - 1$ in $p(y)$.
 
 3. *Equations missing a particular derivative*: Similar substitution techniques apply depending on which derivative is absent.
+
+#example(name: "Reduction of Order (Missing $x$)")[
+Solve $y dot.double(y) = dot(y)^2$.
+
+The equation is missing $x$. Set $p = dot(y)$ and treat $y$ as the independent variable. Then $dot.double(y) = (dif p) / (dif y) \cdot p$, so
+$
+  y \cdot p \cdot (dif p) / (dif y) = p^2.
+$
+For $p \neq 0$, divide by $p$ to get
+$
+  y (dif p) / (dif y) = p,
+$
+which is separable: $(dif p) / p = (dif y) / y$. Integrating gives $ln abs(p) = ln abs(y) + c_1$, so $p = C y$. Since $p = dot(y) = (dif y) / (dif x)$, we have
+$
+  (dif y) / (dif x) = C y,
+$
+which is a simple separable equation with solution $y = c_2 e^(C x)$.
+] <ex:reduction-missing-x>
 
 #definition(name: "Euler-Cauchy Equation")[
 An *Euler-Cauchy equation* (or equidimensional equation) has the form
