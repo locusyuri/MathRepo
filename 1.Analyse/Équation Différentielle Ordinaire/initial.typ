@@ -811,7 +811,7 @@ The previous chapter provided elementary methods for solving specific classes of
 We begin with an auxiliary inequality that will be used repeatedly.
 
 #theorem(name: "Bellman-Gronwall Inequality")[
-Let $f(x)$ and $g(x)$ be continuous on $[a, b]$, with $g(x) >= 0$, and let $c >= 0$ be a constant. If
+Let $f(x)$ and $g(x)$ be continuous on $[a, b]$, with $f(x) >= 0$, $g(x) >= 0$, and let $c >= 0$ be a constant. If
 $
   f(x) <= c + integral_a^x f(t) g(t) dif t,
 $
@@ -820,6 +820,10 @@ $
   f(x) <= c exp(lr(integral_a^x g(t) dif t)).
 $
 ] <thm:bellman-gronwall>
+
+#proof[
+The inequality follows from Gronwall's lemma applied to the continuous function $u(x) = integral_a^x g(t) dif t$. The complete proof is deferred to Analyse Réelle / Analyse Fonctionnelle (Bellman-Gronwall lemma is a standard result in integral inequality theory).
+]
 
 Now consider the Cauchy problem
 #eq[$
@@ -845,7 +849,7 @@ $
 $
 ] <thm:picard-lindelof>
 
-#note[
+#proof[
 The proof proceeds by *Picard iteration*:
 
 1. Convert the Cauchy problem into an equivalent integral equation:
@@ -862,7 +866,7 @@ The proof proceeds by *Picard iteration*:
    $
      abs(phi_(n + 1) - phi_n) <= (M L^n) / ((n + 1)!) abs(x - x_0)^(n + 1),
    $
-   which decays factorially and guarantees uniform convergence.
+   which decays factorially. On the interval $[x_0 - h, x_0 + h]$, we have $abs(x - x_0) <= h$, so the bound is uniform in $x$, guaranteeing uniform convergence.
 
 4. Verify that the limit function satisfies the integral equation, and hence the ODE.
 
@@ -907,12 +911,27 @@ $
 If $f(x, y)$ satisfies the Osgood condition with respect to $y$ in $D$, then the solution to @eq:cauchy-problem is unique on $[x_0 - h, x_0 + h]$.
 ] <thm:osgood>
 
+#example(name: "Non-Uniqueness for Peano")[
+The ODE $dot(y) = sqrt(y)$ with $y(0) = 0$ satisfies the Peano existence theorem's hypotheses ($f(y) = sqrt(y)$ is continuous) but violates uniqueness. Indeed, $y equiv 0$ is a solution, and for any $c >= 0$,
+$
+  y = ((x - c) / 2)^2 quad quad text("for") x >= c, quad quad y = 0 quad quad text("for") x < c
+$
+is also a solution. Since $c$ is arbitrary, there are infinitely many solutions.
+] <ex:peano-counterexample>
+
 #note[
-The Peano theorem guarantees existence but not uniqueness. The classic counterexample is $dot(y) = sqrt(y)$ with $y(0) = 0$, which has infinitely many solutions (including piecewise solutions that stay at zero for an arbitrary interval before taking off). The Osgood theorem gives the weakest known condition for uniqueness.
+The Peano theorem guarantees existence but not uniqueness. The Osgood theorem gives the weakest known condition for uniqueness.
+]
+
+#theorem(name: "Global Existence for Linear Equations")[
+Consider the linear equation $(dif y) / (dif x) = A(x) y + g(x)$ on an interval $I$ where $A(x)$ and $g(x)$ are continuous. Then for any $(x_0, y_0) in I times bb(R)^n$, there exists a unique solution defined on the *entire* interval $I$, not merely on a local subinterval.
+] <thm:linear-global-existence>
+
+#proof[
+This follows from the fact that the integral kernel $A(t)$ remains bounded on compact subintervals of $I$, so the local Picard-Lindelöf theorem can be iterated to extend the solution to all of $I$ without encountering blow-up. A direct proof via successive approximations is standard (see Coddington, *Theory of Ordinary Differential Equations*, §1.9).
 ]
 
 == Continuation of Solutions // 解的延拓
-
 #definition(name: "Saturated (Uncontinuable) Solution")[
 Let $y = phi(x)$ be a solution on interval $I_1$. If there exists another solution $y = tilde(phi)(x)$ on a strictly larger interval $I_2 supset I_1$ that agrees with $phi$ on $I_1$, then $phi$ is called *continuable*, and $tilde(phi)$ is a *continuation*. If no such extension exists, $phi$ is called *uncontinuable* or *saturated*.
 ] <def:saturated-solution>
@@ -926,7 +945,7 @@ Let $f(x, y)$ and $g(x, y)$ be continuous and Lipschitz in $y$ in a region $D$. 
 $
   phi(x) <= psi(x)
 $
-on their common interval of existence. The same holds for strict inequalities.
+for $x >= x_0$ on their common interval of existence. The same holds for strict inequalities (for $x > x_0$).
 ] <thm:comparison>
 
 == Singular Solutions and Envelopes // 奇解与包络
@@ -993,6 +1012,8 @@ $
 #note[
 These formulas show how sensitive the solution is to changes in the initial conditions. The derivative with respect to $y_0$ is a solution of the variational equation $z' = f_(y)(x, phi(x)) z$, which is the linearization of the original ODE along the solution trajectory. This variational equation plays a central role in stability theory (Part III).
 ]
+
+When $f$ also depends on a parameter $lambda$, i.e., $f = f(x, y, lambda)$, the same argument shows that the solution $y = phi(x; x_0, y_0, lambda)$ depends continuously and differentiably on $lambda$ as well, provided $f$ and $f_y$ are continuous in all arguments.
 
 #part("Linear Systems Theory") // 线性系统理论
 
