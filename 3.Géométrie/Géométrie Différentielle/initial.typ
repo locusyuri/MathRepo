@@ -299,6 +299,6 @@
 //   处理。数学分析（Analyse Mathématique）Part 4 为引用基线。
 // ==========================================================================
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 
 // 目录

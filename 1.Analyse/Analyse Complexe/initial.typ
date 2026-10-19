@@ -2804,7 +2804,7 @@ The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genu
 
 
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 
 // 目录
 

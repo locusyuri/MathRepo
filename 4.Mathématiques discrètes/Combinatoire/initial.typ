@@ -2601,4 +2601,4 @@ Erdős's 1947 lower bound and the classical recursion upper bound.
 == Polya's Enumeration Theorem
 
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)

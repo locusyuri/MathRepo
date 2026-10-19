@@ -3626,6 +3626,6 @@ hydrodynamics, beyond this note's scope.
 //    扩展为完整的 3 章，覆盖输运方程、不可逆热力学、涨落-耗散理论。
 // ==========================================================================
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 
 // 目录

@@ -2956,7 +2956,7 @@ The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), i
 
 We now fix the object of the chapter. This section first formulates the general Cauchy problem in space dimension $n$, then derives the wave equation from mechanics — both derivations follow the same pattern, applying Newton's second law, equivalently the balance of momentum, to an infinitesimal material element and then linearizing for small disturbances — and finally discusses the initial and boundary conditions that select a well-posed problem.
 
-=== The Cauchy Problem in bb(R)^n // R^n 上的柯西问题
+=== The Cauchy Problem in $bb(R)^n$ // R^n 上的柯西问题
 
 Throughout the chapter we work in dimension $n$, writing $bold(x) = (x_1, dots, x_n)$ for a point of $bb(R)^n$; in one dimension $bold(x)$ is the single variable $x$, and we write it without boldface. The wave speed is $a > 0$. In its most general form the problem carries both a source and arbitrary initial data.
 
@@ -2971,7 +2971,9 @@ Throughout the chapter we work in dimension $n$, writing $bold(x) = (x_1, dots, 
   where $Delta$ is the Laplacian in $bold(x)$, $f$ a given source, and $phi, psi$ the initial displacement and velocity.
 ] <def:general-cauchy-wave>
 
-The chapter solves this problem for $n = 1, 2, 3$; the same pattern governs higher dimensions, and we indicate the general structure where it clarifies the picture. The *homogeneous* equation with nonzero data is solved in §16.2 (one dimension) and §16.3 (higher dimensions); the *inhomogeneous* equation with zero data is reduced to the homogeneous one in §16.4. Boundary conditions replace the Cauchy formulation entirely once the medium has an end, and are the subject of §16.2 (half-line) and §16.5 (bounded interval).
+The chapter solves this problem for $n = 1, 2, 3$; the same pattern governs higher dimensions, and we indicate the general structure where it clarifies the picture.
+
+The *homogeneous* equation with nonzero data is solved in §16.2 (one dimension) and §16.3 (higher dimensions); the *inhomogeneous* equation with zero data is reduced to the homogeneous one in §16.4. Boundary conditions replace the Cauchy formulation entirely once the medium has an end, and are the subject of §16.2 (half-line) and §16.5 (bounded interval).
 
 === The Vibrating String // 弦振动
 
@@ -4031,6 +4033,6 @@ This chapter gives a concise overview of the four standard families of numerical
 //   - 比较原理与单调迭代统一在 Ch 13
 // ==========================================================================
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 
 // 目录

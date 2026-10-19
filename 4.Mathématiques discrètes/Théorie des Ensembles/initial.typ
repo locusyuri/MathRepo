@@ -1440,7 +1440,7 @@ The number of these endpoints is countable, but there are many other non-endpoin
 == Z
 - *#link(<thm:zorn>)[Zorn's Lemma]*
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 
 
 // --- Part I: Foundations of Set Theory (集合论基础) ---

@@ -43,7 +43,7 @@
 
 
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 
 // 目录
 

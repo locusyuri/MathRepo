@@ -1481,4 +1481,4 @@ eliminates one linear term and reduces the other, yielding $a (y'')^2 + 2 p x'' 
   ]
 ]
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)

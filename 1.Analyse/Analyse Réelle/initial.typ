@@ -2447,7 +2447,7 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 // refer to @zhou2016
 
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 
 // 目录
 
