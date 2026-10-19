@@ -2292,12 +2292,14 @@ finite group theory.
 
 #definition(name: "Normal Subgroup")[
   Let $G$ be a group and $N <= G$ a subgroup. $N$ is *normal* in
-  $G$, written $N ⊲ G$, if
+  $G$, written $N lt.closed.eq G$, if
   $
     a N = N a quad "for all" a in G,
   $
   where $a N = {a n | n in N}$ and $N a = {n a | n in N}$ are the
-  left and right cosets of #link(<def:coset>)[§3.3]. If no
+  left and right cosets of #link(<def:coset>)[§3.3]. As with
+  subgroups, the strict form $N lt.closed G$ is used when $N != G$,
+  that is, when the quotient $G \/ N$ is non-trivial. If no
   ambient group needs to be named, $N$ is simply called *normal*.
 ] <def:normal-subgroup>
 
@@ -2337,7 +2339,7 @@ not just same-sized partitions.
 ]
 
 The third reformulation — closure under conjugation — is the working
-test for normality: to verify $N ⊲ G$ one checks that $a n a^(-1) in
+test for normality: to verify $N lt.closed.eq G$ one checks that $a n a^(-1) in
 N$ for arbitrary $a$ and $n$. The fourth — invariance under inner
 automorphisms — is the structural one: normal subgroups are precisely
 those stable under the natural "change of frame" of the group.
@@ -2345,10 +2347,10 @@ those stable under the natural "change of frame" of the group.
 #property(name: "Basic Properties of Normal Subgroups")[
   Let $G$ be a group.
   + Every subgroup of an abelian group is normal. The trivial
-    subgroup $\\{e\\}$ and $G$ itself are normal in $G$.
-  + If $N, M ⊲ G$, then $N inter M$ and the product $N M = {n m | n
+    subgroup ${e}$ and $G$ itself are normal in $G$.
+  + If $N, M lt.closed.eq G$, then $N inter M$ and the product $N M = {n m | n
       in N, m in M}$ are normal in $G$.
-  + If $[G : N] = 2$, then $N ⊲ G$. In particular $A_n ⊲ S_n$ for
+  + If $[G : N] = 2$, then $N lt.closed G$. In particular $A_n lt.closed S_n$ for
     $n >= 2$ (since $abs(A_n) = n! \/ 2$ by
     #link(<def:alternating-group>)[§3.4]).
   + The union of normal subgroups need not be normal — indeed, need
@@ -2377,9 +2379,9 @@ those stable under the natural "change of frame" of the group.
 #example(name: "A gallery of normal subgroups.")[
 
   + In #link(<ex:a3-alternating>)[§3.4] we observed that $A_3 = {e,
-      (1 2 3), (1 3 2)}$ has index $2$ in $S_3$, so $A_3 ⊲ S_3$ by
+      (1 2 3), (1 3 2)}$ has index $2$ in $S_3$, so $A_3 lt.closed S_3$ by
     #link(<prop:normal-properties>)[property (3)]. The same argument
-    lifts: $A_n ⊲ S_n$ for every $n >= 2$.
+    lifts: $A_n lt.closed S_n$ for every $n >= 2$.
   + The *special linear group* $"SL"_(n)(F)$ of
     #link(<def:general-linear-group>)[§2.2] is normal in
     $"GL"_(n)(F)$: it is the kernel of the determinant
@@ -2392,7 +2394,7 @@ those stable under the natural "change of frame" of the group.
   + The *center* $Z(G) = {z in G | z g = g z "for all" g in G}$ is
     normal: $a z a^(-1) = z$ for $z in Z(G)$, so $a Z(G) a^(-1) =
     Z(G)$.
-  + In an abelian group every subgroup is normal: $n bb(Z) ⊲ bb(Z)$
+  + In an abelian group every subgroup is normal: $n bb(Z) lt.closed.eq bb(Z)$
     for every $n >= 1$ — the foundation of
     #link(<ex:residue-classes>)[Chapter 1].
 ] <ex:normal-examples>
@@ -2456,11 +2458,11 @@ $N$ is normal.
     (a N) dot (b N) = (a b) N
   $
   is well-defined — that is, $a N = a' N$ and $b N = b' N$ imply
-  $(a b) N = (a' b') N$ — if and only if $N ⊲ G$.
+  $(a b) N = (a' b') N$ — if and only if $N lt.closed.eq G$.
 ] <lem:coset-multiplication-well-defined>
 
 #proof[
-  $(arrow.r.double)$ Suppose $N ⊲ G$; by
+  $(arrow.r.double)$ Suppose $N lt.closed.eq G$; by
   #link(<thm:normal-equivalents>)[criterion (3)] we may use $a n
   a^(-1) in N$ freely. Take representatives $a' = a n_1$ and $b' = b
   n_2$ with $n_1, n_2 in N$. By normality ($N b = b N$), there is
@@ -2491,7 +2493,7 @@ of #link(<thm:normal-equivalents>)[§4.1]. With well-definedness in
 hand, the rest is a verification.
 
 #theorem(name: "Quotient Group")[
-  Let $N ⊲ G$. The set $G \/ N$ of left cosets of $N$ in $G$,
+  Let $N lt.closed.eq G$. The set $G \/ N$ of left cosets of $N$ in $G$,
   equipped with the operation $(a N) dot (b N) = (a b) N$, is a
   group. The identity is $e N = N$, the inverse of $a N$ is
   $a^(-1) N$, and the *natural projection*
@@ -2539,7 +2541,7 @@ hand, the rest is a verification.
 ) <fig:quotient-projection>
 
 #property(name: "Order of the Quotient")[
-  For a finite group $G$ and $N ⊲ G$,
+  For a finite group $G$ and $N lt.closed.eq G$,
   $
     abs(G \/ N) = [G : N] = abs(G) \/ abs(N).
   $
@@ -2568,7 +2570,7 @@ hand, the rest is a verification.
 ] <ex:quotient-zn>
 
 #example(name: "Parity as a quotient.")[
-  The subgroup $A_3 ⊲ S_3$ has index $2$
+  The subgroup $A_3 lt.closed S_3$ has index $2$
   (#link(<ex:a3-alternating>)[§3.4]), so $S_3 \/ A_3$ is a group of
   order $2$, hence isomorphic to $bb(Z)_2$ by
   #link(<ex:low-order-classification>)[the order-$2$ case]. The two
@@ -2617,7 +2619,7 @@ hand, the rest is a verification.
 == Simple Groups // 单群
 
 Normal subgroups, we have just seen, are the price of admission for
-a quotient: $G \/ N$ exists only when $N ⊲ G$, and the resulting
+a quotient: $G \/ N$ exists only when $N lt.closed.eq G$, and the resulting
 quotient measures how much of $G$'s structure $N$ collapses. At one
 extreme sit the trivial cases $N = \\{e\\}$ (quotient $G \/ \\{e\\} ~=
 G$, no collapse) and $N = G$ (quotient $G \/ G$ is the one-element
@@ -2643,7 +2645,7 @@ complete list — while the non-abelian case is the subtler one.
 
 #proof[
   $(arrow.r.double)$ Let $G = bb(Z)_p$ with $p$ prime, and let $H
-  ⊲ G$. By #link(<thm:lagrange>)[Lagrange], $abs(H)$ divides
+  lt.closed.eq G$. By #link(<thm:lagrange>)[Lagrange], $abs(H)$ divides
   $abs(G) = p$; the only divisors are $1$ and $p$, so $abs(H) = 1$
   ($H = \\{e\\}$) or $abs(H) = p$ ($H = G$). Hence $bb(Z)_p$ is
   simple.
@@ -2751,7 +2753,7 @@ complete list — while the non-abelian case is the subtler one.
   A *composition series* for a
   finite group $G$ is a chain
   $
-    G = G_0 ⊳ G_1 ⊳ dots ⊳ G_k = \\{e\\}
+    G = G_0 gt.closed G_1 gt.closed dots gt.closed G_k = \\{e\\}
   $
   in which each $G_(i+1)$ is normal in $G_i$ and the quotients $G_i
   \/ G_(i+1)$ are simple. The *Jordan–Hölder theorem* states that
@@ -2826,9 +2828,9 @@ quotients).
   + $f(e) = e'$ — no surjectivity required.
   + $f(a^(-1)) = f(a)^(-1)$ for every $a in G$.
   + $f(a^n) = f(a)^n$ for every $a in G$, $n in bb(Z)$.
-  + If $K <= G$ then $f(K) <= H$; if $K ⊲ G$ then $f(K) ⊲ f(G)$.
-  + If $L <= H$ then $f^(-1)(L) <= G$; if $L ⊲ H$ then
-    $f^(-1)(L) ⊲ G$.
+  + If $K <= G$ then $f(K) <= H$; if $K lt.closed.eq G$ then $f(K) lt.closed.eq f(G)$.
+  + If $L <= H$ then $f^(-1)(L) <= G$; if $L lt.closed.eq H$ then
+    $f^(-1)(L) lt.closed.eq G$.
 ] <prop:group-homomorphism-properties>
 
 #proof[
@@ -2845,14 +2847,14 @@ quotients).
 
   (4) Closure: $f(a), f(b) in f(K)$ with $a, b in K$ gives $f(a)
   f(b)^(-1) = f(a b^(-1)) in f(K)$ by (2), since $K$ is closed under
-  $a b^(-1)$. For normality when $K ⊲ G$: take $f(a) in f(G)$ and
+  $a b^(-1)$. For normality when $K lt.closed.eq G$: take $f(a) in f(G)$ and
   $f(k) in f(K)$, then $f(a) f(k) f(a)^(-1) = f(a k a^(-1)) in
   f(K)$ by normality of $K$ in $G$.
 
   (5) For $L <= H$ and $a, b in f^(-1)(L)$: $f(a b^(-1)) = f(a)
   f(b)^(-1) in L$, so $a b^(-1) in f^(-1)(L)$. For normality when
-  $L ⊲ H$: $a in G$, $b in f^(-1)(L)$ gives $f(a b a^(-1)) = f(a)
-  f(b) f(a)^(-1) in L$ since $L ⊲ H$, hence $a b a^(-1) in
+  $L lt.closed.eq H$: $a in G$, $b in f^(-1)(L)$ gives $f(a b a^(-1)) = f(a)
+  f(b) f(a)^(-1) in L$ since $L lt.closed.eq H$, hence $a b a^(-1) in
   f^(-1)(L)$.
 ]
 
@@ -2901,7 +2903,7 @@ The theorem has a striking converse, which we record for emphasis:
 the link between "normal subgroup" and "kernel of a homomorphism"
 is exact:
 $
-  {N ⊲ G} <-> {"ker" f | f: G -> H "for some" H}.
+  {N lt.closed.eq G} <-> {"ker" f | f: G -> H "for some" H}.
 $
 
 #example(name: "Determinant as a homomorphism.")[
@@ -2916,7 +2918,7 @@ $
   the special linear group of #link(<def:general-linear-group>)[§2.2]
   and #link(<ex:normal-examples>)[§4.1]. Theorem
   #link(<thm:kernel-normal>)[above] re-proves, in one line, that
-  $"SL"_(n)(F) ⊲ "GL"_(n)(F)$.
+  $"SL"_(n)(F) lt.closed.eq "GL"_(n)(F)$.
 ] <ex:det-kernel>
 
 #example(name: "Sign as a homomorphism.")[
@@ -2932,7 +2934,7 @@ $
   $
   the alternating group. Again, Theorem
   #link(<thm:kernel-normal>)[above] re-proves, in one line, that
-  $A_n ⊲ S_n$ — the result of
+  $A_n lt.closed.eq S_n$ — the result of
   #link(<prop:normal-properties>)[§4.1 property (3)], recovered from
   a structural perspective.
 ] <ex:sign-kernel>
@@ -2940,7 +2942,7 @@ $
 The two examples share a common shape: a "natural" homomorphism
 out of $G$ produces, as kernel, a "natural" normal subgroup. The
 First Isomorphism Theorem will run this construction in reverse —
-given $N ⊲ G$, it finds a homomorphism (the natural projection) with
+given $N lt.closed.eq G$, it finds a homomorphism (the natural projection) with
 kernel $N$.
 
 #property(name: "Image Is a Subgroup")[
@@ -2963,7 +2965,7 @@ kernel $N$.
     h$, is an injective homomorphism with $"ker" i = {e_H}$ and
     $"im" i = H$. The kernel is as small as possible — trivial — so
     $i$ "forgets nothing".
-  + For any $N ⊲ G$, the *natural projection* $pi: G -> G \/ N$,
+  + For any $N lt.closed.eq G$, the *natural projection* $pi: G -> G \/ N$,
     $pi(a) = a N$, of #link(<thm:quotient-group>)[§4.2] is a
     surjective homomorphism with $"ker" pi = N$ and $"im" pi = G \/
     N$. The kernel is as large as $N$ — chosen by us — and the
@@ -3127,7 +3129,7 @@ Two natural follow-up questions arise:
 (a) If $N$, $K$ are both normal in $G$ with $N subset.eq K$, does
 $K \/ N$ sit inside $G \/ N$ as a normal subgroup, and is the
 further quotient $(G \/ N) \/ (K \/ N)$ the same as $G \/ K$?
-(b) If $H <= G$ and $N ⊲ G$, what is $H N \/ N$ in terms of $H$?
+(b) If $H <= G$ and $N lt.closed.eq G$, what is $H N \/ N$ in terms of $H$?
 
 The *Third* Isomorphism Theorem answers (a) — quotienting "twice" is
 the same as quotienting once by the larger subgroup. The *Second*
@@ -3135,8 +3137,8 @@ Isomorphism Theorem answers (b) — quotienting $H N$ by $N$ kills only
 the $N$-part, leaving $H$ intact.
 
 #theorem(name: "Second Isomorphism Theorem (Diamond Theorem)")[
-  Let $G$ be a group, $H <= G$ a subgroup, and $N ⊲ G$ a normal
-  subgroup. Then $H N$ is a subgroup of $G$, $N ⊲ H N$, $H ∩ N ⊲ H$,
+  Let $G$ be a group, $H <= G$ a subgroup, and $N lt.closed.eq G$ a normal
+  subgroup. Then $H N$ is a subgroup of $G$, $N lt.closed.eq H N$, $H ∩ N lt.closed.eq H$,
   and
   $
     H N \/ N ~= H \/ (H ∩ N).
@@ -3149,7 +3151,7 @@ the $N$-part, leaving $H$ intact.
   n_2^(-1)$. Since $N$ is normal, $h_2^(-1) n_1 h_2 in N$, so the
   product lies in $H N$; closure under inverses and products follows.
 
-  *$N ⊲ H N$ and $H ∩ N ⊲ H$.* Both follow from
+  *$N lt.closed.eq H N$ and $H ∩ N lt.closed.eq H$.* Both follow from
   #link(<thm:normal-equivalents>)[§4.1 criterion (3)]: $N$ is normal
   in $G$, hence in any subgroup containing it; $H ∩ N$ is the
   intersection of $H$ with a normal subgroup of $G$, which
@@ -3191,8 +3193,8 @@ have isomorphic quotients.
 ] <ex:s4-diamond>
 
 #theorem(name: "Third Isomorphism Theorem")[
-  Let $G$ be a group with $N$, $K ⊲ G$ and $N subset.eq K$. Then
-  $K \/ N ⊲ G \/ N$ and
+  Let $G$ be a group with $N$, $K lt.closed.eq G$ and $N subset.eq K$. Then
+  $K \/ N lt.closed.eq G \/ N$ and
   $
     (G \/ N) \/ (K \/ N) ~= G \/ K.
   $
@@ -3241,7 +3243,7 @@ theorem is a related but distinct structural result: it says that
 $G$ containing $N$.
 
 #theorem(name: "Correspondence Theorem (Fourth Isomorphism Theorem)")[
-  Let $G$ be a group, $N ⊲ G$, and $pi: G -> G \/ N$ the natural
+  Let $G$ be a group, $N lt.closed.eq G$, and $pi: G -> G \/ N$ the natural
   projection. The assignments
   $
     Phi: K |-> K \/ N, quad Psi: L |-> pi^(-1)(L)
@@ -3249,8 +3251,8 @@ $G$ containing $N$.
   are mutually inverse, inclusion-preserving bijections between
   ${K <= G | N subset.eq K}$ (subgroups of $G$ containing $N$) and
   the subgroups of $G \/ N$. Moreover, $K_1 subset.eq K_2$ iff
-  $K_1 \/ N subset.eq K_2 \/ N$, and under this bijection $K ⊲ G$
-  "iff" $K \/ N ⊲ G \/ N$, in which case
+  $K_1 \/ N subset.eq K_2 \/ N$, and under this bijection $K lt.closed.eq G$
+  "iff" $K \/ N lt.closed.eq G \/ N$, in which case
   $
     (G \/ N) \/ (K \/ N) ~= G \/ K
   $
@@ -3273,9 +3275,9 @@ $G$ containing $N$.
 
   *Inclusion preservation* is immediate: $K_1 subset.eq K_2$ implies
   $K_1 \/ N subset.eq K_2 \/ N$, and conversely. *Normality:* if $K
-  ⊲ G$ with $N subset.eq K$, then $K \/ N ⊲ G \/ N$ by
+  lt.closed.eq G$ with $N subset.eq K$, then $K \/ N lt.closed.eq G \/ N$ by
   #link(<prop:group-homomorphism-properties>)[§5.1 property (4)]
-  applied to $pi$. Conversely, if $L ⊲ G \/ N$, then $pi^(-1)(L) ⊲
+  applied to $pi$. Conversely, if $L lt.closed.eq G \/ N$, then $pi^(-1)(L) lt.closed.eq
   G$ by property (5) of the same proposition. The last clause is the
   Third Isomorphism Theorem.
 ]
@@ -4016,11 +4018,11 @@ problems.
   *Argument.* Let $Q$ be a Sylow $q$-subgroup (order $q$). By the
   third Sylow theorem, $n_q | p$ and $n_q ≡ 1 \pmod q$. Since $q >
   p$, the congruence $n_q ≡ 1 \pmod q$ with $n_q | p$ forces $n_q =
-  1$. So $Q ⊲ G$ is normal.
+  1$. So $Q lt.closed.eq G$ is normal.
 
   Let $P$ be a Sylow $p$-subgroup (order $p$). Then $n_p | q$ and
   $n_p ≡ 1 \pmod p$. So $n_p in {1, q}$, and $q ≡ 1 \pmod p$
-  decides: if $q ≢ 1 \pmod p$, then $n_p = 1$ and $P ⊲ G$
+  decides: if $q ≢ 1 \pmod p$, then $n_p = 1$ and $P lt.closed.eq G$
   as well.
 
   *If $n_p = 1$*: both $P$ and $Q$ are normal, with trivial
