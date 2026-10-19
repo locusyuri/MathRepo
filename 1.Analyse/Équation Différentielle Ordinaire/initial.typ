@@ -2291,4 +2291,4 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
   is a singular Sturm-Liouville problem with $p(x) = 1 - x^2$ vanishing at both endpoints; the boundary conditions are replaced by the requirement that solutions remain bounded at $x = +-1$. The eigenvalues are $lambda_n = n(n + 1)$, and the eigenfunctions are the Legendre polynomials $P_(n)(x)$. They are orthogonal with weight $r(x) = 1$ on $[-1, 1]$.
 ] <ex:legendre>
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)

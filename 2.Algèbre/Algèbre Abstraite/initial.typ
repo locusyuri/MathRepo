@@ -5248,4 +5248,4 @@ principal ideal domain $R$, classifies finitely generated $R$-modules
 // 教材覆盖：杨子胥全部 6 章 + 丘维生全部 6 章知识点均已覆盖。
 // ==========================================================================
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
