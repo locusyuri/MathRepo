@@ -197,7 +197,12 @@ Later, we refer to *#link(<def:continuous>)[Continuous Function]*.
 
 - 正文引用：`@citation_key`
 - 脚注：`#footnote[...]`
-- 参考文献列表放在文件末尾：`#bibliography("references.bib")`
+- 参考文献列表放在文件末尾（**必须带 `title` 与 `full: true`**）：
+  ```typst
+  #bibliography("references.bib", title: "References", full: true)
+  ```
+
+**为什么必须写全参数**：Typst 的 `#bibliography` 默认只列出**被正文实际引用过的**条目（`full: false`），且默认**不渲染标题**（`title: auto`）。笔记普遍存在"列了 references.bib 但正文没写 `@citation`"的情况，此时简写 `#bibliography("references.bib")` 在 PDF 中**整节消失、什么都不渲染**。加上 `title: "References", full: true` 后，即使没有正文引用，也会完整列出 .bib 中的全部条目并生成 References 标题。
 
 ---
 
@@ -346,7 +351,6 @@ properties of an invertible matrix ...（理由、例子、非可交换说明等
 **两个常见误区：**
 - 不要把 `#property` 当作"包装任何非定理内容"的万能工具 — 很多内容直接写成普通段落即可
 - 不是每个概念都需要用组件包裹：SI 单位说明、常数值、过渡段、列表列举等，直接写纯文本
-- **物理笔记中 `#theorem` 是少数派，更多用 `#law`**：凡以"定律 / 原理 / 表述"命名的基本规律（Stefan-Boltzmann 定律、熵增原理、第二定律的 Kelvin-Planck / Clausius 表述、第三定律的 Planck 表述与绝对零度不可达性等）一律用 `#law`；`#theorem` 仅用于从基本定律经严格推导得到的命题（如 Carnot 定理、能量均分定理、玻尔兹曼 H 定理、迈耶公式）。新增组件块前先自问：这是"世界运行的规律"（law）还是"从规律推出来的结论"（theorem）？
 
 参考写法对比：
 

@@ -66,7 +66,7 @@ Step 7: 修复编译错误
 #part("Part I Title")
 // ... 各章内容 ...
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 ```
 
 ### Step 3: 运行迁移脚本
@@ -414,7 +414,7 @@ typst compile "Subject/initial.typ" "Subject/initial.pdf" --root .
 2. **tabular 表格**：需要手动转为 `#tex-table(...)`
 3. **align 对齐**：`&` 对齐符需要删除或转为 Typst align 语法
 4. **自定义宏**：`\newcommand` 定义的宏需要手动转换
-5. **BibTeX**：`\begin{thebibliography}` → `#bibliography("references.bib")`
+5. **BibTeX**：`\begin{thebibliography}` → `#bibliography("references.bib", title: "References", full: true)`（必须写全参数，否则未引用时整节不渲染，见 `violet-typst-writing-conventions` §7）
 6. **Preamble**：`\documentclass`、`\usepackage` 等需要手动转为 Typst 头部
 7. **中文翻译注释**：需要在标题后手动添加 `// 中文翻译`
 8. **裸 `matrix`/`array` 环境**：脚本不自动处理，需手动转 `mat(...)`
@@ -461,7 +461,7 @@ typst compile "Subject/initial.typ" "Subject/initial.pdf" --root .
 
 → 提取到 `references.bib` 文件，在 initial.typ 末尾写：
 ```typst
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 ```
 
 ### 5.3 自定义运算符

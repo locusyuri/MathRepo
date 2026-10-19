@@ -184,10 +184,12 @@ Step 8: 写入注释蓝图到 initial.typ
 // ==========================================================================
 // [... 注释蓝图内容 ...]
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 
 // 目录
 ```
+
+> `#bibliography` 必须写全 `title` 与 `full: true` 参数，否则正文未 `@citation` 时整节不渲染。理由见 `violet-typst-writing-conventions` §7。
 
 ### 4.2 注释层级
 

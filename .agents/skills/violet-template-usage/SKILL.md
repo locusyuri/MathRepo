@@ -282,7 +282,7 @@ This is #highlight[important text] in a sentence.
 
 Content here.
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 ```
 
 ---
