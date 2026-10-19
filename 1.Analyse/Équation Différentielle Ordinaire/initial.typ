@@ -154,7 +154,7 @@
 //     - 极限环、Poincaré-Bendixson 定理
 
 // ==========================================================================
-// Part IV — Boundary Value Problems and Sturm-Liouville Theory (边值问题与 Sturm-Liouville 理论)
+// Part IV — Boundary Value Problems and Spectral Theory (边值问题与谱论)
 // ==========================================================================
 // 设计思路：前几 Part 都是初值问题，本 Part 转向边值问题。
 // Sturm-Liouville 问题是 ODE 与谱理论的交汇点：特征值问题既是 ODE 边值问题的核心，
@@ -164,10 +164,16 @@
 
 // --- Chapter 7: Boundary Value Problems (边值问题) ---
 
-//   Section 7.1: Sturm-Liouville Problems (Sturm-Liouville 问题)
-//     - Sturm-Liouville 边值问题的提法
-//     - 特征值与特征函数、正交性
-//     - Sturm 比较定理、振动定理
+//   Section 7.1: Boundary Value Problems vs. Initial Value Problems (边值问题与初值问题)
+//     - IVP 与 BVP 的提法对比、解的个数差异（无解/唯一/无穷多）
+//   Section 7.2: Linear BVPs and Green's Functions (线性边值问题与格林函数)
+//     - Fredholm 备择定理、Green 函数的定义、构造与解公式
+//   Section 7.3: Sturm-Liouville Problems (Sturm-Liouville 问题)
+//     - 正则/周期/奇异 Sturm-Liouville 问题、自伴性与加权内积
+//   Section 7.4: Eigenvalues and Eigenfunctions (特征值与特征函数)
+//     - 特征值为实、正交性、Sturm 比较与振动定理、渐近行为
+//   Section 7.5: Generalized Fourier Series (广义傅里叶级数)
+//     - Fourier 正弦/余弦/全级数、Legendre 多项式、收敛性
 
 // ==========================================================================
 // 结构说明 (Structure Note)
@@ -1953,7 +1959,7 @@ $
   )
 $
 
-Unlike IVPs, which always have a unique solution (under mild conditions), BVPs may have no solution, a unique solution, or infinitely many solutions — depending on the parameter values.
+Unlike linear IVPs with continuous coefficients, which always have a unique solution, BVPs may have no solution, a unique solution, or infinitely many solutions — depending on the parameter values.
 
 #example(name: "A Simple BVP")[
   Consider the second-order equation
@@ -1962,7 +1968,7 @@ Unlike IVPs, which always have a unique solution (under mild conditions), BVPs m
   $
   - If $lambda < 0$, the only solution is $y equiv 0$.
   - If $lambda = 0$, the only solution is $y equiv 0$.
-  - If $lambda = n^2$ for integer $n$, there are non-trivial solutions $y(x) = C sin(n x)$.
+  - If $lambda = n^2$ for a positive integer $n$, there are non-trivial solutions $y(x) = C sin(n x)$.
   - If $lambda > 0$ is not a perfect square, the only solution is $y equiv 0$.
 ] <ex:simple-bvp>
 
@@ -1970,7 +1976,7 @@ This example shows that non-trivial solutions exist only for special values of $
 
 == Linear BVPs and Green's Functions // 线性边值问题与格林函数
 
-Consider the general second-order linear non-homogeneous boundary value problem
+Consider the second-order linear non-homogeneous boundary value problem with Dirichlet boundary conditions
 $
   dot.double(y) + p(x) dot(y) + q(x) y = f(x), quad quad y(a) = c_1, quad quad y(b) = c_2.
 $
@@ -1984,20 +1990,20 @@ In contrast to the initial value problems of Part I, the existence theory for BV
   $
   exactly one of the following holds:
   1. The homogeneous problem $L y = 0, B_(1)(y) = 0, B_(2)(y) = 0$ has only the trivial solution $y equiv 0$. Then the non-homogeneous problem has a unique solution for any $f, c_1, c_2$.
-  2. The homogeneous problem has $k$ linearly independent non-trivial solutions. Then the non-homogeneous problem has solutions if and only if $f$ is orthogonal (with respect to the appropriate inner product) to all solutions of the adjoint homogeneous problem. In that case, there are infinitely many solutions.
+  2. The homogeneous problem has $k$ linearly independent non-trivial solutions. Then the non-homogeneous problem has solutions if and only if the data satisfy the compatibility conditions of the adjoint problem: for homogeneous boundary data this reduces to $f$ being orthogonal (with respect to the appropriate inner product) to all solutions of the adjoint homogeneous problem, while inhomogeneous boundary data $c_1, c_2$ contribute additional conditions. In that case, there are infinitely many solutions.
 ] <thm:fredholm-alternative>
 
 #note[
   The Fredholm alternative is the infinite-dimensional analog of the linear algebra fact: a square matrix $bold(A)$ is either invertible (unique solution for every right-hand side) or has a nontrivial null space (solutions exist only for right-hand sides orthogonal to the left null space).
 
-  The *adjoint homogeneous problem* in alternative 2 is obtained by replacing the operator $L$ with its formal adjoint $L^*$ together with the adjoint boundary conditions; for the self-adjoint problems of the next section the adjoint problem coincides with the original one, and the orthogonality condition simply reads $⟨ f, y ⟩ = 0$ for every solution $y$ of the homogeneous problem.
+  The *adjoint homogeneous problem* in alternative 2 is obtained by replacing the operator $L$ with its formal adjoint $L^*$ together with the adjoint boundary conditions; for the self-adjoint problems of the next section the adjoint problem coincides with the original one, and the orthogonality condition simply reads $⟨ f, y ⟩_(r) = 0$ for every solution $y$ of the homogeneous problem.
 
   The proof belongs to the theory of compact operators on Hilbert spaces and is beyond the scope of this notebook.
 ]
 
 When the homogeneous BVP has only the trivial solution, we can construct the solution explicitly using the *Green's function*.
 
-For definiteness we work with homogeneous boundary conditions $y(a) = y(b) = 0$; a problem with inhomogeneous boundary data $c_1, c_2$ is reduced to this case by subtracting any smooth function that satisfies the boundary conditions.
+For definiteness we work with homogeneous boundary conditions $y(a) = y(b) = 0$; a problem with inhomogeneous boundary data $c_1, c_2$ is reduced to this case by subtracting any smooth function $g$ with $g(a) = c_1$ and $g(b) = c_2$.
 
 #definition(name: "Green's Function")[
   Let the homogeneous BVP
@@ -2010,9 +2016,28 @@ For definiteness we work with homogeneous boundary conditions $y(a) = y(b) = 0$;
   3. $G(x, xi)$ is continuous at $x = xi$.
   4. The derivative has a jump discontinuity at $x = xi$:
     $
-      (partial G) / (partial x) |_(xi^-) - (partial G) / (partial x) |_(xi^+) = 1.
+      (partial G) / (partial x) |_(xi^+) - (partial G) / (partial x) |_(xi^-) = 1.
     $
 ] <def:greens-function>
+
+#theorem(name: "Construction of the Green's Function")[
+  Let $u$ and $v$ be linearly independent solutions of the homogeneous equation
+  $
+    dot.double(y) + p(x) dot(y) + q(x) y = 0
+  $
+  with $u(a) = 0$ and $v(b) = 0$ — such solutions exist whenever the homogeneous BVP has only the trivial solution — and let $W(x) = u(x) dot(v)(x) - dot(u)(x) v(x)$ be their Wronskian. Then the Green's function is given by
+  #eq[$
+    G(x, xi) = (u(min(x, xi)) v(max(x, xi))) / W(xi).
+  $] <eq:greens-construction>
+] <thm:greens-construction>
+
+#proof[
+  For $x != xi$ the numerator $u(min(x, xi)) v(max(x, xi))$ is a solution of the homogeneous equation on each side of $xi$, and the boundary conditions follow from $u(a) = 0$ and $v(b) = 0$. Continuity at $x = xi$ is immediate, while the derivative jump is
+  $
+    (partial G) / (partial x) |_(xi^+) - (partial G) / (partial x) |_(xi^-) = (u(xi) dot(v)(xi) - dot(u)(xi) v(xi)) / W(xi) = 1,
+  $
+  which is property 4 of the definition. Abel's identity $W' = -p W$ shows that $W$ is a non-zero constant multiple of $1 / p$, so it never vanishes on $[a, b]$ and the formula is well-defined.
+]
 
 #theorem(name: "Solution Representation via Green's Function")[
   If $G(x, xi)$ is the Green's function for the homogeneous BVP, then the unique solution of
@@ -2042,15 +2067,23 @@ For definiteness we work with homogeneous boundary conditions $y(a) = y(b) = 0$;
 ]
 
 #example(name: "Green's Function for $dot.double(y) = 0$ with Dirichlet BCs")[
-  Consider the BVP $dot.double(y) = 0, y(0) = 0, y(1) = 0$. The Green's function is
+  Consider the BVP $dot.double(y) = 0, y(0) = 0, y(1) = 0$. Taking $u(x) = x$ and $v(x) = 1 - x$, with Wronskian $W = u dot(v) - dot(u) v = -1$, the construction formula gives
   $
     G(x, xi) = cases(
-      x(1 - xi), & x <= xi,
-      xi(1 - x), & x >= xi.
+      -x(1 - xi) quad & x <= xi,
+      -xi(1 - x) quad & x >= xi.
     )
   $
   It is symmetric: $G(x, xi) = G(xi, x)$, which reflects the self-adjointness of the differential operator.
 ] <ex:greens-simple>
+
+#example(name: "Inhomogeneous Boundary Data via Reduction")[
+  Consider the BVP $dot.double(y) = f(x)$ with $y(0) = c_1$ and $y(1) = c_2$. The affine function $g(x) = c_1 + (c_2 - c_1) x$ carries the boundary data, so $u = y - g$ solves the homogeneous-boundary problem $dot.double(u) = f(x)$ with $u(0) = u(1) = 0$. Hence
+  #eq[$
+    y(x) = c_1 + (c_2 - c_1) x + integral_0^1 G(x, xi) f(xi) dif xi,
+  $] <eq:greens-inhomogeneous>
+  with $G$ the Green's function of #link(<ex:greens-simple>)[the preceding example].
+] <ex:greens-inhomogeneous>
 
 == Sturm-Liouville Problems // Sturm-Liouville 问题
 
@@ -2061,6 +2094,8 @@ For definiteness we work with homogeneous boundary conditions $y(a) = y(b) = 0$;
   $] <eq:sturm-liouville>
   where $p(x) > 0$, $r(x) > 0$, and $q(x)$ are continuous on $[a, b]$.
 ] <def:sturm-liouville>
+
+Conversely, any second-order linear equation can be put into Sturm-Liouville form: multiplying $y'' + P(x) y' + Q(x) y + lambda y = 0$ by the integrating factor $mu(x) = exp(integral P(x) dif x)$ gives $-(\mu y')' - \mu Q(x) y = lambda \mu y$, which is @eq:sturm-liouville with $p = \mu$, $q = -\mu Q$, and $r = \mu$.
 
 The functions $p$, $q$, and $r$ are the coefficients of the Sturm-Liouville operator, and $r(x)$ is called the *weight function*.
 
@@ -2097,7 +2132,7 @@ $
 ] <def:weighted-inner-product>
 
 #theorem(name: "Self-Adjointness of the Sturm-Liouville Operator")[
-  The Sturm-Liouville operator $L$ is self-adjoint with respect to the (unweighted) inner product $⟨ u, v ⟩ = integral_a^b u v dif x$: for functions $u, v$ satisfying the regular Sturm-Liouville boundary conditions,
+  The Sturm-Liouville operator $L$ is self-adjoint with respect to the (unweighted) inner product $⟨ u, v ⟩ = integral_a^b u v dif x$: for functions $u, v$ satisfying the regular Sturm-Liouville boundary conditions, or periodic boundary conditions with $p(a) = p(b)$,
   $
     ⟨ L u, v ⟩ = ⟨ u, L v ⟩.
   $
@@ -2113,7 +2148,7 @@ $
 
   Repeating the computation with $u$ and $v$ interchanged and subtracting, the remaining terms coincide term by term, hence $⟨ L u, v ⟩ = ⟨ u, L v ⟩$.
 
-  The computation extends to complex-valued functions by linearity.
+  The computation extends to complex-valued functions by conjugating the second factor.
 ]
 
 Self-adjointness is the engine behind all spectral properties below: if $L y = lambda r y$ and $L z = mu r z$, then pairing the first equation with $z$ and the second with $y$ gives $lambda ⟨ y, z ⟩_(r) = ⟨ L y, z ⟩ = ⟨ y, L z ⟩ = mu ⟨ y, z ⟩_(r)$, so $(lambda - mu) ⟨ y, z ⟩_(r) = 0$.
@@ -2165,7 +2200,7 @@ This is the setting for the full Fourier series (sine and cosine).
 ]
 
 #theorem(name: "Properties of Sturm-Liouville Eigenvalues")[
-  For a regular Sturm-Liouville problem:
+  For a regular Sturm-Liouville problem with separated boundary conditions:
   1. The eigenvalues form an infinite sequence $lambda_1 < lambda_2 < lambda_3 < dots$ with $lambda_n -> oo$.
   2. All eigenvalues are real.
   3. Eigenfunctions corresponding to distinct eigenvalues are orthogonal with respect to the weight function $r(x)$:
@@ -2183,6 +2218,8 @@ This is the setting for the full Fourier series (sine and cosine).
   Property 2 was proved in #link(<thm:real-eigenvalues>)[the theorem on real eigenvalues], and property 3 follows from self-adjointness exactly as sketched after #link(<thm:self-adjoint>)[the self-adjointness theorem].
 
   Properties 1 and 4 belong to the spectral theory of compact self-adjoint operators and are beyond the scope of this notebook.
+
+  The strict ordering in property 1 is a separated-boundary phenomenon: under periodic boundary conditions eigenvalues may be multiple — each $lambda_n = n^2$, $n >= 1$, of the full Fourier series is double — while orthogonality and completeness are unaffected.
 ]
 
 #theorem(name: "Sturm Comparison Theorem")[
@@ -2263,6 +2300,7 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
   If $f(x)$ is piecewise smooth on $[a, b]$, then the generalized Fourier series converges pointwise:
   - At points where $f$ is continuous, the series converges to $f(x)$.
   - At jump discontinuities, the series converges to the average $(f(x^+) + f(x^-)) / 2$.
+  - At the endpoints, the series converges to the value consistent with the boundary conditions (for instance $0$ under Dirichlet conditions).
 ] <thm:pointwise-convergence>
 
 === Other Examples // 其他例子
@@ -2280,7 +2318,7 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
   $
     dot.double(y) + lambda y = 0, quad quad y(-pi) = y(pi), quad quad dot(y)(-pi) = dot(y)(pi)
   $
-  has eigenvalues $lambda_0 = 0$ and $lambda_n = n^2$ for $n >= 1$. The eigenfunctions are $1, cos(x), sin(x), cos(2x), sin(2x), dots$ — the full Fourier series basis.
+  has eigenvalues $lambda_0 = 0$ and $lambda_n = n^2$ for $n >= 1$, each of the latter being double (both $sin(n x)$ and $cos(n x)$ are eigenfunctions). The eigenfunctions are $1, cos(x), sin(x), cos(2x), sin(2x), dots$ — the full Fourier series basis.
 ] <ex:fourier-full>
 
 #example(name: "Legendre Polynomials (Singular SL Problem)")[
