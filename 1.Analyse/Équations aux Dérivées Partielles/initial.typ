@@ -2962,12 +2962,12 @@ Throughout the chapter we work in dimension $n$, writing $bold(x) = (x_1, dots, 
 
 #definition(name: "The General Cauchy Problem")[
   The *general Cauchy problem* for the wave equation in $bb(R)^n$ with speed $a > 0$ is to find $u: bb(R)^n times [0, oo) -> bb(R)$ with
-  $
+  #eq[$
     cases(
       u_(t t) = a^2 Delta u + f (bold(x), t) quad "in" quad bb(R)^n times (0, oo),
       u (bold(x), 0) = phi (bold(x)) "and" partial_t u (bold(x), 0) = psi (bold(x))
     )
-  $
+  $] <eq:general-cauchy-wave>
   where $Delta$ is the Laplacian in $bold(x)$, $f$ a given source, and $phi, psi$ the initial displacement and velocity.
 ] <def:general-cauchy-wave>
 
@@ -2982,9 +2982,9 @@ $
   rho Delta x dot u_(t t) = T (u_x (x + Delta x, t) - u_x (x, t)) + F (x, t) Delta x.
 $
 Dividing by $rho Delta x$ and letting $Delta x -> 0$ yields
-$
+#eq[$
   u_(t t) = a^2 u_(x x) + f (x, t), quad a^2 = T / rho,
-$ <eq:wave-string>
+$] <eq:wave-string>
 with $f = F / rho$ the forcing per unit mass. This is the one-dimensional wave equation: the wave speed $a = sqrt(T / rho)$ grows with the tension and decreases with the density, as physical intuition demands.
 
 #figure(
@@ -3005,17 +3005,17 @@ with $f = F / rho$ the forcing per unit mass. This is the one-dimensional wave e
 === Acoustic Waves in Three Dimensions // 三维声波方程
 
 The same balance laws produce the wave equation in three space dimensions. Consider an inviscid compressible fluid at rest, with constant density $rho_0$ and pressure $p_0$; a sound wave is a small perturbation, described by the velocity field $bold(v) (x, t)$ and the pressure perturbation $p (x, t)$. Conservation of momentum for a material volume, linearized to first order in the perturbation (the convective term $rho (bold(v) dot nabla) bold(v)$ is quadratic and discarded), gives
-$
+#eq[$
   rho_0 partial_t bold(v) + nabla p = bold(0).
-$ <eq:acoustic-momentum>
+$] <eq:acoustic-momentum>
 Mass conservation and the adiabatic equation of state close the system: the density perturbation $rho'$ satisfies $partial_t rho' + rho_0 "div" bold(v) = 0$, and $p = c^2 rho'$ with $c^2 = ((partial p)/(partial rho))_s > 0$ the square of the *speed of sound*. Applying $partial_t$ to the continuity equation, taking the divergence of the momentum equation, and eliminating $bold(v)$:
-$
+#eq[$
   partial_(t t) p = c^2 Delta p, quad partial_(t t) rho' = c^2 Delta rho',
-$ <eq:acoustic-wave>
+$] <eq:acoustic-wave>
 and each component of $bold(v)$ satisfies the same equation. Thus every small acoustic disturbance propagates according to the three-dimensional wave equation with speed $c$. Equivalently, the first-order system
-$
+#eq[$
   partial_t bold(v) = -1/rho_0 nabla p, quad partial_t p = -rho_0 c^2 "div" bold(v)
-$ <eq:acoustic-system>
+$] <eq:acoustic-system>
 is the prototype of the symmetric hyperbolic systems studied in Chapter 17; its scalar unknowns satisfy the wave equation.
 
 === Well-Posedness: Initial and Boundary Conditions // 定解条件
@@ -3030,17 +3030,17 @@ If the medium is bounded, the solution is further constrained on the spatial bou
 
 #definition(name: "The One-Dimensional Cauchy Problem")[
   The *homogeneous Cauchy problem* for the one-dimensional wave equation with speed $a > 0$ is to find $u: bb(R) times [0, oo) -> bb(R)$ with
-  $
+  #eq[$
     cases(
       (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2) quad "in" quad bb(R) times (0, oo),
       u (x, 0) = phi (x) "and" partial_t u (x, 0) = psi (x)
     )
-  $
+  $] <eq:cauchy-wave>
   where $phi, psi: bb(R) -> bb(R)$ are the initial displacement and velocity.
 ] <def:cauchy-wave>
 
 #theorem(name: "D'Alembert's Formula")[
-  For $phi in C^2 (bb(R))$ and $psi in C^1 (bb(R))$, the Cauchy problem has the unique classical solution
+  For $phi in C^2 (bb(R))$ and $psi in C^1 (bb(R))$, the Cauchy problem (#link(<eq:cauchy-wave>)[Eq.]) has the unique classical solution
   $
     u (x, t) = (phi (x + a t) + phi (x - a t))/2 + 1/(2 a) integral_(x - a t)^(x + a t) psi (s) dif s.
   $
@@ -3133,7 +3133,7 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
 === The Method of Spherical Means // 球平均法
 
 #theorem(name: "Kirchhoff's Formula in Three Dimensions")[
-  For $n = 3$, $bold(x) in bb(R)^3$, and wave speed $a > 0$, the Cauchy problem $(partial^2 u)/(partial t^2) = a^2 Delta u$, $u (bold(x), 0) = phi (bold(x))$, $partial_t u (bold(x), 0) = psi (bold(x))$ has the classical solution
+  For $n = 3$, $bold(x) in bb(R)^3$, and wave speed $a > 0$, the Cauchy problem (#link(<eq:general-cauchy-wave>)[Eq.]) with $f equiv 0$ has the classical solution
   $
     u (bold(x), t) = partial_t (t M_phi (bold(x), t)) + t M_psi (bold(x), t), quad M_phi (bold(x), t) = 1 / (4 pi a^2 t^2) integral_(partial B (bold(x), a t)) phi dif S,
   $
@@ -3273,21 +3273,21 @@ The fully general problem — nonzero data *and* a source — is the sum of this
 Substituting the homogeneous solution operator into Duhamel's principle turns the abstract integral into a quadrature in each dimension.
 
 For $n = 1$, d'Alembert's formula gives $S (t - s) f (s, dot) (x) = 1/(2 a) integral_(x - a (t - s))^(x + a (t - s)) f (y, s) dif y$, so
-$
+#eq[$
   u (x, t) = 1/(2 a) integral_0^t integral_(x - a (t - s))^(x + a (t - s)) f (y, s) dif y dif s,
-$ <eq:duhamel-1d>
+$] <eq:duhamel-1d>
 the integral running over the characteristic triangle $0 <= s <= t$ with $abs(y - x) <= a (t - s)$.
 
 For $n = 3$, Kirchhoff's formula gives
-$
+#eq[$
   u (bold(x), t) = integral_0^t 1/(4 pi a^2 (t - s)) integral_(partial B (bold(x), a (t - s))) f (bold(y), s) dif S_(bold(y)) dif s,
-$ <eq:duhamel-3d>
+$] <eq:duhamel-3d>
 a superposition of spherical waves: the value at $(bold(x), t)$ collects, from every emission time $s$, the data on the sphere that has travelled for the elapsed time $t - s$.
 
 For $n = 2$, Poisson's formula gives
-$
+#eq[$
   u (bold(x), t) = integral_0^t 1/(2 pi) integral_(B (bold(x), a (t - s))) (f (bold(y), s))/(sqrt(a^2 (t - s)^2 - abs(bold(x) - bold(y))^2)) dif bold(y) dif s.
-$ <eq:duhamel-2d>
+$] <eq:duhamel-2d>
 In even dimensions the wave carries a trailing wake: at each emission time the value at $(bold(x), t)$ receives contributions from a whole disk, not merely from its boundary.
 
 == Separation of Variables for the Wave Equation // 波动方程的分离变量法
