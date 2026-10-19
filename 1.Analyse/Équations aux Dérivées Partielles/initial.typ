@@ -3181,8 +3181,7 @@ $
 
 Parameterizing the unit sphere with the spherical coordinates introduced in the proof above, $bold(omega) = (sin phi.alt cos theta, sin phi.alt sin theta, cos phi.alt)$ with $phi.alt in [0, pi]$, $theta in [0, 2 pi)$, and surface element $dif omega = sin phi.alt dif phi.alt dif theta$, the formula takes the fully explicit spherical-coordinate form
 $
-  u (bold(x), t) &= 1/(4 pi) (partial)/(partial t) integral_0^(2 pi) integral_0^pi t phi (bold(x) + a t bold(omega)) sin phi.alt dif phi.alt dif theta \
-  &quad + t/(4 pi) integral_0^(2 pi) integral_0^pi psi (bold(x) + a t bold(omega)) sin phi.alt dif phi.alt dif theta.
+  u (bold(x), t) = 1/(4 pi) (partial)/(partial t) integral_0^(2 pi) integral_0^pi t phi (bold(x) + a t bold(omega)) sin phi.alt dif phi.alt dif theta + t/(4 pi) integral_0^(2 pi) integral_0^pi psi (bold(x) + a t bold(omega)) sin phi.alt dif phi.alt dif theta.
 $
 Both forms make the domain of dependence visible: the solution at $(bold(x), t)$ is assembled exclusively from the initial data on the single sphere of radius $a t$ about $bold(x)$, and no data from the interior of the ball enter. This is the mechanism behind the strong Huygens principle in three dimensions (§16.6), in sharp contrast with the two-dimensional formula of the next section, where the integration runs over the full disk and a trailing wake appears.
 
@@ -3444,7 +3443,16 @@ For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' 
   ) <fig:wave-domain-dependence>
 ]
 
-Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $a$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior. The three domains are illustrated in #link(<fig:wave-domain-dependence>)[Figure].
+Unlike the heat equation, where a disturbance is felt instantly at every distance, information here travels at most at the speed $a$ — this is the precise form of *finite propagation speed*, the feature that distinguishes hyperbolic from parabolic behavior. The three domains are illustrated in #link(<fig:wave-domain-dependence>)[Figure]. The analogous two-dimensional picture, where the three domains are honest cones in the coordinates $(x_1, x_2, t)$, is shown in #link(<fig:wave-domain-dependence-2d>)[Figure]; in three space dimensions the cone lives in four-dimensional space-time and admits no drawing.
+
+#note[
+  #figure(
+    image("./img/wave-domain-dependence-2d.svg", width: 100%),
+    caption: [Dependence, determinacy and influence for $u_(t t) = a^2 Delta u$ in two space dimensions, drawn in the coordinates $(x_1, x_2, t)$ with $a = 1$. (a) The backward characteristic cone with apex $(bold(x)_0, t_0)$ meets the initial plane in the domain of dependence $B (bold(x)_0, a t_0)$, now a disk. (b) The domain of determinacy of a disk $D$ of the initial plane. (c) The domain of influence of a point $bold(y)$ of the initial plane.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:wave-domain-dependence-2d>
+]
 
 === Dispersive Decay // 色散衰减
 
