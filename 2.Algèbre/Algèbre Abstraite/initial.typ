@@ -2621,7 +2621,7 @@ hand, the rest is a verification.
 Normal subgroups, we have just seen, are the price of admission for
 a quotient: $G \/ N$ exists only when $N lt.closed.eq G$, and the resulting
 quotient measures how much of $G$'s structure $N$ collapses. At one
-extreme sit the trivial cases $N = \\{e\\}$ (quotient $G \/ \\{e\\} ~=
+extreme sit the trivial cases $N = {e}$ (quotient $G \/ {e} ~=
 G$, no collapse) and $N = G$ (quotient $G \/ G$ is the one-element
 trivial group, total collapse). At the other extreme sit groups
 *with no non-trivial normal subgroups at all* — groups, that is,
@@ -2632,7 +2632,7 @@ process, every finite group is built.
 
 #definition(name: "Simple Group")[
   A group $G$ is *simple* if its only normal subgroups are the
-  trivial subgroup $\\{e\\}$ and $G$ itself.
+  trivial subgroup ${e}$ and $G$ itself.
 ] <def:simple-group>
 
 For abelian groups simplicity is cheap — the theorem below gives the
@@ -2647,7 +2647,7 @@ complete list — while the non-abelian case is the subtler one.
   $(arrow.r.double)$ Let $G = bb(Z)_p$ with $p$ prime, and let $H
   lt.closed.eq G$. By #link(<thm:lagrange>)[Lagrange], $abs(H)$ divides
   $abs(G) = p$; the only divisors are $1$ and $p$, so $abs(H) = 1$
-  ($H = \\{e\\}$) or $abs(H) = p$ ($H = G$). Hence $bb(Z)_p$ is
+  ($H = {e}$) or $abs(H) = p$ ($H = G$). Hence $bb(Z)_p$ is
   simple.
 
   $(arrow.l.double)$ Let $G$ be a simple abelian group. Abelian
@@ -2753,7 +2753,7 @@ complete list — while the non-abelian case is the subtler one.
   A *composition series* for a
   finite group $G$ is a chain
   $
-    G = G_0 gt.closed G_1 gt.closed dots gt.closed G_k = \\{e\\}
+    G = G_0 gt.closed G_1 gt.closed dots gt.closed G_k = {e}
   $
   in which each $G_(i+1)$ is normal in $G_i$ and the quotients $G_i
   \/ G_(i+1)$ are simple. The *Jordan–Hölder theorem* states that
