@@ -2329,4 +2329,155 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
   is a singular Sturm-Liouville problem with $p(x) = 1 - x^2$ vanishing at both endpoints; the boundary conditions are replaced by the requirement that solutions remain bounded at $x = +-1$. The eigenvalues are $lambda_n = n(n + 1)$, and the eigenfunctions are the Legendre polynomials $P_(n)(x)$. They are orthogonal with weight $r(x) = 1$ on $[-1, 1]$.
 ] <ex:legendre>
 
+// ==========================================================================
+// Appendix (附录)
+// ==========================================================================
+
+#part("Appendix") // 附录
+
+= Glossary // 术语表
+
+== B
+- *#link(<thm:bellman-gronwall>)[Bellman Gronwall]*
+- *#link(<def:bernoulli-equation>)[Bernoulli Equation]*
+
+== C
+- *#link(<thm:c-test>)[C Test]*
+- *#link(<def:cauchy-problem>)[Cauchy Problem]*
+- *#link(<ex:characteristic-roots>)[Characteristic Roots]*
+- *#link(<thm:characteristic-roots>)[Characteristic Roots]*
+- *#link(<def:clairaut-equation>)[Clairaut Equation]*
+- *#link(<ex:clairaut-equation>)[Clairaut Equation]*
+- *#link(<thm:comparison>)[Comparison]*
+- *#link(<thm:continuation>)[Continuation]*
+- *#link(<def:continuous-dependence>)[Continuous Dependence]*
+- *#link(<thm:convolution>)[Convolution]*
+- *#link(<def:critical-point>)[Critical Point]*
+
+== D
+- *#link(<thm:dependence-derivatives>)[Dependence Derivatives]*
+- *#link(<def:direction-field>)[Direction Field]*
+
+== E
+- *#link(<thm:eigenvalue-asymptotics>)[Eigenvalue Asymptotics]*
+- *#link(<def:envelope>)[Envelope]*
+- *#link(<def:euler-cauchy>)[Euler Cauchy]*
+- *#link(<def:exact-equation>)[Exact Equation]*
+- *#link(<ex:exact-equation>)[Exact Equation]*
+- *#link(<thm:exactness-criterion>)[Exactness Criterion]*
+
+== F
+- *#link(<def:first-order-linear>)[First Order Linear]*
+- *#link(<ex:first-order-linear>)[First Order Linear]*
+- *#link(<ex:fourier-cosine>)[Fourier Cosine]*
+- *#link(<ex:fourier-full>)[Fourier Full]*
+- *#link(<ex:fourier-sine>)[Fourier Sine]*
+- *#link(<thm:fredholm-alternative>)[Fredholm Alternative]*
+- *#link(<def:fundamental-matrix>)[Fundamental Matrix]*
+- *#link(<thm:fundamental-matrix-existence>)[Fundamental Matrix Existence]*
+
+== G
+- *#link(<def:general-solution>)[General Solution]*
+- *#link(<thm:generalized-eigenvector-solutions>)[Generalized Eigenvector Solutions]*
+- *#link(<thm:greens-construction>)[Greens Construction]*
+- *#link(<def:greens-function>)[Greens Function]*
+- *#link(<ex:greens-inhomogeneous>)[Greens Inhomogeneous]*
+- *#link(<thm:greens-representation>)[Greens Representation]*
+- *#link(<ex:greens-simple>)[Greens Simple]*
+
+== H
+- *#link(<thm:higher-order-equivalence>)[Higher Order Equivalence]*
+- *#link(<thm:higher-order-general-solution>)[Higher Order General Solution]*
+- *#link(<def:homogeneous-equation>)[Homogeneous Equation]*
+- *#link(<ex:homogeneous-equation>)[Homogeneous Equation]*
+- *#link(<def:homogeneous-function>)[Homogeneous Function]*
+- *#link(<thm:homogeneous-general-solution>)[Homogeneous General Solution]*
+
+== I
+- *#link(<def:implicit-solution>)[Implicit Solution]*
+- *#link(<def:integral-curve>)[Integral Curve]*
+- *#link(<thm:integral-curve-criterion>)[Integral Curve Criterion]*
+- *#link(<def:integrating-factor>)[Integrating Factor]*
+- *#link(<ex:integrating-factor>)[Integrating Factor]*
+- *#link(<thm:integrating-factor-ratio>)[Integrating Factor Ratio]*
+- *#link(<thm:integrating-factor-special>)[Integrating Factor Special]*
+
+== L
+- *#link(<thm:l2-convergence>)[L2 Convergence]*
+- *#link(<ex:laplace-ivp>)[Laplace IVP]*
+- *#link(<thm:laplace-properties>)[Laplace Properties]*
+- *#link(<def:laplace-transform>)[Laplace Transform]*
+- *#link(<ex:legendre>)[Legendre]*
+- *#link(<def:limit-cycle>)[Limit Cycle]*
+- *#link(<thm:linear-existence-uniqueness>)[Linear Existence Uniqueness]*
+- *#link(<thm:linear-global-existence>)[Linear Global Existence]*
+- *#link(<def:linear-ode>)[Linear ODE]*
+- *#link(<thm:linearization>)[Linearization]*
+- *#link(<ex:linearization-classification>)[Linearization Classification]*
+- *#link(<thm:liouville>)[Liouville]*
+- *#link(<thm:liouville-higher-order>)[Liouville Higher Order]*
+- *#link(<def:lipschitz>)[Lipschitz]*
+- *#link(<def:lyapunov-function>)[Lyapunov Function]*
+- *#link(<ex:lyapunov-function>)[Lyapunov Function]*
+- *#link(<def:lyapunov-stability>)[Lyapunov Stability]*
+- *#link(<thm:lyapunov-stability>)[Lyapunov Stability]*
+
+== M
+- *#link(<thm:matrix-exponential-fundamental>)[Matrix Exponential Fundamental]*
+
+== N
+- *#link(<thm:nonhomogeneous-general-solution>)[Nonhomogeneous General Solution]*
+
+== O
+- *#link(<def:ode>)[ODE]*
+- *#link(<def:ode-order>)[ODE Order]*
+- *#link(<thm:osgood>)[Osgood]*
+- *#link(<def:osgood-condition>)[Osgood Condition]*
+
+== P
+- *#link(<thm:p-test>)[P Test]*
+- *#link(<thm:peano>)[Peano]*
+- *#link(<ex:peano-counterexample>)[Peano Counterexample]*
+- *#link(<def:periodic-slp>)[Periodic SLP]*
+- *#link(<def:phase-space>)[Phase Space]*
+- *#link(<thm:picard-lindelof>)[Picard Lindelof]*
+- *#link(<thm:poincare-bendixson>)[Poincare Bendixson]*
+- *#link(<thm:pointwise-convergence>)[Pointwise Convergence]*
+
+== R
+- *#link(<thm:real-eigenvalues>)[Real Eigenvalues]*
+- *#link(<ex:reduction-missing-x>)[Reduction Missing X]*
+- *#link(<ex:reduction-of-order>)[Reduction Of Order]*
+- *#link(<def:regular-slp>)[Regular SLP]*
+- *#link(<ex:resonant-forcing>)[Resonant Forcing]*
+- *#link(<def:riccati-equation>)[Riccati Equation]*
+
+== S
+- *#link(<def:saturated-solution>)[Saturated Solution]*
+- *#link(<thm:self-adjoint>)[Self Adjoint]*
+- *#link(<def:separable-equation>)[Separable Equation]*
+- *#link(<ex:separable-equation>)[Separable Equation]*
+- *#link(<thm:separable-solutions>)[Separable Solutions]*
+- *#link(<ex:simple-bvp>)[Simple BVP]*
+- *#link(<def:singular-slp>)[Singular SLP]*
+- *#link(<def:singular-solution>)[Singular Solution]*
+- *#link(<def:sl-eigenvalue>)[SL Eigenvalue]*
+- *#link(<thm:sl-properties>)[SL Properties]*
+- *#link(<def:solution>)[Solution]*
+- *#link(<thm:sturm-comparison>)[Sturm Comparison]*
+- *#link(<def:sturm-liouville>)[Sturm Liouville]*
+- *#link(<thm:sturm-oscillation>)[Sturm Oscillation]*
+- *#link(<lem:superposition>)[Superposition]*
+
+== U
+- *#link(<thm:undetermined-coefficients>)[Undetermined Coefficients]*
+
+== W
+- *#link(<def:weighted-inner-product>)[Weighted Inner Product]*
+- *#link(<def:wronskian>)[Wronskian]*
+- *#link(<thm:wronskian-criterion>)[Wronskian Criterion]*
+- *#link(<def:wronskian-higher-order>)[Wronskian Higher Order]*
+
+#pagebreak()
+
 #bibliography("references.bib", title: "References", full: true)
