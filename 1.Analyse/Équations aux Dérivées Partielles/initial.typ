@@ -3170,6 +3170,22 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
   ) <fig:wave-spherical-means>
 ]
 
+The compact mean form of Kirchhoff's formula hides where the data are actually evaluated; unwinding the definition of the spherical mean gives two equivalent forms in which the integrals are displayed in full. Since the sphere $partial B (bold(x), a t)$ is the image of the unit sphere $partial B (0, 1)$ under $bold(y) = bold(x) + a t bold(omega)$ with $bold(omega) in partial B (0, 1)$ and $dif S_(bold(y)) = a^2 t^2 dif omega$, the spherical mean of the initial displacement becomes the average of $phi$ over the unit sphere centered at the origin,
+$
+  M_phi (bold(x), t) = 1/(4 pi) integral_(partial B (0, 1)) phi (bold(x) + a t bold(omega)) dif omega,
+$
+and likewise for $M_psi$. Substituting these averages into Kirchhoff's formula (#link(<thm:kirchhoff-formula-3d>)[Th.]) yields the unit-sphere form
+$
+  u (bold(x), t) = 1/(4 pi) (partial)/(partial t) (t integral_(partial B (0, 1)) phi (bold(x) + a t bold(omega)) dif omega) + t/(4 pi) integral_(partial B (0, 1)) psi (bold(x) + a t bold(omega)) dif omega.
+$
+
+Parameterizing the unit sphere with the spherical coordinates introduced in the proof above, $bold(omega) = (sin phi.alt cos theta, sin phi.alt sin theta, cos phi.alt)$ with $phi.alt in [0, pi]$, $theta in [0, 2 pi)$, and surface element $dif omega = sin phi.alt dif phi.alt dif theta$, the formula takes the fully explicit spherical-coordinate form
+$
+  u (bold(x), t) &= 1/(4 pi) (partial)/(partial t) integral_0^(2 pi) integral_0^pi t phi (bold(x) + a t bold(omega)) sin phi.alt dif phi.alt dif theta \
+  &quad + t/(4 pi) integral_0^(2 pi) integral_0^pi psi (bold(x) + a t bold(omega)) sin phi.alt dif phi.alt dif theta.
+$
+Both forms make the domain of dependence visible: the solution at $(bold(x), t)$ is assembled exclusively from the initial data on the single sphere of radius $a t$ about $bold(x)$, and no data from the interior of the ball enter. This is the mechanism behind the strong Huygens principle in three dimensions (§16.6), in sharp contrast with the two-dimensional formula of the next section, where the integration runs over the full disk and a trailing wake appears.
+
 === The Method of Descent // 降维法
 
 #theorem(name: "Poisson's Formula in Two Dimensions")[
