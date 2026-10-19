@@ -2964,8 +2964,8 @@ Throughout the chapter we work in dimension $n$, writing $bold(x) = (x_1, dots, 
   The *general Cauchy problem* for the wave equation in $bb(R)^n$ with speed $a > 0$ is to find $u: bb(R)^n times [0, oo) -> bb(R)$ with
   $
     cases(
-      u_(t t) = a^2 Delta u + f (bold(x), t) quad "in" bb(R)^n times (0, oo),
-      u (bold(x), 0) = phi (bold(x)) comma quad partial_t u (bold(x), 0) = psi (bold(x))
+      u_(t t) = a^2 Delta u + f (bold(x), t) quad "in" quad bb(R)^n times (0, oo),
+      u (bold(x), 0) = phi (bold(x)) "and" partial_t u (bold(x), 0) = psi (bold(x))
     )
   $
   where $Delta$ is the Laplacian in $bold(x)$, $f$ a given source, and $phi, psi$ the initial displacement and velocity.
@@ -2985,7 +2985,7 @@ Dividing by $rho Delta x$ and letting $Delta x -> 0$ yields
 $
   u_(t t) = a^2 u_(x x) + f (x, t), quad a^2 = T / rho,
 $ <eq:wave-string>
-with $f = F \/ rho$ the forcing per unit mass. This is the one-dimensional wave equation: the wave speed $a = sqrt(T \/ rho)$ grows with the tension and decreases with the density, as physical intuition demands.
+with $f = F / rho$ the forcing per unit mass. This is the one-dimensional wave equation: the wave speed $a = sqrt(T / rho)$ grows with the tension and decreases with the density, as physical intuition demands.
 
 #figure(
   image("./img/wave-string-element.svg", width: 62%),
@@ -3008,7 +3008,7 @@ The same balance laws produce the wave equation in three space dimensions. Consi
 $
   rho_0 partial_t bold(v) + nabla p = bold(0).
 $ <eq:acoustic-momentum>
-Mass conservation and the adiabatic equation of state close the system: the density perturbation $rho'$ satisfies $partial_t rho' + rho_0 "div" bold(v) = 0$, and $p = c^2 rho'$ with $c^2 = (partial p \/ partial rho)_s > 0$ the square of the *speed of sound*. Applying $partial_t$ to the continuity equation, taking the divergence of the momentum equation, and eliminating $bold(v)$:
+Mass conservation and the adiabatic equation of state close the system: the density perturbation $rho'$ satisfies $partial_t rho' + rho_0 "div" bold(v) = 0$, and $p = c^2 rho'$ with $c^2 = ((partial p)/(partial rho))_s > 0$ the square of the *speed of sound*. Applying $partial_t$ to the continuity equation, taking the divergence of the momentum equation, and eliminating $bold(v)$:
 $
   partial_(t t) p = c^2 Delta p, quad partial_(t t) rho' = c^2 Delta rho',
 $ <eq:acoustic-wave>
@@ -3032,8 +3032,8 @@ If the medium is bounded, the solution is further constrained on the spatial bou
   The *homogeneous Cauchy problem* for the one-dimensional wave equation with speed $a > 0$ is to find $u: bb(R) times [0, oo) -> bb(R)$ with
   $
     cases(
-      (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2) "in" bb(R) times (0, oo),
-      u (x, 0) = phi (x) comma quad partial_t u (x, 0) = psi (x)
+      (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2) quad "in" quad bb(R) times (0, oo),
+      u (x, 0) = phi (x) "and" partial_t u (x, 0) = psi (x)
     )
   $
   where $phi, psi: bb(R) -> bb(R)$ are the initial displacement and velocity.
@@ -3093,21 +3093,27 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
   - *Fixed end* $u (0, t) = 0$ (with the compatibility condition $phi (0) = 0$): extend the data *oddly*, $tilde(phi) (x) = phi (x)$, $tilde(psi) (x) = psi (x)$ for $x >= 0$ and $tilde(phi) (x) = -phi (-x)$, $tilde(psi) (x) = -psi (-x)$ for $x < 0$. The restriction of the d'Alembert solution to $x > 0$ is
     $
       u (x, t) = cases(
-        1/2 (phi (x + a t) + phi (x - a t)) + 1/(2 a) integral_(x - a t)^(x + a t) psi (s) dif s quad & x >= a t comma,
+        1/2 (phi (x + a t) + phi (x - a t)) + 1/(2 a) integral_(x - a t)^(x + a t) psi (s) dif s quad & x >= a t,
         1/2 (phi (x + a t) - phi (a t - x)) + 1/(2 a) integral_(a t - x)^(x + a t) psi (s) dif s quad & 0 < x < a t
       )
     $
   - *Free end* $u_x (0, t) = 0$ (with the compatibility condition $phi' (0) = 0$): extend the data *evenly*, $tilde(phi) (x) = phi (abs(x))$, $tilde(psi) (x) = psi (abs(x))$. The restriction of the d'Alembert solution to $x > 0$ is
     $
       u (x, t) = cases(
-        1/2 (phi (x + a t) + phi (x - a t)) + 1/(2 a) integral_(x - a t)^(x + a t) psi (s) dif s quad & x >= a t comma,
+        1/2 (phi (x + a t) + phi (x - a t)) + 1/(2 a) integral_(x - a t)^(x + a t) psi (s) dif s quad & x >= a t,
         1/2 (phi (x + a t) + phi (a t - x)) + 1/(2 a) (integral_0^(x + a t) psi (s) dif s + integral_0^(a t - x) psi (s) dif s) quad & 0 < x < a t
       )
     $
 ] <prop:wave-half-line>
 
 #proof[
-  Let $tilde(u)$ be the d'Alembert solution of the Cauchy problem on the whole line with the extended data $(tilde(phi), tilde(psi))$. For the *odd* extension the equation and the data are invariant under $(x, u) -> (-x, -u)$, so $tilde(u) (-x, t) = -tilde(u) (x, t)$: the solution is odd in $x$, whence $tilde(u) (0, t) = 0$. For the *even* extension the solution is even in $x$, $tilde(u) (-x, t) = tilde(u) (x, t)$, whence $partial_x tilde(u) (0, t) = 0$. In both cases the restriction $u = tilde(u)|_(x > 0)$ therefore satisfies the boundary condition as well as the initial data; the formulas above are d'Alembert's formula written out, using $tilde(phi) (x - a t) = -phi (a t - x)$ (odd) or $tilde(phi) (x - a t) = phi (a t - x)$ (even) and deforming the integral over the negative segment to the positive one in the region $0 < x < a t$. The compatibility conditions make the extensions $C^2$, and uniqueness follows from the energy method (§16.7).
+  Let $tilde(u)$ be the d'Alembert solution of the Cauchy problem on the whole line with the extended data $(tilde(phi), tilde(psi))$.
+
+  For the *odd* extension the equation and the data are invariant under $(x, u) -> (-x, -u)$, so $tilde(u) (-x, t) = -tilde(u) (x, t)$: the solution is odd in $x$, whence $tilde(u) (0, t) = 0$.
+
+  For the *even* extension the solution is even in $x$, $tilde(u) (-x, t) = tilde(u) (x, t)$, whence $partial_x tilde(u) (0, t) = 0$.
+
+  In both cases the restriction $u = tilde(u)|_(x > 0)$ therefore satisfies the boundary condition as well as the initial data; the formulas above are d'Alembert's formula written out, using $tilde(phi) (x - a t) = -phi (a t - x)$ (odd) or $tilde(phi) (x - a t) = phi (a t - x)$ (even) and deforming the integral over the negative segment to the positive one in the region $0 < x < a t$. The compatibility conditions make the extensions $C^2$, and uniqueness follows from the energy method (§16.7).
 ]
 
 #note[
@@ -3135,15 +3141,23 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
 ] <thm:kirchhoff-formula-3d>
 
 #proof[
-  For a solution $u$ define the spherical mean
+  *Step 1: Spherical means.* For a solution $u$ define the spherical mean
   $
     M_u (bold(x), r, t) = 1/(4 pi r^2) integral_(partial B (bold(x), r)) u (bold(y), t) dif S_(bold(y)),
   $
-  the average of $u (dot, t)$ over the sphere of radius $r$ about $bold(x)$; in coordinates centered at $bold(x)$, a point of that sphere is $bold(y) = bold(x) + r (sin phi.alt cos theta, sin phi.alt sin theta, cos phi.alt)$ with $phi.alt in [0, pi]$, $theta in [0, 2 pi)$, and surface element $dif S = r^2 sin phi.alt dif phi.alt dif theta$. Averaging the equation over spheres and integrating by parts yields the *Euler--Poisson--Darboux equation*
+  the average of $u (dot, t)$ over the sphere of radius $r$ about $bold(x)$; in coordinates centered at $bold(x)$, a point of that sphere is $bold(y) = bold(x) + r (sin phi.alt cos theta, sin phi.alt sin theta, cos phi.alt)$ with $phi.alt in [0, pi]$, $theta in [0, 2 pi)$, and surface element $dif S = r^2 sin phi.alt dif phi.alt dif theta$.
+
+  Averaging the equation over spheres and integrating by parts yields the *Euler--Poisson--Darboux equation*
   $
     (partial^2 M_u)/(partial t^2) = a^2 ((partial^2 M_u)/(partial r^2) + 2/r (partial M_u)/(partial r)),
   $
-  with data $M_u (bold(x), r, 0) = M_phi (bold(x), r)$ and $partial_t M_u (bold(x), r, 0) = M_psi (bold(x), r)$. The term $2 / r$ blocks a direct use of d'Alembert's formula; the classical trick is to multiply by $r$: since $M_u$ is even in $r$, the function $v (r, t) = r M_u (bold(x), r, t)$ extends oddly to $r < 0$ and solves the *one-dimensional wave equation* $v_(t t) = a^2 v_(r r)$ on the whole line, with data $v (r, 0) = r M_phi (bold(x), r)$ and $partial_t v (r, 0) = r M_psi (bold(x), r)$. D'Alembert's formula (#link(<thm:d-alembert>)[Th.]) gives $v$ explicitly; since $u (bold(x), t) = M_u (bold(x), 0, t) = lim_(r -> 0^+) v (r, t) / r = partial_r v (0, t)$ (the mean over a point is the value), evaluating the result at $r = a t$ produces the formula. Regularity follows by differentiating under the integral. The construction is illustrated in #link(<fig:wave-spherical-means>)[Figure].
+  with data $M_u (bold(x), r, 0) = M_phi (bold(x), r)$ and $partial_t M_u (bold(x), r, 0) = M_psi (bold(x), r)$.
+
+  *Step 2: Reduction to the one-dimensional wave equation.* The term $2 / r$ blocks a direct use of d'Alembert's formula; the classical trick is to multiply by $r$: since $M_u$ is even in $r$, the function $v (r, t) = r M_u (bold(x), r, t)$ extends oddly to $r < 0$ and solves the *one-dimensional wave equation* $v_(t t) = a^2 v_(r r)$ on the whole line, with data $v (r, 0) = r M_phi (bold(x), r)$ and $partial_t v (r, 0) = r M_psi (bold(x), r)$.
+
+  *Step 3: Evaluation.* D'Alembert's formula (#link(<thm:d-alembert>)[Th.]) gives $v$ explicitly; since $u (bold(x), t) = M_u (bold(x), 0, t) = lim_(r -> 0^+) v (r, t) / r = partial_r v (0, t)$ (the mean over a point is the value), evaluating the result at $r = a t$ produces the formula.
+
+  Regularity follows by differentiating under the integral. The construction is illustrated in #link(<fig:wave-spherical-means>)[Figure].
 ]
 
 #note[
@@ -3165,11 +3179,15 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
 ] <thm:poisson-formula-2d>
 
 #proof[
-  Extend the data to three space variables by $bar(phi)(bold(x), x_3) = phi (bold(x))$ and $bar(psi)(bold(x), x_3) = psi (bold(x))$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By uniqueness (#link(<cor:wave-uniqueness>)[Cor.] below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension. It remains to evaluate Kirchhoff's formula. The sphere $partial B ((bold(x), 0), a t)$ projects onto the disk $B (bold(x), a t)$, each point $bold(y) in B (bold(x), a t)$ corresponding to the pair $bold(y)^plus.minus = (bold(y), plus.minus sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2))$ with $dif S = (a t) / sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2) dif bold(y)$; the two hemispheres contribute equally, so
+  Extend the data to three space variables by $bar(phi)(bold(x), x_3) = phi (bold(x))$ and $bar(psi)(bold(x), x_3) = psi (bold(x))$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By uniqueness (#link(<cor:wave-uniqueness>)[Cor.] below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension.
+
+  It remains to evaluate Kirchhoff's formula. The sphere $partial B ((bold(x), 0), a t)$ projects onto the disk $B (bold(x), a t)$, each point $bold(y) in B (bold(x), a t)$ corresponding to the pair $bold(y)^plus.minus = (bold(y), plus.minus sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2))$ with $dif S = (a t) / sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2) dif bold(y)$; the two hemispheres contribute equally, so
   $
     t M_bar(phi) (bold(x), t) = 1/(2 pi) integral_(B (bold(x), a t)) (phi (bold(y)))/(sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2)) dif bold(y),
   $
-  and substituting into Kirchhoff's formula yields Poisson's formula. Note that the integral runs over the full *disk*, not the sphere: this is the mechanism behind the trailing wake and the failure of the strong Huygens principle in even dimensions (§16.6).
+  and substituting into Kirchhoff's formula yields Poisson's formula.
+
+  Note that the integral runs over the full *disk*, not the sphere: this is the mechanism behind the trailing wake and the failure of the strong Huygens principle in even dimensions (§16.6).
 ]
 
 #example(name: "Descent to One Dimension: D'Alembert's Formula")[
@@ -3217,12 +3235,14 @@ It remains to solve the second subproblem.
   The *inhomogeneous Cauchy problem* for the wave equation in $bb(R)^n$ with speed $a > 0$ is to find $u: bb(R)^n times [0, oo) -> bb(R)$ with
   $
     cases(
-      u_(t t) = a^2 Delta u + f (bold(x), t) quad "in" bb(R)^n times (0, oo),
-      u (bold(x), 0) = 0 comma quad partial_t u (bold(x), 0) = 0
+      u_(t t) = a^2 Delta u + f (bold(x), t) quad "in" quad bb(R)^n times (0, oo),
+      u (bold(x), 0) = 0 "and" partial_t u (bold(x), 0) = 0
     )
   $
-  with a given source $f$. The fully general problem — nonzero data *and* a source — is the sum of this and the homogeneous problem (solved in §16.2 and §16.3), by the superposition split (#link(<prop:wave-superposition-split>)[§16.4]).
+  with a given source $f$.
 ] <def:cauchy-wave-inhomogeneous>
+
+The fully general problem — nonzero data *and* a source — is the sum of this and the homogeneous problem (solved in §16.2 and §16.3), by the superposition split (#link(<prop:wave-superposition-split>)[§16.4]).
 
 #theorem(name: "Duhamel's Principle for the Wave Equation")[
   Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$: $S (t) psi = w (dot, t)$, where $w_(t t) = a^2 Delta w$, $w (dot, 0) = 0$, $partial_t w (dot, 0) = psi$. Then the solution of the inhomogeneous Cauchy problem (#link(<def:cauchy-wave-inhomogeneous>)[Def.]) is given by
@@ -3233,15 +3253,19 @@ It remains to solve the second subproblem.
 ] <thm:duhamel-wave>
 
 #proof[
-  Let $w (t, s; bold(x))$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $partial_t w (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$. Define $u (dot, t) = integral_0^t w (t, s; dot) dif s$. Then $u (dot, 0) = 0$, $partial_t u (dot, 0) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $partial_t w (t, t; dot) = f (t, dot)$):
+  Let $w (t, s; bold(x))$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $partial_t w (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$.
+
+  Define $u (dot, t) = integral_0^t w (t, s; dot) dif s$. Then $u (dot, 0) = 0$, $partial_t u (dot, 0) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $partial_t w (t, t; dot) = f (t, dot)$):
   $
     (partial^2 u)/(partial t^2) - a^2 Delta u = (partial_t w) (t, t; dot) + integral_0^t ((partial^2 w)/(partial t^2) - a^2 Delta w) dif s = f (t, dot),
   $
-  since each $w$ is a homogeneous solution. Uniqueness for the Cauchy problem (#link(<cor:wave-uniqueness>)[Cor.] below) identifies $u$ as the solution.
+  since each $w$ is a homogeneous solution.
+
+  Uniqueness for the Cauchy problem (#link(<cor:wave-uniqueness>)[Cor.] below) identifies $u$ as the solution.
 ]
 
 #note[
-  The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 10]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is given explicitly by d'Alembert's formula in one dimension and by the Kirchhoff and Poisson formulas in higher dimensions (§16.3), so Duhamel's principle yields explicit solutions of the inhomogeneous Cauchy problem in every dimension — the formulas are recorded in the next subsection.
+  The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 11]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is given explicitly by d'Alembert's formula in one dimension and by the Kirchhoff and Poisson formulas in higher dimensions (§16.3), so Duhamel's principle yields explicit solutions of the inhomogeneous Cauchy problem in every dimension — the formulas are recorded in the next subsection.
 ]
 
 === Explicit Formulas by Dimension // 各维度的显式公式
@@ -3274,13 +3298,15 @@ For the mixed problem (#link(<def:mixed-problem-wave>)[Def.]) the traveling-wave
   The *mixed problem* for the wave equation on a bounded interval with fixed ends is to find $u: [0, L] times [0, oo) -> bb(R)$ with
   $
     cases(
-      u_(t t) = a^2 u_(x x) quad "in" (0, L) times (0, oo),
+      u_(t t) = a^2 u_(x x) quad "in" quad (0, L) times (0, oo),
       u (0, t) = u (L, t) = 0 quad t > 0,
-      u (x, 0) = phi (x) comma quad partial_t u (x, 0) = psi (x) quad x in (0, L)
+      u (x, 0) = phi (x) "and" partial_t u (x, 0) = psi (x) quad x in (0, L)
     )
   $
-  with the compatibility conditions $phi (0) = phi (L) = psi (0) = psi (L) = 0$ at the corners. A free end prescribes the Neumann conditions $u_x = 0$ instead, and an elastic attachment the Robin conditions, a linear combination of $u$ and $u_x$; the same spectral method handles all three, as the two examples below show.
+  with the compatibility conditions $phi (0) = phi (L) = psi (0) = psi (L) = 0$ at the corners.
 ] <def:mixed-problem-wave>
+
+A free end prescribes the Neumann conditions $u_x = 0$ instead, and an elastic attachment the Robin conditions, a linear combination of $u$ and $u_x$; the same spectral method handles all three, as the two examples below show.
 
 === Homogeneous Boundary Conditions // 齐次边界条件
 
@@ -3294,40 +3320,42 @@ $
 $
 has nontrivial solutions only for
 $
-  lambda_k = (k pi / L)^2, quad X_k (x) = sin (k pi x / L), quad k = 1, 2, dots.
+  lambda_k = ((k pi) / L)^2, quad X_k (x) = sin ((k pi x) / L), quad k = 1, 2, dots.
 $
-For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' + a^2 lambda_k T_k = 0$ with frequency $omega_k = a k pi \/ L$, so $T_k (t) = A_k cos (omega_k t) + B_k sin (omega_k t)$. Superposing all modes and fitting the initial data by the orthogonality of the sines:
+For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' + a^2 lambda_k T_k = 0$ with frequency $omega_k = (a k pi) / L$, so $T_k (t) = A_k cos (omega_k t) + B_k sin (omega_k t)$. Superposing all modes and fitting the initial data by the orthogonality of the sines:
 
 #theorem(name: "Dirichlet Series Solution of the Mixed Problem")[
   The mixed problem (#link(<def:mixed-problem-wave>)[Def.]) with $phi in C^2 ([0, L])$, $psi in C^1 ([0, L])$ satisfying the compatibility conditions has the solution
   $
-    u (x, t) = sum_(k=1)^oo (A_k cos (omega_k t) + B_k sin (omega_k t)) sin (k pi x / L), quad omega_k = (a k pi) / L,
+    u (x, t) = sum_(k=1)^oo (A_k cos (omega_k t) + B_k sin (omega_k t)) sin ((k pi x) / L), quad omega_k = (a k pi) / L,
   $
   with coefficients
   $
-    A_k = 2/L integral_0^L phi (x) sin (k pi x / L) dif x, quad B_k = 2/(L omega_k) integral_0^L psi (x) sin (k pi x / L) dif x.
+    A_k = 2/L integral_0^L phi (x) sin ((k pi x) / L) dif x, quad B_k = 2/(L omega_k) integral_0^L psi (x) sin ((k pi x) / L) dif x.
   $
 ] <thm:wave-dirichlet-series>
 
 #proof[
-  Each summand $u_k = T_k X_k$ solves the wave equation and vanishes at $x = 0, L$; by linearity so does the series (the convergence of the series is underwritten by the spectral theory of Chapter 19, #link(<thm:spectral-expansion>)[Ch 19]). At $t = 0$,
+  Each summand $u_k = T_k X_k$ solves the wave equation and vanishes at $x = 0, L$; by linearity so does the series (the convergence of the series is underwritten by the spectral theory of Chapter 19, #link(<thm:spectral-expansion>)[Ch 19]).
+
+  At $t = 0$,
   $
-    u (x, 0) = sum_(k=1)^oo A_k sin (k pi x / L) = phi (x), quad partial_t u (x, 0) = sum_(k=1)^oo omega_k B_k sin (k pi x / L) = psi (x),
+    u (x, 0) = sum_(k=1)^oo A_k sin ((k pi x) / L) = phi (x), quad partial_t u (x, 0) = sum_(k=1)^oo omega_k B_k sin ((k pi x) / L) = psi (x),
   $
-  and the coefficients follow from the orthogonality relation $integral_0^L sin (k pi x \/ L) sin (m pi x \/ L) dif x = L delta_(k m) \/ 2$: the $A_k$ are the Fourier sine coefficients of $phi$, and the $B_k$ those of $psi$, divided by $omega_k$.
+  and the coefficients follow from the orthogonality relation $integral_0^L sin ((k pi x) / L) sin ((m pi x) / L) dif x = (L delta_(k m)) / 2$: the $A_k$ are the Fourier sine coefficients of $phi$, and the $B_k$ those of $psi$, divided by $omega_k$.
 ]
 
 #note[
-  *Standing waves versus traveling waves.* Each summand $u_k$ is a *standing wave*: the profile $sin (k pi x \/ L)$ is fixed in space — with $k - 1$ interior nodes — and only its amplitude oscillates at frequency $omega_k$. The d'Alembert representation of §16.2 describes the same solution as a superposition of traveling profiles $F (x - a t) + G (x + a t)$; the two pictures are equivalent, the passage between them being the trigonometric identity
+  *Standing waves versus traveling waves.* Each summand $u_k$ is a *standing wave*: the profile $sin ((k pi x) / L)$ is fixed in space — with $k - 1$ interior nodes — and only its amplitude oscillates at frequency $omega_k$. The d'Alembert representation of §16.2 describes the same solution as a superposition of traveling profiles $F (x - a t) + G (x + a t)$; the two pictures are equivalent, the passage between them being the trigonometric identity
   $
-    2 sin (k pi x \/ L) cos (omega_k t) = sin ((k pi (x - a t)) / L) + sin ((k pi (x + a t)) / L).
+    2 sin ((k pi x) / L) cos (omega_k t) = sin ((k pi (x - a t)) / L) + sin ((k pi (x + a t)) / L).
   $
-  The frequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = a pi \/ L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (#link(<thm:wave-energy>)[§16.7]).
+  The frequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = (a pi) / L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (#link(<thm:wave-energy>)[§16.7]).
 ]
 
 #figure(
   image("./img/wave-standing-waves.svg", width: 100%),
-  caption: [The first three standing-wave modes of a string with fixed ends: $sin (k pi x \/ L)$ for $k = 1, 2, 3$, with frequencies $omega_k = a k pi \/ L$ in the ratio $1 : 2 : 3$. The $k$-th mode has $k - 1$ interior nodes and oscillates in place; arbitrary initial data are expanded in these modes.],
+  caption: [The first three standing-wave modes of a string with fixed ends: $sin ((k pi x) / L)$ for $k = 1, 2, 3$, with frequencies $omega_k = (a k pi) / L$ in the ratio $1 : 2 : 3$. The $k$-th mode has $k - 1$ interior nodes and oscillates in place; arbitrary initial data are expanded in these modes.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:wave-standing-waves>
@@ -3335,11 +3363,11 @@ For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' 
 #example(name: "Free Ends: Neumann Conditions")[
   If the ends are free, the boundary conditions are $u_x (0, t) = u_x (L, t) = 0$, and the spatial problem $X'' + lambda X = 0$, $X' (0) = X' (L) = 0$ has eigenvalues
   $
-    lambda_0 = 0 quad "with" quad X_0 = 1; quad quad lambda_k = (k pi / L)^2 quad "with" quad X_k (x) = cos (k pi x / L), quad k >= 1.
+    lambda_0 = 0 quad "with" quad X_0 = 1; quad quad lambda_k = ((k pi) / L)^2 quad "with" quad X_k (x) = cos ((k pi x) / L), quad k >= 1.
   $
   The temporal factor is as before, except that $omega_0 = 0$ gives a rigid translation $T_0 (t) = A_0 + B_0 t$. Hence
   $
-    u (x, t) = A_0 + B_0 t + sum_(k=1)^oo (A_k cos (omega_k t) + B_k sin (omega_k t)) cos (k pi x / L),
+    u (x, t) = A_0 + B_0 t + sum_(k=1)^oo (A_k cos (omega_k t) + B_k sin (omega_k t)) cos ((k pi x) / L),
   $
   the coefficients being the Fourier cosine coefficients of $phi$ and of $psi$ (with $B_k$ divided by $omega_k$). The term $B_0 t$ corresponds to a nonzero total momentum of the string, which is conserved by the free-end dynamics.
 ] <ex:wave-neumann-separation>
@@ -3359,7 +3387,7 @@ For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' 
   $
     v_(t t) = a^2 v_(x x) - (w_(t t) - a^2 w_(x x)),
   $
-  with modified initial data $v (x, 0) = phi (x) - w (x, 0)$ and $partial_t v (x, 0) = psi (x) - partial_t w (x, 0)$. Expanding $v (x, t) = sum_(k=1)^oo q_k (t) sin (k pi x / L)$ in the Dirichlet eigenfunctions and projecting onto each mode yields a *forced* oscillator equation
+  with modified initial data $v (x, 0) = phi (x) - w (x, 0)$ and $partial_t v (x, 0) = psi (x) - partial_t w (x, 0)$. Expanding $v (x, t) = sum_(k=1)^oo q_k (t) sin ((k pi x) / L)$ in the Dirichlet eigenfunctions and projecting onto each mode yields a *forced* oscillator equation
   $
     q_k'' + omega_k^2 q_k = f_k (t),
   $
@@ -3462,11 +3490,15 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
   $
     partial_s (1/2 (u_s^2 + a^2 abs(nabla u)^2)) - "div"(a^2 u_s nabla u) = u_s (u_(s s) - a^2 Delta u) = 0
   $
-  holds for $s < t_0$. Integrate it over the truncated cone $C_t = C inter {s <= t}$ and apply the divergence theorem in space-time. On the lateral face the outward space-time normal is $nu = (a, e_r) / sqrt(1 + a^2)$, with $e_r$ the radial unit vector, and the boundary flux is
+  holds for $s < t_0$.
+
+  Integrate it over the truncated cone $C_t = C inter {s <= t}$ and apply the divergence theorem in space-time. On the lateral face the outward space-time normal is $nu = (a, e_r) / sqrt(1 + a^2)$, with $e_r$ the radial unit vector, and the boundary flux is
   $
     integral_("lateral") (a/2 (u_s - a u_r)^2 + (a^3/2) abs(nabla_T u)^2) / sqrt(1 + a^2) dif S >= 0,
   $
-  a sum of squares: the lateral face is *characteristic*, so no energy flows out of the cone. Hence $E_C (t) + "flux" = E_C (0)$, and the claim follows.
+  a sum of squares: the lateral face is *characteristic*, so no energy flows out of the cone.
+
+  Hence $E_C (t) + "flux" = E_C (0)$, and the claim follows.
 ]
 
 #corollary(name: "Uniqueness of the Cauchy Problem")[
@@ -3478,15 +3510,15 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 ]
 
 #corollary(name: "Continuous Dependence on the Data")[
-  Let $u, v$ be $C^2$ solutions with initial data $(phi, psi)$ and $(tilde(phi), tilde(psi))$, and let $C$ be the backward cone with apex $(x_0, t_0)$. Then for all $t in [0, t_0]$ the local energy of the difference $w = u - v$ satisfies
+  Let $u, v$ be $C^2$ solutions with initial data $(phi, psi)$ and $(tilde(phi), tilde(psi))$, and let $C$ be the backward cone with apex $(bold(x)_0, t_0)$. Then for all $t in [0, t_0]$ the local energy of the difference $w = u - v$ satisfies
   $
-    E_C (t) <= 1/2 integral_(B (x_0, a t_0)) (abs(psi - tilde(psi))^2 + a^2 abs(nabla (phi - tilde(phi)))^2) dif y.
+    E_C (t) <= 1/2 integral_(B (bold(x)_0, a t_0)) (abs(psi - tilde(psi))^2 + a^2 abs(nabla (phi - tilde(phi)))^2) dif bold(y).
   $
   Small initial data (in the energy norm, on the domain of dependence) produce a small solution: the Cauchy problem is *stable*.
 ] <cor:wave-stability>
 
 #proof[
-  Immediate from the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) applied to $w = u - v$, whose initial energy is bounded by the data on $B (x_0, a t_0)$.
+  Immediate from the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) applied to $w = u - v$, whose initial energy is bounded by the data on $B (bold(x)_0, a t_0)$.
 ]
 
 = Linear Hyperbolic Systems // 线性双曲系统
