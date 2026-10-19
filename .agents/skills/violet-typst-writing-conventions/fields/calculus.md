@@ -136,3 +136,58 @@ $L^1 (X, mu)$
 3. **无穷用 `oo`**，不是 `infty`、`infinity`、`∞`。
 4. **偏导一律用 `partial`**，**禁止**在渲染数学中直接使用 Unicode `∂`；含下标的偏导整体按"先组内配对、再挂下标"写：`((partial U)/(partial T))_V`，见 [general.md §6.1](general.md)。
 5. 拉普拉斯算子写 `nabla^2 V`，闭合积分写 `integral.cont` / `integral_(partial sigma)`，无 `oint` 符号。
+6. **导数记号分两种数学模式统一**（行内下标、行间分式），见下方 §9。
+
+## 9. 导数记号两模式：行内下标、行间分式（2026-10-19 用户定稿）
+
+Typst 与 LaTeX 一样有两种数学模式。**同一导数在两种模式下采用不同的统一记法**，全库一致执行：
+
+### 9.1 行内（inline）：一律用下标形式，禁止 `partial_t u`
+
+```typst
+// ❌ 错误 — 行内使用算子形式
+$partial_t u$
+$partial_t phi(x, x)$
+$partial_x F (u)$
+
+// ✅ 正确 — 行内一律下标形式
+$u_t$
+$phi_t (x, x)$      // 注意：下标后紧接括号必须空一格，防止吞括号
+$F (u)_x$           // 复合函数的导数也用下标
+$(M_u)_t$           // 带下标的主体整体加括号再挂导数下标
+$(u_epsilon)_t$
+$u_(t t)$           // 二阶导
+```
+
+要点：
+- 简单主体直接加导数下标：`u_t`、`v_x`、`w_s`、`E_t`、`rho'_t`；
+- 主体本身带下标（`M_u`、`u_1`、`u_epsilon`、`w_i`）或为函数包装（`tilde(u)`、`bold(v)`）时，先保证主体完整再挂导数下标；
+- **新下标后若紧跟 `(`，必须补一个空格**（`phi_t (x, x)`），否则括号被吞进下标（见 [general.md §3.2](general.md)）。
+
+### 9.2 行间（display）：一律用分式形式，禁止 `partial_t (...)`
+
+```typst
+// ❌ 错误 — 行间使用算子下标形式
+$partial_t u - Delta u = f$
+$partial_t (t M_phi) = ...$
+$u_t - a^2 Delta u = f$          // display 内也禁止下标简写
+
+// ✅ 正确 — 行间一律分式（实际书写时置于独立的 display 块内）
+$(partial u)/(partial t) - Delta u = f$
+$(partial)/(partial t) (t M_phi (dot, x)) = ...$   // 纯算子作用于长表达式时，算子用分式
+$(partial^2 u)/(partial t^2) - a^2 Delta u = f$
+$(partial^2 u)/(partial x partial t)$              // 混合偏导
+$(partial u_(n+1))/(partial t)$                    // 下标是迭代指标时随分子整体入分式
+```
+
+要点：
+- 分式的分子/分母各为多字符整体，必须加括号（见 [general.md §6.1](general.md)）；
+- display 内既有的下标简写（`u_t`、`u_(t t)`）同样要转为分式；
+- **裸算子记法保留例外**：`partial_t - Delta_x`、`partial_t + Delta` 这类**未作用于具体函数的算子表达式**（热算子、波动算子）以及 Laplacian 算子定义 `sum_i partial_(x_i)^2`，保留 `partial_t` 算子形式，不强行转分式。
+
+### 9.3 判定流程
+
+写完或修改含导数的公式后自查两问：
+
+1. 这段数学是行内还是行间？（`$` 独立成行/`#eq[$` 开头 = display；嵌在文字行内 = inline）
+2. display 中的导数是否全部为分式？inline 中的导数是否全部为下标？裸算子（± Delta 组合、算子定义）除外。

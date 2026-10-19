@@ -82,6 +82,7 @@ user_invocable: false
 8. **标点写在数学环境内部**；display math 保持原样。
 9. **`\left(`/`\right)` 不存在**；Typst 自动缩放，长竖线用 `lr(...)`。
 10. **不保留 LaTeX 宏**：`int`→`integral`、`cdot`→`dot`、`times`→`times`、`sim`→`~`，`pm`→`±`。
+11. **导数记号两模式**（2026-10-19 用户定稿）：行内一律下标形式（`u_t`，禁止 `partial_t u`），行间一律分式形式（`(partial u)/(partial t)`，禁止 `partial_t (...)`）；裸算子（`partial_t - Delta_x` 类）保留例外（详见 calculus.md §9）。
 
 ### 3.3 LaTeX 宏残留扫描
 
@@ -213,10 +214,10 @@ Later, we refer to *#link(<def:continuous>)[Continuous Function]*.
 ```typst
 #eq[$
   E = m c^2
-$]
+$] <eq:mass-energy>
 ```
 
-编号格式为 `(章号.公式序号)`，如 `(1.1)`。
+编号格式为 `(章号.公式序号)`，如 `(1.1)`；标签写在闭合 `$]` 之后。**需要被引用的方程（尤其是定义块中作为陈述核心的方程）必须用 `#eq` 编号，正文中用 `#link(<eq:...>)[Eq.]` 或 `@eq:...` 引用，禁止把已编号方程在定理陈述中原样再抄一遍**（详见 violet-template-usage SKILL.md §10）。
 
 > 收敛箭头（xarrow 包）、积分记号惯例等记号写法已移至 [fields/arrows.md](fields/arrows.md) §3 与 [fields/calculus.md](fields/calculus.md) §3.2。
 

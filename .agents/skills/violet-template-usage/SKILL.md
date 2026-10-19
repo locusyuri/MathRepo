@@ -232,11 +232,15 @@ user_invocable: false
 ```typst
 #eq[$
   integral_0^infinity f(x) dif x = 1.
-$]
+$] <eq:pythagorean-identity>
 ```
 
 - 编号格式：`(章号.公式序号)`
 - 默认公式不编号，仅需要引用时使用 `#eq`
+- 标签写在 `#eq[$...$]` 的闭合 `$]` 之后：`$] <eq:kebab-case-name>`
+- **需要被引用的方程（尤其是定义块中作为陈述核心的方程）必须用 `#eq` 编号**，正文中通过 `#link(<eq:...>)[Eq.]` 或 `@eq:...` 引用；**禁止在定理陈述或正文中把已编号的方程原样再抄一遍**
+- `#eq` 可在 definition / theorem 等组件块内使用
+- 同一文档内引用风格保持一致即可：ODE 笔记惯用 `@eq:label` 原生引用，PDE 笔记惯用 `#link(<eq:label>)[Eq.]`
 
 ---
 
