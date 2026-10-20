@@ -1454,7 +1454,7 @@ $C$ performs the following cyclic operations when multiplied by another matrix:
       upright("rank")(A) + upright("rank")(B).
     $
 
-    On the basis of the dimension formula,
+    On the basis of #link(<thm:dimension-formula>)[the dimension formula],
     $upright("rank")(A + B) = upright("rank")(A) + upright("rank")(B) -
     "dim"(R(A) inter R(B))$, where $R(A)$ and $R(B)$ are the column spaces of $A$ and $B$.
   + *Multiplication*: $upright("rank")(A B) <= upright("rank")(A)$ and $upright("rank")(A B) <= upright("rank")(B)$.
@@ -1569,14 +1569,12 @@ dimensions, and discusses the structural properties of subspaces.
 == Linear Spaces and Their Bases // 线性空间与基
 
 #definition(name: "Linear Space over Field $F$")[
-  Let $V$ be a non-empty set and $F$ a field. If two operations (binary mappings) are defined
-  on $V$:
-  - *Vector addition*: for any $alpha, beta in V$, there exists $gamma in V$ such that
-    $gamma = alpha + beta$.
-  - *Scalar multiplication*: for any $alpha in V$ and $c in F$, there exists $gamma in V$
-    such that $gamma = c dot alpha$.
+  Let $V$ be a non-empty set and $F$ a field, and suppose two operations (binary mappings) are
+  defined on $V$:
+  - *Vector addition*: $(alpha, beta) |-> alpha + beta$, from $V times V$ to $V$;
+  - *Scalar multiplication*: $(c, alpha) |-> c dot alpha$, from $F times V$ to $V$.
 
-  and the following axioms hold (for any $alpha, beta, gamma in V$ and $k, l in F$):
+  If the following axioms hold (for any $alpha, beta, gamma in V$ and $k, l in F$):
   - *A1. Commutativity of Addition*: $alpha + beta = beta + alpha$.
   - *A2. Associativity of Addition*: $(alpha + beta) + gamma = alpha + (beta + gamma)$.
   - *A3. Existence of Additive Identity*: there exists $0 in V$ such that
@@ -1594,18 +1592,26 @@ dimensions, and discusses the structural properties of subspaces.
 ] <def:linear-space>
 
 #note[
-  In the definition, *A1 (commutativity of addition)* can be derived from the other axioms,
-  so it is not strictly necessary to include it as an axiom.
+  *A1 (commutativity of addition)* is not independent of the other axioms: it follows from
+  A2–A4, D1, D2 and M2. Indeed, D2 gives
+  $0 dot alpha = (0 + 0) dot alpha = 0 dot alpha + 0 dot alpha$, hence $0 dot alpha = 0$ after
+  adding $-(0 dot alpha)$; then M2 and D2 give
+  $alpha + (-1) dot alpha = (1 - 1) dot alpha = 0 dot alpha = 0$, so $(-1) dot alpha = -alpha$ by
+  uniqueness of the inverse, and D1 yields $-(alpha + beta) = -alpha - beta$. Now A2–A4 give
+  $beta + alpha + (-alpha) + (-beta) = beta + (alpha + (-alpha)) + (-beta) = beta + 0 + (-beta) = 0$,
+  so both $alpha + beta$ and $beta + alpha$ are inverses of $-(alpha + beta)$; an inverse in a
+  group being unique, $alpha + beta = beta + alpha$.
 ]
 
 Examples of linear spaces:
 
 - The univariate polynomials $F[x]$ over the number field $F$, with the usual polynomial
   addition and scalar multiplication, form a linear space over $F$; restricting to polynomials
-  of degree less than $n$ together with the zero polynomial gives $F[x]_n$, also a linear
-  space over $F$.
-- The positive reals $bb(R)^+$ with $a ⊕ b = a b$ and $k ∘ a = a^k$ forms a linear space
-  over $bb(R)$.
+  of degree less than $n$ together with the zero polynomial gives the $n$-dimensional space
+  $F[x]_n$, also a linear space over $F$.
+- The strictly positive reals $bb(R)_(> 0)$ with $a ⊕ b = a b$ and $k ∘ a = a^k$ forms a
+  linear space over $bb(R)$ (here $⊕$ denotes the *addition of this space*, not a direct sum:
+  $1$ plays the role of the zero vector and $a^(-1)$ that of $-a$).
 - The set of all real-valued functions, with function addition and scalar multiplication,
   forms a linear space over $bb(R)$.
 - The field $F$ itself, under its own addition and multiplication, forms a linear space
@@ -1613,9 +1619,9 @@ Examples of linear spaces:
 - The set $F^n$ of all ordered $n$-tuples of elements of $F$, with the usual vector addition
   and scalar multiplication, forms a linear space over $F$.
 
-In this section we primarily work with spaces of $n$-dimensional vectors over $bb(R)$; all
-elements of a linear space can be called vectors, and the definitions and properties of
-vectors in $bb(R)^n$ generalize to any linear space.
+We first work concretely with vectors in $bb(R)^n$: every element of a linear space may be
+called a *vector*, and all definitions and results below are stated for a linear space over an
+arbitrary field $F$, so that the familiar facts about $bb(R)^n$ become special cases.
 
 === Linear Combination and Dependence // 线性组合与线性相关
 
@@ -1658,17 +1664,40 @@ vectors in $bb(R)^n$ generalize to any linear space.
   vectors.
 ]
 
+#theorem(name: "Steinitz Replacement Principle")[
+  If $alpha_1, ..., alpha_r$ can be linearly expressed by $beta_1, ..., beta_s$, then:
+  - if $r > s$, the group $alpha_1, ..., alpha_r$ is linearly dependent;
+  - if $alpha_1, ..., alpha_r$ is linearly independent, then $r <= s$, and replacing some $r$
+    vectors of $beta_1, ..., beta_s$ by $alpha_1, ..., alpha_r$ gives a vector group equivalent
+    to $beta_1, ..., beta_s$.
+] <thm:steinitz-replacement>
+
+#proof[
+  Write $alpha_i = sum_(j=1)^s c_(i j) beta_j$.
+
+  *Dependence for $r > s$.* The $s$ equations $sum_(i=1)^r c_(i j) x_i = 0$ ($j = 1, ..., s$)
+  have more unknowns than equations, hence a non-zero solution $x$, and
+  $sum_(i=1)^r x_i alpha_i = sum_(j=1)^s (sum_(i=1)^r c_(i j) x_i) beta_j = 0$, so the group
+  $alpha_1, ..., alpha_r$ is dependent.
+
+  *Replacement.* Assume $alpha_1, ..., alpha_r$ independent and insert the $alpha$'s into the
+  $beta$-list one at a time, from $alpha_r$ down to $alpha_1$. When $alpha_i$ is processed, the
+  current list already contains $alpha_(i+1), ..., alpha_r$ and some of the $beta$'s, and
+  $alpha_i$ lies in its span. Its expression must involve some remaining $beta$: otherwise
+  $alpha_i$ would lie in $upright("span")(alpha_(i+1), ..., alpha_r)$, contradicting independence.
+  Writing that expression as $alpha_i = c beta_j + gamma$ with $c != 0$, $beta_j$ a remaining
+  $beta$ and $gamma$ in the span of the rest of the list, $beta_j$ is expressible by the rest
+  together with $alpha_i$, so replacing $beta_j$ by $alpha_i$ leaves the span unchanged. After
+  $r$ steps exactly $r$ of the $beta$'s have been replaced, and the resulting group of $s$
+  vectors is equivalent to $beta_1, ..., beta_s$. Since every step consumes a remaining $beta$,
+  the procedure can be carried out only if $s >= r$.
+]
+
 #proposition(name: "Properties of Linear Independence")[
   - Let $alpha_i = (a_(i 1), ..., a_(i n))$, $i = 1, ..., s$. The group is linearly dependent
     if and only if the homogeneous system $x_1 alpha_1 + ... + x_s alpha_s = 0$ (entrywise,
     a system of $n$ equations in $s$ unknowns) has a non-zero solution.
   - Adding one component to each vector of a linearly independent group preserves independence.
-  - *Steinitz Replacement Principle*: if $alpha_1, ..., alpha_r$ can be linearly expressed
-    by $beta_1, ..., beta_s$, then:
-    - if $r > s$, the group $alpha_1, ..., alpha_r$ is linearly dependent;
-    - if $alpha_1, ..., alpha_r$ is linearly independent, then $r <= s$, and replacing the
-      first $r$ vectors of $beta_1, ..., beta_s$ by $alpha_1, ..., alpha_r$ gives a vector
-      group equivalent to $beta_1, ..., beta_s$.
   - Any $n + 1$ vectors of dimension $n$ are linearly dependent.
   - Two equivalent linearly independent vector groups contain the same number of vectors.
   - If $alpha_1, ..., alpha_r$ is linearly independent and $beta$ is another vector, then
@@ -1685,34 +1714,26 @@ vectors in $bb(R)^n$ generalize to any linear space.
   *Item 2.* A nontrivial relation among the enlarged vectors would restrict to one among the
   original vectors.
 
-  *Item 3.* Write $alpha_i = sum_(j=1)^s c_(i j) beta_j$. For $r > s$, the $s$ equations
-  $sum_(i=1)^r c_(i j) x_i = 0$ ($j = 1, ..., s$) have a non-zero solution $x$, and
-  $sum_(i=1)^r x_i alpha_i = sum_(j=1)^s (sum_(i=1)^r c_(i j) x_i) beta_j = 0$, so the group
-  is dependent. For the replacement claim, exchange the $alpha$'s into the $beta$-list from
-  $alpha_r$ down to $alpha_1$: when processing $alpha_i$, its expression in the current list
-  must involve some remaining $beta$, otherwise $alpha_i$ would lie in the span of the
-  already-placed $alpha$'s, contradicting independence; replacing that $beta$ by $alpha_i$
-  preserves the span. The resulting group is equivalent to $beta_1, ..., beta_s$.
-
-  *Item 4.* Apply item 1 to the $n$-dimensional vectors: the homogeneous system of $n$
+  *Item 3.* Apply item 1 to the $n$-dimensional vectors: the homogeneous system of $n$
   equations in $n + 1$ unknowns always has a non-zero solution.
 
-  *Item 5.* Each direction follows from item 3: an independent group expressible by another
-  group cannot contain more vectors than the latter.
+  *Item 4.* Apply #link(<thm:steinitz-replacement>)[the replacement principle] in both
+  directions: an independent group expressible by another group cannot contain more vectors
+  than the latter.
 
-  *Item 6.* If $alpha_1, ..., alpha_r, beta$ is linearly independent, the conclusion is
-  immediate. Otherwise they are dependent: there exist scalars $k_1, ..., k_r, k$, not all
-  zero, with $k_1 alpha_1 + ... + k_r alpha_r + k beta = 0$. If $k = 0$, then
+  *Item 5.* If $alpha_1, ..., alpha_r, beta$ is linearly independent, the second alternative
+  holds. Otherwise they are dependent: there exist scalars $k_1, ..., k_r, k$, not all zero,
+  with $k_1 alpha_1 + ... + k_r alpha_r + k beta = 0$. If $k = 0$, then
   $sum_(i=1)^r k_i alpha_i = 0$ with not all $k_i$ zero, contradicting the independence of
   the $alpha$'s; hence $k != 0$ and $beta = -sum_(i=1)^r (k_i/k) alpha_i$. If $beta$ had
   another expression $sum_(i=1)^r l_i alpha_i$, subtracting gives
   $sum_(i=1)^r (l_i + k_i/k) alpha_i = 0$, hence $l_i = -k_i/k$ for all $i$, so the
   expression is unique.
 
-  *Item 7.* If $alpha_1, ..., alpha_r$ is dependent, a nontrivial relation
+  *Item 6.* If $alpha_1, ..., alpha_r$ is dependent, a nontrivial relation
   $sum_(i=1)^r k_i alpha_i = 0$ gives another expression
   $beta = sum_(i=1)^r (c_i + t k_i) alpha_i$ for any $t$, so uniqueness fails. Conversely,
-  item 6 shows that independence forces uniqueness.
+  item 5 shows that independence forces uniqueness.
 ]
 
 === Dimension, Basis, Coordinates // 维数、基与坐标
@@ -1732,9 +1753,29 @@ vectors in $bb(R)^n$ generalize to any linear space.
   of $alpha$ with respect to the basis.
 ] <def:basis-and-coordinates>
 
+Two consequences of the definition are worth recording. First, the $n$ vectors above
+automatically span $V$: by item 3 of #link(<prop:properties-of-linear-independence>)[the
+properties above], the group formed by these vectors and any $alpha in V$ is dependent, and
+since the $n$ vectors are independent, $alpha$ is a combination of them. Second, the coordinates
+are unique, since a second expansion would produce a non-trivial linear relation among the basis
+vectors (item 6 of the same proposition).
+
 The definition immediately gives the following criterion: if $V$ contains $n$ linearly
 independent vectors and every vector of $V$ can be expressed as a linear combination of them,
 then these vectors form a basis and $V$ is $n$-dimensional.
+
+#theorem(name: "Basis Extension")[
+  Let $V$ be an $n$-dimensional linear space over $F$. Every linearly independent group
+  $alpha_1, ..., alpha_r$ of $V$ with $r <= n$ can be extended to a basis
+  $alpha_1, ..., alpha_r, beta_1, ..., beta_(n - r)$ of $V$.
+] <thm:basis-extension>
+
+#proof[
+  Let $epsilon_1, ..., epsilon_n$ be a basis of $V$; the group $alpha_1, ..., alpha_r$ is
+  linearly expressed by it. By #link(<thm:steinitz-replacement>)[the replacement principle],
+  $r$ of the $epsilon$'s can be replaced by $alpha_1, ..., alpha_r$ with the span unchanged, so
+  the resulting group of $n$ vectors is again a basis of $V$ and contains the given group.
+]
 
 == Subspaces // 子空间
 
@@ -1744,11 +1785,19 @@ then these vectors form a basis and $V$ is $n$-dimensional.
   a *linear subspace* of $V$. The zero subspace and $V$ itself are called *trivial subspaces*.
 ] <def:linear-subspace>
 
-#property(name: "Subspace Criterion")[
+#proposition(name: "Subspace Criterion")[
   A non-empty subset $W$ of $V$ is a linear subspace if and only if:
   - $alpha + beta in W$ for all $alpha, beta in W$;
   - $k alpha in W$ for all $alpha in W$ and $k in F$.
 ] <prop:subspace-criterion>
+
+#proof[
+  If $W$ is a subspace, both conditions hold by definition. Conversely, the two conditions say
+  that addition and scalar multiplication restrict to operations on $W$; A1–A4, M1–M2 and D1–D2
+  hold in $W$ because they hold in $V$ and all vectors involved lie in $W$, while for any
+  $alpha in W$ the second condition gives $0 = 0 dot alpha in W$ and
+  $-alpha = (-1) dot alpha in W$. Hence $W$ is a linear space under the restricted operations.
+]
 
 #definition(name: "Span of Vectors")[
   Let $V$ be a linear space over $F$ and $alpha_1, ..., alpha_s in V$. The set of all their
@@ -1759,7 +1808,7 @@ then these vectors form a basis and $V$ is $n$-dimensional.
   $
 
   is called the *span* of $alpha_1, ..., alpha_s$, denoted
-  $upright("span")({alpha_1, ..., alpha_s})$ or $"langle"(alpha_1, ..., alpha_s)"rangle"$
+  $upright("span")({alpha_1, ..., alpha_s})$ or $chevron.l alpha_1, ..., alpha_s chevron.r$
   (sometimes $L(alpha_1, ..., alpha_s)$ is also used).
 ] <def:span-of-vectors>
 
@@ -1771,13 +1820,31 @@ then these vectors form a basis and $V$ is $n$-dimensional.
   $V_1 + V_2 = {alpha_1 + alpha_2 : alpha_1 in V_1, alpha_2 in V_2}$.
 ] <def:intersection-and-sum>
 
-Both the intersection and the sum of two subspaces are again subspaces of $V$, and
-$V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
+#proposition(name: "Intersection and Sum as Subspaces")[
+  Both $V_1 inter V_2$ and $V_1 + V_2$ are subspaces of $V$, and $V_1 + V_2$ is the smallest
+  subspace of $V$ containing both $V_1$ and $V_2$.
+] <prop:intersection-sum-subspace>
+
+#proof[
+  Both sets contain $0$ and are closed under addition and scalar multiplication: this is
+  immediate for $V_1 inter V_2$, and for $V_1 + V_2$ one uses
+  $(alpha_1 + alpha_2) + (beta_1 + beta_2) = (alpha_1 + beta_1) + (alpha_2 + beta_2)$ and
+  $k(alpha_1 + alpha_2) = k alpha_1 + k alpha_2$. Any subspace $W$ containing $V_1$ and $V_2$
+  contains every sum $alpha_1 + alpha_2$, so $V_1 + V_2 subset W$; hence $V_1 + V_2$ is the
+  smallest such subspace.
+]
 
 #proposition(name: "Span of a Union")[
-  $"langle"(alpha_1, ..., alpha_s)"rangle" + "langle"(beta_1, ..., beta_t)"rangle" =
-  "langle"(alpha_1, ..., alpha_s, beta_1, ..., beta_t)"rangle"$.
+  $chevron.l alpha_1, ..., alpha_s chevron.r + chevron.l beta_1, ..., beta_t chevron.r =
+  chevron.l alpha_1, ..., alpha_s, beta_1, ..., beta_t chevron.r$.
 ] <prop:span-of-union>
+
+#proof[
+  A linear combination of the $alpha$'s plus a linear combination of the $beta$'s is a linear
+  combination of $alpha_1, ..., alpha_s, beta_1, ..., beta_t$, and conversely each such
+  combination splits into such a sum by collecting the $alpha$- and $beta$-terms. Hence both
+  sides have the same elements.
+]
 
 #theorem(name: "Dimension Formula")[
   Let $V$ be a finite-dimensional linear space over $F$ and $V_1, V_2 subset V$ two subspaces
@@ -1787,6 +1854,25 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
     "dim"(V_1) + "dim"(V_2) = "dim"(V_1 + V_2) + "dim"(V_1 inter V_2).
   $
 ] <thm:dimension-formula>
+
+#proof[
+  Let $w_1, ..., w_r$ be a basis of $V_1 inter V_2$. By
+  #link(<thm:basis-extension>)[the basis extension theorem] it extends to a basis
+  $w_1, ..., w_r, alpha_1, ..., alpha_p$ of $V_1$ and to a basis
+  $w_1, ..., w_r, beta_1, ..., beta_q$ of $V_2$, so $"dim"(V_1) = r + p$ and
+  $"dim"(V_2) = r + q$. It suffices to show that
+  $w_1, ..., w_r, alpha_1, ..., alpha_p, beta_1, ..., beta_q$ is a basis of $V_1 + V_2$, since
+  then $"dim"(V_1 + V_2) = r + p + q = "dim"(V_1) + "dim"(V_2) - r$.
+
+  These vectors span $V_1 + V_2$: an element of $V_1$ is a combination of the $w$'s and
+  $alpha$'s, and an element of $V_2$ is a combination of the $w$'s and $beta$'s. Suppose
+  $sum_i c_i w_i + sum_j d_j alpha_j + sum_k e_k beta_k = 0$. Then
+  $gamma = sum_k e_k beta_k = -(sum_i c_i w_i + sum_j d_j alpha_j)$ lies in $V_1$ and in $V_2$,
+  hence in $V_1 inter V_2$, so $gamma = sum_i f_i w_i$. Comparing the two expressions of
+  $gamma$ in the basis $w_1, ..., w_r, beta_1, ..., beta_q$ of $V_2$ gives $e_k = 0$ for all
+  $k$; therefore $sum_i c_i w_i + sum_j d_j alpha_j = 0$, and the independence of the basis of
+  $V_1$ gives $c_i = d_j = 0$. Hence the group is independent, as required.
+]
 
 === Direct Sum // 直和
 
@@ -1805,6 +1891,30 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
   - the union of any basis of $V_1$ and any basis of $V_2$ forms a basis of $V_1 + V_2$.
 ] <prop:direct-sum-conditions>
 
+#proof[
+  Number the conditions (1)–(4) in the order displayed. Condition (1) is only a reformulation of
+  the definition: uniqueness for every vector is equivalent to uniqueness for $0$, because
+  $alpha_1 + alpha_2 = beta_1 + beta_2$ if and only if $(alpha_1 - beta_1) + (alpha_2 - beta_2) = 0$
+  with $alpha_i - beta_i in V_i$. So it remains to relate (1) to (2)–(4).
+
+  *(1) $=>$ (2).* If $gamma != 0$ lies in $V_1 inter V_2$, then $0 = gamma + (-gamma)$ is an
+  expression of the zero vector different from $0 = 0 + 0$.
+
+  *(2) $=>$ (1).* If $alpha_1 + alpha_2 = beta_1 + beta_2$ with $alpha_i, beta_i in V_i$, then
+  $alpha_1 - beta_1 = beta_2 - alpha_2 in V_1 inter V_2 = {0}$, so $alpha_1 = beta_1$ and
+  $alpha_2 = beta_2$; in particular $0$ has only the expression $0 + 0$, which is (1).
+
+  *(2) $<=>$ (3).* By #link(<thm:dimension-formula>)[the dimension formula],
+  $"dim"(V_1 inter V_2) = "dim"(V_1) + "dim"(V_2) - "dim"(V_1 + V_2)$, and a subspace consists of
+  the zero vector alone exactly when its dimension is $0$.
+
+  *(3) $=>$ (4).* The union of a basis of $V_1$ and a basis of $V_2$ spans $V_1 + V_2$ and has
+  $"dim"(V_1) + "dim"(V_2) = "dim"(V_1 + V_2)$ elements, so it is a basis of $V_1 + V_2$.
+
+  *(4) $=>$ (3).* If that union is a basis of $V_1 + V_2$, its number of elements gives
+  $"dim"(V_1 + V_2) = "dim"(V_1) + "dim"(V_2)$.
+]
+
 == Isomorphisms // 同构
 
 #definition(name: "Isomorphism of Linear Spaces")[
@@ -1822,6 +1932,16 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
   if and only if they have the same dimension.
 ] <thm:isomorphism-theorem>
 
+#proof[
+  *Necessity.* An isomorphism maps a basis of $V$ to a basis of $V'$: the images are independent
+  and span $V'$ because $sigma$ is injective and surjective. Hence the dimensions coincide.
+
+  *Sufficiency.* Let $"dim"(V) = "dim"(V') = n$, and let $alpha_1, ..., alpha_n$ and
+  $beta_1, ..., beta_n$ be bases of $V$ and $V'$ respectively. The map
+  $sigma(sum_(i=1)^n k_i alpha_i) = sum_(i=1)^n k_i beta_i$ is well defined (coordinates are
+  unique), linear and bijective, hence an isomorphism.
+]
+
 #corollary(name: "Classification of Finite-Dimensional Spaces")[
   Every $n$-dimensional linear space over $F$ is isomorphic to $F^n$.
   Hence, finite-dimensional linear spaces over $F$ are classified up to
@@ -1829,13 +1949,8 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
 ] <cor:classification-of-finite-dim-spaces>
 
 #proof[
-  *Necessity.* An isomorphism maps a basis of $V$ to a basis of $V'$,
-  so the dimensions coincide.
-
-  *Sufficiency.* Let $dim(V) = dim(V') = n$, and let
-  $alpha_1, ..., alpha_n$ and $beta_1, ..., beta_n$ be bases of $V$ and $V'$
-  respectively. The map $sigma(sum_(i=1)^n k_i alpha_i) = sum_(i=1)^n k_i beta_i$
-  is a linear bijection, hence an isomorphism.
+  The space $F^n$ has dimension $n$, so the statement is immediate from
+  #link(<thm:isomorphism-theorem>)[the isomorphism theorem].
 ]
 
 #proposition(name: "Properties of Isomorphisms")[
@@ -1847,20 +1962,37 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
 
 == Quotient Spaces // 商空间
 
+#note[
+  The last two items of this subsection — the induced mapping and the first isomorphism theorem —
+  use linear mappings, kernels and images, which are defined in
+  #link(<def:linear-mapping>)[the next chapter] (see also
+  #link(<def:kernel-and-image>)[kernel and image]). The notion of a quotient space itself needs
+  none of them.
+]
+
 #definition(name: "Cosets and Quotient Space")[
   Let $V$ be a linear space over $F$ and $W subset V$ a subspace.
-  Define an equivalence relation on $V$ by
-  $alpha ∼ beta$ if and only if $alpha - beta in W$.
+  Define a relation on $V$ by
+  $alpha equiv beta$ if and only if $alpha - beta in W$.
+  It is an equivalence relation: reflexivity and symmetry come from $0 in W$ and from
+  $-W = W$, and transitivity from the closure of $W$ under addition.
   The equivalence class $[alpha] = alpha + W = {alpha + gamma : gamma in W}$
   is called a *coset* of $W$ in $V$. The set of all cosets, denoted
   $V / W$, with the operations
 
   $
-    [alpha] + [beta] = [alpha + beta], k [alpha] = [k alpha],
+    [alpha] + [beta] = [alpha + beta], quad k [alpha] = [k alpha],
   $
 
   forms a linear space over $F$, called the *quotient space* of $V$ by $W$.
 ] <def:quotient-space>
+
+The operations are well defined, i.e. they do not depend on the chosen representatives: if
+$[alpha'] = [alpha]$ and $[beta'] = [beta]$, then $alpha' - alpha in W$ and
+$beta' - beta in W$, hence $(alpha' + beta') - (alpha + beta) in W$ and
+$k alpha' - k alpha = k (alpha' - alpha) in W$, so $[alpha' + beta'] = [alpha + beta]$ and
+$[k alpha'] = [k alpha]$. The axioms then follow from the corresponding axioms in $V$; the class
+$[0] = W$ is the zero vector of $V / W$, and $[-alpha]$ is the inverse of $[alpha]$.
 
 #theorem(name: "Dimension of Quotient Space")[
   Let $V$ be a finite-dimensional linear space and $W subset V$ a subspace. Then
@@ -1871,17 +2003,39 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
 ] <thm:quotient-dimension>
 
 #proof[
-  Extend a basis $w_1, ..., w_r$ of $W$ to a basis $w_1, ..., w_r, v_1, ..., v_k$
-  of $V$. Then the cosets $[v_1], ..., [v_k]$ form a basis of $V / W$,
-  so $"dim"(V / W) = k = "dim"(V) - r = "dim"(V) - "dim"(W)$.
+  Extend a basis $w_1, ..., w_r$ of $W$ to a basis $w_1, ..., w_r, v_1, ..., v_k$ of $V$
+  (#link(<thm:basis-extension>)[basis extension]). The cosets $[v_1], ..., [v_k]$ span
+  $V / W$: if $alpha = sum_i a_i w_i + sum_j b_j v_j$, then $[alpha] = sum_j b_j [v_j]$ because
+  $[w_i] = [0]$. They are independent: $sum_j b_j [v_j] = [0]$ means $sum_j b_j v_j in W$, say
+  $sum_j b_j v_j = sum_i a_i w_i$, and the independence of $w_1, ..., w_r, v_1, ..., v_k$ forces
+  $b_j = 0$ for all $j$. Hence
+  $"dim"(V / W) = k = "dim"(V) - r = "dim"(V) - "dim"(W)$.
 ]
 
 #definition(name: "Induced Mapping")[
   Let $sigma: V -> V'$ be a linear mapping with kernel $W = "Ker"(sigma)$.
-  The map $bar(sigma): V / W -> "Im"(sigma)$ defined by
-  $bar(sigma)([alpha]) = sigma(alpha)$ is a well-defined linear isomorphism,
-  called the *induced mapping* of $sigma$.
+  The map $overline(sigma): V / W -> "Im"(sigma)$ defined by
+  $overline(sigma)([alpha]) = sigma(alpha)$ is called the *induced mapping* of $sigma$.
 ] <def:induced-mapping>
+
+#proposition(name: "Induced Mapping is an Isomorphism")[
+  The induced mapping $overline(sigma)$ is well defined, linear and bijective.
+] <prop:induced-mapping-isomorphism>
+
+#proof[
+  *Well defined.* If $[alpha'] = [alpha]$, then $alpha' - alpha in W = "Ker"(sigma)$, hence
+  $sigma(alpha') = sigma(alpha)$.
+
+  *Linear.* $overline(sigma)([alpha] + [beta]) = overline(sigma)([alpha + beta])
+  = sigma(alpha) + sigma(beta) = overline(sigma)([alpha]) + overline(sigma)([beta])$, and similarly
+  $overline(sigma)(k [alpha]) = k overline(sigma)([alpha])$.
+
+  *Injective.* If $overline(sigma)([alpha]) = 0$, then $sigma(alpha) = 0$, so
+  $alpha in "Ker"(sigma) = W$ and $[alpha] = [0]$.
+
+  *Surjective.* Every $beta in "Im"(sigma)$ has the form $beta = sigma(alpha)
+  = overline(sigma)([alpha])$ for some $alpha in V$.
+]
 
 #theorem(name: "First Isomorphism Theorem")[
   Let $sigma: V -> V'$ be a linear mapping. Then
@@ -1891,15 +2045,24 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
   $
 ] <thm:first-isomorphism-theorem>
 
+#proof[
+  By #link(<prop:induced-mapping-isomorphism>)[the proposition above], $overline(sigma)$ is a
+  bijective linear map from $V / "Ker"(sigma)$ onto $"Im"(sigma)$.
+]
+
 == Special Linear Spaces // 特殊线性空间
 
 === Commutative Spaces // 交换空间
 
 #definition(name: "Commutative Space $C(A)$")[
-  Let $A$ be an $n$-order matrix over the number field $F$. The set of all
-  matrices satisfying $A X = X A$ is a subspace of $M_(n times n)(F)$,
-  denoted $C(A)$ and called the *commutative space* of $A$.
+  Let $A$ be an $n$-order matrix over the number field $F$. The set
+  $C(A) = {X in M_(n times n)(F) : A X = X A}$ of all matrices commuting with $A$ is a subspace
+  of $M_(n times n)(F)$, called the *commutative space* (also *centralizer*) of $A$.
 ] <def:commutative-space>
+
+$C(A)$ is indeed a subspace: $A O = O A$, and $A X = X A$, $A Y = Y A$ give
+$A(X + Y) = A X + A Y = X A + Y A = (X + Y) A$ and
+$A(k X) = k (A X) = k (X A) = (k X) A$.
 
 #property(name: "Properties of $C(A)$")[
   For any $n$-order matrices $A, B$ over $F$, if $A$ is similar to $B$
@@ -1907,13 +2070,22 @@ $V_1 + V_2$ is the smallest subspace of $V$ containing both $V_1$ and $V_2$.
   and furthermore $"dim"(C(A)) = "dim"(C(B))$.
 ] <prop:commutative-space-properties>
 
+#proof[
+  Let $B = P^(-1) A P$ with $P$ invertible. The map $X |-> P^(-1) X P$ sends $C(A)$ into
+  $C(B)$: if $A X = X A$, then
+  $B (P^(-1) X P) = P^(-1) A X P = P^(-1) X A P = (P^(-1) X P) B$, and the same computation with
+  $A = P B P^(-1)$ gives the converse, so the map is a bijection between $C(A)$ and $C(B)$; it
+  is clearly linear. Equal dimensions follow from
+  #link(<thm:isomorphism-theorem>)[the isomorphism theorem].
+]
+
 #example[
   Find the dimension and a basis of $C(A)$ where:
 
   (i) $A$ is a $3$-order matrix over the number field $F$ with three distinct
   eigenvalues.
 
-  (ii) $A = mat(1, 0, 4; 0, 1, 2; 0, 1, 2)$.
+  (ii) $A = mat(1, 0, 4; 0, 1, 2; 0, 0, 1)$.
 ]
 
 = Linear Mappings // 线性映射
@@ -2024,7 +2196,8 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
 ] <thm:rank-nullity>
 
 #note[
-  Extend a basis of $"Ker"(A)$ to a basis of $V$. The images of the extension
+  Extend a basis of $"Ker"(A)$ to a basis of $V$
+  (#link(<thm:basis-extension>)[basis extension]). The images of the extension
   vectors under $A$ form a basis of $"Im"(A)$, and the count gives the formula.
 ]
 
@@ -2494,7 +2667,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 ] <prop:invariant-subspace-properties>
 
 #proposition(name: "One-Dimensional Invariant Subspace")[
-  Let $W = "langle"(xi)"rangle"$ ($xi != 0$). Then $W$ is an $A$-subspace if and only if
+  Let $W = chevron.l xi chevron.r$ ($xi != 0$). Then $W$ is an $A$-subspace if and only if
   $xi$ is an eigenvector of $A$.
 ] <prop:one-dim-invariant-subspace>
 
@@ -2502,7 +2675,8 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   Let $V$ be an $n$-dimensional linear space over $F$ and $A in upright("End")(V)$.
 
   - Let $W$ be a nontrivial $A$-subspace. Take a basis ${epsilon_1, ..., epsilon_r}$
-    of $W$ and extend it to a basis ${epsilon_1, ..., epsilon_n}$ of $V$.
+    of $W$ and extend it to a basis ${epsilon_1, ..., epsilon_n}$ of $V$
+    (#link(<thm:basis-extension>)[basis extension]).
     Then the matrix representation of $A$ takes the block upper triangular form
     $mat(A, B; O, C)$, where $A$ represents $A|_W$ and $C$ represents the induced
     transformation on $V/W$. The characteristic polynomial factorizes as
@@ -2880,7 +3054,7 @@ and computation method of the Jordan canonical form.
   For $xi != 0$ in $V$, the subspace
 
   $
-    C(A, xi) = "langle"(xi, A(xi), A^2(xi), ...)"rangle"
+    C(A, xi) = chevron.l xi, A(xi), A^2(xi), ... chevron.r
     = {f(A)(xi) : f(x) in F[x]}
   $
 
@@ -3229,7 +3403,7 @@ and normal transformations.
   there exists an orthonormal basis ${eta_1, ..., eta_n}$ such that
 
   $
-    "langle"(epsilon_1, ..., epsilon_k)"rangle" = "langle"(eta_1, ..., eta_k)"rangle",
+    chevron.l epsilon_1, ..., epsilon_k chevron.r = chevron.l eta_1, ..., eta_k chevron.r,
     k = 1, 2, ..., n.
   $
 ] <thm:gram-schmidt>
@@ -3530,6 +3704,7 @@ and normal transformations.
 
 == B
 - *#link(<def:basis-and-coordinates>)[Basis And Coordinates]*
+- *#link(<thm:basis-extension>)[Basis Extension]*
 - *#link(<def:best-approximation>)[Best Approximation]*
 - *#link(<def:bilinear-form>)[Bilinear Form]*
 - *#link(<thm:block-decomposition>)[Block Decomposition]*
@@ -3615,8 +3790,10 @@ and normal transformations.
 - *#link(<prop:idempotent-involutional-characterization>)[Idempotent Involutional Characterization]*
 - *#link(<def:idempotent-transformation>)[Idempotent Transformation]*
 - *#link(<def:induced-mapping>)[Induced Mapping]*
+- *#link(<prop:induced-mapping-isomorphism>)[Induced Mapping Isomorphism]*
 - *#link(<thm:inertia-theorem>)[Inertia Theorem]*
 - *#link(<def:intersection-and-sum>)[Intersection And Sum]*
+- *#link(<prop:intersection-sum-subspace>)[Intersection And Sum As Subspaces]*
 - *#link(<def:invariant-divisors>)[Invariant Divisors]*
 - *#link(<def:invariant-subspace>)[Invariant Subspace]*
 - *#link(<prop:invariant-subspace-properties>)[Invariant Subspace Properties]*
@@ -3726,6 +3903,7 @@ and normal transformations.
 - *#link(<def:smith-normal-form>)[Smith Normal Form]*
 - *#link(<prop:span-of-union>)[Span Of Union]*
 - *#link(<def:span-of-vectors>)[Span Of Vectors]*
+- *#link(<thm:steinitz-replacement>)[Steinitz Replacement Principle]*
 - *#link(<prop:structure-of-solutions>)[Structure Of Solutions]*
 - *#link(<prop:subspace-criterion>)[Subspace Criterion]*
 - *#link(<thm:symmetric-diagonalization>)[Symmetric Diagonalization]*
