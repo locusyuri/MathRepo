@@ -44,20 +44,82 @@ rather than redefined here.
 == Notations // 符号说明
 
 A *number field* means a subfield of $bb(C)$ closed under the four arithmetic operations;
-in particular $bb(Q)$, $bb(R)$ and $bb(C)$ are number fields.
+in particular $bb(Q)$, $bb(R)$ and $bb(C)$ are number fields. Unless stated otherwise, $F$
+denotes such a field and $V, V'$ finite-dimensional linear spaces over $F$.
 
-The set of all $m times n$ matrices over the number field $F$ is denoted by $M_(m times n)(F)$ or $F^(m times n)$.
-Similarly, the set of all linear mappings from $V$ to $V'$ over the field $F$
-is represented by $upright("Hom")(V, V')$ or $upright("L")(V, V')$.
-Furthermore, when considering the set of all linear transformations,
-it is commonly denoted by $upright("Hom")(V)$, $upright("L")(V)$, or $upright("End")(V)$.
+#tex-table(
+  ([Notation], [Meaning]),
+  (
+    [$bb(N), bb(Z), bb(Q), bb(R), bb(C)$],
+    [Sets of natural, integer, rational, real and complex numbers],
+  ),
+  ([$F^(m times n)$, $M_(m times n)(F)$], [Set of all $m times n$ matrices over $F$]),
+  ([$M_n (F)$], [Set of all square matrices of order $n$; abbreviation of $M_(n times n)(F)$]),
+  (
+    [$upright("Hom")(V, V')$, $upright("L")(V, V')$],
+    [Set of all linear mappings from $V$ to $V'$ over $F$],
+  ),
+  (
+    [$upright("End")(V)$],
+    [
+      Set of all linear transformations of $V$ into itself; also written
+      $upright("Hom")(V)$ or $upright("L")(V)$
+    ],
+  ),
+  ([$V^*$], [Dual space of $V$, i.e. the set of linear functions on $V$]),
+  ([$V / W$], [Quotient space of $V$ by the subspace $W$]),
+  ([$"dim" V$], [Dimension of $V$]),
+  (
+    [$"Ker"(A)$, $"Im"(A)$, $"span"(S)$],
+    [Kernel and image of a linear mapping $A$; span of a set $S$ of vectors],
+  ),
+  ([$E$, $O$], [Identity matrix and zero matrix of the size in question]),
+  ([$A^"T"$, $A^†$], [Transpose; conjugate transpose (adjoint) of a complex matrix]),
+  (
+    [$"det"(A)$, $"tr"(A)$, $"adj"(A)$],
+    [Determinant, trace and adjugate matrix of a square matrix $A$],
+  ),
+  ([$upright("rank")(A)$, $r(A)$], [Rank of a matrix $A$]),
+  ([$"diag"(d_1, ..., d_n)$], [Diagonal matrix with diagonal entries $d_1, ..., d_n$]),
+  ([$J_r (lambda)$], [Jordan block of size $r$ for the eigenvalue $lambda$]),
+  (
+    [$f(lambda)$, $m(lambda)$],
+    [
+      Characteristic polynomial $f(lambda) = "det"(lambda E - A)$ and minimal polynomial
+      $m(lambda)$ of $A$
+    ],
+  ),
+  ([$V_lambda$, $V_lambda^((r))$], [Eigenspace and root subspace of $A$ for the eigenvalue $lambda$]),
+  ([$1_n$], [Column vector $(1, 1, ..., 1)^"T" in F^n$]),
+  ([$A ⊗ B$], [Kronecker product of the matrices $A$ and $B$]),
+)
 
-The rank of a matrix $A$ is denoted by $upright("rank")(A)$ or $r(A)$.
-Two square matrices $A$ and $B$ are called *similar*, denoted $A ~ B$,
-if there exists an invertible matrix $P$ such that $B = P^(-1) A P$.
-The characteristic polynomial of $A$ is $f(lambda) = "det"(lambda E - A)$,
-and the minimal polynomial is the monic polynomial $m(lambda)$ of least degree
-such that $m(A) = 0$.
+Four relations between matrices or spaces are distinguished throughout the notebook:
+
+#tex-table(
+  ([Relation], [Meaning]),
+  ([$A ~ B$], [Similarity: $B = P^(-1) A P$ for some invertible matrix $P$]),
+  ([$A ≅ B$], [Congruence: $B = C^"T" A C$ for some invertible matrix $C$]),
+  (
+    [$A(lambda) ≈ B(lambda)$],
+    [Equivalence of polynomial matrices under elementary row and column operations],
+  ),
+  ([$V ≃ V'$], [Isomorphism of linear spaces, or of inner product spaces (isometry)]),
+)
+
+Inner product spaces use the following notation:
+
+#tex-table(
+  ([Notation], [Meaning]),
+  ([$(alpha, beta)$], [Inner product of the vectors $alpha$ and $beta$]),
+  (
+    [$norm(alpha)$, $||alpha||$],
+    [Norm induced by the inner product: $||alpha|| = (alpha, alpha)^(1/2)$],
+  ),
+  ([$alpha ⊥ beta$, $W^⊥$], [Orthogonality of vectors; orthogonal complement of a subspace $W$]),
+  ([$"proj"_W (alpha)$], [Orthogonal projection of $alpha$ onto $W$]),
+  ([$W_1 ⊕ W_2$], [Direct sum of the subspaces $W_1$ and $W_2$]),
+)
 
 = Determinants // 行列式
 
@@ -2060,7 +2122,7 @@ $[0] = W$ is the zero vector of $V / W$, and $[-alpha]$ is the inverse of $[alph
   Let $sigma: V -> V'$ be a linear mapping. Then
 
   $
-    V / "Ker"(sigma) ≈ "Im"(sigma).
+    V / "Ker"(sigma) ≃ "Im"(sigma).
   $
 ] <thm:first-isomorphism-theorem>
 
@@ -2085,7 +2147,7 @@ $A(k X) = k (A X) = k (X A) = (k X) A$.
 
 #property(name: "Properties of $C(A)$")[
   For any $n$-order matrices $A, B$ over $F$, if $A$ is similar to $B$
-  ($A ~ B$), then $C(A)$ is isomorphic to $C(B)$ ($C(A) ≈ C(B)$),
+  ($A ~ B$), then $C(A)$ is isomorphic to $C(B)$ ($C(A) ≃ C(B)$),
   and furthermore $"dim"(C(A)) = "dim"(C(B))$.
 ] <prop:commutative-space-properties>
 
@@ -2615,8 +2677,8 @@ i.e. $A$ and $A'$ are *similar* matrices.
 #property(name: "Double Dual")[
   Let $V$ be a finite-dimensional linear space over $F$. The map
   $phi: V -> V^(**)$ defined by $phi(alpha)(f) = f(alpha)$ for all $f in V^*$ is an
-  isomorphism, so $V ≈ V^(**)$. It is natural: it does not depend on any choice of bases,
-  unlike an isomorphism $V ≈ V^*$.
+  isomorphism, so $V ≃ V^(**)$. It is natural: it does not depend on any choice of bases,
+  unlike an isomorphism $V ≃ V^*$.
 ] <prop:double-dual>
 
 #proof[
