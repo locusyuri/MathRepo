@@ -1802,16 +1802,16 @@ intimately related to the exponential and the uniform respectively.
   A random variable $X$ has the *Gamma distribution* with shape $alpha > 0$
   and rate $lambda > 0$, written $X ~ "Ga"(alpha, lambda)$, if
   $
-    f(x) = (lambda^alpha) / ("Gamma"(alpha)) x^(alpha - 1) e^(-lambda x), quad x >= 0,
+    f(x) = (lambda^alpha) / (Gamma(alpha)) x^(alpha - 1) e^(-lambda x), quad x >= 0,
   $
-  where $"Gamma"(alpha) = integral_0^infinity t^(alpha - 1) e^(-t) dif t$
+  where $Gamma(alpha) = integral_0^infinity t^(alpha - 1) e^(-t) dif t$
   is the Gamma function.
 ] <def:gamma-dist>
 
 #property(name: "Mean and Variance of the Gamma")[
   If $X ~ "Ga"(alpha, lambda)$, then
   $
-    E[X^k] = ("Gamma"(alpha + k)) / (lambda^k "Gamma"(alpha)), quad
+    E[X^k] = (Gamma(alpha + k)) / (lambda^k Gamma(alpha)), quad
     E[X] = alpha / lambda, quad "Var"(X) = alpha / lambda^2.
   $
 ] <prop:gamma-mean-variance>
@@ -1820,11 +1820,11 @@ intimately related to the exponential and the uniform respectively.
   Substituting $t = lambda x$ ($x = t / lambda$, $dif x = (dif t) / lambda$)
   turns the $k$-th moment into a Gamma function:
   $
-    E[X^k] = (lambda^alpha) / ("Gamma"(alpha)) integral_0^infinity x^(alpha + k - 1) e^(-lambda x) dif x
-    = 1 / (lambda^k "Gamma"(alpha)) integral_0^infinity t^(alpha + k - 1) e^(-t) dif t
-    = ("Gamma"(alpha + k)) / (lambda^k "Gamma"(alpha)),
+    E[X^k] = (lambda^alpha) / (Gamma(alpha)) integral_0^infinity x^(alpha + k - 1) e^(-lambda x) dif x
+    = 1 / (lambda^k Gamma(alpha)) integral_0^infinity t^(alpha + k - 1) e^(-t) dif t
+    = (Gamma(alpha + k)) / (lambda^k Gamma(alpha)),
   $
-  using $"Gamma"(alpha + 1) = alpha "Gamma"(alpha)$. Taking $k = 1$ gives
+  using $Gamma(alpha + 1) = alpha Gamma(alpha)$. Taking $k = 1$ gives
   $E[X] = alpha / lambda$; taking $k = 2$ gives
   $E[X^2] = (alpha (alpha + 1)) / lambda^2$, hence
   $"Var"(X) = alpha / lambda^2$. In particular the exponential ($alpha = 1$)
@@ -1836,7 +1836,7 @@ intimately related to the exponential and the uniform respectively.
   degrees of freedom, written $X ~ chi^2 (n)$, if $X ~ "Ga"(n / 2, 1 / 2)$
   — the Gamma family restricted to the shape–rate pairs $(n / 2, 1 / 2)$:
   $
-    f(x) = 1 / (2^(n \/ 2) "Gamma"(n \/ 2)) x^(n \/ 2 - 1) e^(-x \/ 2), quad x >= 0.
+    f(x) = 1 / (2^(n \/ 2) Gamma(n \/ 2)) x^(n \/ 2 - 1) e^(-x \/ 2), quad x >= 0.
   $
 ] <def:chi-squared-dist>
 
@@ -1862,11 +1862,11 @@ intimately related to the exponential and the uniform respectively.
   for $t >= 0$,
   $
     f_(X + Y)(t) = integral_0^t f_(X)(x) f_(Y)(t - x) dif x
-    = (lambda^(alpha + beta) e^(-lambda t)) / ("Gamma"(alpha) "Gamma"(beta)) integral_0^t x^(alpha - 1) (t - x)^(beta - 1) dif x,
+    = (lambda^(alpha + beta) e^(-lambda t)) / (Gamma(alpha) Gamma(beta)) integral_0^t x^(alpha - 1) (t - x)^(beta - 1) dif x,
   $
   and the substitution $x = t u$ turns the last integral into
   $t^(alpha + beta - 1) "B"(alpha, beta)$; since
-  $"B"(alpha, beta) = ("Gamma"(alpha) "Gamma"(beta)) / "Gamma"(alpha + beta)$,
+  $"B"(alpha, beta) = (Gamma(alpha) Gamma(beta)) / Gamma(alpha + beta)$,
   the density of $X + Y$ is exactly that of $"Ga"(alpha + beta, lambda)$.
   Taking $(alpha, beta) = (n_1 / 2, n_2 / 2)$ with $lambda = 1 / 2$ and
   iterating gives the claim.
@@ -1878,7 +1878,7 @@ intimately related to the exponential and the uniform respectively.
   $
     f(x) = 1 / ("B"(a, b)) x^(a - 1) (1 - x)^(b - 1), quad 0 < x < 1,
   $
-  where $"B"(a, b) = ("Gamma"(a) "Gamma"(b)) / "Gamma"(a + b)$.
+  where $"B"(a, b) = (Gamma(a) Gamma(b)) / Gamma(a + b)$.
 ] <def:beta-dist>
 
 #property(name: "Mean and Variance of the Beta")[
@@ -1894,7 +1894,7 @@ intimately related to the exponential and the uniform respectively.
   parameters $(a+1, b)$ instead:
   $
     E[X] & = integral_0^1 x (x^(a - 1) (1 - x)^(b - 1)) / B(a, b) dif x = B(a + 1, b) / B(a, b) \
-         & = ("Gamma"(a + 1) "Gamma"(b)) / ("Gamma"(a + b + 1)) dot ("Gamma"(a + b)) / ("Gamma"(a) "Gamma"(b))
+         & = (Gamma(a + 1) Gamma(b)) / (Gamma(a + b + 1)) dot (Gamma(a + b)) / (Gamma(a) Gamma(b))
            = a / (a + b).
   $
   Similarly $E[X^2] = B(a + 2, b) / B(a, b) = (a (a + 1)) / ((a + b)(a + b + 1))$,
@@ -1974,7 +1974,7 @@ derived in this chapter:
     ([$N(mu, sigma^2)$], [$(1 / (sigma sqrt(2 pi))) exp(-(x - mu)^2 / (2 sigma^2))$], [RR], [$mu$], [$sigma^2$]),
     (
       [$"Ga"(alpha, lambda)$],
-      [$(lambda^alpha / "Gamma"(alpha)) x^(alpha - 1) e^(-lambda x)$],
+      [$(lambda^alpha / Gamma(alpha)) x^(alpha - 1) e^(-lambda x)$],
       [${x >= 0}$],
       [$alpha / lambda$],
       [$alpha / lambda^2$],
@@ -2098,8 +2098,8 @@ a direct formula avoids the detour through the CDF.
   and $abs(h'(y)) = 1 / k$. The monotone formula gives
   $
     f_(k X)(y) = f_(X)(y / k) dot 1 / k
-    = lambda^alpha / "Gamma"(alpha) dot (y / k)^(alpha - 1) e^(-lambda y \/ k) dot 1 / k
-    = (lambda / k)^alpha / "Gamma"(alpha) dot y^(alpha - 1) e^(-(lambda \/ k) y),
+    = lambda^alpha / Gamma(alpha) dot (y / k)^(alpha - 1) e^(-lambda y \/ k) dot 1 / k
+    = (lambda / k)^alpha / Gamma(alpha) dot y^(alpha - 1) e^(-(lambda \/ k) y),
   $
   which is the $"Ga"(alpha, lambda / k)$ density. With $k = 2 lambda$ the
   pair $(alpha, lambda / k) = (alpha, 1 / 2)$ is exactly the chi-squared
@@ -2636,12 +2636,12 @@ For *sums* of independent continuous variables, the integral form is the
   X_(n+1)$:
   $
     f_(S_(n+1))(s)
-    = integral_0^s (lambda^n / "Gamma"(n)) t^(n-1) e^(-lambda t) dot lambda e^(-lambda(s - t)) dif t
-    = (lambda^(n+1) e^(-lambda s)) / "Gamma"(n) integral_0^s t^(n-1) dif t
-    = (lambda^(n+1) s^n e^(-lambda s)) / "Gamma"(n+1),
+    = integral_0^s (lambda^n / Gamma(n)) t^(n-1) e^(-lambda t) dot lambda e^(-lambda(s - t)) dif t
+    = (lambda^(n+1) e^(-lambda s)) / Gamma(n) integral_0^s t^(n-1) dif t
+    = (lambda^(n+1) s^n e^(-lambda s)) / Gamma(n+1),
   $
-  which is the $"Ga"(n+1, lambda)$ density — using $"Gamma"(n+1) = n dot
-  "Gamma"(n)$. This confirms the Gamma-to-Exponential connection noted in
+  which is the $"Ga"(n+1, lambda)$ density — using $Gamma(n+1) = n dot
+  Gamma(n)$. This confirms the Gamma-to-Exponential connection noted in
   #link(<def:gamma-dist>)[the Gamma definition].
 ] <ex:exp-sum-gamma>
 
@@ -2657,7 +2657,7 @@ monotone transform generalises to a multidimensional change of variables.
   $
     f_(bold(Y))(bold(y)) = f_(bold(X))(bold(h)(bold(y))) dot abs(J(bold(y))),
   $
-  where $J$ is the determinant of the matrix $(partial h_i / partial y_j)_(i,j)$
+  where $J$ is the determinant of the matrix $((partial h_i) / (partial y_j))_(i,j)$
   — the Jacobian determinant of the inverse map.
 ] <thm:jacobian-transform>
 
@@ -3038,7 +3038,7 @@ through the exponential factor.
     ($"Ber"(p)$, $ln(p / (1-p))$, $x$, $-ln(1-p)$, $1$),
     ($B(n, p)$, $ln(p / (1-p))$, $x$, $-n ln(1-p)$, $binom(n, x)$),
     ($"Exp"(lambda)$, $-lambda$, $x$, $-ln lambda$, $1$),
-    ($"Ga"(alpha, lambda)$, $(-lambda, alpha)$, $(x, ln x)$, $ln "Gamma"(alpha) - alpha ln lambda$, $1 / x$),
+    ($"Ga"(alpha, lambda)$, $(-lambda, alpha)$, $(x, ln x)$, $ln Gamma(alpha) - alpha ln lambda$, $1 / x$),
     (
       [$N(mu, sigma^2)$ ($sigma$ known)],
       $mu / sigma^2$,
