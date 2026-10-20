@@ -2315,44 +2315,25 @@ joint PMF and the joint PDF are the same kind of object.
 === Common Joint Distributions // 常见联合分布
 
 
-The joint catalogue begins with three families, one discrete and two
-continuous, mirroring the univariate catalogue of Chapter 4.
+The joint catalogue begins with three families, one discrete and two continuous, mirroring the univariate catalogue of Chapter 4.
 
-The *multinomial distribution* is the discrete member: it counts how
-$n$ independent trials spread over $m$ categories.
+The *multinomial distribution* is the discrete member: it counts how $n$ independent trials spread over $m$ categories.
 
-The continuous members are the *multivariate uniform distribution* on
-a region of $RR^n$ and the *bivariate normal distribution*, the
-$n = 2$ case of #link(<def:multivariate-normal>)[the multivariate
-normal] whose full theory is developed in a later chapter.
+The continuous members are the *multivariate uniform distribution* on a region of $RR^n$ and the *bivariate normal distribution*, the $n = 2$ case of #link(<def:multivariate-normal>)[the multivariate normal] whose full theory is developed in a later chapter.
 
 #definition(name: "Multinomial Distribution")[
-  A *multinomial experiment* consists of $n$ independent trials, each
-  having $m >= 2$ possible outcomes with probabilities $p_1, dots, p_m$,
-  where $p_i >= 0$ and $sum_(i=1)^m p_i = 1$. The count vector
-  $(N_1, dots, N_m)$, where $N_i$ is the number of trials ending in
-  outcome $i$, has the *multinomial distribution*, written
-  $(N_1, dots, N_m) ~ "Mult"(n, bold(p))$ with
-  $bold(p) = (p_1, dots, p_m)$, if
+  A *multinomial experiment* consists of $n$ independent trials, each having $m >= 2$ possible outcomes with probabilities $p_1, dots, p_m$, where $p_i >= 0$ and $sum_(i=1)^m p_i = 1$.
+  The count vector $(N_1, dots, N_m)$, where $N_i$ is the number of trials ending in outcome $i$, has the *multinomial distribution*, written $(N_1, dots, N_m) ~ "Mult"(n, bold(p))$ with $bold(p) = (p_1, dots, p_m)$, if
   $
-    P(N_1 = k_1, dots, N_m = k_m)
-    = (n! p_1^(k_1) dots p_m^(k_m)) / (k_1! dots k_m!),
-    quad k_i in ZZ_(>= 0), sum_(i=1)^m k_i = n.
+    P(N_1 = k_1, dots, N_m = k_m) = (n! p_1^(k_1) dots p_m^(k_m)) / (k_1! dots k_m!), quad k_i in ZZ_(>= 0), sum_(i=1)^m k_i = n.
   $
 ] <def:multinomial-dist>
 
-For $m = 2$ the multinomial reduces to the binomial of
-#link(<def:binomial-dist>)[Chapter 4]: with $p_2 = q = 1 - p_1$ the
-vector $(N_1, N_2)$ carries no more information than
-$N_1 ~ B(n, p_1)$, since $(n!) / (k_1! k_2!) = binom(n, k_1)$.
+For $m = 2$ the multinomial reduces to the binomial of #link(<def:binomial-dist>)[Chapter 4]: with $p_2 = q = 1 - p_1$ the vector $(N_1, N_2)$ carries no more information than $N_1 ~ B(n, p_1)$, since $(n!) / (k_1! k_2!) = binom(n, k_1)$.
 
-Each count is marginally binomial, $N_i ~ B(n, p_i)$, with
-$E[N_i] = n p_i$ and $"Var"(N_i) = n p_i (1 - p_i)$; the marginal
-operation behind this claim is defined in the next section. The counts
-are dependent — one trial can fall in only one category — and their
-covariances are negative, $"Cov"(N_i, N_j) = -n p_i p_j$ for $i != j$
-(#link(<def:covariance>)[covariance] itself is introduced later in
-this chapter).
+Each count is marginally binomial, $N_i ~ B(n, p_i)$, with $E[N_i] = n p_i$ and $"Var"(N_i) = n p_i (1 - p_i)$; the marginal operation behind this claim is defined in the next section.
+
+The counts are dependent — one trial can fall in only one category — and their covariances are negative, $"Cov"(N_i, N_j) = -n p_i p_j$ for $i != j$ (#link(<def:covariance>)[covariance] itself is introduced later in this chapter).
 
 
 #definition(name: "Multivariate Uniform Distribution")[
@@ -2377,37 +2358,24 @@ this chapter).
 ) <fig:joint-density>
 
 #definition(name: "Bivariate Normal Distribution")[
-  The pair $(X, Y)$ has the *bivariate normal distribution* with
-  parameters $mu_1, mu_2 in RR$, $sigma_1, sigma_2 > 0$ and
-  $rho in (-1, 1)$, written
-  $(X, Y) ~ N(mu_1, mu_2, sigma_1^2, sigma_2^2, rho)$, if its joint
-  density is
+  The pair $(X, Y)$ has the *bivariate normal distribution* with parameters $mu_1, mu_2 in RR$, $sigma_1, sigma_2 > 0$ and $rho in (-1, 1)$, written $(X, Y) ~ N(mu_1, mu_2, sigma_1^2, sigma_2^2, rho)$, if its joint density is
   $
     f(x, y) = 1 / (2 pi sigma_1 sigma_2 sqrt(1 - rho^2))
-    exp(-[(x - mu_1)^2 / sigma_1^2
-      - (2 rho (x - mu_1)(y - mu_2)) / (sigma_1 sigma_2)
-      + (y - mu_2)^2 / sigma_2^2] / (2 (1 - rho^2))).
+    exp(
+      -[(x - mu_1)^2 / sigma_1^2
+        - (2 rho (x - mu_1)(y - mu_2)) / (sigma_1 sigma_2)
+        + (y - mu_2)^2 / sigma_2^2] / (2 (1 - rho^2))
+    ).
   $
-  Here $bold(mu) = (mu_1, mu_2)$ is the mean vector and
-  $Sigma = [[sigma_1^2, rho sigma_1 sigma_2], [rho sigma_1 sigma_2, sigma_2^2]]$
-  is the covariance matrix.
+  The notation $N(mu_1, mu_2, sigma_1^2, sigma_2^2, rho)$ can also be written as $N_(2)(bold(mu), Sigma)$, where $bold(mu) = (mu_1, mu_2)$ is the mean vector and $Sigma = [[sigma_1^2, rho sigma_1 sigma_2], [rho sigma_1 sigma_2, sigma_2^2]]$ is the covariance matrix.
 ] <def:bivariate-normal>
 
-The parameter $rho$ is the Pearson correlation coefficient of $X$ and
-$Y$, defined in #link(<def:correlation-coefficient>)[a later section of
-this chapter]. The contours of $f$ are ellipses centred at $bold(mu)$
-whose axes are tilted by $rho$ and aligned with the coordinate axes
-when $rho = 0$ — the picture of #link(<fig:joint-density>)[the joint
-density figure].
+The parameter $rho$ is the Pearson correlation coefficient of $X$ and $Y$, defined in #link(<def:correlation-coefficient>)[a later section of this chapter].
+The contours of $f$ are ellipses centred at $bold(mu)$ whose axes are tilted by $rho$ and aligned with the coordinate axes when $rho = 0$ — the picture of #link(<fig:joint-density>)[the joint density figure].
 
-Each component is marginally normal, $X ~ N(mu_1, sigma_1^2)$ and
-$Y ~ N(mu_2, sigma_2^2)$, but the pair is not determined by its two
-marginals alone: $rho$ carries the dependence information that no
-marginal can see. When $rho = 0$ the density factorises into the
-product of the two marginal normal densities and the components are
-independent — an instance of
-#link(<prop:mv-normal-independence>)[the zero-covariance criterion]
-developed for the multivariate normal.
+Each component is marginally normal, $X ~ N(mu_1, sigma_1^2)$ and $Y ~ N(mu_2, sigma_2^2)$, but the pair is not determined by its two marginals alone: $rho$ carries the dependence information that no marginal can see.
+
+When $rho = 0$ the density factorises into the product of the two marginal normal densities and the components are independent — an instance of #link(<prop:mv-normal-independence>)[the zero-covariance criterion] developed for the multivariate normal.
 
 == Marginal Distributions and Independence // 边缘分布与独立性
 
