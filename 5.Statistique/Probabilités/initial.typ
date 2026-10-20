@@ -2645,6 +2645,24 @@ For *sums* of independent continuous variables, the integral form is the
   #link(<def:gamma-dist>)[the Gamma definition].
 ] <ex:exp-sum-gamma>
 
+Additivity is the property that lets the convolution be used once and then forgotten: the law of the sum is read off the parameters.
+
+#definition(name: "Additive Family of Distributions")[
+  A family ${P_theta : theta in Theta}$ of distributions is *additive* if independent $X ~ P_(theta_1)$ and $Y ~ P_(theta_2)$ always satisfy $X + Y ~ P_(theta_1 + theta_2)$, the parameter of the sum being the natural combination of the two parameters.
+] <def:additive-family>
+
+For continuous families additivity is checked with #link(<thm:convolution>)[the convolution formula], for discrete families with the corresponding convolution sum.
+
+#example(name: "Additive Families")[
+  - *Binomial.* If $X ~ B(n_1, p)$ and $Y ~ B(n_2, p)$ are independent, then $X + Y ~ B(n_1 + n_2, p)$: concatenating blocks of $n_1$ and $n_2$ Bernoulli trials — both with success probability $p$ — gives $n_1 + n_2$ independent trials, and $X + Y$ is their success count.
+  - *Poisson.* If $X ~ "Pois"(lambda_1)$ and $Y ~ "Pois"(lambda_2)$ are independent, then $X + Y ~ "Pois"(lambda_1 + lambda_2)$, since
+    $
+      P(X + Y = k) = sum_(j=0)^k (lambda_1^j e^(-lambda_1)) / j! dot (lambda_2^(k-j) e^(-lambda_2)) / (k-j)! = ((lambda_1 + lambda_2)^k e^(-(lambda_1 + lambda_2))) / k!.
+    $
+  - *Normal.* If $X ~ N(mu_1, sigma_1^2)$ and $Y ~ N(mu_2, sigma_2^2)$ are independent, then $X + Y ~ N(mu_1 + mu_2, sigma_1^2 + sigma_2^2)$: completing the square in #link(<thm:convolution>)[the convolution integral] yields this density — the one-line proof with characteristic functions comes in the next chapter.
+  - *Gamma, hence chi-squared.* If $X ~ "Ga"(alpha_1, lambda)$ and $Y ~ "Ga"(alpha_2, lambda)$ are independent, then $X + Y ~ "Ga"(alpha_1 + alpha_2, lambda)$, the computation of #link(<prop:chi-squared-moments>)[the chi-squared additivity proof]; with $lambda = 1 / 2$ this gives $chi^2 (n_1) + chi^2 (n_2) ~ chi^2 (n_1 + n_2)$.
+]
+
 For *general transformations* of a continuous random vector, the univariate
 monotone transform generalises to a multidimensional change of variables.
 
