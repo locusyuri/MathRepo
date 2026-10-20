@@ -58,21 +58,10 @@ such that $m(A) = 0$.
 
 = Determinants // 行列式
 
-#definition(name: "Matrix over $F$")[
-  Let $F$ be a field. An $m times n$ *matrix over* $F$ is an array of elements of $F$
-  arranged in $m$ rows and $n$ columns, written $A = (a_(i j))_(m times n)$, where the entry
-  $a_(i j) in F$ lies in row $i$ and column $j$ ($1 <= i <= m$, $1 <= j <= n$).
-
-  When $m = n$, the matrix is called *square* of order $n$.
-] <def:matrix>
-
-The set of all $m times n$ matrices over $F$ is denoted by $M_(m times n)(F)$, or simply
-$F^(m times n)$; the set of square $n times n$ matrices is written $M_(n)(F)$.
-
-#definition(name: "Transpose of a Matrix")[
-  The *transpose* of an $m times n$ matrix $A = (a_(i j))_(m times n)$ over $F$ is the $n times m$
-  matrix $A^"T" = (a_((j i))_(n times m)$, obtained by interchanging rows and columns.
-] <def:transpose-matrix>
+The objects studied in this chapter are matrices over a field.
+Their formal definition, together with the definition of transposition, is collected in
+#link(<def:matrix>)[the Matrices chapter], and we use both freely below.
+Throughout, $M_(n)(F)$ abbreviates $M_(n times n)(F)$, the set of square matrices of order $n$.
 
 The determinant is a scalar value assigned to a square matrix. It serves both as a
 criterion for matrix invertibility and as the foundation for Cramer's rule and eigenvalue
@@ -108,10 +97,15 @@ special determinants.
     the parity of the number of transpositions used.
 ] <prop:parity-properties>
 
+#note[
+  Each item is obtained by counting the inversions created or destroyed by a transposition;
+  the composition rule then follows by induction on the number of transpositions.
+]
+
 == Determinant and Its Properties // 行列式及其性质
 
 #definition(name: "Determinant of Order $n$")[
-  Let $A = (a_(i j))_(n times n)$ be an $n times n$ matrix over the number field $F$.
+  Let $A = (a_(i j))_(n times n)$ be an $n times n$ matrix over a field $F$.
   The *determinant* of $A$ is the scalar
 
   $
@@ -124,16 +118,25 @@ special determinants.
   - *Transpose*: $"det"(A^"T") = "det"(A)$.
   - *Row exchange*: interchanging two rows (or two columns) of $A$ changes the sign of $"det"(A)$.
   - *Scalar multiplication*: multiplying one row of $A$ by a scalar $k$ multiplies $"det"(A)$ by $k$.
+  - *Row additivity*: the determinant is additive in each row separately,
+    $"det"((..., u + v, ...)) = "det"((..., u, ...)) + "det"((..., v, ...))$,
+    the three matrices differing only in that row; by transposition the same holds for columns.
   - *Row addition*: adding a scalar multiple of one row to another row leaves $"det"(A)$ unchanged.
   - *Proportional rows*: if two rows (or two columns) of $A$ are proportional, then $"det"(A) = 0$.
 ] <prop:determinant-properties>
 
+#note[
+  Each item is a rearrangement of the Leibniz sum: a row exchange reindexes the permutations by
+  composing with a transposition, while additivity splits one summand into two.
+]
+
 == Expanding by Rows and Columns // 按行（列）展开
 
 #definition(name: "Minors and Cofactors")[
+  Let $A = (a_(i j))_(n times n)$ with $n >= 2$.
   The *minor* $M_(i j)$ of $A$ is the determinant of the $(n-1) times (n-1)$ matrix obtained
-  from $A$ by deleting row $i$ and column $j$. The *cofactor* of entry $a_(i j)$ is
-  $A_(i j) = (-1)^(i + j) M_(i j)$.
+  from $A$ by deleting row $i$ and column $j$.
+  The *cofactor* of the entry $a_(i j)$ is $A_(i j) = (-1)^(i + j) M_(i j)$.
 ] <def:minor-and-cofactor>
 
 #theorem(name: "Laplace Expansion Theorem")[
@@ -149,7 +152,8 @@ special determinants.
 ] <thm:laplace-expansion>
 
 #proof[
-  We prove the expansion along row $i$; the column version follows from $"det"(A^"T") = "det"(A)$.
+  We prove the expansion along row $i$; the column version follows from $"det"(A^"T") = "det"(A)$,
+  which is part of #link(<prop:determinant-properties>)[the basic properties].
   Grouping the Leibniz terms by $j = sigma(i)$ gives
 
   $
@@ -161,35 +165,51 @@ special determinants.
   The inner sum therefore equals $(-1)^(i+j) M_(i j) = A_(i j)$.
 ]
 
-=== Cramer's Rule // 克拉默法则
-
-#theorem(name: "Cramer's Rule")[
-  Let $A x = b$ be a linear system of $n$ equations in $n$ unknowns with $"det"(A) != 0$,
-  and let $A_(j)$ denote the matrix obtained from $A$ by replacing column $j$ with $b$.
-  Then the unique solution is
+#corollary(name: "Expansion Along a Foreign Row")[
+  Let $A_(k j)$ be the cofactor of the entry $a_(k j)$. If $k != i$, then
 
   $
-    x_j = "det"(A_(j)) / "det"(A), j = 1, 2, ..., n.
+    sum_(j=1)^n a_(i j) A_(k j) = 0.
   $
-] <thm:cramer-rule>
+] <cor:foreign-row-expansion>
 
 #proof[
-  Since $b = sum_(k=1)^n x_k "col"_(k)(A)$, column $j$ of $A_(j)$ is $sum_(k=1)^n x_k "col"_(k)(A)$
-  while the other columns coincide with those of $A$. Expanding $"det"(A_(j))$ along column $j$
-  and using the linearity of the determinant in that column,
+  Replace row $k$ of $A$ by row $i$ and call the result $B$.
+  Two rows of $B$ coincide, so $"det"(B) = 0$ by the proportional-row property of
+  #link(<prop:determinant-properties>)[the basic properties].
 
-  $
-    "det"(A_(j)) = sum_(k=1)^n x_k "det"(A_(j, k)),
-  $
-
-  where $A_(j, k)$ is $A$ with column $j$ replaced by column $k$. For $k != j$ the matrix
-  $A_(j, k)$ has two identical columns, hence determinant zero; for $k = j$ it is $A$.
-  Thus $"det"(A_(j)) = x_j "det"(A)$.
+  The cofactors of row $k$ are the same in $B$ and in $A$, because each of them is a minor that
+  deletes row $k$.
+  Expanding $"det"(B)$ along row $k$ by #link(<thm:laplace-expansion>)[the Laplace expansion theorem]
+  therefore yields $sum_(j=1)^n a_(i j) A_(k j) = 0$.
 ]
 
-=== Expanding by k Rows // 按 k 行展开
+#example(name: "Expansion of a Third-Order Determinant")[
+  Expand
 
-#property(name: "Laplace Expansion by k Rows")[
+  $
+    A = mat(1, 2, 3; 4, 5, 6; 7, 8, 10)
+  $
+
+  along its first row:
+
+  $
+    "det"(A) = 1 (5 dot 10 - 6 dot 8) - 2 (4 dot 10 - 6 dot 7) + 3 (4 dot 8 - 5 dot 7)
+    = 2 + 4 - 9 = -3.
+  $
+
+  The elimination route agrees: replacing $R_2$ by $R_2 - 4 R_1$ and $R_3$ by $R_3 - 7 R_1$ leaves
+
+  $
+    mat(1, 2, 3; 0, -3, -6; 0, -6, -11),
+  $
+
+  whose determinant is $1 dot ((-3)(-11) - (-6)(-6)) = 33 - 36 = -3$.
+]
+
+== Laplace Expansion by k Rows // 按 k 行展开
+
+#theorem(name: "Laplace Expansion by k Rows")[
   Fix $k$ rows with indices $I = {i_1 < i_2 < ... < i_k}$. For a $k$-element subset
   $J = {j_1 < ... < j_k}$ of columns, write $M(I, J)$ for the $k$-th order minor on rows $I$
   and columns $J$, and $M^*(I, J)$ for the complementary minor on the remaining rows and columns.
@@ -200,9 +220,94 @@ special determinants.
   $
 
   where the sum runs over all $k$-element subsets $J$ of ${1, 2, ..., n}$.
-] <prop:laplace-expansion-by-k-rows>
+] <thm:laplace-expansion-by-k-rows>
+
+#proof[
+  Induct on $k$; the case $k = 1$ is #link(<thm:laplace-expansion>)[the Laplace expansion theorem].
+
+  Assume the formula for $k - 1$ and expand $"det"(A)$ along the row $i_k$.
+  Each term $a_(i_k j) A_(i_k j)$ is computed in the $(n-1) times (n-1)$ minor $M_(i_k j)$,
+  where by the induction hypothesis it equals a sum over the $(k-1)$-element column sets
+  $J'$ taken from the columns different from $j$.
+
+  Collecting the terms with $J = J' union {j}$ multiplies the two minors, namely $M(I, J)$ splits
+  into $a_(i_k j)$ times the minor of $M(I, J)$ on rows $I$ and columns $J'$, and the
+  complementary minors $M^*(I, J)$ likewise multiply.
+  Adding the signs $(-1)^(i_k + j)$ of the last expansion to
+  $(-1)^(i_1 + ... + i_(k-1) + j_1 + ... + j_(k-1))$ gives the exponent
+  $i_1 + ... + i_k + j_1 + ... + j_k$.
+]
+
+== Cramer's Rule // 克拉默法则
+
+#theorem(name: "Cramer's Rule")[
+  Let $A in M_(n)(F)$, $b in F^n$, and suppose $"det"(A) != 0$.
+  Let $A^((j))$ denote the matrix obtained from $A$ by replacing column $j$ with $b$.
+  Then the system $A x = b$ has exactly one solution, whose components are, for $j = 1, 2, ..., n$,
+
+  $
+    x_j = "det"(A^((j))) / "det"(A).
+  $
+] <thm:cramer-rule>
+
+#proof[
+  *Uniqueness.*
+  Let $x$ be a solution and write $b = sum_(k=1)^n x_k "col"_(k)(A)$, where $"col"_(k)(A)$ is the
+  $k$-th column of $A$.
+  Column $j$ of $A^((j))$ is $b$, while its other columns coincide with those of $A$; so the column
+  version of #link(<prop:determinant-properties>)[row additivity] gives
+
+  $
+    "det"(A^((j))) = sum_(k=1)^n x_k "det"(A^((j, k))),
+  $
+
+  where $A^((j, k))$ is $A$ with column $j$ replaced by $"col"_(k)(A)$.
+  For $k != j$ the matrix $A^((j, k))$ has two identical columns, hence determinant zero, while
+  $A^((j, j)) = A$; thus $"det"(A^((j))) = x_j "det"(A)$, and $x_j$ is forced.
+
+  *Existence.*
+  Set $x_j = "det"(A^((j))) / "det"(A)$ and expand $"det"(A^((j)))$ along its $j$-th column, which is $b$:
+
+  $
+    "det"(A^((j))) = sum_(k=1)^n b_k A_(k j).
+  $
+
+  Hence, for every $i$,
+
+  $
+    sum_(j=1)^n a_(i j) "det"(A^((j)))
+    = sum_(k=1)^n b_k sum_(j=1)^n a_(i j) A_(k j)
+    = b_i "det"(A),
+  $
+
+  where the last equality is #link(<cor:foreign-row-expansion>)[the foreign-row expansion] for
+  $k != i$ together with #link(<thm:laplace-expansion>)[the Laplace expansion theorem] for $k = i$.
+  Dividing by $"det"(A)$ gives $sum_(j=1)^n a_(i j) x_j = b_i$.
+]
 
 == Special Determinants // 特殊行列式
+
+#proposition(name: "Determinant of a Triangular Matrix")[
+  Let $A = (a_(i j))_(n times n)$ be upper triangular, lower triangular, or diagonal.
+  Then
+
+  $
+    "det"(A) = product_(i=1)^n a_(i i).
+  $
+] <prop:triangular-determinant-value>
+
+#proof[
+  Let $A$ be upper triangular, so that $a_(i j) = 0$ whenever $j < i$.
+  A Leibniz summand $product_(i=1)^n a_(i, sigma(i))$ is non-zero only if $sigma(i) >= i$ for
+  every $i$.
+
+  A permutation satisfying $sigma(i) >= i$ for all $i$ must be the identity: summing the $n$
+  inequalities gives $"sum"_(i=1)^n sigma(i) >= "sum"_(i=1)^n i$ with equality of the two sides,
+  so every inequality is an equality.
+
+  The only surviving summand is $product_(i=1)^n a_(i i)$, with sign $+1$.
+  The lower triangular case follows by transposition, and the diagonal case is a special case.
+]
 
 #definition(name: "Vandermonde Determinant")[
   The *Vandermonde determinant* of order $n$ is defined as
@@ -218,20 +323,60 @@ special determinants.
     ),
   $
 
-  where $x_1, x_2, ..., x_n$ are distinct variables.
+  where $x_1, x_2, ..., x_n$ are variables.
 ] <def:vandermonde-determinant>
 
-The value of the Vandermonde determinant is given by
-
-$
-  V_(n) = product_(1 <= i < j <= n) (x_j - x_i).
-$
-
-#definition(name: "Arrow Determinant")[
-  The *Arrow determinant* is defined as
+#proposition(name: "Value of the Vandermonde Determinant")[
+  For $n >= 2$,
 
   $
-    A_(n) = mat(
+    V_(n) = product_(1 <= i < j <= n) (x_j - x_i).
+  $
+] <prop:vandermonde-value>
+
+#proof[
+  Induct on $n$; for $n = 2$ the determinant equals $x_2 - x_1$ directly.
+
+  Assume $n >= 3$.
+  For $i = n, n-1, ..., 2$ in this order replace row $i$ by row $i$ minus $x_1$ times row $i - 1$;
+  these row operations leave the determinant unchanged.
+  The first column becomes $(1, 0, ..., 0)^"T"$, and the entry in row $i >= 2$ and column $j >= 2$
+  becomes $x_j^(i-2) (x_j - x_1)$.
+
+  Expanding along the first column and taking the common factor $x_j - x_1$ out of every column
+  $j = 2, ..., n$ gives
+
+  $
+    V_(n) = product_(j=2)^n (x_j - x_1) V_(n-1)(x_2, ..., x_n),
+  $
+
+  where $V_(n-1)(x_2, ..., x_n)$ is the Vandermonde determinant of order $n - 1$ in the remaining
+  variables.
+  By the induction hypothesis the right-hand side equals
+  $product_(2 <= i < j <= n) (x_j - x_i) product_(j=2)^n (x_j - x_1)$, which is exactly
+  $product_(1 <= i < j <= n) (x_j - x_i)$.
+]
+
+#note[
+  No distinctness is needed for the identity itself, since both sides are polynomials in
+  $x_1, ..., x_n$; distinctness is precisely the condition under which $V_n != 0$.
+]
+
+#example(name: "Vandermonde Determinant of Order 3")[
+  For $x_1 = 1$, $x_2 = 2$ and $x_3 = 3$,
+
+  $
+    V_3 = mat(delim: "|", 1, 1, 1; 1, 2, 3; 1, 4, 9) = 2,
+  $
+
+  in agreement with $product_(1 <= i < j <= 3) (x_j - x_i) = 1 dot 2 dot 1 = 2$.
+]
+
+#definition(name: "Arrow Determinant")[
+  The *arrow determinant* is the determinant
+
+  $
+    Delta_(n) = mat(
       delim: "|",
       a_(11), a_(12), a_(13), dots, a_(1n);
       a_(21), a_(22), 0, dots, 0;
@@ -240,50 +385,90 @@ $
       a_(n 1), 0, 0, dots, a_(n n);
     ).
   $
-
-  Its value is given by
-
-  $
-    A_(n) = (a_(11) - sum_(k=2)^n (a_(1 k) a_(k 1))/a_(k k)) product_(k=2)^n a_(k k).
-  $
 ] <def:arrow-determinant>
 
-From the first column sequentially, subtract $a_(21)/a_(22)$ times the second column, ...,
-$a_(n 1)/a_(n n)$ times the $n$-th column, so that the first column becomes
+#proposition(name: "Value of the Arrow Determinant")[
+  If $a_(k k) != 0$ for $k = 2, ..., n$, then
 
-$
-  (a_(11) - sum_(k=2)^n (a_(1 k) a_(k 1))/a_(k k), 0, 0, dots, 0)^"T".
-$
+  $
+    Delta_(n) = (a_(11) - sum_(k=2)^n (a_(1 k) a_(k 1))/a_(k k)) product_(k=2)^n a_(k k).
+  $
+] <prop:arrow-determinant-value>
 
-Then expand along the first column.
+#proof[
+  For $k = 2, ..., n$ subtract $a_(k 1)/a_(k k)$ times column $k$ from the first column.
+  Column operations of this type leave the determinant unchanged, and the first column becomes
+
+  $
+    vec(a_(11) - sum_(k=2)^n (a_(1 k) a_(k 1))/a_(k k), 0, dots, 0).
+  $
+
+  The entry in row $k >= 2$ does vanish: row $k$ has $a_(k k)$ in column $k$ and $0$ in every other
+  column $k' >= 2$, so the subtracted multiple cancels $a_(k 1)$ exactly.
+
+  Expanding along the first column leaves the determinant of
+  $upright("diag")(a_(22), ..., a_(n n))$, which equals $product_(k=2)^n a_(k k)$ by
+  #link(<prop:triangular-determinant-value>)[the triangular case].
+]
 
 #definition(name: "Two-Triangular Determinant")[
-  If the entries of a determinant satisfy
+  Let $a$, $b$ and $x_1, ..., x_n$ be scalars, and let $A = (a_(i j))_(n times n)$ have diagonal
+  entries $x_i$, with $a$ above and $b$ below the diagonal:
 
   $
-    a_(i j) = cases(a quad & i < j, x_i quad & i = j, b quad & i > j),
+    a_(i j) = cases(a quad & i < j, x_i quad & i = j, b quad & i > j).
   $
 
-  then $D_n$ is called a *two-triangular determinant*.
+  The determinant $D_n = "det"(A)$ is called a *two-triangular determinant*.
 ] <def:two-triangular-determinant>
 
-The value of the two-triangular determinant is given by
+#proposition(name: "Recurrence for Two-Triangular Determinants")[
+  With $D_1 = x_1$, for $n >= 2$,
 
-$
-  mat(
-    delim: "|",
-    x_1, a, a, dots, a;
-    b, x_2, a, dots, a;
-    b, b, x_3, dots, a;
-    dots.v, dots.v, dots.v, dots.down, dots.v;
-    b, b, b, dots, x_n;
-  )
-  =
-  cases(
-    (x_1 + a sum_(k=2)^n (x_1 - a)/(x_k - a)) dot product_(k=2)^n (x_k - a) quad & a = b,
-    (x_n - b) D_(n-1) + product_(k=1)^(n-1) (x_k - a) quad & a != b,
-  ).
-$
+  $
+    D_n = (x_n - a) D_(n-1) + a product_(i=1)^(n-1) (x_i - b).
+  $
+] <prop:two-triangular-recurrence>
+
+#proof[
+  For $i = n, n-1, ..., 2$ in this order replace row $i$ by row $i$ minus row $i - 1$; the
+  determinant is unchanged.
+  Row $1$ becomes $(x_1, a, ..., a)$, and for $i >= 2$ row $i$ keeps exactly two non-zero entries,
+  namely $b - x_(i-1)$ in column $i - 1$ and $x_i - a$ in column $i$.
+
+  Expand along the last row, whose only non-zero entries are $b - x_(n-1)$ in column $n - 1$ and
+  $x_n - a$ in column $n$:
+
+  $
+    D_n = (x_n - a) D_(n-1) - (b - x_(n-1)) M,
+  $
+
+  where $M$ is the minor obtained by deleting row $n$ and column $n - 1$, and $D_(n-1)$ is the
+  determinant of the leading $(n-1) times (n-1)$ block after the same row operations.
+  In $M$ the only non-zero entry of the last column is $a$, in the first row, and what remains after
+  removing that row and column is triangular with diagonal $b - x_1, ..., b - x_(n-2)$.
+  Hence $M = (-1)^n a product_(i=1)^(n-2) (b - x_i)$, and
+
+  $
+    D_n = (x_n - a) D_(n-1) + (-1)^(n+1) a product_(i=1)^(n-1) (b - x_i)
+        = (x_n - a) D_(n-1) + a product_(i=1)^(n-1) (x_i - b),
+  $
+
+  because the $n - 1$ sign changes hidden in $b - x_i = -(x_i - b)$ cancel the factor $(-1)^(n+1)$.
+]
+
+#note[
+  For $a = b$ the recurrence has the closed form
+
+  $
+    D_n = product_(i=1)^n (x_i - a) + a sum_(i=1)^n product_(j=1, j != i)^n (x_j - a),
+  $
+
+  which follows by induction on the recurrence.
+  Rewriting the second summand with the common factor $product_(k=2)^n (x_k - a)$ gives the
+  alternative form $(x_1 + a sum_(k=2)^n (x_1 - a)/(x_k - a)) product_(k=2)^n (x_k - a)$, valid when
+  $x_k != a$ for $k >= 2$.
+]
 
 = Linear Systems // 线性方程组
 
@@ -510,6 +695,21 @@ Matrices are the coordinate representation of linear mappings and also serve as
 coefficient carriers for linear systems. This chapter covers basic matrix operations,
 properties of special square matrices, methods for finding inverse matrices, block
 matrix techniques, and operations of rank.
+
+== Matrices and Transposition // 矩阵与转置
+
+#definition(name: "Matrix over $F$")[
+  Let $F$ be a field. An $m times n$ *matrix over* $F$ is an array of elements of $F$
+  arranged in $m$ rows and $n$ columns, written $A = (a_(i j))_(m times n)$, where the entry
+  $a_(i j) in F$ lies in row $i$ and column $j$ ($1 <= i <= m$, $1 <= j <= n$).
+
+  When $m = n$, the matrix is called *square* of order $n$.
+] <def:matrix>
+
+#definition(name: "Transpose of a Matrix")[
+  The *transpose* of an $m times n$ matrix $A = (a_(i j))_(m times n)$ over $F$ is the $n times m$
+  matrix $A^"T" = (a_(j i))_(n times m)$, obtained by interchanging rows and columns.
+] <def:transpose-matrix>
 
 == Basic Operations // 基本运算
 
@@ -3075,6 +3275,7 @@ and normal transformations.
 - *#link(<def:adjugate-matrix>)[Adjugate Matrix]*
 - *#link(<def:algebra-over-field>)[Algebra Over Field]*
 - *#link(<def:arrow-determinant>)[Arrow Determinant]*
+- *#link(<prop:arrow-determinant-value>)[Arrow Determinant Value]*
 - *#link(<def:ascending-chain>)[Ascending Chain]*
 - *#link(<prop:ascending-chain-properties>)[Ascending Chain Properties]*
 
@@ -3137,6 +3338,7 @@ and normal transformations.
 
 == F
 - *#link(<thm:first-isomorphism-theorem>)[First Isomorphism Theorem]*
+- *#link(<cor:foreign-row-expansion>)[Foreign Row Expansion]*
 - *#link(<def:frobenius-normal-form>)[Frobenius Normal Form]*
 - *#link(<def:full-row-rank-matrix>)[Full Row Rank Matrix]*
 - *#link(<prop:full-row-rank-matrix>)[Full Row Rank Matrix]*
@@ -3186,7 +3388,7 @@ and normal transformations.
 
 == L
 - *#link(<thm:laplace-expansion>)[Laplace Expansion]*
-- *#link(<prop:laplace-expansion-by-k-rows>)[Laplace Expansion By K Rows]*
+- *#link(<thm:laplace-expansion-by-k-rows>)[Laplace Expansion By K Rows]*
 - *#link(<def:linear-combination>)[Linear Combination]*
 - *#link(<def:linear-dependence-and-independence>)[Linear Dependence And Independence]*
 - *#link(<thm:linear-extension>)[Linear Extension]*
@@ -3197,6 +3399,7 @@ and normal transformations.
 - *#link(<def:linear-subspace>)[Linear Subspace]*
 
 == M
+- *#link(<def:matrix>)[Matrix]*
 - *#link(<def:matrix-equivalence>)[Matrix Equivalence]*
 - *#link(<def:maximal-independent-group>)[Maximal Independent Group]*
 - *#link(<def:minimal-polynomial>)[Minimal Polynomial]*
@@ -3280,9 +3483,12 @@ and normal transformations.
 == T
 - *#link(<def:trace>)[Trace]*
 - *#link(<prop:trace-arithmetic>)[Trace Arithmetic]*
+- *#link(<def:transpose-matrix>)[Transpose]*
+- *#link(<prop:triangular-determinant-value>)[Triangular Determinant Value]*
 - *#link(<prop:triangular-matrix>)[Triangular Matrix]*
 - *#link(<def:triangular-matrix>)[Triangular Matrix]*
 - *#link(<def:two-triangular-determinant>)[Two Triangular Determinant]*
+- *#link(<prop:two-triangular-recurrence>)[Two Triangular Recurrence]*
 
 == U
 - *#link(<thm:uniqueness-of-rref>)[Uniqueness Of Rref]*
@@ -3290,6 +3496,7 @@ and normal transformations.
 
 == V
 - *#link(<def:vandermonde-determinant>)[Vandermonde Determinant]*
+- *#link(<prop:vandermonde-value>)[Vandermonde Value]*
 
 == W
 - *#link(<thm:woodbury-identity>)[Woodbury Identity]*
