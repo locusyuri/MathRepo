@@ -61,16 +61,53 @@ such that $m(A) = 0$.
 
 = Determinants // 行列式
 
-The objects studied in this chapter are matrices over a field.
-Their formal definition, together with the definition of transposition, is collected in
-#link(<def:matrix>)[the Matrices chapter], and we use both freely below.
-Throughout, $M_(n)(F)$ abbreviates $M_(n times n)(F)$, the set of square matrices of order $n$.
+The objects studied in this chapter are matrices over a field; their definition, together
+with that of transposition, opens the chapter, and the Matrices chapter develops matrix
+arithmetic from this starting point. Throughout, $M_(n)(F)$ abbreviates
+$M_(n times n)(F)$, the set of square matrices of order $n$.
 
 The determinant is a scalar value assigned to a square matrix. It serves both as a
 criterion for matrix invertibility and as the foundation for Cramer's rule and eigenvalue
 theory. This chapter defines the determinant starting from the inversion number of
 permutations, and gradually develops its properties, expansion rules, and computation of
 special determinants.
+
+== Matrices and Transposition // 矩阵与转置
+
+#definition(name: "Matrix over a Field")[
+  Let $F$ be a field. An $m times n$ *matrix over* $F$ is an array of elements of $F$
+  arranged in $m$ rows and $n$ columns, written $A = (a_(i j))_(m times n)$, where the entry
+  $a_(i j) in F$ lies in row $i$ and column $j$ ($1 <= i <= m$, $1 <= j <= n$).
+
+  When $m = n$, the matrix is called *square* of order $n$.
+] <def:matrix>
+
+#definition(name: "Transpose of a Matrix")[
+  The *transpose* of an $m times n$ matrix $A = (a_(i j))_(m times n)$ over $F$ is the
+  $n times m$ matrix $A^"T" = (a_(j i))_(n times m)$, obtained by interchanging rows and
+  columns.
+] <def:transpose-matrix>
+
+#property(name: "Properties of the Transpose")[
+  Let $A$ and $B$ be matrices over $F$ for which the operations below are defined, and let
+  $k in F$.
+  - *Involution*: $(A^"T")^"T" = A$.
+  - *Linearity*: $(A + B)^"T" = A^"T" + B^"T"$ and $(k A)^"T" = k A^"T"$.
+  - *Product*: $(A B)^"T" = B^"T" A^"T"$, and more generally
+    $(A_1 ... A_k)^"T" = A_k^"T" ... A_1^"T"$.
+  - *Determinant*: $"det"(A^"T") = "det"(A)$ for a square $A$, by
+    #link(<prop:determinant-properties>)[the basic properties of determinants] proved below.
+] <prop:transpose-properties>
+
+#note[
+  Each item is checked entry by entry; for instance the $(i, j)$-entry of $(A B)^"T"$ is
+  $sum_k a_(j k) b_(k i)$, which is the $(i, j)$-entry of $B^"T" A^"T"$. Only the last item
+  involves the determinant, and it is recorded here for completeness; its proof is given
+  once the determinant is available.
+
+  The remaining operations on matrices — addition, scalar multiplication, products, powers,
+  inverses — are treated in the Matrices chapter.
+]
 
 == Permutations // 排列
 
@@ -811,38 +848,11 @@ is closed under linear combinations; this motivates the following notion.
 = Matrices // 矩阵
 
 Matrices are the coordinate representation of linear mappings and also serve as
-coefficient carriers for linear systems. This chapter covers basic matrix operations,
-properties of special square matrices, methods for finding inverse matrices, block
-matrix techniques, and operations of rank.
-
-== Matrices and Transposition // 矩阵与转置
-
-#definition(name: "Matrix over $F$")[
-  Let $F$ be a field. An $m times n$ *matrix over* $F$ is an array of elements of $F$
-  arranged in $m$ rows and $n$ columns, written $A = (a_(i j))_(m times n)$, where the entry
-  $a_(i j) in F$ lies in row $i$ and column $j$ ($1 <= i <= m$, $1 <= j <= n$).
-
-  When $m = n$, the matrix is called *square* of order $n$.
-] <def:matrix>
-
-#definition(name: "Transpose of a Matrix")[
-  The *transpose* of an $m times n$ matrix $A = (a_(i j))_(m times n)$ over $F$ is the $n times m$
-  matrix $A^"T" = (a_(j i))_(n times m)$, obtained by interchanging rows and columns.
-] <def:transpose-matrix>
-
-#property(name: "Properties of the Transpose")[
-  Let $A$ and $B$ be matrices over $F$ for which the operations below are defined, and let $k in F$.
-  - *Involution*: $(A^"T")^"T" = A$.
-  - *Linearity*: $(A + B)^"T" = A^"T" + B^"T"$ and $(k A)^"T" = k A^"T"$.
-  - *Product*: $(A B)^"T" = B^"T" A^"T"$, and more generally $(A_1 ... A_k)^"T" = A_k^"T" ... A_1^"T"$.
-  - *Determinant*: $"det"(A^"T") = "det"(A)$ for a square $A$, by
-    #link(<prop:determinant-properties>)[the basic properties of determinants].
-] <prop:transpose-properties>
-
-#note[
-  Each item is checked entry by entry; for instance the $(i, j)$-entry of $(A B)^"T"$ is
-  $sum_k a_(j k) b_(k i)$, which is the $(i, j)$-entry of $B^"T" A^"T"$.
-]
+coefficient carriers for linear systems. The definition of a matrix, together with the
+basic properties of its transpose, was given at the beginning of the Determinants chapter
+(#link(<def:matrix>)[matrix], #link(<def:transpose-matrix>)[transpose]); the present
+chapter develops matrix arithmetic, properties of special square matrices, methods for
+finding inverse matrices, block matrix techniques, and operations of rank.
 
 == Basic Operations // 基本运算
 
