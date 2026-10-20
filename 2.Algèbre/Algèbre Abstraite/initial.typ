@@ -49,16 +49,11 @@ than redefined.
 ] <def:binary-operation>
 
 #note[
-  A binary operation is, in itself, *nothing more* than an arbitrary
-  mapping $S times S -> S$: any such map qualifies, no matter how
-  chaotic. There is nothing intrinsic to the concept that singles it
-  out — abstract algebra gives it a name and a notation only because
-  every structure studied here (groups, rings, fields, modules) is
-  built on top of one or more such maps, so the vocabulary recurs
-  constantly. The actual mathematical content lies not in the map but
-  in the *laws* a particular operation may satisfy
-  (#link(<prop:operation-laws>)[below]); a generic binary operation
-  has none of them.
+  A binary operation is *nothing more* than an arbitrary map
+  $S times S -> S$, however chaotic. Its name recurs because groups,
+  rings, fields and modules rest on such maps; the real content lies
+  in the *laws* it may satisfy (#link(<prop:operation-laws>)[below])
+  — a generic operation satisfies none.
 ] <note:binary-operation-trivial>
 
 Familiar operations: addition and multiplication on $bb(Z)$,
