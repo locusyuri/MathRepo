@@ -2350,6 +2350,8 @@ those stable under the natural "change of frame" of the group.
     #link(<def:alternating-group>)[§3.4]).
   + The union of normal subgroups need not be normal — indeed, need
     not be a subgroup at all.
+  + If $N lt.closed.eq G$ and $N <= H <= G$, then $N lt.closed.eq H$:
+    normality is inherited by every intermediate subgroup.
 ] <prop:normal-properties>
 
 #proof[
@@ -2369,7 +2371,36 @@ those stable under the natural "change of frame" of the group.
   (and trivially for $a in N$).
 
   (4) is the business of #link(<ex:non-normal>)[the example below].
+
+  (5) Normality in $G$ says $g N g^(-1) = N$ for every $g in G$;
+  every $h in H$ is such a $g$, and $N <= H$, so the same computation
+  certifies $N$ normal in $H$.
 ]
+
+#caution(title: "Normality is not transitive")[
+  Normality is *not transitive*: $N lt.closed H$ and $H lt.closed G$
+  together do not force $N lt.closed G$. In $A_4$, the
+  #link(<def:klein-four>)[Klein four-group]
+  $
+    V_4 = {e, (1 2)(3 4), (1 3)(2 4), (1 4)(2 3)}
+  $
+  is normal in $A_4$ — it is ${e}$ together with the three even
+  permutations of cycle type $(2, 2)$, and conjugation preserves
+  cycle type (#link(<prop:conjugation-renames>)[§3.4]) — and its
+  subgroup $N = {e, (1 2)(3 4)}$ is normal in $V_4$ because $V_4$ is
+  abelian. Hence
+  $
+    N lt.closed V_4 lt.closed A_4 ,
+  $
+  yet $N$ is not normal in $A_4$: conjugating $(1 2)(3 4)$ by
+  $(1 2 3)$ gives
+  $
+    (1 2 3)(1 2)(3 4)(1 2 3)^(-1) = (1 4)(2 3) in.not N.
+  $
+  Without the hypothesis $N <= H$, what remains unconditionally true
+  is $N inter H lt.closed.eq H$ for every $H <= G$: conjugation sends
+  $N inter H$ to $h N h^(-1) inter h H h^(-1) = N inter H$.
+] <caution:normality-not-transitive>
 
 #example(name: "A gallery of normal subgroups.")[
 
