@@ -474,14 +474,15 @@ special determinants.
 
 Linear systems are the most direct application of linear algebra. This chapter
 characterizes the existence and structure of solutions to linear systems using
-elementary transformations and rank theory.
+elementary operations and rank theory.
 
 == Elimination Method // 消元法
 
 #definition(name: "System of Linear Equations")[
-  A *system of linear equations* is a collection of one or more linear equations involving the
-  same set of variables. For example, a system of $m$ linear equations in $n$ variables can be
-  written as
+  A *linear equation* in the variables $x_1, ..., x_n$ is an equation
+  $a_1 x_1 + ... + a_n x_n = b$ whose coefficients $a_i$ and constant term $b$ lie in a field $F$.
+  A *system of linear equations* is a finite collection of such equations in the same variables,
+  written
 
   $
     cases(
@@ -492,10 +493,26 @@ elementary transformations and rank theory.
     )
   $
 
-  where $x_1, ..., x_n$ are the variables, $a_(i j)$ are the coefficients, and $b_i$ are the
-  constants. A *solution* is an ordered set of values for the variables satisfying all equations
-  simultaneously; two systems with the same solution set are called *equivalent systems*.
+  A *solution* is an ordered $n$-tuple $(x_1, ..., x_n)$ satisfying every equation simultaneously;
+  two systems with the same solution set are called *equivalent systems*.
 ] <def:system-of-linear-equations>
+
+The array of coefficients is the *coefficient matrix* $A = (a_(i j))_(m times n)$ of the system, the
+constants form the column $b = (b_1, ..., b_m)$, and the whole system is abbreviated $A x = b$.
+Appending $b$ as an extra column yields the *augmented matrix* $(A | b)$, of size $m times (n + 1)$.
+
+#definition(name: "Elementary Row and Column Operations")[
+  The following three operations, applied to the rows (resp. columns) of a matrix, are
+  called *elementary row* (resp. *column*) *operations*:
+  - *Row swapping*: interchange two rows (resp. columns);
+  - *Row scaling*: multiply a row (resp. column) by a non-zero scalar;
+  - *Row addition*: add a scalar multiple of one row (resp. column) to another.
+
+  A *combination of elementary row and column operations* is any finite sequence of these.
+] <def:elementary-operations>
+
+Two matrices are called *row-equivalent* if one can be carried into the other by elementary row
+operations.
 
 A linear system can be solved by *elimination*: applying elementary row operations to the
 augmented matrix of the system, so that the coefficient part becomes triangular, and then
@@ -503,10 +520,12 @@ solving by back-substitution. *Gauss-Jordan elimination* continues until the red
 echelon form is reached.
 
 #definition(name: "Row Echelon Form")[
-  A matrix is in *row echelon form* if every zero row lies below all non-zero rows and the
-  leading entry of each non-zero row lies to the right of that of the row above. It is in
-  *reduced row echelon form* if, in addition, every leading entry is $1$ and the only non-zero
-  entry in its column.
+  Let $R$ be a matrix.
+  The *leading entry* of a non-zero row of $R$ is its first non-zero entry.
+  The matrix $R$ is in *row echelon form* (REF) if every zero row lies below all non-zero rows and
+  the leading entry of each non-zero row lies to the right of that of the row above.
+  It is in *reduced row echelon form* (RREF) if, in addition, every leading entry is $1$ and is the
+  only non-zero entry of its column.
 ] <def:row-echelon-form>
 
 #theorem(name: "Uniqueness of Reduced Row Echelon Form")[
@@ -514,29 +533,76 @@ echelon form is reached.
 ] <thm:uniqueness-of-rref>
 
 #proof[
-  The row operations preserve the solution set of every linear system, and the reduction to
-  reduced row echelon form is a deterministic procedure: the pivot positions are fixed by the
-  row space of the matrix, each pivot is normalized to $1$, and the entries above it are
-  eliminated. Hence the result is unique.
+  Let $B$ and $C$ be two matrices in RREF that are row-equivalent to $A$; then $B$ and $C$ are
+  row-equivalent to each other.
+  Elementary row operations preserve the solution set, so the homogeneous systems $B x = 0$ and
+  $C x = 0$ have the same solutions.
+
+  The non-zero rows of a matrix in RREF are linearly independent, and row equivalence makes the two
+  row groups mutually linearly expressible; by
+  #link(<prop:rank-of-vector-groups-properties>)[the rank properties] both matrices therefore have
+  the same number $r$ of non-zero rows.
+
+  Let $j_1 < ... < j_r$ be the pivot columns of $B$ and $k_1 < ... < k_r$ those of $C$.
+  If $q$ is a pivot column of $C$, then column $q$ of $C$ is a standard basis vector and every
+  solution of $C x = 0$ has $x_q = 0$.
+  Were $q$ not a pivot column of $B$, it would be a free variable of $B x = 0$ and the solution with
+  $x_q = 1$ and all other free variables $0$ would violate $x_q = 0$.
+  Hence $B$ and $C$ share the same pivot columns.
+
+  Row $i$ of $B$ reads $x_(j_i) + sum_(q "free") B_(i q) x_q = 0$, and the same holds for $C$ with
+  the same pivot columns.
+  Both systems have the same solutions, so $B_(i q) = C_(i q)$ for every free column $q$, while the
+  pivot columns are standard basis vectors in both matrices.
+  Hence $B = C$.
+]
+
+#example(name: "Gauss-Jordan Elimination")[
+  The system with augmented matrix
+
+  $
+    mat(1, 2, 1, 3; 2, 4, 3, 7; 1, 2, 2, 4)
+  $
+
+  has its constants in the last column.
+  Subtracting twice the first row from the second and once the first row from the third gives
+  $mat(1, 2, 1, 3; 0, 0, 1, 1; 0, 0, 1, 1)$; subtracting the second row from the third and from the
+  first then gives the RREF
+
+  $
+    mat(1, 2, 0, 2; 0, 0, 1, 1; 0, 0, 0, 0).
+  $
+
+  Here $"rank"(A) = "rank"(A | b) = 2 < 3 = n$, so the system is solvable with one free variable
+  $x_2 = t$, and its solutions are
+
+  $
+    x = vec(2, 0, 1) + t vec(-2, 1, 0), quad t in F.
+  $
 ]
 
 #note[
-  *Gauss-Jordan algorithm*: For a linear system $A x = b$, form the augmented matrix $(A | b)$
-  and apply elementary row operations until the coefficient part is in reduced row echelon form.
-  The solution falls into exactly one of three cases:
-  - If a row has the form $0 ... 0 | d$ with $d != 0$, the system is *inconsistent* (no solution);
-  - If the number of non-zero rows equals the number of variables, there is a *unique solution*;
-  - Otherwise, there are $n - r$ free variables and *infinitely many solutions*, where $r$ is
-    the number of non-zero rows (i.e., the rank of $A$).
-  For a homogeneous system $A x = 0$, the corollary is: there exists a non-zero solution
-  if and only if $r < n$.
+  *Gauss-Jordan algorithm*: form $(A | b)$ and apply elementary row operations until the
+  coefficient part is in RREF.
+  If a row whose coefficient part is zero and whose last entry is $d != 0$ appears, the system is
+  *inconsistent*, which is exactly the case $"rank"(A) < "rank"(A | b)$.
+  Otherwise $"rank"(A) = "rank"(A | b) = r$: there is a unique solution when $r = n$, and there are
+  $n - r$ free variables, hence infinitely many solutions, when $r < n$.
+  The decision is stated and proved in #link(<thm:existence-of-solutions>)[the existence theorem].
 ]
 
 == Rank of Vector Groups and Matrices // 向量组与矩阵的秩
 
+A *vector group* is a finite family $alpha_1, ..., alpha_s$ of vectors of a common space, taken
+together as one object; intuitively it is a bag of vectors, and the questions below do not depend
+on the order in which they are listed.
+A vector group is *linearly independent* when no member is a linear combination of the others, and
+its *linear combinations* are the vectors $sum_i c_i alpha_i$.
+
 #note[
-  The notions of linear combination, linear representation and linear (in)dependence used in
-  this section are defined in Chapter 5 (Linear Spaces).
+  Linear spaces, linear combinations, linear representation and linear (in)dependence are defined
+  rigorously in #link(<def:linear-combination>)[the Linear Spaces chapter]; the informal
+  description above is all that this section uses.
 ]
 
 === Maximal Independent Group // 极大线性无关组
@@ -551,7 +617,7 @@ echelon form is reached.
   - The maximal linearly independent group is not unique; any maximal linearly independent group
     is equivalent to the original vector group.
   - All maximal linearly independent groups of a vector group contain the same number of vectors.
-]
+] <prop:maximal-independent-groups>
 
 #definition(name: "Rank of Vector Groups")[
   The number of vectors contained in a maximal linearly independent group of a vector group is
@@ -569,35 +635,61 @@ echelon form is reached.
     linearly independent subset can be extended to one.
   - If vector group (I) can be linearly expressed by vector group (II), then the rank of (I)
     does not exceed the rank of (II).
-]
+] <prop:rank-of-vector-groups-properties>
 
 === Rank of Matrices // 矩阵的秩
 
 #definition(name: "Rank of Matrices")[
-  The *row rank* of a matrix is the rank of its row vectors; the *column rank* is the rank of
-  its column vectors. The *rank* of a matrix is defined as the highest order of its non-zero
-  minors.
+  The *row rank* of a matrix is the rank of its group of row vectors, and its *column rank* is the
+  rank of its group of column vectors.
+  Its *(determinantal) rank* is the highest order of a non-zero minor, the zero matrix having
+  rank $0$.
+
+  These three numbers coincide by #link(<thm:row-rank-equals-column-rank>)[the theorem below]; each
+  of them is called the *rank* of the matrix.
 ] <def:rank-of-matrices>
 
-#theorem(name: "Row Rank Equals Column Rank")[
-  The row rank and the column rank of any matrix are equal.
-] <thm:row-rank-equals-column-rank>
-
 #property(name: "Properties of Matrix Rank")[
-  - Elementary row and column transformations do not change the rank of a matrix.
-  - The rank of a matrix equals the number of non-zero rows in its row (column) echelon form.
+  - Elementary row and column operations do not change the rank of a matrix.
+  - The rank of a matrix equals the number of non-zero rows of any matrix in row echelon form that
+    is row-equivalent to it.
   - Elementary row (column) operations do not alter the linear relations among the column (row)
     vectors.
-  - For a square matrix $(a_(i j))_(n times n)$ of order $n$, its row vectors (or column vectors) are
-    linearly independent if and only if $"det"(A) != 0$.
+  - *Determinant criterion*: for $A = (a_(i j))_(n times n)$, the row vectors (equivalently, the
+    column vectors) of $A$ are linearly independent if and only if $"det"(A) != 0$; the invertibility
+    form of this criterion is #link(<cor:determinant-invertibility>)[the corollary on invertibility].
+] <prop:matrix-rank-properties>
+
+#theorem(name: "Row Rank Equals Column Rank")[
+  For every matrix, the row rank, the column rank and the highest order of a non-zero minor are
+  equal.
+] <thm:row-rank-equals-column-rank>
+
+#proof[
+  Let $R$ be a matrix in RREF that is row-equivalent to $A$, with $r$ non-zero rows.
+
+  Row operations replace the row group by a mutually linearly expressible one, so the row rank is
+  unchanged by #link(<prop:rank-of-vector-groups-properties>)[the rank properties].
+  By the third property of #link(<prop:matrix-rank-properties>)[the rank properties of matrices],
+  row operations also preserve the linear relations among the columns, hence the column rank.
+
+  In $R$ the pivot columns are standard basis vectors, so they are linearly independent, and every
+  other column is a linear combination of them; the column rank of $R$ is therefore the number of
+  pivots, namely $r$.
+  The $r$ non-zero rows of $R$ are linearly independent and their linear combinations are exactly
+  the rows of $R$, so the row rank of $R$ is $r$ as well.
+
+  Finally, the rows and pivot columns of $R$ cut out an $r times r$ minor equal to the identity,
+  while every minor of order $r + 1$ contains a zero row and vanishes.
+  Hence the highest order of a non-zero minor is also $r$.
 ]
 
-The third property gives a method for finding a maximal linearly independent group of the row
-(or column) vectors of a matrix; take the column vectors as an example:
+The third property of #link(<prop:matrix-rank-properties>)[the rank properties] yields a method for
+extracting a maximal linearly independent group from the columns $alpha_1, ..., alpha_s$ of a
+matrix:
 
-1. Transform the matrix into its row echelon form (REF) or reduced row echelon form (RREF)
-  using elementary row operations. For example, for the matrix $(alpha_1, alpha_2, alpha_3,
-    alpha_4, alpha_5)$, its REF is shown below:
+1. Reduce the matrix to row echelon form by elementary row operations; for a matrix with five
+  columns the result may look like
 
   $
     mat(
@@ -607,87 +699,111 @@ The third property gives a method for finding a maximal linearly independent gro
     )
   $
 
-2. Identify the leading entries (pivots) of the rows. The columns containing these pivots
-  correspond to a maximal linearly independent group of the column vectors. In the example,
-  $alpha_1, alpha_3, alpha_5$ form a maximal linearly independent group.
+2. The pivot columns of this REF, namely the columns carrying the leading entries, form a maximal
+  linearly independent group of the column vectors. In the displayed example these are
+  $alpha_1, alpha_3, alpha_5$.
 
 == Solution to Linear Systems // 线性方程组的解
 
 === Existence of Solutions // 解的存在性判定
 
 #theorem(name: "Existence of Solutions")[
-  A linear system $A x = b$ is solvable if and only if the rank of the coefficient matrix $A$
-  equals the rank of the augmented matrix $(A | b)$. If both ranks equal $r$, then the system
-  has a unique solution when $r = n$, and infinitely many solutions with $n - r$ free variables
-  when $r < n$.
+  Let $A$ be an $m times n$ matrix over $F$ and $b in F^m$.
+  The system $A x = b$ is solvable if and only if $"rank"(A) = "rank"(A | b)$.
+  If both ranks equal $r$, the system has a unique solution when $r = n$, and solutions depending
+  on $n - r$ free variables when $r < n$; over an infinite field these are infinitely many.
 ] <thm:existence-of-solutions>
+
+#proof[
+  Reduce $(A | b)$ to reduced row echelon form.
+
+  A row whose coefficient part vanishes and whose last entry is $d != 0$ gives the impossible
+  equation $0 = d$, and such a row is the only obstruction: if none appears, every pivot variable is
+  expressed through the free variables, and each choice of the free variables yields a solution.
+
+  Adding $b$ as a column raises the rank by one exactly when a contradictory row appears; hence the
+  system is solvable if and only if $"rank"(A) = "rank"(A | b)$.
+
+  Assume both ranks equal $r$. Then there are $r$ pivot variables and $n - r$ free variables, so the
+  solution is unique when $r = n$, while for $r < n$ each choice of the free variables in $F^(n-r)$
+  gives a distinct solution.
+]
 
 === Homogeneous Systems // 齐次方程组
 
-For a homogeneous system of linear equations, it is evident that the linear combination of
-solutions is still a solution to the system. Thus the concept of a *fundamental system of
-solutions* is introduced.
+A linear combination of solutions of a homogeneous system is again a solution, so its solution set
+is closed under linear combinations; this motivates the following notion.
 
 #definition(name: "Fundamental System of Solutions")[
-  For the homogeneous system $A x = O$, that is
-
-  $
-    cases(
-      a_(11) x_1 + a_(12) x_2 + ... + a_(1n) x_n = 0,
-      a_(21) x_1 + a_(22) x_2 + ... + a_(2n) x_n = 0,
-      dots.v,
-      a_(s 1) x_1 + a_(s 2) x_2 + ... + a_(s n) x_n = 0,
-    )
-  $
-
-  a set of solutions $eta_1, ..., eta_t$ is called a *fundamental system of solutions* if:
-  - any solution of the system can be expressed as a linear combination of
-    $eta_1, ..., eta_t$;
+  For the homogeneous system $A x = O$, a family of solutions $eta_1, ..., eta_t$ is called a
+  *fundamental system of solutions* if
+  - every solution of the system is a linear combination of $eta_1, ..., eta_t$, and
   - $eta_1, ..., eta_t$ are linearly independent.
 ] <def:fundamental-system-of-solutions>
 
 #note[
-  This definition mirrors that of the maximal linearly independent group of a vector group: the
-  fundamental solution set is a maximal linearly independent group of the solution vector group,
-  so the number of solutions it contains equals the rank of that group.
+  This definition mirrors that of the maximal linearly independent group of a vector group: a
+  fundamental system of solutions is a maximal linearly independent group of the solution vector
+  group, so the number of solutions it contains equals the rank of that group.
 ]
 
-All solutions of the homogeneous system $A x = O$ form a linear space, called the *solution
-space*, whose basis is any fundamental system of solutions. The dimension of the solution space
-is $n - upright("rank")(A)$, where $n$ is the number of variables. Thus a fundamental system of
-solutions contains exactly $n - upright("rank")(A)$ solutions.
+#theorem(name: "Dimension of the Solution Space")[
+  The solutions of $A x = O$ form a linear space, called its *solution space*, and every fundamental
+  system of solutions is a basis of it.
+  Consequently the solution space has dimension $n - upright("rank")(A)$, and every fundamental
+  system of solutions contains exactly $n - upright("rank")(A)$ solutions.
+] <thm:dimension-of-solution-space>
 
 #proof[
-  Let $upright("rank")(A) = r$. After row reduction to reduced row echelon form, assume the
-  top-left $r times r$ submatrix is the identity (otherwise permute columns). The system becomes
-  equivalent to $r$ equations in which $x_1, ..., x_r$ are determined by the free variables
-  $x_{r+1}, ..., x_n$. Setting each free variable to $1$ (with all others $0$) yields $n - r$
-  solutions. These are linearly independent (by inspection of the trailing $n - r$ coordinates
-  of each) and every solution is a linear combination of them (by matching the free variable
-  values). Hence they form a fundamental system of exactly $n - r$ solutions.
+  Write $"rank"(A) = r$ and reduce $A$ to reduced row echelon form.
+  After a relabelling of the unknowns, the pivot variables are $x_1, ..., x_r$ and the free variables
+  $x_(r+1), ..., x_n$, and each pivot variable is a linear combination of the free ones with
+  coefficients read off from the RREF.
+
+  Setting one free variable to $1$ and the remaining ones to $0$ produces $n - r$ solutions, whose
+  trailing $n - r$ coordinates form the identity matrix; they are therefore linearly independent.
+
+  Every solution is a linear combination of them, because matching the free coordinates reproduces
+  all of its entries.
+  Hence they form a fundamental system of $n - r$ solutions, and by
+  #link(<prop:maximal-independent-groups>)[the properties of maximal independent groups] no
+  fundamental system has a different size.
 ]
 
 === Nonhomogeneous Systems // 非齐次方程组
 
-The homogeneous system $A x = O$ is called the *derived system* of the nonhomogeneous system
-$A x = b$.
+#definition(name: "Derived System")[
+  The homogeneous system $A x = O$ is called the *derived system* of the nonhomogeneous system
+  $A x = b$.
+] <def:derived-system>
 
 #property(name: "Structure of Solutions")[
   - The difference between two solutions of $A x = b$ is a solution of its derived system
     $A x = O$.
   - The sum of a solution of $A x = b$ and a solution of $A x = O$ is still a solution of
     $A x = b$.
+] <prop:structure-of-solutions>
+
+#theorem(name: "General Solution of a Nonhomogeneous System")[
+  Let $gamma_0$ be a particular solution of $A x = b$, let $"rank"(A) = r$, and let
+  $eta_1, ..., eta_(n-r)$ be a fundamental system of solutions of the derived system.
+  Then the solutions of $A x = b$ are exactly the vectors
+
+  $
+    gamma = gamma_0 + sum_(i=1)^(n-r) c_i eta_i, quad c_i in F,
+  $
+
+  and the coefficients $c_i$ are uniquely determined by $gamma$.
+] <thm:general-solution-of-nonhomogeneous>
+
+#proof[
+  By #link(<prop:structure-of-solutions>)[the structure properties], $gamma_0 + eta$ solves
+  $A x = b$ for every solution $eta$ of the derived system.
+
+  Conversely, if $gamma$ solves $A x = b$, then $gamma - gamma_0$ solves the derived system and is
+  therefore a linear combination of $eta_1, ..., eta_(n-r)$.
+  Uniqueness of the coefficients follows from the linear independence of the $eta_i$.
 ]
-
-If $gamma_0$ is a particular solution of $A x = b$, then any solution $gamma$ of $A x = b$ can
-be expressed as
-
-$
-  gamma = gamma_0 + eta,
-$
-
-where $eta$ is a solution of $A x = O$. Thus, when $eta$ takes all the solutions of the derived
-system, the above formula gives all the solutions of $A x = b$.
 
 = Matrices // 矩阵
 
@@ -814,17 +930,9 @@ The determinant of a product equals the product of the determinants — see #lin
 
 === Elementary Matrix and Matrix Equivalence // 矩阵等价
 
-#definition(name: "Elementary Row and Column Operations")[
-  The following three operations, applied to the rows (resp. columns) of a matrix, are
-  called *elementary row* (resp. *column*) *operations*:
-  - *Row swapping*: interchange two rows (resp. columns);
-  - *Row scaling*: multiply a row (resp. column) by a non-zero scalar.
-  - *Row addition*: add a scalar multiple of one row (resp. column) to another;
-
-  A *combination of elementary row and column operations* is any finite sequence of these.
-] <def:elementary-operations>
-
-Applying a single elementary operation to the identity matrix produces an *elementary matrix*:
+Applying a single elementary operation, defined in
+#link(<def:elementary-operations>)[the elimination section], to the identity matrix produces an
+*elementary matrix*:
 
 #definition(name: "Elementary Matrix")[
   An *elementary matrix* is obtained by performing a single elementary row operation on the
@@ -3305,6 +3413,7 @@ and normal transformations.
 - *#link(<prop:cyclic-subspace-criterion>)[Cyclic Subspace Criterion]*
 
 == D
+- *#link(<def:derived-system>)[Derived System]*
 - *#link(<thm:det-product>)[Det Product]*
 - *#link(<cor:det-product-multiple>)[Det Product Multiple]*
 - *#link(<def:determinant>)[Determinant]*
@@ -3317,6 +3426,7 @@ and normal transformations.
 - *#link(<thm:diagonalization-conditions>)[Diagonalization Conditions]*
 - *#link(<def:dimension>)[Dimension]*
 - *#link(<thm:dimension-formula>)[Dimension Formula]*
+- *#link(<thm:dimension-of-solution-space>)[Dimension Of Solution Space]*
 - *#link(<def:direct-sum>)[Direct Sum]*
 - *#link(<prop:direct-sum-conditions>)[Direct Sum Conditions]*
 - *#link(<prop:double-dual>)[Double Dual]*
@@ -3333,6 +3443,7 @@ and normal transformations.
 - *#link(<lem:eigenvector-independence>)[Eigenvector Independence]*
 - *#link(<def:elementary-divisors>)[Elementary Divisors]*
 - *#link(<def:elementary-matrix>)[Elementary Matrix]*
+- *#link(<def:elementary-operations>)[Elementary Operations]*
 - *#link(<def:equivalent-polynomial-matrices>)[Equivalent Polynomial Matrices]*
 - *#link(<thm:existence-of-solutions>)[Existence Of Solutions]*
 
@@ -3347,6 +3458,7 @@ and normal transformations.
 - *#link(<def:fundamental-system-of-solutions>)[Fundamental System Of Solutions]*
 
 == G
+- *#link(<thm:general-solution-of-nonhomogeneous>)[General Solution Of Nonhomogeneous]*
 - *#link(<def:generalized-inverse>)[Generalized Inverse]*
 - *#link(<thm:gerschgorin-1>)[Gerschgorin 1]*
 - *#link(<thm:gerschgorin-2>)[Gerschgorin 2]*
@@ -3401,7 +3513,9 @@ and normal transformations.
 == M
 - *#link(<def:matrix>)[Matrix]*
 - *#link(<def:matrix-equivalence>)[Matrix Equivalence]*
+- *#link(<prop:matrix-rank-properties>)[Matrix Rank Properties]*
 - *#link(<def:maximal-independent-group>)[Maximal Independent Group]*
+- *#link(<prop:maximal-independent-groups>)[Maximal Independent Groups]*
 - *#link(<def:minimal-polynomial>)[Minimal Polynomial]*
 - *#link(<def:minor-and-cofactor>)[Minor And Cofactor]*
 - *#link(<def:multiplicity>)[Multiplicity]*
@@ -3451,6 +3565,7 @@ and normal transformations.
 - *#link(<thm:rank-nullity>)[Rank Nullity]*
 - *#link(<def:rank-of-matrices>)[Rank Of Matrices]*
 - *#link(<def:rank-of-vector-groups>)[Rank Of Vector Groups]*
+- *#link(<prop:rank-of-vector-groups-properties>)[Rank Of Vector Groups Properties]*
 - *#link(<prop:rank-one-matrix>)[Rank One Matrix]*
 - *#link(<def:real-inner-product>)[Real Inner Product]*
 - *#link(<thm:root-space-decomposition>)[Root Space Decomposition]*
@@ -3470,6 +3585,7 @@ and normal transformations.
 - *#link(<def:smith-normal-form>)[Smith Normal Form]*
 - *#link(<prop:span-of-union>)[Span Of Union]*
 - *#link(<def:span-of-vectors>)[Span Of Vectors]*
+- *#link(<prop:structure-of-solutions>)[Structure Of Solutions]*
 - *#link(<prop:subspace-criterion>)[Subspace Criterion]*
 - *#link(<thm:symmetric-diagonalization>)[Symmetric Diagonalization]*
 - *#link(<def:symmetric-matrix>)[Symmetric Matrix]*
@@ -3491,7 +3607,7 @@ and normal transformations.
 - *#link(<prop:two-triangular-recurrence>)[Two Triangular Recurrence]*
 
 == U
-- *#link(<thm:uniqueness-of-rref>)[Uniqueness Of Rref]*
+- *#link(<thm:uniqueness-of-rref>)[Uniqueness Of RREF]*
 - *#link(<def:unitary-transformation>)[Unitary Transformation]*
 
 == V
