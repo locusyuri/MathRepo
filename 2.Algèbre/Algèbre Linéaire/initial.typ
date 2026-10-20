@@ -43,6 +43,9 @@ rather than redefined here.
 
 == Notations // 符号说明
 
+A *number field* means a subfield of $bb(C)$ closed under the four arithmetic operations;
+in particular $bb(Q)$, $bb(R)$ and $bb(C)$ are number fields.
+
 The set of all $m times n$ matrices over the number field $F$ is denoted by $M_(m times n)(F)$ or $F^(m times n)$.
 Similarly, the set of all linear mappings from $V$ to $V'$ over the field $F$
 is represented by $upright("Hom")(V, V')$ or $upright("L")(V, V')$.
@@ -3490,38 +3493,135 @@ under congruent transformations, and criteria for positive definite quadratic fo
   $
 
   where $X = (x_1, ..., x_n)^"T"$ and $A = (a_(i j))_(n times n)$ with $a_(i j) = a_(j i)$,
-  is called a *quadratic form* in $n$ variables over $F$.
+  is called a *quadratic form* in $n$ variables over $F$. The
+  #link(<def:symmetric-matrix>)[symmetric] matrix $A$ is the *matrix* of $f$, and
+  $upright("rank")(A)$ is called the *rank* of $f$.
 ] <def:quadratic-form>
 
 #note[
-  The matrix $A$ of a quadratic form is symmetric. For any square matrix $B$,
-  $X^"T" B X = X^"T" ((B + B^"T")/2) X$, so any quadratic form can be represented by a
-  symmetric matrix.
+  Every quadratic form is represented by a symmetric matrix: for any square matrix $B$
+  one has $X^"T" B X = X^"T" ((B + B^"T")/2) X$, and the symmetric representative is
+  unique as soon as $"char" F != 2$. Henceforth $A$ is always assumed symmetric.
 ]
 
-#definition(name: "Congruent Transformation")[
-  Two $n$-order square matrices $A$ and $B$ are called *congruent* if there exists an
-  invertible matrix $C$ such that $B = C^"T" A C$.
-] <def:congruent-transformation>
+#definition(name: "Congruent Matrices")[
+  Two $n$-order square matrices $A$ and $B$ over $F$ are called *congruent* if there exists
+  an invertible matrix $C$ such that
+
+  $
+    B = C^"T" A C,
+  $
+
+  denoted $A ≅ B$.
+] <def:congruent-matrices>
 
 #note[
-  The main methods for reducing a quadratic form to standard form:
-  - *Completing the square*: eliminate cross terms by completing the square.
-  - *Elementary transformation method*: apply simultaneous row and column
-    operations to $A$ until it becomes diagonal.
+  Congruence is an equivalence relation (reflexive with $C = E$, symmetric with $C^(-1)$,
+  transitive by multiplying the two transforming matrices), and congruent matrices have the
+  same rank.
+]
+
+#definition(name: "Nonsingular Linear Substitution")[
+  A *nonsingular linear substitution* is a change of variables $X = C Y$, where
+  $C in F^(n times n)$ is invertible and $Y = (y_1, ..., y_n)^"T"$.
+] <def:nonsingular-linear-substitution>
+
+#property(name: "Congruence under Nonsingular Linear Substitution")[
+  Under the substitution $X = C Y$ one has
+
+  $
+    f = X^"T" A X = Y^"T" (C^"T" A C) Y,
+  $
+
+  so the matrix of $f$ in the new variables is $C^"T" A C$. Consequently, reducing $f$ to a
+  standard form is the same as diagonalizing $A$ by congruence.
+] <prop:quadratic-form-congruence>
+
+#definition(name: "Standard Form")[
+  A quadratic form is in *standard form* if it contains no cross terms, i.e.
+
+  $
+    f = d_1 y_1^2 + d_2 y_2^2 + ... + d_n y_n^2
+  $
+
+  with $d_i in F$. Such a form is also called a *diagonal form* of $f$.
+] <def:standard-form>
+
+#theorem(name: "Reduction to Standard Form")[
+  Every quadratic form in $n$ variables over a number field $F$ can be reduced to a
+  standard form by a nonsingular linear substitution. Moreover, the number of non-zero
+  coefficients in any standard form equals the
+  #link(<def:rank-of-matrices>)[rank] of $f$.
+] <thm:reduction-to-standard-form>
+
+== Reduction to Standard Form // 标准形的求法
+
+#note[
+  *Completing the square*: group the terms containing $x_1$ and complete the square, then
+  pass to $x_2$ and so on. If every coefficient of $x_1$ vanishes, first exchange two
+  variables, or use a substitution of the form $x_1 = y_1 + y_2$, $x_2 = y_1 - y_2$ to
+  create a square.
+]
+
+#example(name: "Completing the Square")[
+  Let
+
+  $
+    f = x_1^2 + 2 x_1 x_2 + 3 x_2^2 + 2 x_2 x_3 + x_3^2.
+  $
+
+  Grouping the terms containing $x_1$ gives $x_1^2 + 2 x_1 x_2 = (x_1 + x_2)^2 - x_2^2$,
+  hence
+
+  $
+    f = (x_1 + x_2)^2 + 2 x_2^2 + 2 x_2 x_3 + x_3^2
+      = (x_1 + x_2)^2 + 2 (x_2 + x_3/2)^2 + x_3^2/2.
+  $
+
+  With $y_1 = x_1 + x_2$, $y_2 = x_2 + x_3/2$, $y_3 = x_3$ — an invertible substitution —
+  the form becomes $y_1^2 + 2 y_2^2 + y_3^2/2$, a standard form of rank $3$.
+]
+
+#note[
+  *Elementary transformation method*: perform the same elementary row and column
+  operations on $A$ and on $E$ simultaneously. When $A$ has been reduced to a diagonal
+  matrix $D$, the accumulated column operations give $C$ with $C^"T" A C = D$.
+]
+
+#example(name: "Elementary Transformation Method")[
+  Let $f = 2 x_1 x_2$, so that $A = mat(0, 1; 1, 0)$. Adding row $2$ to row $1$ and then
+  column $2$ to column $1$ yields
+
+  $
+    mat(0, 1; 1, 0) -> mat(1, 1; 1, 0) -> mat(2, 1; 1, 0),
+  $
+
+  and then subtracting $1/2$ times row $1$ from row $2$, followed by the same column
+  operation, gives $"diag"(2, -1/2)$. The accumulated matrix is $C = mat(1, -1/2; 1, 1/2)$,
+  and indeed $C^"T" A C = "diag"(2, -1/2)$, so that $f = 2 y_1^2 - y_2^2/2$ under $X = C Y$.
 ]
 
 == Canonical Forms // 规范形
 
-#definition(name: "Canonical Form over $C$")[
-  Any complex quadratic form $f$ is congruent to the canonical form
+A standard form is not unique — its coefficients can be rescaled. Normalizing every
+non-zero coefficient to $1$ or $-1$ leads to the notion of canonical form.
+
+#definition(name: "Canonical Form over the Complex Field")[
+  A complex quadratic form is in *canonical form* if it can be written as
 
   $
     f = y_1^2 + y_2^2 + ... + y_r^2,
   $
 
-  where $r$ is the rank of $A$.
+  i.e. every non-zero coefficient of a standard form is equal to $1$.
 ] <def:canonical-form-complex>
+
+#theorem(name: "Complex Canonical Form")[
+  Every complex quadratic form $f = X^"T" A X$ is congruent to the canonical form
+  $y_1^2 + ... + y_r^2$, where $r = "rank"(A)$. This canonical form is determined by $r$
+  alone, hence two complex quadratic forms are congruent if and only if they have the same
+  rank.
+] <thm:complex-canonical-form>
 
 #theorem(name: "Inertia Theorem (Real)")[
   Any real quadratic form $f$ is congruent to the canonical form
@@ -3532,17 +3632,33 @@ under congruent transformations, and criteria for positive definite quadratic fo
 
   where $p$ is the *positive inertia index* and $q$ is the *negative inertia index*,
   with $r = p + q$ being the rank. The pair $(p, q)$ is uniquely determined by $f$.
+  Equivalently, $p$ is the largest dimension of a subspace on which $f$ is positive
+  definite, and $q$ the largest dimension of a subspace on which $f$ is negative definite.
 ] <thm:inertia-theorem>
 
 #note[
-  Uniqueness of $(p, q)$ follows from considering the maximum and minimum of the
-  quadratic form on the unit sphere.
+  Uniqueness of $(p, q)$ follows from considering the maximum and minimum of the quadratic
+  form on the unit sphere, i.e. from the two extremal dimensions above.
 ]
 
 #note[
   The difference $s = p - q$ is called the *signature*.
   The canonical form is also written as
   $y_1^2 + ... + y_p^2 - y_(p+1)^2 - ... - y_r^2$ with zeros appended to reach $n$ variables.
+]
+
+== Congruence Classification // 合同分类
+
+#theorem(name: "Congruence Invariants")[
+  Congruent matrices have the same rank. Conversely:
+  - over $bb(C)$, two quadratic forms are congruent if and only if they have the same rank;
+  - over $bb(R)$, two quadratic forms are congruent if and only if they have the same rank
+    and the same inertia indices $(p, q)$.
+] <thm:congruence-invariants>
+
+#note[
+  Thus the rank classifies complex quadratic forms, while the pair $(p, q)$ classifies real
+  ones. Both statements follow directly from the two canonical forms above.
 ]
 
 == Definite Quadratic Forms // 正定二次型
@@ -3555,23 +3671,38 @@ under congruent transformations, and criteria for positive definite quadratic fo
 
 #definition(name: "Other Definiteness Types")[
   A real quadratic form $f = X^"T" A X$ is:
-  - *positive semi-definite* if $f >= 0$ for all $X$;
+  - *positive semi-definite* if $f >= 0$ for all $X$ and $f$ is not positive definite;
   - *negative definite* if $f < 0$ for all $X != 0$;
-  - *negative semi-definite* if $f <= 0$ for all $X$;
+  - *negative semi-definite* if $f <= 0$ for all $X$ and $f$ is not negative definite;
   - *indefinite* if $f$ takes both positive and negative values.
+
+  Positive definiteness itself is defined in
+  #link(<def:positive-definite-quadratic-form>)[Positive Definite Quadratic Form].
 ] <def:other-definiteness-types>
 
 #theorem(name: "Sufficient and Necessary Conditions for Positive Definiteness")[
-  A real quadratic form $f = X^"T" A X$ is positive definite if and only if:
+  Let $f = X^"T" A X$ be a real quadratic form with $A$ symmetric. The following conditions
+  are equivalent, and each of them characterizes positive definiteness of $f$:
   - The positive inertia index of $f$ is $n$;
   - $A$ is congruent to the identity matrix $E$;
-  - All eigenvalues of $A$ are positive;
+  - All #link(<def:eigenvector-eigenvalue>)[eigenvalues] of $A$ are positive;
   - All leading principal minors of $A$ are positive.
 ] <thm:positive-definite-conditions>
 
+#theorem(name: "Conditions for Positive Semi-Definiteness")[
+  Let $f = X^"T" A X$ be a real quadratic form with $A$ symmetric and rank $r$. Then $f$ is
+  positive semi-definite if and only if:
+  - Its positive inertia index equals its rank $r$;
+  - $A$ is congruent to $"diag"(1, ..., 1, 0, ..., 0)$ with exactly $r$ ones;
+  - All principal minors of $A$ are non-negative.
+] <thm:semi-definite-conditions>
+
 #note[
-  Follows from the inertia theorem: positive definite $<=>$ $p = n$ $<=>$ all
-  eigenvalues positive $<=>$ all leading principal minors positive (Sylvester).
+  Follows from the #link(<thm:inertia-theorem>)[inertia theorem]: positive definite
+  $<=>$ $p = n$ $<=>$ all eigenvalues positive $<=>$ all leading principal minors positive
+  (Sylvester's criterion); positive semi-definite $<=>$ $p = r$ $<=>$ all principal minors
+  non-negative. Note the asymmetry of the two criteria: leading minors suffice for
+  definiteness, while all principal minors are needed for semi-definiteness.
 ]
 
 = Inner Product Spaces // 内积空间
@@ -4012,8 +4143,12 @@ and normal transformations.
 - *#link(<prop:commutative-space-properties>)[Commutative Space Properties]*
 - *#link(<def:companion-matrix>)[Companion Matrix]*
 - *#link(<thm:complete-similarity-invariants>)[Complete Similarity Invariants]*
+- *#link(<thm:complex-canonical-form>)[Complex Canonical Form]*
 - *#link(<def:complex-inner-product>)[Complex Inner Product]*
-- *#link(<def:congruent-transformation>)[Congruent Transformation]*
+- *#link(<thm:semi-definite-conditions>)[Conditions For Positive Semi Definiteness]*
+- *#link(<thm:congruence-invariants>)[Congruence Invariants]*
+- *#link(<prop:quadratic-form-congruence>)[Congruence Under Nonsingular Linear Substitution]*
+- *#link(<def:congruent-matrices>)[Congruent Matrices]*
 - *#link(<thm:cramer-rule>)[Cramer Rule]*
 - *#link(<prop:cyclic-space-conditions>)[Cyclic Space Conditions]*
 - *#link(<def:cyclic-subspace>)[Cyclic Subspace]*
@@ -4141,6 +4276,7 @@ and normal transformations.
 - *#link(<lem:nilpotent-jordan-form>)[Nilpotent Jordan Form]*
 - *#link(<def:nilpotent-matrix>)[Nilpotent Matrix]*
 - *#link(<prop:nilpotent-triangular-matrix>)[Nilpotent Triangular Matrix]*
+- *#link(<def:nonsingular-linear-substitution>)[Nonsingular Linear Substitution]*
 - *#link(<thm:normal-diagonalization>)[Normal Diagonalization]*
 - *#link(<def:normal-transformation>)[Normal Transformation]*
 - *#link(<def:normed-linear-space>)[Normed Linear Space]*
@@ -4186,6 +4322,7 @@ and normal transformations.
 - *#link(<prop:rank-one-matrix>)[Rank One Matrix]*
 - *#link(<def:frobenius-normal-form>)[Rational Canonical Form]*
 - *#link(<def:real-inner-product>)[Real Inner Product]*
+- *#link(<thm:reduction-to-standard-form>)[Reduction To Standard Form]*
 - *#link(<thm:root-space-decomposition>)[Root Space Decomposition]*
 - *#link(<def:root-subspace>)[Root Subspace]*
 - *#link(<def:row-echelon-form>)[Row Echelon Form]*
@@ -4203,6 +4340,7 @@ and normal transformations.
 - *#link(<def:smith-normal-form>)[Smith Normal Form]*
 - *#link(<prop:span-of-union>)[Span Of Union]*
 - *#link(<def:span-of-vectors>)[Span Of Vectors]*
+- *#link(<def:standard-form>)[Standard Form]*
 - *#link(<thm:steinitz-replacement>)[Steinitz Replacement Principle]*
 - *#link(<prop:structure-of-solutions>)[Structure Of Solutions]*
 - *#link(<prop:subspace-criterion>)[Subspace Criterion]*
