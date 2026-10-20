@@ -2483,12 +2483,12 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 //     - Duhamel 原理；一维、二维、三维非齐次显式公式
 //
 //   Section 16.5: Separation of Variables for the Wave Equation (波动方程的分离变量法)
-//     - 混合问题（初边值问题）定义
+//     - 初边值问题（IBVP）定义
 //     - 齐次 Dirichlet/Neumann 特征展开；Robin（弹性连接）情形
 //     - 非齐次边界条件约化
 //
 //   Section 16.6: Energy Inequality, Uniqueness and Stability (能量不等式、唯一性与稳定性)
-//     - 能量守恒（有界域，Dirichlet/Neumann）、混合问题唯一性与连续依赖
+//     - 能量守恒（有界域，Dirichlet/Neumann）、初边值问题唯一性与连续依赖
 //     - Robin（弹性连接）与阻尼边界：总能量守恒、真正耗散
 //     - 锥上局部能量不等式；Cauchy 问题唯一性、连续依赖、源项能量估计（Grönwall）
 //     - 驻波能量算例（动能/势能互换、模态间不交换能量）
@@ -2954,7 +2954,7 @@ When characteristics cross, the classical solution breaks down and we must admit
 
 = Wave Equation // 波动方程
 
-The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form in one dimension was obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[Ch 7]). The chapter is organized around one fully general problem — the Cauchy problem on $bb(R)^n$ with a source term *and* nonzero initial data. We first derive the equation itself from mechanics — the vibrating string by Newton's second law, acoustic waves by conservation of momentum — and discuss the initial and boundary conditions that select a well-posed problem (§16.1). The solution is then built in three stages. First the *homogeneous* equation is solved: in one dimension by *d'Alembert's formula* via the method of traveling waves, including the semi-infinite string by the method of extensions (§16.2), and in higher dimensions by spherical means and the method of descent (§16.3). The *superposition principle* then reduces the inhomogeneous problem to the homogeneous one, and *Duhamel's principle* supplies the source contribution in every dimension (§16.4). On a bounded interval the mixed initial-boundary value problem is treated by *separation of variables* (§16.5). The analytic core of the chapter is the *energy method* (§16.6): conservation of energy on bounded domains, the local energy inequality on characteristic cones, and the resulting uniqueness and stability of the mixed and of the Cauchy problem. The chapter closes with the qualitative theory — finite propagation speed, Huygens' principle, dispersive decay (§16.7). The qualitative picture is complementary to the heat equation (Ch 10): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
+The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form in one dimension was obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[Ch 7]). The chapter is organized around one fully general problem — the Cauchy problem on $bb(R)^n$ with a source term *and* nonzero initial data. We first derive the equation itself from mechanics — the vibrating string by Newton's second law, acoustic waves by conservation of momentum — and discuss the initial and boundary conditions that select a well-posed problem (§16.1). The solution is then built in three stages. First the *homogeneous* equation is solved: in one dimension by *d'Alembert's formula* via the method of traveling waves, including the semi-infinite string by the method of extensions (§16.2), and in higher dimensions by spherical means and the method of descent (§16.3). The *superposition principle* then reduces the inhomogeneous problem to the homogeneous one, and *Duhamel's principle* supplies the source contribution in every dimension (§16.4). On a bounded interval the initial-boundary value problem is treated by *separation of variables* (§16.5). The analytic core of the chapter is the *energy method* (§16.6): conservation of energy on bounded domains, the local energy inequality on characteristic cones, and the resulting uniqueness and stability of the mixed and of the Cauchy problem. The chapter closes with the qualitative theory — finite propagation speed, Huygens' principle, dispersive decay (§16.7). The qualitative picture is complementary to the heat equation (Ch 10): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
 
 == Derivation of the Wave Equation and the Cauchy Problem // 波动方程的导出与柯西问题
 
@@ -2977,7 +2977,7 @@ Throughout the chapter we work in dimension $n$, writing $bold(x) = (x_1, dots, 
 
 The chapter solves this problem for $n = 1, 2, 3$; the same pattern governs higher dimensions, and we indicate the general structure where it clarifies the picture.
 
-The *homogeneous* equation with nonzero data is solved in §16.2 (one dimension) and §16.3 (higher dimensions); the *inhomogeneous* equation with zero data is reduced to the homogeneous one in §16.4. Boundary conditions replace the Cauchy formulation entirely once the medium has an end, and are the subject of §16.2 (half-line) and §16.5 (bounded interval).
+The *homogeneous* equation with nonzero data is solved in §16.2 (one dimension) and §16.3 (higher dimensions); the *inhomogeneous* equation with zero data is reduced to the homogeneous one in §16.4. Boundary conditions replace the Cauchy formulation entirely once the medium has an end: the half-line is treated in §16.2, and the bounded interval — an initial-boundary value problem rather than a Cauchy problem — in §16.5.
 
 === The Vibrating String // 弦振动
 
@@ -3026,7 +3026,7 @@ is the prototype of the symmetric hyperbolic systems studied in Chapter 17; its 
 
 The wave equation is second order in time, so a well-posed problem must prescribe *two* initial conditions: the initial displacement $u (bold(x), 0) = phi (bold(x))$ and the initial velocity $u_t (bold(x), 0) = psi (bold(x))$. These data, together with the equation, select the *Cauchy problem* on $bb(R)^n$ — the object of the next three sections.
 
-If the medium is bounded, the solution is further constrained on the spatial boundary and the problem is no longer of Cauchy type. Three boundary conditions are physically meaningful: a *fixed* end prescribes $u = 0$ (Dirichlet), a *free* end $u_n = 0$ (Neumann), and an *elastic attachment* a linear combination of $u$ and $u_n$ (Robin), where $partial_n$ denotes the outward normal derivative. A single end already modifies the solution, as the semi-infinite string of §16.2 shows; two ends — a bounded interval — require the spectral method of §16.5, where the bounded problem is formulated precisely.
+If the medium is bounded, the solution is further constrained on the spatial boundary and the problem is no longer of Cauchy type: it becomes an *initial-boundary value problem*, with the two initial conditions above supplemented by a boundary condition. Three boundary conditions are physically meaningful: a *fixed* end prescribes $u = 0$ (Dirichlet), a *free* end $u_nu = 0$ (Neumann), and an *elastic attachment* a linear combination of $u$ and $u_nu$ (Robin), where $nu$ denotes the outward unit normal. A single end already modifies the solution, as the semi-infinite string of §16.2 shows; two ends — a bounded interval — require the spectral method of §16.5, where the initial-boundary value problem is formulated precisely.
 
 == The Homogeneous Equation: D'Alembert's Formula // 齐次方程：达朗贝尔公式
 
@@ -3221,7 +3221,7 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
   which is exactly d'Alembert's formula (#link(<thm:d-alembert>)[Th.]): the two-dimensional and one-dimensional formulas are both descended from the three-dimensional one.
 ] <ex:wave-dalembert-by-descent>
 
-The homogeneous Cauchy problem is now solved in every dimension. The *inhomogeneous* problem with zero data is reduced to the homogeneous one in §16.4 by the superposition principle and Duhamel's principle (#link(<thm:duhamel-wave>)[Th.]), and for general data the two contributions are simply added. Boundary value problems on bounded domains — membranes, acoustic resonators — call instead for separation of variables, along the lines of §16.5; the general spectral framework is developed in Chapter 19.
+The homogeneous Cauchy problem is now solved in every dimension. The *inhomogeneous* problem with zero data is reduced to the homogeneous one in §16.4 by the superposition principle and Duhamel's principle (#link(<thm:duhamel-wave>)[Th.]), and for general data the two contributions are simply added. Initial-boundary value problems on bounded domains — membranes, acoustic resonators — call instead for separation of variables, along the lines of §16.5; the general spectral framework is developed in Chapter 19.
 
 #note[
   *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (bold(x), t)$ depends only on the data on the *sphere* $partial B (bold(x), a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions. The contrast is illustrated in #link(<fig:wave-huygens>)[Figure].
@@ -3311,10 +3311,10 @@ In even dimensions the wave carries a trailing wake: at each emission time the v
 
 == Separation of Variables for the Wave Equation // 波动方程的分离变量法
 
-For the mixed problem (#link(<def:mixed-problem-wave>)[Def.]) the traveling-wave method of §16.2 no longer applies directly: waves reflect at the endpoints, and the interaction of incident and reflected waves is awkward to describe in the $F (x - a t) + G (x + a t)$ representation. The classical tool on bounded intervals is *separation of variables* (the general framework is developed in Chapter 19, #link(<def:separation-variables>)[Ch 19]): the solution is expanded in the eigenfunctions of the spatial boundary value problem, reducing the PDE to decoupled oscillators.
+For the initial-boundary value problem (#link(<def:ibvp-wave>)[Def.]) the traveling-wave method of §16.2 no longer applies directly: waves reflect at the endpoints, and the interaction of incident and reflected waves is awkward to describe in the $F (x - a t) + G (x + a t)$ representation. The classical tool on bounded intervals is *separation of variables* (the general framework is developed in Chapter 19, #link(<def:separation-variables>)[Ch 19]): the solution is expanded in the eigenfunctions of the spatial boundary value problem, reducing the PDE to decoupled oscillators.
 
-#definition(name: "The Mixed Problem for the String")[
-  The *mixed problem* for the wave equation on a bounded interval with fixed ends is to find $u: [0, L] times [0, oo) -> bb(R)$ with
+#definition(name: "The Initial-Boundary Value Problem for the String")[
+  The *initial-boundary value problem* for the wave equation on a bounded interval with fixed ends is to find $u: [0, L] times [0, oo) -> bb(R)$ with
   $
     cases(
       (partial^2 u)/(partial t^2) = a^2 (partial^2 u)/(partial x^2) quad "in" quad (0, L) times (0, oo),
@@ -3323,7 +3323,7 @@ For the mixed problem (#link(<def:mixed-problem-wave>)[Def.]) the traveling-wave
     )
   $
   with the compatibility conditions $phi (0) = phi (L) = psi (0) = psi (L) = 0$ at the corners.
-] <def:mixed-problem-wave>
+] <def:ibvp-wave>
 
 A free end prescribes the Neumann conditions $u_x = 0$ instead, and an elastic attachment the Robin conditions, a linear combination of $u$ and $u_x$; the same spectral method handles all three, as the two examples below show.
 
@@ -3343,8 +3343,8 @@ $
 $
 For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' + a^2 lambda_k T_k = 0$ with frequency $omega_k = (a k pi) / L$, so $T_k (t) = A_k cos (omega_k t) + B_k sin (omega_k t)$. Superposing all modes and fitting the initial data by the orthogonality of the sines:
 
-#theorem(name: "Dirichlet Series Solution of the Mixed Problem")[
-  The mixed problem (#link(<def:mixed-problem-wave>)[Def.]) with $phi in C^2 ([0, L])$, $psi in C^1 ([0, L])$ satisfying the compatibility conditions has the solution
+#theorem(name: "Dirichlet Series Solution of the Initial-Boundary Value Problem")[
+  The initial-boundary value problem (#link(<def:ibvp-wave>)[Def.]) with $phi in C^2 ([0, L])$, $psi in C^1 ([0, L])$ satisfying the compatibility conditions has the solution
   $
     u (x, t) = sum_(k=1)^oo (A_k cos (omega_k t) + B_k sin (omega_k t)) sin ((k pi x) / L), quad omega_k = (a k pi) / L,
   $
@@ -3415,7 +3415,7 @@ For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' 
 
 == Energy Inequality, Uniqueness and Stability // 能量不等式、唯一性与稳定性
 
-The existence results of the preceding sections say *where* a solution can be found; the *energy method* answers the complementary questions — how many solutions there can be, and how sensitively they depend on the data. Its mechanism is an a priori identity obtained by multiplying the equation by $u_t$ and integrating over space. On a bounded domain the identity is a conservation law, and conservation yields uniqueness of the mixed problem; on all of $bb(R)^n$ the total energy need not be finite and no boundary term is available, so the identity has to be localized to a backward cone, whose *characteristic* lateral surface replaces the missing boundary. The resulting inequality is the analytic backbone of the qualitative theory of §16.7.
+The existence results of the preceding sections say *where* a solution can be found; the *energy method* answers the complementary questions — how many solutions there can be, and how sensitively they depend on the data. Its mechanism is an a priori identity obtained by multiplying the equation by $u_t$ and integrating over space. On a bounded domain the identity is a conservation law, and conservation yields uniqueness of the initial-boundary value problem; on all of $bb(R)^n$ the total energy need not be finite and no boundary term is available, so the identity has to be localized to a backward cone, whose *characteristic* lateral surface replaces the missing boundary. The resulting inequality is the analytic backbone of the qualitative theory of §16.7.
 
 === Energy Conservation on Bounded Domains // 有界域上的能量守恒
 
@@ -3435,21 +3435,21 @@ The existence results of the preceding sections say *where* a solution can be fo
   the volume term vanishing by the equation and the boundary term by the boundary condition: in the Neumann case $(partial u)/(partial nu) = 0$ on the boundary, while in the Dirichlet case $u = 0$ on $partial Omega times (0, T]$ may be differentiated in $t$, which gives $u_t = 0$ there.
 ]
 
-#corollary(name: "Uniqueness of the Mixed Problem")[
-  Let $Omega$, $T$ be as above and let $u, v in C^2 (overline(Omega) times [0, T])$ solve the wave equation in $Omega times (0, T]$ with the same homogeneous Dirichlet (or the same homogeneous Neumann) boundary conditions and the same initial data $u (dot, 0) = v (dot, 0)$, $u_t (dot, 0) = v_t (dot, 0)$. Then $u = v$: the mixed problem has at most one $C^2$ solution.
-] <cor:wave-mixed-uniqueness>
+#corollary(name: "Uniqueness of the Initial-Boundary Value Problem")[
+  Let $Omega$, $T$ be as above and let $u, v in C^2 (overline(Omega) times [0, T])$ solve the wave equation in $Omega times (0, T]$ with the same homogeneous Dirichlet (or the same homogeneous Neumann) boundary conditions and the same initial data $u (dot, 0) = v (dot, 0)$, $u_t (dot, 0) = v_t (dot, 0)$. Then $u = v$: the initial-boundary value problem has at most one $C^2$ solution.
+] <cor:wave-ibvp-uniqueness>
 
 #proof[
   The difference $w = u - v$ is a $C^2$ solution with zero initial data satisfying the same homogeneous boundary conditions, so its energy $E (t)$ of #link(<thm:wave-energy>)[Th.] is constant and $E (0) = 0$; hence $w_t equiv 0$ and $nabla w equiv 0$ in $Omega$ for every $t$. A function whose gradient vanishes on the connected domain $Omega$ is independent of $bold(x)$, and $w (dot, 0) = 0$ then gives $w equiv 0$.
 ]
 
-#corollary(name: "Continuous Dependence for the Mixed Problem")[
+#corollary(name: "Continuous Dependence for the Initial-Boundary Value Problem")[
   Let $u, v in C^2 (overline(Omega) times [0, T])$ be two solutions of the wave equation with the same homogeneous Dirichlet (or Neumann) boundary conditions and initial data $(phi, psi)$ and $(tilde(phi), tilde(psi))$, and put $w = u - v$. Then the energy of $w$ is independent of $t$ and equal to
   $
     1/2 integral_Omega (abs(w_t (bold(x), t))^2 + a^2 abs(nabla w (bold(x), t))^2) dif bold(x) = 1/2 integral_Omega (abs(psi - tilde(psi))^2 + a^2 abs(nabla (phi - tilde(phi)))^2) dif bold(x),
   $
-  so small data in the energy norm produce a small solution in the same norm: the mixed problem is *stable*.
-] <cor:wave-mixed-stability>
+  so small data in the energy norm produce a small solution in the same norm: the initial-boundary value problem is *stable*.
+] <cor:wave-ibvp-stability>
 
 #proof[
   The difference $w$ solves the homogeneous equation and satisfies the homogeneous boundary conditions, so its energy is constant by #link(<thm:wave-energy>)[Th.]; its value at $t = 0$ is read off the initial data.
@@ -3490,7 +3490,11 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
   $
     integral_("lateral") (a/2 ((partial u)/(partial s) - a (partial u)/(partial r))^2 + (a^3/2) abs(nabla_T u)^2) / sqrt(1 + a^2) dif S >= 0,
   $
-  a sum of squares, so no energy enters the cone through its side. Hence $E_C (t) + "flux" = E_C (0)$, and the claim follows.
+  a sum of squares, so no energy enters the cone through its side. Hence
+  $
+    E_C (t) - E_C (0) + "flux" = 0,
+  $
+  and the claim follows.
 ]
 
 #note[
@@ -3502,7 +3506,7 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 ] <cor:wave-uniqueness>
 
 #proof[
-  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(bold(x)_0, t_0)$ the data of $w$ vanish on $B (bold(x)_0, a t_0)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) $E_C (t) = 0$ for all $t in [0, t_0]$, hence $w_t = 0$ and $nabla w = 0$ on the cone $C$. By the argument of #link(<cor:wave-mixed-uniqueness>)[Cor.] $w$ is constant on $C$, and $w (dot, 0) = 0$ gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
+  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(bold(x)_0, t_0)$ the data of $w$ vanish on $B (bold(x)_0, a t_0)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) $E_C (t) = 0$ for all $t in [0, t_0]$, hence $w_t = 0$ and $nabla w = 0$ on the cone $C$. By the argument of #link(<cor:wave-ibvp-uniqueness>)[Cor.] $w$ is constant on $C$, and $w (dot, 0) = 0$ gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
 ]
 
 #corollary(name: "Continuous Dependence on the Data")[
