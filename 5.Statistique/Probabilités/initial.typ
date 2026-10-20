@@ -2379,8 +2379,9 @@ this chapter).
 #definition(name: "Bivariate Normal Distribution")[
   The pair $(X, Y)$ has the *bivariate normal distribution* with
   parameters $mu_1, mu_2 in RR$, $sigma_1, sigma_2 > 0$ and
-  $rho in (-1, 1)$, written $(X, Y) ~ N_(2)(bold(mu), Sigma)$, if its
-  joint density is
+  $rho in (-1, 1)$, written
+  $(X, Y) ~ N(mu_1, mu_2, sigma_1^2, sigma_2^2, rho)$, if its joint
+  density is
   $
     f(x, y) = 1 / (2 pi sigma_1 sigma_2 sqrt(1 - rho^2))
     exp(-[(x - mu_1)^2 / sigma_1^2
