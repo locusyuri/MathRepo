@@ -827,6 +827,20 @@ matrix techniques, and operations of rank.
   matrix $A^"T" = (a_(j i))_(n times m)$, obtained by interchanging rows and columns.
 ] <def:transpose-matrix>
 
+#property(name: "Properties of the Transpose")[
+  Let $A$ and $B$ be matrices over $F$ for which the operations below are defined, and let $k in F$.
+  - *Involution*: $(A^"T")^"T" = A$.
+  - *Linearity*: $(A + B)^"T" = A^"T" + B^"T"$ and $(k A)^"T" = k A^"T"$.
+  - *Product*: $(A B)^"T" = B^"T" A^"T"$, and more generally $(A_1 ... A_k)^"T" = A_k^"T" ... A_1^"T"$.
+  - *Determinant*: $"det"(A^"T") = "det"(A)$ for a square $A$, by
+    #link(<prop:determinant-properties>)[the basic properties of determinants].
+] <prop:transpose-properties>
+
+#note[
+  Each item is checked entry by entry; for instance the $(i, j)$-entry of $(A B)^"T"$ is
+  $sum_k a_(j k) b_(k i)$, which is the $(i, j)$-entry of $B^"T" A^"T"$.
+]
+
 == Basic Operations // 基本运算
 
 === Matrix Basic Operations // 矩阵的基本运算
@@ -849,6 +863,22 @@ matrix techniques, and operations of rank.
     c_(i j) = sum_(k=1)^n a_(i k) b_(k j).
   $
 ] <def:matrix-multiplication>
+
+#property(name: "Algebraic Properties of Matrix Operations")[
+  Let $A$, $B$, $C$ be matrices over $F$ of compatible sizes, and let $lambda, mu in F$.
+  - *Associativity*: $(A B) C = A (B C)$ and $(A + B) + C = A + (B + C)$.
+  - *Distributivity*: $A (B + C) = A B + A C$ and $(A + B) C = A C + B C$.
+  - *Scalars*: $lambda (A B) = (lambda A) B = A (lambda B)$ and $(lambda + mu) A = lambda A + mu A$.
+  - *Identity and zero*: $E A = A E = A$ and $O A = A O = O$, for matrices of compatible sizes.
+  - *Non-commutativity*: $A B != B A$ in general.
+] <prop:matrix-operations-algebra>
+
+#note[
+  Associativity is inherited from the composition of the linear mappings that matrices represent.
+  Non-commutativity is already visible in size $2$:
+  $mat(0, 1; 0, 0) mat(0, 0; 1, 0) = mat(1, 0; 0, 0)$, whereas the reversed product is
+  $mat(0, 0; 0, 1)$.
+]
 
 === Block Partition of a Matrix // 矩阵的分块
 A matrix can also be viewed as an array of smaller *blocks*: a *block partition* of an
@@ -881,7 +911,28 @@ $A B$ can be computed block-wise exactly like ordinary scalar multiplication.
 
 === Determinants of Products // 行列式乘积公式
 
-The determinant of a product equals the product of the determinants — see #link(<thm:det-product>)[Theorem]. By induction it extends to any number of matrices:
+#theorem(name: "Multiplicativity of Determinants")[
+  If $A$ and $B$ are $n times n$ matrices over $F$, then
+
+  $
+    "det"(A B) = "det"(A) "det"(B).
+  $
+] <thm:det-product>
+
+#proof[
+  Every elementary matrix $E$ satisfies $"det"(E A) = "det"(E) "det"(A)$: this is immediate for the
+  three types of elementary row operations, the factors $"det"(E)$ being $-1$, $k$ and $1$.
+
+  If $A$ is invertible, row reduction carries it to $E$ (a zero row would make it singular), so
+  $A = E_1 ... E_k$ is a product of elementary matrices, and the previous step gives
+  $"det"(A) = "det"(E_1) ... "det"(E_k)$.
+  Writing also $B = F_1 ... F_m$ for invertible $B$ yields
+  $"det"(A B) = "det"(A) "det"(F_1) ... "det"(F_m) = "det"(A) "det"(B)$.
+
+  If one of $A$ and $B$ is singular, then $A B$ is singular as well, so both sides vanish.
+]
+
+By induction the formula extends to any number of matrices:
 
 #corollary(name: "Product Formula for k Matrices")[
   For $n times n$ matrices $A_1, ..., A_k$ over $F$,
@@ -901,13 +952,19 @@ The determinant of a product equals the product of the determinants — see #lin
     "det"(A(1, 2, ..., m; v_1, ..., v_m)) "det"(B(v_1, ..., v_m; 1, 2, ..., m)),
   $
 
-  where the sum runs over all strictly increasing index tuples, and $A(1, 2, ..., m; v_1, ..., v_m)$ denotes the minor of $A$ on rows $1, ..., m$ and columns $v_1, ..., v_m$.
+  where the sum runs over all strictly increasing index tuples, and
+  $A(1, 2, ..., m; v_1, ..., v_m)$ denotes the minor of $A$ on rows $1, ..., m$ and columns
+  $v_1, ..., v_m$.
 ] <thm:cauchy-binet-formula>
 
-#note[
-  The proof expands $"det"(A B)$ using the Leibniz formula and groups terms by
-  the column indices selected from $B$, yielding the sum of products of
-  corresponding minors.
+#proof[
+  Expand $"det"(A B)$ by the Leibniz formula. A summand selects, through $sigma$, the entries
+  $b_(v_i, i)$ of $B$ in $m$ distinct rows $v_1, ..., v_m$ together with the entries $a_(i, v_i)$
+  of $A$.
+
+  Grouping the permutations by their row set $v_1 < ... < v_m$ and reordering each group gives the
+  product of the minor of $A$ on columns $v_1, ..., v_m$ and the minor of $B$ on rows
+  $v_1, ..., v_m$; the signs of the two Leibniz sums combine into the sign of the product.
 ]
 
 == Inverse Matrix and Matrix Equivalence // 逆矩阵与矩阵等价
@@ -930,17 +987,17 @@ The determinant of a product equals the product of the determinants — see #lin
 
 === Elementary Matrix and Matrix Equivalence // 矩阵等价
 
-Applying a single elementary operation, defined in
-#link(<def:elementary-operations>)[the elimination section], to the identity matrix produces an
-*elementary matrix*:
+Elementary matrices are the matrix form of the operations defined in
+#link(<def:elementary-operations>)[the elimination section]:
 
 #definition(name: "Elementary Matrix")[
-  An *elementary matrix* is obtained by performing a single elementary row operation on the
-  identity matrix $E$.
-
-  There are $3$ types of elementary row matrices (resp. column matrices):
-  - $P(i, j)$: interchanges rows $i$ and $j$ of $E$.
-  - $P(i(c))$: multiplies row $i$ of $E$ by a non-zero scalar $c$ of $E$.
+  An *elementary matrix* is obtained by performing a single elementary operation on the identity
+  matrix $E$.
+  It is called a *row* matrix when the operation acts on rows, and a *column* matrix when it acts on
+  columns.
+  There are three types of each:
+  - $P(i, j)$: interchanges rows $i$ and $j$ of $E$;
+  - $P(i(c))$: multiplies row $i$ of $E$ by a non-zero scalar $c$;
   - $P(i, j(k))$: adds $k$ times row $j$ of $E$ to row $i$.
 ] <def:elementary-matrix>
 
@@ -953,13 +1010,25 @@ Applying a single elementary operation, defined in
 
 The row swap $P(i, j)$ is already obtainable from the other two types:
 
-#proposition[
-  + $P(i, j)$ can be implemented by a sequence of $P(i(c))$ and $P(i, j(k))$ operations.
-  + Elementary matrices are invertible, with
-  $
-    P(i ,j)^(-1) = P(j, i), quad P(i(c))^(-1) = P(i(c^(-1))), quad P(i ,j(k))^(-1) = P(i, j(-k)).
-  $
+#proposition(name: "Invertibility of Elementary Matrices")[
+  - $P(i, j)$ can be implemented by a sequence of $P(i(c))$ and $P(i, j(k))$ operations.
+  - Every elementary matrix is invertible, with
+
+    $
+      P(i, j)^(-1) = P(j, i), quad P(i(c))^(-1) = P(i(c^(-1))), quad P(i, j(k))^(-1) = P(i, j(-k)).
+    $
+] <prop:elementary-matrix-invertibility>
+
+#proof[
+  The second item is read off from the effect on a single row: adding $k$ times row $j$ to row $i$,
+  then adding $-k$ times row $j$ to row $i$, restores the original matrix, and the other two
+  relations are immediate from the definitions.
+
+  For the first item, a direct computation gives
+  $P(i, j) = P(j(-1)) P(i, j(1)) P(j, i(-1)) P(i, j(1))$, whose factors are scaling and row
+  addition.
 ]
+
 Using elementary row and column operations, we can now compare matrices of the same size:
 
 #definition(name: "Matrix Equivalence")[
@@ -968,21 +1037,42 @@ Using elementary row and column operations, we can now compare matrices of the s
   operations.
 ] <def:matrix-equivalence>
 
+#definition(name: "Canonical Form of Matrix Equivalence")[
+  Let $r <= m$ and $r <= n$. The $m times n$ matrix
+
+  $
+    D_r = mat(I_r, O; O, O),
+  $
+
+  with blocks of sizes $r times r$, $r times (n - r)$, $(m - r) times r$ and $(m - r) times (n - r)$,
+  is called the *canonical form* of matrix equivalence of rank $r$.
+] <def:canonical-form-of-equivalence>
+
 Equivalence is completely determined by the rank:
 
 #theorem(name: "Matrix Equivalence and Rank")[
-  Two matrices are equivalent if and only if they have the same rank.
+  Let $A$ and $B$ be $m times n$ matrices over $F$. The following statements are equivalent:
+  - $A$ and $B$ are equivalent;
+  - $A$ and $B$ have the same rank $r$;
+  - $A$ and $B$ are both equivalent to $D_r$.
+] <thm:matrix-equivalence-and-rank>
+
+#proof[
+  *Every matrix is equivalent to $D_r$, where $r = "rank"(A)$.*
+  Reduce $A$ to RREF; it has $r$ non-zero rows and $r$ pivot columns $j_1 < ... < j_r$.
+  Permute the columns so that the pivots occupy the first $r$ positions, then use column operations
+  of the third type to clear the entries lying to the right of each pivot.
+  The resulting matrix is $D_r$, and its rank is still $r$ because elementary operations preserve
+  the rank (#link(<prop:matrix-rank-properties>)[the rank properties]).
+
+  *Equivalent matrices have the same rank.*
+  Each elementary operation preserves the rank by
+  #link(<prop:matrix-rank-properties>)[the rank properties], so the rank is constant along any
+  transformation.
+
+  *Matrices of the same rank are equivalent.*
+  Both are equivalent to $D_r$, and equivalence is transitive.
 ]
-
-#definition(name: "Canonical Form of Matrix Equivalence")[
-  Any $m times n$ matrix $A$ of rank $r$ is equivalent to the matrix
-
-  $
-    J_r = mat(I_r, O; O, O),
-  $
-
-  which is called the *canonical form* of matrix equivalence.
-] <def:canonical-form-of-equivalence>
 
 === Generalized Inverse // 广义逆
 
@@ -998,97 +1088,118 @@ Equivalence is completely determined by the rank:
 ]
 
 == Method of Inversion // 求逆方法
-=== Equivalent Propositions // 等价命题
+
+=== Adjugate Matrix // 伴随矩阵
+
+#definition(name: "Adjugate Matrix")[
+  Let $A = (a_(i j))_(n times n)$ and let $A_(i j)$ be the cofactor of the entry $a_(i j)$.
+  The *adjugate* of $A$ is the matrix $"adj"(A) = (A_(j i))_(n times n)$, the transpose of the
+  cofactor matrix.
+] <def:adjugate-matrix>
+
+#theorem(name: "Inverse via Adjugate")[
+  For an $n times n$ matrix $A$, not necessarily invertible,
+
+  $
+    A "adj"(A) = "adj"(A) A = "det"(A) E.
+  $
+
+  In particular, if $A$ is invertible, then $A^(-1) = "adj"(A) / "det"(A)$.
+] <thm:inverse-via-adjugate>
+
+#proof[
+  The $(i, j)$-entry of $A "adj"(A)$ is $sum_(k=1)^n a_(i k) A_(j k)$: it equals $"det"(A)$ when
+  $i = j$ by #link(<thm:laplace-expansion>)[the Laplace expansion], and $0$ when $i != j$ by
+  #link(<cor:foreign-row-expansion>)[the foreign-row expansion].
+  The equality $"adj"(A) A = "det"(A) E$ follows by transposing.
+]
 
 #corollary(name: "Determinant and Invertibility")[
   An $n times n$ matrix $A$ is invertible if and only if $"det"(A) != 0$.
 ] <cor:determinant-invertibility>
+
+#proof[
+  If $A$ is invertible, then $E = A A^(-1)$, so
+  #link(<thm:det-product>)[multiplicativity of the determinant] gives
+  $1 = "det"(A) "det"(A^(-1))$ and $"det"(A) != 0$.
+
+  Conversely, if $"det"(A) != 0$, then #link(<thm:inverse-via-adjugate>)[the adjugate theorem] reads
+  $A ("adj"(A)/"det"(A)) = ("adj"(A)/"det"(A)) A = E$, so $A$ is invertible.
+]
+
+=== Equivalent Propositions // 等价命题
 
 #theorem(name: "Equivalent Propositions of Invertibility")[
   For an $n times n$ matrix $A$ over $F$, the following statements are equivalent:
   - $A$ is invertible;
   - $A$ is equivalent to the identity matrix $E$;
   - $A$ is a product of elementary matrices;
-  - the homogeneous system $A x = 0$ has only the zero solution;
+  - the homogeneous system $A x = O$ has only the zero solution;
   - the row vectors (and the column vectors) of $A$ are linearly independent.
 ] <thm:invertibility-equivalent-propositions>
 
 #proof[
-  If $A$ is invertible, then $"det"(A) != 0$ by #link(<cor:determinant-invertibility>)[Corollary],
-  so row reduction of $A$ ends at $E$ rather than at a singular matrix; hence $A$ is equivalent
-  to $E$, and $A = E_1 ... E_k$ is the product of the corresponding elementary matrices.
-  Conversely, every elementary matrix is invertible, so a product of elementary matrices is
-  invertible, and if $A equiv E$ then $A = P E Q$ with $P$ and $Q$ products of elementary
-  matrices, hence $A$ is invertible.
-  Finally, $A x = 0$ has only the zero solution iff the columns of $A$ are linearly independent
-  iff $"det"(A) != 0$, which is equivalent to invertibility by
-  #link(<cor:determinant-invertibility>)[Corollary].
+  *Invertible $=>$ equivalent to $E$.*
+  By #link(<cor:determinant-invertibility>)[the corollary above] $"det"(A) != 0$, so by
+  #link(<prop:matrix-rank-properties>)[the determinant criterion] the columns of $A$ are linearly
+  independent and $"rank"(A) = n$; the RREF of $A$ then has $n$ pivots, hence is $E$.
+
+  *Equivalent to $E$ $=>$ product of elementary matrices.*
+  Equivalence means $A = P E Q$ with $P$ and $Q$ products of elementary matrices; since $E$ is
+  neutral, $A = P Q$.
+
+  *Product of elementary matrices $=>$ invertible.*
+  Elementary matrices are invertible by
+  #link(<prop:elementary-matrix-invertibility>)[the properties of elementary matrices], and a
+  product of invertible matrices is invertible.
+
+  *Invertible $<=>$ only the zero solution $<=>$ independent columns.*
+  If $A$ is invertible, $A x = O$ forces $x = O$; conversely a non-zero solution makes the columns
+  linearly dependent.
+  Independence of the columns is equivalent to $"det"(A) != 0$ by
+  #link(<prop:matrix-rank-properties>)[the determinant criterion], hence to invertibility by
+  #link(<cor:determinant-invertibility>)[the corollary above].
 ]
 
-#theorem(name: "Multiplicativity of Determinants")[
-  If $A$ and $B$ are $n times n$ matrices over $F$, then
+The following two methods for computing an inverse follow from the results above.
+
+- *Adjugate method*: $A^(-1) = "adj"(A) / "det"(A)$, valid whenever $"det"(A) != 0$.
+- *Row operation method*: reduce the augmented matrix $(A | E)$ by elementary row operations until
+  its left half becomes $E$; the right half is then $A^(-1)$.
+  If the left half cannot reach $E$, the matrix is singular.
+
+#example(name: "Inverse by Elementary Row Operations")[
+  For $A = mat(1, 2; 3, 4)$ the augmented matrix is
 
   $
-    "det"(A B) = "det"(A) "det"(B).
-  $
-] <thm:det-product>
-
-#proof[
-  Every elementary matrix $E$ satisfies $"det"(E A) = "det"(E) "det"(A)$: this is immediate for
-  the three types of elementary row operations, with $"det"(E) = -1$, $k$, and $1$, respectively.
-  If $A$ is invertible, then $A$ is a product of elementary matrices, and applying the previous
-  step to $A = E_1 ... E_k$ against $I$ gives $"det"(A) = "det"(E_1) ... "det"(E_k)$.
-  Hence, for invertible $A$ and $B$, writing $B = F_1 ... F_m$ as a product of elementary
-  matrices yields $"det"(A B) = "det"(A) "det"(F_1) ... "det"(F_m) = "det"(A) "det"(B)$.
-  If one of $A$ and $B$ is singular, then $A B$ is singular as well, so both sides are zero.
-]
-
-#definition(name: "Adjugate Matrix")[
-  Let $A$ be an $n times n$ matrix with cofactors $A_(i j)$. The *adjugate* of $A$ is the
-  matrix $"adj"(A) = (A_(j i))$, the transpose of the cofactor matrix.
-] <def:adjugate-matrix>
-
-#theorem(name: "Inverse via Adjugate")[
-  For an invertible $n times n$ matrix $A$,
-
-  $
-    A "adj"(A) = "adj"(A) A = "det"(A) E,
+    mat(1, 2, 1, 0; 3, 4, 0, 1).
   $
 
-  and therefore
+  Replacing $R_2$ by $R_2 - 3 R_1$, then $R_2$ by $-R_2 / 2$, and finally $R_1$ by $R_1 - 2 R_2$
+  gives
 
   $
-    A^(-1) = "adj"(A) / "det"(A).
+    mat(1, 0, -2, 1; 0, 1, 3/2, -1/2),
   $
-] <thm:inverse-via-adjugate>
 
-#proof[
-  The $(i, j)$-entry of $A "adj"(A)$ is $sum_(k=1)^n a_(i k) A_(j k)$: it equals $"det"(A)$
-  when $i = j$ by the Laplace expansion, and $0$ when $i != j$, since it is the expansion of a
-  determinant whose $j$-th row has been replaced by the $i$-th row, hence has two equal rows.
-]
-
-#property(name: "Methods of Finding the Inverse")[
-  - *Adjugate method*: $A^(-1) = "adj"(A) / "det"(A)$, given by #link(<thm:inverse-via-adjugate>)[Theorem].
-  - *Elementary row operation method*: apply the same elementary row operations to the augmented
-    matrix $mat(A, E)$ until the left half becomes $E$; the right half is then $A^(-1)$. If
-    $A$ cannot be reduced to $E$, then $A$ is singular.
+  whose right half is $A^(-1) = mat(-2, 1; 3/2, -1/2)$.
 ]
 
 === Determinant Reduction Formula // 行列式约简公式
+
 #theorem(name: "Determinant Reduction Formula")[
-  Let $A$ be $m times m$, $B$ be $m times n$, $C$ be $n times m$, and $D$ be $n times n$.
-  Then:
+  Let $mat(A, B; C, D)$ be a block matrix with $A$ of size $m times m$, $B$ of size $m times n$,
+  $C$ of size $n times m$ and $D$ of size $n times n$.
   - If $A$ is invertible, then
 
     $
-      mat(A, B; C, D, delim: "|") = "det"(A) "det"(D - C A^(-1) B).
+      mat(delim: "|", A, B; C, D) = "det"(A) "det"(D - C A^(-1) B).
     $
 
   - If $D$ is invertible, then
 
     $
-      mat(A, B; C, D, delim: "|") = "det"(D) "det"(A - B D^(-1) C).
+      mat(delim: "|", A, B; C, D) = "det"(D) "det"(A - B D^(-1) C).
     $
 
   - If both $A$ and $D$ are invertible, then
@@ -1098,10 +1209,28 @@ Equivalence is completely determined by the rank:
     $
 ] <thm:determinant-reduction-formula>
 
+#proof[
+  Assume $A$ invertible and factor the block matrix as
+
+  $
+    mat(A, B; C, D) = mat(A, O; C, E_n) mat(E_m, A^(-1) B; O, D - C A^(-1) B),
+  $
+
+  where the first factor is block lower triangular and the second is block upper triangular.
+  Taking determinants and using #link(<thm:det-product>)[multiplicativity], then expanding each
+  factor along its $m$ leading rows by
+  #link(<thm:laplace-expansion-by-k-rows>)[the Laplace expansion by $k$ rows], gives
+  $"det"(A) "det"(E_n) = "det"(A)$ for the first factor and
+  $"det"(E_m) "det"(D - C A^(-1) B)$ for the second.
+
+  The second formula follows by the same argument with the roles of $A$ and $D$ exchanged, and the
+  third by comparing the two expressions obtained for the same determinant.
+]
+
 #note[
-  The mnemonic is: for $mat(A, B; C, D, delim: "|")$, if $A$ is invertible, one factor is
-  $"det"(A)$ and the other factor is $D$ minus the product of the other three terms arranged
-  *clockwise*, where the middle one is the inverse matrix.
+  The mnemonic is: for $mat(delim: "|", A, B; C, D)$, if $A$ is invertible, one factor is
+  $"det"(A)$ and the other factor is $D$ minus the product of the other three blocks arranged
+  *clockwise*, with the inverse matrix in the middle.
 ]
 
 == Special Square Matrices // 特殊方阵
@@ -1116,7 +1245,7 @@ Equivalence is completely determined by the rank:
     A = upright("diag")(a_(11), a_(22), ..., a_(n n)).
   $
 
-  If $a_(i, n+1-i) = 0$ for all $i = 1, ..., n$, then $A$ is called a *skew-diagonal matrix*,
+  If $a_(i j) = 0$ whenever $j != n + 1 - i$, then $A$ is called a *skew-diagonal matrix*,
   denoted
 
   $
@@ -1128,10 +1257,12 @@ Equivalence is completely determined by the rank:
   - The sum, difference and product of two diagonal matrices of the same order are still diagonal.
   - Multiplying $A$ on the left (right) by a diagonal matrix multiplies the corresponding
     rows (columns) of $A$ by the diagonal entries.
-  - $upright("diag")(a_1, ..., a_n)^(-1) = upright("diag")(1/a_1, ..., 1/a_n)$;
-  - $upright("sdiag")(a_1, ..., a_n)^(-1) = upright("sdiag")(1/a_n, ..., 1/a_1)$;
-  - $mat(A, O; O, C)^(-1) = mat(A^(-1), O; O, C^(-1))$;
-  - $mat(O, B; D, O)^(-1) = mat(O, D^(-1); B^(-1), O)$.
+  - $upright("diag")(a_1, ..., a_n)^(-1) = upright("diag")(1/a_1, ..., 1/a_n)$ when all $a_i$ are
+    non-zero;
+  - $upright("sdiag")(a_1, ..., a_n)^(-1) = upright("sdiag")(1/a_n, ..., 1/a_1)$, under the same
+    condition;
+  - $mat(A, O; O, C)^(-1) = mat(A^(-1), O; O, C^(-1))$ when $A$ and $C$ are invertible;
+  - $mat(O, B; D, O)^(-1) = mat(O, D^(-1); B^(-1), O)$ when $B$ and $D$ are invertible.
 ] <prop:diagonal-matrix>
 
 === Fundamental Matrix // 基本矩阵
@@ -1182,18 +1313,12 @@ Equivalence is completely determined by the rank:
 #property(name: "Properties of Triangular Matrices")[
   - The sum, difference and product of two upper (lower) triangular matrices of the same order
     are still upper (lower) triangular.
-  - Every square matrix $A$ can be expressed as the sum of an upper triangular matrix and a
-    lower triangular matrix:
-    $A = (A + A^"T")/2 + (A - A^"T")/2$.
+  - The inverse of an invertible upper (lower) triangular matrix is again upper (lower) triangular.
   - *($"LU"$ Decomposition)* If all leading principal minors of a square matrix $A$ are non-zero,
     then $A$ can be uniquely decomposed as $A = L U$, where $L$ is a lower triangular matrix
     with all diagonal entries equal to $1$ and $U$ is an invertible upper triangular matrix.
     The converse is also true.
 ] <prop:triangular-matrix>
-
-
-
-
 === Symmetric Matrix // 对称矩阵
 
 #definition(name: "Symmetric and Skew-Symmetric Matrices")[
@@ -1213,20 +1338,21 @@ Equivalence is completely determined by the rank:
 
 === Circulant Matrix // 循环矩阵
 
-Let
+#definition(name: "Cyclic Shift Matrix")[
+  The *cyclic shift matrix* of order $n$ is
 
-$
-  C = mat(
-    0, 1, 0, 0, ..., 0;
-    0, 0, 1, 0, ..., 0;
-    dots.v, dots.v, dots.v, dots.v, dots.down, dots.v;
-    0, 0, 0, 0, ..., 1;
-    1, 0, 0, 0, ..., 0;
-  ),
-$
-which is called a *cyclic shift matrix*.
+  $
+    C = mat(
+      0, 1, 0, 0, ..., 0;
+      0, 0, 1, 0, ..., 0;
+      dots.v, dots.v, dots.v, dots.v, dots.down, dots.v;
+      0, 0, 0, 0, ..., 1;
+      1, 0, 0, 0, ..., 0;
+    ),
+  $
+] <def:cyclic-shift-matrix>
 
-The matrix $C$ performs specific cyclic operations when multiplied by another matrix:
+$C$ performs the following cyclic operations when multiplied by another matrix:
 
 - *Left multiplication*: $C A$ cyclically shifts the rows of $A$ upwards by one position;
   the first row of $A$ moves to the last row.
@@ -1266,40 +1392,55 @@ The matrix $C$ performs specific cyclic operations when multiplied by another ma
 
 #proposition(name: "Nilpotency of Triangular Matrices")[
   - A triangular matrix is nilpotent if and only if all its diagonal entries are zero.
-  - If an $n$-order triangular matrix is nilpotent, then its nilpotent index $l$ must satisfy
+  - If a triangular matrix of order $n$ is nilpotent, then its nilpotent index $l$ satisfies
     $l <= n$.
 ] <prop:nilpotent-triangular-matrix>
 
-Some special nilpotent matrices:
+#proof[
+  Let $A$ be upper triangular with diagonal entries $lambda_1, ..., lambda_n$.
+  The diagonal of a product of upper triangular matrices is the product of the diagonals, so the
+  diagonal of $A^l$ is $lambda_1^l, ..., lambda_n^l$.
+  Hence $A^l = O$ forces $lambda_i^l = 0$, that is $lambda_i = 0$ for every $i$.
 
-$
-  A_n = mat(
-    0, 1, 0, ..., 0;
-    0, 0, 1, ..., 0;
-    dots.v, dots.v, dots.v, dots.down, dots.v;
-    0, 0, 0, ..., 1;
-    0, 0, 0, ..., 0;
-  )
-$
+  Conversely, a strictly upper triangular matrix satisfies $A^n = O$: by induction on $l$, the
+  $(i, j)$-entry of $A^l$ vanishes whenever $j - i < l$, so all entries vanish for $l = n$.
+  The same induction bounds the nilpotent index by $n$.
+]
 
-is a nilpotent matrix with nilpotent index $n$.
+#example(name: "A Nilpotent Matrix of Index $n$")[
+  The matrix
 
-=== Full Row Rank Matrix // 满秩矩阵
+  $
+    N_n = mat(
+      0, 1, 0, ..., 0;
+      0, 0, 1, ..., 0;
+      dots.v, dots.v, dots.v, dots.down, dots.v;
+      0, 0, 0, ..., 1;
+      0, 0, 0, ..., 0;
+    )
+  $
+
+  is nilpotent with nilpotent index $n$: its power $N_n^l$ has ones only on the $l$-th
+  superdiagonal, so $N_n^(n-1) != O$ while $N_n^n = O$.
+]
+
+=== Full Row Rank Matrix // 满行秩矩阵
 
 #definition(name: "Full Row Rank and Full Column Rank Matrices")[
-  A matrix $A$ is called a *full row rank matrix* if its row vectors are linearly independent.
-  Similarly, if its column vectors are linearly independent, then $A$ is called a *full column
-  rank matrix*.
+  An $m times n$ matrix $A$ with $m <= n$ is called a *full row rank matrix* if its row vectors are
+  linearly independent, that is, if $"rank"(A) = m$.
+  An $m times n$ matrix $A$ with $n <= m$ is called a *full column rank matrix* if its column vectors
+  are linearly independent, that is, if $"rank"(A) = n$.
 ] <def:full-row-rank-matrix>
 
 #property(name: "Properties of Full Row Rank Matrices")[
-  - An $A_{m times n}$ is a full row rank matrix if and only if there exists an invertible
-    matrix $Q_{n times n}$ such that $A = mat(E_m, O) Q$.
-  - An $A_{m times n}$ is a full column rank matrix if and only if there exists an invertible
-    matrix $P_{m times m}$ such that $A = P mat(E_n; O)$.
+  - An $m times n$ matrix $A$ with $m <= n$ is of full row rank if and only if there is an
+    invertible $Q_(n times n)$ with $A = mat(E_m, O) Q$, where $O$ is the $m times (n - m)$ zero
+    block.
+  - An $m times n$ matrix $A$ with $n <= m$ is of full column rank if and only if there is an
+    invertible $P_(m times m)$ with $A = P mat(E_n; O)$, where $O$ is the $(m - n) times n$ zero
+    block.
 ] <prop:full-row-rank-matrix>
-
-
 
 == Operations of Rank // 秩的运算
 
