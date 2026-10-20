@@ -1074,6 +1074,12 @@ Equivalence is completely determined by the rank:
   Both are equivalent to $D_r$, and equivalence is transitive.
 ]
 
+#example[
+  Let $A, B in M_(s times n)(F)$. Prove that the homogeneous systems $A X = 0$ and
+  $B X = 0$ have the same solution space if and only if there is an invertible matrix
+  $P in M_(s times s)(F)$ with $B = P A$.
+]
+
 === Generalized Inverse // 广义逆
 
 #definition(name: "Generalized Inverse")[
@@ -2103,19 +2109,29 @@ representations, and special linear transformations.
   $k in F$:
 
   $
-    A(alpha + beta) = A(alpha) + A(beta), A(k alpha) = k A(alpha).
+    A(alpha + beta) = A(alpha) + A(beta), quad A(k alpha) = k A(alpha).
   $
 
   If $V = V'$, then $A$ is called a *linear transformation* of $V$.
-  The linear mapping from $V$ over $F$ to $F$ itself is called a *linear function* on $V$.
 ] <def:linear-mapping>
 
-#note[
-  The field $F$ naturally constitutes a one-dimensional linear space over itself,
-  so a linear function is a special case of a linear mapping.
+#property(name: "Elementary Properties of Linear Mappings")[
+  Let $A: V -> V'$ be a linear mapping. Then
+  - $A(0) = 0$ and $A(-alpha) = -A(alpha)$ for all $alpha in V$;
+  - $A(sum_(i=1)^k c_i alpha_i) = sum_(i=1)^k c_i A(alpha_i)$ for all $c_i in F$ and
+    $alpha_i in V$;
+  - if $W subset.eq V$ is a subspace, then $A(W)$ is a subspace of $V'$.
+] <prop:linear-mapping-properties>
+
+#proof[
+  $A(0) = A(0 + 0) = A(0) + A(0)$, so $A(0) = 0$ after adding $-A(0)$ to both sides; then
+  $0 = A(0) = A(alpha + (-alpha)) = A(alpha) + A(-alpha)$, so $A(-alpha) = -A(alpha)$. The
+  second item follows by induction on $k$ from the two defining relations, and the third
+  from $A(0) = 0$ and from the closure of a subspace under addition and scalar
+  multiplication.
 ]
 
-=== Existence and Uniqueness (Linear Extension Theorem) // 存在唯一性定理
+=== Linear Extension Theorem // 存在唯一性定理
 
 #theorem(name: "Existence and Uniqueness of Linear Mappings")[
   Let $V$ and $V'$ be linear spaces over $F$, and let
@@ -2129,26 +2145,31 @@ representations, and special linear transformations.
   such that $A(epsilon_i) = alpha_i$ for $i = 1, ..., n$.
 ] <thm:linear-extension>
 
+#proof[
+  *Uniqueness.* If a linear $A$ satisfies $A(epsilon_i) = alpha_i$, then for
+  $alpha = sum_i x_i epsilon_i$ the coordinates $x_i$ are unique
+  (#link(<def:basis-and-coordinates>)[basis and coordinates]) and
+  $A(alpha) = sum_i x_i A(epsilon_i) = sum_i x_i alpha_i$, so $A$ is determined on all of
+  $V$.
+
+  *Existence.* Define $A(alpha) = sum_(i=1)^n x_i alpha_i$ where
+  $alpha = sum_(i=1)^n x_i epsilon_i$. The value does not depend on the way $alpha$ is
+  written, by uniqueness of coordinates. If $beta = sum_i y_i epsilon_i$ and $k in F$, then
+  $A(alpha + beta) = sum_i (x_i + y_i) alpha_i = A(alpha) + A(beta)$ and
+  $A(k alpha) = sum_i (k x_i) alpha_i = k A(alpha)$, so $A$ is linear. Finally
+  $A(epsilon_i) = alpha_i$, because $epsilon_i$ has coordinates $delta_(i j)$.
+]
+
 === Operations of Linear Mappings // 线性映射的运算
 
 *Addition.* For $A, B in upright("Hom")(V, V')$, the sum $A + B$ is defined by
-$(A + B)(alpha) = A(alpha) + B(alpha)$ for all $alpha in V$, and satisfies
-commutativity, associativity, existence of additive identity (zero map), and
-existence of additive inverse.
+$(A + B)(alpha) = A(alpha) + B(alpha)$ for all $alpha in V$.
 
-*Scalar multiplication.* For $k in F$ and $A in upright("Hom")(V, V')$, the
-scalar product $k A$ is defined by $(k A)(alpha) = k A(alpha)$, and satisfies
-the unit identity, associativity of scalars, and both distributive properties.
+*Scalar multiplication.* For $k in F$ and $A in upright("Hom")(V, V')$, the scalar
+product $k A$ is defined by $(k A)(alpha) = k A(alpha)$.
 
-*Composition.* For $A in upright("Hom")(V', W)$ and $B in upright("Hom")(U, V')$,
-the composition $A B$ is defined by $(A B)(alpha) = A(B(alpha))$, and satisfies
-associativity, left/right distributivity, and non-commutativity in general.
-The identity transformation $E$ satisfies $E A = A E = A$ for all
-$A in upright("Hom")(V)$.
-
-The collection $upright("Hom")(V, V')$ of all linear mappings from $V$ to $V'$
-forms a linear space over $F$. The collection $upright("End")(V)$ of all linear
-transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V$.
+*Composition.* For $A in upright("Hom")(V', W)$ and $B in upright("Hom")(U, V')$, the
+composition $A B$ is defined by $(A B)(alpha) = A(B(alpha))$.
 
 #definition(name: "Algebra over a Field")[
   Let $V$ be a linear space over $F$ equipped with an additional binary operation
@@ -2160,9 +2181,44 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
 ] <def:algebra-over-field>
 
 #note[
-  The left and right distributivity conditions can be combined into a single condition:
-  $V$ forms a unital ring under the addition and scalar multiplication.
-  It is evident that $upright("End")(V)$ is an algebra over $F$.
+  The two distributivity laws can be combined into a single statement: $V$ is a ring
+  (not necessarily unital) under $+$ and $dot$, compatible with scalar multiplication
+  through $(k alpha) dot (l beta) = (k l)(alpha dot beta)$. Nothing here forces $dot$ to be
+  commutative or to admit an identity.
+]
+
+#proposition(name: "Hom and End")[
+  - With pointwise addition and scalar multiplication, $upright("Hom")(V, V')$ is a
+    linear space over $F$; if $"dim"(V) = n$ and $"dim"(V') = m$, then
+    $"dim" upright("Hom")(V, V') = m n$.
+  - Composition is associative and distributive on both sides, and is not commutative in
+    general; the identity transformation satisfies $E A = A E = A$.
+  - $upright("End")(V) = upright("Hom")(V, V)$ is an algebra over $F$ with multiplication
+    given by composition; as a ring it has identity $E$ and is called the *endomorphism
+    ring* of $V$.
+] <prop:hom-and-end>
+
+#proof[
+  *Linear space.* Every axiom is a pointwise identity: for instance
+  $((A + B) + C)(alpha) = (A(alpha) + B(alpha)) + C(alpha)$, which equals
+  $(A + (B + C))(alpha)$ by associativity in $V'$. The zero map is the additive identity,
+  and $alpha |-> -A(alpha)$ is the inverse of $A$.
+
+  *Dimension.* Let $epsilon_1, ..., epsilon_n$ and $eta_1, ..., eta_m$ be bases of $V$ and
+  $V'$, and let $E_(i j)$ be the linear map with $E_(i j)(epsilon_i) = eta_j$ and
+  $E_(i j)(epsilon_k) = 0$ for $k != i$ (it exists by
+  #link(<thm:linear-extension>)[the linear extension theorem]). Every linear $A$ satisfies
+  $A = sum_(i,j) a_(j i) E_(i j)$, where the $a_(j i)$ are the coefficients of
+  $A(epsilon_i)$ in the basis $(eta_j)$; and the $E_(i j)$ are independent because their
+  values on $epsilon_1, ..., epsilon_n$ are. Hence they form a basis of $m n$ elements.
+
+  *Composition.* Associativity and both distributive laws are again pointwise identities,
+  and $E A = A E = A$ is immediate. Non-commutativity: on $F^2$ the maps
+  $A(x, y) = (y, 0)$ and $B(x, y) = (0, x)$ satisfy $A B(x, y) = (x, 0)$ while
+  $B A(x, y) = (0, y)$.
+
+  *Algebra.* Pointwise verification gives $(k A)(l B) = (k l)(A B)$, so
+  $upright("End")(V)$ satisfies the three conditions of the definition above.
 ]
 
 == Kernel and Image of Linear Mappings // 线性映射的核与像
@@ -2172,19 +2228,30 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   The *kernel* of $A$ is
 
   $
-    "Ker"(A) = {alpha : alpha in V, A(alpha) = 0},
+    "Ker"(A) = {alpha in V : A(alpha) = 0},
   $
 
   and the *image* of $A$ is
 
   $
-    "Im"(A) = {beta : beta = A(alpha), alpha in V, beta in V'},
+    "Im"(A) = {A(alpha) : alpha in V},
   $
 
   also denoted $A^(-1)(0)$ and $A(V)$ respectively.
-  The rank of $"Im"(A)$ is called the *rank* of $A$;
-  the dimension of $"Ker"(A)$ is called the *nullity* of $A$.
+  The dimension of $"Im"(A)$ is called the *rank* of $A$, and the dimension of
+  $"Ker"(A)$ its *nullity*.
 ] <def:kernel-and-image>
+
+#proposition(name: "Kernel and Image as Subspaces")[
+  $"Ker"(A)$ is a subspace of $V$, and $"Im"(A)$ is a subspace of $V'$.
+] <prop:kernel-image-subspace>
+
+#proof[
+  Both contain $0 = A(0)$. If $A(alpha) = A(beta) = 0$ and $k in F$, then
+  $A(alpha + beta) = A(alpha) + A(beta) = 0$ and $A(k alpha) = k A(alpha) = 0$, so
+  $"Ker"(A)$ is a subspace. In $"Im"(A)$, the sum $A(alpha) + A(beta) = A(alpha + beta)$ and
+  the multiple $k A(alpha) = A(k alpha)$ are again images, so it is a subspace of $V'$.
+]
 
 #theorem(name: "Rank-Nullity Theorem")[
   Let $V$ and $V'$ be finite-dimensional linear spaces over $F$, and
@@ -2195,10 +2262,18 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   $
 ] <thm:rank-nullity>
 
-#note[
-  Extend a basis of $"Ker"(A)$ to a basis of $V$
-  (#link(<thm:basis-extension>)[basis extension]). The images of the extension
-  vectors under $A$ form a basis of $"Im"(A)$, and the count gives the formula.
+#proof[
+  Extend a basis $u_1, ..., u_r$ of $"Ker"(A)$ to a basis
+  $u_1, ..., u_r, v_1, ..., v_k$ of $V$ (#link(<thm:basis-extension>)[basis extension]),
+  so that $"dim"("Ker"(A)) = r$ and $"dim"(V) = r + k$. It remains to show that
+  $A(v_1), ..., A(v_k)$ is a basis of $"Im"(A)$.
+
+  They span $"Im"(A)$: for $alpha = sum_i a_i u_i + sum_j b_j v_j$ one has
+  $A(u_i) = 0$, hence $A(alpha) = sum_j b_j A(v_j)$. They are independent: if
+  $sum_j b_j A(v_j) = 0$, then $A(sum_j b_j v_j) = 0$, so
+  $sum_j b_j v_j in "Ker"(A)$ and $sum_j b_j v_j = sum_i a_i u_i$ for suitable $a_i$; the
+  independence of the basis of $V$ then gives $b_j = 0$. Hence
+  $"dim"("Im"(A)) = k$ and the formula follows.
 ]
 
 #definition(name: "Cokernel")[
@@ -2217,32 +2292,36 @@ transformations on $V$ forms a unital ring, called the *endomorphism ring* of $V
   $A in upright("End")(V)$. For $k = 1, 2, 3, ...$, define
 
   $
-    V_k = "Ker"(A^k) = {alpha in V : A^k(alpha) = 0},
+    V_k = "Ker"(A^k) = {alpha in V : A^k alpha = 0},
   $
 
   then the sequence of subspaces
 
   $
-    V_1 ⊆ V_2 ⊆ ... ⊆ V_k ⊆ ...
+    V_1 subset.eq V_2 subset.eq ... subset.eq V_k subset.eq ...
   $
 
   is called the *ascending chain of subspaces* induced by $A$.
 ] <def:ascending-chain>
 
 #property(name: "Properties of the Ascending Chain")[
-  - The dimensions are non-decreasing: $"dim"(V_1) <= "dim"(V_2) <= ...$.
+  - The chain is increasing, since $A^k alpha = 0$ implies
+    $A^(k + 1) alpha = A(A^k alpha) = 0$; hence $V_k subset.eq V_(k + 1)$ and the dimensions
+    are non-decreasing: $"dim"(V_1) <= "dim"(V_2) <= ...$.
   - Since $V$ is finite-dimensional, there exists a positive integer $k_0$ such that
-    $"dim"(V_(k_0)) = "dim"(V_(k_0 + 1)) = ...$, and for all $k >= k_0$,
-    $V_k = V_(k_0)$ — the ascending chain stabilizes at $V_(k_0)$.
-  - This $k_0$ is a stability index for the corresponding linear operator
-    (for example, an upper bound on the degree of its annihilating polynomial or
-    a restriction on the size of its Jordan blocks).
+    $"dim"(V_(k_0)) = "dim"(V_(k_0 + 1)) = ...$, and then $V_k = V_(k_0)$ for all
+    $k >= k_0$ — the chain stabilizes at $V_(k_0)$, because an increasing sequence of
+    subspaces with constant dimension is constant.
+  - The smallest such $k_0$ is the largest size of a Jordan block of $A$ belonging to the
+    eigenvalue $0$ (and $k_0 = 1$ if $0$ is not an eigenvalue); in particular
+    $k_0 <= "dim"(V)$, with equality exactly when $A$ has a single Jordan block of size
+    $"dim"(V)$. See #link(<thm:jordan-existence>)[the Jordan existence theorem].
 ] <prop:ascending-chain-properties>
 
-#note[
-  In some cases, the stability index $k_0$ can be equal to $"dim"(V)$.
-  For instance, when $A$ is nilpotent or all eigenvalues of $A$ are zero.
-]
+Concretely, $k_0 = 1$ for the zero transformation and $k_0 = 2$ for
+$A = mat(0, 1, 0; 0, 0, 0; 0, 0, 0)$, whose largest block has size $2$; only for a single
+Jordan block of size $"dim"(V)$ is $k_0 = "dim"(V)$, so nilpotency alone does not force the
+maximal value.
 
 == Matrix Representation of Linear Mappings // 线性映射的矩阵表示
 
@@ -2254,7 +2333,7 @@ Then the image of each basis vector of $V$ under $A$ can be expressed in terms
 of the basis vectors of $V'$:
 
 $
-  A(epsilon_i) = sum_(j=1)^m a_(j i) eta_j, i = 1, ..., n.
+  A(epsilon_i) = sum_(j=1)^m a_(j i) eta_j, quad i = 1, ..., n.
 $
 
 This can be written in matrix form as
@@ -2279,17 +2358,30 @@ $
 The matrix $A$ is called the *matrix representation* of the linear mapping $A$
 under the given bases.
 
-#example[
-  Let $A, B in M_(s times n)(F)$. Prove that homogeneous linear systems
-  $A X = 0$ and $B X = 0$ have the same solution space if and only if there
-  exists an invertible matrix $P in M_(s times s)(F)$ such that $B = P A$.
+Matrix multiplication is exactly the translation of composition:
+
+#theorem(name: "Matrix Representation of Composition")[
+  Let $U, V, W$ be finite-dimensional linear spaces with fixed bases, and let
+  $B: U -> V$ and $A: V -> W$ be linear mappings whose matrix representations under these
+  bases are also denoted $B$ and $A$. Then the composition $A B: U -> W$ has matrix
+  representation $A B$ under the outer two bases.
+] <thm:matrix-representation-of-composition>
+
+#proof[
+  Write the bases as $(epsilon_i)$, $(eta_j)$ and $(zeta_k)$. The matrices record
+  $B(epsilon_i) = sum_j b_(j i) eta_j$ and $A(eta_j) = sum_k a_(k j) zeta_k$, hence
+  $
+    A B(epsilon_i) = A(sum_j b_(j i) eta_j) = sum_j b_(j i) A(eta_j)
+    = sum_k (sum_j a_(k j) b_(j i)) zeta_k,
+  $
+  so the entry of $zeta_k$ is the $(k, i)$ entry of the product $A B$.
 ]
 
 === Base Change and Coordinate Change // 基变换与坐标变换
 
-Let $B = {epsilon_1, ..., epsilon_n}$ and $B' = {epsilon'_1, ..., epsilon'_n}$ be two
-bases of $V$, and let $S$ be the *transition matrix* (change-of-basis matrix) from
-$B'$ to $B$, i.e.
+Let $cal(B) = {epsilon_1, ..., epsilon_n}$ and $cal(B)' = {epsilon'_1, ..., epsilon'_n}$
+be two bases of $V$, and let $S$ be the *transition matrix* (change-of-basis matrix) from
+$cal(B)'$ to $cal(B)$, i.e.
 
 $
   (epsilon'_1, ..., epsilon'_n) = (epsilon_1, ..., epsilon_n) S.
@@ -2299,14 +2391,19 @@ If $alpha = sum_(i=1)^n x_i epsilon_i = sum_(i=1)^n x'_i epsilon'_i$, then the c
 vectors satisfy $x = S x'$, where $x = (x_1, ..., x_n)^"T"$ and $x' = (x'_1, ..., x'_n)^"T"$.
 This is the *coordinate transformation formula*.
 
-If $A$ has matrix representation $A$ under bases $B, B'$ of $V, V'$, and $B$ is changed
-to $B_1 = B P$ and $B'$ to $B'_1 = B' Q$, then the new matrix representation is
+Now let $A: V -> V'$ be linear, with matrix representation $A$ under the bases
+$cal(B), cal(B)'$ of $V, V'$, and suppose that $cal(B)$ is replaced by the basis
+$cal(B)_1 = cal(B) P$ and $cal(B)'$ by $cal(B)'_1 = cal(B)' Q$, where $P$ and $Q$ are the
+transition matrices from the new bases to the old ones. Then the new matrix representation
+is
 
 $
-  A' = Q^(-1) A P.
+  A' = Q^(-1) A P,
 $
 
-In particular, if $V = V'$ and the same basis change $P$ is applied to both, then
+because $A cal(B)_1 = A cal(B) P = cal(B)' A P = cal(B)'_1 Q^(-1) A P$.
+
+In particular, if $V = V'$ and the same change $P$ is applied to both bases, then
 
 $
   A' = P^(-1) A P,
@@ -2333,56 +2430,129 @@ i.e. $A$ and $A'$ are *similar* matrices.
   $A^2 = A$.
 ] <def:idempotent-transformation>
 
-Two linear transformations $A$ and $B$ on $V$ are called *orthogonal* if
-$A B = B A = O$.
+#definition(name: "Annihilating Transformations")[
+  Two linear transformations $A$ and $B$ on $V$ are called *annihilating* if
+  $A B = B A = O$. This is a purely algebraic notion, unrelated to orthogonality in an
+  inner product space.
+] <def:annihilating-transformations>
 
 #definition(name: "Projection Transformation")[
-  Let $V$ be a linear space over $F$, and let $U, W "subseteq" V$ be subspaces with
-  $V = U ⊕ W$. For all $alpha in V$, there exist unique $alpha_1 in U$ and
-  $alpha_2 in W$ such that $alpha = alpha_1 + alpha_2$.
-  The map
+  Let $V$ be a linear space over $F$, and let $U, W subset.eq V$ be subspaces with
+  $V = U ⊕ W$. For every $alpha in V$ there are unique $alpha_1 in U$ and $alpha_2 in W$
+  with $alpha = alpha_1 + alpha_2$, and the map
 
   $
-    P_U: V -> V, alpha ↝ alpha_1
+    P_U: V -> V, quad alpha mapsto alpha_1
   $
 
-  is called the *projection* onto $U$ along $W$, which is a linear transformation on $V$.
+  is called the *projection* onto $U$ along $W$.
 ] <def:projection-transformation>
 
-$P_U$ satisfies and uniquely satisfies:
+#proposition(name: "Characterization of the Projection")[
+  The map $P_U$ is linear, and it is the unique linear transformation on $V$ with
 
-$
-  P_(U)(alpha) = cases(
-    alpha quad & alpha in U,
-    0 quad & alpha in W,
-  ).
-$
+  $
+    P_(U)(alpha) = cases(
+      alpha quad & alpha in U,
+      0 quad & alpha in W.
+    )
+  $
+] <prop:projection-characterization>
+
+#proof[
+  *Linearity.* Write $alpha = alpha_1 + alpha_2$ and $beta = beta_1 + beta_2$ with
+  $alpha_1, beta_1 in U$ and $alpha_2, beta_2 in W$. Then
+  $alpha + beta = (alpha_1 + beta_1) + (alpha_2 + beta_2)$ is the decomposition of
+  $alpha + beta$, so $P_(U)(alpha + beta) = alpha_1 + beta_1 = P_(U)(alpha) + P_(U)(beta)$;
+  similarly $P_(U)(k alpha) = k alpha_1 = k P_(U)(alpha)$.
+
+  *Values.* For $alpha in U$ the decomposition is $alpha = alpha + 0$, so
+  $P_(U)(alpha) = alpha$; for $alpha in W$ it is $alpha = 0 + alpha$, so $P_(U)(alpha) = 0$.
+
+  *Uniqueness.* A linear map with these values agrees with $P_U$ on $U$ and on $W$, hence on
+  $U + W = V$.
+]
 
 #proposition(name: "Projection and Idempotent")[
   Let $V$ be a linear space over $F$.
-  - Let $U, W "subseteq" V$ with $V = U ⊕ W$. Then the projections $P_U$ and $P_W$
-    are orthogonal idempotent transformations with $P_U + P_W = E$.
-  - Let $A, B in upright("End")(V)$ be orthogonal idempotent transformations with
-    $A + B = E$. Then $V = "Im"(A) ⊕ "Im"(B)$.
+  - Let $U, W subset.eq V$ with $V = U ⊕ W$. Then $P_U$ and $P_W$ are annihilating
+    idempotent transformations with $P_U + P_W = E$.
+  - Let $A, B in upright("End")(V)$ be annihilating idempotent transformations with
+    $A + B = E$. Then $V = "Im"(A) ⊕ "Im"(B)$, and $A$ is the projection onto $"Im"(A)$
+    along $"Im"(B)$.
 ] <prop:projection-and-idempotent>
 
+#proof[
+  *Item 1.* For $alpha = alpha_1 + alpha_2$ one has $P_(U)(alpha) = alpha_1 in U$, hence
+  $P_(U)(P_(U)(alpha)) = alpha_1 = P_(U)(alpha)$, and similarly $P_W^2 = P_W$. Moreover
+  $"Im"(P_W) = W$, on which $P_U$ vanishes, so $P_U P_W = O = P_W P_U$; and
+  $P_(U)(alpha) + P_(W)(alpha) = alpha_1 + alpha_2 = alpha$.
+
+  *Item 2.* Since $alpha = A alpha + B alpha$, one has $V = "Im"(A) + "Im"(B)$. If $gamma$
+  lies in both images, then $A gamma = gamma$ and $B gamma = gamma$ (an idempotent
+  transformation fixes its image), so $gamma = A gamma = A(B gamma) = (A B) gamma = 0$. Hence
+  the sum is direct, $A$ fixes $"Im"(A)$ and vanishes on $"Im"(B)$, and
+  #link(<prop:projection-characterization>)[the characterization above] identifies $A$ with
+  the corresponding projection.
+]
+
 #proposition(name: "Idempotent and Involutional Characterization")[
-  Let $V$ be a linear space over $F$, and $A in upright("End")(V)$.
-  - $A$ is idempotent if and only if
+  Let $V$ be a finite-dimensional linear space over $F$, and $A in upright("End")(V)$.
+  - $A$ is idempotent ($A^2 = A$) if and only if
     $upright("rank")(A) + upright("rank")(E - A) = "dim"(V)$.
   - $A$ is involutional ($A^2 = E$) if and only if
-    $upright("rank")(A) + upright("rank")(E - A) = "dim"(V)$.
+    $upright("rank")(A - E) + upright("rank")(A + E) = "dim"(V)$.
 ] <prop:idempotent-involutional-characterization>
 
+#proof[
+  Both parts use the identity
+  $"rank"(X) + "rank"(Y) = "rank"(X + Y) + "dim"("Im"(X) inter "Im"(Y))$ with the pairs
+  $X = A$, $Y = E - A$ (whose sum is $E$) and $X = A - E$, $Y = A + E$ (whose sum is $2 E$),
+  together with $"Im"(X) + "Im"(Y) = V$ in both cases.
+
+  *Idempotent.* If $A^2 = A$, then $A(E - A) = O = (E - A)A$, so
+  $"Im"(E - A) subset.eq "Ker"(A)$ and $"Im"(A) subset.eq "Ker"(E - A)$; a vector $gamma$ in
+  both images then satisfies $A gamma = 0$ and $(E - A)gamma = 0$, whence $gamma = 0$. So the
+  two images intersect trivially and the identity gives the stated equality. Conversely,
+  $A alpha - A^2 alpha = A(E - A)alpha$ lies in $"Im"(A)$ and equals $(E - A)(A alpha)$, which
+  lies in $"Im"(E - A)$; if the intersection is trivial, then $A alpha = A^2 alpha$ for all
+  $alpha$, i.e. $A^2 = A$.
+
+  *Involutional.* If $A^2 = E$, then $(A - E)(A + E) = O = (A + E)(A - E)$, so
+  $"Im"(A + E) subset.eq "Ker"(A - E)$ and $"Im"(A - E) subset.eq "Ker"(A + E)$; a vector in
+  both images satisfies $(A + E)gamma = 0 = (A - E)gamma$, hence $2 gamma = 0$. So the
+  intersection is trivial and the identity applies. Conversely, for every $alpha$ the vector
+  $(A^2 - E)alpha = (A - E)(A + E)alpha$ lies in $"Im"(A - E)$ and equals
+  $(A + E)(A - E)alpha$, which lies in $"Im"(A + E)$; a trivial intersection forces
+  $A^2 = E$.
+]
+
 #proposition(name: "Equivalent Conditions for Invertibility")[
-  Let $V$ be a linear space over $F$, and $A in upright("End")(V)$.
+  Let $V$ be an $n$-dimensional linear space over $F$, and $A in upright("End")(V)$.
   The following are equivalent:
   - $A$ is invertible;
-  - if ${epsilon_1, ..., epsilon_n}$ is a basis of $V$, then
-    $A epsilon_1, ..., A epsilon_n$ is also a basis of $V$;
-  - if $alpha != 0$, then $A alpha != 0$;
-  - if $V = V_1 ⊕ V_2$, then $V = A V_1 ⊕ A V_2$.
+  - for every basis ${epsilon_1, ..., epsilon_n}$ of $V$, the group
+    $A epsilon_1, ..., A epsilon_n$ is again a basis of $V$;
+  - $"Ker"(A) = {0}$, that is, $A alpha != 0$ for every $alpha != 0$;
+  - for every decomposition $V = V_1 ⊕ V_2$ one has $V = A V_1 ⊕ A V_2$.
 ] <prop:invertibility-conditions>
+
+#proof[
+  *(1) $=>$ (2).* A bijection sends a basis to a basis.
+
+  *(2) $=>$ (3).* If $A alpha = 0$ with $alpha != 0$, extend $alpha$ to a basis; the image
+  of that basis contains the zero vector and so is not a basis.
+
+  *(3) $=>$ (1).* $"Ker"(A) = {0}$ means $A$ is injective, hence
+  $"dim"("Im"(A)) = n$ by #link(<thm:rank-nullity>)[rank-nullity], so $A$ is also surjective.
+
+  *(1) $=>$ (4).* Injectivity gives $A V_1 inter A V_2 = A(V_1 inter V_2) = {0}$, and
+  $A V_1 + A V_2 = A V = V$.
+
+  *(4) $=>$ (1).* If $"Ker"(A) != {0}$, choose a complement $V = "Ker"(A) ⊕ V_2$. Then
+  $A "Ker"(A) = {0}$ and $"dim"(A V_2) <= "dim"(V_2) < n$, so
+  $A "Ker"(A) + A V_2 != V$, contradicting (4).
+]
 
 == Linear Functions and Dual Spaces // 线性函数与对偶空间
 
@@ -2392,22 +2562,35 @@ $
   denoted $V^*$.
 ] <def:linear-function>
 
+#note[
+  The field $F$ is a one-dimensional linear space over itself, so a linear function is a
+  special case of a linear mapping, and $V^* = upright("Hom")(V, F)$ in the notation of
+  #link(<prop:hom-and-end>)[the proposition on Hom and End].
+]
+
 #definition(name: "Dual Space")[
-  The set $V^* = upright("Hom")(V, F)$ of all linear functions on $V$, with the
-  usual addition and scalar multiplication of mappings, forms a linear space over $F$,
-  called the *dual space* of $V$.
+  The set $V^* = upright("Hom")(V, F)$ of all linear functions on $V$, with pointwise
+  addition and scalar multiplication, is a linear space over $F$ (a special case of
+  #link(<prop:hom-and-end>)[that proposition]), called the *dual space* of $V$.
 ] <def:dual-space>
 
 #theorem(name: "Dimension of the Dual Space")[
-  Let $V$ be an $n$-dimensional linear space over $F$. Then $V^*$ is also
-  $n$-dimensional.
+  Let $V$ be an $n$-dimensional linear space over $F$ with basis
+  ${epsilon_1, ..., epsilon_n}$. Then there is a basis
+  ${epsilon_1^*, ..., epsilon_n^*}$ of $V^*$, the *dual basis* (see
+  #link(<def:dual-basis>)[below]), characterized by
+  $epsilon_i^*(epsilon_j) = delta_(i j)$ (the Kronecker delta); in particular
+  $"dim"(V^*) = n$.
 ] <thm:dual-space-dimension>
 
 #proof[
-  Let ${epsilon_1, ..., epsilon_n}$ be a basis of $V$. Define linear functions
-  $epsilon_i^*$ by $epsilon_i^*(epsilon_j) = delta_(i j)$ (Kronecker delta).
-  Then ${epsilon_1^*, ..., epsilon_n^*}$ is a basis of $V^*$, called the *dual basis*
-  corresponding to ${epsilon_1, ..., epsilon_n}$.
+  By #link(<thm:linear-extension>)[the linear extension theorem], for each $i$ there is a
+  unique linear function $epsilon_i^*$ with $epsilon_i^*(epsilon_j) = delta_(i j)$.
+
+  They are independent: applying $sum_i c_i epsilon_i^* = 0$ to $epsilon_j$ gives
+  $c_j = 0$. They span: any $f in V^*$ and $sum_i f(epsilon_i) epsilon_i^*$ agree on every
+  basis vector, hence on $V$ by the uniqueness part of the same theorem. So
+  $epsilon_1^*, ..., epsilon_n^*$ form a basis of $n$ elements.
 ]
 
 #definition(name: "Dual Basis")[
@@ -2417,9 +2600,20 @@ $
 ] <def:dual-basis>
 
 #property(name: "Double Dual")[
-  The map $phi: V -> V^(*)$ defined by $phi(alpha)(f) = f(alpha)$ for all
-  $f in V^*$ is an isomorphism. Thus $V ≈ V^(*)$ when $V$ is finite-dimensional.
+  Let $V$ be a finite-dimensional linear space over $F$. The map
+  $phi: V -> V^(**)$ defined by $phi(alpha)(f) = f(alpha)$ for all $f in V^*$ is an
+  isomorphism, so $V ≈ V^(**)$. It is natural: it does not depend on any choice of bases,
+  unlike an isomorphism $V ≈ V^*$.
 ] <prop:double-dual>
+
+#proof[
+  The map $phi$ is linear, and it is injective: if $phi(alpha) = 0$, then $f(alpha) = 0$
+  for every $f in V^*$; extending $alpha != 0$ to a basis and taking the first dual basis
+  vector gives $f(alpha) != 0$, a contradiction. Finally
+  $"dim"(V^(**)) = "dim"(V^*) = "dim"(V)$ by
+  #link(<thm:dual-space-dimension>)[the dimension formula for dual spaces], so an injective
+  map between spaces of the same finite dimension is bijective.
+]
 
 // ==========================================================================
 // Part III — Structure Theory of Linear Operators (线性算子的结构理论)
@@ -3697,6 +3891,7 @@ and normal transformations.
 == A
 - *#link(<def:adjugate-matrix>)[Adjugate Matrix]*
 - *#link(<def:algebra-over-field>)[Algebra Over Field]*
+- *#link(<def:annihilating-transformations>)[Annihilating Transformations]*
 - *#link(<def:arrow-determinant>)[Arrow Determinant]*
 - *#link(<prop:arrow-determinant-value>)[Arrow Determinant Value]*
 - *#link(<def:ascending-chain>)[Ascending Chain]*
@@ -3785,6 +3980,7 @@ and normal transformations.
 == H
 - *#link(<thm:hamilton-cayley>)[Hamilton Cayley]*
 - *#link(<def:hermitian-transformation>)[Hermitian Transformation]*
+- *#link(<prop:hom-and-end>)[Hom And End]*
 
 == I
 - *#link(<prop:idempotent-involutional-characterization>)[Idempotent Involutional Characterization]*
@@ -3813,6 +4009,7 @@ and normal transformations.
 
 == K
 - *#link(<def:kernel-and-image>)[Kernel And Image]*
+- *#link(<prop:kernel-image-subspace>)[Kernel And Image As Subspaces]*
 - *#link(<prop:kernel-decomposition-coprime>)[Kernel Decomposition Coprime]*
 - *#link(<def:kronecker-product>)[Kronecker Product]*
 
@@ -3824,6 +4021,7 @@ and normal transformations.
 - *#link(<thm:linear-extension>)[Linear Extension]*
 - *#link(<def:linear-function>)[Linear Function]*
 - *#link(<def:linear-mapping>)[Linear Mapping]*
+- *#link(<prop:linear-mapping-properties>)[Linear Mapping Properties]*
 - *#link(<def:linear-representation>)[Linear Representation]*
 - *#link(<def:linear-space>)[Linear Space]*
 - *#link(<def:linear-subspace>)[Linear Subspace]*
@@ -3832,6 +4030,7 @@ and normal transformations.
 - *#link(<def:matrix>)[Matrix]*
 - *#link(<def:matrix-equivalence>)[Matrix Equivalence]*
 - *#link(<prop:matrix-rank-properties>)[Matrix Rank Properties]*
+- *#link(<thm:matrix-representation-of-composition>)[Matrix Representation Of Composition]*
 - *#link(<def:maximal-independent-group>)[Maximal Independent Group]*
 - *#link(<prop:maximal-independent-groups>)[Maximal Independent Groups]*
 - *#link(<def:minimal-polynomial>)[Minimal Polynomial]*
@@ -3871,6 +4070,7 @@ and normal transformations.
 - *#link(<thm:positive-definite-conditions>)[Positive Definite Conditions]*
 - *#link(<def:positive-definite-quadratic-form>)[Positive Definite Quadratic Form]*
 - *#link(<prop:projection-and-idempotent>)[Projection And Idempotent]*
+- *#link(<prop:projection-characterization>)[Projection Characterization]*
 - *#link(<def:projection-transformation>)[Projection Transformation]*
 - *#link(<prop:properties-of-linear-independence>)[Properties Of Linear Independence]*
 
