@@ -2683,14 +2683,15 @@ Similarity is an equivalence relation on the set of square matrices of the same 
   - *Diagonalization simplifies powers*: if $A = P^(-1) D P$ with $D$ diagonal,
     then $A^k = P^(-1) D^k P$.
   - *Jordan form for non-diagonalizable matrices*: $A^k = P^(-1) J^k P$ where $J$ is
-    the Jordan form, and $J^k$ can be computed block by block.
+    the #link(<thm:jordan-existence>)[Jordan canonical form], and $J^k$ can be computed
+    block by block.
   - *Matrix functions*: if $B = P^(-1) A P$, then $exp(B) = P^(-1) exp(A) P$.
 ]
 
 #note[
   In summary, the *determinant*, *rank*, and *trace* of a matrix are invariants
   under similarity, collectively called *similarity invariants*.
-  The *characteristic polynomial*, *eigenvalues*, and *eigenvectors*
+  The #link(<def:eigenpolynomial>)[characteristic polynomial], eigenvalues, and eigenvectors
   (discussed in the next section) are also similarity invariants.
 ]
 
@@ -2847,8 +2848,10 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 ] <def:invariant-subspace>
 
 #note[
-  The kernel and image of $A$, as well as eigenspaces (including generalized eigenspaces)
-  and cyclic subspaces, are all invariant subspaces of $V$ under $A$.
+  The kernel and image of $A$, as well as eigenspaces (including
+  #link(<def:root-subspace>)[generalized eigenspaces]) and
+  #link(<def:cyclic-subspace>)[cyclic subspaces], are all invariant subspaces of $V$
+  under $A$.
 ]
 
 #property(name: "Properties of Invariant Subspaces")[
@@ -2987,9 +2990,10 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 
 #note[
   Over $bb(C)$, the following are also equivalent to $A$ being diagonalizable:
-  - All Jordan blocks in the Jordan canonical form of $A$ are of size $1$;
-  - All elementary divisors of $A$ are linear;
-  - All invariant divisors of $A$ have no repeated roots.
+  - All #link(<lem:nilpotent-jordan-form>)[Jordan blocks] in the
+    #link(<thm:jordan-existence>)[Jordan canonical form] of $A$ are of size $1$;
+  - All #link(<def:elementary-divisors>)[elementary divisors] of $A$ are linear;
+  - All #link(<def:invariant-divisors>)[invariant divisors] of $A$ have no repeated roots.
 ]
 
 == Diagonalization of Special Matrices // 特殊矩阵的对角化
@@ -3049,14 +3053,15 @@ In geometry, an involution corresponds to a reflection or symmetry, since $A^2 =
 ] <prop:all-ones-matrix>
 
 #note[
-  Note that $(1/n) A$ is an idempotent symmetric matrix, hence an orthogonal projection matrix.
+  Note that $(1/n) A$ is an idempotent symmetric matrix, hence an
+  #link(<def:orthogonal-projection>)[orthogonal projection] matrix.
 ]
 
 #proposition(name: "Cyclic Shift Matrix")[
   Let $F = bb(C)$ and $A$ be the cyclic shift matrix (ones on the superdiagonal and in position $(n, 1)$, zeros elsewhere).
   - The eigenvalues are the $n$-th roots of unity $omega^(k) = exp(2 pi i k / n)$ for $k = 0, 1, ..., n - 1$.
   - The eigenvector for $omega^(k)$ is $xi^(k) = (1, omega^(k), (omega^(k))^2, ..., (omega^(k))^(n-1))^"T"$.
-  - $A$ is diagonalizable, and can be unitarily diagonalized.
+  - $A$ is diagonalizable, and can be #link(<thm:normal-diagonalization>)[unitarily diagonalized].
 ] <prop:cyclic-shift-matrix>
 
 All properties above are closely related to the discrete Fourier transform (DFT) and roots of unity; the eigenvectors $xi^((k))$ form the DFT basis, which is orthogonal with each vector of norm $sqrt(n)$.
@@ -3065,7 +3070,7 @@ All properties above are closely related to the discrete Fourier transform (DFT)
   Let $F = bb(C)$ and $A$ be a circulant matrix, i.e. $A = a_0 E + a_1 C + a_2 C^2 + ... + a_(n-1) C^(n-1)$ where $C$ is the cyclic shift matrix.
   - The eigenvalues are $lambda_k = f(omega^(k))$ where $f(x) = a_0 + a_1 x + ... + a_(n-1) x^(n-1)$.
   - Circulant matrices share the same eigenvectors as the cyclic shift matrix.
-  - $A$ is diagonalizable, and can be unitarily diagonalized by the same DFT matrix.
+  - $A$ is diagonalizable, and can be #link(<thm:normal-diagonalization>)[unitarily diagonalized] by the same DFT matrix.
 ] <prop:circulant-matrix>
 
 #note[
@@ -3106,8 +3111,9 @@ if and only if they commute ($A B = B A$).
 
 === Generalization in Multiple Cases // 多种情形的推广
 
-The simultaneous diagonalization result extends to commuting families of normal matrices
-(over $bb(C)$) and symmetric matrices (over $bb(R)$).
+The simultaneous diagonalization result extends to commuting families of
+#link(<def:normal-transformation>)[normal matrices] (over $bb(C)$) and symmetric matrices
+(over $bb(R)$), via #link(<thm:orthogonal-diagonalization>)[orthogonal diagonalization].
 
 = Jordan Canonical Form // Jordan 标准型
 
