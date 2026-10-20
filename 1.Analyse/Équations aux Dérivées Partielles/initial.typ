@@ -3076,7 +3076,7 @@ If the medium is bounded, the solution is further constrained on the spatial bou
   $
     F (x) = 1/2 phi (x) - 1/(2 a) integral_0^x psi (s) dif s, quad G (x) = 1/2 phi (x) + 1/(2 a) integral_0^x psi (s) dif s,
   $
-  up to a constant that cancels between $F$ and $G$. Thus the initial displacement splits into two half-amplitude waves running in opposite directions, while the initial velocity fills in the integral term. The fully general problem — nonzero data *and* a source $f (x, t)$ — is handled by the superposition split of §16.4 (#link(<prop:wave-superposition-split>)[Prop.]): the d'Alembert solution supplies the homogeneous part, and the zero-data part is the object of Duhamel's principle in the next section. The splitting of the initial displacement is illustrated in #link(<fig:wave-traveling-waves>)[Figure].
+  up to a constant that cancels between $F$ and $G$. Thus the initial displacement splits into two half-amplitude waves running in opposite directions, while the initial velocity fills in the integral term. The fully general problem — nonzero data *and* a source $f (x, t)$ — is handled by #link(<prop:wave-superposition-split>)[the superposition split] of §16.4: the d'Alembert solution supplies the homogeneous part, and the zero-data part is the object of Duhamel's principle in the next section. The splitting of the initial displacement is illustrated in #link(<fig:wave-traveling-waves>)[Figure].
 ]
 
 #note[
@@ -3159,7 +3159,7 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
 
   *Step 2: Reduction to the one-dimensional wave equation.* The term $2 / r$ blocks a direct use of d'Alembert's formula; the classical trick is to multiply by $r$: since $M_u$ is even in $r$, the function $v (r, t) = r M_u (bold(x), r, t)$ extends oddly to $r < 0$ and solves the *one-dimensional wave equation* $v_(t t) = a^2 v_(r r)$ on the whole line, with data $v (r, 0) = r M_phi (bold(x), r)$ and $v_t (r, 0) = r M_psi (bold(x), r)$.
 
-  *Step 3: Evaluation.* D'Alembert's formula (#link(<thm:d-alembert>)[Th.]) gives $v$ explicitly; since $u (bold(x), t) = M_u (bold(x), 0, t) = lim_(r -> 0^+) v (r, t) / r = v_r (0, t)$ (the mean over a point is the value), evaluating the result at $r = a t$ produces the formula.
+  *Step 3: Evaluation.* #link(<thm:d-alembert>)[D'Alembert's formula] gives $v$ explicitly; since $u (bold(x), t) = M_u (bold(x), 0, t) = lim_(r -> 0^+) v (r, t) / r = v_r (0, t)$ (the mean over a point is the value), evaluating the result at $r = a t$ produces the formula.
 
   Regularity follows by differentiating under the integral. The construction is illustrated in #link(<fig:wave-spherical-means>)[Figure].
 ]
@@ -3177,7 +3177,7 @@ The compact mean form of Kirchhoff's formula hides where the data are actually e
 $
   M_phi (bold(x), t) = 1/(4 pi) integral_(partial B (0, 1)) phi (bold(x) + a t bold(omega)) dif omega,
 $
-and likewise for $M_psi$. Substituting these averages into Kirchhoff's formula (#link(<thm:kirchhoff-formula-3d>)[Th.]) yields the unit-sphere form
+and likewise for $M_psi$. Substituting these averages into #link(<thm:kirchhoff-formula-3d>)[Kirchhoff's formula] yields the unit-sphere form
 $
   u (bold(x), t) = 1/(4 pi) (partial)/(partial t) (t integral_(partial B (0, 1)) phi (bold(x) + a t bold(omega)) dif omega) + t/(4 pi) integral_(partial B (0, 1)) psi (bold(x) + a t bold(omega)) dif omega.
 $
@@ -3198,7 +3198,7 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
 ] <thm:poisson-formula-2d>
 
 #proof[
-  Extend the data to three space variables by $bar(phi)(bold(x), x_3) = phi (bold(x))$ and $bar(psi)(bold(x), x_3) = psi (bold(x))$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By uniqueness (#link(<cor:wave-uniqueness>)[Cor.] below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension.
+  Extend the data to three space variables by $bar(phi)(bold(x), x_3) = phi (bold(x))$ and $bar(psi)(bold(x), x_3) = psi (bold(x))$, independent of $x_3$, and let $bar(u)$ be the three-dimensional solution. By #link(<cor:wave-uniqueness>)[uniqueness of the Cauchy problem] (proved below) $bar(u)$ is independent of $x_3$, so its restriction solves the two-dimensional problem: a solution in lower dimension is *descended* from one in a higher dimension.
 
   It remains to evaluate Kirchhoff's formula. The sphere $partial B ((bold(x), 0), a t)$ projects onto the disk $B (bold(x), a t)$, each point $bold(y) in B (bold(x), a t)$ corresponding to the pair $bold(y)^plus.minus = (bold(y), plus.minus sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2))$ with $dif S = (a t) / sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2) dif bold(y)$; the two hemispheres contribute equally, so
   $
@@ -3218,10 +3218,10 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
   $
     u (bold(x), t) = 1/2 (phi (x_1 + a t) + phi (x_1 - a t)) + 1/(2 a) integral_(x_1 - a t)^(x_1 + a t) psi (xi) dif xi,
   $
-  which is exactly d'Alembert's formula (#link(<thm:d-alembert>)[Th.]): the two-dimensional and one-dimensional formulas are both descended from the three-dimensional one.
+  which is exactly #link(<thm:d-alembert>)[d'Alembert's formula]: the two-dimensional and one-dimensional formulas are both descended from the three-dimensional one.
 ] <ex:wave-dalembert-by-descent>
 
-The homogeneous Cauchy problem is now solved in every dimension. The *inhomogeneous* problem with zero data is reduced to the homogeneous one in §16.4 by the superposition principle and Duhamel's principle (#link(<thm:duhamel-wave>)[Th.]), and for general data the two contributions are simply added. Initial-boundary value problems on bounded domains — membranes, acoustic resonators — call instead for separation of variables, along the lines of §16.5; the general spectral framework is developed in Chapter 19.
+The homogeneous Cauchy problem is now solved in every dimension. The *inhomogeneous* problem with zero data is reduced to the homogeneous one in §16.4 by the superposition principle and #link(<thm:duhamel-wave>)[Duhamel's principle], and for general data the two contributions are simply added. Initial-boundary value problems on bounded domains — membranes, acoustic resonators — call instead for separation of variables, along the lines of §16.5; the general spectral framework is developed in Chapter 19.
 
 #note[
   *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (bold(x), t)$ depends only on the data on the *sphere* $partial B (bold(x), a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions. The contrast is illustrated in #link(<fig:wave-huygens>)[Figure].
@@ -3241,7 +3241,7 @@ The homogeneous Cauchy problem is now solved in every dimension. The *inhomogene
 We now treat the *inhomogeneous* equation — the second subproblem of the general Cauchy problem of §16.1. By linearity the general problem decomposes into a homogeneous part, solved in §16.2 and §16.3, and an inhomogeneous part with zero data; the decomposition is the form taken here by the linear superposition principle (#link(<prop:superposition-principle>)[Ch 1]).
 
 #proposition(name: "Superposition Split")[
-  Let $u_1$ solve the homogeneous problem $u_(t t) = a^2 Delta u$ with data $(phi, psi)$, and $u_2$ solve the inhomogeneous problem $u_(t t) = a^2 Delta u + f$ with zero data $u_2 (bold(x), 0) = (u_2)_t (bold(x), 0) = 0$. Then $u = u_1 + u_2$ solves the general Cauchy problem (#link(<def:general-cauchy-wave>)[Def.]); conversely, every classical solution of the general problem is this sum.
+  Let $u_1$ solve the homogeneous problem $u_(t t) = a^2 Delta u$ with data $(phi, psi)$, and $u_2$ solve the inhomogeneous problem $u_(t t) = a^2 Delta u + f$ with zero data $u_2 (bold(x), 0) = (u_2)_t (bold(x), 0) = 0$. Then $u = u_1 + u_2$ solves (#link(<def:general-cauchy-wave>)[the general Cauchy problem]); conversely, every classical solution of the general problem is this sum.
 ] <prop:wave-superposition-split>
 
 #proof[
@@ -3264,7 +3264,7 @@ It remains to solve the second subproblem.
 The fully general problem — nonzero data *and* a source — is the sum of this and the homogeneous problem (solved in §16.2 and §16.3), by the superposition split (#link(<prop:wave-superposition-split>)[§16.4]).
 
 #theorem(name: "Duhamel's Principle for the Wave Equation")[
-  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$: $S (t) psi = w (dot, t)$, where $w_(t t) = a^2 Delta w$, $w (dot, 0) = 0$, $w_t (dot, 0) = psi$. Then the solution of the inhomogeneous Cauchy problem (#link(<def:cauchy-wave-inhomogeneous>)[Def.]) is given by
+  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$: $S (t) psi = w (dot, t)$, where $w_(t t) = a^2 Delta w$, $w (dot, 0) = 0$, $w_t (dot, 0) = psi$. Then the solution of (#link(<def:cauchy-wave-inhomogeneous>)[the inhomogeneous Cauchy problem]) is given by
   $
     u (bold(x), t) = integral_0^t S (t - s) f (s, dot) (bold(x)) dif s,
   $
@@ -3280,7 +3280,7 @@ The fully general problem — nonzero data *and* a source — is the sum of this
   $
   since each $w$ is a homogeneous solution.
 
-  Uniqueness for the Cauchy problem (#link(<cor:wave-uniqueness>)[Cor.] below) identifies $u$ as the solution.
+  #link(<cor:wave-uniqueness>)[Uniqueness for the Cauchy problem] (proved below) identifies $u$ as the solution.
 ]
 
 #note[
@@ -3311,7 +3311,7 @@ In even dimensions the wave carries a trailing wake: at each emission time the v
 
 == Separation of Variables for the Wave Equation // 波动方程的分离变量法
 
-For the initial-boundary value problem (#link(<def:ibvp-wave>)[Def.]) the traveling-wave method of §16.2 no longer applies directly: waves reflect at the endpoints, and the interaction of incident and reflected waves is awkward to describe in the $F (x - a t) + G (x + a t)$ representation. The classical tool on bounded intervals is *separation of variables* (the general framework is developed in Chapter 19, #link(<def:separation-variables>)[Ch 19]): the solution is expanded in the eigenfunctions of the spatial boundary value problem, reducing the PDE to decoupled oscillators.
+For (#link(<def:ibvp-wave>)[the initial-boundary value problem]) the traveling-wave method of §16.2 no longer applies directly: waves reflect at the endpoints, and the interaction of incident and reflected waves is awkward to describe in the $F (x - a t) + G (x + a t)$ representation. The classical tool on bounded intervals is *separation of variables* (the general framework is developed in Chapter 19, #link(<def:separation-variables>)[Ch 19]): the solution is expanded in the eigenfunctions of the spatial boundary value problem, reducing the PDE to decoupled oscillators.
 
 #definition(name: "The Initial-Boundary Value Problem for the String")[
   The *initial-boundary value problem* for the wave equation on a bounded interval with fixed ends is to find $u: [0, L] times [0, oo) -> bb(R)$ with
@@ -3344,7 +3344,7 @@ $
 For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' + a^2 lambda_k T_k = 0$ with frequency $omega_k = (a k pi) / L$, so $T_k (t) = A_k cos (omega_k t) + B_k sin (omega_k t)$. Superposing all modes and fitting the initial data by the orthogonality of the sines:
 
 #theorem(name: "Dirichlet Series Solution of the Initial-Boundary Value Problem")[
-  The initial-boundary value problem (#link(<def:ibvp-wave>)[Def.]) with $phi in C^2 ([0, L])$, $psi in C^1 ([0, L])$ satisfying the compatibility conditions has the solution
+  (#link(<def:ibvp-wave>)[The initial-boundary value problem]) with $phi in C^2 ([0, L])$, $psi in C^1 ([0, L])$ satisfying the compatibility conditions has the solution
   $
     u (x, t) = sum_(k=1)^oo (A_k cos (omega_k t) + B_k sin (omega_k t)) sin ((k pi x) / L), quad omega_k = (a k pi) / L,
   $
@@ -3440,7 +3440,7 @@ The existence results of the preceding sections say *where* a solution can be fo
 ] <cor:wave-ibvp-uniqueness>
 
 #proof[
-  The difference $w = u - v$ is a $C^2$ solution with zero initial data satisfying the same homogeneous boundary conditions, so its energy $E (t)$ of #link(<thm:wave-energy>)[Th.] is constant and $E (0) = 0$; hence $w_t equiv 0$ and $nabla w equiv 0$ in $Omega$ for every $t$. A function whose gradient vanishes on the connected domain $Omega$ is independent of $bold(x)$, and $w (dot, 0) = 0$ then gives $w equiv 0$.
+  The difference $w = u - v$ is a $C^2$ solution with zero initial data satisfying the same homogeneous boundary conditions, so by #link(<thm:wave-energy>)[Conservation of Energy] its energy $E (t)$ is constant and $E (0) = 0$; hence $w_t equiv 0$ and $nabla w equiv 0$ in $Omega$ for every $t$. A function whose gradient vanishes on the connected domain $Omega$ is independent of $bold(x)$, and $w (dot, 0) = 0$ then gives $w equiv 0$.
 ]
 
 #corollary(name: "Continuous Dependence for the Initial-Boundary Value Problem")[
@@ -3452,7 +3452,7 @@ The existence results of the preceding sections say *where* a solution can be fo
 ] <cor:wave-ibvp-stability>
 
 #proof[
-  The difference $w$ solves the homogeneous equation and satisfies the homogeneous boundary conditions, so its energy is constant by #link(<thm:wave-energy>)[Th.]; its value at $t = 0$ is read off the initial data.
+  The difference $w$ solves the homogeneous equation and satisfies the homogeneous boundary conditions, so its energy is constant by #link(<thm:wave-energy>)[Conservation of Energy]; its value at $t = 0$ is read off the initial data.
 ]
 
 #note[
@@ -3506,7 +3506,7 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 ] <cor:wave-uniqueness>
 
 #proof[
-  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(bold(x)_0, t_0)$ the data of $w$ vanish on $B (bold(x)_0, a t_0)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) $E_C (t) = 0$ for all $t in [0, t_0]$, hence $w_t = 0$ and $nabla w = 0$ on the cone $C$. By the argument of #link(<cor:wave-ibvp-uniqueness>)[Cor.] $w$ is constant on $C$, and $w (dot, 0) = 0$ gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
+  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(bold(x)_0, t_0)$ the data of $w$ vanish on $B (bold(x)_0, a t_0)$, so $E_C (0) = 0$; by #link(<thm:local-energy-cone>)[the local energy inequality] $E_C (t) = 0$ for all $t in [0, t_0]$, hence $w_t = 0$ and $nabla w = 0$ on the cone $C$. By the argument used for #link(<cor:wave-ibvp-uniqueness>)[uniqueness of the initial-boundary value problem], $w$ is constant on $C$, and $w (dot, 0) = 0$ gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
 ]
 
 #corollary(name: "Continuous Dependence on the Data")[
@@ -3518,7 +3518,7 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
 ] <cor:wave-stability>
 
 #proof[
-  Apply #link(<thm:local-energy-cone>)[Th.] to $w = u - v$ and insert the initial data of $w$; its local energy at $t = 0$ is exactly the integral displayed.
+  Apply #link(<thm:local-energy-cone>)[the local energy inequality] to $w = u - v$ and insert the initial data of $w$; its local energy at $t = 0$ is exactly the integral displayed.
 ]
 
 #corollary(name: "Energy Estimate with a Source")[
@@ -3548,7 +3548,7 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
   $
   where $a^2 ((k pi)/L)^2 = omega_k^2$ was used; their sum is the constant $A^2 omega_k^2 L/4$, in agreement with the conservation law of #link(<thm:wave-energy>)[§16.6]. The two parts oscillate in antiphase, twice per period: the string stores energy alternately as kinetic and as elastic energy, while the total never changes.
 
-  For a superposition of modes the orthogonality of the eigenfunctions annihilates every cross term, so the modes do not exchange energy and, termwise differentiation being justified as in the proof of #link(<thm:wave-dirichlet-series>)[Th.],
+  For a superposition of modes the orthogonality of the eigenfunctions annihilates every cross term, so the modes do not exchange energy and, termwise differentiation being justified as in the proof of #link(<thm:wave-dirichlet-series>)[the Dirichlet series solution],
   $
     E = L/4 sum_(k=1)^oo omega_k^2 (A_k^2 + B_k^2).
   $
@@ -3565,7 +3565,7 @@ The energy estimates of §16.6 answered the local question — how much of the i
 ] <thm:domain-of-dependence>
 
 #proof[
-  By linearity it suffices to show that data supported outside $B (bold(x), a t)$ do not affect $u (bold(x), t)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(bold(x), t)$. The data of $w$ vanish on $C inter {s = 0} = B (bold(x), a t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.] of §16.6) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (bold(x), t) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
+  By linearity it suffices to show that data supported outside $B (bold(x), a t)$ do not affect $u (bold(x), t)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(bold(x), t)$. The data of $w$ vanish on $C inter {s = 0} = B (bold(x), a t)$, so $E_C (0) = 0$; by #link(<thm:local-energy-cone>)[the local energy inequality] of §16.6 the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (bold(x), t) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
 ]
 
 #definition(name: "Domains of Dependence, Determinacy and Influence")[
