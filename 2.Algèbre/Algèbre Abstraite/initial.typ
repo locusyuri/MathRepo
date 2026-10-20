@@ -375,17 +375,17 @@ regardless — this will be systematised in Chapter 5 (see
   (T, diamond)$ where both systems have identities $e, e'$ and
   inverses, the *kernel* of $f$ is
   $
-    "ker" f = {a in S | f(a) = e'}.
+    "Ker" f = {a in S | f(a) = e'}.
   $
   It measures the collapse $f$ performs. In particular, a homomorphism
-  of such systems is injective exactly when $"ker" f$ is trivial:
+  of such systems is injective exactly when $"Ker" f$ is trivial:
   $f(a) = f(b)$ implies $f(a star b^(-1)) = e'$, so $a star b^(-1) in
-  "ker" f$; if the kernel holds only $e$, then $a = b$. The kernel
+  "Ker" f$; if the kernel holds only $e$, then $a = b$. The kernel
   turns out to be not merely a subset but a substructure of a very
   special kind — normal subgroup (Chapter 5), ideal (Chapter 9) — and
   the homomorphism theorems of Chapters 5 and 9, the first great
   structure theorems of this subject, are precisely the statement
-  that $S$ is built from $"ker" f$ and the image $f(S)$.
+  that $S$ is built from $"Ker" f$ and the image $f(S)$.
 ] <note:kernel-preliminary>
 
 A closing remark situates the chapter. We now possess: objects with
@@ -2500,7 +2500,7 @@ hand, the rest is a verification.
   $
     pi: G -> G \/ N, quad pi(a) = a N
   $
-  is a surjective homomorphism with $"ker" pi = N$.
+  is a surjective homomorphism with $"Ker" pi = N$.
 ] <thm:quotient-group>
 
 #proof[
@@ -2519,7 +2519,7 @@ hand, the rest is a verification.
   pi(b)$, so $pi$ is a homomorphism; it is surjective by
   construction, and
   $
-    "ker" pi = {a in G | a N = N} = N
+    "Ker" pi = {a in G | a N = N} = N
   $
   by the coset-equality criterion.
 ]
@@ -2606,7 +2606,7 @@ hand, the rest is a verification.
   The natural projection
   $pi: G -> G \/ N$ is more than a homomorphism: it is the
   *universal* homomorphism out of $G$ whose kernel contains $N$.
-  Precisely, any homomorphism $f: G -> H$ with $N subset.eq "ker" f$
+  Precisely, any homomorphism $f: G -> H$ with $N subset.eq "Ker" f$
   factors uniquely through $G \/ N$ — that is, there is a unique
   homomorphism $f^~: G \/ N -> H$ with $f = f^~ compose pi$. This
   factorization, the content of the *First Isomorphism Theorem*, is
@@ -2785,7 +2785,7 @@ chapter closed with *simple groups* — the atoms of group theory,
 admitting no further quotient (§4.3). The story so far says *when*
 one can take a quotient; Chapter 5 says *why* one does — every
 homomorphism $f: G -> H$ is, up to isomorphism, the natural
-projection $G -> G \/ "ker" f$.
+projection $G -> G \/ "Ker" f$.
 
 // ==========================================================================
 // Chapter 5: 群的同态定理
@@ -2794,13 +2794,13 @@ projection $G -> G \/ "ker" f$.
 = Homomorphism Theorems for Groups // 群的同态定理
 
 Chapter 4 closed on a promise: every homomorphism $f: G -> H$ is,
-up to isomorphism, the natural projection $G -> G \/ "ker" f$. This
+up to isomorphism, the natural projection $G -> G \/ "Ker" f$. This
 chapter fulfills it. §5.1 strengthens the homomorphism concept of
 #link(<def:homomorphism>)[Chapter 1] for the group setting:
 kernels — previewed in #link(<note:kernel-preliminary>)[§1.3] — are
 not merely subgroups but *normal* subgroups, exactly the structures
 that support a quotient (§4.1). §5.2 then states and proves the
-*First Isomorphism Theorem* $G \/ "ker" f ~= "im" f$, the precise
+*First Isomorphism Theorem* $G \/ "Ker" f ~= "Im" f$, the precise
 form of #link(<note:natural-projection-universal>)[§4.2]'s universal
 property, and unpacks its consequence: every $f$ factors as natural
 projection, isomorphism, and inclusion. §5.3 closes with the
@@ -2861,17 +2861,17 @@ quotients).
 #definition(name: "Kernel and Image")[
   Let $f: G -> H$ be a group homomorphism. The *kernel* of $f$ is
   $
-    "ker" f = {a in G | f(a) = e'},
+    "Ker" f = {a in G | f(a) = e'},
   $
   and the *image* of $f$ is
   $
-    "im" f = {f(a) | a in G}.
+    "Im" f = {f(a) | a in G}.
   $
 ] <def:kernel-image>
 
 By #link(<prop:group-homomorphism-properties>)[property (4) and
-  (5)] of the homomorphism properties, $"ker" f <= G$ and
-$"im" f <= H$.
+  (5)] of the homomorphism properties, $"Ker" f <= G$ and
+$"Im" f <= H$.
 
 This formalises #link(<note:kernel-preliminary>)[§1.3]'s
 preliminary kernel. The key new fact — invisible at the level of
@@ -2879,21 +2879,21 @@ general algebraic systems, where inverses need not exist for every
 element — is that the kernel is *normal*.
 
 #theorem(name: "Kernels Are Normal")[
-  For any group homomorphism $f: G -> H$, the kernel $"ker" f$ is a
+  For any group homomorphism $f: G -> H$, the kernel $"Ker" f$ is a
   normal subgroup of $G$.
 ] <thm:kernel-normal>
 
 #proof[
   We verify criterion (3) of
   #link(<thm:normal-equivalents>)[§4.1]: for $a in G$ and $n in
-  "ker" f$ we must show $a n a^(-1) in "ker" f$. Compute
+  "Ker" f$ we must show $a n a^(-1) in "Ker" f$. Compute
   $
     f(a n a^(-1)) = f(a) f(n) f(a)^(-1) = f(a) dot e' dot f(a)^(-1)
     = e',
   $
   using #link(<prop:group-homomorphism-properties>)[property (1) and
-    (2)] and the fact that $f(n) = e'$ (since $n in "ker" f$). Hence
-  $a n a^(-1) in "ker" f$ as required.
+    (2)] and the fact that $f(n) = e'$ (since $n in "Ker" f$). Hence
+  $a n a^(-1) in "Ker" f$ as required.
 ]
 
 The theorem has a striking converse, which we record for emphasis:
@@ -2903,7 +2903,7 @@ The theorem has a striking converse, which we record for emphasis:
 the link between "normal subgroup" and "kernel of a homomorphism"
 is exact:
 $
-  {N lt.closed.eq G} <-> {"ker" f | f: G -> H "for some" H}.
+  {N lt.closed.eq G} <-> {"Ker" f | f: G -> H "for some" H}.
 $
 
 #example(name: "Determinant as a homomorphism.")[
@@ -2913,7 +2913,7 @@ $
   $
   is a homomorphism since $det(A B) = det(A) det(B)$. Its kernel is
   $
-    "ker"(det) = {A in "GL"_(n)(F) | det(A) = 1} = "SL"_(n)(F),
+    "Ker"(det) = {A in "GL"_(n)(F) | det(A) = 1} = "SL"_(n)(F),
   $
   the special linear group of #link(<def:general-linear-group>)[§2.2]
   and #link(<ex:normal-examples>)[§4.1]. Theorem
@@ -2930,7 +2930,7 @@ $
   sign of a product is the product of the signs (see
   #link(<def:alternating-group>)[§3.4]). Its kernel is
   $
-    "ker"("sign") = {sigma in S_n | "sign"(sigma) = +1} = A_n,
+    "Ker"("sign") = {sigma in S_n | "sign"(sigma) = +1} = A_n,
   $
   the alternating group. Again, Theorem
   #link(<thm:kernel-normal>)[above] re-proves, in one line, that
@@ -2946,15 +2946,15 @@ given $N lt.closed.eq G$, it finds a homomorphism (the natural projection) with
 kernel $N$.
 
 #property(name: "Image Is a Subgroup")[
-  For any homomorphism $f: G -> H$, the image $"im" f$ is a
+  For any homomorphism $f: G -> H$, the image $"Im" f$ is a
   subgroup of $H$. The corestriction — same mapping rule, target
   restricted to the image — is a *surjective* homomorphism $G ->
-  "im" f$ with the same kernel as $f$.
+  "Im" f$ with the same kernel as $f$.
 ] <prop:image-subgroup>
 
 #proof[
   Immediate from #link(<prop:group-homomorphism-properties>)[property
-    (4)] with $K = G$: $f(G) = "im" f <= H$. Surjectivity of the
+    (4)] with $K = G$: $f(G) = "Im" f <= H$. Surjectivity of the
   corestriction is by construction, and the kernel is unchanged
   since the mapping rule is.
 ]
@@ -2962,12 +2962,12 @@ kernel $N$.
 #example(name: "Two extreme homomorphisms.")[
   Let $G$ be any group.
   + For any subgroup $H <= G$, the *inclusion* $i: H -> G$, $i(h) =
-    h$, is an injective homomorphism with $"ker" i = {e_H}$ and
-    $"im" i = H$. The kernel is as small as possible — trivial — so
+    h$, is an injective homomorphism with $"Ker" i = {e_H}$ and
+    $"Im" i = H$. The kernel is as small as possible — trivial — so
     $i$ "forgets nothing".
   + For any $N lt.closed.eq G$, the *natural projection* $pi: G -> G \/ N$,
     $pi(a) = a N$, of #link(<thm:quotient-group>)[§4.2] is a
-    surjective homomorphism with $"ker" pi = N$ and $"im" pi = G \/
+    surjective homomorphism with $"Ker" pi = N$ and $"Im" pi = G \/
     N$. The kernel is as large as $N$ — chosen by us — and the
     projection "forgets exactly $N$'s worth of structure".
 
@@ -2981,20 +2981,20 @@ kernel $N$.
 The two extreme examples of #link(<ex:inclusion-projection>)[above] —
 inclusions (trivial kernel) and projections (kernel $N$, image $G \/ N$)
 — are the building blocks of *every* homomorphism. Given $f: G -> H$,
-the projection $pi: G -> G \/ "ker" f$ quotients out exactly the
-information $f$ forgets, and the inclusion $i: "im" f -> H$ records
+the projection $pi: G -> G \/ "Ker" f$ quotients out exactly the
+information $f$ forgets, and the inclusion $i: "Im" f -> H$ records
 where the images land. The First Isomorphism Theorem says that what
-remains in between is an isomorphism: the quotient $G \/ "ker" f$
-recovers, up to renaming, exactly the image $"im" f$.
+remains in between is an isomorphism: the quotient $G \/ "Ker" f$
+recovers, up to renaming, exactly the image $"Im" f$.
 
 #theorem(name: "First Isomorphism Theorem")[
   Let $f: G -> H$ be a group homomorphism. The map
   $
-    overline(f): G \/ "ker" f -> "im" f, quad a("ker" f) |-> f(a),
+    overline(f): G \/ "Ker" f -> "Im" f, quad a("Ker" f) |-> f(a),
   $
   is a well-defined isomorphism. In particular,
   $
-    G \/ "ker" f ~= "im" f.
+    G \/ "Ker" f ~= "Im" f.
   $
 ] <thm:first-isomorphism>
 
@@ -3002,26 +3002,26 @@ recovers, up to renaming, exactly the image $"im" f$.
   We verify four things in turn: that $overline(f)$ is well-defined,
   a homomorphism, injective, and surjective.
 
-  *Well-defined.* If $a("ker" f) = b("ker" f)$ then $b^(-1) a in
-  "ker" f$ by #link(<def:coset>)[§3.3], so $f(b^(-1) a) = e'$, i.e.
+  *Well-defined.* If $a("Ker" f) = b("Ker" f)$ then $b^(-1) a in
+  "Ker" f$ by #link(<def:coset>)[§3.3], so $f(b^(-1) a) = e'$, i.e.
   $f(b)^(-1) f(a) = e'$, giving $f(a) = f(b)$. Thus $overline(f)$
   depends only on the coset, not on the representative.
 
   *Homomorphism.* For $a, b in G$,
   $
-    overline(f)(a("ker" f) dot b("ker" f)) & = overline(f)((a b)("ker"
+    overline(f)(a("Ker" f) dot b("Ker" f)) & = overline(f)((a b)("Ker"
                                                  f)) = f(a b) \
-                                           & = f(a) f(b) = overline(f)(a("ker" f)) dot overline(f)(b("ker" f)),
+                                           & = f(a) f(b) = overline(f)(a("Ker" f)) dot overline(f)(b("Ker" f)),
   $
   using the definition of the quotient operation
   (#link(<thm:quotient-group>)[§4.2]) and that $f$ is a homomorphism.
 
-  *Injective.* If $overline(f)(a("ker" f)) = e'$, then $f(a) = e'$,
-  so $a in "ker" f$, i.e. $a("ker" f) = "ker" f$ — the identity of
-  $G \/ "ker" f$. The kernel of $overline(f)$ is trivial.
+  *Injective.* If $overline(f)(a("Ker" f)) = e'$, then $f(a) = e'$,
+  so $a in "Ker" f$, i.e. $a("Ker" f) = "Ker" f$ — the identity of
+  $G \/ "Ker" f$. The kernel of $overline(f)$ is trivial.
 
-  *Surjective.* By definition, every element of $"im" f$ is of the
-  form $f(a) = overline(f)(a("ker" f))$ for some $a in G$.
+  *Surjective.* By definition, every element of $"Im" f$ is of the
+  form $f(a) = overline(f)(a("Ker" f))$ for some $a in G$.
 
   Being a well-defined, injective and surjective homomorphism,
   $overline(f)$ is an isomorphism.
@@ -3031,7 +3031,7 @@ recovers, up to renaming, exactly the image $"im" f$.
   image("img/first-isomorphism.svg"),
   caption: [The First Isomorphism Theorem as a commutative diagram:
     every row is exact, and $overline(f)$ fills the dashed arrow as
-    the canonical isomorphism $G \/ "ker" f ~= "im" f$.],
+    the canonical isomorphism $G \/ "Ker" f ~= "Im" f$.],
 ) <fig:first-isomorphism>
 
 The theorem unpacks into a *factorization* of $f$, which is often
@@ -3040,7 +3040,7 @@ more useful in practice than the bare isomorphism.
 #corollary(name: "Homomorphism Factorization")[
   Every group homomorphism $f: G -> H$ factors as
   $
-    G arrow.r^pi G \/ "ker" f arrow.r^(overline(f)) "im" f
+    G arrow.r^pi G \/ "Ker" f arrow.r^(overline(f)) "Im" f
     arrow.r.hook H,
   $
   where $pi$ is the natural projection, $overline(f)$ is the
@@ -3060,7 +3060,7 @@ land), with the quotient doing the rest.
     phi: bb(Z) -> bb(Z)_n, quad k |-> overline(k) = k + n bb(Z),
   $
   mapping an integer to its residue modulo $n$. It is surjective,
-  with kernel $"ker" phi = n bb(Z)$. The First Isomorphism Theorem
+  with kernel $"Ker" phi = n bb(Z)$. The First Isomorphism Theorem
   recovers the classification of cyclic groups of order $n$:
   $
     bb(Z) \/ n bb(Z) ~= bb(Z)_n.
@@ -3097,14 +3097,14 @@ land), with the quotient doing the rest.
 
 #note[
   *Isomorphism invariants.* The First Isomorphism Theorem turns the
-  question "compute $G \/ "ker" f$" into the often-easier question
-  "compute $"im" f$". Combined with
+  question "compute $G \/ "Ker" f$" into the often-easier question
+  "compute $"Im" f$". Combined with
   #link(<prop:group-homomorphism-properties>)[§5.1], this makes the
   following invariants cheap to read off from any homomorphism out of
   $G$:
-  - *Order*: $abs(G \/ "ker" f) = abs("im" f)$, so quotients of $G$
+  - *Order*: $abs(G \/ "Ker" f) = abs("Im" f)$, so quotients of $G$
     are bounded by the orders of its homomorphic images.
-  - *Abelianness*: $G \/ "ker" f$ is abelian "iff" $"im" f$ is — quotients
+  - *Abelianness*: $G \/ "Ker" f$ is abelian "iff" $"Im" f$ is — quotients
     inherit commutativity from images and conversely.
   - *Simplicity*: if $G$ is simple, every non-trivial homomorphism
     out of $G$ is injective (its kernel cannot be $G$), so $G$ embeds
@@ -3123,7 +3123,7 @@ Isomorphism Theorems, treated next.
 
 == Second and Third Isomorphism Theorems // 第二与第三同构定理
 
-The First Isomorphism Theorem identifies $G \/ "ker" f$ with $"im" f$.
+The First Isomorphism Theorem identifies $G \/ "Ker" f$ with $"Im" f$.
 Two natural follow-up questions arise:
 
 (a) If $N$, $K$ are both normal in $G$ with $N subset.eq K$, does
@@ -3207,12 +3207,12 @@ have isomorphic quotients.
   $
   where $pi$ is the natural projection and $q$ is the quotient by
   $K \/ N$. This is a surjective homomorphism $psi: G -> (G \/ N)
-  \/ (K \/ N)$. Its kernel is $K$: $a in "ker" psi$ "iff" $a N$ lies in
+  \/ (K \/ N)$. Its kernel is $K$: $a in "Ker" psi$ "iff" $a N$ lies in
   $K \/ N$, "iff" $a in K$ (since $K \/ N$ consists of cosets $k N$
   with $k in K$). The First Isomorphism Theorem
   (#link(<thm:first-isomorphism>)[§5.2]) applied to $psi$ gives
   $
-    (G \/ N) \/ (K \/ N) ~= G \/ "ker" psi = G \/ K.
+    (G \/ N) \/ (K \/ N) ~= G \/ "Ker" psi = G \/ K.
   $
 ]
 
@@ -3388,7 +3388,7 @@ Two equivalent formulations make this explicit.
   + The action is *faithful* (different $g$ move some $x$
     differently) "iff" $rho$ is injective.
   + The *kernel* of the action, $K = {g in G | g dot.c x = x
-      "for all" x in X}$, equals $"ker" rho$; it is a normal subgroup
+      "for all" x in X}$, equals $"Ker" rho$; it is a normal subgroup
     of $G$ by #link(<prop:group-homomorphism-properties>)[§5.1].
 ] <prop:action-permutation-rep>
 
@@ -4303,7 +4303,7 @@ abelian group:
   Let $G$ be a finitely generated abelian group, with generators
   $g_1, dots, g_n$. Then:
   + There is a surjective homomorphism $phi: bb(Z)^n -> G$, $e_i |->
-    g_i$ (so $G ≅ bb(Z)^n \/ "ker" phi$).
+    g_i$ (so $G ≅ bb(Z)^n \/ "Ker" phi$).
   + Let $t(G) = {x in G | m x = 0 "for some" m > 0}$ be the *torsion
     subgroup* of $G$ (elements of finite order). Then $t(G)$ is a
     subgroup, and there is a free abelian subgroup $F <= G$ of rank
@@ -4320,7 +4320,7 @@ abelian group:
   dots + n_n g_n$, is a surjective homomorphism (the $g_i$ generate
   $G$). The First Isomorphism Theorem
   (#link(<thm:first-isomorphism>)[§5.2]) gives $G ≅ bb(Z)^n \/
-  "ker" phi$.
+  "Ker" phi$.
 
   (2) The torsion elements $t(G)$ form a subgroup: if $m x = 0$ and $n
   y = 0$ then $m n (x - y) = 0$. The quotient $G / t(G)$ is
@@ -4335,7 +4335,7 @@ abelian group:
   with $pi(f_i) =$ standard basis of $bb(Z)^r$. The subgroup $F =
   ⟨f_1, dots, f_r⟩$ is free abelian of rank $r$, and
   $G = F + t(G)$ (any $x in G$ has $pi(x) = sum n_i pi(f_i)$, so $x -
-  sum n_i f_i in "ker" pi = t(G)$). Since $F ∩ t(G) = {0}$ (free
+  sum n_i f_i in "Ker" pi = t(G)$). Since $F ∩ t(G) = {0}$ (free
   vs. torsion), $G ~= F ⊕ t(G)$.
 ]
 
@@ -4532,10 +4532,10 @@ We can now complete the proof of the structure theorem.
 
 *Existence in the structure theorem.* By
 #link(<lem:free-subgroup>)[the free subgroup lemma], $G$ admits a
-surjection $phi : bb(Z)^n -> G$ with $G ≅ bb(Z)^n \/ "ker" phi$. The
-kernel $"ker" phi$ is a subgroup of $bb(Z)^n$; since $bb(Z)$ is
+surjection $phi : bb(Z)^n -> G$ with $G ≅ bb(Z)^n \/ "Ker" phi$. The
+kernel $"Ker" phi$ is a subgroup of $bb(Z)^n$; since $bb(Z)$ is
 Noetherian (every ideal of $bb(Z)$ is principal), every subgroup of
-$bb(Z)^n$ is finitely generated, so $"ker" phi = A dot bb(Z)^m$ for
+$bb(Z)^n$ is finitely generated, so $"Ker" phi = A dot bb(Z)^m$ for
 some $n times m$ integer matrix $A$.
 
 Apply #link(<thm:smith-normal-form>)[Smith normal form] to $A$:
@@ -4758,7 +4758,7 @@ the group-theoretic half of this book. Three threads converge here:
   $p$-primary decomposition makes them unique and completely
   decomposes them.
 - *The isomorphism theorems* (#link(<thm:first-isomorphism>)[§5.2])
-  let us write $G$ as a quotient $bb(Z)^n \/ "ker" phi$, from which
+  let us write $G$ as a quotient $bb(Z)^n \/ "Ker" phi$, from which
   the Smith normal form extracts the invariant factors.
 
 For *non-abelian* groups, no structure theorem of comparable strength
