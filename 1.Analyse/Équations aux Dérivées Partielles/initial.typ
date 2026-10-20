@@ -2487,13 +2487,16 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 //     - 齐次 Dirichlet/Neumann 特征展开；Robin（弹性连接）情形
 //     - 非齐次边界条件约化
 //
-//   Section 16.6: Finite Propagation Speed and Dispersive Decay (波的传播与衰减)
+//   Section 16.6: Energy Inequality, Uniqueness and Stability (能量不等式、唯一性与稳定性)
+//     - 能量守恒（有界域，Dirichlet/Neumann）、混合问题唯一性与连续依赖
+//     - Robin（弹性连接）与阻尼边界：总能量守恒、真正耗散
+//     - 锥上局部能量不等式；Cauchy 问题唯一性、连续依赖、源项能量估计（Grönwall）
+//     - 驻波能量算例（动能/势能互换、模态间不交换能量）
+//
+//   Section 16.7: Finite Propagation Speed and Dispersive Decay (波的传播与衰减)
 //     - 依赖区域、决定区域、影响区域
 //     - Huygens 原理（强/弱）、色散衰减
-//
-//   Section 16.7: Energy Inequality, Uniqueness and Stability (能量不等式、唯一性与稳定性)
-//     - 能量恒等式、锥上局部能量不等式
-//     - 唯一性、连续依赖（稳定性）
+//     - 章末收束：与热方程对照，桥接 Ch 17 的能量方法
 
 // --- Chapter 17: Linear Hyperbolic Systems (线性双曲系统) ---
 
@@ -2951,7 +2954,7 @@ When characteristics cross, the classical solution breaks down and we must admit
 
 = Wave Equation // 波动方程
 
-The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form in one dimension was obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[Ch 7]). The chapter is organized around one fully general problem — the Cauchy problem on $bb(R)^n$ with a source term *and* nonzero initial data. We first derive the equation itself from mechanics — the vibrating string by Newton's second law, acoustic waves by conservation of momentum — and discuss the initial and boundary conditions that select a well-posed problem (§16.1). The solution is then built in three stages. First the *homogeneous* equation is solved: in one dimension by *d'Alembert's formula* via the method of traveling waves, including the semi-infinite string by the method of extensions (§16.2), and in higher dimensions by spherical means and the method of descent (§16.3). The *superposition principle* then reduces the inhomogeneous problem to the homogeneous one, and *Duhamel's principle* supplies the source contribution in every dimension (§16.4). On a bounded interval the mixed initial-boundary value problem is treated by *separation of variables* (§16.5). The chapter closes with the qualitative theory — finite propagation speed, Huygens' principle, dispersive decay (§16.6) — and the energy inequality with its uniqueness and stability corollaries (§16.7). The qualitative picture is complementary to the heat equation (Ch 10): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
+The wave equation, introduced in Chapter 1 (#link(<def:wave-equation>)[Ch 1]), is the prototypical hyperbolic equation. Its canonical form in one dimension was obtained in Chapter 2 (#link(<eq:canonical-hyperbolic>)[§2.3]), and its fundamental solution was constructed in Chapter 7 (#link(<ex:fund-wave>)[Ch 7]). The chapter is organized around one fully general problem — the Cauchy problem on $bb(R)^n$ with a source term *and* nonzero initial data. We first derive the equation itself from mechanics — the vibrating string by Newton's second law, acoustic waves by conservation of momentum — and discuss the initial and boundary conditions that select a well-posed problem (§16.1). The solution is then built in three stages. First the *homogeneous* equation is solved: in one dimension by *d'Alembert's formula* via the method of traveling waves, including the semi-infinite string by the method of extensions (§16.2), and in higher dimensions by spherical means and the method of descent (§16.3). The *superposition principle* then reduces the inhomogeneous problem to the homogeneous one, and *Duhamel's principle* supplies the source contribution in every dimension (§16.4). On a bounded interval the mixed initial-boundary value problem is treated by *separation of variables* (§16.5). The analytic core of the chapter is the *energy method* (§16.6): conservation of energy on bounded domains, the local energy inequality on characteristic cones, and the resulting uniqueness and stability of the mixed and of the Cauchy problem. The chapter closes with the qualitative theory — finite propagation speed, Huygens' principle, dispersive decay (§16.7). The qualitative picture is complementary to the heat equation (Ch 10): the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
 
 == Derivation of the Wave Equation and the Cauchy Problem // 波动方程的导出与柯西问题
 
@@ -3063,7 +3066,7 @@ If the medium is bounded, the solution is further constrained on the spatial bou
 ]
 
 #note[
-  The two terms in the formula are traveling waves: $F (x - a t)$ moves right with speed $a$ without changing shape, $G (x + a t)$ moves left. The initial velocity $psi$ contributes the integral term, whose value at $(x, t)$ depends on $psi$ only on the interval $[x - a t, x + a t]$ — the first manifestation of finite propagation speed (§16.6).
+  The two terms in the formula are traveling waves: $F (x - a t)$ moves right with speed $a$ without changing shape, $G (x + a t)$ moves left. The initial velocity $psi$ contributes the integral term, whose value at $(x, t)$ depends on $psi$ only on the interval $[x - a t, x + a t]$ — the first manifestation of finite propagation speed (§16.7).
 ]
 
 === The Method of Traveling Waves // 传播波法
@@ -3114,7 +3117,7 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
 
   For the *even* extension the solution is even in $x$, $tilde(u) (-x, t) = tilde(u) (x, t)$, whence $tilde(u)_x (0, t) = 0$.
 
-  In both cases the restriction $u = tilde(u)|_(x > 0)$ therefore satisfies the boundary condition as well as the initial data; the formulas above are d'Alembert's formula written out, using $tilde(phi) (x - a t) = -phi (a t - x)$ (odd) or $tilde(phi) (x - a t) = phi (a t - x)$ (even) and deforming the integral over the negative segment to the positive one in the region $0 < x < a t$. The compatibility conditions make the extensions $C^2$, and uniqueness follows from the energy method (§16.7).
+  In both cases the restriction $u = tilde(u)|_(x > 0)$ therefore satisfies the boundary condition as well as the initial data; the formulas above are d'Alembert's formula written out, using $tilde(phi) (x - a t) = -phi (a t - x)$ (odd) or $tilde(phi) (x - a t) = phi (a t - x)$ (even) and deforming the integral over the negative segment to the positive one in the region $0 < x < a t$. The compatibility conditions make the extensions $C^2$, and uniqueness follows from the energy method (§16.6).
 ]
 
 #note[
@@ -3183,7 +3186,7 @@ Parameterizing the unit sphere with the spherical coordinates introduced in the 
 $
   u (bold(x), t) = 1/(4 pi) (partial)/(partial t) integral_0^(2 pi) integral_0^pi t phi (bold(x) + a t bold(omega)) sin phi.alt dif phi.alt dif theta + t/(4 pi) integral_0^(2 pi) integral_0^pi psi (bold(x) + a t bold(omega)) sin phi.alt dif phi.alt dif theta.
 $
-Both forms make the domain of dependence visible: the solution at $(bold(x), t)$ is assembled exclusively from the initial data on the single sphere of radius $a t$ about $bold(x)$, and no data from the interior of the ball enter. This is the mechanism behind the strong Huygens principle in three dimensions (§16.6), in sharp contrast with the two-dimensional formula of the next section, where the integration runs over the full disk and a trailing wake appears.
+Both forms make the domain of dependence visible: the solution at $(bold(x), t)$ is assembled exclusively from the initial data on the single sphere of radius $a t$ about $bold(x)$, and no data from the interior of the ball enter. This is the mechanism behind the strong Huygens principle in three dimensions (§16.7), in sharp contrast with the two-dimensional formula of the next section, where the integration runs over the full disk and a trailing wake appears.
 
 === The Method of Descent // 降维法
 
@@ -3203,7 +3206,7 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
   $
   and substituting into Kirchhoff's formula yields Poisson's formula.
 
-  Note that the integral runs over the full *disk*, not the sphere: this is the mechanism behind the trailing wake and the failure of the strong Huygens principle in even dimensions (§16.6).
+  Note that the integral runs over the full *disk*, not the sphere: this is the mechanism behind the trailing wake and the failure of the strong Huygens principle in even dimensions (§16.7).
 ]
 
 #example(name: "Descent to One Dimension: D'Alembert's Formula")[
@@ -3366,7 +3369,7 @@ For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' 
   $
     2 sin ((k pi x) / L) cos (omega_k t) = sin ((k pi (x - a t)) / L) + sin ((k pi (x + a t)) / L).
   $
-  The frequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = (a pi) / L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (#link(<thm:wave-energy>)[§16.7]).
+  The frequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = (a pi) / L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (#link(<thm:wave-energy>)[§16.6]).
 ]
 
 #figure(
@@ -3410,7 +3413,146 @@ For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' 
   where $f_k (t)$ is the $k$-th sine coefficient of the right-hand side; each $q_k$ is recovered by the one-dimensional Duhamel formula of §16.4. Nonhomogeneous boundary conditions thus reduce to the homogeneous case at the price of a source term — the two standard subproblems of §16.4 reappear.
 ] <ex:wave-nonhomogeneous-boundary>
 
+== Energy Inequality, Uniqueness and Stability // 能量不等式、唯一性与稳定性
+
+The existence results of the preceding sections say *where* a solution can be found; the *energy method* answers the complementary questions — how many solutions there can be, and how sensitively they depend on the data. Its mechanism is an a priori identity obtained by multiplying the equation by $u_t$ and integrating over space. On a bounded domain the identity is a conservation law, and conservation yields uniqueness of the mixed problem; on all of $bb(R)^n$ the total energy need not be finite and no boundary term is available, so the identity has to be localized to a backward cone, whose *characteristic* lateral surface replaces the missing boundary. The resulting inequality is the analytic backbone of the qualitative theory of §16.7.
+
+=== Energy Conservation on Bounded Domains // 有界域上的能量守恒
+
+#theorem(name: "Conservation of Energy")[
+  Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary, let $T > 0$, and let $u in C^2 (overline(Omega) times [0, T])$ be a solution of the wave equation $u_(t t) = a^2 Delta u$ for $bold(x) in Omega$, $0 < t <= T$, with either $u = 0$ or $u_nu = 0$ on $partial Omega times (0, T]$, where $nu$ denotes the outward unit normal. Then the energy
+  $
+    E (t) = 1/2 integral_Omega (abs((partial u)/(partial t))^2 + a^2 abs(nabla u)^2) dif bold(x)
+  $
+  is constant in time: $E (t) = E (0)$ for all $t in [0, T]$.
+] <thm:wave-energy>
+
+#proof[
+  Since $u in C^2 (overline(Omega) times [0, T])$, the integral may be differentiated under the integral sign and the divergence theorem applied:
+  $
+    (dif)/(dif t) E (t) = integral_Omega ((partial u)/(partial t) (partial^2 u)/(partial t^2) + a^2 nabla u dot nabla ((partial u)/(partial t))) dif bold(x) = integral_Omega (partial u)/(partial t) ((partial^2 u)/(partial t^2) - a^2 Delta u) dif bold(x) + integral_(partial Omega) (partial u)/(partial t) a^2 (partial u)/(partial nu) dif S = 0,
+  $
+  the volume term vanishing by the equation and the boundary term by the boundary condition: in the Neumann case $(partial u)/(partial nu) = 0$ on the boundary, while in the Dirichlet case $u = 0$ on $partial Omega times (0, T]$ may be differentiated in $t$, which gives $u_t = 0$ there.
+]
+
+#corollary(name: "Uniqueness of the Mixed Problem")[
+  Let $Omega$, $T$ be as above and let $u, v in C^2 (overline(Omega) times [0, T])$ solve the wave equation in $Omega times (0, T]$ with the same homogeneous Dirichlet (or the same homogeneous Neumann) boundary conditions and the same initial data $u (dot, 0) = v (dot, 0)$, $u_t (dot, 0) = v_t (dot, 0)$. Then $u = v$: the mixed problem has at most one $C^2$ solution.
+] <cor:wave-mixed-uniqueness>
+
+#proof[
+  The difference $w = u - v$ is a $C^2$ solution with zero initial data satisfying the same homogeneous boundary conditions, so its energy $E (t)$ of #link(<thm:wave-energy>)[Th.] is constant and $E (0) = 0$; hence $w_t equiv 0$ and $nabla w equiv 0$ in $Omega$ for every $t$. A function whose gradient vanishes on the connected domain $Omega$ is independent of $bold(x)$, and $w (dot, 0) = 0$ then gives $w equiv 0$.
+]
+
+#corollary(name: "Continuous Dependence for the Mixed Problem")[
+  Let $u, v in C^2 (overline(Omega) times [0, T])$ be two solutions of the wave equation with the same homogeneous Dirichlet (or Neumann) boundary conditions and initial data $(phi, psi)$ and $(tilde(phi), tilde(psi))$, and put $w = u - v$. Then the energy of $w$ is independent of $t$ and equal to
+  $
+    1/2 integral_Omega (abs(w_t (bold(x), t))^2 + a^2 abs(nabla w (bold(x), t))^2) dif bold(x) = 1/2 integral_Omega (abs(psi - tilde(psi))^2 + a^2 abs(nabla (phi - tilde(phi)))^2) dif bold(x),
+  $
+  so small data in the energy norm produce a small solution in the same norm: the mixed problem is *stable*.
+] <cor:wave-mixed-stability>
+
+#proof[
+  The difference $w$ solves the homogeneous equation and satisfies the homogeneous boundary conditions, so its energy is constant by #link(<thm:wave-energy>)[Th.]; its value at $t = 0$ is read off the initial data.
+]
+
+#note[
+  *Elastic attachments and damping.* The argument above covers two of the three boundary conditions of §16.1. For an *elastic attachment* — the Robin condition $u_nu + k u = 0$ on $partial Omega$ with $k >= 0$, the case modelled in #link(<ex:wave-robin-separation>)[§16.5] — the boundary term of the energy identity does not vanish but reads
+  $
+    (dif)/(dif t) E (t) = -k a^2 integral_(partial Omega) u_t u dif S = -(k a^2)/2 (dif)/(dif t) integral_(partial Omega) u^2 dif S,
+  $
+  so what is conserved is the *total* energy — the wave energy $E$ plus the elastic energy $(k a^2)/2 integral_(partial Omega) u^2$ stored in the springs — while the wave energy alone need not be monotone. Uniqueness survives unchanged: for the difference $w$ of two solutions the total energy vanishes at $t = 0$, hence $E (t) = -(k a^2)/2 integral_(partial Omega) w^2 dif S <= 0$, and since $E >= 0$ the difference vanishes. Genuine *dissipation* requires the damping condition $u_nu = -k u_t$ with $k > 0$, for which $(dif)/(dif t) E (t) = -k a^2 integral_(partial Omega) u_t^2 dif S <= 0$: the energy decreases monotonically, and the same vanishing argument gives uniqueness.
+]
+
+On all of $bb(R)^n$ the total energy need not be finite, and the boundary term of the preceding argument is unavailable; the wave equation nevertheless admits a *local* energy inequality on characteristic cones, which is the key to uniqueness and stability for the Cauchy problem. The cone that enters is precisely the backward cone of the qualitative discussion of §16.7, drawn in #link(<fig:wave-domain-dependence>)[Figure] together with its domain of dependence.
+
+=== The Cauchy Problem: Local Energy, Uniqueness and Stability // 柯西问题：局部能量、唯一性与稳定性
+
+#theorem(name: "Local Energy Inequality on the Cone")[
+  Let $u in C^2 (bb(R)^n times [0, oo))$ be a solution of $u_(t t) = a^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $bold(x)_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(bold(x)_0, t_0)$,
+  $
+    C = {(bold(y), s) : 0 <= s <= t_0, abs(bold(y) - bold(x)_0) <= a (t_0 - s)}.
+  $
+  On the time slice $s = t$ define the local energy
+  $
+    E_C (t) = 1/2 integral_(B (bold(x)_0, a (t_0 - t))) (abs((partial u)/(partial t))^2 + a^2 abs(nabla u)^2) dif bold(y).
+  $
+  Then $E_C (t) <= E_C (0)$ for all $t in [0, t_0]$: the energy in a backward cone is non-increasing in time.
+] <thm:local-energy-cone>
+
+#proof[
+  Write $s$ for the time variable, $e_r = (bold(y) - bold(x)_0) / abs(bold(y) - bold(x)_0)$ for the radial unit vector, $partial_r u = nabla u dot e_r$ for the radial derivative and $nabla_T u$ for the tangential (sphere) gradient, so that $abs(nabla u)^2 = (partial_r u)^2 + abs(nabla_T u)^2$. The pointwise energy identity
+  $
+    (partial)/(partial s) (1/2 (((partial u)/(partial s))^2 + a^2 abs(nabla u)^2)) - "div" (a^2 (partial u)/(partial s) nabla u) = (partial u)/(partial s) ((partial^2 u)/(partial s^2) - a^2 Delta u) = 0
+  $
+  holds for $0 < s < t_0$.
+
+  Integrate it over the truncated cone $C_t = C inter {s <= t}$ and apply the divergence theorem in space-time to the field $X = (-a^2 u_s nabla u, 1/2 (u_s^2 + a^2 abs(nabla u)^2))$, whose space-time divergence vanishes by the identity. Written with the time component first, the outward unit normal is $nu = (1, bold(0))$ on the top slice $s = t$, $nu = (-1, bold(0))$ on the base $s = 0$, and $nu = (a, e_r) / sqrt(1 + a^2)$ on the lateral surface; the two slices contribute $E_C (t)$ and $-E_C (0)$, while on the lateral surface the flux is
+  $
+    integral_("lateral") (a/2 ((partial u)/(partial s) - a (partial u)/(partial r))^2 + (a^3/2) abs(nabla_T u)^2) / sqrt(1 + a^2) dif S >= 0,
+  $
+  a sum of squares, so no energy enters the cone through its side. Hence $E_C (t) + "flux" = E_C (0)$, and the claim follows.
+]
+
+#note[
+  *Why a cone?* The lateral surface is what makes the proof work: its normal is characteristic, and then the flux collapses to a sum of squares. For the lateral surface of a cylinder, whose normal $(0, e_r)$ is timelike, the flux would be the indefinite quantity $-a^2 u_s partial_r u$ and no inequality would follow. The cone $C$ is the natural region because it is exactly the set of space-time points that the data on the base ball $B (bold(x)_0, a t_0)$ can reach at speed $a$; the same computation, read backwards, is what proves the finite propagation speed of §16.7.
+]
+
+#corollary(name: "Uniqueness of the Cauchy Problem")[
+  Let $u, v in C^2 (bb(R)^n times [0, oo))$ be solutions of $u_(t t) = a^2 Delta u$ with the same initial data $u (dot, 0) = v (dot, 0)$ and $u_t (dot, 0) = v_t (dot, 0)$. Then $u = v$.
+] <cor:wave-uniqueness>
+
+#proof[
+  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(bold(x)_0, t_0)$ the data of $w$ vanish on $B (bold(x)_0, a t_0)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) $E_C (t) = 0$ for all $t in [0, t_0]$, hence $w_t = 0$ and $nabla w = 0$ on the cone $C$. By the argument of #link(<cor:wave-mixed-uniqueness>)[Cor.] $w$ is constant on $C$, and $w (dot, 0) = 0$ gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
+]
+
+#corollary(name: "Continuous Dependence on the Data")[
+  Let $u, v in C^2 (bb(R)^n times [0, oo))$ be solutions with initial data $(phi, psi)$ and $(tilde(phi), tilde(psi))$, where $phi, tilde(phi)$ are $C^1$ and $psi, tilde(psi)$ are continuous, and let $C$ be the backward cone with apex $(bold(x)_0, t_0)$. Then for all $t in [0, t_0]$ the local energy of the difference $w = u - v$ satisfies
+  $
+    E_C (t) <= E_C (0) = 1/2 integral_(B (bold(x)_0, a t_0)) (abs(psi - tilde(psi))^2 + a^2 abs(nabla (phi - tilde(phi)))^2) dif bold(y).
+  $
+  The bound is quantitative: the value at $(bold(x)_0, t_0)$ is controlled by the data on the base of the cone alone, and small data in the energy norm produce a small solution in the same norm.
+] <cor:wave-stability>
+
+#proof[
+  Apply #link(<thm:local-energy-cone>)[Th.] to $w = u - v$ and insert the initial data of $w$; its local energy at $t = 0$ is exactly the integral displayed.
+]
+
+#corollary(name: "Energy Estimate with a Source")[
+  Let $u in C^2 (bb(R)^n times [0, oo))$ solve $u_(t t) = a^2 Delta u + f$ with zero initial data, and let $C$ be the backward cone with apex $(bold(x)_0, t_0)$. Then for all $t in [0, t_0]$,
+  $
+    sqrt(E_C (t)) <= 1/sqrt(2) integral_0^t ||f (s)||_(L^2 (B (bold(x)_0, a (t_0 - s)))) dif s,
+  $
+  so the solution depends continuously on the source as well.
+] <cor:wave-source-energy>
+
+#proof[
+  With a source the identity of the preceding proof reads $partial_s P - "div" (a^2 u_s nabla u) = u_s f (bold(y), s)$, where $P = 1/2 (u_s^2 + a^2 abs(nabla u)^2)$; integrating it over $C_t$, the lateral flux being non-negative, gives
+  $
+    E_C (t) <= E_C (0) + integral_0^t integral_(B (bold(x)_0, a (t_0 - s))) abs(u_s) abs(f) dif bold(y) dif s,
+  $
+  and $E_C (0) = 0$ because the data vanish. By the Cauchy--Schwarz inequality the inner integral is at most $sqrt(2 E_C (s)) beta (s)$, with $beta (s) = ||f (s)||_(L^2 (B (bold(x)_0, a (t_0 - s))))$. Thus $e = E_C$ satisfies $e (t) <= h (t)$, where $h (t) = integral_0^t sqrt(2 e (s)) beta (s) dif s$, and $h' = sqrt(2 e) beta <= sqrt(2 h) beta$; consequently $(sqrt(h))' <= beta/sqrt(2)$ wherever $h > 0$, and integrating gives the claim. The degenerate case $h = 0$ follows by continuity.
+]
+
+#example(name: "Energy of a Standing Wave")[
+  Take a single Dirichlet mode of §16.5 on $Omega = (0, L)$,
+  $
+    u (x, t) = A sin ((k pi x)/L) cos (omega_k t), quad omega_k = (a k pi)/L.
+  $
+  Its kinetic and potential energies are
+  $
+    E_"kin" (t) = 1/2 integral_0^L u_t^2 dif x = (A^2 omega_k^2 L)/4 sin^2 (omega_k t), quad E_"pot" (t) = (a^2)/2 integral_0^L u_x^2 dif x = (A^2 omega_k^2 L)/4 cos^2 (omega_k t),
+  $
+  where $a^2 ((k pi)/L)^2 = omega_k^2$ was used; their sum is the constant $A^2 omega_k^2 L/4$, in agreement with the conservation law of #link(<thm:wave-energy>)[§16.6]. The two parts oscillate in antiphase, twice per period: the string stores energy alternately as kinetic and as elastic energy, while the total never changes.
+
+  For a superposition of modes the orthogonality of the eigenfunctions annihilates every cross term, so the modes do not exchange energy and, termwise differentiation being justified as in the proof of #link(<thm:wave-dirichlet-series>)[Th.],
+  $
+    E = L/4 sum_(k=1)^oo omega_k^2 (A_k^2 + B_k^2).
+  $
+] <ex:wave-standing-energy>
+
 == Finite Propagation Speed and Dispersive Decay // 波的传播与衰减
+
+The energy estimates of §16.6 answered the local question — how much of the initial data can reach a given point. Their geometric content is the *speed* at which information travels, the qualitative feature that separates hyperbolic from parabolic behavior.
 
 === Finite Propagation Speed and the Three Domains // 有限传播速度与三个区域
 
@@ -3419,7 +3561,7 @@ For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' 
 ] <thm:domain-of-dependence>
 
 #proof[
-  By linearity it suffices to show that data supported outside $B (bold(x), a t)$ do not affect $u (bold(x), t)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(bold(x), t)$. The data of $w$ vanish on $C inter {s = 0} = B (bold(x), a t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.], proved in the closing section below) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (bold(x), t) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
+  By linearity it suffices to show that data supported outside $B (bold(x), a t)$ do not affect $u (bold(x), t)$. Let $w$ be the solution with such data, and let $C$ be the backward cone with apex $(bold(x), t)$. The data of $w$ vanish on $C inter {s = 0} = B (bold(x), a t)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.] of §16.6) the energy of $w$ vanishes on every slice of $C$, hence $w = 0$ in $C$ and in particular $w (bold(x), t) = 0$. For $n = 1$ this is also immediate from d'Alembert's formula.
 ]
 
 #definition(name: "Domains of Dependence, Determinacy and Influence")[
@@ -3466,85 +3608,7 @@ Unlike the heat equation, where a disturbance is felt instantly at every distanc
   (Sketch.) Both statements are read off the explicit formulas of §16.3. In three dimensions, Kirchhoff's formula involves only spherical means over $partial B (bold(x), a t)$: the sphere meets the initial support only while $a t$ lies between the nearest and the farthest distance from $bold(x)$ to the support — after that $u (bold(x), t) = 0$. In two dimensions, Poisson's formula integrates over the full disk $B (bold(x), a t)$ with the weight $(a^2 t^2 - abs(bold(x) - bold(y))^2)^(-1/2)$, which is nonzero for all large $t$ (the wake); the dominant contribution as $t -> oo$ comes from the rim $abs(bold(x) - bold(y)) approx a t$, where the weight is barely integrable, and the resulting uniform bound is $O(t^(-1/2))$ — consistent with the general dispersive rate $t^(-(n-1)/2)$.
 ]
 
-== Energy Inequality, Uniqueness and Stability // 能量不等式、唯一性与稳定性
-
-=== Energy Conservation on Bounded Domains // 有界域上的能量守恒
-
-#theorem(name: "Conservation of Energy")[
-  Let $u$ be a $C^2$ solution of the wave equation $u_(t t) = a^2 Delta u$ in $Omega subset bb(R)^n$ with either $u = 0$ or $u_nu = 0$ on $partial Omega$. Then the energy
-  $
-    E (t) = 1/2 integral_Omega (abs((partial u)/(partial t))^2 + a^2 abs(nabla u)^2) dif bold(x)
-  $
-  is constant in time: $E (t) = E (0)$ for all $t$.
-] <thm:wave-energy>
-
-#proof[
-  Differentiate under the integral and integrate by parts:
-  $
-    (dif)/(dif t) E (t) = integral_Omega ((partial u)/(partial t) (partial^2 u)/(partial t^2) + a^2 nabla u dot nabla ((partial u)/(partial t))) dif bold(x) = integral_Omega (partial u)/(partial t) ((partial^2 u)/(partial t^2) - a^2 Delta u) dif bold(x) + integral_(partial Omega) (partial u)/(partial t) a^2 (partial u)/(partial nu) dif S = 0,
-  $
-  the volume term vanishing by the equation and the boundary term by the boundary condition.
-]
-
-#corollary(name: "Uniqueness of the Mixed Problem")[
-  For the wave equation on a bounded domain $Omega$ with homogeneous Dirichlet or Neumann boundary conditions, the mixed problem has at most one $C^2$ solution: two solutions with the same initial data coincide.
-] <cor:wave-mixed-uniqueness>
-
-#proof[
-  For the difference $w$ of two solutions, the energy $E (t)$ of #link(<thm:wave-energy>)[Th.] is constant, and $E (0) = 0$ since the initial data of $w$ vanish; hence $w_t equiv 0$ and $nabla w equiv 0$ in $Omega$. Thus $w$ is constant in space and time, and the initial condition $w (dot, 0) = 0$ gives $w equiv 0$.
-]
-
-On all of $bb(R)^n$ the total energy need not be finite, and the boundary term of the preceding argument is unavailable; the wave equation nevertheless admits a *local* energy inequality on characteristic cones, which is the key to uniqueness and stability for the Cauchy problem.
-
-=== The Cauchy Problem: Local Energy, Uniqueness and Stability // 柯西问题：局部能量、唯一性与稳定性
-
-#theorem(name: "Local Energy Inequality on the Cone")[
-  Let $u$ be a $C^2$ solution of $u_(t t) = a^2 Delta u$ in $bb(R)^n times (0, oo)$. Fix $bold(x)_0 in bb(R)^n$, $t_0 > 0$, and consider the backward cone with apex $(bold(x)_0, t_0)$,
-  $
-    C = {(bold(y), s) : 0 <= s <= t_0, abs(bold(y) - bold(x)_0) <= a (t_0 - s)}.
-  $
-  Define the local energy on the time slice
-  $
-    E_C (t) = 1/2 integral_(B (bold(x)_0, a (t_0 - t))) (abs((partial u)/(partial t))^2 + a^2 abs(nabla u)^2) dif bold(y).
-  $
-  Then $E_C (t) <= E_C (0)$ for all $t in [0, t_0]$: the energy in a backward cone is non-increasing in time.
-] <thm:local-energy-cone>
-
-#proof[
-  The pointwise energy identity
-  $
-    (partial)/(partial s) (1/2 ((partial u)/(partial s)^2 + a^2 abs(nabla u)^2)) - "div"(a^2 (partial u)/(partial s) nabla u) = (partial u)/(partial s) ((partial^2 u)/(partial s^2) - a^2 Delta u) = 0
-  $
-  holds for $s < t_0$.
-
-  Integrate it over the truncated cone $C_t = C inter {s <= t}$ and apply the divergence theorem in space-time. On the lateral face the outward space-time normal is $nu = (a, e_r) / sqrt(1 + a^2)$, with $e_r$ the radial unit vector, and the boundary flux is
-  $
-    integral_("lateral") (a/2 ((partial u)/(partial s) - a (partial u)/(partial r))^2 + (a^3/2) abs(nabla_T u)^2) / sqrt(1 + a^2) dif S >= 0,
-  $
-  a sum of squares: the lateral face is *characteristic*, so no energy flows out of the cone.
-
-  Hence $E_C (t) + "flux" = E_C (0)$, and the claim follows.
-]
-
-#corollary(name: "Uniqueness of the Cauchy Problem")[
-  Let $u, v$ be $C^2$ solutions of $u_(t t) = a^2 Delta u$ on $bb(R)^n times [0, oo)$ with the same initial data $u (dot, 0) = v (dot, 0)$ and $u_t (dot, 0) = v_t (dot, 0)$. Then $u = v$.
-] <cor:wave-uniqueness>
-
-#proof[
-  The difference $w = u - v$ has zero initial data and satisfies the homogeneous equation. For any $(bold(x)_0, t_0)$ the data of $w$ vanish on $B (bold(x)_0, a t_0)$, so $E_C (0) = 0$; by the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) $E_C (t) = 0$ for all $t <= t_0$, hence $w$ is constant in the cone, and the initial condition gives $w = 0$ there. The cones with varying apices cover space-time, so $w = 0$.
-]
-
-#corollary(name: "Continuous Dependence on the Data")[
-  Let $u, v$ be $C^2$ solutions with initial data $(phi, psi)$ and $(tilde(phi), tilde(psi))$, and let $C$ be the backward cone with apex $(bold(x)_0, t_0)$. Then for all $t in [0, t_0]$ the local energy of the difference $w = u - v$ satisfies
-  $
-    E_C (t) <= 1/2 integral_(B (bold(x)_0, a t_0)) (abs(psi - tilde(psi))^2 + a^2 abs(nabla (phi - tilde(phi)))^2) dif bold(y).
-  $
-  Small initial data (in the energy norm, on the domain of dependence) produce a small solution: the Cauchy problem is *stable*.
-] <cor:wave-stability>
-
-#proof[
-  Immediate from the local energy inequality (#link(<thm:local-energy-cone>)[Th.]) applied to $w = u - v$, whose initial energy is bounded by the data on $B (bold(x)_0, a t_0)$.
-]
+The wave equation thus completes the picture drawn by the heat equation (Ch 10). There the analogous computation — multiply the equation by $u$ and integrate — produces dissipation, $(dif)/(dif t) 1/2 ||u||^2 = -||nabla u||^2 <= 0$; here multiplication by $u_t$ produces conservation instead, and finite propagation speed replaces the instantaneous smoothing of the heat kernel: hyperbolic data are transported along characteristics without being regularized. Both mechanisms reappear in the first-order theory of the next chapter, where the same multiplier argument yields well-posedness for symmetric hyperbolic systems (#link(<thm:energy-wellposedness>)[§17.3]).
 
 = Linear Hyperbolic Systems // 线性双曲系统
 
@@ -3561,7 +3625,7 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
 ] <def:hyperbolic-system>
 
 #note[
-  The wave equation is equivalent to a symmetric hyperbolic system: setting $u = (v, w)$ with $v = u_t$, $w = nabla u$, the second-order equation becomes a first-order system whose coefficient matrices are symmetric. More generally, any second-order hyperbolic equation can be reduced this way. The symmetry of the $A_j$ is exactly what makes the energy method (§16.7) work directly.
+  The wave equation is equivalent to a symmetric hyperbolic system: setting $u = (v, w)$ with $v = u_t$, $w = nabla u$, the second-order equation becomes a first-order system whose coefficient matrices are symmetric. More generally, any second-order hyperbolic equation can be reduced this way. The symmetry of the $A_j$ is exactly what makes the energy method (§16.6) work directly.
 ]
 
 #theorem(name: "Energy Identity for Symmetric Systems")[
