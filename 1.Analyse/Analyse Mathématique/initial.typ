@@ -4438,7 +4438,7 @@ take a limit as the partition is refined.
 
 #definition(name: "Riemann Integral")[
   Let $f(x)$ be a bounded function defined on $[a, b]$. Take any set of
-  division points $\{x_i\}_(i=0)^n$ on $[a, b]$ to form a partition
+  division points ${x_i}_(i=0)^n$ on $[a, b]$ to form a partition
   $P: a = x_0 < x_1 < dots.c < x_n = b$, and choose arbitrary points
   $xi_i in [x_(i-1), x_i]$. Denote the length of the sub-interval
   $[x_(i-1), x_i]$ as $Delta x_i = x_i - x_(i-1)$, and let
@@ -4459,7 +4459,7 @@ take a limit as the partition is refined.
   Alternatively, the definition can be expressed as:
   $
     exists I, forall epsilon > 0, exists delta > 0, "s.t." forall P
-    (lambda = max_(1 <= i <= n) (Delta x_i) < delta), forall \{xi_i\}:
+    (lambda = max_(1 <= i <= n) (Delta x_i) < delta), forall {xi_i}:
     abs(sum_(i=1)^n f(xi_i) Delta x_i - I) < epsilon.
   $
 ] <def:riemann-integral>
@@ -4515,8 +4515,8 @@ take a limit as the partition is refined.
   infimum of $f(x)$ on $[x_(i-1), x_i]$ be $M_i$ and $m_i$
   ($i = 1, 2, dots.c, n$), respectively, i.e.
   $
-    M_i = sup \{f(x) | x in [x_(i-1), x_i]\}, quad
-    m_i = inf \{f(x) | x in [x_(i-1), x_i]\}.
+    M_i = sup {f(x) | x in [x_(i-1), x_i]}, quad
+    m_i = inf {f(x) | x in [x_(i-1), x_i]}.
   $
 
   After fixing the partition $P$, define the sums
@@ -4538,8 +4538,8 @@ take a limit as the partition is refined.
     $overline(S)(P_1) in bold(overline(S))$,
     $underline(S)(P_2) in bold(underline(S))$, it always holds that
     $ m(b - a) <= underline(S)(P_2) <= overline(S)(P_1) <= M(b - a). $
-  4. Let $L = inf \{overline(S)(P) | overline(S)(P) in bold(overline(S))\}$ and
-    $l = sup \{underline(S)(P) | underline(S)(P) in bold(underline(S))\}$,
+  4. Let $L = inf {overline(S)(P) | overline(S)(P) in bold(overline(S))}$ and
+    $l = sup {underline(S)(P) | underline(S)(P) in bold(underline(S))}$,
     which are called the *upper integral* and the *lower integral*,
     respectively. It always holds that $l <= L$.
   5. (*Darboux's theorem*) For any $f in B[a, b]$ it always holds that
@@ -4554,7 +4554,7 @@ take a limit as the partition is refined.
   upon taking infimum and supremum.
 
   *Proof of (2).* Let $P$ be a partition with division points
-  $\{x_i\}_(i=1)^n$, and let $P'$ be obtained from $P$ by inserting a single
+  ${x_i}_(i=1)^n$, and let $P'$ be obtained from $P$ by inserting a single
   new point $x' in (x_(i-1), x_i)$. Let $M'_i, M''_i$ be the suprema of $f$
   on $[x_(i-1), x']$ and $[x', x_i]$ respectively; then clearly
   $M'_i <= M_i$ and $M''_i <= M_i$, whence
@@ -4580,12 +4580,12 @@ take a limit as the partition is refined.
     $P': a = x'_0 < x'_1 < dots.c < x'_p = b$.
   + Take
     $
-      delta = min \{Delta x'_1, Delta x'_2, dots.c, Delta x'_p,
-      epsilon / (2(p-1)(M-m))\}.
+      delta = min {Delta x'_1, Delta x'_2, dots.c, Delta x'_p,
+      epsilon / (2(p-1)(M-m))}.
     $
   + Let $P: a = x_0 < x_1 < dots.c < x_n = b$ be any partition with
     $lambda = max_(1 <= i <= n) (Delta x_i) < delta$.
-  + Insert the points $\{x'_j\}_(j=0)^p$ into $\{x_i\}_(i=1)^n$ (i.e. merge
+  + Insert the points ${x'_j}_(j=0)^p$ into ${x_i}_(i=1)^n$ (i.e. merge
     $P'$ into $P$) to form a new partition $P^*$. Since $P^*$ refines both
     $P$ and $P'$, statement (2) gives
     $overline(S)(P^*) <= overline(S)(P)$ and $overline(S)(P^*) <= overline(S)(P')$.
@@ -4632,9 +4632,9 @@ take a limit as the partition is refined.
   $
   and the upper and lower integrals
   $
-    L = inf \{overline(S)(P, alpha) | overline(S)(P, alpha) in bold(overline(S))\},
+    L = inf {overline(S)(P, alpha) | overline(S)(P, alpha) in bold(overline(S))},
     quad
-    l = sup \{underline(S)(P, alpha) | underline(S)(P, alpha) in bold(underline(S))\},
+    l = sup {underline(S)(P, alpha) | underline(S)(P, alpha) in bold(underline(S))},
   $
   where $bold(overline(S))$ and $bold(underline(S))$ are the sets of
   Stieltjes upper and lower sums, respectively. If $L = l$, then
@@ -4735,8 +4735,8 @@ sums carry over verbatim to Stieltjes sums.
   $P': a = x'_0 < dots.c < x'_p = b$ we have
   $overline(S)(P') - underline(S)(P') < epsilon / 3$. Take
   $
-    delta = min \{Delta x'_1, dots.c, Delta x'_p,
-    epsilon / (3(p-1)(M-m))\}
+    delta = min {Delta x'_1, dots.c, Delta x'_p,
+    epsilon / (3(p-1)(M-m))}
   $
   (as in Darboux's theorem we may assume $M > m$). Let
   $P: a = x_0 < dots.c < x_n = b$ be any partition with $lambda < delta$, and
@@ -4860,7 +4860,7 @@ sums carry over verbatim to Stieltjes sums.
   throughout $[a, b]$.
 
   Now let $epsilon > 0$, take $epsilon_1 = epsilon / (4(b-a))$, and choose
-  $M > max\{f(x_1), dots.c, f(x_r), epsilon_1\}$ so large that
+  $M > max{f(x_1), dots.c, f(x_r), epsilon_1}$ so large that
   $abs(f(x)) <= M$ on all of $[a, b]$. Take a partition $P$ for which the total
   length of the sub-intervals containing some exceptional point
   $x_1, dots.c, x_r$ is $< epsilon / (4M)$ — possible since there are only
@@ -4885,7 +4885,7 @@ sums carry over verbatim to Stieltjes sums.
 #definition(name: "Null Set")[
   A set $E subset RR$ is called a *null set* (or a set of measure zero) if
   for any $epsilon > 0$ there exists a countable collection of open intervals
-  $\{I_n | n in NN^*\}$ such that
+  ${I_n | n in NN^*}$ such that
   $ E subset union.big_(i=1)^oo I_n quad "and" quad sum_(i=1)^oo abs(I_n) < epsilon, $
   where $abs(I_n)$ denotes the length of $I_n$.
 ] <def:null-set>
@@ -4902,11 +4902,11 @@ we say that the property holds *almost everywhere* on $A$.
 #lemma(name: "Oscillation Lemmas")[
   Let $f$ be bounded on $[a, b]$.
   1. With $omega$ the oscillation of $f$ on $[a, b]$,
-    $ omega = sup \{f(y_1) - f(y_0) | y_0, y_1 in [a, b]\}. $
+    $ omega = sup {f(y_1) - f(y_0) | y_0, y_1 in [a, b]}. $
   2. $f(x)$ is continuous at a point $x_0$ if and only if the oscillation of
     $f$ at $x_0$ is zero, i.e. $omega_f (x_0) = 0$.
   3. Let $D(f)$ be the set of discontinuities of $f$ on $[a, b]$. For
-    $delta > 0$, denote $D_delta = \{x in [a, b] | omega_f (x) >= delta\}$.
+    $delta > 0$, denote $D_delta = {x in [a, b] | omega_f (x) >= delta}$.
     Then
     $ D(f) = union.big_(n=1)^oo D_(1\/n). $
   4. If there exists a sequence of open intervals $(alpha_j, beta_j)$
@@ -4955,8 +4955,8 @@ $omega_f (x) = 0$.
   *Lemma 4.* Suppose the claim fails. Then there exist $epsilon_0 > 0$, a
   sequence $delta_n = 1\/n$, and points $s_n in K$, $t_n in [a, b]$ with
   $abs(s_n - t_n) < 1\/n$ but $abs(f(s_n) - f(t_n)) >= epsilon_0$. Since
-  $\{s_n\} subset K subset [a, b]$, the Bolzano-Weierstrass theorem yields a
-  subsequence $\{s_(k_n)\}$ converging to some $s^*$. Clearly $s^* in K$ (as
+  ${s_n} subset K subset [a, b]$, the Bolzano-Weierstrass theorem yields a
+  subsequence ${s_(k_n)}$ converging to some $s^*$. Clearly $s^* in K$ (as
   $K$ is closed) and
   $
     abs(t_(k_n) - s^*) <= abs(t_(k_n) - s_(k_n)) + abs(s_(k_n) - s^*)
@@ -4990,7 +4990,7 @@ $omega_f (x) = 0$.
     >= delta sum' Delta x_i, quad "whence" quad sum' Delta x_i < epsilon / 2.
   $
   Consequently
-  $ D_delta subset (union.big' (x_(i-1), x_i)) union \{x_0, x_1, dots.c, x_m\}, $
+  $ D_delta subset (union.big' (x_(i-1), x_i)) union {x_0, x_1, dots.c, x_m}, $
   and covering each division point $x_j$ by an interval of length
   $epsilon / (2(m+1))$ gives a countable cover of $D_delta$ with total length
   $
@@ -5002,7 +5002,7 @@ $omega_f (x) = 0$.
   ($<==$) Suppose $D(f)$ is a null set, and let $omega$ be the oscillation
   of $f$ on $[a, b]$ (the case $omega = 0$ is trivial). For every
   $epsilon > 0$ there is a family of open intervals
-  $\{(alpha_i, beta_i) | i = 1, 2, dots.c\}$ covering $D(f)$ with
+  ${(alpha_i, beta_i) | i = 1, 2, dots.c}$ covering $D(f)$ with
   $ sum_(i=1)^oo (beta_i - alpha_i) < epsilon / (2 omega). $
   Set $K = [a, b] \ union.big_(i=1)^oo (alpha_i, beta_i)$. By Lemma 4
   there is $delta > 0$ such that $abs(x - y) < delta$ with $x in K$ and
@@ -5617,8 +5617,8 @@ between differential and integral calculus.
   (*Sufficiency.*) Suppose $g in R[a, b]$ with
   $F(x) - F(a) = integral_a^x g(t) dif t$. Take a partition
   $P: a = x_0 < x_1 < dots.c < x_n = b$ and denote
-  $m_i^g = inf \{g(x) | x in [x_(i-1), x_i]\}$,
-  $M_i^g = sup \{g(x) | x in [x_(i-1), x_i]\}$, and
+  $m_i^g = inf {g(x) | x in [x_(i-1), x_i]}$,
+  $M_i^g = sup {g(x) | x in [x_(i-1), x_i]}$, and
   $omega_i^g = M_i^g - m_i^g$. For $x, x + Delta x in [x_(i-1), x_i]$ with
   $Delta x != 0$,
   $
@@ -5859,9 +5859,9 @@ directly from the indefinite integral.
     $
   + *Minkowski inequality.* Let $f, g in R[a, b]$. Then
     $
-      lr(\{integral_a^b (f(x) + g(x))^2 dif x\})^(1/2)
-      <= lr(\{integral_a^b f^2 (x) dif x\})^(1/2)
-      + lr(\{integral_a^b g^2 (x) dif x\})^(1/2).
+      lr({integral_a^b (f(x) + g(x))^2 dif x})^(1/2)
+      <= lr({integral_a^b f^2 (x) dif x})^(1/2)
+      + lr({integral_a^b g^2 (x) dif x})^(1/2).
     $
   + *Chebyshev inequality.* Call $f, g$ *similarly ordered* if
     $forall x_1, x_2: (f(x_1) - f(x_2))(g(x_1) - g(x_2)) >= 0$. Then
@@ -5870,7 +5870,7 @@ directly from the indefinite integral.
       <= (b - a) integral_a^b f(x) g(x) dif x.
     $
 
-    *Discrete form.* Let the sequences $\{a_n\}$ and $\{b_n\}$ be similarly
+    *Discrete form.* Let the sequences ${a_n}$ and ${b_n}$ be similarly
     ordered, i.e. $forall i, j: (a_i - a_j)(b_i - b_j) >= 0$. Then
     $
       (sum_(i=1)^n a_i)(sum_(i=1)^n b_i) <= n sum_(i=1)^n a_i b_i.
@@ -6092,7 +6092,7 @@ sense unless stated otherwise.
   The necessary and sufficient condition for the convergence of the infinite
   integral $integral_a^(+oo) f(x) dif x$ is
   $
-    forall epsilon > 0, exists A_0 > max\{a, 0\}, forall A', A'' > A_0:
+    forall epsilon > 0, exists A_0 > max{a, 0}, forall A', A'' > A_0:
     abs(integral_(A')^(A'') f(x) dif x) < epsilon.
   $
 ] <thm:cauchy-criterion-infinite-integral>
@@ -6102,7 +6102,7 @@ sense unless stated otherwise.
   #link(<def:infinite-integral>)[definition], the improper integral converges
   if and only if $lim_(A -> +oo) F(A)$ exists and is finite. By the Cauchy
   criterion for function limits, this holds if and only if for every
-  $epsilon > 0$ there is $A_0 > max\{a, 0\}$ such that for all
+  $epsilon > 0$ there is $A_0 > max{a, 0}$ such that for all
   $A', A'' > A_0$,
   $ abs(F(A') - F(A'')) = abs(integral_(A')^(A'') f(x) dif x) < epsilon, $
   which is precisely the asserted condition.
@@ -6162,7 +6162,7 @@ sense unless stated otherwise.
   *Abel.* Suppose $abs(g(x)) <= M$ for all $x in [a, +oo)$. Since
   $integral_a^(+oo) f(x) dif x$ converges,
   #link(<thm:cauchy-criterion-infinite-integral>)[the Cauchy criterion]
-  provides $A_0 > max\{a, 0\}$ such that for all $A'' > A' > A_0$,
+  provides $A_0 > max{a, 0}$ such that for all $A'' > A' > A_0$,
   $ abs(integral_(A')^(A'') f(x) dif x) < epsilon / (2 M). $
   By the general form of the second integral mean value theorem
   (#link(<thm:integral-mean-value>)[Bonnet's formula]), there exists
@@ -6555,7 +6555,7 @@ $limsup_(x -> +oo) f(x) = +oo$.
   satisfies $abs(f(x_1)) > epsilon_0$. By uniform continuity there is
   $delta > 0$ such that $abs(x' - x'') < delta$ implies
   $abs(f(x') - f(x'')) < epsilon_0 / 2$. By the Cauchy criterion with
-  $epsilon = epsilon_0 delta / 2$ there is $A_0 > max\{a, 0\}$ such that
+  $epsilon = epsilon_0 delta / 2$ there is $A_0 > max{a, 0}$ such that
   $abs(integral_(A')^(A'') f(x) dif x) < epsilon_0 delta / 2$ for all
   $A'' > A' > A_0$; in the negation above take $A = A_0$, obtaining
   $x_1 > A_0$. Then for every $x in [x_1, x_1 + delta]$,
