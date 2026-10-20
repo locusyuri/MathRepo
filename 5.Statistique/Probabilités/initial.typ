@@ -2406,6 +2406,36 @@ joint.
   Symmetric formulas hold for the marginal of $Y$.
 ] <prop:marginal-formulas>
 
+#example(name: "Binomial Marginals of the Multinomial")[
+  Let $(N_1, dots, N_m) ~ "Mult"(n, bold(p))$ be the counts of a #link(<def:multinomial-dist>)[multinomial experiment].
+  Pool the categories $2, dots, m$ into a single category of probability $1 - p_1$: every trial then lands in category $1$ with probability $p_1$ and outside it with probability $1 - p_1$, independently of the other trials.
+  The count of trials in category $1$ is therefore binomial,
+  $
+    N_1 ~ B(n, p_1),
+  $
+  and likewise $N_i ~ B(n, p_i)$ for every $i = 1, dots, m$.
+]
+
+#note(title: "The Dimension of a Multinomial")[
+  Convention calls the $m$-category law an "$m$-nomial" distribution, but the count vector is really $(m - 1)$-dimensional: the constraint $N_1 + dots + N_m = n$ determines the last count from the other $m - 1$.
+  The law thus lives on the simplex ${(k_1, dots, k_m) in ZZ_(>= 0)^m : sum_(i=1)^m k_i = n}$, a set of dimension $m - 1$; the binomial ($m = 2$) is the one-dimensional case.
+]
+
+#example(name: "Normal Marginals without a Normal Joint")[
+  Every #link(<def:bivariate-normal>)[bivariate normal] has normal marginals; the converse fails.
+  Let $phi(x) = 1 / sqrt(2 pi) e^(-x^2 / 2)$ be the standard normal density and set
+  $
+    f(x, y) = phi(x) phi(y) (1 + sin x sin y).
+  $
+  Since $1 + sin x sin y >= 0$ and $integral_(-infinity)^infinity phi(y) sin y dif y = 0$ by oddness, $f$ is a joint density with
+  $
+    f_(X)(x) = integral_(-infinity)^infinity phi(x) phi(y) (1 + sin x sin y) dif y = phi(x),
+  $
+  so both marginals are standard normal.
+  Yet $f$ is not a bivariate normal density.
+  A bivariate normal with standard normal marginals takes the value $1 / (2 pi sqrt(1 - rho^2))$ at the origin, so $f(0, 0) = 1 / (2 pi)$ forces $rho = 0$, i.e. the independent density $phi(x) phi(y)$; but $f(pi / 2, pi / 2) = 2 phi(pi / 2)^2$, not $phi(pi / 2)^2$.
+]
+
 Marginals tell each variable's story separately; the joint tells how they
 interact. When the interaction vanishes — when the joint factors — the
 variables are *independent*.
