@@ -1933,7 +1933,7 @@ then these vectors form a basis and $V$ is $n$-dimensional.
   - $sigma(alpha + beta) = sigma(alpha) + sigma(beta)$;
   - $sigma(k alpha) = k sigma(alpha)$.
   If such an isomorphism exists, $V$ and $V'$ are called *isomorphic*,
-  denoted $V ≈ V'$.
+  denoted $V ≃ V'$ (the symbol $≈$ is reserved for equivalent polynomial matrices).
 ] <def:isomorphism>
 
 #theorem(name: "Isomorphism Theorem")[
@@ -3710,8 +3710,8 @@ non-zero coefficient to $1$ or $-1$ leads to the notion of canonical form.
 Inner product spaces introduce the concepts of length and angle for vectors,
 serving as an algebraic generalization of Euclidean geometry. This chapter covers
 bilinear forms, real inner product spaces, orthonormal bases, orthogonal complements
-and projections, orthogonal and symmetric transformations, as well as unitary spaces
-and normal transformations.
+and projections, orthogonal, symmetric and skew-symmetric transformations, as well as
+unitary spaces, normal transformations and symplectic spaces.
 
 == Bilinear Forms // 双线性型
 
@@ -3728,8 +3728,9 @@ and normal transformations.
   If $B$ is the matrix of $f$ under a basis ${epsilon_1, ..., epsilon_n}$ of $V$,
   i.e. $B = (f(epsilon_i, epsilon_j))$, then $f(alpha, beta) = X^"T" B Y$ where
   $X, Y$ are the coordinate vectors of $alpha, beta$. A bilinear form is *symmetric*
-  if $f(alpha, beta) = f(beta, alpha)$ for all $alpha, beta$. Every quadratic form
-  arises from a symmetric bilinear form (over fields of characteristic != 2).
+  if $f(alpha, beta) = f(beta, alpha)$ for all $alpha, beta$. Every
+  #link(<def:quadratic-form>)[quadratic form] arises from a symmetric bilinear form (over
+  fields of characteristic != 2).
 ]
 
 == Real Inner Product Spaces // 实内积空间
@@ -3746,11 +3747,18 @@ and normal transformations.
 ] <def:real-inner-product>
 
 #definition(name: "Normed Linear Space")[
-  A *normed linear space* is a real linear space $V$ equipped with
-  $||·||: V -> bb(R)$ satisfying positivity, homogeneity ($||k alpha|| = abs(k) ||alpha||$),
-  and the triangle inequality. The norm induced by an inner product is
-  $||alpha|| = (alpha, alpha)^(1/2)$, called the *Euclidean norm*.
+  A *normed linear space* is a real linear space $V$ equipped with a function
+  $||·||: V -> bb(R)$ such that for all $alpha, beta in V$ and $k in bb(R)$:
+  - $||alpha|| >= 0$, with equality if and only if $alpha = 0$;
+  - $||k alpha|| = abs(k) ||alpha||$ (homogeneity);
+  - $||alpha + beta|| <= ||alpha|| + ||beta||$ (triangle inequality).
 ] <def:normed-linear-space>
+
+#property(name: "Norm Induced by an Inner Product")[
+  In a real inner product space, $||alpha|| = (alpha, alpha)^(1/2)$ is a norm, called the
+  *Euclidean norm*. Its triangle inequality follows from the
+  #link(<thm:cauchy-schwarz>)[Cauchy-Bunyakovsky-Schwarz inequality].
+] <prop:norm-from-inner-product>
 
 #theorem(name: "Cauchy-Bunyakovsky-Schwarz Inequality")[
   For any vectors $alpha, beta$ in an inner product space,
@@ -3784,9 +3792,11 @@ and normal transformations.
 
 #property(name: "Properties of Gram Matrix")[
   - $G$ is symmetric;
-  - $G$ is positive semi-definite;
-  - Gram matrices under different bases are congruent;
-  - $"det"(G) >= 0$, with equality iff the basis is linearly dependent.
+  - $G$ is positive definite, hence non-singular, because the basis vectors are linearly
+    independent;
+  - Gram matrices under different bases are
+    #link(<def:congruent-matrices>)[congruent];
+  - $"det"(G) > 0$.
 ] <prop:gram-matrix-properties>
 
 #definition(name: "Orthonormal Basis")[
@@ -3812,9 +3822,11 @@ and normal transformations.
 ] <def:orthogonal-matrix>
 
 #theorem(name: "Orthonormal Basis Transition")[
-  Let ${epsilon_1, ..., epsilon_n}$ and ${eta_1, ..., eta_n}$ be orthonormal bases
-  with transition matrix $T$. Then ${eta_1, ..., eta_n}$ is an orthonormal basis
-  if and only if $T$ is an orthogonal matrix.
+  Let ${epsilon_1, ..., epsilon_n}$ be an
+  #link(<def:orthonormal-basis>)[orthonormal basis] of an $n$-dimensional Euclidean space,
+  and let ${eta_1, ..., eta_n}$ be a further basis with transition matrix $T$. Then
+  ${eta_1, ..., eta_n}$ is orthonormal if and only if $T$ is an
+  #link(<def:orthogonal-matrix>)[orthogonal matrix].
 ] <thm:orthonormal-transition>
 
 === Gram-Schmidt Process // Gram-Schmidt 正交化
@@ -3834,9 +3846,18 @@ and normal transformations.
   (eta_i, eta_i) eta_i$. Verify orthogonality and that the spans are equal.
 ]
 
-#example[
-  Let $B = (a_i + b_j)_(n times n)$ where $a_1, ..., a_n$ and $b_1, ..., b_n$
-  are real numbers. Find all eigenvalues of $B$.
+#example(name: "Gram-Schmidt Orthogonalization in Three Dimensions")[
+  Apply the process to $epsilon_1 = (1, 1, 0)$, $epsilon_2 = (1, 0, 1)$,
+  $epsilon_3 = (0, 1, 1)$ in $bb(R)^3$ with the standard inner product.
+
+  - $eta_1 = epsilon_1 / ||epsilon_1|| = (1, 1, 0) / sqrt(2)$;
+  - $beta_2 = epsilon_2 - (epsilon_2, eta_1) eta_1 = (1/2, -1/2, 1)$, hence
+    $eta_2 = (1, -1, 2) / sqrt(6)$;
+  - $beta_3 = epsilon_3 - (epsilon_3, eta_1) eta_1 - (epsilon_3, eta_2) eta_2
+    = (-2/3, 2/3, 2/3)$, hence $eta_3 = (-1, 1, 1) / sqrt(3)$.
+
+  The vectors $eta_1, eta_2, eta_3$ are pairwise orthogonal and of unit length, and
+  $chevron.l eta_1, eta_2, eta_3 chevron.r = bb(R)^3$.
 ]
 
 == Isomorphism of Real Inner Product Spaces // 实内积空间的同构
@@ -3849,13 +3870,13 @@ and normal transformations.
   - $sigma(k alpha) = k sigma(alpha)$;
   - $(alpha, beta) = (sigma(alpha), sigma(beta))$.
   If such an isomorphism exists, $V$ and $V'$ are called *isomorphic*,
-  denoted $V ≈ V'$.
+  denoted $V ≃ V'$ (the symbol $≈$ is reserved for equivalent polynomial matrices).
 ] <def:isometry>
 
 #note[
-  A bijective linear map that preserves the inner product is called a *linear isomorphism*
-  or *isometry*. Two real inner product spaces that are isomorphic as linear spaces may
-  fail to be isomorphic as inner product spaces.
+  A bijective linear map preserving the inner product is called a *linear isomorphism*, or
+  an *isometry*. For real inner product spaces the dimension alone decides the question:
+  spaces of equal dimension are always isometric — see the theorem below.
 ]
 
 #theorem(name: "Isomorphism Theorem for Euclidean Spaces")[
@@ -3887,7 +3908,8 @@ and normal transformations.
   - An equivalent definition: $W_2$ is an orthogonal complement of $W_1$ if
     $W_1 ⊥ W_2$ and $W_1 + W_2 = V$;
   - The orthogonal complement $W^⊥$ of $W$ exists and is unique in Euclidean space $V$;
-  - $W ⊕ W^⊥ = V$;
+  - $W ⊕ W^⊥ = V$; in particular $"dim" W + "dim" W^⊥ = "dim" V$, by
+    #link(<thm:dimension-formula>)[the dimension formula];
   - $(W^⊥)^⊥ = W$;
   - $(V_1 + V_2)^⊥ = V_1^⊥ inter V_2^⊥$ and $(V_1 inter V_2)^⊥ = V_1^⊥ + V_2^⊥$;
   - If $W_1 subset W_2$, then $W_1^⊥ supset W_2^⊥$.
@@ -3905,15 +3927,34 @@ and normal transformations.
 ] <def:best-approximation>
 
 #property(name: "Properties of Orthogonal Projection")[
-  - The orthogonal projection of $alpha$ onto $W$ exists and is unique, and equals
-    the best approximation element;
-  - "proj"_(W)(alpha) = sum_(i=1)^n (alpha, epsilon_i) / (epsilon_i, epsilon_i) epsilon_i
+  - The orthogonal projection of $alpha$ onto $W$ exists and is unique, and equals the
+    #link(<def:best-approximation>)[best approximation element];
+  - $"proj"_(W)(alpha) = sum_(i=1)^n (alpha, epsilon_i) / (epsilon_i, epsilon_i) epsilon_i$
     for an orthogonal basis ${epsilon_1, ..., epsilon_n}$ of $W$;
-  - $
+  - With $c_i = (alpha, epsilon_i) / (epsilon_i, epsilon_i)$, Pythagoras' theorem in
+    $W ⊕ W^⊥$ gives
+    $
       ||alpha - "proj"_(W)(alpha)||^2 = ||alpha||^2 - ||"proj"_(W)(alpha)||^2
       = ||alpha||^2 - sum_(i=1)^n c_i^2 ||epsilon_i||^2.
     $
 ] <prop:orthogonal-projection-properties>
+
+#property(name: "Bessel Inequality")[
+  For an orthonormal set ${epsilon_1, ..., epsilon_m}$ in a real inner product space and
+  any vector $alpha$,
+
+  $
+    sum_(i=1)^m (alpha, epsilon_i)^2 <= ||alpha||^2,
+  $
+
+  with equality if and only if $alpha$ lies in the span of the set.
+] <prop:bessel-inequality>
+
+#property(name: "Matrix of an Orthogonal Projection")[
+  Let $P$ be the matrix of the orthogonal projection onto a subspace $W$ of $bb(R)^n$
+  with respect to the standard inner product. Then $P^2 = P$, $P^"T" = P$, and
+  $"Im"(P) = W$, $"Ker"(P) = W^⊥$.
+] <prop:projection-matrix>
 
 === Least Squares Method // 最小二乘法
 
@@ -3934,24 +3975,55 @@ and normal transformations.
   $(A^"T" A) x = A^"T" beta$.
 ]
 
-== Orthogonal Transformations and Symmetric Transformations // 正交变换与对称变换
+#theorem(name: "Existence and Uniqueness of the Least Squares Solution")[
+  Let $A in bb(R)^(s times n)$ and $beta in bb(R)^s$. The normal equations
+  $A^"T" A x = A^"T" beta$ always admit a solution, and the solution is unique exactly when
+  $A$ has full column rank; in that case $A^"T" A$ is invertible and
+
+  $
+    x = (A^"T" A)^(-1) A^"T" beta
+  $
+
+  is the unique minimizer of $||A x - beta||$ over $bb(R)^n$.
+] <thm:least-squares-solution>
+
+#example(name: "Least Squares Line Fit")[
+  Fit $y = c_0 + c_1 t$ to the points $(0, 1)$, $(1, 2)$, $(2, 4)$. Here
+
+  $
+    A = mat(1, 0; 1, 1; 1, 2), quad beta = (1, 2, 4)^"T",
+  $
+
+  so the normal equations become
+
+  $
+    mat(3, 3; 3, 5) mat(c_0; c_1) = mat(7; 10),
+  $
+
+  with solution $c_0 = 5/6$, $c_1 = 3/2$. The line $y = (5 + 9 t)/6$ minimizes the sum of
+  squared deviations, the minimal value being $1/6$.
+]
 
 === Orthogonal Transformations // 正交变换
 
 #definition(name: "Orthogonal Transformation")[
-  A surjective map $A: V -> V$ on a real inner product space $V$ is an *orthogonal
-  transformation* if it preserves the inner product:
+  A map $A: V -> V$ on a real inner product space $V$ is *orthogonal* (or an *orthogonal
+  transformation*) if it preserves the inner product:
   $(A alpha, A beta) = (alpha, beta)$ for all $alpha, beta in V$.
+  Such a map turns out to be linear and injective, hence bijective in finite dimension
+  (see the lemma below).
 ] <def:orthogonal-transformation>
 
 #lemma(name: "Properties of Orthogonal Transformations")[
-  - An orthogonal transformation is linear and injective (hence bijective on finite-dimensional $V$);
+  - An orthogonal map is linear and injective, hence bijective when $V$ is
+    finite-dimensional;
   - The inverse and product of orthogonal transformations are orthogonal;
   - The following are equivalent for a linear transformation $A$ on $V$:
     * $A$ is orthogonal;
     * $A$ preserves lengths: $||A alpha|| = ||alpha||$ for all $alpha$;
-    * $A$ maps an orthonormal basis to an orthonormal basis;
-    * The matrix of $A$ under any orthonormal basis is an orthogonal matrix.
+    * $A$ maps an #link(<def:orthonormal-basis>)[orthonormal basis] to an orthonormal basis;
+    * The matrix of $A$ under any orthonormal basis is an
+      #link(<def:orthogonal-matrix>)[orthogonal matrix].
 ] <lem:orthogonal-transformation-properties>
 
 #note[
@@ -3960,18 +4032,21 @@ and normal transformations.
   (reflections or improper rotations).
 ]
 
-#theorem(name: "Orthogonal Diagonalization of Real Orthogonal Matrices")[
+#theorem(name: "Canonical Form of Orthogonal Transformations")[
   Let $A$ be an orthogonal transformation on an $n$-dimensional Euclidean space $V$.
-  Then there exists an orthonormal basis of $V$ such that the matrix of $A$ has the form
-  $ "diag"({lambda_1, ..., lambda_r, R(theta_1), ..., R(theta_m)}) $,
-  where $lambda_i = ±1$ for $i = 1, ..., r$ and $R(theta) = mat(cos(theta), -sin(theta); sin(theta), cos(theta))$
-  for $j = 1, ..., m$, with $r + 2m = n$.
+  Then there exists an orthonormal basis of $V$ such that the matrix of $A$ is the block
+  diagonal matrix
+  $ "diag"(lambda_1, ..., lambda_r, R(theta_1), ..., R(theta_m)) $,
+  where $lambda_i = ±1$ for $i = 1, ..., r$ and
+  $R(theta_j) = mat(cos(theta_j), -sin(theta_j); sin(theta_j), cos(theta_j))$ for
+  $j = 1, ..., m$, with $r + 2m = n$. Such a matrix cannot in general be diagonalized, so
+  this block form is the best possible.
 ] <thm:orthogonal-diagonalization>
 
 #note[
   The eigenvalues of a real orthogonal matrix are $±1$ or $cos(theta) ± i sin(theta)$
-  with $0 < theta < pi$. This decomposition generalizes the spectral theorem for
-  symmetric transformations.
+  with $0 < theta < pi$. When $A$ happens to be symmetric, all rotation blocks disappear
+  and the statement reduces to the spectral theorem for symmetric transformations.
 ]
 
 === Symmetric Transformations // 对称变换
@@ -3982,9 +4057,10 @@ and normal transformations.
 ] <def:symmetric-transformation>
 
 #lemma(name: "Properties of Symmetric Transformations")[
-  - A real symmetric matrix has only real eigenvalues (counting multiplicities);
-  - $A$ is symmetric iff its matrix representation under some orthonormal basis is
-    a symmetric matrix;
+  - A real symmetric matrix has only real
+    #link(<def:eigenvector-eigenvalue>)[eigenvalues] (counting multiplicities);
+  - $A$ is symmetric iff its matrix representation under any orthonormal basis is
+    a #link(<def:symmetric-matrix>)[symmetric matrix];
   - If $W$ is an invariant subspace of $A$, then $W^⊥$ is also invariant;
   - Eigenvectors corresponding to distinct eigenvalues of $A$ are orthogonal.
 ] <lem:symmetric-properties>
@@ -3997,13 +4073,18 @@ and normal transformations.
 ] <thm:symmetric-diagonalization>
 
 #note[
-  Induction on dimension: take an eigenvector for the largest eigenvalue, restrict
-  to its orthogonal complement, and apply the induction hypothesis.
+  A real symmetric matrix always admits a real eigenvalue, so take any eigenvector $xi$.
+  The orthogonal complement of $chevron.l xi chevron.r$ is invariant by the lemma above, and
+  $A$ restricts to a symmetric transformation of it; conclude by induction on the
+  dimension.
 ]
 
 #note[
-  For any real quadratic form $f(x_1, ..., x_n) = X^"T" A X$, there exists an orthogonal
-  transformation $X = T Y$ such that $f = Y^"T" Lambda Y = sum_(i=1)^n lambda_i y_i^2$.
+  For any real #link(<def:quadratic-form>)[quadratic form]
+  $f(x_1, ..., x_n) = X^"T" A X$, there exists an
+  #link(<def:orthogonal-transformation>)[orthogonal transformation] $X = T Y$ such that
+  $f = Y^"T" Lambda Y = sum_(i=1)^n lambda_i y_i^2$; thus $f$ is reduced to a standard form
+  by an orthogonal substitution.
 ]
 
 === Skew-Symmetric Transformations // 反对称变换
@@ -4021,12 +4102,17 @@ and normal transformations.
   - $(A + E)(A - E)^(-1)$ is an orthogonal transformation.
 ] <lem:skew-symmetric-properties>
 
-#theorem(name: "Orthogonal Diagonalization of Skew-Symmetric Matrices")[
+#theorem(name: "Canonical Form of Skew-Symmetric Transformations")[
   Let $A$ be a skew-symmetric transformation on an $n$-dimensional Euclidean space $V$.
-  Then there exists an orthonormal basis of $V$ such that the matrix of $A$ has the form
-  $ "diag"({mat(0, a_1; -a_1, 0), ..., mat(0, a_s; -a_s, 0), 0, ..., 0}) $,
-  where $a_i != 0$ for $i = 1, ..., s$ and $2s + t = n$ ($t$ is the number of zero
-  blocks). In particular, the eigenvalues of $A$ are $0$ or pure imaginary numbers.
+  Then there exists an orthonormal basis of $V$ such that the matrix of $A$ is
+
+  $
+    "diag"(J_1, ..., J_s, 0, ..., 0), quad J_i = mat(0, a_i; -a_i, 0),
+  $
+
+  where $a_i != 0$ for $i = 1, ..., s$ and the number of zero entries is $t = n - 2s$.
+  In particular, the eigenvalues of $A$ are $0$ or purely imaginary, and $A$ is
+  diagonalizable over $bb(R)$ only when $A = 0$.
 ] <thm:skew-symmetric-diagonalization>
 
 == Unitary Spaces and Normal Transformations // 酉空间与正规变换
@@ -4066,8 +4152,9 @@ and normal transformations.
 ] <thm:normal-diagonalization>
 
 #note[
-  Follows from the Schur decomposition and the fact that a normal triangular matrix
-  must be diagonal.
+  Every complex linear transformation admits an eigenvector, so induction on the dimension
+  applies: the orthogonal complement of an invariant subspace of a normal transformation is
+  again invariant, and a normal triangular matrix is necessarily diagonal.
 ]
 
 === Special Normal Transformations // 特殊正规变换
@@ -4091,11 +4178,18 @@ and normal transformations.
 
 == Symplectic Spaces // 辛空间
 
+#definition(name: "Non-Degenerate Bilinear Form")[
+  A #link(<def:bilinear-form>)[bilinear form] $f$ on $V$ is *non-degenerate* if
+  $f(alpha, beta) = 0$ for all $beta in V$ forces $alpha = 0$; equivalently, if its matrix
+  $B$ under some (hence under any) basis is invertible.
+] <def:nondegenerate-bilinear-form>
+
 #definition(name: "Symplectic Inner Product")[
   Let $V$ be a linear space over a field $F$ of characteristic != 2.
   A bilinear form $f: V times V -> F$ is *alternating* if $f(alpha, alpha) = 0$
-  for all $alpha in V$. A non-degenerate alternating bilinear form is called
-  a *symplectic inner product*.
+  for all $alpha in V$. A
+  #link(<def:nondegenerate-bilinear-form>)[non-degenerate] alternating bilinear form is
+  called a *symplectic inner product*.
 ] <def:symplectic-inner-product>
 
 #property(name: "Properties of Symplectic Spaces")[
@@ -4127,6 +4221,7 @@ and normal transformations.
 == B
 - *#link(<def:basis-and-coordinates>)[Basis And Coordinates]*
 - *#link(<thm:basis-extension>)[Basis Extension]*
+- *#link(<prop:bessel-inequality>)[Bessel Inequality]*
 - *#link(<def:best-approximation>)[Best Approximation]*
 - *#link(<def:bilinear-form>)[Bilinear Form]*
 - *#link(<thm:block-decomposition>)[Block Decomposition]*
@@ -4250,6 +4345,7 @@ and normal transformations.
 == L
 - *#link(<thm:laplace-expansion>)[Laplace Expansion]*
 - *#link(<thm:laplace-expansion-by-k-rows>)[Laplace Expansion By K Rows]*
+- *#link(<thm:least-squares-solution>)[Least Squares Solution]*
 - *#link(<def:linear-combination>)[Linear Combination]*
 - *#link(<def:linear-dependence-and-independence>)[Linear Dependence And Independence]*
 - *#link(<thm:linear-extension>)[Linear Extension]*
@@ -4276,7 +4372,9 @@ and normal transformations.
 - *#link(<lem:nilpotent-jordan-form>)[Nilpotent Jordan Form]*
 - *#link(<def:nilpotent-matrix>)[Nilpotent Matrix]*
 - *#link(<prop:nilpotent-triangular-matrix>)[Nilpotent Triangular Matrix]*
+- *#link(<def:nondegenerate-bilinear-form>)[Non Degenerate Bilinear Form]*
 - *#link(<def:nonsingular-linear-substitution>)[Nonsingular Linear Substitution]*
+- *#link(<prop:norm-from-inner-product>)[Norm Induced By An Inner Product]*
 - *#link(<thm:normal-diagonalization>)[Normal Diagonalization]*
 - *#link(<def:normal-transformation>)[Normal Transformation]*
 - *#link(<def:normed-linear-space>)[Normed Linear Space]*
@@ -4287,9 +4385,10 @@ and normal transformations.
 - *#link(<prop:operations-of-rank>)[Operations Of Rank]*
 - *#link(<def:orthogonal-complement>)[Orthogonal Complement]*
 - *#link(<prop:orthogonal-complement-properties>)[Orthogonal Complement Properties]*
-- *#link(<thm:orthogonal-diagonalization>)[Orthogonal Diagonalization]*
+- *#link(<thm:orthogonal-diagonalization>)[Orthogonal Transformation Canonical Form]*
 - *#link(<def:orthogonal-matrix>)[Orthogonal Matrix]*
 - *#link(<def:orthogonal-projection>)[Orthogonal Projection]*
+- *#link(<prop:projection-matrix>)[Orthogonal Projection Matrix]*
 - *#link(<prop:orthogonal-projection-properties>)[Orthogonal Projection Properties]*
 - *#link(<def:orthogonal-transformation>)[Orthogonal Transformation]*
 - *#link(<lem:orthogonal-transformation-properties>)[Orthogonal Transformation Properties]*
@@ -4332,7 +4431,7 @@ and normal transformations.
 - *#link(<thm:sherman-morrison>)[Sherman Morrison]*
 - *#link(<thm:shortest-distance>)[Shortest Distance]*
 - *#link(<def:sign-of-permutation>)[Sign Of Permutation]*
-- *#link(<thm:skew-symmetric-diagonalization>)[Skew Symmetric Diagonalization]*
+- *#link(<thm:skew-symmetric-diagonalization>)[Skew Symmetric Transformation Canonical Form]*
 - *#link(<lem:skew-symmetric-properties>)[Skew Symmetric Properties]*
 - *#link(<def:skew-symmetric-transformation>)[Skew Symmetric Transformation]*
 - *#link(<def:similar-matrices>)[Similar Matrices]*
