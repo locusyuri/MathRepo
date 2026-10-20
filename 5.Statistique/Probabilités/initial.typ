@@ -2650,12 +2650,12 @@ monotone transform generalises to a multidimensional change of variables.
 
 #theorem(name: "Multivariate Change of Variables")[
   Let $bold(X) = (X_1, dots, X_n)$ be a continuous random vector with joint
-  density $f_(bold X)$. Let $bold(g): A -> B$ be a one-to-one differentiable
+  density $f_(bold(X))$. Let $bold(g): A -> B$ be a one-to-one differentiable
   map from an open set $A subset.eq RR^n$ containing the range of $bold(X)$
   onto $B$, with inverse $bold(h) = bold(g)^(-1)$. Then $bold(Y) =
   bold(g)(bold(X))$ has joint density
   $
-    f_(bold Y)(bold(y)) = f_(bold X)(bold(h)(bold(y))) dot abs(J(bold(y))),
+    f_(bold(Y))(bold(y)) = f_(bold(X))(bold(h)(bold(y))) dot abs(J(bold(y))),
   $
   where $J$ is the determinant of the matrix $(partial h_i / partial y_j)_(i,j)$
   — the Jacobian determinant of the inverse map.
@@ -2664,14 +2664,14 @@ monotone transform generalises to a multidimensional change of variables.
 #proof[
   For a region $D subset.eq B$,
   $
-    P(bold(Y) in D) = P(bold(X) in bold(h)(D)) = integral_(bold(h)(D)) f_(bold X)(bold(x)) dif bold(x).
+    P(bold(Y) in D) = P(bold(X) in bold(h)(D)) = integral_(bold(h)(D)) f_(bold(X))(bold(x)) dif bold(x).
   $
   The multivariate change-of-variables theorem from calculus replaces
   $dif bold(x)$ by $abs(J(bold(y))) dif bold(y)$ and the domain by $D$:
   $
-    P(bold(Y) in D) = integral_D f_(bold X)(bold(h)(bold(y))) abs(J(bold(y))) dif bold(y).
+    P(bold(Y) in D) = integral_D f_(bold(X))(bold(h)(bold(y))) abs(J(bold(y))) dif bold(y).
   $
-  Comparing with $P(bold(Y) in D) = integral_D f_(bold Y)(bold(y)) dif bold(y)$
+  Comparing with $P(bold(Y) in D) = integral_D f_(bold(Y))(bold(y)) dif bold(y)$
   for every $D$ identifies the integrand.
 ]
 
