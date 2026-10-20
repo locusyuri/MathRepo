@@ -2312,10 +2312,10 @@ composition $A B$ is defined by $(A B)(alpha) = A(B(alpha))$.
     $"dim"(V_(k_0)) = "dim"(V_(k_0 + 1)) = ...$, and then $V_k = V_(k_0)$ for all
     $k >= k_0$ — the chain stabilizes at $V_(k_0)$, because an increasing sequence of
     subspaces with constant dimension is constant.
-  - The smallest such $k_0$ is the largest size of a Jordan block of $A$ belonging to the
-    eigenvalue $0$ (and $k_0 = 1$ if $0$ is not an eigenvalue); in particular
-    $k_0 <= "dim"(V)$, with equality exactly when $A$ has a single Jordan block of size
-    $"dim"(V)$. See #link(<thm:jordan-existence>)[the Jordan existence theorem].
+  - The smallest such $k_0$ is the largest size of a #link(<def:jordan-block>)[Jordan block]
+    of $A$ belonging to the eigenvalue $0$ (and $k_0 = 1$ if $0$ is not an eigenvalue); in
+    particular $k_0 <= "dim"(V)$, with equality exactly when $A$ has a single Jordan block of
+    size $"dim"(V)$. See #link(<thm:jordan-existence>)[the Jordan existence theorem].
 ] <prop:ascending-chain-properties>
 
 Concretely, $k_0 = 1$ for the zero transformation and $k_0 = 2$ for
@@ -3118,10 +3118,30 @@ The simultaneous diagonalization result extends to commuting families of
 = Jordan Canonical Form // Jordan 标准型
 
 The Jordan canonical form is the universal result of the structure theory of linear
-operators — every square matrix is similar to a direct sum of Jordan blocks. This
-chapter establishes the theory of invariant divisors and elementary divisors through
-the Smith normal form of polynomial matrices, and ultimately derives the existence
-and computation method of the Jordan canonical form.
+operators — every square matrix over $bb(C)$ is similar to a direct sum of
+#link(<def:jordan-block>)[Jordan blocks]. This chapter establishes the theory of
+#link(<def:invariant-divisors>)[invariant divisors] and
+#link(<def:elementary-divisors>)[elementary divisors] through the
+#link(<def:smith-normal-form>)[Smith normal form] of polynomial matrices, and ultimately
+derives the existence and computation method of the Jordan canonical form.
+
+#definition(name: "Jordan Block")[
+  For $lambda in F$ and a positive integer $r$, the $r times r$ matrix
+
+  $
+    J_r (lambda) = mat(
+      lambda, 1, 0, ..., 0;
+      0, lambda, 1, ..., 0;
+      dots.v, dots.v, dots.down, dots.down, dots.v;
+      0, 0, ..., lambda, 1;
+      0, 0, ..., 0, lambda;
+    )
+  $
+
+  is called the *Jordan block* of size $r$ for the eigenvalue $lambda$.
+  Its characteristic and minimal polynomials are both $(x - lambda)^r$, and
+  $J_r (lambda) - lambda E$ is nilpotent of index $r$.
+] <def:jordan-block>
 
 == Polynomial Matrices // 多项式矩阵
 
@@ -3157,7 +3177,11 @@ and computation method of the Jordan canonical form.
 ] <def:equivalent-polynomial-matrices>
 
 #note[
-  $A(lambda) ≈ B(lambda)$ if and only if their ranks are equal.
+  Equivalence is strictly finer than equal rank: $A(lambda) ≈ B(lambda)$ if and only if the
+  two matrices have the same #link(<def:invariant-divisors>)[invariant divisors]
+  (equivalently, the same Smith normal form). Equal rank is only a necessary condition:
+  for instance $"diag"(1, lambda)$ and $"diag"(lambda, lambda)$ both have rank $2$ but are
+  not equivalent.
 ]
 
 #definition(name: "Smith Normal Form")[
@@ -3181,14 +3205,16 @@ and computation method of the Jordan canonical form.
 ] <def:smith-normal-form>
 
 #note[
-  The Smith normal form exists and is unique up to the order of invariant divisors.
+  The Smith normal form of $A(lambda)$ exists and is unique: once the divisibility chain
+  $d_1(lambda) | d_2(lambda) | ... | d_(r)(lambda)$ is required, the diagonal entries are
+  completely determined by $A(lambda)$.
 ]
 
 == Invariant Divisors and Rational Canonical Form // 不变因子与有理标准型
 
 === Invariant Divisors // 不变因子
 
-#definition(name: "$k$-th Order Determinant Divisor")[
+#definition(name: "k-th Order Determinant Divisor")[
   The monic greatest common divisor of all $k$-order minors of $A(lambda)$ is called
   the *$k$-th order determinant divisor*, denoted $D_(k)(lambda)$.
 ] <def:determinant-divisor>
@@ -3205,6 +3231,9 @@ and computation method of the Jordan canonical form.
   $
 
   are called the *invariant divisors* of $A(lambda)$.
+
+  Here we use the convention $D_0(lambda) = 1$; for $k > r$ one sets $D_k(lambda) = 0$,
+  so the list stops at $d_(r)(lambda)$.
 ] <def:invariant-divisors>
 
 #note[
@@ -3248,7 +3277,7 @@ and computation method of the Jordan canonical form.
   then $F$ is the *Frobenius normal form* (or *rational canonical form*) of $A$.
 ] <def:frobenius-normal-form>
 
-=== Geometric Interpretation // 几何解释
+== Cyclic Subspaces // 循环子空间
 
 #definition(name: "Cyclic Subspace")[
   For $xi != 0$ in $V$, the subspace
@@ -3268,15 +3297,16 @@ and computation method of the Jordan canonical form.
 ]
 
 #proposition(name: "Cyclic Subspace Criterion")[
-  A subspace $V_1$ is a cyclic subspace if and only if the matrix representation of
-  $A|_(V_1)$ under some basis of $V_1$ is a companion matrix.
+  Let $V_1$ be an $A$-invariant subspace of $V$. Then $V_1$ is a cyclic subspace if and only
+  if the matrix representation of the restriction $A|_(V_1)$ under some basis of $V_1$ is a
+  #link(<def:companion-matrix>)[companion matrix].
 ] <prop:cyclic-subspace-criterion>
 
 #note[
-  Combining with the rational canonical form theory, $V$ decomposes as a direct sum
-  of cyclic subspaces: $V = plus.o.big_(i=1)^k C(A, xi_i)$, where
-  the matrix of $A|_(C(A, xi_i))$ in the basis
-  ${xi_i, A(xi_i), ..., A^(r_i-1)(xi_i)}$ is the companion matrix $C(d_i)$.
+  Combining with the #link(<def:frobenius-normal-form>)[rational canonical form], $V$
+  decomposes as a direct sum of cyclic subspaces: $V = plus.o.big_(i=1)^k C(A, xi_i)$,
+  where the matrix of $A|_(C(A, xi_i))$ in the basis
+  ${xi_i, A(xi_i), ..., A^(r_i-1)(xi_i)}$ is the companion matrix $C(p_i)$.
 ]
 
 #proposition(name: "Cyclic Space Equivalent Conditions")[
@@ -3284,8 +3314,13 @@ and computation method of the Jordan canonical form.
   The following are equivalent:
   - There exists $xi in V$ such that ${xi, A(xi), ..., A^(n-1)(xi)}$ is a basis of $V$
     (i.e. $V$ is a cyclic space);
-  - For any eigenvalue $lambda$ of $A$, the geometric multiplicity is $1$;
-  - The characteristic polynomial of $A$ equals the minimal polynomial of $A$.
+  - The characteristic polynomial of $A$ equals its
+    #link(<def:minimal-polynomial>)[minimal polynomial]: $f(lambda) = m(lambda)$.
+
+  If moreover $f(lambda)$ splits into linear factors over $F$ (for instance $F = bb(C)$),
+  these are also equivalent to:
+  - Every eigenvalue $lambda$ of $A$ has
+    #link(<def:multiplicity>)[geometric multiplicity] equal to $1$.
 ] <prop:cyclic-space-conditions>
 
 == Elementary Divisors and Jordan Canonical Form // 初等因子与 Jordan 标准型
@@ -3306,7 +3341,8 @@ and computation method of the Jordan canonical form.
   Let $V$ be a linear space over $C$ and $A in upright("End")(V)$ nilpotent.
   Then there exists a basis of $V$ such that the matrix of $A$ is
   $"diag"(J_(r_1)(0), J_(r_2)(0), ..., J_(r_s)(0))$,
-  where $J_(r_i)(0)$ is the Jordan block of size $r_i$ for eigenvalue $0$.
+  where $J_(r_i)(0)$ is the #link(<def:jordan-block>)[Jordan block] of size $r_i$ for
+  eigenvalue $0$.
 ] <lem:nilpotent-jordan-form>
 
 #theorem(name: "Existence of Jordan Canonical Form")[
@@ -3318,58 +3354,112 @@ and computation method of the Jordan canonical form.
     J = "diag"(J_(r_1)(lambda_1), J_(r_2)(lambda_2), ..., J_(r_s)(lambda_s)),
   $
 
-  where $J_(r_i)(lambda_i)$ is the Jordan block of size $r_i$ for eigenvalue $lambda_i$.
+  where $J_(r_i)(lambda_i)$ is the #link(<def:jordan-block>)[Jordan block] of size $r_i$ for
+  eigenvalue $lambda_i$.
 ] <thm:jordan-existence>
 
+#theorem(name: "Uniqueness of Jordan Canonical Form")[
+  Let $V$ be an $n$-dimensional linear space over $C$ and $A in upright("End")(V)$.
+  The Jordan canonical form of $A$ is unique up to the order of its Jordan blocks: for each
+  eigenvalue $lambda$, the number of blocks of each given size is determined by $A$ alone.
+] <thm:jordan-uniqueness>
+
+#theorem(name: "Jordan Blocks and Elementary Divisors")[
+  Let $F = bb(C)$ and $A in F^(n times n)$, with characteristic matrix $lambda E - A$.
+  The #link(<def:elementary-divisors>)[elementary divisors] of $lambda E - A$ are exactly
+  the polynomials $(lambda - lambda_i)^(r_i)$ attached to the
+  #link(<def:jordan-block>)[Jordan blocks] $J_(r_i)(lambda_i)$ of the Jordan canonical form
+  of $A$. Consequently, two matrices over $C$ are similar if and only if they have the same
+  multiset of Jordan blocks.
+] <thm:jordan-blocks-elementary-divisors>
+
 #note[
-  Decompose $V$ into root subspaces $V = V_(lambda_1)^(r_1) ⊕ ... ⊕ V_(lambda_k)^(r_k)$,
-  then apply the nilpotent Jordan form to each root subspace.
+  Decompose $V$ into #link(<def:root-subspace>)[root subspaces]
+  $V = V_(lambda_1)^(r_1) ⊕ ... ⊕ V_(lambda_k)^(r_k)$ (see
+  #link(<thm:root-space-decomposition>)[Root Space Decomposition Theorem]), then apply
+  #link(<lem:nilpotent-jordan-form>)[the nilpotent Jordan form] to each root subspace.
 ]
 
 #note[
   From the space decomposition perspective, $V$ decomposes into a direct sum of cyclic
-  subspaces generated by generalized eigenvectors:
+  subspaces generated by #link(<def:root-subspace>)[generalized eigenvectors]. Number the
+  #link(<def:jordan-block>)[Jordan blocks] of $A$ as
+  $J_(r_1)(mu_1), ..., J_(r_s)(mu_s)$, where $s$ is the *number of Jordan blocks* and $mu_i$
+  is the eigenvalue attached to the $i$-th block (repetitions allowed):
 
   $
-    V = C(A - lambda_1 E, xi_1) ⊕ ... ⊕ C(A - lambda_s E, xi_s),
+    V = C(A - mu_1 E, xi_1) ⊕ ... ⊕ C(A - mu_s E, xi_s),
   $
 
-  where each cyclic subspace corresponds one-to-one to a Jordan block.
+  so each cyclic subspace corresponds one-to-one to exactly one Jordan block.
 ]
 
 == Finding Jordan Canonical Form and Transition Matrices // Jordan 标准型与过渡矩阵的求法
 
 #note[
   To find the Jordan canonical form:
-  1. Compute the characteristic polynomial $f(lambda) = "det"(lambda E - A)$
-    and factor it into irreducible factors.
-  2. For each eigenvalue $lambda$, determine the sizes of Jordan blocks from
-    the ranks of $(lambda E - A)^k$.
-  3. The sizes of Jordan blocks are determined by the differences
-    $upright("rank")((lambda E - A)^(k-1)) - upright("rank")((lambda E - A)^k)$.
+  1. Compute the #link(<def:eigenpolynomial>)[characteristic polynomial]
+    $f(lambda) = "det"(lambda E - A)$ and factor it into linear factors over $bb(C)$.
+  2. For each eigenvalue $lambda$ put
+    $n_k(lambda) = upright("rank")((lambda E - A)^k)$, with $n_0(lambda) = n$.
+    Then the number of Jordan blocks of $A$ for $lambda$ whose size is at least $k$ equals
+    $n_(k-1)(lambda) - n_k(lambda)$, and the number of blocks of size exactly $k$ equals
+    $n_(k-1)(lambda) - 2 n_k(lambda) + n_(k+1)(lambda)$.
+  3. Summing these numbers over $k$ recovers the algebraic multiplicity of $lambda$, i.e. the
+    total size of all blocks attached to $lambda$.
 
   To find the transition matrix $P$:
   1. For each Jordan block, find a *Jordan chain* of generalized eigenvectors.
   2. A Jordan chain of length $r$ for eigenvalue $lambda$ is
     ${xi_1, xi_2, ..., xi_r}$ satisfying
-    $(A - lambda E) xi_1 = 0$, $(A - lambda E) xi_i = xi_(i-1)$.
+    $(A - lambda E) xi_1 = 0$ and $(A - lambda E) xi_i = xi_(i-1)$ for $i >= 2$.
   3. The columns of $P$ are the Jordan chains arranged by blocks.
+]
+
+#example(name: "Jordan Canonical Form of a Three-by-Three Matrix")[
+  Let
+
+  $
+    A = mat(1, 1, 1; 0, 1, 1; 0, 0, 2).
+  $
+
+  Its characteristic polynomial is $f(lambda) = (lambda - 1)^2 (lambda - 2)$, so the
+  eigenvalues are $1$ and $2$.
+
+  For $lambda = 1$: $"rank"(A - E) = 2$ and $"rank"((A - E)^2) = 1$, hence the number of
+  blocks of size at least $1$ is $3 - 2 = 1$, and the number of blocks of size at least $2$
+  is $2 - 1 = 1$. Since $"rank"((A - E)^3) = 1$ as well, no block of size $3$ occurs, so
+  $lambda = 1$ contributes a single block $J_2 (1)$. For $lambda = 2$ the only block is
+  $J_1 (2)$, whence
+
+  $
+    J = mat(1, 1, 0; 0, 1, 0; 0, 0, 2).
+  $
+
+  A Jordan chain for $lambda = 1$ is $xi_1 = (1, 0, 0)^"T"$, $xi_2 = (0, 1, 0)^"T"$, and an
+  eigenvector for $lambda = 2$ is $xi_3 = (2, 1, 1)^"T"$. With
+  $P = (xi_1, xi_2, xi_3) = mat(1, 0, 2; 0, 1, 1; 0, 0, 1)$ one indeed obtains
+  $P^(-1) A P = J$.
 ]
 
 == Complete Set of Invariant Quantities for Matrix Similarity // 矩阵相似的完全相似不变量
 
 #theorem(name: "Complete Set of Similarity Invariants")[
-  Two square matrices $A$ and $B$ over $F$ are similar if and only if they have the same
-  set of invariant divisors (or equivalently, the same set of elementary divisors).
-  Thus the invariant divisors (or elementary divisors) form a complete set of invariants
-  for the similarity relation.
+  Two square matrices $A$ and $B$ over $F$ are similar if and only if their characteristic
+  matrices $lambda E - A$ and $lambda E - B$ have the same set of
+  #link(<def:invariant-divisors>)[invariant divisors] (or equivalently, the same set of
+  #link(<def:elementary-divisors>)[elementary divisors]).
+  Thus the invariant divisors (or elementary divisors) of the characteristic matrix form a
+  complete set of invariants for the similarity relation.
 ] <thm:complete-similarity-invariants>
 
 #note[
-  In the case where $F = bb(C)$, the elementary divisors are powers of linear factors
-  $(lambda - lambda_i)^(r_i)$, and the Jordan canonical form is the most convenient
-  representation. Over a general field $F$, the rational canonical form (Frobenius normal form)
-  plays the analogous role.
+  In the case where $F = bb(C)$, the #link(<def:elementary-divisors>)[elementary divisors]
+  are powers of linear factors $(lambda - lambda_i)^(r_i)$, and the
+  #link(<thm:jordan-existence>)[Jordan canonical form] is the most convenient
+  representation. Over a general field $F$, the
+  #link(<def:frobenius-normal-form>)[rational canonical form] (Frobenius normal form) plays
+  the analogous role.
 ]
 
 // ==========================================================================
@@ -4011,7 +4101,10 @@ and normal transformations.
 - *#link(<thm:isomorphism-theorem>)[Isomorphism Theorem]*
 
 == J
+- *#link(<def:jordan-block>)[Jordan Block]*
+- *#link(<thm:jordan-blocks-elementary-divisors>)[Jordan Blocks And Elementary Divisors]*
 - *#link(<thm:jordan-existence>)[Jordan Existence]*
+- *#link(<thm:jordan-uniqueness>)[Jordan Uniqueness]*
 
 == K
 - *#link(<def:kernel-and-image>)[Kernel And Image]*
@@ -4091,6 +4184,7 @@ and normal transformations.
 - *#link(<def:rank-of-vector-groups>)[Rank Of Vector Groups]*
 - *#link(<prop:rank-of-vector-groups-properties>)[Rank Of Vector Groups Properties]*
 - *#link(<prop:rank-one-matrix>)[Rank One Matrix]*
+- *#link(<def:frobenius-normal-form>)[Rational Canonical Form]*
 - *#link(<def:real-inner-product>)[Real Inner Product]*
 - *#link(<thm:root-space-decomposition>)[Root Space Decomposition]*
 - *#link(<def:root-subspace>)[Root Subspace]*
