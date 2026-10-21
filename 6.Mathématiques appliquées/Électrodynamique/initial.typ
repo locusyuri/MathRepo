@@ -29,17 +29,17 @@
 
 = Vector Analysis and Field Theory // 矢量分析与场论
 
-== Divergence and Curl // 散度与旋度
+== Vector Fields // 向量场
 // 在物理中, 我们通常只考虑三维空间中的矢量场, 下面给出场的定义
-In physics, we typically focus on vector fields in three-dimensional space $RR^3 subset Omega$. A *vector field* / *scalar field* assigns a vector/scalar to every point in space, and it can represent various physical quantities such as velocity, force, or electromagnetic fields/temperature, pressure, etc.
+In physics, we typically focus on vector fields in the three-dimensional space $Omega subset.eq RR^3$. A *vector field* assigns a vector to every point in space, and a *scalar field* assigns a scalar to every point; they represent physical quantities such as velocity, force, and electromagnetic fields, or temperature and pressure, respectively.
 
 If a field does not explicitly depend on time, we call it a *static field*; otherwise, it is a *time-varying field*.
 
 // 显然, 任何 Omega 上的三元函数都可以看作其上的一个标量场. 若其有连续偏导数, 则其梯度 xxx 为一个矢量场, 称之为一个梯度场.
-Obviously, any scalar function $f(x, y, z)$ defined on $Omega$ can be considered a scalar field. If it has continuous partial derivatives, its gradient 
+Obviously, any scalar function $f(x, y, z)$ defined on $Omega$ can be considered a scalar field. If it has continuous partial derivatives, its gradient
 $
-gradient f = bold("grad") f = ( (partial f)/(partial x), (partial f)/(partial y), (partial f)/(partial z) )
-$ 
+  gradient f = bold("grad") f = ( (partial f)/(partial x), (partial f)/(partial y), (partial f)/(partial z) )
+$
 is a vector field, known as a *gradient field*.
 
 Let
@@ -48,116 +48,161 @@ $
 $
 be a vector field defined on $Omega$ and $P, Q, R in C^1(Omega)$.
 
+Let $Gamma$ be a curve in $Omega$. The *vector line* of $bold(a)$ is a curve $Gamma$ such that at every point on $Gamma$, the tangent vector of $Gamma$ is parallel to $bold(a)$. The electric field lines, magnetic field lines and electromagnetic field lines are all examples of vector lines.
 
-=== Flux and Divergence
+== Flux and Divergence // 通量与散度
 // 为了判定场中的点是源还是汇, 以及源的强弱和汇的大小, 我们引入通量和散度.
 To determine whether a point is a source or a sink, and to determine the strength and size of the source and sink, we introduce flux and divergence.
 
-#definition(name: "Divergence")[
-Let $harpoon(Sigma)$ be an oriented surface in $Omega$, then the *flux* of $bold(a)$ through $harpoon(Sigma)$ is defined as
-$
-  Phi = integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_harpoon(Sigma) (P dif y dif z + Q dif z dif x + R dif x dif y) dif bold(Sigma).
-$
-Let $M$ be a point in $Omega$, then the *divergence* of $bold(a)$ at $M$ is defined as
-$
-  "div" bold(a) (M) = (partial P)/(partial x) (M) + (partial Q)/(partial y) (M) + (partial R)/(partial z) (M),
-$
-denoted as $div bold(a)$. 
+#definition(name: "Flux and Divergence")[
+  Let $harpoon(Sigma)$ be an oriented surface in $Omega$, then the *flux* of $bold(a)$ through $harpoon(Sigma)$ is defined as
+  $
+    Phi = integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_harpoon(Sigma) P dif y dif z + Q dif z dif x + R dif x dif y.
+  $
+  Let $M$ be a point in $Omega$, then the *divergence* of $bold(a)$ at $M$ is defined as
+  $
+    "div" bold(a) (M) = (partial P)/(partial x) (M) + (partial Q)/(partial y) (M) + (partial R)/(partial z) (M),
+  $
+  denoted as $"div" bold(a)$.
 ]
-If $"div" bold(a) > 0$, we say that $M$ is a *source* of the field; if $"div" bold(a) < 0$, we say that $M$ is a *sink* of the field; if $"div" bold(a) = 0$, we say that $M$ is a *saddle point* of the field; if $"div" bold(a) = 0$ for all points in $Omega$, we say that $bold(a)$ is a *solenoidal field*.
+If $"div" bold(a) > 0$ at $M$, we say that $M$ is a *source* of the field; if $"div" bold(a) < 0$ at $M$, we say that $M$ is a *sink* of the field; if $"div" bold(a) = 0$ at every point of $Omega$, we say that $bold(a)$ is a *solenoidal field*.
+
+#theorem(name: "Gauss's Divergence Theorem")[
+  Let $Omega$ be a closed region in $RR^3$ bounded by the closed surface $harpoon(Sigma)$ oriented by the outward normal, and let $bold(a) = P bold(i) + Q bold(j) + R bold(k) in C^1(Omega)$. Then
+  $
+    integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_V "div" bold(a) dif V,
+  $
+  where $V$ is the volume of $Omega$.
+] <thm:ed-gauss-divergence>
+
+The proof is given in the Analyse Mathématique note; physically, the theorem states that the net outward flux of a field through a closed surface equals the total strength of the sources and sinks enclosed.
 
 #theorem[
   The divergence of $bold(a)$ is the rate of change of the flux of $bold(a)$ regarding the volume of $harpoon(Sigma)$, i.e.,
-$
-  "div" bold(a) (M) = lim_(V -> 0)  (integral.double_Sigma bold(a) dot dif bold(Sigma)) / V.
-$
+  $
+    "div" bold(a) (M) = lim_(V -> 0) (integral_harpoon(Sigma) bold(a) dot dif bold(Sigma)) / V,
+  $
+  where $harpoon(Sigma)$ bounds a region of volume $V$ that shrinks to the point $M$.
 ]
 
-// 向量线
-Let $Gamma$ be a curve in $Omega$. If $bold(a)$ is a vector field defined on $Omega$, then the *vector line* of $bold(a)$ is defined as the curve $Gamma$ such that at every point on $Gamma$, the tangent vector of $Gamma$ is parallel to $bold(a)$. The electric field lines, magnetic field lines and electromagnetic field lines are all examples of vector lines.
-
-=== Circulation and Curl // 环量与旋度
-To determine whether a field is irrotational or solenoidal, we introduce circulation and curl.
-#definition(name: "Curl")[
-Let $harpoon(Gamma)$ be an oriented curve in $Omega$, then the *circulation* of $bold(a)$ through $harpoon(Gamma)$ is defined as
-
-$
-
-  Zeta = integral_harpoon(Gamma) bold(a) times dif bold(Gamma).
-
-$
-
-Let $M$ be a point in $Omega$, then the *curl* of $bold(a)$ at $M$ is defined as
-
-$
-
-  "curl" bold(a) (M) = ((partial R)/(partial y) - (partial Q)/(partial z)) (M) - ((partial P)/(partial x) - (partial R)/(partial z)) (M) + ((partial Q)/(partial x) - (partial P)/(partial y)) (M),
-
-$
-
-denoted as $"curl" bold(a)$ or $"rot" bold(a)$.
+#proof[
+  By Gauss's divergence theorem,
+  $
+    integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_V "div" bold(a) dif V = "div" bold(a) (M') V,
+  $
+  where the last step is the mean value theorem for integrals, for some point $M'$ in the region. Dividing by $V$ and letting the region shrink to $M$, the continuity of $P, Q, R$ gives $"div" bold(a) (M') -> "div" bold(a) (M)$.
 ]
 
-If $"curl" bold(a) = bold(0)$ for all points in $Omega$, we say that $bold(a)$ is an *irrotational field*; if $"curl" bold(a) = bold(0)$, we say that $bold(a)$ is a *solenoidal field*.
+== Circulation and Curl // 环量与旋度
+// 为了判定场是否有旋, 我们引入环量和旋度.
+To determine whether a field is irrotational, we introduce circulation and curl.
+
+#definition(name: "Circulation and Curl")[
+  Let $harpoon(Gamma)$ be an oriented closed curve in $Omega$, then the *circulation* of $bold(a)$ along $harpoon(Gamma)$ is defined as
+  $
+    Zeta = integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma).
+  $
+  Let $M$ be a point in $Omega$, then the *curl* of $bold(a)$ at $M$ is defined as
+  $
+    "curl" bold(a) (M) = ((partial R)/(partial y) - (partial Q)/(partial z)) (M) bold(i) + ((partial P)/(partial z) - (partial R)/(partial x)) (M) bold(j) + ((partial Q)/(partial x) - (partial P)/(partial y)) (M) bold(k),
+  $
+  denoted as $"curl" bold(a)$ or $"rot" bold(a)$.
+]
+
+If $"curl" bold(a) = bold(0)$ at every point of $Omega$, we say that $bold(a)$ is an *irrotational field*.
+
+#theorem(name: "Stokes' Theorem")[
+  Let $harpoon(Sigma)$ be an oriented surface in $RR^3$ with boundary $harpoon(Gamma)$ oriented consistently with the normal of $harpoon(Sigma)$ by the right-hand rule, and let $bold(a) in C^1$. Then
+  $
+    integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = integral_harpoon(Sigma) ("curl" bold(a)) dot dif bold(Sigma).
+  $
+] <thm:ed-stokes>
+
+The proof is given in the Analyse Mathématique note; physically, the theorem states that the circulation of a field along the boundary of a surface equals the total vortex strength of the field through the surface.
 
 #theorem[
+  The component of the curl along the unit normal $bold(n)$ is the rate of change of the circulation regarding the area of $harpoon(Sigma)$, i.e.,
+  $
+    ("curl" bold(a)) dot bold(n) = lim_(S -> 0) (integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma)) / S,
+  $
+  where $harpoon(Gamma)$ bounds an oriented planar region $harpoon(Sigma)$ of area $S$ with normal $bold(n)$, and the region shrinks to the point $M$.
 ]
 
-=== Hamilton's Operator // 哈密尔顿算子
-The *Hamilton's operator* is defined as
-$
-  nabla = bold(i) (partial)/(partial x) + bold(j) (partial)/(partial y) + bold(k) (partial)/(partial z),
-$
-where $nabla$ is called the *del operator* or *nabla operator*.
+#proof[
+  By Stokes' theorem,
+  $
+    integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = integral_harpoon(Sigma) ("curl" bold(a)) dot dif bold(Sigma) = (("curl" bold(a)) dot bold(n)) (M') S,
+  $
+  where the last step is the mean value theorem for integrals, for some point $M'$ on the planar surface. Dividing by $S$ and letting the region shrink to $M$, the continuity of the components of $bold(a)$ gives the claim.
+]
 
-With the Hamilton's operator, we can express the gradient, divergence and curl of a vector field in a compact form:
+== Hamilton's Operator // 哈密尔顿算子
+The *Hamilton's operator* (also called the *del operator* or *nabla operator*) is defined as
 $
-  gradient f = ((partial f)/(partial x), (partial f)/(partial y), (partial f)/(partial z)) = bold("grad") f,
+  nabla = bold(i) (partial)/(partial x) + bold(j) (partial)/(partial y) + bold(k) (partial)/(partial z).
+$
+
+With the Hamilton's operator, the gradient, the divergence and the curl take the compact forms
+$
+  nabla f = gradient f = ((partial f)/(partial x), (partial f)/(partial y), (partial f)/(partial z)),
 $
 $
-  nabla dot f = (partial P)/(partial x) + (partial Q)/(partial y) + (partial R)/(partial z) = bold("div") bold(a),
+  nabla dot bold(a) = (partial P)/(partial x) + (partial Q)/(partial y) + (partial R)/(partial z) = "div" bold(a),
 $
 $
-  nabla times f = ((partial R)/(partial y) - (partial Q)/(partial z)) bold(i) - ((partial P)/(partial x) - (partial R)/(partial z)) bold(j) + ((partial Q)/(partial x) - (partial P)/(partial y)) bold(k) = bold("curl") a.
+  nabla times bold(a) = ((partial R)/(partial y) - (partial Q)/(partial z)) bold(i) + ((partial P)/(partial z) - (partial R)/(partial x)) bold(j) + ((partial Q)/(partial x) - (partial P)/(partial y)) bold(k) = "curl" bold(a).
 $
-Obviously, we have the following identities:
+We also have the following identities:
+$
+  nabla times (nabla f) = bold(0), quad nabla dot (nabla times bold(a)) = 0,
+$
 $
   nabla dot nabla f = nabla dot (gradient f) = "div" (gradient f) = Delta f,
 $
-where $Delta f$ is the *Laplace operator*.
-Functions satisfying the *Laplace equation*
+where $Delta f = (partial^2 f)/(partial x^2) + (partial^2 f)/(partial y^2) + (partial^2 f)/(partial z^2)$ defines the *Laplace operator*. Functions satisfying the *Laplace equation*
 $
-Delta f = (partial^2 f)/(partial x^2) + (partial^2 f)/(partial y^2) + (partial^2 f)/(partial z^2) = 0.
+  Delta f = 0
 $
 are called *harmonic functions*.
 
 == Conservative Fields and Potential Functions // 保守场与势函数
 #definition(name: "Potential Function and Conservative Field")[ // 有势场与势函数
-Let 
-$
-bold(a) = (P, Q, R), quad P, Q, R in C(Omega),
-$ 
-be a vector field defined on $Omega$.
+  Let
+  $
+    bold(a) = (P, Q, R), quad P, Q, R in C(Omega),
+  $
+  be a vector field defined on $Omega$.
 
-If there exists a scalar field $U$ such that $bold(a) = gradient U$, then we say that $bold(a)$ is a *potential field* and $V=-U$ is the *potential function* of $bold(a)$.
+  If there exists a scalar field $U$ such that $bold(a) = gradient U$, then we say that $bold(a)$ is a *potential field* and $V=-U$ is the *potential function* of $bold(a)$.
 
-In the filed $bold(a)$, if the curve integral is independent of the path, i.e., for any two curves $Gamma_1$ and $Gamma_2$ connecting the same two points in $Omega$, we have
-$
-  integral_harpoon(Gamma_1) bold(a) = integral_harpoon(Gamma_2) bold(a).
-$
-Then we say that $bold(a)$ is a *conservative field*.
+  In the field $bold(a)$, if the line integral is independent of the path, i.e., for any two oriented curves $harpoon(Gamma_1)$ and $harpoon(Gamma_2)$ connecting the same two points in $Omega$, we have
+  $
+    integral_harpoon(Gamma_1) bold(a) dot dif bold(Gamma_1) = integral_harpoon(Gamma_2) bold(a) dot dif bold(Gamma_2).
+  $
+  Then we say that $bold(a)$ is a *conservative field*.
 ]
 
 #theorem[
-Let 
-$
-bold(a) = (P, Q, R), quad P, Q, R in C^1(Omega),
-$ 
-be a vector field defined on simply connected region $Omega$.
-The following statements are equivalent:
-1. $bold(a)$ is a conservative field.
-2. $bold(a)$ is a potential field.
-3. $bold(a)$ is an irrotational field, i.e., $"curl" bold(a) = bold(0)$.
+  Let
+  $
+    bold(a) = (P, Q, R), quad P, Q, R in C^1(Omega),
+  $
+  be a vector field defined on a simply connected region $Omega$.
+  The following statements are equivalent:
+  1. $bold(a)$ is a conservative field.
+  2. $bold(a)$ is a potential field.
+  3. $bold(a)$ is an irrotational field, i.e., $"curl" bold(a) = bold(0)$.
+  4. For every closed curve $harpoon(Gamma)$ in $Omega$, $integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = 0$.
+]
+
+#proof[
+  (1) $==>$ (4): joining two oriented paths between the same endpoints into a closed curve, path-independence means the integral over every closed curve vanishes.
+
+  (4) $==>$ (2): fix a point $M_0 in Omega$ and define $U(M) = integral_(M_0)^M bold(a) dot dif bold(Gamma)$, which is single-valued by (4); differentiating along the coordinate directions gives $gradient U = bold(a)$, so $bold(a)$ is a potential field with potential function $V = -U$.
+
+  (2) $==>$ (3): expanding in coordinates, every component of $"curl" (gradient U)$ is a difference of mixed second-order partial derivatives of $U$ and hence vanishes.
+
+  (3) $==>$ (1): by Stokes' theorem, the integral over any closed curve in $Omega$ equals the flux of $"curl" bold(a) = bold(0)$ through a spanning surface lying in $Omega$, hence vanishes; any two paths between the same endpoints then give the same integral, so the line integral is path-independent.
 ]
 
 
@@ -183,11 +228,11 @@ The following statements are equivalent:
 The study of electrostatics originated from the ancient observation of amber attracting light objects when rubbed. In the 18th century, Charles-Augustin de Coulomb conducted a series of experiments using a torsion balance to measure the electrostatic force between charged spheres, leading to the formulation of the law that now bears his name.
 
 #property[
-Electric charges exhibit some fundamental properties:
-+ Like charges repel each other, while opposite charges attract each other.
-+ The *law of charge conservation* states that the total charge in an isolated system remains constant.
-+ *Quantization* means that charge appears only in discrete multiples of the elementary charge $e approx 1.6021766208 times 10^(-19) "C"$, where $C$ is the coulomb, the SI unit of charge.
-+ *Relativistic invariance* requires that the laws of electromagnetism maintain the same form in all inertial frames.
+  Electric charges exhibit some fundamental properties:
+  + Like charges repel each other, while opposite charges attract each other.
+  + The *law of charge conservation* states that the total charge in an isolated system remains constant.
+  + *Quantization* means that charge appears only in discrete multiples of the elementary charge $e approx 1.6021766208 times 10^(-19) "C"$, where $C$ is the coulomb, the SI unit of charge.
+  + *Relativistic invariance* requires that the laws of electromagnetism maintain the same form in all inertial frames.
 ]
 
 // 点电荷模型
@@ -206,16 +251,16 @@ Electric charges exhibit some fundamental properties:
 
 In SI units, the Coulomb's constant is given by
 $
-k = 8.9875517873681764 times 10^9 "N" dot "m"^2 dot "C"^(-2).
+  k = 8.9875517873681764 times 10^9 "N" dot "m"^2 dot "C"^(-2).
 $
 
 For convenience, we often express Coulomb's constant in terms of the *permittivity of free space* $epsilon_0$:
 $
-k = frac(1, 4 pi epsilon_0),
+  k = frac(1, 4 pi epsilon_0),
 $
 where
 $
-epsilon_0 = 8.854187817 times 10^(-12) "C"^2 dot "N"^(-1) dot "m"^(-2).
+  epsilon_0 = 8.854187817 times 10^(-12) "C"^2 dot "N"^(-1) dot "m"^(-2).
 $
 
 #note[
@@ -336,7 +381,7 @@ The electric field is then given by:
   where $dif bold(S) = bold(n) dif S$ is the vector area element, with $bold(n)$ being the outward unit normal to the surface.
 ]
 
-#h(2em) Physically, the electric flux measures the "flow" of the electric field through a surface — it is proportional to the number of field lines passing through that surface. 
+#h(2em) Physically, the electric flux measures the "flow" of the electric field through a surface — it is proportional to the number of field lines passing through that surface.
 
 For a closed surface, positive flux indicates a net outflow of field lines (a source), while negative flux indicates a net inflow (a sink).
 
@@ -495,7 +540,7 @@ The potential energy of a charge configuration is the work required to assemble 
   For a system of $N$ point charges $q_1, q_2, ..., q_N$, the total electrostatic potential energy is:
   $
     U = frac(1, 4 pi epsilon_0) sum_(i < j)^N frac(q_i q_j, |bold(r)_i - bold(r)_j|)
-      = frac(1, 2) sum_(i=1)^N q_i V_i,
+    = frac(1, 2) sum_(i=1)^N q_i V_i,
   $
   where $V_i = sum_(j != i) frac(1, 4 pi epsilon_0) frac(q_j, |bold(r)_i - bold(r)_j|)$ is the potential at the location of $q_i$ due to all other charges.
 ]
@@ -530,7 +575,7 @@ All spherically symmetric configurations share the property that the electric fi
     image("img/point_charge_field.png", width: 100%),
     caption: [Electric field of a point charge.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:point_charge_field>
 ]
 
@@ -553,7 +598,7 @@ All spherically symmetric configurations share the property that the electric fi
     image("img/charged_sphere.png", width: 100%),
     caption: [Electric field of a uniformly charged spherical shell.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:charged_sphere>
 ]
 
@@ -576,7 +621,7 @@ All spherically symmetric configurations share the property that the electric fi
     image("img/charged_solid_sphere.png", width: 100%),
     caption: [Electric field of a uniformly charged solid sphere.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:charged_solid_sphere>
 ]
 
@@ -598,12 +643,12 @@ All spherically symmetric configurations share the property that the electric fi
     )
   $
   The inner region ($r < a$) is always equipotential and field-free, regardless of $Q_a$ and $Q_b$.
-  
+
   #figure(
     image("img/concentric_shells.png", width: 100%),
     caption: [Electric field of concentric spherical shells.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:concentric_shells>
 ]
 
@@ -638,7 +683,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
     image("img/infinite_line_charge.png", width: 100%),
     caption: [Electric field of an infinite line charge.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:infinite_line_charge>
 ]
 
@@ -661,7 +706,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
     image("img/charged_cylindrical_shell.png", width: 100%),
     caption: [Electric field of a uniformly charged cylindrical shell.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:charged_cylindrical_shell>
 ]
 
@@ -679,7 +724,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
     image("img/charged_solid_cylinder.png", width: 100%),
     caption: [Electric field of a uniformly charged solid cylinder.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:charged_solid_cylinder>
 ]
 
@@ -699,7 +744,8 @@ Configurations invariant under translations along the $z$-axis and rotations abo
 
 These configurations have rotational symmetry about the $z$-axis but are finite in extent. Gauss's law is not directly applicable; the field is obtained by direct integration (superposition). Results are given on the symmetry axis.
 
-#example(name: "Uniformly Charged Ring")[ // 均匀带电圆环
+#example(name: "Uniformly Charged Ring")[
+  // 均匀带电圆环
   Radius $R$, total charge $Q$, lying in the $"xy"$-plane centered at the origin.
   $
     bold(E) (z) = frac(1, 4 pi epsilon_0) frac(Q z, (z^2 + R^2)^(3/2)) hat(bold(z)),
@@ -712,11 +758,12 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
     image("img/charged_ring.png", width: 100%),
     caption: [Electric field of a uniformly charged ring along its axis.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:charged_ring>
 ]
 
-#example(name: "Uniformly Charged Disk")[ // 均匀带电圆盘
+#example(name: "Uniformly Charged Disk")[
+  // 均匀带电圆盘
   Radius $R$, uniform surface charge density $sigma$, lying in the $"xy"$-plane. Obtained by integrating ring contributions radially.
   $
     bold(E) (z) = frac(sigma, 2 epsilon_0) (1 - frac(z, sqrt(z^2 + R^2))) hat(bold(z)).
@@ -728,7 +775,7 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
     image("img/charged_disk.png", width: 100%),
     caption: [Electric field of a uniformly charged disk along its axis.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:charged_disk>
 ]
 
@@ -754,7 +801,7 @@ Configurations invariant under translations parallel to the plane. The field is 
     image("img/charged_plane.png", width: 100%),
     caption: [Electric field of an infinite charged plane.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:infinite_plane>
 ]
 
@@ -777,7 +824,7 @@ Configurations invariant under translations parallel to the plane. The field is 
     image("img/parallel_plate_capacitor.png", width: 100%),
     caption: [Electric field of a parallel-plate capacitor.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:parallel_plate_capacitor>
 ]
 
@@ -804,7 +851,7 @@ Configurations invariant under translations parallel to the plane. The field is 
     image("img/electric_dipole.png", width: 100%),
     caption: [Electric field of an electric dipole.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:electric_dipole>
 ]
 
@@ -854,10 +901,10 @@ A *conductor* contains free charges (electrons in metals, ions in electrolytes) 
   2. The interior is equipotential: $V = "const"$ throughout $Omega$.
   3. Any net charge resides entirely on the surface $partial Omega$; the volume charge density $rho = 0$ inside $Omega$.
   4. The electric field just outside the surface is perpendicular to the surface and satisfies
-     $
-       E_("just outside") = frac(sigma, epsilon_0) hat(bold(n)),
-     $
-     where $sigma$ is the surface charge density and $hat(bold(n))$ is the outward unit normal.
+    $
+      E_("just outside") = frac(sigma, epsilon_0) hat(bold(n)),
+    $
+    where $sigma$ is the surface charge density and $hat(bold(n))$ is the outward unit normal.
   5. The surface is an equipotential; field lines meet it at right angles.
 ]
 
@@ -1007,8 +1054,8 @@ When a dielectric is polarized, the displacement of bound charges produces effec
   *Key insight:* The total bound charge in any closed system is zero:
   $
     Q_b = integral_V rho_b dif V + integral_S sigma_b dif a
-        = integral_V (-nabla dot bold(P)) dif V + integral_S bold(P) dot hat(bold(n)) dif a
-        = 0,
+    = integral_V (-nabla dot bold(P)) dif V + integral_S bold(P) dot hat(bold(n)) dif a
+    = 0,
   $
   by the divergence theorem. Bound charges are merely a redistribution of the dielectric's internal charges — no net charge is created.
 ]
@@ -1098,7 +1145,7 @@ The energy required to assemble a charge distribution from infinity is stored as
   Summing all contributions, each pair $(i, j)$ appears exactly once, yielding the total electrostatic energy
   $
     U = frac(1, 4 pi epsilon_0) sum_(i < j) frac(q_i q_j, |bold(r)_i - bold(r)_j|)
-      = frac(1, 2) sum_(i=1)^N q_i V_i,
+    = frac(1, 2) sum_(i=1)^N q_i V_i,
   $
   consistent with the earlier definition. The factor $1/2$ compensates for double-counting each pair when summing over all $i$.
 ]
@@ -1156,7 +1203,7 @@ The energy required to assemble a charge distribution from infinity is stored as
 The expression $U = frac(epsilon_0, 2) integral E^2 dif tau$ integrates over all space and includes the energy of the field produced by every charge, including the field *of a point charge itself*. For a single point charge $q$, the field is $E = q/(4 pi epsilon_0 r^2)$, and
 $
   U_(text("self")) = frac(epsilon_0, 2) integral_0^oo (frac(q, 4 pi epsilon_0 r^2))^2 4 pi r^2 dif r
-    = frac(q^2, 8 pi epsilon_0) integral_0^oo frac(1, r^2) dif r arrow infinity.
+  = frac(q^2, 8 pi epsilon_0) integral_0^oo frac(1, r^2) dif r arrow infinity.
 $
 This *self-energy divergence* is a fundamental limitation of classical electrodynamics: the energy of a point charge is infinite. In practice, only *changes* in energy (differences between configurations) are physically meaningful for point charges, and these are finite because the divergent self-energy contributions cancel.
 
@@ -1172,7 +1219,7 @@ where $U_(text("int"))^(i j) = frac(1, 4 pi epsilon_0) frac(q_i q_j, |bold(r)_i 
   *Method 1 — field integral*: Using the field from // Common Models: $bold(E) = frac(Q, 4 pi epsilon_0) frac(r, R^3) hat(bold(r))$ for $r < R$ and $bold(E) = frac(Q, 4 pi epsilon_0) frac(1, r^2) hat(bold(r))$ for $r >= R$,
   $
     U = frac(epsilon_0, 2) integral_0^R (frac(Q r, 4 pi epsilon_0 R^3))^2 4 pi r^2 dif r
-      + frac(epsilon_0, 2) integral_R^oo (frac(Q, 4 pi epsilon_0 r^2))^2 4 pi r^2 dif r
+    + frac(epsilon_0, 2) integral_R^oo (frac(Q, 4 pi epsilon_0 r^2))^2 4 pi r^2 dif r
     = frac(3 Q^2, 20 pi epsilon_0 R).
   $
 
@@ -1315,7 +1362,7 @@ $
 $
 so the conductivity is $sigma = n e mu_e$. This relation connects macroscopic conductivity to microscopic parameters (carrier density and mobility).
 
-*Temperature dependence of resistivity.* In metals, resistivity decreases as temperature is lowered, since phonon scattering is suppressed. At sufficiently low temperatures, certain materials undergo a *superconducting transition*: resistivity drops to zero below a *critical temperature* $T_"c"$, discovered by Onnes in 1911 ($T_"c" approx 4.2 "K"$ in mercury). 
+*Temperature dependence of resistivity.* In metals, resistivity decreases as temperature is lowered, since phonon scattering is suppressed. At sufficiently low temperatures, certain materials undergo a *superconducting transition*: resistivity drops to zero below a *critical temperature* $T_"c"$, discovered by Onnes in 1911 ($T_"c" approx 4.2 "K"$ in mercury).
 
 #note[
   Not all conductors obey Ohm's law. Semiconductors, ionic solutions, and plasmas may exhibit nonlinear $J$-$E$ relations. In anisotropic media (e.g., certain crystals), conductivity is a tensor: $J_i = sigma_(i j) E_j$.
@@ -1422,7 +1469,7 @@ When current flows through a conductor, the electric field does work on the movi
 ]
 
 #note[
-  Joule heating is *irreversible* — electrical energy is converted into heat, which cannot be fully converted back. This contrasts with the reversible energy storage in electric and magnetic fields (electrostatic energy $frac(1,2) epsilon_0 E^2$ and magnetostatic energy $frac(1,2) mu_0 B^2$), which will be discussed in subsequent sections.
+  Joule heating is *irreversible* — electrical energy is converted into heat, which cannot be fully converted back. This contrasts with the reversible energy storage in electric and magnetic fields (electrostatic energy $frac(1, 2) epsilon_0 E^2$ and magnetostatic energy $frac(1, 2) mu_0 B^2$), which will be discussed in subsequent sections.
 ]
 
 #note[
@@ -1718,8 +1765,18 @@ We have now assembled the complete set of field equations for electrostatics and
   ("Equation", "Electrostatics", "Magnetostatics", "Physical meaning"),
   ("Divergence", [$nabla dot bold(E) = rho / epsilon_0$], [$nabla dot bold(B) = 0$], "Sources of the field"),
   ("Curl", [$nabla times bold(E) = bold(0)$], [$nabla times bold(B) = mu_0 bold(J)$], "Circulation of the field"),
-  ([Gauss-type (integral)], [$integral_harpoon(S) bold(E) dot dif bold(S) = Q_"enc" / epsilon_0$], [$integral_harpoon(S) bold(B) dot dif bold(S) = 0$], "Flux law"),
-  ([Circulation (integral)], [$integral.cont bold(E) dot dif bold(l) = 0$], [$integral.cont bold(B) dot dif bold(l) = mu_0 I_"enc"$], "Ampère / electrostatic law"),
+  (
+    [Gauss-type (integral)],
+    [$integral_harpoon(S) bold(E) dot dif bold(S) = Q_"enc" / epsilon_0$],
+    [$integral_harpoon(S) bold(B) dot dif bold(S) = 0$],
+    "Flux law",
+  ),
+  (
+    [Circulation (integral)],
+    [$integral.cont bold(E) dot dif bold(l) = 0$],
+    [$integral.cont bold(B) dot dif bold(l) = mu_0 I_"enc"$],
+    "Ampère / electrostatic law",
+  ),
 )
 
 #h(2em)The structural parallels and asymmetries are striking:
@@ -1882,7 +1939,11 @@ This is one of the most beautiful results of magnetostatics: in the Coulomb gaug
     ("Quantity", "Electrostatics", "Magnetostatics"),
     ("Field equation", [$nabla^2 V = - rho / epsilon_0$], [$nabla^2 bold(A) = - mu_0 bold(J)$]),
     ("Source", "Charge density $rho$", "Current density $bold(J)$"),
-    ("Solution", [$V = frac(1, 4 pi epsilon_0) integral frac(rho, R) dif V'$], [$bold(A) = frac(mu_0, 4 pi) integral frac(bold(J), R) dif V'$]),
+    (
+      "Solution",
+      [$V = frac(1, 4 pi epsilon_0) integral frac(rho, R) dif V'$],
+      [$bold(A) = frac(mu_0, 4 pi) integral frac(bold(J), R) dif V'$],
+    ),
     ("Recovery of field", [$bold(E) = - nabla V$], [$bold(B) = nabla times bold(A)$]),
     ("Constant", [$1 / (4 pi epsilon_0)$], [$mu_0 / (4 pi)$]),
   )
@@ -1938,7 +1999,7 @@ The flux-circulation relation provides an alternative way to compute magnetic fl
   $
     nabla times bold(A)_2 = B_0 [ (partial_x (0) - partial_y (-y)) hat(bold(z)) ] = B_0 hat(bold(z)) = bold(B),
   $
-  but $nabla dot bold(A)_2 = 0$ as well (also Coulomb gauge). The gauge transformation linking them is $bold(A)_1 - bold(A)_2 = nabla( - B_0 x y / 2)$.
+  but $nabla dot bold(A)_2 = 0$ as well (also Coulomb gauge). The gauge transformation linking them is $bold(A)_1 - bold(A)_2 = nabla(- B_0 x y / 2)$.
 
   Both give the same magnetic flux through any surface: for a rectangle of area $L_x L_y$ in the $"xy"$-plane, $Phi_B = B_0 L_x L_y$, and using either gauge:
   $
@@ -2007,7 +2068,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
     image("img/infinite_wire_magnetic_field.png", width: 100%),
     caption: [Magnetic field of an infinite straight wire.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:infinite_wire_magnetic_field>
 ]
 
@@ -2030,7 +2091,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
     image("img/solid_cylinder_magnetic_field.png", width: 100%),
     caption: [Magnetic field of a uniformly conducting solid cylinder.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:solid_cylinder_magnetic_field>
 ]
 
@@ -2095,7 +2156,8 @@ Configurations based on helical or toroidal windings. The field is predominantly
 
 These configurations have rotational symmetry about the $z$-axis but are finite in extent. Ampère's law alone is insufficient; the field is obtained by direct integration of the Biot-Savart law. Results are simplest on the symmetry axis.
 
-#example(name: "Finite Straight Wire")[ // 有限长直导线
+#example(name: "Finite Straight Wire")[
+  // 有限长直导线
   A straight wire segment of length $L$, carrying current $I$, lying along the $z$-axis from $z = -L/2$ to $z = L/2$. By the Biot-Savart law, the magnetic field at a distance $rho$ from the wire, in the plane perpendicular to its midpoint, is:
   $
     bold(B) (rho) = frac(mu_0 I, 4 pi rho) (sin theta_2 - sin theta_1) hat(bold(phi)),
@@ -2114,7 +2176,8 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
   - For $rho >> L$ (far field): $B approx mu_0 I L / (4 pi rho^2)$ — the field of a current element.
 ]
 
-#example(name: "Circular Current Loop — On Axis")[ // 载流圆环轴线磁场
+#example(name: "Circular Current Loop — On Axis")[
+  // 载流圆环轴线磁场
   A circular loop of radius $R$ carrying steady current $I$, lying in the $"xy"$-plane centered at the origin. By the Biot-Savart law, the field on the $z$-axis is:
   $
     bold(B) (z) = frac(mu_0 I R^2, 2 (R^2 + z^2)^(3/2)) hat(bold(z)).
@@ -2133,7 +2196,7 @@ These configurations have rotational symmetry about the $z$-axis but are finite 
     image("img/magnetic_field_loop.png", width: 35%),
     caption: [Magnetic field of a circular current loop.],
     placement: auto,
-    supplement: [Fig.]
+    supplement: [Fig.],
   ) <fig:magnetic_field_loop>
 ]
 // ============================================================================
@@ -2157,7 +2220,8 @@ Just as the electric dipole is the fundamental building block for multipole expa
   $
 ]
 
-#example(name: "Magnetic Dipole Field")[ // 磁偶极子的磁场
+#example(name: "Magnetic Dipole Field")[
+  // 磁偶极子的磁场
   In the far-field limit ($r >>$ loop radius $R$), the magnetic field of a dipole $bold(m) = m hat(bold(z))$ in spherical coordinates is:
   $
     bold(B) (r, theta) = frac(mu_0, 4 pi) frac(m, r^3) (2 cos theta hat(bold(r)) + sin theta hat(bold(theta))).
@@ -2177,7 +2241,8 @@ Just as the electric dipole is the fundamental building block for multipole expa
   - For a circular loop of radius $R$, the far-field expression matches the on-axis result from the previous example when $|z| >> R$.
 ]
 
-#example(name: "Force and Torque on a Magnetic Dipole")[ // 磁偶极子受力和力矩
+#example(name: "Force and Torque on a Magnetic Dipole")[
+  // 磁偶极子受力和力矩
   A magnetic dipole $bold(m)$ placed in an external magnetic field $bold(B)_"ext"$ experiences:
   - *Torque* (tending to align the dipole with the field):
     $
@@ -2246,7 +2311,7 @@ The experimental results can be summarised by two key observations:
 
 #law(name: "Lenz's Law")[
   The negative sign in Faraday's law embodies *Lenz's law*: the induced EMF always acts in such a direction as to *oppose* the change that produced it.
-  
+
   In other words, the induced current creates a magnetic field that tries to cancel the change in the external flux:
   - If $Phi_B$ is increasing, the induced current produces a field opposite to the external field.
   - If $Phi_B$ is decreasing, the induced current produces a field in the same direction as the external field.
@@ -2364,7 +2429,8 @@ This force pushes charges along the conductor, separating positive and negative 
   This is equivalent to the rate at which the conductor "cuts" magnetic field lines.
 ]
 
-#example(name: "Sliding Bar on U-Shaped Rails")[ // 滑动导轨
+#example(name: "Sliding Bar on U-Shaped Rails")[
+  // 滑动导轨
   Consider a U-shaped conducting rail with a movable bar of length $L$ sliding frictionlessly to the right at constant velocity $bold(v) = v hat(bold(x))$. A uniform magnetic field $bold(B) = B hat(bold(z))$ points out of the page. A resistor $R$ is connected across the rails.
 
   *EMF:* The motional EMF is generated in the moving bar. For the bar, $bold(v) times bold(B) = v B hat(bold(y))$, directed along the bar from bottom to top. The EMF is:
@@ -2377,7 +2443,7 @@ This force pushes charges along the conductor, separating positive and negative 
 
   *Magnetic force on the bar:* The current-carrying bar in the magnetic field experiences $bold(F)_B = I bold(L) times bold(B) = I L B (- hat(bold(x)))$ — a force to the left, opposing the motion. Magnitude: $F_B = I L B = (v B^2 L^2) / R$.
 
-  *Power balance:* 
+  *Power balance:*
   - Power input (external agent pulling the bar): $P_"in" = F_("ext") v = F_B v = (v^2 B^2 L^2) / R$.
   - Power dissipated (Joule heating in resistor): $P_R = I^2 R = (v^2 B^2 L^2) / R$.
   - $P_"in" = P_R$ — mechanical work is converted entirely into electrical energy, demonstrating conservation of energy.
@@ -2443,10 +2509,22 @@ where $bold(E)_"static"$ is produced by electric charges ($nabla dot bold(E)_"st
   #tex-table(
     ("Property", "Motional EMF", "Induced Electric Field"),
     ("Source", "Motion of conductor through $bold(B)$", "Time-varying $bold(B)$ in free space"),
-    ("Microscopic origin", "Lorentz force $bold(F) = q (bold(v) times bold(B))$", "Faraday's law $nabla times bold(E) = - partial bold(B) / partial t$"),
+    (
+      "Microscopic origin",
+      "Lorentz force $bold(F) = q (bold(v) times bold(B))$",
+      "Faraday's law $nabla times bold(E) = - partial bold(B) / partial t$",
+    ),
     ("Requires conductor?", "Yes (charge carriers must move)", "No (exists in vacuum)"),
-    ("cal(E) formula", "$cal(E) = integral.cont (bold(v) times bold(B)) dot dif bold(l)$", "$cal(E) = - dif / dif t integral_S bold(B) dot dif bold(S)$"),
-    ("Frame dependence", "Exists in lab frame; transforms to $bold(E)$ in moving frame", "Lorentz-invariant (frame-independent flux change)"),
+    (
+      "cal(E) formula",
+      "$cal(E) = integral.cont (bold(v) times bold(B)) dot dif bold(l)$",
+      "$cal(E) = - dif / dif t integral_S bold(B) dot dif bold(S)$",
+    ),
+    (
+      "Frame dependence",
+      "Exists in lab frame; transforms to $bold(E)$ in moving frame",
+      "Lorentz-invariant (frame-independent flux change)",
+    ),
     ("Applicable where", "Generators, sliding contacts", "Transformers, betatrons, eddy currents"),
   )
 
@@ -2688,7 +2766,7 @@ The total magnetic energy of any current distribution can also be expressed in t
   Using $bold(B) = nabla times bold(A)$ and Ampère's law $nabla times bold(H) = bold(J)$:
   $
     U_B = integral_V frac(1, 2) bold(H) dot bold(B) dif V
-        = frac(1, 2) integral_V bold(H) dot (nabla times bold(A)) dif V.
+    = frac(1, 2) integral_V bold(H) dot (nabla times bold(A)) dif V.
   $
   Using the identity $nabla dot (bold(A) times bold(H)) = bold(H) dot (nabla times bold(A)) - bold(A) dot (nabla times bold(H))$:
   $
@@ -2712,8 +2790,16 @@ The total magnetic energy of any current distribution can also be expressed in t
     ("Source", "Charge density $rho$", "Current density $bold(J)$"),
     ("Potential", "Scalar potential $V$", "Vector potential $bold(A)$"),
     ("Circuit form", "$U_E = frac(1, 2) C V^2$", "$U_B = frac(1, 2) L I^2$"),
-    ("Charge/current form", "$U_E = frac(1, 2) integral rho V dif V$", "$U_B = frac(1, 2) integral bold(A) dot bold(J) dif V$"),
-    ("Field energy density", "$u_E = frac(epsilon_0, 2) E^2 = frac(1, 2) bold(E) dot bold(D)$", "$u_B = frac(1, 2 mu_0) B^2 = frac(1, 2) bold(H) dot bold(B)$"),
+    (
+      "Charge/current form",
+      "$U_E = frac(1, 2) integral rho V dif V$",
+      "$U_B = frac(1, 2) integral bold(A) dot bold(J) dif V$",
+    ),
+    (
+      "Field energy density",
+      "$u_E = frac(epsilon_0, 2) E^2 = frac(1, 2) bold(E) dot bold(D)$",
+      "$u_B = frac(1, 2 mu_0) B^2 = frac(1, 2) bold(H) dot bold(B)$",
+    ),
   )
 
   The structural symmetry between these expressions reflects the deep duality between electric and magnetic phenomena. In time-varying situations (§9.5), these two energy densities combine to give the total electromagnetic energy density $u = u_E + u_B$, which evolves according to Poynting's theorem.
@@ -2765,7 +2851,8 @@ which allows $nabla dot bold(J) != 0$ whenever charge density changes with time.
 
 This contradiction is not just a mathematical subtlety — it has a direct physical manifestation.
 
-#example(name: "Charging Capacitor — The Paradox")[ // 充电电容器悖论
+#example(name: "Charging Capacitor — The Paradox")[
+  // 充电电容器悖论
   Consider a parallel-plate capacitor being charged by a steady current $I$. The current flows through the wire onto one plate and away from the other. We apply Ampère's law to a closed loop $C$ encircling the wire, and consider two different surfaces bounded by $C$:
 
   - *Surface $S_1$* (intersecting the wire): The current through $S_1$ is $I$, so $integral.cont_C bold(B) dot dif bold(l) = mu_0 I$.
@@ -2825,10 +2912,10 @@ Applying Stokes' theorem to the left-hand side and noting that the result must h
 The presence of $mu_0 epsilon_0$ is significant: $mu_0 epsilon_0 = 1 / c^2$, where $c$ is the speed of light. This is the first hint that Maxwell's equations predict electromagnetic waves propagating at the speed of light.
 
 #proof[Apply the new law to the capacitor paradox. With the displacement current term, both surfaces give the same result:
-- Surface $S_1$ (intersecting wire): $I_"enc" = I$, and the displacement current through $S_1$ is negligible (the field is confined between the plates).
-- Surface $S_2$ (between plates): $I_"enc" = 0$, but the displacement current between the plates equals $I_D = epsilon_0 dif / dif t integral_S bold(E) dot dif bold(S) = epsilon_0 dif / dif t (Q / epsilon_0) = dif Q / dif t = I$.
+  - Surface $S_1$ (intersecting wire): $I_"enc" = I$, and the displacement current through $S_1$ is negligible (the field is confined between the plates).
+  - Surface $S_2$ (between plates): $I_"enc" = 0$, but the displacement current between the plates equals $I_D = epsilon_0 dif / dif t integral_S bold(E) dot dif bold(S) = epsilon_0 dif / dif t (Q / epsilon_0) = dif Q / dif t = I$.
 
-Both surfaces give $integral.cont_C bold(B) dot dif bold(l) = mu_0 I$, resolving the paradox.
+  Both surfaces give $integral.cont_C bold(B) dot dif bold(l) = mu_0 I$, resolving the paradox.
 ]
 
 === Physical Meaning of the Displacement Current // 位移电流的物理本质
