@@ -291,6 +291,14 @@ Symmetry shortcuts. Before any computation, check the following three devices.
 
 ### 组件块内容约束（definition / example）
 
+**★★★ 块内内容必须紧凑（适用于 definition / theorem / property / corollary / lemma 等所有陈述类组件）**：块内只保留"核心陈述"——定义块只讲"X 本身是什么"（"… is called *X*"句式 + 必要的 Let/where 前提从句），定理块只放条件与结论。以下内容**一律不进块**，若要写则移到块之后的正文中：
+
+- 对定义的解释、解读、延伸说明（如 nabla 算子"如何与场结合运算"）；
+- 块内顺带引入的**派生术语**（如散度定义后附带"div ≡ 0 的场称为 solenoidal"——这是另一个术语的定义，应移出为紧随其后的段落）；
+- 补充约定（如"闭曲面法向默认取外法向"）；
+- 前向/后向指引（如"…are the two operators defined next"）；
+- 物理/几何意义、例子、直观说明。
+
 **`#definition` 块内只放准确定义**，不得混入解释、理由、例子、直观说明或"为什么这样要求"。所有补充说明一律移出定义块，写成紧随其后的普通段落：
 
 ```typst
