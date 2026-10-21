@@ -52,28 +52,15 @@ The three first-order differential operators of field theory are the gradient, t
 All of them will be written with a single symbolic operator, introduced at the end of the first subsection.
 
 === The Gradient and the Nabla Operator // 梯度与哈密尔顿算子
-// 方向导数刻画标量场沿指定方向的变化率, 梯度则给出变化最快的方向
-A scalar field changes at different rates in different directions; the rate along a prescribed direction is measured by the directional derivative.
+A scalar field changes at different rates in different directions: its rate along a unit vector $bold(l)$ is called the *directional derivative*, and is obtained by differentiating $t |-> f(M + t bold(l))$ at $t = 0$.
 
-#definition(name: "Directional Derivative")[
-  Let $f$ be a scalar field on $Omega$, $M in Omega$ and $bold(l)$ a unit vector.
-  The *directional derivative* of $f$ at $M$ along $bold(l)$ is
-  $
-    (partial f)/(partial l) (M) = lim_(t -> 0) (f(M + t bold(l)) - f(M))/t.
-  $
-] <def:directional-derivative>
+Along the coordinate axes the directional derivatives are the partial derivatives $f_x, f_y, f_z$.
 
-The directional derivatives along the coordinate axes are the partial derivatives $f_x, f_y, f_z$; among all directions one of them gives the steepest increase, which leads to the gradient.
-
-#definition(name: "Gradient")[
-  Let $f in C^1(Omega)$.
-  The *gradient* of $f$ at $M$ is the vector
-  $
-    gradient f (M) = (partial f)/(partial x) (M) bold(i) + (partial f)/(partial y) (M) bold(j) + (partial f)/(partial z) (M) bold(k).
-  $
-] <def:gradient>
-
-A vector field that coincides with the gradient of some scalar field is called a *gradient field*.
+The *gradient* of $f in C^1(Omega)$ at $M$ is the vector collecting these three derivatives,
+$
+  gradient f (M) = (partial f)/(partial x) (M) bold(i) + (partial f)/(partial y) (M) bold(j) + (partial f)/(partial z) (M) bold(k),
+$
+and a vector field that coincides with the gradient of some scalar field is called a *gradient field*.
 
 #property(name: "Gradient and Directional Derivative")[
   Let $f in C^1(Omega)$, $M in Omega$ and $bold(l)$ a unit vector.
