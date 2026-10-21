@@ -3649,17 +3649,19 @@ Energy is being transported, not created: $bold(p)$ is the rate at which it cros
   The same computation in $n$ space dimensions — with $a^2 (u_x^2 + u_y^2)$ replaced by $a^2 abs(nabla u)^2$ and $Gamma$ by $partial Omega$ — shows that #link(<thm:wave-energy>)[the conservation law of §16.6] extends from the Dirichlet and Neumann conditions to the Robin condition.
 ] <ex:wave-robin-energy>
 
-#note[
-  *Energy method: three boundary conditions at a glance.* For $u_(t t) = a^2 Delta u$ on $Omega subset bb(R)^2$ the recipe never changes: differentiate $E$, use the divergence theorem to turn $integral_Omega u_t Delta u$ into a boundary integral, kill the volume term by the equation and the boundary term by the boundary condition, then exploit positivity.
+#note(title: "Energy method: three boundary conditions at a glance.")[
+  For $u_(t t) = a^2 Delta u$ on $Omega subset bb(R)^2$ the recipe never changes: differentiate $E$, use the divergence theorem to turn $integral_Omega u_t Delta u$ into a boundary integral, kill the volume term by the equation and the boundary term by the boundary condition, then exploit positivity.
 
-  #table(
-    columns: (1.3fr, 2.0fr, 1.8fr, 1.1fr),
-    stroke: .5pt,
-    align: center,
-    table.header([Boundary], [Energy $E (t)$], [Boundary term killed by], [Uniqueness]),
-    [Dirichlet], [$integral_Omega (u_t^2 + a^2 abs(nabla u)^2) dif bold(x)$], [$u |_Gamma = 0 => u_t |_Gamma = 0$], [Strict],
-    [Neumann], [the same], [$u_nu |_Gamma = 0$], [Up to a constant],
-    [Robin, $sigma > 0$], [the same $+ a^2 sigma integral_Gamma u^2 dif S$], [$u_nu + sigma u = 0$], [Strict],
+  #tex-table(
+    ("Boundary", [Energy $E (t)$], "Boundary term killed by", "Uniqueness"),
+    (
+      "Dirichlet",
+      [$integral_Omega (u_t^2 + a^2 abs(nabla u)^2) dif bold(x)$],
+      [$u |_Gamma = 0 => u_t |_Gamma = 0$],
+      "Strict",
+    ),
+    ("Neumann", "the same", [$u_nu |_Gamma = 0$], "Up to a constant"),
+    ([Robin, $sigma > 0$], [the same $+ a^2 sigma integral_Gamma u^2 dif S$], [$u_nu + sigma u = 0$], "Strict"),
   )
 
   Only two ingredients move from one row to the next — the energy and the boundary condition:
