@@ -3649,6 +3649,32 @@ Energy is being transported, not created: $bold(p)$ is the rate at which it cros
   The same computation in $n$ space dimensions — with $a^2 (u_x^2 + u_y^2)$ replaced by $a^2 abs(nabla u)^2$ and $Gamma$ by $partial Omega$ — shows that #link(<thm:wave-energy>)[the conservation law of §16.6] extends from the Dirichlet and Neumann conditions to the Robin condition.
 ] <ex:wave-robin-energy>
 
+#note[
+  *Energy method: three boundary conditions at a glance.* For $u_(t t) = a^2 Delta u$ on $Omega subset bb(R)^2$ the recipe never changes: differentiate $E$, use the divergence theorem to turn $integral_Omega u_t Delta u$ into a boundary integral, kill the volume term by the equation and the boundary term by the boundary condition, then exploit positivity.
+
+  #table(
+    columns: (1.3fr, 2.0fr, 1.8fr, 1.1fr),
+    stroke: .5pt,
+    align: center,
+    table.header([Boundary], [Energy $E (t)$], [Boundary term killed by], [Uniqueness]),
+    [Dirichlet], [$integral_Omega (u_t^2 + a^2 abs(nabla u)^2) dif bold(x)$], [$u |_Gamma = 0 => u_t |_Gamma = 0$], [Strict],
+    [Neumann], [the same], [$u_nu |_Gamma = 0$], [Up to a constant],
+    [Robin, $sigma > 0$], [the same $+ a^2 sigma integral_Gamma u^2 dif S$], [$u_nu + sigma u = 0$], [Strict],
+  )
+
+  Only two ingredients move from one row to the next — the energy and the boundary condition:
+
+  - *Dirichlet* ($u |_Gamma = 0$). No boundary integral in $E$; since $u = 0$ on $Gamma$ gives $u_t = 0$ there, the term $a^2 integral_Gamma u_t u_nu dif S$ dies and uniqueness is strict.
+
+  - *Neumann* ($u_nu |_Gamma = 0$). Same energy, and the condition kills the boundary term directly. But $E = 0$ only forces $w_t = 0$ and $nabla w = 0$, i.e. $w$ constant in space: uniqueness holds *up to an additive constant*, which the initial data then fix.
+
+  - *Robin* ($(u_nu + sigma u) |_Gamma = 0$, $sigma > 0$). The flat energy fails; after adding the storage $a^2 sigma integral_Gamma u^2 dif S$ the boundary part becomes $a^2 integral_Gamma u_t (u_nu + sigma u) dif S$, which the condition makes zero. Every term is nonnegative because $sigma > 0$, so uniqueness is strict again.
+
+  Three traps. The Dirichlet and Neumann energies cannot be reused for Robin: the boundary term must be added, with coefficient exactly $a^2 sigma$. For Neumann one should not claim plain uniqueness but "unique up to an additive constant". And the sign matters: $sigma = 0$ is Neumann, while $sigma < 0$ destroys positivity — the energy can then decrease, and the argument collapses.
+
+  The general statement is #link(<thm:wave-energy>)[§16.6]; the Robin computation is #link(<ex:wave-robin-energy>)[the example above].
+]
+
 On all of $bb(R)^n$ the total energy need not be finite, and the boundary term of the preceding argument is unavailable; the wave equation nevertheless admits a *local* energy inequality on characteristic cones, which is the key to uniqueness and stability for the Cauchy problem. The cone that enters is precisely the backward cone of the qualitative discussion of §16.7, drawn in #link(<fig:wave-domain-dependence>)[Figure] together with its domain of dependence.
 
 === The Cauchy Problem: Local Energy, Uniqueness and Stability // 柯西问题：局部能量、唯一性与稳定性
