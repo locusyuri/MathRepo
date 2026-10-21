@@ -3247,6 +3247,19 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
   $
   because on the plane $z = 0$ the sphere point has third coordinate $a t omega_3$, so that $e^(c (z + a t omega_3)/a) = e^(c t omega_3)$.
 
+  *Spherical coordinates.* With the parametrization used in §16.3,
+  $
+    omega = (sin phi.alt cos theta, sin phi.alt sin theta, cos phi.alt), quad dif omega = sin phi.alt dif phi.alt dif theta,
+  $
+  where $phi.alt in [0, pi]$ and $theta in [0, 2 pi)$, so that $omega_3 = cos phi.alt$, the same solution reads as a double integral over that rectangle:
+  $
+    u (x, y, t) &= (partial)/(partial t) [t/(4 pi) integral_0^(2 pi) integral_0^pi phi (x + a t sin phi.alt cos theta, \
+    &\qquad y + a t sin phi.alt sin theta) e^(c t cos phi.alt) sin phi.alt dif phi.alt dif theta] \
+    &+ t/(4 pi) integral_0^(2 pi) integral_0^pi psi (x + a t sin phi.alt cos theta, \
+    &\qquad y + a t sin phi.alt sin theta) e^(c t cos phi.alt) sin phi.alt dif phi.alt dif theta.
+  $
+  The weight $sin phi.alt$ is the surface element and $e^(c t cos phi.alt)$ carries the potential; for $c = 0$ the two integrals are exactly the spherical-coordinate form of Kirchhoff's formula of §16.3 with the third variable frozen at $z = 0$.
+
   This is the solution. The average runs over the *unit sphere*, not over the disk, and the potential enters through the weight $e^(c t omega_3)$, which is what the third dimension contributes. For $c = 0$ the weight disappears and the formula becomes the spherical-mean form of Poisson's formula of §16.3. For imaginary $c = i m$ the same transformation gives the Klein--Gordon equation $u_(t t) - a^2 Delta u + m^2 u = 0$, the exponential becoming the oscillating weight $e^(i m t omega_3)$.
 ] <ex:wave-telegraph-2d>
 
