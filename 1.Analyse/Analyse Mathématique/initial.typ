@@ -4581,7 +4581,7 @@ take a limit as the partition is refined.
   + Take
     $
       delta = min {Delta x'_1, Delta x'_2, dots.c, Delta x'_p,
-      epsilon / (2(p-1)(M-m))}.
+        epsilon / (2(p-1)(M-m))}.
     $
   + Let $P: a = x_0 < x_1 < dots.c < x_n = b$ be any partition with
     $lambda = max_(1 <= i <= n) (Delta x_i) < delta$.
@@ -4736,7 +4736,7 @@ sums carry over verbatim to Stieltjes sums.
   $overline(S)(P') - underline(S)(P') < epsilon / 3$. Take
   $
     delta = min {Delta x'_1, dots.c, Delta x'_p,
-    epsilon / (3(p-1)(M-m))}
+      epsilon / (3(p-1)(M-m))}
   $
   (as in Darboux's theorem we may assume $M > m$). Let
   $P: a = x_0 < dots.c < x_n = b$ be any partition with $lambda < delta$, and
@@ -10081,7 +10081,7 @@ In computational terms, $dif x_i$ records the increment of the $i$-th coordinate
   which is precisely the total differential of the coefficient function.
 ] <def:exterior-differentiation>
 
-By the definition, the exterior differentiation of a $k$-form is a $(k + 1)$-form; it generalizes the total differential $dif f$, whose coefficients are precisely the components of the gradient of $f$. The following theorem unwraps the general definition into the coordinate formulas used in actual computation.
+By the definition, the exterior differentiation of a $k$-form is a $(k + 1)$-form; it generalizes the total differential $dif f$, whose coefficients are precisely the components of the gradient $nabla f$ of $f$. The following theorem unwraps the general definition into the coordinate formulas used in actual computation.
 
 #theorem(name: "Coordinate Formulas for Exterior Differentiation")[
   + For a $1$-form $omega = P dif x + Q dif y$ in $bb(R)^2$,
@@ -10106,6 +10106,28 @@ By the definition, the exterior differentiation of a $k$-form is a $(k + 1)$-for
   The anticommutativity rule kills the terms containing $dif x and dif x$ and $dif y and dif y$, and converts $dif y and dif x$ into $-dif x and dif y$; collecting the remaining coefficients yields the formula. For the second formula one collects the coefficients of $dif y and dif z$, $dif z and dif x$, and $dif x and dif y$; for the third, those of $dif x and dif y and dif z$. In each case, the equality of mixed second-order partial derivatives is what merges the contributions of a single coefficient.
 ]
 
+In the standard notation of vector analysis, the three coordinate formulas admit a uniform reading through the operators $nabla$, $nabla dot$, and $nabla times$: writing $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ for the field formed by the coefficients, the single operation $dif$ subsumes the three first-order operators of vector analysis, as summarized below.
+
+#tex-table(
+  ([Form $omega$], [$dif omega$], [Reading via $nabla$]),
+  ([$f$ ($0$-form)], [$dif f$], [the coefficients are the components of $nabla f$]),
+  (
+    [$P dif x + Q dif y$ in $bb(R)^2$],
+    [$(Q_x - P_y) dif x and dif y$],
+    [$(nabla times bold(f)) dot bold(k)$ for the planar field $bold(f) = P bold(i) + Q bold(j)$],
+  ),
+  (
+    [$P dif x + Q dif y + R dif z$ in $bb(R)^3$],
+    [the second coordinate formula],
+    [the coefficients are the components of $nabla times bold(f)$],
+  ),
+  (
+    [$P dif y and dif z + Q dif z and dif x + R dif x and dif y$],
+    [$(P_x + Q_y + R_z) dif x and dif y and dif z$],
+    [$nabla dot bold(f) dif x and dif y and dif z$],
+  ),
+)
+
 These formulas are the computational core of the theorems of the next section: the coefficient in the first formula is exactly the integrand obtained by #link(<thm:green-theorem>)[Green's theorem]; the three coefficients in the second formula are the entries of the determinant appearing in #link(<thm:stokes-theorem>)[Stokes' theorem]; and the coefficient in the third formula is the integrand of #link(<thm:gauss-theorem>)[Gauß's theorem]. The whole ladder is illustrated in @fig:exterior-ladder.
 
 #figure(
@@ -10127,7 +10149,7 @@ These formulas are the computational core of the theorems of the next section: t
   )
 ] <prop:exterior-differentiation-properties>
 
-The nilpotency is the alternating-algebra avatar of the equality of mixed second-order partial derivatives: every term of $dif(dif omega)$ either contains two identical differentials or cancels by anticommutativity.
+The nilpotency is the alternating-algebra avatar of the equality of mixed second-order partial derivatives: every term of $dif(dif omega)$ either contains two identical differentials or cancels by anticommutativity. The sign $(-1)^k$ in the Leibniz rule is obtained by induction on the degree $k$ of $omega$: each time $dif$ passes one factor of $omega$ on its way to $eta$, the sign flips once, which is why $dif$ is a derivation of the *graded* algebra of forms rather than an ordinary one.
 
 #example(name: "Wedge Products")[
   Simplify the $2$-form $omega = (x^2 dif y - y^2 dif x) and (dif x + dif z)$ in $bb(R)^3$.
@@ -10175,7 +10197,41 @@ The nilpotency is the alternating-algebra avatar of the equality of mixed second
     This is precisely the $2$-form whose integral over a closed surface was evaluated through Gauß's formula in #link(<ex:gauss-completion>)[an earlier example]; its exterior derivative is the form integrated over the enclosed volume there.
 ]
 
-The integration of differential forms is defined in the next section: a $1$-form is integrated along an oriented curve, and a $2$-form over an oriented surface. With this in place, Green's, Stokes', and Gauß's formulas all take the unified shape $integral_(limits(partial M)^harpoon.rt) omega = integral_(limits(M)^harpoon.rt) dif omega$.
+#example(name: "Exterior Derivative from a Vector Field")[
+  For the field $bold(f)(x, y, z) = x y bold(i) + y z bold(j) + z x bold(k)$, form the work $1$-form $omega = x y dif x + y z dif y + z x dif z$ and the flux $2$-form $eta = x y dif y and dif z + y z dif z and dif x + z x dif x and dif y$. Compute $dif omega$ and $dif eta$, and compare with $nabla times bold(f)$ and $nabla dot bold(f)$.
+] <ex:exterior-derivative-from-field>
+
+#solution[
+  By the second coordinate formula,
+  $
+    dif omega = -y dif y and dif z - z dif z and dif x - x dif x and dif y,
+  $
+  which is exactly $(nabla times bold(f)) dot (dif y and dif z, dif z and dif x, dif x and dif y)$, since $nabla times bold(f) = -y bold(i) - z bold(j) - x bold(k)$. By the third coordinate formula,
+  $
+    dif eta = (y + z + x) dif x and dif y and dif z = (nabla dot bold(f)) dif x and dif y and dif z.
+  $
+]
+
+The integration of differential forms is defined in the next section: a $1$-form is integrated along an oriented curve, and a $2$-form over an oriented surface. With this in place, Green's, Stokes', and Gauß's formulas all take the unified shape $integral_(limits(partial M)^harpoon.rt) omega = integral_(limits(M)^harpoon.rt) dif omega$. The following dictionary pairs each form with the vector integral it encodes, where $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ in space and $bold(f) = F_1 bold(i) + F_2 bold(j)$ in the plane; the last row is the flux pairing that converts Green's theorem into the two-dimensional divergence theorem.
+
+#tex-table(
+  ([Form], [Vector integral], [Interpretation]),
+  (
+    [$P dif x + Q dif y + R dif z$],
+    [$integral_(limits(L)^harpoon.rt) bold(f) dot bold(tau) dif s$],
+    [work along a curve / circulation],
+  ),
+  (
+    [$P dif y and dif z + Q dif z and dif x + R dif x and dif y$],
+    [$integral.double_(limits(Sigma)^harpoon.rt) bold(f) dot bold(n) dif S$],
+    [flux across a surface],
+  ),
+  (
+    [$F_1 dif y - F_2 dif x$ in $bb(R)^2$],
+    [$integral.cont_(limits(Gamma)^harpoon.rt) bold(f) dot bold(n) dif s$],
+    [outward flux of a planar field],
+  ),
+)
 
 == Line Integrals and Surface Integrals of Vector Fields // 向量场的曲线积分与曲面积分
 
@@ -10392,6 +10448,26 @@ Denote $integral.cont_(limits(partial M)^harpoon.rt)$ as the line integral along
   The induced orientation mentioned above is characterized as follows. For a plane region $limits(M)^harpoon.rt$ with positive (counterclockwise) orientation, the induced orientation of the boundary $limits(partial M)^harpoon.rt$ is such that the region always lies on the left when one walks along the boundary with this orientation. For an oriented surface $limits(M)^harpoon.rt$ in $bb(R)^3$ (as in Gauß's and Stokes' theorems below), the induced orientation of the boundary curve $limits(partial M)^harpoon.rt$ is determined by the chosen unit normal field of the surface: walking along the boundary with the head pointing along the normal, the surface lies on the left; in particular, for Gauß's formula, the boundary surface $limits(partial M)^harpoon.rt$ adopts the outward normal orientation.
 ] <note:induced-orientation>
 // 兑现 P0-3（§14.5）边界诱导定向前瞻承诺。
+
+#corollary(name: "Divergence Form of Green's Theorem")[
+  Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^2$ with positively oriented boundary, and let $bold(f) = P bold(i) + Q bold(j) in C^1 (limits(M)^harpoon.rt)$. Then
+  $
+    integral.cont_(limits(partial M)^harpoon.rt) bold(f) dot bold(n) dif s
+    & = integral.double_(limits(M)^harpoon.rt) (frac(partial P, partial x) + frac(partial Q, partial y)) dif x dif y \
+    & = integral.double_(limits(M)^harpoon.rt) nabla dot bold(f) dif x dif y,
+  $
+  where $bold(n)$ is the unit outward normal along $limits(partial M)^harpoon.rt$.
+] <cor:green-divergence-form>
+
+#proof[
+  Apply #link(<thm:green-theorem>)[Green's theorem] to the $1$-form $omega = P dif y - Q dif x$, whose exterior derivative is
+  $
+    dif omega = (frac(partial P, partial x) + frac(partial Q, partial y)) dif x and dif y.
+  $
+  Along the positively oriented boundary, the outward flux element satisfies $bold(n) dif s = (dif y, -dif x)$, so $integral.cont_(limits(partial M)^harpoon.rt) bold(f) dot bold(n) dif s = integral.cont_(limits(partial M)^harpoon.rt) P dif y - Q dif x$, and the assertion follows.
+]
+
+This is the two-dimensional divergence theorem: it converts the integral of $nabla dot bold(f)$ over a planar region into the outward flux through its boundary, and it is the planar special case of #link(<thm:gauss-theorem>)[Gauß's theorem].
 
 #example(name: "Green's Theorem with a Completing Line Segment")[
   Calculate $I = integral_L (e^x sin y - y) dif x + (e^x cos y - 1) dif y$,
@@ -11121,6 +11197,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:dirichlet-integral-parameter>)[Dirichlet Integral Parameter]*
 - *#link(<ex:dirichlet-kernel>)[Dirichlet Kernel]*
 - *#link(<def:discontinuity-point>)[Discontinuity Point]*
+- *#link(<cor:green-divergence-form>)[Divergence Form of Green's Theorem]*
 - *#link(<def:double-integral-bounded-set>)[Double Integral Bounded Set]*
 - *#link(<fig:double-integral-bounded-set>)[Double Integral Bounded Set]*
 - *#link(<def:double-integral-closed-interval>)[Double Integral Closed Interval]*
@@ -11141,6 +11218,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:exponential-equation>)[Exponential Equation]*
 - *#link(<def:extended-limit>)[Extended Limit]*
 - *#link(<thm:exterior-derivative-computation>)[Exterior Derivative Computation]*
+- *#link(<ex:exterior-derivative-from-field>)[Exterior Derivative from a Field]*
 - *#link(<ex:exterior-derivative-2d>)[Exterior Derivative in the Plane]*
 - *#link(<ex:exterior-derivative-3d>)[Exterior Derivative in Space]*
 - *#link(<def:exterior-differentiation>)[Exterior Differentiation]*
