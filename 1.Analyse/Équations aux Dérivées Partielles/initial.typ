@@ -711,14 +711,11 @@ $
 
 The following table summarizes the canonical forms and their characteristic geometry:
 
-#table(
-  columns: (1fr, 2fr, 2fr, 2fr),
-  stroke: .5pt,
-  align: center,
-  table.header([Type], [Canonical form], [Coordinates], [Characteristics]),
-  [Elliptic], [$u_(alpha alpha) + u_(beta beta) = Phi$], [$alpha + i beta = phi(x, y)$], [Complex; no real curves],
-  [Parabolic], [$u_(eta eta) = Phi$], [$xi = phi(x, y)$; $eta$ free], [One real family],
-  [Hyperbolic], [$u_(xi eta) = Phi$], [$xi = phi, eta = psi$], [Two real families],
+#tex-table(
+  ("Type", "Canonical form", "Coordinates", "Characteristics"),
+  ("Elliptic", [$u_(alpha alpha) + u_(beta beta) = Phi$], [$alpha + i beta = phi (x, y)$], "Complex; no real curves"),
+  ("Parabolic", [$u_(eta eta) = Phi$], [$xi = phi (x, y)$, $eta$ free], "One real family"),
+  ("Hyperbolic", [$u_(xi eta) = Phi$], [$xi = phi$, $eta = psi$], "Two real families"),
 )
 
 #note[
@@ -3649,7 +3646,7 @@ Energy is being transported, not created: $bold(p)$ is the rate at which it cros
   The same computation in $n$ space dimensions — with $a^2 (u_x^2 + u_y^2)$ replaced by $a^2 abs(nabla u)^2$ and $Gamma$ by $partial Omega$ — shows that #link(<thm:wave-energy>)[the conservation law of §16.6] extends from the Dirichlet and Neumann conditions to the Robin condition.
 ] <ex:wave-robin-energy>
 
-#note(title: "Energy method: three boundary conditions at a glance.")[
+#note(title: "Energy method: three boundary conditions at a glance")[
   For $u_(t t) = a^2 Delta u$ on $Omega subset bb(R)^2$ the recipe never changes: differentiate $E$, use the divergence theorem to turn $integral_Omega u_t Delta u$ into a boundary integral, kill the volume term by the equation and the boundary term by the boundary condition, then exploit positivity.
 
   #tex-table(
