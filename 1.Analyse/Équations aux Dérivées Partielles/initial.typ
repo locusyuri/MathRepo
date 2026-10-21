@@ -2476,6 +2476,7 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 //   Section 16.3: The Cauchy Problem in Higher Dimensions (高维柯西问题)
 //     - 球平均法：EPD 方程 → Kirchhoff 公式（三维，球坐标用 phi.alt/theta）
 //     - 降维法：→ Poisson 公式（二维）；降维到一维（由三维公式导出 d'Alembert）
+//     - 二维电报/Klein–Gordon 方程：指数变换 v = e^{cz/a} u 化为三维波动方程 + Kirchhoff 公式
 //     - 向 §16.4 非齐次问题的过渡
 //
 //   Section 16.4: The Inhomogeneous Equation: Duhamel's Principle (非齐次方程：Duhamel 原理)
@@ -3221,6 +3222,33 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
   $
   which is exactly #link(<thm:d-alembert>)[d'Alembert's formula]: the two-dimensional and one-dimensional formulas are both descended from the three-dimensional one.
 ] <ex:wave-dalembert-by-descent>
+
+#example(name: "The Telegraph Equation in Two Dimensions")[
+  Solve the Cauchy problem
+  $
+    u_(t t) = a^2 (u_(x x) + u_(y y)) + c^2 u, quad u (dot, 0) = phi, quad u_t (dot, 0) = psi,
+  $
+  where $c$ is a constant: the potential $c^2 u$ makes the medium restoring, and the equation is the two-dimensional *telegraph*, or *Klein--Gordon*, equation.
+
+  *Reduction to the three-dimensional wave equation.* The potential can be absorbed into the unknown. Put
+  $
+    v (x, y, z, t) = e^(c z/a) u (x, y, t).
+  $
+  The exponential is constant in $t, x, y$ and contributes the factor $c^2/a^2$ to $v_(z z)$, so
+  $
+    v_(t t) - a^2 (v_(x x) + v_(y y) + v_(z z)) = e^(c z/a) (u_(t t) - a^2 (u_(x x) + u_(y y)) - c^2 u) = 0,
+  $
+  and $v$ solves the three-dimensional wave equation with data $v (dot, 0) = e^(c z/a) phi$ and $v_t (dot, 0) = e^(c z/a) psi$.
+
+  *Kirchhoff's formula.* Write that formula in the unit-sphere form derived above, with $omega = (omega_1, omega_2, omega_3)$ ranging over $S^2$ and $dif omega$ the surface element, and evaluate it at the points $(x, y, 0)$:
+  $
+    u (x, y, t) = v (x, y, 0, t) &= (partial)/(partial t) [t/(4 pi) integral_(S^2) phi (x + a t omega_1, y + a t omega_2) e^(c t omega_3) dif omega] \
+    &+ t/(4 pi) integral_(S^2) psi (x + a t omega_1, y + a t omega_2) e^(c t omega_3) dif omega,
+  $
+  because on the plane $z = 0$ the sphere point has third coordinate $a t omega_3$, so that $e^(c (z + a t omega_3)/a) = e^(c t omega_3)$.
+
+  This is the solution. The average runs over the *unit sphere*, not over the disk, and the potential enters through the weight $e^(c t omega_3)$, which is what the third dimension contributes. For $c = 0$ the weight disappears and the formula becomes the spherical-mean form of Poisson's formula of §16.3. For imaginary $c = i m$ the same transformation gives the Klein--Gordon equation $u_(t t) - a^2 Delta u + m^2 u = 0$, the exponential becoming the oscillating weight $e^(i m t omega_3)$.
+] <ex:wave-telegraph-2d>
 
 The homogeneous Cauchy problem is now solved in every dimension. The *inhomogeneous* problem with zero data is reduced to the homogeneous one in §16.4 by the superposition principle and #link(<thm:duhamel-wave>)[Duhamel's principle], and for general data the two contributions are simply added. Initial-boundary value problems on bounded domains — membranes, acoustic resonators — call instead for separation of variables, along the lines of §16.5; the general spectral framework is developed in Chapter 19.
 
