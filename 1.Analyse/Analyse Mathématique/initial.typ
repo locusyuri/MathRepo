@@ -10217,7 +10217,7 @@ These formulas are the computational core of the theorems of the next section: t
   )
 ] <prop:exterior-differentiation-properties>
 
-The nilpotency is the alternating-algebra avatar of the equality of mixed second-order partial derivatives: every term of $dif(dif omega)$ either contains two identical differentials or cancels by anticommutativity. The sign $(-1)^k$ in the Leibniz rule is obtained by induction on the degree $k$ of $omega$: each time $dif$ passes one factor of $omega$ on its way to $eta$, the sign flips once, which is why $dif$ is a derivation of the *graded* algebra of forms rather than an ordinary one.
+The nilpotency is the alternating-algebra avatar of the equality of mixed second-order partial derivatives: every term of $dif(dif omega)$ either contains two identical differentials or cancels by anticommutativity. The sign $(-1)^k$ in the Leibniz rule is obtained by induction on the degree $k$ of $omega$: each time $dif$ passes one factor of $omega$ on its way to $eta$, the sign flips once, which is why $dif$ is a derivation of the *graded* algebra of forms rather than an ordinary one. The nilpotency also subsumes the two composition identities of #link(<prop:div-curl-calculus>)[the calculus of divergence and curl]: applied to the $0$-form $f$ it is $nabla times (nabla f) = bold(0)$, and applied to the work $1$-form $P dif x + Q dif y + R dif z$ it is $nabla dot (nabla times bold(f)) = 0$.
 
 #example(name: "Wedge Products")[
   Simplify the $2$-form $omega = (x^2 dif y - y^2 dif x) and (dif x + dif z)$ in $bb(R)^3$.
@@ -10280,7 +10280,38 @@ The nilpotency is the alternating-algebra avatar of the equality of mixed second
   $
 ]
 
-The integration of differential forms is defined in the next section: a $1$-form is integrated along an oriented curve, and a $2$-form over an oriented surface. With this in place, Green's, Stokes', and Gauß's formulas all take the unified shape $integral_(limits(partial M)^harpoon.rt) omega = integral_(limits(M)^harpoon.rt) dif omega$. The following dictionary pairs each form with the vector integral it encodes, where $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ in space and $bold(f) = F_1 bold(i) + F_2 bold(j)$ in the plane; the last row is the flux pairing that converts Green's theorem into the two-dimensional divergence theorem.
+#definition(name: "Hodge Star Operator")[
+  In $bb(R)^2$ and $bb(R)^3$, the *Hodge star operator* $star$ is the linear map sending a $k$-form to an $(n - k)$-form defined by the following action on the basis forms:
+  #tex-table(
+    ([Form $omega$], [$star omega$ in $bb(R)^2$], [$star omega$ in $bb(R)^3$]),
+    ([$1$], [$dif x and dif y$], [$dif x and dif y and dif z$]),
+    ([$dif x$], [$dif y$], [$dif y and dif z$]),
+    ([$dif y$], [$-dif x$], [$dif z and dif x$]),
+    ([$dif z$], [--], [$dif x and dif y$]),
+    ([$dif x and dif y$], [$1$], [$dif z$]),
+    ([$dif y and dif z$], [--], [$dif x$]),
+    ([$dif z and dif x$], [--], [$dif y$]),
+    ([$dif x and dif y and dif z$], [--], [$1$]),
+  )
+] <def:hodge-star>
+
+The star operator converts tangential data into normal data. For a planar field $bold(f) = F_1 bold(i) + F_2 bold(j)$, the star image of the work form is $star (F_1 dif x + F_2 dif y) = F_1 dif y - F_2 dif x$, which is precisely the flux $1$-form of the dictionary below; for a spatial field $bold(f) = P bold(i) + Q bold(j) + R bold(k)$, the star image is $star (P dif x + Q dif y + R dif z) = P dif y and dif z + Q dif z and dif x + R dif x and dif y$, which is precisely the flux $2$-form. The rotation rule $bold(n) dif s = (dif y, -dif x)$ behind the divergence form of Green's theorem is thus the geometric face of the two relations $star dif x = dif y$ and $star dif y = -dif x$. One checks from the table that applying $star$ twice returns $star star omega = (-1)^(k (n - k)) omega$ for a $k$-form in $bb(R)^n$.
+
+#note(
+  title: "Fields, Forms, and the Star Operator",
+)[
+  Two cautions keep the roles of the objects straight. First, a vector field and a differential form are different kinds of object: at each point a vector field supplies a direction, while a $k$-form takes $k$ directions and returns a number, and on a bare space there is no canonical way to pass between the two. Second, every correspondence used above is an extra structure of Euclidean geometry: the work form $bold(f)^flat$, read "$bold(f)$ flat" and defined by $bold(f)^flat (bold(v)) = bold(f) dot bold(v)$, is produced by the standard inner product, and the star operator depends on both the inner product and the choice of orientation. The precise language -- tangent and cotangent spaces, Riemannian metrics, the musical isomorphisms $flat$ and $sharp$, and the general Hodge star on manifolds -- belongs to differential geometry and is not needed in this note.
+]
+
+#note[
+  The Laplacian of #link(<def:laplacian>)[the preceding section] fits into the same machinery: applying the definitions of $star$ and $dif$ to $dif f$ yields, in both $bb(R)^2$ and $bb(R)^3$,
+  $
+    Delta f = star dif star (dif f),
+  $
+  so the Laplacian is a composition of exterior differentiations and star operators; this is the reading under which it enters Green's identities below.
+]
+
+The integration of differential forms is defined in the next section: a $1$-form is integrated along an oriented curve, and a $2$-form over an oriented surface. With this in place, Green's, Stokes', and Gauß's formulas all take the unified shape $integral_(limits(partial M)^harpoon.rt) omega = integral_(limits(M)^harpoon.rt) dif omega$. The following dictionary pairs each form with the vector integral it encodes, where $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ in space and $bold(f) = F_1 bold(i) + F_2 bold(j)$ in the plane; the two flux rows are exactly the star images $star (bold(f)^flat)$ of the work form computed above, and the last row is the flux pairing that converts Green's theorem into the two-dimensional divergence theorem.
 
 #tex-table(
   ([Form], [Vector integral], [Interpretation]),
@@ -11390,6 +11421,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<thm:heine-borel>)[Heine Borel]*
 - *#link(<thm:heine-theorem>)[Heine Theorem]*
 - *#link(<def:higher-order-derivative>)[Higher Order Derivative]*
+- *#link(<def:hodge-star>)[Hodge Star Operator]*
 - *#link(<def:hypergeometric-series>)[Hypergeometric Series]*
 
 == I
