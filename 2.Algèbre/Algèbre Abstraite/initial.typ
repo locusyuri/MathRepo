@@ -56,6 +56,28 @@ than redefined.
   — a generic operation satisfies none.
 ] <note:binary-operation-trivial>
 
+#definition(name: "Algebraic System")[
+  An *algebraic system* is a set $S$ together with one or more
+  operations on it:
+  $
+    (S, mu_1, dots, mu_k), quad mu_i: S^(n_i) -> S,
+  $
+  where $mu_i$ is an $n_i$-ary operation. A system carrying a single
+  binary operation is written $(S, star)$. The list of arities
+  $(n_1, dots, n_k)$ is the *type* of the system, and the same set
+  equipped with different operations gives different algebraic
+  systems.
+] <def:algebraic-system>
+
+Groups, rings, fields and modules are all algebraic systems: the
+underlying set and its operations supply the type, while the *laws*
+those operations obey (#link(<prop:operation-laws>)[below]) supply the
+distinction between one class and another. This is why the general
+notions of this chapter — congruence relations (§1.2), homomorphisms
+and isomorphisms (the next section) — can be stated once, for
+algebraic systems as such, and then applied unchanged to every class
+of examples.
+
 Familiar operations: addition and multiplication on $bb(Z)$,
 composition of self-maps of a set, vector addition in $bb(R)^n$. In
 each case the interesting structure — what makes the operation
@@ -226,7 +248,7 @@ important technical point in the theory of quotients.
   quotient rings (Chapter 9).
 ] <caution:well-defined-operations>
 
-== Homomorphisms and Isomorphisms // 同态与同构
+== Homomorphism and Isomorphism // 同态与同构
 
 Mappings between sets were the business of the Théorie des Ensembles
 note: injective, surjective, bijective maps and their composition.
@@ -236,15 +258,16 @@ respect the operations?* A map that does is the algebraic notion of
 from Cayley's theorem to Galois theory — is a study of such maps.
 
 #definition(name: "Homomorphism")[
-  Let $(S, star)$ and $(T, diamond)$ be algebraic systems, each
-  equipped with one binary operation. A mapping $f: S -> T$ is a
+  Let $(S, star)$ and $(T, diamond)$ be algebraic systems
+  (#link(<def:algebraic-system>)[§1.1]), each equipped with one binary
+  operation. A mapping $f: S -> T$ is a
   *homomorphism* if it preserves the operation:
   $
     f(a star b) = f(a) diamond f(b) quad quad "for all" a, b in S.
   $
   A homomorphism that is bijective is called an *isomorphism*; two
   systems between which an isomorphism exists are *isomorphic*,
-  written $S ≅ T$.
+  written $S tilde.equiv T$.
 ] <def:homomorphism>
 
 #definition(name: "Endomorphism and Automorphism")[
@@ -4966,7 +4989,7 @@ principal ideal domain $R$, classifies finitely generated $R$-modules
 //     - 商集的定义
 //     - 同余关系 (Congruence Relations)
 
-//   Section 1.3: 同态与同构 (Homomorphisms and Isomorphisms)
+//   Section 1.3: 同态与同构 (Homomorphism and Isomorphism)
 //     - 代数系统间的同态映射
 //     - 同构的概念与意义
 //     - 同态核的初步概念
