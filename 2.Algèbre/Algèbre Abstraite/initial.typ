@@ -281,6 +281,21 @@ from Cayley's theorem to Galois theory — is a study of such maps.
   written $S tilde.equiv T$.
 ] <def:homomorphism>
 
+#note(title: "When are two systems homomorphic?")[
+  Some textbooks attach the adjective to the *pair* rather than to the
+  map: two algebraic systems are called *homomorphic* if there exists a
+  *surjective* homomorphism from one onto the other. The motive is the
+  two properties below — identities, inverses and operation laws are
+  transported across a map only when it is onto
+  (#link(<prop:homomorphism-properties>)[the first],
+  #link(<prop:homomorphism-preserves-laws>)[the second]) — so a
+  surjective homomorphism is often the working hypothesis anyway.
+
+  We do not adopt this convention. In this book "homomorphism" always
+  names a single map, onto or not, and where surjectivity is needed the
+  hypothesis is stated explicitly, as in the two properties below.
+] <note:homomorphic-systems>
+
 #definition(name: "Endomorphism and Automorphism")[
   A homomorphism from an algebraic system to *itself* is called an
   *endomorphism*: $f: (S, star) -> (S, star)$. A bijective
