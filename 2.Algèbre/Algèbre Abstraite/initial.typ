@@ -75,7 +75,7 @@ The relations between groups or systems used throughout are these:
   ([$H <= G$], [$H$ is a subgroup of $G$; $H < G$ means proper]),
   ([$N lt.closed.eq G$], [$N$ is a normal subgroup of $G$ (§4.1)]),
   ([$S tilde.equiv T$], [The algebraic systems $S$ and $T$ are isomorphic (§1.3)]),
-  ([$G ~= H$], [The groups $G$ and $H$ are isomorphic]),
+  ([$G tilde.equiv H$], [The groups $G$ and $H$ are isomorphic]),
 )
 
 == Algebraic Operations // 代数运算
@@ -605,7 +605,7 @@ symmetries, the quaternions.
   carries the addition $[a] + [b] = [a + b]$, which is *well defined*:
   if $[a] = [a']$ and $[b] = [b']$ then $n | a - a'$ and
   $n | b - b'$, hence $n | (a + b) - (a' + b')$, so $[a + b] = [a' +
-  b']$. The axioms then lift from $bb(Z)$:
+    b']$. The axioms then lift from $bb(Z)$:
   $([a] + [b]) + [c] = [a + b + c] = [a] + ([b] + [c])$, the class
   $[0]$ acts as identity, and $[-a]$ inverts $[a]$. The result is an
   abelian group $(bb(Z)_n, +)$ of order $n$ — the Cayley table of
@@ -627,7 +627,7 @@ symmetries, the quaternions.
   terminology of §3.2, $mu_n$ is cyclic, and
   $[k] arrow.r.double e^((2 pi i k) / n)$ identifies $mu_n$ with
   $(bb(Z)_n, +)$: the general form of the isomorphism
-  $bb(Z)_4 ≅ U_4 = mu_4$ computed in
+  $bb(Z)_4 tilde.equiv U_4 = mu_4$ computed in
   #link(<ex:isomorphic-examples>)[Chapter 1].
 ] <ex:roots-of-unity>
 
@@ -1611,7 +1611,7 @@ structure theorem of this notebook.
   surjectivity forces bijectivity.
 ]
 
-The isomorphism $bb(Z)_4 ≅ U_4$ computed in
+The isomorphism $bb(Z)_4 tilde.equiv U_4$ computed in
 #link(<ex:isomorphic-examples>)[Chapter 1] is precisely the case
 $n = 4$ of the theorem; the theorem says such luck is *systematic*.
 
@@ -1981,7 +1981,7 @@ group of a rectangle.)
   - $abs(G) = 1$: the trivial group.
   - $abs(G) = 2, 3, 5$ (primes): $G$ is cyclic,
     #link(<cor:prime-order-cyclic>)[by the corollary].
-  - $abs(G) = 4$: pick $a != e$. If $"ord"(a) = 4$, then $G = ⟨a⟩ ≅
+  - $abs(G) = 4$: pick $a != e$. If $"ord"(a) = 4$, then $G = ⟨a⟩ tilde.equiv
     bb(Z)_4$ by #link(<thm:cyclic-classification>)[§3.2].
     Otherwise every non-identity element has order $2$. Take two
     distinct such elements $a, b$: the product $a b$ cannot be $e$
@@ -2112,13 +2112,13 @@ The criterion forbids mixing: if a transformation group contains even a *single*
   Finally, $g arrow.r.double L_g$ maps $G$ bijectively onto $L(G)$
   (injective: $L_g = L_h$ says $g x = h x$ for all $x$, and $x = e$
   gives $g = h$) and preserves the operation, $L_(g h) = L_g circle
-  L_h$. Hence $G ≅ L(G) <= S_G$.
+  L_h$. Hence $G tilde.equiv L(G) <= S_G$.
 ]
 
 #note(title: "What Cayley says, and what it does not")[
   The theorem exhibits
   every abstract group concretely: $D_3$ as symmetries of a
-  triangle, $Q_8$ inside $S_(Q_8) ≅ S_8$ as $8 times 8$
+  triangle, $Q_8$ inside $S_(Q_8) tilde.equiv S_8$ as $8 times 8$
   permutations. But the embedding is rarely economical — smaller
   permutation representations of $Q_8$ exist — so Cayley is a
   license for concreteness, not a recipe for the best
@@ -2693,10 +2693,10 @@ verification.
   cosets — $A_3$ (the even permutations) and $(1 2) A_3$ (the odd
   ones) — multiply as one would expect: even$dot$even $=$ even,
   odd$dot$odd $=$ even, mixed $=$ odd. In other words, the sign map
-  $"sign": S_3 -> {plus.minus 1} ~= bb(Z)_2$ of
+  $"sign": S_3 -> {plus.minus 1} tilde.equiv bb(Z)_2$ of
   #link(<def:alternating-group>)[§3.4] *is* (up to isomorphism) the
   natural projection $S_3 -> S_3 \/ A_3$. The same pattern holds in
-  every degree: $S_n \/ A_n ~= bb(Z)_2$ for $n >= 2$.
+  every degree: $S_n \/ A_n tilde.equiv bb(Z)_2$ for $n >= 2$.
 ] <ex:s3-quotient>
 
 #example(name: "Orientation as a quotient.")[
@@ -2708,7 +2708,7 @@ verification.
   #link(<prop:normal-properties>)[property (3)] applies. The
   quotient
   $
-    D_n \/ ⟨r⟩ ~= bb(Z)_2
+    D_n \/ ⟨r⟩ tilde.equiv bb(Z)_2
   $
   captures the single bit "rotation or reflection" — the
   orientation of a symmetry. Multiplication in the quotient is
@@ -2784,7 +2784,7 @@ is proved there by a counting argument instead.
 Normal subgroups, we have just seen, are the price of admission for
 a quotient: $G \/ N$ exists only when $N lt.closed.eq G$, and the resulting
 quotient measures how much of $G$'s structure $N$ collapses. At one
-extreme sit the trivial cases $N = {e}$ (quotient $G \/ {e} ~=
+extreme sit the trivial cases $N = {e}$ (quotient $G \/ {e} tilde.equiv
 G$, no collapse) and $N = G$ (quotient $G \/ G$ is the one-element
 trivial group, total collapse).
 
@@ -2843,7 +2843,7 @@ making $G$ cyclic — a contradiction.
   Hamiltonian groups were classified by Dedekind (1897): a group is
   Hamiltonian if and only if
   $
-    G ~= Q_8 times E times A,
+    G tilde.equiv Q_8 times E times A,
   $
   where $E$ is an elementary abelian $2$-group (a direct sum of copies
   of $bb(Z)_2$) and $A$ is abelian with every element of odd order. In
@@ -2888,10 +2888,10 @@ complete list — while the non-abelian case is the subtler one.
   abelian = "no non-trivial subgroups". Pick any $a in G$ with $a
   != e$; the cyclic subgroup $⟨a⟩$ is non-trivial, so $⟨a⟩ = G$,
   i.e. $G$ is cyclic. By
-  #link(<thm:cyclic-classification>)[§3.2], $G ~= bb(Z)$ or
-  $G ~= bb(Z)_n$ for some $n$. The infinite case is excluded:
+  #link(<thm:cyclic-classification>)[§3.2], $G tilde.equiv bb(Z)$ or
+  $G tilde.equiv bb(Z)_n$ for some $n$. The infinite case is excluded:
   $⟨a^2⟩$ would be a non-trivial proper subgroup of $bb(Z)$. So $G
-  ~= bb(Z)_n$ for some $n >= 2$, and
+  tilde.equiv bb(Z)_n$ for some $n >= 2$, and
   #link(<thm:cyclic-subgroups>)[the subgroup structure of cyclic
     groups] gives one subgroup of each order dividing $n$;
   simplicity forces $n$ to have no non-trivial divisors, i.e. $n =
@@ -2905,9 +2905,9 @@ complete list — while the non-abelian case is the subtler one.
   cyclic group of that order, and by
   #link(<thm:abelian-simple>)[the theorem] it is simple. These are
   the simplest non-trivial groups in existence: $bb(Z)_2$ sits
-  underneath the parity quotient $S_n \/ A_n ~= bb(Z)_2$ of
+  underneath the parity quotient $S_n \/ A_n tilde.equiv bb(Z)_2$ of
   #link(<ex:s3-quotient>)[§4.2], and $bb(Z)_3$ is the rotating part
-  of $D_3 ~= S_3$. They are the building blocks of the structure
+  of $D_3 tilde.equiv S_3$. They are the building blocks of the structure
   theorem for finite abelian groups, to which
   #link(<note:composition-series-preview>)[a later note] returns.
 ] <ex:cyclic-prime-simple>
@@ -2970,7 +2970,7 @@ complete list — while the non-abelian case is the subtler one.
   + the alternating groups $A_n$ for $n >= 5$
     (#link(<thm:an-simple>)[above]);
   + the finite groups of Lie type (e.g. the projective special
-    linear groups $"PSL"_(n)(q)$, including $A_5 ~= "PSL"_(2)(4)$);
+    linear groups $"PSL"_(n)(q)$, including $A_5 tilde.equiv "PSL"_(2)(4)$);
   + $26$ *sporadic* groups, ranging from the Mathieu groups in
     degrees $12$ and $24$ up to the *Monster* of order about $8
     times 10^53$.
@@ -3035,7 +3035,7 @@ chapter fulfills it. §5.1 strengthens the homomorphism concept of
 kernels — previewed in #link(<note:kernel-preliminary>)[§1.3] — are
 not merely subgroups but *normal* subgroups, exactly the structures
 that support a quotient (§4.1). §5.2 then states and proves the
-*First Isomorphism Theorem* $G \/ "Ker" f ~= "Im" f$, the precise
+*First Isomorphism Theorem* $G \/ "Ker" f tilde.equiv "Im" f$, the precise
 form of #link(<note:natural-projection-universal>)[§4.2]'s universal
 property, and unpacks its consequence: every $f$ factors as natural
 projection, isomorphism, and inclusion. §5.3 closes with the
@@ -3229,7 +3229,7 @@ recovers, up to renaming, exactly the image $"Im" f$.
   $
   is a well-defined isomorphism. In particular,
   $
-    G \/ "Ker" f ~= "Im" f.
+    G \/ "Ker" f tilde.equiv "Im" f.
   $
 ] <thm:first-isomorphism>
 
@@ -3266,7 +3266,7 @@ recovers, up to renaming, exactly the image $"Im" f$.
   image("img/first-isomorphism.svg"),
   caption: [The First Isomorphism Theorem as a commutative diagram:
     every row is exact, and $overline(f)$ fills the dashed arrow as
-    the canonical isomorphism $G \/ "Ker" f ~= "Im" f$.],
+    the canonical isomorphism $G \/ "Ker" f tilde.equiv "Im" f$.],
 ) <fig:first-isomorphism>
 
 The theorem unpacks into a *factorization* of $f$, which is often
@@ -3298,9 +3298,9 @@ land), with the quotient doing the rest.
   with kernel $"Ker" phi = n bb(Z)$. The First Isomorphism Theorem
   recovers the classification of cyclic groups of order $n$:
   $
-    bb(Z) \/ n bb(Z) ~= bb(Z)_n.
+    bb(Z) \/ n bb(Z) tilde.equiv bb(Z)_n.
   $
-  The same construction with $n = 0$ gives $bb(Z) \/ {0} ~= bb(Z)$,
+  The same construction with $n = 0$ gives $bb(Z) \/ {0} tilde.equiv bb(Z)$,
   and the infinite cyclic group is recovered as a quotient of
   itself.
 ] <ex:zn-iso>
@@ -3314,7 +3314,7 @@ land), with the quotient doing the rest.
   is surjective with kernel $A_n$. The First Isomorphism Theorem
   gives
   $
-    S_n \/ A_n ~= {plus.minus 1} ~= bb(Z)_2,
+    S_n \/ A_n tilde.equiv {plus.minus 1} tilde.equiv bb(Z)_2,
   $
   re-deriving from #link(<def:alternating-group>)[§3.4] the structural
   fact that $A_n$ has index $2$ in $S_n$ (hence is normal): $S_n \/ A_n$
@@ -3324,7 +3324,7 @@ land), with the quotient doing the rest.
   The same pattern recovers $bb(Z)_2$ from the determinant:
   $bb(R)^times$ has a sign component, and
   $
-    "GL"_(n)(bb(R)) \/ "GL"_(n)^+(bb(R)) ~= {plus.minus 1} ~= bb(Z)_2,
+    "GL"_(n)(bb(R)) \/ "GL"_(n)^+(bb(R)) tilde.equiv {plus.minus 1} tilde.equiv bb(Z)_2,
   $
   where $"GL"_(n)^+(bb(R))$ is the subgroup of matrices with positive
   determinant (index $2$, hence normal).
@@ -3376,7 +3376,7 @@ the $N$-part, leaving $H$ intact.
   subgroup. Then $H N$ is a subgroup of $G$, $N lt.closed.eq H N$, $H ∩ N lt.closed.eq H$,
   and
   $
-    H N \/ N ~= H \/ (H ∩ N).
+    H N \/ N tilde.equiv H \/ (H ∩ N).
   $
 ] <thm:second-isomorphism>
 
@@ -3417,12 +3417,12 @@ have isomorphic quotients.
   action of $S_4$ on ${(1 2), (1 3), (1 4), (2 3), (2 4), (3 4)}$).
   Then
   $
-    H ∩ N = {e, (1 2)(3 4)}, quad H N \/ N ~= H \/ (H ∩ N)
-    ~= S_3 \/ bb(Z)_2 ~= "Dih"_6,
+    H ∩ N = {e, (1 2)(3 4)}, quad H N \/ N tilde.equiv H \/ (H ∩ N)
+    tilde.equiv S_3 \/ bb(Z)_2 tilde.equiv "Dih"_6,
   $
-  the dihedral group of order $6$. The quotient $S_4 \/ V_4 ~= S_3$
+  the dihedral group of order $6$. The quotient $S_4 \/ V_4 tilde.equiv S_3$
   is itself a Second Isomorphism Theorem computation with $H = S_3$
-  and $N = V_4$: $S_4 \/ V_4 ~= S_3$, recovering the well-known
+  and $N = V_4$: $S_4 \/ V_4 tilde.equiv S_3$, recovering the well-known
   isomorphism from #link(<ex:normal-examples>)[§4.1] via a direct
   application of the theorem.
 ] <ex:s4-diamond>
@@ -3431,7 +3431,7 @@ have isomorphic quotients.
   Let $G$ be a group with $N$, $K lt.closed.eq G$ and $N subset.eq K$. Then
   $K \/ N lt.closed.eq G \/ N$ and
   $
-    (G \/ N) \/ (K \/ N) ~= G \/ K.
+    (G \/ N) \/ (K \/ N) tilde.equiv G \/ K.
   $
 ] <thm:third-isomorphism>
 
@@ -3447,7 +3447,7 @@ have isomorphic quotients.
   with $k in K$). The First Isomorphism Theorem
   (#link(<thm:first-isomorphism>)[§5.2]) applied to $psi$ gives
   $
-    (G \/ N) \/ (K \/ N) ~= G \/ "Ker" psi = G \/ K.
+    (G \/ N) \/ (K \/ N) tilde.equiv G \/ "Ker" psi = G \/ K.
   $
 ]
 
@@ -3461,9 +3461,9 @@ then killing $K \/ N$ is the same as killing $K$ outright".
   6 bb(Z)$, $N = 2 bb(Z)$. Both are normal since $bb(Z)$ is abelian,
   and $N subset.eq K$ since $2 | 6$. The theorem gives
   $
-    (bb(Z) \/ 2 bb(Z)) \/ (6 bb(Z) \/ 2 bb(Z)) ~= bb(Z) \/ 6 bb(Z),
+    (bb(Z) \/ 2 bb(Z)) \/ (6 bb(Z) \/ 2 bb(Z)) tilde.equiv bb(Z) \/ 6 bb(Z),
   $
-  i.e. $bb(Z)_2 \/ {0, 2, 4} ~= bb(Z)_6$ — quotienting $bb(Z)_2$
+  i.e. $bb(Z)_2 \/ {0, 2, 4} tilde.equiv bb(Z)_6$ — quotienting $bb(Z)_2$
   (the parity classes) by the subgroup ${0, 2, 4}$ (the
   even-remainder subgroup) recovers $bb(Z)_6$. Concretely, the
   quotient collapses the two odd classes ${1, 3, 5}$ and
@@ -3489,7 +3489,7 @@ $G$ containing $N$.
   $K_1 \/ N subset.eq K_2 \/ N$, and under this bijection $K lt.closed.eq G$
   "iff" $K \/ N lt.closed.eq G \/ N$, in which case
   $
-    (G \/ N) \/ (K \/ N) ~= G \/ K
+    (G \/ N) \/ (K \/ N) tilde.equiv G \/ K
   $
   (recovering the Third Isomorphism Theorem).
 ] <thm:correspondence>
@@ -3546,7 +3546,7 @@ $G$ containing $N$.
     very definition of #link(<def:simple-group>)[§4.3].
   - Quotients of simple groups are simple or trivial: $G$ simple
     means the only normal subgroups are ${e, G}$, so $G \/ N$ is
-    $G \/ G$ (trivial) or $G \/ {e} ~= G$ (simple).
+    $G \/ G$ (trivial) or $G \/ {e} tilde.equiv G$ (simple).
   - The lattice of $G$ is "folded" by the projection $pi$, and the
     lattice of $G \/ N$ is precisely the upper part of the lattice of
     $G$ above $N$.
@@ -4249,7 +4249,7 @@ problems.
 #example(name: "Groups of order $p q$.")[
   Let $G$ have order $p q$ with $p, q$
   primes, $p < q$. We claim:
-  - If $q ≢ 1 \pmod p$, then $G$ is cyclic, $G ≅ bb(Z)_(p
+  - If $q ≢ 1 \pmod p$, then $G$ is cyclic, $G tilde.equiv bb(Z)_(p
     q)$.
   - If $q equiv 1 \pmod p$, then there is additionally a
     non-abelian group of order $p q$, the semidirect product
@@ -4267,12 +4267,12 @@ problems.
 
   *If $n_p = 1$*: both $P$ and $Q$ are normal, with trivial
   intersection, and $P Q = G$ (since $abs(P) abs(Q) = p q =
-  abs(G)$). So $G ≅ P times Q ≅ bb(Z)_p times bb(Z)_q ≅ bb(Z)_(p q)$
+  abs(G)$). So $G tilde.equiv P times Q tilde.equiv bb(Z)_p times bb(Z)_q tilde.equiv bb(Z)_(p q)$
   (cyclic, by the Chinese remainder theorem since $gcd(p, q) = 1$).
 
   *If $n_p = q$*: $P$ is not normal; there are $q$ Sylow
   $p$-subgroups. The unique normal $Q$ admits a homomorphism $P ->
-  "Aut"(Q) ≅ bb(Z)_(q-1)$ (the conjugation action of $P$ on $Q$); a
+  "Aut"(Q) tilde.equiv bb(Z)_(q-1)$ (the conjugation action of $P$ on $Q$); a
   non-trivial such homomorphism exists iff $p | (q - 1)$, i.e. $q ≡
   1 \pmod p$. The corresponding semidirect product $bb(Z)_q ⋊ bb(Z)_p$
   is the non-abelian group of order $p q$.
@@ -4280,7 +4280,7 @@ problems.
   For $p = 2, q = 3$: $q = 3 ≢ 1 \pmod 2$, so groups of
   order $6$ are cyclic — but wait, $S_3$ is non-abelian of order
   $6$! The issue is that $3 equiv 1 \pmod 2$ (since $3 - 1 = 2$ is
-  divisible by $2$), so the non-abelian case applies: $S_3 ≅ bb(Z)_3
+  divisible by $2$), so the non-abelian case applies: $S_3 tilde.equiv bb(Z)_3
   ⋊ bb(Z)_2$.
 ] <ex:groups-order-pq>
 
@@ -4294,7 +4294,7 @@ problems.
     3$, so $n_3 in {1, 4}$.
 
   There are five groups of order $12$ up to isomorphism:
-  + $bb(Z)_12 ≅ bb(Z)_3 times bb(Z)_4$ (cyclic, abelian);
+  + $bb(Z)_12 tilde.equiv bb(Z)_3 times bb(Z)_4$ (cyclic, abelian);
   + $bb(Z)_2 times bb(Z)_6$ (abelian, non-cyclic);
   + $A_4$ (alternating group, $n_3 = 4$, $n_2 = 1$ — the Sylow
     $2$-subgroup $V_4$ is normal);
@@ -4320,7 +4320,7 @@ out simplicity for many orders.
 
 #property(name: "No Simple Groups of Small Order")[
   If $G$ is a simple group of order $abs(G) <= 100$, then either
-  $abs(G)$ is prime (so $G ≅ bb(Z)_p$) or $abs(G) = 60$ (so $G ≅
+  $abs(G)$ is prime (so $G tilde.equiv bb(Z)_p$) or $abs(G) = 60$ (so $G tilde.equiv
   A_5$).
 ] <prop:no-simple-small-order>
 
@@ -4388,13 +4388,13 @@ of integers.
 The theorem has two equivalent standard forms. The *invariant factor
 form* writes
 $
-  G ~= bb(Z)^r ⊕ bb(Z) \/ d_1 ⊕ dots.c ⊕ bb(Z) \/ d_k,
+  G tilde.equiv bb(Z)^r ⊕ bb(Z) \/ d_1 ⊕ dots.c ⊕ bb(Z) \/ d_k,
   quad d_1 | d_2 | dots | d_k,
 $
 where $d_1 | d_2 | dots | d_k$ are the *invariant factors*. The
 *elementary divisor form* writes
 $
-  G ~= bb(Z)^r ⊕ bb(Z) \/ p_1^(a_1) ⊕ dots.c ⊕ bb(Z)
+  G tilde.equiv bb(Z)^r ⊕ bb(Z) \/ p_1^(a_1) ⊕ dots.c ⊕ bb(Z)
   \/ p_s^(a_s),
 $
 where each $p_i$ is prime. Both decompositions are *unique* (up to
@@ -4439,8 +4439,8 @@ they differ, but we shall not need the infinite case.
 
 #property(name: "Basic Properties of Direct Sums")[
   Let $G = G_1 ⊕ dots.c ⊕ G_n$.
-  + *Commutativity and associativity*: $G_i ⊕ G_j ≅ G_j ⊕
-    G_i$ and $(G_1 ⊕ G_2) ⊕ G_3 ≅ G_1 ⊕ (G_2 ⊕
+  + *Commutativity and associativity*: $G_i ⊕ G_j tilde.equiv G_j ⊕
+    G_i$ and $(G_1 ⊕ G_2) ⊕ G_3 tilde.equiv G_1 ⊕ (G_2 ⊕
       G_3)$.
   + *Projections and injections*: there are homomorphisms $pi_i: G
     -> G_i$ (projections) and $iota_i: G_i -> G$ (injections), with
@@ -4543,13 +4543,13 @@ abelian group:
   Let $G$ be a finitely generated abelian group, with generators
   $g_1, dots, g_n$. Then:
   + There is a surjective homomorphism $phi: bb(Z)^n -> G$, $e_i |->
-    g_i$ (so $G ≅ bb(Z)^n \/ "Ker" phi$).
+    g_i$ (so $G tilde.equiv bb(Z)^n \/ "Ker" phi$).
   + Let $t(G) = {x in G | m x = 0 "for some" m > 0}$ be the *torsion
     subgroup* of $G$ (elements of finite order). Then $t(G)$ is a
     subgroup, and there is a free abelian subgroup $F <= G$ of rank
     $r = "rank"(G / t(G))$ with
     $
-      G ~= F ⊕ t(G).
+      G tilde.equiv F ⊕ t(G).
     $
   In particular, $G$ is the direct sum of a free abelian group $bb(Z)^r$
   and a finite abelian group $t(G)$, where $r$ is the *rank* of $G$.
@@ -4559,7 +4559,7 @@ abelian group:
   (1) The map $phi: bb(Z)^n -> G$, $phi(n_1, dots, n_n) = n_1 g_1 +
   dots + n_n g_n$, is a surjective homomorphism (the $g_i$ generate
   $G$). The First Isomorphism Theorem
-  (#link(<thm:first-isomorphism>)[§5.2]) gives $G ≅ bb(Z)^n \/
+  (#link(<thm:first-isomorphism>)[§5.2]) gives $G tilde.equiv bb(Z)^n \/
   "Ker" phi$.
 
   (2) The torsion elements $t(G)$ form a subgroup: if $m x = 0$ and $n
@@ -4571,12 +4571,12 @@ abelian group:
   generated torsion-free abelian group is free — proved by embedding
   into $bb(Q)^r$ and clearing denominators).
 
-  Let $pi: G -> G / t(G) ~= bb(Z)^r$. Choose $f_1, dots, f_r in G$
+  Let $pi: G -> G / t(G) tilde.equiv bb(Z)^r$. Choose $f_1, dots, f_r in G$
   with $pi(f_i) =$ standard basis of $bb(Z)^r$. The subgroup $F =
   ⟨f_1, dots, f_r⟩$ is free abelian of rank $r$, and
   $G = F + t(G)$ (any $x in G$ has $pi(x) = sum n_i pi(f_i)$, so $x -
   sum n_i f_i in "Ker" pi = t(G)$). Since $F ∩ t(G) = {0}$ (free
-  vs. torsion), $G ~= F ⊕ t(G)$.
+  vs. torsion), $G tilde.equiv F ⊕ t(G)$.
 ]
 
 This lemma reduces the structure theorem to two cases: the free part
@@ -4598,7 +4598,7 @@ and uniqueness occupy the second half of this section.
   unique integer $r >= 0$ and a unique list of integers
   $d_1, dots, d_k >= 2$ with $d_1 | d_2 | dots | d_k$ such that
   $
-    G ~= bb(Z)^r ⊕ bb(Z) \/ d_1 bb(Z) ⊕ dots.c ⊕ bb(Z) \/ d_k bb(Z).
+    G tilde.equiv bb(Z)^r ⊕ bb(Z) \/ d_1 bb(Z) ⊕ dots.c ⊕ bb(Z) \/ d_k bb(Z).
   $
   The integer $r$ is the *rank* of $G$; the $d_i$ are its *invariant
   factors*.
@@ -4616,7 +4616,7 @@ torsion subgroup, and $d_1$ is its exponent.
   $p_1^(a_1), dots, p_s^(a_s)$ (each $p_i$ prime, each $a_i >= 1$)
   such that
   $
-    G ~= bb(Z)^r ⊕ bb(Z) \/ p_1^(a_1) bb(Z) ⊕ dots.c ⊕ bb(Z) \/ p_s^(a_s) bb(Z).
+    G tilde.equiv bb(Z)^r ⊕ bb(Z) \/ p_1^(a_1) bb(Z) ⊕ dots.c ⊕ bb(Z) \/ p_s^(a_s) bb(Z).
   $
   The $p_i^(a_i)$ are the *elementary divisors* of $G$.
 ] <thm:structure-elementary>
@@ -4636,7 +4636,7 @@ number of cyclic summands. The two views are equivalent by the
   $
   Then:
   + Each $G_(p)$ is a subgroup of $G$.
-  + $G ~= G_(p_1) ⊕ dots.c ⊕ G_(p_s)$ (internal direct sum).
+  + $G tilde.equiv G_(p_1) ⊕ dots.c ⊕ G_(p_s)$ (internal direct sum).
   + $abs(G_(p)) = p^(a_p)$ where $p^(a_p)$ is the $p$-part of $abs(G)$.
 ] <lem:p-primary-decomposition>
 
@@ -4680,7 +4680,7 @@ The $p$-primary decomposition reduces the structure theorem for a
 *finite* abelian group to the case of a $p$-group. For *finitely
 generated* groups, combine with #link(<lem:free-subgroup>)[the free
   subgroup lemma] to peel off the free part $bb(Z)^r$ first; then the
-finite torsion part splits as $t(G) ~= ⊕_p G_(p_p)$, and the theorem
+finite torsion part splits as $t(G) tilde.equiv ⊕_p G_(p_p)$, and the theorem
 is reduced to the finite $p$-group case.
 
 #note(title: "Equivalence of the Two Canonical Forms")[
@@ -4772,7 +4772,7 @@ We can now complete the proof of the structure theorem.
 
 *Existence in the structure theorem.* By
 #link(<lem:free-subgroup>)[the free subgroup lemma], $G$ admits a
-surjection $phi : bb(Z)^n -> G$ with $G ≅ bb(Z)^n \/ "Ker" phi$. The
+surjection $phi : bb(Z)^n -> G$ with $G tilde.equiv bb(Z)^n \/ "Ker" phi$. The
 kernel $"Ker" phi$ is a subgroup of $bb(Z)^n$; since $bb(Z)$ is
 Noetherian (every ideal of $bb(Z)$ is principal), every subgroup of
 $bb(Z)^n$ is finitely generated, so $"Ker" phi = A dot bb(Z)^m$ for
@@ -4788,7 +4788,7 @@ The change of basis $P$ on $bb(Z)^n$ and $Q$ on $bb(Z)^m$ are
 isomorphisms, so they do not change $G$ up to isomorphism. After
 the change of basis, the quotient becomes
 $
-  bb(Z)^n \/ "diag"(d_1, dots, d_r, 0, dots, 0) bb(Z)^m ~= bb(Z) \/ d_1 bb(Z) ⊕ dots.c ⊕ bb(Z) \/ d_r bb(Z) ⊕ bb(Z)^(n-r).
+  bb(Z)^n \/ "diag"(d_1, dots, d_r, 0, dots, 0) bb(Z)^m tilde.equiv bb(Z) \/ d_1 bb(Z) ⊕ dots.c ⊕ bb(Z) \/ d_r bb(Z) ⊕ bb(Z)^(n-r).
 $
 Setting $r_("free") = n - r$ (the free part) and discarding any
 $d_i = 1$ (which give trivial cyclic summands $bb(Z) \/ 1 bb(Z) =
@@ -4801,8 +4801,8 @@ uniqueness for $G$ reduces to uniqueness for each $p$-primary
 component $G_(p)$. So assume $G$ is a finite abelian $p$-group with
 two decompositions
 $
-  G ~= bb(Z) \/ p^(a_1) ⊕ dots.c ⊕ bb(Z) \/ p^(a_k)
-  ~= bb(Z) \/ p^(b_1) ⊕ dots.c ⊕ bb(Z) \/ p^(b_ell),
+  G tilde.equiv bb(Z) \/ p^(a_1) ⊕ dots.c ⊕ bb(Z) \/ p^(a_k)
+  tilde.equiv bb(Z) \/ p^(b_1) ⊕ dots.c ⊕ bb(Z) \/ p^(b_ell),
 $
 with $a_1 >= dots >= a_k >= 1$ and $b_1 >= dots >= b_ell >= 1$. We
 show $k = ell$ and $a_i = b_i$ for all $i$.
@@ -4842,7 +4842,7 @@ uniquely determined by $G$.
   the same counting argument gives uniqueness. The structure theorem
   then reads
   $
-    M ~= R^r ⊕ R \/ d_1 R ⊕ dots.c ⊕ R \/ d_k R, quad d_1 | dots | d_k,
+    M tilde.equiv R^r ⊕ R \/ d_1 R ⊕ dots.c ⊕ R \/ d_k R, quad d_1 | dots | d_k,
   $
   with $d_i$ defined up to units of $R$. The case $R = k[x]$ (polynomials
   over a field) gives the *rational canonical form* of a linear
@@ -4868,19 +4868,19 @@ orders, and connect the result to the Sylow theory of
 #proof[
   Factorise $n = p_1^(a_1) dots.c p_s^(a_s)$. By
   #link(<lem:p-primary-decomposition>)[the $p$-primary
-    decomposition], $G ~= G_(p_1) ⊕ dots.c ⊕ G_(p_s)$ with
+    decomposition], $G tilde.equiv G_(p_1) ⊕ dots.c ⊕ G_(p_s)$ with
   $abs(G_(p_i)) = p_i^(a_i)$. Any divisor $d | n$ factors as
   $d = d_1 dots.c d_s$ with $d_i | p_i^(a_i)$. It suffices to find,
   in each $G_(p_i)$, a subgroup of order $d_i$.
 
   So let $G$ be a finite abelian $p$-group, written in elementary
   divisor form as
-  $G ~= bb(Z) \/ p^(a_1) ⊕ dots.c ⊕ bb(Z) \/ p^(a_k)$
+  $G tilde.equiv bb(Z) \/ p^(a_1) ⊕ dots.c ⊕ bb(Z) \/ p^(a_k)$
   with $a_1 >= dots >= a_k >= 1$. Any divisor of $p^(a_1 + dots + a_k)$
   has the form $p^(b_1 + dots + b_k)$ with $0 <= b_i <= a_i$. In the
   $i$-th summand $bb(Z) \/ p^(a_i) bb(Z)$, the subgroup
   $
-    p^(a_i - b_i) bb(Z) \/ p^(a_i) bb(Z) ~= bb(Z) \/ p^(b_i) bb(Z)
+    p^(a_i - b_i) bb(Z) \/ p^(a_i) bb(Z) tilde.equiv bb(Z) \/ p^(b_i) bb(Z)
   $
   has order $p^(b_i)$. The direct sum of these subgroups gives a
   subgroup of $G$ of order $p^(b_1 + dots + b_k) = d$.
@@ -4899,7 +4899,7 @@ although $6 | 12$).
 ] <prop:exponent-characterisation>
 
 #proof[
-  Write $G ~= bb(Z) \/ d_1 ⊕ dots.c ⊕ bb(Z) \/ d_k$ with
+  Write $G tilde.equiv bb(Z) \/ d_1 ⊕ dots.c ⊕ bb(Z) \/ d_k$ with
   $d_1 | dots | d_k$. The exponent is the least common multiple of
   the $d_i$, which — because $d_i | d_k$ for all $i$ — is exactly
   $d_k$. The element $(0, dots, 0, overline(1))$ in the last summand
@@ -4916,13 +4916,13 @@ small orders.
   There are three partitions of $3$:
 
   + $3 = 3$: one elementary divisor $2^3$, so
-    $G ~= bb(Z) \/ 8 bb(Z)$ (cyclic of order $8$).
+    $G tilde.equiv bb(Z) \/ 8 bb(Z)$ (cyclic of order $8$).
 
   + $3 = 2 + 1$: elementary divisors $2^2, 2^1$, so
-    $G ~= bb(Z) \/ 4 bb(Z) ⊕ bb(Z) \/ 2 bb(Z)$.
+    $G tilde.equiv bb(Z) \/ 4 bb(Z) ⊕ bb(Z) \/ 2 bb(Z)$.
 
   + $3 = 1 + 1 + 1$: three elementary divisors $2^1, 2^1, 2^1$, so
-    $G ~= (bb(Z) \/ 2 bb(Z))^3$.
+    $G tilde.equiv (bb(Z) \/ 2 bb(Z))^3$.
 
   In invariant factor form (using
   #link(<note:two-canonical-forms>)[the dictionary]), the three
@@ -4934,7 +4934,7 @@ small orders.
 #example(name: "Abelian Groups of Order 12")[
   We classify abelian groups $G$ with $abs(G) = 12 = 2^2 dot 3$. By
   #link(<lem:p-primary-decomposition>)[the $p$-primary
-    decomposition], $G ~= G_(2) ⊕ G_(3)$ with $abs(G_(2)) = 4$ and
+    decomposition], $G tilde.equiv G_(2) ⊕ G_(3)$ with $abs(G_(2)) = 4$ and
   $abs(G_(3)) = 3$.
 
   Abelian groups of order $4 = 2^2$: the partitions of $2$ give two
@@ -4949,11 +4949,11 @@ small orders.
   to merge coprime cyclic factors), the abelian groups of order $12$
   are:
 
-  + $bb(Z) \/ 4 bb(Z) ⊕ bb(Z) \/ 3 bb(Z) ~= bb(Z) \/ 12 bb(Z)$
+  + $bb(Z) \/ 4 bb(Z) ⊕ bb(Z) \/ 3 bb(Z) tilde.equiv bb(Z) \/ 12 bb(Z)$
     (cyclic, since $gcd(4, 3) = 1$).
 
   + $bb(Z) \/ 2 bb(Z) ⊕ bb(Z) \/ 2 bb(Z) ⊕ bb(Z) \/ 3 bb(Z)
-    ~= bb(Z) \/ 2 bb(Z) ⊕ bb(Z) \/ 6 bb(Z)$
+    tilde.equiv bb(Z) \/ 2 bb(Z) ⊕ bb(Z) \/ 6 bb(Z)$
     (merge one factor $2$ with the $3$ via CRT).
 
   The invariant factor forms are $bb(Z) \/ 12 bb(Z)$ with
