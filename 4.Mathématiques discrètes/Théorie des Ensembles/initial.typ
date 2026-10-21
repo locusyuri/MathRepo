@@ -104,6 +104,23 @@ Some notations are used throughout this book:
 == Relations and Mappings
 
 === Relations
+Everything in this section is built from a single device, the *ordered pair*: a set that remembers which of its two members came first.
+
+#definition(name: "Ordered Pair")[
+  For two objects $x$ and $y$, the *ordered pair* $(x, y)$ is the set
+  $
+    (x, y) = {{x}, {x, y}},
+  $
+  the *Kuratowski pair*.
+] <def:ordered-pair>
+
+The encoding is designed so that the pair carries exactly the information it should: $(x, y) = (x', y')$ if and only if $x = x'$ and $y = y'$.
+
+One direction is immediate. For the other, suppose ${{x}, {x, y}} = {{x'}, {x', y'}}$.
+If $x = y$, the left side is ${{x}}$, a family with a single member, so the right side has a single member as well: $x' = y' = x$.
+If $x != y$, then ${x} != {x, y}$, and the singleton ${x}$ must equal one of the two members on the right.
+It cannot equal ${x', y'}$, for that would give $x' = y' = x$ and then ${x, y} = {x}$, contradicting $x != y$; hence ${x} = {x'}$, so $x = x'$, and then ${x, y} = {x', y'}$ forces $y = y'$.
+
 #definition(name: "Cartesian product")[
   Let $X$ and $Y$ be two sets.
   The *Cartesian product* (or direct product) of $X$ and $Y$, denoted by $X times Y$, is defined as the set of all ordered pairs $(x, y)$ where $x in X$ and $y in Y$:
@@ -135,6 +152,19 @@ Some notations are used throughout this book:
   is called the *image* of $A$ under the relation $R$.
   $R(X)$ is called the *range* of the relation $R$.
 ] <def:relation>
+
+#note(title: "Everything reduces to sets")[
+  Note what the two definitions above accomplish.
+  A *relation* is a set of ordered pairs, and an *ordered pair* is a set of sets, so a relation is already a set: no new kind of object has entered mathematics.
+
+  Every classical mathematical object is built from these two ingredients.
+  - *Maps* — functions, functionals, operators — are relations with the single-valued property, hence sets of ordered pairs.
+  - *Algebraic and geometric structures* — groups, rings, fields, vector spaces, topological spaces, inner product spaces — are ordered tuples such as $(G, dot)$, $(X, tau)$ or $(V, +, ⟨dot, dot⟩)$, consisting of a set together with some maps and possibly a family of subsets.
+  - *Partitions* and *filters* are sets of subsets.
+
+  The reductionist slogan follows: mathematics is a theory of sets, and every theorem about a structure is, once the definitions are unwound, a theorem about sets.
+  This is what allows set theory — ZFC in the next chapter — to serve as a foundation for the whole of mathematics, and it is why one definition, that of a relation, suffices for graphs, orders, maps and quotient constructions alike.
+] <note:reduction-to-sets>
 
 There are several special types of relations:
 
@@ -261,10 +291,21 @@ blocks.
   A *partition* of a set $S$ is a family ${S_i}_("i in I")$ of
   non-empty subsets such that
   $
-    union_(i in I) S_i = S, quad quad S_i ∩ S_j = emptyset
+    union.big_(i in I) S_i = S, quad quad S_i ∩ S_j = emptyset
     quad "for" i != j.
   $
 ] <def:partition>
+
+#note(title: "Structures defined by families of subsets")[
+  A partition is the first example of a structure carried not by new elements but by a chosen *collection of subsets* of the underlying set.
+  The pattern recurs throughout mathematics, and in each case it is the laws imposed on the family that create the structure.
+  - A *topology* on $X$ is a family $tau subset.eq scr(P)(X)$ containing $emptyset$ and $X$, closed under finite intersections and arbitrary unions.
+  - A *$sigma$-algebra* on $X$ is a family of subsets closed under complements and countable unions — the setting in which measure and probability live.
+  - A *filter* on $X$ is a family closed under supersets and finite intersections (studied later in this note).
+  - A *partition* is the special case in which the family consists of pairwise disjoint non-empty blocks covering $X$; equivalently, it is a family in which every point of $X$ lies in exactly one member.
+
+  In each case the underlying set together with its family is a new *structure*, not merely a set, and the maps between such structures are required to respect the family — the same theme that the abstract algebra note develops for operations.
+] <note:structures-by-subsets>
 
 #theorem(name: "Partition-Class Correspondence")[
   Every equivalence relation on $S$ determines a partition of $S$,
@@ -300,6 +341,8 @@ blocks.
   supplement: [Fig.],
 ) <fig:partition-quotient>
 
+An equivalence relation on $S$ therefore *induces* a new set, not merely a description of $S$: the set whose elements are the classes themselves. Collapsing each class to a point gives the following.
+
 #definition(name: "Quotient Set")[
   The set of all equivalence classes of $R$ on $S$,
   $
@@ -308,6 +351,46 @@ blocks.
   is the *quotient set* of $S$ by $R$. Its elements are classes, not
   elements of $S$.
 ] <def:quotient-set>
+
+#example(name: "Three equivalence relations and their quotient sets")[
+  + *Concentric circles.* On the plane $bb(R)^2$ set
+    $
+      (x, y) R (x', y') quad <=> quad x^2 + y^2 = (x')^2 + (y')^2.
+    $
+    The class of $(x, y)$ is the circle of radius $sqrt(x^2 + y^2)$ centred at the origin — for the origin itself, the degenerate circle consisting of that single point.
+    Distinct circles are disjoint, so the classes partition the plane into concentric circles, and the quotient set is the family of these circles; sending a circle to its radius identifies the quotient with $[0, infinity)$.
+  + *Congruence modulo $n$.* On $bb(Z)$, set $a R b$ if and only if $n | a - b$.
+    There are exactly $n$ classes $[0], [1], dots, [n - 1]$, and the quotient set is $bb(Z)_n$.
+    Here the relation is *compatible* with both addition and multiplication, so the quotient inherits arithmetic — the subject of the definition below.
+  + *Rational numbers.* On $bb(Z) times (bb(Z) backslash {0})$, set $(a, b) R (c, d)$ if and only if $a d = b c$; classes are the rational numbers, and the quotient set is $bb(Q)$.
+    The point of the construction is precisely that a rational number has many representations, all of them the same class.
+    Note that the arithmetic of $bb(Q)$ is *not* the componentwise arithmetic of pairs: it must be defined on the classes and checked to be independent of the representatives chosen.
+] <ex:equivalence-examples>
+
+The last example shows a quotient set acquiring more than set structure. This does not happen automatically, and the extra requirement is a compatibility condition.
+
+#definition(name: "Quotient Structure")[
+  Let $S$ carry operations $mu_i: S^(n_i) -> S$ ($i = 1, dots, k$) and let $R$ be an equivalence relation on $S$.
+  $R$ is *compatible* with the operations — a *congruence* — if for every $i$ and all $a_1 R b_1, dots, a_(n_i) R b_(n_i)$,
+  $
+    mu_i(a_1, dots, a_(n_i)) R mu_i(b_1, dots, b_(n_i)).
+  $
+  For a congruence, each $mu_i$ descends to the quotient set by
+  $
+    mu_i([a_1], dots, [a_(n_i)]) = [mu_i(a_1, dots, a_(n_i))].
+  $
+  Writing again $mu_i$ for the descended operation, the system $(S \/ R, mu_1, dots, mu_k)$ is the *quotient structure* of $S$ by $R$.
+] <def:quotient-structure>
+
+Compatibility is exactly what makes the second formula meaningful: without it, representatives of the same classes could produce different classes, and no operation on $S \/ R$ would exist at all.
+Every quotient construction in algebra has this shape.
+
+- *Quotient group*: for a group $G$ and a normal subgroup $N$, the relation $a R b <=> a^(-1) b in N$ is a congruence, and the quotient structure is $G \/ N$.
+- *Quotient vector space*: for a vector space $V$ over a field and a subspace $W$, the relation $u R v <=> u - v in W$ is a congruence, and the quotient structure is $V \/ W$.
+- *Quotient ring*: for a ring $A$ and an ideal $I$, the relation $a R b <=> a - b in I$ is a congruence, and the quotient structure is $A \/ I$.
+- *Residue-class ring*: $bb(Z)_n$ above, which is the case $A = bb(Z)$ and $I = n bb(Z)$.
+
+In each case the underlying *set* is a quotient set in the sense of #link(<def:quotient-set>)[the definition above]; what varies is the compatibility check, and that check is what singles out normal subgroups, subspaces and ideals as the "admissible" subobjects.
 
 == Order Relations // 序关系
 
@@ -1424,6 +1507,7 @@ The number of these endpoints is countable, but there are many other non-endpoin
 
 == O
 - *#link(<thm:open-set-construction>)[Open Set Construction Theorem]*
+- *#link(<def:ordered-pair>)[Ordered Pair]*
 - *#link(<def:ordinal>)[Ordinal]*
 - *#link(<def:ordinal-addition>)[Ordinal Addition]*
 - *#link(<def:ordinal-multiplication>)[Ordinal Multiplication]*
@@ -1433,6 +1517,10 @@ The number of these endpoints is countable, but there are many other non-endpoin
 - *#link(<def:partition>)[Partition]*
 - *#link(<def:poset>)[Poset]*
 - *#link(<def:preorder>)[Preordered Set]*
+
+== Q
+- *#link(<def:quotient-set>)[Quotient Set]*
+- *#link(<def:quotient-structure>)[Quotient Structure]*
 
 == R
 - *#link(<def:regular-singular>)[Regular and Singular Cardinals]*
