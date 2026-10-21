@@ -10100,7 +10100,9 @@ The composition identities above are the differential shadow of the conservative
 
 == Differential Forms and Exterior Differentiation // 微分形式与外微分
 
-In the previous subsection, the second type of line integral was re-expressed as the integral of a $1$-form $omega = P dif x + Q dif y + R dif z$ along the oriented curve, and the surface integrals to be defined below are built on symbols such as $dif y and dif z$. All these integrands are instances of *differential forms*; moreover, Green's formula admits the unified shape $integral.cont_(limits(partial M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega$, and so will Stokes' and Gauß's formulas. This section sets up the algebra of differential forms together with its computation engine, the *exterior differentiation*.
+In the previous subsection, the second type of line integral was re-expressed as the integral of a $1$-form $omega = P dif x + Q dif y + R dif z$ along the oriented curve, and the surface integrals to be defined below are built on symbols such as $dif y and dif z$. All these integrands are instances of *differential forms*; moreover, Green's formula admits the unified shape $integral.cont_(limits(partial M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega$, and so will Stokes' and Gauß's formulas. This section sets up the algebra of differential forms together with its computation engine, the *exterior differentiation*; a final ingredient, the Hodge star operator, converts the tangential (work) pairing into the normal (flux) pairing.
+
+=== Differential Forms and the Wedge Product // 微分形式与楔积
 
 #definition(name: "Differential Forms")[
   Let $omega$ be an expression of the form
@@ -10134,6 +10136,20 @@ The low-dimensional forms used throughout this chapter are the following.
 
 In computational terms, $dif x_i$ records the increment of the $i$-th coordinate, and a $k$-form attaches a signed number to each $k$-dimensional volume element; the three rules above are all that is needed for calculation. Two consequences follow immediately: the wedge product of a $k$-form and an $l$-form is a $(k + l)$-form, and every wedge product involving more than $n$ differentials in $bb(R)^n$ vanishes, which explains the last convention in #link(<def:differential-form>)[the definition of differential forms].
 
+#example(name: "Wedge Products")[
+  Simplify the $2$-form $omega = (x^2 dif y - y^2 dif x) and (dif x + dif z)$ in $bb(R)^3$.
+] <ex:wedge-computation>
+
+#solution[
+  Distribute the product by bilinearity and drop the vanishing terms:
+  $
+    omega = x^2 dif y and dif x - y^2 dif x and dif x + x^2 dif y and dif z - y^2 dif x and dif z = -x^2 dif x and dif y + x^2 dif y and dif z - y^2 dif x and dif z,
+  $
+  where $dif y and dif x = -dif x and dif y$ and $dif x and dif x = 0$ were used. The result is indeed a $2$-form, as the degree rule predicts.
+]
+
+=== Exterior Differentiation and Its Properties // 外微分及其性质
+
 #definition(name: "Exterior Differentiation")[
   Let $omega$ be a $k$-form on $bb(R)^n$,
   $
@@ -10149,7 +10165,23 @@ In computational terms, $dif x_i$ records the increment of the $i$-th coordinate
   $
 ] <def:exterior-differentiation>
 
-By the definition, the exterior differentiation of a $k$-form is a $(k + 1)$-form; the inner summand $dif f$ is precisely the total differential of the coefficient function, and it generalizes to a form whose coefficients are precisely the components of the gradient $nabla f$ of $f$. The following theorem unwraps the general definition into the coordinate formulas used in actual computation.
+By the definition, the exterior differentiation of a $k$-form is a $(k + 1)$-form; the inner summand $dif f$ is precisely the total differential of the coefficient function, and it generalizes to a form whose coefficients are precisely the components of the gradient $nabla f$ of $f$. We first record the algebraic rules obeyed by $dif$; the coordinate formulas used in actual computation are unwrapped in the theorem below.
+
+#property(name: "Properties of Exterior Differentiation")[
+  #terms(
+    terms.item(
+      [Linearity],
+      [$dif(alpha omega + beta eta) = alpha dif omega + beta dif eta$, where $alpha, beta$ are constants.],
+    ),
+    terms.item(
+      [Leibniz Rule],
+      [$dif(omega and eta) = dif omega and eta + (-1)^k omega and dif eta$, where $omega$ is a $k$-form.],
+    ),
+    terms.item([Nilpotency], [$dif(dif omega) = 0$.]),
+  )
+] <prop:exterior-differentiation-properties>
+
+The nilpotency is the alternating-algebra avatar of the equality of mixed second-order partial derivatives: every term of $dif(dif omega)$ either contains two identical differentials or cancels by anticommutativity. The sign $(-1)^k$ in the Leibniz rule is obtained by induction on the degree $k$ of $omega$: each time $dif$ passes one factor of $omega$ on its way to $eta$, the sign flips once, which is why $dif$ is a derivation of the *graded* algebra of forms rather than an ordinary one. The nilpotency also subsumes the two composition identities of #link(<prop:div-curl-calculus>)[the calculus of divergence and curl]: applied to the $0$-form $f$ it is $nabla times (nabla f) = bold(0)$, and applied to the work $1$-form $P dif x + Q dif y + R dif z$ it is $nabla dot (nabla times bold(f)) = 0$.
 
 #theorem(name: "Coordinate Formulas for Exterior Differentiation")[
   + For a $1$-form $omega = P dif x + Q dif y$ in $bb(R)^2$,
@@ -10172,63 +10204,6 @@ By the definition, the exterior differentiation of a $k$-form is a $(k + 1)$-for
     dif omega = (frac(partial P, partial x) dif x + frac(partial P, partial y) dif y) and dif x + (frac(partial Q, partial x) dif x + frac(partial Q, partial y) dif y) and dif y.
   $
   The anticommutativity rule kills the terms containing $dif x and dif x$ and $dif y and dif y$, and converts $dif y and dif x$ into $-dif x and dif y$; collecting the remaining coefficients yields the formula. For the second formula one collects the coefficients of $dif y and dif z$, $dif z and dif x$, and $dif x and dif y$; for the third, those of $dif x and dif y and dif z$. In each case, the equality of mixed second-order partial derivatives is what merges the contributions of a single coefficient.
-]
-
-The three coordinate formulas admit a uniform reading through the operators $nabla$, $nabla dot$, and $nabla times$ of #link(<sec:vector-differential-operators>)[the preceding section]: writing $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ for the field formed by the coefficients, the single operation $dif$ subsumes the three first-order operators of vector analysis, as summarized below.
-
-#tex-table(
-  ([Form $omega$], [$dif omega$], [Reading via $nabla$]),
-  ([$f$ ($0$-form)], [$dif f$], [the coefficients are the components of $nabla f$]),
-  (
-    [$P dif x + Q dif y$ in $bb(R)^2$],
-    [$(Q_x - P_y) dif x and dif y$],
-    [$(nabla times bold(f)) dot bold(k)$ for the planar field $bold(f) = P bold(i) + Q bold(j)$],
-  ),
-  (
-    [$P dif x + Q dif y + R dif z$ in $bb(R)^3$],
-    [the second coordinate formula],
-    [the coefficients are the components of $nabla times bold(f)$],
-  ),
-  (
-    [$P dif y and dif z + Q dif z and dif x + R dif x and dif y$],
-    [$(P_x + Q_y + R_z) dif x and dif y and dif z$],
-    [$nabla dot bold(f) dif x and dif y and dif z$],
-  ),
-)
-
-These formulas are the computational core of the theorems of the next section: the coefficient in the first formula is exactly the integrand obtained by #link(<thm:green-theorem>)[Green's theorem]; the three coefficients in the second formula are the entries of the determinant appearing in #link(<thm:stokes-theorem>)[Stokes' theorem]; and the coefficient in the third formula is the integrand of #link(<thm:gauss-theorem>)[Gauß's theorem]. The whole ladder is illustrated in @fig:exterior-ladder.
-
-#figure(
-  image("img/exterior-ladder.svg", width: 90%),
-  caption: [The ladder of differential forms: exterior differentiation raises the degree by one, and each rung corresponds to one of the coordinate formulas; the integral theorems of the next section compare a $k$-form integral over an oriented region with a $(k + 1)$-form integral over its boundary.],
-) <fig:exterior-ladder>
-
-#property(name: "Properties of Exterior Differentiation")[
-  #terms(
-    terms.item(
-      [Linearity],
-      [$dif(alpha omega + beta eta) = alpha dif omega + beta dif eta$, where $alpha, beta$ are constants.],
-    ),
-    terms.item(
-      [Leibniz Rule],
-      [$dif(omega and eta) = dif omega and eta + (-1)^k omega and dif eta$, where $omega$ is a $k$-form.],
-    ),
-    terms.item([Nilpotency], [$dif(dif omega) = 0$.]),
-  )
-] <prop:exterior-differentiation-properties>
-
-The nilpotency is the alternating-algebra avatar of the equality of mixed second-order partial derivatives: every term of $dif(dif omega)$ either contains two identical differentials or cancels by anticommutativity. The sign $(-1)^k$ in the Leibniz rule is obtained by induction on the degree $k$ of $omega$: each time $dif$ passes one factor of $omega$ on its way to $eta$, the sign flips once, which is why $dif$ is a derivation of the *graded* algebra of forms rather than an ordinary one. The nilpotency also subsumes the two composition identities of #link(<prop:div-curl-calculus>)[the calculus of divergence and curl]: applied to the $0$-form $f$ it is $nabla times (nabla f) = bold(0)$, and applied to the work $1$-form $P dif x + Q dif y + R dif z$ it is $nabla dot (nabla times bold(f)) = 0$.
-
-#example(name: "Wedge Products")[
-  Simplify the $2$-form $omega = (x^2 dif y - y^2 dif x) and (dif x + dif z)$ in $bb(R)^3$.
-] <ex:wedge-computation>
-
-#solution[
-  Distribute the product by bilinearity and drop the vanishing terms:
-  $
-    omega = x^2 dif y and dif x - y^2 dif x and dif x + x^2 dif y and dif z - y^2 dif x and dif z = -x^2 dif x and dif y + x^2 dif y and dif z - y^2 dif x and dif z,
-  $
-  where $dif y and dif x = -dif x and dif y$ and $dif x and dif x = 0$ were used. The result is indeed a $2$-form, as the degree rule predicts.
 ]
 
 #example(name: "Exterior Differentiation in the Plane")[
@@ -10265,6 +10240,37 @@ The nilpotency is the alternating-algebra avatar of the equality of mixed second
     This is precisely the $2$-form whose integral over a closed surface was evaluated through Gauß's formula in #link(<ex:gauss-completion>)[an earlier example]; its exterior derivative is the form integrated over the enclosed volume there.
 ]
 
+=== Reading the Exterior Derivative via Nabla // 外微分的 nabla 读法
+
+The three coordinate formulas admit a uniform reading through the operators $nabla$, $nabla dot$, and $nabla times$ of #link(<sec:vector-differential-operators>)[the preceding section]: writing $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ for the field formed by the coefficients, the single operation $dif$ subsumes the three first-order operators of vector analysis, as summarized below.
+
+#tex-table(
+  ([Form $omega$], [$dif omega$], [Reading via $nabla$]),
+  ([$f$ ($0$-form)], [$dif f$], [the coefficients are the components of $nabla f$]),
+  (
+    [$P dif x + Q dif y$ in $bb(R)^2$],
+    [$(Q_x - P_y) dif x and dif y$],
+    [$(nabla times bold(f)) dot bold(k)$ for the planar field $bold(f) = P bold(i) + Q bold(j)$],
+  ),
+  (
+    [$P dif x + Q dif y + R dif z$ in $bb(R)^3$],
+    [the second coordinate formula],
+    [the coefficients are the components of $nabla times bold(f)$],
+  ),
+  (
+    [$P dif y and dif z + Q dif z and dif x + R dif x and dif y$],
+    [$(P_x + Q_y + R_z) dif x and dif y and dif z$],
+    [$nabla dot bold(f) dif x and dif y and dif z$],
+  ),
+)
+
+These formulas are the computational core of the theorems of the next section: the coefficient in the first formula is exactly the integrand obtained by #link(<thm:green-theorem>)[Green's theorem]; the three coefficients in the second formula are the entries of the determinant appearing in #link(<thm:stokes-theorem>)[Stokes' theorem]; and the coefficient in the third formula is the integrand of #link(<thm:gauss-theorem>)[Gauß's theorem]. The whole ladder is illustrated in @fig:exterior-ladder.
+
+#figure(
+  image("img/exterior-ladder.svg", width: 90%),
+  caption: [The ladder of differential forms: exterior differentiation raises the degree by one, and each rung corresponds to one of the coordinate formulas; the integral theorems of the next section compare a $k$-form integral over an oriented region with a $(k + 1)$-form integral over its boundary.],
+) <fig:exterior-ladder>
+
 #example(name: "Exterior Derivative from a Vector Field")[
   For the field $bold(f)(x, y, z) = x y bold(i) + y z bold(j) + z x bold(k)$, form the work $1$-form $omega = x y dif x + y z dif y + z x dif z$ and the flux $2$-form $eta = x y dif y and dif z + y z dif z and dif x + z x dif x and dif y$. Compute $dif omega$ and $dif eta$, and compare with $nabla times bold(f)$ and $nabla dot bold(f)$.
 ] <ex:exterior-derivative-from-field>
@@ -10279,6 +10285,8 @@ The nilpotency is the alternating-algebra avatar of the equality of mixed second
     dif eta = (y + z + x) dif x and dif y and dif z = (nabla dot bold(f)) dif x and dif y and dif z.
   $
 ]
+
+=== The Hodge Star Operator and the Dictionary // Hodge 星算子与字典
 
 #definition(name: "Hodge Star Operator")[
   In $bb(R)^2$ and $bb(R)^3$, the *Hodge star operator* $star$ is the linear map sending a $k$-form to an $(n - k)$-form defined by the following action on the basis forms:
@@ -10772,6 +10780,8 @@ Denote $integral.surf_(limits(partial M)^harpoon.rt)$ as the surface integral ov
   and side length $sqrt(2)$, hence $"Area"(Sigma) = sqrt(3)/2$.
   Therefore $I = sqrt(3) dot sqrt(3)/2 = 3/2$.
 ]
+
+=== Computational Strategies and Common Mistakes // 计算策略与常见错误
 
 #note[
   The choice among the computational tools can be summarized as follows:
