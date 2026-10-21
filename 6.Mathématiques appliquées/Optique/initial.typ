@@ -41,7 +41,7 @@
 // - 希尔伯特空间/算符/相干态形式体系 → Mécanique quantique（Part IV 直接使用）
 //
 // 与相关笔记的衔接：
-// - 本笔记 Part I 承接自 Mécanique analytique 迁入的振动与波动正文（约 380 行，含三幅配图），
+// - 本笔记 Part I 承接自 Mécanique analytique 迁入的振动与波动正文（约 590 行，含三幅配图），
 //   其弹性介质内容留在分析力学
 // - 本笔记 Ch 4 桥接 Électrodynamique 的电磁波部分
 // - 本笔记 Part IV 需要 Mécanique quantique 的希尔伯特空间与算符基础
@@ -115,16 +115,16 @@
 // ==========================================================================
 // Part III — Wave Optics (波动光学)
 // ==========================================================================
-// 设计思路：本体理论，体量最大；以标量衍射理论（Helmholtz 方程 + 格林函数）为统一框架，
-//           干涉、衍射、傅里叶光学、偏振、介质传播依次展开。
-//           正文已按规划写入 Ch 8-13（框架先行顺序、Ch 11 完整 5 节、8 张核心配图）。
+// 设计思路：本体理论，体量最大（正文 ~930 行）；以标量衍射理论（Helmholtz 方程 + 格林函数）为统一框架，
+//           干涉、衍射、傅里叶光学、介质传播依次展开，末章回到矢量性（偏振）。
+//           正文已写入 Ch 8-13（框架先行、Ch 11 五节、8 张核心配图）。
 // 对应教材：Born & Wolf Ch 7-10, 13-15；Goodman, Introduction to Fourier Optics
 
 // --- Chapter 8: Scalar Diffraction Theory (标量衍射理论) ---
-//   Section 8.1: The Helmholtz Equation for Optical Fields (光场的亥姆霍兹方程)
+//   Section 8.1: The Scalar Approximation and Boundary Conditions (标量近似与边界条件)
 //   Section 8.2: The Huygens-Fresnel Principle (惠更斯-菲涅耳原理)
-//   Section 8.3: Kirchhoff and Rayleigh-Sommerfeld Integrals (基尔霍夫与瑞利-索末菲积分)
-//   Section 8.4: Green's Functions for Diffraction (衍射的格林函数)
+//   Section 8.3: Green's Functions for Diffraction (衍射的格林函数，先于积分)
+//   Section 8.4: Kirchhoff and Rayleigh-Sommerfeld Integrals (基尔霍夫与瑞利-索末菲积分)
 
 // --- Chapter 9: Interference and Coherence (干涉与相干性) ---
 //   Section 9.1: Two-Beam Interference: Young's Experiment (杨氏双缝)
@@ -132,13 +132,14 @@
 //   Section 9.3: The Michelson Interferometer (迈克耳孙干涉仪)
 //   Section 9.4: Multiple-Beam Interference: Fabry-Perot (多光束干涉与法布里-珀罗)
 //   Section 9.5: Temporal and Spatial Coherence (时间/空间相干性)
-//   Section 9.6: Coherence Length and Visibility (相干长度与可见度)
+//   Section 9.6: Visibility and the Degree of Coherence (可见度与相干度)
 
-// --- Chapter 10: Diffraction (衍射) ---
+// --- Chapter 10: Diffraction: Approximations and Applications (衍射：近似与应用) ---
 //   Section 10.1: Fresnel Diffraction and Zone Plates (菲涅耳衍射与波带片)
-//   Section 10.2: Fraunhofer Diffraction: Single Slit and Circular Aperture (夫琅禾费衍射)
-//   Section 10.3: Diffraction Gratings and Spectroscopy (衍射光栅与光谱学)
-//   Section 10.4: Resolution: Rayleigh and Abbe Criteria (瑞利/阿贝分辨极限)
+//   Section 10.2: Fraunhofer Diffraction: The Single Slit (单缝夫琅禾费衍射)
+//   Section 10.3: Fraunhofer Diffraction: The Circular Aperture (圆孔夫琅禾费衍射)
+//   Section 10.4: Diffraction Gratings and Spectroscopy (衍射光栅与光谱学)
+//   Section 10.5: Resolution: Rayleigh and Abbe Criteria (瑞利/阿贝分辨极限)
 
 // --- Chapter 11: Fourier Optics (傅里叶光学) ---
 //   Section 11.1: The Lens as a Fourier Transformer (透镜作为傅里叶变换器)
@@ -147,18 +148,18 @@
 //   Section 11.4: PSF, OTF and the Coherent Transfer Function (点扩散函数与光学传递函数)
 //   Section 11.5: Holography (全息) [简要]
 
-// --- Chapter 12: Polarization (偏振) ---
-//   Section 12.1: Polarization States of Light (光的偏振态)
-//   Section 12.2: Jones Calculus (琼斯运算)
-//   Section 12.3: Stokes Parameters and Mueller Calculus (斯托克斯参量与缪勒矩阵)
-//   Section 12.4: Birefringence and Wave Plates (双折射与波片)
-//   Section 12.5: Production and Analysis of Polarized Light (起偏与检偏：布儒斯特角)
-//   Section 12.6: Optical Activity (旋光) [简要]
+// --- Chapter 12: Propagation in Media (介质中的传播) ---
+//   Section 12.1: Dispersion and Absorption (色散与吸收)
+//   Section 12.2: Kramers-Kronig Relations (Kramers-Kronig 关系) [可选]
+//   Section 12.3: Rayleigh and Mie Scattering (瑞利与米氏散射)
 
-// --- Chapter 13: Propagation in Media (介质中的传播) ---
-//   Section 13.1: Dispersion and Absorption (色散与吸收)
-//   Section 13.2: Kramers-Kronig Relations (Kramers-Kronig 关系) [可选]
-//   Section 13.3: Rayleigh and Mie Scattering (瑞利与米氏散射)
+// --- Chapter 13: Polarization (偏振) ---
+//   Section 13.1: Polarization States of Light (光的偏振态)
+//   Section 13.2: Jones Calculus (琼斯运算)
+//   Section 13.3: Stokes Parameters and Mueller Calculus (斯托克斯参量与缪勒矩阵)
+//   Section 13.4: Birefringence and Wave Plates (双折射与波片)
+//   Section 13.5: Production and Analysis of Polarized Light (起偏与检偏：布儒斯特角)
+//   Section 13.6: Optical Activity (旋光) [简要]
 
 // ==========================================================================
 // Part IV — Quantum Optics (量子光学)
@@ -211,19 +212,25 @@
 // 本笔记遵循"振动与波动（迁入基础）→ 几何光学（短波长极限）→ 波动光学（本体理论）
 // → 量子光学（场量子化）"的四段式主线，共 4 Part、19 Chapter（其中 Ch 4 桥接章、Ch 19 导论章）。
 //
+// 规模：正文约 2970 行，Part I 589 / Part II 556 / Part III 932 / Part IV 656。
+//
 // Part I（Ch 1-4）：振动与波动的介质无关机制（自 Mécanique analytique 迁入），
 //   为波动光学提供波动方程、叠加、色散、傅里叶简正模等数学基础；Ch 4 引入时谐场与 Helmholtz 方程。
 // Part II（Ch 5-7）：几何光学，作为 Part III 的短波长极限 λ→0；正文已写入（含 6 张配图）。
-// Part III（Ch 8-13）：波动光学核心，标量衍射理论为统一框架，展开干涉、衍射、傅里叶光学、偏振、介质传播。
-//   正文已写入（框架先行 / Ch 11 完整 / 8 张核心配图）。
+// Part III（Ch 8-13）：波动光学核心，标量衍射理论为统一框架，展开干涉、衍射、傅里叶光学、介质传播，
+//   最后由 Ch 13 偏振回到矢量性收束；正文已写入（框架先行 / Ch 11 五节 / 8 张核心配图）。
 // Part IV（Ch 14-19）：量子光学，场量子化、相干态与压缩态、光子统计、光与物质相互作用、应用与前沿。
 //   正文已写入（单模完整 / 18.4 精简保留 / 4 张核心配图）。
 //
 // 教材覆盖：A. P. French（振动与波动）、Hecht / Born & Wolf（几何与波动光学）、
 //           Goodman（傅里叶光学）、Loudon / Scully & Zubairy（量子光学）知识点均已覆盖。
-// 迁移说明：Part I 正文自 Mécanique analytique Ch 4 迁入（约 380 行，含三幅配图），
-//           已重组为 Ch 1-3；Ch 4（时谐场与亥姆霍兹方程）为新写桥接章。
+// 迁移说明：Part I 正文自 Mécanique analytique Ch 4 迁入（约 590 行，含三幅配图），
+//           已重组为 Ch 1-3（Ch 3 在迁入后补写波包展宽与本征函数展开两处）；
+//           Ch 4（时谐场与亥姆霍兹方程）为新写桥接章。
 //           弹性介质小节（应变/应力/泊松比/弹性波/机械阻抗）留在分析力学（Chapter 4: Elastic Waves in Solids）。
+//
+// 交叉引用约定：章标题带 <ch:...> 标签，跨章衔接写 #link(<ch:...>)[Chapter N]；
+//   组件引用写 #link(<def:...|thm:...>)[...]，图引用写 @fig:...；不再新增裸章号文本指代。
 // ==========================================================================
 
 // 目录
@@ -236,11 +243,13 @@
 
 // --- Chapter 1: Oscillations (振动) ---
 
-= Oscillations // 振动
+= Oscillations <ch:oscillations> // 振动
 
 Oscillatory motion is ubiquitous in physics — from a swinging pendulum to vibrating molecules and electromagnetic waves.
 This chapter (migrated from the *Mécanique analytique* notebook) develops the fundamental concepts of simple harmonic motion and of damped and driven oscillations; wave propagation follows in Chapter 2.
 These ideas are revisited in *Mécanique analytique* (Part II), where Lagrangian methods provide a systematic approach to small oscillations and normal modes.
+
+Part I (Chapters 1–4) collects the medium-independent wave mechanics the whole notebook relies on: oscillations, wave motion, dispersion and eigenfunction expansions, and finally the time-harmonic Helmholtz formulation that opens both geometric and wave optics.
 
 == Simple Harmonic Motion // 简谐运动
 
@@ -384,12 +393,14 @@ The characteristic equation $r^2 + 2 beta r + omega_0^2 = 0$ has roots $r = - be
     The system returns slowly without oscillating.
 ]
 
+The three damping regimes are drawn in @fig:damped-oscillation.
+
 #figure(
   image("img/damped_oscillation.png", width: 100%),
   caption: [Damped oscillation: underdamped (blue), critically damped (green), and overdamped (orange).],
   placement: auto,
   supplement: [Fig.]
-) <fig:damped_oscillation>
+) <fig:damped-oscillation>
 
 === Driven Oscillator and Resonance // 受驱振子与共振
 
@@ -418,12 +429,14 @@ $
   The width of the resonance curve (full width at half maximum) is $Delta omega approx 2 beta$, giving a quality factor $Q = omega_0 / (2 beta)$.
 ]
 
+Amplitude and phase near resonance are plotted in @fig:resonance-curves.
+
 #figure(
   image("img/resonance_curves.png", width: 100%),
   caption: [Resonance curves for different damping ratios $beta / omega_0$. Sharp peaks correspond to weak damping; broad curves correspond to strong damping.],
   placement: auto,
   supplement: [Fig.]
-) <fig:resonance_curves>
+) <fig:resonance-curves>
 
 #note[
   Resonance is a crucial phenomenon across physics: it explains why a small force at the right frequency can produce large oscillations (e.g., pushing a child on a swing, tuning a radio receiver, or the Tacoma Narrows Bridge collapse).
@@ -452,7 +465,7 @@ $
 
 // --- Chapter 2: Wave Motion (波动) ---
 
-= Wave Motion // 波动
+= Wave Motion <ch:wave-motion> // 波动
 
 While oscillators describe the motion of individual particles, *waves* describe the propagation of disturbances through a continuous medium.
 The key conceptual shift is from a function of time alone $x(t)$ to a function of both space and time $u(x,t)$.
@@ -568,12 +581,14 @@ The points where $cos(k x) = 0$ (nodes) are stationary; the points where $|cos(k
   The fundamental frequency is $f_1 = omega_1 / (2 pi) = v / (2 L)$, and the higher harmonics are integer multiples: $f_n = n f_1$.
 ]
 
+The first normal modes of the string are drawn in @fig:string-normal-modes.
+
 #figure(
   image("img/string_normal_modes.png", width: 100%),
   caption: [Normal modes of a string fixed at both ends: $n = 1$ (fundamental), $n = 2$ (second harmonic), $n = 3$ (third harmonic).],
   placement: auto,
   supplement: [Fig.]
-) <fig:string_normal_modes>
+) <fig:string-normal-modes>
 
 === Superposition Principle // 叠加原理
 
@@ -616,7 +631,7 @@ $
 
 // --- Chapter 3: Dispersion, Fourier Methods and Normal Modes (色散、傅里叶方法与简正模) ---
 
-= Dispersion, Fourier Methods and Normal Modes // 色散、傅里叶方法与简正模
+= Dispersion, Fourier Methods and Normal Modes <ch:dispersion-fourier> // 色散、傅里叶方法与简正模
 
 == Dispersion and Group Velocity // 色散与群速度
 
@@ -643,6 +658,19 @@ In many real media, however, the wave speed depends on frequency; this is called
   The group velocity $v_g = dif omega / dif k = frac(1,2) sqrt(g / k) = v_p / 2$ — energy travels at half the speed of the crests.
 ]
 
+A wave packet is a superposition of modes, and the two velocities answer different questions: $v_g$ moves the envelope, $v_p$ moves the carrier inside it.
+
+For a narrow spectrum around $k_0$, the expansion of the dispersion relation,
+$
+  omega(k) = omega_0 + v_g (k - k_0) + frac(1,2) alpha (k - k_0)^2 + dots.c, quad alpha = (dif^2 omega) / (dif k^2),
+$
+with $v_g$ and $alpha$ evaluated at $k_0$, shows that the packet keeps its shape to first order, translating at $v_g$; the second-order term $alpha$, the *group-velocity dispersion*, is what deforms it.
+
+#example(name: "Spreading of a Wave Packet")[ // 波包展宽
+  A packet of initial width $sigma_0$ broadens on the time scale $tau ~ sigma_0^2 / abs(alpha)$: a sharply localized packet disperses quickly, a broad one slowly.
+  In optics this is the stretching of a short laser pulse in glass, the effect that limits long-haul fibre links (Section 12.1).
+]
+
 == Fourier Series and Normal Modes // 傅里叶级数与简正模
 
 Any standing wave configuration on a string can be expressed as a sum of normal modes — this is the essence of *Fourier analysis*.
@@ -660,18 +688,35 @@ Any standing wave configuration on a string can be expressed as a sum of normal 
   $
 ]
 
+#example(name: "Plucked String")[ // 拨弦
+  A string pulled at its midpoint and released has the triangular profile $u(x, 0) = 2 h x / L$ for $x <= L / 2$, symmetric beyond it.
+  The even coefficients vanish and the odd ones decay as $a_n prop 1 / n^2$, so the fundamental carries most of the energy and the higher modes only sharpen the corner.
+]
+
 == The Eigenfunction Expansion Idea // 本征函数展开思想
 
-The normal modes are the *eigenfunctions* of the wave equation with given boundary conditions.
-This concept — expanding a general solution in eigenfunctions — is one of the most powerful ideas in mathematical physics, reappearing in quantum mechanics (particle in a box), electromagnetism (waveguide modes), and structural engineering (modal analysis).
+The normal modes are the *eigenfunctions* of the wave operator with the given boundary conditions: each mode satisfies $(dif^2 X) / (dif x^2) = - k_n^2 X$ together with the conditions at the ends of the string.
+The step from "solving one mode" to "reconstructing every solution" is a general one, worth stating as a definition.
 
-#note[
-  *Connection to later topics:*
-  - The normal modes of a string are the first example of a discrete eigenvalue problem.
-    In *Mécanique analytique* (Part II, Lagrangian mechanics), this is generalised to coupled oscillators and normal mode analysis using matrix methods.
-  - The Fourier series is the discrete precursor to the Fourier transform, which describes the continuous spectrum of a wave packet.
-  - In quantum mechanics, the same "expand in eigenfunctions" strategy solves the Schrödinger equation for bound states.
-]
+#definition(name: "Eigenfunction Expansion")[
+  Let $cal(L)$ be a linear differential operator on a domain with homogeneous boundary conditions, with eigenfunctions $phi_n$ and eigenvalues $lambda_n$.
+  An admissible function $f$ is expanded as
+  $
+    f = sum_n c_n phi_n, quad c_n = (⟨ phi_n, f ⟩) / (⟨ phi_n, phi_n ⟩),
+  $
+  where the coefficients are the projections of $f$ onto the eigenfunctions.
+] <def:eigenfunction-expansion>
+
+The eigenfunctions are orthogonal, $⟨ phi_m, phi_n ⟩ = 0$ for $m != n$, which is exactly why the coefficients can be computed one at a time by projection.
+For the string, $phi_n (x) = sin(n pi x / L)$ and $⟨ phi_m, phi_n ⟩ = (L / 2) delta_(m n)$, so the coefficients of the previous section are these projections written out in full.
+
+This is the discrete ancestor of the Fourier transform, and the same idea returns three times in the notebook:
+
+- Fourier optics expands the field on plane waves, the eigenfunctions of the Laplacian in free space (Section 4.4);
+- the diffraction integrals of #link(<ch:scalar-diffraction>)[Chapter 8] are that expansion evaluated at the observation plane;
+- the quantized field of #link(<ch:field-quantization>)[Chapter 15] expands on the modes of a cavity, one oscillator per mode.
+
+In *Mécanique analytique* (Part II) the same projection is applied to coupled oscillators, where the eigenfunctions become the normal coordinates of the system.
 
 The preceding chapters of this part develop the wave equation and its general mathematical machinery — d'Alembert's solution, complex (phasor) representation, superposition, standing waves, dispersion, group velocity, and Fourier analysis.
 These concepts are *medium-independent*: they apply equally to mechanical waves, electromagnetic waves, and quantum probability waves.
@@ -679,7 +724,7 @@ The elastic-solid specialisation (strain, stress, P/S waves, mechanical impedanc
 
 // --- Chapter 4: From Waves to Time-Harmonic Fields (时谐场与亥姆霍兹方程) ---
 
-= From Waves to Time-Harmonic Fields // 时谐场与亥姆霍兹方程
+= From Waves to Time-Harmonic Fields <ch:helmholtz> // 时谐场与亥姆霍兹方程
 
 The wave machinery of Chapters 1–3 describes disturbances that depend on both space and time.
 Almost all of classical optics is built on one special case: fields that oscillate at a single, fixed frequency.
@@ -745,7 +790,7 @@ Its solutions are the building blocks of the entire optical theory that follows.
 
 #note[
   In a source-free, homogeneous medium, every Cartesian component of the electromagnetic field satisfies the scalar Helmholtz equation (see Électrodynamique, Electromagnetic Waves).
-  The scalar theory of this notebook works with a single component $bold(U)$; the vector character of the field returns in Chapter 12 (Polarization).
+  The scalar theory of this notebook works with a single component $bold(U)$; the vector character of the field returns in #link(<ch:polarization>)[Chapter 13 (Polarization)].
 
   The Helmholtz equation alone admits both outgoing and incoming solutions.
   Physical radiation problems single out the outgoing family by the *Sommerfeld radiation condition*; the diffraction integrals of Chapter 8 are the Green-function solutions that enforce it.
@@ -773,10 +818,10 @@ The angular spectrum decomposes the field into plane waves travelling in every d
 - Components with $k_(⊥) > k$ give a purely imaginary $k_z$ — these are *evanescent* waves that decay exponentially away from the plane and carry no net power.
 
 The evanescent component is responsible for the diffraction limit: fine spatial detail at the boundary does not propagate to the far field.
-This distinction reappears in Chapter 10 (Resolution) and Chapter 11 (Fourier Optics).
+This distinction reappears in #link(<ch:diffraction>)[Chapter 10 (Resolution)] and #link(<ch:fourier-optics>)[Chapter 11 (Fourier Optics)].
 
 #note[
-  The angular-spectrum representation is the bridge between Part I and the rest of the notebook: the diffraction integrals of Chapter 8 are this representation evaluated at a distant observation plane, and the lens analysis of Chapter 11 implements it physically as a Fourier transform.
+  The angular-spectrum representation is the bridge between Part I and the rest of the notebook: the diffraction integrals of #link(<ch:scalar-diffraction>)[Chapter 8] are this representation evaluated at a distant observation plane, and the lens analysis of #link(<ch:fourier-optics>)[Chapter 11] implements it physically as a Fourier transform.
 ]
 
 // --------------------------------------------------------------------------
@@ -787,12 +832,15 @@ This distinction reappears in Chapter 10 (Resolution) and Chapter 11 (Fourier Op
 
 // --- Chapter 5: Ray Optics and the Eikonal Equation (光线光学与程函方程) ---
 
-= Ray Optics and the Eikonal Equation // 光线光学与程函方程
+= Ray Optics and the Eikonal Equation <ch:ray-optics> // 光线光学与程函方程
 
 Geometric optics describes the propagation of light in terms of rays rather than waves.
 It is not a separate theory: it is the short-wavelength limit of wave optics, obtained from the Helmholtz equation as $lambda -> 0$.
 This chapter develops that limit systematically — wavefronts become surfaces of constant phase, rays become their normals, and every classical law of geometric optics follows from the *eikonal equation*.
-It redeems the promise made at the end of Chapter 4.
+It redeems the promise made at the end of #link(<ch:helmholtz>)[Chapter 4].
+
+Part II builds geometric optics in three steps, one chapter each: the eikonal limit (Chapter 5), the paraxial approximation (Chapter 6), and matrix optics with its instruments (Chapter 7).
+Everything here is an approximation to Part III, and every error term reappears there as diffraction.
 
 == From Waves to Rays: The Short-Wavelength Limit // 从波到光线
 
@@ -806,6 +854,8 @@ $
 $
 
 where $k_0 = omega / c$ is the vacuum wavenumber.
+
+=== The WKB Ansatz // WKB 拟设
 
 #definition(name: "WKB Ansatz")[
   A *WKB ansatz* for the spatial amplitude has the form
@@ -823,6 +873,8 @@ $
 $
 
 Since the identity holds for every point and the amplitude $A$ is not identically zero, the coefficients of the leading powers of $k_0$ must vanish separately.
+
+=== The Eikonal and Transport Equations // 程函方程与输运方程
 
 #theorem(name: "From Helmholtz to Eikonal")[
   In the short-wavelength limit $lambda -> 0$, the WKB ansatz reduces the Helmholtz equation to two leading-order equations:
@@ -857,11 +909,15 @@ Since the identity holds for every point and the amplitude $A$ is not identicall
   The remaining term $nabla^2 A$ is of order $k_0^0$ and is negligible compared with the leading terms when $k_0$ is large.
 ]
 
+=== Wavefronts and Rays // 波前与光线
+
 #definition(name: "Eikonal and Wavefronts")[
   The function $S$ solving the eikonal equation is the *eikonal*.
   Its level sets $S(bold(r)) = "const"$ are the *wavefronts* (surfaces of constant phase).
   Since $gradient S != 0$, the rays are the curves orthogonal to the wavefronts, traced in the direction of increasing $S$.
 ] <def:eikonal-equation>
+
+The construction is drawn in @fig:waves-to-rays: the wavefronts are the level sets of the eikonal and the rays are their normals.
 
 #figure(
   image("img/waves-to-rays.svg", width: 100%),
@@ -962,6 +1018,8 @@ The reflected and transmitted rays lie in the plane of incidence, the plane span
   where $theta_1$ and $theta_2$ are the angles with respect to the interface normal.
 ] <law:snell>
 
+The construction is drawn in @fig:snells-law.
+
 #figure(
   image("img/snells-law.svg", width: 70%),
   caption: [Reflection and refraction at a planar interface: the incident, reflected, and transmitted rays lie in the plane of incidence, and $n_1 sin theta_1 = n_2 sin theta_2$.],
@@ -999,7 +1057,7 @@ Its full wave description reappears in Part III.
 
 // --- Chapter 6: Paraxial Optics (近轴光学) ---
 
-= Paraxial Optics // 近轴光学
+= Paraxial Optics <ch:paraxial-optics> // 近轴光学
 
 Most optical instruments are designed so that light stays close to a single axis of symmetry — the *optical axis*.
 In this *paraxial regime*, the trigonometric functions of geometric optics linearise, and imaging becomes a linear theory.
@@ -1057,6 +1115,8 @@ Consider an object point $P$ on the axis at distance $s$ from the vertex; its pa
     frac(n_1, s) + frac(n_2, s') = frac(n_2 - n_1, R).
   $
 ]
+
+The conjugate-point construction is drawn in @fig:spherical-refraction.
 
 #figure(
   image("img/spherical-refraction.svg", width: 80%),
@@ -1118,6 +1178,8 @@ Applying the single-surface formula twice and passing to the thin limit:
   The image is real, inverted, and magnified by $m = - s' / s = - 2$.
 ]
 
+The thin-lens construction is drawn in @fig:lens-imaging.
+
 #figure(
   image("img/lens-imaging.svg", width: 90%),
   caption: [Gaussian imaging with a thin converging lens: three characteristic rays locate the image $P'$ of the object $P$.],
@@ -1151,7 +1213,7 @@ Applying the single-surface formula twice and passing to the thin limit:
 
 // --- Chapter 7: Matrix Optics and Optical Instruments (矩阵光学与光学仪器) ---
 
-= Matrix Optics and Optical Instruments // 矩阵光学与光学仪器
+= Matrix Optics and Optical Instruments <ch:matrix-optics> // 矩阵光学与光学仪器
 
 The paraxial theory of Chapter 6 is linear; this chapter organises it into a compact matrix formalism and applies it to prisms and optical instruments.
 Every paraxial optical element is represented by a $2 times 2$ matrix, and a system of elements is represented by the product of their matrices.
@@ -1180,6 +1242,8 @@ For a system of elements with matrices $M_1, M_2, ..., M_N$ traversed in that or
 $
   M = M_N dots.c M_2 M_1.
 $
+
+The equivalent ABCD system is drawn in @fig:abcd-system.
 
 #figure(
   image("img/abcd-system.svg", width: 80%),
@@ -1212,7 +1276,7 @@ $
   $
   and the cavity is stable exactly when $abs(A + D) / 2 < 1$.
   For two plane mirrors ($R = oo$), $A + D = 2$: the cavity sits on the stability boundary.
-  The same criterion returns in Chapter 19, where it governs laser resonators.
+  The same criterion returns in #link(<ch:applications>)[Chapter 19], where it governs laser resonators.
 ]
 
 == Prisms and Dispersion // 棱镜与色散
@@ -1239,7 +1303,7 @@ $
 ]
 
 Since $n$ depends on wavelength, the deviation depends on wavelength: a prism spreads white light into its spectrum.
-The *angular dispersion* is $D = dif delta / dif lambda$, and the material dependence $n(lambda)$ is developed in Chapter 13.
+The *angular dispersion* is $D = dif delta / dif lambda$, and the material dependence $n(lambda)$ is developed in #link(<ch:propagation-media>)[Chapter 12].
 
 #note[
   Prisms and gratings both disperse light; gratings (Chapter 10) disperse by interference rather than refraction.
@@ -1269,6 +1333,8 @@ Optical instruments are sequences of lenses analysed with the matrix formalism o
   so a long objective and a short eyepiece give high magnification.
   The Galilean telescope uses a negative eyepiece, giving an erect image with $M = f_"obj" / f_"eye"$ and a shorter tube.
 ] <ex:telescope>
+
+The two instruments are compared in @fig:optical-instruments.
 
 #figure(
   image("img/optical-instruments.svg", width: 100%),
@@ -1322,13 +1388,13 @@ Optical instruments are sequences of lenses analysed with the matrix formalism o
 
 // --- Chapter 8: Scalar Diffraction Theory (标量衍射理论) ---
 
-= Scalar Diffraction Theory // 标量衍射理论
+= Scalar Diffraction Theory <ch:scalar-diffraction> // 标量衍射理论
 
 Geometric optics traced rays; wave optics propagates fields.
 This chapter builds the unifying framework for the whole of Part III: the diffraction integral, obtained as the Green-function solution of the Helmholtz equation.
 Every phenomenon studied in Part III — interference, diffraction patterns, imaging by lenses, resolution limits — is this integral evaluated in a suitable approximation.
 
-== The Helmholtz Equation for Optical Fields // 光场的亥姆霍兹方程
+== The Scalar Approximation and Boundary Conditions // 标量近似与边界条件
 
 The electromagnetic field is a vector field, but in free space and in media whose index varies slowly each Cartesian component satisfies the same scalar wave equation (see Électrodynamique).
 We therefore work with a single complex scalar amplitude $U(bold(r))$.
@@ -1346,7 +1412,7 @@ A unique solution requires boundary conditions.
 On an aperture or screen we prescribe the field or its normal derivative; for radiation problems we add the Sommerfeld radiation condition of Chapter 4, which selects the outgoing solutions.
 
 #note[
-  The scalar approximation fails near sharp edges, in strongly absorbing media, and for tightly focused beams, where the vector character of the field (Chapter 12) must be retained.
+  The scalar approximation fails near sharp edges, in strongly absorbing media, and for tightly focused beams, where the vector character of the field (#link(<ch:polarization>)[Chapter 13]) must be retained.
 ]
 
 == The Huygens-Fresnel Principle // 惠更斯-菲涅耳原理
@@ -1362,7 +1428,9 @@ $
   U(P) = 1 / (i lambda) integral_Sigma U(P_0) e^(i k r) / r K(theta) dif S.
 $
 
-The factor $1 / (i lambda)$ and the obliquity factor $K(theta)$ cannot be obtained from the intuitive argument alone; they emerge from the rigorous diffraction theory of Section 8.3.
+The factor $1 / (i lambda)$ and the obliquity factor $K(theta)$ cannot be obtained from the intuitive argument alone; they emerge from the rigorous diffraction theory of Section 8.4.
+
+The construction is summarised in @fig:huygens-fresnel.
 
 #figure(
   image("img/huygens-fresnel.svg", width: 80%),
@@ -1371,9 +1439,39 @@ The factor $1 / (i lambda)$ and the obliquity factor $K(theta)$ cannot be obtain
   supplement: [Fig.]
 ) <fig:huygens-fresnel>
 
+== Green's Functions for Diffraction // 衍射的格林函数
+
+The diffraction integral is the Green-function solution of the Helmholtz equation, so the Green function comes first: it is the kernel out of which every integral of this chapter is built.
+
+#definition(name: "Free-Space Green's Function")[
+  The *free-space Green's function* for the Helmholtz equation satisfies
+  $
+    (nabla^2 + k^2) G = - 4 pi delta(bold(r) - bold(r)'),
+  $
+  and is given by
+  $
+    G(bold(r), bold(r)') = e^(i k abs(bold(r) - bold(r)')) / abs(bold(r) - bold(r)').
+  $
+] <def:green-diffraction>
+
+The Green's function admits a plane-wave (angular-spectrum) representation: it is the superposition of the outgoing plane waves of #link(<def:angular-spectrum>)[the angular spectrum].
+This is the precise sense in which the diffraction integrals of this chapter are the angular-spectrum representation evaluated at a distant observation plane, redeeming the promise of #link(<ch:helmholtz>)[Chapter 4].
+
+#note[
+  *Evanescent waves.* The angular-spectrum form of the Green's function contains the evanescent components identified in Section 4.4.
+  Their full wave description — exponential decay away from the aperture, frustrated total internal reflection — was promised at the end of Chapter 5 and is now accounted for by the diffraction integrals of Section 8.4.
+]
+
+#note[
+  *Guided modes.* In cylindrical symmetry (fibres, #link(<ch:matrix-optics>)[Chapter 7]), the Helmholtz equation separates with Bessel functions, and the transverse patterns are the discrete guided modes promised in Section 7.5.
+  The same Green-function machinery, with the appropriate modal basis, describes their propagation.
+]
+
 == Kirchhoff and Rayleigh-Sommerfeld Integrals // 基尔霍夫与瑞利-索末菲积分
 
-The diffraction integral follows from Green's theorem applied to the Helmholtz equation.
+The diffraction integrals follow from Green's theorem applied to the Helmholtz equation, with #link(<def:green-diffraction>)[the free-space Green's function] of Section 8.3 as kernel.
+
+=== Kirchhoff's Integral // 基尔霍夫积分
 
 #theorem(name: "Kirchhoff Diffraction Integral")[
   Let $Sigma$ be an aperture in an opaque screen, and let $U$ be a field that satisfies the Helmholtz equation behind the screen.
@@ -1407,6 +1505,8 @@ The theorem as stated uses the *Kirchhoff boundary conditions*: on the aperture 
   Moreover the formula fails to reproduce the incident field in the absence of a screen (the so-called *obliquity paradox*).
   The Rayleigh-Sommerfeld theory repairs both defects.
 ]
+
+=== The Rayleigh-Sommerfeld Integral // 瑞利-索末菲积分
 
 #theorem(name: "Rayleigh-Sommerfeld Diffraction Integral")[
   Choose the Green's function with vanishing value on the screen, $G_D = e^(i k r) / r - e^(i k r') / r'$, where $r'$ is the distance to the mirror image of $P$ in the plane of the screen.
@@ -1442,35 +1542,9 @@ The Rayleigh-Sommerfeld integral uses only the field on the aperture — a mathe
   For apertures large compared with the wavelength, and for observation points not too oblique, the two agree to leading order.
 ]
 
-== Green's Functions for Diffraction // 衍射的格林函数
-
-#definition(name: "Free-Space Green's Function")[
-  The *free-space Green's function* for the Helmholtz equation satisfies
-  $
-    (nabla^2 + k^2) G = - 4 pi delta(bold(r) - bold(r)'),
-  $
-  and is given by
-  $
-    G(bold(r), bold(r)') = e^(i k abs(bold(r) - bold(r)')) / abs(bold(r) - bold(r)').
-  $
-] <def:green-diffraction>
-
-The Green's function admits a plane-wave (angular-spectrum) representation: it is the superposition of the outgoing plane waves of Chapter 4.
-This is the precise sense in which the diffraction integrals of this chapter are the angular-spectrum representation evaluated at a distant observation plane, redeeming the promise of Chapter 4.
-
-#note[
-  *Evanescent waves.* The angular-spectrum form of the Green's function contains the evanescent components identified in Section 4.4.
-  Their full wave description — exponential decay away from the aperture, frustrated total internal reflection — was promised at the end of Chapter 5 and is now accounted for by the exact diffraction theory.
-]
-
-#note[
-  *Guided modes.* In cylindrical symmetry (fibres, Chapter 7), the Helmholtz equation separates with Bessel functions, and the transverse patterns are the discrete guided modes promised in Section 7.5.
-  The same Green-function machinery, with the appropriate modal basis, describes their propagation.
-]
-
 // --- Chapter 9: Interference and Coherence (干涉与相干性) ---
 
-= Interference and Coherence // 干涉与相干性
+= Interference and Coherence <ch:interference> // 干涉与相干性
 
 Interference is the superposition of coherent fields: when two or more light waves meet, their amplitudes add and the intensity shows stationary bright and dark fringes.
 This chapter develops two-beam and multiple-beam interference, and then asks how stable the phase relationship must be — leading from deterministic interference to the statistical theory of coherence.
@@ -1500,7 +1574,9 @@ Bright fringes occur where $d sin theta = m lambda$ ($m in bb(Z)$), with spacing
 #example(name: "Young's Fringes")[ // 杨氏双缝
   Two slits $d = 1 "mm"$ apart, illuminated with green light $lambda = 550 "nm"$, project fringes on a screen $R = 2 "m"$ away.
   The fringe spacing is $Delta y = lambda R / d = (550 times 10^(-9) dot 2) / (10^(-3)) = 1.1 "mm"$, comfortably visible to the naked eye.
-]
+] <ex:young-fringes>
+
+The geometry and the resulting fringes are shown in @fig:young-double-slit.
 
 #figure(
   image("img/young-double-slit.svg", width: 80%),
@@ -1634,7 +1710,7 @@ A laser is highly coherent: a narrow linewidth $Delta nu ~ 1 "MHz"$ gives $L_c ~
   Stellar interferometry exploits exactly this: measuring the slit separation at which fringes vanish yields the angular diameter of a star.
 ]
 
-== Coherence Length and Visibility // 相干长度与可见度
+== Visibility and the Degree of Coherence // 可见度与相干度
 
 #definition(name: "Complex Degree of Coherence")[
   The normalized first-order correlation of two fields is the *complex degree of coherence*
@@ -1655,12 +1731,12 @@ Perfect coherence ($abs(gamma) = 1$) gives unit visibility; incoherence ($abs(ga
 The fringe phase carries the argument of $gamma$, which encodes the optical path difference.
 
 #note[
-  The degree of coherence is the classical precursor of the first-order correlation function of quantum optics: the Hanbury Brown–Twiss experiments of Chapter 17 measure the second-order analogue, and photon statistics sharpen the classical average into a quantum expectation.
+  The degree of coherence is the classical precursor of the first-order correlation function of quantum optics: the Hanbury Brown–Twiss experiments of #link(<ch:photon-statistics>)[Chapter 17] measure the second-order analogue, and photon statistics sharpen the classical average into a quantum expectation.
 ]
 
 // --- Chapter 10: Diffraction (衍射) ---
 
-= Diffraction // 衍射
+= Diffraction: Approximations and Applications <ch:diffraction> // 衍射：近似与应用
 
 The diffraction integral of Chapter 8 is exact but rarely evaluated in closed form.
 This chapter introduces the two standard approximations — Fresnel (near field) and Fraunhofer (far field) — and applies them to slits, apertures, gratings, and imaging.
@@ -1691,7 +1767,7 @@ The Fresnel integral has no elementary closed form, but it is well tabulated; it
   Blocking every other zone turns the remaining zones into an approximate converging lens: a zone plate focuses light even though it contains no refracting material.
 ]
 
-== Fraunhofer Diffraction: Single Slit and Circular Aperture // 夫琅禾费衍射
+== Fraunhofer Diffraction: The Single Slit // 单缝夫琅禾费衍射
 
 #definition(name: "Fraunhofer Approximation")[
   The *Fraunhofer (far-field) approximation* holds when $z >> a^2 / lambda$, where $a$ is the largest aperture dimension.
@@ -1722,6 +1798,10 @@ The Fourier structure explains everything that follows: the far-field pattern is
   Squaring the modulus gives $I(theta) prop "sinc"^2(k a sin theta / 2)$, hence the stated form with $beta = k a sin theta / 2$.
 ]
 
+== Fraunhofer Diffraction: The Circular Aperture // 圆孔夫琅禾费衍射
+
+The circular aperture is the case of practical importance: every lens, every camera stop, and every telescope objective is one.
+
 #theorem(name: "Fraunhofer Diffraction by a Circular Aperture")[
   A circular aperture of diameter $D$ produces the *Airy pattern*
   $
@@ -1747,6 +1827,8 @@ The Fourier structure explains everything that follows: the far-field pattern is
   Stopping the lens down increases the Airy disc — smaller aperture, worse diffraction resolution.
 ] <ex:airy-disc-diameter>
 
+Single slit, double slit and circular aperture are compared in @fig:fraunhofer-patterns.
+
 #figure(
   image("img/fraunhofer-patterns.svg", width: 100%),
   caption: [Fraunhofer diffraction patterns: single slit (sinc²), double slit (interference modulated by diffraction), and circular aperture (Airy pattern).],
@@ -1755,7 +1837,7 @@ The Fourier structure explains everything that follows: the far-field pattern is
 ) <fig:fraunhofer-patterns>
 
 #note[
-  The double-slit pattern is the product of the two-slit interference term of Chapter 9 and the single-slit diffraction envelope of this section:
+  The double-slit pattern is the product of the two-slit interference term of Chapter 9 and the single-slit diffraction envelope of Section 10.2:
   $
     I(theta) = 4 I_0 cos^2(pi d sin theta / lambda) "sinc"^2(k a sin theta / 2).
   $
@@ -1823,6 +1905,8 @@ The finite size of any aperture sets a fundamental limit on imaging: the image o
   $
 ] <def:abbe-limit>
 
+The three regimes are drawn in @fig:resolution-criterion.
+
 #figure(
   image("img/resolution-criterion.svg", width: 100%),
   caption: [The Rayleigh criterion: two Airy patterns at separations below, equal to, and above $theta_"min"$ — unresolved, just resolved, and resolved.],
@@ -1832,12 +1916,12 @@ The finite size of any aperture sets a fundamental limit on imaging: the image o
 
 #note[
   *Why the limit is fundamental.* The angular-spectrum analysis of Section 4.4 showed that fine spatial detail generates evanescent waves that do not propagate to the far field.
-  The Rayleigh and Abbe criteria are exactly that statement in imaging language: the aperture collects only the propagating components, so detail finer than $lambda / (2 "NA")$ is lost — the wave-optical limit promised in Chapter 7.
+  The Rayleigh and Abbe criteria are exactly that statement in imaging language: the aperture collects only the propagating components, so detail finer than $lambda / (2 "NA")$ is lost — the wave-optical limit promised in #link(<ch:matrix-optics>)[Chapter 7].
 ]
 
 // --- Chapter 11: Fourier Optics (傅里叶光学) ---
 
-= Fourier Optics // 傅里叶光学
+= Fourier Optics <ch:fourier-optics> // 傅里叶光学
 
 Section 10.2 showed that the Fraunhofer pattern is the Fourier transform of the aperture.
 This chapter makes that observation operational: a lens performs the transform optically, and two lenses in a row build a complete filtering system.
@@ -1881,6 +1965,8 @@ The magic of the result is the cancellation: without the lens the Fresnel kernel
   This is the lens analysis promised in Chapter 4, where the angular-spectrum representation is physically implemented by the lens.
 ]
 
+The 2f geometry is drawn in @fig:lens-fourier.
+
 #figure(
   image("img/lens-fourier.svg", width: 90%),
   caption: [The 2f Fourier system: an input placed one focal length in front of the lens produces its Fourier transform in the back focal plane.],
@@ -1895,8 +1981,15 @@ The magic of the result is the cancellation: without the lens the Fresnel kernel
   The far field of the aperture is the Fourier transform of $P$.
 ] <def:pupil-function>
 
-The pupil function unifies the diffraction results of Chapter 10: the single slit, the circular aperture, and every grating are special pupils.
+The pupil function unifies the diffraction results of #link(<ch:diffraction>)[Chapter 10]: the single slit, the circular aperture, and every grating are special pupils.
 An imaging system with pupil $P$ acts as a linear filter on the field, and its impulse response is the Fraunhofer pattern of $P$.
+
+The choice of pupil is therefore the design variable of an imaging system, and two consequences are worth stating.
+
+- *Apodization.* Softening the edge of the pupil — a gradual rather than abrupt taper to zero — suppresses the secondary rings of its Fraunhofer pattern at the price of a slightly wider central lobe.
+- *Aberrations as phase.* A departure from a spherical wavefront enters the pupil as a phase factor $e^(i k W(x, y))$, which is exactly the geometric aberration of #link(<ch:matrix-optics>)[Chapter 7] rewritten in wave language.
+
+The pupil thus carries the whole optical specification of the system: its modulus and its autocorrelation become the transfer functions of Section 11.4.
 
 == Spatial Filtering // 空间滤波
 
@@ -1909,6 +2002,14 @@ A *4f system* chains two Fourier transforms: lens 1 produces the spectrum of the
 ] <ex:4f-spatial-filtering>
 
 The 4f system is the physical image of the statement "multiplication in the frequency domain" that underlies all linear filtering, and it is the basis of optical information processing.
+
+The two illumination regimes must be kept apart, because the same physical filter acts differently in each.
+
+- *Coherent illumination.* The filter multiplies the field spectrum, so the system is linear in amplitude: a stop that removes a spatial frequency deletes that amplitude everywhere in the image.
+- *Incoherent illumination.* Intensities add, the filter acts on the transfer function of Section 11.4, and a stop attenuates the contrast of that frequency instead of deleting it.
+
+The price of the 4f architecture is its length — four focal lengths, two lenses, and a filter that must sit exactly in the focal plane — and its sensitivity to alignment.
+In practice the same operation is increasingly performed digitally on a recorded image.
 
 == PSF, OTF and the Coherent Transfer Function // 点扩散函数与光学传递函数
 
@@ -1934,7 +2035,7 @@ The 4f system is the physical image of the statement "multiplication in the freq
 
 #note[
   The distinction is sharp: coherent imaging is linear in amplitude (CTF = P), incoherent imaging is linear in intensity (OTF = |P| ⊛ |P|, the autocorrelation of the pupil).
-  The Abbe limit of Section 10.4 is the support of the CTF: spatial frequencies beyond the pupil support are simply cut off.
+  The Abbe limit of Section 10.5 is the support of the CTF: spatial frequencies beyond the pupil support are simply cut off.
 ]
 
 == Holography // 全息 [简要]
@@ -1949,12 +2050,123 @@ The 4f system is the physical image of the statement "multiplication in the freq
   Reconstructing the wavefront makes the holographic image three-dimensional: moving one's viewpoint reveals parallax, exactly as for the original object.
 ]
 
-// --- Chapter 12: Polarization (偏振) ---
+// --- Chapter 12: Propagation in Media (介质中的传播) ---
 
-= Polarization // 偏振
+= Propagation in Media <ch:propagation-media> // 介质中的传播
+
+So far the medium entered through a given refractive index $n$.
+This chapter asks where $n$ comes from: light drives the charges of the medium, and the driven response — dispersive, absorptive, causal, scattering — is the material side of wave optics.
+It redeems the promise of #link(<ch:matrix-optics>)[Chapter 7] that the wavelength dependence $n(lambda)$ belongs here.
+With the material response in place, the closing chapter of Part III restores what the scalar theory suppressed: the vector character of the field.
+
+== Dispersion and Absorption // 色散与吸收
+
+#definition(name: "Lorentz Oscillator Model")[
+  In the *Lorentz oscillator model*, each electron is a damped harmonic oscillator driven by the electric field:
+  $
+    dot.double(x) + gamma dot(x) + omega_0^2 x = q/m E_0 e^(- i omega t),
+  $
+  with damping rate $gamma$ and resonance frequency $omega_0$.
+  The induced polarization gives the dielectric function
+  $
+    epsilon(omega) = 1 + (N q^2) / (epsilon_0 m) dot 1 / (omega_0^2 - omega^2 - i gamma omega),
+  $
+  where $N$ is the number density of oscillators.
+] <def:lorentz-oscillator>
+
+#definition(name: "Complex Refractive Index")[
+  The *complex refractive index* is
+  $
+    tilde(n)(omega) = n + i kappa = sqrt(epsilon(omega)),
+  $
+  with real part $n$ governing phase velocity and imaginary part $kappa$ (the extinction coefficient) governing absorption.
+  A wave attenuates as $e^(- kappa k_0 z)$.
+] <def:complex-refractive-index>
+
+The resulting $n(omega)$ is plotted in @fig:dispersion-curves.
+
+#figure(
+  image("img/dispersion-curves.svg", width: 100%),
+  caption: [Refractive index $n(omega)$ near a single resonance: normal dispersion far from resonance, anomalous dispersion within the absorption band.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:dispersion-curves>
+
+#note[
+  *Normal vs anomalous dispersion.* Far from resonance, $n(omega)$ increases with frequency (normal dispersion, familiar from prism spectra, Section 7.2).
+  Inside the absorption band the real part *decreases* with frequency — anomalous dispersion — and absorption is strongest.
+  The damping $gamma$ is what makes $epsilon$ complex and couples the two effects.
+]
+
+== Kramers-Kronig Relations // Kramers-Kronig 关系
+
+#theorem(name: "Kramers-Kronig Relations")[
+  Causality — the response at time $t$ depends only on the field at earlier times — forces the real and imaginary parts of the susceptibility to be linked:
+  $
+    chi_1(omega) = 2/pi cal(P) integral_0^oo (omega' chi_2(omega')) / (omega'^2 - omega^2) dif omega',
+  $
+  $
+    chi_2(omega) = - 2/pi cal(P) integral_0^oo (omega chi_1(omega')) / (omega'^2 - omega^2) dif omega',
+  $
+  where $cal(P)$ denotes the Cauchy principal value.
+] <thm:kramers-kronig>
+
+#proof[
+  *Step 1 — Analyticity.*
+  Causality makes the susceptibility $chi(omega)$ analytic in the upper half-plane: the Fourier transform of a retarded response has no poles for $"Im"(omega) > 0$.
+
+  *Step 2 — Contour integration.*
+  Integrate $chi(omega') / (omega' - omega)$ over a large semicircle in the upper half-plane, indented around the pole on the real axis.
+  The analyticity plus the decay of $chi$ at infinity leaves only the principal-value integral and the residue.
+
+  *Step 3 — Take real and imaginary parts.*
+  Separating $chi = chi_1 + i chi_2$ in the resulting identity yields the two dispersion relations.
+]
+
+#note[
+  The Kramers-Kronig relations are the physics statement of the general principle that real and imaginary parts of a causal linear response cannot be chosen independently: measure absorption at all frequencies and the refractive index is determined, and vice versa.
+]
+
+== Rayleigh and Mie Scattering // 瑞利与米氏散射
+
+#law(name: "Rayleigh Scattering")[
+  A small particle (size $d << lambda$) illuminated by light of wavelength $lambda$ scatters with cross section
+  $
+    sigma_R prop (d^6) / (lambda^4),
+  $
+  i.e., $sigma_R prop omega^4$.
+  Short wavelengths are scattered far more strongly than long ones.
+] <law:rayleigh-scattering>
+
+#example(name: "Why the Sky Is Blue")[ // 天空为什么是蓝的
+  Sunlight passes through the atmosphere; molecules scatter blue light ($lambda approx 450 "nm"$) roughly $(700 / 450)^4 approx 6$ times more strongly than red light ($lambda approx 700 "nm"$).
+  Scattered light reaching the eye from all directions is therefore blue; the transmitted sunlight, depleted of blue, appears red at sunset.
+] <ex:sky-color>
+
+#definition(name: "Mie Scattering")[
+  When the particle size is comparable to the wavelength ($d ~ lambda$), scattering enters the *Mie regime*: the cross section oscillates with size and becomes weakly wavelength-dependent, with pronounced forward scattering.
+] <def:mie-scattering>
+
+The $lambda^(-4)$ dependence is plotted in @fig:rayleigh-scattering.
+
+#figure(
+  image("img/rayleigh-scattering.svg", width: 70%),
+  caption: [Rayleigh scattering strength versus wavelength: the $lambda^(-4)$ law suppresses long wavelengths relative to short ones.],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:rayleigh-scattering>
+
+#note[
+  Rayleigh scattering by air is why the sky is blue; Mie scattering by water droplets and aerosols is why clouds and milk are white — comparable particle sizes scatter all wavelengths equally.
+  This closes the scalar account of propagation: the Helmholtz equation, diffraction, interference and Fourier optics now have their material side. The vector structure of the field is restored in the next chapter, which closes Part III.
+]
+
+// --- Chapter 13: Polarization (偏振) ---
+
+= Polarization <ch:polarization> // 偏振
 
 So far the field was scalar. Light, however, is a vector field, and its transverse structure is the polarization.
-This chapter returns to the vector character promised in Chapter 4, describes polarization states by two compact algebras — Jones (2 × 2, coherent) and Mueller (4 × 4, incoherent) — and studies how matter modifies them.
+This chapter returns to the vector character promised in #link(<ch:helmholtz>)[Chapter 4], describes polarization states by two compact algebras — Jones (2 × 2, coherent) and Mueller (4 × 4, incoherent) — and studies how matter modifies them.
 
 == Polarization States of Light // 光的偏振态
 
@@ -1972,6 +2184,8 @@ Writing $E_y / E_x = tan chi e^(i delta)$, the tip of the field vector traces an
 - $delta = 0$ or $pi$: *linear polarization*;
 - $delta = ± pi / 2$ with $chi = pi / 4$: *circular polarization* (right or left);
 - otherwise: *elliptical polarization*.
+
+The three cases are drawn in @fig:polarization-ellipse.
 
 #figure(
   image("img/polarization-ellipse.svg", width: 100%),
@@ -2099,121 +2313,20 @@ $
   Its quantum counterpart, the coupling of photon helicity to chiral matter, returns in Part IV alongside the polarization states of single photons.
 ]
 
-// --- Chapter 13: Propagation in Media (介质中的传播) ---
-
-= Propagation in Media // 介质中的传播
-
-So far the medium entered through a given refractive index $n$.
-This final chapter of Part III asks where $n$ comes from: light drives the charges of the medium, and the driven response — dispersive, absorptive, causal, scattering — is the material side of wave optics.
-It redeems the promise of Chapter 7 that the wavelength dependence $n(lambda)$ belongs here.
-
-== Dispersion and Absorption // 色散与吸收
-
-#definition(name: "Lorentz Oscillator Model")[
-  In the *Lorentz oscillator model*, each electron is a damped harmonic oscillator driven by the electric field:
-  $
-    dot.double(x) + gamma dot(x) + omega_0^2 x = q/m E_0 e^(- i omega t),
-  $
-  with damping rate $gamma$ and resonance frequency $omega_0$.
-  The induced polarization gives the dielectric function
-  $
-    epsilon(omega) = 1 + (N q^2) / (epsilon_0 m) dot 1 / (omega_0^2 - omega^2 - i gamma omega),
-  $
-  where $N$ is the number density of oscillators.
-] <def:lorentz-oscillator>
-
-#definition(name: "Complex Refractive Index")[
-  The *complex refractive index* is
-  $
-    tilde(n)(omega) = n + i kappa = sqrt(epsilon(omega)),
-  $
-  with real part $n$ governing phase velocity and imaginary part $kappa$ (the extinction coefficient) governing absorption.
-  A wave attenuates as $e^(- kappa k_0 z)$.
-] <def:complex-refractive-index>
-
-#figure(
-  image("img/dispersion-curves.svg", width: 100%),
-  caption: [Refractive index $n(omega)$ near a single resonance: normal dispersion far from resonance, anomalous dispersion within the absorption band.],
-  placement: auto,
-  supplement: [Fig.]
-) <fig:dispersion-curves>
-
-#note[
-  *Normal vs anomalous dispersion.* Far from resonance, $n(omega)$ increases with frequency (normal dispersion, familiar from prism spectra, Section 7.2).
-  Inside the absorption band the real part *decreases* with frequency — anomalous dispersion — and absorption is strongest.
-  The damping $gamma$ is what makes $epsilon$ complex and couples the two effects.
-]
-
-== Kramers-Kronig Relations // Kramers-Kronig 关系
-
-#theorem(name: "Kramers-Kronig Relations")[
-  Causality — the response at time $t$ depends only on the field at earlier times — forces the real and imaginary parts of the susceptibility to be linked:
-  $
-    chi_1(omega) = 2/pi cal(P) integral_0^oo (omega' chi_2(omega')) / (omega'^2 - omega^2) dif omega',
-  $
-  $
-    chi_2(omega) = - 2/pi cal(P) integral_0^oo (omega chi_1(omega')) / (omega'^2 - omega^2) dif omega',
-  $
-  where $cal(P)$ denotes the Cauchy principal value.
-] <thm:kramers-kronig>
-
-#proof[
-  *Step 1 — Analyticity.*
-  Causality makes the susceptibility $chi(omega)$ analytic in the upper half-plane: the Fourier transform of a retarded response has no poles for $"Im"(omega) > 0$.
-
-  *Step 2 — Contour integration.*
-  Integrate $chi(omega') / (omega' - omega)$ over a large semicircle in the upper half-plane, indented around the pole on the real axis.
-  The analyticity plus the decay of $chi$ at infinity leaves only the principal-value integral and the residue.
-
-  *Step 3 — Take real and imaginary parts.*
-  Separating $chi = chi_1 + i chi_2$ in the resulting identity yields the two dispersion relations.
-]
-
-#note[
-  The Kramers-Kronig relations are the physics statement of the general principle that real and imaginary parts of a causal linear response cannot be chosen independently: measure absorption at all frequencies and the refractive index is determined, and vice versa.
-]
-
-== Rayleigh and Mie Scattering // 瑞利与米氏散射
-
-#law(name: "Rayleigh Scattering")[
-  A small particle (size $d << lambda$) illuminated by light of wavelength $lambda$ scatters with cross section
-  $
-    sigma_R prop (d^6) / (lambda^4),
-  $
-  i.e., $sigma_R prop omega^4$.
-  Short wavelengths are scattered far more strongly than long ones.
-] <law:rayleigh-scattering>
-
-#example(name: "Why the Sky Is Blue")[ // 天空为什么是蓝的
-  Sunlight passes through the atmosphere; molecules scatter blue light ($lambda approx 450 "nm"$) roughly $(700 / 450)^4 approx 6$ times more strongly than red light ($lambda approx 700 "nm"$).
-  Scattered light reaching the eye from all directions is therefore blue; the transmitted sunlight, depleted of blue, appears red at sunset.
-] <ex:sky-color>
-
-#definition(name: "Mie Scattering")[
-  When the particle size is comparable to the wavelength ($d ~ lambda$), scattering enters the *Mie regime*: the cross section oscillates with size and becomes weakly wavelength-dependent, with pronounced forward scattering.
-] <def:mie-scattering>
-
-#figure(
-  image("img/rayleigh-scattering.svg", width: 70%),
-  caption: [Rayleigh scattering strength versus wavelength: the $lambda^(-4)$ law suppresses long wavelengths relative to short ones.],
-  placement: auto,
-  supplement: [Fig.]
-) <fig:rayleigh-scattering>
-
-#note[
-  Rayleigh scattering by air is why the sky is blue; Mie scattering by water droplets and aerosols is why clouds and milk are white — comparable particle sizes scatter all wavelengths equally.
-  This closes Part III: from the Helmholtz equation through diffraction, interference, Fourier optics, polarization, to the material response, the scalar wave theory of optics is complete, and the quantum theory of light (Part IV) begins.
-]
+This closes Part III.
+From the Helmholtz equation through diffraction, interference, Fourier optics and the material response, the scalar wave theory is complete; with the vector character restored, the field is ready to be quantized in Part IV.
 
 #part("Quantum Optics") // 量子光学
 
 // --- Chapter 14: Old Quantum Theory of Light (光的旧量子论) ---
 
-= Old Quantum Theory of Light // 光的旧量子论
+= Old Quantum Theory of Light <ch:old-quantum> // 光的旧量子论
 
 Part III treated light as a classical wave field.
 Between 1900 and 1925, three experiments forced the conclusion that light exchanges energy with matter in quantized packets $h nu$: blackbody radiation, the photoelectric effect, and Compton scattering.
 This bridging chapter establishes the particle side of light; Chapter 15 shows how the quantized field reconciles it with the wave picture.
+
+Part IV (Chapters 14–19) proceeds from that bridge through the quantized field (Chapter 15), its states and phase space (Chapter 16), photon statistics (Chapter 17), light–matter interaction (Chapter 18), and the applications that follow from them (Chapter 19).
 
 == Blackbody Radiation and Planck's Law // 黑体辐射与普朗克定律
 
@@ -2245,6 +2358,8 @@ $
   *The ultraviolet catastrophe.* The Rayleigh–Jeans law diverges as $nu -> oo$ — the classical prediction that every hot body emits infinite energy at high frequency.
   The quantization $epsilon_n = n h nu$ cuts the high-frequency contribution off exponentially and removes the divergence.
 ]
+
+Planck's law and its two limits are plotted in @fig:planck-spectrum.
 
 #figure(
   image("img/planck-spectrum.svg", width: 100%),
@@ -2337,7 +2452,7 @@ X-rays scattered by free electrons emerge with a longer wavelength, the shift gr
 
 // --- Chapter 15: Quantization of the Electromagnetic Field (电磁场量子化) ---
 
-= Quantization of the Electromagnetic Field // 电磁场量子化
+= Quantization of the Electromagnetic Field <ch:field-quantization> // 电磁场量子化
 
 Einstein's photon carries the energy quantum $h nu$, yet interference and diffraction (Part III) demand a wave field.
 The resolution is to quantize the field itself: every field mode is a harmonic oscillator, and photons are the excitation quanta of these oscillators.
@@ -2385,8 +2500,14 @@ $
   $
 ] <def:ladder-operators>
 
+#definition(name: "Number Operator")[
+  The *number operator* of the mode is $hat(N) = hat(a)^dagger hat(a)$.
+] <def:number-operator>
+
+The number operator is Hermitian and counts the quanta of the mode: its eigenstates $| n ⟩$, with $n = 0, 1, 2, dots$, are the photon-number states of Section 15.3.
+
 #theorem(name: "Quantization of the Field Hamiltonian")[
-  In terms of the number operator $hat(N) = hat(a)^dagger hat(a)$, the field Hamiltonian is
+  In terms of #link(<def:number-operator>)[the number operator], the field Hamiltonian is
   $
     hat(H) = planck omega (hat(N) + 1/2).
   $
@@ -2443,12 +2564,12 @@ $
   *Vacuum fluctuations.*
   The vacuum expectation of the field vanishes, $⟨ 0 | hat(bold(E)) | 0 ⟩ = 0$, but its square does not: $⟨ 0 | hat(bold(E))^2 | 0 ⟩ != 0$.
   The empty field therefore exhibits fluctuating fields of zero mean — the physical origin of spontaneous emission (Chapter 18) and of the Casimir force between conducting plates.
-  The polarization states of Chapter 12 become, in this language, superpositions of the two Fock modes of orthogonal polarization — the Bloch-sphere picture promised in Chapter 12, and the photon helicity of Section 12.6 is the circular-polarization superposition of the same modes.
+  The polarization states of #link(<ch:polarization>)[Chapter 13] become, in this language, superpositions of the two Fock modes of orthogonal polarization — the Bloch-sphere picture promised in #link(<ch:polarization>)[Chapter 13], and the photon helicity of Section 13.6 is the circular-polarization superposition of the same modes.
 ]
 
 // --- Chapter 16: Coherent and Squeezed States (相干态与压缩态) ---
 
-= Coherent and Squeezed States // 相干态与压缩态
+= Coherent and Squeezed States <ch:coherent-states> // 相干态与压缩态
 
 The number states of Chapter 15 have a definite photon number but an ill-defined phase.
 A laser, however, produces a field with a stable classical amplitude and phase.
@@ -2542,6 +2663,8 @@ The Glauber coherent states — eigenstates of the annihilation operator — are
   Since a genuine classical probability must be nonnegative, negative values of $W$ certify nonclassical light — the quantum feature probed in homodyne tomography.
 ]
 
+Coherent and number states are compared in phase space in @fig:wigner-function.
+
 #figure(
   image("img/wigner-function.svg", width: 100%),
   caption: [Wigner functions: a coherent state (smooth Gaussian hump) versus a single-photon Fock state (negative dip at the origin).],
@@ -2551,7 +2674,7 @@ The Glauber coherent states — eigenstates of the annihilation operator — are
 
 // --- Chapter 17: Photon Statistics and Correlation Functions (光子统计与关联函数) ---
 
-= Photon Statistics and Correlation Functions // 光子统计与关联函数
+= Photon Statistics and Correlation Functions <ch:photon-statistics> // 光子统计与关联函数
 
 Chapters 15 and 16 built the quantum states of the field; measurement reveals them through photon statistics and correlation functions.
 The first-order correlation governs interference (the quantum version of the coherence degree of Chapter 9); the second-order correlation probes intensity correlations and separates classical from quantum light.
@@ -2582,18 +2705,22 @@ The first-order correlation governs interference (the quantum version of the coh
 
 == First- and Second-Order Correlation Functions // 一、二阶关联函数
 
-#definition(name: "Correlation Functions")[
-  The normalized *first-order* and *second-order* correlation functions are
+#definition(name: "First-Order Correlation Function")[
+  The normalized *first-order* correlation function is
   $
-    g^((1))(tau) = (⟨ hat(a)^dagger (t) hat(a) (t + tau) ⟩) / (⟨ hat(a)^dagger hat(a) ⟩),
+    g^((1))(tau) = (⟨ hat(a)^dagger (t) hat(a) (t + tau) ⟩) / (⟨ hat(a)^dagger hat(a) ⟩).
   $
+] <def:first-order-correlation>
+
+#definition(name: "Second-Order Correlation Function")[
+  The normalized *second-order* correlation function is
   $
     g^((2))(tau) = (⟨ hat(a)^dagger (t) hat(a)^dagger (t + tau) hat(a) (t + tau) hat(a) (t) ⟩) / (⟨ hat(a)^dagger hat(a) ⟩^2).
   $
 ] <def:second-order-correlation>
 
 #note[
-  The first-order function is the quantum version of the complex degree of coherence of Chapter 9: its modulus $abs(g^((1))(tau))$ equals the fringe visibility in an interferometer.
+  The first-order function is the quantum version of #link(<def:complex-coherence-degree>)[the complex degree of coherence] of #link(<ch:interference>)[Chapter 9]: its modulus $abs(g^((1))(tau))$ equals the fringe visibility in an interferometer.
   The second-order function measures the joint probability of detecting photons separated by $tau$ — insensitive to phase, but decisive for photon statistics.
 ]
 
@@ -2625,6 +2752,8 @@ The first-order correlation governs interference (the quantum version of the coh
   The bunching peak decays to $g^((2))(tau) = 1$ over the coherence time $tau_c$ of Chapter 9.
 ] <thm:hbt-thermal>
 
+The apparatus and the corresponding $g^((2))(tau)$ are drawn in @fig:hbt-experiment.
+
 #figure(
   image("img/hbt-experiment.svg", width: 100%),
   caption: [Hanbury Brown–Twiss setup (beam splitter, two detectors, coincidence counter) and the bunching peak $g^((2))(tau)$ of thermal light.],
@@ -2654,7 +2783,7 @@ The first-order correlation governs interference (the quantum version of the coh
 
 // --- Chapter 18: Light-Matter Interaction (光与物质相互作用) ---
 
-= Light-Matter Interaction // 光与物质相互作用
+= Light-Matter Interaction <ch:light-matter> // 光与物质相互作用
 
 This chapter couples the quantized field (Chapter 15) to atoms.
 Absorption and stimulated emission follow from a semiclassical treatment; spontaneous emission — an atom radiating with no driving field at all — requires the quantized vacuum, whose fluctuations (Section 15.4) stimulate the decay.
@@ -2695,6 +2824,15 @@ The Jaynes–Cummings model is the simplest exactly solvable atom-field system, 
   A resonant pulse of area $Omega_0 t = pi$ transfers the atom from $| g ⟩$ to $| e ⟩$ with unit probability; a $pi/2$-pulse places it in the superposition $(| g ⟩ + | e ⟩) / sqrt(2)$.
 ] <ex:rabi-flopping>
 
+Both regimes of the example are drawn in @fig:rabi-oscillation: on resonance the population is fully inverted and returns periodically, while a detuning leaves part of the population behind at every period.
+
+#figure(
+  image("img/rabi-oscillation.svg", width: 90%),
+  caption: [Rabi oscillations: excitation probability $P_e (t)$ on resonance (full transfer) and at finite detuning (incomplete transfer at the generalized Rabi frequency $Omega$).],
+  placement: auto,
+  supplement: [Fig.]
+) <fig:rabi-oscillation>
+
 == Spontaneous Emission: Wigner-Weisskopf Theory // 自发辐射
 
 An excited atom in otherwise empty space decays, emitting a photon — even though no classical field drives it.
@@ -2721,7 +2859,7 @@ The decay is stimulated by the vacuum fluctuations of Section 15.4.
 ]
 
 #note[
-  The quantum rate $Gamma$ is the field-quantized version of the classical Lorentz linewidth of Chapter 13: the damping $gamma$ of the Lorentz oscillator is the same physics — radiation reaction — seen semiclassically.
+  The quantum rate $Gamma$ is the field-quantized version of the classical Lorentz linewidth of #link(<ch:propagation-media>)[Chapter 12]: the damping $gamma$ of the Lorentz oscillator is the same physics — radiation reaction — seen semiclassically.
 ]
 
 == The Jaynes-Cummings Model // Jaynes-Cummings 模型
@@ -2762,7 +2900,7 @@ The decay is stimulated by the vacuum fluctuations of Section 15.4.
 
 // --- Chapter 19: Applications and Frontiers (应用与前沿) ---
 
-= Applications and Frontiers // 应用与前沿
+= Applications and Frontiers <ch:applications> // 应用与前沿
 
 This concluding chapter is an introduction: it shows how the tools of Part IV become technology — lasers, quantum cryptography, entanglement — and marks the frontiers.
 Each section is deliberately brief and points beyond this notebook.
@@ -2795,7 +2933,7 @@ Each section is deliberately brief and points beyond this notebook.
 ] <ex:bb84-protocol>
 
 #note[
-  QKD uses exactly the polarization states of Chapter 12 and the single-photon sources of Chapter 17: it is quantum optics made into cryptography.
+  QKD uses exactly the polarization states of #link(<ch:polarization>)[Chapter 13] and the single-photon sources of Chapter 17: it is quantum optics made into cryptography.
 ]
 
 == Photon Entanglement and Bell Tests // 光子纠缠与贝尔检验
@@ -2818,7 +2956,7 @@ Each section is deliberately brief and points beyond this notebook.
 ] <thm:bell-inequality>
 
 #example(name: "Bell Test")[ // 贝尔检验
-  Entangled photon pairs produced by spontaneous parametric down-conversion are sent to two distant detectors; rotating the polarization analyzers (Chapter 12) and accumulating coincidences yields $S approx 2.4$, violating the local bound and confirming entanglement.
+  Entangled photon pairs produced by spontaneous parametric down-conversion are sent to two distant detectors; rotating the polarization analyzers (#link(<ch:polarization>)[Chapter 13]) and accumulating coincidences yields $S approx 2.4$, violating the local bound and confirming entanglement.
 ] <ex:bell-test>
 
 == Spontaneous Parametric Down-Conversion // 自发参量下转换

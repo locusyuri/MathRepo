@@ -1,7 +1,9 @@
 # Optique — Part III Wave Optics (波动光学) 写作大纲
 
-> 状态：大纲已定稿（2026-10-15）。决策记录：① 维持蓝图"理论框架先行"顺序（Born & Wolf 式）；
-> ② Ch 11 傅里叶光学完整 5 节；③ 配图 8 张核心（A 级），B 级图不制作。
+> 状态：大纲已定稿（2026-10-15），正文已按 2026-10-21 审查意见修订。决策记录：① 维持蓝图"理论框架先行"顺序（Born & Wolf 式）；
+> ② Ch 11 傅里叶光学完整 5 节；③ 配图 8 张核心（A 级），B 级图不制作；
+> ④ Ch 10 拆为 5 节（单缝 / 圆孔 / 光栅 / 分辨极限），Ch 12 与 Ch 13 互换，Part III 以"矢量性回归"收束；
+> ⑤ Ch 8 改为"格林函数先于衍射积分"。
 > 前置：Part I（Ch 1-4 时谐场/亥姆霍兹/角谱）、Part II（Ch 5-7 几何光学）已写入并编译通过。
 
 ## 零、Part 定位与核心洞察
@@ -10,38 +12,38 @@
   依次展开干涉与相干（Ch 9）、衍射应用（Ch 10）、傅里叶光学（Ch 11）、偏振（Ch 12）、介质传播（Ch 13）。
 - **核心洞察**：衍射积分的三个渐近层——格林函数精确解（Ch 8）→ 菲涅耳/夫琅禾费近似（Ch 10）→
   透镜实现的傅里叶变换（Ch 11）——是同一条数学链；干涉是其特例，分辨极限是必然推论，偏振是矢量性的回归。
-- **预估规模**：~1900–2200 行，6 章 28 节，约 66 个新标签，8 张配图。
+- **实际规模**：932 行（Part III 正文），6 章 29 节，56 个标签，8 张配图。
 
 ## 一、章节结构与定位
 
 | 章 | 标题 | 节数 | 角色 |
 |---|---|---|---|
-| Ch 8 | Scalar Diffraction Theory // 标量衍射理论 | 4 | 统一理论框架（格林函数求解 Helmholtz 边值） |
+| Ch 8 | Scalar Diffraction Theory // 标量衍射理论 | 4 | 统一理论框架（格林函数先行，再推衍射积分） |
 | Ch 9 | Interference and Coherence // 干涉与相干性 | 6 | 两束/多束叠加 → 统计相干 |
-| Ch 10 | Diffraction // 衍射 | 4 | 衍射积分的菲涅耳/夫琅禾费近似与应用 |
+| Ch 10 | Diffraction: Approximations and Applications // 衍射：近似与应用 | 5 | 菲涅耳/夫琅禾费近似与应用 |
 | Ch 11 | Fourier Optics // 傅里叶光学 | 5 | 透镜=光学傅里叶变换器，空间滤波系统 |
-| Ch 12 | Polarization // 偏振 | 6 | 标量→矢量回归，琼斯/缪勒代数 |
-| Ch 13 | Propagation in Media // 介质中的传播 | 3+可选 | 色散/吸收、因果性、散射 |
+| Ch 12 | Propagation in Media // 介质中的传播 | 3 | 色散/吸收、因果性、散射 |
+| Ch 13 | Polarization // 偏振 | 6 | 标量→矢量回归，琼斯/缪勒代数（Part III 收束） |
 
-## 二、组件频率预估
+## 二、组件频率（全书实况，2026-10-21 统计）
 
 | 组件 | 数量 |
 |---|---|
-| `#definition` | 27 |
-| `#theorem` | 8 |
-| `#law` | 2 |
-| `#example` | 10 |
-| `#figure` | 8 |
-| `#note` | ~14 |
+| `#definition` | 82 |
+| `#theorem` | 24（其中 18 条带 `#proof`） |
+| `#law` | 6 |
+| `#example` | 28 |
+| `#figure` | 21（Part III 占 8 张） |
+| `#note` | 63 |
 
 ## 三、标签系统（写作清单）
 
 ### Ch 8
-- `def:scalar-field`（标量近似/边界条件，回链 `@def:helmholtz`）
+- `def:scalar-field`（标量近似/边界条件，回链 `def:helmholtz`）
 - `def:huygens-fresnel`（惠更斯-菲涅耳原理）
+- `def:green-diffraction`（自由空间格林函数，8.3 先行，兑现 Ch 5.5 倏逝波）
 - `thm:kirchhoff-integral`（基尔霍夫积分，格林第二恒等式证明）
 - `thm:rayleigh-sommerfeld`（RS 积分，镜像格林函数证明）
-- `def:green-diffraction`（自由空间格林函数，兑现 Ch 5.5 倏逝波）
 - `eq:kirchhoff`、`eq:rs`、`eq:green-freespace`
 - `fig:huygens-fresnel`（A 级）
 
@@ -72,6 +74,12 @@
 - `fig:lens-fourier`（A 级）
 
 ### Ch 12
+- `def:lorentz-oscillator`、`def:complex-refractive-index` + `eq:lorentz-dielectric`（兑现 Ch 7.2）
+- `thm:kramers-kronig` + `eq:kk`（因果性 + 上半平面解析性）
+- `law:rayleigh-scattering` + `eq:rayleigh-cross-section`、`def:mie-scattering`、`ex:sky-color`
+- `fig:dispersion-curves`、`fig:rayleigh-scattering`（A 级）
+
+### Ch 13
 - `def:polarization-state`（兑现 Ch 4.3 矢量性回归）
 - `def:jones-vector`、`def:jones-matrix` + `eq:jones-propagation`
 - `def:stokes-parameters`、`def:mueller-matrix` + `eq:stokes`
@@ -81,36 +89,32 @@
 - `def:optical-activity`（简要，埋线 → Part IV Ch 15/16）
 - `fig:polarization-ellipse`（A 级）
 
-### Ch 13
-- `def:lorentz-oscillator`、`def:complex-refractive-index` + `eq:lorentz-dielectric`（兑现 Ch 7.2）
-- `thm:kramers-kronig` + `eq:kk`（因果性 + 上半平面解析性；超重则降级 note）
-- `law:rayleigh-scattering` + `eq:rayleigh-cross-section`、`def:mie-scattering`、`ex:sky-color`
-- `fig:dispersion-curves`（A 级）
-
 ## 四、逻辑链路
 
 ```
-Ch 4 亥姆霍兹+角谱 ──► Ch 8 格林函数衍射积分 ──► Ch 9 干涉/相干 ──► Ch 10 菲涅耳/夫琅禾费
+Ch 4 亥姆霍兹+角谱 ──► Ch 8 格林函数→衍射积分 ──► Ch 9 干涉/相干 ──► Ch 10 菲涅耳/夫琅禾费
         ▲                                                          │
         └──────────── Ch 11 透镜=FT ◄───────── 夫琅禾费(孔径FT) ────┘
-        │                                            │
-        └──── Ch 12 偏振（矢量回归）        Ch 13 介质传播（回指 Ch 3 色散/群速）
-        │                                            │
-        └──── Part IV：相干态/关联函数（Ch 17 兑现 Ch 9 埋线）
+                                                                    │
+                                                     Ch 12 介质传播（回指 Ch 3 色散/群速）
+                                                                    │
+                                                     Ch 13 偏振（矢量回归，收束 Part III）
+                                                                    │
+                                     Part IV：相干态/关联函数（Ch 17 兑现 Ch 9 埋线）
 ```
 
 ## 五、承诺追踪
 
 | 类型 | 位置 | 内容 | 处理 |
 |---|---|---|---|
-| 兑现 | Ch 4 | 衍射积分 = 角谱的远场评估 | Ch 8.4 |
-| 兑现 | Ch 4.4 | 倏逝波区分重现于 Ch 10/11 | Ch 10.4 + Ch 11.4 |
-| 兑现 | Ch 5.5 | 倏逝波全波描述回到 Part III | Ch 8.4 |
-| 兑现 | Ch 7.2 | 色散 n(λ) 属于 Part III | Ch 13.1 |
-| 兑现 | Ch 7.3 | 衍射极限在 Ch 10 发展 | Ch 10.4 |
-| 兑现 | Ch 7.5 | 光纤模式属 Part III | Ch 8（圆柱对称 Helmholtz note） |
-| 兑现 | Ch 4.3 | 矢量性在 Ch 12 回归 | Ch 12.1 |
-| 埋下 | Ch 9.5 / 12.6 | 相干函数/偏振量子态 → Part IV | Ch 17 / Ch 15 |
+| 兑现 | Ch 4 | 衍射积分 = 角谱的远场评估 | Ch 8.3 + Ch 8.4 |
+| 兑现 | Ch 4.4 | 倏逝波区分重现于 Ch 10/11 | Ch 10.5 + Ch 11.4 |
+| 兑现 | Ch 5.5 | 倏逝波全波描述回到 Part III | Ch 8.3 |
+| 兑现 | Ch 7.2 | 色散 n(λ) 属于 Part III | Ch 12.1 |
+| 兑现 | Ch 7.3 | 衍射极限在 Ch 10 发展 | Ch 10.5 |
+| 兑现 | Ch 7.5 | 光纤模式属 Part III | Ch 8.3（圆柱对称 note） |
+| 兑现 | Ch 4.3 | 矢量性在 Ch 13 回归 | Ch 13.1 |
+| 埋下 | Ch 9.5 / 13.6 | 相干函数/偏振量子态 → Part IV | Ch 17 / Ch 15 |
 
 ## 六、证明策略
 
@@ -142,12 +146,13 @@ Ch 4 亥姆霍兹+角谱 ──► Ch 8 格林函数衍射积分 ──► Ch 9 
 | lens-fourier.svg | `fig:lens-fourier` | 2f 系统傅里叶变换 | A |
 | polarization-ellipse.svg | `fig:polarization-ellipse` | 偏振椭圆（相位差 0/π/2 演变） | A |
 | dispersion-curves.svg | `fig:dispersion-curves` | 正常/反常色散 n(ω) | A |
+| rayleigh-scattering.svg | `fig:rayleigh-scattering` | λ⁻⁴ 散射强度随波长变化 | A |
 
-（第 8 张由 Ch 9/10 写作时按需补定；B 级 fabry-perot、spatial-filtering、poincare-sphere、rayleigh-scattering 不制作。）
+（B 级 fabry-perot、spatial-filtering、poincare-sphere 不制作。）
 
 ## 九、写作顺序
 
-Ch 8 → 9 → 10 → 11 → 12 → 13；章内"定义 → 定理 → 例题 → note"，每写完 1–2 节编译一次。
+Ch 8 → 9 → 10 → 11 → 12（介质）→ 13（偏振）；章内"定义 → 定理 → 例题 → note"，每写完 1–2 节编译一次。
 完成后：更新蓝图注释（Part III 设计思路 + Structure Note 标注"正文已写入"）→ 逐页 PDF 预览 → 提交。
 
 ---
@@ -157,7 +162,8 @@ Ch 8 → 9 → 10 → 11 → 12 → 13；章内"定义 → 定理 → 例题 →
 > 状态：大纲已定稿（2026-10-15）。决策记录：① Ch 15 场量子化取**单模完整推导 + 多模简述**（连续场
 > 量子场论式推导不做，避免与 Mécanique quantique 重复）；② Ch 18.4 半经典激光理论**保留精简版**
 > （速率方程 + 阈值条件，支撑 Ch 19.1 激光器）；③ 配图 **4 张 A 级核心图**，B 级不制作。
-> 前置：Part I-III 全部写入并编译通过；Mécanique quantique（希尔伯特空间/算符/谐振子）提供形式体系。
+> 前置：Part I-III 全部写入并编译通过；Mécanique quantique（希尔伯特空间/算符/谐振子）提供形式体系
+> （该笔记目前为空壳，故 Part IV 在 15.2 自足引入算符与对易子，不依赖其正文）。
 
 ## 零、Part 定位与核心洞察
 
@@ -167,7 +173,7 @@ Ch 8 → 9 → 10 → 11 → 12 → 13；章内"定义 → 定理 → 例题 →
 - **核心洞察**：经典波动光学（Part III）量子化后成为自洽图像——每个场模是一个谐振子（Ch 15）；
   相干态是量子场中最接近经典波的状态（Ch 16）；一阶关联是干涉、二阶关联是强度统计，g⁽²⁾ 区分
   经典光与量子光（Ch 17）；自发辐射不是原子的内禀过程而是真空场的受激发射（Ch 18）。
-- **预估规模**：~1400–1700 行，6 章 24 节，约 30 个新标签，4 张配图。
+- **实际规模**：656 行，6 章 24 节，4 张配图（`planck-spectrum`、`wigner-function`、`hbt-experiment`、`rabi-oscillation`）。
 
 ## 一、章节结构与定位
 
@@ -182,14 +188,14 @@ Ch 8 → 9 → 10 → 11 → 12 → 13；章内"定义 → 定理 → 例题 →
 
 ## 二、组件频率预估
 
-| 组件 | 数量 |
+| 组件 | 实况 |
 |---|---|
-| `#definition` | ~20 |
-| `#theorem` | ~8 |
+| `#definition` | 24 |
+| `#theorem` | 10（5 条带证明） |
 | `#law` | 1（光电效应） |
-| `#example` | ~8 |
+| `#example` | 9 |
 | `#figure` | 4 |
-| `#note` | ~10 |
+| `#note` | 20 |
 
 ## 三、标签系统（写作清单）
 
@@ -215,11 +221,11 @@ Ch 8 → 9 → 10 → 11 → 12 → 13；章内"定义 → 定理 → 例题 →
 
 | 类型 | 位置 | 内容 | 处理 |
 |---|---|---|---|
-| 兑现 | Ch 9.6 L1656 | HBT/二阶关联 → Ch 17 | 17.3/17.2 |
-| 兑现 | Ch 9.4 L1602 | Fabry-Perot → Ch 19 激光腔 | 19.1 |
-| 兑现 | Ch 7.1 L1213 | 稳定性判据 → Ch 19 谐振腔 | 19.1 |
-| 兑现 | Ch 12.1 L1983 | Poincaré 球 → 光子偏振 Bloch 球 | Ch 15/16 |
-| 兑现 | Ch 12.6 L2097 | 光子螺旋度 → Part IV | Ch 15/17 |
+| 兑现 | Ch 9.6 | HBT/二阶关联 → Ch 17 | 17.3/17.2 |
+| 兑现 | Ch 9.4 | Fabry-Perot → Ch 19 激光腔 | 19.1 |
+| 兑现 | Ch 7.1 | 稳定性判据 → Ch 19 谐振腔 | 19.1 |
+| 兑现 | Ch 13.1 | Poincaré 球 → 光子偏振 Bloch 球 | Ch 15/16 |
+| 兑现 | Ch 13.6 | 光子螺旋度 → Part IV | Ch 15/17 |
 | 埋下 | Ch 17.4 | 单光子源 → SPDC | Ch 19.4 |
 | 埋下 | Ch 15.4 | 真空涨落 → Casimir | 远期 note |
 
