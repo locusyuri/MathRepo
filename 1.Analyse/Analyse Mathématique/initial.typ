@@ -10029,6 +10029,55 @@ $
   $
 ]
 
+== Vector Differential Operators <sec:vector-differential-operators> // 向量微分算子
+
+The gradient of a scalar function was introduced in #link(<def:jacobian-matrix>)[Chapter 5] as $nabla f = "grad" f$. For a vector field, two further first-order operators play the same fundamental role; they are conveniently produced by a single formal device.
+
+#definition(name: "Nabla Operator")[
+  The formal vector
+  $
+    nabla = bold(i) frac(partial, partial x) + bold(j) frac(partial, partial y) + bold(k) frac(partial, partial z)
+  $
+  is called the *nabla operator* (or Hamilton operator). It combines with scalar and vector fields by the rules of vector algebra: the product $nabla f$ with a scalar field $f$ is the gradient of $f$, while the dot product $nabla dot bold(f)$ and the cross product $nabla times bold(f)$ with a vector field $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ are the two operators defined next.
+] <def:nabla-operator>
+
+#definition(name: "Divergence")[
+  Let $bold(f)(x, y, z) = P bold(i) + Q bold(j) + R bold(k)$, where $P, Q, R$ are differentiable at the point in question. The scalar
+  $
+    "div" bold(f) = nabla dot bold(f) = frac(partial P, partial x) + frac(partial Q, partial y) + frac(partial R, partial z)
+  $
+  is called the *divergence* of the field $bold(f)$ at that point. A field with $"div" bold(f) equiv 0$ on a region is called *solenoidal* (or source-free) there.
+] <def:divergence>
+
+#definition(name: "Curl")[
+  Let $bold(f)(x, y, z) = P bold(i) + Q bold(j) + R bold(k)$, where $P, Q, R$ are differentiable at the point in question. The vector
+  $
+    "curl" bold(f) = nabla times bold(f) = mat(
+      delim: "|",
+      bold(i), bold(j), bold(k);
+      frac(partial, partial x), frac(partial, partial y), frac(partial, partial z);
+      P, Q, R,
+    )
+  $
+  is called the *curl* (or rotation) of the field $bold(f)$ at that point. A field with $"curl" bold(f) equiv bold(0)$ on a region is called *irrotational* there.
+] <def:curl>
+
+#property(name: "Rules for Divergence and Curl")[
+  Let $u$ be a differentiable scalar field and $bold(f), bold(g)$ differentiable vector fields. Then:
+  + Linearity: $"div"(alpha bold(f) + beta bold(g)) = alpha "div" bold(f) + beta "div" bold(g)$ and $"curl"(alpha bold(f) + beta bold(g)) = alpha "curl" bold(f) + beta "curl" bold(g)$ for constants $alpha, beta$.
+  + Product rules:
+    $
+      nabla dot (u bold(f)) = nabla u dot bold(f) + u "div" bold(f), quad nabla times (u bold(f)) = nabla u times bold(f) + u "curl" bold(f).
+    $
+  + Compositions: $"curl" ("grad" f) = nabla times (nabla f) = bold(0)$ and $"div" ("curl" bold(f)) = nabla dot (nabla times bold(f)) = 0$.
+] <prop:div-curl-calculus>
+
+#proof[
+  The linearity and product rules follow by expanding in coordinates and applying the ordinary product rule componentwise. For the composition identities, every term of the coordinate expansions cancels in pairs by the equality of mixed second-order partial derivatives; for instance, the $bold(i)$-component of $"curl" ("grad" f)$ is $frac(partial, partial y) frac(partial f, partial z) - frac(partial, partial z) frac(partial f, partial y) = 0$, and the others are analogous.
+]
+
+Composing the operators produces the second-order scalar operator $Delta f = nabla dot (nabla f) = f_(x x) + f_(y y) + f_(z z)$, called the *Laplacian* of $f$; it appears in Green's identities in #link(<cor:green-first-identity>)[the next section]. The composition identities above are the differential shadow of the conservative-field theory: the vanishing of $"curl" ("grad" f)$ is the coordinate counterpart of the fact that an exact $1$-form is closed.
+
 == Differential Forms and Exterior Differentiation // 微分形式与外微分
 
 In the previous subsection, the second type of line integral was re-expressed as the integral of a $1$-form $omega = P dif x + Q dif y + R dif z$ along the oriented curve, and the surface integrals to be defined below are built on symbols such as $dif y and dif z$. All these integrands are instances of *differential forms*; moreover, Green's formula admits the unified shape $integral.cont_(limits(partial M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega$, and so will Stokes' and Gauß's formulas. This section sets up the algebra of differential forms together with its computation engine, the *exterior differentiation*.
@@ -10106,7 +10155,7 @@ By the definition, the exterior differentiation of a $k$-form is a $(k + 1)$-for
   The anticommutativity rule kills the terms containing $dif x and dif x$ and $dif y and dif y$, and converts $dif y and dif x$ into $-dif x and dif y$; collecting the remaining coefficients yields the formula. For the second formula one collects the coefficients of $dif y and dif z$, $dif z and dif x$, and $dif x and dif y$; for the third, those of $dif x and dif y and dif z$. In each case, the equality of mixed second-order partial derivatives is what merges the contributions of a single coefficient.
 ]
 
-In the standard notation of vector analysis, the three coordinate formulas admit a uniform reading through the operators $nabla$, $nabla dot$, and $nabla times$: writing $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ for the field formed by the coefficients, the single operation $dif$ subsumes the three first-order operators of vector analysis, as summarized below.
+The three coordinate formulas admit a uniform reading through the operators $nabla$, $nabla dot$, and $nabla times$ of #link(<sec:vector-differential-operators>)[the preceding section]: writing $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ for the field formed by the coefficients, the single operation $dif$ subsumes the three first-order operators of vector analysis, as summarized below.
 
 #tex-table(
   ([Form $omega$], [$dif omega$], [Reading via $nabla$]),
@@ -10313,6 +10362,16 @@ This relation allows the symmetry devices of scalar integrals to be applied to v
   hence $I = u(1, 1) - u(0, 0) = 1$.
 ]
 
+#definition(name: "Circulation")[
+  Let $limits(Gamma)^harpoon.rt$ be a closed oriented smooth curve and $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ a continuous vector field on it. The value
+  $
+    integral.cont_(limits(Gamma)^harpoon.rt) bold(f) dot bold(tau) dif s = integral.cont_(limits(Gamma)^harpoon.rt) P dif x + Q dif y + R dif z,
+  $
+  where $bold(tau)$ is the unit tangent of $limits(Gamma)^harpoon.rt$, is called the *circulation* of $bold(f)$ along $limits(Gamma)^harpoon.rt$.
+] <def:circulation>
+
+The circulation measures the extent to which the field rotates along the curve in the chosen direction; Stokes' theorem below will convert it into a surface integral of the curl.
+
 === Surface Integral of Vector Field // 向量场的曲面积分（原 leftbarTitle 非空壳，升级为小节）
 
 #definition(name: "Surface Integral of Vector Field")[
@@ -10395,9 +10454,25 @@ This *one-projection method* avoids projecting onto three coordinate planes sepa
   $
 ]
 
+#definition(name: "Flux")[
+  Let $limits(Sigma)^harpoon.rt$ be an oriented smooth surface with unit normal field $bold(n)$ pointing to the chosen side, and let $bold(f)$ be a continuous vector field on it. The value
+  $
+    integral.double_(limits(Sigma)^harpoon.rt) bold(f) dot bold(n) dif S
+  $
+  is called the *flux* of $bold(f)$ across $limits(Sigma)^harpoon.rt$ (with respect to the chosen side). For a closed surface the normal is always taken to point outward unless stated otherwise.
+] <def:flux>
+
+The flux measures the net amount of field passing through the surface in the direction of $bold(n)$; Gauß's theorem below will convert the flux through a closed surface into a volume integral of the divergence.
+
 == Stokes' Formula // 斯托克斯公式
 
 // 注：tex 中本节开头的 "Newton-Leibniz Formula" leftbarTitle 为空壳（无任何内容），未迁移。
+
+#note(
+  title: "Physical Reading of Divergence and Curl",
+)[
+  Let $bold(f)$ be a $C^1$ vector field. The *divergence* is the volume density of outward flux: for a small closed region $Omega$ of volume $V$ containing the point $P$, the quantity $1/V integral.double.double_(partial Omega) bold(f) dot bold(n) dif S$ approximates $"div" bold(f)(P)$, and the approximation becomes an equality in the limit $Omega -> P$. Dually, the component $"curl" bold(f) dot bold(n)$ is the area density of circulation: for a small oriented disk $Sigma$ with unit normal $bold(n)$, boundary $Gamma$, and area $S$, the circulation of $bold(f)$ around $Gamma$ is approximated by $S dot ("curl" bold(f) dot bold(n))$. The formulas of this section make these density statements integral: Gauß's theorem sums the flux density over a volume, while Green's and Stokes' theorems sum the circulation density over an oriented surface; for Green's theorem the relevant component is $Q_x - P_y$, the $bold(k)$-component of the curl of the planar field $(P, Q, 0)$.
+]
 
 === Green's Formula // 格林公式（原 leftbarTitle 非空壳，升级为小节）
 
@@ -10468,6 +10543,27 @@ Denote $integral.cont_(limits(partial M)^harpoon.rt)$ as the line integral along
 ]
 
 This is the two-dimensional divergence theorem: it converts the integral of $nabla dot bold(f)$ over a planar region into the outward flux through its boundary, and it is the planar special case of #link(<thm:gauss-theorem>)[Gauß's theorem].
+
+Substituting particular fields in the divergence form yields the two classical integral identities of potential theory.
+
+#corollary(name: "Green's First Identity")[
+  Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^2$ with positively oriented piecewise smooth boundary, let $u in C^1 (limits(M)^harpoon.rt)$ and $v in C^2 (limits(M)^harpoon.rt)$. Then
+  $
+    integral.double_(limits(M)^harpoon.rt) (nabla u dot nabla v + u Delta v) dif x dif y = integral.cont_(limits(partial M)^harpoon.rt) u frac(partial v, partial n) dif s,
+  $
+  where $frac(partial v, partial n) = nabla v dot bold(n)$ is the directional derivative of $v$ along the outward unit normal $bold(n)$.
+] <cor:green-first-identity>
+
+#corollary(name: "Green's Second Identity")[
+  Under the hypotheses of #link(<cor:green-first-identity>)[Green's first identity] with $u, v in C^2 (limits(M)^harpoon.rt)$,
+  $
+    integral.double_(limits(M)^harpoon.rt) (u Delta v - v Delta u) dif x dif y = integral.cont_(limits(partial M)^harpoon.rt) (u frac(partial v, partial n) - v frac(partial u, partial n)) dif s.
+  $
+] <cor:green-second-identity>
+
+#proof[
+  For the first identity, apply #link(<cor:green-divergence-form>)[the divergence form] to the field $bold(f) = u nabla v$: by the product rule of #link(<prop:div-curl-calculus>)[the calculus of divergence and curl], $nabla dot (u nabla v) = nabla u dot nabla v + u Delta v$, while $bold(f) dot bold(n) = u nabla v dot bold(n) = u frac(partial v, partial n)$. The second identity follows by interchanging $u$ and $v$ in the first identity and subtracting, which eliminates the symmetric term $nabla u dot nabla v$.
+]
 
 #example(name: "Green's Theorem with a Completing Line Segment")[
   Calculate $I = integral_L (e^x sin y - y) dif x + (e^x cos y - 1) dif y$,
@@ -11122,6 +11218,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<thm:chain-rule>)[Chain Rule]*
 - *#link(<thm:chebyshev>)[Chebyshev]*
 - *#link(<ex:chebyshev-integral-inequality>)[Chebyshev Integral Inequality]*
+- *#link(<def:circulation>)[Circulation]*
 - *#link(<prop:classic-functional-equations>)[Classic Functional Equations]*
 - *#link(<def:closed-exact-forms>)[Closed Exact Forms]*
 - *#link(<thm:commutative-absolute-series>)[Commutative Absolute Series]*
@@ -11156,6 +11253,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<lem:cover-fixed-point>)[Cover Fixed Point]*
 - *#link(<lem:cover-subinterval>)[Cover Subinterval]*
 - *#link(<def:curvature-of-curve>)[Curvature of Curve]*
+- *#link(<def:curl>)[Curl of a Vector Field]*
 - *#link(<fig:cylindrical-coordinates>)[Cylindrical Coordinates]*
 - *#link(<fig:spherical-coordinates>)[Spherical Coordinates]*
 - *#link(<fig:polar-coordinates>)[Polar Coordinates]*
@@ -11197,6 +11295,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:dirichlet-integral-parameter>)[Dirichlet Integral Parameter]*
 - *#link(<ex:dirichlet-kernel>)[Dirichlet Kernel]*
 - *#link(<def:discontinuity-point>)[Discontinuity Point]*
+- *#link(<def:divergence>)[Divergence]*
 - *#link(<cor:green-divergence-form>)[Divergence Form of Green's Theorem]*
 - *#link(<def:double-integral-bounded-set>)[Double Integral Bounded Set]*
 - *#link(<fig:double-integral-bounded-set>)[Double Integral Bounded Set]*
@@ -11239,6 +11338,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<def:first-fundamental-form>)[First Fundamental Form]*
 - *#link(<ex:fixed-point-interval>)[Fixed Point Interval]*
 - *#link(<ex:flat-function>)[Flat Function]*
+- *#link(<def:flux>)[Flux of a Vector Field]*
 - *#link(<ex:froullani-integral>)[Froullani Integral]*
 - *#link(<def:function-term-series>)[Function Term Series]*
 
@@ -11252,6 +11352,8 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<thm:generalized-gauss-test>)[Generalized Gauss Test]*
 - *#link(<lem:green-special-regions>)[Green Special Regions]*
 - *#link(<thm:green-theorem>)[Green Theorem]*
+- *#link(<cor:green-first-identity>)[Green's First Identity]*
+- *#link(<cor:green-second-identity>)[Green's Second Identity]*
 - *#link(<ex:growth-comparison>)[Growth Comparison]*
 
 == H
@@ -11364,6 +11466,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<thm:multivariable-taylor-formula>)[Multivariable Taylor Formula]*
 
 == N
+- *#link(<def:nabla-operator>)[Nabla Operator]*
 - *#link(<prop:nested-implies-suprema>)[Nested Implies Suprema]*
 - *#link(<thm:nested-interval>)[Nested Interval]*
 - *#link(<def:nested-intervals>)[Nested Intervals]*
@@ -11431,6 +11534,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<thm:riemann-rearrangement>)[Riemann Rearrangement]*
 - *#link(<def:riemann-stieltjes-integral>)[Riemann Stieltjes Integral]*
 - *#link(<thm:rolle>)[Rolle]*
+- *#link(<prop:div-curl-calculus>)[Rules for Divergence and Curl]*
 
 == S
 - *#link(<fig:schwarzs-lantern>)[Schwarzs Lantern]*
