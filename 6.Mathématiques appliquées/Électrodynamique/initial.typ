@@ -30,47 +30,112 @@
 = Vector Analysis and Field Theory // 矢量分析与场论
 
 == Vector Fields // 向量场
-// 在物理中, 我们通常只考虑三维空间中的矢量场, 下面给出场的定义
-In physics, we typically focus on vector fields in the three-dimensional space $Omega subset.eq RR^3$. A *vector field* assigns a vector to every point in space, and a *scalar field* assigns a scalar to every point; they represent physical quantities such as velocity, force, and electromagnetic fields, or temperature and pressure, respectively.
+// 物理中通常只考虑三维空间中的场, 本节给出场、场线与等值面的定义
+In physics we usually work with fields defined in the three-dimensional space $Omega subset.eq RR^3$.
 
-If a field does not explicitly depend on time, we call it a *static field*; otherwise, it is a *time-varying field*.
+A *vector field* assigns a vector to every point of $Omega$, while a *scalar field* assigns a scalar to every point; the velocity of a fluid, a force and the electromagnetic fields are vector fields, whereas temperature and pressure are scalar fields.
 
-// 显然, 任何 Omega 上的三元函数都可以看作其上的一个标量场. 若其有连续偏导数, 则其梯度 xxx 为一个矢量场, 称之为一个梯度场.
-Obviously, any scalar function $f(x, y, z)$ defined on $Omega$ can be considered a scalar field. If it has continuous partial derivatives, its gradient
+A field that does not depend explicitly on time is called a *static field*; otherwise it is a *time-varying field*.
+
+Every scalar function $f(x, y, z)$ defined on $Omega$ is a scalar field, and every vector field with components $P, Q, R$ can be written as
 $
-  gradient f = bold("grad") f = ( (partial f)/(partial x), (partial f)/(partial y), (partial f)/(partial z) )
+  bold(a) = P(x, y, z) bold(i) + Q(x, y, z) bold(j) + R(x, y, z) bold(k), quad (x, y, z) in Omega.
 $
-is a vector field, known as a *gradient field*.
 
-Let
-$
-  bold(a) = P(x, y, z) bold(i) + Q(x, y, z) bold(j) + R(x, y, z) bold(k), quad (x, y, z) in Omega,
-$
-be a vector field defined on $Omega$ and $P, Q, R in C^1(Omega)$.
+A *vector line* of $bold(a)$ is a curve $Gamma$ in $Omega$ whose tangent at every point is parallel to $bold(a)$; the electric, magnetic and electromagnetic field lines are all vector lines.
 
-Let $Gamma$ be a curve in $Omega$. The *vector line* of $bold(a)$ is a curve $Gamma$ such that at every point on $Gamma$, the tangent vector of $Gamma$ is parallel to $bold(a)$. The electric field lines, magnetic field lines and electromagnetic field lines are all examples of vector lines.
+In the same way, the *level surfaces* of a scalar field $f$ are the surfaces $f(x, y, z) = C$ with $C$ constant; they are perpendicular to the gradient field of $f$, as shown in the next section.
 
-== Flux and Divergence // 通量与散度
-// 为了判定场中的点是源还是汇, 以及源的强弱和汇的大小, 我们引入通量和散度.
-To determine whether a point is a source or a sink, and to determine the strength and size of the source and sink, we introduce flux and divergence.
+== Differential Operators // 微分算子
+// 本节引入梯度、散度、旋度三个一阶算子与若干二阶算子, 全部统一到 Hamilton 算子的记号下
+The three first-order differential operators of field theory are the gradient, the divergence and the curl.
+All of them will be written with a single symbolic operator, introduced at the end of the first subsection.
+
+=== The Gradient and the Nabla Operator // 梯度与哈密尔顿算子
+// 方向导数刻画标量场沿指定方向的变化率, 梯度则给出变化最快的方向
+A scalar field changes at different rates in different directions; the rate along a prescribed direction is measured by the directional derivative.
+
+#definition(name: "Directional Derivative")[
+  Let $f$ be a scalar field on $Omega$, $M in Omega$ and $bold(l)$ a unit vector.
+  The *directional derivative* of $f$ at $M$ along $bold(l)$ is
+  $
+    (partial f)/(partial l) (M) = lim_(t -> 0) (f(M + t bold(l)) - f(M))/t.
+  $
+] <def:directional-derivative>
+
+The directional derivatives along the coordinate axes are the partial derivatives $f_x, f_y, f_z$; among all directions one of them gives the steepest increase, which leads to the gradient.
+
+#definition(name: "Gradient")[
+  Let $f in C^1(Omega)$.
+  The *gradient* of $f$ at $M$ is the vector
+  $
+    gradient f (M) = (partial f)/(partial x) (M) bold(i) + (partial f)/(partial y) (M) bold(j) + (partial f)/(partial z) (M) bold(k).
+  $
+] <def:gradient>
+
+A vector field that coincides with the gradient of some scalar field is called a *gradient field*.
+
+#property(name: "Gradient and Directional Derivative")[
+  Let $f in C^1(Omega)$, $M in Omega$ and $bold(l)$ a unit vector.
+  Then
+  $
+    (partial f)/(partial l) (M) = gradient f (M) dot bold(l).
+  $
+  Consequently $gradient f (M)$ points along the steepest increase of $f$ at $M$, and $abs(gradient f (M))$ is the maximal rate of increase.
+] <prop:gradient-directional>
+
+#proof[
+  Set $g(t) = f(M + t bold(l))$.
+  By definition $g'(0)$ is the directional derivative of $f$ at $M$ along $bold(l)$.
+
+  By the chain rule,
+  $
+    g'(0) = (partial f)/(partial x) (M) l_x + (partial f)/(partial y) (M) l_y + (partial f)/(partial z) (M) l_z = gradient f (M) dot bold(l).
+  $
+
+  Cauchy's inequality gives $abs(gradient f (M) dot bold(l)) <= abs(gradient f (M))$, with equality exactly when $bold(l)$ is parallel to $gradient f (M)$, so the maximal rate is $abs(gradient f (M))$.
+]
+
+Since the gradient field is perpendicular to the level surfaces of $f$, it points along the normal of each surface $f = C$.
+
+#definition(name: "Hamilton's Operator")[
+  The *Hamilton's operator*, also called the *del operator* or *nabla operator*, is the symbolic vector
+  $
+    nabla = bold(i) (partial)/(partial x) + bold(j) (partial)/(partial y) + bold(k) (partial)/(partial z).
+  $
+  Applied to a scalar field it gives the gradient
+  $
+    nabla f = gradient f = ((partial f)/(partial x), (partial f)/(partial y), (partial f)/(partial z)).
+  $
+] <def:nabla-operator>
+
+Its scalar and vector products with a vector field give the divergence $nabla dot bold(a)$ and the curl $nabla times bold(a)$, which are defined in the next two subsections.
+
+=== Flux and Divergence // 通量与散度
+// 通量刻画场穿过曲面的总量, 散度刻画每一点处源的强弱
+To decide whether a point of a field is a source or a sink, and to measure how strong it is, we use the flux through a surface and the divergence at a point.
 
 #definition(name: "Flux and Divergence")[
-  Let $harpoon(Sigma)$ be an oriented surface in $Omega$, then the *flux* of $bold(a)$ through $harpoon(Sigma)$ is defined as
+  Let $harpoon(Sigma)$ be an oriented surface in $Omega$.
+  The *flux* of $bold(a)$ through $harpoon(Sigma)$ is
   $
     Phi = integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_harpoon(Sigma) P dif y dif z + Q dif z dif x + R dif x dif y.
   $
-  Let $M$ be a point in $Omega$, then the *divergence* of $bold(a)$ at $M$ is defined as
+  Let $M in Omega$.
+  The *divergence* of $bold(a)$ at $M$ is
   $
-    "div" bold(a) (M) = (partial P)/(partial x) (M) + (partial Q)/(partial y) (M) + (partial R)/(partial z) (M),
+    nabla dot bold(a) (M) = (partial P)/(partial x) (M) + (partial Q)/(partial y) (M) + (partial R)/(partial z) (M),
   $
-  denoted as $"div" bold(a)$.
-]
-If $"div" bold(a) > 0$ at $M$, we say that $M$ is a *source* of the field; if $"div" bold(a) < 0$ at $M$, we say that $M$ is a *sink* of the field; if $"div" bold(a) = 0$ at every point of $Omega$, we say that $bold(a)$ is a *solenoidal field*.
+  also written $"div" bold(a) (M)$.
+] <def:flux-divergence>
+
+If $nabla dot bold(a) > 0$ at $M$, then $M$ is a *source* of the field; if $nabla dot bold(a) < 0$, then $M$ is a *sink*; if $nabla dot bold(a) = 0$ everywhere in $Omega$, then $bold(a)$ is a *solenoidal field*.
 
 #theorem(name: "Gauss's Divergence Theorem")[
-  Let $Omega$ be a closed region in $RR^3$ bounded by the closed surface $harpoon(Sigma)$ oriented by the outward normal, and let $bold(a) = P bold(i) + Q bold(j) + R bold(k) in C^1(Omega)$. Then
+  Let $Omega$ be a closed region in $RR^3$ bounded by the closed surface $harpoon(Sigma)$ oriented by the outward normal, and let $bold(a) in C^1(Omega)$.
+  Then
   $
-    integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_V "div" bold(a) dif V,
+    integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_V nabla dot bold(a) dif V,
   $
   where $V$ is the volume of $Omega$.
 ] <thm:ed-gauss-divergence>
@@ -78,94 +143,147 @@ If $"div" bold(a) > 0$ at $M$, we say that $M$ is a *source* of the field; if $"
 The proof is given in the Analyse Mathématique note; physically, the theorem states that the net outward flux of a field through a closed surface equals the total strength of the sources and sinks enclosed.
 
 #theorem[
-  The divergence of $bold(a)$ is the rate of change of the flux of $bold(a)$ regarding the volume of $harpoon(Sigma)$, i.e.,
+  The divergence of $bold(a)$ at $M$ is the rate of change of the flux of $bold(a)$ with respect to the volume of $harpoon(Sigma)$,
   $
-    "div" bold(a) (M) = lim_(V -> 0) (integral_harpoon(Sigma) bold(a) dot dif bold(Sigma)) / V,
+    nabla dot bold(a) (M) = lim_(V -> 0) (integral_harpoon(Sigma) bold(a) dot dif bold(Sigma)) / V,
   $
   where $harpoon(Sigma)$ bounds a region of volume $V$ that shrinks to the point $M$.
-]
+] <thm:divergence-density>
 
 #proof[
   By Gauss's divergence theorem,
   $
-    integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_V "div" bold(a) dif V = "div" bold(a) (M') V,
+    integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_V nabla dot bold(a) dif V = (nabla dot bold(a)) (M') V,
   $
-  where the last step is the mean value theorem for integrals, for some point $M'$ in the region. Dividing by $V$ and letting the region shrink to $M$, the continuity of $P, Q, R$ gives $"div" bold(a) (M') -> "div" bold(a) (M)$.
+  where the last step is the mean value theorem for integrals, for some point $M'$ in the region.
+
+  Dividing by $V$ and letting the region shrink to $M$, the continuity of $P, Q, R$ gives $(nabla dot bold(a))(M') -> (nabla dot bold(a))(M)$.
 ]
 
-== Circulation and Curl // 环量与旋度
-// 为了判定场是否有旋, 我们引入环量和旋度.
-To determine whether a field is irrotational, we introduce circulation and curl.
+=== Circulation and Curl // 环量与旋度
+// 环量刻画场沿闭曲线的累积, 旋度刻画每一点处的涡旋强弱
+To describe how a field circulates, we use the circulation along a closed curve and the curl at a point.
 
 #definition(name: "Circulation and Curl")[
-  Let $harpoon(Gamma)$ be an oriented closed curve in $Omega$, then the *circulation* of $bold(a)$ along $harpoon(Gamma)$ is defined as
+  Let $harpoon(Gamma)$ be an oriented closed curve in $Omega$.
+  The *circulation* of $bold(a)$ along $harpoon(Gamma)$ is
   $
     Zeta = integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma).
   $
-  Let $M$ be a point in $Omega$, then the *curl* of $bold(a)$ at $M$ is defined as
+  Let $M in Omega$.
+  The *curl* of $bold(a)$ at $M$ is
   $
-    "curl" bold(a) (M) = ((partial R)/(partial y) - (partial Q)/(partial z)) (M) bold(i) + ((partial P)/(partial z) - (partial R)/(partial x)) (M) bold(j) + ((partial Q)/(partial x) - (partial P)/(partial y)) (M) bold(k),
+    nabla times bold(a) (M) = ((partial R)/(partial y) - (partial Q)/(partial z)) (M) bold(i) + ((partial P)/(partial z) - (partial R)/(partial x)) (M) bold(j) + ((partial Q)/(partial x) - (partial P)/(partial y)) (M) bold(k),
   $
-  denoted as $"curl" bold(a)$ or $"rot" bold(a)$.
-]
+  also written $"curl" bold(a) (M)$ or $"rot" bold(a) (M)$.
+] <def:circulation-curl>
 
-If $"curl" bold(a) = bold(0)$ at every point of $Omega$, we say that $bold(a)$ is an *irrotational field*.
+If $nabla times bold(a) = bold(0)$ at every point of $Omega$, then $bold(a)$ is an *irrotational field*.
 
 #theorem(name: "Stokes' Theorem")[
-  Let $harpoon(Sigma)$ be an oriented surface in $RR^3$ with boundary $harpoon(Gamma)$ oriented consistently with the normal of $harpoon(Sigma)$ by the right-hand rule, and let $bold(a) in C^1$. Then
+  Let $harpoon(Sigma)$ be an oriented surface in $RR^3$ with boundary $harpoon(Gamma)$ oriented consistently with the normal of $harpoon(Sigma)$ by the right-hand rule, and let $bold(a) in C^1$.
+  Then
   $
-    integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = integral_harpoon(Sigma) ("curl" bold(a)) dot dif bold(Sigma).
+    integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = integral_harpoon(Sigma) (nabla times bold(a)) dot dif bold(Sigma).
   $
 ] <thm:ed-stokes>
 
 The proof is given in the Analyse Mathématique note; physically, the theorem states that the circulation of a field along the boundary of a surface equals the total vortex strength of the field through the surface.
 
 #theorem[
-  The component of the curl along the unit normal $bold(n)$ is the rate of change of the circulation regarding the area of $harpoon(Sigma)$, i.e.,
+  The component of the curl along the unit normal $bold(n)$ is the rate of change of the circulation with respect to the area of $harpoon(Sigma)$,
   $
-    ("curl" bold(a)) dot bold(n) = lim_(S -> 0) (integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma)) / S,
+    (nabla times bold(a)) dot bold(n) = lim_(S -> 0) (integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma)) / S,
   $
   where $harpoon(Gamma)$ bounds an oriented planar region $harpoon(Sigma)$ of area $S$ with normal $bold(n)$, and the region shrinks to the point $M$.
-]
+] <thm:curl-density>
 
 #proof[
   By Stokes' theorem,
   $
-    integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = integral_harpoon(Sigma) ("curl" bold(a)) dot dif bold(Sigma) = (("curl" bold(a)) dot bold(n)) (M') S,
+    integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = integral_harpoon(Sigma) (nabla times bold(a)) dot dif bold(Sigma) = ((nabla times bold(a)) dot bold(n)) (M') S,
   $
-  where the last step is the mean value theorem for integrals, for some point $M'$ on the planar surface. Dividing by $S$ and letting the region shrink to $M$, the continuity of the components of $bold(a)$ gives the claim.
+  where the last step is the mean value theorem for integrals, for some point $M'$ on the planar surface.
+
+  Dividing by $S$ and letting the region shrink to $M$, the continuity of the components of $bold(a)$ gives the claim.
 ]
 
-== Hamilton's Operator // 哈密尔顿算子
-The *Hamilton's operator* (also called the *del operator* or *nabla operator*) is defined as
+=== Second-Order Operators and Identities // 二阶算子与恒等式
+// 两个恒等式说明"梯度的旋度为零"与"旋度的散度为零", 它们是势函数与矢势存在性的根源
+Composing two first-order operators gives second-order operators, and two of these compositions vanish identically.
+
+#property(name: "Identities of Second-Order Operators")[
+  For $f in C^2(Omega)$ and $bold(a) in C^2(Omega)$,
+  $
+    nabla times (nabla f) = bold(0), quad nabla dot (nabla times bold(a)) = 0.
+  $
+] <prop:second-order-identities>
+
+#proof[
+  The first component of $nabla times (nabla f)$ is
+  $
+    (partial)/(partial y) ((partial f)/(partial z)) - (partial)/(partial z) ((partial f)/(partial y)) = 0
+  $
+  by the equality of mixed partial derivatives, and the other two components vanish in the same way.
+
+  In $nabla dot (nabla times bold(a))$ the terms cancel in pairs, each pair being a difference of two mixed partial derivatives of one component of $bold(a)$.
+]
+
+#definition(name: "Laplace Operator")[
+  The *Laplace operator* is the composition
+  $
+    Delta f = nabla dot (nabla f) = (partial^2 f)/(partial x^2) + (partial^2 f)/(partial y^2) + (partial^2 f)/(partial z^2).
+  $
+] <def:laplace-operator>
+
+A scalar field satisfying the *Laplace equation* $Delta f = 0$ is called a *harmonic function*.
+
+Besides these identities, the operator obeys product rules that are used constantly in electrodynamics.
+
+#property(name: "Product Rules for the Nabla Operator")[
+  For $f, g in C^1(Omega)$ and $bold(a), bold(b) in C^1(Omega)$,
+  $
+    nabla (f g) = f nabla g + g nabla f,
+  $
+  $
+    nabla dot (f bold(a)) = f nabla dot bold(a) + bold(a) dot nabla f,
+  $
+  $
+    nabla times (f bold(a)) = f nabla times bold(a) + (nabla f) times bold(a),
+  $
+  $
+    nabla dot (bold(a) times bold(b)) = bold(b) dot (nabla times bold(a)) - bold(a) dot (nabla times bold(b)),
+  $
+  $
+    nabla times (bold(a) times bold(b)) = bold(a) (nabla dot bold(b)) - bold(b) (nabla dot bold(a)) + (bold(b) dot nabla) bold(a) - (bold(a) dot nabla) bold(b),
+  $
+] <prop:nabla-product-rules>
+
+In the last rule the symbol $bold(a) dot nabla$ denotes the operator
 $
-  nabla = bold(i) (partial)/(partial x) + bold(j) (partial)/(partial y) + bold(k) (partial)/(partial z).
+  (bold(a) dot nabla) f = P (partial f)/(partial x) + Q (partial f)/(partial y) + R (partial f)/(partial z).
 $
 
-With the Hamilton's operator, the gradient, the divergence and the curl take the compact forms
-$
-  nabla f = gradient f = ((partial f)/(partial x), (partial f)/(partial y), (partial f)/(partial z)),
-$
-$
-  nabla dot bold(a) = (partial P)/(partial x) + (partial Q)/(partial y) + (partial R)/(partial z) = "div" bold(a),
-$
-$
-  nabla times bold(a) = ((partial R)/(partial y) - (partial Q)/(partial z)) bold(i) + ((partial P)/(partial z) - (partial R)/(partial x)) bold(j) + ((partial Q)/(partial x) - (partial P)/(partial y)) bold(k) = "curl" bold(a).
-$
-We also have the following identities:
-$
-  nabla times (nabla f) = bold(0), quad nabla dot (nabla times bold(a)) = 0,
-$
-$
-  nabla dot nabla f = nabla dot (gradient f) = "div" (gradient f) = Delta f,
-$
-where $Delta f = (partial^2 f)/(partial x^2) + (partial^2 f)/(partial y^2) + (partial^2 f)/(partial z^2)$ defines the *Laplace operator*. Functions satisfying the *Laplace equation*
-$
-  Delta f = 0
-$
-are called *harmonic functions*.
+#proof[
+  Expanding the second rule in components,
+  $
+    nabla dot (f bold(a)) = (partial)/(partial x) (f P) + (partial)/(partial y) (f Q) + (partial)/(partial z) (f R)
+  $
+  $
+    = f ((partial P)/(partial x) + (partial Q)/(partial y) + (partial R)/(partial z)) + P (partial f)/(partial x) + Q (partial f)/(partial y) + R (partial f)/(partial z),
+  $
+  which is $f nabla dot bold(a) + bold(a) dot nabla f$.
 
-== Conservative Fields and Potential Functions // 保守场与势函数
+  The remaining rules are verified in the same way, component by component, with the product rule for ordinary derivatives.
+]
+
+== Field Classification and Potential Theory // 场的分类与势论
+// 有势场、无源场、无旋场三类场最终由 Helmholtz 分解统一起来
+A vector field may possess a scalar potential, a vector potential, both or neither.
+This section classifies fields by these two kinds of potential, and shows that every smooth decaying field possesses both at once.
+
+=== Conservative Fields and Potential Functions // 保守场与势函数
+// 线积分与路径无关的场称为保守场, 它由一个标量函数生成
 #definition(name: "Potential Function and Conservative Field")[ // 有势场与势函数
   Let
   $
@@ -180,7 +298,7 @@ are called *harmonic functions*.
     integral_harpoon(Gamma_1) bold(a) dot dif bold(Gamma_1) = integral_harpoon(Gamma_2) bold(a) dot dif bold(Gamma_2).
   $
   Then we say that $bold(a)$ is a *conservative field*.
-]
+] <def:potential-conservative-field>
 
 #theorem[
   Let
@@ -191,27 +309,284 @@ are called *harmonic functions*.
   The following statements are equivalent:
   1. $bold(a)$ is a conservative field.
   2. $bold(a)$ is a potential field.
-  3. $bold(a)$ is an irrotational field, i.e., $"curl" bold(a) = bold(0)$.
+  3. $bold(a)$ is an irrotational field, i.e., $nabla times bold(a) = bold(0)$.
   4. For every closed curve $harpoon(Gamma)$ in $Omega$, $integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = 0$.
-]
+] <thm:conservative-equivalence>
 
 #proof[
   (1) $==>$ (4): joining two oriented paths between the same endpoints into a closed curve, path-independence means the integral over every closed curve vanishes.
 
   (4) $==>$ (2): fix a point $M_0 in Omega$ and define $U(M) = integral_(M_0)^M bold(a) dot dif bold(Gamma)$, which is single-valued by (4); differentiating along the coordinate directions gives $gradient U = bold(a)$, so $bold(a)$ is a potential field with potential function $V = -U$.
 
-  (2) $==>$ (3): expanding in coordinates, every component of $"curl" (gradient U)$ is a difference of mixed second-order partial derivatives of $U$ and hence vanishes.
+  (2) $==>$ (3): expanding in coordinates, every component of $nabla times (gradient U)$ is a difference of mixed second-order partial derivatives of $U$ and hence vanishes.
 
-  (3) $==>$ (1): by Stokes' theorem, the integral over any closed curve in $Omega$ equals the flux of $"curl" bold(a) = bold(0)$ through a spanning surface lying in $Omega$, hence vanishes; any two paths between the same endpoints then give the same integral, so the line integral is path-independent.
+  (3) $==>$ (1): by Stokes' theorem, the integral over any closed curve in $Omega$ equals the flux of $nabla times bold(a) = bold(0)$ through a spanning surface lying in $Omega$, hence vanishes; any two paths between the same endpoints then give the same integral, so the line integral is path-independent.
 ]
 
+=== The Helmholtz Decomposition // 亥姆霍兹分解
+// Maxwell 方程组只给出散度与旋度; 亥姆霍兹分解说明二者连同边界条件唯一确定场
+The field equations of electrodynamics, as we shall see, specify the divergence and the curl of a field rather than the field itself.
+The mathematical reason why this is enough is the following decomposition theorem.
 
-== Helmholtz Decomposition Theorem  // 亥姆霍兹分解定理
+#theorem(name: "Helmholtz Decomposition Theorem")[
+  Let $bold(a) in C^2(RR^3)$ decay faster than $1 / r$ at infinity.
+  Then there exist a scalar field $phi$ and a vector field $bold(A)$ such that
+  $
+    bold(a) = - nabla phi + nabla times bold(A), quad nabla dot bold(A) = 0,
+  $
+  with both $phi$ and $bold(A)$ decaying at infinity.
+] <thm:helmholtz-decomposition>
+
+#proof[
+  *Uniqueness.*
+  Suppose that $bold(a) = - nabla phi_1 + nabla times bold(A)_1 = - nabla phi_2 + nabla times bold(A)_2$, with $nabla dot bold(A)_1 = nabla dot bold(A)_2 = 0$.
+  Then
+  $
+    bold(h) := nabla (phi_1 - phi_2) = nabla times (bold(A)_1 - bold(A)_2),
+  $
+  and the two identities of the preceding section give $nabla times bold(h) = bold(0)$ and $nabla dot bold(h) = 0$.
+
+  Since $RR^3$ is simply connected and $bold(h)$ is irrotational, the equivalence theorem of the preceding subsection gives $bold(h) = nabla psi$ for some scalar field $psi$.
+  Then $Delta psi = nabla dot bold(h) = 0$, so $psi$ is harmonic; as $psi$ tends to zero at infinity, the maximum principle for harmonic functions gives $psi = 0$, hence $bold(h) = bold(0)$.
+
+  Therefore $nabla phi_1 = nabla phi_2$, so $phi_1 - phi_2$ is constant, and the decay condition forces this constant to be $0$.
+  Moreover $nabla times (bold(A)_1 - bold(A)_2) = bold(0)$ and $nabla dot (bold(A)_1 - bold(A)_2) = 0$, so $bold(A)_1 - bold(A)_2 = nabla chi$ with $Delta chi = 0$; the same argument gives $chi = 0$, hence $bold(A)_1 = bold(A)_2$.
+]
+
+#note(title: "Existence of the Potentials")[
+  The potentials are the Newtonian integrals
+  $
+    phi(bold(r)) = 1/(4 pi) integral (nabla' dot bold(a)(bold(r)'))/(abs(bold(r) - bold(r)')) dif V',
+    quad
+    bold(A)(bold(r)) = 1/(4 pi) integral (nabla' times bold(a)(bold(r)'))/(abs(bold(r) - bold(r)')) dif V',
+  $
+  taken over all space; the proof that they solve the problem uses the identity $Delta (1/r) = - 4 pi delta^3(bold(r))$, which belongs to the last section of this chapter.
+] <note:helmholtz-existence>
+
+Taking the divergence and the curl of the decomposition, and using $nabla dot bold(A) = 0$,
+$
+  nabla dot bold(a) = - Delta phi, quad nabla times bold(a) = nabla times (nabla times bold(A)) = - Delta bold(A).
+$
+Thus the two parts of $bold(a)$ are obtained by solving a Poisson equation for each potential, with the right-hand side supplied by the divergence and the curl of $bold(a)$.
+
+The decomposition splits every field into an *irrotational part* $-nabla phi$, which carries all the sources, and a *solenoidal part* $nabla times bold(A)$, which carries all the circulation.
+
+#corollary[
+  A field with $nabla times bold(a) = bold(0)$ that decays at infinity is a potential field, and a field with $nabla dot bold(a) = 0$ that decays at infinity is the curl of a vector potential.
+] <cor:potential-halves>
+
+The electrostatic field of Chapter 3 is purely irrotational and is described by a scalar potential, while the magnetostatic field is purely solenoidal and is described by a vector potential.
 
 == Curvilinear Coordinates // 曲线坐标系
+// 球对称与柱对称问题在直角坐标下计算繁琐; 本节给出一般正交曲线坐标下的算子表达式
+Many configurations of the following chapters possess spherical, cylindrical or axial symmetry, and in Cartesian coordinates the computation becomes unnecessarily heavy.
+It is therefore useful to express the differential operators in coordinates adapted to the symmetry.
+
+=== Orthogonal Curvilinear Coordinates // 正交曲线坐标
+// 用三个坐标描述空间点, 度规因子刻画各坐标方向上的长度尺度
+Let the position of a point be described by three coordinates $q_1, q_2, q_3$ through
+$
+  bold(r) = bold(r)(q_1, q_2, q_3).
+$
+
+#definition(name: "Orthogonal Curvilinear Coordinates")[
+  The coordinates $(q_1, q_2, q_3)$ are *orthogonal curvilinear coordinates* if the three vectors
+  $
+    (partial bold(r))/(partial q_1), quad (partial bold(r))/(partial q_2), quad (partial bold(r))/(partial q_3)
+  $
+  are mutually perpendicular.
+  The *metric factors* are
+  $
+    h_i = abs((partial bold(r))/(partial q_i)), quad i = 1, 2, 3,
+  $
+  and the unit vectors
+  $
+    bold(e)_i = 1/h_i (partial bold(r))/(partial q_i)
+  $
+  form an orthonormal basis at every point.
+  The arc element and the volume element are
+  $
+    dif s^2 = h_1^2 dif q_1^2 + h_2^2 dif q_2^2 + h_3^2 dif q_3^2, quad dif V = h_1 h_2 h_3 dif q_1 dif q_2 dif q_3.
+  $
+] <def:orthogonal-curvilinear>
+
+Unlike the Cartesian basis, the vectors $bold(e)_i$ change from point to point, and their derivatives with respect to the coordinates involve the curvature of the coordinate lines.
+
+#note[
+  The differentiation of the basis vectors, and the general theory of manifolds with a metric, belong to differential geometry; here we only need the metric factors and the operator formulas below.
+]
+
+=== The Nabla Operator in Curvilinear Coordinates // 曲线坐标下的∇算子
+// 通式由度规因子表出; 柱坐标与球坐标的显式形式是后续各章的主要工具
+#theorem(name: "Differential Operators in Orthogonal Curvilinear Coordinates")[
+  Let $f$ be a scalar field and $bold(a) = a_1 bold(e)_1 + a_2 bold(e)_2 + a_3 bold(e)_3$ a vector field, where $a_i$ are the physical components.
+  Then
+  $
+    nabla f = 1/h_1 (partial f)/(partial q_1) bold(e)_1 + 1/h_2 (partial f)/(partial q_2) bold(e)_2 + 1/h_3 (partial f)/(partial q_3) bold(e)_3,
+  $
+  $
+    nabla dot bold(a) = 1/(h_1 h_2 h_3) ( (partial)/(partial q_1) (h_2 h_3 a_1) + (partial)/(partial q_2) (h_3 h_1 a_2) + (partial)/(partial q_3) (h_1 h_2 a_3) ),
+  $
+  $
+    nabla times bold(a) = 1/(h_1 h_2 h_3) mat(
+      delim: "|",
+      h_1 bold(e)_1, h_2 bold(e)_2, h_3 bold(e)_3;
+      (partial)/(partial q_1), (partial)/(partial q_2), (partial)/(partial q_3);
+      h_1 a_1, h_2 a_2, h_3 a_3,
+    ),
+  $
+  $
+    Delta f = 1/(h_1 h_2 h_3) ( (partial)/(partial q_1) ((h_2 h_3)/h_1 (partial f)/(partial q_1)) + (partial)/(partial q_2) ((h_3 h_1)/h_2 (partial f)/(partial q_2)) + (partial)/(partial q_3) ((h_1 h_2)/h_3 (partial f)/(partial q_3)) ).
+  $
+] <thm:nabla-curvilinear>
+
+#proof[
+  The gradient follows from the chain rule and the definition of the metric factors, since a displacement along $q_i$ alone changes $bold(r)$ by $h_i dif q_i bold(e)_i$.
+
+  The divergence is obtained by applying the divergence theorem to an infinitesimal coordinate cell: the flux through the two faces perpendicular to $q_1$ equals the difference of $h_2 h_3 a_1$ across the cell, divided by $h_1 dif q_1$, and similarly for the other pairs of faces.
+
+  The curl is obtained in the same way by applying Stokes' theorem to the faces of the cell, and the Laplacian is $nabla dot (nabla f)$.
+]
+
+The two coordinate systems used in the following chapters are collected in the table.
+
+#tex-table(
+  ("", "Cylindrical", "Spherical"),
+  ([Coordinates], [$rho, phi, z$], [$r, theta, phi$]),
+  ([Ranges], [$rho >= 0$, $0 <= phi < 2 pi$], [$r >= 0$, $0 <= theta <= pi$, $0 <= phi < 2 pi$]),
+  ([Metric factors $h_1, h_2, h_3$], [$1, rho, 1$], [$1, r, r sin theta$]),
+  ([Unit vectors], [$bold(e)_rho, bold(e)_phi, bold(e)_z$], [$bold(e)_r, bold(e)_theta, bold(e)_phi$]),
+  ([$dif V$], [$rho dif rho dif phi dif z$], [$r^2 sin theta dif r dif theta dif phi$]),
+)
+
+In cylindrical coordinates $(rho, phi, z)$ the formulas become
+$
+  nabla f = (partial f)/(partial rho) bold(e)_rho + 1/rho (partial f)/(partial phi) bold(e)_phi + (partial f)/(partial z) bold(e)_z,
+$
+$
+  nabla dot bold(a) = 1/rho (partial (rho a_rho))/(partial rho) + 1/rho (partial a_phi)/(partial phi) + (partial a_z)/(partial z),
+$
+$
+  nabla times bold(a) = (1/rho (partial a_z)/(partial phi) - (partial a_phi)/(partial z)) bold(e)_rho + ((partial a_rho)/(partial z) - (partial a_z)/(partial rho)) bold(e)_phi + 1/rho ((partial (rho a_phi))/(partial rho) - (partial a_rho)/(partial phi)) bold(e)_z,
+$
+$
+  Delta f = 1/rho (partial)/(partial rho) (rho (partial f)/(partial rho)) + 1/rho^2 (partial^2 f)/(partial phi^2) + (partial^2 f)/(partial z^2).
+$
+
+In spherical coordinates $(r, theta, phi)$ they become
+$
+  nabla f = (partial f)/(partial r) bold(e)_r + 1/r (partial f)/(partial theta) bold(e)_theta + 1/(r sin theta) (partial f)/(partial phi) bold(e)_phi,
+$
+$
+  nabla dot bold(a) = 1/r^2 (partial (r^2 a_r))/(partial r) + 1/(r sin theta) (partial (sin theta a_theta))/(partial theta) + 1/(r sin theta) (partial a_phi)/(partial phi),
+$
+$
+  nabla times bold(a) = 1/(r sin theta) ((partial (sin theta a_phi))/(partial theta) - (partial a_theta)/(partial phi)) bold(e)_r + 1/r (1/(sin theta) (partial a_r)/(partial phi) - (partial (r a_phi))/(partial r)) bold(e)_theta + 1/r ((partial (r a_theta))/(partial r) - (partial a_r)/(partial theta)) bold(e)_phi,
+$
+$
+  Delta f = 1/r^2 (partial)/(partial r) (r^2 (partial f)/(partial r)) + 1/(r^2 sin theta) (partial)/(partial theta) (sin theta (partial f)/(partial theta)) + 1/(r^2 sin^2 theta) (partial^2 f)/(partial phi^2).
+$
+
+=== An Example: The Laplacian of 1/r // 例题: 1/r 的拉普拉斯
+// 该例题既检验球坐标公式, 又为最后一节的奇性分析作准备
+#example(name: "Laplacian of 1/r away from the Origin")[
+  For $r != 0$ the function $f = 1 / r$, written in spherical coordinates, satisfies $Delta f = 0$.
+] <ex:laplacian-one-over-r>
+
+#proof[
+  Here $f$ depends on $r$ only, so the angular terms of the spherical Laplacian vanish and
+  $
+    Delta (1/r) = 1/r^2 (partial)/(partial r) (r^2 (partial)/(partial r) (1/r)) = 1/r^2 (partial)/(partial r) (-1) = 0.
+  $
+]
+
+The computation fails at the origin, where $1 / r$ is singular and its second derivatives do not exist.
+The behaviour of its Laplacian at that single point is the subject of the last section of this chapter.
 
 == Dirac Delta Function // 狄拉克δ函数
+// 点电荷没有通常意义下的密度函数; δ函数把点源纳入积分与微分方程的语言
+A point charge has no ordinary charge density: its charge is concentrated at one point, so the density vanishes everywhere else while the total charge is finite.
+Such singular sources are described by the Dirac delta function.
 
+=== The One-Dimensional Delta // 一维δ函数
+// δ不是通常意义下的函数, 而是由筛选性质定义的广义函数
+#definition(name: "Dirac Delta Function")[
+  The *Dirac delta function* $delta$ is characterized by the sifting property
+  $
+    integral_(-oo)^(oo) f(x) delta(x - a) dif x = f(a)
+  $
+  for every continuous function $f$.
+] <def:dirac-delta-1d>
+
+It is not a function in the usual sense but a *distribution*, defined by its action on test functions under the integral sign; no ordinary function can vanish everywhere except at a single point and still have a nonzero integral.
+
+The following elementary consequences are used repeatedly:
+$
+  delta(-x) = delta(x), quad delta(a x) = 1/abs(a) delta(x), quad integral_(-oo)^(oo) delta(x) dif x = 1.
+$
+
+=== The Three-Dimensional Delta and Point Charges // 三维δ与点电荷
+// 三维δ是三个一维δ的乘积, 它把点电荷的电荷密度变成可积对象
+#definition(name: "Three-Dimensional Delta Function")[
+  The *three-dimensional delta function* is the product
+  $
+    delta^3(bold(r) - bold(r)_0) = delta(x - x_0) delta(y - y_0) delta(z - z_0),
+  $
+  so that
+  $
+    integral_V f(bold(r)) delta^3(bold(r) - bold(r)_0) dif V = f(bold(r)_0)
+  $
+  for every region $V$ containing $bold(r)_0$ and every continuous $f$.
+] <def:dirac-delta-3d>
+
+#example(name: "Point Charge Density")[
+  A point charge $q$ located at $bold(r)_0$ has charge density
+  $
+    rho(bold(r)) = q delta^3(bold(r) - bold(r)_0).
+  $
+] <ex:point-charge-density>
+
+Integrating this density over any region containing $bold(r)_0$ gives $q$, and over any region not containing it gives $0$, which is the behaviour expected of a point charge.
+
+=== Singular Sources: The Laplacian of 1/r // 奇性源: 1/r 的拉普拉斯
+// 上一节算得 1/r 在 r != 0 处调和; 本小节说明它在原点的奇性恰好是一个 δ 源
+The example of the preceding section shows that $1 / r$ is harmonic away from the origin.
+Its Laplacian at the origin is singular, and the singularity is exactly a delta function.
+
+#theorem(name: "Laplacian of 1/r")[
+  $
+    Delta (1/r) = - 4 pi delta^3(bold(r)).
+  $
+] <thm:laplacian-one-over-r>
+
+#proof[
+  For $r != 0$ both sides vanish, by the computation of the preceding section.
+
+  Let $B_epsilon$ be the ball of radius $epsilon$ centred at the origin and $S_epsilon$ its boundary, oriented by the outward normal.
+  By the divergence theorem and the spherical expression for the gradient,
+  $
+    integral_(B_epsilon) Delta (1/r) dif V = integral_(S_epsilon) nabla (1/r) dot dif bold(S) = integral_(S_epsilon) (-1/r^2) bold(e)_r dot dif bold(S) = -1/epsilon^2 4 pi epsilon^2 = -4 pi.
+  $
+  The integral of $-4 pi delta^3(bold(r))$ over the same ball is also $-4 pi$, and both sides vanish outside the ball; since this holds for every $epsilon$, the two sides define the same distribution.
+]
+
+This identity is the reason why the Newtonian integrals of the Helmholtz decomposition solve Poisson equations.
+
+It also gives the differential form of Gauss's law at a point charge.
+For a charge $q$ at the origin the field is
+$
+  bold(E) = 1/(4 pi epsilon_0) q/r^2 bold(e)_r = -q/(4 pi epsilon_0) nabla (1/r),
+$
+hence, by the theorem and the linearity of the Laplacian,
+$
+  nabla dot bold(E) = -q/(4 pi epsilon_0) Delta (1/r) = q/epsilon_0 delta^3(bold(r)).
+$
+
+For $N$ point charges the same computation gives
+$
+  nabla dot bold(E) (bold(r)) = 1/epsilon_0 sum_(i=1)^N q_i delta^3(bold(r) - bold(r)_i),
+$
+which is the differential form of Gauss's law at a distribution of point charges.
 = Tensor Analysis // 张量分析
 == Definition and Representation of Cartesian Tensors // 笛卡尔张量的定义与表示
 == Tensor Algebraic Operations and Contraction // 张量代数运算与缩并
@@ -1525,7 +1900,7 @@ From the Lorentz force law, we can define the magnetic field $bold(B)$ operation
 ]
 
 #note[
-  The Lorentz force law is the operational definition of $bold(B)$ in the same way that $bold(F) = q bold(E)$ defines $bold(E)$. Together with Coulomb's law, it forms the complete description of how electromagnetic fields exert forces on charges — a fact that will be unified when we study the electromagnetic field tensor in §1.6.
+  The Lorentz force law is the operational definition of $bold(B)$ in the same way that $bold(F) = q bold(E)$ defines $bold(E)$. Together with Coulomb's law, it forms the complete description of how electromagnetic fields exert forces on charges — a fact that will be unified when we study the electromagnetic field tensor in §2.6.
 ]
 
 === Biot-Savart Law // 比奥-萨伐尔定律
@@ -1644,7 +2019,7 @@ By applying the divergence theorem to the integral form, we obtain the local (po
 The divergence theorem gives $integral_V (nabla dot bold(B)) dif V = 0$ for any volume $V$. Since this holds for every volume, the integrand must vanish pointwise.
 
 #note[
-  The condition $nabla dot bold(B) = 0$ means $bold(B)$ is a *solenoidal field* (as defined in §1.1). The magnetic field lines are always closed loops — they have neither beginning nor end. This was already anticipated by the properties of magnetic field lines in §6.2. If magnetic monopoles were ever discovered, this equation would become $nabla dot bold(B) = rho_m$ (where $rho_m$ is the magnetic charge density), restoring the symmetry with electrostatics.
+  The condition $nabla dot bold(B) = 0$ means $bold(B)$ is a *solenoidal field* (as defined in §1.2). The magnetic field lines are always closed loops — they have neither beginning nor end. This was already anticipated by the properties of magnetic field lines in §6.2. If magnetic monopoles were ever discovered, this equation would become $nabla dot bold(B) = rho_m$ (where $rho_m$ is the magnetic charge density), restoring the symmetry with electrostatics.
 ]
 
 === Ampère's Circuital Law // 安培环路定理
@@ -1667,7 +2042,7 @@ Before stating the law, we define the enclosed current. For a surface $S$ bounde
   where $dif bold(l)$ is the line element along $C$ in the direction of integration, and $mu_0$ is the permeability of free space. The direction convention follows the right-hand rule: curl the fingers of the right hand along the direction of integration; the thumb gives the positive direction for enclosed current.
 ]
 
-The left-hand side is the *circulation* of $bold(B)$ around $C$ (as defined in §1.1). Unlike the electrostatic field, whose circulation vanishes ($integral.cont bold(E) dot dif bold(l) = 0$), the magnetic field generally has nonzero circulation proportional to the enclosed current. This is the magnetostatic analogue of Gauss's law for $bold(E)$: a powerful integral relation connecting the field to its source.
+The left-hand side is the *circulation* of $bold(B)$ around $C$ (as defined in §1.2). Unlike the electrostatic field, whose circulation vanishes ($integral.cont bold(E) dot dif bold(l) = 0$), the magnetic field generally has nonzero circulation proportional to the enclosed current. This is the magnetostatic analogue of Gauss's law for $bold(E)$: a powerful integral relation connecting the field to its source.
 
 #h(2em)By applying Stokes' theorem, we obtain the differential form:
 
@@ -1807,7 +2182,7 @@ $
   nabla dot bold(B) = 0, quad nabla times bold(B) = mu_0 bold(J).
 $
 
-The divergence-free condition $nabla dot bold(B) = 0$ tells us that the magnetic field is *solenoidal* — its field lines form closed loops without sources or sinks. By the Helmholtz decomposition theorem (§1.5), any solenoidal vector field can be expressed as the curl of some vector field. This leads us to introduce the *magnetic vector potential* $bold(A)$ — a construction that parallels the scalar potential $V$ for the electrostatic field, but adapted to the distinct topological nature of the magnetic field.
+The divergence-free condition $nabla dot bold(B) = 0$ tells us that the magnetic field is *solenoidal* — its field lines form closed loops without sources or sinks. By the Helmholtz decomposition theorem (§1.3), any solenoidal vector field can be expressed as the curl of some vector field. This leads us to introduce the *magnetic vector potential* $bold(A)$ — a construction that parallels the scalar potential $V$ for the electrostatic field, but adapted to the distinct topological nature of the magnetic field.
 
 Just as $bold(E) = - nabla V$ automatically satisfies $nabla times bold(E) = bold(0)$ in electrostatics, the vector potential will allow us to satisfy $nabla dot bold(B) = 0$ identically in magnetostatics.
 
