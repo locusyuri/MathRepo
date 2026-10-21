@@ -10038,16 +10038,20 @@ The gradient of a scalar function was introduced in #link(<def:jacobian-matrix>)
   $
     nabla = bold(i) frac(partial, partial x) + bold(j) frac(partial, partial y) + bold(k) frac(partial, partial z)
   $
-  is called the *nabla operator* (or Hamilton operator). It combines with scalar and vector fields by the rules of vector algebra: the product $nabla f$ with a scalar field $f$ is the gradient of $f$, while the dot product $nabla dot bold(f)$ and the cross product $nabla times bold(f)$ with a vector field $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ are the two operators defined next.
+  is called the *nabla operator* (or Hamilton operator).
 ] <def:nabla-operator>
+
+The operator combines with scalar and vector fields by the rules of vector algebra: the product $nabla f$ with a scalar field $f$ is the gradient of $f$, while the dot product $nabla dot bold(f)$ and the cross product $nabla times bold(f)$ with a vector field $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ are the two operators defined next.
 
 #definition(name: "Divergence")[
   Let $bold(f)(x, y, z) = P bold(i) + Q bold(j) + R bold(k)$, where $P, Q, R$ are differentiable at the point in question. The scalar
   $
     "div" bold(f) = nabla dot bold(f) = frac(partial P, partial x) + frac(partial Q, partial y) + frac(partial R, partial z)
   $
-  is called the *divergence* of the field $bold(f)$ at that point. A field with $"div" bold(f) equiv 0$ on a region is called *solenoidal* (or source-free) there.
+  is called the *divergence* of the field $bold(f)$ at that point.
 ] <def:divergence>
+
+A field with $"div" bold(f) equiv 0$ on a region is called *solenoidal* (or source-free) there.
 
 #definition(name: "Curl")[
   Let $bold(f)(x, y, z) = P bold(i) + Q bold(j) + R bold(k)$, where $P, Q, R$ are differentiable at the point in question. The vector
@@ -10059,8 +10063,10 @@ The gradient of a scalar function was introduced in #link(<def:jacobian-matrix>)
       P, Q, R,
     )
   $
-  is called the *curl* (or rotation) of the field $bold(f)$ at that point. A field with $"curl" bold(f) equiv bold(0)$ on a region is called *irrotational* there.
+  is called the *curl* (or rotation) of the field $bold(f)$ at that point.
 ] <def:curl>
+
+A field with $"curl" bold(f) equiv bold(0)$ on a region is called *irrotational* there.
 
 #property(name: "Rules for Divergence and Curl")[
   Let $u$ be a differentiable scalar field and $bold(f), bold(g)$ differentiable vector fields. Then:
@@ -10127,10 +10133,9 @@ In computational terms, $dif x_i$ records the increment of the $i$-th coordinate
   $
     dif f = frac(partial f, partial x_1) dif x_1 + frac(partial f, partial x_2) dif x_2 + ... + frac(partial f, partial x_n) dif x_n,
   $
-  which is precisely the total differential of the coefficient function.
 ] <def:exterior-differentiation>
 
-By the definition, the exterior differentiation of a $k$-form is a $(k + 1)$-form; it generalizes the total differential $dif f$, whose coefficients are precisely the components of the gradient $nabla f$ of $f$. The following theorem unwraps the general definition into the coordinate formulas used in actual computation.
+By the definition, the exterior differentiation of a $k$-form is a $(k + 1)$-form; the inner summand $dif f$ is precisely the total differential of the coefficient function, and it generalizes to a form whose coefficients are precisely the components of the gradient $nabla f$ of $f$. The following theorem unwraps the general definition into the coordinate formulas used in actual computation.
 
 #theorem(name: "Coordinate Formulas for Exterior Differentiation")[
   + For a $1$-form $omega = P dif x + Q dif y$ in $bb(R)^2$,
@@ -10459,10 +10464,10 @@ This *one-projection method* avoids projecting onto three coordinate planes sepa
   $
     integral.double_(limits(Sigma)^harpoon.rt) bold(f) dot bold(n) dif S
   $
-  is called the *flux* of $bold(f)$ across $limits(Sigma)^harpoon.rt$ (with respect to the chosen side). For a closed surface the normal is always taken to point outward unless stated otherwise.
+  is called the *flux* of $bold(f)$ across $limits(Sigma)^harpoon.rt$ (with respect to the chosen side).
 ] <def:flux>
 
-The flux measures the net amount of field passing through the surface in the direction of $bold(n)$; Gauß's theorem below will convert the flux through a closed surface into a volume integral of the divergence.
+For a closed surface the normal is always taken to point outward unless stated otherwise. The flux measures the net amount of field passing through the surface in the direction of $bold(n)$; Gauß's theorem below will convert the flux through a closed surface into a volume integral of the divergence.
 
 == Stokes' Formula // 斯托克斯公式
 
