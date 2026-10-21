@@ -114,12 +114,23 @@ Everything in this section is built from a single device, the *ordered pair*: a 
   the *Kuratowski pair*.
 ] <def:ordered-pair>
 
-The encoding is designed so that the pair carries exactly the information it should: $(x, y) = (x', y')$ if and only if $x = x'$ and $y = y'$.
+The encoding is designed so that the pair carries exactly the information it should.
 
-One direction is immediate. For the other, suppose ${{x}, {x, y}} = {{x'}, {x', y'}}$.
-If $x = y$, the left side is ${{x}}$, a family with a single member, so the right side has a single member as well: $x' = y' = x$.
-If $x != y$, then ${x} != {x, y}$, and the singleton ${x}$ must equal one of the two members on the right.
-It cannot equal ${x', y'}$, for that would give $x' = y' = x$ and then ${x, y} = {x}$, contradicting $x != y$; hence ${x} = {x'}$, so $x = x'$, and then ${x, y} = {x', y'}$ forces $y = y'$.
+#property(name: "Pairing Is Faithful")[
+  For all $x, y, x', y'$,
+  $
+    (x, y) = (x', y') quad <=> quad x = x' "and" y = y'.
+  $
+] <prop:pairing-faithful>
+
+#proof[
+  If $x = x'$ and $y = y'$, the two sets ${{x}, {x, y}}$ and ${{x'}, {x', y'}}$ coincide, which gives the easy direction.
+
+  Conversely, suppose ${{x}, {x, y}} = {{x'}, {x', y'}}$.
+  If $x = y$, the left side is ${{x}}$, a family with a single member, so the right side has a single member as well: $x' = y' = x$.
+  If $x != y$, then ${x} != {x, y}$, and the singleton ${x}$ must equal one of the two members on the right.
+  It cannot equal ${x', y'}$, for that would give $x' = y' = x$ and then ${x, y} = {x}$, contradicting $x != y$; hence ${x} = {x'}$, so $x = x'$, and then ${x, y} = {x', y'}$ forces $y = y'$.
+]
 
 #definition(name: "Cartesian product")[
   Let $X$ and $Y$ be two sets.
@@ -157,13 +168,22 @@ It cannot equal ${x', y'}$, for that would give $x' = y' = x$ and then ${x, y} =
   Note what the two definitions above accomplish.
   A *relation* is a set of ordered pairs, and an *ordered pair* is a set of sets, so a relation is already a set: no new kind of object has entered mathematics.
 
-  Every classical mathematical object is built from these two ingredients.
+  Almost every classical mathematical object is built from these two ingredients.
   - *Maps* — functions, functionals, operators — are relations with the single-valued property, hence sets of ordered pairs.
+  - *Numbers*: the natural numbers are rebuilt as sets in the chapter on ordinals, where each ordinal is the set of its predecessors; the integers, the rationals and the reals are then built on them, as quotient sets and as cuts or Cauchy sequences.
   - *Algebraic and geometric structures* — groups, rings, fields, vector spaces, topological spaces, inner product spaces — are ordered tuples such as $(G, dot)$, $(X, tau)$ or $(V, +, ⟨dot, dot⟩)$, consisting of a set together with some maps and possibly a family of subsets.
   - *Partitions* and *filters* are sets of subsets.
 
-  The reductionist slogan follows: mathematics is a theory of sets, and every theorem about a structure is, once the definitions are unwound, a theorem about sets.
-  This is what allows set theory — ZFC in the next chapter — to serve as a foundation for the whole of mathematics, and it is why one definition, that of a relation, suffices for graphs, orders, maps and quotient constructions alike.
+  Two caveats keep the slogan honest.
+
+  First, some collections are too large to be sets: the collection of all sets, of all groups, or of all ordinals cannot itself be a set without contradiction, and reappears as a *proper class*.
+  The class-set distinction is the subject of §2.3, and it is why "everything is a set" is a statement about the objects of the theory, not a licence to form any collection one likes.
+
+  Second, ZFC is itself a *first-order theory*: its quantifiers $forall$ and $exists$, its connectives and its variables belong to the *syntax* in which the theory is written, not to the universe that theory describes.
+  Logic is therefore not reduced to sets inside ZFC; only the objects the theory speaks about are sets.
+
+  With these provisos, the reductionist picture stands: mathematics is a theory of sets, every theorem about a structure is — once the definitions are unwound — a theorem about sets, and this is what allows ZFC, presented in the next chapter, to serve as a foundation for the whole of mathematics.
+  It is also why one definition, that of a relation, suffices for graphs, orders, maps and quotient constructions alike.
 ] <note:reduction-to-sets>
 
 There are several special types of relations:
