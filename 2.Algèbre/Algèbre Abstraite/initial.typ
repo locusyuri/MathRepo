@@ -38,20 +38,31 @@ than redefined.
 
 == Algebraic Operations // 代数运算
 
-#definition(name: "Binary Operation")[
-  A *binary operation* on a set $S$ is a mapping
+#definition(name: "Operation")[
+  Let $S$ be a set and $n >= 0$ an integer. An *$n$-ary operation* on
+  $S$ is a mapping
   $
-    mu: S times S -> S, quad (a, b) mapsto mu(a, b).
+    mu: S^n -> S, quad (a_1, dots, a_n) mapsto mu(a_1, dots, a_n);
   $
-  Writing $mu(a, b) = a star b$, the defining requirement is
-  *closure*: $a star b in S$ for all $a, b in S$. More generally, an
-  $n$-ary operation is a mapping $S^n -> S$.
-] <def:binary-operation>
+  the integer $n$ is its *arity*. A *nullary* operation ($n = 0$) is
+  the choice of an element of $S$; a *unary* operation ($n = 1$) is a
+  self-map of $S$; a *binary* operation ($n = 2$) is a mapping
+  $mu: S times S -> S$, written $mu(a, b) = a star b$, and the
+  requirement $a star b in S$ for all $a, b in S$ — *closure* — is
+  written into the codomain.
+] <def:operation>
 
 #note[
-  A binary operation is *nothing more* than an arbitrary map
-  $S times S -> S$, however chaotic. Its name recurs because groups,
-  rings, fields and modules rest on such maps; the real content lies
+  This book studies almost exclusively *binary* operations: unless an
+  arity is named explicitly, "operation" will mean a binary one from
+  now on. Groups, rings, fields and modules are all built on a single
+  binary operation, possibly accompanied by a unary operation of
+  inversion or a nullary one marking the identity.
+
+  But a binary operation is *nothing more* than an arbitrary map
+  $S times S -> S$, however chaotic; nothing in the notion privileges
+  it over the ternary or the nullary case. Its name recurs because
+  the classical structures rest on such maps; the real content lies
   in the *laws* it may satisfy (#link(<prop:operation-laws>)[below])
   — a generic operation satisfies none.
 ] <note:binary-operation-trivial>
@@ -445,7 +456,7 @@ merely has a well-defined product; a *semigroup* adds associativity; a
 ] <def:magma>
 
 A magma is precisely the structure of
-#link(<def:binary-operation>)[§1.1]. The only guarantee is *closure*:
+#link(<def:operation>)[§1.1] with no law imposed. The only guarantee is *closure*:
 every product $a star b$ is a defined element of $G$, and nothing more
 is promised.
 
