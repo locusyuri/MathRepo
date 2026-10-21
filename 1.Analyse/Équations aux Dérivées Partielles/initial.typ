@@ -2481,6 +2481,7 @@ The linear theory of Chapters 12–13 is the platform for semilinear parabolic e
 //   Section 16.4: The Inhomogeneous Equation: Duhamel's Principle (非齐次方程：Duhamel 原理)
 //     - 叠加原理：一般问题 = 齐次 + 非齐次拆解
 //     - Duhamel 原理；一维、二维、三维非齐次显式公式
+//     - 多项式数据的待定系数法：系数递推、终止性证明、两条实用规则、两个算例、适用范围
 //
 //   Section 16.5: Separation of Variables for the Wave Equation (波动方程的分离变量法)
 //     - 初边值问题（IBVP）定义
@@ -3022,7 +3023,7 @@ and each component of $bold(v)$ satisfies the same equation. Thus every small ac
 $] <eq:acoustic-system>
 is the prototype of the symmetric hyperbolic systems studied in Chapter 17; its scalar unknowns satisfy the wave equation.
 
-=== Well-Posedness: Initial and Boundary Conditions // 定解条件
+#h(2em)
 
 The wave equation is second order in time, so a well-posed problem must prescribe *two* initial conditions: the initial displacement $u (bold(x), 0) = phi (bold(x))$ and the initial velocity $u_t (bold(x), 0) = psi (bold(x))$. These data, together with the equation, select the *Cauchy problem* on $bb(R)^n$ — the object of the next three sections.
 
@@ -3308,6 +3309,80 @@ For $n = 2$, Poisson's formula gives
   u (bold(x), t) = integral_0^t 1/(2 pi) integral_(B (bold(x), a (t - s))) (f (bold(y), s))/(sqrt(a^2 (t - s)^2 - abs(bold(x) - bold(y))^2)) dif bold(y) dif s.
 $] <eq:duhamel-2d>
 In even dimensions the wave carries a trailing wake: at each emission time the value at $(bold(x), t)$ receives contributions from a whole disk, not merely from its boundary.
+
+=== Polynomial Data: The Method of Undetermined Coefficients // 多项式数据的待定系数法
+
+The formulas above answer every smooth Cauchy problem, but they answer it with integrals. When the data are polynomials the integrals are avoidable: the solution is then itself a polynomial, and its coefficients come out of pure algebra. The mechanism is a recursion in the powers of $t$.
+
+#proposition(name: "Polynomial Data")[
+  Let $phi, psi$ be polynomials in $bold(x) in bb(R)^n$, and let $f (bold(x), t) = sum_(k=0)^K t^k f_k (bold(x))$ with every $f_k$ a polynomial. Then the Cauchy problem $u_(t t) = a^2 Delta u + f$, $u (dot, 0) = phi$, $u_t (dot, 0) = psi$, has exactly one solution, it is a polynomial
+  $
+    u (bold(x), t) = sum_(k=0)^N t^k P_k (bold(x)),
+  $
+  and its coefficients are determined by
+  $
+    P_0 = phi, quad P_1 = psi, quad P_(k+2) = (a^2 Delta P_k + f_k)/((k+1)(k+2)), quad k >= 0,
+  $
+  the recursion reaching the zero polynomial after finitely many steps.
+] <prop:polynomial-data>
+
+#proof[
+  *Step 1: The recursion terminates.* Each step obeys
+  $
+    "deg" P_(k+2) <= max("deg" P_k - 2, "deg" f_k)
+  $
+  (with $"deg" 0 = -oo$). Since $f_k = 0$ for $k > K$, the recursion reduces to $"deg" P_(k+2) <= "deg" P_k - 2$ once $k >= K$, so each of the two chains $k equiv 0, 1 (2)$ reaches the zero polynomial after finitely many steps: $P_k = 0$ for all $k > N$.
+
+  *Step 2: It solves the problem.* Substituting $u = sum_(k=0)^N t^k P_k$ and $f = sum_(k=0)^K t^k f_k$ into the equation and comparing the coefficients of $t^k$ gives $(k+2)(k+1) P_(k+2) = a^2 Delta P_k + f_k$ for every $k$, which is the recursion; both sides are polynomials in $t$ with coefficients in the space polynomials, so the comparison of coefficients is legitimate. The terms of order $t^0$ and $t^1$ give $u (dot, 0) = P_0 = phi$ and $u_t (dot, 0) = P_1 = psi$.
+
+  *Step 3: Uniqueness.* A polynomial is $C^2$, so by #link(<cor:wave-uniqueness>)[uniqueness of the Cauchy problem] there is no other solution.
+]
+
+The recursion is the precise form of the bookkeeping used in practice, and it explains all of it.
+
+- *Initial data.* The coefficients of $t^0$ and $t^1$ are fixed at once, $P_0 = phi$ and $P_1 = psi$; no other term can contribute to the initial data.
+- *Degree ladder.* Each step lowers the space degree by two and raises the time degree by two: a datum of space degree $d$ produces only the terms $t^(2 j) P_(d - 2 j)$ along the chain $P_0, P_2, P_4, dots$, and the recursion stops as soon as the space degree has dropped below two. An ansatz written with $t^2$ alone is therefore incomplete whenever $a^2 Delta P_0$ still has degree at least two.
+- *Zero initial velocity.* If $f$ is independent of $t$, the recursion preserves parity: $psi equiv 0$ forces all odd terms to vanish, and $phi equiv 0$ all even ones. A source depending on $t$ breaks this: for $u_(t t) = a^2 u_(x x) + t$ with zero data the recursion gives $P_0 = P_1 = P_2 = 0$ and $P_3 = 1/6$, so the solution $u = t^3/6$ is odd although both data vanish.
+
+#example(name: "Polynomial Data: A Homogeneous Plane Wave")[
+  Solve
+  $
+    u_(t t) = a^2 (u_(x x) + u_(y y)), quad u (dot, 0) = x^2 (x + y), quad u_t (dot, 0) = 0.
+  $
+  Here $f equiv 0$, $P_0 = x^3 + x^2 y$ and $P_1 = 0$, so
+  $
+    P_2 = (a^2 Delta P_0)/2 = (a^2 (6 x + 2 y))/2 = a^2 (3 x + y), quad P_3 = (a^2 Delta P_1)/6 = 0,
+  $
+  and then $P_4 = (a^2 Delta P_2)/12 = 0$, because $Delta P_2 = 0$. Hence
+  $
+    u = x^3 + x^2 y + a^2 t^2 (3 x + y),
+  $
+  which satisfies the initial conditions by construction and the equation because $u_(t t) = 2 a^2 (3 x + y) = a^2 (6 x + 2 y) = a^2 Delta u$.
+] <ex:wave-polynomial-homogeneous>
+
+#example(name: "Polynomial Data: An Inhomogeneous Plane Wave")[
+  Solve
+  $
+    u_(t t) - 3 (u_(x x) + u_(y y)) = x^3 + y^3, quad u (dot, 0) = 0, quad u_t (dot, 0) = x^2.
+  $
+  Here $a^2 = 3$, $phi = 0$, $psi = x^2$, $f_0 = x^3 + y^3$ and $f_k = 0$ for $k >= 1$, so the recursion produces four nonzero coefficients:
+  $
+    P_0 = 0, quad P_1 = x^2, quad P_2 = (3 Delta P_0 + f_0)/2 = 1/2 (x^3 + y^3), quad P_3 = (3 Delta P_1)/6 = 1,
+  $
+  then
+  $
+    P_4 = (3 Delta P_2)/12 = (9 (x + y))/12 = 3/4 (x + y), quad P_5 = (3 Delta P_3)/20 = 0,
+  $
+  and $P_6 = (3 Delta P_4)/30 = 0$. Hence
+  $
+    u = t x^2 + t^3 + 1/2 t^2 (x^3 + y^3) + 3/4 t^4 (x + y).
+  $
+  The odd chain is not empty although the source does not depend on $t$: the term $t x^2$ prescribed by $psi$ produces $3 Delta (t x^2) = 6 t$, which must be matched by $u_(t t)$, and the only way to produce $6 t$ is the cubic term $t^3$.
+] <ex:wave-polynomial-inhomogeneous>
+
+#note[
+  *Scope.* The method is pure algebra and applies to the Cauchy problem for constant-coefficient equations with polynomial data; for non-polynomial data the Kirchhoff and Poisson formulas above remain the only general tool. It does not apply to initial-boundary value problems on a bounded interval — a polynomial will rarely satisfy the boundary conditions, and the spectral method of §16.5 takes over — nor to equations with variable coefficients or nonlinear terms. The comparison with the general formulas is therefore one of cost, not of scope: for a polynomial datum the recursion replaces a surface or disk integral by finitely many differentiations.
+]
 
 == Separation of Variables for the Wave Equation // 波动方程的分离变量法
 
