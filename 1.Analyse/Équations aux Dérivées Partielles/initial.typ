@@ -3256,9 +3256,15 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
     u (x, y, t) =& (partial)/(partial t) [t/(4 pi) integral_0^(2 pi) integral_0^pi phi (x + a t sin phi.alt cos theta, y + a t sin phi.alt sin theta) e^(c t cos phi.alt) sin phi.alt dif phi.alt dif theta] \
     &+ t/(4 pi) integral_0^(2 pi) integral_0^pi psi (x + a t sin phi.alt cos theta, y + a t sin phi.alt sin theta) e^(c t cos phi.alt) sin phi.alt dif phi.alt dif theta.
   $
-  The weight $sin phi.alt$ is the surface element and $e^(c t cos phi.alt)$ carries the potential; for $c = 0$ the two integrals are exactly the spherical-coordinate form of Kirchhoff's formula of §16.3 with the third variable frozen at $z = 0$.
+  The weight $sin phi.alt$ is the surface element and $e^(c t cos phi.alt)$ carries the potential.
 
-  This is the solution. The average runs over the *unit sphere*, not over the disk, and the potential enters through the weight $e^(c t omega_3)$, which is what the third dimension contributes. For $c = 0$ the weight disappears and the formula becomes the spherical-mean form of Poisson's formula of §16.3. For imaginary $c = i m$ the same transformation gives the Klein--Gordon equation $u_(t t) - a^2 Delta u + m^2 u = 0$, the exponential becoming the oscillating weight $e^(i m t omega_3)$.
+  For $c = 0$ the two integrals are exactly the spherical-coordinate form of Kirchhoff's formula of §16.3, with the third variable frozen at $z = 0$.
+
+  This is the solution: the average runs over the *unit sphere*, not over the disk, and the potential enters through the weight $e^(c t omega_3)$, which is what the third dimension contributes.
+
+  For $c = 0$ the weight disappears and the formula becomes the spherical-mean form of Poisson's formula of §16.3.
+
+  For imaginary $c = i m$ the same transformation gives the Klein--Gordon equation $u_(t t) - a^2 Delta u + m^2 u = 0$, the exponential becoming the oscillating weight $e^(i m t omega_3)$.
 ] <ex:wave-telegraph-2d>
 
 The homogeneous Cauchy problem is now solved in every dimension. The *inhomogeneous* problem with zero data is reduced to the homogeneous one in §16.4 by the superposition principle and #link(<thm:duhamel-wave>)[Duhamel's principle], and for general data the two contributions are simply added. Initial-boundary value problems on bounded domains — membranes, acoustic resonators — call instead for separation of variables, along the lines of §16.5; the general spectral framework is developed in Chapter 19.
@@ -3596,17 +3602,27 @@ Energy is being transported, not created: $bold(p)$ is the rate at which it cros
   $
     (dif)/(dif t) E (t) = -k a^2 integral_(partial Omega) u_t u dif S = -(k a^2)/2 (dif)/(dif t) integral_(partial Omega) u^2 dif S,
   $
-  so what is conserved is the *total* energy — the wave energy $E$ plus the elastic energy $(k a^2)/2 integral_(partial Omega) u^2$ stored in the springs — while the wave energy alone need not be monotone. Uniqueness survives unchanged: for the difference $w$ of two solutions the total energy vanishes at $t = 0$, hence $E (t) = -(k a^2)/2 integral_(partial Omega) w^2 dif S <= 0$, and since $E >= 0$ the difference vanishes. Genuine *dissipation* requires the damping condition $u_nu = -k u_t$ with $k > 0$, for which $(dif)/(dif t) E (t) = -k a^2 integral_(partial Omega) u_t^2 dif S <= 0$: the energy decreases monotonically, and the same vanishing argument gives uniqueness. The whole computation is carried out from scratch in #link(<ex:wave-robin-energy>)[the example below].
+  so what is conserved is the *total* energy — the wave energy $E$ plus the elastic energy $(k a^2)/2 integral_(partial Omega) u^2$ stored in the springs — while the wave energy alone need not be monotone.
+
+  Uniqueness survives unchanged: for the difference $w$ of two solutions the total energy vanishes at $t = 0$, hence $E (t) = -(k a^2)/2 integral_(partial Omega) w^2 dif S <= 0$, and since $E >= 0$ the difference vanishes.
+
+  Genuine *dissipation* requires the damping condition $u_nu = -k u_t$ with $k > 0$, for which $(dif)/(dif t) E (t) = -k a^2 integral_(partial Omega) u_t^2 dif S <= 0$: the energy decreases monotonically, and the same vanishing argument gives uniqueness.
+
+  The whole computation is carried out from scratch in #link(<ex:wave-robin-energy>)[the example below].
 ]
 
 #example(name: "Third-Type Boundary Condition: Energy and Uniqueness")[
   Consider the wave equation on a bounded plane domain $Omega subset bb(R)^2$ with $C^1$ boundary $Gamma$ and outward unit normal $nu$, subject to the *third-type* (Robin) boundary condition
   $
-    u_(t t) - a^2 (u_(x x) + u_(y y)) &= 0, quad & t > 0, (x, y) in Omega, \
-    u |_(t = 0) = phi (x, y), quad u_t |_(t = 0) &= psi (x, y), quad & (x, y) in Omega, \
-    ((partial u)/(partial nu) + sigma u) |_Gamma &= 0, quad & t > 0,
+    cases(
+      u_(t t) - a^2 (u_(x x) + u_(y y)) = 0 & quad t > 0 quad (x, y) in Omega,
+      u |_(t = 0) = phi (x, y) quad u_t |_(t = 0) = psi (x, y) & quad (x, y) in Omega,
+      ((partial u)/(partial nu) + sigma u) |_Gamma = 0 & quad t > 0,
+    )
   $
-  where $sigma > 0$ is a constant. Then
+  where $sigma > 0$ is a constant.
+
+  The claim is twofold: the quantity
   $
     E (t) = integral_Omega [u_t^2 + a^2 (u_x^2 + u_y^2)] dif x dif y + a^2 sigma integral_Gamma u^2 dif S
   $
@@ -3618,9 +3634,17 @@ Energy is being transported, not created: $bold(p)$ is the rate at which it cros
     &= 2 integral_Omega u_t (u_(t t) - a^2 (u_(x x) + u_(y y))) dif x dif y + 2 a^2 integral_Gamma u_t (partial u)/(partial nu) dif S + 2 a^2 sigma integral_Gamma u u_t dif S \
     &= 2 a^2 integral_Gamma u_t ((partial u)/(partial nu) + sigma u) dif S = 0,
   $
-  the volume term vanishing by the equation and the remaining one by the boundary condition. Two features deserve emphasis. The factor $a^2$ in front of the boundary integral is exactly what the divergence theorem produces, so the *flat* energy $integral_Omega [u_t^2 + a^2 (u_x^2 + u_y^2)]$ alone is not conserved: the energy $a^2 sigma integral_Gamma u^2$ stored on the boundary has to be added. And the identity is an equality rather than an inequality, because the Robin condition lets no energy leave the domain — it is the case $k = sigma$ of the note above.
+  the volume term vanishing by the equation and the remaining one by the boundary condition.
 
-  *Uniqueness.* If $u, v$ are two solutions with the same initial data, the difference $w = u - v$ solves the same problem with $phi = psi = 0$, so by conservation $E_w (t) = E_w (0) = 0$. Every term of $E_w$ is nonnegative ($sigma > 0$), hence $w_t = 0$ and $nabla w = 0$ in $Omega$ and $w = 0$ on $Gamma$. A function with vanishing gradient on the connected domain $Omega$ is constant, and a constant vanishing on $Gamma$ is identically zero. The role of $sigma > 0$ is precisely to make $E$ nonnegative: with $sigma < 0$ the boundary term is negative, the constraint injects rather than stores energy, and the vanishing argument collapses.
+  Two features deserve emphasis. The factor $a^2$ in front of the boundary integral is exactly what the divergence theorem produces, so the *flat* energy $integral_Omega [u_t^2 + a^2 (u_x^2 + u_y^2)]$ alone is not conserved: the energy $a^2 sigma integral_Gamma u^2$ stored on the boundary has to be added.
+
+  Moreover the identity is an equality rather than an inequality, because the Robin condition lets no energy leave the domain — it is the case $k = sigma$ of the note above.
+
+  *Uniqueness.* If $u, v$ are two solutions with the same initial data, the difference $w = u - v$ solves the same problem with $phi = psi = 0$, so by conservation $E_w (t) = E_w (0) = 0$. Every term of $E_w$ is nonnegative ($sigma > 0$), hence $w_t = 0$ and $nabla w = 0$ in $Omega$ and $w = 0$ on $Gamma$.
+
+  A function with vanishing gradient on the connected domain $Omega$ is constant, and a constant vanishing on $Gamma$ is identically zero.
+
+  The role of $sigma > 0$ is precisely to make $E$ nonnegative: with $sigma < 0$ the boundary term is negative, the constraint injects rather than stores energy, and the vanishing argument collapses.
 
   The same computation in $n$ space dimensions — with $a^2 (u_x^2 + u_y^2)$ replaced by $a^2 abs(nabla u)^2$ and $Gamma$ by $partial Omega$ — shows that #link(<thm:wave-energy>)[the conservation law of §16.6] extends from the Dirichlet and Neumann conditions to the Robin condition.
 ] <ex:wave-robin-energy>
