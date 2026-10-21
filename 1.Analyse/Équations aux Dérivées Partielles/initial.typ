@@ -3419,6 +3419,28 @@ The existence results of the preceding sections say *where* a solution can be fo
 
 === Energy Conservation on Bounded Domains // 有界域上的能量守恒
 
+The quantity conserved below is not an abstract device but the mechanical energy of the medium, and its form is fixed by the two ingredients of the derivation in §16.1 — inertia and elasticity.
+
+*Vibrating string.* A segment of length $dif x$ of a string of linear density $rho$ and wave speed $a$ carries the kinetic energy $1/2 rho u_t^2 dif x$. Stretching it from its rest length $dif x$ to $sqrt((dif x)^2 + (dif u)^2)$ stores the work done against the tension, the tension being $rho a^2$ by #link(<eq:wave-string>)[§16.1]; to leading order this is $1/2 rho a^2 u_x^2 dif x$, because $sqrt(1 + u_x^2) - 1 = 1/2 u_x^2 + O(u_x^4)$. The mechanical energy of the string,
+$
+  E_"mech" (t) = 1/2 integral_0^L (rho u_t^2 + rho a^2 u_x^2) dif x,
+$
+is therefore $rho$ times the density-normalized energy; dividing by the constant $rho$ gives
+$
+  E (t) = 1/2 integral_0^L (u_t^2 + a^2 u_x^2) dif x.
+$
+
+*Elastic media and acoustic waves.* In $n$ space dimensions the two contributions appear as energy densities: the kinetic density $1/2 abs(u_t)^2$ and the elastic density $1/2 a^2 abs(nabla u)^2$. For a membrane $u$ is the transverse displacement and $a^2$ the ratio of tension to surface density; for the acoustic system of #link(<eq:acoustic-system>)[§16.1] the same two terms are the kinetic energy $1/2 rho_0 abs(bold(v))^2$ of the fluid and the compression energy $1/2 p^2/(rho_0 c^2)$, again up to the constant density factor. The energy stored in a region $Omega$ at time $t$ is thus
+$
+  E (t) = 1/2 integral_Omega (abs(u_t)^2 + a^2 abs(nabla u)^2) dif bold(x).
+$
+
+*Local conservation.* The same computation that proves conservation also locates it: with the energy density $e = 1/2 (u_t^2 + a^2 abs(nabla u)^2)$ and the energy flux $bold(p) = -a^2 u_t nabla u$, the equation gives
+$
+  (partial e)/(partial t) + "div" bold(p) = u_t (u_(t t) - a^2 Delta u) = 0.
+$
+Energy is being transported, not created: $bold(p)$ is the rate at which it crosses a surface, and the flux $-a^2 u_t nabla u$ is exactly the vector whose contribution over the lateral surface of a cone is computed in the proof of the local energy inequality below. We henceforth work with the normalized energy $E$, the density factor being constant.
+
 #theorem(name: "Conservation of Energy")[
   Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary, let $T > 0$, and let $u in C^2 (overline(Omega) times [0, T])$ be a solution of the wave equation $u_(t t) = a^2 Delta u$ for $bold(x) in Omega$, $0 < t <= T$, with either $u = 0$ or $u_nu = 0$ on $partial Omega times (0, T]$, where $nu$ denotes the outward unit normal. Then the energy
   $
