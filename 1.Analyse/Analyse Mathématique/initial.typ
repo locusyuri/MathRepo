@@ -10100,7 +10100,7 @@ The composition identities above are the differential shadow of the conservative
 
 == Differential Forms and Exterior Differentiation // 微分形式与外微分
 
-In the previous subsection, the second type of line integral was re-expressed as the integral of a $1$-form $omega = P dif x + Q dif y + R dif z$ along the oriented curve, and the surface integrals to be defined below are built on symbols such as $dif y and dif z$. All these integrands are instances of *differential forms*; moreover, Green's formula admits the unified shape $integral.cont_(limits(partial M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega$, and so will Stokes' and Gauß's formulas. This section sets up the algebra of differential forms together with its computation engine, the *exterior differentiation*; a final ingredient, the Hodge star operator, converts the tangential (work) pairing into the normal (flux) pairing.
+In the previous subsection, the second type of line integral was re-expressed as the integral of a $1$-form $omega = P dif x + Q dif y + R dif z$ along the oriented curve, and the surface integrals to be defined below are built on symbols such as $dif y and dif z$. All these integrands are instances of *differential forms*; moreover, Green's formula admits the unified shape $integral.cont_(partial limits(M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega$, and so will Stokes' and Gauß's formulas. This section sets up the algebra of differential forms together with its computation engine, the *exterior differentiation*; a final ingredient, the Hodge star operator, converts the tangential (work) pairing into the normal (flux) pairing.
 
 === Differential Forms and the Wedge Product // 微分形式与楔积
 
@@ -10217,7 +10217,7 @@ The nilpotency is the alternating-algebra avatar of the equality of mixed second
   $
   Substituting this into Green's formula yields, for every oriented closed region $limits(M)^harpoon.rt$,
   $
-    integral.cont_(limits(partial M)^harpoon.rt) x^2 y dif x - x y^2 dif y = -integral.double_(limits(M)^harpoon.rt) (x^2 + y^2) dif x dif y,
+    integral.cont_(partial limits(M)^harpoon.rt) x^2 y dif x - x y^2 dif y = -integral.double_(limits(M)^harpoon.rt) (x^2 + y^2) dif x dif y,
   $
   which the reader may compare with the direct statement of #link(<thm:green-theorem>)[Green's theorem].
 ]
@@ -10319,7 +10319,11 @@ The star operator converts tangential data into normal data. For a planar field 
   so the Laplacian is a composition of exterior differentiations and star operators; this is the reading under which it enters Green's identities below.
 ]
 
-The integration of differential forms is defined in the next section: a $1$-form is integrated along an oriented curve, and a $2$-form over an oriented surface. With this in place, Green's, Stokes', and Gauß's formulas all take the unified shape $integral_(limits(partial M)^harpoon.rt) omega = integral_(limits(M)^harpoon.rt) dif omega$. The following dictionary pairs each form with the vector integral it encodes, where $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ in space and $bold(f) = F_1 bold(i) + F_2 bold(j)$ in the plane; the two flux rows are exactly the star images $star (bold(f)^flat)$ of the work form computed above, and the last row is the flux pairing that converts Green's theorem into the two-dimensional divergence theorem.
+The integration of differential forms is defined in the next section: a $1$-form is integrated along an oriented curve, and a $2$-form over an oriented surface. With this in place, Green's, Stokes', and Gauß's formulas all take the unified shape
+$
+  integral_(partial limits(Omega)^harpoon.rt) omega = integral_(limits(Omega)^harpoon.rt) dif omega.
+$
+The following dictionary pairs each form with the vector integral it encodes, where $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ in space and $bold(f) = F_1 bold(i) + F_2 bold(j)$ in the plane; the two flux rows are exactly the star images $star (bold(f)^flat)$ of the work form computed above, and the last row is the flux pairing that converts Green's theorem into the two-dimensional divergence theorem.
 
 #tex-table(
   ([Form], [Vector integral], [Interpretation]),
@@ -10550,46 +10554,46 @@ The second region is similar.
   caption: [Two special oriented closed regions.],
 ) <fig:special-region-1>
 
-Denote $integral.cont_(limits(partial M)^harpoon.rt)$ as the line integral along the boundary of the region $limits(M)^harpoon.rt$; then we have the following lemma.
+Denote $integral.cont_(partial limits(M)^harpoon.rt)$ as the line integral along the boundary of the region $limits(M)^harpoon.rt$; then we have the following lemma.
 
 #lemma[
-  + Let $limits(partial M)^harpoon.rt$ be the boundary of the first region in @fig:special-region-1, and let $P(x, y) in C^1 (M)$. Then
+  + Let $partial limits(M)^harpoon.rt$ be the boundary of the first region in @fig:special-region-1, and let $P(x, y) in C^1 (M)$. Then
     $
-      integral.cont_(limits(partial M)^harpoon.rt) P dif x = -integral.double_(limits(M)^harpoon.rt) frac(partial P, partial y) dif x and dif y.
+      integral.cont_(partial limits(M)^harpoon.rt) P dif x = -integral.double_(limits(M)^harpoon.rt) frac(partial P, partial y) dif x and dif y.
     $
-  + Let $limits(partial M)^harpoon.rt$ be the boundary of the second region in @fig:special-region-1, and let $Q(x, y) in C^1 (M)$. Then
+  + Let $partial limits(M)^harpoon.rt$ be the boundary of the second region in @fig:special-region-1, and let $Q(x, y) in C^1 (M)$. Then
     $
-      integral.cont_(limits(partial M)^harpoon.rt) Q dif y = integral.double_(limits(M)^harpoon.rt) frac(partial Q, partial x) dif x and dif y.
+      integral.cont_(partial limits(M)^harpoon.rt) Q dif y = integral.double_(limits(M)^harpoon.rt) frac(partial Q, partial x) dif x and dif y.
     $
 ] <lem:green-special-regions>
 
 #theorem(name: "Green's Theorem")[
-  Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^2$, and $omega = P dif x + Q dif y in C^1 (M)$. If $limits(partial M)^harpoon.rt$ can be split into finitely many first and second regions in @fig:special-region-1 simultaneously (non-overlapping, no shared interior points), then
+  Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^2$, and $omega = P dif x + Q dif y in C^1 (M)$. If $partial limits(M)^harpoon.rt$ can be split into finitely many first and second regions in @fig:special-region-1 simultaneously (non-overlapping, no shared interior points), then
   $
-    integral.cont_(limits(partial M)^harpoon.rt) P dif x + Q dif y
+    integral.cont_(partial limits(M)^harpoon.rt) P dif x + Q dif y
     & = integral.double_(limits(M)^harpoon.rt) (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y \
     & = integral.double_M (frac(partial Q, partial x) - frac(partial P, partial y)) dif x dif y,
   $
   where $dif x and dif y$ is the directed area element, while $dif x dif y$ is the unsigned area element. Equivalently,
   $
-    integral.cont_(limits(partial M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega,
+    integral.cont_(partial limits(M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega,
   $
-  where $limits(partial M)^harpoon.rt$ is the induced orientation of $limits(M)^harpoon.rt$.
+  where $partial limits(M)^harpoon.rt$ is the induced orientation of $limits(M)^harpoon.rt$.
 ] <thm:green-theorem>
 
 #note[
-  The induced orientation mentioned above is characterized as follows. For a plane region $limits(M)^harpoon.rt$ with positive (counterclockwise) orientation, the induced orientation of the boundary $limits(partial M)^harpoon.rt$ is such that the region always lies on the left when one walks along the boundary with this orientation. For an oriented surface $limits(M)^harpoon.rt$ in $bb(R)^3$ (as in Gauß's and Stokes' theorems below), the induced orientation of the boundary curve $limits(partial M)^harpoon.rt$ is determined by the chosen unit normal field of the surface: walking along the boundary with the head pointing along the normal, the surface lies on the left; in particular, for Gauß's formula, the boundary surface $limits(partial M)^harpoon.rt$ adopts the outward normal orientation.
+  The induced orientation mentioned above is characterized as follows. For a plane region $limits(M)^harpoon.rt$ with positive (counterclockwise) orientation, the induced orientation of the boundary $partial limits(M)^harpoon.rt$ is such that the region always lies on the left when one walks along the boundary with this orientation. For an oriented surface $limits(M)^harpoon.rt$ in $bb(R)^3$ (as in Gauß's and Stokes' theorems below), the induced orientation of the boundary curve $partial limits(M)^harpoon.rt$ is determined by the chosen unit normal field of the surface: walking along the boundary with the head pointing along the normal, the surface lies on the left; in particular, for Gauß's formula, the boundary surface $partial limits(M)^harpoon.rt$ adopts the outward normal orientation.
 ] <note:induced-orientation>
 // 兑现 P0-3（§14.5）边界诱导定向前瞻承诺。
 
 #corollary(name: "Divergence Form of Green's Theorem")[
   Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^2$ with positively oriented boundary, and let $bold(f) = P bold(i) + Q bold(j) in C^1 (limits(M)^harpoon.rt)$. Then
   $
-    integral.cont_(limits(partial M)^harpoon.rt) bold(f) dot bold(n) dif s
+    integral.cont_(partial limits(M)^harpoon.rt) bold(f) dot bold(n) dif s
     & = integral.double_(limits(M)^harpoon.rt) (frac(partial P, partial x) + frac(partial Q, partial y)) dif x dif y \
     & = integral.double_(limits(M)^harpoon.rt) nabla dot bold(f) dif x dif y,
   $
-  where $bold(n)$ is the unit outward normal along $limits(partial M)^harpoon.rt$.
+  where $bold(n)$ is the unit outward normal along $partial limits(M)^harpoon.rt$.
 ] <cor:green-divergence-form>
 
 #proof[
@@ -10597,7 +10601,7 @@ Denote $integral.cont_(limits(partial M)^harpoon.rt)$ as the line integral along
   $
     dif omega = (frac(partial P, partial x) + frac(partial Q, partial y)) dif x and dif y.
   $
-  Along the positively oriented boundary, the outward flux element satisfies $bold(n) dif s = (dif y, -dif x)$, so $integral.cont_(limits(partial M)^harpoon.rt) bold(f) dot bold(n) dif s = integral.cont_(limits(partial M)^harpoon.rt) P dif y - Q dif x$, and the assertion follows.
+  Along the positively oriented boundary, the outward flux element satisfies $bold(n) dif s = (dif y, -dif x)$, so $integral.cont_(partial limits(M)^harpoon.rt) bold(f) dot bold(n) dif s = integral.cont_(partial limits(M)^harpoon.rt) P dif y - Q dif x$, and the assertion follows.
 ]
 
 This is the two-dimensional divergence theorem: it converts the integral of $nabla dot bold(f)$ over a planar region into the outward flux through its boundary, and it is the planar special case of #link(<thm:gauss-theorem>)[Gauß's theorem].
@@ -10607,7 +10611,7 @@ Substituting particular fields in the divergence form yields the two classical i
 #corollary(name: "Green's First Identity")[
   Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^2$ with positively oriented piecewise smooth boundary, let $u in C^1 (limits(M)^harpoon.rt)$ and $v in C^2 (limits(M)^harpoon.rt)$. Then
   $
-    integral.double_(limits(M)^harpoon.rt) (nabla u dot nabla v + u Delta v) dif x dif y = integral.cont_(limits(partial M)^harpoon.rt) u frac(partial v, partial n) dif s,
+    integral.double_(limits(M)^harpoon.rt) (nabla u dot nabla v + u Delta v) dif x dif y = integral.cont_(partial limits(M)^harpoon.rt) u frac(partial v, partial n) dif s,
   $
   where $frac(partial v, partial n) = nabla v dot bold(n)$ is the directional derivative of $v$ along the outward unit normal $bold(n)$.
 ] <cor:green-first-identity>
@@ -10615,7 +10619,7 @@ Substituting particular fields in the divergence form yields the two classical i
 #corollary(name: "Green's Second Identity")[
   Under the hypotheses of #link(<cor:green-first-identity>)[Green's first identity] with $u, v in C^2 (limits(M)^harpoon.rt)$,
   $
-    integral.double_(limits(M)^harpoon.rt) (u Delta v - v Delta u) dif x dif y = integral.cont_(limits(partial M)^harpoon.rt) (u frac(partial v, partial n) - v frac(partial u, partial n)) dif s.
+    integral.double_(limits(M)^harpoon.rt) (u Delta v - v Delta u) dif x dif y = integral.cont_(partial limits(M)^harpoon.rt) (u frac(partial v, partial n) - v frac(partial u, partial n)) dif s.
   $
 ] <cor:green-second-identity>
 
@@ -10648,7 +10652,7 @@ Substituting particular fields in the divergence form yields the two classical i
 
 === Gauß's Formula // 高斯公式（原 leftbarTitle 非空壳，升级为小节）
 
-Consider three kinds of special oriented closed surfaces in $bb(R)^3$, as shown in @fig:special-region-2. As for the first surface $limits(M)^harpoon.rt$ ($limits(M)^harpoon.rt$ adopts the positive orientation (right-hand system), and $limits(partial M)^harpoon.rt$ adopts the outward normal orientation), it consists of three oriented surfaces:
+Consider three kinds of special oriented closed surfaces in $bb(R)^3$, as shown in @fig:special-region-2. As for the first surface $limits(M)^harpoon.rt$ ($limits(M)^harpoon.rt$ adopts the positive orientation (right-hand system), and $partial limits(M)^harpoon.rt$ adopts the outward normal orientation), it consists of three oriented surfaces:
 
 #terms(
   terms.item([$limits(Sigma_1)^harpoon.rt$], [$z = phi_1 (x, y)$, $(x, y) in Delta_1$.]),
@@ -10666,39 +10670,39 @@ The second and third surfaces are similar.
   caption: [Three special oriented closed surfaces (only the first two are shown).],
 ) <fig:special-region-2>
 
-Denote $integral.surf_(limits(partial M)^harpoon.rt)$ as the surface integral over the boundary of the region $limits(M)^harpoon.rt$; then we have the following lemma.
+Denote $integral.surf_(partial limits(M)^harpoon.rt)$ as the surface integral over the boundary of the region $limits(M)^harpoon.rt$; then we have the following lemma.
 
 #lemma[
-  + Let $limits(partial M)^harpoon.rt$ be the boundary of the first surface in @fig:special-region-2, and let $R(x, y, z) in C^1 (M)$. Then
+  + Let $partial limits(M)^harpoon.rt$ be the boundary of the first surface in @fig:special-region-2, and let $R(x, y, z) in C^1 (M)$. Then
     $
-      integral.surf_(limits(partial M)^harpoon.rt) R dif x and dif y = integral.vol_(limits(M)^harpoon.rt) frac(partial R, partial z) dif x and dif y and dif z.
+      integral.surf_(partial limits(M)^harpoon.rt) R dif x and dif y = integral.vol_(limits(M)^harpoon.rt) frac(partial R, partial z) dif x and dif y and dif z.
     $
-  + Let $limits(partial M)^harpoon.rt$ be the boundary of the second surface in @fig:special-region-2, and let $P(x, y, z) in C^1 (M)$. Then
+  + Let $partial limits(M)^harpoon.rt$ be the boundary of the second surface in @fig:special-region-2, and let $P(x, y, z) in C^1 (M)$. Then
     $
-      integral.surf_(limits(partial M)^harpoon.rt) P dif y and dif z = integral.vol_(limits(M)^harpoon.rt) frac(partial P, partial x) dif x and dif y and dif z.
+      integral.surf_(partial limits(M)^harpoon.rt) P dif y and dif z = integral.vol_(limits(M)^harpoon.rt) frac(partial P, partial x) dif x and dif y and dif z.
     $
-  + Let $limits(partial M)^harpoon.rt$ be the boundary of the third surface in @fig:special-region-2, and let $Q(x, y, z) in C^1 (M)$. Then
+  + Let $partial limits(M)^harpoon.rt$ be the boundary of the third surface in @fig:special-region-2, and let $Q(x, y, z) in C^1 (M)$. Then
     $
-      integral.surf_(limits(partial M)^harpoon.rt) Q dif z and dif x = integral.vol_(limits(M)^harpoon.rt) frac(partial Q, partial y) dif x and dif y and dif z.
+      integral.surf_(partial limits(M)^harpoon.rt) Q dif z and dif x = integral.vol_(limits(M)^harpoon.rt) frac(partial Q, partial y) dif x and dif y and dif z.
     $
 ] <lem:gauss-special-regions>
 
 #theorem(name: "Gauß's Theorem")[
-  Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^3$, and $omega = P dif y and dif z + Q dif z and dif x + R dif x and dif y in C^1 (M)$. If $limits(partial M)^harpoon.rt$ can be split into finitely many first, second and third regions in @fig:special-region-2 simultaneously (non-overlapping, no shared interior points), then
+  Let $limits(Omega)^harpoon.rt$ be an oriented closed region in $bb(R)^3$, and $omega = P dif y and dif z + Q dif z and dif x + R dif x and dif y in C^1 (M)$. If $partial limits(Omega)^harpoon.rt$ can be split into finitely many first, second and third regions in @fig:special-region-2 simultaneously (non-overlapping, no shared interior points), then
   $
-    integral.surf_(limits(partial M)^harpoon.rt) P dif y and dif z + Q dif z and dif x + R dif x and dif y
-    = integral.vol_(limits(M)^harpoon.rt) (frac(partial P, partial x) + frac(partial Q, partial y) + frac(partial R, partial z)) dif x and dif y and dif z,
+    integral.surf_(partial limits(Omega)^harpoon.rt) P dif y and dif z + Q dif z and dif x + R dif x and dif y
+    = integral.vol_(limits(Omega)^harpoon.rt) (frac(partial P, partial x) + frac(partial Q, partial y) + frac(partial R, partial z)) dif x and dif y and dif z,
   $
-  or, in vector form, with $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ and $bold(n)$ the outward unit normal of $limits(partial M)^harpoon.rt$,
+  or, in vector form, with $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ and $bold(n)$ the outward unit normal of $partial limits(Omega)^harpoon.rt$,
   $
-    integral.surf_(limits(partial M)^harpoon.rt) bold(f) dot bold(n) dif S
-    = integral.vol_(limits(M)^harpoon.rt) nabla dot bold(f) dif x and dif y and dif z,
+    integral.surf_(partial limits(Omega)^harpoon.rt) bold(f) dot bold(n) dif S
+    = integral.vol_(limits(Omega)^harpoon.rt) nabla dot bold(f) dif x and dif y and dif z,
   $
   or equivalently,
   $
-    integral.surf_(limits(partial M)^harpoon.rt) omega = integral.vol_(limits(M)^harpoon.rt) dif omega,
+    integral.surf_(partial limits(Omega)^harpoon.rt) omega = integral.vol_(limits(Omega)^harpoon.rt) dif omega,
   $
-  where $limits(partial M)^harpoon.rt$ is the induced orientation of $limits(M)^harpoon.rt$.
+  where $partial limits(Omega)^harpoon.rt$ is the induced orientation of $limits(Omega)^harpoon.rt$.
 ] <thm:gauss-theorem>
 // 注：tex 中该定理 "then:" 连续重复两次，且分割条件误引 fig:SpecialRegion1（应为 fig:SpecialRegion2），均已修正。
 
@@ -10726,9 +10730,9 @@ Denote $integral.surf_(limits(partial M)^harpoon.rt)$ as the surface integral ov
 === Stokes' Formula // 斯托克斯定理（原 leftbarTitle 非空壳，升级为小节）
 
 #theorem(name: "Stokes' Theorem")[
-  Let $limits(M)^harpoon.rt$ be an oriented smooth surface in $bb(R)^3$ with boundary $limits(partial M)^harpoon.rt$, and $omega = P dif x + Q dif y + R dif z in C^1 (M)$. Then
+  Let $limits(M)^harpoon.rt$ be an oriented smooth surface in $bb(R)^3$ with boundary $partial limits(M)^harpoon.rt$, and $omega = P dif x + Q dif y + R dif z in C^1 (M)$. Then
   $
-    integral.cont_(limits(partial M)^harpoon.rt) P dif x + Q dif y + R dif z
+    integral.cont_(partial limits(M)^harpoon.rt) P dif x + Q dif y + R dif z
     & = integral.double_(limits(M)^harpoon.rt) (frac(partial R, partial y) - frac(partial Q, partial z)) dif y and dif z \
     & quad + (frac(partial P, partial z) - frac(partial R, partial x)) dif z and dif x + (frac(partial Q, partial x) - frac(partial P, partial y)) dif x and dif y \
     & = integral.double_(limits(M)^harpoon.rt) mat(
@@ -10745,16 +10749,16 @@ Denote $integral.surf_(limits(partial M)^harpoon.rt)$ as the surface integral ov
     ) dif S \
     & = integral.double_(limits(M)^harpoon.rt) (nabla times bold(f)) dot bold(n) dif S,
   $
-  or, in vector form, with $bold(f) = P bold(i) + Q bold(j) + R bold(k)$, $bold(tau)$ the unit tangent of $limits(partial M)^harpoon.rt$ and $bold(n)$ the unit normal of $limits(M)^harpoon.rt$ consistent with its orientation,
+  or, in vector form, with $bold(f) = P bold(i) + Q bold(j) + R bold(k)$, $bold(tau)$ the unit tangent of $partial limits(M)^harpoon.rt$ and $bold(n)$ the unit normal of $limits(M)^harpoon.rt$ consistent with its orientation,
   $
-    integral.cont_(limits(partial M)^harpoon.rt) bold(f) dot bold(tau) dif s
+    integral.cont_(partial limits(M)^harpoon.rt) bold(f) dot bold(tau) dif s
     = integral.double_(limits(M)^harpoon.rt) (nabla times bold(f)) dot bold(n) dif S,
   $
   or equivalently,
   $
-    integral.cont_(limits(partial M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega,
+    integral.cont_(partial limits(M)^harpoon.rt) omega = integral.double_(limits(M)^harpoon.rt) dif omega,
   $
-  where $limits(partial M)^harpoon.rt$ is the induced orientation of $limits(M)^harpoon.rt$.
+  where $partial limits(M)^harpoon.rt$ is the induced orientation of $limits(M)^harpoon.rt$.
 ] <thm:stokes-theorem>
 // 注：tex 中该定理条件写作 omega in C^1(Sigma)，与曲面记号 M 不一致，已统一为 C^1(M)。
 
@@ -10782,10 +10786,8 @@ Denote $integral.surf_(limits(partial M)^harpoon.rt)$ as the surface integral ov
 ]
 
 === Computational Strategies and Common Mistakes // 计算策略与常见错误
+The choice among the computational tools can be summarized as follows:
 
-#note[
-  The choice among the computational tools can be summarized as follows:
-]
 
 #tex-table(
   ("Situation", "Recommended tool"),
