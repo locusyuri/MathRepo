@@ -10041,7 +10041,21 @@ The gradient of a scalar function was introduced in #link(<def:jacobian-matrix>)
   is called the *nabla operator* (or Hamilton operator).
 ] <def:nabla-operator>
 
-The operator combines with scalar and vector fields by the rules of vector algebra: the product $nabla f$ with a scalar field $f$ is the gradient of $f$, while the dot product $nabla dot bold(f)$ and the cross product $nabla times bold(f)$ with a vector field $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ are the two operators defined next.
+The operator combines with scalar and vector fields by the rules of vector algebra: the product $nabla f$ with a scalar field $f$ is the gradient of $f$, while the dot product $nabla dot bold(f)$ and the cross product $nabla times bold(f)$ with a vector field $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ are the two first-order operators defined below.
+
+#note[
+  Strictly speaking, an *operator* is a mapping from functions to functions, in contrast with an ordinary function (numbers to numbers) and a *functional* (functions to numbers). Operators are studied systematically in functional analysis, which lies beyond the scope of this note.
+]
+
+#definition(name: "Laplacian")[
+  The composition of the nabla operator with itself,
+  $
+    Delta f = nabla dot (nabla f) = f_(x x) + f_(y y) + f_(z z),
+  $
+  is called the *Laplace operator* (or *Laplacian*) of the scalar field $f$.
+] <def:laplacian>
+
+It appears in Green's identities in #link(<cor:green-first-identity>)[the next section] and will be used freely thereafter.
 
 #definition(name: "Divergence")[
   Let $bold(f)(x, y, z) = P bold(i) + Q bold(j) + R bold(k)$, where $P, Q, R$ are differentiable at the point in question. The scalar
@@ -10051,7 +10065,7 @@ The operator combines with scalar and vector fields by the rules of vector algeb
   is called the *divergence* of the field $bold(f)$ at that point.
 ] <def:divergence>
 
-A field with $"div" bold(f) equiv 0$ on a region is called *solenoidal* (or source-free) there.
+A field with $nabla dot bold(f) equiv 0$ on a region is called *solenoidal* (or source-free) there.
 
 #definition(name: "Curl")[
   Let $bold(f)(x, y, z) = P bold(i) + Q bold(j) + R bold(k)$, where $P, Q, R$ are differentiable at the point in question. The vector
@@ -10066,23 +10080,23 @@ A field with $"div" bold(f) equiv 0$ on a region is called *solenoidal* (or sour
   is called the *curl* (or rotation) of the field $bold(f)$ at that point.
 ] <def:curl>
 
-A field with $"curl" bold(f) equiv bold(0)$ on a region is called *irrotational* there.
+A field with $nabla times bold(f) equiv bold(0)$ on a region is called *irrotational* there.
 
 #property(name: "Rules for Divergence and Curl")[
   Let $u$ be a differentiable scalar field and $bold(f), bold(g)$ differentiable vector fields. Then:
-  + Linearity: $"div"(alpha bold(f) + beta bold(g)) = alpha "div" bold(f) + beta "div" bold(g)$ and $"curl"(alpha bold(f) + beta bold(g)) = alpha "curl" bold(f) + beta "curl" bold(g)$ for constants $alpha, beta$.
+  + Linearity: $nabla dot (alpha bold(f) + beta bold(g)) = alpha nabla dot bold(f) + beta nabla dot bold(g)$ and $nabla times (alpha bold(f) + beta bold(g)) = alpha nabla times bold(f) + beta nabla times bold(g)$ for constants $alpha, beta$.
   + Product rules:
     $
-      nabla dot (u bold(f)) = nabla u dot bold(f) + u "div" bold(f), quad nabla times (u bold(f)) = nabla u times bold(f) + u "curl" bold(f).
+      nabla dot (u bold(f)) = nabla u dot bold(f) + u (nabla dot bold(f)), quad nabla times (u bold(f)) = nabla u times bold(f) + u (nabla times bold(f)).
     $
-  + Compositions: $"curl" ("grad" f) = nabla times (nabla f) = bold(0)$ and $"div" ("curl" bold(f)) = nabla dot (nabla times bold(f)) = 0$.
+  + Compositions: $nabla times (nabla f) = bold(0)$ and $nabla dot (nabla times bold(f)) = 0$.
 ] <prop:div-curl-calculus>
 
 #proof[
-  The linearity and product rules follow by expanding in coordinates and applying the ordinary product rule componentwise. For the composition identities, every term of the coordinate expansions cancels in pairs by the equality of mixed second-order partial derivatives; for instance, the $bold(i)$-component of $"curl" ("grad" f)$ is $frac(partial, partial y) frac(partial f, partial z) - frac(partial, partial z) frac(partial f, partial y) = 0$, and the others are analogous.
+  The linearity and product rules follow by expanding in coordinates and applying the ordinary product rule componentwise. For the composition identities, every term of the coordinate expansions cancels in pairs by the equality of mixed second-order partial derivatives; for instance, the $bold(i)$-component of $nabla times (nabla f)$ is $frac(partial, partial y) frac(partial f, partial z) - frac(partial, partial z) frac(partial f, partial y) = 0$, and the others are analogous.
 ]
 
-Composing the operators produces the second-order scalar operator $Delta f = nabla dot (nabla f) = f_(x x) + f_(y y) + f_(z z)$, called the *Laplacian* of $f$; it appears in Green's identities in #link(<cor:green-first-identity>)[the next section]. The composition identities above are the differential shadow of the conservative-field theory: the vanishing of $"curl" ("grad" f)$ is the coordinate counterpart of the fact that an exact $1$-form is closed.
+The composition identities above are the differential shadow of the conservative-field theory: the vanishing of $nabla times (nabla f)$ is the coordinate counterpart of the fact that an exact $1$-form is closed.
 
 == Differential Forms and Exterior Differentiation // 微分形式与外微分
 
@@ -10476,7 +10490,7 @@ For a closed surface the normal is always taken to point outward unless stated o
 #note(
   title: "Physical Reading of Divergence and Curl",
 )[
-  Let $bold(f)$ be a $C^1$ vector field. The *divergence* is the volume density of outward flux: for a small closed region $Omega$ of volume $V$ containing the point $P$, the quantity $1/V integral.double.double_(partial Omega) bold(f) dot bold(n) dif S$ approximates $"div" bold(f)(P)$, and the approximation becomes an equality in the limit $Omega -> P$. Dually, the component $"curl" bold(f) dot bold(n)$ is the area density of circulation: for a small oriented disk $Sigma$ with unit normal $bold(n)$, boundary $Gamma$, and area $S$, the circulation of $bold(f)$ around $Gamma$ is approximated by $S dot ("curl" bold(f) dot bold(n))$. The formulas of this section make these density statements integral: Gauß's theorem sums the flux density over a volume, while Green's and Stokes' theorems sum the circulation density over an oriented surface; for Green's theorem the relevant component is $Q_x - P_y$, the $bold(k)$-component of the curl of the planar field $(P, Q, 0)$.
+  Let $bold(f)$ be a $C^1$ vector field. The *divergence* is the volume density of outward flux: for a small closed region $Omega$ of volume $V$ containing the point $P$, the quantity $1/V integral.double.double_(partial Omega) bold(f) dot bold(n) dif S$ approximates $nabla dot bold(f)(P)$, and the approximation becomes an equality in the limit $Omega -> P$. Dually, the component $(nabla times bold(f)) dot bold(n)$ is the area density of circulation: for a small oriented disk $Sigma$ with unit normal $bold(n)$, boundary $Gamma$, and area $S$, the circulation of $bold(f)$ around $Gamma$ is approximated by $S dot ((nabla times bold(f)) dot bold(n))$. The formulas of this section make these density statements integral: Gauß's theorem sums the flux density over a volume, while Green's and Stokes' theorems sum the circulation density over an oriented surface; for Green's theorem the relevant component is $Q_x - P_y$, the $bold(k)$-component of the curl of the planar field $(P, Q, 0)$.
 ]
 
 === Green's Formula // 格林公式（原 leftbarTitle 非空壳，升级为小节）
@@ -10549,7 +10563,7 @@ Denote $integral.cont_(limits(partial M)^harpoon.rt)$ as the line integral along
 
 This is the two-dimensional divergence theorem: it converts the integral of $nabla dot bold(f)$ over a planar region into the outward flux through its boundary, and it is the planar special case of #link(<thm:gauss-theorem>)[Gauß's theorem].
 
-Substituting particular fields in the divergence form yields the two classical integral identities of potential theory.
+Substituting particular fields in the divergence form yields the two classical integral identities of potential theory, in which $Delta$ denotes the Laplacian of #link(<def:laplacian>)[the preceding section].
 
 #corollary(name: "Green's First Identity")[
   Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^2$ with positively oriented piecewise smooth boundary, let $u in C^1 (limits(M)^harpoon.rt)$ and $v in C^2 (limits(M)^harpoon.rt)$. Then
@@ -10636,6 +10650,11 @@ Denote $integral.surf_(limits(partial M)^harpoon.rt)$ as the surface integral ov
     integral.surf_(limits(partial M)^harpoon.rt) P dif y and dif z + Q dif z and dif x + R dif x and dif y
     = integral.vol_(limits(M)^harpoon.rt) (frac(partial P, partial x) + frac(partial Q, partial y) + frac(partial R, partial z)) dif x and dif y and dif z,
   $
+  or, in vector form, with $bold(f) = P bold(i) + Q bold(j) + R bold(k)$ and $bold(n)$ the outward unit normal of $limits(partial M)^harpoon.rt$,
+  $
+    integral.surf_(limits(partial M)^harpoon.rt) bold(f) dot bold(n) dif S
+    = integral.vol_(limits(M)^harpoon.rt) nabla dot bold(f) dif x and dif y and dif z,
+  $
   or equivalently,
   $
     integral.surf_(limits(partial M)^harpoon.rt) omega = integral.vol_(limits(M)^harpoon.rt) dif omega,
@@ -10684,7 +10703,13 @@ Denote $integral.surf_(limits(partial M)^harpoon.rt)$ as the surface integral ov
       cos alpha, cos beta, cos gamma;
       frac(partial, partial x), frac(partial, partial y), frac(partial, partial z);
       P, Q, R,
-    ) dif S,
+    ) dif S \
+    & = integral.double_(limits(M)^harpoon.rt) (nabla times bold(f)) dot bold(n) dif S,
+  $
+  or, in vector form, with $bold(f) = P bold(i) + Q bold(j) + R bold(k)$, $bold(tau)$ the unit tangent of $limits(partial M)^harpoon.rt$ and $bold(n)$ the unit normal of $limits(M)^harpoon.rt$ consistent with its orientation,
+  $
+    integral.cont_(limits(partial M)^harpoon.rt) bold(f) dot bold(tau) dif s
+    = integral.double_(limits(M)^harpoon.rt) (nabla times bold(f)) dot bold(n) dif S,
   $
   or equivalently,
   $
@@ -11424,6 +11449,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<thm:lagrange-mvt>)[Lagrange Mvt]*
 - *#link(<thm:lagrange-mvt-mappings>)[Lagrange Mvt Mappings]*
 - *#link(<ex:landau-inequality>)[Landau Inequality]*
+- *#link(<def:laplacian>)[Laplace Operator]*
 - *#link(<thm:lebesgue>)[Lebesgue]*
 - *#link(<thm:legendre-duplication>)[Legendre Duplication]*
 - *#link(<ex:legendre-roots>)[Legendre Roots]*
