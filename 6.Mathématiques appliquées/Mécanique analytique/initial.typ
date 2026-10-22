@@ -25,6 +25,9 @@
 #make-outline(depth: 2, title: "Contents")
 
 // --- Part 0: Classical Mechanics Foundations (经典力学基础) ---
+// 说明（2026-10-22）：原 Chapter 4「Elastic Waves in Solids」（应变/应力/泊松比/P-S 波/阻抗/反射）
+//   已整体迁入 Optique 笔记 Ch 2.4 与 Ch 2.6；本章删除，此后 Chapter 5→4（Celestial）、6→5（Fluid）。
+
 #part("Classical Mechanics Foundations") // 经典力学基础
 
 // Chapter 1: Kinematics of Particles and Particle Systems (质点与质点系)
@@ -116,7 +119,7 @@ $
 
 === Spherical Coordinates // 球坐标
 
-For central-force problems (e.g., planetary motion, Chapter 5), spherical coordinates $(r, theta, phi)$ are the most convenient. Here $r$ is the radial distance, $theta$ the polar angle from the $z$-axis, and $phi$ the azimuthal angle.
+For central-force problems (e.g., planetary motion, Chapter 4), spherical coordinates $(r, theta, phi)$ are the most convenient. Here $r$ is the radial distance, $theta$ the polar angle from the $z$-axis, and $phi$ the azimuthal angle.
 
 $
   bold(v) = dot(r) bold(e_r) + r dot(theta) bold(e_theta) + r sin theta dot(phi) bold(e_phi),
@@ -229,7 +232,7 @@ Real mechanical systems rarely consist of a single point particle. Multiple part
 ]
 
 #note[
-  The CM decomposition is more than a kinematic convenience: it decouples the overall motion from the internal motion. This decoupling is the foundation of the two-body reduction in celestial mechanics (Chapter 5) and of rigid-body dynamics (next section), where the internal constraints determine the rotational degrees of freedom.
+  The CM decomposition is more than a kinematic convenience: it decouples the overall motion from the internal motion. This decoupling is the foundation of the two-body reduction in celestial mechanics (Chapter 4) and of rigid-body dynamics (next section), where the internal constraints determine the rotational degrees of freedom.
 ]
 
 === A Preview of Rotating Reference Frames // 转动参考系前瞻
@@ -915,7 +918,7 @@ For a particle moving in one dimension under a conservative force $F(x) = - dif 
 #example(name: "Energy Diagram of a Quartic Oscillator")[ // 四次振子的能量图
   Consider the potential $V(x) = frac(1,2) k x^2 + frac(1,4) alpha x^4$ ($alpha > 0$).
 
-  - For small energies, the quartic term is negligible and the motion is approximately simple harmonic (as in Chapter 4).
+  - For small energies, the quartic term is negligible and the motion is approximately simple harmonic (as in *Optique*, Part I, Chapter 1).
   - For large energies, the quartic term dominates, giving anharmonic oscillations with a frequency that increases with amplitude.
   - The turning points are found by solving $V(x) = E$, which generally requires a quartic equation but can be solved numerically or graphically.
 ]
@@ -948,105 +951,13 @@ $
   bold(F) = F(r) bold(e_r), quad F(r) = - frac(dif V(r), dif r).
 $
 
-Central forces conserve angular momentum (since $bold(tau) = bold(r) times bold(F) = bold(0)$), and the motion is confined to a plane. These properties will be used extensively in Chapter 5 (Celestial Mechanics) and again in Part II (Lagrangian mechanics, central force applications).
+Central forces conserve angular momentum (since $bold(tau) = bold(r) times bold(F) = bold(0)$), and the motion is confined to a plane. These properties will be used extensively in Chapter 4 (Celestial Mechanics) and again in Part II (Lagrangian mechanics, central force applications).
 
 #note[
   This chapter has established the three pillars of conservation — momentum, angular momentum, and energy — each linked to a fundamental symmetry of space and time. These conservation laws are not just convenient shortcuts; they are deeper than the equations of motion themselves. In Part II, Noether's theorem will reveal the direct connection: every continuous symmetry of the action implies a conserved quantity.
 ]
 
-// Chapter 4: Elastic Waves in Solids (固体中的弹性波)
-//   Section 4.1: Strain and Stress in Elastic Media (应变与应力)
-//   Section 4.2: Poisson's Ratio (泊松比)
-//   Section 4.3: Helmholtz Decomposition: P-waves and S-waves (亥姆霍兹分解：P波与S波)
-//   Section 4.4: Reflection and Impedance (反射与阻抗)
-// 说明：本章原名 "Oscillations and Waves (振动与波动)"，其介质无关部分（简谐运动、阻尼受驱振动、
-//       波动传播、色散与傅里叶简正模）已整体迁移至 Optique 笔记 Part I
-//       （6.Mathématiques appliquées/Optique）。此处仅保留弹性介质中的机械波内容，
-//       波动方程、横纵波与波速等基础概念参见 Optique Part I。
-= Elastic Waves in Solids // 固体中的弹性波
-== Strain and Stress in Elastic Media // 弹性介质中的应变与应力
-
-To understand the restoring forces in a solid, we introduce the concepts of strain (deformation) and stress (internal force per area).
-
-#definition(name: "Three Types of Strain")[
-  - *Linear strain* (拉伸/压缩): $epsilon = Delta L / L$, the fractional change in length.
-  - *Shear strain* (切变): $gamma = Delta x / h = tan theta approx theta$, the angular distortion.
-  - *Bulk strain* (体变): $Delta V / V$, the fractional change in volume.
-]
-
-Each type of strain is related to a corresponding stress through an elastic modulus:
-
-$
-  text("Tensile stress"): sigma = E epsilon, quad
-  text("Shear stress"): tau = G gamma, quad
-  text("Pressure"): p = -K frac(Delta V, V).
-$
-
-Here $E$ is Young's modulus, $G$ the shear modulus, and $K$ the bulk modulus.
-
-== Poisson's Ratio // 泊松比
-
-When a material is stretched in one direction, it contracts in the perpendicular directions. This coupling is quantified by *Poisson's ratio*:
-
-#definition(name: "Poisson's Ratio")[
-  $
-    nu = - frac(text("lateral strain"), text("axial strain")) = - frac(epsilon_"lat", epsilon_"ax").
-  $
-  For most materials, $0 < nu < 0.5$. Rubber has $nu approx 0.5$ (incompressible), while cork has $nu approx 0$.
-
-  The three elastic moduli are related by: $E = 2 G (1 + nu) = 3 K (1 - 2 nu)$.
-]
-
-#note[
-  Poisson's ratio explains why a stretched rubber band becomes thinner, and why a cork (used in wine bottles) can be pushed in without expanding sideways — $nu approx 0$. The relation between moduli also shows that only two of $(E, G, K, nu)$ are independent.
-]
-
-== Helmholtz Decomposition: P-waves and S-waves // 亥姆霍兹分解：P波与S波
-
-In a solid, any deformation can be decomposed into a *dilatational* (volume-changing) part and a *distortional* (volume-preserving) part — this is the *Helmholtz decomposition* of the displacement field $bold(u)$:
-
-$
-  bold(u) = nabla phi + nabla times bold(psi), quad nabla dot bold(psi) = 0.
-$
-
-#property(name: "P-waves and S-waves")[
-  - The *irrotational* part $nabla phi$ corresponds to *P-waves* (primary / pressure waves): longitudinal, curl-free ($nabla times bold(u) = 0$). These are the fastest seismic waves.
-  - The *solenoidal* part $nabla times bold(psi)$ corresponds to *S-waves* (secondary / shear waves): transverse, divergence-free ($nabla dot bold(u) = 0$). These cannot propagate through fluids (no shear resistance).
-  - The Helmholtz decomposition shows that P-waves and S-waves propagate *independently* in a homogeneous isotropic elastic medium — they do not mix or convert into each other except at boundaries.
-]
-
-== Reflection and Impedance // 反射与阻抗
-
-When a wave encounters a boundary between two media, part of the energy is reflected and part is transmitted. The determining factor is the *characteristic impedance* of each medium.
-
-#definition(name: "Characteristic Impedance")[
-  For a wave on a string: $Z = mu v = sqrt(T mu)$ (ratio of transverse force to transverse velocity).
-  For a sound wave: $Z = rho v$ (ratio of acoustic pressure to particle velocity).
-]
-
-#theorem(name: "Reflection and Transmission at a Boundary")[
-  At a boundary between two media with impedances $Z_1$ and $Z_2$:
-  $
-    R = frac(Z_1 - Z_2, Z_1 + Z_2) quad (text("amplitude reflection coefficient")),
-    T = frac(2 Z_1, Z_1 + Z_2) quad (text("amplitude transmission coefficient")).
-  $
-  Special cases:
-  - Fixed end ($Z_2 -> infinity$): $R = -1$ (reflected wave inverted, total reflection).
-  - Free end ($Z_2 = 0$): $R = +1$ (reflected wave upright, total reflection).
-  - Impedance matching ($Z_1 = Z_2$): $R = 0$, $T = 1$ (no reflection, perfect transmission).
-]
-
-
-#note[
-  *Scope of this chapter and the road ahead.* This chapter covers elastic waves in solids. The medium-independent wave machinery — simple harmonic motion, damped and driven oscillations, the wave equation, d'Alembert's solution, superposition, standing waves, dispersion and group velocity, and Fourier normal modes — has been migrated to the *Optique* notebook (Part I, Vibrations and Waves).
-
-  - *Lagrangian small oscillations (Part II of this notebook).* The SHM, damped, and driven sections (now in Optique Part I) are re-derived systematically from the Lagrangian: coupled oscillators reduce to independent normal modes via diagonalisation of the mass and stiffness matrices, recovering the Fourier / normal-mode structure as the eigenvalue problem of a linearised system.
-
-  - *Electromagnetic waves and optics (Optique).* The *optical* phenomena of interference, diffraction, and polarisation are treated in the Optique notebook. The elastic-medium specialisation here (strain, stress, P/S waves, mechanical impedance) stays in this notebook, as it is genuinely mechanical.
-]
-
-
-// Chapter 5: Celestial Mechanics Foundations (天体力学基础)
+// Chapter 4: Celestial Mechanics Foundations (天体力学基础)
 //   Section 5.1: Kepler's Laws (开普勒定律)
 //   Section 5.2: Orbit Classification (轨道分类)
 //   Section 5.3: Two-Body Problem and Reduced Mass (二体问题与约化质量)
@@ -1120,7 +1031,7 @@ The gravitational two-body problem — two masses $m_1$ and $m_2$ interacting vi
   The two-body reduction is the foundation of celestial mechanics. In Part II (Lagrangian mechanics), we will derive the same result from a Lagrangian with translational symmetry, and the conserved quantities (energy, angular momentum) will emerge directly from Noether's theorem.
 ]
 
-// Chapter 6: Fluid Mechanics Foundations (流体力学基础)
+// Chapter 5: Fluid Mechanics Foundations (流体力学基础)
 //   Section 6.1: Continuum Hypothesis and Density Fields (连续体假设与密度场)
 //   Section 6.2: Euler's Equations of Motion (欧拉运动方程)
 //   Section 6.3: Bernoulli's Equation (伯努利方程)

@@ -61,23 +61,19 @@
   - 3.4 Isomorphism between Translational and Rotational Structures // 平动与转动的同构性 ← **核心对比章节**
   - 3.5 Potential Energy and Force Fields // 势能与力场
 
-#### Chapter 4: Elastic Waves in Solids // 固体中的弹性波（原 Oscillations and Waves 的弹性介质部分）
-  - 4.1 Strain and Stress in Elastic Media // 应变与应力
-  - 4.2 Poisson's Ratio // 泊松比
-  - 4.3 Helmholtz Decomposition: P-waves and S-waves // 亥姆霍兹分解：P波与S波
-  - 4.4 Reflection and Impedance // 反射与阻抗
-> 迁移说明：振动与波动的介质无关部分（简谐运动、波动传播、色散与傅里叶简正模）
-> 已迁至 Optique 笔记 Part I（Vibrations and Waves），弹性介质专用内容保留在本章。
+#### Chapter 4: Celestial Mechanics Foundations // 天体力学基础
+  - 4.1 Kepler's Laws // 开普勒定律
+  - 4.2 Orbit Classification // 轨道分类
+  - 4.3 Two-Body Problem and Reduced Mass // 二体问题与约化质量
 
-#### Chapter 5: Celestial Mechanics Foundations // 天体力学基础
-  - 5.1 Kepler's Laws // 开普勒定律
-  - 5.2 Orbit Classification // 轨道分类
-  - 5.3 Two-Body Problem and Reduced Mass // 二体问题与约化质量
+#### Chapter 5: Fluid Mechanics Foundations // 流体力学基础
+  - 5.1 Continuum Hypothesis and Density Fields // 连续体假设与密度场
+  - 5.2 Euler's Equations of Motion // 欧拉运动方程
+  - 5.3 Bernoulli's Equation // 伯努利方程
 
-#### Chapter 6: Fluid Mechanics Foundations // 流体力学基础
-  - 6.1 Continuum Hypothesis and Density Fields // 连续体假设与密度场
-  - 6.2 Euler's Equations of Motion // 欧拉运动方程
-  - 6.3 Bernoulli's Equation // 伯努利方程
+> 迁移说明（2026-10-22）：原 Chapter 4「Elastic Waves in Solids」（应变/应力/泊松比/P-S 波/阻抗/
+> 反射与半波损失）已**整体迁入 Optique 笔记 Ch 2.4 与 Ch 2.6**，本章删除；Part 0 由 6 章变为 5 章，
+> 天体力学与流体力学顺次上移编号。振动与波动的介质无关部分此前已迁至 Optique Part I。
 
 ---
 
@@ -135,9 +131,9 @@
   - 6.1 Rigid Body Dynamics // 刚体动力学
     → Recovers Part 0 Ch 2.2 via Lagrangian
   - 6.2 Central Force Motion // 中心力运动
-    → Connects to Part 0 Ch 5 (Celestial Mechanics)
+    → Connects to Part 0 Ch 4 (Celestial Mechanics)
   - 6.3 Small Oscillations // 小振动
-    → Generalizes Part 0 Ch 4 (Oscillations)
+    → Generalizes the SHM of *Optique* Part I Ch 1
   - 6.4 Normal Modes and Eigenfrequencies // 简正模与本征频率
   - 6.5 Coupled Oscillators // 耦合振子
 
@@ -238,8 +234,7 @@
 | Part | 章节 | 状态 |
 |------|------|------|
 | Part 0 | Ch1-3 | ✅ 已完成 |
-| Part 0 | Ch4 | ✅ 已完成（弹性介质部分；原振动与波动已迁至 Optique） |
-| Part 0 | Ch5-6 | ❌ 未写（仅目录） |
+| Part 0 | Ch4-5 | ✅ 已完成（Celestial / Fluid；原 Ch4 弹性波已迁至 Optique） |
 | Part I | Ch1-3 | ✅ 已完成 |
 | Part II | Ch4-6 | ✅ 已完成 |
 | Part III | Ch7-9 | ❌ 未写 |
