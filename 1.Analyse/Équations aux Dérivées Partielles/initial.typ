@@ -542,8 +542,8 @@ For operators with two independent variables, the characteristic equation reduce
   $
 ]
 
-#note[
-  *Extension to $n$ dimensions.* In general, the classification is determined by the eigenvalue signature of $A(x)$:
+#note(title: "Extension to $n$ dimensions")[
+  In general, the classification is determined by the eigenvalue signature of $A(x)$:
   - _Elliptic_: all eigenvalues have the same sign ($A$ is definite)
   - _Hyperbolic_: exactly one eigenvalue has a different sign from the rest
   - _Parabolic_: $A$ is singular (at least one zero eigenvalue)
@@ -599,17 +599,14 @@ The connection to characteristic surfaces (#link(<def:char-surface>)[§2.1]) is 
   The Tricomi equation is the prototypical _mixed-type_ PDE. It arises in transonic gas dynamics, where the flow transitions from subsonic (elliptic) to supersonic (hyperbolic) across the sonic line $y = 0$. The boundary value problem for the Tricomi equation — elliptic in the upper half-plane with data prescribed on the parabolic degeneracy — is known as the _Tricomi problem_.
 ] <ex:tricomi>
 
-#note[
-  *Summary of the 2D classification.* The following table summarizes the three types:
+#note(title: "Summary of the 2D classification")[
+  The following table summarizes the three types:
 
-  #table(
-    columns: (1fr, 1fr, 1fr, 2fr),
-    stroke: .5pt,
-    align: center,
-    table.header([Type], [Discriminant], [$det A$], [Characteristics]),
-    [Elliptic], [$Delta < 0$], [$> 0$], [No real characteristics],
-    [Parabolic], [$Delta = 0$], [$= 0$], [One degenerate family],
-    [Hyperbolic], [$Delta > 0$], [$< 0$], [Two distinct families],
+  #tex-table(
+    ("Type", "Discriminant", [$det A$], "Characteristics"),
+    ("Elliptic", [$Delta < 0$], [$> 0$], "No real characteristics"),
+    ("Parabolic", [$Delta = 0$], [$= 0$], "One degenerate family"),
+    ("Hyperbolic", [$Delta > 0$], [$< 0$], "Two distinct families"),
   )
 
   The transport equation $u_t + a u_x = 0$, introduced in #link(<ex:transport-equation>)[§20.1], is a _first-order_ hyperbolic equation. When viewed as a second-order equation (by differentiating), it satisfies the wave equation $u_(t t) - a^2 u_(x x) = 0$, confirming the consistency between the first-order and second-order classifications.
@@ -711,15 +708,17 @@ $
 
 The following table summarizes the canonical forms and their characteristic geometry:
 
-#tex-table(
-  ("Type", "Canonical form", "Coordinates", "Characteristics"),
-  ("Elliptic", [$u_(alpha alpha) + u_(beta beta) = Phi$], [$alpha + i beta = phi (x, y)$], "Complex; no real curves"),
-  ("Parabolic", [$u_(eta eta) = Phi$], [$xi = phi (x, y)$, $eta$ free], "One real family"),
-  ("Hyperbolic", [$u_(xi eta) = Phi$], [$xi = phi$, $eta = psi$], "Two real families"),
-)
+#block(breakable: false)[
+  #tex-table(
+    ("Type", "Canonical form", "Coordinates", "Characteristics"),
+    ("Elliptic", [$u_(alpha alpha) + u_(beta beta) = Phi$], [$alpha + i beta = phi (x, y)$], "Complex; no real curves"),
+    ("Parabolic", [$u_(eta eta) = Phi$], [$xi = phi (x, y)$, $eta$ free], "One real family"),
+    ("Hyperbolic", [$u_(xi eta) = Phi$], [$xi = phi$, $eta = psi$], "Two real families"),
+  )
+]
 
-#note[
-  *The transport equation previewed.* The transport equation $u_t + a u_x = 0$, developed in detail in #link(<ex:transport-equation>)[§20.1], is "the simplest hyperbolic PDE". From the second-order perspective of this chapter, we can now make this precise.
+#note(title: "The transport equation previewed")[
+  The transport equation $u_t + a u_x = 0$, developed in detail in #link(<ex:transport-equation>)[§20.1], is "the simplest hyperbolic PDE". From the second-order perspective of this chapter, we can now make this precise.
 
   Differentiating $u_t + a u_x = 0$ with respect to $t$ and $x$ yields:
   $
@@ -1472,8 +1471,8 @@ The Laplace equation, introduced in Chapter 1 (#link(<def:laplace-equation>)[Ch 
   where $u: Omega -> bb(R)$ is the unknown function and $f: Omega -> bb(R)$ is given. A $C^2$ function $u$ satisfying $Delta u = 0$ is called a *harmonic function* on $Omega$.
 ] <def:harmonic-function>
 
-#note[
-  Physical origins. The Laplacian measures the local deviation of $u$ from its mean, so $Delta u = 0$ describes equilibrium configurations: the electrostatic potential in a charge-free region, the gravitational potential in empty space, and the steady-state temperature distribution. The Poisson equation $-Delta u = f$ incorporates sources (charge density, heat sources).
+#note(title: "Physical origins")[
+  The Laplacian measures the local deviation of $u$ from its mean, so $Delta u = 0$ describes equilibrium configurations: the electrostatic potential in a charge-free region, the gravitational potential in empty space, and the steady-state temperature distribution. The Poisson equation $-Delta u = f$ incorporates sources (charge density, heat sources).
 
   Linearity and ellipticity. Both equations are linear with constant coefficients, so linear combinations of solutions are again solutions (Chapter 1, #link(<def:pde-linearity-classification>)[§1]). By the classification of Chapter 2, $Delta$ is the canonical *elliptic* operator: its principal symbol $abs(xi)^2$ is positive definite, and no characteristic surfaces exist in $bb(R)^n$.
 ]
@@ -1771,8 +1770,8 @@ The maximum principle and Green's identities of Chapter 8 give the classical (st
   Apply Lax--Milgram on $H = H^1 (Omega)$ with $B (u, v) = integral_Omega nabla u dot nabla v dif x + integral_(partial Omega) sigma u v dif S$. Boundedness follows from the trace inequality. For coercivity, note that $B (u, u) = 0$ would force $nabla u = 0$ (so $u$ is constant) and $integral_(partial Omega) sigma u^2 dif S = 0$, hence $u = 0$ since $integral_(partial Omega) sigma dif S > 0$; by a compactness argument (Rellich embedding) the form is coercive on $H^1 (Omega)$.
 ]
 
-#note[
-  *Mixed boundary conditions.* One may prescribe Dirichlet data on a part $Gamma_D$ of the boundary and Neumann or Robin data on the remainder $Gamma_N$. The weak formulation is the same, with the test space $H_(Gamma_D)^1 = {v in H^1 (Omega) : v = 0 "on" Gamma_D}$; existence follows from Lax--Milgram under analogous coercivity assumptions. The trace theorems required for $L^2 (partial Omega)$ boundary terms are treated in Analyse Harmonique.
+#note(title: "Mixed boundary conditions")[
+  One may prescribe Dirichlet data on a part $Gamma_D$ of the boundary and Neumann or Robin data on the remainder $Gamma_N$. The weak formulation is the same, with the test space $H_(Gamma_D)^1 = {v in H^1 (Omega) : v = 0 "on" Gamma_D}$; existence follows from Lax--Milgram under analogous coercivity assumptions. The trace theorems required for $L^2 (partial Omega)$ boundary terms are treated in Analyse Harmonique.
 ]
 
 == Uniqueness via Energy Methods // 能量方法的唯一性
@@ -1918,8 +1917,8 @@ The fundamental solution of the Laplacian was constructed in Chapter 7 (#link(<e
   As shown in the proof of Poisson's formula (Chapter 10, §10.2), the second term cancels $Gamma (x - y)$ on $partial B (0, R)$ and is harmonic inside the ball, so this is the Green function of the ball.
 ]
 
-#note[
-  *Conformal invariance in two dimensions.* In the plane, harmonic functions interact with complex analysis: if $f: Omega -> bb(C)$ is holomorphic and $u$ is harmonic, then $u compose f$ is harmonic wherever defined (the Laplacian transforms by the conformal factor $abs(f')^2$). Consequently, Green functions and Dirichlet problems can be transferred between conformally equivalent planar domains — a powerful tool for solving problems on disks, strips, and polygons (the Riemann mapping theorem guarantees the equivalence). This is the viewpoint developed in Analyse Complexe; here we only record the elementary invariance fact.
+#note(title: "Conformal invariance in two dimensions")[
+  In the plane, harmonic functions interact with complex analysis: if $f: Omega -> bb(C)$ is holomorphic and $u$ is harmonic, then $u compose f$ is harmonic wherever defined (the Laplacian transforms by the conformal factor $abs(f')^2$). Consequently, Green functions and Dirichlet problems can be transferred between conformally equivalent planar domains — a powerful tool for solving problems on disks, strips, and polygons (the Riemann mapping theorem guarantees the equivalence). This is the viewpoint developed in Analyse Complexe; here we only record the elementary invariance fact.
 ]
 
 = Regularity Theory // 正则性理论
@@ -2145,8 +2144,8 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
   For each fixed $t > 0$, $E (t, dot) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of the heat kernel properties gives $(partial_t - Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E (t, dot)}_(t > 0)$ is an approximate identity; the standard mollifier argument (Chapter 7, #link(<def:mollifier>)[§20.1]) gives $u (dot, t) = E (t, dot) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
 ]
 
-#note[
-  *Smoothing effect.* No regularity of $g$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$, and by the derivative estimates of Chapter 8 the derivatives decay as $t^(-abs(alpha)/2)$ (quantified in §12.4). This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation (Ch 15), which propagates the regularity of the data without improvement.
+#note(title: "Smoothing effect")[
+  No regularity of $g$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$, and by the derivative estimates of Chapter 8 the derivatives decay as $t^(-abs(alpha)/2)$ (quantified in §12.4). This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation (Ch 15), which propagates the regularity of the data without improvement.
 ]
 
 == Maximum Principle // 最大值原理
@@ -2353,8 +2352,8 @@ The Cauchy problem of Chapter 12 treats the whole space. On a bounded domain one
   and Grönwall's inequality gives the decay. The spectral statement follows from the spectral decomposition of the compact resolvent (Analyse Fonctionnelle): $S (t) = sum_k e^(-lambda_k t) P_k$ with the projections $P_k$ onto the eigenspaces.
 ]
 
-#note[
-  *Asymptotic stabilization.* For time-independent $f$, the solution converges to the elliptic steady state: if $v_oo$ solves $-Delta v_oo = f$ in $Omega$, $v_oo = 0$ on $partial Omega$ (Chapter 9, §9.1), then $w = u - v_oo$ satisfies the homogeneous heat equation, so
+#note(title: "Asymptotic stabilization")[
+  For time-independent $f$, the solution converges to the elliptic steady state: if $v_oo$ solves $-Delta v_oo = f$ in $Omega$, $v_oo = 0$ on $partial Omega$ (Chapter 9, §9.1), then $w = u - v_oo$ satisfies the homogeneous heat equation, so
   $
     ||u (t) - v_oo||_(L^2) <= C e^(-lambda_1 t).
   $
@@ -2997,8 +2996,8 @@ with $f = F / rho$ the forcing per unit mass. This is the one-dimensional wave e
   supplement: [Fig.],
 ) <fig:wave-string-element>
 
-#note[
-  *Momentum form.* Newton's second law for the whole segment is equivalent to the balance of linear momentum in integral form: for any piece $(x_1, x_2)$ of the string,
+#note(title: "Momentum form")[
+  Newton's second law for the whole segment is equivalent to the balance of linear momentum in integral form: for any piece $(x_1, x_2)$ of the string,
   $
     (dif)/(dif t) integral_(x_1)^(x_2) rho (partial u)/(partial t) dif x = [T (partial u)/(partial x)]_(x_1)^(x_2) + integral_(x_1)^(x_2) F dif x.
   $
@@ -3070,12 +3069,14 @@ If the medium is bounded, the solution is further constrained on the spatial bou
 
 === The Method of Traveling Waves // 传播波法
 
-#note[
-  *Method of traveling waves.* The two steps of the proof constitute the classical *method of traveling waves*: seek the solution as a superposition of a right-moving profile $F (x - a t)$ and a left-moving profile $G (x + a t)$, then determine the profiles from the data. Solving the equations of Step 2 gives
+#note(title: "Method of traveling waves")[
+  The two steps of the proof constitute the classical *method of traveling waves*: seek the solution as a superposition of a right-moving profile $F (x - a t)$ and a left-moving profile $G (x + a t)$, then determine the profiles from the data. Solving the equations of Step 2 gives
   $
     F (x) = 1/2 phi (x) - 1/(2 a) integral_0^x psi (s) dif s, quad G (x) = 1/2 phi (x) + 1/(2 a) integral_0^x psi (s) dif s,
   $
-  up to a constant that cancels between $F$ and $G$. Thus the initial displacement splits into two half-amplitude waves running in opposite directions, while the initial velocity fills in the integral term. The fully general problem — nonzero data *and* a source $f (x, t)$ — is handled by #link(<prop:wave-superposition-split>)[the superposition split] of §16.4: the d'Alembert solution supplies the homogeneous part, and the zero-data part is the object of Duhamel's principle in the next section. The splitting of the initial displacement is illustrated in #link(<fig:wave-traveling-waves>)[Figure].
+  up to a constant that cancels between $F$ and $G$. Thus the initial displacement splits into two half-amplitude waves running in opposite directions, while the initial velocity fills in the integral term.
+
+  The fully general problem — nonzero data *and* a source $f (x, t)$ — is handled by #link(<prop:wave-superposition-split>)[the superposition split] of §16.4: the d'Alembert solution supplies the homogeneous part, and the zero-data part is the object of Duhamel's principle in the next section. The splitting of the initial displacement is illustrated in #link(<fig:wave-traveling-waves>)[Figure].
 ]
 
 #note[
@@ -3119,8 +3120,10 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
   In both cases the restriction $u = tilde(u)|_(x > 0)$ therefore satisfies the boundary condition as well as the initial data; the formulas above are d'Alembert's formula written out, using $tilde(phi) (x - a t) = -phi (a t - x)$ (odd) or $tilde(phi) (x - a t) = phi (a t - x)$ (even) and deforming the integral over the negative segment to the positive one in the region $0 < x < a t$. The compatibility conditions make the extensions $C^2$, and uniqueness follows from the energy method (§16.6).
 ]
 
-#note[
-  *Reflected waves.* In the region $0 < x < a t$ the extra term $plus.minus 1/2 phi (a t - x)$ is the *reflected wave*: the wave emitted by the initial displacement reaches the end $x = 0$ and comes back, with inverted sign at a fixed end (odd extension) and without sign inversion at a free end (even extension). The boundary thus acts as a mirror whose reflection coefficient is $-1$ or $+1$ according to the boundary condition. An impedance (Robin-type) condition produces the intermediate coefficients: see #link(<ex:wave-half-line-impedance>)[the example below].
+#note(title: "Reflected waves")[
+  In the region $0 < x < a t$ the extra term $plus.minus 1/2 phi (a t - x)$ is the *reflected wave*: the wave emitted by the initial displacement reaches the end $x = 0$ and comes back, with inverted sign at a fixed end (odd extension) and without sign inversion at a free end (even extension).
+
+  The boundary thus acts as a mirror whose reflection coefficient is $-1$ or $+1$ according to the boundary condition. An impedance (Robin-type) condition produces the intermediate coefficients: see #link(<ex:wave-half-line-impedance>)[the example below].
 ]
 
 #example(name: "Semi-Infinite String with an Impedance Boundary Condition")[
@@ -3173,12 +3176,20 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
   *Regularity.* For $phi in C^2$ satisfying the compatibility conditions $phi' (0) = 0$ (so that $u_x$ stays continuous across the characteristic $x = a t$) and, when $k > 0$, $phi'' (0) = 0$ (so that $u_(x x)$ does), the formula above is a classical solution; otherwise it is the weak solution.
 ] <ex:wave-half-line-impedance>
 
-#note[
-  *Other methods for the semi-infinite string.* The extension method is the most elementary route to the semi-infinite string, but the same reflection is described by two further techniques. When the end is driven rather than held — a prescribed displacement $u (0, t) = g (t)$ — the Laplace transform in $t$ turns the problem into an ordinary differential equation in $x$, whose solution is selected by boundedness as $x -> oo$, matched to the boundary condition, and inverted back to $t$. The method of characteristics reads the reflection off the $(x, t)$-plane instead: a characteristic that meets the boundary $x = 0$ turns back, and the jump carried along it is the reflected wave. Both routes reproduce the reflected-wave formula above, and the extension method remains the one we carry out in detail.
+#note(title: "Other methods for the semi-infinite string")[
+  The extension method is the most elementary route to the semi-infinite string, but the same reflection is described by two further techniques.
+
+  When the end is driven rather than held — a prescribed displacement $u (0, t) = g (t)$ — the Laplace transform in $t$ turns the problem into an ordinary differential equation in $x$; its solution is selected by boundedness as $x -> oo$, matched to the boundary condition, and inverted back to $t$.
+
+  The method of characteristics reads the reflection off the $(x, t)$-plane instead: a characteristic that meets the boundary $x = 0$ turns back, and the jump carried along it is the reflected wave. Both routes reproduce the reflected-wave formula above, and the extension method remains the one we carry out in detail.
 ]
 
-#note[
-  *Half-spaces in higher dimensions.* The reflection principle is not confined to one dimension. On the half-space $bb(R)_+^n = {bold(x) : x_n > 0}$ with Dirichlet data on the wall $x_n = 0$, one extends the data oddly across the wall and applies the Kirchhoff or Poisson formula of §16.3; Neumann data call for an even extension, exactly as on the half-line. The resulting *half-space Poisson formula* is, however, far more complicated than its one-dimensional counterpart: the reflected sphere (or disk) meets the wall over a region that must be integrated explicitly, and the contributions pile up as the wave reflects repeatedly off the wall. We therefore record the reflection principle in higher dimensions only at this conceptual level and carry out the explicit computation in one dimension alone.
+#note(title: "Half-spaces in higher dimensions")[
+  The reflection principle is not confined to one dimension. On the half-space $bb(R)_+^n = {bold(x) : x_n > 0}$ with Dirichlet data on the wall $x_n = 0$, one extends the data oddly across the wall and applies the Kirchhoff or Poisson formula of §16.3; Neumann data call for an even extension, exactly as on the half-line.
+
+  The resulting *half-space Poisson formula* is, however, far more complicated than its one-dimensional counterpart: the reflected sphere (or disk) meets the wall over a region that must be integrated explicitly, and the contributions pile up as the wave reflects repeatedly off the wall.
+
+  We therefore record the reflection principle in higher dimensions only at this conceptual level and carry out the explicit computation in one dimension alone.
 ]
 
 == The Cauchy Problem in Higher Dimensions // 高维 Cauchy 问题
@@ -3316,8 +3327,8 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
 
 The homogeneous Cauchy problem is now solved in every dimension. The *inhomogeneous* problem with zero data is reduced to the homogeneous one in §16.4 by the superposition principle and #link(<thm:duhamel-wave>)[Duhamel's principle], and for general data the two contributions are simply added. Initial-boundary value problems on bounded domains — membranes, acoustic resonators — call instead for separation of variables, along the lines of §16.5; the general spectral framework is developed in Chapter 19.
 
-#note[
-  *Huygens' principle.* In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (bold(x), t)$ depends only on the data on the *sphere* $partial B (bold(x), a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions. The contrast is illustrated in #link(<fig:wave-huygens>)[Figure].
+#note(title: "Huygens' principle")[
+  In odd dimensions $n >= 3$ (in particular $n = 3$), the value $u (bold(x), t)$ depends only on the data on the *sphere* $partial B (bold(x), a t)$ — a sharp wave front with no wake: by Kirchhoff's formula only spherical means enter. In even dimensions (in particular $n = 2$) the data on the whole disk enter (Poisson's formula), producing a trailing wake. This distinction is the physical content of Huygens' principle and its failure in even dimensions. The contrast is illustrated in #link(<fig:wave-huygens>)[Figure].
 ]
 
 #note[
@@ -3472,8 +3483,12 @@ The recursion is the precise form of the bookkeeping used in practice, and it ex
   The odd chain is not empty although the source does not depend on $t$: the term $t x^2$ prescribed by $psi$ produces $3 Delta (t x^2) = 6 t$, which must be matched by $u_(t t)$, and the only way to produce $6 t$ is the cubic term $t^3$.
 ] <ex:wave-polynomial-inhomogeneous>
 
-#note[
-  *Scope.* The method is pure algebra and applies to the Cauchy problem for constant-coefficient equations with polynomial data; for non-polynomial data the Kirchhoff and Poisson formulas above remain the only general tool. It does not apply to initial-boundary value problems on a bounded interval — a polynomial will rarely satisfy the boundary conditions, and the spectral method of §16.5 takes over — nor to equations with variable coefficients or nonlinear terms. The comparison with the general formulas is therefore one of cost, not of scope: for a polynomial datum the recursion replaces a surface or disk integral by finitely many differentiations.
+#note(title: "Scope")[
+  The method is pure algebra and applies to the Cauchy problem for constant-coefficient equations with polynomial data; for non-polynomial data the Kirchhoff and Poisson formulas above remain the only general tool.
+
+  It does not apply to initial-boundary value problems on a bounded interval — a polynomial will rarely satisfy the boundary conditions, and the spectral method of §16.5 takes over — nor to equations with variable coefficients or nonlinear terms.
+
+  The comparison with the general formulas is therefore one of cost, not of scope: for a polynomial datum the recursion replaces a surface or disk integral by finitely many differentiations.
 ]
 
 == Separation of Variables for the Wave Equation // 波动方程的分离变量法
@@ -3531,11 +3546,12 @@ For each $k$ the temporal factor solves the harmonic-oscillator equation $T_k'' 
   and the coefficients follow from the orthogonality relation $integral_0^L sin ((k pi x) / L) sin ((m pi x) / L) dif x = (L delta_(k m)) / 2$: the $A_k$ are the Fourier sine coefficients of $phi$, and the $B_k$ those of $psi$, divided by $omega_k$.
 ]
 
-#note[
-  *Standing waves versus traveling waves.* Each summand $u_k$ is a *standing wave*: the profile $sin ((k pi x) / L)$ is fixed in space — with $k - 1$ interior nodes — and only its amplitude oscillates at frequency $omega_k$. The d'Alembert representation of §16.2 describes the same solution as a superposition of traveling profiles $F (x - a t) + G (x + a t)$; the two pictures are equivalent, the passage between them being the trigonometric identity
+#note(title: "Standing waves versus traveling waves")[
+  Each summand $u_k$ is a *standing wave*: the profile $sin ((k pi x) / L)$ is fixed in space — with $k - 1$ interior nodes — and only its amplitude oscillates at frequency $omega_k$. The d'Alembert representation of §16.2 describes the same solution as a superposition of traveling profiles $F (x - a t) + G (x + a t)$; the two pictures are equivalent, the passage between them being the trigonometric identity
   $
     2 sin ((k pi x) / L) cos (omega_k t) = sin ((k pi (x - a t)) / L) + sin ((k pi (x + a t)) / L).
   $
+
   The frequencies $omega_k$ are the harmonics of the string (fundamental $omega_1 = (a pi) / L$); in contrast with the heat equation the modes oscillate without decay, and the energy is conserved (#link(<thm:wave-energy>)[§16.6]).
 ]
 
@@ -3644,8 +3660,8 @@ Energy is being transported, not created: $bold(p)$ is the rate at which it cros
   The difference $w$ solves the homogeneous equation and satisfies the homogeneous boundary conditions, so its energy is constant by #link(<thm:wave-energy>)[Conservation of Energy]; its value at $t = 0$ is read off the initial data.
 ]
 
-#note[
-  *Elastic attachments and damping.* The argument above covers two of the three boundary conditions of §16.1. For an *elastic attachment* — the Robin condition $u_nu + k u = 0$ on $partial Omega$ with $k >= 0$, the case modelled in #link(<ex:wave-robin-separation>)[§16.5] — the boundary term of the energy identity does not vanish but reads
+#note(title: "Elastic attachments and damping")[
+  The argument above covers two of the three boundary conditions of §16.1. For an *elastic attachment* — the Robin condition $u_nu + k u = 0$ on $partial Omega$ with $k >= 0$, the case modelled in #link(<ex:wave-robin-separation>)[§16.5] — the boundary term of the energy identity does not vanish but reads
   $
     (dif)/(dif t) E (t) = -k a^2 integral_(partial Omega) u_t u dif S = -(k a^2)/2 (dif)/(dif t) integral_(partial Omega) u^2 dif S,
   $
@@ -3758,8 +3774,10 @@ On all of $bb(R)^n$ the total energy need not be finite, and the boundary term o
   and the claim follows.
 ]
 
-#note[
-  *Why a cone?* The lateral surface is what makes the proof work: its normal is characteristic, and then the flux collapses to a sum of squares. For the lateral surface of a cylinder, whose normal $(0, e_r)$ is timelike, the flux would be the indefinite quantity $-a^2 u_s partial_r u$ and no inequality would follow. The cone $C$ is the natural region because it is exactly the set of space-time points that the data on the base ball $B (bold(x)_0, a t_0)$ can reach at speed $a$; the same computation, read backwards, is what proves the finite propagation speed of §16.7.
+#note(title: "Why a cone?")[
+  The lateral surface is what makes the proof work: its normal is characteristic, and then the flux collapses to a sum of squares. For the lateral surface of a cylinder, whose normal $(0, e_r)$ is timelike, the flux would be the indefinite quantity $-a^2 u_s partial_r u$ and no inequality would follow.
+
+  The cone $C$ is the natural region because it is exactly the set of space-time points that the data on the base ball $B (bold(x)_0, a t_0)$ can reach at speed $a$; the same computation, read backwards, is what proves the finite propagation speed of §16.7.
 ]
 
 #corollary(name: "Uniqueness of the Cauchy Problem")[
@@ -4022,8 +4040,8 @@ The scalar one-dimensional conservation law was treated completely in Chapter 5 
   for the genuinely nonlinear characteristic field $k$ (the $k$-th family of waves); equivalently, characteristics impinge on the shock from both sides. This is the *Lax entropy condition*.
 ] <thm:lax-entropy>
 
-#note[
-  *The Oleinik condition.* For scalar conservation laws with convex flux, the entropy inequality is equivalent to the *Oleinik condition* (Олейник, 1957): for all $a > 0$ and $t > 0$,
+#note(title: "The Oleinik condition")[
+  For scalar conservation laws with convex flux, the entropy inequality is equivalent to the *Oleinik condition* (Олейник, 1957): for all $a > 0$ and $t > 0$,
   $
     (u (x + a, t) - u (x, t))/a <= C/t,
   $
