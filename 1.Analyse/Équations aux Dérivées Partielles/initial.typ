@@ -3120,8 +3120,58 @@ The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$
 ]
 
 #note[
-  *Reflected waves.* In the region $0 < x < a t$ the extra term $plus.minus 1/2 phi (a t - x)$ is the *reflected wave*: the wave emitted by the initial displacement reaches the end $x = 0$ and comes back, with inverted sign at a fixed end (odd extension) and without sign inversion at a free end (even extension). The boundary thus acts as a mirror whose reflection coefficient is $-1$ or $+1$ according to the boundary condition.
+  *Reflected waves.* In the region $0 < x < a t$ the extra term $plus.minus 1/2 phi (a t - x)$ is the *reflected wave*: the wave emitted by the initial displacement reaches the end $x = 0$ and comes back, with inverted sign at a fixed end (odd extension) and without sign inversion at a free end (even extension). The boundary thus acts as a mirror whose reflection coefficient is $-1$ or $+1$ according to the boundary condition. An impedance (Robin-type) condition produces the intermediate coefficients: see #link(<ex:wave-half-line-impedance>)[the example below].
 ]
+
+#example(name: "Semi-Infinite String with an Impedance Boundary Condition")[
+  Solve on the half-line $x > 0$ the problem
+  $
+    cases(
+      u_(t t) - a^2 u_(x x) = 0 & quad x > 0 quad t > 0,
+      u (x, 0) = phi (x) quad u_t (x, 0) = 0 & quad x > 0,
+      (u_x - k u_t) |_(x = 0) = 0 & quad t > 0,
+    )
+  $
+  where $k > 0$ is a constant.
+
+  *Traveling waves.* Write $u (x, t) = f (x - a t) + g (x + a t)$. The initial conditions impose, for $x > 0$,
+  $
+    f (x) + g (x) = phi (x), quad g' (x) = f' (x),
+  $
+  hence $g = f + C$ on the half-line; the constant $C$ drops out of the final formula.
+
+  *The boundary condition.* Since $u_x - k u_t = (1 + k a) f' (x - a t) + (1 - k a) g' (x + a t)$, the condition at $x = 0$ reads, after using $g' = f'$ on the positive half-line,
+  $
+    f' (xi) = -beta f' (-xi), quad xi < 0, quad beta = (1 - k a)/(1 + k a).
+  $
+  Thus $f'$ is extended to $xi < 0$ by a *scaled odd* reflection; integrating from $0$ gives
+  $
+    f (xi) = (1 - beta) f (0) + beta f (-xi), quad xi < 0.
+  $
+
+  *Result.* Substituting this branch and letting $C$ cancel,
+  $
+    u (x, t) = cases(
+      1/2 (phi (x + a t) + phi (x - a t)) & quad x >= a t,
+      1/2 (phi (x + a t) + beta phi (a t - x)) + (k a)/(1 + k a) phi (0) & quad 0 < x < a t.
+    )
+  $
+  In the region $0 < x < a t$ the solution is the incident wave $1/2 phi (x + a t)$, the reflected wave $1/2 beta phi (a t - x)$ — again a left-traveling wave, with amplitude scaled by $beta$ — and the constant offset $(k a)/(1 + k a) phi (0)$ produced by the impedance condition.
+
+  The coefficient interpolates between the two cases of #link(<prop:wave-half-line>)[§16.2]:
+
+  - $k = 0$: $beta = 1$ and the offset vanishes, which is the even extension of the free end.
+  - $k -> oo$: $beta -> -1$ and the offset tends to $phi (0)$; the condition degenerates to $u_t (0, t) = 0$, the end being displaced but motionless.
+  - $k = 1/a$: $beta = 0$ — *no reflection at all*, the end absorbs the incident wave completely.
+
+  *Dissipation.* For $k > 0$ one has $beta in (-1, 1)$, so reflection is partial. This is the dissipative character of the condition: for the half-line energy $E (t) = 1/2 integral_0^oo (u_t^2 + a^2 u_x^2) dif x$ the energy identity gives
+  $
+    (dif)/(dif t) E (t) = -a^2 u_t (0, t) u_x (0, t) = -a^2 k u_t (0, t)^2 <= 0,
+  $
+  the end removing energy at a rate proportional to $k$, and the reflected wave carrying the fraction $beta$ of the incident amplitude.
+
+  *Regularity.* For $phi in C^2$ satisfying the compatibility conditions $phi' (0) = 0$ (so that $u_x$ stays continuous across the characteristic $x = a t$) and, when $k > 0$, $phi'' (0) = 0$ (so that $u_(x x)$ does), the formula above is a classical solution; otherwise it is the weak solution.
+] <ex:wave-half-line-impedance>
 
 #note[
   *Other methods for the semi-infinite string.* The extension method is the most elementary route to the semi-infinite string, but the same reflection is described by two further techniques. When the end is driven rather than held — a prescribed displacement $u (0, t) = g (t)$ — the Laplace transform in $t$ turns the problem into an ordinary differential equation in $x$, whose solution is selected by boundedness as $x -> oo$, matched to the boundary condition, and inverted back to $t$. The method of characteristics reads the reflection off the $(x, t)$-plane instead: a characteristic that meets the boundary $x = 0$ turns back, and the jump carried along it is the reflected wave. Both routes reproduce the reflected-wave formula above, and the extension method remains the one we carry out in detail.
