@@ -121,6 +121,22 @@ user_invocable: false
   ```
 
 - 带链接时**以标签所在节的标题为准**，不要照抄旧编号——旧编号常常指错节（例：`#link(<def:weak-derivative>)[§20.1]` 实际在 *Weak Derivatives*）。
+- **标题过长时用可识别的简称**（2026-10-22 用户定稿），链接照旧、斜体照旧，正文里不塞整串标题：
+
+  | 完整标题 | 引用简称 |
+  |---|---|
+  | The Homogeneous Equation: D'Alembert's Formula | D'Alembert's Formula |
+  | The Cauchy Problem in Higher Dimensions | Cauchy Problem in Higher Dimensions |
+  | The Inhomogeneous Equation: Duhamel's Principle | Duhamel's Principle |
+  | Separation of Variables for the Wave Equation | Separation of Variables |
+  | Energy Inequality, Uniqueness and Stability | Energy Inequality |
+  | Finite Propagation Speed and Dispersive Decay | Propagation and Decay |
+  | Derivation of the Wave Equation and the Cauchy Problem | Derivation of the Wave Equation |
+  | Energy Estimates and Smoothing Effect | Smoothing Effect |
+  | Heat Kernel and Fundamental Solution | Heat Kernel |
+  | L^p Estimates and Calderón-Zygmund Theory | Calderón--Zygmund Theory |
+
+  同一文档内同一节的称呼必须统一；简称只用于正文引用，`==` 标题本身保持全称。
 - 纯文字的 `(Chapter N, §N.M)` 同样改为 `(*Section Title*)`；若原编号明显指错节，按语义改正。
 - 章节总览段落里若括注与句子描述重复，直接删掉括注，不要重复写标题名。
 - 改完必须自查残留：`rg "§" <file>` 命中数必须为 0。

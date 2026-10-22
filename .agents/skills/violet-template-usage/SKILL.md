@@ -356,5 +356,5 @@ Subject/
 5. **不要** 使用 `#outline()` 内置目录（使用 `#make-outline()` 代替）
 6. **不要** 在 `initial.typ` 中重复章节文件已有的内容
 7. **不要** 手动干预分页：禁止 `#pagebreak()`、`#block(breakable: false)`、为排版目的调整 `#v(...)`；表格、`#note` 跨页交给 Typst（唯一例外是模板函数处理的封面/目录/Part 页）
-8. **不要** 用 `§x.y` 引用章节（编号会漂移且常指错节），一律写 `==` 标题名，带链接时以标签所在节的标题为准（详见 `violet-typst-writing-conventions` §4）
+8. **不要** 用 `§x.y` 引用章节（编号会漂移且常指错节），一律写 `==` 标题名；标题过长时用约定简称（如 *D'Alembert's Formula*），带链接时以标签所在节的标题为准（详见 `violet-typst-writing-conventions` §4）
 9. **不要** 用裸 `#table()` / `#grid()` 排版表格，统一 `#tex-table`（三线表）或 `#plain-table`（网格表）
