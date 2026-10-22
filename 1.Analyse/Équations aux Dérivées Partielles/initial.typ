@@ -708,14 +708,12 @@ $
 
 The following table summarizes the canonical forms and their characteristic geometry:
 
-#block(breakable: false)[
-  #tex-table(
-    ("Type", "Canonical form", "Coordinates", "Characteristics"),
-    ("Elliptic", [$u_(alpha alpha) + u_(beta beta) = Phi$], [$alpha + i beta = phi (x, y)$], "Complex; no real curves"),
-    ("Parabolic", [$u_(eta eta) = Phi$], [$xi = phi (x, y)$, $eta$ free], "One real family"),
-    ("Hyperbolic", [$u_(xi eta) = Phi$], [$xi = phi$, $eta = psi$], "Two real families"),
-  )
-]
+#tex-table(
+  ("Type", "Canonical form", "Coordinates", "Characteristics"),
+  ("Elliptic", [$u_(alpha alpha) + u_(beta beta) = Phi$], [$alpha + i beta = phi (x, y)$], "Complex; no real curves"),
+  ("Parabolic", [$u_(eta eta) = Phi$], [$xi = phi (x, y)$, $eta$ free], "One real family"),
+  ("Hyperbolic", [$u_(xi eta) = Phi$], [$xi = phi$, $eta = psi$], "Two real families"),
+)
 
 #note(title: "The transport equation previewed")[
   The transport equation $u_t + a u_x = 0$, developed in detail in #link(<ex:transport-equation>)[*Quasilinear Equations*], is "the simplest hyperbolic PDE". From the second-order perspective of this chapter, we can now make this precise.
