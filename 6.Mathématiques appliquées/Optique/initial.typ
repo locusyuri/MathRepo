@@ -463,7 +463,7 @@ The characteristic equation $r^2 + 2 beta r + omega_0^2 = 0$ has roots $r = - be
 The three damping regimes are drawn in @fig:damped-oscillation.
 
 #figure(
-  image("img/damped_oscillation.png", width: 100%),
+  image("img/damped-oscillation.svg", width: 100%),
   caption: [Damped oscillation: underdamped (blue), critically damped (green), and overdamped (orange).],
   placement: auto,
   supplement: [Fig.]
@@ -494,7 +494,7 @@ $
 Amplitude and phase near resonance are plotted in @fig:resonance-curves.
 
 #figure(
-  image("img/resonance_curves.png", width: 100%),
+  image("img/resonance-curves.svg", width: 100%),
   caption: [Resonance curves for different damping ratios $beta / omega_0$. Sharp peaks correspond to weak damping; broad curves correspond to strong damping.],
   placement: auto,
   supplement: [Fig.]
@@ -918,7 +918,7 @@ A standing wave is thus a pair of travelling waves trapped between two boundarie
 The first normal modes of the string are drawn in @fig:string-normal-modes.
 
 #figure(
-  image("img/string_normal_modes.png", width: 100%),
+  image("img/string-normal-modes.svg", width: 100%),
   caption: [Normal modes of a string fixed at both ends: $n = 1$ (fundamental), $n = 2$ (second harmonic), $n = 3$ (third harmonic).],
   placement: auto,
   supplement: [Fig.]
