@@ -107,6 +107,23 @@ user_invocable: false
 
 - 图片引用：`@fig:example`
 - 自定义组件引用：`#link(<label>)[显示文本]`
+- **章节引用：禁止 `§x.y` 编号，一律写 `==` 标题名**（2026-10-22 用户定稿）
+
+### 章节引用规则（`§` 已禁用）
+
+编号会随章节增删漂移，且模板手工维护的编号经常对不上真实位置，因此**正文中不得出现 `§x.y`**：
+
+- 引用某节内容时，直接写该节标题名；有对应标签就做成链接，并把标题名排成斜体（表示"节名"而非强调）：
+
+  ```typst
+  ... is solved in *The Homogeneous Equation: D'Alembert's Formula*.
+  ... the conservation law of #link(<thm:wave-energy>)[*Energy Inequality, Uniqueness and Stability*].
+  ```
+
+- 带链接时**以标签所在节的标题为准**，不要照抄旧编号——旧编号常常指错节（例：`#link(<def:weak-derivative>)[§20.1]` 实际在 *Weak Derivatives*）。
+- 纯文字的 `(Chapter N, §N.M)` 同样改为 `(*Section Title*)`；若原编号明显指错节，按语义改正。
+- 章节总览段落里若括注与句子描述重复，直接删掉括注，不要重复写标题名。
+- 改完必须自查残留：`rg "§" <file>` 命中数必须为 0。
 
 > **注意**：`#theorem` / `#definition` / `#corollary` 等模板组件内部包裹了 `context`，
 > 其标签**不能用 `@` 语法引用**（会报错 `cannot reference context`），
@@ -273,6 +290,34 @@ Symmetry shortcuts. Before any computation, check the following three devices.
 - 证明步骤之间用空行分隔，保持逻辑段落清晰
 - 长证明使用 `*Step N*:` 标记关键步骤
 - 证明结束由 `#proof` 组件自动添加 ■ 符号，不需要手动写 QED
+- `#proof` / `#solution` 支持 `name:`，用它说明证明或解答的对象（如 `#proof(name: "of Theorem 16.6")[...]`、`#solution(name: "quadratic minimization")[...]`），不要把这句话写成正文首句
+
+### 组件参数：`title` 与 `name`
+
+- `#note` 与 `#caution` 支持 `title:`；`#proof` 与 `#solution` 支持 `name:`。
+- **首句若是加粗小标签，必须改用参数**，禁止写成 `#note[\n  *Smoothing effect.* ...]`：
+
+  ```typst
+  // ✗ 标签混在正文首句里
+  #note[
+    *Smoothing effect.* No regularity of $g$ beyond continuity is needed...
+  ]
+
+  // ✓ 标签交给 title，正文从内容开始
+  #note(title: "Smoothing effect")[
+    No regularity of $g$ beyond continuity is needed...
+  ]
+  ```
+
+- 判据：首句是"给这块补充说明起名字"（如 *Scope.*、*Why a cone?*、*Reflected waves.*）→ 用 `title`；首句是真正的陈述句（如 "The same principle applies to..."）→ 保持正文。
+- `title` 里的数学会被按 markup 求值，`title: "Extension to $n$ dimensions"` 可正常渲染。
+
+### 分页由 Typst 负责（禁止手动干预）
+
+- **不要**为了美观插入 `#pagebreak()`、`#block(breakable: false)`、`#v(...)` 或调整表格/组件的断行位置来"摆页面"。
+- 表格、`#note` 盒子跨页是 Typst 的正常排版结果，直接接受；若确实难看，通过**减少内容或调整顺序**（把表放到小节开头等）解决，而不是锁死版面。
+- 唯一例外：文档结构本身要求的强制分页（封面、目录、Part 页，由模板函数处理）。
+- 分页效果只能在编译后目视检查，不得通过编辑器预览臆断。
 
 ### 内容组织模式
 
@@ -511,3 +556,6 @@ typst compile "1.Analyse/Analyse Complexe/initial.typ" "1.Analyse/Analyse Comple
 10. **修改保持局部化**：只动当前 subject 的 `initial.typ`（及其 `scripts/`、`img/` 资源），不改其他笔记、不改模板公共接口
 11. 正文中的过渡段落（连接定理之间的逻辑）直接写为普通文本，不使用组件包裹
 12. 行列式用 `"det"(A)` / `mat(delim: "|", ...)`，**禁止用 `abs()` 表示行列式**（详见 general.md §7 与 linear-algebra.md §2）
+13. **章节引用禁止 `§x.y`**：一律写 `==` 标题名（带链接时用标签所在节的标题），提交前 `rg "§" <file>` 必须为 0
+14. **`#note` / `#caution` 的首句加粗小标签必须用 `title:`**，`#proof` / `#solution` 用 `name:` 说明对象
+15. **分页交给 Typst**：禁止 `#pagebreak()`、`#block(breakable: false)`、调节 `#v(...)` 等手动干预分页；表格或 note 跨页属于正常排版

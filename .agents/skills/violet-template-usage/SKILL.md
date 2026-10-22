@@ -152,6 +152,7 @@ user_invocable: false
 
 - `proof` 结尾显示实心方框 ■
 - `solution` 结尾显示空心方框 □
+- `name` 可选，用于标明该证明/解答的对象，例如 `#proof(name: "of Theorem 16.6")[...]`、`#solution(name: "quadratic minimization")[...]`；**不要**把这句话写成正文第一句
 
 ### 练习
 
@@ -168,10 +169,15 @@ user_invocable: false
 ### Note（信息提示）
 
 ```typst
-#note[
+#note(title: "Optional short label")[
   Commentary or reminder text.
 ]
 ```
+
+- `note` 与 `caution` **都支持 `title:`**，渲染为 `Note (标题)` / `Caution (标题)`
+- **首句若是加粗小标签，必须改用 `title:`**，不要写成 `#note[\n  *Short label.* ...]`
+- 判据：首句在"给这块说明起名字"（*Scope.*、*Why a cone?*、*Reflected waves.*）→ 用 `title`；首句是真正的陈述句 → 保持正文
+- `title` 按 markup 求值，可含数学：`title: "Extension to $n$ dimensions"`
 
 ### Caution（警告提示）
 
@@ -224,6 +230,8 @@ user_invocable: false
 
 - 含数学公式的单元格 → 用 `[...]`
 - 纯文本单元格 → 可用 `"..."`
+- **禁止裸 `#table()` / `#grid()`**，统一用上面两个组件（风格一致、宽度自适应）
+- 表格跨页由 Typst 决定，**不要**用 `#block(breakable: false)` 锁死；嫌难看就调整表格在文中的位置或精简内容
 
 ---
 
@@ -347,3 +355,6 @@ Subject/
 4. **不要** 手动管理定理编号（由计数器自动处理）
 5. **不要** 使用 `#outline()` 内置目录（使用 `#make-outline()` 代替）
 6. **不要** 在 `initial.typ` 中重复章节文件已有的内容
+7. **不要** 手动干预分页：禁止 `#pagebreak()`、`#block(breakable: false)`、为排版目的调整 `#v(...)`；表格、`#note` 跨页交给 Typst（唯一例外是模板函数处理的封面/目录/Part 页）
+8. **不要** 用 `§x.y` 引用章节（编号会漂移且常指错节），一律写 `==` 标题名，带链接时以标签所在节的标题为准（详见 `violet-typst-writing-conventions` §4）
+9. **不要** 用裸 `#table()` / `#grid()` 排版表格，统一 `#tex-table`（三线表）或 `#plain-table`（网格表）
