@@ -1124,7 +1124,7 @@ If the medium is bounded, the solution is further constrained on the spatial bou
 
 === The Semi-Infinite String: The Method of Extensions // 半无界弦：延拓法
 
-The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$, provided the boundary condition at the end $x = 0$ can be encoded in the data. The tool is the *method of extensions*: extend the data from $x > 0$ to the whole line in such a way that the d'Alembert solution of the extended problem automatically satisfies the boundary condition — the same reflection principle as the method of images for Green functions (*Green Functions and Representation*). The extension is dictated by the boundary condition: a *fixed end* $u (0, t) = 0$ calls for an *odd* extension, a *free end* $u_x (0, t) = 0$ for an *even* one.
+The d'Alembert solution also covers problems on a *semi-infinite* string $x > 0$, provided the boundary condition at the end $x = 0$ can be encoded in the data. The tool is the *method of extensions*: extend the data from $x > 0$ to the whole line in such a way that the d'Alembert solution of the extended problem automatically satisfies the boundary condition — the same reflection principle as the method of images for Green functions (*Method of Images and Conformal Mapping*). The extension is dictated by the boundary condition: a *fixed end* $u (0, t) = 0$ calls for an *odd* extension, a *free end* $u_x (0, t) = 0$ for an *even* one.
 
 #proposition(name: "The Semi-Infinite String by the Method of Extensions")[
   Let $phi, psi$ be given on $x >= 0$, and let $u$ solve the wave equation on $x > 0$ with $u (x, 0) = phi (x)$, $u_t (x, 0) = psi (x)$ and a boundary condition at $x = 0$. Then:
@@ -1949,7 +1949,7 @@ The wave equation and the heat equation of the next chapter draw the two halves 
 
 = The Heat Equation // 热方程
 
-The heat equation, introduced in #link(<def:heat-equation>)[*Basic Concepts and Examples*], is the prototypical parabolic equation. Its fundamental solution — the heat kernel — was constructed in #link(<ex:fund-heat>)[*Fundamental Solutions*]; this chapter develops the classical theory of the initial value problem: the Cauchy problem, the maximum principle, and the energy estimates. Two features distinguish parabolic equations from hyperbolic ones (*Wave Equation*): *regularization* — arbitrary rough data become $C^oo$ instantly — and *irreversibility* — the backward problem is ill-posed.
+The heat equation, introduced in #link(<def:heat-equation>)[*Basic Concepts and Examples*], is the prototypical parabolic equation. Its fundamental solution — the heat kernel — was constructed in #link(<ex:fund-heat>)[*Fundamental Solutions*]; this chapter develops the classical theory of the initial value problem: the Cauchy problem, the maximum principle, and the energy estimates. Two features distinguish parabolic equations from the hyperbolic ones of the previous chapter: *regularization* — arbitrary rough data become $C^oo$ instantly — and *irreversibility* — the backward problem is ill-posed.
 
 == Heat Kernel and Fundamental Solution // 热核与基本解
 
@@ -3460,7 +3460,7 @@ The linear theory of *The Heat Equation* and *Linear Parabolic Boundary Value Pr
 ] <thm:fujita-exponent>
 
 #note[
-  The Fujita phenomenon exhibits the delicate balance between diffusion, which spreads mass, and the power nonlinearity, which amplifies it: for $p < p_c$ the reaction always wins, for $p > p_c$ small data are damped. The proof uses the heat kernel (*The Heat Equation*) and the semigroup estimates: solutions are compared with self-similar subsolutions $u (x, t) = (T - t)^(-1/(p-1)) phi (x / sqrt(T - t))$, or blow-up is obtained by the Kaplan energy method below.
+  The Fujita phenomenon exhibits the delicate balance between diffusion, which spreads mass, and the power nonlinearity, which amplifies it: for $p < p_c$ the reaction always wins, for $p > p_c$ small data are damped. The proof uses the heat kernel (*Fundamental Solutions*) and the semigroup estimates: solutions are compared with self-similar subsolutions $u (x, t) = (T - t)^(-1/(p-1)) phi (x / sqrt(T - t))$, or blow-up is obtained by the Kaplan energy method below.
 ]
 
 #proposition(name: "Blow-Up via the Kaplan Method")[
