@@ -1593,20 +1593,227 @@ The stability of $cal(S)$ is what makes it usable.
   Every function of polynomial growth acts on $cal(S)$ by integration against it, so $L^p(bb(R)) subset cal(S)'(bb(R))$ for every $p in [1, +oo]$.
 ]
 
-Tempered distributions are exactly the class on which the Fourier transform extends by duality, which is the reason for introducing them at this point; the extension itself is stated in §3.3.
+Tempered distributions are exactly the class on which the Fourier transform extends by duality, which is the reason for introducing them at this point; the extension itself is stated at the end of §3.4, once the inversion formula is available.
 
 == Basic Properties of the Fourier Transform // Fourier 变换的基本性质
-// TODO 按大纲撰写（旧稿此处使用 omega 约定且缺项，重写时统一为 xi 约定）：
-//   prop:fourier-transform-rules —— 线性、平移与调制成对、缩放、微分与乘子对偶、共轭
-//   thm:convolution-R —— 卷积定理（复用 @def:convolution，R 上无归一化）
-//   prop:schwartz-stability 的补充：F: S -> S 连续、F^4 = id、F^2 为反射
-//   prop:fourier-tempered —— 由转置把 F 延拓到 S'(R)（兑现 §3.2 的预告）
+
+Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced in §3.2. The proofs are short computations, and they are not the point: what matters is the pattern. Each operation on the variable $x$ has a dual operation on the frequency $xi$, and the transform passes from one column of the following list to the other.
+
+#property(name: "Fourier Transform Rules")[
+  Let $f, g in cal(S)(bb(R))$, $a, b in bb(C)$, $x_0, xi_0 in bb(R)$ and $c in bb(R) without {0}$. Then
+  1. *Linearity.*
+    $ cal(F)[a f + b g] = a cal(F)[f] + b cal(F)[g]. $
+
+  2. *Translation and modulation.*
+    $ cal(F)[f(x - x_0)](xi) = e^(-2 pi i xi x_0) hat(f)(xi), quad cal(F)[e^(2 pi i xi_0 x) f(x)](xi) = hat(f)(xi - xi_0). $
+
+  3. *Scaling.*
+    $ cal(F)[f(c x)](xi) = (1) / (abs(c)) hat(f)(xi / c). $
+
+  4. *Conjugation and reflection.*
+    $ hat(overline(f))(xi) = overline(hat(f)(-xi)), quad cal(F)[f(-x)](xi) = hat(f)(-xi). $
+
+  5. *Differentiation and multiplication.* For every $n >= 0$,
+    $ cal(F)[f^((n))](xi) = (2 pi i xi)^n hat(f)(xi), quad cal(F)[x^n f(x)](xi) = (1) / (2 pi i)^n hat(f)^((n))(xi). $
+
+  6. *Multiplication formula.*
+    $ integral_(-oo)^(oo) f(x) hat(g)(x) dif x = integral_(-oo)^(oo) hat(f)(xi) g(xi) dif xi. $
+] <prop:fourier-transform-rules>
+
+#proof[
+  (1) is the linearity of the integral. In (2) the substitution $u = x - x_0$ produces the factor $e^(-2 pi i xi x_0)$, and the modulation statement is the same computation written with the frequencies shifted.
+  In (3) the substitution $u = c x$ produces the factor $1 \/ abs(c)$ and rescales the frequency into $xi \/ c$.
+  In (4) take conjugates and substitute $u = -x$.
+  In (5) integrate by parts $n$ times: the boundary terms vanish because every derivative of a Schwartz function decays faster than any polynomial, and each integration by parts brings down a factor $2 pi i xi$; differentiating under the integral sign gives the second identity.
+  For (6), apply Fubini to the absolutely convergent double integral
+  $
+    integral_(-oo)^(oo) integral_(-oo)^(oo) abs(f(x) g(y) e^(-2 pi i x y)) dif x dif y = || f ||_1 || g ||_1 < +oo.
+  $
+]
+
+The product rule, which is the frequency-side shadow of the convolution theorem below, is the most used property of the transform.
+
+#theorem(name: "Convolution Theorem")[
+  Let $f, g in cal(S)(bb(R))$. Then $f * g in cal(S)(bb(R))$ and
+  $
+    hat(f * g)(xi) = hat(f)(xi) dot hat(g)(xi), quad xi in bb(R).
+  $
+  Conversely, $hat(f g) = hat(f) * hat(g)$.
+] <thm:convolution-R>
+
+#proof[
+  By #link(<def:convolution>)[the definition of convolution], $(f * g)(x) = integral_(-oo)^(oo) f(t) g(x - t) dif t$, so
+  $
+    hat(f * g)(xi) & = integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) g(x - t) dif t ) e^(-2 pi i xi x) dif x \
+    & = integral_(-oo)^(oo) f(t) ( integral_(-oo)^(oo) g(x - t) e^(-2 pi i xi x) dif x ) dif t \
+    & = integral_(-oo)^(oo) f(t) e^(-2 pi i xi t) hat(g)(xi) dif t = hat(f)(xi) dot hat(g)(xi).
+  $
+  The interchange of integrals is legitimate: the integrand is dominated by $abs(f(t) g(x - t))$, whose double integral is $|| f ||_1 || g ||_1$ by Fubini and translation invariance of the integral. The second statement follows from the first applied to $hat(f)$ and $hat(g)$, using the inversion formula of §3.4, or directly from the multiplication formula of the preceding proposition.
+]
+
+=== The Transform as an Operator on $cal(S)$ // 作为速降空间上的算子
+
+Rule 5 has a consequence that was promised in §3.2: the transform never leaves the Schwartz space, and it acts continuously there.
+
+#proposition(name: "The Fourier Transform on the Schwartz Space")[
+  For every $phi in cal(S)(bb(R))$ the transform $hat(phi)$ belongs to $cal(S)(bb(R))$, and $cal(F): cal(S)(bb(R)) -> cal(S)(bb(R))$ is continuous for the topology defined by the seminorms of §3.2.
+] <prop:fourier-schwartz>
+
+#proof[
+  Fix $m, n >= 0$ and write $psi = (-2 pi i x)^m phi(x)$, which is again a Schwartz function by #link(<prop:schwartz-stability>)[the closure properties]. By rule 5 applied twice,
+  $
+    xi^n hat(phi)^((m))(xi) = (1) / (2 pi i)^n cal(F)[psi^((n))](xi) = (1) / (2 pi i)^n integral_(-oo)^(oo) psi^((n))(x) e^(-2 pi i xi x) dif x.
+  $
+  Taking absolute values and then suprema over $xi$,
+  $
+    || hat(phi) ||_((m, n)) <= (1) / (2 pi)^n || psi^((n)) ||_1 <= (1) / (2 pi)^n sum_(k=0)^(n) binom(n, k) (2 pi)^(m - k) || phi ||_((m, n - k)),
+  $
+  where the last inequality uses $abs(psi^((n))(x)) <= C \/ (1 + x^2)$ for a combination of finitely many seminorms of $phi$, exactly as in the proof of the closure properties. Hence $hat(phi) in cal(S)$ and $phi_j -> phi$ in $cal(S)$ implies $hat(phi_j) -> hat(phi)$ in $cal(S)$.
+]
+
+#caution[
+  The estimate above is the reason for choosing $cal(S)$ rather than $cal(D)$ or $L^1$: on $cal(D)$ the transform leaves the space, and on $L^1$ it does not even land in $L^1$. The price is that $cal(S)$ contains no compactly supported function except $0$, so it cannot be used where support conditions matter.
+]
 
 == Fourier Inversion Theorem // Fourier 反演定理
-// TODO 按大纲撰写：
-//   def:gauss-kernel、prop:gauss-fourier-transform（e^(-pi x^2) 自对偶）
-//   lem:gauss-approximation（正性/归一/集中，与 @prop:fejer-properties 平行）
-//   thm:fourier-inversion（Fubini + 高斯截断）、cor:fourier-injective、cor:fourier-inversion-L1
+
+The heuristic of §3.1 ended with the formula $f(x) = integral hat(f)(xi) e^(2 pi i xi x) dif xi$. #link(<ex:box-fourier>)[The box function] shows why this cannot be taken at face value: $hat(f)$ need not be integrable, so the integral may not converge. A factor forcing convergence has to be inserted, and the natural choice is the Gaussian, because it is its own transform.
+
+#definition(name: "Gauss Kernel")[
+  For $delta > 0$ and $x in bb(R)$ the *Gauss kernel* of width $delta$ is
+  $
+    K_delta(x) = (1) / (delta) e^(-pi (x / delta)^2).
+  $ <eq:gauss-kernel>
+] <def:gauss-kernel>
+
+#proposition(name: "The Gaussian is its own transform")[
+  For every $xi in bb(R)$,
+  $
+    integral_(-oo)^(oo) e^(-pi x^2) e^(-2 pi i xi x) dif x = e^(-pi xi^2),
+  $ <eq:gauss-fourier>
+  and consequently $hat(K_delta)(xi) = e^(-pi delta^2 xi^2)$.
+] <prop:gauss-fourier-transform>
+
+#proof[
+  Put $F(xi) = integral_(-oo)^(oo) e^(-pi x^2) e^(-2 pi i xi x) dif x$. The integrand is dominated by $e^(-pi x^2)$, so $F$ may be differentiated under the integral sign:
+  $
+    F'(xi) = -2 pi i integral_(-oo)^(oo) x e^(-pi x^2) e^(-2 pi i xi x) dif x.
+  $
+  Since $(dif) / (dif x) e^(-pi x^2) = -2 pi x e^(-pi x^2)$, an integration by parts gives
+  $
+    F'(xi) = i integral_(-oo)^(oo) ( (dif) / (dif x) e^(-pi x^2) ) e^(-2 pi i xi x) dif x = -2 pi xi F(xi),
+  $
+  the boundary term vanishing at both ends. Moreover $F(0) = integral e^(-pi x^2) dif x = 1$, the classical Gaussian integral. The only solution of $F' = -2 pi xi F$ with $F(0) = 1$ is $F(xi) = e^(-pi xi^2)$.
+  For the second statement, substitute $x = delta u$:
+  $
+    hat(K_delta)(xi) = integral_(-oo)^(oo) (1) / (delta) e^(-pi (x / delta)^2) e^(-2 pi i xi x) dif x = integral_(-oo)^(oo) e^(-pi u^2) e^(-2 pi i delta xi u) dif u = e^(-pi delta^2 xi^2).
+  $
+]
+
+#lemma(name: "The Gauss Kernel is an Approximate Identity")[
+  For every $delta > 0$ the kernel $K_delta$ satisfies:
+  1. *Positivity.* $K_delta(x) >= 0$ for all $x$.
+  2. *Normalization.* $integral_(-oo)^(oo) K_delta(x) dif x = 1$.
+  3. *Concentration.* For every $eta > 0$,
+    $
+      integral_(abs(x) > eta) K_delta(x) dif x -> 0, quad delta -> 0^+.
+    $
+  Consequently, for every $f in cal(S)(bb(R))$, the convolution $f * K_delta$ converges to $f$ uniformly on $bb(R)$ as $delta -> 0^+$.
+] <lem:gauss-approximation>
+
+#proof[
+  Positivity is clear. For normalization, substitute $u = x \/ delta$ and use the Gaussian integral. For concentration, the same substitution gives
+  $
+    integral_(abs(x) > eta) K_delta(x) dif x = integral_(abs(u) > eta \/ delta) e^(-pi u^2) dif u -> 0,
+  $
+  since $eta \/ delta -> +oo$ and the tail of an integrable function vanishes.
+
+  For the last claim write $f * K_delta - f$ as an integral and split it at $eta$:
+  $
+    abs((f * K_delta)(x) - f(x)) <= integral_(abs(y) <= eta) K_delta(y) abs(f(x - y) - f(x)) dif y + 2 || f ||_oo integral_(abs(y) > eta) K_delta(y) dif y.
+  $
+  Given $epsilon > 0$, uniform continuity of $f$ on $bb(R)$ gives $eta > 0$ with $abs(f(x - y) - f(x)) < epsilon \/ 2$ whenever $abs(y) <= eta$, and then concentration makes the second term smaller than $epsilon \/ 2$ for $delta$ small enough. This is the same three-property argument as in #link(<prop:fejer-properties>)[the Fejér kernel].
+]
+
+#theorem(name: "Fourier Inversion Theorem")[
+  Let $f in cal(S)(bb(R))$. Then for every $x in bb(R)$
+  $
+    f(x) = integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) dif xi,
+  $ <eq:inversion-formula>
+  the integral converging absolutely, and the convergence being uniform in $x$.
+] <thm:fourier-inversion>
+
+#proof[
+  Let $delta > 0$ and put
+  $
+    f_delta(x) = integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) e^(-pi delta^2 xi^2) dif xi.
+  $
+  Since $hat(f) in cal(S)$ by #link(<prop:fourier-schwartz>)[the preceding proposition], the integrand is integrable and Fubini applies:
+  $
+    f_delta(x) = integral_(-oo)^(oo) f(t) ( integral_(-oo)^(oo) e^(2 pi i xi (x - t)) e^(-pi delta^2 xi^2) dif xi ) dif t = integral_(-oo)^(oo) f(t) K_delta(x - t) dif t,
+  $
+  where the inner integral equals $K_delta(x - t)$: after the substitution $eta = delta xi$ it reads $(1) / (delta) hat(G)((t - x) / (delta))$ with $G(u) = e^(-pi u^2)$, and $hat(G) = G$ is #link(<prop:gauss-fourier-transform>)[the Gaussian identity], while $G$ is even. Hence $f_delta = f * K_delta$, and #link(<lem:gauss-approximation>)[the approximate identity lemma] gives $f_delta -> f$ uniformly.
+
+  On the other hand $abs(hat(f)(xi) e^(2 pi i xi x) e^(-pi delta^2 xi^2)) <= abs(hat(f)(xi))$, which is integrable, so dominated convergence gives
+  $
+    f_delta(x) -> integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) dif xi quad "for every" x.
+  $
+  The two limits coincide, which is the claimed identity. Absolute convergence follows from $hat(f) in L^1(bb(R))$, and uniformity from the uniform convergence of $f * K_delta$ and the domination just used.
+]
+
+#corollary(name: "Injectivity and Invertibility")[
+  If $f, g in cal(S)(bb(R))$ and $hat(f) = hat(g)$, then $f = g$. More generally $cal(F): cal(S)(bb(R)) -> cal(S)(bb(R))$ is a linear isomorphism.
+] <cor:fourier-injective>
+
+#corollary(name: "Involutivity")[
+  For $f in cal(S)(bb(R))$,
+  $
+    cal(F)^2[f](x) = f(-x), quad "hence" quad cal(F)^4 = "id".
+  $
+] <cor:fourier-involution>
+
+#proof[
+  By the definition applied to $hat(f)$ and then the inversion formula with $x$ replaced by $-x$,
+  $
+    cal(F)^2[f](x) = integral_(-oo)^(oo) hat(f)(xi) e^(-2 pi i x xi) dif xi = f(-x).
+  $
+  Applying this twice more returns $f$.
+]
+
+=== The Transform on Tempered Distributions // 缓增分布上的 Fourier 变换
+
+#proposition(name: "Fourier Transform of a Tempered Distribution")[
+  For $T in cal(S)' (bb(R))$ define $cal(F)T$ by
+  $
+    ⟨ cal(F)T, phi ⟩ = ⟨ T, cal(F)phi ⟩, quad phi in cal(S)(bb(R)).
+  $
+  Then $cal(F)T in cal(S)' (bb(R))$, and $cal(F): cal(S)' (bb(R)) -> cal(S)' (bb(R))$ is a linear isomorphism whose inverse is given by the same formula with $cal(F)^(-1)$ in place of $cal(F)$.
+] <prop:fourier-tempered>
+
+#proof[
+  The functional $cal(F)T$ is well defined because $cal(F)phi in cal(S)$ for $phi in cal(S)$, and it is continuous because $phi_j -> phi$ in $cal(S)$ implies $cal(F)phi_j -> cal(F)phi$ by #link(<prop:fourier-schwartz>)[continuity of the transform on $cal(S)$], whence $⟨ T, cal(F)phi_j ⟩ -> ⟨ T, cal(F)phi ⟩$.
+  Linearity in $T$ is clear. For the inverse, #link(<cor:fourier-involution>)[involutivity] gives $⟨ cal(F)^2 T, phi ⟩ = ⟨ T, tilde(phi) ⟩$ where $tilde(phi)(x) = phi(-x)$, so applying $cal(F)$ four times returns $T$; hence $cal(F)^(-1) = cal(F)^3$ on $cal(S)'$, and $cal(F)^(-1) T$ is computed by the same transposition formula.
+]
+
+#example(name: "Fourier transform of the constant and of the Dirac mass")[
+  For $phi in cal(S)(bb(R))$, the definition gives
+  $
+    ⟨ cal(F)1, phi ⟩ = ⟨ 1, cal(F)phi ⟩ = integral_(-oo)^(oo) hat(phi)(xi) dif xi = phi(0),
+  $
+  the last step being #link(<eq:inversion-formula>)[the inversion formula] at $x = 0$. Hence $cal(F)1 = delta_0$. The same computation with the roles exchanged, using $⟨ cal(F)delta_0, phi ⟩ = ⟨ delta_0, cal(F)phi ⟩ = hat(phi)(0) = integral phi$, gives $cal(F)delta_0 = 1$.
+  So a constant has only the zero frequency, and a point mass is spread over all frequencies; on tempered distributions the transform becomes a symmetry with no preferred side.
+] <ex:fourier-delta>
+
+#corollary(name: "Inversion on $L^1$")[
+  Let $f in L^1(bb(R))$ and assume that $hat(f) in L^1(bb(R))$. Then $f$ agrees almost everywhere with the continuous function
+  $
+    x |-> integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) dif xi.
+  $
+] <cor:fourier-inversion-l1>
+
+#note[
+  The proof is deferred to §4.1. It repeats the argument above with the Gaussian factor kept and the limit taken in $L^1$ instead of uniformly, and it requires two facts proved there: the density of $cal(S)(bb(R))$ in $L^1(bb(R))$ and the continuity of the transform on $L^1$, which is the transform version of the Riemann–Lebesgue lemma.
+]
 
 = L¹, L² and the Plancherel Theorem // L¹、L² 与 Plancherel 定理
 
