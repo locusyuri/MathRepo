@@ -245,9 +245,9 @@
 
 #part("Classical Fourier Series") // 经典 Fourier 级数
 
-= Classical Fourier Series
-In this chapter, we will explore the Fourier series in such function space:
-1. *Set and Field.* The linear space we are working on is the set of all integrable
+= Fourier Coefficients and Dirichlet Kernel // Fourier 系数与 Dirichlet 核
+In this chapter we investigate Fourier series in the following function space:
+1. *Underlying Set and Scalar Field.* The linear space we work in is the set of all integrable
   (in the _Riemann sense_)#footnote[
     For common integral, it should be Riemann integral;
     for defective integral, it should be _absolute Riemann integral_.
@@ -257,7 +257,7 @@ In this chapter, we will explore the Fourier series in such function space:
     It can be also defined on interval $[-T, T]$,
     but we choose $[-pi, pi]$ for simplicity.
   ], equipped with the usual addition and scalar multiplication of functions.
-  We denote it as $cal(R)[-pi, pi]$ that is an infinite-dimensional linear space.
+  We denote this space by $cal(R)[-pi, pi]$; it is an infinite-dimensional linear space.
   The field of scalars is the set of complex numbers $bb(C)$.
 
 2. *Inner Product.* For any two functions $f(x), g(x)$ in this space, we define their inner product as:
@@ -267,70 +267,65 @@ In this chapter, we will explore the Fourier series in such function space:
   where $(1) / (2pi)$ is a normalization factor.
 
 3. *Norm.* The norm induced by this inner product is given by:
-  $
-    || f || = sqrt(⟨ f, f ⟩) = ( (1) / (2pi) integral_(-pi)^(pi) abs(f(x))^2 dif x )^((1) / (2)).
-  $
-In fact, we often assume that the functions are always piecewise continuous or piecewise smooth on $[-pi, pi]$,
-which is the most common case in engineering.
+$
+  || f || = sqrt(⟨ f, f ⟩) = ( (1) / (2pi) integral_(-pi)^(pi) abs(f(x))^2 dif x )^((1) / (2)).
+$
 
-=== Function Defined on the Unit Circle
+Strictly speaking this is only a _semi_-inner product: $⟨ f, f ⟩ = 0$ holds for every function vanishing almost everywhere, so $cal(R)[-pi, pi]$ is to be read as a space of equivalence classes modulo such functions.
 
-For a periodic function $f(x): bb(R) -> bb(C)$ with period $2pi$,
-we can explore it from the perspective of complex exponential functions on the unit circle in the complex plane.
+In fact, we often assume that the functions are piecewise continuous or piecewise smooth on $[-pi, pi]$, which is the case most often met in applications.
+
+== Functions on the Unit Circle // 圆周上的函数
+
+A periodic function $f(x): bb(R) -> bb(C)$ of period $2pi$ is best viewed through the complex exponential on the unit circle.
 Let
 $
   bb(T) = { z in bb(C) : abs(z) = 1 },
 $
-which is one-dimensional torus, also known as the unit circle in the complex plane.
+the one-dimensional torus, also known as the unit circle in the complex plane.
 
-For any $theta in bb(R)$, we can define:
+For any $theta in bb(R)$ we may set
 $
   f(theta) = F(e^(i theta)),
 $
-where $F: bb(T) -> bb(C)$ is a *function defined on the unit circle*.
-Thus, we can study the periodic function $f(x)$ by analyzing the function $F(z)$ on the unit circle $bb(T)$.
-From the perspective of algebra, the set of all such functions $F(z)$ forms a function space over the unit circle,
-which is _isomorphic_ to the space of periodic functions $f(x)$ with period $2pi$.
+where $F: bb(T) -> bb(C)$ is the corresponding *function defined on the unit circle*.
+The periodic function $f(x)$ may thus be studied through $F(z)$ on $bb(T)$: the set of all such $F$ is a function space over the circle, _isomorphic_ to the space of $2pi$-periodic functions $f(x)$.
 
-By introducing $bb(T)$ that is a compact manifold without boundary in fact,
-we can not only eliminate the hassles of endpoints but also simplify many discussions.
-Furthermore, since $bb(T)$ is a multiplicative group of complex numbers,
+Working with $bb(T)$, a compact manifold without boundary, removes the inconvenience of endpoints and simplifies many arguments.
+Moreover, since $bb(T)$ is a multiplicative group of complex numbers, it makes transparent the essence of Fourier series: the duality theory on compact Abelian groups.
 
-we can better understand the essence of Fourier series: the duality theory on compact Abelian groups.
-
-== Fourier Coefficients
-#theorem[
+== Fourier Coefficients // Fourier 系数
+#theorem(name: "Orthonormal System")[
+  The family
   $
     cal(E) = { e^(i n x) : n in bb(Z) }
   $
-  is an orthonormal basis of the inner product space $cal(R)[-pi, pi]$.
+  is orthonormal in $cal(R)^2[-pi, pi]$, i.e., $⟨ e^(i m x), e^(i n x) ⟩ = delta_(m n)$ for all $m, n in bb(Z)$.
 
   In real form,
   $
     { 1, cos x, sin x, cos 2 x, sin 2 x, dots }
   $
-  is also an orthogonal basis#footnote[
-    Note that this set is orthogonal but not orthonormal,
-    for
-    $ ⟨ 1, 1 ⟩ = 1, quad ⟨ cos n x, cos n x ⟩ = ⟨ sin n x,
-      sin n x ⟩ = (1) / (2), quad n in bb(N). $
+  is orthogonal though not orthonormal#footnote[
+    Indeed
+    $ ⟨ 1, 1 ⟩ = 1, quad ⟨ cos n x, cos n x ⟩ = ⟨ sin n x, sin n x ⟩ = (1) / (2), quad n in bb(N). $
     To make it orthonormal, each function should be normalized by the appropriate factor.
-  ] of the inner product space $cal(R)[-pi, pi]$.
-]
+  ] in the same space.
+] <thm:orthonormal-system>
 
-#definition[
-  The Fourier coefficients $hat(f)(n)$ of a function $f(x) in cal(R)[-pi, pi]$ is the
-  projection of $f(x)$ onto the basis function $e^(i n x)$:
+Completeness of $cal(E)$ — the fact that it is a _basis_ and not merely an orthonormal system — is precisely the content of #link(<thm:parseval-identity>)[*Parseval's Identity*], and it holds for the square integrable space $cal(R)^2[-pi, pi]$.
+For a merely integrable $f in cal(R)[-pi, pi]$ the expansion need not converge in norm, so no basis statement is available at this stage.
+
+#definition(name: "Fourier Coefficients")[
+  The *Fourier coefficients* of a function $f(x) in cal(R)[-pi, pi]$ are given by the Euler-Fourier formula
   $
     hat(f)(n) = ⟨ f, e^(i n x) ⟩ = (1) / (2pi) integral_(-pi)^(pi) f(x) e^(-i n x) dif x, quad n in bb(Z),
   $
-  that is called Euler-Fourier formula.
-
-  Hence, the Fourier series of $f(x)$ is given by:
+  and the *Fourier series* of $f(x)$ is
   $
-    f(x) ~ sum_(n=-oo)^(+oo) hat(f)(n) e^(i n x),
+    f(x) ~ sum_(n=-oo)^(+oo) hat(f)(n) e^(i n x).
   $
-  or in real form:
+  In real form it reads
   $
     f(x) ~ (a_0) / (2) + sum_(n=1)^(+oo) [ a_n cos(n x) + b_n sin(n x) ],
   $
@@ -338,73 +333,78 @@ we can better understand the essence of Fourier series: the duality theory on co
   $
     &a_0 = (1) / (pi) integral_(-pi)^(pi) f(x) dif x, \
     &a_n = (1) / (pi) integral_(-pi)^(pi) f(x) cos(n x) dif x, \
-    &b_n = (1) / (pi) integral_(-pi)^(pi) f(x) sin(n x) dif x, quad n = 1, 2, dots \
+    &b_n = (1) / (pi) integral_(-pi)^(pi) f(x) sin(n x) dif x, quad n = 1, 2, dots.
   $
-  and the symbol "$~$" indicates that the right-hand side is the Fourier series representation of $f(x)$.
-]
+] <def:fourier-coefficients>
+
+The symbol $~$ only records that the right-hand side is the Fourier series attached to $f$; it carries no claim of convergence.
+
 #note[
-  Utilizing Euler formula:
+  Using Euler's formula,
   $
     cos n x = (e^(i n x) + e^(-i n x)) / (2), quad sin n x = (e^(i n x) - e^(-i n x)) / (2i),
   $
-  we can easily derive the relationship between Fourier coefficients in complex form and real form:
+  the coefficients in the two forms are related by
   $
     hat(f)(0) = (a_0) / (2), quad hat(f)(n) = (a_n - i b_n) / (2), \
-    quad hat(f)(-n) = (a_n + i b_n) / (2), quad n = 1, 2, dots \
+    hat(f)(-n) = (a_n + i b_n) / (2), quad n = 1, 2, dots,
   $
+  and conversely
   $
-    a_0 = 2hat(f)(0), quad a_n = hat(f)(n) + hat(f)(-n) = 2Re hat(f)(n), quad \
-    b_n = i [ hat(f)(n) - hat(f)(-n) ] = -2Im hat(f)(n), quad n = 1, 2, dots \
+    a_0 = 2hat(f)(0), quad a_n = hat(f)(n) + hat(f)(-n) = 2Re hat(f)(n), \
+    b_n = i [ hat(f)(n) - hat(f)(-n) ] = -2Im hat(f)(n), quad n = 1, 2, dots.
   $
 ]
 
 
-It can be easily extended to any periodic function with period $2T$ by the substitution $x = (pi) / (T) t$:
+The whole construction extends to functions of period $2T$, written again with the coefficients $hat(f)(n)$:
+$
+  hat(f)(n) = (1) / (2T) integral_(-T)^(T) f(x) e^(-i n (pi) / (T) x) dif x, quad n in bb(Z),
+$
+so that
 $
   f(x) ~ sum_(n=-oo)^(+oo) hat(f)(n) e^(i n (pi) / (T) x),
 $
-or in real form:
+or in real form
 $
-  f(x) ~ (a_0) / (2) + \
-  sum_(n=1)^(+oo) [ a_n cos(n (pi) / (T) x) + b_n sin(n (pi) / (T) x) ]. \
+  f(x) ~ (a_0) / (2) + sum_(n=1)^(+oo) [ a_n cos(n (pi) / (T) x) + b_n sin(n (pi) / (T) x) ],
+$
+where $a_0, a_n, b_n$ are given by the formulas above with $(1) / (pi)$ replaced by $(1) / (T)$ and $[-pi, pi]$ by $[-T, T]$.
+
+When $f(x)$ is even, all sine terms vanish and the Fourier series reduces to a cosine series,
+$
+  f(x) ~ (a_0) / (2) + sum_(n=1)^(+oo) a_n cos(n x), quad a_n = (2) / (pi) integral_(0)^(pi) f(x) cos(n x) dif x.
+$
+When $f(x)$ is odd, all cosine terms vanish and it reduces to a sine series,
+$
+  f(x) ~ sum_(n=1)^(+oo) b_n sin(n x), quad b_n = (2) / (pi) integral_(0)^(pi) f(x) sin(n x) dif x.
 $
 
-#v(0.7cm)
+== Dirichlet Kernel and Convolution // Dirichlet 核与卷积
 
-When $f(x)$ is an even function, all sine terms vanish, and the Fourier series reduces to a cosine series:
-$
-  f(x) ~ (a_0) / (2) + sum_(n=1)^(+oo) a_n cos(n x).
-$
-When $f(x)$ is an odd function, all cosine terms vanish, and the Fourier series reduces to a sine series:
-$
-  f(x) ~ sum_(n=1)^(+oo) b_n sin(n x).
-$
+=== The Dirichlet Kernel // Dirichlet 核
 
-== The Dirichlet Kernel
-
-=== Dirichlet Kernel
-
-For partial sum of the first $N$ terms of the Fourier series of $f(x)$:
+The partial sum of the first $N$ terms of the Fourier series of $f(x)$ is
 $
-  S_(N)(f; x) = sum_(n=-N)^(N) hat(f)(n) e^(i n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ],
+  S_(N)(f; x) = sum_(n=-N)^(N) hat(f)(n) e^(i n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ].
 $
-in order to study its convergence, we can transform it into integral form.
-By Euler-Fourier formula, we have:
+To study its convergence we transform it into integral form.
+By the Euler-Fourier formula,
 $
-  S_(N)(f; x) \
+  S_(N)(f; x)
   & = sum_(n=-N)^(N) hat(f)(n) e^(i n x) \
   & = sum_(n=-N)^(N) ( (1) / (2pi) integral_(-pi)^(pi) f(t) e^(-i n t) dif t ) e^(i n x) \
   & = (1) / (2pi) integral_(-pi)^(pi) f(t) ( sum_(n=-N)^(N) e^(i n (x - t)) ) dif t \
-  & = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t, \
+  & = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t,
 $
 where
 $
-  D_(N)(x) = sum_(n=-N)^(N) e^(i n x) = sum_(n=1)^(N) 2 cos(n x) + 1 = \
-  ( sin((2N + 1) / (2) x) ) / ( sin(x / (2)) ), \
+  D_(N)(x) = sum_(n=-N)^(N) e^(i n x) = 1 + sum_(n=1)^(N) 2 cos(n x) = ( sin((2N + 1) x / 2) ) / ( sin(x / 2) )
 $
 is called the *Dirichlet kernel*.
+At $x = 2 k pi$ the quotient is understood by continuity, and $D_(N)(2 k pi) = 2N + 1$.
 
-Dirichlet kernel possesses the following important properties:
+The Dirichlet kernel possesses the following properties:
 
 #property[
   1. *Evenness.*
@@ -415,61 +415,55 @@ Dirichlet kernel possesses the following important properties:
 ]
 
 #figure(
-  image("img/Dirichlet_kernels.png", width: 60%),
+  image("img/dirichlet-kernels.svg", width: 60%),
   caption: [Dirichlet kernels for various values of $N$.],
-  placement: auto,
   supplement: [Fig.],
-) <fig:Dirichlet_kernels>
+) <fig:dirichlet-kernels>
 
-However, $D_(N)(x)$ is like water waves, with both positive and negative values.
-This means that during convolution (weighted averaging), positive and negative offsets may lead to extremely unstable results.
-For example, for integral mean of the absolute value of the Dirichlet kernel,
-which is called the *Lebesgue constant*:
-$
-  L_n := (1) / (2pi) integral_(-pi)^(pi) abs(D_(N)(x)) dif x approx (4) / (pi^2) ln N, quad (N -> +oo).
-$
-It is precisely because the absolute integral of $D_(N)(x)$ tends to infinity
-that it is a "bad kernel function".
-It amplifies errors, causing #underline[the Fourier series of a continuous function to potentially diverge].
+The graphs of $D_(N)$ for several values of $N$ are displayed in @fig:dirichlet-kernels.
 
-#v(0.7cm)
-With the help of convolution theorem, we have:
+However, $D_(N)(x)$ oscillates like a wave, taking both positive and negative values.
+During convolution (weighted averaging) the positive and negative contributions therefore almost cancel, which makes the result extremely unstable.
+For instance, the integral mean of $abs(D_(N))$, called the *Lebesgue constant*, satisfies
 $
-  S_(N)(f; x) &= (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t \
-  & =^("Let " u = t - x) (1) / (2pi) integral_(-pi)^(pi) f(x + u) D_(N)(-u) dif u \
-  & =^(D_(N)(-u) = D_(N)(u)) (1) / (2pi) integral_(-pi)^(pi) f(x + u) D_(N)(u) dif u \
-  & =^("Divide by " 2) (1) / (2pi) integral_(0)^(pi) [ f(x + u) + f(x - u) ] D_(N)(u) dif u. \
+  L_(N) := (1) / (2pi) integral_(-pi)^(pi) abs(D_(N)(x)) dif x approx (4) / (pi^2) ln N, quad N -> +oo.
 $
-Then the convergence of $S_(N)(f; x)$ can be analyzed through the properties of the last integral
-that is called the *Dirichlet integral*.
+It is precisely because this absolute integral tends to infinity that $D_(N)$ is a "bad kernel": it amplifies errors, so that #underline[the Fourier series of a continuous function may diverge].
 
-Since the normalization property of Dirichlet kernel, we can analyze the difference between
-$S_(N)(f; x)$ and any a function $sigma(x)$:
+With the help of the convolution theorem,
 $
-  S_(N)(f; x) - sigma(x) = (1) / (2pi) integral_(0)^(pi) [ f(x + u) + f(x - u) - 2sigma(x) ] D_(N)(u) dif u.
+  S_(N)(f; x)
+  & = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t \
+  & = (1) / (2pi) integral_(-pi-x)^(pi-x) f(x + u) D_(N)(-u) dif u, quad u = t - x, \
+  & = (1) / (2pi) integral_(-pi)^(pi) f(x + u) D_(N)(u) dif u, \
+  & = (1) / (2pi) integral_(0)^(pi) [ f(x + u) + f(x - u) ] D_(N)(u) dif u.
 $
-Denote $phi_sigma(u, x) = f(x + u) + f(x - u) - 2sigma(x)$,
-then the convergence of $S_(N)(f; x)$ to $sigma(x)$ is equivalent to:
+In the third step we used the $2pi$-periodicity of $u |-> f(x + u) D_(N)(u)$ to shift the interval of integration back to $[-pi, pi]$; in the last step we used the evenness $D_(N)(-u) = D_(N)(u)$ and the symmetry of the interval.
+The convergence of $S_(N)(f; x)$ can thus be analyzed through the properties of the last integral, which is called the *Dirichlet integral*.
+
+Since the Dirichlet kernel is normalized, we can analyze the difference between $S_(N)(f; x)$ and an arbitrary function $s(x)$:
 $
-  lim_(N -> +oo) integral_(0)^(pi) phi_sigma(u, x) D_(N)(u) dif u = 0.
+  S_(N)(f; x) - s(x) = (1) / (2pi) integral_(0)^(pi) [ f(x + u) + f(x - u) - 2s(x) ] D_(N)(u) dif u.
+$
+Denoting $phi(u, x) = f(x + u) + f(x - u) - 2s(x)$, the convergence of $S_(N)(f; x)$ to $s(x)$ is equivalent to
+$
+  lim_(N -> +oo) integral_(0)^(pi) phi(u, x) D_(N)(u) dif u = 0.
 $
 
-=== Convolution
+=== Convolution // 卷积
 
 #definition(name: "Convolution")[
-  For two functions $f(x), g(x)$ defined on $bb(R)$,
-  their convolution $f * g$ is defined as:
+  For two functions $f(x), g(x)$ on $bb(R)$ such that the integral below converges absolutely, the *convolution* $f * g$ is
   $
     (f * g)(x) = integral_(-oo)^(+oo) f(t) g(x - t) dif t.
   $
 
-  In particular, if the functions are periodically defined on a finite interval $bb(T)$ with period $2pi$,
-  then the convolution is defined as:
+  In particular, for $2pi$-periodic functions, that is, functions on the circle $bb(T)$, the convolution is
   $
-    (f * g)(x) = (1) / (2pi) integral_(-pi)^(pi) f(t) g(x - t) dif t.
+    (f * g)(x) = (1) / (2pi) integral_(-pi)^(pi) f(t) g(x - t) dif t,
   $
-  Here, $(1) / (2pi)$ is a normalization factor.
-]
+  where $(1) / (2pi)$ is a normalization factor.
+] <def:convolution>
 
 #note[
   From a physically intuitive perspective, convolution is a form of "weighted averaging" or "filtering".
@@ -487,101 +481,98 @@ $
   4. *Translation Invariance.* $(T_a f) * g = T_a (f * g)$, where $(T_a f)(x) = f(x - a)$.
 ]
 
-#v(0.7cm)
-With the definition of convolution, we can rewrite the partial sum of Fourier series as:
+With this notation the partial sum of the Fourier series becomes
 $
-  S_(N)(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t = (f * D_N)(x).
+  S_(N)(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t = (f * D_(N))(x).
 $
-Actually, this is a special case of convolution theorem,
-and we have the following general conclusion:
+This is a special case of the following general statement.
 
 #theorem(name: "Convolution Theorem")[
-  Under suitable conditions the Fourier coefficients of a convolution of two functions (or signals)
-  is the product of their Fourier coefficients,
+  Let $f, g in cal(R)[-pi, pi]$. Then the Fourier coefficients of the convolution are the products of the Fourier coefficients:
   $
-    hat(f * g)(n) = hat(f)(n) dot hat(g)(n).
+    hat(f * g)(n) = hat(f)(n) dot hat(g)(n), quad n in bb(Z).
   $
+] <thm:convolution>
 
-  In other words, the convolution in one domain corresponds to the product in another domain,
-  for example, the convolution in the time domain corresponds to the product in the frequency domain.
+In other words, convolution in the time domain corresponds to multiplication in the frequency domain.
+
+#proof(name: "of the Convolution Theorem")[
+  By the definition of convolution and the Euler-Fourier formula,
+  $
+    hat(f * g)(n) = (1) / (2pi) integral_(-pi)^(pi) ( (1) / (2pi) integral_(-pi)^(pi) f(t) g(x - t) dif t ) e^(-i n x) dif x.
+  $
+  Both $f$ and $g$ are bounded, so Fubini's theorem applies to the double integral; the substitution $x = t + u$ together with the $2pi$-periodicity of $g$ gives
+  $
+    hat(f * g)(n) = (1) / (2pi) integral_(-pi)^(pi) f(t) e^(-i n t) ( (1) / (2pi) integral_(-pi)^(pi) g(u) e^(-i n u) dif u ) dif t = hat(f)(n) dot hat(g)(n).
+  $
 ]
 
-=== Localization Theorem
+=== Localization Theorem // 局部化定理
 
 First, we need the following important lemma:
-#lemma(name: "Riemann-Lebesgue Lemma")[
-  Let $f(x) in R[a, b]$, $g(x)$ has a period $T$ and $g(x) in R[0, T]$,
-  then:
+#lemma(name: "Riemann–Lebesgue Lemma")[
+  Let $f$ be Riemann integrable, or absolutely improperly Riemann integrable, on $[a, b]$, and let $g$ be $T$-periodic and Riemann integrable on $[0, T]$. Then
   $
-    lim_(p -> +oo) integral_(a)^(b) f(x) g(p x) dif x \
-    = integral_(a)^(b) f(x) dif x dot (1) / (T) integral_(0)^(T) g(t) dif t. \
+    lim_(p -> +oo) integral_(a)^(b) f(x) g(p x) dif x = integral_(a)^(b) f(x) dif x dot (1) / (T) integral_(0)^(T) g(t) dif t.
   $
-  A special case is when $g(x) = sin x$ or $g(x) = cos x$, then:
+  In particular, for $g(x) = sin x$ and $g(x) = cos x$ one gets, respectively,
   $
-    lim_(p -> +oo) integral_(a)^(b) f(x) sin(p x) dif x \
-    = integral_(a)^(b) f(x) cos(p x) dif x = 0. \
+    lim_(p -> +oo) integral_(a)^(b) f(x) sin(p x) dif x = 0, quad lim_(p -> +oo) integral_(a)^(b) f(x) cos(p x) dif x = 0.
   $
-] <lem:Riemann-Lebesgue>
+] <lem:riemann-lebesgue>
 
-#proof[
-  #text(fill: purple)[*Special case.*]
-  Prove for $g(x) = sin x$, the case for $g(x) = cos x$ is similar.
+#proof(name: "of the special case $g(x) = sin x$")[
+  The case $g(x) = cos x$ is identical.
 
-  If $f(x) in B[a, b]$, i.e., $f(x)$ is integrable in the common Riemann sense on $[a, b]$.
-  Then there exists $M > 0$ such that $abs(f(x)) <= M$ for all $x in [a, b]$.
-  Denote $n = [sqrt(p)]$, then when $p -> +oo$, we have $n -> +oo$.
+  Suppose first that $f$ is properly Riemann integrable on $[a, b]$.
+  Then $f$ is bounded, so there is $M > 0$ with $abs(f(x)) <= M$ for all $x in [a, b]$.
+  Put $n = floor(sqrt(p))$; then $n -> +oo$ as $p -> +oo$.
 
-  Divide the interval $[a, b]$ into $n$ subintervals of equal length:
+  Divide $[a, b]$ into $n$ subintervals of equal length $Delta x_i = (b - a) / n$:
   $
     a = x_0 < x_1 < x_2 < dots.h < x_n = b,
   $
-  and let $omega_i$ be the oscillation of $f(x)$ on the $i$-th subinterval $[x_(i-1), x_i]$.
+  and let $omega_i$ be the oscillation of $f$ on the $i$-th subinterval $[x_(i-1), x_i]$.
 
-  By the integrability theory,
+  By the theory of Riemann integration,
   $
     lim_(n -> oo) sum_(i=1)^(n) omega_i Delta x_i = 0.
   $
-  And we have:
+  Moreover,
   $
-    abs(integral_(x_(i-1))^(x_i) sin(p x) dif x) < (2) / (p), quad \
-    abs(sin(p x)) <= 1. \
+    abs(integral_(x_(i-1))^(x_i) sin(p x) dif x) <= (2) / (p), quad abs(sin(p x)) <= 1.
   $
-  Then we can estimate:
+  We then estimate
   $
-    abs(integral_(a)^(b) f(x) sin(p x) dif x) \
+    abs(integral_(a)^(b) f(x) sin(p x) dif x)
     & = abs(sum_(i=1)^(n) integral_(x_(i-1))^(x_i) f(x) sin(p x) dif x) \
-    & <= abs(sum_(i=1)^(n) integral_(x_(i-1))^(x_i) ( f(x) - f(x_i) ) sin(p x) dif x) \
+    & <= abs(sum_(i=1)^(n) integral_(x_(i-1))^(x_i) ( f(x) - f(x_i) ) sin(p x) dif x)
     + abs(sum_(i=1)^(n) integral_(x_(i-1))^(x_i) f(x_i) sin(p x) dif x) \
-    & <= sum_(i=1)^(n) omega_i Delta x_i \
+    & <= sum_(i=1)^(n) omega_i Delta x_i
     + M sum_(i=1)^(n) abs(integral_(x_(i-1))^(x_i) sin(p x) dif x) \
-    & <= sum_(i=1)^(n) omega_i Delta x_i + M dot n dot (2) / (p) -> 0, quad (p -> +oo). \
+    & <= sum_(i=1)^(n) omega_i Delta x_i + M dot n dot (2) / (p).
   $
-  Thus, $lim_(p -> oo) integral_(a)^(b) f(x) sin(p x) dif x = 0$.
+  Since $n / p <= 1 / sqrt(p) -> 0$, both terms tend to zero, hence
+  $lim_(p -> +oo) integral_(a)^(b) f(x) sin(p x) dif x = 0$.
 
-  If $f(x) in.not B[a, b]$, i.e., $f(x)$ is absolutely integrable in the improper Riemann sense on $[a, b]$.
-  Without loss of generality, assume that $f(x)$ is defective at point $b$.
+  Suppose now that $f$ is not properly Riemann integrable but absolutely integrable in the improper Riemann sense on $[a, b]$.
+  Without loss of generality the only singularity of $f$ is the endpoint $b$.
   Then
   $
-    forall epsilon > 0, exists delta > 0, forall eta in (0, delta): \
-    integral_(b - eta)^(b) abs(f(x)) dif x < (epsilon) / (2). \
+    forall epsilon > 0, exists delta > 0, forall eta in (0, delta): quad integral_(b - eta)^(b) abs(f(x)) dif x < (epsilon) / (2).
   $
-  Fix such $eta$, then $f(x) in R[a, b - eta]$.
-  According to the previous discussion, there exists $P > 0$, such that when $p > P$:
+  Fix such $eta$; then $f$ is properly Riemann integrable on $[a, b - eta]$, so by the first part there is $P > 0$ such that, for $p > P$,
   $
     abs(integral_(a)^(b - eta) f(x) sin(p x) dif x) < (epsilon) / (2).
   $
-  Then we have:
+  Consequently
   $
-    abs(integral_(a)^(b) f(x) sin(p x) dif x) \
-    & <= abs(integral_(a)^(b - eta) f(x) sin(p x) dif x) \
+    abs(integral_(a)^(b) f(x) sin(p x) dif x)
+    & <= abs(integral_(a)^(b - eta) f(x) sin(p x) dif x)
     + abs(integral_(b - eta)^(b) f(x) sin(p x) dif x) \
-    & < (epsilon) / (2) + integral_(b - eta)^(b) abs(f(x)) dif x < epsilon. \
+    & < (epsilon) / (2) + integral_(b - eta)^(b) abs(f(x)) dif x < epsilon.
   $
-  Thus, $lim_(p -> oo) integral_(a)^(b) f(x) sin(p x) dif x = 0$.
-
-  In summary, regardless of whether $f(x)$ is integrable in the common Riemann sense or
-  absolutely integrable in the improper Riemann sense,
-  we have proved the special case of Riemann-Lebesgue Lemma.
+  This proves the special case in both situations.
 ]
 
 Then we can state Riemann's Localization Theorem:
@@ -591,590 +582,746 @@ Then we can state Riemann's Localization Theorem:
   an arbitrarily small neighborhood of $x$.
 ]
 #proof[
-  For any given $delta > 0$, since $f(x) in cal(R)[-pi, pi]$,
-  $((f(x + u) + f(x - u)) / (sin(u / (2)))) in cal(R)[delta, pi]$.
+  Extend $f$ periodically to $bb(R)$, so that $f(x plus.minus u)$ is defined for all $u in [0, pi]$.
+  For any $delta > 0$, the function $u |-> (f(x + u) + f(x - u)) / (sin(u / 2))$ is Riemann integrable on $[delta, pi]$, because $sin(u / 2) >= sin(delta / 2) > 0$ there.
 
-  Then by Riemann-Lebesgue lemma (#link(<lem:Riemann-Lebesgue>)[Lemma]), we have:
+  Since $(sin((N + (1) / (2)) u)) / (sin(u / (2))) = (1) / (sin(u / (2))) sin(p u)$ with $p = N + (1) / (2) -> +oo$, the #link(<lem:riemann-lebesgue>)[*Riemann–Lebesgue Lemma*] gives
   $
-    lim_(N -> oo) integral_(delta)^(pi) \
-    [ f(x + u) + f(x - u) ] (sin((N + (1) / (2)) u)) / (sin(u / (2))) dif u = 0. \
+    lim_(N -> oo) integral_(delta)^(pi) (f(x + u) + f(x - u)) / (sin(u / (2))) sin((N + (1) / (2)) u) dif u = 0.
   $
-  Thus, divided the integral interval of $S_(N)(f; x)$ into $[0, delta]$ and $[delta, pi]$, that is:
+  Splitting the integral defining $S_(N)(f; x)$ at $delta$ therefore yields
   $
-    S_(N)(f; x) = (1) / (2pi) integral_(0)^(delta) [ f(x + u) + f(x - u) ] D_(N)(u) dif u \
-    + (1) / (2pi) integral_(delta)^(pi) \
-    [ f(x + u) + f(x - u) ] (sin((N + (1) / (2)) u)) / (sin(u / (2))) dif u. \
+    S_(N)(f; x) = (1) / (2pi) integral_(0)^(delta) [ f(x + u) + f(x - u) ] D_(N)(u) dif u
+    + (1) / (2pi) integral_(delta)^(pi) (f(x + u) + f(x - u)) / (sin(u / (2))) sin((N + (1) / (2)) u) dif u.
   $
-  When $N -> +oo$, the second term tends to zero, i.e.,
-  the convergence of $S_(N)(f; x)$ only depends on the first term:
+  As $N -> +oo$ the second term tends to zero, so the convergence of $S_(N)(f; x)$ depends only on the first term:
   $
-    lim_(N -> +oo) S_(N)(f; x) = lim_(N -> +oo) (1) / (2pi) integral_(0)^(delta) \
-    [ f(x + u) + f(x - u) ] D_(N)(u) dif u. \
+    lim_(N -> +oo) S_(N)(f; x) = lim_(N -> +oo) (1) / (2pi) integral_(0)^(delta) [ f(x + u) + f(x - u) ] D_(N)(u) dif u.
   $
 ]
 
-#v(0.7cm)
-Since the oscillation of $D_(N)(x)$ is so severe that it causes poor convergence, is there a way to "smooth it out"?
-In fact, we can use *Cesàro summation* and *Fejér kernel* to achieve this goal,
-which will be discussed in the next chapter.
+Since the oscillation of $D_(N)(x)$ is so violent that it causes poor convergence, one may ask whether it can be "smoothed out".
+It can: *Cesàro summation* together with the *Fejér kernel* does exactly that, and this is the subject of *Cesàro Summation and Square Mean Convergence*.
 
-== Pointwise Convergence Tests
-In this section, we will discuss several important convergence tests from coarse to fine for Fourier series.
+== Pointwise Convergence Tests // 逐点收敛判别法
+In this section we discuss several convergence tests for Fourier series, from the coarsest to the finest.
 
-#definition(name: "Hölder condition")[
-  There exists a constant $L > 0$ and $alpha in (0, 1]$,
-  such that for all sufficiently small $delta$:
+#definition(name: "Hölder Condition")[
+  A function $f$ satisfies the *Hölder condition of order* $alpha in (0, 1]$ at a point $x$ if there exist constants $L > 0$ and $delta > 0$ such that
   $
-    abs(f(x plus.minus u) - f(x)) <= L u^alpha, quad 0 < u < delta,
+    abs(f(x plus.minus u) - f(x)) <= L u^alpha, quad 0 < u < delta.
   $
-  then $f$ satisfies $alpha$-order *Hölder condition* at point $x$,
-  denoted as $f in text("Lip")_alpha(x)$.
-  When $alpha = 1$, it is called *Lipschitz condition*.
-]
+  This is denoted $f in text("Lip")_(alpha)(x)$; for $alpha = 1$ it is called the *Lipschitz condition*.
+] <def:holder-condition>
 
 #lemma(name: "Dirichlet's Lemma")[
-  Let $f(x)$ be monotonic on $[0, delta]$, then:
+  Let $f$ be monotonic on $[0, delta]$. Then
   $
-    lim_(p -> oo) integral_(0)^(delta) (f(u) - f(0+)) / (u) sin(p u) dif u = 0.
+    lim_(p -> +oo) integral_(0)^(delta) (f(u) - f(0^+)) / (u) sin(p u) dif u = 0.
   $
-]
+] <lem:dirichlet>
 #proof[
-  Without loss of generality, assume that $f(x)$ is increasing on $[0, delta]$,
-  then for any $epsilon$, there exists a $eta in (0, delta)$, such that:
+  Without loss of generality assume that $f$ is increasing on $[0, delta]$.
+  For every $epsilon > 0$ there is $eta in (0, delta)$ such that
   $
-    0 <= f(u) - f(0+) < epsilon, quad u in (0, eta].
+    0 <= f(u) - f(0^+) < epsilon, quad u in (0, eta].
   $
-  Divide the integral into two parts:
+  Split the integral into two parts:
   $
-    & integral_(0)^(delta) (f(u) - f(0+)) / (u) sin(p u) dif u \
-      = & integral_(0)^(eta) (f(u) - f(0+)) / (u) sin(p u) dif u \
-          + integral_(eta)^(delta) (f(u) - f(0+)) / (u) sin(p u) dif u. \
-  $
-
-  For the first term, by integral second mean value theorem,
-  there exists $xi in [0, eta]$,
-  $
-    abs(integral_(0)^(eta) (f(u) - f(0+)) / (u) sin(p u) dif u) \
-    &= \
-    [f(eta) - f(0+)] abs(integral_(xi)^(eta) (sin(p u)) / (u) dif u) \
-    & <= \
-    epsilon abs(integral_(xi)^(eta) (sin(p u)) / (u) dif u) \
-    & = \
-    abs(integral_(p xi)^(p eta) (sin u) / (u) dif u) epsilon \
-  $
-  Since
-  $
-    integral_(0)^(+oo) (sin u) / (u) dif u = (pi) / (2),
-  $
-  there exists a constant $M > 0$, such that:
-  $
-    abs(integral_(p xi)^(p eta) (sin u) / (u) dif u) < M,
-  $
-  that is,
-  $
-    abs(integral_(0)^(eta) (f(u) - f(0+)) / (u) sin(p u) dif u) < M epsilon.
+    integral_(0)^(delta) (f(u) - f(0^+)) / (u) sin(p u) dif u
+    & = integral_(0)^(eta) (f(u) - f(0^+)) / (u) sin(p u) dif u \
+    & + integral_(eta)^(delta) (f(u) - f(0^+)) / (u) sin(p u) dif u.
   $
 
-  For the second term, since $((f(u) - f(0+)) / (u)) in cal(R)[eta, delta]$,
-  by Riemann-Lebesgue lemma (#link(<lem:Riemann-Lebesgue>)[Lemma]),
-  there exists a $P > 0$, such that when $p > P$:
+  For the first term, the second mean value theorem for integrals, applied to the monotone factor $f(u) - f(0^+)$, provides $xi in [0, eta]$ with
   $
-    abs(integral_(eta)^(delta) (f(u) - f(0+)) / (u) sin(p u) dif u) < epsilon.
+    abs(integral_(0)^(eta) (f(u) - f(0^+)) / (u) sin(p u) dif u)
+    & = [f(eta) - f(0^+)] abs(integral_(xi)^(eta) (sin(p u)) / (u) dif u) \
+    & <= epsilon abs(integral_(xi)^(eta) (sin(p u)) / (u) dif u) \
+    & = epsilon abs(integral_(p xi)^(p eta) (sin v) / (v) dif v).
+  $
+  Since the Dirichlet integral converges,
+  $
+    integral_(0)^(+oo) (sin v) / (v) dif v = (pi) / (2),
+  $
+  its partial integrals are bounded: there is $M > 0$ with
+  $
+    abs(integral_(p xi)^(p eta) (sin v) / (v) dif v) < M
+  $
+  for all $0 <= p xi <= p eta$, whence
+  $
+    abs(integral_(0)^(eta) (f(u) - f(0^+)) / (u) sin(p u) dif u) < M epsilon.
   $
 
-  In summary, the conclusion holds.
+  For the second term, $u |-> (f(u) - f(0^+)) / u$ is Riemann integrable on $[eta, delta]$, so the #link(<lem:riemann-lebesgue>)[*Riemann–Lebesgue Lemma*] gives $P > 0$ such that, for $p > P$,
+  $
+    abs(integral_(eta)^(delta) (f(u) - f(0^+)) / (u) sin(p u) dif u) < epsilon.
+  $
+
+  In summary the limit vanishes, as claimed.
 ]
+
 #note[
-  - There is an equivalent form of Dirichlet's lemma:
+  - For monotonic $f$ there is an equivalent form:
     $
-      lim_(p -> oo) integral_(0)^(delta) f(u) (sin(p u)) / (u) dif u = (pi) / (2) f(0+).
+      lim_(p -> +oo) integral_(0)^(delta) f(u) (sin(p u)) / (u) dif u = (pi) / (2) f(0^+).
     $
-
-  - If $f(x)$ is a piecewise monotonic bounded function,
-    then Dirichlet's lemma still holds.
+  - Dirichlet's lemma remains valid when $f$ is only piecewise monotonic on $[0, delta]$, provided $f(0^+)$ exists.
 ]
 
-#theorem[
-  Let $f(x) in cal(R)[-pi, pi]$, and satisfies one of the following conditions,
-  then the Fourier series of $f(x)$ converges to $(f(x+) + f(x-)) / (2)$ at point $x$:
-  1. *Lipschitz's Test.* If $f in text("Lip")_alpha(x)$.
+#theorem(name: "Pointwise Convergence Tests")[
+  Let $f(x) in cal(R)[-pi, pi]$. If one of the following conditions holds at a point $x$, then the Fourier series of $f$ converges at $x$ to $(f(x^+) + f(x^-)) / (2)$.
 
-    Since the condition is not easy to verify directly, we can use the following sufficient condition:
-    the two quasi-uniliteral derivatives of $f$ at point $x$ exist, i.e.,
+  1. *Lipschitz's Test.* $f in text("Lip")_(alpha)(x)$ for some $alpha in (0, 1]$.
+  2. *Dini's Test.* There exists $delta > 0$ such that
     $
-      lim_(h -> 0^+) (f(x plus.minus h) - f(x plus.minus)) / (h)
+      integral_(0)^(delta) (abs(f(x + u) + f(x - u) - 2 S)) / (u) dif u < +oo,
     $
-    exist finitely.
+    where $S = (f(x^+) + f(x^-)) / (2)$.
+  3. *Dirichlet-Jordan Test.* $f$ is of bounded variation on some neighbourhood of $x$, i.e., $f in "BV"(x - delta, x + delta)$ for some $delta > 0$.
+] <thm:pointwise-tests>
 
-  2. *Dini's Test.* There exists a $delta > 0$, such that:
-    $
-      integral_(0)^(delta) (abs(f(x + u) + f(x - u) - 2S)) / (u) dif u < +oo,
-    $
-    where $S = (f(x+) + f(x-)) / (2)$.
+The Lipschitz condition is rarely verifiable directly; a handy sufficient condition is that the two one-sided derivatives of $f$ at $x$ exist finitely:
+$
+  lim_(h -> 0^+) (f(x + h) - f(x^+)) / (h), quad lim_(h -> 0^+) (f(x - h) - f(x^-)) / (h).
+$
+For the definition and basic properties of functions of bounded variation see *Functions of Bounded Variation and Absolute Continuity* in the Analyse Réelle note.
 
-  3. *Dirichlet-Jordan Test.* If $f(x)$ is of bounded variation on some neighborhood of point $x$,
-    i.e., there exists a $delta > 0$, such that $f in "BV"(x - delta, x + delta)$ (for the definition and basic properties of functions of bounded variation, see the Analyse Réelle note).
+#note(title: "On the proofs")[
+  Each of the three tests is obtained by combining *Riemann's Localization Theorem* with Dirichlet's Lemma applied to the monotone pieces (Jordan decomposition, in the third case); we omit the routine details since they are not used later.
 ]
 
 
-#example[
-  Let $f(x)$ be a $2pi$-periodic function defined as:
+#example(name: "Sawtooth wave")[
+  Let $f(x)$ be the $2pi$-periodic function defined on $[-pi, pi]$ by
   $
     f(x) = cases(
-      x x in [-pi, pi),
-      -pi x = pi. ,
-    ) 
+      x quad & x in [-pi, pi),
+      -pi quad & x = pi,
+    )
   $
-  Find its Fourier series and $1 - (1) / (3) + (1) / (5) - (1) / (7) + dots.h$.
-] <ex:1>
+  Find its Fourier series, and deduce the value of $1 - (1) / (3) + (1) / (5) - (1) / (7) + dots.h$.
+] <ex:sawtooth>
 
-#solution[
-  By Euler-Fourier formula, we have:
+#solution(name: "sawtooth wave")[
+  By the Euler-Fourier formula,
   $
-    & a_0 = (1) / (pi) integral_(-pi)^(pi) f(x) dif x = 0, \
-    & a_n = (1) / (pi) integral_(-pi)^(pi) f(x) cos(n x) dif x \
-    = (1) / (pi) [ x dot (sin(n x)) / (n) |_(-pi)^(pi) \
-      - integral_(-pi)^(pi) (sin(n x)) / (n) dif x ] = 0, \
-    & b_n = (1) / (pi) integral_(-pi)^(pi) f(x) sin(n x) dif x \
-    = (1) / (pi) [ -x dot (cos(n x)) / (n) |_(-pi)^(pi) + integral_(-pi)^(pi) (cos(n x)) / (n) dif x ] \
-    = (2 (-1)^(n+1)) / (n). \
+    a_0 & = (1) / (pi) integral_(-pi)^(pi) f(x) dif x = 0, \
+    a_n & = (1) / (pi) integral_(-pi)^(pi) f(x) cos(n x) dif x = (1) / (pi) [ x dot (sin(n x)) / (n) |_(-pi)^(pi) - integral_(-pi)^(pi) (sin(n x)) / (n) dif x ] = 0, \
+    b_n & = (1) / (pi) integral_(-pi)^(pi) f(x) sin(n x) dif x = (1) / (pi) [ -x dot (cos(n x)) / (n) |_(-pi)^(pi) + integral_(-pi)^(pi) (cos(n x)) / (n) dif x ] = (2 (-1)^(n+1)) / (n).
   $
-  Thus, the Fourier series of $f(x)$ is:
+  Hence the Fourier series of $f(x)$ is
   $
     f(x) ~ sum_(n=1)^(+oo) (-1)^(n+1) (2) / (n) sin(n x).
   $
-  Since $f(x) in "BV"[-pi, pi]$, by Dirichlet-Jordan test,
-  its Fourier series converges to $f(x)$ at every continuous point $x$
-  and to $(f(x+) + f(x-)) / (2)$ at every discontinuous point $x$.
-
-  Then
+  Since $f in "BV"[-pi, pi]$, the Dirichlet-Jordan test shows that this series converges to $f(x)$ at every point of continuity and to $(f(x^+) + f(x^-)) / 2$ at every point of discontinuity.
+  In particular,
   $
-    x = f(x) = sum_(n=1)^(+oo) (-1)^(n+1) (2) / (n) sin(n x), quad x in (-pi, pi).
+    f(x) = sum_(n=1)^(+oo) (-1)^(n+1) (2) / (n) sin(n x), quad x in (-pi, pi),
   $
-  Furthermore,
+  while the periodic extension $tilde(f)$ of $f$ satisfies
   $
     tilde(f)(x) = cases(
-      f(x) x != 2 k pi + pi,
-      (f(pi+) + f(pi-)) / (2) x = 2 k pi + pi,
-    ) 
+      f(x) quad & x in (2 k pi - pi, 2 k pi + pi),
+      0 quad & x = 2 k pi + pi,
+    ) = sum_(n=1)^(+oo) (-1)^(n+1) (2) / (n) sin(n x), quad k in bb(Z).
   $
-  $
-    tilde(f)(x) = cases(
-      f(x) x in (2 k pi - pi, 2 k pi + pi),
-      (-pi + pi) / (2) = 0 x = 2 k pi + pi,
-    ) 
-  $
-  $
-    tilde(f)(x) = sum_(n=1)^(+oo) (-1)^(n+1) (2) / (n) sin(n x),
-  $
-  where $k in bb(Z), x in bb(R)$.
 
-  Let $x = (pi) / (2)$, then we have:
+  Taking $x = (pi) / (2)$ gives
   $
-    (pi) / (2) = sum_(n=1)^(+oo) (-1)^(n+1) (2) / (n) sin(n dot (pi) / (2)),
+    (pi) / (2) = sum_(n=1)^(+oo) (-1)^(n+1) (2) / (n) sin(n (pi) / (2)),
   $
+  that is,
   $
-    (pi) / (4) = sum_(n=1)^(+oo) (-1)^(n+1) (1) / (n) sin(n dot (pi) / (2)) = ,
-    sum_(n=1)^(+oo) (-1)^(2 n + 2) (1) / (2 n + 1) sin((2 n + 1) dot (pi) / (2)) = ,
-    1 - (1) / (3) + (1) / (5) - (1) / (7) + dots.h. ,
+    (pi) / (4) = sum_(n=1)^(+oo) (-1)^(n+1) (1) / (n) sin(n (pi) / (2)) = sum_(n=0)^(+oo) (1) / (2 n + 1) sin((2 n + 1) (pi) / (2)).
+  $
+  Since $sin((2 n + 1) (pi) / (2)) = (-1)^n$, we obtain
+  $
+    1 - (1) / (3) + (1) / (5) - (1) / (7) + dots.h = (pi) / (4).
   $
 ]
 
 
-=== Gibbs Phenomenon
+=== Gibbs Phenomenon // Gibbs 现象
 
-When a function $f(x)$ has jump discontinuities,
-its Fourier series converges to the midpoint of the jump at the discontinuity point.
-However, near the discontinuity, the Fourier series exhibits oscillations that overshoot and undershoot
-the function's actual values.
-This phenomenon is known as the *Gibbs phenomenon*.
+When a function $f(x)$ has jump discontinuities, its Fourier series converges to the midpoint of the jump at the discontinuity.
+Near the jump, however, the partial sums oscillate, overshooting and undershooting the actual values of the function.
+This is the *Gibbs phenomenon*.
 
-For example, for a square wave function $f(x)$ with period $2pi$:
+For example, consider the $2pi$-periodic square wave
 $
   f(x) = cases(
-    -1 x in [-pi, 0),
-    1 x in (0, pi],
-  ) quad quad ,
-  f(x) ~ (4) / (pi) sum_(n=0)^(+oo) (sin((2 n + 1) x)) / (2 n + 1). ,
+    -1 quad & x in [-pi, 0),
+    1 quad & x in (0, pi],
+  )
 $
-Using Dirichlet-Jordan test, $f(x) in "BV"$,
-then we can show that the Fourier series of $f(x)$ converges to:
+whose Fourier series is
+$
+  f(x) ~ (4) / (pi) sum_(n=0)^(+oo) (sin((2 n + 1) x)) / (2 n + 1).
+$
+Since $f in "BV"$, the Dirichlet-Jordan test shows that the series converges to
 $
   cases(
-    f(x) x " is continuous",
-    (f(x+) + f(x-)) / (2) x " is discontinuous". ,
-  ) 
+    f(x) quad & x " is a point of continuity",
+    (f(x^+) + f(x^-)) / (2) quad & x " is a point of discontinuity".
+  )
 $
-Regarding the partial sum of the $N$-term Fourier series $S_(N)(f; x)$,
-it will exhibit significant overshoot near the discontinuity points (@fig:gibbs).
-Even if more sine terms are used, this approximation error will only converge to a limit of
-approximately $9 percent$ of the jump height,
-although the infinite Fourier series will eventually converge almost everywhere.
+As regards the partial sums $S_(N)(f; x)$, they overshoot near the jump points (@fig:gibbs).
+Adding more sine terms only pushes the oscillation towards the jump: the maximal overshoot converges to a limit of approximately $9 percent$ of the jump height, even though the infinite Fourier series converges everywhere.
 #figure(
-  image("img/Gibbs.png", width: 40%),
+  image("img/gibbs.svg", width: 55%),
   caption: [Gibbs phenomenon of square wave near a jump discontinuity.],
-  placement: auto,
   supplement: [Fig.],
 ) <fig:gibbs>
 
+This behaviour matters in signal processing, where it produces high-frequency ringing.
 
-This phenomenon is an important consideration in signal processing,
-as it can cause high-frequency noise and ringing effects.
-
-== Properties of Fourier series
-By Riemann-Lebesgue lemma (#link(<lem:Riemann-Lebesgue>)[Lemma]),
-we have the following important conclusion of Fourier coefficients directly:
+== Properties of Fourier Series // Fourier 级数的性质
+By the #link(<lem:riemann-lebesgue>)[*Riemann–Lebesgue Lemma*] we obtain at once a first property of the Fourier coefficients:
 #proposition[
-  Let $f(x) in cal(R)[-pi, pi]$,
-  then its Fourier coefficients satisfy:
+  Let $f(x) in cal(R)[-pi, pi]$. Then
   $
-    lim_(abs(n) -> +oo) hat(f)(n) = 0.
+    lim_(abs(n) -> +oo) hat(f)(n) = 0,
   $
-
-  In real form, it is equivalent to:
+  or, in real form,
   $
     lim_(n -> +oo) a_n = 0, quad lim_(n -> +oo) b_n = 0.
   $
-]
-And we give a theoretical property, used as a fallback option.
+] <prop:riemann-lebesgue-coefficients>
+
+We record one more structural property, useful whenever convergence of the series itself is not available.
 #theorem(name: "Uniqueness Theorem")[
-  If $f(x), g(x) in cal(R)[-pi, pi]$ have the same Fourier coefficients,
-  i.e., $hat(f)(n) = hat(g)(n)$ for all $n in bb(Z)$,
-  then $f(x) = g(x)$ almost everywhere on $[-pi, pi]$.
+  If $f(x), g(x) in cal(R)[-pi, pi]$ have the same Fourier coefficients, i.e., $hat(f)(n) = hat(g)(n)$ for all $n in bb(Z)$, then $f(x) = g(x)$ almost everywhere on $[-pi, pi]$.
+] <thm:uniqueness>
+
+#note(title: "Proof")[
+  Deferred to the Cesàro theory: a Riemann integrable function is continuous almost everywhere, so by the generalized #link(<thm:fejer>)[*Fejér Theorem*] its Cesàro means converge to $f$ almost everywhere.
+  If all Fourier coefficients of $f$ vanish, then every Cesàro mean vanishes identically, hence $f = 0$ almost everywhere.
 ]
 
-=== Analytical Properties
+=== Analytical Properties // 解析性质
 
 #theorem(name: "Termwise Integration")[
-  If $f(x) in cal(R)[-pi, pi]$ with Fourier series:
+  If $f(x) in cal(R)[-pi, pi]$ has Fourier series
   $
     f(x) ~ (a_0) / (2) + sum_(n=1)^(+oo) [ a_n cos(n x) + b_n sin(n x) ],
   $
-  then its integral also has a Fourier series obtained by termwise integration:
+  then
   $
-    integral_(c)^(x) f(t) dif t = integral_(c)^(x) (a_0) / (2) dif t + sum_(n=1)^(+oo) ,
-    integral_(c)^(x) [ a_n cos(n t) + b_n sin(n t) ] dif t, quad c, x in [-pi, pi]. ,
+    integral_(c)^(x) f(t) dif t = integral_(c)^(x) (a_0) / (2) dif t + sum_(n=1)^(+oo) integral_(c)^(x) [ a_n cos(n t) + b_n sin(n t) ] dif t, quad c, x in [-pi, pi],
   $
+  the series on the right being uniformly convergent on $[-pi, pi]$.
+] <thm:termwise-integration>
+
+#note(title: "Why the symbol becomes an equality")[
+  After termwise integration the series converges uniformly, so the relation $~$ may be upgraded to $=$.
+  Integration smooths the function: the coefficients acquire a factor $1 / n$, which improves the decay and hence the convergence.
 ]
 
-#note[
-  Note that after termwise integration, the resulting Fourier series converges on $[-pi, pi]$
-  ($~$ to $=$).
-  This is because integration smooths out the function, reducing oscillations and improving convergence behavior.
+#proof(name: "of Termwise Integration")[
+  Fix $c in [-pi, pi]$ and put
+  $
+    F(x) = integral_(c)^(x) f(t) dif t, quad H(x) = F(x) - (a_0) / (2) (x - c).
+  $
+  Since $f$ is Riemann integrable, it is bounded, so $F$ is Lipschitz and therefore of bounded variation on $[-pi, pi]$; the same holds for $H$.
+  Because $H' = f - a_0 / 2$ almost everywhere and
+  $
+    H(pi) - H(-pi) = integral_(-pi)^(pi) (f(t) - (a_0) / (2)) dif t = pi a_0 - pi a_0 = 0,
+  $
+  $H$ is a continuous function on the circle, and by the Dirichlet-Jordan test its Fourier series converges uniformly to $H$.
+  Integration by parts on $[-pi, pi]$ then gives, for $n != 0$,
+  $
+    hat(H)(n) = (1) / (i n) hat(H')(n) = (1) / (i n) hat(f)(n),
+  $
+  since the constant $a_0 / 2$ has vanishing Fourier coefficients for $n != 0$.
+  In real form this reads
+  $
+    H(x) = hat(H)(0) + sum_(n=1)^(+oo) [ (a_n) / (n) sin(n x) - (b_n) / (n) cos(n x) ].
+  $
+  On the other hand,
+  $
+    integral_(c)^(x) [ a_n cos(n t) + b_n sin(n t) ] dif t = (a_n) / (n) sin(n x) - (b_n) / (n) cos(n x) + C_n, quad C_n = -(a_n sin(n c) - b_n cos(n c)) / (n),
+  $
+  so
+  $
+    F(x) = integral_(c)^(x) (a_0) / (2) dif t + sum_(n=1)^(+oo) integral_(c)^(x) [ a_n cos(n t) + b_n sin(n t) ] dif t + K,
+  $
+  where $K$ does not depend on $x$.
+  Evaluating at $x = c$ gives $0 = 0 + 0 + K$, so $K = 0$, which is the claimed identity.
 ]
-
-#proof[
-  Here, we only prove the case that $f(x)$ has finitely many discontinuities of the first kind on $[-pi, pi]$.
-]
-
 
 #theorem(name: "Termwise Differentiation")[
-  If $f(x) in cal(R)[-pi, pi]$ with Fourier series:
+  Let $f$ be continuous on $[-pi, pi]$, $2pi$-periodic and piecewise $C^1$, with Fourier series
   $
-    f(x) ~ (a_0) / (2) + sum_(n=1)^(+oo) [ a_n cos(n x) + b_n sin(n x) ],
+    f(x) ~ (a_0) / (2) + sum_(n=1)^(+oo) [ a_n cos(n x) + b_n sin(n x) ].
   $
-  and if $f(x)$ is piecewise smooth on $[-pi, pi]$,
-  then its derivative also has a Fourier series obtained by termwise differentiation:
+  Then, at every point where $f'$ is continuous,
   $
-    f'(x) ~ sum_(n=1)^(+oo) [ -n a_n sin(n x) + n b_n cos(n x) ].
+    f'(x) = sum_(n=1)^(+oo) [ -n a_n sin(n x) + n b_n cos(n x) ].
   $
+] <thm:termwise-differentiation>
+
+#note(title: "Why continuity of $f$ is needed")[
+  Continuity of $f$ is what makes the boundary terms of the integration by parts disappear, giving $hat(f')(n) = i n hat(f)(n)$.
+  For a function with a jump these boundary terms survive, and the differentiated series no longer represents $f'$.
 ]
 
-=== Smoothness and Decay Rate
+=== Smoothness and Decay Rate // 光滑性与衰减速度
 
-The smoother and less angular a function is,
-its Fourier coefficients decay more rapidly (with fewer high-frequency components).
-The rougher a function is (with jumps),
-the more high-frequency components it has (and the slower the coefficients decay).
+The smoother a function is, the more rapidly its Fourier coefficients decay; the rougher it is, the more high-frequency components it carries.
 
 #tex-table(
-  ("Function Smoothness", "Fourier Coefficient Decay Rate"),
+  ([Smoothness of $f$], [Decay of $hat(f)(n)$]),
   ([$f in cal(R)[-pi, pi]$], [$hat(f)(n) -> 0$ (slowest)]),
-  ([$f$ has jump discontinuities], [$hat(f)(n) ~ O((1) / (n))$]),
-  ([$f$ is continuous but not differentiable], [$hat(f)(n) ~ O((1) / (n^2))$]),
-  ([$f in C^k$], [$hat(f)(n) ~ O((1) / (n^(k+1)))$]),
-  ("Analytic Function", [Exponential Decay ($O(e^(-c abs(n)))$)]),
+  ([piecewise $C^1$ with jumps], [$O(1 / n)$]),
+  ([continuous and piecewise $C^1$], [$O(1 / n^2)$]),
+  ([piecewise $C^k$, $f, dots, f^((k-1))$ continuous], [$O(1 / n^(k+1))$]),
+  ([real analytic], [$O(e^(-c abs(n)))$ for some $c > 0$]),
 )
 
-= Cesàro Summation
-In the previous chapter, we denote $cal(R)[-pi, pi]$ as the linear space whose elements are
-all Riemann integrable or absolutely Riemann integrable functions on $[-pi, pi]$.
-Now, for convenience, we introduce the notation $cal(R)^2[-pi, pi]$ as the linear space whose elements are
-all Riemann integrable or square Riemann integrable functions on $[-pi, pi]$.
-Since for defective integral, the square integrability implies absolute integrability,
-we have
+= Cesàro Summation and Square Mean Convergence // Cesàro 求和与平方平均收敛
+In the previous chapter we denoted by $cal(R)[-pi, pi]$ the linear space of all functions that are Riemann integrable, or absolutely improperly Riemann integrable, on $[-pi, pi]$.
+For convenience we now introduce $cal(R)^2[-pi, pi]$, the linear space of all functions that are Riemann integrable, or square improperly Riemann integrable, on $[-pi, pi]$.
+Since the Cauchy-Schwarz inequality gives, for $f$ vanishing outside a bounded set,
 $
-  cal(R)^2[-pi, pi] subset cal(R)[-pi, pi].
+  integral_(a)^(b - eta) abs(f(x)) dif x <= sqrt(b - a) ( integral_(a)^(b - eta) abs(f(x))^2 dif x )^(1/2),
+$
+square integrability implies absolute integrability, hence
+$
+  cal(R)^2[-pi, pi] subset.eq cal(R)[-pi, pi].
 $
 
-== Cesàro Summation and Fejér Kernel
-Until now, when we discuss the convergence of series $sum_(n=1)^(oo) a_n$,
-the convergence of partial sums $S_N = sum_(n=1)^(N) a_n$ as $N -> oo$ is considered de facto.
-The definition is put forward by Cauchy in 1821.
-However, there are other ways to define the convergence of series.
-Here we introduce Cesàro summation, which is a method to assign sums to some divergent series#footnote[
-  By Cauchy proposition (see _Analyse Mathématique - Section 2.1: Convergent Sequences_),
-  if $lim_(n -> oo) x_n = l$, then $lim_(n -> oo) (x_1 + x_2 + dots.h + x_n) / (n) = l$.
-  That is, the Cesàro sum of a convergent series is equal to its Cauchy sum.
+== Cesàro Summation and Fejér Kernel // Cesàro 求和与 Fejér 核
+Up to now, the convergence of a series $sum_(n=1)^(oo) a_n$ has always meant the convergence of its partial sums $S_(N) = sum_(n=1)^(N) a_n$ as $N -> oo$, the definition put forward by Cauchy in 1821.
+There are other ways of attaching a sum to a series; the following one is due to Cesàro and assigns sums to some divergent series#footnote[
+  By Cauchy's proposition (see *Convergent Sequences* in the Analyse Mathématique note), if $lim_(n -> oo) x_n = l$, then $lim_(n -> oo) (x_1 + x_2 + dots.h + x_n) / (n) = l$.
+  In other words, the Cesàro sum of a convergent series equals its Cauchy sum.
 ].
-#definition(name: "Cesàro Summation")[
-  A series $sum_(n=1)^(oo) a_n$ is said to be Cesàro summable to $S$
-  if the arithmetical average $sigma_k$ of its partial sums converges to $S$, i.e.,
-  $
-    lim_(k -> oo) sigma_k = S,
-  $
-  where
-  $
-    sigma_k = (S_1 + S_2 + dots.h + S_k) / (k).
-  $
-]
 
-Due to
+#definition(name: "Cesàro Summation")[
+  Let $S_(k) = sum_(n=1)^(k) a_n$ be the partial sums of a series $sum_(n=1)^(oo) a_n$, with $S_(0) = 0$.
+  The series is *Cesàro summable* to $S$ if the arithmetic means
+  $
+    sigma_(N) = (S_(0) + S_(1) + dots.h + S_(N-1)) / (N), quad N >= 1,
+  $
+  converge to $S$ as $N -> +oo$.
+] <def:cesaro-summation>
+
+Since
 $
-  S_(N)(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(x - t) D_(N)(t) dif t,
+  S_(k)(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(x - t) D_(k)(t) dif t,
 $
-then
+the Cesàro means of the Fourier series are
 $
-  sigma_(N)(f; x) &= (1) / (N) sum_(k=0)^(N-1) S_(k)(f; x) ,
-  &= (1) / (N) sum_(k=0)^(N-1) (1) / (2pi) integral_(-pi)^(pi) f(x - t) D_(k)(t) dif t ,
-  &= (1) / (2pi) integral_(-pi)^(pi) f(x - t) ( (1) / (N) sum_(k=0)^(N-1) D_(k)(t) ) dif t ,
-  &= (1) / (2pi) integral_(-pi)^(pi) f(x - t) F_(N)(t) dif t,
+  sigma_(N)(f; x)
+  & = (1) / (N) sum_(k=0)^(N-1) S_(k)(f; x) \
+  & = (1) / (N) sum_(k=0)^(N-1) (1) / (2pi) integral_(-pi)^(pi) f(x - t) D_(k)(t) dif t \
+  & = (1) / (2pi) integral_(-pi)^(pi) f(x - t) ( (1) / (N) sum_(k=0)^(N-1) D_(k)(t) ) dif t \
+  & = (1) / (2pi) integral_(-pi)^(pi) f(x - t) F_(N)(t) dif t,
 $
 where
 $
-  F_(N)(t) = (1) / (N) sum_(k=0)^(N-1) D_(k)(t) = (1) / (N) ( (sin((N t) / (2))) / (sin(t / (2))) )^2,
+  F_(N)(t) = (1) / (N) sum_(k=0)^(N-1) D_(k)(t) = (1) / (N) ( (sin(N t / 2)) / (sin(t / 2)) )^2
 $
 is called the *Fejér kernel*.
+At $t = 2 k pi$ its value is again understood by continuity, and $F_(N)(0) = N$.
 
 #figure(
-  image("img/Fejér_kernels.png", width: 60%),
+  image("img/fejer-kernels.svg", width: 60%),
   caption: [Fejér kernels $F_(N)(t)$ for $N = 2, 4, 6, 8, 10$.],
-  placement: auto,
   supplement: [Fig.],
-) <fig:Fejer-kernels>
+) <fig:fejer-kernels>
 
-Fejér kernel has the following excellent properties:
+The graphs of $F_(N)$ for several values of $N$ are displayed in @fig:fejer-kernels.
+
+The Fejér kernel has the following excellent properties:
 #property[
-  1. *Positivity.* For any integer $N$ and real number $t$, $F_(N)(t) >= 0$.
-    This property significantly distinguishes Fejér kernel from Dirichlet kernel.
+  1. *Positivity.* $F_(N)(t) >= 0$ for every integer $N >= 1$ and every real $t$.
+    This is what distinguishes it sharply from the Dirichlet kernel.
 
-  2. *Normalization.* For any integer $N$,
+  2. *Normalization.* For every $N >= 1$,
     $
       (1) / (2pi) integral_(-pi)^(pi) F_(N)(t) dif t = 1.
     $
 
-  3. *Concentration.* For any $delta in (0, pi)$,
+  3. *Concentration.* For every $delta in (0, pi)$,
     $
-      lim_(N -> oo) integral_(delta)^(pi) F_(N)(t) dif t = 0.
+      lim_(N -> oo) integral_(delta)^(pi) F_(N)(t) dif t = 0,
     $
+    and in fact $F_(N)(t) <= 1 / (N sin^2(t / 2))$ for $t in [delta, pi]$.
 
-  4. *Bounded.* Its $L^1$ norm is bounded:
+  4. *Bounded $L^1$ norm.* Since $F_(N) >= 0$,
     $
-      (1) / (2pi) integral_(-pi)^(pi) abs(F_(N)(t)) dif t = 1.
+      (1) / (2pi) integral_(-pi)^(pi) abs(F_(N)(t)) dif t = 1,
     $
-    Distinct from Dirichlet kernel, whose $L^1$ norm grows logarithmically with $N$:
+    in contrast with the Dirichlet kernel, whose $L^1$ norm grows logarithmically:
     $
-      (1) / (2pi) integral_(-pi)^(pi) abs(D_(N)(t)) dif t ~ (4) / (pi^2) log N.
+      (1) / (2pi) integral_(-pi)^(pi) abs(D_(N)(t)) dif t ~ (4) / (pi^2) ln N.
     $
-]
+] <prop:fejer-properties>
 
 #tex-table(
-  ("Property", [Dirichlet Kernel ($D_N$)], [Fejér Kernel ($F_N$)]),
-  ("Corresponding operation", [Partial sum $S_N$ (truncation)], [Cesàro sum $sigma_N$ (averaging)]),
+  ("Property", [Dirichlet kernel $D_(N)$], [Fejér kernel $F_(N)$]),
+  ("Corresponding operation", [Partial sum $S_(N)$ (truncation)], [Cesàro mean $sigma_(N)$ (averaging)]),
   (
-    "Formula feature",
-    [$(sin((N + (1) / (2)) x)) / (2 sin(x / (2)))$ (1st-order)],
-    [$(1) / (N) ((sin(((N + 1) x) / (2))) / (sin(x / (2))))^2$ (square)],
+    "Formula",
+    [$(sin((N + (1) / (2)) x)) / (sin(x / 2))$ (first order)],
+    [$(1) / (N) ( (sin(N x / 2)) / (sin(x / 2)) )^2$ (square)],
   ),
-  ("Positivity", [Violent oscillations (positive & negative)], [Non-negative everywhere ($>= 0$)]),
-  ([$L^1$ Norm], [$ln N -> oo$ (divergent)], [$= 1$ (bounded)]),
+  ("Positivity", [Violent oscillations (positive and negative)], [Non-negative everywhere ($>= 0$)]),
+  ([$L^1$ norm], [$ln N -> oo$ (divergent)], [$= 1$ (bounded)]),
   ([$f in C$], "May diverge", "Uniform convergence"),
   ("Role", "Projection operator", "Approximation operator"),
 )
 
-With such a "good kernel", we can develop the following theorem:
+With such a "good kernel" we can prove the following theorem.
 #theorem(name: "Fejér Theorem")[
-  If $f(x)$ is a continuous function defined on $bb(T)$,
-  then its Cesàro means $sigma_(N)(f; x)$ converge uniformly to $f(x)$ on $bb(T)$, i.e.,
+  If $f(x)$ is continuous on $bb(T)$, then its Cesàro means $sigma_(N)(f; x)$ converge uniformly to $f(x)$ on $bb(T)$:
   $
     lim_(N -> oo) sup_(x in bb(T)) abs(sigma_(N)(f; x) - f(x)) = 0.
   $
 
-  The generalized version is:
-  if $f(x) in cal(R)[-pi, pi]$, and $f$ has left and right limits at point $x_0 in [-pi, pi]$,
-  then its Cesàro means $sigma_(N)(f; x_0)$ converge to the average of the left and right limits, i.e.,
+  More generally, if $f(x) in cal(R)[-pi, pi]$ has left and right limits at a point $x_0 in [-pi, pi]$, then
   $
     lim_(N -> oo) sigma_(N)(f; x_0) = (f(x_0^+) + f(x_0^-)) / (2).
   $
+] <thm:fejer>
+
+#proof(name: "of Fejér Theorem, continuous case")[
+  Let $M = sup_(x in bb(T)) abs(f(x)) < +oo$ and let $epsilon > 0$.
+  By uniform continuity of $f$ on $bb(T)$ there is $delta in (0, pi)$ such that $abs(f(x - t) - f(x)) < epsilon$ whenever $abs(t) < delta$.
+  Using the normalization of $F_(N)$,
+  $
+    sigma_(N)(f; x) - f(x) = (1) / (2pi) integral_(-pi)^(pi) (f(x - t) - f(x)) F_(N)(t) dif t.
+  $
+  Splitting the integral and using positivity,
+  $
+    abs(sigma_(N)(f; x) - f(x)) <= epsilon + (2M) / (2pi) dot 2 integral_(delta)^(pi) F_(N)(t) dif t.
+  $
+  By the concentration property and the bound $F_(N)(t) <= 1 / (N sin^2(delta / 2))$ for $t in [delta, pi]$, the second term is at most
+  $
+    (2 M) / (sin^2(delta / 2)) dot (1) / (N) -> 0, quad N -> oo,
+  $
+  uniformly in $x$.
+  Hence $abs(sigma_(N)(f; x) - f(x)) <= 2 epsilon$ for all $x$ and all $N$ large enough, which is uniform convergence.
+
+  The general statement for $f in cal(R)[-pi, pi]$ follows from the same three properties applied to the one-sided intervals around $x_0$; the details are routine.
 ]
 
 #note[
-  It means that as long as $f$ is integrable or absolutely integrable,
-  and has left and right limits at point $x_0$,
-  then its Fourier series converges in Cesàro sense at $x_0$.
-
-  Compared with various convergence tests of Fourier series in previous chapter,
-  Fejér theorem is brief and to the point.
+  As soon as $f$ is integrable, or absolutely integrable, and has left and right limits at $x_0$, its Fourier series is Cesàro summable at $x_0$.
+  Compared with the tests collected in *Pointwise Convergence Tests*, this statement asks for almost nothing.
 ]
 
-With Fejér theorem, we can obtain that
-the trigonometric polynomials are dense in the continuous function space $C(bb(T))$.
-and the Weierstrass second approximation theorem#footnote[
-  The Weierstrass second approximation theorem states that
-  any continuous function defined on a closed interval can be uniformly approximated
-  by polynomials to any desired degree of accuracy.
-  Refer to _Analyse Mathématique - Section 10.3: Smooth Appropriation of Functions_ for details.
+With Fejér's theorem at hand, the trigonometric polynomials are dense in the space $C(bb(T))$ of continuous functions on the circle, and the Weierstrass approximation theorem#footnote[
+  The Weierstrass approximation theorem states that every continuous function on a closed interval can be uniformly approximated by polynomials to any prescribed accuracy.
+  See *Smooth Approximation of Functions* in the Analyse Mathématique note for details.
 ]
-can be proved easily.
+follows easily.
 
-== Square mean Convergence
-=== Parseval's Identity
+== Square Approximation and Parseval's Identity // 平方逼近与 Parseval 恒等式
+
+=== Best Approximation in the Square Mean // 平方平均意义下的最佳逼近
 
 #theorem(name: "Square Approximation Property of Fourier Series")[
-  Let $f(x) in cal(R)^2[-pi, pi]$, and $W$ be an $N$-degree subspace of $cal(R)^2[-pi, pi]$,
-  then the best approximation of $f(x)$ in $W$ is just given by its Fourier series partial sum $S_(N)(f; x)$:
+  Let $f(x) in cal(R)^2[-pi, pi]$ and let $W_(N) = op("span"){ e^(i n x) : abs(n) <= N }$.
+  Then the best approximation of $f$ in $W_(N)$ with respect to the norm $|| dot ||$ is the Fourier partial sum
   $
-    S_(N)(f; x) = sum_(n=-N)^(N) hat(f)(n) e^(i n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ].
+    S_(N)(f; x) = sum_(n=-N)^(N) hat(f)(n) e^(i n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ],
   $
-  And the remainder $E_(N)(f; x) = f(x) - S_(N)(f; x)$ satisfies#footnote[
-    Refer to _Algèbre Linéaire - Section 10.5: Orthogonal Completion and Orthogonal Projection_.
-  ]:
+  and the remainder $E_(N)(f) = f - S_(N)(f)$ satisfies#footnote[
+    See *Orthogonal Completion and Orthogonal Projection* in the Algèbre Linéaire note.
+  ]
   $
-    || E_(N)(f; x) ||^2 = || f ||^2 - sum_(n=-N)^(N) abs(hat(f)(n))^2 ,
-    = (1) / (pi) integral_(-pi)^(pi) f^2(x) dif x - [ (a_0^2) / (2) + sum_(n=1)^(N) (a_n^2 + b_n^2) ]. ,
+    || E_(N)(f) ||^2 = || f ||^2 - sum_(n=-N)^(N) abs(hat(f)(n))^2.
   $
-]
+] <thm:square-approximation>
+
+In terms of the real coefficients the same identity reads
+$
+  || E_(N)(f) ||^2 = (1) / (2) [ (1) / (pi) integral_(-pi)^(pi) abs(f(x))^2 dif x - ( (a_0^2) / (2) + sum_(n=1)^(N) (a_n^2 + b_n^2) ) ],
+$
+the factor $1 / 2$ being the one relating the normalized inner product to $integral_(-pi)^(pi) dot dif x$.
 
 #theorem(name: "Bessel's Inequality")[
-  Let $f(x) in cal(R)^2[-pi, pi]$ with Fourier coefficients $hat(f)(n)$,
-  then for any integer $N >= 0$:
+  Let $f(x) in cal(R)^2[-pi, pi]$ with Fourier coefficients $hat(f)(n)$. Then, for every integer $N >= 0$,
   $
     sum_(n=-N)^(N) abs(hat(f)(n))^2 <= || f ||^2,
   $
-  or in real form:
+  or, in real form,
   $
-    (a_0^2) / (2) + sum_(n=1)^(N) (a_n^2 + b_n^2) <= (1) / (pi) integral_(-pi)^(pi) f^2(x) dif x.
+    (a_0^2) / (2) + sum_(n=1)^(N) (a_n^2 + b_n^2) <= (1) / (pi) integral_(-pi)^(pi) abs(f(x))^2 dif x.
   $
-]
+] <thm:bessel>
 
 #theorem(name: "Parseval's Identity")[
-  Let $f(x) in cal(R)^2[-pi, pi]$ with Fourier coefficients $hat(f)(n)$,
-  then:
+  Let $f(x) in cal(R)^2[-pi, pi]$ with Fourier coefficients $hat(f)(n)$. Then
   $
     sum_(n=-oo)^(+oo) abs(hat(f)(n))^2 = || f ||^2,
   $
-  or in real form:
+  or, in real form,
   $
-    (a_0^2) / (2) + sum_(n=1)^(+oo) (a_n^2 + b_n^2) = (1) / (pi) integral_(-pi)^(pi) f^2(x) dif x.
+    (a_0^2) / (2) + sum_(n=1)^(+oo) (a_n^2 + b_n^2) = (1) / (pi) integral_(-pi)^(pi) abs(f(x))^2 dif x.
   $
 
-  The generalized form is:
+  The polarized form reads, for $f, g in cal(R)^2[-pi, pi]$,
   $
     sum_(n=-oo)^(+oo) hat(f)(n) overline(hat(g)(n)) = ⟨ f, g ⟩,
   $
-  or in real form:
+  or, in real form,
   $
-    (a_0 c_0) / (2) + sum_(n=1)^(+oo) (a_n c_n + b_n d_n) = (1) / (pi) integral_(-pi)^(pi) f(x) g(x) dif x,
+    (a_0 c_0) / (2) + sum_(n=1)^(+oo) (a_n c_n + b_n d_n) = (1) / (pi) integral_(-pi)^(pi) f(x) overline(g(x)) dif x,
   $
-  where $g(x) in cal(R)^2[-pi, pi]$ with Fourier coefficients $hat(g)(n)$,
+  where $g(x) in cal(R)^2[-pi, pi]$ has real coefficients $c_0, c_n, d_n$.
+] <thm:parseval-identity>
+
+#proof(name: "of Parseval's Identity")[
+  By #link(<thm:square-approximation>)[*Square Approximation Property of Fourier Series*],
   $
-    g(x) ~ (c_0) / (2) + sum_(n=1)^(+oo) [ c_n cos(n x) + d_n sin(n x) ].
+    || E_(N)(f) ||^2 = || f ||^2 - sum_(n=-N)^(N) abs(hat(f)(n))^2 >= 0,
+  $
+  so the partial sums of $sum abs(hat(f)(n))^2$ are bounded; the series therefore converges and
+  $
+    sum_(n=-oo)^(+oo) abs(hat(f)(n))^2 <= || f ||^2.
+  $
+
+  It remains to prove equality.
+  Let $epsilon > 0$. Since continuous functions are dense in $L^2[-pi, pi]$ and trigonometric polynomials are dense in $C(bb(T))$ by #link(<thm:fejer>)[*Fejér Theorem*], there is a trigonometric polynomial $P = sum_(abs(n) <= M) c_(n) e^(i n x)$ with $|| f - P || < epsilon$.
+  As $P in W_(M)$ and $S_(M)(f)$ is the best approximation in $W_(M)$,
+  $
+    || E_(M)(f) || <= || f - P || < epsilon.
+  $
+  Since $|| E_(N)(f) ||$ is non-increasing in $N$ and every level $N$ is dominated by some such $M$, we get $|| E_(N)(f) || -> 0$ as $N -> +oo$, i.e.,
+  $
+    lim_(N -> +oo) sum_(abs(n) <= N) abs(hat(f)(n))^2 = || f ||^2.
   $
 ]
 
-#proof[
+== Classical Inequalities // 经典不等式
 
-]
+=== Wirtinger Inequality // Wirtinger 不等式
 
 #theorem(name: "Wirtinger Inequality")[
-  Let $f(x) in C^1[-pi, pi]$,
-  and satisfies:
+  Let $f in C^1[-pi, pi]$ be real-valued and satisfy
   $
-    integral_(-pi)^(pi) f(x) dif x = 0, f(-pi) = f(pi),
+    integral_(-pi)^(pi) f(x) dif x = 0, quad f(-pi) = f(pi).
   $
-  then:
+  Then
   $
-    integral_(-pi)^(pi) f^2(x) dif x <= integral_(-pi)^(pi) f'^2(x) dif x,
+    integral_(-pi)^(pi) f^2(x) dif x <= integral_(-pi)^(pi) (f'(x))^2 dif x,
   $
   with equality if and only if $f(x) = A cos x + B sin x$ for some constants $A, B in bb(R)$.
+] <thm:wirtinger>
+
+#proof(name: "of Wirtinger Inequality")[
+  Since $f in C^1$ is continuous and of bounded variation, #link(<thm:parseval-identity>)[*Parseval's Identity*] applies to both $f$ and $f'$.
+  As $f$ is continuous and periodic, integration by parts gives $hat(f')(n) = i n hat(f)(n)$ for every $n$, and $hat(f)(0) = (1) / (2pi) integral_(-pi)^(pi) f = 0$.
+  Hence
+  $
+    integral_(-pi)^(pi) (f'(x))^2 dif x = 2pi sum_(n in bb(Z)) abs(hat(f')(n))^2 = 2pi sum_(n != 0) n^2 abs(hat(f)(n))^2 >= 2pi sum_(n != 0) abs(hat(f)(n))^2 = integral_(-pi)^(pi) f^2(x) dif x.
+  $
+  Equality holds exactly when $hat(f)(n) = 0$ for $abs(n) >= 2$, that is, when $f(x) = A cos x + B sin x$.
 ]
+
+=== Poincaré Inequality // Poincaré 不等式
 
 #theorem(name: "Poincaré Inequality")[
+  Let $f in C^1[a, b]$ be real-valued with
+  $
+    integral_(a)^(b) f(x) dif x = 0.
+  $
+  Then
+  $
+    integral_(a)^(b) f^2(x) dif x <= ((b - a)^2) / (pi^2) integral_(a)^(b) (f'(x))^2 dif x,
+  $
+  and the constant is optimal.
+] <thm:poincare>
 
+#note(title: "Comparison with Wirtinger")[
+  No periodicity is assumed here, and the constant $4$ obtained for $[a, b] = [-pi, pi]$ is weaker than the constant $1$ of #link(<thm:wirtinger>)[*Wirtinger Inequality*].
+  The difference comes precisely from the boundary condition $f(-pi) = f(pi)$, which rules out the extremal function $sin(x / 2)$.
 ]
+
+#note(title: "Proof")[
+  Deferred to *Poincaré and Friedrichs Inequalities* in the Sobolev spaces part, where the constant is obtained from the first eigenvalue of $-d^2 / d x^2$ with Neumann boundary conditions.
+]
+
+=== Friedrichs Inequality // Friedrichs 不等式
 
 #theorem(name: "Friedrichs Inequality")[
+  Let $f in C^1[a, b]$ be real-valued with $f(a) = 0$. Then
+  $
+    integral_(a)^(b) f^2(x) dif x <= (4 (b - a)^2) / (pi^2) integral_(a)^(b) (f'(x))^2 dif x,
+  $
+  and the constant is optimal.
+] <thm:friedrichs>
 
+#note(title: "Proof")[
+  Deferred to *Poincaré and Friedrichs Inequalities* in the Sobolev spaces part.
+  The inequality is the counterpart of Poincaré's for functions vanishing on part of the boundary, and it holds more generally when $f$ vanishes on a subset of $[a, b]$ of positive measure.
 ]
 
-
-=== Square Mean Convergence
+== Square Mean Convergence // 平方平均收敛
 
 #definition(name: "Square Mean Convergence")[
-  A sequence of functions $f_(n)(x)$ is said to converge to $f(x)$
-  in the square mean (or $L^2$) sense on interval $[a, b]$,
-  if
+  A sequence $f_(n)(x)$ converges to $f(x)$ in the *square mean* (or $L^2$) sense on $[a, b]$ if
   $
-    lim_(n -> oo) || f_n - f ||^2 = ,
-    lim_(n -> oo) integral_(a)^(b) abs(f_(n)(x) - f(x))^2 dif x = 0. ,
+    lim_(n -> oo) integral_(a)^(b) abs(f_(n)(x) - f(x))^2 dif x = 0.
   $
-]
+  With the normalization of the first chapter, this is the same as $lim_(n -> oo) || f_(n) - f || = 0$ on $[-pi, pi]$.
+] <def:square-mean-convergence>
 
-#theorem[
-  If $f(x) in cal(R)^2[-pi, pi]$,
-  then its Fourier series converges to $f(x)$ in the square mean sense on $[-pi, pi]$, i.e.,
+#theorem(name: "Square Mean Convergence of Fourier Series")[
+  If $f(x) in cal(R)^2[-pi, pi]$, then its Fourier series converges to $f(x)$ in the square mean sense on $[-pi, pi]$:
   $
     lim_(N -> oo) integral_(-pi)^(pi) abs(f(x) - S_(N)(f; x))^2 dif x = 0.
   $
+] <thm:square-mean>
+
+#proof(name: "of Square Mean Convergence")[
+  By #link(<thm:parseval-identity>)[*Parseval's Identity*] the partial sums of $sum abs(hat(f)(n))^2$ tend to $|| f ||^2$, so by #link(<thm:square-approximation>)[*Square Approximation Property of Fourier Series*]
+  $
+    || E_(N)(f) ||^2 = || f ||^2 - sum_(abs(n) <= N) abs(hat(f)(n))^2 -> 0, quad N -> oo.
+  $
+  Since $integral_(-pi)^(pi) abs(f(x) - S_(N)(f; x))^2 dif x = 2pi || E_(N)(f) ||^2$, the claim follows.
 ]
 
+=== Sums of Special Series // 特殊级数求和
 
-#example[
-  Proof:
-  1.
-    $
-      sum_(n=1)^(oo) (1) / (n^2) = (pi^2) / (6);
-    $
-  2.
-    $
-      sum_(n=1)^(oo) (1) / ((2n - 1)^2) = (pi^2) / (8);
-    $
-  3.
-    $
-      sum_(n=1)^(oo) ((-1)^(n+1)) / (n^2) = (pi^2) / (12);
-    $
-  4.
-    $
-      sum_(n=1)^(oo) ((-1)^(n+1)) / (n^4) = (7 pi^4) / (720);
-    $
-  5.
-    $
-      sum_(n=1)^(oo) (1) / (n^4) = (pi^4) / (90).
-    $
+#example(name: "Sums computed by Parseval's identity")[
+  Using #link(<thm:parseval-identity>)[*Parseval's Identity*] and suitable Fourier series, compute
+  1. $sum_(n=1)^(oo) (1) / (n^2) = (pi^2) / (6)$;
+  2. $sum_(n=1)^(oo) (1) / ((2 n - 1)^2) = (pi^2) / (8)$;
+  3. $sum_(n=1)^(oo) ((-1)^(n+1)) / (n^2) = (pi^2) / (12)$;
+  4. $sum_(n=1)^(oo) ((-1)^(n+1)) / (n^4) = (7 pi^4) / (720)$;
+  5. $sum_(n=1)^(oo) (1) / (n^4) = (pi^4) / (90)$.
 ] <ex:parseval-sums>
 
-#proof[
-  #text(fill: purple)[*1.*]
-  By #link(<ex:1>)[Example],
+#solution(name: "sums of special series")[
+  *(1)* By #link(<ex:sawtooth>)[*Sawtooth wave*],
   $
-    x = 2 sum_(n=1)^(oo) ((-1)^(n+1)) / (n) sin n x, quad x in (-pi, pi).
+    x = 2 sum_(n=1)^(oo) ((-1)^(n+1)) / (n) sin(n x), quad x in (-pi, pi),
   $
-  Using Parseval's identity, we have
+  so $a_n = 0$ and $b_n = (2 (-1)^(n+1)) / n$. Parseval's identity gives
   $
-    4 sum_(n=1)^(oo) (1) / (n^2) = (1) / (pi) integral_(-pi)^(pi) x^2 dif x = (2 pi^2) / (3),
+    sum_(n=1)^(oo) (4) / (n^2) = (1) / (pi) integral_(-pi)^(pi) x^2 dif x = (2 pi^2) / (3),
   $
-  i.e.,
+  hence $sum_(n=1)^(oo) (1) / (n^2) = (pi^2) / (6)$.
+
+  *(2)* For the square wave of *Gibbs Phenomenon* one has $a_n = 0$, $b_(2 n) = 0$ and $b_(2 n + 1) = (4) / (pi (2 n + 1))$.
+  Since $(1) / (pi) integral_(-pi)^(pi) f^2 = 2$, Parseval's identity gives
   $
-    sum_(n=1)^(oo) (1) / (n^2) = (pi^2) / (6).
+    (16) / (pi^2) sum_(n=0)^(oo) (1) / ((2 n + 1)^2) = 2,
+  $
+  i.e. $sum_(n=1)^(oo) (1) / ((2 n - 1)^2) = (pi^2) / (8)$.
+
+  *(3)* Splitting the alternating series into odd and even indices and using (1) and (2),
+  $
+    sum_(n=1)^(oo) ((-1)^(n+1)) / (n^2) = sum_(n=0)^(oo) (1) / ((2 n + 1)^2) - sum_(n=1)^(oo) (1) / ((2 n)^2) = (pi^2) / (8) - (1) / (4) dot (pi^2) / (6) = (pi^2) / (12).
   $
 
-  #text(fill: purple)[*2.*]
+  *(4)* The same splitting, applied to (5) below, gives with $S = sum_(n=1)^(oo) 1 / n^4$ an even part $S / 16$ and an odd part $(15) / (16) S$, hence
+  $
+    sum_(n=1)^(oo) ((-1)^(n+1)) / (n^4) = (15) / (16) S - (1) / (16) S = (7) / (8) S = (7 pi^4) / (720).
+  $
+
+  *(5)* For $f(x) = x^2$ on $[-pi, pi]$ one computes $a_0 = (2 pi^2) / (3)$, $a_n = (4 (-1)^n) / (n^2)$ and $b_n = 0$. Parseval's identity then gives
+  $
+    (1) / (2) dot (4 pi^4) / (9) + 16 sum_(n=1)^(oo) (1) / (n^4) = (1) / (pi) integral_(-pi)^(pi) x^4 dif x = (2 pi^4) / (5),
+  $
+  hence $sum_(n=1)^(oo) (1) / (n^4) = (pi^4) / (90)$.
 ]
 
-== Equidistribution
+== Poisson Kernel // Poisson 核
 
+The averaging device that produced the Fejér kernel also works when the truncation parameter is sent to $1$ rather than to $+oo$.
 
-== Poisson Kernel
+#definition(name: "Poisson Kernel")[
+  For $0 <= r < 1$ and $t in bb(R)$, the *Poisson kernel* is
+  $
+    P_(r)(t) = sum_(n=-oo)^(+oo) r^(abs(n)) e^(i n t) = (1 - r^2) / (1 - 2 r cos t + r^2).
+  $
+] <def:poisson-kernel>
+
+#property[
+  1. *Positivity.* $P_(r)(t) >= 0$, since $1 - 2 r cos t + r^2 >= (1 - r)^2 > 0$.
+  2. *Normalization.* $(1) / (2pi) integral_(-pi)^(pi) P_(r)(t) dif t = 1$.
+  3. *Concentration.* For every $delta in (0, pi)$,
+    $
+      sup_(delta <= abs(t) <= pi) P_(r)(t) <= (1 - r^2) / (1 - 2 r cos delta + r^2) -> 0, quad r -> 1^-.
+    $
+] <prop:poisson-properties>
+
+#theorem(name: "Abel's Theorem")[
+  Let $f in cal(R)[-pi, pi]$ and $0 <= r < 1$. The *Abel means*
+  $
+    A_(r)(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(t) P_(r)(x - t) dif t = sum_(n=-oo)^(+oo) r^(abs(n)) hat(f)(n) e^(i n x)
+  $
+  satisfy:
+  1. if $f$ is continuous, then $A_(r)(f; x) -> f(x)$ uniformly on $bb(T)$ as $r -> 1^-$;
+  2. if $f$ has left and right limits at $x_0$, then $A_(r)(f; x_0) -> (f(x_0^+) + f(x_0^-)) / 2$.
+] <thm:abel>
+
+#proof(name: "of Abel's Theorem")[
+  The argument is that of #link(<thm:fejer>)[*Fejér Theorem*]: positivity, normalization and concentration of $P_(r)$ play exactly the role of the same three properties of $F_(N)$, and the identity for the Abel means follows from the uniform convergence of $sum r^(abs(n))$ by exchanging sum and integral.
+]
+
+#note(title: "Harmonic functions")[
+  For $f in cal(R)[-pi, pi]$ the function $u(r e^(i theta)) = A_(r)(f; theta)$ is harmonic in the open unit disc, and by the theorem above it tends to $f$ at every point where $f$ has one-sided limits.
+  This is the Poisson integral formula for the Dirichlet problem on the disc; its use in PDEs belongs to the Équations aux Dérivées Partielles note.
+]
+
+== Equidistribution // 等分布
+
+Fourier analysis also decides when a sequence fills an interval evenly.
+
+#definition(name: "Equidistributed Sequence")[
+  A sequence $(x_(n))_(n >= 1)$ in $[0, 1)$ is *equidistributed* if for every interval $[a, b) subset.eq [0, 1)$ the proportion of the first $N$ terms falling into it tends to its length:
+  $
+    lim_(N -> oo) (1) / (N) sum_(n=1)^(N) bold(1)_([a, b))(x_(n)) = b - a,
+  $
+  where $bold(1)_([a, b))$ denotes the indicator function of $[a, b)$.
+] <def:equidistributed>
+
+#theorem(name: "Weyl's Criterion")[
+  A sequence $(x_(n))_(n >= 1)$ in $[0, 1)$ is equidistributed if and only if, for every integer $k != 0$,
+  $
+    lim_(N -> oo) (1) / (N) sum_(n=1)^(N) e^(2 pi i k x_(n)) = 0.
+  $
+] <thm:weyl>
+
+#proof(name: "of Weyl's Criterion")[
+  *(1) Equidistribution implies averages.* If $x_(n)$ is equidistributed, then
+  $
+    lim_(N -> oo) (1) / (N) sum_(n=1)^(N) g(x_(n)) = integral_(0)^(1) g(t) dif t
+  $
+  for every Riemann integrable $g$ on $[0, 1]$: the identity holds for indicator functions of intervals by hypothesis, hence for step functions, and every Riemann integrable $g$ is a uniform limit of step functions.
+  Taking $g(t) = e^(2 pi i k t)$ with $k != 0$ gives necessity, since $integral_(0)^(1) e^(2 pi i k t) dif t = 0$.
+
+  *(2) Sufficiency.* Assume that the exponential averages vanish for all $k != 0$.
+  Let $g$ be continuous on $[0, 1]$; replacing $g$ by a function continuous on the circle (the value at $1$ is never taken by $x_(n)$), #link(<thm:fejer>)[*Fejér Theorem*] provides trigonometric polynomials uniformly close to $g$.
+  For $P(t) = sum_(abs(k) <= K) c_(k) e^(2 pi i k t)$ the hypothesis gives
+  $
+    (1) / (N) sum_(n=1)^(N) P(x_(n)) -> c_(0) = integral_(0)^(1) P(t) dif t,
+  $
+  and the same limit holds for $g$.
+  Finally, for $0 <= a < b <= 1$ and $epsilon > 0$ there are continuous $g_(1) <= bold(1)_([a, b)) <= g_(2)$ with $integral_(0)^(1) (g_(2) - g_(1)) < epsilon$; passing to the limit in $N$ squeezes the proportion between $integral_(0)^(1) g_(1)$ and $integral_(0)^(1) g_(2)$, which gives the required limit $b - a$.
+]
+
+#example(name: "Rotation by an angle")[
+  For $alpha in bb(R)$ let $x_(n) = {n alpha}$ be the fractional part of $n alpha$.
+  Then $(x_(n))$ is equidistributed if and only if $alpha$ is irrational.
+] <ex:equidistribution>
+
+#solution(name: "rotation by an angle")[
+  If $alpha = p / q$ is rational, then $x_(q) = 0$, so taking $k = q$ in Weyl's criterion gives an average equal to $1$ and the sequence is not equidistributed.
+
+  Let $alpha$ be irrational. For $k != 0$ the number $e^(2 pi i k alpha)$ is different from $1$, and the geometric sum formula gives
+  $
+    abs(sum_(n=1)^(N) e^(2 pi i k n alpha)) = abs((e^(2 pi i k alpha) (1 - e^(2 pi i k N alpha))) / (1 - e^(2 pi i k alpha))) <= (2) / (abs(1 - e^(2 pi i k alpha))),
+  $
+  whence the averages tend to zero for every $k != 0$, and Weyl's criterion applies.
+]
 
 #part("Fourier Transform and Modern Theory") // Fourier 变换与现代理论
 
