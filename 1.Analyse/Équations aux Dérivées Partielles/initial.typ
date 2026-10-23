@@ -3366,19 +3366,19 @@ It remains to solve the second subproblem.
 The fully general problem — nonzero data *and* a source — is the sum of this and the homogeneous problem (solved in *D'Alembert's Formula* and *Cauchy Problem in Higher Dimensions*), by the superposition split (#link(<prop:wave-superposition-split>)[*Duhamel's Principle*]).
 
 #theorem(name: "Duhamel's Principle for the Wave Equation")[
-  Let $S (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$: $S (t) psi = w (dot, t)$, where $w_(t t) = a^2 Delta w$, $w (dot, 0) = 0$, $w_t (dot, 0) = psi$. Then the solution of (#link(<def:cauchy-wave-inhomogeneous>)[the inhomogeneous Cauchy problem]) is given by
+  Let $W (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$: $W (t) psi = w (dot, t)$, where $w_(t t) = a^2 Delta w$, $w (dot, 0) = 0$, $w_t (dot, 0) = psi$. Then the solution of (#link(<def:cauchy-wave-inhomogeneous>)[the inhomogeneous Cauchy problem]) is given by
   $
-    u (bold(x), t) = integral_0^t S (t - s) f (s, dot) (bold(x)) dif s,
+    u (bold(x), t) = integral_0^t W (t - tau) f (tau, dot) (bold(x)) dif tau,
   $
-  where $f (s, dot)$ denotes the function $bold(y) -> f (s, bold(y))$ of the spatial variable, and the bracket $(bold(x))$ means that $S (t - s)$ is evaluated at the point $bold(x)$.
+  where $f (tau, dot)$ denotes the function $bold(y) -> f (tau, bold(y))$ of the spatial variable, and the bracket $(bold(x))$ means that $W (t - tau)$ is evaluated at the point $bold(x)$.
 ] <thm:duhamel-wave>
 
 #proof[
-  Let $w (t, s; bold(x))$ be the solution of the homogeneous problem with $w (s, s; dot) = 0$ and $w_t (s, s; dot) = f (s, dot)$, i.e. $w (t, s; dot) = S (t - s) f (s, dot)$.
+  Let $w (t, tau; bold(x))$ be the solution of the homogeneous problem with $w (tau, tau; dot) = 0$ and $w_t (tau, tau; dot) = f (tau, dot)$, i.e. $w (t, tau; dot) = W (t - tau) f (tau, dot)$.
 
-  Define $u (dot, t) = integral_0^t w (t, s; dot) dif s$. Then $u (dot, 0) = 0$, $u_t (dot, 0) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $w_t (t, t; dot) = f (t, dot)$):
+  Define $u (dot, t) = integral_0^t w (t, tau; dot) dif tau$. Then $u (dot, 0) = 0$, $u_t (dot, 0) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $w_t (t, t; dot) = f (t, dot)$):
   $
-    (partial^2 u)/(partial t^2) - a^2 Delta u = ((partial w)/(partial t)) (t, t; dot) + integral_0^t ((partial^2 w)/(partial t^2) - a^2 Delta w) dif s = f (t, dot),
+    (partial^2 u)/(partial t^2) - a^2 Delta u = ((partial w)/(partial t)) (t, t; dot) + integral_0^t ((partial^2 w)/(partial t^2) - a^2 Delta w) dif tau = f (t, dot),
   $
   since each $w$ is a homogeneous solution.
 
@@ -3386,28 +3386,34 @@ The fully general problem — nonzero data *and* a source — is the sum of this
 ]
 
 #note[
-  The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 11]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $S (t)$ is given explicitly by d'Alembert's formula in one dimension and by the Kirchhoff and Poisson formulas in higher dimensions (*Cauchy Problem in Higher Dimensions*), so Duhamel's principle yields explicit solutions of the inhomogeneous Cauchy problem in every dimension — the formulas are recorded in the next subsection.
+  The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 11]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $W (t)$ is given explicitly by d'Alembert's formula in one dimension and by the Kirchhoff and Poisson formulas in higher dimensions (*Cauchy Problem in Higher Dimensions*), so Duhamel's principle yields explicit solutions of the inhomogeneous Cauchy problem in every dimension — the formulas are recorded in the next subsection.
 ]
 
 === Explicit Formulas by Dimension // 各维度的显式公式
 
 Substituting the homogeneous solution operator into Duhamel's principle turns the abstract integral into a quadrature in each dimension.
 
-For $n = 1$, d'Alembert's formula gives $S (t - s) f (s, dot) (x) = 1/(2 a) integral_(x - a (t - s))^(x + a (t - s)) f (y, s) dif y$, so
+For $n = 1$, d'Alembert's formula gives $W (t - tau) f (tau, dot) (x) = 1/(2 a) integral_(x - a (t - tau))^(x + a (t - tau)) f (y, tau) dif y$, so
 #eq[$
-  u (x, t) = 1/(2 a) integral_0^t integral_(x - a (t - s))^(x + a (t - s)) f (y, s) dif y dif s,
+  u (x, t) = 1/(2 a) integral_0^t integral_(x - a (t - tau))^(x + a (t - tau)) f (y, tau) dif y dif tau,
 $] <eq:duhamel-1d>
-the integral running over the characteristic triangle $0 <= s <= t$ with $abs(y - x) <= a (t - s)$.
+the integral running over the characteristic triangle $0 <= tau <= t$ with $abs(y - x) <= a (t - tau)$.
 
 For $n = 3$, Kirchhoff's formula gives
 #eq[$
-  u (bold(x), t) = integral_0^t 1/(4 pi a^2 (t - s)) integral_(partial B (bold(x), a (t - s))) f (bold(y), s) dif S_(bold(y)) dif s,
+  u (bold(x), t) = integral_0^t 1/(4 pi a^2 (t - tau)) integral_(partial B (bold(x), a (t - tau))) f (bold(y), tau) dif S_(bold(y)) dif tau,
 $] <eq:duhamel-3d>
-a superposition of spherical waves: the value at $(bold(x), t)$ collects, from every emission time $s$, the data on the sphere that has travelled for the elapsed time $t - s$.
+a superposition of spherical waves: the value at $(bold(x), t)$ collects, from every emission time $tau$, the data on the sphere that has travelled for the elapsed time $t - tau$.
+
+The inner integral is the classical *retarded potential* of the source. Setting $r = abs(bold(x) - bold(y)) = a (t - tau)$, so that $tau = t - r/a$ is the *retarded time*, and using $dif bold(y) = a dif S_(bold(y)) dif tau$, the double integral becomes the volume integral over the past light cone
+$
+  u (bold(x), t) = 1/(4 pi a^2) integral_(B (bold(x), a t)) (f (bold(y), t - abs(bold(x) - bold(y)) / a))/(abs(bold(x) - bold(y))) dif bold(y),
+$
+the source contributing only from the past and the factor $1/abs(bold(x) - bold(y))$ being the decay of a spherical wave as it spreads out.
 
 For $n = 2$, Poisson's formula gives
 #eq[$
-  u (bold(x), t) = integral_0^t 1/(2 pi) integral_(B (bold(x), a (t - s))) (f (bold(y), s))/(sqrt(a^2 (t - s)^2 - abs(bold(x) - bold(y))^2)) dif bold(y) dif s.
+  u (bold(x), t) = integral_0^t 1/(2 pi) integral_(B (bold(x), a (t - tau))) (f (bold(y), tau))/(sqrt(a^2 (t - tau)^2 - abs(bold(x) - bold(y))^2)) dif bold(y) dif tau.
 $] <eq:duhamel-2d>
 In even dimensions the wave carries a trailing wake: at each emission time the value at $(bold(x), t)$ receives contributions from a whole disk, not merely from its boundary.
 
