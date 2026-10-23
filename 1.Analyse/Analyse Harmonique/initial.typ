@@ -1599,6 +1599,12 @@ Tempered distributions are exactly the class on which the Fourier transform exte
 
 Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced in §3.2. The proofs are short computations, and they are not the point: what matters is the pattern. Each operation on the variable $x$ has a dual operation on the frequency $xi$, and the transform passes from one column of the following list to the other.
 
+#figure(
+  image("img/fourier-duality.svg", width: 72%),
+  caption: [Fourier duality in the $xi$ convention. Left column: $f(x)$; right column: $hat(f)(xi)$. Top: a box of half-width $a$ gives a sinc decaying like $1 \/ abs(xi)$, so a narrow support forces a wide spectrum. Middle: a Gaussian gives a Gaussian of width $1 \/ (pi sigma)$, the shape being preserved only at the self-dual scale $sigma = 1$. Bottom: translating $f$ leaves $abs(hat(f))$ unchanged and multiplies the transform by the linear phase $e^(-2 pi i x_0 xi)$ — the content of rule 2 below.],
+  supplement: [Fig.],
+) <fig:fourier-duality>
+
 #property(name: "Fourier Transform Rules")[
   Let $f, g in cal(S)(bb(R))$, $a, b in bb(C)$, $x_0, xi_0 in bb(R)$ and $c in bb(R) without {0}$. Then
   1. *Linearity.*
