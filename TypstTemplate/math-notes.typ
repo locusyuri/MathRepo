@@ -190,9 +190,10 @@
   ]
 }
 
-/// 数学 bold(xxx)：保持原生粗体字形映射，再以等宽字体渲染（仿 LaTeX \mathbb 观感）。
+/// 数学 bold(xxx)：以等宽字体渲染并用 0.2pt 描边加粗（仿 LaTeX \mathbb 观感）。
+/// 注意数学环境的 mono 字体不响应 weight/strong，只有 text stroke 能实际加粗。
 /// 以顶层绑定遮蔽内置 math.bold，数学模式中的 bold(...) 会优先解析到此函数。
-#let bold(body) = math.mono(math.bold(body))
+#let bold(body) = text(stroke: 0.2pt, math.mono(math.bold(body)))
 
 /// Chapter 显示编号状态（供目录读取）
 #let chapter-num-state = state("chapter-num-state", 0)
