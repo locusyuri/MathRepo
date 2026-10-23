@@ -2249,26 +2249,7 @@ The inversion formula is the point at which the Laplace transform pays back what
   The contour deformation used in the example requires the residue theorem of the Analyse Complexe note. In practice one rarely evaluates #link(<eq:bromwich>)[the Bromwich integral] directly: for rational $F$ one decomposes into partial fractions and reads the answer off a table, which is the reason for collecting the pairs below.
 ]
 
-Some common Laplace transforms are listed in the following table.
-
-#figure(
-  tex-table(
-    ([$f(t)$], [$F(s)$]),
-    ([$1$], [$(1) / (s)$]),
-    ([$t^n$], [$(n!) / (s^(n+1))$]),
-    ([$e^(a t)$], [$(1) / (s - a)$]),
-    ([$t^n e^(a t)$], [$(n!) / ((s - a)^(n+1))$]),
-    ([$sin(omega t)$], [$(omega) / (s^2 + omega^2)$]),
-    ([$cos(omega t)$], [$(s) / (s^2 + omega^2)$]),
-    ([$sinh(omega t)$], [$(omega) / (s^2 - omega^2)$]),
-    ([$cosh(omega t)$], [$(s) / (s^2 - omega^2)$]),
-    ([$t^n e^(a t) sin(omega t)$], [$(-1)^n (dif^n) / (dif s^n) ( (omega) / ((s - a)^2 + omega^2) )$]),
-    ([$t^n e^(a t) cos(omega t)$], [$(-1)^n (dif^n) / (dif s^n) ( (s - a) / ((s - a)^2 + omega^2) )$]),
-  ),
-  caption: [Common Laplace transforms, for $t > 0$. The last two rows follow from rule 2 of #link(<prop:laplace-rules>)[the rules] applied repeatedly, since multiplication by $t$ corresponds to differentiation in $s$.],
-  placement: auto,
-  supplement: [Tab.],
-) <tab:laplace-transforms>
+Some common Laplace transforms are collected in #link(<tab:laplace-transforms>)[the table of Appendix B], next to their Fourier counterparts, so that the two conventions can be compared at a glance.
 
 #part("Sobolev Spaces") // Sobolev 空间
 
@@ -2290,7 +2271,44 @@ The spaces treated in this part measure smoothness in $L^2$ through the decay of
 // 数值算法不属于调和分析理论主体，故自原 §4.8 移出正文
 
 = Tables of Fourier and Laplace Transforms // Fourier 与 Laplace 变换表
-// TODO（附录 B）：常见 Fourier 变换对；Laplace 变换对（自 §5.3 的 tab:laplace-transforms 迁入）
+
+The pairs below are the ones used in the text. They are stated in the conventions fixed in §3.1: $hat(f)(xi) = integral f(x) e^(-2 pi i xi x) dif x$ on the line, and $F(s) = integral_0^(oo) f(t) e^(-s t) dif t$ on the half-line. Every formula involving a parameter assumes that parameter positive.
+
+#figure(
+  tex-table(
+    ([$f(x)$], [$hat(f)(xi)$]),
+    ([$bold(1)_([-a, a])$], [$(sin(2 pi a xi)) / (pi xi)$]),
+    ([$e^(-pi x^2)$], [$e^(-pi xi^2)$]),
+    ([$x e^(-pi x^2)$], [$-i xi e^(-pi xi^2)$]),
+    ([$e^(-a abs(x))$], [$(2 a) / (a^2 + 4 pi^2 xi^2)$]),
+    ([$(1) / (x^2 + a^2)$], [$(pi) / (a) e^(-2 pi a abs(xi))$]),
+    ([$e^(-a x) bold(1)_([0, oo))$], [$(1) / (a + 2 pi i xi)$]),
+    ([$delta_0$], [$1$]),
+    ([$1$], [$delta_0$]),
+  ),
+  caption: [Fourier transform pairs. The first row is #link(<ex:box-fourier>)[the box example] of §3.1, the second is #link(<prop:gauss-fourier-transform>)[the Gaussian identity] of §3.4, and the last two are identities between tempered distributions, in the sense of #link(<prop:fourier-tempered>)[the extension to $cal(S)'$]; they are deliberately not obtained by an absolutely convergent integral.],
+  placement: auto,
+  supplement: [Tab.],
+) <tab:fourier-transforms>
+
+#figure(
+  tex-table(
+    ([$f(t)$], [$F(s)$]),
+    ([$1$], [$(1) / (s)$]),
+    ([$t^n$], [$(n!) / (s^(n+1))$]),
+    ([$e^(a t)$], [$(1) / (s - a)$]),
+    ([$t^n e^(a t)$], [$(n!) / ((s - a)^(n+1))$]),
+    ([$sin(omega t)$], [$(omega) / (s^2 + omega^2)$]),
+    ([$cos(omega t)$], [$(s) / (s^2 + omega^2)$]),
+    ([$sinh(omega t)$], [$(omega) / (s^2 - omega^2)$]),
+    ([$cosh(omega t)$], [$(s) / (s^2 - omega^2)$]),
+    ([$t^n e^(a t) sin(omega t)$], [$(-1)^n (dif^n) / (dif s^n) ( (omega) / ((s - a)^2 + omega^2) )$]),
+    ([$t^n e^(a t) cos(omega t)$], [$(-1)^n (dif^n) / (dif s^n) ( (s - a) / ((s - a)^2 + omega^2) )$]),
+  ),
+  caption: [Laplace transform pairs, for $t > 0$ and $Re(s)$ large enough. The last two rows follow from #link(<prop:laplace-analytic>)[the differentiation rule] $F^((n)) = (-1)^n cal(L)[t^n f]$, since multiplication by $t$ corresponds to differentiation in $s$; the same rule gives all rows above them by repeatedly applying #link(<prop:laplace-rules>)[the rules of §5.3].],
+  placement: auto,
+  supplement: [Tab.],
+) <tab:laplace-transforms>
 
 #bibliography("references.bib", title: "References", full: true)
 
