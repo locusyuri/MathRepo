@@ -2139,39 +2139,121 @@ The two transforms are in fact one: writing $s = sigma + i omega$ and assuming $
 #definition(name: "Laplace Transform")[
   The *Laplace transform* of a function $f(t)$ defined for $t >= 0$ is given by
   $
-    cal(L)[f](s) = integral_(0)^(oo) f(t) e^(-s t) dif t,
-  $
+    cal(L)[f](s) = F(s) = integral_(0)^(oo) f(t) e^(-s t) dif t,
+  $ <eq:laplace-transform>
   where $s$ is a complex variable.
+] <def:laplace-transform>
+
+#theorem(name: "Existence of the Laplace Transform")[
+  Assume there are constants $M >= 0$ and $s_0 in bb(R)$ with $abs(f(t)) <= M e^(s_0 t)$ for all $t >= 0$. Then the integral above converges absolutely for every $s$ with $Re(s) > s_0$, and defines a function of $s$ on that half-plane.
+] <thm:laplace-existence>
+
+#proof[
+  For $Re(s) = sigma > s_0$,
+  $
+    integral_(0)^(oo) abs(f(t)) abs(e^(-s t)) dif t <= M integral_(0)^(oo) e^(-(sigma - s_0) t) dif t = (M) / (sigma - s_0) < +oo.
+  $
+  The number $s_0$ is called the *abscissa of convergence* of $f$ when it is the smallest such constant.
 ]
 
-#theorem(name: "Existence of Laplace Transform")[
-  If there exist constants $M, s_0 > 0$ such that $abs(f(t)) <= M e^(s_0 t)$ for all $t >= 0$,
-  then the Laplace transform $cal(L)[f](s)$ exists for all $s$ with $Re(s) > s_0$.
+#proposition(name: "Analyticity in the Half-Plane")[
+  Under the growth condition of the theorem, $F = cal(L)[f]$ is holomorphic in the half-plane $Re(s) > s_0$, and there
+  $
+    F^((n))(s) = (-1)^n cal(L)[t^n f(t)](s), quad n >= 0.
+  $
+] <prop:laplace-analytic>
+
+#proof[
+  Differentiating under the integral sign is justified by local uniform domination: on the half-plane $Re(s) >= sigma_1 > s_0$ the integrand of the differentiated integral is bounded by $M t^n e^(-(sigma_1 - s_0) t)$, which is integrable in $t$. Hence $F$ is complex differentiable at every point of $Re(s) > s_0$, and the formula follows by induction.
 ]
 
-#property[
-  1. *Linearity.* For any functions $f, g$ and scalars $a, b$,
+#property(name: "Rules of the Laplace Transform")[
+  Let $F = cal(L)[f]$ and $G = cal(L)[g]$, all transforms being taken in the common half-plane of convergence.
+  1. *Linearity.*
     $
-      cal(L)[a f + b g](s) = a cal(L)[f](s) + b cal(L)[g](s).
+      cal(L)[a f + b g](s) = a F(s) + b G(s).
     $
 
-  2. *Derivative.* For any function $f$ with appropriate growth conditions,
+  2. *Derivatives.* If $f, f', dots, f^((n))$ are of exponential growth and continuous on $[0, +oo)$,
     $
-      cal(L)[ (dif f) / (dif t) ](s) = s cal(L)[f](s) - f(0).
+      cal(L)[f^((n))](s) = s^n F(s) - sum_(k=0)^(n-1) s^(n-1-k) f^((k))(0).
     $
-    Or more generally,
+    In particular $cal(L)[f'](s) = s F(s) - f(0)$.
+
+  3. *Shift in $s$.* For $a in bb(C)$,
     $
-      cal(L)[ (dif^n f) / (dif t^n) ](s) = ,
-      s^n cal(L)[f](s) - sum_(k=0)^(n-1) s^(n-1-k) f^((k))(0). ,
+      cal(L)[e^(a t) f(t)](s) = F(s - a).
     $
+
+  4. *Scaling.* For $c > 0$,
+    $
+      cal(L)[f(c t)](s) = (1) / (c) F(s \/ c).
+    $
+
+  5. *Convolution.* With $(f * g)(t) = integral_(0)^(t) f(tau) g(t - tau) dif tau$,
+    $
+      cal(L)[f * g](s) = F(s) G(s).
+    $
+] <prop:laplace-rules>
+
+#proof[
+  Rules 1, 3 and 4 are changes of variable in the defining integral. For 2, integrate by parts once:
+  $
+    integral_(0)^(oo) f'(t) e^(-s t) dif t = [f(t) e^(-s t)]_0^(+oo) + s integral_(0)^(oo) f(t) e^(-s t) dif t = s F(s) - f(0),
+  $
+  the boundary term at infinity vanishing because $Re(s)$ exceeds the growth exponent; iterate for $n$.
+  For 5, insert the definition of the convolution and exchange the two integrals over the triangle $0 <= tau <= t < +oo$, which is legitimate by absolute convergence.
+
+  Note that rule 5 is the exact analogue of #link(<thm:convolution-R>)[the convolution theorem], with the convolution taken over $(0, +oo)$ rather than over $bb(R)$: this is the algebraic reason for the absence of the $sigma$-shift in $F(s)G(s)$.
+]
+
+The inversion formula is the point at which the Laplace transform pays back what it borrows from the Fourier transform.
+
+#theorem(name: "Laplace Inversion Formula")[
+  Let $f: [0, +oo) -> bb(C)$ be piecewise $C^1$ and satisfy a growth condition with abscissa $s_0$, and let $F = cal(L)[f]$. Then for every $sigma > s_0$ and every $t > 0$ at which $f$ is continuous,
+  $
+    f(t) = (1) / (2 pi i) integral_(sigma - i oo)^(sigma + i oo) F(s) e^(s t) dif s,
+  $ <eq:bromwich>
+  where the integral is taken along the vertical line $Re(s) = sigma$ and means $lim_(T -> +oo) integral_(sigma - i T)^(sigma + i T)$. At a jump of $f$ the integral equals the mean of the two one-sided limits.
+] <thm:laplace-inversion>
+
+#proof[
+  Fix $sigma > s_0$ and put
+  $
+    g(t) = cases(f(t) e^(-sigma t) & "if" t >= 0, 0 & "if" t < 0)
+  $
+  Then $g in L^1(bb(R))$ by #link(<thm:laplace-existence>)[the existence theorem], and its Fourier transform in the angular variable of #link(<eq:freq-dictionary>)[§3.1] is
+  $
+    hat(g)(omega) = integral_(0)^(oo) f(t) e^(-sigma t) e^(-i omega t) dif t = F(sigma + i omega).
+  $
+  Since $g$ is piecewise $C^1$, #link(<thm:fourier-inversion>)[the inversion theorem] applies at every point of continuity:
+  $
+    g(t) = (1) / (2 pi) integral_(-oo)^(oo) F(sigma + i omega) e^(i omega t) dif omega.
+  $
+  Multiplying by $e^(sigma t)$ and substituting $s = sigma + i omega$, so that $dif s = i dif omega$ and $omega: -oo -> +oo$ corresponds to $s: sigma - i oo -> sigma + i oo$, gives
+  $
+    f(t) = (1) / (2 pi i) integral_(sigma - i oo)^(sigma + i oo) F(s) e^(s t) dif s.
+  $
+]
+
+#example(name: "Inverting $1 \/ s$")[
+  For $f(t) = 1$ on $t > 0$ one has $F(s) = 1 \/ s$ with abscissa $s_0 = 0$. Choose $sigma > 0$; the Bromwich integral is
+  $
+    (1) / (2 pi i) integral_(sigma - i oo)^(sigma + i oo) (e^(s t)) / (s) dif s.
+  $
+  For $t > 0$ close the contour to the left of the line, where $e^(s t)$ decays; the only singularity inside is the simple pole at $s = 0$, and the residue theorem gives $e^(0 dot t) = 1$. For $t < 0$ close instead to the right, where there is no singularity, and the integral is $0$.
+  The result is the Heaviside step function, not the constant $1$: the inversion reproduces the function together with its causal support, which is the information encoded in the half-plane of convergence.
+] <ex:laplace-step>
+
+#note[
+  The contour deformation used in the example requires the residue theorem of the Analyse Complexe note. In practice one rarely evaluates #link(<eq:bromwich>)[the Bromwich integral] directly: for rational $F$ one decomposes into partial fractions and reads the answer off a table, which is the reason for collecting the pairs below.
 ]
 
 Some common Laplace transforms are listed in the following table.
-// TODO: The transform formulas of the last two rows were corrupted in the LaTeX source
-// (mismatched \( ... \) and $ delimiters) and are left as placeholders.
+
 #figure(
   tex-table(
-    ([$f(t)$], [$cal(L)[f](s)$]),
+    ([$f(t)$], [$F(s)$]),
     ([$1$], [$(1) / (s)$]),
     ([$t^n$], [$(n!) / (s^(n+1))$]),
     ([$e^(a t)$], [$(1) / (s - a)$]),
@@ -2180,10 +2262,10 @@ Some common Laplace transforms are listed in the following table.
     ([$cos(omega t)$], [$(s) / (s^2 + omega^2)$]),
     ([$sinh(omega t)$], [$(omega) / (s^2 - omega^2)$]),
     ([$cosh(omega t)$], [$(s) / (s^2 - omega^2)$]),
-    ([$t^n e^(a t) sin(omega t)$], [TODO]),
-    ([$t^n e^(a t) cos(omega t)$], [TODO]),
+    ([$t^n e^(a t) sin(omega t)$], [$(-1)^n (dif^n) / (dif s^n) ( (omega) / ((s - a)^2 + omega^2) )$]),
+    ([$t^n e^(a t) cos(omega t)$], [$(-1)^n (dif^n) / (dif s^n) ( (s - a) / ((s - a)^2 + omega^2) )$]),
   ),
-  caption: [Common Laplace transforms.],
+  caption: [Common Laplace transforms, for $t > 0$. The last two rows follow from rule 2 of #link(<prop:laplace-rules>)[the rules] applied repeatedly, since multiplication by $t$ corresponds to differentiation in $s$.],
   placement: auto,
   supplement: [Tab.],
 ) <tab:laplace-transforms>
