@@ -506,6 +506,36 @@ $
   which samples and averages $f$ within a "sliding window" around the point $x$.
 ]
 
+#note(title: "Discrete Convolution")[
+  The same definition makes sense on discrete groups, where the integral is replaced by a sum and the normalization by a counting measure.
+  This note records the two cases that occur in other parts of the repository; nothing below is used in the present chapter.
+
+  On $bb(Z)$, for absolutely summable sequences $a, b in ell^1(bb(Z))$, the *convolution* is
+  $
+    (a * b)(n) = sum_(k in bb(Z)) a(k) b(n - k), quad n in bb(Z),
+  $
+  and $ell^1(bb(Z))$ is a Banach algebra for this product, with unit the sequence $delta_0$ (where $delta_0(0) = 1$ and $delta_0(n) = 0$ for $n != 0$).
+  Writing
+  $
+    hat(a)(theta) = sum_(n in bb(Z)) a(n) e^(-i n theta), quad theta in bb(R),
+  $
+  the convolution theorem takes the same form as on the circle:
+  $
+    hat(a * b)(theta) = hat(a)(theta) dot hat(b)(theta).
+  $
+
+  On the finite cyclic group $bb(Z) slash N bb(Z)$, the discrete counterpart of the circle $bb(T)$, the sum has to be taken modulo $N$ and one uses the *cyclic convolution*
+  $
+    (a *_N b)(n) = sum_(k=0)^(N-1) a(k) b((n - k) mod N), quad n = 0, 1, dots, N - 1.
+  $
+  With the discrete Fourier transform $hat(a)(j) = sum_(n=0)^(N-1) a(n) e^(-2pi i j n \/ N)$, the same statement holds up to the conventional factor $N$, namely
+  $
+    hat(a *_N b)(j) = hat(a)(j) dot hat(b)(j).
+  $
+
+  Letting $N -> +oo$ recovers the case of $bb(Z)$, just as $T -> +oo$ turns the circle $bb(T)$ into the line $bb(R)$; the continuous, the discrete and the finite cases are three instances of one algebraic pattern, convolution on a group.
+]
+
 #property[
   1. *Commutativity.* $f * g = g * f$.
 
