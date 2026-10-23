@@ -248,6 +248,7 @@
 = Fourier Coefficients and Dirichlet Kernel // Fourier 系数与 Dirichlet 核
 In this chapter we investigate Fourier series in the following two function spaces.
 
+== Function Spaces // 函数空间
 #definition(name: "Riemann Integrable Functions on the Circle")[
   Let $cal(R)[-pi, pi]$ denote the space of complex-valued $2pi$-periodic functions on $[-pi, pi]$ that are Riemann integrable, or absolutely improperly Riemann integrable, there#footnote[
     "Improper" refers to a singularity at an endpoint, and the improper integral is required to converge absolutely; we write "Riemann integrable" for short in the sequel.
@@ -277,7 +278,7 @@ Three caveats are worth recording at once.
 
 In practice we shall mostly deal with piecewise continuous or piecewise smooth functions, which is the case most often met in applications.
 
-== Functions on the Unit Circle // 圆周上的函数
+=== Functions on the Unit Circle // 圆周上的函数
 
 A periodic function $f(x): bb(R) -> bb(C)$ of period $2pi$ is best viewed through the complex exponential on the unit circle.
 Let
@@ -297,6 +298,7 @@ Working with $bb(T)$, a compact manifold without boundary, removes the inconveni
 Moreover, since $bb(T)$ is a multiplicative group of complex numbers, it makes transparent the essence of Fourier series: the duality theory on compact Abelian groups.
 
 == Fourier Coefficients // Fourier 系数
+=== Fourier Coefficients of period $2pi$ // 2 pi 周期的傅里叶系数
 #theorem(name: "Orthonormal System")[
   The family
   $
@@ -333,9 +335,9 @@ For a merely integrable $f in cal(R)[-pi, pi]$ the expansion need not converge i
   $
   where
   $
-    &a_0 = (1) / (pi) integral_(-pi)^(pi) f(x) dif x, \
-    &a_n = (1) / (pi) integral_(-pi)^(pi) f(x) cos(n x) dif x, \
-    &b_n = (1) / (pi) integral_(-pi)^(pi) f(x) sin(n x) dif x, quad n = 1, 2, dots.
+    & a_0 = (1) / (pi) integral_(-pi)^(pi) f(x) dif x, \
+    & a_n = (1) / (pi) integral_(-pi)^(pi) f(x) cos(n x) dif x, \
+    & b_n = (1) / (pi) integral_(-pi)^(pi) f(x) sin(n x) dif x, quad n = 1, 2, dots.
   $
 ] <def:fourier-coefficients>
 
@@ -371,8 +373,28 @@ In particular, a real and even $f$ has real coefficients, a real and odd $f$ has
   $
 ]
 
+=== Fourier Coefficients of period $2T$ // 2T 周期的傅里叶系数
+The construction rests on the same orthonormal system, rescaled to the interval $[-T, T]$.
+On the space $cal(R)^2[-T, T]$ of $2T$-periodic square integrable functions, endowed with the normalized inner product
+$
+  ⟨ f, g ⟩ = (1) / (2T) integral_(-T)^(T) f(x) overline(g(x)) dif x,
+$
+the family
+$
+  cal(E)_T = { e^(i n (pi) / (T) x) : n in bb(Z) }
+$
+is orthonormal, i.e., $⟨ e^(i m (pi) / (T) x), e^(i n (pi) / (T) x) ⟩ = delta_(m n)$ for all $m, n in bb(Z)$.
+In real form,
+$
+  { 1, cos((pi) / (T) x), sin((pi) / (T) x), cos(2 (pi) / (T) x), sin(2 (pi) / (T) x), dots }
+$
+is orthogonal though not orthonormal, with
+$
+  ⟨ 1, 1 ⟩ = 1, quad ⟨ cos(n (pi) / (T) x), cos(n (pi) / (T) x) ⟩ = ⟨ sin(n (pi) / (T) x), sin(n (pi) / (T) x) ⟩ = (1) / (2), quad n in bb(N).
+$
+The frequency is now $n (pi) / (T)$ rather than $n$; the value $T = pi$ recovers the $2pi$-periodic case, and the normalization $(1) / (2T)$ is what keeps $⟨ 1, 1 ⟩ = 1$.
 
-The whole construction extends to functions of period $2T$, written again with the coefficients $hat(f)(n)$:
+The coefficients are again denoted $hat(f)(n)$, and the Euler-Fourier formula reads
 $
   hat(f)(n) = (1) / (2T) integral_(-T)^(T) f(x) e^(-i n (pi) / (T) x) dif x, quad n in bb(Z),
 $
@@ -406,11 +428,10 @@ $
 To study its convergence we transform it into integral form.
 By the Euler-Fourier formula,
 $
-  S_(N)(f; x)
-  & = sum_(n=-N)^(N) hat(f)(n) e^(i n x) \
-  & = sum_(n=-N)^(N) ( (1) / (2pi) integral_(-pi)^(pi) f(t) e^(-i n t) dif t ) e^(i n x) \
-  & = (1) / (2pi) integral_(-pi)^(pi) f(t) ( sum_(n=-N)^(N) e^(i n (x - t)) ) dif t \
-  & = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t,
+  S_(N)(f; x) & = sum_(n=-N)^(N) hat(f)(n) e^(i n x) \
+              & = sum_(n=-N)^(N) ( (1) / (2pi) integral_(-pi)^(pi) f(t) e^(-i n t) dif t ) e^(i n x) \
+              & = (1) / (2pi) integral_(-pi)^(pi) f(t) ( sum_(n=-N)^(N) e^(i n (x - t)) ) dif t \
+              & = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t,
 $
 where
 $
@@ -443,15 +464,14 @@ For instance, the integral mean of $abs(D_(N))$, called the *Lebesgue constant*,
 $
   L_(N) := (1) / (2pi) integral_(-pi)^(pi) abs(D_(N)(x)) dif x approx (4) / (pi^2) ln N, quad N -> +oo.
 $
-It is precisely because this absolute integral tends to infinity that $D_(N)$ is a "bad kernel": it amplifies errors, so that #underline[the Fourier series of a continuous function may diverge].
+It is precisely because this absolute integral tends to infinity that $D_(N)$ is a "bad kernel": it amplifies errors, so that _the Fourier series of a continuous function may diverge_.
 
 With the help of the convolution theorem,
 $
-  S_(N)(f; x)
-  & = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t \
-  & = (1) / (2pi) integral_(-pi-x)^(pi-x) f(x + u) D_(N)(-u) dif u, quad u = t - x, \
-  & = (1) / (2pi) integral_(-pi)^(pi) f(x + u) D_(N)(u) dif u, \
-  & = (1) / (2pi) integral_(0)^(pi) [ f(x + u) + f(x - u) ] D_(N)(u) dif u.
+  S_(N)(f; x) & = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t \
+              & = (1) / (2pi) integral_(-pi-x)^(pi-x) f(x + u) D_(N)(-u) dif u, quad u = t - x, \
+              & = (1) / (2pi) integral_(-pi)^(pi) f(x + u) D_(N)(u) dif u, \
+              & = (1) / (2pi) integral_(0)^(pi) [ f(x + u) + f(x - u) ] D_(N)(u) dif u.
 $
 In the third step we used the $2pi$-periodicity of $u |-> f(x + u) D_(N)(u)$ to shift the interval of integration back to $[-pi, pi]$; in the last step we used the evenness $D_(N)(-u) = D_(N)(u)$ and the symmetry of the interval.
 The convergence of $S_(N)(f; x)$ can thus be analyzed through the properties of the last integral, which is called the *Dirichlet integral*.
@@ -559,13 +579,12 @@ First, we need the following important lemma:
   $
   We then estimate
   $
-    abs(integral_(a)^(b) f(x) sin(p x) dif x)
-    & = abs(sum_(i=1)^(n) integral_(x_(i-1))^(x_i) f(x) sin(p x) dif x) \
-    & <= abs(sum_(i=1)^(n) integral_(x_(i-1))^(x_i) ( f(x) - f(x_i) ) sin(p x) dif x)
-    + abs(sum_(i=1)^(n) integral_(x_(i-1))^(x_i) f(x_i) sin(p x) dif x) \
-    & <= sum_(i=1)^(n) omega_i Delta x_i
-    + M sum_(i=1)^(n) abs(integral_(x_(i-1))^(x_i) sin(p x) dif x) \
-    & <= sum_(i=1)^(n) omega_i Delta x_i + M dot n dot (2) / (p).
+    abs(integral_(a)^(b) f(x) sin(p x) dif x) & = abs(sum_(i=1)^(n) integral_(x_(i-1))^(x_i) f(x) sin(p x) dif x) \
+                                              & <= abs(sum_(i=1)^(n) integral_(x_(i-1))^(x_i) ( f(x) - f(x_i) ) sin(p x) dif x)
+                                                + abs(sum_(i=1)^(n) integral_(x_(i-1))^(x_i) f(x_i) sin(p x) dif x) \
+                                              & <= sum_(i=1)^(n) omega_i Delta x_i
+                                                + M sum_(i=1)^(n) abs(integral_(x_(i-1))^(x_i) sin(p x) dif x) \
+                                              & <= sum_(i=1)^(n) omega_i Delta x_i + M dot n dot (2) / (p).
   $
   Since $n / p <= 1 / sqrt(p) -> 0$, both terms tend to zero, hence
   $lim_(p -> +oo) integral_(a)^(b) f(x) sin(p x) dif x = 0$.
@@ -582,10 +601,9 @@ First, we need the following important lemma:
   $
   Consequently
   $
-    abs(integral_(a)^(b) f(x) sin(p x) dif x)
-    & <= abs(integral_(a)^(b - eta) f(x) sin(p x) dif x)
-    + abs(integral_(b - eta)^(b) f(x) sin(p x) dif x) \
-    & < (epsilon) / (2) + integral_(b - eta)^(b) abs(f(x)) dif x < epsilon.
+    abs(integral_(a)^(b) f(x) sin(p x) dif x) & <= abs(integral_(a)^(b - eta) f(x) sin(p x) dif x)
+                                                + abs(integral_(b - eta)^(b) f(x) sin(p x) dif x) \
+                                              & < (epsilon) / (2) + integral_(b - eta)^(b) abs(f(x)) dif x < epsilon.
   $
   This proves the special case in both situations.
 ]
@@ -919,11 +937,10 @@ $
 $
 the Cesàro means of the Fourier series are
 $
-  sigma_(N)(f; x)
-  & = (1) / (N) sum_(k=0)^(N-1) S_(k)(f; x) \
-  & = (1) / (N) sum_(k=0)^(N-1) (1) / (2pi) integral_(-pi)^(pi) f(x - t) D_(k)(t) dif t \
-  & = (1) / (2pi) integral_(-pi)^(pi) f(x - t) ( (1) / (N) sum_(k=0)^(N-1) D_(k)(t) ) dif t \
-  & = (1) / (2pi) integral_(-pi)^(pi) f(x - t) F_(N)(t) dif t,
+  sigma_(N)(f; x) & = (1) / (N) sum_(k=0)^(N-1) S_(k)(f; x) \
+                  & = (1) / (N) sum_(k=0)^(N-1) (1) / (2pi) integral_(-pi)^(pi) f(x - t) D_(k)(t) dif t \
+                  & = (1) / (2pi) integral_(-pi)^(pi) f(x - t) ( (1) / (N) sum_(k=0)^(N-1) D_(k)(t) ) dif t \
+                  & = (1) / (2pi) integral_(-pi)^(pi) f(x - t) F_(N)(t) dif t,
 $
 where
 $
