@@ -1293,7 +1293,7 @@
   show link: it => {
     let d = it.dest
     if type(d) == label or type(d) == str {
-      text(fill: color-structure, underline(stroke: 0.5pt + color-structure.lighten(25%), offset: 2.5pt, it))
+      text(fill: color-structure, style: "italic", underline(stroke: 0.5pt + color-structure.lighten(25%), offset: 2.5pt, it))
     } else {
       it
     }
