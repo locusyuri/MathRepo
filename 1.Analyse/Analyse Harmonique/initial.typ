@@ -246,34 +246,36 @@
 #part("Classical Fourier Series") // 经典 Fourier 级数
 
 = Fourier Coefficients and Dirichlet Kernel // Fourier 系数与 Dirichlet 核
-In this chapter we investigate Fourier series in the following function space:
-1. *Underlying Set and Scalar Field.* The linear space we work in is the set of all integrable
-  (in the _Riemann sense_)#footnote[
-    For common integral, it should be Riemann integral;
-    for defective integral, it should be _absolute Riemann integral_.
-    For convenience, we just say Riemann integral in this context.
-  ]
-  complex-valued periodic functions defined on $[-pi, pi]$#footnote[
-    It can be also defined on interval $[-T, T]$,
-    but we choose $[-pi, pi]$ for simplicity.
-  ], equipped with the usual addition and scalar multiplication of functions.
-  We denote this space by $cal(R)[-pi, pi]$; it is an infinite-dimensional linear space.
-  The field of scalars is the set of complex numbers $bb(C)$.
+In this chapter we investigate Fourier series in the following two function spaces.
 
-2. *Inner Product.* For any two functions $f(x), g(x)$ in this space, we define their inner product as:
-  $
-    ⟨ f, g ⟩ = (1) / (2pi) integral_(-pi)^(pi) f(x) overline(g(x)) dif x,
-  $
-  where $(1) / (2pi)$ is a normalization factor.
+#definition(name: "Riemann Integrable Functions on the Circle")[
+  Let $cal(R)[-pi, pi]$ denote the space of complex-valued $2pi$-periodic functions on $[-pi, pi]$ that are Riemann integrable, or absolutely improperly Riemann integrable, there#footnote[
+    "Improper" refers to a singularity at an endpoint, and the improper integral is required to converge absolutely; we write "Riemann integrable" for short in the sequel.
+    The interval $[-pi, pi]$ may of course be replaced by $[-T, T]$.
+  ].
+  Let $cal(R)^2[-pi, pi]$ denote the subspace of those $f$ for which $integral_(-pi)^(pi) abs(f(x))^2 dif x$ converges.
+] <def:function-spaces>
 
-3. *Norm.* The norm induced by this inner product is given by:
+Both are infinite-dimensional linear spaces over $bb(C)$, and $cal(R)^2[-pi, pi] subset.eq cal(R)[-pi, pi]$: the Cauchy-Schwarz inequality gives, for $f$ supported in a bounded interval,
 $
+  integral_(a)^(b) abs(f(x)) dif x <= sqrt(b - a) ( integral_(a)^(b) abs(f(x))^2 dif x )^(1/2),
+$
+so square integrability implies absolute integrability.
+
+On these spaces we use the normalized integral
+$
+  ⟨ f, g ⟩ = (1) / (2pi) integral_(-pi)^(pi) f(x) overline(g(x)) dif x, quad
   || f || = sqrt(⟨ f, f ⟩) = ( (1) / (2pi) integral_(-pi)^(pi) abs(f(x))^2 dif x )^((1) / (2)).
 $
+The factor $(1) / (2pi)$ is a convention, chosen so that $|| 1 || = 1$; it is the one used throughout the note.
 
-Strictly speaking this is only a _semi_-inner product: $⟨ f, f ⟩ = 0$ holds for every function vanishing almost everywhere, so $cal(R)[-pi, pi]$ is to be read as a space of equivalence classes modulo such functions.
+Three caveats are worth recording at once.
 
-In fact, we often assume that the functions are piecewise continuous or piecewise smooth on $[-pi, pi]$, which is the case most often met in applications.
+- The pairing $⟨ f, g ⟩$ is only a _semi_-inner product on $cal(R)[-pi, pi]$: $⟨ f, f ⟩ = 0$ holds for every function vanishing almost everywhere, so the space is to be read as a space of equivalence classes modulo such functions.
+- The norm is finite only on $cal(R)^2[-pi, pi]$; an integrable $f$ such as $abs(x)^(-1/2)$ has $|| f || = +oo$. This is why $|| dot ||$ is used only on $cal(R)^2[-pi, pi]$, and why the orthogonality statements below are stated there.
+- $cal(R)^2[-pi, pi]$ is not complete for $|| dot ||$; its completion is $L^2[-pi, pi]$, whose theory belongs to the Analyse Réelle note.
+
+In practice we shall mostly deal with piecewise continuous or piecewise smooth functions, which is the case most often met in applications.
 
 == Functions on the Unit Circle // 圆周上的函数
 
@@ -338,6 +340,19 @@ For a merely integrable $f in cal(R)[-pi, pi]$ the expansion need not converge i
 ] <def:fourier-coefficients>
 
 The symbol $~$ only records that the right-hand side is the Fourier series attached to $f$; it carries no claim of convergence.
+
+The following algebraic rules are immediate from the linearity of the integral and from changes of variable, and will be used without further mention.
+
+#property(name: "Elementary Properties of Fourier Coefficients")[
+  Let $f, g in cal(R)[-pi, pi]$, $alpha, beta in bb(C)$ and $n in bb(Z)$. Then
+  1. *Linearity.* $hat(alpha f + beta g)(n) = alpha hat(f)(n) + beta hat(g)(n)$.
+  2. *Conjugation.* $hat(overline(f))(n) = overline(hat(f)(-n))$; in particular, if $f$ is real valued, then $hat(f)(-n) = overline(hat(f)(n))$.
+  3. *Translation.* If $g(x) = f(x - a)$ with $a in bb(R)$, then $hat(g)(n) = e^(-i n a) hat(f)(n)$.
+  4. *Modulation.* If $g(x) = e^(i k x) f(x)$ with $k in bb(Z)$, then $hat(g)(n) = hat(f)(n - k)$.
+  5. *Boundedness.* $abs(hat(f)(n)) <= || f ||_1$, where $|| f ||_1 = (1) / (2pi) integral_(-pi)^(pi) abs(f(x)) dif x$.
+] <prop:fourier-coefficient-rules>
+
+In particular, a real and even $f$ has real coefficients, a real and odd $f$ has purely imaginary ones, and for real $f$ the identity $hat(f)(-n) = overline(hat(f)(n))$ is precisely what makes the coefficients $a_n, b_n$ of the real form real.
 
 #note[
   Using Euler's formula,
@@ -611,7 +626,7 @@ In this section we discuss several convergence tests for Fourier series, from th
   $
     abs(f(x plus.minus u) - f(x)) <= L u^alpha, quad 0 < u < delta.
   $
-  This is denoted $f in text("Lip")_(alpha)(x)$; for $alpha = 1$ it is called the *Lipschitz condition*.
+  This is denoted $f in "Lip"_(alpha)(x)$; for $alpha = 1$ it is called the *Lipschitz condition*.
 ] <def:holder-condition>
 
 #lemma(name: "Dirichlet's Lemma")[
@@ -672,7 +687,7 @@ In this section we discuss several convergence tests for Fourier series, from th
 #theorem(name: "Pointwise Convergence Tests")[
   Let $f(x) in cal(R)[-pi, pi]$. If one of the following conditions holds at a point $x$, then the Fourier series of $f$ converges at $x$ to $(f(x^+) + f(x^-)) / (2)$.
 
-  1. *Lipschitz's Test.* $f in text("Lip")_(alpha)(x)$ for some $alpha in (0, 1]$.
+  1. *Lipschitz's Test.* $f in "Lip"_(alpha)(x)$ for some $alpha in (0, 1]$.
   2. *Dini's Test.* There exists $delta > 0$ such that
     $
       integral_(0)^(delta) (abs(f(x + u) + f(x - u) - 2 S)) / (u) dif u < +oo,
@@ -879,17 +894,8 @@ The smoother a function is, the more rapidly its Fourier coefficients decay; the
   ([real analytic], [$O(e^(-c abs(n)))$ for some $c > 0$]),
 )
 
-= Cesàro Summation and Square Mean Convergence // Cesàro 求和与平方平均收敛
-In the previous chapter we denoted by $cal(R)[-pi, pi]$ the linear space of all functions that are Riemann integrable, or absolutely improperly Riemann integrable, on $[-pi, pi]$.
-For convenience we now introduce $cal(R)^2[-pi, pi]$, the linear space of all functions that are Riemann integrable, or square improperly Riemann integrable, on $[-pi, pi]$.
-Since the Cauchy-Schwarz inequality gives, for $f$ vanishing outside a bounded set,
-$
-  integral_(a)^(b - eta) abs(f(x)) dif x <= sqrt(b - a) ( integral_(a)^(b - eta) abs(f(x))^2 dif x )^(1/2),
-$
-square integrability implies absolute integrability, hence
-$
-  cal(R)^2[-pi, pi] subset.eq cal(R)[-pi, pi].
-$
+= Cesàro Summation, Square Mean Convergence and Applications // Cesàro 求和、平方平均收敛及其应用
+Throughout this chapter $cal(R)[-pi, pi]$ and $cal(R)^2[-pi, pi]$ denote the spaces of #link(<def:function-spaces>)[*Riemann Integrable Functions on the Circle*], equipped with the normalized inner product and norm introduced there, and $cal(R)^2[-pi, pi] subset.eq cal(R)[-pi, pi]$.
 
 == Cesàro Summation and Fejér Kernel // Cesàro 求和与 Fejér 核
 Up to now, the convergence of a series $sum_(n=1)^(oo) a_n$ has always meant the convergence of its partial sums $S_(N) = sum_(n=1)^(N) a_n$ as $N -> oo$, the definition put forward by Cauchy in 1821.
