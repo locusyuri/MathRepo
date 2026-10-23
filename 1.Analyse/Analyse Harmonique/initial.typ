@@ -42,7 +42,7 @@
 // ==========================================================================
 // 设计思路：从经典 Fourier 级数出发，建立 Fourier 系数、核函数、收敛性等基础理论。
 // Part I 涵盖从 Euler-Fourier 公式到逐点收敛判别法，再到 Cesàro 求和与平方平均收敛。
-// 对应教材：Stein & Shakarchi Ch 1-3，于品 Ch 1-3
+// 对应教材：Stein & Shakarchi Ch 1-4（Ch 4 仅取其等分布部分，等周与热方程交叉引用其他笔记），于品 Ch 1-3
 // 对应 LaTeX：chap01.tex (Classical Fourier Series), chap02.tex (Cesàro Summation)
 
 // --- Chapter 1: Fourier Coefficients and Dirichlet Kernel (傅里叶系数与 Dirichlet 核) ---
@@ -110,133 +110,212 @@
 //   Section 2.6: Equidistribution (等分布问题)
 //     - Weyl 等分布准则
 //     - Fourier 分析在等分布理论中的应用
+//
+// 收尾注记（非独立章节）：Carleson-Hunt 定理
+//     - L²(T)（乃至 L^p, p > 1）中 Fourier 级数几乎处处收敛
+//     - 仅作陈述与历史定位；其证明依赖时频分析与算子理论，超出本笔记范围
+//     - 由原 Part II "Ch 3 Modern Fourier Analysis" 降级而来，不单独成章
 
 // ==========================================================================
 // Part II — Fourier Transform and Modern Theory (Fourier 变换与现代理论)
 // ==========================================================================
-// 设计思路：从周期到非周期，引入 Fourier 变换；然后进入现代 Fourier 分析，
-// 讨论 L¹/L² 空间中的 Fourier 级数收敛理论。
-// 对应教材：Stein & Shakarchi Ch 4-5，于品 Ch 4-5
-// 对应 LaTeX：chap04.tex (Fourier Transform), chap03.tex (Modern Fourier Analysis)
+// 设计思路：本 Part 完成"周期 → 非周期"的转折，并把 Part I 中的有限测度（级数）
+// 视角升级为连续谱（变换）视角。组织顺序严格遵循依赖关系：
+//   变换本体（Schwartz 空间 → 基本性质 → 反演）→ L¹/L² 延拓（Plancherel）→ 补充与应用
+// 即"先造工具、再谈延拓、最后扩展"，而非先讲 L¹/L² 再讲变换。
+// 对应教材：Stein & Shakarchi Ch 5 (R 上的 Fourier 变换)、Ch 6 (R^d 上的 Fourier 变换)，于品 Ch 4-5
+// 对应 LaTeX：chap04.tex (Fourier Transform)；原 chap03.tex (Modern Fourier Analysis) 已拆解重组
+//
+// 与 Part I 的分工：L²(T) 上的 Parseval 与平方平均收敛已在 Part I Ch 2 §2.2、§2.4 完成，
+// 本 Part 不再重复；Carleson-Hunt 定理证明超出本笔记范围，降级为 Part I 的收尾注记。
+//
+// 职责边界（本 Part 的裁决）：
+// - Fourier 变换本体（含 S(R)^d、缓增分布的 Fourier 变换、Plancherel）→ 本笔记
+// - L^p 空间一般理论（完备性、可分性、对偶、Riesz-Thorin 插值）→ Analyse Réelle
+//   （其蓝图 Ch 12 "Fourier Analysis on L^p" 应改为引用本 Part）
+// - 一般分布理论（测试函数、弱导数、基本解）→ Équations aux Dérivées Partielles
+//   本笔记只取 Fourier 变换所需的 S'(R) 最小片段，不重建分布论
+// - Laplace 变换：EDO 笔记已将"收敛类 + 反演公式"抵押给本 Part（EDO:37, 1652），
+//   故 §5.3 必须包含反演公式与收敛半平面，不能只列性质表
+// - FFT（数值算法）不属于调和分析理论 → 移入附录，仅作注记
 
-// --- Chapter 3: Modern Fourier Series (现代 Fourier 级数) ---
+// --- Chapter 3: The Fourier Transform on R (实轴上的 Fourier 变换) ---
 
-//   Section 3.1: L¹ Space and Fourier Coefficients (L¹ 空间与 Fourier 系数)
-//     - L¹(T) 空间的基本性质
-//     - L¹ 函数的 Fourier 系数
-//     - Riemann-Lebesgue 引理（L¹ 版本）
-//     - 注：L¹ 空间的一般理论参见 Analyse Réelle
-
-//   Section 3.2: L² Space and Fourier Series (L² 空间与 Fourier 级数)
-//     - L²(T) 空间的基本性质
-//     - L² 中 Fourier 级数的收敛性
-//     - Parseval 恒等式（L² 版本）
-//     - 注：L² 空间的一般理论参见 Analyse Réelle
-
-//   Section 3.3: Convergence Theory in L² (L² 空间中的收敛理论)
-//     - Carleson-Hunt 定理（几乎处处收敛）
-//     - 注：深入测度论工具参见 Analyse Réelle
-
-// --- Chapter 4: Fourier Transform (Fourier 变换) ---
-
-//   Section 4.1: From Periodic to Non-Periodic (从周期函数到非周期函数)
-//     - 从 Fourier 级数到 Fourier 变换的极限过程
+//   Section 3.1: From Periodic to Non-Periodic (从周期函数到非周期函数)
+//     - 从 Fourier 级数到 Fourier 变换的极限过程（启发式推导，作为动机而非证明）
 //     - Fourier 变换与逆变换的定义
-//     - Poisson 求和公式
+//     - 频率约定的统一：hat(f)(xi) = ∫ f(x) e^(-2pi i xi x) dx 与 hat(f)(omega) = ∫ f(x) e^(-i omega x) dx 的换算
+//     - 注：Poisson 求和公式后移至 §4.3（它是反演的推论，不能作为入口）
 
-//   Section 4.2: Schwartz Space (Schwartz 速降空间)
-//     - Schwartz 空间 S(R) 的定义
-//     - 速降函数的性质
+//   Section 3.2: Schwartz Space and Tempered Distributions (速降空间与缓增分布)
+//     - Schwartz 空间 S(R) 的定义与半范数族（Fréchet 结构）
+//     - S(R) 对微分、乘多项式的封闭性
+//     - 缓增分布 S'(R) 的定义与基本运算（最小片段；一般分布论参见 EDP 笔记）
+//     - 注：S'(R) 仅为 §3.3-§4.2 中"Fourier 变换可延拓"的表述服务
 
-//   Section 4.3: Basic Properties of Fourier Transform (Fourier 变换的基本性质)
-//     - 线性性、平移性、缩放性
-//     - 微分性质与积分性质
-//     - 卷积定理（Fourier 变换版本）
+//   Section 3.3: Basic Properties of the Fourier Transform (Fourier 变换的基本性质)
+//     - 线性性、平移性、调制性、缩放性
+//     - 微分与乘子的对偶：F[f'] = i omega hat(f)，F[x f] = i (hat(f))'
+//     - 卷积定理与乘法公式（Fourier 变换版本）
+//     - S(R) 上变换的连续性与周期性 F^4 = id（其中 F^2 是反射 f(x) -> f(-x)）
 
-//   Section 4.4: Fourier Inversion Theorem (Fourier 反演定理)
-//     - 反演定理的陈述与证明思路
+//   Section 3.4: Fourier Inversion Theorem (Fourier 反演定理)
+//     - Gauss 核与恒等逼近（与 Part I 的 Fejér 核平行，交叉引用其集中性论证）
+//     - 反演定理（S(R) 上成立；L¹ 上需附加条件）
+//     - 唯一性推论
 
-//   Section 4.5: The L¹ and L² Dichotomy (L¹ 与 L² 理论的二分)
-//     - L¹ 上的 Fourier 变换
-//     - Plancherel 定理与 L² 上的 Fourier 变换
-//     - F. Riesz 定理（注：一般 L^p 理论参见 Analyse Réelle）
+// --- Chapter 4: L¹, L² and the Plancherel Theorem (L¹、L² 与 Plancherel 定理) ---
 
-//   Section 4.6: Heisenberg's Uncertainty Principle (海森堡不确定性原理)
-//     - 不确定性原理的陈述与证明
+//   Section 4.1: The Fourier Transform on L¹ (L¹ 上的 Fourier 变换)
+//     - F: L¹(R) → L^oo(R) 的有界性与范数估计
+//     - Riemann-Lebesgue 引理的变换版本（级数版本见 Part I §1.4）
+//     - 值域不闭：变换不映满 L^oo（Riemann-Lebesgue 的逆问题）
+//     - L¹ 上的反演（附加条件下）
+
+//   Section 4.2: Plancherel Theorem (Plancherel 定理)
+//     - L¹ ∩ L² 上的等距性与稠密性延拓
+//     - ||hat(f)||_2 = ||f||_2 与极化恒等式
+//     - F 是 L²(R) 上的酉算子；与 Part I §2.2 Parseval 恒等式的对应
+//     - 注：Riesz-Thorin 插值不在本笔记（→ Analyse Réelle）
+
+//   Section 4.3: Poisson Summation Formula (Poisson 求和公式)
+//     - 陈述与证明（周期化 + 反演定理）
+//     - 抽样定理（Shannon）作为推论
+//     - 注：级数与变换之间的桥梁，须在 §3.4 之后
+
+//   Section 4.4: Heisenberg's Uncertainty Principle (海森堡不确定性原理)
+//     - 陈述与证明（分部积分 + Cauchy-Schwarz）
 //     - 等号条件（Gauss 函数）
+//     - 与 Hardy 不确定性原理的关系（只作注记）
 
-//   Section 4.7: Laplace Transform (拉普拉斯变换)
-//     - Laplace 变换的定义与存在性
-//     - 基本性质（线性性、微分性质）
-//     - 常见 Laplace 变换表
-//     - 与 Fourier 变换的关系
+// --- Chapter 5: Complements and Applications (补充与应用) ---
 
-//   Section 4.8: Fast Fourier Transform (快速 Fourier 变换)
-//     - FFT 算法的基本思想
-//     - 计算复杂度分析
+//   Section 5.1: The Fourier Transform on R^d (R^d 上的 Fourier 变换)
+//     - 多元定义、张量积结构、Fubini 化归
+//     - 旋转不变性与球对称函数的变换
+//     - Radon 变换与投影切片定理
+//     - 波方程基本解（应用；PDE 细节交叉引用 EDP 笔记）
+
+//   Section 5.2: Paley-Wiener Theorem (Paley-Wiener 定理)
+//     - 紧支集函数的变换是整函数（指数型）
+//     - 指数型整函数的刻画（复分析工具交叉引用 Analyse Complexe）
+
+//   Section 5.3: Laplace Transform (拉普拉斯变换)
+//     - 定义、收敛半平面与解析性（交叉引用 Analyse Complexe）
+//     - 基本性质（线性性、微分性质、卷积定理）
+//     - 与 Fourier 变换的关系（s = sigma + i omega）
+//     - 反演公式（Bromwich 积分）——为 EDO 笔记提供被抵押的完整理论
+//     - 常见变换表移至附录 B
+
+// --- Appendices (附录) ---
+//
+//   Appendix A: Fast Fourier Transform (快速 Fourier 变换)
+//     - 算法思想（分治）与计算复杂度
+//     - 与 EDP 笔记谱方法的关系（仅注记，不展开证明）
+//
+//   Appendix B: Tables of Fourier and Laplace Transforms (Fourier 与 Laplace 变换表)
+//     - 常见 Fourier 变换对
+//     - 常见 Laplace 变换对（原 §4.7 的表格迁入此处）
+//
+// 正文迁移状态（蓝图与正文的差异，供施工时对照）：
+// - 旧 "Ch 3 Modern Fourier Analysis"（正文 1380-1390）整体撤销：
+//   L¹/L² 两节并入 Chapter 4；Carleson-Hunt 移作 Part I 收尾注记。
+// - 旧 §4.1 "Introduction to Fourier Transform"（1393-1435）拆为 §3.1，Poisson 求和独立为 §4.3，
+//   并需修复 1404-1418 的迁移残渣（孤立逗号、缺失 plus 与乘号）与频率约定不一致。
+// - 旧 §4.2 "Schwartz Space"（1437-1447）→ §3.2，需补 S'(R) 片段。
+// - 旧 §4.3 "Basic Properties"（1449-1477，含误置于其下的 === Convolution）→ §3.3，
+//   需补 modulation、multiplication、Parseval 与空缺的第 5 条 Integration。
+// - 旧 §4.4 "Fourier Inversion Theorem"（1479）→ §3.4。
+// - 旧 §4.5 "The Dichotomy"（1481）→ §4.1 + §4.2（二分拆为两节，标题不再用 Dichotomy）。
+// - 旧 §4.6 "Heisenberg"（1483-1494）→ §4.4，公式需修复。
+// - 旧 §4.7 "Laplace Transform"（1496-1550）→ §5.3，补反演公式；表 1533-1550 迁入附录 B。
+// - 旧 §4.8 "Fast Fourier Transform"（1552）→ 附录 A。
 
 // ==========================================================================
 // Part III — Sobolev Spaces (Sobolev 空间)
 // ==========================================================================
 // 设计思路：Sobolev 空间是调和分析的核心工具，也是连接 Fourier 分析与 PDE 的桥梁。
-// 本 Part 建立 Sobolev 空间的完整理论，为 PDE 笔记提供函数空间基础。
+// 本 Part 的立足点是 Part II 的 Plancherel 定理：H^s 用 Fourier 变换刻画，
+// 从而把"弱可微"翻译为"频谱衰减"，这是本笔记不可替代的贡献。
 // 对应教材：Evans Ch 5，Adams "Sobolev Spaces"
 //
-// 职责边界：本笔记负责 Sobolev 空间的定义、嵌入定理、迹定理等纯分析理论。
-// Sobolev 空间在 PDE 弱解中的应用参见 Équations aux Dérivées Partielles。
+// 职责边界（含待裁决项）：
+// - 本笔记负责：H^s(R^d) 的 Fourier 刻画、Plancherel 型范数等价、Fourier 视角下的嵌入与紧嵌入
+// - Équations aux Dérivées Partielles 已写完 Sobolev 空间的定义、嵌入定理与迹定理
+//   （其 Ch "Sobolev Spaces"，EDP:1363-1451）。若照原规划全盘重建，将造成整章重复。
+//   建议裁决：W^(k,p) 的定义、嵌入定理的证明、迹定理 → 归 EDP，本笔记交叉引用；
+//   本 Part 只保留 H^s 的 Fourier 刻画与谱方法视角。此处暂按原规划列出，待用户确认后收缩。
+// - Sobolev 空间在 PDE 弱解中的应用 → EDP
 
-// --- Chapter 5: Sobolev Spaces (Sobolev 空间) ---
+// --- Chapter 6: Sobolev Spaces (Sobolev 空间) ---
 
-//   Section 5.1: Definition and Basic Properties (定义与基本性质)
-//     - 弱导数的定义
+//   Section 6.1: Definition and Basic Properties (定义与基本性质)
+//     - 弱导数的定义（交叉引用 EDP 笔记，不重建）
 //     - Sobolev 空间 W^(k,p) 与 H^s 的定义
+//     - H^s 的 Fourier 刻画：||f||_(H^s)^2 = ∫ (1 + |xi|^2)^s |hat(f)(xi)|^2 dxi
 //     - 基本性质与范数等价
 
-//   Section 5.2: Sobolev Embedding Theorems (Sobolev 嵌入定理)
+//   Section 6.2: Sobolev Embedding Theorems (Sobolev 嵌入定理)
 //     - 连续嵌入与紧嵌入
 //     - Sobolev 不等式
 //     - Morrey 不等式
-//     - Rellich-Kondrachov 紧嵌入定理
+//     - Rellich-Kondrachov 紧嵌入定理（证明归属待裁决，见上）
 
-//   Section 5.3: Trace Theorem (迹定理)
+//   Section 6.3: Trace Theorem (迹定理)
 //     - 边界迹算子的定义
 //     - 迹定理的陈述与证明
 
-//   Section 5.4: Poincaré and Friedrichs Inequalities (Poincaré 不等式与 Friedrichs 不等式)
-//     - Poincaré 不等式（补全 Ch 2 中的空白）
-//     - Friedrichs 不等式（补全 Ch 2 中的空白）
+//   Section 6.4: Poincaré and Friedrichs Inequalities (Poincaré 不等式与 Friedrichs 不等式)
+//     - Poincaré 不等式（与 Part I §2.3 的级数版本对照，避免重复陈述）
+//     - Friedrichs 不等式（同上）
 //     - 在 Sobolev 空间中的完整证明
 
-//   Section 5.5: Interpolation and Duality (插值与对偶)
-//     - 实插值与复插值方法
+//   Section 6.5: Interpolation and Duality (插值与对偶)
+//     - 实插值与复插值方法（Riesz-Thorin 的一般理论 → Analyse Réelle）
 //     - Sobolev 空间的对偶空间
 //     - 负指数 Sobolev 空间 H^(-s)
 
 // ==========================================================================
 // 教材覆盖度映射表 (Coverage Mapping)
 // ==========================================================================
-// | 教材位置                    | 知识点                     | 本笔记位置         | 备注                          |
-// |----------------------------|---------------------------|-------------------|-------------------------------|
-// | Stein Ch 1-3               | 经典 Fourier 级数          | Ch 1-2            | 直接对应                       |
-// | Stein Ch 4-5               | Fourier 变换              | Ch 4              | 直接对应                       |
-// | 于品 Ch 1-3                | 经典理论与收敛性           | Ch 1-2            | 直接对应                       |
-// | 于品 Ch 4-5                | 现代理论与变换             | Ch 3-4            | 直接对应                       |
-// | Evans Ch 5                 | Sobolev 空间              | Ch 5              | 本笔记负责纯分析理论            |
-// | Poisson 核                 | Poisson 核与调和函数       | Ch 2, §2.5        | 补充内容                       |
-// | 等分布理论                  | Weyl 准则等               | Ch 2, §2.6        | 补充内容                       |
-// | Plancherel / F. Riesz      | L² 变换与 L^p 理论        | Ch 4, §4.5        | 补充内容                       |
+// | 教材位置      | 知识点                                                      | 本笔记位置                        | 备注                    |
+// |--------------|-------------------------------------------------------------|----------------------------------|-------------------------|
+// | Stein Ch 1   | 弦振动、热方程、Fourier 级数的起源                            | Ch 1, §1.1                       | 动机层面                 |
+// | Stein Ch 2   | Fourier 级数、Dirichlet 核、典型例子                          | Ch 1                             | 直接对应                 |
+// | Stein Ch 3   | Good kernels、Fejér/Cesàro、Poisson/Abel 求和、收敛判别         | Ch 1-2, §2.1, §2.5               | 直接对应                 |
+// | Stein Ch 4   | 等周不等式、Weyl 等分布、热方程的应用                          | Ch 2, §2.6                       | 仅取等分布；其余交叉引用   |
+// | Stein Ch 5   | R 上 Fourier 变换：反演、Plancherel、Paley-Wiener、Poisson 求和、Heisenberg | Ch 3-5, §3.4, §4.2-4.4, §5.2 | 直接对应（原表误记为 Ch 4）|
+// | Stein Ch 6   | R^d 上 Fourier 变换：Radon 变换、波方程                        | Ch 5, §5.1                       | 原表遗漏，现补齐          |
+// | Stein Ch 7   | 有限 Fourier 分析（Z/NZ）                                     | 附录 A                           | 仅作 FFT 的代数背景       |
+// | 于品 Ch 1-3  | 经典理论与收敛性                                              | Ch 1-2                           | 直接对应                 |
+// | 于品 Ch 4-5  | 变换与现代理论                                                | Ch 3-5                           | 直接对应                 |
+// | Evans Ch 5   | Sobolev 空间                                                  | Ch 6                             | 与 EDP 重复，待裁决       |
+// | Poisson 核   | Poisson 核与调和函数                                          | Ch 2, §2.5                       | 补充内容                 |
+// | 等分布理论    | Weyl 准则                                                     | Ch 2, §2.6                       | 补充内容                 |
+// | Plancherel   | L² 等距延拓与酉性                                             | Ch 4, §4.2                       | 补充内容（Riesz-Thorin → Analyse Réelle）|
+// | 缓增分布      | S'(R) 上的 Fourier 变换                                       | Ch 3, §3.2                       | 补充内容，填补三方互推的空白 |
+// | Laplace 变换  | 收敛半平面、反演公式、变换表                                   | Ch 5, §5.3 + 附录 B              | 兑现 EDO 笔记的抵押        |
+// | FFT          | 分治算法与复杂度                                              | 附录 A                           | 数值内容，不入理论主体     |
 //
 // ==========================================================================
 // 结构说明 (Structure Note)
 // ==========================================================================
-// 本笔记遵循"经典级数 → 变换与现代理论 → Sobolev 空间"的三段式主线，共 3 Part、5 Chapter。
+// 本笔记遵循"经典级数 → 变换与现代理论 → Sobolev 空间"的三段式主线，
+// 共 3 Part、6 Chapter、2 Appendix。
 //
-// Part I（Ch 1-2）：经典 Fourier 级数理论，从 Euler-Fourier 公式到逐点收敛与平方平均收敛。
-// Part II（Ch 3-4）：现代 Fourier 分析，涵盖 L¹/L² 理论与 Fourier/Laplace 变换。
-// Part III（Ch 5）：Sobolev 空间，为 PDE 弱解理论提供函数空间基础。
+// Part I（Ch 1-2）：经典 Fourier 级数理论，从 Euler-Fourier 公式到逐点收敛与平方平均收敛；
+//                   以 Carleson-Hunt 定理的陈述收尾（不单独成章）。
+// Part II（Ch 3-5）：变换本体（Schwartz 空间 → 基本性质 → 反演）→ L¹/L² 延拓（Plancherel）
+//                   → 补充与应用（R^d、Paley-Wiener、Laplace）；FFT 与变换表移入附录。
+//                   L²(T) 上的 Parseval 与平方平均收敛已在 Part I 完成，此处不重复。
+// Part III（Ch 6）：Sobolev 空间，以 H^s 的 Fourier 刻画为核心；
+//                   W^(k,p) 定义、嵌入与迹定理与 EDP 笔记重叠，边界待裁决。
 //
-// 教材覆盖：Stein & Shakarchi 全部核心章节 + 于品核心章节均已覆盖，
-// 并补充了 Poisson 核、等分布、Plancherel 定理等扩展内容。
+// 教材覆盖：Stein & Shakarchi Ch 1-7（Ch 7 仅作附录背景）、于品 Ch 1-5、Evans Ch 5，
+// 并补充 Poisson 核、等分布、缓增分布的 Fourier 变换、Laplace 反演等内容。
+//
+// 正文进度：Part I 已完成；Part II 正文仍为旧 Ch 3-4 结构，须按上方迁移状态逐节改写；
+//           Part III 仅有占位。
 // ==========================================================================
 
 // ==========================================================================
@@ -508,7 +587,6 @@ $
 
 #note(title: "Discrete Convolution")[
   The same definition makes sense on discrete groups, where the integral is replaced by a sum and the normalization by a counting measure.
-  This note records the two cases that occur in other parts of the repository; nothing below is used in the present chapter.
 
   On $bb(Z)$, for absolutely summable sequences $a, b in ell^1(bb(Z))$, the *convolution* is
   $
@@ -1552,7 +1630,7 @@ Some common Laplace transforms are listed in the following table.
 
 == Fast Fourier Transform
 
-// Part III — Sobolev Spaces (Sobolev 空间): Chapter 5 has no content yet (placeholder).
+// Part III — Sobolev Spaces (Sobolev 空间): Chapter 6 has no content yet (placeholder).
 
 #bibliography("references.bib")
 
