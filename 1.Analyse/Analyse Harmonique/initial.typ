@@ -2267,8 +2267,70 @@ The spaces treated in this part measure smoothness in $L^2$ through the decay of
 #part("Appendices") // 附录
 
 = Fast Fourier Transform // 快速 Fourier 变换
-// TODO（附录 A）：分治算法、复杂度 O(N log N)、与 EDP 笔记谱方法的关系
-// 数值算法不属于调和分析理论主体，故自原 §4.8 移出正文
+
+Nothing in this appendix is used in the main text. It records the discrete counterpart of the transform, because the same algebraic pattern recurs in computation, and because the complexity of the algorithm is the reason why the continuous theory is usable in practice.
+
+#definition(name: "Discrete Fourier Transform")[
+  Let $N >= 1$ and $a = (a(0), dots, a(N - 1)) in bb(C)^N$. With $omega_N = e^(2 pi i \/ N)$, the *discrete Fourier transform* of $a$ is
+  $
+    hat(a)(k) = sum_(n=0)^(N-1) a(n) omega_N^(-n k), quad k = 0, 1, dots, N - 1,
+  $ <eq:dft>
+  and the *inverse discrete Fourier transform* is
+  $
+    a(n) = (1) / (N) sum_(k=0)^(N-1) hat(a)(k) omega_N^(n k), quad n = 0, 1, dots, N - 1.
+  $ <eq:idft>
+] <def:dft>
+
+#proposition(name: "Orthogonality and Inversion")[
+  For all integers $j, k$,
+  $
+    sum_(n=0)^(N-1) omega_N^(n (k - j)) = cases(N & "if" k - j equiv 0 mod N, 0 & "otherwise")
+  $
+  and consequently #link(<eq:idft>)[the inversion formula] is correct: applying the definition and then the inverse formula returns $a$.
+] <prop:dft-inversion>
+
+#proof[
+  If $k - j equiv 0 mod N$ every term of the sum equals $1$. Otherwise $omega_N^(k - j) != 1$ and the sum is a geometric progression:
+  $
+    sum_(n=0)^(N-1) (omega_N^(k - j))^n = (1 - omega_N^(N (k - j))) / (1 - omega_N^(k - j)) = 0,
+  $
+  since $omega_N^N = 1$. Substituting #link(<eq:dft>)[the definition] into #link(<eq:idft>)[the inverse formula] and exchanging the two finite sums gives $a(n)$ back, the inner sum being $N$ when $k = n$ and $0$ otherwise.
+]
+
+Computing $hat(a)$ directly from #link(<eq:dft>)[the definition] requires $N$ multiplications for each of the $N$ values of $k$, that is $O(N^2)$ operations. The following observation reduces this to $O(N log_2 N)$ when $N$ is a power of two.
+
+#proposition(name: "Radix-2 Recursion")[
+  Let $N = 2 M$ and define the two sequences of length $M$
+  $
+    a_"even"(m) = a(2 m), quad a_"odd"(m) = a(2 m + 1), quad m = 0, dots, M - 1.
+  $
+  Then for $k = 0, dots, M - 1$,
+  $
+    hat(a)(k) = hat(a)_"even"(k) + omega_N^(-k) hat(a)_"odd"(k), quad hat(a)(k + M) = hat(a)_"even"(k) - omega_N^(-k) hat(a)_"odd"(k).
+  $ <eq:fft-butterfly>
+] <prop:fft-radix2>
+
+#proof[
+  Split the sum in #link(<eq:dft>)[the definition] according to the parity of $n$:
+  $
+    hat(a)(k) = sum_(m=0)^(M-1) a(2 m) omega_N^(-2 m k) + omega_N^(-k) sum_(m=0)^(M-1) a(2 m + 1) omega_N^(-2 m k).
+  $
+  Since $omega_N^2 = omega_M$, the two sums are the transforms of length $M$ of $a_"even"$ and $a_"odd"$ evaluated at $k$. This gives the first identity. For the second, replace $k$ by $k + M$ and use $omega_N^(-M) = -1$ and $omega_M^(-M k) = 1$.
+]
+
+The pair of identities is called a *butterfly*: two transforms of size $M$ produce one of size $N$ at the cost of $M$ multiplications by the *twiddle factors* $omega_N^(-k)$. Applying the recursion $log_2 N$ times, the total number of operations satisfies
+$
+  T(N) = 2 T(N \/ 2) + O(N), quad "hence" quad T(N) = O(N log_2 N),
+$
+which for $N = 2^20$ is a factor of about $5 dot 10^4$ better than the direct evaluation.
+
+#caution[
+  The algorithm computes the *discrete* transform exactly in exact arithmetic, but in floating point it accumulates an error of order $epsilon log_2 N$, where $epsilon$ is the machine precision; and it computes the transform of a finite vector, not of a function. For a function sampled on a grid, the discrete transform approximates the continuous one only up to aliasing: the periodization of $hat(f)$ overlaps, which is exactly the phenomenon described by #link(<thm:poisson-summation>)[the Poisson summation formula]. The two are the same statement seen from the sampling side.
+]
+
+#note[
+  The practical importance for this note is the acceleration of convolution. By the discrete convolution theorem recorded in §1.3, the cyclic convolution of two vectors of length $N$ has a transform equal to the pointwise product of the transforms, so it can be computed in $O(N log_2 N)$ instead of $O(N^2)$: transform, multiply, invert. The same device underlies spectral methods for partial differential equations, where differentiation becomes multiplication by $2 pi i xi$ and the FFT moves between the two representations; those methods are developed in the PDE note.
+]
 
 = Tables of Fourier and Laplace Transforms // Fourier 与 Laplace 变换表
 
