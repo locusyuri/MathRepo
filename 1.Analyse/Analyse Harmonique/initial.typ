@@ -1632,6 +1632,6 @@ Some common Laplace transforms are listed in the following table.
 
 // Part III — Sobolev Spaces (Sobolev 空间): Chapter 6 has no content yet (placeholder).
 
-#bibliography("references.bib")
+#bibliography("references.bib", title: "References", full: true)
 
 // 目录
