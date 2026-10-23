@@ -190,6 +190,11 @@
   ]
 }
 
+/// 数学 bb(xxx)：保持原生双线体字符映射（R→ℝ 等），再以等宽字体渲染，
+/// 仿 LaTeX \mathbb 的等宽粗体观感。以顶层绑定遮蔽内置 math.bb，
+/// 数学模式中的 bb(...) 会优先解析到此函数。
+#let bb(body) = math.mono(math.bb(body))
+
 /// Chapter 显示编号状态（供目录读取）
 #let chapter-num-state = state("chapter-num-state", 0)
 
@@ -1293,7 +1298,11 @@
   show link: it => {
     let d = it.dest
     if type(d) == label or type(d) == str {
-      text(fill: color-structure, style: "italic", underline(stroke: 0.5pt + color-structure.lighten(25%), offset: 2.5pt, it))
+      text(fill: color-structure, style: "italic", underline(
+        stroke: 0.5pt + color-structure.lighten(25%),
+        offset: 2.5pt,
+        it,
+      ))
     } else {
       it
     }
