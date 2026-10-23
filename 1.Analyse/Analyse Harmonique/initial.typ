@@ -2017,12 +2017,117 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
 = Complements and Applications // 补充与应用
 
 == The Fourier Transform on $bb(R)^d$ // $bb(R)^d$ 上的 Fourier 变换
-// TODO：多元定义与张量积结构、旋转不变性与球对称函数的变换
-// Radon 变换与投影切片定理、波方程基本解（PDE 细节引用 EDP 笔记）
+
+Nothing in the definition of §3.1 is one-dimensional. Writing $xi dot x = sum_(j=1)^d xi_j x_j$ for the euclidean inner product, the transform of $f in cal(S)(bb(R)^d)$ is
+$
+  hat(f)(xi) = integral_(bb(R)^d) f(x) e^(-2 pi i xi dot x) dif x, quad xi in bb(R)^d,
+$
+and the inversion formula reads the same way. The Schwartz space in $d$ variables is the space defined in §3.2 with $x^m$ replaced by $x^alpha$ and $dif^n \/ dif x^n$ by $D^alpha$; the properties of §3.3 transfer verbatim. What is genuinely new in several variables is geometry.
+
+#definition(name: "Fourier Transform in $bb(R)^d$")[
+  For $f in cal(S)(bb(R)^d)$ the *Fourier transform* is the function
+  $
+    hat(f)(xi) = cal(F)[f](xi) = integral_(bb(R)^d) f(x) e^(-2 pi i xi dot x) dif x, quad xi in bb(R)^d,
+  $ <eq:fourier-transform-rd>
+  and the *inverse transform* is given by the same formula with $+2 pi i xi dot x$ in place of $-2 pi i xi dot x$.
+] <def:fourier-transform-rd>
+
+#proposition(name: "Tensor Product Structure")[
+  Let $f_j in cal(S)(bb(R))$ for $j = 1, dots, d$ and put $f(x) = f_1(x_1) dots f_d(x_d)$. Then
+  $
+    hat(f)(xi) = hat(f)_1(xi_1) dots hat(f)_d(xi_d), quad xi in bb(R)^d.
+  $
+  Consequently the $d$-dimensional transform is the $d$-fold tensor product of the one-dimensional one, and inversion, the convolution theorem and Plancherel in $bb(R)^d$ all follow from their one-dimensional forms by iteration.
+] <prop:fourier-rd-tensor>
+
+#proof[
+  The double integral defining $hat(f)$ factorizes by Fubini, since $f$ is Schwartz; each factor is the one-dimensional transform of $f_j$. The consequences follow because the class of finite sums of such products is dense in $cal(S)(bb(R)^d)$ and both sides are continuous for the Schwartz topology.
+]
+
+#proposition(name: "Rotation Invariance")[
+  Let $R$ be an orthogonal transformation of $bb(R)^d$ and put $f_R(x) = f(R x)$. Then
+  $
+    hat(f_R)(xi) = hat(f)(R xi), quad xi in bb(R)^d.
+  $
+  In particular, if $f$ is radial then so is $hat(f)$.
+] <prop:rotation-invariance>
+
+#proof[
+  Substitute $x = R^(-1) y$ in the defining integral. Orthogonality gives $dif x = dif y$ and $xi dot R^(-1) y = (R xi) dot y$, whence the identity. If $f$ is radial then $f_R = f$ for every $R$, so $hat(f)(R xi) = hat(f)(xi)$ for every $R$, which means that $hat(f)$ is radial.
+]
+The explicit formula for a radial function involves Bessel functions, since the transform reduces to a Hankel transform on $(0, +oo)$; it is not needed here.
+
+=== Radon Transform and Slices // Radon 变换与切片
+
+The behaviour of the transform under rotations suggests looking at the values of $hat(f)$ along lines through the origin, which are precisely the transforms of the integrals of $f$ over hyperplanes.
+
+#definition(name: "Radon Transform")[
+  For $f in cal(S)(bb(R)^d)$, a unit vector $omega in bb(S)^(d-1)$ and $s in bb(R)$, the *Radon transform* of $f$ is
+  $
+    R f(omega, s) = integral_(x dot omega = s) f(x) dif sigma(x),
+  $
+  the integral being taken with respect to $(d-1)$-dimensional surface measure over the hyperplane orthogonal to $omega$ at distance $s$ from the origin.
+] <def:radon-transform>
+
+#theorem(name: "Projection-Slice Theorem")[
+  Fix $omega in bb(S)^(d-1)$ and $sigma in bb(R)$. Then
+  $
+    integral_(-oo)^(oo) R f(omega, s) e^(-2 pi i sigma s) dif s = hat(f)(sigma omega).
+  $ <eq:projection-slice>
+] <thm:projection-slice>
+
+#proof[
+  Both integrals are absolutely convergent for Schwartz $f$, so Fubini applies to the slice decomposition $dif x = dif s dif sigma(x)$:
+  $
+    integral_(-oo)^(oo) R f(omega, s) e^(-2 pi i sigma s) dif s = integral_(bb(R)^d) f(x) e^(-2 pi i sigma (x dot omega)) dif x = hat(f)(sigma omega),
+  $
+  since $sigma (x dot omega) = (sigma omega) dot x$.
+]
+
+#note[
+  The theorem says that the one-dimensional transform of a projection determines, and is determined by, a line of the $d$-dimensional transform: rotating the hyperplane rotates the line. This is the principle behind computerized tomography, and it also provides a proof of inversion in $d$ variables by inverting one-dimensional transforms along all lines and reconstructing from the slices.
+
+  Its other classical use is the wave equation. If $u$ solves $partial_t^2 u = Delta u$ with $u(dot, 0) = f$ and $partial_t u(dot, 0) = 0$, transforming in $x$ gives $partial_t^2 hat(u)(xi, t) = -4 pi^2 abs(xi)^2 hat(u)(xi, t)$, hence
+  $
+    hat(u)(xi, t) = hat(f)(xi) cos(2 pi abs(xi) t).
+  $
+  Inverting, $u(dot, t)$ is the convolution of $f$ with a measure carried by the sphere of radius $t$, which is the Huygens principle; the explicit formulas of d'Alembert and Kirchhoff are derived in the PDE note.
+]
 
 == Paley-Wiener Theorem // Paley-Wiener 定理
-// TODO：紧支集函数的变换是指数型整函数；指数型整函数的刻画（复分析工具引用 Analyse Complexe）
-// 该定理已在 §4.1 的 note 中被引用，用于说明 Cal(F)(L^1) 不映满 C_0
+
+The note in §4.1 claimed that $cal(F)(L^1(bb(R)))$ is strictly smaller than $C_0(bb(R))$ and referred forward to the present theorem, which characterizes exactly which functions occur.
+
+#definition(name: "Exponential Type")[
+  An entire function $F: bb(C) -> bb(C)$ is said to be of *exponential type at most $A$* if there are constants $C >= 0$ such that
+  $
+    abs(F(z)) <= C e^(2 pi A abs(z)) quad "for every" z in bb(C).
+  $
+] <def:exponential-type>
+
+#theorem(name: "Paley–Wiener Theorem")[
+  Let $f in L^2(bb(R))$ and $A > 0$. The following are equivalent:
+  1. $f$ vanishes almost everywhere on the complement of $[-A, A]$;
+  2. the class of $hat(f)$ on $bb(R)$ agrees almost everywhere with the restriction of an entire function $F$ of exponential type at most $A$ whose restriction to $bb(R)$ lies in $L^2(bb(R))$.
+] <thm:paley-wiener>
+
+#proof[
+  Assume first that $f$ is supported in $[-A, A]$. Then
+  $
+    F(z) = integral_(-A)^(A) f(x) e^(-2 pi i z x) dif x, quad z in bb(C),
+  $
+  is well defined, entire (differentiate under the integral sign), and satisfies
+  $
+    abs(F(z)) <= integral_(-A)^(A) abs(f(x)) e^(2 pi abs(z) abs(x)) dif x <= 2 sqrt(A) || f ||_2 e^(2 pi A abs(z)),
+  $
+  so it has exponential type at most $A$; its restriction to the real axis is $hat(f)$, which lies in $L^2$ by #link(<thm:plancherel>)[Plancherel]. This proves that 1 implies 2.
+]
+
+#note[
+  The converse is the substantial direction: starting from an entire function of exponential type whose boundary values are square integrable, one must show that the inversion integral vanishes outside $[-A, A]$. The standard route shifts the contour of the inversion integral to the line $Im z = plus.minus R$ and lets $R -> +oo$, using the growth bound to kill the horizontal contributions; it needs the Cauchy integral theorem and the Paley–Wiener lemma for entire functions of exponential type. The complex analysis involved is developed in the Analyse Complexe note, so the converse is quoted here rather than proved.
+
+  For the purpose of §4.1 the implication 1 implies 2 is already enough: the transform of a compactly supported function extends off the real axis, whereas a general element of $C_0$ has no reason to, which shows that $cal(F)(L^1(bb(R)))$ is a proper subset of $C_0(bb(R))$.
+]
 
 == Laplace Transform // 拉普拉斯变换
 Fourier transform requires the function to be integrable over the entire real line,
