@@ -3389,6 +3389,22 @@ The fully general problem — nonzero data *and* a source — is the sum of this
   The same principle applies to the heat equation (#link(<thm:heat-semigroup>)[Ch. 11]) and to the wave equation with boundary conditions; it reduces inhomogeneous evolution problems to the homogeneous one, provided the solution operator is known. For the wave equation, $W (t)$ is given explicitly by d'Alembert's formula in one dimension and by the Kirchhoff and Poisson formulas in higher dimensions (*Cauchy Problem in Higher Dimensions*), so Duhamel's principle yields explicit solutions of the inhomogeneous Cauchy problem in every dimension — the formulas are recorded in the next subsection.
 ]
 
+The simplest instance is plain calculus. For the first-order linear equation $u' (t) = A u (t) + f (t)$ with $u (0) = u_0$, where $A$ is a constant matrix, the *variation of constants* gives
+$
+  u (t) = e^(t A) u_0 + integral_0^t e^((t - tau) A) f (tau) dif tau,
+$
+which is exactly Duhamel's formula with the one-parameter semigroup $W (t) = e^(t A)$: the first term propagates the data freely, the second superposes the responses $e^((t - tau) A) f (tau) dif tau$ to the source at each instant $tau$. In the scalar case $u' = lambda u + f$ it reads
+$
+  u (t) = e^(lambda t) u (0) + integral_0^t e^(lambda (t - tau)) f (tau) dif tau,
+$
+the classical formula obtained by multiplying with the integrating factor $e^(-lambda t)$.
+
+Second-order linear ODEs fit the same template. For the oscillator $u'' + omega^2 u = f$ the homogeneous solution operator is $W (t) = (sin omega t)/omega$, so
+$
+  u (t) = u (0) cos omega t + u' (0) (sin omega t)/omega + integral_0^t (sin omega (t - tau))/omega f (tau) dif tau,
+$
+the last term being the familiar driven-oscillator superposition.
+
 === Explicit Formulas by Dimension // 各维度的显式公式
 
 Substituting the homogeneous solution operator into Duhamel's principle turns the abstract integral into a quadrature in each dimension.
