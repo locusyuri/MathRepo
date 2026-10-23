@@ -1824,34 +1824,213 @@ The heuristic of §3.1 ended with the formula $f(x) = integral hat(f)(xi) e^(2 p
 = L¹, L² and the Plancherel Theorem // L¹、L² 与 Plancherel 定理
 
 == The Fourier Transform on $L^1$ // $L^1$ 上的 Fourier 变换
-// TODO：lem:riemann-lebesgue-transform（变换版）、值域不闭、L¹ 上的反演条件
-// 旧稿的 == $L^1$ Space 已撤销，内容并入本节
 
-== Plancherel Theorem // Plancherel 定理
-// TODO：L¹ ∩ L² 上的等距 -> 稠密性延拓 -> 酉性；与 @thm:parseval-identity 的对应
-// 原 "The Dichotomy" 一分为二：本节与上一节
+#link(<def:fourier-transform>)[The definition] asks only for absolute integrability, so the transform is defined on every $f in L^1(bb(R))$. Two questions follow at once: how regular is $hat(f)$, and can $f$ be recovered from it? The first has a clean answer, the second only a conditional one.
 
-== Poisson Summation Formula // Poisson 求和公式
-// TODO：由 @thm:fourier-inversion 周期化推出；抽样定理作为推论
-// 原为 §3.1 的子节，因依赖反演定理而后移至此
-
-== Heisenberg's Uncertainty Principle
-
-#theorem(name: "Heisenberg's Uncertainty Principle")[
-  For any function $f in cal(S)(bb(R))$,
+#proposition(name: "The Transform on $L^1$")[
+  Let $f in L^1(bb(R))$. Then $hat(f)$ is bounded and uniformly continuous, with
   $
-    ( integral_(-oo)^(oo) x^2 abs(f(x))^2 dif x ) ,
-    ( integral_(-oo)^(oo) omega^2 abs(hat(f)(omega))^2 dif omega ) ,
-    >= (1) / (4) ( integral_(-oo)^(oo) abs(f(x))^2 dif x )^2. ,
+    || hat(f) ||_oo <= || f ||_1,
   $
-  Equality holds if and only if $f(x)$ is a Gaussian function of the form
-  $f(x) = A e^(-a x^2)$ for some constants $A in bb(C)$ and $a > 0$.
+  and $cal(F): L^1(bb(R)) -> L^oo(bb(R))$ is linear and continuous for these norms.
+] <prop:fourier-transform-l1>
+
+#proof[
+  The bound is immediate: $abs(hat(f)(xi)) <= integral abs(f(x)) dif x = || f ||_1$.
+  For uniform continuity, write
+  $
+    abs(hat(f)(xi + h) - hat(f)(xi)) <= integral_(-oo)^(oo) abs(f(x)) abs(e^(-2 pi i h x) - 1) dif x
+  $
+  and split the integral at $abs(x) <= R$. On that piece $abs(e^(-2 pi i h x) - 1) <= 2 pi abs(h) R$ by the mean value inequality, while the tail is at most $2 integral_(abs(x) > R) abs(f(x)) dif x$, which is small for $R$ large. Letting $h -> 0$ afterwards gives the claim.
 ]
 
-== Laplace Transform
+The bound above is crude: in fact the transform of an integrable function vanishes at infinity, which is the continuous version of #link(<lem:riemann-lebesgue>)[the Riemann–Lebesgue lemma for Fourier coefficients].
+
+#lemma(name: "Riemann–Lebesgue Lemma")[
+  Let $f in L^1(bb(R))$. Then
+  $
+    lim_(abs(xi) -> +oo) hat(f)(xi) = 0,
+  $
+  so that $hat(f) in C_0(bb(R))$.
+] <lem:riemann-lebesgue-transform>
+
+#proof[
+  Suppose first that $f$ is $C^1$ with compact support. Integrating by parts,
+  $
+    hat(f)(xi) = (1) / (2 pi i xi) integral_(-oo)^(oo) f'(x) e^(-2 pi i xi x) dif x, quad xi != 0,
+  $
+  whence $abs(hat(f)(xi)) <= || f' ||_1 \/ (2 pi abs(xi)) -> 0$ as $abs(xi) -> +oo$.
+
+  In general, functions of that type are dense in $L^1(bb(R))$ (see the Analyse Réelle note), so choose $(f_j)$ with $|| f_j - f ||_1 -> 0$. By the bound of the proposition, $|| hat(f_j) - hat(f) ||_oo <= || f_j - f ||_1$, so $hat(f_j) -> hat(f)$ uniformly. A uniform limit of functions vanishing at infinity also vanishes at infinity, which completes the proof.
+]
+
+#note[
+  The image of $L^1$ under $cal(F)$ is strictly smaller than $C_0(bb(R))$. By the Paley–Wiener theorem of §5.2, the transform of a compactly supported function extends to an entire function of exponential type, and conversely every such function with integrable boundary values arises this way. Nothing in the estimate above reveals this restriction, which is why the two-sided theory is organized around $L^2$ rather than around $L^1$.
+]
+
+The inversion formula stated in #link(<cor:fourier-inversion-l1>)[§3.4] can now be proved.
+
+#proof(name: "of the $L^1$ inversion formula")[
+  Assume $f in L^1(bb(R))$ and $hat(f) in L^1(bb(R))$, and put
+  $
+    g(x) = integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) dif xi,
+  $
+  which is bounded and continuous by #link(<prop:fourier-transform-l1>)[the proposition] applied to $hat(f)$.
+
+  Let $phi in cal(S)(bb(R))$ and put $psi(xi) = hat(phi)(-xi)$. Writing $tilde(phi)(y) = phi(-y)$ we have $psi = cal(F)[tilde(phi)]$, so #link(<cor:fourier-involution>)[the involution identity] gives $hat(psi)(x) = phi(x)$.
+  All integrals below are absolutely convergent, since $hat(f), phi, psi, f in L^1$; Fubini and #link(<prop:fourier-transform-rules>)[the multiplication formula] therefore give
+  $
+    integral_(-oo)^(oo) g(x) phi(x) dif x = integral_(-oo)^(oo) hat(f)(xi) psi(xi) dif xi = integral_(-oo)^(oo) f(x) hat(psi)(x) dif x = integral_(-oo)^(oo) f(x) phi(x) dif x.
+  $
+  As $phi in cal(S)(bb(R))$ is arbitrary, the continuous function $g$ and the equivalence class of $f$ agree almost everywhere.
+]
+
+== Plancherel Theorem // Plancherel 定理
+
+The transform is not bounded for the $L^1$ norm, and the estimate $|| hat(f) ||_oo <= || f ||_1$ is very far from an identity. On $L^2$, by contrast, the transform preserves the norm exactly: this is the continuous analogue of #link(<thm:parseval-identity>)[Parseval's identity], and it is the reason why the theory is organized around $L^2$.
+
+#theorem(name: "Plancherel Theorem")[
+  Let $f, g in L^1(bb(R)) ∩ L^2(bb(R))$. Then
+  $
+    integral_(-oo)^(oo) hat(f)(xi) overline(hat(g)(xi)) dif xi = integral_(-oo)^(oo) f(x) overline(g(x)) dif x,
+  $ <eq:plancherel-inner>
+  and in particular $|| hat(f) ||_2 = || f ||_2$.
+] <thm:plancherel>
+
+#proof[
+  Put $g^*(x) = overline(g(-x))$, so that $hat(g^*)(xi) = overline(hat(g)(xi))$ by rule 4 of #link(<prop:fourier-transform-rules>)[the basic properties]. By #link(<thm:convolution-R>)[the convolution theorem],
+  $
+    hat(f * g^*)(xi) = hat(f)(xi) overline(hat(g)(xi)).
+  $
+  Since $hat(f)$ and $hat(g)$ both lie in $L^2(bb(R))$, their product is integrable by the Cauchy–Schwarz inequality, so $f * g^*$ has an integrable transform and #link(<cor:fourier-inversion-l1>)[the $L^1$ inversion formula] applies at $x = 0$:
+  $
+    (f * g^*)(0) = integral_(-oo)^(oo) hat(f)(xi) overline(hat(g)(xi)) dif xi.
+  $
+  On the other hand $(f * g^*)(0) = integral f(y) overline(g(y)) dif y$ by #link(<def:convolution>)[the definition of convolution]. Comparing the two expressions proves the identity; taking $g = f$ gives the norm equality.
+]
+
+#corollary(name: "Unitary Extension")[
+  $cal(F)$ extends uniquely to a linear isometry $U: L^2(bb(R)) -> L^2(bb(R))$; this extension is unitary, satisfies $U^2[f](x) = f(-x)$, and hence $U^4 = "id"$.
+] <cor:plancherel-unitary>
+
+#proof[
+  The space $L^1(bb(R)) ∩ L^2(bb(R))$ contains $cal(S)(bb(R))$ and is dense in $L^2(bb(R))$. On it $cal(F)$ is isometric by #link(<thm:plancherel>)[the theorem], so by the extension principle for uniformly continuous maps it extends uniquely to an isometry $U$ of $L^2(bb(R))$.
+
+  The image of $U$ contains $cal(F)(cal(S)(bb(R))) = cal(S)(bb(R))$ by #link(<cor:fourier-injective>)[invertibility on $cal(S)$], and $cal(S)$ is dense in $L^2$; an isometry whose image is dense is unitary.
+  Finally $U^2$ is the reflection $f |-> f(-x)$ on $cal(S)$ by #link(<cor:fourier-involution>)[involutivity], and both sides are continuous on $L^2$, so the identity extends.
+]
+
+#note[
+  This is exactly #link(<thm:parseval-identity>)[Parseval's identity] with the sum replaced by an integral. On the circle the family $(e^(i n x))_(n in bb(Z))$ is an orthonormal basis of $L^2(bb(T))$; on the line the role of the basis is played by the continuum $(e^(2 pi i xi x))_(xi in bb(R))$, and the $(1)/(2 pi)$ of the circle case is absorbed into the counting measure $dif xi$. This is the reason for the convention fixed in §3.1.
+]
+
+#example(name: "Norm invariance for the Gaussian")[
+  For $f(x) = e^(-pi x^2)$ one has $hat(f) = f$ by #link(<eq:gauss-fourier>)[the Gaussian identity], so #link(<thm:plancherel>)[Plancherel] reduces to the identity $|| f ||_2 = || f ||_2$.
+  For $f(x) = e^(-pi (x \/ sigma)^2)$ the scaling rule gives $hat(f)(xi) = sigma e^(-pi sigma^2 xi^2)$, and direct integration yields
+  $
+    || f ||_2^2 = integral_(-oo)^(oo) e^(-2 pi (x \/ sigma)^2) dif x = (sigma) / (sqrt(2)), quad || hat(f) ||_2^2 = sigma^2 integral_(-oo)^(oo) e^(-2 pi sigma^2 xi^2) dif xi = (sigma) / (sqrt(2)),
+  $
+  in agreement with the theorem.
+] <ex:plancherel-gauss>
+
+== Poisson Summation Formula // Poisson 求和公式
+
+Inversion relates $f$ to $hat(f)$ through an integral. The identity below relates the *periodization* of $f$ to the *sampling* of $hat(f)$, and through it the discrete and the continuous theories are glued together.
+
+#theorem(name: "Poisson Summation Formula")[
+  Let $f in cal(S)(bb(R))$. Then for every $x in bb(R)$
+  $
+    sum_(n in bb(Z)) f(x + n) = sum_(n in bb(Z)) hat(f)(n) e^(2 pi i n x),
+  $ <eq:poisson-summation>
+  both series converging absolutely and uniformly on $bb(R)$. In particular, at $x = 0$,
+  $
+    sum_(n in bb(Z)) f(n) = sum_(n in bb(Z)) hat(f)(n).
+  $
+] <thm:poisson-summation>
+
+#proof[
+  Since $f$ is Schwartz, $abs(f(x + n)) <= C \/ (1 + (x + n)^2)$ and the series defining
+  $
+    F(x) = sum_(n in bb(Z)) f(x + n)
+  $
+  converges uniformly on $bb(R)$, so $F$ is continuous, and it is clearly $1$-periodic. Differentiating termwise shows that $F in C^oo(bb(R))$.
+
+  Its Fourier coefficients are computed by cutting the integral into unit intervals and shifting each piece:
+  $
+    hat(F)(k) = integral_(0)^(1) ( sum_(n in bb(Z)) f(x + n) ) e^(-2 pi i k x) dif x = sum_(n in bb(Z)) integral_(n)^(n+1) f(t) e^(-2 pi i k t) dif t = hat(f)(k).
+  $
+  The interchange of sum and integral is legitimate by uniform convergence.
+
+  Two integrations by parts on $hat(F)(k) = hat(f)(k)$ show that $abs(hat(F)(k)) <= C \/ (1 + k^2)$, so the Fourier series of $F$ converges absolutely and uniformly, and by #link(<thm:fejer>)[Fejér's theorem] its Cesàro means converge uniformly to $F$; the two limits coincide, hence $F(x) = sum_k hat(f)(k) e^(2 pi i k x)$.
+]
+
+#corollary(name: "Sampling Theorem")[
+  Let $f in cal(S)(bb(R))$ have a transform supported in $[-1 / 2, 1 / 2]$. Then $f$ is determined by its values at the integers:
+  $
+    f(x) = sum_(n in bb(Z)) f(n) (sin(pi (x - n))) / (pi (x - n)), quad x in bb(R).
+  $
+] <cor:sampling>
+
+#note[
+  Apply #link(<thm:poisson-summation>)[the Poisson formula] to $hat(f)$, whose transform is $f(-x)$ by #link(<cor:fourier-involution>)[involutivity]. Since $hat(f)$ is supported in $[-1/2, 1/2]$, the periodization on the left is just $hat(f)(xi)$ for $xi$ in that interval, so
+  $
+    hat(f)(xi) = sum_(n in bb(Z)) f(-n) e^(2 pi i n xi), quad abs(xi) <= 1 / 2.
+  $
+  Inverting the series gives the displayed formula. In signal processing terms: a function whose spectrum vanishes above the frequency $1/2$ is completely determined by its samples taken at the integers, and the cardinal sine is the interpolation kernel.
+]
+
+== Heisenberg's Uncertainty Principle // 海森堡不确定性原理
+
+#link(<thm:plancherel>)[Plancherel] forbids a function and its transform to be sharply concentrated at the same time. The quantitative form of this exclusion is the last consequence of the transform developed here.
+
+#theorem(name: "Heisenberg's Uncertainty Principle")[
+  Let $f in cal(S)(bb(R))$ with $|| f ||_2 != 0$. Then
+  $
+    ( integral_(-oo)^(oo) x^2 abs(f(x))^2 dif x ) ( integral_(-oo)^(oo) xi^2 abs(hat(f)(xi))^2 dif xi ) >= (1) / (16 pi^2) ( integral_(-oo)^(oo) abs(f(x))^2 dif x )^2.
+  $ <eq:heisenberg>
+  Equality holds if and only if $f(x) = A e^(-a x^2)$ with $A in bb(C) without {0}$ and $a > 0$.
+] <thm:heisenberg>
+
+#proof[
+  By rule 5 of #link(<prop:fourier-transform-rules>)[the basic properties], $hat(f')(xi) = 2 pi i xi hat(f)(xi)$, so
+  $
+    integral_(-oo)^(oo) xi^2 abs(hat(f)(xi))^2 dif xi = (1) / (4 pi^2) integral_(-oo)^(oo) abs(hat(f')(xi))^2 dif xi = (1) / (4 pi^2) integral_(-oo)^(oo) abs(f'(x))^2 dif x,
+  $
+  the second equality being #link(<thm:plancherel>)[Plancherel]. It therefore suffices to prove
+  $
+    4 ( integral_(-oo)^(oo) x^2 abs(f(x))^2 dif x ) ( integral_(-oo)^(oo) abs(f'(x))^2 dif x ) >= ( integral_(-oo)^(oo) abs(f(x))^2 dif x )^2.
+  $
+
+  Since $f$ is Schwartz, an integration by parts against $x$ gives
+  $
+    integral_(-oo)^(oo) abs(f(x))^2 dif x = - integral_(-oo)^(oo) x (f'(x) overline(f(x)) + f(x) overline(f'(x))) dif x,
+  $
+  the boundary term vanishing. Taking absolute values and applying the Cauchy–Schwarz inequality in the form $abs(integral g h) <= || g ||_2 || h ||_2$ with $g(x) = x abs(f(x))$ and $h(x) = abs(f'(x))$,
+  $
+    integral_(-oo)^(oo) abs(f(x))^2 dif x <= 2 ( integral_(-oo)^(oo) x^2 abs(f(x))^2 dif x )^(1\/2) ( integral_(-oo)^(oo) abs(f'(x))^2 dif x )^(1\/2).
+  $
+  Squaring gives the claim.
+
+  For equality, both the integration by parts and the Cauchy–Schwarz step must be equalities, which forces $f' = -2 a x f$ for some $a > 0$, and hence $f(x) = A e^(-a x^2)$; conversely such a function gives equality by direct computation.
+]
+
+= Complements and Applications // 补充与应用
+
+== The Fourier Transform on $bb(R)^d$ // $bb(R)^d$ 上的 Fourier 变换
+// TODO：多元定义与张量积结构、旋转不变性与球对称函数的变换
+// Radon 变换与投影切片定理、波方程基本解（PDE 细节引用 EDP 笔记）
+
+== Paley-Wiener Theorem // Paley-Wiener 定理
+// TODO：紧支集函数的变换是指数型整函数；指数型整函数的刻画（复分析工具引用 Analyse Complexe）
+// 该定理已在 §4.1 的 note 中被引用，用于说明 Cal(F)(L^1) 不映满 C_0
+
+== Laplace Transform // 拉普拉斯变换
 Fourier transform requires the function to be integrable over the entire real line,
 which may not hold for functions that grow exponentially.
 To handle such functions, we introduce the Laplace transform, defined as follows.
+
+The two transforms are in fact one: writing $s = sigma + i omega$ and assuming $f$ is supported on $[0, +oo)$, the Laplace transform below is the Fourier transform of $t |-> f(t) e^(-sigma t)$ evaluated at the frequency $omega$. This is the precise sense in which the present section continues §3.1, and it is why #link(<eq:freq-dictionary>)[the angular convention] was recorded there.
+
 #definition(name: "Laplace Transform")[
   The *Laplace transform* of a function $f(t)$ defined for $t >= 0$ is given by
   $
@@ -1904,9 +2083,27 @@ Some common Laplace transforms are listed in the following table.
   supplement: [Tab.],
 ) <tab:laplace-transforms>
 
-== Fast Fourier Transform
+#part("Sobolev Spaces") // Sobolev 空间
 
-// Part III — Sobolev Spaces (Sobolev 空间): Chapter 6 has no content yet (placeholder).
+= Sobolev Spaces // Sobolev 空间
+
+The spaces treated in this part measure smoothness in $L^2$ through the decay of the Fourier transform: $f$ belongs to $H^s(bb(R))$ when $(1 + xi^2)^(s\/2) hat(f)(xi)$ is square integrable. This is precisely the point of view opened by #link(<thm:plancherel>)[Plancherel], and it is the reason why the chapter belongs to this note rather than to the PDE note, where Sobolev spaces are built from weak derivatives and where the general theory of $W^(k,p)$, the embedding theorems and the trace theorem are developed.
+
+// TODO（本章正文待补，结构见上方 Part III 蓝图）：
+//   6.1 定义与基本性质：H^s 的 Fourier 刻画、范数等价（弱导数定义引用 EDP）
+//   6.2 嵌入定理：H^s -> C^k 与紧嵌入（证明归属待裁决，可能与 EDP 重复）
+//   6.3 迹定理（同上）
+//   6.4 Poincaré 与 Friedrichs 不等式（与 Part I §2.3 的级数版本对照，避免重复陈述）
+//   6.5 插值与对偶：实/复插值、负指数 H^(-s)
+
+#part("Appendices") // 附录
+
+= Fast Fourier Transform // 快速 Fourier 变换
+// TODO（附录 A）：分治算法、复杂度 O(N log N)、与 EDP 笔记谱方法的关系
+// 数值算法不属于调和分析理论主体，故自原 §4.8 移出正文
+
+= Tables of Fourier and Laplace Transforms // Fourier 与 Laplace 变换表
+// TODO（附录 B）：常见 Fourier 变换对；Laplace 变换对（自 §5.3 的 tab:laplace-transforms 迁入）
 
 #bibliography("references.bib", title: "References", full: true)
 
