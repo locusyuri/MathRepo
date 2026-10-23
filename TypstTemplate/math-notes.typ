@@ -190,6 +190,10 @@
   ]
 }
 
+/// 数学 bold(xxx)：保持原生粗体字形映射，再以等宽字体渲染（仿 LaTeX \mathbb 观感）。
+/// 以顶层绑定遮蔽内置 math.bold，数学模式中的 bold(...) 会优先解析到此函数。
+#let bold(body) = math.mono(math.bold(body))
+
 /// Chapter 显示编号状态（供目录读取）
 #let chapter-num-state = state("chapter-num-state", 0)
 
@@ -1293,7 +1297,11 @@
   show link: it => {
     let d = it.dest
     if type(d) == label or type(d) == str {
-      text(fill: color-structure, style: "italic", underline(stroke: 0.5pt + color-structure.lighten(25%), offset: 2.5pt, it))
+      text(fill: color-structure, style: "italic", underline(
+        stroke: 0.5pt + color-structure.lighten(25%),
+        offset: 2.5pt,
+        it,
+      ))
     } else {
       it
     }
