@@ -144,11 +144,14 @@
 //   Section 3.1: From Periodic to Non-Periodic (从周期函数到非周期函数)
 //     - 从 Fourier 级数到 Fourier 变换的极限过程（启发式推导，作为动机而非证明）
 //     - Fourier 变换与逆变换的定义
-//     - 频率约定的统一：hat(f)(xi) = ∫ f(x) e^(-2pi i xi x) dx 与 hat(f)(omega) = ∫ f(x) e^(-i omega x) dx 的换算
+//     - 频率约定（已定）：采用 xi 约定 hat(f)(xi) = ∫ f(x) e^(-2pi i xi x) dx，逆变换无前置系数；
+//       另设换算字典 omega = 2 pi xi，供 §5.3 Laplace 的 s = sigma + i omega 复用
+//     - 归一化陷阱：F[f](0) = ∫ f，与级数的 (1)/(2 pi) 约定不同（#caution）
 //     - 注：Poisson 求和公式后移至 §4.3（它是反演的推论，不能作为入口）
 
 //   Section 3.2: Schwartz Space and Tempered Distributions (速降空间与缓增分布)
-//     - Schwartz 空间 S(R) 的定义与半范数族（Fréchet 结构）
+//     - Schwartz 空间 S(R) 的定义与半范数族（Fréchet 结构）；完整写一维版，
+//       并注明与 EDP 的 <def:test-fn-space-S>（n 维测试函数版）一致，不重复多指标部分
 //     - S(R) 对微分、乘多项式的封闭性
 //     - 缓增分布 S'(R) 的定义与基本运算（最小片段；一般分布论参见 EDP 笔记）
 //     - 注：S'(R) 仅为 §3.3-§4.2 中"Fourier 变换可延拓"的表述服务
@@ -1454,110 +1457,170 @@ Fourier analysis also decides when a sequence fills an interval evenly.
   whence the averages tend to zero for every $k != 0$, and Weyl's criterion applies.
 ]
 
+The convergence theory developed so far is conditional: it asks for regularity, monotonicity or bounded variation of $f$. The following theorem removes every hypothesis.
+
+#theorem(name: "Carleson–Hunt Theorem")[
+  Let $f in L^p(bb(T))$ with $1 < p <= +oo$. Then the Fourier series of $f$ converges to $f$ almost everywhere on $bb(T)$.
+] <thm:carleson-hunt>
+
+In particular the Fourier series of every $L^2$ function converges almost everywhere, although it need not converge uniformly or even at every point. This is the sharp endpoint of the theory: no condition on $f$ beyond integrability of some power is required.
+The proof is far outside the scope of this note — it rests on time-frequency decompositions and on $L^2$ weighted estimates for the maximal Carleson operator — so the statement is recorded for reference only. Carleson proved the $L^2$ case in 1966 and Hunt extended it to $L^p$, $1 < p < +oo$, in 1968.
+The hypothesis $p > 1$ cannot be lowered: Kolmogorov constructed an $L^1$ function whose Fourier series diverges almost everywhere.
+
 #part("Fourier Transform and Modern Theory") // Fourier 变换与现代理论
 
-= Modern Fourier Analysis
-== $L^1$ Space
+= The Fourier Transform on $bb(R)$ // 实轴上的 Fourier 变换
 
+== From Periodic to Non-Periodic // 从周期函数到非周期函数
 
-== $L^2$ Space
+Every function considered in Part I was periodic, so its spectrum was a discrete family $(hat(f)(n))_(n in bb(Z))$. Dropping periodicity should replace that family by a function of a continuous frequency variable. The following computation is the heuristic that performs the replacement; the rigorous statement is the *Fourier Inversion Theorem* of §3.4.
 
+Let $f$ have period $2T$. By #link(<def:fourier-coefficients>)[the Euler–Fourier formula] in the form given in §1.2,
+$
+  f(x) ~ sum_(n in bb(Z)) hat(f)_T(n) e^(i n (pi) / (T) x), quad hat(f)_T(n) = (1) / (2T) integral_(-T)^(T) f(t) e^(-i n (pi) / (T) t) dif t.
+$
+Put $xi_n = n / (2T)$, so that the exponentials read $e^(2 pi i xi_n x)$ and the spacing of consecutive frequencies is
+$
+  Delta xi = xi_(n+1) - xi_n = (1) / (2T).
+$
+Then
+$
+  f(x) ~ sum_(n in bb(Z)) ( integral_(-T)^(T) f(t) e^(-2 pi i xi_n t) dif t ) e^(2 pi i xi_n x) Delta xi,
+$
+which is a Riemann sum, over the grid $(xi_n)$, for the function
+$
+  xi |-> ( integral_(-oo)^(oo) f(t) e^(-2 pi i xi t) dif t ) e^(2 pi i xi x).
+$
+Letting $T -> +oo$ sends $Delta xi -> 0$ and the sum to the integral of that function:
+$
+  f(x) = integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) e^(-2 pi i xi t) dif t ) e^(2 pi i xi x) dif xi.
+$
 
-== Convergence Theory in $L^2$ Space
-#theorem(name: "Carleson-Hunt Theorem")[
-  If $f in L^2(bb(T))$, then the Fourier series of $f$ converges to $f$ almost everywhere.
+#caution[
+  This is only a formal derivation. Three limits are taken without justification: the expanding interval $[-T, T]$ is replaced by $bb(R)$, the Riemann sum is replaced by an integral of a function that need not be integrable, and the two integrations are interchanged. The identity it suggests is true, but it has to be proved, and the proof is the content of §3.4.
 ]
 
-= Fourier Transform
-== Introduction to Fourier Transform
-=== From Periodic to Non-Periodic Functions
+#definition(name: "Fourier Transform")[
+  Let $f$ be absolutely integrable on $bb(R)$. Its *Fourier transform* is the function
+  $
+    hat(f)(xi) = cal(F)[f](xi) = integral_(-oo)^(oo) f(x) e^(-2 pi i xi x) dif x, quad xi in bb(R).
+  $ <eq:fourier-transform>
+  Whenever the integral below converges, the *inverse Fourier transform* of $g$ is
+  $
+    cal(F)^(-1)[g](x) = integral_(-oo)^(oo) g(xi) e^(2 pi i xi x) dif xi, quad x in bb(R).
+  $ <eq:inverse-fourier-transform>
+] <def:fourier-transform>
 
-Until now, we have only discussed Fourier series for periodic functions.
-To extend the idea of Fourier series to non-periodic functions,
-we consider the limit as the period $T -> oo$.
-In this limit, the discrete frequencies of the Fourier series become continuous,
-leading to the definition of the Fourier transform.
+The variable $xi$ is the *frequency*: it counts the number of oscillations per unit length, and $e^(2 pi i xi x)$ has period $1 \/ xi$. Thus $hat(f)(xi)$ measures how much of $f$ oscillates at that rate. Under this convention no constant appears in front of either integral; the price is the factor $2 pi$ hidden in the exponent.
 
-For a function $f(x)$ with period $T$, its Fourier series representation is given by
-$
-  f_(T)(x) = sum_(n=-oo)^(oo) [ (1) / (2T) integral_(-T)^(T) f(x) e^(-i (pi n) / (T) x) dif x ] ,
-  e^(i (pi n) / (T) x). ,
-$
-Define the frequency variable $omega_n = (n) / (2T)$,
-and the frequency increment $Delta omega = omega_(n+1) - omega_n = (1) / (2T)$.
-Then we can rewrite the Fourier series as
-$
-  f_(T)(x) = sum_(n=-oo)^(oo) [ integral_(-T)^(T) f(x) e^(-i 2 pi omega_n x) dif x ] ,
-  e^(i 2 pi omega_n x) Delta omega. ,
-$
-Let $T -> oo$, we have $Delta omega -> 0$ and the sum becomes an integral:
-$
-  f(x) = integral_(-oo)^(oo) [ integral_(-oo)^(oo) f(t) e^(-i 2 pi omega t) dif t ] ,
-  e^(i 2 pi omega x) dif omega. ,
-$
-Naturally, we define the Fourier transform and its inverse as follows.
-#definition(name: "Fourier Transform and Inverse Fourier Transform")[
-  The *Fourier transform* of a function $f(x)$ is defined as
-  $
-    hat(f)(omega) = cal(F)[f](omega) = integral_(-oo)^(oo) f(x) e^(-i omega x) dif x.
-  $
-  The *inverse Fourier transform* is given by
-  $
-    f(x) = cal(F)^(-1)[hat(f)](x) = (1) / (2pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega.
-  $
-]
-#note[
-  The definition of $omega_n$ above leads to the difference of $2pi$ in the exponent compared to the classical definition.
+#caution[
+  Several normalizations circulate in the literature, and a formula copied from a source that uses another one is false as it stands. The three common choices are: no constant in either direction (used here), $1 \/ sqrt(2 pi)$ in both directions (unitary, but with $e^(plus.minus i omega x)$), and $1$ forward with $1 \/ (2 pi)$ backward (the *angular* convention below). Conversion is mechanical once the frequency variable is matched, see #link(<eq:freq-dictionary>)[the dictionary].
 ]
 
-=== Poisson Summation Formula
+#note(title: "Angular frequency")[
+  Writing $omega = 2 pi xi$, so that $e^(2 pi i xi x) = e^(i omega x)$, the same transform reads
+  $
+    hat(f)_(omega)(omega) = hat(f)(omega / (2 pi)) = integral_(-oo)^(oo) f(x) e^(-i omega x) dif x,
+  $
+  and the inverse formula carries the factor $1 \/ (2 pi)$:
+  $
+    f(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)_(omega)(omega) e^(i omega x) dif omega.
+  $ <eq:freq-dictionary>
+  The angular variable is the natural one for the Laplace transform in §5.3, where $s = sigma + i omega$; both conventions are recorded so that the two chapters can be read side by side.
+]
 
+#example(name: "Fourier transform of the box function")[
+  Let $f = bold(1)_([-a, a])$ with $a > 0$. For $xi != 0$,
+  $
+    hat(f)(xi) = integral_(-a)^(a) e^(-2 pi i xi x) dif x = (e^(2 pi i xi a) - e^(-2 pi i xi a)) / (2 pi i xi) = (sin(2 pi a xi)) / (pi xi),
+  $
+  while $hat(f)(0) = 2a$. The transform is continuous and decays like $1 \/ abs(xi)$, so it is _not_ absolutely integrable on $bb(R)$: already for this harmless $f$ the inversion formula cannot be justified by an absolutely convergent integral. This is the obstruction taken up in §4.1.
+] <ex:box-fourier>
 
-== Schwartz Space
+== Schwartz Space and Tempered Distributions // 速降空间与缓增分布
+
+The definition of the Fourier transform asks only for absolute integrability, and #link(<ex:box-fourier>)[the box function] already shows that the transform of an integrable function need not be integrable. A proof of inversion therefore needs a space in which differentiation, multiplication by polynomials and the Fourier transform itself act without leaving the space. That space is the Schwartz space: it trades generality for total stability.
+
+#definition(name: "Schwartz Seminorms")[
+  For $phi in C^oo(bb(R))$ and integers $m, n >= 0$ put
+  $
+    || phi ||_((m, n)) = sup_(x in bb(R)) abs(x^m phi^((n))(x)).
+  $ <eq:schwartz-seminorm>
+  Each $|| dot ||_((m, n))$ is a seminorm on the space of smooth functions: homogeneous and subadditive, but vanishing on every function supported away from the origin when $m >= 1$. No single one of them is a norm.
+] <def:schwartz-seminorms>
+
 #definition(name: "Schwartz Space")[
-  The *Schwartz space* $cal(S)(bb(R))$ is the set of
-  all infinitely differentiable functions $f: bb(R) -> bb(C)$
-  such that for every pair of non-negative integers $m, n$,
+  The *Schwartz space* $cal(S)(bb(R))$ is the set of $phi in C^oo(bb(R))$ such that
   $
-    sup_(x in bb(R)) abs(x^m f^((n))(x)) < oo.
+    || phi ||_((m, n)) < oo quad "for every" m, n >= 0.
   $
-  In other words, functions in $cal(S)(bb(R))$ and
-  all their derivatives decay faster than any polynomial as $abs(x) -> oo$.
+  In words: $phi$ and each of its derivatives decay faster than the reciprocal of any polynomial at infinity.
+
+  A sequence $(phi_j)$ converges to $phi$ in $cal(S)(bb(R))$ if $|| phi_j - phi ||_((m, n)) -> 0$ for every pair $(m, n)$;
+  the space is endowed with the topology defined by the whole family of seminorms. With this topology $cal(S)(bb(R))$ is a Fréchet space, and it contains $cal(D)(bb(R))$ as a dense subspace.
+] <def:schwartz-space>
+
+#note[
+  This is the one-dimensional case of the space introduced in the Équations aux Dérivées Partielles note as the *Schwartz space* $cal(S)(bb(R)^n)$, where the definition is stated with multi-indices on $bb(R)^n$.
+  Only the case $n = 1$ is needed here, and the seminorm family above is the extra structure that the Fourier transform requires; the multi-index version is not repeated.
 ]
 
-== Basic Properties
-#property[
-  1. *Linearity.* For any functions $f, g in cal(S)(bb(R))$ and scalars $a, b in bb(C)$,
-    $
-      cal(F)[a f + b g] = a cal(F)[f] + b cal(F)[g].
-    $
+The stability of $cal(S)$ is what makes it usable.
 
-  2. *Translation.* For any function $f in cal(S)(bb(R))$ and $x_0 in bb(R)$,
-    $
-      cal(F)[f(x - x_0)](omega) = e^(-i omega x_0) hat(f)(omega).
-    $
+#proposition(name: "Closure Properties of the Schwartz Space")[
+  Let $phi, psi in cal(S)(bb(R))$. Then:
+  1. *Differentiation.* $phi' in cal(S)(bb(R))$, and $D: cal(S) -> cal(S)$ is continuous.
+  2. *Multiplication.* $x phi in cal(S)(bb(R))$, and the map $phi |-> x phi$ is continuous.
+  3. *Multiplication by functions of moderate growth.* If $a in C^oo(bb(R))$ has all derivatives of polynomial growth, then $a phi in cal(S)(bb(R))$.
+  4. *Products.* $phi psi in cal(S)(bb(R))$; in particular $cal(S)$ is an algebra.
+  5. *Integrability.* $cal(S)(bb(R)) subset L^1(bb(R))$, so that the Fourier transform of every Schwartz function is defined.
+] <prop:schwartz-stability>
 
-  3. *Scaling.* For any function $f in cal(S)(bb(R))$ and $a in bb(R) backslash {0}$,
-    $
-      cal(F)[f(a x)](omega) = (1) / (abs(a)) hat(f)( (omega) / (a) ).
-    $
-
-  4. *Differentiation.* For any function $f in cal(S)(bb(R))$,
-    $
-      cal(F)[ (dif^n f) / (dif x^n) ](omega) = (i omega)^n hat(f)(omega).
-    $
-
-  5. *Integration.*
+#proof[
+  Statements 1, 2 and 4 are immediate from the Leibniz rule: each seminorm of a derivative or of a product is controlled by finitely many seminorms of the factors, which is exactly continuity.
+  For 3, $D^n(a phi) = sum_(k=0)^(n) binom(n, k) D^(n-k)(a) D^k(phi)$ and $abs(x^m D^(n-k) a(x))$ is bounded by hypothesis, so $|| a phi ||_((m, n))$ is bounded by a finite sum of seminorms of $phi$.
+  For 5, $abs(phi(x)) <= || phi ||_((2, 0)) / (1 + x^2)$ and $x |-> 1 \/ (1 + x^2)$ is integrable.
 ]
 
+#definition(name: "Tempered Distribution")[
+  A *tempered distribution* on $bb(R)$ is a linear functional $T: cal(S)(bb(R)) -> bb(C)$ that is continuous for the topology above: $phi_j -> phi$ in $cal(S)$ implies $T(phi_j) -> T(phi)$.
+  The space of all tempered distributions is denoted $cal(S)' (bb(R))$, and the value of $T$ at $phi$ is written $⟨ T, phi ⟩$.
+] <def:tempered-distribution>
 
+#note[
+  A general distribution is a continuous functional on $cal(D)(Omega)$; its definition and the duality pairing $⟨ T, phi ⟩$ are given in the Équations aux Dérivées Partielles note (see its chapter on distributions).
+  Since $cal(D) subset cal(S)$ with a finer topology on $cal(S)$, every tempered distribution is a distribution, $cal(S)'(bb(R)) subset cal(D)'(bb(R))$; the converse fails, and $x |-> e^(x^2)$ is the standard example of a distribution that is not tempered.
+  Every function of polynomial growth acts on $cal(S)$ by integration against it, so $L^p(bb(R)) subset cal(S)'(bb(R))$ for every $p in [1, +oo]$.
+]
 
-=== Convolution
+Tempered distributions are exactly the class on which the Fourier transform extends by duality, which is the reason for introducing them at this point; the extension itself is stated in §3.3.
 
+== Basic Properties of the Fourier Transform // Fourier 变换的基本性质
+// TODO 按大纲撰写（旧稿此处使用 omega 约定且缺项，重写时统一为 xi 约定）：
+//   prop:fourier-transform-rules —— 线性、平移与调制成对、缩放、微分与乘子对偶、共轭
+//   thm:convolution-R —— 卷积定理（复用 @def:convolution，R 上无归一化）
+//   prop:schwartz-stability 的补充：F: S -> S 连续、F^4 = id、F^2 为反射
+//   prop:fourier-tempered —— 由转置把 F 延拓到 S'(R)（兑现 §3.2 的预告）
 
-== Fourier Inversion Theorem
+== Fourier Inversion Theorem // Fourier 反演定理
+// TODO 按大纲撰写：
+//   def:gauss-kernel、prop:gauss-fourier-transform（e^(-pi x^2) 自对偶）
+//   lem:gauss-approximation（正性/归一/集中，与 @prop:fejer-properties 平行）
+//   thm:fourier-inversion（Fubini + 高斯截断）、cor:fourier-injective、cor:fourier-inversion-L1
 
-== The Dichotomy
+= L¹, L² and the Plancherel Theorem // L¹、L² 与 Plancherel 定理
+
+== The Fourier Transform on $L^1$ // $L^1$ 上的 Fourier 变换
+// TODO：lem:riemann-lebesgue-transform（变换版）、值域不闭、L¹ 上的反演条件
+// 旧稿的 == $L^1$ Space 已撤销，内容并入本节
+
+== Plancherel Theorem // Plancherel 定理
+// TODO：L¹ ∩ L² 上的等距 -> 稠密性延拓 -> 酉性；与 @thm:parseval-identity 的对应
+// 原 "The Dichotomy" 一分为二：本节与上一节
+
+== Poisson Summation Formula // Poisson 求和公式
+// TODO：由 @thm:fourier-inversion 周期化推出；抽样定理作为推论
+// 原为 §3.1 的子节，因依赖反演定理而后移至此
 
 == Heisenberg's Uncertainty Principle
 
