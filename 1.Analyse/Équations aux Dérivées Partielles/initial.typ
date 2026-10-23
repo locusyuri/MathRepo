@@ -286,7 +286,7 @@ Physical derivation: For small amplitude waves in an elastic medium, consider th
 $
   rho (partial^2 u) / (partial t^2) = nabla dot (a^2 rho nabla u) + F,
 $
-where $rho$ is density, $a$ is the wave speed, and $F$ is the external force. This simplifies to $u_(t t) - a^2 Delta u = f$ after rescaling. A full derivation — the vibrating string via Newton's second law and acoustic waves via conservation of momentum — is given in Chapter 4.
+where $rho$ is density, $a$ is the wave speed, and $F$ is the external force. This simplifies to $u_(t t) - a^2 Delta u = f$ after rescaling. A full derivation — the vibrating string via Newton's second law and acoustic waves via conservation of momentum — is given in *Derivation of the Wave Equation and the Cauchy Problem*.
 
 #example(name: "Identifying PDE Properties")[
   Consider the following equations:
@@ -477,7 +477,7 @@ The third condition (stability) is particularly important: small changes in the 
   $
     sup_(t in [0, T]) norm(u(dot, t))_(L^2(Omega)) <= norm(g)_(L^2(Omega)) + integral_0^T norm(f(dot, s))_(L^2(Omega)) dif s.
   $
-  This stands in sharp contrast to the backward heat equation (#link(<ex:backward-heat-ill-posed>)[Example above]), where the same estimate fails catastrophically. The full proof requires energy methods developed in Chapter 5.
+  This stands in sharp contrast to the backward heat equation (#link(<ex:backward-heat-ill-posed>)[Example above]), where the same estimate fails catastrophically. The full proof requires energy methods developed in *Energy Estimates and Smoothing Effect*.
 ] <prop:heat-well-posed>
 
 #caution(title: "Importance of Well-Posedness")[
@@ -557,7 +557,7 @@ The projection of the characteristic curve onto the $(x, y)$-plane (determined b
 ] <ex:transport-equation>
 
 #note[
-  The transport equation is closely related to the wave equation #link(<def:wave-equation>)[Ch 1]: it is the simplest hyperbolic PDE and serves as a building block for understanding wave propagation; the classification of Ch 3 makes this precise.
+  The transport equation is closely related to the wave equation #link(<def:wave-equation>)[*Basic Concepts and Examples*]: it is the simplest hyperbolic PDE and serves as a building block for understanding wave propagation; *Classification of Second-Order PDEs* makes this precise.
 ]
 
 The example above illustrates the general strategy: (1) write down the characteristic equations (#link(<eq:char-system>)[*Method of Characteristics*]); (2) solve the ODE system; (3) use the initial data to determine the solution. We formalize this procedure in *Method of Characteristics*.
@@ -668,7 +668,7 @@ Even when the initial data is smooth, the solution of a _quasilinear_ (nonlinear
 ] <ex:burgers-shock>
 
 #note[
-  After the breaking time $t^"break"$, the solution must be continued as a _weak solution_ that admits discontinuities (shocks). The theory of weak solutions and shock conditions is developed in Ch 16.
+  After the breaking time $t^"break"$, the solution must be continued as a _weak solution_ that admits discontinuities (shocks). The theory of weak solutions and shock conditions is developed in *Conservation Laws in One Space Dimension*.
 ]
 
 #note[
@@ -691,7 +691,7 @@ Even when the initial data is smooth, the solution of a _quasilinear_ (nonlinear
 
 = Classification of Second-Order PDEs // 二阶偏微分方程分类
 
-The three model equations introduced in #link(<def:laplace-equation>)[Ch 1] — Laplace, heat, and wave — exhibit fundamentally different solution behaviors: harmonic functions are smooth, heat flow is irreversible, and waves propagate at finite speed. This chapter reveals the algebraic invariant behind this trichotomy: the _principal symbol_ of the second-order operator determines the equation type, which in turn governs the geometry of _characteristic surfaces_ and the canonical form to which the equation can be reduced.
+The three model equations introduced in #link(<def:laplace-equation>)[*Basic Concepts and Examples*] — Laplace, heat, and wave — exhibit fundamentally different solution behaviors: harmonic functions are smooth, heat flow is irreversible, and waves propagate at finite speed. This chapter reveals the algebraic invariant behind this trichotomy: the _principal symbol_ of the second-order operator determines the equation type, which in turn governs the geometry of _characteristic surfaces_ and the canonical form to which the equation can be reduced.
 
 == Linear Second-Order Equations // 线性二阶方程
 
@@ -816,7 +816,7 @@ The connection to characteristic surfaces (#link(<def:char-surface>)[*Linear Sec
 - _Hyperbolic_: two distinct families of characteristic curves (wave-like propagation)
 
 #example(name: "Classification of Model Equations")[
-  We classify the three model equations from #link(<def:laplace-equation>)[Ch 1] using #link(<def:pde-type-2d>)[Definition above].
+  We classify the three model equations from #link(<def:laplace-equation>)[*Basic Concepts and Examples*] using #link(<def:pde-type-2d>)[Definition above].
 
   *Laplace equation* $u_(x x) + u_(y y) = 0$: Here $a = 1$, $b = 0$, $c = 1$, so $Delta = 0 - 1 = -1 < 0$. The Laplace equation is _elliptic_ everywhere.
 
@@ -888,7 +888,7 @@ $
 ]
 
 #example(name: "Wave Equation in Canonical Form")[
-  The wave equation $u_(t t) - a^2 u_(x x) = 0$ from #link(<def:wave-equation>)[Ch 1] has $a_"coeff" = -a^2$, $b = 0$, $c_"coeff" = 1$ (with variables $(x, t)$), so $Delta = a^2 > 0$. The characteristic ODE gives:
+  The wave equation $u_(t t) - a^2 u_(x x) = 0$ from #link(<def:wave-equation>)[*Basic Concepts and Examples*] has $a_"coeff" = -a^2$, $b = 0$, $c_"coeff" = 1$ (with variables $(x, t)$), so $Delta = a^2 > 0$. The characteristic ODE gives:
   $
     -a^2 (d t)^2 + (d x)^2 = 0 quad => quad x +- a t = text("const").
   $
@@ -910,7 +910,7 @@ When $Delta = 0$, the characteristic ODE has a single repeated family of solutio
 The proof follows the same chain-rule computation: since $Delta = 0$, the two characteristic families coincide, so both the $u_(xi xi)$ and $u_(xi eta)$ coefficients vanish, leaving only $u_(eta eta)$.
 
 #example(name: "Heat Equation in Canonical Form")[
-  The heat equation $u_t = kappa u_(x x)$ from #link(<def:heat-equation>)[Ch 1] has $a = -kappa$, $b = 0$, $c_"coeff" = 0$ (with variables $(x, t)$), so $Delta = 0$. The characteristic ODE gives $-kappa (d t)^2 = 0$, so $t = text("const")$ is the single characteristic family. Setting $xi = t$ and $eta = x$, the equation is already in canonical form #link(<eq:canonical-parabolic>)[(9)]:
+  The heat equation $u_t = kappa u_(x x)$ from #link(<def:heat-equation>)[*Basic Concepts and Examples*] has $a = -kappa$, $b = 0$, $c_"coeff" = 0$ (with variables $(x, t)$), so $Delta = 0$. The characteristic ODE gives $-kappa (d t)^2 = 0$, so $t = text("const")$ is the single characteristic family. Setting $xi = t$ and $eta = x$, the equation is already in canonical form #link(<eq:canonical-parabolic>)[(9)]:
   $
     u_(eta eta) = (1) / (kappa) u_xi.
   $
@@ -936,7 +936,7 @@ $
 ]
 
 #example(name: "Laplace Equation in Canonical Form")[
-  The Laplace equation $u_(x x) + u_(y y) = 0$ from #link(<def:laplace-equation>)[Ch 1] has $a = 1$, $b = 0$, $c = 1$, so $Delta = -1 < 0$. The characteristic ODE gives:
+  The Laplace equation $u_(x x) + u_(y y) = 0$ from #link(<def:laplace-equation>)[*Basic Concepts and Examples*] has $a = 1$, $b = 0$, $c = 1$, so $Delta = -1 < 0$. The characteristic ODE gives:
   $
     (d y)^2 + (d x)^2 = 0 quad => quad y +- i x = text("const").
   $
@@ -1949,7 +1949,7 @@ The wave equation and the heat equation of the next chapter draw the two halves 
 
 = The Heat Equation // 热方程
 
-The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), is the prototypical parabolic equation. Its fundamental solution — the heat kernel — was constructed in Chapter 8 (#link(<ex:fund-heat>)[*Fundamental Solutions*]); this chapter develops the classical theory of the initial value problem: the Cauchy problem, the maximum principle, and the energy estimates. Two features distinguish parabolic equations from hyperbolic ones (Ch 4): *regularization* — arbitrary rough data become $C^oo$ instantly — and *irreversibility* — the backward problem is ill-posed.
+The heat equation, introduced in #link(<def:heat-equation>)[*Basic Concepts and Examples*], is the prototypical parabolic equation. Its fundamental solution — the heat kernel — was constructed in #link(<ex:fund-heat>)[*Fundamental Solutions*]; this chapter develops the classical theory of the initial value problem: the Cauchy problem, the maximum principle, and the energy estimates. Two features distinguish parabolic equations from hyperbolic ones (*Wave Equation*): *regularization* — arbitrary rough data become $C^oo$ instantly — and *irreversibility* — the backward problem is ill-posed.
 
 == Heat Kernel and Fundamental Solution // 热核与基本解
 
@@ -1958,7 +1958,7 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
   $
     E (t, x) = cases(1 / (4 pi t)^(n/2) exp(-abs(x)^2 / (4 t)) "if" t > 0, 0 "if" t <= 0.)
   $
-  It is the fundamental solution of the heat operator (Chapter 8, #link(<ex:fund-heat>)[*Fundamental Solutions*]): $(partial_t - Delta_x) E = delta$ in $cal(D)'(bb(R)^(1+n))$.
+  It is the fundamental solution of the heat operator (#link(<ex:fund-heat>)[*Fundamental Solutions*]): $(partial_t - Delta_x) E = delta$ in $cal(D)'(bb(R)^(1+n))$.
 ] <def:heat-kernel>
 
 #proposition(name: "Basic Properties of the Heat Kernel")[
@@ -1970,7 +1970,7 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
 ] <prop:heat-kernel-properties>
 
 #proof[
-  (i) and (iii) are direct computations with the Gaussian, already carried out in Chapter 8 (#link(<ex:fund-heat>)[*Fundamental Solutions*]). For (ii), use the one-dimensional Gaussian integral $integral_(-oo)^oo e^(-s^2) dif s = sqrt(pi)$:
+  (i) and (iii) are direct computations with the Gaussian, already carried out in #link(<ex:fund-heat>)[*Fundamental Solutions*]. For (ii), use the one-dimensional Gaussian integral $integral_(-oo)^oo e^(-s^2) dif s = sqrt(pi)$:
   $
     integral_(bb(R)^n) E (t, x) dif x = 1 / (4 pi t)^(n/2) product_(i=1)^n integral_(-oo)^oo exp(-x_i^2 / (4 t)) dif x_i = 1 / (4 pi t)^(n/2) (sqrt(4 pi t))^n = 1.
   $
@@ -1996,11 +1996,11 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
 ] <thm:cauchy-heat>
 
 #proof[
-  For each fixed $t > 0$, $E (t, dot) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of the heat kernel properties gives $(partial_t - Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E (t, dot)}_(t > 0)$ is an approximate identity; the standard mollifier argument (Chapter 8, #link(<def:mollifier>)[*Convolution and Approximation*]) gives $u (dot, t) = E (t, dot) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
+  For each fixed $t > 0$, $E (t, dot) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of the heat kernel properties gives $(partial_t - Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E (t, dot)}_(t > 0)$ is an approximate identity; the standard mollifier argument (#link(<def:mollifier>)[*Convolution and Approximation*]) gives $u (dot, t) = E (t, dot) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
 ]
 
 #note(title: "Smoothing effect")[
-  No regularity of $g$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$, and by the derivative estimates of Chapter 5 the derivatives decay as $t^(-abs(alpha)/2)$ (quantified in *Smoothing Effect*). This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation (Ch 4), which propagates the regularity of the data without improvement.
+  No regularity of $g$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$, and by the derivative estimates of *Energy Estimates and Smoothing Effect* the derivatives decay as $t^(-abs(alpha)/2)$ (quantified in *Smoothing Effect*). This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation of the previous chapter, which propagates the regularity of the data without improvement.
 ]
 
 == Maximum Principle // 最大值原理
@@ -2082,12 +2082,12 @@ The heat equation, introduced in Chapter 1 (#link(<def:heat-equation>)[Ch 1]), i
 ]
 
 #note[
-  The smoothing effect is irreversible. The backward heat equation is ill-posed, as already noted in Chapter 1 (#link(<ex:backward-heat-ill-posed>)[*Well-Posedness*]): the estimates above all blow up as $t -> 0^+$, and no bounded backward solution exists for general data. This asymmetry — regularization forward, instability backward — is characteristic of parabolic equations and underlies the arrow of time in diffusion processes.
+  The smoothing effect is irreversible. The backward heat equation is ill-posed, as already noted in #link(<ex:backward-heat-ill-posed>)[*Well-Posedness*]: the estimates above all blow up as $t -> 0^+$, and no bounded backward solution exists for general data. This asymmetry — regularization forward, instability backward — is characteristic of parabolic equations and underlies the arrow of time in diffusion processes.
 ]
 
 = Laplace's Equation and Harmonic Functions // 拉普拉斯方程与调和函数
 
-The Laplace equation, introduced in Chapter 1 (#link(<def:laplace-equation>)[Ch 1]), is the prototypical elliptic equation. Its solutions — the *harmonic functions* — form the smoothest and most rigid class of objects in PDE theory: they are $C^oo$ wherever defined, enjoy the mean value property and the maximum principle, and their theory provides the blueprint for the general elliptic theory developed in this Part.
+The Laplace equation, introduced in #link(<def:laplace-equation>)[*Basic Concepts and Examples*], is the prototypical elliptic equation. Its solutions — the *harmonic functions* — form the smoothest and most rigid class of objects in PDE theory: they are $C^oo$ wherever defined, enjoy the mean value property and the maximum principle, and their theory provides the blueprint for the general elliptic theory developed in this Part.
 
 == Laplace's and Poisson's Equations // 拉普拉斯方程与泊松方程
 
@@ -2106,7 +2106,7 @@ The Laplace equation, introduced in Chapter 1 (#link(<def:laplace-equation>)[Ch 
 #note(title: "Physical origins")[
   The Laplacian measures the local deviation of $u$ from its mean, so $Delta u = 0$ describes equilibrium configurations: the electrostatic potential in a charge-free region, the gravitational potential in empty space, and the steady-state temperature distribution. The Poisson equation $-Delta u = f$ incorporates sources (charge density, heat sources).
 
-  Linearity and ellipticity. Both equations are linear with constant coefficients, so linear combinations of solutions are again solutions (Chapter 1, #link(<def:pde-linearity-classification>)[*Basic Concepts and Examples*]). By the classification of Chapter 3, $Delta$ is the canonical *elliptic* operator: its principal symbol $abs(xi)^2$ is positive definite, and no characteristic surfaces exist in $bb(R)^n$.
+  Linearity and ellipticity. Both equations are linear with constant coefficients, so linear combinations of solutions are again solutions (#link(<def:pde-linearity-classification>)[*Basic Concepts and Examples*]). By *Classification of Second-Order PDEs*, $Delta$ is the canonical *elliptic* operator: its principal symbol $abs(xi)^2$ is positive definite, and no characteristic surfaces exist in $bb(R)^n$.
 ]
 
 #proposition(name: "Invariance Properties of the Laplacian")[
@@ -2180,7 +2180,7 @@ The mean value property is the fundamental structural feature of harmonic functi
 ] <cor:mean-value-converse>
 
 #proof[
-  Let $rho_epsilon$ be the standard mollifier (Chapter 8, #link(<def:mollifier>)[*Convolution and Approximation*]) and set $u_epsilon = u * rho_epsilon$ on $Omega_epsilon = {x in Omega : "dist"(x, partial Omega) > epsilon}$. Since mollification averages $u$ against a smooth kernel, the mean value property passes to $u_epsilon$: for $B (x, r) subset Omega_epsilon$,
+  Let $rho_epsilon$ be the standard mollifier (#link(<def:mollifier>)[*Convolution and Approximation*]) and set $u_epsilon = u * rho_epsilon$ on $Omega_epsilon = {x in Omega : "dist"(x, partial Omega) > epsilon}$. Since mollification averages $u$ against a smooth kernel, the mean value property passes to $u_epsilon$: for $B (x, r) subset Omega_epsilon$,
   $
     u_epsilon (x) = 1 / (abs(B (x, r))) integral_(B (x, r)) u_epsilon dif y.
   $
@@ -2190,7 +2190,7 @@ The mean value property is the fundamental structural feature of harmonic functi
   $
   for every $r$. Dividing by $abs(B (x, r)) = omega_n r^n / n$ and letting $r -> 0^+$, the continuity of $Delta u_epsilon$ gives $Delta u_epsilon (x) = 0$. Thus each $u_epsilon$ is harmonic on $Omega_epsilon$.
 
-  Now $u_epsilon -> u$ locally uniformly on $Omega$ (Chapter 8). By the derivative estimates above, $D^alpha u_epsilon$ converges locally uniformly to a continuous function, and $Delta u = lim_(epsilon -> 0) Delta u_epsilon = 0$. Hence $u in C^oo (Omega)$ and $u$ is harmonic.
+  Now $u_epsilon -> u$ locally uniformly on $Omega$ (*Convolution and Approximation*). By the derivative estimates above, $D^alpha u_epsilon$ converges locally uniformly to a continuous function, and $Delta u = lim_(epsilon -> 0) Delta u_epsilon = 0$. Hence $u in C^oo (Omega)$ and $u$ is harmonic.
 ]
 
 == Maximum and Minimum Principles // 最大值与最小值原理
@@ -2228,7 +2228,7 @@ The mean value property is the fundamental structural feature of harmonic functi
 ] <thm:hopf-lemma>
 
 #note[
-  Hopf's lemma is proved by constructing a suitable *barrier*: near $x_0$, take a ball internally tangent to $partial Omega$ at $x_0$ and compare $u$ with a carefully chosen function of $r = abs(x - x_c)$, which is subharmonic and vanishes appropriately on the boundary of the ball. The strict inequality $u_nu > 0$ is the quantitative form of the strong maximum principle at the boundary; it is the key input for uniqueness and boundary estimates in Chapters 10–12.
+  Hopf's lemma is proved by constructing a suitable *barrier*: near $x_0$, take a ball internally tangent to $partial Omega$ at $x_0$ and compare $u$ with a carefully chosen function of $r = abs(x - x_c)$, which is subharmonic and vanishes appropriately on the boundary of the ball. The strict inequality $u_nu > 0$ is the quantitative form of the strong maximum principle at the boundary; it is the key input for uniqueness and boundary estimates in *Elliptic Theory*.
 ]
 
 #corollary(name: "Uniqueness for the Dirichlet Problem")[
@@ -2766,23 +2766,23 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 ] <ex:fund-wave>
 
 #note[
-  The three fundamental solutions reveal fundamentally different propagation behaviors, reflecting the classification of Chapter 3:
+  The three fundamental solutions reveal fundamentally different propagation behaviors, reflecting *Classification of Second-Order PDEs*:
 
   - *Laplace* ($Delta$): $E$ is supported on _all_ of $bb(R)^n$ — elliptic equations have infinite propagation in all directions; disturbances are felt everywhere instantaneously.
   - *Heat* ($partial_t - Delta$): $E$ is supported on ${t >= 0}$ — parabolic equations have infinite spatial propagation speed but respect the arrow of time (irreversibility).
   - *Wave* ($(partial^2)/(partial t^2) - Delta$): $E$ is supported on the forward light cone ${t >= abs(x)}$ — hyperbolic equations respect finite propagation speed and causality.
 
-  Moreover, the wave fundamental solution reveals a striking dimensional dichotomy: for odd $n$, $E$ is supported on the _surface_ of the light cone (sharp signals — the *strong Huygens' principle*); for even $n$, $E$ fills the _interior_ (after-effects — the *weak Huygens' principle*). This is explored in detail in Chapter 4.
+  Moreover, the wave fundamental solution reveals a striking dimensional dichotomy: for odd $n$, $E$ is supported on the _surface_ of the light cone (sharp signals — the *strong Huygens' principle*); for even $n$, $E$ fills the _interior_ (after-effects — the *weak Huygens' principle*). This is explored in detail in *Finite Propagation Speed and Dispersive Decay*.
 ]
 
 = Sobolev Spaces // 索伯列夫空间
 
-The distribution theory of Chapter 7 extends classical analysis by allowing differentiation of non-smooth functions, but it does not provide a function space framework suitable for PDE theory. Sobolev spaces fill this gap: they are Banach spaces built from weak derivatives, equipped with completeness properties that make them the natural setting for existence and regularity theory.
+The distribution theory of *Distributions and Weak Derivatives* extends classical analysis by allowing differentiation of non-smooth functions, but it does not provide a function space framework suitable for PDE theory. Sobolev spaces fill this gap: they are Banach spaces built from weak derivatives, equipped with completeness properties that make them the natural setting for existence and regularity theory.
 
 == Definition and Basic Properties // 定义与基本性质
 
 #definition(name: "Sobolev Spaces $W^(k,p)$")[
-  For $k >= 0$ and $1 <= p <= oo$, the space $W^(k,p) (Omega)$ consists of all $u in L^p (Omega)$ whose weak derivatives $partial^alpha u$ (Chapter 7, #link(<def:weak-derivative>)[*Weak Derivatives*]) belong to $L^p (Omega)$ for every multi-index $alpha$ with $abs(alpha) <= k$, with the norm
+  For $k >= 0$ and $1 <= p <= oo$, the space $W^(k,p) (Omega)$ consists of all $u in L^p (Omega)$ whose weak derivatives $partial^alpha u$ (#link(<def:weak-derivative>)[*Weak Derivatives*]) belong to $L^p (Omega)$ for every multi-index $alpha$ with $abs(alpha) <= k$, with the norm
   $
     ||u||_(W^(k,p)) = (sum_(abs(alpha) <= k) integral_Omega abs(partial^alpha u)^p dif x)^(1/p), quad 1 <= p < oo,
   $
@@ -2806,7 +2806,7 @@ The distribution theory of Chapter 7 extends classical analysis by allowing diff
 ] <prop:c-c-density>
 
 #proof[
-  Given $u in W^(k,p)$, mollify: $u * rho_epsilon in C_c^oo (Omega_epsilon)$ and $partial^alpha (u * rho_epsilon) = (partial^alpha u) * rho_epsilon$. By the mollifier approximation theorem (Chapter 8, #link(<thm:mollifier-approx>)[*Convolution and Approximation*]), $partial^alpha (u * rho_epsilon) -> partial^alpha u$ in $L^p$ as $epsilon -> 0$, giving convergence in $W^(k,p)$.
+  Given $u in W^(k,p)$, mollify: $u * rho_epsilon in C_c^oo (Omega_epsilon)$ and $partial^alpha (u * rho_epsilon) = (partial^alpha u) * rho_epsilon$. By the mollifier approximation theorem (#link(<thm:mollifier-approx>)[*Convolution and Approximation*]), $partial^alpha (u * rho_epsilon) -> partial^alpha u$ in $L^p$ as $epsilon -> 0$, giving convergence in $W^(k,p)$.
 ]
 
 #example(name: "Sobolev Space $H^1 (Omega)$")[
@@ -2840,7 +2840,7 @@ The distribution theory of Chapter 7 extends classical analysis by allowing diff
 ] <thm:rellich-kondrachov>
 
 #note[
-  This is a cornerstone result: bounded sequences in $W^(1,p)$ have strongly convergent subsequences in $L^q$ for $q < p^*$. It is used in the direct method of the calculus of variations and in the Galerkin method for parabolic problems (Chapter 13, *Dirichlet and Neumann Problems*).
+  This is a cornerstone result: bounded sequences in $W^(1,p)$ have strongly convergent subsequences in $L^q$ for $q < p^*$. It is used in the direct method of the calculus of variations and in the Galerkin method for parabolic problems (*Dirichlet and Neumann Problems*).
 ]
 
 == Trace Theory // 迹理论
@@ -2861,14 +2861,14 @@ The distribution theory of Chapter 7 extends classical analysis by allowing diff
 ] <thm:trace-theorem>
 
 #note[
-  The fractional-order Sobolev space $W^(s,p) (partial Omega)$ on the boundary (where $s = k - 1/p$) encodes the optimal regularity of boundary data. For the Dirichlet problem, the boundary data $g$ must lie in the trace space for the solution to belong to $W^(k,p) (Omega)$. This is why the boundary regularity theorem (Chapter 12, *Boundary Regularity*) requires $g in H^(k + 3/2) (partial Omega)$.
+  The fractional-order Sobolev space $W^(s,p) (partial Omega)$ on the boundary (where $s = k - 1/p$) encodes the optimal regularity of boundary data. For the Dirichlet problem, the boundary data $g$ must lie in the trace space for the solution to belong to $W^(k,p) (Omega)$. This is why the boundary regularity theorem (*Boundary Regularity*) requires $g in H^(k + 3/2) (partial Omega)$.
 ]
 
 
 #part("Elliptic Theory") // 椭圆型方程理论
 = Boundary Value Problems for Elliptic Equations // 椭圆型方程边值问题
 
-The maximum principle and Green's identities of Chapter 6 give the classical (strong) theory. Modern PDE theory works with *weak solutions* in Sobolev spaces, where existence follows from the Lax--Milgram theorem. This chapter develops the Dirichlet, Neumann, and Robin problems in the weak framework; the abstract Hilbert-space theory is that of Analyse Fonctionnelle, and we apply it here.
+The maximum principle and Green's identities of *Laplace's Equation and Harmonic Functions* give the classical (strong) theory. Modern PDE theory works with *weak solutions* in Sobolev spaces, where existence follows from the Lax--Milgram theorem. This chapter develops the Dirichlet, Neumann, and Robin problems in the weak framework; the abstract Hilbert-space theory is that of Analyse Fonctionnelle, and we apply it here.
 
 == Dirichlet Problem // 狄利克雷问题
 
@@ -2881,7 +2881,7 @@ The maximum principle and Green's identities of Chapter 6 give the classical (st
 ] <def:dirichlet-problem>
 
 #definition(name: "Sobolev Space $H^1 (Omega)$")[
-  The space $H^1 (Omega) = W^(1,2) (Omega)$ consists of all $u in L^2 (Omega)$ whose first-order weak derivatives (Chapter 7, #link(<def:weak-derivative>)[*Weak Derivatives*]) belong to $L^2 (Omega)$, with the norm
+  The space $H^1 (Omega) = W^(1,2) (Omega)$ consists of all $u in L^2 (Omega)$ whose first-order weak derivatives (#link(<def:weak-derivative>)[*Weak Derivatives*]) belong to $L^2 (Omega)$, with the norm
   $
     ||u||_(H^1) = (integral_Omega (abs(u)^2 + abs(nabla u)^2) dif x)^(1/2).
   $
@@ -2945,7 +2945,7 @@ The maximum principle and Green's identities of Chapter 6 give the classical (st
 ]
 
 #note[
-  The classical and weak formulations are consistent: if $u in C^2 (Omega) inter C^1 (overline(Omega))$ is a weak solution with $f$ continuous, then integrating by parts in the weak formulation shows $Delta u = f$ pointwise, so $u$ is a classical solution. Regularity theory (Chapter 12) shows that weak solutions are automatically classical under mild smoothness assumptions on the data.
+  The classical and weak formulations are consistent: if $u in C^2 (Omega) inter C^1 (overline(Omega))$ is a weak solution with $f$ continuous, then integrating by parts in the weak formulation shows $Delta u = f$ pointwise, so $u$ is a classical solution. *Regularity Theory* shows that weak solutions are automatically classical under mild smoothness assumptions on the data.
 ]
 
 == Neumann Problem // 纽曼问题
@@ -3019,17 +3019,17 @@ The maximum principle and Green's identities of Chapter 6 give the classical (st
 ]
 
 #note[
-  The energy viewpoint and the maximum principle are complementary tools. The maximum principle (Chapter 6) is quantitative and works in $C^2$; energy methods provide existence in the weak framework and are the starting point for numerical approximation (Ritz--Galerkin). The Dirichlet principle also shows that the weak solution is the "least energy" representative among functions with the given boundary data — a variational characterization that extends to parabolic problems in Part V.
+  The energy viewpoint and the maximum principle are complementary tools. The maximum principle (*Laplace's Equation and Harmonic Functions*) is quantitative and works in $C^2$; energy methods provide existence in the weak framework and are the starting point for numerical approximation (Ritz--Galerkin). The Dirichlet principle also shows that the weak solution is the "least energy" representative among functions with the given boundary data — a variational characterization that extends to parabolic problems in Part V.
 ]
 
 = Green Functions and Representation // 格林函数与表示
 
-The fundamental solution of the Laplacian was constructed in Chapter 8 (#link(<ex:fund-laplace>)[*Fundamental Solutions*]): it is the Newtonian potential $Gamma$, satisfying $-Delta Gamma = delta$ on $bb(R)^n$. For a bounded domain, the *Green function* modifies $Gamma$ by a harmonic correction so that it vanishes on the boundary; it then encodes the solution of the Dirichlet problem through an explicit representation formula.
+The fundamental solution of the Laplacian was constructed in #link(<ex:fund-laplace>)[*Fundamental Solutions*]: it is the Newtonian potential $Gamma$, satisfying $-Delta Gamma = delta$ on $bb(R)^n$. For a bounded domain, the *Green function* modifies $Gamma$ by a harmonic correction so that it vanishes on the boundary; it then encodes the solution of the Dirichlet problem through an explicit representation formula.
 
 == Green's Function Construction // 格林函数的构造
 
 #definition(name: "Green's Function of a Domain")[
-  Let $Omega subset bb(R)^n$ be a bounded domain with smooth boundary and let $Gamma$ be the fundamental solution of the Laplacian (Chapter 8, #link(<ex:fund-laplace>)[*Fundamental Solutions*]):
+  Let $Omega subset bb(R)^n$ be a bounded domain with smooth boundary and let $Gamma$ be the fundamental solution of the Laplacian (#link(<ex:fund-laplace>)[*Fundamental Solutions*]):
   $
     Gamma (x) = cases(
       -1 / ((n - 2) omega_n) abs(x)^(2 - n) "if" n >= 3,
@@ -3047,7 +3047,7 @@ The fundamental solution of the Laplacian was constructed in Chapter 8 (#link(<e
 ] <def:green-function>
 
 #note[
-  The correction term is chosen so that $G$ vanishes on the boundary, while the singularity at $y$ is exactly that of the fundamental solution. By the maximum principle, the Dirichlet problem for $h^y$ has a unique solution, so $G$ is well defined. The construction does not repeat the fundamental solution (already treated in Chapter 8); it only exploits it as the singular part.
+  The correction term is chosen so that $G$ vanishes on the boundary, while the singularity at $y$ is exactly that of the fundamental solution. By the maximum principle, the Dirichlet problem for $h^y$ has a unique solution, so $G$ is well defined. The construction does not repeat the fundamental solution (already treated in *Convolution and Fundamental Solutions*); it only exploits it as the singular part.
 ]
 
 #theorem(name: "Symmetry of the Green Function")[
@@ -3147,12 +3147,12 @@ The fundamental solution of the Laplacian was constructed in Chapter 8 (#link(<e
 
 = Regularity Theory // 正则性理论
 
-Weak solutions constructed in Chapter 10 are $H^1$ functions; the question of their smoothness is *regularity theory*. This chapter states the central results: interior and boundary regularity, the Schauder estimates in Hölder spaces, and the $L^p$ estimates based on the Calderón--Zygmund theory. The Sobolev space machinery is summarized here; its deeper theory (embeddings, traces) belongs to Analyse Harmonique.
+Weak solutions constructed in *Boundary Value Problems for Elliptic Equations* are $H^1$ functions; the question of their smoothness is *regularity theory*. This chapter states the central results: interior and boundary regularity, the Schauder estimates in Hölder spaces, and the $L^p$ estimates based on the Calderón--Zygmund theory. The Sobolev space machinery is summarized here; its deeper theory (embeddings, traces) belongs to Analyse Harmonique.
 
 == Interior Regularity // 内正则性
 
 #definition(name: "Sobolev Spaces $W^(k,p)$")[
-  For $k >= 0$ and $1 <= p <= oo$, the space $W^(k,p) (Omega)$ consists of all $u in L^p (Omega)$ whose weak derivatives $partial^alpha u$ (Chapter 7, #link(<def:weak-derivative>)[*Weak Derivatives*]) belong to $L^p (Omega)$ for every multi-index $alpha$ with $abs(alpha) <= k$, with the norm
+  For $k >= 0$ and $1 <= p <= oo$, the space $W^(k,p) (Omega)$ consists of all $u in L^p (Omega)$ whose weak derivatives $partial^alpha u$ (#link(<def:weak-derivative>)[*Weak Derivatives*]) belong to $L^p (Omega)$ for every multi-index $alpha$ with $abs(alpha) <= k$, with the norm
   $
     ||u||_(W^(k,p)) = (sum_(abs(alpha) <= k) integral_Omega abs(partial^alpha u)^p dif x)^(1/p), quad 1 <= p < oo,
   $
@@ -3259,7 +3259,7 @@ Weak solutions constructed in Chapter 10 are $H^1$ functions; the question of th
 #part("Parabolic Theory") // 抛物型方程理论
 = Linear Parabolic Boundary Value Problems // 线性抛物型边值问题
 
-The Cauchy problem of Chapter 5 treats the whole space. On a bounded domain one prescribes, in addition to the initial datum, boundary conditions — the initial-boundary value problems of Chapter 10, now with a time derivative. The weak framework extends the elliptic theory (Chapter 10) to parabolic equations, and the semigroup viewpoint gives the abstract structure.
+The Cauchy problem of *The Heat Equation* treats the whole space. On a bounded domain one prescribes, in addition to the initial datum, boundary conditions — the initial-boundary value problems of *Boundary Value Problems for Elliptic Equations*, now with a time derivative. The weak framework extends the elliptic theory (*Boundary Value Problems for Elliptic Equations*) to parabolic equations, and the semigroup viewpoint gives the abstract structure.
 
 == Dirichlet and Neumann Problems // 狄利克雷与纽曼问题
 
@@ -3332,7 +3332,7 @@ The Cauchy problem of Chapter 5 treats the whole space. On a bounded domain one 
 ]
 
 #note[
-  The semigroup viewpoint recasts the heat equation as an infinite-dimensional linear ODE $u' (t) = A u (t)$ with $A = Delta$ negative self-adjoint, so $S (t) = e^(t A)$ behaves like a decaying exponential. The rate of decay is governed by the spectrum of $A$ (*Long-Time Behavior*), and the semigroup estimates of *Smoothing Effect* are exactly the $L^p -> L^q$ smoothing bounds used for nonlinear problems in Chapter 14.
+  The semigroup viewpoint recasts the heat equation as an infinite-dimensional linear ODE $u' (t) = A u (t)$ with $A = Delta$ negative self-adjoint, so $S (t) = e^(t A)$ behaves like a decaying exponential. The rate of decay is governed by the spectrum of $A$ (*Long-Time Behavior*), and the semigroup estimates of *Smoothing Effect* are exactly the $L^p -> L^q$ smoothing bounds used for nonlinear problems in *Nonlinear Parabolic Equations*.
 ]
 
 == Comparison Principles and Monotone Iteration // 比较原理与单调迭代
@@ -3346,7 +3346,7 @@ The Cauchy problem of Chapter 5 treats the whole space. On a bounded domain one 
 ] <thm:comparison-principle>
 
 #proof[
-  Apply the weak maximum principle (Chapter 5, #link(<thm:parabolic-weak-maximum>)[*Maximum Principle*]) to $w = u - v$: since $w_t - Delta w <= 0$ in $Omega_T$ and $w <= 0$ on $Gamma_T$, we get $w <= 0$ everywhere.
+  Apply the weak maximum principle (#link(<thm:parabolic-weak-maximum>)[*Maximum Principle*]) to $w = u - v$: since $w_t - Delta w <= 0$ in $Omega_T$ and $w <= 0$ on $Gamma_T$, we get $w <= 0$ everywhere.
 ]
 
 #example(name: "Monotone Iteration for Semilinear Problems")[
@@ -3384,12 +3384,12 @@ The Cauchy problem of Chapter 5 treats the whole space. On a bounded domain one 
   $
     ||u (t) - v_oo||_(L^2) <= C e^(-lambda_1 t).
   $
-  This is the parabolic-to-elliptic connection: the long-time behavior of the heat equation is governed by the elliptic problem, tying Part IV back to Chapters 10–12.
+  This is the parabolic-to-elliptic connection: the long-time behavior of the heat equation is governed by the elliptic problem, tying *Parabolic Theory* back to *Elliptic Theory*.
 ]
 
 = Nonlinear Parabolic Equations // 非线性抛物型方程
 
-The linear theory of Chapters 5 and 13 is the platform for semilinear parabolic equations $u_t = Delta u + f (u)$, which model reaction-diffusion phenomena. Two qualitative phenomena dominate: *traveling fronts* propagating at a characteristic speed (the Fisher--KPP equation) and *finite-time blow-up* when the reaction dominates diffusion. The basic existence machinery is the contraction argument on Duhamel's formula.
+The linear theory of *The Heat Equation* and *Linear Parabolic Boundary Value Problems* is the platform for semilinear parabolic equations $u_t = Delta u + f (u)$, which model reaction-diffusion phenomena. Two qualitative phenomena dominate: *traveling fronts* propagating at a characteristic speed (the Fisher--KPP equation) and *finite-time blow-up* when the reaction dominates diffusion. The basic existence machinery is the contraction argument on Duhamel's formula.
 
 == Reaction-Diffusion Equations // 反应-扩散方程
 
@@ -3460,7 +3460,7 @@ The linear theory of Chapters 5 and 13 is the platform for semilinear parabolic 
 ] <thm:fujita-exponent>
 
 #note[
-  The Fujita phenomenon exhibits the delicate balance between diffusion, which spreads mass, and the power nonlinearity, which amplifies it: for $p < p_c$ the reaction always wins, for $p > p_c$ small data are damped. The proof uses the heat kernel (Chapter 5) and the semigroup estimates: solutions are compared with self-similar subsolutions $u (x, t) = (T - t)^(-1/(p-1)) phi (x / sqrt(T - t))$, or blow-up is obtained by the Kaplan energy method below.
+  The Fujita phenomenon exhibits the delicate balance between diffusion, which spreads mass, and the power nonlinearity, which amplifies it: for $p < p_c$ the reaction always wins, for $p > p_c$ small data are damped. The proof uses the heat kernel (*The Heat Equation*) and the semigroup estimates: solutions are compared with self-similar subsolutions $u (x, t) = (T - t)^(-1/(p-1)) phi (x / sqrt(T - t))$, or blow-up is obtained by the Kaplan energy method below.
 ]
 
 #proposition(name: "Blow-Up via the Kaplan Method")[
@@ -3748,7 +3748,7 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
 ]
 
 #note[
-  The Riemann invariants exhibit the hyperbolic structure: the solution is a superposition of $m$ waves, each propagating along its characteristic family with speed $lambda_i$ without interacting (linear case). In the nonlinear case (Chapter 18) the invariants are the building blocks of the solution of the Riemann problem, but the characteristic speeds then depend on the solution.
+  The Riemann invariants exhibit the hyperbolic structure: the solution is a superposition of $m$ waves, each propagating along its characteristic family with speed $lambda_i$ without interacting (linear case). In the nonlinear case (*Conservation Laws for Systems*) the invariants are the building blocks of the solution of the Riemann problem, but the characteristic speeds then depend on the solution.
 ]
 
 == Energy Methods and Well-Posedness // 能量方法与适定性
@@ -3776,12 +3776,12 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
 ]
 
 #note[
-  For systems with *variable* coefficients $A_j (x, t)$, the same energy argument works provided the matrices are symmetric and $C^1$: the derivative of $E$ produces a term $sum_j (A_j)_(x_j) u dot u$ bounded by $C E (t)$, giving the exponential bound. This robustness is the reason the energy method is the standard tool for well-posedness of hyperbolic problems (and for the symmetrization of nonlinear systems in Chapter 18).
+  For systems with *variable* coefficients $A_j (x, t)$, the same energy argument works provided the matrices are symmetric and $C^1$: the derivative of $E$ produces a term $sum_j (A_j)_(x_j) u dot u$ bounded by $C E (t)$, giving the exponential bound. This robustness is the reason the energy method is the standard tool for well-posedness of hyperbolic problems (and for the symmetrization of nonlinear systems in *Conservation Laws for Systems*).
 ]
 
 = Conservation Laws for Systems // 守恒律系统
 
-The scalar one-dimensional conservation law was treated completely in Chapter 16 (#link(<def:conservation-law>)[Ch 16]), including weak solutions, the Rankine--Hugoniot condition (#link(<thm:rankine-hugoniot>)[*Rankine--Hugoniot Condition*]), shocks, and rarefaction waves. This chapter covers only the *system* increment: weak solutions and jump conditions for systems, entropy conditions, and the Riemann problem — cross-referencing Chapter 16 for the scalar theory.
+The scalar one-dimensional conservation law was treated completely in #link(<def:conservation-law>)[*Derivation of Conservation Laws*], including weak solutions, the Rankine--Hugoniot condition (#link(<thm:rankine-hugoniot>)[*Rankine--Hugoniot Condition*]), shocks, and rarefaction waves. This chapter covers only the *system* increment: weak solutions and jump conditions for systems, entropy conditions, and the Riemann problem — cross-referencing *Conservation Laws in One Space Dimension* for the scalar theory.
 
 == Weak Solutions for Systems // 系统的弱解与 Rankine-Hugoniot 条件
 
@@ -3794,7 +3794,7 @@ The scalar one-dimensional conservation law was treated completely in Chapter 16
   $
     integral_0^oo integral_(-oo)^oo (u dot (partial phi)/(partial t) + F (u) dot (partial phi)/(partial x)) dif x dif t = 0
   $
-  (componentwise, as in the scalar case of Chapter 16, #link(<def:conservation-law>)[*Derivation of Conservation Laws*]).
+  (componentwise, as in the scalar case of #link(<def:conservation-law>)[*Derivation of Conservation Laws*]).
 ] <def:conservation-system>
 
 #theorem(name: "Rankine--Hugoniot Condition for Systems")[
@@ -3806,7 +3806,7 @@ The scalar one-dimensional conservation law was treated completely in Chapter 16
 ] <thm:rh-systems>
 
 #proof[
-  The proof is identical to the scalar case (Chapter 16, #link(<thm:rankine-hugoniot>)[*Rankine--Hugoniot Condition*]): apply the weak formulation with test functions supported in a small neighborhood of a point of the curve, integrate by parts on each smooth side, and let the neighborhood shrink to the curve. Each component of the equation yields the corresponding scalar condition.
+  The proof is identical to the scalar case (#link(<thm:rankine-hugoniot>)[*Rankine--Hugoniot Condition*]): apply the weak formulation with test functions supported in a small neighborhood of a point of the curve, integrate by parts on each smooth side, and let the neighborhood shrink to the curve. Each component of the equation yields the corresponding scalar condition.
 ]
 
 #note[
@@ -3850,7 +3850,7 @@ The scalar one-dimensional conservation law was treated completely in Chapter 16
   $
     u (x, 0) = cases(u_L "if" x < 0, u_R "if" x > 0)
   $
-  for two constant states $u_L, u_R in bb(R)^m$. Its self-similar solution $u (x, t) = v (x/t)$ is the building block of the general theory (front tracking, Godunov-type schemes, Chapter 20).
+  for two constant states $u_L, u_R in bb(R)^m$. Its self-similar solution $u (x, t) = v (x/t)$ is the building block of the general theory (front tracking, Godunov-type schemes, *Numerical Methods for PDEs*).
 ] <def:riemann-problem>
 
 #theorem(name: "Structure of the Solution for Systems")[
@@ -3866,14 +3866,14 @@ The scalar one-dimensional conservation law was treated completely in Chapter 16
 ]
 
 #note[
-  For the scalar equation ($m = 1$), the Riemann problem was solved completely in Chapter 16 (#link(<thm:rankine-hugoniot>)[*Rankine--Hugoniot Condition*]): the solution is a shock if $u_L > u_R$ and a rarefaction if $u_L < u_R$ (convex flux). The system case combines these waves, and the entropy condition (Lax or Олейник) selects the admissible configuration. The general existence theory for arbitrary large data — the Glimm scheme and front tracking — is beyond this note (see Analyse Fonctionnelle and the numerical methods of Chapter 20).
+  For the scalar equation ($m = 1$), the Riemann problem was solved completely in #link(<thm:rankine-hugoniot>)[*Rankine--Hugoniot Condition*]: the solution is a shock if $u_L > u_R$ and a rarefaction if $u_L < u_R$ (convex flux). The system case combines these waves, and the entropy condition (Lax or Олейник) selects the admissible configuration. The general existence theory for arbitrary large data — the Glimm scheme and front tracking — is beyond this note (see Analyse Fonctionnelle and the numerical methods of *Numerical Methods for PDEs*).
 ]
 
 
 #part("Solution Methods and Numerical Methods") // 求解方法与数值方法
 = Separation of Variables and Spectral Methods // 分离变量与谱方法
 
-This closing part of the notes collects the classical method of separation of variables — announced already in Chapter 1 as a basic tool — together with its spectral formulation, and ends with an overview of numerical methods as the bridge from theory to computation. The method in action for the wave equation is developed in Chapter 4 (#link(<thm:wave-dirichlet-series>)[*Separation of Variables*]); the present chapter treats the general framework and its spectral underpinnings. The deep theory of Fourier series and transforms belongs to Analyse Harmonique and is only used here; the abstract spectral theory of operators is referenced to Analyse Fonctionnelle.
+This closing part of the notes collects the classical method of separation of variables — announced already in *Introduction to PDEs* as a basic tool — together with its spectral formulation, and ends with an overview of numerical methods as the bridge from theory to computation. The method in action for the wave equation is developed in #link(<thm:wave-dirichlet-series>)[*Separation of Variables*]; the present chapter treats the general framework and its spectral underpinnings. The deep theory of Fourier series and transforms belongs to Analyse Harmonique and is only used here; the abstract spectral theory of operators is referenced to Analyse Fonctionnelle.
 
 == Separation of Variables // 分离变量法
 
@@ -3898,7 +3898,7 @@ This closing part of the notes collects the classical method of separation of va
   $
     u (x, t) = sum_(k=1)^oo c_k e^(-(k pi/L)^2 t) sin (k pi x/L), quad c_k = 2/L integral_0^L g (x) sin (k pi x / L) dif x,
   $
-  where the coefficients are fixed by the initial datum (the Fourier sine series of $g$). Each mode decays with the rate $lambda_k$; the highest modes are damped fastest, the smoothing effect of Chapter 5.
+  where the coefficients are fixed by the initial datum (the Fourier sine series of $g$). Each mode decays with the rate $lambda_k$; the highest modes are damped fastest, the smoothing effect of *The Heat Equation*.
 ] <ex:heat-separation>
 
 #theorem(name: "Eigenfunction Expansion")[
@@ -3914,7 +3914,7 @@ This closing part of the notes collects the classical method of separation of va
 ]
 
 #note[
-  The separation-of-variables solution of the heat equation is thus the eigenfunction expansion of the initial datum, propagated mode by mode. The same mechanism underlies the semigroup solution of Chapter 13: $u (t) = sum_k e^(-lambda_k t) c_k phi_k$ is the action of the heat semigroup (#link(<def:semigroup>)[*Semigroup Framework*]) on the eigenbasis.
+  The separation-of-variables solution of the heat equation is thus the eigenfunction expansion of the initial datum, propagated mode by mode. The same mechanism underlies the semigroup solution of *Linear Parabolic Boundary Value Problems*: $u (t) = sum_k e^(-lambda_k t) c_k phi_k$ is the action of the heat semigroup (#link(<def:semigroup>)[*Semigroup Framework*]) on the eigenbasis.
 ]
 
 == Sturm--Liouville Theory // Sturm--Liouville 理论
@@ -3982,11 +3982,11 @@ This closing part of the notes collects the classical method of separation of va
   $
     u (r, theta) = a_0/2 + sum_(n=1)^oo r^n (a_n cos (n theta) + b_n sin (n theta)),
   $
-  where the coefficients are the Fourier coefficients of the boundary datum $g (theta) = u (1, theta)$. The radial weights $r^n$ are the harmonic extension of the boundary data; this is the series form of Poisson's integral formula of Chapter 11 (#link(<thm:poisson-integral-formula>)[*Representation Formulas*]).
+  where the coefficients are the Fourier coefficients of the boundary datum $g (theta) = u (1, theta)$. The radial weights $r^n$ are the harmonic extension of the boundary data; this is the series form of Poisson's integral formula of #link(<thm:poisson-integral-formula>)[*Representation Formulas*].
 ] <ex:laplace-disk>
 
 #note[
-  The model equations are solved by the same machinery: the spatial part always reduces to a Sturm--Liouville problem whose eigenfunctions diagonalize the PDE, and the temporal (or remaining) factor is an ODE in the eigenbasis. This is the *spectral viewpoint*: the heat equation contracts modes ($e^(-lambda_k t)$), the wave equation rotates them ($e^(+- i sqrt(lambda_k) t)$ — developed in detail in Chapter 4), and the Laplace equation extends them harmonically ($r^n$). The spectral method of Chapter 19 discretizes precisely these expansions.
+  The model equations are solved by the same machinery: the spatial part always reduces to a Sturm--Liouville problem whose eigenfunctions diagonalize the PDE, and the temporal (or remaining) factor is an ODE in the eigenbasis. This is the *spectral viewpoint*: the heat equation contracts modes ($e^(-lambda_k t)$), the wave equation rotates them ($e^(+- i sqrt(lambda_k) t)$ — developed in detail in *Wave Equation*), and the Laplace equation extends them harmonically ($r^n$). The spectral method of *Separation of Variables and Spectral Methods* discretizes precisely these expansions.
 ]
 
 = Numerical Methods for PDEs // PDE 数值方法
@@ -4045,7 +4045,7 @@ This chapter gives a concise overview of the four standard families of numerical
 == Finite Element Methods // 有限元法
 
 #definition(name: "Galerkin Finite Element Method")[
-  Let $V = H_0^1 (Omega)$ with the weak formulation of the Dirichlet problem (Chapter 10, #link(<def:weak-dirichlet>)[*Dirichlet Problem*]): find $u in V$ with $a (u, v) = F (v)$ for all $v in V$, where $a (u, v) = integral_Omega nabla u dot nabla v dif x$ and $F (v) = integral_Omega f v dif x$. The *finite element method* chooses a finite-dimensional subspace $V_h subset V$ of piecewise polynomial functions on a triangulation of $Omega$ of mesh size $h$ and seeks the Galerkin approximation $u_h in V_h$ satisfying
+  Let $V = H_0^1 (Omega)$ with the weak formulation of the Dirichlet problem (#link(<def:weak-dirichlet>)[*Dirichlet Problem*]): find $u in V$ with $a (u, v) = F (v)$ for all $v in V$, where $a (u, v) = integral_Omega nabla u dot nabla v dif x$ and $F (v) = integral_Omega f v dif x$. The *finite element method* chooses a finite-dimensional subspace $V_h subset V$ of piecewise polynomial functions on a triangulation of $Omega$ of mesh size $h$ and seeks the Galerkin approximation $u_h in V_h$ satisfying
   $
     a (u_h, v_h) = F (v_h) quad "for all" quad v_h in V_h.
   $
@@ -4079,7 +4079,7 @@ This chapter gives a concise overview of the four standard families of numerical
 == Finite Volume Methods // 有限体积法
 
 #definition(name: "Finite Volume Scheme")[
-  Consider a conservation law $u_t + F (u)_x = 0$ (Chapter 18, #link(<def:conservation-system>)[*Weak Solutions for Systems*]). Divide $bb(R)$ into cells $I_i = [x_(i - 1/2), x_(i + 1/2)]$ of width $Delta x$ and let
+  Consider a conservation law $u_t + F (u)_x = 0$ (#link(<def:conservation-system>)[*Weak Solutions for Systems*]). Divide $bb(R)$ into cells $I_i = [x_(i - 1/2), x_(i + 1/2)]$ of width $Delta x$ and let
   $
     U_i^n = 1/Delta x integral_(I_i) u (x, t_n) dif x
   $
@@ -4106,11 +4106,11 @@ This chapter gives a concise overview of the four standard families of numerical
 ]
 
 #theorem(name: "Godunov's Method")[
-  The *Godunov scheme* (Годунов, 1959) defines the numerical flux by solving the Riemann problem (Chapter 18, #link(<def:riemann-problem>)[*Riemann Problems*]) at each interface between constant states $U_i^n$, $U_(i+1)^n$:
+  The *Godunov scheme* (Годунов, 1959) defines the numerical flux by solving the Riemann problem (#link(<def:riemann-problem>)[*Riemann Problems*]) at each interface between constant states $U_i^n$, $U_(i+1)^n$:
   $
     cal(F) (U_i^n, U_(i+1)^n) = F (u^R (0; U_i^n, U_(i+1)^n)),
   $
-  where $u^R (x/t)$ is the self-similar solution. The scheme is conservative, consistent, first-order accurate, and monotone for scalar convex laws; it resolves shocks correctly and satisfies the entropy condition of Chapter 18. Its stability is governed by a CFL condition on the wave speeds. A simpler representative of the same family is the *Lax--Friedrichs flux*
+  where $u^R (x/t)$ is the self-similar solution. The scheme is conservative, consistent, first-order accurate, and monotone for scalar convex laws; it resolves shocks correctly and satisfies the entropy condition of *Conservation Laws for Systems*. Its stability is governed by a CFL condition on the wave speeds. A simpler representative of the same family is the *Lax--Friedrichs flux*
   $
     cal(F)^("LF") (a, b) = (F (a) + F (b))/2 - Delta x/(2 Delta t) (b - a),
   $
@@ -4124,7 +4124,7 @@ This chapter gives a concise overview of the four standard families of numerical
   $
     u_N (x, t) = sum_(k = -N)^N hat(u)_k (t) e^(i k x),
   $
-  determined by the Galerkin projection of the equation onto $S_N$. The *pseudospectral* (collocation) variant imposes the equation at $2 N + 1$ grid points and evaluates nonlinear terms with the fast Fourier transform. Since $e^(i k x)$ are the eigenfunctions of $-(partial^2)/(partial x^2)$ (eigenvalues $k^2$), the spectral method is the discretized eigenfunction expansion of Chapter 19.
+  determined by the Galerkin projection of the equation onto $S_N$. The *pseudospectral* (collocation) variant imposes the equation at $2 N + 1$ grid points and evaluates nonlinear terms with the fast Fourier transform. Since $e^(i k x)$ are the eigenfunctions of $-(partial^2)/(partial x^2)$ (eigenvalues $k^2$), the spectral method is the discretized eigenfunction expansion of *Separation of Variables and Spectral Methods*.
 ] <def:spectral-galerkin>
 
 #theorem(name: "Spectral Accuracy")[
@@ -4144,7 +4144,7 @@ This chapter gives a concise overview of the four standard families of numerical
 ]
 
 #note[
-  The four families are complementary: finite differences (easiest on simple grids), finite elements (flexible on complex domains via weak forms, Chapter 10), finite volumes (structure-preserving for conservation laws, Chapter 18), and spectral methods (exponential accuracy for smooth periodic problems, directly tied to the Fourier analysis of Analyse Harmonique and the eigenfunction expansions of Chapter 19).
+  The four families are complementary: finite differences (easiest on simple grids), finite elements (flexible on complex domains via weak forms, *Boundary Value Problems for Elliptic Equations*), finite volumes (structure-preserving for conservation laws, *Conservation Laws for Systems*), and spectral methods (exponential accuracy for smooth periodic problems, directly tied to the Fourier analysis of Analyse Harmonique and the eigenfunction expansions of *Separation of Variables and Spectral Methods*).
 ]
 
 #bibliography("references.bib", title: "References", full: true)
