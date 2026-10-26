@@ -2022,7 +2022,7 @@ The backward problem shows that the third requirement is not automatic, and quan
   The three problems are solved by three different devices, and the order below follows the dependence between them.
   - The Cauchy problem is solved explicitly by convolution with the heat kernel (*The Convolution Formula*).
   - The inhomogeneous equation is reduced to the homogeneous one by superposition in time (*Duhamel's Principle*).
-  - On a bounded domain, uniqueness, stability and comparison follow from the maximum principle (*Maximum Principle*), and existence from the eigenfunction expansion (*Separation of Variables*).
+  - On a bounded domain, uniqueness, stability and comparison follow from the maximum principle (*Maximum Principle*), and existence from the eigenfunction expansion (*Initial-Boundary Value Problems*).
   - The energy identity and the smoothing estimates give the quantitative form of the regularization (*Energy Estimates and Smoothing Effect*).
 ]
 
@@ -2259,6 +2259,116 @@ The second is uniqueness on bounded domains, obtained by comparing two solutions
 
 The pair of corollaries is the parabolic counterpart of the energy inequality of the wave equation: there stability is measured in the energy norm, which involves one derivative of the data, whereas here the flow is a contraction in the sup-norm and loses no derivative at all.
 That gain is exactly the regularization of *Regularization*, seen from the point of view of well-posedness.
+
+== Initial-Boundary Value Problems // 初边值问题
+
+On a bounded domain the heat kernel of the whole space is no longer available: the flow is confined by the boundary, and no closed formula survives.
+The substitute is the eigenfunction expansion, the same device that solves the wave equation on an interval, and the two constructions are formally identical — only the time factor differs.
+
+=== The Eigenfunction Expansion // 本征展开
+
+Let $Omega subset bb(R)^n$ be bounded with smooth boundary, and let $(lambda_k, w_k)_(k >= 1)$ be the eigenpairs of the Dirichlet Laplacian,
+$
+  -Delta w_k = lambda_k w_k quad "in" Omega, quad w_k = 0 quad "on" partial Omega,
+$
+with $0 < lambda_1 <= lambda_2 <= dots$ and ${w_k}$ an orthonormal basis of $L^2 (Omega)$.
+The Neumann problem replaces the boundary condition by $partial_nu w_k = 0$ and has $lambda_1 = 0$, with $w_1$ constant.
+The existence of such a basis, and the growth $lambda_k -> oo$, is the content of *Sturm--Liouville Theory*.
+
+Each eigenfunction is an exact solution of the heat equation with the correct boundary data, since $-Delta w_k = lambda_k w_k$ turns the evolution into the scalar ODE $c_k' = -lambda_k c_k$ for the coefficient.
+Superposing and choosing the coefficients to match the initial datum gives the solution.
+
+#theorem(name: "Solution of the Dirichlet Problem by Eigenfunction Expansion")[
+  Let $g in L^2 (Omega)$ and $a_k = (g, w_k)$. Then
+  #eq[$ u (x, t) = sum_(k=1)^oo a_k e^(-lambda_k t) w_k (x) $] <eq:heat-eigen-expansion>
+  converges in $L^2 (Omega)$, uniformly in $t >= 0$, and defines the solution of the Dirichlet problem with $f = 0$ and datum $g$.
+] <thm:heat-eigen-expansion>
+
+#proof[
+  *Step 1: Each term solves.* For fixed $k$, $u_k = a_k e^(-lambda_k t) w_k$ satisfies $partial_t u_k = -lambda_k a_k e^(-lambda_k t) w_k = a_k e^(-lambda_k t) Delta w_k = Delta u_k$, and $u_k = 0$ on $partial Omega$.
+
+  *Step 2: Convergence.* By Parseval, $sum_k a_k^2 = ||g||_(L^2)^2$, and $0 < e^(-lambda_k t) <= 1$ for $t >= 0$; hence for $t >= 0$
+  $
+    ||u (dot, t)||_(L^2)^2 = sum_(k=1)^oo a_k^2 e^(-2 lambda_k t) <= ||g||_(L^2)^2,
+  $
+  and the series converges in $L^2$ uniformly in $t$, with $u in C ([0, oo); L^2 (Omega))$.
+
+  *Step 3: The initial datum.* At $t = 0$ the series is the expansion of $g$, so $u (dot, 0) = g$.
+]
+
+Two remarks fix the status of the formula.
+First, #link(<eq:heat-eigen-expansion>)[the expansion] is a solution in the $L^2$ sense; if $g$ is smooth enough — for instance $g in H_0^1 (Omega)$ with $Delta g in L^2 (Omega)$ — the series converges uniformly and termwise differentiation is legitimate, so $u$ is a classical solution.
+Second, the formula exhibits the structure of the flow in the clearest possible way: the eigenfunctions are frozen profiles, and each decays at its own rate $e^(-lambda_k t)$.
+
+=== Heat Conduction in a Rod // 细杆热传导
+
+On an interval the eigenpairs are known explicitly, and #link(<eq:heat-eigen-expansion>)[the expansion] becomes a Fourier series.
+
+For $Omega = (0, L)$ with Dirichlet data, $lambda_k = (k pi / L)^2$ and $w_k (x) = sqrt(2/L) sin(k pi x / L)$, so the solution with datum $g$ is
+$
+  u (x, t) = sum_(k=1)^oo b_k e^(-(k pi / L)^2 t) sin((k pi x)/L), quad b_k = 2/L integral_0^L g (y) sin((k pi y)/L) dif y.
+$
+The coefficients $b_k$ are the sine coefficients of $g$; no new computation is required beyond the Fourier expansion itself.
+
+#example(name: "Cooling of a Rod with a Parabolic Profile")[
+  Take $L = 1$ and $g (x) = x (1 - x)$, which vanishes at both ends and peaks at $x = 1/2$ with value $1/4$. The sine coefficients are
+  $
+    b_k = 2 integral_0^1 x (1 - x) sin(k pi x) dif x = 4/(k^3 pi^3) (1 - (-1)^k),
+  $
+  so $b_k = 8/(k^3 pi^3)$ for odd $k$ and $b_k = 0$ for even $k$; the oddness reflects the symmetry of $g$ about the midpoint. Hence
+  $
+    u (x, t) = 8/pi^3 sum_(k "odd") 1/k^3 e^(-(k pi)^2 t) sin(k pi x).
+  $
+  Since the successive rates differ by the factor $(2 k + 1)^2$, the first mode already dominates for $t > 1/pi^2$: the profile very quickly becomes a single sine arch, with amplitude $8 e^(-pi^2 t)/pi^3$.
+] <ex:heat-rod-cooling>
+
+The example separates the two time scales that every parabolic problem exhibits.
+The *transient* is governed by the gap $lambda_2 - lambda_1$: the rates grow like $k^2$, so each odd mode decays faster than its predecessor by the factor $((k + 2)/k)^2$.
+The *asymptotic* regime is governed by $lambda_1$ alone, and it is universal: whatever the datum, the profile converges to a multiple of the first eigenfunction.
+
+=== Inhomogeneous Data and Sources // 非齐次边值与源项
+
+Two devices reduce the general problem of #link(<eq:heat-problem>)[the initial-boundary value problem] to the homogeneous one solved above.
+
+- *Non-zero boundary data.* If the boundary datum is independent of $t$, let $v$ be the harmonic function with those boundary values, whose existence is the content of *Representation Formulas* in *Green Functions and Representation*.
+  Then $w = u - v$ satisfies the heat equation with homogeneous Dirichlet data and initial datum $g - v$, to which the expansion applies.
+- *A source term.* Expand $u$ and $f$ in the eigenbasis, $u = sum_k c_k (t) w_k$ and $f = sum_k f_k (t) w_k$ with $f_k = (f (dot, t), w_k)$.
+  Each coefficient then solves a scalar ODE, $c_k' + lambda_k c_k = f_k$, whose solution with $c_k (0) = a_k$ is
+  $
+    c_k (t) = a_k e^(-lambda_k t) + integral_0^t e^(-lambda_k (t - s)) f_k (s) dif s.
+  $
+
+The second formula is #link(<eq:heat-duhamel>)[Duhamel's formula] projected onto a single eigenmode: the source is superposed in time, and the kernel of the projection is the exponential $e^(-lambda_k (t - s))$ rather than the Gaussian.
+
+=== Decay to the Steady State // 稳态的趋近
+
+The expansion also gives the sharp asymptotics of the flow, because the rates $lambda_k$ are ordered.
+
+#theorem(name: "Spectral Asymptotics of the Dirichlet Flow")[
+  Let $(lambda_k, w_k)$ be the Dirichlet eigenpairs, $g in L^2 (Omega)$ and $a_k = (g, w_k)$, and let $u$ be the solution of #link(<thm:heat-eigen-expansion>)[the expansion]. Then for $t >= 0$
+  #eq[$ ||u (dot, t) - a_1 e^(-lambda_1 t) w_1||_(L^2) <= e^(-lambda_2 t) ||g||_(L^2). $] <eq:heat-spectral-gap>
+  In particular $||u (dot, t)||_(L^2) <= e^(-lambda_1 t) ||g||_(L^2)$, and the normalized profile $u (dot, t)/e^(-lambda_1 t)$ converges to $a_1 w_1$ in $L^2 (Omega)$ as $t -> oo$.
+] <thm:heat-spectral-gap>
+
+#proof[
+  Subtract the first term in #link(<eq:heat-eigen-expansion>)[the expansion]: the remainder is $sum_(k >= 2) a_k e^(-lambda_k t) w_k$, and since $lambda_k >= lambda_2$ for $k >= 2$,
+  $
+    ||sum_(k >= 2) a_k e^(-lambda_k t) w_k||_(L^2)^2 = sum_(k >= 2) a_k^2 e^(-2 lambda_k t) <= e^(-2 lambda_2 t) sum_(k >= 2) a_k^2 <= e^(-2 lambda_2 t) ||g||_(L^2)^2.
+  $
+  The bound on $||u (dot, t)||$ follows by the same argument with $lambda_k >= lambda_1$ for all $k$, and the convergence of the normalized profile from the same estimate divided by $e^(-2 lambda_1 t)$, which gives $||u (dot, t)/e^(-lambda_1 t) - a_1 w_1|| <= e^(-(lambda_2 - lambda_1) t) ||g||$.
+]
+
+The consequence for the initial-boundary value problem with time-independent data is the *parabolic-to-elliptic* principle already announced in *The Equation in $n$ Dimensions and the Steady State*.
+If $v$ is the steady state — the harmonic function with the prescribed boundary values, and a solution of $-Delta v = f$ when $f$ is time-independent — then $w = u - v$ solves the homogeneous problem and
+$
+  ||u (dot, t) - v||_(L^2) <= e^(-lambda_1 t) ||g - v||_(L^2).
+$
+The evolution problem thus forgets its initial datum at an exponential rate, and its long-time limit is the solution of an elliptic problem: the arrow of time leads from the parabolic to the elliptic world.
+
+#note[
+  The decay can also be proved without any eigenfunction expansion, from the energy identity and Poincaré's inequality; that route is taken in *Long-Time Behavior* of *Linear Parabolic Boundary Value Problems*, where the same rate appears as the first eigenvalue of $-Delta$ on a general domain.
+  The spectral route above is sharper — it keeps the profile, not only the norm — but it presumes the Hilbertian eigenbasis.
+]
 
 == Energy Estimates and Smoothing Effect // 能量估计与平滑效应
 
@@ -3570,6 +3680,9 @@ Here it is applied to a semilinear equation, where it produces monotone sequence
 ] <ex:monotone-iteration>
 
 == Long-Time Behavior // 长期行为
+
+The explicit case of an interval, where the eigenvalues are known and the whole profile can be computed, is treated in *Decay to the Steady State*.
+Here the same rate is obtained from the energy identity alone, without any eigenfunction expansion, which makes it available on an arbitrary domain.
 
 #theorem(name: "Exponential Decay for the Dirichlet Problem")[
   Let $lambda_1 > 0$ be the first eigenvalue of $-Delta$ with Dirichlet data on $Omega$. Then the solution of the homogeneous heat equation satisfies
