@@ -1949,9 +1949,86 @@ The wave equation and the heat equation of the next chapter draw the two halves 
 
 = The Heat Equation // 热方程
 
-The heat equation, introduced in #link(<def:heat-equation>)[*Basic Concepts and Examples*], is the prototypical parabolic equation. Its fundamental solution — the heat kernel — was constructed in #link(<ex:fund-heat>)[*Fundamental Solutions*]; this chapter develops the classical theory of the initial value problem: the Cauchy problem, the maximum principle, and the energy estimates. Two features distinguish parabolic equations from the hyperbolic ones of the previous chapter: *regularization* — arbitrary rough data become $C^oo$ instantly — and *irreversibility* — the backward problem is ill-posed.
+The heat equation, introduced in #link(<def:heat-equation>)[*Basic Concepts and Examples*], is the prototypical parabolic equation.
+Its fundamental solution — the heat kernel — is constructed in #link(<ex:fund-heat>)[*Fundamental Solutions*], and it is the starting point of the explicit solution below.
+The chapter is organized around one fully general problem: the equation $u_t - Delta u = f$ on a domain, with an initial datum and, when the domain is bounded, boundary data.
+The solution is built in three stages: on the whole space by convolution with the heat kernel, on a bounded domain by separation of variables, and for the inhomogeneous problem by Duhamel's principle.
+The analytic core of the chapter is the *maximum principle*, which plays for parabolic equations the role that the energy method plays for the wave equation: it yields uniqueness, comparison and positivity without any regularity beyond $C^2$.
+The chapter closes with the qualitative theory — infinite propagation speed, irreversibility — and with the comparison of the three model equations.
+Two features distinguish parabolic equations from the hyperbolic ones of the previous chapter: *regularization* — arbitrary rough data become $C^oo$ instantly — and *irreversibility* — the backward problem is ill-posed.
 
-== Heat Kernel and Fundamental Solution // 热核与基本解
+Two ingredients are borrowed from later parts: the mollifier and the convolution estimates (*Analytical Tools*), and the eigenfunction expansion with the Sturm--Liouville theory that underwrites it (*Solution Methods and Numerical Methods*).
+
+== Derivation of the Heat Equation and the General Problem // 热方程的导出与一般问题
+
+=== Conservation of Energy and Fourier's Law: the Rod // 能量守恒与傅里叶定律：细杆
+
+Consider a homogeneous rod of cross-section $S$, density $rho$ and specific heat $c$, whose temperature is $u (x, t)$.
+Let $q (x, t)$ be the heat flux — the energy crossing a unit area per unit time, counted positive to the right — and let $f$ be a volumetric heat source.
+The heat content of a segment $[x_1, x_2]$ is
+$ Q = integral_(x_1)^(x_2) rho c u S dif x, $
+and conservation of energy over that segment reads
+$ (dif Q)/(dif t) = q (x_1, t) S - q (x_2, t) S + integral_(x_1)^(x_2) f S dif x. $
+Divide by $S (x_2 - x_1)$, let $x_2 -> x_1$, and use the smoothness of $u$: this gives the local balance
+#eq[$ rho c u_t + q_x = f. $] <eq:heat-conservation>
+
+The balance alone does not close, because $q$ is independent of $u$; the missing ingredient is a constitutive assumption.
+*Fourier's law* states that heat flows against the temperature gradient,
+$ q = -k u_x, quad k > 0, $
+where $k$ is the thermal conductivity of the material.
+Substituting into #link(<eq:heat-conservation>)[the balance] gives
+$ rho c u_t = k u_(x x) + f, quad "i.e." quad u_t = alpha u_(x x) + F, quad alpha = k/(rho c). $
+The constant $alpha > 0$ is the *thermal diffusivity*; rescaling time and space sets $alpha = 1$, the normalization used in the rest of the chapter.
+
+The structure of the derivation is worth recording, because it explains every later contrast with the wave equation.
+There the balance of *momentum* combined with a Hookean stress produces a *second-order* equation in time; here the balance of *energy* combined with Fourier's law produces a *first-order* one.
+A difference of a single order in time is the source of the regularization, the infinite speed of propagation and the irreversibility that characterize this chapter.
+
+=== The Equation in $n$ Dimensions and the Steady State // $n$ 维方程与稳态
+
+In $n$ dimensions the flux is a vector field and Fourier's law reads $bold(q) = -k nabla u$.
+Writing the balance in divergence form gives
+#eq[$ u_t + div bold(q) = f, quad "i.e." quad u_t - div (k nabla u) = f. $] <eq:heat-n-dim>
+For a homogeneous isotropic medium $k$ is constant and, after rescaling, the equation is $u_t - Delta u = f$.
+
+Two special cases organize the whole theory.
+
+- *The steady state.* If $u$ is independent of $t$, the equation reduces to $-Delta u = f$: Poisson's equation, and Laplace's equation when $f = 0$.
+  These are the object of *Laplace's Equation and Harmonic Functions*, and they reappear here as the limit of the evolution problem — the convergence is proved in *Decay to the Steady State*.
+- *The Cauchy problem.* On $bb(R)^n$ there is no boundary, and the initial datum alone determines the solution.
+  This is the problem solved explicitly in *The Convolution Formula*.
+
+=== The Cauchy and Initial-Boundary Problems // 柯西问题与初边值问题
+
+#definition(name: "The Heat Equation: Cauchy and Initial-Boundary Value Problems")[
+  Let $Omega subset bb(R)^n$ be a domain and $T > 0$.
+  The *heat equation* with source $f$ and initial datum $g$ is
+  #eq[$ u_t - Delta u = f quad "in" quad Omega times (0, T), quad u (dot, 0) = g quad "on" quad Omega. $] <eq:heat-problem>
+  - *Cauchy problem*: $Omega = bb(R)^n$, with no boundary condition.
+  - *Dirichlet problem*: $Omega$ bounded, $u = 0$ on $partial Omega times (0, T)$.
+  - *Neumann problem*: $Omega$ bounded, $u_nu = 0$ on $partial Omega times (0, T)$.
+] <def:heat-ibvp>
+
+The data of #link(<eq:heat-problem>)[the problem] sit on different parts of the boundary of the cylinder $Omega times (0, T)$: the initial datum on the bottom $Omega times {0}$, the boundary datum on the lateral surface $partial Omega times (0, T)$, and nothing on the top $Omega times {T}$.
+This asymmetry — one initial condition where the wave equation needs two — is the trace of the first order in time, and it is what makes the problem irreversible.
+
+The set $Gamma_T = (overline(Omega) times {0}) union (partial Omega times [0, T])$ is the *parabolic boundary*: it is precisely the part of the boundary on which the maximum principle reads off the data (*Maximum Principle*).
+On $bb(R)^n$ only the bottom remains, and the parabolic boundary degenerates to the initial surface.
+
+Well-posedness is understood in the sense of #link(<ex:backward-heat-ill-posed>)[*Well-Posedness*]: existence, uniqueness, and continuous dependence on the data.
+The backward problem shows that the third requirement is not automatic, and quantifies how parabolic smoothing forbids it (*Irreversibility and the Arrow of Time*).
+
+#note(title: "Roadmap")[
+  The three problems are solved by three different devices, and the order below follows the dependence between them.
+  - The Cauchy problem is solved explicitly by convolution with the heat kernel (*The Convolution Formula*).
+  - The inhomogeneous equation is reduced to the homogeneous one by superposition in time (*Duhamel's Principle*).
+  - On a bounded domain, uniqueness, stability and comparison follow from the maximum principle (*Maximum Principle*), and existence from the eigenfunction expansion (*Separation of Variables*).
+  - The energy identity and the smoothing estimates give the quantitative form of the regularization (*Energy Estimates and Smoothing Effect*).
+]
+
+== The Heat Kernel and the Cauchy Problem // 热核与柯西问题
+
+=== The Heat Kernel // 热核
 
 #definition(name: "The Heat Kernel")[
   The *heat kernel* on $bb(R)^n$ is
@@ -1977,7 +2054,34 @@ The heat equation, introduced in #link(<def:heat-equation>)[*Basic Concepts and 
   (iv) follows from (ii), positivity, and the concentration of the mass at the origin as $t -> 0^+$ (*Heat Kernel*).
 ]
 
-== Cauchy Problem // Cauchy 问题
+The kernel is more than a function of $t$ and $x$: convolving two kernels amounts to adding the times.
+That law is what makes the convolution formula solve the equation for all $t > 0$ rather than merely provide a candidate, and it is the analytic form of the semigroup property of the flow.
+
+#lemma(name: "Convolution Semigroup Property")[
+  For $s, t > 0$,
+  $
+    E (t, dot) * E (s, dot) = E (t + s, dot).
+  $
+] <lem:heat-kernel-semigroup>
+
+#proof[
+  Set $sigma = s t/(s + t)$ and complete the square in the exponent:
+  $
+    -abs(x - y)^2/(4 t) - abs(y)^2/(4 s) = -abs(y - (s x)/(s + t))^2/(4 sigma) - abs(x)^2/(4 (t + s)).
+  $
+  Hence
+  $
+    (E (t, dot) * E (s, dot)) (x) = exp(-abs(x)^2/(4 (t + s)))/((4 pi t)^(n/2) (4 pi s)^(n/2)) integral_(bb(R)^n) exp(-abs(y - (s x)/(s + t))^2/(4 sigma)) dif y.
+  $
+  The integral equals $(4 pi sigma)^(n/2)$ by (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], and
+  $
+    (4 pi sigma)^(n/2)/((4 pi t)^(n/2) (4 pi s)^(n/2)) = (4 pi (t + s))^(-n/2)
+  $
+  because $sigma = s t/(s + t)$.
+  This is the kernel $E (t + s, dot)$.
+]
+
+=== The Convolution Formula // 卷积表示
 
 #definition(name: "The Cauchy Problem for the Heat Equation")[
   The *Cauchy problem* is to find $u: bb(R)^n times [0, oo) -> bb(R)$ such that
@@ -1999,8 +2103,28 @@ The heat equation, introduced in #link(<def:heat-equation>)[*Basic Concepts and 
   For each fixed $t > 0$, $E (t, dot) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of the heat kernel properties gives $(partial_t - Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E (t, dot)}_(t > 0)$ is an approximate identity; the standard mollifier argument (#link(<def:mollifier>)[*Convolution and Approximation*]) gives $u (dot, t) = E (t, dot) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
 ]
 
+#example(name: "The Cauchy Problem in One Space Dimension")[
+  For $n = 1$ the convolution formula reads
+  $
+    u (x, t) = 1/sqrt(4 pi t) integral_(-oo)^oo exp(-(x - y)^2/(4 t)) g (y) dif y.
+  $
+  For the Heaviside datum $g = bold(1)_((0, oo))$ the substitution $y = x - 2 sqrt(t) xi$ evaluates the integral:
+  $
+    u (x, t) = 1/sqrt(pi) integral_(-oo)^(x/(2 sqrt(t))) e^(-xi^2) dif xi = 1/2 (1 + "erf"(x/(2 sqrt(t)))).
+  $
+] <ex:heat-cauchy-1d>
+
+The example displays the mechanism of the regularization in the simplest case, and it is worth isolating it.
+The datum enters the solution only through an average against the Gaussian, whose support is the whole line.
+A jump of $g$ is therefore not transported but *diffused*: at every $t > 0$ the profile of #link(<ex:heat-cauchy-1d>)[the example] is smooth, and the original discontinuity survives only in the limit $t -> 0^+$.
+This is the exact opposite of what happens for the wave equation, where a jump travels along the characteristics unchanged (*Finite Propagation Speed and Dispersive Decay*).
+
+=== Regularization // 正则化
+
 #note(title: "Smoothing effect")[
-  No regularity of $g$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$, and by the derivative estimates of *Energy Estimates and Smoothing Effect* the derivatives decay as $t^(-abs(alpha)/2)$ (quantified in *Smoothing Effect*). This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation of the previous chapter, which propagates the regularity of the data without improvement.
+  No regularity of $g$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$.
+  The smoothing estimates of *Smoothing Effect* quantify the gain: each derivative costs the factor $t^(-abs(alpha)/2)$, which blows up only as $t -> 0^+$.
+  This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation of the previous chapter, which propagates the regularity of the data without improvement.
 ]
 
 == Maximum Principle // 最大值原理
