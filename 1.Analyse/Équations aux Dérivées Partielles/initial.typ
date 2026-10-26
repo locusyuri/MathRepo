@@ -92,10 +92,13 @@
 //   Section 4.6 Energy Inequality, Uniqueness and Stability
 //   Section 4.7 Finite Propagation Speed and Dispersive Decay
 // --- Ch5 The Heat Equation (热方程) ---
-//   Section 5.1 Heat Kernel and Fundamental Solution
-//   Section 5.2 Cauchy Problem
-//   Section 5.3 Maximum Principle
-//   Section 5.4 Energy Estimates and Smoothing Effect
+//   Section 5.1 Derivation of the Heat Equation and the General Problem
+//   Section 5.2 The Heat Kernel and the Cauchy Problem
+//   Section 5.3 The Inhomogeneous Equation: Duhamel's Principle
+//   Section 5.4 Maximum Principle and Comparison
+//   Section 5.5 Initial-Boundary Value Problems
+//   Section 5.6 Energy Estimates and Smoothing Effect
+//   Section 5.7 Qualitative Theory: Infinite Speed and Irreversibility
 // --- Ch6 Laplace's Equation and Harmonic Functions (拉普拉斯方程与调和函数) ---
 //   Section 6.1 Laplace's and Poisson's Equations
 //   Section 6.2 Mean Value Property
@@ -2081,6 +2084,15 @@ That law is what makes the convolution formula solve the equation for all $t > 0
   This is the kernel $E (t + s, dot)$.
 ]
 
+#note[
+  #figure(
+    image("./img/heat-kernel-spreading.svg", width: 92%),
+    caption: [The kernel $E (t, dot)$ in one space dimension for $t = 0.05, 0.2, 0.8, 3$. The area under each curve is $1$, the peak height is $(4 pi t)^(-1/2)$, and the width grows like $sqrt(t)$: the kernel transports no mass but spreads it.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:heat-kernel-spreading>
+]
+
 === The Convolution Formula // 卷积表示
 
 #definition(name: "The Cauchy Problem for the Heat Equation")[
@@ -2372,6 +2384,11 @@ The evolution problem thus forgets its initial datum at an exponential rate, and
 
 == Energy Estimates and Smoothing Effect // 能量估计与平滑效应
 
+The maximum principle gives qualitative information — order, positivity, uniqueness — from the geometry of the parabolic boundary.
+The energy identity gives quantitative information of a different kind: it identifies the exact rate at which the $L^2$ norm decreases and shows that no derivative of the datum is needed to bound the solution.
+
+=== Energy Dissipation // 能量耗散
+
 #proposition(name: "Energy Dissipation")[
   Let $u$ be a smooth solution of the heat equation on $Omega times (0, oo)$ with either $u = 0$ on $partial Omega$ (Dirichlet) or $u_nu = 0$ on $partial Omega$ (Neumann). Then
   $
@@ -2388,29 +2405,102 @@ The evolution problem thus forgets its initial datum at an exponential rate, and
   The boundary term vanishes for both Dirichlet and Neumann data.
 ]
 
-#theorem(name: "Smoothing Estimates")[
+=== Smoothing Estimates // 平滑估计
+
+The derivatives of the solution are controlled by the datum, with a cost that depends only on the time elapsed and never on the regularity of $g$.
+
+#theorem(name: "Smoothing Estimates in $L^2$")[
   Let $g in L^2 (bb(R)^n)$ and $u = E * g$ the solution of the Cauchy problem. Then for every multi-index $alpha$ and every $t > 0$,
-  $
-    ||partial^alpha u (dot, t)||_(L^2) <= C_(n, alpha) t^(-abs(alpha)/2) ||g||_(L^2),
-  $
-  and for $g in L^1 (bb(R)^n) inter L^2 (bb(R)^n)$,
-  $
-    ||u (dot, t)||_oo <= (4 pi t)^(-n/2) ||g||_(L^1).
-  $
-  These are quantitative forms of the smoothing effect: each derivative costs the factor $t^(-abs(alpha)/2)$, which diverges only as $t -> 0^+$.
+  #eq[$ ||partial^alpha u (dot, t)||_(L^2) <= C_(n, alpha) t^(-abs(alpha)/2) ||g||_(L^2). $] <eq:heat-smoothing-l2>
 ] <thm:smoothing-estimates>
 
 #proof[
-  By the scaling of the Gaussian, $partial^alpha E (t, x) = t^(-(n + abs(alpha))/2) (partial^alpha E) (1, x / sqrt(t))$, so $||partial^alpha E (t, dot)||_(L^1) = C t^(-abs(alpha)/2)$; Young's inequality for convolutions gives
-  $
-    ||partial^alpha u (dot, t)||_(L^2) <= ||partial^alpha E (t, dot)||_(L^1) ||g||_(L^2) <= C t^(-abs(alpha)/2) ||g||_(L^2).
-  $
-  The second estimate is the trivial Young bound $||E (t, dot) * g||_oo <= ||E (t, dot)||_oo ||g||_(L^1) = (4 pi t)^(-n/2) ||g||_(L^1)$.
+  By the scaling of the Gaussian, $partial^alpha E (t, x) = t^(-(n + abs(alpha))/2) (partial^alpha E) (1, x / sqrt(t))$, hence $||partial^alpha E (t, dot)||_(L^1) = C t^(-abs(alpha)/2)$. Young's inequality for convolutions then gives #link(<eq:heat-smoothing-l2>)[the estimate].
 ]
 
-#note[
-  The smoothing effect is irreversible. The backward heat equation is ill-posed, as already noted in #link(<ex:backward-heat-ill-posed>)[*Well-Posedness*]: the estimates above all blow up as $t -> 0^+$, and no bounded backward solution exists for general data. This asymmetry — regularization forward, instability backward — is characteristic of parabolic equations and underlies the arrow of time in diffusion processes.
+Each derivative therefore costs the factor $t^(-abs(alpha)/2)$, which diverges only as $t -> 0^+$: the loss of regularity is confined to the initial instant, and for every $t > 0$ the solution is as smooth as the kernel.
+
+A companion estimate replaces the $L^2$ data by an $L^1$ datum and the $L^2$ norm by the sup-norm; it is the elementary bound used for the nonlinear problems of *Nonlinear Parabolic Equations*.
+
+#proposition(name: "Sup-Norm Smoothing Bound")[
+  Let $g in L^1 (bb(R)^n)$ and $u = E * g$. Then for every $t > 0$,
+  #eq[$ ||u (dot, t)||_oo <= (4 pi t)^(-n/2) ||g||_(L^1). $] <eq:heat-smoothing-linfty>
+] <prop:heat-linfty-bound>
+
+#proof[
+  This is the Young bound $||E (t, dot) * g||_oo <= ||E (t, dot)||_oo ||g||_(L^1)$, together with $||E (t, dot)||_oo = (4 pi t)^(-n/2)$.
 ]
+
+The two estimates display the two faces of the smoothing effect: #link(<eq:heat-smoothing-l2>)[the first] creates derivatives at a fixed integrability level, #link(<eq:heat-smoothing-linfty>)[the second] buys integrability — an $L^1$ datum becomes bounded immediately.
+Both blow up as $t -> 0^+$, and that divergence is not an artefact of the proof: it is the quantitative form of the irreversibility discussed in *Irreversibility and the Arrow of Time*.
+
+== Qualitative Theory: Infinite Speed and Irreversibility // 定性理论：无穷传播速度与不可逆性
+
+=== Infinite Propagation Speed // 无穷传播速度
+
+The convolution formula forces a conclusion that no energy argument could give: the solution at any positive time depends on the datum everywhere.
+
+#theorem(name: "Infinite Speed of Propagation")[
+  Let $g in C_c (bb(R)^n)$ with $g >= 0$ and $g != 0$, and let $u = E * g$ be the solution of the Cauchy problem. Then
+  $
+    u (x, t) > 0 quad "for every" quad x in bb(R)^n quad "and every" quad t > 0.
+  $
+] <thm:heat-infinite-speed>
+
+#proof[
+  For $t > 0$ the kernel $E (t, dot)$ is strictly positive on all of $bb(R)^n$ by (i) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], and $g$ is non-negative and not identically zero, so the integrand in $u (x, t) = integral E (t, x - y) g (y) dif y$ is non-negative and positive on a set of positive measure.
+  The integral is therefore strictly positive.
+]
+
+The support of the datum is lost at the first instant.
+If $g$ is supported in a ball of radius $R$, then for every $t > 0$ the solution is positive on the whole space, however small $t$ is.
+This is the exact negation of finite propagation speed, where the value at $(x, t)$ depends only on the datum in $B (x, a t)$ and vanishes identically outside the cone (*Finite Propagation Speed and Dispersive Decay*).
+
+#note[
+  #figure(
+    image("./img/wave-vs-heat.svg", width: 100%),
+    caption: [The same compactly supported datum, evolved by the two equations. (a) Wave equation $u_(t t) = u_(x x)$: at time $t$ the support is exactly the interval $[x_0 - t, x_0 + t]$, and the signal is transported without being smoothed. (b) Heat equation $u_t = u_(x x)$: at every $t > 0$ the solution is strictly positive on the whole line, with Gaussian tails, and the profile is analytic.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:wave-vs-heat>
+]
+
+=== Irreversibility and the Arrow of Time // 不可逆性与时间箭头
+
+Forward in time the heat equation is the most regularizing equation of the three model equations; backward in time it is not even well posed.
+
+The obstruction is already quantitative in #link(<prop:heat-linfty-bound>)[the sup-norm bound]: solving backward from time $T$ to time $t < T$ would require inverting the factor $(4 pi (T - t))^(-n/2)$, which is unbounded as $t -> T^-$.
+The qualitative statement is in #link(<ex:backward-heat-ill-posed>)[*Well-Posedness*]: the backward problem has no bounded solution for general data, and small perturbations of the final datum produce arbitrarily large perturbations of the initial one.
+
+There is a structural way to say the same thing.
+The solution operator $S (t)$ is defined for $t >= 0$ only, and the family is a semigroup, not a group: the inverse $S (t)^(-1)$ is unbounded wherever it is defined (*Semigroup Framework*).
+The wave equation, by contrast, is reversible — its flow is a group, and the energy identity holds in both directions of time (*Energy Inequality, Uniqueness and Stability*).
+
+#caution[
+  Irreversibility is a property of the *equation*, not of the numerical scheme used to solve it.
+  A stable backward reconstruction is possible only with additional a priori information on the datum — for instance a bound on its norm or its support — and such a reconstruction is a regularization problem, not a solution of the backward equation.
+]
+
+=== The Three Model Equations Compared // 三大模型方程的对照
+
+The three model equations of this Part are distinguished by a single structural choice — the order in time and the sign of the spatial operator — and everything else follows from it.
+
+#tex-table(
+  ("", [*Wave* $u_(t t) = Delta u$], [*Heat* $u_t = Delta u$], [*Laplace* $Delta u = 0$]),
+  ([Order in $t$], [second], [first], [none]),
+  ([Data required], [initial position and velocity], [initial datum only], [boundary data only]),
+  ([Propagation], [finite speed $a$], [infinite speed], [infinite speed, all directions]),
+  ([Regularity], [no gain], [instant smoothing], [analytic]),
+  ([Reversibility], [reversible (group)], [irreversible (semigroup)], [static]),
+  ([Energy], [conserved], [dissipated], [stationary]),
+  ([Spectrum], [$plus.minus i a abs(xi)$], [$-abs(xi)^2$], [no time evolution]),
+) <tab:three-models>
+
+The table is not a mnemonic but a summary of the three chapters.
+Each row was proved in the corresponding chapter: the finite speed and the absence of smoothing in *Finite Propagation Speed and Dispersive Decay*, the infinite speed in *Infinite Propagation Speed*, the smoothing and the dissipation in *Energy Estimates and Smoothing Effect*, and the rigidity of the harmonic functions in *Mean Value Property*.
+
+With the three model equations in place, the stage is set for the general theory.
+The next Part supplies the language — distributions, convolution and Sobolev spaces — in which the weak formulations of the elliptic, parabolic and hyperbolic problems are stated, and the three chapters that follow it revisit these equations at a higher level of generality.
 
 = Laplace's Equation and Harmonic Functions // 拉普拉斯方程与调和函数
 
