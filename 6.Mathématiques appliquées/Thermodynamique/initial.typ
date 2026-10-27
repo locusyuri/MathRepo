@@ -737,21 +737,43 @@ captures both corrections.
   equation.
 ]
 
-#proposition(name: "Critical Point")[
-  The van der Waals isotherm $p(V_m)$ has, at sufficiently low
-  temperatures, a region of positive slope — unphysical, since it
-  signals negative compressibility. The boundary is the *critical
-  point*, at which the isotherm develops an inflection:
+At sufficiently low temperatures the van der Waals isotherm $p(V_m)$
+acquires a region of positive slope — unphysical, since it signals
+negative compressibility — and that region is bounded by the state at
+which the isotherm flattens into an inflection.
+
+#definition(name: "Critical Point")[
+  The *critical point* of the van der Waals gas is the state at which its
+  isotherm develops an inflection:
   $
-    (dif p) / (dif V_m)_T = 0, quad (dif^2 p) / (dif V_m^2)_T = 0,
+    (dif p) / (dif V_m)_T = 0, quad (dif^2 p) / (dif V_m^2)_T = 0.
   $
-  yielding the critical constants
+] <def:vdw-critical>
+
+#proposition(name: "Critical Constants")[
+  At the critical point the van der Waals equation of state gives the
+  critical constants
   $
     T_c = 8 a / (27 R b), quad V_c = 3 b, quad p_c = a / (27 b^2).
   $
-  Below $T_c$ the isotherms develop the characteristic loop that signals
-  the liquid--gas transition.
 ] <prop:vdw-critical>
+
+#proof(name: "of the critical constants")[
+  Write the equation of state as
+  $p = (R T)/(V_m - b) - a/(V_m^2)$.
+  The two inflection conditions then read
+  $
+    - (R T)/(V_m - b)^2 + (2 a)/(V_m^3) = 0, quad
+    (2 R T)/(V_m - b)^3 - (6 a)/(V_m^4) = 0.
+  $
+  Dividing the second by the first eliminates $T$ and gives
+  $1/(V_m - b) = 3/(2 V_m)$, i.e. $V_m = 3 b$.
+  Substituting back yields $T = 8 a / (27 R b)$, and then
+  $p = a / (27 b^2)$.
+]
+
+Below $T_c$ the isotherms develop the characteristic loop that signals
+the liquid--gas transition.
 
 #note(title: "Maxwell construction")[
   The van der Waals loop below $T_c$ is
@@ -771,30 +793,33 @@ by the collisions that randomise it. For a dilute gas, the collision
 structure is captured by a single geometric quantity.
 
 #definition(name: "Collision Cross-Section")[
-  Model the molecules as hard spheres of diameter $d$. A collision
-  occurs whenever two centres pass within a distance $d$; equivalently,
-  each molecule sweeps out a *collision cross-section*
-  $
-    sigma = pi d^2
-  $
-  on the cylinder of targets it can hit.
+  Model the molecules as hard spheres of diameter $d$. A collision occurs
+  whenever two centres pass within a distance $d$; equivalently, each
+  molecule sweeps out a *collision cross-section* $sigma = pi d^2$ on the
+  cylinder of targets it can hit.
 ] <def:collision-cross-section>
 
+#definition(name: "Collision Frequency and Mean Free Path")[
+  The *collision frequency* $overline(Z)$ of a molecule is the average
+  number of collisions it undergoes per unit time; its *mean free path*
+  $lambda = overline(v) / overline(Z)$ is the average distance travelled
+  between successive collisions, with $overline(v)$ the mean speed.
+] <def:mean-free-path>
+
 #proposition(name: "Mean Free Path")[
-  A molecule of a gas with number density $n$ travels, between successive collisions, an average distance
+  For a dilute gas of number density $n$, whose molecules present the
+  cross-section $sigma$, the mean free path and the collision frequency
+  are
   $
-    lambda = overline(v) / overline(Z) = 1 / (sqrt(2) n sigma),
+    lambda = 1 / (sqrt(2) n sigma), quad
+    overline(Z) = sqrt(2) n sigma overline(v).
   $
-  where $overline(Z)$ is the *collision frequency* — the average number of collisions one molecule undergoes per unit time — and $lambda$ the *mean free path*, the average distance travelled between successive collisions.
 ] <prop:mean-free-path>
 
-Since a molecule spends the time between two collisions
-travelling at the mean speed $overline(v)$, its path decomposes as
-distance $=$ speed $times$ time, $lambda = overline(v) / overline(Z)$.
-The content of the formula is the factor $sqrt(2)$, which the proof
+The content of the proposition is the factor $sqrt(2)$, which the proof
 below traces to the motion of the targets.
 
-#proof[
+#proof(name: "of the mean free path")[
   In a time $dif t$, a molecule moving with speed $v$ sweeps
   a cylinder of volume $sigma v dif t$ and collides with every other
   molecule whose centre lies inside it. With stationary targets the
@@ -900,6 +925,14 @@ one mean free path away.
     derivations use free flight over one $lambda$, valid only when
     $lambda$ is small compared with the macroscopic scale of the gradient.
 ]
+
+#note(title: "Status of the three estimates")[
+  Only the viscosity case is derived above; conductivity and diffusivity
+  follow by repeating the argument with the transported quantity changed,
+  so all three share the same first-order prefactor $1/3$.
+  The exact prefactors, and the precise range of validity of the
+  estimates, come from the Boltzmann equation — the subject of Chapter 21.
+] <note:transport-estimates>
 
 #note(title: "Stochastic boundary")[
   The molecular-randomness picture of this
