@@ -2766,7 +2766,7 @@ vectors.
 
 #definition(name: "Mean Vector and Covariance Matrix")[
   For a random vector $bold(X) = (X_1, dots, X_n)$:
-  - the *mean vector* is $bold(mu) = E[bold(X)] = (E[X_1], dots, E[X_n])^T$;
+  - the *mean vector* is $bold(mu) = E[bold(X)] = (E[X_1], dots, E[X_n])^"T"$;
   - the *covariance matrix* is the $n times n$ matrix $Sigma$ with entries
     $
       Sigma_(i j) = "Cov"(X_i, X_j), quad i, j = 1, dots, n,
@@ -2775,9 +2775,9 @@ vectors.
 ] <def:mean-vector-covariance-matrix>
 
 #property(name: "Symmetry and Positive Semi-Definiteness")[
-  The covariance matrix satisfies $Sigma^T = Sigma$ and is positive semi-definite:
+  The covariance matrix satisfies $Sigma^"T" = Sigma$ and is positive semi-definite:
   $
-    bold(a)^T Sigma bold(a) = "Var"(bold(a)^T bold(X)) >= 0 quad "for every" bold(a) in RR^n.
+    bold(a)^"T" Sigma bold(a) = "Var"(bold(a)^"T" bold(X)) >= 0 quad "for every" bold(a) in RR^n.
   $
 ] <prop:cov-matrix-psd>
 
@@ -2785,7 +2785,7 @@ vectors.
   Symmetry follows from $"Cov"(X_i, X_j) = "Cov"(X_j, X_i)$.
   For the quadratic form, expanding the definition and using linearity of expectation,
   $
-    bold(a)^T Sigma bold(a) = sum_(i, j) a_i a_j (E[X_i X_j] - E[X_i] E[X_j]) = E[(bold(a)^T bold(X))^2] - (E[bold(a)^T bold(X)])^2 = "Var"(bold(a)^T bold(X)) >= 0.
+    bold(a)^"T" Sigma bold(a) = sum_(i, j) a_i a_j (E[X_i X_j] - E[X_i] E[X_j]) = E[(bold(a)^"T" bold(X))^2] - (E[bold(a)^"T" bold(X)])^2 = "Var"(bold(a)^"T" bold(X)) >= 0.
   $
 ]
 
@@ -3176,9 +3176,9 @@ statistics.
   $Sigma$ (a symmetric positive-definite $n times n$ matrix), written
   $bold(X) ~ N_(n)(bold(mu), Sigma)$, if its joint density is
   $
-    f(bold(x)) = 1 / ((2 pi)^(n\/2) sqrt(abs(Sigma))) exp(-1\/2 (bold(x) - bold(mu))^T Sigma^(-1) (bold(x) - bold(mu))).
+    f(bold(x)) = 1 / ((2 pi)^(n\/2) sqrt(abs(Sigma))) exp(-1\/2 (bold(x) - bold(mu))^"T" Sigma^(-1) (bold(x) - bold(mu))).
   $
-  The quadratic form $(bold(x) - bold(mu))^T Sigma^(-1) (bold(x) - bold(mu))$
+  The quadratic form $(bold(x) - bold(mu))^"T" Sigma^(-1) (bold(x) - bold(mu))$
   is the *Mahalanobis distance* from $bold(x)$ to $bold(mu)$.
 ] <def:multivariate-normal>
 
@@ -3197,7 +3197,7 @@ $rho$ — the picture of #link(<fig:joint-density>)[the joint density figure].
 #property(name: "Linear Transformations")[
   If $bold(X) ~ N_(n)(bold(mu), Sigma)$ and $bold(Y) = bold(A) bold(X) +
   bold(b)$ where $bold(A)$ is an $m times n$ matrix and $bold(b) in RR^m$,
-  then $bold(Y) ~ N_(m)(bold(A) bold(mu) + bold(b), bold(A) Sigma bold(A)^T)$.
+  then $bold(Y) ~ N_(m)(bold(A) bold(mu) + bold(b), bold(A) Sigma bold(A)^"T")$.
   In particular, any linear combination of jointly normal variables is
   normal — the *closure under linear transformation*.
 ] <prop:mv-normal-linear>

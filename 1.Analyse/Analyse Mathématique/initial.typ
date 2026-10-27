@@ -8178,7 +8178,7 @@ $
   $
     Delta bold(y) = bold(f)(bold(x)^0 + Delta bold(x)) - bold(f)(bold(x)^0) = A Delta bold(x) + o(norm(Delta bold(x)))
   $
-  (where $Delta bold(x) = (Delta x_1, Delta x_2, dots, Delta x_n)^T$ is a column vector and $norm(Delta bold(x))$ denotes its norm), then $bold(f)$ is said to be *differentiable at* $bold(x)^0$ as a vector-valued function, and $A Delta bold(x)$ is called the *differential* of $bold(f)$ at $bold(x)^0$, denoted as $dif bold(y)$. If we denote $Delta bold(x)$ by $dif bold(x)$ ($dif bold(x) = (dif x_1, dif x_2, dots, dif x_n)^T$), then
+  (where $Delta bold(x) = (Delta x_1, Delta x_2, dots, Delta x_n)^"T"$ is a column vector and $norm(Delta bold(x))$ denotes its norm), then $bold(f)$ is said to be *differentiable at* $bold(x)^0$ as a vector-valued function, and $A Delta bold(x)$ is called the *differential* of $bold(f)$ at $bold(x)^0$, denoted as $dif bold(y)$. If we denote $Delta bold(x)$ by $dif bold(x)$ ($dif bold(x) = (dif x_1, dif x_2, dots, dif x_n)^"T"$), then
   $
     dif bold(y) = A dif bold(x).
   $
@@ -8442,7 +8442,7 @@ And we have a global estimation for the difference of mappings:
 In applications, particularly important is the expression of the first three terms in Taylor's formula, which is given as (let $x_1 - x_1^0$ be denoted by $Delta x_1$, and similarly for other variables; $Delta bold(x) = (Delta x_1, Delta x_2, dots, Delta x_n)$):
 $
   f(bold(x)) = f(bold(x)^0) + J f(bold(x)^0)(Delta bold(x))
-  + 1/(2!) (Delta bold(x)) H f(bold(x)^0) (Delta bold(x))^T + dots,
+  + 1/(2!) (Delta bold(x)) H f(bold(x)^0) (Delta bold(x))^"T" + dots,
 $
 where the matrix
 $

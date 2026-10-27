@@ -725,7 +725,7 @@ and $L_1[u] = sum_i b_i(x) u_(x_i)$ is the first-order part.
 #definition(name: "Principal Symbol")[
   The _principal symbol_ of the operator $L$ is the quadratic form
   #eq[$
-    a(x, xi) = sum_(i, j = 1)^n a_(i j)(x) xi_i xi_j = xi^T A(x) xi,
+    a(x, xi) = sum_(i, j = 1)^n a_(i j)(x) xi_i xi_j = xi^"T" A(x) xi,
   $] <eq:principal-symbol>
   where $xi = (xi_1, dots, xi_n) in bb(R)^n$. The _full symbol_ of $L$ is $sigma(x, xi) = a(x, xi) + i sum_i b_i(x) xi_i - c(x)$, which incorporates lower-order contributions.
 ]
@@ -2535,7 +2535,7 @@ The Laplace equation, introduced in #link(<def:laplace-equation>)[*Basic Concept
 ] <prop:laplacian-invariance>
 
 #proof[
-  These are direct chain-rule computations. For example, if $v (x) = u (Q x)$, then $v_(x_i) = sum_j Q_(j i) u_(x_j) compose (Q dot)$ and, since $Q Q^T = I$,
+  These are direct chain-rule computations. For example, if $v (x) = u (Q x)$, then $v_(x_i) = sum_j Q_(j i) u_(x_j) compose (Q dot)$ and, since $Q Q^"T" = I$,
   $
     Delta v = sum_i sum_(j, k) Q_(j i) Q_(k i) ((partial^2 u)/(partial x_j partial x_k)) compose (Q dot) = sum_j ((partial^2 u)/(partial x_j^2)) compose (Q dot) = (Delta u) compose (Q dot).
   $

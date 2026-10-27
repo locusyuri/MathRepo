@@ -1177,7 +1177,7 @@ is called a hyperbolic paraboloid, or a saddle surface.
 
 The equation above can be written in matrix form as
 #eq[$
-  bold(x)^T A bold(x) + 2 bold(b)^T bold(x) + a_0 = 0,
+  bold(x)^"T" A bold(x) + 2 bold(b)^"T" bold(x) + a_0 = 0,
 $] <eq:conic-general>
 where
 $
