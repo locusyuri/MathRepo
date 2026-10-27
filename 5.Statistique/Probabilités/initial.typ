@@ -2189,6 +2189,9 @@ densities takes centre stage.
 
 = Multivariate Random Variables and Distributions // 多维随机变量及其分布
 
+Real experiments rarely report a single number, and the univariate theory of Chapters 3–4 extends to vectors: joint laws, marginals, conditioning, functions of several variables, and the covariance structure that summarises dependence.
+This chapter builds that extension; the tools it develops — convolution, change of variables, additivity, covariance — serve every later chapter.
+
 == Joint Distributions // 联合分布
 
 A single random variable tracks one quantity; real experiments often
@@ -2222,9 +2225,10 @@ now landing on $RR^n$.
     F(bold(x)) = mu_(bold(X))((-infinity, x_1] times dots times (-infinity, x_n])
     = P(X_1 <= x_1, dots, X_n <= x_n).
   $
-  For $n = 2$ we write $F(x, y) = P(X <= x, Y <= y)$. As in one dimension,
-  joint distribution measures and joint CDFs determine each other.
+  For $n = 2$ we write $F(x, y) = P(X <= x, Y <= y)$.
 ] <def:joint-distribution-measure>
+
+As in one dimension, the joint distribution measure and the joint CDF determine each other: the CDF evaluates the measure on the boxes $(-infinity, x_1] times dots times (-infinity, x_n]$, a $pi$-system generating $cal(B)(RR^n)$.
 
 #property(name: "Properties of the Joint CDF")[
   Let $F(x, y)$ be a bivariate CDF.
@@ -2249,9 +2253,7 @@ now landing on $RR^n$.
   arguments as in the univariate case.
 ]
 
-The univariate pattern — a density with respect to a reference measure —
-carries over verbatim once the Borel $sigma$-algebra of $RR$ is replaced
-by that of $RR^n$.
+The univariate pattern of #link(<def:density>)[the density with respect to a reference measure] carries over verbatim once the Borel $sigma$-algebra of $RR$ is replaced by that of $RR^n$.
 
 #definition(name: "Joint Density with Respect to a Reference Measure")[
   Let $nu$ be a $sigma$-finite reference measure on
@@ -2271,9 +2273,7 @@ by that of $RR^n$.
     probability mass function* (joint PMF).
 ] <def:joint-density>
 
-As in the univariate chapter, the probability part of this book works in
-the two elementary regimes below; the general definition explains why the
-joint PMF and the joint PDF are the same kind of object.
+As in #link(<def:pmf-pdf>)[the univariate elementary forms], the probability part of this book works in the two elementary regimes below; the general definition explains why the joint PMF and the joint PDF are the same kind of object.
 
 #definition(name: "Joint PMF and PDF: Elementary Forms")[
   The components are *discrete* if they take values in a finite or
@@ -2281,7 +2281,7 @@ joint PMF and the joint PDF are the same kind of object.
   $
     p(x_1, dots, x_n) = P(X_1 = x_1, dots, X_n = x_n),
   $
-  with $sum p(x_1, dots, x_n) = 1$, and the joint CDF is the multivariate
+  with $sum_(x_1, dots, x_n) p(x_1, dots, x_n) = 1$, and the joint CDF is the multivariate
   step function $F(bold(x)) = sum_(bold(y) <= bold(x)) p(bold(y))$, where
   $bold(y) <= bold(x)$ means $y_i <= x_i$ for every component.
 
@@ -2303,13 +2303,10 @@ joint PMF and the joint PDF are the same kind of object.
 
 #proof[
   The argument repeats the univariate one dimension by dimension.
-  Non-negativity is built into the definition. Normalization follows from
-  $F(+infinity, dots, +infinity) = 1$. On any rectangle
-  $R = (a_1, b_1] times dots times (a_n, b_n]$, iterating the fundamental
-  theorem of calculus gives $P(bold(X) in R) = integral_R f(bold(x)) dif bold(x)$,
-  and general regions $D$ follow by approximating with finite unions of
-  rectangles and using #link(<thm:continuity-probability>)[continuity of
-    probability].
+  Non-negativity is built into the definition.
+  Normalization follows from $F(+infinity, dots, +infinity) = 1$.
+  On any rectangle $R = (a_1, b_1] times dots times (a_n, b_n]$, iterating the fundamental theorem of calculus gives $P(bold(X) in R) = integral_R f(bold(x)) dif bold(x)$.
+  Both sides are finite measures on $cal(B)(RR^n)$ that agree on the rectangles, a $pi$-system generating the Borel $sigma$-algebra, so the monotone class theorem extends the identity to every Borel region $D$.
 ]
 
 === Common Joint Distributions // 常见联合分布
@@ -2468,19 +2465,15 @@ factorization criterion above applies verbatim.
   - $P(X in A, Y in B) = P(X in A) P(Y in B)$ for all Borel sets $A, B$;
   - if $g$ and $h$ are measurable functions, $g(X)$ and $h(Y)$ are
     independent;
-  - the joint CDF determines the joint distribution *and* the marginals, but
-    the converse requires independence: the marginals alone do *not*
-    determine the joint.
+  - the joint CDF determines the joint distribution *and* the marginals; conversely, the marginals determine the joint only under independence — in general they do *not*.
 ] <prop:independence-criterion>
 
 #note[
-  Independence of random variables is stronger than *uncorrelatedness*: two
-  variables can be uncorrelated (a condition involving expectations,
-  defined in Chapter 3) yet dependent. The
-  distinction is central to the covariance theory developed there.
+  Independence of random variables is stronger than *uncorrelatedness*: two variables can be uncorrelated — a condition on expectations, defined with #link(<def:covariance>)[covariance] later in this chapter — yet dependent.
+  The distinction is central to the covariance theory developed below.
 ]
 
-== Conditional Distributions // 条件分布
+== Conditional Distributions and Conditional Expectation // 条件分布与条件期望
 
 Conditional probability restricts the sample space; conditional
 distributions restrict one variable to a fixed value and examine the
@@ -2490,7 +2483,7 @@ distribution of the other.
   For discrete $X, Y$ with joint PMF $p(x, y)$ and $p_(X)(x) > 0$, the
   *conditional PMF* of $Y$ given $X = x$ is
   $
-    p_(Y|X)(y|x) = (p(x, y)) / p_(X)(x).
+    p_(Y|X)(y|x) = (p(x, y)) / (p_(X)(x)).
   $
 ] <def:conditional-pmf>
 
@@ -2498,7 +2491,7 @@ distribution of the other.
   For continuous $X, Y$ with joint PDF $f(x, y)$ and $f_(X)(x) > 0$, the
   *conditional PDF* of $Y$ given $X = x$ is
   $
-    f_(Y|X)(y|x) = (f(x, y)) / f_(X)(x).
+    f_(Y|X)(y|x) = (f(x, y)) / (f_(X)(x)).
   $
 ] <def:conditional-pdf>
 
@@ -2522,7 +2515,7 @@ distribution of the other.
 
 #definition(name: "Conditional Expectation")[
   Given #link(<def:conditional-pmf>)[the conditional PMF/PDF] of $Y$ given
-  $X = x$, the *conditional expectation* is
+  $X = x$, the *conditional expectation* — defined whenever $E[abs(Y)] < infinity$ — is
   $
     E[Y|X=x] = sum_y y p_(Y|X)(y|x) quad ("discrete"), quad integral_(-infinity)^infinity y f_(Y|X)(y|x) dif y quad ("continuous").
   $
@@ -2542,12 +2535,16 @@ distribution of the other.
   #link(<prop:conditional-dist-properties>)[the total density formula]
   $f_(Y)(y) = integral f_(Y|X)(y|x) f_(X)(x) dif x$:
   $
-    E[E[Y|X]] = integral E[Y|X=x] f_(X)(x) dif x = integral (integral y f_(Y|X)(y|x) dif y) f_(X)(x) dif x = integral y (integral f_(Y|X)(y|x) f_(X)(x) dif x) dif y = integral y f_(Y)(y) dif y = E[Y].
+    E[E[Y|X]] & = integral E[Y|X=x] f_(X)(x) dif x
+    = integral (integral y f_(Y|X)(y|x) dif y) f_(X)(x) dif x \
+    & = integral y (integral f_(Y|X)(y|x) f_(X)(x) dif x) dif y
+    = integral y f_(Y)(y) dif y = E[Y].
   $
   The discrete case replaces integrals by sums.
 ]
 
 #property(name: "Conditional Variance Decomposition")[
+  If $"Var"(Y) < infinity$, then
   $
     "Var"(Y) = E["Var"(Y|X)] + "Var"(E[Y|X]).
   $
@@ -2564,13 +2561,10 @@ distribution of the other.
 
 
 
-== Distributions of Functions of Random Variables // 随机变量函数的分布
+== Distributions of Functions of Several Random Variables // 多维随机变量函数的分布
 
-Given the joint distribution of several random variables, the distribution of
-a function of them — a sum, a product, a maximum — is the natural next
-question. The methods extend the univariate tools of
-#link(<thm:monotone-transform>)[the monotone transform] to higher
-dimensions.
+Given the joint distribution of several random variables, the distribution of a function of them — a sum, a product, a maximum — is the natural next question.
+The methods extend the univariate tools of #link(<thm:monotone-transform>)[the monotone transform] to higher dimensions.
 
 For a *discrete* vector, the method is direct enumeration.
 
@@ -2623,8 +2617,7 @@ For *sums* of independent continuous variables, the integral form is the
   $
     F_(Z)(z) = P(X + Y <= z) = integral_(-infinity)^infinity P(Y <= z - x) f_(X)(x) dif x = integral_(-infinity)^infinity F_(Y)(z - x) f_(X)(x) dif x.
   $
-  Differentiating in $z$ (under the integral, justified by dominated
-  convergence) gives $f_(Z)(z) = integral f_(Y)(z - x) f_(X)(x) dif x$.
+  Differentiating in $z$ under the integral — justified by dominated convergence when $f_(Y)$ is bounded, and in general by approximation — gives $f_(Z)(z) = integral f_(Y)(z - x) f_(X)(x) dif x$.
 ]
 
 #example(name: "Sum of exponentials is Gamma")[
@@ -2640,9 +2633,8 @@ For *sums* of independent continuous variables, the integral form is the
     = (lambda^(n+1) e^(-lambda s)) / Gamma(n) integral_0^s t^(n-1) dif t
     = (lambda^(n+1) s^n e^(-lambda s)) / Gamma(n+1),
   $
-  which is the $"Ga"(n+1, lambda)$ density — using $Gamma(n+1) = n dot
-  Gamma(n)$. This confirms the Gamma-to-Exponential connection noted in
-  #link(<def:gamma-dist>)[the Gamma definition].
+  which is the $"Ga"(n+1, lambda)$ density — using $Gamma(n+1) = n dot Gamma(n)$.
+  This confirms the Gamma-to-Exponential connection of #link(<def:gamma-dist>)[the Gamma family]: $"Exp"(lambda) = "Ga"(1, lambda)$.
 ] <ex:exp-sum-gamma>
 
 Additivity is the property that lets the convolution be used once and then forgotten: the law of the sum is read off the parameters.
@@ -2659,8 +2651,8 @@ For continuous families additivity is checked with #link(<thm:convolution>)[the 
     $
       P(X + Y = k) = sum_(j=0)^k (lambda_1^j e^(-lambda_1)) / j! dot (lambda_2^(k-j) e^(-lambda_2)) / (k-j)! = ((lambda_1 + lambda_2)^k e^(-(lambda_1 + lambda_2))) / k!.
     $
-  - *Normal.* If $X ~ N(mu_1, sigma_1^2)$ and $Y ~ N(mu_2, sigma_2^2)$ are independent, then $X + Y ~ N(mu_1 + mu_2, sigma_1^2 + sigma_2^2)$: completing the square in #link(<thm:convolution>)[the convolution integral] yields this density — the one-line proof with characteristic functions comes in the next chapter.
-  - *Gamma, hence chi-squared.* If $X ~ "Ga"(alpha_1, lambda)$ and $Y ~ "Ga"(alpha_2, lambda)$ are independent, then $X + Y ~ "Ga"(alpha_1 + alpha_2, lambda)$, the computation of #link(<prop:chi-squared-moments>)[the chi-squared additivity proof]; with $lambda = 1 / 2$ this gives $chi^2 (n_1) + chi^2 (n_2) ~ chi^2 (n_1 + n_2)$.
+  - *Normal.* If $X ~ N(mu_1, sigma_1^2)$ and $Y ~ N(mu_2, sigma_2^2)$ are independent, then $X + Y ~ N(mu_1 + mu_2, sigma_1^2 + sigma_2^2)$: completing the square in #link(<thm:convolution>)[the convolution integral] yields this density, while the one-line proof via #link(<ex:normal-sum-mgf>)[moment generating functions] comes in the next chapter.
+  - *Gamma, hence chi-squared.* If $X ~ "Ga"(alpha_1, lambda)$ and $Y ~ "Ga"(alpha_2, lambda)$ are independent, then $X + Y ~ "Ga"(alpha_1 + alpha_2, lambda)$, as computed in #link(<prop:chi-squared-moments>)[the chi-squared additivity proof]; with $lambda = 1 / 2$ this gives $chi^2 (n_1) + chi^2 (n_2) ~ chi^2 (n_1 + n_2)$.
 ]
 
 For *general transformations* of a continuous random vector, the univariate
@@ -2668,9 +2660,7 @@ monotone transform generalises to a multidimensional change of variables.
 
 #theorem(name: "Multivariate Change of Variables")[
   Let $bold(X) = (X_1, dots, X_n)$ be a continuous random vector with joint
-  density $f_(bold(X))$. Let $bold(g): A -> B$ be a one-to-one differentiable
-  map from an open set $A subset.eq RR^n$ containing the range of $bold(X)$
-  onto $B$, with inverse $bold(h) = bold(g)^(-1)$. Then $bold(Y) =
+  density $f_(bold(X))$. Let $bold(g): A -> B$ be a one-to-one continuously differentiable map from an open set $A subset.eq RR^n$ containing the range of $bold(X)$ onto $B$, with continuously differentiable inverse $bold(h) = bold(g)^(-1)$. Then $bold(Y) =
   bold(g)(bold(X))$ has joint density
   $
     f_(bold(Y))(bold(y)) = f_(bold(X))(bold(h)(bold(y))) dot abs(J(bold(y))),
@@ -2712,51 +2702,94 @@ vectors.
   $
 ] <def:covariance>
 
+#property(name: "Product Expectation for Independent Variables")[
+  If $X$ and $Y$ are independent with $E[abs(X)], E[abs(Y)] < infinity$, then
+  $
+    E[X Y] = E[X] E[Y].
+  $
+] <prop:product-expectation>
+
+#proof[
+  In the elementary regimes the joint law factorises, $f(x, y) = f_(X)(x) f_(Y)(y)$ (sums replacing integrals when the variables are discrete).
+  Tonelli applied to the non-negative function $abs(x y) f_(X)(x) f_(Y)(y)$ gives $E[abs(X Y)] = E[abs(X)] E[abs(Y)] < infinity$, so Fubini factors the double integral:
+  $
+    E[X Y] = integral integral x y f_(X)(x) f_(Y)(y) dif x dif y = (integral x f_(X)(x) dif x) (integral y f_(Y)(y) dif y) = E[X] E[Y].
+  $
+  Approximation by simple functions extends the identity beyond the elementary regimes.
+]
+
 #definition(name: "Correlation Coefficient")[
-  The *Pearson correlation coefficient* is the normalised covariance
+  The *Pearson correlation coefficient* of $X$ and $Y$ with $"Var"(X), "Var"(Y) > 0$ is the normalised covariance
   $
-    rho_(X Y) = ("Cov"(X, Y)) / (sigma_X sigma_Y),
+    rho_(X Y) = ("Cov"(X, Y)) / (sigma_X sigma_Y).
   $
-  provided $sigma_X, sigma_Y > 0$. It satisfies $-1 <= rho <= 1$, with
-  $rho = plus.minus 1$ iff $Y = a X + b$ a.s. for some $a != 0$.
 ] <def:correlation-coefficient>
 
+#property(name: "Range of the Correlation Coefficient")[
+  For random variables with $0 < "Var"(X), "Var"(Y) < infinity$,
+  $
+    -1 <= rho_(X Y) <= 1,
+  $
+  with $rho_(X Y) = ±1$ if and only if $Y = a X + b$ almost surely for some $a != 0$; the sign of $a$ is the sign of $rho_(X Y)$.
+] <prop:correlation-range>
+
+#proof[
+  Cauchy–Schwarz applied to the centred variables gives
+  $
+    ("Cov"(X, Y))^2 <= "Var"(X) "Var"(Y),
+  $
+  which is exactly $abs(rho_(X Y)) <= 1$.
+  Equality holds precisely when $X - E[X]$ and $Y - E[Y]$ are almost surely proportional, i.e. $Y = a X + b$ almost surely with $a != 0$.
+]
+
 #property(name: "Uncorrelatedness vs Independence")[
-  - If $X$ and $Y$ are independent, then $"Cov"(X, Y) = 0$ (they are
-    *uncorrelated*).
-  - The converse is false in general: zero covariance does not imply
-    independence.
-  - (Normal case.) For jointly normal variables, uncorrelatedness and
-    independence are *equivalent* — see
-    #link(<prop:mv-normal-independence>)[the multivariate normal
-      independence property].
-  - $"Cov"(X, Y) = 0$ is equivalent to $E[X Y] = E[X] E[Y]$ and to
-    $"Var"(X + Y) = "Var"(X) + "Var"(Y)$.
+  - If $X$ and $Y$ are independent, then $"Cov"(X, Y) = 0$ (they are *uncorrelated*).
+  - The converse is false in general: zero covariance does not imply independence.
+  - (Normal case.) For jointly normal variables, uncorrelatedness and independence are *equivalent* — see #link(<prop:mv-normal-independence>)[the multivariate normal independence property].
+  - $"Cov"(X, Y) = 0$ is equivalent to $E[X Y] = E[X] E[Y]$ and to $"Var"(X + Y) = "Var"(X) + "Var"(Y)$.
 ] <prop:uncorrelated-vs-independent>
 
+#proof[
+  If $X$ and $Y$ are independent, #link(<prop:product-expectation>)[the product rule for expectations] gives $E[X Y] = E[X] E[Y]$, hence $"Cov"(X, Y) = E[X Y] - E[X] E[Y] = 0$.
+  Conversely, $"Cov"(X, Y) = 0$ means $E[X Y] = E[X] E[Y]$ by #link(<def:covariance>)[definition], and expanding
+  $
+    "Var"(X + Y) = E[(X + Y)^2] - (E[X] + E[Y])^2 = "Var"(X) + "Var"(Y) + 2 ("Cov"(X, Y))
+  $
+  shows that the three conditions are equivalent.
+  The first implication nevertheless cannot be reversed in general — the example below exhibits dependent variables with zero covariance.
+]
+
 #example(name: "Uncorrelated but dependent")[
-  Let $X ~ U(-1, 1)$ and $Y = X^2$. Then
-  $"Cov"(X, Y) = E[X^3] - E[X] E[X^2] = 0 - 0 = 0$ (since $E[X^3] = 0$ by
-  symmetry), yet $Y$ is a deterministic function of $X$ — far from
-  independent.
+  Let $X ~ U(-1, 1)$ and $Y = X^2$.
+  Then $"Cov"(X, Y) = E[X^3] - E[X] E[X^2] = 0 - 0 = 0$ (since $E[X^3] = 0$ by symmetry), yet $Y$ is a deterministic function of $X$ — far from independent.
 ]
 
 #definition(name: "Mean Vector and Covariance Matrix")[
   For a random vector $bold(X) = (X_1, dots, X_n)$:
-  - the *mean vector* is $bold(mu) = E[bold(X)] = (E[X_1], dots,
-      E[X_n])^T$;
+  - the *mean vector* is $bold(mu) = E[bold(X)] = (E[X_1], dots, E[X_n])^T$;
   - the *covariance matrix* is the $n times n$ matrix $Sigma$ with entries
     $
       Sigma_(i j) = "Cov"(X_i, X_j), quad i, j = 1, dots, n,
     $
     with $Sigma_(i i) = "Var"(X_i)$ on the diagonal.
-
-  $Sigma$ is symmetric and positive semi-definite. This is the object
-  appearing in the
-  #link(<def:multivariate-normal>)[multivariate normal density] of
-  Chapter 7: the abstract $Sigma$ is grounded in the concrete notion of
-  covariance.
 ] <def:mean-vector-covariance-matrix>
+
+#property(name: "Symmetry and Positive Semi-Definiteness")[
+  The covariance matrix satisfies $Sigma^T = Sigma$ and is positive semi-definite:
+  $
+    bold(a)^T Sigma bold(a) = "Var"(bold(a)^T bold(X)) >= 0 quad "for every" bold(a) in RR^n.
+  $
+] <prop:cov-matrix-psd>
+
+#proof[
+  Symmetry follows from $"Cov"(X_i, X_j) = "Cov"(X_j, X_i)$.
+  For the quadratic form, expanding the definition and using linearity of expectation,
+  $
+    bold(a)^T Sigma bold(a) = sum_(i, j) a_i a_j (E[X_i X_j] - E[X_i] E[X_j]) = E[(bold(a)^T bold(X))^2] - (E[bold(a)^T bold(X)])^2 = "Var"(bold(a)^T bold(X)) >= 0.
+  $
+]
+
+This is the object appearing in the #link(<def:multivariate-normal>)[multivariate normal density] of Chapter 7: the abstract $Sigma$ is grounded in the concrete notion of covariance.
 
 
 
@@ -2835,6 +2868,14 @@ probabilistic statement that the MGF determines the distribution.
     t^2 / 2
   )$.
 ] <ex:common-mgf>
+
+#example(name: "Sums of Independent Normals")[
+  If $X ~ N(mu_1, sigma_1^2)$ and $Y ~ N(mu_2, sigma_2^2)$ are independent, #link(<prop:mgf-properties>)[the MGF product rule] gives
+  $
+    M_(X + Y)(t) = exp(mu_1 t + sigma_1^2 t^2 / 2) exp(mu_2 t + sigma_2^2 t^2 / 2) = exp((mu_1 + mu_2) t + (sigma_1^2 + sigma_2^2) t^2 / 2),
+  $
+  which is the MGF of $N(mu_1 + mu_2, sigma_1^2 + sigma_2^2)$; #link(<thm:mgf-uniqueness>)[uniqueness of the MGF] identifies the law of the sum — the deferred proof promised in #link(<def:additive-family>)[the additivity definition].
+] <ex:normal-sum-mgf>
 
 #caution(title: "MGF may not exist")[
   For the Cauchy distribution, $E[exp(t X)] =
