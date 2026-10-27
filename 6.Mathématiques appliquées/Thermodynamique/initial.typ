@@ -163,7 +163,7 @@ of kinetic theory.
   - *isotropy of directions*: no direction is preferred, $chevron.l v_x chevron.r = chevron.l v_y chevron.r = chevron.l v_z chevron.r = 0$ and $chevron.l v_x^2 chevron.r = chevron.l v_y^2 chevron.r = chevron.l v_z^2 chevron.r = 1/3 chevron.l v^2 chevron.r$.
 ] <def:ideal-gas-model>
 
-#property(name: "Pressure Formula")[
+#proposition(name: "Pressure Formula")[
   For a gas of number density $n = N / V$ and molecular mass $m$ in
   equilibrium, the pressure exerted on any wall is
   $
@@ -198,7 +198,7 @@ of kinetic theory.
   Hence $p = 1/3 n m lr(⟨ v^2 ⟩)$, or, in terms of the mean translational kinetic energy $overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩)$, the compact form $p = 2/3 n overline(epsilon)_t$.
 ]
 
-#property(name: "Microscopic Meaning of Temperature")[
+#proposition(name: "Microscopic Meaning of Temperature")[
   Comparing the form $p = 2/3 n overline(epsilon)_t$ with the ideal-gas
   equation of state $p V = N k_B T$, i.e. $p = n k_B T$, gives the
   identification
@@ -301,7 +301,7 @@ Two details of the table deserve comment. A *linear* molecule (monatomic aside) 
   the ratio equals $1/(2 beta) = 1/2 k_B T$.
 ]
 
-#property(name: "Internal Energy of an Ideal Gas")[
+#proposition(name: "Internal Energy of an Ideal Gas")[
   For a gas of $nu$ moles whose molecules have $f$ quadratic degrees of
   freedom, the equilibrium internal energy is
   $
@@ -737,7 +737,7 @@ captures both corrections.
   equation.
 ]
 
-#property(name: "Critical Point")[
+#proposition(name: "Critical Point")[
   The van der Waals isotherm $p(V_m)$ has, at sufficiently low
   temperatures, a region of positive slope — unphysical, since it
   signals negative compressibility. The boundary is the *critical
@@ -780,7 +780,7 @@ structure is captured by a single geometric quantity.
   on the cylinder of targets it can hit.
 ] <def:collision-cross-section>
 
-#property(name: "Mean Free Path")[
+#proposition(name: "Mean Free Path")[
   A molecule of a gas with number density $n$ travels, between successive collisions, an average distance
   $
     lambda = overline(v) / overline(Z) = 1 / (sqrt(2) n sigma),
@@ -851,7 +851,7 @@ one mean free path away.
   density gradients respectively.
 ] <def:transport-coefficients>
 
-#property(name: "Kinetic Estimates of Transport Coefficients")[
+#proposition(name: "Kinetic Estimates of Transport Coefficients")[
   In terms of the mean free path $lambda$, mean speed $overline(v)$,
   number density $n$ and molecular mass $m$,
   $
@@ -1060,7 +1060,7 @@ Different thermometers need not agree in detail — each defines its own
 empirical scale. The universal choice uses the ideal gas, whose
 equation of state (Chapter 1) supplies a system-independent standard.
 
-#property(name: "Ideal Gas Temperature Scale")[
+#proposition(name: "Ideal Gas Temperature Scale")[
   Fix the volume of a gas thermometer and measure its pressure $p$. The
   temperature defined by
   $
@@ -1090,7 +1090,7 @@ equation of state (Chapter 1) supplies a system-independent standard.
   no material substance at all; the equivalence of the Carnot and
   ideal-gas scales is proved in Chapter 3, once the second law is
   available. Until then, the ideal-gas scale of
-  #link(<prop:ideal-gas-scale>)[the preceding property] serves as the
+  #link(<prop:ideal-gas-scale>)[the preceding proposition] serves as the
   definition of $T$.
 ] <note:kelvin-scale>
 
@@ -1121,7 +1121,7 @@ The $delta$ in $delta W$ — as opposed to the $dif$ in $dif V$ — signals
 that work is *not* an exact differential: no state function $W$ exists
 whose differential it would be.
 
-#property(name: "Work as Area in the State Diagram")[
+#proposition(name: "Work as Area in the State Diagram")[
   For a quasi-static process taking the system along a curve $C$ in the
   $p$-$V$ plane, the work done by the system is
   $
@@ -1267,7 +1267,7 @@ internal energy $U = f/2 nu R T$ from #link(<thm:equipartition>)[the
 turns it into a heat capacity, while §2.4 and §2.5 treat $C_(V,m)$ and
 $C_(p,m)$ as thermodynamic quantities, defined for any substance.
 
-#property(name: "Joule's Law: Internal Energy of an Ideal Gas")[
+#law(name: "Joule's Law: Internal Energy of an Ideal Gas")[
   The internal energy of an ideal gas depends on temperature alone:
   $
     U = U(T) quad "and hence" quad C_(V, m) = (dif u)/(dif T), quad
@@ -1453,7 +1453,7 @@ The conversion of heat into work is complete but not repeatable: the gas ends at
 
 === The Reversible Adiabatic Process // 绝热可逆过程
 
-#property(name: "Quasi-Static Adiabatic Process")[
+#proposition(name: "Quasi-Static Adiabatic Process")[
   A quasi-static adiabatic process ($delta Q = 0$) of an ideal gas with
   constant heat capacities obeys
   $
@@ -1532,7 +1532,7 @@ Intermediate exponents describe unregulated processes — heat is exchanged, but
   supplement: [Fig.],
 ) <fig:polytropic-family>
 
-#property(name: "Work and Heat of a Polytropic Process")[
+#proposition(name: "Work and Heat of a Polytropic Process")[
   Along a polytropic process with $n != 1$ taking the gas from $(p_1, V_1)$ to $(p_2, V_2)$, the work done by the gas and the molar heat capacity of the process are
   $
     W = (p_1 V_1 - p_2 V_2) / (n - 1), quad
@@ -1604,9 +1604,9 @@ Intermediate exponents describe unregulated processes — heat is exchanged, but
 
 === Cyclic Processes // 循环过程
 
-A process that returns the system to its initial state is called a *cyclic process*. Since $U$ is a state quantity, $Delta U = 0$ over *any* cycle — quasi-static or not — and the first law collapses to $W = Q$: the net work delivered equals the net heat absorbed, drawn from some reservoirs and dumped into others. Only when every leg of the cycle is quasi-static does the state of the system trace a closed curve in the $p$-$V$ plane; that picture, and the area it encloses, is what the property below quantifies.
+A process that returns the system to its initial state is called a *cyclic process*. Since $U$ is a state quantity, $Delta U = 0$ over *any* cycle — quasi-static or not — and the first law collapses to $W = Q$: the net work delivered equals the net heat absorbed, drawn from some reservoirs and dumped into others. Only when every leg of the cycle is quasi-static does the state of the system trace a closed curve in the $p$-$V$ plane; that picture, and the area it encloses, is what the proposition below quantifies.
 
-#property(name: "Net Work as Enclosed Area")[
+#proposition(name: "Net Work as Enclosed Area")[
   For a quasi-static cycle the net work per cycle equals the area enclosed by the closed curve in the $p$-$V$ plane,
   $
     W = integral.cont p dif V,
@@ -1687,7 +1687,7 @@ The Carnot cycle is the most efficient cycle conceivable between two reservoirs;
   ) <fig:carnot-cycle>
 ] <def:carnot-cycle>
 
-#property(name: "Carnot Efficiency")[
+#proposition(name: "Carnot Efficiency")[
   The efficiency of a Carnot engine depends only on the two reservoir
   temperatures:
   $
@@ -2447,7 +2447,7 @@ at low temperature.
   origin: all condensed systems share one entropy at $T = 0$.
 ]
 
-#property(name: "Heat Capacities Vanish at Zero Temperature")[
+#corollary(name: "Heat Capacities Vanish at Zero Temperature")[
   The Nernst theorem implies that the heat capacities of condensed
   systems vanish in the zero-temperature limit,
   $
@@ -2712,7 +2712,7 @@ more of the system at high energies than at moderate ones.
   supplement: [Fig.],
 ) <fig:negative-t>
 
-#property(name: "Negative Temperatures Are Hotter Than Infinity")[
+#proposition(name: "Negative Temperatures Are Hotter Than Infinity")[
   If two systems at $T_1 < 0$ and $T_2 > 0$ exchange energy, heat
   flows from the negative-temperature system to the positive one:
   in the ordering
@@ -2791,7 +2791,7 @@ the covariant formulation that closes Part I.
   supplement: [Fig.],
 ) <fig:relativistic-dispersion>
 
-#property(name: "Pressure of a Relativistic Gas")[
+#proposition(name: "Pressure of a Relativistic Gas")[
   For an isotropic gas of particles with arbitrary dispersion, the
   pressure is the momentum flux
   $
@@ -2867,7 +2867,7 @@ Maxwell momentum distribution underlying
   consequences.
 ] <note:juttner-preview>
 
-#property(name: "Temperature Invariance at Equilibrium")[
+#proposition(name: "Temperature Invariance at Equilibrium")[
   If two bodies in relative motion are in thermal equilibrium with
   each other, then their proper (rest-frame) temperatures are equal.
   Equilibrium is thus characterised by a Lorentz-invariant statement
@@ -2914,7 +2914,7 @@ potential $mu = 0$ (Chapter 14); thermodynamically, it means the
 energy density $u$ can be a function of $T$ alone — no second density
 to keep fixed.
 
-#property(name: "Radiation Pressure")[
+#corollary(name: "Radiation Pressure")[
   The pressure of equilibrium radiation is one third of its energy
   density:
   $
@@ -3022,7 +3022,7 @@ and the convention that Greek indices run over spacetime.
     argument] identified as momentum flux.
 ] <def:energy-momentum-tensor>
 
-#property(name: "Conservation Law")[
+#law(name: "Conservation Law")[
   In the absence of external forces,
   $
     partial_mu T^(mu nu) = 0,
