@@ -1847,7 +1847,7 @@ business of *Entropy and the Clausius Inequality*.
 
 == Entropy and the Clausius Inequality // 熵与克劳修斯不等式
 
-#property(name: "Clausius Inequality")[
+#theorem(name: "Clausius Inequality")[
   For any cyclic process of a closed system,
   $
     integral.cont (delta Q) / T <= 0,
@@ -1903,9 +1903,9 @@ $eta = 1 - Q_c / Q_h$ this is exactly $eta < 1 - T_c / T_h$.
 That $S$ exists — that the integral is path-independent — follows from
 the equality case of #link(<prop:clausius-inequality>)[the Clausius
 inequality], and is the content of
-#link(<prop:entropy-state-function>)[the next property].
+#link(<prop:entropy-state-function>)[the next proposition].
 
-#property(name: "Entropy Is a State Function")[
+#proposition(name: "Entropy Is a State Function")[
   For any reversible cycle,
   $
     integral.cont (delta Q_("rev")) / T = 0.
@@ -1929,7 +1929,7 @@ path connecting the same endpoints, as in
 #link(<def:entropy>)[the definition] — the distinction is the subject of
 #link(<caution:heat-vs-entropy>)[the caution below].
 
-#property(name: "Entropy of an Ideal Gas")[
+#proposition(name: "Entropy of an Ideal Gas")[
   The entropy change of a closed ideal gas of constant molar heat
   capacities between two states, evaluated along a *reversible* path, is
   $
@@ -2312,7 +2312,7 @@ triple point of water — the same convention as the gas scale.
 instead, and the triple point has become a measured quantity; the
 construction above is how the scale was established historically.)
 
-#property(name: "Equivalence of the Carnot and Ideal-Gas Scales")[
+#proposition(name: "Equivalence of the Carnot and Ideal-Gas Scales")[
   The absolute temperature of
   #link(<thm:heat-ratio>)[the universal heat ratio] coincides with
   the ideal-gas temperature of
@@ -2349,7 +2349,7 @@ were defined in *Throttling, Cycles and the Carnot Cycle*; combined with
 #link(<thm:carnot-theorem>)[Carnot's theorem] they become absolute bounds
 on any cyclic device operating between two reservoirs.
 
-#property(name: "Carnot Bounds")[
+#proposition(name: "Carnot Bounds")[
   Any engine between reservoirs at $T_h, T_c$ satisfies
   $
     eta <= 1 - T_c / T_h, quad
