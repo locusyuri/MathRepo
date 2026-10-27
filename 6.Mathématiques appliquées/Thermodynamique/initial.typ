@@ -1715,7 +1715,8 @@ The Carnot cycle is the most efficient cycle conceivable between two reservoirs;
 
 
 
-The derivation used nothing but the first law and the adiabatic relation. That no engine between the same reservoirs can beat $eta_C$ is a statement of the second law, proved as #link(<thm:carnot-theorem>)[Carnot's theorem] in §3.2.
+The derivation used nothing but the first law and the adiabatic relation.
+That no engine between the same reservoirs can beat $eta_C$ is a statement of the second law, proved as #link(<thm:carnot-theorem>)[Carnot's theorem] in Chapter 3.
 
 = Second Law of Thermodynamics // 热力学第二定律
 
@@ -1728,9 +1729,15 @@ thereby produces the entropy, the quantity that grades the direction.
 
 == Clausius and Kelvin-Planck Statements // 克劳修斯与开尔文-普朗克表述
 
-The cast is the one assembled in §2.6 — thermal reservoirs at fixed temperatures, and cyclic devices shuttling heat between them (#link(<def:heat-engine>)[thermal reservoirs and heat engines], @fig:reservoir-schematic). Experience: no cyclic device absorbs heat from a single reservoir and
-converts it entirely into work, however ingeniously designed. This
-regularity is elevated to a law in two equivalent formulations.
+The cast is the one assembled in *Throttling, Cycles and the Carnot
+Cycle* — thermal reservoirs at fixed temperatures, and cyclic devices
+shuttling heat between them
+(#link(<def:heat-engine>)[thermal reservoirs and heat engines],
+@fig:reservoir-schematic).
+
+Experience: no cyclic device absorbs heat from a single reservoir and
+converts it entirely into work, however ingeniously designed.
+This regularity is elevated to a law in two equivalent formulations.
 
 #law(name: "Kelvin-Planck Statement")[
   No process is possible whose sole result is the complete conversion
@@ -1765,8 +1772,8 @@ The two statements look different; they are the same law.
   devices to violate the other.
 ] <thm:statement-equivalence>
 
-#proof[
-  ($"KP" ==>$ $"C"$) Suppose a device $X$ violates the Clausius
+#proof(name: "of the equivalence")[
+  (*KP* $=>$ *C*) Suppose a device $X$ violates the Clausius
   statement: it transfers $Q$ from the cold to the hot reservoir with no
   other effect. Couple it to an ordinary heat engine $E$ that absorbs
   $Q_h$ from the hot reservoir, rejects exactly $Q$ to the cold one, and
@@ -1774,7 +1781,7 @@ The two statements look different; they are the same law.
   single hot reservoir and delivers the same work, violating the
   Kelvin-Planck statement.
 
-  ($"C" ==>$ $"KP"$) Symmetrically, suppose a device $X$ violates
+  (*C* $=>$ *KP*) Symmetrically, suppose a device $X$ violates
   Kelvin-Planck: it absorbs $Q_h$ from the hot reservoir and converts it
   entirely into work $W$. Run $W$ into an ordinary refrigerator $R$
   pumping $Q_c$ from the cold reservoir and dumping $Q_c + W$ into the
@@ -1782,14 +1789,21 @@ The two statements look different; they are the same law.
   effect — violating the Clausius statement.
 ]
 
-The Carnot cycle was defined and its efficiency $eta_C = 1 - T_c / T_h$ computed in §2.6 from the first law alone. What the second law contributes is universality: no engine operating between the same two reservoirs, however ingenious its design, can exceed the Carnot efficiency.
+== Carnot's Theorem // 卡诺定理
+
+The Carnot cycle was defined, and its efficiency
+$eta_C = 1 - T_c / T_h$ computed, in *Throttling, Cycles and the Carnot
+Cycle* from the first law alone.
+What the second law contributes is universality: no engine operating
+between the same two reservoirs, however ingenious its design, can
+exceed the Carnot efficiency.
 
 #theorem(name: "Carnot's Theorem")[
   + All reversible engines operating between the same two reservoirs have the same efficiency $eta_C = 1 - T_c / T_h$;
   + every irreversible engine operating between them has strictly smaller efficiency.
 ] <thm:carnot-theorem>
 
-#proof[
+#proof(name: "of Carnot's theorem")[
   Let $I$ be any engine between the reservoirs, and $R$ a
   Carnot (reversible) engine run *backwards* as a refrigerator, sized so
   that it absorbs exactly the heat $Q_c$ that $I$ rejects. The composite
@@ -1798,20 +1812,38 @@ The Carnot cycle was defined and its efficiency $eta_C = 1 - T_c / T_h$ computed
     W = Q_h - Q_c - (Q_h' - Q_c) = Q_h - Q_h',
   $
   takes no net heat from the cold reservoir, and extracts net heat
-  $Q_h - Q_h'$ from the hot one. If $eta_I > eta_R$, then
-  $Q_h' / Q_c > Q_h / Q_c$, i.e. $Q_h' > Q_h$: the composite would be a
-  sole-result work producer from one reservoir — violating
-  #link(<law:kelvin-planck>)[Kelvin-Planck]. Hence
-  $eta_I <= eta_R$. If $I$ is irreversible, running a *reversible* $R$
-  forward and $I$ backward in the same coupling (now with roles swapped)
-  yields the strict inequality $eta_I < eta_R$; equality would make the
-  composite reversible, forcing $I$ itself reversible.
+  $Q_h - Q_h'$ from the hot one.
+
+  Both engines reject the same $Q_c$ to the cold reservoir, so
+  $eta = 1 - Q_c / Q_h$ turns $eta_I > eta_R$ into
+  $Q_c / Q_h < Q_c / Q_h'$, i.e. $Q_h > Q_h'$: the composite then
+  delivers $W = Q_h - Q_h' > 0$ while drawing heat from the single hot
+  reservoir only — a sole-result work producer, violating
+  #link(<law:kelvin-planck>)[Kelvin-Planck]. Hence $eta_I <= eta_R$.
+
+  The strict inequality for an irreversible $I$ is *not* reached by this
+  coupling, nor by "running $I$ backwards" — an irreversible engine
+  admits no reverse operation. It follows instead from the strict
+  #link(<prop:clausius-inequality>)[Clausius inequality], as shown in
+  *Entropy and the Clausius Inequality*.
 ]
 
+Conversely, #link(<thm:carnot-theorem>)[Carnot's theorem] delivers the
+#link(<law:kelvin-planck>)[Kelvin-Planck statement].
+An engine violating Kelvin-Planck rejects no heat at all, so its
+efficiency is $eta = 1 > 1 - T_c / T_h$ for any $T_c > 0$ — above the
+Carnot bound.
+The bound and the Kelvin-Planck statement are therefore equivalent, and
+so is the #link(<law:clausius-statement>)[Clausius statement], by
+#link(<thm:statement-equivalence>)[the equivalence of the two
+statements].
+
 Carnot's theorem caps every real engine: no cleverness of design beats
-$1 - T_c / T_h$ — the only levers are the reservoir temperatures. What
-remains is to convert this cap into a state function, which is the
-business of §3.3.
+$1 - T_c / T_h$ — the only levers are the reservoir temperatures, and
+#link(<caution:perpetual-motion-ii>)[perpetual motion of the second kind]
+stays out of reach.
+What remains is to convert this cap into a state function, which is the
+business of *Entropy and the Clausius Inequality*.
 
 == Entropy and the Clausius Inequality // 熵与克劳修斯不等式
 
@@ -1825,16 +1857,19 @@ business of §3.3.
   Equality holds if and only if the cycle is reversible.
 ] <prop:clausius-inequality>
 
-#proof[
-  Decompose an arbitrary cycle into a fine mesh: each elementary
-  strip exchanges heat $delta Q_i$ with reservoirs whose temperatures
-  match the boundary temperature $T_i$. By
-  #link(<thm:carnot-theorem>)[Carnot's theorem], a reversible engine
-  working between $T_i$ and a reference temperature $T_0$ satisfies
-  $delta W_i = delta Q_i (1 - T_0 / T_i)$, while the actual strip
-  delivers at most this work: $delta Q_i (1 - T_0 / T_i) >= delta W_i$.
-  Summing over the whole cycle and using $sum delta W_i = integral.cont delta Q$
-  (gross heat minus gross work balance of the cycle),
+#proof(name: "of the Clausius inequality")[
+  Decompose an arbitrary cycle into a fine mesh: each elementary strip
+  exchanges heat $delta Q_i$ with a reservoir at the boundary temperature
+  $T_i$.
+  By #link(<thm:carnot-theorem>)[Carnot's theorem], a reversible engine
+  working between $T_i$ and a reference temperature $T_0$ — chosen below
+  every $T_i$ — satisfies $delta W_i = delta Q_i (1 - T_0 / T_i)$, and
+  the actual strip delivers at most this work:
+  $delta Q_i (1 - T_0 / T_i) >= delta W_i$.
+
+  Summing over the whole cycle and using
+  $sum delta W_i = integral.cont delta Q$ (net heat equals net work over
+  a cycle),
   $
     integral.cont delta Q - T_0 integral.cont (delta Q) / T >= integral.cont delta Q
     quad "hence" quad integral.cont (delta Q) / T <= 0.
@@ -1844,49 +1879,66 @@ business of §3.3.
   is strict.
 ]
 
+The strict form of #link(<thm:carnot-theorem>)[Carnot's theorem] is now a
+one-line consequence.
+A cycle working between reservoirs at $T_h$ and $T_c$ absorbs $Q_h$ at
+$T_h$ and $-Q_c$ at $T_c$, so strictness reads
+$Q_h / T_h - Q_c / T_c < 0$ for an irreversible cycle; with
+$eta = 1 - Q_c / Q_h$ this is exactly $eta < 1 - T_c / T_h$.
+
 #definition(name: "Entropy")[
-  The *entropy* of a system is the state function $S$ whose change
-  between two nearby equilibrium states is
+  The *entropy* of a system is the state function $S$, defined up to an
+  additive constant, whose change between two nearby equilibrium states
+  is
   $
     dif S = (delta Q_("rev")) / T,
   $
   the heat absorbed in a *reversible* path divided by the common
-  temperature. For a finite reversible path,
+  temperature. For a finite reversible path from $A$ to $B$,
   $
-    Delta S = integral^(("rev")) (delta Q) / T.
+    Delta S = S_B - S_A = integral_A^B (delta Q_("rev")) / T.
   $
 ] <def:entropy>
 
 That $S$ exists — that the integral is path-independent — follows from
 the equality case of #link(<prop:clausius-inequality>)[the Clausius
-  inequality]:
+inequality], and is the content of
+#link(<prop:entropy-state-function>)[the next property].
 
 #property(name: "Entropy Is a State Function")[
-  For any reversible cycle, $integral.cont_("rev") (delta Q) / T = 0$.
-  Consequently $integral (delta Q) / T$ along reversible paths depends
-  only on the endpoints, and $S$ is well-defined as a state quantity.
+  For any reversible cycle,
+  $
+    integral.cont (delta Q_("rev")) / T = 0.
+  $
+  Consequently $integral_A^B (delta Q_("rev")) / T$ along reversible
+  paths depends only on the endpoints, and $S$ is well-defined as a state
+  quantity.
 ] <prop:entropy-state-function>
 
-#proof[
+#proof(name: "of the state-function property")[
   Every reversible cycle satisfies the Clausius inequality with
-  equality. Given any two states $A, B$, the integral along a reversible
-  path is therefore independent of which reversible path is chosen — for
-  two such paths form a reversible cycle.
+  equality.
+  Given any two states $A, B$, the integral along a reversible path is
+  therefore independent of which reversible path is chosen — for two such
+  paths form a reversible cycle.
 ]
 
-The entropy of an irreversible process is *not* obtained by
-integrating $(delta Q)/T$ along that process; one integrates along any
-*reversible* path connecting the same endpoints.
+The entropy of an irreversible process is *not* obtained by integrating
+$(delta Q)/T$ along that process; one integrates along any *reversible*
+path connecting the same endpoints, as in
+#link(<def:entropy>)[the definition] — the distinction is the subject of
+#link(<caution:heat-vs-entropy>)[the caution below].
 
 #example(name: "Entropy of an ideal gas")[
-  For a reversible change of $nu$ moles,
+  For a reversible change of $nu$ moles, with constant molar heat
+  capacity,
   $delta Q = dif U + p dif V = nu C_(V,m) dif T + nu R T (dif V) / V$, so
   $
-    dif S = C_(V,m) (dif T) / T + nu R (dif V) / V,
+    dif S = nu C_(V,m) (dif T) / T + nu R (dif V) / V,
   $
   and integrating,
   $
-    Delta S = C_(V,m) ln(T_2 / T_1) + nu R ln(V_2 / V_1).
+    Delta S = nu C_(V,m) ln(T_2 / T_1) + nu R ln(V_2 / V_1).
   $
   Between any two states this formula holds — including for
   irreversible changes between them, since only the endpoints enter.
@@ -1904,7 +1956,11 @@ integrating $(delta Q)/T$ along that process; one integrates along any
 
 == The Microscopic Meaning of Entropy // 熵的微观意义
 
-The second law so far is a set of macroscopic prohibitions. This section opens the box and looks at the molecules: the three signature irreversibilities of nature all push a system of many molecules from ordered towards disordered motion, and the quantity that measures this disorder turns out to be nothing other than the entropy itself.
+The second law so far is a set of macroscopic prohibitions.
+This section opens the box and looks at the molecules: the three
+signature irreversibilities of nature all push a system of many molecules
+from ordered towards disordered motion, and the quantity that measures
+this disorder turns out to be nothing other than the entropy itself.
 
 === From Order to Disorder // 从有序到无序
 
@@ -1914,38 +1970,73 @@ Three everyday irreversibilities make the pattern visible:
 - *heat conduction*: heat flows spontaneously from hot to cold and never back of its own accord;
 - *free expansion*: a gas released into vacuum expands spontaneously and never recompresses itself.
 
-In each case the reverse process is not forbidden by energy conservation — the first law would happily allow it — yet it never happens. What the three share is the fate of the molecules: motion initially concentrated (a falling weight, a hot body, a gas confined to one corner) spreads out over many molecules moving incoherently. Natural processes always proceed in the direction that carries the motion of large numbers of molecules from *order* towards *disorder*.
+In each case the reverse process is not forbidden by energy conservation — the first law would happily allow it — yet it never happens.
+What the three share is the fate of the molecules: motion initially concentrated (a falling weight, a hot body, a gas confined to one corner) spreads out over many molecules moving incoherently.
+Natural processes always proceed in the direction that carries the motion of large numbers of molecules from *order* towards *disorder*.
+
+Each of these is quantified below:
+#link(<ex:heat-transfer-entropy>)[heat conduction],
+#link(<ex:free-expansion-entropy>)[free expansion], and — in the same
+entropy ledger — #link(<ex:mixing-dissipation>)[mixing and dissipation].
 
 === Thermodynamic Probability // 热力学概率
 
-"Disorder" must be made countable. Distinguish the two levels of description: a *microstate* specifies the position and velocity of every molecule, while a *macrostate* specifies only coarse quantities — the pressure, the temperature, and how the molecules are distributed. Many microstates typically correspond to one macrostate.
+"Disorder" must be made countable.
+Distinguish the two levels of description: a *microstate* specifies the position and velocity of every molecule, while a *macrostate* specifies only coarse quantities — the pressure, the temperature, and how the molecules are distributed.
+Many microstates typically correspond to one macrostate, and their number is the
+#link(<def:thermodynamic-probability>)[thermodynamic probability] $Omega$ of that macrostate.
 
 #definition(name: "Thermodynamic Probability")[
   The *thermodynamic probability* of a macrostate is the number $Omega$ of microstates (microscopic configurations) compatible with it.
 ] <def:thermodynamic-probability>
 
 #example(name: "Four Molecules in a Two-Compartment Box")[
-  Divide an isolated box into left and right halves and place $N = 4$ distinguishable molecules $a, b, c, d$ inside. A microstate assigns each molecule to a side; a macrostate only counts them: $k$ molecules on the left and $4 - k$ on the right. There are $2^4 = 16$ microstates in all, distributed among the five macrostates as
+  Divide an isolated box into left and right halves and place $N = 4$
+  distinguishable molecules $a, b, c, d$ inside.
+  A microstate assigns each molecule to a side; a macrostate only counts
+  them: $k$ molecules on the left and $4 - k$ on the right.
+  There are $2^4 = 16$ microstates in all, distributed among the five
+  macrostates as
 
   #tex-table(
-    ([macrostate $k | 4 - k$], [$0 | 4$], [$1 | 3$], [$2 | 2$], [$3 | 1$], [$4 | 0$]),
+    ([macrostate], [$k = 0$], [$k = 1$], [$k = 2$], [$k = 3$], [$k = 4$]),
     ([microstates $Omega$], [$1$], [$4$], [$6$], [$4$], [$1$]),
   )
 
-  The counts are the binomial coefficients $binom(4, k)$ — one row of Pascal's triangle.
+  The counts are the binomial coefficients $binom(4, k)$ — one row of
+  Pascal's triangle.
 ] <ex:four-molecule-model>
 
 #note(title: "Equal a priori probabilities")[
-  The dynamical input of the whole construction is a single assumption: for an isolated system in equilibrium, all microstates occur with equal probability. It is the statistical counterpart of "no position in the box is special".
+  The dynamical input of the whole construction is a single assumption:
+  for an isolated system in equilibrium, all microstates occur with equal
+  probability.
+  It is the statistical counterpart of "no position in the box is
+  special".
 ] <note:equal-a-priori>
 
-With equal weights, the probability of finding the macrostate with $k$ molecules on the left is $P(k) = Omega / 2^4 = binom(4, k) / 16$, giving $1/16, 4/16, 6/16, 4/16, 1/16$ across the five macrostates. The equilibrium macrostate — here $2 | 2$, where the gas fills both halves uniformly — is the one with the *largest* $Omega$, and as $N$ grows to macroscopic values $N tilde 10^23$ the maximum sharpens so much that fluctuations away from uniformity become unobservably rare.
+With equal weights, the probability of finding the macrostate with $k$
+molecules on the left is
+$P(k) = Omega / 2^4 = binom(4, k) / 16$, giving
+$1/16, 4/16, 6/16, 4/16, 1/16$ across the five macrostates.
+The equilibrium macrostate — here $k = 2$, where the gas fills both
+halves uniformly — is the one with the *largest* $Omega$, exactly as
+#link(<ex:four-molecule-model>)[the four-molecule model] displays.
+As $N$ grows to macroscopic values $N ~ 10^23$ the maximum sharpens so
+much that fluctuations away from uniformity become unobservably rare.
 
 The conclusion is general: $Omega$ measures the *disorder* of molecular motion, and the equilibrium state is the most disordered one.
 
 === Boltzmann Entropy // 玻尔兹曼熵
 
-The logarithm is not an ansatz but a necessity. For two *independent* systems the compatible microstates multiply, $Omega_12 = Omega_1 Omega_2$, while entropy as an extensive quantity must add, $S_12 = S_1 + S_2$; only the logarithm turns products into sums, so $S prop ln Omega$ up to one universal constant.
+The logarithm is not an ansatz but a necessity.
+For two *independent* systems the compatible microstates multiply,
+$Omega_12 = Omega_1 Omega_2$, while entropy as an extensive quantity must
+add, $S_12 = S_1 + S_2$; only the logarithm turns products into sums, so
+$S prop ln Omega$ up to one universal constant.
+The #link(<def:boltzmann-entropy>)[Boltzmann entropy]
+$S = k_B ln Omega$ declares that constant to be the $k_B$ of
+$R = N_A k_B$; that the two agree is the content of the next theorem.
 
 #definition(name: "Boltzmann Entropy")[
   For a macrostate of an isolated system, let $Omega$ be the number of
@@ -1970,22 +2061,53 @@ The logarithm is not an ansatz but a necessity. For two *independent* systems th
   which equals $Q_"rev" / T$.
 ] <thm:boltzmann-identification>
 
-#proof[
+#proof(name: "of the identification")[
   At fixed temperature the momentum part of the phase-space volume is
   unaffected by a change of volume, and each of the $N$ molecules is
   free to roam the whole container, so the number of microstates
   compatible with a macrostate at volume $V$ scales as
   $Omega prop V^N$; hence
-  $Delta S = k_B ln (Omega_2 / Omega_1) = N k_B ln (V_2 / V_1) = nu N_A k_B ln (V_2 / V_1) = nu R ln (V_2 / V_1)$. On the thermodynamic side, the quasi-static isothermal expansion of an ideal gas absorbs $Q_"rev" = W = nu R T ln (V_2 / V_1)$ (§2.5), so the Clausius definition gives $Delta S = Q_"rev" / T = nu R ln (V_2 / V_1)$ — the two agree identically, and the proportionality constant of $S prop ln Omega$ is thereby fixed as $k_B$.
+  $
+    Delta S = k_B ln (Omega_2 / Omega_1)
+    = N k_B ln (V_2 / V_1)
+    = nu N_A k_B ln (V_2 / V_1)
+    = nu R ln (V_2 / V_1).
+  $
+  On the thermodynamic side, the quasi-static isothermal expansion of an
+  ideal gas absorbs $Q_"rev" = W = nu R T ln (V_2 / V_1)$
+  (*Common Thermodynamic Processes*), so the Clausius definition gives
+  $Delta S = Q_"rev" / T = nu R ln (V_2 / V_1)$.
+  The two agree identically, and the proportionality constant of
+  $S prop ln Omega$ is thereby fixed as $k_B$.
 ]
 
-This dovetails with the kinetic theory of Chapter 1: Boltzmann's $H$-function decreases monotonically under collisions, and #link(<note:h-statistical>)[its interpretation] as a negative logarithm of molecular disorder prefigures exactly the construction above.
+#note(title: "Heuristic standing of the counting")[
+  The argument above presumes a fixed-temperature count of microstates,
+  i.e. the canonical ensemble, which is constructed only in Chapter 12.
+  What is settled here is the proportionality $S prop ln Omega$ together
+  with its constant; the rigorous identification of the two entropies is
+  the bridge built there.
+]
 
-The identification extends far beyond this example — the entropy of mixing, the equilibration of heat flow, all of Part III — and it is this agreement that makes $k_B$ the exchange rate between information and heat.
+This dovetails with the kinetic theory of Chapter 1: Boltzmann's
+$H$-function decreases monotonically under collisions, and
+#link(<note:h-statistical>)[its statistical interpretation] as a negative
+logarithm of molecular disorder prefigures exactly the construction
+above.
+
+The identification of
+#link(<thm:boltzmann-identification>)[Boltzmann and Clausius entropy]
+extends far beyond this example — to the entropy of mixing, to the
+equilibration of heat flow, and to the whole ensemble programme of
+Chapters 11--15 — and it is this agreement that makes $k_B$ the exchange
+rate between information and heat.
 
 === The Entropy Increase Principle // 熵增原理
 
-Which processes actually realise $Delta S > 0$? By #link(<def:reversible-process>)[the criterion of Chapter 2], exactly the irreversible ones — and the microscopic picture now makes the principle quantitative.
+Which processes actually realise $Delta S > 0$?
+By #link(<def:reversible-process>)[the criterion of a reversible
+process], exactly the irreversible ones — and the microscopic picture now
+makes the principle quantitative.
 
 #law(name: "Principle of Entropy Increase")[
   For any process of an isolated system,
@@ -1998,7 +2120,7 @@ Which processes actually realise $Delta S > 0$? By #link(<def:reversible-process
   $
 ] <law:entropy-increase>
 
-#proof[
+#proof(name: "of the entropy increase")[
   Take an irreversible process carrying an isolated system from
   $A$ to $B$; the Clausius inequality applied to the cycle formed by the
   actual process and an arbitrary reversible return path $B -> A$ gives
@@ -2006,28 +2128,43 @@ Which processes actually realise $Delta S > 0$? By #link(<def:reversible-process
     integral_A^B (delta Q) / T + integral_B^A (delta Q_("rev")) / T <= 0,
   $
   and the first integral vanishes ($delta Q = 0$ in isolation), so
-  $Delta S = S_B - S_A >= 0$, strict for the irreversible process. For a
-  non-isolated system, enlarge the boundary: system plus environment is
-  isolated, and their entropy sum obeys the same inequality.
+  $Delta S = S_B - S_A >= 0$, strict for the irreversible process.
+  For a non-isolated system, enlarge the boundary: system plus
+  environment is isolated, and their entropy sum obeys the same
+  inequality — the caveat of
+  #link(<caution:entropy-nonisolated>)[non-isolated systems] makes this
+  explicit.
 ]
 
-Microscopically, the principle is a statement about probability. An isolated system wanders through its microstates with equal weights, so macrostates with larger $Omega$ are visited overwhelmingly more often: a system found in a macrostate of small $Omega$ drifts, with overwhelming probability, towards one with larger $Omega$.
+Microscopically, the principle is a statement about probability.
+Under #link(<note:equal-a-priori>)[equal a priori probabilities] an
+isolated system wanders through its microstates with equal weights, so
+macrostates with larger $Omega$ are visited overwhelmingly more often: a
+system found in a macrostate of small $Omega$ drifts, with overwhelming
+probability, towards one with larger $Omega$.
 
-In Boltzmann's language the entropy change of any spontaneous process reads $Delta S = k_B ln (Omega_2 / Omega_1) >= 0$ — *irreversibility is the drift towards the probable*, and a reversible process is one that leaves $Omega$ unchanged. This is the microscopic reading of the three phenomena with which this section opened.
+In Boltzmann's language the entropy change of any spontaneous process
+reads $Delta S = k_B ln (Omega_2 / Omega_1) >= 0$ — *irreversibility is
+the drift towards the probable*, and a reversible process is one that
+leaves $Omega$ unchanged.
+This is the microscopic reading of the three phenomena with which this
+section opened.
 
 #example(name: "Free expansion, explained")[
-  An ideal gas doubling its volume in
-  adiabatic free expansion (§2.6: $W = Q = 0$, $Delta U = 0$, hence
+  An ideal gas doubling its volume in adiabatic free expansion
+  (*Common Thermodynamic Processes*: $W = Q = 0$, $Delta U = 0$, hence
   $T$ unchanged) has entropy change — computed on the reversible
-  isothermal path between the same endpoints —
+  isothermal path between the same endpoints, the isothermal special case
+  of #link(<ex:entropy-ideal-gas>)[the ideal-gas entropy formula] —
   $
     Delta S = nu R ln(V_2 / V_1) = nu R ln 2 > 0.
   $
   The first law saw nothing ($Delta U = 0$); the entropy increase
-  declares the process irreversible and predicts it never runs
-  backwards. Microscopically, $Omega prop V^N$: doubling the volume
-  multiplies the accessible microstates by $2^N$, and the gas never
-  finds its way back among them. This fulfils the promissory note of
+  declares the process irreversible and predicts it never runs backwards.
+  Microscopically, $Omega prop V^N$: doubling the volume multiplies the
+  accessible microstates by $2^N$, and the gas never finds its way back
+  among them.
+  This fulfils the promissory note of
   #link(<ex:free-expansion>)[the free-expansion example].
 ] <ex:free-expansion-entropy>
 
@@ -2042,73 +2179,98 @@ In Boltzmann's language the entropy change of any spontaneous process reads $Del
   requires reservoirs differing infinitesimally.
 ] <ex:heat-transfer-entropy>
 
+#example(name: "Mixing and dissipation")[
+  Two ideal gases at the same temperature and pressure, in volumes $V_1$
+  and $V_2$, are put into communication and mix.
+  Each behaves as if it expanded into the whole volume at fixed
+  temperature, so with mole fractions $x_i = nu_i / (nu_1 + nu_2)$,
+  $
+    Delta S = -nu R (x_1 ln x_1 + x_2 ln x_2) > 0.
+  $
+  Dissipation is the same story in mechanical dress: work $W_"diss"$
+  spent on friction ends as heat at temperature $T$, creating entropy
+  $Delta S = W_"diss" / T$.
+  The first law sees nothing in either process — energy is conserved
+  throughout — yet both are forbidden in reverse by
+  #link(<law:entropy-increase>)[the principle of entropy increase].
+  Chemical reactions belong to the same family, their entropy accounting
+  being the affair of Chapter 7.
+] <ex:mixing-dissipation>
+
 #caution(title: "Entropy of non-isolated systems")[
-  The entropy of a *system* may
-  decrease: a refrigerator pumps heat out of its cold box, freezing
-  water crystallises, living organisms build order — each at the price
-  of exporting more entropy to the environment. The principle
-  constrains only the *total*: $Delta S_("system") + Delta S_("environment") >= 0$
-  holds without exception.
+  The entropy of a *system* may decrease: a refrigerator pumps heat out
+  of its cold box, freezing water crystallises, living organisms build
+  order — each at the price of exporting more entropy to the environment.
+  #link(<law:entropy-increase>)[The principle of entropy increase] constrains
+  only the *total*:
+  $Delta S_("system") + Delta S_("environment") >= 0$ holds without
+  exception.
 ] <caution:entropy-nonisolated>
 
 == Thermodynamic Temperature Scale // 热力学温标
 
 The efficiency bound $eta_C = 1 - T_c / T_h$ rests on the temperatures
-of the reservoirs — but which temperature? The ideal-gas scale of
-#link(<prop:ideal-gas-scale>)[§2.2] referenced a particular substance.
-Carnot's theorem offers something better: a temperature scale defined
-by the second law itself, independent of any material.
+of the reservoirs — but which temperature?
+The ideal-gas scale of
+#link(<prop:ideal-gas-scale>)[the ideal-gas temperature scale] referenced
+a particular substance.
+Carnot's theorem offers something better: a temperature scale defined by
+the second law itself, independent of any material.
 
-#theorem(name: "Absolute (Kelvin) Temperature Scale")[
-  For reversible engines operating between two reservoirs, the ratio
-  of the exchanged heats depends only on the reservoirs:
+#theorem(name: "Universality of the Heat Ratio")[
+  For reversible engines operating between two reservoirs, the ratio of
+  the exchanged heats depends only on the two reservoirs:
   $
     Q_h / Q_c = f(theta_h, theta_c),
   $
-  where $theta$ denotes any empirical temperatures. This allows the
-  *absolute temperature* $T$ to be defined — up to a multiplicative
-  constant — as the unique quantity satisfying
-  $
-    Q_h / Q_c = T_h / T_c
-  $
-  for every reversible engine between the reservoirs.
-] <thm:absolute-scale>
+  where $theta$ denotes any empirical temperatures.
+] <thm:heat-ratio>
 
-#proof[
-  Let two reversible engines $R_1$ (between $theta_1,
-  theta_2$) and $R_2$ (between $theta_2, theta_3$) be coupled, with
-  $R_2$ consuming exactly what $R_1$ rejects at $theta_2$. The composite
-  is a reversible engine between $theta_1$ and $theta_3$, so
+#proof(name: "of the heat-ratio universality")[
+  Let two reversible engines $R_1$ (between $theta_1, theta_2$) and $R_2$
+  (between $theta_2, theta_3$) be coupled, with $R_2$ consuming exactly
+  what $R_1$ rejects at $theta_2$.
+  The composite is a reversible engine between $theta_1$ and $theta_3$, so
   $
     f(theta_1, theta_3) = f(theta_1, theta_2) dot f(theta_2, theta_3).
   $
   Fix an arbitrary reference $theta_0$; the identity
   $f(theta_1, theta_0) = f(theta_1, theta_2) dot f(theta_2, theta_0)$
   then forces $f(theta_1, theta_2) = phi(theta_1) / phi(theta_2)$ with
-  $phi(theta) := f(theta, theta_0)$, a single function, positive
-  because engines exchange positive heats. Choosing
-  $T := c dot phi(theta)$ (constant fixed by convention) gives
+  $phi(theta) := f(theta, theta_0)$, a single function, positive because
+  engines exchange positive heats.
+  Choosing $T := c dot phi(theta)$, with $c$ fixed by convention, gives
   $Q_h / Q_c = T_h / T_c$.
 ]
 
+That $f$ is system-independent licenses a *new* temperature: the
+*absolute temperature* $T$ is defined — up to the multiplicative
+constant $c$ — as the quantity satisfying
+$
+  Q_h / Q_c = T_h / T_c
+$
+for every reversible engine between the reservoirs.
+
 The reference constant is fixed by assigning $T = 273.16 "K"$ to the
-triple point of water — the same convention as the gas scale. (Since
-the 2019 SI revision the kelvin is defined by fixing $k_B$ instead,
-and the triple point has become a measured quantity; the construction
-above is how the scale was established historically.)
+triple point of water — the same convention as the gas scale.
+(Since the 2019 SI revision the kelvin is defined by fixing $k_B$
+instead, and the triple point has become a measured quantity; the
+construction above is how the scale was established historically.)
 
 #property(name: "Equivalence of the Carnot and Ideal-Gas Scales")[
-  The absolute temperature of #link(<thm:absolute-scale>)[the Carnot
-    definition] coincides with the ideal-gas temperature of
-  #link(<prop:ideal-gas-scale>)[§2.2].
+  The absolute temperature of
+  #link(<thm:heat-ratio>)[the universal heat ratio] coincides with
+  the ideal-gas temperature of
+  #link(<prop:ideal-gas-scale>)[the ideal-gas scale].
 ] <prop:scales-equivalence>
 
-#proof[
-  Compute the Carnot cycle of #link(<def:carnot-cycle>)[§2.6]
-  using the *gas* scale $theta$ throughout the equation of state
-  $p V = nu R theta$: the derivation of
-  #link(<prop:carnot-efficiency>)[the Carnot efficiency] never used any
-  property of $T$ beyond the equation of state, and it produced
+#proof(name: "of the scale equivalence")[
+  Compute the Carnot cycle of
+  #link(<def:carnot-cycle>)[the Carnot cycle] using the *gas* scale
+  $theta$ throughout the equation of state $p V = nu R theta$: the
+  derivation of #link(<prop:carnot-efficiency>)[the Carnot efficiency]
+  never used any property of $T$ beyond the equation of state, and it
+  produced
   $
     Q_h / Q_c = theta_h / theta_c.
   $
@@ -2117,14 +2279,20 @@ above is how the scale was established historically.)
   they are identical.
 ]
 
-This closes the account opened in #link(<note:kelvin-scale>)[§2.2]:
-temperature now rests on the second law alone, and every thermometer —
-gas, resistance, or otherwise — measures the same $T$. The numerical
-work-out of #link(<ex:engine-numerical>)[§3.6] puts the scale to use.
+This closes the account opened in
+#link(<note:kelvin-scale>)[the note on the absolute scale]: temperature
+now rests on the second law alone, and every thermometer — gas,
+resistance, or otherwise — measures the same $T$.
+The #link(<ex:engine-numerical>)[numerical work-out] puts the scale to
+use.
 
 == Heat Engines and Refrigeration Cycles // 热机与制冷循环
 
-The efficiency and the coefficients of performance were defined in #link(<def:efficiency-cop>)[§2.6]; combined with #link(<thm:carnot-theorem>)[Carnot's theorem] they become absolute bounds on any cyclic device operating between two reservoirs.
+The
+#link(<def:efficiency-cop>)[efficiency and coefficients of performance]
+were defined in *Throttling, Cycles and the Carnot Cycle*; combined with
+#link(<thm:carnot-theorem>)[Carnot's theorem] they become absolute bounds
+on any cyclic device operating between two reservoirs.
 
 #property(name: "Carnot Bounds")[
   Any engine between reservoirs at $T_h, T_c$ satisfies
@@ -2136,7 +2304,7 @@ The efficiency and the coefficients of performance were defined in #link(<def:ef
   with equality exactly for reversible (Carnot) devices.
 ] <prop:carnot-bounds>
 
-#proof[
+#proof(name: "of the Carnot bounds")[
   The efficiency bound is
   #link(<thm:carnot-theorem>)[Carnot's theorem] itself. For a
   refrigerator, suppose the bound were violated,
@@ -2158,24 +2326,29 @@ The efficiency and the coefficients of performance were defined in #link(<def:ef
   $
     eta_C = 1 - 300 / 600 = 0.5, quad W = 500 "J", quad Q_c = 500 "J".
   $
-  A real engine between the same reservoirs at $eta = 0.35$ wastes
-  part of the Carnot potential to friction and finite-rate heat
-  exchange. The same temperature gap run as a Carnot refrigerator
-  gives
+  By #link(<prop:carnot-bounds>)[the Carnot bounds], a real engine
+  between the same reservoirs at $eta = 0.35$ wastes part of the Carnot
+  potential to friction and finite-rate heat exchange.
+  The same temperature gap run as a Carnot refrigerator gives
   $
     "COP"_R = T_c / (T_h - T_c) = 1, quad
     W = 500 "J" quad "to extract" quad Q_c = 500 "J".
   $
-  Note how the numbers expose the asymmetry the definitions encode:
-  the same reservoir pair yields $eta < 1$ but $"COP"_R$ of order
+  Note how the numbers expose the asymmetry the definitions encode: the
+  same reservoir pair yields $eta < 1$ but $"COP"_R$ of order
   $T_c / (T_h - T_c)$, which can far exceed 1 for narrow gaps — the
   reason refrigeration is cheap and engine power is not.
 ] <ex:engine-numerical>
 
-The Carnot bound is the engineering face of the second law: efficiency
-is bought with temperature, not with mechanical ingenuity. The
-thermodynamic potentials of Chapter 6 — free energy and free enthalpy —
-will carry the same accounting to non-cyclic processes.
+The Carnot bound is the engineering face of the second law: efficiency is
+bought with temperature, not with mechanical ingenuity.
+
+Two questions are left open, and each opens a door.
+What the second law fixes is the *change* of entropy; the value of $S$ at
+the lower boundary is still free — the business of the third law.
+And every inequality derived here is stated for a *cycle*: the
+thermodynamic potentials of Chapter 6 — the Helmholtz and Gibbs free
+energies — will carry the same accounting to non-cyclic processes.
 
 = Third Law of Thermodynamics // 热力学第三定律
 
@@ -2968,7 +3141,7 @@ hydrodynamics, beyond this note's scope.
 //     - 两种表述的等价性证明
 
 //   Section 3.2: Carnot's Theorem (卡诺定理)
-//     - 卡诺定理的表述与证明（卡诺循环见 §2.6）
+//     - 卡诺定理的表述与证明（卡诺循环见 Throttling, Cycles and the Carnot Cycle）
 //     - 卡诺定理与第二定律的等价性
 
 //   Section 3.3: Entropy and the Clausius Inequality (熵与克劳修斯不等式)
