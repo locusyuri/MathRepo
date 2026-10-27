@@ -1929,29 +1929,84 @@ path connecting the same endpoints, as in
 #link(<def:entropy>)[the definition] — the distinction is the subject of
 #link(<caution:heat-vs-entropy>)[the caution below].
 
-#example(name: "Entropy of an ideal gas")[
-  For a reversible change of $nu$ moles, with constant molar heat
-  capacity,
-  $delta Q = dif U + p dif V = nu C_(V,m) dif T + nu R T (dif V) / V$, so
+#property(name: "Entropy of an Ideal Gas")[
+  The entropy change of a closed ideal gas of constant molar heat
+  capacities between two states, evaluated along a *reversible* path, is
   $
-    dif S = nu C_(V,m) (dif T) / T + nu R (dif V) / V,
+    Delta S = nu C_(V,m) ln(T_2 / T_1) + nu R ln(V_2 / V_1),
   $
-  and integrating,
+  or equivalently, with pressure in place of volume,
   $
-    Delta S = nu C_(V,m) ln(T_2 / T_1) + nu R ln(V_2 / V_1).
+    Delta S = nu C_(p,m) ln(T_2 / T_1) - nu R ln(p_2 / p_1).
   $
-  Between any two states this formula holds — including for
-  irreversible changes between them, since only the endpoints enter.
-] <ex:entropy-ideal-gas>
+] <prop:entropy-ideal-gas>
 
-#caution(title: "$(delta Q)/T$ versus $dif S$")[
-  Only on a reversible path is
-  $delta Q = T dif S$. Along an irreversible path the absorbed heat is
-  smaller than $integral T dif S$ (for the same endpoints), and writing
+#proof(name: "of the ideal-gas entropy")[
+  For a reversible change of $nu$ moles,
+  $
+    delta Q = dif U + p dif V
+    = nu C_(V,m) dif T + nu R T (dif V) / V,
+  $
+  by #link(<prop:joule-law>)[Joule's law], so
+  $
+    dif S = (delta Q)/T
+    = nu C_(V,m) (dif T)/T + nu R (dif V)/V,
+  $
+  and integrating from state $1$ to state $2$ gives the volume form.
+
+  For the pressure form write $V = nu R T / p$, so that
+  $dif V / V = dif T / T - dif p / p$:
+  $
+    dif S = nu (C_(V,m) + R) (dif T)/T - nu R (dif p)/p
+    = nu C_(p,m) (dif T)/T - nu R (dif p)/p,
+  $
+  where #link(<thm:mayer-formula>)[Mayer's formula] supplies
+  $C_(p,m) - C_(V,m) = R$ for the ideal gas.
+]
+
+The two forms are one and the same statement, related by the equation of
+state; either may be kept as the master formula.
+Both are *universal* — they hold along any reversible path whatsoever —
+and, because $S$ is a state function, the value they return depends on
+the endpoints alone.
+The path an irreversible process actually follows therefore never enters
+the computation.
+
+Each standard process of *Common Thermodynamic Processes* pins one state
+variable, so one term of the master formula drops out:
+
+#tex-table(
+  ("Process", "Constraint", [$Delta S$]),
+  ([isochoric], [$V = "const"$], [$nu C_(V,m) ln(T_2 / T_1)$]),
+  ([isobaric], [$p = "const"$], [$nu C_(p,m) ln(T_2 / T_1)$]),
+  ([isothermal], [$T = "const"$], [$nu R ln(V_2 / V_1) = -nu R ln(p_2 / p_1)$]),
+  ([reversible adiabatic], [$Q = 0$], [$0$]),
+)
+
+The last row is the entropy face of
+#link(<prop:adiabatic-process>)[the reversible adiabatic relation].
+Setting $Delta S = 0$ gives
+$C_(V,m) ln(T_2 / T_1) + R ln(V_2 / V_1) = 0$, which with
+$gamma - 1 = R / C_(V,m)$ is exactly $T V^(gamma - 1) = "const"$.
+
+#caution(title: "$(delta Q)/T$ versus $dif S$: reversibility required")[
+  Only on a reversible path is $delta Q = T dif S$.
+  Along an irreversible path the absorbed heat is smaller than
+  $integral T dif S$ (for the same endpoints), and writing
   $dif S = (delta Q)/T$ for an irreversible step silently shrinks the
-  entropy. The safe route is always: compute $Delta S$ on a reversible
-  path between the endpoints, regardless of how the actual process
-  ran.
+  entropy.
+
+  The same restriction governs every row of the table above: the
+  isochoric, isobaric, isothermal and adiabatic formulas describe
+  *reversible* processes, and none of them may be applied to the actual
+  run of an irreversible one.
+
+  What replaces the actual process is a path the gas never followed: one
+  *invents* a reversible path between the same endpoints and integrates
+  along it, precisely because $S$ is a state function.
+  Free expansion is the model case — sudden and irreversible, its entropy
+  change is computed on an isothermal path, in
+  #link(<ex:free-expansion-entropy>)[the example below].
 ] <caution:heat-vs-entropy>
 
 == The Microscopic Meaning of Entropy // 熵的微观意义
@@ -2154,8 +2209,8 @@ section opened.
   An ideal gas doubling its volume in adiabatic free expansion
   (*Common Thermodynamic Processes*: $W = Q = 0$, $Delta U = 0$, hence
   $T$ unchanged) has entropy change — computed on the reversible
-  isothermal path between the same endpoints, the isothermal special case
-  of #link(<ex:entropy-ideal-gas>)[the ideal-gas entropy formula] —
+  isothermal path between the same endpoints, the isothermal case of
+  #link(<prop:entropy-ideal-gas>)[the ideal-gas entropy formula] —
   $
     Delta S = nu R ln(V_2 / V_1) = nu R ln 2 > 0.
   $
