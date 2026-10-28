@@ -58,6 +58,17 @@
 // 修订记录（2026-10-22）：Ch 1 由 2 节扩为 3 节（新增 1.3 谐波分析、1.1 增垂直合成与李萨如）；
 //   Ch 2 由 5 节扩为 8 节，并入原 Mécanique analytique Ch 4 的弹性波内容（2.4、2.6），
 //   并新增机械波几何描述、常见波与多普勒效应。
+// 修订记录（2026-10-28）：按内容审查（violet-content-review）通修四个 Part：
+//   Part I — 李萨如 p/q 周期数、任意夹角多普勒公式与横向红移、多普勒实例的音程、
+//     P/S 波速比较、固定端与半波损失的一致性、时谐相位统一、能量密度标注时均；
+//   Part II — 棱镜最小偏向角数值 17.5°→37.2°、Ch 6 符号约定改写、主平面定义（横向≠角放大率）、
+//     面镜"折叠约定"补述、稳定性判据补 M=±I 退化情形；
+//   Part III — 艾里斑尺寸 5.4mm→5.4µm、可见度—相干度关系的强度因子、牛顿环半径的 (m+1/2)、
+//     Kirchhoff 积分的法向约定与"斜度佯谬"措辞、OTF 为光瞳的复自相关（含 ⊛ 与 abs 修正）；
+//   Part IV — Rabi 频率 Ω₀=dE₀/ℏ 的幅度约定、Wigner-Weisskopf 中 Γ 与 Lorentz γ 的因子 2、
+//     He-Ne 能级标注、压缩算符 (a†)² 写法、挤压增益"真空方差 vs 不确定度乘积"措辞；
+//   规范：裸章号全部改为 #link、13 处 proof 补 name、补 5 个组件标签、note 小标签改用 title、
+//     绝对值改 abs()（保留量子力学的 Dirac 竖线记号）。
 
 // --- Chapter 1: Oscillations (振动) ---
 //   Section 1.1: Simple Harmonic Motion (简谐运动)
@@ -1219,7 +1230,7 @@ This distinction reappears in #link(<ch:diffraction>)[Chapter 10 (Resolution)] a
 Chapters 1–3 of this part developed the wave equation and its general mathematical machinery — d'Alembert's solution, the wave function, complex (phasor) representation, superposition, interference, standing waves, dispersion, group velocity, and Fourier analysis.
 These concepts are *medium-independent*: they apply equally to mechanical waves, electromagnetic waves, and quantum probability waves.
 The elastic-medium specialisation — strain, stress, elastic moduli, P/S waves, impedance, reflection and half-wave loss — is now part of this notebook as well (Sections 2.4 and 2.6); it originally came from *Mécanique analytique*.
-Chapter 4 has added the last piece: the time-harmonic Helmholtz formulation on which both geometric optics (Part II) and wave optics (Part III) rest.
+#link(<ch:helmholtz>)[Chapter 4] has added the last piece: the time-harmonic Helmholtz formulation on which both geometric optics (Part II) and wave optics (Part III) rest.
 
 // --------------------------------------------------------------------------
 // Part II: Geometric Optics (几何光学)
@@ -1236,7 +1247,7 @@ It is not a separate theory: it is the short-wavelength limit of wave optics, ob
 This chapter develops that limit systematically — wavefronts become surfaces of constant phase, rays become their normals, and every classical law of geometric optics follows from the *eikonal equation*.
 It redeems the promise made at the end of #link(<ch:helmholtz>)[Chapter 4].
 
-Part II builds geometric optics in three steps, one chapter each: the eikonal limit (Chapter 5), the paraxial approximation (Chapter 6), and matrix optics with its instruments (Chapter 7).
+Part II builds geometric optics in three steps, one chapter each: the eikonal limit (#link(<ch:ray-optics>)[Chapter 5]), the paraxial approximation (#link(<ch:paraxial-optics>)[Chapter 6]), and matrix optics with its instruments (#link(<ch:matrix-optics>)[Chapter 7]).
 Everything here is an approximation to Part III, and every error term reappears there as diffraction.
 
 == From Waves to Rays: The Short-Wavelength Limit // 从波到光线
@@ -1244,7 +1255,7 @@ Everything here is an approximation to Part III, and every error term reappears 
 Geometric optics applies when the wavelength is much smaller than every relevant length scale of the problem: the size of apertures, the radii of curvature of interfaces, and the scale over which the refractive index varies.
 Under this condition the spatial amplitude varies slowly over one wavelength, and the field is well approximated by a slowly varying envelope multiplied by a rapidly oscillating phase.
 
-For a time-harmonic field in a medium of refractive index $n(bold(r))$, the scalar Helmholtz equation of Chapter 4 reads:
+For a time-harmonic field in a medium of refractive index $n(bold(r))$, the scalar Helmholtz equation of #link(<ch:helmholtz>)[Chapter 4] reads:
 
 $
   (nabla^2 + k_0^2 n^2) bold(U) = 0,
@@ -1282,9 +1293,9 @@ Since the identity holds for every point and the amplitude $A$ is not identicall
   The order-$k_0^0$ term $nabla^2 A$ is dropped in the geometric-optics approximation.
 ] <thm:eikonal-from-helmholtz>
 
-// 兑现 Ch4 L682 的承诺：geometric optics as the λ→0 limit
+// 兑现 Ch 4 引言的承诺：geometric optics as the λ→0 limit
 
-#proof[
+#proof(name: "From Helmholtz to Eikonal")[
   *Step 1 — Substitute the ansatz.*
   The gradient and Laplacian of the ansatz are:
   $
@@ -1323,8 +1334,8 @@ The construction is drawn in @fig:waves-to-rays: the wavefronts are the level se
   supplement: [Fig.]
 ) <fig:waves-to-rays>
 
-#note[
-  *Validity.* The WKB approximation breaks down where the amplitude varies rapidly — at focal points (caustics), at interfaces, and near turning points.
+#note(title: "Validity")[
+  The WKB approximation breaks down where the amplitude varies rapidly — at focal points (caustics), at interfaces, and near turning points.
   There the geometric-optics field diverges, and one must return to the full wave equation; the diffraction integrals of Part III provide the correct description.
 ]
 
@@ -1346,7 +1357,7 @@ The construction is drawn in @fig:waves-to-rays: the wavefronts are the level se
 ] <law:fermat>
 
 "Stationary" means that the first variation vanishes; in most optical situations the ray is a local minimum of the OPL.
-The principle subsumes both the law of reflection and Snell's law (Section 5.4), and it is the variational form of the eikonal equation: along a ray, the accumulated phase $S$ is exactly the optical path length, and the rays are the extremals of $integral n dif s$.
+The principle subsumes both the law of reflection and Snell's law (Section 5.4), and it is the variational form of the eikonal equation: along a ray the eikonal $S$ accumulated from a reference wavefront is exactly the optical path length (the accumulated phase being $k_0 S$), and the rays are the extremals of $integral n dif s$.
 
 #note[
   Fermat's principle is the optical analogue of Hamilton's principle in mechanics: a particle extremises the action $integral L dif t$, a ray extremises the optical path $integral n dif s$.
@@ -1367,7 +1378,7 @@ The principle subsumes both the law of reflection and Snell's law (Section 5.4),
   The rays are the characteristic curves of the eikonal equation, and they satisfy the ray equation.
 ] <thm:ray-from-eikonal>
 
-#proof[
+#proof(name: "From Eikonal to Ray")[
   *Step 1 — Rays as gradient flow.*
   Set the ray direction to $bold(r)' = gradient S / n$.
   Since $abs(gradient S) = n$ by the eikonal equation, this is a unit vector, and it is normal to the wavefronts by construction.
@@ -1389,9 +1400,9 @@ The principle subsumes both the law of reflection and Snell's law (Section 5.4),
 In a homogeneous medium, $gradient n = 0$ and the ray equation forces $n bold(r)'$ to be constant: rays are straight lines.
 In an inhomogeneous medium, rays bend toward the region of higher refractive index — the origin of mirages, heat shimmer, and graded-index guidance.
 
-#note[
-  *Optical-mechanical analogy (Hamiltonian optics).* With the "optical momentum" $bold(p) = n bold(r)'$, the ray equation reads $bold(p)' = gradient n$, the exact analogue of Newton's law $dot(bold(p)) = - gradient V$.
-  Fermat's principle is Hamilton's principle for light, and the eikonal $S$ plays the role of the action.
+#note(title: "Optical-mechanical analogy (Hamiltonian optics)")[
+  Fermat's principle is the optical counterpart of the Maupertuis principle of mechanics: a particle extremises $integral p dif s = integral sqrt(2 m (E - V)) dif s$, a ray extremises $integral n dif s$ — so the refractive index plays the role of the *mechanical momentum* $sqrt(2 m (E - V))$, and the eikonal $S$ plays the role of the action.
+  If one nevertheless writes $bold(p) = n bold(r)'$, the ray equation reads $bold(p)' = gradient n$, formally Newton's law $dot(bold(p)) = - gradient V$ for a position-dependent "mass" $n$; this is *not* Newtonian mechanics with a potential $V = - n$, since $|bold(r)'| = 1$ is maintained along every ray.
   The full Hamiltonian formulation of optics belongs to *Mécanique analytique*; here the analogy serves only as intuition.
 ]
 
@@ -1424,10 +1435,11 @@ The construction is drawn in @fig:snells-law.
   supplement: [Fig.]
 ) <fig:snells-law>
 
-Both laws follow from Fermat's principle: the stationary optical path between two fixed points on opposite sides of the interface is achieved when the crossing point satisfies these angle relations.
+Both laws follow from Fermat's principle: the stationary optical path between two fixed points on either side of the interface is achieved when the crossing point satisfies these angle relations.
+Concretely, let the crossing point slide by $dif x$ along the interface inside the plane of incidence; the first variation of the optical path is $(n_1 sin theta_1 - n_2 sin theta_2) dif x$ for the refracted path and $(n_1 sin theta_1 - n_1 sin theta_1') dif x$ for the reflected one, so stationarity gives Snell's law and $theta_1 = theta_1'$ respectively.
 
-#note[
-  *Wavefront (phase-matching) argument.* Across the interface the phase must be continuous, so the tangential component of the wavevector, $k_0 n sin theta$, is conserved.
+#note(title: "Wavefront (phase-matching) argument")[
+  Across the interface the phase must be continuous, so the tangential component of the wavevector, $k_0 n sin theta$, is conserved.
   Equating it on the two sides gives Snell's law directly — the same condition that Fermat's principle produces.
   The reflected ray is obtained by requiring the tangential wavevector to be preserved on the same side: $n_1 sin theta_1 = n_1 sin theta_1'$, hence $theta_1 = theta_1'$.
 ]
@@ -1444,7 +1456,7 @@ When light enters a less dense medium ($n_1 > n_2$), Snell's law admits a real t
   For $theta_1 > theta_c$, Snell's law would require $sin theta_2 > 1$, which has no real solution: no transmitted ray exists and the light is *totally internally reflected*.
 ] <def:critical-angle>
 
-Beyond the critical angle, the "transmitted" field is an evanescent wave that decays exponentially away from the interface and carries no net energy — the geometric-optics avatar of the evanescent plane waves of Chapter 4.
+Beyond the critical angle, the "transmitted" field is an evanescent wave that decays exponentially away from the interface and carries no net energy — the geometric-optics avatar of the evanescent plane waves of #link(<ch:helmholtz>)[Chapter 4].
 Its full wave description reappears in Part III.
 
 #note[
@@ -1474,12 +1486,15 @@ A ray is described, at any plane perpendicular to the optical axis, by its heigh
 
 The approximation is accurate for rays whose angle with the axis is only a few degrees; its failure produces the *aberrations* of Section 7.4.
 
-#caution[
-  *Sign convention.* We adopt the standard Cartesian sign convention for ray tracing:
+#caution(title: "Sign convention")[
+  We adopt the Gaussian sign convention for ray tracing, used throughout this chapter:
   - Light travels from left to right.
-  - Distances measured to the right of a vertex, or along the direction of propagation, are positive.
+  - The *object* distance $s$ is measured from the object point to the vertex *along the direction of propagation*: a real object upstream of the vertex has $s > 0$, a virtual object downstream has $s < 0$.
+  - The *image* distance $s'$ is measured from the vertex to the image *along the direction of propagation*: a real image downstream of the vertex has $s' > 0$, a virtual image upstream has $s' < 0$.
+  - The radius of curvature $R$ is positive when the centre of curvature lies on the outgoing side of the vertex — for a mirror, on the side facing the incident light, so that a concave mirror has $R > 0$.
   - Heights above the optical axis are positive; angles are measured from the axis, counter-clockwise positive.
-  The same convention underlies the matrix formalism of Chapter 7.
+  So a real object on the left has $s > 0$ even though it lies to the *left* of the vertex: the sign records whether the segment runs with or against the light, not its direction on the page.
+  The same convention underlies the matrix formalism of #link(<ch:matrix-optics>)[Chapter 7].
 ] <caution:sign-convention>
 
 == Mirrors and Lenses // 球面镜与透镜
@@ -1495,7 +1510,7 @@ Consider an object point $P$ on the axis at distance $s$ from the vertex; its pa
   The image-side focal length of the surface is $f' = n_2 R / (n_2 - n_1)$.
 ] <thm:spherical-refraction>
 
-#proof[
+#proof(name: "Single Spherical Refracting Surface")[
   *Step 1 — Geometry.*
   Let a paraxial ray from $P$ meet the surface at height $y$.
   With the paraxial angles $alpha = y/s$, $alpha' = y/s'$ and the normal angle $phi = y/R$, the angles of incidence and refraction are $theta_1 = alpha + phi$ and $theta_2 = phi - alpha'$.
@@ -1523,13 +1538,14 @@ The conjugate-point construction is drawn in @fig:spherical-refraction.
 ) <fig:spherical-refraction>
 
 A spherical mirror is the reflection analogue: formally, reflection is refraction into a medium of index $n_2 = - n_1$.
-With the mirror sign convention, the paraxial mirror formula is
+This substitution is meant in the *folded* convention, where the image side is unfolded back onto the incident side, so that the image distance and the radius of curvature reverse their sign together: putting $n_2 = - n_1$, $s' -> - s'$ and $R -> - R$ into the surface formula turns $n_1 / s + n_2 / s' = (n_2 - n_1) / R$ into
 
 $
   frac(1, s) + frac(1, s') = frac(2, R),
 $
 
-so the focal length is $f = R / 2$ for a concave mirror and $f = - R / 2$ for a convex mirror.
+now read with the actual (unfolded) image distance.
+For a concave mirror ($R > 0$) the focal length is $f = R / 2$; for a convex mirror it is $f = - R / 2$.
 
 == The Thin-Lens Equation and Lensmaker's Formula // 薄透镜公式与磨镜者公式
 
@@ -1547,7 +1563,7 @@ Applying the single-surface formula twice and passing to the thin limit:
   $
 ] <thm:thin-lens-formula>
 
-#proof[
+#proof(name: "Thin-Lens Formula")[
   *Step 1 — First surface.*
   The first surface (index $1$ to $n$) forms an intermediate image at distance $s_1'$:
   $
@@ -1573,7 +1589,7 @@ Applying the single-surface formula twice and passing to the thin limit:
   A converging lens of focal length $f = 10 "cm"$ images an object at $s = 15 "cm"$.
   From the thin-lens formula, $1/s' = 1/f - 1/s = 1/10 - 1/15 = 1/30$, so $s' = 30 "cm"$.
   The image is real, inverted, and magnified by $m = - s' / s = - 2$.
-]
+] <ex:thin-lens-imaging>
 
 The thin-lens construction is drawn in @fig:lens-imaging.
 
@@ -1587,7 +1603,8 @@ The thin-lens construction is drawn in @fig:lens-imaging.
 == Gaussian Imaging // 高斯成像
 
 #definition(name: "Principal Planes and Transverse Magnification")[
-  The *principal planes* of a lens system are the two planes of unit angular magnification: a ray meeting the first principal plane at height $y$ leaves the second at the same height.
+  The *principal planes* of a lens system are its two conjugate planes of *unit transverse magnification*: a ray meeting the first principal plane at height $y$ leaves the second at the same height.
+  (Unit *angular* magnification instead defines the *nodal points*.)
   The *transverse magnification* of a thin lens is
   $
     m = - frac(s', s),
@@ -1612,7 +1629,7 @@ The thin-lens construction is drawn in @fig:lens-imaging.
 
 = Matrix Optics and Optical Instruments <ch:matrix-optics> // 矩阵光学与光学仪器
 
-The paraxial theory of Chapter 6 is linear; this chapter organises it into a compact matrix formalism and applies it to prisms and optical instruments.
+The paraxial theory of #link(<ch:paraxial-optics>)[Chapter 6] is linear; this chapter organises it into a compact matrix formalism and applies it to prisms and optical instruments.
 Every paraxial optical element is represented by a $2 times 2$ matrix, and a system of elements is represented by the product of their matrices.
 
 == ABCD Matrices and Stability // ABCD 矩阵与稳定性
@@ -1652,17 +1669,18 @@ The equivalent ABCD system is drawn in @fig:abcd-system.
 #theorem(name: "Cavity Stability Criterion")[
   For a periodic system with unimodular matrix $M = mat(A, B; C, D)$ (i.e., $A D - B C = 1$), the repeated propagation $M^n$ remains bounded if and only if
   $
-    abs(frac(A + D, 2)) < 1.
+    abs(frac(A + D, 2)) < 1,
   $
+  up to the degenerate round trip $M = plus.minus I$, which reproduces the ray exactly and is bounded even though $abs(A + D) = 2$.
 ] <thm:stability-criterion>
 
-#proof[
+#proof(name: "Cavity Stability Criterion")[
   *Step 1 — Eigenvalues.*
   Since $"det"(M) = A D - B C = 1$, the eigenvalues of $M$ satisfy $lambda_1 lambda_2 = 1$ and $lambda_1 + lambda_2 = A + D$.
 
   *Step 2 — Boundedness.*
   If $abs(A + D) < 2$, the eigenvalues are complex conjugates on the unit circle, $lambda = e^(± i phi)$, and the powers $M^n$ oscillate — the ray stays bounded.
-  If $abs(A + D) >= 2$, at least one eigenvalue has modulus $>= 1$, and $M^n$ grows — the ray escapes.
+  If $abs(A + D) >= 2$, at least one eigenvalue has modulus $>= 1$, and $M^n$ grows — exponentially in general, linearly in the defective cases such as a pure translation — so the ray escapes; the one exception is again the degenerate round trip $M = plus.minus I$.
 ]
 
 #example(name: "Two-Mirror Optical Cavity")[ // 两镜腔
@@ -1674,7 +1692,7 @@ The equivalent ABCD system is drawn in @fig:abcd-system.
   and the cavity is stable exactly when $abs(A + D) / 2 < 1$.
   For two plane mirrors ($R = oo$), $A + D = 2$: the cavity sits on the stability boundary.
   The same criterion returns in #link(<ch:applications>)[Chapter 19], where it governs laser resonators.
-]
+] <ex:cavity-stability>
 
 == Prisms and Dispersion // 棱镜与色散
 
@@ -1696,14 +1714,14 @@ $
 
 #example(name: "Minimum Deviation")[ // 最小偏向角
   A $60°$ prism with $n = 1.5$ satisfies $sin((60° + delta_"min") / 2) = 1.5 sin 30° = 0.75$.
-  Hence $delta_"min" = 2 arcsin(0.75) - 60° approx 17.5°$.
-]
+  Hence $delta_"min" = 2 arcsin(0.75) - 60° = 2 times 48.59° - 60° approx 37.2°$, the standard result for a $60°$ crown-glass prism.
+] <ex:minimum-deviation>
 
 Since $n$ depends on wavelength, the deviation depends on wavelength: a prism spreads white light into its spectrum.
-The *angular dispersion* is $D = dif delta / dif lambda$, and the material dependence $n(lambda)$ is developed in #link(<ch:propagation-media>)[Chapter 12].
+The *angular dispersion* is $D_"ang" = dif delta / dif lambda$ ($D_"ang"$ here, not the matrix element $D$ of Section 7.1), and the material dependence $n(lambda)$ is developed in #link(<ch:propagation-media>)[Chapter 12].
 
 #note[
-  Prisms and gratings both disperse light; gratings (Chapter 10) disperse by interference rather than refraction.
+  Prisms and gratings both disperse light; gratings (#link(<ch:diffraction>)[Chapter 10]) disperse by interference rather than refraction.
   The wavelength dependence of $n$ itself — normal and anomalous dispersion — belongs to Part III (Propagation in Media).
 ]
 
@@ -1714,11 +1732,11 @@ Optical instruments are sequences of lenses analysed with the matrix formalism o
 #example(name: "Compound Microscope")[ // 显微镜
   A compound microscope consists of a short-focal-length objective and a longer-focal-length eyepiece.
   The objective forms a real, magnified intermediate image; the eyepiece acts as a magnifier.
-  The total magnification is the product
+  The total *angular* magnification is the product
   $
-    M = M_"obj" M_"eye",
+    M_"tot" = M_"obj" M_"eye",
   $
-  with the objective magnification $M_"obj" = - L / f_"obj"$ (for tube length $L$) and the eyepiece angular magnification $M_"eye" = 25 "cm" / f_"eye"$ for a near point at $25 "cm"$.
+  of one transverse and one angular factor — the standard convention for a visual instrument: the objective magnification $M_"obj" = - L / f_"obj"$ (for tube length $L$) times the eyepiece angular magnification $M_"eye" = 25 "cm" / f_"eye"$ for a near point at $25 "cm"$.
 ] <ex:microscope>
 
 #example(name: "Refracting Telescope")[ // 折射望远镜
@@ -1740,9 +1758,9 @@ The two instruments are compared in @fig:optical-instruments.
   supplement: [Fig.]
 ) <fig:optical-instruments>
 
-#note[
-  *Resolution.* Magnification alone is useless beyond the *diffraction limit*: a lens of diameter $D$ cannot separate two points whose angular separation is below $approx 1.22 lambda / D$ (Rayleigh criterion).
-  This wave-optical limit is developed in Chapter 10.
+#note(title: "Resolution")[
+  Magnification alone is useless beyond the *diffraction limit*: a lens of aperture diameter $D_"ap"$ cannot separate two points whose angular separation is below $approx 1.22 lambda / D_"ap"$ (Rayleigh criterion).
+  This wave-optical limit is developed in #link(<ch:diffraction>)[Chapter 10].
 ]
 
 == Aberrations // 像差 [简要]
@@ -1777,6 +1795,9 @@ The two instruments are compared in @fig:optical-instruments.
   The evanescent field outside the core is the same phenomenon as in Section 5.5.
 ]
 
+Chapters 5–7 built geometric optics as the $lambda -> 0$ limit of wave optics: rays are the normals of the level sets of the eikonal, imaging is linear because paraxial rays obey linear equations, and every paraxial element is a $2 times 2$ matrix.
+Everything neglected on the way — the finite wavelength, the interference of secondary waves, the finite aperture — returns in Part III as diffraction.
+
 // --------------------------------------------------------------------------
 // Part III: Wave Optics (波动光学)
 // --------------------------------------------------------------------------
@@ -1802,11 +1823,11 @@ We therefore work with a single complex scalar amplitude $U(bold(r))$.
     (nabla^2 + k^2) U = 0,
   $
   where $k = 2 pi n / lambda_0$ is the wavenumber in the medium.
-  The physical field is recovered as $u(bold(r), t) = "Re"(U(bold(r)) e^(-i omega t))$, with the time-harmonic convention of Chapter 4.
+  The physical field is recovered as $u(bold(r), t) = "Re"(U(bold(r)) e^(-i omega t))$, with the time-harmonic convention of #link(<ch:helmholtz>)[Chapter 4].
 ] <def:scalar-field>
 
 A unique solution requires boundary conditions.
-On an aperture or screen we prescribe the field or its normal derivative; for radiation problems we add the Sommerfeld radiation condition of Chapter 4, which selects the outgoing solutions.
+On an aperture or screen we prescribe the field or its normal derivative; for radiation problems we add the Sommerfeld radiation condition of #link(<ch:helmholtz>)[Chapter 4], which selects the outgoing solutions.
 
 #note[
   The scalar approximation fails near sharp edges, in strongly absorbing media, and for tightly focused beams, where the vector character of the field (#link(<ch:polarization>)[Chapter 13]) must be retained.
@@ -1854,13 +1875,13 @@ The diffraction integral is the Green-function solution of the Helmholtz equatio
 The Green's function admits a plane-wave (angular-spectrum) representation: it is the superposition of the outgoing plane waves of #link(<def:angular-spectrum>)[the angular spectrum].
 This is the precise sense in which the diffraction integrals of this chapter are the angular-spectrum representation evaluated at a distant observation plane, redeeming the promise of #link(<ch:helmholtz>)[Chapter 4].
 
-#note[
-  *Evanescent waves.* The angular-spectrum form of the Green's function contains the evanescent components identified in Section 4.4.
-  Their full wave description — exponential decay away from the aperture, frustrated total internal reflection — was promised at the end of Chapter 5 and is now accounted for by the diffraction integrals of Section 8.4.
+#note(title: "Evanescent waves")[
+  The angular-spectrum form of the Green's function contains the evanescent components identified in Section 4.4.
+  Their full wave description — exponential decay away from the aperture, frustrated total internal reflection — was promised at the end of #link(<ch:ray-optics>)[Chapter 5] and is now accounted for by the diffraction integrals of Section 8.4.
 ]
 
-#note[
-  *Guided modes.* In cylindrical symmetry (fibres, #link(<ch:matrix-optics>)[Chapter 7]), the Helmholtz equation separates with Bessel functions, and the transverse patterns are the discrete guided modes promised in Section 7.5.
+#note(title: "Guided modes")[
+  In cylindrical symmetry (fibres, #link(<ch:matrix-optics>)[Chapter 7]), the Helmholtz equation separates with Bessel functions, and the transverse patterns are the discrete guided modes promised in Section 7.5.
   The same Green-function machinery, with the appropriate modal basis, describes their propagation.
 ]
 
@@ -1876,10 +1897,10 @@ The diffraction integrals follow from Green's theorem applied to the Helmholtz e
   $
     U(P) = 1 / (4 pi) integral_Sigma [U (partial G)/(partial n) - G (partial U)/(partial n)] dif S,
   $
-  where $partial / partial n$ is the outward normal derivative and $r$ is the distance from the integration point to $P$.
+  where $partial / partial n$ is the derivative along the normal to $Sigma$ directed *towards the observation region* (the direction of propagation) and $r$ is the distance from the integration point to $P$; the opposite orientation of the normal introduces an overall minus sign, and the same convention is used again below.
 ] <thm:kirchhoff-integral>
 
-#proof[
+#proof(name: "Kirchhoff Diffraction Integral")[
   *Step 1 — Green's second identity.*
   For two smooth functions $U$ and $G$ on a volume $V$ bounded by a surface $S$:
   $
@@ -1888,7 +1909,7 @@ The diffraction integrals follow from Green's theorem applied to the Helmholtz e
 
   *Step 2 — Apply to the Helmholtz equation.*
   Both $U$ and $G$ solve the Helmholtz equation away from the singular point of $G$, so $U nabla^2 G - G nabla^2 U = 0$ on the integration region.
-  The surface integral therefore reduces to the boundary $Sigma$ (the aperture) together with the point $P$ itself.
+  A large closing hemisphere is made to vanish by the Sommerfeld radiation condition, so what remains of the surface integral is the aperture $Sigma$ (the screen contributes nothing under the Kirchhoff boundary conditions below) together with the small sphere around $P$.
 
   *Step 3 — Pick up the singularity.*
   Surrounding $P$ by a small sphere of radius $epsilon$ and using $G = e^(i k r) / r$ on it, the integral over the small sphere gives $4 pi U(P)$ as $epsilon -> 0$.
@@ -1897,9 +1918,9 @@ The diffraction integrals follow from Green's theorem applied to the Helmholtz e
 
 The theorem as stated uses the *Kirchhoff boundary conditions*: on the aperture $U$ and $partial U / partial n$ take the values of the incident field, and on the screen they vanish.
 
-#note[
-  *Inconsistency.* The Kirchhoff conditions assign both $U$ and its normal derivative on the screen, which over-determines the elliptic problem: a Helmholtz solution is fixed by one boundary condition alone.
-  Moreover the formula fails to reproduce the incident field in the absence of a screen (the so-called *obliquity paradox*).
+#note(title: "Inconsistency")[
+  The Kirchhoff conditions assign both $U$ and its normal derivative on the screen, which over-determines the elliptic problem: a Helmholtz solution is fixed by one boundary condition alone, and one that vanishes together with its normal derivative on an open piece of the boundary vanishes identically.
+  The practical consequence is that the formula never returns the very values fed into it: in particular it does not reproduce the incident wave when the screen is removed.
   The Rayleigh-Sommerfeld theory repairs both defects.
 ]
 
@@ -1914,7 +1935,7 @@ The theorem as stated uses the *Kirchhoff boundary conditions*: on the aperture 
   where $theta$ is the angle between the segment $P_0 P$ and the normal to the screen.
 ] <thm:rayleigh-sommerfeld>
 
-#proof[
+#proof(name: "Rayleigh-Sommerfeld Diffraction Integral")[
   *Step 1 — A Dirichlet Green's function.*
   The mirrored source makes $G_D$ vanish identically on the screen, so the boundary term containing $G_D (partial U)/(partial n)$ disappears from Green's identity.
 
@@ -1992,7 +2013,7 @@ The geometry and the resulting fringes are shown in @fig:young-double-slit.
 ] <def:fringe-visibility>
 
 #note[
-  Real slits have finite width: each slit diffracts, and the two-beam pattern is modulated by the single-slit diffraction envelope (Chapter 10).
+  Real slits have finite width: each slit diffracts, and the two-beam pattern is modulated by the single-slit diffraction envelope (#link(<ch:diffraction>)[Chapter 10]).
   The diffraction envelope answers "where the light goes"; the interference term answers "how it distributes within the envelope".
 ]
 
@@ -2009,8 +2030,8 @@ where the $lambda_0 / 2$ term accounts for a phase jump of $pi$ when light refle
 
 #example(name: "Newton's Rings")[ // 牛顿环
   A plano-convex lens of radius $R$ resting on a flat plate creates a film of thickness $t(r) approx r^2 / (2 R)$.
-  Bright rings occur where $2 t = (m + 1/2) lambda$, giving ring radii $r_m approx sqrt(m lambda R)$.
-  Newton's rings were decisive evidence for the wave nature of light.
+  Bright rings occur where $2 t = (m + 1/2) lambda$, giving ring radii $r_m = sqrt((m + 1/2) lambda R)$ for $m = 0, 1, 2, dots.c$, which reduce to the familiar estimate $r_m approx sqrt(m lambda R)$ at large order $m$.
+  The regular rings resisted a corpuscular account, and their explanation by interference was one of the early successes of the wave theory.
 ] <ex:newton-rings>
 
 #note[
@@ -2049,7 +2070,7 @@ Light bounces many times between them; the transmitted field is the coherent sum
   $
 ] <thm:airy-function>
 
-#proof[
+#proof(name: "Airy Function")[
   *Step 1 — Sum the partial waves.*
   The transmitted field is the geometric series
   $
@@ -2074,7 +2095,7 @@ Light bounces many times between them; the transmitted field is the coherent sum
 
 #note[
   The two-beam pattern is a broad $cos^2$; the multiple-beam pattern is a comb of sharp peaks.
-  The sharpness is what makes the Fabry-Perot the standard tool for high-resolution spectroscopy and for laser cavities (Chapter 19).
+  The sharpness is what makes the Fabry-Perot the standard tool for high-resolution spectroscopy and for laser cavities (#link(<ch:applications>)[Chapter 19]).
 ]
 
 == Temporal and Spatial Coherence // 时间/空间相干性
@@ -2118,11 +2139,13 @@ A laser is highly coherent: a narrow linewidth $Delta nu ~ 1 "MHz"$ gives $L_c ~
   Its modulus satisfies $0 <= abs(gamma_(12)) <= 1$.
 ] <def:complex-coherence-degree>
 
-For quasi-monochromatic fields, the visibility of the interference pattern equals the modulus of the degree of coherence:
+For quasi-monochromatic fields the *visibility* measures the modulus of the degree of coherence; for two beams of intensities $I_1$ and $I_2$,
 
 $
-  V = abs(gamma_(12)(0)) .
+  V = frac(2 sqrt(I_1 I_2), I_1 + I_2) abs(gamma_(12)(0)),
 $
+
+which reduces to $V = abs(gamma_(12)(0))$ when the intensities are equal.
 
 Perfect coherence ($abs(gamma) = 1$) gives unit visibility; incoherence ($abs(gamma) = 0$) gives none.
 The fringe phase carries the argument of $gamma$, which encodes the optical path difference.
@@ -2135,9 +2158,9 @@ The fringe phase carries the argument of $gamma$, which encodes the optical path
 
 = Diffraction: Approximations and Applications <ch:diffraction> // 衍射：近似与应用
 
-The diffraction integral of Chapter 8 is exact but rarely evaluated in closed form.
+The diffraction integral of #link(<ch:scalar-diffraction>)[Chapter 8] is exact but rarely evaluated in closed form.
 This chapter introduces the two standard approximations — Fresnel (near field) and Fraunhofer (far field) — and applies them to slits, apertures, gratings, and imaging.
-The Fraunhofer patterns are nothing but Fourier transforms of the aperture, which prepares the Fourier optics of Chapter 11.
+The Fraunhofer patterns are nothing but Fourier transforms of the aperture, which prepares the Fourier optics of #link(<ch:fourier-optics>)[Chapter 11].
 
 == Fresnel Diffraction and Zone Plates // 菲涅耳衍射与波带片
 
@@ -2159,8 +2182,8 @@ The Fraunhofer patterns are nothing but Fourier transforms of the aperture, whic
 
 The Fresnel integral has no elementary closed form, but it is well tabulated; its limit at infinity is $C(oo) = S(oo) = 1/2$.
 
-#note[
-  *Zone plates.* Divide the wavefront into concentric *half-period zones* so that waves from successive zones arrive out of phase.
+#note(title: "Zone plates")[
+  Divide the wavefront into concentric *half-period zones* so that waves from successive zones arrive out of phase.
   Blocking every other zone turns the remaining zones into an approximate converging lens: a zone plate focuses light even though it contains no refracting material.
 ]
 
@@ -2186,9 +2209,9 @@ The Fourier structure explains everything that follows: the far-field pattern is
   The first zeros lie at $sin theta = ± lambda / a$.
 ] <thm:fraunhofer-single-slit>
 
-#proof[
+#proof(name: "Fraunhofer Diffraction by a Single Slit")[
   *Step 1 — Fourier transform of a rectangle.*
-  The aperture field is $U_0(x_0) = U_0$ on $|x_0| <= a/2$ and zero elsewhere.
+  The aperture field is $U_0(x_0) = U_0$ on $abs(x_0) <= a / 2$ and zero elsewhere.
   Its Fourier transform is proportional to the integral $integral_(-a/2)^(a/2) e^(- i k x_0 sin theta) dif x_0 = a "sinc"(k a sin theta / 2)$.
 
   *Step 2 — Intensity.*
@@ -2211,7 +2234,7 @@ The circular aperture is the case of practical importance: every lens, every cam
   $
 ] <thm:airy-pattern>
 
-#proof[
+#proof(name: "Fraunhofer Diffraction by a Circular Aperture")[
   *Step 1 — Fourier transform in polar coordinates.*
   The circular aperture is the indicator of a disk; its two-dimensional Fourier transform is the Hankel transform of the disk, which evaluates to $2 J_(1)(x) / x$.
 
@@ -2219,8 +2242,9 @@ The circular aperture is the case of practical importance: every lens, every cam
   The first zero of $J_(1)(x)$ is at $x = 3.8317 approx 1.22 pi$, giving $sin theta_(1) = 1.22 lambda / D$.
 ]
 
-#example(name: "Airy Disc Diameter")[ // 艾里斑直径
-  A camera lens of diameter $D = 25 "mm"$ at $lambda = 550 "nm"$ has an Airy disc of angular radius $theta_(1) = 1.22 lambda / D approx 2.7 times 10^(-5) "rad"$, i.e., about $5.4 "mm"$ at a focal distance of $200 "mm"$.
+#example(name: "Airy Disc Size")[ // 艾里斑尺寸
+  A camera lens of diameter $D = 25 "mm"$ at $lambda = 550 "nm"$ has an Airy disc of angular radius $theta_(1) = 1.22 lambda / D approx 2.7 times 10^(-5) "rad"$.
+  At a focal distance of $200 "mm"$ that is a radius of only $5.4 times 10^(-3) "mm" = 5.4 "µm"$ (diameter $approx 11 "µm"$) — at the scale of the pixel pitch of a modern sensor, which is why diffraction limits the finest usable pixels.
   Stopping the lens down increases the Airy disc — smaller aperture, worse diffraction resolution.
 ] <ex:airy-disc-diameter>
 
@@ -2234,7 +2258,7 @@ Single slit, double slit and circular aperture are compared in @fig:fraunhofer-p
 ) <fig:fraunhofer-patterns>
 
 #note[
-  The double-slit pattern is the product of the two-slit interference term of Chapter 9 and the single-slit diffraction envelope of Section 10.2:
+  The double-slit pattern is the product of the two-slit interference term of #link(<ch:interference>)[Chapter 9] and the single-slit diffraction envelope of Section 10.2:
   $
     I(theta) = 4 I_0 cos^2(pi d sin theta / lambda) "sinc"^2(k a sin theta / 2).
   $
@@ -2257,7 +2281,7 @@ Single slit, double slit and circular aperture are compared in @fig:fraunhofer-p
   the *resolving power* at order $m$.
 ] <thm:grating-resolution>
 
-#proof[
+#proof(name: "Grating Resolution")[
   *Step 1 — Principal maximum.*
   For $N$ equally spaced slits, the intensity is
   $
@@ -2311,8 +2335,8 @@ The three regimes are drawn in @fig:resolution-criterion.
   supplement: [Fig.]
 ) <fig:resolution-criterion>
 
-#note[
-  *Why the limit is fundamental.* The angular-spectrum analysis of Section 4.4 showed that fine spatial detail generates evanescent waves that do not propagate to the far field.
+#note(title: "Why the limit is fundamental")[
+  The angular-spectrum analysis of Section 4.4 showed that fine spatial detail generates evanescent waves that do not propagate to the far field.
   The Rayleigh and Abbe criteria are exactly that statement in imaging language: the aperture collects only the propagating components, so detail finer than $lambda / (2 "NA")$ is lost — the wave-optical limit promised in #link(<ch:matrix-optics>)[Chapter 7].
 ]
 
@@ -2322,7 +2346,7 @@ The three regimes are drawn in @fig:resolution-criterion.
 
 Section 10.2 showed that the Fraunhofer pattern is the Fourier transform of the aperture.
 This chapter makes that observation operational: a lens performs the transform optically, and two lenses in a row build a complete filtering system.
-Fourier optics is the engineering branch of wave optics, and it redeems the promise of Chapter 4 that the lens implements the angular-spectrum representation as a physical Fourier transform.
+Fourier optics is the engineering branch of wave optics, and it redeems the promise of #link(<ch:helmholtz>)[Chapter 4] that the lens implements the angular-spectrum representation as a physical Fourier transform.
 
 == The Lens as a Fourier Transformer // 透镜作为傅里叶变换器
 
@@ -2342,7 +2366,7 @@ $
   the two-dimensional Fourier transform of the input evaluated at spatial frequencies $f_x = u / (lambda f)$, $f_y = v / (lambda f)$.
 ] <thm:lens-fourier-transform>
 
-#proof[
+#proof(name: "Lens Fourier Transform")[
   *Step 1 — Lens phase.*
   Immediately after the lens the field is $U_(i n)(x, y) t(x, y)$, with $t$ the quadratic phase factor above.
 
@@ -2356,10 +2380,10 @@ $
 
 The magic of the result is the cancellation: without the lens the Fresnel kernel keeps its quadratic phase and no clean transform appears.
 
-#note[
-  *The 2f system.* With the input in the front focal plane, the output is a *strict* Fourier transform with no residual phase factor.
+#note(title: "The 2f system")[
+  With the input in the front focal plane, the output is a *strict* Fourier transform with no residual phase factor.
   If the input is placed elsewhere, the output carries an additional quadratic phase, so the standard configuration for Fourier processing is the 2f system.
-  This is the lens analysis promised in Chapter 4, where the angular-spectrum representation is physically implemented by the lens.
+  This is the lens analysis promised in #link(<ch:helmholtz>)[Chapter 4], where the angular-spectrum representation is physically implemented by the lens.
 ]
 
 The 2f geometry is drawn in @fig:lens-fourier.
@@ -2431,7 +2455,7 @@ In practice the same operation is increasingly performed digitally on a recorded
 ] <def:coherent-transfer-function>
 
 #note[
-  The distinction is sharp: coherent imaging is linear in amplitude (CTF = P), incoherent imaging is linear in intensity (OTF = |P| ⊛ |P|, the autocorrelation of the pupil).
+  The distinction is sharp: coherent imaging is linear in amplitude, so the transfer function is the pupil itself ($"CTF" = P$); incoherent imaging is linear in intensity, so the transfer function is the *complex autocorrelation of the pupil*, $"OTF" = P ⊛ P$ — the pupil enters with its phase, not through its modulus.
   The Abbe limit of Section 10.5 is the support of the CTF: spatial frequencies beyond the pupil support are simply cut off.
 ]
 
@@ -2463,7 +2487,7 @@ With the material response in place, the closing chapter of Part III restores wh
   $
     dot.double(x) + gamma dot(x) + omega_0^2 x = q/m E_0 e^(- i omega t),
   $
-  with damping rate $gamma$ and resonance frequency $omega_0$.
+  with damping rate $gamma$ (a decay rate here, not the Lorentz factor of #link(<ch:wave-motion>)[Chapter 2]) and resonance frequency $omega_0$.
   The induced polarization gives the dielectric function
   $
     epsilon(omega) = 1 + (N q^2) / (epsilon_0 m) dot 1 / (omega_0^2 - omega^2 - i gamma omega),
@@ -2489,8 +2513,8 @@ The resulting $n(omega)$ is plotted in @fig:dispersion-curves.
   supplement: [Fig.]
 ) <fig:dispersion-curves>
 
-#note[
-  *Normal vs anomalous dispersion.* Far from resonance, $n(omega)$ increases with frequency (normal dispersion, familiar from prism spectra, Section 7.2).
+#note(title: "Normal vs anomalous dispersion")[
+  Far from resonance, $n(omega)$ increases with frequency (normal dispersion, familiar from prism spectra, Section 7.2).
   Inside the absorption band the real part *decreases* with frequency — anomalous dispersion — and absorption is strongest.
   The damping $gamma$ is what makes $epsilon$ complex and couples the two effects.
 ]
@@ -2508,7 +2532,7 @@ The resulting $n(omega)$ is plotted in @fig:dispersion-curves.
   where $cal(P)$ denotes the Cauchy principal value.
 ] <thm:kramers-kronig>
 
-#proof[
+#proof(name: "Kramers-Kronig Relations")[
   *Step 1 — Analyticity.*
   Causality makes the susceptibility $chi(omega)$ analytic in the upper half-plane: the Fourier transform of a retarded response has no poles for $"Im"(omega) > 0$.
 
@@ -2516,8 +2540,8 @@ The resulting $n(omega)$ is plotted in @fig:dispersion-curves.
   Integrate $chi(omega') / (omega' - omega)$ over a large semicircle in the upper half-plane, indented around the pole on the real axis.
   The analyticity plus the decay of $chi$ at infinity leaves only the principal-value integral and the residue.
 
-  *Step 3 — Take real and imaginary parts.*
-  Separating $chi = chi_1 + i chi_2$ in the resulting identity yields the two dispersion relations.
+  *Step 3 — Fold the integral and separate real and imaginary parts.*
+  Crossing symmetry, $chi(- omega') = chi(omega')^*$, folds the integral over the whole real axis onto $omega' > 0$; separating $chi = chi_1 + i chi_2$ in the resulting identity then yields the two dispersion relations above.
 ]
 
 #note[
@@ -2691,7 +2715,7 @@ $
 ] <ex:brewster-reflection>
 
 #note[
-  Malus's law is the amplitude-splitting analogue of the interference visibility of Chapter 9: both measure how much of a field survives a projection.
+  Malus's law is the amplitude-splitting analogue of the interference visibility of #link(<ch:interference>)[Chapter 9]: both measure how much of a field survives a projection.
   For partially polarized light the transmitted intensity follows from the Mueller calculus, generalizing Malus.
 ]
 
@@ -2721,9 +2745,9 @@ From the Helmholtz equation through diffraction, interference, Fourier optics an
 
 Part III treated light as a classical wave field.
 Between 1900 and 1925, three experiments forced the conclusion that light exchanges energy with matter in quantized packets $h nu$: blackbody radiation, the photoelectric effect, and Compton scattering.
-This bridging chapter establishes the particle side of light; Chapter 15 shows how the quantized field reconciles it with the wave picture.
+This bridging chapter establishes the particle side of light; #link(<ch:field-quantization>)[Chapter 15] shows how the quantized field reconciles it with the wave picture.
 
-Part IV (Chapters 14–19) proceeds from that bridge through the quantized field (Chapter 15), its states and phase space (Chapter 16), photon statistics (Chapter 17), light–matter interaction (Chapter 18), and the applications that follow from them (Chapter 19).
+Part IV (Chapters 14–19) proceeds from that bridge through the quantized field (#link(<ch:field-quantization>)[Chapter 15]), its states and phase space (#link(<ch:coherent-states>)[Chapter 16]), photon statistics (#link(<ch:photon-statistics>)[Chapter 17]), light–matter interaction (#link(<ch:light-matter>)[Chapter 18]), and the applications that follow from them (#link(<ch:applications>)[Chapter 19]).
 
 == Blackbody Radiation and Planck's Law // 黑体辐射与普朗克定律
 
@@ -2751,8 +2775,8 @@ $
   and multiplying by the mode density yields the formula above.
 ] <thm:planck-derivation>
 
-#note[
-  *The ultraviolet catastrophe.* The Rayleigh–Jeans law diverges as $nu -> oo$ — the classical prediction that every hot body emits infinite energy at high frequency.
+#note(title: "The ultraviolet catastrophe")[
+  The Rayleigh–Jeans law diverges as $nu -> oo$ — the classical prediction that every hot body emits infinite energy at high frequency.
   The quantization $epsilon_n = n h nu$ cuts the high-frequency contribution off exponentially and removes the divergence.
 ]
 
@@ -2807,7 +2831,7 @@ X-rays scattered by free electrons emerge with a longer wavelength, the shift gr
   where $theta$ is the scattering angle and $m_e$ the electron mass.
 ] <thm:compton-shift>
 
-#proof[
+#proof(name: "Compton Shift")[
   *Step 1 — Conserve energy.*
   The photon loses energy $h nu - h nu'$, which the electron gains as kinetic energy:
   $
@@ -2837,14 +2861,13 @@ X-rays scattered by free electrons emerge with a longer wavelength, the shift gr
   with magnitude $p = h / lambda = h nu / c$.
 ] <def:photon-momentum>
 
-#note[
-  *The single-photon double slit.*
-  In Young's experiment (Chapter 9) the fringe pattern appears even when the intensity is so low that photons arrive one at a time — each photon interferes with itself, and the pattern builds up as a statistical accumulation of detections.
+#note(title: "The single-photon double slit")[
+  In Young's experiment (#link(<ch:interference>)[Chapter 9]) the fringe pattern appears even when the intensity is so low that photons arrive one at a time — each photon interferes with itself, and the pattern builds up as a statistical accumulation of detections.
   The wave picture (Part III) governs the probability distribution; the particle picture governs the individual detection events.
 ]
 
 #note[
-  Wave–particle duality is not a paradox to be resolved by choosing one picture per experiment: Chapter 15 quantizes the field so that a single quantum object — the photon — carries both the wave-like mode structure and the particle-like energy quanta $h nu$.
+  Wave–particle duality is not a paradox to be resolved by choosing one picture per experiment: #link(<ch:field-quantization>)[Chapter 15] quantizes the field so that a single quantum object — the photon — carries both the wave-like mode structure and the particle-like energy quanta $h nu$.
 ]
 
 // --- Chapter 15: Quantization of the Electromagnetic Field (电磁场量子化) ---
@@ -2853,11 +2876,11 @@ X-rays scattered by free electrons emerge with a longer wavelength, the shift gr
 
 Einstein's photon carries the energy quantum $h nu$, yet interference and diffraction (Part III) demand a wave field.
 The resolution is to quantize the field itself: every field mode is a harmonic oscillator, and photons are the excitation quanta of these oscillators.
-This chapter performs the canonical quantization for a single mode in full and summarizes the multimode extension; it uses the harmonic oscillator formalism of *Mécanique quantique* and of Chapter 1.
+This chapter performs the canonical quantization for a single mode in full and summarizes the multimode extension; it uses the harmonic oscillator formalism of *Mécanique quantique* and of #link(<ch:oscillations>)[Chapter 1].
 
 == Classical Field Modes // 经典场模
 
-The electromagnetic field inside a cavity can be expanded in spatial modes (the plane-wave expansion of Chapter 4, or the cavity modes of Chapter 7).
+The electromagnetic field inside a cavity can be expanded in spatial modes (the plane-wave expansion of #link(<ch:helmholtz>)[Chapter 4], or the cavity modes of #link(<ch:matrix-optics>)[Chapter 7]).
 In each mode the field factors into a time-dependent amplitude and a fixed spatial pattern:
 
 $
@@ -2910,15 +2933,14 @@ The number operator is Hermitian and counts the quanta of the mode: its eigensta
   $
 ] <thm:field-quantization>
 
-#proof[
+#proof(name: "Quantization of the Field Hamiltonian")[
   *Step 1 — Substitute the ladder operators.*
   With $hat(Q) = (hat(a) + hat(a)^dagger) / sqrt(2)$ and $hat(P) = (hat(a) - hat(a)^dagger) / (i sqrt(2))$, the dimensionless sum $hat(P)^2 + hat(Q)^2$ becomes $hat(a)^dagger hat(a) + hat(a) hat(a)^dagger$.
   *Step 2 — Use the commutator.*
   The relation $[hat(a), hat(a)^dagger] = 1$ gives $hat(a) hat(a)^dagger = hat(a)^dagger hat(a) + 1$, hence $hat(H) = planck omega (hat(N) + 1/2)$.
 ]
 
-#note[
-  *Multimode extension.*
+#note(title: "Multimode extension")[
   Independent modes carry independent ladder operators with $[hat(a)_k, hat(a)_l^dagger] = delta_(k l)$.
   The full field Hamiltonian is the sum $hat(H) = sum_k planck omega_k (hat(N)_k + 1/2)$ — the field is a collection of independent quantum oscillators.
 ]
@@ -2957,18 +2979,17 @@ The number operator is Hermitian and counts the quanta of the mode: its eigensta
   which formally diverges in the continuum limit.
 ] <def:zero-point-energy>
 
-#note[
-  *Vacuum fluctuations.*
+#note(title: "Vacuum fluctuations")[
   The vacuum expectation of the field vanishes, $⟨ 0 | hat(bold(E)) | 0 ⟩ = 0$, but its square does not: $⟨ 0 | hat(bold(E))^2 | 0 ⟩ != 0$.
-  The empty field therefore exhibits fluctuating fields of zero mean — the physical origin of spontaneous emission (Chapter 18) and of the Casimir force between conducting plates.
-  The polarization states of #link(<ch:polarization>)[Chapter 13] become, in this language, superpositions of the two Fock modes of orthogonal polarization — the Bloch-sphere picture promised in #link(<ch:polarization>)[Chapter 13], and the photon helicity of Section 13.6 is the circular-polarization superposition of the same modes.
+  The empty field therefore exhibits fluctuating fields of zero mean — the physical origin of spontaneous emission (#link(<ch:light-matter>)[Chapter 18]) and of the Casimir force between conducting plates.
+  The polarization states of #link(<ch:polarization>)[Chapter 13] become, in this language, superpositions of the two Fock modes of orthogonal polarization — the Bloch-sphere picture promised in #link(<ch:polarization>)[Chapter 13], and the photon helicity states are the circular-polarization superpositions introduced in Section 13.1.
 ]
 
 // --- Chapter 16: Coherent and Squeezed States (相干态与压缩态) ---
 
 = Coherent and Squeezed States <ch:coherent-states> // 相干态与压缩态
 
-The number states of Chapter 15 have a definite photon number but an ill-defined phase.
+The number states of #link(<ch:field-quantization>)[Chapter 15] have a definite photon number but an ill-defined phase.
 A laser, however, produces a field with a stable classical amplitude and phase.
 The Glauber coherent states — eigenstates of the annihilation operator — are the quantum states closest to a classical wave; the squeezed states go further and redistribute the vacuum uncertainty between the field quadratures.
 
@@ -2996,7 +3017,7 @@ The Glauber coherent states — eigenstates of the annihilation operator — are
   - the states are not orthogonal: $⟨ beta | alpha ⟩ = exp(- 1/2 (abs(alpha)^2 + abs(beta)^2 - 2 beta^"*" alpha))$.
 ] <thm:coherent-state-properties>
 
-#proof[
+#proof(name: "Properties of Coherent States")[
   *Step 1 — Expand in number states.*
   Write $| alpha ⟩ = sum_n c_n | n ⟩$ and apply $hat(a)$: the eigenvalue equation forces $c_(n+1) = alpha c_n / sqrt(n + 1)$, giving $c_n = alpha^n / sqrt(n!) c_0$.
   *Step 2 — Normalize.*
@@ -3014,7 +3035,7 @@ The Glauber coherent states — eigenstates of the annihilation operator — are
 #definition(name: "Squeezed State")[
   Acting with the *squeeze operator*
   $
-    hat(S)(zeta) = exp(1/2 (zeta^"*" hat(a)^2 - zeta hat(a)^(dagger 2))), quad zeta = r e^(i phi),
+    hat(S)(zeta) = exp(1/2 (zeta^"*" hat(a)^2 - zeta (hat(a)^dagger)^2)), quad zeta = r e^(i phi),
   $
   on a coherent state gives the squeezed state $| zeta, alpha ⟩ = hat(S)(zeta) hat(D)(alpha)| 0 ⟩$.
 ] <def:squeezed-state>
@@ -3041,7 +3062,8 @@ The Glauber coherent states — eigenstates of the annihilation operator — are
   $
     (Delta X)^2 = e^(-2 r) / 4, quad (Delta P)^2 = e^(2 r) / 4.
   $
-  One quadrature falls below the standard quantum limit $1/4$; a state with $Delta X < 1/2$ has no classical counterpart and is a signature of nonclassical light.
+  One variance falls below the *vacuum* variance $1/4$ (so that $Delta X < 1/2$ for that quadrature) while the product $Delta X Delta P >= 1/4$ stays saturated; squeezing redistributes the vacuum noise, it does not remove it.
+  A state with $Delta X < 1/2$ has no classical counterpart and is a signature of nonclassical light.
 ] <prop:squeezed-uncertainty>
 
 == Phase-Space Representations: The Wigner Function // 相空间表示与 Wigner 函数
@@ -3054,8 +3076,7 @@ The Glauber coherent states — eigenstates of the annihilation operator — are
   normalized so that $integral.double W(x, p) dif x dif p = 1$.
 ] <def:wigner-function>
 
-#note[
-  *Negativity is nonclassical.*
+#note(title: "Negativity is nonclassical")[
   A coherent state has a positive Gaussian Wigner function; a single-photon state $| 1 ⟩$ has a Wigner function with a negative dip at the origin.
   Since a genuine classical probability must be nonnegative, negative values of $W$ certify nonclassical light — the quantum feature probed in homodyne tomography.
 ]
@@ -3074,7 +3095,7 @@ Coherent and number states are compared in phase space in @fig:wigner-function.
 = Photon Statistics and Correlation Functions <ch:photon-statistics> // 光子统计与关联函数
 
 Chapters 15 and 16 built the quantum states of the field; measurement reveals them through photon statistics and correlation functions.
-The first-order correlation governs interference (the quantum version of the coherence degree of Chapter 9); the second-order correlation probes intensity correlations and separates classical from quantum light.
+The first-order correlation governs interference (the quantum version of the coherence degree of #link(<ch:interference>)[Chapter 9]); the second-order correlation probes intensity correlations and separates classical from quantum light.
 
 == Thermal, Poisson and Sub-Poisson Statistics // 热/泊松/亚泊松统计
 
@@ -3094,8 +3115,7 @@ The first-order correlation governs interference (the quantum version of the coh
   Averaging the Poisson distribution of $| alpha ⟩$ over this phase-space mixture yields the Bose–Einstein distribution above.
 ] <thm:thermal-statistics>
 
-#note[
-  *Classicality of Poisson statistics.*
+#note(title: "Classicality of Poisson statistics")[
   A Poisson distribution describes independent, random emissions; thermal light shows *super-Poisson* bunching ($"Var" > bar(n)$), while number states and other nonclassical states show *sub-Poisson* statistics ($"Var" < bar(n)$).
   Sub-Poisson light has no classical stochastic model.
 ]
@@ -3131,8 +3151,7 @@ The first-order correlation governs interference (the quantum version of the coh
   - Number state $| n ⟩$: $g^((2))(0) = 1 - 1/n$ (antibunching).
 ] <prop:g2-values>
 
-#note[
-  *The classical bound.*
+#note(title: "The classical bound")[
   For any classical stochastic field, the Cauchy–Schwarz inequality forces $g^((2))(0) >= 1$.
   A measured value $g^((2))(0) < 1$ therefore proves that the light has no classical description — a direct witness of nonclassicality.
 ]
@@ -3146,7 +3165,7 @@ The first-order correlation governs interference (the quantum version of the coh
 
 #theorem(name: "Thermal Bunching")[
   For thermal light, $g^((2))(0) = 2$: photons arrive preferentially in bunches.
-  The bunching peak decays to $g^((2))(tau) = 1$ over the coherence time $tau_c$ of Chapter 9.
+  The bunching peak decays to $g^((2))(tau) = 1$ over the coherence time $tau_c$ of #link(<ch:interference>)[Chapter 9].
 ] <thm:hbt-thermal>
 
 The apparatus and the corresponding $g^((2))(tau)$ are drawn in @fig:hbt-experiment.
@@ -3158,9 +3177,8 @@ The apparatus and the corresponding $g^((2))(tau)$ are drawn in @fig:hbt-experim
   supplement: [Fig.]
 ) <fig:hbt-experiment>
 
-#note[
-  *Intensity interferometry.*
-  Because HBT measures intensity correlations rather than phase, it tolerates atmospheric turbulence: stellar interferometry measures the angular diameter of stars from the slit separation at which the bunching peak vanishes — the spatial-coherence idea of Chapter 9 in photon-counting form.
+#note(title: "Intensity interferometry")[
+  Because HBT measures intensity correlations rather than phase, it tolerates atmospheric turbulence: stellar interferometry measures the angular diameter of stars from the slit separation at which the bunching peak vanishes — the spatial-coherence idea of #link(<ch:interference>)[Chapter 9] in photon-counting form.
 ]
 
 == Photon Antibunching and Single-Photon Sources // 反聚束与单光子源
@@ -3175,14 +3193,14 @@ The apparatus and the corresponding $g^((2))(tau)$ are drawn in @fig:hbt-experim
 
 #example(name: "Single-Photon Emission")[ // 单光子源
   A single quantum dot or single molecule emits at most one photon per excitation cycle: the detector records $g^((2))(0) << 1$, the hallmark of antibunched, single-photon emission.
-  Such sources are the building blocks of quantum key distribution (Chapter 19); an alternative source is the pair production of spontaneous parametric down-conversion, where detecting one photon of a pair heralds the other.
+  Such sources are the building blocks of quantum key distribution (#link(<ch:applications>)[Chapter 19]); an alternative source is the pair production of spontaneous parametric down-conversion, where detecting one photon of a pair heralds the other.
 ] <ex:single-photon-source-example>
 
 // --- Chapter 18: Light-Matter Interaction (光与物质相互作用) ---
 
 = Light-Matter Interaction <ch:light-matter> // 光与物质相互作用
 
-This chapter couples the quantized field (Chapter 15) to atoms.
+This chapter couples the quantized field (#link(<ch:field-quantization>)[Chapter 15]) to atoms.
 Absorption and stimulated emission follow from a semiclassical treatment; spontaneous emission — an atom radiating with no driving field at all — requires the quantized vacuum, whose fluctuations (Section 15.4) stimulate the decay.
 The Jaynes–Cummings model is the simplest exactly solvable atom-field system, and the rate-equation laser theory closes the chapter.
 
@@ -3194,7 +3212,7 @@ The Jaynes–Cummings model is the simplest exactly solvable atom-field system, 
     hat(H)_("at") = 1/2 planck omega_0 hat(sigma)_z,
   $
   where $hat(sigma)_z = | e ⟩ ⟨ e | - | g ⟩ ⟨ g |$.
-  A classical field $E_0 cos(omega t)$ couples the levels through the dipole term $- bold(d) dot bold(E)$.
+  A classical field $E_0 cos(omega t)$ couples the levels through the dipole term $- bold(d) dot bold(E)$, and here $E_0$ denotes its *real peak amplitude*, so that the positive-frequency part carries the amplitude $E_0 / 2$.
 ] <def:two-level-atom>
 
 #theorem(name: "Rabi Oscillations")[
@@ -3204,11 +3222,12 @@ The Jaynes–Cummings model is the simplest exactly solvable atom-field system, 
   $
   with the generalized Rabi frequency
   $
-    Omega = sqrt(Omega_0^2 + Delta^2), quad Omega_0 = (2 abs(bold(d)) E_0) / planck.
+    Omega = sqrt(Omega_0^2 + Delta^2), quad Omega_0 = (abs(bold(d)) E_0) / planck
   $
+  for the real amplitude $E_0$ introduced above; the alternative convention in which $E_0$ denotes the positive-frequency complex amplitude doubles this value, and the two are related by the same factor 2 that turns the cavity coupling $g$ into the vacuum Rabi frequency $2 g$ of Section 18.3.
 ] <thm:rabi-oscillation>
 
-#proof[
+#proof(name: "Rabi Oscillations")[
   *Step 1 — Schrödinger equation in the interaction picture.*
   Writing the state as $c_g (t)| g ⟩ + c_e (t) e^(- i omega_0 t)| e ⟩$ and applying the rotating-wave approximation (dropping the $2 omega$ terms), the amplitudes satisfy $dot(c)_e = - i Omega_0 / 2 e^(i Delta t) c_g$.
   *Step 2 — Solve the two-level system.*
@@ -3246,7 +3265,7 @@ The decay is stimulated by the vacuum fluctuations of Section 15.4.
   $
 ] <thm:wigner-weisskopf>
 
-#proof[
+#proof(name: "Wigner-Weisskopf Decay")[
   *Step 1 — Golden rule.*
   The transition rate into all final field states is $Gamma = (2 pi) / planck sum_f abs(⟨ f | hat(V) | i ⟩)^2 delta (E_f - E_i)$.
   *Step 2 — Dipole matrix element.*
@@ -3257,12 +3276,13 @@ The decay is stimulated by the vacuum fluctuations of Section 15.4.
 
 #note[
   The quantum rate $Gamma$ is the field-quantized version of the classical Lorentz linewidth of #link(<ch:propagation-media>)[Chapter 12]: the damping $gamma$ of the Lorentz oscillator is the same physics — radiation reaction — seen semiclassically.
+  The identification carries one caveat: $Gamma$ is the decay rate of the *population* (excited-state probability), whereas the Lorentz $gamma$ damps the dipole *amplitude*, so the two agree only up to the usual factor 2, $gamma = Gamma / 2$.
 ]
 
 == The Jaynes-Cummings Model // Jaynes-Cummings 模型
 
 #definition(name: "Jaynes-Cummings Hamiltonian")[
-  Quantizing the field (Chapter 15) and coupling it to the atom gives the *Jaynes–Cummings Hamiltonian*
+  Quantizing the field (#link(<ch:field-quantization>)[Chapter 15]) and coupling it to the atom gives the *Jaynes–Cummings Hamiltonian*
   $
     hat(H) = planck omega hat(a)^dagger hat(a) + 1/2 planck omega_0 hat(sigma)_z + planck g (hat(a) hat(sigma)_+ + hat(a)^dagger hat(sigma)_-),
   $
@@ -3288,11 +3308,10 @@ The decay is stimulated by the vacuum fluctuations of Section 15.4.
   where $B$ is the stimulated-emission coefficient and $kappa$ the cavity loss rate.
 ] <def:laser-rate-equations>
 
-#note[
-  *Threshold.*
+#note(title: "Threshold")[
   Lasing begins when gain balances loss, $B (N_2 - N_1) = kappa$.
-  The laser cavity selects the mode — the Fabry-Perot etalon of Chapter 9 with the stability condition of Chapter 7 — and the coherent field that emerges is, quantum-mechanically, a coherent state of Chapter 16.
-  The engineering details and applications are taken up in Chapter 19.
+  The laser cavity selects the mode — the Fabry-Perot etalon of #link(<ch:interference>)[Chapter 9] with the stability condition of #link(<ch:matrix-optics>)[Chapter 7] — and the coherent field that emerges is, quantum-mechanically, a coherent state of #link(<ch:coherent-states>)[Chapter 16].
+  The engineering details and applications are taken up in #link(<ch:applications>)[Chapter 19].
 ]
 
 // --- Chapter 19: Applications and Frontiers (应用与前沿) ---
@@ -3306,15 +3325,15 @@ Each section is deliberately brief and points beyond this notebook.
 
 #definition(name: "Laser Principle")[
   A *laser* (light amplification by stimulated emission of radiation) amplifies light by stimulated emission in a gain medium inside an optical resonator.
-  Above the threshold of Section 18.4, the cavity selects a single mode of the Fabry-Perot etalon (Chapter 9) that satisfies the stability condition (Chapter 7), and the output is a coherent state (Chapter 16).
+  Above the threshold of Section 18.4, the cavity selects a single mode of the Fabry-Perot etalon (#link(<ch:interference>)[Chapter 9]) that satisfies the stability condition (#link(<ch:matrix-optics>)[Chapter 7]), and the output is a coherent state (#link(<ch:coherent-states>)[Chapter 16]).
 ] <def:laser-principle>
 
 #example(name: "A Helium-Neon Laser")[ // 氦氖激光器
-  A helium-neon laser at $lambda = 632.8 "nm"$ amplifies the $2 s -> 2 p$ neon transition; the cavity length selects the longitudinal mode, and the output linewidth is set by the cavity finesse — the same physics as the Fabry-Perot resolution of Chapter 9.
+  A helium-neon laser at $lambda = 632.8 "nm"$ amplifies a neon transition of the $3 s -> 2 p$ family ($3 s_2 -> 2 p_4$ in Paschen notation); the cavity length selects the longitudinal mode, and the output linewidth is set by the cavity finesse — the same physics as the Fabry-Perot resolution of #link(<ch:interference>)[Chapter 9].
 ] <ex:laser-example>
 
 #note[
-  The laser is the physical realization of the coherent state: far above threshold its photon statistics are Poissonian (Chapter 17), its field has a well-defined phase, and its spectrum is limited by phase diffusion.
+  The laser is the physical realization of the coherent state: far above threshold its photon statistics are Poissonian (#link(<ch:photon-statistics>)[Chapter 17]), its field has a well-defined phase, and its spectrum is limited by phase diffusion.
 ]
 
 == Quantum Key Distribution // 量子密钥分发
@@ -3330,7 +3349,7 @@ Each section is deliberately brief and points beyond this notebook.
 ] <ex:bb84-protocol>
 
 #note[
-  QKD uses exactly the polarization states of #link(<ch:polarization>)[Chapter 13] and the single-photon sources of Chapter 17: it is quantum optics made into cryptography.
+  QKD uses exactly the polarization states of #link(<ch:polarization>)[Chapter 13] and the single-photon sources of #link(<ch:photon-statistics>)[Chapter 17]: it is quantum optics made into cryptography.
 ]
 
 == Photon Entanglement and Bell Tests // 光子纠缠与贝尔检验
@@ -3365,11 +3384,10 @@ Each section is deliberately brief and points beyond this notebook.
   $
 ] <def:spdc>
 
-#note[
-  *Heralded single photons and entanglement.*
-  Detecting the idler photon heralds the signal photon — a single-photon source of the type discussed in Chapter 17 — and the pair inherits the polarization correlations of Section 19.3, the workhorse of quantum information experiments.
+#note(title: "Heralded single photons and entanglement")[
+  Detecting the idler photon heralds the signal photon — a single-photon source of the type discussed in #link(<ch:photon-statistics>)[Chapter 17] — and the pair inherits the polarization correlations of Section 19.3, the workhorse of quantum information experiments.
 ]
 
 #note[
-  This closes Part IV, and with it the whole notebook: from the vibrations of Chapter 1 through geometric and wave optics to the quantized field, the photon, and its entanglement, the four-part line — vibrations, rays, waves, quanta — is complete.
+  This closes Part IV, and with it the whole notebook: from the vibrations of #link(<ch:oscillations>)[Chapter 1] through geometric and wave optics to the quantized field, the photon, and its entanglement, the four-part line — vibrations, rays, waves, quanta — is complete.
 ]
