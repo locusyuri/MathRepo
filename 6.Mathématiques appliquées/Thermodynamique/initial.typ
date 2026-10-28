@@ -1694,6 +1694,66 @@ A process that returns the system to its initial state is called a *cyclic proce
   rejected to the *cold* one (temperature $T_c$).
 ]
 
+#example(name: "A mixed-gas cycle")[
+  A system consists of $nu_1 = 2 "mol"$ of a monatomic ideal gas mixed
+  with $nu_2 = 2 "mol"$ of a rigid diatomic ideal gas, and runs the
+  reversible cycle $a -> b -> c -> d -> a$ in which $a -> b$ and
+  $c -> d$ are isobaric while $b -> c$ and $d -> a$ are adiabatic, with
+  $T_a = 300 "K"$, $T_b = 900 "K"$, $T_c = 450 "K"$, $T_d = 150 "K"$.
+  Find the heat and work of each leg and the efficiency of the cycle.
+
+  *Heat capacities of the mixture.* Internal energies of ideal gases
+  simply add, so by #link(<thm:equipartition>)[equipartition]
+  $C_(V,m)^((1)) = 3/2 R$ and $C_(V,m)^((2)) = 5/2 R$, and
+  $
+    C_(V,m) = (nu_1 C_(V,m)^((1)) + nu_2 C_(V,m)^((2))) / (nu_1 + nu_2)
+    = (3R + 5R) / 4 = 2R, quad C_(p,m) = C_(V,m) + R = 3R,
+  $
+  the last step being #link(<thm:mayer-formula>)[Mayer's relation], which
+  survives for the mixture because it too obeys
+  $p V = (nu_1 + nu_2) R T$. Hence for the $nu = 4 "mol"$ of gas
+  $nu C_(V,m) = 8R$ and $nu C_(p,m) = 12R$, and $gamma = 3/2$ — with
+  which the four temperatures are consistent: the isobars fix
+  $V_b / V_a = T_b / T_a = 3$ and $V_d / V_c = T_d / T_c = 1/3$, and the
+  adiabatic relations close the loop,
+  $V_c / V_b = (T_b / T_c)^2 = 4$, $V_d / V_a = (T_a / T_d)^2 = 4$.
+
+  *The four legs.* With $R = 8.31 "J" dot "mol"^(-1) "K"^(-1)$:
+
+  + $a -> b$ (isobaric heating):
+    $Q_(a b) = nu C_(p,m) (T_b - T_a) = 7200 R approx 5.98 times 10^4
+    "J"$, of which $W_(a b) = nu R (T_b - T_a) = 2400 R$ is work and the
+    rest raises $U$;
+  + $b -> c$ (adiabatic expansion): $Q = 0$ and
+    $W_(b c) = -nu C_(V,m) (T_c - T_b) = 3600 R$;
+  + $c -> d$ (isobaric cooling):
+    $Q_(c d) = nu C_(p,m) (T_d - T_c) = -3600 R$, with
+    $W_(c d) = nu R (T_d - T_c) = -1200 R$;
+  + $d -> a$ (adiabatic compression):
+    $W_(d a) = -nu C_(V,m) (T_a - T_d) = -1200 R$.
+
+  The net work is $W = 3600 R approx 2.99 times 10^4 "J"$, equal to the
+  net heat $Q_(a b) + Q_(c d)$, as the first law demands of a cycle.
+  Only the isobar $a -> b$ absorbs heat, so
+  $
+    eta = W / Q_(a b) = (3600 R) / (7200 R) = 1/2,
+  $
+  well below #link(<prop:carnot-efficiency>)[the Carnot value]
+  $eta_C = 1 - T_d / T_b = 5/6$ between the extreme temperatures of the
+  cycle.
+
+  *Mixtures in general.* For any mixture of ideal gases,
+  $
+    C_(V,m) = (sum_i nu_i C_(V,m)^((i))) / (sum_i nu_i), quad
+    C_(p,m) = C_(V,m) + R,
+  $
+  because $U = sum_i nu_i C_(V,m)^((i)) T$ and
+  $H = sum_i nu_i C_(p,m)^((i)) T$ are additive, while the mixture as a
+  whole obeys $p V = nu R T$ with $nu = sum_i nu_i$. The ratio
+  $gamma = C_(p,m) / C_(V,m)$ of the mixture then enters its adiabatic
+  relations exactly as for a single gas.
+] <ex:mixed-gas-cycle>
+
 === The Carnot Cycle // 卡诺循环
 
 The Carnot cycle is the most efficient cycle conceivable between two reservoirs; its efficiency can be computed from the first law alone.
