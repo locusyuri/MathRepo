@@ -77,23 +77,27 @@
 //     - 核心式 <eq:division-identity>；数值例 <ex:division-example>（含负数情形）
 //     - #note 带余除法引向同余 Ch3 / 欧几里得引理 Ch2（伏笔）
 //   Section 1.3: Numeral Systems（进位制）
-//     - r 进制展开 #definition <def:numeral-system>；唯一性由反复带余除法（回链 thm）
+//     - r 进制展开 #definition <def:numeral-system>；存在唯一性
+//       #proposition <prop:numeral-uniqueness>（回链 <thm:division-algorithm>）
 //     - 转换例 <ex:base-conversion>；平衡三进制 #note（竞赛向，简明）
 //   Section 1.4: GCD and LCM（最大公因数与最小公倍数）
 //     - gcd/lcm/互素 #definition <def:gcd> <def:lcm> <def:coprime>
-//     - 初等性质 #proposition <prop:gcd-basic>；
+//     - 初等性质 #property <prop:gcd-basic>；
 //       gcd | 一切线性组合 #corollary <cor:gcd-divides-linear>
 //     - 例 <ex:gcd-lcm-example>（观察 6·90 = 18·30，暂不证）
-//     - 乘积恒等式 |ab| 证明依赖 Bézout，留 §1.5 <cor:gcd-lcm-product> 兑现
+//     - 乘积恒等式 |ab| 证明依赖 Bézout，留 <cor:gcd-lcm-product> 兑现
 //   Section 1.5: Euclidean Algorithm and Bézout's Identity（辗转相除法与 Bézout 恒等式）
 //     - 换余引理 #lemma <lem:gcd-substitution>（公约数集合相等）
 //     - 辗转相除法 #theorem <thm:euclidean-algorithm>（余数严格递减 ⇒ 有限步）
 //     - Bézout 恒等式 #theorem <thm:bezout>（Euclid 步骤反向归纳构造）
-//     - 算法呈现：编号算法框 + 回代表（非 C++ 代码块）；例 <ex:euclid-example>
+//     - 公约数整除 gcd #corollary <cor:common-divisor-divides-gcd>（Bézout 直接后件）
+//     - 算法呈现：带余除法 3 步 + 回代 3 步编号算法框；例 <ex:euclid-example>
 //       <ex:bezout-example>（252 与 105：21 = 5·105 − 2·252）
 //     - 互素判据 #corollary <cor:bezout-coprime>；核心式 <eq:bezout>
-//     - 乘积恒等式 <cor:gcd-lcm-product> + <eq:gcd-lcm-product>（互素可消去引理）
-//     - 章末 #note：Bézout → Ch10 §10.1 一次不定方程通解（兑现蓝图伏笔）
+//     - 乘积恒等式 <cor:gcd-lcm-product> + <eq:gcd-lcm-product>（互素可消去引理）；
+//       lcm 整除一切公倍数 #corollary <cor:lcm-divides-common-multiples>
+//     - 例 <ex:gcd-product-identity>（18 与 30 闭环验证）
+//     - 章末 #note：Bézout → Ch10 一次不定方程通解（兑现蓝图伏笔）
 //   图片：fig:euclid-rectangle（img/euclid-rectangle.svg，24×9 矩形切 9²,9²,6²,3²,3²
 //     → gcd 3；A 级核心图；占位先复制 0.Wiki/null.svg）
 //   写作顺序：§1.2 定义+带余除法 → §1.1 良序/取整 → §1.4 → §1.5 → §1.3 → 章首串联；
@@ -645,11 +649,12 @@ without the ceremony.
 ] <prop:well-ordering>
 
 #note[
-  This principle is logically equivalent to mathematical induction:
-  each can be derived from the other. We take it as an accepted starting
-  point and use it as the engine of the Division Algorithm (§1.2) and
-  the Euclidean Algorithm (§1.5), where it guarantees that a certain
-  decreasing sequence of nonnegative remainders must stop.
+  This principle is *assumed*, not proved: it is logically equivalent to
+  mathematical induction, each being derivable from the other, and we
+  take one of the two as the starting point. It serves as the engine of
+  the division algorithm and of the Euclidean algorithm, where it
+  guarantees that a decreasing sequence of nonnegative remainders must
+  stop.
 ]
 
 Division in $bb(Z)$ produces quotients and remainders, and to describe
@@ -727,11 +732,12 @@ Hermite.
 ]
 
 #note[
-  A good picture: $theta$ fixes a point in $[0, 1)$; the sum counts how
-  many of the $n$ cells of the uniform grid
-  $0 < 1\/n < 2\/n < dots < 1$ are "to the left" of $theta$ in the
-  wrapped sense of the identity. This grid-counting viewpoint will
-  reappear when summatory estimates are developed in Chapter 7.
+  A good picture: $theta$ fixes a point in $[0, 1)$; the sum in
+  #link(<eq:hermite-identity>)[Hermite's identity] counts how many of
+  the $n$ cells of the uniform grid $0 < 1\/n < 2\/n < dots < 1$ lie "to
+  the left" of $theta$ in the wrapped sense. This grid-counting
+  viewpoint will reappear when summatory estimates are developed in
+  Chapter 7.
 ]
 
 == Divisibility and the Division Algorithm // 整除性与带余除法
@@ -743,12 +749,13 @@ primes, unique factorization — is built from this definition.
 #definition(name: "Divisibility")[
   Let $a, b in bb(Z)$ with $a != 0$. We say that $a$ *divides* $b$, and
   write $a | b$, if there exists an integer $c$ such that $b = a c$.
-  - If $a | b$, then $a$ is a *divisor* (or *factor*) of $b$, and $b$ is
-    a *multiple* of $a$.
-  - If $a | b$ and $abs(a) < abs(b)$, then $a$ is a *proper divisor* of
-    $b$; if in addition $abs(a) != 1$, it is a *nontrivial proper
-    divisor*.
+  In that case $a$ is a *divisor* (or *factor*) of $b$, and $b$ is a
+  *multiple* of $a$.
 ] <def:divisibility>
+
+One refinement of this vocabulary will be used in Chapter 2: when
+$a | b$ and $abs(a) < abs(b)$, the divisor $a$ is *proper*; if in
+addition $abs(a) != 1$, it is *nontrivial proper*.
 
 #caution[
   Divisibility is only defined for a *nonzero* divisor. The case $a = 0$
@@ -816,9 +823,10 @@ is the result that makes all of elementary number theory quantitative.
 ]
 
 The integer $q$ is the *quotient* and $r$ the *remainder* of $a$ on
-division by $b$. Note carefully what the condition $0 <= r < b$ means
-for negative $a$: the remainder is always chosen nonnegative, which is
-_not_ what a calculator does when it truncates toward zero.
+division by $b$. Note carefully what the condition $0 <= r < b$ in
+#link(<eq:division-identity>)[the division identity] means for negative
+$a$: the remainder is always chosen nonnegative, which is _not_ what a
+calculator does when it truncates toward zero.
 
 #example(name: "Division with Remainder")[
   - $a = 17$, $b = 5$: $17 = 3 dot 5 + 2$, so $q = 3$, $r = 2$.
@@ -834,9 +842,11 @@ _not_ what a calculator does when it truncates toward zero.
   Two roads open here. First, equality of remainders
   $r_1 = r_2$ after division by $b$ is exactly the relation
   $b | (a_1 - a_2)$, which becomes the language of congruences in
-  Chapter 3. Second, when $b$ is prime the division algorithm will
-  produce the Euclidean lemma that powers unique factorization in
-  Chapter 2.
+  Chapter 3. Second, a *prime* divisor leaves only one possible gcd with
+  the dividend: since the only positive divisors of $p$ are $1$ and $p$,
+  the common divisors of $p$ and any integer it fails to divide reduce
+  to $1$. That collapse is the input of the Euclidean lemma, and through
+  it of unique factorization, in Chapter 2.
 ]
 
 == Numeral Systems // 进位制
@@ -844,8 +854,9 @@ _not_ what a calculator does when it truncates toward zero.
 The division algorithm gives a canonical way to *write* every positive
 integer: repeatedly strip off the remainder. This is where base-$r$
 notation comes from — far from being a fact about "digits", it is an
-iteration of §1.2, and its proof is a perfect first exercise in the
-division-iteration technique that drives the whole chapter.
+iteration of *Divisibility and the Division Algorithm*, and its proof
+is a perfect first exercise in the division-iteration technique that
+drives the whole chapter.
 
 #definition(name: "Base-$r$ Numeral System")[
   Let $r >= 2$ be an integer, the *base*. A (finite) sequence of digits
@@ -857,15 +868,39 @@ division-iteration technique that drives the whole chapter.
   required to be nonzero (except for the number $0$ itself).
 ] <def:numeral-system>
 
-Every positive integer has one and only one such representation: apply
-the Division Algorithm to $N$ and $r$, obtaining
-$N = r q_1 + a_0$ with $0 <= a_0 < r$; then to $q_1$, obtaining
-$q_1 = r q_2 + a_1$; and so on. The quotients $q_i$ decrease strictly
-while positive, so the process terminates; the last nonzero quotient is
-the leading digit. Uniqueness follows by reading the same chain
-backwards: if two representations agreed, subtracting them would
-exhibit a positive multiple of $r$ strictly smaller than $r$ — the
-bound $0 <= a_i < r$ is exactly what makes the writing unique.
+Every positive integer has one and only one such representation, and
+the proof is nothing but an iteration of
+#link(<thm:division-algorithm>)[the division algorithm].
+
+#proposition(name: "Existence and Uniqueness of the Base-$r$ Expansion")[
+  Let $r >= 2$. Every integer $N >= 1$ is represented by exactly one
+  digit sequence in the sense of
+  #link(<def:numeral-system>)[the definition above].
+] <prop:numeral-uniqueness>
+
+#proof[
+  *Existence.* Divide $N$ by $r$: $N = r q_1 + a_0$ with
+  $0 <= a_0 < r$. If $q_1 = 0$, then $N = a_0$ is a single digit.
+  Otherwise divide $q_1$ by $r$, getting $q_1 = r q_2 + a_1$, and
+  continue. The quotients satisfy $0 <= q_(i+1) < q_i$ while $q_i > 0$,
+  so the process stops at some $m >= 0$ with $q_m > 0$ and
+  $q_(m+1) = 0$. Reading the chain backwards gives
+  $N = a_m r^m + dots + a_1 r + a_0$ with $a_m = q_m > 0$ and
+  $0 <= a_i < r$.
+
+  *Uniqueness.* Suppose
+  $N = sum_(i=0)^m a_i r^i = sum_(i=0)^k b_i r^i$ with all digits in
+  ${0, 1, dots, r - 1}$ and $a_m, b_k != 0$. If $m < k$, then
+  $N >= r^k >= r^(m+1)$, while
+  $N <= (r - 1)(r^m + dots + r + 1) = r^(m+1) - 1$: impossible. Hence
+  $m = k$, and the difference
+  $0 = sum_(i=0)^m (a_i - b_i) r^i$ can be written $0 = r S + d$ with
+  $S in bb(Z)$ and $d = a_0 - b_0$, where $abs(d) < r$; if $d < 0$,
+  replace $S$ by $S - 1$ and $d$ by $d + r$ to get $0 <= d < r$. The
+  uniqueness of the remainder in the division algorithm applied to the
+  dividend $0$ then forces $d = 0$, i.e. $a_0 = b_0$. Cancelling this
+  term, dividing by $r$ and repeating gives $a_i = b_i$ for every $i$.
+]
 
 #example(name: "Converting Between Bases")[
   - Write $37$ in base $5$: repeated division by $5$ gives
@@ -895,7 +930,8 @@ Common divisors are where divisibility becomes a relation between two
 numbers rather than a property of one. The greatest common divisor is
 the largest integer that divides both; the least common multiple is the
 smallest positive integer divisible by both. They are dual notions, and
-one of the goals of §1.5 is to make the duality precise.
+one of the goals of *Euclidean Algorithm and Bézout's Identity* is to
+make the duality precise.
 
 #definition(name: "Greatest Common Divisor")[
   Let $a, b in bb(Z)$, not both zero. The *greatest common divisor* of
@@ -917,26 +953,38 @@ one of the goals of §1.5 is to make the duality precise.
 #note[
   The definition of the gcd asks for the *largest* common divisor. That
   it exists is not a formality: the set of common divisors of $a, b$ is
-  nonempty (it contains $1$) and bounded above by $abs(a)$ whenever
-  $a != 0$, so the well-ordering principle applies. The genuinely
-  surprising fact — that this largest divisor is also a *linear
-  combination* of $a$ and $b$ — requires the Euclidean algorithm and is
-  proved in §1.5.
+  nonempty (it contains $1$) and bounded above by
+  $max(abs(a), abs(b)) >= 1$, since $a, b$ are not both zero. The set of
+  their *negatives* is then nonempty and bounded below, so the
+  #link(<prop:well-ordering>)[well-ordering principle] gives it a least
+  element, whose negative is the largest common divisor.
+
+  The genuinely surprising fact — that this largest divisor is also a
+  *linear combination* of $a$ and $b$ — requires the Euclidean algorithm
+  and is proved in *Euclidean Algorithm and Bézout's Identity*.
 ]
 
-#proposition(name: "Elementary Properties of the GCD")[
-  Let $a, b in bb(Z)$ be nonzero and $c in bb(Z)$.
-  - $"gcd"(a, b) = "gcd"(b, a) = "gcd"(abs(a), abs(b)) = "gcd"(abs(b),
-      abs(a))$;
-  - $"gcd"(a, 0) = abs(a)$, $"gcd"(a, 1) = 1$, $"gcd"(a, a) = abs(a)$;
-  - $"gcd"(a, b) = "gcd"(a, b + c a)$ for every integer $c$ (adding a
-    multiple of one argument to the other does not change the gcd).
+#property(name: "Elementary Properties of the GCD")[
+  Let $a, b in bb(Z)$, not both zero, and $c in bb(Z)$.
+  - $"gcd"(a, b) = "gcd"(b, a) = "gcd"(abs(a), abs(b))$;
+  - $"gcd"(a, 1) = 1$, and $"gcd"(a, 0) = "gcd"(a, a) = abs(a)$ when
+    $a != 0$;
+  - $"gcd"(a, b) = "gcd"(a, b + c a)$ for every integer $c$, provided
+    $a != 0$ (adding a multiple of one argument to the other does not
+    change the gcd).
 ] <prop:gcd-basic>
 
 #proof(name: "of the elementary properties")[
-  The first two statements are immediate from the definition, since
-  $x$ and $-x$ have the same divisors and $1$ divides everything. For
-  the third, note that a common divisor of $a$ and $b + c a$ also
+  The first statement is immediate from the definition: $x$ and $-x$
+  have the same divisors, and the order of the arguments is irrelevant.
+
+  For the second: $1$ divides every integer, so $"gcd"(a, 1) = 1$. For
+  $a != 0$, every divisor of $a$ divides both $0$ and $a$, so the common
+  divisors of the pairs $(a, 0)$ and $(a, a)$ are both exactly the
+  divisors of $a$; the largest of them is $abs(a)$ by
+  #link(<prop:divisibility-rules>)[the size bound].
+
+  For the third, note that a common divisor of $a$ and $b + c a$ also
   divides $(b + c a) - c a = b$; and conversely a common divisor of $a$
   and $b$ divides $b + c a$. Hence the two numbers have *exactly the
   same* common divisors, so in particular the same greatest one.
@@ -944,7 +992,8 @@ one of the goals of §1.5 is to make the duality precise.
 
 The second property above shows that even when one argument vanishes,
 the gcd is well defined. A useful reformulation of "greatest common
-divisor" points forward to the linear-combination world of §1.5.
+divisor" points forward to the linear-combination world of
+*Euclidean Algorithm and Bézout's Identity*.
 
 #corollary(name: "GCD Divides Every Linear Combination")[
   Let $a, b in bb(Z)$, not both zero, and $d = "gcd"(a, b)$. Then $d$
@@ -954,6 +1003,14 @@ divisor" points forward to the linear-combination world of §1.5.
   $
   In particular $d | (a + b)$ and $d | (a - b)$.
 ] <cor:gcd-divides-linear>
+
+#proof[
+  The gcd divides both $a$ and $b$ by definition, so the
+  linear-combination rule
+  (#link(<prop:divisibility-rules>)[Basic Rules of Divisibility]) gives
+  $d | (a x + b y)$ for all integers $x, y$. The last two claims are the
+  choices $(x, y) = (1, 1)$ and $(1, -1)$.
+]
 
 #example(name: "Computing GCD and LCM by Hand")[
   The divisors of $18$ are $1, 2, 3, 6, 9, 18$; the divisors of $30$ are
@@ -965,12 +1022,12 @@ divisor" points forward to the linear-combination world of §1.5.
     6 dot 90 = 540 = 18 dot 30,
   $
   suggesting $"gcd"(a, b) dot "lcm"(a, b) = a b$. A proof that works
-  for all pairs must wait for the tools of §1.5.
+  for all pairs must wait for Bézout's identity.
 ] <ex:gcd-lcm-example>
 
 #note[
   The product identity $"gcd"(a, b) dot "lcm"(a, b) = abs(a b)$ is
-  proved at the end of §1.5 as
+  proved at the end of the chapter as
   #link(<cor:gcd-lcm-product>)[the product identity]. The catch is
   that one must first know the gcd is not merely a divisor but a
   *linear combination* of $a$ and $b$ — the content of Bézout's
@@ -980,31 +1037,32 @@ divisor" points forward to the linear-combination world of §1.5.
 
 == Euclidean Algorithm and Bézout's Identity // 辗转相除法与 Bézout 恒等式
 
-Computing the gcd by listing all divisors (as in §1.4's example) is
+Computing the gcd by listing all divisors (as in *GCD and LCM*) is
 hopeless for large numbers. The *Euclidean algorithm* replaces the pair
 $(a, b)$ by a smaller pair with the same gcd, over and over, until the
 answer falls out. The engine is the observation recorded already in
-#link(<prop:gcd-basic>)[§1.4]: adding a multiple of one number to the
-other does not change the gcd. Iterating the division algorithm turns
-this into a termination proof.
+#link(<prop:gcd-basic>)[*GCD and LCM*]: adding a multiple of one number
+to the other does not change the gcd. Iterating the division algorithm
+turns this into a termination proof.
 
 #lemma(name: "GCD Substitution Lemma")[
-  Let $a, b in bb(Z)$ with $b != 0$, and let $r$ be the remainder of $a$
-  upon division by $b$, i.e. $a = b q + r$ with $0 <= r < abs(b)$. Then
+  Let $a, b in bb(Z)$ with $b > 0$, and let $r$ be the remainder of $a$
+  upon division by $b$, i.e. $a = b q + r$ with $0 <= r < b$. Then
   $
     "gcd"(a, b) = "gcd"(b, r).
   $
   More generally, replacing $(a, b)$ by $(b, r)$ preserves the set of
-  common divisors, hence the gcd.
+  common divisors, hence the gcd. A negative $b$ is replaced by
+  $abs(b)$ first, which changes neither the gcd nor the remainders.
 ] <lem:gcd-substitution>
 
 #proof[
   Since $r = a - b q$ is a linear combination of $a$ and $b$, every
   common divisor of $a$ and $b$ divides $r$
-  (#link(<cor:gcd-divides-linear>)[§1.4]); and since $a = b q + r$,
-  every common divisor of $b$ and $r$ divides $a$. The two pairs share
-  exactly the same common divisors, so in particular their greatest
-  common divisors agree.
+  (#link(<prop:divisibility-rules>)[the linear-combination rule]); and
+  since $a = b q + r$, every common divisor of $b$ and $r$ divides $a$.
+  The two pairs share exactly the same common divisors, so in particular
+  their greatest common divisors agree.
 ]
 
 The lemma gives the algorithm its bite: dividing $a$ by $b$ makes the
@@ -1012,35 +1070,49 @@ second argument strictly smaller than the first, so a repeated chain of
 divisions must terminate at a division with remainder $0$.
 
 #theorem(name: "The Euclidean Algorithm")[
-  Let $a, b in bb(Z)$ with $b != 0$. Repeatedly applying the division
-  algorithm produces the chain
+  Let $a, b in bb(Z)$ with $b != 0$, and put $r_(-1) = a$ and
+  $r_0 = abs(b)$. Successively divide the previous remainder by the last
+  nonzero one:
   $
-                a = b q_1 + r_1, & quad 0 < r_1 < abs(b), \
-              b = r_1 q_2 + r_2, & quad 0 < r_2 < r_1, \
-            r_1 = r_2 q_3 + r_3, & quad 0 < r_3 < r_2, \
-                          dots.v \
-    r_(n-2) = r_(n-1) q_n + r_n, & quad 0 < r_n < r_(n-1), \
-      r_(n-1) = r_n q_(n+1) + 0.
+    r_(i-1) = r_i q_(i+1) + r_(i+1), quad 0 <= r_(i+1) < r_i,
+    quad (i = 0, 1, 2, dots).
   $
-  The remainders are strictly decreasing nonnegative integers, so the
-  process stops after finitely many steps, and the last nonzero
-  remainder is the greatest common divisor:
+  The remainders are strictly decreasing nonnegative integers, so there
+  is a least index $n >= 0$ with $r_(n+1) = 0$, and $r_0, dots, r_n$ are
+  then all positive. The last nonzero remainder is the greatest common
+  divisor:
   $
     r_n = "gcd"(a, b).
   $
 ] <thm:euclidean-algorithm>
 
 #proof[
-  Existence of the chain and its termination follow from the division
-  algorithm and the strict decrease $abs(b) > r_1 > r_2 > dots >= 0$. By
-  #link(<lem:gcd-substitution>)[the substitution lemma] applied along
-  the chain,
+  *Termination.* Since $r_0 = abs(b) > 0$, the division algorithm applies
+  at every step: if $r_i > 0$, dividing $r_(i-1)$ by $r_i$ produces
+  $r_(i+1)$ with $0 <= r_(i+1) < r_i$. A strictly decreasing sequence of
+  nonnegative integers is finite, so some $r_(n+1)$ is $0$; choosing $n$
+  least, all of $r_0, dots, r_n$ are positive.
+
+  *The value.* By #link(<lem:gcd-substitution>)[the substitution lemma]
+  applied along the chain,
   $
-    "gcd"(a, b) = "gcd"(b, r_1) = "gcd"(r_1, r_2) = dots = "gcd"(r_(n-1),
-      r_n) = "gcd"(r_n, 0) = r_n,
+    "gcd"(a, b) = "gcd"(a, abs(b)) = "gcd"(r_(-1), r_0) = dots
+    = "gcd"(r_(n-1), r_n) = "gcd"(r_n, 0) = r_n,
   $
-  since $"gcd"(x, 0) = abs(x)$ (#link(<prop:gcd-basic>)[§1.4]).
+  since $"gcd"(x, 0) = abs(x)$
+  (#link(<prop:gcd-basic>)[the elementary properties]) and $r_n > 0$.
 ]
+
+Read as a loop, the theorem is the algorithm itself:
+
+1. Set $x = abs(a)$ and $y = abs(b)$; this changes neither the common
+  divisors nor the gcd.
+2. If $y = 0$, output $x$ and stop.
+3. Otherwise write $x = y q + r$ with $0 <= r < y$, replace $(x, y)$ by
+  $(y, r)$, and return to step 2.
+
+Step 3 is exactly one division of the chain, and the loop halts because
+$y$ strictly decreases at every pass.
 
 The algorithm is the oldest nontrivial algorithm in mathematics and
 admits a purely geometric reading: to tile a $24 times 9$ rectangle
@@ -1084,47 +1156,75 @@ Bézout's identity.
 ] <thm:bezout>
 
 #proof(name: "of Bézout's identity, by back-substitution")[
-  We show the claim by induction on the number of steps in the
-  Euclidean chain for $(abs(a), abs(b))$; signs are restored at the end.
+  Write $b' = abs(b)$. It suffices to find integers $x, y$ with
+  $a x + b' y = d$, since for $b < 0$ one then replaces $y$ by $-y$. We
+  argue by induction on the number of divisions in the Euclidean chain
+  of $(a, b')$.
 
-  *Base case.* If $b$ divides $a$, the chain has length one, and
-  $a = b q + 0$ gives $"gcd"(a, b) = abs(b)$, which we exhibit directly
-  as $a dot 0 + b dot s = abs(b)$, where $s in {plus.minus 1}$ is the
-  sign of $b$ — a linear combination with integer coefficients.
+  *Base case.* If the chain has a single division, $b' | a$ and
+  $"gcd"(a, b') = b'$, which is exhibited directly as
+  $a dot 0 + b' dot 1 = b'$.
 
-  *Inductive step.* Assume the chain has at least two divisions, and
-  let $a = b q + r$, $r != 0$. By
-  #link(<lem:gcd-substitution>)[the lemma], $d = "gcd"(a, b) =
-  "gcd"(b, r)$, and the chain for $(b, r)$ is one step shorter. By
-  induction there exist integers $x_0, y_0$ with
-  $b x_0 + r y_0 = d$. Substituting $r = a - b q$ gives
+  *Inductive step.* Assume the chain has at least two divisions, and let
+  $a = b' q + r$ with $0 < r < b'$. By
+  #link(<lem:gcd-substitution>)[the substitution lemma],
+  $d = "gcd"(a, b') = "gcd"(b', r)$, and the chain for $(b', r)$ is one
+  division shorter. By induction there exist integers $x_0, y_0$ with
+  $b' x_0 + r y_0 = d$. Substituting $r = a - b' q$ gives
   $
-    d = b x_0 + (a - b q) y_0 = a y_0 + b (x_0 - q y_0),
+    d = b' x_0 + (a - b' q) y_0 = a y_0 + b' (x_0 - q y_0),
   $
-  a linear combination of $a$ and $b$ with integer coefficients. The
-  induction is complete; tracking signs of $a, b$ only changes signs of
-  $x, y$.
+  a linear combination of $a$ and $b'$ with integer coefficients, and
+  the induction is complete.
 ]
 
-Back-substitution is best seen on a concrete chain: solve for the
-remainders, from bottom to top, and substitute upwards.
+Bézout's identity is more than an existence statement about *one*
+linear combination: it shows that the gcd absorbs every common divisor.
+
+#corollary(name: "Common Divisors Divide the GCD")[
+  Let $a, b in bb(Z)$ be not both zero, and let $d'$ be a common divisor
+  of $a$ and $b$. Then $d' | "gcd"(a, b)$.
+] <cor:common-divisor-divides-gcd>
+
+#proof[
+  By #link(<eq:bezout>)[Bézout's identity] there are integers $x, y$
+  with $a x + b y = "gcd"(a, b)$. The linear-combination rule
+  (#link(<prop:divisibility-rules>)[Basic Rules of Divisibility]) turns
+  $d' | a$ and $d' | b$ into $d' | (a x + b y) = "gcd"(a, b)$.
+]
+
+Back-substitution is mechanical as well. Run the algorithm on
+$(abs(a), abs(b))$ and keep every quotient:
+
+1. Record the divisions $r_(i-1) = r_i q_(i+1) + r_(i+1)$ down to
+  $r_(n+1) = 0$; the gcd is $d = r_n$.
+2. Starting from $d = r_n$, use
+  $r_(i+1) = r_(i-1) - r_i q_(i+1)$ to rewrite the remainders upwards,
+  eliminating $r_(n-1), r_(n-2), dots$ in turn.
+3. Once $r_1$ has disappeared, the identity reads
+  $d = x_0 abs(a) + y_0 abs(b)$; flip the signs of $x_0, y_0$ according
+  to the signs of $a$ and $b$ to obtain $d = a x + b y$.
+
+The next example is one run of these three steps.
 
 #example(name: "Bézout Coefficients by Back-Substitution")[
   For $a = 252$, $b = 105$, the chain of
   #link(<ex:euclid-example>)[the previous example] is
   $
-    252 = 2 dot 105 + 42, quad 105 = 2 dot 42 + 21, quad 42 = 2 dot 21.
+    252 = 2 dot 105 + 42, quad 105 = 2 dot 42 + 21, quad
+    42 = 2 dot 21 + 0,
   $
-  Solve for the remainders and substitute from the last equation up:
-
-  $r_2 = 21 = 105 - 2 dot 42$ (from the middle equation);
-
-  then $42 = 252 - 2 dot 105$ (from the first), giving
-
-  $21 = 105 - 2 dot (252 - 2 dot 105) = 5 dot 105 - 2 dot 252$.
-
+  so $r_1 = 42$, $r_2 = 21$ and $d = r_2 = 21$. Solving the middle
+  equation for $r_2$ and the first for $r_1$,
+  $
+    21 = 105 - 2 dot 42, quad 42 = 252 - 2 dot 105,
+  $
+  and substituting the second into the first gives
+  $
+    21 = 105 - 2 dot (252 - 2 dot 105) = 5 dot 105 - 2 dot 252.
+  $
   Hence $21 = (-2) dot 252 + 5 dot 105$, i.e. $x = -2$, $y = 5$ work in
-  Bézout's identity.
+  #link(<eq:bezout>)[Bézout's identity].
 ] <ex:bezout-example>
 
 #corollary(name: "Coprime Criterion")[
@@ -1136,10 +1236,12 @@ remainders, from bottom to top, and substitute upwards.
 ] <cor:bezout-coprime>
 
 #proof[
-  If $"gcd"(a, b) = 1$, Bézout's identity gives the combination
-  directly. Conversely, if $a x + b y = 1$ and $d = "gcd"(a, b)$, then
-  $d$ divides the left-hand side
-  (#link(<cor:gcd-divides-linear>)[§1.4]), so $d | 1$ and $d = 1$.
+  If $"gcd"(a, b) = 1$, #link(<thm:bezout>)[Bézout's identity] gives
+  #link(<eq:bezout>)[the combination] with $d = 1$ directly.
+  Conversely, if $a x + b y = 1$ and $d = "gcd"(a, b)$, then $d$ divides
+  the left-hand side
+  (#link(<cor:gcd-divides-linear>)[the gcd divides every linear
+  combination]), so $d | 1$ and $d = 1$.
 ]
 
 This criterion is the workhorse behind everything multiplicative in
@@ -1166,47 +1268,67 @@ numbers is a multiple of their product.
 ] <cor:gcd-lcm-product>
 
 #proof(name: "of the product identity")[
-  Let $d = "gcd"(a, b)$ and write $a = d a_0$, $b = d b_0$ with
-  $"gcd"(a_0, b_0) = 1$ (dividing both by their gcd can only remove
-  common factors). Consider $M = d a_0 b_0$: it is a common multiple of
-  $a = d a_0$ and $b = d b_0$. We show it is the *least* one.
+  It suffices to treat the case $a, b > 0$: every multiple of $a$ is a
+  multiple of $abs(a)$ and conversely, so both the gcd and the lcm
+  depend only on $abs(a), abs(b)$, and $abs(a b) = abs(a) abs(b)$.
 
-  Let $m$ be any common multiple of $a$ and $b$, say $m = a a_1 = b b_1$.
-  Substituting $a = d a_0$, $b = d b_0$ gives
-  $a_0 a_1 = b_0 b_1$ after cancelling $d$. Since
+  Let $d = "gcd"(a, b)$ and write $a = d a_0$, $b = d b_0$. Then
+  $"gcd"(a_0, b_0) = 1$: a common divisor $e$ of $a_0, b_0$ would make
+  $d e$ a common divisor of $a, b$, so $d e <= d$ and $e = 1$.
+
+  Consider $M = d a_0 b_0$, a positive common multiple of $a = d a_0$
+  and $b = d b_0$. We show it is the *least* one. Let $m$ be any common
+  multiple, say $m = a a_1 = b b_1$; substituting $a = d a_0$,
+  $b = d b_0$ and cancelling $d$ gives $a_0 a_1 = b_0 b_1$. Since
   $"gcd"(a_0, b_0) = 1$, the
   #link(<lem:coprime-divisibility>)[coprime form of Euclid's lemma]
   applies: $b_0 | a_1$, so $a_1 = b_0 t$ and
   $m = a a_1 = d a_0 b_0 t = M t$. Hence every common multiple is a
   multiple of $M$, and $M = "lcm"(a, b)$.
 
-  Finally $d dot "lcm"(a, b) = d dot (d a_0 b_0) = (d a_0)(d b_0) =
-  a b$, and since $d, "lcm"(a, b) > 0$ both sides are positive; with
-  signs restored this reads $d dot "lcm"(a, b) = abs(a b)$.
+  Finally $d dot "lcm"(a, b) = d dot (d a_0 b_0) = (d a_0)(d b_0) = a b$,
+  and in the general case $abs(a b) = abs(a) abs(b)$ turns this into
+  $d dot "lcm"(a, b) = abs(a b)$.
+]
+
+#corollary(name: "The LCM Divides Every Common Multiple")[
+  Let $m$ be a common multiple of the nonzero integers $a, b$. Then
+  $"lcm"(a, b) | m$.
+] <cor:lcm-divides-common-multiples>
+
+#proof[
+  Let $L = "lcm"(a, b)$ and write $m = L t + s$ with $0 <= s < L$
+  (#link(<thm:division-algorithm>)[the division algorithm]). Both $L$
+  and $m$ are common multiples of $a$ and $b$, so $s = m - L t$ is a
+  common multiple too. If $s > 0$, it would be a positive common
+  multiple smaller than $L$, contradicting the definition of the lcm;
+  hence $s = 0$ and $L | m$.
 ]
 
 #example(name: "The Product Identity in Action")[
-  For $a = 18$, $b = 30$, the identity from
-  #link(<ex:gcd-lcm-example>)[§1.4] reads
+  For $a = 18$, $b = 30$, #link(<eq:gcd-lcm-product>)[the identity] of
+  #link(<ex:gcd-lcm-example>)[*GCD and LCM*] reads
   $"gcd"(18, 30) dot "lcm"(18, 30) = 6 dot 90 = 540 = 18 dot 30$: the
   relation observed numerically is now a theorem.
-]
+] <ex:gcd-product-identity>
 
 #note[
   Bézout's identity is the seed of Chapter 10: the solutions of the
   linear Diophantine equation $a x + b y = c$ are parameterised by one
   particular solution (obtained from Bézout) plus the general solution
-  of the homogeneous equation $a x + b y = 0$. All of §10.1 is nothing
-  but this observation, developed systematically.
+  of the homogeneous equation $a x + b y = 0$. The whole chapter is
+  nothing but this observation, developed systematically.
 ]
 
-The chapter has built its fundamental machinery: divisibility and the
-division algorithm (§1.1–§1.2), base-$r$ notation as its first
-iteration (§1.3), the gcd/lcm and their elementary identities
-(§1.4), and finally the Euclidean algorithm with the Bézout identity
-as its backward reading (§1.5). The next chapter feeds this engine its
-favourite fuel — primes — and the division algorithm's remainder-free
-case will return as the Euclidean lemma behind unique factorization.
+The chapter has built its fundamental machinery: the floor and ceiling
+functions, the division algorithm, base-$r$ notation as its first
+iteration, the gcd and lcm with their elementary identities, and
+finally the Euclidean algorithm with the Bézout identity as its
+backward reading. The next chapter feeds this engine its favourite fuel
+— primes — and returns with the first harvest: for a prime divisor the
+gcd with the dividend collapses to $1$, so a prime dividing a product
+must divide one of the factors. That is Euclid's lemma, and it is what
+sets unique factorization running.
 
 = Primes and the Fundamental Theorem of Arithmetic // 素数与算术基本定理
 
@@ -1224,15 +1346,15 @@ its key ingredient is exactly the Euclidean lemma promised there.
 == Prime Numbers and the Infinitude of Primes // 素数及其无穷性
 
 We isolate the indivisible integers. The definition is stated relative
-to the divisibility language of §1.2, where a proper divisor was
-already introduced.
+to the divisibility language of
+#link(<def:divisibility>)[*Divisibility and the Division Algorithm*],
+where proper and nontrivial proper divisors were already introduced.
 
 #definition(name: "Prime and Composite Numbers")[
   A positive integer $n > 1$ is *prime* if its only positive divisors
   are $1$ and $n$ itself — equivalently, $n$ has no *nontrivial proper
-  divisor* (#link(<def:divisibility>)[§1.2]). A positive integer
-  $n > 1$ that is not prime is *composite*: it admits a factorization
-  $n = a b$ with $1 < a, b < n$.
+  divisor*. A positive integer $n > 1$ that is not prime is *composite*:
+  it admits a factorization $n = a b$ with $1 < a, b < n$.
 ] <def:prime-composite>
 
 #caution[
@@ -1257,14 +1379,14 @@ guarantee, and it rests only on well-ordering.
   The set of divisors $d$ of $n$ with $d > 1$ is nonempty (it contains
   $n$), so by the
   #link(<prop:well-ordering>)[well-ordering principle] it has a least
-  element $p$. If $p$ were composite, say $p = a b$ with $1 < a < p$,
+  element $p$. If $p$ were composite, say $p = a b$ with $1 < a, b < p$,
   then $a$ divides $p$ hence $n$, contradicting the minimality of $p$.
   Thus $p$ is prime.
 ]
 
 The lemma has an immediate quantitative refinement that will power the
-sieve of §2.3 and all trial-division tests: a composite number always
-betrays itself by a small factor.
+sieve of Eratosthenes and all trial-division tests: a composite number
+always betrays itself by a small factor.
 
 #corollary(name: "Composite Numbers Have Small Prime Divisors")[
   If $n$ is composite, then $n$ has a prime divisor $p$ with
@@ -1278,8 +1400,8 @@ betrays itself by a small factor.
   with $p <= a <= sqrt(n)$, and $p$ divides $a$ hence $n$.
 ]
 
-The sieve of §2.3 says nothing more than the contrapositive of this
-corollary: if no prime $p <= sqrt(n)$ divides $n$, then $n$ must be
+The sieve of Eratosthenes says nothing more than the contrapositive of
+this corollary: if no prime $p <= sqrt(n)$ divides $n$, then $n$ must be
 prime. Before developing that theme, however, we record the first
 grand consequence of having at least one prime divisor of every integer
 — the primes themselves are inexhaustible.
@@ -1295,8 +1417,8 @@ grand consequence of having at least one prime divisor of every integer
     N = p_1 p_2 dots p_k + 1.
   $
   Since $N > 1$, the least-prime-divisor lemma
-  (#link(<lem:least-prime-divisor>)[§2.1]) provides a prime $q$ dividing
-  $N$. If $q = p_i$ for some $i$, then $q$ divides both $N$ and the
+  (#link(<lem:least-prime-divisor>)[Least Prime Divisor]) provides a
+  prime $q$ dividing $N$. If $q = p_i$ for some $i$, then $q$ divides both $N$ and the
   product $p_1 dots p_k$, so $q$ divides their difference $N - p_1 dots
   p_k = 1$ — impossible since $q >= 2$. Hence $q$ is a prime not on the
   list, contradicting the assumption that the list was complete.
@@ -1305,17 +1427,21 @@ grand consequence of having at least one prime divisor of every integer
 #note[
   The construction does _not_ require the Fundamental Theorem: Euclid's
   proof needs only the existence of *some* prime divisor of $N$, which
-  the least-prime-divisor lemma supplies, not uniqueness of
-  factorization. This is worth stressing, because the two results are
-  logically independent. A later, analytic proof of the same infinitude
-  (from the divergence of the harmonic series) appears in Chapter 8.
+  the least-prime-divisor lemma supplies, and never uniqueness of
+  factorization. The two results are not on the same footing, though:
+  the existence half of the Fundamental Theorem already implies the
+  infinitude of the primes, whereas Euclid's argument uses strictly less.
+  A later, analytic proof of the same infinitude (from the divergence of
+  the harmonic series) appears in Chapter 8.
 ]
 
 The definition of a prime says that $p$ has no *proper* divisors; the
 next theorem converts this negative statement into a positive engine of
-divisibility. It is the lemma promised at the end of §1.2, where it was
-observed that division by a prime leaves essentially no remainder
-cases.
+divisibility. It is the lemma promised twice — at the end of
+*Divisibility and the Division Algorithm*, and in the closing paragraph
+of that chapter: for a prime divisor the gcd with the dividend collapses
+to $1$ unless the prime divides it, and the coprime form of Euclid's
+lemma does the rest.
 
 #theorem(name: "Euclid's Lemma (Prime Divisibility)")[
   Let $p$ be a prime. If $p | (a b)$, then $p | a$ or $p | b$.
@@ -1328,7 +1454,8 @@ cases.
   reduce to $1$, i.e. $"gcd"(p, a) = 1$. Now $p | (a b)$ and $p$ is
   coprime to $a$: the
   #link(<lem:coprime-divisibility>)[coprime form of Euclid's lemma]
-  proved in §1.5 applies and yields $p | b$.
+  proved in *Euclidean Algorithm and Bézout's Identity* applies and
+  yields $p | b$.
 ]
 
 The single-factor statement extends to arbitrary products by
@@ -1367,7 +1494,8 @@ factorization.
 
 == The Fundamental Theorem of Arithmetic // 算术基本定理
 
-We now reap the harvest of §2.1. The least-prime-divisor lemma says
+We now reap the harvest of *Prime Numbers and the Infinitude of
+Primes*. The least-prime-divisor lemma says
 that every $n > 1$ has *some* prime factor; peeling factors off
 recursively gives *a* factorization into primes. The genuine content of
 this section is that this factorization is unique — up to reordering,
@@ -1389,19 +1517,20 @@ existence, by strong induction; and uniqueness, by Euclid's lemma.
   Assume every integer in ${2, 3, dots, n - 1}$ is a product of primes.
   If $n$ is prime, it is itself such a product (of length $1$). If $n$
   is composite, then $n = a b$ with $1 < a, b < n$
-  (#link(<def:prime-composite>)[§2.1]); by the induction hypothesis
-  both $a$ and $b$ are products of primes, and multiplying the two
-  products expresses $n$ as a product of primes.
+  (#link(<def:prime-composite>)[Prime and Composite Numbers]); by the
+  induction hypothesis both $a$ and $b$ are products of primes, and
+  multiplying the two products expresses $n$ as a product of primes.
 
   *Uniqueness.* Suppose
   $
     p_1 p_2 dots p_r = q_1 q_2 dots q_s
   $
   are two factorizations into primes, and argue by induction on $r$.
-  If $r = 1$, then $n = p_1$ is prime, so the right-hand side, a
-  product of primes equal to a prime, must consist of the single factor
-  $q_1 = p_1$. For $r >= 2$, the prime $p_1$ divides the right-hand
-  side $q_1 dots q_s$, so by
+  If $r = 1$, then $n = p_1$ is prime. A product of primes equal to a
+  prime has a single factor: $q_1 | p_1$ with $q_1$ prime forces
+  $q_1 = p_1$, and cancelling leaves $q_2 dots q_s = 1$, which is
+  impossible for $s >= 2$. For $r >= 2$, the prime $p_1$ divides the
+  right-hand side $q_1 dots q_s$, so by
   #link(<cor:euclid-lemma-product>)[Euclid's lemma for products],
   $p_1 = q_j$ for some $j$. Cancelling $p_1$ from both sides leaves
   two factorizations of the same integer with $r - 1$ factors, and the
@@ -1413,15 +1542,15 @@ existence, by strong induction; and uniqueness, by Euclid's lemma.
   a "prime factorization" would be a bookkeeping accident of the method
   used to find one. Euclid's lemma is precisely the bridge: it is what
   lets a single prime, once detected, be *cancelled* from an equality
-  of products. This is the role Chapter 1 promised when it observed that
-  the division algorithm, applied to a prime divisor, yields the
-  Euclidean lemma.
+  of products. This is the role Chapter 1 promised, when it observed
+  that for a prime divisor the gcd with the dividend collapses to $1$.
 ]
 
 Collecting equal primes and writing them with exponents gives the
-standard form of the factorization, in which the order is fixed by
-increasing the base. This is the form we will use throughout the rest
-of the notebook.
+standard form of the factorization, in which the primes appear in
+increasing order. This is the form
+#link(<eq:canonical-form>)[the standard factorization] will take
+throughout the rest of the notebook.
 
 #definition(name: "Standard (Prime-Power) Factorization")[
   Let $n > 1$ be an integer. Its *standard factorization* (or
@@ -1431,7 +1560,7 @@ of the notebook.
   ] <eq:canonical-form>
   where $p_1 < p_2 < dots < p_k$ are distinct primes and $a_1, a_2,
   dots, a_k$ are positive integers. The factor $p_i^(a_i)$ is the
-  $p_i$-*primary part* of $n$.
+  $p_i$-*part* of $n$.
 ] <def:prime-factorization>
 
 #note[
@@ -1441,7 +1570,7 @@ of the notebook.
 ]
 
 #example(name: "Writing the Standard Factorization")[
-  - $72 = 8 dot 9 = 2^3 dot 3^2$, since $72 = 2^3 dot 3^2$.
+  - $72 = 8 dot 9 = 2^3 dot 3^2$, since $8 = 2^3$ and $9 = 3^2$.
   - $1000 = 10^3 = (2 dot 5)^3 = 2^3 dot 5^3$.
   - $360 = 2^3 dot 3^2 dot 5$: divide by $2$ three times
     ($360 -> 180 -> 90 -> 45$), then by $3$ twice ($45 -> 15 -> 5$),
@@ -1471,20 +1600,23 @@ now falls out of comparing exponents.
 #note[
   The exponent argument is the seed of a much more systematic language:
   the *valuation* $v_(p)(n)$, the exponent of the prime $p$ in $n$,
-  introduced in §2.4. It turns every question about divisibility into a
-  question about comparing small integers. We will also see §2.4 that
-  the same exponent language makes the gcd and lcm formulas transparent.
+  introduced in *Applications of Unique Factorization*. It turns every
+  question about divisibility into a question about comparing small
+  integers, and in the same language the gcd and lcm formulas become
+  transparent.
 ]
 
 == Sieve Methods // 筛法
 
-The results of §2.1 give a strategy for *producing* primes. To test one
-number $n$ we only need to try dividing by primes up to $sqrt(n)$
-(#link(<cor:composite-sqrt-bound>)[§2.1]); to produce a *list* of
-primes, the most ancient algorithm in the subject strikes out
-composites in bulk. This is the *sieve of Eratosthenes* (third century
-BC), and it is nothing but the contrapositive of the corollary of §2.1,
-applied simultaneously to every number in a range.
+The results of *Prime Numbers and the Infinitude of Primes* give a
+strategy for *producing* primes. To test one number $n$ we only need to
+try dividing by primes up to $sqrt(n)$
+(#link(<cor:composite-sqrt-bound>)[Composite Numbers Have Small Prime
+Divisors]); to produce a *list* of primes, the most ancient algorithm
+in the subject strikes out composites in bulk. This is the *sieve of
+Eratosthenes* (third century BC), and it is nothing but the
+contrapositive of that corollary, applied simultaneously to every
+number in a range.
 
 #proposition(name: "Sieve of Eratosthenes: Correctness")[
   Fix a bound $N >= 2$. Write down the integers
@@ -1497,8 +1629,8 @@ applied simultaneously to every number in a range.
 #proof[
   A number that remains is not divisible by any prime $p <= sqrt(N)$,
   so by the contrapositive of
-  #link(<cor:composite-sqrt-bound>)[§2.1] it cannot be composite; it is
-  prime. Conversely, a prime $q <= N$ is never crossed out: it is
+  #link(<cor:composite-sqrt-bound>)[Composite Numbers Have Small Prime
+  Divisors] it cannot be composite; it is prime. Conversely, a prime $q <= N$ is never crossed out: it is
   written down, and crossing out removes only proper multiples $p k$
   with $k >= 2$, but no such product equals the prime $q$.
 ]
@@ -1573,8 +1705,9 @@ notebook.
 #definition(name: "The $p$-adic Valuation")[
   Let $p$ be a prime and $n >= 1$ an integer. The *valuation of $n$ at
   $p$*, written $v_(p)(n)$, is the exponent of $p$ in the standard
-  factorization of $n$ (#link(<def:prime-factorization>)[§2.2]); in
-  symbols,
+  factorization of $n$
+  (#link(<def:prime-factorization>)[Standard (Prime-Power)
+  Factorization]); in symbols,
   #eq[
     $v_(p)(n) = max{k >= 0 : p^k | n}$.
   ] <eq:valuation-def>
@@ -1584,7 +1717,8 @@ notebook.
 ] <def:p-adic-valuation>
 
 #note[
-  With this notation the standard factorization reads
+  With #link(<eq:valuation-def>)[the definition above] the standard
+  factorization reads
   $
     n = product_p p^(v_(p)(n)),
   $
@@ -1608,27 +1742,39 @@ exponent and the joint part by the *larger* exponent.
 ] <cor:gcd-lcm-valuation>
 
 #proof[
-  Fix $p$ and write $alpha = v_(p)(a)$, $beta = v_(p)(b)$. Since the gcd
-  divides both $a$ and $b$, the valuation inequality of the previous
-  note gives
+  Fix $p$ and write $alpha = v_(p)(a)$, $beta = v_(p)(b)$.
+
+  *The gcd.* Since the gcd divides both $a$ and $b$, the valuation
+  inequality of the previous note gives
   $v_(p)("gcd"(a, b)) <= alpha$ and $v_(p)("gcd"(a, b)) <= beta$, hence
-  $v_(p)("gcd"(a, b)) <= min(alpha, beta)$. Conversely, the common
-  divisor $p^(min(alpha, beta))$ divides both $a$ and $b$, so it
-  divides their gcd, whence $v_(p)("gcd"(a, b)) >= min(alpha, beta)$.
-  The two inequalities give equality. The argument for the lcm is
-  symmetric.
+  $v_(p)("gcd"(a, b)) <= min(alpha, beta)$. Conversely,
+  $p^(min(alpha, beta))$ divides both $a$ and $b$, so it is a common
+  divisor, and by
+  #link(<cor:common-divisor-divides-gcd>)[every common divisor dividing
+  the gcd] it divides $"gcd"(a, b)$; hence
+  $v_(p)("gcd"(a, b)) >= min(alpha, beta)$.
+
+  *The lcm.* Since $a$ and $b$ both divide the lcm,
+  $alpha <= v_(p)("lcm"(a, b))$ and $beta <= v_(p)("lcm"(a, b))$, hence
+  $max(alpha, beta) <= v_(p)("lcm"(a, b))$. Conversely, let
+  $M = product_q q^(max(v_(q)(a), v_(q)(b)))$, the product running over
+  the primes dividing $a b$. By the valuation criterion for divisibility
+  $M$ is a common multiple of $a$ and $b$, so by
+  #link(<cor:lcm-divides-common-multiples>)[the divisibility of every
+  common multiple by the lcm] we get $"lcm"(a, b) | M$, whence
+  $v_(p)("lcm"(a, b)) <= v_(p)(M) = max(alpha, beta)$.
 ]
 
 #example(name: "Valuation Computation of GCD and LCM")[
   Take $a = 72 = 2^3 dot 3^2$ and $b = 84 = 2^2 dot 3 dot 7$. Applying
-  the corollary prime by prime:
+  #link(<eq:gcd-lcm-valuation>)[the two identities] prime by prime:
   - at $p = 2$: $min(3, 2) = 2$, so $2^2$ divides the gcd;
   - at $p = 3$: $min(2, 1) = 1$;
   - at $p = 7$: $min(0, 1) = 0$ (the factor $7$ is absent from $a$).
   Hence $"gcd"(72, 84) = 2^2 dot 3 = 12$, and likewise
   $"lcm"(72, 84) = 2^3 dot 3^2 dot 7 = 504$. Note that
-  $12 dot 504 = 6048 = 72 dot 84$, the product identity of §1.5
-  (#link(<cor:gcd-lcm-product>)[§1.5]) again.
+  $12 dot 504 = 6048 = 72 dot 84$: the product identity
+  #link(<eq:gcd-lcm-product>)[of the previous chapter] once more.
 ] <ex:gcd-lcm-valuation>
 
 As a second payoff of the exponent dictionary, we answer the question
@@ -1655,11 +1801,11 @@ exercise in counting multiples.
   $
   the series terminating as soon as $p^k > n$ (whence
   $floor(n\/p^k) = 0$). The floor function is that of
-  #link(<def:floor-ceiling>)[§1.1].
+  #link(<def:floor-ceiling>)[*Integers and Floor/Ceiling Functions*].
 ]
 
 #example(name: "The Exponent of $5$ in $100!$ and Trailing Zeros")[
-  By Legendre's formula,
+  By #link(<eq:legendre-formula>)[Legendre's formula],
   $
     v_5(100!) = floor(100\/5) + floor(100\/25) + floor(100\/125)
     = 20 + 4 + 0 = 24,
@@ -1671,7 +1817,8 @@ exercise in counting multiples.
   The number of trailing zeros of $100!$ in base $10$ is the largest
   power of $10 = 2 dot 5$ dividing $100!$, namely
   $min(v_2(100!), v_5(100!)) = 24$: the "scarce" prime $5$ is the
-  bottleneck, as it is in every factorial $n!$ with $n >= 2$.
+  bottleneck. This is so for every factorial $n!$ with $n >= 2$, since
+  $v_2(n!) >= floor(n\/2) > n\/4 >= v_5(n!)$.
 ] <ex:legendre-example>
 
 #note[
