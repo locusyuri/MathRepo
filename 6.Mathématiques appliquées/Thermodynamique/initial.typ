@@ -1541,9 +1541,11 @@ The four processes above are the canonical members of a one-parameter family.
 #definition(name: "Polytropic Process")[
   A quasi-static process of an ideal gas in which pressure and volume satisfy
   $
-    p V^n = "const"
+    p V^n = "const", quad T V^(n - 1) = "const", quad
+    T^n p^(1 - n) = "const",
   $
-  for a constant exponent $n$ is called a *polytropic process*.
+  for a constant exponent $n$ — three equivalent forms, related through the
+  equation of state — is called a *polytropic process*.
 ] <def:polytropic-process>
 
 The exponent $n$ recovers the canonical processes as special cases:
@@ -1571,8 +1573,14 @@ Intermediate exponents describe unregulated processes — heat is exchanged, but
     W = (p_1 V_1 - p_2 V_2) / (n - 1), quad
     C_(n, m) = C_(V,m) + R / (1 - n).
   $
-  The special cases are consistent: $C_(n,m) = C_(p,m)$ at $n = 0$, $C_(n,m) -> oo$ at $n = 1$ (finite heat absorbed at constant temperature), and $C_(n,m) = C_(V,m)$ at $n = gamma$, the adiabat.
 ] <prop:polytropic-process>
+
+The special cases are consistent:
+
++ $n = 0$: $C_(0,m) = C_(V,m) + R = C_(p,m)$ — the isobaric value;
++ $n = 1$: $C_(n,m) -> oo$ — a finite heat absorbed at constant temperature;
++ $n = gamma$: $C_(gamma,m) = C_(V,m) - R/(gamma - 1) = 0$ — the adiabat, which exchanges no heat at all;
++ $n -> oo$: $C_(n,m) -> C_(V,m)$ — the isochore.
 
 #proof[
   Write $p = K V^(-n)$; integrating, $W = K (V_2^(1-n) - V_1^(1-n)) / (1-n) = (p_2 V_2 - p_1 V_1) / (1-n)$. For the heat capacity, logarithmic differentiation of $p v^n = "const"$ (per mole) gives $v dif p = - n p dif v$, while the equation of state yields $p dif v + v dif p = R dif T$; eliminating $dif p$ gives $p dif v = R dif T / (1 - n)$. Substituting into $delta q = C_(V,m) dif T + p dif v$ produces $delta q = [C_(V,m) + R / (1-n)] dif T$, which is the claimed $C_(n,m)$.
