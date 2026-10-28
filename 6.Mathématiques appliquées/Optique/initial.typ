@@ -245,6 +245,8 @@
 //
 // 交叉引用约定：章标题带 <ch:...> 标签，跨章衔接写 #link(<ch:...>)[Chapter N]；
 //   组件引用写 #link(<def:...|thm:...>)[...]，图引用写 @fig:...；不再新增裸章号文本指代。
+//   节级引用暂仍允许文本形式 "(Section x.y)"（各 == 小节尚未逐一加标签），
+//   但全文不得出现 § 记号，也不得用裸章号代替跨章链接。
 // ==========================================================================
 
 // 目录
@@ -260,7 +262,7 @@
 = Oscillations <ch:oscillations> // 振动
 
 Oscillatory motion is ubiquitous in physics — from a swinging pendulum to vibrating molecules and electromagnetic waves.
-This chapter (migrated from the *Mécanique analytique* notebook) develops simple harmonic motion, damped and driven oscillations, and the harmonic analysis of a general periodic motion; wave propagation follows in Chapter 2.
+This chapter (migrated from the *Mécanique analytique* notebook) develops simple harmonic motion, damped and driven oscillations, and the harmonic analysis of a general periodic motion; wave propagation follows in #link(<ch:wave-motion>)[Chapter 2].
 These ideas are revisited in *Mécanique analytique* (Part II), where Lagrangian methods provide a systematic approach to small oscillations and normal modes.
 
 Part I (Chapters 1–4) collects the medium-independent wave mechanics the whole notebook relies on: oscillations, wave motion, dispersion and eigenfunction expansions, and finally the time-harmonic Helmholtz formulation that opens both geometric and wave optics.
@@ -367,7 +369,7 @@ For frequencies that are close but not equal, the phasor rotates relative to the
     x(t) = A cos(omega_1 t) + A cos(omega_2 t) = 2 A cos(frac(Delta omega, 2) t) cos(bar(omega) t),
   $
   with $Delta omega = abs(omega_2 - omega_1)$ and $bar(omega) = (omega_1 + omega_2) / 2$.
-  The carrier oscillates at $bar(omega)$, while the *envelope* $2 A abs(cos(Delta omega t / 2))$ varies at the angular frequency $Delta omega / 2$.
+  The carrier oscillates at $bar(omega)$ inside the slowly varying factor $2 A cos(Delta omega t / 2)$, whose signed value repeats at the angular frequency $Delta omega / 2$ and whose magnitude gives the *envelope* $2 A abs(cos(Delta omega t / 2))$, repeating twice as fast.
   The loudness peaks twice per envelope period, so the perceived *beat frequency* is
   $
     f_"beat" = abs(f_2 - f_1) = frac(Delta omega, 2 pi).
@@ -399,9 +401,10 @@ When one oscillates along $x$ and the other along $y$, the trajectory in the pla
 
 The direction of circulation distinguishes $Delta phi = pi / 2$ from $Delta phi = - pi / 2$: the ellipse is traced clockwise in one case and counter-clockwise in the other.
 
-When the frequencies are commensurable, $omega_x : omega_y = p : q$ with small integers, the trajectory closes after $q$ periods along $x$ and $p$ periods along $y$: a *Lissajous figure*.
+When the frequencies are commensurable, $omega_x : omega_y = p : q$ with small integers, the trajectory closes after $p$ periods along $x$ and $q$ periods along $y$: a *Lissajous figure*.
 The number of tangencies with the horizontal sides of the bounding rectangle is $q$, and with the vertical sides $p$, which is how a frequency ratio is read off an oscilloscope.
 For incommensurable frequencies the curve never closes and eventually fills the rectangle.
+Both cases are drawn in @fig:lissajous.
 
 #figure(
   image("img/lissajous.svg", width: 85%),
@@ -534,12 +537,13 @@ Fourier's theorem says that this is a complication of vocabulary rather than of 
   $
     x(t) = frac(a_0, 2) + sum_(n=1)^oo (a_n cos(n omega t) + b_n sin(n omega t)), quad omega = frac(2 pi, T),
   $
-  with $a_n, b_n$ given by the Fourier integrals of Section 3.2.
+  with $a_n, b_n$ given by the Fourier integrals collected in #link(<ch:dispersion-fourier>)[Chapter 3].
   The amplitudes $sqrt(a_n^2 + b_n^2)$ plotted against the harmonic order $n$ form the *spectrum* of the motion.
 ] <def:harmonic-analysis>
 
 The spectrum is the fingerprint of the source: a pure tone is a single line, a plucked string has a decaying comb of harmonics, and an ideal percussion has a broad continuum.
 Which harmonics survive is decided by symmetry — an odd function has only sines, a function with half-period antisymmetry has only odd harmonics.
+Pointwise convergence is guaranteed by the Dirichlet conditions (piecewise smoothness of the motion); at a jump the series settles on the midpoint of the discontinuity, and this is what leaves the overshoot commented on below.
 
 #example(name: "Spectrum of a Square Wave")[ // 方波频谱
   A square wave of amplitude $A$ and period $T$ has only odd harmonics, with amplitudes $A_n = 4 A / (n pi)$ for odd $n$ and zero otherwise.
@@ -633,6 +637,7 @@ so that a wave entering a new medium keeps its frequency and changes its wavelen
 From the same picture comes *Huygens' construction*: every point of a wavefront acts as a source of secondary spherical wavelets, and the wavefront at a later time is their envelope.
 The construction explains qualitatively why waves bend around obstacles (diffraction) and why they obey the reflection and refraction laws.
 Its quantitative form — with amplitudes, obliquity factors and boundary conditions — is the Huygens–Fresnel principle of #link(<ch:scalar-diffraction>)[Chapter 8]; the reflection and refraction laws are derived from Fermat's principle in #link(<ch:ray-optics>)[Chapter 5]; and the diffraction patterns themselves are computed in #link(<ch:diffraction>)[Chapter 10].
+The four parameters, together with the two readings of the wave function, are collected in @fig:wave-parameters.
 
 #figure(
   image("img/wave-parameters.svg", width: 95%),
@@ -664,8 +669,8 @@ A travelling wave has three defining features:
 #property(name: "Three Characteristics of Travelling Waves")[
   1. *Morphology*: The entire waveform translates rigidly at speed $v$.
      A snapshot at time $t+Delta t$ is identical to the snapshot at $t$ shifted by $v Delta t$.
-  2. *Phase*: Each particle lags behind the particle to its left (for $+x$ propagation).
-     The phase difference between two points separated by $Delta x$ is $Delta phi = k Delta x = 2 pi Delta x / lambda$.
+  2. *Phase*: The pattern travels, so every particle repeats what the particle at its left has just done, a time $Delta x / v$ later (for $+x$ propagation).
+     In the phase $k x - omega t$ this delay reads as a phase difference $Delta phi = k Delta x = 2 pi Delta x / lambda$ between two points separated by $Delta x$.
   3. *Energy*: Travelling waves carry energy unidirectionally — there is a net energy flux from source to receiver, unlike standing waves which store energy locally.
 ] <prop:travelling-wave-features>
 
@@ -677,11 +682,11 @@ For a harmonic wave the particle velocity has amplitude $omega A$, which may be 
 Depending on the geometry of the source, the solutions of the wave equation take different forms.
 
 #definition(name: "Plane, Spherical, and Cylindrical Waves")[
-  - *Plane wave*: wavefronts are infinite planes. $u = A cos(omega t - bold(k) dot bold(r) + phi)$.
+  - *Plane wave*: wavefronts are infinite planes. $u = A cos(bold(k) dot bold(r) - omega t + phi)$.
     Energy does not spread — amplitude is constant.
-  - *Spherical wave* (point source): wavefronts are expanding spheres. $u(r, t) = frac(A, r) cos(omega t - k r + phi)$.
+  - *Spherical wave* (point source): wavefronts are expanding spheres. $u(r, t) = frac(A, r) cos(k r - omega t + phi)$, far from the source.
     Amplitude decays as $1/r$ to conserve energy (intensity $prop 1/r^2$).
-  - *Cylindrical wave* (line source): wavefronts are coaxial cylinders. $u(r, t) prop frac(1, sqrt(r)) cos(omega t - k r + phi)$.
+  - *Cylindrical wave* (line source): wavefronts are coaxial cylinders. $u(r, t) prop frac(1, sqrt(r)) cos(k r - omega t + phi)$.
     Amplitude decays as $1/sqrt(r)$.
 ] <def:wave-geometries>
 
@@ -740,7 +745,7 @@ The wave equation needs one coefficient, and that coefficient is fixed by the me
 ] <def:wave-speed-media>
 
 Every entry has the same structure: an elastic modulus (restoring force) divided by a density (inertia).
-Because $G < K$ for ordinary solids, $v_"P" > v_"S"$: the compressional wave always arrives first.
+Since $v_"P"^2 - v_"S"^2 = (K + G / 3) / rho > 0$ for any solid, the compressional wave always arrives first.
 
 #example(name: "Sound Speed in Air")[ // 空气声速
   For air, $gamma = 1.4$, $M = 29 times 10^(-3) "kg/mol"$ and $R = 8.31 "J/(mol K)"$.
@@ -755,11 +760,11 @@ Because $G < K$ for ordinary solids, $v_"P" > v_"S"$: the compressional wave alw
 
 In a solid, any deformation can be decomposed into a *dilatational* (volume-changing) part and a *distortional* (volume-preserving) part — this is the *Helmholtz decomposition* of the displacement field $bold(u)$:
 $
-  bold(u) = nabla phi + nabla times bold(psi), quad nabla dot bold(psi) = 0.
+  bold(u) = nabla Phi + nabla times bold(psi), quad nabla dot bold(psi) = 0,
 $
 
 #property(name: "P-waves and S-waves")[
-  - The *irrotational* part $nabla phi$ corresponds to *P-waves* (primary / pressure waves): longitudinal, curl-free ($nabla times bold(u) = 0$). These are the fastest seismic waves.
+  - The *irrotational* part $nabla Phi$ ($Phi$ is the scalar displacement potential, not the phase) corresponds to *P-waves* (primary / pressure waves): longitudinal, curl-free ($nabla times bold(u) = 0$). These are the fastest seismic waves.
   - The *solenoidal* part $nabla times bold(psi)$ corresponds to *S-waves* (secondary / shear waves): transverse, divergence-free ($nabla dot bold(u) = 0$). These cannot propagate through fluids (no shear resistance).
   - The Helmholtz decomposition shows that P-waves and S-waves propagate *independently* in a homogeneous isotropic elastic medium — they do not mix or convert into each other except at boundaries.
 ] <prop:p-s-waves>
@@ -781,16 +786,19 @@ $
   text("Potential energy density"): cal(V) = frac(1,2) T (frac(partial u, partial x))^2.
 $
 
-For a harmonic travelling wave $u = A cos(k x - omega t)$:
-
+For a harmonic travelling wave $u = A cos(k x - omega t)$ the two densities are equal at *every instant*,
 $
-  cal(K) = cal(V) = frac(1,4) mu omega^2 A^2,
+  cal(K) = cal(V) = frac(1,2) mu omega^2 A^2 sin^2 (k x - omega t),
+$
+so that after averaging over one period,
+$
+  overline(cal(K)) = overline(cal(V)) = frac(1,4) mu omega^2 A^2,
   quad
-  text("Total energy density"): cal(E) = frac(1,2) mu omega^2 A^2.
+  text("mean total energy density"): overline(cal(E)) = frac(1,2) mu omega^2 A^2.
 $
 
 Kinetic and potential energy are equal at every instant for a travelling wave — unlike an oscillator, where they exchange.
-The energy moves with the wave: the *energy flux density* is the energy crossing unit area per unit time, and for a harmonic wave it equals the energy density times the speed, $cal(E) v$.
+The energy moves with the wave: the *energy flux density* is the energy crossing unit area per unit time, and for a harmonic wave its period average is the mean energy density times the speed, $overline(cal(E)) v$.
 
 #definition(name: "Wave Intensity")[
   The *intensity* (average power per unit area) of a harmonic wave is
@@ -854,15 +862,20 @@ When a wave encounters a boundary between two media, part of the energy is refle
   - Fixed end ($Z_2 -> infinity$): $R = -1$ (reflected wave inverted, total reflection).
   - Free end ($Z_2 = 0$): $R = +1$ (reflected wave upright, total reflection).
   - Impedance matching ($Z_1 = Z_2$): $R = 0$, $T = 1$ (no reflection, perfect transmission).
+
+  Both coefficients compare *displacement* amplitudes: if the acoustic *pressure* is taken instead, the reflection coefficient reverses its sign, $R_p = (Z_2 - Z_1) / (Z_1 + Z_2)$.
+  The $T$ above is the transmitted fraction, unrelated to the string tension and to the period.
 ] <thm:reflection-transmission>
 
-#proof[
+#proof(name: "Reflection and Transmission at a Boundary")[
   *Step 1 — Continuity of displacement.*
   Write the incident, reflected and transmitted waves at the boundary $x = 0$ as $e^(i(k_1 x - omega t))$, $R e^(i(-k_1 x - omega t))$ and $T e^(i(k_2 x - omega t))$.
   Continuity of the displacement requires $1 + R = T$.
 
   *Step 2 — Continuity of the transverse force.*
-  The force transmitted across the boundary is $Z partial u / partial t$ for each medium, and matching it gives $Z_1 (1 - R) = Z_2 T$.
+  On each side the transverse force is the tension multiplied by the slope, $tau_k partial u / partial x$, where $tau_k$ is the string tension of Section 2.4 (not the transmission coefficient $T$ of this theorem).
+  Demanding equality at $x = 0$ gives $i k_1 tau_1 (1 - R) = i k_2 tau_2 T$.
+  Because $Z_k = mu_k v_k$, $tau_k = mu_k v_k^2$ and $v_k = omega / k_k$, we have $tau_k k_k = Z_k omega$, so the condition collapses to $Z_1 (1 - R) = Z_2 T$ — which is to say that each travelling component transmits a force $Z partial u / partial t$, up to a sign set by its direction of travel.
 
   *Step 3 — Solve.*
   Combining the two conditions yields $R = (Z_1 - Z_2)/(Z_1 + Z_2)$ and $T = 2 Z_1/(Z_1 + Z_2)$.
@@ -924,15 +937,15 @@ The first normal modes of the string are drawn in @fig:string-normal-modes.
   supplement: [Fig.]
 ) <fig:string-normal-modes>
 
-The fixed ends are nodes, and no half-wave loss needs to be invoked: the boundary condition is imposed by the support, not by a reflection coefficient.
-For a string with one free end the antinode sits at the free end, and the allowed lengths become $L = (2 n + 1) lambda / 4$.
+Each fixed end is a node, and this is exactly the $Z_2 -> infinity$ limit of the impedance argument above: reading the support as a prescribed node and reading it as a $R = -1$ reflection (half-wave loss) give the same answer.
+For a string with one free end the antinode sits at the free end, and the allowed lengths become $L = (2 n + 1) lambda / 4$ with $n = 0, 1, 2, dots.c$.
 
 == Common Waves: Sound, Seismic and Water // 常见波
 
 The same machinery describes the waves met in practice, with one twist each.
 
 *Sound.* A longitudinal compression wave in a fluid, governed by $v = sqrt(K / rho)$ and, for a gas, $v = sqrt(gamma R T / M)$.
-The audible range is a narrow band of frequencies, but the physics is that of Section 2.4; the intensity level is quoted on a logarithmic scale, $L = 10 log_(10)(I / I_0)$ with $I_0 = 10^(-12) "W/m"^2$.
+The audible range is a narrow band of frequencies, but the physics is that of Section 2.4; the intensity level is quoted on a logarithmic scale, $L = 10 log_(10)(I / I_0)$ in decibels, referenced to the threshold of hearing $I_0 = 10^(-12) "W/m"^2$.
 
 *Seismic waves.* The Earth supports both P- and S-waves, plus surface waves that travel more slowly and carry most of the destructive energy.
 The S–P delay locates the epicentre, and the absence of S-waves on the far side of the Earth is the classical evidence for a liquid core.
@@ -965,17 +978,22 @@ Only the latter changes the wavelength in the medium.
   A horn emits $f = 500 "Hz"$; the train moves at $v_s = 30 "m/s"$ and the air is still, with $u = 340 "m/s"$.
   Approaching: $f' = 500 times 340 / (340 - 30) approx 548 "Hz"$.
   Receding: $f' = 500 times 340 / (340 + 30) approx 459 "Hz"$.
-  The drop of about one semitone as the train passes is the familiar acoustic signature of the effect.
+  The two differ by a factor $548 / 459 approx 1.19$, about three semitones (a minor third), and this sudden drop as the train passes is the familiar acoustic signature of the effect.
 ] <ex:doppler-train>
 
 === Electromagnetic Doppler // 电磁波多普勒
 
 Light needs no medium, so there is no preferred frame and the formula must be relativistic.
-For a source receding at speed $v = beta c$ along the line of sight,
+For a source receding at speed $v$ along the line of sight, writing $beta = v / c$ (here $beta$ is the speed ratio, not the damping coefficient of Section 1.2) and $gamma = 1 / sqrt(1 - beta^2)$:
 $
   f' = f sqrt(frac(1 - beta, 1 + beta)),
 $
-and the reciprocal expression holds for approach; for an arbitrary angle $theta$ between the velocity and the line of sight, $f' = f gamma (1 - beta cos theta)$, which retains a transverse redshift at $theta = pi / 2$.
+and the reciprocal expression holds for approach.
+For an arbitrary angle $theta$ measured *in the observer's frame* between the velocity and the line of sight, the same result reads
+$
+  f' = frac(f, gamma (1 - beta cos theta)),
+$
+which reduces to the reciprocal of the expression above at $theta = 0$, back to it at $theta = pi$, and to the *transverse Doppler redshift* $f' = f / gamma$ at $theta = pi / 2$ — a genuine redshift, not merely a cancellation of the line-of-sight term.
 
 The effect is the basis of radar speed measurement, of the redshift of distant galaxies, and of Doppler broadening of spectral lines — the thermal motion of the emitting atoms spreads each line by $Delta lambda / lambda ~ v_"th" / c$ (Section 12.1).
 
@@ -989,6 +1007,7 @@ $
 $
 where $"Ma" = v_s / u$ is the Mach number.
 On crossing the cone the pressure jumps discontinuously — the sonic boom; the same geometry gives the bow wave of a ship and the Cherenkov cone of a charged particle moving faster than light in a medium.
+The two regimes are compared in @fig:doppler.
 
 #figure(
   image("img/doppler.svg", width: 95%),
@@ -1018,13 +1037,13 @@ In many real media, however, the wave speed depends on frequency; this is called
   $
   In a non-dispersive medium, $v_p = v_g$.
   In a dispersive medium, $v_p != v_g$; a wave packet spreads as it propagates.
-]
+] <def:dispersion-relation>
 
 #example(name: "Deep Water Waves")[ // 深水波
   For deep water waves, the dispersion relation is $omega = sqrt(g k)$.
   The phase velocity $v_p = omega / k = sqrt(g / k)$ increases with wavelength (longer waves travel faster).
   The group velocity $v_g = dif omega / dif k = frac(1,2) sqrt(g / k) = v_p / 2$ — energy travels at half the speed of the crests.
-]
+] <ex:deep-water-waves>
 
 A wave packet is a superposition of modes, and the two velocities answer different questions: $v_g$ moves the envelope, $v_p$ moves the carrier inside it.
 
@@ -1035,9 +1054,9 @@ $
 with $v_g$ and $alpha$ evaluated at $k_0$, shows that the packet keeps its shape to first order, translating at $v_g$; the second-order term $alpha$, the *group-velocity dispersion*, is what deforms it.
 
 #example(name: "Spreading of a Wave Packet")[ // 波包展宽
-  A packet of initial width $sigma_0$ broadens on the time scale $tau ~ sigma_0^2 / abs(alpha)$: a sharply localized packet disperses quickly, a broad one slowly.
+  A packet of initial spatial width $sigma_0$ broadens on the time scale $tau ~ sigma_0^2 / abs(alpha)$, with $alpha$ evaluated at the carrier wavenumber: a sharply localized packet disperses quickly, a broad one slowly.
   In optics this is the stretching of a short laser pulse in glass, the effect that limits long-haul fibre links (Section 12.1).
-]
+] <ex:wave-packet-spreading>
 
 == Fourier Series and Normal Modes // 傅里叶级数与简正模
 
@@ -1054,12 +1073,21 @@ Any standing wave configuration on a string can be expressed as a sum of normal 
     quad
     b_n = frac(2, L omega_n) integral_0^L dot(u)(x, 0) sin(frac(n pi x, L)) dif x.
   $
-]
+] <def:fourier-series-string>
+
+The same projection gives the coefficients of the general sine–cosine series stated in #link(<ch:oscillations>)[Chapter 1]: for a motion $x(t)$ of period $T$ with $omega = 2 pi / T$,
+$
+  a_0 = frac(2, T) integral_0^T x(t) dif t,
+  quad
+  a_n = frac(2, T) integral_0^T x(t) cos(n omega t) dif t,
+  quad
+  b_n = frac(2, T) integral_0^T x(t) sin(n omega t) dif t.
+$
 
 #example(name: "Plucked String")[ // 拨弦
   A string pulled at its midpoint and released has the triangular profile $u(x, 0) = 2 h x / L$ for $x <= L / 2$, symmetric beyond it.
   The even coefficients vanish and the odd ones decay as $a_n prop 1 / n^2$, so the fundamental carries most of the energy and the higher modes only sharpen the corner.
-]
+] <ex:plucked-string>
 
 == The Eigenfunction Expansion Idea // 本征函数展开思想
 
@@ -1086,10 +1114,6 @@ This is the discrete ancestor of the Fourier transform, and the same idea return
 
 In *Mécanique analytique* (Part II) the same projection is applied to coupled oscillators, where the eigenfunctions become the normal coordinates of the system.
 
-The preceding chapters of this part develop the wave equation and its general mathematical machinery — d'Alembert's solution, the wave function, complex (phasor) representation, superposition, interference, standing waves, dispersion, group velocity, and Fourier analysis.
-These concepts are *medium-independent*: they apply equally to mechanical waves, electromagnetic waves, and quantum probability waves.
-The elastic-medium specialisation — strain, stress, elastic moduli, P/S waves, impedance, reflection and half-wave loss — is now part of this notebook as well (Sections 2.4 and 2.6); it was formerly the content of *Mécanique analytique* Ch 4.
-
 // --- Chapter 4: From Waves to Time-Harmonic Fields (时谐场与亥姆霍兹方程) ---
 
 = From Waves to Time-Harmonic Fields <ch:helmholtz> // 时谐场与亥姆霍兹方程
@@ -1101,7 +1125,7 @@ The Helmholtz equation is the mathematical backbone of Part II (geometric optics
 
 == Waves in 2D and 3D // 二维三维波动
 
-The one-dimensional wave equation of Chapter 2 generalises to three dimensions by replacing the second spatial derivative with the Laplacian $nabla^2$.
+The one-dimensional wave equation of #link(<ch:wave-motion>)[Chapter 2] generalises to three dimensions by replacing the second spatial derivative with the Laplacian $nabla^2$.
 
 #definition(name: "Three-Dimensional Wave Equation")[
   The displacement $u(bold(r), t)$ of a wave propagating in three-dimensional space satisfies
@@ -1111,7 +1135,7 @@ The one-dimensional wave equation of Chapter 2 generalises to three dimensions b
   where $nabla^2 = gradient dot gradient$ is the Laplacian and $v$ is the wave speed.
 ] <def:wave-eq-3d>
 
-The plane, spherical, and cylindrical solutions of Chapter 2 are the three-dimensional solutions obtained by separating $u(bold(r), t)$ in Cartesian, spherical, and cylindrical coordinates.
+The plane, spherical, and cylindrical solutions of #link(<ch:wave-motion>)[Chapter 2] are the three-dimensional solutions obtained by separating $u(bold(r), t)$ in Cartesian, spherical, and cylindrical coordinates.
 Separation of variables turns the problem into an equation for the spatial part alone — this is the route to the Helmholtz equation below.
 
 == The Time-Harmonic Convention // 时谐约定
@@ -1151,7 +1175,7 @@ Rearranging yields the Helmholtz equation.
 ] <def:helmholtz>
 
 For light in vacuum, $v = c$ and $k = 2 pi / lambda$.
-In a medium of refractive index $n$, the wavenumber becomes $k = n omega / c = 2 pi n / lambda$.
+In a medium of refractive index $n$, the wavenumber becomes $k = n omega / c = 2 pi n / lambda$, where the $lambda$ on the right is still the vacuum wavelength (inside the medium the wavelength is $lambda / n$).
 
 The Helmholtz equation is the spatial eigenvalue problem of the Laplacian: the field $bold(U)$ is an eigenfunction of $nabla^2$ with eigenvalue $-k^2$.
 Its solutions are the building blocks of the entire optical theory that follows.
@@ -1161,7 +1185,7 @@ Its solutions are the building blocks of the entire optical theory that follows.
   The scalar theory of this notebook works with a single component $bold(U)$; the vector character of the field returns in #link(<ch:polarization>)[Chapter 13 (Polarization)].
 
   The Helmholtz equation alone admits both outgoing and incoming solutions.
-  Physical radiation problems single out the outgoing family by the *Sommerfeld radiation condition*; the diffraction integrals of Chapter 8 are the Green-function solutions that enforce it.
+  Physical radiation problems single out the outgoing family by the *Sommerfeld radiation condition*; the diffraction integrals of #link(<ch:scalar-diffraction>)[Chapter 8] are the Green-function solutions that enforce it.
 ]
 
 == Plane-Wave Expansions // 平面波展开
@@ -1191,6 +1215,11 @@ This distinction reappears in #link(<ch:diffraction>)[Chapter 10 (Resolution)] a
 #note[
   The angular-spectrum representation is the bridge between Part I and the rest of the notebook: the diffraction integrals of #link(<ch:scalar-diffraction>)[Chapter 8] are this representation evaluated at a distant observation plane, and the lens analysis of #link(<ch:fourier-optics>)[Chapter 11] implements it physically as a Fourier transform.
 ]
+
+Chapters 1–3 of this part developed the wave equation and its general mathematical machinery — d'Alembert's solution, the wave function, complex (phasor) representation, superposition, interference, standing waves, dispersion, group velocity, and Fourier analysis.
+These concepts are *medium-independent*: they apply equally to mechanical waves, electromagnetic waves, and quantum probability waves.
+The elastic-medium specialisation — strain, stress, elastic moduli, P/S waves, impedance, reflection and half-wave loss — is now part of this notebook as well (Sections 2.4 and 2.6); it originally came from *Mécanique analytique*.
+Chapter 4 has added the last piece: the time-harmonic Helmholtz formulation on which both geometric optics (Part II) and wave optics (Part III) rest.
 
 // --------------------------------------------------------------------------
 // Part II: Geometric Optics (几何光学)
