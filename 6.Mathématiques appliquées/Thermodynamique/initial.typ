@@ -560,7 +560,7 @@ The ordering follows from the ratios $overline(v) / v_p = 2 / sqrt(pi) approx 1.
     (integral_(v_1)^(v_2) v f(v) dif v) / (integral_(v_1)^(v_2) f(v) dif v).
   $
   Molecules outside $[v_1, v_2]$ contribute to neither integral.
-]
+] <note:mean-speed-interval>
 
 #example(name: "Stern experiment, 1920")[
   Silver atoms evaporating from an oven pass
@@ -626,7 +626,25 @@ The ordering follows from the ratios $overline(v) / v_p = 2 / sqrt(pi) approx 1.
   $
   The ratio is now $v_p : overline(v) : v_("rms") = 1 : 0.75 : 0.775$:
   with the tail amputated, all three speeds crowd just below the cutoff
-  instead of straddling a peak. The mean kinetic energy follows at once,
+  instead of straddling a peak.
+
+  *A sub-population.* How fast are the *fast* electrons? Restrict to
+  $[v_F/2, v_F]$, which holds the fraction
+  $
+    integral_(v_F/2)^(v_F) 3 v^2/v_F^3 dif v = 1 - 1/8 = 7/8
+  $
+  of them; #link(<note:mean-speed-interval>)[the interval-mean formula]
+  then gives
+  $
+    overline(v)_([v_F/2, v_F])
+    = (integral_(v_F/2)^(v_F) v^3 dif v) /
+      (integral_(v_F/2)^(v_F) v^2 dif v)
+    = (45/64)/(7/8) v_F = 45/56 v_F approx 0.804 v_F,
+  $
+  above the overall $3/4 v_F$: dropping the slowest eighth of the
+  electrons raises the average, as it must.
+
+  The mean kinetic energy follows at once,
   $
     lr(⟨E⟩) = 1/2 m lr(⟨v^2⟩) = 3/5 (1/2 m v_F^2) = 3/5 E_F,
   $
