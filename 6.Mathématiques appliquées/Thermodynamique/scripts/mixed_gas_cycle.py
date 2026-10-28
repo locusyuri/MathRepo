@@ -80,14 +80,14 @@ for v, p, name, temp, (dx, dy) in [
     ax.text(v + dx, p + dy, f"${name}$, {temp} K", fontsize=11, va="center")
 
 # heat exchange hints
-ax.text(2.30, PA + 0.055, "absorbs $Q_{ab}$", color=BLUE, fontsize=9.5,
+ax.text(2.30, PA + 0.145, "absorbs $Q_{ab}$", color=BLUE, fontsize=9.5,
         ha="center")
 ax.text(8.0, PD - 0.075, "rejects $Q_{cd}$", color=BLUE, fontsize=9.5,
         ha="center")
 
 ax.legend(loc="upper right", frameon=False, fontsize=10.5)
 ax.set_xlim(0, 13.6)
-ax.set_ylim(-0.06, 1.18)
+ax.set_ylim(-0.06, 1.26)
 ax.set_xlabel("$V$", fontsize=12)
 ax.set_ylabel("$p$", fontsize=12)
 ax.spines["top"].set_visible(False)
