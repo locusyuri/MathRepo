@@ -581,6 +581,59 @@ The ordering follows from the ratios $overline(v) / v_p = 2 / sqrt(pi) approx 1.
   shape parameters in disguise.
 ] <note:mb-probability>
 
+#example(name: "A simplified electron gas")[
+  The conduction electrons of a metal move much like the molecules of a
+  gas — an *electron gas*. In a crude model every speed stays below a
+  maximum $v_F$, and the fraction of the $N$ electrons with speed in
+  $[v, v + dif v]$ is
+  $
+    (dif N)/N = cases(A v^2 dif v & quad (0 < v < v_F), 0 & quad (v > v_F)),
+  $
+  a parabola switched off at $v_F$ (@fig:fermi-speed-distribution).
+  Determine $A$ and the three characteristic speeds.
+
+  #figure(
+    image("img/fermi-speed-distribution.svg", width: 62%),
+    caption: [The speed distribution $f(v) = A v^2$ of the model: it
+      rises up to the Fermi speed $v_F$ and drops abruptly to zero
+      there, with no high-speed tail at all.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:fermi-speed-distribution>
+
+  *Normalisation.* The total fraction must be one:
+  $
+    integral_0^infinity f(v) dif v = integral_0^(v_F) A v^2 dif v
+    = A v_F^3/3 = 1, quad "hence" quad A = 3/v_F^3.
+  $
+
+  *Characteristic speeds.* Since $f(v) = 3 v^2/v_F^3$ *increases* all the
+  way to the cutoff, its maximum lies at the edge of the allowed range:
+  $
+    v_p = v_F,
+  $
+  an interior peak being impossible — quite unlike
+  #link(<thm:characteristic-speeds>)[the Maxwell case]. The mean and the
+  mean square are the first two moments,
+  $
+    overline(v) = integral_0^(v_F) v dot 3 v^2/v_F^3 dif v = 3/4 v_F,
+    quad
+    lr(⟨v^2⟩) = integral_0^(v_F) v^2 dot 3 v^2/v_F^3 dif v = 3/5 v_F^2,
+  $
+  so
+  $
+    v_("rms") = sqrt(lr(⟨v^2⟩)) = sqrt(3/5) v_F approx 0.775 v_F.
+  $
+  The ratio is now $v_p : overline(v) : v_("rms") = 1 : 0.75 : 0.775$:
+  with the tail amputated, all three speeds crowd just below the cutoff
+  instead of straddling a peak. The mean kinetic energy follows at once,
+  $
+    lr(⟨E⟩) = 1/2 m lr(⟨v^2⟩) = 3/5 (1/2 m v_F^2) = 3/5 E_F,
+  $
+  the result that, at zero temperature, the electrons of a metal fill the
+  Fermi sphere — the starting point of Chapter 18.
+] <ex:fermi-electron-gas>
+
 == Boltzmann Energy Distribution // 玻尔兹曼能量分布律
 
 The Maxwell distribution depends on velocity through the combination
