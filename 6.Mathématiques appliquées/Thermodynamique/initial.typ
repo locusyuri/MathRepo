@@ -2572,6 +2572,46 @@ on any cyclic device operating between two reservoirs.
   reason refrigeration is cheap and engine power is not.
 ] <ex:engine-numerical>
 
+#example(name: "Maximum work from two finite bodies")[
+  Two identical bodies of heat capacity $C$, at temperatures
+  $T_1 > T_2$, serve as the hot and the cold reservoir of an engine.
+  As the engine works the first cools and the second warms; after a
+  finite number of cycles both reach a common temperature $T_f$.
+  What is the largest work the engine can deliver?
+
+  The first law fixes the work once $T_f$ is chosen, the engine itself
+  returning to its initial state after every cycle:
+  $
+    W = -[C (T_f - T_1) + C (T_f - T_2)] = C (T_1 + T_2 - 2 T_f),
+  $
+  so the work is largest when $T_f$ is smallest. The second law, applied
+  to the isolated pair of bodies, bounds $T_f$ from below:
+  $
+    Delta S = C ln(T_f / T_1) + C ln(T_f / T_2)
+    = 2 C ln (T_f / sqrt(T_1 T_2)) >= 0,
+  $
+  with equality exactly when the engine is reversible. Hence
+  $T_f >= sqrt(T_1 T_2)$, and
+  $
+    W_max = C (T_1 + T_2 - 2 sqrt(T_1 T_2))
+    = C (sqrt(T_1) - sqrt(T_2))^2,
+  $
+  reached by a reversible engine running on infinitesimal temperature
+  differences — the engine counterpart of
+  #link(<ex:reservoir-cascade>)[the cascade of reservoirs], and the case
+  of equality in #link(<prop:carnot-bounds>)[the Carnot bounds].
+  Left in direct thermal contact instead, the bodies settle at
+  $T_f = (T_1 + T_2)/2$, deliver no work, and produce the entropy
+  $
+    Delta S = 2 C ln ((T_1 + T_2)/(2 sqrt(T_1 T_2))) > 0.
+  $
+
+  The answer is quadratic in the gap: for $T_(1,2) = T plus.minus delta/2$,
+  $W_max approx C delta^2/(4 T)$, negligible beside the heat $C delta$
+  exchanged — a reversible engine between nearly equal temperatures
+  extracts nearly nothing, which is the Carnot bound read differentially.
+] <ex:engine-finite-bodies>
+
 The Carnot bound is the engineering face of the second law: efficiency is
 bought with temperature, not with mechanical ingenuity.
 
