@@ -1671,7 +1671,7 @@ The equivalent ABCD system is drawn in @fig:abcd-system.
   $
     abs(frac(A + D, 2)) < 1,
   $
-  up to the degenerate round trip $M = plus.minus I$, which reproduces the ray exactly and is bounded even though $abs(A + D) = 2$.
+  the sole exception being the degenerate round trip $M = plus.minus I$.
 ] <thm:stability-criterion>
 
 #proof(name: "Cavity Stability Criterion")[
