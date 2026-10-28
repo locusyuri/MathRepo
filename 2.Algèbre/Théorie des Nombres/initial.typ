@@ -4617,11 +4617,12 @@ polynomial ring $P[x]$ over a number field $P$ (typically $bb(Q)$,
 $bb(R)$, or $bb(C)$). The parallel is exact and it is the point:
 where $bb(Z)$ measures size by the absolute value, $P[x]$ measures it
 by the *degree*, and every argument of Part I that used only "the
-sizes decrease" goes through verbatim. The final two chapters will
-harvest this: Chapter 12 develops factorization and roots (including
-the rational root theorem and Eisenstein's criterion behind the root
-bound used in Chapter 5), and Chapter 14 develops the symmetric
-polynomial language behind Vièta's formulas.
+sizes decrease" goes through verbatim. Two later chapters harvest it:
+*Factorization and Roots* develops factorization and roots
+(including the rational root theorem and Eisenstein's criterion behind
+the root bound used in Chapter 5), and *Symmetric Polynomials and
+Inequalities* develops the symmetric polynomial language behind
+Vièta's formulas.
 
 == Univariate Polynomials // 一元多项式
 
@@ -4675,9 +4676,8 @@ $bb(Z)$ run.
 
 == Division of Polynomials // 多项式的带余除法
 
-In $bb(Z)$ the division algorithm
-(#link(<thm:division-algorithm>)[§1.2]) produced a quotient and a
-remainder with
+In $bb(Z)$ #link(<thm:division-algorithm>)[the division algorithm]
+produced a quotient and a remainder with
 $0 <= r < abs(b)$. The polynomial version replaces the inequality by
 a degree condition: the remainder must be $0$ or of degree smaller
 than the divisor. Long division of polynomials is the same algorithm
@@ -4726,17 +4726,18 @@ the degree rather than on the size.
   $f = g h = 0$, so the *zero polynomial divides only the zero
   polynomial*. This degenerate case is harmless but must be kept in
   mind when comparing with the integer convention of
-  #link(<def:divisibility>)[§1.2], where the divisor is required to
-  be nonzero.
+  #link(<def:divisibility>)[Divisibility], where the divisor is
+  required to be nonzero.
 ]
 
 The degree rules make the parallel with $bb(Z)$ precise: $abs(dot)$ is
 replaced by $"deg"(dot)$, $plus.minus 1$ by the nonzero constants, and
 "positive" by "degree at least $1$". Every divisibility rule of
-#link(<prop:divisibility-rules>)[§1.2] — transitivity, linear
-combinations, and the size bound $abs(a) <= abs(b)$ reading
-$"deg"(g) <= "deg"(f)$ — now transfers to $P[x]$ by the same proofs,
-with the degree rules playing the role of the size bound.
+#link(<prop:divisibility-rules>)[Basic Rules of Divisibility] —
+transitivity, linear combinations, and the size bound
+$abs(a) <= abs(b)$ mirrored by $"deg"(g) <= "deg"(f)$ — now transfers
+to $P[x]$ by the same proofs, with the degree rules playing the role
+of the size bound.
 
 == GCD and Bézout's Identity // 最大公因式与 Bézout 恒等式
 
@@ -4756,17 +4757,23 @@ divisor. The fix is the same as fixing signs — normalize.
 ] <def:poly-gcd>
 
 #theorem(name: "Euclidean Algorithm and Bézout's Identity")[
-  For all $f, g in P[x]$ there exists a greatest common divisor
-  $d in P[x]$ of $f$ and $g$, and $d$ is a linear combination:
+  Let $f, g in P[x]$, not both zero. Then $f$ and $g$ possess a greatest
+  common divisor $d in P[x]$, whose monic associate $(f, g)$ is unique,
+  and $d$ is a linear combination:
   $
     d = u f + v g
   $
-  for some $u, v in P[x]$. The converse fails in general: a
-  polynomial combination $u f + v g$ need not be a greatest common
-  divisor.
+  for some $u, v in P[x]$. The converse fails in general: a polynomial
+  combination $u f + v g$ need not be a greatest common divisor.
 ] <thm:poly-bezout>
 
 #proof(name: "of the theorem")[
+  *The degenerate start.* If $g = 0$, then $f != 0$ and the common
+  divisors of $f$ and $0$ are exactly the divisors of $f$; the monic
+  associate of $f$ is therefore $(f, 0)$, and it equals
+  $c^(-1) f + 0 dot g$ where $c$ is the leading coefficient of $f$.
+  Hence assume $g != 0$ from now on.
+
   Iterated division: set $r_(-1) = f$, $r_0 = g$ and define
   $r_(k) = r_(k-2) - q_k r_(k-1)$ to be the remainder of
   $r_(k-2)$ upon division by $r_(k-1)$. The degrees
@@ -4828,26 +4835,30 @@ divisor. The fix is the same as fixing signs — normalize.
   Write $d = (f, g)$ and $f = d f_1$, $g = d g_1$ with
   $(f_1, g_1) = 1$ (any common factor of $f_1$ and $g_1$ would
   enlarge $d$). Then $f_1 g_1$ is a common multiple of $f_1$ and
-  $g_1$, and if $f_1 | k$ and $g_1 | k$, writing $k = f_1 t$ gives
-  $f_1 | g_1 t$, hence $f_1 | t$ by the polynomial Euclid lemma
-  (#link(<cor:poly-coprime-bezout>)[coprimality]; the full factorized
-  form is proved in Chapter 12). So $[f_1, g_1] = f_1 g_1$, and
-  multiplying back by $d$:
-  $[f, g] = d f_1 g_1$, i.e. $[f, g] = (f g)\/d = f g\/(f, g)$.
+  $g_1$. Conversely, let $k$ be any common multiple and write
+  $k = f_1 t$; since $g_1 | k = f_1 t$ and $(f_1, g_1) = 1$,
+  #link(<cor:poly-coprime-bezout>)[Bézout's criterion] supplies
+  $u f_1 + v g_1 = 1$, and multiplying by $t$ gives
+  $t = u f_1 t + v g_1 t$, both terms divisible by $g_1$; hence
+  $g_1 | t$ and $k = f_1 g_1 (t\/g_1)$ is a multiple of $f_1 g_1$. So
+  $[f_1, g_1] = f_1 g_1$ up to a nonzero constant, and multiplying
+  back by $d$ gives $[f, g] = d f_1 g_1 = f g \/ (f, g)$, which is
+  monic whenever $f$ and $g$ are.
 ]
 
 This closes the mirror of Part I: division with remainder, gcd,
 Bézout, and the product identity all stand in $P[x]$ exactly as they
 stand in $bb(Z)$. What is still missing is the payoff — unique
-factorization into irreducibles — which Chapter 12 develops together
-with the theory of roots, and which in particular explains why the
-polynomial root bound of #link(<lem:poly-roots-bound>)[§5.2] had to
-hold.
+factorization into irreducibles — which *Factorization and Roots*
+develops together with the theory of roots, and which in particular
+explains why #link(<lem:poly-roots-bound>)[the root bound for
+polynomial congruences] had to hold.
 
 = Factorization and Roots // 因式分解与根
 
-Chapter 11 transported the division engine of the integers into
-$P[x]$. This chapter collects the payoff: irreducible polynomials play
+*Divisibility of Polynomials* transported the division engine of the
+integers into $P[x]$. This chapter collects the payoff: irreducible
+polynomials play
 the role of primes, every polynomial factors uniquely into them, and
 the chapter closes with two classical instruments that read arithmetic
 off the roots — Vièta's formulas and the roots of unity. Along the way
@@ -4867,11 +4878,12 @@ polynomials that cannot be split.
 ] <def:poly-irreducible>
 
 #proposition(name: "Euclid's Lemma for Irreducible Polynomials")[
-  Let $p in P[x]$ be irreducible and $f in P[x]$ arbitrary. The
-  following are equivalent:
-  + *either-or*: either $p | f$ or $(p, f) = 1$;
-  + *prime property*: $p | f g$ implies $p | f$ or $p | g$ for all
-    $f, g in P[x]$.
+  Let $p in P[x]$ be irreducible. Then the following two statements are
+  equivalent:
+  + *either-or*: for every $f in P[x]$, either $p | f$ or
+    $(p, f) = 1$;
+  + *prime property*: for all $f, g in P[x]$, $p | f g$ implies
+    $p | f$ or $p | g$.
 ] <prop:irreducible-prime>
 
 #proof(name: "of the proposition")[
@@ -4883,18 +4895,19 @@ polynomials that cannot be split.
   $p$. Hence $p | g$.
 
   *(2) $=>$ (1).* Let $d = (p, f)$. Then $d | p$, so $p = d q$. If
-  $"deg"(d) = "deg"(p)$ then $q$ is a nonzero constant and $d | p | f$.
-  If $"deg"(d) = 0$, then $(p, f) = 1$. In both cases statement (1)
-  holds.
+  $"deg"(d) = "deg"(p)$, then $q$ is a nonzero constant, and $d | f$
+  gives $p = q d | f$. If $"deg"(d) = 0$, then $(p, f) = 1$. In both
+  cases statement (1) holds.
 ]
 
-This is the exact mirror of #link(<thm:euclid-lemma>)[Euclid's lemma
-  for primes], and it drives unique factorization in $P[x]$ the same
-way: the induction of #link(<thm:fta>)[the Fundamental Theorem of
-  Arithmetic] transfers verbatim, with "prime" replaced by "irreducible"
-and absolute values by degrees. The ring-theoretic formulation of this
-state of affairs ($P[x]$ is a Euclidean domain, hence a unique
-factorization domain) belongs to Algèbre Abstraite.
+This is the exact mirror of
+#link(<thm:euclid-lemma>)[Euclid's lemma for primes], and it drives
+unique factorization in $P[x]$ the same way: the induction of
+#link(<thm:fta>)[the Fundamental Theorem of Arithmetic] transfers
+verbatim, with "prime" replaced by "irreducible" and absolute values by
+degrees. The ring-theoretic formulation of this state of affairs ($P[x]$
+is a Euclidean domain, hence a unique factorization domain) belongs to
+Algèbre Abstraite.
 
 == Polynomials with Rational Coefficients // 有理系数多项式
 
@@ -4911,7 +4924,7 @@ and $bb(Z)[x]$: the notion of a primitive polynomial.
   $
 ] <def:primitive-polynomial>
 
-#lemma(name: "Gauss's Lemma")[
+#lemma(name: "Gauss's Lemma on Primitive Polynomials")[
   The product of two primitive polynomials is primitive.
 ] <lem:gauss-poly-lemma>
 
@@ -4984,8 +4997,9 @@ Two consequences make the bridge traffic-ready.
   $
     a_n r^n + a_(n-1) r^(n-1) s + dots + a_1 r s^(n-1) + a_0 s^n = 0.
   $
-  Modulo the first term, $a_0 s^n = -r (a_n r^(n-1) + dots +
-    a_1 s^(n-1))$, so $r | a_0 s^n$; since $"gcd"(r, s) = 1$,
+  Isolating the constant term,
+  $a_0 s^n = -r (a_n r^(n-1) + dots + a_1 s^(n-1))$, so
+  $r | a_0 s^n$; since $"gcd"(r, s) = 1$,
   #link(<lem:coprime-divisibility>)[coprime cancellation] gives
   $r | a_0$. Symmetrically, $a_n r^n = -s (a_(n-1) r^(n-1) + dots +
     a_0 s^(n-1))$, so $s | a_n r^n$ and hence $s | a_n$.
@@ -5041,8 +5055,9 @@ finding roots.
   coefficients except the leading one, and $9 ∤ 3$. The criterion
   also produces irreducibles of every degree, e.g. $x^5 - 2$
   (Eisenstein at $p = 2$), which no amount of root testing alone
-  could settle — $x^5 - 2$ has no rational root, yet "no rational
-  root" does not preclude a factorization into two quadratics.
+  could settle — $x^5 - 2$ has no rational root, yet the absence of a
+  rational root excludes only a linear factor and leaves a
+  factorization into a quadratic and a cubic unchecked.
 ] <ex:eisenstein-action>
 
 == Vièta's Formulas // 根与系数的关系
@@ -5073,16 +5088,17 @@ finding roots.
   $a_(n - k) = a_n (-1)^k sum_(i_1 < dots < i_k) r_(i_1) dots r_(i_k)$.
 ]
 
-In the language of Chapter 14, the sums on the left are the
-*elementary symmetric polynomials* $sigma_(k)(r_1, dots, r_n)$ in the
-roots, so Vièta's formulas read
+In the language of *Symmetric Polynomials and Inequalities*, the sums
+on the left are the *elementary symmetric polynomials*
+$sigma_(k)(r_1, dots, r_n)$ in the roots, so Vièta's formulas read
 $
   sigma_(k)(r_1, dots, r_n) = (-1)^k a_(n-k)\/a_n, quad k = 1, dots, n.
 $
 For a cubic $x^3 - 2 x^2 + x - 5$ this says: the roots add to $2$,
 pair up to add to $1$, and multiply to $5$ — the coefficients are a
 complete dossier on the roots. The systematic theory of these
-symmetric expressions is developed in Chapter 14.
+symmetric expressions is developed in *Symmetric Polynomials and
+Inequalities*.
 
 == Roots of Unity // 单位根
 
@@ -5123,10 +5139,23 @@ neighbours.
   power $omega^k$ with $0 <= k <= n - 1$.
 ] <prop:roots-cyclic>
 
+#proof[
+  The powers $omega^0, omega^1, dots, omega^(n - 1)$ are $n$ distinct
+  roots of $x^n = 1$: each satisfies $(omega^k)^n = (omega^n)^k = 1$,
+  and $omega^j = omega^k$ with $0 <= j < k <= n - 1$ would give
+  $omega^(k - j) = 1$, forcing $n | (k - j)$, which is impossible in
+  that range. A polynomial of degree $n$ over a field has at most $n$
+  roots (the factor-theorem induction of
+  #link(<lem:poly-roots-bound>)[the root bound for polynomial
+congruences] applies verbatim over any field), so these are *all* the
+  $n$-th roots of unity. Every root is therefore a power of $omega$,
+  and the set is the cyclic group generated by $omega$.
+]
+
 #note[
-  Compare #link(<def:primitive-root>)[primitive roots modulo $m$]
-  (§5.2): there, the powers of a single element exhaust the reduced
-  residue classes; here, the powers of $omega = e^(2 pi i \/ n)$
+  Compare #link(<def:primitive-root>)[primitive roots modulo $m$]:
+  there, the powers of a single element exhaust the reduced residue
+  classes; here, the powers of $omega = e^(2 pi i \/ n)$
   exhaust the solutions of $x^n = 1$. The two cyclic phenomena are
   the finite and the complex face of the same structure — and
   $omega$ is a *root of the cyclotomic polynomial* $Phi_n$, whose
@@ -5153,12 +5182,16 @@ neighbours.
   The first identity is telescoping: expanding
   $(a - b) sum_(k=0)^(n-1) a^(n-1-k) b^k$, the products
   $sum_k a^(n-k) b^k$ and $sum_k a^(n-1-k) b^(k+1)$ cancel term by
-  term, leaving $a^n - b^n$. For the second, apply the first to the
-  pair $(-a)^n = -a^n$ (since $n$ is odd) and $b$:
-  $a^n + b^n = b^n - (-a)^n = (b + a)(b^(n-1) - b^(n-2)(-a) + dots +
-    (-a)^(n-1))$, which rearranges to the stated alternating sum. The
-  $n$-even case fails because $x^n + 1$ then has no root at $x = -1$
-  to factor against — e.g. $x^2 + 1$ is irreducible over $bb(R)$.
+  term, leaving $a^n - b^n$. For the second, apply the first with
+  $A = b$ and $B = -a$: since $n$ is odd, $(-a)^n = -a^n$, so
+  $A^n - B^n = b^n + a^n$ and
+  $
+    a^n + b^n = (b + a)(b^(n-1) + b^(n-2)(-a) + dots + (-a)^(n-1)),
+  $
+  whose factors alternate in sign and rearrange to the stated
+  alternating sum. The $n$-even case fails because $x^n + 1$ then has
+  no root at $x = -1$ to factor against — e.g. $x^2 + 1$ is
+  irreducible over $bb(R)$.
 ]
 
 Frequently used low-degree special cases:
@@ -5191,7 +5224,7 @@ any finite set of data points. Both are "change of basis" stories,
 and both echo themes from the rest of the notebook — the binomial
 basis stands behind the middle-binomial-coefficient estimates of
 Chapter 8, and interpolation is the uniqueness half of the root-count
-arguments of Chapter 12.
+arguments of *Factorization and Roots*.
 
 == Integer-Valued Polynomials // 整值多项式
 
@@ -5230,9 +5263,9 @@ converse fails — and the failure is instructive.
   (products of integer values are integers), so it is a ring strictly
   larger than $bb(Z)[x]$. The counting argument in the example —
   values at integers are integers because they count something — is
-  the same style of proof as the floor-sum identity
-  #link(<prop:hermite-identity>)[§1.1] and the Legendre formula of
-  Chapter 8.
+  the same style of proof as
+  #link(<prop:hermite-identity>)[Hermite's identity] and the Legendre
+  formula of Chapter 8.
 ]
 
 == The Binomial Polynomial Basis // 二项式系数基
@@ -5267,13 +5300,10 @@ coordinates.
   $
     (Delta f)(x) = sum_(k=1)^d c_k binom(x, k - 1).
   $
-  By the induction hypothesis applied to $Delta f$, the coefficients
-  $c_2, dots, c_d$ are integers. For the two that remain: evaluating
-  the expansion at $x = 0$, where $binom(0, k) = 0$ for $k >= 1$,
-  gives $c_0 = f(0) in bb(Z)$; and
-  $(Delta f)(0) = c_1$, because $binom(0, j) = 0$ for $j >= 1$ kills
-  every other term — while $(Delta f)(0) = f(1) - f(0) in bb(Z)$, so
-  $c_1 in bb(Z)$.
+  By the induction hypothesis applied to $Delta f$, all the
+  coefficients $c_1, dots, c_d$ are integers. Only $c_0$ remains:
+  evaluating the expansion of $f$ at $x = 0$, where
+  $binom(0, k) = 0$ for $k >= 1$, gives $c_0 = f(0) in bb(Z)$.
 ]
 
 The coefficients $c_k$ have a name: $c_k = (Delta^k f)(0)$, the
@@ -5308,9 +5338,10 @@ exactly one polynomial of bounded degree.
 
   *Uniqueness.* If $f$ and $g$ both work, then $f - g$ has degree
   $<= n$ but vanishes at the $n + 1$ distinct points $x_i$. A nonzero
-  polynomial of degree $<= n$ over a field has at most $n$ roots
-  (the same induction as in #link(<lem:poly-roots-bound>)[§5.2],
-  via the factor theorem), so $f - g = 0$.
+  polynomial of degree $<= n$ over a field has at most $n$ roots (the
+  same induction as in
+  #link(<lem:poly-roots-bound>)[the root bound for polynomial
+congruences], via the factor theorem), so $f - g = 0$.
 ]
 
 #example(name: "Interpolating Three Points")[
@@ -5347,8 +5378,9 @@ the object of study.
 The last chapter of the notebook changes perspective one final time:
 several variables at once, and expressions invariant under every
 permutation of them. The *elementary symmetric polynomials* are the
-connecting thread — they are the quantities that Vièta's formulas
-(#link(<thm:vieta>)[§12.3]) read off the coefficients — and Newton's
+connecting thread — they are the quantities that
+#link(<thm:vieta>)[Vièta's formulas] read off the coefficients — and
+Newton's
 identities relate them to plain power sums. The second half applies
 this language to the classical symmetric inequalities of the
 competition tradition (power means, Muirhead, Schur, Nesbitt); the
@@ -5440,7 +5472,8 @@ variables (not necessarily a polynomial):
   $
   with indices read modulo $n$; for example
   $sum_"cyc" a\/(b + c) = a\/(b + c) + b\/(c + a) + c\/(a + b)$ — the
-  left side of Nesbitt's inequality, proved in §14.4;
+  left side of Nesbitt's inequality, proved in *Classical
+  Applications*;
 - *symmetric sum*: sum over *all* permutations $sigma in S_n$,
   $
     sum_"sym" f(x_1, dots, x_n) = sum_(sigma in S_n)
@@ -5606,24 +5639,20 @@ $alpha op("prec") beta => alpha in H(beta)$.
   $
 ] <prop:schur>
 
-#proof(name: "of the case $r = 1$")[
-  By symmetry assume $a >= b >= c$. The difference between the right
-  side and the left side of the $r = 1$ inequality rearranges as
+#proof[
+  By symmetry assume $a >= b >= c$. Since $(b - a) = -(a - b)$ and
+  $(c - a)(c - b) = (a - c)(b - c)$, the left side reads
   $
-    sum_"cyc" a (a - b)(a - c),
+    a^r (a - b)(a - c) - b^r (a - b)(b - c) + c^r (a - c)(b - c),
   $
-  and we decompose:
+  and the first two terms combine:
   $
-    a (a - b)(a - c) + b (b - c)(b - a) + c (c - a)(c - b)
+    (a - b)[a^r (a - c) - b^r (b - c)] + c^r (a - c)(b - c).
   $
-  $
-    quad = (a - b)^2 (a + b - c) + c (a - c)(b - c),
-  $
-  which follows from collecting the first two terms:
-  $a(a-b)(a-c) - b(a-b)(b-c) = (a-b)[a(a-c) - b(b-c)] =
-  (a-b)^2 (a+b-c)$. Both summands are non-negative —
-  $(a - b)^2 >= 0$ and $a + b >= c$ by assumption, and
-  $(a - c)(b - c) >= 0$ — so the total is $>= 0$.
+  Both summands are non-negative. Indeed $a >= b >= 0$ and $r >= 0$
+  give $a^r >= b^r$, while $a - c >= b - c >= 0$; hence the bracket is
+  $>= 0$, and it is multiplied by $a - b >= 0$. The second summand has
+  $c^r >= 0$ and $(a - c)(b - c) >= 0$. So the total is $>= 0$.
 ]
 
 #proposition(name: "Nesbitt's Inequality")[
@@ -5650,15 +5679,15 @@ $alpha op("prec") beta => alpha in H(beta)$.
   The exponents $(3, 0, 0)$ and $(2, 1, 0)$ satisfy
   $(2, 1, 0) op("prec") (3, 0, 0)$ — equal coordinate sums $3$, and
   $2 <= 3$, $2 + 1 <= 3 + 0$ — so #link(<thm:muirhead>)[Muirhead]
-  applied through #link(<thm:majorization-equivalent>)[the
-    equivalences] gives exactly
+  applied through
+  #link(<thm:majorization-equivalent>)[the equivalences] gives exactly
   $2 (a^3 + b^3 + c^3) = sum_(sigma in S_3)
   x_(sigma(1))^3 >= sum_(sigma in S_3)
   x_(sigma(1))^2 x_(sigma(2)) = sum_"sym" a^2 b$, with equality iff
   $a = b = c$.
 ]
 
-This closes Chapter 14 and with it the notebook. The polynomial part
+This closes the part, and with it the notebook. The polynomial part
 mirrored the integer arithmetic of Part I degree for degree, and its
 final chapter showed the same permutation-invariant quantities — the
 elementary symmetric polynomials — serving both as the bridge between
