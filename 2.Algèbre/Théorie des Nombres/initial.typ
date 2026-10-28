@@ -1850,8 +1850,9 @@ all of Part I's machinery.
 Chapter 1 asked when one integer divides another, and sharpened the
 answer into the Bézout identity; Chapter 2 crowned that identity with
 unique factorization. Part II changes the point of view. The equality
-of remainders that appeared in the wake of the Division Algorithm
-(§1.2) is promoted from an observation to a *language*: we agree to
+of remainders that appeared in the wake of
+#link(<thm:division-algorithm>)[the division algorithm] is promoted
+from an observation to a *language*: we agree to
 call two integers equivalent when they leave the same remainder on
 division by a fixed modulus, and we study the arithmetic of these
 equivalence classes as a world of its own. This is the theory of
@@ -1867,8 +1868,7 @@ divisibility machinery of Part I into a cleaner setting.
 
 Where Chapter 1 asked _when_ one integer divides another, this
 section asks when two integers behave "the same" relative to a third.
-The key observation, already noted after the Division Algorithm
-(§1.2), is that two integers leave the same remainder on division by
+The key observation, already noted after the Division Algorithm, is that two integers leave the same remainder on division by
 $m$ exactly when their difference is a multiple of $m$.
 
 #definition(name: "Congruence Modulo $m$")[
@@ -1882,13 +1882,16 @@ $m$ exactly when their difference is a multiple of $m$.
   *modulus* of the congruence.
 ] <def:congruence>
 
-Congruence modulo $m$ is an equivalence relation on $bb(Z)$: it is
+Congruence modulo $m$ is an equivalence relation on $bb(Z)$ — the three
+axioms are verified directly from
+#link(<eq:congruence-def>)[the defining divisibility]: it is
 *reflexive* ($m | 0$), *symmetric* (if $m | (a - b)$, then
 $m | (b - a)$), and *transitive* (from $m | (a - b)$ and
-$m | (b - c)$ the linear-combination rule of §1.2 gives
-$m | (a - c)$). The equivalence classes are arithmetic progressions of
-step $m$ that partition $bb(Z)$; §3.2 studies them as objects in their
-own right. What makes the relation useful for computation is that it
+$m | (b - c)$ the linear-combination rule of *Divisibility and the
+Division Algorithm* gives $m | (a - c)$). The equivalence classes are
+arithmetic progressions of step $m$ that partition $bb(Z)$;
+*Residue Classes and Systems* studies them as objects in their own
+right. What makes the relation useful for computation is that it
 *interacts* with arithmetic: congruent numbers may be interchanged
 freely inside expressions, provided the modulus is respected.
 
@@ -1915,7 +1918,7 @@ freely inside expressions, provided the modulus is respected.
   $a c - b d = c(a - b) + b(c - d) = m (c k + b ell)$, again a multiple
   of $m$.
   *Transfer.* If $d | m$ and $m | (a - b)$, then $d | (a - b)$ by the
-  transitivity of divisibility (#link(<prop:divisibility-rules>)[§1.2]).
+  transitivity of divisibility (#link(<prop:divisibility-rules>)[Basic Rules of Divisibility]).
   *Transitivity.* This is the transitivity of the equivalence relation
   shown above.
 ]
@@ -1945,8 +1948,7 @@ cancellation is allowed.
     m | c(a - b) <=> m_0 | c_0 (a - b),
   $
   and since $"gcd"(c_0, m_0) = 1$, the
-  #link(<lem:coprime-divisibility>)[coprime form of Euclid's lemma]
-  (§1.5) lets us drop $c_0$: $m_0 | (a - b)$, i.e.
+  #link(<lem:coprime-divisibility>)[coprime form of Euclid's lemma] lets us drop $c_0$: $m_0 | (a - b)$, i.e.
   $a equiv b$ modulo $m_0 = m\/g$. The final clause is the case
   $g = 1$.
 ]
@@ -1999,7 +2001,7 @@ Chapter 5.
 
 == Residue Classes and Systems // 剩余类与剩余系
 
-Because congruence modulo $m$ is an equivalence relation (§3.1), it
+Because congruence modulo $m$ is an equivalence relation, it
 splits $bb(Z)$ into $m$ disjoint pieces. This section names these
 pieces — the *residue classes* — and studies the various ways of
 selecting one representative from each class: the *complete* residue
@@ -2021,12 +2023,13 @@ special attention, since they alone behave well under multiplication.
 
 Among the representatives of a class, the one satisfying
 $0 <= r < m$ is the *least nonnegative residue*; it is precisely the
-remainder of the Division Algorithm (§1.2). In computations we
-usually identify a class with its least nonnegative residue, writing,
-for instance, $-5 equiv 7$ (mod $12$), the residue of $19$ modulo
-$12$ being $7$.
+remainder of the Division Algorithm (*Divisibility and the Division
+Algorithm*). In computations we usually identify a class with its least
+nonnegative residue, writing, for instance, $-5 equiv 7$ (mod $12$),
+meaning that $7$ is the least nonnegative representative of the class
+of $-5$.
 
-The rules of §3.1 state exactly that the following class operations
+The rules of *Congruences and Their Properties* state exactly that the following class operations
 are well defined, independently of the representatives chosen:
 $
   [a]_m + [b]_m = [a + b]_m, quad [a]_m dot [b]_m = [a b]_m.
@@ -2053,8 +2056,8 @@ Translating a complete system by a fixed integer preserves
 completeness: if $S$ is a CRS, then so is ${s + t : s in S}$, because
 the map $s -> s + t$ merely permutes the classes. The analogous
 statement for multiplication — a CRS multiplied by any integer coprime
-to $m$ is again a CRS — requires inverses, and is best proved in
-§3.3.
+to $m$ is again a CRS — requires inverses, and is proved in
+#link(<prop:unit-permutes-residues>)[*Linear Congruences*].
 
 #definition(name: "Reduced Residue System")[
   A *reduced residue system* modulo $m$ (RRS for short) is a set of
@@ -2064,14 +2067,14 @@ to $m$ is again a CRS — requires inverses, and is best proved in
   $
     {1 <= k <= m : "gcd"(k, m) = 1},
   $
-  whose size is Euler's function $phi(m)$, studied in §3.5.
+  whose size is Euler's function $phi(m)$, studied in *Euler's φ Function*.
 ] <def:reduced-residue-system>
 
 The reduced system is singled out because coprimality to $m$ is
 preserved under products — a fact whose proof is the first genuine
 use of Euclid's lemma in the arithmetic of congruences.
 
-#property(name: "Reduced Systems Are Closed under Multiplication")[
+#proposition(name: "Reduced Systems Are Closed under Multiplication")[
   Let $m in bb(Z)^+$. If $"gcd"(a, m) = 1$ and $"gcd"(b, m) = 1$, then
   $"gcd"(a b, m) = 1$. Hence the integers coprime to $m$ form a set
   closed under multiplication: products of elements of the canonical
@@ -2081,7 +2084,7 @@ use of Euclid's lemma in the arithmetic of congruences.
 #proof[
   Suppose, for contradiction, that $"gcd"(a b, m) > 1$, and let $p$ be
   a prime divisor of $"gcd"(a b, m)$. Then $p | a b$ and $p | m$. By
-  #link(<thm:euclid-lemma>)[Euclid's lemma] (§2.1), $p | a b$ forces
+  #link(<thm:euclid-lemma>)[Euclid's lemma], $p | a b$ forces
   $p | a$ or $p | b$. If $p | a$, then $p$ divides both $a$ and $m$,
   contradicting $"gcd"(a, m) = 1$; the case $p | b$ contradicts
   $"gcd"(b, m) = 1$ similarly.
@@ -2091,9 +2094,9 @@ use of Euclid's lemma in the arithmetic of congruences.
   Modulo $8$ the canonical complete system is ${0, 1, dots, 7}$, and
   the reduced system retains only the elements coprime to $8$:
   ${1, 3, 5, 7}$ — four elements, so $phi(8) = 4$. Modulo $12$ the
-  reduced system is ${1, 5, 7, 11}$, again with four elements, but for
-  a different reason: $phi(12) = 4$ counts the residues $1, 5, 7, 11$
-  together with their negatives ($-1 equiv 11$, $-5 equiv 7$).
+  reduced system is ${1, 5, 7, 11}$, four elements as well; here the
+  four classes fall into two opposite pairs, $-1 equiv 11$ and
+  $-5 equiv 7$ (mod $12$).
 
   The closure property is visible in the multiplication table modulo
   $12$ restricted to the reduced system:
@@ -2118,9 +2121,9 @@ use of Euclid's lemma in the arithmetic of congruences.
   $"gcd"(a, m) = 1$. Necessity is clear: any common divisor of $a$ and
   $m$ divides $a x$ and hence also $a x - 1$, forcing it to divide
   $1$. Sufficiency follows from Bézout's identity
-  (#link(<thm:bezout>)[§1.5]): $a x + m y = 1$ reads, modulo $m$, as
+  (#link(<thm:bezout>)[Bézout's Identity]): $a x + m y = 1$ reads, modulo $m$, as
   $a x equiv 1$. Thus the reduced system is exactly the set of
-  invertible classes. §3.3 turns this existence statement into a
+  invertible classes. *Linear Congruences* turns this existence statement into a
   computation, and Chapter 5 will study the *structure* of these
   invertible classes — how many elements of each possible order they
   contain — via primitive roots.
@@ -2135,7 +2138,7 @@ $
   a x equiv b quad ("mod" m),
 $
 with $a, b in bb(Z)$ and modulus $m in bb(Z)^+$. Because congruence
-is compatible with addition and multiplication (§3.1), the solution
+is compatible with addition and multiplication, the solution
 set depends only on the residue classes of $a$ and $b$ modulo $m$:
 either coefficient may be replaced by a congruent integer without
 changing the solutions. Reading the definition literally, the problem
@@ -2149,11 +2152,31 @@ $a x + m y = b$ in two variables.
   $
     a x equiv 1 quad ("mod" m).
   $
-  By the note closing §3.2 — Bézout's identity applied to the pair
-  $a, m$ — such an $x$ exists exactly when $"gcd"(a, m) = 1$, and it
-  is then unique modulo $m$. We write $a^(-1)$ for the unique inverse
-  class, so that $a dot a^(-1) equiv 1$ (mod $m$).
+  It is unique modulo $m$: from $a x equiv 1 equiv a x'$ (mod $m$) and
+  $"gcd"(a, m) = 1$, the cancellation law
+  (#link(<prop:congruence-cancellation>)[Cancellation Law for Congruences]) gives $x equiv x'$ (mod $m$). We write $a^(-1)$ for
+  this inverse class, so that $a dot a^(-1) equiv 1$ (mod $m$).
 ] <def:modular-inverse>
+
+That such an $x$ exists at all — and only for classes coprime to $m$ —
+was proved in the note closing *Residue Classes and Systems*, by
+applying Bézout's identity to the pair $a, m$.
+
+#proposition(name: "Units Permute the Residue Classes")[
+  Let $"gcd"(a, m) = 1$ and let $S$ be a complete residue system
+  modulo $m$. Then ${a s : s in S}$ is again a complete residue
+  system modulo $m$.
+] <prop:unit-permutes-residues>
+
+#proof[
+  The set ${a s : s in S}$ has $m$ elements, so it suffices to show
+  that no two of them are congruent modulo $m$. If
+  $a s equiv a s'$ (mod $m$), then cancelling $a$ — legitimate since
+  $"gcd"(a, m) = 1$ (#link(<prop:congruence-cancellation>)[the
+  cancellation law]) — gives $s equiv s'$ (mod $m$), and hence
+  $s = s'$, because distinct members of the complete system $S$ are
+  incongruent.
+]
 
 The inverse is the key to the general equation: multiplying
 $a x equiv b$ by $a^(-1)$ is the legitimate "division" in this
@@ -2191,9 +2214,9 @@ only obstruction is the common divisor of $a$ and $m$.
     (a\/d) x equiv b\/d quad ("mod" m\/d)
   $
   has $"gcd"(a\/d, m\/d) = 1$: dividing two integers by their gcd
-  removes all common prime factors (unique factorization, §2.2).
+  removes all common prime factors (unique factorization, *The Fundamental Theorem of Arithmetic*).
   Hence $(a\/d)$ possesses an inverse modulo $m\/d$
-  (#link(<def:modular-inverse>)[§3.3]) and the reduced congruence has
+  (#link(<def:modular-inverse>)[Modular Inverse]) and the reduced congruence has
   the unique solution class
   $x_0 equiv (a\/d)^(-1) (b\/d)$ (mod $m\/d$).
 
@@ -2220,13 +2243,13 @@ form, worth stating separately.
 Putting the pieces together gives a completely algorithmic procedure,
 free of trial and error.
 
-1. *Compute $d = "gcd"(a, m)$* by the Euclidean algorithm (§1.5).
+1. *Compute $d = "gcd"(a, m)$* by the Euclidean algorithm.
 2. *Test solvability.* If $d$ does not divide $b$, there is no
   solution. Otherwise divide $a$, $b$, $m$ by $d$, obtaining
   $a' x equiv b'$ (mod $m'$) with $"gcd"(a', m') = 1$.
 3. *Invert.* Obtain the inverse of $a'$ modulo $m'$ from the Bézout
   combination produced by back-substitution in the Euclidean
-  algorithm (§1.5), and set
+  algorithm, and set
   $x_0 equiv (a')^(-1) b'$ (mod $m'$).
 4. *List the lifts.* If $d = 1$ the solution is the single class
   $x_0$ modulo $m$. If $d > 1$, the $d$ solutions modulo $m$ are
@@ -2264,9 +2287,10 @@ free of trial and error.
   Check: $14 dot 29 = 406 = 13 dot 31 + 3$.
 ] <ex:linear-congruence>
 
-The method of this section is the exact computational twin of §1.5's
-Bézout identity: every linear congruence is reduced to one inverse,
-and every inverse is produced by the Euclidean algorithm. The systems
+The method of this section is the exact computational twin of
+#link(<thm:bezout>)[Bézout's identity]: every linear congruence is
+reduced to one inverse, and every inverse is produced by the Euclidean
+algorithm. The systems
 of several congruences are the subject of the next section, where the
 Chinese Remainder Theorem converts them into a single congruence with
 composite modulus. When $b$ itself is a power or a product of
@@ -2275,7 +2299,7 @@ Chapter 5.
 
 == The Chinese Remainder Theorem // 中国剩余定理
 
-Section 3.3 solved one linear congruence in one unknown. This section
+*Linear Congruences* solved one linear congruence in one unknown. This section
 solves *systems* of linear congruences in a single unknown,
 $
   x equiv a_1 quad ("mod" m_1), quad dots, quad
@@ -2292,8 +2316,9 @@ fact, and its proof gives the solution in closed form.
 
 We isolate first the single divisibility fact that will enforce
 uniqueness. It is the multi-factor version of the observation behind
-§1.5's product identity: a common multiple of several pairwise coprime
-integers is a multiple of their product.
+the product identity of *Euclidean Algorithm and Bézout's Identity*: a
+common multiple of several pairwise coprime integers is a multiple of
+their product.
 
 #lemma(name: "Products of Pairwise Coprime Divisors")[
   Let $m_1, m_2, dots, m_k$ be positive integers with
@@ -2303,21 +2328,21 @@ integers is a multiple of their product.
 ] <lem:pairwise-coprime-product>
 
 #proof[
-  Use the exponent dictionary of §2.4. Fix a prime $p$. Because the
+  Use the exponent dictionary of *Applications of Unique Factorization*. Fix a prime $p$. Because the
   $m_i$ are pairwise coprime, $p$ can occur in the prime factorization
   of *at most one* of them: were $p | m_i$ and $p | m_j$ with
   $i != j$, then $p$ would divide their gcd. Hence
   $v_(p)(M) = v_(p)(m_i)$ for the unique index $i$ with $p | m_i$ (if any),
   and $v_(p)(M) = 0$ otherwise. Since $m_i | n$,
-  $v_(p)(m_i) <= v_(p)(n)$ by the exponent criterion of §2.4, and so
+  $v_(p)(m_i) <= v_(p)(n)$ by the exponent criterion of *Applications of Unique Factorization*, and so
   $v_(p)(M) <= v_(p)(n)$ for every prime $p$. By the same criterion,
-  $M | n$ (#link(<def:p-adic-valuation>)[§2.4]).
+  $M | n$ (#link(<def:p-adic-valuation>)[The $p$-adic Valuation]).
 ]
 
 Now the main theorem. The construction is often attributed to Qin
 Jiushao's day-and-astronomical calculations, and it is purely
-algorithmic: solve each congruence "one at a time", using §3.3's
-inverses, then add the pieces.
+algorithmic: solve each congruence "one at a time", using the inverses
+of *Linear Congruences*, then add the pieces.
 
 #theorem(name: "Chinese Remainder Theorem")[
   Let $m_1, dots, m_k$ be pairwise coprime positive integers and set
@@ -2329,7 +2354,7 @@ inverses, then add the pieces.
   has a solution, and it is unique modulo $M$. A solution is obtained
   as follows. Put $M_i = M\/m_i$ for each $i$. Since
   $"gcd"(M_i, m_i) = 1$, let $y_i$ be the inverse of $M_i$ modulo
-  $m_i$ (§3.3). Then
+  $m_i$. Then
   $
     x_0 equiv sum_(i=1)^k a_i M_i y_i quad ("mod" M)
   $
@@ -2392,10 +2417,10 @@ reduces any pair of congruences to a single one.
   has a solution if and only if $a equiv b$ (mod $"gcd"(m, n)$). When
   this compatibility condition holds, the solution is unique modulo
   $"lcm"(m, n)$. Indeed, any solution satisfies both congruences
-  modulo $d = "gcd"(m, n)$ (§3.1, transfer to a divisor), forcing
+  modulo $d = "gcd"(m, n)$ (*Congruences and Their Properties*, transfer to a divisor), forcing
   $a equiv b$ modulo $d$; conversely, writing $x = a + m t$ and
   substituting into the second congruence turns the problem into the
-  linear congruence $m t equiv b - a$ (mod $n$), which §3.3 solves
+  linear congruence $m t equiv b - a$ (mod $n$), which *Linear Congruences* solves
   (its consistency condition $d | (b - a)$ is exactly the one stated).
   A system of several congruences with arbitrary moduli is treated by
   merging pairs successively in this way.
@@ -2410,7 +2435,7 @@ reduces any pair of congruences to a single one.
   $7 equiv 3$ (mod $4$). Write $x = 7 + 12 t$; the second congruence
   becomes $7 + 12 t equiv 3$ (mod $8$), i.e. $12 t equiv 4$ (mod
   $8$). Reducing coefficients, $4 t equiv 4$ (mod $8$), whose solution
-  is $t equiv 1$ (mod $2$) — the reduction step of §3.3 with
+  is $t equiv 1$ (mod $2$) — the reduction step of *Linear Congruences* with
   $d = 4$. Hence $t = 1 + 2 s$ and
   $
     x = 7 + 12 (1 + 2 s) = 19 + 24 s,
@@ -2435,8 +2460,8 @@ reduces any pair of congruences to a single one.
   modulo the $m_i$, preserving addition and multiplication component
   by component: an isomorphism of the rings of integers modulo $M$ and
   modulo $m_1, dots, m_k$. This is the viewpoint developed in the
-  *Algèbre Abstraite* notebook (§9.4); here the elementary
-  representative language of the construction above is sufficient.
+  *Algèbre Abstraite* notebook; here the elementary representative
+  language of the construction above is sufficient.
   Structurally, the theorem is the *splitting engine* of modular
   arithmetic: any modulus $m$ factorizes into powers of distinct
   primes, and every question about arithmetic modulo $m$ — units,
@@ -2448,7 +2473,7 @@ reduces any pair of congruences to a single one.
 
 == Euler's φ Function // Euler φ 函数
 
-The reduced residue systems of §3.2 have a size worth measuring. It
+The reduced residue systems of *Residue Classes and Systems* have a size worth measuring. It
 counts the residue classes that are invertible under multiplication,
 and it turns out to be computable by an astonishingly simple product
 formula once the two structural tools of this chapter — unique
@@ -2460,7 +2485,7 @@ factorization and the CRT — are brought to bear.
   #eq[
     $phi(m) = abs({k in bb(Z) : 1 <= k <= m, "gcd"(k, m) = 1})$,
   ] <eq:phi-def>
-  Equivalently, by §3.2, $phi(m)$ is the size of the canonical reduced
+  Equivalently, by *Residue Classes and Systems*, $phi(m)$ is the size of the canonical reduced
   residue system modulo $m$: the number of invertible residue classes.
   In particular, $phi(1) = 1$.
 ] <def:phi-function>
@@ -2487,7 +2512,7 @@ was precisely the tool that reassembles prime powers into products.
   divides one of the factors, so "sharing a prime with $m n$" is
   equivalent to "sharing a prime with $m$ or with $n$".
 
-  By the CRT (#link(<thm:crt>)[§3.4]) the map
+  By the CRT (#link(<thm:crt>)[Chinese Remainder Theorem]) the map
   $[x]_(m n) -> ([x]_m, [x]_n)$ is a bijection between the residue
   classes modulo $m n$ and the pairs of classes modulo $m$ and $n$.
   The observation above restricts this bijection: classes coprime to
@@ -2523,24 +2548,26 @@ form.
 ]
 
 #example(name: "Totient Values")[
-  *Small values.* The totients of $1, 2, dots, 12$ are
+  *Small values.* The totients of $1, 2, dots, 12$, in the sense of
+  #link(<eq:phi-def>)[the defining count], are
   $
     (phi(1), phi(2), dots, phi(12)) = (1, 1, 2, 2, 4, 2, 6, 4, 6, 4,
       10, 4),
   $
   with $phi(n) = n - 1$ at the primes $n = 2, 3, 5, 7, 11$ and
   strictly smaller values at the composites: $phi(4) = 2$, $phi(6) =
-  2$, $phi(8) = 4$, $phi(9) = 6$, $phi(10) = 4$, $phi(12) = 4$. (The
-  equality $phi(n) = n - 1$ characterizes the primes: every
-  $k < n$ is then coprime to $n$, forcing $n$ to have no proper
-  divisor.)
+  2$, $phi(8) = 4$, $phi(9) = 6$, $phi(10) = 4$, $phi(12) = 4$. The
+  equality $phi(n) = n - 1$ characterizes the primes among the integers
+  $n >= 2$: a composite $n$ possesses a divisor $d$ with $1 < d < n$,
+  and that $d$ is not coprime to $n$, so at least one of the $n - 1$
+  candidates drops out.
 
   *The formula in action.* Factorize $360 = 2^3 dot 3^2 dot 5$. The
   prime-power route gives
   $
     phi(360) = phi(8) phi(9) phi(5) = 4 dot 6 dot 4 = 96,
   $
-  while the product formula reads
+  while #link(<eq:phi-formula>)[the product formula] reads
   $
     360 (1 - 1\/2)(1 - 1\/3)(1 - 1\/5)
     = 360 dot 1\/2 dot 2\/3 dot 4\/5 = 96.
@@ -2561,10 +2588,10 @@ form.
   of that whole theory.
 ]
 
-This closes Chapter 3: congruence language (§3.1), the residue
-systems it carves out (§3.2), the resolution of linear congruences
-(§3.3), the Chinese Remainder Theorem that splits composite moduli
-(§3.4), and the totient that counts the invertible classes (§3.5).
+This closes Chapter 3: the congruence language, the residue systems it
+carves out, the resolution of linear congruences, the Chinese Remainder
+Theorem that splits composite moduli, and the totient that counts the
+invertible classes.
 Part II now possesses both a compact language and a splitting tool;
 Chapter 4 harvests them into the three classical theorems of Fermat,
 Euler and Wilson.
@@ -2586,7 +2613,7 @@ behalf of John Wilson, and first proved by Lagrange in 1771 — records
 a striking bookkeeping of the factorial $(p - 1)!$ that in turn
 characterizes primes. All three rest on the same engine of Chapter 3:
 invertible classes may be permuted and cancelled freely. The chapter
-closes (§4.4) by converting the periodicity of powers into two
+closes by converting the periodicity of powers into two
 computing tools, modular exponentiation and primality testing.
 
 == Fermat's Little Theorem // Fermat 小定理
@@ -2597,9 +2624,9 @@ multiplication costs one hundred steps. The discovery of this section
 is that the powers of a fixed integer modulo a prime run in a short
 *cycle* — once the cycle length is known, the exponent may be reduced
 modulo it. The proof given here is the *binomial* one: it needs only
-the inverse-solving machinery of §3.3 and a single observation about
+the inverse-solving machinery of *Linear Congruences* and a single observation about
 the coefficients in the expansion of $(a + b)^p$. (The alternative
-route through residue systems is saved for §4.2, where it will be run
+route through residue systems is saved for *Euler's Theorem*, where it will be run
 at the general level of Euler's theorem.)
 
 #lemma(name: "Prime Divisibility of Binomial Coefficients")[
@@ -2614,12 +2641,12 @@ at the general level of Euler's theorem.)
   $
   reduces to $k binom(p, k) equiv 0$ (mod $p$). Since
   $1 <= k <= p - 1$, we have $gcd(k, p) = 1$, so $k$ is invertible
-  modulo $p$ (#link(<def:modular-inverse>)[§3.3]). Multiplying by the
+  modulo $p$ (#link(<def:modular-inverse>)[Modular Inverse]). Multiplying by the
   inverse of $k$ yields $binom(p, k) equiv 0$ (mod $p$), that is,
   $p | binom(p, k)$.
 ]
 
-#property(name: "Freshman's Dream Modulo a Prime")[
+#proposition(name: "Freshman's Dream Modulo a Prime")[
   If $p$ is prime and $a, b in bb(Z)$, then
   $
     (a + b)^p equiv a^p + b^p quad ("mod" p).
@@ -2657,7 +2684,7 @@ notebook's scope.
   the displayed identity from it.
   *Nonnegative bases.* Induct on $a >= 0$; the cases $a = 0, 1$ are
   clear. If $a^p equiv a$ (mod $p$), then by the freshman's dream
-  (#link(<prop:freshmans-dream>)[§4.1]),
+  (#link(<prop:freshmans-dream>)[Freshman's Dream Modulo a Prime]),
   $
     (a + 1)^p equiv a^p + 1 equiv a + 1 quad ("mod" p).
   $
@@ -2666,7 +2693,7 @@ notebook's scope.
   split: $a^2 equiv a$ (mod $2$) for every integer $a$, since
   $a^2 - a = a(a - 1)$ is even.
   *First form.* If $p$ does not divide $a$, then $a$ is invertible
-  modulo $p$ (#link(<def:modular-inverse>)[§3.3]); multiplying
+  modulo $p$ (#link(<def:modular-inverse>)[Modular Inverse]); multiplying
   $a^p equiv a$ (mod $p$) by the inverse of $a$ gives
   $a^(p - 1) equiv 1$ (mod $p$).
 ]
@@ -2683,9 +2710,9 @@ notebook's scope.
   Thus $13 | (2^90 - 12)$ — a verdict that naive exponentiation would
   need ninety multiplications to reach.
 
-  The theorem also *manufactures inverses*: if $p$ does not divide
-  $a$, then $a^(p - 1) equiv 1$ (mod $p$) shows that $a^(p - 2)$ is
-  the inverse of $a$ modulo $p$. Modulo $7$, the inverse of $3$ is
+  The theorem also *manufactures inverses*: #link(<eq:fermat-little>)[the
+  first form] $a^(p - 1) equiv 1$ (mod $p$), valid when $p$ does not
+  divide $a$, shows that $a^(p - 2)$ is the inverse of $a$ modulo $p$. Modulo $7$, the inverse of $3$ is
   $3^5 = 243 equiv 5$ (mod $7$), and indeed $3 dot 5 = 15 equiv 1$
   (mod $7$).
 ] <ex:fermat-example>
@@ -2699,7 +2726,7 @@ notebook's scope.
   This route is deferred because, with the factor $(p - 1)!$ replaced
   by the product of a general reduced residue system and the exponent
   $p - 1$ by $phi(m)$, it proves Euler's theorem *verbatim*; we run
-  it once, at its full level, in §4.2.
+  it once, at its full level, in *Euler's Theorem*.
 ]
 
 == Euler's Theorem // Euler 定理
@@ -2707,11 +2734,11 @@ notebook's scope.
 Fermat's little theorem regulates prime moduli. This section replaces
 the prime $p$ by an arbitrary modulus $m$ and asks: after how many
 steps do the powers of an invertible integer $a$ return to $1$?
-Chapter 3 supplied every ingredient. Section 3.5 counted the
+Chapter 3 supplied every ingredient. *Euler's φ Function* counted the
 invertible classes modulo $m$ and named the count $phi(m)$
-(#link(<def:phi-function>)[§3.5]); §3.2 observed that multiplication
+(#link(<def:phi-function>)[Euler's Totient Function $phi$]); *Residue Classes and Systems* observed that multiplication
 by an invertible class keeps a reduced residue system closed and
-pairwise distinct (#link(<prop:reduced-closed>)[§3.2]). Euler's
+pairwise distinct (#link(<prop:reduced-closed>)[Reduced Systems Are Closed under Multiplication]). Euler's
 theorem is the statement that these two facts combine into a period
 of length $phi(m)$.
 
@@ -2725,14 +2752,14 @@ of length $phi(m)$.
 #proof(name: "of Euler's theorem")[
   Fix a reduced residue system $r_1, ..., r_(phi(m))$ modulo $m$, a
   list of representatives of the invertible classes
-  (#link(<def:reduced-residue-system>)[§3.2]). Multiplying every entry
+  (#link(<def:reduced-residue-system>)[Reduced Residue System]). Multiplying every entry
   by $a$ produces *another reduced residue system*:
   - each product $a r_i$ is again coprime to $m$, by the closure of
-    the invertible classes (#link(<prop:reduced-closed>)[§3.2]);
+    the invertible classes (#link(<prop:reduced-closed>)[Reduced Systems Are Closed under Multiplication]);
   - the products are pairwise incongruent: if
     $a r_i equiv a r_j$ (mod $m$), then $m | a(r_i - r_j)$, and since
     $gcd(a, m) = 1$ the factor $a$ may be cancelled
-    (#link(<def:modular-inverse>)[§3.3]), giving
+    (#link(<def:modular-inverse>)[Modular Inverse]), giving
     $r_i equiv r_j$ (mod $m$) and hence $i = j$.
 
   The two lists therefore represent the same $phi(m)$ classes, in a
@@ -2744,18 +2771,18 @@ of length $phi(m)$.
   The left-hand product equals $a^(phi(m)) P$, where
   $P = product_(i = 1)^(phi(m)) r_i$. Each factor $r_i$ is invertible
   modulo $m$, so the product $P$ is invertible as well
-  (#link(<prop:reduced-closed>)[§3.2]); multiplying both sides by the
+  (#link(<prop:reduced-closed>)[Reduced Systems Are Closed under Multiplication]); multiplying both sides by the
   inverse of $P$ yields $a^(phi(m)) equiv 1$ (mod $m$).
 ]
 
-This is the proof promised in the closing note of §4.1, now run at
+This is the proof promised in the closing note of *Fermat's Little Theorem*, now run at
 full strength: the reduced residue system plays the role that
 $1, 2, ..., p - 1$ played there, and $phi(m)$ replaces $p - 1$. For a
 prime modulus, $phi(p) = p - 1$
-(#link(<def:phi-function>)[§3.5]), so Euler's theorem contains
-Fermat's little theorem as the special case $m = p$
-(#link(<thm:fermat-little>)[§4.1]) — with the same proof structure,
-permutation followed by cancellation.
+(#link(<def:phi-function>)[Euler's Totient Function $phi$]), so Euler's
+theorem contains #link(<thm:fermat-little>)[Fermat's little theorem] as
+the special case $m = p$ — with the same proof structure, permutation
+followed by cancellation.
 
 #example(name: "Last Digits and Small Moduli")[
   Let $m = 10$ and $a = 7$. Here $phi(10) = 4$, so Euler's theorem
@@ -2770,15 +2797,18 @@ permutation followed by cancellation.
   entry of the cycle is $9$. Hence $7^222 equiv 9$ (mod $10$).
 
   For $m = 15$ the theorem gives $2^8 equiv 1$ (mod $15$) — and indeed
-  $2^8 = 256 = 17 dot 15 + 1$ — although no smaller positive power of
-  $2$ is congruent to $1$ modulo $15$: the period guaranteed by Euler's
-  theorem need not be *minimal*, only a divisor of $phi(m)$. Chapter 5
-  isolates the minimal period (the *order* of $a$ modulo $m$) and shows
-  that it always divides $phi(m)$.
+  $2^8 = 256 = 17 dot 15 + 1$ — but the period it promises is not the
+  minimal one: already $2^4 = 16 equiv 1$ (mod $15$), so the true
+  period is $4$, a proper divisor of $phi(15) = 8$. Euler's theorem
+  guarantees a period dividing $phi(m)$, not necessarily $phi(m)$
+  itself. Chapter 5 isolates the minimal period (the *order* of $a$
+  modulo $m$) and shows that it always divides $phi(m)$.
 ] <ex:euler-example>
 
 #note[
-  Euler's theorem is the workhorse behind the computations of §4.4:
+  #link(<eq:euler-theorem>)[Euler's theorem] is the workhorse behind the
+  computations of *Applications: Modular Exponentiation and Primality
+  Testing*:
   an exponent may always be reduced modulo $phi(m)$ before a power is
   evaluated. It also carries a structural message that Chapter 5
   formalizes: the invertible classes modulo $m$ form an abelian group
@@ -2819,15 +2849,15 @@ elements exist.
 
 #proof(name: "of the lemma")[
   The congruence reads $p | (x - 1)(x + 1)$. Since $p$ is prime,
-  Euclid's lemma (#link(<thm:euclid-lemma>)[§2.1]) forces $p | x - 1$
-  or $p | x + 1$, i.e. $x equiv 1$ or $x equiv -1$ (mod $p$).
+  #link(<thm:euclid-lemma>)[Euclid's lemma] forces $p | x - 1$ or
+  $p | x + 1$, i.e. $x equiv 1$ or $x equiv -1$ (mod $p$).
 ]
 
 #proof(name: "of Wilson's theorem")[
   The case $p = 2$ is immediate: $1! = 1 equiv -1$ (mod $2$), so
   assume $p$ is odd.
   *Pairing by inverses.* In the list $1, 2, ..., p - 1$ of invertible
-  classes modulo $p$ (#link(<def:modular-inverse>)[§3.3]) every
+  classes modulo $p$ (#link(<def:modular-inverse>)[Modular Inverse]) every
   element $x$ has a unique inverse $x'$ with $x x' equiv 1$
   (mod $p$). By #link(<lem:square-roots-of-one>)[the lemma], an
   element coincides with its inverse only when $x equiv plus.minus 1$
@@ -2862,9 +2892,10 @@ cannot be fooled:
 ]
 
 Together with Wilson's theorem itself this gives an exact primality
-criterion: an integer $n >= 2$ is prime if and only if
-$(n - 1)! equiv -1$ (mod $n$). The criterion is perfect but slow — it
-requires $n - 1$ multiplications. Section 4.4 trades this certainty
+criterion: an integer $n >= 2$ is prime if and only if the congruence
+#link(<eq:wilson>)[$(n - 1)! equiv -1 quad ("mod" n)$] holds. The
+criterion is perfect but slow — it
+requires $n - 1$ multiplications. *Applications: Modular Exponentiation and Primality Testing* trades this certainty
 for speed, after first building fast modular exponentiation.
 
 #example(name: "Wilson's Theorem in Action")[
@@ -2879,8 +2910,8 @@ for speed, after first building fast modular exponentiation.
   $8! equiv 0 != 8 equiv -1$ (mod $9$).
 ] <ex:wilson-example>
 
-#note[
-  *Half-factorial form.* Pairing the factors of $(p - 1)!$ as
+#note(title: "Half-factorial form")[
+  Pairing the factors of $(p - 1)!$ as
   $k(p - k) equiv -k^2$ (mod $p$) for $k = 1, ..., (p - 1)\/2$ gives
   $
     (p - 1)! = product_(k = 1)^((p - 1)\/2) k(p - k)
@@ -2978,9 +3009,10 @@ primality never; and some composite numbers defeat the test for
   exponent $560 = n - 1$ is a multiple of each of $2, 10, 16$
   ($560 = 2 dot 280 = 10 dot 56 = 16 dot 35$), so raising the three
   congruences to suitable powers gives $a^560 equiv 1$ modulo each of
-  $3, 11, 17$. The moduli are pairwise coprime, and by the product
-  lemma of §3.4 (#link(<lem:pairwise-coprime-product>)[§3.4]) a number
-  divisible by each of them is divisible by their product; hence
+  $3, 11, 17$. The moduli are pairwise coprime, and by
+  #link(<lem:pairwise-coprime-product>)[the product lemma] of
+  *The Chinese Remainder Theorem*, a number divisible by each of them is
+  divisible by their product; hence
   $561 | (a^560 - 1)$, i.e. $a^560 equiv 1$ (mod $561$). Since $a$ was
   arbitrary, $561$ passes the Fermat test for every base.
 ] <ex:carmichael-example>
@@ -2997,9 +3029,9 @@ primality never; and some composite numbers defeat the test for
   if $a^2 equiv 1$ (mod $n$) yet $a$ is congruent to neither $1$ nor
   $-1$ (mod $n$), then $n$ cannot be prime — the only square roots of
   $1$ modulo a prime are $1$ and $-1$
-  (#link(<lem:square-roots-of-one>)[§4.3]). The Miller–Rabin test
+  (#link(<lem:square-roots-of-one>)[Self-Inverse Elements Modulo a Prime]). The Miller–Rabin test
   mixes repeated squaring with this square-root check and forms the
-  robust probabilistic test of §8.4; Chapter 8 revisits these ideas in
+  robust probabilistic test of Chapter 8, which revisits these ideas in
   detail. The Carmichael numbers themselves are known to be infinite
   (Alford–Granville–Pomerance, 1994).
 ]
@@ -3011,7 +3043,7 @@ The next chapters refine this periodicity to its finest scale:
 Chapter 5 studies the exact order of an element and the exponents that
 generate the whole system of units, and Chapter 6 counts the solutions
 of quadratic congruences such as $x^2 equiv -1$ (mod $p$) with the
-tools glimpsed in §4.3.
+tools glimpsed in *Wilson's Theorem*.
 
 = Primitive Roots and Discrete Logarithms // 原根与离散对数
 
@@ -3034,29 +3066,30 @@ moduli have this property at all — exactly the numbers
 $
   m = 1, 2, 4, p^alpha, 2 p^alpha
 $
-with $p$ an odd prime. Section 5.1 isolates the minimal period — the
+with $p$ an odd prime. *The Order of an Element* isolates the minimal period — the
 *order* of an element — and proves the two structural facts that power
 the rest of the chapter: orders divide $phi(m)$, and every least
-common multiple of two orders is itself an order. Section 5.2 deploys
+common multiple of two orders is itself an order. *Existence of Primitive Roots* deploys
 these tools to prove the existence theorems and the classification
 above. Sections 5.3–5.4 turn the generator into a logarithm: once a
 root $g$ is fixed, each unit class $a$ is a uniquely determined power
 $g^k$, the exponent $k$ being the *index* of $a$. Multiplication
 translates into addition of indices, and the power equation
 $x^k equiv a$ — asking for $k$-th roots of $a$ — collapses into the
-linear congruences solved in §3.3. The case $n = 2$ then hands the
+linear congruences solved in *Linear Congruences*. The case $n = 2$ then hands the
 subject to Chapter 6, which treats quadratic residues in full.
 
 == The Order of an Element // 元素的阶
 
 Fix $m >= 2$ and an integer $a$ coprime to $m$. Multiplication by $a$
-is invertible modulo $m$ (§3.3), so the sequence
-$1, a, a^2, a^3, ...$ can never reach $0$; Euler's theorem (§4.2)
+is invertible modulo $m$, so the sequence
+$1, a, a^2, a^3, ...$ can never reach $0$; Euler's theorem
 guarantees that it reaches $1$ at the exponent $phi(m)$ and therefore
-runs in a cycle whose length divides $phi(m)$. But as the example
-after Euler's theorem showed ($2$ modulo $15$), the genuine cycle may
-be shorter than the promised $phi(m)$, and may also be full. The exact
-cycle length deserves its own name.
+runs in a cycle whose length divides $phi(m)$. But, as that same
+example showed, the genuine cycle may be shorter than the promised
+$phi(m)$ — $2$ modulo $15$ has period $4$, not $8$ — or it may be full
+— $7$ modulo $10$ has period $4 = phi(10)$. The exact cycle length
+deserves its own name.
 
 #definition(name: "Order of an Element Modulo m")[
   Let $m >= 2$ and let $a$ be an integer with $"gcd"(a, m) = 1$. The
@@ -3071,7 +3104,7 @@ cycle length deserves its own name.
 ] <def:order-of-element>
 
 #proposition(name: "The Order Divides φ(m)")[
-  Let $"gcd"(a, m) = 1$. Then
+  Let $m >= 2$ and $"gcd"(a, m) = 1$. Then
   $"ord"_(m)(a) | phi(m)$.
 ] <prop:order-divides-phi>
 
@@ -3092,8 +3125,8 @@ cycle length deserves its own name.
 ]
 
 #proposition(name: "The Order of a Power")[
-  Let $"gcd"(a, m) = 1$ and put $t = "ord"_(m)(a)$. For every integer
-  $k >= 1$,
+  Let $m >= 2$, $"gcd"(a, m) = 1$, and put $t = "ord"_(m)(a)$. For
+  every integer $k >= 1$,
   $
     "ord"_(m)(a^k) = t / "gcd"(t, k).
   $
@@ -3102,20 +3135,21 @@ cycle length deserves its own name.
 #proof(name: "of the proposition")[
   Write $d = "gcd"(t, k)$. The power $(a^k)^(t\/d) =
   (a^t)^(k\/d)$ is $equiv 1$ (mod $m$), so by the minimality criterion
-  of §5.1 the order of $a^k$ divides $t\/d$.
+  the order of $a^k$ divides $t\/d$.
   Conversely, let $u = "ord"_(m)(a^k)$; then $a^(k u) = (a^k)^u
   equiv 1$ (mod $m$), so the criterion applied to $a$ gives
   $t | k u$. Dividing by $d$,
   $
     t\/d | (k\/d) u,
   $
-  and since $"gcd"(t\/d, k\/d) = 1$, Euclid's lemma forces
+  and since $"gcd"(t\/d, k\/d) = 1$, the coprime form of Euclid's
+  lemma (#link(<lem:coprime-divisibility>)[Coprime Divisibility]) forces
   $t\/d | u$. The two divisibilities leave $u = t\/d$.
 ]
 
 #proposition(name: "Congruent Powers Coincide Exactly on Periods")[
-  Let $"gcd"(a, m) = 1$ and let $t = "ord"_(m)(a)$. For any integers
-  $r, s >= 0$,
+  Let $m >= 2$, $"gcd"(a, m) = 1$, and let $t = "ord"_(m)(a)$. For any
+  integers $r, s >= 0$,
   $
     a^r equiv a^s quad ("mod" m) <=> r equiv s quad ("mod" t).
   $
@@ -3123,7 +3157,7 @@ cycle length deserves its own name.
 
 #proof(name: "of the proposition")[
   By symmetry we may suppose $r >= s$. The class of $a^s$ is
-  invertible modulo $m$ (§3.3), so multiplying a congruence by its
+  invertible modulo $m$, so multiplying a congruence by its
   inverse preserves equivalence:
   $
     a^r equiv a^s ("mod" m) <=> a^(r - s) equiv 1 ("mod" m)
@@ -3141,7 +3175,7 @@ twice above is its engine. The last structural fact we need concerns
 two elements at once.
 
 #lemma(name: "Reaching the Least Common Multiple of Two Orders")[
-  Let $"gcd"(a, m) = 1$ and $"gcd"(b, m) = 1$, with
+  Let $m >= 2$, $"gcd"(a, m) = 1$ and $"gcd"(b, m) = 1$, with
   $r = "ord"_(m)(a)$ and $s = "ord"_(m)(b)$. Then there is an integer
   $c$, coprime to $m$, with
   $
@@ -3158,8 +3192,10 @@ two elements at once.
   so $"ord"_(m)(a b) | r s$ by the minimality criterion. On the other
   hand, let $n = "ord"_(m)(a b)$. Raising $(a b)^n equiv 1$ (mod $m$) to
   the $s$-th power and using $b^s equiv 1$ gives $a^(n s) equiv 1$
-  (mod $m$), hence $r | n s$; as $"gcd"(r, s) = 1$, Euclid's lemma
-  yields $r | n$. The symmetric argument gives $s | n$, and the two
+  (mod $m$), hence $r | n s$; as $"gcd"(r, s) = 1$, the coprime form of
+  Euclid's lemma (#link(<lem:coprime-divisibility>)[Coprime
+  Divisibility]) yields $r | n$. The symmetric argument gives $s | n$,
+  and the two
   coprime divisors multiply: $r s | n$. Together with $n | r s$ we
   obtain $n = r s = "lcm"(r, s)$.
   *Step 2: general orders.* Split the two orders prime power by prime
@@ -3182,7 +3218,8 @@ two elements at once.
 This lemma is the hidden engine of the existence theorems: whenever
 orders cannot be combined into one element, they cannot form a common
 multiple, and a maximal order would force every other order to divide
-it — the dichotomy §5.2 will exploit. First, a concrete tour of the
+it — a dichotomy that *Existence of Primitive Roots* will exploit.
+First, a concrete tour of the
 orders modulo a small prime.
 
 #example(name: "Orders Modulo 7")[
@@ -3200,18 +3237,18 @@ orders modulo a small prime.
   opposite case, bouncing between $6$ and $1$ with order $2$. Note
   also the "middle" order $3$, realized by $2$ and $4$: modulo $7$ the
   powers of $2$ run through $2, 4, 1$ and stop — a *proper* divisor of
-  $phi(7)$, in contrast to the element $2$ modulo $15$ of the example
-  in §4.2 (#link(<ex:euler-example>)[§4.2]), whose order $8$
-  equals $phi(15)$ exactly.
+  $phi(7)$. The same phenomenon was visible in
+  #link(<ex:euler-example>)[the example after Euler's theorem], where
+  $2$ modulo $15$ has order $4$ rather than the full $phi(15) = 8$.
 ] <ex:order-table>
 
 #note[
-  In the language of §4.2's remark after Euler's theorem, the
+  In the language of the remark closing *Euler's Theorem*, the
   invertible classes modulo $m$ form an abelian group of size
   $phi(m)$ under multiplication, and each order divides the group
   size — the finite echo of Lagrange's theorem. The classes of a fixed
   order $t$ form a *level*: the reduced residue system
-  (#link(<def:reduced-residue-system>)[§3.2]) splits into the disjoint
+  (#link(<def:reduced-residue-system>)[Reduced Residue System]) splits into the disjoint
   union of the levels $t | phi(m)$, each class sitting at exactly one
   level. The highest level, $t = phi(m)$, consists of the classes
   whose powers *generate* the whole system of units. Whether that
@@ -3220,23 +3257,24 @@ orders modulo a small prime.
 
 == Existence of Primitive Roots // 原根的存在性
 
-Section 5.1 closed with the highest order level, $t = phi(m)$, whose
-elements generate the whole system of units. Such elements deserve a
-name.
+*The Order of an Element* closed with the highest order level,
+$t = phi(m)$, whose elements generate the whole system of units. Such
+elements deserve a name.
 
 #definition(name: "Primitive Root")[
   Let $m >= 2$. An integer $g$ with $"gcd"(g, m) = 1$ is a *primitive
   root modulo $m$* if
   $"ord"_(m)(g) = phi(m)$.
-  By the periodicity proposition of §5.1
-  (#link(<prop:order-periodicity>)[§5.1]), its powers
+  By #link(<prop:order-periodicity>)[the periodicity proposition], its
+  powers
   $g^0 = 1, g, g^2, ..., g^(phi(m) - 1)$ are then pairwise incongruent
   modulo $m$; there are $phi(m)$ of them, and they therefore form a
-  reduced residue system (#link(<def:reduced-residue-system>)[§3.2]).
+  reduced residue system (#link(<def:reduced-residue-system>)[Reduced
+  Residue System]).
   In other words, every invertible class modulo $m$ is a power of $g$.
 ] <def:primitive-root>
 
-Modulo $7$ the order table of §5.1 shows that $3$ and $5$ are
+Modulo $7$ the order table computed above shows that $3$ and $5$ are
 primitive roots, and every nonzero class is one of their powers
 (for example $3^0 = 1, 3^1 = 3, 3^2 = 2, 3^3 = 6, 3^4 = 4, 3^5 = 5$
 (mod $7$), reading the classes in the order visited by $3$). Two
@@ -3250,8 +3288,7 @@ machinery already built.
 ] <prop:primitive-root-power>
 
 #proof(name: "of the proposition")[
-  By the proposition on the order of a power
-  (#link(<prop:order-power>)[§5.1]),
+  By #link(<prop:order-power>)[the proposition on the order of a power],
   $
     "ord"_(m)(g^k) = phi(m) / "gcd"(phi(m), k),
   $
@@ -3311,7 +3348,7 @@ lines.
   Let $b$ be any further solution with $b != a$ (mod $p$). Then
   $(b - a) q(b) equiv 0$ (mod $p$); the factor $b - a$ is nonzero
   modulo $p$, hence invertible, and Euclid's lemma
-  (#link(<thm:euclid-lemma>)[§2.1]) forces $q(b) equiv 0$ (mod $p$).
+  (#link(<thm:euclid-lemma>)[Euclid's Lemma (Prime Divisibility)]) forces $q(b) equiv 0$ (mod $p$).
   So every solution other than $a$ is a root of $q$, which has at most
   $d - 1$ roots by the induction hypothesis; the bound $1 + (d - 1) =
   d$ follows.
@@ -3332,13 +3369,13 @@ maximize the order — the existence theorem drops out.
   *Step 1: $l <= p - 1$.* An element of order $t$ has $t$ pairwise
   incongruent powers $1, a, ..., a^(t-1)$ by the periodicity
   proposition, all nonzero, so $t <= p - 1$.
-  *Step 2: every order divides $l$.* Let $a$ have order $t$. By the
-  least common multiple lemma of §5.1 (#link(<lem:order-lcm>)[§5.1]),
-  some element $c$ has order $"lcm"(t, l)$. This order cannot exceed
-  the maximum $l$, so $"lcm"(t, l) = l$, which means $t | l$.
+  *Step 2: every order divides $l$.* Let $a$ have order $t$. By
+  #link(<lem:order-lcm>)[the least common multiple lemma], some element
+  $c$ has order $"lcm"(t, l)$. This order cannot exceed the maximum
+  $l$, so $"lcm"(t, l) = l$, which means $t | l$.
   *Step 3: conclude.* Every nonzero class $a$ has its order dividing
-  $l$, hence $a^l equiv 1$ (mod $p$) by the minimality criterion of
-  §5.1. The congruence $x^l equiv 1$ (mod $p$) therefore admits all
+  $l$, hence $a^l equiv 1$ (mod $p$) by the minimality criterion. The
+  congruence $x^l equiv 1$ (mod $p$) therefore admits all
   $p - 1$ nonzero classes as solutions. The root bound forbids this
   when the degree is smaller: $l < p - 1$ would contradict the lemma,
   so $l >= p - 1$. Together with Step 1, $l = p - 1$, and any element
@@ -3360,7 +3397,8 @@ To lift a root from $p$ to $p^alpha$ we need to control what raising
 to the $p$-th power does to a number congruent to $1$ modulo a high
 power of $p$: each application of the $p$-th power pushes the
 congruence one level deeper. The computation is a binomial expansion
-whose middle coefficients are swallowed by the lemma of §4.1.
+whose middle coefficients are swallowed by the binomial lemma of
+*Fermat's Little Theorem*.
 
 #lemma(name: "A Binomial Lifting Identity")[
   Let $p$ be an odd prime, let $k >= 1$, and let $u$ be an integer not
@@ -3377,7 +3415,7 @@ whose middle coefficients are swallowed by the lemma of §4.1.
     p^(k i) u^i + p^(k p) u^p.
   $
   Every middle coefficient $binom(p, i)$ with $2 <= i <= p - 1$ is
-  divisible by $p$ (#link(<lem:binom-prime>)[§4.1]), so the
+  divisible by $p$ (#link(<lem:binom-prime>)[Prime Divisibility of Binomial Coefficients]), so the
   corresponding term is divisible by $p^(1 + k i) | p^(k + 2)$, since
   $1 + k i >= 1 + 2 k >= k + 2$. The final term $p^(k p) u^p$ is
   divisible by $p^(k p)$, and $k p >= 3 k >= k + 2$. Both tails vanish
@@ -3459,7 +3497,7 @@ correspondence.
 #proof(name: "of the corollary")[
   The units modulo $2 p^alpha$ are the odd classes coprime to
   $p^alpha$, and $phi(2 p^alpha) = phi(p^alpha)$ by multiplicativity
-  (#link(<prop:phi-multiplicative>)[§3.5]). Let $G$ be a primitive
+  (#link(<prop:phi-multiplicative>)[Multiplicativity of Euler's Totient]). Let $G$ be a primitive
   root modulo $p^alpha$. Among the two classes modulo $2 p^alpha$
   that reduce to $G$ modulo $p^alpha$, namely $G$ and $G + p^alpha$,
   exactly one is odd; call it $G'$. Its order modulo $2 p^alpha$
@@ -3488,7 +3526,10 @@ several odd primes are structurally unable to reach the top level.
   by its corollary.
   For the "only if" direction write $m = u v$ with $"gcd"(u, v) = 1$
   and $u, v >= 3$, whenever possible, and use the elementary fact that
-  $phi(n)$ is even for every $n >= 3$ (§3.5). For any unit $a$
+  $phi(n)$ is even for every $n >= 3$ — the units coprime to such an
+  $n$ split into the pairs ${k, n - k}$, and a fixed point $k = n - k$
+  would force $2 k = n$, hence $"gcd"(k, n) = n\/2 > 1$: no unit is
+  left unpaired. For any unit $a$
   modulo $m$, the order of $a$ modulo $m$ is the least common multiple
   of its orders modulo $u$ and modulo $v$ ($a^t equiv 1$ (mod $m$)
   holds exactly when it holds modulo both factors). Hence
@@ -3514,9 +3555,10 @@ several odd primes are structurally unable to reach the top level.
 
 #example(name: "The Full Sets of Primitive Roots")[
   The classification predicts, for a modulus that has roots, exactly
-  $phi(phi(m))$ of them (#link(<cor:primitive-root-count>)[§5.2]).
-  Modulo $7$: $phi(6) = 2$ roots, and the order table of §5.1 shows
-  them to be $3$ and $5$.
+  $phi(phi(m))$ of them
+  (#link(<cor:primitive-root-count>)[the counting corollary]).
+  Modulo $7$: $phi(6) = 2$ roots, and the order table computed above
+  shows them to be $3$ and $5$.
   Modulo $13$: here $phi(13) = 12$ and $phi(12) = 4$ roots are
   expected. The residue $2$ is primitive: $2^6 = 64 equiv -1$
   (mod $13$), so $2^12 equiv 1$ yet no smaller power reaches $1$. The
@@ -3533,12 +3575,14 @@ several odd primes are structurally unable to reach the top level.
 The classification theorem has a striking restatement in the
 language of Chapter 4's remark after Euler's theorem: the group of
 units modulo $m$ is *cyclic* precisely for the moduli $m = 2, 4,
-p^alpha, 2 p^alpha$ — a primitive root being a generator. For all
-other moduli the unit group is a product of two cyclic groups of even
-order each, hence never generated by a single element. This structural
-view belongs to abstract algebra; the notebooks on abstract algebra
-develop it there, whereas here the classical language of roots and
-indices carries the rest of the chapter.
+p^alpha, 2 p^alpha$ — a primitive root being a generator. For every
+other modulus the group splits into a product of at least two cyclic
+factors, at least two of them of even order, and is therefore never
+generated by a single element — which is exactly what the proof above
+established for the two obstructing cases. This structural view belongs
+to abstract algebra; the notebooks on abstract algebra develop it there,
+whereas here the classical language of roots and indices carries the
+rest of the chapter.
 
 == Indices and Discrete Logarithms // 指标与离散对数
 
@@ -3551,7 +3595,7 @@ $
 so that every invertible class occurs exactly once. Multiplication of
 classes is then nothing but addition of the positions in this list —
 turning the multiplicative structure of the units into the additive
-arithmetic of exponents, which Section 3.3 made completely explicit.
+arithmetic of exponents, which *Linear Congruences* made completely explicit.
 Gauss called these exponents *indices* and exploited their logarithmic
 behaviour throughout the *Disquisitiones*; the modern name for the
 same quantity is the *discrete logarithm*, a term that carries its own
@@ -3568,17 +3612,19 @@ all bases $a$ are coprime to $m$.
     a equiv g^r quad ("mod" m).
   $
   One often says that $r$ is the *discrete logarithm of $a$ to the
-  base $g$*. Uniqueness is the periodicity proposition of §5.1
-  (#link(<prop:order-periodicity>)[§5.1]): two exponents are allowed
-  exactly when they are congruent modulo $"ord"_(m)(g) = phi(m)$.
+  base $g$*. Uniqueness is
+  #link(<prop:order-periodicity>)[the periodicity proposition]: two
+  exponents are allowed exactly when they are congruent modulo
+  $"ord"_(m)(g) = phi(m)$.
 ] <def:index-logarithm>
 
-Modulo $7$ with base $3$, the powers computed in §5.2 give
-$"ind"_3(1) = 0$, $"ind"_3(2) = 2$, $"ind"_3(4) = 4$ and
-$"ind"_3(5) = 5$. Exponents are read modulo $phi(m)$; e.g.
-$"ind"_3(1) = 0 = phi(7)$ is the same statement as $3^7 equiv 3^0
-equiv 1$. The index obeys the laws of a logarithm, with
-multiplication on the unit side and addition on the exponent side.
+Modulo $7$ with base $3$, the powers computed in *Existence of
+Primitive Roots* give $"ind"_3(1) = 0$, $"ind"_3(2) = 2$,
+$"ind"_3(4) = 4$ and $"ind"_3(5) = 5$. Exponents are read modulo
+$phi(m)$; since $phi(7) = 6$, the identity $"ind"_3(1) = 0$ is the
+same statement as $3^6 equiv 3^0 equiv 1$ (mod $7$). The index obeys
+the laws of a logarithm, with multiplication on the unit side and
+addition on the exponent side.
 
 #proposition(name: "The Index Rules")[
   Let $g$ be a primitive root modulo $m$, and let $"gcd"(a, m) = 1$
@@ -3598,16 +3644,16 @@ multiplication on the unit side and addition on the exponent side.
   uniqueness of the index; raising $a equiv g^r$ to the $k$-th power
   gives the second rule, which covers negative $k$ as well because the
   inverse of $a$ is a power of $g$. For the change of base, both
-  $g$ and $h$ are primitive roots, so $"gcd"(c, phi(m)) = 1$ by the
-  proposition of §5.2 (#link(<prop:primitive-root-power>)[§5.2]) and
-  $c$ has an inverse modulo $phi(m)$. Since
+  $g$ and $h$ are primitive roots, so $"gcd"(c, phi(m)) = 1$ by
+  #link(<prop:primitive-root-power>)[The Roots among the Powers of a
+  Root], and $c$ has an inverse modulo $phi(m)$. Since
   $a equiv g^("ind"_(g)(a)) equiv (g^c)^("ind"_(g)(a) c^(-1)) equiv
   h^("ind"_(g)(a) c^(-1))$ (mod $m$), uniqueness of the index to the
   base $h$ forces the third rule.
 ]
 
 #example(name: "An Index Table Modulo 13")[
-  The residue $2$ is a primitive root modulo $13$ (§5.2). Raising $2$
+  The residue $2$ is a primitive root modulo $13$. Raising $2$
   successively and reducing modulo $13$ produces the table
   #tex-table(
     ([$a$], [$1$], [$2$], [$3$], [$4$], [$5$], [$6$], [$7$], [$8$], [$9$], [$10$], [$11$], [$12$]),
@@ -3625,7 +3671,7 @@ The payoff of a logarithm is that *equations in the exponent become
 linear*. Solving $x^k equiv a$ (mod $m$) means finding which units,
 when raised to the $k$-th power, land on $a$ — a question about
 products that the index converts into a single congruence of the form
-solved in §3.3.
+solved in *Linear Congruences*.
 
 #theorem(name: "The Power Congruence Theorem")[
   Let $m$ have a primitive root $g$, let $k >= 1$, and let
@@ -3647,8 +3693,9 @@ solved in §3.3.
     ("mod" m) <=> k y equiv "ind"_(g)(a) ("mod" phi(m)),
   $
   the last equivalence being the periodicity of $g$'s powers. This is
-  a linear congruence in the variable $y$, and the theorem of §3.3
-  (#link(<thm:linear-congruence>)[§3.3]) says it is solvable exactly
+  a linear congruence in the variable $y$, and
+  #link(<thm:linear-congruence>)[the linear congruence theorem] says it
+  is solvable exactly
   when $d | "ind"_(g)(a)$, in which case there are $d$ solutions $y$
   modulo $phi(m)$. The map $y -> g^y$ sends distinct $y$ modulo
   $phi(m)$ to distinct classes, so the count survives.
@@ -3682,7 +3729,7 @@ not change which divisors of $phi(m)$ divide the index.
   When $m = p$ is a large prime, the index table has $p - 1$ entries
   and the map $k -> g^k$ is a one-way computation in practice:
   although exponentiating is fast (the repeated-squaring routine of
-  §4.4), no efficient method is known to recover an index from the
+  *Applications: Modular Exponentiation and Primality Testing*), no efficient method is known to recover an index from the
   residue — the *discrete logarithm problem*. This asymmetry is the
   basis of modern public-key cryptography (Diffie–Hellman key
   exchange, ElGamal), a direction this notebook does not pursue.
@@ -3690,7 +3737,7 @@ not change which divisors of $phi(m)$ divide the index.
 
 == Power Residues // 幂剩余
 
-Section 5.3 answered, for a fixed right-hand side $a$, how many
+*Indices and Discrete Logarithms* answered, for a fixed right-hand side $a$, how many
 solutions the congruence $x^k equiv a$ (mod $m$) has. This section
 reverses the question: fix the exponent $n$ and ask *which* residues
 can be reached at all. Those that can deserve a name; among them the
@@ -3724,8 +3771,8 @@ $a$, whose exponent is the "reduced" $(p - 1)\/d$.
 
 #proof(name: "of the theorem")[
   *If $a$ is an $n$-th power residue.* Choose $x$ with $x^n equiv a$
-  (mod $p$). Then $x$ is a unit modulo $p$, and Fermat's little
-  theorem (#link(<thm:fermat-little>)[§4.1]) applies:
+  (mod $p$). Then $x$ is a unit modulo $p$, and
+  #link(<thm:fermat-little>)[Fermat's little theorem] applies:
   $
     a^((p - 1)\/d) equiv x^(n (p - 1)\/d) = x^((p - 1)(n\/d))
     equiv 1^((n\/d)) = 1 quad ("mod" p).
@@ -3734,10 +3781,11 @@ $a$, whose exponent is the "reduced" $(p - 1)\/d$.
   $a equiv g^s$ (mod $p$), so $s = "ind"_(g)(a)$. The condition reads
   $g^(s (p - 1)\/d) equiv 1$ (mod $p$), which holds exactly when the
   order $p - 1$ of $g$ divides $s (p - 1)\/d$ — equivalently, dividing
-  by $d$, exactly when $d | s$. By the power congruence theorem of
-  §5.3 (#link(<thm:power-congruence>)[§5.3]) solvability of
-  $x^n equiv a$ (mod $p$) is itself equivalent to $d | "ind"_(g)(a) =
-  d | s$. The two conditions coincide, so $a$ is a power residue.
+  by $d$, exactly when $d | s$. By
+  #link(<thm:power-congruence>)[the power congruence theorem],
+  solvability of $x^n equiv a$ (mod $p$) is itself equivalent to
+  $d | "ind"_(g)(a) = d | s$. The two conditions coincide, so $a$ is a
+  power residue.
 ]
 
 The criterion separates the units into $n$-th power residues and
@@ -3785,15 +3833,14 @@ uniform size $d$.
 
 This closes Chapter 5. The chapter converted the periodicity of
 powers, first observed in Chapter 4, into a full structural theory:
-orders organize the units by levels (§5.1); the levels reach the top
-precisely for the moduli $2, 4, p^alpha, 2 p^alpha$, where a
-primitive root generates everything (§5.2); a fixed root turns
-multiplication into addition of indices and power equations into
-linear congruences (§5.3); and the power residues — the attainable
-$n$-th powers — are counted and recognized by the single congruence of
-§5.4. For $n = 2$ this is the gate to Chapter 6: the quadratic
-residues modulo a prime, their Legendre symbol, and the law of
-quadratic reciprocity.
+orders organize the units by levels; the levels reach the top precisely
+for the moduli $2, 4, p^alpha, 2 p^alpha$, where a primitive root
+generates everything; a fixed root turns multiplication into addition
+of indices and power equations into linear congruences; and the power
+residues — the attainable $n$-th powers — are counted and recognized by
+a single congruence. For $n = 2$ this is the gate to Chapter 6: the
+quadratic residues modulo a prime, their Legendre symbol, and the law
+of quadratic reciprocity.
 
 = Quadratic Residues and the Law of Quadratic Reciprocity // 二次剩余与二次互反律
 
@@ -3801,7 +3848,7 @@ This chapter is devoted to the case $n = 2$ of the theory of power
 residues. For an odd prime $p$ and an integer $a$ coprime to $p$, when
 is the congruence $x^2 equiv a$ (mod $p$) solvable, and how is the
 answer recognized without trying the $(p - 1)\/2$ candidates by hand?
-Section 5.4 counted the solutions from a distance — exactly half of
+*Power Residues* counted the solutions from a distance — exactly half of
 the $(p - 1)$ nonzero classes are squares — and it already exposed the
 engine that decides a single class: $a$ is a square precisely when
 $a^((p - 1)\/2) equiv 1$ (mod $p$). The present chapter polishes that
@@ -3823,14 +3870,14 @@ and kept returning to it for the rest of his life with further proofs
 of very different natures — evidence of a phenomenon far deeper than
 the elementary statement suggests.
 
-Section 6.1 sets up the vocabulary of quadratic residues, proves
+*Quadratic Residues and Legendre Symbols* sets up the vocabulary of quadratic residues, proves
 Euler's criterion by polynomial counting, and installs the Legendre
-symbol together with its elementary laws. Section 6.2 proves Gauss's
+symbol together with its elementary laws. *Gauss's Lemma* proves Gauss's
 lemma and draws from it the two supplementary laws for the numerators
-$a = -1$ and $a = 2$. Section 6.3 then proves the reciprocity law
+$a = -1$ and $a = 2$. *The Law of Quadratic Reciprocity* then proves the reciprocity law
 itself by the geometric count of Eisenstein, in which the exponent
 $((p - 1)\/2)((q - 1)\/2)$ is read off from the lattice points of a
-rectangle. Section 6.4 extends the symbol to composite odd denominators
+rectangle. *Jacobi Symbols* extends the symbol to composite odd denominators
 (the *Jacobi symbol*), a purely computational device that makes the
 evaluation of Legendre symbols painless.
 
@@ -3859,11 +3906,11 @@ exactly half of the nonzero classes.
   plays no role in what follows.
 ] <def:quadratic-residue>
 
-The vocabulary was announced in §5.4
-(#link(<def:power-residue>)[§5.4]), where the general $n$-th power
-residues were defined: a quadratic residue is exactly a $2$-nd power
-residue, and the whole apparatus of power residues guarantees that
-there are $(p - 1)\/2$ of them. The next proposition recovers both the
+The vocabulary was announced in
+#link(<def:power-residue>)[*Power Residues*], where the general $n$-th
+power residues were defined: a quadratic residue is exactly a $2$-nd
+power residue, and the whole apparatus of power residues guarantees
+that there are $(p - 1)\/2$ of them. The next proposition recovers both the
 pairing of roots and the count directly, without indices, since the
 exponent $2$ is so small that everything can be said by elementary
 counting.
@@ -3879,9 +3926,9 @@ counting.
 #proof(name: "of the proposition")[
   *Pairs of roots.* If $x$ is any solution, then $x^2 equiv x_0^2$
   (mod $p$), and multiplying by the inverse of $x_0^2$ turns this into
-  $(x x_0^(-1))^2 equiv 1$ (mod $p$). By the lemma of §4.3 on square
-  roots of one (#link(<lem:square-roots-of-one>)[§4.3]) the product
-  $x x_0^(-1)$ is congruent to $1$ or $-1$ modulo $p$, so
+  $(x x_0^(-1))^2 equiv 1$ (mod $p$). By
+  #link(<lem:square-roots-of-one>)[the lemma on square roots of one] the
+  product $x x_0^(-1)$ is congruent to $1$ or $-1$ modulo $p$, so
   $x equiv plus.minus x_0$ (mod $p$). The two candidates are genuinely
   distinct, because $p$ is odd and $x_0$ is not divisible by $p$
   (its square $a$ is coprime to $p$).
@@ -3908,8 +3955,7 @@ surprising fact is that the single power also suffices.
 
 #proof(name: "of the theorem")[
   *If $a$ is a quadratic residue.* Choose $x_0$ with $x_0^2 equiv a$
-  (mod $p$). Fermat's little theorem
-  (#link(<thm:fermat-little>)[§4.1]) gives
+  (mod $p$). #link(<thm:fermat-little>)[Fermat's little theorem] gives
   $
     a^((p - 1)\/2) equiv x_0^(p - 1) equiv 1 quad ("mod" p).
   $
@@ -3919,9 +3965,8 @@ surprising fact is that the single power also suffices.
   satisfies the congruence, by the first part of this proof. But the
   congruence $z^((p - 1)\/2) equiv 1$ (mod $p$) is an equation of
   degree $(p - 1)\/2$ in the field of residues modulo the prime $p$, so
-  the polynomial root bound of §5.2
-  (#link(<lem:poly-roots-bound>)[§5.2]) allows it at most
-  $(p - 1)\/2$ solutions. The $S$-members already exhaust that quota:
+  #link(<lem:poly-roots-bound>)[the polynomial root bound] allows it at
+  most $(p - 1)\/2$ solutions. The $S$-members already exhaust that quota:
   a class satisfying $a^((p - 1)\/2) equiv 1$ (mod $p$) is therefore
   one of them, i.e. a quadratic residue.
 ]
@@ -3929,13 +3974,12 @@ surprising fact is that the single power also suffices.
 The same argument gives a bonus: for a unit $a$ the square of
 $a^((p - 1)\/2)$ is $a^(p - 1) equiv 1$ (mod $p$) by Fermat, so the
 power is a square root of one and equals $1$ or $-1$ modulo $p$
-(#link(<lem:square-roots-of-one>)[§4.3]). Non-residues therefore land
-on $-1$: the classes modulo $p$ are divided by the sign of this single
-power. This is precisely the specialization promised at the end of
-§5.4: with $d = "gcd"(2, p - 1) = 2$ the general criterion for power
-residues (#link(<thm:power-residue-criterion>)[§5.4]) becomes Euler's
-criterion, and the general count
-(#link(<prop:count-power-residues>)[§5.4]) reduces to $(p - 1)\/2$.
+(#link(<lem:square-roots-of-one>)[Square Roots of One]). Non-residues
+therefore land on $-1$: the classes modulo $p$ are divided by the sign
+of this single power. This is precisely the specialization promised at
+the end of *Power Residues*: with $d = "gcd"(2, p - 1) = 2$ the general
+criterion for power residues becomes Euler's criterion, and the general
+count reduces to $(p - 1)\/2$.
 The proof given here, however, is independent of the theory of indices
 used there — the exponent $2$ is small enough that polynomial counting
 alone suffices.
@@ -3986,9 +4030,9 @@ makes the arithmetic laws almost immediate.
   $
   and two integers in ${-1, 1}$ that are congruent modulo the odd prime
   $p$ must be equal — this proves multiplicativity when $p$ divides
-  neither $a$ nor $b$, and the case where $p$ divides $a$ or $b$ is
-  trivial by the prime property of $p$. The rule for squares is the
-  special case $b = a$.
+  neither $a$ nor $b$. If $p$ divides $a$ or $b$, then $(a\/p) = 0$ or
+  $(b\/p) = 0$, and also $(a b\/p) = 0$ because $p | a b$: both sides
+  vanish. The rule for squares is the special case $b = a$.
 ]
 
 Multiplicativity is the workhorse of the chapter: it reduces any
@@ -4027,7 +4071,7 @@ by definition and then against Euler's criterion.
 The symbol is now fully specified and computable in principle, but the
 laws of this section still stop short of a real computation: for a
 prime numerator $q$, evaluating $(q\/p)$ by Euler's criterion means
-raising to a huge power. Section 6.2 begins the dismantling of this
+raising to a huge power. *Gauss's Lemma* begins the dismantling of this
 obstacle by treating the two simplest numerators, $a = -1$ and $a =
 2$, where the answer is visible directly from the shape of $p$.
 
@@ -4041,7 +4085,7 @@ brought back into the symmetric range $[-m, m]$. The parity of that
 count decides the symbol. Counting is a weaker instrument than
 exponentiating, but it is precisely what one can inspect by hand for
 special numerators such as $a = 2$, and it will be upgraded to a
-two-dimensional count in the proof of the reciprocity law (§6.3).
+two-dimensional count in the proof of the reciprocity law.
 
 Since $p$ is odd, every nonzero residue class modulo $p$ has a unique
 representative of absolute value at most $m$: among the two numbers
@@ -4077,17 +4121,15 @@ follows.
   $p$. Hence the $m$ numbers $n_i$ are distinct elements of
   ${1, ..., m}$ and exhaust that set.
 
-  *Step 2: multiply.* The congruence $r_i equiv i a$ (mod $p$) holds
-  for every $i$, so the products match:
+  *Step 2: multiply.* Since $r_i equiv i a$ (mod $p$) for every $i$,
+  multiplying the $m$ congruences gives
   $
     m! a^m = product_(i=1)^m i a equiv product_(i=1)^m r_i
-    = product_(i=1)^m plus.minus n_i = (-1)^mu m! quad ("mod" p).
+    = product_(i=1)^m plus.minus n_i = (-1)^mu m! quad ("mod" p),
   $
-  The two products are congruent to the same residue $(-1)^mu m!$; but
-  multiplying $r_i = plus.minus n_i$ over $i$ produces the sign
-  $(-1)^mu$ times the product of the $n_i$, which equals $m!$ by
-  Step 1. Cancelling $m!$, a unit modulo $p$, yields
-  $a^m equiv (-1)^mu$ (mod $p$). Euler's criterion identifies the left
+  the last equality using $r_i = plus.minus n_i$ (signs recorded by
+  $mu$) and $n_1 dots n_m = m!$ (Step 1). Cancelling $m!$, a unit
+  modulo $p$, yields $a^m equiv (-1)^mu$ (mod $p$). Euler's criterion identifies the left
   side with the Legendre symbol, since $a^m equiv (a\/p)$ (mod $p$)
   and both sides are $plus.minus 1$ — Gauss's lemma follows.
 ]
@@ -4118,13 +4160,13 @@ settled by the residue class of $p$ modulo $8$.
 ]
 
 For primes $p equiv 1$ (mod $4$) this proposition agrees with — and
-completes — the construction of §4.3: there Wilson's theorem supplied
+completes — the construction of *Wilson's Theorem*: there Wilson's theorem supplied
 the explicit square root $((p - 1)\/2)!$ of $-1$ whenever $p equiv 1$
 (mod $4$), with the tiny example $2! = 2$ for $p = 5$. The supplement
 adds the missing converse: for $p equiv 3$ (mod $4$) no such root
 exists, and the congruence $x^2 equiv -1$ (mod $p$) has no solution at
 all; when it is solvable it has exactly two solutions, as every
-solvable quadratic congruence does (§6.1). The single symbol therefore
+solvable quadratic congruence does. The single symbol therefore
 settles the question that Chapter 4 left open, and it answers the
 counting promise made there for the special case $a = -1$.
 
@@ -4159,9 +4201,15 @@ residue is $2 i - p < 0$.
   )
 
   The symbol is $1$ for $r = 1, 7$ and $-1$ for $r = 3, 5$, which is
-  the assertion $p equiv plus.minus 1$ (mod $8$). An immediate check by
-  $p mod 8$ shows that $mu$ has the same parity as
-  $(p^2 - 1)\/8$, hence the exponent form of the supplement as well.
+  the assertion $p equiv plus.minus 1$ (mod $8$). Finally, with
+  $p = 8 k + r$,
+  $
+    (p^2 - 1)\/8 = 8 k^2 + 2 k r + (r^2 - 1)\/8,
+  $
+  which equals $8 k^2 + 2 k$ (even), $8 k^2 + 6 k + 1$ (odd),
+  $8 k^2 + 10 k + 3$ (odd) and $8 k^2 + 14 k + 6$ (even) for
+  $r = 1, 3, 5, 7$ — the same parities as $mu$ in the four rows.
+  Hence $(2\/p) = (-1)^((p^2 - 1)\/8)$.
 ]
 
 #example(name: "Gauss's Lemma in Action")[
@@ -4175,17 +4223,18 @@ residue is $2 i - p < 0$.
 
   *The second supplement by samples.* The supplement predicts
   $(2\/p) = 1$ for $p equiv plus.minus 1$ (mod $8$). Reading off the
-  quadratic residues listed in §6.1 confirms the first few values:
+  quadratic residues listed in *Quadratic Residues and Legendre Symbols* confirms the first few values:
   $2$ is a square modulo $7$ and $17$ (indeed $3^2 equiv 2$ (mod $7$)
   and $6^2 equiv 2$ (mod $17$)), while it is not a square modulo
   $3, 5, 11, 13$ — the four classes $r = 1, 3, 5, 7$ behave exactly as
   the table of the proof dictates.
 
-  *Multiplicativity shortcuts.* The first and second supplements feed
-  the product law: $(-5\/13) = (-1\/13)(5\/13)$, and
-  $(-1\/13) = 1$ since $13 equiv 1$ (mod $4$), while $(5\/13) = -1$
-  because $5$ does not appear in the residue list
-  ${1, 3, 4, 9, 10, 12}$ of the example of §6.1.
+  *Multiplicativity shortcuts.* The two supplements feed the product
+  law: $(-5\/13) = (-1\/13)(5\/13)$, and $(-1\/13) = 1$ since
+  $13 equiv 1$ (mod $4$), while $(5\/13) = -1$ because $5$ does not
+  appear in the residue list ${1, 3, 4, 9, 10, 12}$ computed in
+  *Quadratic Residues and Legendre Symbols*. Hence
+  $(-5\/13) = -1$, obtained without testing a single square.
 ] <ex:gauss-lemma>
 
 The two supplements answer every question whose numerator is $plus.minus
@@ -4340,7 +4389,7 @@ periodicity in its cleanest form.
     (5\/p) = 1 <=> p equiv plus.minus 1 quad ("mod" 5).
   $
   For instance $(5\/11) = 1$ ($11 equiv 1$) and $(5\/7) = -1$
-  ($7 equiv 2$), agreeing with the residue lists of §6.1.
+  ($7 equiv 2$), agreeing with the residue lists of *Quadratic Residues and Legendre Symbols*.
 
   *The numerator $3$.* Now $3 equiv 3$ (mod $4$) and the sign depends
   on the parity of $(p - 1)\/2$. Reciprocity says
@@ -4377,7 +4426,7 @@ periodicity in its cleanest form.
   sums $sum_(x mod p) exp(2 pi i x^2 \/p)$ — a bridge to algebraic
   number theory that lies beyond the scope of this notebook. The
   section's own supplements do cover the even numerator: $(2\/p)$ was
-  settled in §6.2, and for a numerator $a = 2^k b$ with $b$ odd the
+  settled in *Gauss's Lemma*, and for a numerator $a = 2^k b$ with $b$ odd the
   product law factors the symbol into $2^k$-part and $b$-part.
 ]
 
@@ -4531,28 +4580,29 @@ this loop.
 
 #note[
   Because the Jacobi symbol is computable in polynomial time without
-  factoring, it plays a role beyond mere bookkeeping: the identity
+  factoring, it plays a role beyond mere bookkeeping. The identity
   $a^((n - 1)\/2) equiv (a\/n)$ (mod $n$) — Jacobi's analogue of
-  Euler's criterion, valid for every integer $a$ coprime to $n$ — is
-  the engine of the Solovay–Strassen primality test. If $n$ is
-  composite, many witnesses $a$ fail this congruence, so testing random
-  classes gives a probabilistic primality certificate. This belongs to
-  the primality-testing section of Chapter 8 (§8.4); it is mentioned
-  here only to mark where the symbol's computational power leads.
+  Euler's criterion — holds for every integer $a$ coprime to $n$ *when
+  $n$ is prime*, and it typically fails when $n$ is composite. That
+  failure is precisely what the Solovay–Strassen test exploits: a
+  single random class $a$ that violates the congruence is a
+  certificate of compositeness, so testing several classes gives a
+  probabilistic primality test. This belongs to the primality-testing
+  material of Chapter 8; it is mentioned here only to mark where the
+  symbol's computational power leads.
 ]
 
 This closes Chapter 6 and with it Part II. The chapter built the
 complete arithmetic of squares modulo a prime: Euler's criterion
-decides single classes (§6.1), Gauss's lemma and its two supplements
-settle the numerators $-1$ and $2$ by counting (§6.2), the reciprocity
-law flips any other odd numerator and reduces it modulo the opposite
-prime (§6.3), and the Jacobi symbol turns the whole apparatus into a
-fast Euclidean-style algorithm (§6.4). Part II, which began with the
-language of congruences, thus ends with one of the most beautiful
-closed theorems of elementary number theory. The next part leaves the
-single-prime world behind: the arithmetic functions of Chapter 7 count
-divisors and sum them, laying the analytical groundwork for the
-distribution of primes in Chapter 8.
+decides single classes, Gauss's lemma and its two supplements settle the
+numerators $-1$ and $2$ by counting, the reciprocity law flips any other
+odd numerator and reduces it modulo the opposite prime, and the Jacobi
+symbol turns the whole apparatus into a fast Euclidean-style algorithm.
+Part II, which began with the language of congruences, thus ends with
+one of the most beautiful closed theorems of elementary number theory.
+The next part leaves the single-prime world behind: the arithmetic
+functions of Chapter 7 count divisors and sum them, laying the
+analytical groundwork for the distribution of primes in Chapter 8.
 
 
 #part("Polynomials") // 多项式
