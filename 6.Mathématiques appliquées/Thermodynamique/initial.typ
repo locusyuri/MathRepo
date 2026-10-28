@@ -2042,6 +2042,57 @@ $gamma - 1 = R / C_(V,m)$ is exactly $T V^(gamma - 1) = "const"$.
   #link(<ex:free-expansion-entropy>)[the example below].
 ] <caution:heat-vs-entropy>
 
+#example(name: "Entropy across phase transitions")[
+  Take $m = 30 "g"$ of ice at $-40$ °C, i.e. $T_0 = 233.15 "K"$, and let
+  it become steam at $100$ °C, i.e. $T_1 = 373.15 "K"$, all at one
+  atmosphere.
+  Say the ice is dropped into a hot oven: the actual process is violent
+  and irreversible, and $integral (delta Q)/T$ along it is meaningless.
+
+  The way out is the one the caution above prescribes — invent a
+  *reversible* path between the same endpoints and traverse it infinitely
+  slowly.
+  Heat the ice to $273.15 "K"$, melt it there, heat the water to
+  $373.15 "K"$, vaporise it there.
+  Every stage exchanges heat with a reservoir whose temperature differs
+  from the body's by an infinitesimal, so $dif S = (delta Q_("rev")) / T$
+  applies stage by stage.
+  A phase transition needs a stage of its own, because the body then
+  absorbs latent heat at a *fixed* temperature.
+
+  With $c_"ice" = 2.1$ and $c_"water" = 4.2$ (in
+  $"J" "g"^(-1) "K"^(-1)$), and latent heats $lambda = 334$ and
+  $L = 2260$ (in $"J"/"g"$),
+
+  #tex-table(
+    ("Stage", "Reversible step", [$Delta S$], [value / ($"J/K"$)]),
+    ([1], [ice heats $233.15 -> 273.15 "K"$], [$m c_"ice" ln(273.15/233.15)$], [9.98]),
+    ([2], [ice melts at $273.15 "K"$], [$m lambda / 273.15$], [36.68]),
+    ([3], [water heats $273.15 -> 373.15 "K"$], [$m c_"water" ln(373.15/273.15)$], [39.31]),
+    ([4], [water vaporises at $373.15 "K"$], [$m L / 373.15$], [181.70]),
+  )
+
+  and the four contributions add to
+  $Delta S = 267.7 "J/K" approx 2.7 times 10^2 "J/K"$.
+
+  Two working rules follow.
+  A heating stage obeys $delta Q_("rev") = m c dif T$ at constant
+  pressure, hence $Delta S = m c ln(T_2 / T_1)$ with $c$ the specific
+  heat of that phase.
+  A phase transition contributes $m lambda / T_"tr"$ instead — no
+  logarithm, because the whole latent heat crosses the boundary at a
+  single temperature.
+  Splitting the path at every transition is therefore the rule, not a
+  technicality.
+
+  The first law would report only the total heat, $Q = 92.9 "kJ"$, which
+  is *not* the entropy change.
+  Had the oven been held at $473.15 "K"$, its entropy would fall by
+  $Q / 473.15 "K" approx 196 "J/K"$, leaving
+  $Delta S_("universe") approx +71 "J/K" > 0$: the irreversibility of the
+  actual process, now visible in numbers.
+] <ex:phase-transition-entropy>
+
 == The Microscopic Meaning of Entropy // 熵的微观意义
 
 The second law so far is a set of macroscopic prohibitions.
