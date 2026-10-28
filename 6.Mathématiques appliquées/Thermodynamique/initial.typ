@@ -1700,7 +1700,20 @@ A process that returns the system to its initial state is called a *cyclic proce
   reversible cycle $a -> b -> c -> d -> a$ in which $a -> b$ and
   $c -> d$ are isobaric while $b -> c$ and $d -> a$ are adiabatic, with
   $T_a = 300 "K"$, $T_b = 900 "K"$, $T_c = 450 "K"$, $T_d = 150 "K"$.
-  Find the heat and work of each leg and the efficiency of the cycle.
+  Find the heat and work of each leg and the efficiency of the cycle,
+  the cycle being the one drawn in @fig:mixed-gas-cycle.
+
+  #figure(
+    image("img/mixed-gas-cycle.svg", width: 82%),
+    caption: [The cycle of the mixed gas in the $p$-$V$ plane: isobaric
+      expansion $a -> b$ ($300 -> 900 "K"$, absorbing $Q_(a b)$),
+      adiabatic expansion $b -> c$ ($900 -> 450 "K"$), isobaric
+      compression $c -> d$ ($450 -> 150 "K"$, rejecting $Q_(c d)$), and
+      adiabatic compression $d -> a$ — all with $gamma = 3/2$. The
+      shaded area is the net work $W = 3600 R$.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:mixed-gas-cycle>
 
   *Heat capacities of the mixture.* Internal energies of ideal gases
   simply add, so by #link(<thm:equipartition>)[equipartition]
