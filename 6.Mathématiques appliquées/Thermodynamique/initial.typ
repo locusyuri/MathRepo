@@ -2357,6 +2357,60 @@ section opened.
   requires reservoirs differing infinitesimally.
 ] <ex:heat-transfer-entropy>
 
+#example(name: "A cascade of reservoirs")[
+  A body of constant heat capacity $C$, initially at $T_i$, is to be
+  brought to $T_f > T_i$. Its own entropy change is
+  $
+    Delta S_"body" = integral_(T_i)^(T_f) C/T dif T = C ln(T_f/T_i)
+  $
+  along *any* route — entropy is a state function — so reversibility
+  hinges entirely on what the environment does.
+
+  + *One reservoir at $T_f$.* The body absorbs $Q = C (T_f - T_i)$ from a
+    reservoir held at $T_f$, whose entropy therefore drops by $Q/T_f$:
+    $
+      Delta S_1 = C [ln(T_f/T_i) - 1 + T_i/T_f] >= 0,
+    $
+    with equality only for $T_i = T_f$. Heat crossing a finite
+    temperature difference has produced entropy: the process is
+    irreversible.
+
+  + *One intermediate reservoir at $T_1$, $T_i < T_1 < T_f$.* The body is
+    heated from $T_i$ to $T_1$ by a reservoir at $T_1$, then from $T_1$ to
+    $T_f$ by the reservoir at $T_f$. Only the environmental term moves,
+    $
+      Delta S_2 = C ln(T_f/T_i)
+        - C (T_1 - T_i)/T_1 - C (T_f - T_1)/T_f,
+    $
+    and
+    $
+      Delta S_1 - Delta S_2
+      = C (T_1 - T_i) (1/T_1 - 1/T_f) > 0.
+    $
+    Splitting the jump in two has reduced the entropy produced without
+    removing it.
+
+  With $n$ reservoirs at $T_k = T_i (T_f/T_i)^(k/n)$ — equally spaced in
+  $ln T$ — every step meets the same ratio
+  $T_(k-1)/T_k = r := (T_i/T_f)^(1/n)$, and the same accounting gives
+  $
+    Delta S_n = C [ln(T_f/T_i) - n (1 - r)] = n C (r - 1 - ln r),
+  $
+  so $n = 1$ is the first question above and $n = 2$, with
+  $T_1 = sqrt(T_i T_f)$, the second. Writing $a = ln(T_f/T_i)$ and
+  $r = e^(-a/n)$,
+  $
+    Delta S_n = n C (e^(-a/n) - 1 + a/n) approx C a^2/(2 n) -> 0
+    quad (n -> infinity).
+  $
+  Infinitely many reservoirs make each transfer occur across an
+  infinitesimal $dif T$: the body then follows a
+  #link(<def:reversible-process>)[reversible] path, and
+  #link(<law:entropy-increase>)[the principle of entropy increase] is
+  saturated. Irreversibility is thus a matter of degree, with reversible
+  processes as the limit that finite cascades approach but never attain.
+] <ex:reservoir-cascade>
+
 #example(name: "Mixing and dissipation")[
   Two ideal gases at the same temperature and pressure, in volumes $V_1$
   and $V_2$, are put into communication and mix.
