@@ -2039,7 +2039,7 @@ $gamma - 1 = R / C_(V,m)$ is exactly $T V^(gamma - 1) = "const"$.
   along it, precisely because $S$ is a state function.
   Free expansion is the model case — sudden and irreversible, its entropy
   change is computed on an isothermal path, in
-  #link(<ex:free-expansion-entropy>)[the example below].
+  #link(<ex:free-expansion-adiabatic>)[the second example below].
 ] <caution:heat-vs-entropy>
 
 #example(name: "Entropy across phase transitions")[
@@ -2093,6 +2093,40 @@ $gamma - 1 = R / C_(V,m)$ is exactly $T V^(gamma - 1) = "const"$.
   actual process, now visible in numbers.
 ] <ex:phase-transition-entropy>
 
+#example(name: "Adiabatic free expansion")[
+  Let $nu$ moles of ideal gas occupy $V_1$ at temperature $T$; the tap to
+  an evacuated vessel is opened and the gas fills $V_2 > V_1$, thermally
+  insulated throughout.
+  No work is done — the expansion is unresisted, $W = 0$ — and no heat
+  crosses the wall, $Q = 0$.
+  Hence $Delta U = 0$, and by #link(<prop:joule-law>)[Joule's law] the
+  temperature is unchanged: the final state is $(V_2, T)$.
+
+  The step is adiabatic, yet it is *not* the reversible adiabatic process
+  of the table above, and $Delta S$ is *not* zero.
+  Compute it on the fictitious reversible path between the same
+  endpoints, here the isothermal one, with the $(T, V)$ form of
+  #link(<prop:entropy-ideal-gas>)[the ideal-gas entropy]:
+  $
+    Delta S = nu R ln(V_2 / V_1) > 0.
+  $
+
+  The contrast with the reversible adiabat is the point of the example.
+  From the same initial state $(V_1, T)$, a *reversible* adiabatic
+  expansion to the same volume $V_2$ ends at
+  $
+    T' = T (V_1 / V_2)^(gamma - 1) < T,
+  $
+  and has $Delta S = 0$: the gas pays for its lost heat by doing work and
+  cools down.
+  Free expansion pays nothing and gets nothing back — both $Q$ and $W$
+  vanish — so the gas arrives at $V_2$ with its temperature intact, and
+  with entropy produced along the way.
+
+  "Adiabatic" fixes $Q = 0$; only "reversible adiabatic" fixes
+  $Delta S = 0$.
+] <ex:free-expansion-adiabatic>
+
 == The Microscopic Meaning of Entropy // 熵的微观意义
 
 The second law so far is a set of macroscopic prohibitions.
@@ -2113,10 +2147,9 @@ In each case the reverse process is not forbidden by energy conservation — the
 What the three share is the fate of the molecules: motion initially concentrated (a falling weight, a hot body, a gas confined to one corner) spreads out over many molecules moving incoherently.
 Natural processes always proceed in the direction that carries the motion of large numbers of molecules from *order* towards *disorder*.
 
-Each of these is quantified below:
-#link(<ex:heat-transfer-entropy>)[heat conduction],
-#link(<ex:free-expansion-entropy>)[free expansion], and — in the same
-entropy ledger — #link(<ex:mixing-dissipation>)[mixing and dissipation].
+Each is now accounted for: free expansion macroscopically
+(#link(<ex:free-expansion-adiabatic>)[above]) and by counting microstates
+(below); heat conduction and dissipation in the examples that follow.
 
 === Thermodynamic Probability // 热力学概率
 
@@ -2289,21 +2322,27 @@ leaves $Omega$ unchanged.
 This is the microscopic reading of the three phenomena with which this
 section opened.
 
-#example(name: "Free expansion, explained")[
-  An ideal gas doubling its volume in adiabatic free expansion
-  (*Common Thermodynamic Processes*: $W = Q = 0$, $Delta U = 0$, hence
-  $T$ unchanged) has entropy change — computed on the reversible
-  isothermal path between the same endpoints, the isothermal case of
-  #link(<prop:entropy-ideal-gas>)[the ideal-gas entropy formula] —
+#example(name: "Free expansion, counted")[
+  The free expansion of #link(<ex:free-expansion-adiabatic>)[the previous
+  section] arrived at $Delta S = nu R ln(V_2/V_1)$ along a fictitious
+  reversible path.
+  Counting microstates reaches the same number.
+  At fixed temperature the momentum part of phase space does not change,
+  and each molecule may roam the whole container, so $Omega prop V^N$: the
+  macrostate at $V_2$ carries $(V_2/V_1)^N$ times the microstates of the
+  one at $V_1$, and
   $
-    Delta S = nu R ln(V_2 / V_1) = nu R ln 2 > 0.
+    Delta S = k_B ln(Omega_2 / Omega_1)
+    = N k_B ln(V_2 / V_1) = nu R ln(V_2 / V_1),
   $
-  The first law saw nothing ($Delta U = 0$); the entropy increase
-  declares the process irreversible and predicts it never runs backwards.
-  Microscopically, $Omega prop V^N$: doubling the volume multiplies the
-  accessible microstates by $2^N$, and the gas never finds its way back
-  among them.
-  This fulfils the promissory note of
+  as #link(<thm:boltzmann-identification>)[the identification theorem]
+  requires.
+
+  The gas is not forbidden to run backwards; it is that the original
+  macrostate occupies a fraction $(V_1/V_2)^N$ of all microstates —
+  unobservably small for macroscopic $N$.
+  The entropy increase is that improbability, and it fulfils the
+  promissory note of
   #link(<ex:free-expansion>)[the free-expansion example].
 ] <ex:free-expansion-entropy>
 
