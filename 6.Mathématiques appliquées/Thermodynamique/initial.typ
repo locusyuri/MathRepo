@@ -2909,16 +2909,6 @@ on any cyclic device operating between two reservoirs.
   well. How much heat $Q = Q_2 + Q_2'$ does the water receive per
   kilogram of coal, of combustion value $H = 2.09 times 10^7 "J"$?
 
-  #figure(
-    image("img/power-heating-unit.svg", width: 60%),
-    caption: [The power-heating unit: a reversible engine between the
-      boiler $T_1$ and the heating water $T_2$ delivers its work $A$ to a
-      reversible heat pump between the pond $T_3$ and the same water.
-      The water receives $Q = Q_2 + Q_2'$.],
-    placement: auto,
-    supplement: [Fig.],
-  ) <fig:power-heating-unit>
-
   Both machines are reversible, so the equalities behind
   #link(<prop:carnot-bounds>)[the Carnot bounds] hold. For the engine,
   $
@@ -2945,6 +2935,15 @@ on any cyclic device operating between two reservoirs.
     approx 6.24 times 10^7 "J"
   $
   per kilogram of coal.
+  #figure(
+    image("img/power-heating-unit.svg", width: 60%),
+    caption: [The power-heating unit: a reversible engine between the
+      boiler $T_1$ and the heating water $T_2$ delivers its work $A$ to a
+      reversible heat pump between the pond $T_3$ and the same water.
+      The water receives $Q = Q_2 + Q_2'$.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:power-heating-unit>
 
   The factor $2.99$ deserves a second look. The engine alone converts
   only $eta = 1 - T_2/T_1 approx 0.31$ of the coal's heat into work,
