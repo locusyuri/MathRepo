@@ -177,8 +177,14 @@ of kinetic theory.
   *Statistical assumptions on the ensemble.*
 
   - the molecules are in perpetual random motion, their velocities changing from instant to instant through collisions;
-  - *spatial homogeneity*: in equilibrium the molecules are distributed uniformly over the volume, $n = (dif N)/(dif V) = N / V$;
-  - *isotropy of directions*: no direction is preferred, $chevron.l v_x chevron.r = chevron.l v_y chevron.r = chevron.l v_z chevron.r = 0$ and $chevron.l v_x^2 chevron.r = chevron.l v_y^2 chevron.r = chevron.l v_z^2 chevron.r = 1/3 chevron.l v^2 chevron.r$.
+  - *spatial homogeneity*: in equilibrium the molecules are distributed uniformly over the volume,
+  $
+    n = (dif N)/(dif V) = N / V;
+  $
+  - *isotropy of directions*: no direction is preferred,
+  $
+    chevron.l v_x chevron.r = chevron.l v_y chevron.r = chevron.l v_z chevron.r = 0, quad quad chevron.l v_x^2 chevron.r = chevron.l v_y^2 chevron.r = chevron.l v_z^2 chevron.r = 1/3 chevron.l v^2 chevron.r.
+  $
 ] <def:ideal-gas-model>
 
 #proposition(name: "Pressure Formula")[
@@ -283,7 +289,7 @@ next proposition — which pins each partial pressure at $p_i = n_i k_B T$.
   The mean translational kinetic energy is a property of the temperature
   alone, not of the species: by
   #link(<prop:temperature-kinetic>)[the microscopic meaning of
-  temperature],
+    temperature],
   $
     overline(epsilon)_(t,1) = overline(epsilon)_(t,2) = 3/2 k_B T
     = 6.21 times 10^(-21) "J".
@@ -303,7 +309,7 @@ next proposition — which pins each partial pressure at $p_i = n_i k_B T$.
   taking a share proportional to its mole number. That every molecule,
   heavy or light, carries the same $3/2 k_B T$ of translational energy
   is a first taste of #link(<thm:equipartition>)[the equipartition
-  theorem] of the next section.
+    theorem] of the next section.
 ] <ex:dalton-mixture>
 
 == Degrees of Freedom and Equipartition // 自由度与能量均分
@@ -596,8 +602,9 @@ higher speeds and must simultaneously lower.
   giving $v_p^2 = 1 / alpha$, i.e. $v_p = sqrt(2 k_B T / m)$.
 
   *Mean speed.* The mean is the first moment of the distribution,
-  $$overline(v) = integral_0^infinity v f(v) dif v$ = 4 pi (alpha / pi)^(3/2) integral_0^infinity v^3
-  exp(-alpha v^2) dif v. $
+  $
+    overline(v) = integral_0^infinity v f(v) dif v = 4 pi (alpha / pi)^(3/2) integral_0^infinity v^3 exp(-alpha v^2) dif v.
+  $
   The substitution $u = alpha v^2$, for which
   $v dif v = (dif u) / (2 alpha)$, reduces the integral to the gamma
   function
@@ -713,7 +720,7 @@ The ordering follows from the ratios $overline(v) / v_p = 2 / sqrt(pi) approx 1.
   $
     overline(v)_([v_F/2, v_F])
     = (integral_(v_F/2)^(v_F) v^3 dif v) /
-      (integral_(v_F/2)^(v_F) v^2 dif v)
+    (integral_(v_F/2)^(v_F) v^2 dif v)
     = (45/64)/(7/8) v_F = 45/56 v_F approx 0.804 v_F,
   $
   above the overall $3/4 v_F$: dropping the slowest eighth of the
@@ -948,7 +955,10 @@ structure is captured by a single geometric quantity.
 #definition(name: "Collision Frequency and Mean Free Path")[
   The *collision frequency* $overline(Z)$ of a molecule is the average
   number of collisions it undergoes per unit time; its *mean free path*
-  $lambda = overline(v) / overline(Z)$ is the average distance travelled
+  $
+    lambda = overline(v) / overline(Z)
+  $
+  is the average distance travelled
   between successive collisions, with $overline(v)$ the mean speed.
 ] <def:mean-free-path>
 
@@ -2116,7 +2126,7 @@ Carnot bound.
 The bound and the Kelvin-Planck statement are therefore equivalent, and
 so is the #link(<law:clausius-statement>)[Clausius statement], by
 #link(<thm:statement-equivalence>)[the equivalence of the two
-statements].
+  statements].
 
 Carnot's theorem caps every real engine: no cleverness of design beats
 $1 - T_c / T_h$ — the only levers are the reservoir temperatures, and
@@ -2182,7 +2192,7 @@ $eta = 1 - Q_c / Q_h$ this is exactly $eta < 1 - T_c / T_h$.
 
 That $S$ exists — that the integral is path-independent — follows from
 the equality case of #link(<prop:clausius-inequality>)[the Clausius
-inequality], and is the content of
+  inequality], and is the content of
 #link(<prop:entropy-state-function>)[the next proposition].
 
 #proposition(name: "Entropy Is a State Function")[
@@ -2525,7 +2535,7 @@ rate between information and heat.
 
 Which processes actually realise $Delta S > 0$?
 By #link(<def:reversible-process>)[the criterion of a reversible
-process], exactly the irreversible ones — and the microscopic picture now
+  process], exactly the irreversible ones — and the microscopic picture now
 makes the principle quantitative.
 
 #law(name: "Principle of Entropy Increase")[
@@ -2571,7 +2581,7 @@ section opened.
 
 #example(name: "Free expansion, counted")[
   The free expansion of #link(<ex:free-expansion-adiabatic>)[the previous
-  section] arrived at $Delta S = nu R ln(V_2/V_1)$ along a fictitious
+    section] arrived at $Delta S = nu R ln(V_2/V_1)$ along a fictitious
   reversible path.
   Counting microstates reaches the same number.
   At fixed temperature the momentum part of phase space does not change,
@@ -2627,7 +2637,7 @@ section opened.
     $T_f$ by the reservoir at $T_f$. Only the environmental term moves,
     $
       Delta S_2 = C ln(T_f/T_i)
-        - C (T_1 - T_i)/T_1 - C (T_f - T_1)/T_f,
+      - C (T_1 - T_i)/T_1 - C (T_f - T_1)/T_f,
     $
     and
     $
