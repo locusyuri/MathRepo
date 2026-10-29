@@ -74,7 +74,7 @@ user_invocable: true
 ### 4. 模板与格式规范
 - **组件职责**：`#definition` / `#theorem` / `#property` / `#example` / `#note` / `#caution` 是否按模板约定使用（绿♣定义、红♥定理、蓝♠命题）；定义块内是否混入推导、解释或动机（应移至块后正文）；property 是否被滥用为"万能包装器"；
 - **双语规范**：正文不得出现中文（扫描：逐行去除 `//` 注释后检查 CJK 字符，PowerShell `Select-String -Pattern '[\u4e00-\u9fff]'` 定位后人工核对是否落在注释内）；标题带 `// 中文注释`，不得出现双 `//`；
-- **数学语法**：符合 `violet-typst-writing-conventions`（符号映射、`abs()` 写法、分数括号、dif、display 公式标点在环境内等）；绝对值统一 `abs()`（扫描 `\|[^|]*\|` 行内配对；集合描述 `{|f| > M}`、`|->` 映射箭头、迹代数 `cal(S)|E`、函数限制 `f|_F` 保留原样）。**强制扫描下标吞括号**：正则 `_[a-zA-Z]+\(`（如 `mu_X(B)` → 必须 `mu_(X)(B)`），规则详见 `violet-typst-writing-conventions` §3，命中即为错误，上报必改项。
+- **数学语法**：符合 `violet-typst-writing-conventions`（符号映射、`abs()` 写法、分数括号、dif、独立 math 块标点在块内 / 行内 math 标点在块外等——`rg '\$\.'` 会把合法行内句号大量误报，只查 `#eq[...]` 内容行与 `$` 独占行块的末行）；绝对值统一 `abs()`（扫描 `\|[^|]*\|` 行内配对；集合描述 `{|f| > M}`、`|->` 映射箭头、迹代数 `cal(S)|E`、函数限制 `f|_F` 保留原样）。**强制扫描下标吞括号**：正则 `_[a-zA-Z]+\(`（如 `mu_X(B)` → 必须 `mu_(X)(B)`），规则详见 `violet-typst-writing-conventions` §3，命中即为错误，上报必改项。
 - **标题层级**：`initial.typ` 中 `=` / `==` 层级正确、无跳级；
 - **组件参数**：`#note` / `#caution` 的首句若是加粗小标签（`*Scope.*`、`*Why a cone?*` 之类）应改用 `title:`，不得留在正文；`#proof` / `#solution` 说明对象的那句应放进 `name:`；
 - **分页干预**（必改项）：出现 `#pagebreak()`、`#block(breakable: false)` 或为"摆页面"而调的 `#v(...)`，一律报告——分页由 Typst 负责，表格/note 跨页属正常排版；

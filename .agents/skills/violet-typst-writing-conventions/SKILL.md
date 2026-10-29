@@ -79,7 +79,7 @@ user_invocable: false
 5. **`n` 次方根用 `root(n, x)`**，不用 `sqrt(x, n)` 二参形式。
 6. **`text()` 必须用字符串**：`text("...")`。
 7. **`cases()` 裸逗号是分行符**，值与条件用 `quad &` 对齐（详见 general.md §11）。
-8. **标点写在数学环境内部**；display math 保持原样。
+8. **独立 math 块（`$` 独占行、`#eq[...]`）的标点写在块内；行内 math 的标点照常写在公式外**。`rg '\$\.'` 会把大量合法的行内句号误报成违规，不得据此批量修改（详见 general.md §10）；display math 保持原样。
 9. **`\left(`/`\right)` 不存在**；Typst 自动缩放，长竖线用 `lr(...)`。
 10. **不保留 LaTeX 宏**：`int`→`integral`、`cdot`→`dot`、`times`→`times`、`sim`→`~`，`pm`→`±`。
 11. **导数记号两模式**（2026-10-19 用户定稿）：行内一律下标形式（`u_t`，禁止 `partial_t u`），行间一律分式形式（`(partial u)/(partial t)`，禁止 `partial_t (...)`）；裸算子（`partial_t - Delta_x` 类）保留例外（详见 calculus.md §9）。
@@ -563,7 +563,7 @@ typst compile "1.Analyse/Analyse Complexe/initial.typ" "1.Analyse/Analyse Comple
 1. 所有数学公式使用正确的 Typst 语法，不保留 LaTeX 宏
 2. 多字母变量必须用引号包裹或空格分开
 3. 下标前必须有主体；下标后紧跟括号必须用 `{}` 包裹（`_([a-zA-Z])\(` 自查）
-4. Display math 标点写在环境内部
+4. 独立 math 块（`$` 独占行、`#eq[...]`）标点写在环境内部；行内 math 标点照常写在公式外（general.md §10）
 5. 不改动模板公共接口名称
 6. 保持与现有内容的风格一致性
 7. 补全后确保文件可编译（使用 `typst compile` 验证）

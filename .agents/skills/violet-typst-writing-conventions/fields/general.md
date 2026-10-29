@@ -290,7 +290,11 @@ $abs(dot)$
 
 ## 10. 标点位置
 
-独立数学公式的句号等标点必须写在数学环境内部：
+**分两种情况，不要互相串用**（2026-10-29 用户确认口径）：独立 math 块的标点写在块内，行内 math 的标点照常写在块外。
+
+### 10.1 独立 math 块：标点写在块内
+
+"独立 math 块"指独占一行的 display 公式——`$` 单独成行的块，以及 `#eq[...]` 编号公式块。句末标点必须写在数学环境内部：
 
 ```typst
 // 错误
@@ -304,7 +308,56 @@ $
 $
 ```
 
-### Display math 保持原样
+`#eq[...]` 块同理——标点要在 `$` 之内，不能落在 `$` 与 `]` 之间：
+
+```typst
+// 错误
+#eq[
+  $a = b q + r, quad 0 <= r < b$.
+] <eq:division-identity>
+
+// 正确
+#eq[
+  $a = b q + r, quad 0 <= r < b.$
+] <eq:division-identity>
+```
+
+`cases(...)` 之类的块，句末标点写在 `cases(...)` 之后、闭合 `$` 之前，即 `).$`。
+
+### 10.2 句中块不加标点
+
+若闭合 `$` 之后的文字继续同一句（display 只作句子成分），块内不加句末标点：
+
+```typst
+// 正确：display 作 "the congruence ... has a solution" 的主语
+$
+  a x equiv b quad ("mod" m)
+:$
+has a solution if and only if ...
+
+// 也正确：#eq 块作句中成分时，块内保留逗号，句子由后文收束
+#eq[
+  $a equiv b quad ("mod" m),$
+] <eq:congruence-def>
+if $m$ divides the difference $a - b$.
+```
+
+### 10.3 行内 math：标点照常写在公式外
+
+行内公式不适用本条规则，标点就是普通行文标点，写在 `$` **外面**：
+
+```typst
+// 正确
+... the remainder lies in $[0, b)$.
+Every unit has order dividing $phi(m)$.
+
+// 错误：把句号塞进行内公式
+... the remainder lies in $[0, b.)$
+```
+
+所以"公式后面紧跟句号"本身**不是**问题：先判断它是独立块还是行内公式，只有独立块的句末标点需要内移。用 `rg '\$\.'` 之类扫描会把大量合法的行内句号误报为违规，**不得据此批量修改**；自查时只检查 `#eq[...]` 块的内容行与 `$` 独占行块的末行。
+
+### 10.4 Display math 保持原样
 
 如果原内容是 display math，不要擅自改写成行内数学。
 
