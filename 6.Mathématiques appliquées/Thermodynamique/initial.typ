@@ -112,7 +112,7 @@ $
 where $N_A = 6.022 times 10^23 "mol"^(-1)$ is the Avogadro constant,
 standing for the number of molecules in one mole of any substance. The mass of a mole of any substance is called the molar mass, and it is denoted by the symbol $M$.
 
-#definition(name: "Dalton's Law of Partial Pressures")[
+#law(name: "Dalton's Law of Partial Pressures")[
   In a mixture of non-reacting ideal gases at temperature $T$ in a volume
   $V$, each component behaves as if it occupied the container alone: its
   *partial pressure* is
@@ -123,7 +123,7 @@ standing for the number of molecules in one mole of any substance. The mass of a
   $
     p = sum_i p_i = (sum_i nu_i) R T / V.
   $
-] <def:dalton-law>
+] <law:dalton-law>
 
 Dalton's law carries the equation of state from pure gases to mixtures.
 It holds exactly within the ideal-gas model — and fails just where the
@@ -216,7 +216,7 @@ of kinetic theory.
   Hence $p = 1/3 n m lr(⟨ v^2 ⟩)$, or, in terms of the mean translational kinetic energy $overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩)$, the compact form $p = 2/3 n overline(epsilon)_t$.
 ]
 
-Dalton's law of #link(<def:dalton-law>)[partial pressures] is transparent
+Dalton's law of #link(<law:dalton-law>)[partial pressures] is transparent
 in this model: the wall receives momentum flux from each species
 independently, so a mixture with number densities $n_i$ exerts
 $
@@ -268,7 +268,7 @@ next proposition — which pins each partial pressure at $p_i = n_i k_B T$.
   kinetic energy of the molecules of each species, and the total
   translational kinetic energy of the gas.
 
-  By #link(<def:dalton-law>)[Dalton's law] each component fills the
+  By #link(<law:dalton-law>)[Dalton's law] each component fills the
   vessel as if alone:
   $
     p_1 = nu_1 R T / V = 2.49 times 10^4 "Pa", quad
@@ -1889,7 +1889,7 @@ A process that returns the system to its initial state is called a *cyclic proce
   $
   the last step being #link(<thm:mayer-formula>)[Mayer's relation], which
   survives for the mixture because, by
-  #link(<def:dalton-law>)[Dalton's law], it too obeys
+  #link(<law:dalton-law>)[Dalton's law], it too obeys
   $p V = (nu_1 + nu_2) R T$. Hence for the $nu = 4 "mol"$ of gas
   $nu C_(V,m) = 8R$ and $nu C_(p,m) = 12R$, and $gamma = 3/2$ — with
   which the four temperatures are consistent: the isobars fix
