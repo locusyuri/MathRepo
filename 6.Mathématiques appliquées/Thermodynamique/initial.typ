@@ -1589,9 +1589,11 @@ On the $p$-$V$ diagram the adiabat through a point is *steeper* than
 the isotherm through the same point, since
 $((partial p)/(partial V))_("adiabatic") = gamma ((partial p)/(partial V))_T$
 and $gamma > 1$: expansion cools the gas, so its pressure falls faster
-than isothermally — see @fig:work-path, right panel. Correspondingly,
-adiabatic compression to a given volume attains a higher pressure and a
-higher temperature than isothermal compression.
+than isothermally — see @fig:work-path, right panel; the slope computed
+for #link(<def:polytropic-process>)[the polytropic family] below makes
+the factor $gamma$ explicit. Correspondingly, adiabatic compression to a
+given volume attains a higher pressure and a higher temperature than
+isothermal compression.
 
 === Free Expansion // 自由膨胀
 
@@ -1642,6 +1644,18 @@ Intermediate exponents describe unregulated processes — heat is exchanged, but
   placement: auto,
   supplement: [Fig.],
 ) <fig:polytropic-family>
+
+The slope of each member follows by differentiating $p V^n = "const"$:
+$
+  (dif p)/(dif V) = -n p/V,
+$
+so at a common state the family is ordered by $n$ — horizontal for the
+isobar ($n = 0$), $-p/V$ for the isotherm ($n = 1$), $-gamma p/V$ for the
+adiabat ($n = gamma$), vertical as $n -> oo$. Since $gamma > 1$, the
+adiabat through a point is *steeper* than the isotherm through the same
+point by exactly the factor $gamma$: expansion cools the gas, so its
+pressure falls faster than at constant temperature, and adiabatic
+compression climbs more steeply than isothermal compression.
 
 #proposition(name: "Work and Heat of a Polytropic Process")[
   Along a polytropic process with $n != 1$ taking the gas from $(p_1, V_1)$ to $(p_2, V_2)$, the work done by the gas and the molar heat capacity of the process are
