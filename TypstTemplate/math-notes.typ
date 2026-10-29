@@ -38,26 +38,46 @@
 /// 浅灰边框色
 #let color-border-light = rgb("#D4D4D4")
 
-/// theorem-like 主要组件渐变色系
-#let color-theorem-bg-1 = rgb("#FFF4F4")
-#let color-theorem-bg-2 = rgb("#F8E7E7")
-#let color-theorem-border = rgb("#C95A5A")
+/// theorem-like 主要组件配色：每个组件一个独立色相（沿色环铺开），背景保持极浅
+#let color-theorem-bg-1 = rgb("#FBEFEE")
+#let color-theorem-bg-2 = rgb("#F5DBD9")
+#let color-theorem-border = rgb("#BE4A42")
 
-#let color-definition-bg-1 = rgb("#F2FAEF")
-#let color-definition-bg-2 = rgb("#E5F3DF")
-#let color-definition-border = rgb("#4FA36A")
+#let color-corollary-bg-1 = rgb("#FDF4E7")
+#let color-corollary-bg-2 = rgb("#F8E5C9")
+#let color-corollary-border = rgb("#DB7E2E")
 
-#let color-proposition-bg-1 = rgb("#F2F6FF")
-#let color-proposition-bg-2 = rgb("#E5ECFA")
-#let color-proposition-border = rgb("#4E77B7")
+#let color-lemma-bg-1 = rgb("#FBF0F5")
+#let color-lemma-bg-2 = rgb("#F4DDE9")
+#let color-lemma-border = rgb("#CE5B95")
 
-#let color-axiom-bg-1 = rgb("#FBF2FF")
-#let color-axiom-bg-2 = rgb("#F0E3FA")
-#let color-axiom-border = rgb("#9B65C9")
+#let color-definition-bg-1 = rgb("#EEF7F0")
+#let color-definition-bg-2 = rgb("#DEF0E3")
+#let color-definition-border = rgb("#40985F")
 
-#let color-example-bg-1 = rgb("#FFF8EC")
-#let color-example-bg-2 = rgb("#F9EFD6")
-#let color-example-border = rgb("#D59A2A")
+#let color-law-bg-1 = rgb("#EDF7F5")
+#let color-law-bg-2 = rgb("#D9EFEB")
+#let color-law-border = rgb("#2E9589")
+
+#let color-property-bg-1 = rgb("#EEF5FA")
+#let color-property-bg-2 = rgb("#DCEAF4")
+#let color-property-border = rgb("#337FB0")
+
+#let color-proposition-bg-1 = rgb("#F0F2FA")
+#let color-proposition-bg-2 = rgb("#E0E4F3")
+#let color-proposition-border = rgb("#5063AC")
+
+#let color-axiom-bg-1 = rgb("#F7F2FB")
+#let color-axiom-bg-2 = rgb("#EADFF5")
+#let color-axiom-border = rgb("#8B5EC5")
+
+#let color-postulate-bg-1 = rgb("#F2F1F8")
+#let color-postulate-bg-2 = rgb("#E2DFF0")
+#let color-postulate-border = rgb("#5E4B8B")
+
+#let color-example-bg-1 = rgb("#FAF3EC")
+#let color-example-bg-2 = rgb("#F1E2D3")
+#let color-example-border = rgb("#A0673A")
 
 #let color-annot-note-bg = rgb("#F3F5F8")
 #let color-annot-note-border = rgb("#96A2B6")
@@ -795,9 +815,9 @@
     major-box(
       "Corollary",
       [♥],
-      color-theorem-bg-1,
-      color-theorem-bg-2,
-      color-theorem-border,
+      color-corollary-bg-1,
+      color-corollary-bg-2,
+      color-corollary-border,
       body,
       number: num,
       name: name,
@@ -813,9 +833,9 @@
     major-box(
       "Lemma",
       [♥],
-      color-theorem-bg-1,
-      color-theorem-bg-2,
-      color-theorem-border,
+      color-lemma-bg-1,
+      color-lemma-bg-2,
+      color-lemma-border,
       body,
       number: num,
       name: name,
@@ -854,9 +874,9 @@
     major-box(
       "Law",
       [♣],
-      color-definition-bg-1,
-      color-definition-bg-2,
-      color-definition-border,
+      color-law-bg-1,
+      color-law-bg-2,
+      color-law-border,
       body,
       number: num,
       name: name,
@@ -892,9 +912,9 @@
     major-box(
       "Property",
       [♣],
-      color-definition-bg-1,
-      color-definition-bg-2,
-      color-definition-border,
+      color-property-bg-1,
+      color-property-bg-2,
+      color-property-border,
       body,
       number: num,
       name: name,
@@ -948,9 +968,9 @@
     major-box(
       "Postulate",
       [♦],
-      color-axiom-bg-1,
-      color-axiom-bg-2,
-      color-axiom-border,
+      color-postulate-bg-1,
+      color-postulate-bg-2,
+      color-postulate-border,
       body,
       number: num,
       name: name,
@@ -1086,7 +1106,7 @@
 
       #v(0.35em)
       #align(right)[
-        #text(size: 10.5pt, fill: color-title)[#end-mark]
+        #text(size: 14pt, fill: color-title)[#end-mark]
       ]
     ]
     #v(0.1em)
