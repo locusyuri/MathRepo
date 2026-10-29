@@ -993,6 +993,35 @@ below traces to the motion of the targets.
   diameters, which is why the dilute-gas picture is self-consistent.
 ]
 
+#example(name: "Heated, then expanded")[
+  A fixed amount of ideal gas first undergoes an isochoric process that
+  raises its temperature to four times its initial value, then an
+  isothermal expansion to three times its volume. By what factors do the
+  mean free path and the mean collision frequency change?
+
+  Only the number density $n$ enters
+  #link(<prop:mean-free-path>)[the formulas] — together with the mean
+  speed $overline(v) prop sqrt(T)$ in the collision frequency; the
+  cross-section $sigma$ is fixed by the molecules themselves.
+
+  - *Isochoric heating.* $n$ does not move, so neither does
+    $lambda = 1/(sqrt(2) n sigma)$; but $overline(v)$ doubles, and with
+    it $overline(Z) = sqrt(2) n sigma overline(v) -> 2 overline(Z)$.
+  - *Isothermal expansion.* The volume triples, so $n -> n/3$: the free
+    path lengthens, $lambda -> 3 lambda$, while the unchanged temperature
+    leaves the pace of flight alone and
+    $overline(Z) -> overline(Z)/3$.
+
+  In total,
+  $
+    lambda -> 3 lambda, quad overline(Z) -> 2/3 overline(Z).
+  $
+  The two answers part company because they measure different things:
+  the free path is the spacing of targets, blind to how fast the
+  molecules fly, whereas the collision rate feels both the crowding and
+  the pace.
+] <ex:free-path-heating>
+
 The *collision frequency* $overline(Z)$ will do little explicit work below, but
 the mean free path $lambda$ and the mean speed $overline(v)$ are the
 two ingredients from which all transport coefficients of §1.8 are
