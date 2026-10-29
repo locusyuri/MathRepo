@@ -260,6 +260,52 @@ next proposition — which pins each partial pressure at $p_i = n_i k_B T$.
   molecular mass.
 ] <cor:rms-speed>
 
+#example(name: "Partial pressures in a mixture")[
+  A rigid vessel of volume $V = 0.02 "m"^3$ holds $nu_1 = 0.2 "mol"$ of
+  oxygen mixed with $nu_2 = 0.3 "mol"$ of nitrogen; in thermal
+  equilibrium the temperature is $T = 300 "K"$. Find the partial
+  pressures $p_1$ and $p_2$, the total pressure, the mean translational
+  kinetic energy of the molecules of each species, and the total
+  translational kinetic energy of the gas.
+
+  By #link(<def:dalton-law>)[Dalton's law] each component fills the
+  vessel as if alone:
+  $
+    p_1 = nu_1 R T / V = 2.49 times 10^4 "Pa", quad
+    p_2 = nu_2 R T / V = 3.74 times 10^4 "Pa",
+  $
+  and the total pressure is their sum — equivalently,
+  $(nu_1 + nu_2) R T / V$:
+  $
+    p = p_1 + p_2 = 6.23 times 10^4 "Pa".
+  $
+
+  The mean translational kinetic energy is a property of the temperature
+  alone, not of the species: by
+  #link(<prop:temperature-kinetic>)[the microscopic meaning of
+  temperature],
+  $
+    overline(epsilon)_(t,1) = overline(epsilon)_(t,2) = 3/2 k_B T
+    = 6.21 times 10^(-21) "J".
+  $
+  Nitrogen molecules are lighter, so
+  #link(<cor:rms-speed>)[their root-mean-square speed] is larger by the
+  factor $sqrt(32/28) approx 1.07$ — yet they carry exactly the same
+  mean translational energy.
+
+  The total translational energy is the sum over all
+  $(nu_1 + nu_2) N_A = 3.01 times 10^23$ molecules,
+  $
+    E_t = 3/2 (nu_1 + nu_2) R T = 1.87 times 10^3 "J",
+  $
+  split as $E_(t,1) = 3/2 nu_1 R T = 7.48 times 10^2 "J"$ for the oxygen
+  and $E_(t,2) = 1.12 times 10^3 "J"$ for the nitrogen — each species
+  taking a share proportional to its mole number. That every molecule,
+  heavy or light, carries the same $3/2 k_B T$ of translational energy
+  is a first taste of #link(<thm:equipartition>)[the equipartition
+  theorem] of the next section.
+] <ex:dalton-mixture>
+
 == Degrees of Freedom and Equipartition // 自由度与能量均分
 
 The pressure-temperature identification of §1.2 was derived without
