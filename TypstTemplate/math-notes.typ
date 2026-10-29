@@ -71,13 +71,13 @@
 #let color-axiom-bg-2 = rgb("#EADFF5")
 #let color-axiom-border = rgb("#8B5EC5")
 
-#let color-postulate-bg-1 = rgb("#F2F1F8")
-#let color-postulate-bg-2 = rgb("#E2DFF0")
-#let color-postulate-border = rgb("#5E4B8B")
+#let color-postulate-bg-1 = rgb("#F2F3F4")
+#let color-postulate-bg-2 = rgb("#E3E5E7")
+#let color-postulate-border = rgb("#565B61")
 
-#let color-example-bg-1 = rgb("#FAF3EC")
-#let color-example-bg-2 = rgb("#F1E2D3")
-#let color-example-border = rgb("#A0673A")
+#let color-example-bg-1 = rgb("#E9F6F9")
+#let color-example-bg-2 = rgb("#D2ECF1")
+#let color-example-border = rgb("#2299B8")
 
 #let color-annot-note-bg = rgb("#F3F5F8")
 #let color-annot-note-border = rgb("#96A2B6")
@@ -1106,7 +1106,7 @@
 
       #v(0.35em)
       #align(right)[
-        #text(size: 14pt, fill: color-title)[#end-mark]
+        #text(size: 17pt, fill: color-title)[#end-mark]
       ]
     ]
     #v(0.1em)
