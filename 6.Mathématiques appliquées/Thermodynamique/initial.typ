@@ -1564,7 +1564,8 @@ The conversion of heat into work is complete but not repeatable: the gas ends at
     p V^gamma = "const", quad T V^(gamma - 1) = "const", quad
     T^gamma p^(1 - gamma) = "const",
   $
-  where $gamma = C_(p,m) / C_(V,m) > 1$.
+  where $gamma = C_(p,m) / C_(V,m) > 1$. These three relations are
+  *Poisson's equations* of the adiabatic process.
 ] <prop:adiabatic-process>
 
 #proof[
@@ -1579,6 +1580,10 @@ The conversion of heat into work is complete but not repeatable: the gas ends at
   $T V^(gamma - 1) = "const"$; eliminating $T$ with the equation of state
   gives the $p V^gamma$ and $T^gamma p^(1-gamma)$ forms.
 ]
+
+These are also called *Poisson's law*; the name has nothing to do with
+the Poisson equation $nabla^2 phi = -rho/epsilon_0$ of electrostatics —
+the same mathematician, a different subject.
 
 On the $p$-$V$ diagram the adiabat through a point is *steeper* than
 the isotherm through the same point, since
