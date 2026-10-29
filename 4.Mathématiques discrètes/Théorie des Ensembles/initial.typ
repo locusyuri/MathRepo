@@ -368,8 +368,7 @@ An equivalence relation on $S$ therefore *induces* a new set, not merely a descr
   $
     S \/ R = {[a] | a in S},
   $
-  is the *quotient set* of $S$ by $R$. Its elements are classes, not
-  elements of $S$.
+  is the *quotient set* of $S$ by $R$. By #link(<thm:partition-correspondence>)[the correspondence theorem], $S \/ R$ is a partition of $S$: pairwise disjoint, non-empty classes that cover $S$.
 ] <def:quotient-set>
 
 #example(name: "Three equivalence relations and their quotient sets")[
@@ -393,11 +392,11 @@ The last example shows a quotient set acquiring more than set structure. This do
   Let $S$ carry operations $mu_i: S^(n_i) -> S$ ($i = 1, dots, k$) and let $R$ be an equivalence relation on $S$.
   $R$ is *compatible* with the operations — a *congruence* — if for every $i$ and all $a_1 R b_1, dots, a_(n_i) R b_(n_i)$,
   $
-    mu_i(a_1, dots, a_(n_i)) R mu_i(b_1, dots, b_(n_i)).
+    mu_i (a_1, dots, a_(n_i)) R mu_i (b_1, dots, b_(n_i)).
   $
   For a congruence, each $mu_i$ descends to the quotient set by
   $
-    mu_i([a_1], dots, [a_(n_i)]) = [mu_i(a_1, dots, a_(n_i))].
+    mu_i ([a_1], dots, [a_(n_i)]) = [mu_i (a_1, dots, a_(n_i))].
   $
   Writing again $mu_i$ for the descended operation, the system $(S \/ R, mu_1, dots, mu_k)$ is the *quotient structure* of $S$ by $R$.
 ] <def:quotient-structure>
