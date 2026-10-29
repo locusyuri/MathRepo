@@ -112,6 +112,24 @@ $
 where $N_A = 6.022 times 10^23 "mol"^(-1)$ is the Avogadro constant,
 standing for the number of molecules in one mole of any substance. The mass of a mole of any substance is called the molar mass, and it is denoted by the symbol $M$.
 
+#definition(name: "Dalton's Law of Partial Pressures")[
+  In a mixture of non-reacting ideal gases at temperature $T$ in a volume
+  $V$, each component behaves as if it occupied the container alone: its
+  *partial pressure* is
+  $
+    p_i = nu_i R T / V,
+  $
+  and the total pressure is their sum,
+  $
+    p = sum_i p_i = (sum_i nu_i) R T / V.
+  $
+] <def:dalton-law>
+
+Dalton's law carries the equation of state from pure gases to mixtures.
+It holds exactly within the ideal-gas model — and fails just where the
+ideal-gas law does, the corrections for real mixtures being carried, as
+for pure gases, by virial coefficients.
+
 The three families of curves $p V = "const"$ (isotherms),
 $p = "const"$ (isobars) and $V = "const"$ (isochores) partition the
 $p$-$V$ plane; see @fig:pv-isotherms.
@@ -197,6 +215,17 @@ of kinetic theory.
   $lr(⟨ v_x^2 ⟩) = lr(⟨ v_y^2 ⟩) = lr(⟨ v_z^2 ⟩) = lr(⟨ v^2 ⟩) / 3$.
   Hence $p = 1/3 n m lr(⟨ v^2 ⟩)$, or, in terms of the mean translational kinetic energy $overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩)$, the compact form $p = 2/3 n overline(epsilon)_t$.
 ]
+
+Dalton's law of #link(<def:dalton-law>)[partial pressures] is transparent
+in this model: the wall receives momentum flux from each species
+independently, so a mixture with number densities $n_i$ exerts
+$
+  p = sum_i 1/3 n_i m_i chevron.l v_i^2 chevron.r = sum_i p_i,
+$
+each species contributing its own share. Collisions between molecules of
+different species exchange kinetic energy until, in equilibrium, all
+species carry the same mean translational energy — the content of the
+next proposition — which pins each partial pressure at $p_i = n_i k_B T$.
 
 #proposition(name: "Microscopic Meaning of Temperature")[
   Comparing the form $p = 2/3 n overline(epsilon)_t$ with the ideal-gas
@@ -1813,7 +1842,8 @@ A process that returns the system to its initial state is called a *cyclic proce
     = (3R + 5R) / 4 = 2R, quad C_(p,m) = C_(V,m) + R = 3R,
   $
   the last step being #link(<thm:mayer-formula>)[Mayer's relation], which
-  survives for the mixture because it too obeys
+  survives for the mixture because, by
+  #link(<def:dalton-law>)[Dalton's law], it too obeys
   $p V = (nu_1 + nu_2) R T$. Hence for the $nu = 4 "mol"$ of gas
   $nu C_(V,m) = 8R$ and $nu C_(p,m) = 12R$, and $gamma = 3/2$ — with
   which the four temperatures are consistent: the isobars fix
