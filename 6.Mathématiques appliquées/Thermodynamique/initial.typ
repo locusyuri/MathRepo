@@ -2783,6 +2783,66 @@ on any cyclic device operating between two reservoirs.
   extracts nearly nothing, which is the Carnot bound read differentially.
 ] <ex:engine-finite-bodies>
 
+#example(name: "A power-heating unit")[
+  A heating plant couples a reversible engine to a reversible heat pump,
+  as in @fig:power-heating-unit. The engine draws $Q_1$ from the boiler
+  at $t_1 = 210 degree "C"$ ($T_1 = 483 "K"$) and rejects $Q_2$ into the
+  heating water at $t_2 = 60 degree "C"$ ($T_2 = 333 "K"$); the work $A$
+  it delivers drives a heat pump that extracts $Q_3$ from a pond at
+  $t_3 = 15 degree "C"$ ($T_3 = 288 "K"$) and delivers $Q_2'$ — also into
+  the heating water, which thus serves as the engine's cold reservoir as
+  well. How much heat $Q = Q_2 + Q_2'$ does the water receive per
+  kilogram of coal, of combustion value $H = 2.09 times 10^7 "J"$?
+
+  #figure(
+    image("img/power-heating-unit.svg", width: 60%),
+    caption: [The power-heating unit: a reversible engine between the
+      boiler $T_1$ and the heating water $T_2$ delivers its work $A$ to a
+      reversible heat pump between the pond $T_3$ and the same water.
+      The water receives $Q = Q_2 + Q_2'$.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:power-heating-unit>
+
+  Both machines are reversible, so the equalities behind
+  #link(<prop:carnot-bounds>)[the Carnot bounds] hold. For the engine,
+  $
+    Q_2 = Q_1 T_2/T_1, quad A = Q_1 (1 - T_2/T_1),
+  $
+  and the heat pump, running between $T_3$ and $T_2$, delivers per unit
+  of work the heat-pump coefficient of
+  #link(<def:efficiency-cop>)[the definition],
+  $
+    "COP"_"HP" = T_2/(T_2 - T_3),
+  $
+  so that
+  $
+    Q_2' = A T_2/(T_2 - T_3)
+    = Q_1 (1 - T_2/T_1) T_2/(T_2 - T_3).
+  $
+  Hence
+  $
+    Q = Q_2 + Q_2' = Q_1 (T_2 (T_1 - T_3))/(T_1 (T_2 - T_3)),
+  $
+  and with $Q_1 = H$,
+  $
+    Q = 2.09 times 10^7 "J" times (333 times 195)/(483 times 45)
+    approx 6.24 times 10^7 "J"
+  $
+  per kilogram of coal.
+
+  The factor $2.99$ deserves a second look. The engine alone converts
+  only $eta = 1 - T_2/T_1 approx 0.31$ of the coal's heat into work,
+  rejecting $Q_2 approx 1.44 times 10^7 "J"$ to the water directly. The
+  work then buys, at $"COP"_"HP" = T_2/(T_2 - T_3) = 333/45 = 7.4$, the
+  further $Q_2' approx 4.80 times 10^7 "J"$, of which
+  $Q_3 approx 4.15 times 10^7 "J"$ is pumped up from the pond. Energy
+  conservation is honoured — $Q = Q_1 + Q_3$, as a short check
+  confirms — yet more than twice the coal's energy reaches the water:
+  the heat pump harvests the difference from the environment. Heat is
+  cheap; work is not, and the unit spends its work where it buys most.
+] <ex:power-heating>
+
 The Carnot bound is the engineering face of the second law: efficiency is
 bought with temperature, not with mechanical ingenuity.
 
