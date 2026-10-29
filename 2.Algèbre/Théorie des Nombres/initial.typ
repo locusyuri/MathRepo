@@ -705,7 +705,7 @@ Hermite.
 #proposition(name: "Hermite's Identity")[
   Let $n in bb(Z)^+$ and $x in bb(R)$. Then
   #eq[
-    $sum_(k=0)^(n-1) floor(x + k\/n) = floor(n x)$.
+    $sum_(k=0)^(n-1) floor(x + k\/n) = floor(n x).$
   ] <eq:hermite-identity>
 ] <prop:hermite-identity>
 
@@ -799,7 +799,7 @@ is the result that makes all of elementary number theory quantitative.
   Let $a in bb(Z)$ and $b in bb(Z)^+$. Then there exist *unique*
   integers $q$ and $r$ such that
   #eq[
-    $a = b q + r, quad 0 <= r < b$.
+    $a = b q + r, quad 0 <= r < b.$
   ] <eq:division-identity>
 ] <thm:division-algorithm>
 
@@ -1151,7 +1151,7 @@ Bézout's identity.
   Let $a, b in bb(Z)$, not both zero, and $d = "gcd"(a, b)$. Then there
   exist integers $x, y in bb(Z)$ such that
   #eq[
-    $a x + b y = d$.
+    $a x + b y = d.$
   ] <eq:bezout>
 ] <thm:bezout>
 
@@ -1263,7 +1263,7 @@ numbers is a multiple of their product.
 #corollary(name: "The Product Identity for GCD and LCM")[
   For nonzero integers $a, b$,
   #eq[
-    $"gcd"(a, b) dot "lcm"(a, b) = abs(a b)$.
+    $"gcd"(a, b) dot "lcm"(a, b) = abs(a b).$
   ] <eq:gcd-lcm-product>
 ] <cor:gcd-lcm-product>
 
@@ -1556,7 +1556,7 @@ throughout the rest of the notebook.
   Let $n > 1$ be an integer. Its *standard factorization* (or
   *prime-power decomposition*) is the unique writing
   #eq[
-    $n = p_1^(a_1) p_2^(a_2) dots p_k^(a_k)$,
+    $n = p_1^(a_1) p_2^(a_2) dots p_k^(a_k),$
   ] <eq:canonical-form>
   where $p_1 < p_2 < dots < p_k$ are distinct primes and $a_1, a_2,
   dots, a_k$ are positive integers. The factor $p_i^(a_i)$ is the
@@ -1709,7 +1709,7 @@ notebook.
   (#link(<def:prime-factorization>)[Standard (Prime-Power)
   Factorization]); in symbols,
   #eq[
-    $v_(p)(n) = max{k >= 0 : p^k | n}$.
+    $v_(p)(n) = max{k >= 0 : p^k | n}.$
   ] <eq:valuation-def>
   For $n = 1$ the set is ${0}$, so $v_(p)(1) = 0$. Equivalently,
   $p^k | n$ iff $k <= v_(p)(n)$, and one writes $p^(v_(p)(n)) "||" n$ to
@@ -1738,7 +1738,8 @@ exponent and the joint part by the *larger* exponent.
   For positive integers $a, b$ and every prime $p$,
   #eq[
     $v_(p)("gcd"(a, b)) = min(v_(p)(a), v_(p)(b)), \
-    v_(p)("lcm"(a, b)) = max(v_(p)(a), v_(p)(b)).$] <eq:gcd-lcm-valuation>
+    v_(p)("lcm"(a, b)) = max(v_(p)(a), v_(p)(b)).$
+  ] <eq:gcd-lcm-valuation>
 ] <cor:gcd-lcm-valuation>
 
 #proof[
@@ -1785,7 +1786,7 @@ exercise in counting multiples.
 #theorem(name: "Legendre's Formula for the Exponent of a Prime in a Factorial")[
   For a prime $p$ and an integer $n >= 1$,
   #eq[
-    $v_(p)(n!) = sum_(k=1)^oo floor(n\/p^k)$.
+    $v_(p)(n!) = sum_(k=1)^oo floor(n\/p^k).$
   ] <eq:legendre-formula>
 ] <thm:legendre-formula>
 
@@ -1875,7 +1876,7 @@ $m$ exactly when their difference is a multiple of $m$.
   Let $m in bb(Z)^+$ and $a, b in bb(Z)$. We say that $a$ is
   *congruent* to $b$ modulo $m$, written
   #eq[
-    $a equiv b quad ("mod" m)$,
+    $a equiv b quad ("mod" m),$
   ] <eq:congruence-def>
   if $m$ divides the difference $a - b$; otherwise $a$ is
   *incongruent* to $b$ modulo $m$. The fixed integer $m$ is the
@@ -2483,7 +2484,7 @@ factorization and the CRT — are brought to bear.
   For $m in bb(Z)^+$, the *totient* (Euler's function) $phi(m)$ is the
   number of integers $k$ with $1 <= k <= m$ and $"gcd"(k, m) = 1$:
   #eq[
-    $phi(m) = abs({k in bb(Z) : 1 <= k <= m, "gcd"(k, m) = 1})$,
+    $phi(m) = abs({k in bb(Z) : 1 <= k <= m, "gcd"(k, m) = 1}),$
   ] <eq:phi-def>
   Equivalently, by *Residue Classes and Systems*, $phi(m)$ is the size of the canonical reduced
   residue system modulo $m$: the number of invertible residue classes.
@@ -2529,7 +2530,7 @@ form.
   Let $n >= 2$ have prime factorization
   $n = p_1^(alpha_1) p_2^(alpha_2) dots p_r^(alpha_r)$. Then
   #eq[
-    $phi(n) = n product_(p | n) (1 - 1\/p)$.
+    $phi(n) = n product_(p | n) (1 - 1\/p).$
   ] <eq:phi-formula>
 ] <thm:phi-formula>
 
@@ -3992,7 +3993,7 @@ alone suffices.
       1 text(" if ") a text(" is a quadratic residue modulo ") p,
       -1 text(" if ") a text(" is a quadratic non-residue modulo ") p,
       0 text(" if ") p text(" divides ") a.
-    )
+    ).
   $
   The value $0$ records that the numerator is not a unit modulo $p$;
   for the $(p - 1)$ units the symbol keeps the sign promised by
@@ -5499,11 +5500,11 @@ variables (not necessarily a polynomial):
     M_(p)(a_1, a_2, dots, a_n) = cases(
       ((a_1^p + a_2^p + dots.h + a_n^p)\/n)^(1\/p) quad & "if" p != 0,
       root(n, a_1 a_2 dots.h a_n) quad & "if" p = 0,
-    )
+    ).
   $
   Then $M_(p)$ is increasing in $p$:
   $
-    dots <= M_(-2) <= M_(-1) <= M_0 <= M_1 <= M_2 <= dots
+    dots <= M_(-2) <= M_(-1) <= M_0 <= M_1 <= M_2 <= dots.
   $
   In particular, writing
   $
