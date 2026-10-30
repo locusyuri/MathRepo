@@ -2653,6 +2653,36 @@ section opened.
   #link(<ex:free-expansion>)[the free-expansion example].
 ] <ex:free-expansion-entropy>
 
+#note(title: "Gibbs paradox")[
+  The counting $Omega prop V^N$ behind
+  #link(<ex:free-expansion-entropy>)[that example] is one step short of
+  a paradox.
+  Take two samples of the *same* gas, each of amount $nu$ and volume
+  $V$, at the same temperature, and remove the wall between them: the
+  gas then occupies $2V$, and the same reasoning gives
+  $Delta S = 2 nu R ln 2 > 0$ — entropy has been created by doing
+  nothing at all.
+
+  The bookkeeping betrays the same fault. Since
+  $S = k_B ln Omega$ grows like $N k_B ln V$, merging the two samples
+  (doubling both $N$ and $V$) yields
+  $S = 2 S_0 + 2 nu R ln 2$: the entropy of the union exceeds the sum of
+  the parts, and $S$ is not extensive.
+
+  Both symptoms vanish once identical molecules are treated as
+  *indistinguishable*: their permutations are not distinct microstates,
+  so the count carries a factor $1\/(N!)$ and
+  $S = k_B ln(Omega\/(N!))$ becomes extensive — the Sackur--Tetrode
+  entropy of a monatomic gas.
+  Mixing two *identical* gases then produces no entropy, while
+  #link(<ex:mixing-dissipation>)[mixing distinct ones] still does, for
+  those are genuinely different arrangements.
+  Gibbs found the rule long before quantum mechanics explained it:
+  indistinguishability is a quantum property, and the classical count is
+  its shadow in the limit $h -> 0$; the systematic account belongs to
+  the microcanonical ensemble of Chapter 12.
+] <note:gibbs-paradox>
+
 #example(name: "Heat conduction")[
   Heat $Q$ flows directly from a body at $T_h$ to a
   body at $T_c < T_h$. Each body changes at fixed temperature, so
