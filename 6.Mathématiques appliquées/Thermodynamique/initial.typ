@@ -1877,11 +1877,11 @@ A process that returns the system to its initial state is called a *cyclic proce
 ) <fig:reservoir-schematic>
 
 #definition(name: "Efficiency and Coefficients of Performance")[
-  A heat engine absorbs $Q_h$ and delivers work $W = Q_h - Q_c$ per cycle; its purpose is to *deliver work*, so the natural figure of merit is the fraction of the absorbed heat converted into work — the *efficiency*:
+  A heat engine absorbs $Q_h$ and delivers work $W = Q_h - Q_c$ per cycle, whose purpose is to *deliver work*:
   $
-    eta = W / Q_h.
+    eta = W / Q_h = 1 - Q_c / Q_h.
   $
-  A refrigerator pumps $Q_c$ out of the cold space at a work cost $W = Q_h - Q_c$; its purpose is to *remove heat from the cold space*, so the figure of merit is the heat removed per unit of work paid — the *coefficient of performance*:
+  A refrigerator pumps $Q_c$ out of the cold space at a work cost $W = Q_h - Q_c$, whose purpose is to *remove heat from the cold space*:
   $
     "COP"_R = Q_c / W;
   $
