@@ -1847,6 +1847,27 @@ The special cases are consistent:
   Chapter 20 on phase transitions.
 ] <note:jt-liquefaction>
 
+The two irreversible expansions met so far —
+#link(<ex:free-expansion>)[adiabatic free expansion] and
+#link(<def:jt-coefficient>)[throttling] — are both adiabatic, yet they
+conserve different quantities; the table keeps them apart.
+
+#tex-table(
+  ("Item", "Adiabatic free expansion", "Throttling (Joule--Thomson)"),
+  ([Heat], [$Q = 0$], [$Q = 0$]),
+  ([Work], [Expansion into vacuum: $W = 0$], [Pressure on both sides: $W != 0$ is exchanged]),
+  ([Conserved quantity], [Internal energy, $U = "const"$], [Enthalpy, $H = "const"$]),
+  ([Ideal-gas temperature], [Unchanged], [Unchanged]),
+  ([Real-gas temperature], [May rise or fall, the intermolecular potential dominating], [Fixed by the sign of $mu_("JT")$]),
+  ([Typical setting], [A partition removed, the gas diffusing into vacuum], [Refrigeration, gas liquefaction]),
+  ([Reversible adiabatic formulas], [Not applicable: irreversible], [Not applicable: irreversible]),
+)
+
+The last row is the one to remember: being adiabatic does not entitle a
+process to #link(<prop:adiabatic-process>)[Poisson's equations] — those
+describe a *quasi-static* adiabat, and neither free expansion nor
+throttling is quasi-static.
+
 === Cyclic Processes // 循环过程
 
 A process that returns the system to its initial state is called a *cyclic process*. Since $U$ is a state quantity, $Delta U = 0$ over *any* cycle — quasi-static or not — and the first law collapses to $W = Q$: the net work delivered equals the net heat absorbed, drawn from some reservoirs and dumped into others. Only when every leg of the cycle is quasi-static does the state of the system trace a closed curve in the $p$-$V$ plane; that picture, and the area it encloses, is what the proposition below quantifies.
