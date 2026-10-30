@@ -3320,6 +3320,33 @@ recovers, up to renaming, exactly the image $"Im" f$.
     the canonical isomorphism $G \/ "Ker" f tilde.equiv "Im" f$.],
 ) <fig:first-isomorphism>
 
+#corollary(name: "The Fundamental Theorem of Group Homomorphisms")[
+  Let $phi: G -> overline(G)$ be a *surjective* group homomorphism.
+  Then $"Ker" phi lt.closed.eq G$, and the map
+  $
+    G \/ "Ker" phi -> overline(G), quad a("Ker" phi) |-> phi(a),
+  $
+  is an isomorphism. In particular
+  $
+    G \/ "Ker" phi tilde.equiv overline(G).
+  $
+] <cor:fundamental-homomorphism>
+
+#note(title: "Two names for one theorem")[
+  This is #link(<thm:first-isomorphism>)[the First Isomorphism Theorem]
+  read in the case $"Im" phi = overline(G)$, together with
+  #link(<thm:kernel-normal>)[the normality of kernels] of §5.1: the two
+  statements that Chinese textbooks present as a single result, the
+  *fundamental theorem of group homomorphisms* (@yang2011, Theorem 2).
+
+  The book keeps them apart on purpose. Normality is a property of the
+  kernel, the isomorphism a property of the quotient; and the version
+  proved above is strictly stronger, assuming neither surjectivity nor
+  a prescribed target, and identifying $G \/ "Ker" f$ with the actual
+  image $"Im" f$. Every application below recovers the textbook form by
+  observing that $"Im" phi$ is the whole of $overline(G)$.
+] <note:fundamental-homomorphism-names>
+
 The theorem unpacks into a *factorization* of $f$, which is often
 more useful in practice than the bare isomorphism.
 
@@ -5174,6 +5201,7 @@ principal ideal domain $R$, classifies finitely generated $R$-modules
 
 //   Section 5.2: 第一同构定理 (First Isomorphism Theorem)
 //     - 定理陈述与证明
+//     - 群同态基本定理（满射形式）与中英术语对照
 //     - 典型应用
 
 //   Section 5.3: 第二与第三同构定理 (Second and Third Isomorphism Theorems)
