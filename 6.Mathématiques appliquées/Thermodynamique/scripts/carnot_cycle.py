@@ -73,10 +73,8 @@ for v, p, name, (dx, dy) in [
     ax.text(v + dx, p + dy, name, fontsize=12, va="center")
 
 # heat exchange hints
-ax.text(1.5, TH / 1.5 + 0.055, "absorbs $Q_h$", color=BLUE, fontsize=9.5,
-        ha="center")
-ax.text(4.3, TC / 4.3 + 0.03, "rejects $Q_c$", color=BLUE, fontsize=9.5,
-        ha="center")
+ax.text(2.05, 0.66, "absorbs $Q_h$", color=BLUE, fontsize=9.5, ha="center")
+ax.text(3.55, 0.085, "rejects $Q_c$", color=BLUE, fontsize=9.5, ha="center")
 
 ax.legend(loc="upper right", frameon=False, fontsize=10.5)
 ax.set_xlim(0.6, 6.3)
