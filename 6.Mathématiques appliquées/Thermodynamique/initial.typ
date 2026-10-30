@@ -2776,6 +2776,44 @@ section opened.
   exception.
 ] <caution:entropy-nonisolated>
 
+The examples of this section, together with the processes of
+*Common Thermodynamic Processes*, form a catalogue worth keeping at
+hand: for each familiar process, the sign of the entropy change of the
+*system*.
+
+#tex-table(
+  ("Process", "$Delta S$ of the system", "Comment"),
+  ([Mixing two different ideal gases at fixed $T$, $p$], [$-nu R sum_i x_i ln x_i$], [$> 0$; for identical gases $0$]),
+  ([Adiabatic free expansion of an ideal gas], [$nu R ln(V_2/V_1)$], [$> 0$; adiabatic yet not isentropic]),
+  ([Throttling of an ideal gas], [$nu R ln(p_1/p_2)$], [$> 0$ although $T$ does not change]),
+  ([Heat conduction across a finite $dif T$], [$Q (1/T_c - 1/T_h)$], [$> 0$; a finite gap always costs entropy]),
+  ([Melting or boiling at fixed $T$], [$L/T$], [$> 0$; latent heat $L$ absorbed]),
+  ([Heating at fixed $V$ or $p$], [$nu C ln(T_2/T_1)$], [$> 0$]),
+  ([Friction and viscous dissipation], [$W_"diss"/T$], [$> 0$; work degraded into heat]),
+  ([Cooling at fixed $V$ or $p$], [$nu C ln(T_2/T_1)$], [$< 0$; entropy exported]),
+  ([Isothermal compression of an ideal gas], [$nu R ln(V_2/V_1)$], [$< 0$; the heat released carries the entropy away]),
+  ([Condensation or freezing at fixed $T$], [$-L/T$], [$< 0$; latent heat $L$ released]),
+  ([Reversible adiabatic process], [$0$], [quasi-static and dissipation-free; #link(<prop:adiabatic-process>)[Poisson's equations] apply]),
+  ([Any complete cycle], [$0$], [entropy is a state function]),
+)
+
+#caution(title: "Adiabatic, isothermal, isentropic")[
+  Three adjectives that are routinely confused.
+
+  - *Adiabatic is not isentropic.* Free expansion and throttling of an
+    ideal gas both have $Q = 0$ and both raise $S$; only a *reversible*
+    adiabatic process is isentropic.
+  - *Isothermal is not isentropic.* Compressing an ideal gas at fixed
+    $T$ lowers its entropy, the heat released carrying the difference
+    into the surroundings.
+  - *Fixed temperature is not fixed entropy.* Throttling an ideal gas
+    leaves $T$ untouched and still creates entropy.
+
+  What the second law forbids is a decrease of the *total*, not of the
+  system: every entry with $Delta S < 0$ above is paid for by a larger
+  increase outside the system.
+]
+
 == Thermodynamic Temperature Scale // 热力学温标
 
 The efficiency bound $eta_C = 1 - T_c / T_h$ rests on the temperatures
