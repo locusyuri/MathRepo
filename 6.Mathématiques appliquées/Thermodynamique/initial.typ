@@ -1858,7 +1858,11 @@ conserve different quantities; the table keeps them apart.
   ([Work], [Expansion into vacuum: $W = 0$], [Pressure on both sides: $W != 0$ is exchanged]),
   ([Conserved quantity], [Internal energy, $U = "const"$], [Enthalpy, $H = "const"$]),
   ([Ideal-gas temperature], [Unchanged], [Unchanged]),
-  ([Real-gas temperature], [May rise or fall, the intermolecular potential dominating], [Fixed by the sign of $mu_("JT")$]),
+  (
+    [Real-gas temperature],
+    [May rise or fall, the intermolecular potential dominating],
+    [Fixed by the sign of $mu_("JT")$],
+  ),
   ([Typical setting], [A partition removed, the gas diffusing into vacuum], [Refrigeration, gas liquefaction]),
   ([Reversible adiabatic formulas], [Not applicable: irreversible], [Not applicable: irreversible]),
 )
@@ -2782,7 +2786,7 @@ hand: for each familiar process, the sign of the entropy change of the
 *system*.
 
 #tex-table(
-  ("Process", "$Delta S$ of the system", "Comment"),
+  ("Process", [$Delta S$ of the system], "Comment"),
   ([Mixing two different ideal gases at fixed $T$, $p$], [$-nu R sum_i x_i ln x_i$], [$> 0$; for identical gases $0$]),
   ([Adiabatic free expansion of an ideal gas], [$nu R ln(V_2/V_1)$], [$> 0$; adiabatic yet not isentropic]),
   ([Throttling of an ideal gas], [$nu R ln(p_1/p_2)$], [$> 0$ although $T$ does not change]),
@@ -2793,7 +2797,11 @@ hand: for each familiar process, the sign of the entropy change of the
   ([Cooling at fixed $V$ or $p$], [$nu C ln(T_2/T_1)$], [$< 0$; entropy exported]),
   ([Isothermal compression of an ideal gas], [$nu R ln(V_2/V_1)$], [$< 0$; the heat released carries the entropy away]),
   ([Condensation or freezing at fixed $T$], [$-L/T$], [$< 0$; latent heat $L$ released]),
-  ([Reversible adiabatic process], [$0$], [quasi-static and dissipation-free; #link(<prop:adiabatic-process>)[Poisson's equations] apply]),
+  (
+    [Reversible adiabatic process],
+    [$0$],
+    [quasi-static and dissipation-free; #link(<prop:adiabatic-process>)[Poisson's equations] apply],
+  ),
   ([Any complete cycle], [$0$], [entropy is a state function]),
 )
 
