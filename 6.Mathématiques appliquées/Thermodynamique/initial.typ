@@ -49,12 +49,11 @@ thermodynamic framework of Chapters 2–4.
 ] <def:thermodynamic-system>
 
 #definition(name: "Extensive and Intensive Quantities")[
-  A state quantity is *extensive* if it doubles when two copies of the
-  system are combined into one, and *intensive* if it is unchanged
-  under such a scaling. Volume $V$, amount of substance $nu$, internal
-  energy $U$, entropy $S$ are extensive; pressure $p$, temperature
-  $T$, density $rho$ are intensive. The quotient of two extensive
-  quantities is intensive.
+  A state quantity is *extensive* if it doubles when two copies of the system are combined into one, and *intensive* if it is unchanged under such a scaling.
+
+  Volume $V$, amount of substance $nu$, internal energy $U$, entropy $S$ are extensive; pressure $p$, temperature $T$, density $rho$ are intensive.
+
+  The quotient of two extensive quantities is intensive.
 ] <def:extensive-intensive>
 
 #definition(name: "Equilibrium State and State Variables")[
@@ -101,16 +100,19 @@ where $nu$ is the amount of substance (in moles) and
 $R = 8.314 "J/(mol K)"$ is the gas constant. The *microscopic
 (molecular) form*, suited to kinetic theory, reads
 $
-  p V = N k_B T,
+  p V = N k_B T, quad "or" quad p = N/V k_B T = n k_B T,
 $
 where $N$ is the number of molecules and
 $k_B = 1.38 times 10^(-23) "J/K"$ is the Boltzmann constant. The two
 forms are linked by the conversion relations
 $
-  nu = N / N_A = m / M, quad M = m_0 N_A, quad k_B = R / N_A, quad k / m = R / M,
+  nu = N / N_A = m / M, quad M = m_0 N_A, quad k_B = R / N_A, quad k_B / m_0 = R / M,
 $
-where $N_A = 6.022 times 10^23 "mol"^(-1)$ is the Avogadro constant,
-standing for the number of molecules in one mole of any substance. The mass of a mole of any substance is called the molar mass, and it is denoted by the symbol $M$.
+where $N_A = 6.022 times 10^23 "mol"^(-1)$ is the Avogadro constant, standing for the number of molecules in one mole of any substance.
+The mass of a mole of any substance is called the molar mass, and it is denoted by the symbol $M$.
+
+Three masses must be kept apart: $m$ is the mass of the sample, $m = nu M = N m_0$; $m_0$ is the mass of a single molecule; $M$ is the molar mass.
+The kinetic-theory formulas below are all written in the molecular mass $m_0$.
 
 #law(name: "Dalton's Law of Partial Pressures")[
   In a mixture of non-reacting ideal gases at temperature $T$ in a volume
@@ -188,12 +190,12 @@ of kinetic theory.
 ] <def:ideal-gas-model>
 
 #proposition(name: "Pressure Formula")[
-  For a gas of number density $n = N / V$ and molecular mass $m$ in
+  For a gas of number density $n = N / V$ and molecular mass $m_0$ in
   equilibrium, the pressure exerted on any wall is
   $
-    p = 1/3 n m chevron.l v^2 chevron.r = 2/3 n overline(epsilon)_t,
+    p = 1/3 n m_0 chevron.l v^2 chevron.r = 2/3 n overline(epsilon)_t,
   $
-  where $chevron.l v^2 chevron.r$ is the mean squared molecular speed, and $overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩)$ is the mean translational kinetic energy of a molecule.
+  where $chevron.l v^2 chevron.r$ is the mean squared molecular speed, and $overline(epsilon)_t = 1/2 m_0 lr(⟨ v^2 ⟩)$ is the mean translational kinetic energy of a molecule.
 ] <prop:pressure-formula>
 
 #proof[
@@ -203,12 +205,12 @@ of kinetic theory.
   number density $n$, the number of such molecules per unit wall area
   and per unit velocity interval is $n f(v_x) dif v_x times v_x dif t$,
   where $f(v_x)$ is the marginal distribution of $v_x$. Each impact
-  reverses the normal component, transferring momentum $2 m v_x$ to the
+  reverses the normal component, transferring momentum $2 m_0 v_x$ to the
   wall. The pressure is the momentum transfer per unit area per unit
   time:
   $
-    p = integral_0^infinity 2 m v_x dot n v_x f(v_x) dif v_x
-    = n m integral_0^infinity v_x^2 f(v_x) dif v_x.
+    p = integral_0^infinity 2 m_0 v_x dot n v_x f(v_x) dif v_x
+    = n m_0 integral_0^infinity v_x^2 f(v_x) dif v_x.
   $
   The integrand is even, so extending to $(-infinity, infinity)$ and
   invoking isotropy,
@@ -219,7 +221,7 @@ of kinetic theory.
   $
   since the three Cartesian components contribute equally,
   $lr(⟨ v_x^2 ⟩) = lr(⟨ v_y^2 ⟩) = lr(⟨ v_z^2 ⟩) = lr(⟨ v^2 ⟩) / 3$.
-  Hence $p = 1/3 n m lr(⟨ v^2 ⟩)$, or, in terms of the mean translational kinetic energy $overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩)$, the compact form $p = 2/3 n overline(epsilon)_t$.
+  Hence $p = 1/3 n m_0 lr(⟨ v^2 ⟩)$, or, in terms of the mean translational kinetic energy $overline(epsilon)_t = 1/2 m_0 lr(⟨ v^2 ⟩)$, the compact form $p = 2/3 n overline(epsilon)_t$.
 ]
 
 Dalton's law of #link(<law:dalton-law>)[partial pressures] is transparent
@@ -238,7 +240,7 @@ next proposition — which pins each partial pressure at $p_i = n_i k_B T$.
   equation of state $p V = N k_B T$, i.e. $p = n k_B T$, gives the
   identification
   $
-    overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T.
+    overline(epsilon)_t = 1/2 m_0 lr(⟨ v^2 ⟩) = 3/2 k_B T.
   $
   The temperature of an ideal gas is, up to the constant $3/2 k_B$ per
   molecule, the mean translational kinetic energy per molecule.
@@ -251,7 +253,7 @@ next proposition — which pins each partial pressure at $p_i = n_i k_B T$.
   $
   Cancelling $n$ yields
   $
-    overline(epsilon)_t = 1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T.
+    overline(epsilon)_t = 1/2 m_0 lr(⟨ v^2 ⟩) = 3/2 k_B T.
   $
   This is the kinetic definition of temperature.
 ]
@@ -260,7 +262,7 @@ next proposition — which pins each partial pressure at $p_i = n_i k_B T$.
   The root-mean-square molecular speed of an ideal gas at temperature $T$
   is
   $
-    v_("rms") = sqrt(lr(⟨ v^2 ⟩)) = sqrt(3 k_B T / m),
+    v_("rms") = sqrt(lr(⟨ v^2 ⟩)) = sqrt(3 k_B T / m_0),
   $
   scaling as $sqrt(T)$ and inversely with the square root of the
   molecular mass.
@@ -492,9 +494,9 @@ three Cartesian components are statistically independent.
 
 #theorem(name: "Maxwell Velocity Distribution")[
   In a gas at thermal equilibrium, the probability density of the
-  velocity $bold(v)$ of a molecule of mass $m$ at temperature $T$ is
+  velocity $bold(v)$ of a molecule of mass $m_0$ at temperature $T$ is
   $
-    f(bold(v)) = (m / (2 pi k_B T))^(3/2) exp(- m v^2 / (2 k_B T)),
+    f(bold(v)) = (m_0 / (2 pi k_B T))^(3/2) exp(- m_0 v^2 / (2 k_B T)),
   $
   where $v^2 = v_x^2 + v_y^2 + v_z^2$.
 ] <thm:maxwell-velocity>
@@ -525,16 +527,16 @@ three Cartesian components are statistically independent.
   $
   Normalisation fixes $A = sqrt(alpha / pi)$ per component. The
   parameter $alpha$ is fixed below by the ideal-gas law to be
-  $alpha = m / (2 k_B T)$.
+  $alpha = m_0 / (2 k_B T)$.
 ]
 
 The only undetermined constant is $alpha$. Its value follows from the
-pressure formula of §1.2, $p = 1/3 n m lr(⟨ v^2 ⟩)$, which combined
+pressure formula of §1.2, $p = 1/3 n m_0 lr(⟨ v^2 ⟩)$, which combined
 with the ideal-gas law $p = n k_B T$ gave
 #link(<prop:temperature-kinetic>)[the mean translational kinetic
-  energy] $1/2 m lr(⟨ v^2 ⟩) = 3/2 k_B T$; hence
+  energy] $1/2 m_0 lr(⟨ v^2 ⟩) = 3/2 k_B T$; hence
 $
-  alpha = m / (2 k_B T).
+  alpha = m_0 / (2 k_B T).
 $
 Temperature thereby enters the Maxwell distribution as the mean kinetic
 energy per molecule — announcing the equipartition theorem of §1.3.
@@ -549,8 +551,8 @@ one into the other.
   The speed distribution function of a gas in equilibrium at
   temperature $T$ is
   $
-    f(v) = 4 pi v^2 (m / (2 pi k_B T))^(3/2)
-    exp(- m v^2 / (2 k_B T)),
+    f(v) = 4 pi v^2 (m_0 / (2 pi k_B T))^(3/2)
+    exp(- m_0 v^2 / (2 k_B T)),
   $
   normalised so that $integral_0^infinity f(v) dif v = 1$.
 ] <cor:maxwell-speed>
@@ -578,11 +580,11 @@ higher speeds and must simultaneously lower.
 === Characteristic Speeds // 三种统计速率
 #theorem(name: "Characteristic Speeds")[
   Three speeds characterise the Maxwell distribution, each expressible
-  through the molar mass $M$ as well as the molecular mass $m$:
+  through the molar mass $M$ as well as the molecular mass $m_0$:
   $
-    v_p = sqrt(2 k_B T / m) = sqrt(2 R T / M), quad
+    v_p = sqrt(2 k_B T / m_0) = sqrt(2 R T / M), quad
     overline(v) = sqrt(8 k_B T / (pi m)) = sqrt(8 R T / (pi M)), quad
-    v_("rms") = sqrt(3 k_B T / m) = sqrt(3 R T / M),
+    v_("rms") = sqrt(3 k_B T / m_0) = sqrt(3 R T / M),
   $
   the *most probable*, *mean* and *root-mean-square* speeds, in the
   fixed ratio
@@ -592,14 +594,14 @@ higher speeds and must simultaneously lower.
 ] <thm:characteristic-speeds>
 
 #proof[
-  Throughout, write $alpha = m / (2 k_B T)$, so that $f(v) = 4 pi (alpha / pi)^(3/2) v^2 exp(-alpha v^2)$.
+  Throughout, write $alpha = m_0 / (2 k_B T)$, so that $f(v) = 4 pi (alpha / pi)^(3/2) v^2 exp(-alpha v^2)$.
 
   *Most probable speed.* $v_p$ maximises $f(v)$; since the prefactor is constant, set
   $
     (dif)/(dif v) (v^2 exp(-alpha v^2)) = (2 v - 2 alpha v^3)
     exp(-alpha v^2) = 0,
   $
-  giving $v_p^2 = 1 / alpha$, i.e. $v_p = sqrt(2 k_B T / m)$.
+  giving $v_p^2 = 1 / alpha$, i.e. $v_p = sqrt(2 k_B T / m_0)$.
 
   *Mean speed.* The mean is the first moment of the distribution,
   $
@@ -623,8 +625,8 @@ higher speeds and must simultaneously lower.
   $
   and the same substitution turns the remaining integral into
   $integral_0^infinity u^(3/2) exp(-u) dif u = Gamma(5/2) =
-  3 sqrt(pi) / 4$, so $lr(⟨ v^2 ⟩) = 3 / (2 alpha) = 3 k_B T / m$ and
-  $v_("rms") = sqrt(⟨ v^2 ⟩) = sqrt(3 k_B T / m)$.
+  3 sqrt(pi) / 4$, so $lr(⟨ v^2 ⟩) = 3 / (2 alpha) = 3 k_B T / m_0$ and
+  $v_("rms") = sqrt(⟨ v^2 ⟩) = sqrt(3 k_B T / m_0)$.
 ]
 The ordering follows from the ratios $overline(v) / v_p = 2 / sqrt(pi) approx 1.128$ and $v_("rms") / v_p = sqrt(3 / 2) approx 1.225$: the long tail drags the mean, and still more the root-mean-square speed, above the peak. The three speeds answer different questions — $v_("rms")$ enters the mean kinetic energy and the pressure, $overline(v)$ enters collision and effusion rates, and $v_p$ marks the peak of the distribution.
 
@@ -728,7 +730,7 @@ The ordering follows from the ratios $overline(v) / v_p = 2 / sqrt(pi) approx 1.
 
   The mean kinetic energy follows at once,
   $
-    lr(⟨E⟩) = 1/2 m lr(⟨v^2⟩) = 3/5 (1/2 m v_F^2) = 3/5 E_F,
+    lr(⟨E⟩) = 1/2 m_0 lr(⟨v^2⟩) = 3/5 (1/2 m_0 v_F^2) = 3/5 E_F,
   $
   the result that, at zero temperature, the electrons of a metal fill the
   Fermi sphere — the starting point of Chapter 18.
@@ -737,7 +739,7 @@ The ordering follows from the ratios $overline(v) / v_p = 2 / sqrt(pi) approx 1.
 == Boltzmann Energy Distribution // 玻尔兹曼能量分布律
 
 The Maxwell distribution depends on velocity through the combination
-$m v^2 / 2$ — that is, through the *kinetic energy* $E_k$. This is no
+$m_0 v^2 / 2$ — that is, through the *kinetic energy* $E_k$. This is no
 accident: the equilibrium probability of a state depends on its total
 energy, kinetic or otherwise, through the universal Boltzmann factor.
 The resulting *Boltzmann distribution* is the cornerstone of
@@ -757,7 +759,7 @@ statistical mechanics.
 #proof[
   In energy form, the Maxwell velocity distribution of §1.4 reads
   $
-    dif N = N (m / (2 pi k_B T))^(3/2) exp(- epsilon_k / (k_B T))
+    dif N = N (m_0 / (2 pi k_B T))^(3/2) exp(- epsilon_k / (k_B T))
     dif v_x dif v_y dif v_z,
   $
   a law over *velocity space* weighted by the kinetic energy alone.
@@ -765,10 +767,10 @@ statistical mechanics.
   the joint event that a molecule has velocity in
   $dif v_x dif v_y dif v_z$ *and* position in $dif x dif y dif z$. The
   equilibrium weight is the total energy $epsilon_k + epsilon_p =
-  1/2 m v^2 + Phi(bold(r))$, so the joint distribution over the
+  1/2 m_0 v^2 + Phi(bold(r))$, so the joint distribution over the
   six-dimensional velocity-plus-position space is
   $
-    dif N = n_0 (m / (2 pi k_B T))^(3/2)
+    dif N = n_0 (m_0 / (2 pi k_B T))^(3/2)
     exp(- (epsilon_k + epsilon_p) / (k_B T))
     dif v_x dif v_y dif v_z dif x dif y dif z,
   $
@@ -797,11 +799,11 @@ statistical mechanics.
 
 === The Gas in a Gravitational Field // 重力场中的气体
 In a gravitational field $g$ directed along $+z$, the potential energy
-of a molecule of mass $m$ at altitude $z$ is $epsilon_p = m g z$, and
+of a molecule of mass $m_0$ at altitude $z$ is $epsilon_p = m_0 g z$, and
 the position-space distribution specialises to the *molecular number
 density formula* of the gravitational field
 $
-  n = n_0 exp(- m g z / (k_B T)) = n_0 exp(- M g z / (R T)),
+  n = n_0 exp(- m_0 g z / (k_B T)) = n_0 exp(- M g z / (R T)),
 $
 with $n_0$ the number density at ground level ($z = 0$, the zero of
 potential energy) and $M$ the molar mass — the *Boltzmann
@@ -811,7 +813,7 @@ potential-energy distribution* in the Earth's gravity.
   The density formula combines with the ideal-gas law $p = n k_B T$ to
   give the *isothermal pressure formula*
   $
-    p = p_0 exp(- m g z / (k_B T)) = p_0 exp(- M g z / (R T)),
+    p = p_0 exp(- m_0 g z / (k_B T)) = p_0 exp(- M g z / (R T)),
   $
   where $p_0 = n_0 k_B T$ is the pressure at ground level: pressure
   falls by the same exponential law as density. Inverting it expresses
@@ -833,7 +835,7 @@ potential-energy distribution* in the Earth's gravity.
 ] <ex:barometric-formula>
 
 #example(name: "Sedimentation equilibrium")[
-  Colloidal particles of mass $m$ suspended in a fluid settle under
+  Colloidal particles of mass $m_0$ suspended in a fluid settle under
   gravity against thermal agitation. Their equilibrium density follows
   the same Boltzmann law,
   $
@@ -1063,13 +1065,13 @@ one mean free path away.
 
 #proposition(name: "Kinetic Estimates of Transport Coefficients")[
   In terms of the mean free path $lambda$, mean speed $overline(v)$,
-  number density $n$ and molecular mass $m$,
+  number density $n$ and molecular mass $m_0$,
   $
     eta = 1/3 rho overline(v) lambda, quad
     kappa = 1/3 n overline(v) lambda C_(V,m), quad
     D = 1/3 overline(v) lambda,
   $
-  where $rho = n m$ is the mass density and $C_(V,m)$ the molar
+  where $rho = n m_0$ is the mass density and $C_(V,m)$ the molar
   heat capacity at constant volume.
 ] <prop:kinetic-transport>
 
@@ -1081,12 +1083,12 @@ one mean free path away.
   crossing rate $1/4 n overline(v)$ per direction pair; the resulting
   prefactor is $1/3$ in the elementary estimate, higher-order treatments
   give $0.37$-odd). A molecule arriving from distance $lambda$ carries the
-  $x$-momentum appropriate to its departure point, $m u(z - lambda)$ from
-  below and $m u(z + lambda)$ from above. The net momentum flux in the
+  $x$-momentum appropriate to its departure point, $m_0 u(z - lambda)$ from
+  below and $m_0 u(z + lambda)$ from above. The net momentum flux in the
   $+z$ direction is
   $
-    Pi = 1/2 n overline(v) [m u(z - lambda) - m u(z + lambda)]
-    = - n m overline(v) lambda (dif u)/(dif z),
+    Pi = 1/2 n overline(v) [m_0 u(z - lambda) - m_0 u(z + lambda)]
+    = - n m_0 overline(v) lambda (dif u)/(dif z),
   $
   with the sign convention that positive $Pi$ transports $x$-momentum
   towards $+z$. Comparing with $Pi = -eta (dif u)/(dif z)$ yields
