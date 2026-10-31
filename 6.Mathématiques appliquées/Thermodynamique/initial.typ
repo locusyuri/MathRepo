@@ -3426,6 +3426,15 @@ the covariant formulation that closes Part I.
 
 == Thermodynamics of the Relativistic Ideal Gas // 相对论理想气体的热力学
 
+#note(title: "Meaning of $m$ in this section")[
+  Throughout this section $m$ denotes the *rest mass of a single
+  particle* — the molecular mass written $m_0$ in the earlier chapters —
+  and not the mass of the sample, which is $N m$.
+  The molar mass, whenever it appears, is $M = m N_A$.
+  This is the standard relativistic notation, and it is the only place in
+  these notes where $m$ carries this meaning.
+]
+
 #definition(name: "Relativistic Dispersion")[
   A relativistic particle of mass $m$ and momentum $p$ has energy
   $
