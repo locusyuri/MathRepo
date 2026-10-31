@@ -583,7 +583,7 @@ higher speeds and must simultaneously lower.
   through the molar mass $M$ as well as the molecular mass $m_0$:
   $
     v_p = sqrt(2 k_B T / m_0) = sqrt(2 R T / M), quad
-    overline(v) = sqrt(8 k_B T / (pi m)) = sqrt(8 R T / (pi M)), quad
+    overline(v) = sqrt(8 k_B T / (pi m_0)) = sqrt(8 R T / (pi M)), quad
     v_("rms") = sqrt(3 k_B T / m_0) = sqrt(3 R T / M),
   $
   the *most probable*, *mean* and *root-mean-square* speeds, in the
