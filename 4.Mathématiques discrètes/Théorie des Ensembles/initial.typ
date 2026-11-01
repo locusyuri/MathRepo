@@ -226,8 +226,8 @@ There are several special types of mappings:
 
 Mappings can be classified based on their behavior:
 
-- *Injective (One-to-One)*: A mapping $f: X -> Y$ is *injective* if for every $x_1, x_2 in X$, $f(x_1) = f(x_2) => x_1 = x_2$.
-- *Surjective (Onto)*: A mapping $f: X -> Y$ is *surjective* if for every $y in Y$, there exists an $x in X$ such that $f(x) = y$.
+- *Injective (One-to-One)*: A mapping $f: X -> Y$ is *injective* if for every $x_1, x_2 in X$, $f(x_1) = f(x_2) => x_1 = x_2$. Injections are written $f: X arrow.r.hook Y$.
+- *Surjective (Onto)*: A mapping $f: X -> Y$ is *surjective* if for every $y in Y$, there exists an $x in X$ such that $f(x) = y$. Surjections are written $f: X arrow.r.twohead Y$.
 - *Bijective*: A mapping $f: X -> Y$ is *bijective* if it is both injective and surjective.
 
 #note[
