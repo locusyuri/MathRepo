@@ -348,8 +348,21 @@ The proportionality $dot.double(x) prop - x$ is the defining signature of simple
 
 The total mechanical energy is conserved and oscillates between kinetic and potential forms:
 $
-  E = frac(1,2) m dot(x)^2 + frac(1,2) k x^2 = frac(1,2) k A^2.
+  E = E_k + E_p = frac(1, 2) m dot(x)^2 + frac(1, 2) k x^2 = frac(1, 2) k A^2,
 $
+where $E_k$ is the kinetic energy and $E_p$ is the potential energy.
+
+Since $k = m omega_0^2$, the two contributions read, in terms of the motion,
+$
+  E_p = frac(1, 2) k A^2 cos^2(omega_0 t + phi), quad
+  E_k = frac(1, 2) k A^2 sin^2(omega_0 t + phi),
+$
+and they sum to the constant $E$: the energy is transferred back and forth between the spring and the mass.
+
+- At the turning points $x = plus.minus A$ the mass is momentarily at rest: $E_k = 0$ and $E_p = E$ is maximal, the spring being fully stretched or compressed.
+- At equilibrium $x = 0$ the spring is unstretched: $E_p = 0$ and $E_k = E$ is maximal, the mass moving fastest with speed $omega_0 A$.
+
+The maxima of one form therefore coincide with the minima of the other, and away from these extremes both terms are nonzero while their sum stays equal to $E$.
 
 #example(name: "Mass-Spring System")[ // 弹簧振子
   A mass $m = 0.5 "kg"$ on a spring of stiffness $k = 32 "N/m"$ is pulled $A = 0.1 "m"$ from equilibrium and released.
