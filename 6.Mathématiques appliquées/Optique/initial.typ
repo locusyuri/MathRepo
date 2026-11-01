@@ -72,7 +72,7 @@
 
 // --- Chapter 1: Oscillations (振动) ---
 //   Section 1.1: Simple Harmonic Motion (简谐运动)
-//     - 运动方程、相位与相位差
+//     - 运动方程、周期与频率、相位与相位差
 //     - 能量守恒与振幅
 //     - 旋转矢量法与复数表示
 //     - 同频合成与拍频
@@ -298,14 +298,44 @@ Dividing by $m$ and defining the *angular frequency* $omega_0 = sqrt(k / m)$:
     dot.double(x) + omega_0^2 x = 0, quad x(t) = A cos(omega_0 t + phi),
   $
   where $A$ is the amplitude and $phi$ is the initial phase.
-  The period and frequency are
-  $
-    T = frac(2 pi, omega_0) = 2 pi sqrt(frac(m, k)), quad f = frac(1, T) = frac(omega_0, 2 pi).
-  $
 ] <def:shm>
 
-The argument $omega_0 t + phi$ is the *phase* of the oscillation, and $phi$ the phase at $t = 0$.
-Two oscillators of the same frequency are compared through their *phase difference* $Delta phi$: a constant that decides whether they move together ($Delta phi = 0$), in opposition ($Delta phi = pi$), or in between.
+The solution is characterised by its amplitude together with three equivalent measures of how fast the motion repeats:
+
+#tex-table(
+  ("Quantity", "Symbol", "Expression", "Meaning"),
+  ([Amplitude], [$A$], [$A > 0$], [maximal displacement from equilibrium]),
+  ([Period], [$T$], [$T = frac(2 pi, omega_0) = 2 pi sqrt(frac(m, k))$], [time of one complete cycle]),
+  ([Frequency], [$f$], [$f = frac(1, T) = frac(omega_0, 2 pi)$], [number of cycles per second]),
+  ([Angular frequency], [$omega_0$], [$omega_0 = frac(2 pi, T) = 2 pi f$], [radians per second]),
+)
+
+The period is measured in seconds, the frequency in hertz (one hertz is one cycle per second), and the angular frequency in radians per second.
+For the mass-spring system $T = 2 pi sqrt(m / k)$: the stiffer the spring or the lighter the mass, the faster the oscillation, while the period is independent of the amplitude.
+
+The argument $omega_0 t + phi$ is the *phase* of the oscillation: it advances by $2 pi$ during one period, so it records the progress of the motion within the cycle.
+The constant $phi$ is the *initial phase*, the phase at $t = 0$, which fixes where in the cycle the motion starts.
+
+Two oscillators of the same angular frequency are compared through their *phase difference*.
+For phases $omega_0 t + phi_1$ and $omega_0 t + phi_2$ the difference
+$
+  Delta phi = (omega_0 t + phi_2) - (omega_0 t + phi_1) = phi_2 - phi_1
+$
+does not depend on time: the two phasors rotate at the same rate and keep a fixed angle.
+The magnitude of $Delta phi$ then classifies the relative motion:
+
+- *In phase* — $Delta phi = 2 m pi$ with $m in bb(Z)$: the two oscillators cross equilibrium and reach their maxima at the same instants.
+- *Antiphase* — $Delta phi = (2 m + 1) pi$: one is at its maximum when the other is at its minimum; for equal amplitudes $x_2 = - x_1$.
+- *Neither in phase nor in antiphase* — every other value: the oscillations keep the same period and amplitude but are shifted in time relative to each other.
+
+Which oscillator is labelled "first" is a matter of convention, and adding $2 m pi$ to $Delta phi$ changes nothing observable.
+It is therefore customary to choose the representative with $abs(Delta phi) <= pi$, folding all physically equivalent values into a single interval.
+In this convention the sign of $Delta phi$ carries the lead-lag information:
+
+- $Delta phi > 0$: $x_2$ *leads* $x_1$ by $Delta phi$, reaching each phase a time $Delta phi / omega_0$ earlier.
+- $Delta phi < 0$: $x_2$ *lags* behind $x_1$ by $abs(Delta phi)$.
+
+The boundary values $Delta phi = 0$ and $Delta phi = pi$ are the in-phase and antiphase cases, for which the notions of lead and lag are immaterial.
 
 Differentiating the solution gives the velocity and the acceleration:
 $
