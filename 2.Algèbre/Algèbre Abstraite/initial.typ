@@ -2392,6 +2392,11 @@ irreducible building blocks of finite group theory.
   ambient group needs to be named, $N$ is simply called *normal*.
 ] <def:normal-subgroup>
 
+#note(title: "Normal versus invariant")[
+  Normal subgroups are also called *invariant subgroups*. The alias anticipates the characterization below: $N$ is normal exactly when $a n a^(-1) in N$ for all $a in G$ and $n in N$, so the group's internal relabelling $x |-> a x a^(-1)$ never carries an element of $N$ outside $N$.
+  The word *invariant* is nonetheless vague — invariant under *what*? The answer is deferred to #link(<def:inner-automorphism>)[§5.4], where inner automorphisms are formalised and characteristic subgroups (invariant under *every* automorphism) show why the bare word cannot be trusted.
+] <note:normal-invariant>
+
 Two remarks are in order. First, normality is *relative to $G$*: the
 same subgroup may be normal in one ambient group and not in another.
 Second, $a N = N a$ is *not* the assertion that $a n = n a$ for every
