@@ -88,14 +88,13 @@
 //     - 方波/三角波/锯齿波、Gibbs 现象、Parseval 能量
 
 // --- Chapter 2: Wave Motion (波动) ---
-//   Section 2.1: The Wave Equation and d'Alembert's Solution (波动方程与达朗贝尔解)
-//   Section 2.2: Mechanical Waves and Their Geometry (机械波与几何描述：波源/介质/波面波线/惠更斯定性)
-//   Section 2.3: Harmonic Travelling Waves: The Wave Function (简谐行波与波函数)
-//   Section 2.4: Wave Speed in Elastic Media (弹性介质波速：应变/应力/模量/泊松比/P-S 波)
-//   Section 2.5: Energy, Energy Density and Intensity (能量、能量密度与能流密度)
-//   Section 2.6: Superposition, Interference and Standing Waves (叠加/相干/反射与半波损失/驻波)
-//   Section 2.7: Common Waves: Sound, Seismic and Water (常见波)
-//   Section 2.8: The Doppler Effect (多普勒效应)
+//   Section 2.1: The Description of Waves (波的描述：波源/介质/横纵波/波面波线/参量/波函数)
+//   Section 2.2: The Wave Equation and d'Alembert's Solution (波动方程与达朗贝尔解)
+//   Section 2.3: Wave Speed in Elastic Media (弹性介质波速：应变/应力/模量/泊松比/P-S 波)
+//   Section 2.4: Energy, Intensity and Impedance (能量、能流与特征阻抗)
+//   Section 2.5: Superposition, Interference, Reflection and Standing Waves (叠加/干涉/反射与半波损失/驻波)
+//   Section 2.6: Applications: Sound, Seismic and Water Waves (常见波的应用)
+//   Section 2.7: The Doppler Effect and Shock Waves (多普勒效应与冲击波)
 
 // --- Chapter 3: Dispersion, Fourier Methods and Normal Modes (色散、傅里叶方法与简正模) ---
 //   Section 3.1: Dispersion Relation, Phase and Group Velocity (色散关系、相速度与群速度)
@@ -712,35 +711,11 @@ Beyond periodic motion the sum becomes an integral: letting $T -> oo$ turns the 
 While oscillators describe the motion of individual particles, *waves* describe the propagation of disturbances through a continuous medium.
 The key conceptual shift is from a function of time alone $x(t)$ to a function of both space and time $u(x,t)$.
 
-This chapter builds that description in two layers: first the medium-independent kinematics and energetics of a travelling wave, then the concrete mechanics of waves in elastic media — their speed, their reflection, and the interference and standing-wave patterns they produce.
+The chapter moves from the description of a travelling wave — its source, medium, geometry, parameters and wave function — to the equation that governs it and the medium-dependent speed, then to energy transport, superposition and standing waves, the common waves of sound, seismology and water, and finally moving-source effects.
 
-== The Wave Equation and d'Alembert's Solution // 波动方程与达朗贝尔解
+== The Description of Waves // 波的描述
 
-=== The Wave Equation // 波动方程
-
-#definition(name: "One-Dimensional Wave Equation")[
-  The displacement $u(x, t)$ of a wave travelling along the $x$-axis satisfies
-  $
-    frac(partial^2 u, partial t^2) = v^2 frac(partial^2 u, partial x^2).
-  $
-  The constant $v$ is the *wave speed*, fixed by the medium and not by the source.
-] <def:wave-eq-1d>
-
-The equation is second order in both space and time and linear; the speed formulas for particular media are collected in #link(<sec:elastic-wave-speed>)[Section 2.4].
-
-=== d'Alembert's Solution // 达朗贝尔解
-
-The wave equation admits a general solution in terms of travelling waves:
-$
-  u(x, t) = f(x - v t) + g(x + v t),
-$
-where $f$ and $g$ are arbitrary twice-differentiable functions.
-The function $f(x - v t)$ represents a wave travelling to the right at speed $v$ without changing shape; $g(x + v t)$ travels to the left.
-This is *d'Alembert's solution*, and it reveals that the wave equation is fundamentally a statement that the waveform propagates without distortion in a non-dispersive medium.
-
-== Mechanical Waves and Their Geometry // 机械波及其几何描述
-
-=== Formation: Source and Medium // 波源与介质
+=== Source, Medium and Wave Types // 波源、介质与波的类型
 
 A *mechanical wave* is a disturbance propagating through a material medium by virtue of the elastic coupling between neighbouring particles.
 Two ingredients are therefore indispensable: a *source* that supplies the disturbance and a *medium* that transmits it.
@@ -748,8 +723,6 @@ Two ingredients are therefore indispensable: a *source* that supplies the distur
 The particles of the medium do not travel with the wave.
 Each of them oscillates about its equilibrium position, while the disturbance — and with it the energy — moves forward.
 This is the essential difference between a wave and a stream: what propagates is a *state of motion*, not matter.
-
-=== Transverse and Longitudinal Waves // 横波与纵波
 
 Waves are classified by the direction of particle displacement relative to the propagation direction.
 
@@ -761,17 +734,18 @@ Waves are classified by the direction of particle displacement relative to the p
   - A *surface wave* combines both: the particles trace ellipses near the surface (water waves, seismic surface waves), and the amplitude decays with depth.
 ] <def:transverse-longitudinal>
 
-Solids support both types at once, and the two propagate at different speeds; this is the content of #link(<sec:elastic-wave-speed>)[Section 2.4], and the reason seismic stations record two distinct arrivals.
+Solids support both types at once, and the two propagate at different speeds; this is the content of #link(<sec:elastic-wave-speed>)[Section 2.3], and the reason seismic stations record two distinct arrivals.
 
-=== Wavefronts, Rays and Wave Parameters // 波面、波线与波的参量
+=== Wavefronts and Rays // 波面与波线
 
 A wave in three dimensions is described geometrically by two families of surfaces.
 
 #definition(name: "Wavefronts and Rays")[
   A *wavefront* is a surface on which the phase of the wave is constant at a given instant — a surface of constant phase.
   A *ray* is a line drawn perpendicular to the wavefronts, in the direction of energy propagation.
-  A wave is *plane* if its wavefronts are parallel planes, *spherical* if they are concentric spheres, and *cylindrical* if they are coaxial cylinders.
 ] <def:wave-geometry>
+
+=== Wavelength, Period, Frequency and Speed // 波长、周期、频率与波速
 
 Four parameters describe a harmonic wave completely:
 - the *wavelength* $lambda$, the distance between two successive wavefronts of the same phase;
@@ -785,23 +759,9 @@ $
 $
 so that a wave entering a new medium keeps its frequency and changes its wavelength in proportion to the speed.
 
-From the same picture comes *Huygens' construction*: every point of a wavefront acts as a source of secondary spherical wavelets, and the wavefront at a later time is their envelope.
-The construction explains qualitatively why waves bend around obstacles (diffraction) and why they obey the reflection and refraction laws.
-Its quantitative form — with amplitudes, obliquity factors and boundary conditions — is the Huygens–Fresnel principle of #link(<ch:scalar-diffraction>)[Chapter 8]; the reflection and refraction laws are derived from Fermat's principle in #link(<ch:ray-optics>)[Chapter 5]; and the diffraction patterns themselves are computed in #link(<ch:diffraction>)[Chapter 10].
-The four parameters, together with the two readings of the wave function, are collected in @fig:wave-parameters.
+=== The Harmonic Wave Function // 波函数
 
-#figure(
-  image("img/wave-parameters.svg", width: 95%),
-  caption: [Left: the same harmonic wave read as a waveform $u(x)$ at fixed $t$ (top) and as the vibration $u(t)$ of a single particle (bottom). Right: wavefronts (blue) and rays (green) of a plane wave.],
-  placement: auto,
-  supplement: [Fig.],
-) <fig:wave-parameters>
-
-== Harmonic Travelling Waves: The Wave Function // 简谐行波与波函数
-
-=== The Wave Function // 波函数
-
-The simplest and most important special case of d'Alembert's solution is the *harmonic travelling wave*.
+The simplest and most important special case of a travelling wave is the *harmonic travelling wave*.
 
 #definition(name: "Harmonic Travelling Wave")[
   $
@@ -830,7 +790,7 @@ For a harmonic wave the particle velocity has amplitude $omega A$, which may be 
 
 === Plane, Spherical and Cylindrical Waves // 平面波、球面波与柱面波
 
-Depending on the geometry of the source, the solutions of the wave equation take different forms.
+Depending on the geometry of the source, a harmonic wave takes one of three canonical forms.
 
 #definition(name: "Plane, Spherical, and Cylindrical Waves")[
   - *Plane wave*: wavefronts are infinite planes. $u = A cos(bold(k) dot bold(r) - omega t + phi)$.
@@ -840,6 +800,46 @@ Depending on the geometry of the source, the solutions of the wave equation take
   - *Cylindrical wave* (line source): wavefronts are coaxial cylinders. $u(r, t) prop frac(1, sqrt(r)) cos(k r - omega t + phi)$.
     Amplitude decays as $1/sqrt(r)$.
 ] <def:wave-geometries>
+
+From the geometry of the wavefronts comes *Huygens' construction*: every point of a wavefront acts as a source of secondary spherical wavelets, and the wavefront at a later time is their envelope.
+The construction explains qualitatively why waves bend around obstacles (diffraction) and why they obey the reflection and refraction laws.
+Its quantitative form — with amplitudes, obliquity factors and boundary conditions — is the Huygens–Fresnel principle of #link(<ch:scalar-diffraction>)[Chapter 8]; the reflection and refraction laws are derived from Fermat's principle in #link(<ch:ray-optics>)[Chapter 5]; and the diffraction patterns themselves are computed in #link(<ch:diffraction>)[Chapter 10].
+
+The four parameters, together with the two readings of the wave function, are collected in @fig:wave-parameters.
+
+#figure(
+  image("img/wave-parameters.svg", width: 95%),
+  caption: [Left: the same harmonic wave read as a waveform $u(x)$ at fixed $t$ (top) and as the vibration $u(t)$ of a single particle (bottom). Right: wavefronts (blue) and rays (green) of a plane wave.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:wave-parameters>
+
+== The Wave Equation and d'Alembert's Solution // 波动方程与达朗贝尔解
+
+The description so far is kinematic: it says how a wave looks, not why it propagates.
+The dynamics that fixes its speed enters through a partial differential equation.
+
+=== The Wave Equation // 波动方程
+
+#definition(name: "One-Dimensional Wave Equation")[
+  The displacement $u(x, t)$ of a wave travelling along the $x$-axis satisfies
+  $
+    frac(partial^2 u, partial t^2) = v^2 frac(partial^2 u, partial x^2).
+  $
+  The constant $v$ is the *wave speed*, fixed by the medium and not by the source.
+] <def:wave-eq-1d>
+
+The equation is second order in both space and time and linear; the speed formulas for particular media are collected in #link(<sec:elastic-wave-speed>)[Section 2.3].
+
+=== d'Alembert's Solution // 达朗贝尔解
+
+The wave equation admits a general solution in terms of travelling waves:
+$
+  u(x, t) = f(x - v t) + g(x + v t),
+$
+where $f$ and $g$ are arbitrary twice-differentiable functions.
+The function $f(x - v t)$ represents a wave travelling to the right at speed $v$ without changing shape; $g(x + v t)$ travels to the left.
+This is *d'Alembert's solution*, and it reveals that the wave equation is fundamentally a statement that the waveform propagates without distortion in a non-dispersive medium.
 
 == Wave Speed in Elastic Media <sec:elastic-wave-speed> // 弹性介质中的波速
 
@@ -926,7 +926,9 @@ $
   The S–P time is the standard first estimate of the distance to an earthquake.
 ] <ex:seismic-arrival>
 
-== Energy, Energy Density and Intensity // 能量、能量密度与能流密度
+== Energy, Intensity and Impedance // 能量、强度与阻抗
+
+=== Energy Density and Energy Flux // 能量密度与能流
 
 A travelling wave carries both kinetic and potential energy.
 For a wave on a string:
@@ -951,6 +953,17 @@ $
 Kinetic and potential energy are equal at every instant for a travelling wave — unlike an oscillator, where they exchange.
 The energy moves with the wave: the *energy flux density* is the energy crossing unit area per unit time, and for a harmonic wave its period average is the mean energy density times the speed, $overline(cal(E)) v$.
 
+=== Characteristic Impedance // 特征阻抗
+
+At a given amplitude, how much energy a wave carries is fixed by the medium through its characteristic impedance.
+
+#definition(name: "Characteristic Impedance")[
+  For a wave on a string: $Z = mu v = sqrt(T mu)$ (ratio of transverse force to transverse velocity).
+  For a sound wave: $Z = rho v$ (ratio of acoustic pressure to particle velocity).
+] <def:characteristic-impedance>
+
+=== Intensity and the Inverse-Square Law // 强度与平方反比律
+
 #definition(name: "Wave Intensity")[
   The *intensity* (average power per unit area) of a harmonic wave is
   $
@@ -964,7 +977,7 @@ The energy moves with the wave: the *energy flux density* is the energy crossing
   The same structure — energy density, energy flux, and conservation law — appears in the electromagnetic field (Électrodynamique, Electromagnetic Waves).
 ]
 
-== Superposition, Interference and Standing Waves <sec:superposition-standing> // 叠加、干涉与驻波
+== Superposition, Interference, Reflection and Standing Waves <sec:superposition-standing> // 叠加、干涉、反射与驻波
 
 === The Superposition Principle // 叠加原理
 
@@ -994,14 +1007,9 @@ maximal for $Delta phi = 2 m pi$ (*constructive*) and minimal for $Delta phi = (
 With $I_1 = I_2$ the pattern runs from $4 I_1$ to $0$: fringes of full contrast.
 The optical case is developed in #link(<ch:interference>)[Chapter 9], where $Delta phi$ is produced by an optical path difference.
 
-=== Reflection, Impedance and Half-Wave Loss // 反射、阻抗与半波损失
+=== Reflection and Half-Wave Loss // 反射与半波损失
 
-When a wave encounters a boundary between two media, part of the energy is reflected and part is transmitted. The determining factor is the *characteristic impedance* of each medium.
-
-#definition(name: "Characteristic Impedance")[
-  For a wave on a string: $Z = mu v = sqrt(T mu)$ (ratio of transverse force to transverse velocity).
-  For a sound wave: $Z = rho v$ (ratio of acoustic pressure to particle velocity).
-] <def:characteristic-impedance>
+When a wave encounters a boundary between two media, part of the energy is reflected and part is transmitted. The determining factor is the #link(<def:characteristic-impedance>)[characteristic impedance] of each medium.
 
 #theorem(name: "Reflection and Transmission at a Boundary")[
   At a boundary between two media with impedances $Z_1$ and $Z_2$:
@@ -1024,7 +1032,7 @@ When a wave encounters a boundary between two media, part of the energy is refle
   Continuity of the displacement requires $1 + R = T$.
 
   *Step 2 — Continuity of the transverse force.*
-  On each side the transverse force is the tension multiplied by the slope, $tau_k partial u / partial x$, where $tau_k$ is the string tension of #link(<sec:elastic-wave-speed>)[Section 2.4] (not the transmission coefficient $T$ of this theorem).
+  On each side the transverse force is the tension multiplied by the slope, $tau_k partial u / partial x$, where $tau_k$ is the string tension of #link(<sec:elastic-wave-speed>)[Section 2.3] (not the transmission coefficient $T$ of this theorem).
   Demanding equality at $x = 0$ gives $i k_1 tau_1 (1 - R) = i k_2 tau_2 T$.
   Because $Z_k = mu_k v_k$, $tau_k = mu_k v_k^2$ and $v_k = omega / k_k$, we have $tau_k k_k = Z_k omega$, so the condition collapses to $Z_1 (1 - R) = Z_2 T$ — which is to say that each travelling component transmits a force $Z partial u / partial t$, up to a sign set by its direction of travel.
 
@@ -1091,20 +1099,17 @@ The first normal modes of the string are drawn in @fig:string-normal-modes.
 Each fixed end is a node, and this is exactly the $Z_2 -> infinity$ limit of the impedance argument above: reading the support as a prescribed node and reading it as a $R = -1$ reflection (half-wave loss) give the same answer.
 For a string with one free end the antinode sits at the free end, and the allowed lengths become $L = (2 n + 1) lambda / 4$ with $n = 0, 1, 2, dots.c$.
 
-== Common Waves: Sound, Seismic and Water // 常见波
+== Applications: Sound, Seismic and Water Waves // 常见波的应用
 
-The same machinery describes the waves met in practice, with one twist each.
+*Sound.* A longitudinal compression wave in a fluid, with the speed fixed by the bulk modulus and the density as in #link(<sec:elastic-wave-speed>)[Section 2.3].
+The audible range is a narrow band of frequencies; the intensity level is quoted on a logarithmic scale, $L = 10 log_(10)(I / I_0)$ in decibels, referenced to the threshold of hearing $I_0 = 10^(-12) "W/m"^2$.
 
-*Sound.* A longitudinal compression wave in a fluid, governed by $v = sqrt(K / rho)$ and, for a gas, $v = sqrt(gamma R T / M)$.
-The audible range is a narrow band of frequencies, but the physics is that of #link(<sec:elastic-wave-speed>)[Section 2.4]; the intensity level is quoted on a logarithmic scale, $L = 10 log_(10)(I / I_0)$ in decibels, referenced to the threshold of hearing $I_0 = 10^(-12) "W/m"^2$.
-
-*Seismic waves.* The Earth supports both P- and S-waves, plus surface waves that travel more slowly and carry most of the destructive energy.
+*Seismic waves.* The Earth supports both P- and S-waves, whose speeds are compared in #link(<sec:elastic-wave-speed>)[Section 2.3], plus surface waves that travel more slowly and carry most of the destructive energy.
 The S–P delay locates the epicentre, and the absence of S-waves on the far side of the Earth is the classical evidence for a liquid core.
 
-*Water waves.* Gravity and surface tension supply the restoring force, so the dispersion relation is not linear: deep-water waves have $omega = sqrt(g k)$ and hence $v_p = sqrt(g lambda / 2 pi)$, while shallow-water waves have $v = sqrt(g h)$ and are non-dispersive.
-This is the example that opens the discussion of dispersion in #link(<ch:dispersion-fourier>)[Chapter 3].
+*Water waves.* Gravity and surface tension supply the restoring force, so the wave is dispersive: deep-water and shallow-water waves follow different relations, the deep-water case opening the discussion of dispersion in #link(<ch:dispersion-fourier>)[Chapter 3].
 
-== The Doppler Effect // 多普勒效应
+== The Doppler Effect and Shock Waves // 多普勒效应与冲击波
 
 === Mechanical Doppler // 机械波多普勒
 
@@ -1369,7 +1374,7 @@ This distinction reappears in #link(<ch:diffraction>)[Chapter 10 (Resolution)] a
 
 Chapters 1–3 of this part developed the wave equation and its general mathematical machinery — d'Alembert's solution, the wave function, complex (phasor) representation, superposition, interference, standing waves, dispersion, group velocity, and Fourier analysis.
 These concepts are *medium-independent*: they apply equally to mechanical waves, electromagnetic waves, and quantum probability waves.
-The elastic-medium specialisation — strain, stress, elastic moduli, P/S waves, impedance, reflection and half-wave loss — is now part of this notebook as well (#link(<sec:elastic-wave-speed>)[Section 2.4] and #link(<sec:superposition-standing>)[Section 2.6]); it originally came from *Mécanique analytique*.
+The elastic-medium specialisation — strain, stress, elastic moduli, P/S waves, impedance, reflection and half-wave loss — is now part of this notebook as well (#link(<sec:elastic-wave-speed>)[Section 2.3] and #link(<sec:superposition-standing>)[Section 2.5]); it originally came from *Mécanique analytique*.
 #link(<ch:helmholtz>)[Chapter 4] has added the last piece: the time-harmonic Helmholtz formulation on which both geometric optics (Part II) and wave optics (Part III) rest.
 
 // --------------------------------------------------------------------------
