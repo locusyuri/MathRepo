@@ -3109,14 +3109,36 @@ is *always* the identity (no surjectivity needed, redeeming
 kernel is *always* normal (the link between homomorphisms and
 quotients).
 
+#proposition(name: "A Surjective Image of a Group Is a Group")[
+  Let $(M, star)$ be a magma and let $f: G -> M$ be a *surjective* homomorphism (#link(<def:homomorphism>)[§1.3]) whose source $G$ is a group. Then $(M, star)$ is a group, with identity $f(e)$ and with $f(a^(-1))$ the inverse of $f(a)$: a surjective homomorphic image of a group is again a group.
+] <prop:surjective-image-group>
+
+#proof[
+  *Associativity.* Write $x = f(a)$, $y = f(b)$, $z = f(c)$ for suitable $a, b, c in G$. Then
+  $
+    (x star y) star z = (f(a) star f(b)) star f(c) = f(a b) star f(c) = f((a b) c) = f(a (b c)) = f(a) star f(b c) = x star (y star z),
+  $
+  the fourth equality being associativity in $G$.
+
+  *Identity.* $x star f(e) = f(a) star f(e) = f(a e) = f(a) = x$, and likewise $f(e) star x = x$.
+
+  *Inverses.* $f(a) star f(a^(-1)) = f(a a^(-1)) = f(e) = f(a^(-1)) star f(a)$, so every element of $M$ is invertible.
+]
+
+The proposition asks nothing of the target beyond a binary operation: the three group axioms are *equalities*, and equalities survive a surjective map. It is applied below not to $G -> H$ but to the restriction $G -> "Im" f$, whose *target* is by definition exactly the image — that is what makes surjectivity affordable here, whereas #link(<prop:homomorphism-properties>)[§1.3] had to demand it for the source–target pair in general. The first three items of the property to come are this statement read inside $"Im" f$; in particular the identity of $"Im" f$ is the identity $e'$ of the ambient group $H$.
+
 #property(name: "Group Homomorphisms Preserve Structure")[
   Let $f: G -> H$ be a homomorphism of groups, with identities
-  $e in G$, $e' in H$.
-  + $f(e) = e'$ — no surjectivity required.
+  $e in G$ and $e' in H$. *None of the items below requires $f$ to be
+  surjective.*
+  + $f(e) = e'$.
   + $f(a^(-1)) = f(a)^(-1)$ for every $a in G$.
   + $f(a^n) = f(a)^n$ for every $a in G$, $n in bb(Z)$.
-  + If $K <= G$ then $f(K) <= H$; if $K lt.closed.eq G$ then $f(K) lt.closed.eq f(G)$.
-  + If $L <= H$ then $f^(-1)(L) <= G$; if $L lt.closed.eq H$ then
+  + If $K <= G$ then $f(K) <= H$, and the restriction of $f$ to $K$ is a
+    surjective homomorphism $K -> f(K)$; if $K lt.closed.eq G$ then $f(K)
+    lt.closed.eq f(G)$.
+  + If $L <= H$ then $f^(-1)(L) <= G$, and the restriction of $f$ to
+    $f^(-1)(L)$ is a homomorphism $f^(-1)(L) -> L$; if $L lt.closed.eq H$ then
     $f^(-1)(L) lt.closed.eq G$.
 ] <prop:group-homomorphism-properties>
 
@@ -3134,12 +3156,12 @@ quotients).
 
   (4) Closure: $f(a), f(b) in f(K)$ with $a, b in K$ gives $f(a)
   f(b)^(-1) = f(a b^(-1)) in f(K)$ by (2), since $K$ is closed under
-  $a b^(-1)$. For normality when $K lt.closed.eq G$: take $f(a) in f(G)$ and
+  $a b^(-1)$. The restriction of $f$ to $K$ satisfies the same equation $f(a b) = f(a) f(b)$, so it is a homomorphism, and it lands on all of $f(K)$ by definition of the image. For normality when $K lt.closed.eq G$: take $f(a) in f(G)$ and
   $f(k) in f(K)$, then $f(a) f(k) f(a)^(-1) = f(a k a^(-1)) in
   f(K)$ by normality of $K$ in $G$.
 
   (5) For $L <= H$ and $a, b in f^(-1)(L)$: $f(a b^(-1)) = f(a)
-  f(b)^(-1) in L$, so $a b^(-1) in f^(-1)(L)$. For normality when
+  f(b)^(-1) in L$, so $a b^(-1) in f^(-1)(L)$. The same equation shows that the restriction is a homomorphism, and it takes values in $L$ — that is what $f^(-1)(L)$ means — so it is a homomorphism $f^(-1)(L) -> L$. For normality when
   $L lt.closed.eq H$: $a in G$, $b in f^(-1)(L)$ gives $f(a b a^(-1)) = f(a)
   f(b) f(a)^(-1) in L$ since $L lt.closed.eq H$, hence $a b a^(-1) in
   f^(-1)(L)$.
