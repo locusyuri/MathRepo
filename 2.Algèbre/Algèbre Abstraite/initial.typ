@@ -3129,14 +3129,12 @@ The proposition asks nothing of the target beyond a binary operation: the three 
 
 #property(name: "Group Homomorphisms Preserve Structure")[
   Let $f: G -> H$ be a homomorphism of groups, with identities
-  $e in G$ and $e' in H$. *None of the items below requires $f$ to be
-  surjective.*
+  $e in G$ and $e' in H$. _None of the items below requires $f$ to be surjective._
   + $f(e) = e'$.
   + $f(a^(-1)) = f(a)^(-1)$ for every $a in G$.
+  + $f$ is injective if and only if $f^(-1)({e'}) = {e}$.
   + $f(a^n) = f(a)^n$ for every $a in G$, $n in bb(Z)$.
-  + If $K <= G$ then $f(K) <= H$, and the restriction of $f$ to $K$ is a
-    surjective homomorphism $K -> f(K)$; if $K lt.closed.eq G$ then $f(K)
-    lt.closed.eq f(G)$.
+  + If $K <= G$ then $f(K) <= H$, and the restriction of $f$ to $K$ is a surjective homomorphism $K -> f(K)$; if $K lt.closed.eq G$ then $f(K) lt.closed.eq f(G)$.
   + If $L <= H$ then $f^(-1)(L) <= G$, and the restriction of $f$ to
     $f^(-1)(L)$ is a homomorphism $f^(-1)(L) -> L$; if $L lt.closed.eq H$ then
     $f^(-1)(L) lt.closed.eq G$.
@@ -3151,16 +3149,21 @@ The proposition asks nothing of the target beyond a binary operation: the three 
   an inverse of $f(a)$, hence equals $f(a)^(-1)$ by uniqueness of
   inverses.
 
-  (3) For $n >= 0$ this is induction on $n$; for $n < 0$ combine the
+  (3) If $f$ is injective, then $f(a) = e' = f(e)$ forces $a = e$, so
+  $f^(-1)({e'}) = {e}$. Conversely, suppose $f^(-1)({e'}) = {e}$ and
+  $f(a) = f(b)$; then $f(a b^(-1)) = f(a) f(b)^(-1) = e'$ by (2), so $a
+  b^(-1) in f^(-1)({e'}) = {e}$, whence $a = b$.
+
+  (4) For $n >= 0$ this is induction on $n$; for $n < 0$ combine the
   $n > 0$ case with (2).
 
-  (4) Closure: $f(a), f(b) in f(K)$ with $a, b in K$ gives $f(a)
+  (5) Closure: $f(a), f(b) in f(K)$ with $a, b in K$ gives $f(a)
   f(b)^(-1) = f(a b^(-1)) in f(K)$ by (2), since $K$ is closed under
   $a b^(-1)$. The restriction of $f$ to $K$ satisfies the same equation $f(a b) = f(a) f(b)$, so it is a homomorphism, and it lands on all of $f(K)$ by definition of the image. For normality when $K lt.closed.eq G$: take $f(a) in f(G)$ and
   $f(k) in f(K)$, then $f(a) f(k) f(a)^(-1) = f(a k a^(-1)) in
   f(K)$ by normality of $K$ in $G$.
 
-  (5) For $L <= H$ and $a, b in f^(-1)(L)$: $f(a b^(-1)) = f(a)
+  (6) For $L <= H$ and $a, b in f^(-1)(L)$: $f(a b^(-1)) = f(a)
   f(b)^(-1) in L$, so $a b^(-1) in f^(-1)(L)$. The same equation shows that the restriction is a homomorphism, and it takes values in $L$ — that is what $f^(-1)(L)$ means — so it is a homomorphism $f^(-1)(L) -> L$. For normality when
   $L lt.closed.eq H$: $a in G$, $b in f^(-1)(L)$ gives $f(a b a^(-1)) = f(a)
   f(b) f(a)^(-1) in L$ since $L lt.closed.eq H$, hence $a b a^(-1) in
@@ -3176,8 +3179,8 @@ The proposition asks nothing of the target beyond a binary operation: the three 
   $
 ] <def:kernel-image>
 
-By #link(<prop:group-homomorphism-properties>)[property (4) and
-  (5)] of the homomorphism properties, $"Ker" f <= G$ and
+By #link(<prop:group-homomorphism-properties>)[property (5) and
+  (6)] of the homomorphism properties, $"Ker" f <= G$ and
 $"Im" f <= H$.
 
 This specialises #link(<def:kernel-image-general>)[§1.3] to groups,
@@ -3596,7 +3599,7 @@ $G$ containing $N$.
 
 #proof[
   *$pi(K) = K \/ N$ is a subgroup of $G \/ N$* by
-  #link(<prop:group-homomorphism-properties>)[§5.1 property (4)], and
+  #link(<prop:group-homomorphism-properties>)[§5.1 property (5)], and
   *the preimage of a subgroup is a subgroup* by the same property. We
   check the two maps are inverses.
 
@@ -3611,9 +3614,9 @@ $G$ containing $N$.
   *Inclusion preservation* is immediate: $K_1 subset.eq K_2$ implies
   $K_1 \/ N subset.eq K_2 \/ N$, and conversely. *Normality:* if $K
   lt.closed.eq G$ with $N subset.eq K$, then $K \/ N lt.closed.eq G \/ N$ by
-  #link(<prop:group-homomorphism-properties>)[§5.1 property (4)]
+  #link(<prop:group-homomorphism-properties>)[§5.1 property (5)]
   applied to $pi$. Conversely, if $L lt.closed.eq G \/ N$, then $pi^(-1)(L) lt.closed.eq
-  G$ by property (5) of the same proposition. The last clause is the
+  G$ by property (6) of the same proposition. The last clause is the
   Third Isomorphism Theorem.
 ]
 
