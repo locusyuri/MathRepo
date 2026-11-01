@@ -582,20 +582,319 @@ which is the differential form of Gauss's law at a distribution of point charges
 = Tensor Analysis // 张量分析
 // 只保留电动力学真正需要的张量预备；几何张量与电磁场张量分别交由 Géométrie Différentielle 与 Ch16 处理
 
+In the preceding chapter every operation was written in vector notation, with the components hidden inside a single bold symbol.
+Electrodynamics constantly needs the components themselves: the field equations are most conveniently checked component by component, and many vector identities are proved by turning them into algebra.
+This chapter builds that notation, the transformation law that defines a tensor, and the three-dimensional symbol that turns cross products into sums.
+
 == Index Notation and Einstein Summation Convention // 指标记法与爱因斯坦求和约定
-#todo[Write free and dummy indices, the Einstein summation convention, and the Kronecker symbol $delta_(i j)$.]
+// 指标只在三维欧氏空间的笛卡尔坐标系中使用, 拉丁字母取 1,2,3
+
+We use Cartesian coordinates $x_1, x_2, x_3$ of three-dimensional Euclidean space, so that $bold(r) = (x_1, x_2, x_3)$.
+Latin indices $i, j, k, l, m$ always run over $1, 2, 3$, and $a_i$ denotes the $i$-th component of a vector $bold(a)$.
+
+#definition(name: "Einstein Summation Convention")[
+  In a monomial, an index that appears exactly twice is summed over $1, 2, 3$, and the summation sign is omitted:
+  $
+    a_i b_i = sum_(i=1)^3 a_i b_i.
+  $
+  An index that appears exactly twice is called a *dummy index*; an index that appears once is called a *free index*.
+] <def:einstein-convention>
+
+The convention is notational rather than an extra assumption, and it acts within a single term: a sum is never carried across a plus sign.
+Four habits keep the notation unambiguous.
+
+- *At most twice.* An index may appear at most twice in a term; a third occurrence is an error and the index must be renamed.
+- *Dummy indices may be renamed.* Replacing $i$ by $m$ throughout a term changes nothing, since both are summed.
+- *Free indices must match.* A free index on the left-hand side of an equation must appear, with the same letter and exactly once, in every term on the right-hand side.
+- *Terms are independent.* Each term of a sum carries its own dummy indices.
+
+#definition(name: "Kronecker Delta")[
+  The *Kronecker delta* $delta_(i j)$ is defined by
+  $
+    delta_(i j) = cases(1 & "if" i = j, 0 & "if" i != j).
+  $
+] <def:kronecker-delta>
+
+#property(name: "Properties of the Kronecker Delta")[
+  With the summation convention in force,
+  - $delta_(i i) = 3$,
+  - $delta_(i j) a_j = a_i$ for every vector $bold(a)$,
+  - $delta_(i j) delta_(j k) = delta_(i k)$.
+] <prop:kronecker-delta>
+
+The first identity counts the three coordinate directions.
+The second is the *sifting property*: a Kronecker delta renames a summed index.
+The third says that $delta_(i j)$ composes like the identity matrix.
+
+#example(name: "Vector operations in index notation")[
+  The scalar product, the action of a matrix on a vector and the product of two matrices read
+  $
+    bold(a) dot bold(b) = a_i b_i, quad (A bold(x))_i = A_(i j) x_j, quad (A B)_(i j) = A_(i k) B_(k j).
+  $
+  Each right-hand side is a single term with the summation already performed, so no summation sign survives.
+]
+
+#note(title: "Why indices instead of vectors")[
+  Vector notation hides the direction of an equation, which is convenient for statements but awkward for verification.
+  Index notation exposes every component, so a vector identity becomes an algebraic identity in the dummy indices.
+  The price is that the notation refers to axes; the transformation law of the next section is what makes it geometric.
+]
 
 == Cartesian Tensors: Definition and Representation // 笛卡尔张量的定义与表示
-#todo[Write the component transformation law of a Cartesian tensor and its orthogonal-matrix representation.]
+// 张量的存在不依赖坐标轴, 但分量随正交变换按 R 的乘积规律变换
+
+A tensor is a geometric object whose existence does not depend on the choice of axes.
+Its components do depend on the axes, and the way they change is what distinguishes a tensor from an arbitrary array of numbers.
+
+#definition(name: "Orthogonal Transformation")[
+  A change of Cartesian coordinates
+  $
+    x'_i = R_(i j) x_j
+  $
+  is *orthogonal* when its matrix $R = (R_(i j))_(3 times 3)$ satisfies
+  $
+    R_(k i) R_(k j) = delta_(i j),
+  $
+  equivalently $R^"T" R = bold(I)$.
+] <def:orthogonal-transformation>
+
+Orthogonal transformations are the rotations and the reflections of space, and they preserve lengths and scalar products.
+
+#definition(name: "Cartesian Tensor")[
+  A *Cartesian tensor of rank one* is a set of three numbers $a_i$ that transforms as
+  $
+    a'_i = R_(i j) a_j
+  $
+  under every orthogonal transformation, and a *Cartesian tensor of rank zero* is a number that is unchanged.
+  A *Cartesian tensor of rank two* is a set of nine numbers $T_(i j)$ with
+  $
+    T'_(i j) = R_(i k) R_(j l) T_(k l).
+  $
+  A Cartesian tensor of rank $n$ carries one factor $R$ for each of its indices.
+] <def:cartesian-tensor>
+
+The rank counts the number of indices, hence the number of factors $R$.
+For rank two the law says that $T_(i j)$ transforms like the product $a_i b_j$ of two vectors.
+
+#property(name: "The Kronecker Delta is Isotropic")[
+  Under every orthogonal transformation,
+  $
+    delta'_(i j) = R_(i k) R_(j l) delta_(k l) = R_(i k) R_(j k) = delta_(i j).
+  $
+] <prop:isotropic-kronecker>
+
+#note(title: "Components are not the tensor")[
+  A rank-two tensor is stored as a $3 times 3$ matrix, but that matrix is only its representation in one frame.
+  The object itself is the family of components together with the transformation law; in a new frame the matrix is replaced by $R T R^"T"$.
+]
+
+#note(title: "Scope")[
+  Only orthogonal transformations of Cartesian frames are used here, which is why the tensors are called Cartesian.
+  General curvilinear coordinates and their metric belong to the Géométrie Différentielle note; a first contact with orthogonal curvilinear systems is made in *Curvilinear Coordinates*.
+  In *Relativistic Electrodynamics* the same definition is applied to four-dimensional Minkowski frames, where Greek indices also take the value $0$.
+]
 
 == Tensor Algebraic Operations and Contraction // 张量代数运算与缩并
-#todo[Write tensor addition, scalar multiplication, tensor product and contraction.]
+// 加法与数乘逐分量定义; 张量积升高阶数; 缩并降低两阶
+
+Tensors of the same rank form a vector space, while products and contractions generate new tensors from old ones.
+
+Addition and multiplication by a scalar are performed component by component:
+$
+  (A + B)_(i j) = A_(i j) + B_(i j), quad (lambda A)_(i j) = lambda A_(i j).
+$
+Tensors of different rank cannot be added, since their components are of different kinds.
+
+#definition(name: "Tensor Product")[
+  The *tensor product* of a tensor of rank $r$ and a tensor of rank $s$ is the tensor of rank $r + s$ whose components are the products of the components:
+  $
+    (A ⊗ B)_(i j k) = A_(i j) B_k.
+  $
+] <def:tensor-product>
+
+#definition(name: "Contraction")[
+  *Contraction* of a tensor consists in setting two of its indices equal and summing over them with the summation convention.
+  For example, a rank-three tensor $T_(i j k)$ gives the rank-one tensor
+  $
+    S_i = T_(i j j).
+  $
+  A contraction lowers the rank by two.
+] <def:contraction>
+
+For a rank-two tensor the only contraction is the *trace*
+$
+  "tr"(T) = T_(i i).
+$
+The trace is a scalar, hence invariant: $T'_(i i) = R_(i k) R_(i l) T_(k l) = delta_(k l) T_(k l) = T_(k k)$.
+
+Transposition exchanges the two indices, $(T^"T")_(i j) = T_(j i)$, and matrix multiplication is the contraction
+$
+  (A B)_(i j) = A_(i k) B_(k j).
+$
+
+#note(title: "Two different products")[
+  The tensor product $A ⊗ B$ of two rank-two tensors has rank four and components $A_(i j) B_(k l)$, whereas the matrix product $A B$ contracts one index and stays of rank two.
+]
+
+#example(name: "Anisotropic conductivity")[
+  In a crystal the current density need not be parallel to the electric field, and the linear relation is
+  $
+    J_i = sigma_(i j) E_j,
+  $
+  where $sigma_(i j)$ is the *conductivity tensor*.
+  In an isotropic conductor $sigma_(i j) = sigma delta_(i j)$, and the relation reduces to Ohm's law $bold(J) = sigma bold(E)$ of *Ohm's Law and Conductivity*.
+]
 
 == Symmetric and Antisymmetric Tensors // 对称与反对称张量
-#todo[Write the symmetric/antisymmetric decomposition and the dual axial vector of an antisymmetric tensor.]
+// 任意二阶张量可唯一分解为对称部分与反对称部分; 三维中反对称部分等价于一个轴矢量
+
+#definition(name: "Symmetric and Antisymmetric Tensors")[
+  A rank-two tensor is *symmetric* when $T_(i j) = T_(j i)$ and *antisymmetric* when $T_(i j) = -T_(j i)$.
+] <def:symmetric-antisymmetric>
+
+#theorem(name: "Symmetric–Antisymmetric Decomposition")[
+  Every rank-two tensor decomposes uniquely as
+  $
+    T_(i j) = S_(i j) + A_(i j), quad S_(i j) = (T_(i j) + T_(j i))/2, quad A_(i j) = (T_(i j) - T_(j i))/2,
+  $
+  where $S$ is symmetric and $A$ is antisymmetric.
+] <thm:tensor-decomposition>
+
+#proof[
+  *Existence.*
+  The definitions give $S_(i j) + A_(i j) = T_(i j)$ directly, together with $S_(j i) = S_(i j)$ and $A_(j i) = -A_(i j)$.
+
+  *Uniqueness.*
+  If $T_(i j) = S_(i j) + A_(i j) = S'_(i j) + A'_(i j)$, then $S_(i j) - S'_(i j) = A'_(i j) - A_(i j)$, where the left side is symmetric and the right side is antisymmetric.
+  A tensor that is both symmetric and antisymmetric satisfies $C_(i j) = C_(j i) = -C_(i j)$, hence $C_(i j) = 0$, so $S = S'$ and $A = A'$.
+]
+
+In three dimensions a symmetric tensor has six independent components and an antisymmetric one has three, so the two parts together carry the nine components of a general rank-two tensor.
+
+#property(name: "Symmetric–Antisymmetric Contraction")[
+  If $S_(i j)$ is symmetric and $A_(i j)$ is antisymmetric, then $S_(i j) A_(i j) = 0$.
+] <prop:sym-antisym-contraction>
+
+#proof[
+  Renaming the dummy indices,
+  $S_(i j) A_(i j) = S_(j i) A_(j i) = -S_(i j) A_(i j)$, so the scalar equals its own negative.
+]
+
+#definition(name: "Axial Vector of an Antisymmetric Tensor")[
+  For an antisymmetric tensor $A_(i j)$, the *dual vector* is
+  $
+    a_i = 1/2 epsilon_(i j k) A_(j k),
+  $
+  and conversely
+  $
+    A_(i j) = epsilon_(i j k) a_k.
+  $
+] <def:axial-vector>
+
+The two formulas are inverse to each other: substituting the second into the first and contracting two Levi-Civita symbols gives $(1/2)(2 delta_(i l)) a_l = a_i$.
+
+#example(name: "Strain rate and vorticity")[
+  The velocity gradient of a fluid splits as
+  $
+    (partial v_i)/(partial x_j) = e_(i j) + omega_(i j), quad
+    e_(i j) = 1/2 ((partial v_i)/(partial x_j) + (partial v_j)/(partial x_i)), quad
+    omega_(i j) = 1/2 ((partial v_i)/(partial x_j) - (partial v_j)/(partial x_i)).
+  $
+  The symmetric part $e_(i j)$ is the strain-rate tensor, and the dual vector of the antisymmetric part is half the vorticity $nabla times bold(v)$.
+]
+
+#note(title: "Polar and axial vectors")[
+  A vector transforming with $a'_i = R_(i j) a_j$ is called *polar*.
+  The dual vector of an antisymmetric tensor instead picks up an extra factor $"det"(R)$, because the Levi-Civita symbol is a pseudotensor; such a vector is called *axial* or a *pseudovector*.
+  The magnetic field is axial, which is consistent with its definition through a cross product.
+]
 
 == The Levi-Civita Symbol and Vector Identities // Levi-Civita 符号与矢量恒等式
-#todo[Write the contraction identities of $epsilon_(i j k)$ and the index form of gradient, divergence and curl.]
+// ε 符号把叉积与旋度写成缩并; 本节用它把矢量恒等式重新证一遍
+
+#definition(name: "Levi-Civita Symbol")[
+  In three dimensions the *Levi-Civita symbol* is defined by
+  $
+    epsilon_(123) = epsilon_(231) = epsilon_(312) = 1, quad
+    epsilon_(213) = epsilon_(321) = epsilon_(132) = -1,
+  $
+  and $epsilon_(i j k) = 0$ whenever two indices coincide.
+] <def:levi-civita>
+
+#property(name: "Properties of the Levi-Civita Symbol")[
+  - It is totally antisymmetric: interchanging two indices changes its sign.
+  - It is invariant under cyclic permutations: $epsilon_(i j k) = epsilon_(j k i) = epsilon_(k i j)$.
+  - $epsilon_(i j k) epsilon_(i l m) = delta_(j l) delta_(k m) - delta_(j m) delta_(k l)$.
+  - $epsilon_(i j k) epsilon_(k l m) = delta_(i l) delta_(j m) - delta_(i m) delta_(j l)$.
+  - Further contractions give $epsilon_(i j k) epsilon_(i j l) = 2 delta_(k l)$ and $epsilon_(i j k) epsilon_(i j k) = 6$.
+] <prop:levi-civita>
+
+The product identities are obtained by listing the possible coincidences among the indices: the only nonzero contributions occur when the two symbols share one index, so that a choice of $j = l$ or $j = m$ remains.
+
+The cross product and the scalar triple product become
+$
+  (bold(a) times bold(b))_i = epsilon_(i j k) a_j b_k, quad
+  bold(a) dot (bold(b) times bold(c)) = epsilon_(i j k) a_i b_j c_k.
+$
+
+#proposition(name: "Vector Identities in Index Notation")[
+  For a scalar field $f$ and vector fields $bold(a), bold(b)$,
+  $
+    nabla times (nabla f) = bold(0), quad nabla dot (nabla times bold(a)) = 0,
+  $
+  $
+    nabla times (nabla times bold(a)) = nabla (nabla dot bold(a)) - nabla^2 bold(a),
+  $
+  and
+  $
+    nabla dot (bold(a) times bold(b)) = bold(b) dot (nabla times bold(a)) - bold(a) dot (nabla times bold(b)).
+  $
+] <prop:vector-identities>
+
+#proof[
+  *Step 1.*
+  In components the first identity reads
+  $
+    (nabla times (nabla f))_i = epsilon_(i j k) (partial^2 f)/(partial x_j partial x_k),
+  $
+  and the contraction of the antisymmetric $epsilon_(i j k)$ with the symmetric second derivative vanishes by #link(<prop:sym-antisym-contraction>)[*Symmetric–Antisymmetric Contraction*].
+
+  *Step 2.*
+  Likewise
+  $
+    nabla dot (nabla times bold(a)) = (partial)/(partial x_i) (epsilon_(i j k) (partial a_k)/(partial x_j)) = epsilon_(i j k) (partial^2 a_k)/(partial x_i partial x_j) = 0,
+  $
+  because $epsilon_(i j k)$ is antisymmetric in $i, j$ while the mixed derivative is symmetric.
+
+  *Step 3.*
+  For the double curl,
+  $
+    (nabla times (nabla times bold(a)))_i = epsilon_(i j k) (partial)/(partial x_j) (epsilon_(k l m) (partial a_m)/(partial x_l)) = epsilon_(i j k) epsilon_(k l m) (partial^2 a_m)/(partial x_j partial x_l).
+  $
+  The contraction identity of the Levi-Civita symbol then gives
+  $
+    (nabla times (nabla times bold(a)))_i = (partial^2 a_j)/(partial x_j partial x_i) - (partial^2 a_i)/(partial x_j partial x_j) = (nabla (nabla dot bold(a)) - nabla^2 bold(a))_i.
+  $
+
+  *Step 4.*
+  Finally,
+  $
+    nabla dot (bold(a) times bold(b)) = (partial)/(partial x_i) (epsilon_(i j k) a_j b_k) = epsilon_(i j k) ((partial a_j)/(partial x_i) b_k + a_j (partial b_k)/(partial x_i)).
+  $
+  Using the cyclic invariance of $epsilon_(i j k)$ and renaming dummy indices turns the two terms into $bold(b) dot (nabla times bold(a))$ and $-bold(a) dot (nabla times bold(b))$.
+]
+
+#example(name: "Scalar product of two cross products")[
+  The contraction identity gives
+  $
+    (bold(a) times bold(b)) dot (bold(c) times bold(d)) = epsilon_(i j k) a_j b_k epsilon_(i l m) c_l d_m = (bold(a) dot bold(c))(bold(b) dot bold(d)) - (bold(a) dot bold(d))(bold(b) dot bold(c)).
+  $
+]
+
+#note(title: "Use in electrodynamics")[
+  The double-curl identity is the algebraic step behind the wave equation: taking the curl of Faraday's law and of the Ampère–Maxwell law turns the first-order Maxwell system into second-order wave equations for $bold(E)$ and $bold(B)$.
+  The vanishing divergence of a curl is the statement that $bold(B)$ has no magnetic sources.
+]
 
 #part("Electrostatics") // 静电学
 
@@ -2307,7 +2606,7 @@ This is one of the most beautiful results of magnetostatics: in the Coulomb gaug
 #solution(name: "Integral Solution for the Vector Potential")[
   By analogy with the scalar Poisson equation, the solution for each component is:
   $
-    A_i(bold(r)) = frac(mu_0, 4 pi) integral_V frac(J_i(bold(r)'), |bold(r) - bold(r)'|) dif V',
+    A_i (bold(r)) = frac(mu_0, 4 pi) integral_V frac(J_i (bold(r)'), |bold(r) - bold(r)'|) dif V',
   $
   or, in full vector form:
   $
@@ -2527,7 +2826,7 @@ Configurations based on helical or toroidal windings. The field is predominantly
 
   For a *finite* solenoid of length $L$, the on-axis field at the centre is:
   $
-    B_z(0) = mu_0 n I frac(L, sqrt(L^2 + 4 R^2)),
+    B_z (0) = mu_0 n I frac(L, sqrt(L^2 + 4 R^2)),
   $
   approaching $mu_0 n I$ as $L >> R$. At the end of a long solenoid, $B_z approx mu_0 n I / 2$.
 ]
@@ -2743,7 +3042,7 @@ The experimental results can be summarised by two key observations:
 
   The magnetic flux through the loop is:
   $
-    Phi_B(t) = integral_S bold(B) dot dif bold(S) = B_0 sin(omega t) w h.
+    Phi_B (t) = integral_S bold(B) dot dif bold(S) = B_0 sin(omega t) w h.
   $
 
   By Faraday's law, the induced EMF is:
@@ -3550,7 +3849,7 @@ where $bold(J)_f$ is the *free* current density, $bold(H) = bold(B) / mu_0 - bol
 //
 // Part I  Mathematical Foundations (Ch1–Ch2)
 //   Ch1 Vector Analysis and Field Theory（已写）
-//   Ch2 Tensor Analysis（TODO：指标记法、笛卡尔张量、Levi-Civita；几何张量见 Géométrie Différentielle）
+//   Ch2 Tensor Analysis（已写：指标记法、笛卡尔张量、张量代数与缩并、对称/反对称、Levi-Civita；几何张量见 Géométrie Différentielle）
 //
 // Part II Electrostatics (Ch3–Ch5)
 //   Ch3 Electrostatic Field（已写；Poisson/Laplace 已移至 Ch4 §4.1，静电能见 Ch5 §5.5）
