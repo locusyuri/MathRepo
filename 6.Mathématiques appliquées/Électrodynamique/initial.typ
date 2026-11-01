@@ -12,6 +12,10 @@
 // Cover + Outline
 // --------------------------------------------------------------------------
 
+// TODO 占位组件：待写内容统一用灰色文字标记
+#let todo(body) = text(fill: luma(140))[TODO: #body]
+
+
 #make-cover(
   "Électrodynamique",
   "Violet",
@@ -574,17 +578,29 @@ $
   nabla dot bold(E) (bold(r)) = 1/epsilon_0 sum_(i=1)^N q_i delta^3(bold(r) - bold(r)_i),
 $
 which is the differential form of Gauss's law at a distribution of point charges.
-= Tensor Analysis // 张量分析
-== Definition and Representation of Cartesian Tensors // 笛卡尔张量的定义与表示
-== Tensor Algebraic Operations and Contraction // 张量代数运算与缩并
-== Symmetric and Antisymmetric Tensors // 对称与反对称张量
-== Principal Axis Transformation and Eigenvalues // 主轴变换与特征值
-== Moment of Inertia Tensor and Stress Tensor // 惯性矩张量与应力张量
-== Electromagnetic Field Tensors in Electrodynamics // 电动力学中的电磁场张量
 
+= Tensor Analysis // 张量分析
+// 只保留电动力学真正需要的张量预备；几何张量与电磁场张量分别交由 Géométrie Différentielle 与 Ch16 处理
+
+== Index Notation and Einstein Summation Convention // 指标记法与爱因斯坦求和约定
+#todo[Write free and dummy indices, the Einstein summation convention, and the Kronecker symbol $delta_(i j)$.]
+
+== Cartesian Tensors: Definition and Representation // 笛卡尔张量的定义与表示
+#todo[Write the component transformation law of a Cartesian tensor and its orthogonal-matrix representation.]
+
+== Tensor Algebraic Operations and Contraction // 张量代数运算与缩并
+#todo[Write tensor addition, scalar multiplication, tensor product and contraction.]
+
+== Symmetric and Antisymmetric Tensors // 对称与反对称张量
+#todo[Write the symmetric/antisymmetric decomposition and the dual axial vector of an antisymmetric tensor.]
+
+== The Levi-Civita Symbol and Vector Identities // Levi-Civita 符号与矢量恒等式
+#todo[Write the contraction identities of $epsilon_(i j k)$ and the index form of gradient, divergence and curl.]
 
 #part("Electrostatics") // 静电学
+
 = Electrostatic Field // 静电场
+
 == Coulomb's Law // 库仑定律
 
 The study of electrostatics originated from the ancient observation of amber attracting light objects when rubbed. In the 18th century, Charles-Augustin de Coulomb conducted a series of experiments using a torsion balance to measure the electrostatic force between charged spheres, leading to the formulation of the law that now bears his name.
@@ -1225,20 +1241,32 @@ Configurations invariant under translations parallel to the plane. The field is 
   - *Axial (finite)*: use direct integration (Coulomb's law) — Gauss's law alone is insufficient.
 ]
 
-== Poisson's Equation and Laplace's Equation // 泊松方程与拉普拉斯方程
-
-== Electrostatic Energy // 静电能 [→ Ch5]
-
-// 静电能（静电能的一般表达式、能量密度）已在 Chapter 5 中结合电容器讨论。
-// 参见 §5.5: Electrostatic Energy and Capacitors.
+#note[
+  Poisson's and Laplace's equations are developed in Chapter 4, §4.1; electrostatic energy is treated in Chapter 5, §5.5.
+]
 
 = Boundary Value Problems in Electrostatics // 静电学边值问题
+
+== Poisson's Equation and Laplace's Equation // 泊松方程与拉普拉斯方程
+#todo[Write the Poisson equation $nabla^2 V = -rho / epsilon_0$, the Laplace equation $nabla^2 V = 0$ and the formulation of electrostatic boundary value problems.]
+
 == Uniqueness Theorems // 唯一性定理
+#todo[Write the Dirichlet and Neumann uniqueness theorems and their proofs.]
+
 == Method of Images // 镜像法
+#todo[Write the image-charge solutions for an infinite grounded plane, a grounded sphere and a point charge near a conducting sphere.]
+
 == Separation of Variables in Cartesian Coordinates // 直角坐标系分离变量法
+#todo[Write separation of variables in rectangular regions with typical boundary conditions.]
+
 == Separation of Variables in Spherical Coordinates // 球坐标系分离变量法
+#todo[Write Legendre's equation, spherical harmonics and interior/exterior boundary value problems.]
+
 == Separation of Variables in Cylindrical Coordinates // 柱坐标系分离变量法
+#todo[Write Bessel's equation, cylindrical harmonics and boundary value problems in cylindrical regions.]
+
 == Multipole Expansion // 多极展开
+#todo[Write the electric multipole expansion, the multipole moments and the far-field approximation.]
 
 = Conductors and Dielectrics in Electrostatic Fields // 静电场中的导体与电介质
 
@@ -1318,7 +1346,7 @@ The surface charge density $sigma$ is *not* uniform in general. It depends on th
 #example(name: "Point Charge Near a Grounded Conducting Sphere")[
   A point charge $q$ placed at distance $a > R$ from the centre of a grounded ($V = 0$) conducting sphere of radius $R$. The sphere acquires an induced surface charge distribution whose total is $-q R / a$.
 
-  This problem is solved by the *method of images* (Chapter 4, §4.2): a fictitious image charge $q' = -q R / a$ placed inside the sphere at distance $b = R^2 / a$ from the centre ensures $V = 0$ on the spherical surface.
+  This problem is solved by the *method of images* (Chapter 4, §4.3): a fictitious image charge $q' = -q R / a$ placed inside the sphere at distance $b = R^2 / a$ from the centre ensures $V = 0$ on the spherical surface.
 ]
 
 #caution[
@@ -1483,15 +1511,21 @@ Different dielectric materials respond to an external field through different mi
 ]
 
 == Electric Displacement and Gauss's Law for D // 电位移矢量与D的高斯定理
+
+#todo[Define the electric displacement $bold(D) = epsilon_0 bold(E) + bold(P)$, derive Gauss's law for $bold(D)$, and discuss linear dielectrics.]
+
 // 电位移矢量定义、D的高斯定理、线性电介质
 
 == Boundary Conditions at Interfaces // 介质界面边界条件
+
+#todo[Derive the normal and tangential boundary conditions for $bold(E)$ and $bold(D)$ at a dielectric interface.]
+
 // 电场与电位移矢量的边界条件、导体-介质界面
 
 == Electrostatic Energy and Capacitors // 静电能与电容器
 // 静电能的一般表达式、电容器储能、能量密度、自能与相互作用能
 
-The energy required to assemble a charge distribution from infinity is stored as electrostatic energy. For discrete point charges, this was given by $U = frac(1, 2) sum_i q_i V_i$ (Section // 势与电势). We now extend this to continuous distributions and express the energy in terms of the electric field.
+The energy required to assemble a charge distribution from infinity is stored as electrostatic energy. For discrete point charges, this was given by $U = frac(1, 2) sum_i q_i V_i$ (Section 3.4.4). We now extend this to continuous distributions and express the energy in terms of the electric field.
 
 === Work to Assemble Point Charges // 组装点电荷的功
 
@@ -1604,6 +1638,7 @@ where $U_(text("int"))^(i j) = frac(1, 4 pi epsilon_0) frac(q_i q_j, |bold(r)_i 
 
 
 #part("Magnetostatics") // 静磁学
+
 = Magnetostatic Field // 静磁场
 
 // 恒定电流（电流密度、连续性方程、欧姆定律、电动势）
@@ -1887,7 +1922,7 @@ From the Lorentz force law, we can define the magnetic field $bold(B)$ operation
 ]
 
 #note[
-  The Lorentz force law is the operational definition of $bold(B)$ in the same way that $bold(F) = q bold(E)$ defines $bold(E)$. Together with Coulomb's law, it forms the complete description of how electromagnetic fields exert forces on charges — a fact that will be unified when we study the electromagnetic field tensor in §2.6.
+  The Lorentz force law is the operational definition of $bold(B)$ in the same way that $bold(F) = q bold(E)$ defines $bold(E)$. Together with Coulomb's law, it forms the complete description of how electromagnetic fields exert forces on charges — a fact that will be unified when we study the electromagnetic field tensor in §16.1.
 ]
 
 === Biot-Savart Law // 比奥-萨伐尔定律
@@ -1919,7 +1954,7 @@ The Biot-Savart law obeys the superposition principle: the total field from mult
 ]
 
 #note[
-  The Biot-Savart law is a *volume law*: every current element contributes to the field at every point in space. In contrast, Ampère's law (to be introduced in §6.3) is a *boundary law* that is much more powerful when the current distribution has sufficient symmetry. This parallels the relationship between Coulomb's law and Gauss's law in electrostatics.
+  The Biot-Savart law is a *volume law*: every current element contributes to the field at every point in space. In contrast, Ampère's law (to be introduced in §6.4) is a *boundary law* that is much more powerful when the current distribution has sufficient symmetry. This parallels the relationship between Coulomb's law and Gauss's law in electrostatics.
 ]
 
 === Magnetic Field Lines // 磁感线
@@ -1950,7 +1985,7 @@ The Biot-Savart law obeys the superposition principle: the total field from mult
 // 安培环路定理（积分与微分形式）、磁场高斯定理、磁通量；对比静电学微分方程
 == Ampère's Law and Gauss's Law for Magnetism // 安培环路定理与磁场高斯定理
 
-In section §6.2, the Biot-Savart law gave us the fundamental integral relation between steady currents and the magnetic field they produce — the magnetostatic counterpart of Coulomb's law. We now turn to the two field equations that govern the _global_ structure of $bold(B)$: Gauss's law for magnetism and Ampère's circuital law. Just as Gauss's law for $bold(E)$ (§3.3) exploits symmetry to simplify electrostatic calculations, Ampère's law provides an elegant route to $bold(B)$ when the current distribution possesses sufficient symmetry. Together, these two laws form the magnetostatic pair among Maxwell's four equations.
+In section §6.3, the Biot-Savart law gave us the fundamental integral relation between steady currents and the magnetic field they produce — the magnetostatic counterpart of Coulomb's law. We now turn to the two field equations that govern the _global_ structure of $bold(B)$: Gauss's law for magnetism and Ampère's circuital law. Just as Gauss's law for $bold(E)$ (§3.3) exploits symmetry to simplify electrostatic calculations, Ampère's law provides an elegant route to $bold(B)$ when the current distribution possesses sufficient symmetry. Together, these two laws form the magnetostatic pair among Maxwell's four equations.
 
 === Magnetic Flux // 磁通量
 
@@ -2006,7 +2041,7 @@ By applying the divergence theorem to the integral form, we obtain the local (po
 The divergence theorem gives $integral_V (nabla dot bold(B)) dif V = 0$ for any volume $V$. Since this holds for every volume, the integrand must vanish pointwise.
 
 #note[
-  The condition $nabla dot bold(B) = 0$ means $bold(B)$ is a *solenoidal field* (as defined in §1.2). The magnetic field lines are always closed loops — they have neither beginning nor end. This was already anticipated by the properties of magnetic field lines in §6.2. If magnetic monopoles were ever discovered, this equation would become $nabla dot bold(B) = rho_m$ (where $rho_m$ is the magnetic charge density), restoring the symmetry with electrostatics.
+  The condition $nabla dot bold(B) = 0$ means $bold(B)$ is a *solenoidal field* (as defined in §1.2). The magnetic field lines are always closed loops — they have neither beginning nor end. This was already anticipated by the properties of magnetic field lines in §6.3. If magnetic monopoles were ever discovered, this equation would become $nabla dot bold(B) = rho_m$ (where $rho_m$ is the magnetic charge density), restoring the symmetry with electrostatics.
 ]
 
 === Ampère's Circuital Law // 安培环路定理
@@ -2144,7 +2179,7 @@ We have now assembled the complete set of field equations for electrostatics and
 #h(2em)The structural parallels and asymmetries are striking:
 
 - The electrostatic field is *irrotational* ($nabla times bold(E) = bold(0)$) and has *sources* (charges, $nabla dot bold(E) = rho / epsilon_0$). It can be derived from a scalar potential: $bold(E) = - nabla V$.
-- The magnetostatic field is *solenoidal* ($nabla dot bold(B) = 0$) and has *circulation* (currents, $nabla times bold(B) = mu_0 bold(J)$). It cannot be described by a scalar potential in regions with current; instead, a *vector potential* $bold(A)$ will be introduced in §6.4 such that $bold(B) = nabla times bold(A)$.
+- The magnetostatic field is *solenoidal* ($nabla dot bold(B) = 0$) and has *circulation* (currents, $nabla times bold(B) = mu_0 bold(J)$). It cannot be described by a scalar potential in regions with current; instead, a *vector potential* $bold(A)$ will be introduced in §6.5 such that $bold(B) = nabla times bold(A)$.
 - The asymmetry between the two sets reflects the absence of magnetic monopoles. If magnetic monopoles existed (with density $rho_m$ and current $bold(J)_m$), the equations would become fully symmetric.
 - The constants $epsilon_0$ and $mu_0$ play dual roles, linked by $c^2 = 1 / (mu_0 epsilon_0)$.
 
@@ -2164,7 +2199,7 @@ We have now assembled the complete set of field equations for electrostatics and
 // 磁矢势、库仑规范、矢势的泊松方程、磁通量与矢势环量的关系
 == Magnetic Vector Potential and Flux // 磁矢势与磁通量
 
-In the preceding section (§6.3), we established the complete set of magnetostatic field equations:
+In the preceding section (§6.4), we established the complete set of magnetostatic field equations:
 $
   nabla dot bold(B) = 0, quad nabla times bold(B) = mu_0 bold(J).
 $
@@ -2416,7 +2451,7 @@ This section serves as a quick-reference table of standard current configuration
 Configurations invariant under translations along the $z$-axis and rotations about it. Use a coaxial circular Amperian loop of radius $rho$ and length $L$. The field is azimuthal: $bold(B) = B(rho) hat(bold(phi))$ in cylindrical coordinates $(rho, phi, z)$.
 
 #example(name: "Infinite Straight Wire")[ // 无限长直导线
-  A steady current $I$ flows along the $z$-axis. (§6.3 gives the full Ampère derivation.)
+  A steady current $I$ flows along the $z$-axis. (§6.4 gives the full Ampère derivation.)
   $
     bold(B) (rho) = frac(mu_0 I, 2 pi rho) hat(bold(phi)), quad
     bold(A) (rho) = frac(mu_0 I, 2 pi) ln frac(rho_0, rho) hat(bold(z)),
@@ -2479,7 +2514,7 @@ Configurations invariant under translations along the $z$-axis and rotations abo
 Configurations based on helical or toroidal windings. The field is predominantly axial (solenoid) or azimuthal (toroid), and Ampère's law with a suitably chosen rectangular or circular Amperian loop gives the solution.
 
 #example(name: "Infinite Solenoid")[ // 无限长螺线管
-  $n$ turns per unit length, each carrying current $I$. (§6.3 gives the full Ampère derivation.)
+  $n$ turns per unit length, each carrying current $I$. (§6.4 gives the full Ampère derivation.)
   $
     bold(B) = cases(
       mu_0 n I hat(bold(z)) (text("inside")),
@@ -2498,7 +2533,7 @@ Configurations based on helical or toroidal windings. The field is predominantly
 ]
 
 #example(name: "Toroid")[ // 环形螺线管（螺绕环）
-  $N$ total turns wound around a torus of mean radius $R$, each carrying current $I$. (§6.3 gives the derivation.)
+  $N$ total turns wound around a torus of mean radius $R$, each carrying current $I$. (§6.4 gives the derivation.)
   $
     bold(B) (r) = cases(
       frac(mu_0 N I, 2 pi r) hat(bold(phi)) (text("inside")),
@@ -2633,8 +2668,28 @@ Just as the electric dipole is the fundamental building block for multipole expa
 // 回旋运动、螺旋运动、E×B 漂移、磁镜效应；霍尔效应（霍尔电压、霍尔系数、载流子类型判定）
 == Motion of Charged Particles in Magnetic Fields // 带电粒子在磁场中的运动
 
+#todo[Write cyclotron motion, helical motion, $bold(E) times bold(B)$ drift, magnetic mirror, and the Hall effect.]
+
+
 // 安培力、平行载流导线相互作用、载流线圈力矩与磁偶极矩、静磁能（场能表达式）
 == Magnetic Forces on Currents and Energy // 磁场对电流的作用与磁能
+
+#todo[Write the force between parallel currents, the torque on a current loop, and the magnetostatic energy of a current distribution.]
+
+
+= Magnetostatics in Matter // 介质中的静磁学
+
+== Magnetization and Bound Currents // 磁化与束缚电流
+#todo[Define the magnetization $bold(M)$, derive the bound current densities $bold(J)_b = nabla times bold(M)$ and the surface current $bold(K)_b = bold(M) times hat(bold(n))$, and discuss the magnetic monopole model.]
+
+== Magnetic Field Intensity // 磁场强度
+#todo[Define $bold(H) = bold(B) / mu_0 - bold(M)$ and derive Ampère's law in matter, $nabla times bold(H) = bold(J)_f$.]
+
+== Linear and Nonlinear Magnetic Materials // 线性与非线性磁介质
+#todo[Discuss diamagnetism, paramagnetism and ferromagnetism; define $bold(B) = mu bold(H)$ and the relative permeability $mu_r$.]
+
+== Boundary Conditions at Magnetic Interfaces // 磁介质界面边界条件
+#todo[Derive the continuity of the normal component of $bold(B)$ and the jump of the tangential component of $bold(H)$.]
 
 #part("Electromagnetic Induction and Time-Varying Fields") // 电磁感应与时变场
 
@@ -2650,7 +2705,7 @@ Faraday's key insight was that a *changing* magnetic field can produce an electr
 
 Faraday's original experiments can be reproduced with a simple setup: a coil of wire connected to a sensitive galvanometer, and a bar magnet. The galvanometer deflects only when the magnet is *moving* relative to the coil — that is, when the magnetic flux through the coil is changing. A steady magnet produces no current, no matter how strong it is.
 
-The quantity that determines the induced electromotive force (EMF) is the *magnetic flux* through the loop (defined in §6.3):
+The quantity that determines the induced electromotive force (EMF) is the *magnetic flux* through the loop (defined in §6.4):
 
 $
   Phi_B = integral_S bold(B) dot dif bold(S).
@@ -2744,7 +2799,7 @@ Since this holds for *any* surface $S$, the integrands must be equal pointwise:
 
 #property(name: "Key Properties of the Induced Electric Field")[
   - The induced electric field is *non-conservative*: its circulation around a closed loop is nonzero when $dif Phi_B / dif t != 0$.
-  - Unlike the electrostatic field, the induced field cannot be derived from a scalar potential $V$ alone (since $nabla times bold(E) != 0$). In time-varying situations, the full electric field is given by $bold(E) = - nabla V - partial bold(A) / partial t$, where $bold(A)$ is the vector potential (§6.4).
+  - Unlike the electrostatic field, the induced field cannot be derived from a scalar potential $V$ alone (since $nabla times bold(E) != 0$). In time-varying situations, the full electric field is given by $bold(E) = - nabla V - partial bold(A) / partial t$, where $bold(A)$ is the vector potential (§6.5).
   - The induced electric field lines are *closed loops* (they have no sources or sinks), as $nabla dot bold(E) = rho / epsilon_0$ still holds — the divergence of $bold(E)$ is determined only by charge density.
   - Faraday's law applies regardless of whether a physical conducting loop is present: a time-varying magnetic field produces an electric field in *empty space* as well.
 ]
@@ -2814,7 +2869,7 @@ This force pushes charges along the conductor, separating positive and negative 
 ]
 
 #note[
-  The motional EMF arises purely from the Lorentz force in a moving conductor — no time-varying magnetic field is required. In the rest frame of the bar, the magnetic field $bold(B)$ transforms (relativistically) into an electric field $bold(E)' = bold(v) times bold(B)$, which is the source of the EMF in that frame. This relativistic perspective unifies motional EMF with the induced electric field (next subsection) under the umbrella of electromagnetic field transformations (to be explored in §17.3).
+  The motional EMF arises purely from the Lorentz force in a moving conductor — no time-varying magnetic field is required. In the rest frame of the bar, the magnetic field $bold(B)$ transforms (relativistically) into an electric field $bold(E)' = bold(v) times bold(B)$, which is the source of the EMF in that frame. This relativistic perspective unifies motional EMF with the induced electric field (next subsection) under the umbrella of electromagnetic field transformations (to be explored in §16.3).
 ]
 
 === Induced Electric Field // 感应电场
@@ -2928,7 +2983,7 @@ When a circuit carries a time-varying current, the changing magnetic flux throug
 ]
 
 #example(name: "Self-Inductance of a Long Solenoid")[ // 长直螺线管的自感
-  A long solenoid of length $l$, cross-sectional area $A = pi R^2$, and $n$ turns per unit length (total $N = n l$ turns). From §6.5, the interior magnetic field is uniform: $B = mu_0 n I$.
+  A long solenoid of length $l$, cross-sectional area $A = pi R^2$, and $n$ turns per unit length (total $N = n l$ turns). From §6.6, the interior magnetic field is uniform: $B = mu_0 n I$.
 
   The flux through a single turn: $Phi_B = B A = mu_0 n I pi R^2$.
   The total flux linkage: $N Phi_B = (n l) (mu_0 n I pi R^2) = mu_0 n^2 I pi R^2 l$.
@@ -2993,7 +3048,7 @@ For two circuits of arbitrary shape, the mutual inductance can be expressed in t
 ]
 
 #proof[
-  The magnetic vector potential produced by circuit $C_1$ at a point on $C_2$ is (from §6.4):
+  The magnetic vector potential produced by circuit $C_1$ at a point on $C_2$ is (from §6.5):
   $
     bold(A)_1(bold(r)_2) = frac(mu_0 I_1, 4 pi) integral.cont_(C_1) frac(dif bold(l)_1, |bold(r)_2 - bold(r)_1|).
   $
@@ -3317,6 +3372,9 @@ where $bold(J)_f$ is the *free* current density, $bold(H) = bold(B) / mu_0 - bol
 ]
 
 == Maxwell's Equations in Vacuum // 真空中的麦克斯韦方程组
+
+#todo[Write the four Maxwell equations in vacuum, the integral-differential comparison, the degree-of-freedom count, and the derivation of the vacuum wave equation and $c = 1 / sqrt(mu_0 epsilon_0)$.]
+
 // 四个方程的完整表述（真空、无源情形——既无自由电荷也无传导电流）
 // Maxwell's Equations in Vacuum（源区：有 ρ 和 J 的一般形式）
 // ∇·E = ρ/ε₀, ∇·B = 0, ∇×E = -∂B/∂t, ∇×B = μ₀J + μ₀ε₀ ∂E/∂t
@@ -3329,6 +3387,9 @@ where $bold(J)_f$ is the *free* current density, $bold(H) = bold(B) / mu_0 - bol
 // Note：Maxwell 方程组是经典电动力学的最高总结——统一了电学、磁学和光学
 
 == Maxwell's Equations in Matter // 介质中的麦克斯韦方程组
+
+#todo[Write the bound charge and bound current densities, the definitions of $bold(D)$ and $bold(H)$, the macroscopic Maxwell equations, and the linear constitutive relations.]
+
 // 极化和磁化引入束缚电荷 ρ_b = -∇·P 和束缚电流 J_b = ∇×M + ∂P/∂t
 // 辅助场 D 和 H 的定义：D = ε₀E + P, H = B/μ₀ - M
 // 宏观 Maxwell 方程组（仅含自由电荷和自由电流）：
@@ -3339,6 +3400,9 @@ where $bold(J)_f$ is the *free* current density, $bold(H) = bold(B) / mu_0 - bol
 // Note：宏观 Maxwell 方程组的适用范围——平均场近似，忽略微观涨落
 
 == Boundary Conditions for Electromagnetic Fields // 电磁场边界条件
+
+#todo[Derive the boundary conditions for the normal and tangential components of $bold(E)$, $bold(B)$, $bold(D)$ and $bold(H)$, including the ideal-conductor limit.]
+
 // 从积分形式的 Maxwell 方程组推导四个场量的边界条件
 // 法向分量：D_⊥ 的跃变（自由面电荷密度）= σ_f；B_⊥ 连续
 // 切向分量：E_∥ 连续；H_∥ 的跃变（自由面电流密度）= K_f × n̂
@@ -3350,6 +3414,9 @@ where $bold(J)_f$ is the *free* current density, $bold(H) = bold(B) / mu_0 - bol
 // Note：边界条件是求解边值问题的关键——连接不同介质区域的 Maxwell 方程组
 
 == Conservation of Energy: Poynting's Theorem // 能量守恒：坡印廷定理
+
+#todo[Derive Poynting's theorem in differential and integral form, define the Poynting vector and energy density, and discuss the example of energy flow into a resistive wire.]
+
 // 从 Maxwell 方程组出发推导坡印廷定理（能量守恒定律的场形式）
 // 推导：E·(∇×H) - H·(∇×E) = E·J_f + E·∂D/∂t + H·∂B/∂t
 // 利用矢量恒等式 ∇·(E×H) = H·(∇×E) - E·(∇×H)
@@ -3362,163 +3429,164 @@ where $bold(J)_f$ is the *free* current density, $bold(H) = bold(B) / mu_0 - bol
 // Note：Poynting 定理是 §14 辐射能流和天线理论基础
 
 #part("Electromagnetic Waves") // 电磁波
+// 光学现象（干涉、衍射、偏振光学、散射）由 Optique 笔记承担；本 Part 只处理电磁波本身的场论内容
+
+= Electromagnetic Waves in Vacuum // 真空中的电磁波
+
+== Wave Equation from Maxwell's Equations // 由麦克斯韦方程组导出波动方程
+#todo[Derive the wave equations for $bold(E)$ and $bold(B)$ from Maxwell's equations in vacuum and identify the speed $c = 1 / sqrt(mu_0 epsilon_0)$.]
+
+== Plane Wave Solutions // 平面波解
+#todo[Write the plane-wave solutions, the transverse nature of $bold(E)$ and $bold(B)$, and the relation $bold(B) = (1/c) hat(bold(k)) times bold(E)$.]
+
+== Polarization States of Electromagnetic Waves // 电磁波的偏振状态
+#todo[Describe linear, circular and elliptical polarization; leave Jones calculus and polarization optics to the Optique notebook.]
+
+== Energy and Momentum of Electromagnetic Waves // 电磁波的能量与动量
+#todo[Write the energy density, the Poynting flux, the momentum density, and radiation pressure for a plane wave.]
+
+= Electromagnetic Waves in Media // 介质中的电磁波
+
+== Wave Equation in Linear Media // 线性介质中的波动方程
+#todo[Derive the wave equation in a linear medium and define the refractive index $n = sqrt(epsilon_r mu_r)$.]
+
+== Reflection and Refraction at Interfaces // 界面上的反射与折射
+#todo[Write the laws of reflection and refraction from the boundary conditions.]
+
+== Fresnel Equations // 菲涅耳公式
+#todo[Derive the Fresnel coefficients for s- and p-polarization and discuss total internal reflection and Brewster's angle.]
+
+== Dispersion and Absorption // 色散与吸收
+#todo[Give a brief account of dispersion and absorption in matter; the detailed optics treatment is in the Optique notebook.]
+
+= Waveguides and Cavities // 波导与谐振腔
+
+== Waveguides: TE and TM Modes // 波导：TE 模与 TM 模
+#todo[Write the mode structure of cylindrical waveguides and define TE and TM modes.]
+
+== Rectangular Waveguide // 矩形波导
+#todo[Solve the rectangular waveguide and obtain the cutoff frequencies and mode patterns.]
+
+== Resonant Cavities // 谐振腔
+#todo[Write the modes of rectangular and cylindrical cavities and the resonance conditions.]
+
 #part("Potentials and Radiation") // 势与辐射
+
+= Time-Dependent Potentials // 时变电磁势
+// 静态标势与矢势已在 Chapter 3 和 Chapter 6 建立；本章只处理时变情形、规范变换与推迟势
+
+== Scalar and Vector Potentials // 标势与矢势
+#todo[Recall the static potentials and introduce their time-dependent counterparts $V(bold(r), t)$ and $bold(A)(bold(r), t)$.]
+
+== Gauge Transformations // 规范变换
+#todo[Write the gauge transformation $V -> V - partial chi / partial t$, $bold(A) -> bold(A) + gradient chi$ and discuss gauge invariance.]
+
+== Coulomb Gauge and Lorenz Gauge // 库仑规范与洛伦兹规范
+#todo[Derive the Coulomb and Lorenz gauge conditions and the corresponding wave equations for the potentials.]
+
+== Retarded Potentials // 推迟势
+#todo[Write the retarded potentials and discuss causality and the retarded time.]
+
+= Radiation // 辐射
+
+== Radiation from Point Charges // 点电荷的辐射
+#todo[Write the Liénard-Wiechert potentials and fields for a moving point charge.]
+
+== Electric Dipole Radiation // 电偶极辐射
+#todo[Derive the electric dipole radiation fields, angular distribution and radiated power.]
+
+== Magnetic Dipole Radiation // 磁偶极辐射
+#todo[Derive the magnetic dipole radiation fields and compare with the electric dipole case.]
+
+== Electric Quadrupole Radiation // 电四极辐射
+#todo[Derive the electric quadrupole radiation fields and their angular dependence.]
+
+== Larmor Formula // 拉莫尔公式
+#todo[Write the Larmor formula for the power radiated by an accelerated charge and its relativistic generalization.]
+
+== Radiation Reaction // 辐射反作用
+#todo[Discuss the radiation reaction force and the Abraham-Lorentz formula.]
+
 #part("Special Relativity and Electrodynamics") // 狭义相对论与电动力学
+// 完整的狭义相对论力学由 Mécanique analytique 笔记承担；本 Part 只保留电动力学所需的相对论要点与协变表述
 
+= Special Relativity // 狭义相对论
 
+== Lorentz Transformations // 洛伦兹变换
+#todo[Write the Lorentz transformations and the relativity of simultaneity, length and time.]
 
+== Four-Vectors and Minkowski Spacetime // 四维矢量与闵可夫斯基时空
+#todo[Introduce four-vectors, the Minkowski metric and the light cone.]
+
+== Relativistic Kinematics // 相对论运动学
+#todo[Write relativistic velocity addition, aberration and the Doppler effect.]
+
+== Relativistic Dynamics // 相对论动力学
+#todo[Write the relativistic energy-momentum relation and the four-force.]
+
+= Relativistic Electrodynamics // 相对论电动力学
+
+== Electromagnetic Field Tensor // 电磁场张量
+#todo[Define the electromagnetic field tensor $F^(mu nu)$ and express $bold(E)$ and $bold(B)$ through its components.]
+
+== Covariant Form of Maxwell's Equations // 麦克斯韦方程组的协变形式
+#todo[Write Maxwell's equations in covariant form, $partial_mu F^(mu nu) = mu_0 J^nu$, and the homogeneous equation.]
+
+== Lorentz Transformation of Fields // 电磁场的洛伦兹变换
+#todo[Derive the transformation of $bold(E)$ and $bold(B)$ under a Lorentz boost.]
+
+== Relativistic Lagrangian and Hamiltonian // 相对论拉格朗日量与哈密顿量
+#todo[Write the relativistic Lagrangian for a charged particle in an electromagnetic field and the corresponding Hamiltonian.]
+
+== Invariants of the Electromagnetic Field // 电磁场的不变量
+#todo[Write the two Lorentz invariants $bold(E)^2 - c^2 bold(B)^2$ and $bold(E) dot bold(B)$.]
 
 // 目录
 // ==============================================================================
-// Electrodynamics (电动力学) — Table of Contents
+// Electrodynamics (电动力学) — Structure and TODO Blueprint
 // ==============================================================================
-
-// --- Part I: Mathematical Foundations (数学基础) ---
-
-// Chapter 1: Vector Analysis and Field Theory (矢量分析与场论)
-//   Section 1.2: Divergence and Curl (散度与旋度)
-//   Section 1.4: Conservative Fields and Potential Functions (保守场与势函数)
-//   Section 1.5: Helmholtz Decomposition Theorem (亥姆霍兹分解定理)
-//   Section 1.6: Curvilinear Coordinates (曲线坐标系)
-//   Section 1.7: Dirac Delta Function (狄拉克δ函数)
-
-// Chapter 2: Tensor Analysis (张量分析)
-//   Section 2.1: Definition and Representation of Cartesian Tensors (笛卡尔张量的定义与表示)
-//   Section 2.2: Tensor Algebraic Operations and Contraction (张量代数运算与缩并)
-//   Section 2.3: Symmetric and Antisymmetric Tensors (对称与反对称张量)
-//   Section 2.4: Principal Axis Transformation and Eigenvalues (主轴变换与特征值)
-//   Section 2.5: Moment of Inertia Tensor and Stress Tensor (惯性矩张量与应力张量)
-//   Section 2.6: Electromagnetic Field Tensors in Electrodynamics (电动力学中的电磁场张量)
-
-// --- Part II: Electrostatics (静电学) ---
-
-// Chapter 3: Electrostatic Field (静电场)
-//   Section 3.1: Coulomb's Law (库仑定律)
-//   Section 3.2: Electric Field Intensity (电场强度)
-//   Section 3.3: Gauss's Law and Electric Flux (高斯定律与电通量)
-//   Section 3.4: Electric Potential (电势)
-//   Section 3.5: Poisson's Equation and Laplace's Equation (泊松方程与拉普拉斯方程)
-
-// Chapter 4: Boundary Value Problems in Electrostatics (静电学边值问题)
-//   Section 4.1: Uniqueness Theorems (唯一性定理)
-//   Section 4.2: Method of Images (镜像法)
-//   Section 4.3: Separation of Variables in Cartesian Coordinates (直角坐标系分离变量法)
-//   Section 4.4: Separation of Variables in Spherical Coordinates (球坐标系分离变量法)
-//   Section 4.5: Separation of Variables in Cylindrical Coordinates (柱坐标系分离变量法)
-//   Section 4.6: Multipole Expansion (多极展开)
-
-// Chapter 5: Conductors and Dielectrics in Electrostatic Fields (静电场中的导体与电介质)
-//   Section 5.1: Conductors in Electrostatic Fields (静电场中的导体)
-//   Section 5.2: Polarization and Bound Charges (极化与束缚电荷)
-//   Section 5.3: Electric Displacement and Gauss's Law for D (电位移矢量与D的高斯定理)
-//   Section 5.4: Boundary Conditions at Interfaces (介质界面边界条件)
-//   Section 5.5: Electrostatic Energy and Capacitors (静电能与电容器)
-
-// --- Part III: Magnetostatics (静磁学) ---
-
-// Chapter 6: Magnetostatic Field (静磁场)
-//   Section 6.1: Steady Currents and Ohm's Law (恒定电流与欧姆定律)
-//   Section 6.2: Lorentz Force and Biot-Savart Law (洛伦兹力与比奥-萨伐尔定律)
-//   Section 6.3: Ampère's Law and Gauss's Law for Magnetism (安培环路定理与磁场高斯定理)
-//   Section 6.4: Magnetic Vector Potential and Flux (磁矢势与磁通量)
-//   Section 6.5: Common Models in Magnetostatics (常见模型：载流导体的磁场)
-//   Section 6.6: Motion of Charged Particles in Magnetic Fields (带电粒子在磁场中的运动)
-//   Section 6.7: Magnetic Forces on Currents and Energy (磁场对电流的作用与磁能)
-
-// Chapter 7: Magnetostatics in Matter (介质中的静磁学)
-//   Section 7.1: Magnetization and Bound Currents (磁化与束缚电流)
-//   Section 7.2: Magnetic Field Intensity (磁场强度)
-//   Section 7.3: Linear and Nonlinear Magnetic Materials (线性与非线性磁介质)
-//   Section 7.4: Boundary Conditions at Magnetic Interfaces (磁介质界面边界条件)
-
-// --- Part IV: Electromagnetic Induction and Time-Varying Fields (电磁感应与时变场) ---
-
-// Chapter 8: Electromagnetic Induction (电磁感应)
-//   Section 8.1: Faraday's Law of Induction (法拉第电磁感应定律)
-//   Section 8.2: Motional EMF and Induced Electric Field (动生电动势与感应电场)
-//   Section 8.3: Inductance (电感)
-//   Section 8.4: Magnetic Energy in Circuits (电路中的磁能)
-
-// Chapter 9: Maxwell's Equations (麦克斯韦方程组)
-//   Section 9.1: Displacement Current and Ampère–Maxwell Law (位移电流与安培–麦克斯韦定律)
-//   Section 9.2: Maxwell's Equations in Vacuum (真空中的麦克斯韦方程组)
-//   Section 9.3: Maxwell's Equations in Matter (介质中的麦克斯韦方程组)
-//   Section 9.4: Boundary Conditions for Electromagnetic Fields (电磁场边界条件)
-//   Section 9.5: Conservation of Energy: Poynting's Theorem (能量守恒：坡印廷定理)
-
-// --- Part V: Electromagnetic Waves and Optics (电磁波与光学) ---
-//   Note: The mathematical wave machinery (d'Alembert, phasors, superposition,
-//   dispersion, group velocity, Fourier analysis) is shared with the Mécanique
-//   analytique notebook (Ch4). Part V/VI here specialise to EM waves and
-//   develop the optical phenomena (interference, diffraction, polarisation)
-//   that follow from Maxwell's equations.
-
-// Chapter 10: Electromagnetic Waves in Vacuum (真空中的电磁波)
-//   Section 10.1: Wave Equation from Maxwell's Equations (由麦克斯韦方程组导出波动方程)
-//   Section 10.2: Plane Wave Solutions (平面波解)
-//   Section 10.3: Polarisation States of EM Waves (电磁波的偏振状态：线/圆/椭圆偏振、Jones矢量)
-//   Section 10.4: Polarisation Optics (偏振光学：Malus定律、Brewster角、波片、双折射、Stokes参量)
-//   Section 10.5: Energy and Momentum of Electromagnetic Waves (电磁波的能量与动量)
-
-// Chapter 11: Electromagnetic Waves in Media (介质中的电磁波)
-//   Section 11.1: Wave Equation in Linear Media (线性介质中的波动方程)
-//   Section 11.2: Reflection and Refraction at Interfaces (界面上的反射与折射)
-//   Section 11.3: Fresnel Equations (菲涅尔公式)
-//   Section 11.4: Dispersion Relations (色散关系)
-//   Section 11.5: Absorption and Complex Refractive Index (吸收与复折射率)
-
-// Chapter 12: Interference (干涉) [新增章]
-//   Section 12.1: Coherence and Superposition (相干性与叠加)
-//   Section 12.2: Young's Double-Slit Experiment (杨氏双缝实验)
-//   Section 12.3: Thin-Film Interference (薄膜干涉：等厚、等倾)
-//   Section 12.4: Michelson and Mach-Zehnder Interferometers (迈克尔逊与马赫-曾德尔干涉仪)
-//   Section 12.5: Multiple-Beam Interference and Fabry-Pérot (多光束干涉与法布里-珀罗)
-
-// Chapter 13: Waveguides and Cavities (波导与谐振腔)
-//   Section 13.1: Waveguides: TE and TM Modes (波导：TE模与TM模)
-//   Section 13.2: Rectangular Waveguide (矩形波导)
-//   Section 13.3: Resonant Cavities (谐振腔)
-
-// --- Part VI: Potentials, Radiation, and Diffraction (势、辐射与衍射) ---
-
-// Chapter 14: Electromagnetic Potentials (电磁势)
-//   Section 14.1: Scalar and Vector Potentials (标势与矢势)
-//   Section 14.2: Gauge Transformations (规范变换)
-//   Section 14.3: Coulomb Gauge and Lorenz Gauge (库仑规范与洛伦兹规范)
-//   Section 14.4: Retarded Potentials (推迟势)
-
-// Chapter 15: Radiation (辐射)
-//   Section 15.1: Radiation from Point Charges (点电荷的辐射)
-//   Section 15.2: Electric Dipole Radiation (电偶极辐射)
-//   Section 15.3: Magnetic Dipole Radiation (磁偶极辐射)
-//   Section 15.4: Electric Quadrupole Radiation (电四极辐射)
-//   Section 15.5: Larmor Formula (拉莫尔公式)
-//   Section 15.6: Radiation Reaction (辐射反作用)
-
-// Chapter 16: Optical Diffraction (光学衍射) [新增章，原 §15.3 扩展]
-//   Section 16.1: Huygens-Fresnel Principle (惠更斯-菲涅尔原理)
-//   Section 16.2: Fraunhofer Single-Slit Diffraction (夫琅禾费单缝衍射)
-//   Section 16.3: Fraunhofer Double-Slit and Gratings (夫琅禾费双缝与多缝/光栅)
-//   Section 16.4: Fraunhofer Circular-Aperture Diffraction (夫琅禾费圆孔衍射：Airy斑、分辨率判据)
-//   Section 16.5: Fresnel Diffraction (菲涅尔衍射：半波带法、Cornu蟠线)
-//   Section 16.6: Kirchhoff Diffraction Theory (基尔霍夫衍射理论：统一框架)
-
-// Chapter 17: Scattering (散射) [原 Ch15 拆出]
-//   Section 17.1: Thomson Scattering (汤姆孙散射)
-//   Section 17.2: Rayleigh Scattering (瑞利散射)
-//   Section 17.3: Mie Scattering (米氏散射，可选)
-
-// --- Part VII: Special Relativity and Electrodynamics (狭义相对论与电动力学) ---
-
-// Chapter 18: Special Relativity (狭义相对论)
-//   Section 18.1: Lorentz Transformations (洛伦兹变换)
-//   Section 18.2: Four-Vectors and Minkowski Spacetime (四维矢量与闵可夫斯基时空)
-//   Section 18.3: Relativistic Kinematics (相对论运动学)
-//   Section 18.4: Relativistic Dynamics (相对论动力学)
-
-// Chapter 19: Relativistic Electrodynamics (相对论电动力学)
-//   Section 19.1: Electromagnetic Field Tensor (电磁场张量)
-//   Section 19.2: Covariant Form of Maxwell's Equations (麦克斯韦方程组的协变形式)
-//   Section 19.3: Lorentz Transformation of Fields (电磁场的洛伦兹变换)
-//   Section 19.4: Relativistic Lagrangian and Hamiltonian (相对论拉格朗日量与哈密顿量)
-//   Section 19.5: Invariants of the Electromagnetic Field (电磁场的不变量)
+// 结构主线：数学基础 → 静电学 → 静磁学 → 时变场 → 电磁波 → 势与辐射 → 相对论电动力学。
+// 正文中所有未写内容以 #todo 占位；本蓝图只记录章节职责与写作顺序，不重复正文标题。
+//
+// Part I  Mathematical Foundations (Ch1–Ch2)
+//   Ch1 Vector Analysis and Field Theory（已写）
+//   Ch2 Tensor Analysis（TODO：指标记法、笛卡尔张量、Levi-Civita；几何张量见 Géométrie Différentielle）
+//
+// Part II Electrostatics (Ch3–Ch5)
+//   Ch3 Electrostatic Field（已写；Poisson/Laplace 已移至 Ch4 §4.1，静电能见 Ch5 §5.5）
+//   Ch4 Boundary Value Problems（TODO：Poisson/Laplace、唯一性、镜像法、三种分离变量、多极展开）
+//   Ch5 Conductors and Dielectrics（导体与极化已写；D、界面条件 TODO；能量与电容器已写）
+//
+// Part III Magnetostatics (Ch6–Ch7)
+//   Ch6 Magnetostatic Field（已写；恒定电流、电动势、磁场定律、矢势、常见模型）
+//   Ch7 Magnetostatics in Matter（TODO：M/H、束缚电流、线性/非线性介质、磁界面条件）
+//
+// Part IV Time-Varying Fields (Ch8–Ch9)
+//   Ch8 Electromagnetic Induction（已写）
+//   Ch9 Maxwell's Equations（位移电流已写；真空/介质形式、边界条件、Poynting 定理 TODO）
+//
+// Part V Electromagnetic Waves (Ch10–Ch12)
+//   Ch10 Electromagnetic Waves in Vacuum（TODO）
+//   Ch11 Electromagnetic Waves in Media（TODO；色散/吸收只作简述，详见 Optique）
+//   Ch12 Waveguides and Cavities（TODO）
+//
+// Part VI Potentials and Radiation (Ch13–Ch14)
+//   Ch13 Time-Dependent Potentials（TODO；静态势见 Ch3/Ch6）
+//   Ch14 Radiation（TODO）
+//
+// Part VII Special Relativity and Electrodynamics (Ch15–Ch16)
+//   Ch15 Special Relativity（TODO；完整相对论力学见 Mécanique analytique）
+//   Ch16 Relativistic Electrodynamics（TODO；电磁场张量只在此处定义）
+//
+// 职责边界：
+//   干涉/衍射/偏振光学/散射 → Optique
+//   通用波方程/叠加/色散/Fourier → Optique Part I
+//   张量几何/微分形式 → Géométrie Différentielle
+//   完整狭义相对论力学 → Mécanique analytique
+//
+// 待办优先级：
+//   1. 补写 Ch7 介质静磁学，解决 M/H/D 先用后定义。
+//   2. 补写 Ch4 边值问题与 Ch9 麦克斯韦剩余节。
+//   3. 补写 Part V–VII；保持与 Optique / Mécanique analytique 的职责边界。
+//   4. 给被引用的小节加标签，用 #link 替代硬编码 §编号。
+// ==============================================================================
