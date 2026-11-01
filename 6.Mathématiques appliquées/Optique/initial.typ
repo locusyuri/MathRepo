@@ -391,6 +391,15 @@ The solution $x(t) = A cos(omega_0 t + phi)$ can be visualised as the projection
 ] <def:phasor>
 
 The rotating vector makes phase relationships geometrically obvious: velocity leads displacement by $pi/2$ (the tangent direction), and acceleration leads displacement by $pi$ (opposite direction).
+Both constructions are drawn in @fig:phasor-rotation.
+
+#figure(
+  image("img/phasor-rotation.svg", width: 92%),
+  caption: [Left: a phasor of length $A$ rotates at $omega_0$, and its projection on the $x$-axis gives $x(t) = A cos(omega_0 t + phi)$; the faded arrow is the same phasor a moment later. Right: displacement, velocity and acceleration phasors at one instant, with their amplitudes normalised to a common length; velocity leads by $pi/2$ and acceleration by $pi$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:phasor-rotation>
+
 
 #note[
   The complex representation turns differentiation into multiplication by $i omega$, and superposition into complex addition.
