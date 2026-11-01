@@ -3705,9 +3705,161 @@ The three isomorphism theorems together — First, Second, Third,
 together with the Correspondence Theorem as a "zeroth" companion —
 form the *structural calculus of quotients*. Every manipulation of
 normal subgroups and quotient groups, in group theory and beyond
-(rings in §9, modules in §17), reduces to these four results. With
-them in hand, we turn next to *group actions*, the second great
-structural tool of group theory.
+(rings in §9, modules in §17), reduces to these four results.
+
+== Automorphism Groups // 自同构群
+
+An automorphism of a group $G$ is a relabelling of the elements that preserves every product. #link(<def:endomorphism-automorphism>)[§1.3] records that $"Aut"(G)$ is a group under composition, a subgroup of the symmetric group $S_G$ (#link(<def:permutation-group>)[§3.4]). This section asks how large it is, which of its elements come from conjugation inside $G$, and which subgroups it preserves.
+
+=== Inner Automorphisms // 内自同构
+
+Conjugation (#link(<def:conjugate-elements>)[§2.3]) becomes a self-map of $G$ once the conjugating element is fixed.
+
+#definition(name: "Inner Automorphism")[
+  Let $G$ be a group and $a in G$. The *inner automorphism* determined by $a$ is the map
+  $
+    phi_a: G -> G, quad x |-> a x a^(-1).
+  $
+  The set of all such maps is the *inner automorphism group* $"Inn"(G) = {phi_a | a in G}$.
+] <def:inner-automorphism>
+
+That $phi_a$ is an automorphism is immediate: it is a homomorphism because $phi_a(x y) = (a x a^(-1))(a y a^(-1))$, and it is bijective because $phi_a circle phi_(a^(-1)) = "id"$.
+
+#proposition(name: "Inner Automorphisms Form a Normal Subgroup of the Automorphism Group")[
+  Let $G$ be a group. Then $"Inn"(G) <= "Aut"(G)$, and $"Inn"(G) lt.closed.eq "Aut"(G)$.
+] <prop:inn-normal>
+
+#proof[
+  *Subgroup.* $phi_a circle phi_b = phi_(a b)$ and $phi_a^(-1) = phi_(a^(-1))$, so $"Inn"(G)$ is closed under composition and inverses and contains $"id" = phi_e$.
+
+  *Normality.* Let $sigma in "Aut"(G)$. For every $x in G$,
+  $
+    sigma phi_a sigma^(-1)(x) = sigma(a sigma^(-1)(x) a^(-1)) = sigma(a) x sigma(a)^(-1) = phi_(sigma(a))(x),
+  $
+  using that $sigma$ preserves products and inverses. Hence $sigma phi_a sigma^(-1) = phi_(sigma(a)) in "Inn"(G)$: the subgroup $"Inn"(G)$ is invariant under conjugation by $"Aut"(G)$, which is normality.
+]
+
+#corollary(name: "The Inner Automorphism Group Is $G \/ C(G)$")[
+  Let $G$ be a group. The assignment $iota: a |-> phi_a$ is a surjective homomorphism $G -> "Aut"(G)$ with image $"Inn"(G)$ and kernel $C(G)$; consequently
+  $
+    "Inn"(G) tilde.equiv G \/ C(G).
+  $
+] <cor:inn-quotient>
+
+#proof[
+  $iota(a b) = phi_(a b) = phi_a circle phi_b = iota(a) circle iota(b)$, so $iota$ is a homomorphism with image $"Inn"(G)$ by definition. Its kernel consists of the $a$ with $a x = x a$ for all $x in G$, i.e. $"Ker" iota = C(G)$ (#link(<def:center-centralizer>)[§3.1]); apply #link(<cor:fundamental-homomorphism>)[§5.2].
+]
+
+=== Automorphisms of Cyclic Groups // 循环群的自同构
+
+For cyclic groups the automorphism group can be computed outright: a homomorphism out of a cyclic group is determined by the image of one generator, so automorphisms correspond exactly to generators.
+
+#theorem(name: "Automorphisms of Cyclic Groups")[
+  - $"Aut"(bb(Z)) tilde.equiv {plus.minus 1} tilde.equiv bb(Z)_2$.
+  - For $n >= 2$, $"Aut"(bb(Z)_n) tilde.equiv bb(Z)_n^*$, the group of units modulo $n$; in particular $abs("Aut"(bb(Z)_n)) = phi(n)$.
+] <thm:aut-cyclic>
+
+#proof[
+  Let $G = ⟨g⟩$. An automorphism $f$ carries $g$ to a generator, since $⟨f(g)⟩ = f(⟨g⟩) = G$ (#link(<prop:cyclic-images>)[§5.2]). Conversely, if $h$ generates $G$, then $g^k |-> h^k$ is well defined — the only relations among the powers of $g$ are $g^m = e$, and $h$ has the same order as $g$ — and it is a surjective homomorphism onto $⟨h⟩ = G$, hence an automorphism. So $f |-> f(g)$ is a bijection from $"Aut"(G)$ onto the set of generators of $G$.
+
+  For $G = bb(Z)$ the generators are $plus.minus 1$ (#link(<cor:cyclic-generators>)[§3.2]), so $"Aut"(bb(Z)) = {"id", -"id"} tilde.equiv bb(Z)_2$.
+
+  For $G = bb(Z)_n$, written additively, the generators are the classes $k$ with $"gcd"(k, n) = 1$, that is the units $bb(Z)_n^*$, and the corresponding automorphism is $f_k: x |-> k x$. Composition gives $f_k circle f_l = f_(k l)$, so $k |-> f_k$ is an isomorphism $"Aut"(bb(Z)_n) tilde.equiv bb(Z)_n^*$, of order $phi(n)$ (#link(<cor:cyclic-generators>)[§3.2]).
+]
+
+Some textbooks state that $"Aut"(bb(Z)_n)$ is *cyclic* of order $phi(n)$. The order is correct, but cyclicity fails in general.
+
+#caution(title: "The automorphism group of $bb(Z)_n$ is not always cyclic")[
+  $"Aut"(bb(Z)_8) tilde.equiv bb(Z)_8^* = {1, 3, 5, 7} tilde.equiv bb(Z)_2 times bb(Z)_2$, because $3^2 = 5^2 = 7^2 = 1$ and no unit has order $4$. The unit group $bb(Z)_n^*$ is cyclic exactly for $n = 1, 2, 4, p^k, 2 p^k$ with $p$ an odd prime — a theorem of Gauss, quoted here without proof.
+] <caution:aut-zn-not-cyclic>
+
+#example(name: "Automorphisms of the Klein four-group.")[
+  In $V_4 = {e, a, b, c}$ (#link(<def:klein-four>)[§3.3]) every non-identity element has order $2$, and the product of two distinct non-identity elements is the third. Hence every permutation of ${a, b, c}$ fixing $e$ is an automorphism, while every automorphism must permute ${a, b, c}$, since it preserves element orders. Therefore $"Aut"(V_4) tilde.equiv S_3$: the automorphism group of an abelian group need not be abelian.
+] <ex:aut-klein-four>
+
+#note(title: "The automorphism group is not a complete invariant")[
+  An isomorphism $f: G -> H$ conjugates $"Aut"(G)$ onto $"Aut"(H)$, so isomorphic groups have isomorphic automorphism groups. The converse fails: $"Aut"(bb(Z)) tilde.equiv "Aut"(bb(Z)_3) tilde.equiv bb(Z)_2$, although $bb(Z)$ is infinite and $bb(Z)_3$ is not. The group $"Aut"(G)$ records some, but not all, of the structure of $G$.
+] <note:aut-not-complete>
+
+=== Characteristic and Fully Invariant Subgroups // 特征子群与全特征子群
+
+Normality is invariance under the *inner* automorphisms (#link(<thm:normal-equivalents>)[§4.1]). Demanding invariance under more maps gives strictly smaller classes of subgroups: first all automorphisms, then all endomorphisms.
+
+#definition(name: "Characteristic Subgroup")[
+  A subgroup $N <= G$ is *characteristic* in $G$ if $sigma(N) subset.eq N$ for every $sigma in "Aut"(G)$; since $sigma$ is bijective, this is equivalent to $sigma(N) = N$.
+] <def:characteristic>
+
+#definition(name: "Fully Invariant Subgroup")[
+  A subgroup $N <= G$ is *fully invariant*, or *fully characteristic*, if $phi(N) subset.eq N$ for every endomorphism $phi: G -> G$.
+] <def:fully-invariant>
+
+#proposition(name: "The Center Is a Characteristic Subgroup")[
+  For every group $G$, the center $C(G)$ is characteristic in $G$.
+] <prop:center-characteristic>
+
+#proof[
+  Let $sigma in "Aut"(G)$ and $c in C(G)$. Every $y in G$ is $y = sigma(x)$ for some $x in G$, and
+  $
+    sigma(c) y = sigma(c) sigma(x) = sigma(c x) = sigma(x c) = sigma(x) sigma(c) = y sigma(c),
+  $
+  because $c$ is central. Hence $sigma(c) in C(G)$ and $sigma(C(G)) subset.eq C(G)$.
+]
+
+#proposition(name: "Subgroups of Cyclic Groups Are Fully Invariant")[
+  Every subgroup of a cyclic group is fully invariant.
+] <prop:cyclic-fully-invariant>
+
+#proof[
+  Let $G = ⟨g⟩$. By #link(<thm:cyclic-subgroups>)[§3.2] a subgroup has the form $H = ⟨g^d⟩$ with $d >= 0$ (and $d | abs(G)$ when $G$ is finite). An endomorphism sends $g$ to some $g^k$, so it sends $g^d$ to $g^(k d) in ⟨g^d⟩$; hence $phi(H) subset.eq H$.
+]
+
+#example(name: "The center of $\"GL\"_(2)(bb(Q))$ is not fully invariant.")[
+  Every nonzero rational has a unique form $r = (b \/ a) 2^(nu(r))$ with $a, b$ odd integers; the exponent $nu(r) in bb(Z)$ is additive, $nu(r s) = nu(r) + nu(s)$. The assignment
+  $
+    phi: "GL"_(2)(bb(Q)) -> "GL"_(2)(bb(Q)), quad A |-> mat(1, nu("det" A); 0, 1)
+  $
+  satisfies $phi(A B) = phi(A) phi(B)$, since $nu("det"(A B)) = nu("det" A) + nu("det" B)$, so $phi$ is an endomorphism, with image in the upper unitriangular subgroup. The central element $2 I$ is sent to $mat(1, 2; 0, 1)$, which does not commute with $mat(1, 0; 1, 1)$:
+  $
+    mat(1, 2; 0, 1) mat(1, 0; 1, 1) = mat(3, 2; 1, 1), quad mat(1, 0; 1, 1) mat(1, 2; 0, 1) = mat(1, 2; 1, 3).
+  $
+  Thus $phi$ carries a central element out of the center, and the center — characteristic by #link(<prop:center-characteristic>)[above] — is not fully invariant.
+] <ex:gl2q-center>
+
+#theorem(name: "Fully Invariant, Characteristic, and Normal")[
+  Let $N <= G$.
+  - If $N$ is fully invariant, then $N$ is characteristic.
+  - If $N$ is characteristic, then $N$ is normal in $G$.
+  Neither implication reverses.
+] <thm:char-hierarchy>
+
+#proof[
+  (1) Every automorphism is an endomorphism.
+  (2) Every inner automorphism is an automorphism, and normality is invariance under inner automorphisms (#link(<thm:normal-equivalents>)[§4.1 (4)]).
+
+  *Normal, not characteristic.* In the abelian group $V_4$ the subgroup ${e, a}$ is normal (#link(<prop:normal-properties>)[§4.1]), but $"Aut"(V_4) tilde.equiv S_3$ (#link(<ex:aut-klein-four>)[above]) permutes $a, b, c$ transitively: some $sigma$ sends ${e, a}$ to ${e, b}$, so ${e, a}$ is not characteristic.
+
+  *Characteristic, not fully invariant.* The center of $"GL"_(2)(bb(Q))$ (#link(<ex:gl2q-center>)[above]).
+]
+
+The three notions therefore form a strict chain, $"fully invariant" subset "characteristic" subset "normal"$, inside the lattice of subgroups of $G$.
+
+=== What the Automorphism Group Detects // 自同构群能反映多少
+
+#proposition(name: "A Centerless Group Has a Centerless Automorphism Group")[
+  If $C(G) = {e}$, then $C("Aut"(G)) = {"id"}$.
+] <prop:centerless-aut>
+
+#proof[
+  For $sigma in "Aut"(G)$ and $a in G$ we have $sigma phi_a sigma^(-1) = phi_(sigma(a))$ (#link(<prop:inn-normal>)[above]). If $sigma$ lies in the center of $"Aut"(G)$, then $sigma phi_a sigma^(-1) = phi_a$, hence $phi_(sigma(a)) = phi_a$, and $a^(-1) sigma(a) in C(G) = {e}$. Therefore $sigma(a) = a$ for every $a in G$, i.e. $sigma = "id"$.
+]
+
+#note(title: "What the automorphism group detects")[
+  - Isomorphic groups have isomorphic automorphism groups, but not conversely (#link(<note:aut-not-complete>)[above]).
+  - Neither abelianness nor finiteness is inherited: $V_4$ is abelian while $"Aut"(V_4) tilde.equiv S_3$ is not (#link(<ex:aut-klein-four>)[above]), and $"Aut"(bb(Q)) tilde.equiv (bb(Q)^*, dot)$ is infinite while $"Aut"(bb(Z)_n)$ is finite of order $phi(n)$ (#link(<thm:aut-cyclic>)[above]).
+  - $"Out"(G) = "Aut"(G) \/ "Inn"(G)$ is the *outer automorphism group*, the automorphisms not realised by conjugation; $"Aut"(S_n) tilde.equiv S_n$ for $n != 2, 6$, so $"Out"(S_n)$ is trivial there.
+]
+
+Conjugation exhibits those automorphisms that come from elements of $G$ itself, packaged in the homomorphism $G -> "Aut"(G)$ with image $"Inn"(G)$. That map is the *conjugation action* of $G$ on itself, and the general theory of actions is the subject of the next chapter.
 
 = Group Actions and the Sylow Theorems // 群的作用与 Sylow 定理
 
