@@ -3346,30 +3346,20 @@ recovers, up to renaming, exactly the image $"Im" f$.
 ) <fig:first-isomorphism>
 
 #corollary(name: "The Fundamental Theorem of Group Homomorphisms")[
-  Let $phi: G -> overline(G)$ be a *surjective* group homomorphism.
-  Then $"Ker" phi lt.closed.eq G$, and the map
+  Let $f: G -> H$ be a *surjective* group homomorphism. Then $"Ker" f lt.closed.eq G$, and the map
   $
-    G \/ "Ker" phi -> overline(G), quad a("Ker" phi) |-> phi(a),
+    G \/ "Ker" f -> H, quad a("Ker" f) |-> f(a),
   $
   is an isomorphism. In particular
   $
-    G \/ "Ker" phi tilde.equiv overline(G).
+    G \/ "Ker" f tilde.equiv H.
   $
 ] <cor:fundamental-homomorphism>
 
 #note(title: "Two names for one theorem")[
-  This is #link(<thm:first-isomorphism>)[the First Isomorphism Theorem]
-  read in the case $"Im" phi = overline(G)$, together with
-  #link(<thm:kernel-normal>)[the normality of kernels] of §5.1: the two
-  statements that Chinese textbooks present as a single result, the
-  *fundamental theorem of group homomorphisms* (@yang2011, Theorem 2).
+  This is #link(<thm:first-isomorphism>)[the First Isomorphism Theorem] read in the case $"Im" f = H$, together with #link(<thm:kernel-normal>)[the normality of kernels] of §5.1: the two statements that Chinese textbooks present as a single result, the *fundamental theorem of group homomorphisms* (@yang2011, Theorem 2).
 
-  The book keeps them apart on purpose. Normality is a property of the
-  kernel, the isomorphism a property of the quotient; and the version
-  proved above is strictly stronger, assuming neither surjectivity nor
-  a prescribed target, and identifying $G \/ "Ker" f$ with the actual
-  image $"Im" f$. Every application below recovers the textbook form by
-  observing that $"Im" phi$ is the whole of $overline(G)$.
+  The book keeps them apart on purpose. Normality is a property of the kernel, the isomorphism a property of the quotient; and the version proved above is strictly stronger, assuming neither surjectivity nor a prescribed target, and identifying $G \/ "Ker" f$ with the actual image $"Im" f$. Every application below recovers the textbook form by observing that $"Im" f$ is the whole of $H$.
 ] <note:fundamental-homomorphism-names>
 
 The theorem unpacks into a *factorization* of $f$, which is often
