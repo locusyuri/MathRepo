@@ -84,7 +84,8 @@
 //     - 受驱振子与共振
 //     - 功率吸收与线宽（Q 因子）
 //   Section 1.4: Harmonic Analysis of Periodic Motion (周期振动的谐波分析)
-//     - 基频与谐频、频谱、Gibbs 现象
+//     - 傅里叶系数与频谱、对称性判据
+//     - 方波/三角波/锯齿波、Gibbs 现象、Parseval 能量
 
 // --- Chapter 2: Wave Motion (波动) ---
 //   Section 2.1: The Wave Equation and d'Alembert's Solution (波动方程与达朗贝尔解)
@@ -603,22 +604,106 @@ Fourier's theorem says that this is a complication of vocabulary rather than of 
   $
     x(t) = frac(a_0, 2) + sum_(n=1)^oo (a_n cos(n omega t) + b_n sin(n omega t)), quad omega = frac(2 pi, T),
   $
-  with $a_n, b_n$ given by the Fourier integrals collected in #link(<ch:dispersion-fourier>)[Chapter 3].
-  The amplitudes $sqrt(a_n^2 + b_n^2)$ plotted against the harmonic order $n$ form the *spectrum* of the motion.
+  where $a_0, a_n, b_n$ are the *Fourier coefficients* of $x$.
+  The amplitudes $sqrt(a_n^2 + b_n^2)$ plotted against the harmonic order $n$ form the *amplitude spectrum* of the motion.
 ] <def:harmonic-analysis>
 
-The spectrum is the fingerprint of the source: a pure tone is a single line, a plucked string has a decaying comb of harmonics, and an ideal percussion has a broad continuum.
-Which harmonics survive is decided by symmetry — an odd function has only sines, a function with half-period antisymmetry has only odd harmonics.
-Pointwise convergence is guaranteed by the Dirichlet conditions (piecewise smoothness of the motion); at a jump the series settles on the midpoint of the discontinuity, and this is what leaves the overshoot commented on below.
+=== Fourier Coefficients and the Spectrum // 傅里叶系数与频谱
 
-#example(name: "Spectrum of a Square Wave")[ // 方波频谱
-  A square wave of amplitude $A$ and period $T$ has only odd harmonics, with amplitudes $A_n = 4 A / (n pi)$ for odd $n$ and zero otherwise.
-  The series converges slowly: truncating it at $n = N$ still leaves an overshoot of about 9% of the jump at each edge, independent of $N$ (the Gibbs phenomenon).
+The coefficients are extracted by projecting the motion onto each harmonic over one period:
+$
+  a_n = frac(2, T) integral_0^T x(t) cos(n omega t) dif t, quad
+  b_n = frac(2, T) integral_0^T x(t) sin(n omega t) dif t,
+$
+while $a_0 = frac(2, T) integral_0^T x(t) dif t$ is twice the mean value, so the constant term $a_0 / 2$ is exactly the time average of $x$.
+The normalisation $2/T$ is what makes these numbers the amplitudes of the harmonics, rather than merely their correlations with $x$.
+
+Collecting the cosine and the sine of the same order gives the *amplitude-phase form*
+$
+  x(t) = frac(a_0, 2) + sum_(n=1)^oo A_n cos(n omega t + phi_n),
+  quad A_n = sqrt(a_n^2 + b_n^2), quad tan phi_n = - frac(b_n, a_n),
+$
+where the quadrant of $phi_n$ is fixed by the signs of $a_n$ and $b_n$.
+The amplitude spectrum $A_n$ and the phase spectrum $phi_n$ carry the same information as $(a_n, b_n)$: the amplitudes say which harmonics are present and how strongly, the phases say how they line up.
+
+The spectrum is the fingerprint of the source: a pure tone is a single line, a plucked string has a decaying comb of harmonics, and an ideal percussion has a broad continuum.
+What a filter or a resonant detector measures is precisely a slice of this spectrum.
+
+=== Symmetry Rules // 对称性判据
+
+Symmetry of the waveform removes whole families of coefficients before any integral is evaluated.
+The rules below refer to $x$ as a function of time about the chosen origin.
+
+#tex-table(
+  ("Symmetry", "Condition", "Consequence", "Typical waveform"),
+  ([Even], [$x(-t) = x(t)$], [$b_n = 0$: cosine terms only], [even pulse train]),
+  ([Odd], [$x(-t) = - x(t)$], [$a_n = 0$: sine terms only], [square wave, sawtooth]),
+  ([Half-wave], [$x(t + T/2) = - x(t)$], [$a_0 = 0$; even $n$ vanish], [square wave, sawtooth]),
+  ([Zero mean], [$overline(x) = 0$], [$a_0 = 0$: no constant term], [any balanced waveform]),
+)
+
+Shifting the time origin does not change the amplitudes $A_n$, only the phases; symmetry is therefore always judged after choosing the most convenient origin.
+A waveform can obey several rules at once — the square wave below is odd and half-wave antisymmetric, so only odd sine terms survive, which a direct integration confirms.
+
+=== Examples: Square, Triangle and Sawtooth // 方波、三角波与锯齿波
+
+#example(name: "Spectrum of a Square Wave")[
+  For the odd square wave of amplitude $A$ and period $T$, the sine coefficients are
+  $
+    b_n = frac(2, T) integral_0^T x(t) sin(n omega t) dif t = frac(4 A, n pi) quad (n "odd"),
+  $
+  and $b_n = 0$ for even $n$, hence
+  $
+    x(t) = frac(4 A, pi) (sin(omega t) + frac(1, 3) sin(3 omega t) + frac(1, 5) sin(5 omega t) + dots.c).
+  $
+  The $1/n$ decrease makes the convergence slow, and truncating at $n = N$ still leaves an overshoot of about 9% of the jump at each edge, independent of $N$ (the Gibbs phenomenon).
 ] <ex:square-wave-spectrum>
 
-#note[
-  This section states the *idea* of harmonic analysis; the mathematical machinery — orthogonality, completeness, and the eigenfunction expansion of a boundary-value problem — is developed in #link(<ch:dispersion-fourier>)[Chapter 3].
+The three common waveforms are compared in the table; the decay rate is what decides how many harmonics a given approximation needs.
+
+#tex-table(
+  ("Waveform", "Nonzero coefficients", "Decay", "Convergence"),
+  ([Square], [odd sine, $4 A / (n pi)$], [$1/n$], [slow; Gibbs overshoot]),
+  ([Triangle], [odd sine, alternating signs, $8 A / (n^2 pi^2)$], [$1/n^2$], [fast; overshoot hardly visible]),
+  ([Sawtooth], [all sine, $2 A / (n pi)$], [$1/n$], [slow; jump at the reset]),
+)
+
+The reconstruction and the line spectrum of the square wave are drawn in @fig:harmonic-spectrum.
+
+#figure(
+  image("img/harmonic-spectrum.svg", width: 92%),
+  caption: [Left: the square wave (dotted) and its Fourier partial sums with $N = 1, 3, 9$ terms; the overshoot near each edge persists as $N$ grows. Right: the line spectrum, with amplitudes $4 A / (n pi)$ on the odd orders and zero on the even ones.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:harmonic-spectrum>
+
+#note(title: "Gibbs phenomenon")[
+  At a jump the Fourier series converges pointwise to the midpoint but not uniformly: the partial sums overshoot by a fixed fraction, $frac(2, pi) integral_0^pi frac(sin t, t) dif t approx 1.0895$, however many terms are kept.
+  Adding terms only narrows the overshoot region, it never removes it.
 ]
+
+=== Energy and Physical Meaning // 能量与物理意义
+
+#theorem(name: "Parseval's Theorem")[
+  For a periodic motion with Fourier coefficients $(a_n, b_n)$,
+  $
+    overline(x^2) = frac(a_0^2, 4) + frac(1, 2) sum_(n=1)^oo (a_n^2 + b_n^2).
+  $
+]
+
+#proof[
+  Squaring the series and averaging over one period, every product of two harmonics of different order averages to zero — cosines and sines are mutually orthogonal — and each squared harmonic contributes $1/2$.
+  The constant term contributes $a_0^2 / 4$, which gives the stated identity.
+]
+
+The mean square is proportional to the energy stored in the oscillation: for a mechanical oscillator $overline(E) = k overline(x^2)$, so Parseval is an energy statement, each harmonic contributing $frac(1, 2) k A_n^2$.
+A spectrum that decays slowly therefore carries appreciable energy at high frequencies, while a nearly sinusoidal motion concentrates it in the first line.
+
+This is why harmonic analysis is a practical tool rather than a mathematical curiosity.
+A linear oscillator driven by a periodic force responds to each harmonic independently, with the resonance factor computed in #link(<sec:damped-driven>)[Section 1.3]; the spectrum of the force therefore predicts which harmonics the system amplifies and which it suppresses.
+The same reasoning underlies the frequency response of filters, the timbre of musical instruments, and the design of vibration isolators.
+
+Beyond periodic motion the sum becomes an integral: letting $T -> oo$ turns the discrete line spectrum into a continuous spectral density, the Fourier transform developed in #link(<ch:dispersion-fourier>)[Chapter 3].
 
 // --- Chapter 2: Wave Motion (波动) ---
 
