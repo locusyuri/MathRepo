@@ -75,14 +75,15 @@
 //     - 运动方程、周期与频率、相位与相位差
 //     - 能量守恒与振幅
 //     - 旋转矢量法与复数表示
+//     - 单摆与物理摆
+//   Section 1.2: Composition of Simple Harmonic Motions (简谐运动的合成)
 //     - 同频合成与拍频
 //     - 垂直合成与李萨如图形
-//     - 单摆与物理摆
-//   Section 1.2: Damped and Driven Oscillations (阻尼与受驱振动)
+//   Section 1.3: Damped and Driven Oscillations (阻尼与受驱振动)
 //     - 阻尼振子（欠/临界/过阻尼）
 //     - 受驱振子与共振
 //     - 功率吸收与线宽（Q 因子）
-//   Section 1.3: Harmonic Analysis of Periodic Motion (周期振动的谐波分析)
+//   Section 1.4: Harmonic Analysis of Periodic Motion (周期振动的谐波分析)
 //     - 基频与谐频、频谱、Gibbs 现象
 
 // --- Chapter 2: Wave Motion (波动) ---
@@ -370,7 +371,7 @@ The maxima of one form therefore coincide with the minima of the other, and away
   Angular frequency: $omega_0 = sqrt(k / m) = sqrt(32 / 0.5) = 8 "rad/s"$.
   Period: $T = 2 pi / omega_0 = pi / 4 approx 0.785 "s"$.
   Maximum speed: $v_"max" = omega_0 A = 0.8 "m/s"$.
-  Total energy: $E = frac(1,2) k A^2 = frac(1,2) times 32 times 0.1^2 = 0.16 "J"$.
+  Total energy: $E = frac(1, 2) k A^2 = frac(1, 2) times 32 times 0.1^2 = 0.16 "J"$.
 ] <ex:mass-spring>
 
 === Rotating Vector and Complex Representation // 旋转矢量法与复数表示
@@ -405,6 +406,32 @@ Both constructions are drawn in @fig:phasor-rotation.
   The complex representation turns differentiation into multiplication by $i omega$, and superposition into complex addition.
   This is the foundation of phasor analysis in AC circuits and of Fourier methods in normal mode analysis (Mécanique analytique, Part II).
 ]
+
+=== Pendulums // 单摆与物理摆
+
+The pendulum is the canonical realisation of SHM and the standard laboratory test of the small-angle approximation.
+
+#definition(name: "Simple and Physical Pendula")[
+  A *simple pendulum* (mass $m$ on a massless string of length $L$) obeys
+  $
+    dot.double(theta) + frac(g, L) sin theta = 0,
+  $
+  which for small angles becomes SHM with $omega_0 = sqrt(g / L)$.
+  A *physical pendulum* (rigid body of mass $M$, moment of inertia $I$ about the pivot, centre of mass at distance $d$) obeys
+  $
+    omega_0 = sqrt(frac(M g d, I)).
+  $
+] <def:pendulum>
+
+The simple pendulum is the special case $I = M L^2$, $d = L$, recovering $omega_0 = sqrt(g / L)$.
+The SHM framework thus unifies every system with a linear restoring torque.
+
+#note[
+  The small-angle approximation $sin theta approx theta$ is the first term of the Taylor expansion.
+  For larger amplitudes the period grows: $T = 2 pi sqrt(L/g) (1 + theta_0^2 / 16 + ...)$, obtained from the energy integral (Mécanique analytique, Ch 3).
+]
+
+== Composition of Simple Harmonic Motions // 简谐运动的合成
 
 === Superposition of Two SHMs // 同频简谐运动的合成
 
@@ -473,32 +500,8 @@ Both cases are drawn in @fig:lissajous.
   image("img/lissajous.svg", width: 85%),
   caption: [Left: perpendicular composition at equal frequency, for $Delta phi = 0, pi / 4, pi / 2$. Right: Lissajous figures for the frequency ratios $1 : 2$ and $2 : 3$.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:lissajous>
-
-=== Pendulums // 单摆与物理摆
-
-The pendulum is the canonical realisation of SHM and the standard laboratory test of the small-angle approximation.
-
-#definition(name: "Simple and Physical Pendula")[
-  A *simple pendulum* (mass $m$ on a massless string of length $L$) obeys
-  $
-    dot.double(theta) + frac(g, L) sin theta = 0,
-  $
-  which for small angles becomes SHM with $omega_0 = sqrt(g / L)$.
-  A *physical pendulum* (rigid body of mass $M$, moment of inertia $I$ about the pivot, centre of mass at distance $d$) obeys
-  $
-    omega_0 = sqrt(frac(M g d, I)).
-  $
-] <def:pendulum>
-
-The simple pendulum is the special case $I = M L^2$, $d = L$, recovering $omega_0 = sqrt(g / L)$.
-The SHM framework thus unifies every system with a linear restoring torque.
-
-#note[
-  The small-angle approximation $sin theta approx theta$ is the first term of the Taylor expansion.
-  For larger amplitudes the period grows: $T = 2 pi sqrt(L/g) (1 + theta_0^2 / 16 + ...)$, obtained from the energy integral (Mécanique analytique, Ch 3).
-]
 
 == Damped and Driven Oscillations <sec:damped-driven> // 阻尼与受驱振动
 
@@ -532,7 +535,7 @@ The three damping regimes are drawn in @fig:damped-oscillation.
   image("img/damped-oscillation.svg", width: 100%),
   caption: [Damped oscillation: underdamped (blue), critically damped (green), and overdamped (orange).],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:damped-oscillation>
 
 === Driven Oscillator and Resonance // 受驱振子与共振
@@ -563,7 +566,7 @@ Amplitude and phase near resonance are plotted in @fig:resonance-curves.
   image("img/resonance-curves.svg", width: 100%),
   caption: [Resonance curves for different damping ratios $beta / omega_0$. Sharp peaks correspond to weak damping; broad curves correspond to strong damping.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:resonance-curves>
 
 #note[
@@ -706,7 +709,7 @@ The four parameters, together with the two readings of the wave function, are co
   image("img/wave-parameters.svg", width: 95%),
   caption: [Left: the same harmonic wave read as a waveform $u(x)$ at fixed $t$ (top) and as the vibration $u(t)$ of a single particle (bottom). Right: wavefronts (blue) and rays (green) of a plane wave.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:wave-parameters>
 
 == Harmonic Travelling Waves: The Wave Function // 简谐行波与波函数
@@ -731,9 +734,9 @@ A travelling wave has three defining features:
 
 #property(name: "Three Characteristics of Travelling Waves")[
   1. *Morphology*: The entire waveform translates rigidly at speed $v$.
-     A snapshot at time $t+Delta t$ is identical to the snapshot at $t$ shifted by $v Delta t$.
+    A snapshot at time $t+Delta t$ is identical to the snapshot at $t$ shifted by $v Delta t$.
   2. *Phase*: The pattern travels, so every particle repeats what the particle at its left has just done, a time $Delta x / v$ later (for $+x$ propagation).
-     In the phase $k x - omega t$ this delay reads as a phase difference $Delta phi = k Delta x = 2 pi Delta x / lambda$ between two points separated by $Delta x$.
+    In the phase $k x - omega t$ this delay reads as a phase difference $Delta phi = k Delta x = 2 pi Delta x / lambda$ between two points separated by $Delta x$.
   3. *Energy*: Travelling waves carry energy unidirectionally — there is a net energy flux from source to receiver, unlike standing waves which store energy locally.
 ] <prop:travelling-wave-features>
 
@@ -844,20 +847,20 @@ A travelling wave carries both kinetic and potential energy.
 For a wave on a string:
 
 $
-  text("Kinetic energy density"): cal(K) = frac(1,2) mu (frac(partial u, partial t))^2,
+  text("Kinetic energy density"): cal(K) = frac(1, 2) mu (frac(partial u, partial t))^2,
   quad
-  text("Potential energy density"): cal(V) = frac(1,2) T (frac(partial u, partial x))^2.
+  text("Potential energy density"): cal(V) = frac(1, 2) T (frac(partial u, partial x))^2.
 $
 
 For a harmonic travelling wave $u = A cos(k x - omega t)$ the two densities are equal at *every instant*,
 $
-  cal(K) = cal(V) = frac(1,2) mu omega^2 A^2 sin^2 (k x - omega t),
+  cal(K) = cal(V) = frac(1, 2) mu omega^2 A^2 sin^2 (k x - omega t),
 $
 so that after averaging over one period,
 $
-  overline(cal(K)) = overline(cal(V)) = frac(1,4) mu omega^2 A^2,
+  overline(cal(K)) = overline(cal(V)) = frac(1, 4) mu omega^2 A^2,
   quad
-  text("mean total energy density"): overline(cal(E)) = frac(1,2) mu omega^2 A^2.
+  text("mean total energy density"): overline(cal(E)) = frac(1, 2) mu omega^2 A^2.
 $
 
 Kinetic and potential energy are equal at every instant for a travelling wave — unlike an oscillator, where they exchange.
@@ -866,7 +869,7 @@ The energy moves with the wave: the *energy flux density* is the energy crossing
 #definition(name: "Wave Intensity")[
   The *intensity* (average power per unit area) of a harmonic wave is
   $
-    I = frac(1,2) rho v omega^2 A^2 = frac(1,2) Z omega^2 A^2.
+    I = frac(1, 2) rho v omega^2 A^2 = frac(1, 2) Z omega^2 A^2.
   $
   For a point source emitting power $P$, the intensity at distance $r$ is $I = P / (4 pi r^2)$, consistent with the $1/r$ amplitude decay of spherical waves.
 ] <def:wave-intensity>
@@ -961,7 +964,7 @@ The resulting standing patterns are compared in @fig:half-wave-loss: the wall is
   image("img/half-wave-loss.svg", width: 88%),
   caption: [Standing waves at a fixed end (node, $R = -1$, half-wave loss) and at a free end (antinode, $R = +1$), shown at three instants. Nodes are solid dots; the boundary condition is marked in red.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:half-wave-loss>
 
 === Standing Waves // 驻波
@@ -997,7 +1000,7 @@ The first normal modes of the string are drawn in @fig:string-normal-modes.
   image("img/string-normal-modes.svg", width: 100%),
   caption: [Normal modes of a string fixed at both ends: $n = 1$ (fundamental), $n = 2$ (second harmonic), $n = 3$ (third harmonic).],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:string-normal-modes>
 
 Each fixed end is a node, and this is exactly the $Z_2 -> infinity$ limit of the impedance argument above: reading the support as a prescribed node and reading it as a $R = -1$ reflection (half-wave loss) give the same answer.
@@ -1047,7 +1050,7 @@ Only the latter changes the wavelength in the medium.
 === Electromagnetic Doppler // 电磁波多普勒
 
 Light needs no medium, so there is no preferred frame and the formula must be relativistic.
-For a source receding at speed $v$ along the line of sight, writing $beta = v / c$ (here $beta$ is the speed ratio, not the damping coefficient of #link(<sec:damped-driven>)[Section 1.2]) and $gamma = 1 / sqrt(1 - beta^2)$:
+For a source receding at speed $v$ along the line of sight, writing $beta = v / c$ (here $beta$ is the speed ratio, not the damping coefficient of #link(<sec:damped-driven>)[Section 1.3]) and $gamma = 1 / sqrt(1 - beta^2)$:
 $
   f' = f sqrt(frac(1 - beta, 1 + beta)),
 $
@@ -1076,7 +1079,7 @@ The two regimes are compared in @fig:doppler.
   image("img/doppler.svg", width: 95%),
   caption: [Left: wavefronts of a subsonic source, compressed ahead and stretched behind. Right: wavefronts of a supersonic source and their envelope, the Mach cone of half-angle $theta$ with $sin theta = u / v_s$.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:doppler>
 
 // --- Chapter 3: Dispersion, Fourier Methods and Normal Modes (色散、傅里叶方法与简正模) ---
@@ -1105,14 +1108,14 @@ In many real media, however, the wave speed depends on frequency; this is called
 #example(name: "Deep Water Waves")[ // 深水波
   For deep water waves, the dispersion relation is $omega = sqrt(g k)$.
   The phase velocity $v_p = omega / k = sqrt(g / k)$ increases with wavelength (longer waves travel faster).
-  The group velocity $v_g = dif omega / dif k = frac(1,2) sqrt(g / k) = v_p / 2$ — energy travels at half the speed of the crests.
+  The group velocity $v_g = dif omega / dif k = frac(1, 2) sqrt(g / k) = v_p / 2$ — energy travels at half the speed of the crests.
 ] <ex:deep-water-waves>
 
 A wave packet is a superposition of modes, and the two velocities answer different questions: $v_g$ moves the envelope, $v_p$ moves the carrier inside it.
 
 For a narrow spectrum around $k_0$, the expansion of the dispersion relation,
 $
-  omega(k) = omega_0 + v_g (k - k_0) + frac(1,2) alpha (k - k_0)^2 + dots.c, quad alpha = (dif^2 omega) / (dif k^2),
+  omega(k) = omega_0 + v_g (k - k_0) + frac(1, 2) alpha (k - k_0)^2 + dots.c, quad alpha = (dif^2 omega) / (dif k^2),
 $
 with $v_g$ and $alpha$ evaluated at $k_0$, shows that the packet keeps its shape to first order, translating at $v_g$; the second-order term $alpha$, the *group-velocity dispersion*, is what deforms it.
 
@@ -1383,7 +1386,7 @@ The construction is drawn in @fig:waves-to-rays: the wavefronts are the level se
   image("img/waves-to-rays.svg", width: 100%),
   caption: [Wavefronts and rays: rays are the normals to the wavefronts (surfaces of constant phase).],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:waves-to-rays>
 
 #note(title: "Validity")[
@@ -1484,7 +1487,7 @@ The construction is drawn in @fig:snells-law.
   image("img/snells-law.svg", width: 70%),
   caption: [Reflection and refraction at a planar interface: the incident, reflected, and transmitted rays lie in the plane of incidence, and $n_1 sin theta_1 = n_2 sin theta_2$.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:snells-law>
 
 Both laws follow from Fermat's principle: the stationary optical path between two fixed points on either side of the interface is achieved when the crossing point satisfies these angle relations.
@@ -1586,7 +1589,7 @@ The conjugate-point construction is drawn in @fig:spherical-refraction.
   image("img/spherical-refraction.svg", width: 80%),
   caption: [Imaging by a single spherical refracting surface: the object $P$, the image $P'$, and the centre of curvature $C$ lie on the optical axis.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:spherical-refraction>
 
 A spherical mirror is the reflection analogue: formally, reflection is refraction into a medium of index $n_2 = - n_1$.
@@ -1649,7 +1652,7 @@ The thin-lens construction is drawn in @fig:lens-imaging.
   image("img/lens-imaging.svg", width: 90%),
   caption: [Gaussian imaging with a thin converging lens: three characteristic rays locate the image $P'$ of the object $P$.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:lens-imaging>
 
 == Gaussian Imaging // 高斯成像
@@ -1715,7 +1718,7 @@ The equivalent ABCD system is drawn in @fig:abcd-system.
   image("img/abcd-system.svg", width: 80%),
   caption: [A paraxial ray $(y, theta)$ propagated through a translation $T(d)$ and a thin lens $L(f)$; the system matrix is $L(f) T(d)$.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:abcd-system>
 
 #theorem(name: "Cavity Stability Criterion")[
@@ -1807,7 +1810,7 @@ The two instruments are compared in @fig:optical-instruments.
   image("img/optical-instruments.svg", width: 100%),
   caption: [Ray diagrams of (a) a compound microscope and (b) a Keplerian refracting telescope.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:optical-instruments>
 
 #note(title: "Resolution")[
@@ -1906,7 +1909,7 @@ The construction is summarised in @fig:huygens-fresnel.
   image("img/huygens-fresnel.svg", width: 80%),
   caption: [The Huygens-Fresnel construction: secondary spherical wavelets emitted from a wavefront, whose envelope forms the new wavefront.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:huygens-fresnel>
 
 == Green's Functions for Diffraction <sec:green-functions-diffraction> // 衍射的格林函数
@@ -2052,7 +2055,7 @@ The geometry and the resulting fringes are shown in @fig:young-double-slit.
   image("img/young-double-slit.svg", width: 80%),
   caption: [Young's double-slit experiment: geometry (top) and the cosine-squared fringe intensity (bottom).],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:young-double-slit>
 
 #definition(name: "Fringe Visibility")[
@@ -2306,7 +2309,7 @@ Single slit, double slit and circular aperture are compared in @fig:fraunhofer-p
   image("img/fraunhofer-patterns.svg", width: 100%),
   caption: [Fraunhofer diffraction patterns: single slit (sinc²), double slit (interference modulated by diffraction), and circular aperture (Airy pattern).],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:fraunhofer-patterns>
 
 #note[
@@ -2384,7 +2387,7 @@ The three regimes are drawn in @fig:resolution-criterion.
   image("img/resolution-criterion.svg", width: 100%),
   caption: [The Rayleigh criterion: two Airy patterns at separations below, equal to, and above $theta_"min"$ — unresolved, just resolved, and resolved.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:resolution-criterion>
 
 #note(title: "Why the limit is fundamental")[
@@ -2444,7 +2447,7 @@ The 2f geometry is drawn in @fig:lens-fourier.
   image("img/lens-fourier.svg", width: 90%),
   caption: [The 2f Fourier system: an input placed one focal length in front of the lens produces its Fourier transform in the back focal plane.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:lens-fourier>
 
 == Aperture Functions and Pupil Transforms // 孔径函数与光瞳变换
@@ -2468,7 +2471,8 @@ The pupil thus carries the whole optical specification of the system: its modulu
 
 A *4f system* chains two Fourier transforms: lens 1 produces the spectrum of the input in its focal plane, where a filter is inserted, and lens 2 Fourier-transforms the filtered spectrum back to an image.
 
-#example(name: "4f Spatial Filtering")[ // 4f 空间滤波
+#example(name: "4f Spatial Filtering")[
+  // 4f 空间滤波
   - *Low-pass filter*: a circular stop on the axis blocks high spatial frequencies — the image is blurred and speckle and periodicity are suppressed.
   - *High-pass filter*: an opaque disc on the axis blocks the DC and low frequencies — edges are enhanced, since edges live in the high-frequency content.
   - *Phase filter*: a phase plate alters the spectrum, e.g., for phase contrast microscopy of transparent specimens.
@@ -2562,7 +2566,7 @@ The resulting $n(omega)$ is plotted in @fig:dispersion-curves.
   image("img/dispersion-curves.svg", width: 100%),
   caption: [Refractive index $n(omega)$ near a single resonance: normal dispersion far from resonance, anomalous dispersion within the absorption band.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:dispersion-curves>
 
 #note(title: "Normal vs anomalous dispersion")[
@@ -2626,7 +2630,7 @@ The $lambda^(-4)$ dependence is plotted in @fig:rayleigh-scattering.
   image("img/rayleigh-scattering.svg", width: 70%),
   caption: [Rayleigh scattering strength versus wavelength: the $lambda^(-4)$ law suppresses long wavelengths relative to short ones.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:rayleigh-scattering>
 
 #note[
@@ -2664,7 +2668,7 @@ The three cases are drawn in @fig:polarization-ellipse.
   image("img/polarization-ellipse.svg", width: 100%),
   caption: [Polarization ellipses traced by the electric vector for phase differences $delta = 0, pi / 2$, and a general value, with $E_y / E_x = 1$.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:polarization-ellipse>
 
 #note[
@@ -2838,7 +2842,7 @@ Planck's law and its two limits are plotted in @fig:planck-spectrum.
   image("img/planck-spectrum.svg", width: 100%),
   caption: [Blackbody spectral energy density at three temperatures; the classical Rayleigh–Jeans curve diverges at high frequency.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:planck-spectrum>
 
 #note[
@@ -3139,7 +3143,7 @@ Coherent and number states are compared in phase space in @fig:wigner-function.
   image("img/wigner-function.svg", width: 100%),
   caption: [Wigner functions: a coherent state (smooth Gaussian hump) versus a single-photon Fock state (negative dip at the origin).],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:wigner-function>
 
 // --- Chapter 17: Photon Statistics and Correlation Functions (光子统计与关联函数) ---
@@ -3226,7 +3230,7 @@ The apparatus and the corresponding $g^((2))(tau)$ are drawn in @fig:hbt-experim
   image("img/hbt-experiment.svg", width: 100%),
   caption: [Hanbury Brown–Twiss setup (beam splitter, two detectors, coincidence counter) and the bunching peak $g^((2))(tau)$ of thermal light.],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:hbt-experiment>
 
 #note(title: "Intensity interferometry")[
@@ -3286,7 +3290,7 @@ The Jaynes–Cummings model is the simplest exactly solvable atom-field system, 
   Eliminating $c_g$ gives a second-order equation for $c_e$; with $c_e (0) = 0$ the solution is the stated Rabi formula.
   *Step 3 — Interpret.*
   On resonance ($Delta = 0$), the population oscillates fully: $P_e (t) = sin^2 (Omega_0 t / 2)$; a pulse of duration $pi / Omega_0$ (a $pi$-pulse) inverts the atom completely.
-] 
+]
 
 #example(name: "Rabi Flopping")[ // 拉比振荡
   A resonant pulse of area $Omega_0 t = pi$ transfers the atom from $| g ⟩$ to $| e ⟩$ with unit probability; a $pi/2$-pulse places it in the superposition $(| g ⟩ + | e ⟩) / sqrt(2)$.
@@ -3298,7 +3302,7 @@ Both regimes of the example are drawn in @fig:rabi-oscillation: on resonance the
   image("img/rabi-oscillation.svg", width: 90%),
   caption: [Rabi oscillations: excitation probability $P_e (t)$ on resonance (full transfer) and at finite detuning (incomplete transfer at the generalized Rabi frequency $Omega$).],
   placement: auto,
-  supplement: [Fig.]
+  supplement: [Fig.],
 ) <fig:rabi-oscillation>
 
 == Spontaneous Emission: Wigner-Weisskopf Theory // 自发辐射
