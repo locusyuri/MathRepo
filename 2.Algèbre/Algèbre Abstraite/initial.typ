@@ -1624,6 +1624,20 @@ $C(G) = inter.big_(a in G) C_(G)(a)$.
     #link(<ex:subgroup-inventory>)[the inventory above].
 ]
 
+#proposition(name: "The Center of $S_n$ Is Trivial for $n >= 3$")[
+  For every $n >= 3$, $C(S_n) = {e}$.
+] <prop:symmetric-center>
+
+#proof[
+  Let $sigma in C(S_n)$ and let $(a b)$ be a transposition.
+  Conjugation by $sigma$ sends $(a b)$ to $(sigma(a) sigma(b))$: it maps $sigma(a)$ to $sigma(b)$, $sigma(b)$ to $sigma(a)$, and fixes every other point.
+  Since $sigma$ is central, $sigma (a b) sigma^(-1) = (a b)$, so $(sigma(a) sigma(b)) = (a b)$ as permutations, i.e. ${sigma(a), sigma(b)} = {a, b}$ for every pair $a, b$.
+  Fix $a$ and choose two distinct elements $b_1, b_2$, neither equal to $a$, which is possible because $n >= 3$; then $sigma(a) in {a, b_1} inter {a, b_2} = {a}$, so $sigma(a) = a$.
+  As $a$ was arbitrary, $sigma = "id"$.
+]
+
+The hypothesis $n >= 3$ is essential: $S_2 tilde.equiv bb(Z)_2$ is abelian, hence $C(S_2) = S_2$.
+
 == Cyclic Groups // 循环群
 
 === Generated Subgroups // 生成子群
