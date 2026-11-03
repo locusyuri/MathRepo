@@ -3946,6 +3946,19 @@ The three notions therefore form a strict chain, $"fully invariant" subset "char
   - $"Out"(G) = "Aut"(G) \/ "Inn"(G)$ is the *outer automorphism group*, the automorphisms not realised by conjugation; $"Aut"(S_n) tilde.equiv S_n$ for $n != 2, 6$, so $"Out"(S_n)$ is trivial there.
 ]
 
+#example(name: "Transpose and inverse transpose on $\"GL\"_(n)(F)$.")[
+  The transpose $f(A) = A^T$ is bijective and satisfies $f(A^(-1)) = f(A)^(-1)$, yet it reverses products:
+  $
+    f(A B) = (A B)^T = B^T A^T = f(B) f(A).
+  $
+  Since $"GL"_(n)(F)$ is non-abelian for $n >= 2$, pick $A, B$ with $A B != B A$; transposing gives $B^T A^T != A^T B^T$, so $f(A B) != f(A) f(B)$ and $f$ is not a homomorphism — only an *anti-automorphism*. (For $n = 1$ it is the identity.)
+  Composing with inversion repairs the order: $g(A) = (A^(-1))^T$ satisfies
+  $
+    g(A B) = ((A B)^(-1))^T = (B^(-1) A^(-1))^T = (A^(-1))^T (B^(-1))^T = g(A) g(B),
+  $
+  so $g$ is an automorphism, with $g circle g = "id"$. For $F = bb(R)$ and $n = 2$ it is outer — conjugation preserves the trace, while $g$ sends $mat(2, 0; 0, 1)$ to $mat(1 \/ 2, 0; 0, 1)$, changing the trace — so $"Out"(G)$ need not be trivial.
+] <ex:inverse-transpose>
+
 Conjugation exhibits those automorphisms that come from elements of $G$ itself, packaged in the homomorphism $G -> "Aut"(G)$ with image $"Inn"(G)$. That map is the *conjugation action* of $G$ on itself, and the general theory of actions is the subject of the next chapter.
 
 = Group Actions and the Sylow Theorems // 群的作用与 Sylow 定理
