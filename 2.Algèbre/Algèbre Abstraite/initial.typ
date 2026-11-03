@@ -2056,6 +2056,18 @@ subgroup. When it is one (for instance when $H K = K H$, by
 #link(<thm:product-of-subgroups>)[§3.1]), it specializes to the
 index identity $[H K : K] = [H : H inter K]$.
 
+#example(name: "A product of $p$-subgroups that is not a subgroup.")[
+  Let $G$ be a finite group with $abs(G) = p^t m$, where $p$ is prime and $p$ does not divide $m$. Let $H <= G$ have order $p^t$ and $K <= G$ have order $p^s$, with $0 < s <= t$, and suppose $K$ is not contained in $H$. Then $H K$ is not a subgroup of $G$.
+
+  *Argument.* Suppose $H K <= G$. Since $K$ is not contained in $H$, the intersection $H inter K$ is a proper subgroup of $K$, so Lagrange's theorem makes $abs(H inter K) = p^r$ with $r < s$. The counting formula above then gives
+  $
+    abs(H K) = (p^t dot p^s) \/ p^r = p^(t + s - r),
+  $
+  where $t + s - r > t$. But every subgroup order divides $abs(G) = p^t m$, and $p^(t + s - r)$ cannot divide $p^t m$ because $p$ does not divide $m$. Contradiction.
+] <ex:hk-not-subgroup>
+
+In the terminology of #link(<def:sylow-p-subgroup>)[§6.3], $H$ is a Sylow $p$-subgroup of $G$: adjoining a $p$-subgroup that lies outside $H$ cannot produce a subgroup through the product alone.
+
 #corollary(name: "Element Orders Divide the Group Order")[
   In a finite group $G$, the order of every element $a$ divides
   $abs(G)$; in particular $a^(abs(G)) = e$ for all $a in G$.
@@ -3947,14 +3959,14 @@ The three notions therefore form a strict chain, $"fully invariant" subset "char
 ]
 
 #example(name: "Transpose and inverse transpose on $\"GL\"_(n)(F)$.")[
-  The transpose $f(A) = A^T$ is bijective and satisfies $f(A^(-1)) = f(A)^(-1)$, yet it reverses products:
+  The transpose $f(A) = A^"T"$ is bijective and satisfies $f(A^(-1)) = f(A)^(-1)$, yet it reverses products:
   $
-    f(A B) = (A B)^T = B^T A^T = f(B) f(A).
+    f(A B) = (A B)^"T" = B^"T" A^"T" = f(B) f(A).
   $
-  Since $"GL"_(n)(F)$ is non-abelian for $n >= 2$, pick $A, B$ with $A B != B A$; transposing gives $B^T A^T != A^T B^T$, so $f(A B) != f(A) f(B)$ and $f$ is not a homomorphism — only an *anti-automorphism*. (For $n = 1$ it is the identity.)
-  Composing with inversion repairs the order: $g(A) = (A^(-1))^T$ satisfies
+  Since $"GL"_(n)(F)$ is non-abelian for $n >= 2$, pick $A, B$ with $A B != B A$; transposing gives $B^"T" A^"T" != A^"T" B^"T"$, so $f(A B) != f(A) f(B)$ and $f$ is not a homomorphism — only an *anti-automorphism*. (For $n = 1$ it is the identity.)
+  Composing with inversion repairs the order: $g(A) = (A^(-1))^"T"$ satisfies
   $
-    g(A B) = ((A B)^(-1))^T = (B^(-1) A^(-1))^T = (A^(-1))^T (B^(-1))^T = g(A) g(B),
+    g(A B) = ((A B)^(-1))^"T" = (B^(-1) A^(-1))^"T" = (A^(-1))^"T" (B^(-1))^"T" = g(A) g(B),
   $
   so $g$ is an automorphism, with $g circle g = "id"$. For $F = bb(R)$ and $n = 2$ it is outer — conjugation preserves the trace, while $g$ sends $mat(2, 0; 0, 1)$ to $mat(1 \/ 2, 0; 0, 1)$, changing the trace — so $"Out"(G)$ need not be trivial.
 ] <ex:inverse-transpose>
