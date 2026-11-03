@@ -1006,7 +1006,7 @@ non-abelian structure.
   $
     g a g^(-1).
   $
-  Two elements $a, b in G$ are *conjugate* in $G$, written $a tilde b$, if
+  Two elements $a, b in G$ are *conjugate* in $G$, written $a equiv b$, if
   there exists $g in G$ with $b = g a g^(-1)$.
 ] <def:conjugate-elements>
 
@@ -1924,7 +1924,7 @@ arithmetic is the cyclic special case of a general mechanism.
   (6) Every $a in G$ lies in its own coset $a H$ by (1), and the
   cosets are pairwise disjoint by (5): a partition of $G$ (in the
   sense of the *Théorie des Ensembles* note). The equivalence
-  relation behind it, "$a tilde b$ if and only if $a^(-1) b in H$",
+  relation behind it, "$a equiv b$ if and only if $a^(-1) b in H$",
   matches the partition-class correspondence.
 ]
 
@@ -2672,7 +2672,7 @@ groups is the shape that compatibility takes.
   relation is a *congruence* on $G$ if it is compatible with the
   operation:
   $
-    a tilde b quad "and" quad c tilde d quad ==> quad a c tilde b d
+    a equiv b quad "and" quad c equiv d quad ==> quad a c equiv b d
     quad quad "for all" a, b, c, d in G.
   $
   For a congruence the product of classes is defined by
@@ -2688,12 +2688,12 @@ representatives, and only compatibility guarantees that the answer
 does not depend on the choice.
 
 #caution(title: "Compatibility is not automatic")[
-  On the additive group $bb(R)^2$, let $bold(x) tilde bold(y)$ mean
+  On the additive group $bb(R)^2$, let $bold(x) equiv bold(y)$ mean
   $norm(bold(x)) = norm(bold(y))$, so that the classes are the
   concentric circles about the origin. This is an equivalence
   relation, but it is *not* compatible with addition: taking
   $bold(x) = (1, 0)$, $bold(y) = (0, 1)$ and $bold(z) = (1, 0)$, we
-  have $bold(x) tilde bold(y)$, while
+  have $bold(x) equiv bold(y)$, while
   $bold(x) + bold(z) = (2, 0)$ and $bold(y) + bold(z) = (1, 1)$ have
   norms $2$ and $sqrt(2)$.
 
@@ -2708,33 +2708,33 @@ does not depend on the choice.
   bijection between the congruences on $G$ and the normal subgroups of
   $G$. Its inverse sends $N lt.closed.eq G$ to the relation
   $
-    a tilde b quad <=> quad a^(-1) b in N,
+    a equiv b quad <=> quad a^(-1) b in N,
   $
   whose classes are the left cosets, $[a] = a N$, so that
-  $G \/ tilde = G \/ N$.
+  $G \/ equiv = G \/ N$.
 ] <thm:congruence-normal>
 
 #proof[
   *From a congruence to a normal subgroup.* Let $tilde$ be a
-  congruence and put $N = [e]_tilde = {g in G | g tilde e}$.
+  congruence and put $N = [e]_tilde = {g in G | g equiv e}$.
 
   First, $N$ is a subgroup. Reflexivity gives $e in N$. If $a, b in
-  N$, then $a tilde e$ and $b tilde e$, hence $a b tilde e$, so $a b
-  in N$. If $a in N$, then $a^(-1) a tilde a^(-1) e$, that is $e tilde
+  N$, then $a equiv e$ and $b equiv e$, hence $a b equiv e$, so $a b
+  in N$. If $a in N$, then $a^(-1) a equiv a^(-1) e$, that is $e tilde
   a^(-1)$, so $a^(-1) in N$.
 
   Second, $N$ is normal: for $g in G$ and $n in N$, compatibility
-  applied to $g tilde g$, $n tilde e$ and $g^(-1) tilde g^(-1)$ gives
-  $g n g^(-1) tilde g e g^(-1) = e$, so $g n g^(-1) in N$.
+  applied to $g equiv g$, $n equiv e$ and $g^(-1) equiv g^(-1)$ gives
+  $g n g^(-1) equiv g e g^(-1) = e$, so $g n g^(-1) in N$.
 
-  Third, the classes are the left cosets. If $a tilde b$, then
-  $a^(-1) a tilde a^(-1) b$, i.e. $e tilde a^(-1) b$, so $a^(-1) b in
-  N$. Conversely, if $a^(-1) b in N$ then $a^(-1) b tilde e$, and
-  multiplying by $a tilde a$ gives $b tilde a$, so $a tilde b$ by
+  Third, the classes are the left cosets. If $a equiv b$, then
+  $a^(-1) a equiv a^(-1) b$, i.e. $e equiv a^(-1) b$, so $a^(-1) b in
+  N$. Conversely, if $a^(-1) b in N$ then $a^(-1) b equiv e$, and
+  multiplying by $a equiv a$ gives $b equiv a$, so $a equiv b$ by
   symmetry. Hence $[a] = a N$, and in particular $[e] = N$.
 
   *From a normal subgroup to a congruence.* Let $N lt.closed.eq G$ and
-  set $a tilde b$ if and only if $a^(-1) b in N$. This is an
+  set $a equiv b$ if and only if $a^(-1) b in N$. This is an
   equivalence relation: $a^(-1) a = e in N$; from $a^(-1) b in N$ we
   get $(a^(-1) b)^(-1) = b^(-1) a in N$; and $a^(-1) b, b^(-1) c in N$
   multiply to $a^(-1) c in N$. It is compatible: writing $a^(-1) b =
@@ -2770,7 +2770,7 @@ verification.
 ] <thm:quotient-group>
 
 #proof[
-  Well-definedness is the compatibility of the congruence $a tilde b
+  Well-definedness is the compatibility of the congruence $a equiv b
   <=> a^(-1) b in N$ (#link(<thm:congruence-normal>)[above]); closure
   is automatic. Associativity is inherited from $G$:
   $
@@ -5419,6 +5419,1192 @@ generalises beautifully: the same proof, with $bb(Z)$ replaced by any
 principal ideal domain $R$, classifies finitely generated $R$-modules
 (#link(<note:pid-generalisation>)[§7.2]).
 
+#part("Ring Theory")
+
+= Basic Concepts of Rings // 环的基本概念
+
+Chapter 1 introduced operations and asked which laws they might obey; the
+distributive laws were recorded there as the pair that couples two
+operations together (#link(<def:operation>)[§1.2]), with the remark that
+they would be decisive for rings.
+This chapter collects the debt.
+
+A ring is the simplest structure carrying two operations that interact, and
+it is assembled from pieces the group-theoretic half of this book has
+already built.
+The additive half is an abelian group (#link(<def:abelian-group>)[§2.1]), so
+everything proved there — Lagrange's theorem, the isomorphism theorems, the
+structure theorem — is available at once for $(R, +)$.
+The multiplicative half is only a semigroup: it may lack an identity, lack
+inverses, and lack commutativity.
+Ring theory is the systematic study of how far the multiplicative half is
+from being a group, and of the tools that survive when it is not.
+
+The strengthening happens in three independent directions —
+*commutativity*, *identity*, *invertibility* — and the ladder it generates,
+$
+  "ring" subset "commutative ring" subset "integral domain" subset "field",
+$
+together with its non-commutative sibling the division ring, organises most
+of the vocabulary of the subject.
+Its strictness is the content of #link(<fig:ring-hierarchy>)[the hierarchy
+  figure] in *Integral Domains and Fields*.
+
+The exposition runs as follows.
+*Definition of Rings* fixes the axioms and the language of units and zero
+divisors.
+*Subrings and Ring Homomorphisms* supplies the two structural notions every
+later argument uses.
+*Integral Domains and Fields* strengthens the multiplicative half and
+measures how far it can go.
+*Characteristic and Prime Fields* extracts the first numerical invariant of
+a ring.
+*Constructions of Rings* assembles new rings — products, matrices, function
+rings, group rings — from old ones.
+*Field of Fractions* closes the chapter with the converse movement: every
+integral domain embeds in a field, which is the door to Part III.
+
+Two boundaries are respected throughout.
+Ideals, quotient rings and the homomorphism theorems belong to *Ideals and
+Quotient Rings*; the divisibility theory built on domains belongs to
+*Divisibility Theory*.
+What is established here is used there without repetition.
+
+== Definition of Rings // 环的定义
+
+#definition(name: "Ring")[
+  A *ring* is a set $R$ carrying two binary operations
+  $+ : R times R -> R$ and $dot : R times R -> R$, called addition and
+  multiplication, such that
+  - (R1) $(R, +)$ is an abelian group;
+  - (R2) $(R, dot)$ is a semigroup, that is, multiplication is associative:
+    $(a b) c = a (b c)$ for all $a, b, c in R$;
+  - (R3) multiplication distributes over addition on both sides:
+    $a dot (b + c) = a dot b + a dot c$ and
+    $(a + b) dot c = a dot c + b dot c$ for all $a, b, c in R$.
+] <def:ring>
+
+The three clauses divide the labour cleanly.
+(R1) is importation: nothing new is assumed on the additive side, and the
+whole group-theoretic apparatus is inherited verbatim.
+(R2) is a deliberate weakening — a semigroup promises neither a neutral
+element nor inverses, and the examples below show that it often delivers
+neither.
+(R3) is the only clause mentioning both operations, and it is the sole
+reason a ring is more than an abelian group and a semigroup sharing a set.
+Every computation in this chapter — multiplying out, factoring, evaluating
+$0 dot a$ — is bookkeeping with distributivity.
+
+#note(title: "Whether a ring must have a $1$")[
+  The axioms above deliberately omit a multiplicative identity.
+  This is the convention of E. Noether and of most texts written before
+  1960.
+  From the 1960s onward a growing number of authors — Bourbaki, Eisenbud and
+  Lang among them — folded $1$ into the definition itself, and the two
+  schools use different names for the same objects.
+
+  Those who do *not* require $1$ call a ring that possesses one a *unital
+  ring*.
+  Those who *do* require it call a ring without $1$ a *rng* — the word
+  "ring" with the $i$ removed — or a *pseudo-ring*, or they do not mention
+  such objects at all.
+  In commutative algebra commutativity is usually stipulated as well, and
+  the convention is announced once at the start of the text.
+
+  We follow the weaker convention: *ring* means (R1)–(R3), and a
+  multiplicative identity, when it exists, is named explicitly.
+  The gain is economy: statements about zero divisors, subrings and ideals
+  are cleaner when no identity is silently required, and several rings that
+  matter — $2 bb(Z)$, the functions vanishing at a point, the ideal $(x)$ —
+  are not unital.
+]
+
+#definition(name: "Commutative Ring")[
+  A ring $R$ is *commutative* if $a b = b a$ for all $a, b in R$.
+] <def:commutative-ring>
+
+#definition(name: "Unital Ring")[
+  A ring $R$ is *unital*, or a *ring with identity*, if $(R, dot)$ is a
+  monoid: there is an element $1 = 1_R in R$ with $1 a = a 1 = a$ for all
+  $a in R$.
+] <def:unital-ring>
+
+An identity, when it exists, is unique
+(#link(<prop:operation-laws-unique>)[§1.2]), so writing $1_R$ loses nothing.
+$bb(Z)$ under ordinary addition and multiplication is the prototype of a
+commutative unital ring, and a "commutative unital ring" is the default
+setting of commutative algebra.
+The additive identity is always written $0_R$, or $0$ when the ring is
+clear from context.
+
+#definition(name: "Units")[
+  Let $R$ be a unital ring.
+  An element $a in R$ is a *unit*, or is *invertible*, if there exists
+  $b in R$ with $a b = b a = 1$.
+  The set of units of $R$ is denoted $R^times$.
+] <def:unit>
+
+#proposition(name: "The Units Form a Group")[
+  Let $R$ be a unital ring.
+  Then $R^times$ is a group under multiplication.
+] <prop:units-form-group>
+
+#proof[
+  *Closure.* If $a b = b a = 1$ and $c d = d c = 1$, then
+  $(a c)(d b) = a (c d) b = a b = 1$ and likewise $(d b)(a c) = 1$, so
+  $a c in R^times$ with inverse $d b$.
+
+  *Associativity* is inherited from $R$, and $1 dot 1 = 1$ shows
+  $1 in R^times$.
+
+  *Inverses.* The defining relation is symmetric in $a$ and $b$: if $b$ is
+  an inverse of $a$, then $a$ is an inverse of $b$.
+  Hence $b in R^times$, with inverse $a$.
+]
+
+In $bb(Z)$ the units are $±1$; in $bb(Q)$, $bb(R)$ and $bb(C)$ every nonzero
+element is a unit; in the ring of $n times n$ matrices the units are exactly
+the invertible matrices, a remark made precise by
+#link(<prop:matrix-ring-properties>)[the properties of the matrix ring].
+
+#definition(name: "Zero Divisors")[
+  Let $R$ be a ring and $a in R$ a nonzero element.
+  Then $a$ is a *left zero divisor* if $a b = 0$ for some nonzero $b in R$,
+  a *right zero divisor* if $b a = 0$ for some nonzero $b in R$, and a
+  *zero divisor* if it is one of the two.
+] <def:zero-divisor>
+
+In a commutative ring the three notions coincide, and in a non-commutative
+ring they may differ.
+The element $0$ is a zero divisor in every ring $R != {0}$, and only there:
+the definition of a zero divisor excludes $0$ itself precisely so that
+"$a b = 0$ with $a, b != 0$" expresses a genuine failure of cancellation.
+
+#caution(title: "Units and zero divisors are disjoint")[
+  Let $R$ be a unital ring.
+  If $a in R^times$ and $a b = 0$, then $b = a^(-1) (a b) = 0$, and the
+  right-handed version is the same computation.
+  So no unit is a zero divisor.
+  The converse exclusion is not exhaustive: in $bb(Z)$ every nonzero element
+  is a non-zero-divisor, yet only $±1$ are units, so an element may be
+  neither.
+]
+
+#property(name: "Arithmetic in a Ring")[
+  Let $R$ be a ring and $a, b, c in R$.
+  + $0 dot a = a dot 0 = 0$;
+  + $(-a) dot b = a dot (-b) = -(a b)$, and in particular
+    $(-a) dot (-b) = a b$;
+  + $(a - b) dot c = a dot c - b dot c$ and
+    $a dot (b - c) = a dot b - a dot c$;
+  + if $R$ is unital, then $n a = (n dot 1_R) a$ for every integer $n$.
+] <prop:ring-arithmetic>
+
+#proof[
+  (1) From $0 + 0 = 0$ and distributivity,
+  $0 dot a = (0 + 0) dot a = 0 dot a + 0 dot a$; adding $-(0 dot a)$ to
+  both sides in the additive group gives $0 dot a = 0$.
+  The right-handed statement is symmetric.
+
+  (2) $a dot (-b) + a b = a dot (-b + b) = a dot 0 = 0$ by (1), and the
+  additive inverse is unique
+  (#link(<prop:group-basic-properties>)[§2.3]); hence $a dot (-b) = -(a b)$.
+  Applying this twice gives $(-a) dot (-b) = -(a dot (-b)) = a b$.
+
+  (3) Expand $a dot (b - c) = a dot (b + (-c)) = a b + a dot (-c)$ and use
+  (2); the other side is analogous.
+
+  (4) Induction on $n >= 0$ gives $n a = (n dot 1_R) a$, the case $n = 0$
+  being (1); the negative case follows from (2).
+]
+
+Item (2) with $b = 1$ reads $(-1) dot a = -a$: negation is multiplication by
+$-1$, as soon as a $1$ exists.
+Item (3) is the licence to subtract inside products, and it is used
+constantly below.
+
+#caution(title: "The freshman's dream needs commutativity")[
+  In a ring, $(a + b)^2 = a^2 + a b + b a + b^2$, and the two middle terms
+  cannot be merged unless $a b = b a$.
+  So the familiar expansion $(a + b)^2 = a^2 + 2 a b + b^2$ is a theorem
+  about *commutative* rings only, and the binomial theorem of
+  #link(<prop:frobenius>)[the Frobenius map] is stated under that
+  hypothesis for the same reason.
+]
+
+Rings are cheap to manufacture, and a first inventory shows how varied the
+multiplicative half can be.
+The structures already met in this book supply most of the entries.
+
+- $bb(Z)$, $bb(Q)$, $bb(R)$, $bb(C)$ under the usual operations:
+  commutative, unital, without zero divisors.
+- $bb(Z)_n$ for $n >= 1$: the residue classes with addition and
+  multiplication of classes (#link(<ex:residue-group>)[§2.2]); commutative
+  and unital, of order $n$.
+- $2 bb(Z) = {2 k : k in bb(Z)}$: commutative, closed under addition,
+  subtraction and multiplication, but *not* unital — there is no even
+  identity.
+- $bb(N)$ under the usual operations is *not* a ring: (R1) fails, since
+  positive integers have no additive inverse.
+- $M_(n)(R)$ of square matrices over a unital ring: unital and, for $n >= 2$,
+  non-commutative (#link(<def:matrix-ring>)[§8.5]).
+- $R^X$, the set of all maps $X -> R$ with pointwise operations: as
+  commutative as $R$ is (#link(<def:function-ring>)[§8.5]).
+- The quaternions $bb(H)$: a division ring that is not a field
+  (#link(<ex:quaternion-ring>)[§8.3]).
+
+#example(name: "The zero ring.")[
+  Let $R = {0}$ with the only possible operations, $0 + 0 = 0$ and
+  $0 dot 0 = 0$.
+  It is a ring, and it is unital with $1 = 0$; it is called the *zero ring*
+  and written $0$.
+
+  Conversely, if $1 = 0$ in a unital ring, then
+  $a = a dot 1 = a dot 0 = 0$ for every $a$
+  (#link(<prop:ring-arithmetic>)[the property above]), so $R = {0}$.
+  The zero ring is therefore the only ring in which the identity collapses,
+  and "$R$ is nonzero" is the same as "$1 != 0$" once unitality is assumed.
+]
+
+The collapse $1 = 0$ is the one degeneration the definitions tolerate
+silently, and it is excluded by hand whenever a statement would become
+vacuous: an integral domain will be required nonzero, a field will be one
+automatically.
+
+== Subrings and Ring Homomorphisms // 子环与环同态
+
+Two structural notions carry every later argument: the substructures of a
+ring, and the maps that preserve its operations.
+Both are specialisations of Chapter 1
+(#link(<def:algebraic-system>)[§1.2], #link(<def:homomorphism>)[§1.3]), and
+the additive half of each is already known.
+Only the interaction with multiplication is new — and that interaction is
+the seed of the next chapter.
+
+#definition(name: "Subring")[
+  A subset $S$ of a ring $R$ is a *subring* if it is a subgroup of
+  $(R, +)$, closed under multiplication, and a ring under the restricted
+  operations.
+] <def:subring>
+
+The last clause costs nothing: associativity and distributivity hold in $S$
+because they hold in $R$.
+When $R$ is unital we do *not* require $1_R in S$; a subring containing
+$1_R$ is called *unital*.
+The distinction is not pedantry: $2 bb(Z)$ is a subring of $bb(Z)$ with no
+identity at all, and $bb(Z)$ is a unital subring of $bb(Q)$.
+
+#theorem(name: "Subring Criterion")[
+  A nonempty subset $S$ of a ring $R$ is a subring if and only if
+  $a - b in S$ and $a b in S$ for all $a, b in S$.
+] <thm:subring-criteria>
+
+#proof[
+  If $S$ is a subring, both conditions hold by the definition of a subgroup
+  and of closure.
+
+  Conversely, "$a - b in S$ for all $a, b in S$" is exactly the subgroup
+  criterion (#link(<thm:subgroup-criteria>)[§3.1]), so $(S, +)$ is an
+  abelian group, containing $0$ and closed under negation.
+  Multiplication is closed by hypothesis, associative because $R$ is, and
+  the distributive laws hold in $S$ because they hold identically in $R$.
+  Hence $S$ is a ring.
+]
+
+#proposition(name: "Intersections of Subrings")[
+  Let ${S_i : i in I}$ be a family of subrings of a ring $R$.
+  Then $inter_(i in I) S_i$ is a subring of $R$.
+] <prop:subring-intersection>
+
+#proof[
+  Every $S_i$ contains $0$, so the intersection is nonempty.
+  If $a, b$ lie in the intersection, then $a, b in S_i$ for each $i$, hence
+  $a - b in S_i$ and $a b in S_i$ for each $i$, and the criterion puts both
+  in the intersection.
+]
+
+Consequently every subset $X subset.eq R$ lies in a smallest subring: the
+intersection of all subrings containing $X$.
+It is written $⟨X⟩$ and called the *subring generated by $X$*.
+Two extreme cases are recorded now for later use: $⟨emptyset⟩ = {0}$, and
+$⟨1_R⟩$ is the prime subring of
+#link(<def:prime-field>)[*Characteristic and Prime Fields*].
+
+#definition(name: "Ring Homomorphism")[
+  Let $R$ and $S$ be rings.
+  A map $f: R -> S$ is a *ring homomorphism* if
+  $f(a + b) = f(a) + f(b)$ and $f(a b) = f(a) f(b)$ for all $a, b in R$.
+  If $R$ and $S$ are unital, a ring homomorphism is in addition required to
+  satisfy $f(1_R) = 1_S$.
+] <def:ring-homomorphism>
+
+The extra requirement is a convention, and it deserves one sentence of
+defence.
+Without it the map $bb(Z) -> bb(Z) times bb(Z)$, $n |-> (n, 0)$, would
+qualify, although it annihilates the identity of the target.
+With it, a ring homomorphism between unital rings is automatically a
+morphism of the corresponding one-object categories, and a bijective one is
+an isomorphism.
+We adopt the requirement whenever both rings are unital and drop it
+otherwise; #link(<prop:domain-embeds-frac>)[the embedding into the field of
+  fractions] is the place where the bookkeeping is checked explicitly.
+
+#proposition(name: "Elementary Properties of Ring Homomorphisms")[
+  Let $f: R -> S$ be a ring homomorphism.
+  + $f(0_R) = 0_S$ and $f(-a) = -f(a)$; hence $f$ is a homomorphism of the
+    additive groups, so $f(a - b) = f(a) - f(b)$ and
+    $f(n a) = n f(a)$ for every $n in bb(Z)$;
+  + the image $f(R)$ is a subring of $S$;
+  + a composite of ring homomorphisms is a ring homomorphism;
+  + if $R$ and $S$ are unital and $f(1_R) = 1_S$, then
+    $f(a^n) = f(a)^n$ for $n >= 0$, and $f$ carries units to units.
+] <prop:ring-hom-basic>
+
+#proof[
+  (1) Additivity alone says that $f$ is a homomorphism
+  $(R, +) -> (S, +)$ of abelian groups, so the listed identities are
+  #link(<prop:homomorphism-preserves-laws>)[those of §1.3].
+
+  (2) The image is nonempty, and
+  $f(a) - f(b) = f(a - b)$, $f(a) f(b) = f(a b)$, so the subring
+  criterion applies.
+
+  (3) Immediate from the definitions.
+
+  (4) $f(a^0) = f(1_R) = 1_S$, and induction on $n$ gives the power rule.
+  If $a b = 1_R$, then $f(a) f(b) = f(1_R) = 1_S$ and likewise on the other
+  side, so $f(a)$ is a unit with inverse $f(b)$.
+]
+
+Item (4) says that $f$ restricts to a group homomorphism
+$R^times -> S^times$ when both rings are unital; it need be neither
+injective nor surjective, since the units of the image may be fewer or more
+than those inherited from $R$.
+
+#definition(name: "Kernel and Image")[
+  Let $f: R -> S$ be a ring homomorphism.
+  Its *kernel* is $"Ker" f = {a in R : f(a) = 0_S}$, and its *image* is
+  $"Im" f = f(R)$.
+] <def:ring-kernel>
+
+#proposition(name: "Injectivity and the Kernel")[
+  A ring homomorphism $f: R -> S$ is injective if and only if
+  $"Ker" f = {0}$.
+] <prop:ring-mono-kernel>
+
+#proof[
+  If $f$ is injective, then $f(a) = 0 = f(0)$ forces $a = 0$.
+  Conversely, if $f(a) = f(b)$, then $f(a - b) = 0$, so $a - b in "Ker" f$
+  and $a = b$.
+]
+
+The kernel is a subring by the properties above, but it carries strictly
+more structure than that, and the surplus is the subject of the next
+chapter.
+
+#note(title: "The kernel is more than a subring")[
+  Let $f: R -> S$ be a ring homomorphism and $a in "Ker" f$.
+  For arbitrary $r in R$,
+  $f(r a) = f(r) f(a) = 0$ and $f(a r) = f(a) f(r) = 0$, so $r a$ and
+  $a r$ also lie in the kernel.
+  A subring with this two-sided absorption property is an *ideal*, the
+  ring-theoretic analogue of a normal subgroup: kernels of ring
+  homomorphisms turn out to be exactly the ideals, and ideals are exactly
+  the subrings by which one may divide.
+  Both statements belong to *Ideals and Quotient Rings*.
+
+  Not every subring arises this way.
+  $bb(Z)$ is a subring of $bb(Q)$, but no homomorphism with domain $bb(Q)$
+  can have kernel $bb(Z)$: from $1/2 in "Ker" f$ one gets
+  $f(1) = f(2 dot 1/2) = f(2) f(1/2) = 0$, whence
+  $f(x) = f(x dot 1) = 0$ for every $x$, and the kernel would be all of
+  $bb(Q)$.
+] <note:kernel-ideal-preview>
+
+#example(name: "Reduction modulo $n$.")[
+  The map $pi: bb(Z) -> bb(Z)_n$, $a |-> overline(a)$, preserves addition
+  and multiplication of residue classes
+  (#link(<ex:residue-group>)[§2.2]) and sends $1$ to $overline(1)$.
+  It is a surjective ring homomorphism whose kernel is $n bb(Z)$: the fibre
+  over $overline(0)$ consists exactly of the multiples of $n$.
+  The example is the model for every quotient construction to come.
+] <ex:canonical-mod-n>
+
+#example(name: "Complex conjugation.")[
+  Conjugation $sigma: bb(C) -> bb(C)$, $z |-> overline(z)$, preserves sums
+  and products, is its own inverse, and hence is a ring automorphism.
+  It fixes every real number and exchanges $i$ with $-i$.
+  Together with the identity it exhausts the automorphisms of $bb(C)$ over
+  $bb(R)$ — a fact re-read in *Galois Theory* as the statement that
+  $"Aut"(bb(C) \/ bb(R))$ has two elements.
+] <ex:complex-conjugation>
+
+Two further homomorphisms are permanent actors in what follows: the
+canonical map $bb(Z) -> R$, $n |-> n dot 1_R$, which measures the
+characteristic of a ring (#link(<eq:characteristic-map>)[§8.4]), and the
+embedding of an integral domain in its field of fractions
+(#link(<prop:domain-embeds-frac>)[§8.6]).
+Both are injective or not according to an invariant of the ring, and both
+are studied where that invariant is defined.
+
+== Integral Domains and Fields // 整环与域
+
+The multiplicative half of a ring admits two further strengthenings, and
+the ladder they produce is the central classification of elementary ring
+theory.
+First forbid zero divisors: a product may vanish only if a factor does.
+Then demand that every nonzero element be invertible: division becomes
+available.
+Between the two lies a sharp finiteness phenomenon — in a finite ring the
+second condition follows from the first — which explains why the arithmetic
+of $bb(Z)_p$ behaves like linear algebra.
+
+#definition(name: "Integral Domain")[
+  An *integral domain*, or simply a *domain*, is a commutative unital ring
+  $R$ with $R != {0}$ and no zero divisors: $a b = 0$ implies $a = 0$ or
+  $b = 0$.
+] <def:integral-domain>
+
+#proposition(name: "Cancellation in a Domain")[
+  Let $R$ be an integral domain and $a, b, c in R$ with $a != 0$.
+  Then $a b = a c$ implies $b = c$, and $b a = c a$ implies $b = c$.
+] <prop:cancellation-domain>
+
+#proof[
+  From $a b = a c$ one gets $a (b - c) = 0$
+  (#link(<prop:ring-arithmetic>)[§8.1]); since $a != 0$ and there are no
+  zero divisors, $b - c = 0$.
+  The right-handed statement is the same computation.
+]
+
+Cancellation is a genuine gain — $bb(Z)_6$ cancels nothing nontrivially —
+but it is not invertibility: the multiplicative semigroup of a domain is
+cancellative and may still miss almost every inverse, as $bb(Z)$ does.
+
+#definition(name: "Field")[
+  A *field* is a commutative unital ring $R$ with $R^times = R backslash
+  {0}$: every nonzero element is a unit.
+] <def:field>
+
+The zero ring is excluded by the equation itself, since there
+$R^times = {0}$ whereas $R backslash {0} = emptyset$.
+
+#definition(name: "Division Ring")[
+  A *division ring*, or *skew field*, is a unital ring $R != {0}$ in which
+  every nonzero element is a unit.
+  Commutativity is not required.
+] <def:division-ring>
+
+#example(name: "The quaternions.")[
+  Let
+  $bb(H) = {a + b i + c j + d k : a, b, c, d in bb(R)}$
+  with componentwise addition and the multiplication determined by
+  $i^2 = j^2 = k^2 = i j k = -1$.
+  For $q = a + b i + c j + d k != 0$ the conjugate is
+  $overline(q) = a - b i - c j - d k$, and
+  $q overline(q) = a^2 + b^2 + c^2 + d^2 != 0$, so $q$ has the inverse
+  $q^(-1) = overline(q) / (a^2 + b^2 + c^2 + d^2)$.
+  Hence $bb(H)$ is a division ring.
+  It is not commutative, since $i j = k$ while $j i = -k$, so it is not a
+  field; and ${±1, ±i, ±j, ±k}$ is the quaternion group $Q_8$
+  (#link(<ex:quaternion-group>)[§2.2]) sitting inside $bb(H)^times$.
+] <ex:quaternion-ring>
+
+#theorem(name: "Every Field Is an Integral Domain")[
+  Every field is an integral domain.
+] <thm:field-is-domain>
+
+#proof[
+  Let $F$ be a field and $a b = 0$ with $a != 0$.
+  Then $b = a^(-1) (a b) = a^(-1) dot 0 = 0$.
+  A field is commutative, unital and nonzero by definition, so the defining
+  conditions of a domain are met.
+]
+
+The converse fails, and $bb(Z)$ is the witness.
+It recovers in the finite case.
+
+#theorem(name: "Finite Domains Are Fields")[
+  Every finite integral domain is a field.
+] <thm:finite-domain-field>
+
+#proof[
+  Let $R$ be a finite domain and $a in R$ nonzero, and consider the map
+  $mu_a: R -> R$, $x |-> a x$.
+  It is injective, because $a x = a y$ gives $x = y$ by
+  #link(<prop:cancellation-domain>)[cancellation].
+  An injective self-map of a finite set is surjective, so $1$ lies in the
+  image: there is $b in R$ with $a b = 1$.
+  Every nonzero element is therefore a unit.
+]
+
+The argument uses nothing about the additive structure beyond finiteness —
+the pigeonhole principle, in the form "injective implies bijective for
+self-maps of a finite set".
+The same step recurs in #link(<thm:zn-field-iff-prime>)[the next theorem]
+and, in *Finite Fields*, identifies the finite domains of order $p^n$ with
+$bb(F)_(p^n)$.
+
+#theorem(name: "When $bb(Z)_n$ Is a Field")[
+  The ring $bb(Z)_n$ is a field if and only if $n$ is prime.
+] <thm:zn-field-iff-prime>
+
+#proof[
+  Suppose first that $n = p$ is prime and
+  $overline(a) overline(b) = overline(0)$, that is, $p | a b$.
+  Then $p | a$ or $p | b$, so one factor is already $overline(0)$:
+  $bb(Z)_p$ has no zero divisors.
+  A finite domain is a field by #link(<thm:finite-domain-field>)[the theorem
+    above].
+
+  Conversely, if $n = u v$ with $1 < u, v < n$, then $overline(u)$ and
+  $overline(v)$ are nonzero while their product is $overline(0)$, so
+  $bb(Z)_n$ is not a domain and hence, by
+  #link(<thm:field-is-domain>)[the first theorem of this section], not a
+  field.
+]
+
+#example(name: "Units and zero divisors in $bb(Z)_n$.")[
+  In $bb(Z)_6$ the classes $overline(2)$ and $overline(3)$ are nonzero zero
+  divisors, while $overline(1)$ and $overline(5)$ are the units.
+  In $bb(Z)_4$ the only zero divisor is $overline(2)$, with
+  $overline(2)^2 = overline(0)$.
+  In general $overline(a)$ is a unit if and only if $gcd(a, n) = 1$, so
+  $bb(Z)_n^times$ has $phi(n)$ elements, and every other nonzero class is a
+  zero divisor.
+] <ex:zn-zero-divisors>
+
+#example(name: "Zero divisors in $M_2(bb(R))$.")[
+  Let $E_(i j)$ be the matrix with entry $1$ in position $(i, j)$ and $0$
+  elsewhere.
+  Then $E_11 E_22 = 0$ with both factors nonzero, and $E_12^2 = 0$: zero
+  divisors come both from disjoint support and from nilpotence.
+  The ring is not commutative either, since $E_11 E_12 = E_12$ while
+  $E_12 E_11 = 0$.
+] <ex:matrix-zero-divisors>
+
+#caution(title: "Four ways to fail to be a domain")[
+  The definition of a domain imposes four conditions, and none is
+  redundant.
+  + *Unital*: $2 bb(Z)$ is commutative and has no zero divisors, but no
+    identity.
+  + *Commutative*: $bb(H)$ is a division ring and not a field.
+  + *No zero divisors*: $bb(Z)_6$ is a commutative unital ring in which
+    $overline(2) overline(3) = overline(0)$.
+  + *Nonzero*: the zero ring satisfies the first three conditions, with
+    $1 = 0$.
+]
+
+#note(title: "Why a field is required to commute")[
+  Dropping commutativity is not a cosmetic weakening.
+  In $bb(H)$ the equations $x i = j$ and $i x = j$ have different
+  solutions, so the usual elimination arguments of linear algebra break
+  down.
+  Authors who take "field" to include the non-commutative case say
+  *commutative field* for what is called a field here, or reserve *skew
+  field* for $bb(H)$-like structures.
+  We keep *field* commutative throughout, so that a field is always the
+  ground structure of linear algebra.
+] <note:field-convention>
+
+#figure(
+  image("img/ring-hierarchy.svg", width: 96%),
+  caption: [The ladder of ring axioms. Each class is obtained from the one
+    outside it by adjoining a single multiplicative condition:
+    commutativity, then absence of zero divisors, then invertibility of
+    every nonzero element. The branch on the right keeps commutativity out
+    and stops at the division ring $bb(H)$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:ring-hierarchy>
+
+The ladder is strict at every rung, and each rung has a named witness:
+$bb(Z)$ is a domain that is not a field, $bb(Z)_6$ is a commutative unital
+ring that is not a domain, $bb(H)$ is a division ring that is not a field,
+and $2 bb(Z)$ is a ring that is not unital.
+No implication in the ladder reverses.
+
+== Characteristic and Prime Fields // 环的特征与素域
+
+Every unital ring carries a canonical copy of the integers, namely the
+multiples of $1_R$.
+Either that copy is faithful, or it collapses at some positive integer; the
+point of collapse is the first genuine numerical invariant of the ring, and
+the collapsed copy is the smallest substructure a ring can have.
+
+#eq[
+  $chi_R: bb(Z) -> R, quad chi_(R)(n) = n dot 1_R.$
+] <eq:characteristic-map>
+
+The map is a ring homomorphism: additivity is the definition of integer
+multiples in the additive group
+(#link(<prop:order-properties>)[§2.3]), the identity goes to the identity,
+and $chi_(R)(m n) = (m n) dot 1_R = (m dot 1_R)(n dot 1_R)$ is distributivity
+followed by induction on $m$.
+Its image is $⟨1_R⟩$, the prime subring defined below.
+
+#definition(name: "Characteristic")[
+  The *characteristic* of a unital ring $R$, written $"char" R$, is the
+  least integer $n >= 1$ with $n dot 1_R = 0_R$.
+  If no such integer exists, $"char" R = 0$.
+] <def:ring-characteristic>
+
+#proposition(name: "Characteristic as an Additive Order")[
+  Let $R$ be a unital ring.
+  Then $"char" R$ is the order of $1_R$ in the additive group $(R, +)$,
+  with the convention that infinite order is recorded as $0$; consequently
+  an integer $n$ satisfies $n dot 1_R = 0_R$ if and only if $"char" R$
+  divides $n$, and if $R$ is finite then $"char" R$ divides $abs(R)$.
+] <prop:char-as-order>
+
+#proof[
+  By definition the order of $1_R$ is the least $n >= 1$ with
+  $n dot 1_R = 0_R$, which is the characteristic; it is infinite exactly
+  when no such $n$ exists.
+  The divisibility criterion is
+  #link(<prop:order-properties>)[the standard property of the order of an
+    element], and Lagrange's theorem (#link(<thm:lagrange>)[§3.3]) gives
+  $"char" R | abs(R)$ in the finite case.
+]
+
+By #link(<prop:ring-mono-kernel>)[the injectivity criterion of §8.2],
+$chi_R$ is injective exactly when $"char" R = 0$: a ring of characteristic
+$0$ contains a copy of $bb(Z)$, and a ring of characteristic $n > 0$ a copy
+of $bb(Z)_n$.
+Which of the two copies it contains turns out to control most of its
+arithmetic.
+
+#theorem(name: "Characteristic of a Domain")[
+  Let $R$ be an integral domain.
+  Then $"char" R$ is either $0$ or a prime number.
+] <thm:characteristic-domain>
+
+#proof[
+  Suppose $"char" R = n > 0$ and $n = m k$ with $m, k >= 1$.
+  Then
+  $(m dot 1_R)(k dot 1_R) = (m k) dot 1_R = n dot 1_R = 0_R$.
+  Since $R$ has no zero divisors, $m dot 1_R = 0_R$ or
+  $k dot 1_R = 0_R$, and minimality of $n$ forces $m = n$ or $k = n$.
+
+  So $n$ admits no factorization into smaller positive factors.
+  The case $n = 1$ would give $1_R = 0_R$ and hence the zero ring, which a
+  domain is not; therefore $n$ is prime.
+]
+
+#definition(name: "Prime Subring and Prime Field")[
+  Let $R$ be a unital ring.
+  Its *prime subring* is the intersection of all subrings of $R$
+  containing $1_R$, equivalently $⟨1_R⟩$.
+  A *prime field* is a field possessing no proper subfield.
+] <def:prime-field>
+
+#theorem(name: "The Prime Subring")[
+  Let $R$ be a unital ring with prime subring $P$.
+  If $"char" R = 0$ then $P tilde.equiv bb(Z)$; if $"char" R = n > 0$ then
+  $P tilde.equiv bb(Z)_n$.
+] <thm:prime-subring>
+
+#proof[
+  By #link(<prop:ring-hom-basic>)[the properties of ring homomorphisms],
+  $"Im" chi_R$ is a subring of $R$ containing $1_R$.
+  Every subring containing $1_R$ contains all the multiples $n dot 1_R$,
+  so $"Im" chi_R = ⟨1_R⟩ = P$.
+
+  If $"char" R = 0$, then $"Ker" chi_R = {0}$ and $chi_R$ is injective,
+  giving $bb(Z) tilde.equiv P$.
+
+  If $"char" R = n$, then $"Ker" chi_R = n bb(Z)$
+  (#link(<prop:char-as-order>)[above]), and $chi_R$ factors through the
+  residue classes: $overline(m) |-> m dot 1_R$ is well defined, bijective
+  onto $P$, and preserves sums and products.
+  Hence $P tilde.equiv bb(Z)_n$.
+]
+
+#figure(
+  image("img/characteristic-embedding.svg", width: 92%),
+  caption: [The canonical homomorphism $chi_R: bb(Z) -> R$ in its two
+    possible shapes. In characteristic $0$ it is injective, and the prime
+    subring is a copy of $bb(Z)$; in characteristic $p$ it collapses the
+    multiples of $p$, and the prime subring is the field $bb(Z)_p$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:characteristic-embedding>
+
+#corollary(name: "Prime Fields of Prime Characteristic")[
+  Let $R$ be an integral domain with $"char" R = p > 0$.
+  Then the prime subring of $R$ is a field isomorphic to $bb(Z)_p$.
+] <cor:prime-field-char-p>
+
+#proof[
+  By #link(<thm:prime-subring>)[the theorem above] the prime subring is
+  $bb(Z)_p$, and by #link(<thm:zn-field-iff-prime>)[§8.3] this is a field
+  exactly when $p$ is prime, which
+  #link(<thm:characteristic-domain>)[characteristic of a domain] guarantees.
+]
+
+The characteristic $0$ case is the mirror image and needs one more
+construction: the prime subring is then a copy of $bb(Z)$, which is a domain
+but not a field, and the smallest field containing it is $bb(Q)$
+(#link(<cor:prime-field-char-zero>)[§8.6]).
+So every field contains exactly one prime field, of which there are two
+families: $bb(Q)$ and the fields $bb(F)_p$.
+
+#lemma(name: "Binomial Coefficients in Prime Characteristic")[
+  Let $p$ be prime.
+  Then $p$ divides $binom(p, k)$ for every $k$ with $1 <= k <= p - 1$.
+] <lem:binomial-char-p>
+
+#proof[
+  From $binom(p, k) = p! / (k! (p - k)!)$ one gets
+  $binom(p, k) dot k! dot (p - k)! = p!$, whose right-hand side is
+  divisible by $p$.
+  Every factor of $k!$ and of $(p - k)!$ is strictly smaller than the prime
+  $p$, so $p$ divides neither factorial; a prime dividing a product divides
+  one factor, hence $p | binom(p, k)$.
+]
+
+#proposition(name: "The Frobenius Map")[
+  Let $R$ be a commutative ring of prime characteristic $p$.
+  Then $(a + b)^p = a^p + b^p$ for all $a, b in R$, and the map
+  $F: R -> R$, $a |-> a^p$, is a ring endomorphism.
+] <prop:frobenius>
+
+#proof[
+  The binomial theorem holds in a commutative ring, by induction on $n$ and
+  distributivity:
+  $(a + b)^n = sum_(k=0)^n binom(n, k) a^(n - k) b^k$.
+  For $n = p$ the intermediate coefficients are $binom(p, k)$ with
+  $1 <= k <= p - 1$, each a multiple of $p$
+  (#link(<lem:binomial-char-p>)[the lemma]).
+  An integer annihilates $1_R$ exactly when the characteristic divides it
+  (#link(<prop:char-as-order>)[the order interpretation]), so those terms
+  vanish and only $a^p + b^p$ survives.
+
+  Multiplicativity of $F$ is commutativity, $(a b)^p = a^p b^p$, and
+  additivity is the identity just proved; also $F(1_R) = 1_R$.
+  Hence $F$ is a ring endomorphism.
+]
+
+#example(name: "Characteristics in practice.")[
+  #tex-table(
+    ([Ring], [$"char"$], [Comment]),
+    ([$bb(Z)$, $bb(Q)$, $bb(R)$, $bb(C)$], [$0$], [contain a copy of $bb(Z)$]),
+    ([$bb(Z)_n$], [$n$], [the collapse point of $chi$]),
+    ([$bb(F)_p$, $p$ prime], [$p$], [the prime subring is everything]),
+    ([$bb(H)$], [$0$], [finite-dimensional over $bb(R)$, still characteristic $0$]),
+  )
+  Characteristic counts multiples of $1$, not the size of the ring: $bb(H)$
+  is a finite-dimensional algebra of characteristic $0$, whereas
+  $bb(Z)_2 times bb(Z)_3$ has characteristic $6$, the least common multiple
+  of the two (#link(<prop:product-ring-properties>)[§8.5]).
+] <ex:char-examples>
+
+The Frobenius endomorphism is the technical heart of finite field theory:
+for $R = bb(F)_p$ it is the identity, for $R = bb(F)_(p^n)$ it generates
+the Galois group of the extension over $bb(F)_p$, and in every case it
+provides a ring homomorphism that is invisible to the additive group alone.
+
+== Constructions of Rings // 环的典型构造
+
+Rings are rarely presented as bare sets; they are built from other rings,
+and a handful of machines account for nearly every example in this book.
+Each machine preserves some of the axioms and destroys others, and knowing
+which is which spares most of the verification work in practice.
+
+#definition(name: "Direct Product of Rings")[
+  Let $R$ and $S$ be rings.
+  Their *direct product* $R times S$ is the product of the underlying sets
+  with componentwise operations:
+  $(r, s) + (r', s') = (r + r', s + s')$ and
+  $(r, s)(r', s') = (r r', s s')$.
+] <def:product-ring>
+
+#proposition(name: "Properties of the Direct Product")[
+  Let $R$ and $S$ be rings.
+  + the projections $pi_R: R times S -> R$ and $pi_S$ are surjective ring
+    homomorphisms, and the injections $iota_R: R -> R times S$,
+    $r |-> (r, 0)$, and $iota_S$ preserve sums and products;
+  + *universal property*: a map $f: T -> R times S$ is a ring homomorphism
+    if and only if both components $pi_R compose f$ and $pi_S compose f$
+    are;
+  + if $R$ and $S$ are unital, then $(R times S)^times = R^times times
+    S^times$ and $"char"(R times S) = "lcm"("char" R, "char" S)$, with
+    $"lcm"(0, n) = 0$;
+  + if $R != {0}$ and $S != {0}$, then $R times S$ is not an integral
+    domain.
+] <prop:product-ring-properties>
+
+#proof[
+  (1) Both operations are componentwise, so each projection preserves them
+  by construction, and surjectivity is immediate.
+  The injections preserve sums and products for the same reason.
+
+  (2) A map into a product is determined by its two components, and
+  componentwise preservation of $+$ and $dot$ is exactly preservation by
+  each component.
+
+  (3) The element $(r, s)$ is a unit precisely when there are $r', s'$ with
+  $r r' = r' r = 1$ and $s s' = s' s = 1$, which is the statement about
+  units.
+  For the characteristic, $n dot (1, 1) = (n dot 1_R, n dot 1_S)$ vanishes
+  exactly when both characteristics divide $n$
+  (#link(<prop:char-as-order>)[§8.4]), that is, when their least common
+  multiple does.
+
+  (4) The elements $(1, 0)$ and $(0, 1)$ are nonzero, and their product is
+  $(0, 0)$.
+]
+
+One subtlety is worth naming: $iota_R$ sends $1_R$ to $(1_R, 0)$, which is
+not the identity of $R times S$.
+So $iota_R$ is a ring homomorphism in the sense of (R1)–(R3) but not a
+homomorphism of unital rings — exactly the distinction isolated in
+#link(<def:ring-homomorphism>)[*Subrings and Ring Homomorphisms*].
+
+#definition(name: "Matrix Ring")[
+  Let $R$ be a ring and $n >= 1$.
+  The *matrix ring* $M_(n)(R)$ is the set of $n times n$ arrays with entries
+  in $R$, with entrywise addition and product
+  $(a_(i j))(b_(i j)) = (sum_k a_(i k) b_(k j))$.
+] <def:matrix-ring>
+
+#proposition(name: "Properties of the Matrix Ring")[
+  Let $R$ be a unital ring, $n >= 2$, and $E_(i j)$ the matrix with entry
+  $1_R$ in position $(i, j)$ and $0$ elsewhere.
+  + $M_(n)(R)$ is a unital ring, with identity the identity matrix $I_n$;
+  + its units are the invertible matrices, and for $R = F$ a field these
+    are exactly $"GL"_(n)(F)$ (#link(<def:general-linear-group>)[§2.2]);
+  + if $1_R != 0$, then $M_(n)(R)$ is not commutative, since
+    $E_11 E_12 = E_12$ while $E_12 E_11 = 0$;
+  + $M_(n)(R)$ has zero divisors, since $E_11 E_22 = 0$.
+] <prop:matrix-ring-properties>
+
+#proof[
+  (1) Addition is entrywise, hence an abelian group.
+  The product is associative because every entry of $(A B) C$ and of
+  $A (B C)$ is the same finite sum indexed by triples $(i, k, l)$;
+  distributivity is the distributivity of $R$ applied to finite sums, and
+  $I_n$ is neutral by the definition of the product.
+
+  (2) A unit is by definition a matrix possessing a two-sided inverse in
+  $M_(n)(R)$, which is invertibility; over a field the elementary theory of
+  matrices identifies these with $"GL"_(n)(F)$.
+
+  (3) Direct computation with elementary matrices; $E_12 != 0$ because
+  $1_R != 0$.
+
+  (4) The same computation, the two factors having disjoint support.
+]
+
+#definition(name: "Ring of Functions")[
+  Let $R$ be a ring and $X$ a set.
+  The *ring of functions* $R^X$ is the set of all maps $X -> R$ with
+  pointwise operations, $(f + g)(x) = f(x) + g(x)$ and
+  $(f g)(x) = f(x) g(x)$.
+] <def:function-ring>
+
+Each axiom of $R$ is verified point by point in $X$, so $R^X$ inherits all
+of them, commutativity and unitality included — the constant map
+$x |-> 1_R$ is the identity.
+Subsets cut out by a pointwise condition stable under $+$ and $dot$ are
+subrings: the continuous functions when $X$ is a topological space and
+$R = bb(R)$, the bounded functions, the functions vanishing at a fixed
+point.
+Rings of functions are for this reason the standard source of examples and
+counterexamples in analysis.
+
+#example(name: "Idempotents and zero divisors in $R^X$.")[
+  For $A subset.eq X$ let $chi_A$ be the indicator function of $A$.
+  Then $chi_A chi_B = chi_(A inter B)$, so whenever $A$ is neither empty
+  nor all of $X$, the functions $chi_A$ and $chi_(X backslash A)$ are
+  nonzero zero divisors.
+
+  Conversely, if $R$ is a domain and $f^2 = f$, then $f(x)^2 = f(x)$ for
+  each $x$, leaving only $0$ and $1$ as possible values; so the idempotents
+  of $R^X$ are exactly the indicators.
+  An idempotent other than $0$ and $1$ is therefore both a zero divisor and
+  a witness that $R^X$ is not a domain.
+] <ex:function-ring-idempotents>
+
+#definition(name: "Group Ring")[
+  Let $R$ be a unital ring and $G$ a finite group.
+  The *group ring* $R[G]$ is the set of formal sums
+  $sum_(g in G) a_g g$ with coefficients $a_g in R$, with componentwise
+  addition and the product determined by the group law,
+  $(sum_(g in G) a_g g)(sum_(h in G) b_h h) = sum_(g, h) a_g b_h (g h)$.
+] <def:group-ring>
+
+Additively, $R[G]$ is the direct product of $abs(G)$ copies of $R$
+(#link(<def:direct-sum>)[§7.1] for the abelian case); the twist lies
+entirely in the multiplication, which mixes the coordinates according to
+the group law.
+
+#example(name: "$bb(F)_3[C_2]$ is a product of two copies of $bb(F)_3$.")[
+  Let $C_2 = {1, g}$ with $g^2 = 1$, and $F = bb(F)_3$, where $2$ is
+  invertible.
+  The map $phi: F[C_2] -> F times F$, $a + b g |-> (a + b, a - b)$
+  preserves sums, and since
+  $(a + b g)(c + d g) = (a c + b d) + (a d + b c) g$ maps to
+  $((a + b)(c + d), (a - b)(c - d))$, it preserves products too.
+  The inverse is $(u, v) |-> (u + v)/2 + ((u - v)/2) g$, so $phi$ is a ring
+  isomorphism.
+
+  Over $bb(Z)$ the same formula is injective but not surjective: its image
+  is the set of pairs $(u, v)$ with $u equiv v$ modulo $2$.
+  So $bb(Z)[C_2]$ embeds in $bb(Z) times bb(Z)$ without being isomorphic to
+  it — a discrepancy resolved in *Polynomial Rings* by reading
+  $bb(Z)[C_2]$ as $bb(Z)[x] \/ (x^2 - 1)$.
+] <ex:group-ring-c2>
+
+#definition(name: "Endomorphism Ring")[
+  Let $M$ be an abelian group.
+  The set $"End"(M)$ of group homomorphisms $M -> M$ is a ring under
+  pointwise addition, $(f + g)(m) = f(m) + g(m)$, and composition as
+  multiplication.
+] <def:endomorphism-ring>
+
+The verification is short: pointwise addition inherits the abelian group
+structure of $M$, composition is associative, and the two distributive laws
+are the identities $(f + g) compose h = f compose h + g compose h$ and
+$f compose (g + h) = f compose g + f compose h$, valid because all maps
+involved are homomorphisms.
+The identity of $"End"(M)$ is $"id"_M$, so the endomorphism ring of an
+abelian group is unital even though $M$ itself need carry no ring
+structure.
+
+#example(name: [$"End"_(F)(V)$ is a matrix ring.])[
+  Let $V$ be a finite-dimensional vector space over a field $F$, with basis
+  $B$ of $n$ elements.
+  Sending an endomorphism $T$ to its matrix relative to $B$ is a ring
+  isomorphism $"End"_(F)(V) tilde.equiv M_(n)(F)$: sums of endomorphisms go
+  to sums of matrices, composites to products.
+  Matrix rings are therefore not artificial objects but what endomorphisms
+  look like once a basis is chosen — a viewpoint developed in *Basic
+  Concepts of Modules*, where it becomes the statement that the
+  endomorphism ring of a free module of rank $n$ is $M_(n)(R)$.
+] <ex:end-v-mn>
+
+The table collects the verdicts; the entries follow from the definitions
+and the propositions of this section.
+
+#tex-table(
+  ([Construction], [Commutative], [Unital], [Domain], [Field]),
+  ([$R times S$], [iff both are], [iff both are], [never], [never]),
+  ([$M_(n)(R)$, $n >= 2$], [no], [iff $R$ is], [no], [no]),
+  ([$R^X$, $abs(X) >= 2$], [iff $R$ is], [iff $R$ is], [rarely], [no]),
+  ([$R[G]$], [iff $R$ and $G$ are], [iff $R$ is], [no], [no]),
+  ([$"End"(M)$], [rarely], [yes], [no], [no]),
+)
+
+#note(title: "The fourth construction")[
+  A fourth machine is missing from the list, deliberately: the quotient
+  $R \/ I$.
+  Dividing a ring by a subring requires the subring to absorb
+  multiplication, that is, to be an ideal
+  (#link(<note:kernel-ideal-preview>)[the kernel note in *Subrings and Ring
+    Homomorphisms*]).
+  Quotients, together with the homomorphism theorems that describe them,
+  form the content of *Ideals and Quotient Rings*.
+] <note:quotient-preview>
+
+== Field of Fractions // 分式域
+
+An integral domain cancels but does not divide: in $bb(Z)$ the equation
+$2 x = 1$ has no solution.
+The remedy is not to enlarge $bb(Z)$ by hand but to adjoin the missing
+quotients formally, and the construction works for every domain at once.
+The result is the smallest field containing the domain, and it is
+characterised by a universal property rather than by the accidents of its
+construction.
+
+#caution(title: "No division without cancellation")[
+  The construction below rests on cancellation, and it collapses as soon as
+  zero divisors are present.
+  In $bb(Z)_6$ set $(a, b) equiv (c, d)$ when $a d = c b$, as in
+  #link(<eq:fraction-equivalence>)[the relation below].
+  Then $(2, 1) equiv (0, 3)$, since $2 dot 3 = 0 dot 1$, and
+  $(0, 3) equiv (0, 1)$, since $0 dot 1 = 0 dot 3$; yet $(2, 1)$ is not
+  related to $(0, 1)$, because $2 dot 1 != 0 dot 1$.
+  The relation is not transitive, and no honest ring of fractions can
+  distinguish $2\/1$ from $0\/1$.
+]
+
+So fix an integral domain $R$ and write $R^* = R backslash {0}$ for its
+nonzero elements.
+The plan is to let a pair $(a, b) in R times R^*$ stand for the quotient
+$a\/b$, and to identify pairs that would denote the same quotient.
+
+#eq[
+  $(a, b) equiv (c, d) quad <==> quad a d = c b.$
+] <eq:fraction-equivalence>
+
+#lemma(name: "Equal Fractions")[
+  Let $R$ be an integral domain.
+  The relation #link(<eq:fraction-equivalence>)[above] on
+  $R times R^*$ is an equivalence relation.
+] <lem:fraction-equivalence>
+
+#proof[
+  Reflexivity and symmetry are the identities $a b = b a$ and the symmetry
+  of equality.
+
+  For transitivity, suppose $(a, b) equiv (c, d)$ and
+  $(c, d) equiv (e, f)$, so that $a d = c b$ and $c f = e d$.
+  Multiplying the first identity by $f$ and the second by $b$ gives
+  $a d f = c b f = b (c f) = b e d$.
+  Since $d != 0$ and $R$ has no zero divisors, cancellation
+  (#link(<prop:cancellation-domain>)[§8.3]) gives $a f = e b$, which is
+  $(a, b) equiv (e, f)$.
+]
+
+On the quotient set define the two operations by
+#eq[
+  $a\/b + c\/d = (a d + c b)\/(b d), quad (a\/b)(c\/d) = (a c)\/(b d).$
+] <eq:fraction-operations>
+
+#definition(name: "Field of Fractions")[
+  Let $R$ be an integral domain.
+  The *field of fractions* of $R$ is the quotient
+  $"Frac"(R) = (R times R^*) \/ equiv$, with elements written $a\/b$ for the
+  class of $(a, b)$ and with the operations of
+  #link(<eq:fraction-operations>)[the display above].
+] <def:field-of-fractions>
+
+#theorem(name: "The Field of Fractions Is a Field")[
+  Let $R$ be an integral domain.
+  Then $"Frac"(R)$, with these operations, is a field; its zero is $0\/1$,
+  its identity is $1\/1$, and the inverse of $a\/b != 0$ is $b\/a$.
+] <thm:fraction-field>
+
+#proof[
+  *Step 1: the operations are well defined.*
+  Suppose $(a, b) equiv (a', b')$ and $(c, d) equiv (c', d')$, that is,
+  $a b' = a' b$ and $c d' = c' d$.
+  For the sum one must check
+  $(a d + c b)(b' d') = (a' d' + c' b')(b d)$.
+  Expanding, the first terms agree:
+  $a d b' d' = a b' d d' = a' b d d'$, and the second terms agree:
+  $c b b' d' = c d' b b' = c' d b b'$.
+  For the product one must check $a c b' d' = a' c' b d$: multiply
+  $a b' = a' b$ by $c d'$ and use $c d' = c' d$.
+
+  *Step 2: additive group.*
+  Addition is well defined, commutative and associative by the
+  corresponding laws in the commutative ring $R$, and $0\/1$ is neutral
+  because $a\/b + 0\/1 = (a dot 1 + 0 dot b)\/(b dot 1) = a\/b$.
+  The opposite of $a\/b$ is $(-a)\/b$, since
+  $a\/b + (-a)\/b = 0\/(b^2) = 0\/1$.
+
+  *Step 3: multiplicative monoid.*
+  Multiplication is well defined, associative and commutative by the same
+  appeal to $R$, and $1\/1$ is neutral because
+  $(1\/1)(a\/b) = (1 dot a)\/(1 dot b) = a\/b$.
+
+  *Step 4: distributivity.*
+  Both sides of $a\/b (c\/d + e\/f)$ expand to
+  $(a c f + a e d)\/(b d f)$ in $R$, hence are equal.
+
+  *Step 5: inverses.*
+  If $a\/b != 0\/1$, then $a != 0$, so $b\/a$ is again a class, and
+  $(a\/b)(b\/a) = (a b)\/(b a) = 1\/1$.
+]
+
+#proposition(name: "Embedding of a Domain in Its Field of Fractions")[
+  Let $R$ be an integral domain.
+  The map $iota: R -> "Frac"(R)$, $a |-> a\/1$, is an injective unital ring
+  homomorphism.
+] <prop:domain-embeds-frac>
+
+#proof[
+  By #link(<eq:fraction-operations>)[the definition of the operations],
+  $iota(a + b) = (a + b)\/1 = a\/1 + b\/1$ and
+  $iota(a b) = (a b)\/1 = (a\/1)(b\/1)$, while $iota(1) = 1\/1$ is the
+  identity.
+  If $a\/1 = 0\/1$, then $a dot 1 = 0 dot 1$, that is, $a = 0$; so the
+  kernel is trivial and #link(<prop:ring-mono-kernel>)[§8.2] applies.
+]
+
+#theorem(name: "Universal Property of the Field of Fractions")[
+  Let $R$ be an integral domain, $K$ a field, and $phi: R -> K$ an
+  injective ring homomorphism.
+  Then there is exactly one ring homomorphism
+  $Phi: "Frac"(R) -> K$ with $Phi compose iota = phi$, and it is given by
+  $Phi(a\/b) = phi(a) phi(b)^(-1)$.
+] <thm:fraction-universal>
+
+#proof[
+  *Uniqueness.*
+  In $"Frac"(R)$ one has $a\/b = (a\/1)(b\/1)^(-1)$, since $b\/1$ has
+  inverse $1\/b$.
+  So any $Phi$ extending $phi$ must send $a\/b$ to
+  $phi(a) phi(b)^(-1)$, and the value is forced.
+
+  *Existence.*
+  Define $Phi(a\/b) = phi(a) phi(b)^(-1)$; the value is defined because
+  $b != 0$ and $phi$ is injective.
+  It is well defined: from $a d = c b$ one gets
+  $phi(a) phi(d) = phi(c) phi(b)$, and multiplying by
+  $phi(b)^(-1) phi(d)^(-1)$ gives
+  $phi(a) phi(b)^(-1) = phi(c) phi(d)^(-1)$.
+  The expansions used in #link(<thm:fraction-field>)[Step 4 above] show
+  that $Phi$ preserves sums and products, and
+  $Phi(1\/1) = phi(1) phi(1)^(-1) = 1$.
+]
+
+#example(name: "The rationals.")[
+  $"Frac"(bb(Z)) = bb(Q)$: a class $a\/b$ with $b != 0$ is a rational
+  number, and the two operations are the familiar ones.
+
+  For a field $F$ the embedding is an isomorphism, since
+  $a\/b = (a b^(-1))\/1$: indeed $(a, b) equiv (a b^(-1), 1)$ because
+  $a dot 1 = (a b^(-1)) dot b$.
+  In particular $"Frac"(bb(F)_p) = bb(F)_p$, and the construction adds
+  nothing to a field.
+] <ex:fraction-of-z>
+
+#corollary(name: "Prime Field of Characteristic Zero")[
+  Let $F$ be a field of characteristic $0$.
+  Then the prime subring of $F$ is a copy of $bb(Z)$, and the smallest
+  subfield of $F$ is isomorphic to $bb(Q)$.
+] <cor:prime-field-char-zero>
+
+#proof[
+  By #link(<thm:prime-subring>)[§8.4] the prime subring is a copy of
+  $bb(Z)$.
+  Every subfield of $F$ containing it must contain the quotients of its
+  elements, so the smallest subfield is the image of $bb(Q)$ under the
+  extension of the inclusion furnished by
+  #link(<thm:fraction-universal>)[the universal property].
+]
+
+#note(title: "Beyond the integers")[
+  The construction applies to every domain, and two cases outside $bb(Z)$
+  are used later in this book.
+  + For a field $k$, the domain $k[x]$ has as its field of fractions the
+    field $k(x)$ of rational functions, treated in *Polynomial Rings*.
+  + For $bb(Z)[i]$ the field of fractions is
+    $bb(Q)(i) = {a + b i : a, b in bb(Q)}$, the field in which $x^2 + 1$
+    splits and the stage of the first examples of *Field Extensions*.
+] <note:fraction-examples>
+
+#note(title: "Closing remarks on ring theory")[
+  Three threads converge at the end of this chapter.
+  + *Axioms*: a ring is an abelian group and a semigroup tied together by
+    distributivity (#link(<def:ring>)[§8.1]), and every difficulty of the
+    subject is inherited from the weakness of the multiplicative half.
+  + *Classification*: commutativity, identity, absence of zero divisors
+    and invertibility cut the class of rings into the ladder of
+    #link(<fig:ring-hierarchy>)[§8.3], whose top rung a finite domain
+    reaches automatically.
+  + *Embedding*: a domain is not a field, but it always sits inside one,
+    its field of fractions, which is the smallest such field and is unique
+    by #link(<thm:fraction-universal>)[the universal property].
+
+  What is still missing is the ability to divide a ring by a subring, and
+  with it the homomorphism theorems. Both rest on ideals, the subject of
+  *Ideals and Quotient Rings*.
+] <note:ring-closing>
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
@@ -5588,24 +6774,39 @@ principal ideal domain $R$, classifies finitely generated $R$-modules
 // --- Chapter 8: 环的基本概念 (Basic Concepts of Rings) ---
 
 //   Section 8.1: 环的定义 (Definition of Rings)
-//     - 环的公理（加法Abel群 + 乘法半群 + 分配律）
-//     - 含幺环、交换环
-//     - 零因子与整环
+//     - 环的公理（R1 加法Abel群 + R2 乘法半群 + R3 分配律）
+//     - 含幺环与交换环；含幺与否的约定（Noether 传统 vs 1960 后并入定义）
+//     - 单位与单位群、零因子
+//     - 环中的基本算术、零环
 
-//   Section 8.2: 整环与域 (Integral Domains and Fields)
-//     - 整环的定义与性质
-//     - 域的定义
-//     - 整环到域的嵌入（分式域的构造）
+//   Section 8.2: 子环与环同态 (Subrings and Ring Homomorphisms)
+//     - 子环与子环判定、子环的交与生成子环
+//     - 环同态（含幺时要求保 1）、核与像、单同态判据
+//     - 核是理想（预告 Ch9）
 
-//   Section 8.3: 环的特征 (Characteristic of a Ring)
-//     - 特征的定义
+//   Section 8.3: 整环与域 (Integral Domains and Fields)
+//     - 整环与消去律
+//     - 域、除环、四元数体
+//     - 域必为整环；有限整环必为域；$\bb(Z)_n$ 为域 ⟺ n 素
+//     - 环的公理阶梯图 fig:ring-hierarchy
+
+//   Section 8.4: 环的特征与素域 (Characteristic and Prime Fields)
+//     - 典范同态 $\chi_R: \bb(Z) -> R$ 与特征的定义
 //     - 整环的特征为 0 或素数
-//     - 素域 (Prime Field)
+//     - 素子环与素域（特征 p 情形）；特征 0 情形留给 §8.6
+//     - 特征 p 的二项式系数与 Frobenius 自同态
+//     - 双面板图 fig:characteristic-embedding
 
-//   Section 8.4: 环的典型构造 (Typical Constructions of Rings)
-//     - 剩余类环 $\bb(Z)_n$
-//     - 矩阵环 $M_(n)(R)$
-//     - 直积环
+//   Section 8.5: 环的典型构造 (Constructions of Rings)
+//     - 直积环、矩阵环
+//     - 函数环（幂等元与零因子）
+//     - 群环、自同态环
+//     - 各构造属性对照表；商环留给 Ch9
+
+//   Section 8.6: 分式域 (Field of Fractions)
+//     - 等价关系 $(a,b) ~ (c,d) \iff a d = c b$（良定义的核心）
+//     - $\text{Frac}(R)$ 是域；嵌入 $R -> \text{Frac}(R)$
+//     - 泛性质；$\text{Frac}(\bb(Z)) = \bb(Q)$、特征 0 的素域
 
 // --- Chapter 9: 理想与商环 (Ideals and Quotient Rings) ---
 
@@ -5829,7 +7030,7 @@ principal ideal domain $R$, classifies finitely generated $R$-modules
 // | 第二章 §7        | Sylow定理                  | Ch 6 §6.3–6.4          | 直接对应          |
 // | 第三章 §1        | 环的定义                    | Ch 8 §8.1              | 直接对应          |
 // | 第三章 §2        | 整环与域                    | Ch 8 §8.2              | 直接对应          |
-// | 第三章 §3        | 环的同态                    | Ch 9 §9.3              | 直接对应          |
+// | 第三章 §3        | 环的同态                    | Ch 8 §8.2；Ch 9 §9.3   | 定义在前，定理在后  |
 // | 第三章 §4        | 理想                       | Ch 9 §9.1              | 直接对应          |
 // | 第三章 §5        | 商环与域                    | Ch 9 §9.2              | 直接对应          |
 // | 第四章 §1–3      | 整除性与算术基本定理         | Ch 10 §10.1–10.2       | 直接对应          |
