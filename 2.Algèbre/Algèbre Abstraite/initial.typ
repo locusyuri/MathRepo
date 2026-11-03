@@ -499,18 +499,18 @@ merely has a well-defined product; a *semigroup* adds associativity; a
 *monoid* adds an identity; a *group* adds inverses.
 
 #definition(name: "Magma")[
-  A *magma* is a pair $(G, star)$ where $star$ is a binary operation
-  on the set $G$.
+  A *magma* is a pair $(S, star)$ where $star$ is a binary operation
+  on the set $S$.
 ] <def:magma>
 
 A magma is precisely the structure of
 #link(<def:operation>)[§1.2] with no law imposed. The only guarantee is *closure*:
-every product $a star b$ is a defined element of $G$, and nothing more
+every product $a star b$ is a defined element of $S$, and nothing more
 is promised.
 
 #definition(name: "Semigroup")[
   A *semigroup* is a magma whose operation is *associative*:
-  $(a star b) star c = a star (b star c)$ for all $a, b, c in G$.
+  $(a star b) star c = a star (b star c)$ for all $a, b, c in S$.
 ] <def:semigroup>
 
 By generalised associativity (#link(<prop:operation-laws>)[§1.2]) the
@@ -520,12 +520,22 @@ reliability.
 
 #definition(name: "Monoid")[
   A *monoid* is a semigroup possessing a two-sided *identity*: an
-  element $e in G$ with $e star a = a star e = a$ for all $a in G$.
+  element $e in S$ with $e star a = a star e = a$ for all $a in S$.
 ] <def:monoid>
 
 The identity of a monoid is unique
 (#link(<prop:operation-laws-unique>)[§1.2]). Familiar specimens:
 $(bb(N), +)$ with identity $0$, and $(bb(N), dot)$ with identity $1$.
+
+#note(title: "One-sided identities and one-sided inverses")[
+  *One side only.* A semigroup can have left identities and no right identity, and dually. The right projection $a star b = b$ on a set with at least two elements is associative, every element is a left identity ($e star a = a$), and no right identity exists ($a star e = e != a$); this is the right-zero operation of #link(<ex:non-groups>)[§2.2]. The left projection $a star b = a$ is the mirror image.
+
+  *Both sides agree.* In any magma, a left identity $e_L$ and a right identity $e_R$ satisfy $e_L = e_L star e_R = e_R$ — the first equality uses $e_R$, the second $e_L$ — and no associativity is needed (#link(<prop:operation-laws-unique>)[§1.2]). So a two-sided identity is unique and excludes any further one-sided identity; many left identities occur only when there is no right identity at all.
+
+  *Why groups upgrade.* For a group nothing is missing: #link(<thm:group-equivalent-axioms>)[*Equivalent Axioms for Groups*] shows that a left identity together with left inverses already yields a group. Its proof turns $b a = e$ into $a b = e$ using a left inverse $c$ of $b$, so the inverse candidate itself must be invertible; this is the only step that fails below group level.
+
+  *What is missing below.* A semigroup has no inverses, so its left identities stay one-sided. A monoid has a two-sided identity but need not have inverses, and even a one-sided inverse need not be two-sided: in the monoid of all self-maps of $bb(N)$ under composition, $f(n) = n + 1$ and $g(0) = 0$, $g(n) = n - 1$ for $n >= 1$ satisfy $g circle f = "id"$ but $(f circle g)(0) = 1 != 0$, so $g$ is a left inverse of $f$ with no right inverse.
+] <note:one-sided-identities>
 
 #definition(name: "Group")[
   A *group* is a monoid in which every element is *invertible* — a
