@@ -150,12 +150,11 @@
 //   Section 8.4: Kirchhoff and Rayleigh-Sommerfeld Integrals (基尔霍夫与瑞利-索末菲积分)
 
 // --- Chapter 9: Interference and Coherence (干涉与相干性) ---
-//   Section 9.1: Two-Beam Interference: Young's Experiment (杨氏双缝)
-//   Section 9.2: Interference of Thin Films (薄膜干涉)
-//   Section 9.3: The Michelson Interferometer (迈克耳孙干涉仪)
-//   Section 9.4: Multiple-Beam Interference: Fabry-Perot (多光束干涉与法布里-珀罗)
-//   Section 9.5: Temporal and Spatial Coherence (时间/空间相干性)
-//   Section 9.6: Visibility and the Degree of Coherence (可见度与相干度)
+//   Section 9.1: Coherence Conditions and the Two-Beam Toolbox (相干条件与双束干涉基础)
+//   Section 9.2: Wavefront Division (分波阵面法：杨氏双缝/菲涅尔双面镜/劳埃德镜)
+//   Section 9.3: Amplitude Division: Thin Films (分振幅法：薄膜光程差/等厚/等倾)
+//   Section 9.4: Amplitude-Splitting Interferometers (分振幅干涉仪：迈克尔逊/法布里-珀罗)
+//   Section 9.5: Coherence of Real Sources (真实光源的相干性：时间/空间/相干度)
 
 // --- Chapter 10: Diffraction: Approximations and Applications (衍射：近似与应用) ---
 //   Section 10.1: Fresnel Diffraction and Zone Plates (菲涅耳衍射与波带片)
@@ -1049,7 +1048,7 @@ At a fixed end the reflected pulse returns inverted, so that the sum at the boun
   Reflection from a medium of *lower* impedance ($R > 0$) produces no inversion.
 ] <def:half-wave-loss>
 
-The half-wave loss is what decides whether a reflected wave adds to or subtracts from the incident one, and it is the reason a thin film can be dark at normal incidence even when its optical thickness is small (#link(<sec:thin-film-interference>)[Section 9.2]).
+The half-wave loss is what decides whether a reflected wave adds to or subtracts from the incident one, and it is the reason a thin film can be dark at normal incidence even when its optical thickness is small (#link(<sec:thin-film-interference>)[Section 9.3]).
 
 The resulting standing patterns are compared in @fig:half-wave-loss: the wall is a node, the free end an antinode.
 
@@ -2110,9 +2109,38 @@ The Rayleigh-Sommerfeld integral uses only the field on the aperture — a mathe
 = Interference and Coherence <ch:interference> // 干涉与相干性
 
 Interference is the superposition of coherent fields: when two or more light waves meet, their amplitudes add and the intensity shows stationary bright and dark fringes.
-This chapter develops two-beam and multiple-beam interference, and then asks how stable the phase relationship must be — leading from deterministic interference to the statistical theory of coherence.
+This chapter states what coherence requires and how coherent light is produced, then develops wavefront-division and amplitude-division interference, their instruments, and finally quantifies how well real sources maintain a fixed phase relation.
 
-== Two-Beam Interference: Young's Experiment // 杨氏双缝
+== Coherence Conditions and the Two-Beam Toolbox // 相干条件与双束干涉基础
+
+Interference is not automatic: the two fields must satisfy conditions that keep their phase difference meaningful over the observation.
+Once those conditions hold, the rest of the chapter uses only three quantities — the optical path difference, its phase, and the fringe visibility — collected here for later reference.
+
+=== Coherence Conditions // 相干条件
+
+Two waves produce a stable interference pattern only if they are *coherent*: they have the same frequency, a phase difference that is constant in time, and the same or nearly the same direction of oscillation.
+These are the conditions already stated for waves in #link(<def:coherence-conditions>)[Coherence Conditions]; optics adds the practical question of how to obtain such a pair from an ordinary source.
+Independent sources fail the constant-phase requirement, because their emission consists of randomly phased wave trains.
+The practical solution is to derive both beams from a single source, which is the content of the next subsection.
+
+=== Wavefront and Amplitude Division // 分波阵面法与分振幅法
+
+#definition(name: "Wavefront and Amplitude Division")[
+  A single source can supply two coherent beams in two ways:
+  - *Wavefront division*: two nearby portions of the same wavefront are selected and later recombined (Young's slits, Fresnel double mirror, Lloyd's mirror).
+  - *Amplitude division*: the beam is split at a partially reflecting surface into parts that travel different paths and recombine (thin films, Michelson and Fabry-Perot interferometers).
+]
+
+The two families differ in what they sample: wavefront division takes different points of one wavefront, amplitude division takes different fractions of one beam.
+The table maps each device to its method and to the origin of its optical path difference.
+
+#tex-table(
+  ("Method", "Devices", "Origin of the OPD"),
+  ([Wavefront division], [Young's slits, Fresnel double mirror, Lloyd's mirror], [geometry of two real or virtual sources]),
+  ([Amplitude division], [thin films, Michelson, Fabry-Perot], [extra optical path in the film or between the arms]),
+)
+
+=== Optical Path Difference and Fringe Visibility // 光程差与条纹可见度
 
 #definition(name: "Optical Path Difference")[
   The *optical path difference* (OPD) between two rays reaching a common point is
@@ -2123,11 +2151,35 @@ This chapter develops two-beam and multiple-beam interference, and then asks how
   A phase difference $delta = k_0 Delta$ accompanies it, where $k_0 = 2 pi / lambda_0$ is the vacuum wavenumber.
 ] <def:optical-path-difference>
 
+For two beams of intensities $I_1, I_2$ and phase difference $delta$, superposition gives
+$
+  I = I_1 + I_2 + 2 sqrt(I_1 I_2) cos delta = I_1 + I_2 + 2 sqrt(I_1 I_2) cos(k_0 Delta).
+$
+The interference term is maximal when $delta = 2 m pi$ and minimal when $delta = (2 m + 1) pi$, so bright and dark fringes correspond to $Delta = m lambda_0$ and $Delta = (m + 1/2) lambda_0$.
+
+#definition(name: "Fringe Visibility")[
+  The *visibility* (contrast) of an interference pattern is
+  $
+    V = (I_"max" - I_"min") / (I_"max" + I_"min"),
+  $
+  with $0 <= V <= 1$.
+  Perfectly coherent equal-amplitude beams give $V = 1$; incoherent superposition gives $V = 0$.
+] <def:fringe-visibility>
+
+For equal amplitudes the general formula reduces to $I = 4 I_0 cos^2(delta / 2)$, the form used for most devices below.
+Visibility measures how deep the fringes are, and it becomes the operational definition of coherence in #link(<sec:visibility-coherence>)[Section 9.5].
+
+== Wavefront Division // 分波阵面法
+
+In wavefront division the two beams come from different points of the same wavefront, so their phase relation is fixed by the source itself.
+The path difference is purely geometrical, and the devices differ only in how the two secondary sources are produced.
+
+=== Young's Double Slit // 杨氏双缝
+
 In Young's experiment two slits separated by $d$, illuminated by a common source, emit secondary waves.
 At a point on a screen at distance $R$, the path difference is $Delta = d sin theta approx d y / R$, where $y$ is the height of the point above the axis.
 
-For equal amplitudes $U_0$, the two-beam intensity is
-
+For equal amplitudes, the two-beam intensity is
 $
   I(y) = 4 I_0 cos^2 (pi d y / (lambda R)).
 $
@@ -2148,30 +2200,63 @@ The geometry and the resulting fringes are shown in @fig:young-double-slit.
   supplement: [Fig.],
 ) <fig:young-double-slit>
 
-#definition(name: "Fringe Visibility")[
-  The *visibility* (contrast) of an interference pattern is
-  $
-    V = (I_"max" - I_"min") / (I_"max" + I_"min"),
-  $
-  with $0 <= V <= 1$.
-  Perfectly coherent equal-amplitude beams give $V = 1$; incoherent superposition gives $V = 0$.
-] <def:fringe-visibility>
-
 #note[
   Real slits have finite width: each slit diffracts, and the two-beam pattern is modulated by the single-slit diffraction envelope (#link(<ch:diffraction>)[Chapter 10]).
   The diffraction envelope answers "where the light goes"; the interference term answers "how it distributes within the envelope".
 ]
 
-== Interference of Thin Films <sec:thin-film-interference> // 薄膜干涉
+=== Fresnel Double Mirror // 菲涅尔双面镜
+
+Two plane mirrors are joined along an edge at a small angle $alpha$, and a point source $S$ is placed in front of them.
+Each mirror reflects the source into a virtual image, so the reflected beams overlap and interfere exactly as if they came from two coherent sources $S_1, S_2$.
+
+The virtual sources are separated by
+$
+  d = 2 r sin alpha approx 2 r alpha,
+$
+where $r$ is the distance from $S$ to the mirror edge, and the fringe spacing on a screen at distance $D$ is the Young result with this separation,
+$
+  Delta y = frac(lambda (r + D), d).
+$
+The useful field is limited to the region where the two reflected beams overlap, but no separate source is needed: the phase relation is guaranteed by the common origin.
+
+=== Lloyd's Mirror // 劳埃德镜
+
+A point source is placed close to a plane mirror, and the direct beam interferes with the beam reflected at grazing incidence.
+The reflected beam appears to come from a virtual source below the plane, so the geometry is Young's experiment with $d = 2 h$, where $h$ is the height of the source above the mirror.
+
+Unlike Young's slits, the two beams are not equivalent: the reflected one has undergone a phase jump of $pi$ at the mirror (reflection from a denser medium, #link(<def:half-wave-loss>)[Half-Wave Loss]).
+The central point, where the geometrical path difference vanishes, therefore carries a phase difference of $pi$ and is *dark* — the standard demonstration of the half-wave loss.
+For a screen at distance $D$ from the source, the fringe spacing is $Delta y = lambda D / (2 h)$.
+
+== Amplitude Division: Thin Films <sec:thin-film-interference> // 分振幅法：薄膜干涉
+
+In amplitude division the incident beam is split at the first surface; the reflected and transmitted parts travel different paths and recombine, so the interference is between two fractions of the same beam rather than two points of one wavefront.
+
+=== Thin-Film Optical Path Difference // 薄膜光程差
 
 A thin film of thickness $t$ and index $n$ between two media reflects light from both surfaces.
 The reflected waves interfere with phase difference from the extra optical path $2 n t cos theta_t$ and from any phase jump at reflection:
-
 $
-  Delta = 2 n t cos theta_t + (lambda_0) / 2,
+  Delta = 2 n t cos theta_t + lambda_0 / 2,
 $
-
 where the $lambda_0 / 2$ term accounts for a phase jump of $pi$ when light reflects off a denser medium.
+For reflected light with a single hard reflection, the half-wave term shifts each order by one half, so the conditions are
+$
+  2 n t cos theta_t = (m + 1/2) lambda_0 quad ("bright"), quad
+  2 n t cos theta_t = m lambda_0 quad ("dark").
+$
+
+Two limiting regimes follow: if the film thickness varies while the angle is fixed, the fringes are loci of equal thickness; if the thickness is uniform while the angle varies, they are loci of equal inclination.
+
+=== Equal-Thickness Interference // 等厚干涉
+
+For a wedge of small angle $alpha$ between two plates, the film thickness at distance $x$ from the edge is $t = x tan alpha approx x alpha$.
+Equal thickness then means straight fringes parallel to the edge, equally spaced with
+$
+  Delta x = frac(lambda_0, 2 n alpha).
+$
+Each fringe marks a thickness change of $lambda_0 / (2 n)$, so the wedge measures small angles, film thicknesses and surface flatness.
 
 #example(name: "Newton's Rings")[ // 牛顿环
   A plano-convex lens of radius $R$ resting on a flat plate creates a film of thickness $t(r) approx r^2 / (2 R)$.
@@ -2179,27 +2264,51 @@ where the $lambda_0 / 2$ term accounts for a phase jump of $pi$ when light refle
   The regular rings resisted a corpuscular account, and their explanation by interference was one of the early successes of the wave theory.
 ] <ex:newton-rings>
 
+=== Equal-Inclination Interference // 等倾干涉
+
+When the film has uniform thickness but is illuminated by an extended source, the optical path difference depends on the incidence angle through $cos theta_t$, so each angle selects its own interference order.
+The fringes are loci of equal inclination: concentric circular rings, observed at infinity or in the focal plane of a lens, with the centre corresponding to normal incidence.
+For a film of index $n$ and thickness $t$, the bright rings satisfy $2 n t cos theta_t = (m + 1/2) lambda_0$.
+
 #note[
   Films of constant thickness produce *equal-inclination* fringes (colours varying with viewing angle, as in soap bubbles); films of varying thickness produce *equal-thickness* fringes (as in Newton's rings and oil slicks).
 ]
 
-== The Michelson Interferometer // 迈克耳孙干涉仪
+== Amplitude-Splitting Interferometers // 分振幅干涉仪
+
+Both instruments in this section split a beam by amplitude at a partially reflecting surface and later recombine the parts.
+The Michelson interferometer recombines two beams; the Fabry-Perot recombines many, and the difference in beam number changes the fringe profile from a broad $cos^2$ to a sharp comb.
+
+=== The Michelson Interferometer // 迈克耳孙干涉仪
 
 A Michelson interferometer splits a beam at a half-silvered mirror, sends the two parts to fixed and movable mirrors, and recombines them.
-The optical path difference is twice the displacement $Delta L$ of the movable mirror:
-
+The movable mirror and its image in the beam splitter form an equivalent air film of thickness $Delta L$, so the optical path difference is twice the mirror displacement:
 $
   Delta = 2 Delta L.
 $
+For a point source at normal incidence the fringes are straight and equally spaced.
+A slight tilt of one mirror gives straight fringes of equal thickness, while an extended source produces circular fringes of equal inclination, with $Delta = 2 Delta L cos theta$.
 
-Moving the mirror by $lambda / 2$ shifts the pattern by one full fringe, so the interferometer measures lengths and wavelengths with interferometric precision.
+Moving the mirror by $lambda / 2$ shifts the pattern by one full fringe, so counting $N$ fringes gives
+$
+  Delta L = N frac(lambda, 2),
+$
+which is the basis of interferometric length and wavelength measurement.
+
+#example(name: "Fringe Counting")[
+  A Michelson interferometer is illuminated with $lambda = 550 "nm"$, and $N = 100$ fringes pass a reference point while the mirror moves.
+  The displacement is $Delta L = 100 times 550 times 10^(-9) / 2 = 27.5 mu "m"$, so one fringe corresponds to $lambda / 2 = 275 "nm"$.
+] <ex:michelson-fringe-counting>
+
+White-light fringes are visible only when the two arms are nearly equal: the coherence length of white light is about $1 mu "m"$, so the interferometer measures the coherence length directly (see #link(<sec:visibility-coherence>)[Section 9.5]).
+A Fourier-transform spectrometer uses the same geometry, recording the interferogram $I(Delta L)$ and recovering the spectrum by a Fourier transform (#link(<ch:dispersion-fourier>)[Chapter 3]).
 
 #note[
   The Michelson interferometer is the archetype of amplitude-splitting interferometers.
-  Its modern descendants include Fourier-transform spectrometers, gravitational-wave detectors (LIGO-type cavities), and the coherence measurements of #link(<sec:visibility-coherence>)[Section 9.6].
+  Its modern descendants include Fourier-transform spectrometers and gravitational-wave detectors (LIGO-type cavities), and its fringe visibility is the standard measurement of coherence.
 ]
 
-== Multiple-Beam Interference: Fabry-Perot // 多光束干涉与法布里-珀罗
+=== The Fabry-Perot Interferometer // 法布里-珀罗干涉仪
 
 A Fabry-Perot interferometer is a pair of parallel, highly reflecting surfaces.
 Light bounces many times between them; the transmitted field is the coherent sum of all transmitted partial waves.
@@ -2232,10 +2341,23 @@ Light bounces many times between them; the transmitted field is the coherent sum
   Using $1 - 2 R cos delta + R^2 = (1 - R)^2 (1 + F sin^2 (delta / 2))$ completes the proof.
 ]
 
+The transmission peaks repeat whenever the round-trip phase advances by $2 pi$, which gives the *free spectral range*
+$
+  Delta lambda_"FSR" = frac(lambda^2, 2 n d), quad Delta nu_"FSR" = frac(c, 2 n d).
+$
+The *finesse* $cal(F) = pi sqrt(F) / 2$ measures the sharpness of the peaks; the peak half-width is
+$
+  delta lambda = frac(Delta lambda_"FSR", cal(F)),
+$
+and the resolving power is
+$
+  cal(R) = frac(lambda, delta lambda) = m cal(F), quad m = frac(2 n d, lambda).
+$
+
 #example(name: "Fabry-Perot Resolution")[ // 法布里-珀罗分光本领
-  The finesse $cal(F) = pi sqrt(F) / 2$ measures the sharpness of the transmission peaks.
-  For $R = 0.97$, $F = 4 R / (1 - R)^2 approx 4300$ and $cal(F) approx 100$.
-  A Fabry-Perot of plate spacing $d = 1 "cm"$ then resolves wavelengths separated by $Delta lambda approx lambda^2 / (2 d cal(F))$, far beyond what a grating of the same size can do.
+  For intensity reflectivity $R = 0.97$, $F = 4 R / (1 - R)^2 approx 4300$ and the finesse is $cal(F) = pi sqrt(F) / 2 approx 100$.
+  For plate spacing $d = 1 "cm"$ and $lambda = 550 "nm"$, the order is $m = 2 d / lambda approx 3.6 times 10^4$, so the resolving power is $cal(R) = m cal(F) approx 3.6 times 10^6$ and the resolution width is $delta lambda = lambda / cal(R) approx 1.5 times 10^(-4) "nm"$.
+  The free spectral range is $Delta lambda_"FSR" = lambda^2 / (2 d) approx 1.5 times 10^(-2) "nm"$, so about $cal(F) approx 100$ resolution widths fit between successive orders.
 ] <ex:fabry-perot-resolution>
 
 #note[
@@ -2243,10 +2365,15 @@ Light bounces many times between them; the transmitted field is the coherent sum
   The sharpness is what makes the Fabry-Perot the standard tool for high-resolution spectroscopy and for laser cavities (#link(<ch:applications>)[Chapter 19]).
 ]
 
-== Temporal and Spatial Coherence // 时间/空间相干性
+== Coherence of Real Sources // 真实光源的相干性
 
-Real sources are not perfectly monochromatic, and their wavefronts are not perfectly correlated.
-Two independent notions of coherence describe the two defects.
+A stable interference pattern requires the phase relation to stay fixed over the observation time and across the beams.
+Real sources fail this requirement in two independent ways: a finite spectral width destroys the phase relation after a coherence time, and a finite source size destroys it across a transverse separation.
+The degree of coherence turns both defects into a single measurable quantity.
+
+=== Temporal Coherence // 时间相干性
+
+A source of bandwidth $Delta nu$ emits wave trains of finite duration; beyond the coherence time the phase relation is lost.
 
 #definition(name: "Coherence Time and Length")[
   A source with bandwidth $Delta nu$ has *coherence time*
@@ -2263,17 +2390,34 @@ Two independent notions of coherence describe the two defects.
 A thermal source is temporally incoherent: its coherence length is tiny ($L_c ~ 1 mu "m"$ for white light).
 A laser is highly coherent: a narrow linewidth $Delta nu ~ 1 "MHz"$ gives $L_c ~ 300 "m"$.
 
+#example(name: "Coherence Length of Filtered Light")[
+  For $lambda = 550 "nm"$ and a bandwidth $Delta lambda = 1 "nm"$, the coherence length is $L_c approx lambda^2 / (Delta lambda) = (550 times 10^(-9))^2 / (10^(-9)) approx 0.30 "mm"$.
+  The Michelson interferometer measures this length directly: the fringe visibility falls as the arm difference approaches $L_c$ and vanishes beyond it.
+] <ex:coherence-length>
+
+The coherence function and the power spectrum are Fourier transforms of each other (the Wiener–Khinchin theorem), so a broad spectrum corresponds to a short coherence time; the Fourier machinery is developed in #link(<ch:dispersion-fourier>)[Chapter 3].
+
+=== Spatial Coherence // 空间相干性
+
 #definition(name: "Spatial Coherence")[
   A source has *spatial coherence* over a transverse separation if the fields at two points of a wavefront maintain a fixed phase relationship.
   In Young's experiment, spatial coherence is measured by the visibility as the slit separation $d$ grows: fringes disappear when $d$ exceeds the transverse coherence width, $d_c approx lambda R / sigma_s$, where $sigma_s$ is the source size.
 ] <def:spatial-coherence>
 
+For a source of angular size $theta_s$ seen from the slits, the coherence width is $d_c approx lambda / theta_s$, equivalent to $sigma_s = R theta_s$ in the form above.
+Fringes survive only for separations smaller than this width, which is the basis of stellar interferometry.
+
+#example(name: "Spatial Coherence of Sunlight")[
+  The sun subtends $theta_s approx 0.5° approx 9 times 10^(-3) "rad"$.
+  At $lambda = 550 "nm"$ the coherence width is $d_c approx lambda / theta_s approx 6 times 10^(-5) "m" = 60 mu "m"$, so Young's fringes from sunlight disappear for slit separations beyond a few tens of micrometres.
+] <ex:sun-spatial-coherence>
+
 #note[
-  The sun subtends a small angle, so sunlight is partially spatially coherent: Young's fringes are visible with slits close together but vanish as the slits are separated.
-  Stellar interferometry exploits exactly this: measuring the slit separation at which fringes vanish yields the angular diameter of a star.
+  The quantitative relation between the source intensity distribution and the coherence is the van Cittert–Zernike theorem.
+  Measuring the separation at which fringes vanish yields the angular diameter of a star, as in the Michelson stellar interferometer.
 ]
 
-== Visibility and the Degree of Coherence <sec:visibility-coherence> // 可见度与相干度
+=== Degree of Coherence and Visibility <sec:visibility-coherence> // 相干度与可见度
 
 #definition(name: "Complex Degree of Coherence")[
   The normalized first-order correlation of two fields is the *complex degree of coherence*
@@ -2284,12 +2428,15 @@ A laser is highly coherent: a narrow linewidth $Delta nu ~ 1 "MHz"$ gives $L_c ~
   Its modulus satisfies $0 <= abs(gamma_(12)) <= 1$.
 ] <def:complex-coherence-degree>
 
-For quasi-monochromatic fields the *visibility* measures the modulus of the degree of coherence; for two beams of intensities $I_1$ and $I_2$,
-
+For quasi-monochromatic fields the intensity of the superposition is
+$
+  I = I_1 + I_2 + 2 sqrt(I_1 I_2) abs(gamma_(12)(0)) cos(arg gamma_(12)(0)),
+$
+so the fringe contrast measures the modulus of the degree of coherence and the fringe shift measures its argument.
+For two beams of intensities $I_1$ and $I_2$,
 $
   V = frac(2 sqrt(I_1 I_2), I_1 + I_2) abs(gamma_(12)(0)),
 $
-
 which reduces to $V = abs(gamma_(12)(0))$ when the intensities are equal.
 
 Perfect coherence ($abs(gamma) = 1$) gives unit visibility; incoherence ($abs(gamma) = 0$) gives none.
