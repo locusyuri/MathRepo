@@ -563,17 +563,11 @@ every element.
 ] <def:abelian-group>
 
 #note(title: "Notation")[
-  In *multiplicative notation* the operation is written
-  as juxtaposition, $a star b = a b$, the identity as $e$ (or $1$),
-  and the inverse as $a^(-1)$; powers $a^n$ follow the rules of
-  #link(<note:power-notation>)[Chapter 1]. In *additive notation*
-  the operation is $+$, the identity is $0$, the inverse of $a$ is
-  $-a$, and one writes the multiple $n a$ instead of the power
-  $a^n$. Additive notation is reserved for abelian groups;
-  multiplicative notation serves in general. The promise made in
-  #link(<note:power-notation>)[Chapter 1] — that the interplay of
-  powers and orders would become central — is redeemed in §2.4,
-  where the *order* of an element is defined through powers.
+  In *multiplicative notation* the operation is written as juxtaposition, $a star b = a b$, the identity as $e$ (or $1$), and the inverse as $a^(-1)$; powers $a^n$ follow the rules of #link(<note:power-notation>)[Chapter 1].
+
+  In *additive notation* the operation is $+$, the identity is $0$, the inverse of $a$ is $-a$, and one writes the multiple $n a$ instead of the power $a^n$. Additive notation is reserved for abelian groups; multiplicative notation serves in general.
+
+  The promise made in #link(<note:power-notation>)[Chapter 1] — that the interplay of powers and orders would become central — is redeemed in §2.4, where the *order* of an element is defined through powers.
 ] <note:notation-convention>
 
 A natural suspicion: are the axioms perhaps redundant — does one of
@@ -582,10 +576,8 @@ be halved? The equivalence at the heart of the definition is the
 following.
 
 #theorem(name: "Equivalent Axioms for Groups")[
-  Let $G$ be a non-empty set with an associative binary operation.
-  Suppose there exists a *left identity*: an element $e$ with
-  $e a = a$ for all $a in G$; and suppose each $a in G$ has a *left
-  inverse*: an element $a'$ with $a' a = e$. Then $G$ is a group.
+  Let $G$ be a semigroup.
+  Suppose there exists a *left identity*: an element $e$ with $e a = a$ for all $a in G$; and suppose each $a in G$ has a *left inverse*: an element $a'$ with $a' a = e$. Then $G$ is a group.
 ] <thm:group-equivalent-axioms>
 
 #proof[
@@ -777,6 +769,13 @@ $
 These relations give $abs(D_n) = 2 n$. Moreover the relation
 $s r = r^(-1) s$ shows $s r != r s$ as soon as $r != r^(-1)$, that is,
 $n >= 3$: dihedral groups are non-abelian.
+
+#figure(
+  image("img/dihedral-group.svg", width: 92%),
+  caption: [The dihedral group $D_6$ acting on the regular hexagon: the rotation $r$ through $(2 pi) \/ 6$ (left) and one reflection $s$ (right), whose mirror axis joins two opposite vertices. Every symmetry permutes the six vertices, so $D_6$ embeds into $S_6$; reflections reverse the sense of rotation, the content of $s r = r^(-1) s$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:dihedral-group>
 
 #example(name: "The quaternion group.")[
   Let
