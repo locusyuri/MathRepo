@@ -804,10 +804,9 @@ of all roots-of-unity groups closes it with a cautionary tale about
 infinity.
 
 #example(name: "Elementary groups.")[
-  The sets $bb(Z)$, $bb(Q)$, $bb(R)$ under
-  addition are abelian groups: closure and associativity are
-  inherited from arithmetic, $0$ is the identity, and $-a$ inverts
-  $a$. The non-zero rationals and reals under multiplication,
+  The sets $bb(Z)$, $bb(Q)$, $bb(R)$ under addition are abelian groups: closure and associativity are inherited from arithmetic, $0$ is the identity, and $-a$ inverts $a$.
+
+  The non-zero rationals and reals under multiplication,
   $(bb(Q)^*, dot)$ and $(bb(R)^*, dot)$, are abelian groups with
   identity $1$ and inverse $1 \/ a$. Note the exclusion of $0$: it
   has no multiplicative inverse, so the full structures
@@ -1295,8 +1294,9 @@ group, however abstract, lives inside a permutation group.
 
 A subgroup is, simply, a subset that is itself a group under the
 restricted operation. We first develop the criteria that certify
-subgroups, then close the section with the center — the subgroup
-that measures how far a group is from being abelian.
+subgroups, then examine how conjugation moves them, and close the
+section with the center — the subgroup that measures how far a group
+is from being abelian.
 
 #definition(name: "Subgroup")[
   Let $(G, star)$ be a group and $H$ a subset of $G$. Then $H$ is a
@@ -1508,6 +1508,65 @@ protagonist of Chapter 4.
     group, so no other subgroup exists. The list feeds §3.3 and
     Chapter 4.
 ] <ex:subgroup-inventory>
+
+=== Conjugate Subgroups // 共轭子群
+
+Conjugating an element rebinds it as $a x a^(-1)$ (#link(<def:conjugate-elements>)[§2.3]); conjugating a subgroup rebinds all of its elements at once.
+
+#definition(name: "Conjugate Subgroup")[
+  Let $H <= G$ and $a in G$. The *conjugate* of $H$ by $a$ is
+  $
+    a H a^(-1) = {a h a^(-1) | h in H}.
+  $
+] <def:conjugate-subgroup>
+
+Conjugation applies the bijection $x |-> a x a^(-1)$ to every element of $H$ at once. This bijection respects products and inverses, because $a (x y) a^(-1) = (a x a^(-1))(a y a^(-1))$ and $a x^(-1) a^(-1) = (a x a^(-1))^(-1)$; it is the prototype of an *inner automorphism* (#link(<def:inner-automorphism>)[§5.4]). Hence it carries subgroups to subgroups, and the next proposition records this together with the preservation of size.
+
+#proposition(name: "Conjugates Are Subgroups of the Same Order")[
+  Let $H <= G$ and $a in G$. Then $a H a^(-1) <= G$, and $abs(a H a^(-1)) = abs(H)$.
+] <prop:conjugate-subgroup>
+
+#proof[
+  The map $x |-> a x a^(-1)$ is a bijection of $G$ with inverse $x |-> a^(-1) x a$, so it carries $H$ bijectively onto $a H a^(-1)$, and the two sets have the same cardinality.
+  For the subgroup claim, take $h_1, h_2 in H$; the one-step criterion asks for $(a h_1 a^(-1))(a h_2 a^(-1))^(-1) in a H a^(-1)$, and
+  $
+    (a h_1 a^(-1))(a h_2 a^(-1))^(-1) = a (h_1 h_2^(-1)) a^(-1) in a H a^(-1)
+  $
+  because $h_1 h_2^(-1) in H$. The set is non-empty, containing $a e a^(-1) = e$.
+]
+
+Conjugation is an equivalence relation on the set of subgroups — reflexive with $a = e$, symmetric by replacing $a$ with $a^(-1)$, and transitive by composing the conjugators — so the subgroups of $G$ split into *conjugacy classes*: the orbits of $G$ acting on its subgroups by conjugation, a preview of the group actions of Chapter 6.
+
+The normalizer singles out the conjugators that leave a given subgroup fixed.
+
+#definition(name: "Normalizer of a Subgroup")[
+  Let $H <= G$. The *normalizer* of $H$ in $G$ is
+  $
+    N_(G)(H) = {a in G | a H a^(-1) = H}.
+  $
+] <def:normalizer>
+
+#proposition(name: "The Normalizer Is a Subgroup Containing $H$")[
+  Let $H <= G$. Then $N_(G)(H) <= G$ and $H subset.eq N_(G)(H) subset.eq G$.
+] <prop:normalizer>
+
+#proof[
+  For $h in H$ the conjugation $x |-> h x h^(-1)$ maps $H$ bijectively into itself, hence $h H h^(-1) = H$ and $H subset.eq N_(G)(H)$; in particular the normalizer is non-empty.
+  If $a, b in N_(G)(H)$, then
+  $
+    (a b) H (a b)^(-1) = a (b H b^(-1)) a^(-1) = a H a^(-1) = H,
+    quad quad a^(-1) H a = H,
+  $
+  so $N_(G)(H)$ passes the one-step criterion (#link(<cor:subgroup-criterion>)[the criterion above]).
+]
+
+The conjugates of $H$ correspond bijectively to the cosets of $N_(G)(H)$: two conjugators $a, b$ produce the same conjugate exactly when $b^(-1) a in N_(G)(H)$. The coset counting of §3.3 therefore identifies their number with the index $[G : N_(G)(H)]$.
+
+A subgroup whose normalizer is all of $G$ — one that every conjugation leaves fixed — is exactly a *normal* subgroup: the condition $a H a^(-1) = H$ for all $a$ is equivalent to $a H = H a$ (#link(<thm:normal-equivalents>)[§4.1]). Such subgroups are alone in their conjugacy class.
+
+#example(name: "Conjugacy classes of subgroups in $S_3$.")[
+  The inventory above lists the three order-$2$ subgroups $⟨(1 2)⟩$, $⟨(1 3)⟩$, $⟨(2 3)⟩$ and the order-$3$ subgroup $⟨(1 2 3)⟩$. Conjugation by $(2 3)$ sends $⟨(1 2)⟩$ to $⟨(1 3)⟩$, and a further conjugation sends it to $⟨(2 3)⟩$, so the three order-$2$ subgroups form one conjugacy class and each has normalizer itself. The order-$3$ subgroup is unique of its order, hence self-conjugate, and so are ${e}$ and $S_3$: $S_3$ has four conjugacy classes of subgroups.
+] <ex:conjugate-subgroups-s3>
 
 === The Center // 中心
 
