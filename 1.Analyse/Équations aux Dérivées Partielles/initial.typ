@@ -2058,26 +2058,28 @@ The backward problem shows that the third requirement is not automatic, and quan
 #definition(name: "The Heat Kernel")[
   The *heat kernel* with diffusivity $alpha > 0$ on $bb(R)^n$ is
   #eq[$
-    E_alpha (t, bold(x)) = cases(1 / (4 pi alpha t)^(n/2) exp(-abs(bold(x))^2 / (4 alpha t)) "if" t > 0, 0 "if" t <= 0.)
+    E_alpha (bold(x), t) = cases(1 / (4 pi alpha t)^(n/2) exp(-abs(bold(x))^2 / (4 alpha t)) "if" t > 0, 0 "if" t <= 0.)
   $] <eq:heat-kernel>
   It is the fundamental solution of the heat operator (#link(<ex:fund-heat>)[*Fundamental Solutions*]): $(partial_t - alpha Delta_x) E_alpha = delta$ in $cal(D)'(bb(R)^(1+n))$.
 ] <def:heat-kernel>
+
+The kernel is a *Gaussian kernel*: as a function of $bold(x)$ it is the density of the centred Gaussian with covariance $2 alpha t I$, whose width grows like $sqrt(alpha t)$ while its peak decreases like $t^(-n/2)$.
 
 The case $alpha = 1$ is the kernel constructed in #link(<ex:fund-heat>)[*Fundamental Solutions*].
 The general case follows from it by the rescaling $t |-> alpha t$, which turns the operator $partial_t - Delta$ into $partial_t - alpha Delta$; this is why $alpha$ appears in the kernel only through the product $alpha t$.
 
 #proposition(name: "Basic Properties of the Heat Kernel")[
   For every $t > 0$:
-  (i) $E_alpha (t, dot) in C^oo (bb(R)^n)$ and $E_alpha (t, bold(x)) > 0$ for all $bold(x)$;
-  (ii) $integral_(bb(R)^n) E_alpha (t, bold(x)) dif bold(x) = 1$;
-  (iii) $(partial_t - alpha Delta) E_alpha (t, bold(x)) = 0$ for $t > 0$;
-  (iv) as $t -> 0^+$, $E_alpha (t, dot) -> delta$ in $cal(D)'(bb(R)^n)$ (approximate identity).
+  (i) $E_alpha (dot, t) in C^oo (bb(R)^n)$ and $E_alpha (bold(x), t) > 0$ for all $bold(x)$;
+  (ii) $integral_(bb(R)^n) E_alpha (bold(x), t) dif bold(x) = 1$;
+  (iii) $(partial_t - alpha Delta) E_alpha (bold(x), t) = 0$ for $t > 0$;
+  (iv) as $t -> 0^+$, $E_alpha (dot, t) -> delta$ in $cal(D)'(bb(R)^n)$ (approximate identity).
 ] <prop:heat-kernel-properties>
 
 #proof[
   (i) is clear from the formula, and (iii) is the computation of #link(<ex:fund-heat>)[*Fundamental Solutions*] after the substitution $t |-> alpha t$. For (ii), use the one-dimensional Gaussian integral $integral_(-oo)^oo e^(-s^2) dif s = sqrt(pi)$:
   $
-    integral_(bb(R)^n) E_alpha (t, bold(x)) dif bold(x) = 1 / (4 pi alpha t)^(n/2) product_(i=1)^n integral_(-oo)^oo exp(-x_i^2 / (4 alpha t)) dif x_i = 1 / (4 pi alpha t)^(n/2) (sqrt(4 pi alpha t))^n = 1.
+    integral_(bb(R)^n) E_alpha (bold(x), t) dif bold(x) = 1 / (4 pi alpha t)^(n/2) product_(i=1)^n integral_(-oo)^oo exp(-x_i^2 / (4 alpha t)) dif x_i = 1 / (4 pi alpha t)^(n/2) (sqrt(4 pi alpha t))^n = 1.
   $
   (iv) follows from (ii), positivity, and the concentration of the mass at the origin as $t -> 0^+$ (*Heat Kernel*).
 ]
@@ -2088,7 +2090,7 @@ That law is what makes the convolution formula solve the equation for all $t > 0
 #lemma(name: "Convolution Semigroup Property")[
   For $s, t > 0$,
   $
-    E_alpha (t, dot) * E_alpha (s, dot) = E_alpha (t + s, dot).
+    E_alpha (dot, t) * E_alpha (dot, s) = E_alpha (dot, t + s).
   $
 ] <lem:heat-kernel-semigroup>
 
@@ -2099,20 +2101,20 @@ That law is what makes the convolution formula solve the equation for all $t > 0
   $
   Consequently
   $
-    (E_alpha (t, dot) * E_alpha (s, dot)) (bold(x)) = exp(-abs(bold(x))^2/(4 alpha (t + s)))/((4 pi alpha t)^(n/2) (4 pi alpha s)^(n/2)) integral_(bb(R)^n) exp(-abs(bold(y) - (s bold(x))/(s + t))^2/(4 alpha sigma)) dif bold(y).
+    (E_alpha (dot, t) * E_alpha (dot, s)) (bold(x)) = exp(-abs(bold(x))^2/(4 alpha (t + s)))/((4 pi alpha t)^(n/2) (4 pi alpha s)^(n/2)) integral_(bb(R)^n) exp(-abs(bold(y) - (s bold(x))/(s + t))^2/(4 alpha sigma)) dif bold(y).
   $
   The integral equals $(4 pi alpha sigma)^(n/2)$ by (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], and
   $
     (4 pi alpha sigma)^(n/2)/((4 pi alpha t)^(n/2) (4 pi alpha s)^(n/2)) = (4 pi alpha (t + s))^(-n/2)
   $
   because $sigma = s t/(s + t)$.
-  This is the kernel $E_alpha (t + s, dot)$.
+  This is the kernel $E_alpha (dot, t + s)$.
 ]
 
 #note[
   #figure(
     image("./img/heat-kernel-spreading.svg", width: 92%),
-    caption: [The kernel $E_alpha (t, dot)$ in one space dimension for $t = 0.05, 0.2, 0.8, 3$, drawn with $alpha = 1$. The area under each curve is $1$, the peak height is $(4 pi alpha t)^(-1/2)$, and the width grows like $sqrt(alpha t)$: the kernel transports no mass but spreads it.],
+    caption: [The kernel $E_alpha (dot, t)$ in one space dimension for $t = 0.05, 0.2, 0.8, 3$, drawn with $alpha = 1$. The area under each curve is $1$, the peak height is $(4 pi alpha t)^(-1/2)$, and the width grows like $sqrt(alpha t)$: the kernel transports no mass but spreads it.],
     placement: auto,
     supplement: [Fig.],
   ) <fig:heat-kernel-spreading>
@@ -2124,12 +2126,12 @@ With the kernel at hand, the Cauchy problem of #link(<def:heat-ibvp>)[the defini
 
 #theorem(name: "Solution of the Cauchy Problem")[
   Let $g in C (bb(R)^n) inter L^oo (bb(R)^n)$. Then
-  #eq[$ u (bold(x), t) = integral_(bb(R)^n) E_alpha (t, bold(x) - bold(y)) g (bold(y)) dif bold(y), quad t > 0, quad u (bold(x), 0) = g (bold(x)), $] <eq:heat-cauchy>
+  #eq[$ u (bold(x), t) = integral_(bb(R)^n) E_alpha (bold(x) - bold(y), t) g (bold(y)) dif bold(y), quad t > 0, quad u (bold(x), 0) = g (bold(x)), $] <eq:heat-cauchy>
   defines $u in C^oo (bb(R)^n times (0, oo)) inter C (bb(R)^n times [0, oo))$, which satisfies $u_t = alpha Delta u$ for $t > 0$ and $u (dot, 0) = g$.
 ] <thm:cauchy-heat>
 
 #proof[
-  For each fixed $t > 0$, $E_alpha (t, dot) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of #link(<prop:heat-kernel-properties>)[the heat kernel properties] gives $(partial_t - alpha Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E_alpha (t, dot)}_(t > 0)$ is an approximate identity; the mollifier argument (#link(<def:mollifier>)[*Convolution and Approximation*]) gives $u (dot, t) = E_alpha (t, dot) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
+  For each fixed $t > 0$, $E_alpha (dot, t) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of #link(<prop:heat-kernel-properties>)[the heat kernel properties] gives $(partial_t - alpha Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E_alpha (dot, t)}_(t > 0)$ is an approximate identity; the mollifier argument (#link(<def:mollifier>)[*Convolution and Approximation*]) gives $u (dot, t) = E_alpha (dot, t) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
 ]
 
 #example(name: "The Cauchy Problem in One Space Dimension")[
@@ -2162,22 +2164,22 @@ This is the exact opposite of what happens for the wave equation, where a jump t
 
 Consider the inhomogeneous problem $u_t - alpha Delta u = f$ on $bb(R)^n times (0, oo)$ with zero initial datum.
 The equation may be read as a continuous family of instantaneous sources: at each time $s$ the source $f (dot, s)$ is injected into the medium, and from that instant on it evolves by the homogeneous flow.
-By #link(<lem:heat-kernel-semigroup>)[the semigroup law of the kernel], the homogeneous solution started at time $s$ from a datum $phi$ is $E_alpha (t - s, dot) * phi$, so superposing the injections gives
-#eq[$ u (bold(x), t) = integral_0^t integral_(bb(R)^n) E_alpha (t - s, bold(x) - bold(y)) f (bold(y), s) dif bold(y) dif s. $] <eq:heat-duhamel>
+By #link(<lem:heat-kernel-semigroup>)[the semigroup law of the kernel], the homogeneous solution started at time $s$ from a datum $phi$ is $E_alpha (dot, t - s) * phi$, so superposing the injections gives
+#eq[$ u (bold(x), t) = integral_0^t integral_(bb(R)^n) E_alpha (bold(x) - bold(y), t - s) f (bold(y), s) dif bold(y) dif s. $] <eq:heat-duhamel>
 
 #theorem(name: "Duhamel's Principle for the Heat Equation")[
   Let $f in C_c^oo (bb(R)^n times (0, oo))$. Then the function of #link(<eq:heat-duhamel>)[the convolution above] is $C^oo$ on $bb(R)^n times (0, oo)$, satisfies $u_t - alpha Delta u = f$ there, and $u (dot, 0) = 0$.
 ] <thm:heat-duhamel>
 
 #proof[
-  *Step 1: Differentiation in $t$.* The integrand is smooth for $s < t$, so differentiating under the integral is legitimate; the upper limit contributes the boundary term $integral E_alpha (0, bold(x) - bold(y)) f (bold(y), t) dif bold(y) = f (bold(x), t)$, since $E_alpha (0, dot) = delta$. Hence
+  *Step 1: Differentiation in $t$.* The integrand is smooth for $s < t$, so differentiating under the integral is legitimate; the upper limit contributes the boundary term $integral E_alpha (bold(x) - bold(y), 0) f (bold(y), t) dif bold(y) = f (bold(x), t)$, since $E_alpha (dot, 0) = delta$. Hence
   $
-    u_t (bold(x), t) = f (bold(x), t) + integral_0^t integral_(bb(R)^n) (partial_t E_alpha) (t - s, bold(x) - bold(y)) f (bold(y), s) dif bold(y) dif s.
+    u_t (bold(x), t) = f (bold(x), t) + integral_0^t integral_(bb(R)^n) (partial_t E_alpha) (bold(x) - bold(y), t - s) f (bold(y), s) dif bold(y) dif s.
   $
 
-  *Step 2: Comparison with the Laplacian.* Differentiating in $x$ is unproblematic because $E_alpha (t - s, dot)$ is smooth for $s < t$, and $partial_t E_alpha = alpha Delta E_alpha$ on that range by (iii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*]. Therefore
+  *Step 2: Comparison with the Laplacian.* Differentiating in $x$ is unproblematic because $E_alpha (dot, t - s)$ is smooth for $s < t$, and $partial_t E_alpha = alpha Delta E_alpha$ on that range by (iii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*]. Therefore
   $
-    alpha Delta u (bold(x), t) = integral_0^t integral_(bb(R)^n) alpha Delta E_alpha (t - s, bold(x) - bold(y)) f (bold(y), s) dif bold(y) dif s = integral_0^t integral_(bb(R)^n) (partial_t E_alpha) (t - s, bold(x) - bold(y)) f (bold(y), s) dif bold(y) dif s.
+    alpha Delta u (bold(x), t) = integral_0^t integral_(bb(R)^n) alpha Delta E_alpha (bold(x) - bold(y), t - s) f (bold(y), s) dif bold(y) dif s = integral_0^t integral_(bb(R)^n) (partial_t E_alpha) (t - s, bold(x) - bold(y)) f (bold(y), s) dif bold(y) dif s.
   $
   Subtracting the two identities gives $u_t - alpha Delta u = f$.
 
@@ -2187,7 +2189,7 @@ By #link(<lem:heat-kernel-semigroup>)[the semigroup law of the kernel], the homo
 #example(name: "Constant Source")[
   For $f -= 1$ on $bb(R)^n$, #link(<eq:heat-duhamel>)[the formula] gives
   $
-    u (bold(x), t) = integral_0^t integral_(bb(R)^n) E_alpha (t - s, bold(x) - bold(y)) dif bold(y) dif s = integral_0^t 1 dif s = t,
+    u (bold(x), t) = integral_0^t integral_(bb(R)^n) E_alpha (bold(x) - bold(y), t - s) dif bold(y) dif s = integral_0^t 1 dif s = t,
   $
   because the kernel has unit mass (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*]. Indeed $u = t$ solves $u_t = 1$ with $u (dot, 0) = 0$.
 ] <ex:heat-constant-source>
@@ -2200,7 +2202,7 @@ $
   u (t) = integral_0^t S (t - s) f (s) dif s,
 $
 which is the convolution of the source with the flow.
-On $bb(R)^n$ the operator is $S (t) phi = E_alpha (t, dot) * phi$ and the two formulas coincide.
+On $bb(R)^n$ the operator is $S (t) phi = E_alpha (dot, t) * phi$ and the two formulas coincide.
 
 The abstract form is the one that survives on a bounded domain, where no explicit kernel is available.
 There $S (t) = e^(alpha t A)$ is the semigroup generated by the Dirichlet Laplacian, and the formula above is the variation-of-constants formula for the infinite-dimensional ODE $u' = alpha A u + f$; this is the content of #link(<thm:heat-semigroup>)[*Semigroup Framework*], where the existence theory for the initial-boundary value problems is built on it.
@@ -2238,9 +2240,9 @@ There $S (t) = e^(alpha t A)$ is the semigroup generated by the Dirichlet Laplac
 #proof[
   (Sketch.) The proof propagates the maximum backward in time using the positivity of the heat kernel. If $u (x_0, t_0) = M$ is the maximum, then for $0 < s < t_0$ the mean value formula for the heat equation gives
   $
-    u (x_0, t_0) = integral_(bb(R)^n) E_alpha (s, y) u (x_0 - y, t_0 - s) dif y
+    u (x_0, t_0) = integral_(bb(R)^n) E_alpha (y, s) u (x_0 - y, t_0 - s) dif y
   $
-  (on the whole space; for bounded domains, boundary terms enter with the correct sign for sub-solutions). Since $E_alpha (s, y) > 0$, $integral E_alpha dif y = 1$, and $u <= M$, the average can equal $M$ only if $u (dot, t_0 - s) = M$ a.e., hence everywhere by continuity. Iterating backward in $t$ and spreading in space by connectedness yields $u = M$ on $overline(Omega) times [0, t_0]$.
+  (on the whole space; for bounded domains, boundary terms enter with the correct sign for sub-solutions). Since $E_alpha (y, s) > 0$, $integral E_alpha dif y = 1$, and $u <= M$, the average can equal $M$ only if $u (dot, t_0 - s) = M$ a.e., hence everywhere by continuity. Iterating backward in $t$ and spreading in space by connectedness yields $u = M$ on $overline(Omega) times [0, t_0]$.
 ]
 
 === Comparison Principle and Positivity // 比较原理与正性
@@ -2283,7 +2285,7 @@ The second is uniqueness on bounded domains, obtained by comparing two solutions
 ] <cor:heat-stability>
 
 #proof[
-  Both solutions are given by #link(<thm:cauchy-heat>)[the convolution formula] with $f = 0$, so $u (dot, t) - tilde(u) (dot, t) = E_alpha (t, dot) * (g - tilde(g))$. Since $||E_alpha (t, dot)||_(L^1) = 1$ by (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], Young's inequality gives #link(<eq:heat-stability>)[the bound].
+  Both solutions are given by #link(<thm:cauchy-heat>)[the convolution formula] with $f = 0$, so $u (dot, t) - tilde(u) (dot, t) = E_alpha (dot, t) * (g - tilde(g))$. Since $||E_alpha (dot, t)||_(L^1) = 1$ by (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], Young's inequality gives #link(<eq:heat-stability>)[the bound].
 ]
 
 The pair of corollaries is the parabolic counterpart of the energy inequality of the wave equation: there stability is measured in the energy norm, which involves one derivative of the data, whereas here the flow is a contraction in the sup-norm and loses no derivative at all.
@@ -2432,7 +2434,7 @@ The derivatives of the solution are controlled by the datum, with a cost that de
 ] <thm:smoothing-estimates>
 
 #proof[
-  By the scaling of the Gaussian, $partial^gamma E_alpha (t, bold(x)) = (alpha t)^(-(n + abs(gamma))/2) (partial^gamma E_alpha) (1, bold(x) / sqrt(alpha t))$, hence $||partial^gamma E_alpha (t, dot)||_(L^1) = C (alpha t)^(-abs(gamma)/2)$. Young's inequality for convolutions then gives #link(<eq:heat-smoothing-l2>)[the estimate].
+  By the scaling of the Gaussian, $partial^gamma E_alpha (bold(x), t) = (alpha t)^(-(n + abs(gamma))/2) (partial^gamma E_alpha) (bold(x) / sqrt(alpha t), 1)$, hence $||partial^gamma E_alpha (dot, t)||_(L^1) = C (alpha t)^(-abs(gamma)/2)$. Young's inequality for convolutions then gives #link(<eq:heat-smoothing-l2>)[the estimate].
 ]
 
 Each derivative therefore costs the factor $(alpha t)^(-abs(gamma)/2)$, which diverges only as $t -> 0^+$: the loss of regularity is confined to the initial instant, and for every $t > 0$ the solution is as smooth as the kernel.
@@ -2445,7 +2447,7 @@ A companion estimate replaces the $L^2$ data by an $L^1$ datum and the $L^2$ nor
 ] <prop:heat-linfty-bound>
 
 #proof[
-  This is the Young bound $||E_alpha (t, dot) * g||_oo <= ||E_alpha (t, dot)||_oo ||g||_(L^1)$, together with $||E_alpha (t, dot)||_oo = (4 pi alpha t)^(-n/2)$.
+  This is the Young bound $||E_alpha (dot, t) * g||_oo <= ||E_alpha (dot, t)||_oo ||g||_(L^1)$, together with $||E_alpha (dot, t)||_oo = (4 pi alpha t)^(-n/2)$.
 ]
 
 The two estimates display the two faces of the smoothing effect: #link(<eq:heat-smoothing-l2>)[the first] creates derivatives at a fixed integrability level, #link(<eq:heat-smoothing-linfty>)[the second] buys integrability — an $L^1$ datum becomes bounded immediately.
@@ -2465,7 +2467,7 @@ The convolution formula forces a conclusion that no energy argument could give: 
 ] <thm:heat-infinite-speed>
 
 #proof[
-  For $t > 0$ the kernel $E_alpha (t, dot)$ is strictly positive on all of $bb(R)^n$ by (i) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], and $g$ is non-negative and not identically zero, so the integrand in $u (bold(x), t) = integral E_alpha (t, bold(x) - bold(y)) g (bold(y)) dif bold(y)$ is non-negative and positive on a set of positive measure.
+  For $t > 0$ the kernel $E_alpha (dot, t)$ is strictly positive on all of $bb(R)^n$ by (i) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], and $g$ is non-negative and not identically zero, so the integrand in $u (bold(x), t) = integral E_alpha (bold(x) - bold(y), t) g (bold(y)) dif bold(y)$ is non-negative and positive on a set of positive measure.
   The integral is therefore strictly positive.
 ]
 
@@ -3108,7 +3110,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 #example(name: "Fundamental Solution of the Heat Operator")[
   For the heat operator $partial_t - Delta_x$ on $bb(R)^(1+n)$ with coordinates $(t, x) in bb(R) times bb(R)^n$, the fundamental solution is the *heat kernel*:
   $
-    E(t, x) = cases(1 / (4 pi t)^(n/2) exp(-abs(x)^2 / (4 t)) "if" t > 0, 0 "if" t < 0.)
+    E(x, t) = cases(1 / (4 pi t)^(n/2) exp(-abs(x)^2 / (4 t)) "if" t > 0, 0 "if" t < 0.)
   $
   Then $(partial_t - Delta_x) E = delta$ in $cal(D)'(bb(R)^(1+n))$, where $delta = delta_(0, 0)$ is the delta at the origin of spacetime.
 
@@ -3117,19 +3119,19 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 
     For $phi in cal(D)(bb(R)^(1+n))$:
     $
-      ⟨ (partial_t - Delta) E, phi ⟩ = -⟨ E, (partial_t + Delta) phi ⟩ = -integral_0^oo integral_(bb(R)^n) E(t, x) ((partial_t + Delta_x) phi)(t, x) dif x dif t.
+      ⟨ (partial_t - Delta) E, phi ⟩ = -⟨ E, (partial_t + Delta) phi ⟩ = -integral_0^oo integral_(bb(R)^n) E(x, t) ((partial_t + Delta_x) phi)(t, x) dif x dif t.
     $
     Since $E$ is smooth for $t > 0$ and decays rapidly in $x$, we integrate by parts in $t$ over $(0, oo)$:
     $
-      -integral_0^oo integral E ((partial phi)/(partial t)) dif x dif t = integral_0^oo integral ((partial E)/(partial t)) phi dif x dif t + integral_(bb(R)^n) E(0^+, x) phi(0, x) dif x.
+      -integral_0^oo integral E ((partial phi)/(partial t)) dif x dif t = integral_0^oo integral ((partial E)/(partial t)) phi dif x dif t + integral_(bb(R)^n) E(x, 0^+) phi(x, 0) dif x.
     $
     The spatial integration by parts gives $-integral E Delta phi dif x dif t = integral (Delta E) phi dif x dif t$ (boundary terms in $x$ vanish by rapid decay). Since $E_t = Delta E$ for $t > 0$, the volume integrals cancel, leaving:
     $
-      ⟨ (partial_t - Delta) E, phi ⟩ = integral_(bb(R)^n) E(0^+, x) phi(0, x) dif x.
+      ⟨ (partial_t - Delta) E, phi ⟩ = integral_(bb(R)^n) E(x, 0^+) phi(x, 0) dif x.
     $
-    As $t -> 0^+$, the heat kernel $E(t, dot) -> delta$ in $cal(D)'(bb(R)^n)$ (it is an approximate identity: $E >= 0$, $integral E dif x = 1$ for all $t > 0$, and $"supp"(E(t, dot))$ concentrates at the origin). Therefore:
+    As $t -> 0^+$, the heat kernel $E(dot, t) -> delta$ in $cal(D)'(bb(R)^n)$ (it is an approximate identity: $E >= 0$, $integral E dif x = 1$ for all $t > 0$, and $"supp"(E(dot, t))$ concentrates at the origin). Therefore:
     $
-      integral_(bb(R)^n) E(0^+, x) phi(0, x) dif x = phi(0, 0).
+      integral_(bb(R)^n) E(x, 0^+) phi(x, 0) dif x = phi(0, 0).
     $
     Hence $(partial_t - Delta) E = delta_(0,0)$.
   ]
@@ -3140,13 +3142,13 @@ This is a deep existence theorem; we omit the general proof (which requires tool
 
   For $n = 1$:
   $
-    E(t, x) = 1/2 H(t) H(t^2 - x^2) = cases(1/2 "if" t > abs(x), 0 "if" t < abs(x).),
+    E(x, t) = 1/2 H(t) H(t^2 - x^2) = cases(1/2 "if" t > abs(x), 0 "if" t < abs(x).),
   $
   where $H$ is the Heaviside function (#link(<ex:weak-heaviside>)[Example 20.2]). The support of $E$ is the forward light cone ${(t, x) : t >= abs(x)}$.
 
   For $n = 3$:
   $
-    E(t, x) = 1 / (4 pi t) delta(t - abs(x)) H(t),
+    E(x, t) = 1 / (4 pi t) delta(t - abs(x)) H(t),
   $
   supported on the _surface_ of the forward light cone.
 
@@ -3155,7 +3157,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
   We verify $square E = delta$ for $n = 1$ in detail, as the key mechanism already appears in this simplest case.
 
   #proof[
-    For $n = 1$, $E(t, x) = (1/2) H(t - abs(x))$. For $phi in cal(D)(bb(R)^2)$:
+    For $n = 1$, $E(x, t) = (1/2) H(t - abs(x))$. For $phi in cal(D)(bb(R)^2)$:
     $
       ⟨ square E, phi ⟩ = ⟨ E, square phi ⟩ = 1/2 integral_0^oo (integral_(-t)^t ((partial^2 phi)/(partial t^2) - (partial^2 phi)/(partial x^2)) dif x) dif t.
     $
@@ -3170,25 +3172,25 @@ This is a deep existence theorem; we omit the general proof (which requires tool
     $
     Substituting $x -> -x$ in the second integral:
     $
-      integral_0^oo integral_(-t)^t (partial^2 phi)/(partial t^2) dif x dif t = -integral_0^oo (partial phi(x, x))/(partial t) dif x - integral_0^oo (partial phi(x, -x))/(partial t) dif x.
+      integral_0^oo integral_(-t)^t (partial^2 phi)/(partial t^2) dif x dif t = -integral_0^oo (partial phi(x, x))/(partial t) dif x - integral_0^oo (partial phi(-x, x))/(partial t) dif x.
     $
 
     *Step 2: The $(partial^2)/(partial x^2)$ integral.* For fixed $t$:
     $
-      integral_(-t)^t (partial^2 phi)/(partial x^2) dif x = (partial phi(t, t))/(partial x) - (partial phi(t, -t))/(partial x).
+      integral_(-t)^t (partial^2 phi)/(partial x^2) dif x = (partial phi(t, t))/(partial x) - (partial phi(-t, t))/(partial x).
     $
     So:
     $
-      integral_0^oo integral_(-t)^t (partial^2 phi)/(partial x^2) dif x dif t = integral_0^oo (partial phi(t, t))/(partial x) dif t - integral_0^oo (partial phi(t, -t))/(partial x) dif t.
+      integral_0^oo integral_(-t)^t (partial^2 phi)/(partial x^2) dif x dif t = integral_0^oo (partial phi(t, t))/(partial x) dif t - integral_0^oo (partial phi(-t, t))/(partial x) dif t.
     $
 
     *Step 3: Combining.* Let $A = integral_0^oo phi_t (x, x) dif x$ and $B = integral_0^oo phi_x (x, x) dif x$. Since $(d / (dif x)) phi(x, x) = phi_x (x, x) + phi_t (x, x)$:
     $
       A + B = integral_0^oo (d / (dif x)) phi(x, x) dif x = phi(oo, oo) - phi(0, 0) = -phi(0, 0).
     $
-    Similarly, let $C = integral_0^oo phi_t (x, -x) dif x$ and $D = integral_0^oo phi_x (x, -x) dif x$. Since $(d / (dif x)) phi(x, -x) = phi_x (x, -x) - phi_t (x, -x)$:
+    Similarly, let $C = integral_0^oo phi_t (-x, x) dif x$ and $D = integral_0^oo phi_x (-x, x) dif x$. Since $(d / (dif x)) phi(-x, x) = phi_x (-x, x) - phi_t (-x, x)$:
     $
-      D - C = integral_0^oo (d / (dif x)) phi(x, -x) dif x = phi(oo, -oo) - phi(0, 0) = -phi(0, 0).
+      D - C = integral_0^oo (d / (dif x)) phi(-x, x) dif x = phi(-oo, oo) - phi(0, 0) = -phi(0, 0).
     $
 
     From Steps 1 and 2:
