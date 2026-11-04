@@ -807,4 +807,421 @@ This is the first instance of a phenomenon that recurs throughout the notebook: 
 The last principle is made quantitative in *Ch 2*, where the condition number separates the difficulty of a problem from the quality of an algorithm.
 A further technique, extrapolation, cancels the leading truncation term instead of shrinking it; it is developed in *Richardson Extrapolation and Romberg Integration*.
 
+= Norms, Conditioning and Stability // 范数、条件数与稳定性
+
+The error analysis of the previous chapter measured the deviation of a single computed number from its exact value.
+To compare vectors and matrices, and above all to compare whole computations, that notion of distance must be replaced by a norm, and a single question must be split into two: how sensitive is the problem, and how good is the algorithm.
+This chapter supplies the four tools that answer it: norms, which measure vectors and matrices; the pair forward and backward error, which separates the error of the answer from the perturbation of the data; the condition number, which is a property of the problem alone; and the order of convergence, which is the language in which iterative methods are compared.
+The chapter closes with the definition of stability, which classifies algorithms once the difficulty of the problem has been factored out.
+
+The single idea behind all four tools is the inequality
+$
+  "forward error" <= "condition number" times "backward error",
+$
+which says that an algorithm can never be blamed for more than the sensitivity of its problem allows, and that it should never be blamed for less either.
+Every result of this chapter is a quantitative version of this sentence.
+
+== Vector and Matrix Norms // 向量与矩阵范数
+
+An error bound for a scalar is a number; an error bound for a vector or a matrix must be a single number that summarizes many components.
+Such a summary is what a norm provides, and the axioms below are exactly the properties needed for the error bounds of the sequel to be provable by the triangle inequality.
+
+#definition(name: "Norm")[
+  A *norm* on a real vector space $V$ is a map $||dot|| : V -> bb(R)$ such that, for all $x, y in V$ and all $alpha in bb(R)$,
+  - $||x|| >= 0$, with $||x|| = 0$ only for $x = 0$;
+  - $||alpha x|| = abs(alpha) ||x||$;
+  - $||x + y|| <= ||x|| + ||y||$.
+] <def:norm>
+
+The three most used families on $bb(R)^n$ are the following.
+
+#definition(name: "$p$-Norms")[
+  For $1 <= p < oo$ and $x = (x_1, dots, x_n) in bb(R)^n$, the *$p$-norm* is
+  #eq[$
+    ||x||_p = (sum_(i=1)^n abs(x_i)^p)^(1 slash p),
+  $] <eq:p-norm>
+  and the limiting case $p -> oo$ gives the *maximum norm*
+  $
+    ||x||_oo = max_(1 <= i <= n) abs(x_i).
+  $
+] <def:p-norm>
+
+That @eq:p-norm indeed defines a norm is Minkowski's inequality, which belongs to the theory of $L^p$ spaces and is proved there; only the triangle inequality is not immediate.
+For matrices the analogous construction takes the norm of the image of a vector.
+
+#definition(name: "Induced Matrix Norm")[
+  Let $||dot||$ be a norm on $bb(R)^n$ and on $bb(R)^m$, and let $A in bb(R)^(m times n)$.
+  The *matrix norm induced by* $||dot||$ is
+  #eq[$
+    ||A|| = sup_(x != 0) (||A x||)/(||x||) = sup_(||x|| = 1) ||A x||.
+  $] <eq:induced-norm>
+] <def:matrix-norm>
+
+The induced norm has a direct geometric meaning: it is the largest factor by which $A$ can stretch a vector.
+For the three norms above the supremum can be computed explicitly.
+
+#proposition(name: "Formulas for Induced Norms")[
+  For $A = (a_(i j))_(m times n)$,
+  $
+    ||A||_1 = max_(1 <= j <= n) sum_(i=1)^m abs(a_(i j)), quad ||A||_oo = max_(1 <= i <= m) sum_(j=1)^n abs(a_(i j)), quad ||A||_2 = sqrt(rho(A^"T" A)).
+  $
+  The first two are the largest column sum and the largest row sum respectively, and $rho$ denotes the spectral radius.
+] <prop:induced-norm-formulas>
+
+The formulas for $p = 1$ and $p = oo$ follow by pushing the absolute values through the sum, since each is attained by concentrating the mass of $x$ on a single entry.
+The formula for $p = 2$ is the singular value characterization of the Euclidean norm and is proved in *Algèbre Linéaire*; it shows that $||A||_2$ is the largest singular value of $A$.
+
+A fourth norm is often used because it is cheap to compute, although it is not induced by any vector norm.
+
+#definition(name: "Frobenius Norm")[
+  The *Frobenius norm* of $A = (a_(i j))_(m times n)$ is
+  $
+    ||A||_"F" = (sum_(i=1)^m sum_(j=1)^n abs(a_(i j))^2)^(1 slash 2).
+  $
+] <def:frobenius-norm>
+
+#lemma(name: "Submultiplicativity")[
+  Let $||dot||$ be an induced matrix norm.
+  Then for all compatible $A, B$ and all $x$,
+  $
+    ||A x|| <= ||A|| ||x||, quad ||A B|| <= ||A|| ||B||.
+  $
+] <lem:submultiplicativity>
+
+#proof[
+  The first inequality is immediate from @eq:induced-norm when $x != 0$ and trivial when $x = 0$.
+  For the second, apply the first twice: $||A B x|| <= ||A|| ||B x|| <= ||A|| ||B|| ||x||$, and take the supremum over $||x|| = 1$.
+]
+
+The quantity that governs the convergence of iterative methods is not a norm but the spectral radius, and the two are linked by an inequality that will be used repeatedly.
+
+#definition(name: "Spectral Radius")[
+  For $A in bb(R)^(n times n)$ with eigenvalues $lambda_1, dots, lambda_n$, the *spectral radius* is
+  $
+    rho(A) = max_(1 <= i <= n) abs(lambda_i).
+  $
+] <def:spectral-radius>
+
+#theorem(name: "Spectral Radius and Norms")[
+  Let $A in bb(R)^(n times n)$.
+  Then $rho(A) <= ||A||$ for every induced norm, and for every $epsilon > 0$ there exists an induced norm with $||A|| <= rho(A) + epsilon$.
+] <thm:spectral-radius-norm>
+
+#proof[
+  *First claim.* Let $lambda$ be an eigenvalue of largest modulus and $x$ a corresponding eigenvector.
+  Then $abs(lambda) ||x|| = ||A x|| <= ||A|| ||x||$, and dividing by $||x|| != 0$ gives $rho(A) <= ||A||$.
+
+  *Second claim.* Over $bb(C)$ the matrix $A$ is similar to an upper triangular matrix $T$ whose diagonal entries are the eigenvalues, say $A = S T S^(-1)$.
+  For $D_epsilon = "diag"(1, epsilon, epsilon^2, dots, epsilon^(n-1))$ the matrix $D_epsilon^(-1) T D_epsilon$ has the same diagonal and off-diagonal entries multiplied by powers of $epsilon$, hence its row sums tend to $rho(A)$ as $epsilon -> 0$.
+  Since $||B||_oo$ is the largest row sum, the norm $||x||_epsilon = ||D_epsilon^(-1) S^(-1) x||_oo$ satisfies the claim.
+]
+
+#caution[
+  The spectral radius is not a norm: for $A = mat(0, 1; 0, 0)$ we have $rho(A) = 0$ while $A != 0$.
+  It nevertheless controls the asymptotic behaviour of powers, since $rho(A) < 1$ if and only if $A^k -> 0$, which is why the convergence of the iterative methods of *Ch 8* is stated in terms of $rho$ rather than of $norm(dot)$.
+]
+
+#example(name: "Four norms of a small matrix")[
+  Let $A = mat(1, 2; 3, 4)$.
+  Its column sums are $4$ and $6$, so $||A||_1 = 6$; its row sums are $3$ and $7$, so $||A||_oo = 7$; and $||A||_"F" = sqrt(30) approx 5.477$.
+  The eigenvalues solve $lambda^2 - 5 lambda - 2 = 0$, giving $lambda approx 5.372$ and $lambda approx -0.372$, so $rho(A) approx 5.372$.
+  Finally $A^"T" A = mat(10, 14; 14, 20)$ has eigenvalues $29.866$ and $0.134$, so $||A||_2 = sqrt(29.866) approx 5.465$.
+  The four numbers differ, and none of the inequalities $rho(A) <= ||A||_2 <= ||A||_"F"$ is an equality here.
+]
+
+#figure(
+  image("img/unit-balls.svg", width: 54%),
+  caption: [The unit balls of the $1$-, $2$- and $oo$-norms in $bb(R)^2$. The diamond, the disc and the square are all convex and centrally symmetric, and each is the unit ball of some norm. The induced matrix norm @eq:induced-norm is the largest stretch factor of such a ball, which is why $||A||_1$ and $||A||_oo$ are read off from columns and rows.],
+) <fig:unit-balls>
+
+#note(title: "Equivalence of norms")[
+  All norms on $bb(R)^n$ are equivalent, but the constants depend on $n$: for instance $||x||_oo <= ||x||_2 <= sqrt(n) ||x||_oo$ and $||x||_2 <= ||x||_1 <= sqrt(n) ||x||_2$.
+  In numerical analysis the constants matter, because a bound proved in one norm may deteriorate by a factor $sqrt(n)$ or $n$ when restated in another.
+  This is why every error bound below states explicitly which norm is used, and why the choice of norm is part of the design of an algorithm rather than a cosmetic matter.
+]
+
+== Forward and Backward Error // 前向误差与后向误差
+
+A computed answer can be described in two ways.
+One may say how far it is from the exact answer, or one may say which slightly different problem it solves exactly.
+The first description is the forward error, the second the backward error, and the second is the one that can be measured without knowing the exact answer.
+
+#definition(name: "Forward Error")[
+  Let $x$ be the exact solution of a problem and $hat(x)$ a computed approximation.
+  The *forward error* is the difference $x - hat(x)$, measured in a norm suited to the answer.
+] <def:forward-error>
+
+The forward error is what a user cares about, and it is exactly what cannot be computed, since $x$ is unknown.
+Wilkinson's idea was to reverse the point of view: instead of asking how wrong the answer is, ask how much the data would have to be changed for the answer to be right.
+
+#definition(name: "Backward Error")[
+  Let a problem be represented by a map $f : X -> Y$ and let $hat(y)$ be the computed value of $y = f(x)$.
+  Any $Delta x$ satisfying $f(x + Delta x) = hat(y)$ is called a *backward perturbation* of the data, and the *backward error* is the norm of the smallest such perturbation, usually reported relative to $||x||$.
+] <def:backward-error>
+
+#definition(name: "Backward Stable Algorithm")[
+  An algorithm computing $f(x)$ is *backward stable* if the computed value equals $f(x + Delta x)$ for some $Delta x$ with
+  $
+    ||Delta x|| <= c(n) u ||x||,
+  $
+  where $u$ is the unit roundoff and $c(n)$ is a modest function of the size of the problem.
+] <def:backward-stability>
+
+The standard model of Chapter 1 is exactly a statement of backward stability for a single operation, and this is where the promise made there is kept.
+
+#proposition(name: "Elementary Operations are Backward Stable")[
+  Under the standard model @eq:fl-model, each of the four elementary operations is backward stable with $c = 1$: for $op in {+, -, times, slash}$ and for $x op y != 0$ there exist relative perturbations $abs(Delta x) <= u abs(x)$ and $abs(Delta y) <= u abs(y)$ such that
+  $
+    "fl"(x op y) = (x + Delta x) op (y + Delta y)
+  $
+  exactly.
+] <prop:fl-backward-stable>
+
+#proof[
+  Write $"fl"(x op y) = (x op y)(1 + delta)$ with $abs(delta) <= u$ by @eq:fl-model.
+  For multiplication and division it suffices to perturb one operand: $(x(1 + delta)) dot y = x y (1 + delta)$ and $(x(1 + delta)) slash y = (x slash y)(1 + delta)$.
+  For addition and subtraction, perturb both operands by the same factor: $(x(1 + delta)) ± (y(1 + delta)) = (x ± y)(1 + delta)$.
+  In each case the computed value is the exact value of the operation applied to the perturbed operands.
+]
+
+Backward stability is therefore a property of the arithmetic, not of the algorithm, and it is inherited by any finite sequence of operations: the whole computation is the exact computation for slightly perturbed input data.
+The error analysis of an algorithm then reduces to bounding the size of that perturbation.
+
+#example(name: "Backward error of a dot product")[
+  Let $s = sum_(i=1)^n x_i y_i$ and compute it as the sum of the computed products.
+  Collecting the rounding factors, $hat(s) = sum_i x_i y_i (1 + delta_i)$ with $abs(delta_i) <= n u$ to first order, so $hat(s)$ is the exact dot product of $x$ with a vector $tilde(y)$ satisfying $abs(tilde(y)_i - y_i) <= n u abs(y_i)$.
+  The backward error is small, of order $n u$, and yet the forward error obeys
+  $
+    abs(s - hat(s)) <= n u sum_(i=1)^n abs(x_i y_i),
+  $
+  whose right-hand side involves the sum of absolute values and not $abs(s)$.
+  When the terms cancel, this bound is enormous compared with $abs(s)$: the algorithm is backward stable and still inaccurate.
+]
+
+The distinction is sharpest for linear systems, where two different measures of the error are routinely confused.
+
+#definition(name: "Residual")[
+  Let $A x = b$ with $A$ invertible, and let $hat(x)$ be a computed solution.
+  The vector
+  $
+    r = b - A hat(x)
+  $
+  is the *residual* of $hat(x)$.
+] <def:residual>
+
+For a linear system the residual measures how far $hat(x)$ is from solving the given system, which is precisely a backward error: $A hat(x) = b + Delta b$ with $Delta b = -r$.
+The error $x - hat(x)$, by contrast, is a forward error, and the two can differ by a factor as large as the condition number of $A$.
+
+#example(name: "A small residual does not imply a small error")[
+  Let
+  $
+    A = mat(1, 1; 1, 1 + 10^(-3)), quad b = mat(2; 2 + 10^(-3)),
+  $
+  whose exact solution is $x = (1, 1)$.
+  Take $hat(x) = (1 + delta, 1 - delta)$ with $delta = 1 slash 2$.
+  Then $A hat(x) = (2, 2 + 10^(-3) - 10^(-3) delta)$, so $r = (0, 10^(-3) delta) = (0, 5 times 10^(-4))$ and the relative residual is $||r||_oo slash ||b||_oo approx 1.8 times 10^(-4)$.
+  The relative error, however, is $||x - hat(x)||_oo slash ||x||_oo = 0.5$, more than three orders of magnitude larger.
+  The perturbation of the data that explains the answer is tiny, but the problem amplifies it.
+]
+
+#note(title: "Wilkinson's programme")[
+  Backward error analysis converts a question about the accuracy of an algorithm into a question about the size of an equivalent perturbation.
+  This is what makes Gaussian elimination analysable despite its notorious growth of intermediate quantities: it is backward stable with a modest constant, so any inaccuracy in the computed solution is attributable to the sensitivity of the system.
+  That sensitivity is measured by the condition number, which is the subject of the next section.
+]
+
+== Condition Number and Ill-Conditioned Problems // 条件数与病态问题
+
+The backward error of the previous section measures the algorithm; the condition number measures the problem.
+The two combine into a single inequality, which is the reason for introducing either of them.
+
+#definition(name: "Condition Number of a Problem")[
+  Let $f : X -> Y$ be a problem, and let $x != 0$ with $f(x) != 0$.
+  The *relative condition number* of $f$ at $x$ is
+  #eq[$
+    kappa(x) = lim_(delta -> 0) sup_(||Delta x|| <= delta) (||f(x + Delta x) - f(x)|| slash ||f(x)||)/(||Delta x|| slash ||x||).
+  $] <eq:condition-number>
+  A problem with a small condition number is called *well conditioned*, one with a large condition number *ill conditioned*.
+] <def:condition-number>
+
+For a differentiable problem the limit is a derivative ratio, namely $kappa(x) = ||f'(x)|| ||x|| slash ||f(x)||$, so the condition number is the ratio between the relative change of the answer and the relative change of the data.
+
+#theorem(name: "The Fundamental Inequality")[
+  Let an algorithm compute $f(x)$ with backward error $||Delta x|| <= c u ||x||$, so that $hat(y) = f(x + Delta x)$.
+  Then the relative forward error satisfies
+  #eq[$
+    (||hat(y) - f(x)||)/(||f(x)||) <= kappa(x) c u + O(u^2).
+  $] <eq:fundamental-inequality>
+] <thm:fundamental-inequality>
+
+#proof[
+  Expanding to first order, $f(x + Delta x) = f(x) + f'(x) Delta x + O(||Delta x||^2)$, hence
+  $
+    ||hat(y) - f(x)|| <= ||f'(x)|| ||Delta x|| + O(u^2) <= ||f'(x)|| c u ||x|| + O(u^2).
+  $
+  Dividing by $||f(x)||$ and inserting $kappa(x) = ||f'(x)|| ||x|| slash ||f(x)||$ gives @eq:fundamental-inequality.
+]
+
+@eq:fundamental-inequality is the sentence announced in the introduction: the forward error is bounded by the product of the sensitivity of the problem and the backward error of the algorithm.
+A backward stable algorithm is therefore optimal up to the constant $c$; nothing better can be achieved in the same arithmetic, and the remaining error belongs to the problem.
+
+#example(name: "The square root is perfectly conditioned")[
+  For $f(x) = sqrt(x)$ with $x > 0$ we have $f'(x) = 1 slash (2 sqrt(x))$, so
+  $
+    kappa(x) = 1/(2 sqrt(x)) dot x/sqrt(x) = 1/2.
+  $
+  A relative perturbation of the data of size $u$ produces a relative change of the answer of about $u slash 2$, whatever the size of $x$.
+  Taking a square root never loses digits, which is why the operation appears in so many stabilizations of formulas.
+]
+
+#example(name: "Subtraction is ill conditioned when it cancels")[
+  For $f(x_1, x_2) = x_1 - x_2$ measured in the $1$-norm on the data, a perturbation satisfies $abs(Delta f) <= ||Delta x||_1$, so
+  $
+    kappa(x) = (abs(x_1) + abs(x_2))/(abs(x_1 - x_2)).
+  $
+  This is exactly the amplification factor $K$ of *Catastrophic Cancellation*, now identified as a property of the map $f$ rather than of any particular formula.
+  The condition number is small when the two numbers are far apart and unbounded when they are close, which confirms the conclusion reached there: no rearrangement can rescue a genuinely ill-conditioned subtraction, and a rearrangement is needed precisely when the cancellation is avoidable.
+]
+
+The same analysis applies to linear systems, where the condition number of the matrix governs everything.
+
+#proposition(name: "Condition Number of a Linear System")[
+  Let $A in bb(R)^(n times n)$ be invertible, $b != 0$ and $x = A^(-1) b$, and let $kappa(A) = ||A|| ||A^(-1)||$ for a fixed induced norm.
+  If $b$ is perturbed by $Delta b$ and $Delta x$ denotes the resulting change of the solution, then
+  #eq[$
+    (||Delta x||)/(||x||) <= kappa(A) (||Delta b||)/(||b||).
+  $] <eq:linear-system-b-perturbation>
+  If in addition $A$ is perturbed by $Delta A$ with $||A^(-1)|| ||Delta A|| < 1$, then
+  #eq[$
+    (||Delta x||)/(||x||) <= (kappa(A))/(1 - kappa(A) (||Delta A||)/(||A||)) ((||Delta A||)/(||A||) + (||Delta b||)/(||b||)).
+  $] <eq:linear-system-a-perturbation>
+] <prop:linear-system-condition>
+
+#proof[
+  From $A (x + Delta x) = b + Delta b$ and $A x = b$ we get $Delta x = A^(-1) Delta b$, hence $||Delta x|| <= ||A^(-1)|| ||Delta b||$.
+  Since $b = A x$ gives $||b|| <= ||A|| ||x||$, that is $1 slash ||x|| <= ||A|| slash ||b||$, multiplying the two bounds yields @eq:linear-system-b-perturbation.
+
+  The second bound combines this estimate with the perturbation of $A$; the denominator accounts for the possibility that $A + Delta A$ is close to singular.
+]
+
+#example(name: "Hilbert matrices")[
+  The Hilbert matrix $H_n$ with entries $1 slash (i + j - 1)$ is the classical example of an ill-conditioned matrix that arises naturally from least squares fitting.
+  In the $2$-norm, $kappa(H_5) approx 4.8 times 10^5$ and $kappa(H_(10)) approx 1.6 times 10^13$.
+  With $u approx 1.1 times 10^(-16)$ the fundamental inequality only guarantees about ten correct digits for $H_5$, and none at all for $H_(10)$: the computed solution of a Hilbert system of order ten can be entirely wrong although the elimination is backward stable.
+]
+
+#figure(
+  image("img/conditioning-ellipse.svg", width: 62%),
+  caption: [Geometry of the condition number. The matrix $A$ maps the unit circle onto an ellipse whose semi-axes are the extreme singular values, and $kappa(A) = ||A||_2 ||A^(-1)||_2$ is their ratio. A relative ball of uncertainty of radius $epsilon$ around the data is stretched into an ellipse whose aspect ratio is the same, so the answer inherits an uncertainty magnified by $kappa(A)$ in the worst direction.],
+) <fig:conditioning-geometry>
+
+#caution[
+  An ill-conditioned problem cannot be repaired by a better algorithm.
+  If $kappa(A) u >= 1$, the fundamental inequality permits a relative error of order one, and no backward stable method can avoid it; what can be changed is the problem, not the solver.
+  The remedies are of a different nature: reformulate the model, rescale the unknowns, or regularize the problem by adding information.
+]
+
+#note(title: "Conditioning of eigenvalues")[
+  The same idea applies to eigenproblems, with a different formula.
+  A simple eigenvalue $lambda$ of $A$ with right eigenvector $x$ and left eigenvector $y$ has condition number $1 slash abs(y^"T" x)$, which equals one for symmetric matrices and can be enormous for non-symmetric ones.
+  This explains why symmetric eigenvalue algorithms of *Ch 9* are far better behaved than general ones, and why the eigenvalues of a non-symmetric matrix may be computed accurately even when its eigenvectors are not.
+]
+
+== Rates of Convergence // 收敛阶
+
+Most algorithms of the sequel do not compute an answer in finitely many exact steps; they generate a sequence of approximations.
+Comparing such algorithms requires a precise notion of how fast the sequence approaches its limit, and that notion is the order of convergence promised in *Ch 1*.
+
+#definition(name: "Order of Convergence")[
+  Let $x_k -> x^*$ with $x_k != x^*$ for all $k$.
+  The sequence has *order of convergence* $p >= 1$ and *rate* $C$ if
+  $
+    lim_(k -> oo) (||x_(k+1) - x^*||)/(||x_k - x^*||^p) = C,
+  $
+  with $0 < C < oo$ when $p > 1$ and $0 < C < 1$ when $p = 1$.
+  The case $p = 1$ is called *linear* convergence, $1 < p < 2$ *superlinear* convergence, and $p = 2$ *quadratic* convergence.
+] <def:order-of-convergence>
+
+The order is best understood in terms of digits, because that is how accuracy is reported in practice.
+
+#proposition(name: "Digits Gained per Step")[
+  Let $e_k = ||x_k - x^*||$ and suppose $e_(k+1) approx C e_k^p$.
+  Then
+  $
+    log_10 e_(k+1) approx p log_10 e_k + log_10 C,
+  $
+  so that asymptotically the number of correct decimal digits is multiplied by $p$ at each step.
+  For linear convergence the number of digits gained per step is $-log_10 C$.
+] <prop:digits-per-step>
+
+#proof[
+  Take logarithms in $e_(k+1) approx C e_k^p$.
+  The additive term $log_10 C$ is negligible compared with $p log_10 e_k$ when $e_k$ is small and $p > 1$, and it is the whole story when $p = 1$.
+]
+
+#example(name: "Linear versus quadratic")[
+  The sequence $x_k = 2^(-k)$ converges linearly to zero with rate $C = 1 slash 2$, so it gains $log_10 2 approx 0.301$ digits per step: a hundred iterations buy thirty digits.
+  Newton's iteration for $sqrt(2)$, started at $x_0 = 1$, gives
+  $x_1 = 1.5$, $x_2 approx 1.41667$, $x_3 approx 1.4142157$, $x_4 approx 1.41421356237$,
+  whose errors are $8.6 times 10^(-2)$, $2.5 times 10^(-3)$, $2.1 times 10^(-6)$ and $1.6 times 10^(-12)$.
+  The number of correct digits is roughly $1$, $3$, $6$, $12$: it doubles at each step, which is the practical meaning of quadratic convergence.
+]
+
+#note(title: "Two meanings of order")[
+  The word *order* is used in two different senses in numerical analysis, and both are powers of a small quantity.
+  For an iterative method the small quantity is the current error, and the order $p$ introduced in #link(<def:order-of-convergence>)[*Order of Convergence*] controls how fast the iteration converges.
+  For a discretization the small quantity is the step size $h$, and the order $p$ in a bound of the form $abs("error") <= C h^p$ controls how fine the mesh must be.
+  The two are unified by the same question, namely how many digits one unit of extra work buys, and the estimates of *Ch 6* and *Ch 11* are of the second type while those of *Ch 8* and *Ch 10* are of the first.
+]
+
+#caution[
+  Quadratic convergence is a local property: it holds once the iterate is close enough to the root, and says nothing about the first steps.
+  It also degrades in finite precision, because once $e_k$ reaches the level $u$ of the roundoff error no iteration can improve it, and further steps may oscillate or diverge away from the root.
+  An iteration is therefore stopped when the increment falls below a tolerance related to $u$, not when it becomes as small as possible.
+]
+
+== Stability of Algorithms // 算法的数值稳定性
+
+The fundamental inequality separates the error into a factor belonging to the problem and a factor belonging to the algorithm.
+The second factor deserves a name, and it is the notion announced in *Algorithm Design Techniques* as the fifth principle.
+
+#definition(name: "Numerical Stability")[
+  Let $f$ be a problem with condition number $kappa(x)$, and let an algorithm compute $hat(y)$ in arithmetic with unit roundoff $u$.
+  The algorithm is *numerically stable* for the inputs under consideration if
+  $
+    (||hat(y) - f(x)||)/(||f(x)||) <= c kappa(x) u
+  $
+  for a modest constant $c$ independent of the input, and *unstable* if for some admissible input the relative error is much larger than $kappa(x) u$.
+] <def:numerical-stability>
+
+Backward stability is the stronger property: by @eq:fundamental-inequality a backward stable algorithm is stable with $c$ equal to the constant of its backward error.
+The converse fails, and the distinction matters when the problem is itself sensitive, since then a stable algorithm is all that can be asked for.
+
+#example(name: "An unstable recurrence")[
+  Let $I_n = integral_0^1 (x^n)/(x + 5) dif x$ for $n >= 0$.
+  Adding and subtracting $5 x^(n-1)$ inside the integrand gives the exact identity
+  $
+    I_n + 5 I_(n-1) = 1/n.
+  $
+  Computing upwards, $I_n = 1 slash n - 5 I_(n-1)$, multiplies whatever error $I_(n-1)$ carries by $5$, so an initial error $delta$ becomes $5^n delta$ after $n$ steps; with $n = 10$ the amplification is $5^(10) approx 9.8 times 10^6$ and the computed values, which should decrease monotonically to zero, turn negative.
+  Computing downwards, $I_(n-1) = (1 slash n - I_n) slash 5$, divides the error by $5$ at each step and is perfectly stable, but it needs a starting value $I_N$, which can be obtained by a quadrature rule.
+  The problem of evaluating $I_n$ is well conditioned; only the direction of the recurrence decides whether the computation succeeds.
+]
+
+The interplay between the two factors gives a complete classification of the sources of inaccuracy.
+
+#tex-table(
+  ("Problem", "Algorithm", "Outcome"),
+  ("well conditioned", "stable", [the answer is accurate to about $u$]),
+  ("ill conditioned", "stable", [the error is bounded by $kappa u$ and cannot be improved]),
+  ("well conditioned", "unstable", [arbitrary loss of accuracy, avoidable by choosing another algorithm]),
+  ("ill conditioned", "unstable", "nothing can be said; both factors contribute"),
+)
+
+#note(title: "Growth factors")[
+  Stability is usually proved by exhibiting a quantity whose growth controls the error, and Gaussian elimination is the standard case.
+  With partial pivoting the computed solution is the exact solution of a perturbed system, so the method is backward stable, and the size of the perturbation is governed by the growth factor, namely the largest entry appearing during elimination divided by the largest entry of $A$.
+  Partial pivoting keeps this factor below $2^(n-1)$ in the worst case, a bound that is almost never approached in practice; the details belong to *Direct Methods for Linear Systems*, where the same factorization is used to solve the systems of *Ch 7*.
+]
+
 #bibliography("references.bib", title: "References", full: true)
