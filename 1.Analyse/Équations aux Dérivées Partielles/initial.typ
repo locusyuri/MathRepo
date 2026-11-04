@@ -2070,10 +2070,10 @@ The general case follows from it by the rescaling $t |-> alpha t$, which turns t
 
 #proposition(name: "Basic Properties of the Heat Kernel")[
   For every $t > 0$:
-  (i) $E_alpha (dot, t) in C^oo (bb(R)^n)$ and $E_alpha (bold(x), t) > 0$ for all $bold(x)$;
-  (ii) $integral_(bb(R)^n) E_alpha (bold(x), t) dif bold(x) = 1$;
-  (iii) $(partial_t - alpha Delta) E_alpha (bold(x), t) = 0$ for $t > 0$;
-  (iv) as $t -> 0^+$, $E_alpha (dot, t) -> delta$ in $cal(D)'(bb(R)^n)$ (approximate identity).
+  + $E_alpha (dot, t) in C^oo (bb(R)^n)$ and $E_alpha (bold(x), t) > 0$ for all $bold(x)$;
+  + $integral_(bb(R)^n) E_alpha (bold(x), t) dif bold(x) = 1$;
+  + $(partial_t - alpha Delta) E_alpha (bold(x), t) = 0$ for $t > 0$;
+  + as $t -> 0^+$, $E_alpha (dot, t) -> delta$ in $cal(D)'(bb(R)^n)$ (approximate identity).
 ] <prop:heat-kernel-properties>
 
 #proof[
@@ -2126,7 +2126,9 @@ With the kernel at hand, the Cauchy problem of #link(<def:heat-ibvp>)[the defini
 
 #theorem(name: "Solution of the Cauchy Problem")[
   Let $g in C (bb(R)^n) inter L^oo (bb(R)^n)$. Then
-  #eq[$ u (bold(x), t) = integral_(bb(R)^n) E_alpha (bold(x) - bold(y), t) g (bold(y)) dif bold(y), quad t > 0, quad u (bold(x), 0) = g (bold(x)), $] <eq:heat-cauchy>
+  #eq[$
+    u (bold(x), t) = integral_(bb(R)^n) E_alpha (bold(x) - bold(y), t) g (bold(y)) dif bold(y), quad t > 0, quad u (bold(x), 0) = g (bold(x)),
+  $] <eq:heat-cauchy>
   defines $u in C^oo (bb(R)^n times (0, oo)) inter C (bb(R)^n times [0, oo))$, which satisfies $u_t = alpha Delta u$ for $t > 0$ and $u (dot, 0) = g$.
 ] <thm:cauchy-heat>
 
@@ -2165,7 +2167,9 @@ This is the exact opposite of what happens for the wave equation, where a jump t
 Consider the inhomogeneous problem $u_t - alpha Delta u = f$ on $bb(R)^n times (0, oo)$ with zero initial datum.
 The equation may be read as a continuous family of instantaneous sources: at each time $s$ the source $f (dot, s)$ is injected into the medium, and from that instant on it evolves by the homogeneous flow.
 By #link(<lem:heat-kernel-semigroup>)[the semigroup law of the kernel], the homogeneous solution started at time $s$ from a datum $phi$ is $E_alpha (dot, t - s) * phi$, so superposing the injections gives
-#eq[$ u (bold(x), t) = integral_0^t integral_(bb(R)^n) E_alpha (bold(x) - bold(y), t - s) f (bold(y), s) dif bold(y) dif s. $] <eq:heat-duhamel>
+#eq[$
+  u (bold(x), t) = integral_0^t integral_(bb(R)^n) E_alpha (bold(x) - bold(y), t - s) f (bold(y), s) dif bold(y) dif s.
+$] <eq:heat-duhamel>
 
 #theorem(name: "Duhamel's Principle for the Heat Equation")[
   Let $f in C_c^oo (bb(R)^n times (0, oo))$. Then the function of #link(<eq:heat-duhamel>)[the convolution above] is $C^oo$ on $bb(R)^n times (0, oo)$, satisfies $u_t - alpha Delta u = f$ there, and $u (dot, 0) = 0$.
@@ -2193,6 +2197,59 @@ By #link(<lem:heat-kernel-semigroup>)[the semigroup law of the kernel], the homo
   $
   because the kernel has unit mass (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*]. Indeed $u = t$ solves $u_t = 1$ with $u (dot, 0) = 0$.
 ] <ex:heat-constant-source>
+
+#example(name: "A Forced Oscillation")[
+  Solve
+  $
+    u_t = alpha u_(x x) + t sin x, quad x in bb(R), quad t > 0, quad u (x, 0) = cos x,
+  $
+  where $alpha > 0$ is the diffusivity (the coefficient written $a^2$ in the formulation of the problem).
+] <ex:heat-forced-oscillation>
+
+Superposition splits the problem into the homogeneous problem with datum $cos x$ and the inhomogeneous problem with zero datum, and each of the two is reduced to a single Gaussian integral.
+
+*Step 1: The Gaussian integral.* For every $t > 0$ and every real $xi$,
+$
+  integral_(-oo)^oo E_alpha (z, t) e^(i xi z) dif z = e^(-alpha xi^2 t).
+$
+For $xi = 1$ this is the standard Fourier integral: with $a = 1/(4 alpha t)$,
+$
+  integral_(-oo)^oo e^(-a z^2 + i z) dif z = sqrt(pi/a) e^(-1/(4 a)) = sqrt(4 pi alpha t) e^(-alpha t),
+$
+and multiplying by the normalizing factor $(4 pi alpha t)^(-1/2)$ gives the claim.
+Taking real and imaginary parts at $xi = 1$,
+$
+  integral_(-oo)^oo E_alpha (z, t) cos z dif z = e^(-alpha t), quad integral_(-oo)^oo E_alpha (z, t) sin z dif z = 0.
+$
+
+*Step 2: The homogeneous part.* With $g = cos$, #link(<eq:heat-cauchy>)[the convolution formula] gives, after the change of variable $z = x - y$ and the addition formula $cos (x - z) = cos x cos z + sin x sin z$,
+$
+  u_1 (x, t) = integral_(-oo)^oo E_alpha (z, t) cos (x - z) dif z = e^(-alpha t) cos x,
+$
+The datum is an eigenfunction of $partial_x^2$, so the convolution does nothing but multiply it by the damping factor — the Gaussian integral is the only computation required.
+
+*Step 3: Duhamel.* The source is $f (x, s) = s sin x$. By #link(<eq:heat-duhamel>)[Duhamel's formula],
+$
+  u_2 (x, t) = integral_0^t integral_(-oo)^oo E_alpha (x - y, t - s) s sin y dif y dif s,
+$
+and the inner integral is $s e^(-alpha (t - s)) sin x$ by Step 1 applied at time $t - s$.
+Integrating in $s$,
+$
+  integral_0^t s e^(-alpha (t - s)) dif s = e^(-alpha t) integral_0^t s e^(alpha s) dif s = t/alpha - (1 - e^(-alpha t))/alpha^2,
+$
+where the primitive follows from integrating by parts once.
+
+*Step 4: The sum.* Adding the two contributions,
+$
+  u (x, t) = e^(-alpha t) cos x + (t/alpha - (1 - e^(-alpha t))/alpha^2) sin x.
+$
+One checks directly that $u_t - alpha u_(x x) = t sin x$ and $u (x, 0) = cos x$: the two terms containing $e^(-alpha t)$ cancel in the first identity, and the brackets in the second vanish at $t = 0$.
+
+#note[
+  The reduction is not an accident of this problem: $cos x$ and $sin x$ are eigenfunctions of the Dirichlet-type operator $partial_x^2$ on the whole line, with eigenvalue $-1$.
+  In that basis the equation becomes the scalar ODE $c' = -alpha c + t$, whose solution is precisely the factor multiplying $sin x$; the Gaussian integral is what makes the eigenbasis visible without introducing the Fourier transform.
+  Note also that the source grows linearly in $t$, so the solution does not settle to a steady state: the forced part grows like $t sin x / alpha$, while the free part decays at rate $alpha$.
+]
 
 === The Semigroup Form // 半群形式
 
@@ -2377,7 +2434,9 @@ The expansion also gives the sharp asymptotics of the flow, because the rates $l
 
 #theorem(name: "Spectral Asymptotics of the Dirichlet Flow")[
   Let $(lambda_k, w_k)$ be the Dirichlet eigenpairs, $g in L^2 (Omega)$ and $a_k = (g, w_k)$, and let $u$ be the solution of #link(<thm:heat-eigen-expansion>)[the expansion]. Then for $t >= 0$
-  #eq[$ ||u (dot, t) - a_1 e^(-alpha lambda_1 t) w_1||_(L^2) <= e^(-alpha lambda_2 t) ||g||_(L^2). $] <eq:heat-spectral-gap>
+  #eq[$
+    ||u (dot, t) - a_1 e^(-alpha lambda_1 t) w_1||_(L^2) <= e^(-alpha lambda_2 t) ||g||_(L^2).
+  $] <eq:heat-spectral-gap>
   In particular $||u (dot, t)||_(L^2) <= e^(-alpha lambda_1 t) ||g||_(L^2)$, and the normalized profile $u (dot, t)/e^(-alpha lambda_1 t)$ converges to $a_1 w_1$ in $L^2 (Omega)$ as $t -> oo$.
 ] <thm:heat-spectral-gap>
 
@@ -2430,7 +2489,9 @@ The derivatives of the solution are controlled by the datum, with a cost that de
 
 #theorem(name: "Smoothing Estimates in $L^2$")[
   Let $g in L^2 (bb(R)^n)$ and $u = E_alpha * g$ the solution of the Cauchy problem. Then for every multi-index $gamma$ and every $t > 0$,
-  #eq[$ ||partial^gamma u (dot, t)||_(L^2) <= C_(n, gamma) (alpha t)^(-abs(gamma)/2) ||g||_(L^2). $] <eq:heat-smoothing-l2>
+  #eq[$
+    ||partial^gamma u (dot, t)||_(L^2) <= C_(n, gamma) (alpha t)^(-abs(gamma)/2) ||g||_(L^2).
+  $] <eq:heat-smoothing-l2>
 ] <thm:smoothing-estimates>
 
 #proof[
