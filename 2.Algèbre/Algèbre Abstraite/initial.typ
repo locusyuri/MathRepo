@@ -5472,6 +5472,7 @@ What is established here is used there without repetition.
 
 == Definition of Rings // 环的定义
 
+=== Rings
 #definition(name: "Ring")[
   A *ring* is a set $R$ carrying two binary operations
   $+ : R times R -> R$ and $dot : R times R -> R$, called addition and
@@ -5485,23 +5486,16 @@ What is established here is used there without repetition.
 ] <def:ring>
 
 The three clauses divide the labour cleanly.
-(R1) is importation: nothing new is assumed on the additive side, and the
-whole group-theoretic apparatus is inherited verbatim.
-(R2) is a deliberate weakening — a semigroup promises neither a neutral
-element nor inverses, and the examples below show that it often delivers
-neither.
-(R3) is the only clause mentioning both operations, and it is the sole
-reason a ring is more than an abelian group and a semigroup sharing a set.
++ (R1) is importation: nothing new is assumed on the additive side, and the whole group-theoretic apparatus is inherited verbatim.
++ (R2) is a deliberate weakening — a semigroup promises neither a neutral element nor inverses, and the examples below show that it often delivers neither.
++ (R3) is the only clause mentioning both operations, and it is the sole reason a ring is more than an abelian group and a semigroup sharing a set.
 Every computation in this chapter — multiplying out, factoring, evaluating
 $0 dot a$ — is bookkeeping with distributivity.
 
 #note(title: "Whether a ring must have a $1$")[
   The axioms above deliberately omit a multiplicative identity.
-  This is the convention of E. Noether and of most texts written before
-  1960.
-  From the 1960s onward a growing number of authors — Bourbaki, Eisenbud and
-  Lang among them — folded $1$ into the definition itself, and the two
-  schools use different names for the same objects.
+  This is the convention of E. Noether and of most texts written before 1960.
+  From the 1960s onward a growing number of authors — Bourbaki, Eisenbud and Lang among them — folded $1$ into the definition itself, and the two schools use different names for the same objects.
 
   Those who do *not* require $1$ call a ring that possesses one a *unital
   ring*.
@@ -5520,22 +5514,32 @@ $0 dot a$ — is bookkeeping with distributivity.
 ]
 
 #definition(name: "Commutative Ring")[
-  A ring $R$ is *commutative* if $a b = b a$ for all $a, b in R$.
+  A ring $R$ is *commutative* if $(R, dot)$ is a commutative semigroup: $a b = b a$ for all $a, b in R$.
 ] <def:commutative-ring>
 
 #definition(name: "Unital Ring")[
-  A ring $R$ is *unital*, or a *ring with identity*, if $(R, dot)$ is a
-  monoid: there is an element $1 = 1_R in R$ with $1 a = a 1 = a$ for all
-  $a in R$.
+  A ring $R$ is *unital*, or a *ring with identity*, if $(R, dot)$ is a monoid: there is an element $1_R in R$ with $1_R a = a 1_R = a$ for all $a in R$.
 ] <def:unital-ring>
 
-An identity, when it exists, is unique
-(#link(<prop:operation-laws-unique>)[§1.2]), so writing $1_R$ loses nothing.
-$bb(Z)$ under ordinary addition and multiplication is the prototype of a
-commutative unital ring, and a "commutative unital ring" is the default
-setting of commutative algebra.
-The additive identity is always written $0_R$, or $0$ when the ring is
-clear from context.
+#note(title: "Zero and one")[
+  The neutral element of the additive group $(R, +)$ is written $0_R$; the neutral element of the multiplicative monoid $(R, dot)$, when it exists, is written $1_R$.
+  Each is unique when it exists (#link(<prop:operation-laws-unique>)[§1.2]), so the subscripts cost nothing.
+
+  Both are *identities*, the notion introduced in #link(<def:identity-inverse>)[§1.2].
+  That notion says nothing about which operation is neutralised, and the two elements differ only in the operation they neutralise: $0_R$ is the identity of the addition, $1_R$ the identity of the multiplication.
+  Calling them zero and one, rather than "the additive identity" and "the multiplicative identity", is a habit inherited from $bb(Z)$.
+
+  What separates them is existence, not kind.
+  $0_R$ is guaranteed by (R1), because $(R, +)$ is a group; $1_R$ is not guaranteed by (R2), whose semigroup may possess no neutral element at all.
+
+  Neither symbol denotes an integer, and $n dot 1_R$ denotes repeated addition of $1_R$, not a product of integers.
+
+  We abbreviate $0_R$ and $1_R$ to $0$ and $1$ while a single ring is in play, and restore the subscripts as soon as two rings meet — as in $f(1_R) = 1_S$, or in the self-explanatory $1_R != 0_R$.
+  In the zero ring below the distinction disappears, since $0_R = 1_R$.
+] <note:zero-and-one>
+
+=== Units And Zero Divisors
+$bb(Z)$ under ordinary addition and multiplication is the prototype of a commutative unital ring, and "commutative unital ring" is the default setting of commutative algebra.
 
 #definition(name: "Units")[
   Let $R$ be a unital ring.
@@ -6255,7 +6259,7 @@ which is which spares most of the verification work in practice.
   $(0, 0)$.
 ]
 
-One subtlety is worth naming: $iota_R$ sends $1_R$ to $(1_R, 0)$, which is
+One subtlety is worth naming: $iota_R$ sends $1_R$ to $(1_R, 0_S)$, which is
 not the identity of $R times S$.
 So $iota_R$ is a ring homomorphism in the sense of (R1)–(R3) but not a
 homomorphism of unital rings — exactly the distinction isolated in
@@ -6270,11 +6274,11 @@ homomorphism of unital rings — exactly the distinction isolated in
 
 #proposition(name: "Properties of the Matrix Ring")[
   Let $R$ be a unital ring, $n >= 2$, and $E_(i j)$ the matrix with entry
-  $1_R$ in position $(i, j)$ and $0$ elsewhere.
+  $1_R$ in position $(i, j)$ and $0_R$ elsewhere.
   + $M_(n)(R)$ is a unital ring, with identity the identity matrix $I_n$;
   + its units are the invertible matrices, and for $R = F$ a field these
     are exactly $"GL"_(n)(F)$ (#link(<def:general-linear-group>)[§2.2]);
-  + if $1_R != 0$, then $M_(n)(R)$ is not commutative, since
+  + if $1_R != 0_R$, then $M_(n)(R)$ is not commutative, since
     $E_11 E_12 = E_12$ while $E_12 E_11 = 0$;
   + $M_(n)(R)$ has zero divisors, since $E_11 E_22 = 0$.
 ] <prop:matrix-ring-properties>
@@ -6291,7 +6295,7 @@ homomorphism of unital rings — exactly the distinction isolated in
   matrices identifies these with $"GL"_(n)(F)$.
 
   (3) Direct computation with elementary matrices; $E_12 != 0$ because
-  $1_R != 0$.
+  $1_R != 0_R$.
 
   (4) The same computation, the two factors having disjoint support.
 ]
