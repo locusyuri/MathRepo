@@ -1424,12 +1424,16 @@ The fully general problem — nonzero data *and* a source — is the sum of this
 ] <thm:duhamel-wave>
 
 #proof[
-  Let $w (bold(x), t; tau)$ be the solution of the homogeneous problem with $w (dot, tau; tau) = 0$ and $w_t (dot, tau; tau) = f (tau, dot)$, i.e. $w (dot, t; tau) = W (t - tau) f (tau, dot)$.
+  For $tau >= 0$ let $w (bold(x), t; tau)$ be the solution of the homogeneous problem with
+  $
+    w (bold(x), tau; tau) = 0, quad w_t (bold(x), tau; tau) = f (bold(x), tau);
+  $
+  equivalently, $w (bold(x), t; tau) = (W (t - tau) f (tau, dot)) (bold(x))$.
   The arguments are the point and the time, in that order; $tau$ is the starting time and is kept as a parameter after the semicolon.
 
-  Define $u (dot, t) = integral_0^t w (dot, t; tau) dif tau$. Then $u (dot, 0) = 0$, $u_t (dot, 0) = w (dot, 0; 0) = 0$, and differentiating twice (using $w (dot, t; t) = 0$, $w_t (dot, t; t) = f (t, dot)$):
+  Set $u (bold(x), t) = integral_0^t w (bold(x), t; tau) dif tau$. Then $u (bold(x), 0) = 0$ and $u_t (bold(x), 0) = w (bold(x), 0; 0) = 0$, and differentiating twice, using $w (bold(x), t; t) = 0$ and $w_t (bold(x), t; t) = f (bold(x), t)$,
   $
-    (partial^2 u)/(partial t^2) - a^2 Delta u = ((partial w)/(partial t)) (dot, t; t) + integral_0^t ((partial^2 w)/(partial t^2) - a^2 Delta w) dif tau = f (t, dot),
+    (partial^2 u)/(partial t^2) - a^2 Delta u = ((partial w)/(partial t)) (bold(x), t; t) + integral_0^t ((partial^2 w)/(partial t^2) - a^2 Delta w) dif tau = f (bold(x), t),
   $
   since each $w$ is a homogeneous solution.
 
