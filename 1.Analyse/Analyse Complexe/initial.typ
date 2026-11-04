@@ -2769,9 +2769,150 @@ The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genu
 
 = Evaluation of Real Integrals // 实积分的计算
 
+// 实积分计算的总纲：选围道 → 留数定理 → 弧段估计 → 取极限。
+Every computation in this chapter follows the same four steps.
+
+1. *Choose a closed contour*, made of the interval carrying the wanted integral together with supplementary pieces whose integrals are known to vanish.
+2. *Apply the residue theorem* to the closed contour, summing the residues of the artificial integrand at the enclosed singularities.
+3. *Estimate the supplementary pieces*, by the ML estimate, by Jordan's lemma, or by a small-arc lemma.
+4. *Let the parameters tend to their limits*, and read the real integral off the resulting identity.
+
+What varies from section to section is only the shape of the contour, and the shape is dictated by the analytic obstacle: a large semicircle for decay at infinity, an indentation for a pole lying on the path, and a keyhole for a branch cut.
+
 == Integrals of Rational Functions // 有理函数的积分
 
+A rational function decays at infinity as soon as the degree of its denominator exceeds the degree of its numerator, and then the real axis may simply be closed by a large semicircle.
+
+#theorem(name: "Rational Integrals over the Real Line")[
+  Let $P, Q$ be polynomials with real coefficients, suppose that $Q$ has no real zero, and that $"deg"(Q) >= "deg"(P) + 2$.
+  Then
+  $ integral_(-infinity)^infinity (P(x))/(Q(x)) dif x = 2 pi "i" sum_k "Res"(P/Q, z_k), $
+  where $z_k$ runs over the zeros of $Q$ in the upper half-plane.
+] <thm:rational-semicircle>
+
+#proof[
+  Let $Gamma_R$ be the arc $z = R e^(i theta)$, $0 <= theta <= pi$, and $C_R = [-R, R] union Gamma_R$.
+  For $R$ so large that every zero of $Q$ in the upper half-plane lies inside $C_R$, #link(<thm:residue-theorem>)[the residue theorem] gives
+  $
+    integral_(-R)^R (P(x))/(Q(x)) dif x + integral_(Gamma_R) (P(z))/(Q(z)) dif z = 2 pi "i" sum_k "Res"(P/Q, z_k).
+  $
+  On $Gamma_R$ one has $abs(P(z)/Q(z)) <= C R^("deg"(P) - "deg"(Q)) <= C R^(-2)$ for $R$ large, and the length of the arc is $pi R$, so by the ML estimate
+  $
+    abs(integral_(Gamma_R) (P(z))/(Q(z)) dif z) <= pi R dot C R^(-2) = (pi C)/R -> 0 quad (R -> infinity).
+  $
+  Letting $R -> infinity$ leaves the asserted identity; the integral over the real axis converges absolutely because $abs(P/Q) = O(x^(-2))$ there.
+]
+
+#example(name: "Integral of $1/(1 + x^4)$")[
+  The zeros of $1 + z^4$ are the fourth roots of $-1$; those in the upper half-plane are $z_1 = e^(i pi/4)$ and $z_2 = e^(3 i pi/4)$.
+  At such a zero $z_k^4 = -1$, so #link(<thm:residue-poles>)[the residue formula for a simple pole] gives
+  $
+    "Res"(1/(1 + z^4), z_k) = 1/(4 z_k^3) = (z_k)/(4 z_k^4) = -(z_k)/4.
+  $
+  Since $z_1 + z_2 = sqrt(2) "i"$, #link(<thm:rational-semicircle>)[the semicircle theorem] yields
+  $
+    integral_(-infinity)^infinity (dif x)/(1 + x^4) = 2 pi "i" dot (-(sqrt(2) "i"))/4 = (pi)/sqrt(2),
+  $
+  and by evenness $integral_0^infinity (dif x)/(1 + x^4) = (pi)/(2 sqrt(2))$.
+] <ex:quartic-integral>
+
+#example(name: "A Pole of Order Two")[
+  At $z = "i"$ the function $1/(1 + z^2)^2$ has a pole of order two, and #link(<thm:residue-poles>)[the higher-order residue formula] gives
+  $
+    "Res"(1/(1 + z^2)^2, "i") = lim_(z -> "i") (dif)/(dif z) ((z - "i")^2)/((z - "i")^2 (z + "i")^2) = lim_(z -> "i") (-2)/(z + "i")^3 = (-2)/(-8 "i") = 1/(4 "i").
+  $
+  Hence
+  $ integral_(-infinity)^infinity (dif x)/(1 + x^2)^2 = 2 pi "i" dot 1/(4 "i") = (pi)/2. $
+] <ex:repeated-pole-integral>
+
+#note(title: "Why a Gap of Two Degrees")[
+  The hypothesis $"deg"(Q) >= "deg"(P) + 2$ is what makes the semicircle vanish by the ML estimate, and it simultaneously guarantees absolute convergence on the real axis.
+  When the gap is only one, the real integral converges merely conditionally and the arc no longer vanishes by size; the oscillation of the exponential has to be used instead, which is the subject of the next section.
+]
+
 == Integrals Involving Trigonometric Functions // 含三角函数的积分
+
+On the large semicircle the exponential factor has modulus $abs(e^(i lambda z)) = e^(-lambda Im(z)) = e^(-lambda R sin theta)$.
+This is close to $1$ near the endpoints $theta = 0$ and $theta = pi$, and small only near the top of the arc, so the decay has to be extracted from the exponential rather than from the modulus of $f$.
+
+#lemma(name: "Jordan's Lemma")[
+  Let $f$ be continuous on the arc $Gamma_R: z = R e^(i theta)$, $0 <= theta <= pi$, and suppose that $abs(f(z)) <= M_R$ on $Gamma_R$, where $M_R -> 0$ as $R -> infinity$.
+  Then for every $lambda > 0$,
+  $ integral_(Gamma_R) f(z) e^(i lambda z) dif z -> 0 quad (R -> infinity). $
+] <lem:jordan>
+
+#proof[
+  On $Gamma_R$,
+  $
+    abs(integral_(Gamma_R) f(z) e^(i lambda z) dif z) <= M_R R integral_0^pi e^(-lambda R sin theta) dif theta.
+  $
+  The integrand is symmetric about $theta = pi/2$, and $sin theta >= 2 theta/pi$ on $[0, pi/2]$, hence
+  $
+    integral_0^pi e^(-lambda R sin theta) dif theta = 2 integral_0^(pi/2) e^(-lambda R sin theta) dif theta <= 2 integral_0^(pi/2) e^(-2 lambda R theta/pi) dif theta = (pi)/(lambda R)(1 - e^(-lambda R)) <= (pi)/(lambda R).
+  $
+  The bound is therefore at most $pi M_R/lambda$, which tends to $0$.
+]
+
+#theorem(name: "Fourier Integrals of Rational Functions")[
+  Let $P, Q$ be polynomials with real coefficients, $Q$ without real zeros, $"deg"(Q) >= "deg"(P) + 1$, and let $lambda > 0$.
+  Then
+  $
+    integral_(-infinity)^infinity (P(x))/(Q(x)) e^(i lambda x) dif x = 2 pi "i" sum_k "Res"((P(z))/(Q(z)) e^(i lambda z), z_k),
+  $
+  where $z_k$ runs over the zeros of $Q$ in the upper half-plane.
+] <thm:fourier-semicircle>
+
+#proof[
+  Integrate $g(z) = (P(z))/(Q(z)) e^(i lambda z)$ over $C_R = [-R, R] union Gamma_R$, with $R$ large enough to enclose every upper zero of $Q$.
+  Then
+  $
+    integral_(-R)^R g(x) dif x + integral_(Gamma_R) g(z) dif z = 2 pi "i" sum_k "Res"(g, z_k).
+  $
+  On $Gamma_R$ the factor $abs(P/Q)$ is bounded by $C R^(-1)$, which tends to $0$, so #link(<lem:jordan>)[Jordan's lemma] makes the arc contribution vanish.
+  Letting $R -> infinity$ gives the formula.
+]
+
+#example(name: "Laplace-Type Integrals")[
+  Let $a > 0$ and $b >= 0$.
+  The only pole in the upper half-plane of $e^(i b z)/(z^2 + a^2)$ is $z = a "i"$, whose residue is $e^(-a b)/(2 a "i")$.
+  Hence
+  $ integral_(-infinity)^infinity (e^(i b x))/(x^2 + a^2) dif x = 2 pi "i" dot (e^(-a b))/(2 a "i") = (pi)/a e^(-a b), $
+  and separating real and imaginary parts,
+  $
+    integral_(-infinity)^infinity (cos(b x))/(x^2 + a^2) dif x = (pi)/a e^(-a b), quad
+    integral_(-infinity)^infinity (sin(b x))/(x^2 + a^2) dif x = 0.
+  $
+  Replacing the numerator by $z e^(i b z)$ produces the residue $e^(-a b)/2$ at the same point, whence
+  $
+    integral_(-infinity)^infinity (x sin(b x))/(x^2 + a^2) dif x = pi e^(-a b), quad
+    integral_(-infinity)^infinity (x cos(b x))/(x^2 + a^2) dif x = 0.
+  $
+  By evenness, the corresponding integrals over $(0, infinity)$ are half of these values.
+] <ex:laplace-integrals>
+
+#note(title: "The Classical Laplace Integrals")[
+  Over the half-line the two nontrivial formulas read
+  $
+    integral_0^infinity (cos(b x))/(x^2 + a^2) dif x = (pi)/(2 a) e^(-a b), quad
+    integral_0^infinity (x sin(b x))/(x^2 + a^2) dif x = (pi)/2 e^(-a b),
+  $
+  which is the form in which Laplace integrals usually appear.
+  The factor $e^(-a b)$ is invisible from the real variable: it is the value of $e^(i b z)$ at the pole $a "i"$, so the imaginary part of the pole has been converted into an exponential decay.
+]
+
+#example(name: "An Integral over the Unit Circle")[
+  Let $a > abs(b) > 0$.
+  Show that
+  $ integral_0^(2 pi) (dif theta)/(a + b cos theta) = (2 pi)/(sqrt(a^2 - b^2)). $
+
+  Put $z = e^(i theta)$; then $cos theta = (z + z^(-1))/2$ and $dif theta = (dif z)/(i z)$, so the integral becomes the contour integral over $abs(z) = 1$
+  $ (2)/i integral_(abs(z) = 1) (dif z)/(b z^2 + 2 a z + b). $
+  The denominator has the zeros $z_plus.minus = (-a plus.minus sqrt(a^2 - b^2))/b$, whose product is $1$; since $a > abs(b)$, exactly one of them, namely $z_plus$ with $abs(z_plus) < 1$, lies inside the circle.
+  There the residue is $1/(2 b z_plus + 2 a) = 1/(2 sqrt(a^2 - b^2))$, so
+  $
+    integral_0^(2 pi) (dif theta)/(a + b cos theta) = 2/i dot 2 pi "i" dot 1/(2 sqrt(a^2 - b^2)) = (2 pi)/(sqrt(a^2 - b^2)).
+  $
+] <ex:trig-rational-circle>
 
 == Improper Integrals // 反常积分
 
