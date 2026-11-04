@@ -1418,9 +1418,9 @@ The fully general problem — nonzero data *and* a source — is the sum of this
   $
   Then the solution of (#link(<def:cauchy-wave-inhomogeneous>)[the inhomogeneous Cauchy problem]) is given by
   $
-    u (bold(x), t) = integral_0^t W (t - tau) f (tau, dot) (bold(x)) dif tau,
+    u (bold(x), t) = integral_0^t W (t - tau) f (dot, tau) (bold(x)) dif tau,
   $
-  where $f (tau, dot)$ denotes the function $bold(y) -> f (tau, bold(y))$ of the spatial variable, and the bracket $(bold(x))$ means that $W (t - tau)$ is evaluated at the point $bold(x)$.
+  where $f (dot, tau)$ denotes the function $bold(y) -> f (bold(y), tau)$ of the spatial variable, and the bracket $(bold(x))$ means that $W (t - tau)$ is evaluated at the point $bold(x)$.
 ] <thm:duhamel-wave>
 
 #proof[
@@ -1428,7 +1428,7 @@ The fully general problem — nonzero data *and* a source — is the sum of this
   $
     w (bold(x), tau; tau) = 0, quad w_t (bold(x), tau; tau) = f (bold(x), tau);
   $
-  equivalently, $w (bold(x), t; tau) = (W (t - tau) f (tau, dot)) (bold(x))$.
+  equivalently, $w (bold(x), t; tau) = (W (t - tau) f (dot, tau)) (bold(x))$.
   The arguments are the point and the time, in that order; $tau$ is the starting time and is kept as a parameter after the semicolon.
 
   Set $u (bold(x), t) = integral_0^t w (bold(x), t; tau) dif tau$. Then $u (bold(x), 0) = 0$ and $u_t (bold(x), 0) = w (bold(x), 0; 0) = 0$, and differentiating twice, using $w (bold(x), t; t) = 0$ and $w_t (bold(x), t; t) = f (bold(x), t)$,
@@ -1464,7 +1464,7 @@ the last term being the familiar driven-oscillator superposition.
 
 Substituting the homogeneous solution operator into Duhamel's principle turns the abstract integral into a quadrature in each dimension.
 
-For $n = 1$, d'Alembert's formula gives $W (t - tau) f (tau, dot) (x) = 1/(2 a) integral_(x - a (t - tau))^(x + a (t - tau)) f (y, tau) dif y$, so
+For $n = 1$, d'Alembert's formula gives $W (t - tau) f (dot, tau) (x) = 1/(2 a) integral_(x - a (t - tau))^(x + a (t - tau)) f (y, tau) dif y$, so
 #eq[$
   u (x, t) = 1/(2 a) integral_0^t integral_(x - a (t - tau))^(x + a (t - tau)) f (y, tau) dif y dif tau,
 $] <eq:duhamel-1d>
