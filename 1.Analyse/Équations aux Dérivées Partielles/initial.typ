@@ -1972,7 +1972,7 @@ The wave equation and the heat equation of the next chapter draw the two halves 
 
 The heat equation, introduced in #link(<def:heat-equation>)[*Basic Concepts and Examples*], is the prototypical parabolic equation.
 Its fundamental solution — the heat kernel — is constructed in #link(<ex:fund-heat>)[*Fundamental Solutions*], and it is the starting point of the explicit solution below.
-The chapter is organized around one fully general problem: the equation $u_t - Delta u = f$ on a domain, with an initial datum and, when the domain is bounded, boundary data.
+The chapter is organized around one fully general problem: the equation $u_t - alpha Delta u = f$ on a domain, with an initial datum and, when the domain is bounded, boundary data.
 The solution is built in three stages: on the whole space by convolution with the heat kernel, on a bounded domain by separation of variables, and for the inhomogeneous problem by Duhamel's principle.
 The analytic core of the chapter is the *maximum principle*, which plays for parabolic equations the role that the energy method plays for the wave equation: it yields uniqueness, comparison and positivity without any regularity beyond $C^2$.
 The chapter closes with the qualitative theory — infinite propagation speed, irreversibility — and with the comparison of the three model equations.
@@ -1999,7 +1999,7 @@ $ q = -k u_x, quad k > 0, $
 where $k$ is the thermal conductivity of the material.
 Substituting into #link(<eq:heat-conservation>)[the balance] gives
 $ rho c u_t = k u_(x x) + f, quad "i.e." quad u_t = alpha u_(x x) + F, quad alpha = k/(rho c). $
-The constant $alpha > 0$ is the *thermal diffusivity*; rescaling time and space sets $alpha = 1$, the normalization used in the rest of the chapter.
+The constant $alpha > 0$ is the *thermal diffusivity*; it is kept explicitly from now on, because the kernel and the decay rates below depend on it. Setting $alpha = 1$ amounts to measuring time in units of $alpha$.
 
 The structure of the derivation is worth recording, because it explains every later contrast with the wave equation.
 There the balance of *momentum* combined with a Hookean stress produces a *second-order* equation in time; here the balance of *energy* combined with Fourier's law produces a *first-order* one.
@@ -2009,12 +2009,12 @@ A difference of a single order in time is the source of the regularization, the 
 
 In $n$ dimensions the flux is a vector field and Fourier's law reads $bold(q) = -k nabla u$.
 Writing the balance in divergence form gives
-#eq[$ u_t + div bold(q) = f, quad "i.e." quad u_t - div (k nabla u) = f. $] <eq:heat-n-dim>
-For a homogeneous isotropic medium $k$ is constant and, after rescaling, the equation is $u_t - Delta u = f$.
+#eq[$ rho c u_t + "div" bold(q) = f, quad "i.e." quad rho c u_t - "div" (k nabla u) = f. $] <eq:heat-n-dim>
+For a homogeneous isotropic medium $k$ is constant, and with $alpha = k/(rho c)$ the equation reads $u_t - alpha Delta u = f$.
 
 Two special cases organize the whole theory.
 
-- *The steady state.* If $u$ is independent of $t$, the equation reduces to $-Delta u = f$: Poisson's equation, and Laplace's equation when $f = 0$.
+- *The steady state.* If $u$ is independent of $t$, the equation reduces to $-alpha Delta u = f$: Poisson's equation after dividing by $alpha$, and Laplace's equation when $f = 0$.
   These are the object of *Laplace's Equation and Harmonic Functions*, and they reappear here as the limit of the evolution problem — the convergence is proved in *Decay to the Steady State*.
 - *The Cauchy problem.* On $bb(R)^n$ there is no boundary, and the initial datum alone determines the solution.
   This is the problem solved explicitly in *The Convolution Formula*.
@@ -2022,14 +2022,16 @@ Two special cases organize the whole theory.
 === The Cauchy and Initial-Boundary Problems // 柯西问题与初边值问题
 
 #definition(name: "The Heat Equation: Cauchy and Initial-Boundary Value Problems")[
-  Let $Omega subset bb(R)^n$ be a domain and $T > 0$.
+  Let $alpha > 0$, let $Omega subset bb(R)^n$ be a domain, and $T > 0$.
   The *heat equation* with source $f$ and initial datum $g$ is
   #eq[$
-    u_t - Delta u = f quad "in" quad Omega times (0, T), quad u (dot, 0) = g quad "on" quad Omega.
+    cases(
+      u_t - alpha Delta u = f (bold(x), t) quad "in" quad Omega times (0, T),
+      u (bold(x), 0) = g (bold(x)) quad "on" quad Omega,
+      u = 0 quad "on" quad partial Omega times (0, T).
+    )
   $] <eq:heat-problem>
-  - *Cauchy problem*: $Omega = bb(R)^n$, with no boundary condition.
-  - *Dirichlet problem*: $Omega$ bounded, $u = 0$ on $partial Omega times (0, T)$.
-  - *Neumann problem*: $Omega$ bounded, $u_nu = 0$ on $partial Omega times (0, T)$.
+  The last line is the *Dirichlet condition*; the *Neumann condition* $u_nu = 0$ replaces it, and the *Cauchy problem* drops it, because $Omega = bb(R)^n$ has no boundary.
 ] <def:heat-ibvp>
 
 The data of #link(<eq:heat-problem>)[the problem] sit on different parts of the boundary of the cylinder $Omega times (0, T)$: the initial datum on the bottom $Omega times {0}$, the boundary datum on the lateral surface $partial Omega times (0, T)$, and nothing on the top $Omega times {T}$.
@@ -2054,60 +2056,63 @@ The backward problem shows that the third requirement is not automatic, and quan
 === The Heat Kernel // 热核
 
 #definition(name: "The Heat Kernel")[
-  The *heat kernel* on $bb(R)^n$ is
-  $
-    E (t, x) = cases(1 / (4 pi t)^(n/2) exp(-abs(x)^2 / (4 t)) "if" t > 0, 0 "if" t <= 0.)
-  $
-  It is the fundamental solution of the heat operator (#link(<ex:fund-heat>)[*Fundamental Solutions*]): $(partial_t - Delta_x) E = delta$ in $cal(D)'(bb(R)^(1+n))$.
+  The *heat kernel* with diffusivity $alpha > 0$ on $bb(R)^n$ is
+  #eq[$
+    E_alpha (t, bold(x)) = cases(1 / (4 pi alpha t)^(n/2) exp(-abs(bold(x))^2 / (4 alpha t)) "if" t > 0, 0 "if" t <= 0.)
+  $] <eq:heat-kernel>
+  It is the fundamental solution of the heat operator (#link(<ex:fund-heat>)[*Fundamental Solutions*]): $(partial_t - alpha Delta_x) E_alpha = delta$ in $cal(D)'(bb(R)^(1+n))$.
 ] <def:heat-kernel>
+
+The case $alpha = 1$ is the kernel constructed in #link(<ex:fund-heat>)[*Fundamental Solutions*].
+The general case follows from it by the rescaling $t |-> alpha t$, which turns the operator $partial_t - Delta$ into $partial_t - alpha Delta$; this is why $alpha$ appears in the kernel only through the product $alpha t$.
 
 #proposition(name: "Basic Properties of the Heat Kernel")[
   For every $t > 0$:
-  (i) $E (t, dot) in C^oo (bb(R)^n)$ and $E (t, x) > 0$ for all $x$;
-  (ii) $integral_(bb(R)^n) E (t, x) dif x = 1$;
-  (iii) $(partial_t - Delta) E (t, x) = 0$ for $t > 0$;
-  (iv) as $t -> 0^+$, $E (t, dot) -> delta$ in $cal(D)'(bb(R)^n)$ (approximate identity).
+  (i) $E_alpha (t, dot) in C^oo (bb(R)^n)$ and $E_alpha (t, bold(x)) > 0$ for all $bold(x)$;
+  (ii) $integral_(bb(R)^n) E_alpha (t, bold(x)) dif bold(x) = 1$;
+  (iii) $(partial_t - alpha Delta) E_alpha (t, bold(x)) = 0$ for $t > 0$;
+  (iv) as $t -> 0^+$, $E_alpha (t, dot) -> delta$ in $cal(D)'(bb(R)^n)$ (approximate identity).
 ] <prop:heat-kernel-properties>
 
 #proof[
-  (i) and (iii) are direct computations with the Gaussian, already carried out in #link(<ex:fund-heat>)[*Fundamental Solutions*]. For (ii), use the one-dimensional Gaussian integral $integral_(-oo)^oo e^(-s^2) dif s = sqrt(pi)$:
+  (i) is clear from the formula, and (iii) is the computation of #link(<ex:fund-heat>)[*Fundamental Solutions*] after the substitution $t |-> alpha t$. For (ii), use the one-dimensional Gaussian integral $integral_(-oo)^oo e^(-s^2) dif s = sqrt(pi)$:
   $
-    integral_(bb(R)^n) E (t, x) dif x = 1 / (4 pi t)^(n/2) product_(i=1)^n integral_(-oo)^oo exp(-x_i^2 / (4 t)) dif x_i = 1 / (4 pi t)^(n/2) (sqrt(4 pi t))^n = 1.
+    integral_(bb(R)^n) E_alpha (t, bold(x)) dif bold(x) = 1 / (4 pi alpha t)^(n/2) product_(i=1)^n integral_(-oo)^oo exp(-x_i^2 / (4 alpha t)) dif x_i = 1 / (4 pi alpha t)^(n/2) (sqrt(4 pi alpha t))^n = 1.
   $
   (iv) follows from (ii), positivity, and the concentration of the mass at the origin as $t -> 0^+$ (*Heat Kernel*).
 ]
 
-The kernel is more than a function of $t$ and $x$: convolving two kernels amounts to adding the times.
+The kernel is more than a function of $t$ and $bold(x)$: convolving two kernels amounts to adding the times.
 That law is what makes the convolution formula solve the equation for all $t > 0$ rather than merely provide a candidate, and it is the analytic form of the semigroup property of the flow.
 
 #lemma(name: "Convolution Semigroup Property")[
   For $s, t > 0$,
   $
-    E (t, dot) * E (s, dot) = E (t + s, dot).
+    E_alpha (t, dot) * E_alpha (s, dot) = E_alpha (t + s, dot).
   $
 ] <lem:heat-kernel-semigroup>
 
 #proof[
-  Set $sigma = s t/(s + t)$ and complete the square in the exponent:
+  Set $sigma = s t/(s + t)$ and complete the square in the exponent; the diffusivity enters only through the products $alpha t$ and $alpha s$, hence
   $
-    -abs(x - y)^2/(4 t) - abs(y)^2/(4 s) = -abs(y - (s x)/(s + t))^2/(4 sigma) - abs(x)^2/(4 (t + s)).
+    -abs(bold(x) - bold(y))^2/(4 alpha t) - abs(bold(y))^2/(4 alpha s) = -abs(bold(y) - (s bold(x))/(s + t))^2/(4 alpha sigma) - abs(bold(x))^2/(4 alpha (t + s)).
   $
-  Hence
+  Consequently
   $
-    (E (t, dot) * E (s, dot)) (x) = exp(-abs(x)^2/(4 (t + s)))/((4 pi t)^(n/2) (4 pi s)^(n/2)) integral_(bb(R)^n) exp(-abs(y - (s x)/(s + t))^2/(4 sigma)) dif y.
+    (E_alpha (t, dot) * E_alpha (s, dot)) (bold(x)) = exp(-abs(bold(x))^2/(4 alpha (t + s)))/((4 pi alpha t)^(n/2) (4 pi alpha s)^(n/2)) integral_(bb(R)^n) exp(-abs(bold(y) - (s bold(x))/(s + t))^2/(4 alpha sigma)) dif bold(y).
   $
-  The integral equals $(4 pi sigma)^(n/2)$ by (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], and
+  The integral equals $(4 pi alpha sigma)^(n/2)$ by (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], and
   $
-    (4 pi sigma)^(n/2)/((4 pi t)^(n/2) (4 pi s)^(n/2)) = (4 pi (t + s))^(-n/2)
+    (4 pi alpha sigma)^(n/2)/((4 pi alpha t)^(n/2) (4 pi alpha s)^(n/2)) = (4 pi alpha (t + s))^(-n/2)
   $
   because $sigma = s t/(s + t)$.
-  This is the kernel $E (t + s, dot)$.
+  This is the kernel $E_alpha (t + s, dot)$.
 ]
 
 #note[
   #figure(
     image("./img/heat-kernel-spreading.svg", width: 92%),
-    caption: [The kernel $E (t, dot)$ in one space dimension for $t = 0.05, 0.2, 0.8, 3$. The area under each curve is $1$, the peak height is $(4 pi t)^(-1/2)$, and the width grows like $sqrt(t)$: the kernel transports no mass but spreads it.],
+    caption: [The kernel $E_alpha (t, dot)$ in one space dimension for $t = 0.05, 0.2, 0.8, 3$, drawn with $alpha = 1$. The area under each curve is $1$, the peak height is $(4 pi alpha t)^(-1/2)$, and the width grows like $sqrt(alpha t)$: the kernel transports no mass but spreads it.],
     placement: auto,
     supplement: [Fig.],
   ) <fig:heat-kernel-spreading>
@@ -2115,34 +2120,26 @@ That law is what makes the convolution formula solve the equation for all $t > 0
 
 === The Convolution Formula // 卷积表示
 
-#definition(name: "The Cauchy Problem for the Heat Equation")[
-  The *Cauchy problem* is to find $u: bb(R)^n times [0, oo) -> bb(R)$ such that
-  $
-    (partial u)/(partial t) = Delta u quad "in" quad bb(R)^n times (0, oo), quad u (x, 0) = g (x) quad "on" quad {t = 0},
-  $
-  where $g: bb(R)^n -> bb(R)$ is the prescribed initial datum.
-] <def:cauchy-heat>
+With the kernel at hand, the Cauchy problem of #link(<def:heat-ibvp>)[the definition] is solved by a single convolution, exactly as d'Alembert's formula solves it for the wave equation in one dimension.
 
 #theorem(name: "Solution of the Cauchy Problem")[
   Let $g in C (bb(R)^n) inter L^oo (bb(R)^n)$. Then
-  $
-    u (x, t) = integral_(bb(R)^n) E (t, x - y) g (y) dif y, quad t > 0, quad u (x, 0) = g (x),
-  $
-  defines $u in C^oo (bb(R)^n times (0, oo)) inter C (bb(R)^n times [0, oo))$, which satisfies the heat equation for $t > 0$ and $u (dot, 0) = g$.
+  #eq[$ u (bold(x), t) = integral_(bb(R)^n) E_alpha (t, bold(x) - bold(y)) g (bold(y)) dif bold(y), quad t > 0, quad u (bold(x), 0) = g (bold(x)), $] <eq:heat-cauchy>
+  defines $u in C^oo (bb(R)^n times (0, oo)) inter C (bb(R)^n times [0, oo))$, which satisfies $u_t = alpha Delta u$ for $t > 0$ and $u (dot, 0) = g$.
 ] <thm:cauchy-heat>
 
 #proof[
-  For each fixed $t > 0$, $E (t, dot) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of the heat kernel properties gives $(partial_t - Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E (t, dot)}_(t > 0)$ is an approximate identity; the standard mollifier argument (#link(<def:mollifier>)[*Convolution and Approximation*]) gives $u (dot, t) = E (t, dot) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
+  For each fixed $t > 0$, $E_alpha (t, dot) in cal(S) (bb(R)^n)$ and $g in L^oo$, so the convolution is well defined; differentiating under the integral and using (iii) of #link(<prop:heat-kernel-properties>)[the heat kernel properties] gives $(partial_t - alpha Delta) u = 0$ for $t > 0$, and $u in C^oo$ there. For the initial condition, (iv) says ${E_alpha (t, dot)}_(t > 0)$ is an approximate identity; the mollifier argument (#link(<def:mollifier>)[*Convolution and Approximation*]) gives $u (dot, t) = E_alpha (t, dot) * g -> g$ locally uniformly as $t -> 0^+$, so $u$ extends continuously to $t = 0$ with the right limit.
 ]
 
 #example(name: "The Cauchy Problem in One Space Dimension")[
-  For $n = 1$ the convolution formula reads
+  For $n = 1$ #link(<eq:heat-cauchy>)[the convolution formula] reads
   $
-    u (x, t) = 1/sqrt(4 pi t) integral_(-oo)^oo exp(-(x - y)^2/(4 t)) g (y) dif y.
+    u (x, t) = 1/sqrt(4 pi alpha t) integral_(-oo)^oo exp(-(x - y)^2/(4 alpha t)) g (y) dif y.
   $
-  For the Heaviside datum $g = bold(1)_((0, oo))$ the substitution $y = x - 2 sqrt(t) xi$ evaluates the integral:
+  For the Heaviside datum $g = bold(1)_((0, oo))$ the substitution $y = x - 2 sqrt(alpha t) xi$ evaluates the integral:
   $
-    u (x, t) = 1/sqrt(pi) integral_(-oo)^(x/(2 sqrt(t))) e^(-xi^2) dif xi = 1/2 (1 + "erf"(x/(2 sqrt(t)))).
+    u (x, t) = 1/sqrt(pi) integral_(-oo)^(x/(2 sqrt(alpha t))) e^(-xi^2) dif xi = 1/2 (1 + "erf"(x/(2 sqrt(alpha t)))).
   $
 ] <ex:heat-cauchy-1d>
 
@@ -2155,7 +2152,7 @@ This is the exact opposite of what happens for the wave equation, where a jump t
 
 #note(title: "Smoothing effect")[
   No regularity of $g$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$.
-  The smoothing estimates of *Smoothing Effect* quantify the gain: each derivative costs the factor $t^(-abs(alpha)/2)$, which blows up only as $t -> 0^+$.
+  The smoothing estimates of *Smoothing Effect* quantify the gain: each derivative costs the factor $(alpha t)^(-abs(gamma)/2)$, which blows up only as $t -> 0^+$.
   This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation of the previous chapter, which propagates the regularity of the data without improvement.
 ]
 
@@ -2163,26 +2160,26 @@ This is the exact opposite of what happens for the wave equation, where a jump t
 
 === Duhamel's Formula // Duhamel 公式
 
-Consider the inhomogeneous problem $u_t - Delta u = f$ on $bb(R)^n times (0, oo)$ with zero initial datum.
+Consider the inhomogeneous problem $u_t - alpha Delta u = f$ on $bb(R)^n times (0, oo)$ with zero initial datum.
 The equation may be read as a continuous family of instantaneous sources: at each time $s$ the source $f (dot, s)$ is injected into the medium, and from that instant on it evolves by the homogeneous flow.
-By #link(<lem:heat-kernel-semigroup>)[the semigroup law of the kernel], the homogeneous solution started at time $s$ from a datum $phi$ is $E (t - s, dot) * phi$, so superposing the injections gives
-#eq[$ u (x, t) = integral_0^t integral_(bb(R)^n) E (t - s, x - y) f (y, s) dif y dif s. $] <eq:heat-duhamel>
+By #link(<lem:heat-kernel-semigroup>)[the semigroup law of the kernel], the homogeneous solution started at time $s$ from a datum $phi$ is $E_alpha (t - s, dot) * phi$, so superposing the injections gives
+#eq[$ u (bold(x), t) = integral_0^t integral_(bb(R)^n) E_alpha (t - s, bold(x) - bold(y)) f (bold(y), s) dif bold(y) dif s. $] <eq:heat-duhamel>
 
 #theorem(name: "Duhamel's Principle for the Heat Equation")[
-  Let $f in C_c^oo (bb(R)^n times (0, oo))$. Then the function of #link(<eq:heat-duhamel>)[the convolution above] is $C^oo$ on $bb(R)^n times (0, oo)$, satisfies $u_t - Delta u = f$ there, and $u (dot, 0) = 0$.
+  Let $f in C_c^oo (bb(R)^n times (0, oo))$. Then the function of #link(<eq:heat-duhamel>)[the convolution above] is $C^oo$ on $bb(R)^n times (0, oo)$, satisfies $u_t - alpha Delta u = f$ there, and $u (dot, 0) = 0$.
 ] <thm:heat-duhamel>
 
 #proof[
-  *Step 1: Differentiation in $t$.* The integrand is smooth for $s < t$, so differentiating under the integral is legitimate; the upper limit contributes the boundary term $integral E (0, x - y) f (y, t) dif y = f (x, t)$, since $E (0, dot) = delta$. Hence
+  *Step 1: Differentiation in $t$.* The integrand is smooth for $s < t$, so differentiating under the integral is legitimate; the upper limit contributes the boundary term $integral E_alpha (0, bold(x) - bold(y)) f (bold(y), t) dif bold(y) = f (bold(x), t)$, since $E_alpha (0, dot) = delta$. Hence
   $
-    u_t (x, t) = f (x, t) + integral_0^t integral_(bb(R)^n) E_t (t - s, x - y) f (y, s) dif y dif s.
+    u_t (bold(x), t) = f (bold(x), t) + integral_0^t integral_(bb(R)^n) (partial_t E_alpha) (t - s, bold(x) - bold(y)) f (bold(y), s) dif bold(y) dif s.
   $
 
-  *Step 2: Comparison with the Laplacian.* Differentiating in $x$ is unproblematic because $E (t - s, dot)$ is smooth for $s < t$, and $E_t = Delta E$ on that range by (iii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*]. Therefore
+  *Step 2: Comparison with the Laplacian.* Differentiating in $x$ is unproblematic because $E_alpha (t - s, dot)$ is smooth for $s < t$, and $partial_t E_alpha = alpha Delta E_alpha$ on that range by (iii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*]. Therefore
   $
-    Delta u (x, t) = integral_0^t integral_(bb(R)^n) Delta E (t - s, x - y) f (y, s) dif y dif s = integral_0^t integral_(bb(R)^n) E_t (t - s, x - y) f (y, s) dif y dif s.
+    alpha Delta u (bold(x), t) = integral_0^t integral_(bb(R)^n) alpha Delta E_alpha (t - s, bold(x) - bold(y)) f (bold(y), s) dif bold(y) dif s = integral_0^t integral_(bb(R)^n) (partial_t E_alpha) (t - s, bold(x) - bold(y)) f (bold(y), s) dif bold(y) dif s.
   $
-  Subtracting the two identities gives $u_t - Delta u = f$.
+  Subtracting the two identities gives $u_t - alpha Delta u = f$.
 
   *Step 3: Initial condition.* As $t -> 0^+$ the domain of integration in $s$ shrinks to a point and the integral tends to $0$, so $u (dot, t) -> 0$ locally uniformly.
 ]
@@ -2190,7 +2187,7 @@ By #link(<lem:heat-kernel-semigroup>)[the semigroup law of the kernel], the homo
 #example(name: "Constant Source")[
   For $f -= 1$ on $bb(R)^n$, #link(<eq:heat-duhamel>)[the formula] gives
   $
-    u (x, t) = integral_0^t integral_(bb(R)^n) E (t - s, x - y) dif y dif s = integral_0^t 1 dif s = t,
+    u (bold(x), t) = integral_0^t integral_(bb(R)^n) E_alpha (t - s, bold(x) - bold(y)) dif bold(y) dif s = integral_0^t 1 dif s = t,
   $
   because the kernel has unit mass (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*]. Indeed $u = t$ solves $u_t = 1$ with $u (dot, 0) = 0$.
 ] <ex:heat-constant-source>
@@ -2203,10 +2200,10 @@ $
   u (t) = integral_0^t S (t - s) f (s) dif s,
 $
 which is the convolution of the source with the flow.
-On $bb(R)^n$ the operator is $S (t) phi = E (t, dot) * phi$ and the two formulas coincide.
+On $bb(R)^n$ the operator is $S (t) phi = E_alpha (t, dot) * phi$ and the two formulas coincide.
 
 The abstract form is the one that survives on a bounded domain, where no explicit kernel is available.
-There $S (t) = e^(t A)$ is the semigroup generated by the Dirichlet Laplacian, and the formula above is the variation-of-constants formula for the infinite-dimensional ODE $u' = A u + f$; this is the content of #link(<thm:heat-semigroup>)[*Semigroup Framework*], where the existence theory for the initial-boundary value problems is built on it.
+There $S (t) = e^(alpha t A)$ is the semigroup generated by the Dirichlet Laplacian, and the formula above is the variation-of-constants formula for the infinite-dimensional ODE $u' = alpha A u + f$; this is the content of #link(<thm:heat-semigroup>)[*Semigroup Framework*], where the existence theory for the initial-boundary value problems is built on it.
 
 #note[
   The heat and wave versions of Duhamel's principle differ only in the kernel, but that difference is qualitative.
@@ -2219,31 +2216,31 @@ There $S (t) = e^(t A)$ is the semigroup generated by the Dirichlet Laplacian, a
 === Weak Maximum Principle // 弱最大值原理
 
 #theorem(name: "Weak Maximum Principle for the Heat Equation")[
-  Let $Omega subset bb(R)^n$ be bounded and $T > 0$, and set $Omega_T = Omega times (0, T]$. If $u in C^2 (Omega_T) inter C (overline(Omega_T))$ satisfies $u_t - Delta u <= 0$ in $Omega_T$, then
+  Let $Omega subset bb(R)^n$ be bounded and $T > 0$, and set $Omega_T = Omega times (0, T]$. If $u in C^2 (Omega_T) inter C (overline(Omega_T))$ satisfies $u_t - alpha Delta u <= 0$ in $Omega_T$, then
   $
     max_(overline(Omega_T)) u = max_(Gamma_T) u,
   $
-  where $Gamma_T = (overline(Omega) times {0}) union (partial Omega times [0, T])$ is the *parabolic boundary* (the bottom and the lateral sides; the top $t = T$ is not part of it). For $u_t - Delta u >= 0$ the same holds with minima.
+  where $Gamma_T = (overline(Omega) times {0}) union (partial Omega times [0, T])$ is the *parabolic boundary* (the bottom and the lateral sides; the top $t = T$ is not part of it). For $u_t - alpha Delta u >= 0$ the same holds with minima.
 ] <thm:parabolic-weak-maximum>
 
 #proof[
-  *Step 1: Strict inequality.* Suppose $u_t - Delta u < 0$. If $u$ attained its maximum at an interior point $(x_0, t_0)$ with $0 < t_0 < T$ and $x_0 in Omega$, then $u_t (x_0, t_0) = 0$ (first-order condition) and $Delta u (x_0, t_0) <= 0$ (second-derivative test), contradicting the strict inequality. If the maximum occurred on the top $t = T$, say at $(x_0, T)$ with $x_0 in Omega$, then for small $h > 0$, $u (x_0, T) >= u (x_0, T - h)$ gives $u_t (x_0, T) >= 0$, while $Delta u (x_0, T) <= 0$, again contradicting $u_t - Delta u < 0$. Hence the maximum lies on $Gamma_T$.
+  *Step 1: Strict inequality.* Suppose $u_t - alpha Delta u < 0$. If $u$ attained its maximum at an interior point $(x_0, t_0)$ with $0 < t_0 < T$ and $x_0 in Omega$, then $u_t (x_0, t_0) = 0$ (first-order condition) and $Delta u (x_0, t_0) <= 0$ (second-derivative test), contradicting the strict inequality. If the maximum occurred on the top $t = T$, say at $(x_0, T)$ with $x_0 in Omega$, then for small $h > 0$, $u (x_0, T) >= u (x_0, T - h)$ gives $u_t (x_0, T) >= 0$, while $Delta u (x_0, T) <= 0$, again contradicting $u_t - alpha Delta u < 0$. Hence the maximum lies on $Gamma_T$.
 
-  *Step 2: General case.* For $epsilon > 0$ consider $u_epsilon (x, t) = u (x, t) - epsilon t$, for which $(u_epsilon)_t - Delta u_epsilon = (u_t - Delta u) - epsilon < 0$. By Step 1, $max_(overline(Omega_T)) u_epsilon = max_(Gamma_T) u_epsilon$. Letting $epsilon -> 0$ and using $u_epsilon <= u <= u_epsilon + epsilon T$ gives $max u = max_(Gamma_T) u$.
+  *Step 2: General case.* For $epsilon > 0$ consider $u_epsilon (x, t) = u (x, t) - epsilon t$, for which $(u_epsilon)_t - alpha Delta u_epsilon = (u_t - alpha Delta u) - epsilon < 0$. By Step 1, $max_(overline(Omega_T)) u_epsilon = max_(Gamma_T) u_epsilon$. Letting $epsilon -> 0$ and using $u_epsilon <= u <= u_epsilon + epsilon T$ gives $max u = max_(Gamma_T) u$.
 ]
 
 === Strong Maximum Principle // 强最大值原理
 
 #theorem(name: "Strong Maximum Principle for the Heat Equation")[
-  Let $Omega$ be connected and $u in C^2 (Omega_T) inter C (overline(Omega_T))$ with $u_t - Delta u <= 0$ in $Omega_T$. If $u$ attains its maximum at a point of $Omega_T$ (i.e. with $t > 0$), then $u$ is constant on $overline(Omega) times [0, t]$. In particular, a non-constant solution of the heat equation attains its maximum only on the parabolic boundary.
+  Let $Omega$ be connected and $u in C^2 (Omega_T) inter C (overline(Omega_T))$ with $u_t - alpha Delta u <= 0$ in $Omega_T$. If $u$ attains its maximum at a point of $Omega_T$ (i.e. with $t > 0$), then $u$ is constant on $overline(Omega) times [0, t]$. In particular, a non-constant solution of the heat equation attains its maximum only on the parabolic boundary.
 ] <thm:parabolic-strong-maximum>
 
 #proof[
   (Sketch.) The proof propagates the maximum backward in time using the positivity of the heat kernel. If $u (x_0, t_0) = M$ is the maximum, then for $0 < s < t_0$ the mean value formula for the heat equation gives
   $
-    u (x_0, t_0) = integral_(bb(R)^n) E (s, y) u (x_0 - y, t_0 - s) dif y
+    u (x_0, t_0) = integral_(bb(R)^n) E_alpha (s, y) u (x_0 - y, t_0 - s) dif y
   $
-  (on the whole space; for bounded domains, boundary terms enter with the correct sign for sub-solutions). Since $E (s, y) > 0$, $integral E dif y = 1$, and $u <= M$, the average can equal $M$ only if $u (dot, t_0 - s) = M$ a.e., hence everywhere by continuity. Iterating backward in $t$ and spreading in space by connectedness yields $u = M$ on $overline(Omega) times [0, t_0]$.
+  (on the whole space; for bounded domains, boundary terms enter with the correct sign for sub-solutions). Since $E_alpha (s, y) > 0$, $integral E_alpha dif y = 1$, and $u <= M$, the average can equal $M$ only if $u (dot, t_0 - s) = M$ a.e., hence everywhere by continuity. Iterating backward in $t$ and spreading in space by connectedness yields $u = M$ on $overline(Omega) times [0, t_0]$.
 ]
 
 === Comparison Principle and Positivity // 比较原理与正性
@@ -2253,17 +2250,17 @@ The maximum principle concerns one function; applied to a difference of two, it 
 #theorem(name: "Comparison Principle")[
   Let $Omega subset bb(R)^n$ be bounded and $u, v in C^2 (overline(Omega_T))$ with
   $
-    (partial u)/(partial t) - Delta u <= (partial v)/(partial t) - Delta v quad "in" quad Omega_T, quad u <= v quad "on" quad Gamma_T.
+    (partial u)/(partial t) - alpha Delta u <= (partial v)/(partial t) - alpha Delta v quad "in" quad Omega_T, quad u <= v quad "on" quad Gamma_T.
   $
   Then $u <= v$ throughout $Omega_T$.
 ] <thm:comparison-principle>
 
 #proof[
-  Apply #link(<thm:parabolic-weak-maximum>)[*Weak Maximum Principle*] to $w = u - v$: the hypotheses give $w_t - Delta w <= 0$ in $Omega_T$ and $w <= 0$ on $Gamma_T$, hence $w <= 0$ everywhere in $Omega_T$.
+  Apply #link(<thm:parabolic-weak-maximum>)[*Weak Maximum Principle*] to $w = u - v$: the hypotheses give $w_t - alpha Delta w <= 0$ in $Omega_T$ and $w <= 0$ on $Gamma_T$, hence $w <= 0$ everywhere in $Omega_T$.
 ]
 
 Two consequences are used throughout the theory of parabolic equations.
-The first is *positivity preservation*: a function with $u_t - Delta u <= 0$ that is non-negative on the parabolic boundary is non-negative inside, since $v = 0$ is admissible.
+The first is *positivity preservation*: a function with $u_t - alpha Delta u <= 0$ that is non-negative on the parabolic boundary is non-negative inside, since $v = 0$ is admissible.
 The second is uniqueness on bounded domains, obtained by comparing two solutions of the same problem — no energy argument is needed, only the geometry of $Gamma_T$.
 
 === Uniqueness and Stability // 唯一性与稳定性
@@ -2273,11 +2270,11 @@ The second is uniqueness on bounded domains, obtained by comparing two solutions
 ] <cor:cauchy-heat-uniqueness>
 
 #proof[
-  The difference $w = u - v$ is bounded, say $abs(w) <= 2 M$, and solves the heat equation with $w (dot, 0) = 0$. Fix $(y, T)$ and $epsilon > 0$. By continuity at $t = 0$, there is $delta > 0$ with $abs(w (x, t)) < epsilon$ for $0 <= t < delta$ on every bounded set; fix $R$ so large that on the cylinder $Q = {abs(x - y) < R} times (delta, T)$ the Gaussian barrier
+  The difference $w = u - v$ is bounded, say $abs(w) <= 2 M$, and solves the heat equation with $w (dot, 0) = 0$. Fix $(bold(y), T)$ and $epsilon > 0$. By continuity at $t = 0$, there is $delta > 0$ with $abs(w (bold(x), t)) < epsilon$ for $0 <= t < delta$ on every bounded set; fix $R$ so large that on the cylinder $Q = {abs(bold(x) - bold(y)) < R} times (delta, T)$ the Gaussian barrier
   $
-    Psi (x, t) = 2 M (1 - exp(-(abs(x - y)^2)/(4 (T - t)))) + epsilon
+    Psi (bold(x), t) = 2 M (1 - exp(-(abs(bold(x) - bold(y))^2)/(4 alpha (T - t)))) + epsilon
   $
-  dominates $abs(w)$ on the parabolic boundary of $Q$ (at $t = delta$ this holds for $R$ large since $Psi (x, delta) -> 2 M + epsilon$ as $R -> oo$; on the lateral side $Psi -> 2 M + epsilon$ as $t -> T^-$). A direct computation gives $Psi_t - Delta Psi <= 0$, so by #link(<thm:parabolic-weak-maximum>)[the weak maximum principle] $abs(w) <= Psi$ in $Q$; at the point $(y, T)$, $Psi = epsilon$, hence $abs(w (y, T)) <= epsilon$. Letting $epsilon -> 0$ gives $w (y, T) = 0$, and $(y, T)$ is arbitrary.
+  dominates $abs(w)$ on the parabolic boundary of $Q$ (at $t = delta$ this holds for $R$ large since $Psi (bold(x), delta) -> 2 M + epsilon$ as $R -> oo$; on the lateral side $Psi -> 2 M + epsilon$ as $t -> T^-$). A direct computation gives $Psi_t - alpha Delta Psi <= 0$, so by #link(<thm:parabolic-weak-maximum>)[the weak maximum principle] $abs(w) <= Psi$ in $Q$; at the point $(bold(y), T)$, $Psi = epsilon$, hence $abs(w (bold(y), T)) <= epsilon$. Letting $epsilon -> 0$ gives $w (bold(y), T) = 0$, and $(bold(y), T)$ is arbitrary.
 ]
 
 #corollary(name: "Stability with Respect to the Initial Datum")[
@@ -2286,7 +2283,7 @@ The second is uniqueness on bounded domains, obtained by comparing two solutions
 ] <cor:heat-stability>
 
 #proof[
-  Both solutions are given by #link(<thm:cauchy-heat>)[the convolution formula] with $f = 0$, so $u (dot, t) - tilde(u) (dot, t) = E (t, dot) * (g - tilde(g))$. Since $||E (t, dot)||_(L^1) = 1$ by (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], Young's inequality gives #link(<eq:heat-stability>)[the bound].
+  Both solutions are given by #link(<thm:cauchy-heat>)[the convolution formula] with $f = 0$, so $u (dot, t) - tilde(u) (dot, t) = E_alpha (t, dot) * (g - tilde(g))$. Since $||E_alpha (t, dot)||_(L^1) = 1$ by (ii) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], Young's inequality gives #link(<eq:heat-stability>)[the bound].
 ]
 
 The pair of corollaries is the parabolic counterpart of the energy inequality of the wave equation: there stability is measured in the energy norm, which involves one derivative of the data, whereas here the flow is a contraction in the sup-norm and loses no derivative at all.
@@ -2307,21 +2304,21 @@ with $0 < lambda_1 <= lambda_2 <= dots$ and ${w_k}$ an orthonormal basis of $L^2
 The Neumann problem replaces the boundary condition by $partial_nu w_k = 0$ and has $lambda_1 = 0$, with $w_1$ constant.
 The existence of such a basis, and the growth $lambda_k -> oo$, is the content of *Sturm--Liouville Theory*.
 
-Each eigenfunction is an exact solution of the heat equation with the correct boundary data, since $-Delta w_k = lambda_k w_k$ turns the evolution into the scalar ODE $c_k' = -lambda_k c_k$ for the coefficient.
+Each eigenfunction is an exact solution of the heat equation with the correct boundary data, since $-Delta w_k = lambda_k w_k$ turns the evolution into the scalar ODE $c_k' = -alpha lambda_k c_k$ for the coefficient.
 Superposing and choosing the coefficients to match the initial datum gives the solution.
 
 #theorem(name: "Solution of the Dirichlet Problem by Eigenfunction Expansion")[
   Let $g in L^2 (Omega)$ and $a_k = (g, w_k)$. Then
-  #eq[$ u (x, t) = sum_(k=1)^oo a_k e^(-lambda_k t) w_k (x) $] <eq:heat-eigen-expansion>
+  #eq[$ u (bold(x), t) = sum_(k=1)^oo a_k e^(-alpha lambda_k t) w_k (bold(x)) $] <eq:heat-eigen-expansion>
   converges in $L^2 (Omega)$, uniformly in $t >= 0$, and defines the solution of the Dirichlet problem with $f = 0$ and datum $g$.
 ] <thm:heat-eigen-expansion>
 
 #proof[
-  *Step 1: Each term solves.* For fixed $k$, $u_k = a_k e^(-lambda_k t) w_k$ satisfies $partial_t u_k = -lambda_k a_k e^(-lambda_k t) w_k = a_k e^(-lambda_k t) Delta w_k = Delta u_k$, and $u_k = 0$ on $partial Omega$.
+  *Step 1: Each term solves.* For fixed $k$, $u_k = a_k e^(-alpha lambda_k t) w_k$ satisfies $partial_t u_k = -alpha lambda_k a_k e^(-alpha lambda_k t) w_k = a_k e^(-alpha lambda_k t) Delta w_k = alpha Delta u_k$, and $u_k = 0$ on $partial Omega$.
 
-  *Step 2: Convergence.* By Parseval, $sum_k a_k^2 = ||g||_(L^2)^2$, and $0 < e^(-lambda_k t) <= 1$ for $t >= 0$; hence for $t >= 0$
+  *Step 2: Convergence.* By Parseval, $sum_k a_k^2 = ||g||_(L^2)^2$, and $0 < e^(-alpha lambda_k t) <= 1$ for $t >= 0$; hence for $t >= 0$
   $
-    ||u (dot, t)||_(L^2)^2 = sum_(k=1)^oo a_k^2 e^(-2 lambda_k t) <= ||g||_(L^2)^2,
+    ||u (dot, t)||_(L^2)^2 = sum_(k=1)^oo a_k^2 e^(-2 alpha lambda_k t) <= ||g||_(L^2)^2,
   $
   and the series converges in $L^2$ uniformly in $t$, with $u in C ([0, oo); L^2 (Omega))$.
 
@@ -2330,7 +2327,7 @@ Superposing and choosing the coefficients to match the initial datum gives the s
 
 Two remarks fix the status of the formula.
 First, #link(<eq:heat-eigen-expansion>)[the expansion] is a solution in the $L^2$ sense; if $g$ is smooth enough — for instance $g in H_0^1 (Omega)$ with $Delta g in L^2 (Omega)$ — the series converges uniformly and termwise differentiation is legitimate, so $u$ is a classical solution.
-Second, the formula exhibits the structure of the flow in the clearest possible way: the eigenfunctions are frozen profiles, and each decays at its own rate $e^(-lambda_k t)$.
+Second, the formula exhibits the structure of the flow in the clearest possible way: the eigenfunctions are frozen profiles, and each decays at its own rate $e^(-alpha lambda_k t)$.
 
 === Heat Conduction in a Rod // 细杆热传导
 
@@ -2338,7 +2335,7 @@ On an interval the eigenpairs are known explicitly, and #link(<eq:heat-eigen-exp
 
 For $Omega = (0, L)$ with Dirichlet data, $lambda_k = (k pi / L)^2$ and $w_k (x) = sqrt(2/L) sin(k pi x / L)$, so the solution with datum $g$ is
 $
-  u (x, t) = sum_(k=1)^oo b_k e^(-(k pi / L)^2 t) sin((k pi x)/L), quad b_k = 2/L integral_0^L g (y) sin((k pi y)/L) dif y.
+  u (x, t) = sum_(k=1)^oo b_k e^(-alpha (k pi / L)^2 t) sin((k pi x)/L), quad b_k = 2/L integral_0^L g (y) sin((k pi y)/L) dif y.
 $
 The coefficients $b_k$ are the sine coefficients of $g$; no new computation is required beyond the Fourier expansion itself.
 
@@ -2349,13 +2346,13 @@ The coefficients $b_k$ are the sine coefficients of $g$; no new computation is r
   $
   so $b_k = 8/(k^3 pi^3)$ for odd $k$ and $b_k = 0$ for even $k$; the oddness reflects the symmetry of $g$ about the midpoint. Hence
   $
-    u (x, t) = 8/pi^3 sum_(k "odd") 1/k^3 e^(-(k pi)^2 t) sin(k pi x).
+    u (x, t) = 8/pi^3 sum_(k "odd") 1/k^3 e^(-alpha (k pi)^2 t) sin(k pi x).
   $
-  Since the successive rates differ by the factor $(2 k + 1)^2$, the first mode already dominates for $t > 1/pi^2$: the profile very quickly becomes a single sine arch, with amplitude $8 e^(-pi^2 t)/pi^3$.
+  Since the successive rates differ by the factor $(2 k + 1)^2$, the first mode already dominates for $t > 1/pi^2$: the profile very quickly becomes a single sine arch, with amplitude $8 e^(-alpha pi^2 t)/pi^3$.
 ] <ex:heat-rod-cooling>
 
 The example separates the two time scales that every parabolic problem exhibits.
-The *transient* is governed by the gap $lambda_2 - lambda_1$: the rates grow like $k^2$, so each odd mode decays faster than its predecessor by the factor $((k + 2)/k)^2$.
+The *transient* is governed by the gap $alpha (lambda_2 - lambda_1)$: the rates grow like $k^2$, so each odd mode decays faster than its predecessor by the factor $((k + 2)/k)^2$.
 The *asymptotic* regime is governed by $lambda_1$ alone, and it is universal: whatever the datum, the profile converges to a multiple of the first eigenfunction.
 
 === Inhomogeneous Data and Sources // 非齐次边值与源项
@@ -2365,12 +2362,12 @@ Two devices reduce the general problem of #link(<eq:heat-problem>)[the initial-b
 - *Non-zero boundary data.* If the boundary datum is independent of $t$, let $v$ be the harmonic function with those boundary values, whose existence is the content of *Representation Formulas* in *Green Functions and Representation*.
   Then $w = u - v$ satisfies the heat equation with homogeneous Dirichlet data and initial datum $g - v$, to which the expansion applies.
 - *A source term.* Expand $u$ and $f$ in the eigenbasis, $u = sum_k c_k (t) w_k$ and $f = sum_k f_k (t) w_k$ with $f_k = (f (dot, t), w_k)$.
-  Each coefficient then solves a scalar ODE, $c_k' + lambda_k c_k = f_k$, whose solution with $c_k (0) = a_k$ is
+  Each coefficient then solves a scalar ODE, $c_k' + alpha lambda_k c_k = f_k$, whose solution with $c_k (0) = a_k$ is
   $
-    c_k (t) = a_k e^(-lambda_k t) + integral_0^t e^(-lambda_k (t - s)) f_k (s) dif s.
+    c_k (t) = a_k e^(-alpha lambda_k t) + integral_0^t e^(-alpha lambda_k (t - s)) f_k (s) dif s.
   $
 
-The second formula is #link(<eq:heat-duhamel>)[Duhamel's formula] projected onto a single eigenmode: the source is superposed in time, and the kernel of the projection is the exponential $e^(-lambda_k (t - s))$ rather than the Gaussian.
+The second formula is #link(<eq:heat-duhamel>)[Duhamel's formula] projected onto a single eigenmode: the source is superposed in time, and the kernel of the projection is the exponential $e^(-alpha lambda_k (t - s))$ rather than the Gaussian.
 
 === Decay to the Steady State // 稳态的趋近
 
@@ -2378,27 +2375,27 @@ The expansion also gives the sharp asymptotics of the flow, because the rates $l
 
 #theorem(name: "Spectral Asymptotics of the Dirichlet Flow")[
   Let $(lambda_k, w_k)$ be the Dirichlet eigenpairs, $g in L^2 (Omega)$ and $a_k = (g, w_k)$, and let $u$ be the solution of #link(<thm:heat-eigen-expansion>)[the expansion]. Then for $t >= 0$
-  #eq[$ ||u (dot, t) - a_1 e^(-lambda_1 t) w_1||_(L^2) <= e^(-lambda_2 t) ||g||_(L^2). $] <eq:heat-spectral-gap>
-  In particular $||u (dot, t)||_(L^2) <= e^(-lambda_1 t) ||g||_(L^2)$, and the normalized profile $u (dot, t)/e^(-lambda_1 t)$ converges to $a_1 w_1$ in $L^2 (Omega)$ as $t -> oo$.
+  #eq[$ ||u (dot, t) - a_1 e^(-alpha lambda_1 t) w_1||_(L^2) <= e^(-alpha lambda_2 t) ||g||_(L^2). $] <eq:heat-spectral-gap>
+  In particular $||u (dot, t)||_(L^2) <= e^(-alpha lambda_1 t) ||g||_(L^2)$, and the normalized profile $u (dot, t)/e^(-alpha lambda_1 t)$ converges to $a_1 w_1$ in $L^2 (Omega)$ as $t -> oo$.
 ] <thm:heat-spectral-gap>
 
 #proof[
-  Subtract the first term in #link(<eq:heat-eigen-expansion>)[the expansion]: the remainder is $sum_(k >= 2) a_k e^(-lambda_k t) w_k$, and since $lambda_k >= lambda_2$ for $k >= 2$,
+  Subtract the first term in #link(<eq:heat-eigen-expansion>)[the expansion]: the remainder is $sum_(k >= 2) a_k e^(-alpha lambda_k t) w_k$, and since $alpha lambda_k >= alpha lambda_2$ for $k >= 2$,
   $
-    ||sum_(k >= 2) a_k e^(-lambda_k t) w_k||_(L^2)^2 = sum_(k >= 2) a_k^2 e^(-2 lambda_k t) <= e^(-2 lambda_2 t) sum_(k >= 2) a_k^2 <= e^(-2 lambda_2 t) ||g||_(L^2)^2.
+    ||sum_(k >= 2) a_k e^(-alpha lambda_k t) w_k||_(L^2)^2 = sum_(k >= 2) a_k^2 e^(-2 alpha lambda_k t) <= e^(-2 alpha lambda_2 t) sum_(k >= 2) a_k^2 <= e^(-2 alpha lambda_2 t) ||g||_(L^2)^2.
   $
-  The bound on $||u (dot, t)||$ follows by the same argument with $lambda_k >= lambda_1$ for all $k$, and the convergence of the normalized profile from the same estimate divided by $e^(-2 lambda_1 t)$, which gives $||u (dot, t)/e^(-lambda_1 t) - a_1 w_1|| <= e^(-(lambda_2 - lambda_1) t) ||g||$.
+  The bound on $||u (dot, t)||$ follows by the same argument with $alpha lambda_k >= alpha lambda_1$ for all $k$, and the convergence of the normalized profile from the same estimate divided by $e^(-2 alpha lambda_1 t)$, which gives $||u (dot, t)/e^(-alpha lambda_1 t) - a_1 w_1|| <= e^(-alpha (lambda_2 - lambda_1) t) ||g||$.
 ]
 
 The consequence for the initial-boundary value problem with time-independent data is the *parabolic-to-elliptic* principle already announced in *The Equation in $n$ Dimensions and the Steady State*.
 If $v$ is the steady state — the harmonic function with the prescribed boundary values, and a solution of $-Delta v = f$ when $f$ is time-independent — then $w = u - v$ solves the homogeneous problem and
 $
-  ||u (dot, t) - v||_(L^2) <= e^(-lambda_1 t) ||g - v||_(L^2).
+  ||u (dot, t) - v||_(L^2) <= e^(-alpha lambda_1 t) ||g - v||_(L^2).
 $
 The evolution problem thus forgets its initial datum at an exponential rate, and its long-time limit is the solution of an elliptic problem: the arrow of time leads from the parabolic to the elliptic world.
 
 #note[
-  The decay can also be proved without any eigenfunction expansion, from the energy identity and Poincaré's inequality; that route is taken in *Long-Time Behavior* of *Linear Parabolic Boundary Value Problems*, where the same rate appears as the first eigenvalue of $-Delta$ on a general domain.
+  The decay can also be proved without any eigenfunction expansion, from the energy identity and Poincaré's inequality; that route is taken in *Long-Time Behavior* of *Linear Parabolic Boundary Value Problems*, where the same rate appears as $alpha lambda_1$, with $lambda_1$ the first eigenvalue of $-Delta$ on a general domain.
   The spectral route above is sharper — it keeps the profile, not only the norm — but it presumes the Hilbertian eigenbasis.
 ]
 
@@ -2412,7 +2409,7 @@ The energy identity gives quantitative information of a different kind: it ident
 #proposition(name: "Energy Dissipation")[
   Let $u$ be a smooth solution of the heat equation on $Omega times (0, oo)$ with either $u = 0$ on $partial Omega$ (Dirichlet) or $u_nu = 0$ on $partial Omega$ (Neumann). Then
   $
-    1/2 (dif)/(dif t) integral_Omega abs(u)^2 dif x = -integral_Omega abs(nabla u)^2 dif x.
+    1/2 (dif)/(dif t) integral_Omega abs(u)^2 dif x = -alpha integral_Omega abs(nabla u)^2 dif x.
   $
   In particular the $L^2$ energy is non-increasing in time.
 ] <prop:energy-dissipation>
@@ -2420,7 +2417,7 @@ The energy identity gives quantitative information of a different kind: it ident
 #proof[
   Differentiating under the integral, using the equation, and integrating by parts:
   $
-    1/2 (dif)/(dif t) integral_Omega abs(u)^2 dif x = integral_Omega u (partial u)/(partial t) dif x = integral_Omega u Delta u dif x = -integral_Omega abs(nabla u)^2 dif x + integral_(partial Omega) u (partial u)/(partial nu) dif S.
+    1/2 (dif)/(dif t) integral_Omega abs(u)^2 dif x = integral_Omega u (partial u)/(partial t) dif x = alpha integral_Omega u Delta u dif x = -alpha integral_Omega abs(nabla u)^2 dif x + alpha integral_(partial Omega) u (partial u)/(partial nu) dif S.
   $
   The boundary term vanishes for both Dirichlet and Neumann data.
 ]
@@ -2430,25 +2427,25 @@ The energy identity gives quantitative information of a different kind: it ident
 The derivatives of the solution are controlled by the datum, with a cost that depends only on the time elapsed and never on the regularity of $g$.
 
 #theorem(name: "Smoothing Estimates in $L^2$")[
-  Let $g in L^2 (bb(R)^n)$ and $u = E * g$ the solution of the Cauchy problem. Then for every multi-index $alpha$ and every $t > 0$,
-  #eq[$ ||partial^alpha u (dot, t)||_(L^2) <= C_(n, alpha) t^(-abs(alpha)/2) ||g||_(L^2). $] <eq:heat-smoothing-l2>
+  Let $g in L^2 (bb(R)^n)$ and $u = E_alpha * g$ the solution of the Cauchy problem. Then for every multi-index $gamma$ and every $t > 0$,
+  #eq[$ ||partial^gamma u (dot, t)||_(L^2) <= C_(n, gamma) (alpha t)^(-abs(gamma)/2) ||g||_(L^2). $] <eq:heat-smoothing-l2>
 ] <thm:smoothing-estimates>
 
 #proof[
-  By the scaling of the Gaussian, $partial^alpha E (t, x) = t^(-(n + abs(alpha))/2) (partial^alpha E) (1, x / sqrt(t))$, hence $||partial^alpha E (t, dot)||_(L^1) = C t^(-abs(alpha)/2)$. Young's inequality for convolutions then gives #link(<eq:heat-smoothing-l2>)[the estimate].
+  By the scaling of the Gaussian, $partial^gamma E_alpha (t, bold(x)) = (alpha t)^(-(n + abs(gamma))/2) (partial^gamma E_alpha) (1, bold(x) / sqrt(alpha t))$, hence $||partial^gamma E_alpha (t, dot)||_(L^1) = C (alpha t)^(-abs(gamma)/2)$. Young's inequality for convolutions then gives #link(<eq:heat-smoothing-l2>)[the estimate].
 ]
 
-Each derivative therefore costs the factor $t^(-abs(alpha)/2)$, which diverges only as $t -> 0^+$: the loss of regularity is confined to the initial instant, and for every $t > 0$ the solution is as smooth as the kernel.
+Each derivative therefore costs the factor $(alpha t)^(-abs(gamma)/2)$, which diverges only as $t -> 0^+$: the loss of regularity is confined to the initial instant, and for every $t > 0$ the solution is as smooth as the kernel.
 
 A companion estimate replaces the $L^2$ data by an $L^1$ datum and the $L^2$ norm by the sup-norm; it is the elementary bound used for the nonlinear problems of *Nonlinear Parabolic Equations*.
 
 #proposition(name: "Sup-Norm Smoothing Bound")[
-  Let $g in L^1 (bb(R)^n)$ and $u = E * g$. Then for every $t > 0$,
-  #eq[$ ||u (dot, t)||_oo <= (4 pi t)^(-n/2) ||g||_(L^1). $] <eq:heat-smoothing-linfty>
+  Let $g in L^1 (bb(R)^n)$ and $u = E_alpha * g$. Then for every $t > 0$,
+  #eq[$ ||u (dot, t)||_oo <= (4 pi alpha t)^(-n/2) ||g||_(L^1). $] <eq:heat-smoothing-linfty>
 ] <prop:heat-linfty-bound>
 
 #proof[
-  This is the Young bound $||E (t, dot) * g||_oo <= ||E (t, dot)||_oo ||g||_(L^1)$, together with $||E (t, dot)||_oo = (4 pi t)^(-n/2)$.
+  This is the Young bound $||E_alpha (t, dot) * g||_oo <= ||E_alpha (t, dot)||_oo ||g||_(L^1)$, together with $||E_alpha (t, dot)||_oo = (4 pi alpha t)^(-n/2)$.
 ]
 
 The two estimates display the two faces of the smoothing effect: #link(<eq:heat-smoothing-l2>)[the first] creates derivatives at a fixed integrability level, #link(<eq:heat-smoothing-linfty>)[the second] buys integrability — an $L^1$ datum becomes bounded immediately.
@@ -2468,7 +2465,7 @@ The convolution formula forces a conclusion that no energy argument could give: 
 ] <thm:heat-infinite-speed>
 
 #proof[
-  For $t > 0$ the kernel $E (t, dot)$ is strictly positive on all of $bb(R)^n$ by (i) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], and $g$ is non-negative and not identically zero, so the integrand in $u (x, t) = integral E (t, x - y) g (y) dif y$ is non-negative and positive on a set of positive measure.
+  For $t > 0$ the kernel $E_alpha (t, dot)$ is strictly positive on all of $bb(R)^n$ by (i) of #link(<prop:heat-kernel-properties>)[*Heat Kernel*], and $g$ is non-negative and not identically zero, so the integrand in $u (bold(x), t) = integral E_alpha (t, bold(x) - bold(y)) g (bold(y)) dif bold(y)$ is non-negative and positive on a set of positive measure.
   The integral is therefore strictly positive.
 ]
 
@@ -2489,7 +2486,7 @@ This is the exact negation of finite propagation speed, where the value at $(x, 
 
 Forward in time the heat equation is the most regularizing equation of the three model equations; backward in time it is not even well posed.
 
-The obstruction is already quantitative in #link(<prop:heat-linfty-bound>)[the sup-norm bound]: solving backward from time $T$ to time $t < T$ would require inverting the factor $(4 pi (T - t))^(-n/2)$, which is unbounded as $t -> T^-$.
+The obstruction is already quantitative in #link(<prop:heat-linfty-bound>)[the sup-norm bound]: solving backward from time $T$ to time $t < T$ would require inverting the factor $(4 pi alpha (T - t))^(-n/2)$, which is unbounded as $t -> T^-$.
 The qualitative statement is in #link(<ex:backward-heat-ill-posed>)[*Well-Posedness*]: the backward problem has no bounded solution for general data, and small perturbations of the final datum produce arbitrarily large perturbations of the initial one.
 
 There is a structural way to say the same thing.
@@ -2506,7 +2503,7 @@ The wave equation, by contrast, is reversible — its flow is a group, and the e
 The three model equations of this Part are distinguished by a single structural choice — the order in time and the sign of the spatial operator — and everything else follows from it.
 
 #tex-table(
-  ("", [*Wave* $u_(t t) = Delta u$], [*Heat* $u_t = Delta u$], [*Laplace* $Delta u = 0$]),
+  ("", [*Wave* $u_(t t) = Delta u$], [*Heat* $u_t = alpha Delta u$], [*Laplace* $Delta u = 0$]),
   ([Order in $t$], [second], [first], [none]),
   ([Data required], [initial position and velocity], [initial datum only], [boundary data only]),
   ([Propagation], [finite speed $a$], [infinite speed], [infinite speed, all directions]),
