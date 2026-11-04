@@ -6338,6 +6338,13 @@ sense unless stated otherwise.
 
 == Special Integrals // 特殊积分
 
+The integrals collected here are the ones that come out in closed form, and they recur throughout analysis and in applications.
+They are grouped by the device that evaluates them rather than by the interval of integration.
+
+- *Scaling and translation.* A substitution $x = alpha t + beta$ turns a whole family of integrals into a single one; the Froullani formula and the general Gaussian integral are the two systematic instances.
+- *Completing the square.* Every exponent that is quadratic in the variable — with a linear term, a constant term, or complex coefficients — reduces to $e^(-u^2)$ after one translation and one dilation.
+- *Summation of a kernel.* When the integrand hides a geometric series, term-by-term integration collapses to its constant term; the Dirichlet, Fejér and Poisson kernels are the prototypes.
+
 === Definite Integrals // 特殊定积分
 
 #example(name: "The Dirichlet Kernel")[
@@ -6364,6 +6371,15 @@ sense unless stated otherwise.
   $ integral_0^pi ((sin(n x/2)) / (sin(x/2)))^2 dif x = n pi. $
 ] <ex:fejer-integral>
 
+#solution[
+  Away from $x = 0$, the integrand is the squared modulus of a geometric sum,
+  $ (sin(n x/2)/sin(x/2))^2 = abs(sum_(k=0)^(n-1) e^(i k x))^2. $
+  Expanding the square and collecting the terms with $j - k = m$ gives
+  $ abs(sum_(k=0)^(n-1) e^(i k x))^2 = n + 2 sum_(m=1)^(n-1) (n - m) cos(m x). $
+  Every cosine integrates to $sin(m pi)/m = 0$ over $[0, pi]$, so only the constant term survives and the integral equals $n pi$.
+  The integrand has a removable singularity at $x = 0$ — its limit there is $n^2$ — hence it is Riemann integrable on $[0, pi]$ and the term-by-term integration above is legitimate.
+]
+
 === Improper Integrals // 特殊反常积分
 
 #example(name: "The Euler Integral")[
@@ -6389,13 +6405,6 @@ sense unless stated otherwise.
   $
   and solving for $I$ yields $I = -pi/2 ln 2$.
 ]
-
-#example(name: "The Froullani Integral")[
-  Let $f(x)$ be continuous on $(0, +oo)$ with both limits $f(0)$ and
-  $f(+oo)$ existing (finite), and let $a, b > 0$. Then the integral
-  $ integral_0^(+oo) (f(a x) - f(b x)) / x dif x $
-  converges and equals $[f(0) - f(+oo)] ln(b/a)$.
-] <ex:froullani-integral>
 
 #example(name: "The Dirichlet Integral")[
   Show that
@@ -6444,6 +6453,30 @@ sense unless stated otherwise.
   #link(<fig:special-integral-graph>)[the figure below].
 ] <ex:special-oscillatory-integral>
 
+#solution[
+  The integrand is continuous and positive on $[0, +oo)$, so the improper integral converges exactly when its partial integrals stay bounded.
+  Split $[0, +oo)$ into periods and estimate each of them.
+
+  *Step 1 (the $k$-th period).* On $[k pi, (k+1) pi]$ put $u = x - k pi in [0, pi]$.
+  Since $b$ is even, $sin^b x = sin^b u$, and since $x >= k pi$,
+  $ integral_(k pi)^((k+1) pi) (dif x)/(1 + x^a sin^b x) <= integral_0^pi (dif u)/(1 + (k pi)^a sin^b u). $
+
+  *Step 2 (size of one period).* On $[0, pi/2]$ one has $sin u >= 2 u/pi$, and the substitution $s = 2 u/pi$ followed by $s = A^(-1/b) w$ with $A = (k pi)^a$ gives
+  $
+    integral_0^(pi/2) (dif u)/(1 + A sin^b u)
+    & <= integral_0^(pi/2) (dif u)/(1 + A (2 u/pi)^b)
+      = pi/2 integral_0^1 (dif s)/(1 + A s^b) \
+    & = pi/2 A^(-1/b) integral_0^(A^(1/b)) (dif w)/(1 + w^b)
+      <= pi/2 C_b (k pi)^(-a/b),
+  $
+  where $C_b = integral_0^(+oo) (dif w)/(1 + w^b) < +oo$ because $b >= 2$.
+  The half $[pi/2, pi]$ is handled by the substitution $u = pi - v$ and gives the same bound, so
+  $ integral_(k pi)^((k+1) pi) (dif x)/(1 + x^a sin^b x) <= C (k pi)^(-a/b). $
+
+  *Step 3 (summation).* The hypothesis $a > b$ means $a/b > 1$, so $sum_k k^(-a/b)$ converges and the partial integrals are bounded.
+  Hence the improper integral converges.
+]
+
 #figure(
   image("img/xsinx.png", width: 80%),
   caption: [Graph of $y = 1 / (1 + x^6 sin^2 x)$.],
@@ -6460,6 +6493,71 @@ sense unless stated otherwise.
   $ I_n = (-e^(-x) x^n) |_0^(+oo) + n integral_0^(+oo) e^(-x) x^(n - 1) dif x = n I_(n - 1), $
   since $x^n e^(-x) -> 0$ as $x -> +oo$ and the lower limit contributes 0.
   Induction yields $I_n = n!$ for all $n$.
+]
+
+=== Froullani Integral // Froullani 积分
+
+The Froullani formula evaluates a whole family of improper integrals at once.
+It uses only the behaviour of $f$ at the two ends of $(0, +oo)$, and the answer is proportional to $ln(b/a)$.
+
+#proposition(name: "The Froullani Integral")[
+  Let $f$ be continuous on $(0, +oo)$, and suppose that the limits $f(0^+)$ and $f(+oo)$ exist and are finite.
+  Then for all $a, b > 0$ the integral
+  $ integral_0^(+oo) (f(a x) - f(b x)) / x dif x $
+  converges and
+  $ integral_0^(+oo) (f(a x) - f(b x)) / x dif x = (f(0^+) - f(+oo)) ln(b/a). $
+] <prop:froullani-integral>
+
+#proof[
+  Assume first $b > a$, and fix $0 < epsilon < A < +oo$ with $b epsilon < a A$.
+  The substitutions $u = a x$ and $u = b x$ give
+  $
+    integral_epsilon^A (f(a x) - f(b x)) / x dif x
+    & = integral_(a epsilon)^(a A) f(u)/u dif u - integral_(b epsilon)^(b A) f(u)/u dif u \
+    & = integral_(a epsilon)^(b epsilon) f(u)/u dif u - integral_(a A)^(b A) f(u)/u dif u.
+  $
+
+  On $[a epsilon, b epsilon]$ the function $f$ is continuous and $1/u$ has constant sign, so #link(<thm:integral-mean-value>)[the first integral mean value theorem] provides $xi_epsilon in [a epsilon, b epsilon]$ with
+  $ integral_(a epsilon)^(b epsilon) f(u)/u dif u = f(xi_epsilon) ln(b/a). $
+  Likewise there is $eta_A in [a A, b A]$ with
+  $ integral_(a A)^(b A) f(u)/u dif u = f(eta_A) ln(b/a). $
+
+  As $epsilon -> 0^+$ one has $xi_epsilon -> 0^+$, hence $f(xi_epsilon) -> f(0^+)$; as $A -> +oo$ one has $eta_A -> +oo$, hence $f(eta_A) -> f(+oo)$.
+  The two pieces depend on $epsilon$ and $A$ separately, so both limits exist and the improper integral converges, with the announced value.
+  For $b < a$ exchange the roles of $a$ and $b$: the two sides of the identity change sign together, so the formula is unchanged.
+]
+
+The general statement is followed by its two classical instances.
+
+#example(name: "The Exponential Froullani Integral")[
+  Show that for $a, b > 0$,
+  $ integral_0^(+oo) (e^(-a x) - e^(-b x)) / x dif x = ln(b/a). $
+] <ex:froullani-exponential>
+
+#solution[
+  Take $f(x) = e^(-x)$ in #link(<prop:froullani-integral>)[the Froullani formula].
+  Its end values are $f(0^+) = 1$ and $f(+oo) = 0$, so the integral equals $(1 - 0) ln(b/a) = ln(b/a)$.
+]
+
+#example(name: "The Arctangent Froullani Integral")[
+  Show that for $a, b > 0$,
+  $ integral_0^(+oo) (arctan(a x) - arctan(b x)) / x dif x = pi/2 ln(a/b). $
+] <ex:froullani-arctangent>
+
+#solution[
+  Take $f(x) = arctan x$ in #link(<prop:froullani-integral>)[the Froullani formula].
+  Its end values are $f(0^+) = 0$ and $f(+oo) = pi/2$, so the integral equals $(0 - pi/2) ln(b/a) = pi/2 ln(a/b)$.
+  The variant $f(x) = arctan(1/x) = pi/2 - arctan x$ has the end values exchanged and gives $pi/2 ln(b/a)$, which is the same identity with $a$ and $b$ interchanged.
+]
+
+#note(title: "On the Hypotheses")[
+  The existence of the two end limits is used by the proof, but it is not necessary for convergence.
+  With $f(x) = sin x$ both limits fail, yet the integral equals $0$, since by #link(<ex:dirichlet-integral>)[the Dirichlet integral]
+  $ integral_0^(+oo) (sin(a x) - sin(b x)) / x dif x = pi/2 - pi/2 = 0 quad (a, b > 0). $
+  The formula is therefore sufficient, not necessary.
+
+  A second reading is that the integral only sees the two end values of $f$: replacing $f$ by $f + g$, where $g$ is continuous on $(0, +oo)$ with $g(0^+) = g(+oo) = 0$, leaves the value unchanged.
+  Two immediate consequences are that $a = b$ gives $0$, and that $f(0^+) = f(+oo)$ gives $0$ for all $a, b$.
 ]
 
 == Common Questions // 常见问题
@@ -11412,7 +11510,9 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:fixed-point-interval>)[Fixed Point Interval]*
 - *#link(<ex:flat-function>)[Flat Function]*
 - *#link(<def:flux>)[Flux of a Vector Field]*
-- *#link(<ex:froullani-integral>)[Froullani Integral]*
+- *#link(<prop:froullani-integral>)[Froullani Integral]*
+- *#link(<ex:froullani-arctangent>)[Froullani Arctangent]*
+- *#link(<ex:froullani-exponential>)[Froullani Exponential]*
 - *#link(<def:function-term-series>)[Function Term Series]*
 
 == G
