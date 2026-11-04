@@ -6437,15 +6437,6 @@ They are grouped by the device that evaluates them rather than by the interval o
   $integral_0^(+oo) sin t / t dif t = pi/2$.
 ]
 
-#example(name: "The Euler-Poisson Integral")[
-  $ integral_0^(+oo) e^(-x^2) dif x = sqrt(pi) / 2. $
-] <ex:euler-poisson-integral>
-
-#example(name: "The Poisson Integral")[
-  For $0 < r < 1$, the *Poisson integral* is
-  $ integral_(-pi)^pi (1 - r^2) / (1 - 2 r cos x + r^2) dif x. $
-] <ex:poisson-integral>
-
 #example(name: "A Special Oscillatory Integral")[
   For $a > b > 0$ with $b$ even, consider
   $ integral_0^(+oo) (dif x) / (1 + x^a sin^b x). $
@@ -6524,7 +6515,7 @@ It uses only the behaviour of $f$ at the two ends of $(0, +oo)$, and the answer 
 
   As $epsilon -> 0^+$ one has $xi_epsilon -> 0^+$, hence $f(xi_epsilon) -> f(0^+)$; as $A -> +oo$ one has $eta_A -> +oo$, hence $f(eta_A) -> f(+oo)$.
   The two pieces depend on $epsilon$ and $A$ separately, so both limits exist and the improper integral converges, with the announced value.
-  For $b < a$ exchange the roles of $a$ and $b$: the two sides of the identity change sign together, so the formula is unchanged.
+  For $b < a$ exchange the roles of $a$ and $b$: both sides change sign, so the identity is preserved.
 ]
 
 The general statement is followed by its two classical instances.
@@ -6558,6 +6549,154 @@ The general statement is followed by its two classical instances.
 
   A second reading is that the integral only sees the two end values of $f$: replacing $f$ by $f + g$, where $g$ is continuous on $(0, +oo)$ with $g(0^+) = g(+oo) = 0$, leaves the value unchanged.
   Two immediate consequences are that $a = b$ gives $0$, and that $f(0^+) = f(+oo)$ gives $0$ for all $a, b$.
+]
+
+=== Gaussian Integrals // 高斯积分
+
+Every integral whose exponent is a quadratic in the variable reduces to a single number after one translation and one dilation.
+That number is the value of $integral_bb(R) e^(-u^2) dif u$, which is computed elsewhere and is taken as the starting point here.
+
+#note(title: "The Base Value")[
+  The value
+  $ integral_(-oo)^(+oo) e^(-u^2) dif u = sqrt(pi) $
+  is obtained in #link(<ex:poisson-integral-gaussian>)[*Multiple Integrals*] by evaluating $integral.double_(bb(R)^2) e^(-(x^2 + y^2)) dif x dif y$ in polar coordinates.
+  Every formula below is a consequence of this single number, so the polar computation is not repeated here.
+]
+
+#proposition(name: "The General Gaussian Integral")[
+  Let $a > 0$ and $b, c in bb(R)$.
+  Then
+  $ integral_(-oo)^(+oo) e^(-a x^2 + b x + c) dif x = sqrt(pi/a) e^(c + b^2/(4 a)). $
+] <prop:gaussian-integral>
+
+#proof[
+  *Step 1 (completing the square).* The exponent is
+  $ -a x^2 + b x + c = -a (x - b/(2 a))^2 + c + b^2/(4 a). $
+
+  *Step 2 (translation).* The substitution $t = x - b/(2 a)$ shifts the line rigidly, hence
+  $ integral_(-oo)^(+oo) e^(-a x^2 + b x + c) dif x = e^(c + b^2/(4 a)) integral_(-oo)^(+oo) e^(-a t^2) dif t. $
+
+  *Step 3 (dilation).* The substitution $u = sqrt(a) t$ gives
+  $ integral_(-oo)^(+oo) e^(-a t^2) dif t = 1/sqrt(a) integral_(-oo)^(+oo) e^(-u^2) dif u = sqrt(pi/a), $
+  and the last factor is the base value recorded at the beginning of this subsection.
+]
+
+The case $a = 1$, $b = c = 0$ is the classical Euler-Poisson integral.
+
+#example(name: "The Euler-Poisson Integral")[
+  Show that
+  $ integral_(-oo)^(+oo) e^(-x^2) dif x = sqrt(pi), quad quad integral_0^(+oo) e^(-x^2) dif x = sqrt(pi)/2, $
+  and more generally that $integral_0^(+oo) e^(-a x^2) dif x = sqrt(pi/a)/2$ for every $a > 0$.
+] <ex:euler-poisson-integral>
+
+#solution[
+  The two-sided value is #link(<prop:gaussian-integral>)[the general formula] with $a = 1$ and $b = c = 0$.
+  Since $e^(-x^2)$ is even, the integral over $(0, +oo)$ is half of it.
+  For general $a > 0$ the same evenness applies to $e^(-a x^2)$, and the dilation of the proof above gives $sqrt(pi/a)/2$.
+]
+
+#note(title: "The Most General Form")[
+  Two extensions of #link(<prop:gaussian-integral>)[the general formula] are used constantly.
+
+  + *Euclidean space.* Let $A$ be a symmetric positive definite $n times n$ matrix, $b in bb(R)^n$ and $c in bb(R)$.
+    Then
+    $ integral_(bb(R)^n) e^(-A x dot x + b dot x + c) dif x = pi^(n/2)/(sqrt("det"(A))) e^(c + 1/4 b dot A^(-1) b). $
+    The exponent is the most general negative definite quadratic form with a linear term, and $n = 1$ recovers the formula above.
+    The proof is an orthogonal change of variable $x = Q y$ that diagonalizes $A$: the integral factors into $n$ copies of the one-dimensional formula, and $"det"(A)$ is the product of the eigenvalues.
+
+  + *Complex parameters.* Let $a in bb(C)$ with $Re a > 0$, and $b, c in bb(C)$.
+    The same formula holds, with $sqrt(a)$ denoting the branch characterized by $Re sqrt(a) > 0$.
+    The complex $a$ is reached by analytic continuation in the half-plane $Re a > 0$, where both sides are analytic and agree on the positive real axis.
+    A complex $b$ costs nothing: $abs(e^(b x)) = e^((Re b) x)$ is dominated by $e^(-(Re a) x^2/2)$ at infinity, so no integrability is lost.
+    Taking $b = i beta$ and $c = i gamma$ gives the *oscillatory Gaussian integral*, whose real part is computed next.
+    The boundary case $Re a = 0$ is outside this continuation — it produces the Fresnel integrals below, which need a separate limiting argument.
+]
+
+#example(name: "The Cosine Gaussian Integral")[
+  Show that for $a > 0$ and $beta in bb(R)$,
+  $ integral_(-oo)^(+oo) e^(-a x^2) cos(beta x) dif x = sqrt(pi/a) e^(-beta^2/(4 a)), quad quad integral_(-oo)^(+oo) e^(-a x^2) sin(beta x) dif x = 0. $
+] <ex:cosine-gaussian-integral>
+
+#solution[
+  Take $b = i beta$ and $c = 0$ in the complex form of #link(<prop:gaussian-integral>)[the general formula].
+  The modulus of the integrand is $e^(-a x^2)$, which is integrable, so real and imaginary parts may be separated:
+  $ integral_(-oo)^(+oo) e^(-a x^2) e^(i beta x) dif x = integral_(-oo)^(+oo) e^(-a x^2) cos(beta x) dif x + i integral_(-oo)^(+oo) e^(-a x^2) sin(beta x) dif x. $
+  The left side equals $sqrt(pi/a) e^(-beta^2/(4 a))$, a real number, so the imaginary part vanishes and the real part is the asserted value.
+  The vanishing of the sine integral also follows from the oddness of $x -> e^(-a x^2) sin(beta x)$.
+]
+
+These two integrals are the real and imaginary parts of the Fourier transform of the Gaussian $e^(-a x^2)$.
+
+#example(name: "The Fresnel Integrals")[
+  Show that
+  $ integral_0^(+oo) cos(x^2) dif x = integral_0^(+oo) sin(x^2) dif x = sqrt(2 pi)/4. $
+] <ex:fresnel-integrals>
+
+#solution[
+  *Step 1 (convergence).* The substitution $u = x^2$ turns the complex integral into
+  $ integral_0^(+oo) e^(i x^2) dif x = 1/2 integral_0^(+oo) u^(-1/2) e^(i u) dif u, $
+  which converges by #link(<thm:abel-dirichlet-infinite-integral>)[Dirichlet's test], since $u^(-1/2)$ decreases to $0$.
+  Its real and imaginary parts are the two Fresnel integrals, so both converge.
+
+  *Step 2 (value for $Re a > 0$).* For $epsilon > 0$ put $a = epsilon - i$, so that $Re a > 0$, and apply the complex form with $b = c = 0$:
+  $ I(epsilon) = integral_0^(+oo) e^(-(epsilon - i) x^2) dif x = 1/2 sqrt(pi/(epsilon - i)). $
+
+  *Step 3 (limit $epsilon -> 0^+$).* The integrand $e^(i x^2)$ is not absolutely integrable, so dominated convergence is not available.
+  Split at a fixed $R$: on $[0, R]$ the integrands converge boundedly, while after $u = x^2$, #link(<thm:integral-mean-value>)[the second integral mean value theorem] applied to the decreasing factor $u^(-1/2) e^(-epsilon u)$ gives
+  $ abs(integral_R^(+oo) e^(-(epsilon - i) x^2) dif x) <= C R^(-1/2) quad (0 <= epsilon <= 1), $
+  uniformly in $epsilon$.
+  Hence $I(epsilon) -> integral_0^(+oo) e^(i x^2) dif x$ as $epsilon -> 0^+$.
+
+  *Step 4 (evaluation).* Since $-i = e^(-i pi/2)$, the branch of the square root gives $sqrt(-i) = e^(-i pi/4)$, hence
+  $ integral_0^(+oo) e^(i x^2) dif x = sqrt(pi)/2 e^(i pi/4) = sqrt(2 pi)/4 (1 + i). $
+  Taking real and imaginary parts gives the two asserted values.
+]
+
+=== Poisson Kernel Integrals // 泊松核积分
+
+The Poisson kernel is the trigonometric kernel whose expansion is a geometric series.
+Its total mass is the last integral of this section that comes out without any integration by parts.
+
+#definition(name: "The Poisson Kernel of the Unit Circle")[
+  For $0 <= r < 1$ the *Poisson kernel* is
+  $ K_r (x) = (1 - r^2) / (1 - 2 r cos x + r^2), quad quad x in bb(R). $
+] <def:poisson-kernel-circle>
+
+The kernel is positive, because $1 - 2 r cos x + r^2 = abs(1 - r e^(i x))^2 > 0$ and $1 - r^2 > 0$.
+Taking real parts in the geometric expansion
+$ (1 + r e^(i x))/(1 - r e^(i x)) = 1 + 2 sum_(n=1)^oo (r e^(i x))^n $
+gives the Fourier expansion
+$ K_r (x) = 1 + 2 sum_(n=1)^oo r^n cos(n x). $
+
+#example(name: "The Poisson Kernel Integral")[
+  Show that for every $0 <= r < 1$,
+  $ integral_(-pi)^(pi) K_r (x) dif x = 2 pi. $
+] <ex:poisson-kernel-integral>
+
+#solution[
+  The substitution $t = tan(x/2)$ maps $(-pi, pi)$ onto $bb(R)$ and gives
+  $ cos x = (1 - t^2)/(1 + t^2), quad quad dif x = (2 dif t)/(1 + t^2), $
+  hence
+  $ 1 - 2 r cos x + r^2 = ((1 - r)^2 + (1 + r)^2 t^2)/(1 + t^2). $
+  Therefore
+  $
+    integral_(-pi)^(pi) K_r (x) dif x
+    & = 2 (1 - r^2) integral_(-oo)^(+oo) (dif t)/((1 - r)^2 + (1 + r)^2 t^2) \
+    & = 2 (1 - r^2) dot pi/((1 - r)(1 + r))
+      = 2 pi,
+  $
+  where the elementary integral $integral_(-oo)^(+oo) (dif t)/(alpha^2 + beta^2 t^2) = pi/(alpha beta)$ was used for $alpha, beta > 0$.
+]
+
+The same value is immediate from the Fourier expansion: the series converges normally on $[-pi, pi]$, every cosine integrates to $0$ over a full period, and the constant term contributes $2 pi$.
+
+#note(title: "The Poisson Integral Operator")[
+  Because $K_r > 0$ and $integral_(-pi)^(pi) K_r = 2 pi$, the mass of the kernel concentrates near $x = 0$ as $r -> 1^-$.
+  Consequently the *Poisson integral*
+  $ u(r, x) = 1/(2 pi) integral_(-pi)^(pi) K_r (x - t) f(t) dif t $
+  of a $2 pi$-periodic function $f in R[-pi, pi]$ tends to $(f(x^+) + f(x^-))/2$ as $r -> 1^-$; in particular $u(r, x) -> f(x)$ at every continuity point of $f$.
+  This is the classical construction of the harmonic extension of $f$ to the unit disk, and it is the prototype of an approximate identity.
+  The name should not be confused with #link(<ex:poisson-integral-gaussian>)[the plane Gaussian integral] of *Multiple Integrals*, which inherited the same historical label.
 ]
 
 == Common Questions // 常见问题
@@ -11420,6 +11559,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<fig:convex-function>)[Convex Function]*
 - *#link(<ex:convex-integral-inequality>)[Convex Integral Inequality]*
 - *#link(<def:convex-region>)[Convex Region]*
+- *#link(<ex:cosine-gaussian-integral>)[Cosine Gaussian Integral]*
 - *#link(<lem:cover-cyclic>)[Cover Cyclic]*
 - *#link(<lem:cover-fixed-point>)[Cover Fixed Point]*
 - *#link(<lem:cover-subinterval>)[Cover Subinterval]*
@@ -11510,6 +11650,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:fixed-point-interval>)[Fixed Point Interval]*
 - *#link(<ex:flat-function>)[Flat Function]*
 - *#link(<def:flux>)[Flux of a Vector Field]*
+- *#link(<ex:fresnel-integrals>)[Fresnel Integrals]*
 - *#link(<prop:froullani-integral>)[Froullani Integral]*
 - *#link(<ex:froullani-arctangent>)[Froullani Arctangent]*
 - *#link(<ex:froullani-exponential>)[Froullani Exponential]*
@@ -11522,6 +11663,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<lem:gauss-special-regions>)[Gauss Special Regions]*
 - *#link(<thm:gauss-test>)[Gauss Test]*
 - *#link(<thm:gauss-theorem>)[Gauss Theorem]*
+- *#link(<prop:gaussian-integral>)[Gaussian Integral]*
 - *#link(<thm:generalized-gauss-test>)[Generalized Gauss Test]*
 - *#link(<lem:green-special-regions>)[Green Special Regions]*
 - *#link(<thm:green-theorem>)[Green Theorem]*
@@ -11674,7 +11816,8 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<def:pointwise-convergence>)[Pointwise Convergence]*
 - *#link(<ex:pointwise-counterexamples>)[Pointwise Counterexamples]*
 - *#link(<ex:pointwise-vanishing>)[Pointwise Vanishing]*
-- *#link(<ex:poisson-integral>)[Poisson Integral]*
+- *#link(<def:poisson-kernel-circle>)[Poisson Kernel of the Unit Circle]*
+- *#link(<ex:poisson-kernel-integral>)[Poisson Kernel Integral]*
 - *#link(<def:positive-derived-series>)[Positive Derived Series]*
 - *#link(<ex:positive-integral-subinterval>)[Positive Integral Subinterval]*
 - *#link(<def:positive-term-series>)[Positive Term Series]*
