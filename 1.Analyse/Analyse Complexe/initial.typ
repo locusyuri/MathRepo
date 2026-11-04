@@ -2916,7 +2916,96 @@ This is close to $1$ near the endpoints $theta = 0$ and $theta = pi$, and small 
 
 == Improper Integrals // 反常积分
 
+When a singularity of the integrand lies on the real axis, the contour may not pass through it; it is deformed into a small semicircle around the singularity, and the contribution of that semicircle is then computed separately.
+
+#lemma(name: "The Small Arc Lemma")[
+  Let $f$ have a simple pole at $z_0$ with residue $c$, and let $gamma_epsilon$ be the arc $z = z_0 + epsilon e^(i theta)$, $alpha <= theta <= beta$.
+  Then
+  $ lim_(epsilon -> 0^+) integral_(gamma_epsilon) f(z) dif z = "i" (beta - alpha) c. $
+] <lem:small-arc>
+
+#proof[
+  By #link(<def:residue>)[the definition of the residue], $f(z) = c/(z - z_0) + g(z)$ with $g$ holomorphic near $z_0$, hence bounded there.
+  On $gamma_epsilon$,
+  $
+    integral_(gamma_epsilon) c/(z - z_0) dif z = "i" (beta - alpha) c,
+  $
+  since $(dif z)/(z - z_0) = "i" dif theta$.
+  The remainder satisfies $abs(integral_(gamma_epsilon) g(z) dif z) <= (beta - alpha) epsilon dot sup_(gamma_epsilon) abs(g) -> 0$, so the limit is $"i" (beta - alpha) c$.
+]
+
+#example(name: "The Dirichlet Integral by an Indented Contour")[
+  Show that
+  $ integral_0^infinity (sin x)/x dif x = (pi)/2. $
+
+  The function $g(z) = e^(i z)/z$ has a single simple pole, at $z = 0$, with residue $1$.
+  Let $C$ be the positively oriented contour made of the segment $[-R, -epsilon]$, the small upper semicircle $gamma_epsilon: z = epsilon e^(i theta)$ from $theta = pi$ down to $theta = 0$, the segment $[epsilon, R]$, and the large arc $Gamma_R$.
+  No singularity lies inside $C$, so
+  $
+    integral_(-R)^(-epsilon) g(x) dif x + integral_(gamma_epsilon) g(z) dif z + integral_epsilon^R g(x) dif x + integral_(Gamma_R) g(z) dif z = 0.
+  $
+
+  As $R -> infinity$ the arc term vanishes by #link(<lem:jordan>)[Jordan's lemma], since $abs(1/z) = 1/R -> 0$.
+  As $epsilon -> 0^+$ #link(<lem:small-arc>)[the small arc lemma] gives $integral_(gamma_epsilon) g -> "i" (0 - pi) dot 1 = -"i" pi$.
+  Passing to the limits,
+  $ "PV" integral_(-infinity)^infinity (e^(i x))/x dif x = "i" pi. $
+
+  Taking imaginary parts,
+  $ "PV" integral_(-infinity)^infinity (sin x)/x dif x = pi, $
+  and the integrand is even, so the integral over $(0, infinity)$ is $pi/2$.
+  Taking real parts gives $integral_(-infinity)^infinity (cos x)/x dif x = 0$, as expected from the oddness of the integrand.
+] <ex:dirichlet-indented>
+
+#note(title: "Two Routes to the Dirichlet Integral")[
+  The same value is obtained in *Analyse Mathématique* without complex analysis, by comparing $1/x$ with the Dirichlet kernel and applying the Riemann-Lebesgue lemma.
+  The contour proof replaces that Fourier-analytic input by two geometric estimates — Jordan's lemma on the large arc and the small arc lemma at the indentation — and it also yields the principal value of $e^(i x)/x$ in one stroke.
+]
+
 == Integrals with Branch Cuts // 含割线的积分
+
+A multivalued integrand cannot be integrated around a closed contour until a single-valued branch is fixed, and the cut of that branch dictates the contour: a *keyhole* that hugs the cut on both banks, closes at infinity by a large circle, and avoids the branch point by a small circle.
+The two banks then contribute two copies of the wanted integral, related by the change of argument accumulated along the circuit.
+
+#example(name: "A Keyhole Contour: $x^(a-1)/(1+x)$")[
+  Let $0 < a < 1$. Show that
+  $ integral_0^infinity (x^(a-1))/(1 + x) dif x = (pi)/(sin(a pi)). $
+
+  Use the branch $z^(a-1) = e^((a-1) log z)$ of the logarithm with argument in $(0, 2 pi)$, whose cut is the positive real axis, and put $f(z) = z^(a-1)/(1 + z)$.
+  On the upper bank $f$ equals $x^(a-1)/(1 + x)$, while on the lower bank the argument has increased by $2 pi$, so there $f$ equals $e^(2 pi "i" (a-1)) x^(a-1)/(1 + x)$; the lower bank is traversed in the opposite direction, so the two banks contribute
+  $ (1 - e^(2 pi "i" (a-1))) I, $
+  where $I$ is the wanted integral.
+
+  The only singularity enclosed is the simple pole at $z = -1$, whose argument is $pi$, so its residue is $e^(i pi (a-1))$.
+  The large circle contributes $O(R^(a-1)) dot 2 pi R = O(R^a) -> 0$ because $a < 1$, and the small circle contributes $O(epsilon^(a-1)) dot 2 pi epsilon = O(epsilon^a) -> 0$; hence
+  $
+    (1 - e^(2 pi "i" (a-1))) I = 2 pi "i" e^(i pi (a-1)).
+  $
+  Since $e^(2 pi "i" (a-1)) = e^(2 pi "i" a)$ and $1 - e^(2 pi "i" a) = -2 "i" e^(i pi a) sin(a pi)$, while $e^(i pi (a-1)) = -e^(i pi a)$, the quotient simplifies to
+  $
+    I = (2 pi "i" e^(i pi (a-1)))/(1 - e^(2 pi "i" (a-1))) = (pi)/(sin(a pi)).
+  $
+] <ex:keyhole-basic>
+
+#example(name: "A Square-Root Branch on a Keyhole")[
+  Show that
+  $ integral_0^infinity (sqrt(x))/(1 + x^2) dif x = (pi)/sqrt(2). $
+
+  Take the branch $z^(1/2) = e^((1/2) log z)$ with argument in $(0, 2 pi)$ and $f(z) = z^(1/2)/(1 + z^2)$.
+  Both poles $z = "i"$ (argument $pi/2$) and $z = -"i"$ (argument $3 pi/2$) lie inside a keyhole contour $C$ for the cut, with residues
+  $
+    (e^(i pi/4))/(2 "i") quad "and" quad (e^(3 i pi/4))/(-2 "i").
+  $
+  Their sum is $(1)/(2 "i")(e^(i pi/4) - e^(3 i pi/4)) = (sqrt(2))/(2 "i")$, so
+  $
+    integral_C f(z) dif z = 2 pi "i" dot (sqrt(2))/(2 "i") = pi sqrt(2).
+  $
+
+  On the two banks the branch takes the values $sqrt(x)$ and $-sqrt(x)$, and the integral over the large circle is $O(R^(1/2)) dot 2 pi R = O(R^(3/2))$ against a denominator of size $R^2$, hence tends to $0$; the small circle contributes $O(epsilon^(3/2)) -> 0$.
+  Therefore the keyhole integral equals twice the wanted integral, and
+  $
+    integral_0^infinity (sqrt(x))/(1 + x^2) dif x = (pi sqrt(2))/2 = (pi)/sqrt(2).
+  $
+] <ex:keyhole-sqrt>
 
 == Summation of Series // 级数求和
 
