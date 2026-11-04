@@ -1400,10 +1400,23 @@ It remains to solve the second subproblem.
   with a given source $f$.
 ] <def:cauchy-wave-inhomogeneous>
 
+=== Duhamel's Principle for the Wave Equation
+
 The fully general problem — nonzero data *and* a source — is the sum of this and the homogeneous problem (solved in *D'Alembert's Formula* and *Cauchy Problem in Higher Dimensions*), by the superposition split (#link(<prop:wave-superposition-split>)[*Duhamel's Principle*]).
 
 #theorem(name: "Duhamel's Principle for the Wave Equation")[
-  Let $W (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$: $W (t) psi = w (dot, t)$, where $w_(t t) = a^2 Delta w$, $w (dot, 0) = 0$, $w_t (dot, 0) = psi$. Then the solution of (#link(<def:cauchy-wave-inhomogeneous>)[the inhomogeneous Cauchy problem]) is given by
+  Let $W (t)$ be the solution operator of the homogeneous Cauchy problem with data $(0, psi)$:
+  $
+    W (t) psi = w (dot, t),
+  $
+  where
+  $
+    cases(
+      w_(t t) = a^2 Delta w,
+      w (dot, 0) = 0 quad w_t (dot, 0) = psi.
+    )
+  $
+  Then the solution of (#link(<def:cauchy-wave-inhomogeneous>)[the inhomogeneous Cauchy problem]) is given by
   $
     u (bold(x), t) = integral_0^t W (t - tau) f (tau, dot) (bold(x)) dif tau,
   $
@@ -1411,11 +1424,12 @@ The fully general problem — nonzero data *and* a source — is the sum of this
 ] <thm:duhamel-wave>
 
 #proof[
-  Let $w (t, tau; bold(x))$ be the solution of the homogeneous problem with $w (tau, tau; dot) = 0$ and $w_t (tau, tau; dot) = f (tau, dot)$, i.e. $w (t, tau; dot) = W (t - tau) f (tau, dot)$.
+  Let $w (bold(x), t; tau)$ be the solution of the homogeneous problem with $w (dot, tau; tau) = 0$ and $w_t (dot, tau; tau) = f (tau, dot)$, i.e. $w (dot, t; tau) = W (t - tau) f (tau, dot)$.
+  The arguments are the point and the time, in that order; $tau$ is the starting time and is kept as a parameter after the semicolon.
 
-  Define $u (dot, t) = integral_0^t w (t, tau; dot) dif tau$. Then $u (dot, 0) = 0$, $u_t (dot, 0) = w (0, 0; dot) = 0$, and differentiating twice (using $w (t, t; dot) = 0$, $w_t (t, t; dot) = f (t, dot)$):
+  Define $u (dot, t) = integral_0^t w (dot, t; tau) dif tau$. Then $u (dot, 0) = 0$, $u_t (dot, 0) = w (dot, 0; 0) = 0$, and differentiating twice (using $w (dot, t; t) = 0$, $w_t (dot, t; t) = f (t, dot)$):
   $
-    (partial^2 u)/(partial t^2) - a^2 Delta u = ((partial w)/(partial t)) (t, t; dot) + integral_0^t ((partial^2 w)/(partial t^2) - a^2 Delta w) dif tau = f (t, dot),
+    (partial^2 u)/(partial t^2) - a^2 Delta u = ((partial w)/(partial t)) (dot, t; t) + integral_0^t ((partial^2 w)/(partial t^2) - a^2 Delta w) dif tau = f (t, dot),
   $
   since each $w$ is a homogeneous solution.
 
@@ -2006,7 +2020,9 @@ Two special cases organize the whole theory.
 #definition(name: "The Heat Equation: Cauchy and Initial-Boundary Value Problems")[
   Let $Omega subset bb(R)^n$ be a domain and $T > 0$.
   The *heat equation* with source $f$ and initial datum $g$ is
-  #eq[$ u_t - Delta u = f quad "in" quad Omega times (0, T), quad u (dot, 0) = g quad "on" quad Omega. $] <eq:heat-problem>
+  #eq[$
+    u_t - Delta u = f quad "in" quad Omega times (0, T), quad u (dot, 0) = g quad "on" quad Omega.
+  $] <eq:heat-problem>
   - *Cauchy problem*: $Omega = bb(R)^n$, with no boundary condition.
   - *Dirichlet problem*: $Omega$ bounded, $u = 0$ on $partial Omega times (0, T)$.
   - *Neumann problem*: $Omega$ bounded, $u_nu = 0$ on $partial Omega times (0, T)$.
