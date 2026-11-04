@@ -2137,15 +2137,20 @@ With the kernel at hand, the Cauchy problem of #link(<def:heat-ibvp>)[the defini
 ]
 
 #example(name: "The Cauchy Problem in One Space Dimension")[
+  Solve the Cauchy problem in one space dimension with the Heaviside datum $g = bold(1)_((0, oo))$, using #link(<eq:heat-cauchy>)[the convolution formula], and describe the regularity of the resulting profile.
+] <ex:heat-cauchy-1d>
+
+#solution(name: "Heaviside datum")[
   For $n = 1$ #link(<eq:heat-cauchy>)[the convolution formula] reads
   $
     u (x, t) = 1/sqrt(4 pi alpha t) integral_(-oo)^oo exp(-(x - y)^2/(4 alpha t)) g (y) dif y.
   $
-  For the Heaviside datum $g = bold(1)_((0, oo))$ the substitution $y = x - 2 sqrt(alpha t) xi$ evaluates the integral:
+  For the Heaviside datum the substitution $y = x - 2 sqrt(alpha t) xi$ evaluates the integral:
   $
     u (x, t) = 1/sqrt(pi) integral_(-oo)^(x/(2 sqrt(alpha t))) e^(-xi^2) dif xi = 1/2 (1 + "erf"(x/(2 sqrt(alpha t)))).
   $
-] <ex:heat-cauchy-1d>
+  The profile is $C^oo$ in $x$ for every $t > 0$, and the jump of the datum survives only in the limit $t -> 0^+$.
+]
 
 The example displays the mechanism of the regularization in the simplest case, and it is worth isolating it.
 The datum enters the solution only through an average against the Gaussian, whose support is the whole line.
@@ -2206,44 +2211,46 @@ $] <eq:heat-duhamel>
   where $alpha > 0$ is the diffusivity (the coefficient written $a^2$ in the formulation of the problem).
 ] <ex:heat-forced-oscillation>
 
-Superposition splits the problem into the homogeneous problem with datum $cos x$ and the inhomogeneous problem with zero datum, and each of the two is reduced to a single Gaussian integral.
+#solution(name: "forced oscillation")[
+  Superposition splits the problem into the homogeneous problem with datum $cos x$ and the inhomogeneous problem with zero datum, and each of the two is reduced to a single Gaussian integral.
 
-*Step 1: The Gaussian integral.* For every $t > 0$ and every real $xi$,
-$
-  integral_(-oo)^oo E_alpha (z, t) e^(i xi z) dif z = e^(-alpha xi^2 t).
-$
-For $xi = 1$ this is the standard Fourier integral: with $a = 1/(4 alpha t)$,
-$
-  integral_(-oo)^oo e^(-a z^2 + i z) dif z = sqrt(pi/a) e^(-1/(4 a)) = sqrt(4 pi alpha t) e^(-alpha t),
-$
-and multiplying by the normalizing factor $(4 pi alpha t)^(-1/2)$ gives the claim.
-Taking real and imaginary parts at $xi = 1$,
-$
-  integral_(-oo)^oo E_alpha (z, t) cos z dif z = e^(-alpha t), quad integral_(-oo)^oo E_alpha (z, t) sin z dif z = 0.
-$
+  *Step 1: The Gaussian integral.* For every $t > 0$ and every real $xi$,
+  $
+    integral_(-oo)^oo E_alpha (z, t) e^(i xi z) dif z = e^(-alpha xi^2 t).
+  $
+  For $xi = 1$ this is the standard Fourier integral: with $a = 1/(4 alpha t)$,
+  $
+    integral_(-oo)^oo e^(-a z^2 + i z) dif z = sqrt(pi/a) e^(-1/(4 a)) = sqrt(4 pi alpha t) e^(-alpha t),
+  $
+  and multiplying by the normalizing factor $(4 pi alpha t)^(-1/2)$ gives the claim.
+  Taking real and imaginary parts at $xi = 1$,
+  $
+    integral_(-oo)^oo E_alpha (z, t) cos z dif z = e^(-alpha t), quad integral_(-oo)^oo E_alpha (z, t) sin z dif z = 0.
+  $
 
-*Step 2: The homogeneous part.* With $g = cos$, #link(<eq:heat-cauchy>)[the convolution formula] gives, after the change of variable $z = x - y$ and the addition formula $cos (x - z) = cos x cos z + sin x sin z$,
-$
-  u_1 (x, t) = integral_(-oo)^oo E_alpha (z, t) cos (x - z) dif z = e^(-alpha t) cos x,
-$
-The datum is an eigenfunction of $partial_x^2$, so the convolution does nothing but multiply it by the damping factor — the Gaussian integral is the only computation required.
+  *Step 2: The homogeneous part.* With $g = cos$, #link(<eq:heat-cauchy>)[the convolution formula] gives, after the change of variable $z = x - y$ and the addition formula $cos (x - z) = cos x cos z + sin x sin z$,
+  $
+    u_1 (x, t) = integral_(-oo)^oo E_alpha (z, t) cos (x - z) dif z = e^(-alpha t) cos x.
+  $
+  The datum is an eigenfunction of $partial_x^2$, so the convolution does nothing but multiply it by the damping factor — the Gaussian integral is the only computation required.
 
-*Step 3: Duhamel.* The source is $f (x, s) = s sin x$. By #link(<eq:heat-duhamel>)[Duhamel's formula],
-$
-  u_2 (x, t) = integral_0^t integral_(-oo)^oo E_alpha (x - y, t - s) s sin y dif y dif s,
-$
-and the inner integral is $s e^(-alpha (t - s)) sin x$ by Step 1 applied at time $t - s$.
-Integrating in $s$,
-$
-  integral_0^t s e^(-alpha (t - s)) dif s = e^(-alpha t) integral_0^t s e^(alpha s) dif s = t/alpha - (1 - e^(-alpha t))/alpha^2,
-$
-where the primitive follows from integrating by parts once.
+  *Step 3: Duhamel.* The source is $f (x, s) = s sin x$. By #link(<eq:heat-duhamel>)[Duhamel's formula],
+  $
+    u_2 (x, t) = integral_0^t integral_(-oo)^oo E_alpha (x - y, t - s) s sin y dif y dif s,
+  $
+  and the inner integral is $s e^(-alpha (t - s)) sin x$ by Step 1 applied at time $t - s$.
+  Integrating in $s$,
+  $
+    integral_0^t s e^(-alpha (t - s)) dif s = e^(-alpha t) integral_0^t s e^(alpha s) dif s = t/alpha - (1 - e^(-alpha t))/alpha^2,
+  $
+  where the primitive follows from integrating by parts once.
 
-*Step 4: The sum.* Adding the two contributions,
-$
-  u (x, t) = e^(-alpha t) cos x + (t/alpha - (1 - e^(-alpha t))/alpha^2) sin x.
-$
-One checks directly that $u_t - alpha u_(x x) = t sin x$ and $u (x, 0) = cos x$: the two terms containing $e^(-alpha t)$ cancel in the first identity, and the brackets in the second vanish at $t = 0$.
+  *Step 4: The sum.* Adding the two contributions,
+  $
+    u (x, t) = e^(-alpha t) cos x + (t/alpha - (1 - e^(-alpha t))/alpha^2) sin x.
+  $
+  One checks directly that $u_t - alpha u_(x x) = t sin x$ and $u (x, 0) = cos x$: the two terms containing $e^(-alpha t)$ cancel in the first identity, and the brackets in the second vanish at $t = 0$.
+]
 
 #note[
   The reduction is not an accident of this problem: $cos x$ and $sin x$ are eigenfunctions of the Dirichlet-type operator $partial_x^2$ on the whole line, with eigenvalue $-1$.
@@ -2399,16 +2406,21 @@ $
 The coefficients $b_k$ are the sine coefficients of $g$; no new computation is required beyond the Fourier expansion itself.
 
 #example(name: "Cooling of a Rod with a Parabolic Profile")[
+  Consider the rod $Omega = (0, 1)$ with Dirichlet ends and initial temperature $g (x) = x (1 - x)$.
+  Compute the temperature at later times and describe the profile.
+] <ex:heat-rod-cooling>
+
+#solution(name: "parabolic profile")[
   Take $L = 1$ and $g (x) = x (1 - x)$, which vanishes at both ends and peaks at $x = 1/2$ with value $1/4$. The sine coefficients are
   $
     b_k = 2 integral_0^1 x (1 - x) sin(k pi x) dif x = 4/(k^3 pi^3) (1 - (-1)^k),
   $
-  so $b_k = 8/(k^3 pi^3)$ for odd $k$ and $b_k = 0$ for even $k$; the oddness reflects the symmetry of $g$ about the midpoint. Hence
+  so $b_k = 8/(k^3 pi^3)$ for odd $k$ and $b_k = 0$ for even $k$; the vanishing of the even coefficients reflects the symmetry of $g$ about the midpoint. Hence
   $
     u (x, t) = 8/pi^3 sum_(k "odd") 1/k^3 e^(-alpha (k pi)^2 t) sin(k pi x).
   $
-  Since the successive rates differ by the factor $(2 k + 1)^2$, the first mode already dominates for $t > 1/pi^2$: the profile very quickly becomes a single sine arch, with amplitude $8 e^(-alpha pi^2 t)/pi^3$.
-] <ex:heat-rod-cooling>
+  Since the rates grow like $k^2$, each odd mode is damped faster than the previous one by the factor $((k + 2)/k)^2$, so the first mode already dominates for $t > 1/pi^2$: the profile very quickly becomes a single sine arch, with amplitude $8 e^(-alpha pi^2 t)/pi^3$.
+]
 
 The example separates the two time scales that every parabolic problem exhibits.
 The *transient* is governed by the gap $alpha (lambda_2 - lambda_1)$: the rates grow like $k^2$, so each odd mode decays faster than its predecessor by the factor $((k + 2)/k)^2$.
