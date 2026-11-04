@@ -5701,16 +5701,24 @@ directly from the indefinite integral.
 ]
 
 #proposition(name: "Symmetry of Definite Integrals")[
-  Let $f in R[0, a]$.
-  + *Even reflection:* if $f(x) = f(a - x)$ for all $x in [0, a]$, then
-    $ integral_0^a f(x) dif x = 2 integral_0^(a/2) f(x) dif x. $
-  + *Odd reflection:* if $f(x) = -f(a - x)$ for all $x in [0, a]$, then
-    $ integral_0^a f(x) dif x = 0. $
-  + If $f(x) + f(a - x) = g(x)$, then
-    $ integral_0^a f(x) dif x = integral_0^(a/2) g(x) dif x; $
-    indeed, $f(x) + f(a - x)$ is always even with respect to the point
-    $x = a/2$.
+  Let $f in R[c, d]$, put $s = (c + d)/2$, and denote by $tilde(f)(x) = f(c + d - x)$ the reflection of $f$ in the midpoint of $[c, d]$.
+  + *Interval reproduction:* $integral_c^d f(x) dif x = integral_c^d tilde(f)(x) dif x$.
+  + *Even reflection:* if $tilde(f) = f$, then $integral_c^d f(x) dif x = 2 integral_c^s f(x) dif x$.
+  + *Odd reflection:* if $tilde(f) = -f$, then $integral_c^d f(x) dif x = 0$.
+  + *General reflection:* if $f + tilde(f) = g$, then $integral_c^d f(x) dif x = integral_c^s g(x) dif x$.
 ] <prop:integral-symmetry>
+
+#proof[
+  The substitution $x = c + d - t$ maps $[c, d]$ onto itself and reverses it, which gives the first identity.
+  If $tilde(f) = f$, the two halves $[c, s]$ and $[s, d]$ carry equal integrals; if $tilde(f) = -f$, they carry opposite ones. The second and third identities follow.
+
+  For the fourth, write $f = (g + (f - tilde(f)))/2$.
+  The second summand is odd about $s$ and contributes nothing, so $integral_c^d f = 1/2 integral_c^d g$.
+  Since $g = f + tilde(f)$ is always even about $s$, this equals $integral_c^s g$.
+]
+
+The case $c = 0$, $d = a$, in which the reflection is $x -> a - x$, is the form that occurs in most computations.
+The standard uses of the reproduction identity are collected in *Interval Reproduction*.
 
 #proposition(name: "Periodicity of Definite Integrals")[
   Let $f$ be an integrable periodic function with period $T$. Then for every
@@ -5728,8 +5736,9 @@ directly from the indefinite integral.
 ] <ex:wallis>
 
 #solution[
-  The equality of the two integrals follows from the substitution
-  $t = pi/2 - x$. Integration by parts yields
+  The equality of the two integrals is the exchange of $sin$ and $cos$ recorded in
+  *Interval Reproduction*, realized by the substitution $t = pi/2 - x$.
+  Integration by parts yields
   $
     I_n & = integral_0^(pi/2) sin^(n - 1) x dif (-cos x) \
         & = (-sin^(n - 1) x cos x) |_0^(pi/2) + integral_0^(pi/2) cos x dif (sin^(n - 1) x) \
@@ -5778,11 +5787,11 @@ directly from the indefinite integral.
           + integral_0^(pi/4) ln cos(pi/4 - t) dif t
           - integral_0^(pi/4) ln cos t dif t.
     $
-    Moreover, by the substitution $u = pi/4 - t$,
+    Moreover, by #link(<prop:integral-symmetry>)[the symmetry of definite integrals] and the substitution $u = pi/4 - t$,
     $integral_0^(pi/4) ln cos(pi/4 - t) dif t = integral_0^(pi/4) ln cos u dif u$.
     The last two integrals cancel, and therefore
     $I = integral_0^(pi/4) ln sqrt(2) dif t = pi/8 ln 2$.
-  + By the substitution $x = pi/2 - t$ the integral equals
+  + By #link(<prop:integral-symmetry>)[the symmetry of definite integrals] and the substitution $x = pi/2 - t$ the integral equals
     $integral_0^(pi/2) (cos^2 x) / (sin x + cos x) dif x$. Hence
     $
       integral_0^(pi/2) (sin^2 x) / (sin x + cos x) dif x
@@ -5828,6 +5837,53 @@ directly from the indefinite integral.
   $[1, 2]$ by additivity and apply the Newton-Leibniz formula to each piece.
   Cauchy gave a similar example:
   $integral_0^((3 pi)/4) (sin x) / (1 + cos^2 x) dif x$.
+]
+
+=== Interval Reproduction // 区间再现
+
+The first item of #link(<prop:integral-symmetry>)[the symmetry proposition] says that integrating $f$ over $[c, d]$ and integrating its reflection in the midpoint give the same number.
+The formula is rarely used on its own; what makes it useful is that the reproduced copy can be added to, or subtracted from, the original.
+
+Three patterns cover almost all applications.
+
+- *Eliminating a linear factor.* If $f(sin x)$ is unchanged by $x -> pi - x$, then the reproduced copy of $x$ cancels $x$ itself:
+  $ integral_0^pi x f(sin x) dif x = pi/2 integral_0^pi f(sin x) dif x. $
+- *Exchanging $sin$ and $cos$.* On $[0, pi/2]$ the reflection $x -> pi/2 - x$ swaps the two functions, so
+  $ integral_0^(pi/2) f(sin x, cos x) dif x = integral_0^(pi/2) f(cos x, sin x) dif x; $
+  in particular $integral_0^(pi/2) sin^n x dif x = integral_0^(pi/2) cos^n x dif x$.
+- *Averaging a fraction to a constant.* If $g(x) + g(c + d - x) = 1$, the integral equals half the length of the interval.
+  For instance $integral_0^(pi/2) (dif x)/(1 + tan^alpha x) = pi/4$ for every real $alpha$, because $tan(pi/2 - x) = 1/tan x$.
+
+#example(name: "Eliminating a Linear Factor")[
+  Evaluate
+  $ I = integral_0^pi (x sin x)/(1 + cos^2 x) dif x. $
+] <ex:reproduction-eliminating-factor>
+
+#solution[
+  Without the factor $x$ the integrand is unchanged by $x -> pi - x$, since $sin(pi - x) = sin x$ and $cos^2 (pi - x) = cos^2 x$.
+  Adding the reproduced copy therefore merges the two copies of $x$ into the constant $pi$:
+  $ 2 I = integral_0^pi (x + pi - x) (sin x)/(1 + cos^2 x) dif x = pi integral_0^pi (sin x)/(1 + cos^2 x) dif x. $
+
+  Since $(-arctan(cos x))' = (sin x)/(1 + cos^2 x)$,
+  $ integral_0^pi (sin x)/(1 + cos^2 x) dif x = -arctan(cos x) |_0^pi = pi/4 + pi/4 = pi/2, $
+  and hence $I = pi^2/4$.
+]
+
+#example(name: "Symmetrizing a Trigonometric Fraction")[
+  Show that for every real $alpha$,
+  $ integral_0^(pi/2) (dif x)/(1 + tan^alpha x) = pi/4. $
+] <ex:reproduction-symmetrizing-fraction>
+
+#solution[
+  Put $g(x) = 1/(1 + tan^alpha x)$ and apply the general reflection identity on $[0, pi/2]$.
+  Since $tan(pi/2 - x) = 1/tan x$,
+  $ g(x) + g(pi/2 - x) = 1/(1 + tan^alpha x) + (tan^alpha x)/(1 + tan^alpha x) = 1, $
+  so
+  $ integral_0^(pi/2) g(x) dif x = integral_0^(pi/4) dif x = pi/4. $
+
+  Dividing numerator and denominator of $(sin^alpha x)/(sin^alpha x + cos^alpha x)$ by $cos^alpha x$ turns the integrand into $tan^alpha x/(1 + tan^alpha x) = 1 - g(x)$, whose integral over $[0, pi/2]$ is $pi/2 - pi/4 = pi/4$. Hence
+  $ integral_0^(pi/2) (sin^alpha x)/(sin^alpha x + cos^alpha x) dif x = pi/4 $
+  as well.
 ]
 
 == Integral Inequalities // 积分不等式
@@ -6384,7 +6440,7 @@ They are grouped by the device that evaluates them rather than by the interval o
 
 #example(name: "The Euler Integral")[
   Show that
-  $ I = integral_0^(pi/2) ln sin x dif x = -pi/2 ln 2. $
+  $ I = integral_0^(pi/2) ln sin x dif x = integral_0^(pi/2) ln cos x dif x = -pi/2 ln 2. $
 ] <ex:euler-integral>
 
 #solution[
@@ -6397,7 +6453,7 @@ They are grouped by the device that evaluates them rather than by the interval o
       & = pi/2 ln 2 + 2 integral_0^(pi/4) ln sin t dif t
         + 2 integral_0^(pi/4) ln cos t dif t.
   $
-  The substitution $t = pi/2 - u$ transforms the last integral into
+  By #link(<prop:integral-symmetry>)[the symmetry of definite integrals], the substitution $t = pi/2 - u$ transforms the last integral into
   $2 integral_(pi/4)^(pi/2) ln sin t dif t$. Therefore
   $
     I = pi/2 ln 2 + 2 (integral_0^(pi/4) + integral_(pi/4)^(pi/2)) ln sin t dif t
@@ -6408,7 +6464,7 @@ They are grouped by the device that evaluates them rather than by the interval o
 
 #example(name: "The Dirichlet Integral")[
   Show that
-  $ integral_0^(+oo) sin x / x dif x = pi/2. $
+  $ integral_0^(+oo) (sin x) / x dif x = pi/2. $
 ] <ex:dirichlet-integral>
 
 #solution[
@@ -6454,11 +6510,10 @@ They are grouped by the device that evaluates them rather than by the interval o
 
   *Step 2 (size of one period).* On $[0, pi/2]$ one has $sin u >= 2 u/pi$, and the substitution $s = 2 u/pi$ followed by $s = A^(-1/b) w$ with $A = (k pi)^a$ gives
   $
-    integral_0^(pi/2) (dif u)/(1 + A sin^b u)
-    & <= integral_0^(pi/2) (dif u)/(1 + A (2 u/pi)^b)
-      = pi/2 integral_0^1 (dif s)/(1 + A s^b) \
-    & = pi/2 A^(-1/b) integral_0^(A^(1/b)) (dif w)/(1 + w^b)
-      <= pi/2 C_b (k pi)^(-a/b),
+    integral_0^(pi/2) (dif u)/(1 + A sin^b u) & <= integral_0^(pi/2) (dif u)/(1 + A (2 u/pi)^b)
+                                                = pi/2 integral_0^1 (dif s)/(1 + A s^b) \
+                                              & = pi/2 A^(-1/b) integral_0^(A^(1/b)) (dif w)/(1 + w^b)
+                                                <= pi/2 C_b (k pi)^(-a/b),
   $
   where $C_b = integral_0^(+oo) (dif w)/(1 + w^b) < +oo$ because $b >= 2$.
   The half $[pi/2, pi]$ is handled by the substitution $u = pi - v$ and gives the same bound, so
@@ -6614,13 +6669,17 @@ The case $a = 1$, $b = c = 0$ is the classical Euler-Poisson integral.
 
 #example(name: "The Cosine Gaussian Integral")[
   Show that for $a > 0$ and $beta in bb(R)$,
-  $ integral_(-oo)^(+oo) e^(-a x^2) cos(beta x) dif x = sqrt(pi/a) e^(-beta^2/(4 a)), quad quad integral_(-oo)^(+oo) e^(-a x^2) sin(beta x) dif x = 0. $
+  $
+    integral_(-oo)^(+oo) e^(-a x^2) cos(beta x) dif x = sqrt(pi/a) e^(-beta^2/(4 a)), quad quad integral_(-oo)^(+oo) e^(-a x^2) sin(beta x) dif x = 0.
+  $
 ] <ex:cosine-gaussian-integral>
 
 #solution[
   Take $b = i beta$ and $c = 0$ in the complex form of #link(<prop:gaussian-integral>)[the general formula].
   The modulus of the integrand is $e^(-a x^2)$, which is integrable, so real and imaginary parts may be separated:
-  $ integral_(-oo)^(+oo) e^(-a x^2) e^(i beta x) dif x = integral_(-oo)^(+oo) e^(-a x^2) cos(beta x) dif x + i integral_(-oo)^(+oo) e^(-a x^2) sin(beta x) dif x. $
+  $
+    integral_(-oo)^(+oo) e^(-a x^2) e^(i beta x) dif x = integral_(-oo)^(+oo) e^(-a x^2) cos(beta x) dif x + i integral_(-oo)^(+oo) e^(-a x^2) sin(beta x) dif x.
+  $
   The left side equals $sqrt(pi/a) e^(-beta^2/(4 a))$, a real number, so the imaginary part vanishes and the real part is the asserted value.
   The vanishing of the sine integral also follows from the oddness of $x -> e^(-a x^2) sin(beta x)$.
 ]
@@ -6680,10 +6739,9 @@ $ K_r (x) = 1 + 2 sum_(n=1)^oo r^n cos(n x). $
   $ 1 - 2 r cos x + r^2 = ((1 - r)^2 + (1 + r)^2 t^2)/(1 + t^2). $
   Therefore
   $
-    integral_(-pi)^(pi) K_r (x) dif x
-    & = 2 (1 - r^2) integral_(-oo)^(+oo) (dif t)/((1 - r)^2 + (1 + r)^2 t^2) \
-    & = 2 (1 - r^2) dot pi/((1 - r)(1 + r))
-      = 2 pi,
+    integral_(-pi)^(pi) K_r (x) dif x & = 2 (1 - r^2) integral_(-oo)^(+oo) (dif t)/((1 - r)^2 + (1 + r)^2 t^2) \
+                                      & = 2 (1 - r^2) dot pi/((1 - r)(1 + r))
+                                        = 2 pi,
   $
   where the elementary integral $integral_(-oo)^(+oo) (dif t)/(alpha^2 + beta^2 t^2) = pi/(alpha beta)$ was used for $alpha, beta > 0$.
 ]
@@ -11616,6 +11674,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 
 == E
 - *#link(<thm:elementary-continuous>)[Elementary Continuous]*
+- *#link(<ex:reproduction-eliminating-factor>)[Eliminating a Linear Factor]*
 - *#link(<thm:equivalence-replacement>)[Equivalence Replacement]*
 - *#link(<thm:equivalent-convexity>)[Equivalent Convexity]*
 - *#link(<ex:euler-equation-degree-zero>)[Euler Equation Degree Zero]*
@@ -11870,6 +11929,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<ex:smooth-not-analytic>)[Smooth Not Analytic]*
 - *#link(<fig:special-integral-graph>)[Special Integral Graph]*
 - *#link(<ex:special-oscillatory-integral>)[Special Oscillatory Integral]*
+- *#link(<ex:reproduction-symmetrizing-fraction>)[Symmetrizing a Trigonometric Fraction]*
 - *#link(<fig:special-region-1>)[Special Region 1]*
 - *#link(<fig:special-region-2>)[Special Region 2]*
 - *#link(<ex:sqrt-a2-minus-x2>)[Sqrt A2 Minus X2]*
