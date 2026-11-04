@@ -3009,6 +3009,71 @@ The two banks then contribute two copies of the wanted integral, related by the 
 
 == Summation of Series // 级数求和
 
+The residue theorem also sums series: a kernel whose residues at the integers are known turns a sum over $bb(Z)$ into a sum of residues at the poles of the summand.
+
+#theorem(name: "Summation by the Cotangent Kernel")[
+  Let $f$ be holomorphic in $bb(C)$ except for finitely many poles $z_k$, none of which is an integer, and suppose that $abs(f(z)) <= C abs(z)^(-2)$ for $abs(z)$ large.
+  Then
+  $
+    sum_(n = -infinity)^infinity f(n) = -sum_k "Res"(pi cot(pi z) f(z), z_k)
+  $
+  and
+  $
+    sum_(n = -infinity)^infinity (-1)^n f(n) = -sum_k "Res"((pi)/(sin(pi z)) f(z), z_k),
+  $
+  where both sums run over the integers that are not poles of $f$.
+] <thm:cotangent-summation>
+
+#proof[
+  Let $C_N$ be the square with vertices $(plus.minus 1 plus.minus "i")(N + 1/2)$, positively oriented.
+  Its boundary stays at distance $1/2$ from every integer, and on it $abs(cot(pi z))$ is bounded by a constant independent of $N$: on the vertical sides $cot(pi z) = -"i" tanh(pi Im(z))$, and on the horizontal sides the modulus stays bounded as $abs(Im(z)) >= 1/2$.
+
+  By #link(<thm:residue-theorem>)[the residue theorem], the residues of $pi cot(pi z) f(z)$ inside $C_N$ are the values $f(n)$ for $abs(n) <= N$, coming from the simple poles of the cotangent with residue $1$, together with the residues at the poles $z_k$ of $f$:
+  $
+    integral_(C_N) pi cot(pi z) f(z) dif z = 2 pi "i" (sum_(abs(n) <= N) f(n) + sum_k "Res"(pi cot(pi z) f(z), z_k)).
+  $
+  On $C_N$ the estimate $abs(pi cot(pi z) f(z)) <= C' (N + 1/2)^(-2)$ holds and the perimeter is $8 (N + 1/2)$, so the left-hand side is $O(N^(-1))$ and tends to $0$.
+  Letting $N -> infinity$ gives the first identity.
+
+  The second is identical, with the cotangent replaced by $(pi)/(sin(pi z))$, whose residue at the integer $n$ equals $(-1)^n$.
+]
+
+#example(name: "The Basel Problem")[
+  Take $f(z) = 1/z^2$, which has a double pole at $0$ and no other.
+  Dividing the expansion $pi cot(pi z) = 1/z - (pi^2 z)/3 - dots$ by $z^2$ gives
+  $
+    (pi cot(pi z))/(z^2) = 1/z^3 - (pi^2)/(3 z) - dots,
+  $
+  so $"Res"(pi cot(pi z)/z^2, 0) = -pi^2/3$.
+  #link(<thm:cotangent-summation>)[The summation theorem] therefore yields
+  $
+    sum_(n != 0) 1/n^2 = (pi^2)/3,
+  $
+  and halving the symmetric sum gives $sum_(n=1)^infinity 1/n^2 = pi^2/6$.
+] <ex:basel-problem>
+
+#example(name: "An Alternating Sum")[
+  Let $a > 0$ and $f(z) = 1/(z^2 + a^2)$, with simple poles at $plus.minus a "i"$.
+  At $a "i"$, where $sin(pi a "i") = "i" sinh(pi a)$,
+  $
+    "Res"((pi)/(sin(pi z)) 1/(z^2 + a^2), a "i") = (pi)/(("i" sinh(pi a))(2 a "i")) = -(pi)/(2 a sinh(pi a)),
+  $
+  and the residue at $-a "i"$ takes the same value; their sum is $-pi/(a sinh(pi a))$.
+  Hence
+  $
+    sum_(n = -infinity)^infinity ((-1)^n)/(n^2 + a^2) = (pi)/(a sinh(pi a)),
+  $
+  and by evenness
+  $
+    sum_(n=1)^infinity ((-1)^n)/(n^2 + a^2) = (pi)/(2 a sinh(pi a)) - (1)/(2 a^2).
+  $
+] <ex:alternating-sum>
+
+#note(title: "Why the Quadratic Decay")[
+  The hypothesis $abs(f(z)) <= C abs(z)^(-2)$ is used twice: it makes the series converge absolutely, and it makes the contour integral vanish after multiplication by the bounded kernel and the perimeter $O(N)$.
+  A slower decay leaves both the series and the integral divergent; a faster decay merely makes the computation shorter.
+]
+
 #part("Conformal Mapping and Analytic Continuation") // 共形映射与解析延拓
 = Theory of Conformal Mapping // 共形映射理论
 
