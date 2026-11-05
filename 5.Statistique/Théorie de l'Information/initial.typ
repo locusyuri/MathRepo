@@ -28,7 +28,8 @@
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
 // 主线：信息度量 → 编码极限 → 代数构造 → 网络与接口。
-// 共 5 Part、15 Chapter、74 Section；另设附录（术语表）。
+// 四段主线对应 5 个 Part（"编码极限"占 Part II、III 两个 Part），
+// 共 15 Chapter、74 Section；另设附录（术语表）。
 //
 // 职责边界：
 //   - σ-代数、集合运算、关系与映射 → Théorie des Ensembles（交叉引用）
@@ -40,10 +41,13 @@
 //     的带限信道只引用抽样定理的结论）
 //   - 随机过程的构造、鞅、Itô 积分 → Processus Stochastique（交叉引用；
 //     Ch 3 仅处理熵率，不展开过程理论）
-//   - 群、环、有限域的一般理论、多项式环 → Algèbre Abstraite（交叉引用；
-//     §10.1 只复习编码所需的 GF(q) 与本原多项式）
+//   - 群、环、域的一般理论与多项式环 → Algèbre Abstraite（交叉引用；§10.1
+//     回指其 Ch 13 §13.3「有限域」的存在唯一性、乘法群循环性与 Frobenius，
+//     但本原多项式、最小多项式与 BCH 根集由 §10.1 自含——AA §13.3 不含这些）
 //   - 矩阵的秩、线性方程组、SVD → Algèbre Linéaire（交叉引用；§10.2 的
 //     生成矩阵与校验矩阵只讨论编码结构）
+//   - 图论基本概念（图、树、流、割）→ Théorie des Graphes（交叉引用；该笔记
+//     目前尚未在仓库中建立，§3.2、§13.5 只借用术语与结论，不重述图论）
 //   - 组合计数方法（容斥、双计数、生成函数）→ Combinatoire（交叉引用；
 //     §4.3 的类型计数只用到初等计数）
 //   - 热力学熵、Gibbs 熵、Landauer 原理 → Thermodynamique（交叉引用；
@@ -53,23 +57,30 @@
 //   - 生命科学、医学信息分析（傅祖芸 第 12 章）→ 不纳入（非数学内容）
 //   - von Neumann 熵、量子信道、Holevo 界、QKD → Mécanique quantique
 //     §13.4（不纳入；本笔记保持经典 Shannon 体系）
-//   - Kolmogorov 复杂度、算法随机性 → Logique Mathématique（不纳入；
-//     §15.3 只使用 MDL 的信息论表述，不建立可计算性基础）
+//   - Kolmogorov 复杂度、算法随机性 → 不纳入（本笔记不建立可计算性基础；
+//     §15.4 只使用 MDL 的信息论表述。仓库内亦无承载该主题的笔记，
+//     因此不写成"归 XX"，避免制造空头承诺）
 //
 // 设计决策：
 //   - Ch 4 独立于 Ch 3：熵率刻画"信源在时间上的渐近性质"，AEP 与类型方法
 //     刻画"单次观测的典型性"，后者是两个编码定理共用的工具；按"工具先行"
 //     把 AEP 放在 Part II 开头，而不是紧跟熵的定义
+//   - AEP 的正本在 §4.1（DMS 情形）：§2.3 的典型体积、§3.3 的
+//     Shannon–McMillan–Breiman、§8.1 的联合典型都只是回指 §4.1 的同一
+//     论证骨架，各自只补"连续 / 平稳 / 多变量"的差异，不重证
 //   - Ch 2 前移微分熵（C&T 第 8 章）与最大熵（C&T 第 12 章）：Part I 必须
 //     同时给出离散与连续两套度量，否则 Ch 9 要跨 Part 引用；最大熵是度量层
-//     的收官原理，与微分熵同章可避免概念往返
+//     的收官原理，与微分熵同章可避免概念往返。本章 §2.1–2.2（离散散度）与
+//     §2.3–2.5（连续化）以 KL 为纽带：连续熵是离散熵在量化步长 → 0 时的
+//     极限，故不拆章，改由本章标题如实反映两个主题
 //   - Ch 7 与 Ch 8 拆分：容量是信道本身的优化问题，编码定理是可达性证明；
 //     合并会使"容量计算"与"随机编码"两条论证线互相打断
 //   - Ch 9 的衰落与 MIMO（§9.5）超出两本基线（傅祖芸止于限带高斯信道），
 //     作为现代扩展保留，只给容量结论，不展开信道估计与预编码
 //   - Part IV 独立成编：C&T 仅在 §7.11 提 Hamming 码，傅祖芸第 9 章系统讲
 //     线性/循环/卷积码；按"极限（Part III）→ 构造（Part IV）"分编，并在
-//     §10.1 以 GF(q) 复习衔接 Algèbre Abstraite
+//     §10.1 回指 Algèbre Abstraite §13.3 的有限域结论，本原多项式与最小多项式
+//     自含
 //   - §12.3–12.5（Turbo/LDPC/Polar）超出两本基线，作为现代构造导论保留；
 //     密度进化、极化理论的完整证明不在本笔记范围
 //   - §5.6 合并 C&T 第 6 章（赌博）与第 16 章（投资组合）：两者是"熵 =
@@ -80,6 +91,17 @@
 //     占位，按 SRP 只交叉引用；傅祖芸第 13 章亦仅"简介"
 //   - 傅祖芸第 12 章（跨学科）不设专章：热力学/光学部分以交叉引用处理，
 //     生命科学部分超出数学笔记范围
+//   - §7.6 与 §8.5 的分工：分离定理的严格证明要用 Fano 不等式，故归 §8.5；
+//     §7.6 只讲"匹配与失配代价"（率失真视角），避免两处重复陈述同一定理
+//   - §9.1 与 §9.2 的分工：§9.1 只做高斯信道的可达性（编码 + 功率约束的
+//     反向检验），§9.2 专做逆定理（EPI + 高斯为最坏噪声），使 §2.5 的熵
+//     功率不等式在此获得唯一回收点
+//   - Ch 11 由三节并为两节：原 §11.1–11.2 都在讲生成/校验多项式的表示，与
+//     §11.3 的"编解码实现"才构成真正的分界；合并后为"结构 / 实现"两节，
+//     BCH 与 RS 顺次前移
+//   - §15.3 新增 Fisher 信息与估计界：C&T 第 11 章含 Fisher 信息与
+//     Cramér–Rao 型不等式，原目录无落点；且 Part V 号称"为统计笔记搭桥"，
+//     估计理论比 ELBO 更基础，故独立成节（原 §15.3–15.5 依次后移）
 //
 // 教材基线：Cover & Thomas《Elements of Information Theory》第 2 版
 //   （Wiley, 2006）17 章 + 傅祖芸《信息论——基础理论与应用》第 4 版
@@ -87,16 +109,21 @@
 //   Inference, and Learning Algorithms》（Cambridge, 2003）作为推断/学习
 //   接口的补充来源，不单独设章。组织顺序独立于教材。
 //
-// 教材覆盖度（章节级映射；逐节对应见交付说明的完整表）：
+// 教材覆盖度（章节级映射，按 C&T 第 2 版章号）：
 //   C&T  1 → Ch 1 §1.1              C&T 10 → Ch 6
-//   C&T  2 → Ch 1 §1.2–1.5, Ch 2 §2.1   C&T 11 → Ch 4 §4.3, Ch 15 §15.1–15.2
+//   C&T  2 → Ch 1 §1.2–1.5, Ch 2 §2.1   C&T 11 → Ch 4 §4.3, Ch 15 §15.1–15.3
 //   C&T  3 → Ch 4 §4.1–4.2          C&T 12 → Ch 2 §2.4
 //   C&T  4 → Ch 3                   C&T 13 → Ch 5 §5.5
-//   C&T  5 → Ch 5 §5.1–5.4          C&T 14 → 不纳入（Logique Mathématique）
-//   C&T  6 → Ch 5 §5.6              C&T 15 → Ch 13
+//   C&T  5 → Ch 5 §5.1–5.4          C&T 14 → 不纳入（不建立可计算性基础）
+//   C&T  6 → Ch 5 §5.6, Ch 3 §3.4   C&T 15 → Ch 13
 //   C&T  7 → Ch 7, Ch 8             C&T 16 → Ch 5 §5.6
 //   C&T  8 → Ch 2 §2.3              C&T 17 → Ch 1 §1.4, Ch 2 §2.2
 //   C&T  9 → Ch 9
+//
+//   章号说明：第 2 版以 Ch 1「Introduction and Preview」开篇，故 Ch 4 为
+//   Entropy Rates、Ch 6 为 Gambling（内含 §6.4 The Entropy of English）。
+//   逐节映射（到 C&T 的 §x.y 与傅祖芸的 §x.y 一级）在每章写作时同步追加到
+//   本块下方，保持"覆盖度可在仓库内复核"；不再指向仓库外的交付说明。
 //
 //   傅 1 → Ch 1 §1.1    傅 6 → Ch 8     傅 11 → Ch 14
 //   傅 2 → Ch 1, Ch 3   傅 7 → Ch 6（另见 §8.5）   傅 12 → §2.4（最大熵部分）；其余交叉引用
@@ -150,13 +177,13 @@
 //     - Fano 不等式的用途：逆定理、下界、错误概率与熵的关系
 
 
-// --- Chapter 2: Divergence Measures and Continuous Information (散度与连续信息) ---
+// --- Chapter 2: Divergences, Continuous Entropy and Maximum Entropy (散度、连续熵与最大熵原理) ---
 
 //   Section 2.1: Relative Entropy, Cross Entropy and f-Divergences (相对熵、交叉熵与 f-散度)
 //     - KL 散度 D(p||q)；交叉熵 H(p,q)
 //     - 非负性与不对称性；KL 不是度量
 //     - f-散度族（KL、总变差、χ²、Hellinger）；Rényi 熵与 Rényi 散度
-//     - 与最大似然、交叉熵损失的联系（只给接口，详见 §15.4）
+//     - 与最大似然、交叉熵损失的联系（只给接口，详见 §15.5）
 
 //   Section 2.2: Pinsker's Inequality and Variational Representations (Pinsker 不等式与变分表示)
 //     - 总变差距离与 KL 的相互控制
@@ -167,7 +194,7 @@
 //   Section 2.3: Differential Entropy and Its Properties (微分熵及其性质)
 //     - 微分熵 h(X) = -∫ f log f；与离散熵的关系（量化极限）
 //     - 联合/条件微分熵；相对熵与互信息的连续版本
-//     - 连续情形的 AEP：典型体积与高概率集（C&T 第 8 章）
+//     - 典型体积与高概率集（连续 AEP；回指 §4.1 的正本，C&T 第 8 章）
 //     - 平移不变性与尺度变换：h(aX) = h(X) + log|a|
 //     - 线性变换下的微分熵：h(AX) = h(X) + log|det A|（傅祖芸 第 4 章的坐标变换）
 //     - 微分熵可为负，它不是"比特数"（与离散熵的关键区别）
@@ -200,6 +227,7 @@
 //     - 马尔可夫链的函数（隐藏 Markov 模型）：只给熵率定义与例子
 
 //   Section 3.3: Asymptotic Equipartition for Stationary Sources (平稳信源的渐近均分性)
+//     - 本节只补"平稳/遍历"相对 DMS 的差异；论证骨架回指 §4.1，不重证
 //     - Shannon–McMillan–Breiman 定理（陈述，不证一般遍历情形）
 //     - 典型序列的存在性与概率集中
 //     - 经验熵与熵率的估计
@@ -207,8 +235,8 @@
 
 //   Section 3.4: Redundancy and the Entropy of Natural Language (剩余度与自然语言的熵)
 //     - 剩余度 R = log|X| - H；冗余与可压缩性
-//     - 自然语言的熵：Shannon 猜词实验与 C&T 第 6 章
-//     - 压缩与语言模型的关系（预告 §15.4 的交叉熵）
+//     - 自然语言的熵：Shannon 猜词实验（C&T §6.4；Shannon 1951 原始论文）
+//     - 压缩与语言模型的关系（预告 §15.5 的交叉熵）
 //     - 英文/中文熵估计的量级与结论（只给结论）
 
 
@@ -225,6 +253,8 @@
 // --- Chapter 4: Asymptotic Equipartition and Typicality (渐近均分性与典型性) ---
 
 //   Section 4.1: The AEP for Discrete Memoryless Sources (离散无记忆信源的 AEP)
+//     - 本节是全书 AEP 的"正本"；§2.3（连续）、§3.3（平稳）、§8.1（联合）
+//       三处只回指此处的论证骨架，各自仅补差异，不重证
 //     - 大数定律视角：-log p(X^n)/n → H(X)
 //     - 典型集 A_ε^(n) 的定义与三条性质
 //     - 典型集的概率、大小与元素概率的下界
@@ -278,7 +308,7 @@
 //     - 通用码与未知分布下的编码；LZ 的渐近最优性
 //     - 冗余度的定义与下界；Bayesian 与 minimax 冗余
 //     - 两遍编码与一遍编码的差异
-//     - 与 MDL 原理的联系（预告 §15.3）
+//     - 与 MDL 原理的联系（预告 §15.4）
 
 //   Section 5.6: Gambling, the Kelly Criterion and Universal Portfolios (赌博、Kelly 准则与通用投资组合)
 //     - 赛马模型与公平赔率；财富增长的对数效用
@@ -358,10 +388,10 @@
 //     - 离散无记忆信道的数值计算
 //     - 与 §6.2 率失真迭代算法的同构
 
-//   Section 7.6: Source–Channel Separation and Matching (信源信道分离与匹配)
-//     - 分离定理：C ≥ H 时可靠传输
-//     - 匹配：信源编码 + 信道编码的级联
-//     - 分离定理的失效场景（多用户、时延受限；只给结论）
+//   Section 7.6: Source–Channel Matching and the Cost of Mismatch (信源信道匹配与失配代价)
+//     - 匹配：按 R(D) 与 C 分配比特；信源编码 + 信道编码的级联
+//     - 失配代价：码率偏离匹配点时的性能损失（定性；回指 Ch 6 的 R(D)）
+//     - 分离定理的严格陈述与证明归 §8.5，本节只做匹配层面的讨论
 
 
 // --- Chapter 8: The Channel Coding Theorem (信道编码定理) ---
@@ -387,12 +417,12 @@
 //     - 截止速率 R_comp；与容量的差距
 //     - 有限码长效应（只给量级，不展开有限块长理论）
 
-//   Section 8.5: Feedback, Zero-Error Codes and Separation (反馈、零错误码与分离)
+//   Section 8.5: Feedback and Source–Channel Separation (反馈与信源信道分离)
 //     - 反馈不增加 DMC 容量（C&T 第 7 章）
-//     - 零错误码与容量（回指 §7.3）
-//     - 信源信道分离定理的严格表述（C&T 第 7 章）
+//     - 信源信道分离定理的严格表述与证明（承 §7.6 的匹配讨论；C&T 第 7 章）
 //     - 联合信源信道编码：有失真情形（傅祖芸 第 6、7 章）
 //     - 反馈在时变/多用户信道中的作用（定性）
+//     - 零错误码与零错误容量只在 §7.3 处理，本节回指不重复
 
 
 // --- Chapter 9: Gaussian Channels and Capacity (高斯信道与容量) ---
@@ -400,12 +430,14 @@
 //   Section 9.1: The Gaussian Channel and Its Capacity (高斯信道与容量)
 //     - AWGN 模型 Y = X + Z；功率约束 E[X²] ≤ P
 //     - 容量 C = ½ log(1 + P/N)
-//     - 可达性与逆定理（用 §8.3 的 Fano 论证 + 微分熵）
+//     - 可达性：把 §8.1–8.2 的联合典型与随机编码改写到连续情形，只给适配要点
+//     - 逆定理不在本节：见 §9.2
 
 //   Section 9.2: Converse for the Gaussian Channel (高斯信道的逆定理)
+//     - 用 §8.3 的 Fano 论证 + 微分熵推出 nR ≤ nC + 1 + n P_e R
 //     - 熵功率不等式（§2.5）的作用
 //     - 高斯噪声是最坏噪声（最大熵，回指 §2.4）
-//     - 容量界的紧性
+//     - 紧性：可达性与逆定理在 C = ½ log(1 + P/N) 处相遇
 
 //   Section 9.3: Bandlimited Channels and the Shannon–Hartley Formula (带限信道与 Shannon–Hartley 公式)
 //     - 采样定理与自由度（交叉引用 Analyse Harmonique 的抽样定理）
@@ -439,8 +471,8 @@
 // --- Chapter 10: Finite Fields and Linear Block Codes (有限域与线性分组码) ---
 
 //   Section 10.1: Finite Fields and Polynomial Arithmetic (有限域与多项式算术)
-//     - GF(q) 的存在唯一性；GF(p^m) 的构造
-//     - 本原元与本原多项式；最小多项式
+//     - GF(q) 的存在唯一性与乘法群的循环性：回指 Algèbre Abstraite §13.3，不重证
+//     - 本原元与本原多项式；最小多项式（AA §13.3 未含此内容，本节自含）
 //     - 多项式环与欧几里得算法（交叉引用 Algèbre Abstraite 的环论）
 //     - 编码所需的全部代数工具（不重述群环域一般理论）
 
@@ -464,35 +496,31 @@
 
 //   Section 10.5: Bounds: Hamming, Singleton, Plotkin, Gilbert–Varshamov (界：Hamming、Singleton、Plotkin、Gilbert–Varshamov)
 //     - 四个界的陈述与证明思路
-//     - 界的可达性：MDS 码与 §11.5 的衔接
+//     - 界的可达性：MDS 码与 §11.4 的衔接
 //     - 渐近界与编码理论的基本极限（只给结论）
 //     - 与 Part III 容量界的对照：距离界 vs 容量界
 
 
 // --- Chapter 11: Cyclic Codes, BCH and Reed–Solomon (循环码、BCH 与 Reed–Solomon) ---
 
-//   Section 11.1: Cyclic Codes and Polynomial Description (循环码与多项式表示)
+//   Section 11.1: Cyclic Codes: Polynomial Structure (循环码：多项式结构)
 //     - 循环移位不变性；理想与多项式环的对应
 //     - 码多项式、生成多项式 g(x)；g(x) | x^n - 1
+//     - 生成矩阵的系统形式；校验多项式 h(x)；对偶码与互反多项式
 //     - 循环码的维数与最小距离下界
 
-//   Section 11.2: Generator and Parity-Check Polynomials (生成多项式与校验多项式)
-//     - 生成矩阵的系统形式；校验多项式 h(x)
-//     - 编码的移位寄存器实现
-//     - 对偶码与互反多项式
-
-//   Section 11.3: Encoding and Decoding of Cyclic Codes (循环码的编码与译码)
+//   Section 11.2: Encoding and Decoding of Cyclic Codes (循环码的编码与译码)
 //     - 多项式除法编码；系统循环码
-//     - 伴随式计算与错误定位
-//     - 译码器结构（LFSR）；复杂度
+//     - 编码与伴随式的移位寄存器（LFSR）实现
+//     - 错误定位与译码器结构；复杂度
 
-//   Section 11.4: BCH Codes (BCH 码)
+//   Section 11.3: BCH Codes (BCH 码)
 //     - 本原 BCH 码的构造：根集与生成多项式
 //     - BCH 界；设计距离与实际距离
 //     - 译码：Berlekamp–Massey 与 Chien 搜索（只给算法框架）
 //     - 二元 BCH 与 §10.4 Hamming 码的关系
 
-//   Section 11.5: Reed–Solomon Codes and MDS Codes (Reed–Solomon 码与 MDS 码)
+//   Section 11.4: Reed–Solomon Codes and MDS Codes (Reed–Solomon 码与 MDS 码)
 //     - RS 码作为 GF(q) 上的 BCH 码；参数 (n, n-d+1)
 //     - MDS 码与 Singleton 界等号
 //     - 纠删与纠错；多项式求值视角
@@ -538,8 +566,8 @@
 // Ch 13 多用户/网络（容量区域取代单一容量）；Ch 14 安全（保密容量取代可靠
 // 传输容量）；Ch 15 统计与学习（把类型、散度、描述长度接到推断与表示学习）。
 // 三章共享同一套工具（联合典型、类型方法、互信息），是"同一理论的不同边界"。
-// Ch 15 同时为未来的数理统计笔记（估计/检验/回归）搭桥：§15.2–15.3 是
-// "从数据推模型"的信息论入口。
+// Ch 15 同时为未来的数理统计笔记（估计/检验/回归）搭桥：§15.2（检验）与
+// §15.3（估计）是"从数据推模型"的两侧入口，§15.4（MDL）给出选择准则。
 // 对应教材：C&T 第 11、15 章；傅祖芸 第 10、11 章；MacKay 的推断/学习部分。
 // （傅祖芸第 12 章的跨学科内容按交叉引用分散处理，其中最大熵谱估计见 §2.4。）
 
@@ -618,21 +646,27 @@
 //     - Chernoff 信息与错误指数
 //     - 与 §2.2 散度、§8.4 错误指数的统一视角
 
-//   Section 15.3: MDL and Model Selection (最小描述长度与模型选择)
+//   Section 15.3: Fisher Information and Estimation Bounds (Fisher 信息与估计界)
+//     - 得分函数与 Fisher 信息 J(θ)；与 KL 的局部展开（J 是 D 的二阶项）
+//     - 数据处理不等式下的 Fisher 信息；信息不等式链
+//     - Cramér–Rao 下界；渐近有效估计
+//     - 与 §15.2 错误指数、§2.1 散度的接口（C&T 第 11 章的估计部分）
+
+//   Section 15.4: MDL and Model Selection (最小描述长度与模型选择)
 //     - 两遍编码与 MDL；码长 = -log P(x|θ) + 模型描述
 //     - MDL 与 BIC/AIC 的关系（只给结论）
 //     - 通用编码与模型选择的等价（回指 §5.5）
-//     - Kolmogorov 复杂度的定位（交叉引用 Logique Mathématique，不展开）
+//     - Kolmogorov 复杂度的定位（只说明"不可计算"，不建立理论，见职责边界）
 
-//   Section 15.4: Cross-Entropy, Variational Inference and the ELBO (交叉熵、变分推断与 ELBO)
+//   Section 15.5: Cross-Entropy, Variational Inference and the ELBO (交叉熵、变分推断与 ELBO)
 //     - 交叉熵损失 = H(p) + D(p||q)
 //     - 变分下界 ELBO = E_q[log p(x,z)] - E_q[log q(z)]
 //     - KL 的分解与重参数化（只给框架）
 //     - 与 §2.1 的 KL、§2.4 的最大熵对照
 
-//   Section 15.5: Information Bottleneck and Representation Learning (信息瓶颈与表示学习)
+//   Section 15.6: Information Bottleneck and Representation Learning (信息瓶颈与表示学习)
 //     - 信息瓶颈目标：min I(X;T) - β I(T;Y)
-//     - 与 §15.4 的变分近似；自编码器的信息论解读
+//     - 与 §15.5 的变分近似；自编码器的信息论解读
 //     - 对比学习中的互信息最大化（InfoNCE，只给目标函数）
 //     - 信息论的边界：相关性不等于因果（谨慎结论）
 
@@ -670,13 +704,15 @@
 //   统计推断与学习接口，展示同一套工具在三个方向的边界。
 //
 // 教材覆盖：Cover & Thomas 第 2 版 17 章中 16 章的知识点已覆盖（第 14 章
-//   Kolmogorov 复杂度按 SRP 归 Logique Mathématique）；傅祖芸第 4 版 13 章中
+//   Kolmogorov 复杂度不纳入：本笔记不建立可计算性基础）；傅祖芸第 4 版 13 章中
 //   11 章已覆盖（第 12 章跨学科按交叉引用分散处理，第 13 章量子信息归
 //   Mécanique quantique §13.4）。MacKay 的推断/学习内容并入 Ch 15。
 //
 // 与相邻笔记的衔接：Ch 3 使用 Probabilités 的 Markov 链结论；Ch 15 为未来的
-//   数理统计笔记提供"类型/检验/MDL"入口；Part IV 的有限域复习衔接
-//   Algèbre Abstraite，不重复其理论。
+//   数理统计笔记提供"类型/检验/Fisher 估计/MDL"入口；Part IV 的有限域复习
+//   衔接 Algèbre Abstraite §13.3（本原多项式与最小多项式由 §10.1 自含）。
 // ==========================================================================
 
 #bibliography("references.bib", title: "References", full: true)
+
+// 目录
