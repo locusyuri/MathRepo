@@ -1590,45 +1590,45 @@ Tempered distributions are exactly the class on which the Fourier transform exte
 
 == Basic Properties of the Fourier Transform // Fourier 变换的基本性质
 
-Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced in §3.2. The proofs are short computations, and they are not the point: what matters is the pattern. Each operation on the variable $x$ has a dual operation on the frequency $xi$, and the transform passes from one column of the following list to the other.
+Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced in §3.2. The proofs are short computations, and they are not the point: what matters is the pattern. Each operation on the variable $x$ has a dual operation on the angular frequency $omega$, and the transform passes from one column of the following list to the other.
 
 #figure(
   image("img/fourier-duality.svg", width: 72%),
-  caption: [Fourier duality in the $xi$ convention. Left column: $f(x)$; right column: $hat(f)(xi)$. Top: a box of half-width $a$ gives a sinc decaying like $1 \/ abs(xi)$, so a narrow support forces a wide spectrum. Middle: a Gaussian gives a Gaussian of width $1 \/ (pi sigma)$, the shape being preserved only at the self-dual scale $sigma = 1$. Bottom: translating $f$ leaves $abs(hat(f))$ unchanged and multiplies the transform by the linear phase $e^(-2 pi i x_0 xi)$ — the content of rule 2 below.],
+  caption: [Fourier duality in the $omega$ convention. Left column: $f(x)$; right column: $hat(f)(omega)$. Top: a box of half-width $a$ gives a sinc decaying like $1 \/ abs(omega)$, so a narrow support forces a wide spectrum. Middle: a Gaussian gives a Gaussian, with variances in inverse proportion; the shape is preserved only at the self-dual scale. Bottom: translating $f$ leaves $abs(hat(f))$ unchanged and multiplies the transform by the linear phase $e^(-i x_0 omega)$ — the content of rule 2 below.],
   supplement: [Fig.],
 ) <fig:fourier-duality>
 
 #property(name: "Fourier Transform Rules")[
-  Let $f, g in cal(S)(bb(R))$, $a, b in bb(C)$, $x_0, xi_0 in bb(R)$ and $c in bb(R) without {0}$. Then
+  Let $f, g in cal(S)(bb(R))$, $a, b in bb(C)$, $x_0, omega_0 in bb(R)$ and $c in bb(R) without {0}$. Then
   1. *Linearity.*
     $ cal(F)[a f + b g] = a cal(F)[f] + b cal(F)[g]. $
 
   2. *Translation and modulation.*
     $
-      cal(F)[f(x - x_0)](xi) = e^(-2 pi i xi x_0) hat(f)(xi), quad cal(F)[e^(2 pi i xi_0 x) f(x)](xi) = hat(f)(xi - xi_0).
+      cal(F)[f(x - x_0)](omega) = e^(-i omega x_0) hat(f)(omega), quad cal(F)[e^(i omega_0 x) f(x)](omega) = hat(f)(omega - omega_0).
     $
 
   3. *Scaling.*
-    $ cal(F)[f(c x)](xi) = (1) / (abs(c)) hat(f)(xi / c). $
+    $ cal(F)[f(c x)](omega) = (1) / (abs(c)) hat(f)(omega / c). $
 
   4. *Conjugation and reflection.*
-    $ hat(overline(f))(xi) = overline(hat(f)(-xi)), quad cal(F)[f(-x)](xi) = hat(f)(-xi). $
+    $ hat(overline(f))(omega) = overline(hat(f)(-omega)), quad cal(F)[f(-x)](omega) = hat(f)(-omega). $
 
   5. *Differentiation and multiplication.* For every $n >= 0$,
-    $ cal(F)[f^((n))](xi) = (2 pi i xi)^n hat(f)(xi), quad cal(F)[x^n f(x)](xi) = (1) / (2 pi i)^n hat(f)^((n))(xi). $
+    $ cal(F)[f^((n))](omega) = (i omega)^n hat(f)(omega), quad cal(F)[x^n f(x)](omega) = i^n hat(f)^((n))(omega). $
 
   6. *Multiplication formula.*
-    $ integral_(-oo)^(oo) f(x) hat(g)(x) dif x = integral_(-oo)^(oo) hat(f)(xi) g(xi) dif xi. $
+    $ integral_(-oo)^(oo) f(x) hat(g)(x) dif x = integral_(-oo)^(oo) hat(f)(omega) g(omega) dif omega. $
 ] <prop:fourier-transform-rules>
 
 #proof[
-  (1) is the linearity of the integral. In (2) the substitution $u = x - x_0$ produces the factor $e^(-2 pi i xi x_0)$, and the modulation statement is the same computation written with the frequencies shifted.
-  In (3) the substitution $u = c x$ produces the factor $1 \/ abs(c)$ and rescales the frequency into $xi \/ c$.
+  (1) is the linearity of the integral. In (2) the substitution $u = x - x_0$ produces the factor $e^(-i omega x_0)$, and the modulation statement is the same computation written with the frequencies shifted.
+  In (3) the substitution $u = c x$ produces the factor $1 \/ abs(c)$ and rescales the frequency into $omega \/ c$.
   In (4) take conjugates and substitute $u = -x$.
-  In (5) integrate by parts $n$ times: the boundary terms vanish because every derivative of a Schwartz function decays faster than any polynomial, and each integration by parts brings down a factor $2 pi i xi$; differentiating under the integral sign gives the second identity.
+  In (5) integrate by parts $n$ times: the boundary terms vanish because every derivative of a Schwartz function decays faster than any polynomial, and each integration by parts brings down a factor $i omega$; differentiating under the integral sign gives the second identity, since $(dif) / (dif omega) hat(f)(omega) = -i cal(F)[x f](omega)$.
   For (6), apply Fubini to the absolutely convergent double integral
   $
-    integral_(-oo)^(oo) integral_(-oo)^(oo) abs(f(x) g(y) e^(-2 pi i x y)) dif x dif y = || f ||_1 || g ||_1 < +oo.
+    integral_(-oo)^(oo) integral_(-oo)^(oo) abs(f(x) g(y) e^(-i x y)) dif x dif y = || f ||_1 || g ||_1 < +oo.
   $
 ]
 
@@ -1637,19 +1637,23 @@ The product rule, which is the frequency-side shadow of the convolution theorem 
 #theorem(name: "Convolution Theorem")[
   Let $f, g in cal(S)(bb(R))$. Then $f * g in cal(S)(bb(R))$ and
   $
-    hat(f * g)(xi) = hat(f)(xi) dot hat(g)(xi), quad xi in bb(R).
+    hat(f * g)(omega) = hat(f)(omega) dot hat(g)(omega), quad omega in bb(R).
   $
-  Conversely, $hat(f g) = hat(f) * hat(g)$.
+  Conversely,
+  $
+    hat(f g)(omega) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(theta) hat(g)(omega - theta) dif theta.
+  $
 ] <thm:convolution-R>
 
 #proof[
   By #link(<def:convolution>)[the definition of convolution], $(f * g)(x) = integral_(-oo)^(oo) f(t) g(x - t) dif t$, so
   $
-    hat(f * g)(xi) & = integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) g(x - t) dif t ) e^(-2 pi i xi x) dif x \
-                   & = integral_(-oo)^(oo) f(t) ( integral_(-oo)^(oo) g(x - t) e^(-2 pi i xi x) dif x ) dif t \
-                   & = integral_(-oo)^(oo) f(t) e^(-2 pi i xi t) hat(g)(xi) dif t = hat(f)(xi) dot hat(g)(xi).
+    hat(f * g)(omega) & = integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) g(x - t) dif t ) e^(-i omega x) dif x \
+                      & = integral_(-oo)^(oo) f(t) ( integral_(-oo)^(oo) g(x - t) e^(-i omega x) dif x ) dif t \
+                      & = integral_(-oo)^(oo) f(t) e^(-i omega t) hat(g)(omega) dif t = hat(f)(omega) dot hat(g)(omega).
   $
-  The interchange of integrals is legitimate: the integrand is dominated by $abs(f(t) g(x - t))$, whose double integral is $|| f ||_1 || g ||_1$ by Fubini and translation invariance of the integral. The second statement follows from the first applied to $hat(f)$ and $hat(g)$, using the inversion formula of §3.4, or directly from the multiplication formula of the preceding proposition.
+  The interchange of integrals is legitimate: the integrand is dominated by $abs(f(t) g(x - t))$, whose double integral is $|| f ||_1 || g ||_1$ by Fubini and translation invariance of the integral.
+  The converse is the same computation read backwards: in the double integral defining $hat(f) * hat(g)$ one integrates first in $theta$, and the formal identity $integral e^(-i theta (x - y)) dif theta = 2 pi delta(x - y)$ leaves $2 pi$ times the transform of $f g$.
 ]
 
 === The Transform as an Operator on $cal(S)$ // 作为速降空间上的算子
@@ -1661,13 +1665,13 @@ Rule 5 has a consequence that was promised in §3.2: the transform never leaves 
 ] <prop:fourier-schwartz>
 
 #proof[
-  Fix $m, n >= 0$ and write $psi = (-2 pi i x)^m phi(x)$, which is again a Schwartz function by #link(<prop:schwartz-stability>)[the closure properties]. By rule 5 applied twice,
+  Fix $m, n >= 0$ and write $psi = (-i x)^m phi(x)$, which is again a Schwartz function by #link(<prop:schwartz-stability>)[the closure properties]. By rule 5 applied twice, $hat(phi)^((m)) = cal(F)[psi]$, so
   $
-    xi^n hat(phi)^((m))(xi) = (1) / (2 pi i)^n cal(F)[psi^((n))](xi) = (1) / (2 pi i)^n integral_(-oo)^(oo) psi^((n))(x) e^(-2 pi i xi x) dif x.
+    omega^n hat(phi)^((m))(omega) = (-i)^n cal(F)[psi^((n))](omega) = (-i)^n integral_(-oo)^(oo) psi^((n))(x) e^(-i omega x) dif x.
   $
-  Taking absolute values and then suprema over $xi$,
+  Taking absolute values and then suprema over $omega$, and expanding the $n$-th derivative of $(-i x)^m phi(x)$ by Leibniz,
   $
-    || hat(phi) ||_((m, n)) <= (1) / (2 pi)^n || psi^((n)) ||_1 <= (1) / (2 pi)^n sum_(k=0)^(n) binom(n, k) (2 pi)^(m - k) || phi ||_((m, n - k)),
+    || hat(phi) ||_((m, n)) <= || psi^((n)) ||_1 <= sum_(k=0)^(min(m, n)) binom(n, k) (m!)/((m - k)!) || phi ||_((m - k, n - k)),
   $
   where the last inequality uses $abs(psi^((n))(x)) <= C \/ (1 + x^2)$ for a combination of finitely many seminorms of $phi$, exactly as in the proof of the closure properties. Hence $hat(phi) in cal(S)$ and $phi_j -> phi$ in $cal(S)$ implies $hat(phi_j) -> hat(phi)$ in $cal(S)$.
 ]
