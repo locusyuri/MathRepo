@@ -759,8 +759,9 @@ a specified circuit. Once both are in place, entropy, capacity and error
 probability become functions of distributions rather than of hardware, and the
 theory becomes a chapter of probability.
 
+// TODO: 占位图为 8x8 空 SVG，故暂时按高度约束；生成正式图后改为 width: 92%
 #figure(
-  image("img/communication-system.svg", width: 92%),
+  image("img/communication-system.svg", height: 7cm),
   caption: [
     The five components of a communication system. The source is described by a
     distribution $p(x)$, the channel by transition probabilities $p(y | x)$;
@@ -841,6 +842,288 @@ language; statistics receives the resulting tools in Ch 15.
   from the context, $H(X)$ is written for $H(p)$; the distinction between the
   two is made explicit only where it matters, namely in the concavity statement
   of §1.2.
+]
+
+== Axiomatic Definition of Entropy // 熵的公理化定义
+
+How much information does the occurrence of an event carry? Three requirements
+suggest themselves before any formula is written. The information should depend
+only on the probability of the event; it should *decrease* as that probability
+grows, because a certain event carries none; and for independent events it
+should *add up*, because independence means that learning one outcome says
+nothing about the other. Continuity in the probability is a fourth requirement,
+mild enough to be uncontroversial and strong enough to exclude pathological
+functionals.
+
+=== Self-Information // 自信息
+
+#definition(name: "Self-Information")[
+  Let $X$ be a random variable on a finite alphabet $cal(X)$ with probability
+  mass function $p$. For $x in cal(X)$ with $p(x) > 0$, the *self-information*
+  of the outcome $x$ is
+  $
+    I(x) = -log p(x) = log 1 / (p(x)),
+  $
+  measured in bits when the logarithm is base $2$.
+] <def:self-information>
+
+The three requirements fix $I$ up to a positive constant: monotonicity forces
+$I$ to be a decreasing function of $p$, additivity on independent events forces
+it to turn products into sums, and continuity then leaves only the logarithm.
+The constant is a choice of unit, and base $2$ makes $I$ count the number of
+fair coin tosses needed to specify the outcome.
+
+Self-information is a *random variable*: it is the function
+$x |-> -log p(x)$ composed with $X$. Its expectation is the central object of
+the theory.
+
+#definition(name: "Entropy")[
+  The *entropy* of a random variable $X$ with mass function $p$ on a finite
+  alphabet $cal(X)$ is the expected self-information,
+  $
+    H(X) = -sum_(x in cal(X)) p(x) log p(x).
+  $ <eq:entropy-def>
+  We write $H(p)$ for the same quantity when the distribution, not the variable,
+  is the object of study, and we adopt the convention $0 log 0 = 0$.
+] <def:entropy>
+
+The notation $H(X)$ versus $H(p)$ is not pedantry. Entropy is a functional of
+the distribution, and two different variables with the same distribution have
+the same entropy; conversely, theorems about $H$ as a function on the simplex
+(concavity, continuity) are statements about $H(p)$ and are meaningless for
+$H(X)$.
+
+=== The Shannon Axioms // Shannon 公理
+
+The formula in #link(<def:entropy>)[the definition above] should not be taken on
+faith. The honest question is which functionals on distributions deserve the
+name "amount of information", and the answer is that a short list of structural
+requirements determines the functional uniquely. We state them for a functional
+$H_n$ defined on the simplex
+$Delta_n = {(p_1, dots, p_n) : p_i >= 0, sum_i p_i = 1}$ for every $n >= 1$.
+
+#axiom(name: "Shannon Axioms for Entropy")[
+  + *Continuity.* For each fixed $n$, $H_n$ is continuous on $Delta_n$.
+  + *Symmetry.* $H_n$ is invariant under permutations of its arguments:
+    $H_n (p_1, dots, p_n) = H_n (p_(sigma(1)), dots, p_(sigma(n)))$.
+  + *Monotonicity and normalization.* $H_n (1\/n, dots, 1\/n)$ is strictly
+    increasing in $n$, and $H_2 (1\/2, 1\/2) = 1$.
+  + *Grouping.* If $p_1 + dots + p_k > 0$, then
+    $
+      H_n (p_1, dots, p_n) = H_(n-k+1) (p_1 + dots + p_k, p_(k+1), dots, p_n)
+        + (p_1 + dots + p_k) H_k (p_1 / s, dots, p_k / s),
+    $ <eq:grouping>
+    where $s = p_1 + dots + p_k$. In words: a two-stage experiment — first
+    decide which group occurred, then which member of the group — carries the
+    same information as the single-stage experiment.
+] <axiom:shannon>
+
+Each axiom excludes something. Continuity rules out functionals that depend on
+the arithmetic form of the probabilities; symmetry rules out an ordering of the
+outcomes; monotonicity says that more equally likely alternatives mean more
+uncertainty and, together with normalization, fixes the base of the logarithm;
+grouping is the structural axiom, and it is the one that will be dropped, in two
+different ways, for the weighted and the Rényi entropies.
+
+=== The Equiprobable Case and the General Formula // 从等概情形到一般公式
+
+Two computations do all the work. The first evaluates the functional on uniform
+distributions.
+
+#lemma(name: "Entropy of a Uniform Distribution")[
+  Let $H$ satisfy #link(<axiom:shannon>)[the Shannon axioms] and let $H_n$
+  denote its value on the uniform distribution of $n$ outcomes. Then
+  $H_n = log n$ for every $n >= 1$.
+] <lem:equiprobable-entropy>
+
+#proof[
+  *Step 1: multiplicativity.* Consider $m n$ equally likely outcomes and group
+  them into $m$ blocks of $n$ outcomes each. #link(<eq:grouping>)[The grouping
+  axiom], with $p_j = 1\/m$ inside each block, gives
+  $
+    H_(m n) = H_m + sum_(j=1)^m (1) / (m) H_n = H_m + H_n,
+  $
+  using symmetry to evaluate each block in the same way. By induction
+  $H_(n^k) = k H_n$, and $H_1 = 0$ because a one-point distribution carries no
+  uncertainty.
+
+  *Step 2: squeezing.* Fix $l >= 1$ and let $k$ be the integer with
+  $n^l <= 2^k < n^(l+1)$. Monotonicity and $H_2 = 1$ give
+  $
+    l H_n = H_(n^l) <= H_(2^k) = k < H_(n^(l+1)) = (l + 1) H_n.
+  $
+  Hence $k / (l + 1) < H_n <= k / l$, and since $k \/ l -> log_2 n$ as
+  $l -> infinity$, the squeeze gives $H_n = log_2 n$.
+]
+
+#lemma(name: "Entropy of a Rational Distribution")[
+  Let $p$ be a distribution on $n$ outcomes with rational probabilities
+  $p_i = r_i \/ n$, where $r_i$ are non-negative integers with
+  $sum_i r_i = n$. Then
+  $
+    H(p) = log n - 1 / n sum_(i=1)^n r_i log r_i.
+  $ <eq:rational-entropy>
+] <lem:rational-extension>
+
+#proof[
+  Take $n$ equally likely outcomes and group them into $n$ blocks of sizes
+  $r_1, dots, r_n$. #link(<eq:grouping>)[The grouping axiom] reads
+  $H_n = H(p) + sum_i p_i H_(r_i)$, and
+  #link(<lem:equiprobable-entropy>)[the previous lemma] evaluates
+  $H_n = log n$ and $H_(r_i) = log r_i$. Solving for $H(p)$ gives the claim,
+  with the convention that a block of size $0$ is omitted.
+]
+
+=== Uniqueness // 唯一性定理
+
+The two lemmas already give the formula on rational distributions. Continuity
+extends it, and the extension is unique because the rational points are dense in
+the simplex.
+
+#theorem(name: "Uniqueness of Entropy")[
+  Let $(H_n)_(n >= 1)$ be a family of functionals satisfying
+  #link(<axiom:shannon>)[the Shannon axioms]. Then for every $n$ and every
+  $p in Delta_n$,
+  $
+    H_n (p) = -sum_(i=1)^n p_i log p_i.
+  $ <eq:entropy-uniqueness>
+] <thm:entropy-uniqueness>
+
+#proof[
+  If $p$ is rational, #link(<lem:rational-extension>)[the rational formula]
+  gives
+  $H(p) = log n - (1\/n) sum_i r_i log r_i = -sum_i (r_i \/ n) log (r_i \/ n)$,
+  which is $-sum_i p_i log p_i$ after dividing the logarithm by $n$. For general
+  $p$, approximate by rational distributions $p^((k)) -> p$ pointwise; each
+  $p^((k))$ lies in a simplex of dimension at most $n$, and
+  #link(<axiom:shannon>)[continuity] gives
+  $H(p) = lim_k H(p^((k))) = lim_k (-sum_i p_i^((k)) log p_i^((k)))
+  = -sum_i p_i log p_i$, the last step by continuity of $t |-> t log t$ on
+  $[0, 1]$ with the convention $0 log 0 = 0$.
+]
+
+#note[
+  The theorem is the reason entropy is not a convention. Any functional that is
+  continuous, symmetric, monotone on uniform distributions and compatible with
+  two-stage experiments *is* $-sum p log p$. Formulae that disagree with it must
+  violate one of the four axioms, and saying which one is the fastest way to
+  understand them: the weighted entropy of §1.2 violates grouping, the Rényi
+  entropy of §2.1 keeps grouping only along a one-parameter family, and the
+  differential entropy of §2.3 applies the same formula to densities, where
+  monotonicity has no analogue and the result may even be negative.
+]
+
+=== Basic Properties and Concavity // 基本性质与凹性
+
+#proposition(name: "Elementary Properties of Entropy")[
+  For a random variable $X$ on a finite alphabet $cal(X)$:
+  + $H(X) >= 0$, with equality if and only if $X$ is constant;
+  + $H(X) <= log |cal(X)|$, with equality if and only if $X$ is uniform on its
+    support;
+  + $H$ is invariant under relabeling of the outcomes and depends only on the
+    multiset of non-zero probabilities.
+] <prop:entropy-basic>
+
+#proof[
+  Non-negativity is immediate since every term of the sum is non-negative. For
+  the upper bound, apply *Jensen's inequality* for the concave logarithm — the
+  inequality proved in the convexity section of the Analyse Mathématique note,
+  which we use rather than restate:
+  $
+    H(X) = sum_x p(x) log 1 / (p(x))
+    <= log ( sum_x p(x) dot 1 / (p(x)) ) = log |cal(X)|,
+  $
+  where the sum runs over the support of $p$. Since $log$ is strictly concave,
+  equality forces $1\/p(x)$ to be constant on the support, that is, $p$ uniform.
+]
+
+#proposition(name: "Concavity of Entropy")[
+  The map $p |-> H(p)$ is concave on the simplex: for
+  $lambda in [0, 1]$ and distributions $p, q$ on the same alphabet,
+  $
+    H(lambda p + (1 - lambda) q) >= lambda H(p) + (1 - lambda) H(q).
+  $
+] <prop:entropy-concavity>
+
+#proof[
+  The function $phi(t) = -t log t$ is concave on $[0, 1]$, being twice
+  differentiable with $phi''(t) = -1 \/ (t ln 2) < 0$. Since
+  $H(p) = sum_i phi(p_i)$ is a sum of concave functions of the coordinates,
+  it is concave.
+]
+
+#example(name: "Entropy of a Three-Point Distribution")[
+  For $p = (1\/2, 1\/4, 1\/4)$,
+  $
+    H(p) = 1/2 dot 1 + 1/4 dot 2 + 1/4 dot 2 = 1.5 "bits",
+  $
+  against $log 3 approx 1.585$ bits for the uniform distribution on three
+  outcomes. The gap is the price of the imbalance, in the sense made precise by
+  #link(<prop:entropy-basic>)[the upper bound above].
+]
+
+=== The Binary Entropy Function // 二元熵函数
+
+#definition(name: "Binary Entropy Function")[
+  For $p in [0, 1]$ the *binary entropy function* is
+  $
+    h(p) = -p log p - (1 - p) log(1 - p),
+  $
+  with $h(0) = h(1) = 0$ by the convention $0 log 0 = 0$.
+] <def:binary-entropy>
+
+// TODO: 同上，正式图生成后改为 width: 70%
+#figure(
+  image("img/binary-entropy-curve.svg", height: 6cm),
+  caption: [
+    The binary entropy function. It is concave, vanishes at the two degenerate
+    ends and attains its maximum $h(1\/2) = 1$ at the fair coin; the chord
+    drawn from $p = 0$ to $p = 1$ illustrates the strict concavity of
+    #link(<prop:entropy-concavity>)[the concavity proposition].
+  ],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:binary-entropy-curve>
+
+#example(name: "Values of the Binary Entropy")[
+  $h(1\/4) = 3\/4 log (4\/3) + 1\/4 log 4 approx 0.811$,
+  $h(0.11) approx 0.5$, and $h(0.01) approx 0.0808$. The last value is the
+  reason a channel with crossover probability $0.01$ costs only about $8\%$ of
+  its raw capacity, a number used in §7.3 and in §15.2.
+]
+
+=== Generalizations: Weighted Entropy // 推广：加权熵
+
+#definition(name: "Weighted Entropy")[
+  Let $w: cal(X) -> [0, infinity)$ assign a weight to each outcome. The
+  *weighted entropy* of $X$ is
+  $
+    H_w (X) = -sum_(x in cal(X)) w(x) p(x) log p(x).
+  $ <eq:weighted-entropy>
+  With $w equiv 1$ this is #link(<def:entropy>)[the entropy defined above].
+] <def:weighted-entropy>
+
+Weighted entropy models a source whose messages are not equally important: a
+rare but consequential outcome contributes more than its probability alone would
+suggest. The price is structural. The functional no longer satisfies
+#link(<eq:grouping>)[the grouping axiom] when the weights are not constant, so
+#link(<thm:entropy-uniqueness>)[the uniqueness theorem] does not apply, and
+there is no reason for the coding theorems of Ch 5 to hold with $H$ replaced by
+$H_w$. It is a measure of *semantic* content, not of compressibility.
+
+A second way to leave the axiomatic framework is to keep grouping but demand it
+along a one-parameter family only; the resulting functionals are the Rényi
+entropies, deferred to §2.1 where the divergence machinery makes them natural.
+
+#caution[
+  Two errors recur. First, the base of the logarithm is a unit: changing it
+  multiplies every information quantity by a constant and changes no inequality,
+  but mixing bases inside one computation does. Second, a discrete entropy
+  cannot be negative — the sum has non-negative terms. The quantity that can be
+  negative is the *differential* entropy of a density, introduced in §2.3, and
+  the reason is that a density is not a probability; the analogy with
+  #link(<eq:entropy-def>)[the discrete formula] must not be pushed past that
+  point.
 ]
 
 #bibliography("references.bib", title: "References", full: true)
