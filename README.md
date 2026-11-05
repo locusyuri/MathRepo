@@ -7,12 +7,12 @@
 ------
 
 # Structure | 目录结构
-This repository collects mathematics notes organized by subject. The list below reflects the current folder tree; folders shown with ~~strike through~~ are still under construction. Notes not yet migrated to Typst are marked with (LaTeX).
+This repository collects mathematics notes organized by subject. The list below reflects the current folder tree; folders shown with ~~strike through~~ are still under construction.
 
 ## 1.Analyse | 分析学
 - [Analyse Complexe | 复分析](https://lis-azure.vercel.app/notes/analyse-complexe)
 - [Analyse Harmonique | 调和分析](https://lis-azure.vercel.app/notes/analyse-harmonique)
-- [Analyse Fonctionnelle | 泛函分析](https://lis-azure.vercel.app/notes/analyse-fonctionnelle)
+- [~~Analyse Fonctionnelle | 泛函分析~~](https://lis-azure.vercel.app/notes/analyse-fonctionnelle)
 - [Analyse Mathématique | 数学分析](https://lis-azure.vercel.app/notes/analyse-math%C3%A9matique)
 - [Analyse Réelle | 实分析](https://lis-azure.vercel.app/notes/analyse-r%C3%A9elle)
 - [Équation Différentielle Ordinaire | 常微分方程](https://lis-azure.vercel.app/notes/%C3%A9quation-diff%C3%A9rentielle-ordinaire)
@@ -27,19 +27,19 @@ This repository collects mathematics notes organized by subject. The list below 
 
 ## 3.Géométrie | 几何学
 - [Géométrie Analytique | 解析几何](https://lis-azure.vercel.app/notes/g%C3%A9om%C3%A9trie-analytique)
-- [Géométrie Différentielle | 微分几何](https://lis-azure.vercel.app/notes/g%C3%A9om%C3%A9trie-diff%C3%A9rentielle)
-- [Topologie Algébrique | 代数拓扑](https://lis-azure.vercel.app/notes/topologie-alg%C3%A9brique)
-- [Topologie Générale | 点集拓扑](https://lis-azure.vercel.app/notes/topologie-g%C3%A9n%C3%A9rale) (LaTeX)
+- [~~Géométrie Différentielle | 微分几何~~](https://lis-azure.vercel.app/notes/g%C3%A9om%C3%A9trie-diff%C3%A9rentielle)
+- [~~Topologie Algébrique | 代数拓扑~~](https://lis-azure.vercel.app/notes/topologie-alg%C3%A9brique)
+- [~~Topologie Générale | 点集拓扑~~](https://lis-azure.vercel.app/notes/topologie-g%C3%A9n%C3%A9rale)
 
 ## 4.Mathématiques discrètes | 离散数学
 - [Combinatoire | 组合数学](https://lis-azure.vercel.app/notes/combinatoire)
 - [Logique Mathématique | 数理逻辑](https://lis-azure.vercel.app/notes/logique-math%C3%A9matique)
 - [Théorie des Ensembles | 集合论](https://lis-azure.vercel.app/notes/th%C3%A9orie-des-ensembles)
-- [Théorie des Graphes | 图论](https://lis-azure.vercel.app/notes/th%C3%A9orie-des-graphes) (LaTeX)
+- [~~Théorie des Graphes | 图论~~](https://lis-azure.vercel.app/notes/th%C3%A9orie-des-graphes)
 
 ## 5.Statistique | 统计学
 - [Probabilités | 概率论与数理统计](https://lis-azure.vercel.app/notes/probabilit%C3%A9s)
-- [Processus Stochastique | 随机过程](https://lis-azure.vercel.app/notes/processus-stochastique) (LaTeX)
+- [~~Processus Stochastique | 随机过程~~](https://lis-azure.vercel.app/notes/processus-stochastique)
 - [Théorie de l'Information | 信息论](https://lis-azure.vercel.app/notes/th%C3%A9orie-de-l%27information)
 
 
