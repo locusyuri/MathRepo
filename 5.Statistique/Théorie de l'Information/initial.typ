@@ -718,6 +718,131 @@
 //   衔接 Algèbre Abstraite §13.3（本原多项式与最小多项式由 §10.1 自含）。
 // ==========================================================================
 
+// ==========================================================================
+// Part I — Information Measures (信息度量)
+// ==========================================================================
+
+#part("Information Measures") // 信息度量
+
+= Information, Uncertainty and the Axiomatic Foundation // 信息、不确定性与公理化基础
+
+// 本章只做一件事：把"信息"从直觉概念变成可计算的泛函，并把后续各章反复使用
+// 的信息不等式（链式法则、次可加性、数据处理、Fano）一次备齐。
+
+== Communication Systems and Shannon's Three Questions // 通信系统与 Shannon 三问
+
+Shannon's 1948 paper begins with a deceptively simple observation: the *semantic
+content* of a message is irrelevant to its transmission. What matters is that
+the receiver is uncertain about which message was sent, and that the channel
+destroys part of what the source produced. This reframing replaces the
+engineering question "what does the message mean?" by the mathematical question
+"how much uncertainty was removed?". The whole of this notebook elaborates the
+second question.
+
+=== The Five Components of a Communication System // 通信系统的五个部件
+
+Every communication system decomposes into five parts:
+
++ an *information source*, which produces a message drawn from a finite
+  alphabet;
++ a *transmitter* (encoder), which maps the message into an input signal;
++ the *channel*, which carries the signal and may corrupt it;
++ a *receiver* (decoder), which maps the received signal to an estimate of the
+  message;
++ a *destination*, the final consumer of the message.
+
+Two features of this model carry all the mathematical content, and neither is
+physical. First, the source is *probabilistic*: the message is a realization of
+a random variable $X$ with distribution $p$. Second, the channel is
+*probabilistic*: it is a conditional distribution $p(y | x)$, not a device with
+a specified circuit. Once both are in place, entropy, capacity and error
+probability become functions of distributions rather than of hardware, and the
+theory becomes a chapter of probability.
+
+#figure(
+  image("img/communication-system.svg", width: 92%),
+  caption: [
+    The five components of a communication system. The source is described by a
+    distribution $p(x)$, the channel by transition probabilities $p(y | x)$;
+    the two boxes that carry the theory are marked. The upper annotation is the
+    subject of source coding (Ch 4–6), the lower one of channel coding (Ch 7–9).
+  ],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:communication-system>
+
+Throughout Parts I–III the model is *memoryless*: successive source symbols are
+independent, and the channel acts on each symbol independently of the others.
+Sources and channels *with* memory appear in Ch 3 (entropy rate, Markov
+sources) and are touched upon only sporadically later. This restriction costs
+nothing essential: the coding theorems are already sharp in the memoryless case,
+and that case exhibits every phenomenon which the general theory later
+generalizes.
+
+=== Two Limits: Efficiency and Reliability // 两个极限：有效性与可靠性
+
+Two numbers summarize the performance of a system. The *rate* $R$ is the number
+of bits spent per source symbol (or per use of the channel); the *error
+probability* $P_e$ is the probability that the destination receives a wrong
+message. A good system makes $R$ small and $P_e$ small simultaneously, and the
+two demands conflict: the first asks us to discard information, the second
+forbids us to discard any of what is needed to reconstruct it.
+
+Shannon's two theorems resolve the conflict exactly, and it is this exactness —
+not any particular code — that makes information theory a mathematical subject:
+
+- For a source of entropy $H$, the smallest rate at which the source can be
+  described with vanishing error is $H$ (Ch 5).
+- For a channel of capacity $C$, the largest rate at which messages can be sent
+  with vanishing error is $C$ (Ch 8).
+
+Consequently a system separates into a compression stage operating at $H$ and a
+transmission stage operating at $C$, and reliable communication is possible if
+and only if $H < C$; the precise statement is the source–channel separation
+theorem of §7.6 and §8.5. The genuinely hard part of communication is therefore
+not to decide *whether* reliable transmission is possible, but to *construct*
+codes that approach the second boundary — which is exactly the subject of
+Part IV.
+
+=== Shannon's Three Questions and the Roadmap // Shannon 三问与全书路线图
+
+The theory answers three questions, in this order.
+
++ *How is information measured?* Ch 1 gives the axiomatic answer, the entropy of
+  a distribution; Ch 2 extends the measurement to pairs of distributions
+  (divergence) and to continuous alphabets; Ch 3 lifts it to processes, where
+  the relevant quantity is the entropy rate per symbol.
++ *How small can data be compressed?* Ch 4 isolates the typical set, Ch 5 turns
+  typicality into the lossless coding theorem and the algorithms that approach
+  it, Ch 6 relaxes exactness to a distortion constraint and obtains the
+  rate–distortion function.
++ *How fast can data be transmitted reliably?* Ch 7 defines capacity as an
+  optimization problem, Ch 8 proves that capacity is both achievable and
+  unbreakable, Ch 9 carries the analysis to the Gaussian channel and to the
+  Shannon–Hartley formula.
+
+The remaining parts extend rather than repeat this core. Part IV replaces the
+non-constructive random-coding argument of Ch 8 by algebraic and graphical
+constructions. Part V pushes the same tools — joint typicality, the method of
+types, mutual information — to networks, to secrecy, and to statistics and
+learning. The dependencies between the domains are genuine: the entropy of Ch 1
+is the objective of the maximum-entropy principle in §2.4, the error exponent of
+§8.4 is a large-deviation rate, and the mutual information of §1.3 reappears as
+the objective of the information bottleneck in §15.6. Combinatorics enters
+through the type-counting of §4.3; probability supplies the entire probabilistic
+language; statistics receives the resulting tools in Ch 15.
+
+#note[
+  *Conventions.* All alphabets are finite unless stated otherwise, and
+  $|cal(X)|$ denotes cardinality. Logarithms are base $2$ and entropies are
+  measured in bits; the change of base only multiplies every information
+  quantity by a constant, so no result depends on the choice. We use
+  $0 log 0 = 0$ without further comment. When the distribution of $X$ is clear
+  from the context, $H(X)$ is written for $H(p)$; the distinction between the
+  two is made explicit only where it matters, namely in the concavity statement
+  of §1.2.
+]
+
 #bibliography("references.bib", title: "References", full: true)
 
 // 目录
