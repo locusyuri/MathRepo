@@ -48,6 +48,9 @@
 //     §4.3 的类型计数只用到初等计数）
 //   - 热力学熵、Gibbs 熵、Landauer 原理 → Thermodynamique（交叉引用；
 //     §2.4 与 §3.3 只在概念上对照，不重述热力学）
+//   - 光学信息量、光量子信道容量（傅祖芸 第 12 章）→ Optique 与
+//     Mécanique quantique（不纳入；涉及量子光学与光子统计）
+//   - 生命科学、医学信息分析（傅祖芸 第 12 章）→ 不纳入（非数学内容）
 //   - von Neumann 熵、量子信道、Holevo 界、QKD → Mécanique quantique
 //     §13.4（不纳入；本笔记保持经典 Shannon 体系）
 //   - Kolmogorov 复杂度、算法随机性 → Logique Mathématique（不纳入；
@@ -96,7 +99,7 @@
 //   C&T  9 → Ch 9
 //
 //   傅 1 → Ch 1 §1.1    傅 6 → Ch 8     傅 11 → Ch 14
-//   傅 2 → Ch 1, Ch 3   傅 7 → Ch 6     傅 12 → 交叉引用（§2.4, §9）
+//   傅 2 → Ch 1, Ch 3   傅 7 → Ch 6（另见 §8.5）   傅 12 → §2.4（最大熵部分）；其余交叉引用
 //   傅 3 → Ch 7         傅 8 → Ch 5     傅 13 → 不纳入（Mécanique quantique）
 //   傅 4 → Ch 2, Ch 9   傅 9 → Ch 10–12
 //   傅 5 → Ch 4, Ch 5   傅 10 → Ch 13
@@ -126,6 +129,7 @@
 //     - 熵的公理化刻画（连续性、对称性、极值性、可加性）
 //     - 唯一性定理：满足公理的泛函只能是 H = -Σ p log p
 //     - 基本性质：非负性、H(X) ≤ log|X|、等号条件
+//     - 熵的推广：加权熵与意义信息（傅祖芸 第 2 章；Rényi 熵见 §2.1）
 
 //   Section 1.3: Joint Entropy, Conditional Entropy and Mutual Information (联合熵、条件熵与互信息)
 //     - 联合熵 H(X,Y) 与条件熵 H(X|Y)
@@ -163,14 +167,17 @@
 //   Section 2.3: Differential Entropy and Its Properties (微分熵及其性质)
 //     - 微分熵 h(X) = -∫ f log f；与离散熵的关系（量化极限）
 //     - 联合/条件微分熵；相对熵与互信息的连续版本
+//     - 连续情形的 AEP：典型体积与高概率集（C&T 第 8 章）
 //     - 平移不变性与尺度变换：h(aX) = h(X) + log|a|
+//     - 线性变换下的微分熵：h(AX) = h(X) + log|det A|（傅祖芸 第 4 章的坐标变换）
 //     - 微分熵可为负，它不是"比特数"（与离散熵的关键区别）
 
 //   Section 2.4: The Principle of Maximum Entropy (最大熵原理)
 //     - 约束下的最大熵：给定支撑、给定方差、给定均值
 //     - 指数族是最大熵分布族（交叉引用 Probabilités Ch 7 的指数族）
 //     - 最大熵与最大似然的对偶；Jaynes 解释及其边界
-//     - 最大熵谱估计（只给结论，交叉引用 傅祖芸 §12.3）
+//     - 最大熵图像恢复（傅祖芸 第 12 章，只给结论）
+//     - Burg 最大熵谱估计与 AR 模型（只给结论）
 
 //   Section 2.5: Entropy Power and the Gaussian Bound (熵功率与高斯界)
 //     - 熵功率 N(X) = exp(2h(X)) / (2πe)
@@ -189,7 +196,7 @@
 //   Section 3.2: Markov Sources and Their Entropy Rate (Markov 信源与熵率)
 //     - Markov 链的熵率 H(X|X_{n-1})；平稳分布下的计算公式
 //     - m 阶 Markov 信源；状态图与转移矩阵（交叉引用 Probabilités Ch 9）
-//     - 加权图上的随机游走熵率（C&T §4.3；与 Théorie des Graphes 交叉引用）
+//     - 加权图上的随机游走熵率（C&T 第 4 章；与 Théorie des Graphes 交叉引用）
 //     - 马尔可夫链的函数（隐藏 Markov 模型）：只给熵率定义与例子
 
 //   Section 3.3: Asymptotic Equipartition for Stationary Sources (平稳信源的渐近均分性)
@@ -200,7 +207,7 @@
 
 //   Section 3.4: Redundancy and the Entropy of Natural Language (剩余度与自然语言的熵)
 //     - 剩余度 R = log|X| - H；冗余与可压缩性
-//     - 自然语言的熵：Shannon 猜词实验与 C&T §6.4–6.6
+//     - 自然语言的熵：Shannon 猜词实验与 C&T 第 6 章
 //     - 压缩与语言模型的关系（预告 §15.4 的交叉熵）
 //     - 英文/中文熵估计的量级与结论（只给结论）
 
@@ -223,7 +230,7 @@
 //     - 典型集的概率、大小与元素概率的下界
 
 //   Section 4.2: Typical Sets and Their Properties (典型集及其性质)
-//     - 高概率集与典型集的差别（C&T §3.3）
+//     - 高概率集与典型集的差别（C&T 第 3 章）
 //     - 典型集是对最小高概率集的近似
 //     - 典型性作为"可压缩序列"的刻画
 
@@ -235,7 +242,7 @@
 
 //   Section 4.4: Consequences for Compression (压缩的推论)
 //     - 典型集编码：固定长度约 nH 比特
-//     - 高概率集编码；ε-典型序列（傅祖芸 §5.3）
+//     - 高概率集编码；ε-典型序列（傅祖芸 第 5 章）
 //     - AEP 的边界：非平稳、非遍历信源的失效
 
 
@@ -245,17 +252,20 @@
 //     - 码的分类：定长/变长、非奇异、唯一可译、即时码
 //     - 前缀码与码树；Kraft 不等式（必要与充分）
 //     - McMillan 定理：唯一可译 ⇒ 满足 Kraft 不等式
+//     - 唯一可译码的判定法（Sardinas–Patterson；傅祖芸 第 5 章）
 
 //   Section 5.2: Optimal Codes: Huffman and Shannon–Fano–Elias (最优码：Huffman 与 Shannon–Fano–Elias)
 //     - 最优码长的上下界 L* ∈ [H, H+1)
 //     - Huffman 算法与最优性证明；r 元 Huffman
 //     - Shannon–Fano–Elias 编码与算术编码的思想起源
-//     - 竞争最优性（C&T §5.10；只给结论）
+//     - Fano 编码（Shannon–Fano 分组）；与 Huffman 的性能比较（傅祖芸 第 8 章）
+//     - 竞争最优性（C&T 第 5 章；只给结论）
 
 //   Section 5.3: Arithmetic Coding, Run-Length and Lempel–Ziv (算术编码、游程与 Lempel–Ziv)
 //     - 算术编码：区间划分、累积分布、渐近最优
-//     - 游程编码与 MH 编码（傅祖芸 §8.4）
+//     - 游程编码与 MH 编码（傅祖芸 第 8 章）
 //     - LZ77 / LZ78 / LZW 的字典思想
+//     - 由公平硬币生成任意分布（Knuth–Yao 方法；C&T 第 5 章）
 //     - 算法复杂度与实用性能的比较（定性）
 
 //   Section 5.4: Shannon's Source Coding Theorem (Shannon 无失真信源编码定理)
@@ -273,7 +283,7 @@
 //   Section 5.6: Gambling, the Kelly Criterion and Universal Portfolios (赌博、Kelly 准则与通用投资组合)
 //     - 赛马模型与公平赔率；财富增长的对数效用
 //     - Kelly 准则：最优增长率的熵表达式
-//     - 边信息与熵率（C&T §6.2–6.3）
+//     - 边信息与熵率（C&T 第 6 章）
 //     - 通用投资组合与"熵 = 增长率"的同一性（C&T 第 16 章，只给主定理）
 
 
@@ -287,14 +297,14 @@
 
 //   Section 6.2: Properties and Calculation of R(D) (R(D) 的性质与计算)
 //     - 参量表示与斜率；二元对称信源的 R(D)
-//     - 离散对称信源的 R(D)（傅祖芸 §7.3）
+//     - 离散对称信源的 R(D)（傅祖芸 第 7 章）
 //     - 迭代算法（Blahut–Arimoto，陈述）
 //     - 与信道容量的对偶（率失真 vs 容量）
 
 //   Section 6.3: The Rate–Distortion Theorem (率失真定理)
 //     - 可达性：联合典型 + 随机码本
 //     - 逆定理：D 约束下 R < R(D) 不可能
-//     - 强典型序列与率失真（C&T §10.6，只给结论）
+//     - 强典型序列与率失真（C&T 第 10 章，只给结论）
 //     - 与无失真定理的逻辑关系：D → 0 的连续性
 
 //   Section 6.4: Gaussian Sources and Reverse Water-Filling (高斯信源与反向注水)
@@ -336,12 +346,12 @@
 //     - 无噪二进制信道、无重叠输出的噪声信道
 //     - 噪声打字机；BSC 与 BEC 的容量公式
 //     - 弱对称/对称信道的容量
-//     - 零错误容量（C&T §7.8）
+//     - 零错误容量（C&T 第 7 章）
 
 //   Section 7.4: Symmetric and Quasi-Symmetric Channels (对称与准对称信道)
 //     - 对称信道的容量公式；准对称信道的分解
 //     - 独立并联信道的容量相加
-//     - 串联信道的互信息与数据处理（傅祖芸 §3.8）
+//     - 串联信道的互信息与数据处理（傅祖芸 第 3 章）
 
 //   Section 7.5: Computation of Capacity: Blahut–Arimoto (容量的计算：Blahut–Arimoto)
 //     - 交替最大化；收敛性
@@ -378,9 +388,10 @@
 //     - 有限码长效应（只给量级，不展开有限块长理论）
 
 //   Section 8.5: Feedback, Zero-Error Codes and Separation (反馈、零错误码与分离)
-//     - 反馈不增加 DMC 容量（C&T §7.12）
-//     - 零错误码及其容量（C&T §7.8）
-//     - 信源信道分离定理的严格表述（C&T §7.13）
+//     - 反馈不增加 DMC 容量（C&T 第 7 章）
+//     - 零错误码与容量（回指 §7.3）
+//     - 信源信道分离定理的严格表述（C&T 第 7 章）
+//     - 联合信源信道编码：有失真情形（傅祖芸 第 6、7 章）
 //     - 反馈在时变/多用户信道中的作用（定性）
 
 
@@ -412,6 +423,7 @@
 //     - 衰落信道模型：慢衰落/快衰落
 //     - 中断容量与遍历容量
 //     - MIMO 容量：空间复用增益
+//     - 高斯信道的反馈：不提高容量，但可简化编码（C&T 第 9 章）
 //     - 与现代标准（5G）的接口（定性，不展开）
 
 
@@ -422,7 +434,7 @@
 // 给出可实现的码：Ch 10 用有限域上的线性代数建立线性分组码与界；Ch 11 用
 // 多项式环构造循环码、BCH 与 RS；Ch 12 转向网格/图/极化三类现代构造，把
 // "译码"作为算法问题处理。三章的共同主线是"结构（代数/图）→ 距离 → 译码"。
-// 对应教材：傅祖芸 第 9 章；C&T §7.11（Hamming 码）；§12.3–12.5 为现代扩展。
+// 对应教材：傅祖芸 第 9 章；C&T 第 7 章（Hamming 码）；§12.3–12.5 为现代扩展。
 
 // --- Chapter 10: Finite Fields and Linear Block Codes (有限域与线性分组码) ---
 
@@ -433,6 +445,7 @@
 //     - 编码所需的全部代数工具（不重述群环域一般理论）
 
 //   Section 10.2: Linear Block Codes (线性分组码)
+//     - 差错控制方式：FEC/ARQ；纠错码按代数结构的分类（傅祖芸 第 9 章）
 //     - 码的定义：(n,k) 线性码；生成矩阵 G 与校验矩阵 H
 //     - 系统码；对偶码；GHᵀ = 0
 //     - 码的维数与秩；缩短、扩展、打孔
@@ -446,7 +459,7 @@
 //   Section 10.4: Hamming Codes and Perfect Codes (Hamming 码与完备码)
 //     - Hamming 码的构造与参数
 //     - 完备码的定义；Hamming 界
-//     - 扩展 Hamming 码；与 C&T §7.11 的衔接
+//     - 扩展 Hamming 码；与 C&T 第 7 章的衔接
 //     - 其他完备码的存在性（只给结论）
 
 //   Section 10.5: Bounds: Hamming, Singleton, Plotkin, Gilbert–Varshamov (界：Hamming、Singleton、Plotkin、Gilbert–Varshamov)
@@ -533,6 +546,7 @@
 // --- Chapter 13: Network Information Theory (网络信息论) ---
 
 //   Section 13.1: Multiple-Access Channels (多址接入信道)
+//     - 通信网的分类与多用户信道模型（傅祖芸 第 10 章）
 //     - 多用户信道模型；容量区域而非单一容量
 //     - 离散 MAC 的可达区域与时分/频分对照
 //     - 高斯 MAC 的容量区域（叠加编码）
@@ -573,8 +587,8 @@
 
 //   Section 14.2: Theoretical versus Practical Security (理论保密性与实际保密性)
 //     - 理论保密性、实际保密性；唯一解距离
-//     - 冗余度与破译工作量（傅祖芸 §11.4–11.5）
-//     - 古典密码的例证（移位、代换；只给信息论视角）
+//     - 冗余度与破译工作量（傅祖芸 第 11 章）
+//     - 古典密码体制：单表代换、移位、乘数、多表代换与置换（只给信息论视角）
 //     - 现代密码不在此展开
 
 //   Section 14.3: The Wiretap Channel and Secrecy Capacity (窃听信道与保密容量)
