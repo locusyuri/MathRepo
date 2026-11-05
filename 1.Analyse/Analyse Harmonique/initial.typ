@@ -144,9 +144,9 @@
 //   Section 3.1: From Periodic to Non-Periodic (从周期函数到非周期函数)
 //     - 从 Fourier 级数到 Fourier 变换的极限过程（启发式推导，作为动机而非证明）
 //     - Fourier 变换与逆变换的定义
-//     - 频率约定（已定）：采用 xi 约定 hat(f)(xi) = ∫ f(x) e^(-2pi i xi x) dx，逆变换无前置系数；
-//       另设换算字典 omega = 2 pi xi，供 §5.3 Laplace 的 s = sigma + i omega 复用
-//     - 归一化陷阱：F[f](0) = ∫ f，与级数的 (1)/(2 pi) 约定不同（#caution）
+//     - 频率约定（已定）：采用角频率 omega 约定 hat(f)(omega) = ∫ f(x) e^(-i omega x) dx，逆变换带 1/(2 pi) 前置系数；
+//       普通频率 xi = omega/(2 pi) 的约定（e^(-2 pi i xi x)，双向无系数）作为附注记录，换算字典见 #caution
+//     - 归一化陷阱：F[f](0) = ∫ f；逆变换与 Plancherel 各带 1/(2 pi)，酉算子需取 F/sqrt(2 pi)（#caution）
 //     - 注：Poisson 求和公式后移至 §4.3（它是反演的推论，不能作为入口）
 
 //   Section 3.2: Schwartz Space and Tempered Distributions (速降空间与缓增分布)
@@ -255,7 +255,7 @@
 //   Section 6.1: Definition and Basic Properties (定义与基本性质)
 //     - 弱导数的定义（交叉引用 EDP 笔记，不重建）
 //     - Sobolev 空间 W^(k,p) 与 H^s 的定义
-//     - H^s 的 Fourier 刻画：||f||_(H^s)^2 = ∫ (1 + |xi|^2)^s |hat(f)(xi)|^2 dxi
+//     - H^s 的 Fourier 刻画：||f||_(H^s)^2 = ∫ (1 + |omega|^2)^s |hat(f)(omega)|^2 domega
 //     - 基本性质与范数等价
 
 //   Section 6.2: Sobolev Embedding Theorems (Sobolev 嵌入定理)
