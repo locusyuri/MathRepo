@@ -1477,23 +1477,23 @@ Every function considered in Part I was periodic, so its spectrum was a discrete
 
 Let $f$ have period $2T$. By #link(<def:fourier-coefficients>)[the Euler–Fourier formula] in the form given in §1.2,
 $
-  f(x) ~ sum_(n in bb(Z)) hat(f)_T(n) e^(i n (pi) / (T) x), quad hat(f)_T(n) = (1) / (2T) integral_(-T)^(T) f(t) e^(-i n (pi) / (T) t) dif t.
+  f(x) ~ sum_(n in bb(Z)) hat(f)_T(n) e^(i omega_n x), quad omega_n = n pi / T, quad hat(f)_T(n) = (1) / (2T) integral_(-T)^(T) f(t) e^(-i omega_n t) dif t.
 $
-Put $xi_n = n / (2T)$, so that the exponentials read $e^(2 pi i xi_n x)$ and the spacing of consecutive frequencies is
+The frequencies form an arithmetic grid, of spacing
 $
-  Delta xi = xi_(n+1) - xi_n = (1) / (2T).
+  Delta omega = omega_(n+1) - omega_n = pi / T,
 $
-Then
+and since $1 \/ (2T) = Delta omega \/ (2 pi)$, the series reads
 $
-  f(x) ~ sum_(n in bb(Z)) ( integral_(-T)^(T) f(t) e^(-2 pi i xi_n t) dif t ) e^(2 pi i xi_n x) Delta xi,
+  f(x) ~ (1) / (2 pi) sum_(n in bb(Z)) ( integral_(-T)^(T) f(t) e^(-i omega_n t) dif t ) e^(i omega_n x) Delta omega,
 $
-which is a Riemann sum, over the grid $(xi_n)$, for the function
+which is a Riemann sum, over the grid $(omega_n)$, for the function
 $
-  xi |-> ( integral_(-oo)^(oo) f(t) e^(-2 pi i xi t) dif t ) e^(2 pi i xi x).
+  omega |-> ( integral_(-oo)^(oo) f(t) e^(-i omega t) dif t ) e^(i omega x).
 $
-Letting $T -> +oo$ sends $Delta xi -> 0$ and the sum to the integral of that function:
+Letting $T -> +oo$ sends $Delta omega -> 0$ and the sum to the integral of that function:
 $
-  f(x) = integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) e^(-2 pi i xi t) dif t ) e^(2 pi i xi x) dif xi.
+  f(x) = (1) / (2 pi) integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) e^(-i omega t) dif t ) e^(i omega x) dif omega.
 $
 
 #caution[
@@ -1503,38 +1503,31 @@ $
 #definition(name: "Fourier Transform")[
   Let $f$ be absolutely integrable on $bb(R)$. Its *Fourier transform* is the function
   $
-    hat(f)(xi) = cal(F)[f](xi) = integral_(-oo)^(oo) f(x) e^(-2 pi i xi x) dif x, quad xi in bb(R).
+    hat(f)(omega) = cal(F)[f](omega) = integral_(-oo)^(oo) f(x) e^(-i omega x) dif x, quad omega in bb(R).
   $ <eq:fourier-transform>
   Whenever the integral below converges, the *inverse Fourier transform* of $g$ is
   $
-    cal(F)^(-1)[g](x) = integral_(-oo)^(oo) g(xi) e^(2 pi i xi x) dif xi, quad x in bb(R).
+    cal(F)^(-1)[g](x) = (1) / (2 pi) integral_(-oo)^(oo) g(omega) e^(i omega x) dif omega, quad x in bb(R).
   $ <eq:inverse-fourier-transform>
 ] <def:fourier-transform>
 
-The variable $xi$ is the *frequency*: it counts the number of oscillations per unit length, and $e^(2 pi i xi x)$ has period $1 \/ xi$. Thus $hat(f)(xi)$ measures how much of $f$ oscillates at that rate. Under this convention no constant appears in front of either integral; the price is the factor $2 pi$ hidden in the exponent.
+The variable $omega$ is the *angular frequency*: it counts the number of radians of oscillation per unit length, and $e^(i omega x)$ has period $2 pi \/ abs(omega)$. Thus $hat(f)(omega)$ measures how much of $f$ oscillates at that rate. The number of cycles per unit length is $\xi = omega \/ (2 pi)$, the variable of the ordinary convention recorded below.
+Under this convention the forward integral carries no constant and the inverse carries $1 \/ (2 pi)$. The asymmetry is the price of keeping the exponent free of $2 pi$, and it is the same price paid by the Laplace transform of §5.3, where $s = sigma + i omega$ and the exponent is $e^(i omega t)$.
 
 #caution[
-  Several normalizations circulate in the literature, and a formula copied from a source that uses another one is false as it stands. The three common choices are: no constant in either direction (used here), $1 \/ sqrt(2 pi)$ in both directions (unitary, but with $e^(plus.minus i omega x)$), and $1$ forward with $1 \/ (2 pi)$ backward (the *angular* convention below). Conversion is mechanical once the frequency variable is matched, see #link(<eq:freq-dictionary>)[the dictionary].
-]
-
-#note(title: "Angular frequency")[
-  Writing $omega = 2 pi xi$, so that $e^(2 pi i xi x) = e^(i omega x)$, the same transform reads
+  Several normalizations circulate in the literature, and a formula copied from a source that uses another one is false as it stands. Three are common: the present one, with $e^(-i omega x)$ and the factor $1 \/ (2 pi)$ on the inverse; the unitary one, with the factor $1 \/ sqrt(2 pi)$ in both directions; and the *ordinary frequency* convention, with $e^(-2 pi i xi x)$ and no constant in either direction. The last one is the same transform read on $xi = omega \/ (2 pi)$:
   $
-    hat(f)_(omega)(omega) = hat(f)(omega / (2 pi)) = integral_(-oo)^(oo) f(x) e^(-i omega x) dif x,
-  $
-  and the inverse formula carries the factor $1 \/ (2 pi)$:
-  $
-    f(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)_(omega)(omega) e^(i omega x) dif omega.
+    hat(f)(xi) = integral_(-oo)^(oo) f(x) e^(-2 pi i xi x) dif x, quad f(x) = integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) dif xi.
   $ <eq:freq-dictionary>
-  The angular variable is the natural one for the Laplace transform in §5.3, where $s = sigma + i omega$; both conventions are recorded so that the two chapters can be read side by side.
+  Conversion is mechanical once the variable is matched: replace $omega$ by $2 pi xi$, or equivalently substitute $xi = omega \/ (2 pi)$ and carry the resulting $2 pi$ into the measure $dif xi = dif omega \/ (2 pi)$. The ordinary frequency counts cycles and is the variable of signal processing; the angular one is the variable of the Laplace transform.
 ]
 
 #example(name: "Fourier transform of the box function")[
-  Let $f = bold(1)_([-a, a])$ with $a > 0$. For $xi != 0$,
+  Let $f = bold(1)_([-a, a])$ with $a > 0$. For $omega != 0$,
   $
-    hat(f)(xi) = integral_(-a)^(a) e^(-2 pi i xi x) dif x = (e^(2 pi i xi a) - e^(-2 pi i xi a)) / (2 pi i xi) = (sin(2 pi a xi)) / (pi xi),
+    hat(f)(omega) = integral_(-a)^(a) e^(-i omega x) dif x = (e^(i omega a) - e^(-i omega a)) / (i omega) = (2 sin(a omega)) / (omega),
   $
-  while $hat(f)(0) = 2a$. The transform is continuous and decays like $1 \/ abs(xi)$, so it is _not_ absolutely integrable on $bb(R)$: already for this harmless $f$ the inversion formula cannot be justified by an absolutely convergent integral. This is the obstruction taken up in §4.1.
+  while $hat(f)(0) = 2a$. The transform is continuous and decays like $1 \/ abs(omega)$, so it is _not_ absolutely integrable on $bb(R)$: already for this harmless $f$ the inversion formula cannot be justified by an absolutely convergent integral. This is the obstruction taken up in §4.1.
 ] <ex:box-fourier>
 
 == Schwartz Space and Tempered Distributions // 速降空间与缓增分布
@@ -1611,7 +1604,9 @@ Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced 
     $ cal(F)[a f + b g] = a cal(F)[f] + b cal(F)[g]. $
 
   2. *Translation and modulation.*
-    $ cal(F)[f(x - x_0)](xi) = e^(-2 pi i xi x_0) hat(f)(xi), quad cal(F)[e^(2 pi i xi_0 x) f(x)](xi) = hat(f)(xi - xi_0). $
+    $
+      cal(F)[f(x - x_0)](xi) = e^(-2 pi i xi x_0) hat(f)(xi), quad cal(F)[e^(2 pi i xi_0 x) f(x)](xi) = hat(f)(xi - xi_0).
+    $
 
   3. *Scaling.*
     $ cal(F)[f(c x)](xi) = (1) / (abs(c)) hat(f)(xi / c). $
@@ -1651,8 +1646,8 @@ The product rule, which is the frequency-side shadow of the convolution theorem 
   By #link(<def:convolution>)[the definition of convolution], $(f * g)(x) = integral_(-oo)^(oo) f(t) g(x - t) dif t$, so
   $
     hat(f * g)(xi) & = integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) g(x - t) dif t ) e^(-2 pi i xi x) dif x \
-    & = integral_(-oo)^(oo) f(t) ( integral_(-oo)^(oo) g(x - t) e^(-2 pi i xi x) dif x ) dif t \
-    & = integral_(-oo)^(oo) f(t) e^(-2 pi i xi t) hat(g)(xi) dif t = hat(f)(xi) dot hat(g)(xi).
+                   & = integral_(-oo)^(oo) f(t) ( integral_(-oo)^(oo) g(x - t) e^(-2 pi i xi x) dif x ) dif t \
+                   & = integral_(-oo)^(oo) f(t) e^(-2 pi i xi t) hat(g)(xi) dif t = hat(f)(xi) dot hat(g)(xi).
   $
   The interchange of integrals is legitimate: the integrand is dominated by $abs(f(t) g(x - t))$, whose double integral is $|| f ||_1 || g ||_1$ by Fubini and translation invariance of the integral. The second statement follows from the first applied to $hat(f)$ and $hat(g)$, using the inversion formula of §3.4, or directly from the multiplication formula of the preceding proposition.
 ]
