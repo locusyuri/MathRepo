@@ -2028,24 +2028,27 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
 
 == The Fourier Transform on $bb(R)^d$ // $bb(R)^d$ 上的 Fourier 变换
 
-Nothing in the definition of §3.1 is one-dimensional. Writing $xi dot x = sum_(j=1)^d xi_j x_j$ for the euclidean inner product, the transform of $f in cal(S)(bb(R)^d)$ is
+Nothing in the definition of §3.1 is one-dimensional. Writing $omega dot x = sum_(j=1)^d omega_j x_j$ for the euclidean inner product, the transform of $f in cal(S)(bb(R)^d)$ is
 $
-  hat(f)(xi) = integral_(bb(R)^d) f(x) e^(-2 pi i xi dot x) dif x, quad xi in bb(R)^d,
+  hat(f)(omega) = integral_(bb(R)^d) f(x) e^(-i omega dot x) dif x, quad omega in bb(R)^d,
 $
-and the inversion formula reads the same way. The Schwartz space in $d$ variables is the space defined in §3.2 with $x^m$ replaced by $x^alpha$ and $dif^n \/ dif x^n$ by $D^alpha$; the properties of §3.3 transfer verbatim. What is genuinely new in several variables is geometry.
+and the inversion formula carries the factor $(2 pi)^(-d)$. The Schwartz space in $d$ variables is the space defined in §3.2 with $x^m$ replaced by $x^alpha$ and $dif^n \/ dif x^n$ by $D^alpha$; the properties of §3.3 transfer verbatim. What is genuinely new in several variables is geometry.
 
 #definition(name: "Fourier Transform in $bb(R)^d$")[
   For $f in cal(S)(bb(R)^d)$ the *Fourier transform* is the function
   $
-    hat(f)(xi) = cal(F)[f](xi) = integral_(bb(R)^d) f(x) e^(-2 pi i xi dot x) dif x, quad xi in bb(R)^d,
+    hat(f)(omega) = cal(F)[f](omega) = integral_(bb(R)^d) f(x) e^(-i omega dot x) dif x, quad omega in bb(R)^d,
   $ <eq:fourier-transform-rd>
-  and the *inverse transform* is given by the same formula with $+2 pi i xi dot x$ in place of $-2 pi i xi dot x$.
+  and the *inverse transform* is
+  $
+    cal(F)^(-1)[g](x) = (1) / (2 pi)^d integral_(bb(R)^d) g(omega) e^(i omega dot x) dif omega, quad x in bb(R)^d.
+  $
 ] <def:fourier-transform-rd>
 
 #proposition(name: "Tensor Product Structure")[
   Let $f_j in cal(S)(bb(R))$ for $j = 1, dots, d$ and put $f(x) = f_1(x_1) dots f_d(x_d)$. Then
   $
-    hat(f)(xi) = hat(f)_1(xi_1) dots hat(f)_d(xi_d), quad xi in bb(R)^d.
+    hat(f)(omega) = hat(f)_1(omega_1) dots hat(f)_d(omega_d), quad omega in bb(R)^d.
   $
   Consequently the $d$-dimensional transform is the $d$-fold tensor product of the one-dimensional one, and inversion, the convolution theorem and Plancherel in $bb(R)^d$ all follow from their one-dimensional forms by iteration.
 ] <prop:fourier-rd-tensor>
@@ -2057,13 +2060,13 @@ and the inversion formula reads the same way. The Schwartz space in $d$ variable
 #proposition(name: "Rotation Invariance")[
   Let $R$ be an orthogonal transformation of $bb(R)^d$ and put $f_R(x) = f(R x)$. Then
   $
-    hat(f_R)(xi) = hat(f)(R xi), quad xi in bb(R)^d.
+    hat(f_R)(omega) = hat(f)(R omega), quad omega in bb(R)^d.
   $
   In particular, if $f$ is radial then so is $hat(f)$.
 ] <prop:rotation-invariance>
 
 #proof[
-  Substitute $x = R^(-1) y$ in the defining integral. Orthogonality gives $dif x = dif y$ and $xi dot R^(-1) y = (R xi) dot y$, whence the identity. If $f$ is radial then $f_R = f$ for every $R$, so $hat(f)(R xi) = hat(f)(xi)$ for every $R$, which means that $hat(f)$ is radial.
+  Substitute $x = R^(-1) y$ in the defining integral. Orthogonality gives $dif x = dif y$ and $omega dot R^(-1) y = (R omega) dot y$, whence the identity. If $f$ is radial then $f_R = f$ for every $R$, so $hat(f)(R omega) = hat(f)(omega)$ for every $R$, which means that $hat(f)$ is radial.
 ]
 The explicit formula for a radial function involves Bessel functions, since the transform reduces to a Hankel transform on $(0, +oo)$; it is not needed here.
 
@@ -2072,34 +2075,34 @@ The explicit formula for a radial function involves Bessel functions, since the 
 The behaviour of the transform under rotations suggests looking at the values of $hat(f)$ along lines through the origin, which are precisely the transforms of the integrals of $f$ over hyperplanes.
 
 #definition(name: "Radon Transform")[
-  For $f in cal(S)(bb(R)^d)$, a unit vector $omega in bb(S)^(d-1)$ and $s in bb(R)$, the *Radon transform* of $f$ is
+  For $f in cal(S)(bb(R)^d)$, a unit vector $theta in bb(S)^(d-1)$ and $s in bb(R)$, the *Radon transform* of $f$ is
   $
-    R f(omega, s) = integral_(x dot omega = s) f(x) dif sigma(x),
+    R f(theta, s) = integral_(x dot theta = s) f(x) dif sigma(x),
   $
-  the integral being taken with respect to $(d-1)$-dimensional surface measure over the hyperplane orthogonal to $omega$ at distance $s$ from the origin.
+  the integral being taken with respect to $(d-1)$-dimensional surface measure over the hyperplane orthogonal to $theta$ at distance $s$ from the origin.
 ] <def:radon-transform>
 
 #theorem(name: "Projection-Slice Theorem")[
-  Fix $omega in bb(S)^(d-1)$ and $sigma in bb(R)$. Then
+  Fix $theta in bb(S)^(d-1)$ and $omega in bb(R)$. Then
   $
-    integral_(-oo)^(oo) R f(omega, s) e^(-2 pi i sigma s) dif s = hat(f)(sigma omega).
+    integral_(-oo)^(oo) R f(theta, s) e^(-i omega s) dif s = hat(f)(omega theta).
   $ <eq:projection-slice>
 ] <thm:projection-slice>
 
 #proof[
   Both integrals are absolutely convergent for Schwartz $f$, so Fubini applies to the slice decomposition $dif x = dif s dif sigma(x)$:
   $
-    integral_(-oo)^(oo) R f(omega, s) e^(-2 pi i sigma s) dif s = integral_(bb(R)^d) f(x) e^(-2 pi i sigma (x dot omega)) dif x = hat(f)(sigma omega),
+    integral_(-oo)^(oo) R f(theta, s) e^(-i omega s) dif s = integral_(bb(R)^d) f(x) e^(-i omega (x dot theta)) dif x = hat(f)(omega theta),
   $
-  since $sigma (x dot omega) = (sigma omega) dot x$.
+  since $omega (x dot theta) = (omega theta) dot x$.
 ]
 
 #note[
   The theorem says that the one-dimensional transform of a projection determines, and is determined by, a line of the $d$-dimensional transform: rotating the hyperplane rotates the line. This is the principle behind computerized tomography, and it also provides a proof of inversion in $d$ variables by inverting one-dimensional transforms along all lines and reconstructing from the slices.
 
-  Its other classical use is the wave equation. If $u$ solves $partial_t^2 u = Delta u$ with $u(dot, 0) = f$ and $partial_t u(dot, 0) = 0$, transforming in $x$ gives $partial_t^2 hat(u)(xi, t) = -4 pi^2 abs(xi)^2 hat(u)(xi, t)$, hence
+  Its other classical use is the wave equation. If $u$ solves $partial_t^2 u = Delta u$ with $u(dot, 0) = f$ and $partial_t u(dot, 0) = 0$, transforming in $x$ gives $partial_t^2 hat(u)(omega, t) = -abs(omega)^2 hat(u)(omega, t)$, hence
   $
-    hat(u)(xi, t) = hat(f)(xi) cos(2 pi abs(xi) t).
+    hat(u)(omega, t) = hat(f)(omega) cos(abs(omega) t).
   $
   Inverting, $u(dot, t)$ is the convolution of $f$ with a measure carried by the sphere of radius $t$, which is the Huygens principle; the explicit formulas of d'Alembert and Kirchhoff are derived in the PDE note.
 ]
@@ -2111,7 +2114,7 @@ The note in §4.1 claimed that $cal(F)(L^1(bb(R)))$ is strictly smaller than $C_
 #definition(name: "Exponential Type")[
   An entire function $F: bb(C) -> bb(C)$ is said to be of *exponential type at most $A$* if there are constants $C >= 0$ such that
   $
-    abs(F(z)) <= C e^(2 pi A abs(z)) quad "for every" z in bb(C).
+    abs(F(z)) <= C e^(A abs(z)) quad "for every" z in bb(C).
   $
 ] <def:exponential-type>
 
@@ -2124,11 +2127,11 @@ The note in §4.1 claimed that $cal(F)(L^1(bb(R)))$ is strictly smaller than $C_
 #proof[
   Assume first that $f$ is supported in $[-A, A]$. Then
   $
-    F(z) = integral_(-A)^(A) f(x) e^(-2 pi i z x) dif x, quad z in bb(C),
+    F(z) = integral_(-A)^(A) f(x) e^(-i z x) dif x, quad z in bb(C),
   $
   is well defined, entire (differentiate under the integral sign), and satisfies
   $
-    abs(F(z)) <= integral_(-A)^(A) abs(f(x)) e^(2 pi abs(z) abs(x)) dif x <= 2 sqrt(A) || f ||_2 e^(2 pi A abs(z)),
+    abs(F(z)) <= integral_(-A)^(A) abs(f(x)) e^(abs(z) abs(x)) dif x <= 2 sqrt(A) || f ||_2 e^(A abs(z)),
   $
   so it has exponential type at most $A$; its restriction to the real axis is $hat(f)$, which lies in $L^2$ by #link(<thm:plancherel>)[Plancherel]. This proves that 1 implies 2.
 ]
@@ -2144,7 +2147,7 @@ Fourier transform requires the function to be integrable over the entire real li
 which may not hold for functions that grow exponentially.
 To handle such functions, we introduce the Laplace transform, defined as follows.
 
-The two transforms are in fact one: writing $s = sigma + i omega$ and assuming $f$ is supported on $[0, +oo)$, the Laplace transform below is the Fourier transform of $t |-> f(t) e^(-sigma t)$ evaluated at the frequency $omega$. This is the precise sense in which the present section continues §3.1, and it is why #link(<eq:freq-dictionary>)[the angular convention] was recorded there.
+The two transforms are in fact one: writing $s = sigma + i omega$ and assuming $f$ is supported on $[0, +oo)$, the Laplace transform below is the Fourier transform of $t |-> f(t) e^(-sigma t)$ evaluated at the angular frequency $omega$. This is the precise sense in which the present section continues §3.1, and no change of variable is needed now that §3.1 is written in the angular variable.
 
 #definition(name: "Laplace Transform")[
   The *Laplace transform* of a function $f(t)$ defined for $t >= 0$ is given by
@@ -2232,7 +2235,7 @@ The inversion formula is the point at which the Laplace transform pays back what
   $
     g(t) = cases(f(t) e^(-sigma t) & "if" t >= 0, 0 & "if" t < 0)
   $
-  Then $g in L^1(bb(R))$ by #link(<thm:laplace-existence>)[the existence theorem], and its Fourier transform in the angular variable of #link(<eq:freq-dictionary>)[§3.1] is
+  Then $g in L^1(bb(R))$ by #link(<thm:laplace-existence>)[the existence theorem], and its Fourier transform in the sense of #link(<def:fourier-transform>)[§3.1] is
   $
     hat(g)(omega) = integral_(0)^(oo) f(t) e^(-sigma t) e^(-i omega t) dif t = F(sigma + i omega).
   $
@@ -2265,7 +2268,7 @@ Some common Laplace transforms are collected in #link(<tab:laplace-transforms>)[
 
 = Sobolev Spaces // Sobolev 空间
 
-The spaces treated in this part measure smoothness in $L^2$ through the decay of the Fourier transform: $f$ belongs to $H^s(bb(R))$ when $(1 + xi^2)^(s\/2) hat(f)(xi)$ is square integrable. This is precisely the point of view opened by #link(<thm:plancherel>)[Plancherel], and it is the reason why the chapter belongs to this note rather than to the PDE note, where Sobolev spaces are built from weak derivatives and where the general theory of $W^(k,p)$, the embedding theorems and the trace theorem are developed.
+The spaces treated in this part measure smoothness in $L^2$ through the decay of the Fourier transform: $f$ belongs to $H^s(bb(R))$ when $(1 + omega^2)^(s\/2) hat(f)(omega)$ is square integrable. This is precisely the point of view opened by #link(<thm:plancherel>)[Plancherel], and it is the reason why the chapter belongs to this note rather than to the PDE note, where Sobolev spaces are built from weak derivatives and where the general theory of $W^(k,p)$, the embedding theorems and the trace theorem are developed.
 
 // TODO（本章正文待补，结构见上方 Part III 蓝图）：
 //   6.1 定义与基本性质：H^s 的 Fourier 刻画、范数等价（弱导数定义引用 EDP）
@@ -2281,7 +2284,7 @@ The spaces treated in this part measure smoothness in $L^2$ through the decay of
 Nothing in this appendix is used in the main text. It records the discrete counterpart of the transform, because the same algebraic pattern recurs in computation, and because the complexity of the algorithm is the reason why the continuous theory is usable in practice.
 
 #definition(name: "Discrete Fourier Transform")[
-  Let $N >= 1$ and $a = (a(0), dots, a(N - 1)) in bb(C)^N$. With $omega_N = e^(2 pi i \/ N)$, the *discrete Fourier transform* of $a$ is
+  Let $N >= 1$ and $a = (a(0), dots, a(N - 1)) in bb(C)^N$. With $omega_N = e^(2 pi i \/ N)$ — a root of unity, unrelated to the angular frequency $omega$ of the main text — the *discrete Fourier transform* of $a$ is
   $
     hat(a)(k) = sum_(n=0)^(N-1) a(n) omega_N^(-n k), quad k = 0, 1, dots, N - 1,
   $ <eq:dft>
@@ -2339,24 +2342,24 @@ which for $N = 2^20$ is a factor of about $5 dot 10^4$ better than the direct ev
 ]
 
 #note[
-  The practical importance for this note is the acceleration of convolution. By the discrete convolution theorem recorded in §1.3, the cyclic convolution of two vectors of length $N$ has a transform equal to the pointwise product of the transforms, so it can be computed in $O(N log_2 N)$ instead of $O(N^2)$: transform, multiply, invert. The same device underlies spectral methods for partial differential equations, where differentiation becomes multiplication by $2 pi i xi$ and the FFT moves between the two representations; those methods are developed in the PDE note.
+  The practical importance for this note is the acceleration of convolution. By the discrete convolution theorem recorded in §1.3, the cyclic convolution of two vectors of length $N$ has a transform equal to the pointwise product of the transforms, so it can be computed in $O(N log_2 N)$ instead of $O(N^2)$: transform, multiply, invert. The same device underlies spectral methods for partial differential equations, where differentiation becomes multiplication by $i omega$ and the FFT moves between the two representations; those methods are developed in the PDE note.
 ]
 
 = Tables of Fourier and Laplace Transforms // Fourier 与 Laplace 变换表
 
-The pairs below are the ones used in the text. They are stated in the conventions fixed in §3.1: $hat(f)(xi) = integral f(x) e^(-2 pi i xi x) dif x$ on the line, and $F(s) = integral_0^(oo) f(t) e^(-s t) dif t$ on the half-line. Every formula involving a parameter assumes that parameter positive.
+The pairs below are the ones used in the text. They are stated in the conventions fixed in §3.1: $hat(f)(omega) = integral f(x) e^(-i omega x) dif x$ on the line, with the factor $1 \/ (2 pi)$ on the inverse transform, and $F(s) = integral_0^(oo) f(t) e^(-s t) dif t$ on the half-line. Every formula involving a parameter assumes that parameter positive. The ordinary-frequency column is recovered by the substitution $omega = 2 pi xi$ of #link(<eq:freq-dictionary>)[the dictionary].
 
 #figure(
   tex-table(
-    ([$f(x)$], [$hat(f)(xi)$]),
-    ([$bold(1)_([-a, a])$], [$(sin(2 pi a xi)) / (pi xi)$]),
-    ([$e^(-pi x^2)$], [$e^(-pi xi^2)$]),
-    ([$x e^(-pi x^2)$], [$-i xi e^(-pi xi^2)$]),
-    ([$e^(-a abs(x))$], [$(2 a) / (a^2 + 4 pi^2 xi^2)$]),
-    ([$(1) / (x^2 + a^2)$], [$(pi) / (a) e^(-2 pi a abs(xi))$]),
-    ([$e^(-a x) bold(1)_([0, oo))$], [$(1) / (a + 2 pi i xi)$]),
+    ([$f(x)$], [$hat(f)(omega)$]),
+    ([$bold(1)_([-a, a])$], [$(2 sin(a omega)) / (omega)$]),
+    ([$e^(-pi x^2)$], [$e^(-omega^2 \/ (4 pi))$]),
+    ([$x e^(-pi x^2)$], [$-i omega \/ (2 pi) e^(-omega^2 \/ (4 pi))$]),
+    ([$e^(-a abs(x))$], [$(2 a) / (a^2 + omega^2)$]),
+    ([$(1) / (x^2 + a^2)$], [$(pi) / (a) e^(-a abs(omega))$]),
+    ([$e^(-a x) bold(1)_([0, oo))$], [$(1) / (a + i omega)$]),
     ([$delta_0$], [$1$]),
-    ([$1$], [$delta_0$]),
+    ([$1$], [$2 pi delta_0$]),
   ),
   caption: [Fourier transform pairs. The first row is #link(<ex:box-fourier>)[the box example] of §3.1, the second is #link(<prop:gauss-fourier-transform>)[the Gaussian identity] of §3.4, and the last two are identities between tempered distributions, in the sense of #link(<prop:fourier-tempered>)[the extension to $cal(S)'$]; they are deliberately not obtained by an absolutely convergent integral.],
   placement: auto,
