@@ -7,7 +7,7 @@
 ------
 
 # Structure | 目录结构
-This repository collects bilingual mathematics notes organized by subject. The list below reflects the current folder tree; folders shown with ~~strike through~~ are still under construction.
+This repository collects mathematics notes organized by subject. The list below reflects the current folder tree; folders shown with ~~strike through~~ are still under construction. Notes not yet migrated to Typst are marked with (LaTeX).
 
 ## 1.Analyse | 分析学
 - [Analyse Complexe | 复分析](https://lis-azure.vercel.app/notes/analyse-complexe)
@@ -27,27 +27,42 @@ This repository collects bilingual mathematics notes organized by subject. The l
 
 ## 3.Géométrie | 几何学
 - [Géométrie Analytique | 解析几何](https://lis-azure.vercel.app/notes/g%C3%A9om%C3%A9trie-analytique)
-- [Topologie Algébrique  | 代数拓扑](https://lis-azure.vercel.app/notes/topologie-alg%C3%A9brique)
-- [Topologie Générale | 点集拓扑](https://lis-azure.vercel.app/notes/topologie-g%C3%A9n%C3%A9rale)
+- [Géométrie Différentielle | 微分几何](https://lis-azure.vercel.app/notes/g%C3%A9om%C3%A9trie-diff%C3%A9rentielle)
+- [Topologie Algébrique | 代数拓扑](https://lis-azure.vercel.app/notes/topologie-alg%C3%A9brique)
+- [Topologie Générale | 点集拓扑](https://lis-azure.vercel.app/notes/topologie-g%C3%A9n%C3%A9rale) (LaTeX)
 
 ## 4.Mathématiques discrètes | 离散数学
 - [Combinatoire | 组合数学](https://lis-azure.vercel.app/notes/combinatoire)
 - [Logique Mathématique | 数理逻辑](https://lis-azure.vercel.app/notes/logique-math%C3%A9matique)
 - [Théorie des Ensembles | 集合论](https://lis-azure.vercel.app/notes/th%C3%A9orie-des-ensembles)
-- [Théorie des Graphes | 图论](https://lis-azure.vercel.app/notes/th%C3%A9orie-des-graphes)
+- [Théorie des Graphes | 图论](https://lis-azure.vercel.app/notes/th%C3%A9orie-des-graphes) (LaTeX)
 
 ## 5.Statistique | 统计学
-- [Probabilités | 概率论](https://lis-azure.vercel.app/notes/probabilit%C3%A9s)
-- [Processus Stochastique | 随机过程](https://lis-azure.vercel.app/notes/processus-stochastique)
+- [Probabilités | 概率论与数理统计](https://lis-azure.vercel.app/notes/probabilit%C3%A9s)
+- [Processus Stochastique | 随机过程](https://lis-azure.vercel.app/notes/processus-stochastique) (LaTeX)
+- [Théorie de l'Information | 信息论](https://lis-azure.vercel.app/notes/th%C3%A9orie-de-l%27information)
 
 
 ## 6.Mathématiques appliquées | 应用数学
+- [Analyse Numérique | 数值分析](https://lis-azure.vercel.app/notes/analyse-num%C3%A9rique)
 - [Électrodynamique | 电动力学](https://lis-azure.vercel.app/notes/%C3%A9lectrodynamique)
-- [Latex | Latex 教程](https://lis-azure.vercel.app/notes/latex)
 - [Mécanique analytique | 分析力学](https://lis-azure.vercel.app/notes/m%C3%A9canique-analytique)
 - [Mécanique quantique | 量子力学](https://lis-azure.vercel.app/notes/m%C3%A9canique-quantique)
 - [Optique | 光学](https://lis-azure.vercel.app/notes/optique)
+- [Thermodynamique | 热力学](https://lis-azure.vercel.app/notes/thermodynamique)
 
+
+---
+# Build | 编译
+
+Typst 笔记以 `initial.typ` 为入口，模板位于 `TypstTemplate/math-notes.typ`。
+在仓库根目录执行：
+
+```bash
+typst compile "<subject>/<note>/initial.typ" "<subject>/<note>/initial.pdf" --root .
+```
+
+各笔记目录下的 `scripts/*.py` 用 matplotlib 生成 `img/` 中的插图，用 `uv run` 执行（依赖见 `pyproject.toml`）。
 
 ---
 # Asset Sync | 资源同步
@@ -88,6 +103,25 @@ PDF 存储在 `oss://math-repo/math/main/`，保持与本地相同的目录结�
 
 # 仅查看本地 PDF 列表
 .\scripts\upload-pdfs.ps1 -ListOnly
+```
+
+## PDF 归类 (`scripts/migrate-pdfs.ps1`)
+
+将各笔记编译出的 `initial.pdf` 按 `<学科>/<笔记名>.pdf` 的结构复制到本地目标目录，便于集中查看。
+通过 size + MD5 比较，仅复制有差异的文件。
+
+```powershell
+# 直接复制差异文件
+.\scripts\migrate-pdfs.ps1 -Yes
+
+# 交互式模式（带文件预览和确认）
+.\scripts\migrate-pdfs.ps1
+
+# 仅查看映射关系
+.\scripts\migrate-pdfs.ps1 -ListOnly
+
+# 自定义目标目录
+.\scripts\migrate-pdfs.ps1 -Target "D:\PDF\Math" -Yes
 ```
 
 ## 同步策略
