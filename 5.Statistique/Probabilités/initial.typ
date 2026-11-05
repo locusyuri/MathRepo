@@ -3344,6 +3344,20 @@ the preceding chapters. They answer two fundamental questions:
 
 == Concepts of Convergence // 收敛概念
 
+A sequence of random variables is a sequence of measurable functions on the probability space $(Omega, cal(F), P)$ — precisely the object of *Convergence of Measurable Functions* in the Analyse Réelle note.
+Nothing prevents reusing that theory as it stands: $P$ is a measure with $P(Omega) = 1$, so the classical modes of convergence carry over unchanged and the probabilistic vocabulary is only a renaming.
+
+#tex-table(
+  ("Probability theory", "Measure theory (Analyse Réelle)", "Work required"),
+  ([$X_n -> X$ almost surely], [convergence almost everywhere], [inherited]),
+  ([$X_n arrow.r^P X$], [convergence in measure], [inherited]),
+  ([$X_n arrow.r^(L^p) X$], [$L^p$ norm convergence], [inherited]),
+  ([$X_n arrow.r^d X$], [weak convergence of the laws $mu_(X_n)$], [new]),
+)
+
+Three of the four definitions below are therefore pure vocabulary: they mention measurable functions and the measure $P$ only.
+The fourth, convergence in distribution, is different in kind — it uses the order of $RR$ through CDFs, and compares laws rather than values.
+
 #definition(name: "Convergence in Probability")[
   $X_n$ converges *in probability* to $X$, written $X_n arrow.r^P X$,
   if for every $epsilon > 0$,
@@ -3373,6 +3387,25 @@ the preceding chapters. They answer two fundamental questions:
   $E[abs(X_n - X)^p] -> 0$ (assuming $X_n, X in L^p$).
 ] <def:convergence-lp>
 
+Read through the dictionary above, the hierarchy proved below is the measure-theoretic one, and two of its three arrows already have proofs in the Analyse Réelle note.
+
+- *a.s. $arrow.r.double$ P.* On a *finite* measure space, almost everywhere convergence implies almost uniform convergence (*Almost Uniform Convergence*, Егоров's theorem), which in turn implies convergence in measure (*Convergence in Measure*): uniform convergence off a set $E$ with $P(E) < delta$ puts ${abs(X_n - X) > epsilon}$ inside $E$ for all large $n$.
+- *$L^p$ $arrow.r.double$ P.* This is *Марков's Inequality* (*Convergence in $L^p$ Norm*) applied to $abs(X_n - X)^p$, i.e. #link(<prop:markov-inequality>)[Markov's inequality] in probabilistic notation.
+- *P $arrow.r.double$ d.* The odd one out — it does not compare the values $X_(n)(omega)$ at all, only the laws $mu_(X_n)$, and it is the only arrow whose proof needs a new tool, #link(<thm:continuity-theorem>)[Lévy's continuity theorem].
+
+The failures of the converses are inherited rather than re-proved.
+The *typewriter sequence* of *Convergence in Measure* converges in measure yet diverges at every point, and the *shrinking bump* of *Convergence in $L^p$ Norm* converges everywhere yet not in $L^p$; both live on $([0, 1], cal(L), m)$, a probability space, so they are legitimate counterexamples here.
+
+#property(name: "Riesz Subsequence Principle")[
+  If $X_n arrow.r^P X$, then some subsequence $X_(n_k)$ converges to $X$ almost surely.
+] <prop:riesz-subsequence>
+
+This is *Riesz's Theorem* of the Analyse Réelle note restricted to $mu = P$.
+Convergence in probability need not imply a.s. convergence along the whole sequence, but it never fails to produce a subsequence that does — the standard repair when an argument requires a.s. convergence.
+
+In the opposite direction, the passage from probability to $L^1$ requires a uniform integrability assumption: convergence in probability plus uniform integrability gives $E[abs(X_n - X)] -> 0$ (Vitali, see *Uniform Integrability and Vitali Convergence*).
+Without it, the shrinking bump of *Convergence in $L^p$ Norm* is again the counterexample: $X_n -> 0$ almost surely, hence in probability, while $E[abs(X_n)] = 1$ for every $n$.
+
 #theorem(name: "Hierarchy of Convergence Modes")[
   - (a.s. $arrow.r.double$ P) $X_n arrow.r^(a.s.) X$ implies $X_n
     arrow.r^P X$;
@@ -3383,10 +3416,16 @@ the preceding chapters. They answer two fundamental questions:
 ] <thm:convergence-relations>
 
 #proof[
-  (a.s. $arrow.r.double$ P) If $X_n -> X$ a.s., then for any $epsilon > 0$,
-  ${abs(X_n - X) > epsilon}$ occurs only finitely often (outside a null
-  set). By #link(<thm:borel-cantelli>)[the first Borel–Cantelli lemma],
-  $P(abs(X_n - X) > epsilon) -> 0$.
+  (a.s. $arrow.r.double$ P) Fix $epsilon > 0$ and let $A_n = {abs(X_n - X) > epsilon}$.
+  Almost sure convergence says that $A_n$ occurs only finitely often, i.e.
+  $inter.big_(n >= 1) union.big_(m >= n) A_m$ is null.
+  The sets $union.big_(m >= n) A_m$ decrease to that intersection, so
+  #link(<thm:continuity-probability>)[continuity of probability] gives
+  $
+    lim_(n -> infinity) P(union.big_(m >= n) A_m) = 0,
+  $
+  and $P(A_n) <= P(union.big_(m >= n) A_m)$ because $A_n$ is one of the
+  sets in the union.
 
   ($L^p$ $arrow.r.double$ P) By #link(<prop:markov-inequality>)[Markov's
     inequality], $P(abs(X_n - X) > epsilon) <= E[abs(X_n - X)^p] / epsilon^p
