@@ -1211,6 +1211,16 @@ E[X^2] - 2 mu E[X] + mu^2 = E[X^2] - mu^2$.
   - $"Var"(X) < infinity$ iff $E[X^2] < infinity$.
 ] <prop:variance-properties>
 
+#definition(name: "Standardization")[
+  Let $X$ have $0 < "Var"(X) < infinity$, with $mu = E[X]$ and $sigma = sqrt("Var"(X))$. The *standardized* variable associated with $X$ is
+  $
+    Z = (X - mu) / sigma.
+  $
+] <def:standardization>
+
+Standardization recentres at $0$ and rescales the spread to $1$: by #link(<prop:variance-properties>)[the shift and scale rules of variance], $E[Z] = 0$ and $"Var"(Z) = 1$, while the shape of the distribution is untouched.
+It is the change of unit that makes variables with different locations and scales comparable — the common currency behind $z$-scores, and the reason one table of the standard normal CDF serves every normal variable (see #link(<thm:normal-standardization>)[standardization of the normal]).
+
 #theorem(name: "Chebyshev's Inequality")[
   If $"Var"(X) < infinity$, then for any $k > 0$,
   $
@@ -2091,7 +2101,7 @@ a direct formula avoids the detour through the CDF.
   $
   This is $N(a mu + b, a^2 sigma^2)$: linear transforms of normals are
   normal, with scale and location transformed accordingly. In particular,
-  $Z = (X - mu) / sigma ~ N(0, 1)$ — the standardization used throughout
+  $Z = (X - mu) / sigma ~ N(0, 1)$ — the #link(<def:standardization>)[standardization] used throughout
   normal calculations.
 ] <ex:linear-transform>
 
@@ -2770,9 +2780,24 @@ vectors.
 #definition(name: "Correlation Coefficient")[
   The *Pearson correlation coefficient* of $X$ and $Y$ with $"Var"(X), "Var"(Y) > 0$ is the normalised covariance
   $
-    rho_(X Y) = ("Cov"(X, Y)) / (sigma_X sigma_Y).
+    rho_(X Y) = "Corr"(X, Y) = ("Cov"(X, Y)) / (sigma_X sigma_Y).
   $
 ] <def:correlation-coefficient>
+
+#property(name: "Cauchy–Schwarz Inequality in $L^2$")[
+  For random variables with $E[X^2] < infinity$ and $E[Y^2] < infinity$,
+  $
+    (E[X Y])^2 <= E[X^2] E[Y^2],
+  $
+  with equality if and only if $X$ and $Y$ are almost surely proportional.
+] <prop:cauchy-schwarz-l2>
+
+This is not a new theorem, but the *Cauchy-Bunyakovsky-Schwarz Inequality* of the *Algèbre Linéaire* note applied to a function space: the random variables with finite second moment form a real inner product space under
+$
+  chevron.l X, Y chevron.r = E[X Y],
+$
+and the inequality above is precisely $(chevron.l X, Y chevron.r)^2 <= ||X||^2 ||Y||^2$ for that inner product.
+The probabilistic content is that the expectation of a product behaves like a scalar product — Cauchy–Schwarz is then available for free.
 
 #property(name: "Range of the Correlation Coefficient")[
   For random variables with $0 < "Var"(X), "Var"(Y) < infinity$,
@@ -2783,13 +2808,16 @@ vectors.
 ] <prop:correlation-range>
 
 #proof[
-  Cauchy–Schwarz applied to the centred variables gives
+  #link(<prop:cauchy-schwarz-l2>)[Cauchy–Schwarz in $L^2$] applied to the centred variables gives
   $
     ("Cov"(X, Y))^2 <= "Var"(X) "Var"(Y),
   $
   which is exactly $abs(rho_(X Y)) <= 1$.
   Equality holds precisely when $X - E[X]$ and $Y - E[Y]$ are almost surely proportional, i.e. $Y = a X + b$ almost surely with $a != 0$.
 ]
+
+Read in the same inner product space, $rho_(X Y)$ is the cosine of the angle between the centred variables $X - E[X]$ and $Y - E[Y]$.
+This is the geometric meaning of the coefficient: correlation measures alignment, not magnitude — which is why it is scale-free, and why $-1 <= rho_(X Y) <= 1$ is no more surprising than $abs(cos theta) <= 1$.
 
 #property(name: "Uncorrelatedness vs Independence")[
   - If $X$ and $Y$ are independent, then $"Cov"(X, Y) = 0$ (they are *uncorrelated*).
