@@ -2157,12 +2157,69 @@ The datum enters the solution only through an average against the Gaussian, whos
 A jump of $phi$ is therefore not transported but *diffused*: at every $t > 0$ the profile of #link(<ex:heat-cauchy-1d>)[the example] is smooth, and the original discontinuity survives only in the limit $t -> 0^+$.
 This is the exact opposite of what happens for the wave equation, where a jump travels along the characteristics unchanged (*Finite Propagation Speed and Dispersive Decay*).
 
+=== Solution by the Fourier Transform // 用傅里叶变换求解
+
+The kernel was produced by inspection; the systematic route to the same formula, and the one usually taken in a first course, is to transform the equation in the space variable — this is the treatment of @gu2012pde.
+
+Throughout this subsection $\hat(u) (xi, t) = integral_(bb(R)^n) u (bold(x), t) e^(-2 pi i xi dot bold(x)) dif bold(x)$ denotes the Fourier transform in $bold(x)$, with the frequency convention of the Fourier analysis notes.
+The properties used below — differentiation becomes multiplication by $2 pi i xi$, convolution becomes a product, and the inversion formula — are proved there (*The Fourier Transform on $bb(R)^d$* in Analyse Harmonique).
+
+Let $u$ be a smooth decaying solution of the Cauchy problem with datum $phi$.
+Transforming $u_t - alpha Delta u = 0$ in $bold(x)$ turns the equation into a family of scalar ODEs, one for each frequency:
+$
+  (dif)/(dif t) hat(u) (xi, t) = -4 pi^2 alpha abs(xi)^2 hat(u) (xi, t), quad hat(u) (xi, 0) = hat(phi) (xi).
+$
+The solution is immediate,
+#eq[$ hat(u) (xi, t) = e^(-4 pi^2 alpha abs(xi)^2 t) hat(phi) (xi), $] <eq:heat-fourier>
+and this is the whole content of the method: the partial differential equation has been diagonalized, and each frequency evolves independently of the others.
+
+Two consequences follow.
+
+- *The multiplier is the transform of the kernel.* In one dimension the standard Gaussian integral gives
+  $
+    integral_(-oo)^oo e^(-2 pi i xi x) e^(-x^2/(4 alpha t)) dif x = sqrt(4 pi alpha t) e^(-4 pi^2 alpha t xi^2),
+  $
+  and dividing by the normalization $(4 pi alpha t)^(n/2)$, the product over the $n$ coordinates gives $\hat(E)_alpha (xi, t) = e^(-4 pi^2 alpha abs(xi)^2 t)$ for the kernel of #link(<eq:heat-kernel>)[the definition].
+  Hence #link(<eq:heat-fourier>)[the transformed solution] is the product $\hat(E)_alpha hat(phi)$, and the convolution theorem together with the inversion formula returns $u = E_alpha * phi$, which is #link(<eq:heat-cauchy>)[the convolution formula].
+  The two routes agree, as they must: the direct one verifies the kernel, the transformed one derives it.
+- *High frequencies are damped.* The multiplier has modulus at most $1$ and decays like $e^(-4 pi^2 alpha t abs(xi)^2)$, so the amplitude at frequency $xi$ is attenuated at the exponential rate $4 pi^2 alpha abs(xi)^2$: the finer the spatial scale, the faster it disappears.
+  By Plancherel,
+  $
+    ||u (dot, t)||_(L^2) = ||hat(u) (dot, t)||_(L^2) <= ||hat(phi)||_(L^2) = ||phi||_(L^2),
+  $
+  which is the contraction later obtained from the energy identity (*Energy Dissipation*), here read off from the spectrum.
+
+#note[
+  The transform method also explains why no boundary condition appears: on $bb(R)^n$ the frequencies form a continuum and each evolves freely.
+  On a bounded domain the same computation is carried out with a discrete set of frequencies, and the multiplier becomes the sequence $e^(-alpha lambda_k t)$ of *Initial-Boundary Value Problems*.
+]
+
 === Regularization // 正则化
 
+The kernel is not merely smooth: it is analytic, and analyticity is transferred to the solution at every positive time.
+
+#theorem(name: "Instant Analyticity")[
+  Let $phi in L^oo (bb(R)^n)$ and $u = E_alpha * phi$. Then for every $t > 0$ the function $u (dot, t)$ is real analytic on $bb(R)^n$.
+] <thm:heat-analyticity>
+
+#proof[
+  *(Sketch.)* Extended to $z in bb(C)^n$ by the same formula, the kernel is entire, and for $abs(z - bold(x)_0) <= r$ its derivatives obey
+  $
+    abs(partial^gamma E_alpha (z - bold(y), t)) <= C^(abs(gamma) + 1) (alpha t)^(-abs(gamma)/2) e^(-c abs(bold(y))^2), quad bold(y) in bb(R)^n,
+  $
+  with constants depending only on $n$, $alpha t$ and $r$; the estimate is that of the derivatives of a Gaussian.
+  Differentiating under the integral for each multi-index therefore gives
+  $
+    abs(partial^gamma u (bold(x)_0, t)) <= M^(abs(gamma) + 1) abs(gamma)! dot ||phi||_oo,
+  $
+  where $M$ absorbs $C$ and $(alpha t)^(-1/2)$, and this is precisely the criterion for analyticity of $u (dot, t)$ at $bold(x)_0$.
+  Since $bold(x)_0$ is arbitrary, the claim follows.
+]
+
 #note(title: "Smoothing effect")[
-  No regularity of $phi$ beyond continuity is needed: $u (dot, t)$ is $C^oo$ for every $t > 0$.
-  The smoothing estimates of *Smoothing Effect* quantify the gain: each derivative costs the factor $(alpha t)^(-abs(gamma)/2)$, which blows up only as $t -> 0^+$.
-  This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast to the wave equation of the previous chapter, which propagates the regularity of the data without improvement.
+  No regularity of $phi$ beyond boundedness is needed: #link(<thm:heat-analyticity>)[the theorem] produces an analytic function at every positive time.
+  The gain is paid for at $t = 0$, and the smoothing estimates of *Smoothing Effect* make the price explicit: each derivative costs the factor $(alpha t)^(-abs(gamma)/2)$, which blows up only as $t -> 0^+$.
+  This instantaneous regularization is the hallmark of parabolic equations and is in sharp contrast with the wave equation of the previous chapter, which propagates the regularity of the data without improvement.
 ]
 
 == The Inhomogeneous Equation: Duhamel's Principle // 非齐次方程：Duhamel 原理
