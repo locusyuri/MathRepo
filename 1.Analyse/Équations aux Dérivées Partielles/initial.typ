@@ -2161,7 +2161,7 @@ This is the exact opposite of what happens for the wave equation, where a jump t
 
 The kernel was produced by inspection; the systematic route to the same formula, and the one usually taken in a first course, is to transform the equation in the space variable — this is the treatment of @gu2012pde.
 
-Throughout this subsection $\hat(u) (xi, t) = integral_(bb(R)^n) u (bold(x), t) e^(-2 pi i xi dot bold(x)) dif bold(x)$ denotes the Fourier transform in $bold(x)$, with the frequency convention of the Fourier analysis notes.
+Throughout this subsection $hat(u) (xi, t) = integral_(bb(R)^n) u (bold(x), t) e^(-2 pi i xi dot bold(x)) dif bold(x)$ denotes the Fourier transform in $bold(x)$, with the frequency convention of the Fourier analysis notes.
 The properties used below — differentiation becomes multiplication by $2 pi i xi$, convolution becomes a product, and the inversion formula — are proved there (*The Fourier Transform on $bb(R)^d$* in Analyse Harmonique).
 
 Let $u$ be a smooth decaying solution of the Cauchy problem with datum $phi$.
@@ -2179,8 +2179,8 @@ Two consequences follow.
   $
     integral_(-oo)^oo e^(-2 pi i xi x) e^(-x^2/(4 alpha t)) dif x = sqrt(4 pi alpha t) e^(-4 pi^2 alpha t xi^2),
   $
-  and dividing by the normalization $(4 pi alpha t)^(n/2)$, the product over the $n$ coordinates gives $\hat(E)_alpha (xi, t) = e^(-4 pi^2 alpha abs(xi)^2 t)$ for the kernel of #link(<eq:heat-kernel>)[the definition].
-  Hence #link(<eq:heat-fourier>)[the transformed solution] is the product $\hat(E)_alpha hat(phi)$, and the convolution theorem together with the inversion formula returns $u = E_alpha * phi$, which is #link(<eq:heat-cauchy>)[the convolution formula].
+  and dividing by the normalization $(4 pi alpha t)^(n/2)$, the product over the $n$ coordinates gives $hat(E)_alpha (xi, t) = e^(-4 pi^2 alpha abs(xi)^2 t)$ for the kernel of #link(<eq:heat-kernel>)[the definition].
+  Hence #link(<eq:heat-fourier>)[the transformed solution] is the product $hat(E)_alpha hat(phi)$, and the convolution theorem together with the inversion formula returns $u = E_alpha * phi$, which is #link(<eq:heat-cauchy>)[the convolution formula].
   The two routes agree, as they must: the direct one verifies the kernel, the transformed one derives it.
 - *High frequencies are damped.* The multiplier has modulus at most $1$ and decays like $e^(-4 pi^2 alpha t abs(xi)^2)$, so the amplitude at frequency $xi$ is attenuated at the exponential rate $4 pi^2 alpha abs(xi)^2$: the finer the spatial scale, the faster it disappears.
   By Plancherel,
