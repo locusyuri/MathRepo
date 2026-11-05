@@ -1,7 +1,7 @@
 #import "../../TypstTemplate/math-notes.typ": *
 
 #set document(
-  title: "Probabilités", // 概率论
+  title: "Probabilités et Statistique", // 概率论与数理统计
   author: "Violet",
   date: datetime.today(),
 )
@@ -13,13 +13,13 @@
 // --------------------------------------------------------------------------
 
 #make-cover(
-  "Probabilités", // 概率论
+  "Probabilités et Statistique", // 概率论与数理统计
   "Violet",
-  subtitle: "A notebook for probability",
+  subtitle: "A notebook for probability and mathematical statistics",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.2.0",
-  extra-info: "This is a notebook for probability.",
+  version: "v0.3.0",
+  extra-info: "This is a notebook for probability and mathematical statistics.",
 )
 
 #make-outline(depth: 2, title: "Contents")
@@ -957,6 +957,21 @@ function.
   carries all the information about $X$.
 ] <def:distribution-measure>
 
+#definition(name: "Distribution of a Random Variable")[
+  Let $F$ be a CDF. A random variable $X$ *has distribution* $F$, written
+  $X tilde F$, if $F_X = F$, that is $P(X <= x) = F(x)$ for every $x in RR$.
+] <def:has-distribution>
+
+The phrase "$X$ follows the distribution $F$" therefore attributes to $X$ a
+whole law, not a single number: writing $X tilde N(mu, sigma^2)$ only says
+that the CDF of $X$ is the normal CDF with parameters $mu$ and $sigma^2$.
+The statement concerns the push-forward measure $mu_X$ alone, and is silent
+about how $X$ is realised on $Omega$ — two random variables defined on
+completely different spaces, even two different functions of the same
+variable, can carry the same distribution. This is exactly why laws can be
+compared, tabulated and later estimated without reference to the underlying
+experiment.
+
 #property(name: "Properties of the CDF")[
   Let $F$ be a CDF. Then:
 
@@ -1303,7 +1318,8 @@ and the inequalities that control them. We now assemble the standard
 families — the working vocabulary of probability and statistics — and
 give each a complete portrait: its probability law, its origin as a
 model, its mean and variance, and the special properties that set it
-apart.
+apart. Each family is introduced through the notation $X tilde F$ of
+#link(<def:has-distribution>)[the general distribution definition].
 
 
 == Common Discrete Distributions // 常用离散分布
@@ -2473,6 +2489,27 @@ factorization criterion above applies verbatim.
   The distinction is central to the covariance theory developed below.
 ]
 
+Independence constrains the *joint* law; it says nothing about the individual laws.
+The complementary condition — equal individual laws — is a separate notion, and the two together form the standard hypothesis of repeated sampling.
+
+#definition(name: "Identically Distributed Random Variables")[
+  Random variables $X_1, dots, X_n$ are *identically distributed* if they have the same distribution, that is $F_(X_1) = dots = F_(X_n)$.
+] <def:identically-distributed>
+
+#definition(name: "Independent and Identically Distributed")[
+  Random variables $X_1, dots, X_n$ are *independent and identically distributed* (*i.i.d.*) if they are #link(<def:rv-independence>)[independent] and #link(<def:identically-distributed>)[identically distributed].
+] <def:iid>
+
+Neither condition implies the other.
+
+- *Identically distributed but dependent.* $X tilde U(0, 1)$ and $Y = 1 - X$ have the same uniform law, yet $Y$ is a deterministic function of $X$, so the pair is as dependent as possible.
+- *Independent but not identically distributed.* $X tilde N(0, 1)$ and $Y tilde N(0, 100)$ drawn independently are independent, but their laws differ.
+
+Two further points deserve emphasis.
+
+- *Identical distribution is not equality.* If $X_1 = X_2$ then the two are trivially identically distributed, but they are independent only when the common law is degenerate (a constant). Sampling $n$ i.i.d. copies means $n$ *distinct* random variables sharing one law, not one variable written $n$ times.
+- *i.i.d. is a hypothesis, not a definition of randomness.* It is the standing assumption behind #link(<def:bernoulli-trials>)[Bernoulli trials], the weak and strong laws of large numbers, and #link(<thm:clt>)[the Lindeberg-Lévy CLT]; the #link(<prop:lindeberg-condition>)[Lindeberg-Lyapunov CLT] shows that independence alone suffices once the variances are rescaled.
+
 == Conditional Distributions and Conditional Expectation // 条件分布与条件期望
 
 Conditional probability restricts the sample space; conditional
@@ -2591,7 +2628,8 @@ apply.
     $
       F_(N_n)(z) = 1 - product_(i=1)^n (1 - F_(i)(z)).
     $
-  If the $X_i$ are identically distributed with CDF $F$, then
+  If the $X_i$ are #link(<def:identically-distributed>)[identically
+  distributed] with CDF $F$, then
   $F_(M_n) = F^n$ and $F_(N_n) = 1 - (1 - F)^n$.
 ] <prop:extreme-distributions>
 
