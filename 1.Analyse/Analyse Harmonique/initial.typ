@@ -1837,12 +1837,12 @@ The heuristic of §3.1 ended with the formula $f(x) = (1) / (2 pi) integral hat(
 ] <prop:fourier-transform-l1>
 
 #proof[
-  The bound is immediate: $abs(hat(f)(xi)) <= integral abs(f(x)) dif x = || f ||_1$.
+  The bound is immediate: $abs(hat(f)(omega)) <= integral abs(f(x)) dif x = || f ||_1$.
   For uniform continuity, write
   $
-    abs(hat(f)(xi + h) - hat(f)(xi)) <= integral_(-oo)^(oo) abs(f(x)) abs(e^(-2 pi i h x) - 1) dif x
+    abs(hat(f)(omega + h) - hat(f)(omega)) <= integral_(-oo)^(oo) abs(f(x)) abs(e^(-i h x) - 1) dif x
   $
-  and split the integral at $abs(x) <= R$. On that piece $abs(e^(-2 pi i h x) - 1) <= 2 pi abs(h) R$ by the mean value inequality, while the tail is at most $2 integral_(abs(x) > R) abs(f(x)) dif x$, which is small for $R$ large. Letting $h -> 0$ afterwards gives the claim.
+  and split the integral at $abs(x) <= R$. On that piece $abs(e^(-i h x) - 1) <= abs(h) R$ by the mean value inequality, while the tail is at most $2 integral_(abs(x) > R) abs(f(x)) dif x$, which is small for $R$ large. Letting $h -> 0$ afterwards gives the claim.
 ]
 
 The bound above is crude: in fact the transform of an integrable function vanishes at infinity, which is the continuous version of #link(<lem:riemann-lebesgue>)[the Riemann–Lebesgue lemma for Fourier coefficients].
@@ -1850,7 +1850,7 @@ The bound above is crude: in fact the transform of an integrable function vanish
 #lemma(name: "Riemann–Lebesgue Lemma")[
   Let $f in L^1(bb(R))$. Then
   $
-    lim_(abs(xi) -> +oo) hat(f)(xi) = 0,
+    lim_(abs(omega) -> +oo) hat(f)(omega) = 0,
   $
   so that $hat(f) in C_0(bb(R))$.
 ] <lem:riemann-lebesgue-transform>
@@ -1858,9 +1858,9 @@ The bound above is crude: in fact the transform of an integrable function vanish
 #proof[
   Suppose first that $f$ is $C^1$ with compact support. Integrating by parts,
   $
-    hat(f)(xi) = (1) / (2 pi i xi) integral_(-oo)^(oo) f'(x) e^(-2 pi i xi x) dif x, quad xi != 0,
+    hat(f)(omega) = (1) / (i omega) integral_(-oo)^(oo) f'(x) e^(-i omega x) dif x, quad omega != 0,
   $
-  whence $abs(hat(f)(xi)) <= || f' ||_1 \/ (2 pi abs(xi)) -> 0$ as $abs(xi) -> +oo$.
+  whence $abs(hat(f)(omega)) <= || f' ||_1 \/ abs(omega) -> 0$ as $abs(omega) -> +oo$.
 
   In general, functions of that type are dense in $L^1(bb(R))$ (see the Analyse Réelle note), so choose $(f_j)$ with $|| f_j - f ||_1 -> 0$. By the bound of the proposition, $|| hat(f_j) - hat(f) ||_oo <= || f_j - f ||_1$, so $hat(f_j) -> hat(f)$ uniformly. A uniform limit of functions vanishing at infinity also vanishes at infinity, which completes the proof.
 ]
@@ -1874,62 +1874,66 @@ The inversion formula stated in #link(<cor:fourier-inversion-l1>)[§3.4] can now
 #proof(name: "of the $L^1$ inversion formula")[
   Assume $f in L^1(bb(R))$ and $hat(f) in L^1(bb(R))$, and put
   $
-    g(x) = integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) dif xi,
+    g(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega,
   $
   which is bounded and continuous by #link(<prop:fourier-transform-l1>)[the proposition] applied to $hat(f)$.
 
-  Let $phi in cal(S)(bb(R))$ and put $psi(xi) = hat(phi)(-xi)$. Writing $tilde(phi)(y) = phi(-y)$ we have $psi = cal(F)[tilde(phi)]$, so #link(<cor:fourier-involution>)[the involution identity] gives $hat(psi)(x) = phi(x)$.
+  Let $phi in cal(S)(bb(R))$ and put $psi(omega) = hat(phi)(-omega)$. Writing $tilde(phi)(y) = phi(-y)$ we have $psi = cal(F)[tilde(phi)]$, so #link(<cor:fourier-involution>)[the involution identity] gives $hat(psi)(x) = 2 pi phi(x)$.
   All integrals below are absolutely convergent, since $hat(f), phi, psi, f in L^1$; Fubini and #link(<prop:fourier-transform-rules>)[the multiplication formula] therefore give
   $
-    integral_(-oo)^(oo) g(x) phi(x) dif x = integral_(-oo)^(oo) hat(f)(xi) psi(xi) dif xi = integral_(-oo)^(oo) f(x) hat(psi)(x) dif x = integral_(-oo)^(oo) f(x) phi(x) dif x.
+    integral_(-oo)^(oo) g(x) phi(x) dif x = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) psi(omega) dif omega = (1) / (2 pi) integral_(-oo)^(oo) f(x) hat(psi)(x) dif x = integral_(-oo)^(oo) f(x) phi(x) dif x.
   $
   As $phi in cal(S)(bb(R))$ is arbitrary, the continuous function $g$ and the equivalence class of $f$ agree almost everywhere.
 ]
 
 == Plancherel Theorem // Plancherel 定理
 
-The transform is not bounded for the $L^1$ norm, and the estimate $|| hat(f) ||_oo <= || f ||_1$ is very far from an identity. On $L^2$, by contrast, the transform preserves the norm exactly: this is the continuous analogue of #link(<thm:parseval-identity>)[Parseval's identity], and it is the reason why the theory is organized around $L^2$.
+The transform is not bounded for the $L^1$ norm, and the estimate $|| hat(f) ||_oo <= || f ||_1$ is very far from an identity. On $L^2$, by contrast, the transform preserves the norm up to the single constant $sqrt(2 pi)$: the normalized transform $cal(F) \/ sqrt(2 pi)$ is exactly isometric, and this is the continuous analogue of #link(<thm:parseval-identity>)[Parseval's identity]. It is the reason why the theory is organized around $L^2$.
 
 #theorem(name: "Plancherel Theorem")[
   Let $f, g in L^1(bb(R)) ∩ L^2(bb(R))$. Then
   $
-    integral_(-oo)^(oo) hat(f)(xi) overline(hat(g)(xi)) dif xi = integral_(-oo)^(oo) f(x) overline(g(x)) dif x,
+    (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) overline(hat(g)(omega)) dif omega = integral_(-oo)^(oo) f(x) overline(g(x)) dif x,
   $ <eq:plancherel-inner>
-  and in particular $|| hat(f) ||_2 = || f ||_2$.
+  and in particular $|| hat(f) ||_2 = sqrt(2 pi) || f ||_2$.
 ] <thm:plancherel>
 
 #proof[
-  Put $g^*(x) = overline(g(-x))$, so that $hat(g^*)(xi) = overline(hat(g)(xi))$ by rule 4 of #link(<prop:fourier-transform-rules>)[the basic properties]. By #link(<thm:convolution-R>)[the convolution theorem],
+  Put $g^*(x) = overline(g(-x))$, so that $hat(g^*)(omega) = overline(hat(g)(omega))$ by rule 4 of #link(<prop:fourier-transform-rules>)[the basic properties]. By #link(<thm:convolution-R>)[the convolution theorem],
   $
-    hat(f * g^*)(xi) = hat(f)(xi) overline(hat(g)(xi)).
+    hat(f * g^*)(omega) = hat(f)(omega) overline(hat(g)(omega)).
   $
   Since $hat(f)$ and $hat(g)$ both lie in $L^2(bb(R))$, their product is integrable by the Cauchy–Schwarz inequality, so $f * g^*$ has an integrable transform and #link(<cor:fourier-inversion-l1>)[the $L^1$ inversion formula] applies at $x = 0$:
   $
-    (f * g^*)(0) = integral_(-oo)^(oo) hat(f)(xi) overline(hat(g)(xi)) dif xi.
+    (f * g^*)(0) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) overline(hat(g)(omega)) dif omega.
   $
   On the other hand $(f * g^*)(0) = integral f(y) overline(g(y)) dif y$ by #link(<def:convolution>)[the definition of convolution]. Comparing the two expressions proves the identity; taking $g = f$ gives the norm equality.
 ]
 
 #corollary(name: "Unitary Extension")[
-  $cal(F)$ extends uniquely to a linear isometry $U: L^2(bb(R)) -> L^2(bb(R))$; this extension is unitary, satisfies $U^2[f](x) = f(-x)$, and hence $U^4 = "id"$.
+  $cal(F) \/ sqrt(2 pi)$ extends uniquely to a linear isometry $U: L^2(bb(R)) -> L^2(bb(R))$; this extension is unitary, satisfies $U^2[f](x) = f(-x)$, and hence $U^4 = "id"$.
 ] <cor:plancherel-unitary>
 
 #proof[
-  The space $L^1(bb(R)) ∩ L^2(bb(R))$ contains $cal(S)(bb(R))$ and is dense in $L^2(bb(R))$. On it $cal(F)$ is isometric by #link(<thm:plancherel>)[the theorem], so by the extension principle for uniformly continuous maps it extends uniquely to an isometry $U$ of $L^2(bb(R))$.
+  The space $L^1(bb(R)) ∩ L^2(bb(R))$ contains $cal(S)(bb(R))$ and is dense in $L^2(bb(R))$. On it $cal(F) \/ sqrt(2 pi)$ is isometric by #link(<thm:plancherel>)[the theorem], so by the extension principle for uniformly continuous maps it extends uniquely to an isometry $U$ of $L^2(bb(R))$.
 
-  The image of $U$ contains $cal(F)(cal(S)(bb(R))) = cal(S)(bb(R))$ by #link(<cor:fourier-injective>)[invertibility on $cal(S)$], and $cal(S)$ is dense in $L^2$; an isometry whose image is dense is unitary.
-  Finally $U^2$ is the reflection $f |-> f(-x)$ on $cal(S)$ by #link(<cor:fourier-involution>)[involutivity], and both sides are continuous on $L^2$, so the identity extends.
+  The image of $U$ contains $(cal(F) \/ sqrt(2 pi))(cal(S)(bb(R))) = cal(S)(bb(R))$ by #link(<cor:fourier-injective>)[invertibility on $cal(S)$], and $cal(S)$ is dense in $L^2$; an isometry whose image is dense is unitary.
+  Finally $U^2 = (1) / (2 pi) cal(F)^2$ is the reflection $f |-> f(-x)$ on $cal(S)$ by #link(<cor:fourier-involution>)[involutivity], and both sides are continuous on $L^2$, so the identity extends.
 ]
 
 #note[
-  This is exactly #link(<thm:parseval-identity>)[Parseval's identity] with the sum replaced by an integral. On the circle the family $(e^(i n x))_(n in bb(Z))$ is an orthonormal basis of $L^2(bb(T))$; on the line the role of the basis is played by the continuum $(e^(2 pi i xi x))_(xi in bb(R))$, and the $(1)/(2 pi)$ of the circle case is absorbed into the counting measure $dif xi$. This is the reason for the convention fixed in §3.1.
+  This is exactly #link(<thm:parseval-identity>)[Parseval's identity] with the sum replaced by an integral. On the circle the family $(e^(i n x))_(n in bb(Z))$ is an orthonormal basis of $L^2(bb(T))$; on the line the role of the basis is played by the continuum $(e^(i omega x))_(omega in bb(R))$, orthonormal for the measure $dif omega \/ (2 pi)$. That factor is the one carried by the inversion formula and by #link(<eq:plancherel-inner>)[Plancherel], and it is the reason for the convention fixed in §3.1.
 ]
 
-#example(name: "Norm invariance for the Gaussian")[
-  For $f(x) = e^(-pi x^2)$ one has $hat(f) = f$ by #link(<eq:gauss-fourier>)[the Gaussian identity], so #link(<thm:plancherel>)[Plancherel] reduces to the identity $|| f ||_2 = || f ||_2$.
-  For $f(x) = e^(-pi (x \/ sigma)^2)$ the scaling rule gives $hat(f)(xi) = sigma e^(-pi sigma^2 xi^2)$, and direct integration yields
+#example(name: "Norm relation for the Gaussian")[
+  For $f(x) = e^(-pi x^2)$ #link(<eq:gauss-fourier>)[the Gaussian identity] gives $hat(f)(omega) = e^(-omega^2 \/ (4 pi))$, so #link(<thm:plancherel>)[Plancherel] reads
   $
-    || f ||_2^2 = integral_(-oo)^(oo) e^(-2 pi (x \/ sigma)^2) dif x = (sigma) / (sqrt(2)), quad || hat(f) ||_2^2 = sigma^2 integral_(-oo)^(oo) e^(-2 pi sigma^2 xi^2) dif xi = (sigma) / (sqrt(2)),
+    (1) / (2 pi) integral_(-oo)^(oo) e^(-omega^2 \/ (2 pi)) dif omega = integral_(-oo)^(oo) e^(-2 pi x^2) dif x,
+  $
+  and both sides equal $1 \/ sqrt(2)$: the substitution $omega = 2 pi x$ turns the left-hand integral into the right-hand one.
+  For $f(x) = e^(-pi (x \/ sigma)^2)$ the scaling rule gives $hat(f)(omega) = sigma e^(-sigma^2 omega^2 \/ (4 pi))$, and direct integration yields
+  $
+    || f ||_2^2 = (sigma) / (sqrt(2)), quad || hat(f) ||_2^2 = sqrt(2) pi sigma = 2 pi || f ||_2^2,
   $
   in agreement with the theorem.
 ] <ex:plancherel-gauss>
@@ -1941,11 +1945,11 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
 #theorem(name: "Poisson Summation Formula")[
   Let $f in cal(S)(bb(R))$. Then for every $x in bb(R)$
   $
-    sum_(n in bb(Z)) f(x + n) = sum_(n in bb(Z)) hat(f)(n) e^(2 pi i n x),
+    sum_(n in bb(Z)) f(x + n) = sum_(n in bb(Z)) hat(f)(2 pi n) e^(2 pi i n x),
   $ <eq:poisson-summation>
   both series converging absolutely and uniformly on $bb(R)$. In particular, at $x = 0$,
   $
-    sum_(n in bb(Z)) f(n) = sum_(n in bb(Z)) hat(f)(n).
+    sum_(n in bb(Z)) f(n) = sum_(n in bb(Z)) hat(f)(2 pi n).
   $
 ] <thm:poisson-summation>
 
@@ -1958,26 +1962,30 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
 
   Its Fourier coefficients are computed by cutting the integral into unit intervals and shifting each piece:
   $
-    hat(F)(k) = integral_(0)^(1) ( sum_(n in bb(Z)) f(x + n) ) e^(-2 pi i k x) dif x = sum_(n in bb(Z)) integral_(n)^(n+1) f(t) e^(-2 pi i k t) dif t = hat(f)(k).
+    hat(F)(k) = integral_(0)^(1) ( sum_(n in bb(Z)) f(x + n) ) e^(-2 pi i k x) dif x = sum_(n in bb(Z)) integral_(n)^(n+1) f(t) e^(-2 pi i k t) dif t = hat(f)(2 pi k).
   $
   The interchange of sum and integral is legitimate by uniform convergence.
 
-  Two integrations by parts on $hat(F)(k) = hat(f)(k)$ show that $abs(hat(F)(k)) <= C \/ (1 + k^2)$, so the Fourier series of $F$ converges absolutely and uniformly, and by #link(<thm:fejer>)[Fejér's theorem] its Cesàro means converge uniformly to $F$; the two limits coincide, hence $F(x) = sum_k hat(f)(k) e^(2 pi i k x)$.
+  Two integrations by parts on $hat(F)(k) = hat(f)(2 pi k)$ show that $abs(hat(F)(k)) <= C \/ (1 + k^2)$, so the Fourier series of $F$ converges absolutely and uniformly, and by #link(<thm:fejer>)[Fejér's theorem] its Cesàro means converge uniformly to $F$; the two limits coincide, hence $F(x) = sum_k hat(f)(2 pi k) e^(2 pi i k x)$.
 ]
 
 #corollary(name: "Sampling Theorem")[
-  Let $f in cal(S)(bb(R))$ have a transform supported in $[-1 / 2, 1 / 2]$. Then $f$ is determined by its values at the integers:
+  Let $f in cal(S)(bb(R))$ have a transform supported in $[-pi, pi]$. Then $f$ is determined by its values at the integers:
   $
     f(x) = sum_(n in bb(Z)) f(n) (sin(pi (x - n))) / (pi (x - n)), quad x in bb(R).
   $
 ] <cor:sampling>
 
 #note[
-  Apply #link(<thm:poisson-summation>)[the Poisson formula] to $hat(f)$, whose transform is $f(-x)$ by #link(<cor:fourier-involution>)[involutivity]. Since $hat(f)$ is supported in $[-1/2, 1/2]$, the periodization on the left is just $hat(f)(xi)$ for $xi$ in that interval, so
+  The spectrum occupying a single period $[-pi, pi]$, #link(<thm:poisson-summation>)[the Poisson formula] degenerates into a Fourier expansion. The coefficients of the $2 pi$-periodic extension of $hat(f)$ are
   $
-    hat(f)(xi) = sum_(n in bb(Z)) f(-n) e^(2 pi i n xi), quad abs(xi) <= 1 / 2.
+    (1) / (2 pi) integral_(-pi)^(pi) hat(f)(omega) e^(-i n omega) dif omega = f(-n),
   $
-  Inverting the series gives the displayed formula. In signal processing terms: a function whose spectrum vanishes above the frequency $1/2$ is completely determined by its samples taken at the integers, and the cardinal sine is the interpolation kernel.
+  by #link(<eq:inversion-formula>)[inversion], so on that interval
+  $
+    hat(f)(omega) = sum_(n in bb(Z)) f(-n) e^(i n omega), quad abs(omega) <= pi.
+  $
+  Feeding this series into the inversion integral and exchanging sum and integral gives the displayed formula. In signal processing terms: a function whose spectrum vanishes above the angular frequency $pi$, that is above the ordinary frequency $1\/2$, is completely determined by its samples taken at the integers, and the cardinal sine is the interpolation kernel.
 ]
 
 == Heisenberg's Uncertainty Principle // 海森堡不确定性原理
@@ -1987,17 +1995,18 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
 #theorem(name: "Heisenberg's Uncertainty Principle")[
   Let $f in cal(S)(bb(R))$ with $|| f ||_2 != 0$. Then
   $
-    ( integral_(-oo)^(oo) x^2 abs(f(x))^2 dif x ) ( integral_(-oo)^(oo) xi^2 abs(hat(f)(xi))^2 dif xi ) >= (1) / (16 pi^2) ( integral_(-oo)^(oo) abs(f(x))^2 dif x )^2.
+    ( integral_(-oo)^(oo) x^2 abs(f(x))^2 dif x ) ( integral_(-oo)^(oo) omega^2 abs(hat(f)(omega))^2 dif omega ) >= (pi) / (2) ( integral_(-oo)^(oo) abs(f(x))^2 dif x )^2.
   $ <eq:heisenberg>
   Equality holds if and only if $f(x) = A e^(-a x^2)$ with $A in bb(C) without {0}$ and $a > 0$.
+  For the normalized transform $cal(F) \/ sqrt(2 pi)$ the constant becomes the familiar $1 \/ 4$.
 ] <thm:heisenberg>
 
 #proof[
-  By rule 5 of #link(<prop:fourier-transform-rules>)[the basic properties], $hat(f')(xi) = 2 pi i xi hat(f)(xi)$, so
+  By rule 5 of #link(<prop:fourier-transform-rules>)[the basic properties], $hat(f')(omega) = i omega hat(f)(omega)$, so
   $
-    integral_(-oo)^(oo) xi^2 abs(hat(f)(xi))^2 dif xi = (1) / (4 pi^2) integral_(-oo)^(oo) abs(hat(f')(xi))^2 dif xi = (1) / (4 pi^2) integral_(-oo)^(oo) abs(f'(x))^2 dif x,
+    integral_(-oo)^(oo) omega^2 abs(hat(f)(omega))^2 dif omega = integral_(-oo)^(oo) abs(hat(f')(omega))^2 dif omega = 2 pi integral_(-oo)^(oo) abs(f'(x))^2 dif x,
   $
-  the second equality being #link(<thm:plancherel>)[Plancherel]. It therefore suffices to prove
+  the second equality being #link(<thm:plancherel>)[Plancherel]. Carrying the factor $2 pi$ through the estimate below, it therefore suffices to prove
   $
     4 ( integral_(-oo)^(oo) x^2 abs(f(x))^2 dif x ) ( integral_(-oo)^(oo) abs(f'(x))^2 dif x ) >= ( integral_(-oo)^(oo) abs(f(x))^2 dif x )^2.
   $
