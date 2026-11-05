@@ -1682,37 +1682,39 @@ Rule 5 has a consequence that was promised in §3.2: the transform never leaves 
 
 == Fourier Inversion Theorem // Fourier 反演定理
 
-The heuristic of §3.1 ended with the formula $f(x) = integral hat(f)(xi) e^(2 pi i xi x) dif xi$. #link(<ex:box-fourier>)[The box function] shows why this cannot be taken at face value: $hat(f)$ need not be integrable, so the integral may not converge. A factor forcing convergence has to be inserted, and the natural choice is the Gaussian, because it is its own transform.
+The heuristic of §3.1 ended with the formula $f(x) = (1) / (2 pi) integral hat(f)(omega) e^(i omega x) dif omega$. #link(<ex:box-fourier>)[The box function] shows why this cannot be taken at face value: $hat(f)$ need not be integrable, so the integral may not converge. A factor forcing convergence has to be inserted, and the natural choice is the Gaussian, whose transform is again a Gaussian of the same shape.
 
 #definition(name: "Gauss Kernel")[
   For $delta > 0$ and $x in bb(R)$ the *Gauss kernel* of width $delta$ is
   $
-    K_delta(x) = (1) / (delta) e^(-pi (x / delta)^2).
+    K_delta(x) = (1) / (sqrt(2 pi) delta) e^(-x^2 \/ (2 delta^2)).
   $ <eq:gauss-kernel>
 ] <def:gauss-kernel>
 
-#proposition(name: "The Gaussian is its own transform")[
-  For every $xi in bb(R)$,
+#proposition(name: "The Transform of a Gaussian")[
+  For every $omega in bb(R)$,
   $
-    integral_(-oo)^(oo) e^(-pi x^2) e^(-2 pi i xi x) dif x = e^(-pi xi^2),
+    integral_(-oo)^(oo) e^(-x^2 \/ 2) e^(-i omega x) dif x = sqrt(2 pi) e^(-omega^2 \/ 2),
   $ <eq:gauss-fourier>
-  and consequently $hat(K_delta)(xi) = e^(-pi delta^2 xi^2)$.
+  so the Gaussian $G(x) = e^(-x^2 \/ 2)$ is carried by $cal(F)$ to $sqrt(2 pi) G$: the shape is preserved. Consequently $hat(K_delta)(omega) = e^(-delta^2 omega^2 \/ 2)$.
 ] <prop:gauss-fourier-transform>
 
 #proof[
-  Put $F(xi) = integral_(-oo)^(oo) e^(-pi x^2) e^(-2 pi i xi x) dif x$. The integrand is dominated by $e^(-pi x^2)$, so $F$ may be differentiated under the integral sign:
+  Put $F(omega) = integral_(-oo)^(oo) e^(-x^2 \/ 2) e^(-i omega x) dif x$. The integrand is dominated by $e^(-x^2 \/ 2)$, so $F$ may be differentiated under the integral sign:
   $
-    F'(xi) = -2 pi i integral_(-oo)^(oo) x e^(-pi x^2) e^(-2 pi i xi x) dif x.
+    F'(omega) = -i integral_(-oo)^(oo) x e^(-x^2 \/ 2) e^(-i omega x) dif x.
   $
-  Since $(dif) / (dif x) e^(-pi x^2) = -2 pi x e^(-pi x^2)$, an integration by parts gives
+  Since $(dif) / (dif x) e^(-x^2 \/ 2) = -x e^(-x^2 \/ 2)$, an integration by parts gives
   $
-    F'(xi) = i integral_(-oo)^(oo) ( (dif) / (dif x) e^(-pi x^2) ) e^(-2 pi i xi x) dif x = -2 pi xi F(xi),
+    integral_(-oo)^(oo) x e^(-x^2 \/ 2) e^(-i omega x) dif x = - integral_(-oo)^(oo) ( (dif) / (dif x) e^(-x^2 \/ 2) ) e^(-i omega x) dif x = -i omega F(omega),
   $
-  the boundary term vanishing at both ends. Moreover $F(0) = integral e^(-pi x^2) dif x = 1$, the classical Gaussian integral. The only solution of $F' = -2 pi xi F$ with $F(0) = 1$ is $F(xi) = e^(-pi xi^2)$.
+  the boundary term vanishing at both ends, whence $F'(omega) = -omega F(omega)$.
+  Moreover $F(0) = integral e^(-x^2 \/ 2) dif x = sqrt(2 pi)$, the classical Gaussian integral. The only solution of $F' = -omega F$ with $F(0) = sqrt(2 pi)$ is $F(omega) = sqrt(2 pi) e^(-omega^2 \/ 2)$.
   For the second statement, substitute $x = delta u$:
   $
-    hat(K_delta)(xi) = integral_(-oo)^(oo) (1) / (delta) e^(-pi (x / delta)^2) e^(-2 pi i xi x) dif x = integral_(-oo)^(oo) e^(-pi u^2) e^(-2 pi i delta xi u) dif u = e^(-pi delta^2 xi^2).
+    hat(K_delta)(omega) = (1) / (sqrt(2 pi)) integral_(-oo)^(oo) e^(-u^2 \/ 2) e^(-i delta omega u) dif u = e^(-delta^2 omega^2 \/ 2),
   $
+  by the first identity with $omega$ replaced by $delta omega$.
 ]
 
 #lemma(name: "The Gauss Kernel is an Approximate Identity")[
@@ -1727,9 +1729,9 @@ The heuristic of §3.1 ended with the formula $f(x) = integral hat(f)(xi) e^(2 p
 ] <lem:gauss-approximation>
 
 #proof[
-  Positivity is clear. For normalization, substitute $u = x \/ delta$ and use the Gaussian integral. For concentration, the same substitution gives
+  Positivity is clear. For normalization, substitute $u = x \/ delta$: the factor $1 \/ (sqrt(2 pi))$ times the Gaussian integral $integral e^(-u^2 \/ 2) dif u = sqrt(2 pi)$ gives $1$. For concentration, the same substitution gives
   $
-    integral_(abs(x) > eta) K_delta(x) dif x = integral_(abs(u) > eta \/ delta) e^(-pi u^2) dif u -> 0,
+    integral_(abs(x) > eta) K_delta(x) dif x = (1) / (sqrt(2 pi)) integral_(abs(u) > eta \/ delta) e^(-u^2 \/ 2) dif u -> 0,
   $
   since $eta \/ delta -> +oo$ and the tail of an integrable function vanishes.
 
@@ -1743,7 +1745,7 @@ The heuristic of §3.1 ended with the formula $f(x) = integral hat(f)(xi) e^(2 p
 #theorem(name: "Fourier Inversion Theorem")[
   Let $f in cal(S)(bb(R))$. Then for every $x in bb(R)$
   $
-    f(x) = integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) dif xi,
+    f(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega,
   $ <eq:inversion-formula>
   the integral converging absolutely, and the convergence being uniform in $x$.
 ] <thm:fourier-inversion>
@@ -1751,17 +1753,17 @@ The heuristic of §3.1 ended with the formula $f(x) = integral hat(f)(xi) e^(2 p
 #proof[
   Let $delta > 0$ and put
   $
-    f_delta(x) = integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) e^(-pi delta^2 xi^2) dif xi.
+    f_delta(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) e^(-delta^2 omega^2 \/ 2) dif omega.
   $
   Since $hat(f) in cal(S)$ by #link(<prop:fourier-schwartz>)[the preceding proposition], the integrand is integrable and Fubini applies:
   $
-    f_delta(x) = integral_(-oo)^(oo) f(t) ( integral_(-oo)^(oo) e^(2 pi i xi (x - t)) e^(-pi delta^2 xi^2) dif xi ) dif t = integral_(-oo)^(oo) f(t) K_delta(x - t) dif t,
+    f_delta(x) = integral_(-oo)^(oo) f(t) ( (1) / (2 pi) integral_(-oo)^(oo) e^(i omega (x - t)) e^(-delta^2 omega^2 \/ 2) dif omega ) dif t = integral_(-oo)^(oo) f(t) K_delta(x - t) dif t,
   $
-  where the inner integral equals $K_delta(x - t)$: after the substitution $eta = delta xi$ it reads $(1) / (delta) hat(G)((t - x) / (delta))$ with $G(u) = e^(-pi u^2)$, and $hat(G) = G$ is #link(<prop:gauss-fourier-transform>)[the Gaussian identity], while $G$ is even. Hence $f_delta = f * K_delta$, and #link(<lem:gauss-approximation>)[the approximate identity lemma] gives $f_delta -> f$ uniformly.
+  where the inner integral equals $K_delta(x - t)$: after the substitution $eta = delta omega$ it reads $(1) / (2 pi delta) integral e^(-eta^2 \/ 2) e^(i eta (x - t) \/ delta) dif eta$, which is $K_delta(x - t)$ by #link(<eq:gauss-fourier>)[the Gaussian identity] and the evenness of the Gaussian. Hence $f_delta = f * K_delta$, and #link(<lem:gauss-approximation>)[the approximate identity lemma] gives $f_delta -> f$ uniformly.
 
-  On the other hand $abs(hat(f)(xi) e^(2 pi i xi x) e^(-pi delta^2 xi^2)) <= abs(hat(f)(xi))$, which is integrable, so dominated convergence gives
+  On the other hand $abs(hat(f)(omega) e^(i omega x) e^(-delta^2 omega^2 \/ 2)) <= abs(hat(f)(omega))$, which is integrable, so dominated convergence gives
   $
-    f_delta(x) -> integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) dif xi quad "for every" x.
+    f_delta(x) -> (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega quad "for every" x.
   $
   The two limits coincide, which is the claimed identity. Absolute convergence follows from $hat(f) in L^1(bb(R))$, and uniformity from the uniform convergence of $f * K_delta$ and the domination just used.
 ]
@@ -1770,19 +1772,19 @@ The heuristic of §3.1 ended with the formula $f(x) = integral hat(f)(xi) e^(2 p
   If $f, g in cal(S)(bb(R))$ and $hat(f) = hat(g)$, then $f = g$. More generally $cal(F): cal(S)(bb(R)) -> cal(S)(bb(R))$ is a linear isomorphism.
 ] <cor:fourier-injective>
 
-#corollary(name: "Involutivity")[
+#corollary(name: "Involutivity up to a Constant")[
   For $f in cal(S)(bb(R))$,
   $
-    cal(F)^2[f](x) = f(-x), quad "hence" quad cal(F)^4 = "id".
+    cal(F)^2[f](x) = 2 pi f(-x), quad "hence" quad cal(F)^4 = (2 pi)^2 "id".
   $
 ] <cor:fourier-involution>
 
 #proof[
   By the definition applied to $hat(f)$ and then the inversion formula with $x$ replaced by $-x$,
   $
-    cal(F)^2[f](x) = integral_(-oo)^(oo) hat(f)(xi) e^(-2 pi i x xi) dif xi = f(-x).
+    cal(F)^2[f](x) = integral_(-oo)^(oo) hat(f)(omega) e^(-i x omega) dif omega = 2 pi f(-x).
   $
-  Applying this twice more returns $f$.
+  Applying this twice more multiplies by another factor $2 pi$.
 ]
 
 === The Transform on Tempered Distributions // 缓增分布上的 Fourier 变换
@@ -1797,22 +1799,22 @@ The heuristic of §3.1 ended with the formula $f(x) = integral hat(f)(xi) e^(2 p
 
 #proof[
   The functional $cal(F)T$ is well defined because $cal(F)phi in cal(S)$ for $phi in cal(S)$, and it is continuous because $phi_j -> phi$ in $cal(S)$ implies $cal(F)phi_j -> cal(F)phi$ by #link(<prop:fourier-schwartz>)[continuity of the transform on $cal(S)$], whence $⟨ T, cal(F)phi_j ⟩ -> ⟨ T, cal(F)phi ⟩$.
-  Linearity in $T$ is clear. For the inverse, #link(<cor:fourier-involution>)[involutivity] gives $⟨ cal(F)^2 T, phi ⟩ = ⟨ T, tilde(phi) ⟩$ where $tilde(phi)(x) = phi(-x)$, so applying $cal(F)$ four times returns $T$; hence $cal(F)^(-1) = cal(F)^3$ on $cal(S)'$, and $cal(F)^(-1) T$ is computed by the same transposition formula.
+  Linearity in $T$ is clear. For the inverse, #link(<cor:fourier-involution>)[involutivity] gives $⟨ cal(F)^2 T, phi ⟩ = 2 pi ⟨ T, tilde(phi) ⟩$ where $tilde(phi)(x) = phi(-x)$, so applying $cal(F)$ four times multiplies by $(2 pi)^2$; hence $cal(F)^(-1) = (1) / (2 pi)^2 cal(F)^3$ on $cal(S)'$, and $cal(F)^(-1) T$ is computed by the same transposition formula.
 ]
 
 #example(name: "Fourier transform of the constant and of the Dirac mass")[
   For $phi in cal(S)(bb(R))$, the definition gives
   $
-    ⟨ cal(F)1, phi ⟩ = ⟨ 1, cal(F)phi ⟩ = integral_(-oo)^(oo) hat(phi)(xi) dif xi = phi(0),
+    ⟨ cal(F)1, phi ⟩ = ⟨ 1, cal(F)phi ⟩ = integral_(-oo)^(oo) hat(phi)(omega) dif omega = 2 pi phi(0),
   $
-  the last step being #link(<eq:inversion-formula>)[the inversion formula] at $x = 0$. Hence $cal(F)1 = delta_0$. The same computation with the roles exchanged, using $⟨ cal(F)delta_0, phi ⟩ = ⟨ delta_0, cal(F)phi ⟩ = hat(phi)(0) = integral phi$, gives $cal(F)delta_0 = 1$.
+  the last step being #link(<eq:inversion-formula>)[the inversion formula] at $x = 0$. Hence $cal(F)1 = 2 pi delta_0$. The same computation with the roles exchanged, using $⟨ cal(F)delta_0, phi ⟩ = ⟨ delta_0, cal(F)phi ⟩ = hat(phi)(0) = integral phi$, gives $cal(F)delta_0 = 1$.
   So a constant has only the zero frequency, and a point mass is spread over all frequencies; on tempered distributions the transform becomes a symmetry with no preferred side.
 ] <ex:fourier-delta>
 
 #corollary(name: "Inversion on $L^1$")[
   Let $f in L^1(bb(R))$ and assume that $hat(f) in L^1(bb(R))$. Then $f$ agrees almost everywhere with the continuous function
   $
-    x |-> integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) dif xi.
+    x |-> (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega.
   $
 ] <cor:fourier-inversion-l1>
 
