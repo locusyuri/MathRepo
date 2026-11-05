@@ -1592,11 +1592,7 @@ Tempered distributions are exactly the class on which the Fourier transform exte
 
 Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced in §3.2. The proofs are short computations, and they are not the point: what matters is the pattern. Each operation on the variable $x$ has a dual operation on the angular frequency $omega$, and the transform passes from one column of the following list to the other.
 
-#figure(
-  image("img/fourier-duality.svg", width: 72%),
-  caption: [Fourier duality in the $omega$ convention. Left column: $f(x)$; right column: $hat(f)(omega)$. Top: a box of half-width $a$ gives a sinc decaying like $1 \/ abs(omega)$, so a narrow support forces a wide spectrum. Middle: a Gaussian gives a Gaussian, with variances in inverse proportion; the shape is preserved only at the self-dual scale. Bottom: translating $f$ leaves $abs(hat(f))$ unchanged and multiplies the transform by the linear phase $e^(-i x_0 omega)$ — the content of rule 2 below.],
-  supplement: [Fig.],
-) <fig:fourier-duality>
+=== Properties // 性质
 
 #property(name: "Fourier Transform Rules")[
   Let $f, g in cal(S)(bb(R))$, $x_0, omega_0 in bb(R)$ and $c in bb(R) without {0}$. The transform is written with the operator alone: $cal(F)[f]$ denotes the function $omega |-> cal(F)[f](omega)$, and the shorthand $hat(f)$ is not used in this list.
@@ -1616,7 +1612,9 @@ Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced 
     $ cal(F)[overline(f)](omega) = overline(cal(F)[f](-omega)), quad cal(F)[f(-x)](omega) = cal(F)[f](-omega). $
 
   5. *Differentiation and multiplication.* For every $n >= 0$,
-    $ cal(F)[f^((n))](omega) = (i omega)^n cal(F)[f](omega), quad cal(F)[x^n f(x)](omega) = i^n (cal(F)[f])^((n))(omega). $
+    $
+      cal(F)[f^((n))](omega) = (i omega)^n cal(F)[f](omega), quad cal(F)[x^n f(x)](omega) = i^n (cal(F)[f])^((n))(omega).
+    $
 
   6. *Multiplication formula.*
     $ integral_(-oo)^(oo) f(x) cal(F)[g](x) dif x = integral_(-oo)^(oo) cal(F)[f](omega) g(omega) dif omega. $
@@ -1632,6 +1630,12 @@ Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced 
     integral_(-oo)^(oo) integral_(-oo)^(oo) abs(f(x) g(y) e^(-i x y)) dif x dif y = || f ||_1 || g ||_1 < +oo.
   $
 ]
+
+#figure(
+  image("img/fourier-duality.svg", width: 72%),
+  caption: [Fourier duality in the $omega$ convention. Left column: $f(x)$; right column: $hat(f)(omega)$. Top: a box of half-width $a$ gives a sinc decaying like $1 \/ abs(omega)$, so a narrow support forces a wide spectrum. Middle: a Gaussian gives a Gaussian, with variances in inverse proportion; the shape is preserved only at the self-dual scale. Bottom: translating $f$ leaves $abs(hat(f))$ unchanged and multiplies the transform by the linear phase $e^(-i x_0 omega)$ — the content of rule 2 below.],
+  supplement: [Fig.],
+) <fig:fourier-duality>
 
 The product rule, which is the frequency-side shadow of the convolution theorem below, is the most used property of the transform.
 
@@ -1685,6 +1689,28 @@ Rule 5 has a consequence that was promised in §3.2: the transform never leaves 
 
 The heuristic of §3.1 ended with the formula $f(x) = (1) / (2 pi) integral hat(f)(omega) e^(i omega x) dif omega$. #link(<ex:box-fourier>)[The box function] shows why this cannot be taken at face value: $hat(f)$ need not be integrable, so the integral may not converge. A factor forcing convergence has to be inserted, and the natural choice is the Gaussian, whose transform is again a Gaussian of the same shape.
 
+#lemma(name: "Gaussian Integral in Angular Form")[
+  Let $a in bb(C)$ with $Re a > 0$ and let $omega in bb(C)$. Then
+  $
+    integral_(-oo)^(oo) e^(-a x^2 \/ 2) e^(-i omega x) dif x = sqrt(2 pi \/ a) e^(-omega^2 \/ (2 a)),
+  $ <eq:gaussian-angular>
+  where $sqrt(a)$ is the branch with $Re sqrt(a) > 0$. For $a > 0$ this reads
+  $
+    cal(F)[e^(-a dot^2 \/ 2)](omega) = sqrt(2 pi \/ a) e^(-omega^2 \/ (2 a)),
+  $
+  so every Gaussian is carried to a Gaussian, with reciprocal width.
+] <lem:gaussian-integral>
+
+#proof[
+  This is the general Gaussian integral
+  $
+    integral_(-oo)^(oo) e^(-A x^2 + B x + C) dif x = sqrt(pi \/ A) e^(C + B^2 \/ (4 A)), quad Re A > 0,
+  $
+  of the Analyse Mathématique note, read with $A = a \/ 2$, $B = -i omega$ and $C = 0$. The hypotheses are met: $Re(a \/ 2) > 0$, and a complex $B$ costs nothing, since $abs(e^(-i omega x)) = e^((Im omega) x)$ is dominated at infinity by $e^(-(Re a) x^2 \/ 2)$. Complex $a$ follows by analytic continuation in the half-plane $Re a > 0$, where both sides are analytic and agree on the positive real axis.
+]
+
+Two features of #link(<eq:gaussian-angular>)[this form] are used below. It already contains the oscillation, so the transform of a Gaussian costs one substitution instead of an integration by parts; and the frequency enters quadratically, which is what the inversion proof needs, because the damping factor $e^(-delta^2 omega^2 \/ 2)$ is itself a Gaussian in $omega$. The $d$-dimensional version, with a quadratic form $x dot A x$ in the exponent, is used in §5.1.
+
 #definition(name: "Gauss Kernel")[
   For $delta > 0$ and $x in bb(R)$ the *Gauss kernel* of width $delta$ is
   $
@@ -1697,25 +1723,15 @@ The heuristic of §3.1 ended with the formula $f(x) = (1) / (2 pi) integral hat(
   $
     integral_(-oo)^(oo) e^(-x^2 \/ 2) e^(-i omega x) dif x = sqrt(2 pi) e^(-omega^2 \/ 2),
   $ <eq:gauss-fourier>
-  so the Gaussian $G(x) = e^(-x^2 \/ 2)$ is carried by $cal(F)$ to $sqrt(2 pi) G$: the shape is preserved. Consequently $hat(K_delta)(omega) = e^(-delta^2 omega^2 \/ 2)$.
+  so the Gaussian $G(x) = e^(-x^2 \/ 2)$ is carried by $cal(F)$ to $sqrt(2 pi) G$: the shape is preserved and the width is reciprocal. Consequently $hat(K_delta)(omega) = e^(-delta^2 omega^2 \/ 2)$.
 ] <prop:gauss-fourier-transform>
 
 #proof[
-  Put $F(omega) = integral_(-oo)^(oo) e^(-x^2 \/ 2) e^(-i omega x) dif x$. The integrand is dominated by $e^(-x^2 \/ 2)$, so $F$ may be differentiated under the integral sign:
+  The first identity is #link(<lem:gaussian-integral>)[the Gaussian integral] with $a = 1$. For the second, the definition of $K_delta$ and the same lemma with $a = 1 \/ delta^2$ give
   $
-    F'(omega) = -i integral_(-oo)^(oo) x e^(-x^2 \/ 2) e^(-i omega x) dif x.
+    hat(K_delta)(omega) = (1) / (sqrt(2 pi) delta) integral_(-oo)^(oo) e^(-x^2 \/ (2 delta^2)) e^(-i omega x) dif x = (1) / (sqrt(2 pi) delta) sqrt(2 pi delta^2) e^(-delta^2 omega^2 \/ 2) = e^(-delta^2 omega^2 \/ 2).
   $
-  Since $(dif) / (dif x) e^(-x^2 \/ 2) = -x e^(-x^2 \/ 2)$, an integration by parts gives
-  $
-    integral_(-oo)^(oo) x e^(-x^2 \/ 2) e^(-i omega x) dif x = - integral_(-oo)^(oo) ( (dif) / (dif x) e^(-x^2 \/ 2) ) e^(-i omega x) dif x = -i omega F(omega),
-  $
-  the boundary term vanishing at both ends, whence $F'(omega) = -omega F(omega)$.
-  Moreover $F(0) = integral e^(-x^2 \/ 2) dif x = sqrt(2 pi)$, the classical Gaussian integral. The only solution of $F' = -omega F$ with $F(0) = sqrt(2 pi)$ is $F(omega) = sqrt(2 pi) e^(-omega^2 \/ 2)$.
-  For the second statement, substitute $x = delta u$:
-  $
-    hat(K_delta)(omega) = (1) / (sqrt(2 pi)) integral_(-oo)^(oo) e^(-u^2 \/ 2) e^(-i delta omega u) dif u = e^(-delta^2 omega^2 \/ 2),
-  $
-  by the first identity with $omega$ replaced by $delta omega$.
+  The scaling and the oscillation are absorbed in one step, which is the reason for stating the general form once.
 ]
 
 #lemma(name: "The Gauss Kernel is an Approximate Identity")[
@@ -1730,7 +1746,7 @@ The heuristic of §3.1 ended with the formula $f(x) = (1) / (2 pi) integral hat(
 ] <lem:gauss-approximation>
 
 #proof[
-  Positivity is clear. For normalization, substitute $u = x \/ delta$: the factor $1 \/ (sqrt(2 pi))$ times the Gaussian integral $integral e^(-u^2 \/ 2) dif u = sqrt(2 pi)$ gives $1$. For concentration, the same substitution gives
+  Positivity is clear. For normalization, #link(<lem:gaussian-integral>)[the Gaussian integral] with $a = 1 \/ delta^2$ gives $integral K_delta(x) dif x = 1$. For concentration, the substitution $u = x \/ delta$ gives
   $
     integral_(abs(x) > eta) K_delta(x) dif x = (1) / (sqrt(2 pi)) integral_(abs(u) > eta \/ delta) e^(-u^2 \/ 2) dif u -> 0,
   $
@@ -1760,7 +1776,7 @@ The heuristic of §3.1 ended with the formula $f(x) = (1) / (2 pi) integral hat(
   $
     f_delta(x) = integral_(-oo)^(oo) f(t) ( (1) / (2 pi) integral_(-oo)^(oo) e^(i omega (x - t)) e^(-delta^2 omega^2 \/ 2) dif omega ) dif t = integral_(-oo)^(oo) f(t) K_delta(x - t) dif t,
   $
-  where the inner integral equals $K_delta(x - t)$: after the substitution $eta = delta omega$ it reads $(1) / (2 pi delta) integral e^(-eta^2 \/ 2) e^(i eta (x - t) \/ delta) dif eta$, which is $K_delta(x - t)$ by #link(<eq:gauss-fourier>)[the Gaussian identity] and the evenness of the Gaussian. Hence $f_delta = f * K_delta$, and #link(<lem:gauss-approximation>)[the approximate identity lemma] gives $f_delta -> f$ uniformly.
+  where the inner integral equals $K_delta(x - t)$ by #link(<lem:gaussian-integral>)[the Gaussian integral] with $a = delta^2$, applied in the variable $omega$: it gives $(1) / (2 pi) sqrt(2 pi \/ delta^2) e^(-(x - t)^2 \/ (2 delta^2))$, which is $K_delta(x - t)$. Hence $f_delta = f * K_delta$, and #link(<lem:gauss-approximation>)[the approximate identity lemma] gives $f_delta -> f$ uniformly.
 
   On the other hand $abs(hat(f)(omega) e^(i omega x) e^(-delta^2 omega^2 \/ 2)) <= abs(hat(f)(omega))$, which is integrable, so dominated convergence gives
   $
