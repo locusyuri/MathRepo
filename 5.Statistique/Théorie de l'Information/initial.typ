@@ -1060,7 +1060,7 @@ the simplex.
   against $log 3 approx 1.585$ bits for the uniform distribution on three
   outcomes. The gap is the price of the imbalance, in the sense made precise by
   #link(<prop:entropy-basic>)[the upper bound above].
-]
+] <ex:entropy-uniform>
 
 === The Binary Entropy Function // 二元熵函数
 
@@ -1090,7 +1090,7 @@ the simplex.
   $h(0.11) approx 0.5$, and $h(0.01) approx 0.0808$. The last value is the
   reason a channel with crossover probability $0.01$ costs only about $8\%$ of
   its raw capacity, a number used in §7.3 and in §15.2.
-]
+] <ex:binary-entropy-values>
 
 === Generalizations: Weighted Entropy // 推广：加权熵
 
@@ -1124,6 +1124,228 @@ entropies, deferred to §2.1 where the divergence machinery makes them natural.
   the reason is that a density is not a probability; the analogy with
   #link(<eq:entropy-def>)[the discrete formula] must not be pushed past that
   point.
+]
+
+== Joint Entropy, Conditional Entropy and Mutual Information // 联合熵、条件熵与互信息
+
+The entropy of one variable measures one uncertainty. Communication involves
+two: what was sent and what was received. Three questions then arise, and they
+are answered by three functionals of the pair $(X, Y)$: how much uncertainty
+the pair carries, how much of it survives once $Y$ is known, and how much of the
+uncertainty of $X$ is *removed* by observing $Y$. The third is the one that will
+be optimized into a capacity in Ch 7.
+
+=== Joint and Conditional Entropy // 联合熵与条件熵
+
+#definition(name: "Joint Entropy")[
+  For random variables $X, Y$ on finite alphabets with joint mass function
+  $p(x, y)$, the *joint entropy* is
+  $
+    H(X, Y) = -sum_(x, y) p(x, y) log p(x, y),
+  $
+  the entropy of the pair regarded as a single random variable on the product
+  alphabet, in the sense of #link(<def:entropy>)[the definition of §1.2].
+] <def:joint-entropy>
+
+Nothing new happens at the level of the definition: $H(X, Y)$ is $H$ applied to
+the joint distribution. What is new is that the joint and the marginals
+constrain each other, and the constraint is quantified by the conditional
+entropy.
+
+#definition(name: "Conditional Entropy")[
+  For random variables $X, Y$ with joint mass function $p(x, y)$ and marginal
+  $p(y)$, the *conditional entropy* of $X$ given $Y$ is
+  $
+    H(X | Y) = H(X, Y) - H(Y).
+  $ <eq:conditional-entropy>
+] <def:conditional-entropy>
+
+The definition is a difference of two entropies, which is not what the name
+suggests: one expects "the entropy of the conditional distribution, averaged".
+The two agree, and the agreement is the first real computation of the chapter.
+
+#theorem(name: "Conditional Entropy as an Expectation")[
+  Let $X, Y$ have joint mass function $p(x, y)$. Then
+  $
+    H(X | Y) = -sum_((x, y) : p(y) > 0) p(x, y) log p(x | y)
+             = E[-log p(X | Y)],
+  $
+  where $p(x | y) = p(x, y) / p(y)$.
+] <thm:conditional-entropy-expectation>
+
+#proof[
+  Write $p(x, y) = p(y) p(x | y)$ and expand the two terms of
+  #link(<eq:conditional-entropy>)[the definition]:
+  $
+    H(X, Y) - H(Y)
+    = -sum_(x, y) p(x, y) log p(x, y) + sum_y p(y) log p(y)
+    = -sum_(x, y) p(x, y) log (p(x, y)) + sum_y ( sum_x p(x, y) ) log p(y).
+  $
+  In the second sum, replace $sum_x p(x, y)$ by $p(y)$ and combine the two sums
+  into one over the pairs with $p(y) > 0$:
+  $
+    H(X | Y) = -sum_(x, y) p(x, y) ( log p(x, y) - log p(y) )
+             = -sum_(x, y) p(x, y) log p(x | y),
+  $
+  which is the expectation of $-log p(X | Y)$ by definition of expectation. Pairs
+  with $p(y) = 0$ contribute nothing in either expression, since then
+  $p(x, y) = 0$ as well.
+]
+
+Two readings of this identity are used interchangeably in the sequel. As a
+*weighted average*, $H(X | Y) = sum_y p(y) H(X | Y = y)$ is the average entropy
+of the conditional distributions, weighted by how likely each conditioning
+event is. As an *expectation*, it is the average surprise remaining in $X$ after
+$Y$ is observed. The second reading is the operational one: it says that
+$H(X | Y)$ is what a decoder still has to guess.
+
+=== Mutual Information // 互信息
+
+#definition(name: "Mutual Information")[
+  For random variables $X, Y$ with joint mass function $p(x, y)$ and marginals
+  $p(x), p(y)$, the *mutual information* between $X$ and $Y$ is
+  $
+    I(X; Y) = sum_(x, y) p(x, y) log (p(x, y)) / (p(x) p(y)),
+  $ <eq:mi-def>
+  terms with $p(x, y) = 0$ being omitted.
+] <def:mutual-information>
+
+The definition is deliberately the log-ratio form rather than a difference: it
+is manifestly symmetric, it makes sense for any pair of distributions, and it
+will be recognized in §2.1 as the divergence between the joint law and the
+product of the marginals. The familiar subtraction formulae are a proposition.
+
+#proposition(name: "Identities for Mutual Information")[
+  For any pair $(X, Y)$,
+  $
+    I(X; Y) = H(X) - H(X | Y) = H(Y) - H(Y | X) = H(X) + H(Y) - H(X, Y),
+  $
+  the mutual information is symmetric, $I(X; Y) = I(Y; X)$, and
+  $I(X; X) = H(X)$.
+] <prop:mi-identities>
+
+#proof[
+  By #link(<thm:conditional-entropy-expectation>)[the expectation form],
+  $H(X | Y) = -sum p(x, y) log p(x | y)$, so
+  $
+    H(X) - H(X | Y)
+    = -sum_(x, y) p(x, y) log p(x) + sum_(x, y) p(x, y) log p(x | y)
+    = sum_(x, y) p(x, y) log (p(x, y)) / (p(x) p(y)),
+  $
+  using $p(x) p(x | y) = p(x, y)$ inside the logarithm. The computation is
+  symmetric in $X$ and $Y$, which gives the second identity; the third is the
+  same statement rearranged, and $I(X; X) = H(X) - H(X | X) = H(X) - 0$.
+]
+
+The identities justify the name. Observing $Y$ removes exactly $I(X; Y)$ of the
+uncertainty of $X$, and since the expression is symmetric, the same observation
+removes the same amount of the uncertainty of $Y$ about $X$. Mutual information
+is a *measure of dependence*, and it is the only one that will survive
+optimization: it is linear in the pair $(p(x), p(y | x))$ once the logarithm is
+fixed, which is why capacities can be computed at all.
+
+=== Non-negativity and Independence // 非负性与独立性
+
+#theorem(name: "Non-negativity of Mutual Information")[
+  For any pair $(X, Y)$, $I(X; Y) >= 0$, with equality if and only if $X$ and
+  $Y$ are independent.
+] <thm:mi-nonneg>
+
+#proof[
+  Apply *Jensen's inequality* to the concave logarithm, in the form used for
+  #link(<prop:entropy-basic>)[the entropy bound of §1.2], to the weights
+  $p(x, y)$:
+  $
+    I(X; Y) = -sum_(x, y) p(x, y) log (p(x) p(y)) / (p(x, y))
+    >= -log ( sum_(x, y) p(x, y) dot (p(x) p(y)) / (p(x, y)) ).
+  $
+  The argument of the logarithm collapses to a probability:
+  $
+    sum_(x, y) p(x) p(y) = ( sum_x p(x) ) ( sum_y p(y) ) = 1,
+  $
+  so the right-hand side is $-log 1 = 0$.
+  Since $log$ is strictly concave, equality holds exactly when
+  $p(x) p(y) \/ p(x, y)$ is constant on the support of $p(x, y)$, that is, when
+  $p(x, y) = p(x) p(y)$ there — independence of $X$ and $Y$.
+]
+
+The consequence $H(X | Y) <= H(X)$ is immediate from
+#link(<prop:mi-identities>)[the first identity]: conditioning never increases
+entropy. It is stated as a corollary in §1.4, where the chain rule makes the
+same fact available in the multi-variable form needed for the coding theorems.
+
+=== A Venn Diagram, and Where It Fails // Venn 图及其边界
+
+Two circles of areas $H(X)$ and $H(Y)$ whose union has area $H(X, Y)$ make the
+three identities visual: the intersection is $I(X; Y)$, the two crescents are
+$H(X | Y)$ and $H(Y | X)$.
+
+// TODO: 占位图为 8x8 空 SVG，正式图生成后改为 width: 72%
+#figure(
+  image("img/entropy-venn.svg", height: 4.5cm),
+  caption: [
+    The additive bookkeeping of the identities in
+    #link(<prop:mi-identities>)[the proposition above]. The three regions of the
+    two circles have areas $H(X | Y)$, $I(X; Y)$ and $H(Y | X)$, and the union
+    has area $H(X, Y) = H(X) + H(Y) - I(X; Y)$.
+  ],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:entropy-venn>
+
+The picture is a bookkeeping device and no more, and it misleads in two ways
+worth naming, because both errors are common in the literature. First, the
+circles suggest that $I(X; Y)$ is "the overlap of the information in $X$ and in
+$Y$", an interpretation that has no meaning: information is not a substance, and
+$H(X)$ is a functional of a single distribution, not a set. Second, the picture
+does not extend to three variables. For a triple $(X, Y, Z)$ one can draw three
+circles, but the analogy then fails quantitatively: $I(X; Y | Z)$ can exceed
+$I(X; Y)$, so conditioning on $Z$ can *increase* the information $Y$ carries
+about $X$. The reason is that conditional mutual information is an average of
+divergences, and averaging can go either way. Nothing in the algebra of §1.4
+depends on the picture; the picture only helps to remember the two-variable
+case.
+
+=== The Binary Symmetric Channel // 二元对称信道
+
+#example(name: "Mutual Information of the Binary Symmetric Channel")[
+  Let $X$ be uniform on ${0, 1}$ and let $Y$ be the output of a channel that
+  flips the input with probability $epsilon in [0, 1\/2]$:
+  $p(y | x) = 1 - epsilon$ if $y = x$ and $p(y | x) = epsilon$ otherwise. Then
+  $Y$ is uniform, so $H(Y) = 1$, and
+  $
+    H(Y | X) = sum_x p(x) h(epsilon) = h(epsilon),
+  $
+  where $h$ is #link(<def:binary-entropy>)[the binary entropy function]. Hence
+  $
+    I(X; Y) = H(Y) - H(Y | X) = 1 - h(epsilon).
+  $
+  At $epsilon = 0$ this is $1$ bit, at $epsilon = 1\/2$ it is $0$, and at
+  $epsilon = 0.11$ it is $1 - 0.5 = 0.5$ bits, matching
+  #link(<ex:binary-entropy-values>)[the numerical example of §1.2].
+]
+
+The quantity $1 - h(epsilon)$ is computed here only as an example; that it is
+the *capacity* of the channel, and that no non-uniform input does better, is the
+content of §7.3. The example already shows the mechanism that the whole of
+Part III will exploit: capacity is mutual information maximized over the input,
+and for the symmetric channel the maximum is at the uniform input.
+
+#caution[
+  Three statements that look like consequences of the identities and are false.
+  + *"Mutual information can be negative."* It cannot, by
+    #link(<thm:mi-nonneg>)[the non-negativity theorem]. What can be negative is
+    a *difference* of mutual informations, such as the gain
+    $I(X; Y) - I(X; Y | Z)$ obtained by conditioning on a third variable.
+  + *"Mutual information is a metric."* It is symmetric but satisfies neither
+    the triangle inequality nor the axiom "distance to itself is zero", since
+    $I(X; X) = H(X) != 0$. It measures divergence between the joint law and the
+    product law, and divergences are not metric distances.
+  + *"The identity with $H(X)$ means that $Y$ determines $X$."* It says only
+    that the conditional entropy vanishes, that is, that $X$ is a function of
+    $Y$ almost surely. On a finite alphabet with a strictly positive joint law
+    this is genuine determination; with zero probabilities the qualifier is
+    essential.
 ]
 
 #bibliography("references.bib", title: "References", full: true)
