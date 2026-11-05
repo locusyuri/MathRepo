@@ -809,6 +809,8 @@ A further technique, extrapolation, cancels the leading truncation term instead 
 
 = Norms, Conditioning and Stability // 范数、条件数与稳定性
 
+#counter(math.equation).update(0)
+
 The error analysis of the previous chapter measured the deviation of a single computed number from its exact value.
 To compare vectors and matrices, and above all to compare whole computations, that notion of distance must be replaced by a norm, and a single question must be split into two: how sensitive is the problem, and how good is the algorithm.
 This chapter supplies the four tools that answer it: norms, which measure vectors and matrices; the pair forward and backward error, which separates the error of the answer from the perturbation of the data; the condition number, which is a property of the problem alone; and the order of convergence, which is the language in which iterative methods are compared.
@@ -1223,5 +1225,446 @@ The interplay between the two factors gives a complete classification of the sou
   With partial pivoting the computed solution is the exact solution of a perturbed system, so the method is backward stable, and the size of the perturbation is governed by the growth factor, namely the largest entry appearing during elimination divided by the largest entry of $A$.
   Partial pivoting keeps this factor below $2^(n-1)$ in the worst case, a bound that is almost never approached in practice; the details belong to *Direct Methods for Linear Systems*, where the same factorization is used to solve the systems of *Ch 7*.
 ]
+
+#part("Polynomial Approximation and Numerical Calculus") // 多项式逼近与数值微积分
+
+= Polynomial Interpolation // 多项式插值
+
+#counter(math.equation).update(0)
+
+Part I supplied the tools for judging a computation; this part uses them to build one.
+Interpolation is the first construction of the notebook: a finite table of values is replaced by a polynomial that agrees with it, and everything later in the part — piecewise interpolation, best approximation, quadrature — is a variation on it.
+The algebraic facts are elementary and complete: the interpolating polynomial exists, is unique, and can be written in several equivalent ways.
+The numerical facts are not: the natural way to compute it is hopelessly ill conditioned, and the ways that work are the subject of this chapter.
+
+== The Interpolation Problem: Existence and Uniqueness // 插值问题：存在唯一性
+
+The problem is to pass a polynomial through a prescribed set of points.
+Nothing more is assumed about the data: the values may come from a function, from a table, or from a measurement.
+
+#definition(name: "Polynomial Interpolation Problem")[
+  Let $x_0, x_1, dots, x_n$ be $n + 1$ distinct real numbers, the *nodes*, and let $y_0, y_1, dots, y_n$ be given real numbers.
+  A polynomial $p$ of degree at most $n$ satisfying
+  #eq[$
+    p(x_i) = y_i, quad i = 0, 1, dots, n,
+  $] <eq:interpolation-conditions>
+  is called the *interpolating polynomial* of the data $(x_i, y_i)_(i = 0)^n$.
+] <def:interpolation-problem>
+
+The number of conditions equals the number of coefficients, so @eq:interpolation-conditions is a square linear system once the coefficients are chosen as unknowns.
+
+#definition(name: "Vandermonde System")[
+  Writing $p(x) = a_0 + a_1 x + dots + a_n x^n$, the conditions @eq:interpolation-conditions become
+  #eq[$
+    mat(
+      1, x_0, dots.h, x_0^n;
+      1, x_1, dots.h, x_1^n;
+      dots.v, dots.v, dots.down, dots.v;
+      1, x_n, dots.h, x_n^n;
+    ) mat(a_0; a_1; dots.v; a_n) = mat(y_0; y_1; dots.v; y_n).
+  $] <eq:vandermonde-system>
+  The matrix is the *Vandermonde matrix* $V(x_0, dots, x_n)$.
+] <def:vandermonde-system>
+
+Whether the system can be solved is decided by the determinant, which is known from linear algebra.
+
+#theorem(name: "Existence and Uniqueness of the Interpolating Polynomial")[
+  Let $x_0, dots, x_n$ be distinct.
+  Then there is exactly one polynomial of degree at most $n$ satisfying @eq:interpolation-conditions.
+] <thm:interpolation-uniqueness>
+
+#proof[
+  *Existence.* By the formula for the Vandermonde determinant,
+  $
+    "det" V(x_0, dots, x_n) = product_(0 <= i < j <= n) (x_j - x_i),
+  $
+  which is nonzero because the nodes are distinct; the evaluation of this determinant belongs to linear algebra and is not repeated here.
+  Hence @eq:vandermonde-system has a solution.
+
+  *Uniqueness.* If $p$ and $q$ both satisfy @eq:interpolation-conditions, then $r = p - q$ has degree at most $n$ and vanishes at the $n + 1$ distinct nodes.
+  A nonzero polynomial of degree at most $n$ has at most $n$ roots, so $r$ is identically zero and $p = q$.
+]
+
+The theorem settles the existence question completely, and it is worth pausing on how little it settles.
+The uniqueness proof does not exhibit the polynomial, and the existence proof produces it only by inverting a matrix.
+
+#example(name: "Vandermonde systems are ill conditioned")[
+  For $n + 1$ equispaced nodes on $[0, 1]$ the condition number $kappa_2 (V)$ of the Vandermonde matrix grows rapidly with $n$: it equals $9.9 times 10^1$ for four nodes, $4.9 times 10^3$ for six, $2.7 times 10^5$ for eight, $1.5 times 10^7$ for ten, and $3.1 times 10^12$ for sixteen.
+  By @eq:fundamental-inequality, solving @eq:vandermonde-system in double precision leaves about $16 - log_10 kappa$ correct digits, that is four digits for ten nodes and none at all for sixteen.
+  The interpolation problem is perfectly posed; it is the representation by coefficients in the monomial basis that is ill conditioned.
+]
+
+The distinction is the one drawn in *Condition Number and Ill-Conditioned Problems*: the difficulty lies in the problem of expressing the answer as a coefficient vector, not in the algorithm that solves the system.
+
+#note(title: "Uniqueness is not the same as computability")[
+  The polynomial is unique, but its *representation* is not.
+  Written in the monomial basis it is a vector of coefficients, and recovering that vector from the data is an ill-conditioned task.
+  Written in the Lagrange basis or in the Newton basis it is a vector of values or of divided differences, and the corresponding tasks are well conditioned.
+  The next two sections construct these two representations, and the comparison between them is the practical content of the chapter.
+]
+
+#caution[
+  Interpolation forces the polynomial through every data point, which is the right requirement when the data are exact and the wrong one when they are noisy.
+  When the data carry measurement error, the appropriate problem is approximation in a norm rather than interpolation, and it is treated in *Function Approximation and Curve Fitting*.
+]
+
+== Lagrange Interpolation // Lagrange 插值
+
+Since the interpolating polynomial is unique, any construction that produces it is the right one.
+The Lagrange construction avoids solving a system altogether: it builds the polynomial out of pieces that are switched on at one node and off at all the others.
+
+#definition(name: "Lagrange Basis")[
+  For distinct nodes $x_0, dots, x_n$, the *Lagrange basis polynomials* are
+  #eq[$
+    ell_i (x) = product_(j = 0, j != i)^n (x - x_j)/(x_i - x_j), quad i = 0, 1, dots, n.
+  $] <eq:lagrange-basis>
+] <def:lagrange-basis>
+
+#proposition(name: "Properties of the Lagrange Basis")[
+  The polynomials @eq:lagrange-basis have degree $n$ and satisfy $ell_i (x_j) = delta_(i j)$ for all $i, j$.
+  Consequently
+  #eq[$
+    L_n (x) = sum_(i=0)^n y_i ell_i (x)
+  $] <eq:lagrange-formula>
+  is the unique interpolating polynomial of the data, and $sum_(i=0)^n ell_i (x) = 1$ identically.
+] <prop:lagrange-basis-properties>
+
+#proof[
+  Each factor in @eq:lagrange-basis vanishes at $x_j$ for $j != i$, and at $x = x_i$ the product equals one.
+  Hence $L_n (x_j) = y_j$ for every $j$, and $L_n$ has degree at most $n$, so it is the interpolating polynomial by uniqueness.
+
+  Applying the same argument to the constant data $y_i = 1$ gives the sum rule, since the polynomial that interpolates the value one at every node is the constant one.
+]
+
+The formula is elegant but expensive to apply directly: each basis polynomial costs $n$ multiplications and one division, so a single evaluation of $L_n$ costs $O(n^2)$ operations and may overflow when the nodes are widely spread.
+Both defects disappear once a common factor is taken out.
+
+#proposition(name: "Barycentric Lagrange Formula")[
+  Let
+  #eq[$
+    w_i = 1/(product_(j != i) (x_i - x_j)), quad i = 0, 1, dots, n,
+  $] <eq:barycentric-weights>
+  be the *barycentric weights* of the nodes.
+  Then for every $x$ distinct from the nodes,
+  #eq[$
+    L_n (x) = (sum_(i=0)^n (w_i y_i)/(x - x_i))/(sum_(i=0)^n (w_i)/(x - x_i)).
+  $] <eq:barycentric-formula>
+] <prop:barycentric-formula>
+
+#proof[
+  Let $omega (x) = product_(j=0)^n (x - x_j)$.
+  Dividing @eq:lagrange-basis by $omega (x)$ gives $ell_i (x) = omega (x) w_i slash (x - x_i)$, so @eq:lagrange-formula becomes
+  $
+    L_n (x) = omega (x) sum_(i=0)^n (w_i y_i)/(x - x_i).
+  $
+  Applying the same identity to the constant data $y_i = 1$ gives $1 = omega (x) sum_i w_i slash (x - x_i)$, and dividing the two relations eliminates $omega (x)$, which is @eq:barycentric-formula.
+]
+
+The weights depend on the nodes alone.
+Evaluating @eq:barycentric-formula for a new data set therefore costs $O(n)$ operations after the $O(n^2)$ preliminary computation of the weights, and changing a single value $y_i$ costs nothing at all.
+
+#note(title: "Why implementations use the barycentric form")[
+  @eq:barycentric-formula is numerically stable: with the weights computed once and accurately, the evaluation is backward stable in the sense of *Forward and Backward Error*, and the second form obtained by replacing the numerator and denominator by weighted sums of differences avoids overflow for large $n$.
+  This is why modern codes evaluate interpolants in barycentric rather than in expanded form; the classical Lagrange formula @eq:lagrange-formula is the right object for proofs and the wrong one for computation.
+]
+
+#example(name: "Quadratic interpolant in two forms")[
+  Interpolate the data $(0, 1)$, $(1, 3)$, $(2, 2)$.
+  The basis polynomials are
+  $
+    ell_0 (x) = ((x - 1)(x - 2))/2, quad ell_1 (x) = -x (x - 2), quad ell_2 (x) = (x (x - 1))/2,
+  $
+  and @eq:lagrange-formula gives $L_2 (x) = -3/2 x^2 + 7/2 x + 1$, whose values at the nodes are $1, 3, 2$ as required.
+  The barycentric weights are $w_0 = 1 slash 2$, $w_1 = -1$ and $w_2 = 1 slash 2$.
+  At $x = 1 slash 2$ the two sums in @eq:barycentric-formula equal $-19 slash 3$ and $-8 slash 3$, whose ratio $19 slash 8 = 2.375$ agrees with the expanded form.
+]
+
+#figure(
+  image("img/lagrange-basis.svg", width: 68%),
+  caption: [The six basis polynomials of @eq:lagrange-basis for equispaced nodes on $[0, 1]$. Each vanishes at all nodes except its own, and the lobes are largest towards the ends of the interval: the sum of the absolute values reaches $3.11$ near $x = 0.078$, and that maximum is the Lebesgue constant of these nodes, the quantity responsible for the Runge phenomenon of the last section.],
+) <fig:lagrange-basis>
+
+The cost of @eq:lagrange-basis is not merely arithmetic.
+Adding one node changes every basis polynomial, so a table that grows one entry at a time must be recomputed completely, whereas the Newton form of the next section extends in a single step.
+Neither form escapes the difficulty of high degree with equispaced nodes, and that difficulty is analysed in *Interpolation Error and Runge Phenomenon*.
+
+== Newton Interpolation and Divided Differences // Newton 插值与差商
+
+The Lagrange form treats the data as one object.
+In practice data arrive one point at a time, and a representation that extends in a single step is worth more than one that must be rebuilt.
+The Newton form achieves this by expressing the interpolant in a basis that depends on the order in which the nodes are added.
+
+#definition(name: "Divided Differences")[
+  The *divided differences* of the data $(x_i, y_i)_i$ are defined by
+  #eq[$
+    f[x_i] = y_i, quad f[x_i, dots, x_(i+k)] = (f[x_(i+1), dots, x_(i+k)] - f[x_i, dots, x_(i+k-1)])/(x_(i+k) - x_i),
+  $] <eq:divided-difference>
+  for $k = 1, dots, n$, all indices being understood to lie between $0$ and $n$.
+] <def:divided-difference>
+
+The recursion computes all divided differences in a triangular table whose first column holds the data and whose last entry is the highest-order difference.
+The construction of the interpolant then reads the table along its diagonal.
+
+#theorem(name: "Newton Interpolation Formula")[
+  The polynomial
+  #eq[$
+    N_n (x) = f[x_0] + sum_(k=1)^n f[x_0, dots, x_k] product_(j=0)^(k-1) (x - x_j)
+  $] <eq:newton-form>
+  is the interpolating polynomial of the data.
+] <thm:newton-form>
+
+#proof[
+  Write $N_k$ for the polynomial formed with the first $k + 1$ nodes, so that $N_k = N_(k-1) + f[x_0, dots, x_k] omega_(k-1) (x)$ with $omega_(k-1) (x) = product_(j=0)^(k-1) (x - x_j)$.
+  For $k = 0$ the claim is $N_0 = y_0$.
+  Assume $N_(k-1) (x_i) = y_i$ for $i < k$; since $omega_(k-1)$ vanishes at those nodes, $N_k$ agrees with $N_(k-1)$ there.
+  At $x_k$ only the last term survives, so
+  $
+    N_k (x_k) = N_(k-1) (x_k) + f[x_0, dots, x_k] product_(j=0)^(k-1) (x_k - x_j) = y_k,
+  $
+  the last equality being exactly the recursion @eq:divided-difference solved for $f[x_0, dots, x_k]$.
+  By induction $N_n$ interpolates all the data, and uniqueness identifies it with $L_n$.
+]
+
+Two properties of divided differences make the table more than a bookkeeping device.
+The first says that the labels of the nodes do not matter.
+
+#proposition(name: "Symmetry of Divided Differences")[
+  For any permutation $sigma$ of the indices,
+  $
+    f[x_(sigma (0)), dots, x_(sigma (k))] = f[x_0, dots, x_k].
+  $
+] <prop:divided-difference-symmetry>
+
+#proof[
+  The coefficient of $x^k$ in the interpolating polynomial of $k + 1$ points is $f[x_0, dots, x_k]$ by @eq:newton-form, since every other term of the sum has degree below $k$.
+  The same coefficient can be read off the Lagrange form, where it equals $sum_(j=0)^k y_j slash product_(l != j) (x_j - x_l)$, a quantity that is plainly independent of the order of the nodes.
+  Since the interpolating polynomial does not depend on that order either, the two expressions for its leading coefficient coincide for every permutation.
+]
+
+The second connects the table to derivatives, and it is the bridge to the error theorem of the last section.
+
+#proposition(name: "Divided Differences and Derivatives")[
+  Let $f in C^k [a, b]$ and let $x_0, dots, x_k$ lie in $[a, b]$.
+  Then there exists $xi in (min_i x_i, max_i x_i)$ such that
+  $
+    f[x_0, dots, x_k] = (f^((k)) (xi))/(k!).
+  $
+] <prop:divided-difference-derivative>
+
+#proof[
+  Let $N_k$ be the Newton interpolant of the $k + 1$ points of the graph of $f$, and set $g = f - N_k$.
+  Then $g$ has $k + 1$ distinct zeros, so by Rolle's theorem applied $k$ times there is a point $xi$ with $g^((k)) (xi) = 0$.
+  Since $N_k$ has degree at most $k$ with leading coefficient $f[x_0, dots, x_k]$, its $k$-th derivative is the constant $k! f[x_0, dots, x_k]$, hence $f^((k)) (xi) = k! f[x_0, dots, x_k]$.
+]
+
+Because of the product $omega_(k-1)$ in @eq:newton-form, the evaluation of $N_n$ is a nested computation of the same shape as Horner's scheme.
+
+#eq[$
+  N_n (x) = f[x_0] + (x - x_0) (f[x_0, x_1] + (x - x_1) (dots + (x - x_(n-1)) f[x_0, dots, x_n] dots )).
+$] <eq:newton-horner>
+
+Evaluating @eq:newton-horner costs $n$ multiplications and $n$ additions, the same as the Horner scheme for the monomial basis, and no powers of $x$ are formed.
+
+#example(name: "The divided difference table extends in one term")[
+  Take the nodes $0, 1, 2, 3$ with values $1, 3, 2, 5$.
+  The table is
+
+  #tex-table(
+    ("$x_i$", "values", "order 1", "order 2", "order 3"),
+    ([$0$], [$1$], "", "", ""),
+    ([$1$], [$3$], [$2$], "", ""),
+    ([$2$], [$2$], [$-1$], [$-3 slash 2$], ""),
+    ([$3$], [$5$], [$3$], [$2$], [$7 slash 6$]),
+  )
+
+  so @eq:newton-form gives
+  $
+    N_3 (x) = 1 + 2 x - 3/2 x (x - 1) + 7/6 x (x - 1)(x - 2).
+  $
+  The first three terms are exactly the quadratic interpolant of the data $1, 3, 2$ computed in *Quadratic interpolant in two forms*; appending the fourth point changed nothing before the last term.
+  This is the practical advantage of the Newton form over @eq:lagrange-formula.
+]
+
+#note(title: "Neville's algorithm")[
+  When only the value at a single point is wanted, the interpolant need not be formed at all.
+  Neville's recursion builds the table of values $P_(i,0) = y_i$ and
+  $
+    P_(i,k) (x) = ((x - x_(i+k)) P_(i,k-1) (x) - (x - x_i) P_(i+1,k-1) (x))/(x_i - x_(i+k)),
+  $
+  which converges to $L_n (x)$ at the far corner.
+  The cost is the same as the divided difference table, but no coefficients are produced, which makes it the method of choice for table lookups.
+]
+
+#caution[
+  Each divided difference contains a difference of two values, so the cancellation analysis of *Catastrophic Cancellation* applies term by term.
+  With closely spaced nodes and a smooth function the higher divided differences are small differences of small differences, and their computed values consist mostly of noise; this is one reason why interpolation with many clustered nodes is avoided even when the nodes are not equispaced.
+]
+
+== Hermite Interpolation // Hermite 插值
+
+Data often carry more than values: a trajectory comes with velocities, a curve with slopes.
+The divided difference table of the previous section absorbs this extra information with almost no modification, which is the reason for presenting the two topics in this order.
+
+#definition(name: "Hermite Interpolation Problem")[
+  Let $x_0, dots, x_n$ be distinct nodes, and let $y_i$ and $y'_i$ be prescribed values for $i = 0, dots, n$.
+  A polynomial $H$ of degree at most $2 n + 1$ satisfying
+  #eq[$
+    H(x_i) = y_i, quad H'(x_i) = y'_i, quad i = 0, dots, n,
+  $] <eq:hermite-conditions>
+  is called the *Hermite interpolating polynomial* of the data.
+] <def:hermite-interpolation>
+
+There are $2 n + 2$ conditions and $2 n + 2$ coefficients, so @eq:hermite-conditions is again a square linear system, and the same argument as in *Existence and Uniqueness of the Interpolating Polynomial* shows that it has exactly one solution: a nonzero polynomial of degree at most $2 n + 1$ cannot have $n + 1$ double zeros.
+The relevant computation is best organized by repeating every node twice.
+
+#definition(name: "Repeated-Node Divided Differences")[
+  The divided differences with repeated nodes are defined by the same recursion @eq:divided-difference for distinct nodes, and by
+  $
+    f[x_i, x_i] = f'(x_i)
+  $
+  when the two nodes coincide.
+] <def:repeated-node-difference>
+
+With this convention the table of @eq:divided-difference, written with each node listed twice, produces the Hermite interpolant through @eq:newton-form unchanged.
+The interpolation conditions of order two also determine the error exactly as before.
+
+#theorem(name: "Hermite Interpolation Error")[
+  Let $f in C^(2 n + 2) [a, b]$, let the nodes lie in $[a, b]$, and let $H$ be the Hermite interpolant of $f$ and $f'$ at these nodes.
+  Then for every $x in [a, b]$ there is $xi$ between $x$ and the nodes such that
+  #eq[$
+    f(x) - H(x) = (f^((2 n + 2)) (xi))/((2 n + 2)!) product_(i=0)^n (x - x_i)^2.
+  $] <eq:hermite-error>
+] <thm:hermite-error>
+
+#proof[
+  Fix $x$ different from the nodes and set $omega (x) = product_(i=0)^n (x - x_i)^2$.
+  Choose $K$ so that $phi (t) = f(t) - H(t) - K omega (t)$ vanishes at $t = x$, and note that $phi$ also vanishes, together with its first derivative, at each node, by @eq:hermite-conditions.
+  Counting multiplicities, $phi$ has at least $2 n + 3$ zeros, so $2 n + 2$ applications of Rolle's theorem produce a point $xi$ with $phi^((2 n + 2)) (xi) = 0$.
+  Since $H$ has degree at most $2 n + 1$ and $omega$ has leading coefficient one, that relation reads $f^((2 n + 2)) (xi) - (2 n + 2)! K = 0$, and substituting the definition of $K$ gives @eq:hermite-error.
+]
+
+For the most common case of two nodes the interpolant can be written down explicitly, and the formula is used repeatedly in later chapters.
+
+#proposition(name: "Cubic Hermite Basis")[
+  Let $a < b$, $h = b - a$ and $t = (x - a) slash h$.
+  The cubic polynomial satisfying @eq:hermite-conditions at $a$ and $b$ is
+  #eq[$
+    H_3 (x) = y_a h_00 (t) + h y'_a h_10 (t) + y_b h_01 (t) + h y'_b h_11 (t),
+  $] <eq:hermite-basis>
+  where
+  $
+    h_00 (t) = 2 t^3 - 3 t^2 + 1, quad h_10 (t) = t^3 - 2 t^2 + t, quad h_01 (t) = -2 t^3 + 3 t^2, quad h_11 (t) = t^3 - t^2.
+  $
+] <prop:hermite-basis>
+
+#proof[
+  Each of the four basis functions has degree three, and direct evaluation shows the pattern of @eq:hermite-conditions: $h_00 (0) = 1$, $h_00 (1) = h'_00 (0) = h'_00 (1) = 0$, with the analogous statements for the other three.
+  The combination @eq:hermite-basis therefore satisfies the four conditions, and uniqueness of the Hermite interpolant identifies it as the answer.
+]
+
+#example(name: "A cubic Hermite interpolant")[
+  Interpolate the data $H(0) = 0$, $H'(0) = 1$, $H(1) = 1$, $H'(1) = 0$.
+  With $h = 1$ and $t = x$, @eq:hermite-basis gives
+  $
+    H_3 (x) = (x^3 - 2 x^2 + x) + (-2 x^3 + 3 x^2) = -x^3 + x^2 + x,
+  $
+  and indeed $H_3 (0) = 0$, $H_3 (1) = 1$, $H'_3 (x) = -3 x^2 + 2 x + 1$ gives $H'_3 (0) = 1$ and $H'_3 (1) = 0$.
+  At the midpoint $H_3 (1 slash 2) = 5 slash 8 = 0.625$, while the straight line through the two values would give $0.5$: the derivatives push the graph upwards in between.
+]
+
+#note(title: "Where the derivatives come from")[
+  Hermite interpolation is only as good as its derivative data.
+  When $f'$ is itself computed numerically, the error of that computation enters the interpolant with weight $h$, as @eq:hermite-basis shows, and the accuracy promised by @eq:hermite-error may never be observed.
+  The optimal step size of *Algorithm Design Techniques* therefore reappears here: differentiating a tabulated function just accurately enough to interpolate it is a balance problem, and the balance is analysed in *Numerical Differentiation and Integration*.
+]
+
+== Interpolation Error and Runge Phenomenon // 插值余项与 Runge 现象
+
+The three constructions above produce the same polynomial, so they share the same error.
+The error formula is the last piece of the elementary theory, and it also explains why the obvious way of improving accuracy fails.
+
+#theorem(name: "Interpolation Error")[
+  Let $f in C^(n+1) [a, b]$ and let $x_0, dots, x_n$ be distinct nodes in $[a, b]$.
+  Then for every $x in [a, b]$ there exists $xi$ between $x$ and the nodes such that
+  #eq[$
+    f(x) - L_n (x) = (f^((n+1)) (xi))/((n+1)!) omega (x), quad omega (x) = product_(i=0)^n (x - x_i).
+  $] <eq:interpolation-error>
+] <thm:interpolation-error>
+
+#proof[
+  Fix $x$ different from the nodes and choose $K$ so that $phi (t) = f(t) - L_n (t) - K omega (t)$ vanishes at $t = x$.
+  Then $phi$ vanishes at $x$ and at the $n + 1$ nodes, that is at $n + 2$ distinct points, so $n + 1$ applications of Rolle's theorem give a point $xi$ with $phi^((n+1)) (xi) = 0$.
+  Since $L_n$ has degree at most $n$ and $omega$ has leading coefficient one, this reads $f^((n+1)) (xi) - (n + 1)! K = 0$, and substituting $K$ gives @eq:interpolation-error.
+  The case $x = x_i$ is trivial.
+]
+
+@eq:interpolation-error is the $n$-th divided difference of $f$ written as a derivative, in agreement with *Divided Differences and Derivatives*, and it separates the error into a factor that depends on the function and a factor that depends on the nodes.
+
+#corollary(name: "Interpolation Error Bound")[
+  If $abs(f^((n+1))) <= M_(n+1)$ on $[a, b]$, then
+  #eq[$
+    abs(f(x) - L_n (x)) <= (M_(n+1))/((n+1)!) abs(omega (x)), quad x in [a, b].
+  $] <eq:interpolation-error-bound>
+] <cor:interpolation-error-bound>
+
+#example(name: "Interpolating the sine with five nodes")[
+  Interpolate $f(x) = sin x$ on $[0, 1]$ at the five equispaced nodes $0, 1 slash 4, 1 slash 2, 3 slash 4, 1$.
+  Here $abs(f^((5))) <= 1$ and the maximum of $abs(omega)$ on the interval is $3.5 times 10^(-3)$, attained near $x = 0.089$.
+  The bound @eq:interpolation-error-bound therefore reads $abs(f - L_4) <= 3.5 times 10^(-3) slash 120 approx 2.9 times 10^(-5)$, and the actual maximum error is $2.7 times 10^(-5)$.
+  The bound is sharp here because $abs(f^((5)))$ really does reach its maximum on the interval, and it shows that four interpolating points already deliver almost five correct digits.
+]
+
+The bound contains two competing quantities, and the competition is not always won.
+
+#example(name: "Runge's counterexample")[
+  Interpolate $f(x) = 1 slash (1 + 25 x^2)$ on $[-1, 1]$ at equispaced nodes and measure the maximum error.
+  With $n + 1 = 5$ nodes the maximum error is $0.44$, with $11$ nodes it is $1.9$, with $15$ nodes it is $7.2$, and with $21$ nodes it is $60$.
+  The error does not merely fail to decrease: it grows without bound, and the oscillations are concentrated near the endpoints, where the interpolant departs from the function by an amount comparable to the function itself.
+]
+
+#figure(
+  image("img/runge-phenomenon.svg", width: 88%),
+  caption: [Runge's example. Top: $f(x) = 1/(1 + 25x^2)$ together with its equispaced interpolants of degree $6$, $10$ and $20$. The interpolant matches the function in the middle of the interval and oscillates violently near the endpoints, and the amplitude of the oscillation increases with the degree. Bottom: the maximum error on $[-1, 1]$ as a function of the number of nodes, on a logarithmic scale.],
+) <fig:runge-phenomenon>
+
+The failure is not an accident of the example, and the reason is visible in @eq:interpolation-error: the quantity $M_(n+1) slash (n+1)!$ does not decrease for this function, because its higher derivatives grow faster than the factorial.
+The factorial is not a general guarantee, and a bound that relies on it silently assumes analyticity of a very strong kind.
+
+A second, more informative diagnosis separates the role of the function from the role of the nodes altogether.
+
+#definition(name: "Lebesgue Constant")[
+  For nodes $x_0, dots, x_n$ in $[a, b]$, the *Lebesgue constant* is
+  $
+    Lambda_n = max_(x in [a, b]) sum_(i=0)^n abs(ell_i (x)).
+  $
+] <def:lebesgue-constant>
+
+#lemma(name: "Interpolation Operator Bound")[
+  Let $f$ be continuous on $[a, b]$ and let $E_n^* (f) = min_(p in Pi_n) ||f - p||_oo$ be the best uniform approximation error by polynomials of degree at most $n$.
+  Then
+  $
+    ||L_n f||_oo <= Lambda_n ||f||_oo, quad ||f - L_n f||_oo <= (1 + Lambda_n) E_n^* (f).
+  $
+] <lem:interpolation-operator-bound>
+
+#proof[
+  By @eq:lagrange-formula, $abs(L_n f (x)) <= sum_i abs(ell_i (x)) abs(f(x_i)) <= Lambda_n ||f||_oo$, which is the first inequality.
+  For the second, let $p$ be a best approximation; then $f - L_n f = (f - p) - L_n (f - p)$ because $L_n p = p$ for $p in Pi_n$, and the two terms are bounded by $E_n^* (f)$ and $Lambda_n E_n^* (f)$ respectively.
+]
+
+#link(<lem:interpolation-operator-bound>)[*Interpolation Operator Bound*] is the right statement of the problem: interpolation converges uniformly if and only if $Lambda_n E_n^* (f) -> 0$, and the two factors behave in opposite ways depending on the nodes.
+For equispaced nodes the Lebesgue constant grows exponentially: $Lambda_4 approx 2.2$, $Lambda_8 approx 11.0$ and $Lambda_14 approx 283$ on $[-1, 1]$.
+For Chebyshev nodes it grows only logarithmically: $Lambda_10 approx 2.5$ and $Lambda_20 approx 2.9$ for the same interval.
+The Runge function has a small best approximation error, since it is analytic in a neighbourhood of the interval, but the exponential factor of equispaced nodes destroys it.
+
+#caution[
+  Raising the degree with equispaced nodes is not a way to improve accuracy.
+  The interpolant may be computed exactly and still be a bad approximation, and in double precision the computation itself eventually fails as well, since high degree equispaced interpolation is also an ill-conditioned operation.
+  Two cures exist, and both abandon the idea of a single polynomial of high degree: piecewise interpolation of low degree, and interpolation at specially chosen nodes.
+]
+
+The first cure is the subject of the next chapter, where the interval is cut into pieces and the degree is kept fixed, so that the Lebesgue constant stays bounded by a constant independent of the number of nodes.
+The second is developed in *Function Approximation and Curve Fitting*, where the Chebyshev nodes are shown to be optimal in a precise sense and the interpolation error is compared with the best possible error $E_n^* (f)$.
+Until then, the practical rule is the one stated in the caution: for tables of many equispaced values, interpolate locally, not globally.
 
 #bibliography("references.bib", title: "References", full: true)
