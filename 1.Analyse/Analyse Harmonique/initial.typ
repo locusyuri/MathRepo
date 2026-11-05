@@ -1599,33 +1599,34 @@ Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced 
 ) <fig:fourier-duality>
 
 #property(name: "Fourier Transform Rules")[
-  Let $f, g in cal(S)(bb(R))$, $a, b in bb(C)$, $x_0, omega_0 in bb(R)$ and $c in bb(R) without {0}$. Then
-  1. *Linearity.*
+  Let $f, g in cal(S)(bb(R))$, $x_0, omega_0 in bb(R)$ and $c in bb(R) without {0}$. The transform is written with the operator alone: $cal(F)[f]$ denotes the function $omega |-> cal(F)[f](omega)$, and the shorthand $hat(f)$ is not used in this list.
+  1. *Linearity.* The transform is a $bb(C)$-linear map $cal(F): cal(S)(bb(R)) -> cal(S)(bb(R))$: for $a, b in bb(C)$,
     $ cal(F)[a f + b g] = a cal(F)[f] + b cal(F)[g]. $
+    The same identity holds on $L^1(bb(R))$, where $cal(F)$ is a continuous linear map into $L^oo(bb(R))$, see §4.1.
 
   2. *Translation and modulation.*
     $
-      cal(F)[f(x - x_0)](omega) = e^(-i omega x_0) hat(f)(omega), quad cal(F)[e^(i omega_0 x) f(x)](omega) = hat(f)(omega - omega_0).
+      cal(F)[f(x - x_0)](omega) = e^(-i omega x_0) cal(F)[f](omega), quad cal(F)[e^(i omega_0 x) f(x)](omega) = cal(F)[f](omega - omega_0).
     $
 
   3. *Scaling.*
-    $ cal(F)[f(c x)](omega) = (1) / (abs(c)) hat(f)(omega / c). $
+    $ cal(F)[f(c x)](omega) = (1) / (abs(c)) cal(F)[f](omega / c). $
 
   4. *Conjugation and reflection.*
-    $ hat(overline(f))(omega) = overline(hat(f)(-omega)), quad cal(F)[f(-x)](omega) = hat(f)(-omega). $
+    $ cal(F)[overline(f)](omega) = overline(cal(F)[f](-omega)), quad cal(F)[f(-x)](omega) = cal(F)[f](-omega). $
 
   5. *Differentiation and multiplication.* For every $n >= 0$,
-    $ cal(F)[f^((n))](omega) = (i omega)^n hat(f)(omega), quad cal(F)[x^n f(x)](omega) = i^n hat(f)^((n))(omega). $
+    $ cal(F)[f^((n))](omega) = (i omega)^n cal(F)[f](omega), quad cal(F)[x^n f(x)](omega) = i^n (cal(F)[f])^((n))(omega). $
 
   6. *Multiplication formula.*
-    $ integral_(-oo)^(oo) f(x) hat(g)(x) dif x = integral_(-oo)^(oo) hat(f)(omega) g(omega) dif omega. $
+    $ integral_(-oo)^(oo) f(x) cal(F)[g](x) dif x = integral_(-oo)^(oo) cal(F)[f](omega) g(omega) dif omega. $
 ] <prop:fourier-transform-rules>
 
 #proof[
-  (1) is the linearity of the integral. In (2) the substitution $u = x - x_0$ produces the factor $e^(-i omega x_0)$, and the modulation statement is the same computation written with the frequencies shifted.
+  (1) is the linearity of the integral, on $cal(S)(bb(R))$ as on $L^1(bb(R))$. In (2) the substitution $u = x - x_0$ produces the factor $e^(-i omega x_0)$, and the modulation statement is the same computation written with the frequencies shifted.
   In (3) the substitution $u = c x$ produces the factor $1 \/ abs(c)$ and rescales the frequency into $omega \/ c$.
   In (4) take conjugates and substitute $u = -x$.
-  In (5) integrate by parts $n$ times: the boundary terms vanish because every derivative of a Schwartz function decays faster than any polynomial, and each integration by parts brings down a factor $i omega$; differentiating under the integral sign gives the second identity, since $(dif) / (dif omega) hat(f)(omega) = -i cal(F)[x f](omega)$.
+  In (5) integrate by parts $n$ times: the boundary terms vanish because every derivative of a Schwartz function decays faster than any polynomial, and each integration by parts brings down a factor $i omega$; differentiating under the integral sign gives the second identity, since $(dif) / (dif omega) cal(F)[f](omega) = -i cal(F)[x f](omega)$.
   For (6), apply Fubini to the absolutely convergent double integral
   $
     integral_(-oo)^(oo) integral_(-oo)^(oo) abs(f(x) g(y) e^(-i x y)) dif x dif y = || f ||_1 || g ||_1 < +oo.
