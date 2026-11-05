@@ -1667,4 +1667,270 @@ The first cure is the subject of the next chapter, where the interval is cut int
 The second is developed in *Function Approximation and Curve Fitting*, where the Chebyshev nodes are shown to be optimal in a precise sense and the interpolation error is compared with the best possible error $E_n^* (f)$.
 Until then, the practical rule is the one stated in the caution: for tables of many equispaced values, interpolate locally, not globally.
 
+= Piecewise Interpolation and Splines // 分段插值与样条
+
+#counter(math.equation).update(0)
+
+The last section of the previous chapter diagnosed the failure of high degree interpolation and announced two cures.
+This chapter develops the first of them: instead of one polynomial of high degree, use many polynomials of low degree, glued together so that the result is still smooth enough to be useful.
+
+The idea can be stated as an exchange rate.
+A single polynomial of degree $n$ is infinitely differentiable but has global support, and its Lebesgue constant grows exponentially with $n$ when the nodes are equispaced.
+A piecewise polynomial is only finitely differentiable, but each piece depends on a bounded number of data, so the Lebesgue constant stays bounded and the interpolation converges at a rate fixed by the degree rather than by the number of nodes.
+Everything in this chapter is an instance of that trade: piecewise linear interpolation buys locality at the price of a discontinuous derivative, and the cubic spline buys back two continuous derivatives at the price of a global tridiagonal system.
+
+== Piecewise Linear Interpolation // 分段线性插值
+
+The simplest way to avoid a global polynomial is to join the data points by straight lines.
+
+#definition(name: "Grid")[
+  A *grid* on $[a, b]$ is a set of points $a = x_0 < x_1 < dots < x_N = b$.
+  The *step sizes* are $h_i = x_(i+1) - x_i$ and the *mesh size* is $h = max_i h_i$.
+] <def:grid>
+
+#definition(name: "Piecewise Linear Interpolant")[
+  The *piecewise linear interpolant* of the data $(x_i, y_i)_(i=0)^N$ is the continuous function $p$ that is linear on each $[x_i, x_(i+1)]$ and satisfies $p(x_i) = y_i$ for all $i$.
+] <def:piecewise-linear-interpolant>
+
+On the interval $[x_i, x_(i+1)]$ the function $p$ is exactly the linear interpolant of the two endpoint values, so the error theory of *Interpolation Error and Runge Phenomenon* applies piece by piece.
+
+#theorem(name: "Error of Piecewise Linear Interpolation")[
+  Let $f in C^2 [a, b]$ with $abs(f'') <= M_2$, and let $p$ be its piecewise linear interpolant on a grid with step sizes $h_i$.
+  Then for $x in [x_i, x_(i+1)]$,
+  #eq[$
+    abs(f(x) - p(x)) <= (M_2)/8 h_i^2 <= (M_2)/8 h^2.
+  $] <eq:pl-error>
+] <thm:pl-error>
+
+#proof[
+  Apply @eq:interpolation-error with $n = 1$ on the interval $[x_i, x_(i+1)]$.
+  There, $omega (x) = (x - x_i)(x - x_(i+1))$, whose modulus is maximal at the midpoint and equals $h_i^2 slash 4$, while $(n+1)! = 2$.
+  Hence $abs(f - p) <= (M_2 slash 2) dot (h_i^2 slash 4)$, which is @eq:pl-error.
+]
+
+Two consequences follow immediately, and both are worth stating because they contrast with the previous chapter.
+
+First, the estimate is uniform in the number of nodes: with $M_2$ fixed, the error tends to zero as the mesh size tends to zero.
+In the language of *Rates of Convergence*, the piecewise linear interpolant is a method of order two in $h$, and the order is governed by the smoothness of $f$, not by the number of data points.
+
+Second, the interpolation operator is bounded independently of the grid.
+On each interval $p(x) = (1 - t) y_i + t y_(i+1)$ with $t in [0, 1]$, which is a convex combination, so $abs(p(x)) <= ||f||_oo$ and the Lebesgue constant is exactly one.
+
+#example(name: "Piecewise linear interpolation of the sine")[
+  Interpolate $sin x$ on $[0, 1]$ with $N = 8$ equal subintervals, so that $h = 1 slash 8$.
+  Here $M_2 = 1$ and @eq:pl-error predicts a maximum error of $1 slash 512 approx 1.95 times 10^(-3)$; the observed maximum is $1.57 times 10^(-3)$.
+  To reach an accuracy of $10^(-6)$ the same bound requires $h <= sqrt(8 times 10^(-6)) approx 2.8 times 10^(-3)$, that is about $360$ subintervals.
+  The cost is a consequence of the order two, and it is the reason for looking for a smoother interpolant.
+]
+
+Piecewise linear interpolation is continuous but its derivative jumps at every node.
+For plotting it is often enough; for anything that involves differentiating the interpolant, or solving a differential equation with it, the jumps are fatal, because the second derivative is a sum of Dirac masses and the first derivative is not even well defined at the nodes.
+
+#figure(
+  image("img/piecewise-vs-spline.svg", width: 70%),
+  caption: [The same nine nodes and the same function as in the Runge example, interpolated in three ways. The piecewise linear interpolant is continuous and converges, but has corners at every node; the clamped cubic spline is twice continuously differentiable and reproduces the shape of the peak; the interpolating polynomial of degree eight oscillates with an amplitude comparable to the function itself, as the Lebesgue constant predicts. At this mesh the two piecewise methods have comparable maximum error, of order $10^(-2)$; the difference between them is the regularity of the result, and the order of convergence once the mesh is refined.],
+) <fig:piecewise-vs-spline>
+
+#note(title: "Piecewise Hermite interpolation")[
+  A cheap way to raise the order without leaving the local setting is to use the derivative data as well, exactly as in *Hermite Interpolation*.
+  Piecewise cubic Hermite interpolation on each interval needs $f$ and $f'$ at both ends, is locally determined, and has order four, but it is only once continuously differentiable and it requires derivative data that a table does not usually provide.
+  The cubic spline avoids that requirement by determining the missing derivative values from the interpolation conditions themselves.
+]
+
+== Cubic Splines: Construction // 三次样条：构造
+
+The corners of the piecewise linear interpolant disappear if the pieces are allowed to be cubic and are glued with matching first and second derivatives.
+The result is a function that is twice continuously differentiable, that still depends on the data through a banded linear system, and that converges at a much higher rate.
+
+#definition(name: "Cubic Spline Interpolant")[
+  Let $a = x_0 < x_1 < dots < x_N = b$ be a grid.
+  A *cubic spline* interpolating the data $(x_i, y_i)_(i=0)^N$ is a function $S in C^2 [a, b]$ whose restriction to each $[x_i, x_(i+1)]$ is a polynomial of degree at most three and which satisfies $S(x_i) = y_i$ for every $i$.
+] <def:cubic-spline>
+
+Counting conditions explains why two extra requirements are needed.
+There are $4 N$ coefficients, the interpolation conditions give $N + 1$, and the continuity of $S$, $S'$ and $S''$ at the $N - 1$ interior nodes gives $3 (N - 1)$; the total $4 N - 2$ leaves exactly two degrees of freedom.
+They are fixed by boundary conditions.
+
+#definition(name: "Boundary Conditions for Cubic Splines")[
+  The two missing conditions are chosen among the following, applied to the interpolant of #link(<def:cubic-spline>)[*Cubic Spline Interpolant*].
+  - *Natural*: $S''(a) = S''(b) = 0$.
+  - *Clamped* (or *complete*): $S'(a)$ and $S'(b)$ are prescribed, usually as $f'(a)$ and $f'(b)$.
+  - *Periodic*: $S'$ and $S''$ take equal values at $a$ and at $b$.
+] <def:spline-boundary-conditions>
+
+Writing the spline in terms of its second derivatives at the nodes reduces the whole construction to a tridiagonal system.
+Set $M_i = S''(x_i)$ and $h_i = x_(i+1) - x_i$.
+
+#eq[$
+  S(x) = M_i ((x_(i+1) - x)^3)/(6 h_i) + M_(i+1) ((x - x_i)^3)/(6 h_i) + (y_i - (M_i h_i^2)/6) (x_(i+1) - x)/(h_i) + (y_(i+1) - (M_(i+1) h_i^2)/6) (x - x_i)/(h_i)
+$] <eq:spline-moment-form>
+
+is the only cubic on $[x_i, x_(i+1)]$ with the prescribed values at the endpoints and second derivatives $M_i$, $M_(i+1)$ there; it is the piecewise linear interpolant of $S''$, integrated twice.
+The unknowns $M_0, dots, M_N$ are then determined by requiring that $S'$ be continuous at the interior nodes.
+
+#definition(name: "Moment Equations")[
+  The *moment equations* are the linear relations
+  #eq[$
+    mu_i M_(i-1) + 2 M_i + lambda_i M_(i+1) = d_i, quad i = 1, dots, N - 1,
+  $] <eq:moment-equations>
+  with
+  $
+    mu_i = (h_(i-1))/(h_(i-1) + h_i), quad lambda_i = (h_i)/(h_(i-1) + h_i), quad d_i = 6 f[x_(i-1), x_i, x_(i+1)],
+  $
+  where $f[x_(i-1), x_i, x_(i+1)]$ is the second divided difference of the data.
+] <def:moment-equations>
+
+The derivation is one line of bookkeeping: differentiating @eq:spline-moment-form and equating the limits of $S'$ at $x_i$ from the two sides gives
+$
+  (h_(i-1))/6 M_(i-1) + (h_(i-1) + h_i)/3 M_i + (h_i)/6 M_(i+1) = (y_(i+1) - y_i)/(h_i) - (y_i - y_(i-1))/(h_(i-1)),
+$
+and dividing by $(h_(i-1) + h_i) slash 6$ produces @eq:moment-equations, the right-hand side being six times the second divided difference.
+The natural conditions simply set $M_0 = M_N = 0$, while the clamped conditions are the two additional equations
+$
+  2 M_0 + M_1 = 6/h_0 ((y_1 - y_0)/(h_0) - f'(a)), quad M_(N-1) + 2 M_N = 6/(h_(N-1)) (f'(b) - (y_N - y_(N-1))/(h_(N-1))).
+$
+
+#theorem(name: "Existence and Uniqueness of the Cubic Spline")[
+  For distinct nodes and either natural or clamped conditions, the cubic spline interpolant exists and is unique.
+] <thm:spline-existence>
+
+#proof[
+  The coefficient matrix of @eq:moment-equations is tridiagonal with diagonal entries $2$ and off-diagonal entries $mu_i$ and $lambda_i$, which are positive and sum to one.
+  Hence it is strictly diagonally dominant, therefore nonsingular, and the moments are uniquely determined; the clamped conditions only replace the two end rows by equations that are themselves diagonally dominant.
+  Once the moments are known, @eq:spline-moment-form determines $S$ uniquely on every subinterval.
+]
+
+#note(title: "A well-conditioned system, in contrast to Vandermonde")[
+  The matrix in @eq:moment-equations does not depend on the values $y_i$ and has condition number bounded independently of $N$, because it is a strictly diagonally dominant M-matrix with a fixed diagonal.
+  This is the structural reason why splines are preferable to the monomial representation of *The Interpolation Problem: Existence and Uniqueness*: the linear algebra involved is a banded system solved in $O(N)$ operations, not an ill-conditioned dense system.
+  The banded solver itself is the Thomas algorithm of *Tridiagonal Systems and Thomas Algorithm*.
+]
+
+#example(name: "A natural spline through three points")[
+  Take the nodes $0, 1, 2$ with values $0, 1, 0$ and unit spacing.
+  The only interior moment satisfies $2 M_1 = 6 f[0, 1, 2] = -6$, hence $M_1 = -3$, while $M_0 = M_2 = 0$ by the natural condition.
+  Substituting into @eq:spline-moment-form on $[0, 1]$ gives
+  $
+    S(x) = -1/2 x^3 + 3/2 x,
+  $
+  and on $[1, 2]$ the same computation with $2 - x$ in place of $x$ gives $S(x) = -1/2 (2 - x)^3 + 3/2 (2 - x)$.
+  Both pieces have second derivative $-3 x$ and $-3 (2 - x)$, which agree with $M_1 = -3$ at the middle node, so $S''$ is continuous and $S$ is a cubic spline.
+]
+
+#caution[
+  The word *natural* is a misnomer: the condition $S''(a) = S''(b) = 0$ is a modelling assumption, not a consequence of the data.
+  It is the right condition when the interpolated function is known to be almost linear near the ends, and the wrong one otherwise; imposing zero curvature where the function actually curves produces an error of order $h^2$ near the endpoints, as the next section shows.
+  When derivative data are available, the clamped conditions are always preferable.
+]
+
+== Cubic Splines: Error Estimates // 三次样条：误差估计
+
+The gain in accuracy from the piecewise linear to the cubic case is one order of the mesh size in the second derivative and two orders in the function itself, and the price paid is the two boundary conditions.
+
+#theorem(name: "Error of the Clamped Cubic Spline")[
+  Let $f in C^4 [a, b]$ with $abs(f^((4))) <= M_4$, and let $S$ be the clamped cubic spline of $f$ with $S'(a) = f'(a)$ and $S'(b) = f'(b)$.
+  Then
+  #eq[$
+    ||f - S||_oo <= 5/384 M_4 h^4, quad ||f' - S'||_oo <= (M_4)/24 h^3, quad ||f'' - S''||_oo <= 3/8 M_4 h^2.
+  $] <eq:spline-error>
+] <thm:spline-error>
+
+#proof[
+  Two ingredients are needed, and both are classical.
+  First, among all $C^2$ functions that interpolate the data and match the prescribed end slopes, the spline minimizes $integral_a^b (S'')^2$; the difference between any competitor and the spline is therefore orthogonal to the spline in the inner product of second derivatives.
+  Second, the interpolation error of the competitor can be expressed as an integral of $f^((4))$ against a Peano kernel, whose modulus is bounded by the constants in @eq:spline-error.
+  Combining the two gives the three estimates; the constants are sharp and are attained, up to the usual factor, by functions with constant fourth derivative.
+]
+
+The improvement over @eq:pl-error is substantial: the function error improves from $h^2$ to $h^4$, and the second derivative, which is discontinuous for the piecewise linear interpolant, is now accurate to $h^2$.
+
+#example(name: "Clamped versus natural spline")[
+  Interpolate $sin x$ on $[0, 1]$ with $N = 8$ equal subintervals and $h = 1 slash 8$.
+  With the clamped conditions and the exact endpoint slopes, $M_4 = 1$ and @eq:spline-error predicts an error of at most $5 slash 384 dot h^4 approx 3.2 times 10^(-6)$; the observed maximum error is $5.3 times 10^(-7)$.
+  The natural spline on the same grid gives $6.5 times 10^(-4)$, three orders of magnitude worse, and refining the grid barely helps: the errors for $N = 8, 16, 32$ are $6.5 times 10^(-4)$, $1.6 times 10^(-4)$ and $4.0 times 10^(-5)$, which decrease like $h^2$ and not like $h^4$.
+  The loss is entirely due to the artificial condition $S''(1) = 0$, which is false for $sin x$ at $x = 1$; the interior of the interval is far more accurate than the maximum error suggests.
+]
+
+#note(title: "Holladay's characterization")[
+  Among all functions of class $C^2$ that interpolate the data and take the prescribed slopes at the endpoints, the cubic spline is the unique minimizer of the bending energy
+  $
+    integral_a^b (S''(x))^2 dif x.
+  $
+  For the natural spline the same statement holds with no slope conditions imposed, the minimizer then satisfying $S''(a) = S''(b) = 0$ as a natural boundary condition of the variational problem.
+  This is the precise sense in which a spline is the *smoothest* interpolant, and it explains both its good behaviour and its sensitivity to the boundary conditions: the data determine everything except the two end slopes, and the minimizer fills them in the way that bends least.
+]
+
+#caution[
+  The estimates @eq:spline-error refer to the global maximum on $[a, b]$ and require the correct end slopes.
+  If the end slopes are themselves estimated, their error enters the spline with weight of order one near the boundary and decays into the interior, so an inaccurate derivative, in the sense of the discussion in *Hermite Interpolation*, can dominate the fourth order estimate.
+  In practice the interior error is often far below the bound while the error in the first and last few subintervals is close to it.
+]
+
+== B-Splines and Local Bases // B 样条与局部基
+
+The moment form of the previous two sections is the right tool for theory: it turns the spline problem into a tridiagonal system whose entries are divided differences.
+It is not the right tool for computation, because it presupposes a particular degree and a particular boundary condition, and because the formula @eq:spline-moment-form mixes the data $y_i$ with the unknowns $M_i$.
+A basis that depends only on the knots, and in which every spline has a simple coordinate vector, is what is needed, and it is provided by the B-splines.
+
+#definition(name: "Knot Vector")[
+  A *knot vector* on $[a, b]$ is a nondecreasing sequence $t_0 <= t_1 <= dots <= t_m$ with $t_0 = a$ and $t_m = b$.
+  Repeated knots lower the continuity of the splines at that point: a knot repeated $r$ times gives continuity $C^(p-r)$ for splines of degree $p$.
+] <def:knot-vector>
+
+#definition(name: "B-Splines")[
+  The *B-splines of degree zero* are the indicator functions of the intervals $[t_i, t_(i+1))$.
+  For $p >= 1$ the *Cox–de Boor recursion* defines
+  #eq[$
+    N_(i,p) (x) = (x - t_i)/(t_(i+p) - t_i) N_(i,p-1) (x) + (t_(i+p+1) - x)/(t_(i+p+1) - t_(i+1)) N_(i+1,p-1) (x).
+  $] <eq:bspline-recursion>
+] <def:bspline>
+
+The recursion is written with the convention that a quotient whose denominator vanishes is zero.
+Its two structural properties are what make the B-splines a good basis.
+
+#proposition(name: "Properties of B-Splines")[
+  Each $N_(i,p)$ is a nonnegative piecewise polynomial of degree $p$ whose support is $[t_i, t_(i+p+1)]$, and on $[a, b]$ the B-splines form a partition of unity,
+  $
+    sum_i N_(i,p) (x) = 1.
+  $
+] <prop:bspline-properties>
+
+#proof[
+  Both claims are proved by induction on $p$.
+  For $p = 0$ the indicator functions are nonnegative and sum to one wherever they are defined.
+  If they hold for $p - 1$, then @eq:bspline-recursion writes $N_(i,p)$ as a combination with nonnegative weights, since the weights are ratios of nonnegative differences, and the support is the union of the supports of the two terms.
+  Summing the recursion over $i$ makes the two sums telescope into the same expression, which equals one by the induction hypothesis.
+]
+
+#theorem(name: "Dimension of a Spline Space")[
+  Let $t_0, dots, t_m$ be a knot vector and $p >= 0$.
+  Then the splines of degree $p$ with these knots form a vector space of dimension $m - p$, and the B-splines $N_(0,p), dots, N_(m-p-1,p)$ are a basis of it.
+] <thm:spline-dimension>
+
+The count is transparent once one notices that the recursion @eq:bspline-recursion starts from $m$ indicator functions of degree zero and loses one basis function at each step because the first and last knots support no degree-one spline.
+
+#example(name: "The uniform cubic B-spline")[
+  Take integer knots and $p = 3$.
+  The B-spline supported on $[-2, 2]$ equals $1 slash 6$ at $x = ±1$, $2 slash 3$ at $x = 0$, and vanishes outside $(-2, 2)$, so that the four unit-spaced values sum to one, in accordance with partition of unity.
+  It is the cubic analogue of the hat function of degree one, and translates of it by integers form the basis of the uniform cubic splines used in computer graphics and in signal processing.
+]
+
+#figure(
+  image("img/bspline-basis.svg", width: 62%),
+  caption: [Cubic B-splines on a uniform knot vector of spacing one. Each basis function is supported on four consecutive knot intervals, and in the window shown exactly seven translates are active: their sum, dashed, is identically one. Such a local support is what makes the basis numerically stable, and what allows a single coefficient to be changed without recomputing the whole spline.],
+) <fig:bspline-basis>
+
+#note(title: "de Boor's algorithm and stability")[
+  A spline written as $S = sum_i c_i N_(i,p)$ is evaluated by de Boor's algorithm, a triangular recursion of the same shape as the divided difference table of *Newton Interpolation and Divided Differences*.
+  Every step is an affine combination with positive weights summing to one, so no cancellation occurs and the evaluation is backward stable in the sense of #link(<def:backward-stability>)[*Backward Stable Algorithm*].
+  In addition, summing the absolute values of the basis functions gives one by partition of unity, so the Lebesgue constant of the basis is one and does not grow with the number of knots; this is the structural reason why the B-spline basis replaced the monomial basis in every serious spline implementation.
+]
+
+The two descriptions of the cubic splines are related in the expected way: with knots at the data points and degree three, the splines of this chapter are exactly the span of the B-splines, and the moment equations @eq:moment-equations are the collocation system in the B-spline basis after elimination of the knot values.
+The moment form is convenient for proving error estimates, and the B-spline form is convenient for computing; both describe the same space.
+
+The chapter closes the first of the two cures announced in *Interpolation Error and Runge Phenomenon*.
+Piecewise interpolation keeps the Lebesgue constant bounded and reaches any prescribed accuracy by refining the grid, and the cubic spline does so while remaining twice differentiable.
+The remaining question, namely what happens when the data are noisy and cannot be interpolated at all, is taken up in *Function Approximation and Curve Fitting*.
+
 #bibliography("references.bib", title: "References", full: true)
