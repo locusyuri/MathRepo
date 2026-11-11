@@ -1067,7 +1067,7 @@ The multi-valued structure depends sharply on $alpha$.
 #example(name: "Roots as Powers")[
   For a positive integer $n$, the function $z^(1 \/ n) = exp((1 \/ n) Ln z)$ takes exactly $n$ values, recovering the $n$ roots of $z$ studied numerically in Section 1.3. With the principal branch on $D = bb(C) backslash (-oo, 0]$,
   $
-    f_k(z) = root(n, r) e^(i (theta + 2 k pi) \/ n), quad k = 0, 1, dots, n - 1,
+    f_(k)(z) = root(n, r) e^(i (theta + 2 k pi) \/ n), quad k = 0, 1, dots, n - 1,
   $
   are the $n$ analytic branches; the case $n = 2$ reproduces #link(<ex:sqrt-branches>)[the square-root example]. The branch points $0$ and $oo$ are algebraic of order $n$: one loop permutes the $n$ branches cyclically, and $n$ loops restore them.
 ] <ex:roots-as-powers>
@@ -1738,7 +1738,7 @@ The Schwarz lemma is the precise form of a remarkable fact: a holomorphic self-m
 ) <fig:schwarz-lemma>
 
 #note(title: "Toward Schwarz-Pick and Disk Automorphisms")[
-  The Schwarz lemma is the gateway to the geometry of the disk. Dropping the normalization $f(0) = 0$ and pre-composing with disk automorphisms $phi_a(z) = (z - a)/(1 - overline(a) z)$ yields the *Schwarz-Pick lemma*: holomorphic self-maps of the disk never decrease hyperbolic distance. This theory — including the full classification of disk automorphisms — will be taken up once Möbius transformations become available later in this book.
+  The Schwarz lemma is the gateway to the geometry of the disk. Dropping the normalization $f(0) = 0$ and pre-composing with disk automorphisms $phi_(a)(z) = (z - a)/(1 - overline(a) z)$ yields the *Schwarz-Pick lemma*: holomorphic self-maps of the disk never decrease hyperbolic distance. This theory — including the full classification of disk automorphisms — will be taken up once Möbius transformations become available later in this book.
 ]
 
 == Weierstrass Convergence Theorem // 魏尔斯特拉斯收敛定理
@@ -1748,7 +1748,7 @@ The Cauchy theory of Chapter 5 established what single holomorphic functions can
 #definition(name: "Locally Uniform Convergence")[
   A sequence of functions $f_n$ *converges locally uniformly* to $f$ on a domain $D$ if every point of $D$ has a neighborhood on which $f_n -> f$ uniformly — equivalently, $f_n -> f$ uniformly on every compact subset $K subset D$:
   $
-    sup_(z in K) abs(f_n(z) - f(z)) -> 0 quad "as" n -> oo.
+    sup_(z in K) abs(f_(n)(z) - f(z)) -> 0 quad "as" n -> oo.
   $
 ] <def:locally-uniform>
 
@@ -1766,27 +1766,27 @@ The Cauchy theory of Chapter 5 established what single holomorphic functions can
 #proof[
   *Step 1 ($f$ is holomorphic).* $f$ is continuous, being a locally uniform limit of continuous functions. For any closed contour $C$ in $D$, *#link(<thm:cauchy-goursat>)[Cauchy-Goursat]* gives $integral_C f_n dif z = 0$ for every $n$, and since $C$ is compact, $f_n -> f$ uniformly on it:
   $
-    abs(integral_C f dif z) = abs(integral_C (f - f_n) dif z) <= "length"(C) dot sup_(z in C) abs(f_n(z) - f(z)) -> 0.
+    abs(integral_C f dif z) = abs(integral_C (f - f_n) dif z) <= "length"(C) dot sup_(z in C) abs(f_(n)(z) - f(z)) -> 0.
   $
   Hence $integral_C f dif z = 0$ for every closed contour $C$, and $f$ is holomorphic by *#link(<thm:morera>)[Morera's Theorem]*.
 
   *Step 2 (convergence of derivatives).* Fix $z_0 in D$ and a circle $C_r: abs(z - z_0) = r$ whose closed disk lies in $D$. Applying *#link(<thm:cif-derivatives>)[the derivative formula]* to $f_n$ and — by Step 1 — to $f$,
   $
-    f_n'(z_0) - f'(z_0) = 1/(2 pi "i") integral_(C_r) (f_n(z) - f(z)) / (z - z_0)^2 dif z,
+    f_n'(z_0) - f'(z_0) = 1/(2 pi "i") integral_(C_r) (f_(n)(z) - f(z)) / (z - z_0)^2 dif z,
   $
   so the ML estimate gives
   $
-    abs(f_n'(z_0) - f'(z_0)) <= 1/r dot sup_(abs(z - z_0) = r) abs(f_n(z) - f(z)) -> 0.
+    abs(f_n'(z_0) - f'(z_0)) <= 1/r dot sup_(abs(z - z_0) = r) abs(f_(n)(z) - f(z)) -> 0.
   $
   To upgrade this to uniform convergence on compacts, cover a given compact $K subset D$ by finitely many disks $abs(z - z_j) < r_j$ whose closures lie in $D$; each point of $K$ lies in some smaller disk $abs(z - z_j) < r_j / 2$, on which the estimate applies with the circle $abs(w - z) = r_j / 2$ contained in $abs(w - z_j) < r_j$. The right-hand side tends to $0$ uniformly over each of the finitely many disks, hence over $K$.
 ]
 
 #note(title: "Real versus Complex, Once More")[
-  In real analysis, a uniform limit of differentiable functions need not be differentiable — and even when it is, the derivatives may fail to converge: $f_n(x) = sin(n x) / sqrt(n)$ converges uniformly to $0$ on $bb(R)$, yet $f_n'(x) = sqrt(n) cos(n x)$ diverges at every point. In the complex setting, Weierstrass's theorem shows that the limit of holomorphic functions is holomorphic *and* the derivatives converge — rigidity survives the passage to a limit.
+  In real analysis, a uniform limit of differentiable functions need not be differentiable — and even when it is, the derivatives may fail to converge: $f_(n)(x) = sin(n x) / sqrt(n)$ converges uniformly to $0$ on $bb(R)$, yet $f_n'(x) = sqrt(n) cos(n x)$ diverges at every point. In the complex setting, Weierstrass's theorem shows that the limit of holomorphic functions is holomorphic *and* the derivatives converge — rigidity survives the passage to a limit.
 ]
 
 #corollary(name: "Term-by-Term Differentiation")[
-  Let $sum_(n=1)^oo u_n(z)$ be a series of holomorphic functions on a domain $D$ converging locally uniformly to $s(z)$. Then $s$ is holomorphic on $D$, and the series may be differentiated term by term:
+  Let $sum_(n=1)^oo u_(n)(z)$ be a series of holomorphic functions on a domain $D$ converging locally uniformly to $s(z)$. Then $s$ is holomorphic on $D$, and the series may be differentiated term by term:
   $
     s'(z) = sum_(n=1)^oo u_n'(z),
   $
@@ -1798,9 +1798,9 @@ The Cauchy theory of Chapter 5 established what single holomorphic functions can
 ]
 
 #example(name: "The Geometric Series")[
-  On the unit disk, the partial sums $s_n(z) = 1 + z + dots + z^n$ are holomorphic and converge to $s(z) = 1/(1 - z)$. On any compact set where $abs(z) <= rho < 1$,
+  On the unit disk, the partial sums $s_(n)(z) = 1 + z + dots + z^n$ are holomorphic and converge to $s(z) = 1/(1 - z)$. On any compact set where $abs(z) <= rho < 1$,
   $
-    abs(s(z) - s_n(z)) = abs(z^(n+1) / (1 - z)) <= rho^(n+1) / (1 - rho) -> 0,
+    abs(s(z) - s_(n)(z)) = abs(z^(n+1) / (1 - z)) <= rho^(n+1) / (1 - rho) -> 0,
   $
   so the convergence is locally uniform. *#link(<cor:term-by-term>)[Term-by-term differentiation]* then recovers
   $
@@ -2686,9 +2686,9 @@ The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genu
 #definition(name: "Winding Number")[
   Let $C$ be a closed curve and let $z_0$ be a point not on $C$. The *winding number* of $C$ with respect to $z_0$ is defined as
   $
-    "Ind"_C(z_0) = 1/(2 pi"i") integral_C dif z/(z - z_0).
+    "Ind"_(C)(z_0) = 1/(2 pi"i") integral_C dif z/(z - z_0).
   $
-  For a simple closed curve $C$, $"Ind"_C(z_0) = 1$ if $z_0$ lies inside $C$ and $0$ otherwise.
+  For a simple closed curve $C$, $"Ind"_(C)(z_0) = 1$ if $z_0$ lies inside $C$ and $0$ otherwise.
 ] <def:winding-number>
 
 // 辐角原理：亚纯函数沿闭曲线的对数导数积分等于内部零点数减去极点数。
