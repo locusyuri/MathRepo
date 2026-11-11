@@ -435,11 +435,11 @@ The third condition (stability) is particularly important: small changes in the 
       u(x, t) = 0 text("on ") partial Omega times [0, T],
     )
   $
-  is well-posed in the sense of #link(<def:well-posedness>)[Hadamard] for suitable data $f$ and $g$. The solution satisfies the stability estimate:
+  is well-posed in the sense of #link(<def:well-posedness>)[*Well-Posed Problem (Hadamard)*] for suitable data $f$ and $g$. The solution satisfies the stability estimate:
   $
     sup_(t in [0, T]) norm(u(dot, t))_(L^2(Omega)) <= norm(g)_(L^2(Omega)) + integral_0^T norm(f(dot, s))_(L^2(Omega)) dif s.
   $
-  This stands in sharp contrast to the backward heat equation (#link(<ex:backward-heat-ill-posed>)[Example above]), where the same estimate fails catastrophically. The full proof requires energy methods developed in *Energy Estimates and Smoothing Effect*.
+  This stands in sharp contrast to #link(<ex:backward-heat-ill-posed>)[*Backward Heat Equation (Ill-posed)*], where the same estimate fails catastrophically. The full proof requires energy methods developed in *Energy Estimates and Smoothing Effect*.
 ] <prop:heat-well-posed>
 
 #caution(title: "Importance of Well-Posedness")[
@@ -462,7 +462,7 @@ Consider a first-order PDE with two independent variables:
   a(x, y, u) (partial u) / (partial x) + b(x, y, u) (partial u) / (partial y) = c(x, y, u).
 $] <eq:quasilinear-pde>
 
-where $u = u(x, y)$ is the unknown function and $a, b, c$ are given functions with $a$ and $b$ not both zero. By #link(<def:pde-linearity-classification>)[*Basic Concepts and Examples*], this equation is _quasilinear_: it is linear in the first-order derivatives, but the coefficients may depend on $u$ itself.
+where $u = u(x, y)$ is the unknown function and $a, b, c$ are given functions with $a$ and $b$ not both zero. By #link(<def:pde-linearity-classification>)[*Classification of PDEs by Linearity*], this equation is _quasilinear_: it is linear in the first-order derivatives, but the coefficients may depend on $u$ itself.
 
 The left-hand side can be interpreted as a directional derivative:
 $
@@ -475,7 +475,7 @@ The equation states that the directional derivative of $u$ along the vector fiel
 The key idea is to find curves along which the PDE becomes an ODE. Introduce a parameter $t$ and construct curves $(x(t), y(t), u(t))$ in three-dimensional space whose tangent vector is parallel to $(a, b, c)$ at each point.
 
 #definition(name: "Characteristic Curves")[
-  The _characteristic curves_ of the quasilinear equation (#link(<eq:quasilinear-pde>)[1]) are the curves $(x(t), y(t), u(t))$ satisfying the _characteristic system_:
+  The _characteristic curves_ of the quasilinear equation @eq:quasilinear-pde are the curves $(x(t), y(t), u(t))$ satisfying the _characteristic system_:
 ] <def:characteristic-curve>
 
 #eq[$
@@ -485,7 +485,7 @@ $] <eq:char-system>
 Along these curves, the PDE reduces to an ODE.
 
 #lemma(name: "Solution Along Characteristics")[
-  If $u(x,y)$ satisfies (#link(<eq:quasilinear-pde>)[1]), then along any characteristic curve:
+  If $u(x,y)$ satisfies @eq:quasilinear-pde, then along any characteristic curve:
   $
     (dif u) / (dif t) = c(x(t), y(t), u(t)).
   $
@@ -500,14 +500,14 @@ Along these curves, the PDE reduces to an ODE.
 
 This lemma is the heart of the method: it converts the PDE into an ODE system along characteristic curves. The existence and uniqueness theory for the Cauchy problem then follows from the corresponding ODE theory (Picard--Lindelöf theorem).
 
-The projection of the characteristic curve onto the $(x, y)$-plane (determined by the first two equations of (#link(<eq:char-system>)[2])) is called the _characteristic baseline_.
+The projection of the characteristic curve onto the $(x, y)$-plane (determined by the first two equations of @eq:char-system) is called the _characteristic baseline_.
 
 #example(name: "Transport Equation")[
   The simplest first-order PDE is the _transport equation_:
   $
     (partial u)/(partial t) + a (partial u)/(partial x) = 0, quad a in bb(R).
   $
-  This is (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = a$, and $c(x,y,u) = 0$ (here the independent variables are $(x, t)$). The characteristic system is:
+  This is @eq:quasilinear-pde with $a = 1$, $b = a$, and $c(x,y,u) = 0$ (here the independent variables are $(x, t)$). The characteristic system is:
   $
     (dif x) / (dif t) = a, quad (dif u) / (dif t) = 0.
   $
@@ -522,7 +522,7 @@ The projection of the characteristic curve onto the $(x, y)$-plane (determined b
   The transport equation is closely related to the wave equation: it is the simplest hyperbolic PDE and serves as a building block for understanding wave propagation; *Classification of Second-Order PDEs* makes this precise.
 ]
 
-The example above illustrates the general strategy: (1) write down the characteristic equations (#link(<eq:char-system>)[*Method of Characteristics*]); (2) solve the ODE system; (3) use the initial data to determine the solution. We formalize this procedure in *Method of Characteristics*.
+The example above illustrates the general strategy: (1) write down the characteristic equations @eq:char-system; (2) solve the ODE system; (3) use the initial data to determine the solution. We formalize this procedure in *Method of Characteristics*.
 
 #note[
   Although we have presented the theory for two independent variables, the method extends directly to $n$ variables. The characteristic system for a first-order PDE in $n$ independent variables consists of $n + 1$ ODEs, and the same geometric ideas apply.
@@ -534,10 +534,10 @@ We now formalize the procedure illustrated in *Quasilinear Equations* into a sys
 
 === The Cauchy Problem // Cauchy 问题
 
-Given the quasilinear equation (#link(<eq:quasilinear-pde>)[1]), the _Cauchy problem_ consists of finding a solution $u(x, y)$ satisfying prescribed values on a curve $Gamma$ in the $(x, y)$-plane.
+Given the quasilinear equation @eq:quasilinear-pde, the _Cauchy problem_ consists of finding a solution $u(x, y)$ satisfying prescribed values on a curve $Gamma$ in the $(x, y)$-plane.
 
 #definition(name: "Cauchy Problem for First-Order PDE")[
-  Let $Gamma$ be a curve in $bb(R)^2$ parametrized by $(x_0(s), y_0(s))$ for $s in I subset bb(R)$, and let $u_0: I -> bb(R)$ be a given function. The _Cauchy problem_ for (#link(<eq:quasilinear-pde>)[1]) is:
+  Let $Gamma$ be a curve in $bb(R)^2$ parametrized by $(x_0(s), y_0(s))$ for $s in I subset bb(R)$, and let $u_0: I -> bb(R)$ be a given function. The _Cauchy problem_ for @eq:quasilinear-pde is:
   $
     cases(
       a (partial u)/(partial x) + b (partial u)/(partial y) = c(x, y, u) "along characteristics",
@@ -551,13 +551,13 @@ Given the quasilinear equation (#link(<eq:quasilinear-pde>)[1]), the _Cauchy pro
 
 The method proceeds in three steps.
 
-*Step 1: Parametrize the initial data.* At each point $(x_0(s), y_0(s))$ on $Gamma$, the characteristic curve passing through this point carries the value $u_0(s)$. This gives the initial conditions for the characteristic system (#link(<eq:char-system>)[2]):
+*Step 1: Parametrize the initial data.* At each point $(x_0(s), y_0(s))$ on $Gamma$, the characteristic curve passing through this point carries the value $u_0(s)$. This gives the initial conditions for the characteristic system @eq:char-system:
 
 #eq[$
   x(s, 0) = x_0(s), quad y(s, 0) = y_0(s), quad u(s, 0) = u_0(s).
 $] <eq:char-initial-cond>
 
-*Step 2: Solve the characteristic ODE system.* For each fixed $s$, solve (#link(<eq:char-system>)[2]) with initial conditions (#link(<eq:char-initial-cond>)[3]) to obtain a family of characteristic curves:
+*Step 2: Solve the characteristic ODE system.* For each fixed $s$, solve @eq:char-system with initial conditions @eq:char-initial-cond to obtain a family of characteristic curves:
 $
   (x(s, t), y(s, t), u(s, t)).
 $
@@ -582,7 +582,7 @@ The invertibility in Step 3 is guaranteed by the implicit function theorem provi
 Geometrically, the non-characteristic condition means that the characteristic direction $(a, b)$ is _transverse_ to the initial curve: characteristics cross $Gamma$ rather than running along it.
 
 #theorem(name: "Local Existence and Uniqueness")[
-  Let $a, b, c$ be $C^1$ functions, and let $Gamma$ be a $C^1$ non-characteristic initial curve with $C^1$ initial data $u_0$. Then the Cauchy problem #link(<def:cauchy-first-order>)[1] has a unique $C^1$ solution in a neighborhood of $Gamma$.
+  Let $a, b, c$ be $C^1$ functions, and let $Gamma$ be a $C^1$ non-characteristic initial curve with $C^1$ initial data $u_0$. Then the Cauchy problem of #link(<def:cauchy-first-order>)[*Cauchy Problem for First-Order PDE*] has a unique $C^1$ solution in a neighborhood of $Gamma$.
 ] <thm:cauchy-existence-unique>
 
 #proof[
@@ -618,7 +618,7 @@ Even when the initial data is smooth, the solution of a _quasilinear_ (nonlinear
   $
     (partial u)/(partial t) + u (partial u)/(partial x) = 0, quad u(x, 0) = u_0(x).
   $
-  This is (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = u$, $c = 0$. The characteristic system is:
+  This is @eq:quasilinear-pde with $a = 1$, $b = u$, $c = 0$. The characteristic system is:
   $
     (dif x) / (dif t) = u, quad (dif u) / (dif t) = 0.
   $
@@ -663,7 +663,7 @@ The most general linear second-order PDE for $u: Omega subset bb(R)^n -> bb(R)$ 
   L[u] = sum_(i, j = 1)^n a_(i j)(x) (partial^2 u) / (partial x_i partial x_j) + sum_(i=1)^n b_i(x) (partial u) / (partial x_i) + c(x) u = f(x),
 $] <eq:general-2nd-order>
 
-where $a_{i j}, b_i, c, f$ are given functions on $Omega$. By #link(<def:pde-linearity-classification>)[*Basic Concepts and Examples*], this equation is _linear_: the unknown $u$ and all its derivatives appear to the first power. We assume $a_{i j} = a_{j i}$ throughout (any non-symmetric coefficient matrix can be symmetrized since $u_{x_i x_j} = u_{x_j x_i}$ for $C^2$ solutions).
+where $a_{i j}, b_i, c, f$ are given functions on $Omega$. By #link(<def:pde-linearity-classification>)[*Classification of PDEs by Linearity*], this equation is _linear_: the unknown $u$ and all its derivatives appear to the first power. We assume $a_{i j} = a_{j i}$ throughout (any non-symmetric coefficient matrix can be symmetrized since $u_{x_i x_j} = u_{x_j x_i}$ for $C^2$ solutions).
 
 === The Coefficient Matrix and Principal Symbol // 系数矩阵与主符号
 
@@ -693,7 +693,7 @@ The principal symbol captures the highest-order behavior of the operator. Since 
 
 === Characteristic Surfaces // 特征曲面
 
-The concept of characteristic surfaces generalizes the characteristic curves of first-order PDEs (#link(<def:characteristic-curve>)[*Quasilinear Equations*]) to the second-order setting.
+The concept of characteristic surfaces generalizes the characteristic curves of first-order PDEs (#link(<def:characteristic-curve>)[*Characteristic Curves*]) to the second-order setting.
 
 #definition(name: "Characteristic Surface")[
   A hypersurface $S subset bb(R)^n$ is a _characteristic surface_ for the operator $L$ if at every point $x in S$, the principal symbol vanishes in the direction of the normal $nu(x)$ to $S$:
@@ -707,7 +707,7 @@ Characteristic surfaces are the loci along which singularities of solutions can 
 #example(name: "Characteristics of Model Equations")[
   *Laplace equation* $Delta u = 0$: Here $A = I$, so $a(xi) = xi_1^2 + dots + xi_n^2 = abs(xi)^2$. The characteristic equation $abs(nu)^2 = 0$ has no nonzero real solutions. The Laplace equation has _no real characteristic surfaces_.
 
-  *Heat equation* $u_t = alpha u_(x x)$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((alpha, 0), (0, 0))$. The characteristic equation $alpha nu_1^2 = 0$ gives $nu_1 = 0$, so surfaces $t = text("const")$ are characteristic. These are precisely the initial/boundary surfaces for the Cauchy problem (#link(<def:cauchy-problem>)[*Initial and Boundary Value Problems*]).
+  *Heat equation* $u_t = alpha u_(x x)$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((alpha, 0), (0, 0))$. The characteristic equation $alpha nu_1^2 = 0$ gives $nu_1 = 0$, so surfaces $t = text("const")$ are characteristic. These are precisely the initial/boundary surfaces for the Cauchy problem (#link(<def:cauchy-problem>)[*Initial Value Problem (Cauchy Problem)*]).
 
   *Wave equation* $u_(t t) - a^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $A = mat((-a^2, 0), (0, 1))$. The characteristic equation $-a^2 nu_1^2 + nu_2^2 = 0$ yields $nu_2 = +- a nu_1$, giving characteristic lines $x +- a t = text("const")$ in the $(x, t)$-plane.
 ]
@@ -772,7 +772,7 @@ where the principal part has coefficient matrix $A = mat((a, b), (b, c))$ with $
   If the type is the same at every point of the domain $Omega$, the equation is said to be _of that type_ on $Omega$. If the type varies, the equation is of _mixed type_.
 ] <def:pde-type-2d>
 
-The connection to characteristic surfaces (#link(<def:char-surface>)[*Linear Second-Order Equations*]) is direct: the characteristic equation $a (d y)^2 - 2 b dif x dif y + c (d x)^2 = 0$ from #link(<eq:char-ode-2d>)[*Linear Second-Order Equations*] has real solutions if and only if $Delta >= 0$. Thus:
+The connection to characteristic surfaces (#link(<def:char-surface>)[*Characteristic Surface*]) is direct: the characteristic equation $a (d y)^2 - 2 b dif x dif y + c (d x)^2 = 0$ from @eq:char-ode-2d has real solutions if and only if $Delta >= 0$. Thus:
 - _Elliptic_: no real characteristic curves (solutions are smooth)
 - _Parabolic_: one family of characteristic curves (one degenerate direction)
 - _Hyperbolic_: two distinct families of characteristic curves (wave-like propagation)
@@ -782,9 +782,9 @@ The connection to characteristic surfaces (#link(<def:char-surface>)[*Linear Sec
 
   *Laplace equation* $u_(x x) + u_(y y) = 0$: Here $a = 1$, $b = 0$, $c = 1$, so $Delta = 0 - 1 = -1 < 0$. The Laplace equation is _elliptic_ everywhere.
 
-  *Heat equation* $u_t - alpha u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $a = -alpha$, $b = 0$, $c = 0$, so $Delta = 0 - 0 = 0$. The heat equation is _parabolic_ everywhere. The characteristic surfaces are $t = text("const")$, consistent with #link(<eq:char-ode-2d>)[*Linear Second-Order Equations*].
+  *Heat equation* $u_t - alpha u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $a = -alpha$, $b = 0$, $c = 0$, so $Delta = 0 - 0 = 0$. The heat equation is _parabolic_ everywhere. The characteristic surfaces are $t = text("const")$, consistent with @eq:char-ode-2d.
 
-  *Wave equation* $u_(t t) - a^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((-a^2, 0), (0, 1))$, so $Delta = 0^2 - (-a^2)(1) = a^2 > 0$. The wave equation is _hyperbolic_ everywhere. The characteristic lines $x +- a t = text("const")$ are the two families found in #link(<eq:char-ode-2d>)[*Linear Second-Order Equations*].
+  *Wave equation* $u_(t t) - a^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((-a^2, 0), (0, 1))$, so $Delta = 0^2 - (-a^2)(1) = a^2 > 0$. The wave equation is _hyperbolic_ everywhere. The characteristic lines $x +- a t = text("const")$ are the two families found in @eq:char-ode-2d.
 ] <ex:model-equations-type>
 
 #example(name: "Tricomi Equation and Mixed Type")[
@@ -810,21 +810,21 @@ The connection to characteristic surfaces (#link(<def:char-surface>)[*Linear Sec
     ("Hyperbolic", [$Delta > 0$], [$< 0$], "Two distinct families"),
   )
 
-  The transport equation $u_t + a u_x = 0$, introduced in #link(<ex:transport-equation>)[*Quasilinear Equations*], is a _first-order_ hyperbolic equation. When viewed as a second-order equation (by differentiating), it satisfies the wave equation $u_(t t) - a^2 u_(x x) = 0$, confirming the consistency between the first-order and second-order classifications.
+  The transport equation $u_t + a u_x = 0$, introduced in #link(<ex:transport-equation>)[*Transport Equation*], is a _first-order_ hyperbolic equation. When viewed as a second-order equation (by differentiating), it satisfies the wave equation $u_(t t) - a^2 u_(x x) = 0$, confirming the consistency between the first-order and second-order classifications.
 ]
 
 == Canonical Forms and Characteristics // 标准形与特征线
 
-The classification of #link(<def:pde-type-2d>)[*Elliptic, Parabolic, Hyperbolic Types*] is not merely a labeling scheme: it determines the _canonical form_ to which any equation of that type can be reduced by a suitable change of variables. The characteristic curves computed in #link(<eq:char-ode-2d>)[*Linear Second-Order Equations*] provide exactly the coordinates needed for this reduction.
+The classification of #link(<def:pde-type-2d>)[*Classification in Two Dimensions*] is not merely a labeling scheme: it determines the _canonical form_ to which any equation of that type can be reduced by a suitable change of variables. The characteristic curves computed in @eq:char-ode-2d provide exactly the coordinates needed for this reduction.
 
-We work with the general linear second-order equation in two variables (#link(<eq:general-2d>)[*Elliptic, Parabolic, Hyperbolic Types*]):
+We work with the general linear second-order equation in two variables @eq:general-2d:
 $
   a (partial^2 u)/(partial x^2) + 2 b (partial^2 u)/(partial x partial y) + c (partial^2 u)/(partial y^2) + text("lower-order terms") = f(x, y).
 $
 
 === Hyperbolic Equations // 双曲型方程
 
-When $Delta = b^2 - a c > 0$, the characteristic ODE #link(<eq:char-ode-2d>)[*Linear Second-Order Equations*] has two distinct real families of solutions:
+When $Delta = b^2 - a c > 0$, the characteristic ODE @eq:char-ode-2d has two distinct real families of solutions:
 $
   phi(x, y) = c_1, quad psi(x, y) = c_2.
 $
@@ -846,7 +846,7 @@ $
     (partial u)/(partial x) &= (partial u)/(partial xi) (partial phi)/(partial x) + (partial u)/(partial eta) (partial psi)/(partial x), \
     (partial u)/(partial y) &= (partial u)/(partial xi) (partial phi)/(partial y) + (partial u)/(partial eta) (partial psi)/(partial y).
   $
-  Computing second derivatives and substituting into #link(<eq:general-2d>)[*Elliptic, Parabolic, Hyperbolic Types*], the coefficient of $u_(xi xi)$ is $a phi_x^2 + 2 b phi_x phi_y + c phi_y^2$, which vanishes precisely because $phi = text("const")$ satisfies the characteristic ODE #link(<eq:char-ode-2d>)[*Linear Second-Order Equations*]. Similarly, the coefficient of $u_(eta eta)$ vanishes because $psi = text("const")$ is also a characteristic family. The only surviving second-order term is proportional to $u_(xi eta)$, yielding #link(<eq:canonical-hyperbolic>)[(7)]. The second form follows by a linear change of variables.
+  Computing second derivatives and substituting into @eq:general-2d, the coefficient of $u_(xi xi)$ is $a phi_x^2 + 2 b phi_x phi_y + c phi_y^2$, which vanishes precisely because $phi = text("const")$ satisfies the characteristic ODE @eq:char-ode-2d. Similarly, the coefficient of $u_(eta eta)$ vanishes because $psi = text("const")$ is also a characteristic family. The only surviving second-order term is proportional to $u_(xi eta)$, yielding @eq:canonical-hyperbolic. The second form follows by a linear change of variables.
 ]
 
 #example(name: "Wave Equation in Canonical Form")[
@@ -872,7 +872,7 @@ When $Delta = 0$, the characteristic ODE has a single repeated family of solutio
 The proof follows the same chain-rule computation: since $Delta = 0$, the two characteristic families coincide, so both the $u_(xi xi)$ and $u_(xi eta)$ coefficients vanish, leaving only $u_(eta eta)$.
 
 #example(name: "Heat Equation in Canonical Form")[
-  The heat equation $u_t = alpha u_(x x)$ has $a = -alpha$, $b = 0$, $c_"coeff" = 0$ (with variables $(x, t)$), so $Delta = 0$. The characteristic ODE gives $-alpha (d t)^2 = 0$, so $t = text("const")$ is the single characteristic family. Setting $xi = t$ and $eta = x$, the equation is already in canonical form #link(<eq:canonical-parabolic>)[(9)]:
+  The heat equation $u_t = alpha u_(x x)$ has $a = -alpha$, $b = 0$, $c_"coeff" = 0$ (with variables $(x, t)$), so $Delta = 0$. The characteristic ODE gives $-alpha (d t)^2 = 0$, so $t = text("const")$ is the single characteristic family. Setting $xi = t$ and $eta = x$, the equation is already in canonical form @eq:canonical-parabolic:
   $
     u_(eta eta) = (1) / (alpha) u_xi.
   $
@@ -894,7 +894,7 @@ $
 ]
 
 #proof[
-  If we formally apply the hyperbolic reduction with complex coordinates $z = alpha + i beta$ and $bar(z) = alpha - i beta$, the canonical form would be $u_(z bar(z)) = 0$. Converting back to real variables via $alpha = (z + bar(z)) / 2$, $beta = (z - bar(z)) / (2 i)$ transforms $4 u_(z bar(z))$ into $u_(alpha alpha) + u_(beta beta)$, yielding #link(<eq:canonical-elliptic>)[(10)].
+  If we formally apply the hyperbolic reduction with complex coordinates $z = alpha + i beta$ and $bar(z) = alpha - i beta$, the canonical form would be $u_(z bar(z)) = 0$. Converting back to real variables via $alpha = (z + bar(z)) / 2$, $beta = (z - bar(z)) / (2 i)$ transforms $4 u_(z bar(z))$ into $u_(alpha alpha) + u_(beta beta)$, yielding @eq:canonical-elliptic.
 ]
 
 #example(name: "Laplace Equation in Canonical Form")[
@@ -917,7 +917,7 @@ The following table summarizes the canonical forms and their characteristic geom
 )
 
 #note(title: "The transport equation previewed")[
-  The transport equation $u_t + a u_x = 0$, developed in detail in #link(<ex:transport-equation>)[*Quasilinear Equations*], is "the simplest hyperbolic PDE". From the second-order perspective of this chapter, we can now make this precise.
+  The transport equation $u_t + a u_x = 0$, developed in detail in #link(<ex:transport-equation>)[*Transport Equation*], is "the simplest hyperbolic PDE". From the second-order perspective of this chapter, we can now make this precise.
 
   Differentiating $u_t + a u_x = 0$ with respect to $t$ and $x$ yields:
   $
@@ -937,7 +937,7 @@ The following table summarizes the canonical forms and their characteristic geom
   supplement: [Fig.],
 ) <fig:characteristics-three-types>
 
-The figure above provides a geometric summary of the classification. The characteristic curves (#link(<def:char-surface>)[*Linear Second-Order Equations*]) partition the domain differently for each type:
+The figure above provides a geometric summary of the classification. The characteristic curves (#link(<def:char-surface>)[*Characteristic Surface*]) partition the domain differently for each type:
 - *Elliptic*: no real characteristics. Information propagates in all directions equally; solutions are smooth.
 - *Parabolic*: one family of characteristics. Information propagates along a single preferred direction (the "time" direction); solutions smooth out in that direction.
 - *Hyperbolic*: two transverse families. Information propagates along characteristics; solutions can develop singularities along characteristic curves.
@@ -2651,7 +2651,7 @@ The Laplace equation is the prototypical elliptic equation. Its solutions — th
 #note(title: "Physical origins")[
   The Laplacian measures the local deviation of $u$ from its mean, so $Delta u = 0$ describes equilibrium configurations: the electrostatic potential in a charge-free region, the gravitational potential in empty space, and the steady-state temperature distribution. The Poisson equation $-Delta u = f$ incorporates sources (charge density, heat sources).
 
-  Linearity and ellipticity. Both equations are linear with constant coefficients, so linear combinations of solutions are again solutions (#link(<def:pde-linearity-classification>)[*Basic Concepts and Examples*]). By *Classification of Second-Order PDEs*, $Delta$ is the canonical *elliptic* operator: its principal symbol $abs(xi)^2$ is positive definite, and no characteristic surfaces exist in $bb(R)^n$.
+  Linearity and ellipticity. Both equations are linear with constant coefficients, so linear combinations of solutions are again solutions (#link(<def:pde-linearity-classification>)[*Classification of PDEs by Linearity*]). By *Classification of Second-Order PDEs*, $Delta$ is the canonical *elliptic* operator: its principal symbol $abs(xi)^2$ is positive definite, and no characteristic surfaces exist in $bb(R)^n$.
 ]
 
 #proposition(name: "Invariance Properties of the Laplacian")[
@@ -4137,7 +4137,7 @@ Since this holds for every interval $[a, b]$, the integrand must vanish:
   $
 ] <def:conservation-law>
 
-This is a quasilinear equation (#link(<eq:quasilinear-pde>)[1]) with $a = 1$, $b = f'(u)$, and $c = 0$.
+This is a quasilinear equation @eq:quasilinear-pde with $a = 1$, $b = f'(u)$, and $c = 0$.
 
 == Solution by Characteristics // 特征线求解
 
