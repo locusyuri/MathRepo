@@ -231,18 +231,18 @@ PDEs are classified according to their linearity properties:
 
   1. The PDE is *linear* if $F$ is linear in $u$ and all its partial derivatives, i.e.,
     $
-      F(x, u, nabla u, dots) = sum_(abs(alpha) <= m) a_alpha(x) D^alpha u - f(x),
+      F(x, u, nabla u, dots) = sum_(abs(alpha) <= m) a_(alpha)(x) D^alpha u - f(x),
     $
-    where coefficients $a_alpha(x)$ depend only on $x$.
+    where coefficients $a_(alpha)(x)$ depend only on $x$.
 
   2. The PDE is *semilinear* if it is linear in the highest-order derivatives but nonlinear in lower-order derivatives:
     $
-      sum_(abs(alpha) = m) a_alpha(x) D^alpha u = f(x, u, (D^beta u)_(abs(beta) < m)).
+      sum_(abs(alpha) = m) a_(alpha)(x) D^alpha u = f(x, u, (D^beta u)_(abs(beta) < m)).
     $
 
   3. The PDE is *quasilinear* if it is linear in the highest-order derivatives but coefficients may depend on the function and lower-order derivatives:
     $
-      sum_(abs(alpha) = m) a_alpha(x, u, (D^beta u)_(abs(beta) < m)) D^alpha u = f(x, u, (D^beta u)_(abs(beta) < m)).
+      sum_(abs(alpha) = m) a_(alpha)(x, u, (D^beta u)_(abs(beta) < m)) D^alpha u = f(x, u, (D^beta u)_(abs(beta) < m)).
     $
 
   4. The PDE is *fully nonlinear* if it is nonlinear in the highest-order derivatives.
@@ -388,7 +388,7 @@ The third condition (stability) is particularly important: small changes in the 
   $
   is well-posed under suitable regularity assumptions on the domain $Omega$ and boundary data $g$. Existence and uniqueness can be established using variational methods or maximum principles, and stability follows from the continuous dependence estimate:
   $
-    norm(u)_(L^oo(Omega)) <= norm(g)_(L^oo(partial Omega)).
+    norm(u)_(L^(oo)(Omega)) <= norm(g)_(L^(oo)(partial Omega)).
   $
 ] <ex:laplace-dirichlet-well-posed>
 
@@ -403,9 +403,9 @@ The third condition (stability) is particularly important: small changes in the 
   $
   This problem is ill-posed. Even if $f$ and $g$ are very small, the solution can grow arbitrarily large. For example, with $f(x) = 0$ and $g(x) = (1/n) sin(n x)$ for large $n$, we have:
   $
-    u_n(x,y) = (1/(n^2)) sin(n x) sinh(n y).
+    u_(n)(x,y) = (1/(n^2)) sin(n x) sinh(n y).
   $
-  At $y = 1$ and $x = pi/(2n)$, we get $u_n(pi/(2n), 1) = (1/(n^2)) sinh(n) approx (e^n)/(2n^2)$, which grows exponentially as $n -> oo$, despite the data being small in any reasonable norm.
+  At $y = 1$ and $x = pi/(2n)$, we get $u_(n)(pi/(2n), 1) = (1/(n^2)) sinh(n) approx (e^n)/(2n^2)$, which grows exponentially as $n -> oo$, despite the data being small in any reasonable norm.
 ] <ex:laplace-cauchy-ill-posed>
 
 #note[
@@ -660,17 +660,17 @@ The three model equations — Laplace, heat, and wave — exhibit fundamentally 
 The most general linear second-order PDE for $u: Omega subset bb(R)^n -> bb(R)$ takes the form
 
 #eq[$
-  L[u] = sum_(i, j = 1)^n a_(i j)(x) (partial^2 u) / (partial x_i partial x_j) + sum_(i=1)^n b_i(x) (partial u) / (partial x_i) + c(x) u = f(x),
+  L[u] = sum_(i, j = 1)^n a_(i j)(x) (partial^2 u) / (partial x_i partial x_j) + sum_(i=1)^n b_(i)(x) (partial u) / (partial x_i) + c(x) u = f(x),
 $] <eq:general-2nd-order>
 
-where $a_{i j}, b_i, c, f$ are given functions on $Omega$. By #link(<def:pde-linearity-classification>)[*Classification of PDEs by Linearity*], this equation is _linear_: the unknown $u$ and all its derivatives appear to the first power. We assume $a_{i j} = a_{j i}$ throughout (any non-symmetric coefficient matrix can be symmetrized since $u_{x_i x_j} = u_{x_j x_i}$ for $C^2$ solutions).
+where $a_(i j), b_i, c, f$ are given functions on $Omega$. By #link(<def:pde-linearity-classification>)[*Classification of PDEs by Linearity*], this equation is _linear_: the unknown $u$ and all its derivatives appear to the first power. We assume $a_(i j) = a_(j i)$ throughout (any non-symmetric coefficient matrix can be symmetrized since $u_(x_i x_j) = u_(x_j x_i)$ for $C^2$ solutions).
 
 === The Coefficient Matrix and Principal Symbol // 系数矩阵与主符号
 
 The second-order part of $L$ is encoded in the symmetric _coefficient matrix_:
 
 $
-  A(x) = (a_{i j}(x))_(1 <= i, j <= n).
+  A(x) = (a_(i j)(x))_(1 <= i, j <= n).
 $
 
 The operator decomposes as $L[u] = L_2[u] + L_1[u] + c u$, where the _principal (second-order) part_ is
@@ -679,14 +679,14 @@ $
   L_2[u] = sum_(i, j = 1)^n a_(i j)(x) (partial^2 u) / (partial x_i partial x_j),
 $
 
-and $L_1[u] = sum_i b_i(x) u_(x_i)$ is the first-order part.
+and $L_1[u] = sum_i b_(i)(x) u_(x_i)$ is the first-order part.
 
 #definition(name: "Principal Symbol")[
   The _principal symbol_ of the operator $L$ is the quadratic form
   #eq[$
     a(x, xi) = sum_(i, j = 1)^n a_(i j)(x) xi_i xi_j = xi^"T" A(x) xi,
   $] <eq:principal-symbol>
-  where $xi = (xi_1, dots, xi_n) in bb(R)^n$. The _full symbol_ of $L$ is $sigma(x, xi) = a(x, xi) + i sum_i b_i(x) xi_i - c(x)$, which incorporates lower-order contributions.
+  where $xi = (xi_1, dots, xi_n) in bb(R)^n$. The _full symbol_ of $L$ is $sigma(x, xi) = a(x, xi) + i sum_i b_(i)(x) xi_i - c(x)$, which incorporates lower-order contributions.
 ]
 
 The principal symbol captures the highest-order behavior of the operator. Since classification depends only on the leading derivatives, the principal symbol — not the full symbol — determines the equation type.
@@ -1266,7 +1266,7 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
 
   It remains to evaluate Kirchhoff's formula. The sphere $partial B ((bold(x), 0), a t)$ projects onto the disk $B (bold(x), a t)$, each point $bold(y) in B (bold(x), a t)$ corresponding to the pair $bold(y)^plus.minus = (bold(y), plus.minus sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2))$ with $dif S = (a t) / sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2) dif bold(y)$; the two hemispheres contribute equally, so
   $
-    t M_bar(phi) (bold(x), t) = 1/(2 pi) integral_(B (bold(x), a t)) (phi (bold(y)))/(sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2)) dif bold(y),
+    t M_(bar)(phi) (bold(x), t) = 1/(2 pi) integral_(B (bold(x), a t)) (phi (bold(y)))/(sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2)) dif bold(y),
   $
   and substituting into Kirchhoff's formula yields Poisson's formula.
 
@@ -2830,13 +2830,13 @@ This chapter develops the foundational tools: test function spaces, distribution
 The strategy of distribution theory is to transfer derivatives from the unknown function onto smooth "test functions" via integration by parts. This requires a space of test functions with strong regularity and support properties, and a dual space of "generalized functions."
 
 #definition(name: "Space of Test Functions $cal(D)(Omega)$")[
-  Let $Omega subset bb(R)^n$ be an open set. The space $cal(D)(Omega) = C_c^oo(Omega)$ consists of all infinitely differentiable functions with *compact support* in $Omega$:
+  Let $Omega subset bb(R)^n$ be an open set. The space $cal(D)(Omega) = C_c^(oo)(Omega)$ consists of all infinitely differentiable functions with *compact support* in $Omega$:
   $
-    cal(D)(Omega) = {phi in C^oo(Omega) : "supp"(phi) " is compact and" "supp"(phi) subset Omega}.
+    cal(D)(Omega) = {phi in C^(oo)(Omega) : "supp"(phi) " is compact and" "supp"(phi) subset Omega}.
   $
   A sequence $(phi_j)$ *converges* to $phi$ in $cal(D)(Omega)$ if there exists a compact set $K subset Omega$ such that $"supp"(phi_j) subset K$ for all $j$, and for every multi-index $alpha$,
   $
-    sup_(x in K) abs(D^alpha phi_j(x) - D^alpha phi(x)) -> 0 quad "as" j -> oo.
+    sup_(x in K) abs(D^alpha phi_(j)(x) - D^alpha phi(x)) -> 0 quad "as" j -> oo.
   $
 ] <def:test-fn-space-D>
 
@@ -2853,11 +2853,11 @@ The space $cal(D)(Omega)$ is non-trivial: it contains functions that are smooth 
         0 "if" t <= 0.
       )
     $
-    One verifies by induction that $f in C^oo(bb(R))$ with $f^(k)(0) = 0$ for all $k >= 0$. Now set:
+    One verifies by induction that $f in C^(oo)(bb(R))$ with $f^(k)(0) = 0$ for all $k >= 0$. Now set:
     $
       g(x) = f(r^2 - abs(x - a)^2).
     $
-    Then $g in C^oo(bb(R)^n)$, $g(x) > 0$ for $abs(x - a) < r$, and $g(x) = 0$ for $abs(x - a) >= r$. Thus $"supp"(g) = overline(B(a, r))$ and $g$ is the desired bump function.
+    Then $g in C^(oo)(bb(R)^n)$, $g(x) > 0$ for $abs(x - a) < r$, and $g(x) = 0$ for $abs(x - a) >= r$. Thus $"supp"(g) = overline(B(a, r))$ and $g$ is the desired bump function.
   ]
 ] <lem:bump-function>
 
@@ -2868,18 +2868,18 @@ The space $cal(D)(Omega)$ is non-trivial: it contains functions that are smooth 
 For problems on all of $bb(R)^n$, a larger test function space with controlled decay at infinity is more convenient.
 
 #definition(name: "Schwartz Space $cal(S)(bb(R)^n)$")[
-  The *Schwartz space* $cal(S)(bb(R)^n)$ consists of all $phi in C^oo(bb(R)^n)$ such that for every pair of multi-indices $alpha, beta$,
+  The *Schwartz space* $cal(S)(bb(R)^n)$ consists of all $phi in C^(oo)(bb(R)^n)$ such that for every pair of multi-indices $alpha, beta$,
   $
     sup_(x in bb(R)^n) abs(x^alpha D^beta phi(x)) < oo.
   $
   A sequence $(phi_j)$ converges to $phi$ in $cal(S)(bb(R)^n)$ if for all multi-indices $alpha, beta$,
   $
-    sup_(x in bb(R)^n) abs(x^alpha D^beta(phi_j(x) - phi(x))) -> 0 quad "as" j -> oo.
+    sup_(x in bb(R)^n) abs(x^alpha D^(beta)(phi_(j)(x) - phi(x))) -> 0 quad "as" j -> oo.
   $
 ] <def:test-fn-space-S>
 
 #note[
-  The Schwartz space satisfies $cal(D)(bb(R)^n) subset cal(S)(bb(R)^n) subset C^oo(bb(R)^n)$. Functions in $cal(S)$ and all their derivatives decay faster than any polynomial at infinity — this makes $cal(S)$ the natural domain for the Fourier transform (see Analyse Harmonique).
+  The Schwartz space satisfies $cal(D)(bb(R)^n) subset cal(S)(bb(R)^n) subset C^(oo)(bb(R)^n)$. Functions in $cal(S)$ and all their derivatives decay faster than any polynomial at infinity — this makes $cal(S)$ the natural domain for the Fourier transform (see Analyse Harmonique).
 ]
 
 We now define distributions as continuous linear functionals on test functions.
@@ -2937,11 +2937,11 @@ Distributions arising from locally integrable functions in this way are called *
     $
       integral_(bb(R)^n) f(x) phi(x) dif x = phi(0).
     $
-    Choose a sequence of test functions $phi_j in cal(D)(bb(R)^n)$ with $"supp"(phi_j) subset B(0, 1/j)$, $0 <= phi_j <= 1$, and $phi_j(0) = 1$ (constructed from the bump function in #link(<lem:bump-function>)[*Test Functions and Distributions*]). Then:
+    Choose a sequence of test functions $phi_j in cal(D)(bb(R)^n)$ with $"supp"(phi_j) subset B(0, 1/j)$, $0 <= phi_j <= 1$, and $phi_(j)(0) = 1$ (constructed from the bump function in #link(<lem:bump-function>)[*Test Functions and Distributions*]). Then:
     $
       abs(integral f phi_j dif x) <= integral_(B(0, 1/j)) abs(f(x)) dif x -> 0
     $
-    as $j -> oo$, since $f in L^1_"loc"$. But $phi_j(0) = 1$ for all $j$, contradicting $integral f phi_j dif x = phi_j(0) = 1$.
+    as $j -> oo$, since $f in L^1_"loc"$. But $phi_(j)(0) = 1$ for all $j$, contradicting $integral f phi_j dif x = phi_(j)(0) = 1$.
   ]
 ] <ex:delta-not-regular>
 
@@ -3069,7 +3069,7 @@ Convolution with smooth functions provides the primary tool for approximating di
   $
     (f * g)(x) = integral_(bb(R)^n) f(y) g(x - y) dif y.
   $
-  The integral is well-defined since $g$ has compact support. The result $f * g in C^oo(bb(R)^n)$, with derivatives:
+  The integral is well-defined since $g$ has compact support. The result $f * g in C^(oo)(bb(R)^n)$, with derivatives:
   $
     partial^alpha (f * g) = f * (partial^alpha g).
   $
@@ -3099,7 +3099,7 @@ For distributions, we extend convolution by duality. If $T in cal(D)'(bb(R)^n)$ 
   $
   where $c > 0$ is chosen so that $integral_(bb(R)^n) rho(x) dif x = 1$. For $epsilon > 0$, define the rescaled mollifier:
   $
-    rho_epsilon(x) = epsilon^(-n) rho(x / epsilon).
+    rho_(epsilon)(x) = epsilon^(-n) rho(x / epsilon).
   $
   Then $"supp"(rho_epsilon) = overline(B(0, epsilon))$, $rho_epsilon >= 0$, and $integral rho_epsilon dif x = 1$ for all $epsilon > 0$.
 ] <def:mollifier>
@@ -3113,7 +3113,7 @@ The family $(rho_epsilon)_(epsilon > 0)$ is an _approximate identity_: as $epsil
   $
   meaning $⟨ T * rho_epsilon, phi ⟩ -> ⟨ T, phi ⟩$ for all $phi in cal(D)(bb(R)^n)$.
 
-  Moreover, if $T = T_f$ for $f in L^p(bb(R)^n)$ ($1 <= p < oo$), then $f * rho_epsilon -> f$ in $L^p(bb(R)^n)$.
+  Moreover, if $T = T_f$ for $f in L^(p)(bb(R)^n)$ ($1 <= p < oo$), then $f * rho_epsilon -> f$ in $L^(p)(bb(R)^n)$.
 ] <thm:mollifier-approx>
 
 #proof[
@@ -3123,22 +3123,22 @@ The family $(rho_epsilon)_(epsilon > 0)$ is an _approximate identity_: as $epsil
   $
   By definition of $T * rho_epsilon$:
   $
-    ⟨ T * rho_epsilon, phi ⟩ = integral (⟨ T_y, rho_epsilon(x - y) ⟩) phi(x) dif x = ⟨ T_y, integral rho_epsilon(x - y) phi(x) dif x ⟩ = ⟨ T, rho_epsilon * phi ⟩.
+    ⟨ T * rho_epsilon, phi ⟩ = integral (⟨ T_y, rho_(epsilon)(x - y) ⟩) phi(x) dif x = ⟨ T_y, integral rho_(epsilon)(x - y) phi(x) dif x ⟩ = ⟨ T, rho_epsilon * phi ⟩.
   $
   The classical result $rho_epsilon * phi -> phi$ in $cal(D)(bb(R)^n)$ (uniform convergence of all derivatives on compact sets) combined with the continuity of $T$ gives $⟨ T, rho_epsilon * phi ⟩ -> ⟨ T, phi ⟩$.
 
-  *Step 2: $L^p$ convergence.* For $f in L^p$, the $L^p$ convergence $f * rho_epsilon -> f$ follows from Minkowski's integral inequality and the density of $C_c(bb(R)^n)$ in $L^p(bb(R)^n)$.
+  *Step 2: $L^p$ convergence.* For $f in L^p$, the $L^p$ convergence $f * rho_epsilon -> f$ follows from Minkowski's integral inequality and the density of $C_(c)(bb(R)^n)$ in $L^(p)(bb(R)^n)$.
 ]
 
 #corollary(name: "Density of Smooth Functions in $cal(D)'$")[
-  Every distribution $T in cal(D)'(bb(R)^n)$ is the limit (in $cal(D)'$) of a sequence of $C^oo$ functions. Specifically, $T * rho_(1/j) in C^oo(bb(R)^n)$ and $T * rho_(1/j) -> T$ in $cal(D)'(bb(R)^n)$ as $j -> oo$.
+  Every distribution $T in cal(D)'(bb(R)^n)$ is the limit (in $cal(D)'$) of a sequence of $C^oo$ functions. Specifically, $T * rho_(1/j) in C^(oo)(bb(R)^n)$ and $T * rho_(1/j) -> T$ in $cal(D)'(bb(R)^n)$ as $j -> oo$.
 ] <cor:smooth-density-D-prime>
 
 This density result is fundamental: it means we can approximate any distribution — no matter how singular — by smooth functions. In PDE theory, this allows us to first solve problems for smooth data and then pass to the limit.
 
 #figure(
   image("img/mollifier-approx.svg", width: 85%),
-  caption: [Mollification of the Heaviside function $H(x)$. *Left:* The discontinuous function $H(x)$ (blue) and the mollifier kernel $rho_epsilon(x)$ (red, dashed). *Right:* The convolution $H * rho_epsilon$ (green) is a smooth approximation of $H$; as $epsilon -> 0$, it converges pointwise to $H$ away from the jump.],
+  caption: [Mollification of the Heaviside function $H(x)$. *Left:* The discontinuous function $H(x)$ (blue) and the mollifier kernel $rho_(epsilon)(x)$ (red, dashed). *Right:* The convolution $H * rho_epsilon$ (green) is a smooth approximation of $H$; as $epsilon -> 0$, it converges pointwise to $H$ away from the jump.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:mollifier-approx>
@@ -3339,7 +3339,7 @@ The distribution theory of *Distributions and Weak Derivatives* extends classica
 ] <prop:sobolev-complete>
 
 #proof[
-  If $(u_j)$ is a Cauchy sequence in $W^(k,p)$, then for each $abs(alpha) <= k$, $(partial^alpha u_j)$ is Cauchy in $L^p (Omega)$. By completeness of $L^p$, there exist $v_alpha in L^p (Omega)$ with $partial^alpha u_j -> v_alpha$. We must show $v_alpha = partial^alpha v_0$ weakly for $u_0 := v_{(0)}$. For $phi in C_c^oo (Omega)$, the definition of weak derivative gives
+  If $(u_j)$ is a Cauchy sequence in $W^(k,p)$, then for each $abs(alpha) <= k$, $(partial^alpha u_j)$ is Cauchy in $L^p (Omega)$. By completeness of $L^p$, there exist $v_alpha in L^p (Omega)$ with $partial^alpha u_j -> v_alpha$. We must show $v_alpha = partial^alpha v_0$ weakly for $u_0 := v_(0)$. For $phi in C_c^oo (Omega)$, the definition of weak derivative gives
   $
     integral_Omega v_0 partial^alpha phi dif x = lim_j integral_Omega u_j partial^alpha phi dif x = (-1)^(abs(alpha)) lim_j integral_Omega phi partial^alpha u_j dif x = (-1)^(abs(alpha)) integral_Omega phi v_alpha dif x,
   $
