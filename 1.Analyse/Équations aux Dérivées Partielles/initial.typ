@@ -1989,7 +1989,7 @@ Two special cases organize the whole theory.
 === The Cauchy and Initial-Boundary Problems // 柯西问题与初边值问题
 
 #definition(name: "The Heat Equation")[
-  Let $alpha > 0$ and let $f$ be a given source. The *heat equation* with diffusivity $alpha$ is
+  Let $alpha > 0$ and let $f$ be a given source. The *heat equation* is
   $
     u_t - alpha Delta u = f (bold(x), t),
   $
