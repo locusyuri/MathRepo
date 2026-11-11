@@ -2304,7 +2304,7 @@ Two cycles with disjoint supports do not interact — each fixes the other's mov
 #proof[
   *Existence.* Pick $x_1$ and follow the sequence
   $x_1, sigma(x_1), sigma^2(x_1), dots$. Since $X$ is finite, some
-  value repeats: $sigma^j(x_1) = sigma^k(x_1)$ with $0 < j < k$.
+  value repeats: $sigma^(j)(x_1) = sigma^(k)(x_1)$ with $0 < j < k$.
   Applying $sigma^(-j)$ yields $x_1 = sigma^(k - j)(x_1)$, so the
   *first* repetition is $x_1$ returning to itself, and the orbit
   closes into a cycle $c_1$ on
@@ -3822,7 +3822,7 @@ Conjugation (#link(<def:conjugate-elements>)[§2.3]) becomes a self-map of $G$ o
   The set of all such maps is the *inner automorphism group* $"Inn"(G) = {phi_a | a in G}$.
 ] <def:inner-automorphism>
 
-That $phi_a$ is an automorphism is immediate: it is a homomorphism because $phi_a(x y) = (a x a^(-1))(a y a^(-1))$, and it is bijective because $phi_a circle phi_(a^(-1)) = "id"$.
+That $phi_a$ is an automorphism is immediate: it is a homomorphism because $phi_(a)(x y) = (a x a^(-1))(a y a^(-1))$, and it is bijective because $phi_a circle phi_(a^(-1)) = "id"$.
 
 #proposition(name: "Inner Automorphisms Form a Normal Subgroup of the Automorphism Group")[
   Let $G$ be a group. Then $"Inn"(G) <= "Aut"(G)$, and $"Inn"(G) lt.closed.eq "Aut"(G)$.

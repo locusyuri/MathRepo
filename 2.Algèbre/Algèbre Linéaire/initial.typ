@@ -1539,7 +1539,7 @@ $C$ performs the following cyclic operations when multiplied by another matrix:
     $upright("rank")(A + B) = upright("rank")(A) + upright("rank")(B) -
     "dim"(R(A) inter R(B))$, where $R(A)$ and $R(B)$ are the column spaces of $A$ and $B$.
   + *Multiplication*: $upright("rank")(A B) <= upright("rank")(A)$ and $upright("rank")(A B) <= upright("rank")(B)$.
-    + *Sylvester's Inequality*: for $A_{s times n}$ and $B_{n times m}$, $ upright("rank")(A B) >= upright("rank")(A) + upright("rank")(B) - n. $ In particular, if $A B = O$, then $upright("rank")(A) + upright("rank")(B) <= n$.
+    + *Sylvester's Inequality*: for $A_(s times n)$ and $B_(n times m)$, $ upright("rank")(A B) >= upright("rank")(A) + upright("rank")(B) - n. $ In particular, if $A B = O$, then $upright("rank")(A) + upright("rank")(B) <= n$.
     + *Frobenius Inequality*: $upright("rank")(A B C) >= upright("rank")(A B) + upright("rank")(B C) -
       upright("rank")(B)$.
   + *Transpose*:
@@ -3000,7 +3000,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 
   $
     V_lambda^(r) = "Ker"((A - lambda E)^r) =
-    {alpha : alpha in V, (A - lambda E)^r(alpha) = 0},
+    {alpha : alpha in V, (A - lambda E)^(r)(alpha) = 0},
   $
 
   is called the *root subspace* (or *generalized eigenspace*) of order $r$
@@ -3009,7 +3009,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
 
 #note[
   For a vector $alpha$ in the generalized eigenspace, the smallest positive integer
-  $r$ such that $(A - lambda E)^r(alpha) = 0$ is called the *height* of $alpha$.
+  $r$ such that $(A - lambda E)^(r)(alpha) = 0$ is called the *height* of $alpha$.
   The maximum height over all vectors equals the algebraic multiplicity of $lambda$,
   and the chain $V_(lambda)^(1) subset V_(lambda)^(2) subset ...$ stabilizes
   at this value.
@@ -3307,7 +3307,7 @@ derives the existence and computation method of the Jordan canonical form.
 
   are called the *invariant divisors* of $A(lambda)$.
 
-  Here we use the convention $D_0(lambda) = 1$; for $k > r$ one sets $D_k(lambda) = 0$,
+  Here we use the convention $D_0(lambda) = 1$; for $k > r$ one sets $D_(k)(lambda) = 0$,
   so the list stops at $d_(r)(lambda)$.
 ] <def:invariant-divisors>
 
@@ -3476,10 +3476,10 @@ derives the existence and computation method of the Jordan canonical form.
   1. Compute the #link(<def:eigenpolynomial>)[characteristic polynomial]
     $f(lambda) = "det"(lambda E - A)$ and factor it into linear factors over $bb(C)$.
   2. For each eigenvalue $lambda$ put
-    $n_k(lambda) = upright("rank")((lambda E - A)^k)$, with $n_0(lambda) = n$.
+    $n_(k)(lambda) = upright("rank")((lambda E - A)^k)$, with $n_0(lambda) = n$.
     Then the number of Jordan blocks of $A$ for $lambda$ whose size is at least $k$ equals
-    $n_(k-1)(lambda) - n_k(lambda)$, and the number of blocks of size exactly $k$ equals
-    $n_(k-1)(lambda) - 2 n_k(lambda) + n_(k+1)(lambda)$.
+    $n_(k-1)(lambda) - n_(k)(lambda)$, and the number of blocks of size exactly $k$ equals
+    $n_(k-1)(lambda) - 2 n_(k)(lambda) + n_(k+1)(lambda)$.
   3. Summing these numbers over $k$ recovers the algebraic multiplicity of $lambda$, i.e. the
     total size of all blocks attached to $lambda$.
 
