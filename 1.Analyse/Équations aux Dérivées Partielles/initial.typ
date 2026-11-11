@@ -1266,7 +1266,7 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
 
   It remains to evaluate Kirchhoff's formula. The sphere $partial B ((bold(x), 0), a t)$ projects onto the disk $B (bold(x), a t)$, each point $bold(y) in B (bold(x), a t)$ corresponding to the pair $bold(y)^plus.minus = (bold(y), plus.minus sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2))$ with $dif S = (a t) / sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2) dif bold(y)$; the two hemispheres contribute equally, so
   $
-    t M_(bar)(phi) (bold(x), t) = 1/(2 pi) integral_(B (bold(x), a t)) (phi (bold(y)))/(sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2)) dif bold(y),
+    t M_bar(phi) (bold(x), t) = 1/(2 pi) integral_(B (bold(x), a t)) (phi (bold(y)))/(sqrt(a^2 t^2 - abs(bold(x) - bold(y))^2)) dif bold(y),
   $
   and substituting into Kirchhoff's formula yields Poisson's formula.
 

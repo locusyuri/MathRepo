@@ -11,6 +11,9 @@
     paren   [_^][a-zA-Z]+(      下/上标后紧跟括号，括号会被吞进上下标
                                 例：L^oo(Omega) 渲染成 L^{oo(Omega)}
                                 建议：L^(oo)(Omega)          —— 可自动修
+                                （`_{函数}(参数)` 除外：integral_bb(R)、
+                                 V_text("out") 里的括号本就是函数参数，
+                                 已实测渲染正确，不在报告范围内）
     brace   [_^]{               LaTeX 花括号残留，Typst 中会按字面渲染
                                 例：a_{i j}(x) 渲染出可见的 {i j}
                                 建议：a_(i j)(x)             —— 可自动修
@@ -43,6 +46,25 @@ def plan_paren(match, line):
     return match.start(), match.end(), f"{match['sig']}({match['name']})("
 
 
+# Typst 数学函数名：`_{函数}(参数)` 里的括号是函数参数，本就属于下标，
+# 例如 integral_bb(R) 渲染成 ∫_ℝ、V_text("out") 渲染成 V_out，无需加括号。
+MATH_FUNCTIONS = {
+    # 字体与文本
+    "bb", "cal", "frak", "scr", "sans", "mono", "text", "upright", "italic",
+    "bold", "display", "inline", "op",
+    # 重音与修饰
+    "hat", "tilde", "bar", "breve", "dot", "ddot", "diaer", "grave", "acute",
+    "macron", "caron", "circle", "arrow", "vec", "overline", "underline",
+    "overbrace", "underbrace", "overparen", "underparen", "overshell",
+    "undershell", "overbracket", "underbracket", "cancel", "strike", "highlight",
+    # 常见排版函数
+    "abs", "norm", "floor", "ceil", "round", "lr", "attach", "sqrt", "root",
+    "frac", "binom", "mat", "cases",
+}
+
+_FUNCTION_GUARD = "|".join(sorted(MATH_FUNCTIONS))
+
+
 def plan_brace(match, line):
     """_{name} → _(name)；同一行找不到闭合花括号时返回 None（留给人工）。"""
     close = line.find("}", match.end())
@@ -54,7 +76,7 @@ def plan_brace(match, line):
 CHECKS = {
     "paren": {
         "title": "下/上标后紧跟括号（括号被吞进上下标）",
-        "pattern": re.compile(r"(?P<sig>[_^])(?P<name>[a-zA-Z]+)\("),
+        "pattern": re.compile(rf"(?P<sig>[_^])(?!(?:{_FUNCTION_GUARD})\()(?P<name>[a-zA-Z]+)\("),
         "plan": plan_paren,
         "fixable": True,
     },

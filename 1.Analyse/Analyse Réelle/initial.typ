@@ -905,11 +905,11 @@ We now examine the relationship between convergence in measure and almost everyw
   Let $f: bb(R) -> overline(bb(R))$ be an integrable function with respect to Lebesgue measure $m$ on $bb(R)$.
   + *Translation Invariance*: For any $h in bb(R)$, the translated function $f_(h)(x) = f(x + h)$ is integrable and
     $
-      integral_(bb)(R) f_h dif m = integral_(bb)(R) f dif m.
+      integral_bb(R) f_h dif m = integral_bb(R) f dif m.
     $
   + *Continuity of Average*:
   $
-    lim_(h->0) integral_(bb)(R) abs(f_(h)(x) - f(x)) dif m = 0.
+    lim_(h->0) integral_bb(R) abs(f_(h)(x) - f(x)) dif m = 0.
   $
   + *Absolute Continuity of the Integral*: For every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A in cal(L)$ with $m(A) < delta$,
     $
@@ -965,7 +965,7 @@ We now examine the relationship between convergence in measure and almost everyw
 ]
 
 #example[
-  The monotonicity condition cannot be dropped. Consider $f_n = chi_([n, n+1])$ on $(bb(R), cal(L), m)$. Then $f_n -> 0$ pointwise, but $integral_(bb)(R) f_n dif m = 1$ for all $n$, so $lim integral f_n = 1 != 0 = integral lim f_n$.
+  The monotonicity condition cannot be dropped. Consider $f_n = chi_([n, n+1])$ on $(bb(R), cal(L), m)$. Then $f_n -> 0$ pointwise, but $integral_bb(R) f_n dif m = 1$ for all $n$, so $lim integral f_n = 1 != 0 = integral lim f_n$.
 ]
 
 === Fatou's Lemma // Fatou 引理
