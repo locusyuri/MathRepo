@@ -81,7 +81,7 @@ $C_(c)(bb(R)^n)$ // C_c (ℝⁿ)
 
 **批量排查**：在全仓库 `.typ` 文件中搜索正则 `[_\^]([a-zA-Z]+)\(`，逐个改为 `_(...)(` / `^(...)(`。这与你之前修的 `f_n(A)` 是同一种错误，务必全局替换，不限于举例处。
 
-在仓库根执行 `uv run scripts/check-typst-attachments.py` 可只读列出全库命中片段与建议写法（`paren` 上下标括号、`brace` LaTeX 花括号残留、`macro` LaTeX 宏残留三类），加 `--check paren` 只跑一项、`--summary` 只看计数；脚本不修改文件，改动仍需人工确认。
+在仓库根执行 `uv run scripts/check-typst-attachments.py` 可只读列出全库命中片段与建议写法（`paren` 上下标括号、`brace` LaTeX 花括号残留、`macro` LaTeX 宏残留三类），加 `--check paren` 只跑一项、`--summary` 只看计数。默认**只检查**；必须先人工确认报告无误，再加 `--fix` 写回（只自动改 `paren`、`brace`，`macro` 永远只报告），最后重新编译复核。
 
 ## 4. 多字母变量问题
 
