@@ -1151,7 +1151,7 @@ The goal is to find the curve $q$ that makes $J$ stationary.
   A variation of $q$ is a family
 
   $
-    q_epsilon(t) = q(t) + epsilon eta(t),
+    q_(epsilon)(t) = q(t) + epsilon eta(t),
   $
 
   where $eta(a)=eta(b)=0$ and $eta$ is sufficiently smooth.
@@ -1606,7 +1606,7 @@ Here a *functional* means a map from a function space to real numbers, e.g. $S: 
 Equivalently, with a variation family
 
 $
-  q_epsilon(t) = q(t) + epsilon eta(t), quad eta(t_0)=eta(t_1)=0,
+  q_(epsilon)(t) = q(t) + epsilon eta(t), quad eta(t_0)=eta(t_1)=0,
 $
 
 the first-order term in $S[q_epsilon] - S[q]$ vanishes at $epsilon = 0$.
@@ -1808,14 +1808,14 @@ where $F_a$ is the applied force on the $a$-th particle.
 When the coordinates are constrained by relations
 
 $
-  f_alpha(q_1, dots, q_n, t) = 0, quad alpha = 1, dots, m,
+  f_(alpha)(q_1, dots, q_n, t) = 0, quad alpha = 1, dots, m,
 $
 
 the configuration space is reduced to an admissible submanifold of the full coordinate space.
 If the constraints are holonomic, one can either solve them explicitly or introduce multipliers.
 
 #theorem(name: "Constrained Lagrange Equations")[
-  For holonomic constraints $f_alpha(q, t)=0$, the equations of motion can be written in the multiplier form
+  For holonomic constraints $f_(alpha)(q, t)=0$, the equations of motion can be written in the multiplier form
 
   $
     frac(dif, dif t) frac(partial L, partial dot(q)_i) - frac(partial L, partial q_i) = sum_(alpha=1)^m lambda_alpha frac(partial f_alpha, partial q_i),
@@ -1824,7 +1824,7 @@ If the constraints are holonomic, one can either solve them explicitly or introd
   together with the constraint equations
 
   $
-    f_alpha(q, t) = 0, quad alpha = 1, dots, m.
+    f_(alpha)(q, t) = 0, quad alpha = 1, dots, m.
   $
 ]
 
