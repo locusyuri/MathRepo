@@ -112,7 +112,7 @@ This template currently supports:
 == Definitions and Properties
 
 #definition(name: "Monotone Sequence")[
-  A sequence $(a_n)$ is monotone increasing if $a_n <= a_{n+1}$ for all $n$.
+  A sequence $(a_n)$ is monotone increasing if $a_n <= a_(n+1)$ for all $n$.
 ]
 
 #proposition[
