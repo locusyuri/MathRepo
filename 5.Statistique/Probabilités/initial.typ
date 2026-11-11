@@ -1239,7 +1239,8 @@ It is the change of unit that makes variables with different locations and scale
 
 Chebyshev's inequality is universal — it uses only the mean and variance,
 not the full distribution. It is the bridge from finite moments to limit
-theorems: the Weak Law of Large Numbers (Chapter 8) is a direct corollary.
+theorems: #link(<thm:khinchin-wlln>)[the Weak Law of Large Numbers] is a
+direct corollary.
 
 #note(title: "Exponential family callback")[
   The
@@ -1314,7 +1315,7 @@ The mean, variance, skewness, and kurtosis are the first four standardised
 moments — together they sketch the shape of a distribution: location,
 scale, asymmetry, and tail weight. Higher moments and the moment
 generating function, which encodes *all* moments in a single function, are
-the subject of the generating functions chapter (Chapter 6). First,
+the subject of #link(<def:mgf>)[the generating functions chapter]. First,
 however, the next chapter applies the tools just built to give the standard
 families their complete portraits — mean and variance included.
 
@@ -2518,7 +2519,7 @@ Neither condition implies the other.
 Two further points deserve emphasis.
 
 - *Identical distribution is not equality.* If $X_1 = X_2$ then the two are trivially identically distributed, but they are independent only when the common law is degenerate (a constant). Sampling $n$ i.i.d. copies means $n$ *distinct* random variables sharing one law, not one variable written $n$ times.
-- *i.i.d. is a hypothesis, not a definition of randomness.* It is the standing assumption behind #link(<def:bernoulli-trials>)[Bernoulli trials], the weak and strong laws of large numbers, and #link(<thm:clt>)[the Lindeberg-Lévy CLT]; the #link(<prop:lindeberg-condition>)[Lindeberg-Lyapunov CLT] shows that independence alone suffices once the variances are rescaled.
+- *i.i.d. is a hypothesis, not a definition of randomness.* It is the standing assumption behind #link(<def:bernoulli-trials>)[Bernoulli trials], the weak and strong laws of large numbers, and #link(<thm:clt>)[the Lindeberg-Lévy CLT]; the #link(<thm:lindeberg-feller>)[Lindeberg–Feller CLT] shows that independence alone suffices once the variances are rescaled.
 
 == Conditional Distributions and Conditional Expectation // 条件分布与条件期望
 
@@ -2866,21 +2867,132 @@ This is the geometric meaning of the coefficient: correlation measures alignment
   $
 ]
 
-This is the object appearing in the #link(<def:multivariate-normal>)[multivariate normal density] of Chapter 7: the abstract $Sigma$ is grounded in the concrete notion of covariance.
+== Multivariate Normal Distribution // 多元正态分布
 
+The bivariate normal of #link(<fig:joint-density>)[the joint density figure]
+is the $n = 2$ case of the construction prepared by
+#link(<def:mean-vector-covariance-matrix>)[the covariance matrix]: the
+univariate normal of #link(<def:normal-dist>)[the normal distribution] extends
+to vectors, and its geometry — ellipsoidal contours, linear closure,
+independence through zero covariance — makes it the workhorse of multivariate
+statistics.
+
+#definition(name: "Multivariate Normal Distribution")[
+  A random vector $bold(X) = (X_1, dots, X_n)$ has the *$n$-variate normal
+  distribution* with mean vector $bold(mu) in RR^n$ and covariance matrix
+  $Sigma$ (a symmetric positive-definite $n times n$ matrix), written
+  $bold(X) ~ N_(n)(bold(mu), Sigma)$, if its joint density is
+  $
+    f(bold(x)) = 1 / ((2 pi)^(n\/2) sqrt(abs(Sigma))) exp(-1\/2 (bold(x) - bold(mu))^"T" Sigma^(-1) (bold(x) - bold(mu))).
+  $
+  The quadratic form $(bold(x) - bold(mu))^"T" Sigma^(-1) (bold(x) - bold(mu))$
+  is the *Mahalanobis distance* from $bold(x)$ to $bold(mu)$.
+] <def:multivariate-normal>
+
+The covariance matrix $Sigma = (sigma_(i j))$ where $sigma_(i j) =
+"Cov"(X_i, X_j)$ encodes the pairwise covariances; its diagonal entries are
+the variances $sigma_(i i) = "Var"(X_i)$. These notions were formalised in
+#link(<def:mean-vector-covariance-matrix>)[the preceding section], and the
+multivariate normal can be understood geometrically through its density:
+level sets are ellipsoids centred at $bold(mu)$, with axes determined by the
+eigenvectors and eigenvalues of $Sigma$.
+
+For $n = 2$ and $Sigma = [[sigma_1^2, rho sigma_1 sigma_2], [rho sigma_1
+    sigma_2, sigma_2^2]]$, the contours are ellipses tilted by the correlation
+$rho$ — the picture of #link(<fig:joint-density>)[the joint density figure].
+
+#property(name: "Linear Transformations")[
+  If $bold(X) ~ N_(n)(bold(mu), Sigma)$ and $bold(Y) = bold(A) bold(X) +
+  bold(b)$ where $bold(A)$ is an $m times n$ matrix and $bold(b) in RR^m$,
+  then $bold(Y) ~ N_(m)(bold(A) bold(mu) + bold(b), bold(A) Sigma bold(A)^"T")$.
+  In particular, any linear combination of jointly normal variables is
+  normal — the *closure under linear transformation*.
+] <prop:mv-normal-linear>
+
+The proof is a direct application of
+#link(<thm:jacobian-transform>)[the multivariate change of variables] with
+$bold(g)(bold(x)) = bold(A) bold(x) + bold(b)$, whose Jacobian is
+$abs(bold(A))$.
+
+#property(name: "Marginal Distributions")[
+  Any subvector of a multivariate normal is itself multivariate normal. If
+  $bold(X) = (bold(X)_1, bold(X)_2)$ is partitioned with
+  $bold(mu) = (bold(mu)_1, bold(mu)_2)$ and
+  $
+    Sigma = [[Sigma_(11), Sigma_(12)], [Sigma_(21), Sigma_(22)]],
+  $
+  then $bold(X)_1 ~ N(bold(mu)_1, Sigma_(11))$ and $bold(X)_2 ~
+  N(bold(mu)_2, Sigma_(22))$.
+] <prop:mv-normal-marginal>
+
+#property(name: "Independence and Zero Covariance")[
+  For a multivariate normal, two subvectors $bold(X)_1$ and $bold(X)_2$ are
+  *independent* if and only if $"Cov"(bold(X)_1, bold(X)_2) = bold(0)$, i.e.
+  $Sigma_(12) = bold(0)$.
+
+  This is a *special* property of the normal: for general distributions,
+  zero covariance (uncorrelatedness) is necessary but not sufficient for
+  independence (see the note in
+  #link(<prop:independence-criterion>)[the independence criterion]). For the
+  normal, the density factorises iff $Sigma_(12) = bold(0)$, because the
+  cross term in the exponent vanishes.
+] <prop:mv-normal-independence>
+
+#property(name: "Conditional Distributions")[
+  Given $bold(X)_2 = bold(x)_2$, the conditional distribution of
+  $bold(X)_1$ is normal:
+  $
+    bold(X)_1 | bold(X)_2 = bold(x)_2 ~ N(bold(mu)_(1|2), Sigma_(1|2)),
+  $
+  with
+  $
+    bold(mu)_(1|2) = bold(mu)_1 + Sigma_(12) Sigma_(22)^(-1) (bold(x)_2 - bold(mu)_2),
+    quad
+    Sigma_(1|2) = Sigma_(11) - Sigma_(12) Sigma_(22)^(-1) Sigma_(21).
+  $
+  The conditional mean is a linear function of $bold(x)_2$ — the *linear
+  regression* of $bold(X)_1$ on $bold(X)_2$; the conditional covariance is
+  independent of $bold(x)_2$ — the regression is *homoscedastic*.
+] <prop:mv-normal-conditional>
+
+These four properties — linear closure, normal marginals, the
+equivalence of independence with zero covariance, and normal conditionals —
+make the multivariate normal the structural backbone of classical
+multivariate analysis, to which the sampling distribution and regression
+chapters of Part IV will return repeatedly.
 
 
 #part("Generating Tools and Limit Theorems") // 生成工具与极限定理
+
+The preceding parts described *one* distribution at a time. This part does
+something else: it builds a language in which whole families of
+distributions, and whole sequences of them, can be discussed at once. It
+follows a single thread, one chapter per step:
+
+- *Generating functions* encode an entire law in one analytic object —
+  moments, distributional information and independence structure all become
+  algebra.
+- *Convergence* acquires a vocabulary: four modes in which a sequence of
+  random variables can converge, their hierarchy, and the analytic criterion
+  (Lévy's continuity theorem) that turns convergence of laws into pointwise
+  convergence of functions.
+- *Limit theorems* spend that vocabulary on the two laws governing
+  independent sampling, the laws of large numbers and the central limit
+  theorem, with the Delta method as their statistical corollary.
+- *Stochastic processes* finally relax independence: Markov chains, the
+  Poisson process and Brownian motion appear as the dynamical counterparts
+  of the theorems just proved.
+
 = Generating Functions and Transform Methods // 生成函数与变换方法
 
-A single function — the moment generating function, the characteristic
-function, or the probability generating function — can encode *all* the
-moments, *all* the distributional information, and *all* the
-independence structure of a random variable. These transforms turn
-hard problems (sums of independent variables, convergence in
-distribution) into routine algebra (products, limits of functions).
+Each of the three transforms below encodes a law so that one operation
+becomes trivial: multiplying transforms represents adding independent
+variables, differentiating represents taking moments, and — for the
+characteristic function — pointwise convergence will represent convergence
+in distribution. They differ in what they demand of the law: the MGF may
+fail to exist, the PGF needs integer-valued variables, the CF always exists.
 
-== Moment Generating Functions // 矩母函数
+== Moment Generating Functions and Cumulants // 矩母函数与累积量
 
 #definition(name: "Moment Generating Function")[
   The *moment generating function* (MGF) of $X$ is
@@ -2909,9 +3021,7 @@ moments by differentiation, fulfilling the promise of
 #property(name: "Properties of the MGF")[
   - (linearity) $M_(a X + b)(t) = exp(b t) M_(X)(a t)$;
   - (independent sum) if $X$ and $Y$ are independent, $M_(X+Y)(t) = M_(X)(t)
-    M_(Y)(t)$ — the MGF of a sum is the product of the MGFs;
-  - (identification) $M_X = M_Y$ (on a common domain) implies $X$
-    and $Y$ have the same distribution.
+    M_(Y)(t)$ — the MGF of a sum is the product of the MGFs.
 ] <prop:mgf-properties>
 
 #theorem(name: "Uniqueness Theorem")[
@@ -2924,6 +3034,40 @@ The proof relies on the uniqueness of the Laplace transform: if two
 integrable functions have the same transform on a strip, they are equal
 almost everywhere. This is the analytic counterpart of the
 probabilistic statement that the MGF determines the distribution.
+
+Taking logarithms of the MGF trades products for sums, and it is this
+additive form that later chapters use.
+
+#definition(name: "Cumulant Generating Function")[
+  When $M_X$ is finite on an open interval around $0$, the *cumulant
+  generating function* (CGF) of $X$ is
+  $
+    K_X(t) = ln M_X(t) = ln E[exp(t X)],
+  $
+  and the *cumulants* of $X$ are the derivatives $kappa_k = K_X^((k))(0)$.
+] <def:cgf>
+
+#property(name: "Cumulants and Moments")[
+  The first cumulants are the centred quantities
+  $
+    kappa_1 = E[X], quad kappa_2 = "Var"(X), quad
+    kappa_3 = E[(X - E[X])^3], quad kappa_4 = mu_4 - 3 sigma^4,
+  $
+  where $mu_4 = E[(X - E[X])^4]$ and $sigma^2 = "Var"(X)$.
+] <prop:cumulants>
+
+The advantage of $K_X$ over $M_X$ is exactly its behaviour under addition:
+#link(<prop:mgf-properties>)[the product rule] for $M$ becomes a *sum* for $K$,
+$
+  K_(X + Y)(t) = K_(X)(t) + K_(Y)(t) quad "(for independent" X, Y ")".
+$
+Cumulants are therefore the additive coordinates of a law: the $k$-th
+cumulant of a sum of $n$ i.i.d. copies is $n$ times the $k$-th cumulant of
+one copy. This is the algebraic content behind the $n^(-1\/2)$ scaling in
+#link(<thm:clt>)[the central limit theorem], and it reappears in Part IV,
+where the log-partition function $A(eta)$ of
+#link(<def:exponential-family>)[the exponential family] is a cumulant
+generating function in disguise.
 
 #example[
   Common MGFs (computed from the definition via LOTUS):
@@ -3000,6 +3144,28 @@ This mirrors #link(<prop:mgf-moments>)[the MGF moment formula], but with
 $i^k$ in the denominator. The CF plays the same role as the MGF for
 moment extraction, with the crucial advantage of universal existence.
 
+#example[
+  Common characteristic functions (compare the MGF table of
+  #link(<ex:common-mgf>)[the MGF examples]):
+
+  #tex-table(
+    ("Distribution", $phi_(X)(t)$),
+    ($"Ber"(p)$, $1 - p + p exp(i t)$),
+    ($B(n, p)$, $(1 - p + p exp(i t))^n$),
+    ($"Pois"(lambda)$, $exp(lambda (exp(i t) - 1))$),
+    ($"Exp"(lambda)$, $lambda / (lambda - i t)$),
+    ($"Ga"(alpha, lambda)$, $(lambda / (lambda - i t))^alpha$),
+    ($N(mu, sigma^2)$, $exp(i mu t - sigma^2 t^2 / 2)$),
+    ($"Cauchy"(0, 1)$, $exp(-abs(t))$),
+  )
+
+  The Cauchy entry is the point of the whole construction: its MGF is
+  infinite for every $t != 0$
+  (#link(<caution:mgf-nonexistence>)[as noted above]), while its CF exists
+  everywhere, since $abs(phi) <= 1$ by
+  #link(<prop:cf-properties>)[the basic properties].
+] <ex:common-cf>
+
 #theorem(name: "Inversion Formula")[
   If $phi_X$ is integrable ($integral_(-infinity)^infinity abs(phi_(X)(t))
   dif t < infinity$), then $X$ has a continuous density $f$ given by
@@ -3009,47 +3175,22 @@ moment extraction, with the crucial advantage of universal existence.
   In general, $F(b) - F(a) = lim_(T -> infinity) 1/(2 pi) integral_(-T)^T (exp(-i t a) - exp(-i t b)) / (i t) phi_(X)(t) dif t$.
 ] <thm:inversion-formula>
 
-The proof is a Fourier inversion argument; the full development of the
-Fourier analysis tools required is deferred to the Processus Stochastique
-note. The essential idea: the CF is the Fourier transform of the
-distribution, and the inversion formula is the inverse Fourier transform.
-
-#theorem(name: "Lévy's Continuity Theorem")[
-  Let $X_1, X_2, dots$ and $X$ be random variables with CFs $phi_n$ and
-  $phi$. Then
-  $
-    X_n arrow.r^d X quad "iff" quad phi_(n)(t) -> phi(t) "for all" t in RR.
-  $
-  Moreover, if $phi_n -> phi$ pointwise and $phi$ is continuous at $0$,
-  then $phi$ is a CF and $X_n arrow.r^d X$.
-] <thm:continuity-theorem>
-
-The proof strategy has two directions:
-
-- ($arrow.r.double$) Convergence in distribution implies pointwise
-  convergence of CFs by the definition of $arrow.r^d$ (the
-  bounded continuous function $exp(i t dot)$ has the right limit).
-
-- ($arrow.l.double$) This is the hard direction. The key steps are:
-  1. (truncation) Show tightness of ${X_n}$ from the convergence $phi_n
-    -> phi$ and continuity at $0$;
-  2. (subsequence) Extract a weakly convergent subsequence by Prohorov's
-  theorem;
-  3. (identification) The limit has CF $phi$, hence (by uniqueness) is
-  $X$.
-
-This theorem is the *master tool* for proving limit theorems. The
-Central Limit Theorem (Chapter 8) reduces to showing $phi_(S_n / sqrt(n))
-(t) -> exp(-t^2 / 2)$ — a routine computation with independent-sum CFs.
+The proof is a Fourier inversion argument; the analytic machinery behind it
+is not developed here. The essential idea is that the CF is the Fourier
+transform of the distribution, and the inversion formula is its inverse
+transform.
 
 #note(title: "Fourier analysis boundary")[
-  The CF is the Fourier transform of the
-  distribution measure, and the inversion formula is the inverse
-  transform. The full theory — $L^1$ and $L^2$ inversion, Plancherel's
-  theorem, distributional Fourier transforms — is developed in the
-  Analyse Harmonique note. Here we use the CF as a probabilistic tool;
-  the Fourier-analytic proofs of the inversion and continuity theorems
-  are recalled as needed.
+  The analytic theory — $L^1$ and $L^2$ inversion, Plancherel's theorem,
+  distributional Fourier transforms — belongs to the Analyse Harmonique
+  note; its probabilistic counterpart, for stochastic processes and their
+  spectral analysis, is taken up in the Processus Stochastique note.
+  Here the CF is used only as a tool: the inversion formula is stated and
+  applied, not proved.
+
+  What the CF still lacks is a notion of *convergence* to be compared
+  against. That vocabulary, and the theorem that links it to the CF, is
+  the subject of #link(<thm:continuity-theorem>)[the next chapter].
 ] <note:fourier-boundary>
 
 == Probability Generating Functions // 概率生成函数
@@ -3123,255 +3264,38 @@ independent variables, and analysing compound distributions.
   sum (lambda s)^k / k! = exp(lambda(s - 1))$.
 ] <ex:common-pgf>
 
-The three transforms — MGF, CF, PGF — each encode the full distribution
-in a single analytic function. The CF, with its universal existence and
-the Lévy continuity theorem, is the master tool for the limit theorems
-of Chapter 8.
+Each transform converts a statement about *laws* into a statement about
+*analytic functions*: adding independent variables becomes multiplying
+transforms, and — as the next chapter shows — convergence of laws becomes
+pointwise convergence of functions. Of the three, the CF is the one whose
+existence is unconditional, and it is therefore the transform used in what
+follows.
 
-= Characterization and Classification of Distributions // 分布的特征与分类
+= Modes of Convergence // 收敛方式
 
-The distributions of Chapter 4 — normal, Gamma, Beta, Poisson,
-binomial — look different on the surface, yet most of them share a hidden
-algebraic skeleton: the *exponential family*. Recognising a distribution as
-a member of this family immediately yields its sufficient statistic, its
-moment-generating structure, and its conjugate prior — three pillars of
-modern statistical inference. This chapter assembles that skeleton and then
-turns to the multivariate normal, the canonical distribution of multivariate
-statistics.
+To exploit the transforms of the preceding chapter, one needs a vocabulary:
+what does it mean for a *sequence of laws* to converge? The question is
+about random variables, and a sequence of random variables is a sequence of
+measurable functions on the probability space $(Omega, cal(F), P)$ —
+precisely the object of *Convergence of Measurable Functions* in the
+Analyse Réelle note. Since $P$ is a measure with $P(Omega) = 1$, that theory
+carries over unchanged, and three of the four modes below are pure
+vocabulary. The fourth — convergence in distribution — is different in kind:
+it does not compare the values $X_n(omega)$ at all, only the laws
+$mu_(X_n)$.
 
-== Exponential Family // 指数族
+This chapter fixes the vocabulary, records the hierarchy between the modes,
+and proves the one theorem that connects laws to characteristic functions.
 
-#definition(name: "Exponential Family")[
-  A family of densities $f(x; theta)$ with parameter $theta in Theta
-  subset.eq RR^k$ belongs to the *exponential family* if it can be written
-  in the *canonical form*
-  $
-    f(x; theta) = h(x) exp(eta(theta) dot T(x) - A(theta)),
-  $
-  where:
-
-  - $h(x) >= 0$ is the *base measure*, independent of $theta$;
-  - $eta(theta) in RR^k$ is the *natural parameter*;
-  - $T(x) in RR^k$ is the *natural statistic* (a vector of the same
-    dimension as $eta$);
-  - $A(theta)$ is the *log-partition function* (or cumulant generating
-    function), ensuring normalisation.
-
-  The inner product $eta dot T = sum_(i=1)^k eta_i T_i$ couples parameter
-  to data.
-] <def:exponential-family>
-
-The key structural constraint is that the support ${{x : f(x; theta) > 0}}$ must not depend on $theta$; the parameter enters only
-through the exponential factor.
-
-#property(name: "Classical Distributions in the Exponential Family")[
-  Each of the following admits the canonical form; the table lists the
-  ingredients.
-
-  #tex-table(
-    ("Distribution", $eta$, $T(x)$, $A(theta)$, $h(x)$),
-    ($"Pois"(lambda)$, $ln lambda$, $x$, $lambda$, $1 / x!$),
-    ($"Ber"(p)$, $ln(p / (1-p))$, $x$, $-ln(1-p)$, $1$),
-    ($B(n, p)$, $ln(p / (1-p))$, $x$, $-n ln(1-p)$, $binom(n, x)$),
-    ($"Exp"(lambda)$, $-lambda$, $x$, $-ln lambda$, $1$),
-    ($"Ga"(alpha, lambda)$, $(-lambda, alpha)$, $(x, ln x)$, $ln Gamma(alpha) - alpha ln lambda$, $1 / x$),
-    (
-      [$N(mu, sigma^2)$ ($sigma$ known)],
-      $mu / sigma^2$,
-      $x$,
-      $mu^2 / (2 sigma^2) + ln sigma$,
-      $exp(-x^2 / (2 sigma^2)) / sqrt(2 pi)$,
-    ),
-    ($"Be"(a, b)$, $(a-1, b-1)$, $(ln x, ln(1-x))$, $ln "B"(a, b)$, $1$),
-  )
-] <prop:exp-family-members>
-
-The verification is mechanical: rewrite each density by collecting the
-$theta$-dependent parts into $exp(eta dot T)$ and moving the
-$theta$-independent remainder into $h(x)$. For instance, the Poisson density
-$
-  f(k; lambda) = (lambda^k exp(-lambda)) / k! = (1 / k!) exp(k ln lambda - lambda)
-$
-has $eta = ln lambda$, $T(k) = k$, $A = lambda$, $h = 1 / k!$.
-
-#note(title: "A notable exception")[
-  The uniform distribution $U(0, theta)$ does *not*
-  belong to the exponential family, because its support $[0, theta]$
-  depends on $theta$. The support-independence requirement is not a
-  technicality: it is what makes the factorisation theorem and conjugate
-  Bayesian analysis work.
-]
-
-#definition(name: "Natural Parameter Space")[
-  The *natural parameter space* is the set of $eta$ for which the density is
-  normalisable:
-  $
-    H = {eta in RR^k : integral h(x) exp(eta dot T(x)) dif x < infinity}.
-  $
-  The family is *regular* if $H$ is an open set; *full* if $H$ is the
-  maximal set. The log-partition function is
-  $
-    A(theta) = ln integral h(x) exp(eta(theta) dot T(x)) dif x.
-  $
-] <def:natural-parameter-space>
-
-#property(name: "Derivative of the Log-Partition Function")[
-  Under regularity conditions,
-  $
-    (dif A) / (dif eta) = E[T(X)], quad (dif^2 A) / (dif eta^2) = "Var"(T(X)).
-  $
-  Thus the cumulant generating function $A$ encodes the mean and variance of
-  the natural statistic.
-] <prop:cgf-derivative>
-
-The proof requires interchange of differentiation and integration, which
-the regularity of the natural parameter space guarantees. The notation
-$E[T(X)]$ and $"Var"(T(X))$ — expectation and variance — is made precise in
-the Numerical Characteristics chapter; the point here is that the moments
-of the sufficient statistic are read off from the derivatives of $A$.
-
-#note(title: "Sufficient statistic preview")[
-  The canonical form $f(x; theta) = h(x)
-  exp(eta dot T(x) - A)$ depends on the data only through $T(x)$. This
-  means $T(X_1, dots, X_n) = sum_i T(X_i)$ is a *sufficient statistic* for
-  $theta$ — it captures all the information the sample contains about the
-  parameter. The formal proof uses the factorisation theorem, developed in
-  the Sufficient Statistics chapter. The exponential family is the natural
-  habitat of sufficiency.
-]
-
-== Multivariate Normal Distribution // 多元正态分布
-
-The univariate normal of #link(<def:normal-dist>)[Chapter 4] extends to
-vectors, and its geometry — ellipsoidal contours, linear closure,
-independence through zero covariance — makes it the workhorse of multivariate
-statistics.
-
-#definition(name: "Multivariate Normal Distribution")[
-  A random vector $bold(X) = (X_1, dots, X_n)$ has the *$n$-variate normal
-  distribution* with mean vector $bold(mu) in RR^n$ and covariance matrix
-  $Sigma$ (a symmetric positive-definite $n times n$ matrix), written
-  $bold(X) ~ N_(n)(bold(mu), Sigma)$, if its joint density is
-  $
-    f(bold(x)) = 1 / ((2 pi)^(n\/2) sqrt(abs(Sigma))) exp(-1\/2 (bold(x) - bold(mu))^"T" Sigma^(-1) (bold(x) - bold(mu))).
-  $
-  The quadratic form $(bold(x) - bold(mu))^"T" Sigma^(-1) (bold(x) - bold(mu))$
-  is the *Mahalanobis distance* from $bold(x)$ to $bold(mu)$.
-] <def:multivariate-normal>
-
-The covariance matrix $Sigma = (sigma_(i j))$ where $sigma_(i j) =
-"Cov"(X_i, X_j)$ encodes the pairwise covariances; its diagonal entries are
-the variances $sigma_(i i) = "Var"(X_i)$. These notions were formalised in
-the multivariate chapter (Chapter 5), and the multivariate normal can be
-understood geometrically through its density: level sets are
-ellipsoids centred at $bold(mu)$, with axes determined by the eigenvectors
-and eigenvalues of $Sigma$.
-
-For $n = 2$ and $Sigma = [[sigma_1^2, rho sigma_1 sigma_2], [rho sigma_1
-    sigma_2, sigma_2^2]]$, the contours are ellipses tilted by the correlation
-$rho$ — the picture of #link(<fig:joint-density>)[the joint density figure].
-
-#property(name: "Linear Transformations")[
-  If $bold(X) ~ N_(n)(bold(mu), Sigma)$ and $bold(Y) = bold(A) bold(X) +
-  bold(b)$ where $bold(A)$ is an $m times n$ matrix and $bold(b) in RR^m$,
-  then $bold(Y) ~ N_(m)(bold(A) bold(mu) + bold(b), bold(A) Sigma bold(A)^"T")$.
-  In particular, any linear combination of jointly normal variables is
-  normal — the *closure under linear transformation*.
-] <prop:mv-normal-linear>
-
-The proof is a direct application of
-#link(<thm:jacobian-transform>)[the multivariate change of variables] with
-$bold(g)(bold(x)) = bold(A) bold(x) + bold(b)$, whose Jacobian is
-$abs(bold(A))$.
-
-#property(name: "Marginal Distributions")[
-  Any subvector of a multivariate normal is itself multivariate normal. If
-  $bold(X) = (bold(X)_1, bold(X)_2)$ is partitioned with
-  $bold(mu) = (bold(mu)_1, bold(mu)_2)$ and
-  $
-    Sigma = [[Sigma_(11), Sigma_(12)], [Sigma_(21), Sigma_(22)]],
-  $
-  then $bold(X)_1 ~ N(bold(mu)_1, Sigma_(11))$ and $bold(X)_2 ~
-  N(bold(mu)_2, Sigma_(22))$.
-] <prop:mv-normal-marginal>
-
-#property(name: "Independence and Zero Covariance")[
-  For a multivariate normal, two subvectors $bold(X)_1$ and $bold(X)_2$ are
-  *independent* if and only if $"Cov"(bold(X)_1, bold(X)_2) = bold(0)$, i.e.
-  $Sigma_(12) = bold(0)$.
-
-  This is a *special* property of the normal: for general distributions,
-  zero covariance (uncorrelatedness) is necessary but not sufficient for
-  independence (see the note in
-  #link(<prop:independence-criterion>)[the independence criterion]). For the
-  normal, the density factorises iff $Sigma_(12) = bold(0)$, because the
-  cross term in the exponent vanishes.
-] <prop:mv-normal-independence>
-
-#property(name: "Conditional Distributions")[
-  Given $bold(X)_2 = bold(x)_2$, the conditional distribution of
-  $bold(X)_1$ is normal:
-  $
-    bold(X)_1 | bold(X)_2 = bold(x)_2 ~ N(bold(mu)_(1|2), Sigma_(1|2)),
-  $
-  with
-  $
-    bold(mu)_(1|2) = bold(mu)_1 + Sigma_(12) Sigma_(22)^(-1) (bold(x)_2 - bold(mu)_2),
-    quad
-    Sigma_(1|2) = Sigma_(11) - Sigma_(12) Sigma_(22)^(-1) Sigma_(21).
-  $
-  The conditional mean is a linear function of $bold(x)_2$ — the *linear
-  regression* of $bold(X)_1$ on $bold(X)_2$; the conditional covariance is
-  independent of $bold(x)_2$ — the regression is *homoscedastic*.
-] <prop:mv-normal-conditional>
-
-These four properties — linear closure, normal marginals, the
-equivalence of independence with zero covariance, and normal conditionals —
-make the multivariate normal the structural backbone of classical
-multivariate analysis, to which the sampling distribution and regression
-chapters will return repeatedly.
-
-= LLN and CLT // 大数定律与中心极限定理
-
-The limit theorems — Laws of Large Numbers and the Central Limit Theorem
-— are the culmination of the probability-theoretic framework built over
-the preceding chapters. They answer two fundamental questions:
-
-- *Does the sample average stabilise?* The LLN says yes: $overline(X)_n -> mu$
-  (almost surely, or in probability).
-- *How fast does it stabilise?* The CLT says: the fluctuation
-  $sqrt(n)(overline(X)_n - mu)$ converges *in distribution* to a normal law.
-
-== Concepts of Convergence // 收敛概念
-
-A sequence of random variables is a sequence of measurable functions on the probability space $(Omega, cal(F), P)$ — precisely the object of *Convergence of Measurable Functions* in the Analyse Réelle note.
-Nothing prevents reusing that theory as it stands: $P$ is a measure with $P(Omega) = 1$, so the classical modes of convergence carry over unchanged and the probabilistic vocabulary is only a renaming.
+== The Four Modes of Convergence // 四种收敛方式
 
 #tex-table(
-  ("Probability theory", "Measure theory (Analyse Réelle)", "Work required"),
-  ([$X_n -> X$ almost surely], [convergence almost everywhere], [inherited]),
-  ([$X_n arrow.r^P X$], [convergence in measure], [inherited]),
-  ([$X_n arrow.r^(L^p) X$], [$L^p$ norm convergence], [inherited]),
-  ([$X_n arrow.r^d X$], [weak convergence of the laws $mu_(X_n)$], [new]),
+  ("Probability theory", "Measure theory (Analyse Réelle)"),
+  ([$X_n -> X$ almost surely], [convergence almost everywhere]),
+  ([$X_n arrow.r^P X$], [convergence in measure]),
+  ([$X_n arrow.r^(L^p) X$], [$L^p$ norm convergence]),
+  ([$X_n arrow.r^d X$], [weak convergence of the laws $mu_(X_n)$]),
 )
-
-Three of the four definitions below are therefore pure vocabulary: they mention measurable functions and the measure $P$ only.
-The fourth, convergence in distribution, is different in kind — it uses the order of $RR$ through CDFs, and compares laws rather than values.
-
-#definition(name: "Convergence in Probability")[
-  $X_n$ converges *in probability* to $X$, written $X_n arrow.r^P X$,
-  if for every $epsilon > 0$,
-  $
-    P(abs(X_n - X) > epsilon) -> 0 quad "as" n -> infinity.
-  $
-] <def:convergence-probability>
-
-#definition(name: "Convergence in Distribution")[
-  $X_n$ converges *in distribution* (or *weakly*) to $X$, written
-  $X_n arrow.r^d X$, if $F_(n)(x) -> F(x)$ at every continuity point $x$
-  of $F$. Equivalently (by #link(<thm:continuity-theorem>)[Lévy's
-    continuity theorem]), $phi_(n)(t) -> phi(t)$ for all $t in RR$.
-] <def:convergence-distribution>
 
 #definition(name: "Almost Sure Convergence")[
   $X_n$ converges *almost surely* (a.s.) to $X$, written
@@ -3382,29 +3306,32 @@ The fourth, convergence in distribution, is different in kind — it uses the or
   That is, $X_(n)(omega) -> X(omega)$ for all $omega$ outside a null set.
 ] <def:convergence-as>
 
+#definition(name: "Convergence in Probability")[
+  $X_n$ converges *in probability* to $X$, written $X_n arrow.r^P X$,
+  if for every $epsilon > 0$,
+  $
+    P(abs(X_n - X) > epsilon) -> 0 quad "as" n -> infinity.
+  $
+] <def:convergence-probability>
+
 #definition(name: "Convergence in L^p")[
   $X_n$ converges *in $L^p$* to $X$, written $X_n arrow.r^(L^p) X$, if
   $E[abs(X_n - X)^p] -> 0$ (assuming $X_n, X in L^p$).
 ] <def:convergence-lp>
 
-Read through the dictionary above, the hierarchy proved below is the measure-theoretic one, and two of its three arrows already have proofs in the Analyse Réelle note.
+#definition(name: "Convergence in Distribution")[
+  $X_n$ converges *in distribution* (or *weakly*) to $X$, written
+  $X_n arrow.r^d X$, if $F_(n)(x) -> F(x)$ at every continuity point $x$
+  of the limit CDF $F$.
+] <def:convergence-distribution>
 
-- *a.s. $arrow.r.double$ P.* On a *finite* measure space, almost everywhere convergence implies almost uniform convergence (*Almost Uniform Convergence*, Егоров's theorem), which in turn implies convergence in measure (*Convergence in Measure*): uniform convergence off a set $E$ with $P(E) < delta$ puts ${abs(X_n - X) > epsilon}$ inside $E$ for all large $n$.
-- *$L^p$ $arrow.r.double$ P.* This is *Марков's Inequality* (*Convergence in $L^p$ Norm*) applied to $abs(X_n - X)^p$, i.e. #link(<prop:markov-inequality>)[Markov's inequality] in probabilistic notation.
-- *P $arrow.r.double$ d.* The odd one out — it does not compare the values $X_(n)(omega)$ at all, only the laws $mu_(X_n)$, and it is the only arrow whose proof needs a new tool, #link(<thm:continuity-theorem>)[Lévy's continuity theorem].
+Convergence in distribution is the weakest of the four, and the only one
+that forgets the underlying probability space: two sequences with the same
+laws have the same limit law wherever they are defined. Its analytic
+characterisation — in terms of characteristic functions — is the content of
+#link(<thm:continuity-theorem>)[the last section of this chapter].
 
-The failures of the converses are inherited rather than re-proved.
-The *typewriter sequence* of *Convergence in Measure* converges in measure yet diverges at every point, and the *shrinking bump* of *Convergence in $L^p$ Norm* converges everywhere yet not in $L^p$; both live on $([0, 1], cal(L), m)$, a probability space, so they are legitimate counterexamples here.
-
-#property(name: "Riesz Subsequence Principle")[
-  If $X_n arrow.r^P X$, then some subsequence $X_(n_k)$ converges to $X$ almost surely.
-] <prop:riesz-subsequence>
-
-This is *Riesz's Theorem* of the Analyse Réelle note restricted to $mu = P$.
-Convergence in probability need not imply a.s. convergence along the whole sequence, but it never fails to produce a subsequence that does — the standard repair when an argument requires a.s. convergence.
-
-In the opposite direction, the passage from probability to $L^1$ requires a uniform integrability assumption: convergence in probability plus uniform integrability gives $E[abs(X_n - X)] -> 0$ (Vitali, see *Uniform Integrability and Vitali Convergence*).
-Without it, the shrinking bump of *Convergence in $L^p$ Norm* is again the counterexample: $X_n -> 0$ almost surely, hence in probability, while $E[abs(X_n)] = 1$ for every $n$.
+== The Hierarchy of Modes // 收敛方式之间的关系
 
 #theorem(name: "Hierarchy of Convergence Modes")[
   - (a.s. $arrow.r.double$ P) $X_n arrow.r^(a.s.) X$ implies $X_n
@@ -3436,7 +3363,103 @@ Without it, the shrinking bump of *Convergence in $L^p$ Norm* is again the count
   bound each piece to get $F_(n)(x) -> F(x)$.
 ]
 
-== Laws of Large Numbers // 大数定律
+The two implications that end at convergence in probability are the
+measure-theoretic ones. Almost sure convergence passes through the finite
+measure of the space (Егоров's theorem, made explicit here by
+#link(<thm:continuity-probability>)[continuity of probability]), while
+$L^p$ convergence is #link(<prop:markov-inequality>)[Markov's inequality]
+applied to $abs(X_n - X)^p$. The failure of both converses is inherited
+rather than re-proved: the *typewriter sequence* converges in measure yet
+diverges at every point, and the *shrinking bump* converges everywhere yet
+not in $L^p$; both live on $([0, 1], cal(L), m)$, a probability space, so
+they are legitimate counterexamples here.
+
+Two further facts are used constantly in the sequel: a subsequence repair,
+and an algebra of mixed modes.
+
+#property(name: "Riesz Subsequence Principle")[
+  If $X_n arrow.r^P X$, then some subsequence $X_(n_k)$ converges to $X$
+  almost surely.
+] <prop:riesz-subsequence>
+
+This is *Riesz's Theorem* of the Analyse Réelle note restricted to
+$mu = P$: convergence in probability need not imply a.s. convergence along
+the whole sequence, but it never fails to produce a subsequence that does —
+the standard repair when an argument requires a.s. convergence. In the
+opposite direction, passing from probability to $L^1$ costs an extra
+assumption: convergence in probability plus uniform integrability gives
+$E[abs(X_n - X)] -> 0$ (Vitali), and without it the shrinking bump is again
+the counterexample.
+
+#property(name: "Slutsky's Theorem")[
+  If $X_n arrow.r^d X$ and $Y_n arrow.r^P c$ for a constant $c$, then
+  $
+    X_n + Y_n arrow.r^d X + c, quad X_n Y_n arrow.r^d c X, quad
+    X_n \/ Y_n arrow.r^d X \/ c quad (c != 0).
+  $
+] <prop:slutsky>
+
+Slutsky's theorem is what makes asymptotic arguments usable in practice: a
+limit law is stable under perturbation by anything that is asymptotically
+constant. It is the missing ingredient in the proof of
+#link(<thm:delta-method>)[the Delta method].
+
+== Lévy's Continuity Theorem // Lévy 连续性定理
+
+The bridge between laws and analytic functions is the characteristic
+function of #link(<def:cf>)[the preceding chapter].
+
+#theorem(name: "Lévy's Continuity Theorem")[
+  Let $X_1, X_2, dots$ and $X$ be random variables with CFs $phi_n$ and
+  $phi$. Then
+  $
+    X_n arrow.r^d X quad "iff" quad phi_(n)(t) -> phi(t) "for all" t in RR.
+  $
+  Moreover, if $phi_n -> phi$ pointwise and $phi$ is continuous at $0$,
+  then $phi$ is a CF and $X_n arrow.r^d X$.
+] <thm:continuity-theorem>
+
+The two directions are of very unequal difficulty.
+
+- ($arrow.r.double$) Convergence in distribution tests the law against every
+  bounded continuous function; taking $g(x) = exp(i t x)$ gives pointwise
+  convergence of CFs.
+
+- ($arrow.l.double$) This is the hard direction, and it is where the
+  definition of $arrow.r^d$ in terms of CDFs is essential. The steps are:
+  1. (tightness) the convergence $phi_n -> phi$ together with continuity of
+  $phi$ at $0$ forces ${X_n}$ to be tight, i.e. to escape to infinity with
+  vanishing probability;
+  2. (subsequence) by Prohorov's theorem a tight sequence has a weakly
+  convergent subsequence;
+  3. (identification) the limit of any such subsequence has CF $phi$, and a
+  law is determined by its CF, so all subsequential limits coincide and the
+  whole sequence converges.
+
+This is the *master tool* for limit theorems: a convergence in distribution
+is proved by exhibiting pointwise convergence of CFs.
+#link(<thm:clt>)[The central limit theorem] is exactly of this form — it
+reduces to $phi_(S_n \/ sqrt(n))(t) -> exp(-t^2 \/ 2)$, a routine computation
+with the independent-sum rule of
+#link(<prop:cf-properties>)[the basic properties].
+
+= Laws of Large Numbers and the Central Limit Theorem // 大数定律与中心极限定理
+
+The limit theorems — Laws of Large Numbers and the Central Limit Theorem
+— are the culmination of the probability-theoretic framework built over
+the preceding chapters. They answer two fundamental questions:
+
+- *Does the sample average stabilise?* The LLN says yes: $overline(X)_n -> mu$
+  (almost surely, or in probability).
+- *How fast does it stabilise?* The CLT says: the fluctuation
+  $sqrt(n)(overline(X)_n - mu)$ converges *in distribution* to a normal law.
+
+== Weak Laws of Large Numbers // 弱大数定律
+
+The weak law says that a *single* sequence of averages stabilises: the
+probability that $overline(X)_n$ misses $mu$ by more than a fixed $epsilon$
+tends to $0$. The three versions below trade variance assumptions for
+generality.
 
 #theorem(name: "Bernoulli WLLN")[
   Let $X_1, X_2, dots$ be i.i.d. $"Ber"(p)$ random variables and
@@ -3478,11 +3501,17 @@ Without it, the shrinking bump of *Convergence in $L^p$ Norm* is again the count
   $overline(X)_n arrow.r^d mu$, which implies $overline(X)_n arrow.r^P mu$.
 ]
 
-Before turning to almost sure convergence, we fulfil the promise of
-#link(<thm:borel-cantelli>)[the Borel–Cantelli lemmas] made in Part I:
-the second lemma needs only the
-#link(<def:mutual-independence>)[mutual independence] of events from
-Chapter 2 and the continuity of probability.
+== Strong Laws of Large Numbers // 强大数定律
+
+Almost sure convergence is a statement about every outcome at once, and it
+is not reachable with the tools of the weak law. Two ingredients are needed:
+a *maximal* inequality controlling the whole fluctuation of the partial sums
+up to time $n$, and a zero–one criterion converting "the deviation exceeds
+$epsilon$ infinitely often" into an almost sure statement. They are
+Kolmogorov's inequality and the second Borel–Cantelli lemma — the latter
+promised in Part I, and proved here; it needs only
+#link(<def:mutual-independence>)[mutual independence] of events from the
+independence chapter and the continuity of probability.
 
 #lemma(name: "Second Borel–Cantelli Lemma")[
   If the events $A_1, A_2, dots$ are
@@ -3516,6 +3545,21 @@ Chapter 2 and the continuity of probability.
   $
 ]
 
+#theorem(name: "Kolmogorov's Inequality")[
+  Let $X_1, dots, X_n$ be independent with $E[X_i] = 0$ and
+  $"Var"(X_i) = sigma_i^2 < infinity$, and let $S_k = X_1 + dots + X_k$.
+  Then for every $epsilon > 0$,
+  $
+    P(max_(1 <= k <= n) abs(S_k) >= epsilon) <= (1 / epsilon^2) sum_(k=1)^n sigma_k^2.
+  $
+] <thm:kolmogorov-inequality>
+
+This is the maximal version of #link(<thm:chebyshev-inequality>)[Chebyshev's
+inequality]: the same second-moment bound, but applied to the worst time
+before $n$ rather than to a single time. It is exactly what a
+Borel–Cantelli argument needs, since that lemma speaks about events indexed
+by $n$ and asks whether they occur infinitely often.
+
 #theorem(name: "Kolmogorov SLLN")[
   Let $X_1, X_2, dots$ be i.i.d. with $E[abs(X_1)] < infinity$ and
   $E[X_1] = mu$. Then
@@ -3524,19 +3568,20 @@ Chapter 2 and the continuity of probability.
   $
 ] <thm:kolmogorov-slln>
 
-The proof requires deeper machinery than the weak law. The key tool is
-*Kolmogorov's inequality* — a maximal version of Chebyshev's inequality
-controlling $max_(k<=n) abs(S_k - k mu)$. Combined with
-#link(<lem:borel-cantelli-second>)[the second Borel–Cantelli lemma] proved
-above, one shows that the event ${abs(overline(X)_n - mu) > epsilon quad
-  "i.o."}$ has probability $0$ for every $epsilon > 0$, yielding a.s.
-convergence.
-
-This fulfils the promise of #link(<thm:borel-cantelli>)[the Borel–Cantelli
-  lemmas] made in Part I: the second lemma, whose proof was deferred to
-this part, is central to the SLLN.
+For the proof one applies #link(<thm:kolmogorov-inequality>)[Kolmogorov's
+inequality] to the centred partial sums of a truncated copy of the $X_i$,
+which shows that ${abs(overline(X)_n - mu) > epsilon quad "i.o."}$ is null
+for every $epsilon > 0$; the passage from the truncated variables back to
+the original ones is where $E[abs(X_1)] < infinity$ is used. The zero–one
+step is #link(<lem:borel-cantelli-second>)[the second Borel–Cantelli lemma]
+proved above — the deferred promise of Part I, discharged once and for all.
 
 == Central Limit Theorem // 中心极限定理
+
+The weak law locates the average; the CLT describes the residual
+fluctuation, and it is a statement about *laws* rather than probabilities —
+hence the need for convergence in distribution and for
+#link(<thm:continuity-theorem>)[Lévy's continuity theorem].
 
 #theorem(name: "Lindeberg-Lévy CLT")[
   Let $X_1, X_2, dots$ be i.i.d. with $E[X_1] = mu$ and
@@ -3547,8 +3592,8 @@ this part, is central to the SLLN.
 ] <thm:clt>
 
 #proof[
-  (via characteristic functions.) We fulfil the promise of
-  #link(<thm:continuity-theorem>)[Lévy's continuity theorem]: the CLT
+  (via characteristic functions.) By
+  #link(<thm:continuity-theorem>)[Lévy's continuity theorem], the CLT
   reduces to showing $phi_(sqrt(n)(overline(X)_n - mu))(t) ->
   exp(-sigma^2 t^2 / 2)$.
 
@@ -3579,21 +3624,29 @@ This is the CLT applied to Bernoulli trials: $X_n = sum_(i=1)^n X_i$ with
 $X_i ~ "Ber"(p)$, $mu = p$, $sigma^2 = p(1-p)$. The De Moivre-Laplace
 theorem predates the general CLT by two centuries.
 
-#property(name: "Lindeberg-Lyapunov CLT (Independent, Non-Identically Distributed)")[
+#theorem(name: "Lindeberg–Feller CLT (Independent, Non-Identically Distributed)")[
   Let $X_1, X_2, dots$ be independent with $E[X_k] = mu_k$,
-  $"Var"(X_k) = sigma_k^2$, $s_n^2 = sum_(k=1)^n sigma_k^2$. If the
-  *Lindeberg condition* holds —
+  $"Var"(X_k) = sigma_k^2$, $s_n^2 = sum_(k=1)^n sigma_k^2$, and
+  $S_n = sum_(k=1)^n (X_k - mu_k)$. If the *Lindeberg condition* holds —
   $
-    (1 / s_n^2) sum_(k=1)^n E[(X_k - mu_k)^2 dot 1_{abs(X_k - mu_k) > epsilon s_n}] -> 0 quad "for all" epsilon > 0 —
+    (1 / s_n^2) sum_(k=1)^n E[(X_k - mu_k)^2 dot 1_{abs(X_k - mu_k) > epsilon s_n}] -> 0 quad "for all" epsilon > 0,
   $
-  then $S_n / s_n arrow.r^d N(0,1)$, where $S_n = sum_(k=1)^n (X_k - mu_k)$.
-] <prop:lindeberg-condition>
+  then $S_n / s_n arrow.r^d N(0,1)$.
+] <thm:lindeberg-feller>
 
-The Lindeberg condition ensures that no single $X_k$ dominates the sum.
+The Lindeberg condition says that no single $X_k$ dominates the sum: every
+term is negligible compared with the total variance $s_n^2$. It is
+*necessary* as well as sufficient for normal convergence of the rescaled
+sum, which is why the theorem is the definitive form of the CLT.
+
 A simpler but stronger sufficient condition is the *Lyapunov condition*:
-$sum E[abs(X_k - mu_k)^(2+delta)] / s_n^(2+delta) -> 0$ for some
-$delta > 0$. The proof uses the same CF strategy as the i.i.d. case,
-but the Taylor expansion must control each term individually.
+$
+  (1 / s_n^(2 + delta)) sum_(k=1)^n E[abs(X_k - mu_k)^(2 + delta)] -> 0
+  quad "for some" delta > 0.
+$
+The proof again compares characteristic functions; the Taylor expansion of
+$phi_(X_k)$ must now control each term individually, and the Lindeberg
+condition is exactly what makes the accumulated error vanish.
 
 #example(name: "Normal approximation to the binomial")[
   A factory produces items with
@@ -3621,7 +3674,13 @@ but the Taylor expansion must control each term individually.
   this to smooth functions of $overline(X)_n$.
 ] <ex:clt-application>
 
-== Delta Method // Delta 方法
+== Applications of the CLT: Normal Approximation and the Delta Method // CLT 的应用
+
+The CLT is used in two directions: to approximate the law of an average
+(the two examples of #link(<ex:normal-approximation>)[the binomial] and of
+#link(<ex:clt-application>)[sample means]), and to transport that
+approximation through a smooth change of parameter. The second use is the
+Delta method.
 
 #theorem(name: "Delta Method (First Order)")[
   Let $X_1, X_2, dots$ be i.i.d. with $E[X_1] = mu$ and
@@ -3638,14 +3697,28 @@ but the Taylor expansion must control each term individually.
   $
     g(overline(X)_n) = g(mu) + g'(mu)(overline(X)_n - mu) + o_(p)(overline(X)_n - mu).
   $
-  Multiplying by $sqrt(n)$ and using Slutsky's theorem (if $Y_n arrow.r^d
-  Y$ and $Z_n arrow.r^P c$, then $Z_n Y_n arrow.r^d c Y$):
+  Multiplying by $sqrt(n)$ and using
+  #link(<prop:slutsky>)[Slutsky's theorem]:
   $
     sqrt(n)(g(overline(X)_n) - g(mu)) = g'(mu) dot sqrt(n)(overline(X)_n - mu) + o_(p)(1) arrow.r^d g'(mu) dot N(0, sigma^2) = N(0, [g'(mu)]^2 sigma^2).
   $
 ]
 
-#example[
+#theorem(name: "Delta Method (Second Order)")[
+  Let $X_1, X_2, dots$ be i.i.d. with $E[X_1] = mu$ and
+  $"Var"(X_1) = sigma^2 < infinity$, and let $g$ be twice differentiable at
+  $mu$ with $g'(mu) = 0$ and $g''(mu) != 0$. Then
+  $
+    n (g(overline(X)_n) - g(mu)) arrow.r^d (g''(mu) sigma^2) / 2 dot chi_1^2.
+  $
+] <thm:delta-method-second>
+
+When the first derivative vanishes the linear term disappears, the
+$n^(-1\/2)$ scaling is too coarse, and the limit is a scaled $chi^2$ —
+the quadratic term of the Taylor expansion, fed by the CLT applied to
+$(overline(X)_n - mu)^2$.
+
+#example(name: "Asymptotic law of the reciprocal of the sample mean")[
   Let $X_1, dots, X_n$ be i.i.d. $"Exp"(lambda)$, so $mu = 1/lambda$,
   $sigma^2 = 1/lambda^2$. To estimate $g(mu) = 1/mu = lambda$ via
   $g(overline(X)_n) = 1/overline(X)_n$, note $g'(mu) = -1/mu^2 =
@@ -3659,10 +3732,10 @@ but the Taylor expansion must control each term individually.
   normality.
 ] <ex:delta-method-application>
 
-The limit theorems of this chapter are the pillars of statistical
-inference. Part IV applies them to sampling distributions (Chapter 10);
-the estimation chapters use the CLT and Delta method to establish the
-asymptotic properties of estimators.
+The two limit theorems are the pillars of statistical inference: the LLN
+justifies estimating a parameter by a sample average, and the CLT together
+with the Delta method supplies the asymptotic distribution that makes
+confidence intervals and tests possible. Part IV takes up both.
 
 = Introduction to Stochastic Processes // 随机过程初步
 
@@ -3817,6 +3890,13 @@ This theorem identifies the Poisson process and the exponential
 inter-arrival law as two views of one object — the continuous-time
 sibling of the geometric waiting time in discrete Bernoulli trials.
 
+A *compound* Poisson process, in which each arrival carries an independent
+mark, is the process-level counterpart of
+#link(<ex:compound-poisson>)[the random sums of the PGF chapter]: the
+number of arrivals up to time $t$ has the PGF of $N(t)$ composed with the
+PGF of the mark, exactly as
+#link(<prop:pgf-compound>)[the compound distribution rule] prescribes.
+
 == Brownian Motion // Brown 运动初步
 
 #definition(name: "Standard Brownian Motion")[
@@ -3828,11 +3908,38 @@ sibling of the geometric waiting time in discrete Bernoulli trials.
   - its sample paths are continuous.
 ] <def:brownian-motion>
 
-Brownian motion is the scaling limit of the symmetric random walk: as the
-step size shrinks like $1 / sqrt(n)$ and the step rate grows like $n$, the
-random walk — whose increments are the very $S_n$ of
-#link(<thm:clt>)[the CLT] — converges in distribution to $B(t)$. Its
-sample paths are continuous yet nowhere differentiable, and the process
+The CLT describes the fluctuation of a sum at one fixed time. Refining it so
+that it holds simultaneously at all times produces a limit that is itself a
+process.
+
+#theorem(name: "Donsker's Invariance Principle")[
+  Let $X_1, X_2, dots$ be i.i.d. with $E[X_1] = 0$ and
+  $"Var"(X_1) = sigma^2 < infinity$, and let $S_k = X_1 + dots + X_k$. On
+  $[0, 1]$ define the rescaled, linearly interpolated random walk
+  $
+    B_n(t) = 1 / (sigma sqrt(n)) (S_(floor(n t)) + (n t - floor(n t)) X_(floor(n t) + 1)).
+  $
+  Then $B_n arrow.r^d B$ in the space of continuous paths, where $B$ is a
+  standard Brownian motion.
+] <thm:donsker>
+
+This explains why Brownian motion, and not the normal distribution, is the
+universal object behind the CLT: the Gaussian limit of #link(<thm:clt>)[the
+CLT] is the one-time marginal of $B$, and $B$ is what survives when all
+times are considered at once.
+
+#note(title: "Quadratic variation")[
+  Brownian paths have finite *quadratic* variation: for any sequence of
+  partitions of $[0, t]$ whose mesh tends to $0$,
+  $
+    sum_i (B(t_(i+1)) - B(t_i))^2 -> t quad "in" L^2,
+  $
+  whereas a differentiable path would give $0$. This is why the Itô
+  integral cannot be an ordinary Riemann–Stieltjes integral, and it is the
+  starting point of stochastic calculus.
+]
+
+Its sample paths are continuous yet nowhere differentiable, and the process
 sits at the intersection of probability, Fourier analysis, and PDE theory
 (the heat equation). All of this — constructions, the Markov property,
 stopping times, and the Itô calculus — is the starting material of the
@@ -3845,6 +3952,136 @@ Processus Stochastique note.
   deduce data" to "observed data, infer model": the business of
   mathematical statistics, to which the remainder of this note is devoted.
 ]
+
+#part("Mathematical Statistics") // 数理统计
+
+= Exponential Families // 指数族
+
+The distributions of Part II — normal, Gamma, Beta, Poisson, binomial — look
+different on the surface, yet most of them share a hidden algebraic
+skeleton: the *exponential family*. Recognising a distribution as a member
+of this family yields at once its sufficient statistic, its moment structure
+through the cumulant generating function, and its conjugate prior — three
+pillars on which the inference of the following chapters rests.
+
+This chapter assembles that skeleton before the statistics proper begins.
+
+== The Canonical Form // 典范形式
+
+#definition(name: "Exponential Family")[
+  A family of densities $f(x; theta)$ with parameter $theta in Theta
+  subset.eq RR^k$ belongs to the *exponential family* if it can be written
+  in the *canonical form*
+  $
+    f(x; theta) = h(x) exp(eta(theta) dot T(x) - A(eta(theta))),
+  $
+  where:
+
+  - $h(x) >= 0$ is the *base measure*, independent of $theta$;
+  - $eta(theta) in RR^k$ is the *natural parameter*;
+  - $T(x) in RR^k$ is the *natural statistic* (a vector of the same
+    dimension as $eta$);
+  - $A(eta) = ln integral h(x) exp(eta dot T(x)) dif x$ is the
+    *log-partition function*, ensuring normalisation.
+
+  The inner product $eta dot T = sum_(i=1)^k eta_i T_i$ couples parameter
+  to data, and the whole dependence on $theta$ passes through $eta$.
+
+  Everything below is written in terms of the *canonical* parameter $eta$;
+  the map $theta arrow.r.double eta(theta)$ is assumed one-to-one, so that
+  the two parametrisations describe the same family.
+] <def:exponential-family>
+
+The key structural constraint is that the support ${{x : f(x; theta) > 0}}$ must not depend on $theta$; the parameter enters only
+through the exponential factor.
+
+#property(name: "Classical Distributions in the Exponential Family")[
+  Each of the following admits the canonical form; the table lists the
+  ingredients, with the log-partition function written in terms of the
+  natural parameter $eta$.
+
+  #tex-table(
+    ("Distribution", $eta$, $T(x)$, $A(eta)$, $h(x)$),
+    ($"Pois"(lambda)$, $ln lambda$, $x$, $exp(eta)$, $1 / x!$),
+    ($"Ber"(p)$, $ln(p / (1-p))$, $x$, $ln(1 + exp(eta))$, $1$),
+    ($B(n, p)$, $ln(p / (1-p))$, $x$, $n ln(1 + exp(eta))$, $binom(n, x)$),
+    ($"Exp"(lambda)$, $-lambda$, $x$, $-ln(-eta)$, $1$),
+    ($"Ga"(alpha, lambda)$, $(-lambda, alpha)$, $(x, ln x)$, $ln Gamma(eta_2) - eta_2 ln(-eta_1)$, $1 / x$),
+    (
+      [$N(mu, sigma^2)$ ($sigma$ known)],
+      $mu / sigma^2$,
+      $x$,
+      $(sigma^2 eta^2) / 2 + ln sigma$,
+      $exp(-x^2 / (2 sigma^2)) / sqrt(2 pi)$,
+    ),
+    ($"Be"(a, b)$, $(a-1, b-1)$, $(ln x, ln(1-x))$, $ln "B"(eta_1 + 1, eta_2 + 1)$, $1$),
+  )
+] <prop:exp-family-members>
+
+The verification is mechanical: rewrite each density by collecting the
+$theta$-dependent parts into $exp(eta dot T)$ and moving the
+$theta$-independent remainder into $h(x)$. For instance, the Poisson density
+$
+  f(k; lambda) = (lambda^k exp(-lambda)) / k! = (1 / k!) exp(k ln lambda - lambda)
+$
+has $eta = ln lambda$, $T(k) = k$, $A(eta) = exp(eta) = lambda$, $h = 1 / k!$.
+
+The multivariate normal of #link(<def:multivariate-normal>)[Part II] belongs
+to the family as well: with $Sigma$ fixed, $eta = Sigma^(-1) bold(mu)$,
+$T(bold(x)) = bold(x)$ and $h(bold(x)) = (2 pi)^(-n\/2) abs(Sigma)^(-1\/2) exp(-bold(x)^"T" Sigma^(-1) bold(x) \/ 2)$.
+This is why the multivariate normal is closed under conditioning and why its
+sufficient statistics are linear — two facts used throughout Part IV.
+
+#note(title: "A notable exception")[
+  The uniform distribution $U(0, theta)$ does *not*
+  belong to the exponential family, because its support $[0, theta]$
+  depends on $theta$. The support-independence requirement is not a
+  technicality: it is what makes the factorisation theorem and conjugate
+  Bayesian analysis work.
+]
+
+== The Natural Parameter Space // 自然参数空间
+
+#definition(name: "Natural Parameter Space")[
+  The *natural parameter space* is the set of $eta$ for which the density is
+  normalisable:
+  $
+    H = {eta in RR^k : integral h(x) exp(eta dot T(x)) dif x < infinity}.
+  $
+  The family is *regular* if $H$ is open, and *full* if $H$ is the maximal
+  set with this property. On $H$ the log-partition function
+  $A(eta) = ln integral h(x) exp(eta dot T(x)) dif x$ of
+  #link(<def:exponential-family>)[the canonical form] is defined, and it is
+  convex there.
+] <def:natural-parameter-space>
+
+#property(name: "Derivative of the Log-Partition Function")[
+  Under regularity conditions,
+  $
+    (dif A) / (dif eta) = E[T(X)], quad (dif^2 A) / (dif eta^2) = "Var"(T(X)).
+  $
+  Thus the cumulant generating function $A$ encodes the mean and variance of
+  the natural statistic.
+] <prop:cgf-derivative>
+
+The proof requires interchanging differentiation and integration, which the
+regularity of $H$ guarantees. The name is now justified: $A$ is the cumulant
+generating function of $T(X)$ in the sense of
+#link(<def:cgf>)[the cumulants section], so its derivatives are the
+cumulants of the sufficient statistic — the first two being its mean and its
+covariance. This is the structural reason why exponential families have
+closed-form moment estimators.
+
+#note(title: "Sufficient statistic preview")[
+  The canonical form $f(x; theta) = h(x)
+  exp(eta dot T(x) - A)$ depends on the data only through $T(x)$. This
+  means $T(X_1, dots, X_n) = sum_i T(X_i)$ is a *sufficient statistic* for
+  $theta$ — it captures all the information the sample contains about the
+  parameter. The formal proof uses the factorisation theorem, developed in
+  the Sufficient Statistics chapter. The exponential family is the natural
+  habitat of sufficiency.
+]
+
 
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
@@ -4003,53 +4240,67 @@ Processus Stochastique note.
 //     - 协方差的定义与性质；相关系数；不相关与独立的关系
 //     - 随机向量的期望向量与协方差矩阵
 
+//   Section 5.6: 多元正态分布 (Multivariate Normal Distribution)
+//     - 定义与几何（Mahalanobis 距离、椭球等高线）
+//     - 线性变换闭包；边缘分布；不相关 ⟺ 独立；条件分布与线性回归
+//     - 定位：指数族的旗舰成员，Part IV 抽样分布与回归的骨架
+//       （指数族视角留待 Part IV Chapter 10）
+
 
 // ==========================================================================
 // Part III — 生成工具与极限定理 (Generating Tools and Limit Theorems)  [已写出]
 // ==========================================================================
-// 设计思路：用生成函数提供统一分析工具；指数族与多元正态依赖 cgf，
-// 故置于生成函数之后；极限定理是概率论的理论高峰；
-// 随机过程初步作为从独立到相依的自然延伸收束概率论。
-// 特征函数在极限定理中扮演关键角色（证明 CLT）。
+// 设计思路：本 Part 只走一条主线——造工具 → 建立收敛语言 → 用语言证极限
+// → 极限的动力学化。
+//   Ch6 造工具（MGF/cgf、CF、PGF），把"律"翻译成"解析函数"；
+//   Ch7 建立收敛语言（四种收敛、层级、Lévy 连续性定理）；
+//       依分布收敛的定义先于引用它的定理，消除循环依赖；
+//   Ch8 用该语言证明 LLN 与 CLT，Delta 方法作为统计推论；
+//   Ch9 放松独立性，三种典型过程作为极限定理的动力学对应。
+// 指数族移至 Part IV（统计推断的语言），多元正态移至 Part II §5.6
+// （多维随机变量分布的直接推广）。
 // 对应教材：§2.4（特征函数）+ 第四章 §4.1–§4.4 + 拓展
 
 // --- Chapter 6: 生成函数与变换方法 (Generating Functions and Transform Methods) ---
 
-//   Section 6.1: 矩母函数 (Moment Generating Functions)
-//     - 定义与性质；唯一性定理
+//   Section 6.1: 矩母函数与累积量 (Moment Generating Functions and Cumulants)
+//     - MGF 定义与性质；唯一性定理
+//     - CGF 定义 K = ln M；累积量与矩的关系；独立和的可加性
 
 //   Section 6.2: 特征函数 (Characteristic Functions)
-//     - 定义与基本性质；反转公式；连续性定理
-//     - 注：Fourier 分析工具详见 Processus Stochastique
+//     - 定义与基本性质；矩公式；反转公式；常见分布 CF 表
+//     - 注：Fourier 理论属 Analyse Harmonique，概率中的应用见 Processus Stochastique
 
 //   Section 6.3: 概率生成函数 (Probability Generating Functions)
-//     - 离散情形；复合分布的应用
+//     - 离散情形；复合分布；复合 Poisson
 
 
-// --- Chapter 7: 指数族与多元正态 (Exponential Family and Multivariate Normal) ---
+// --- Chapter 7: 收敛方式 (Modes of Convergence) ---
 
-//   Section 7.1: 指数族 (Exponential Family)
-//     - 典范形式；自然参数空间；充分统计量与 cgf 的联系
+//   Section 7.1: 四种收敛 (The Four Modes of Convergence)
+//     - a.s. / 依概率 / L^p / 依分布；与测度论收敛的对照
 
-//   Section 7.2: 多元正态分布 (Multivariate Normal Distribution)
-//     - 定义与性质（线性闭包、边缘、条件分布）
-//     - 不相关与独立的等价性
+//   Section 7.2: 收敛方式之间的关系 (The Hierarchy of Modes)
+//     - 层级定理与证明；Riesz 子列原理；Vitali 与一致可积；Slutsky 定理
+
+//   Section 7.3: Lévy 连续性定理 (Lévy's Continuity Theorem)
+//     - 依分布收敛的 CF 判据；紧性—子列—识别的证明策略
 
 
 // --- Chapter 8: 大数定律与中心极限定理 (LLN and CLT) ---
 
-//   Section 8.1: 收敛概念 (Concepts of Convergence)
-//     - 依概率 / 依分布 / 几乎必然 / L^p 收敛及其关系
+//   Section 8.1: 弱大数定律 (Weak Laws of Large Numbers)
+//     - Bernoulli / Chebyshev / Khinchin
 
-//   Section 8.2: 大数定律 (Laws of Large Numbers)
-//     - Bernoulli / Chebyshev / Khinchin / Kolmogorov 强大数定律
+//   Section 8.2: 强大数定律 (Strong Laws of Large Numbers)
+//     - Borel–Cantelli 第二引理；Kolmogorov 不等式；Kolmogorov SLLN
 
 //   Section 8.3: 中心极限定理 (Central Limit Theorem)
-//     - Lindeberg-Lévy CLT；De Moivre-Laplace；Lindeberg / Lyapunov 条件
-//     - CLT 的应用与近似计算
+//     - Lindeberg-Lévy CLT；De Moivre-Laplace；Lindeberg–Feller；Lyapunov 条件
+//     - 应用与近似计算
 
-//   Section 8.4: Delta 方法 (Delta Method)
-//     - 一阶 Delta 方法；在统计量渐近分布中的应用
+//   Section 8.4: CLT 的应用：正态近似与 Delta 方法
+//     - 一阶 / 二阶 Delta 方法；估计量的渐近分布
 
 
 // --- Chapter 9: 随机过程初步 (Introduction to Stochastic Processes) ---
@@ -4061,174 +4312,189 @@ Processus Stochastique note.
 //     - 转移概率矩阵；Chapman–Kolmogorov；平稳分布
 
 //   Section 9.3: Poisson 过程 (Poisson Processes)
-//     - 定义与性质；到达时间间隔（i.i.d. Exp；Erlang）
+//     - 定义与性质；到达时间间隔（i.i.d. Exp；Erlang）；复合 Poisson 与 PGF 呼应
 
 //   Section 9.4: Brown 运动初步 (Introduction to Brownian Motion)
+//     - 定义；Donsker 尺度极限（与 CLT 呼应）；二次变差
 
 
 // ==========================================================================
-// Part IV — 数理统计 (Mathematical Statistics)  [待写出]
+// Part IV — 数理统计 (Mathematical Statistics)  [Ch 10 已写出，其余待写出]
 // ==========================================================================
-// 设计思路：从概率论过渡到数理统计——数据如何产生（抽样）、
-// 如何压缩信息（充分统计量）、如何推断（估计→检验）、如何应用（方差分析→回归）。
+// 设计思路：从概率论过渡到数理统计——先建立分布族的统一语言（指数族），
+// 再讨论数据如何产生（抽样）、如何压缩信息（充分统计量）、
+// 如何推断（估计→检验）、如何应用（方差分析→回归）。
 // 这是从"已知模型推数据"到"从数据推模型"的转折。
 // 对应教材：第五至八章
 
-// --- Chapter 10: 抽样与经验分布 (Sampling and Empirical Distributions) ---
+// --- Chapter 10: 指数族 (Exponential Families)  [已写出] ---
 
-//   Section 10.1: 总体与样本 (Population and Samples)
+//   Section 10.1: 典范形式 (The Canonical Form)
+//     - 指数族定义；自然参数 η 与自然统计量 T(x)；log-partition A(η)
+//     - 常见分布表（含多元正态，Σ 固定）
+//     - 支撑不依赖 θ 的要求；U(0,θ) 反例
+
+//   Section 10.2: 自然参数空间 (The Natural Parameter Space)
+//     - H 的定义；regular / full；A 的凸性
+//     - A 与 CGF 的同一性：A' = E[T]，A'' = Cov(T)
+//     - 充分统计量预告（指向 Chapter 12）
+
+
+// --- Chapter 11: 抽样与经验分布 (Sampling and Empirical Distributions) ---
+
+//   Section 11.1: 总体与样本 (Population and Samples)
 //     - 总体与个体；样本与统计量
 //     - 经验分布函数 (Empirical Distribution Function)
 //     - Glivenko-Cantelli 定理
 
-//   Section 10.2: 样本矩与抽样分布 (Sample Moments and Sampling Distributions)
+//   Section 11.2: 样本矩与抽样分布 (Sample Moments and Sampling Distributions)
 //     - 统计量与抽样分布的概念
 //     - 样本均值及其抽样分布；样本方差与样本标准差
 //     - 样本矩及其函数；蒙特卡罗方法 (Monte Carlo Methods)
 
-//   Section 10.3: 次序统计量 (Order Statistics)
+//   Section 11.3: 次序统计量 (Order Statistics)
 //     - 次序统计量的概念；单个/多个次序统计量的分布
 //     - 样本中位数与样本分位数
 //     - 五数概括 (Five-Number Summary) 与箱线图 (Box Plot)
 
-//   Section 10.4: 三大抽样分布 (Three Major Sampling Distributions)
+//   Section 11.4: 三大抽样分布 (Three Major Sampling Distributions)
 //     - χ² 分布 (Chi-Squared)：定义、性质、分位数
 //     - t 分布 (Student's t)：定义、性质、分位数
 //     - F 分布 (Fisher's F)：定义、性质、分位数
 
-//   Section 10.5: 正态总体下的抽样分布 (Sampling Distributions under Normality)
+//   Section 11.5: 正态总体下的抽样分布 (Sampling Distributions under Normality)
 //     - X̄ 与 S² 的独立性；基于正态总体的经典抽样分布结论
 
 
-// --- Chapter 11: 充分统计量 (Sufficient Statistics) ---
+// --- Chapter 12: 充分统计量 (Sufficient Statistics) ---
 
-//   Section 11.1: 充分性的概念 (Concept of Sufficiency)
+//   Section 12.1: 充分性的概念 (Concept of Sufficiency)
 
-//   Section 11.2: 因子分解定理 (Factorization Theorem)
+//   Section 12.2: 因子分解定理 (Factorization Theorem)
 
-//   Section 11.3: 完备统计量 (Complete Statistics)
+//   Section 12.3: 完备统计量 (Complete Statistics)
 //     - 完备性定义；Bahadur 定理
 
-//   Section 11.4: Ancillary 统计量与 Basu 定理 (Ancillary Statistics and Basu's Theorem)
+//   Section 12.4: Ancillary 统计量与 Basu 定理 (Ancillary Statistics and Basu's Theorem)
 
 
-// --- Chapter 12: 点估计方法 (Methods of Point Estimation) ---
+// --- Chapter 13: 点估计方法 (Methods of Point Estimation) ---
 
-//   Section 12.1: 矩估计法 (Method of Moments)
+//   Section 13.1: 矩估计法 (Method of Moments)
 //     - 替换原理；概率函数已知时的矩估计
 
-//   Section 12.2: 极大似然估计法 (Maximum Likelihood Estimation)
+//   Section 13.2: 极大似然估计法 (Maximum Likelihood Estimation)
 //     - 似然函数与 MLE；EM 算法 (EM Algorithm)
 //     - MLE 的渐近正态性 (Asymptotic Normality)；不变性原理
 
-//   Section 12.3: 最小二乘法 (Least Squares Method)
+//   Section 13.3: 最小二乘法 (Least Squares Method)
 
-//   Section 12.4: Bayes 估计 (Bayesian Estimation)
+//   Section 13.4: Bayes 估计 (Bayesian Estimation)
 //     - 统计推断的贝叶斯范式；先验分布的选择与共轭先验族
 //     - 后验分布的密度函数形式
 
 
-// --- Chapter 13: 估计的评价与改进 (Evaluation and Improvement of Estimators) ---
+// --- Chapter 14: 估计的评价与改进 (Evaluation and Improvement of Estimators) ---
 
-//   Section 13.1: 无偏性 (Unbiasedness)
+//   Section 14.1: 无偏性 (Unbiasedness)
 
-//   Section 13.2: 有效性与 Cramér-Rao 不等式 (Efficiency and Cramér-Rao Inequality)
+//   Section 14.2: 有效性与 Cramér-Rao 不等式 (Efficiency and Cramér-Rao Inequality)
 //     - Fisher 信息量；Cramér-Rao 下界的推导与等号成立条件
 
-//   Section 13.3: 一致性 / 相合性 (Consistency)
+//   Section 14.3: 一致性 / 相合性 (Consistency)
 //     - 弱一致性与强一致性；矩估计与 MLE 的相合性
 
-//   Section 13.4: 均方误差 (Mean Squared Error)
+//   Section 14.4: 均方误差 (Mean Squared Error)
 
-//   Section 13.5: 一致最小方差无偏估计 (UMVUE)
+//   Section 14.5: 一致最小方差无偏估计 (UMVUE)
 //     - 充分性原则；Rao-Blackwell 定理
 //     - Lehmann-Scheffé 定理（基于完备充分统计量）
 
 
-// --- Chapter 14: 区间估计 (Interval Estimation) ---
+// --- Chapter 15: 区间估计 (Interval Estimation) ---
 
-//   Section 14.1: 置信区间的概念 (Concept of Confidence Intervals)
+//   Section 15.1: 置信区间的概念 (Concept of Confidence Intervals)
 //     - 置信水平与频率诠释；枢轴量法 (Pivotal Quantity Method)
 
-//   Section 14.2: 单个正态总体参数的置信区间 (CIs for Single Normal Population)
+//   Section 15.2: 单个正态总体参数的置信区间 (CIs for Single Normal Population)
 //     - μ 的置信区间（σ 已知 / σ 未知）；σ² 的置信区间
 
-//   Section 14.3: 两个正态总体参数的置信区间 (CIs for Two Normal Populations)
+//   Section 15.3: 两个正态总体参数的置信区间 (CIs for Two Normal Populations)
 //     - μ₁ - μ₂ 的置信区间（含配对样本）；σ₁² / σ₂² 的置信区间
 
-//   Section 14.4: 大样本置信区间 (Large-Sample CIs)
+//   Section 15.4: 大样本置信区间 (Large-Sample CIs)
 
-//   Section 14.5: 样本量的确定 (Sample Size Determination)
+//   Section 15.5: 样本量的确定 (Sample Size Determination)
 
 
-// --- Chapter 15: 假设检验的理论与方法 (Theory and Methods of Hypothesis Testing) ---
+// --- Chapter 16: 假设检验的理论与方法 (Theory and Methods of Hypothesis Testing) ---
 
-//   Section 15.1: 假设检验的基本概念 (Basic Concepts)
+//   Section 16.1: 假设检验的基本概念 (Basic Concepts)
 //     - 假设检验问题与基本步骤；第一类错误与第二类错误；P 值
 
-//   Section 15.2: Neyman-Pearson 范式 (Neyman-Pearson Paradigm)
+//   Section 16.2: Neyman-Pearson 范式 (Neyman-Pearson Paradigm)
 //     - 功效函数 (Power Function)；Neyman-Pearson 引理
 
-//   Section 15.3: 似然比检验 (Likelihood Ratio Tests)
+//   Section 16.3: 似然比检验 (Likelihood Ratio Tests)
 //     - 广义似然比检验的思想
 
-//   Section 15.4: 正态总体参数的假设检验 (Tests for Normal Population Parameters)
+//   Section 16.4: 正态总体参数的假设检验 (Tests for Normal Population Parameters)
 //     - 单个正态总体均值的检验（Z 检验、t 检验）
 //     - 两个正态总体均值差的检验（含成对数据检验）
 //     - 正态总体方差的检验（χ² 检验、F 检验）
 
-//   Section 15.5: 假设检验与置信区间的对偶性 (Duality of Tests and CIs)
+//   Section 16.5: 假设检验与置信区间的对偶性 (Duality of Tests and CIs)
 
-//   Section 15.6: 其他分布参数的假设检验 (Tests for Other Distribution Parameters)
+//   Section 16.6: 其他分布参数的假设检验 (Tests for Other Distribution Parameters)
 //     - 指数分布参数的检验；比率 p 的检验；大样本检验
 
 
-// --- Chapter 16: 拟合检验与非参数检验 (Goodness-of-Fit and Nonparametric Tests) ---
+// --- Chapter 17: 拟合检验与非参数检验 (Goodness-of-Fit and Nonparametric Tests) ---
 
-//   Section 16.1: 正态性检验 (Normality Tests)
+//   Section 17.1: 正态性检验 (Normality Tests)
 //     - 正态概率纸 (Normal Probability Paper)；W 检验 (Shapiro-Wilk)；EP 检验
 
-//   Section 16.2: χ² 拟合优度与独立性检验 (Chi-Squared Tests)
+//   Section 17.2: χ² 拟合优度与独立性检验 (Chi-Squared Tests)
 //     - 分类数据的 χ² 拟合优度检验；分布的 χ² 拟合优度检验
 //     - 列联表的独立性检验
 
-//   Section 16.3: 方差齐性检验 (Tests for Homogeneity of Variances)
+//   Section 17.3: 方差齐性检验 (Tests for Homogeneity of Variances)
 //     - Hartley 检验；Bartlett 检验；修正的 Bartlett 检验
 
-//   Section 16.4: 非参数检验 (Nonparametric Tests)
+//   Section 17.4: 非参数检验 (Nonparametric Tests)
 //     - 游程检验 (Runs Test)；符号检验 (Sign Test)
 //     - Wilcoxon 秩和检验 (Wilcoxon Rank-Sum Test)；Mann-Whitney U 检验
 
 
-// --- Chapter 17: 方差分析 (Analysis of Variance) ---
+// --- Chapter 18: 方差分析 (Analysis of Variance) ---
 
-//   Section 17.1: 单因素方差分析 (One-Way ANOVA)
+//   Section 18.1: 单因素方差分析 (One-Way ANOVA)
 //     - 统计模型；平方和分解；F 检验；参数估计；重复数不等的情形
 
-//   Section 17.2: 多重比较 (Multiple Comparisons)
+//   Section 18.2: 多重比较 (Multiple Comparisons)
 //     - 水平均值差的置信区间
 //     - 重复数相等时的 T 法 (Tukey HSD)；不等时的 S 法 (Scheffé)
 
-//   Section 17.3: 方差齐性检验 (Tests for Homogeneity of Variances)
+//   Section 18.3: 方差齐性检验 (Tests for Homogeneity of Variances)
 //     - Hartley 检验、Bartlett 检验；与 §16.3 的联系与区别
 
-//   Section 17.4: 双因素方差分析 (Two-Way ANOVA)
+//   Section 18.4: 双因素方差分析 (Two-Way ANOVA)
 //     - 无交互作用模型；有交互作用模型
 
 
-// --- Chapter 18: 回归分析 (Regression Analysis) ---
+// --- Chapter 19: 回归分析 (Regression Analysis) ---
 
-//   Section 18.1: 一元线性回归 (Simple Linear Regression)
+//   Section 19.1: 一元线性回归 (Simple Linear Regression)
 //     - 变量间的两类关系；回归模型与最小二乘估计
 //     - 回归方程的显著性检验；估计与预测
 
-//   Section 18.2: 一元非线性回归 (Simple Nonlinear Regression)
+//   Section 19.2: 一元非线性回归 (Simple Nonlinear Regression)
 //     - 确定可能的函数形式；参数估计（线性化方法）；曲线回归方程的比较
 
-//   Section 18.3: 多元线性回归 (Multiple Linear Regression)
+//   Section 19.3: 多元线性回归 (Multiple Linear Regression)
 //     - 矩阵表示；参数估计与统计推断
 
-//   Section 18.4: 回归诊断 (Regression Diagnostics)
+//   Section 19.4: 回归诊断 (Regression Diagnostics)
 //     - 拟合优度 R²；残差分析
 
 
@@ -4259,17 +4525,18 @@ Processus Stochastique note.
 // Part I（概率论基础，Ch 1–2）：从公理化的概率空间出发，建立
 // 条件概率与独立性理论——整个概率论的地基。
 //
-// Part II（随机变量及其数字特征，Ch 3–6）：随机变量与分布的一般理论 →
-// 期望与方差 → 常用分布族的完整肖像（含 E/Var）→ 多维推广。
+// Part II（随机变量及其数字特征，Ch 3–5）：随机变量与分布的一般理论 →
+// 期望与方差 → 常用分布族的完整肖像（含 E/Var）→ 多维推广与多元正态。
 // 期望/方差前置于常用分布是本笔记的关键设计（Ross / Casella-Berger 顺序）。
 //
-// Part III（生成工具与极限定理，Ch 7–10）：生成函数 → 指数族与多元正态 →
-// 极限定理（LLN / CLT / Delta 方法）→ 随机过程初步，收束概率论并为
-// Processus Stochastique 笔记铺垫。
+// Part III（生成工具与极限定理，Ch 6–9）：生成函数与累积量 →
+// 收敛方式与 Lévy 连续性定理 → LLN / CLT / Delta 方法 → 随机过程初步。
+// 主线是"造工具 → 建立收敛语言 → 用语言证极限 → 极限的动力学化"，
+// 收束概率论并为 Processus Stochastique 笔记铺垫。
 //
-// Part IV（数理统计，Ch 11–19，待写出）：抽样分布与充分统计量（桥梁）→
-// 参数估计（方法→评价→区间）→ 假设检验（理论→具体检验→拟合/非参数）→
-// 方差分析与回归分析。
+// Part IV（数理统计，Ch 10–19，Ch 10 已写出）：指数族（分布族的结构语言）→
+// 抽样分布与充分统计量（桥梁）→ 参数估计（方法→评价→区间）→
+// 假设检验（理论→具体检验→拟合/非参数）→ 方差分析与回归分析。
 //
 // 教材覆盖：茆诗松《概率论与数理统计教程》全部 8 章知识点均已覆盖。
 // ==========================================================================
