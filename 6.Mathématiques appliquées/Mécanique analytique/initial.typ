@@ -24,7 +24,7 @@
 
 #make-outline(depth: 2, title: "Contents")
 
-// --- Part 0: Classical Mechanics Foundations (经典力学基础) ---
+// --- Part I: Classical Mechanics Foundations (经典力学基础) ---
 // 说明（2026-10-22）：原 Chapter 4「Elastic Waves in Solids」（应变/应力/泊松比/P-S 波/阻抗/反射）
 //   已整体迁入 Optique 笔记 Ch 2.4 与 Ch 2.6；本章删除，此后 Chapter 5→4（Celestial）、6→5（Fluid）。
 
@@ -279,7 +279,7 @@ In that case, the velocity and acceleration of any point coincide with those of 
   Suppose the position of every point$P$ of the body can be written as
 
   $
-    bold(r)_P(t) = bold(R)(t) + bold(r)_P^0,
+    bold(r)_(P)(t) = bold(R)(t) + bold(r)_P^0,
   $
 
   where $bold(r)_P^0$ is fixed in the body frame.
@@ -321,7 +321,7 @@ The first term is tangential, and the second term is centripetal.
 The most general rigid-body motion is the sum of a translation of a reference pointand a rotation about that point.
 
 $
-  bold(r)_P(t) = bold(R)(t) + cal(R)(t) bold(r)_P^0,
+  bold(r)_(P)(t) = bold(R)(t) + cal(R)(t) bold(r)_P^0,
 $
 
 where $cal(R)(t)$ is a rotation operator.
@@ -332,6 +332,7 @@ where $cal(R)(t)$ is a rotation operator.
 ]
 
 == Correspondence between Linear and Angular Quantities // 线量与角量的对应
+<sec:linear-angular-correspondence>
 
 Rigid-body rotation becomes especially transparent once we pair linear quantities with their angular analogues.
 The main pointis that many formulas in translation and rotation have exactly the same algebraic structure.
@@ -410,7 +411,7 @@ which is formally identical to the translational expression $frac(1,2) m |bold(v
 //   Section 2.2: Rigid Body Rotation about a Fixed Axis (刚体定轴转动定律)
 = Newton's Laws and Rigid Body Rotational Dynamics // 牛顿运动定律与刚体转动定律
 
-Chapter 1 established the *kinematic* language of motion: position, velocity, acceleration, and their angular counterparts. This chapter supplies the *dynamics* — the laws that relate motion to its causes. We first review Newton's three laws in their familiar translational form, then develop the parallel rotational laws for rigid bodies. The structural analogy between translation and rotation, already visible in the kinematics of §1.3, becomes deeper here: force ↔ torque, mass ↔ moment of inertia, and linear acceleration ↔ angular acceleration.
+Chapter 1 established the *kinematic* language of motion: position, velocity, acceleration, and their angular counterparts. This chapter supplies the *dynamics* — the laws that relate motion to its causes. We first review Newton's three laws in their familiar translational form, then develop the parallel rotational laws for rigid bodies. The structural analogy between translation and rotation, already visible in the kinematics of #link(<sec:linear-angular-correspondence>)[*Linear-Angular Correspondence*], becomes deeper here: force ↔ torque, mass ↔ moment of inertia, and linear acceleration ↔ angular acceleration.
 
 == Newton's Three Laws // 牛顿三大定律
 
@@ -700,7 +701,7 @@ This form is more fundamental than $sum bold(F) = m bold(a)$ because it remains 
 This is one of the most powerful principles in mechanics. It follows directly from Newton's second law and third law, but it applies even when the internal forces are unknown (as in collisions and explosions).
 
 #note[
-  Conservation of momentum is a consequence of *translational symmetry* of space (Noether's theorem, to be studied in Part II). If the laws of physics are the same at every pointin space, momentum must be conserved.
+  Conservation of momentum is a consequence of *translational symmetry* of space (Noether's theorem, to be studied in Part III). If the laws of physics are the same at every pointin space, momentum must be conserved.
 ]
 
 == Angular Momentum and Torque // 角动量与力矩
@@ -900,7 +901,7 @@ This section formalises the structural parallel that has been developed througho
 === Why This Matters // 为什么这很重要
 
 #note[
-  The translational-rotational isomorphism is not just a pedagogical convenience. It reflects a deep fact about the structure of classical mechanics: both sets of equations arise from the same underlying variational principle (Hamilton's principle, Part I). When we later study Lagrangian mechanics, we will see that a single equation — the Euler-Lagrange equation — produces *both* the translational and rotational equations of motion, depending only on which generalized coordinates we choose.
+  The translational-rotational isomorphism is not just a pedagogical convenience. It reflects a deep fact about the structure of classical mechanics: both sets of equations arise from the same underlying variational principle (Hamilton's principle, Part II). When we later study Lagrangian mechanics, we will see that a single equation — the Euler-Lagrange equation — produces *both* the translational and rotational equations of motion, depending only on which generalized coordinates we choose.
 
   Moreover, this isomorphism extends beyond rigid-body mechanics. The same mathematical structures (configuration spaces, momenta, conjugate variables) reappear in field theory, quantum mechanics, and even statistical mechanics. Mastering the translational-rotational correspondence is the first step toward recognising these unifying patterns.
 ]
@@ -951,19 +952,19 @@ $
   bold(F) = F(r) bold(e_r), quad F(r) = - frac(dif V(r), dif r).
 $
 
-Central forces conserve angular momentum (since $bold(tau) = bold(r) times bold(F) = bold(0)$), and the motion is confined to a plane. These properties will be used extensively in Chapter 4 (Celestial Mechanics) and again in Part II (Lagrangian mechanics, central force applications).
+Central forces conserve angular momentum (since $bold(tau) = bold(r) times bold(F) = bold(0)$), and the motion is confined to a plane. These properties will be used extensively in Chapter 4 (Celestial Mechanics) and again in Part III (Lagrangian mechanics, central force applications).
 
 #note[
-  This chapter has established the three pillars of conservation — momentum, angular momentum, and energy — each linked to a fundamental symmetry of space and time. These conservation laws are not just convenient shortcuts; they are deeper than the equations of motion themselves. In Part II, Noether's theorem will reveal the direct connection: every continuous symmetry of the action implies a conserved quantity.
+  This chapter has established the three pillars of conservation — momentum, angular momentum, and energy — each linked to a fundamental symmetry of space and time. These conservation laws are not just convenient shortcuts; they are deeper than the equations of motion themselves. In Part III, Noether's theorem will reveal the direct connection: every continuous symmetry of the action implies a conserved quantity.
 ]
 
 // Chapter 4: Celestial Mechanics Foundations (天体力学基础)
-//   Section 5.1: Kepler's Laws (开普勒定律)
-//   Section 5.2: Orbit Classification (轨道分类)
-//   Section 5.3: Two-Body Problem and Reduced Mass (二体问题与约化质量)
+//   Section 4.1: Kepler's Laws (开普勒定律)
+//   Section 4.2: Orbit Classification (轨道分类)
+//   Section 4.3: Two-Body Problem and Reduced Mass (二体问题与约化质量)
 = Celestial Mechanics Foundations // 天体力学基础
 
-Celestial mechanics studies the motion of astronomical bodies under gravitational forces. This brief chapter establishes the essential results — Kepler's laws, orbit classification, and the two-body reduction — that will be revisited in Part II from the Lagrangian perspective.
+Celestial mechanics studies the motion of astronomical bodies under gravitational forces. This brief chapter establishes the essential results — Kepler's laws, orbit classification, and the two-body reduction — that will be revisited in Part III from the Lagrangian perspective.
 
 == Kepler's Laws // 开普勒定律
 
@@ -1000,7 +1001,7 @@ The general solution of the two-body problem is a *conic section* (ellipse, para
 ]
 
 #note[
-  The energy-orbit connection is profound: a bound system ($E < 0$) always follows a closed or quasi-periodic orbit, while an unbound system ($E >= 0$) escapes to infinity. This classification reappears in the effective potential analysis of central forces in Part II.
+  The energy-orbit connection is profound: a bound system ($E < 0$) always follows a closed or quasi-periodic orbit, while an unbound system ($E >= 0$) escapes to infinity. This classification reappears in the effective potential analysis of central forces in Part III.
 ]
 
 == Two-Body Problem and Reduced Mass // 二体问题与约化质量
@@ -1028,13 +1029,13 @@ The gravitational two-body problem — two masses $m_1$ and $m_2$ interacting vi
 ]
 
 #note[
-  The two-body reduction is the foundation of celestial mechanics. In Part II (Lagrangian mechanics), we will derive the same result from a Lagrangian with translational symmetry, and the conserved quantities (energy, angular momentum) will emerge directly from Noether's theorem.
+  The two-body reduction is the foundation of celestial mechanics. In Part III (Lagrangian mechanics), we will derive the same result from a Lagrangian with translational symmetry, and the conserved quantities (energy, angular momentum) will emerge directly from Noether's theorem.
 ]
 
 // Chapter 5: Fluid Mechanics Foundations (流体力学基础)
-//   Section 6.1: Continuum Hypothesis and Density Fields (连续体假设与密度场)
-//   Section 6.2: Euler's Equations of Motion (欧拉运动方程)
-//   Section 6.3: Bernoulli's Equation (伯努利方程)
+//   Section 5.1: Continuum Hypothesis and Density Fields (连续体假设与密度场)
+//   Section 5.2: Euler's Equations of Motion (欧拉运动方程)
+//   Section 5.3: Bernoulli's Equation (伯努利方程)
 = Fluid Mechanics Foundations // 流体力学基础
 
 Fluid mechanics describes the motion of continuous deformable media — liquids and gases. This chapter provides the minimal foundation needed to appreciate the parallels between particle mechanics and continuum mechanics in later parts of the notes.
@@ -1073,7 +1074,7 @@ For an *inviscid* (frictionless) fluid, Newton's second law applied to a fluid e
 The term $(bold(v) dot nabla) bold(v)$ is the *convective acceleration* — it accounts for the fact that fluid particles move to regions of different velocity even in steady flow.
 
 #note[
-  Euler's equation is the fluid analogue of Newton's second law. In Part V (Classical Field Theory), we will see how it emerges from a variational principle applied to a continuous medium.
+  Euler's equation is the fluid analogue of Newton's second law. In Part VI (Classical Field Theory), we will see how it emerges from a variational principle applied to a continuous medium.
 ]
 
 == Bernoulli's Equation // 伯努利方程
@@ -1101,14 +1102,25 @@ For steady, incompressible ($rho = "const"$), inviscid flow along a streamline, 
 This completes the Classical Mechanics Foundations part. The next part (Mathematical Foundations) introduces the variational calculus that underpins analytical mechanics. All the concepts developed here — conservation laws, oscillations, central forces, and continuum mechanics — will be revisited and deepened through the Lagrangian and Hamiltonian formalisms.
 
 // =========================================================================
-// --- Part I: Mathematical Foundations (数学基础) ---
+// --- Part II: Mathematical Foundations (数学基础) ---
 // =========================================================================
+// 设计思路：本 Part 是主线"经典力学 → 分析力学"的工具与公理阶段。
+//   Part I 用 Newton 语言建立物理直觉；本 Part 切换到变分语言，先备齐数学工具
+//   （变分法、广义坐标、约束与虚位移），再以 Hamilton 原理为公理起点，
+//   为 Part III 把公理转化为 Lagrange 方程铺路。
+//   职责边界：连续时间变分法归本笔记（Optimisation Convexe 已显式委托）；
+//   分布论形式的基本引理见 PDE 笔记；无穷维/弱变分理论见 Analyse Fonctionnelle；
+//   Legendre 变换与 Noether 定理分别推迟到 Hamiltonian Part 与 Lagrangian Part。
+// 对应教材：Goldstein ch.1–2；Landau-Lifshitz 1–5；Arnold ch.1–3
+// 编号说明：全笔记蓝图采用与 PDF 一致的编号——Part I–VI 对应渲染罗马数字，
+//   章号全局连续（Part I = Ch 1–5，本 Part = Ch 6–8，Part III = Ch 9–11，依此类推）。
+
 #part("Mathematical Foundations") // 数学基础
 
-// Chapter 1: Variational Calculus (变分法)
-//   Section 1.1: Variational Method and First Variation (变分法与第一变分)
-//   Section 1.2: Euler-Lagrange Equations (欧拉-拉格朗日方程)
-//   Section 1.3: Variational Problems with Constraints (带约束的变分问题)
+// Chapter 6: Variational Calculus (变分法)
+//   Section 6.1: Variational Method and First Variation (变分法与第一变分)
+//   Section 6.2: Euler-Lagrange Equation (欧拉-拉格朗日方程)
+//   Section 6.3: Variational Problems with Constraints (带约束的变分问题)
 = Variational Calculus  // 变分法
 
 == Variational Method and First Variation // 变分法与第一变分
@@ -1116,9 +1128,22 @@ This completes the Classical Mechanics Foundations part. The next part (Mathemat
 In analytical mechanics, we optimize objects whose input is a whole function (or path), not a finite-dimensional vector.
 This leads naturally from ordinary calculus to variational calculus.
 
-#note[
-  The functional setup has already been introduced in the previous section.
-  Here we focus only on the variational procedure and its differential consequences.
+#definition(name: "Functional")[
+  A *functional* is a map $J: cal(A) -> bb(R)$ from an admissible class $cal(A)$ of curves to the real numbers.
+] <def:functional>
+
+The central example is the integral functional
+
+$
+  J[q] = integral_a^b L(t, q, dot(q)) dif t,
+$
+
+where $L$ is a given smooth function of its three arguments and $q$ ranges over curves with fixed endpoints.
+The goal is to find the curve $q$ that makes $J$ stationary.
+
+#note(title: "Scope")[
+  This chapter treats the classical, finite-dimensional variational calculus needed for mechanics.
+  The functional-analytic direct method and weak formulations belong to Analyse Fonctionnelle; the distributional form of the fundamental lemma belongs to the PDE note.
 ]
 
 #definition(name: "Admissible Variation")[
@@ -1130,7 +1155,7 @@ This leads naturally from ordinary calculus to variational calculus.
   $
 
   where $eta(a)=eta(b)=0$ and $eta$ is sufficiently smooth.
-]
+] <def:admissible-variation>
 
 === First Variation
 
@@ -1142,54 +1167,25 @@ This leads naturally from ordinary calculus to variational calculus.
   $
 
   A curve $q$ is called *stationary* if $delta J[q; eta] = 0$ for every admissible $eta$.
-]
+] <def:first-variation>
 
-For
-
-$
-  J[q] = integral_a^b L(t, q, dot(q)) dif t,
-$
-
-direct differentiation gives
+For the integral functional, direct differentiation gives
 
 $
   delta J[q; eta] = integral_a^b ( frac(partial L, partial q) eta + frac(partial L, partial dot(q)) dot(eta) ) dif t.
 $
 
-After integration by parts and using $eta(a)=eta(b)=0$,
+Integration by parts moves the derivative off $eta$ and produces a boundary term:
 
 $
-  delta J[q; eta] = integral_a^b ( frac(partial L, partial q) - frac(dif, dif t) frac(partial L, partial dot(q)) ) eta(t) dif t.
+  delta J[q; eta] = lr(frac(partial L, partial dot(q)) eta|)_a^b + integral_a^b ( frac(partial L, partial q) - frac(dif, dif t) frac(partial L, partial dot(q)) ) eta(t) dif t.
 $
 
-#theorem(name: "Stationarity Criterion")[
-  If $q$ is stationary for all endpoint-fixed variations, then
+For endpoint-fixed variations $eta(a)=eta(b)=0$, so the boundary term vanishes and only the integral remains.
 
-  $
-    frac(partial L, partial q) - frac(dif, dif t) frac(partial L, partial dot(q)) = 0,
-  $
-
-  which is the Euler-Lagrange equation.
-]
-
-=== Simple Example: Shortest Curve in the Plane
-
-#example[
-  Consider
-
-  $
-    J[y] = integral_(x_0)^(x_1) sqrt(1 + (y')^2) dif x
-  $
-
-  with fixed endpoints $y(x_0)=y_0$, $y(x_1)=y_1$.
-  Here $L(y, y') = sqrt(1 + (y')^2)$ does not depend explicitly on $y$, so
-
-  $
-    frac(dif, dif x) frac(partial L, partial y') = 0
-  $
-
-  implies $frac(partial L, partial y')$ is constant, hence $y' = C$.
-  Therefore the stationary curve is a line segment.
+#note(title: "What comes next")[
+  The integrand is a fixed function multiplied by the arbitrary test function $eta$.
+  Extracting a pointwise differential equation from this integral identity requires the fundamental lemma of variational calculus, stated in the next section.
 ]
 
 This variational viewpoint is the direct bridge to Hamilton's principle and the full Lagrangian formalism.
@@ -1198,6 +1194,34 @@ This variational viewpoint is the direct bridge to Hamilton's principle and the 
 
 The Euler-Lagrange equation is the local differential form of stationarity for the action functional.
 It turns a global variational statement into equations of motion.
+
+=== Fundamental Lemma of Variational Calculus // 变分法基本引理
+
+#lemma(name: "Fundamental Lemma (du Bois-Reymond, classical form)")[
+  Let $f$ be continuous on $[a, b]$.
+  If
+
+  $
+    integral_a^b f(t) eta(t) dif t = 0
+  $
+
+  for every smooth $eta$ with $eta(a)=eta(b)=0$, then $f(t) = 0$ for all $t in [a, b]$.
+] <lem:fundamental-lemma>
+
+#proof(name: "of the fundamental lemma")[
+  Suppose $f(t_0) != 0$ for some interior point $t_0$; without loss of generality $f(t_0) > 0$.
+  By continuity, $f > 0$ on a small interval around $t_0$.
+  Choose a smooth bump $eta >= 0$ supported in that interval with $eta(t_0) > 0$.
+  Then $integral_a^b f eta dif t > 0$, contradicting the hypothesis.
+  Hence $f$ vanishes on the interior, and by continuity on all of $[a, b]$.
+]
+
+#note(title: "Distributional version")[
+  When $f$ is only locally integrable, the same conclusion holds almost everywhere; that is the du Bois-Reymond lemma used in weak formulations and distribution theory, treated in the PDE note.
+  The classical continuous form above suffices for the smooth Lagrangians of mechanics.
+]
+
+=== Single-Coordinate Equation // 单坐标方程
 
 #definition(name: "Euler-Lagrange Equation (Single Coordinate)")[
   For
@@ -1211,29 +1235,27 @@ It turns a global variational statement into equations of motion.
   $
     frac(partial L, partial q) - frac(dif, dif t) frac(partial L, partial dot(q)) = 0.
   $
+] <def:euler-lagrange>
+
+#theorem(name: "Stationarity Criterion")[
+  If $q$ is stationary for $J$ under all endpoint-fixed variations, then $q$ satisfies the Euler-Lagrange equation.
+] <thm:stationarity-criterion>
+
+#proof(name: "of the stationarity criterion")[
+  By the integration-by-parts identity of *Variational Method and First Variation*, stationarity gives
+
+  $
+    integral_a^b ( frac(partial L, partial q) - frac(dif, dif t) frac(partial L, partial dot(q)) ) eta(t) dif t = 0
+  $
+
+  for every admissible $eta$.
+  The coefficient of $eta$ is continuous, so the #link(<lem:fundamental-lemma>)[fundamental lemma] forces it to vanish identically.
 ]
-
-=== Derivation from First Variation // 从第一变分推导
-
-Starting from
-
-$
-  delta J[q; eta] = integral_a^b ( frac(partial L, partial q) eta + frac(partial L, partial dot(q)) dot(eta) ) dif t,
-$
-
-integration by parts gives
-
-$
-  delta J[q; eta] = lr(frac(partial L, partial dot(q)) eta|)_a^b + integral_a^b ( frac(partial L, partial q) - frac(dif, dif t) frac(partial L, partial dot(q)) ) eta dif t.
-$
-
-Because endpoint-fixed variations satisfy $eta(a)=eta(b)=0$, the boundary term vanishes.
-By the fundamental lemma of variational calculus, the integrand must be zero, yielding the Euler-Lagrange equation.
 
 === Multi-Coordinate Form // 多坐标形式
 
 #theorem(name: "Euler-Lagrange System")[
-  For generalized coordinates $q_1, dots, q_n$ and
+  For coordinates $q_1, dots, q_n$ and
 
   $
     S[q] = integral_(t_0)^(t_1) L(t, q_1, dots, q_n, dot(q)_1, dots, dot(q)_n) dif t,
@@ -1244,17 +1266,29 @@ By the fundamental lemma of variational calculus, the integrand must be zero, yi
   $
     frac(dif, dif t) frac(partial L, partial dot(q)_i) - frac(partial L, partial q_i) = 0.
   $
+] <thm:euler-lagrange-system>
+
+#proof(name: "of the Euler-Lagrange system")[
+  Vary each coordinate independently: take $eta_i$ arbitrary and $eta_j = 0$ for $j != i$.
+  The single-coordinate argument applies to each $i$ in turn.
+]
+
+#note(title: "Terminology")[
+  The independent coordinates $q_i$ are the generalized coordinates formalized in *Degrees of Freedom and Generalized Coordinates*.
+  Here they are simply any set of independent parameters describing the configuration.
 ]
 
 === Natural Boundary Conditions (Free Endpoints) // 自然边界条件（自由端点）
 
-#note[
-  If an endpointis free, the boundary term does not automatically vanish.
-  One then obtains a natural boundary condition, typically
-  $frac(partial L, partial dot(q)) = 0$ at that free endpoint(or its constrained variant).
+#note(title: "Free endpoints")[
+  If an endpoint is free, the boundary term does not automatically vanish.
+  One then obtains a natural boundary condition, typically $frac(partial L, partial dot(q)) = 0$ at that free endpoint (or its constrained variant).
 ]
 
 === First Integrals and Cyclic Coordinates // 第一积分与循环坐标
+
+A first integral is a quantity conserved along every solution of the Euler-Lagrange equation.
+Two structural features of $L$ produce first integrals immediately.
 
 #proposition(name: "Cyclic Coordinate")[
   If $frac(partial L, partial q_k) = 0$, then
@@ -1263,41 +1297,58 @@ By the fundamental lemma of variational calculus, the integrand must be zero, yi
     frac(dif, dif t) frac(partial L, partial dot(q)_k) = 0,
   $
 
-  so the conjugate momentum
-  $
-    p_k = frac(partial L, partial dot(q)_k)
-  $
-  is conserved.
-]
+  so the conjugate momentum $p_k = frac(partial L, partial dot(q)_k)$ is conserved.
+] <prop:cyclic-coordinate>
 
-#proposition(name: "Energy Integral (Autonomous Case)")[
-  If $L$ has no explicit $t$-dependence, then
+#proposition(name: "Beltrami Identity (Autonomous Case)")[
+  If $L$ has no explicit $t$-dependence, then the energy function
 
   $
     E = sum_i dot(q)_i frac(partial L, partial dot(q)_i) - L
   $
 
   is constant along solutions.
+  For a single coordinate this is the Beltrami identity $L - dot(q) frac(partial L, partial dot(q)) = "const"$.
+] <prop:beltrami>
+
+#proof(name: "of the Beltrami identity")[
+  Differentiate $E$ and expand $dif L / dif t$ by the chain rule:
+
+  $
+    frac(dif E, dif t) = sum_i dot(q)_i ( frac(dif, dif t) frac(partial L, partial dot(q)_i) - frac(partial L, partial q_i) ) - frac(partial L, partial t).
+  $
+
+  The sum vanishes by the Euler-Lagrange system, leaving $dif E / dif t = - partial L / partial t$.
+  Autonomy gives $partial L / partial t = 0$, hence $E$ is constant.
 ]
 
-=== Example: Particle in a Potential Field // 例子：势场中的粒子
+#note(title: "Physical interpretation")[
+  These are the mathematical first integrals of the Euler-Lagrange equation.
+  Their physical meaning as conservation laws, and their origin in symmetry via Noether's theorem, are developed in *Conservation Laws in Lagrangian Mechanics*.
+]
 
-#example[
+=== Examples // 例子
+
+#example(name: "Shortest curve in the plane")[
+  Consider
+
+  $
+    J[y] = integral_(x_0)^(x_1) sqrt(1 + (y')^2) dif x
+  $
+
+  with fixed endpoints $y(x_0)=y_0$, $y(x_1)=y_1$.
+  Here $L(y, y') = sqrt(1 + (y')^2)$ does not depend explicitly on $y$, so the cyclic-coordinate first integral gives $frac(partial L, partial y')$ constant.
+  Hence $y' = C$ and the stationary curve is a line segment.
+]
+
+#example(name: "Particle in a potential field")[
   Let
 
   $
     L(q, dot(q)) = frac(1,2) m dot(q)^2 - V(q).
   $
 
-  Then
-  $
-    frac(partial L, partial dot(q)) = m dot(q),
-  $
-  and
-  $
-    frac(partial L, partial q) = -frac(dif V, dif q).
-  $
-
+  Then $frac(partial L, partial dot(q)) = m dot(q)$ and $frac(partial L, partial q) = -frac(dif V, dif q)$.
   The Euler-Lagrange equation becomes
 
   $
@@ -1305,6 +1356,32 @@ By the fundamental lemma of variational calculus, the integrand must be zero, yi
   $
 
   i.e. Newton's equation $m dot.double(q) = -frac(dif V, dif q)$.
+  This is the mathematical verification that the variational formalism reproduces Newtonian mechanics; the physical callback is revisited in *Lagrange's Equations of the Second Kind*.
+]
+
+#example(name: "Brachistochrone")[
+  A bead slides without friction under gravity from one point to a lower one.
+  Taking $y$ positive downward, the descent time is
+
+  $
+    T[y] = integral_(x_0)^(x_1) sqrt(frac(1 + (y')^2, 2 g y)) dif x.
+  $
+
+  The integrand $L(y, y')$ has no explicit $x$-dependence, so the Beltrami identity applies:
+
+  $
+    L - y' frac(partial L, partial y') = "const".
+  $
+
+  Substituting $L$ and simplifying yields $y (1 + (y')^2) = 2 a$ for a constant $a$.
+  The solution is a cycloid,
+
+  $
+    x = a (theta - sin theta), quad y = a (1 - cos theta),
+  $
+
+  the curve of fastest descent.
+  This example shows the power of the first integral: it reduces a second-order Euler-Lagrange equation to a first-order relation that can be integrated directly.
 ]
 
 This section provides the variational core used in the next chapters on Lagrange's equations, constraints, and Hamiltonian reformulation.
@@ -1312,13 +1389,113 @@ This section provides the variational core used in the next chapters on Lagrange
 
 == Variational Problems with Constraints // 带约束的变分问题
 
+Stationarity is often sought not over all curves but over curves satisfying a constraint.
+Two kinds of constraint appear in mechanics, and both are handled by Lagrange multipliers.
+
+- *Integral (isoperimetric) constraints*: a global condition such as fixed length or fixed area, written as an integral equal to a constant.
+- *Pointwise (holonomic) constraints*: a relation $f(q, t) = 0$ imposed at every instant, restricting the configuration itself.
+
+=== Isoperimetric Problems // 等周问题
+
+#definition(name: "Isoperimetric Problem")[
+  An *isoperimetric problem* seeks a stationary curve of $J[q] = integral_a^b L(t, q, dot(q)) dif t$ among endpoint-fixed curves satisfying
+
+  $
+    integral_a^b g(t, q, dot(q)) dif t = K,
+  $
+
+  where $K$ is a prescribed constant.
+] <def:isoperimetric>
+
+#theorem(name: "Multiplier Rule for Integral Constraints")[
+  Let $q$ be a stationary curve of the isoperimetric problem, and assume the constraint is non-degenerate at $q$.
+  Then there exists a constant $lambda$ such that $q$ satisfies the Euler-Lagrange equation of the augmented integrand $L + lambda g$:
+
+  $
+    frac(dif, dif t) frac(partial (L + lambda g), partial dot(q)) - frac(partial (L + lambda g), partial q) = 0.
+  $
+] <thm:isoperimetric-multiplier>
+
+#proof(name: "sketch")[
+  Introduce a two-parameter family $q + epsilon eta + epsilon' zeta$, where $zeta$ is chosen so that the constraint can be maintained by adjusting $epsilon'$ as a function of $epsilon$.
+  Stationarity of $J$ under all constraint-preserving variations then forces the first variation of $J$ to be proportional to the first variation of the constraint functional.
+  The proportionality constant is $lambda$, and the #link(<lem:fundamental-lemma>)[fundamental lemma] converts the resulting integral identity into the augmented Euler-Lagrange equation.
+]
+
+#note(title: "Rigor")[
+  The non-degeneracy hypothesis and the existence of $lambda$ are instances of the Lagrange multiplier theorem; their functional-analytic justification belongs to Analyse Fonctionnelle and optimization theory.
+  The formal derivation above is the form used in mechanics.
+]
+
+=== Pointwise Holonomic Constraints // 逐点完整约束
+
+#theorem(name: "Multiplier Form for Holonomic Constraints")[
+  Let $q$ be stationary for $J[q] = integral_a^b L(t, q, dot(q)) dif t$ subject to pointwise constraints
+
+  $
+    f_(alpha)(q, t) = 0, quad alpha = 1, dots, m,
+  $
+
+  with fixed endpoints and independent constraint gradients.
+  Then there exist multiplier functions $lambda_(alpha)(t)$ such that, for each coordinate $q_i$,
+
+  $
+    frac(dif, dif t) frac(partial L, partial dot(q)_i) - frac(partial L, partial q_i) = sum_(alpha=1)^m lambda_(alpha) frac(partial f_(alpha), partial q_i).
+  $
+] <thm:holonomic-multiplier>
+
+#proof(name: "sketch")[
+  Augment the integrand to $L + sum_(alpha=1)^m lambda_(alpha)(t) f_(alpha)(q, t)$.
+  Because the constraints hold at every instant, the multipliers are functions of $t$ rather than constants.
+  The constraints involve no velocities, so $partial f_(alpha) / partial dot(q)_i = 0$; applying the Euler-Lagrange system to the augmented integrand gives the stated form.
+]
+
+The multiplier functions $lambda_(alpha)(t)$ are not arbitrary: they are determined together with $q$ by the equations of motion and the constraints.
+In mechanics they encode the constraint reaction forces, as developed in *Lagrange's Equations with Constraints* and *Lagrange Multipliers in Mechanics*.
+
+#note(title: "Bridge to mechanics")[
+  This section is the mathematical foundation for the constrained Lagrange equations of the Lagrangian Part.
+  The integral-constraint multiplier is a constant; the pointwise-constraint multiplier is a function of time.
+  Both reduce a constrained variational problem to an unconstrained one for an augmented Lagrangian.
+]
+
+=== Example: The Catenary // 例子：悬链线
+
+#example(name: "Hanging chain (catenary)")[
+  A uniform flexible chain of fixed length hangs in equilibrium between two points.
+  Its shape minimizes the gravitational potential energy subject to the length constraint.
+  With $y$ the height and $s$ the arc length, the problem is
+
+  $
+    "minimize" integral y sqrt(1 + (y')^2) dif x quad "subject to" integral sqrt(1 + (y')^2) dif x = ell.
+  $
+
+  This is isoperimetric with $L = y sqrt(1 + (y')^2)$ and $g = sqrt(1 + (y')^2)$.
+  The augmented integrand is $F = (y + lambda) sqrt(1 + (y')^2)$.
+  Since $F$ has no explicit $x$-dependence, the Beltrami identity gives
+
+  $
+    F - y' frac(partial F, partial y') = frac(y + lambda, sqrt(1 + (y')^2)) = a,
+  $
+
+  a constant.
+  Solving this first-order equation yields the catenary
+
+  $
+    y = a cosh(frac(x - b, a)) - lambda,
+  $
+
+  where $a, b, lambda$ are fixed by the endpoints and the length $ell$.
+  The multiplier $lambda$ shifts the curve vertically and is determined by the constraint.
+]
 
 
-// Chapter 2: Description of Mechanical Systems (力学系统的完整描述)
-//   Section 2.1: Degrees of Freedom and Generalized Coordinates (自由度与广义坐标)
-//   Section 2.2: Classification of Constraints (约束的分类)
-//   Section 2.3: Real Displacements and Virtual Displacements (实位移与虚位移)
-//   Section 2.4: D'Alembert's Principle and Virtual Work (达朗贝尔原理与虚功原理) [← Retrospective to Part 0 Ch. 2]
+
+// Chapter 7: Description of Mechanical Systems (力学系统的完整描述)
+//   Section 7.1: Degrees of Freedom and Generalized Coordinates (自由度与广义坐标)
+//   Section 7.2: Classification of Constraints (约束的分类)
+//   Section 7.3: Real Displacements and Virtual Displacements (实位移与虚位移)
+//   Section 7.4: D'Alembert's Principle and Virtual Work (达朗贝尔原理与虚功原理) [← Retrospective to Part I Ch. 2]
 = Description of Mechanical Systems // 力学系统的完整描述
 
 Before we can apply Hamilton's principle, we must describe the system we are studying. This chapter introduces the concepts that bridge the physical system to its mathematical representation: generalized coordinates, constraints, virtual displacements, and D'Alembert's principle.
@@ -1378,19 +1555,23 @@ The key difference: a virtual displacement is a *comparison* between two neighbo
   $
 ]
 
-D'Alembert's principle transforms dynamics into a form of statics by including the inertial term $-m bold(a)$. In the next chapter, we will show that this principle is equivalent to Hamilton's principle of stationary action, and that it leads directly to Lagrange's equations.
+D'Alembert's principle transforms dynamics into a form of statics by including the inertial term $-m bold(a)$.
+In the next chapter we show that, for holonomic systems whose applied forces derive from a potential, this principle is equivalent to Hamilton's principle of stationary action; together they lead to Lagrange's equations.
 
-#note[
-  The logical chain is now complete: generalized coordinates → constraints → virtual displacements → D'Alembert's principle → (next chapter) Hamilton's principle → Lagrange's equations. Each step translates the Newtonian picture into a more abstract but more powerful language.
+#note(title: "The logical chain")[
+  The chain is taking shape: generalized coordinates → constraints → virtual displacements → D'Alembert's principle → (next chapter) Hamilton's principle → Lagrange's equations.
+  Each step translates the Newtonian picture into a more abstract but more powerful language; the chain closes in the Lagrangian Part.
 ]
 
-// Chapter 3: Axiom: Hamilton's Principle (公理：哈密顿原理 - 最小作用量原理)
-//   Section 3.1: Definition of Action Functional (作用量泛函的定义)
-//   Section 3.2: Axiomatic Statement (公理陈述)
-//   Section 3.3: Additivity and Gauge Invariance of Lagrangian (拉格朗日量的可加性与不唯一性)
+// Chapter 8: Axiom: Hamilton's Principle (公理：哈密顿原理 - 最小作用量原理)
+//   Section 8.1: Definition of Action Functional (作用量泛函的定义)
+//   Section 8.2: Axiomatic Statement (公理陈述)
+//   Section 8.3: Additivity and Gauge Invariance of Lagrangian (拉格朗日量的可加性与不唯一性)
 = Axiom: Hamilton's Principle // 公理：哈密顿原理
 
 In this notebook, we take Hamilton's principle as the foundational axiom-like starting point of analytical mechanics.
+
+== Definition of Action Functional // 作用量泛函的定义
 
 Before stating the principle, we fix the basic objects:
 
@@ -1402,7 +1583,9 @@ $
   S[q] = integral_(t_0)^(t_1) L(t, q, dot(q)) dif t.
 $
 
-Here, a *functional* means a map from a function space to real numbers, e.g. $S: cal(A) -> bb(R)$ on an admissible curve class $cal(A)$.
+Here a *functional* means a map from a function space to real numbers, e.g. $S: cal(A) -> bb(R)$ on an admissible curve class $cal(A)$, as in #link(<def:functional>)[Functional].
+
+== Axiomatic Statement // 公理陈述
 
 #axiom(name: "Hamilton's Principle (Stationary Action)")[
   Among all admissible curves with fixed endpoints,
@@ -1418,7 +1601,7 @@ Here, a *functional* means a map from a function space to real numbers, e.g. $S:
   $
 
   for all endpoint-fixed admissible variations.
-]
+] <ax:hamilton>
 
 Equivalently, with a variation family
 
@@ -1428,36 +1611,86 @@ $
 
 the first-order term in $S[q_epsilon] - S[q]$ vanishes at $epsilon = 0$.
 
-#note[
+#note(title: "Stationary, not minimal")[
   In rigorous mathematical language, this is a *stationary* principle, not necessarily a strict minimum principle.
-  The phrase "least action" is historical; "stationary action" is usually the precise formulation.
+  The phrase "least action" is historical; "stationary action" is the precise formulation.
+  A necessary condition for a minimum is the non-negativity of the second variation, which leads to the Legendre condition $frac(partial^2 L, partial dot(q)^2) >= 0$; this sufficiency question lies beyond the present axiom.
 ]
 
-=== Additivity and Gauge Invariance of Lagrangian // 拉格朗日量的可加性与不唯一性
+#caution(title: "Scope of the axiom")[
+  The axiom in this simple form applies under two hypotheses:
 
-#property(name: "Gauge Invariance of the Lagrangian")[
-  If two Lagrangians differ by a total time derivative, $L' = L + dif F / dif t$, they produce the same equations of motion. The action changes only by boundary terms:
-  $
-    S'[q] = S[q] + F(q(t_1), t_1) - F(q(t_0), t_0),
-  $
-  so the stationarity condition is unchanged.
+  - *Holonomic constraints.* The constraints are expressible as $f_(alpha)(q, t) = 0$, so admissible variations are tangent to the constraint submanifold and the #link(<thm:holonomic-multiplier>)[multiplier form for holonomic constraints] applies.
+  - *Monogenic forces.* The applied forces derive from a potential, so a Lagrangian $L = T - V$ (or a generalized potential) exists.
+
+  For *nonholonomic* constraints, such as rolling without slipping, stationarity of $S$ among constraint-satisfying curves gives *vakonomic* dynamics, which differs from the physical motion.
+  The correct equations for nonholonomic systems come from D'Alembert's principle, not from naive stationary action.
+  Non-potential forces such as friction require the generalized-force extension of the Lagrangian Part.
 ]
 
-This gauge freedom is important: it allows us to simplify Lagrangians by adding total derivatives without affecting the physics.
+=== Equivalence with D'Alembert's Principle // 与达朗贝尔原理的等价性
+
+#proposition(name: "Equivalence of D'Alembert and Hamilton")[
+  For a holonomic system whose applied forces derive from a potential $V(q, t)$, D'Alembert's principle is equivalent to Hamilton's principle with $L = T - V$.
+] <prop:dalembert-hamilton>
+
+#proof(name: "of the equivalence")[
+  *Step 1: virtual displacements.* Holonomic constraints give $delta bold(r)_a = sum_i frac(partial bold(r)_a, partial q_i) delta q_i$ with independent $delta q_i$.
+
+  *Step 2: applied forces.* Monogenic forces give $sum_a bold(F)_a dot delta bold(r)_a = - sum_i frac(partial V, partial q_i) delta q_i$.
+
+  *Step 3: inertial term.* With $T = frac(1,2) sum_a m_a abs(dot(bold(r))_a)^2$, the standard kinetic-energy identity gives
+
+  $
+    sum_a m_a bold(a)_a dot delta bold(r)_a = sum_i ( frac(dif, dif t) frac(partial T, partial dot(q)_i) - frac(partial T, partial q_i) ) delta q_i.
+  $
+
+  *Step 4: combine.* D'Alembert's principle becomes
+
+  $
+    sum_i ( frac(dif, dif t) frac(partial T, partial dot(q)_i) - frac(partial T, partial q_i) + frac(partial V, partial q_i) ) delta q_i = 0.
+  $
+
+  Independence of the $delta q_i$ and $L = T - V$ yield the Euler-Lagrange system.
+
+  *Step 5: integrate in time.* Multiplying by $dif t$, integrating from $t_0$ to $t_1$, and integrating by parts with $delta q_(i)(t_0) = delta q_(i)(t_1) = 0$ gives $delta S = 0$.
+  Every step reverses, so Hamilton's principle implies D'Alembert's principle as well.
+]
+
+== Additivity and Gauge Invariance of Lagrangian // 拉格朗日量的可加性与不唯一性
+
+#property(name: "Additivity and Gauge Invariance")[
+  - *Additivity.* For non-interacting subsystems with Lagrangians $L_1, dots, L_k$, the total Lagrangian is $L = sum_(j=1)^k L_j$; interactions contribute an additional term $L_("int")$.
+  - *Gauge invariance.* If $L' = L + frac(dif F, dif t)$ for a function $F(q, t)$, then $L'$ and $L$ produce the same equations of motion, because the action changes only by boundary terms.
+] <prop:lagrangian-structure>
+
+The boundary-term formula for gauge invariance is
+
+$
+  S'[q] = S[q] + F(q(t_1), t_1) - F(q(t_0), t_0),
+$
+
+so the stationarity condition is unchanged.
+
+Additivity justifies building the Lagrangian of a many-particle system from single-particle kinetic and potential energies.
+The action is additive, $S = sum_j S_j$, and for non-interacting subsystems stationarity of $S$ decouples into stationarity of each $S_j$.
+
+Gauge freedom allows us to simplify Lagrangians by adding total time derivatives without affecting the physics.
+It is the variational counterpart of the freedom to shift the potential energy by a constant.
 
 // =========================================================================
-// --- Part II: Lagrangian Mechanics (拉格朗日力学) ---
+// --- Part III: Lagrangian Mechanics (拉格朗日力学) ---
 // =========================================================================
 // Theme: Retrospective derivation showing how Lagrangian methods recover classical results
 #part("Lagrangian Mechanics") // 拉格朗日力学
 
-// Chapter 4: Lagrange's Equations (拉格朗日方程)
-//   Section 4.1: Lagrangian Function (拉格朗日函数) [← Based on Part 0 Ch. 3.5: Potential Energy]
-//   Section 4.2: Derivation from Hamilton's Principle (从哈密顿原理推导)
-//   Section 4.3: Lagrange's Equations of the Second Kind (第二类拉格朗日方程) [← Recovers Part 0 Ch. 2.1]
-//   Section 4.4: Generalized Forces (广义力)
-//   Section 4.5: Lagrange's Equations with Constraints (带约束的拉格朗日方程) [← Generalizes Part 0 Ch. 2.2]
-//   Section 4.6: Lagrange Multipliers in Mechanics (力学中的拉格朗日乘子)
+// Chapter 9: Lagrange's Equations (拉格朗日方程)
+//   Section 9.1: Lagrangian Function (拉格朗日函数) [← Based on Part I Ch. 3.5: Potential Energy]
+//   Section 9.2: Derivation from Hamilton's Principle (从哈密顿原理推导)
+//   Section 9.3: Lagrange's Equations of the Second Kind (第二类拉格朗日方程) [← Recovers Part I Ch. 2.1]
+//   Section 9.4: Generalized Forces (广义力)
+//   Section 9.5: Lagrange's Equations with Constraints (带约束的拉格朗日方程) [← Generalizes Part I Ch. 2.2; math basis: Ch. 6.3]
+//   Section 9.6: Lagrange Multipliers in Mechanics (力学中的拉格朗日乘子) [← math basis: Ch. 6.3]
 = Lagrange's Equations // 拉格朗日方程
 
 In this chapter, the variational principle from the previous section is converted into differential equations for motion.
@@ -1495,7 +1728,7 @@ The Lagrangian is not uniquely determined by the physical system: adding a total
 Let the configuration of a system be described by a curve
 
 $
-  q(t) = (q_1(t), dots, q_n(t)).
+  q(t) = (q_(1)(t), dots, q_(n)(t)).
 $
 
 The action functional is then
@@ -1526,31 +1759,22 @@ This is the object whose stationarity is prescribed by Hamilton's principle.
 
 == Derivation from Hamilton's Principle // 从哈密顿原理推导
 
-Assume that the configuration curve is varied as
+Hamilton's principle prescribes that the physical trajectory makes the action stationary.
+The mathematical content of this prescription is already established: by the #link(<thm:euler-lagrange-system>)[Euler-Lagrange System], stationarity of
 
 $
-  q_i,epsilon(t) = q_i(t) + epsilon eta_i(t), quad eta_i(t_0)=eta_i(t_1)=0.
+  S[q] = integral_(t_0)^(t_1) L(t, q_1, dots, q_n, dot(q)_1, dots, dot(q)_n) dif t
 $
 
-The stationarity condition from Hamilton's principle gives
+under endpoint-fixed variations is equivalent to
 
 $
-  delta S[q; eta] = 0.
+  frac(dif, dif t) frac(partial L, partial dot(q)_i) - frac(partial L, partial q_i) = 0, quad i = 1, dots, n.
 $
 
-Because the endpoints are fixed, the first variation is computed by differentiating the action with respect to $epsilon$ and evaluating at $epsilon=0$:
-
-$
-  delta S[q; eta] = integral_(t_0)^(t_1) sum_(i=1)^n ( frac(partial L, partial q_i) eta_i + frac(partial L, partial dot(q)_i) dot(eta)_i ) dif t.
-$
-
-Integrating by parts in each term containing $dot(eta)_i$ yields
-
-$
-  delta S[q; eta] = integral_(t_0)^(t_1) sum_(i=1)^n ( frac(partial L, partial q_i) - frac(dif, dif t) frac(partial L, partial dot(q)_i) ) eta_i dif t.
-$
-
-Since the variations $eta_i$ are arbitrary in the interior of the interval, the fundamental lemma implies that each coefficient must vanish.
+No new computation is needed here.
+The variational machinery of the Mathematical Foundations Part converts the axiom directly into these equations of motion.
+The physical input is the choice of Lagrangian $L = T - V$ for the system at hand, justified by the #link(<prop:dalembert-hamilton>)[equivalence with D'Alembert's principle].
 
 == Lagrange's Equations of the Second Kind // 第二类拉格朗日方程
 
@@ -1667,18 +1891,24 @@ $
 $
 
 which is exactly Newton's law in one dimension.
+This is the physical callback to the mathematical verification in *Particle in a potential field*: the same computation now reads as the recovery of Newtonian mechanics from the variational axiom.
 
-// Chapter 5: Conservation Laws in Lagrangian Mechanics (拉格朗日力学中的守恒律)
-//   Section 5.1: Cyclic Coordinates and Generalized Momenta (循环坐标与广义动量)
-//   Section 5.2: Energy Conservation (能量守恒) [← Time symmetry → Retrospective to Part 0 Ch. 3.3]
-//   Section 5.3: Noether's Theorem (诺特定理)
-//   Section 5.4: Momentum Conservation and Translational Symmetry (动量守恒与平移对称性) [← Retrospective to Part 0 Ch. 3.1]
-//   Section 5.5: Angular Momentum Conservation and Rotational Symmetry (角动量守恒与旋转对称性) [← Retrospective to Part 0 Ch. 3.2]
+// Chapter 10: Conservation Laws in Lagrangian Mechanics (拉格朗日力学中的守恒律)
+//   Section 10.1: Cyclic Coordinates and Generalized Momenta (循环坐标与广义动量) [← deepens Ch. 6.2 first integrals]
+//   Section 10.2: Energy Conservation (能量守恒) [← Time symmetry → Retrospective to Part I Ch. 3.3; deepens Ch. 6.2 Beltrami]
+//   Section 10.3: Noether's Theorem (诺特定理)
+//   Section 10.4: Momentum Conservation and Translational Symmetry (动量守恒与平移对称性) [← Retrospective to Part I Ch. 3.1]
+//   Section 10.5: Angular Momentum Conservation and Rotational Symmetry (角动量守恒与旋转对称性) [← Retrospective to Part I Ch. 3.2]
 
 = Conservation Laws in Lagrangian Mechanics // 拉格朗日力学中的守恒律
 
 Conservation laws are the symmetry side of the Lagrangian formalism.
 Once the equations of motion have been derived, one can often read off conserved quantities directly from the structure of the Lagrangian.
+
+#note(title: "From first integrals to conservation laws")[
+  The cyclic-coordinate and Beltrami first integrals were established mathematically in *First Integrals and Cyclic Coordinates*.
+  This chapter reinterprets them physically as conservation laws and traces their origin to symmetry via Noether's theorem — the retrospective deepening of those mathematical facts.
+]
 
 == Cyclic Coordinates and Generalized Momenta // 循环坐标与广义动量
 
@@ -1865,15 +2095,15 @@ This chapter shows how symmetries of the Lagrangian produce conserved quantities
 
 These conservation laws will be used repeatedly in the applications chapter.
 
-// Chapter 6: Applications of Lagrangian Mechanics (拉格朗日力学的应用)
-//   Section 6.1: Rigid Body Dynamics (刚体动力学) [← Recovers Part 0 Ch. 2.2 via Lagrangian]
-//   Section 6.2: Central Force Motion (中心力运动) [← Connects to Part 0 Ch. 5]
-//   Section 6.3: Small Oscillations (小振动) [← Generalizes Part 0 Ch. 4]
-//   Section 6.4: Normal Modes and Eigenfrequencies (简正模与本征频率)
-//   Section 6.5: Coupled Oscillators (耦合振子)
+// Chapter 11: Applications of Lagrangian Mechanics (拉格朗日力学的应用)
+//   Section 11.1: Rigid Body Dynamics (刚体动力学) [← Recovers Part I Ch. 2.2 via Lagrangian]
+//   Section 11.2: Central Force Motion (中心力运动) [← Connects to Part I Ch. 4]
+//   Section 11.3: Small Oscillations (小振动) [← Generalizes Optique Part I Ch. 1]
+//   Section 11.4: Normal Modes and Eigenfrequencies (简正模与本征频率)
+//   Section 11.5: Coupled Oscillators (耦合振子)
 = Applications of Lagrangian Mechanics // 拉格朗日力学的应用
 
-This chapter demonstrates the power of the Lagrangian formalism by applying it to three classic problems: rigid body dynamics, central force motion, and small oscillations. In each case, the Lagrangian approach reproduces the results of Part 0 with greater elegance and generality, while also extending them to situations that would be cumbersome to handle with Newtonian methods.
+This chapter demonstrates the power of the Lagrangian formalism by applying it to three classic problems: rigid body dynamics, central force motion, and small oscillations. In each case, the Lagrangian approach reproduces the results of Part I with greater elegance and generality, while also extending them to situations that would be cumbersome to handle with Newtonian methods.
 
 == Rigid Body Dynamics via Lagrangian // 刚体动力学的拉格朗日方法
 
@@ -1893,7 +2123,7 @@ $
   I dot.double(theta) + frac(partial V, partial theta) = 0,
 $
 
-which is precisely the rotational second law $I alpha = tau$ from Part 0 Ch 2, where $tau = - partial V / partial theta$ is the torque derived from potential.
+which is precisely the rotational second law $I alpha = tau$ from Part I Ch 2, where $tau = - partial V / partial theta$ is the torque derived from potential.
 
 #example(name: "Physical Pendulum Revisited")[ // 物理摆的拉格朗日分析
   A rigid body pivoted at a distance $d$ from its CM. Using $theta$ as the generalized coordinate:
@@ -1904,12 +2134,12 @@ which is precisely the rotational second law $I alpha = tau$ from Part 0 Ch 2, w
     L = frac(1,2) I dot(theta)^2 - M g d (1 - cos theta).
   $
 
-  Lagrange's equation yields $I dot.double(theta) + M g d sin theta = 0$, recovering the physical pendulum result from Part 0 Ch 2.6.
+  Lagrange's equation yields $I dot.double(theta) + M g d sin theta = 0$, recovering the physical pendulum result from Part I Ch 2.
 ]
 
 == Central Force Motion // 中心力运动
 
-The two-body central force problem (Part 0 Ch 5) finds a particularly elegant solution in the Lagrangian framework.
+The two-body central force problem (Part I Ch 4) finds a particularly elegant solution in the Lagrangian framework.
 
 === Lagrangian in Plane Polar Coordinates // 平面极坐标下的拉格朗日量
 
@@ -1943,12 +2173,12 @@ $
 $
 
 #note[
-  The centrifugal term $L_z^2 / (2 mu r^2)$ arises naturally from the kinetic energy in polar coordinates — no physical force is involved. This effective potential analysis was anticipated in Part 0 Ch 5 (orbit classification) and will be used to derive Kepler's laws from the Lagrangian in the exercises.
+  The centrifugal term $L_z^2 / (2 mu r^2)$ arises naturally from the kinetic energy in polar coordinates — no physical force is involved. This effective potential analysis was anticipated in Part I Ch 4 (orbit classification) and will be used to derive Kepler's laws from the Lagrangian in the exercises.
 ]
 
 == Small Oscillations // 小振动
 
-The small oscillation problem — one of the most important applications of Lagrangian mechanics — generalises the simple harmonic oscillator of Part 0 Ch 4 to multiple degrees of freedom.
+The small oscillation problem — one of the most important applications of Lagrangian mechanics — generalises the simple harmonic oscillator of Optique Part I to multiple degrees of freedom.
 
 === One Degree of Freedom // 单自由度
 
@@ -1958,7 +2188,7 @@ $
   L approx frac(1,2) m dot(q)^2 - frac(1,2) k (q - q_0)^2,
 $
 
-where $k = V''(q_0)$. Lagrange's equation gives $m dot.double(q) + k (q - q_0) = 0$, i.e., SHM with $omega_0 = sqrt(k / m)$. This recovers the simple harmonic oscillator from Part 0 Ch 4.1.
+where $k = V''(q_0)$. Lagrange's equation gives $m dot.double(q) + k (q - q_0) = 0$, i.e., SHM with $omega_0 = sqrt(k / m)$. This recovers the simple harmonic oscillator from Optique Part I Ch 1.
 
 === Multiple Degrees of Freedom // 多自由度
 
@@ -1978,7 +2208,7 @@ where $k = V''(q_0)$. Lagrange's equation gives $m dot.double(q) + k (q - q_0) =
 The coupled equations from the previous section can be decoupled by solving an eigenvalue problem.
 
 #theorem(name: "Normal Mode Analysis")[
-  Assume a solution $q_j(t) = A_j e^(i omega t)$. Substituting into the equations of motion gives the generalised eigenvalue problem:
+  Assume a solution $q_(j)(t) = A_j e^(i omega t)$. Substituting into the equations of motion gives the generalised eigenvalue problem:
   $
     sum_j (K_(i j) - omega^2 M_(i j)) A_j = 0.
   $
@@ -2015,84 +2245,89 @@ The normal mode analysis extends naturally to systems with $N$ coupled oscillato
 
 #note[
   *Connection to earlier and later topics:*
-  - The two-mass system above is the simplest nontrivial example of mode splitting. With $N$ coupled masses, one obtains $N$ normal modes whose frequencies approach a continuous spectrum as $N -> infinity$ — the transition from discrete oscillators to a continuous wave (Part 0 Ch 4.3, standing waves on a string).
+  - The two-mass system above is the simplest nontrivial example of mode splitting. With $N$ coupled masses, one obtains $N$ normal modes whose frequencies approach a continuous spectrum as $N -> infinity$ — the transition from discrete oscillators to a continuous wave (Optique, standing waves on a string).
   - The eigenvalue problem $det(K - omega^2 M) = 0$ reappears in quantum mechanics (vibrational spectra of molecules) and in structural engineering (modal analysis of buildings and bridges).
-  - In the limit of $N -> infinity$, the normal mode frequencies form a dispersion relation $omega(k)$, connecting to the wave propagation discussed in Part 0 Ch 4.3.
+  - In the limit of $N -> infinity$, the normal mode frequencies form a dispersion relation $omega(k)$, connecting to the wave propagation discussed in Optique.
 ]
 
 // =========================================================================
-// --- Part III: Hamiltonian Mechanics (哈密顿力学) ---
+// --- Part IV: Hamiltonian Mechanics (哈密顿力学) ---
 // =========================================================================
 #part("Hamiltonian Mechanics") // 哈密顿力学
 
-// Chapter 7: Hamilton's Equations (哈密顿方程)
-//   Section 7.1: Legendre Transformation (勒让德变换)
-//   Section 7.2: Hamiltonian Function (哈密顿函数)
-//   Section 7.3: Canonical Equations of Motion (正则运动方程)
-//   Section 7.4: Hamiltonian for Common Systems (常见系统的哈密顿量)
-//   Section 7.5: Phase Space and Phase Portraits (相空间与相图)
+// Chapter 12: Hamilton's Equations (哈密顿方程)
+//   Section 12.1: Legendre Transformation (勒让德变换)
+//   Section 12.2: Hamiltonian Function (哈密顿函数)
+//   Section 12.3: Canonical Equations of Motion (正则运动方程)
+//   Section 12.4: Hamiltonian for Common Systems (常见系统的哈密顿量)
+//   Section 12.5: Phase Space and Phase Portraits (相空间与相图)
 
-// Chapter 8: Canonical Transformations (正则变换)
-//   Section 8.1: Generating Functions (生成函数)
-//   Section 8.2: Types of Generating Functions (生成函数的类型)
-//   Section 8.3: Conditions for Canonical Transformations (正则变换的条件)
-//   Section 8.4: Poisson Brackets (泊松括号)
-//   Section 8.5: Invariants under Canonical Transformations (正则变换下的不变量)
-//   Section 8.6: Symplectic Structure (辛结构)
+// Chapter 13: Canonical Transformations (正则变换)
+//   Section 13.1: Generating Functions (生成函数)
+//   Section 13.2: Types of Generating Functions (生成函数的类型)
+//   Section 13.3: Conditions for Canonical Transformations (正则变换的条件)
+//   Section 13.4: Poisson Brackets (泊松括号)
+//   Section 13.5: Invariants under Canonical Transformations (正则变换下的不变量)
+//   Section 13.6: Symplectic Structure (辛结构)
 
-// Chapter 9: Hamilton-Jacobi Theory (哈密顿-雅可比理论)
-//   Section 9.1: Hamilton-Jacobi Equation (哈密顿-雅可比方程)
-//   Section 9.2: Separation of Variables (分离变量法)
-//   Section 9.3: Action-Angle Variables (作用量-角变量)
-//   Section 9.4: Complete Integrals and Characteristics (完全积分与特征线)
-//   Section 9.5: Applications to Central Force Problems (在中心力问题中的应用)
+// Chapter 14: Hamilton-Jacobi Theory (哈密顿-雅可比理论)
+//   Section 14.1: Hamilton-Jacobi Equation (哈密顿-雅可比方程)
+//   Section 14.2: Separation of Variables (分离变量法)
+//   Section 14.3: Action-Angle Variables (作用量-角变量)
+//   Section 14.4: Complete Integrals and Characteristics (完全积分与特征线)
+//   Section 14.5: Applications to Central Force Problems (在中心力问题中的应用)
 
 // =========================================================================
-// --- Part IV: Advanced Topics (进阶主题) ---
+// --- Part V: Advanced Topics (进阶主题) ---
 // =========================================================================
 #part("Advanced Topics") // 进阶主题
 
-// Chapter 10: Liouville's Theorem and Statistical Mechanics (刘维尔定理与统计力学)
-//   Section 10.1: Liouville's Theorem (刘维尔定理)
-//   Section 10.2: Phase Space Volume Conservation (相空间体积守恒)
-//   Section 10.3: Ergodicity and Mixing (遍历性与混合)
-//   Section 10.4: Poincaré Recurrence Theorem (庞加莱回归定理)
+// Chapter 15: Liouville's Theorem and Statistical Mechanics (刘维尔定理与统计力学)
+//   Section 15.1: Liouville's Theorem (刘维尔定理)
+//   Section 15.2: Phase Space Volume Conservation (相空间体积守恒)
+//   Section 15.3: Ergodicity and Mixing (遍历性与混合)
+//   Section 15.4: Poincaré Recurrence Theorem (庞加莱回归定理)
 
-// Chapter 11: Perturbation Theory (微扰理论)
-//   Section 11.1: Time-independent Perturbation Theory (不含时微扰理论)
-//   Section 11.2: Time-dependent Perturbation Theory (含时微扰理论)
-//   Section 11.3: Adiabatic Invariants (绝热不变量)
-//   Section 11.4: Canonical Perturbation Theory (正则微扰理论)
+// Chapter 16: Perturbation Theory (微扰理论)
+//   Section 16.1: Time-independent Perturbation Theory (不含时微扰理论)
+//   Section 16.2: Time-dependent Perturbation Theory (含时微扰理论)
+//   Section 16.3: Adiabatic Invariants (绝热不变量)
+//   Section 16.4: Canonical Perturbation Theory (正则微扰理论)
 
-// Chapter 12: Integrable Systems (可积系统)
-//   Section 12.1: Complete Integrability (完全可积性)
-//   Section 12.2: Lax Pairs (Lax对)
-//   Section 12.3: Inverse Scattering Method (逆散射方法)
-//   Section 12.4: Examples of Integrable Systems (可积系统示例)
+// Chapter 17: Integrable Systems (可积系统)
+//   Section 17.1: Complete Integrability (完全可积性)
+//   Section 17.2: Lax Pairs (Lax对)
+//   Section 17.3: Inverse Scattering Method (逆散射方法)
+//   Section 17.4: Examples of Integrable Systems (可积系统示例)
 
-// Chapter 13: Stability and Chaos (稳定性与混沌)
-//   Section 13.1: Linear Stability Analysis (线性稳定性分析)
-//   Section 13.2: Lyapunov Exponents (李雅普诺夫指数)
-//   Section 13.3: Poincaré Sections (庞加莱截面)
-//   Section 13.4: Bifurcations (分岔)
-//   Section 13.5: Routes to Chaos (通向混沌的道路)
+// Chapter 18: Stability and Chaos (稳定性与混沌)
+//   Section 18.1: Linear Stability Analysis (线性稳定性分析)
+//   Section 18.2: Lyapunov Exponents (李雅普诺夫指数)
+//   Section 18.3: Poincaré Sections (庞加莱截面)
+//   Section 18.4: Bifurcations (分岔)
+//   Section 18.5: Routes to Chaos (通向混沌的道路)
 
 
 
 // =========================================================================
-// --- Part V: Relativistic and Field Extensions (相对论与场的推广) ---
+// --- Part VI: Relativistic and Field Extensions (相对论与场的推广) ---
 // =========================================================================
 #part("Relativistic and Field Extensions") // 相对论与场的推广
 
-// Chapter 14: Relativistic Mechanics (相对论力学)
-//   Section 14.1: Relativistic Lagrangian (相对论拉格朗日量)
-//   Section 14.2: Relativistic Hamiltonian (相对论哈密顿量)
-//   Section 14.3: Electromagnetic Interactions (电磁相互作用)
-//   Section 14.4: Covariant Formulation (协变形式)
+// Chapter 19: Relativistic Mechanics (相对论力学)
+//   Section 19.1: Relativistic Lagrangian (相对论拉格朗日量)
+//   Section 19.2: Relativistic Hamiltonian (相对论哈密顿量)
+//   Section 19.3: Electromagnetic Interactions (电磁相互作用)
+//   Section 19.4: Covariant Formulation (协变形式)
 
-// Chapter 15: Classical Field Theory (经典场论)
-//   Section 15.1: Lagrangian Density (拉格朗日密度)
-//   Section 15.2: Field Equations from Variational Principle (从变分原理推导场方程)
-//   Section 15.3: Noether's Theorem for Fields (场的诺特定理)
-//   Section 15.4: Stress-Energy Tensor (应力-能量张量)
-//   Section 15.5: Examples: Scalar and Electromagnetic Fields (示例：标量场与电磁场)
+// Chapter 20: Classical Field Theory (经典场论)
+//   Section 20.1: Lagrangian Density (拉格朗日密度)
+//   Section 20.2: Field Equations from Variational Principle (从变分原理推导场方程)
+//   Section 20.3: Noether's Theorem for Fields (场的诺特定理)
+//   Section 20.4: Stress-Energy Tensor (应力-能量张量)
+//   Section 20.5: Examples: Scalar and Electromagnetic Fields (示例：标量场与电磁场)
+
+// ==========================================================================
+// References (参考文献)
+// ==========================================================================
+#bibliography("references.bib", title: "References", full: true)
