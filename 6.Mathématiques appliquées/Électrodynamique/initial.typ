@@ -110,7 +110,7 @@ To decide whether a point of a field is a source or a sink, and to measure how s
   Let $harpoon(Sigma)$ be an oriented surface in $Omega$.
   The *flux* of $bold(a)$ through $harpoon(Sigma)$ is
   $
-    Phi = integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_harpoon(Sigma) P dif y dif z + Q dif z dif x + R dif x dif y.
+    Phi = integral_(harpoon)(Sigma) bold(a) dot dif bold(Sigma) = integral_(harpoon)(Sigma) P dif y dif z + Q dif z dif x + R dif x dif y.
   $
   Let $M in Omega$.
   The *divergence* of $bold(a)$ at $M$ is
@@ -126,7 +126,7 @@ If $nabla dot bold(a) > 0$ at $M$, then $M$ is a *source* of the field; if $nabl
   Let $Omega$ be a closed region in $RR^3$ bounded by the closed surface $harpoon(Sigma)$ oriented by the outward normal, and let $bold(a) in C^1(Omega)$.
   Then
   $
-    integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_V nabla dot bold(a) dif V,
+    integral_(harpoon)(Sigma) bold(a) dot dif bold(Sigma) = integral_V nabla dot bold(a) dif V,
   $
   where $V$ is the volume of $Omega$.
 ] <thm:ed-gauss-divergence>
@@ -136,7 +136,7 @@ The proof is given in the Analyse Mathématique note; physically, the theorem st
 #theorem[
   The divergence of $bold(a)$ at $M$ is the rate of change of the flux of $bold(a)$ with respect to the volume of $harpoon(Sigma)$,
   $
-    nabla dot bold(a) (M) = lim_(V -> 0) (integral_harpoon(Sigma) bold(a) dot dif bold(Sigma)) / V,
+    nabla dot bold(a) (M) = lim_(V -> 0) (integral_(harpoon)(Sigma) bold(a) dot dif bold(Sigma)) / V,
   $
   where $harpoon(Sigma)$ bounds a region of volume $V$ that shrinks to the point $M$.
 ] <thm:divergence-density>
@@ -144,7 +144,7 @@ The proof is given in the Analyse Mathématique note; physically, the theorem st
 #proof[
   By Gauss's divergence theorem,
   $
-    integral_harpoon(Sigma) bold(a) dot dif bold(Sigma) = integral_V nabla dot bold(a) dif V = (nabla dot bold(a)) (M') V,
+    integral_(harpoon)(Sigma) bold(a) dot dif bold(Sigma) = integral_V nabla dot bold(a) dif V = (nabla dot bold(a)) (M') V,
   $
   where the last step is the mean value theorem for integrals, for some point $M'$ in the region.
 
@@ -159,7 +159,7 @@ To describe how a field circulates, we use the circulation along a closed curve 
   Let $harpoon(Gamma)$ be an oriented closed curve in $Omega$.
   The *circulation* of $bold(a)$ along $harpoon(Gamma)$ is
   $
-    Zeta = integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma).
+    Zeta = integral.cont_(harpoon)(Gamma) bold(a) dot dif bold(Gamma).
   $
   Let $M in Omega$.
   The *curl* of $bold(a)$ at $M$ is
@@ -175,7 +175,7 @@ If $nabla times bold(a) = bold(0)$ at every point of $Omega$, then $bold(a)$ is 
   Let $harpoon(Sigma)$ be an oriented surface in $RR^3$ with boundary $harpoon(Gamma)$ oriented consistently with the normal of $harpoon(Sigma)$ by the right-hand rule, and let $bold(a) in C^1$.
   Then
   $
-    integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = integral_harpoon(Sigma) (nabla times bold(a)) dot dif bold(Sigma).
+    integral.cont_(harpoon)(Gamma) bold(a) dot dif bold(Gamma) = integral_(harpoon)(Sigma) (nabla times bold(a)) dot dif bold(Sigma).
   $
 ] <thm:ed-stokes>
 
@@ -184,7 +184,7 @@ The proof is given in the Analyse Mathématique note; physically, the theorem st
 #theorem[
   The component of the curl along the unit normal $bold(n)$ is the rate of change of the circulation with respect to the area of $harpoon(Sigma)$,
   $
-    (nabla times bold(a)) dot bold(n) = lim_(S -> 0) (integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma)) / S,
+    (nabla times bold(a)) dot bold(n) = lim_(S -> 0) (integral.cont_(harpoon)(Gamma) bold(a) dot dif bold(Gamma)) / S,
   $
   where $harpoon(Gamma)$ bounds an oriented planar region $harpoon(Sigma)$ of area $S$ with normal $bold(n)$, and the region shrinks to the point $M$.
 ] <thm:curl-density>
@@ -192,7 +192,7 @@ The proof is given in the Analyse Mathématique note; physically, the theorem st
 #proof[
   By Stokes' theorem,
   $
-    integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = integral_harpoon(Sigma) (nabla times bold(a)) dot dif bold(Sigma) = ((nabla times bold(a)) dot bold(n)) (M') S,
+    integral.cont_(harpoon)(Gamma) bold(a) dot dif bold(Gamma) = integral_(harpoon)(Sigma) (nabla times bold(a)) dot dif bold(Sigma) = ((nabla times bold(a)) dot bold(n)) (M') S,
   $
   where the last step is the mean value theorem for integrals, for some point $M'$ on the planar surface.
 
@@ -286,7 +286,7 @@ This section classifies fields by these two kinds of potential, and shows that e
 
   In the field $bold(a)$, if the line integral is independent of the path, i.e., for any two oriented curves $harpoon(Gamma_1)$ and $harpoon(Gamma_2)$ connecting the same two points in $Omega$, we have
   $
-    integral_harpoon(Gamma_1) bold(a) dot dif bold(Gamma_1) = integral_harpoon(Gamma_2) bold(a) dot dif bold(Gamma_2).
+    integral_(harpoon)(Gamma_1) bold(a) dot dif bold(Gamma_1) = integral_(harpoon)(Gamma_2) bold(a) dot dif bold(Gamma_2).
   $
   Then we say that $bold(a)$ is a *conservative field*.
 ] <def:potential-conservative-field>
@@ -301,7 +301,7 @@ This section classifies fields by these two kinds of potential, and shows that e
   1. $bold(a)$ is a conservative field.
   2. $bold(a)$ is a potential field.
   3. $bold(a)$ is an irrotational field, i.e., $nabla times bold(a) = bold(0)$.
-  4. For every closed curve $harpoon(Gamma)$ in $Omega$, $integral.cont_harpoon(Gamma) bold(a) dot dif bold(Gamma) = 0$.
+  4. For every closed curve $harpoon(Gamma)$ in $Omega$, $integral.cont_(harpoon)(Gamma) bold(a) dot dif bold(Gamma) = 0$.
 ] <thm:conservative-equivalence>
 
 #proof[
@@ -1075,7 +1075,7 @@ For a closed surface, positive flux indicates a net outflow of field lines (a so
 #law(name: "Gauss's Law — Integral Form")[
   The total electric flux through any closed surface $S$ (also called a *Gaussian surface*) is proportional to the total charge enclosed within that surface:
   $
-    integral_harpoon(S) bold(E) dot dif bold(S) = frac(Q_"enc", epsilon_0),
+    integral_(harpoon)(S) bold(E) dot dif bold(S) = frac(Q_"enc", epsilon_0),
   $
   where $Q_"enc" = integral_V rho(bold(r)) dif V$ is the total charge inside the volume $V$ bounded by $S$, and $epsilon_0$ is the permittivity of free space.
 ]
@@ -1754,15 +1754,15 @@ When a dielectric is polarized, the displacement of bound charges produces effec
 Different dielectric materials respond to an external field through different microscopic mechanisms:
 
 #property(name: "Electronic Polarization")[ // 电子极化
-  In atoms and nonpolar molecules, the external field displaces the electron cloud relative to the nucleus, creating an induced dipole. This mechanism is present in all materials, extremely fast (~$10^{-15}$ s), and essentially temperature-independent. Typical contribution: $chi_e approx 0.01 - 1$.
+  In atoms and nonpolar molecules, the external field displaces the electron cloud relative to the nucleus, creating an induced dipole. This mechanism is present in all materials, extremely fast (~$10^(-15)$ s), and essentially temperature-independent. Typical contribution: $chi_e approx 0.01 - 1$.
 ]
 
 #property(name: "Ionic Polarization")[ // 离子极化
-  In ionic crystals (e.g., NaCl), the external field displaces positive and negative ions in opposite directions, increasing the dipole moment of each ion pair. Slower than electronic polarization (~$10^{-13}$ s) and moderately temperature-dependent. Typical contribution: $chi_e approx 1 - 10$.
+  In ionic crystals (e.g., NaCl), the external field displaces positive and negative ions in opposite directions, increasing the dipole moment of each ion pair. Slower than electronic polarization (~$10^(-13)$ s) and moderately temperature-dependent. Typical contribution: $chi_e approx 1 - 10$.
 ]
 
 #property(name: "Orientational (Dipolar) Polarization")[ // 取向极化
-  In polar molecules (e.g., H₂O, NH₃) that possess a permanent dipole moment, the external field tends to align these dipoles against thermal agitation. This is the strongest mechanism but also the slowest (~$10^{-10}$ s) and strongly temperature-dependent (following the Langevin function). Typical contribution: $chi_e$ can exceed $10$.
+  In polar molecules (e.g., H₂O, NH₃) that possess a permanent dipole moment, the external field tends to align these dipoles against thermal agitation. This is the strongest mechanism but also the slowest (~$10^(-10)$ s) and strongly temperature-dependent (following the Langevin function). Typical contribution: $chi_e$ can exceed $10$.
 ]
 
 #property(name: "Interfacial (Space-Charge) Polarization")[ // 界面极化
@@ -2295,7 +2295,7 @@ In section §6.3, the Biot-Savart law gave us the fundamental integral relation 
   $
   where $dif bold(S) = hat(bold(n)) dif S$ is the vector area element, with $hat(bold(n))$ being the unit normal to the surface. For a closed surface, the flux is denoted:
   $
-    Phi_B = integral_harpoon(S) bold(B) dot dif bold(S).
+    Phi_B = integral_(harpoon)(S) bold(B) dot dif bold(S).
   $
 
   The SI unit of magnetic flux is the *weber* (Wb):
@@ -2319,13 +2319,13 @@ Physically, the magnetic flux measures the "flow" of the magnetic field through 
 #law(name: "Gauss's Law for Magnetism — Integral Form")[
   The net magnetic flux through any closed surface $S$ is identically zero:
   $
-    integral_harpoon(S) bold(B) dot dif bold(S) = 0.
+    integral_(harpoon)(S) bold(B) dot dif bold(S) = 0.
   $
 ]
 
 This law expresses the experimental fact that *magnetic monopoles do not exist*. Every magnetic field line that enters a closed surface must also leave it. Contrast this with Gauss's law for $bold(E)$ (§3.3), where the flux is proportional to the enclosed charge:
 $
-  integral_harpoon(S) bold(E) dot dif bold(S) = frac(Q_"enc", epsilon_0).
+  integral_(harpoon)(S) bold(E) dot dif bold(S) = frac(Q_"enc", epsilon_0).
 $
 The right-hand side being zero means there are no "magnetic charges" to serve as sources or sinks of the magnetic field.
 
@@ -2463,8 +2463,8 @@ We have now assembled the complete set of field equations for electrostatics and
   ("Curl", [$nabla times bold(E) = bold(0)$], [$nabla times bold(B) = mu_0 bold(J)$], "Circulation of the field"),
   (
     [Gauss-type (integral)],
-    [$integral_harpoon(S) bold(E) dot dif bold(S) = Q_"enc" / epsilon_0$],
-    [$integral_harpoon(S) bold(B) dot dif bold(S) = 0$],
+    [$integral_(harpoon)(S) bold(E) dot dif bold(S) = Q_"enc" / epsilon_0$],
+    [$integral_(harpoon)(S) bold(B) dot dif bold(S) = 0$],
     "Flux law",
   ),
   (
@@ -2711,17 +2711,17 @@ The flux-circulation relation provides an alternative way to compute magnetic fl
     Phi_B = integral_S bold(B) dot dif bold(S) = integral_0^R B_0 (1 - rho / R) 2 pi rho dif rho = 2 pi B_0 integral_0^R (rho - rho^2 / R) dif rho = frac(pi B_0 R^2, 3).
   $
 
-  *Via $bold(A)$:* By symmetry, $bold(A) = A_phi(rho) hat(bold(phi))$. From $bold(B) = nabla times bold(A)$ in cylindrical coordinates:
+  *Via $bold(A)$:* By symmetry, $bold(A) = A_(phi)(rho) hat(bold(phi))$. From $bold(B) = nabla times bold(A)$ in cylindrical coordinates:
   $
     B_z = frac(1, rho) (partial (rho A_phi)) / (partial rho) = B_0 (1 - rho / R).
   $
   Integrating: $rho A_phi = B_0 integral (rho - rho^2 / R) dif rho = B_0 (rho^2 / 2 - rho^3 / (3 R))$, so
   $
-    A_phi(rho) = B_0 (rho / 2 - rho^2 / (3 R)).
+    A_(phi)(rho) = B_0 (rho / 2 - rho^2 / (3 R)).
   $
   The circulation around the rim ($rho = R$) gives:
   $
-    integral.cont bold(A) dot dif bold(l) = 2 pi R A_phi(R) = 2 pi R B_0 (R / 2 - R^2 / (3 R)) = 2 pi R B_0 frac(R, 6) = frac(pi B_0 R^2, 3),
+    integral.cont bold(A) dot dif bold(l) = 2 pi R A_(phi)(R) = 2 pi R B_0 (R / 2 - R^2 / (3 R)) = 2 pi R B_0 frac(R, 6) = frac(pi B_0 R^2, 3),
   $
   matching the direct calculation.
 ]
