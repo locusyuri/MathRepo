@@ -1,0 +1,449 @@
+% ==========================================================================
+% Recherche Opérationnelle — References
+% ==========================================================================
+% 分组顺序：教材基线 → 线性规划 → 整数与组合优化 → 网络优化 →
+%           动态规划与 MDP → 排队论与存储论 → 随机规划与模拟 →
+%           决策论与博弈论 → 非线性优化（交叉引用用）
+% ==========================================================================
+
+% --------------------------------------------------------------------------
+% 教材基线 (Textbook Baseline)
+% --------------------------------------------------------------------------
+
+@book{hillier2015,
+  author    = {Hillier, Frederick S. and Lieberman, Gerald J.},
+  title     = {Introduction to Operations Research},
+  publisher = {McGraw-Hill Education},
+  edition   = {10},
+  year      = {2015},
+}
+
+@book{tsinghua2012,
+  author    = {{运筹学教材编写组}},
+  title     = {运筹学},
+  publisher = {清华大学出版社},
+  edition   = {4},
+  year      = {2012},
+}
+
+% --------------------------------------------------------------------------
+% 线性规划 (Linear Programming)
+% --------------------------------------------------------------------------
+
+@book{bertsimas1997,
+  author    = {Bertsimas, Dimitris and Tsitsiklis, John N.},
+  title     = {Introduction to Linear Optimization},
+  publisher = {Athena Scientific},
+  year      = {1997},
+}
+
+@book{dantzig1963,
+  author    = {Dantzig, George B.},
+  title     = {Linear Programming and Extensions},
+  publisher = {Princeton University Press},
+  year      = {1963},
+}
+
+@book{chvatal1983,
+  author    = {Chv{\'a}tal, V{\'a}clav},
+  title     = {Linear Programming},
+  publisher = {W. H. Freeman},
+  year      = {1983},
+}
+
+@book{vanderbei2020,
+  author    = {Vanderbei, Robert J.},
+  title     = {Linear Programming: Foundations and Extensions},
+  publisher = {Springer},
+  edition   = {5},
+  year      = {2020},
+}
+
+@book{schrijver1986,
+  author    = {Schrijver, Alexander},
+  title     = {Theory of Linear and Integer Programming},
+  publisher = {Wiley},
+  year      = {1986},
+}
+
+@incollection{klee1972,
+  author    = {Klee, Victor and Minty, George J.},
+  title     = {How Good is the Simplex Algorithm?},
+  booktitle = {Inequalities III},
+  editor    = {Shisha, Oved},
+  publisher = {Academic Press},
+  pages     = {159--175},
+  year      = {1972},
+}
+
+@article{spielman2004,
+  author  = {Spielman, Daniel A. and Teng, Shang-Hua},
+  title   = {Smoothed Analysis of Algorithms: Why the Simplex Algorithm Usually Takes Polynomial Time},
+  journal = {Journal of the ACM},
+  volume  = {51},
+  number  = {3},
+  pages   = {385--463},
+  year    = {2004},
+}
+
+@book{borgwardt1987,
+  author    = {Borgwardt, Karl-Heinz},
+  title     = {The Simplex Method: A Probabilistic Analysis},
+  publisher = {Springer},
+  year      = {1987},
+}
+
+@incollection{dantzig1951,
+  author    = {Dantzig, George B.},
+  title     = {Application of the Simplex Method to a Transportation Problem},
+  booktitle = {Activity Analysis of Production and Allocation},
+  editor    = {Koopmans, Tjalling C.},
+  publisher = {Wiley},
+  pages     = {359--373},
+  year      = {1951},
+}
+
+@article{kuhn1955,
+  author  = {Kuhn, Harold W.},
+  title   = {The Hungarian Method for the Assignment Problem},
+  journal = {Naval Research Logistics Quarterly},
+  volume  = {2},
+  pages   = {83--97},
+  year    = {1955},
+}
+
+@article{charnes1978,
+  author  = {Charnes, Abraham and Cooper, William W. and Rhodes, Edwardo},
+  title   = {Measuring the Efficiency of Decision Making Units},
+  journal = {European Journal of Operational Research},
+  volume  = {2},
+  number  = {6},
+  pages   = {429--444},
+  year    = {1978},
+}
+
+% --------------------------------------------------------------------------
+% 整数与组合优化 (Integer and Combinatorial Optimization)
+% --------------------------------------------------------------------------
+
+@book{wolsey2020,
+  author    = {Wolsey, Laurence A.},
+  title     = {Integer Programming},
+  publisher = {Springer},
+  edition   = {2},
+  year      = {2020},
+}
+
+@book{nemhauser1988,
+  author    = {Nemhauser, George L. and Wolsey, Laurence A.},
+  title     = {Integer and Combinatorial Optimization},
+  publisher = {Wiley},
+  year      = {1988},
+}
+
+@book{garey1979,
+  author    = {Garey, Michael R. and Johnson, David S.},
+  title     = {Computers and Intractability: A Guide to the Theory of NP-Completeness},
+  publisher = {W. H. Freeman},
+  year      = {1979},
+}
+
+@book{vazirani2001,
+  author    = {Vazirani, Vijay V.},
+  title     = {Approximation Algorithms},
+  publisher = {Springer},
+  year      = {2001},
+}
+
+@book{kleinberg2006,
+  author    = {Kleinberg, Jon and Tardos, {\'E}va},
+  title     = {Algorithm Design},
+  publisher = {Pearson/Addison-Wesley},
+  year      = {2006},
+}
+
+@article{kirkpatrick1983,
+  author  = {Kirkpatrick, Scott and Gelatt, C. Daniel and Vecchi, Mario P.},
+  title   = {Optimization by Simulated Annealing},
+  journal = {Science},
+  volume  = {220},
+  number  = {4598},
+  pages   = {671--680},
+  year    = {1983},
+}
+
+@book{glover1997,
+  author    = {Glover, Fred and Laguna, Manuel},
+  title     = {Tabu Search},
+  publisher = {Kluwer Academic Publishers},
+  year      = {1997},
+}
+
+@book{holland1975,
+  author    = {Holland, John H.},
+  title     = {Adaptation in Natural and Artificial Systems},
+  publisher = {University of Michigan Press},
+  year      = {1975},
+}
+
+% --------------------------------------------------------------------------
+% 网络优化 (Network Optimization)
+% --------------------------------------------------------------------------
+
+@book{ahuja1993,
+  author    = {Ahuja, Ravindra K. and Magnanti, Thomas L. and Orlin, James B.},
+  title     = {Network Flows: Theory, Algorithms, and Applications},
+  publisher = {Prentice Hall},
+  year      = {1993},
+}
+
+@book{bertsekas1998,
+  author    = {Bertsekas, Dimitri P.},
+  title     = {Network Optimization: Continuous and Discrete Models},
+  publisher = {Athena Scientific},
+  year      = {1998},
+}
+
+@book{ford1962,
+  author    = {Ford, L. R. and Fulkerson, D. R.},
+  title     = {Flows in Networks},
+  publisher = {Princeton University Press},
+  year      = {1962},
+}
+
+% --------------------------------------------------------------------------
+% 动态规划与马尔可夫决策过程 (Dynamic Programming and MDP)
+% --------------------------------------------------------------------------
+
+@book{bellman1957,
+  author    = {Bellman, Richard},
+  title     = {Dynamic Programming},
+  publisher = {Princeton University Press},
+  year      = {1957},
+}
+
+@book{bertsekas2017,
+  author    = {Bertsekas, Dimitri P.},
+  title     = {Dynamic Programming and Optimal Control, Volume I},
+  publisher = {Athena Scientific},
+  edition   = {4},
+  year      = {2017},
+}
+
+@book{bertsekas2012,
+  author    = {Bertsekas, Dimitri P.},
+  title     = {Dynamic Programming and Optimal Control, Volume II: Approximate Dynamic Programming},
+  publisher = {Athena Scientific},
+  edition   = {4},
+  year      = {2012},
+}
+
+@book{puterman1994,
+  author    = {Puterman, Martin L.},
+  title     = {Markov Decision Processes: Discrete Stochastic Dynamic Programming},
+  publisher = {Wiley},
+  year      = {1994},
+}
+
+% --------------------------------------------------------------------------
+% 排队论与存储论 (Queueing and Inventory Theory)
+% --------------------------------------------------------------------------
+
+@book{ross2019,
+  author    = {Ross, Sheldon M.},
+  title     = {Introduction to Probability Models},
+  publisher = {Academic Press},
+  edition   = {12},
+  year      = {2019},
+}
+
+@book{kleinrock1975,
+  author    = {Kleinrock, Leonard},
+  title     = {Queueing Systems, Volume I: Theory},
+  publisher = {Wiley},
+  year      = {1975},
+}
+
+@book{gross2008,
+  author    = {Gross, Donald and Shortle, John F. and Thompson, James M. and Harris, Carl M.},
+  title     = {Fundamentals of Queueing Theory},
+  publisher = {Wiley},
+  edition   = {4},
+  year      = {2008},
+}
+
+@book{tijms2003,
+  author    = {Tijms, Henk C.},
+  title     = {A First Course in Stochastic Models},
+  publisher = {Wiley},
+  edition   = {2},
+  year      = {2003},
+}
+
+@book{zipkin2000,
+  author    = {Zipkin, Paul H.},
+  title     = {Foundations of Inventory Management},
+  publisher = {McGraw-Hill},
+  year      = {2000},
+}
+
+@book{silver1998,
+  author    = {Silver, Edward A. and Pyke, David F. and Peterson, Rein},
+  title     = {Inventory Management and Production Planning and Scheduling},
+  publisher = {Wiley},
+  edition   = {3},
+  year      = {1998},
+}
+
+% --------------------------------------------------------------------------
+% 随机规划与模拟 (Stochastic Programming and Simulation)
+% --------------------------------------------------------------------------
+
+@book{birge2011,
+  author    = {Birge, John R. and Louveaux, Fran{\c{c}}ois},
+  title     = {Introduction to Stochastic Programming},
+  publisher = {Springer},
+  edition   = {2},
+  year      = {2011},
+}
+
+@book{bental2009,
+  author    = {Ben-Tal, Aharon and El Ghaoui, Laurent and Nemirovski, Arkadi},
+  title     = {Robust Optimization},
+  publisher = {Princeton University Press},
+  year      = {2009},
+}
+
+@article{bertsimas2004,
+  author  = {Bertsimas, Dimitris and Sim, Melvyn},
+  title   = {The Price of Robustness},
+  journal = {Operations Research},
+  volume  = {52},
+  number  = {1},
+  pages   = {35--53},
+  year    = {2004},
+}
+
+@book{law2015,
+  author    = {Law, Averill M.},
+  title     = {Simulation Modeling and Analysis},
+  publisher = {McGraw-Hill},
+  edition   = {5},
+  year      = {2015},
+}
+
+@book{rubinstein2017,
+  author    = {Rubinstein, Reuven Y. and Kroese, Dirk P.},
+  title     = {Simulation and the Monte Carlo Method},
+  publisher = {Wiley},
+  edition   = {3},
+  year      = {2017},
+}
+
+% --------------------------------------------------------------------------
+% 决策论与博弈论 (Decision Analysis and Game Theory)
+% --------------------------------------------------------------------------
+
+@book{raiffa1968,
+  author    = {Raiffa, Howard},
+  title     = {Decision Analysis: Introductory Lectures on Choices under Uncertainty},
+  publisher = {Addison-Wesley},
+  year      = {1968},
+}
+
+@book{keeney1976,
+  author    = {Keeney, Ralph L. and Raiffa, Howard},
+  title     = {Decisions with Multiple Objectives: Preferences and Value Tradeoffs},
+  publisher = {Wiley},
+  year      = {1976},
+}
+
+@book{saaty1980,
+  author    = {Saaty, Thomas L.},
+  title     = {The Analytic Hierarchy Process},
+  publisher = {McGraw-Hill},
+  year      = {1980},
+}
+
+@book{vonneumann1944,
+  author    = {von Neumann, John and Morgenstern, Oskar},
+  title     = {Theory of Games and Economic Behavior},
+  publisher = {Princeton University Press},
+  year      = {1944},
+}
+
+@book{osborne1994,
+  author    = {Osborne, Martin J. and Rubinstein, Ariel},
+  title     = {A Course in Game Theory},
+  publisher = {MIT Press},
+  year      = {1994},
+}
+
+@book{myerson1991,
+  author    = {Myerson, Roger B.},
+  title     = {Game Theory: Analysis of Conflict},
+  publisher = {Harvard University Press},
+  year      = {1991},
+}
+
+@incollection{shapley1953,
+  author    = {Shapley, Lloyd S.},
+  title     = {A Value for n-Person Games},
+  booktitle = {Contributions to the Theory of Games II},
+  editor    = {Kuhn, Harold W. and Tucker, Albert W.},
+  publisher = {Princeton University Press},
+  pages     = {307--317},
+  year      = {1953},
+}
+
+@article{gale1962,
+  author  = {Gale, David and Shapley, Lloyd S.},
+  title   = {College Admissions and the Stability of Marriage},
+  journal = {The American Mathematical Monthly},
+  volume  = {69},
+  number  = {1},
+  pages   = {9--15},
+  year    = {1962},
+}
+
+@book{nowak2006,
+  author    = {Nowak, Martin A.},
+  title     = {Evolutionary Dynamics: Exploring the Equations of Life},
+  publisher = {Harvard University Press},
+  year      = {2006},
+}
+
+% --------------------------------------------------------------------------
+% 非线性优化（Part III 导论与交叉引用）(Nonlinear Optimization)
+% --------------------------------------------------------------------------
+
+@book{boyd2004,
+  author    = {Boyd, Stephen and Vandenberghe, Lieven},
+  title     = {Convex Optimization},
+  publisher = {Cambridge University Press},
+  year      = {2004},
+}
+
+@book{nocedal2006,
+  author    = {Nocedal, Jorge and Wright, Stephen J.},
+  title     = {Numerical Optimization},
+  publisher = {Springer},
+  edition   = {2},
+  year      = {2006},
+}
+
+@book{bazaraa2013,
+  author    = {Bazaraa, Mokhtar S. and Sherali, Hanif D. and Shetty, C. M.},
+  title     = {Nonlinear Programming: Theory and Algorithms},
+  publisher = {Wiley},
+  edition   = {3},
+  year      = {2013},
+}
+
+@book{luenberger2016,
+  author    = {Luenberger, David G. and Ye, Yinyu},
+  title     = {Linear and Nonlinear Programming},
+  publisher = {Springer},
+  edition   = {4},
+  year      = {2016},
+}
