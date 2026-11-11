@@ -1460,7 +1460,7 @@ Fourier analysis also decides when a sequence fills an interval evenly.
 The convergence theory developed so far is conditional: it asks for regularity, monotonicity or bounded variation of $f$. The following theorem removes every hypothesis.
 
 #theorem(name: "Carleson–Hunt Theorem")[
-  Let $f in L^p(bb(T))$ with $1 < p <= +oo$. Then the Fourier series of $f$ converges to $f$ almost everywhere on $bb(T)$.
+  Let $f in L^(p)(bb(T))$ with $1 < p <= +oo$. Then the Fourier series of $f$ converges to $f$ almost everywhere on $bb(T)$.
 ] <thm:carleson-hunt>
 
 In particular the Fourier series of every $L^2$ function converges almost everywhere, although it need not converge uniformly or even at every point. This is the sharp endpoint of the theory: no condition on $f$ beyond integrability of some power is required.
@@ -1477,7 +1477,7 @@ Every function considered in Part I was periodic, so its spectrum was a discrete
 
 Let $f$ have period $2T$. By #link(<def:fourier-coefficients>)[the Euler–Fourier formula] in the form given in §1.2,
 $
-  f(x) ~ sum_(n in bb(Z)) hat(f)_T(n) e^(i omega_n x), quad omega_n = n pi / T, quad hat(f)_T(n) = (1) / (2T) integral_(-T)^(T) f(t) e^(-i omega_n t) dif t.
+  f(x) ~ sum_(n in bb(Z)) hat(f)_(T)(n) e^(i omega_n x), quad omega_n = n pi / T, quad hat(f)_(T)(n) = (1) / (2T) integral_(-T)^(T) f(t) e^(-i omega_n t) dif t.
 $
 The frequencies form an arithmetic grid, of spacing
 $
@@ -1535,7 +1535,7 @@ Under this convention the forward integral carries no constant and the inverse c
 The definition of the Fourier transform asks only for absolute integrability, and #link(<ex:box-fourier>)[the box function] already shows that the transform of an integrable function need not be integrable. A proof of inversion therefore needs a space in which differentiation, multiplication by polynomials and the Fourier transform itself act without leaving the space. That space is the Schwartz space: it trades generality for total stability.
 
 #definition(name: "Schwartz Seminorms")[
-  For $phi in C^oo(bb(R))$ and integers $m, n >= 0$ put
+  For $phi in C^(oo)(bb(R))$ and integers $m, n >= 0$ put
   $
     || phi ||_((m, n)) = sup_(x in bb(R)) abs(x^m phi^((n))(x)).
   $ <eq:schwartz-seminorm>
@@ -1543,7 +1543,7 @@ The definition of the Fourier transform asks only for absolute integrability, an
 ] <def:schwartz-seminorms>
 
 #definition(name: "Schwartz Space")[
-  The *Schwartz space* $cal(S)(bb(R))$ is the set of $phi in C^oo(bb(R))$ such that
+  The *Schwartz space* $cal(S)(bb(R))$ is the set of $phi in C^(oo)(bb(R))$ such that
   $
     || phi ||_((m, n)) < oo quad "for every" m, n >= 0.
   $
@@ -1564,14 +1564,14 @@ The stability of $cal(S)$ is what makes it usable.
   Let $phi, psi in cal(S)(bb(R))$. Then:
   1. *Differentiation.* $phi' in cal(S)(bb(R))$, and $D: cal(S) -> cal(S)$ is continuous.
   2. *Multiplication.* $x phi in cal(S)(bb(R))$, and the map $phi |-> x phi$ is continuous.
-  3. *Multiplication by functions of moderate growth.* If $a in C^oo(bb(R))$ has all derivatives of polynomial growth, then $a phi in cal(S)(bb(R))$.
+  3. *Multiplication by functions of moderate growth.* If $a in C^(oo)(bb(R))$ has all derivatives of polynomial growth, then $a phi in cal(S)(bb(R))$.
   4. *Products.* $phi psi in cal(S)(bb(R))$; in particular $cal(S)$ is an algebra.
   5. *Integrability.* $cal(S)(bb(R)) subset L^1(bb(R))$, so that the Fourier transform of every Schwartz function is defined.
 ] <prop:schwartz-stability>
 
 #proof[
   Statements 1, 2 and 4 are immediate from the Leibniz rule: each seminorm of a derivative or of a product is controlled by finitely many seminorms of the factors, which is exactly continuity.
-  For 3, $D^n(a phi) = sum_(k=0)^(n) binom(n, k) D^(n-k)(a) D^k(phi)$ and $abs(x^m D^(n-k) a(x))$ is bounded by hypothesis, so $|| a phi ||_((m, n))$ is bounded by a finite sum of seminorms of $phi$.
+  For 3, $D^(n)(a phi) = sum_(k=0)^(n) binom(n, k) D^(n-k)(a) D^(k)(phi)$ and $abs(x^m D^(n-k) a(x))$ is bounded by hypothesis, so $|| a phi ||_((m, n))$ is bounded by a finite sum of seminorms of $phi$.
   For 5, $abs(phi(x)) <= || phi ||_((2, 0)) / (1 + x^2)$ and $x |-> 1 \/ (1 + x^2)$ is integrable.
 ]
 
@@ -1583,7 +1583,7 @@ The stability of $cal(S)$ is what makes it usable.
 #note[
   A general distribution is a continuous functional on $cal(D)(Omega)$; its definition and the duality pairing $⟨ T, phi ⟩$ are given in the Équations aux Dérivées Partielles note (see its chapter on distributions).
   Since $cal(D) subset cal(S)$ with a finer topology on $cal(S)$, every tempered distribution is a distribution, $cal(S)'(bb(R)) subset cal(D)'(bb(R))$; the converse fails, and $x |-> e^(x^2)$ is the standard example of a distribution that is not tempered.
-  Every function of polynomial growth acts on $cal(S)$ by integration against it, so $L^p(bb(R)) subset cal(S)'(bb(R))$ for every $p in [1, +oo]$.
+  Every function of polynomial growth acts on $cal(S)$ by integration against it, so $L^(p)(bb(R)) subset cal(S)'(bb(R))$ for every $p in [1, +oo]$.
 ]
 
 Tempered distributions are exactly the class on which the Fourier transform extends by duality, which is the reason for introducing them at this point; the extension itself is stated at the end of §3.4, once the inversion formula is available.
@@ -1598,7 +1598,7 @@ Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced 
   Let $f, g in cal(S)(bb(R))$, $x_0, omega_0 in bb(R)$ and $c in bb(R) without {0}$. The transform is written with the operator alone: $cal(F)[f]$ denotes the function $omega |-> cal(F)[f](omega)$, and the shorthand $hat(f)$ is not used in this list.
   1. *Linearity.* The transform is a $bb(C)$-linear map $cal(F): cal(S)(bb(R)) -> cal(S)(bb(R))$: for $a, b in bb(C)$,
     $ cal(F)[a f + b g] = a cal(F)[f] + b cal(F)[g]. $
-    The same identity holds on $L^1(bb(R))$, where $cal(F)$ is a continuous linear map into $L^oo(bb(R))$, see §4.1.
+    The same identity holds on $L^1(bb(R))$, where $cal(F)$ is a continuous linear map into $L^(oo)(bb(R))$, see §4.1.
 
   2. *Translation and modulation.*
     $
@@ -1714,7 +1714,7 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
 #definition(name: "Gauss Kernel")[
   For $delta > 0$ and $x in bb(R)$ the *Gauss kernel* of width $delta$ is
   $
-    K_delta(x) = (1) / (sqrt(2 pi) delta) e^(-x^2 \/ (2 delta^2)).
+    K_(delta)(x) = (1) / (sqrt(2 pi) delta) e^(-x^2 \/ (2 delta^2)).
   $ <eq:gauss-kernel>
 ] <def:gauss-kernel>
 
@@ -1736,25 +1736,25 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
 
 #lemma(name: "The Gauss Kernel is an Approximate Identity")[
   For every $delta > 0$ the kernel $K_delta$ satisfies:
-  1. *Positivity.* $K_delta(x) >= 0$ for all $x$.
-  2. *Normalization.* $integral_(-oo)^(oo) K_delta(x) dif x = 1$.
+  1. *Positivity.* $K_(delta)(x) >= 0$ for all $x$.
+  2. *Normalization.* $integral_(-oo)^(oo) K_(delta)(x) dif x = 1$.
   3. *Concentration.* For every $eta > 0$,
     $
-      integral_(abs(x) > eta) K_delta(x) dif x -> 0, quad delta -> 0^+.
+      integral_(abs(x) > eta) K_(delta)(x) dif x -> 0, quad delta -> 0^+.
     $
   Consequently, for every $f in cal(S)(bb(R))$, the convolution $f * K_delta$ converges to $f$ uniformly on $bb(R)$ as $delta -> 0^+$.
 ] <lem:gauss-approximation>
 
 #proof[
-  Positivity is clear. For normalization, #link(<lem:gaussian-integral>)[the Gaussian integral] with $a = 1 \/ delta^2$ gives $integral K_delta(x) dif x = 1$. For concentration, the substitution $u = x \/ delta$ gives
+  Positivity is clear. For normalization, #link(<lem:gaussian-integral>)[the Gaussian integral] with $a = 1 \/ delta^2$ gives $integral K_(delta)(x) dif x = 1$. For concentration, the substitution $u = x \/ delta$ gives
   $
-    integral_(abs(x) > eta) K_delta(x) dif x = (1) / (sqrt(2 pi)) integral_(abs(u) > eta \/ delta) e^(-u^2 \/ 2) dif u -> 0,
+    integral_(abs(x) > eta) K_(delta)(x) dif x = (1) / (sqrt(2 pi)) integral_(abs(u) > eta \/ delta) e^(-u^2 \/ 2) dif u -> 0,
   $
   since $eta \/ delta -> +oo$ and the tail of an integrable function vanishes.
 
   For the last claim write $f * K_delta - f$ as an integral and split it at $eta$:
   $
-    abs((f * K_delta)(x) - f(x)) <= integral_(abs(y) <= eta) K_delta(y) abs(f(x - y) - f(x)) dif y + 2 || f ||_oo integral_(abs(y) > eta) K_delta(y) dif y.
+    abs((f * K_delta)(x) - f(x)) <= integral_(abs(y) <= eta) K_(delta)(y) abs(f(x - y) - f(x)) dif y + 2 || f ||_oo integral_(abs(y) > eta) K_(delta)(y) dif y.
   $
   Given $epsilon > 0$, uniform continuity of $f$ on $bb(R)$ gives $eta > 0$ with $abs(f(x - y) - f(x)) < epsilon \/ 2$ whenever $abs(y) <= eta$, and then concentration makes the second term smaller than $epsilon \/ 2$ for $delta$ small enough. This is the same three-property argument as in #link(<prop:fejer-properties>)[the Fejér kernel].
 ]
@@ -1770,17 +1770,17 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
 #proof[
   Let $delta > 0$ and put
   $
-    f_delta(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) e^(-delta^2 omega^2 \/ 2) dif omega.
+    f_(delta)(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) e^(-delta^2 omega^2 \/ 2) dif omega.
   $
   Since $hat(f) in cal(S)$ by #link(<prop:fourier-schwartz>)[the preceding proposition], the integrand is integrable and Fubini applies:
   $
-    f_delta(x) = integral_(-oo)^(oo) f(t) ( (1) / (2 pi) integral_(-oo)^(oo) e^(i omega (x - t)) e^(-delta^2 omega^2 \/ 2) dif omega ) dif t = integral_(-oo)^(oo) f(t) K_delta(x - t) dif t,
+    f_(delta)(x) = integral_(-oo)^(oo) f(t) ( (1) / (2 pi) integral_(-oo)^(oo) e^(i omega (x - t)) e^(-delta^2 omega^2 \/ 2) dif omega ) dif t = integral_(-oo)^(oo) f(t) K_(delta)(x - t) dif t,
   $
-  where the inner integral equals $K_delta(x - t)$ by #link(<lem:gaussian-integral>)[the Gaussian integral] with $a = delta^2$, applied in the variable $omega$: it gives $(1) / (2 pi) sqrt(2 pi \/ delta^2) e^(-(x - t)^2 \/ (2 delta^2))$, which is $K_delta(x - t)$. Hence $f_delta = f * K_delta$, and #link(<lem:gauss-approximation>)[the approximate identity lemma] gives $f_delta -> f$ uniformly.
+  where the inner integral equals $K_(delta)(x - t)$ by #link(<lem:gaussian-integral>)[the Gaussian integral] with $a = delta^2$, applied in the variable $omega$: it gives $(1) / (2 pi) sqrt(2 pi \/ delta^2) e^(-(x - t)^2 \/ (2 delta^2))$, which is $K_(delta)(x - t)$. Hence $f_delta = f * K_delta$, and #link(<lem:gauss-approximation>)[the approximate identity lemma] gives $f_delta -> f$ uniformly.
 
   On the other hand $abs(hat(f)(omega) e^(i omega x) e^(-delta^2 omega^2 \/ 2)) <= abs(hat(f)(omega))$, which is integrable, so dominated convergence gives
   $
-    f_delta(x) -> (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega quad "for every" x.
+    f_(delta)(x) -> (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega quad "for every" x.
   $
   The two limits coincide, which is the claimed identity. Absolute convergence follows from $hat(f) in L^1(bb(R))$, and uniformity from the uniform convergence of $f * K_delta$ and the domination just used.
 ]
@@ -1850,7 +1850,7 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
   $
     || hat(f) ||_oo <= || f ||_1,
   $
-  and $cal(F): L^1(bb(R)) -> L^oo(bb(R))$ is linear and continuous for these norms.
+  and $cal(F): L^1(bb(R)) -> L^(oo)(bb(R))$ is linear and continuous for these norms.
 ] <prop:fourier-transform-l1>
 
 #proof[
@@ -1975,7 +1975,7 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
   $
     F(x) = sum_(n in bb(Z)) f(x + n)
   $
-  converges uniformly on $bb(R)$, so $F$ is continuous, and it is clearly $1$-periodic. Differentiating termwise shows that $F in C^oo(bb(R))$.
+  converges uniformly on $bb(R)$, so $F$ is continuous, and it is clearly $1$-periodic. Differentiating termwise shows that $F in C^(oo)(bb(R))$.
 
   Its Fourier coefficients are computed by cutting the integral into unit intervals and shifting each piece:
   $
@@ -2063,9 +2063,9 @@ and the inversion formula carries the factor $(2 pi)^(-d)$. The Schwartz space i
 ] <def:fourier-transform-rd>
 
 #proposition(name: "Tensor Product Structure")[
-  Let $f_j in cal(S)(bb(R))$ for $j = 1, dots, d$ and put $f(x) = f_1(x_1) dots f_d(x_d)$. Then
+  Let $f_j in cal(S)(bb(R))$ for $j = 1, dots, d$ and put $f(x) = f_1(x_1) dots f_(d)(x_d)$. Then
   $
-    hat(f)(omega) = hat(f)_1(omega_1) dots hat(f)_d(omega_d), quad omega in bb(R)^d.
+    hat(f)(omega) = hat(f)_1(omega_1) dots hat(f)_(d)(omega_d), quad omega in bb(R)^d.
   $
   Consequently the $d$-dimensional transform is the $d$-fold tensor product of the one-dimensional one, and inversion, the convolution theorem and Plancherel in $bb(R)^d$ all follow from their one-dimensional forms by iteration.
 ] <prop:fourier-rd-tensor>
@@ -2075,7 +2075,7 @@ and the inversion formula carries the factor $(2 pi)^(-d)$. The Schwartz space i
 ]
 
 #proposition(name: "Rotation Invariance")[
-  Let $R$ be an orthogonal transformation of $bb(R)^d$ and put $f_R(x) = f(R x)$. Then
+  Let $R$ be an orthogonal transformation of $bb(R)^d$ and put $f_(R)(x) = f(R x)$. Then
   $
     hat(f_R)(omega) = hat(f)(R omega), quad omega in bb(R)^d.
   $
@@ -2285,7 +2285,7 @@ Some common Laplace transforms are collected in #link(<tab:laplace-transforms>)[
 
 = Sobolev Spaces // Sobolev 空间
 
-The spaces treated in this part measure smoothness in $L^2$ through the decay of the Fourier transform: $f$ belongs to $H^s(bb(R))$ when $(1 + omega^2)^(s\/2) hat(f)(omega)$ is square integrable. This is precisely the point of view opened by #link(<thm:plancherel>)[Plancherel], and it is the reason why the chapter belongs to this note rather than to the PDE note, where Sobolev spaces are built from weak derivatives and where the general theory of $W^(k,p)$, the embedding theorems and the trace theorem are developed.
+The spaces treated in this part measure smoothness in $L^2$ through the decay of the Fourier transform: $f$ belongs to $H^(s)(bb(R))$ when $(1 + omega^2)^(s\/2) hat(f)(omega)$ is square integrable. This is precisely the point of view opened by #link(<thm:plancherel>)[Plancherel], and it is the reason why the chapter belongs to this note rather than to the PDE note, where Sobolev spaces are built from weak derivatives and where the general theory of $W^(k,p)$, the embedding theorems and the trace theorem are developed.
 
 // TODO（本章正文待补，结构见上方 Part III 蓝图）：
 //   6.1 定义与基本性质：H^s 的 Fourier 刻画、范数等价（弱导数定义引用 EDP）
