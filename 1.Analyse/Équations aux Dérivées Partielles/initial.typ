@@ -248,49 +248,6 @@ PDEs are classified according to their linearity properties:
   4. The PDE is *fully nonlinear* if it is nonlinear in the highest-order derivatives.
 ] <def:pde-linearity-classification>
 
-Let us introduce three fundamental PDEs that serve as models for large classes of equations:
-
-#definition(name: "Laplace Equation")[
-  The *Laplace equation* is given by
-  $
-    Delta u = sum_(i=1)^n (partial^2 u) / (partial x_i^2) = 0.
-  $
-  Solutions to this equation are called *harmonic functions*.
-] <def:laplace-equation>
-
-The Laplace equation arises in various physical contexts:
-- Electrostatics: $Delta V = 0$ where $V$ is the electrostatic potential in a charge-free region
-- Steady-state heat conduction: $Delta T = 0$ where $T$ is temperature in equilibrium
-- Incompressible fluid flow: $Delta phi = 0$ where $phi$ is the velocity potential
-
-#definition(name: "Heat Equation")[
-  The *heat equation* (or diffusion equation) is given by
-  $
-    (partial u)/(partial t) - kappa Delta u = f(x,t),
-  $
-  where $kappa > 0$ is the thermal diffusivity and $f(x,t)$ represents a heat source.
-] <def:heat-equation>
-
-Physical derivation: Consider heat flow in a homogeneous medium. Let $u(x,t)$ denote the temperature at position $x$ and time $t$. By conservation of energy and Fourier's law of heat conduction ($bold(q) = -kappa nabla u$ where $bold(q)$ is the heat flux), we obtain:
-$
-  rho c_p (partial u) / (partial t) = nabla dot (kappa nabla u) + Q,
-$
-where $rho$ is density, $c_p$ is specific heat capacity, and $Q$ is the heat source. For constant coefficients and rescaling, this becomes $u_t - kappa Delta u = f$.
-
-#definition(name: "Wave Equation")[
-  The *wave equation* is given by
-  $
-    (partial^2 u)/(partial t^2) - a^2 Delta u = f(x,t),
-  $
-  where $a > 0$ is the wave speed and $f(x,t)$ represents a forcing term.
-] <def:wave-equation>
-
-Physical derivation: For small amplitude waves in an elastic medium, consider the displacement $u(x,t)$ of particles from equilibrium. Newton's second law combined with Hooke's law for elastic forces leads to:
-$
-  rho (partial^2 u) / (partial t^2) = nabla dot (a^2 rho nabla u) + F,
-$
-where $rho$ is density, $a$ is the wave speed, and $F$ is the external force. This simplifies to $u_(t t) - a^2 Delta u = f$ after rescaling. A full derivation — the vibrating string via Newton's second law and acoustic waves via conservation of momentum — is given in *Derivation of the Wave Equation and the Cauchy Problem*.
-
 #example(name: "Identifying PDE Properties")[
   Consider the following equations:
 
@@ -302,9 +259,11 @@ where $rho$ is density, $a$ is the wave speed, and $F$ is the external force. Th
   Identify their orders, linearity types, and principal parts.
 ] <ex:pde-classification>
 
-== Order, Linearity and Superposition // 阶、线性与叠加原理
+The three model equations — Laplace, heat and wave — are defined and studied in Part II, where the vibrating string and Fourier's law are also derived from first principles.
 
-The classification introduced in #link(<def:pde-linearity-classification>)[*Basic Concepts and Examples*] determines which structural tools are available for analyzing a PDE. For *linear* equations, the superposition principle allows us to decompose complex solutions into simpler building blocks — a property that fundamentally distinguishes linear PDEs from their nonlinear counterparts.
+== Linear Operators and Superposition // 线性算子与叠加原理
+
+Linear equations — the first class of #link(<def:pde-linearity-classification>)[*Classification of PDEs by Linearity*] — admit the superposition principle: complex solutions decompose into simpler building blocks, a property that fundamentally distinguishes them from their nonlinear counterparts.
 
 #definition(name: "Homogeneous and Inhomogeneous Equations")[
   A linear PDE is said to be *homogeneous* if it can be written in the form $L u = 0$, where $L$ is a linear differential operator. It is *inhomogeneous* (or non-homogeneous) if it has the form $L u = f$ with $f not= 0$.
@@ -560,7 +519,7 @@ The projection of the characteristic curve onto the $(x, y)$-plane (determined b
 ] <ex:transport-equation>
 
 #note[
-  The transport equation is closely related to the wave equation #link(<def:wave-equation>)[*Basic Concepts and Examples*]: it is the simplest hyperbolic PDE and serves as a building block for understanding wave propagation; *Classification of Second-Order PDEs* makes this precise.
+  The transport equation is closely related to the wave equation: it is the simplest hyperbolic PDE and serves as a building block for understanding wave propagation; *Classification of Second-Order PDEs* makes this precise.
 ]
 
 The example above illustrates the general strategy: (1) write down the characteristic equations (#link(<eq:char-system>)[*Method of Characteristics*]); (2) solve the ODE system; (3) use the initial data to determine the solution. We formalize this procedure in *Method of Characteristics*.
@@ -694,7 +653,7 @@ Even when the initial data is smooth, the solution of a _quasilinear_ (nonlinear
 
 = Classification of Second-Order PDEs // 二阶偏微分方程分类
 
-The three model equations introduced in #link(<def:laplace-equation>)[*Basic Concepts and Examples*] — Laplace, heat, and wave — exhibit fundamentally different solution behaviors: harmonic functions are smooth, heat flow is irreversible, and waves propagate at finite speed. This chapter reveals the algebraic invariant behind this trichotomy: the _principal symbol_ of the second-order operator determines the equation type, which in turn governs the geometry of _characteristic surfaces_ and the canonical form to which the equation can be reduced.
+The three model equations — Laplace, heat, and wave — exhibit fundamentally different solution behaviors: harmonic functions are smooth, heat flow is irreversible, and waves propagate at finite speed. This chapter reveals the algebraic invariant behind this trichotomy: the _principal symbol_ of the second-order operator determines the equation type, which in turn governs the geometry of _characteristic surfaces_ and the canonical form to which the equation can be reduced.
 
 == Linear Second-Order Equations // 线性二阶方程
 
@@ -819,7 +778,7 @@ The connection to characteristic surfaces (#link(<def:char-surface>)[*Linear Sec
 - _Hyperbolic_: two distinct families of characteristic curves (wave-like propagation)
 
 #example(name: "Classification of Model Equations")[
-  We classify the three model equations from #link(<def:laplace-equation>)[*Basic Concepts and Examples*] using #link(<def:pde-type-2d>)[Definition above].
+  We classify the three model equations — Laplace, heat, and wave — using #link(<def:pde-type-2d>)[*Classification in Two Dimensions*].
 
   *Laplace equation* $u_(x x) + u_(y y) = 0$: Here $a = 1$, $b = 0$, $c = 1$, so $Delta = 0 - 1 = -1 < 0$. The Laplace equation is _elliptic_ everywhere.
 
@@ -891,7 +850,7 @@ $
 ]
 
 #example(name: "Wave Equation in Canonical Form")[
-  The wave equation $u_(t t) - a^2 u_(x x) = 0$ from #link(<def:wave-equation>)[*Basic Concepts and Examples*] has $a_"coeff" = -a^2$, $b = 0$, $c_"coeff" = 1$ (with variables $(x, t)$), so $Delta = a^2 > 0$. The characteristic ODE gives:
+  The wave equation $u_(t t) - a^2 u_(x x) = 0$ has $a_"coeff" = -a^2$, $b = 0$, $c_"coeff" = 1$ (with variables $(x, t)$), so $Delta = a^2 > 0$. The characteristic ODE gives:
   $
     -a^2 (d t)^2 + (d x)^2 = 0 quad => quad x +- a t = text("const").
   $
@@ -913,7 +872,7 @@ When $Delta = 0$, the characteristic ODE has a single repeated family of solutio
 The proof follows the same chain-rule computation: since $Delta = 0$, the two characteristic families coincide, so both the $u_(xi xi)$ and $u_(xi eta)$ coefficients vanish, leaving only $u_(eta eta)$.
 
 #example(name: "Heat Equation in Canonical Form")[
-  The heat equation $u_t = kappa u_(x x)$ from #link(<def:heat-equation>)[*Basic Concepts and Examples*] has $a = -kappa$, $b = 0$, $c_"coeff" = 0$ (with variables $(x, t)$), so $Delta = 0$. The characteristic ODE gives $-kappa (d t)^2 = 0$, so $t = text("const")$ is the single characteristic family. Setting $xi = t$ and $eta = x$, the equation is already in canonical form #link(<eq:canonical-parabolic>)[(9)]:
+  The heat equation $u_t = kappa u_(x x)$ has $a = -kappa$, $b = 0$, $c_"coeff" = 0$ (with variables $(x, t)$), so $Delta = 0$. The characteristic ODE gives $-kappa (d t)^2 = 0$, so $t = text("const")$ is the single characteristic family. Setting $xi = t$ and $eta = x$, the equation is already in canonical form #link(<eq:canonical-parabolic>)[(9)]:
   $
     u_(eta eta) = (1) / (kappa) u_xi.
   $
@@ -939,7 +898,7 @@ $
 ]
 
 #example(name: "Laplace Equation in Canonical Form")[
-  The Laplace equation $u_(x x) + u_(y y) = 0$ from #link(<def:laplace-equation>)[*Basic Concepts and Examples*] has $a = 1$, $b = 0$, $c = 1$, so $Delta = -1 < 0$. The characteristic ODE gives:
+  The Laplace equation $u_(x x) + u_(y y) = 0$ has $a = 1$, $b = 0$, $c = 1$, so $Delta = -1 < 0$. The characteristic ODE gives:
   $
     (d y)^2 + (d x)^2 = 0 quad => quad y +- i x = text("const").
   $
@@ -987,7 +946,7 @@ The figure above provides a geometric summary of the classification. The charact
 #part("The Three Model Equations") // 三大模型方程
 = Wave Equation // 波动方程
 
-The wave equation, introduced in #link(<def:wave-equation>)[*Introduction to PDEs*], is the prototypical hyperbolic equation. Its canonical form in one dimension was obtained in #link(<eq:canonical-hyperbolic>)[*Canonical Forms and Characteristics*], and its fundamental solution is constructed in #link(<ex:fund-wave>)[*Fundamental Solutions*]. The chapter is organized around one fully general problem — the Cauchy problem on $bb(R)^n$ with a source term *and* nonzero initial data. We first derive the equation itself from mechanics — the vibrating string by Newton's second law, acoustic waves by conservation of momentum — and discuss the initial and boundary conditions that select a well-posed problem. The solution is then built in three stages. First the *homogeneous* equation is solved: in one dimension by *d'Alembert's formula* via the method of traveling waves, including the semi-infinite string by the method of extensions, and in higher dimensions by spherical means and the method of descent. The *superposition principle* then reduces the inhomogeneous problem to the homogeneous one, and *Duhamel's principle* supplies the source contribution in every dimension. On a bounded interval the initial-boundary value problem is treated by *separation of variables*. The analytic core of the chapter is the *energy method*: conservation of energy on bounded domains, the local energy inequality on characteristic cones, and the resulting uniqueness and stability of the mixed and of the Cauchy problem. The chapter closes with the qualitative theory — finite propagation speed, Huygens' principle, dispersive decay. The picture that emerges is the counterpart of the heat equation of the next chapter: the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
+The wave equation is the prototypical hyperbolic equation. Its canonical form in one dimension was obtained in @eq:canonical-hyperbolic, and its fundamental solution is constructed in #link(<ex:fund-wave>)[*Fundamental Solutions*]. The chapter is organized around one fully general problem — the Cauchy problem on $bb(R)^n$ with a source term *and* nonzero initial data. We first derive the equation itself from mechanics — the vibrating string by Newton's second law, acoustic waves by conservation of momentum — and discuss the initial and boundary conditions that select a well-posed problem. The solution is then built in three stages. First the *homogeneous* equation is solved: in one dimension by *d'Alembert's formula* via the method of traveling waves, including the semi-infinite string by the method of extensions, and in higher dimensions by spherical means and the method of descent. The *superposition principle* then reduces the inhomogeneous problem to the homogeneous one, and *Duhamel's principle* supplies the source contribution in every dimension. On a bounded interval the initial-boundary value problem is treated by *separation of variables*. The analytic core of the chapter is the *energy method*: conservation of energy on bounded domains, the local energy inequality on characteristic cones, and the resulting uniqueness and stability of the mixed and of the Cauchy problem. The chapter closes with the qualitative theory — finite propagation speed, Huygens' principle, dispersive decay. The picture that emerges is the counterpart of the heat equation of the next chapter: the wave equation *propagates* information at finite speed, conserves energy, and does not regularize the data.
 
 Four ingredients are borrowed from later parts: the fundamental solution (*Analytical Tools*), weak formulations (*Elliptic Theory*), the spectral theory of eigenfunction expansions (*Solution Methods and Numerical Methods*), and the theory of first-order systems (*Hyperbolic Theory and Conservation Laws*).
 
@@ -998,6 +957,14 @@ We now fix the object of the chapter. This section first formulates the general 
 === The Cauchy Problem in $bb(R)^n$ // R^n 上的柯西问题
 
 Throughout the chapter we work in dimension $n$, writing $bold(x) = (x_1, dots, x_n)$ for a point of $bb(R)^n$; in one dimension $bold(x)$ is the single variable $x$, and we write it without boldface. The wave speed is $a > 0$. In its most general form the problem carries both a source and arbitrary initial data.
+
+#definition(name: "The Wave Equation")[
+  Let $a > 0$ and let $f$ be a given source. The *wave equation* in $bb(R)^n$ is
+  $
+    u_(t t) - a^2 Delta u = f (bold(x), t),
+  $
+  where $u (bold(x), t)$ is the unknown function and the constant $a$ is the wave speed.
+] <def:wave-equation>
 
 #definition(name: "The General Cauchy Problem")[
   The *general Cauchy problem* for the wave equation in $bb(R)^n$ with speed $a > 0$ is to find $u: bb(R)^n times [0, oo) -> bb(R)$ with
@@ -1970,7 +1937,7 @@ The wave equation and the heat equation of the next chapter draw the two halves 
 
 = The Heat Equation // 热方程
 
-The heat equation, introduced in #link(<def:heat-equation>)[*Basic Concepts and Examples*], is the prototypical parabolic equation.
+The heat equation is the prototypical parabolic equation.
 Its fundamental solution — the heat kernel — is constructed in #link(<ex:fund-heat>)[*Fundamental Solutions*], and it is the starting point of the explicit solution below.
 The chapter is organized around one fully general problem: the equation $u_t - alpha Delta u = f$ on a domain, with an initial datum and, when the domain is bounded, boundary data.
 The solution is built in three stages: on the whole space by convolution with the heat kernel, on a bounded domain by separation of variables, and for the inhomogeneous problem by Duhamel's principle.
@@ -2021,9 +1988,17 @@ Two special cases organize the whole theory.
 
 === The Cauchy and Initial-Boundary Problems // 柯西问题与初边值问题
 
+#definition(name: "The Heat Equation")[
+  Let $alpha > 0$ and let $f$ be a given source. The *heat equation* with diffusivity $alpha$ is
+  $
+    u_t - alpha Delta u = f (bold(x), t),
+  $
+  where $u (bold(x), t)$ is the unknown function and $alpha = k / (rho c)$ is the thermal diffusivity of the medium.
+] <def:heat-equation>
+
 #definition(name: "The Heat Equation: Cauchy and Initial-Boundary Value Problems")[
   Let $alpha > 0$, let $Omega subset bb(R)^n$ be a domain, and $T > 0$.
-  The *heat equation* with source $f$ and initial datum $phi$ is
+  With source $f$ and initial datum $phi$, the problem is
   #eq[$
     cases(
       u_t - alpha Delta u = f (bold(x), t) quad "in" quad Omega times (0, T),
@@ -2653,7 +2628,7 @@ The next Part supplies the language — distributions, convolution and Sobolev s
 
 = Laplace's Equation and Harmonic Functions // 拉普拉斯方程与调和函数
 
-The Laplace equation, introduced in #link(<def:laplace-equation>)[*Basic Concepts and Examples*], is the prototypical elliptic equation. Its solutions — the *harmonic functions* — form the smoothest and most rigid class of objects in PDE theory: they are $C^oo$ wherever defined, enjoy the mean value property and the maximum principle, and their theory provides the blueprint for the general elliptic theory developed in this Part.
+The Laplace equation is the prototypical elliptic equation. Its solutions — the *harmonic functions* — form the smoothest and most rigid class of objects in PDE theory: they are $C^oo$ wherever defined, enjoy the mean value property and the maximum principle, and their theory provides the blueprint for the general elliptic theory developed in this Part.
 
 == Laplace's and Poisson's Equations // 拉普拉斯方程与泊松方程
 
@@ -2662,11 +2637,15 @@ The Laplace equation, introduced in #link(<def:laplace-equation>)[*Basic Concept
   $
     Delta u = 0 quad "in" quad Omega,
   $
-  and the *Poisson equation* is
+  and the *Poisson equation* with source $f: Omega -> bb(R)$ is
   $
     -Delta u = f quad "in" quad Omega,
   $
-  where $u: Omega -> bb(R)$ is the unknown function and $f: Omega -> bb(R)$ is given. A $C^2$ function $u$ satisfying $Delta u = 0$ is called a *harmonic function* on $Omega$.
+  where $u: Omega -> bb(R)$ is the unknown function.
+] <def:laplace-equation>
+
+#definition(name: "Harmonic Functions")[
+  A $C^2$ function $u$ satisfying the Laplace equation $Delta u = 0$ on $Omega$ is called a *harmonic function* on $Omega$.
 ] <def:harmonic-function>
 
 #note(title: "Physical origins")[
