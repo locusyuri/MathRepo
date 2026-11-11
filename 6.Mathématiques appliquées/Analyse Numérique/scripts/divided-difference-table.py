@@ -30,26 +30,28 @@ CELLS = {
 }
 HEADERS = {0: "values", 1: "order 1", 2: "order 2", 3: "order 3"}
 HIGHLIGHT = (2, 2)
-PARENTS = ((1, 1), (2, 1))
+PARENTS = ((1, 1), (1, 2))  # f[x0,x1] = 2 and f[x1,x2] = -1
 HIGHLIGHT_ROWS = (0, 2)  # nodes x_0 and x_2 entering the highlighted computation
 
 OUT = "6.Mathématiques appliquées/Analyse Numérique/img/divided-difference-table.svg"
 PREVIEW = "tmp/preview-divided-difference-table.png"
 
 fig, ax = plt.subplots(figsize=(6.6, 4.4))
+fig.patch.set_alpha(0.0)
+ax.patch.set_alpha(0.0)
 
 
 def centre(k, i):
     return COL_X[k], ROW_Y[i]
 
 
-def box(k, i, edge, face, text, weight="normal"):
+def box(k, i, edge, face, text, weight="normal", linewidth=1.3):
     x, y = centre(k, i)
     ax.add_patch(
         FancyBboxPatch(
             (x - BOX_W / 2, y - BOX_H / 2), BOX_W, BOX_H,
             boxstyle="round,pad=0.02,rounding_size=0.06",
-            linewidth=1.3, edgecolor=edge, facecolor=face, zorder=2,
+            linewidth=linewidth, edgecolor=edge, facecolor=face, zorder=2,
         )
     )
     ax.text(x, y, text, ha="center", va="center", fontsize=10, zorder=3, weight=weight)
@@ -80,9 +82,9 @@ for (k, i) in CELLS:
 # boxes
 for (k, i), text in CELLS.items():
     if (k, i) == HIGHLIGHT:
-        box(k, i, "tab:red", "#F5B7B1", text, weight="bold")
+        box(k, i, "tab:red", "#F1948A", text, weight="bold", linewidth=2.2)
     elif (k, i) in PARENTS:
-        box(k, i, "tab:red", "#FDECEC", text)
+        box(k, i, "tab:red", "#FADBD8", text, linewidth=2.0)
     else:
         box(k, i, "0.45", "#F5F5F5", text)
 
@@ -94,6 +96,9 @@ for i in ROW_Y:
     ax.text(-0.95, ROW_Y[i], rf"$x_{i} = {i}$", ha="right", va="center", fontsize=8.5,
             color="tab:red" if highlighted else "0.25",
             weight="bold" if highlighted else "normal")
+    if highlighted:
+        ax.plot([-2.05, -0.98], [ROW_Y[i] - 0.21] * 2, color="tab:red", linewidth=1.4,
+                solid_capstyle="butt", zorder=4)
 
 ax.text(COL_X[2] + 0.05, -2.92, r"$(-1 - 2)\,/\,(2 - 0) = -3/2$", ha="center", va="center",
         fontsize=8.5, color="tab:red")
@@ -104,6 +109,6 @@ ax.set_aspect("equal")
 ax.axis("off")
 
 fig.tight_layout()
-fig.savefig(OUT, format="svg")
-fig.savefig(PREVIEW, format="png", dpi=140)
+fig.savefig(OUT, format="svg", transparent=True)
+fig.savefig(PREVIEW, format="png", dpi=140, facecolor="white")
 plt.close(fig)
