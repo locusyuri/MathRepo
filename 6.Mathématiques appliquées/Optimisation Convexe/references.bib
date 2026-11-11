@@ -1,0 +1,745 @@
+% ==========================================================================
+% Optimisation Convexe — References
+% ==========================================================================
+% 分组顺序：教材基线与总论 → 凸分析与对偶经典 → 锥规划与 SDP →
+%           逼近拟合与稀疏优化 → 统计/学习/控制应用 →
+%           一阶近端与算子分裂 → 内点法与求解器
+% 标注 [Boyd] 为教材基线直接对应；其余为超出 Boyd 的扩展文献。
+% ==========================================================================
+
+% --------------------------------------------------------------------------
+% 教材基线与总论 (Textbook Baseline and General References)
+% --------------------------------------------------------------------------
+
+@book{boyd2004,
+  author    = {Boyd, Stephen and Vandenberghe, Lieven},
+  title     = {Convex Optimization},
+  publisher = {Cambridge University Press},
+  year      = {2004},
+}
+
+@book{rockafellar1970,
+  author    = {Rockafellar, R. Tyrrell},
+  title     = {Convex Analysis},
+  publisher = {Princeton University Press},
+  year      = {1970},
+}
+
+@book{nesterov2018,
+  author    = {Nesterov, Yurii},
+  title     = {Lectures on Convex Optimization},
+  publisher = {Springer},
+  edition   = {2},
+  year      = {2018},
+}
+
+@book{nocedal2006,
+  author    = {Nocedal, Jorge and Wright, Stephen J.},
+  title     = {Numerical Optimization},
+  publisher = {Springer},
+  edition   = {2},
+  year      = {2006},
+}
+
+@book{bertsekas2009,
+  author    = {Bertsekas, Dimitri P.},
+  title     = {Convex Optimization Theory},
+  publisher = {Athena Scientific},
+  year      = {2009},
+}
+
+@book{bertsekas2015,
+  author    = {Bertsekas, Dimitri P.},
+  title     = {Convex Optimization Algorithms},
+  publisher = {Athena Scientific},
+  year      = {2015},
+}
+
+@book{beck2017,
+  author    = {Beck, Amir},
+  title     = {First-Order Methods in Optimization},
+  publisher = {SIAM},
+  year      = {2017},
+}
+
+@book{beck2014,
+  author    = {Beck, Amir},
+  title     = {Introduction to Nonlinear Optimization: Theory, Algorithms, and Applications with MATLAB},
+  publisher = {SIAM},
+  year      = {2014},
+}
+
+@book{bauschke2017,
+  author    = {Bauschke, Heinz H. and Combettes, Patrick L.},
+  title     = {Convex Analysis and Monotone Operator Theory in Hilbert Spaces},
+  publisher = {Springer},
+  edition   = {2},
+  year      = {2017},
+}
+
+@book{hiriart2001,
+  author    = {Hiriart-Urruty, Jean-Baptiste and Lemar{\'e}chal, Claude},
+  title     = {Fundamentals of Convex Analysis},
+  publisher = {Springer},
+  year      = {2001},
+}
+
+@book{borwein2006,
+  author    = {Borwein, Jonathan M. and Lewis, Adrian S.},
+  title     = {Convex Analysis and Nonlinear Optimization: Theory and Examples},
+  publisher = {Springer},
+  edition   = {2},
+  year      = {2006},
+}
+
+@book{schneider2014,
+  author    = {Schneider, Rolf},
+  title     = {Convex Bodies: The Brunn-Minkowski Theory},
+  publisher = {Cambridge University Press},
+  edition   = {2},
+  year      = {2014},
+}
+
+@book{rockafellar1974,
+  author    = {Rockafellar, R. Tyrrell},
+  title     = {Conjugate Duality and Optimization},
+  publisher = {SIAM},
+  year      = {1974},
+}
+
+@article{bubeck2015,
+  author  = {Bubeck, S{\'e}bastien},
+  title   = {Convex Optimization: Algorithms and Complexity},
+  journal = {Foundations and Trends in Machine Learning},
+  volume  = {8},
+  number  = {3-4},
+  pages   = {231--357},
+  year    = {2015},
+}
+
+@book{lan2020,
+  author    = {Lan, Guanghui},
+  title     = {First-order and Stochastic Optimization Methods for Machine Learning},
+  publisher = {Springer},
+  year      = {2020},
+}
+
+@book{bazaraa2013,
+  author    = {Bazaraa, Mokhtar S. and Sherali, Hanif D. and Shetty, C. M.},
+  title     = {Nonlinear Programming: Theory and Algorithms},
+  publisher = {Wiley},
+  edition   = {3},
+  year      = {2013},
+}
+
+@book{luenberger2016,
+  author    = {Luenberger, David G. and Ye, Yinyu},
+  title     = {Linear and Nonlinear Programming},
+  publisher = {Springer},
+  edition   = {4},
+  year      = {2016},
+}
+
+@book{dennis1996,
+  author    = {Dennis, J. E. and Schnabel, Robert B.},
+  title     = {Numerical Methods for Unconstrained Optimization and Nonlinear Equations},
+  publisher = {SIAM},
+  year      = {1996},
+}
+
+% --------------------------------------------------------------------------
+% 凸分析与对偶经典 (Classics in Convex Analysis and Duality)
+% --------------------------------------------------------------------------
+
+@article{fenchel1949,
+  author  = {Fenchel, Werner},
+  title   = {On Conjugate Convex Functions},
+  journal = {Canadian Journal of Mathematics},
+  volume  = {1},
+  pages   = {73--77},
+  year    = {1949},
+}
+
+@article{moreau1965,
+  author  = {Moreau, Jean-Jacques},
+  title   = {Proximit{\'e} et Dualit{\'e} dans un Espace Hilbertien},
+  journal = {Bulletin de la Soci{\'e}t{\'e} Math{\'e}matique de France},
+  volume  = {93},
+  pages   = {273--299},
+  year    = {1965},
+}
+
+@article{sion1958,
+  author  = {Sion, Maurice},
+  title   = {On General Minimax Theorems},
+  journal = {Pacific Journal of Mathematics},
+  volume  = {8},
+  number  = {1},
+  pages   = {171--176},
+  year    = {1958},
+}
+
+@incollection{kuhn1951,
+  author    = {Kuhn, Harold W. and Tucker, Albert W.},
+  title     = {Nonlinear Programming},
+  booktitle = {Proceedings of the Second Berkeley Symposium on Mathematical Statistics and Probability},
+  publisher = {University of California Press},
+  pages     = {481--492},
+  year      = {1951},
+}
+
+@mastersthesis{karush1939,
+  author = {Karush, William},
+  title  = {Minima of Functions of Several Variables with Inequalities as Side Conditions},
+  school = {Department of Mathematics, University of Chicago},
+  year   = {1939},
+}
+
+@techreport{slater1950,
+  author      = {Slater, Morton},
+  title       = {Lagrange Multipliers Revisited},
+  institution = {Cowles Commission for Research in Economics},
+  number      = {Discussion Paper No. Math. 403},
+  year        = {1950},
+}
+
+@article{farkas1902,
+  author  = {Farkas, Julius},
+  title   = {Theorie der einfachen Ungleichungen},
+  journal = {Journal f{\"u}r die reine und angewandte Mathematik},
+  volume  = {124},
+  pages   = {1--27},
+  year    = {1902},
+}
+
+@article{rockafellar1976,
+  author  = {Rockafellar, R. Tyrrell},
+  title   = {Augmented Lagrangians and Applications of the Proximal Point Algorithm in Convex Programming},
+  journal = {Mathematics of Operations Research},
+  volume  = {1},
+  number  = {2},
+  pages   = {97--116},
+  year    = {1976},
+}
+
+@article{hestenes1969,
+  author  = {Hestenes, Magnus R.},
+  title   = {Multiplier and Gradient Methods},
+  journal = {Journal of Optimization Theory and Applications},
+  volume  = {4},
+  pages   = {303--320},
+  year    = {1969},
+}
+
+@incollection{powell1969,
+  author    = {Powell, Michael J. D.},
+  title     = {A Method for Nonlinear Constraints in Minimization Problems},
+  booktitle = {Optimization},
+  editor    = {Fletcher, Roger},
+  publisher = {Academic Press},
+  pages     = {283--298},
+  year      = {1969},
+}
+
+% --------------------------------------------------------------------------
+% 锥规划与半定规划 (Conic Programming and SDP)
+% --------------------------------------------------------------------------
+
+@article{vandenberghe1996,
+  author  = {Vandenberghe, Lieven and Boyd, Stephen},
+  title   = {Semidefinite Programming},
+  journal = {SIAM Review},
+  volume  = {38},
+  number  = {1},
+  pages   = {49--95},
+  year    = {1996},
+}
+
+@book{wolkowicz2000,
+  editor    = {Wolkowicz, Henry and Saigal, Romesh and Vandenberghe, Lieven},
+  title     = {Handbook of Semidefinite Programming: Theory, Algorithms, and Applications},
+  publisher = {Kluwer Academic Publishers},
+  year      = {2000},
+}
+
+@article{lobo1998,
+  author  = {Lobo, Miguel Sousa and Vandenberghe, Lieven and Boyd, Stephen and Lebret, Herv{\'e}},
+  title   = {Applications of Second-Order Cone Programming},
+  journal = {Linear Algebra and its Applications},
+  volume  = {284},
+  pages   = {193--228},
+  year    = {1998},
+}
+
+@article{alizadeh2003,
+  author  = {Alizadeh, Farid and Goldfarb, Donald},
+  title   = {Second-Order Cone Programming},
+  journal = {Mathematical Programming},
+  volume  = {95},
+  pages   = {3--51},
+  year    = {2003},
+}
+
+@article{goemans1995,
+  author  = {Goemans, Michel X. and Williamson, David P.},
+  title   = {Improved Approximation Algorithms for Maximum Cut and Satisfiability Problems Using Semidefinite Programming},
+  journal = {Journal of the ACM},
+  volume  = {42},
+  number  = {6},
+  pages   = {1115--1145},
+  year    = {1995},
+}
+
+@article{parrilo2003,
+  author  = {Parrilo, Pablo A.},
+  title   = {Semidefinite Programming Relaxations for Semialgebraic Problems},
+  journal = {Mathematical Programming},
+  volume  = {96},
+  pages   = {293--320},
+  year    = {2003},
+}
+
+@article{lasserre2001,
+  author  = {Lasserre, Jean B.},
+  title   = {Global Optimization with Polynomials and the Problem of Moments},
+  journal = {SIAM Journal on Optimization},
+  volume  = {11},
+  number  = {3},
+  pages   = {796--817},
+  year    = {2001},
+}
+
+@article{elghaoui1997,
+  author  = {El Ghaoui, Laurent and Lebret, Herv{\'e}},
+  title   = {Robust Solutions to Least-Squares Problems with Uncertain Data},
+  journal = {SIAM Journal on Matrix Analysis and Applications},
+  volume  = {18},
+  number  = {4},
+  pages   = {1035--1064},
+  year    = {1997},
+}
+
+@book{bental2001,
+  author    = {Ben-Tal, Aharon and Nemirovski, Arkadi},
+  title     = {Lectures on Modern Convex Optimization: Analysis, Algorithms, and Engineering Applications},
+  publisher = {SIAM},
+  year      = {2001},
+}
+
+@book{bental2009,
+  author    = {Ben-Tal, Aharon and El Ghaoui, Laurent and Nemirovski, Arkadi},
+  title     = {Robust Optimization},
+  publisher = {Princeton University Press},
+  year      = {2009},
+}
+
+@article{bertsimas2004,
+  author  = {Bertsimas, Dimitris and Sim, Melvyn},
+  title   = {The Price of Robustness},
+  journal = {Operations Research},
+  volume  = {52},
+  number  = {1},
+  pages   = {35--53},
+  year    = {2004},
+}
+
+@article{agrawal2018,
+  author  = {Agrawal, Akshay and Verschueren, Robin and Diamond, Steven and Boyd, Stephen},
+  title   = {A Rewriting System for Convex Optimization Problems},
+  journal = {Journal of Control and Decision},
+  volume  = {5},
+  number  = {1},
+  pages   = {42--60},
+  year    = {2018},
+}
+
+@article{diamond2016,
+  author  = {Diamond, Steven and Boyd, Stephen},
+  title   = {CVXPY: A Python-Embedded Modeling Language for Convex Optimization},
+  journal = {Journal of Machine Learning Research},
+  volume  = {17},
+  pages   = {1--5},
+  year    = {2016},
+}
+
+% --------------------------------------------------------------------------
+% 逼近、拟合与稀疏优化 (Approximation, Fitting and Sparse Optimization)
+% --------------------------------------------------------------------------
+
+@article{tibshirani1996,
+  author  = {Tibshirani, Robert},
+  title   = {Regression Shrinkage and Selection via the Lasso},
+  journal = {Journal of the Royal Statistical Society, Series B},
+  volume  = {58},
+  number  = {1},
+  pages   = {267--288},
+  year    = {1996},
+}
+
+@article{huber1964,
+  author  = {Huber, Peter J.},
+  title   = {Robust Estimation of a Location Parameter},
+  journal = {The Annals of Mathematical Statistics},
+  volume  = {35},
+  number  = {1},
+  pages   = {73--101},
+  year    = {1964},
+}
+
+@article{candes2006,
+  author  = {Cand{\`e}s, Emmanuel J. and Romberg, Justin and Tao, Terence},
+  title   = {Robust Uncertainty Principles: Exact Signal Reconstruction from Highly Incomplete Frequency Information},
+  journal = {IEEE Transactions on Information Theory},
+  volume  = {52},
+  number  = {2},
+  pages   = {489--509},
+  year    = {2006},
+}
+
+@article{donoho2006,
+  author  = {Donoho, David L.},
+  title   = {Compressed Sensing},
+  journal = {IEEE Transactions on Information Theory},
+  volume  = {52},
+  number  = {4},
+  pages   = {1289--1306},
+  year    = {2006},
+}
+
+@article{recht2010,
+  author  = {Recht, Benjamin and Fazel, Maryam and Parrilo, Pablo A.},
+  title   = {Guaranteed Minimum-Rank Solutions of Linear Matrix Equations via Nuclear Norm Minimization},
+  journal = {SIAM Review},
+  volume  = {52},
+  number  = {3},
+  pages   = {471--501},
+  year    = {2010},
+}
+
+@article{candes2009,
+  author  = {Cand{\`e}s, Emmanuel J. and Recht, Benjamin},
+  title   = {Exact Matrix Completion via Convex Optimization},
+  journal = {Foundations of Computational Mathematics},
+  volume  = {9},
+  pages   = {717--772},
+  year    = {2009},
+}
+
+@book{hastie2015,
+  author    = {Hastie, Trevor and Tibshirani, Robert and Wainwright, Martin},
+  title     = {Statistical Learning with Sparsity: The Lasso and Generalizations},
+  publisher = {CRC Press},
+  year      = {2015},
+}
+
+@article{rudin1992,
+  author  = {Rudin, Leonid I. and Osher, Stanley and Fatemi, Emad},
+  title   = {Nonlinear Total Variation Based Noise Removal Algorithms},
+  journal = {Physica D: Nonlinear Phenomena},
+  volume  = {60},
+  pages   = {259--268},
+  year    = {1992},
+}
+
+% --------------------------------------------------------------------------
+% 统计、学习、金融与控制应用 (Applications)
+% --------------------------------------------------------------------------
+
+@article{cortes1995,
+  author  = {Cortes, Corinna and Vapnik, Vladimir},
+  title   = {Support-Vector Networks},
+  journal = {Machine Learning},
+  volume  = {20},
+  pages   = {273--297},
+  year    = {1995},
+}
+
+@article{markowitz1952,
+  author  = {Markowitz, Harry},
+  title   = {Portfolio Selection},
+  journal = {The Journal of Finance},
+  volume  = {7},
+  number  = {1},
+  pages   = {77--91},
+  year    = {1952},
+}
+
+@article{rockafellar2000,
+  author  = {Rockafellar, R. Tyrrell and Uryasev, Stanislav},
+  title   = {Optimization of Conditional Value-at-Risk},
+  journal = {Journal of Risk},
+  volume  = {2},
+  pages   = {21--41},
+  year    = {2000},
+}
+
+@book{rawlings2017,
+  author    = {Rawlings, James B. and Mayne, David Q. and Diehl, Moritz},
+  title     = {Model Predictive Control: Theory, Computation, and Design},
+  publisher = {Nob Hill Publishing},
+  edition   = {2},
+  year      = {2017},
+}
+
+@book{hastie2009,
+  author    = {Hastie, Trevor and Tibshirani, Robert and Friedman, Jerome},
+  title     = {The Elements of Statistical Learning: Data Mining, Inference, and Prediction},
+  publisher = {Springer},
+  edition   = {2},
+  year      = {2009},
+}
+
+% --------------------------------------------------------------------------
+% 一阶方法、近端算法与算子分裂 (First-Order, Proximal and Splitting Methods)
+% --------------------------------------------------------------------------
+
+@article{parikh2014,
+  author  = {Parikh, Neal and Boyd, Stephen},
+  title   = {Proximal Algorithms},
+  journal = {Foundations and Trends in Optimization},
+  volume  = {1},
+  number  = {3},
+  pages   = {127--239},
+  year    = {2014},
+}
+
+@article{boyd2011,
+  author  = {Boyd, Stephen and Parikh, Neal and Chu, Eric and Peleato, Borja and Eckstein, Jonathan},
+  title   = {Distributed Optimization and Statistical Learning via the Alternating Direction Method of Multipliers},
+  journal = {Foundations and Trends in Machine Learning},
+  volume  = {3},
+  number  = {1},
+  pages   = {1--122},
+  year    = {2011},
+}
+
+@article{beck2009,
+  author  = {Beck, Amir and Teboulle, Marc},
+  title   = {A Fast Iterative Shrinkage-Thresholding Algorithm for Linear Inverse Problems},
+  journal = {SIAM Journal on Imaging Sciences},
+  volume  = {2},
+  number  = {1},
+  pages   = {183--202},
+  year    = {2009},
+}
+
+@article{nesterov1983,
+  author  = {Nesterov, Yurii},
+  title   = {A Method for Solving the Convex Programming Problem with Convergence Rate O(1/k²)},
+  journal = {Soviet Mathematics Doklady},
+  volume  = {27},
+  pages   = {372--376},
+  year    = {1983},
+}
+
+@book{nesterov2004,
+  author    = {Nesterov, Yurii},
+  title     = {Introductory Lectures on Convex Optimization: A Basic Course},
+  publisher = {Kluwer Academic Publishers},
+  year      = {2004},
+}
+
+@article{nesterov2013,
+  author  = {Nesterov, Yurii},
+  title   = {Gradient Methods for Minimizing Composite Functions},
+  journal = {Mathematical Programming},
+  volume  = {140},
+  pages   = {125--161},
+  year    = {2013},
+}
+
+@incollection{combettes2011,
+  author    = {Combettes, Patrick L. and Pesquet, Jean-Christophe},
+  title     = {Proximal Splitting Methods in Signal Processing},
+  booktitle = {Fixed-Point Algorithms for Inverse Problems in Science and Engineering},
+  publisher = {Springer},
+  pages     = {185--212},
+  year      = {2011},
+}
+
+@article{chambolle2011,
+  author  = {Chambolle, Antonin and Pock, Thomas},
+  title   = {A First-Order Primal-Dual Algorithm for Convex Problems with Applications to Imaging},
+  journal = {Journal of Mathematical Imaging and Vision},
+  volume  = {40},
+  pages   = {120--145},
+  year    = {2011},
+}
+
+@article{gabay1976,
+  author  = {Gabay, Daniel and Mercier, Bertrand},
+  title   = {A Dual Algorithm for the Solution of Nonlinear Variational Problems via Finite Element Approximations},
+  journal = {Computers \& Mathematics with Applications},
+  volume  = {2},
+  number  = {1},
+  pages   = {17--40},
+  year    = {1976},
+}
+
+@article{douglas1956,
+  author  = {Douglas, Jim and Rachford, H. H.},
+  title   = {On the Numerical Solution of Heat Conduction Problems in Two and Three Space Variables},
+  journal = {Transactions of the American Mathematical Society},
+  volume  = {82},
+  pages   = {421--439},
+  year    = {1956},
+}
+
+@article{lions1979,
+  author  = {Lions, Pierre-Louis and Mercier, Bertrand},
+  title   = {Splitting Algorithms for the Sum of Two Nonlinear Operators},
+  journal = {SIAM Journal on Numerical Analysis},
+  volume  = {16},
+  number  = {6},
+  pages   = {964--979},
+  year    = {1979},
+}
+
+@article{eckstein1992,
+  author  = {Eckstein, Jonathan and Bertsekas, Dimitri P.},
+  title   = {On the Douglas-Rachford Splitting Method and the Proximal Point Algorithm for Maximal Monotone Operators},
+  journal = {Mathematical Programming},
+  volume  = {55},
+  pages   = {293--318},
+  year    = {1992},
+}
+
+@article{condat2013,
+  author  = {Condat, Laurent},
+  title   = {A Primal-Dual Splitting Method for Convex Optimization Involving Lipschitzian, Proximable and Linear Composite Terms},
+  journal = {Journal of Optimization Theory and Applications},
+  volume  = {158},
+  pages   = {460--479},
+  year    = {2013},
+}
+
+@book{nemirovski1983,
+  author    = {Nemirovski, Arkadi and Yudin, David B.},
+  title     = {Problem Complexity and Method Efficiency in Optimization},
+  publisher = {Wiley},
+  year      = {1983},
+}
+
+@article{bottou2018,
+  author  = {Bottou, L{\'e}on and Curtis, Frank E. and Nocedal, Jorge},
+  title   = {Optimization Methods for Large-Scale Machine Learning},
+  journal = {SIAM Review},
+  volume  = {60},
+  number  = {2},
+  pages   = {223--311},
+  year    = {2018},
+}
+
+@inproceedings{johnson2013,
+  author    = {Johnson, Rie and Zhang, Tong},
+  title     = {Accelerating Stochastic Gradient Descent Using Predictive Variance Reduction},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  volume    = {26},
+  pages     = {315--323},
+  year      = {2013},
+}
+
+@article{xiao2014,
+  author  = {Xiao, Lin and Zhang, Tong},
+  title   = {A Proximal Stochastic Gradient Method with Progressive Variance Reduction},
+  journal = {SIAM Journal on Optimization},
+  volume  = {24},
+  number  = {4},
+  pages   = {2057--2075},
+  year    = {2014},
+}
+
+@article{duchi2011,
+  author  = {Duchi, John and Hazan, Elad and Singer, Yoram},
+  title   = {Adaptive Subgradient Methods for Online Learning and Stochastic Optimization},
+  journal = {Journal of Machine Learning Research},
+  volume  = {12},
+  pages   = {2121--2159},
+  year    = {2011},
+}
+
+@inproceedings{kingma2015,
+  author    = {Kingma, Diederik P. and Ba, Jimmy},
+  title     = {Adam: A Method for Stochastic Optimization},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2015},
+}
+
+@article{liu1989,
+  author  = {Liu, Dong C. and Nocedal, Jorge},
+  title   = {On the Limited Memory BFGS Method for Large Scale Optimization},
+  journal = {Mathematical Programming},
+  volume  = {45},
+  pages   = {503--528},
+  year    = {1989},
+}
+
+% --------------------------------------------------------------------------
+% 内点法与求解器 (Interior-Point Methods and Solvers)
+% --------------------------------------------------------------------------
+
+@article{karmarkar1984,
+  author  = {Karmarkar, Narendra},
+  title   = {A New Polynomial-Time Algorithm for Linear Programming},
+  journal = {Combinatorica},
+  volume  = {4},
+  pages   = {373--395},
+  year    = {1984},
+}
+
+@book{nesterov1994,
+  author    = {Nesterov, Yurii and Nemirovskii, Arkadi},
+  title     = {Interior-Point Polynomial Algorithms in Convex Programming},
+  publisher = {SIAM},
+  year      = {1994},
+}
+
+@book{wright1997,
+  author    = {Wright, Stephen J.},
+  title     = {Primal-Dual Interior-Point Methods},
+  publisher = {SIAM},
+  year      = {1997},
+}
+
+@book{renegar2001,
+  author    = {Renegar, James},
+  title     = {A Mathematical View of Interior-Point Methods in Convex Optimization},
+  publisher = {SIAM},
+  year      = {2001},
+}
+
+@article{mehrotra1992,
+  author  = {Mehrotra, Sanjay},
+  title   = {On the Implementation of a Primal-Dual Interior Point Method},
+  journal = {SIAM Journal on Optimization},
+  volume  = {2},
+  number  = {4},
+  pages   = {575--601},
+  year    = {1992},
+}
+
+@article{sturm1999,
+  author  = {Sturm, Jos F.},
+  title   = {Using SeDuMi 1.02, a MATLAB Toolbox for Optimization over Symmetric Cones},
+  journal = {Optimization Methods and Software},
+  volume  = {11},
+  pages   = {625--653},
+  year    = {1999},
+}
+
+@inproceedings{domahidi2013,
+  author    = {Domahidi, Alexander and Chu, Eric and Boyd, Stephen},
+  title     = {ECOS: An SOCP Solver for Embedded Systems},
+  booktitle = {European Control Conference (ECC)},
+  pages     = {3071--3076},
+  year      = {2013},
+}
+
+@article{wachter2006,
+  author  = {W{\"a}chter, Andreas and Biegler, Lorenz T.},
+  title   = {On the Implementation of an Interior-Point Filter Line-Search Algorithm for Large-Scale Nonlinear Programming},
+  journal = {Mathematical Programming},
+  volume  = {106},
+  pages   = {25--57},
+  year    = {2006},
+}
