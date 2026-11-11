@@ -1405,12 +1405,23 @@ In practice data arrive one point at a time, and a representation that extends i
 The Newton form achieves this by expressing the interpolant in a basis that depends on the order in which the nodes are added.
 
 #definition(name: "Divided Differences")[
-  The *divided differences* of the data $(x_i, y_i)_i$ are defined by
+  The *divided differences* of the data $(x_i, y_i)_i$ are defined recursively.
+  The zeroth, first and second orders are
+  $
+    f[x_i] = y_i, quad f[x_i, x_(i+1)] = (y_(i+1) - y_i)/(x_(i+1) - x_i),
+  $
+  $
+    f[x_i, x_(i+1), x_(i+2)] = (f[x_(i+1), x_(i+2)] - f[x_i, x_(i+1)])/(x_(i+2) - x_i),
+  $
+  and in general, for $k >= 1$,
   #eq[$
-    f[x_i] = y_i, quad f[x_i, dots, x_(i+k)] = (f[x_(i+1), dots, x_(i+k)] - f[x_i, dots, x_(i+k-1)])/(x_(i+k) - x_i),
+    f[x_i, dots, x_(i+k)] = (f[x_(i+1), dots, x_(i+k)] - f[x_i, dots, x_(i+k-1)])/(x_(i+k) - x_i);
   $] <eq:divided-difference>
-  for $k = 1, dots, n$, all indices being understood to lie between $0$ and $n$.
+  all indices are understood to lie between $0$ and $n$.
 ] <def:divided-difference>
+
+The order $k$ of a divided difference is the number of nodes it involves minus one, so that $f[x_i, dots, x_(i+k)]$ is a difference of order $k$.
+Each step of the recursion uses two divided differences of order $k - 1$, namely the one obtained by dropping the first node and the one obtained by dropping the last node, and divides their difference by the distance between the two nodes that were dropped.
 
 The recursion computes all divided differences in a triangular table whose first column holds the data and whose last entry is the highest-order difference.
 The construction of the interpolant then reads the table along its diagonal.
@@ -1516,6 +1527,11 @@ Evaluating @eq:newton-horner costs $n$ multiplications and $n$ additions, the sa
   The first three terms are exactly the quadratic interpolant of the data $1, 3, 2$ computed in *Quadratic interpolant in two forms*; appending the fourth point changed nothing before the last term.
   This is the practical advantage of the Newton form over @eq:lagrange-formula.
 ]
+
+#figure(
+  image("img/divided-difference-table.svg", width: 72%),
+  caption: [Dependency structure of the table of the example above. Every entry of positive order is computed from the two entries to its left and to its upper left: take their difference and divide it by the distance between the two nodes that were dropped from the arguments. The highlighted cell is $f[x_0, x_1, x_2] = (-1 - 2) slash (2 - 0) = -3 slash 2$, obtained from $f[x_1, x_2] = -1$ and $f[x_0, x_1] = 2$. Read from left to right, the same rule fills the whole table in $n (n+1) slash 2$ subtractions and divisions.],
+) <fig:divided-difference-table>
 
 #note(title: "Neville's algorithm")[
   When only the value at a single point is wanted, the interpolant need not be formed at all.
