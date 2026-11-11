@@ -66,7 +66,7 @@ Obviously, a sigma-ring is closed under countable unions and countable differenc
 ]
 
 #definition(name: "Monotone Class")[
-  Let $S$ be a non-empty set. A non-empty collection $cal(M)$ of subsets of $S$ is called a *monotone class* if it is closed under limits of monotone sequences of sets. That is, for any monotone sequence ${A_n}_{n in bb(N)}$ in $cal(M)$ (i.e., $A_1 subset.eq A_2 subset.eq dots$ or $A_1 supset.eq A_2 supset.eq dots$), we have
+  Let $S$ be a non-empty set. A non-empty collection $cal(M)$ of subsets of $S$ is called a *monotone class* if it is closed under limits of monotone sequences of sets. That is, for any monotone sequence ${A_n}_(n in bb(N))$ in $cal(M)$ (i.e., $A_1 subset.eq A_2 subset.eq dots$ or $A_1 supset.eq A_2 supset.eq dots$), we have
   $
     lim_(n->infinity) A_n = union.big_(n=1)^infinity A_n quad "or" quad lim_(n->infinity) A_n = inter.big_(n=1)^infinity A_n quad in cal(M).
   $
@@ -359,7 +359,7 @@ For example,
 ]
 
 #proof[
-  Let ${P_alpha}_{alpha < frak(c)}$ be a well-ordering of all non-empty perfect subsets of $bb(R)$ (there are exactly $frak(c)$ such sets). We construct $B$ by transfinite induction.
+  Let ${P_alpha}_(alpha < frak(c))$ be a well-ordering of all non-empty perfect subsets of $bb(R)$ (there are exactly $frak(c)$ such sets). We construct $B$ by transfinite induction.
 
   At each stage $alpha < frak(c)$, the set of points already chosen has cardinality $abs(alpha) < frak(c)$. Since $abs(P_alpha) = frak(c)$, we can pick two distinct points $x_alpha, y_alpha in P_alpha$ that have not been chosen at any previous stage.
 
@@ -905,11 +905,11 @@ We now examine the relationship between convergence in measure and almost everyw
   Let $f: bb(R) -> overline(bb(R))$ be an integrable function with respect to Lebesgue measure $m$ on $bb(R)$.
   + *Translation Invariance*: For any $h in bb(R)$, the translated function $f_(h)(x) = f(x + h)$ is integrable and
     $
-      integral_bb(R) f_h dif m = integral_bb(R) f dif m.
+      integral_(bb)(R) f_h dif m = integral_(bb)(R) f dif m.
     $
   + *Continuity of Average*:
   $
-    lim_(h->0) integral_bb(R) abs(f_(h)(x) - f(x)) dif m = 0.
+    lim_(h->0) integral_(bb)(R) abs(f_(h)(x) - f(x)) dif m = 0.
   $
   + *Absolute Continuity of the Integral*: For every $epsilon > 0$, there exists $delta > 0$ such that for every measurable set $A in cal(L)$ with $m(A) < delta$,
     $
@@ -965,7 +965,7 @@ We now examine the relationship between convergence in measure and almost everyw
 ]
 
 #example[
-  The monotonicity condition cannot be dropped. Consider $f_n = chi_([n, n+1])$ on $(bb(R), cal(L), m)$. Then $f_n -> 0$ pointwise, but $integral_bb(R) f_n dif m = 1$ for all $n$, so $lim integral f_n = 1 != 0 = integral lim f_n$.
+  The monotonicity condition cannot be dropped. Consider $f_n = chi_([n, n+1])$ on $(bb(R), cal(L), m)$. Then $f_n -> 0$ pointwise, but $integral_(bb)(R) f_n dif m = 1$ for all $n$, so $lim integral f_n = 1 != 0 = integral lim f_n$.
 ]
 
 === Fatou's Lemma // Fatou 引理
@@ -1469,7 +1469,7 @@ As an application of Fubini's theorem, we derive the *layer cake representation*
 ]
 
 #proof[
-  Write $f^p(x) = p integral_0^(f(x)) t^(p-1) dif t = p integral_0^infinity t^(p-1) chi_({f > t})(x) dif t$.
+  Write $f^(p)(x) = p integral_0^(f(x)) t^(p-1) dif t = p integral_0^infinity t^(p-1) chi_({f > t})(x) dif t$.
   By Tonelli's theorem applied to the non-negative function $(x,t) |-> t^(p-1) chi_({f > t})(x)$ on $X times (0, infinity)$:
   $
     integral_X f^p dif mu = integral_X (p integral_0^infinity t^(p-1) chi_({f > t})(x) dif t) dif mu(x) = p integral_0^infinity t^(p-1) mu({f > t}) dif t.
@@ -1852,14 +1852,14 @@ As noted in Section 4.1, every function of bounded variation on $[a, b]$ admits 
   $ V(f, P) = sum_(i=1)^n abs(f(x_i) - f(x_(i-1))). $
 
   The total variation of $f$ on $[a, b]$ is defined as
-  $ V_a^b(f) = sup_P V(f, P), $
-  where the supremum is taken over all possible partitions $P$ of $[a, b]$. If $V_a^b(f) < oo$, then $f$ is said to be of *bounded variation* on $[a, b]$, denoted as $f in "BV"([a, b])$.
+  $ V_a^(b)(f) = sup_P V(f, P), $
+  where the supremum is taken over all possible partitions $P$ of $[a, b]$. If $V_a^(b)(f) < oo$, then $f$ is said to be of *bounded variation* on $[a, b]$, denoted as $f in "BV"([a, b])$.
 ] <def:bounded-variation>
 
 #property[
   + $"BV"([a, b]) subset B([a, b])$, where $B([a, b])$ denotes the set of all bounded functions on $[a, b]$.
   + For any $f, g in "BV"([a, b])$ and any scalars $alpha, beta in bb(R)$, the linear combination $alpha f + beta g in "BV"([a, b])$, and
-    $ V_a^b(alpha f + beta g) <= abs(alpha) V_a^b(f) + abs(beta) V_a^b(g). $
+    $ V_a^(b)(alpha f + beta g) <= abs(alpha) V_a^(b)(f) + abs(beta) V_a^(b)(g). $
     In particular, if $abs(g(x)) >= sigma > 0$, then $frac(f(x), g(x)) in "BV"([a, b])$.
 ] <prop:bv-properties>
 // 注：tex 中该 property 的 enumerate 原含第 3 项但内容为空，已删除。
@@ -1869,7 +1869,7 @@ Some common functions of bounded variation include:
 #terms(
   terms.item(
     [Monotonic functions],
-    [Any monotonic function on a closed interval is of bounded variation, and $V_a^b(f) = abs(f(b) - f(a))$.],
+    [Any monotonic function on a closed interval is of bounded variation, and $V_a^(b)(f) = abs(f(b) - f(a))$.],
   ),
   terms.item(
     [Piecewise monotonic functions],
@@ -2002,7 +2002,7 @@ The results of the preceding sections converge on a single question: for which f
   _Step 2: $(1) => (2)$ — the main argument._
   This is the heart of the proof and proceeds through several sub-steps.
 
-  _(a) Differentiability a.e._ Since $f in "AC"([a, b])$, by the proposition in Section 4.4, $f in "BV"([a, b])$. The total variation function $V(x) = V_a^x(f)$ is non-decreasing, and both $V(x)$ and $V(x) - f(x)$ are non-decreasing. By Lebesgue's Differentiability Theorem (Section 4.3), both are differentiable a.e., hence $f = V - (V - f)$ is differentiable a.e.
+  _(a) Differentiability a.e._ Since $f in "AC"([a, b])$, by the proposition in Section 4.4, $f in "BV"([a, b])$. The total variation function $V(x) = V_a^(x)(f)$ is non-decreasing, and both $V(x)$ and $V(x) - f(x)$ are non-decreasing. By Lebesgue's Differentiability Theorem (Section 4.3), both are differentiable a.e., hence $f = V - (V - f)$ is differentiable a.e.
 
   _(b) $V$ is absolutely continuous._ We claim $V in "AC"([a, b])$. Given $epsilon > 0$, choose $delta > 0$ from the AC definition of $f$ for $epsilon / 2$. For disjoint intervals $(a_k, b_k)$ with $sum(b_k - a_k) < delta$, any partitions of these intervals combine into subintervals of total length $sum(b_k - a_k) < delta$, so $sum_k sum_j abs(f(t_j) - f(t_(j-1))) < epsilon / 2$. Taking the supremum over all partitions of each interval gives $sum_k (V(b_k) - V(a_k)) <= epsilon / 2 < epsilon$. Since $V$ is non-decreasing, $sum abs(V(b_k) - V(a_k)) < epsilon$, and $V in "AC"([a, b])$.
 
@@ -2087,13 +2087,13 @@ Throughout the preceding chapters, the expression $(integral_X |f|^p dif mu)^(1/
 #definition(name: "$L^p$ Space, $1 <= p < infinity$")[
   Let $(X, cal(S), mu)$ be a measure space and let $1 <= p < infinity$. Define
   $
-    cal(L)^p(X, mu) = {f: X -> overline(bb(R)) "measurable" : integral_X |f|^p dif mu < infinity}.
+    cal(L)^(p)(X, mu) = {f: X -> overline(bb(R)) "measurable" : integral_X |f|^p dif mu < infinity}.
   $
-  Two functions $f, g in cal(L)^p(X, mu)$ are said to be *equivalent*, written $f tilde g$, if $f = g$ almost everywhere. The *$L^p$ space* is the quotient
+  Two functions $f, g in cal(L)^(p)(X, mu)$ are said to be *equivalent*, written $f tilde g$, if $f = g$ almost everywhere. The *$L^p$ space* is the quotient
   $
-    L^p(X, mu) = cal(L)^p(X, mu) / tilde.
+    L^(p)(X, mu) = cal(L)^(p)(X, mu) / tilde.
   $
-  For $f in L^p(X, mu)$, the *$L^p$ norm* is defined by
+  For $f in L^(p)(X, mu)$, the *$L^p$ norm* is defined by
   $
     ||f||_p = (integral_X |f|^p dif mu)^(1/p).
   $
@@ -2104,7 +2104,7 @@ Throughout the preceding chapters, the expression $(integral_X |f|^p dif mu)^(1/
   $
     ||f||_oo = "ess sup"_(x in X) |f(x)| = inf {M >= 0 : mu({x : |f(x)| > M}) = 0}.
   $
-  The space $L^infinity(X, mu)$ consists of equivalence classes (modulo a.e. equality) of essentially bounded measurable functions, equipped with the norm $||dot||_oo$.
+  The space $L^(infinity)(X, mu)$ consists of equivalence classes (modulo a.e. equality) of essentially bounded measurable functions, equipped with the norm $||dot||_oo$.
 ]
 
 #note[
@@ -2112,11 +2112,11 @@ Throughout the preceding chapters, the expression $(integral_X |f|^p dif mu)^(1/
 ]
 
 #proposition(name: "$L^p$ is a Vector Space")[
-  For $1 <= p <= infinity$, $L^p(X, mu)$ is a vector space over $bb(R)$.
+  For $1 <= p <= infinity$, $L^(p)(X, mu)$ is a vector space over $bb(R)$.
 ]
 
 #proof[
-  Let $f, g in L^p$. For $1 <= p < infinity$, the elementary inequality $|a + b|^p <= 2^p max(|a|^p, |b|^p) <= 2^p(|a|^p + |b|^p)$ gives
+  Let $f, g in L^p$. For $1 <= p < infinity$, the elementary inequality $|a + b|^p <= 2^p max(|a|^p, |b|^p) <= 2^(p)(|a|^p + |b|^p)$ gives
   $
     integral_X |f + g|^p dif mu <= 2^p (integral_X |f|^p dif mu + integral_X |g|^p dif mu) < infinity,
   $
@@ -2154,7 +2154,7 @@ Throughout the preceding chapters, the expression $(integral_X |f|^p dif mu)^(1/
 ]
 
 #theorem(name: "Hölder's Inequality")[
-  Let $1 <= p <= infinity$ with conjugate exponent $q$. If $f in L^p(X, mu)$ and $g in L^q(X, mu)$, then $f g in L^1(X, mu)$ and
+  Let $1 <= p <= infinity$ with conjugate exponent $q$. If $f in L^(p)(X, mu)$ and $g in L^(q)(X, mu)$, then $f g in L^1(X, mu)$ and
   $
     integral_X |f g| dif mu <= ||f||_p ||g||_q.
   $
@@ -2203,7 +2203,7 @@ Throughout the preceding chapters, the expression $(integral_X |f|^p dif mu)^(1/
 === Minkowski's Inequality // Minkowski不等式
 
 #theorem(name: "Minkowski's Inequality")[
-  Let $1 <= p <= infinity$. For all $f, g in L^p(X, mu)$,
+  Let $1 <= p <= infinity$. For all $f, g in L^(p)(X, mu)$,
   $
     ||f + g||_p <= ||f||_p + ||g||_p.
   $
@@ -2238,12 +2238,12 @@ Throughout the preceding chapters, the expression $(integral_X |f|^p dif mu)^(1/
 ]
 
 #corollary(name: [$L^p$ Norm Axioms])[
-  For $1 <= p <= infinity$, $(L^p(X, mu), ||dot||_p)$ satisfies all norm axioms:
+  For $1 <= p <= infinity$, $(L^(p)(X, mu), ||dot||_p)$ satisfies all norm axioms:
   + *Non-negativity*: $||f||_p >= 0$, with equality if and only if $f = 0$ in $L^p$ (i.e., $f = 0$ a.e.).
   + *Absolute homogeneity*: $||alpha f||_p = |alpha| ||f||_p$ for all $alpha in bb(R)$.
   + *Triangle inequality*: $||f + g||_p <= ||f||_p + ||g||_p$ (Minkowski's inequality).
 
-  Therefore $(L^p(X, mu), ||dot||_p)$ is a normed vector space.
+  Therefore $(L^(p)(X, mu), ||dot||_p)$ is a normed vector space.
 ]
 
 #note[
@@ -2256,7 +2256,7 @@ Throughout the preceding chapters, the expression $(integral_X |f|^p dif mu)^(1/
 // 证明核心：从 Cauchy 列中提取快速收敛子列，利用级数和 Fatou 引理
 
 #theorem(name: "Riesz-Fischer Theorem")[
-  For $1 <= p <= infinity$, the space $L^p(X, mu)$ is complete: every Cauchy sequence in $L^p$ converges to an element of $L^p$. Therefore $(L^p(X, mu), ||dot||_p)$ is a Banach space.
+  For $1 <= p <= infinity$, the space $L^(p)(X, mu)$ is complete: every Cauchy sequence in $L^p$ converges to an element of $L^p$. Therefore $(L^(p)(X, mu), ||dot||_p)$ is a Banach space.
 ]
 
 #proof[
@@ -2307,7 +2307,7 @@ Throughout the preceding chapters, the expression $(integral_X |f|^p dif mu)^(1/
 ]
 
 #proposition(name: "Monotonicity of $L^p$ Norms on Finite Measure")[
-  Let $mu(X) < infinity$ and $1 <= p <= q <= infinity$. For any $f in L^q(X, mu)$:
+  Let $mu(X) < infinity$ and $1 <= p <= q <= infinity$. For any $f in L^(q)(X, mu)$:
   $
     ||f||_p <= mu(X)^(1/p - 1/q) ||f||_q.
   $
@@ -2343,7 +2343,7 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 === Dense Subspaces of $L^p$ // L^p的稠密子空间
 
 #theorem(name: "Simple Functions are Dense in $L^p$")[
-  Let $1 <= p < infinity$. For every $f in L^p(X, mu)$ and every $epsilon > 0$, there exists a simple function $s in L^p(X, mu)$ such that $||f - s||_p < epsilon$.
+  Let $1 <= p < infinity$. For every $f in L^(p)(X, mu)$ and every $epsilon > 0$, there exists a simple function $s in L^(p)(X, mu)$ such that $||f - s||_p < epsilon$.
 ]
 
 #proof[
@@ -2356,8 +2356,8 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
   _Step 2: Approximate bounded functions by simple functions._ Since $f_N$ is bounded and measurable, by the Approximation Theorem for measurable functions (Section 2.1), there exists a sequence of simple functions $(s_n)$ such that $s_n -> f_N$ pointwise and $|s_n| <= ||f_N||_oo$. Then $|f_N - s_n|^p -> 0$ pointwise and $|f_N - s_n|^p <= (2 ||f_N||_oo)^p$. Since $f_N in L^p$, the support of $f_N$ has finite measure or $f_N$ decays sufficiently, so $(2 ||f_N||_oo)^p chi_("supp"(f_N)) in L^1$. By LDCT, $||f_N - s_n||_p -> 0$. Choose $n$ so that $||f_N - s_n||_p < epsilon / 2$. Then $||f - s_n||_p < epsilon$.
 ]
 
-#theorem(name: "$C_(c)(bb(R)^n)$ is Dense in $L^p(bb(R)^n)$")[
-  For $1 <= p < infinity$, the space $C_(c)(bb(R)^n)$ of continuous functions with compact support is dense in $L^p(bb(R)^n, m)$.
+#theorem(name: "$C_(c)(bb(R)^n)$ is Dense in $L^(p)(bb(R)^n)$")[
+  For $1 <= p < infinity$, the space $C_(c)(bb(R)^n)$ of continuous functions with compact support is dense in $L^(p)(bb(R)^n, m)$.
 ]
 
 #proof[
@@ -2371,11 +2371,11 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
   $
     ||chi_E - phi||_p^p = integral_(U backslash K) |chi_E - phi|^p dif m <= m(U backslash K) < epsilon^p.
   $
-  Hence $||chi_E - phi||_p < epsilon$, and $C_(c)(bb(R)^n)$ is dense in $L^p(bb(R)^n, m)$.
+  Hence $||chi_E - phi||_p < epsilon$, and $C_(c)(bb(R)^n)$ is dense in $L^(p)(bb(R)^n, m)$.
 ]
 
 #corollary[
-  Step functions (finite linear combinations of indicator functions of intervals) are dense in $L^p(bb(R), m)$ for $1 <= p < infinity$.
+  Step functions (finite linear combinations of indicator functions of intervals) are dense in $L^(p)(bb(R), m)$ for $1 <= p < infinity$.
 ]
 
 === Separability // 可分性
@@ -2385,7 +2385,7 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 ]
 
 #theorem(name: "Separability of $L^p$")[
-  For $1 <= p < infinity$, $L^p(bb(R)^n, m)$ is separable.
+  For $1 <= p < infinity$, $L^(p)(bb(R)^n, m)$ is separable.
 ]
 
 #proof[
@@ -2399,11 +2399,11 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 
   _Step 3: $cal(D)$ is dense in $C_(c)(bb(R)^n)$._ Let $phi in C_(c)(bb(R)^n)$ with $"supp"(phi) subset K$ compact. By uniform continuity on $K$, for any $delta > 0$, there exists a partition of $K$ into small rectangles on which $phi$ varies by at most $delta$. A step function from $cal(D)$ on this partition satisfies $||phi - s||_oo < delta$.
 
-  _Step 4: $cal(D)$ is dense in $L^p$._ Since $||phi - s||_p <= ||phi - s||_oo m(K)^(1/p)$, uniform approximation on bounded support gives $L^p$ approximation. Since $C_(c)(bb(R)^n)$ is dense in $L^p$ (previous theorem) and $cal(D)$ is dense in $C_(c)(bb(R)^n)$, $cal(D)$ is dense in $L^p(bb(R)^n, m)$.
+  _Step 4: $cal(D)$ is dense in $L^p$._ Since $||phi - s||_p <= ||phi - s||_oo m(K)^(1/p)$, uniform approximation on bounded support gives $L^p$ approximation. Since $C_(c)(bb(R)^n)$ is dense in $L^p$ (previous theorem) and $cal(D)$ is dense in $C_(c)(bb(R)^n)$, $cal(D)$ is dense in $L^(p)(bb(R)^n, m)$.
 ]
 
 #theorem(name: [$L^infinity$ is NOT Separable])[
-  $L^infinity(bb(R), m)$ is not separable.
+  $L^(infinity)(bb(R), m)$ is not separable.
 ]
 
 #proof[
@@ -2419,7 +2419,7 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 ]
 
 #note[
-  The same argument shows that $L^infinity(X, mu)$ is not separable whenever the measure space has uncountably many disjoint sets of positive measure. This is one reason $L^infinity$ has a fundamentally different character from the other $L^p$ spaces.
+  The same argument shows that $L^(infinity)(X, mu)$ is not separable whenever the measure space has uncountably many disjoint sets of positive measure. This is one reason $L^infinity$ has a fundamentally different character from the other $L^p$ spaces.
 ]
 
 === Summary and Outlook // 总结与展望
