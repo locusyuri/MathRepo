@@ -1574,7 +1574,7 @@ in repeated trials (geometric, negative binomial).
   For uniqueness: if a distribution on ${1, 2, dots}$ is memoryless, its
   survival function $overline(F)(n) = P(X > n)$ satisfies the multiplicative
   equation $overline(F)(m + n) = overline(F)(m) overline(F)(n)$; the only
-  non-trivial solution on $ZZ_{>= 0}$ is $overline(F)(n) = q^n$.
+  non-trivial solution on $ZZ_(>= 0)$ is $overline(F)(n) = q^n$.
 ]
 
 #definition(name: "Negative Binomial Distribution")[
@@ -1986,7 +1986,7 @@ derived in this chapter:
     ([Distribution], [PMF / PDF], [Support], [$E[X]$], [$"Var"(X)$]),
     ([$"Ber"(p)$], [$p^x q^(1-x)$], [${0, 1}$], [$p$], [$p q$]),
     ([$B(n, p)$], [$binom(n, k) p^k q^(n-k)$], [${0, dots, n}$], [$n p$], [$n p q$]),
-    ([$"Pois"(lambda)$], [$(lambda^k e^(-lambda)) / k!$], [$ZZ_{>= 0}$], [$lambda$], [$lambda$]),
+    ([$"Pois"(lambda)$], [$(lambda^k e^(-lambda)) / k!$], [$ZZ_(>= 0)$], [$lambda$], [$lambda$]),
     (
       [$"Hyp"(N, K, n)$],
       [$(binom(K, k) binom(N - K, n - k)) / binom(N, n)$],
@@ -3042,7 +3042,7 @@ additive form that later chapters use.
   When $M_X$ is finite on an open interval around $0$, the *cumulant
   generating function* (CGF) of $X$ is
   $
-    K_X(t) = ln M_X(t) = ln E[exp(t X)],
+    K_(X)(t) = ln M_(X)(t) = ln E[exp(t X)],
   $
   and the *cumulants* of $X$ are the derivatives $kappa_k = K_X^((k))(0)$.
 ] <def:cgf>
@@ -3281,7 +3281,7 @@ precisely the object of *Convergence of Measurable Functions* in the
 Analyse Réelle note. Since $P$ is a measure with $P(Omega) = 1$, that theory
 carries over unchanged, and three of the four modes below are pure
 vocabulary. The fourth — convergence in distribution — is different in kind:
-it does not compare the values $X_n(omega)$ at all, only the laws
+it does not compare the values $X_(n)(omega)$ at all, only the laws
 $mu_(X_n)$.
 
 This chapter fixes the vocabulary, records the hierarchy between the modes,
@@ -3629,7 +3629,7 @@ theorem predates the general CLT by two centuries.
   $"Var"(X_k) = sigma_k^2$, $s_n^2 = sum_(k=1)^n sigma_k^2$, and
   $S_n = sum_(k=1)^n (X_k - mu_k)$. If the *Lindeberg condition* holds —
   $
-    (1 / s_n^2) sum_(k=1)^n E[(X_k - mu_k)^2 dot 1_{abs(X_k - mu_k) > epsilon s_n}] -> 0 quad "for all" epsilon > 0,
+    (1 / s_n^2) sum_(k=1)^n E[(X_k - mu_k)^2 dot 1_(abs(X_k - mu_k) > epsilon s_n)] -> 0 quad "for all" epsilon > 0,
   $
   then $S_n / s_n arrow.r^d N(0,1)$.
 ] <thm:lindeberg-feller>
@@ -3917,7 +3917,7 @@ process.
   $"Var"(X_1) = sigma^2 < infinity$, and let $S_k = X_1 + dots + X_k$. On
   $[0, 1]$ define the rescaled, linearly interpolated random walk
   $
-    B_n(t) = 1 / (sigma sqrt(n)) (S_(floor(n t)) + (n t - floor(n t)) X_(floor(n t) + 1)).
+    B_(n)(t) = 1 / (sigma sqrt(n)) (S_(floor(n t)) + (n t - floor(n t)) X_(floor(n t) + 1)).
   $
   Then $B_n arrow.r^d B$ in the space of continuous paths, where $B$ is a
   standard Brownian motion.
