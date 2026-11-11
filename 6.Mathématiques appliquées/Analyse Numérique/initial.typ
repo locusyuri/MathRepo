@@ -383,8 +383,18 @@ The chain has four links, and each link contributes its own error.
   ("Source", "Where it enters", "Controllable", "Typical size"),
   ("Model error", "The mathematical model idealizes the real problem", "No", "not quantifiable"),
   ("Data error", "The input data are measured, hence inexact", "No", "inherited from the measurement"),
-  ("Truncation error", "An infinite or continuous process is replaced by a finite or discrete one", "Yes", [decreases with the step size $h$]),
-  ("Roundoff error", "Real numbers are replaced by floating-point numbers", "Yes", [of the order of $u$, independent of $h$]),
+  (
+    "Truncation error",
+    "An infinite or continuous process is replaced by a finite or discrete one",
+    "Yes",
+    [decreases with the step size $h$],
+  ),
+  (
+    "Roundoff error",
+    "Real numbers are replaced by floating-point numbers",
+    "Yes",
+    [of the order of $u$, independent of $h$],
+  ),
 )
 
 The first two links belong to the modelling stage and cannot be repaired by any numerical method: a biased model or a miscalibrated instrument corrupts every subsequent step equally.
@@ -1457,6 +1467,28 @@ The second connects the table to derivatives, and it is the bridge to the error 
   Since $N_k$ has degree at most $k$ with leading coefficient $f[x_0, dots, x_k]$, its $k$-th derivative is the constant $k! f[x_0, dots, x_k]$, hence $f^((k)) (xi) = k! f[x_0, dots, x_k]$.
 ]
 
+The proposition extends to coinciding nodes by passing to the limit, and the limiting values are the ones needed whenever derivative data enter an interpolation problem.
+
+#corollary(name: "Repeated Nodes")[
+  Let $f in C^k [a, b]$ and let $x_0$ be interior to $[a, b]$.
+  If $k + 1$ nodes tend to $x_0$, the corresponding divided differences converge, and their common limit, denoted $f[x_0, dots, x_0]$, satisfies
+  #eq[$
+    f[x_0, dots, x_0] = (f^((k)) (x_0))/(k!).
+  $] <eq:repeated-node-difference>
+  In particular, for two coinciding nodes,
+  $
+    f[x_0, x_0] = f'(x_0).
+  $
+] <cor:repeated-nodes>
+
+#proof[
+  For distinct nodes, #link(<prop:divided-difference-derivative>)[*Divided Differences and Derivatives*] gives $f[x_0, dots, x_k] = f^((k)) (xi) slash k!$ with $xi$ between the smallest and the largest node.
+  As the nodes tend to $x_0$, the point $xi$ is squeezed to $x_0$, and the continuity of $f^((k))$ gives the limit @eq:repeated-node-difference.
+  The case $k = 1$ is $f[x_0, x_1] = f'(xi) -> f'(x_0)$, and $k = 0$ is the trivial statement $f[x_0] = f(x_0)$.
+]
+
+The corollary is what makes derivative data compatible with the divided difference table: a node that appears twice contributes the function value and the derivative value, exactly as required in *Hermite Interpolation*.
+
 Because of the product $omega_(k-1)$ in @eq:newton-form, the evaluation of $N_n$ is a nested computation of the same shape as Horner's scheme.
 
 #eq[$
@@ -1470,7 +1502,7 @@ Evaluating @eq:newton-horner costs $n$ multiplications and $n$ additions, the sa
   The table is
 
   #tex-table(
-    ("$x_i$", "values", "order 1", "order 2", "order 3"),
+    ([$x_i$], "values", "order 1", "order 2", "order 3"),
     ([$0$], [$1$], "", "", ""),
     ([$1$], [$3$], [$2$], "", ""),
     ([$2$], [$2$], [$-1$], [$-3 slash 2$], ""),
@@ -1522,7 +1554,7 @@ The relevant computation is best organized by repeating every node twice.
   $
     f[x_i, x_i] = f'(x_i)
   $
-  when the two nodes coincide.
+  when the two nodes coincide; this is the limiting value obtained in #link(<cor:repeated-nodes>)[*Repeated Nodes*], where the table is extended from distinct nodes to coinciding ones.
 ] <def:repeated-node-difference>
 
 With this convention the table of @eq:divided-difference, written with each node listed twice, produces the Hermite interpolant through @eq:newton-form unchanged.
