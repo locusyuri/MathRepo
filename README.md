@@ -48,7 +48,9 @@ This repository collects mathematics notes organized by subject. The list below 
 - [Électrodynamique | 电动力学](https://lis-azure.vercel.app/notes/%C3%A9lectrodynamique)
 - [Mécanique analytique | 分析力学](https://lis-azure.vercel.app/notes/m%C3%A9canique-analytique)
 - [Mécanique quantique | 量子力学](https://lis-azure.vercel.app/notes/m%C3%A9canique-quantique)
+- [~~Optimisation Convexe | 凸优化~~](https://lis-azure.vercel.app/notes/optimisation-convexe)
 - [Optique | 光学](https://lis-azure.vercel.app/notes/optique)
+- [~~Recherche Opérationnelle | 运筹学~~](https://lis-azure.vercel.app/notes/recherche-op%C3%A9rationnelle)
 - [Thermodynamique | 热力学](https://lis-azure.vercel.app/notes/thermodynamique)
 
 
