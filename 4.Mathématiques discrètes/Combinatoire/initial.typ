@@ -1790,13 +1790,13 @@ principle, extended from "boxes" to arbitrary numerical quantities.
 == Sperner's Theorem  // Sperner 定理
 
 The pinnacle of extremal combinatorics on the Boolean lattice: the largest
-antichain in $2^{[n]}$ sits in the middle layer. Two equivalent pillars
+antichain in $2^([n])$ sits in the middle layer. Two equivalent pillars
 support the theory — Dilworth's theorem relating antichains to chain
 covers, and the LYM inequality giving a weighted size bound — and both
 specialise to give Sperner's theorem with the same sharp constant.
 
 #definition(name: "Antichain")[
-  A family $cal(F) subset.eq 2^{[n]}$ is an *antichain* if no two of its
+  A family $cal(F) subset.eq 2^([n])$ is an *antichain* if no two of its
   members are comparable by inclusion: for all $A, B in cal(F)$ with
   $A != B$, neither $A subset.eq B$ nor $B subset.eq A$.
 ] <def:antichain>
@@ -1860,7 +1860,7 @@ specialise to give Sperner's theorem with the same sharp constant.
 ] <ex:es-dilworth>
 
 #lemma(name: "LYM Inequality")[
-  For any antichain $cal(F) subset.eq 2^{[n]}$,
+  For any antichain $cal(F) subset.eq 2^([n])$,
   $
     sum_(A in cal(F)) 1 / binom(n, |A|) <= 1.
   $
@@ -1886,7 +1886,7 @@ specialise to give Sperner's theorem with the same sharp constant.
 ]
 
 #theorem(name: "Sperner's Theorem")[
-  The largest antichain in $2^{[n]}$ has size $binom(n, floor(n\/2))$.
+  The largest antichain in $2^([n])$ has size $binom(n, floor(n\/2))$.
 ] <thm:sperner>
 
 #proof[
@@ -1902,7 +1902,7 @@ specialise to give Sperner's theorem with the same sharp constant.
 ]
 
 #example(name: "Middle layer of 2^[4]")[
-  For $n = 4$, the largest antichain in $2^{[4]}$ has size
+  For $n = 4$, the largest antichain in $2^([4])$ has size
   $binom(4, 2) = 6$, given by the middle layer
   $
     {1,2}, {1,3}, {1,4}, {2,3}, {2,4}, {3,4}.
@@ -1912,7 +1912,7 @@ specialise to give Sperner's theorem with the same sharp constant.
   #figure(
     image("img/sperner-hassee.svg", width: 70%),
     caption: [
-      The Boolean lattice $2^{[4]}$ as a Hasse diagram. The middle layer
+      The Boolean lattice $2^([4])$ as a Hasse diagram. The middle layer
       (subsets of size 2) is highlighted; it is the largest antichain, of
       size $binom(4, 2) = 6$, consistent with
       #link(<thm:sperner>)[Sperner's theorem].
@@ -2539,7 +2539,7 @@ Ramsey's theorem, as follows. Given an $r$-coloring of ${1, dots, N}$,
 form a complete graph on vertices ${0, 1, dots, N}$, coloring edge
 ${i, j}$ (with $i < j$) by the color of $j - i$. A monochromatic triangle
 on vertices $i < j < k$ gives $x = j - i$, $y = k - j$, $z = k - i$, with
-$x + y = z$, all the same color. So $S(r) <= R_r(3) - 1$, where $R_r(3)$
+$x + y = z$, all the same color. So $S(r) <= R_(r)(3) - 1$, where $R_(r)(3)$
 is the $r$-color Ramsey number for triangles.
 
 == Applications and Bounds  // 应用与界
