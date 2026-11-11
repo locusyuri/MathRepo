@@ -221,7 +221,7 @@ For a binary relation $R$ on a set $X$, we define the following special properti
 
 There are several special types of mappings:
 
-- *Identity mapping*: The mapping $id_X: X -> X$ defined by $id_X(x) = x$ for all $x in X$ is called the *identity mapping* on $X$.
+- *Identity mapping*: The mapping $id_X: X -> X$ defined by $id_(X)(x) = x$ for all $x in X$ is called the *identity mapping* on $X$.
 - *Constant mapping*: A mapping $f: X -> Y$ is called a *constant mapping* if there exists a fixed element $y_0 in Y$ such that $f(x) = y_0$ for all $x in X$.
 
 Mappings can be classified based on their behavior:
@@ -263,7 +263,7 @@ be the *characteristic function* of set $A$.
 
 #definition(name: "Restriction and Extension")[
   Let $f: X -> Y$ be a mapping, and let $A subset X$.
-  The *restriction* of $f$ to $A$, denoted by $f|_A$, is the mapping from $A$ to $Y$ defined by $f|_A(x) = f(x)$ for all $x in A$.
+  The *restriction* of $f$ to $A$, denoted by $f|_A$, is the mapping from $A$ to $Y$ defined by $f|_(A)(x) = f(x)$ for all $x in A$.
 
   Conversely, if $g: A -> Y$ is a mapping and $A subset X$, an *extension* of $g$ to $X$ is a mapping $f: X -> Y$ such that $f|_A = g$.
 ] <def:restriction-extension>
@@ -597,7 +597,7 @@ $t = (t_1, dots, t_n)$ where $t_i$ is the value of attribute $A_i$.
 == Set Sequences // 集合列
 
 #definition(name: "Monotone Sequence of Sets")[
-  A sequence ${A_n}_{n=1}^infinity$ of sets is:
+  A sequence ${A_n}_(n=1)^infinity$ of sets is:
   - *increasing* (or *ascending*) if $A_n subset.eq A_(n+1)$ for all
     $n$;
   - *decreasing* (or *descending*) if $A_(n+1) subset.eq A_n$ for all
@@ -606,7 +606,7 @@ $t = (t_1, dots, t_n)$ where $t_i$ is the value of attribute $A_i$.
 ] <def:monotone-sequence>
 
 #definition(name: "Limit of a Sequence of Sets")[
-  Let ${A_n}_{n=1}^infinity$ be a sequence of sets.
+  Let ${A_n}_(n=1)^infinity$ be a sequence of sets.
   The *limit inferior* (or *lim inf*) and *limit superior* (or *lim sup*) of the sequence are defined as follows:
 
   $
@@ -1006,10 +1006,10 @@ right argument.
   for some $d in A$. But then $d in D "iff" d in.not f(d) = D$, a
   contradiction.
 
-  (5) Index the family as ${A_n}_{n in bb(N)}$. For each $n$ choose
+  (5) Index the family as ${A_n}_(n in bb(N))$. For each $n$ choose
   an injection $f_n : A_n -> bb(N)$ (this uses the
   #link(<axiom:choice>)[Axiom of Choice] for countably many choices).
-  The map $(n, a) mapsto 2^n (2 f_n(a) + 1)$ injects $union.big_n A_n$
+  The map $(n, a) mapsto 2^n (2 f_(n)(a) + 1)$ injects $union.big_n A_n$
   into $bb(N)$ by unique prime factorisation.
 ]
 
@@ -1169,7 +1169,7 @@ right argument.
 ] <prop:cofinality-facts>
 
 #theorem(name: "König's Theorem")[
-  Let ${kappa_i}_{i in I}$ and ${lambda_i}_{i in I}$ be families of
+  Let ${kappa_i}_(i in I)$ and ${lambda_i}_(i in I)$ be families of
   cardinals with $kappa_i < lambda_i$ for each $i in I$. Then
   $
     sum_(i in I) kappa_i < product_(i in I) lambda_i.
@@ -1430,8 +1430,8 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
 
 #proposition[
   + *Continuity set of a function* Let $G subset bb(R)^n$ be open and $f: G -> bb(R)$ be a function. Then the set of points where $f$ is continuous is a $G_delta$ set (hence a Borel set).
-  + *Differentiability set of a continuous function* Let $f: bb(R) -> bb(R)$ be a continuous function. Then the set of points where $f$ is differentiable is a $F_{delta sigma}$ set (a countable intersection of $F_sigma$ sets).
-  + *Properties of the limit function of a sequence of continuous functions* Let $f_i: bb(R)^n -> bb(R)$ be continuous functions, $i in bb(N)$, and suppose $lim_(i -> +infinity) f_i(x) = f(x)$ for all $x in bb(R)^n$. Then:
+  + *Differentiability set of a continuous function* Let $f: bb(R) -> bb(R)$ be a continuous function. Then the set of points where $f$ is differentiable is a $F_(delta sigma)$ set (a countable intersection of $F_sigma$ sets).
+  + *Properties of the limit function of a sequence of continuous functions* Let $f_i: bb(R)^n -> bb(R)$ be continuous functions, $i in bb(N)$, and suppose $lim_(i -> +infinity) f_(i)(x) = f(x)$ for all $x in bb(R)^n$. Then:
     - If $G subset bb(R)$ is open, then $f^(-1)(G)$ is an $F_sigma$ set;
     - The set of continuity points of $f$ is a dense $G_delta$ set in $bb(R)^n$ (equivalently, the set of discontinuity points $D(f)$ is an $F_sigma$ set with empty interior in $bb(R)^n$).
 ]
@@ -1442,7 +1442,7 @@ Furthermore, these concepts can be generalized to metric spaces and topological 
 
   If each $F_k$ ($k in bb(N)$) has empty interior, then $E$ also has empty interior.
 
-  Equivalently, if $E$ has non-empty interior, then there exists some $F_{k_0}$ that contains an interior point.
+  Equivalently, if $E$ has non-empty interior, then there exists some $F_(k_0)$ that contains an interior point.
 ]
 
 == Special Point Sets and Special Functions
