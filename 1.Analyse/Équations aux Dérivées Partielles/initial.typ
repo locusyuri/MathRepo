@@ -297,7 +297,7 @@ Linear equations — the first class of #link(<def:pde-linearity-classification>
 ]
 
 #example(name: "Application of Superposition")[
-  The heat equation $u_t - kappa u_(x x) = 0$ is linear and homogeneous. If $u_1(x,t) = sin(x)e^(-kappa t)$ and $u_2(x,t) = cos(x)e^(-kappa t)$ are both solutions, then $u(x,t) = A sin(x)e^(-kappa t) + B cos(x)e^(-kappa t)$ is also a solution for any constants $A, B$.
+  The heat equation $u_t - alpha u_(x x) = 0$ is linear and homogeneous. If $u_1(x,t) = sin(x)e^(-alpha t)$ and $u_2(x,t) = cos(x)e^(-alpha t)$ are both solutions, then $u(x,t) = A sin(x)e^(-alpha t) + B cos(x)e^(-alpha t)$ is also a solution for any constants $A, B$.
 ] <ex:superposition-application>
 
 #note[
@@ -351,7 +351,7 @@ The three most common boundary conditions are:
 ] <def:boundary-conditions>
 
 #example(name: "Classifying Boundary Conditions")[
-  For the heat equation $u_t - kappa Delta u = 0$ in a domain $Omega$:
+  For the heat equation $u_t - alpha Delta u = 0$ in a domain $Omega$:
 
   - Dirichlet: $u(x,t) = 0$ on $partial Omega$ (fixed temperature on boundary)
   - Neumann: $u_n = 0$ on $partial Omega$ (insulated boundary)
@@ -415,22 +415,22 @@ The third condition (stability) is particularly important: small changes in the 
 #example(name: "Backward Heat Equation (Ill-posed)")[
   The backward heat equation:
   $
-    (partial u)/(partial t) = -kappa (partial^2 u)/(partial x^2), quad t > 0,
+    (partial u)/(partial t) = -alpha (partial^2 u)/(partial x^2), quad t > 0,
   $
   with final condition $u(x, T) = g(x)$ is ill-posed. Solutions may not exist for arbitrary final data, and when they do exist, they are unstable. Small changes in the final data can lead to exponential growth in the solution at earlier times.
 
   This can be seen from the solution formula (formal):
   $
-    hat(u)(xi, t) = hat(g)(xi) e^(kappa xi^2 (t-T)),
+    hat(u)(xi, t) = hat(g)(xi) e^(alpha xi^2 (t-T)),
   $
-  where $hat(u)$ denotes the Fourier transform. The exponential factor $e^(kappa xi^2 (t-T))$ for $t < T$ grows rapidly for high frequencies $xi$, causing instability.
+  where $hat(u)$ denotes the Fourier transform. The exponential factor $e^(alpha xi^2 (t-T))$ for $t < T$ grows rapidly for high frequencies $xi$, causing instability.
 ] <ex:backward-heat-ill-posed>
 
 #proposition(name: "Well-Posedness of the Forward Heat Equation")[
   The initial-boundary value problem for the *forward* heat equation:
   $
     cases(
-      (partial u)/(partial t) - kappa Delta u = f text("in ") Omega times (0, T],
+      (partial u)/(partial t) - alpha Delta u = f text("in ") Omega times (0, T],
       u(x, 0) = g(x) text("in ") Omega,
       u(x, t) = 0 text("on ") partial Omega times [0, T],
     )
@@ -707,7 +707,7 @@ Characteristic surfaces are the loci along which singularities of solutions can 
 #example(name: "Characteristics of Model Equations")[
   *Laplace equation* $Delta u = 0$: Here $A = I$, so $a(xi) = xi_1^2 + dots + xi_n^2 = abs(xi)^2$. The characteristic equation $abs(nu)^2 = 0$ has no nonzero real solutions. The Laplace equation has _no real characteristic surfaces_.
 
-  *Heat equation* $u_t = kappa u_(x x)$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((kappa, 0), (0, 0))$. The characteristic equation $kappa nu_1^2 = 0$ gives $nu_1 = 0$, so surfaces $t = text("const")$ are characteristic. These are precisely the initial/boundary surfaces for the Cauchy problem (#link(<def:cauchy-problem>)[*Initial and Boundary Value Problems*]).
+  *Heat equation* $u_t = alpha u_(x x)$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((alpha, 0), (0, 0))$. The characteristic equation $alpha nu_1^2 = 0$ gives $nu_1 = 0$, so surfaces $t = text("const")$ are characteristic. These are precisely the initial/boundary surfaces for the Cauchy problem (#link(<def:cauchy-problem>)[*Initial and Boundary Value Problems*]).
 
   *Wave equation* $u_(t t) - a^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $A = mat((-a^2, 0), (0, 1))$. The characteristic equation $-a^2 nu_1^2 + nu_2^2 = 0$ yields $nu_2 = +- a nu_1$, giving characteristic lines $x +- a t = text("const")$ in the $(x, t)$-plane.
 ]
@@ -782,7 +782,7 @@ The connection to characteristic surfaces (#link(<def:char-surface>)[*Linear Sec
 
   *Laplace equation* $u_(x x) + u_(y y) = 0$: Here $a = 1$, $b = 0$, $c = 1$, so $Delta = 0 - 1 = -1 < 0$. The Laplace equation is _elliptic_ everywhere.
 
-  *Heat equation* $u_t - kappa u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $a = -kappa$, $b = 0$, $c = 0$, so $Delta = 0 - 0 = 0$. The heat equation is _parabolic_ everywhere. The characteristic surfaces are $t = text("const")$, consistent with #link(<eq:char-ode-2d>)[*Linear Second-Order Equations*].
+  *Heat equation* $u_t - alpha u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, we have $a = -alpha$, $b = 0$, $c = 0$, so $Delta = 0 - 0 = 0$. The heat equation is _parabolic_ everywhere. The characteristic surfaces are $t = text("const")$, consistent with #link(<eq:char-ode-2d>)[*Linear Second-Order Equations*].
 
   *Wave equation* $u_(t t) - a^2 u_(x x) = 0$: With $(x_1, x_2) = (x, t)$, the coefficient matrix is $A = mat((-a^2, 0), (0, 1))$, so $Delta = 0^2 - (-a^2)(1) = a^2 > 0$. The wave equation is _hyperbolic_ everywhere. The characteristic lines $x +- a t = text("const")$ are the two families found in #link(<eq:char-ode-2d>)[*Linear Second-Order Equations*].
 ] <ex:model-equations-type>
@@ -872,9 +872,9 @@ When $Delta = 0$, the characteristic ODE has a single repeated family of solutio
 The proof follows the same chain-rule computation: since $Delta = 0$, the two characteristic families coincide, so both the $u_(xi xi)$ and $u_(xi eta)$ coefficients vanish, leaving only $u_(eta eta)$.
 
 #example(name: "Heat Equation in Canonical Form")[
-  The heat equation $u_t = kappa u_(x x)$ has $a = -kappa$, $b = 0$, $c_"coeff" = 0$ (with variables $(x, t)$), so $Delta = 0$. The characteristic ODE gives $-kappa (d t)^2 = 0$, so $t = text("const")$ is the single characteristic family. Setting $xi = t$ and $eta = x$, the equation is already in canonical form #link(<eq:canonical-parabolic>)[(9)]:
+  The heat equation $u_t = alpha u_(x x)$ has $a = -alpha$, $b = 0$, $c_"coeff" = 0$ (with variables $(x, t)$), so $Delta = 0$. The characteristic ODE gives $-alpha (d t)^2 = 0$, so $t = text("const")$ is the single characteristic family. Setting $xi = t$ and $eta = x$, the equation is already in canonical form #link(<eq:canonical-parabolic>)[(9)]:
   $
-    u_(eta eta) = (1) / (kappa) u_xi.
+    u_(eta eta) = (1) / (alpha) u_xi.
   $
   The variable $xi = t$ plays the role of the "evolution parameter," and $eta = x$ is the spatial variable. The absence of a $u_(xi xi)$ term reflects the irreversible nature of diffusion.
 ]
