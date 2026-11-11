@@ -1423,7 +1423,7 @@ and $bold(F)(x) = mat(0; 0; dots.v; f(x))$.
 ] <thm:higher-order-equivalence>
 
 #proof[
-  For $y in C^n(I)$, the components of $(dif bold(Y)) / (dif x)$ with $bold(Y) = mat(y; dot(y); dots.v; y^((n-1)))$ are $dot(y), dot.double(y), dots, y^((n))$, and the first $n - 1$ rows of $bold(A)(x) bold(Y) + bold(F)(x)$ reproduce exactly these derivatives, while the last row, $-p_(n) y - p_(n-1) dot(y) - dots - p_1 y^((n-1)) + f$, equals $y^((n))$ precisely when $y$ satisfies @eq:higher-order-nonhomogeneous.
+  For $y in C^(n)(I)$, the components of $(dif bold(Y)) / (dif x)$ with $bold(Y) = mat(y; dot(y); dots.v; y^((n-1)))$ are $dot(y), dot.double(y), dots, y^((n))$, and the first $n - 1$ rows of $bold(A)(x) bold(Y) + bold(F)(x)$ reproduce exactly these derivatives, while the last row, $-p_(n) y - p_(n-1) dot(y) - dots - p_1 y^((n-1)) + f$, equals $y^((n))$ precisely when $y$ satisfies @eq:higher-order-nonhomogeneous.
 
   Hence $bold(Y)$ solves the system if and only if $y$ solves the equation.
 
