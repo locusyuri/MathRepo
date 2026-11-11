@@ -31,6 +31,7 @@ CELLS = {
 HEADERS = {0: "values", 1: "order 1", 2: "order 2", 3: "order 3"}
 HIGHLIGHT = (2, 2)
 PARENTS = ((1, 1), (2, 1))
+HIGHLIGHT_ROWS = (0, 2)  # nodes x_0 and x_2 entering the highlighted computation
 
 OUT = "6.Mathématiques appliquées/Analyse Numérique/img/divided-difference-table.svg"
 PREVIEW = "tmp/preview-divided-difference-table.png"
@@ -79,9 +80,9 @@ for (k, i) in CELLS:
 # boxes
 for (k, i), text in CELLS.items():
     if (k, i) == HIGHLIGHT:
-        box(k, i, "tab:red", "#FDECEC", text, weight="bold")
+        box(k, i, "tab:red", "#F5B7B1", text, weight="bold")
     elif (k, i) in PARENTS:
-        box(k, i, "tab:blue", "#EAF1FB", text)
+        box(k, i, "tab:red", "#FDECEC", text)
     else:
         box(k, i, "0.45", "#F5F5F5", text)
 
@@ -89,7 +90,10 @@ for (k, i), text in CELLS.items():
 for k, label in HEADERS.items():
     ax.text(COL_X[k], 0.95, label, ha="center", va="center", fontsize=8.5, color="0.25")
 for i in ROW_Y:
-    ax.text(-0.95, ROW_Y[i], rf"$x_{i} = {i}$", ha="right", va="center", fontsize=8.5, color="0.25")
+    highlighted = i in HIGHLIGHT_ROWS
+    ax.text(-0.95, ROW_Y[i], rf"$x_{i} = {i}$", ha="right", va="center", fontsize=8.5,
+            color="tab:red" if highlighted else "0.25",
+            weight="bold" if highlighted else "normal")
 
 ax.text(COL_X[2] + 0.05, -2.92, r"$(-1 - 2)\,/\,(2 - 0) = -3/2$", ha="center", va="center",
         fontsize=8.5, color="tab:red")
