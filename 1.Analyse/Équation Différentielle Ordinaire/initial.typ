@@ -27,8 +27,8 @@
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
-// 主线：基础与一阶理论 → 线性系统 → 定性与非线性 → 边值谱论
-// 共 4 Part、7 Chapter。
+// 主线：基础与一阶理论 → 线性系统 → 定性与非线性 → 分岔 → 边值谱论
+// 共 4 Part、8 Chapter。
 //
 // 职责边界：
 //   - Banach 不动点 / Picard 迭代的抽象理论 → Analyse Réelle / Analyse Fonctionnelle
@@ -40,7 +40,9 @@
 //     Sturm-Liouville 作为具体应用出现在本笔记）
 //   - 一阶偏微分方程全部内容 → Équations aux Dérivées Partielles
 //     （本笔记不包含，完整理论见 PDE 笔记）
-//   - 相平面分支、混沌等深入内容 → 后续专门笔记（如有）
+//   - 高维分岔、全局分岔与混沌 → 后续动力系统笔记（如有）
+//   - 中心流形约化、Lyapunov-Schmidt 约化的构造性证明 → Analyse Fonctionnelle
+//     （本笔记只在 Ch 7 给出定理陈述与几何解释）
 //
 // 设计决策：
 //   - 原 tex 笔记中 chap06（边值问题）被错误置于 chap08（一阶PDE）之后，
@@ -137,9 +139,9 @@
 // ==========================================================================
 // 设计思路：前两 Part 都是「求精确解」，本 Part 转向「不解方程也能了解解的性质」。
 // 从相平面（Ch 6.1）的几何直观出发，引入 Lyapunov 稳定性概念与直接法（Ch 6.2-6.3），
-// 最后讨论平面系统的奇点分类与极限环（Ch 6.4）。这是从解析到定性的范式转换，
-// 也是现代动力系统的入口。
-// 对应教材：非线性方程与稳定性。
+// 讨论平面系统的奇点分类与极限环（Ch 6.4），最后把整套工具参数化，得到分岔理论（Ch 7）。
+// 这是从解析到定性的范式转换，也是现代动力系统的入口。
+// 对应教材：非线性方程与稳定性（Ch 6）；分岔（Ch 7）属扩展内容。
 
 // --- Chapter 6: Nonlinear Equations and Stability (非线性方程与稳定性) ---
 
@@ -153,33 +155,47 @@
 //     - 线性化定理与平面奇点分类（结点、鞍点、焦点、中心）
 //     - 极限环、Poincaré-Bendixson 定理
 
+// --- Chapter 7: Bifurcation Theory (分岔理论) ---
+
+//   Section 7.1: Parameter Families and Structural Stability (参数族与结构稳定性)
+//     - 单参数族、拓扑等价、分岔值与分岔点、结构稳定性、分岔图
+//   Section 7.2: Saddle-Node Bifurcation (鞍结分岔)
+//     - 标量范式、鞍结分岔定理与证明、常收获 Logistic 模型
+//   Section 7.3: Transcritical and Pitchfork Bifurcations (跨临界分岔与叉式分岔)
+//     - 稳定性交换、超临界/亚临界叉式分岔、对称性要求、滞后现象
+//   Section 7.4: Hopf Bifurcation (Hopf 分岔)
+//     - 共轭复特征值穿越虚轴、极限环的诞生、平方根律、退化 Hopf（Van der Pol）
+//   Section 7.5: Classification and Scope (分类与适用范围)
+//     - 四类 codim-1 局部分岔对照表、余维数、边界与延伸阅读
+
 // ==========================================================================
 // Part IV — Boundary Value Problems and Spectral Theory (边值问题与谱论)
 // ==========================================================================
 // 设计思路：前几 Part 都是初值问题，本 Part 转向边值问题。
 // Sturm-Liouville 问题是 ODE 与谱理论的交汇点：特征值问题既是 ODE 边值问题的核心，
 // 也是 Fourier 分析、正交函数系、PDE 分离变量法的基础。
-// 放在定性理论之后：Sturm 比较定理与振动性与稳定性思想一脉相承。
+// 放在最后：本 Part 收束全书，把「初值问题」换成「边值问题」，
+// 并为 PDE 分离变量法提供特征值理论基础（与 Ch 7 的分岔只在「特征值」处相交）。
 // 对应教材：边值问题一章。
 
-// --- Chapter 7: Boundary Value Problems (边值问题) ---
+// --- Chapter 8: Boundary Value Problems (边值问题) ---
 
-//   Section 7.1: Boundary Value Problems vs. Initial Value Problems (边值问题与初值问题)
+//   Section 8.1: Boundary Value Problems vs. Initial Value Problems (边值问题与初值问题)
 //     - IVP 与 BVP 的提法对比、解的个数差异（无解/唯一/无穷多）
-//   Section 7.2: Linear BVPs and Green's Functions (线性边值问题与格林函数)
+//   Section 8.2: Linear BVPs and Green's Functions (线性边值问题与格林函数)
 //     - Fredholm 备择定理、Green 函数的定义、构造与解公式
-//   Section 7.3: Sturm-Liouville Problems (Sturm-Liouville 问题)
+//   Section 8.3: Sturm-Liouville Problems (Sturm-Liouville 问题)
 //     - 正则/周期/奇异 Sturm-Liouville 问题、自伴性与加权内积
-//   Section 7.4: Eigenvalues and Eigenfunctions (特征值与特征函数)
+//   Section 8.4: Eigenvalues and Eigenfunctions (特征值与特征函数)
 //     - 特征值为实、正交性、Sturm 比较与振动定理、渐近行为
-//   Section 7.5: Generalized Fourier Series (广义傅里叶级数)
+//   Section 8.5: Generalized Fourier Series (广义傅里叶级数)
 //     - Fourier 正弦/余弦/全级数、Legendre 多项式、收敛性
 
 // ==========================================================================
 // 结构说明 (Structure Note)
 // ==========================================================================
-// 本笔记遵循「基础与一阶理论 → 线性系统 → 定性与非线性 → 边值谱论」
-// 的四段式主线，共 4 Part、7 Chapter。
+// 本笔记遵循「基础与一阶理论 → 线性系统 → 定性与非线性 → 分岔 → 边值谱论」
+// 的五段式主线，共 4 Part、8 Chapter。
 //
 // Part I（Ch 1–3，基础与一阶理论）：ODE 基本语言、一阶方程全套初等解法、
 //   存在唯一性与解的依赖性，奠定严格基础。
@@ -187,14 +203,16 @@
 // Part II（Ch 4–5，线性系统理论）：一阶线性方程组的完整理论与解法，
 //   高阶线性方程作为对偶视角，是解析理论的核心。
 //
-// Part III（Ch 6，定性与非线性）：相平面几何、Lyapunov 稳定性理论、
-//   奇点与极限环，从「求精确解」转向「定性分析」。
+// Part III（Ch 6–7，定性与非线性）：相平面几何、Lyapunov 稳定性理论、
+//   奇点与极限环，从「求精确解」转向「定性分析」；再把参数引入，
+//   得到鞍结/跨临界/叉式/Hopf 四类局部分岔（Ch 7）。
 //
-// Part IV（Ch 7，边值问题）：Sturm-Liouville 特征值问题，
+// Part IV（Ch 8，边值问题）：Sturm-Liouville 特征值问题，
 //   连接 ODE 与谱理论，为 PDE 分离变量法铺路。
 //
 // 教材覆盖：柳彬《常微分方程》、王高雄《常微分方程》、Boyce & DiPrima
-//   《Elementary Differential Equations》全部核心知识点均已覆盖。
+//   《Elementary Differential Equations》核心知识点均已覆盖；
+//   Ch 7（分岔理论）属扩展内容，不在这三本教材的主线要求之内。
 //   （注：原 tex 笔记中一阶 PDE 一章已全部移入 Équations aux Dérivées Partielles 笔记）
 // ==========================================================================
 
@@ -352,7 +370,7 @@ Remarkably, we can determine the tangent slope at any point from the equation al
 = First-Order Equations // 一阶方程
 
 This chapter presents the elementary solution methods for first-order ODEs.
-We proceed from the symmetric differential form (§2.1), then derive several important special classes: separable equations, homogeneous equations, and linear equations.
+We proceed from the symmetric differential form of *Exact Equations*, then derive several important special classes: separable equations, homogeneous equations, and linear equations.
 The method of integrating factors unifies these approaches by converting non-exact forms into exact ones.
 Finally, we treat implicit equations and the reduction of higher-order equations.
 
@@ -548,7 +566,7 @@ which can be reduced to a homogeneous or separable equation by coordinate transl
 ] <def:first-order-linear>
 
 #note[
-  The term "homogeneous" here means the right-hand side is zero — this is a different usage from the "homogeneous equation" of §2.3, where homogeneity refers to the scaling property of $f(x, y)$.
+  The term "homogeneous" here means the right-hand side is zero — this is a different usage from the homogeneous equations of *Homogeneous Equations*, where homogeneity refers to the scaling property of $f(x, y)$.
 ]
 
 First solve the homogeneous equation. Since it is separable, its general solution is
@@ -1830,7 +1848,7 @@ The level sets of a Lyapunov function and a trajectory trapped inside them are i
     )
   $
 
-  The Jacobian matrix at the origin is $mat(0, 1; -1, 0)$, whose eigenvalues are purely imaginary, so the linearization theorem (to be stated in §6.4) does not apply.
+  The Jacobian matrix at the origin is $mat(0, 1; -1, 0)$, whose eigenvalues are purely imaginary, so #link(<thm:linearization>)[*Linearization Theorem*], stated in *Critical Points and Limit Cycles*, does not apply.
 
   Take $V = x^2 + y^2$, which is positive definite with $V(bold(0)) = 0$.
 
@@ -1936,6 +1954,264 @@ A concrete example is provided by the Van der Pol oscillator, whose unique limit
   placement: auto,
   supplement: [Fig.],
 ) <fig:limit-cycle>
+
+= Bifurcation Theory // 分岔理论
+
+The qualitative theory of the previous chapter analyzed a single autonomous system, with the right-hand side fixed once and for all.
+In applications that right-hand side almost always carries parameters: a damping coefficient, a growth rate, a harvesting quota.
+The phase portrait then varies with those parameters, and the question becomes how.
+
+Most of the time the variation is gradual: an equilibrium drifts, a focus spirals a little faster.
+At isolated parameter values, however, the phase portrait changes its *type*: a pair of equilibria annihilates, an equilibrium hands its stability over to a closed orbit.
+Such an event is a *bifurcation*, and the values at which it happens organize the parameter space into regimes of qualitatively identical behavior.
+
+This chapter treats one-parameter families in the plane.
+Three earlier results are used throughout: #link(<thm:linearization>)[*Linearization Theorem*] identifies the hypothesis whose failure marks every bifurcation of an equilibrium, #link(<def:limit-cycle>)[*Limit Cycle*] names the object born in a Hopf bifurcation, and #link(<def:lyapunov-function>)[*Lyapunov Function*] certifies the stability of the new branches.
+
+== Parameter Families and Structural Stability // 参数族与结构稳定性
+
+Consider the one-parameter family
+#eq[$
+  dot(bold(x)) = bold(f)(bold(x); mu), quad quad bold(x) in D subset.eq bb(R)^2, quad quad mu in I subset.eq bb(R),
+$] <eq:parameter-family>
+where $bold(f)$ is of class $C^1$ in $(bold(x), mu)$.
+For each fixed value of $mu$ this is exactly the autonomous system @eq:autonomous-system, so the phase portraits classified in *Critical Points and Limit Cycles* apply parameter by parameter.
+
+To speak of the phase portrait "changing type" we need a notion of sameness that ignores the shape of individual trajectories.
+
+#definition(name: "Topological Equivalence")[
+  Two planar systems $dot(bold(x)) = bold(f)(bold(x))$ and $dot(bold(x)) = bold(g)(bold(x))$ are *topologically equivalent* if there is a homeomorphism $bold(h)$ of the phase spaces sending trajectories onto trajectories and preserving the direction of time.
+] <def:topological-equivalence>
+
+Topologically equivalent systems share every qualitative feature of the classification of *Critical Points and Limit Cycles*: nodes correspond to nodes, saddles to saddles, closed orbits to closed orbits.
+Only the geometry of the individual trajectories differs.
+
+#definition(name: "Bifurcation Value")[
+  A value $mu_0 in I$ is a *bifurcation value* of @eq:parameter-family if every neighborhood of $mu_0$ contains a value $mu$ at which the system is not topologically equivalent to the system at $mu_0$.
+] <def:bifurcation-value>
+
+The corresponding point $(bold(x)^*, mu_0)$, where $bold(x)^*$ is the equilibrium or the closed orbit that changes type, is called a *bifurcation point*.
+
+#definition(name: "Structural Stability")[
+  The system $dot(bold(x)) = bold(f)(bold(x))$ is *structurally stable* if every sufficiently small $C^1$ perturbation of $bold(f)$ is topologically equivalent to $bold(f)$.
+] <def:structural-stability>
+
+Structural stability is the same notion viewed from the parameter axis: if $bold(f)(dot.c; mu_0)$ is structurally stable, then all nearby members of the family look alike and $mu_0$ is not a bifurcation value.
+Conversely, every bifurcation value is a parameter at which structural stability is lost, and every local bifurcation is a failure of a non-degeneracy hypothesis of the earlier theory.
+
+#note(title: "What fails at a bifurcation")[
+  By #link(<thm:linearization>)[*Linearization Theorem*], an equilibrium whose Jacobian has no eigenvalue on the imaginary axis is *hyperbolic*, and its type is reproduced by every sufficiently small perturbation.
+  Likewise, a closed orbit whose Floquet multipliers of *Periodic Coefficient Systems* avoid the unit circle persists with the same stability type.
+  Hence an equilibrium can change type only when an eigenvalue reaches the imaginary axis, and a periodic orbit only when a Floquet multiplier crosses the unit circle.
+  The degenerate rows of the classification table — repeated and purely imaginary eigenvalues — are therefore exactly where parameter dependence becomes visible.
+]
+
+In the plane the converse holds as well, by the Andronov–Pontryagin theorem: a smooth planar system is structurally stable if and only if it has finitely many hyperbolic equilibria and closed orbits and no trajectory joining two saddle points.
+A saddle connection is thus a bifurcation of *global* type, in contrast with the *local* bifurcations treated in this chapter, which are already visible in an arbitrarily small neighborhood of one equilibrium or one closed orbit.
+
+A *bifurcation diagram* records the outcome: the parameter runs along the horizontal axis and the equilibria, or the amplitude of the periodic orbits, along the vertical axis, with stable branches drawn solid and unstable ones dashed.
+Two examples are the diagrams of @fig:bifurcation-diagrams and @fig:hopf-bifurcation.
+
+== Saddle-Node Bifurcation // 鞍结分岔
+
+The simplest mechanism is the collision and mutual annihilation of two equilibria, already visible in a scalar equation:
+#eq[$
+  dot(x) = mu - x^2, quad quad x in bb(R).
+$] <eq:saddle-node>
+
+For $mu < 0$ there is no equilibrium, because $mu - x^2 < 0$ everywhere.
+At $mu = 0$ a single equilibrium $x = 0$ appears, semistable: attracting from the left, repelling to the right.
+For $mu > 0$ the parabola splits the line into two equilibria $x = +- sqrt(mu)$; the right one has $f'(x) = -2 x < 0$ and is asymptotically stable, whereas the left one has $f'(x) = -2 x > 0$ and is unstable.
+Two equilibria are born out of nothing as $mu$ crosses $0$, and the pair is destroyed when $mu$ crosses back.
+
+The phenomenon is not special to the model: it occurs whenever the graph of $f$ is tangent to the $x$-axis in the $(x, mu)$-plane.
+
+#theorem(name: "Saddle-Node Bifurcation")[
+  Let $f: bb(R) times bb(R) -> bb(R)$ be of class $C^2$, and suppose that at $(x_0, mu_0)$
+  $
+    f(x_0, mu_0) = 0, quad quad f_x (x_0, mu_0) = 0, quad quad f_mu (x_0, mu_0) != 0, quad quad f_(x x)(x_0, mu_0) != 0.
+  $
+  Then there is $epsilon > 0$ such that the equation $dot(x) = f(x; mu)$ has no equilibrium in $(x_0 - epsilon, x_0 + epsilon)$ for the parameters on one side of $mu_0$, and exactly two equilibria there for the parameters on the other side.
+  These two equilibria are hyperbolic, one asymptotically stable and one unstable.
+] <thm:saddle-node>
+
+#proof[
+  Translating $x$ and $mu$ we may assume $x_0 = 0$ and $mu_0 = 0$; write $a = f_mu (0, 0)$ and $b = (f_(x x)(0, 0)) / 2$, both non-zero.
+
+  Taylor's formula with remainder gives
+  $
+    f(x, mu) = a mu + b x^2 + R(x, mu), quad quad abs(R(x, mu)) <= C (x^2 + mu^2),
+  $
+  where the constant $C = C(x, mu)$ tends to $0$ as $(x, mu) -> (0, 0)$.
+
+  *No equilibrium on one side.* Replacing $x$ by $-x$ and $mu$ by $-mu$ if necessary, we may suppose $a > 0$ and $b < 0$.
+  For $mu < 0$ set $h = abs(mu)$; then, for small $h$,
+  $
+    f(x, mu) <= -a h + (b + C) x^2 + C h^2 <= -a h + C h^2 < 0,
+  $
+  because $b + C <= 0$ and $C h <= a / 2$; hence no equilibrium exists near $0$.
+
+  *Two equilibria on the other side.* For $mu > 0$ we have $f(0, mu) = a mu + R(0, mu) > 0$ for small $mu$, while, for $s = 2 sqrt((a mu) / abs(b))$,
+  $
+    f(+- s, mu) <= a mu + (b + C) s^2 < 0.
+  $
+  By the intermediate value theorem $f$ vanishes on $(0, s)$ and on $(-s, 0)$, which yields two equilibria $x_1 < 0 < x_2$; applying the estimate at a root gives $c sqrt(mu) <= abs(x_i) <= C' sqrt(mu)$ with $c > 0$.
+
+  At such a root, $f_x (x_i, mu) = 2 b x_i + R_x (x_i, mu)$ with $abs(R_x (x_i, mu)) = o(abs(x_i))$; the sign of $f_x (x_i, mu)$ is therefore the sign of $2 b x_i$, which is positive at $x_1$ and negative at $x_2$.
+  Hence $x_2$ is asymptotically stable, $x_1$ is unstable, and both are hyperbolic.
+]
+
+#example(name: "Constant Harvesting of a Logistic Population")[
+  A population with logistic growth and constant harvesting rate $h >= 0$ satisfies
+  $
+    dot(x) = x (1 - x) - h.
+  $
+  Equilibria solve $x^2 - x + h = 0$, hence $x = (1 +- sqrt(1 - 4 h)) / 2$, and they exist only for $h <= 1/4$.
+  At $h = 1/4$ the two equilibria merge at $x = 1/2$, where $f_x = 1 - 2 x = 0$ while $f_h = -1 != 0$ and $f_(x x) = -2 != 0$; #link(<thm:saddle-node>)[*Saddle-Node Bifurcation*] therefore applies.
+
+  For $h > 1/4$ we have $dot(x) = x (1 - x) - h <= 1/4 - h < 0$ for every $x$, so the population decreases monotonically and reaches $0$ in finite time: extinction, whatever the initial size.
+  The critical value $h = 1/4$ is the maximum sustainable yield.
+] <ex:saddle-node-harvesting>
+
+The bifurcation diagram of the saddle-node prototype is the left panel of @fig:bifurcation-diagrams.
+
+== Transcritical and Pitchfork Bifurcations // 跨临界分岔与叉式分岔
+
+Two further variants keep one equilibrium present throughout and only exchange or split stability.
+
+#eq[$
+  dot(x) = mu x - x^2 = x (mu - x).
+$] <eq:transcritical>
+
+Here $x = 0$ is an equilibrium for every $mu$, and $x = mu$ is a second one.
+Since $f_x = mu - 2 x$, the origin carries the eigenvalue $mu$ and the second equilibrium carries $-mu$.
+For $mu < 0$ the origin is asymptotically stable and $x = mu$ is unstable; for $mu > 0$ the roles are exchanged.
+At $mu = 0$ the two equilibria collide and swap stability: a *transcritical* bifurcation.
+
+Its distinguishing feature is that one branch exists for all parameters.
+That branch is usually a "trivial" state — extinction of a population, absence of an infection, the zero solution of a linear equation — which is why the transcritical bifurcation is typical in models where such a state is structurally preserved.
+
+#eq[$
+  dot(x) = mu x - x^3 = x (mu - x^2).
+$] <eq:pitchfork-supercritical>
+
+The equilibria are $x = 0$ for all $mu$, together with the symmetric pair $x = +- sqrt(mu)$ for $mu > 0$.
+Now $f_x = mu - 3 x^2$, which equals $mu$ at the origin and $-2 mu$ at $x = +- sqrt(mu)$.
+Hence the origin is asymptotically stable for $mu < 0$ and unstable for $mu > 0$, while the new pair is asymptotically stable whenever it exists.
+This is a *supercritical pitchfork*: a symmetric state loses stability to a pair of symmetric states.
+
+#eq[$
+  dot(x) = mu x + x^3 = x (mu + x^2).
+$] <eq:pitchfork-subcritical>
+
+Reversing the sign of the cubic term produces the *subcritical* pitchfork: the pair $x = +- sqrt(-mu)$ exists for $mu < 0$ and is unstable there, since $f_x = mu + 3 x^2 = -2 mu > 0$, while the origin is stable for $mu < 0$ and unstable for $mu > 0$.
+The unstable branches now lie on the side where the origin is stable and disappear at the bifurcation itself.
+This is what makes the subcritical case dangerous: a stable state is lost without a nearby stable state to replace it.
+
+Adding a stabilizing quintic term makes the consequence visible.
+For
+$
+  dot(x) = mu x + x^3 - x^5
+$
+the origin is still unstable for $mu > 0$, but stable equilibria survive at $x^2 = (1 + sqrt(1 + 4 mu)) / 2$ as long as $mu > -1/4$.
+Increasing $mu$ through $0$ therefore forces a jump to large amplitude, whereas decreasing $mu$ again does not restore the small state until $mu = -1/4$; the observed state depends on the history of the parameter, a phenomenon known as *hysteresis*.
+
+#note(title: "Why the pitchfork needs symmetry")[
+  Both pitchfork prototypes satisfy $f(-x) = -f(x)$, and their diagrams inherit the reflection symmetry $x -> -x$.
+  A perturbation breaking this symmetry separates the two branches and replaces the pitchfork by a saddle-node together with a transcritical event, so a genuine pitchfork is possible only in a symmetric family.
+  In a generic one-parameter family the local bifurcations at a simple zero eigenvalue are the saddle-node, and the transcritical one when a trivial branch is preserved.
+]
+
+#figure(
+  image("img/bifurcation-diagrams.svg", width: 100%),
+  caption: [Bifurcation diagrams of the saddle-node, transcritical and pitchfork prototypes. Solid curves are stable equilibria and dashed curves unstable ones.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:bifurcation-diagrams>
+
+== Hopf Bifurcation // Hopf 分岔
+
+In the three mechanisms above the number or the location of equilibria changes, and no periodic orbit is involved.
+The Hopf bifurcation is different in kind: the equilibrium survives, but at the critical parameter its linearization becomes a center, and on one side a closed orbit grows out of it.
+
+#theorem(name: "Hopf Bifurcation")[
+  Let $bold(f)$ in @eq:parameter-family be of class $C^4$ and let $bold(x)^*(mu)$ be an equilibrium depending continuously on $mu$, with Jacobian $bold(A)(mu)$ and eigenvalues $alpha(mu) ± i beta(mu)$.
+  Suppose that at $mu_0$
+  $
+    alpha(mu_0) = 0, quad quad beta(mu_0) = omega > 0, quad quad alpha'(mu_0) != 0,
+  $
+  and that the first Lyapunov coefficient $ell_1 (mu_0)$ of the reduced system is non-zero.
+  Then the equilibrium is asymptotically stable on one side of $mu_0$ and unstable on the other, and near it there is a unique closed orbit, of amplitude of order $sqrt(abs(mu - mu_0))$ and period tending to $(2 pi) / omega$ as $mu -> mu_0$.
+  That orbit is a limit cycle; it is asymptotically stable when $ell_1 (mu_0) < 0$ (*supercritical*) and unstable when $ell_1 (mu_0) > 0$ (*subcritical*), in which case it lies on the side where the equilibrium is stable.
+] <thm:hopf>
+
+#note(title: "Where the difficulty lies")[
+  Unlike #link(<thm:saddle-node>)[*Saddle-Node Bifurcation*], the Hopf theorem does not follow from the implicit function theorem: at $mu_0$ there is no equilibrium to continue, only a center direction, and the closed orbit is not a perturbation of an equilibrium of the linear part.
+  The proof reduces the system to a two-dimensional center manifold, then to the normal form $dot(z) = (alpha + i beta) z + c abs(z)^2 z$, whose cubic coefficient determines $ell_1$; see Perko, *Differential Equations and Dynamical Systems*, and Wiggins, *Introduction to Applied Nonlinear Dynamical Systems and Chaos*.
+]
+
+The square-root law explains the parabolic shape of the upper branch in @fig:hopf-bifurcation: the amplitude leaves the equilibrium with a vertical tangent, exactly as the pair of equilibria does at a saddle-node bifurcation.
+
+#example(name: "A Planar Family with an Explicit Hopf Bifurcation")[
+  Consider
+  $
+    cases(
+      dot(x) = mu x - y - x (x^2 + y^2),
+      dot(y) = x + mu y - y (x^2 + y^2).
+    )
+  $
+  In polar coordinates $x = r cos theta$, $y = r sin theta$ the system reads $dot(r) = mu r - r^3$ and $dot(theta) = 1$.
+  The origin is an equilibrium for all $mu$, with Jacobian $mat(mu, -1; 1, mu)$ and eigenvalues $mu ± i$, so $alpha(mu) = mu$, $omega = 1$ and $alpha'(0) = 1 != 0$.
+
+  The radial equation is a pitchfork bifurcation in disguise: for $mu > 0$ the circle $r = sqrt(mu)$ is invariant, and $dot(r) = r (mu - r^2)$ shows that it attracts every trajectory with $r > 0$.
+  By #link(<thm:hopf>)[*Hopf Bifurcation*] the transition at $mu = 0$ is supercritical, and the amplitude grows like $sqrt(mu)$.
+] <ex:hopf-radial>
+
+#note(title: "Van der Pol revisited")[
+  The Van der Pol oscillator of *Critical Points and Limit Cycles* shows the same transition at $mu = 0$: for $mu < 0$ the origin is an asymptotically stable focus, and for $mu > 0$ it is an unstable focus surrounded by the limit cycle of @fig:limit-cycle.
+  Its eigenvalues are $mu / 2 ± i sqrt(1 - mu^2 / 4)$, so $alpha'(0) = 1/2 != 0$ and the transversality condition holds.
+
+  The first Lyapunov coefficient, however, vanishes with $mu$: at $mu = 0$ the equation is linear and every circle centered at the origin is a periodic orbit.
+  The bifurcation is therefore *degenerate*, the non-degenerate statement of #link(<thm:hopf>)[*Hopf Bifurcation*] does not apply, and the limit cycle keeps a radius tending to $2$ as $mu -> 0$ instead of shrinking to the origin.
+  Degenerate Hopf bifurcations are common in applications and are responsible for the abrupt onset of oscillations of finite amplitude.
+]
+
+#figure(
+  image("img/hopf-bifurcation.svg", width: 90%),
+  caption: [Hopf bifurcation in the planar family of the preceding example. Left: bifurcation diagram, with the equilibrium branch and the circular limit cycle of amplitude $sqrt(mu)$. Right: phase portrait at $mu = 0.2$, where trajectories spiral out to the limit cycle.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:hopf-bifurcation>
+
+== Classification and Scope // 分类与适用范围
+
+The four mechanisms of this chapter cover the local bifurcations of one-parameter families of planar systems:
+
+#tex-table(
+  ("Bifurcation", "Normal form", [Condition at $mu_0$], "Qualitative change"),
+  ([Saddle-node], [$dot(x) = mu - x^2$], [Simple zero eigenvalue], [Two equilibria created or annihilated]),
+  ([Transcritical], [$dot(x) = mu x - x^2$], [Simple zero eigenvalue, trivial branch preserved], [Stability exchanged between two equilibria]),
+  ([Pitchfork], [$dot(x) = mu x - x^3$], [Simple zero eigenvalue, symmetry $x -> -x$], [Symmetric pair created, symmetry broken]),
+  ([Hopf], [$dot(z) = (mu + i) z - abs(z)^2 z$], [Pair $± i omega$ crossing the imaginary axis], [Limit cycle created around the equilibrium]),
+)
+
+Each row is obtained from a representative nonlinear system by a smooth change of variables followed by truncation at the lowest non-trivial order.
+The truncated polynomial is the *normal form* of the bifurcation, and the conditions in the third column are the non-degeneracy assumptions under which the truncation decides the local dynamics.
+
+The *codimension* of a bifurcation is the number of independent scalar conditions on the vector field that must hold for it to occur.
+All four types above are of codimension one: a single condition forces an eigenvalue onto the imaginary axis, while the remaining conditions are inequalities.
+Codimension two requires two equations, for instance a double zero eigenvalue, which produces the Takens–Bogdanov bifurcation; such points lie on curves in a two-parameter plane and organize the codimension-one structure around them.
+
+#caution(title: "Scope of this chapter")[
+  Only local bifurcations of equilibria and periodic orbits in the plane are treated here.
+  Global bifurcations — homoclinic and heteroclinic connections, saddle connections, the period-doubling cascade — depend on the whole phase portrait and are not covered.
+  Chaotic dynamics requires dimension three or more, precisely the situation excluded by #link(<thm:poincare-bendixson>)[*Poincaré-Bendixson Theorem*] in the plane; the full theory is developed in Perko, Wiggins, and Guckenheimer & Holmes.
+]
+
+#note(title: "Bifurcation in boundary value problems")[
+  Parameter dependence also reorganizes Part IV: for a nonlinear boundary value problem $L y + N(y; mu) = 0$ on an interval, solutions branch at precisely those values of $mu$ for which the linearized problem has a non-trivial solution, that is, at the eigenvalues of *Sturm-Liouville Problems*, where the #link(<thm:fredholm-alternative>)[*Fredholm Alternative*] degenerates.
+  The reduction used to analyse such branching (the Lyapunov-Schmidt method) is an infinite-dimensional version of the center-manifold reduction and belongs to functional analysis rather than to this notebook.
+]
 
 #part("Boundary Value Problems and Spectral Theory") // 边值问题与谱论
 
@@ -2340,6 +2616,7 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
 == B
 - *#link(<thm:bellman-gronwall>)[Bellman Gronwall]*
 - *#link(<def:bernoulli-equation>)[Bernoulli Equation]*
+- *#link(<def:bifurcation-value>)[Bifurcation Value]*
 
 == C
 - *#link(<thm:c-test>)[C Test]*
@@ -2392,6 +2669,8 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
 - *#link(<ex:homogeneous-equation>)[Homogeneous Equation]*
 - *#link(<def:homogeneous-function>)[Homogeneous Function]*
 - *#link(<thm:homogeneous-general-solution>)[Homogeneous General Solution]*
+- *#link(<thm:hopf>)[Hopf]*
+- *#link(<ex:hopf-radial>)[Hopf Radial]*
 
 == I
 - *#link(<def:implicit-solution>)[Implicit Solution]*
@@ -2453,6 +2732,8 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
 - *#link(<def:riccati-equation>)[Riccati Equation]*
 
 == S
+- *#link(<thm:saddle-node>)[Saddle Node]*
+- *#link(<ex:saddle-node-harvesting>)[Saddle Node Harvesting]*
 - *#link(<def:saturated-solution>)[Saturated Solution]*
 - *#link(<thm:self-adjoint>)[Self Adjoint]*
 - *#link(<def:separable-equation>)[Separable Equation]*
@@ -2464,10 +2745,14 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
 - *#link(<def:sl-eigenvalue>)[SL Eigenvalue]*
 - *#link(<thm:sl-properties>)[SL Properties]*
 - *#link(<def:solution>)[Solution]*
+- *#link(<def:structural-stability>)[Structural Stability]*
 - *#link(<thm:sturm-comparison>)[Sturm Comparison]*
 - *#link(<def:sturm-liouville>)[Sturm Liouville]*
 - *#link(<thm:sturm-oscillation>)[Sturm Oscillation]*
 - *#link(<lem:superposition>)[Superposition]*
+
+== T
+- *#link(<def:topological-equivalence>)[Topological Equivalence]*
 
 == U
 - *#link(<thm:undetermined-coefficients>)[Undetermined Coefficients]*
@@ -2477,7 +2762,5 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
 - *#link(<def:wronskian>)[Wronskian]*
 - *#link(<thm:wronskian-criterion>)[Wronskian Criterion]*
 - *#link(<def:wronskian-higher-order>)[Wronskian Higher Order]*
-
-#pagebreak()
 
 #bibliography("references.bib", title: "References", full: true)
