@@ -4542,6 +4542,6 @@ closed-form moment estimators.
 // ==========================================================================
 
 
-#bibliography("references.bib")
+#bibliography("references.bib", style: "gb-7714-2015-numeric", full: true)
 
 // 目录
