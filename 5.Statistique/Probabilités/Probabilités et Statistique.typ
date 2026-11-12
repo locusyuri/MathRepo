@@ -620,13 +620,13 @@ content.
   it is returned together with $c$ additional balls of the *same colour*.
   Remarkably, the probability of drawing a red ball at step $k$ equals
   $a / (a + b)$ *for every* $k$: letting $X_(k-1)$ be the number of red
-  balls drawn in the first $k - 1$ steps (and writing $E[X_(k-1)]$ for its
+  balls drawn in the first $k - 1$ steps (and writing $bb(E)[X_(k-1)]$ for its
   average over the drawing protocols — the notion of expectation is made
   precise in the Numerical Characteristics part), the induction hypothesis
-  $E[X_(k-1)] = (k - 1) a / (a + b)$ (trivial for $k = 1$) gives
+  $bb(E)[X_(k-1)] = (k - 1) a / (a + b)$ (trivial for $k = 1$) gives
   $
     P("red at step " k)
-    = E[(a + c X_(k-1)) / (a + b + (k - 1) c)]
+    = bb(E)[(a + c X_(k-1)) / (a + b + (k - 1) c)]
     = (a + c (k - 1) a / (a + b)) / (a + b + (k - 1) c)
     = a / (a + b).
   $
@@ -1119,7 +1119,7 @@ portrait.
   Let $X$ be discrete with PMF $p(x)$. If $sum_x abs(x) p(x) < infinity$,
   the *expectation* (or *mean*) of $X$ is
   $
-    E[X] = sum_x x p(x).
+    bb(E)[X] = sum_x x p(x).
   $
   If the series is not absolutely convergent, the expectation does not
   exist.
@@ -1129,7 +1129,7 @@ portrait.
   Let $X$ be continuous with PDF $f(x)$. If $integral_(-infinity)^infinity
   abs(x) f(x) dif x < infinity$, the *expectation* of $X$ is
   $
-    E[X] = integral_(-infinity)^infinity x f(x) dif x.
+    bb(E)[X] = integral_(-infinity)^infinity x f(x) dif x.
   $
 ] <def:expectation-continuous>
 
@@ -1140,7 +1140,7 @@ series depend on summation order, which has no probabilistic meaning.
   For any random variables $X, Y$ with finite expectations and constants
   $a, b in RR$,
   $
-    E[a X + b Y] = a E[X] + b E[Y].
+    bb(E)[a X + b Y] = a bb(E)[X] + b bb(E)[Y].
   $
 ] <prop:expectation-linearity>
 
@@ -1149,7 +1149,7 @@ Linearity holds *without* any independence assumption — this is what makes exp
   Let $X$ have PMF $p(x)$ (or PDF $f(x)$) and let $g: RR -> RR$ be
   measurable. Then
   $
-    E[g(X)] = sum_x g(x) p(x) quad ("or" quad integral_(-infinity)^infinity g(x) f(x) dif x).
+    bb(E)[g(X)] = sum_x g(x) p(x) quad ("or" quad integral_(-infinity)^infinity g(x) f(x) dif x).
   $
   No intermediate step of deriving the distribution of $Y = g(X)$ is needed
   — the expectation of $g(X)$ is computed directly from the distribution of
@@ -1159,12 +1159,12 @@ Linearity holds *without* any independence assumption — this is what makes exp
 #property(name: "Markov's Inequality")[
   If $X >= 0$ a.s. and $a > 0$, then
   $
-    P(X >= a) <= (E[X]) / a.
+    P(X >= a) <= (bb(E)[X]) / a.
   $
 ] <prop:markov-inequality>
 
 #proof[
-  $E[X] = integral_0^infinity x f(x) dif x >= integral_a^infinity x f(x) dif x
+  $bb(E)[X] = integral_0^infinity x f(x) dif x >= integral_a^infinity x f(x) dif x
   >= a integral_a^infinity f(x) dif x = a P(X >= a)$.
 ]
 
@@ -1172,7 +1172,7 @@ Linearity holds *without* any independence assumption — this is what makes exp
   Common expectations (verified by direct computation or LOTUS):
 
   #tex-table(
-    ("Distribution", $E[X]$),
+    ("Distribution", $bb(E)[X]$),
     ($"Ber"(p)$, $p$),
     ($B(n, p)$, $n p$),
     ($"Pois"(lambda)$, $lambda$),
@@ -1186,45 +1186,45 @@ Linearity holds *without* any independence assumption — this is what makes exp
     ($"Be"(a, b)$, $a / (a+b)$),
   )
 
-  For instance, $E["Exp"(lambda)] = integral_0^infinity x lambda exp(-lambda x) dif x = 1 / lambda$ by integration by parts.
+  For instance, $bb(E)["Exp"(lambda)] = integral_0^infinity x lambda exp(-lambda x) dif x = 1 / lambda$ by integration by parts.
 ] <ex:common-expectations>
 
 == Variance and Standard Deviation // 方差与标准差
 
 #definition(name: "Variance")[
-  The *variance* of $X$ with finite $E[X^2]$ is
+  The *variance* of $X$ with finite $bb(E)[X^2]$ is
   $
-    "Var"(X) = E[(X - E[X])^2] = E[X^2] - (E[X])^2,
+    "Var"(X) = bb(E)[(X - bb(E)[X])^2] = bb(E)[X^2] - (bb(E)[X])^2,
   $
   and the *standard deviation* is $sigma = sqrt("Var"(X))$.
 ] <def:variance>
 
-The computational form $E[X^2] - (E[X])^2$ follows from
-#link(<prop:expectation-linearity>)[linearity]: expand $E[(X - mu)^2] =
-E[X^2] - 2 mu E[X] + mu^2 = E[X^2] - mu^2$.
+The computational form $bb(E)[X^2] - (bb(E)[X])^2$ follows from
+#link(<prop:expectation-linearity>)[linearity]: expand $bb(E)[(X - mu)^2] =
+bb(E)[X^2] - 2 mu bb(E)[X] + mu^2 = bb(E)[X^2] - mu^2$.
 
 #property(name: "Properties of Variance")[
   - $"Var"(a X + b) = a^2 "Var"(X)$ — shift does not affect spread;
   - if $X_1, dots, X_n$ are pairwise independent, $"Var"(sum X_i) = sum
     "Var"(X_i)$;
-  - $"Var"(X) >= 0$, with equality iff $X = E[X]$ a.s.;
-  - $"Var"(X) < infinity$ iff $E[X^2] < infinity$.
+  - $"Var"(X) >= 0$, with equality iff $X = bb(E)[X]$ a.s.;
+  - $"Var"(X) < infinity$ iff $bb(E)[X^2] < infinity$.
 ] <prop:variance-properties>
 
 #definition(name: "Standardization")[
-  Let $X$ have $0 < "Var"(X) < infinity$, with $mu = E[X]$ and $sigma = sqrt("Var"(X))$. The *standardized* variable associated with $X$ is
+  Let $X$ have $0 < "Var"(X) < infinity$, with $mu = bb(E)[X]$ and $sigma = sqrt("Var"(X))$. The *standardized* variable associated with $X$ is
   $
     Z = (X - mu) / sigma.
   $
 ] <def:standardization>
 
-Standardization recentres at $0$ and rescales the spread to $1$: by #link(<prop:variance-properties>)[the shift and scale rules of variance], $E[Z] = 0$ and $"Var"(Z) = 1$, while the shape of the distribution is untouched.
+Standardization recentres at $0$ and rescales the spread to $1$: by #link(<prop:variance-properties>)[the shift and scale rules of variance], $bb(E)[Z] = 0$ and $"Var"(Z) = 1$, while the shape of the distribution is untouched.
 It is the change of unit that makes variables with different locations and scales comparable — the common currency behind $z$-scores, and the reason one table of the standard normal CDF serves every normal variable (see #link(<thm:normal-standardization>)[standardization of the normal]).
 
 #theorem(name: "Chebyshev's Inequality")[
   If $"Var"(X) < infinity$, then for any $k > 0$,
   $
-    P(abs(X - E[X]) >= k) <= ("Var"(X)) / k^2.
+    P(abs(X - bb(E)[X]) >= k) <= ("Var"(X)) / k^2.
   $
   Equivalently, $P(abs(X - mu) >= k sigma) <= 1 / k^2$.
 ] <thm:chebyshev-inequality>
@@ -1233,7 +1233,7 @@ It is the change of unit that makes variables with different locations and scale
   Apply #link(<prop:markov-inequality>)[Markov's inequality] to the
   non-negative random variable $(X - mu)^2$ with $a = k^2$:
   $
-    P(abs(X - mu) >= k) = P((X - mu)^2 >= k^2) <= (E[(X - mu)^2]) / k^2 = ("Var"(X)) / k^2.
+    P(abs(X - mu) >= k) = P((X - mu)^2 >= k^2) <= (bb(E)[(X - mu)^2]) / k^2 = ("Var"(X)) / k^2.
   $
 ]
 
@@ -1254,10 +1254,10 @@ direct corollary.
 == Other Characterization Numbers // 其他特征数
 
 #definition(name: "Moments and Central Moments")[
-  The *$k$-th moment* of $X$ is $mu_k = E[X^k]$, and the *$k$-th central
+  The *$k$-th moment* of $X$ is $mu_k = bb(E)[X^k]$, and the *$k$-th central
   moment* is
   $
-    mu_k' = E[(X - mu)^k],
+    mu_k' = bb(E)[(X - mu)^k],
   $
   provided the expectations exist. The variance is the second central
   moment: $"Var"(X) = mu_2'$.
@@ -1285,7 +1285,7 @@ direct corollary.
 #definition(name: "Skewness")[
   The *skewness* (coefficient of skewness) is
   $
-    gamma_1 = (mu_3') / sigma^3 = (E[(X - mu)^3]) / sigma^3.
+    gamma_1 = (mu_3') / sigma^3 = (bb(E)[(X - mu)^3]) / sigma^3.
   $
   It measures asymmetry: $gamma_1 > 0$ (right-skewed), $gamma_1 < 0$
   (left-skewed), $gamma_1 = 0$ (symmetric).
@@ -1294,7 +1294,7 @@ direct corollary.
 #definition(name: "Kurtosis")[
   The *kurtosis* (excess kurtosis) is
   $
-    gamma_2 = (mu_4') / sigma^4 - 3 = (E[(X - mu)^4]) / sigma^4 - 3.
+    gamma_2 = (mu_4') / sigma^4 - 3 = (bb(E)[(X - mu)^4]) / sigma^4 - 3.
   $
   The subtraction of $3$ makes the normal distribution the reference:
   $gamma_2 = 0$ (*mesokurtic*), $gamma_2 > 0$ (*leptokurtic* — heavier
@@ -1349,14 +1349,14 @@ produces the first and most important discrete distribution family.
 #property(name: "Mean and Variance of the Bernoulli")[
   If $X ~ "Ber"(p)$, then
   $
-    E[X] = p, quad "Var"(X) = p q = p (1 - p).
+    bb(E)[X] = p, quad "Var"(X) = p q = p (1 - p).
   $
 ] <prop:bernoulli-mean-variance>
 
 #proof[
-  Directly from the PMF: $E[X] = 0 dot q + 1 dot p = p$ and
-  $E[X^2] = 0^2 dot q + 1^2 dot p = p$, so
-  $"Var"(X) = E[X^2] - (E[X])^2 = p - p^2 = p (1 - p)$ by
+  Directly from the PMF: $bb(E)[X] = 0 dot q + 1 dot p = p$ and
+  $bb(E)[X^2] = 0^2 dot q + 1^2 dot p = p$, so
+  $"Var"(X) = bb(E)[X^2] - (bb(E)[X])^2 = p - p^2 = p (1 - p)$ by
   #link(<def:variance>)[the computational form].
 ]
 
@@ -1373,7 +1373,7 @@ produces the first and most important discrete distribution family.
 #property(name: "Mean and Variance of the Binomial")[
   If $X ~ B(n, p)$, then
   $
-    E[X] = n p, quad "Var"(X) = n p q.
+    bb(E)[X] = n p, quad "Var"(X) = n p q.
   $
 ] <prop:binomial-mean-variance>
 
@@ -1381,7 +1381,7 @@ produces the first and most important discrete distribution family.
   Write $X = X_1 + dots + X_n$ where $X_i$ is the indicator of a success in
   trial $i$; the $X_i$ are independent $"Ber"(p)$ variables. By
   #link(<prop:expectation-linearity>)[linearity of expectation] — which
-  needs no independence — $E[X] = sum_(i=1)^n E[X_i] = n p$; and by
+  needs no independence — $bb(E)[X] = sum_(i=1)^n bb(E)[X_i] = n p$; and by
   #link(<prop:variance-properties>)[additivity of variance for independent
     variables], $"Var"(X) = sum_(i=1)^n "Var"(X_i) = n p q$.
 ]
@@ -1414,23 +1414,23 @@ produces the first and most important discrete distribution family.
 #property(name: "Mean and Variance of the Poisson")[
   If $X ~ "Pois"(lambda)$, then
   $
-    E[X] = lambda, quad "Var"(X) = lambda.
+    bb(E)[X] = lambda, quad "Var"(X) = lambda.
   $
 ] <prop:poisson-mean-variance>
 
 #proof[
   Shifting the index in the series ($k! = k dot (k-1)!$):
   $
-    E[X] = sum_(k=1)^infinity k (lambda^k e^(-lambda)) / k!
+    bb(E)[X] = sum_(k=1)^infinity k (lambda^k e^(-lambda)) / k!
     = lambda e^(-lambda) sum_(k=1)^infinity (lambda^(k-1)) / (k-1)!
     = lambda e^(-lambda) e^(lambda) = lambda.
   $
   For the second factorial moment, $k (k-1) / k! = 1 / (k-2)!$, so
   $
-    E[X (X - 1)] = e^(-lambda) sum_(k=2)^infinity (lambda^k) / (k-2)!
+    bb(E)[X (X - 1)] = e^(-lambda) sum_(k=2)^infinity (lambda^k) / (k-2)!
     = lambda^2 e^(-lambda) sum_(j=0)^infinity (lambda^j) / j! = lambda^2,
   $
-  so $E[X^2] = E[X (X-1)] + E[X] = lambda^2 + lambda$ and
+  so $bb(E)[X^2] = bb(E)[X (X-1)] + bb(E)[X] = lambda^2 + lambda$ and
   $"Var"(X) = lambda^2 + lambda - lambda^2 = lambda$: mean and variance
   coincide, the signature of the Poisson family.
 ]
@@ -1484,7 +1484,7 @@ in repeated trials (geometric, negative binomial).
 #property(name: "Mean and Variance of the Hypergeometric")[
   If $X ~ "Hyp"(N, K, n)$, then with $p = K / N$,
   $
-    E[X] = n p, quad "Var"(X) = n p (1 - p) (N - n) / (N - 1).
+    bb(E)[X] = n p, quad "Var"(X) = n p (1 - p) (N - n) / (N - 1).
   $
   The factor $(N - n) / (N - 1)$ — at most $1$ — is the *finite population
   correction*: sampling without replacement is less variable than sampling
@@ -1494,8 +1494,8 @@ in repeated trials (geometric, negative binomial).
 #proof[
   Let $I_i$ indicate that the $i$-th draw is red. By symmetry each draw
   sees a red ball with probability $K / N$ (all orderings of the drawn
-  balls are equally likely), so $E[I_i] = K / N$ and
-  $E[X] = sum_(i=1)^n E[I_i] = n K / N$ by linearity. For $i != j$,
+  balls are equally likely), so $bb(E)[I_i] = K / N$ and
+  $bb(E)[X] = sum_(i=1)^n bb(E)[I_i] = n K / N$ by linearity. For $i != j$,
   $P(I_i = 1, I_j = 1) = (K (K - 1)) / (N (N - 1))$, hence
   $"Cov"(I_i, I_j) = (K (K - 1)) / (N (N - 1)) - (K / N)^2 = -(K (N - K)) / (N^2 (N - 1))$.
   Since
@@ -1523,7 +1523,7 @@ in repeated trials (geometric, negative binomial).
   If $X ~ "Geo"(p)$ (trials counted up to and including the first success),
   then
   $
-    E[X] = 1 / p, quad "Var"(X) = q / p^2.
+    bb(E)[X] = 1 / p, quad "Var"(X) = q / p^2.
   $
 ] <prop:geometric-mean-variance>
 
@@ -1531,10 +1531,10 @@ in repeated trials (geometric, negative binomial).
   Using the geometric series derivatives $sum_(k=1)^infinity k q^(k-1) =
   1 / (1 - q)^2$ and $sum_(k=2)^infinity k (k - 1) q^(k-2) = 2 / (1 - q)^3$:
   $
-    E[X] = p sum_(k=1)^infinity k q^(k-1) = p / (1 - q)^2 = 1 / p,
+    bb(E)[X] = p sum_(k=1)^infinity k q^(k-1) = p / (1 - q)^2 = 1 / p,
   $
-  and $E[X (X - 1)] = p q sum_(k=2)^infinity k (k-1) q^(k-2) = 2 q / p^2$,
-  so $E[X^2] = 2 q / p^2 + 1 / p = (1 + q) / p^2$ and
+  and $bb(E)[X (X - 1)] = p q sum_(k=2)^infinity k (k-1) q^(k-2) = 2 q / p^2$,
+  so $bb(E)[X^2] = 2 q / p^2 + 1 / p = (1 + q) / p^2$ and
   $"Var"(X) = (1 + q) / p^2 - 1 / p^2 = q / p^2$.
 ]
 
@@ -1546,7 +1546,7 @@ in repeated trials (geometric, negative binomial).
   $
   The two variables are linked by $Y = X - 1$, so
   $
-    E[Y] = E[X] - 1 = q / p, quad "Var"(Y) = "Var"(X) = q / p^2:
+    bb(E)[Y] = bb(E)[X] - 1 = q / p, quad "Var"(Y) = "Var"(X) = q / p^2:
   $
   the expectation shifts by one, the variance is unchanged by any shift.
   This note uses the "trials" convention throughout, which matches the
@@ -1590,7 +1590,7 @@ in repeated trials (geometric, negative binomial).
 #property(name: "Mean and Variance of the Negative Binomial")[
   If $X ~ "NB"(r, p)$, then
   $
-    E[X] = r / p, quad "Var"(X) = r q / p^2.
+    bb(E)[X] = r / p, quad "Var"(X) = r q / p^2.
   $
 ] <prop:negative-binomial-mean-variance>
 
@@ -1600,7 +1600,7 @@ in repeated trials (geometric, negative binomial).
   from just after the $(j-1)$-th success through the $j$-th success) is an
   independent $"Geo"(p)$ variable — the trials are independent and each has
   success probability $p$. By linearity and independence:
-  $E[X] = sum_(j=1)^r E[Y_j] = r / p$ and
+  $bb(E)[X] = sum_(j=1)^r bb(E)[Y_j] = r / p$ and
   $"Var"(X) = sum_(j=1)^r "Var"(Y_j) = r q / p^2$. The case $r = 1$
   recovers the geometric moments.
 ]
@@ -1650,17 +1650,17 @@ concentration, error.
 #property(name: "Mean and Variance of the Uniform")[
   If $X ~ U(a, b)$, then
   $
-    E[X] = (a + b) / 2, quad "Var"(X) = (b - a)^2 / 12.
+    bb(E)[X] = (a + b) / 2, quad "Var"(X) = (b - a)^2 / 12.
   $
 ] <prop:uniform-mean-variance>
 
 #proof[
   The density is constant, so
   $
-    E[X] = integral_a^b x / (b - a) dif x = (b^2 - a^2) / (2 (b - a)) = (a + b) / 2,
+    bb(E)[X] = integral_a^b x / (b - a) dif x = (b^2 - a^2) / (2 (b - a)) = (a + b) / 2,
   $
   the midpoint of the interval — as symmetry suggests. Next,
-  $E[X^2] = (b^3 - a^3) / (3 (b - a)) = (a^2 + a b + b^2) / 3$, hence
+  $bb(E)[X^2] = (b^3 - a^3) / (3 (b - a)) = (a^2 + a b + b^2) / 3$, hence
   $
     "Var"(X) = (a^2 + a b + b^2) / 3 - ((a + b) / 2)^2 = (b - a)^2 / 12:
   $
@@ -1679,7 +1679,7 @@ concentration, error.
 #property(name: "Mean and Variance of the Exponential")[
   If $X ~ "Exp"(lambda)$, then
   $
-    E[X] = 1 / lambda, quad "Var"(X) = 1 / lambda^2.
+    bb(E)[X] = 1 / lambda, quad "Var"(X) = 1 / lambda^2.
   $
 ] <prop:exponential-mean-variance>
 
@@ -1687,12 +1687,12 @@ concentration, error.
   Integration by parts ($u = x$, $dif v = lambda e^(-lambda x) dif x$)
   gives
   $
-    E[X] = integral_0^infinity x lambda e^(-lambda x) dif x
+    bb(E)[X] = integral_0^infinity x lambda e^(-lambda x) dif x
     = integral_0^infinity e^(-lambda x) dif x = 1 / lambda,
   $
   the boundary term $x e^(-lambda x)$ vanishing both at $x = 0$ and in the
   limit $x -> infinity$. Integrating by parts twice,
-  $E[X^2] = 2 integral_0^infinity x e^(-lambda x) dif x = 2 / lambda^2$, so
+  $bb(E)[X^2] = 2 integral_0^infinity x e^(-lambda x) dif x = 2 / lambda^2$, so
   $"Var"(X) = 2 / lambda^2 - (1 / lambda)^2 = 1 / lambda^2$.
   The mean and the standard deviation are equal — a heavy right tail
   relative to the normal.
@@ -1779,7 +1779,7 @@ negative arguments, and the tail identity yields two-sided probabilities.
 #property(name: "Mean and Variance of the Normal")[
   If $X ~ N(mu, sigma^2)$, then — as the parameter names promise —
   $
-    E[X] = mu, quad "Var"(X) = sigma^2.
+    bb(E)[X] = mu, quad "Var"(X) = sigma^2.
   $
 ] <prop:normal-mean-variance>
 
@@ -1788,15 +1788,15 @@ negative arguments, and the tail identity yields two-sided probabilities.
   $X = sigma Z + mu$ with $Z ~ N(0, 1)$; the properties of expectation and
   variance (#link(<prop:expectation-linearity>)[linearity],
   #link(<prop:variance-properties>)[scaling]) reduce the claim to the
-  standard case $E[Z] = 0$, $"Var"(Z) = 1$. Symmetry of $phi$ around $0$
-  gives $E[Z] = 0$. For the variance, integrate by parts with
+  standard case $bb(E)[Z] = 0$, $"Var"(Z) = 1$. Symmetry of $phi$ around $0$
+  gives $bb(E)[Z] = 0$. For the variance, integrate by parts with
   $u = z$, $dif v = z phi(z) dif z = -dif (phi(z))$:
   $
-    E[Z^2] = (1 / sqrt(2 pi)) integral_(-infinity)^infinity z^2 e^(-z^2 / 2) dif z
+    bb(E)[Z^2] = (1 / sqrt(2 pi)) integral_(-infinity)^infinity z^2 e^(-z^2 / 2) dif z
     = (1 / sqrt(2 pi)) integral_(-infinity)^infinity e^(-z^2 / 2) dif z = 1,
   $
   since the boundary terms vanish and the last integral equals
-  $sqrt(2 pi)$ by normalization. Hence $"Var"(Z) = E[Z^2] - 0 = 1$.
+  $sqrt(2 pi)$ by normalization. Hence $"Var"(Z) = bb(E)[Z^2] - 0 = 1$.
 ]
 
 #property(name: "Three-Sigma Rule")[
@@ -1838,8 +1838,8 @@ intimately related to the exponential and the uniform respectively.
 #property(name: "Mean and Variance of the Gamma")[
   If $X ~ "Ga"(alpha, lambda)$, then
   $
-    E[X^k] = (Gamma(alpha + k)) / (lambda^k Gamma(alpha)), quad
-    E[X] = alpha / lambda, quad "Var"(X) = alpha / lambda^2.
+    bb(E)[X^k] = (Gamma(alpha + k)) / (lambda^k Gamma(alpha)), quad
+    bb(E)[X] = alpha / lambda, quad "Var"(X) = alpha / lambda^2.
   $
 ] <prop:gamma-mean-variance>
 
@@ -1847,13 +1847,13 @@ intimately related to the exponential and the uniform respectively.
   Substituting $t = lambda x$ ($x = t / lambda$, $dif x = (dif t) / lambda$)
   turns the $k$-th moment into a Gamma function:
   $
-    E[X^k] = (lambda^alpha) / (Gamma(alpha)) integral_0^infinity x^(alpha + k - 1) e^(-lambda x) dif x
+    bb(E)[X^k] = (lambda^alpha) / (Gamma(alpha)) integral_0^infinity x^(alpha + k - 1) e^(-lambda x) dif x
     = 1 / (lambda^k Gamma(alpha)) integral_0^infinity t^(alpha + k - 1) e^(-t) dif t
     = (Gamma(alpha + k)) / (lambda^k Gamma(alpha)),
   $
   using $Gamma(alpha + 1) = alpha Gamma(alpha)$. Taking $k = 1$ gives
-  $E[X] = alpha / lambda$; taking $k = 2$ gives
-  $E[X^2] = (alpha (alpha + 1)) / lambda^2$, hence
+  $bb(E)[X] = alpha / lambda$; taking $k = 2$ gives
+  $bb(E)[X^2] = (alpha (alpha + 1)) / lambda^2$, hence
   $"Var"(X) = alpha / lambda^2$. In particular the exponential ($alpha = 1$)
   moments are recovered.
 ]
@@ -1870,7 +1870,7 @@ intimately related to the exponential and the uniform respectively.
 #property(name: "Mean, Variance and Additivity of the Chi-Squared")[
   If $X ~ chi^2 (n)$, then
   $
-    E[X] = n, quad "Var"(X) = 2 n.
+    bb(E)[X] = n, quad "Var"(X) = 2 n.
   $
   Moreover, if $X_1, dots, X_k$ are independent with $X_i ~ chi^2 (n_i)$,
   then
@@ -1882,7 +1882,7 @@ intimately related to the exponential and the uniform respectively.
 #proof[
   The moments follow from #link(<prop:gamma-mean-variance>)[the Gamma
     moments] with $(alpha, lambda) = (n / 2, 1 / 2)$:
-  $E[X] = (n / 2) / (1 / 2) = n$ and $"Var"(X) = (n / 2) / (1 / 2)^2 = 2 n$.
+  $bb(E)[X] = (n / 2) / (1 / 2) = n$ and $"Var"(X) = (n / 2) / (1 / 2)^2 = 2 n$.
   For additivity it suffices to establish additivity of the Gamma family
   at a common rate. Let $X ~ "Ga"(alpha, lambda)$ and
   $Y ~ "Ga"(beta, lambda)$ be independent; the convolution formula gives,
@@ -1911,7 +1911,7 @@ intimately related to the exponential and the uniform respectively.
 #property(name: "Mean and Variance of the Beta")[
   If $X ~ "Be"(a, b)$, then
   $
-    E[X] = a / (a + b), quad "Var"(X) = (a b) / ((a + b)^2 (a + b + 1)).
+    bb(E)[X] = a / (a + b), quad "Var"(X) = (a b) / ((a + b)^2 (a + b + 1)).
   $
 ] <prop:beta-mean-variance>
 
@@ -1920,11 +1920,11 @@ intimately related to the exponential and the uniform respectively.
   integrating $x f(x)$; recognising an unnormalised Beta density of
   parameters $(a+1, b)$ instead:
   $
-    E[X] & = integral_0^1 x (x^(a - 1) (1 - x)^(b - 1)) / B(a, b) dif x = B(a + 1, b) / B(a, b) \
+    bb(E)[X] & = integral_0^1 x (x^(a - 1) (1 - x)^(b - 1)) / B(a, b) dif x = B(a + 1, b) / B(a, b) \
          & = (Gamma(a + 1) Gamma(b)) / (Gamma(a + b + 1)) dot (Gamma(a + b)) / (Gamma(a) Gamma(b))
            = a / (a + b).
   $
-  Similarly $E[X^2] = B(a + 2, b) / B(a, b) = (a (a + 1)) / ((a + b)(a + b + 1))$,
+  Similarly $bb(E)[X^2] = B(a + 2, b) / B(a, b) = (a (a + 1)) / ((a + b)(a + b + 1))$,
   so
   $
     "Var"(X) = (a (a + 1)) / ((a + b)(a + b + 1)) - (a / (a + b))^2
@@ -1983,7 +1983,7 @@ derived in this chapter:
 
 #figure(
   tex-table(
-    ([Distribution], [PMF / PDF], [Support], [$E[X]$], [$"Var"(X)$]),
+    ([Distribution], [PMF / PDF], [Support], [$bb(E)[X]$], [$"Var"(X)$]),
     ([$"Ber"(p)$], [$p^x q^(1-x)$], [${0, 1}$], [$p$], [$p q$]),
     ([$B(n, p)$], [$binom(n, k) p^k q^(n-k)$], [${0, dots, n}$], [$n p$], [$n p q$]),
     ([$"Pois"(lambda)$], [$(lambda^k e^(-lambda)) / k!$], [$ZZ_(>= 0)$], [$lambda$], [$lambda$]),
@@ -2025,7 +2025,7 @@ derived in this chapter:
   models (Bernoulli, binomial, hypergeometric, geometric, negative
   binomial, Poisson) and the measuring models (uniform, exponential,
   normal, Gamma, Beta). Two structural facts stand out: the Poisson is the
-  unique family with $E[X] = "Var"(X)$, and the exponential is the unique
+  unique family with $bb(E)[X] = "Var"(X)$, and the exponential is the unique
   family whose mean equals its standard deviation. The table also encodes
   the degeneracies: $"B"(1, p) = "Ber"(p)$, $"NB"(1, p) = "Geo"(p)$,
   $"Exp"(lambda) = "Ga"(1, lambda)$, and $U(0, 1) = "Be"(1, 1)$ — the same
@@ -2147,22 +2147,22 @@ a direct formula avoids the detour through the CDF.
 #property(name: "Mean and Variance of the Lognormal")[
   If $Y ~ "LN"(mu, sigma^2)$, then
   $
-    E[Y] = exp(mu + sigma^2 / 2), quad
+    bb(E)[Y] = exp(mu + sigma^2 / 2), quad
     "Var"(Y) = (exp(sigma^2) - 1) exp(2 mu + sigma^2).
   $
 ] <prop:lognormal-mean-variance>
 
 #proof[
-  By LOTUS, $E[Y] = E[e^X]$ with $X ~ N(mu, sigma^2)$. Completing the
+  By LOTUS, $bb(E)[Y] = bb(E)[e^X]$ with $X ~ N(mu, sigma^2)$. Completing the
   square in the exponent,
   $
     x - (x - mu)^2 / (2 sigma^2)
     = mu + sigma^2 / 2 - (x - mu - sigma^2)^2 / (2 sigma^2),
   $
   so the remaining factor is an unnormalised normal density and
-  $E[Y] = exp(mu + sigma^2 / 2)$. The same computation with $2 x$ in place
-  of $x$ gives $E[Y^2] = E[e^(2 X)] = exp(2 mu + 2 sigma^2)$, and
-  $"Var"(Y) = E[Y^2] - E[Y]^2 = (exp(sigma^2) - 1) exp(2 mu + sigma^2)$.
+  $bb(E)[Y] = exp(mu + sigma^2 / 2)$. The same computation with $2 x$ in place
+  of $x$ gives $bb(E)[Y^2] = bb(E)[e^(2 X)] = exp(2 mu + 2 sigma^2)$, and
+  $"Var"(Y) = bb(E)[Y^2] - bb(E)[Y]^2 = (exp(sigma^2) - 1) exp(2 mu + sigma^2)$.
 ]
 
 === The CDF Method // 连续型：一般 $g$ 与分布函数法
@@ -2355,7 +2355,7 @@ The continuous members are the *multivariate uniform distribution* on a region o
 
 For $m = 2$ the multinomial reduces to the binomial of #link(<def:binomial-dist>)[Chapter 4]: with $p_2 = q = 1 - p_1$ the vector $(N_1, N_2)$ carries no more information than $N_1 ~ B(n, p_1)$, since $(n!) / (k_1! k_2!) = binom(n, k_1)$.
 
-Each count is marginally binomial, $N_i ~ B(n, p_i)$, with $E[N_i] = n p_i$ and $"Var"(N_i) = n p_i (1 - p_i)$; the marginal operation behind this claim is defined in the next section.
+Each count is marginally binomial, $N_i ~ B(n, p_i)$, with $bb(E)[N_i] = n p_i$ and $"Var"(N_i) = n p_i (1 - p_i)$; the marginal operation behind this claim is defined in the next section.
 
 The counts are dependent — one trial can fall in only one category — and their covariances are negative, $"Cov"(N_i, N_j) = -n p_i p_j$ for $i != j$ (#link(<def:covariance>)[covariance] itself is introduced later in this chapter).
 
@@ -2563,29 +2563,29 @@ distribution of the other.
 
 #definition(name: "Conditional Expectation")[
   Given #link(<def:conditional-pmf>)[the conditional PMF/PDF] of $Y$ given
-  $X = x$, the *conditional expectation* — defined whenever $E[abs(Y)] < infinity$ — is
+  $X = x$, the *conditional expectation* — defined whenever $bb(E)[abs(Y)] < infinity$ — is
   $
-    E[Y|X=x] = sum_y y p_(Y|X)(y|x) quad ("discrete"), quad integral_(-infinity)^infinity y f_(Y|X)(y|x) dif y quad ("continuous").
+    bb(E)[Y|X=x] = sum_y y p_(Y|X)(y|x) quad ("discrete"), quad integral_(-infinity)^infinity y f_(Y|X)(y|x) dif y quad ("continuous").
   $
-  As a function of $x$, this defines a random variable $E[Y|X]$ — the
+  As a function of $x$, this defines a random variable $bb(E)[Y|X]$ — the
   *regression function* of $Y$ on $X$.
 ] <def:conditional-expectation>
 
-#note(title: "Three different types: $Y$, $E[Y]$, and $E[Y|X]$")[
-  The notation $E[Y|X]$, $E[Y|X=x]$ and $E[Y]$ look alike but live on different levels, and keeping the levels apart prevents most errors.
+#note(title: "Three different types: $Y$, $bb(E)[Y]$, and $bb(E)[Y|X]$")[
+  The notation $bb(E)[Y|X]$, $bb(E)[Y|X=x]$ and $bb(E)[Y]$ look alike but live on different levels, and keeping the levels apart prevents most errors.
 
   - *A random variable is a function.* By #link(<def:random-variable>)[definition], $Y$ is a measurable map $Omega -> RR$; the symbol $Y$ abbreviates $omega |-> Y(omega)$, never a number.
-  - *An expectation is a number.* $E[Y]$ is one real number, obtained by averaging $Y$ against its law, as in #link(<def:expectation-discrete>)[the discrete] and #link(<def:expectation-continuous>)[continuous definitions].
-  - *$E[Y|X=x]$ is also a number.* Fix $x$, replace the marginal law of $Y$ by the conditional law given $X = x$, and average exactly as before: the computation is that of an ordinary expectation, only the law has changed. The result depends on $x$ through the parameter of that law, nothing more.
-  - *$E[Y|X]$ is a random variable.* Plugging the random point $X(omega)$ into the previous number gives the map $omega |-> E[Y|X=X(omega)]$, which is measurable with respect to the $sigma$-field generated by $X$, $sigma(X) = {X^(-1)(B) : B in cal(B)(RR)}$; equivalently $E[Y|X] = g(X)$ for the function $g(x) = E[Y|X=x]$ computed above.
+  - *An expectation is a number.* $bb(E)[Y]$ is one real number, obtained by averaging $Y$ against its law, as in #link(<def:expectation-discrete>)[the discrete] and #link(<def:expectation-continuous>)[continuous definitions].
+  - *$bb(E)[Y|X=x]$ is also a number.* Fix $x$, replace the marginal law of $Y$ by the conditional law given $X = x$, and average exactly as before: the computation is that of an ordinary expectation, only the law has changed. The result depends on $x$ through the parameter of that law, nothing more.
+  - *$bb(E)[Y|X]$ is a random variable.* Plugging the random point $X(omega)$ into the previous number gives the map $omega |-> bb(E)[Y|X=X(omega)]$, which is measurable with respect to the $sigma$-field generated by $X$, $sigma(X) = {X^(-1)(B) : B in cal(B)(RR)}$; equivalently $bb(E)[Y|X] = g(X)$ for the function $g(x) = bb(E)[Y|X=x]$ computed above.
 
-  Only the last step changes the *type* of the object, and that is precisely what makes it useful: being a random variable, $E[Y|X]$ can itself be averaged — which is the content of #link(<thm:total-expectation>)[the tower property] — bounded by inequalities, and passed to a limit. Writing $E[E[Y|X=x]]$ would be pointless, since the inner object is already a number: it equals $E[Y|X=x]$.
+  Only the last step changes the *type* of the object, and that is precisely what makes it useful: being a random variable, $bb(E)[Y|X]$ can itself be averaged — which is the content of #link(<thm:total-expectation>)[the tower property] — bounded by inequalities, and passed to a limit. Writing $bb(E)[bb(E)[Y|X=x]]$ would be pointless, since the inner object is already a number: it equals $bb(E)[Y|X=x]$.
 ]
 
 #theorem(name: "Law of Total Expectation (Tower Property)")[
-  If $E[abs(Y)] < infinity$, then
+  If $bb(E)[abs(Y)] < infinity$, then
   $
-    E[Y] = E[E[Y|X]].
+    bb(E)[Y] = bb(E)[bb(E)[Y|X]].
   $
 ] <thm:total-expectation>
 
@@ -2594,10 +2594,10 @@ distribution of the other.
   #link(<prop:conditional-dist-properties>)[the total density formula]
   $f_(Y)(y) = integral f_(Y|X)(y|x) f_(X)(x) dif x$:
   $
-    E[E[Y|X]] & = integral E[Y|X=x] f_(X)(x) dif x
+    bb(E)[bb(E)[Y|X]] & = integral bb(E)[Y|X=x] f_(X)(x) dif x
     = integral (integral y f_(Y|X)(y|x) dif y) f_(X)(x) dif x \
     & = integral y (integral f_(Y|X)(y|x) f_(X)(x) dif x) dif y
-    = integral y f_(Y)(y) dif y = E[Y].
+    = integral y f_(Y)(y) dif y = bb(E)[Y].
   $
   The discrete case replaces integrals by sums.
 ]
@@ -2605,7 +2605,7 @@ distribution of the other.
 #property(name: "Conditional Variance Decomposition")[
   If $"Var"(Y) < infinity$, then
   $
-    "Var"(Y) = E["Var"(Y|X)] + "Var"(E[Y|X]).
+    "Var"(Y) = bb(E)["Var"(Y|X)] + "Var"(bb(E)[Y|X]).
   $
   The total variance decomposes into the *expected conditional variance*
   (within-group scatter) and the *variance of the conditional mean*
@@ -2613,9 +2613,9 @@ distribution of the other.
 ] <prop:variance-decomposition>
 
 #proof[
-  $E["Var"(Y|X)] = E[E[Y^2|X] - (E[Y|X])^2] = E[Y^2] - E[(E[Y|X])^2]$
-  and $"Var"(E[Y|X]) = E[(E[Y|X])^2] - (E[E[Y|X]])^2 = E[(E[Y|X])^2] -
-  (E[Y])^2$. Adding: $E[Y^2] - (E[Y])^2 = "Var"(Y)$.
+  $bb(E)["Var"(Y|X)] = bb(E)[bb(E)[Y^2|X] - (bb(E)[Y|X])^2] = bb(E)[Y^2] - bb(E)[(bb(E)[Y|X])^2]$
+  and $"Var"(bb(E)[Y|X]) = bb(E)[(bb(E)[Y|X])^2] - (bb(E)[bb(E)[Y|X]])^2 = bb(E)[(bb(E)[Y|X])^2] -
+  (bb(E)[Y])^2$. Adding: $bb(E)[Y^2] - (bb(E)[Y])^2 = "Var"(Y)$.
 ]
 
 
@@ -2758,22 +2758,22 @@ vectors.
   For random variables $X, Y$ with finite second moments, the *covariance*
   is
   $
-    "Cov"(X, Y) = E[(X - E[X])(Y - E[Y])] = E[X Y] - E[X] E[Y].
+    "Cov"(X, Y) = bb(E)[(X - bb(E)[X])(Y - bb(E)[Y])] = bb(E)[X Y] - bb(E)[X] bb(E)[Y].
   $
 ] <def:covariance>
 
 #property(name: "Product Expectation for Independent Variables")[
-  If $X$ and $Y$ are independent with $E[abs(X)], E[abs(Y)] < infinity$, then
+  If $X$ and $Y$ are independent with $bb(E)[abs(X)], bb(E)[abs(Y)] < infinity$, then
   $
-    E[X Y] = E[X] E[Y].
+    bb(E)[X Y] = bb(E)[X] bb(E)[Y].
   $
 ] <prop:product-expectation>
 
 #proof[
   In the elementary regimes the joint law factorises, $f(x, y) = f_(X)(x) f_(Y)(y)$ (sums replacing integrals when the variables are discrete).
-  Tonelli applied to the non-negative function $abs(x y) f_(X)(x) f_(Y)(y)$ gives $E[abs(X Y)] = E[abs(X)] E[abs(Y)] < infinity$, so Fubini factors the double integral:
+  Tonelli applied to the non-negative function $abs(x y) f_(X)(x) f_(Y)(y)$ gives $bb(E)[abs(X Y)] = bb(E)[abs(X)] bb(E)[abs(Y)] < infinity$, so Fubini factors the double integral:
   $
-    E[X Y] = integral integral x y f_(X)(x) f_(Y)(y) dif x dif y = (integral x f_(X)(x) dif x) (integral y f_(Y)(y) dif y) = E[X] E[Y].
+    bb(E)[X Y] = integral integral x y f_(X)(x) f_(Y)(y) dif x dif y = (integral x f_(X)(x) dif x) (integral y f_(Y)(y) dif y) = bb(E)[X] bb(E)[Y].
   $
   Approximation by simple functions extends the identity beyond the elementary regimes.
 ]
@@ -2786,16 +2786,16 @@ vectors.
 ] <def:correlation-coefficient>
 
 #property(name: "Cauchy–Schwarz Inequality in $L^2$")[
-  For random variables with $E[X^2] < infinity$ and $E[Y^2] < infinity$,
+  For random variables with $bb(E)[X^2] < infinity$ and $bb(E)[Y^2] < infinity$,
   $
-    (E[X Y])^2 <= E[X^2] E[Y^2],
+    (bb(E)[X Y])^2 <= bb(E)[X^2] bb(E)[Y^2],
   $
   with equality if and only if $X$ and $Y$ are almost surely proportional.
 ] <prop:cauchy-schwarz-l2>
 
 This is not a new theorem, but the *Cauchy-Bunyakovsky-Schwarz Inequality* of the *Algèbre Linéaire* note applied to a function space: the random variables with finite second moment form a real inner product space under
 $
-  chevron.l X, Y chevron.r = E[X Y],
+  chevron.l X, Y chevron.r = bb(E)[X Y],
 $
 and the inequality above is precisely $(chevron.l X, Y chevron.r)^2 <= ||X||^2 ||Y||^2$ for that inner product.
 The probabilistic content is that the expectation of a product behaves like a scalar product — Cauchy–Schwarz is then available for free.
@@ -2814,24 +2814,24 @@ The probabilistic content is that the expectation of a product behaves like a sc
     ("Cov"(X, Y))^2 <= "Var"(X) "Var"(Y),
   $
   which is exactly $abs(rho_(X Y)) <= 1$.
-  Equality holds precisely when $X - E[X]$ and $Y - E[Y]$ are almost surely proportional, i.e. $Y = a X + b$ almost surely with $a != 0$.
+  Equality holds precisely when $X - bb(E)[X]$ and $Y - bb(E)[Y]$ are almost surely proportional, i.e. $Y = a X + b$ almost surely with $a != 0$.
 ]
 
-Read in the same inner product space, $rho_(X Y)$ is the cosine of the angle between the centred variables $X - E[X]$ and $Y - E[Y]$.
+Read in the same inner product space, $rho_(X Y)$ is the cosine of the angle between the centred variables $X - bb(E)[X]$ and $Y - bb(E)[Y]$.
 This is the geometric meaning of the coefficient: correlation measures alignment, not magnitude — which is why it is scale-free, and why $-1 <= rho_(X Y) <= 1$ is no more surprising than $abs(cos theta) <= 1$.
 
 #property(name: "Uncorrelatedness vs Independence")[
   - If $X$ and $Y$ are independent, then $"Cov"(X, Y) = 0$ (they are *uncorrelated*).
   - The converse is false in general: zero covariance does not imply independence.
   - (Normal case.) For jointly normal variables, uncorrelatedness and independence are *equivalent* — see #link(<prop:mv-normal-independence>)[the multivariate normal independence property].
-  - $"Cov"(X, Y) = 0$ is equivalent to $E[X Y] = E[X] E[Y]$ and to $"Var"(X + Y) = "Var"(X) + "Var"(Y)$.
+  - $"Cov"(X, Y) = 0$ is equivalent to $bb(E)[X Y] = bb(E)[X] bb(E)[Y]$ and to $"Var"(X + Y) = "Var"(X) + "Var"(Y)$.
 ] <prop:uncorrelated-vs-independent>
 
 #proof[
-  If $X$ and $Y$ are independent, #link(<prop:product-expectation>)[the product rule for expectations] gives $E[X Y] = E[X] E[Y]$, hence $"Cov"(X, Y) = E[X Y] - E[X] E[Y] = 0$.
-  Conversely, $"Cov"(X, Y) = 0$ means $E[X Y] = E[X] E[Y]$ by #link(<def:covariance>)[definition], and expanding
+  If $X$ and $Y$ are independent, #link(<prop:product-expectation>)[the product rule for expectations] gives $bb(E)[X Y] = bb(E)[X] bb(E)[Y]$, hence $"Cov"(X, Y) = bb(E)[X Y] - bb(E)[X] bb(E)[Y] = 0$.
+  Conversely, $"Cov"(X, Y) = 0$ means $bb(E)[X Y] = bb(E)[X] bb(E)[Y]$ by #link(<def:covariance>)[definition], and expanding
   $
-    "Var"(X + Y) = E[(X + Y)^2] - (E[X] + E[Y])^2 = "Var"(X) + "Var"(Y) + 2 ("Cov"(X, Y))
+    "Var"(X + Y) = bb(E)[(X + Y)^2] - (bb(E)[X] + bb(E)[Y])^2 = "Var"(X) + "Var"(Y) + 2 ("Cov"(X, Y))
   $
   shows that the three conditions are equivalent.
   The first implication nevertheless cannot be reversed in general — the example below exhibits dependent variables with zero covariance.
@@ -2839,12 +2839,12 @@ This is the geometric meaning of the coefficient: correlation measures alignment
 
 #example(name: "Uncorrelated but dependent")[
   Let $X ~ U(-1, 1)$ and $Y = X^2$.
-  Then $"Cov"(X, Y) = E[X^3] - E[X] E[X^2] = 0 - 0 = 0$ (since $E[X^3] = 0$ by symmetry), yet $Y$ is a deterministic function of $X$ — far from independent.
+  Then $"Cov"(X, Y) = bb(E)[X^3] - bb(E)[X] bb(E)[X^2] = 0 - 0 = 0$ (since $bb(E)[X^3] = 0$ by symmetry), yet $Y$ is a deterministic function of $X$ — far from independent.
 ]
 
 #definition(name: "Mean Vector and Covariance Matrix")[
   For a random vector $bold(X) = (X_1, dots, X_n)$:
-  - the *mean vector* is $bold(mu) = E[bold(X)] = (E[X_1], dots, E[X_n])^"T"$;
+  - the *mean vector* is $bold(mu) = bb(E)[bold(X)] = (bb(E)[X_1], dots, bb(E)[X_n])^"T"$;
   - the *covariance matrix* is the $n times n$ matrix $Sigma$ with entries
     $
       Sigma_(i j) = "Cov"(X_i, X_j), quad i, j = 1, dots, n,
@@ -2863,7 +2863,7 @@ This is the geometric meaning of the coefficient: correlation measures alignment
   Symmetry follows from $"Cov"(X_i, X_j) = "Cov"(X_j, X_i)$.
   For the quadratic form, expanding the definition and using linearity of expectation,
   $
-    bold(a)^"T" Sigma bold(a) = sum_(i, j) a_i a_j (E[X_i X_j] - E[X_i] E[X_j]) = E[(bold(a)^"T" bold(X))^2] - (E[bold(a)^"T" bold(X)])^2 = "Var"(bold(a)^"T" bold(X)) >= 0.
+    bold(a)^"T" Sigma bold(a) = sum_(i, j) a_i a_j (bb(E)[X_i X_j] - bb(E)[X_i] bb(E)[X_j]) = bb(E)[(bold(a)^"T" bold(X))^2] - (bb(E)[bold(a)^"T" bold(X)])^2 = "Var"(bold(a)^"T" bold(X)) >= 0.
   $
 ]
 
@@ -2997,10 +2997,10 @@ fail to exist, the PGF needs integer-valued variables, the CF always exists.
 #definition(name: "Moment Generating Function")[
   The *moment generating function* (MGF) of $X$ is
   $
-    M_(X)(t) = E[exp(t X)],
+    M_(X)(t) = bb(E)[exp(t X)],
   $
   defined for all $t$ where the expectation is finite. The domain of $M_X$
-  is the set $D = {t in RR : E[exp(t X)] < infinity}$, which always
+  is the set $D = {t in RR : bb(E)[exp(t X)] < infinity}$, which always
   contains $t = 0$.
 ] <def:mgf>
 
@@ -3012,7 +3012,7 @@ moments by differentiation, fulfilling the promise of
   If $M_X$ is finite in an open interval containing $t = 0$, then the
   $k$-th moment of $X$ is
   $
-    E[X^k] = M_X^(k)(0) = (dif^k M_X) / (dif t^k) upright("at") t = 0.
+    bb(E)[X^k] = M_X^(k)(0) = (dif^k M_X) / (dif t^k) upright("at") t = 0.
   $
   This follows from differentiating under the expectation:
   $(dif^k) / (dif t^k) exp(t X) = X^k exp(t X)$, evaluated at $t = 0$.
@@ -3042,7 +3042,7 @@ additive form that later chapters use.
   When $M_X$ is finite on an open interval around $0$, the *cumulant
   generating function* (CGF) of $X$ is
   $
-    K_(X)(t) = ln M_(X)(t) = ln E[exp(t X)],
+    K_(X)(t) = ln M_(X)(t) = ln bb(E)[exp(t X)],
   $
   and the *cumulants* of $X$ are the derivatives $kappa_k = K_X^((k))(0)$.
 ] <def:cgf>
@@ -3050,10 +3050,10 @@ additive form that later chapters use.
 #property(name: "Cumulants and Moments")[
   The first cumulants are the centred quantities
   $
-    kappa_1 = E[X], quad kappa_2 = "Var"(X), quad
-    kappa_3 = E[(X - E[X])^3], quad kappa_4 = mu_4 - 3 sigma^4,
+    kappa_1 = bb(E)[X], quad kappa_2 = "Var"(X), quad
+    kappa_3 = bb(E)[(X - bb(E)[X])^3], quad kappa_4 = mu_4 - 3 sigma^4,
   $
-  where $mu_4 = E[(X - E[X])^4]$ and $sigma^2 = "Var"(X)$.
+  where $mu_4 = bb(E)[(X - bb(E)[X])^4]$ and $sigma^2 = "Var"(X)$.
 ] <prop:cumulants>
 
 The advantage of $K_X$ over $M_X$ is exactly its behaviour under addition:
@@ -3082,9 +3082,9 @@ generating function in disguise.
     ($N(mu, sigma^2)$, $exp(mu t + sigma^2 t^2 / 2)$, $RR$),
   )
 
-  For the normal: $M_(X)(t) = E[exp(t(mu + sigma Z))] = exp(mu t)
-  E[exp(sigma t Z)]$ where $Z ~ N(0,1)$; expanding $exp(sigma t Z)$ in
-  a power series and using $E[Z^(2k)] = (2k-1) "!!"$ recovers $exp(
+  For the normal: $M_(X)(t) = bb(E)[exp(t(mu + sigma Z))] = exp(mu t)
+  bb(E)[exp(sigma t Z)]$ where $Z ~ N(0,1)$; expanding $exp(sigma t Z)$ in
+  a power series and using $bb(E)[Z^(2k)] = (2k-1) "!!"$ recovers $exp(
     sigma^2
     t^2 / 2
   )$.
@@ -3099,7 +3099,7 @@ generating function in disguise.
 ] <ex:normal-sum-mgf>
 
 #caution(title: "MGF may not exist")[
-  For the Cauchy distribution, $E[exp(t X)] =
+  For the Cauchy distribution, $bb(E)[exp(t X)] =
   infinity$ for every $t != 0$ — the integral diverges. The MGF fails to
   exist outside $t = 0$, so it cannot be used to identify the
   distribution or compute moments. This motivates the *characteristic
@@ -3111,12 +3111,12 @@ generating function in disguise.
 #definition(name: "Characteristic Function")[
   The *characteristic function* (CF) of $X$ is
   $
-    phi_(X)(t) = E[exp(i t X)],
+    phi_(X)(t) = bb(E)[exp(i t X)],
   $
   defined for *all* $t in RR$.
 ] <def:cf>
 
-The CF always exists because $abs(exp(i t X)) = 1$, so $E[abs(
+The CF always exists because $abs(exp(i t X)) = 1$, so $bb(E)[abs(
     exp(
       i t
       X
@@ -3134,9 +3134,9 @@ The CF always exists because $abs(exp(i t X)) = 1$, so $E[abs(
 ] <prop:cf-properties>
 
 #property(name: "Moments and the CF")[
-  If $E[abs(X)^k] < infinity$, then
+  If $bb(E)[abs(X)^k] < infinity$, then
   $
-    E[X^k] = i^(-k) phi_X^(k)(0) = i^(-k) (dif^k phi_X) / (dif t^k) upright("at") t = 0.
+    bb(E)[X^k] = i^(-k) phi_X^(k)(0) = i^(-k) (dif^k phi_X) / (dif t^k) upright("at") t = 0.
   $
 ] <prop:cf-moments>
 
@@ -3199,7 +3199,7 @@ transform.
   For a random variable $X$ taking non-negative integer values with PMF
   $p_k = P(X = k)$, the *probability generating function* (PGF) is
   $
-    G_(X)(s) = E[s^X] = sum_(k=0)^infinity p_k s^k, quad abs(s) <= 1.
+    G_(X)(s) = bb(E)[s^X] = sum_(k=0)^infinity p_k s^k, quad abs(s) <= 1.
   $
 ] <def:pgf>
 
@@ -3211,9 +3211,9 @@ independent variables, and analysing compound distributions.
 
 #property(name: "Properties of the PGF")[
   - (normalisation) $G_(X)(1) = 1$;
-  - (factorial moments) $G_X^(k)(1) = E[X(X-1)dots(X-k+1)]$, the $k$-th
-    factorial moment; in particular $G_X'(1) = E[X]$ and
-    $G_X''(1) = E[X(X-1)] = E[X^2] - E[X]$;
+  - (factorial moments) $G_X^(k)(1) = bb(E)[X(X-1)dots(X-k+1)]$, the $k$-th
+    factorial moment; in particular $G_X'(1) = bb(E)[X]$ and
+    $G_X''(1) = bb(E)[X(X-1)] = bb(E)[X^2] - bb(E)[X]$;
   - (independent sum) if $X$ and $Y$ are independent,
     $G_(X+Y)(s) = G_(X)(s) G_(Y)(s)$;
   - (uniqueness) $G_X$ determines the distribution:
@@ -3230,7 +3230,7 @@ independent variables, and analysing compound distributions.
 ] <prop:pgf-compound>
 
 #proof[
-  Condition on $N = n$: $G_(S_N)(s) = E[s^(X_1 + dots + X_n)] = G_(X)(s)^n$
+  Condition on $N = n$: $G_(S_N)(s) = bb(E)[s^(X_1 + dots + X_n)] = G_(X)(s)^n$
   by independence. Averaging over $N$:
   $
     G_(S_N)(s) = sum_(n=0)^infinity P(N=n) G_(X)(s)^n = G_(N)(G_(X)(s)).
@@ -3316,7 +3316,7 @@ and proves the one theorem that connects laws to characteristic functions.
 
 #definition(name: "Convergence in L^p")[
   $X_n$ converges *in $L^p$* to $X$, written $X_n arrow.r^(L^p) X$, if
-  $E[abs(X_n - X)^p] -> 0$ (assuming $X_n, X in L^p$).
+  $bb(E)[abs(X_n - X)^p] -> 0$ (assuming $X_n, X in L^p$).
 ] <def:convergence-lp>
 
 #definition(name: "Convergence in Distribution")[
@@ -3355,7 +3355,7 @@ characterisation — in terms of characteristic functions — is the content of
   sets in the union.
 
   ($L^p$ $arrow.r.double$ P) By #link(<prop:markov-inequality>)[Markov's
-    inequality], $P(abs(X_n - X) > epsilon) <= E[abs(X_n - X)^p] / epsilon^p
+    inequality], $P(abs(X_n - X) > epsilon) <= bb(E)[abs(X_n - X)^p] / epsilon^p
   -> 0$.
 
   (P $arrow.r.double$ d) If $X_n arrow.r^P X$, then at any continuity
@@ -3388,7 +3388,7 @@ the whole sequence, but it never fails to produce a subsequence that does —
 the standard repair when an argument requires a.s. convergence. In the
 opposite direction, passing from probability to $L^1$ costs an extra
 assumption: convergence in probability plus uniform integrability gives
-$E[abs(X_n - X)] -> 0$ (Vitali), and without it the shrinking bump is again
+$bb(E)[abs(X_n - X)] -> 0$ (Vitali), and without it the shrinking bump is again
 the counterexample.
 
 #property(name: "Slutsky's Theorem")[
@@ -3470,7 +3470,7 @@ generality.
 ] <thm:bernoulli-wlln>
 
 #proof[
-  Since $E[overline(X)_n] = p$ and $"Var"(overline(X)_n) = p(1-p)/n$, #link(<thm:chebyshev-inequality>)[Chebyshev's inequality] gives
+  Since $bb(E)[overline(X)_n] = p$ and $"Var"(overline(X)_n) = p(1-p)/n$, #link(<thm:chebyshev-inequality>)[Chebyshev's inequality] gives
   $
     P(abs(overline(X)_n - p) > epsilon) <= p(1-p) / (n epsilon^2) -> 0.
   $
@@ -3481,18 +3481,18 @@ generality.
 
 #theorem(name: "Chebyshev WLLN")[
   Let $X_1, X_2, dots$ be independent (not necessarily identically
-  distributed) with $E[X_i] = mu_i$ and $"Var"(X_i) <= C$ for all $i$.
+  distributed) with $bb(E)[X_i] = mu_i$ and $"Var"(X_i) <= C$ for all $i$.
   Then $overline(X)_n - overline(mu)_n arrow.r^P 0$, where $overline(mu)_n = (1/n) sum mu_i$.
 ] <thm:chebyshev-wlln>
 
 #theorem(name: "Khinchin WLLN")[
-  Let $X_1, X_2, dots$ be i.i.d. with $E[abs(X_1)] < infinity$ and
-  $E[X_1] = mu$. Then $overline(X)_n arrow.r^P mu$.
+  Let $X_1, X_2, dots$ be i.i.d. with $bb(E)[abs(X_1)] < infinity$ and
+  $bb(E)[X_1] = mu$. Then $overline(X)_n arrow.r^P mu$.
 ] <thm:khinchin-wlln>
 
 #proof[
   (via characteristic functions.) Let $phi$ be the CF of $X_1$. The CF of
-  $overline(X)_n$ is $phi_(overline(X)_n)(t) = [phi(t/n)]^n$. Since $E[abs(X_1)] < infinity$,
+  $overline(X)_n$ is $phi_(overline(X)_n)(t) = [phi(t/n)]^n$. Since $bb(E)[abs(X_1)] < infinity$,
   $phi$ is differentiable at $0$ with $phi'(0) = i mu$, so
   $
     phi(t/n) = 1 + i mu t / n + o(1/n), quad [phi(t/n)]^n -> exp(i mu t).
@@ -3546,7 +3546,7 @@ independence chapter and the continuity of probability.
 ]
 
 #theorem(name: "Kolmogorov's Inequality")[
-  Let $X_1, dots, X_n$ be independent with $E[X_i] = 0$ and
+  Let $X_1, dots, X_n$ be independent with $bb(E)[X_i] = 0$ and
   $"Var"(X_i) = sigma_i^2 < infinity$, and let $S_k = X_1 + dots + X_k$.
   Then for every $epsilon > 0$,
   $
@@ -3561,8 +3561,8 @@ Borel–Cantelli argument needs, since that lemma speaks about events indexed
 by $n$ and asks whether they occur infinitely often.
 
 #theorem(name: "Kolmogorov SLLN")[
-  Let $X_1, X_2, dots$ be i.i.d. with $E[abs(X_1)] < infinity$ and
-  $E[X_1] = mu$. Then
+  Let $X_1, X_2, dots$ be i.i.d. with $bb(E)[abs(X_1)] < infinity$ and
+  $bb(E)[X_1] = mu$. Then
   $
     overline(X)_n arrow.r^(a.s.) mu.
   $
@@ -3572,7 +3572,7 @@ For the proof one applies #link(<thm:kolmogorov-inequality>)[Kolmogorov's
 inequality] to the centred partial sums of a truncated copy of the $X_i$,
 which shows that ${abs(overline(X)_n - mu) > epsilon quad "i.o."}$ is null
 for every $epsilon > 0$; the passage from the truncated variables back to
-the original ones is where $E[abs(X_1)] < infinity$ is used. The zero–one
+the original ones is where $bb(E)[abs(X_1)] < infinity$ is used. The zero–one
 step is #link(<lem:borel-cantelli-second>)[the second Borel–Cantelli lemma]
 proved above — the deferred promise of Part I, discharged once and for all.
 
@@ -3584,7 +3584,7 @@ hence the need for convergence in distribution and for
 #link(<thm:continuity-theorem>)[Lévy's continuity theorem].
 
 #theorem(name: "Lindeberg-Lévy CLT")[
-  Let $X_1, X_2, dots$ be i.i.d. with $E[X_1] = mu$ and
+  Let $X_1, X_2, dots$ be i.i.d. with $bb(E)[X_1] = mu$ and
   $0 < "Var"(X_1) = sigma^2 < infinity$. Then
   $
     sqrt(n) (overline(X)_n - mu) arrow.r^d N(0, sigma^2).
@@ -3597,9 +3597,9 @@ hence the need for convergence in distribution and for
   reduces to showing $phi_(sqrt(n)(overline(X)_n - mu))(t) ->
   exp(-sigma^2 t^2 / 2)$.
 
-  Let $Z_i = (X_i - mu) / sigma$, so $E[Z_1] = 0$, $"Var"(Z_1) = 1$.
+  Let $Z_i = (X_i - mu) / sigma$, so $bb(E)[Z_1] = 0$, $"Var"(Z_1) = 1$.
   Then $sqrt(n)(overline(X)_n - mu) / sigma = (1/sqrt(n)) sum Z_i$,
-  whose CF is $[phi_(Z)(t/sqrt(n))]^n$. Since $E[Z_1^2] = 1$, the CF
+  whose CF is $[phi_(Z)(t/sqrt(n))]^n$. Since $bb(E)[Z_1^2] = 1$, the CF
   has the expansion (by #link(<prop:cf-moments>)[the CF moment formula]):
   $
     phi_(Z)(t/sqrt(n)) = 1 - t^2/(2n) + o(1/n).
@@ -3625,11 +3625,11 @@ $X_i ~ "Ber"(p)$, $mu = p$, $sigma^2 = p(1-p)$. The De Moivre-Laplace
 theorem predates the general CLT by two centuries.
 
 #theorem(name: "Lindeberg–Feller CLT (Independent, Non-Identically Distributed)")[
-  Let $X_1, X_2, dots$ be independent with $E[X_k] = mu_k$,
+  Let $X_1, X_2, dots$ be independent with $bb(E)[X_k] = mu_k$,
   $"Var"(X_k) = sigma_k^2$, $s_n^2 = sum_(k=1)^n sigma_k^2$, and
   $S_n = sum_(k=1)^n (X_k - mu_k)$. If the *Lindeberg condition* holds —
   $
-    (1 / s_n^2) sum_(k=1)^n E[(X_k - mu_k)^2 dot 1_(abs(X_k - mu_k) > epsilon s_n)] -> 0 quad "for all" epsilon > 0,
+    (1 / s_n^2) sum_(k=1)^n bb(E)[(X_k - mu_k)^2 dot 1_(abs(X_k - mu_k) > epsilon s_n)] -> 0 quad "for all" epsilon > 0,
   $
   then $S_n / s_n arrow.r^d N(0,1)$.
 ] <thm:lindeberg-feller>
@@ -3641,7 +3641,7 @@ sum, which is why the theorem is the definitive form of the CLT.
 
 A simpler but stronger sufficient condition is the *Lyapunov condition*:
 $
-  (1 / s_n^(2 + delta)) sum_(k=1)^n E[abs(X_k - mu_k)^(2 + delta)] -> 0
+  (1 / s_n^(2 + delta)) sum_(k=1)^n bb(E)[abs(X_k - mu_k)^(2 + delta)] -> 0
   quad "for some" delta > 0.
 $
 The proof again compares characteristic functions; the Taylor expansion of
@@ -3683,7 +3683,7 @@ approximation through a smooth change of parameter. The second use is the
 Delta method.
 
 #theorem(name: "Delta Method (First Order)")[
-  Let $X_1, X_2, dots$ be i.i.d. with $E[X_1] = mu$ and
+  Let $X_1, X_2, dots$ be i.i.d. with $bb(E)[X_1] = mu$ and
   $"Var"(X_1) = sigma^2 < infinity$. If $g$ is differentiable at $mu$
   with $g'(mu) != 0$, then
   $
@@ -3705,7 +3705,7 @@ Delta method.
 ]
 
 #theorem(name: "Delta Method (Second Order)")[
-  Let $X_1, X_2, dots$ be i.i.d. with $E[X_1] = mu$ and
+  Let $X_1, X_2, dots$ be i.i.d. with $bb(E)[X_1] = mu$ and
   $"Var"(X_1) = sigma^2 < infinity$, and let $g$ be twice differentiable at
   $mu$ with $g'(mu) = 0$ and $g''(mu) != 0$. Then
   $
@@ -3913,7 +3913,7 @@ that it holds simultaneously at all times produces a limit that is itself a
 process.
 
 #theorem(name: "Donsker's Invariance Principle")[
-  Let $X_1, X_2, dots$ be i.i.d. with $E[X_1] = 0$ and
+  Let $X_1, X_2, dots$ be i.i.d. with $bb(E)[X_1] = 0$ and
   $"Var"(X_1) = sigma^2 < infinity$, and let $S_k = X_1 + dots + X_k$. On
   $[0, 1]$ define the rescaled, linearly interpolated random walk
   $
@@ -4058,7 +4058,7 @@ sufficient statistics are linear — two facts used throughout Part IV.
 #property(name: "Derivative of the Log-Partition Function")[
   Under regularity conditions,
   $
-    (dif A) / (dif eta) = E[T(X)], quad (dif^2 A) / (dif eta^2) = "Var"(T(X)).
+    (dif A) / (dif eta) = bb(E)[T(X)], quad (dif^2 A) / (dif eta^2) = "Var"(T(X)).
   $
   Thus the cumulant generating function $A$ encodes the mean and variance of
   the natural statistic.
