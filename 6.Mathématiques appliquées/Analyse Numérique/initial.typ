@@ -150,11 +150,14 @@
 
 //   Section 4.1: Piecewise Linear Interpolation (分段线性插值)
 //     - 分段低次插值的构造与收敛性
-//   Section 4.2: Cubic Splines: Construction (三次样条：构造)
-//     - 自然/夹紧边界条件、三弯矩方程、二阶光滑性
-//   Section 4.3: Cubic Splines: Error Estimates (三次样条：误差估计)
-//     - 样条插值的误差阶与最优性
-//   Section 4.4: B-Splines and Local Bases (B 样条与局部基)
+//   Section 4.2: Cubic Splines (三次样条)
+//     Subsection 4.2.1: Definition and Degrees of Freedom (定义与自由度)
+//       - 三条件式定义、4N-2 自由度计数、固支/简支/周期三类边界、not-a-knot 补充
+//     Subsection 4.2.2: The Moment Equations (三弯矩方程)
+//       - 三弯矩与三转角两种求解框架、三弯矩方程及其推导
+//       - 性质：存在唯一性、极小能量（最优光滑）、误差阶与收敛性、良态稳定性
+//       - 优缺点小结
+//   Section 4.3: B-Splines and Local Bases (B 样条与局部基)
 //     - B 样条的递推定义、局部支集与单位分解
 //     - de Boor 算法
 
@@ -1346,6 +1349,37 @@ The Lagrange construction avoids solving a system altogether: it builds the poly
   Applying the same argument to the constant data $y_i = 1$ gives the sum rule, since the polynomial that interpolates the value one at every node is the constant one.
 ]
 
+Two low degrees carry names of their own, and they are the building blocks of the piecewise constructions of the next chapter.
+For $n = 1$ the interpolant is the straight line through two points, and $L_1$ is called the *linear interpolant*.
+For $n = 2$ it is the parabola through three points, and $L_2$ is called the *quadratic interpolant*, or *parabolic interpolant*.
+
+The formula is exact at the nodes and differs from $f$ everywhere else, and the difference is what any error analysis of interpolation must bound.
+
+#definition(name: "Interpolation Remainder")[
+  For a function $f$ sampled at nodes as in #link(<def:interpolation-problem>)[*Polynomial Interpolation Problem*], the *interpolation remainder*, also called the *truncation error* of the interpolant, is
+  $
+    R_n (x) = f(x) - L_n (x), quad x in [a, b].
+  $
+] <def:interpolation-remainder>
+
+#theorem(name: "Remainder of the Interpolating Polynomial")[
+  Let $f in C^(n+1) [a, b]$ and let $x_0, dots, x_n$ be distinct nodes in $[a, b]$.
+  Then for every $x in [a, b]$ there exists $xi in (a, b)$, depending on $x$, such that
+  #eq[$
+    R_n (x) = (f^((n+1)) (xi))/((n+1)!) omega_(n+1) (x), quad omega_(n+1) (x) = product_(i=0)^n (x - x_i).
+  $] <eq:interpolation-error>
+] <thm:interpolation-error>
+
+#proof[
+  Fix $x$ different from the nodes and choose $K$ so that $phi (t) = f(t) - L_n (t) - K omega_(n+1) (t)$ vanishes at $t = x$.
+  Then $phi$ vanishes at $x$ and at the $n + 1$ nodes, that is at $n + 2$ distinct points, so $n + 1$ applications of Rolle's theorem give a point $xi$ with $phi^((n+1)) (xi) = 0$.
+  Since $L_n$ has degree at most $n$ and $omega_(n+1)$ has leading coefficient one, this reads $f^((n+1)) (xi) - (n + 1)! K = 0$, and substituting $K$ gives @eq:interpolation-error.
+  The case $x = x_i$ is trivial.
+]
+
+Equation @eq:interpolation-error separates the remainder into a factor that depends on the function, through its derivative of order $n + 1$, and a factor $omega_(n+1)$ that depends on the nodes alone.
+The theorem says nothing yet about convergence, because the point $xi$ moves with $x$ and with the data; bounding the two factors is the subject of *Interpolation Error and Runge Phenomenon*.
+
 The formula is elegant but expensive to apply directly: each basis polynomial costs $n$ multiplications and one division, so a single evaluation of $L_n$ costs $O(n^2)$ operations and may overflow when the nodes are widely spread.
 Both defects disappear once a common factor is taken out.
 
@@ -1554,15 +1588,8 @@ The divided difference table of the previous section absorbs this extra informat
 There are $2 n + 2$ conditions and $2 n + 2$ coefficients, so @eq:hermite-conditions is again a square linear system, and the same argument as in *Existence and Uniqueness of the Interpolating Polynomial* shows that it has exactly one solution: a nonzero polynomial of degree at most $2 n + 1$ cannot have $n + 1$ double zeros.
 The relevant computation is best organized by repeating every node twice.
 
-#definition(name: "Repeated-Node Divided Differences")[
-  The divided differences with repeated nodes are defined by the same recursion @eq:divided-difference for distinct nodes, and by
-  $
-    f[x_i, x_i] = f'(x_i)
-  $
-  when the two nodes coincide; this is the limiting value obtained in #link(<cor:repeated-nodes>)[*Repeated Nodes*], where the table is extended from distinct nodes to coinciding ones.
-] <def:repeated-node-difference>
-
-With this convention the table of @eq:divided-difference, written with each node listed twice, produces the Hermite interpolant through @eq:newton-form unchanged.
+Every node is therefore listed twice, and the entries of the form $f[x_i, x_i]$ that appear on the diagonal are the derivatives $f'(x_i)$, as established in #link(<cor:repeated-nodes>)[*Repeated Nodes*].
+With that convention the table of @eq:divided-difference, written with each node listed twice, produces the Hermite interpolant through @eq:newton-form unchanged.
 The interpolation conditions of order two also determine the error exactly as before.
 
 #theorem(name: "Hermite Interpolation Error")[
@@ -1617,25 +1644,8 @@ For the most common case of two nodes the interpolant can be written down explic
 
 == Interpolation Error and Runge Phenomenon // 插值余项与 Runge 现象
 
-The three constructions above produce the same polynomial, so they share the same error.
-The error formula is the last piece of the elementary theory, and it also explains why the obvious way of improving accuracy fails.
-
-#theorem(name: "Interpolation Error")[
-  Let $f in C^(n+1) [a, b]$ and let $x_0, dots, x_n$ be distinct nodes in $[a, b]$.
-  Then for every $x in [a, b]$ there exists $xi$ between $x$ and the nodes such that
-  #eq[$
-    f(x) - L_n (x) = (f^((n+1)) (xi))/((n+1)!) omega (x), quad omega (x) = product_(i=0)^n (x - x_i).
-  $] <eq:interpolation-error>
-] <thm:interpolation-error>
-
-#proof[
-  Fix $x$ different from the nodes and choose $K$ so that $phi (t) = f(t) - L_n (t) - K omega (t)$ vanishes at $t = x$.
-  Then $phi$ vanishes at $x$ and at the $n + 1$ nodes, that is at $n + 2$ distinct points, so $n + 1$ applications of Rolle's theorem give a point $xi$ with $phi^((n+1)) (xi) = 0$.
-  Since $L_n$ has degree at most $n$ and $omega$ has leading coefficient one, this reads $f^((n+1)) (xi) - (n + 1)! K = 0$, and substituting $K$ gives @eq:interpolation-error.
-  The case $x = x_i$ is trivial.
-]
-
-@eq:interpolation-error is the $n$-th divided difference of $f$ written as a derivative, in agreement with *Divided Differences and Derivatives*, and it separates the error into a factor that depends on the function and a factor that depends on the nodes.
+The three constructions above produce the same polynomial, so they share the same remainder @eq:interpolation-error.
+What remains of the elementary theory is to turn that formula into a usable bound, and then to see that the bound can fail for reasons that have nothing to do with the data.
 
 #corollary(name: "Interpolation Error Bound")[
   If $abs(f^((n+1))) <= M_(n+1)$ on $[a, b]$, then
@@ -1774,29 +1784,53 @@ For plotting it is often enough; for anything that involves differentiating the 
   The cubic spline avoids that requirement by determining the missing derivative values from the interpolation conditions themselves.
 ]
 
-== Cubic Splines: Construction // 三次样条：构造
+== Cubic Splines // 三次样条
 
 The corners of the piecewise linear interpolant disappear if the pieces are allowed to be cubic and are glued with matching first and second derivatives.
-The result is a function that is twice continuously differentiable, that still depends on the data through a banded linear system, and that converges at a much higher rate.
+The result is twice continuously differentiable, converges two orders faster than the piecewise linear interpolant, and is still determined by a banded linear system.
+This section defines it, counts its degrees of freedom, and then solves it with the moment equations, which are the framework used throughout the rest of the notebook.
+
+=== Definition and Degrees of Freedom // 定义与自由度
 
 #definition(name: "Cubic Spline Interpolant")[
   Let $a = x_0 < x_1 < dots < x_N = b$ be a grid.
-  A *cubic spline* interpolating the data $(x_i, y_i)_(i=0)^N$ is a function $S in C^2 [a, b]$ whose restriction to each $[x_i, x_(i+1)]$ is a polynomial of degree at most three and which satisfies $S(x_i) = y_i$ for every $i$.
+  A *cubic spline* interpolating the data $(x_i, y_i)_(i=0)^N$ is a function $S$ satisfying three conditions:
+  + it is an interpolant: $S(x_i) = y_i$ for $i = 0, dots, N$, in the sense of #link(<def:interpolation-problem>)[*Polynomial Interpolation Problem*];
+  + it is twice continuously differentiable: $S in C^2 [a, b]$;
+  + on each subinterval $[x_i, x_(i+1)]$ it is a polynomial of degree at most three.
 ] <def:cubic-spline>
 
-Counting conditions explains why two extra requirements are needed.
+Counting conditions explains why two further requirements are needed.
 There are $4 N$ coefficients, the interpolation conditions give $N + 1$, and the continuity of $S$, $S'$ and $S''$ at the $N - 1$ interior nodes gives $3 (N - 1)$; the total $4 N - 2$ leaves exactly two degrees of freedom.
-They are fixed by boundary conditions.
+They are fixed by boundary conditions, of which three kinds are standard.
 
 #definition(name: "Boundary Conditions for Cubic Splines")[
   The two missing conditions are chosen among the following, applied to the interpolant of #link(<def:cubic-spline>)[*Cubic Spline Interpolant*].
-  - *Natural*: $S''(a) = S''(b) = 0$.
-  - *Clamped* (or *complete*): $S'(a)$ and $S'(b)$ are prescribed, usually as $f'(a)$ and $f'(b)$.
-  - *Periodic*: $S'$ and $S''$ take equal values at $a$ and at $b$.
+  - *Clamped* (or *fixed*, first kind): the end slopes $S'(a)$ and $S'(b)$ are prescribed, usually as $f'(a)$ and $f'(b)$.
+  - *Simply supported* (second kind): the end curvatures vanish, $S''(a) = S''(b) = 0$.
+  - *Periodic* (third kind): $S'$ and $S''$ take equal values at $a$ and at $b$.
 ] <def:spline-boundary-conditions>
 
-Writing the spline in terms of its second derivatives at the nodes reduces the whole construction to a tridiagonal system.
+A spline built with the simply supported conditions is called a *natural spline*.
+The name comes from the calculus of variations: when the bending energy of the curve is minimized among all interpolants, the condition $S''(a) = S''(b) = 0$ arises as the natural boundary condition of the problem, without being imposed.
+
+#note(title: "The not-a-knot condition")[
+  Engineering software rarely uses the conditions above by default.
+  MATLAB's `spline` and most drafting and CAD systems impose the *not-a-knot* condition: the first two and the last two subintervals are required to be pieces of the same cubic, so that $x_1$ and $x_(N-1)$ cease to be knots in the sense of a change of polynomial.
+  This removes the need to estimate end slopes, keeps the fourth order of accuracy, and behaves well on ordinary data, which is why it became the default despite having no interpretation in terms of boundary data.
+  The boundary conditions of #link(<def:spline-boundary-conditions>)[*Boundary Conditions for Cubic Splines*] remain the right choice when the end slopes or the end curvature are known from the problem.
+]
+
+=== The Moment Equations // 三弯矩方程
+
+Two frameworks are used to compute a cubic spline, and they differ only in the unknowns.
+The *moment* (or *three-moment*) equations take the second derivatives $M_i = S''(x_i)$ as unknowns.
+The *rotation* (or *three-slope*) equations take the first derivatives $m_i = S'(x_i)$ as unknowns, and are the classical form in structural analysis, where they express the equilibrium of the end rotations of each beam.
+Both lead to a tridiagonal system of the same size and are related by a diagonal scaling, so the choice is a matter of taste; this notebook develops the moment equations, because the second derivatives enter the error estimates directly.
+
+Writing the spline through its moments is immediate.
 Set $M_i = S''(x_i)$ and $h_i = x_(i+1) - x_i$.
+Since $S''$ is piecewise linear and continuous, it is the piecewise linear interpolant of the values $M_i$, and integrating twice gives the following formula.
 
 #eq[$
   S(x) = M_i ((x_(i+1) - x)^3)/(6 h_i) + M_(i+1) ((x - x_i)^3)/(6 h_i) + (y_i - (M_i h_i^2)/6) (x_(i+1) - x)/(h_i) + (y_(i+1) - (M_(i+1) h_i^2)/6) (x - x_i)/(h_i)
@@ -1837,32 +1871,23 @@ $
   Once the moments are known, @eq:spline-moment-form determines $S$ uniquely on every subinterval.
 ]
 
-#note(title: "A well-conditioned system, in contrast to Vandermonde")[
-  The matrix in @eq:moment-equations does not depend on the values $y_i$ and has condition number bounded independently of $N$, because it is a strictly diagonally dominant M-matrix with a fixed diagonal.
-  This is the structural reason why splines are preferable to the monomial representation of *The Interpolation Problem: Existence and Uniqueness*: the linear algebra involved is a banded system solved in $O(N)$ operations, not an ill-conditioned dense system.
-  The banded solver itself is the Thomas algorithm of *Tridiagonal Systems and Thomas Algorithm*.
-]
-
 #example(name: "A natural spline through three points")[
   Take the nodes $0, 1, 2$ with values $0, 1, 0$ and unit spacing.
-  The only interior moment satisfies $2 M_1 = 6 f[0, 1, 2] = -6$, hence $M_1 = -3$, while $M_0 = M_2 = 0$ by the natural condition.
-  Substituting into @eq:spline-moment-form on $[0, 1]$ gives
+
+  *Step 1: boundary conditions.* The simply supported choice gives $M_0 = M_2 = 0$.
+
+  *Step 2: the interior moment.* The only equation of @eq:moment-equations reads $2 M_1 = 6 f[0, 1, 2] = -6$, hence $M_1 = -3$.
+
+  *Step 3: the pieces.* Substituting the moments into @eq:spline-moment-form on $[0, 1]$ gives
   $
     S(x) = -1/2 x^3 + 3/2 x,
   $
-  and on $[1, 2]$ the same computation with $2 - x$ in place of $x$ gives $S(x) = -1/2 (2 - x)^3 + 3/2 (2 - x)$.
-  Both pieces have second derivative $-3 x$ and $-3 (2 - x)$, which agree with $M_1 = -3$ at the middle node, so $S''$ is continuous and $S$ is a cubic spline.
+  and on $[1, 2]$ the same formula with $2 - x$ in place of $x$ gives $S(x) = -1/2 (2 - x)^3 + 3/2 (2 - x)$.
+
+  *Step 4: verification.* The two pieces have second derivatives $-3 x$ and $-3 (2 - x)$, both equal to $-3$ at $x = 1$, so $S''$ is continuous and $S$ is a cubic spline; its values at the nodes are $0, 1, 0$ and its end curvatures vanish, as the boundary conditions require.
 ]
 
-#caution[
-  The word *natural* is a misnomer: the condition $S''(a) = S''(b) = 0$ is a modelling assumption, not a consequence of the data.
-  It is the right condition when the interpolated function is known to be almost linear near the ends, and the wrong one otherwise; imposing zero curvature where the function actually curves produces an error of order $h^2$ near the endpoints, as the next section shows.
-  When derivative data are available, the clamped conditions are always preferable.
-]
-
-== Cubic Splines: Error Estimates // 三次样条：误差估计
-
-The gain in accuracy from the piecewise linear to the cubic case is one order of the mesh size in the second derivative and two orders in the function itself, and the price paid is the two boundary conditions.
+The construction is now complete, and three properties summarize its quality, the first of them being accuracy: compared with @eq:pl-error the function error improves from $h^2$ to $h^4$, and the second derivative, which does not even exist in the piecewise linear case, is now accurate to $h^2$.
 
 #theorem(name: "Error of the Clamped Cubic Spline")[
   Let $f in C^4 [a, b]$ with $abs(f^((4))) <= M_4$, and let $S$ be the clamped cubic spline of $f$ with $S'(a) = f'(a)$ and $S'(b) = f'(b)$.
@@ -1874,12 +1899,10 @@ The gain in accuracy from the piecewise linear to the cubic case is one order of
 
 #proof[
   Two ingredients are needed, and both are classical.
-  First, among all $C^2$ functions that interpolate the data and match the prescribed end slopes, the spline minimizes $integral_a^b (S'')^2$; the difference between any competitor and the spline is therefore orthogonal to the spline in the inner product of second derivatives.
+  First, by the optimality established in *Optimal smoothness* below, the difference between any competitor and the spline is orthogonal to the spline in the inner product of second derivatives.
   Second, the interpolation error of the competitor can be expressed as an integral of $f^((4))$ against a Peano kernel, whose modulus is bounded by the constants in @eq:spline-error.
   Combining the two gives the three estimates; the constants are sharp and are attained, up to the usual factor, by functions with constant fourth derivative.
 ]
-
-The improvement over @eq:pl-error is substantial: the function error improves from $h^2$ to $h^4$, and the second derivative, which is discontinuous for the piecewise linear interpolant, is now accurate to $h^2$.
 
 #example(name: "Clamped versus natural spline")[
   Interpolate $sin x$ on $[0, 1]$ with $N = 8$ equal subintervals and $h = 1 slash 8$.
@@ -1888,8 +1911,10 @@ The improvement over @eq:pl-error is substantial: the function error improves fr
   The loss is entirely due to the artificial condition $S''(1) = 0$, which is false for $sin x$ at $x = 1$; the interior of the interval is far more accurate than the maximum error suggests.
 ]
 
-#note(title: "Holladay's characterization")[
-  Among all functions of class $C^2$ that interpolate the data and take the prescribed slopes at the endpoints, the cubic spline is the unique minimizer of the bending energy
+The second property is optimality, and it is what the word *spline* originally meant.
+
+#note(title: "Optimal smoothness")[
+  Among all functions of class $C^2$ that interpolate the data and take the prescribed end slopes, the cubic spline is the unique minimizer of the bending energy
   $
     integral_a^b (S''(x))^2 dif x.
   $
@@ -1897,15 +1922,26 @@ The improvement over @eq:pl-error is substantial: the function error improves fr
   This is the precise sense in which a spline is the *smoothest* interpolant, and it explains both its good behaviour and its sensitivity to the boundary conditions: the data determine everything except the two end slopes, and the minimizer fills them in the way that bends least.
 ]
 
-#caution[
-  The estimates @eq:spline-error refer to the global maximum on $[a, b]$ and require the correct end slopes.
-  If the end slopes are themselves estimated, their error enters the spline with weight of order one near the boundary and decays into the interior, so an inaccurate derivative, in the sense of the discussion in *Hermite Interpolation*, can dominate the fourth order estimate.
-  In practice the interior error is often far below the bound while the error in the first and last few subintervals is close to it.
+The third property is numerical stability, and it is the reason the moment equations are used rather than the Vandermonde system of the interpolating polynomial.
+
+#note(title: "A well-conditioned tridiagonal system")[
+  The matrix in @eq:moment-equations does not depend on the values $y_i$ and has a condition number bounded independently of $N$, because it is a strictly diagonally dominant matrix with a fixed diagonal.
+  The whole spline therefore costs $O(N)$ operations and is computed by a backward stable banded solver, the Thomas algorithm of *Tridiagonal Systems and Thomas Algorithm*.
+  This contrasts sharply with the monomial representation of *The Interpolation Problem: Existence and Uniqueness*, where the same interpolant is obtained from a dense system whose condition number grows exponentially with the number of nodes.
 ]
+
+The balance sheet of the cubic spline is therefore short.
+
+- *Advantages.* It is $C^2$, hence differentiable twice and usable in differential equations; it attains fourth order accuracy when the end conditions are correct; and it is computed by a banded, well-conditioned system in $O(N)$ operations.
+- *Drawbacks.* It needs two boundary conditions that the data may not provide; it is only $C^2$, so the third derivative jumps at every node; it does not preserve shape, since a monotone or positive data set can produce a spline that overshoots and oscillates mildly; and a change of one value alters the whole spline in principle, although its influence decays geometrically with distance from the changed node.
+
+Two qualifications belong to the drawbacks just listed.
+The estimates @eq:spline-error refer to the global maximum on $[a, b]$ and presuppose the correct end conditions: a wrong boundary condition contaminates the first and last few subintervals and reduces the global order, as the comparison between the clamped and the natural spline in the example above shows, while the interior of the interval remains far more accurate than the maximum error suggests.
+When the end slopes are themselves estimated numerically, their error enters the spline with weight of order one near the boundary, in the sense of the discussion in *Hermite Interpolation*, and can dominate the fourth order estimate even when the conditions are formally correct.
 
 == B-Splines and Local Bases // B 样条与局部基
 
-The moment form of the previous two sections is the right tool for theory: it turns the spline problem into a tridiagonal system whose entries are divided differences.
+The moment form of the previous section is the right tool for theory: it turns the spline problem into a tridiagonal system whose entries are divided differences.
 It is not the right tool for computation, because it presupposes a particular degree and a particular boundary condition, and because the formula @eq:spline-moment-form mixes the data $y_i$ with the unknowns $M_i$.
 A basis that depends only on the knots, and in which every spline has a simple coordinate vector, is what is needed, and it is provided by the B-splines.
 
