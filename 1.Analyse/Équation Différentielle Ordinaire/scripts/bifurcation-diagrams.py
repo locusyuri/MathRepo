@@ -62,9 +62,10 @@ def main():
         Line2D([0], [0], color=BLUE, lw=1.6, label="stable equilibrium"),
         Line2D([0], [0], color=BLUE, lw=1.6, ls="--", label="unstable equilibrium"),
     ]
-    axes[2].legend(handles=handles, fontsize=8, loc="upper left")
+    fig.legend(handles=handles, fontsize=8, ncol=2, frameon=False,
+               loc="upper center", bbox_to_anchor=(0.5, 0.985))
 
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0, 1, 0.94))
     fig.savefig(OUT, format="svg")
     if "--png" in sys.argv:
         fig.savefig(IMG / "bifurcation-diagrams.png", format="png", dpi=150)

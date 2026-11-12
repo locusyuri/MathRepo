@@ -152,13 +152,13 @@
 //   Section 6.3: Lyapunov Methods (Lyapunov 直接法)
 //     - Lyapunov 函数、V 函数判定
 //   Section 6.4: Critical Points and Limit Cycles (奇点与极限环)
-//     - 线性化定理与平面奇点分类（结点、鞍点、焦点、中心）
-//     - 极限环、Poincaré-Bendixson 定理
+//     - 拓扑等价、双曲平衡点、线性化定理与平面奇点分类（结点、鞍点、焦点、中心）
+//     - 极限环、Poincaré-Bendixson 定理、Van der Pol 振子的极限环
 
 // --- Chapter 7: Bifurcation Theory (分岔理论) ---
 
 //   Section 7.1: Parameter Families and Structural Stability (参数族与结构稳定性)
-//     - 单参数族、拓扑等价、分岔值与分岔点、结构稳定性、分岔图
+//     - 单参数族（回指 Ch 6.4 的拓扑等价）、分岔值与分岔点、结构稳定性、分岔图
 //   Section 7.2: Saddle-Node Bifurcation (鞍结分岔)
 //     - 标量范式、鞍结分岔定理与证明、常收获 Logistic 模型
 //   Section 7.3: Transcritical and Pitchfork Bifurcations (跨临界分岔与叉式分岔)
@@ -1780,7 +1780,7 @@ We now define stability concepts for an equilibrium point $bold(x)^*$ of the aut
 
 #definition(name: "Lyapunov Stability")[
   The equilibrium point $bold(x)^*$ is
-  - *Lyapunov stable* if for every $epsilon > 0$, there exists $delta = delta(epsilon) > 0$ such that every solution $bold(x)(t)$ with $norm(bold(x)(t_0) - bold(x)^*) < delta$ satisfies $norm(bold(x)(t) - bold(x)^*) < epsilon$ for all $t >= t_0$.
+  - *Lyapunov stable* if for every $epsilon > 0$, there exists $delta = delta(epsilon) > 0$ such that every solution $bold(x)(t)$ defined for all $t >= t_0$, with $norm(bold(x)(t_0) - bold(x)^*) < delta$, satisfies $norm(bold(x)(t) - bold(x)^*) < epsilon$ for all $t >= t_0$.
   - *asymptotically stable* if it is Lyapunov stable, and there exists $delta_0 > 0$ such that $norm(bold(x)(t_0) - bold(x)^*) < delta_0$ implies $lim_(t -> oo) bold(x)(t) = bold(x)^*$.
   - *unstable* if it is not Lyapunov stable.
 ] <def:lyapunov-stability>
@@ -1801,7 +1801,7 @@ For notational economy, the method is stated for a general $n$-dimensional auton
   A function $V$ defined in a neighborhood of $bold(x)^*$ is called a *Lyapunov function* if:
 
   - $V(bold(x)^*) = 0$ and $V(bold(x)) > 0$ for all $bold(x) != bold(x)^*$ in the neighborhood;
-  - the derivative along trajectories $dot(V)(bold(x)) = nabla V(bold(x)) dot bold(x) = sum_(i=1)^n (partial V) / (partial x_i) f_(i)(bold(x))$ satisfies $dot(V)(bold(x)) <= 0$ in the neighborhood.
+  - the derivative along trajectories $dot(V)(bold(x)) = nabla V(bold(x)) dot dot(bold(x)) = sum_(i=1)^n (partial V) / (partial x_i) f_(i)(bold(x))$ satisfies $dot(V)(bold(x)) <= 0$ in the neighborhood.
 ] <def:lyapunov-function>
 
 #theorem(name: "Lyapunov's Stability Theorem")[
@@ -1811,7 +1811,7 @@ For notational economy, the method is stated for a general $n$-dimensional auton
 ] <thm:lyapunov-stability>
 
 #proof[
-  *Stability.* Let $epsilon > 0$. Since $V$ is positive definite and continuous, the sphere $S_epsilon = {norm(bold(x) - bold(x)^*) = epsilon}$ carries a positive minimum $m = min_(S_epsilon) V > 0$.
+  *Stability.* Let $epsilon > 0$ be small enough that the closed $epsilon$-ball around $bold(x)^*$ lies in the domain of $V$. Since $V$ is positive definite and continuous, the sphere $S_epsilon = {norm(bold(x) - bold(x)^*) = epsilon}$ carries a positive minimum $m = min_(S_epsilon) V > 0$.
 
   By continuity of $V$ at $bold(x)^*$, choose $delta > 0$ with $V(bold(x)) < m$ whenever $norm(bold(x) - bold(x)^*) < delta$.
 
@@ -1834,7 +1834,7 @@ The level sets of a Lyapunov function and a trajectory trapped inside them are i
 
 #figure(
   image("img/lyapunov-function.svg", width: 75%),
-  caption: [Lyapunov function $V(x,y) = x^2 + y^2$ (dashed contours) and a typical trajectory. The trajectory moves toward lower level sets of $V$, converging to the equilibrium at the origin.],
+  caption: [Lyapunov function $V(x,y) = x^2 + y^2$ (dashed contours) and a trajectory of $dot(x) = -x$, $dot(y) = -y$. The trajectory moves toward lower level sets of $V$, converging to the equilibrium at the origin.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:lyapunov-function>
@@ -1864,13 +1864,24 @@ The level sets of a Lyapunov function and a trajectory trapped inside them are i
 
 For two-dimensional systems, the behavior near a critical point can be classified by linearization.
 
-Let $bold(x)^*$ be a critical point, and consider the *Jacobian matrix* of $bold(f)$ at $bold(x)^*$,
+Let $bold(x)^*$ be a critical point of @eq:phase-plane-system.
+The *Jacobian matrix* of $bold(f)$ at $bold(x)^*$ is
 $
   bold(A) = mat(
     (partial F) / (partial x), (partial F) / (partial y);
     (partial G) / (partial x), (partial G) / (partial y);
-  )_(bold(x) = bold(x)^*).
+  ),
 $
+the matrix of partial derivatives evaluated at $bold(x) = bold(x)^*$.
+
+Two phase portraits are compared through the following notion.
+
+#definition(name: "Topological Equivalence")[
+  Two planar systems $dot(bold(x)) = bold(f)(bold(x))$ and $dot(bold(x)) = bold(g)(bold(x))$ are *topologically equivalent* if there is a homeomorphism $bold(h)$ of the phase spaces sending trajectories onto trajectories and preserving the direction of time.
+] <def:topological-equivalence>
+
+Topologically equivalent systems share every qualitative feature of the classification below: nodes correspond to nodes, saddles to saddles, closed orbits to closed orbits.
+Only the geometry of the individual trajectories differs.
 
 #theorem(name: "Linearization Theorem")[
   Let $bold(x)^*$ be a critical point of @eq:autonomous-system and let $bold(A)$ be the Jacobian matrix of $bold(f)$ at $bold(x)^*$.
@@ -1880,7 +1891,15 @@ $
   In particular, the type and stability of the critical point are correctly read off from the eigenvalues of $bold(A)$.
 ] <thm:linearization>
 
-The local behavior is determined by the eigenvalues of $bold(A)$:
+#note[
+  The theorem is the Hartman-Grobman theorem; its proof, a fixed-point argument on the stable and unstable manifolds, is beyond the scope of this notebook (see Perko, *Differential Equations and Dynamical Systems*).
+]
+
+#definition(name: "Hyperbolic Equilibrium")[
+  A critical point $bold(x)^*$ is *hyperbolic* if no eigenvalue of its Jacobian matrix has zero real part.
+] <def:hyperbolic>
+
+By #link(<thm:linearization>)[*Linearization Theorem*] this table classifies the hyperbolic critical points:
 
 #tex-table(
   ("Eigenvalues", "Type of Critical Point", "Stability"),
@@ -1930,10 +1949,14 @@ Four of the main critical point types (stable node, saddle, stable focus, and ce
 
 Here *isolated* means that some neighborhood of the orbit contains no other closed trajectory: neighboring trajectories spiral toward or away from it as $t$ increases.
 
-Like equilibria, a limit cycle is called *stable* (respectively *unstable*) if neighboring trajectories approach it (respectively move away from it) as $t -> oo$.
+Like equilibria, a limit cycle is called *stable* (respectively *unstable*) if the distance from nearby trajectories to the orbit decreases to $0$ (respectively does not) as $t -> oo$; this is orbital stability of the closed orbit.
+
+For a trajectory $bold(x)(t)$ the *$omega$-limit set* consists of the points $bold(p)$ for which $bold(x)(t_n) -> bold(p)$ along some sequence $t_n -> oo$.
+
+The general existence statement for planar limit cycles is the following.
 
 #theorem(name: "Poincaré-Bendixson Theorem")[
-  Let $bold(x)(t)$ be a trajectory of a planar system that remains in a bounded closed region containing only finitely many critical points, for all $t >= t_0$.
+  Let $bold(x)(t)$ be a trajectory of a planar system that remains, for all $t >= t_0$, in a bounded closed positively invariant region containing only finitely many critical points.
 
   Then its $omega$-limit set is one of the following: a critical point, a periodic orbit, or a graph consisting of critical points together with orbits connecting them.
 ] <thm:poincare-bendixson>
@@ -1946,14 +1969,27 @@ Like equilibria, a limit cycle is called *stable* (respectively *unstable*) if n
   In dimensions three and higher, chaotic behavior is possible, which is excluded in the plane.
 ]
 
-A concrete example is provided by the Van der Pol oscillator, whose unique limit cycle is illustrated in @fig:limit-cycle.
+A concrete example is provided by the Van der Pol oscillator
+$
+  dot.double(x) + mu (x^2 - 1) dot(x) + x = 0, quad quad mu > 0,
+$
+written as a planar system,
+$
+  cases(
+    dot(x) = y,
+    dot(y) = -x + mu (1 - x^2) y.
+  )
+$
+Its phase portrait for $mu = 0.8$ is shown in @fig:limit-cycle.
 
 #figure(
-  image("img/limit-cycle.svg", width: 75%),
-  caption: [Limit cycle in the Van der Pol oscillator. Trajectories starting inside the cycle spiral outward, while those starting outside spiral inward, all approaching the same closed orbit.],
-  placement: auto,
+  image("img/limit-cycle.svg", width: 55%),
+  caption: [Limit cycle in the Van der Pol oscillator at $mu = 0.8$. Trajectories starting inside the cycle spiral outward, while those starting outside spiral inward, all approaching the same closed orbit.],
+  placement: none,
   supplement: [Fig.],
 ) <fig:limit-cycle>
+
+The closed orbit displayed is the only limit cycle at that parameter value; uniqueness for every $mu > 0$ follows from Liénard's theorem, whose proof is not given here.
 
 = Bifurcation Theory // 分岔理论
 
@@ -1975,16 +2011,10 @@ Consider the one-parameter family
   dot(bold(x)) = bold(f)(bold(x); mu), quad quad bold(x) in D subset.eq bb(R)^2, quad quad mu in I subset.eq bb(R),
 $] <eq:parameter-family>
 where $bold(f)$ is of class $C^1$ in $(bold(x), mu)$.
-For each fixed value of $mu$ this is exactly the autonomous system @eq:autonomous-system, so the phase portraits classified in *Critical Points and Limit Cycles* apply parameter by parameter.
+For each fixed value of $mu$ this is the planar system @eq:phase-plane-system together with the initial condition of @eq:autonomous-system, so the phase portraits classified in *Critical Points and Limit Cycles* apply parameter by parameter.
+We keep the terminology of that chapter and speak interchangeably of critical points and equilibria.
 
-To speak of the phase portrait "changing type" we need a notion of sameness that ignores the shape of individual trajectories.
-
-#definition(name: "Topological Equivalence")[
-  Two planar systems $dot(bold(x)) = bold(f)(bold(x))$ and $dot(bold(x)) = bold(g)(bold(x))$ are *topologically equivalent* if there is a homeomorphism $bold(h)$ of the phase spaces sending trajectories onto trajectories and preserving the direction of time.
-] <def:topological-equivalence>
-
-Topologically equivalent systems share every qualitative feature of the classification of *Critical Points and Limit Cycles*: nodes correspond to nodes, saddles to saddles, closed orbits to closed orbits.
-Only the geometry of the individual trajectories differs.
+To say that the phase portrait changes its type we compare systems through #link(<def:topological-equivalence>)[*Topological Equivalence*], which ignores the shape of individual trajectories and retains exactly the structure recorded by the classification.
 
 #definition(name: "Bifurcation Value")[
   A value $mu_0 in I$ is a *bifurcation value* of @eq:parameter-family if every neighborhood of $mu_0$ contains a value $mu$ at which the system is not topologically equivalent to the system at $mu_0$.
@@ -2000,13 +2030,13 @@ Structural stability is the same notion viewed from the parameter axis: if $bold
 Conversely, every bifurcation value is a parameter at which structural stability is lost, and every local bifurcation is a failure of a non-degeneracy hypothesis of the earlier theory.
 
 #note(title: "What fails at a bifurcation")[
-  By #link(<thm:linearization>)[*Linearization Theorem*], an equilibrium whose Jacobian has no eigenvalue on the imaginary axis is *hyperbolic*, and its type is reproduced by every sufficiently small perturbation.
+  By #link(<thm:linearization>)[*Linearization Theorem*], a hyperbolic equilibrium — one whose Jacobian has no eigenvalue on the imaginary axis, in the terminology of *Critical Points and Limit Cycles* — has its type reproduced by every sufficiently small perturbation.
   Likewise, a closed orbit whose Floquet multipliers of *Periodic Coefficient Systems* avoid the unit circle persists with the same stability type.
   Hence an equilibrium can change type only when an eigenvalue reaches the imaginary axis, and a periodic orbit only when a Floquet multiplier crosses the unit circle.
   The degenerate rows of the classification table — repeated and purely imaginary eigenvalues — are therefore exactly where parameter dependence becomes visible.
 ]
 
-In the plane the converse holds as well, by the Andronov–Pontryagin theorem: a smooth planar system is structurally stable if and only if it has finitely many hyperbolic equilibria and closed orbits and no trajectory joining two saddle points.
+In the plane the converse holds as well, by the Andronov-Pontryagin theorem: on a compact region that the flow crosses transversally, a smooth planar system is structurally stable if and only if it has finitely many hyperbolic equilibria and closed orbits and no trajectory joining two saddle points.
 A saddle connection is thus a bifurcation of *global* type, in contrast with the *local* bifurcations treated in this chapter, which are already visible in an arbitrarily small neighborhood of one equilibrium or one closed orbit.
 
 A *bifurcation diagram* records the outcome: the parameter runs along the horizontal axis and the equilibria, or the amplitude of the periodic orbits, along the vertical axis, with stable branches drawn solid and unstable ones dashed.
@@ -2024,14 +2054,14 @@ At $mu = 0$ a single equilibrium $x = 0$ appears, semistable: attracting from th
 For $mu > 0$ the parabola splits the line into two equilibria $x = +- sqrt(mu)$; the right one has $f'(x) = -2 x < 0$ and is asymptotically stable, whereas the left one has $f'(x) = -2 x > 0$ and is unstable.
 Two equilibria are born out of nothing as $mu$ crosses $0$, and the pair is destroyed when $mu$ crosses back.
 
-The phenomenon is not special to the model: it occurs whenever the graph of $f$ is tangent to the $x$-axis in the $(x, mu)$-plane.
+The phenomenon is not special to the model: it occurs whenever the graph of $f$ is tangent to the $x$-axis in the $(x, mu)$-plane, with $f_mu != 0$ and $f_(x x) != 0$ at the contact point, so that the tangency is quadratic and crosses the axis as $mu$ varies.
 
 #theorem(name: "Saddle-Node Bifurcation")[
   Let $f: bb(R) times bb(R) -> bb(R)$ be of class $C^2$, and suppose that at $(x_0, mu_0)$
   $
     f(x_0, mu_0) = 0, quad quad f_x (x_0, mu_0) = 0, quad quad f_mu (x_0, mu_0) != 0, quad quad f_(x x)(x_0, mu_0) != 0.
   $
-  Then there is $epsilon > 0$ such that the equation $dot(x) = f(x; mu)$ has no equilibrium in $(x_0 - epsilon, x_0 + epsilon)$ for the parameters on one side of $mu_0$, and exactly two equilibria there for the parameters on the other side.
+  Then there are $epsilon > 0$ and $delta > 0$ such that, for $mu$ with $0 < abs(mu - mu_0) < delta$ on one side of $mu_0$, the equation $dot(x) = f(x; mu)$ has no equilibrium in $(x_0 - epsilon, x_0 + epsilon)$, while for $mu$ on the other side it has exactly two equilibria there.
   These two equilibria are hyperbolic, one asymptotically stable and one unstable.
 ] <thm:saddle-node>
 
@@ -2044,8 +2074,9 @@ The phenomenon is not special to the model: it occurs whenever the graph of $f$ 
   $
   where the constant $C = C(x, mu)$ tends to $0$ as $(x, mu) -> (0, 0)$.
 
-  *No equilibrium on one side.* Replacing $x$ by $-x$ and $mu$ by $-mu$ if necessary, we may suppose $a > 0$ and $b < 0$.
-  For $mu < 0$ set $h = abs(mu)$; then, for small $h$,
+  *Normalization.* Replacing $mu$ by $-mu$ changes the sign of $a$ and leaves $b$ unchanged, whereas replacing $f$ by $-f$ changes the sign of both and leaves the zero set untouched; combining the two we may suppose $a > 0$ and $b < 0$, at the price of interchanging stable and unstable in the conclusions.
+
+  *No equilibrium on one side.* With $a > 0$ and $b < 0$, for $mu < 0$ set $h = abs(mu)$; then, for small $h$,
   $
     f(x, mu) <= -a h + (b + C) x^2 + C h^2 <= -a h + C h^2 < 0,
   $
@@ -2100,6 +2131,12 @@ Now $f_x = mu - 3 x^2$, which equals $mu$ at the origin and $-2 mu$ at $x = +- s
 Hence the origin is asymptotically stable for $mu < 0$ and unstable for $mu > 0$, while the new pair is asymptotically stable whenever it exists.
 This is a *supercritical pitchfork*: a symmetric state loses stability to a pair of symmetric states.
 
+The stability of the new branch also follows from a Lyapunov function in the sense of #link(<def:lyapunov-function>)[*Lyapunov Function*]: with $xi = x - sqrt(mu)$ and $V = xi^2 / 2$, one has
+$
+  dot(V) = xi dot(xi) = -2 mu xi^2 + O(xi^3) < 0 quad quad text("for small") xi != 0,
+$
+because $f'(sqrt(mu)) = -2 mu < 0$.
+
 #eq[$
   dot(x) = mu x + x^3 = x (mu + x^2).
 $] <eq:pitchfork-subcritical>
@@ -2113,8 +2150,9 @@ For
 $
   dot(x) = mu x + x^3 - x^5
 $
-the origin is still unstable for $mu > 0$, but stable equilibria survive at $x^2 = (1 + sqrt(1 + 4 mu)) / 2$ as long as $mu > -1/4$.
-Increasing $mu$ through $0$ therefore forces a jump to large amplitude, whereas decreasing $mu$ again does not restore the small state until $mu = -1/4$; the observed state depends on the history of the parameter, a phenomenon known as *hysteresis*.
+the origin is still unstable for $mu > 0$, but stable equilibria survive at $x^2 = (1 + sqrt(1 + 4 mu)) / 2$ as long as $mu > -1/4$, with an unstable branch between them and the origin when $-1/4 < mu < 0$.
+The two regimes therefore coexist on that interval.
+Increasing $mu$ through $0$ forces a jump to large amplitude, whereas decreasing $mu$ again does not restore the small state until $mu = -1/4$; the observed state depends on the history of the parameter, a phenomenon known as *hysteresis*.
 
 #note(title: "Why the pitchfork needs symmetry")[
   Both pitchfork prototypes satisfy $f(-x) = -f(x)$, and their diagrams inherit the reflection symmetry $x -> -x$.
@@ -2135,14 +2173,17 @@ In the three mechanisms above the number or the location of equilibria changes, 
 The Hopf bifurcation is different in kind: the equilibrium survives, but at the critical parameter its linearization becomes a center, and on one side a closed orbit grows out of it.
 
 #theorem(name: "Hopf Bifurcation")[
-  Let $bold(f)$ in @eq:parameter-family be of class $C^4$ and let $bold(x)^*(mu)$ be an equilibrium depending continuously on $mu$, with Jacobian $bold(A)(mu)$ and eigenvalues $alpha(mu) ± i beta(mu)$.
+  Let $bold(f)$ in @eq:parameter-family be of class $C^4$ in $(bold(x), mu)$, and let $bold(x)^*(mu)$ be an equilibrium of class $C^1$ in $mu$, with Jacobian $bold(A)(mu)$ and eigenvalues $alpha(mu) ± i beta(mu)$.
   Suppose that at $mu_0$
   $
     alpha(mu_0) = 0, quad quad beta(mu_0) = omega > 0, quad quad alpha'(mu_0) != 0,
   $
-  and that the first Lyapunov coefficient $ell_1 (mu_0)$ of the reduced system is non-zero.
-  Then the equilibrium is asymptotically stable on one side of $mu_0$ and unstable on the other, and near it there is a unique closed orbit, of amplitude of order $sqrt(abs(mu - mu_0))$ and period tending to $(2 pi) / omega$ as $mu -> mu_0$.
-  That orbit is a limit cycle; it is asymptotically stable when $ell_1 (mu_0) < 0$ (*supercritical*) and unstable when $ell_1 (mu_0) > 0$ (*subcritical*), in which case it lies on the side where the equilibrium is stable.
+  and that the first Lyapunov coefficient $ell_1$ at $(bold(x)^*(mu_0), mu_0)$ is non-zero.
+  Then the equilibrium is asymptotically stable on one side of $mu_0$ and unstable on the other.
+
+  If $ell_1 < 0$ (*supercritical* case), then for $mu$ on the side where the equilibrium is unstable there is a unique closed orbit in a neighborhood of it, and this orbit is asymptotically stable.
+  If $ell_1 > 0$ (*subcritical* case), then a unique closed orbit exists instead on the side where the equilibrium is stable, and this orbit is unstable.
+  In both cases the orbit is a limit cycle, its amplitude is of order $sqrt(abs(mu - mu_0))$, and its period tends to $(2 pi) / omega$ as $mu -> mu_0$.
 ] <thm:hopf>
 
 #note(title: "Where the difficulty lies")[
@@ -2164,8 +2205,15 @@ The square-root law explains the parabolic shape of the upper branch in @fig:hop
   The origin is an equilibrium for all $mu$, with Jacobian $mat(mu, -1; 1, mu)$ and eigenvalues $mu ± i$, so $alpha(mu) = mu$, $omega = 1$ and $alpha'(0) = 1 != 0$.
 
   The radial equation is a pitchfork bifurcation in disguise: for $mu > 0$ the circle $r = sqrt(mu)$ is invariant, and $dot(r) = r (mu - r^2)$ shows that it attracts every trajectory with $r > 0$.
-  By #link(<thm:hopf>)[*Hopf Bifurcation*] the transition at $mu = 0$ is supercritical, and the amplitude grows like $sqrt(mu)$.
+  Since the radial equation is explicit, the first Lyapunov coefficient is negative here, and #link(<thm:hopf>)[*Hopf Bifurcation*] shows that the transition at $mu = 0$ is supercritical, with amplitude $sqrt(mu)$.
 ] <ex:hopf-radial>
+
+#figure(
+  image("img/hopf-bifurcation.svg", width: 90%),
+  caption: [Hopf bifurcation in the planar family of the preceding example. Left: bifurcation diagram, with the equilibrium branch and the circular limit cycle of amplitude $sqrt(mu)$. Right: phase portrait at $mu = 0.2$, where trajectories spiral out to the limit cycle.],
+  placement: none,
+  supplement: [Fig.],
+) <fig:hopf-bifurcation>
 
 #note(title: "Van der Pol revisited")[
   The Van der Pol oscillator of *Critical Points and Limit Cycles* shows the same transition at $mu = 0$: for $mu < 0$ the origin is an asymptotically stable focus, and for $mu > 0$ it is an unstable focus surrounded by the limit cycle of @fig:limit-cycle.
@@ -2176,16 +2224,9 @@ The square-root law explains the parabolic shape of the upper branch in @fig:hop
   Degenerate Hopf bifurcations are common in applications and are responsible for the abrupt onset of oscillations of finite amplitude.
 ]
 
-#figure(
-  image("img/hopf-bifurcation.svg", width: 90%),
-  caption: [Hopf bifurcation in the planar family of the preceding example. Left: bifurcation diagram, with the equilibrium branch and the circular limit cycle of amplitude $sqrt(mu)$. Right: phase portrait at $mu = 0.2$, where trajectories spiral out to the limit cycle.],
-  placement: auto,
-  supplement: [Fig.],
-) <fig:hopf-bifurcation>
-
 == Classification and Scope // 分类与适用范围
 
-The four mechanisms of this chapter cover the local bifurcations of one-parameter families of planar systems:
+The four mechanisms of this chapter cover the local bifurcations of equilibria in one-parameter families of planar systems:
 
 #tex-table(
   ("Bifurcation", "Normal form", [Condition at $mu_0$], "Qualitative change"),
@@ -2200,16 +2241,17 @@ The truncated polynomial is the *normal form* of the bifurcation, and the condit
 
 The *codimension* of a bifurcation is the number of independent scalar conditions on the vector field that must hold for it to occur.
 All four types above are of codimension one: a single condition forces an eigenvalue onto the imaginary axis, while the remaining conditions are inequalities.
-Codimension two requires two equations, for instance a double zero eigenvalue, which produces the Takens–Bogdanov bifurcation; such points lie on curves in a two-parameter plane and organize the codimension-one structure around them.
+Codimension two requires two equations, for instance a double zero eigenvalue, which produces the Takens-Bogdanov bifurcation; such points lie on curves in a two-parameter plane and organize the codimension-one structure around them.
 
 #caution(title: "Scope of this chapter")[
-  Only local bifurcations of equilibria and periodic orbits in the plane are treated here.
-  Global bifurcations — homoclinic and heteroclinic connections, saddle connections, the period-doubling cascade — depend on the whole phase portrait and are not covered.
+  Only local bifurcations of equilibria in the plane are treated here; nothing is said about the bifurcations of a periodic orbit.
+  Bifurcations of periodic orbits — period doubling and the Neimark-Sacker bifurcation, read off from a Poincaré map — involve dynamics along the orbit rather than in a neighborhood of a single equilibrium, and are not covered.
+  Global bifurcations, such as homoclinic and heteroclinic connections or saddle connections, depend on the whole phase portrait and are likewise excluded.
   Chaotic dynamics requires dimension three or more, precisely the situation excluded by #link(<thm:poincare-bendixson>)[*Poincaré-Bendixson Theorem*] in the plane; the full theory is developed in Perko, Wiggins, and Guckenheimer & Holmes.
 ]
 
 #note(title: "Bifurcation in boundary value problems")[
-  Parameter dependence also reorganizes Part IV: for a nonlinear boundary value problem $L y + N(y; mu) = 0$ on an interval, solutions branch at precisely those values of $mu$ for which the linearized problem has a non-trivial solution, that is, at the eigenvalues of *Sturm-Liouville Problems*, where the #link(<thm:fredholm-alternative>)[*Fredholm Alternative*] degenerates.
+  Parameter dependence also reorganizes Part IV: for a nonlinear boundary value problem $L y + N(y; mu) = 0$ on an interval, solutions can branch at those values of $mu$ for which the linearized problem has a non-trivial solution, that is, at the eigenvalues of *Sturm-Liouville Problems*, where the #link(<thm:fredholm-alternative>)[*Fredholm Alternative*] degenerates; for a simple eigenvalue with the usual non-degeneracy conditions a branch indeed exists.
   The reduction used to analyse such branching (the Lyapunov-Schmidt method) is an infinite-dimensional version of the center-manifold reduction and belongs to functional analysis rather than to this notebook.
 ]
 
@@ -2669,6 +2711,7 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
 - *#link(<ex:homogeneous-equation>)[Homogeneous Equation]*
 - *#link(<def:homogeneous-function>)[Homogeneous Function]*
 - *#link(<thm:homogeneous-general-solution>)[Homogeneous General Solution]*
+- *#link(<def:hyperbolic>)[Hyperbolic]*
 - *#link(<thm:hopf>)[Hopf]*
 - *#link(<ex:hopf-radial>)[Hopf Radial]*
 
