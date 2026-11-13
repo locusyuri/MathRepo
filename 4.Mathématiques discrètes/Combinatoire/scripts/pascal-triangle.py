@@ -1,8 +1,8 @@
-"""Pascal's triangle.
+"""Pascal's triangle drawn as a honeycomb of hexagonal cells.
 
-Rows n = 0, ..., 7 with the binomial coefficients C(n, k) centred; one entry is
-highlighted together with the two entries above it that produce it by the
-recurrence C(n, k) = C(n-1, k-1) + C(n-1, k).
+Left: rows n = 0, ..., 4 with the values C(n, k).  Right: the same cells labelled
+with the binomial coefficients in the notation of the text.  The arrow recalls
+that both displays carry the same information.
 
 Output: ../img/pascal-triangle.svg
 """
@@ -12,23 +12,50 @@ from __future__ import annotations
 import os
 import sys
 from dataclasses import replace
-from math import comb
+from math import comb, pi, sqrt
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+from matplotlib.patches import FancyArrowPatch, RegularPolygon
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _viz import Presets
 
-SPEC = replace(Presets.SVG_MATH, figsize=(6.8, 4.8))
+SPEC = replace(Presets.SVG_MATH_PANEL, figsize=(7.4, 3.3))
 OUT_DIR = Path(__file__).resolve().parent.parent / "img"
 
 INK = "#1f2933"
-MUTED = "#8894a0"
-KEY = "#1f4e9b"
+CELL = "#ffffff"
+EDGE = "#1f2933"
+ARROW = "#1f2933"
 
-ROWS = 8
-HIGHLIGHT = (5, 2)   # C(5, 2) = C(4, 1) + C(4, 2)
+ROWS = 5
+S = 0.52                      # circumradius of one hexagon
+DX = 2 * S                    # horizontal pitch inside a row
+DY = sqrt(3) * S              # vertical pitch between rows
+PANEL_OFFSET = 2.95           # horizontal offset of the two panels
+
+
+def draw_triangle(ax, offset, labels):
+    """Draw the hexagonal cells of Pascal's triangle centred at `offset`."""
+    for n in range(ROWS):
+        y = -n * DY
+        for k in range(n + 1):
+            cx = offset + (k - n / 2) * DX
+            ax.add_patch(RegularPolygon(
+                (cx, y), numVertices=6, radius=S, orientation=pi / 6,
+                facecolor=CELL, edgecolor=EDGE, lw=0.8, zorder=3))
+            ax.text(cx, y, labels(n, k), ha="center", va="center",
+                    fontsize=12 if labels is values else 9.5, color=INK,
+                    zorder=4)
+
+
+def values(n, k):
+    return str(comb(n, k))
+
+
+def symbols(n, k):
+    return rf"${{}}^{{{n}}}C_{{{k}}}$"
 
 
 def main():
@@ -37,28 +64,17 @@ def main():
     ax.set_aspect("equal")
     ax.axis("off")
 
-    row_gap = 0.85
-    for n in range(ROWS):
-        for k in range(n + 1):
-            value = comb(n, k)
-            x, y = k - n / 2, -n * row_gap
-            is_key = (n, k) == HIGHLIGHT
-            is_parent = (n, k) in ((HIGHLIGHT[0] - 1, HIGHLIGHT[1] - 1),
-                                   (HIGHLIGHT[0] - 1, HIGHLIGHT[1]))
-            colour = KEY if (is_key or is_parent) else INK
-            weight = "bold" if is_key else "normal"
-            ax.text(x, y, str(value), ha="center", va="center", fontsize=13,
-                    color=colour, fontweight=weight, zorder=3)
+    draw_triangle(ax, -PANEL_OFFSET, values)
+    draw_triangle(ax, +PANEL_OFFSET, symbols)
 
-    # Connect the highlighted entry to the two entries above it.
-    n, k = HIGHLIGHT
-    for parent_k in (k - 1, k):
-        ax.plot([parent_k - (n - 1) / 2, k - n / 2],
-                [-(n - 1) * row_gap + 0.26, -n * row_gap + 0.26],
-                color=MUTED, lw=1.0, ls=(0, (3, 2)), zorder=1)
+    ax.add_patch(FancyArrowPatch((-0.95, -1.55), (0.95, -1.55),
+                                 arrowstyle="-|>,head_length=8,head_width=4",
+                                 mutation_scale=1.0, color=ARROW, lw=2.2,
+                                 shrinkA=0, shrinkB=0, zorder=5))
 
-    ax.set_xlim(-3.6, 3.6)
-    ax.set_ylim(-(ROWS - 1) * row_gap - 0.55, 0.65)
+    half_width = PANEL_OFFSET + 2 * S * ROWS / 2 + 0.15
+    ax.set_xlim(-half_width, half_width)
+    ax.set_ylim(-(ROWS - 1) * DY - 1.05, 0.62)
 
     path = SPEC.save(fig, OUT_DIR / "pascal-triangle")
     print(f"Saved: {path}")

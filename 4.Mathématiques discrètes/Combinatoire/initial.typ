@@ -247,7 +247,7 @@ combinatorics.
   its boundary values $C_n^0 = C_n^n = 1$.
 
   #figure(
-    image("img/pascal-triangle.svg", width: 65%),
+    image("img/pascal-triangle.svg", width: 100%),
     caption: [Pascal triangle (YangHui triangle).],
     placement: auto,
     supplement: [Fig.],
