@@ -3156,7 +3156,7 @@ What it also gives, once combined with positivity, is a two-sided comparison bet
 ] <thm:harnack-convergence>
 
 #proof[
-  Let $(u_k (x_0))$ be bounded.
+  Suppose $(u_k (x_0))$ is bounded at some $x_0 in Omega$.
   For $m > k$ the difference $u_m - u_k$ is non-negative and harmonic, so by #link(<cor:harnack-compact>)[*Harnack's Inequality on Compact Subsets*] on a compact set $K$ containing $x_0$,
   $
     sup_K abs(u_m - u_k) <= C_K (u_m - u_k)(x_0).
@@ -3290,7 +3290,8 @@ The same identity is quantitative, so the freedom of the constant is the only in
   Dividing by $||nabla w||_(L^2 (Omega))$ gives the estimate.
 ]
 
-The two functional inequalities used here are established in *Sobolev Spaces* and *Boundary Value Problems for Elliptic Equations*; in the classical setting they can also be obtained directly, since $w$ vanishes nowhere but has zero mean.
+The two functional inequalities used here are Poincaré's inequality and the trace inequality, established in *Sobolev Spaces* and *Boundary Value Problems for Elliptic Equations*.
+Classically they express the same two facts: a function of zero mean is controlled in $L^2 (Omega)$ by its gradient, and its boundary values are controlled by its $H^1$ norm.
 
 The exterior problem requires more care, because the energy identity now ends on a large sphere.
 
