@@ -5698,10 +5698,4 @@ recurred at every stage: divide, look at the remainder, and let the
 decreasing quantity do the work — in $bb(Z)$, in $bb(Z)\/m bb(Z)$, in
 counting functions, in continued fractions, and in $P[x]$.
 
-
-
-
-
-
-
-
+#bibliography("references.bib", title: "References", full: true)
