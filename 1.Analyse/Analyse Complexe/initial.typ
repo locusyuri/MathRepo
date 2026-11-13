@@ -1381,7 +1381,7 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
 ]
 
 #figure(
-  image("img/goursat-triangulation.png", width: 95%),
+  image("img/goursat-triangulation.svg", width: 95%),
   caption: [Goursat's proof: repeated bisection selects a nested sequence of triangles (left); triangulating the interior of a contour, interior edges cancel in pairs (right).],
   placement: auto,
   supplement: [Fig.],
