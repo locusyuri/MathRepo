@@ -3101,6 +3101,131 @@ The hypotheses are weaker than they look: $g$ need only be continuous, although 
 ]
 
 
+== Further Properties of Harmonic Functions // 调和函数的进一步性质
+
+The mean value property already gave smoothness.
+What it also gives, once combined with positivity, is a two-sided comparison between the values of a harmonic function at different points, and that comparison is strong enough to force the rigidity phenomena collected here: a global one-sided bound forces constancy, an isolated singularity disappears, and the Taylor series converges.
+
+#theorem(name: "Harnack's Inequality")[
+  Let $u$ be non-negative and harmonic on $B (0, R)$, and let $abs(x) < R$.
+  Then
+  $
+    ((R - abs(x))/(R + abs(x)))^(n - 1) u (0) <= u (x) <= ((R + abs(x))/(R - abs(x)))^(n - 1) u (0).
+  $
+] <thm:harnack-inequality>
+
+#proof[
+  By #link(<thm:dirichlet-ball-existence>)[the Poisson formula on a ball] and uniqueness, $u$ equals the Poisson integral of its own boundary values on $partial B (0, R)$:
+  $
+    u (x) = integral_(partial B (0, R)) P (x, y) u (y) dif S (y), quad x in B (0, R).
+  $
+  Since $P (0, y) = 1 / (omega_n R^(n - 1))$, the ratio of the kernels is
+  $
+    (P (x, y))/(P (0, y)) = ((R^2 - abs(x)^2) R^(n - 2)) / (abs(x - y)^n),
+  $
+  and $R - abs(x) <= abs(x - y) <= R + abs(x)$ for $abs(y) = R$ gives
+  $
+    ((R - abs(x)) R^(n - 2)) / (R + abs(x))^(n - 1) <= (P (x, y))/(P (0, y)) <= ((R + abs(x)) R^(n - 2)) / (R - abs(x))^(n - 1).
+  $
+  Multiplying by $u (y) >= 0$ and integrating yields the two inequalities, since $R^(n - 2) (R - abs(x)) >= (R - abs(x))^(n - 1)$ and $R^(n - 2) <= (R + abs(x))^(n - 2)$ only weaken them.
+]
+
+#corollary(name: "Harnack's Inequality on Compact Subsets")[
+  Let $u$ be non-negative and harmonic on a domain $Omega$ and let $K subset Omega$ be compact.
+  Then
+  $
+    sup_K u <= C inf_K u
+  $
+  with $C$ depending only on $n$, $"dist"(K, partial Omega)$ and $"diam"(K)$.
+] <cor:harnack-compact>
+
+#proof[
+  Fix $x, y in K$ and set $delta = "dist"(K, partial Omega) / 4 > 0$, so that $B (z, 2 delta) subset Omega$ for every $z in K$.
+  Choose points $z_0 = x, z_1, dots, z_m = y$ on the segment from $x$ to $y$ with $abs(z_(j + 1) - z_j) <= delta$ and $m <= "diam"(K) / delta + 1$.
+  For each $j$ the ball $B (z_j, 2 delta)$ is contained in $Omega$ and contains $z_(j + 1)$, so #link(<thm:harnack-inequality>)[Harnack's inequality] applied there, and then with the roles exchanged, gives
+  $
+    2^(-(n - 1)) u (z_j) <= u (z_(j + 1)) <= 2^(n - 1) u (z_j).
+  $
+  Iterating over the chain bounds $u (y)$ by $2^((n - 1)(m + 1)) u (x)$, and the estimate for the reverse direction follows by symmetry.
+]
+
+#theorem(name: "Harnack's Convergence Theorem")[
+  Let $u_1 <= u_2 <= dots$ be harmonic functions on a connected domain $Omega$, and suppose that the sequence is bounded at one point.
+  Then it converges locally uniformly on $Omega$ to a harmonic function.
+] <thm:harnack-convergence>
+
+#proof[
+  Let $(u_k (x_0))$ be bounded.
+  For $m > k$ the difference $u_m - u_k$ is non-negative and harmonic, so by #link(<cor:harnack-compact>)[*Harnack's Inequality on Compact Subsets*] on a compact set $K$ containing $x_0$,
+  $
+    sup_K abs(u_m - u_k) <= C_K (u_m - u_k)(x_0).
+  $
+  The sequence $(u_k (x_0))$ is monotone and bounded, hence Cauchy, so $(u_k)$ is Cauchy in the supremum norm on every compact subset of $Omega$.
+  The limit $u$ is therefore continuous and is the locally uniform limit of harmonic functions; passing to the limit in the mean value identity on any ball gives the identity for $u$, so $u$ is harmonic by #link(<cor:mean-value-converse>)[the converse of the mean value property].
+]
+
+#theorem(name: "Liouville's Theorem")[
+  A harmonic function on $bb(R)^n$ that is bounded from below is constant.
+] <thm:liouville>
+
+#proof[
+  Let $u >= m$ and put $v = u - m >= 0$, which is harmonic and non-negative.
+  Fix $x in bb(R)^n$ and apply #link(<thm:harnack-inequality>)[Harnack's inequality] on $B (0, R)$ with $R > 2 abs(x)$:
+  $
+    v (x) <= ((R + abs(x))/(R - abs(x)))^(n - 1) v (0).
+  $
+  Letting $R -> oo$ gives $v (x) <= v (0)$ for every $x$.
+  The non-negative harmonic function $v$ therefore attains its maximum at $0$, and the strong maximum principle makes it constant.
+]
+
+#theorem(name: "Removable Singularity")[
+  Let $Omega$ be a domain, $x_0 in Omega$ and $u$ harmonic on $Omega backslash {x_0}$.
+  If $u$ is bounded near $x_0$, then $u$ extends to a harmonic function on $Omega$.
+] <thm:removable-singularity>
+
+#proof[
+  Choose $r > 0$ with $overline(B (x_0, r)) subset Omega$, and let $v$ be the harmonic function on $B (x_0, r)$ with boundary values $u$ on $partial B (x_0, r)$ (*The Dirichlet Problem on a Ball*).
+  The function $w = u - v$ is harmonic on $B (x_0, r) backslash {x_0}$, bounded there, and equal to $0$ on $partial B (x_0, r)$.
+
+  For $epsilon > 0$ set
+  $
+    Phi (x) = cases(
+      epsilon (abs(x - x_0)^(2 - n) - r^(2 - n)) quad & "if" n >= 3,
+      epsilon log (r / abs(x - x_0)) quad & "if" n = 2,
+    )
+  $
+  which is harmonic and non-negative on $B (x_0, r) backslash {x_0}$, vanishes on $partial B (x_0, r)$, and tends to $+oo$ at $x_0$ (*Laplace's and Poisson's Equations*).
+  For $rho in (0, r)$ small enough, $sup abs(w) <= Phi$ on $abs(x - x_0) = rho$, and both bounds $±w - Phi$ are harmonic on the annulus with $±w - Phi <= 0$ on its boundary; the weak maximum principle gives $abs(w) <= Phi$ there.
+  Letting $epsilon -> 0^+$ gives $w = 0$ on the punctured ball, hence $u = v$ is harmonic across $x_0$.
+]
+
+#theorem(name: "Analyticity of Harmonic Functions")[
+  Every harmonic function on a domain $Omega subset bb(R)^n$ is real analytic: near each $x_0 in Omega$ it is the sum of a convergent power series in $x - x_0$.
+] <thm:harmonic-analyticity>
+
+#proof[
+  Fix $x_0 in Omega$ and $rho = "dist"(x_0, partial Omega) / 2$.
+  By #link(<thm:dirichlet-ball-existence>)[the Poisson formula] and uniqueness, $u$ equals the Poisson integral of its boundary values on $partial B (x_0, rho)$, so for $abs(x - x_0) < rho$,
+  $
+    u (x) = integral_(partial B (x_0, rho)) ((rho^2 - abs(x - x_0)^2)) / (omega_n rho abs(x - y)^n) u (y) dif S (y).
+  $
+  For $abs(x - x_0) <= rho / 2$ the denominator satisfies $abs(x - y) >= rho / 2$, so the kernel, as a function of $x$, is analytic on that ball with a radius of convergence bounded below independently of $y in partial B (x_0, rho)$, and so are all its derivatives, with bounds independent of $y$.
+  Expanding the kernel in powers of $x - x_0$ and integrating term by term against the bounded function $u$ is therefore legitimate, and produces a power series for $u$ which converges on $B (x_0, rho / 2)$.
+]
+
+Harmonic functions are thus analytic, not merely smooth, and the radius of convergence at $x_0$ is at least half the distance to the boundary.
+
+#note(title: "The two-dimensional picture")[
+  In the plane the statement has a second proof, which explains the phenomenon: every harmonic function is locally the real part of a holomorphic function, and holomorphic functions are analytic by Cauchy's theory.
+  This is the viewpoint of Analyse Complexe, where harmonic conjugates and conformal invariance are developed; the argument above is the real-variable counterpart and does not use complex numbers.
+]
+
+#note(title: "Compactness")[
+  The derivative estimates of *Mean Value Property* show that a locally bounded family of harmonic functions has locally bounded derivatives of every order.
+  Together with the mean value property this makes the family normal: every locally bounded sequence of harmonic functions has a locally uniformly convergent subsequence, with harmonic limit.
+  This compactness is the analytic input of *Regularity Theory*, where it is used to pass from weak to classical solutions.
+]
+
 == The Neumann Problem // Neumann 问题
 
 The second boundary value problem prescribes the normal derivative instead of the values.
