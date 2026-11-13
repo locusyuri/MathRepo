@@ -126,6 +126,13 @@ The family ${mu_(t_1 dots t_n)}$ cannot be arbitrary: a joint law determines its
   For the first, sum over the remaining variables, which is legitimate by the law of total probability; for the second, note that a joint law is symmetric in its arguments, since the event $X(t_i) in B_i$ for all $i$ does not depend on the order in which the conditions are listed.
 ]
 
+#figure(
+  image("img/fdd-consistency.svg", width: 72%),
+  caption: [Marginal consistency: a three-dimensional law determines its two-dimensional and one-dimensional marginals, and every marginal obtained from the same high-dimensional law agrees with the one computed directly.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:fdd-consistency>
+
 The converse is the content of the extension theorem: consistency is not merely necessary but also sufficient.
 
 #theorem(name: "Kolmogorov's Extension Theorem")[
@@ -163,6 +170,145 @@ The description of white noise in terms of joint laws is immediate.
 
 White noise is the exceptional case in which the joint laws are as simple as the marginal ones.
 In every other model of this note the dependence between different times is the whole point, and the finite-dimensional distributions encode it: for a Markov chain they factor through the transition matrix, for the Poisson process they are forced by independent increments, and for Brownian motion by Gaussian increments.
+
+== Path Regularity // 路径正则性
+
+The extension theorem produces a process from a family of laws and says nothing about the paths of the result.
+Two processes with identical finite-dimensional distributions may differ on a set of times that carries the whole probability.
+This section separates the two notions, then gives the standard criterion under which a well-behaved version can be recovered.
+
+#definition(name: "Modification and Indistinguishability")[
+  Two processes ${X(t) : t in T}$ and ${Y(t) : t in T}$ on the same probability space are *modifications* of each other if, for every $t in T$,
+  $
+    P(X(t) = Y(t)) = 1.
+  $
+  They are *indistinguishable* if
+  $
+    P(X(t) = Y(t) "for all" t in T) = 1.
+  $
+] <def:modification>
+
+Indistinguishability plainly implies being a modification.
+The converse holds whenever the index set is countable, since a countable union of null sets is null; it fails in general, and the failure is exactly what makes path regularity a separate problem.
+
+#example(name: "Same finite-dimensional distributions, different paths")[
+  Let $U$ be uniform on $[0, 1]$, let $T = [0, 1]$, and put $X(t) = 0$ for every $t$.
+  Define $Y(t) = 1$ when $t = U$ and $Y(t) = 0$ otherwise.
+  For each fixed $t$ one has $P(Y(t) = 1) = P(U = t) = 0$, so $X$ and $Y$ are modifications and share every finite-dimensional distribution.
+  Yet $P(Y(t) = X(t) "for all" t) = 0$: the two paths differ at the single time $U$, which is random.
+] <ex:same-fdd-different-paths>
+
+This is the precise form of the warning stated after the extension theorem.
+A law determines the distribution of the *values*, never the distribution of the *path*; the two are linked only when the index set is countable.
+
+Separating laws from paths requires a measurability condition on $X$ viewed as a function of $t$.
+
+#definition(name: "Separable Process")[
+  A process ${X(t) : t in T}$ with $T subset.eq RR$ is *separable* if there exist a countable set $D subset.eq T$ and a null set $N in cal(F)$ such that, for every $omega in.not N$ and every open interval $I$,
+  $
+    sup_(t in I) X(t)(omega) = sup_(t in I inter D) X(t)(omega).
+  $
+] <def:separable-process>
+
+Separability says that suprema over uncountable families of times can be read off from a countable set, which is what makes quantities such as $sup_(t <= T) X(t)$ measurable.
+Every process has a separable modification; the construction is again measure-theoretic and belongs to the Analyse Réelle note.
+
+Separability makes the path measurable, but not continuous.
+Continuity is bought by a moment condition on the increments.
+
+#theorem(name: "Kolmogorov's Continuity Criterion")[
+  Let ${X(t) : t in [0, 1]}$ be a process such that, for some constants $alpha > 0$, $beta > 0$ and $C < infinity$,
+  $
+    bb(E)[abs(X(t) - X(s))^alpha] <= C abs(t - s)^(1 + beta)
+  $
+  for all $s, t in [0, 1]$.
+  Then $X$ has a modification whose sample paths are Hölder continuous of every order $gamma < beta \/ alpha$.
+] <thm:kolmogorov-continuity>
+
+#proof[
+  Fix $gamma < beta \/ alpha$ and let $D_n = \{k 2^(-n) : k = 0, dots, 2^n\}$ be the dyadic grid of level $n$.
+
+  *Step 1 (dyadic increments).* For $n >= 1$ set
+  $
+    A_n = union.big_(k=1)^(2^n) \{abs(X(k 2^(-n)) - X((k-1) 2^(-n))) > 2^(-n gamma)\}.
+  $
+  Markov's inequality bounds each term by $C 2^(-n (1 + beta) + n gamma alpha)$, and there are $2^n$ of them, so
+  $
+    P(A_n) <= C 2^(-n (beta - gamma alpha)).
+  $
+  Since $beta - gamma alpha > 0$, the series $sum_n P(A_n)$ converges, and the Borel–Cantelli lemma gives $P(limsup A_n) = 0$.
+
+  *Step 2 (uniform control on the grid).* Off the null set of Step 1, for every $omega$ there is an index $n_0 (omega)$ such that every dyadic increment of level $n >= n_0 (omega)$ is at most $2^(-n gamma)$.
+  Two points of $D = union.big_(n >= 0) D_n$ at distance at most $2^(-n)$ are joined by finitely many dyadic increments, at most two per level, so
+  $
+    abs(X(s) - X(t)) <= K_gamma 2^(-n gamma)
+  $
+  for a constant $K_gamma$ depending on $gamma$ only.
+  On $D$ the process is therefore uniformly Hölder continuous of order $gamma$.
+
+  *Step 3 (extension).* Set $tilde(X)(t) = lim_(s -> t, s in D) X(s)$ whenever the limit exists, and $tilde(X)(t) = 0$ otherwise.
+  Since $D$ is dense and $X$ is uniformly continuous on $D$, the limit exists off a null set, and the resulting process has continuous paths with the same Hölder constant.
+
+  *Step 4 (modification).* Fix $t in [0, 1]$ and choose $t_n in D_n$ with $abs(t_n - t) <= 2^(-n)$.
+  The same Markov bound applied to the pair $(t_n, t)$, followed by Borel–Cantelli, gives $X(t_n) -> X(t)$ almost surely, while $X(t_n) -> tilde(X)(t)$ almost surely by construction.
+  Hence $P(tilde(X)(t) = X(t)) = 1$, and $tilde(X)$ is a modification of $X$.
+]
+
+The criterion is the only place in this chapter where a path property is proved rather than assumed.
+Its hypothesis is a *local* moment condition — increments over short intervals are controlled on average — and its conclusion is a *global* regularity statement.
+That gap between local control and global regularity is the recurring theme of stochastic analysis, and it reappears in the quadratic variation of Brownian motion.
+
+Two path spaces will be used in the continuous-time part.
+
+- $C([0, T])$, the continuous functions, equipped with the supremum norm.
+- $D([0, T])$, the right-continuous functions with left limits, equipped with the Skorokhod topology.
+
+The first suits Brownian motion, the second the Poisson process, whose paths jump.
+
+== Stationarity and Ergodic Ideas // 平稳性与遍历思想
+
+Until now the finite-dimensional distributions were an arbitrary consistent family.
+Structural assumptions on that family select the models of the later chapters, and the most important of them is invariance under time shift.
+
+#definition(name: "Stationary Process")[
+  A process ${X(t) : t in T}$ with $T subset.eq RR$ is *strictly stationary* if, for every $n >= 1$, all $t_1, dots, t_n$ and every $h$, the law of $(X(t_1 + h), dots, X(t_n + h))$ does not depend on $h$.
+] <def:stationary-process>
+
+Strict stationarity is a statement about whole joint laws and says nothing about moments.
+When second moments exist, the dependence structure is summarised by two numerical functions.
+
+#definition(name: "Mean and Covariance Functions")[
+  Let ${X(t) : t in T}$ have finite second moments.
+  Its *mean function* is $m(t) = bb(E)[X(t)]$, and its *covariance function* is
+  $
+    gamma(s, t) = op("Cov")(X(s), X(t)) = bb(E)[(X(s) - m(s))(X(t) - m(t))].
+  $
+] <def:covariance-function>
+
+#property(name: "Weak Stationarity")[
+  A process is *weakly stationary* if $m(t)$ is constant and $gamma(s, t)$ depends on $t - s$ only.
+  Strict stationarity together with finite second moments implies weak stationarity; the converse fails in general.
+] <prop:stationary-covariance>
+
+The converse does hold for Gaussian processes: such a process is determined by its mean and covariance functions, so weak and strict stationarity coincide.
+This is why the theory of stationary time series is written almost entirely in terms of $gamma$.
+
+#example(name: "Stationary increments without stationarity")[
+  The Poisson process and Brownian motion both have stationary increments, yet neither is stationary: the law of $N(t)$ depends on $t$, and $"Var"(B(t)) = t$.
+  Stationarity of the increments is a statement about the *changes* of the process, not about its values.
+] <ex:stationary-increments>
+
+The usefulness of stationarity lies in the possibility of averaging along a single path.
+
+#note(title: "The ergodic theorem, informally")[
+  For a stationary process with $bb(E)[abs(X(0))] < infinity$, the time average
+  $
+    (1 / T) integral_0^T X(t) dif t
+  $
+  is expected to converge, as $T -> infinity$, to the constant $bb(E)[X(0)]$.
+  Without a further hypothesis the statement is false; the hypothesis is *ergodicity*, and the precise theorem (Birkhoff's) is proved in the Analyse Harmonique note, together with the spectral decomposition that makes it effective.
+  The Markov-chain version appears in *Discrete-Time Markov Chains*, where it becomes the equality of time averages and space averages.
+]
 
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
