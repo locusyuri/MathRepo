@@ -3000,26 +3000,16 @@ For the exterior problem the comparison functions come from the radial solutions
 
 == Green's Identities and the Dirichlet Problem on a Ball // 格林公式与球上的 Dirichlet 问题
 
-#proposition(name: "Green's Identities")[
-  Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary and let $u, v in C^2 (overline(Omega))$.
-  With $nu$ the outward unit normal,
-  $
-    integral_Omega nabla u dot nabla v dif x = integral_(partial Omega) v (partial u)/(partial nu) dif S - integral_Omega v Delta u dif x,
-  $
-  and, exchanging $u$ and $v$ and subtracting,
-  $
-    integral_Omega (u Delta v - v Delta u) dif x = integral_(partial Omega) (u (partial v)/(partial nu) - v (partial u)/(partial nu)) dif S.
-  $
-] <prop:green-identities>
-
-Both formulae are the multidimensional Green theorem of *Stokes' Formula* in Analyse Mathématique, written in the notation of this chapter; the proof is the divergence theorem applied to a vector field.
-
-#proof[
-  For the first identity take $bold(F) = v nabla u$ in the divergence theorem $integral_Omega "div" bold(F) dif x = integral_(partial Omega) bold(F) dot nu dif S$, so that $"div"(bold(F)) = nabla v dot nabla u + v Delta u$.
-  The second identity is the difference of the first with $(u, v)$ and with $(v, u)$.
-]
-
-The second identity turns the equation into an integral representation, provided a function is available that vanishes on $partial Omega$ and has a prescribed singularity inside.
+Two integrations by parts for the Laplacian are used repeatedly below. Both are the multidimensional Green theorem of *Stokes' Formula* in Analyse Mathématique, read with $nu$ the outward unit normal: for a bounded domain $Omega$ with $C^1$ boundary and $u, v in C^2 (overline(Omega))$,
+$
+  integral_Omega nabla u dot nabla v dif x = integral_(partial Omega) v (partial u)/(partial nu) dif S - integral_Omega v Delta u dif x,
+$
+the *first Green identity*, obtained by applying the divergence theorem to $v nabla u$, and, exchanging $u$ and $v$ and subtracting,
+$
+  integral_Omega (u Delta v - v Delta u) dif x = integral_(partial Omega) (u (partial v)/(partial nu) - v (partial u)/(partial nu)) dif S,
+$
+the *second Green identity*.
+The first turns a Dirichlet energy into boundary data and is the engine of every energy argument in this chapter; the second turns the equation into an integral representation, provided a function is available that vanishes on $partial Omega$ and has a prescribed singularity inside.
 On a ball that function can be written down, and its normal derivative — the *Poisson kernel* — solves the Dirichlet problem.
 
 #definition(name: "Poisson Kernel of a Ball")[
@@ -4101,7 +4091,7 @@ Existence on a general domain is proved in *Boundary Value Problems for Elliptic
 
 #proof[
   Fix distinct points $x_0, y_0 in Omega$ and excise small balls: $Omega_epsilon = Omega backslash (B (x_0, epsilon) union B (y_0, epsilon))$.
-  Both $u = G (dot, x_0)$ and $v = G (dot, y_0)$ are harmonic on $Omega_epsilon$, so Green's second identity (#link(<prop:green-identities>)[*Green's Identities*]) gives
+  Both $u = G (dot, x_0)$ and $v = G (dot, y_0)$ are harmonic on $Omega_epsilon$, so Green's second identity (*Green's Identities and the Dirichlet Problem on a Ball*) gives
   $
     integral_(partial Omega_epsilon) (u (partial v)/(partial nu) - v (partial u)/(partial nu)) dif S = 0.
   $
@@ -4128,7 +4118,7 @@ Existence on a general domain is proved in *Boundary Value Problems for Elliptic
 ] <thm:green-representation>
 
 #proof[
-  Apply Green's second identity (#link(<prop:green-identities>)[*Green's Identities*]) to $u$ and $v = G (dot, y)$ on $Omega_epsilon = Omega backslash B (y, epsilon)$; both functions are $C^2$ there. Since $G$ vanishes on $partial Omega$ and $Delta G = 0$ away from $y$,
+  Apply Green's second identity (*Green's Identities and the Dirichlet Problem on a Ball*) to $u$ and $v = G (dot, y)$ on $Omega_epsilon = Omega backslash B (y, epsilon)$; both functions are $C^2$ there. Since $G$ vanishes on $partial Omega$ and $Delta G = 0$ away from $y$,
   $
     integral_(partial Omega_epsilon) (u (partial G)/(partial nu) - G (partial u)/(partial nu)) dif S = -integral_(Omega_epsilon) G Delta u dif x.
   $
