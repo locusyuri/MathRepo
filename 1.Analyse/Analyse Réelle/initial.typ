@@ -438,7 +438,7 @@ $
 $
 
 #note[
-  For $s = n$, $cal(H)^n$ coincides with the Lebesgue measure on $bb(R)^n$ up to a constant factor. Hausdorff measures are the basic tool for measuring "fractal" sets; the full theory is developed in the Advanced Topics part.
+  For $s = n$, $cal(H)^n$ coincides with the Lebesgue measure on $bb(R)^n$ up to a constant factor. Hausdorff measures are the basic tool for measuring "fractal" sets; the full theory, together with Hausdorff dimension, is outside the scope of this note.
 ]
 
 = Measurable Function // 可测函数
