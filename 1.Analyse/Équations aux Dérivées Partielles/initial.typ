@@ -129,7 +129,7 @@
 //   Section 10.1 Dirichlet Problem: Weak Formulation
 //   Section 10.2 Neumann Problem: Weak Formulation
 //   Section 10.3 Robin and Mixed Conditions
-//   Section 10.4 Uniqueness via Energy Methods
+//   Section 10.4 The Dirichlet Principle
 // --- Ch11 Green Functions and Representation (格林函数与表示) ---
 //   Section 11.1 Green's Function Construction
 //   Section 11.2 Representation Formulas
@@ -3072,8 +3072,11 @@ The ball is the only domain treated here, and only because its kernel is explici
 The hypotheses are weaker than they look: $g$ need only be continuous, although the equation is satisfied in the classical sense.
 
 #note(title: "Where existence comes from in general")[
-  Existence on a general bounded domain is proved in *Boundary Value Problems for Elliptic Equations* by a different route: weak solutions are constructed in $H^1 (Omega)$ with the Lax--Milgram theorem, and *Regularity Theory* recovers a classical solution.
-  The maximum principle is not used there, and the Poisson kernel is not available; the two existence theories are genuinely independent.
+  Three routes to existence are available, and they are independent of one another.
+  The first writes the solution down: it needs a domain whose kernel is explicit, which is why it stops at the ball.
+  The second is variational — the solution is the minimiser of the total potential energy among the admissible functions, which is the Dirichlet principle of *The Dirichlet Principle*.
+  The third is functional analytic: weak solutions are constructed in $H^1 (Omega)$ by the Lax--Milgram theorem and then shown to be classical, the route of *Boundary Value Problems for Elliptic Equations* and *Regularity Theory*.
+  None of the three uses the maximum principle to prove existence; the maximum principle compares solutions only after they exist.
 ]
 
 #note(title: "The interface with the Green function")[
@@ -3910,20 +3913,23 @@ The distribution theory of *Distributions and Weak Derivatives* extends classica
 
 The classical theory of *Laplace's Equation and Harmonic Functions* settles uniqueness and stability by the maximum principle, and existence only on a ball, through an explicit kernel.
 Modern PDE theory works instead with *weak solutions* in Sobolev spaces, where existence follows from the Lax--Milgram theorem and no maximum principle is needed.
-This chapter develops the Dirichlet, Neumann and Robin problems in that framework, closing the existence gap left open there; the abstract Hilbert-space theory is that of Analyse Fonctionnelle, and we apply it here.
+This chapter develops the Dirichlet, Neumann and Robin problems in that framework, closing the existence gap left open there.
+The only Hilbert-space tool required is the Lax--Milgram theorem, stated and proved below; the variational reading of the same problems closes the section.
 
 == Dirichlet Problem: Weak Formulation // 狄利克雷问题：弱形式
 
 The problem itself — equation, boundary data, and the distinction between a classical and a weak solution — is stated in *The Dirichlet Problem*.
 Here the solution is sought in $H^1 (Omega)$ instead, and the boundary condition is read in the trace sense.
 
-#definition(name: "Sobolev Space $H^1 (Omega)$")[
-  The space $H^1 (Omega) = W^(1,2) (Omega)$ consists of all $u in L^2 (Omega)$ whose first-order weak derivatives (#link(<def:weak-derivative>)[*Weak Derivatives*]) belong to $L^2 (Omega)$, with the norm
+#definition(name: "The Spaces $H^1 (Omega)$ and $H_0^1 (Omega)$")[
+  The space $H^1 (Omega) = W^(1,2) (Omega)$ is the Sobolev space of #link(<def:sobolev-wkp>)[*Sobolev Spaces*], with the norm written in the notation of this chapter as
   $
     ||u||_(H^1) = (integral_Omega (abs(u)^2 + abs(nabla u)^2) dif x)^(1/2).
   $
-  The subspace $H_0^1 (Omega)$ is the closure of $C_c^oo (Omega)$ in $H^1 (Omega)$; equivalently, it consists of the functions that vanish on $partial Omega$ in the trace sense. The abstract theory of $H^1$ — completeness and embeddings — is developed in Analyse Harmonique; here we need only completeness and Poincaré's inequality below.
+  The subspace $H_0^1 (Omega)$ is the closure of $C_c^oo (Omega)$ in $H^1 (Omega)$; for Lipschitz $partial Omega$ it consists, by #link(<thm:trace-theorem>)[the trace theorem], of the functions whose trace on $partial Omega$ vanishes.
 ] <def:sobolev-h1>
+
+The analytic facts needed below are proved in *Sobolev Spaces*: completeness (#link(<prop:sobolev-complete>)[*Definition and Basic Properties*]), the Sobolev inequality (#link(<thm:sobolev-inequality>)[*Embedding Theorems*]), the Rellich--Kondrachov theorem (#link(<thm:rellich-kondrachov>)[*Embedding Theorems*]) and the trace theorem (#link(<thm:trace-theorem>)[*Trace Theory*]).
 
 #proposition(name: "Poincaré's Inequality")[
   Let $Omega subset bb(R)^n$ be a bounded domain. There exists a constant $C = C (Omega)$ such that for every $u in H_0^1 (Omega)$,
@@ -3934,7 +3940,18 @@ Here the solution is sought in $H^1 (Omega)$ instead, and the boundary condition
 ] <prop:poincare-inequality>
 
 #proof[
-  For a bounded box containing $Omega$, write $u (x) = integral_(-oo)^(x_1) (partial u)/(partial x_1) (t, x_2, dots, x_n) dif t$ for $u in C_c^oo$ (extended by zero), square and integrate; the one-dimensional Poincaré inequality gives the bound with a constant depending on the side length. The result for general $u in H_0^1$ follows by density of $C_c^oo$ in $H_0^1$.
+  Since $Omega$ is bounded, it lies in a box with sides parallel to the axes; let $L$ be the length of the first side.
+  Extend $u in C_c^oo (Omega)$ by zero and write $x' = (x_2, dots, x_n)$.
+  For $x in Omega$,
+  $
+    abs(u (x))^2 = (integral_(-oo)^(x_1) (partial u)/(partial x_1) (t, x') dif t)^2 <= L integral_(-oo)^(x_1) abs((partial u)/(partial x_1) (t, x'))^2 dif t
+  $
+  by Cauchy--Schwarz.
+  Integrating in $x_1$ over the first side of the box and then in $x'$ gives
+  $
+    integral_Omega abs(u)^2 dif x <= L^2 integral_Omega abs(nabla u)^2 dif x.
+  $
+  For $u in H_0^1 (Omega)$ the inequality follows by density of $C_c^oo (Omega)$ in $H_0^1 (Omega)$, since both sides are continuous in the $H^1$ norm.
 ]
 
 #theorem(name: "Lax--Milgram Theorem")[
@@ -3946,8 +3963,17 @@ Here the solution is sought in $H^1 (Omega)$ instead, and the boundary condition
   $
     B (u, v) = F (v) quad "for all" v in H.
   $
-  (The abstract proof — Riesz representation and the contraction mapping argument — is given in Analyse Fonctionnelle; we apply the theorem here.)
 ] <thm:lax-milgram>
+
+This is the engine of every existence statement below: it converts coercivity of the energy into a solution of the weak problem, and it is the abstract form of the Dirichlet principle proved in *The Dirichlet Principle*.
+
+#proof[
+  For fixed $u in H$ the map $v |-> B (u, v)$ is a bounded linear functional, so by the Riesz representation theorem there is a unique $A u in H$ with $B (u, v) = ⟨ A u, v ⟩$ for all $v in H$; the map $A: H -> H$ is linear and bounded, with $||A u|| <= beta ||u||$.
+  Coercivity gives $⟨ A u, u ⟩ >= alpha ||u||^2$, hence $||A u|| >= alpha ||u||$: the operator $A$ is injective and has closed range.
+  The range is dense as well, because an element $w$ orthogonal to it satisfies $B (u, w) = 0$ for every $u in H$, and $u = w$ gives $alpha ||w||^2 <= B (w, w) = 0$, so $w = 0$.
+  Hence $A$ is an isomorphism of $H$ onto $H$ with $||A^(-1)|| <= 1 / alpha$.
+  If $F^sharp$ denotes the Riesz vector of $F$, then $u = A^(-1) F^sharp$ satisfies $B (u, v) = ⟨ F^sharp, v ⟩ = F (v)$ for all $v$, with $||u|| <= ||F|| / alpha$, and injectivity of $A$ gives uniqueness.
+]
 
 #definition(name: "Weak Solution of the Dirichlet Problem")[
   Let $f in L^2 (Omega)$ and $g in H^1 (Omega)$. A function $u in H^1 (Omega)$ with $u - g in H_0^1 (Omega)$ is a *weak solution* of the Dirichlet problem if
@@ -3958,7 +3984,8 @@ Here the solution is sought in $H^1 (Omega)$ instead, and the boundary condition
 ] <def:weak-dirichlet>
 
 #theorem(name: "Existence and Uniqueness for the Dirichlet Problem")[
-  Let $Omega subset bb(R)^n$ be a bounded domain and $f in L^2 (Omega)$. For every $g in H^1 (Omega)$ the weak Dirichlet problem has a unique solution $u in H^1 (Omega)$, and
+  Let $Omega subset bb(R)^n$ be a bounded domain with Lipschitz boundary and $f in L^2 (Omega)$.
+  For every $g in H^1 (Omega)$ the weak Dirichlet problem has a unique solution $u in H^1 (Omega)$, and
   $
     ||u||_(H^1) <= C (||f||_(L^2) + ||g||_(H^1))
   $
@@ -3981,8 +4008,10 @@ Here the solution is sought in $H^1 (Omega)$ instead, and the boundary condition
   *Step 3: Estimate.* Applying the bound $||w||_(H^1) <= (1/alpha) ||F||$ and the explicit bound on $F$ gives the stated estimate for $u$.
 ]
 
-#note[
-  The classical and weak formulations are consistent: if $u in C^2 (Omega) inter C^1 (overline(Omega))$ is a weak solution with $f$ continuous, then integrating by parts in the weak formulation shows $Delta u = f$ pointwise, so $u$ is a classical solution. *Regularity Theory* shows that weak solutions are automatically classical under mild smoothness assumptions on the data.
+#note(title: "Consistency with the classical formulation")[
+  The two notions agree whenever both make sense: a weak solution lying in $C^2 (Omega) inter C^1 (overline(Omega))$, with $f$ continuous on $overline(Omega)$, satisfies $-Delta u = f$ pointwise, because integrating the weak identity by parts gives $integral_Omega (-Delta u - f) v dif x = 0$ for every $v in C_c^oo (Omega)$.
+  The same integration by parts, this time keeping the boundary term, identifies the classical Neumann and Robin problems of *The Neumann Problem* and *Robin and Mixed Conditions* with their weak forms.
+  *Regularity Theory* closes the loop in the other direction: weak solutions are classical as soon as the data are smooth enough.
 ]
 
 == Neumann Problem: Weak Formulation // 纽曼问题：弱形式
@@ -4002,34 +4031,72 @@ The classical statement, the compatibility condition and uniqueness up to a cons
 ] <thm:neumann-existence>
 
 #proof[
-  On $H = {v in H^1 (Omega) : integral_Omega v dif x = 0}$, the form $B (u, v) = integral_Omega nabla u dot nabla v dif x$ is coercive: this is Poincaré's inequality for mean-zero functions, $||u||_(L^2) <= C ||nabla u||_(L^2)$ for $u in H$ (proved like Proposition 9.1, using the mean-zero condition instead of vanishing on the boundary). The functional $F (v) = integral_Omega f v dif x + integral_(partial Omega) g v dif S$ is bounded on $H$ (trace inequality for $H^1$), and Lax--Milgram applies. The compatibility condition ensures that $F$ vanishes on constants, so $F$ is well-defined on $H$ (i.e., on equivalence classes modulo constants).
+  *Step 1: solve on the mean-zero subspace.* On $H = {v in H^1 (Omega) : integral_Omega v dif x = 0}$ the form $B (u, v) = integral_Omega nabla u dot nabla v dif x$ is coercive: #link(<prop:poincare-inequality>)[Poincaré's inequality] holds for mean-zero functions as well, the box argument being applied to the differences $u (x) - u (y)$ and averaged over $y in Omega$, so $||u||_(L^2) <= C ||nabla u||_(L^2)$ for $u in H$.
+  The functional $F (v) = integral_Omega f v dif x + integral_(partial Omega) g v dif S$ is bounded on $H$ by Cauchy--Schwarz and the #link(<thm:trace-theorem>)[trace theorem], so Lax--Milgram gives a unique $u in H$ with $B (u, v) = F (v)$ for every $v in H$.
+
+  *Step 2: remove the restriction.* Write an arbitrary $v in H^1 (Omega)$ as $v = overline(v) + c$, with $overline(v) in H$ and $c = |Omega|^(-1) integral_Omega v dif x$.
+  Since $B (u, 1) = 0$ and, by the compatibility condition, $F (1) = 0$, one finds $B (u, v) = B (u, overline(v)) = F (overline(v)) = F (v)$, so the identity holds on all of $H^1 (Omega)$.
 ]
 
 == Robin and Mixed Conditions // Robin 与混合边界条件
 
 #definition(name: "The Robin Problem")[
-  Let $sigma in L^oo (partial Omega)$ with $sigma >= 0$ and $integral_(partial Omega) sigma dif S > 0$. The *Robin problem* $-Delta u = f$ in $Omega$, $u_nu + sigma u = g$ on $partial Omega$ has the weak form: find $u in H^1 (Omega)$ such that
+  Let $sigma in L^oo (partial Omega)$ with $sigma >= 0$ and $integral_(partial Omega) sigma dif S > 0$, and let $f$ and $g$ be given functions.
+  The *Robin problem* is to find $u$ with
   $
-    integral_Omega nabla u dot nabla v dif x + integral_(partial Omega) sigma u v dif S = integral_Omega f v dif x + integral_(partial Omega) g v dif S quad "for all" v in H^1 (Omega).
+    -Delta u = f quad "in" Omega, quad (partial u)/(partial nu) + sigma u = g quad "on" partial Omega.
   $
 ] <def:robin-problem>
+
+Multiplying by a test function, integrating by parts and replacing $(partial u)/(partial nu)$ by $g - sigma u$ gives the weak formulation: find $u in H^1 (Omega)$ with
+$
+  integral_Omega nabla u dot nabla v dif x + integral_(partial Omega) sigma u v dif S = integral_Omega f v dif x + integral_(partial Omega) g v dif S
+$
+for every $v in H^1 (Omega)$.
+This is the form used below.
 
 #theorem(name: "Existence and Uniqueness for the Robin Problem")[
   Let $Omega$ be a bounded Lipschitz domain, $f in L^2 (Omega)$, $g in L^2 (partial Omega)$, and $sigma$ as above. Then the Robin problem has a unique weak solution $u in H^1 (Omega)$.
 ] <thm:robin-existence>
 
 #proof[
-  Apply Lax--Milgram on $H = H^1 (Omega)$ with $B (u, v) = integral_Omega nabla u dot nabla v dif x + integral_(partial Omega) sigma u v dif S$. Boundedness follows from the trace inequality. For coercivity, note that $B (u, u) = 0$ would force $nabla u = 0$ (so $u$ is constant) and $integral_(partial Omega) sigma u^2 dif S = 0$, hence $u = 0$ since $integral_(partial Omega) sigma dif S > 0$; by a compactness argument (Rellich embedding) the form is coercive on $H^1 (Omega)$.
+  Apply Lax--Milgram on $H = H^1 (Omega)$ with
+  $
+    B (u, v) = integral_Omega nabla u dot nabla v dif x + integral_(partial Omega) sigma u v dif S.
+  $
+  Boundedness follows from Cauchy--Schwarz and the #link(<thm:trace-theorem>)[trace theorem].
+
+  Coercivity is the only point that needs an argument, since $B$ is not coercive on $L^2$ alone.
+  Suppose it fails: then there are $u_k$ with $||u_k||_(H^1) = 1$ and $B (u_k, u_k) -> 0$, so that $||nabla u_k||_(L^2) -> 0$ and $integral_(partial Omega) sigma u_k^2 dif S -> 0$.
+  The sequence is bounded in $H^1$, so by the #link(<thm:rellich-kondrachov>)[Rellich--Kondrachov theorem] a subsequence converges strongly in $L^2 (Omega)$; together with $nabla u_k -> 0$ this makes it converge in $H^1$ to a constant $c$, and $||u_k||_(H^1) = 1$ gives $c != 0$.
+  But $integral_(partial Omega) sigma u_k^2 dif S -> c^2 integral_(partial Omega) sigma dif S$, which is strictly positive because $c != 0$ and $integral_(partial Omega) sigma dif S > 0$ — a contradiction.
 ]
 
 #note(title: "Mixed boundary conditions")[
-  One may prescribe Dirichlet data on a part $Gamma_D$ of the boundary and Neumann or Robin data on the remainder $Gamma_N$. The weak formulation is the same, with the test space $H_(Gamma_D)^1 = {v in H^1 (Omega) : v = 0 "on" Gamma_D}$; existence follows from Lax--Milgram under analogous coercivity assumptions. The trace theorems required for $L^2 (partial Omega)$ boundary terms are treated in Analyse Harmonique.
+  One may prescribe Dirichlet data on a part $Gamma_D$ of the boundary and Neumann or Robin data on the remainder $Gamma_N$.
+  The weak formulation is the same, with the test space $H_(Gamma_D)^1 = {v in H^1 (Omega) : v = 0 "on" Gamma_D}$, and existence follows from Lax--Milgram under the analogous coercivity assumption.
+  The boundary terms are legitimate by the #link(<thm:trace-theorem>)[trace theorem].
 ]
 
-== Uniqueness via Energy Methods // 能量方法的唯一性
+== The Dirichlet Principle // 狄利克雷原理
+
+The weak solution of the Dirichlet problem has been obtained above by functional analysis.
+The same object admits a second characterisation, which is historically the older one: it is the configuration of least total potential energy among the admissible functions.
+The variational statement and the boundary value problem are two descriptions of one solution, and passing between them costs a single integration by parts.
+
+#note(title: "Why the admissible class changes")[
+  The classical form of the principle is stated on
+  $
+    V_0 = {v in C^2 (Omega) inter C^1 (overline(Omega)) : v = 0 "on" partial Omega},
+  $
+  and it asserts that a classical solution minimises the energy $E$ of the theorem below over $g + V_0$, and conversely that every minimiser in that class solves the equation — the converse requiring $u in C^2$ in order to extract the equation from the first variation.
+  What this statement cannot supply is the existence of the minimiser: $V_0$ is not complete for the energy norm, and a minimising sequence need not converge in it.
+  Replacing $V_0$ by $H_0^1 (Omega)$ repairs exactly that point — the class is complete and $E$ is coercive on it, so the minimiser exists — while the first variation remains available, because $C_c^oo (Omega)$ is dense in $H_0^1 (Omega)$.
+  This is why the principle is proved below in $H_0^1 (Omega)$ and why its classical form is recorded as motivation rather than as a theorem.
+]
 
 #theorem(name: "Dirichlet's Principle")[
-  Let $Omega$ be bounded, $f in L^2 (Omega)$, and $g in H^1 (Omega)$. A function $u in H^1 (Omega)$ with $u - g in H_0^1 (Omega)$ minimizes the energy functional
+  Let $Omega$ be bounded, $f in L^2 (Omega)$, and $g in H^1 (Omega)$. A function $u in H^1 (Omega)$ with $u - g in H_0^1 (Omega)$ minimises the energy functional
   $
     E (v) = 1/2 integral_Omega abs(nabla v)^2 dif x - integral_Omega f v dif x
   $
@@ -4037,15 +4104,54 @@ The classical statement, the compatibility condition and uniqueness up to a cons
 ] <thm:dirichlet-principle>
 
 #proof[
-  For any $w in H_0^1 (Omega)$, the map $t |-> E (u + t w)$ is a convex quadratic polynomial (the Hessian is $B (w, w) = integral_Omega abs(nabla w)^2 dif x >= 0$), whose derivative at $0$ is
+  For $w in H_0^1 (Omega)$ the map $t |-> E (u + t w)$ is a quadratic polynomial whose second derivative is $2 integral_Omega abs(nabla w)^2 dif x >= 0$, hence it is convex; its derivative at $0$, that is, the first variation of $E$ at $u$ along $w$ (*Variational Method and First Variation* in Mécanique analytique), is
   $
     E' (u) [w] = integral_Omega nabla u dot nabla w dif x - integral_Omega f w dif x.
   $
-  A minimizer satisfies $E' (u) [w] = 0$ for all $w in H_0^1 (Omega)$, which is exactly the weak formulation; convexity makes this first-order condition sufficient. Existence of the minimizer also follows directly from coercivity and convexity (direct method of the calculus of variations).
+  If $u$ is a minimiser then $E' (u) [w] = 0$ for every $w in H_0^1 (Omega)$, which is exactly the weak formulation.
+  Conversely, if the identity holds then
+  $
+    E (u + w) - E (u) = 1/2 integral_Omega abs(nabla w)^2 dif x >= 0 quad "for every" w in H_0^1 (Omega),
+  $
+  so $u$ minimises $E$ over $g + H_0^1 (Omega)$; strict convexity makes the minimiser unique, and its existence is that of #link(<thm:dirichlet-existence>)[*Existence and Uniqueness for the Dirichlet Problem*].
 ]
 
 #note[
-  The energy viewpoint and the maximum principle are complementary tools. The maximum principle (*Laplace's Equation and Harmonic Functions*) is quantitative and works in $C^2$; energy methods provide existence in the weak framework and are the starting point for numerical approximation (Ritz--Galerkin). The Dirichlet principle also shows that the weak solution is the "least energy" representative among functions with the given boundary data — a variational characterization that extends to parabolic problems in Part V.
+  The energy viewpoint and the maximum principle are complementary tools.
+  The maximum principle (*Laplace's Equation and Harmonic Functions*) is pointwise, quantitative, and needs only $C^2$; the energy method yields existence in the weak framework and is the starting point for numerical approximation (Ritz--Galerkin).
+  The Dirichlet principle also identifies the weak solution as the least-energy representative among the functions with the given boundary data, a characterisation that extends to parabolic problems in Part V.
+]
+
+Boundary data that are not imposed on the admissible class emerge from the first variation by themselves, and the Neumann problem is the model case.
+
+#theorem(name: "The Neumann Problem as a Free Minimisation")[
+  Let $f in L^2 (Omega)$, $g in L^2 (partial Omega)$ and
+  $
+    J (v) = 1/2 integral_Omega abs(nabla v)^2 dif x - integral_Omega f v dif x - integral_(partial Omega) g v dif S.
+  $
+  Then $u in H^1 (Omega)$ is a weak solution of the Neumann problem (*Neumann Problem: Weak Formulation*) if and only if $J (u) <= J (v)$ for every $v in H^1 (Omega)$.
+] <thm:neumann-variational>
+
+#proof[
+  For $w in H^1 (Omega)$,
+  $
+    J (u + w) - J (u) = 1/2 integral_Omega abs(nabla w)^2 dif x + integral_Omega nabla u dot nabla w dif x - integral_Omega f w dif x - integral_(partial Omega) g w dif S,
+  $
+  so the last three terms are the first variation of $J$ at $u$ along $w$.
+  If $u$ solves the Neumann problem they vanish for every $w$, and then $J (u + w) >= J (u)$.
+  Conversely, if $u$ minimises, the function $t |-> J (u + t w)$ has a minimum at $t = 0$ for every $w$, so its derivative there vanishes, which is the weak formulation.
+]
+
+#note(title: "Essential versus natural boundary conditions")[
+  The two principles differ in where the boundary condition enters.
+  In Dirichlet's principle the value $u = g$ is built into the admissible class and the variation $w$ vanishes on $partial Omega$, so no boundary term survives: the condition is *essential*.
+  In the Neumann principle nothing is imposed on the class, the boundary term $integral_(partial Omega) (partial u)/(partial nu) w dif S$ survives the integration by parts, and requiring it to balance $integral_(partial Omega) g w dif S$ is exactly what produces $(partial u)/(partial nu) = g$: the condition is *natural*, in the sense of *Natural Boundary Conditions (Free Endpoints)* in Mécanique analytique.
+]
+
+#note(title: "Solvability, seen variationally")[
+  The Neumann principle also explains the compatibility condition of *The Neumann Problem*.
+  Replacing $v$ by $v + c$ changes $J$ by $-c (integral_Omega f dif x + integral_(partial Omega) g dif S)$, so $J$ is unbounded below — and has no minimiser — unless that bracket vanishes.
+  When it does vanish, $J$ is invariant under translations and the minimisers form a line, which is the freedom left by the Neumann problem.
 ]
 
 = Green Functions and Representation // 格林函数与表示
@@ -4184,17 +4290,11 @@ The Green function therefore reproduces the kernel that was written down and ver
 
 = Regularity Theory // 正则性理论
 
-Weak solutions constructed in *Boundary Value Problems for Elliptic Equations* are $H^1$ functions; the question of their smoothness is *regularity theory*. This chapter states the central results: interior and boundary regularity, the Schauder estimates in Hölder spaces, and the $L^p$ estimates based on the Calderón--Zygmund theory. The Sobolev space machinery is summarized here; its deeper theory (embeddings, traces) belongs to Analyse Harmonique.
+Weak solutions constructed in *Boundary Value Problems for Elliptic Equations* are $H^1$ functions; the question of their smoothness is *regularity theory*. This chapter states the central results: interior and boundary regularity, the Schauder estimates in Hölder spaces, and the $L^p$ estimates based on the Calderón--Zygmund theory. The Sobolev space machinery is that of *Sobolev Spaces*, and it is used here without further comment.
 
 == Interior Regularity // 内正则性
 
-#definition(name: "Sobolev Spaces $W^(k,p)$")[
-  For $k >= 0$ and $1 <= p <= oo$, the space $W^(k,p) (Omega)$ consists of all $u in L^p (Omega)$ whose weak derivatives $partial^alpha u$ (#link(<def:weak-derivative>)[*Weak Derivatives*]) belong to $L^p (Omega)$ for every multi-index $alpha$ with $abs(alpha) <= k$, with the norm
-  $
-    ||u||_(W^(k,p)) = (sum_(abs(alpha) <= k) integral_Omega abs(partial^alpha u)^p dif x)^(1/p), quad 1 <= p < oo,
-  $
-  and the essential-supremum norm for $p = oo$. For $p = 2$ we write $H^k (Omega) = W^(k,2) (Omega)$; $H_("loc")^k$ denotes membership on every compactly contained subdomain. The basic theory (completeness, density, embeddings) is developed in Analyse Harmonique.
-] <def:sobolev-wkp>
+The Sobolev spaces used below are those of *Sobolev Spaces*: for $k >= 0$ and $1 <= p <= oo$ the space $W^(k,p) (Omega)$ consists of the $L^p (Omega)$ functions whose weak derivatives up to order $k$ lie in $L^p (Omega)$, with $H^k (Omega) = W^(k,2) (Omega)$, and $H_("loc")^k (Omega)$ denotes membership on every compactly contained subdomain.
 
 #theorem(name: "Interior Regularity")[
   Let $u in H^1 (Omega)$ be a weak solution of $-Delta u = f$ in $Omega$ (#link(<def:weak-dirichlet>)[*Dirichlet Problem: Weak Formulation*]). If $f in H_("loc")^k (Omega)$ for some $k >= 0$, then $u in H_("loc")^(k+2) (Omega)$. In particular, if $f in C^oo (Omega)$ then $u in C^oo (Omega)$ after modification on a null set.
@@ -4797,7 +4897,7 @@ Many physical systems — acoustics, elasticity, electromagnetism — are first-
 ] <thm:energy-wellposedness>
 
 #proof[
-  *Step 1: A priori estimate for smooth solutions.* Multiplying by $u$ as in #link(<thm:symmetric-energy>)[Theorem 20.1] gives
+  *Step 1: A priori estimate for smooth solutions.* Multiplying by $u$ as in #link(<thm:symmetric-energy>)[*Symmetric Hyperbolic Systems*] gives
   $
     1/2 (dif)/(dif t) ||u||_(L^2)^2 = integral u dot B u dif x <= ||B||_oo ||u||_(L^2)^2,
   $
@@ -4971,7 +5071,7 @@ This closing part of the notes collects the classical method of separation of va
   $
     integral_a^b phi_m phi_n w dif x = 0 quad (m != n),
   $
-  and after normalization, an orthonormal basis. In particular the eigenvalues are simple (one eigenfunction per eigenvalue, up to scaling), and the eigenfunction expansion of Theorem 18.1 applies.
+  and after normalization, an orthonormal basis. In particular the eigenvalues are simple (one eigenfunction per eigenvalue, up to scaling), and the eigenfunction expansion of *Separation of Variables and Spectral Methods* applies.
 ] <thm:sl-spectral-theorem>
 
 #proof[
