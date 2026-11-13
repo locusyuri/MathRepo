@@ -2334,6 +2334,46 @@ Two cycles with disjoint supports do not interact — each fixes the other's mov
   For a cycle $c = (a_1 a_2 dots a_k)$, the power $c^m$ sends each $a_i arrow.r.double a_(i + m)$, the index being read modulo $k$. Thus $c^k = "id"$, while for $0 < m < k$ the point $a_1$ is not fixed, since $c^m$ moves it to $a_(1 + m)$; hence $"ord"(c) = k$. Now let $sigma = c_1 c_2 dots c_r$ with the $c_i$ pairwise disjoint. Commutativity gives $sigma^m = c_1^m c_2^m dots c_r^m$, and a product of disjoint cycles is the identity exactly when each factor is — every other factor fixes that factor's support. So $sigma^m = "id"$ holds exactly when $k_i | m$ for every $i$, by #link(<prop:order-properties>)[the wrap-around property], and the least such $m$ is $"lcm"(k_1, dots, k_r)$.
 ]
 
+#example(name: "The interleave permutation.")[
+  Fix $n >= 1$ and number the $2 n$ positions of the word
+  $x_1 x_2 dots x_n y_1 y_2 dots y_n$ from $0$ to $2 n - 1$, so that
+  position $i$ holds $x_(i+1)$ for $i < n$ and $y_(i - n + 1)$ for
+  $i >= n$. Let $sigma$ be the permutation of positions that
+  interleaves the two halves:
+  $
+    x_1 x_2 dots x_n y_1 y_2 dots y_n
+    mapsto x_1 y_1 x_2 y_2 dots x_n y_n.
+  $
+  The element at position $i$ moves to the position
+  $
+    sigma(i) = cases(
+      2 i & i < n,
+      2 (i - n) + 1 & i >= n,
+    )
+  $
+  the first half spreading over the even positions, the second over
+  the odd ones.
+
+  Iterating this rule is how the cycles are found: start at any
+  position, apply $i |-> sigma(i)$ until the starting point returns,
+  and the positions visited form one cycle. For $n = 2$ this gives
+  $sigma = (1 2)$, with $0$ and $3$ fixed; for $n = 3$,
+  $sigma = (1 2 4 3)$; for $n = 4$,
+  $sigma = (1 2 4)(3 6 5)$. In every case the extreme positions $0$
+  and $2 n - 1$ are fixed — the first and last letters keep their
+  places — and by #link(<prop:permutation-order>)[the order formula]
+  the order of $sigma$ is the least common multiple of its cycle
+  lengths: $2$, $4$ and $3$ for $n = 2, 3, 4$.
+
+  This is the card player's *perfect shuffle* — cut the deck into two
+  equal halves and riffle them together. In tensor language it is the
+  *interleave* (or *commutation*) permutation, the one that exchanges
+  the two factors of a Kronecker product; and in algorithmic language
+  the rule for $sigma$ is all one needs, since the image of $i$ is
+  computed from $i$ by a single comparison rather than read off a
+  stored array.
+] <ex:interleave-permutation>
+
 #proposition(name: "Conjugation Renames Cycles")[
   Let $sigma, tau in S_X$ and suppose $tau = (a_1 a_2 dots a_k)$ is a cycle. Then
   $
