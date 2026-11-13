@@ -5124,7 +5124,7 @@ circle of the complex plane with angular gap $2 pi\/n$ between
 neighbours.
 
 #figure(
-  image("img/roots-visualisation.png", width: 52%),
+  image("img/roots-visualisation.svg", width: 62%),
   caption: [
     Visualisation of the complex roots of unity: the $n$-th roots
     $omega_k = exp(2 k pi i\/n)$ sit on the unit circle, equally
@@ -5557,7 +5557,7 @@ $bb(R)^n$ with a partial order given by convex hulls.
 ] <def:convex-hull>
 
 #figure(
-  image("img/convex-hull.png", width: 42%),
+  image("img/convex-hull.svg", width: 58%),
   caption: [
     The convex hull in $bb(R)^3$ of the permutation orbit of a
     vector: a hexagon (permutahedron) cut out by the plane
