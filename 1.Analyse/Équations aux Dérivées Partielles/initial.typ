@@ -3101,6 +3101,101 @@ The hypotheses are weaker than they look: $g$ need only be continuous, although 
 ]
 
 
+== The Neumann Problem // Neumann 问题
+
+The second boundary value problem prescribes the normal derivative instead of the values.
+The data no longer determine the solution: constants are free, and a global balance condition must hold before a solution can exist.
+What survives — uniqueness up to a constant, and stability modulo constants — is proved with the first Green identity rather than with the maximum principle, and the same identity, applied on a truncated exterior domain, handles the exterior problem as well.
+
+#definition(name: "The Neumann Problem")[
+  Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary and let $f in C (overline(Omega))$ and $g in C (partial Omega)$ be given.
+  The *Neumann problem* is to find $u in C^2 (Omega) inter C^1 (overline(Omega))$ with
+  $
+    -Delta u = f quad "in" Omega, quad (partial u)/(partial nu) = g quad "on" partial Omega.
+  $
+] <def:neumann-problem>
+
+#proposition(name: "Compatibility Condition")[
+  If the Neumann problem has a solution, then
+  $
+    integral_Omega f dif x + integral_(partial Omega) g dif S = 0.
+  $
+] <prop:neumann-compatibility>
+
+#proof[
+  Integrating $-Delta u = f$ over $Omega$ and applying the divergence theorem gives $integral_Omega f dif x = -integral_(partial Omega) (partial u)/(partial nu) dif S = -integral_(partial Omega) g dif S$.
+]
+
+The condition says that the total source balances the total flux.
+It is the only obstruction to existence, and *Boundary Value Problems for Elliptic Equations* shows in the weak framework that it is also sufficient.
+
+#theorem(name: "Uniqueness for the Neumann Problem")[
+  Let $Omega$ be a bounded connected domain with $C^1$ boundary, and let $u, v in C^2 (Omega) inter C^1 (overline(Omega))$ solve the Neumann problem with the same data $f$ and $g$.
+  Then $u - v$ is constant on $Omega$.
+] <thm:neumann-uniqueness>
+
+#proof[
+  The difference $w = u - v$ is harmonic and satisfies $(partial w)/(partial nu) = 0$ on $partial Omega$.
+  The first Green identity with $v = w$ gives
+  $
+    integral_Omega abs(nabla w)^2 dif x = integral_(partial Omega) w (partial w)/(partial nu) dif S - integral_Omega w Delta w dif x = 0,
+  $
+  so $nabla w = 0$ on the connected set $Omega$, and $w$ is constant.
+]
+
+The same identity is quantitative, so the freedom of the constant is the only instability.
+
+#theorem(name: "Stability for the Neumann Problem")[
+  Let $Omega$ be a bounded connected domain, let $u, v$ solve the Neumann problem with data $(f_1, g_1)$ and $(f_2, g_2)$, and normalise both by $integral_Omega u dif x = integral_Omega v dif x = 0$.
+  Then
+  $
+    ||nabla (u - v)||_(L^2 (Omega)) <= C (Omega) (||f_1 - f_2||_(L^2 (Omega)) + ||g_1 - g_2||_(L^2 (partial Omega))).
+  $
+] <thm:neumann-stability>
+
+#proof[
+  Put $w = u - v$, $F = f_1 - f_2$ and $G = g_1 - g_2$.
+  The first Green identity gives
+  $
+    integral_Omega abs(nabla w)^2 dif x = integral_(partial Omega) w G dif S + integral_Omega w F dif x,
+  $
+  and Cauchy--Schwarz bounds the right side by $||w||_(L^2 (partial Omega)) ||G||_(L^2 (partial Omega)) + ||w||_(L^2 (Omega)) ||F||_(L^2 (Omega))$.
+  Since $w$ has zero mean, Poincaré's inequality bounds $||w||_(L^2 (Omega))$ by $C ||nabla w||_(L^2 (Omega))$, and the trace inequality bounds $||w||_(L^2 (partial Omega))$ by $C ||w||_(H^1 (Omega))$, hence by $C ||nabla w||_(L^2 (Omega))$ again.
+  Dividing by $||nabla w||_(L^2 (Omega))$ gives the estimate.
+]
+
+The two functional inequalities used here are established in *Sobolev Spaces* and *Boundary Value Problems for Elliptic Equations*; in the classical setting they can also be obtained directly, since $w$ vanishes nowhere but has zero mean.
+
+The exterior problem requires more care, because the energy identity now ends on a large sphere.
+
+#theorem(name: "Uniqueness for the Exterior Neumann Problem")[
+  Let $Omega$ be a bounded domain with $C^2$ boundary and let $u$ be harmonic on $bb(R)^n backslash overline(Omega)$ with $(partial u)/(partial nu) = 0$ on $partial Omega$.
+  If $n >= 3$ and $u (x) = O(abs(x)^(2 - n))$ at infinity, or if $n = 2$ and $u (x) -> 0$ at infinity, then $u = 0$.
+] <thm:neumann-uniqueness-exterior>
+
+#proof[
+  Let $Omega_R = {x : abs(x) < R} backslash overline(Omega)$ and apply the first Green identity to $u$ and $v = u$ on $Omega_R$.
+  The boundary consists of $partial Omega$, where the normal derivative of $Omega_R$ is the negative of the normal derivative of $Omega$ and therefore vanishes, and of the sphere $abs(x) = R$, so
+  $
+    integral_(Omega_R) abs(nabla u)^2 dif x = integral_(abs(x) = R) u (partial u)/(partial r) dif S.
+  $
+
+  The derivative estimates of *Mean Value Property*, applied on the ball of radius $abs(x) / 2$, give
+  $
+    abs(nabla u (x)) <= C / (abs(x)) sup_(abs(y - x) < abs(x)/2) abs(u (y)).
+  $
+  If $n >= 3$ and $u (x) = O(abs(x)^(2 - n))$, the supremum is $O(abs(x)^(2 - n))$, so the boundary integral is $O(R^(2 - n))$ and tends to $0$.
+  If $n = 2$ and $u (x) -> 0$, the supremum is $epsilon_R$ with $epsilon_R -> 0$, so the boundary integral is $O(epsilon_R^2)$ and also tends to $0$.
+
+  Hence $integral abs(nabla u)^2 dif x = 0$ over the whole exterior domain after $R -> oo$, and $nabla u = 0$; the behaviour at infinity then gives $u = 0$.
+]
+
+#note(title: "Why the decay conditions differ")[
+  For the Dirichlet problem the maximum principle asks only for boundedness at infinity: the comparison function is the radial solution itself, and it dominates any bounded difference.
+  For the Neumann problem the maximum principle is replaced by an energy identity, and the flux through the large sphere must vanish; that requires the product $u \, u_r$ to decay faster than $abs(x)^(1 - n)$.
+  This is the price of working with an integral identity instead of a pointwise comparison.
+]
+
 #part("Analytical Tools") // 分析工具
 = Distributions and Weak Derivatives // 分布与弱导数 <sec:ch7-distributions>
 
@@ -3696,9 +3791,11 @@ The distribution theory of *Distributions and Weak Derivatives* extends classica
 #part("Elliptic Theory") // 椭圆型方程理论
 = Boundary Value Problems for Elliptic Equations // 椭圆型方程边值问题
 
-The maximum principle and Green's identities of *Laplace's Equation and Harmonic Functions* give the classical (strong) theory. Modern PDE theory works with *weak solutions* in Sobolev spaces, where existence follows from the Lax--Milgram theorem. This chapter develops the Dirichlet, Neumann, and Robin problems in the weak framework; the abstract Hilbert-space theory is that of Analyse Fonctionnelle, and we apply it here.
+The classical theory of *Laplace's Equation and Harmonic Functions* settles uniqueness and stability by the maximum principle, and existence only on a ball, through an explicit kernel.
+Modern PDE theory works instead with *weak solutions* in Sobolev spaces, where existence follows from the Lax--Milgram theorem and no maximum principle is needed.
+This chapter develops the Dirichlet, Neumann and Robin problems in that framework, closing the existence gap left open there; the abstract Hilbert-space theory is that of Analyse Fonctionnelle, and we apply it here.
 
-== Dirichlet Problem // 狄利克雷问题
+== Dirichlet Problem: Weak Formulation // 狄利克雷问题：弱形式
 
 The problem itself — equation, boundary data, and the distinction between a classical and a weak solution — is stated in *The Dirichlet Problem*.
 Here the solution is sought in $H^1 (Omega)$ instead, and the boundary condition is read in the trace sense.
@@ -3771,28 +3868,17 @@ Here the solution is sought in $H^1 (Omega)$ instead, and the boundary condition
   The classical and weak formulations are consistent: if $u in C^2 (Omega) inter C^1 (overline(Omega))$ is a weak solution with $f$ continuous, then integrating by parts in the weak formulation shows $Delta u = f$ pointwise, so $u$ is a classical solution. *Regularity Theory* shows that weak solutions are automatically classical under mild smoothness assumptions on the data.
 ]
 
-== Neumann Problem // 纽曼问题
+== Neumann Problem: Weak Formulation // 纽曼问题：弱形式
 
-#definition(name: "The Neumann Problem")[
-  Let $Omega subset bb(R)^n$ be a bounded domain with Lipschitz boundary and let $f in L^2 (Omega)$, $g in L^2 (partial Omega)$ be given. The *Neumann problem* is to find $u in H^1 (Omega)$ such that
+#definition(name: "Weak Formulation of the Neumann Problem")[
+  Let $Omega subset bb(R)^n$ be a bounded domain with Lipschitz boundary and let $f in L^2 (Omega)$, $g in L^2 (partial Omega)$ be given.
+  A function $u in H^1 (Omega)$ is a *weak solution* of the Neumann problem if
   $
     integral_Omega nabla u dot nabla v dif x = integral_Omega f v dif x + integral_(partial Omega) g v dif S quad "for all" v in H^1 (Omega).
   $
-  (Formally, this corresponds to $-Delta u = f$ in $Omega$ and $u_nu = g$ on $partial Omega$, obtained by integrating by parts.)
-] <def:neumann-problem>
+] <def:neumann-problem-weak>
 
-#proposition(name: "Compatibility Condition and Uniqueness")[
-  (i) If a solution of the Neumann problem exists, then the data satisfy the *compatibility condition*
-  $
-    integral_Omega f dif x + integral_(partial Omega) g dif S = 0.
-  $
-  (ii) Solutions are unique up to an additive constant: if $u_1, u_2$ are both solutions, then $u_1 - u_2 = c$ a.e. for some constant $c$.
-] <prop:neumann-compatibility>
-
-#proof[
-  (i) Take $v = 1$ in the weak formulation; both gradient terms vanish and the condition follows.
-  (ii) The difference $w = u_1 - u_2$ satisfies $integral_Omega nabla w dot nabla w dif x = 0$, so $nabla w = 0$ a.e.; by connectedness of $Omega$, $w$ is constant a.e.
-]
+The classical statement, the compatibility condition and uniqueness up to a constant are proved in *The Neumann Problem*; the weak formulation is obtained from it by the same integration by parts, and the boundary condition is then read in the trace sense.
 
 #theorem(name: "Existence for the Neumann Problem")[
   Assume the compatibility condition holds. Then the Neumann problem has a unique solution in the space ${u in H^1 (Omega) : integral_Omega u dif x = 0}$.
