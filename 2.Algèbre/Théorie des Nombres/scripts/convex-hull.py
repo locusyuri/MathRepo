@@ -1,8 +1,9 @@
 """The permutahedron: convex hull of the permutation orbit of a vector in R^3.
 
 For alpha = (3, 2, 1) the six rearrangements are the vertices of a regular
-hexagon lying in the plane x + y + z = 6; the hull is drawn together with a
-patch of that plane.
+hexagon lying in the plane x + y + z = 6.  The figure is drawn in isometric
+projection, without the clutter of a 3D axis box: the three coordinate axes,
+a patch of the plane and the hexagon itself.
 
 Output: ../img/convex-hull.svg
 """
@@ -13,25 +14,34 @@ import os
 import sys
 from dataclasses import replace
 from itertools import permutations
+from math import cos, pi, sin
 from pathlib import Path
 
-import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+import numpy as np
+from matplotlib.patches import Polygon
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _viz import Presets
 
-SPEC = replace(Presets.SVG_MATH, figsize=(5.6, 4.8))
+SPEC = replace(Presets.SVG_MATH, figsize=(6.2, 6.2))
 OUT_DIR = Path(__file__).resolve().parent.parent / "img"
 
 INK = "#1f2933"
 AXIS = "#8b949e"
+GHOST = "#c3cbd4"
 BLUE = "#1f4e9b"
-FILL = "#dbe8f7"
+FILL = "#e3ecf7"
 DOT = "#c0392b"
 
 ALPHA = (3, 2, 1)
+COS30, SIN30 = cos(pi / 6), sin(pi / 6)
+
+
+def project(point):
+    """Isometric projection of R^3 onto the drawing plane."""
+    x, y, z = point
+    return (x - y) * COS30, z - (x + y) * SIN30
 
 
 def main():
@@ -45,46 +55,55 @@ def main():
                                                    (p - centre) @ u))
 
     fig = SPEC.figure()
-    ax = fig.add_subplot(111, projection="3d")
-    ax.set_box_aspect((1, 1, 1))
+    ax = fig.add_subplot(111)
+    ax.set_aspect("equal")
+    ax.axis("off")
 
-    # A patch of the plane containing the hexagon.
-    span = 1.75
-    corners = [centre + span * (su * u + sv * v)
+    # Patch of the plane containing the hexagon.
+    span = 1.45
+    corners = [project(centre + span * (su * u + sv * v))
                for su, sv in ((1, 1), (-1, 1), (-1, -1), (1, -1))]
-    ax.add_collection3d(Poly3DCollection(
-        [[tuple(c) for c in corners]], facecolor=FILL, edgecolor="none",
-        alpha=0.30))
+    ax.add_patch(Polygon(corners, closed=True, facecolor=FILL,
+                         edgecolor="none", zorder=1))
+    ax.add_patch(Polygon(corners, closed=True, facecolor="none",
+                         edgecolor=GHOST, lw=0.8, ls=(0, (3, 3)), zorder=2))
+    ax.text(2.35, 4.35, r"plane $x + y + z = 6$", ha="left", va="center",
+            fontsize=9, color="#7b8794")
 
-    ax.add_collection3d(Poly3DCollection(
-        [[tuple(p) for p in order]], facecolor=FILL, edgecolor=BLUE,
-        lw=1.4, alpha=0.55))
+    # Coordinate axes.
+    for end, label, offset, align in (
+        ((4.35, 0, 0), r"$x$", (0.10, -0.22), "left"),
+        ((0, 4.35, 0), r"$y$", (-0.10, -0.22), "right"),
+        ((0, 0, 4.55), r"$z$", (-0.14, 0.10), "right"),
+    ):
+        tail = project((0, 0, 0))
+        head = project(end)
+        ax.annotate("", xy=head, xytext=tail,
+                    arrowprops=dict(arrowstyle="-|>", color=AXIS, lw=1.0,
+                                    shrinkA=0, shrinkB=0, mutation_scale=11))
+        ax.text(head[0] + offset[0], head[1] + offset[1], label, ha=align,
+                va="center", fontsize=11, color=INK)
+    ax.text(*project((0, 0, 0)), " ", fontsize=1)
 
+    # The hexagon.
+    hexagon = [project(p) for p in order]
+    ax.add_patch(Polygon(hexagon, closed=True, facecolor="none",
+                         edgecolor=BLUE, lw=1.7, joinstyle="round", zorder=4))
+
+    # Vertices, with the rearrangements written next to them.
     for p in verts:
-        ax.scatter(*p, color=DOT, s=16, depthshade=False)
+        sx, sy = project(p)
+        ax.plot([sx], [sy], "o", color=DOT, ms=5.0, zorder=5)
         out = p - centre
-        label_at = p + 0.45 * out / np.linalg.norm(out)
-        ax.text(*label_at, "(%d,%d,%d)" % tuple(int(t) for t in p),
-                fontsize=7.0, color=INK, ha="center", va="center")
+        out = out / np.linalg.norm(out)
+        lx, ly = project(p + 0.42 * out)
+        ax.text(lx, ly, "(%d,%d,%d)" % tuple(int(t) for t in p), ha="center",
+                va="center", fontsize=8.5, color=INK, zorder=6,
+                bbox=dict(boxstyle="round,pad=0.12", fc="white", ec="none",
+                          alpha=0.85))
 
-    ax.grid(False)
-    for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
-        axis.pane.set_facecolor((1, 1, 1, 0))
-        axis.pane.set_edgecolor((1, 1, 1, 0))
-        axis.pane.set_alpha(0.0)
-        axis.line.set_color(AXIS)
-
-    ax.set_xlim(0.4, 3.8)
-    ax.set_ylim(0.4, 3.8)
-    ax.set_zlim(0.4, 3.8)
-    ax.set_xticks([1, 2, 3])
-    ax.set_yticks([1, 2, 3])
-    ax.set_zticks([1, 2, 3])
-    ax.tick_params(labelsize=7, colors=INK, pad=1, length=2)
-    ax.set_xlabel(r"$x$", fontsize=9, color=INK, labelpad=0)
-    ax.set_ylabel(r"$y$", fontsize=9, color=INK, labelpad=0)
-    ax.set_zlabel(r"$z$", fontsize=9, color=INK, labelpad=0)
-    ax.view_init(elev=38, azim=32)
+    ax.set_xlim(-4.6, 4.4)
+    ax.set_ylim(-4.5, 5.0)
 
     path = SPEC.save(fig, OUT_DIR / "convex-hull")
     print(f"Saved: {path}")

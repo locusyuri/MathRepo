@@ -5124,11 +5124,14 @@ circle of the complex plane with angular gap $2 pi\/n$ between
 neighbours.
 
 #figure(
-  image("img/roots-visualisation.svg", width: 62%),
+  image("img/roots-visualisation.svg", width: 70%),
   caption: [
-    Visualisation of the complex roots of unity: the $n$-th roots
-    $omega_k = exp(2 k pi i\/n)$ sit on the unit circle, equally
-    spaced by the angle $2 pi\/n$.
+    The $n$ solutions of $X^n = Z$ for $n = 1, dots, 6$. Writing
+    $Z = r e^(i phi)$, they are $root(n, r) e^(i(phi + 2 k pi)\/n)$ for
+    $k = 0, dots, n-1$: all of them lie on the circle of radius
+    $root(n, r)$ (solid), equally spaced by the angle $2 pi\/n$, while the
+    dashed circle of radius $r$ carries $Z$ itself. For $Z = 1$ this is
+    the picture of the $n$-th roots of unity.
   ],
   placement: auto,
   supplement: [Fig.],
@@ -5557,7 +5560,7 @@ $bb(R)^n$ with a partial order given by convex hulls.
 ] <def:convex-hull>
 
 #figure(
-  image("img/convex-hull.svg", width: 58%),
+  image("img/convex-hull.svg", width: 76%),
   caption: [
     The convex hull in $bb(R)^3$ of the permutation orbit of a
     vector: a hexagon (permutahedron) cut out by the plane
