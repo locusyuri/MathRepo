@@ -1858,6 +1858,31 @@ intimately related to the exponential and the uniform respectively.
   moments are recovered.
 ]
 
+The Gamma family carries two classical special cases. The first has an
+integer shape:
+
+#definition(name: "Erlang Distribution")[
+  The *Erlang distribution* with shape $n = 1, 2, dots$ and rate
+  $lambda > 0$ is the Gamma law $"Ga"(n, lambda)$, written
+  $X ~ "Erlang"(n, lambda)$:
+  $
+    f(x) = (lambda^n x^(n - 1) e^(-lambda x)) / (n - 1)!, quad x >= 0.
+  $
+] <def:erlang-dist>
+
+Since $Gamma(n) = (n - 1)!$, the Erlang density is the Gamma density with
+the Gamma function evaluated at an integer. The name records a probabilistic
+meaning rather than an analytic one: by
+#link(<ex:exp-sum-gamma>)[the convolution of exponentials], an
+$"Erlang"(n, lambda)$ variable is the sum of $n$ independent
+$"Exp"(lambda)$ waiting times — the time of the $n$-th arrival in a Poisson
+process of rate $lambda$, a model introduced by Erlang for telephone
+traffic. The case $n = 1$ is the exponential law itself; at the other end,
+$"Erlang"(n, n)$ concentrates at $1$ as $n -> infinity$, the weakest form of
+the law of large numbers.
+
+The second special case fixes both parameters:
+
 #definition(name: "Chi-Squared Distribution")[
   A random variable $X$ has the *chi-squared distribution* with $n$
   degrees of freedom, written $X ~ chi^2 (n)$, if $X ~ "Ga"(n / 2, 1 / 2)$
@@ -2005,6 +2030,13 @@ derived in this chapter:
       [${x >= 0}$],
       [$alpha / lambda$],
       [$alpha / lambda^2$],
+    ),
+    (
+      [$"Erlang"(n, lambda)$],
+      [$(lambda^n / (n - 1)!) x^(n - 1) e^(-lambda x)$],
+      [${x >= 0}$],
+      [$n / lambda$],
+      [$n / lambda^2$],
     ),
     (
       [$"Be"(a, b)$],
@@ -2979,9 +3011,11 @@ follows a single thread, one chapter per step:
 - *Limit theorems* spend that vocabulary on the two laws governing
   independent sampling, the laws of large numbers and the central limit
   theorem, with the Delta method as their statistical corollary.
-- *Stochastic processes* finally relax independence: Markov chains, the
-  Poisson process and Brownian motion appear as the dynamical counterparts
-  of the theorems just proved.
+
+Everything in this part stays inside the world of independent sampling.
+Relaxing independence — processes evolving in time — opens a subject of its
+own, built on exactly these tools; it is developed in the Processus
+Stochastique note.
 
 = Generating Functions and Transform Methods // 生成函数与变换方法
 
@@ -3245,7 +3279,7 @@ independent variables, and analysing compound distributions.
   $
   which is the PGF of $"Pois"(lambda mu)$. The Poisson distribution is
   *closed under compounding* — a property central to the compound Poisson
-  process in the Stochastic Processes chapter.
+  process of the Processus Stochastique note.
 ] <ex:compound-poisson>
 
 #example[
@@ -3737,220 +3771,18 @@ justifies estimating a parameter by a sample average, and the CLT together
 with the Delta method supplies the asymptotic distribution that makes
 confidence intervals and tests possible. Part IV takes up both.
 
-= Introduction to Stochastic Processes // 随机过程初步
-
-Everything so far concerns a single random variable, or a fixed vector of
-them. A *stochastic process* is a family of random variables indexed by
-time: the evolving position of a particle, the size of a population, the
-accumulated number of insurance claims. The limit theorems of the
-preceding chapter already studied one such family — the partial sums
-$S_n$ — and this chapter organises the general framework, presenting the
-three canonical processes that every application meets. The deep theory
-is developed in the Processus Stochastique note; here we lay only the
-foundations.
-
-== Definition and Classification // 定义与分类
-
-#definition(name: "Stochastic Process")[
-  A *stochastic process* is a family of random variables
-  $
-    {X(t) : t in T},
-  $
-  where $t in T$ is the *index* (interpreted as time) and $X(t)$ takes
-  values in the *state space* $S$. Equivalently, it is a random function
-  $t arrow.r.double X(t)$: for each outcome $omega$, the sample path
-  $t arrow.r.double X(t)(omega)$ is an ordinary function.
-] <def:stochastic-process>
-
-#note(title: "Finite-dimensional distributions")[
-  The law of a process is determined
-  by the joint distributions of $(X(t_1), dots, X(t_n))$ for all choices
-  of indices — the *finite-dimensional distributions*. This extends the
-  multivariate theory of Chapter 5 from fixed dimension to arbitrary
-  families; the consistency conditions that make such a family coherent
-  are the content of Kolmogorov's extension theorem (see the Analyse
-  Réelle and Processus Stochastique notes).
-
-  Two structural properties organise the classification: the process has
-  *independent increments* if the changes $X(t_2) - X(t_1), dots,
-  X(t_n) - X(t_(n-1))$ over disjoint intervals are independent; and it is
-  *(strictly) stationary* if all finite-dimensional distributions are
-  invariant under time shifts.
-]
-
-#figure(
-  tex-table(
-    ([], [State space discrete], [State space continuous]),
-    ([Index discrete], [random walks; Markov chains], [time series; stationary processes]),
-    ([Index continuous], [Poisson process], [Brownian motion]),
-  ),
-  caption: [The four quadrants of the elementary classification, with the
-    canonical process of each.],
-  placement: auto,
-  supplement: [Tab.],
-) <tab:process-classification>
-
-== Discrete-Time Markov Chains // 离散时间 Markov 链
-
-#definition(name: "Markov Chain")[
-  A discrete-time process ${X_n : n = 0, 1, 2, dots}$ with countable
-  state space $S$ is a *Markov chain* if it satisfies the *Markov
-  property*:
-  $
-    P(X_(n+1) = j | X_n = i, X_(n-1) = i_(n-1), dots, X_0 = i_0)
-    = P(X_(n+1) = j | X_n = i),
-  $
-  for all states and times. The probabilities $p_(i j) = P(X_(n+1) = j |
-    X_n = i)$ form the *transition matrix* $P = (p_(i j))$ when they do not
-  depend on $n$ (*time-homogeneous* case): each row is a probability
-  vector.
-] <def:markov-chain>
-
-The Markov property is the process analogue of memorylessness
-(#link(<prop:geometric-memoryless>)[geometric],
-#link(<prop:exponential-memoryless>)[exponential]): the future depends on
-the past only through the present state.
-
-#theorem(name: "Chapman–Kolmogorov Equations")[
-  The $n$-step transition probabilities $p_(i j)^((n)) = P(X_n = j | X_0
-    = i)$ satisfy
-  $
-    p_(i j)^((m + n)) = sum_(k) p_(i k)^((m)) p_(k j)^((n)),
-  $
-  i.e. in matrix form $P^(m + n) = P^m P^n$. Consequently
-  $p_(i j)^((n))$ is the $(i, j)$-entry of $P^n$.
-] <thm:chapman-kolmogorov>
-
-#proof[
-  Condition on the state at the intermediate time $m$ and apply the law of
-  total probability:
-  $
-    P(X_(m+n) = j | X_0 = i)
-    = sum_(k) P(X_(m+n) = j | X_m = k) P(X_m = k | X_0 = i),
-  $
-  where the Markov property makes the first factor $p_(k j)^((n))$,
-  independent of how the chain reached $k$.
-]
-
-#definition(name: "Stationary Distribution")[
-  A probability distribution $pi = (pi_i)$ on $S$ is a *stationary
-  distribution* of the chain if
-  $
-    pi = pi P,
-  $
-  i.e. $sum_i pi_i p_(i j) = pi_j$ for every $j$. If the chain starts
-  with $X_0 ~ pi$, then every $X_n ~ pi$: the distribution is in
-  equilibrium.
-] <def:stationary-distribution>
-
-#note[
-  For an irreducible, aperiodic, positive-recurrent chain, the stationary
-  distribution exists, is unique, and $lim_(n -> infinity) P(X_n = j) =
-  pi_j$ regardless of the initial state — the Markov-chain counterpart of
-  the law of large numbers: time averages stabilise, here to equilibrium
-  probabilities. The proofs (recurrence theory) belong to the Processus
-  Stochastique note.
-]
-
-== Poisson Process // Poisson 过程
-
-#definition(name: "Poisson Process")[
-  A counting process ${N(t) : t >= 0}$ — $N(t)$ counts events in $[0, t]$,
-  with $N(s) <= N(t)$ for $s <= t$ — is a *Poisson process* with rate
-  $lambda > 0$ if:
-  - $N(0) = 0$;
-  - it has independent, stationary increments;
-  - for every $t >= 0$, $N(t) ~ "Pois"(lambda t)$.
-] <def:poisson-process>
-
-The Poisson process is the canonical model of "rare events arriving
-independently at a constant rate": radioactive decays, customer arrivals,
-component failures. It is the continuous-time limit of the Bernoulli
-scheme — #link(<thm:poisson-limit>)[the Poisson limit theorem] with
-$n$ trials per unit time and $p = lambda t / n$, sent through the
-binomial-to-Poisson approximation.
-
-#theorem(name: "Inter-arrival Times of the Poisson Process")[
-  Let ${N(t)}$ be a Poisson process with rate $lambda$, and let
-  $T_1, T_2, dots$ be the times between consecutive events. Then
-  $T_1, T_2, dots$ are i.i.d. $"Exp"(lambda)$ variables, and the time of
-  the $n$-th event satisfies $S_n = T_1 + dots + T_n ~ "Ga"(n, lambda)$.
-] <prop:poisson-interarrival>
-
-#proof[
-  $P(T_1 > t) = P(N(t) = 0) = e^(-lambda t)$, so $T_1 ~ "Exp"(lambda)$.
-  Given the past up to time $s$, the process restarts afresh on $[s,
-    infinity)$ by independent stationary increments, so $T_2$ is independent
-  of $T_1$ with the same law — and so on by induction. The sum of $n$
-  i.i.d. exponentials is Gamma by the convolution induction of
-  #link(<ex:exp-sum-gamma>)[the exponential-sum example].
-]
-
-This theorem identifies the Poisson process and the exponential
-inter-arrival law as two views of one object — the continuous-time
-sibling of the geometric waiting time in discrete Bernoulli trials.
-
-A *compound* Poisson process, in which each arrival carries an independent
-mark, is the process-level counterpart of
-#link(<ex:compound-poisson>)[the random sums of the PGF chapter]: the
-number of arrivals up to time $t$ has the PGF of $N(t)$ composed with the
-PGF of the mark, exactly as
-#link(<prop:pgf-compound>)[the compound distribution rule] prescribes.
-
-== Brownian Motion // Brown 运动初步
-
-#definition(name: "Standard Brownian Motion")[
-  A process ${B(t) : t >= 0}$ is a *standard Brownian motion* (Wiener
-  process) if:
-  - $B(0) = 0$;
-  - it has independent, stationary increments;
-  - for $s, t >= 0$, $B(t) - B(s) ~ N(0, t - s)$;
-  - its sample paths are continuous.
-] <def:brownian-motion>
-
-The CLT describes the fluctuation of a sum at one fixed time. Refining it so
-that it holds simultaneously at all times produces a limit that is itself a
-process.
-
-#theorem(name: "Donsker's Invariance Principle")[
-  Let $X_1, X_2, dots$ be i.i.d. with $bb(E)[X_1] = 0$ and
-  $"Var"(X_1) = sigma^2 < infinity$, and let $S_k = X_1 + dots + X_k$. On
-  $[0, 1]$ define the rescaled, linearly interpolated random walk
-  $
-    B_(n)(t) = 1 / (sigma sqrt(n)) (S_(floor(n t)) + (n t - floor(n t)) X_(floor(n t) + 1)).
-  $
-  Then $B_n arrow.r^d B$ in the space of continuous paths, where $B$ is a
-  standard Brownian motion.
-] <thm:donsker>
-
-This explains why Brownian motion, and not the normal distribution, is the
-universal object behind the CLT: the Gaussian limit of #link(<thm:clt>)[the
-CLT] is the one-time marginal of $B$, and $B$ is what survives when all
-times are considered at once.
-
-#note(title: "Quadratic variation")[
-  Brownian paths have finite *quadratic* variation: for any sequence of
-  partitions of $[0, t]$ whose mesh tends to $0$,
-  $
-    sum_i (B(t_(i+1)) - B(t_i))^2 -> t quad "in" L^2,
-  $
-  whereas a differentiable path would give $0$. This is why the Itô
-  integral cannot be an ordinary Riemann–Stieltjes integral, and it is the
-  starting point of stochastic calculus.
-]
-
-Its sample paths are continuous yet nowhere differentiable, and the process
-sits at the intersection of probability, Fourier analysis, and PDE theory
-(the heat equation). All of this — constructions, the Markov property,
-stopping times, and the Itô calculus — is the starting material of the
-Processus Stochastique note.
-
 #note(title: "Looking ahead")[
-  With the probability framework complete —
-  distributions, numerical characteristics, generating tools, limit
-  theorems, and the canonical processes above — we turn from "known model,
-  deduce data" to "observed data, infer model": the business of
-  mathematical statistics, to which the remainder of this note is devoted.
+  With the probability framework complete — distributions, numerical
+  characteristics, generating tools and limit theorems — we turn from
+  "known model, deduce data" to "observed data, infer model": the business
+  of mathematical statistics, to which the remainder of this note is
+  devoted.
+
+  The dynamical side of probability — processes evolving in time — is not
+  taken up here. It needs the convergence theory of
+  #link(<thm:continuity-theorem>)[the preceding chapters] together with
+  conditioning and martingales, and it is the subject of the Processus
+  Stochastique note.
 ]
 
 #part("Mathematical Statistics") // 数理统计
@@ -4244,21 +4076,20 @@ closed-form moment estimators.
 //     - 定义与几何（Mahalanobis 距离、椭球等高线）
 //     - 线性变换闭包；边缘分布；不相关 ⟺ 独立；条件分布与线性回归
 //     - 定位：指数族的旗舰成员，Part IV 抽样分布与回归的骨架
-//       （指数族视角留待 Part IV Chapter 10）
+//       （指数族视角留待 Part IV Chapter 9）
 
 
 // ==========================================================================
 // Part III — 生成工具与极限定理 (Generating Tools and Limit Theorems)  [已写出]
 // ==========================================================================
-// 设计思路：本 Part 只走一条主线——造工具 → 建立收敛语言 → 用语言证极限
-// → 极限的动力学化。
+// 设计思路：本 Part 只走一条主线——造工具 → 建立收敛语言 → 用语言证极限。
 //   Ch6 造工具（MGF/cgf、CF、PGF），把"律"翻译成"解析函数"；
 //   Ch7 建立收敛语言（四种收敛、层级、Lévy 连续性定理）；
 //       依分布收敛的定义先于引用它的定理，消除循环依赖；
-//   Ch8 用该语言证明 LLN 与 CLT，Delta 方法作为统计推论；
-//   Ch9 放松独立性，三种典型过程作为极限定理的动力学对应。
+//   Ch8 用该语言证明 LLN 与 CLT，Delta 方法作为统计推论。
 // 指数族移至 Part IV（统计推断的语言），多元正态移至 Part II §5.6
-// （多维随机变量分布的直接推广）。
+// （多维随机变量分布的直接推广）；随机过程章已迁出，另立
+// Processus Stochastique 笔记，本 Part 末尾以 note 指向。
 // 对应教材：§2.4（特征函数）+ 第四章 §4.1–§4.4 + 拓展
 
 // --- Chapter 6: 生成函数与变换方法 (Generating Functions and Transform Methods) ---
@@ -4303,23 +4134,8 @@ closed-form moment estimators.
 //     - 一阶 / 二阶 Delta 方法；估计量的渐近分布
 
 
-// --- Chapter 9: 随机过程初步 (Introduction to Stochastic Processes) ---
-
-//   Section 9.1: 定义与分类 (Definition and Classification)
-//     - 有限维分布；平稳性；独立增量；四象限分类
-
-//   Section 9.2: 离散时间 Markov 链 (Discrete-Time Markov Chains)
-//     - 转移概率矩阵；Chapman–Kolmogorov；平稳分布
-
-//   Section 9.3: Poisson 过程 (Poisson Processes)
-//     - 定义与性质；到达时间间隔（i.i.d. Exp；Erlang）；复合 Poisson 与 PGF 呼应
-
-//   Section 9.4: Brown 运动初步 (Introduction to Brownian Motion)
-//     - 定义；Donsker 尺度极限（与 CLT 呼应）；二次变差
-
-
 // ==========================================================================
-// Part IV — 数理统计 (Mathematical Statistics)  [Ch 10 已写出，其余待写出]
+// Part IV — 数理统计 (Mathematical Statistics)  [Ch 9 已写出，其余待写出]
 // ==========================================================================
 // 设计思路：从概率论过渡到数理统计——先建立分布族的统一语言（指数族），
 // 再讨论数据如何产生（抽样）、如何压缩信息（充分统计量）、
@@ -4327,174 +4143,174 @@ closed-form moment estimators.
 // 这是从"已知模型推数据"到"从数据推模型"的转折。
 // 对应教材：第五至八章
 
-// --- Chapter 10: 指数族 (Exponential Families)  [已写出] ---
+// --- Chapter 9: 指数族 (Exponential Families)  [已写出] ---
 
-//   Section 10.1: 典范形式 (The Canonical Form)
+//   Section 9.1: 典范形式 (The Canonical Form)
 //     - 指数族定义；自然参数 η 与自然统计量 T(x)；log-partition A(η)
 //     - 常见分布表（含多元正态，Σ 固定）
 //     - 支撑不依赖 θ 的要求；U(0,θ) 反例
 
-//   Section 10.2: 自然参数空间 (The Natural Parameter Space)
+//   Section 9.2: 自然参数空间 (The Natural Parameter Space)
 //     - H 的定义；regular / full；A 的凸性
 //     - A 与 CGF 的同一性：A' = E[T]，A'' = Cov(T)
-//     - 充分统计量预告（指向 Chapter 12）
+//     - 充分统计量预告（指向 Chapter 11）
 
 
-// --- Chapter 11: 抽样与经验分布 (Sampling and Empirical Distributions) ---
+// --- Chapter 10: 抽样与经验分布 (Sampling and Empirical Distributions) ---
 
-//   Section 11.1: 总体与样本 (Population and Samples)
+//   Section 10.1: 总体与样本 (Population and Samples)
 //     - 总体与个体；样本与统计量
 //     - 经验分布函数 (Empirical Distribution Function)
 //     - Glivenko-Cantelli 定理
 
-//   Section 11.2: 样本矩与抽样分布 (Sample Moments and Sampling Distributions)
+//   Section 10.2: 样本矩与抽样分布 (Sample Moments and Sampling Distributions)
 //     - 统计量与抽样分布的概念
 //     - 样本均值及其抽样分布；样本方差与样本标准差
 //     - 样本矩及其函数；蒙特卡罗方法 (Monte Carlo Methods)
 
-//   Section 11.3: 次序统计量 (Order Statistics)
+//   Section 10.3: 次序统计量 (Order Statistics)
 //     - 次序统计量的概念；单个/多个次序统计量的分布
 //     - 样本中位数与样本分位数
 //     - 五数概括 (Five-Number Summary) 与箱线图 (Box Plot)
 
-//   Section 11.4: 三大抽样分布 (Three Major Sampling Distributions)
+//   Section 10.4: 三大抽样分布 (Three Major Sampling Distributions)
 //     - χ² 分布 (Chi-Squared)：定义、性质、分位数
 //     - t 分布 (Student's t)：定义、性质、分位数
 //     - F 分布 (Fisher's F)：定义、性质、分位数
 
-//   Section 11.5: 正态总体下的抽样分布 (Sampling Distributions under Normality)
+//   Section 10.5: 正态总体下的抽样分布 (Sampling Distributions under Normality)
 //     - X̄ 与 S² 的独立性；基于正态总体的经典抽样分布结论
 
 
-// --- Chapter 12: 充分统计量 (Sufficient Statistics) ---
+// --- Chapter 11: 充分统计量 (Sufficient Statistics) ---
 
-//   Section 12.1: 充分性的概念 (Concept of Sufficiency)
+//   Section 11.1: 充分性的概念 (Concept of Sufficiency)
 
-//   Section 12.2: 因子分解定理 (Factorization Theorem)
+//   Section 11.2: 因子分解定理 (Factorization Theorem)
 
-//   Section 12.3: 完备统计量 (Complete Statistics)
+//   Section 11.3: 完备统计量 (Complete Statistics)
 //     - 完备性定义；Bahadur 定理
 
-//   Section 12.4: Ancillary 统计量与 Basu 定理 (Ancillary Statistics and Basu's Theorem)
+//   Section 11.4: Ancillary 统计量与 Basu 定理 (Ancillary Statistics and Basu's Theorem)
 
 
-// --- Chapter 13: 点估计方法 (Methods of Point Estimation) ---
+// --- Chapter 12: 点估计方法 (Methods of Point Estimation) ---
 
-//   Section 13.1: 矩估计法 (Method of Moments)
+//   Section 12.1: 矩估计法 (Method of Moments)
 //     - 替换原理；概率函数已知时的矩估计
 
-//   Section 13.2: 极大似然估计法 (Maximum Likelihood Estimation)
+//   Section 12.2: 极大似然估计法 (Maximum Likelihood Estimation)
 //     - 似然函数与 MLE；EM 算法 (EM Algorithm)
 //     - MLE 的渐近正态性 (Asymptotic Normality)；不变性原理
 
-//   Section 13.3: 最小二乘法 (Least Squares Method)
+//   Section 12.3: 最小二乘法 (Least Squares Method)
 
-//   Section 13.4: Bayes 估计 (Bayesian Estimation)
+//   Section 12.4: Bayes 估计 (Bayesian Estimation)
 //     - 统计推断的贝叶斯范式；先验分布的选择与共轭先验族
 //     - 后验分布的密度函数形式
 
 
-// --- Chapter 14: 估计的评价与改进 (Evaluation and Improvement of Estimators) ---
+// --- Chapter 13: 估计的评价与改进 (Evaluation and Improvement of Estimators) ---
 
-//   Section 14.1: 无偏性 (Unbiasedness)
+//   Section 13.1: 无偏性 (Unbiasedness)
 
-//   Section 14.2: 有效性与 Cramér-Rao 不等式 (Efficiency and Cramér-Rao Inequality)
+//   Section 13.2: 有效性与 Cramér-Rao 不等式 (Efficiency and Cramér-Rao Inequality)
 //     - Fisher 信息量；Cramér-Rao 下界的推导与等号成立条件
 
-//   Section 14.3: 一致性 / 相合性 (Consistency)
+//   Section 13.3: 一致性 / 相合性 (Consistency)
 //     - 弱一致性与强一致性；矩估计与 MLE 的相合性
 
-//   Section 14.4: 均方误差 (Mean Squared Error)
+//   Section 13.4: 均方误差 (Mean Squared Error)
 
-//   Section 14.5: 一致最小方差无偏估计 (UMVUE)
+//   Section 13.5: 一致最小方差无偏估计 (UMVUE)
 //     - 充分性原则；Rao-Blackwell 定理
 //     - Lehmann-Scheffé 定理（基于完备充分统计量）
 
 
-// --- Chapter 15: 区间估计 (Interval Estimation) ---
+// --- Chapter 14: 区间估计 (Interval Estimation) ---
 
-//   Section 15.1: 置信区间的概念 (Concept of Confidence Intervals)
+//   Section 14.1: 置信区间的概念 (Concept of Confidence Intervals)
 //     - 置信水平与频率诠释；枢轴量法 (Pivotal Quantity Method)
 
-//   Section 15.2: 单个正态总体参数的置信区间 (CIs for Single Normal Population)
+//   Section 14.2: 单个正态总体参数的置信区间 (CIs for Single Normal Population)
 //     - μ 的置信区间（σ 已知 / σ 未知）；σ² 的置信区间
 
-//   Section 15.3: 两个正态总体参数的置信区间 (CIs for Two Normal Populations)
+//   Section 14.3: 两个正态总体参数的置信区间 (CIs for Two Normal Populations)
 //     - μ₁ - μ₂ 的置信区间（含配对样本）；σ₁² / σ₂² 的置信区间
 
-//   Section 15.4: 大样本置信区间 (Large-Sample CIs)
+//   Section 14.4: 大样本置信区间 (Large-Sample CIs)
 
-//   Section 15.5: 样本量的确定 (Sample Size Determination)
+//   Section 14.5: 样本量的确定 (Sample Size Determination)
 
 
-// --- Chapter 16: 假设检验的理论与方法 (Theory and Methods of Hypothesis Testing) ---
+// --- Chapter 15: 假设检验的理论与方法 (Theory and Methods of Hypothesis Testing) ---
 
-//   Section 16.1: 假设检验的基本概念 (Basic Concepts)
+//   Section 15.1: 假设检验的基本概念 (Basic Concepts)
 //     - 假设检验问题与基本步骤；第一类错误与第二类错误；P 值
 
-//   Section 16.2: Neyman-Pearson 范式 (Neyman-Pearson Paradigm)
+//   Section 15.2: Neyman-Pearson 范式 (Neyman-Pearson Paradigm)
 //     - 功效函数 (Power Function)；Neyman-Pearson 引理
 
-//   Section 16.3: 似然比检验 (Likelihood Ratio Tests)
+//   Section 15.3: 似然比检验 (Likelihood Ratio Tests)
 //     - 广义似然比检验的思想
 
-//   Section 16.4: 正态总体参数的假设检验 (Tests for Normal Population Parameters)
+//   Section 15.4: 正态总体参数的假设检验 (Tests for Normal Population Parameters)
 //     - 单个正态总体均值的检验（Z 检验、t 检验）
 //     - 两个正态总体均值差的检验（含成对数据检验）
 //     - 正态总体方差的检验（χ² 检验、F 检验）
 
-//   Section 16.5: 假设检验与置信区间的对偶性 (Duality of Tests and CIs)
+//   Section 15.5: 假设检验与置信区间的对偶性 (Duality of Tests and CIs)
 
-//   Section 16.6: 其他分布参数的假设检验 (Tests for Other Distribution Parameters)
+//   Section 15.6: 其他分布参数的假设检验 (Tests for Other Distribution Parameters)
 //     - 指数分布参数的检验；比率 p 的检验；大样本检验
 
 
-// --- Chapter 17: 拟合检验与非参数检验 (Goodness-of-Fit and Nonparametric Tests) ---
+// --- Chapter 16: 拟合检验与非参数检验 (Goodness-of-Fit and Nonparametric Tests) ---
 
-//   Section 17.1: 正态性检验 (Normality Tests)
+//   Section 16.1: 正态性检验 (Normality Tests)
 //     - 正态概率纸 (Normal Probability Paper)；W 检验 (Shapiro-Wilk)；EP 检验
 
-//   Section 17.2: χ² 拟合优度与独立性检验 (Chi-Squared Tests)
+//   Section 16.2: χ² 拟合优度与独立性检验 (Chi-Squared Tests)
 //     - 分类数据的 χ² 拟合优度检验；分布的 χ² 拟合优度检验
 //     - 列联表的独立性检验
 
-//   Section 17.3: 方差齐性检验 (Tests for Homogeneity of Variances)
+//   Section 16.3: 方差齐性检验 (Tests for Homogeneity of Variances)
 //     - Hartley 检验；Bartlett 检验；修正的 Bartlett 检验
 
-//   Section 17.4: 非参数检验 (Nonparametric Tests)
+//   Section 16.4: 非参数检验 (Nonparametric Tests)
 //     - 游程检验 (Runs Test)；符号检验 (Sign Test)
 //     - Wilcoxon 秩和检验 (Wilcoxon Rank-Sum Test)；Mann-Whitney U 检验
 
 
-// --- Chapter 18: 方差分析 (Analysis of Variance) ---
+// --- Chapter 17: 方差分析 (Analysis of Variance) ---
 
-//   Section 18.1: 单因素方差分析 (One-Way ANOVA)
+//   Section 17.1: 单因素方差分析 (One-Way ANOVA)
 //     - 统计模型；平方和分解；F 检验；参数估计；重复数不等的情形
 
-//   Section 18.2: 多重比较 (Multiple Comparisons)
+//   Section 17.2: 多重比较 (Multiple Comparisons)
 //     - 水平均值差的置信区间
 //     - 重复数相等时的 T 法 (Tukey HSD)；不等时的 S 法 (Scheffé)
 
-//   Section 18.3: 方差齐性检验 (Tests for Homogeneity of Variances)
-//     - Hartley 检验、Bartlett 检验；与 §16.3 的联系与区别
+//   Section 17.3: 方差齐性检验 (Tests for Homogeneity of Variances)
+//     - Hartley 检验、Bartlett 检验；与 §15.3 的联系与区别
 
-//   Section 18.4: 双因素方差分析 (Two-Way ANOVA)
+//   Section 17.4: 双因素方差分析 (Two-Way ANOVA)
 //     - 无交互作用模型；有交互作用模型
 
 
-// --- Chapter 19: 回归分析 (Regression Analysis) ---
+// --- Chapter 18: 回归分析 (Regression Analysis) ---
 
-//   Section 19.1: 一元线性回归 (Simple Linear Regression)
+//   Section 18.1: 一元线性回归 (Simple Linear Regression)
 //     - 变量间的两类关系；回归模型与最小二乘估计
 //     - 回归方程的显著性检验；估计与预测
 
-//   Section 19.2: 一元非线性回归 (Simple Nonlinear Regression)
+//   Section 18.2: 一元非线性回归 (Simple Nonlinear Regression)
 //     - 确定可能的函数形式；参数估计（线性化方法）；曲线回归方程的比较
 
-//   Section 19.3: 多元线性回归 (Multiple Linear Regression)
+//   Section 18.3: 多元线性回归 (Multiple Linear Regression)
 //     - 矩阵表示；参数估计与统计推断
 
-//   Section 19.4: 回归诊断 (Regression Diagnostics)
+//   Section 18.4: 回归诊断 (Regression Diagnostics)
 //     - 拟合优度 R²；残差分析
 
 
@@ -4519,7 +4335,7 @@ closed-form moment estimators.
 // ==========================================================================
 // 结构说明 (Structure Note)
 // ==========================================================================
-// 本笔记遵循"概率论 → 数理统计"的两段式主线，共 4 Part、19 Chapter，
+// 本笔记遵循"概率论 → 数理统计"的两段式主线，共 4 Part、18 Chapter，
 // 与 Analyse Mathématique 笔记的 4 Part + Appendix 架构对齐。
 //
 // Part I（概率论基础，Ch 1–2）：从公理化的概率空间出发，建立
@@ -4529,16 +4345,17 @@ closed-form moment estimators.
 // 期望与方差 → 常用分布族的完整肖像（含 E/Var）→ 多维推广与多元正态。
 // 期望/方差前置于常用分布是本笔记的关键设计（Ross / Casella-Berger 顺序）。
 //
-// Part III（生成工具与极限定理，Ch 6–9）：生成函数与累积量 →
-// 收敛方式与 Lévy 连续性定理 → LLN / CLT / Delta 方法 → 随机过程初步。
-// 主线是"造工具 → 建立收敛语言 → 用语言证极限 → 极限的动力学化"，
-// 收束概率论并为 Processus Stochastique 笔记铺垫。
+// Part III（生成工具与极限定理，Ch 6–8）：生成函数与累积量 →
+// 收敛方式与 Lévy 连续性定理 → LLN / CLT / Delta 方法。
+// 主线是"造工具 → 建立收敛语言 → 用语言证极限"，收束概率论。
+// 随机过程不在此展开：它需要条件期望与鞅，另立 Processus Stochastique 笔记。
 //
-// Part IV（数理统计，Ch 10–19，Ch 10 已写出）：指数族（分布族的结构语言）→
+// Part IV（数理统计，Ch 9–18，Ch 9 已写出）：指数族（分布族的结构语言）→
 // 抽样分布与充分统计量（桥梁）→ 参数估计（方法→评价→区间）→
 // 假设检验（理论→具体检验→拟合/非参数）→ 方差分析与回归分析。
 //
-// 教材覆盖：茆诗松《概率论与数理统计教程》全部 8 章知识点均已覆盖。
+// 教材覆盖：茆诗松《概率论与数理统计教程》全部 8 章知识点均已覆盖；
+// 随机过程部分移交 Processus Stochastique 笔记后，本笔记专注"概率 + 统计"。
 // ==========================================================================
 
 
