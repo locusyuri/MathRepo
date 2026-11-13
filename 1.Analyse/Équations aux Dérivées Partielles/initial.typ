@@ -1031,7 +1031,7 @@ is the prototype of the symmetric hyperbolic systems studied in *Linear Hyperbol
 
 The wave equation is second order in time, so a well-posed problem must prescribe *two* initial conditions: the initial displacement $u (bold(x), 0) = phi (bold(x))$ and the initial velocity $u_t (bold(x), 0) = psi (bold(x))$. These data, together with the equation, select the *Cauchy problem* on $bb(R)^n$ — the object of the next three sections.
 
-If the medium is bounded, the solution is further constrained on the spatial boundary and the problem is no longer of Cauchy type: it becomes an *initial-boundary value problem*, with the two initial conditions above supplemented by a boundary condition. Three boundary conditions are physically meaningful: a *fixed* end prescribes $u = 0$ (Dirichlet), a *free* end $u_nu = 0$ (Neumann), and an *elastic attachment* a linear combination of $u$ and $u_nu$ (Robin), where $nu$ denotes the outward unit normal. A single end already modifies the solution, as the semi-infinite string treated in *D'Alembert's Formula* shows; two ends — a bounded interval — require the spectral method of *Separation of Variables for the Wave Equation*, where the initial-boundary value problem is formulated precisely.
+If the medium is bounded, the solution is further constrained on the spatial boundary and the problem is no longer of Cauchy type: it becomes an *initial-boundary value problem*, with the two initial conditions above supplemented by a boundary condition. Three boundary conditions are physically meaningful: a *fixed* end prescribes $u = 0$ (Dirichlet), a *free* end $(partial u)/(partial nu) = 0$ (Neumann), and an *elastic attachment* a linear combination of $u$ and $(partial u)/(partial nu)$ (Robin), where $nu$ denotes the outward unit normal. A single end already modifies the solution, as the semi-infinite string treated in *D'Alembert's Formula* shows; two ends — a bounded interval — require the spectral method of *Separation of Variables for the Wave Equation*, where the initial-boundary value problem is formulated precisely.
 
 == The Homogeneous Equation: D'Alembert's Formula // 齐次方程：达朗贝尔公式
 
@@ -1670,7 +1670,7 @@ $
 Energy is being transported, not created: $bold(p)$ is the rate at which it crosses a surface, and the flux $-a^2 u_t nabla u$ is exactly the vector whose contribution over the lateral surface of a cone is computed in the proof of the local energy inequality below. We henceforth work with the normalized energy $E$, the density factor being constant.
 
 #theorem(name: "Conservation of Energy")[
-  Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary, let $T > 0$, and let $u in C^2 (overline(Omega) times [0, T])$ be a solution of the wave equation $u_(t t) = a^2 Delta u$ for $bold(x) in Omega$, $0 < t <= T$, with either $u = 0$ or $u_nu = 0$ on $partial Omega times (0, T]$, where $nu$ denotes the outward unit normal. Then the energy
+  Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary, let $T > 0$, and let $u in C^2 (overline(Omega) times [0, T])$ be a solution of the wave equation $u_(t t) = a^2 Delta u$ for $bold(x) in Omega$, $0 < t <= T$, with either $u = 0$ or $(partial u)/(partial nu) = 0$ on $partial Omega times (0, T]$, where $nu$ denotes the outward unit normal. Then the energy
   $
     E (t) = 1/2 integral_Omega (abs((partial u)/(partial t))^2 + a^2 abs(nabla u)^2) dif bold(x)
   $
@@ -1706,7 +1706,7 @@ Energy is being transported, not created: $bold(p)$ is the rate at which it cros
 ]
 
 #note(title: "Elastic attachments and damping")[
-  The argument above covers two of the three boundary conditions of *Derivation of the Wave Equation*. For an *elastic attachment* — the Robin condition $u_nu + k u = 0$ on $partial Omega$ with $k >= 0$, the case modelled in #link(<ex:wave-robin-separation>)[*Separation of Variables for the Wave Equation*] — the boundary term of the energy identity does not vanish but reads
+  The argument above covers two of the three boundary conditions of *Derivation of the Wave Equation*. For an *elastic attachment* — the Robin condition $(partial u)/(partial nu) + k u = 0$ on $partial Omega$ with $k >= 0$, the case modelled in #link(<ex:wave-robin-separation>)[*Separation of Variables for the Wave Equation*] — the boundary term of the energy identity does not vanish but reads
   $
     (dif)/(dif t) E (t) = -k a^2 integral_(partial Omega) u_t u dif S = -(k a^2)/2 (dif)/(dif t) integral_(partial Omega) u^2 dif S,
   $
@@ -1714,7 +1714,7 @@ Energy is being transported, not created: $bold(p)$ is the rate at which it cros
 
   Uniqueness survives unchanged: for the difference $w$ of two solutions the total energy vanishes at $t = 0$, hence $E (t) = -(k a^2)/2 integral_(partial Omega) w^2 dif S <= 0$, and since $E >= 0$ the difference vanishes.
 
-  Genuine *dissipation* requires the damping condition $u_nu = -k u_t$ with $k > 0$, for which $(dif)/(dif t) E (t) = -k a^2 integral_(partial Omega) u_t^2 dif S <= 0$: the energy decreases monotonically, and the same vanishing argument gives uniqueness.
+  Genuine *dissipation* requires the damping condition $(partial u)/(partial nu) = -k u_t$ with $k > 0$, for which $(dif)/(dif t) E (t) = -k a^2 integral_(partial Omega) u_t^2 dif S <= 0$: the energy decreases monotonically, and the same vanishing argument gives uniqueness.
 
   The whole computation is carried out from scratch in #link(<ex:wave-robin-energy>)[the example below].
 ]
@@ -1768,17 +1768,17 @@ Energy is being transported, not created: $bold(p)$ is the rate at which it cros
       [$u |_Gamma = 0 => u_t |_Gamma = 0$],
       "Strict",
     ),
-    ("Neumann", "the same", [$u_nu |_Gamma = 0$], "Up to a constant"),
-    ([Robin, $sigma > 0$], [the same $+ a^2 sigma integral_Gamma u^2 dif S$], [$u_nu + sigma u = 0$], "Strict"),
+    ("Neumann", "the same", [$(partial u)/(partial nu) |_Gamma = 0$], "Up to a constant"),
+    ([Robin, $sigma > 0$], [the same $+ a^2 sigma integral_Gamma u^2 dif S$], [$(partial u)/(partial nu) + sigma u = 0$], "Strict"),
   )
 
   Only two ingredients move from one row to the next — the energy and the boundary condition:
 
-  - *Dirichlet* ($u |_Gamma = 0$). No boundary integral in $E$; since $u = 0$ on $Gamma$ gives $u_t = 0$ there, the term $a^2 integral_Gamma u_t u_nu dif S$ dies and uniqueness is strict.
+  - *Dirichlet* ($u |_Gamma = 0$). No boundary integral in $E$; since $u = 0$ on $Gamma$ gives $u_t = 0$ there, the term $a^2 integral_Gamma u_t (partial u)/(partial nu) dif S$ dies and uniqueness is strict.
 
-  - *Neumann* ($u_nu |_Gamma = 0$). Same energy, and the condition kills the boundary term directly. But $E = 0$ only forces $w_t = 0$ and $nabla w = 0$, i.e. $w$ constant in space: uniqueness holds *up to an additive constant*, which the initial data then fix.
+  - *Neumann* ($(partial u)/(partial nu) |_Gamma = 0$). Same energy, and the condition kills the boundary term directly. But $E = 0$ only forces $w_t = 0$ and $nabla w = 0$, i.e. $w$ constant in space: uniqueness holds *up to an additive constant*, which the initial data then fix.
 
-  - *Robin* ($(u_nu + sigma u) |_Gamma = 0$, $sigma > 0$). The flat energy fails; after adding the storage $a^2 sigma integral_Gamma u^2 dif S$ the boundary part becomes $a^2 integral_Gamma u_t (u_nu + sigma u) dif S$, which the condition makes zero. Every term is nonnegative because $sigma > 0$, so uniqueness is strict again.
+  - *Robin* ($((partial u)/(partial nu) + sigma u) |_Gamma = 0$, $sigma > 0$). The flat energy fails; after adding the storage $a^2 sigma integral_Gamma u^2 dif S$ the boundary part becomes $a^2 integral_Gamma u_t ((partial u)/(partial nu) + sigma u) dif S$, which the condition makes zero. Every term is nonnegative because $sigma > 0$, so uniqueness is strict again.
 
   Three traps. The Dirichlet and Neumann energies cannot be reused for Robin: the boundary term must be added, with coefficient exactly $a^2 sigma$. For Neumann one should not claim plain uniqueness but "unique up to an additive constant". And the sign matters: $sigma = 0$ is Neumann, while $sigma < 0$ destroys positivity — the energy can then decrease, and the argument collapses.
 
@@ -2009,7 +2009,7 @@ Two special cases organize the whole theory.
       u = 0 quad "on" quad partial Omega times (0, T).
     )
   $] <eq:heat-problem>
-  The last line is the *Dirichlet condition*; the *Neumann condition* $u_nu = 0$ replaces it, and the *Cauchy problem* drops it, because $Omega = bb(R)^n$ has no boundary.
+  The last line is the *Dirichlet condition*; the *Neumann condition* $(partial u)/(partial nu) = 0$ replaces it, and the *Cauchy problem* drops it, because $Omega = bb(R)^n$ has no boundary.
 ] <def:heat-ibvp>
 
 The data of #link(<eq:heat-problem>)[the problem] sit on different parts of the boundary of the cylinder $Omega times (0, T)$: the initial datum on the bottom $Omega times {0}$, the boundary datum on the lateral surface $partial Omega times (0, T)$, and nothing on the top $Omega times {T}$.
@@ -2402,7 +2402,7 @@ $
   -Delta w_k = lambda_k w_k quad "in" Omega, quad w_k = 0 quad "on" partial Omega,
 $
 with $0 < lambda_1 <= lambda_2 <= dots$ and ${w_k}$ an orthonormal basis of $L^2 (Omega)$.
-The Neumann problem replaces the boundary condition by $partial_nu w_k = 0$ and has $lambda_1 = 0$, with $w_1$ constant.
+The Neumann problem replaces the boundary condition by $(partial w_k)/(partial nu) = 0$ and has $lambda_1 = 0$, with $w_1$ constant.
 The existence of such a basis, and the growth $lambda_k -> oo$, is the content of *Sturm--Liouville Theory*.
 
 Each eigenfunction is an exact solution of the heat equation with the correct boundary data, since $-Delta w_k = lambda_k w_k$ turns the evolution into the scalar ODE $c_k' = -alpha lambda_k c_k$ for the coefficient.
@@ -2515,7 +2515,7 @@ The energy identity gives quantitative information of a different kind: it ident
 === Energy Dissipation // 能量耗散
 
 #proposition(name: "Energy Dissipation")[
-  Let $u$ be a smooth solution of the heat equation on $Omega times (0, oo)$ with either $u = 0$ on $partial Omega$ (Dirichlet) or $u_nu = 0$ on $partial Omega$ (Neumann). Then
+  Let $u$ be a smooth solution of the heat equation on $Omega times (0, oo)$ with either $u = 0$ on $partial Omega$ (Dirichlet) or $(partial u)/(partial nu) = 0$ on $partial Omega$ (Neumann). Then
   $
     1/2 (dif)/(dif t) integral_Omega abs(u)^2 dif x = -alpha integral_Omega abs(nabla u)^2 dif x.
   $
@@ -2879,7 +2879,7 @@ A strict maximum at a boundary point forces the normal derivative to point outwa
 #note[
   #figure(
     image("./img/hopf-barrier.svg", width: 100%),
-    caption: [Hopf's lemma at a boundary point. (a) The ball $B (x_c, delta)$ is internally tangent to $partial Omega$ at $x_0$, so $abs(x - x_c) >= delta$ on $partial Omega$. (b) The barrier $w (x) = e^(-lambda abs(x - x_c)^2) - e^(-lambda delta^2)$ vanishes at $x_0$, is positive on the side of $Omega$, and is subharmonic on the comparison region $Omega inter B (x_0, rho)$ once $lambda$ is chosen large enough. It forces $u$ to leave the boundary at a strictly positive rate, hence $u_nu (x_0) > 0$.],
+    caption: [Hopf's lemma at a boundary point. (a) The ball $B (x_c, delta)$ is internally tangent to $partial Omega$ at $x_0$, so $abs(x - x_c) >= delta$ on $partial Omega$. (b) The barrier $w (x) = e^(-lambda abs(x - x_c)^2) - e^(-lambda delta^2)$ vanishes at $x_0$, is positive on the side of $Omega$, and is subharmonic on the comparison region $Omega inter B (x_0, rho)$ once $lambda$ is chosen large enough. It forces $u$ to leave the boundary at a strictly positive rate, hence $(partial u)/(partial nu) (x_0) > 0$.],
     placement: auto,
     supplement: [Fig.],
   ) <fig:hopf-barrier>
@@ -3702,7 +3702,7 @@ This is a deep existence theorem; we omit the general proof (which requires tool
     $
       epsilon^(2 - n) integral_(partial B(0, epsilon)) (partial phi) / (partial nu) dif S -> 0
     $
-    since $"supp"(phi)$ is bounded and $phi_nu$ is bounded.
+    since $"supp"(phi)$ is bounded and $(partial phi)/(partial nu)$ is bounded.
 
     Combining:
     $
@@ -4228,7 +4228,7 @@ Existence on a general domain is proved in *Boundary Value Problems for Elliptic
   $
     integral_(partial Omega_epsilon) (u (partial G)/(partial nu) - G (partial u)/(partial nu)) dif S = -integral_(Omega_epsilon) G Delta u dif x.
   $
-  On the small sphere $partial B (y, epsilon)$, write $G (x, y) = Gamma (x - y) + O(1)$ and $G_nu (x, y) = -1 / (omega_n epsilon^(n-1)) + O(1)$. Then as $epsilon -> 0$,
+  On the small sphere $partial B (y, epsilon)$, write $G (x, y) = Gamma (x - y) + O(1)$ and $(partial G)/(partial nu) (x, y) = -1 / (omega_n epsilon^(n-1)) + O(1)$. Then as $epsilon -> 0$,
   $
     integral_(partial B (y, epsilon)) (u (partial G)/(partial nu) - G (partial u)/(partial nu)) dif S -> -u (y),
   $
@@ -4405,7 +4405,7 @@ The Cauchy problem of *The Heat Equation* treats the whole space. On a bounded d
   $
     (partial u)/(partial t) - Delta u = f quad "in" quad Omega times (0, T), quad u = 0 quad "on" quad partial Omega times (0, T), quad u (dot, 0) = u_0 quad "in" quad Omega.
   $
-  The Neumann version replaces the boundary condition by $u_nu = 0$ on $partial Omega times (0, T)$.
+  The Neumann version replaces the boundary condition by $(partial u)/(partial nu) = 0$ on $partial Omega times (0, T)$.
 ] <def:parabolic-ibvp>
 
 #definition(name: "Weak Formulation and Bochner Spaces")[
