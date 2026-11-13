@@ -45,7 +45,7 @@ where the horizontal axis (the real axis) represents the real part and
 the vertical axis (the imaginary axis) represents the imaginary part.
 
 #figure(
-  image("./img/Complex_conjugate_picture.svg.png", width: 25%),
+  image("./img/complex-conjugate.svg", width: 45%),
   caption: [Complex number $z$ and its conjugate $overline(z)$ in the complex plane.],
   placement: auto,
   supplement: [Fig.],
@@ -199,7 +199,7 @@ The extended complex plane can be visualized as a sphere, called the *Riemann sp
 where the point at infinity corresponds to the north pole of the sphere.
 
 #figure(
-  image("./img/extended_complex_plane.png", width: 40%),
+  image("./img/extended-complex-plane.svg", width: 65%),
   caption: [The extended complex plane, also known as the Riemann sphere.],
   placement: auto,
   supplement: [Fig.],
@@ -245,7 +245,7 @@ where $u, v: E subset bb(R)^2 -> bb(R)$ are real-valued functions. We call $u = 
 A complex function $f: E -> bb(C)$ can be interpreted geometrically as a mapping from its domain $E$ (a subset of the *$z$-plane*) onto its image $f(E)$ (a subset of the *$w$-plane*). Unlike a graph in $bb(R)^2$, the graph of a complex function would require four real dimensions, so instead one visualizes $f$ as a transformation that moves points, curves, and regions from the source plane to the target plane.
 
 #figure(
-  image("./img/complex-function-mapping.png", width: 80%),
+  image("./img/complex-function-mapping.svg", width: 100%),
   caption: [A complex function $f: bb(C) -> bb(C)$ can be visualized as a transformation between two copies of the complex plane, the $z$-plane and the $w$-plane. Shown here: the mapping $w = overline(z)$ reflects across the real axis.],
   placement: auto,
   supplement: [Fig.],
