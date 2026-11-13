@@ -24,6 +24,146 @@
 
 #make-outline(depth: 2, title: "Contents")
 
+#part("Foundations") // 一般理论
+
+= Stochastic Processes and Finite-Dimensional Distributions // 随机过程与有限维分布
+
+The probability theory of *Probabilités et Statistique* studies one random variable, or a fixed finite family of them.
+A *stochastic process* is what appears once a new index — usually time — is allowed to vary, so that an entire family of random variables must be described at once.
+
+Two questions organise this chapter.
+
+- What *is* such a family, as a mathematical object? The answer is a collection of finite-dimensional distributions, subject to consistency conditions.
+- Which of these objects possess paths with reasonable regularity? The answer requires separating the law of a process from the choice of a path version.
+
+The first question is settled by Kolmogorov's extension theorem; the second by his continuity criterion.
+Everything that follows in this note — Markov chains, the Poisson process, Brownian motion — is a particular way of specifying one of these families and then choosing a path version for it.
+
+== Definition and Classification // 定义与分类
+
+A random variable is a measurable map from a probability space into a measurable state space.
+A process is the same object with a parameter attached.
+
+#definition(name: "Stochastic Process")[
+  Let $(Omega, cal(F), P)$ be a probability space, $T$ a set, and $(S, cal(S))$ a measurable space.
+  A *stochastic process* indexed by $T$ with state space $S$ is a family ${X(t) : t in T}$ of $S$-valued random variables on $Omega$.
+  Equivalently, it is a map $X : Omega times T -> S$ such that $omega |-> X(t)(omega)$ is measurable for every fixed $t in T$.
+] <def:stochastic-process>
+
+The set $T$ is the *index set* and is read as time; $S$ is the *state space*.
+Nothing in the definition requires $T$ to be ordered, but every process treated in this note is indexed by $NN$, by $ZZ$, or by an interval of $RR$.
+The two readings of the map $X$ correspond to the two ways of looking at a process.
+
+- Fix $t$: then $X(t)$ is a random variable, and the whole family is a curve in the space of random variables.
+- Fix $omega$: then $t |-> X(t)(omega)$ is an ordinary function of time, and the process is a random function.
+
+The second reading is the one that carries the intuition, and it deserves a name.
+
+#definition(name: "Sample Path")[
+  For a fixed outcome $omega in Omega$, the function $t |-> X(t)(omega)$ from $T$ to $S$ is the *sample path*, or *trajectory*, of the process at $omega$.
+] <def:sample-path>
+
+A process is therefore a probability measure on a space of functions; the sample paths are the individual functions it produces.
+
+The simplest process is an independent sequence.
+
+#example(name: "Discrete white noise")[
+  Let $X_1, X_2, dots$ be independent real random variables, all with the same law $nu$, mean $0$ and variance $sigma^2$.
+  Indexed by $T = NN^*$ with state space $S = RR$, they form a stochastic process whose sample paths are the real sequences $(x_1, x_2, dots)$.
+  It is called *white noise* because consecutive values carry no information about one another: the covariance $op("Cov")(X_i, X_j)$ vanishes for $i != j$.
+] <ex:iid-noise>
+
+White noise already shows that a process is more than a list of marginal laws: the *joint* behaviour of different times is part of the data.
+That joint behaviour is the subject of the next section.
+
+Two properties of the increments organise most of the classical theory, and both are visible in the models of the later chapters.
+
+#definition(name: "Independent and Stationary Increments")[
+  A process ${X(t) : t in T}$ with $T subset.eq RR$ has *independent increments* if for all $t_1 < dots < t_n$ the increments $X(t_2) - X(t_1), dots, X(t_n) - X(t_(n-1))$ are independent.
+  It has *stationary increments* if the law of $X(t + h) - X(t)$ depends on $h$ only.
+] <def:increments>
+
+The Poisson process of the continuous-time part is characterised by independent, stationary increments together with a counting structure; Brownian motion, by the same two properties together with Gaussian increments.
+Independence of increments is the exact counterpart, at the level of a process, of independence of trials at the level of a sequence.
+
+Finally, the pair (index set, state space) sorts the elementary examples into four classes.
+
+#figure(
+  image("img/process-classification.svg", width: 82%),
+  caption: [The four types of processes obtained by combining a discrete or continuous index set with a discrete or continuous state space, with a canonical example and the place where this note treats it.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:process-classification>
+
+The four entries are not equally hard.
+A discrete index set with a discrete state space is the setting of Markov chains, where everything reduces to matrix algebra; a continuous index set with a continuous state space is the setting of Brownian motion, where the paths are irregular enough to require a new integral.
+
+== Finite-Dimensional Distributions // 有限维分布
+
+An experiment never observes a whole path.
+It records the values of the process at finitely many times, and a process is known once the joint law of every such finite sample is known.
+This section makes that statement precise and asks when a prescribed family of joint laws really comes from a process.
+
+#definition(name: "Finite-Dimensional Distributions")[
+  The *finite-dimensional distributions* of a process ${X(t) : t in T}$ are the probability measures
+  $
+    mu_(t_1 dots t_n)(B_1 times dots times B_n) = P(X(t_1) in B_1, dots, X(t_n) in B_n),
+  $
+  indexed by $n >= 1$, by $t_1, dots, t_n in T$ and by measurable sets $B_1, dots, B_n subset.eq S$.
+] <def:finite-dimensional-distributions>
+
+The family ${mu_(t_1 dots t_n)}$ cannot be arbitrary: a joint law determines its marginals, so the measures attached to different tuples of times must agree on the overlap.
+
+#property(name: "Consistency of the Finite-Dimensional Distributions")[
+  The family ${mu_(t_1 dots t_n)}$ of a process is consistent in two senses.
+
+  - (marginal consistency) If $(s_1, dots, s_m)$ is a subfamily of $(t_1, dots, t_n)$, then $mu_(s_1 dots s_m)$ is the corresponding marginal of $mu_(t_1 dots t_n)$.
+  - (permutation consistency) $mu_(t_1 dots t_n)$ is unchanged when the times and the sets are permuted simultaneously.
+] <prop:fdd-consistency>
+
+#proof[
+  Both statements follow from the definition by integrating out the irrelevant coordinates.
+  For the first, sum over the remaining variables, which is legitimate by the law of total probability; for the second, note that a joint law is symmetric in its arguments, since the event $X(t_i) in B_i$ for all $i$ does not depend on the order in which the conditions are listed.
+]
+
+The converse is the content of the extension theorem: consistency is not merely necessary but also sufficient.
+
+#theorem(name: "Kolmogorov's Extension Theorem")[
+  Let $T$ be a set, let $(S, cal(S))$ be a standard Borel space, and let ${mu_(t_1 dots t_n)}$ be a consistent family of probability measures on $S^n$, $n >= 1$.
+  Then there exist a probability space $(Omega, cal(F), P)$ and a process ${X(t) : t in T}$ on it whose finite-dimensional distributions are exactly the given family.
+] <thm:kolmogorov-extension>
+
+#note(title: "Division of labour")[
+  The proof is measure-theoretic: one builds the product σ-algebra on $S^T$, checks that the consistent family defines a finitely additive set function on the algebra of cylinder sets, and extends it by Carathéodory's theorem.
+  This is the machinery of the Analyse Réelle note, and it is not repeated here.
+  What matters for the sequel is the *content* of the theorem: a process may be specified by its finite-dimensional distributions alone, with no reference to a path space.
+]
+
+The theorem is the licence to define every model in this note the same way: write down the joint law of finitely many times, check consistency, and let the theorem produce the process.
+Two warnings must accompany that licence.
+
+#caution(title: "The finite-dimensional distributions do not determine the paths")[
+  The extension theorem produces *some* process with the prescribed finite-dimensional distributions, and it gives no control whatsoever on its sample paths.
+  Two processes may share every finite-dimensional distribution and still have paths that differ on a set of times of full measure.
+  The counterexample appears in *Path Regularity*, where the distinction between a law and a path version is made precise.
+  Every model below therefore has to specify a path version, not only a family of laws.
+]
+
+The description of white noise in terms of joint laws is immediate.
+
+#example(name: "The finite-dimensional distributions of white noise")[
+  For the independent sequence of #link(<ex:iid-noise>)[*Discrete white noise*], the joint law of $X(t_1), dots, X(t_n)$ is the product measure
+  $
+    mu_(t_1 dots t_n) = nu^(times n),
+  $
+  independently of the times $t_1, dots, t_n$.
+  Consistency is then obvious: a marginal of a product measure is again a product measure, and the order of the factors is irrelevant.
+  The family is therefore consistent, and the extension theorem recovers the sequence from its finite-dimensional distributions.
+] <ex:fdd-of-white-noise>
+
+White noise is the exceptional case in which the joint laws are as simple as the marginal ones.
+In every other model of this note the dependence between different times is the whole point, and the finite-dimensional distributions encode it: for a Markov chain they factor through the transition matrix, for the Poisson process they are forced by independent increments, and for Brownian motion by Gaussian increments.
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
@@ -81,15 +221,6 @@
 //     - 遍历定理的直观陈述（严格版本见 Analyse Harmonique 的谱分解）
 
 
-// ==========================================================================
-// Part II — Discrete Time (离散时间)  [待写出]
-// ==========================================================================
-// 设计思路：离散时间是结构最清晰、证明最完整的战场：Markov 链把
-// "独立性失效"以最少的工具处理掉，随机游走是它的样板实例，
-// 分枝与排队则给出两类典型应用。本章的结论在 Part III 连续化时
-// 反复对照。
-// 对应教材：Ross Ch 2、Ch 3；Norris Ch 1–3；Grimmett–Stirzaker Ch 6
-
 // --- Chapter 2: Conditional Expectation and Martingales (条件期望与鞅) ---
 
 //   Section 2.1: Conditional Expectation (条件期望)
@@ -110,6 +241,16 @@
 //     - 上穿不等式与几乎必然收敛定理
 //     - L^1 / L^2 收敛；一致可积性
 //     - 反向鞅与 Lévy 上穿
+
+
+// ==========================================================================
+// Part II — Discrete Time (离散时间)  [待写出]
+// ==========================================================================
+// 设计思路：离散时间是结构最清晰、证明最完整的战场：Markov 链把
+// "独立性失效"以最少的工具处理掉，随机游走是它的样板实例，
+// 分枝与排队则给出两类典型应用。本章的结论在 Part III 连续化时
+// 反复对照。
+// 对应教材：Ross Ch 2、Ch 3；Norris Ch 1–3；Grimmett–Stirzaker Ch 6
 
 
 // --- Chapter 3: Discrete-Time Markov Chains (离散时间 Markov 链) ---
