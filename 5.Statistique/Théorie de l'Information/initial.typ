@@ -759,9 +759,8 @@ a specified circuit. Once both are in place, entropy, capacity and error
 probability become functions of distributions rather than of hardware, and the
 theory becomes a chapter of probability.
 
-// TODO: 占位图为 8x8 空 SVG，故暂时按高度约束；生成正式图后改为 width: 92%
 #figure(
-  image("img/communication-system.svg", height: 7cm),
+  image("img/communication-system.svg", width: 92%),
   caption: [
     The five components of a communication system. The source is described by a
     distribution $p(x)$, the channel by transition probabilities $p(y | x)$;
@@ -1072,9 +1071,8 @@ the simplex.
   with $h(0) = h(1) = 0$ by the convention $0 log 0 = 0$.
 ] <def:binary-entropy>
 
-// TODO: 同上，正式图生成后改为 width: 70%
 #figure(
-  image("img/binary-entropy-curve.svg", height: 6cm),
+  image("img/binary-entropy-curve.svg", width: 72%),
   caption: [
     The binary entropy function. It is concave, vanishes at the two degenerate
     ends and attains its maximum $h(1\/2) = 1$ at the fair coin; the chord
@@ -1280,9 +1278,8 @@ Two circles of areas $H(X)$ and $H(Y)$ whose union has area $H(X, Y)$ make the
 three identities visual: the intersection is $I(X; Y)$, the two crescents are
 $H(X | Y)$ and $H(Y | X)$.
 
-// TODO: 占位图为 8x8 空 SVG，正式图生成后改为 width: 72%
 #figure(
-  image("img/entropy-venn.svg", height: 4.5cm),
+  image("img/entropy-venn.svg", width: 68%),
   caption: [
     The additive bookkeeping of the identities in
     #link(<prop:mi-identities>)[the proposition above]. The three regions of the
