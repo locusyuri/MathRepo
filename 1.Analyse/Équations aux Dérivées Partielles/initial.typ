@@ -103,7 +103,10 @@
 //   Section 6.1 Laplace's and Poisson's Equations
 //   Section 6.2 Mean Value Property
 //   Section 6.3 Maximum and Minimum Principles
-//   Section 6.4 Green's Identities
+//   Section 6.4 The Dirichlet Problem
+//   Section 6.5 Green's Identities and the Dirichlet Problem on a Ball
+//   Section 6.6 Further Properties of Harmonic Functions
+//   Section 6.7 The Neumann Problem
 //
 // ==========================================================================
 // Part III — Analytical Tools (分析工具)
@@ -123,8 +126,8 @@
 // Part IV — Elliptic Theory (椭圆型方程理论)
 // ==========================================================================
 // --- Ch10 Boundary Value Problems for Elliptic Equations (椭圆型方程边值问题) ---
-//   Section 10.1 Dirichlet Problem
-//   Section 10.2 Neumann Problem
+//   Section 10.1 Dirichlet Problem: Weak Formulation
+//   Section 10.2 Neumann Problem: Weak Formulation
 //   Section 10.3 Robin and Mixed Conditions
 //   Section 10.4 Uniqueness via Energy Methods
 // --- Ch11 Green Functions and Representation (格林函数与表示) ---
@@ -2977,14 +2980,15 @@ For the exterior problem the comparison functions come from the radial solutions
 
 #proof[
   Let $u_1, u_2$ be two solutions and $w = u_1 - u_2$; then $w$ is harmonic outside $overline(Omega)$, vanishes on $partial Omega$, and satisfies the same condition at infinity.
-  For $R > "diam"(Omega)$ put $Omega_R = {x : abs(x) < R} backslash overline(Omega)$, and let $delta_R = sup_(abs(x) = R) abs(w)$, so that $delta_R -> 0$ as $R -> oo$ in both dimensions.
 
-  *Step 1: a comparison function.* Choose $Phi$ harmonic and positive on $Omega_R$ with $Phi -> oo$ as $abs(x) -> 0$: take $Phi (x) = abs(x)^(2 - n)$ when $n >= 3$ and $Phi (x) = log (R / abs(x))$ when $n = 2$ (*Laplace's and Poisson's Equations*).
-  Then $phi = epsilon Phi + delta_R$ is harmonic, and on $partial Omega_R$ one has $abs(w) <= phi$: on $partial Omega$ because $w = 0 <= epsilon Phi$, and on $abs(x) = R$ because $abs(w) <= delta_R$.
+  *Case $n >= 3$.* Here $w (x) -> 0$ at infinity.
+  For $R > "diam"(Omega)$ put $Omega_R = {x : abs(x) < R} backslash overline(Omega)$ and $delta_R = sup_(abs(x) = R) abs(w)$, so that $delta_R -> 0$ as $R -> oo$.
+  The function $Phi (x) = abs(x)^(2 - n)$ is harmonic and positive on $Omega_R$ (*Laplace's and Poisson's Equations*), so $phi = epsilon Phi + delta_R$ is harmonic, and on $partial Omega_R$ one has $abs(w) <= phi$: on $partial Omega$ because $w = 0 <= epsilon Phi$, and on $abs(x) = R$ because $abs(w) <= delta_R$.
+  The functions $±w - phi$ are harmonic on $Omega_R$ and non-positive on $partial Omega_R$, hence non-positive on $Omega_R$, that is, $abs(w) <= epsilon Phi + delta_R$ there.
+  Fix $x$ outside $overline(Omega)$ and let $R -> oo$: the last term disappears, and $epsilon -> 0^+$ then gives $w (x) = 0$.
 
-  *Step 2: the maximum principle.* The functions $w - phi$ and $-w - phi$ are harmonic on $Omega_R$ and non-positive on $partial Omega_R$, so both are non-positive on $Omega_R$, that is, $abs(w) <= epsilon Phi + delta_R$ there.
-
-  *Step 3: the limits.* Fix $x$ outside $overline(Omega)$. Letting $R -> oo$ in $abs(w (x)) <= epsilon Phi (x) + delta_R$ kills the last term; letting then $epsilon -> 0^+$ kills the first. Hence $w (x) = 0$.
+  *Case $n = 2$.* Inversion sends the exterior domain to a bounded domain and $w$ to $w^star (x) = w (x / abs(x)^2)$, which is harmonic on the image domain, vanishes on the image of $partial Omega$, and is bounded near the origin because $w$ is bounded at infinity.
+  By #link(<thm:removable-singularity>)[the removable singularity theorem] the singularity at the origin is removable, so $w^star$ is a bounded harmonic function on a bounded domain with boundary value $0$; the weak maximum principle gives $w^star = 0$, hence $w = 0$.
 ]
 
 #note(title: "Kelvin transform")[
@@ -3142,11 +3146,8 @@ What it also gives, once combined with positivity, is a two-sided comparison bet
 #proof[
   Fix $x, y in K$ and set $delta = "dist"(K, partial Omega) / 4 > 0$, so that $B (z, 2 delta) subset Omega$ for every $z in K$.
   Choose points $z_0 = x, z_1, dots, z_m = y$ on the segment from $x$ to $y$ with $abs(z_(j + 1) - z_j) <= delta$ and $m <= "diam"(K) / delta + 1$.
-  For each $j$ the ball $B (z_j, 2 delta)$ is contained in $Omega$ and contains $z_(j + 1)$, so #link(<thm:harnack-inequality>)[Harnack's inequality] applied there, and then with the roles exchanged, gives
-  $
-    2^(-(n - 1)) u (z_j) <= u (z_(j + 1)) <= 2^(n - 1) u (z_j).
-  $
-  Iterating over the chain bounds $u (y)$ by $2^((n - 1)(m + 1)) u (x)$, and the estimate for the reverse direction follows by symmetry.
+  For each $j$ the ball $B (z_j, 2 delta)$ is contained in $Omega$ and contains $z_(j + 1)$, so #link(<thm:harnack-inequality>)[Harnack's inequality] applied there gives $u (z_(j + 1)) <= Lambda u (z_j)$ with a constant $Lambda$ depending only on $n$, and the reverse inequality follows by symmetry.
+  Iterating along the chain bounds $u (y)$ by $Lambda^(m + 1) u (x)$, and $m + 1 <= "diam"(K) / delta + 2$ by the choice of the points.
 ]
 
 #theorem(name: "Harnack's Convergence Theorem")[
@@ -4058,7 +4059,9 @@ The classical statement, the compatibility condition and uniqueness up to a cons
 
 = Green Functions and Representation // 格林函数与表示
 
-The fundamental solution of the Laplacian was constructed in #link(<ex:fund-laplace>)[*Fundamental Solutions*]: it is the Newtonian potential $Gamma$, satisfying $-Delta Gamma = delta$ on $bb(R)^n$. For a bounded domain, the *Green function* modifies $Gamma$ by a harmonic correction so that it vanishes on the boundary; it then encodes the solution of the Dirichlet problem through an explicit representation formula.
+The fundamental solution of the Laplacian was constructed in #link(<ex:fund-laplace>)[*Fundamental Solutions*]: it is the Newtonian potential $Gamma$, satisfying $Delta Gamma = delta$ on $bb(R)^n$.
+For a bounded domain, the *Green function* modifies $Gamma$ by a harmonic correction so that it vanishes on the boundary; it then encodes the solution of the Dirichlet problem through an explicit representation formula.
+The classical theory of *Laplace's Equation and Harmonic Functions* supplies the maximum principle, the uniqueness theorem, and the Poisson kernel of a ball; what is added here is the Green function of an arbitrary domain and the representation formula it produces.
 
 == Green's Function Construction // 格林函数的构造
 
@@ -4074,14 +4077,21 @@ The fundamental solution of the Laplacian was constructed in #link(<ex:fund-lapl
   $
     G (x, y) = Gamma (x - y) - h^y (x), quad x in Omega backslash {y},
   $
-  where $h^y$ is the unique harmonic function in $Omega$, smooth up to the boundary, with $h^y = Gamma (dot - y)$ on $partial Omega$ (existence of $h^y$: *Dirichlet Problem*). Equivalently, $G$ is the unique function such that
-  $
-    -Delta_x G (dot, y) = delta_y quad "in" quad Omega, quad G (dot, y) = 0 quad "on" quad partial Omega.
-  $
+  where $h^y$ is the harmonic function on $Omega$ whose boundary values are those of $Gamma (dot - y)$.
 ] <def:green-function>
 
+Since $Delta Gamma = delta$ and $h^y$ is harmonic, the function $G$ is characterised by
+$
+  Delta_x G (dot, y) = delta_y quad "in" Omega, quad G (dot, y) = 0 quad "on" partial Omega,
+$
+the singularity at $y$ being exactly that of $Gamma$.
+
+The correction $h^y$ exists because the Dirichlet problem is uniquely solvable (*The Dirichlet Problem*).
+Existence on a general domain is proved in *Boundary Value Problems for Elliptic Equations* and upgraded to a classical solution in *Regularity Theory*; on a ball the correction is explicit, and the computation is carried out in *The Poisson Kernel as a Normal Derivative*.
+
 #note[
-  The correction term is chosen so that $G$ vanishes on the boundary, while the singularity at $y$ is exactly that of the fundamental solution. By the maximum principle, the Dirichlet problem for $h^y$ has a unique solution, so $G$ is well defined. The construction does not repeat the fundamental solution (already treated in *Convolution and Fundamental Solutions*); it only exploits it as the singular part.
+  The correction term is chosen so that $G$ vanishes on the boundary, while the singularity at $y$ is exactly that of the fundamental solution.
+  The construction does not repeat the fundamental solution (already treated in *Convolution and Fundamental Solutions*); it only exploits it as the singular part.
 ]
 
 #theorem(name: "Symmetry of the Green Function")[
@@ -4089,25 +4099,20 @@ The fundamental solution of the Laplacian was constructed in #link(<ex:fund-lapl
 ] <thm:green-symmetry>
 
 #proof[
-  Fix distinct points $x_0, y_0 in Omega$ and set $Omega_epsilon = Omega backslash (overline(B (x_0, epsilon)) union overline(B (y_0, epsilon)))$ for small $epsilon$. The functions $u = G (dot, x_0)$ and $v = G (dot, y_0)$ are harmonic in $Omega_epsilon$, so Green's second identity (#link(<prop:green-identities>)[*Green's Identities*]) gives
+  Fix distinct points $x_0, y_0 in Omega$ and excise small balls: $Omega_epsilon = Omega backslash (B (x_0, epsilon) union B (y_0, epsilon))$.
+  Both $u = G (dot, x_0)$ and $v = G (dot, y_0)$ are harmonic on $Omega_epsilon$, so Green's second identity (#link(<prop:green-identities>)[*Green's Identities*]) gives
   $
     integral_(partial Omega_epsilon) (u (partial v)/(partial nu) - v (partial u)/(partial nu)) dif S = 0.
   $
-  The integral over $partial Omega$ vanishes because $u = v = 0$ there. On the sphere $partial B (x_0, epsilon)$, the leading term of $u$ is $Gamma (x - x_0)$, so
+  On $partial Omega$ both $u$ and $v$ vanish.
+  On the two small spheres the singularity is that of $Gamma$: with $nu$ pointing into the ball,
   $
-    lim_(epsilon -> 0) integral_(partial B (x_0, epsilon)) v (partial u)/(partial nu) dif S = -v (y_0) ...
+    (partial G)/(partial nu) (x, x_0) = -1 / (omega_n epsilon^(n-1)) + O(1), quad G (x, x_0) = Gamma (x - x_0) + O(1),
   $
-  hmm.
-]
-
-#proof[
-  Fix distinct $x_0, y_0 in Omega$ and excise small balls: $Omega_epsilon = Omega backslash (B (x_0, epsilon) union B (y_0, epsilon))$. Both $u = G (dot, x_0)$ and $v = G (dot, y_0)$ are harmonic on $Omega_epsilon$, so Green's second identity (#link(<prop:green-identities>)[*Green's Identities*]) yields
+  and the same holds with $x_0$ replaced by $y_0$ (#link(<ex:fund-laplace>)[*Fundamental Solutions*]).
+  Hence the sphere around $x_0$ contributes $v (x_0) + o(1)$ and the sphere around $y_0$ contributes $-u (y_0) + o(1)$, so letting $epsilon -> 0$ gives $v (x_0) = u (y_0)$, that is,
   $
-    integral_(partial Omega_epsilon) (u (partial v)/(partial nu) - v (partial u)/(partial nu)) dif S = 0.
-  $
-  On $partial Omega$ both $u$ and $v$ vanish. On the two small spheres, $u (x) = Gamma (x - x_0) + O(1)$ with $u_nu ~ -1 / (omega_n epsilon^(n-1))$ as $epsilon -> 0$ (and similarly for $v$), so the surviving terms give, in the limit,
-  $
-    v (y_0) = u (x_0), quad "i.e." quad G (y_0, x_0) = G (x_0, y_0).
+    G (x_0, y_0) = G (y_0, x_0).
   $
 ]
 
@@ -4116,9 +4121,9 @@ The fundamental solution of the Laplacian was constructed in #link(<ex:fund-lapl
 #theorem(name: "Green's Representation Formula")[
   Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary and let $u in C^2 (overline(Omega))$. Then for every $y in Omega$,
   $
-    u (y) = integral_(partial Omega) (u (x) (partial G)/(partial nu_x) (x, y) - G (x, y) (partial u)/(partial nu) (x)) dif S (x) - integral_Omega G (x, y) Delta u (x) dif x.
+    u (y) = integral_(partial Omega) u (x) (partial G)/(partial nu_x) (x, y) dif S (x) + integral_Omega G (x, y) Delta u (x) dif x.
   $
-  In particular, a harmonic function is determined by its boundary values together with the normal derivative of $G$ on the boundary.
+  In particular, a harmonic function is recovered from its boundary values alone, the weight being the normal derivative of the Green function.
 ] <thm:green-representation>
 
 #proof[
@@ -4133,28 +4138,35 @@ The fundamental solution of the Laplacian was constructed in #link(<ex:fund-lapl
   and rearranging gives the representation formula.
 ]
 
-#theorem(name: "Poisson's Integral Formula on a Ball")[
-  Let $B = B (0, R) subset bb(R)^n$ and $g in C (partial B)$. The unique harmonic function $u in C^2 (B) inter C (overline(B))$ with $u = g$ on $partial B$ is given by
+#corollary(name: "The Poisson Kernel as a Normal Derivative")[
+  Let $B = B (0, R)$ and let $G$ be the Green function of $B$.
+  Then for $x in B$ and $y in partial B$,
   $
-    u (x) = integral_(partial B) Phi (x, y) g (y) dif S (y), quad Phi (x, y) = (R^2 - abs(x)^2) / (omega_n R abs(x - y)^n), quad x in B.
+    (partial G)/(partial nu_y) (x, y) = (R^2 - abs(x)^2) / (omega_n R abs(x - y)^n),
   $
-  The function $Phi$ is called the *Poisson kernel* of the ball. Moreover, $Phi (x, y) > 0$ and $integral_(partial B) Phi (x, y) dif S (y) = 1$ for every $x in B$.
-] <thm:poisson-integral-formula>
+  the right-hand side being the Poisson kernel of $B$.
+] <cor:poisson-kernel-normal-derivative>
 
 #proof[
-  *Step 1: The Green function of the ball.* For $y in B$, let $y^* = (R^2 / abs(y)^2) y$ be the inverse point (the Kelvin transform of $y$). One verifies that for $abs(x) = R$,
+  *Step 1: the Green function of the ball.* For $y in B$, let $y^* = (R^2 / abs(y)^2) y$ be the inverse point.
+  One verifies that $abs(x - y) = (abs(y)/R) abs(x - y^*)$ for $abs(x) = R$, so the function
   $
-    abs(x - y) = (abs(y)/R) abs(x - y^*),
+    G (x, y) = Gamma (x - y) - Gamma ((abs(y)/R) (x - y^*))
   $
-  so the function $G (x, y) = Gamma (x - y) - Gamma ((abs(y)/R) (x - y^*))$ vanishes on $partial B$, is harmonic in $x != y$, and has the singularity of $Gamma$ at $y$. By uniqueness of the Green function, this is the Green function of the ball.
+  vanishes on $partial B$, is harmonic in $x != y$, and has the singularity of $Gamma$ at $y$; by uniqueness of the Green function it is the Green function of the ball.
 
-  *Step 2: Compute the normal derivative.* For $u$ harmonic, the representation formula reduces to $u (y) = integral_(partial B) u (x) (partial G)/(partial nu_x) (x, y) dif S (x)$. A direct differentiation of the explicit $G$ on the sphere gives
+  *Step 2: the normal derivative.* Differentiating the explicit $G$ on the sphere gives, for $z in partial B$ and $w in B$,
   $
-    (partial G)/(partial nu_x) (x, y) = (R^2 - abs(y)^2) / (omega_n R abs(x - y)^n),
+    (partial G)/(partial nu_z) (z, w) = (R^2 - abs(w)^2) / (omega_n R abs(z - w)^n).
   $
-  and using the symmetry of $G$ (*Green's Function Construction*) and renaming variables yields the Poisson kernel $Phi$.
+  By #link(<thm:green-symmetry>)[the symmetry] of $G$, the normal derivative in the boundary variable is the same expression with the boundary point and the interior point exchanged, which is the formula stated.
+]
 
-  *Step 3: Properties.* Taking $u = 1$ (harmonic) shows $integral_(partial B) Phi (x, y) dif S (y) = 1$; positivity is immediate from the formula. Uniqueness follows from the maximum principle (*Maximum and Minimum Principles*).
+The Green function therefore reproduces the kernel that was written down and verified in *Green's Identities and the Dirichlet Problem on a Ball*; the existence theorem for the ball becomes a corollary of the representation formula.
+
+#note(title: "One object, two constructions")[
+  The Poisson kernel was obtained in *Green's Identities and the Dirichlet Problem on a Ball* by inspection and direct verification, and it is obtained here as the normal derivative of the Green function.
+  The first route proves existence, the second explains why the formula has to be what it is, and it generalises: on any domain whose Green function is known, its normal derivative is the kernel of the representation formula.
 ]
 
 == Method of Images and Conformal Mapping // 镜像法与保角映射
@@ -4194,7 +4206,7 @@ Weak solutions constructed in *Boundary Value Problems for Elliptic Equations* a
 ] <def:sobolev-wkp>
 
 #theorem(name: "Interior Regularity")[
-  Let $u in H^1 (Omega)$ be a weak solution of $-Delta u = f$ in $Omega$ (#link(<def:weak-dirichlet>)[*Dirichlet Problem*]). If $f in H_("loc")^k (Omega)$ for some $k >= 0$, then $u in H_("loc")^(k+2) (Omega)$. In particular, if $f in C^oo (Omega)$ then $u in C^oo (Omega)$ after modification on a null set.
+  Let $u in H^1 (Omega)$ be a weak solution of $-Delta u = f$ in $Omega$ (#link(<def:weak-dirichlet>)[*Dirichlet Problem: Weak Formulation*]). If $f in H_("loc")^k (Omega)$ for some $k >= 0$, then $u in H_("loc")^(k+2) (Omega)$. In particular, if $f in C^oo (Omega)$ then $u in C^oo (Omega)$ after modification on a null set.
 ] <thm:interior-regularity>
 
 #proof[
@@ -4400,7 +4412,7 @@ Here the same rate is obtained from the energy identity alone, without any eigen
 ] <thm:exponential-decay>
 
 #proof[
-  Multiply the equation by $u$ and use Poincaré's inequality (#link(<prop:poincare-inequality>)[*Dirichlet Problem*]), $||nabla u||_(L^2)^2 >= lambda_1 ||u||_(L^2)^2$. From the energy identity (*Smoothing Effect*),
+  Multiply the equation by $u$ and use Poincaré's inequality (#link(<prop:poincare-inequality>)[*Poincaré's Inequality*]), $||nabla u||_(L^2)^2 >= lambda_1 ||u||_(L^2)^2$. From the energy identity (*Smoothing Effect*),
   $
     1/2 (dif)/(dif t) ||u||_(L^2)^2 = -||nabla u||_(L^2)^2 <= -lambda_1 ||u||_(L^2)^2,
   $
@@ -4408,7 +4420,7 @@ Here the same rate is obtained from the energy identity alone, without any eigen
 ]
 
 #note(title: "Asymptotic stabilization")[
-  For time-independent $f$, the solution converges to the elliptic steady state: if $v_oo$ solves $-Delta v_oo = f$ in $Omega$, $v_oo = 0$ on $partial Omega$ (*Dirichlet Problem*), then $w = u - v_oo$ satisfies the homogeneous heat equation, so
+  For time-independent $f$, the solution converges to the elliptic steady state: if $v_oo$ solves $-Delta v_oo = f$ in $Omega$, $v_oo = 0$ on $partial Omega$ (*Dirichlet Problem: Weak Formulation*), then $w = u - v_oo$ satisfies the homogeneous heat equation, so
   $
     ||u (t) - v_oo||_(L^2) <= C e^(-lambda_1 t).
   $
@@ -5010,7 +5022,7 @@ This closing part of the notes collects the classical method of separation of va
   $
     u (r, theta) = a_0/2 + sum_(n=1)^oo r^n (a_n cos (n theta) + b_n sin (n theta)),
   $
-  where the coefficients are the Fourier coefficients of the boundary datum $g (theta) = u (1, theta)$. The radial weights $r^n$ are the harmonic extension of the boundary data; this is the series form of Poisson's integral formula of #link(<thm:poisson-integral-formula>)[*Representation Formulas*].
+  where the coefficients are the Fourier coefficients of the boundary datum $g (theta) = u (1, theta)$. The radial weights $r^n$ are the harmonic extension of the boundary data; this is the series form of the Poisson formula of #link(<thm:dirichlet-ball-existence>)[*The Dirichlet Problem on a Ball*].
 ] <ex:laplace-disk>
 
 #note[
@@ -5073,7 +5085,7 @@ This chapter gives a concise overview of the four standard families of numerical
 == Finite Element Methods // 有限元法
 
 #definition(name: "Galerkin Finite Element Method")[
-  Let $V = H_0^1 (Omega)$ with the weak formulation of the Dirichlet problem (#link(<def:weak-dirichlet>)[*Dirichlet Problem*]): find $u in V$ with $a (u, v) = F (v)$ for all $v in V$, where $a (u, v) = integral_Omega nabla u dot nabla v dif x$ and $F (v) = integral_Omega f v dif x$. The *finite element method* chooses a finite-dimensional subspace $V_h subset V$ of piecewise polynomial functions on a triangulation of $Omega$ of mesh size $h$ and seeks the Galerkin approximation $u_h in V_h$ satisfying
+  Let $V = H_0^1 (Omega)$ with the weak formulation of the Dirichlet problem (#link(<def:weak-dirichlet>)[*Dirichlet Problem: Weak Formulation*]): find $u in V$ with $a (u, v) = F (v)$ for all $v in V$, where $a (u, v) = integral_Omega nabla u dot nabla v dif x$ and $F (v) = integral_Omega f v dif x$. The *finite element method* chooses a finite-dimensional subspace $V_h subset V$ of piecewise polynomial functions on a triangulation of $Omega$ of mesh size $h$ and seeks the Galerkin approximation $u_h in V_h$ satisfying
   $
     a (u_h, v_h) = F (v_h) quad "for all" quad v_h in V_h.
   $
@@ -5081,7 +5093,7 @@ This chapter gives a concise overview of the four standard families of numerical
 ] <def:galerkin-fem>
 
 #theorem(name: "Céa's Lemma")[
-  Under the hypotheses of the Lax--Milgram theorem (#link(<thm:lax-milgram>)[*Dirichlet Problem*]) — $V$-ellipticity with constant $alpha$ and continuity with constant $M$ of the bilinear form $a$ — the Galerkin approximation $u_h$ satisfies
+  Under the hypotheses of the Lax--Milgram theorem (#link(<thm:lax-milgram>)[*Lax--Milgram Theorem*]) — $V$-ellipticity with constant $alpha$ and continuity with constant $M$ of the bilinear form $a$ — the Galerkin approximation $u_h$ satisfies
   $
     ||u - u_h||_V <= M/alpha inf_(v_h in V_h) ||u - v_h||_V.
   $
