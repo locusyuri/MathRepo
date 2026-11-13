@@ -8073,6 +8073,478 @@ The corollary closes the circle opened in §12.1: the degree of $bb(R) \/ bb(Q)$
   That is the notion of a splitting field, and with it the symmetry group of an extension becomes visible.
 ] <note:closing-forward>
 
+// 跳号：Ch 13–16 尚未写入，此处把章计数器对齐到蓝图编号 17。
+// 写入 Ch 13–16 后删除以下两行，让编号自然接续。
+#counter(heading).update(16)
+#chapter-counter.update(16)
+
+#part("Introduction to Module Theory")
+
+= Basic Concepts of Modules // 模的基本概念
+
+// 同上：公式计数器按章归零
+#counter(math.equation).update(0)
+
+Chapter 7 ended with a promise.
+The structure theorem for finitely generated abelian groups was proved there using nothing but integer arithmetic, and the closing note claimed that the same proof with $bb(Z)$ replaced by any principal ideal domain $R$ classifies finitely generated $R$-modules (#link(<note:pid-generalisation>)[§7.2]).
+The present chapter supplies the language that claim requires, and the next one keeps the claim.
+
+Three familiar structures turn out to be one.
+An abelian group is a $bb(Z)$-module, a vector space over a field $F$ is an $F$-module, and a left ideal of a ring $R$ is an $R$-module with $R$ acting on itself.
+All three are an abelian group together with a ring of scalars acting on it linearly, that is, a ring homomorphism $R -> "End"(M)$.
+Recognising this does more than unify vocabulary: it transfers the whole quotient machinery of Chapters 4, 5 and 9 at once, because the additive half of a module is an abelian group and the only new thing to check is that scalars respect the quotient.
+
+The price of the generality is that scalars need not form a field.
+Every vector space has a basis, but most modules do not; a submodule of a free module need not be free; a minimal set of generators need not be linearly independent.
+These failures are not defects of the theory — they are exactly what the structure theorem of *Finitely Generated Modules over PIDs* measures, and they disappear when $R$ is a principal ideal domain.
+Chapter 17 therefore stops short of classification: it builds the objects and the four homomorphism theorems, and ends with the fact that every module is a quotient of a free one, which is the starting point of Chapter 18.
+
+The exposition runs as follows.
+*Definition of Modules* gives the axioms, the endomorphism-ring viewpoint, and the three specialisations.
+*Submodules, Homomorphisms and Quotient Modules* builds the internal substructures, the maps between them, and the quotient by a submodule.
+*Homomorphism Theorems for Modules* transfers the four theorems of Chapter 5 — this is the section promised as §17.3 at the opening of that chapter.
+*Direct Sums and Free Modules* assembles modules from copies of $R$, introduces bases and generators, and proves that every module is a quotient of a free one.
+
+Boundaries are drawn as in the preceding parts.
+The classification of finitely generated modules over a PID, its Smith normal form, and the rational and Jordan canonical forms belong to *Finitely Generated Modules over PIDs*.
+Linear algebra itself is not redeveloped here: vector spaces appear only as the case $R = F$, and their theory is used as already known.
+
+== Definition of Modules // 模的定义
+
+=== The Axioms
+
+Throughout this part $R$ denotes a unital ring.
+The convention of #link(<def:unital-ring>)[§8.1] is that a ring need not have an identity, but the axiom $1_R m = m$ below requires one, so unitality is assumed here and is not repeated in every statement.
+
+#eq[
+  $r (m + n) = r m + r n, quad (r + s) m = r m + s m, quad (r s) m = r (s m), quad 1_R m = m.$
+] <eq:module-axioms>
+
+#definition(name: "Left $R$-Module")[
+  Let $R$ be a unital ring.
+  A *left $R$-module* is an abelian group $(M, +)$ together with a map $R times M -> M$, $(r, m) |-> r m$, satisfying the four identities of #link(<eq:module-axioms>)[the display above] for all $r, s in R$ and $m, n in M$.
+  Elements of $R$ are called *scalars* and elements of $M$ *vectors*.
+] <def:module>
+
+The first axiom says that each $r in R$ acts as a group endomorphism of $M$; the second that the assignment $r |-> (m |-> r m)$ is additive; the third and fourth that it respects multiplication and the identity.
+So the four identities are precisely the statement that a module is a representation of $R$ by endomorphisms of an abelian group, recorded next.
+
+#theorem(name: "Modules as Endomorphism Representations")[
+  Let $M$ be an abelian group and $R$ a unital ring.
+  Then giving $M$ the structure of a left $R$-module is the same as giving a unital ring homomorphism $rho: R -> "End"(M)$.
+] <thm:module-as-endomorphism>
+
+#proof[
+  Given a module structure, put $rho(r)(m) = r m$.
+  The first axiom of #link(<eq:module-axioms>)[the display] says $rho(r)$ lies in $"End"(M)$, the ring of #link(<def:endomorphism-ring>)[§8.5]; the second says $rho$ is additive; the third and fourth say $rho(r s) = rho(r) compose rho(s)$ and $rho(1_R) = "id"_(M)$.
+  Conversely, given $rho$, define $r m = rho(r)(m)$ and read the four module axioms off the corresponding identities for $rho$, using that each $rho(r)$ is a group homomorphism.
+]
+
+The theorem is the module version of #link(<def:group-action>)[§6.1]: a group action is a homomorphism $G -> "Aut"(X)$, and a module is a linear action of a ring on an abelian group.
+It also explains why the definition has exactly four axioms and no more.
+
+#note(title: "Left, right, and bimodules")[
+  A *right $R$-module* replaces $r m$ by $m r$, with the third axiom reading $m (r s) = (m r) s$; equivalently, it is a left module over the opposite ring $R^(op)$.
+  An *$R$-$S$-bimodule* is a left $R$-module and a right $S$-module with $(r m) s = r (m s)$.
+
+  When $R$ is commutative the two sides agree and the distinction is invisible.
+  When $R$ is not, it matters: $M_(n)(R)$ is not commutative, and its left and right module categories are different objects.
+  Throughout this part *module* means *left module*, and a right module is written explicitly as $M_R$.
+] <note:left-right-convention>
+
+#property(name: "Arithmetic in a Module")[
+  Let $M$ be a left $R$-module, $r in R$ and $m in M$.
+  - $r dot 0_M = 0_M$ and $0_R dot m = 0_M$;
+  - $r (-m) = -(r m)$ and $(-r) m = -(r m)$;
+  - $r (m - n) = r m - r n$ and $(r - s) m = r m - s m$.
+] <prop:module-arithmetic>
+
+#proof[
+  From $r (0_M + 0_M) = r 0_M + r 0_M$ and cancellation in the group $M$ (#link(<prop:group-basic-properties>)[§2.3]) one gets $r 0_M = 0_M$; likewise $(0_R + 0_R) m = 0_R m + 0_R m$ gives $0_R m = 0_M$.
+
+  Since $r (-m) + r m = r (-m + m) = r 0_M = 0_M$, the element $r(-m)$ is the additive inverse of $r m$, and similarly $(-r) m + r m = ((-r) + r) m = 0_R m = 0_M$.
+  The two difference identities follow by expanding $m - n = m + (-n)$ and $r - s = r + (-s)$.
+]
+
+These are the same computations as #link(<prop:ring-arithmetic>)[§8.1], with one of the two factors replaced by a scalar; the proof is included only because it is short and it fixes the sign conventions used below.
+
+#caution(title: "Two distributive laws, not one")[
+  The first and second axioms of #link(<eq:module-axioms>)[the display] are independent: one concerns addition in $M$, the other addition in $R$.
+  Neither implies the other.
+  In a non-commutative ring one must also keep the order in $(r s) m = r (s m)$: writing $m (r s)$ or $(s r) m$ silently converts a left module into a right one, and the third axiom fails.
+] <caution:scalar-side>
+
+=== Three Faces of One Notion
+
+The definition earns its keep by specialising.
+Each of the following examples is a structure already studied in this book, now read as a module.
+
+#example(name: "Abelian groups are $bb(Z)$-modules.")[
+  Let $A$ be an abelian group and define $n a$ for $n in bb(Z)$ to be the $n$-fold sum of $a$, with the usual interpretation for negative $n$.
+  The identities of #link(<prop:order-properties>)[§2.3] are exactly the four module axioms, so $A$ is a $bb(Z)$-module.
+
+  Conversely, forgetting the scalars of a $bb(Z)$-module leaves an abelian group, and these two operations are inverse: giving an abelian group and giving a $bb(Z)$-module are the same data.
+  This is why the structure theorem of Chapter 7 could be stated entirely in the language of groups, and why Chapter 18 can re-prove it as a statement about modules over the PID $bb(Z)$ (#link(<note:pid-generalisation>)[§7.2]).
+] <ex:z-modules>
+
+#example(name: "Vector spaces are modules over a field.")[
+  Let $F$ be a field (#link(<def:field>)[§8.3]) and $V$ a vector space over $F$.
+  The vector space axioms are #link(<eq:module-axioms>)[the four identities above], so $V$ is an $F$-module; submodules are subspaces and linear maps are module homomorphisms.
+  In particular the extension field $E$ of #link(<def:field-extension>)[§12.1] is a vector space over $F$, and #link(<eq:degree-def>)[the degree $[E:F]$] is its dimension as an $F$-module.
+] <ex:vector-space-module>
+
+#example(name: "Ideals are modules.")[
+  A ring $R$ is a left $R$-module under left multiplication, $r m = r m$, because associativity and the left distributive law are the third and first axioms.
+  A submodule of this module is precisely a left ideal (#link(<def:ideal>)[§9.1]), and a submodule of the right $R$-module $R_R$ is a right ideal.
+
+  More generally every left ideal $I subset.eq R$ is itself a left $R$-module, and the quotient $R \/ I$ of #link(<def:quotient-ring>)[§9.2] is again a left $R$-module with action $r (a + I) = r a + I$.
+  Chapter 9 built that quotient as a ring; §17.2 will rebuild it as a module, with a strictly shorter proof.
+] <ex:ideal-module>
+
+#example(name: "$k[x]$-modules are vector spaces with an operator.")[
+  Let $V$ be a vector space over a field $k$ and $T: V -> V$ a linear operator.
+  For $f in k[x]$ (#link(<def:polynomial-ring>)[§11.1]) put $f dot v = f(T)(v)$, where $f(T)$ is obtained by substituting $T$ for $x$ and $1$ for the constant term.
+  The universal property of #link(<thm:poly-universal>)[§11.1] shows that this makes $V$ a $k[x]$-module.
+
+  Conversely a $k[x]$-module structure on a $k$-vector space is determined by the action of $x$, which is a linear operator, so the two descriptions are equivalent.
+  Chapter 18 reads the rational and Jordan canonical forms of $T$ as the structure theorem for this $k[x]$-module.
+] <ex:polynomial-module>
+
+#note(title: "The three faces")[
+  The scalar ring decides which familiar theory one is doing: $R = bb(Z)$ gives abelian groups, $R = F$ a field gives vector spaces, and $R$ acting on itself gives ideals.
+  In all three cases submodules, quotients and homomorphisms are the usual ones — subgroups, quotients of abelian groups and group homomorphisms in the first; subspaces, quotient spaces and linear maps in the second; ideals, quotient rings and ring homomorphisms in the third.
+
+  What changes with the scalar ring is not the additive machinery but the supply of bases.
+  Over a field every module is free; over $bb(Z)$ only the torsion-free finitely generated ones are; over a general ring even submodules of free modules can fail to be free (#link(<note:no-basis-warning>)[§17.4]).
+] <note:three-faces>
+
+#figure(
+  image("img/module-faces.svg", width: 88%),
+  caption: [Three specialisations of one definition. A left $R$-module is an abelian group with a unital ring homomorphism $R -> "End"(M)$; taking $R = bb(Z)$, $R = F$ a field, and $M = R$ itself produces abelian groups, vector spaces, and left ideals. The additive half — quotients and the four homomorphism theorems — is inherited from group theory in every case; only the compatibility of scalars with quotients needs a new argument.],
+  placement: none,
+  supplement: [Fig.],
+) <fig:module-faces>
+
+== Submodules, Homomorphisms and Quotient Modules // 子模、同态与商模
+
+=== Submodules
+
+#definition(name: "Submodule")[
+  Let $M$ be a left $R$-module.
+  A subset $N subset.eq M$ is a *submodule* if it is a subgroup of $(M, +)$ and $r n in N$ for all $r in R$ and $n in N$, with the restricted addition and scalar action making $N$ itself a left $R$-module.
+] <def:submodule>
+
+As with subrings and ideals, the last clause costs nothing: the four module axioms are identities that hold in $M$ and therefore hold on any subset closed under the operations.
+
+#theorem(name: "Submodule Criterion")[
+  A nonempty subset $N$ of a left $R$-module $M$ is a submodule if and only if $m - n in N$ for all $m, n in N$ and $r n in N$ for all $r in R$, $n in N$.
+] <thm:submodule-criterion>
+
+#proof[
+  Necessity is the definition of a subgroup together with closure under scalars.
+
+  Conversely, $m - n in N$ for all $m, n in N$ is #link(<thm:subgroup-criteria>)[the subgroup criterion], so $(N, +)$ is a subgroup of the abelian group $M$, hence an abelian group in its own right.
+  Scalar closure is the second hypothesis, and the module axioms hold in $N$ because they hold identically in $M$.
+]
+
+The criterion is the exact analogue of #link(<prop:ideal-criterion>)[the ideal criterion of §9.1]: a subgroup plus one absorption condition.
+The difference is that an ideal absorbs multiplication by elements of $R$ on both sides, whereas a submodule absorbs the scalar action on one side only.
+
+#proposition(name: "Intersections and Sums of Submodules")[
+  Let $M$ be a left $R$-module and let ${N_i : i in I}$ be a family of submodules.
+  - $inter_(i in I) N_i$ is a submodule;
+  - for two submodules $N$ and $L$, the set $N + L = {n + l : n in N, l in L}$ is a submodule and is the smallest one containing $N union L$;
+  - consequently every subset $S subset.eq M$ lies in a smallest submodule $⟨S⟩$, whose elements are the finite sums $sum_k r_k s_k$ with $r_k in R$ and $s_k in S$.
+] <prop:submodule-operations>
+
+#proof[
+  *(1)* The intersection contains $0$, and if $m, n$ lie in every $N_i$ then so do $m - n$ and $r m$; the criterion applies.
+
+  *(2)* Differences and scalar multiples of sums stay sums, since each component does; absorption reads $r (n + l) = r n + r l$.
+  Both $N$ and $L$ are contained in $N + L$, and any submodule containing them contains all sums $n + l$, so $N + L$ is the smallest such submodule.
+
+  *(3)* The intersection of all submodules containing $S$ is a submodule by (1), and it is minimal.
+  The set of finite sums $sum_k r_k s_k$ is a submodule containing $S$ and is contained in every submodule containing $S$, so it equals $⟨S⟩$.
+]
+
+The description of $⟨S⟩$ is the module version of #link(<eq:ideal-generated>)[the generated ideal of §9.1], with coefficients from $R$ in place of products in $R$.
+A module generated by a finite set is called *finitely generated*; §17.4 shows why this is the condition Chapter 18 needs.
+
+=== Homomorphisms
+
+#definition(name: "Module Homomorphism")[
+  Let $M$ and $N$ be left $R$-modules.
+  A map $f: M -> N$ is an *$R$-module homomorphism*, or an *$R$-linear map*, if $f(m + n) = f(m) + f(n)$ and $f(r m) = r f(m)$ for all $r in R$ and $m, n in M$.
+] <def:module-homomorphism>
+
+The definition is #link(<def:homomorphism>)[the general homomorphism of §1.3] specialised to the algebraic system whose addition is $+$ on $M$ and whose unary operations are the scalar maps $m |-> r m$ for $r in R$, and it is the module counterpart of #link(<def:ring-homomorphism>)[§8.2]: scalar multiplication replaces multiplication of two elements of the domain.
+An isomorphism is a bijective homomorphism whose inverse is a homomorphism; an endomorphism is a homomorphism $M -> M$.
+
+#definition(name: "Kernel and Image of a Module Homomorphism")[
+  Let $f: M -> N$ be a homomorphism of left $R$-modules.
+  Its *kernel* is $"Ker" f = {m in M : f(m) = 0_N}$ and its *image* is $"Im" f = f(M)$.
+] <def:module-kernel>
+
+#proposition(name: "Elementary Properties of Module Homomorphisms")[
+  Let $f: M -> N$ and $g: L -> M$ be homomorphisms of left $R$-modules.
+  - $f(0_M) = 0_N$, $f(-m) = -f(m)$ and $f(m - n) = f(m) - f(n)$;
+  - $"Ker" f$ is a submodule of $M$ and $"Im" f$ is a submodule of $N$;
+  - $f$ is injective if and only if $"Ker" f = {0}$;
+  - $f compose g$ is a homomorphism;
+  - the set $"Hom"_(R)(M, N)$ is an abelian group under pointwise addition, and $"End"_(R)(M)$ is a unital ring under pointwise addition and composition.
+] <prop:module-hom-basic>
+
+#proof[
+  *(1)* Additivity alone makes $f$ a homomorphism of abelian groups, so these are the identities of #link(<prop:homomorphism-preserves-laws>)[§1.3].
+
+  *(2)* If $m, n in "Ker" f$ then $f(m - n) = 0$ and $f(r m) = r f(m) = 0$, so the criterion applies; similarly $f(m) - f(n) = f(m - n)$ and $f(r m) = r f(m)$ show that the image is closed.
+
+  *(3)* Injectivity gives $f(m) = 0 = f(0) => m = 0$; conversely $f(m) = f(n)$ gives $f(m - n) = 0$, hence $m = n$.
+
+  *(4)* Both maps preserve sums and scalars, so their composite does.
+
+  *(5)* Pointwise sums of $R$-linear maps are $R$-linear, and the abelian group axioms are inherited from $N$.
+  Composition is associative and distributes over pointwise addition because the maps are additive, and $"id"_(M)$ is the identity; so $"End"_(R)(M)$ is a ring of the kind constructed in #link(<def:endomorphism-ring>)[§8.5].
+]
+
+The fifth item closes a circle: #link(<thm:module-as-endomorphism>)[§17.1] described a module by a homomorphism $R -> "End"(M)$, and here $"End"$ is taken with respect to that very module structure, so $"End"_(R)(M)$ is generally a *smaller* ring than $"End"(M)$ (the endomorphisms of $M$ as an abelian group).
+
+=== Quotient Modules
+
+Let $N$ be a submodule of $M$.
+Additively there is nothing to construct: $N$ is a subgroup of the abelian group $(M, +)$, hence normal, and the quotient group $M \/ N$ of cosets $m + N$ is available from #link(<thm:quotient-group>)[§4.2].
+The only question is whether the scalar action descends to the cosets.
+
+#eq[
+  $r (m + N) = r m + N.$
+] <eq:quotient-module-action>
+
+#theorem(name: "The Quotient Module")[
+  Let $M$ be a left $R$-module and $N$ a submodule.
+  Then the formula of #link(<eq:quotient-module-action>)[the display above] is well defined and makes the quotient group $M \/ N$ into a left $R$-module.
+] <thm:quotient-module>
+
+#proof[
+  *Step 1: well-definedness.*
+  Suppose $m + N = m' + N$, so that $m' - m in N$.
+  Since $N$ is a submodule, $r (m' - m) in N$, and therefore $r m' - r m in N$, which says $r m' + N = r m + N$.
+  This is the entire new content: it is the module counterpart of #link(<lem:quotient-well-defined>)[§9.2], where absorption of multiplication was what made the product of cosets well defined.
+  No normality hypothesis is needed, because $(M, +)$ is abelian.
+
+  *Step 2: additive group.*
+  By #link(<thm:quotient-group>)[§4.2], $(M \/ N, +)$ is an abelian group with zero $0 + N = N$.
+
+  *Step 3: the four axioms.*
+  Each is verified on representatives, using #link(<eq:module-axioms>)[the axioms in $M$].
+  For instance
+  $r ((m + N) + (m' + N)) = r ((m + m') + N) = (r m + r m') + N = r (m + N) + r (m' + N)$,
+  and the other three are the same computation with the corresponding identity in $M$.
+]
+
+#theorem(name: "The Natural Homomorphism")[
+  Let $N$ be a submodule of a left $R$-module $M$.
+  Then $pi: M -> M \/ N$, $m |-> m + N$, is a surjective module homomorphism with $"Ker" pi = N$.
+] <thm:natural-hom-module>
+
+#proof[
+  Addition is preserved by the definition of the quotient group, and
+  $pi(r m) = r m + N = r (m + N) = r pi(m)$ by #link(<eq:quotient-module-action>)[the scalar action], so $pi$ is $R$-linear.
+  Surjectivity holds by construction, and $pi(m) = N$ exactly when $m in N$.
+]
+
+Comparing with #link(<thm:quotient-ring>)[§9.2] shows the gain: a quotient ring needs its denominator to be a two-sided ideal, because multiplication by cosets must be well defined in both factors; a quotient module needs only a submodule, because there is only one scalar and one vector.
+This is the formal reason the quotient construction in module theory is shorter.
+
+#example(name: "Three quotient modules.")[
+  + $bb(Z) \/ n bb(Z)$ is a $bb(Z)$-module, the quotient of the regular module by its submodule $n bb(Z)$; its elements are the residue classes of #link(<ex:residue-group>)[§2.2].
+  + For a left ideal $I subset.eq R$, the additive quotient $R \/ I$ is a left $R$-module with action $r (a + I) = r a + I$.
+    When $I$ is a two-sided ideal this is the additive part of the quotient ring of #link(<def:quotient-ring>)[§9.2].
+  + For $f in k[x]$ the quotient $k[x] \/ (f)$ is a $k[x]$-module, and as a $k$-vector space it has dimension $\"deg\" f$ (#link(<prop:quotient-degree>)[§11.4]).
+    Chapter 18 reads the Jordan canonical form from this module.
+] <ex:quotient-module-examples>
+
+Every submodule is now the kernel of a homomorphism, namely the natural one.
+The converse was #link(<prop:module-hom-basic>)[the second item above]: every kernel is a submodule.
+This dictionary is the input to the four homomorphism theorems.
+
+== Homomorphism Theorems for Modules // 模的同态定理
+
+The four theorems of Chapter 5 were advertised there as the template for their ring-theoretic and module-theoretic counterparts (#link(<thm:correspondence>)[§5.3]).
+Rings supplied one of those counterparts in #link(<thm:ring-first-isomorphism>)[§9.3]; modules supply the other here.
+Nothing new needs to be proved: a module homomorphism is in particular a homomorphism of abelian groups, so the group proofs transfer verbatim, and the only extra check is that the bijections respect scalar multiplication.
+
+#theorem(name: "First Isomorphism Theorem for Modules")[
+  Let $f: M -> N$ be a homomorphism of left $R$-modules.
+  Then $Phi: M \/ "Ker" f -> "Im" f$, $m + "Ker" f |-> f(m)$, is an isomorphism of $R$-modules.
+] <thm:module-first-isomorphism>
+
+#proof[
+  *Well defined, bijective and additive.*
+  This is #link(<thm:first-isomorphism>)[the group version of §5.2] applied to the underlying abelian groups: $m + "Ker" f = m' + "Ker" f$ exactly when $f(m) = f(m')$.
+
+  *Linear.*
+  Here is the only new line:
+  $Phi(r (m + "Ker" f)) = Phi(r m + "Ker" f) = f(r m) = r f(m) = r Phi(m + "Ker" f)$,
+  using #link(<eq:quotient-module-action>)[the scalar action on the quotient] and the linearity of $f$.
+]
+
+#theorem(name: "Second Isomorphism Theorem for Modules")[
+  Let $N$ and $L$ be submodules of a left $R$-module $M$.
+  Then $(N + L) \/ L tilde.equiv N \/ (N inter L)$, by the map $n + (N inter L) |-> n + L$.
+] <thm:module-second-isomorphism>
+
+#proof[
+  The map is the composite of the inclusion $N -> N + L$ with #link(<thm:natural-hom-module>)[the natural homomorphism] $N + L -> (N + L) \/ L$, hence is linear.
+  Its kernel is ${n in N : n in L} = N inter L$, and it is surjective because a class $(n + l) + L$ equals $n + L$.
+  The first isomorphism theorem finishes; the computation is identical to #link(<thm:second-isomorphism>)[§5.3] and #link(<thm:ring-second-isomorphism>)[§9.3].
+]
+
+#theorem(name: "Third Isomorphism Theorem for Modules")[
+  Let $N subset.eq L subset.eq M$ be submodules.
+  Then $(M \/ N) \/ (L \/ N) tilde.equiv M \/ L$, by the map $(m + N) + L \/ N |-> m + L$.
+] <thm:module-third-isomorphism>
+
+#proof[
+  The natural homomorphism $M -> M \/ L$ kills $N$, so it factors through $M \/ N$ by #link(<thm:module-first-isomorphism>)[the first theorem]; the induced map is surjective with kernel $L \/ N$.
+  Equivalently, this is #link(<thm:third-isomorphism>)[§5.3] with one scaling check, exactly as for #link(<thm:ring-third-isomorphism>)[§9.3].
+]
+
+#theorem(name: "Correspondence Theorem for Modules")[
+  Let $N$ be a submodule of a left $R$-module $M$ and $pi: M -> M \/ N$ the natural homomorphism.
+  Then $L |-> L \/ N$ is a bijection, with inverse $K |-> pi^(-1)(K)$, between the submodules of $M$ containing $N$ and the submodules of $M \/ N$.
+  It preserves and reflects inclusions, and exchanges intersections with intersections and sums with sums.
+] <thm:module-correspondence>
+
+#proof[
+  *Submodules correspond.*
+  If $L supset.eq N$ is a submodule, then $L \/ N = pi(L)$ is a submodule of $M \/ N$ because $pi$ is a surjective homomorphism (#link(<prop:module-hom-basic>)[§17.2]).
+  If $K$ is a submodule of $M \/ N$, then $pi^(-1)(K)$ is a submodule containing $N$: for $m, m' in pi^(-1)(K)$ and $r in R$ one has $pi(m - m') in K$ and $pi(r m) = r pi(m) in K$.
+
+  *The two constructions are inverse.*
+  $pi(pi^(-1)(K)) = K$ because $pi$ is surjective, and $pi^(-1)(pi(L)) = L + N = L$ because $N subset.eq L$.
+
+  *Inclusions and operations* are preserved by the definition of the image, and the preimage of an intersection is the intersection of preimages; sums follow by the same argument using surjectivity.
+]
+
+The four statements are word-for-word those of Chapter 5 (#link(<thm:first-isomorphism>)[§5.2] through #link(<thm:correspondence>)[§5.3]) and their ring counterparts of #link(<thm:ring-first-isomorphism>)[§9.3].
+A single principle accounts for all three versions: the quotient is taken in the category of abelian groups, where every subgroup is normal, and the extra structure — a second operation in rings, a scalar action in modules — merely has to be checked to descend to the cosets.
+That check was #link(<lem:quotient-well-defined>)[§9.2] for rings and #link(<thm:quotient-module>)[§17.2] for modules.
+
+== Direct Sums and Free Modules // 直和、自由模与生成元
+
+=== Products and Sums
+
+#definition(name: "Direct Product and Direct Sum")[
+  Let ${M_i : i in I}$ be a family of left $R$-modules.
+  Their *direct product* $product_(i in I) M_i$ is the Cartesian product with componentwise addition and scalar action.
+  Their *direct sum* $⊕_(i in I) M_i$ is the submodule of the product consisting of the families with only finitely many nonzero components.
+] <def:direct-product-module>
+
+For a finite index set the two coincide, and one writes $M_1 ⊕ dots.c ⊕ M_n$, as in #link(<def:direct-sum>)[§7.1] for abelian groups.
+The verification that both are modules is componentwise and therefore immediate.
+
+#caution(title: "Infinite direct sums are not products")[
+  When $I$ is infinite, $⊕_(i in I) M_i$ is a proper submodule of $product_(i in I) M_i$: the family with every component equal to a fixed nonzero vector lies in the product but not in the sum.
+  Chapter 7 recorded the same distinction for abelian groups and declared the infinite case unnecessary there (#link(<def:direct-sum>)[§7.1]); Chapter 18 needs it once, for free modules on an arbitrary basis.
+] <caution:infinite-direct-sum>
+
+=== Free Modules
+
+#definition(name: "Free Module and Basis")[
+  Let $M$ be a left $R$-module.
+  A subset $B subset.eq M$ is a *basis* if every $m in M$ can be written uniquely as a finite sum $sum_i r_i b_i$ with $r_i in R$ and $b_i in B$.
+  A module possessing a basis is *free*, and $M$ is *free of rank $n$* if it has a basis of $n$ elements.
+  The module $⊕_(b in B) R$, with $b$ identified with the unit vector having $1_R$ in position $b$, is the *free module on $B$*.
+] <def:free-module>
+
+Equivalently, $B$ generates $M$ and is *linearly independent*: $sum_i r_i b_i = 0$ forces every $r_i = 0$.
+The standard basis of $R^n$ makes $R^n$ free of rank $n$, and $R$ itself is free of rank $1$ over itself.
+
+#eq[
+  $Phi: ⊕_(s in S) R -> M, quad sum_(s in S) r_s e_s |-> sum_(s in S) r_s m_s.$
+] <eq:free-universal-map>
+
+#proposition(name: "Universal Property of a Free Module")[
+  Let $S$ be a set, $e_s$ the standard basis of $⊕_(s in S) R$, $M$ a left $R$-module, and $s |-> m_s$ any map $S -> M$.
+  Then there is exactly one homomorphism of $R$-modules satisfying #link(<eq:free-universal-map>)[the display above].
+] <prop:free-module-universal>
+
+#proof[
+  *Uniqueness.*
+  A homomorphism is determined by its values on a generating set, so its values on the $e_s$ determine it everywhere.
+
+  *Existence.*
+  Define $Phi$ by the displayed formula; the sums are finite because elements of the direct sum have finite support.
+  It preserves sums by collecting coefficients and is $R$-linear because
+  $Phi(r sum_s r_s e_s) = sum_s (r r_s) m_s = r sum_s r_s m_s$.
+]
+
+This is the same universal property as #link(<thm:poly-universal>)[§11.1]: there a polynomial ring was freely generated over $R$ by one element subject to commutativity, and here a free module is generated by a set with no relations at all.
+Both are instances of the same idea — a free object is one on which a map out is freely determined by its values on generators.
+
+#corollary(name: "Every Module Is a Quotient of a Free Module")[
+  Let $M$ be a left $R$-module and $S subset.eq M$ a generating set.
+  Then there is a surjective homomorphism $⊕_(s in S) R -> M$ whose kernel $K$ satisfies $M tilde.equiv (⊕_(s in S) R) \/ K$; if $M$ is finitely generated, $S$ may be chosen finite and $M tilde.equiv R^n \/ K$.
+] <cor:every-module-is-quotient>
+
+#proof[
+  Apply #link(<prop:free-module-universal>)[the universal property] to the inclusion $S -> M$, with $e_s |-> s$.
+  Its image is the submodule generated by $S$ (#link(<prop:submodule-operations>)[§17.2]), which is $M$, so the map is surjective.
+  Now #link(<thm:module-first-isomorphism>)[the first isomorphism theorem] gives the stated quotient, and $S$ finite means $⊕_(s in S) R = R^n$ with $n = abs(S)$.
+]
+
+The submodule $K$ is called the *module of relations* among the chosen generators, and the corollary is the precise sense in which a module is described by generators and relations.
+Chapter 18 turns it into a matrix: when $R$ is a principal ideal domain, $K$ is itself free and can be put into Smith normal form, which yields the classification theorem.
+
+#corollary(name: "Endomorphisms of a Free Module")[
+  Let $R$ be a commutative unital ring.
+  Then $"End"_(R)(R^n) tilde.equiv M_(n)(R)$, the ring of $n times n$ matrices over $R$.
+] <cor:end-free-module>
+
+#proof[
+  Fix the standard basis $e_1, dots, e_n$ of $R^n$ and write $f(e_j) = sum_i a_(i j) e_i$.
+  Since $R$ is commutative, the map $f |-> (a_(i j))$ sends composition to matrix multiplication: the $(i, j)$ entry of the matrix of $f compose g$ is $sum_k a_(i k) b_(k j)$.
+  It preserves sums, is injective because a linear map is determined by its values on a basis, and is surjective because any matrix defines $f(v) = A v$, which is $R$-linear by commutativity.
+  The ring structure on $"End"_(R)(R^n)$ is that of #link(<prop:module-hom-basic>)[§17.2].
+]
+
+The commutativity hypothesis is not cosmetic.
+For a non-commutative $R$, an $R$-linear endomorphism of the *left* module $R^n$ is right multiplication by a matrix, and the resulting ring is $M_(n)(R^(op))$; to obtain $M_(n)(R)$ one uses right modules instead.
+Both agree when $R$ is commutative, which covers the case $R = F$ of #link(<ex:end-v-mn>)[§8.5] and the principal ideal domains of Chapter 18.
+
+#note(title: "Why not every module has a basis")[
+  Over a field every module is a vector space and therefore free.
+  Over a general ring this fails at once: $bb(Z) \/ n bb(Z)$ is a $bb(Z)$-module in which $n dot m = 0$ for every $m$, whereas in a free $bb(Z)$-module $r m = 0$ with $r != 0$ forces $m = 0$; so it has no basis.
+
+  Two further warnings are deferred to Chapter 18.
+  A submodule of a free module need not be free, although it *is* free when $R$ is a PID — the first step of the structure theorem.
+  And the rank of a free module over a general ring need not be well defined; for the commutative rings used in this book it is, a fact quoted without proof.
+] <note:no-basis-warning>
+
+#example(name: "Free and non-free modules.")[
+  + $R^n$ is free of rank $n$ over any unital $R$, with the standard basis; so are $bb(Z)^n$ over $bb(Z)$ and $k[x]^n$ over $k[x]$.
+  + $bb(Z) \/ 2 bb(Z)$ is finitely generated — by one element — but not free over $bb(Z)$, by #link(<note:no-basis-warning>)[the argument above].
+  + $bb(Q)$ is not free as a $bb(Z)$-module: two nonzero rationals are linearly dependent over $bb(Z)$, so a basis would have one element, yet no single rational generates $bb(Q)$.
+  + The ideal $(2, x)$ of $bb(Z)[x]$ (#link(<cor:zx-not-pid>)[§11.3]) is a submodule of the free module $bb(Z)[x]$ that is not free; this is the example Chapter 18 will treat systematically.
+] <ex:free-module-examples>
+
+#note(title: "Closing remarks: towards the structure theorem")[
+  Three things are now in place for Chapter 18.
+
+  *The objects.*
+  A module is a linear action of $R$ on an abelian group (#link(<thm:module-as-endomorphism>)[§17.1]); submodules, quotients and homomorphisms are the expected ones.
+
+  *The calculus.*
+  The four homomorphism theorems transfer from group theory with one scalar check each (#link(<thm:module-first-isomorphism>)[§17.3]).
+
+  *The presentation.*
+  Every finitely generated module is $R^n \/ K$ for a relation submodule $K$ (#link(<cor:every-module-is-quotient>)[§17.4]).
+
+  What remains is arithmetic on that presentation.
+  When $R$ is a principal ideal domain, $K$ is free and admits a Smith normal form, so the quotient splits into a free part and cyclic torsion parts; this is the structure theorem announced in #link(<note:pid-generalisation>)[§7.2], and its special case $R = bb(Z)$ is the classification of finitely generated abelian groups proved there.
+  The same theorem, read for the $k[x]$-module of #link(<ex:polynomial-module>)[§17.1], produces the rational and Jordan canonical forms of a linear operator.
+] <note:closing-part-four>
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
@@ -8481,19 +8953,32 @@ The corollary closes the circle opened in §12.1: the degree of $bb(R) \/ bb(Q)$
 //
 // --- Chapter 17: 模的基本概念 (Basic Concepts of Modules) ---
 
+//   结构说明：本章四节（蓝图原为三节）。同态定义前移到 §17.2，
+//   四个同态定理独立成 §17.3，以兑现 Ch 5 L3238「module theory (§17.3)」的节号承诺。
+
 //   Section 17.1: 模的定义 (Definition of Modules)
-//     - 左 $R$-模与右 $R$-模
-//     - 典型例子（Abel群是 $\bb(Z)$-模、向量空间是 $F$-模、理想是 $R$-模）
+//     - 四条公理与含幺约定；模 ⟺ 环同态 $R -> \mathrm{End}(M)$
+//     - 左/右模与双模的约定（默认左模）
+//     - 模中算术；三副面孔图 fig:module-faces
+//     - 例：Abel 群是 $\bb(Z)$-模、向量空间是 $F$-模、理想是 $R$-模、
+//       $k[x]$-模 = 带算子的向量空间（Ch 18 Jordan 标准形的种子）
 
-//   Section 17.2: 子模与商模 (Submodules and Quotient Modules)
-//     - 子模的定义与判定
-//     - 商模的构造
-//     - 模的同态定理
+//   Section 17.2: 子模、同态与商模 (Submodules, Homomorphisms and Quotient Modules)
+//     - 子模定义与判定、交与和、生成子模 $\langle S\rangle$
+//     - 模同态、核与像、基本性质；$\mathrm{Hom}_R$ 与 $\mathrm{End}_R$
+//     - 商模良定义（唯一新步骤）、自然同态；与 Ch 9 商环构造的对照
+//     - 三个商模实例
 
-//   Section 17.3: 模的同态 (Homomorphisms of Modules)
-//     - 模同态的核与像
-//     - 模的直积与直和
-//     - 自由模与基
+//   Section 17.3: 模的同态定理 (Homomorphism Theorems for Modules)
+//     - 第一、第二、第三同构定理与对应定理
+//     - 群/环/模三层模板的统一说明（兑现 Ch 5 L3238、L3847）
+
+//   Section 17.4: 直和、自由模与生成元 (Direct Sums and Free Modules)
+//     - 直积与直和（有限族一致，无限族有限支撑）
+//     - 自由模与基、泛性质（类比 $R[x]$ 的泛性质）
+//     - 每个模都是自由模的商 $R^n/K$（Ch 18 表现矩阵的硬前置）
+//     - $\mathrm{End}_R(R^n) \cong M_n(R)$（交换情形；兑现 Ch 8 L6123）
+//     - 非自由模的例子；章末转向 Ch 18 三件待办
 
 // --- Chapter 18: 主理想整环上的有限生成模 (Finitely Generated Modules over PIDs) ---
 
@@ -8610,6 +9095,26 @@ The corollary closes the circle opened in §12.1: the degree of $bb(R) \/ bb(Q)$
 //     「有限扩张 ⇒ 代数扩张」从 §12.1 后移到 §12.3（需要代数元定义）。
 //     代数闭包的存在性只陈述、不证明，Zorn 的说明放 note:closure-scope；
 //     唯一性与分裂域构造留 Ch 13。
+//
+// 11. Ch 17 修正蓝图的顺序倒置：原 §17.2 的「模的同态定理」放在
+//     §17.3 的「模同态」之前，无同态与核无法陈述。现把同态前移到
+//     §17.2，四个同态定理独立成 §17.3，正好兑现 Ch 5 L3238 点名的
+//     「module theory (§17.3)」。直积直和与自由模独立为 §17.4，
+//     并补「每个模都是自由模的商」，作为 Ch 18 表现矩阵的硬前置。
+//
+// 12. Ch 17 默认左模：右模与双模在 note:left-right-convention 交代，
+//     不做双轨陈述。$\mathrm{End}_R(R^n) \cong M_n(R)$ 只在 $R$ 交换时
+//     成立；非交换情形为 $M_n(R^{op})$，已在推论后注明，避免与
+//     Ch 8 ex:end-v-mn 的域情形混淆。
+//
+// 13. Ch 17 按蓝图编号 17 写入，但 Ch 13–16 尚未落笔，故在
+//     `#part("Introduction to Module Theory")` 之前放了两行跳号
+//     （`#counter(heading).update(16)` 与 `#chapter-counter.update(16)`），
+//     使章号、节号、公式号与组件号显示为 17.x。
+//     写入 Ch 13–16 后必须删除这两行，让编号自然接续。
+//     跳号期间文末 References 会占「Chapter 18」号（模板把
+//     bibliography 当作一章的既存行为），与蓝图 Ch 18 撞号；
+//     删除跳号后该页自然顺延，不必另行处理。
 //
 // ==========================================================================
 // 结构说明 (Structure Note)
