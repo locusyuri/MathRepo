@@ -1910,7 +1910,7 @@ specialise to give Sperner's theorem with the same sharp constant.
   No two of these 2-element subsets contain one another.
 
   #figure(
-    image("img/sperner-hassee.svg", width: 70%),
+    image("img/sperner-hasse.svg", width: 70%),
     caption: [
       The Boolean lattice $2^([4])$ as a Hasse diagram. The middle layer
       (subsets of size 2) is highlighted; it is the largest antichain, of
