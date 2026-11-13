@@ -5463,6 +5463,9 @@ principal ideal domain $R$, classifies finitely generated $R$-modules
 
 = Basic Concepts of Rings // 环的基本概念
 
+// 模板的公式计数器不按章重置，这里手动归零，使编号形如 (8.1)
+#counter(math.equation).update(0)
+
 Chapter 1 introduced operations and asked which laws they might obey; the distributive laws were recorded there as the pair that couples two operations together (#link(<def:operation>)[§1.2]), with the remark that they would be decisive for rings.
 This chapter collects the debt.
 
@@ -6263,6 +6266,584 @@ On the quotient set define the two operations by
   Both rest on ideals, the subject of *Ideals and Quotient Rings*.
 ] <note:ring-closing>
 
+= Ideals and Quotient Rings // 理想与商环
+
+// 同上：公式计数器按章归零
+#counter(math.equation).update(0)
+
+Chapter 8 ended with a promise.
+A ring homomorphism cannot distinguish two elements with the same image, and the set of elements it collapses absorbs multiplication (#link(<note:kernel-ideal-preview>)[§8.2]); the promise was that this stronger kind of subring is exactly what one may divide by.
+This chapter keeps the promise, and then reads the construction backwards.
+
+In group theory the corresponding question had a clean answer, and the answer is worth recalling because the ring case copies its shape.
+A subgroup supports a quotient group precisely when it is normal, normality is preserved by every homomorphism, and the four isomorphism theorems (#link(<thm:first-isomorphism>)[§5.2], #link(<thm:correspondence>)[§5.3]) describe the outcome.
+The ring case admits the same four theorems.
+What changes is the admissible substructure: not "normal" but *ideal*, and an ideal must absorb multiplication on both sides.
+
+Two operations carry the chapter:
+
+- *collapse*: given an ideal $I$, form $R \/ I$ by identifying everything in $I$ with $0$;
+- *read back*: the algebraic nature of $R \/ I$ records a property of $I$ — it is a domain exactly when $I$ is prime, a field exactly when $I$ is maximal.
+
+The second line is what makes ideals useful rather than merely permissible, since it converts a question about a quotient ring into a question about one subring.
+The Chinese Remainder Theorem is the extreme case, where comaximal ideals split the quotient into a product.
+
+The exposition runs as follows.
+*Ideals* introduces the substructure, the criterion, and the standard ways of producing ideals.
+*Quotient Rings* performs the collapse and proves that the ideals are exactly the kernels.
+*Homomorphism Theorems for Rings* transports the four theorems of Chapter 5.
+*Prime and Maximal Ideals* is the reverse reading, and explains why the two words are worth keeping apart.
+*The Chinese Remainder Theorem* exploits comaximality to decompose quotients.
+
+Boundaries are drawn as in the previous chapter.
+The divisibility theory built on these notions belongs to *Divisibility Theory*.
+The construction of fields as $k[x] \/ (f)$ belongs to *Polynomial Rings* and *Field Extensions*.
+The quotient of a module by a submodule belongs to *Basic Concepts of Modules*.
+
+== Ideals // 理想
+
+=== Ideals and the Criterion
+
+A subring is closed under multiplication; an ideal is closed under multiplication *by the whole ring*.
+That is the only difference, and it is the difference between a substructure one can quotient by and one cannot.
+The definition takes the kernel of a homomorphism as its model, because that is where the extra closure was first observed.
+
+#definition(name: "Ideal")[
+  Let $R$ be a ring and $I subset.eq R$ an additive subgroup.
+  - $I$ is a *left ideal* if $r a in I$ for all $r in R$ and $a in I$;
+  - $I$ is a *right ideal* if $a r in I$ for all $r in R$ and $a in I$;
+  - $I$ is a *two-sided ideal*, or simply an *ideal*, if it is both.
+] <def:ideal>
+
+In a commutative ring the three notions coincide, and "ideal" then always means a two-sided one.
+In a non-commutative ring they do not, and the matrix ring supplies the standard witness (#link(<caution:one-sided-ideals>)[below]).
+Every ideal is a subring, but a proper ideal is never a unital subring: $1_R in I$ would force $I = R$ (#link(<caution:proper-ideal>)[below]).
+The trivial ideals are $(0)$ and $R$ itself, and they are the two ideals every ring has.
+
+#note(title: "The ring analogue of a normal subgroup")[
+  Normal subgroups and ideals answer the same question in two categories.
+  A subgroup $N <= G$ survives quotienting exactly when $g N g^(-1) = N$ for all $g in G$ (#link(<def:normal-subgroup>)[§4.1]); an additive subgroup $I <= R$ survives exactly when $r a in I$ and $a r in I$ for all $r in R$.
+  In both cases the condition says that the substructure is stable under the ambient action — conjugation in a group, left and right multiplication in a ring.
+  In both cases the admissible substructures are exactly the kernels, and in both cases the quotient is the image.
+] <note:ideal-vs-normal>
+
+#proposition(name: "Ideal Criterion")[
+  A nonempty subset $I$ of a ring $R$ is a two-sided ideal if and only if
+  - $a - b in I$ for all $a, b in I$;
+  - $r a in I$ and $a r in I$ for all $a in I$ and $r in R$.
+] <prop:ideal-criterion>
+
+#proof[
+  If $I$ is an ideal, the first condition holds because $I$ is an additive subgroup, and the second is the absorption axiom.
+
+  Conversely, $a - b in I$ for all $a, b in I$ is the subgroup criterion (#link(<thm:subgroup-criteria>)[§3.1]), so $(I, +)$ is a subgroup of the abelian group $(R, +)$.
+  The two absorption conditions are exactly the left and right ideal axioms, so $I$ is a two-sided ideal.
+]
+
+Keeping only the left absorption condition characterizes left ideals, and keeping only the right condition characterizes right ideals.
+
+#caution(title: "A proper ideal contains no unit")[
+  Let $R$ be a unital ring and $I$ an ideal.
+  If $1_R in I$, then $r = r dot 1_R in I$ for every $r in R$, so $I = R$.
+  More generally, if $u in I$ is a unit, then $1_R = u^(-1) u in I$ and again $I = R$.
+  So a proper ideal consists of non-units, and a field has exactly two ideals: $(0)$ and the field itself.
+] <caution:proper-ideal>
+
+=== Principal and Generated Ideals
+
+Ideals are produced from subsets by closing them under subtraction and under multiplication by ring elements.
+The smallest ideal containing a given set is obtained this way, and the two cases that matter are a single element and a finite list.
+
+#definition(name: "Principal Ideal")[
+  Let $R$ be a ring and $a in R$.
+  The *principal ideal* generated by $a$ is the intersection of all ideals of $R$ containing $a$, written $(a)$.
+] <def:principal-ideal>
+
+In a commutative ring $(a) = a R = {a r : r in R}$, which is the formula used in practice.
+In a non-commutative ring the two-sided closure $R a R$ is needed, its elements being finite sums $sum r_i a s_i$.
+
+#definition(name: "Ideal Generated by a Set")[
+  Let $S subset.eq R$.
+  The *ideal generated by $S$*, written $⟨S⟩$, is the intersection of all ideals of $R$ containing $S$.
+] <def:generated-ideal>
+
+The intersection is an ideal by #link(<prop:ideal-operations>)[the next proposition], so $⟨S⟩$ is the smallest ideal containing $S$.
+In a commutative ring its elements are exactly the finite sums
+#eq[
+  $sum_(k=1)^n r_k s_k, quad n >= 0, quad r_k in R, quad s_k in S,$
+] <eq:ideal-generated>
+with the empty sum read as $0$; for $S = {a_1, dots, a_m}$ one writes $(a_1, dots, a_m)$.
+
+#example(name: "The ideals of $bb(Z)$.")[
+  Every ideal of $bb(Z)$ is principal.
+  For $I != (0)$ let $n$ be the least positive element of $I$ and divide an arbitrary $a in I$ by it: $a = q n + r$ with $0 <= r < n$.
+  Since $r = a - q n in I$ and $r < n$, minimality forces $r = 0$, hence $a in n bb(Z)$.
+  So the ideals of $bb(Z)$ are the sets $n bb(Z)$ for $n >= 0$, and
+  $(m) + (n) = (gcd(m, n))$, while $(m) inter (n) = ("lcm"(m, n))$.
+] <ex:ideals-in-z>
+
+#caution(title: "One-sided ideals exist")[
+  In $M_2(bb(R))$ let $L$ be the set of matrices whose second column vanishes.
+  Then $L$ is a left ideal, since the second column of $B A$ is $B$ applied to the second column of $A$, hence zero.
+  It is not a right ideal: $E_11 in L$, while $E_11 E_12 = E_12 in.not L$.
+] <caution:one-sided-ideals>
+
+=== Operations on Ideals
+
+#proposition(name: "Intersections, Sums and Products of Ideals")[
+  Let $I$ and $J$ be ideals of a ring $R$.
+  - $I inter J$ is an ideal;
+  - $I + J = {i + j : i in I, quad j in J}$ is an ideal, and it is the smallest ideal containing $I union J$;
+  - $I J$, the set of finite sums $sum_k i_k j_k$ with $i_k in I$ and $j_k in J$, is an ideal contained in $I inter J$.
+] <prop:ideal-operations>
+
+#proof[
+  *(1)* If $a, b in I inter J$ and $r in R$, then $a - b$, $r a$ and $a r$ lie in both $I$ and $J$; the criterion applies.
+
+  *(2)* Sums and differences of elements of $I + J$ stay in $I + J$, since each component does; absorption is $r (i + j) = r i + r j$ and $(i + j) r = i r + j r$.
+  Both $I$ and $J$ are contained in $I + J$, and any ideal containing them contains all sums $i + j$; so $I + J$ is the smallest such ideal.
+
+  *(3)* The sum of two finite sums of products is again one, and absorption reads $r sum i_k j_k = sum (r i_k) j_k$ and $sum i_k j_k r = sum i_k (j_k r)$, which are again of the required form.
+  Finally $i_k j_k in I$ because $I$ is an ideal and $j_k in J$; likewise $i_k j_k in J$, so $I J subset.eq I inter J$.
+]
+
+The same argument shows that the intersection of any family of ideals is an ideal, which is what makes #link(<def:generated-ideal>)[the ideal generated by a set] well defined.
+It also shows that the ideals of $R$ form a lattice under inclusion, with meet $I inter J$ and join $I + J$.
+
+=== A Running Example
+
+The integers supply examples of every phenomenon in this chapter; they do not supply a surprising one.
+The Gaussian integers will, and they are worth introducing once.
+
+#definition(name: "Gaussian Integers")[
+  The *Gaussian integers* are $bb(Z)[i] = {a + b i : a, b in bb(Z)} subset.eq bb(C)$.
+] <def:gaussian-integers>
+
+That $bb(Z)[i]$ is a subring of $bb(C)$ follows from the subring criterion: it is closed under subtraction, and $(a + b i)(c + d i) = (a c - b d) + (a d + b c) i$ because $i^2 = -1$.
+It is a domain but not a field: $2$ is not a unit, since $1/2 in.not bb(Z)[i]$.
+The *norm* $N(z) = z overline(z) = a^2 + b^2$ is multiplicative, $N(z w) = N(z) N(w)$, and an element is a unit exactly when its norm is $1$; this leaves $±1$ and $±i$.
+Chapter 10 will show that $bb(Z)[i]$ is Euclidean for this norm, hence a principal ideal domain.
+
+Two quotients of $bb(Z)[i]$ carry the chapter: $bb(Z)[i] \/ (1 + i)$ turns out to be $bb(F)_2$ (#link(<ex:zi-quotient>)[§9.3]), and that fact makes $(1 + i)$ a maximal ideal (#link(<ex:prime-in-zi>)[§9.4]).
+Both computations rest on one identity, $(1 + i)(1 - i) = 2$, which will be quoted twice.
+
+== Quotient Rings // 商环
+
+=== Cosets and the Product
+
+Additively there is nothing new.
+An ideal is a subgroup of the abelian group $(R, +)$, and the quotient group of cosets $a + I$ was built in Chapter 3 (#link(<def:coset>)[§3.3]).
+What a ring needs on top is a multiplication, and the only candidate is $(a + I)(b + I) = a b + I$.
+Whether that formula depends on the chosen representatives is the whole question, and the answer is precisely what distinguishes ideals from arbitrary subgroups.
+
+#lemma(name: "Well-Definedness of the Product")[
+  Let $R$ be a ring and $I$ an additive subgroup.
+  The formula $(a + I)(b + I) = a b + I$ defines a binary operation on $R \/ I$ if and only if $I$ is a two-sided ideal.
+] <lem:quotient-well-defined>
+
+#proof[
+  *Sufficiency.*
+  Suppose $I$ is a two-sided ideal, and let $a' = a + i$ and $b' = b + j$ with $i, j in I$.
+  Then $a' b' = a b + a j + i b + i j$, and the three extra terms lie in $I$ by absorption, so $a' b' + I = a b + I$.
+
+  *Necessity.*
+  Suppose the formula does not depend on representatives.
+  Fix $a in R$ and $i in I$, and compare the pairs $(a + i, b)$ and $(a, b)$ for an arbitrary $b in R$: well-definedness gives $(a + i) b + I = a b + I$, hence $i b in I$, so $I$ is a right ideal.
+  Comparing $(a, b + i)$ with $(a, b)$ gives $a i in I$, so $I$ is also a left ideal.
+]
+
+Addition needs no such care: $(R, +)$ is abelian, so every subgroup is normal and the sum $a + b + I$ is independent of representatives.
+That asymmetry between the two operations is the entire content of the lemma.
+
+The two operations are therefore
+#eq[
+  $(a + I) + (b + I) = (a + b) + I, quad (a + I)(b + I) = a b + I.$
+] <eq:quotient-operations>
+
+#definition(name: "Quotient Ring")[
+  Let $R$ be a ring and $I$ a two-sided ideal.
+  The *quotient ring* $R \/ I$ is the set of additive cosets $a + I$ equipped with the operations of #link(<eq:quotient-operations>)[above].
+] <def:quotient-ring>
+
+=== The Quotient Ring
+
+#theorem(name: "The Quotient Ring Is a Ring")[
+  Let $R$ be a ring and $I$ an ideal.
+  Then
+  - $R \/ I$ is a ring whose zero is $0 + I$, that is, the ideal $I$ itself;
+  - if $R$ is unital, then $R \/ I$ is unital with identity $1_R + I$;
+  - if $R$ is commutative, then so is $R \/ I$.
+] <thm:quotient-ring>
+
+#proof[
+  By #link(<lem:quotient-well-defined>)[the lemma] both operations are well defined, and $(R \/ I, +)$ is a quotient of the abelian group $(R, +)$, hence an abelian group.
+  Associativity and both distributive laws are inherited from $R$, because they hold for representatives and the operations are computed on representatives:
+  $((a + I)(b + I))(c + I) = a b c + I = (a + I)((b + I)(c + I))$, and similarly for distribution.
+  The coset $0 + I = I$ is neutral for addition, and $1_R + I$ is neutral for multiplication when $1_R$ exists.
+  Commutativity is inherited in the same way.
+]
+
+Two extremes are worth naming: $R \/ R$ is the zero ring, since every coset is $R$ itself, and $R \/ (0)$ is $R$, since the cosets are the singletons.
+
+#theorem(name: "The Natural Homomorphism")[
+  Let $R$ be a ring and $I$ an ideal.
+  Then $pi: R -> R \/ I$, $a |-> a + I$, is a surjective ring homomorphism with kernel $I$; if $R$ is unital, then $pi(1_R) = 1_(R \/ I)$.
+] <thm:natural-homomorphism>
+
+#proof[
+  $pi(a + b) = (a + b) + I = (a + I) + (b + I) = pi(a) + pi(b)$ and $pi(a b) = a b + I = pi(a) pi(b)$ by #link(<eq:quotient-operations>)[the definitions of the operations], and $pi$ is surjective by construction.
+  Its kernel is ${a : a + I = I} = I$, and $pi(1_R) = 1_R + I$ is the identity of the quotient by #link(<thm:quotient-ring>)[the theorem above].
+]
+
+#theorem(name: "Kernels Are Exactly the Ideals")[
+  Let $R$ and $S$ be rings.
+  Then a subset $I subset.eq R$ is an ideal if and only if $I = "Ker" f$ for some ring homomorphism $f: R -> S$.
+] <thm:kernel-ideal>
+
+#proof[
+  If $I = "Ker" f$, then $I$ is an additive subgroup because $f$ is a homomorphism of abelian groups, and it absorbs multiplication: $f(r a) = f(r) f(a) = 0$ and $f(a r) = f(a) f(r) = 0$ for $a in I$ and $r in R$ (#link(<note:kernel-ideal-preview>)[§8.2]).
+
+  Conversely, if $I$ is an ideal, the natural homomorphism $pi: R -> R \/ I$ has kernel $I$ by #link(<thm:natural-homomorphism>)[the theorem above].
+]
+
+This is the exact analogue of the group-theoretic statement that normal subgroups are the kernels (#link(<thm:kernel-normal>)[§5.1]), and it closes the loop opened in the previous chapter: the substructures by which one may divide are exactly the ones that arise as kernels.
+Together with #link(<prop:ring-mono-kernel>)[the injectivity criterion] it also says when a quotient is faithful: $R \/ I = 0$ exactly when $I = R$, and $f$ is injective exactly when $I = (0)$.
+
+#note(title: "Quotients as relations")[
+  A quotient imposes relations.
+  In $bb(Z) \/ n bb(Z)$ the relation is $n = 0$, and the quotient is the ring in which that relation holds and nothing else does.
+  The same reading makes sense of every later construction: $k[x] \/ (f)$ is the ring in which $f = 0$; $bb(Z)[i] \/ (1 + i)$ is the ring in which $i = -1$, hence $i = 1$, hence $2 = 0$.
+  Chapter 11 will make this precise for polynomial rings, where the quotient by $(f)$ is computed by division with remainder.
+] <note:quotient-relations>
+
+== Homomorphism Theorems for Rings // 环的同态定理
+
+The four theorems of Chapter 5 were proved for groups, and their proofs used only the additive structure plus one multiplicativity check.
+They therefore transfer with that check supplied, and the section is short for that reason.
+The templates are #link(<thm:first-isomorphism>)[the first isomorphism theorem], #link(<thm:second-isomorphism>)[the second], #link(<thm:third-isomorphism>)[the third] and #link(<thm:correspondence>)[the correspondence theorem].
+
+=== The First Isomorphism Theorem
+
+#theorem(name: "First Isomorphism Theorem for Rings")[
+  Let $f: R -> S$ be a ring homomorphism.
+  Then the map $Phi: R \/ "Ker" f -> "Im" f$, $a + "Ker" f |-> f(a)$, is a ring isomorphism.
+] <thm:ring-first-isomorphism>
+
+#proof[
+  *Well defined and injective.*
+  This is #link(<thm:first-isomorphism>)[the group version] applied to the additive groups: $a + "Ker" f = b + "Ker" f$ exactly when $f(a) = f(b)$.
+
+  *Additive homomorphism.*
+  The same theorem gives $Phi((a + b) + "Ker" f) = f(a + b) = f(a) + f(b)$.
+
+  *Multiplicative.*
+  Here is the only new line: $Phi((a + "Ker" f)(b + "Ker" f)) = Phi(a b + "Ker" f) = f(a b) = f(a) f(b)$.
+
+  *Surjective onto the image* holds by construction, and $Phi(1_R + "Ker" f) = f(1_R)$ in the unital case.
+]
+
+#example(name: "Residue rings as quotients.")[
+  The reduction map $bb(Z) -> bb(Z)_n$ (#link(<ex:canonical-mod-n>)[§8.2]) is a surjective ring homomorphism with kernel $n bb(Z)$, so $bb(Z) \/ n bb(Z) tilde.equiv bb(Z)_n$ by #link(<thm:ring-first-isomorphism>)[the theorem above].
+  The isomorphism is the identity on representatives, which is why the two notations are used interchangeably from now on.
+  With $n = 0$ the statement reads $bb(Z) \/ (0) tilde.equiv bb(Z)$.
+] <ex:zn-quotient>
+
+#example(name: "A quotient of $bb(Z) times bb(Z)$.")[
+  The projection $pi: bb(Z) times bb(Z) -> bb(Z)$, $(m, n) |-> m$, is a surjective ring homomorphism with kernel ${0} times bb(Z)$.
+  The first isomorphism theorem gives $(bb(Z) times bb(Z)) \/ ({0} times bb(Z)) tilde.equiv bb(Z)$.
+  The other factor gives nothing new: the kernel of $(m, n) |-> n$ is $bb(Z) times {0}$, and the two quotients are isomorphic by symmetry.
+] <ex:quotient-product>
+
+#example(name: "The ring in which $i = 1$.")[
+  Let $phi: bb(Z)[i] -> bb(F)_2$ be defined by $phi(a + b i) = overline(a) + overline(b)$.
+  It preserves addition, and it preserves products because $(a + b i)(c + d i) = (a c - b d) + (a d + b c) i$ maps to $a c + b d + a d + b c$, which equals $(a + b)(c + d)$ in $bb(F)_2$ since $-1 = 1$ there.
+  The map is surjective, as $phi(a) = overline(a)$.
+
+  Its kernel is $(1 + i)$: on one hand $phi(1 + i) = overline(2) = 0$; on the other hand, if $a + b$ is even then $a - b$ is even, say $a - b = 2 k$, and $a + b i = 2 k + b (1 + i)$ lies in $(1 + i)$ because $2 = (1 + i)(1 - i)$.
+  The first isomorphism theorem gives $bb(Z)[i] \/ (1 + i) tilde.equiv bb(F)_2$.
+] <ex:zi-quotient>
+
+The last example is the chapter's one non-trivial computation, and it will be read twice: once here as a quotient, and once in #link(<ex:prime-in-zi>)[*Prime and Maximal Ideals*] as the statement that $(1 + i)$ is maximal.
+
+=== The Second and Third Isomorphism Theorems
+
+#theorem(name: "Second Isomorphism Theorem for Rings")[
+  Let $I$ and $J$ be ideals of a ring $R$.
+  Then $(I + J) \/ J tilde.equiv I \/ (I inter J)$, by the map $x + (I inter J) |-> x + J$.
+] <thm:ring-second-isomorphism>
+
+#proof[
+  The map is the composite of the inclusion $I -> I + J$ with the natural homomorphism $I + J -> (I + J) \/ J$, so it is a ring homomorphism.
+  Its kernel is ${x in I : x in J} = I inter J$, and it is surjective because every class in $(I + J) \/ J$ has a representative in $I$.
+  The first isomorphism theorem for rings finishes.
+]
+
+#theorem(name: "Third Isomorphism Theorem for Rings")[
+  Let $I subset.eq J$ be ideals of a ring $R$.
+  Then $(R \/ I) \/ (J \/ I) tilde.equiv R \/ J$, by the map $(a + I) + J \/ I |-> a + J$.
+] <thm:ring-third-isomorphism>
+
+#proof[
+  The kernel of the natural homomorphism $pi: R -> R \/ J$ contains $I$, so by the correspondence theorem below $pi$ induces a homomorphism $R \/ I -> R \/ J$, $a + I |-> a + J$.
+  It is surjective, and its kernel is $J \/ I$; the first isomorphism theorem finishes.
+]
+
+=== The Correspondence Theorem
+
+#theorem(name: "Correspondence Theorem for Rings")[
+  Let $I$ be an ideal of a ring $R$ and $pi: R -> R \/ I$ the natural homomorphism.
+  Then $J |-> J \/ I$ is a bijection, with inverse $K |-> pi^(-1)(K)$, between the ideals of $R$ containing $I$ and the ideals of $R \/ I$.
+  It preserves and reflects inclusions, and it exchanges intersections with intersections and sums with sums; the same statements hold with "ideals" replaced by "subrings".
+] <thm:ideal-correspondence>
+
+#proof[
+  *Ideals correspond.*
+  If $J$ is an ideal containing $I$, then $J \/ I = pi(J)$ is an ideal of $R \/ I$, since $pi$ is surjective and a homomorphism.
+  If $K$ is an ideal of $R \/ I$, then $pi^(-1)(K)$ is an additive subgroup of $R$ absorbing multiplication: for $a in pi^(-1)(K)$ and $r in R$, $pi(r a) = pi(r) pi(a) in K$.
+  The two constructions are inverse: $pi(pi^(-1)(K)) = K$ because $pi$ is surjective, and $pi^(-1)(pi(J)) = J$ because $pi^(-1)(pi(J)) = J + I = J$ when $I subset.eq J$.
+
+  *Inclusions and operations* are preserved because $J subset.eq J'$ implies $J \/ I subset.eq J' \/ I$, and because the preimage of an intersection is the intersection of the preimages; sums are treated the same way, using the surjectivity of $pi$ again.
+
+  *Subrings* follow from the same three steps, with "$a - b$ and $a b$" in place of "absorption".
+]
+
+The theorem is the reason quotients are useful for classification: they turn a question about the ideals of $R \/ I$ into a question about the ideals of $R$ that happen to contain $I$.
+Its most frequent use in what follows is the recognition of maximality, which is a statement about the absence of intermediate ideals.
+
+#note(title: "Which part of the group theorems survives")[
+  The four theorems are verbatim the ones of Chapter 5.
+  Three things change.
+  First, "normal subgroup" becomes "two-sided ideal", and the two-sidedness is what #link(<lem:quotient-well-defined>)[the well-definedness lemma] forces.
+  Second, the homomorphisms of unital rings are required to preserve $1$ (#link(<def:ring-homomorphism>)[§8.2]), which is why quotients of unital rings stay unital.
+  Third, the correspondence theorem has more to say, because a ring has both ideals and subrings, and only the first are exchanged with the ideals of the quotient.
+] <note:group-vs-ring>
+
+== Prime and Maximal Ideals // 素理想与极大理想
+
+=== Two Adjectives
+
+The previous sections turned ideals into quotients.
+This one runs the construction backwards: it asks when the quotient is a domain and when it is a field, and records the answers as properties of the ideal.
+Two adjectives emerge, and they turn out not to be equivalent.
+
+#definition(name: "Prime Ideal")[
+  Let $R$ be a commutative unital ring.
+  A proper ideal $I$ of $R$ is *prime* if $a b in I$ implies $a in I$ or $b in I$ for all $a, b in R$.
+] <def:prime-ideal>
+
+#definition(name: "Maximal Ideal")[
+  Let $R$ be a ring.
+  A proper ideal $I$ of $R$ is *maximal* if there is no ideal $J$ with $I subset J subset R$, both inclusions strict.
+] <def:maximal-ideal>
+
+Being proper is part of both definitions, and it is not a technicality: $R$ itself would satisfy the divisibility condition of primality vacuously, and would be the largest rather than the smallest element of every chain.
+The two names are justified by the next two theorems, which translate them into properties of $R \/ I$.
+
+=== Quotient Criteria
+
+#theorem(name: "Prime Ideals and Domains")[
+  Let $R$ be a commutative unital ring and $I$ a proper ideal.
+  Then $I$ is prime if and only if $R \/ I$ is an integral domain.
+] <thm:prime-iff-domain>
+
+#proof[
+  By #link(<thm:quotient-ring>)[§9.2] the quotient is a commutative unital ring.
+  It is nonzero: since $I$ is proper, $1_R in.not I$, so $1_R + I != 0 + I$.
+
+  For $a, b in R$ one has $(a + I)(b + I) = a b + I$, by #link(<eq:quotient-operations>)[the definition of the product].
+  So this product vanishes exactly when $a b in I$.
+  Consequently $R \/ I$ has no zero divisors exactly when $a b in I$ forces $a in I$ or $b in I$, which is the definition of primality.
+]
+
+#theorem(name: "Maximal Ideals and Fields")[
+  Let $R$ be a commutative unital ring and $I$ a proper ideal.
+  Then $I$ is maximal if and only if $R \/ I$ is a field.
+] <thm:maximal-iff-field>
+
+#proof[
+  *Suppose $I$ is maximal.*
+  Let $a in.not I$, so $a + I != 0 + I$ in the quotient.
+  The ideal $I + (a)$ contains $I$ and $a$, hence strictly contains $I$; maximality forces $I + (a) = R$.
+  Write $1_R = i + r a$ with $i in I$ and $r in R$.
+  Then $(a + I)(r + I) = r a + I = 1_R - i + I = 1_R + I$, so $a + I$ is a unit.
+  Every nonzero element of $R \/ I$ has the form $a + I$ with $a in.not I$, so $R \/ I$ is a field.
+
+  *Suppose $R \/ I$ is a field.*
+  Then its only ideals are $(0)$ and the field itself, by #link(<caution:proper-ideal>)[§9.1].
+  By #link(<thm:ideal-correspondence>)[the correspondence theorem], the ideals of $R$ containing $I$ correspond to these two, hence are exactly $I$ and $R$; so $I$ is maximal.
+]
+
+#corollary(name: "Maximal implies prime")[
+  In a commutative unital ring, every maximal ideal is prime.
+] <cor:maximal-implies-prime>
+
+#proof[
+  If $I$ is maximal then $R \/ I$ is a field by #link(<thm:maximal-iff-field>)[the theorem above], hence an integral domain by #link(<thm:field-is-domain>)[§8.3], hence $I$ is prime by #link(<thm:prime-iff-domain>)[the first theorem].
+]
+
+The converse fails, and the examples below show why: a quotient can be a domain without being a field.
+The two notions coincide in the rings of Chapter 10, where every ideal is principal, and that coincidence is one of the reasons principal ideal domains are the right setting for arithmetic.
+
+#figure(
+  image("img/ideal-correspondence.svg", width: 74%),
+  caption: [The correspondence theorem as one lattice with paired labels: each node carries an ideal $J$ of $R$ containing $I$ (upper line) and its image $J \/ I$ in the quotient (lower line). Inclusion is preserved, so one picture serves both lattices; the quotient has only the two ideals $0$ and $R \/ I$ exactly when the pair $(I, R)$ is the whole lattice, that is, exactly when $I$ is maximal and $R \/ I$ a field.],
+  placement: none,
+  supplement: [Fig.],
+) <fig:ideal-correspondence>
+
+=== Examples
+
+#example(name: "Maximal ideals of $bb(Z)$.")[
+  By #link(<ex:ideals-in-z>)[§9.1] every ideal of $bb(Z)$ is $n bb(Z)$.
+  If $n = u v$ with $1 < u, v < n$, then $n bb(Z) subset u bb(Z) subset bb(Z)$ with strict inclusions, so $n bb(Z)$ is not maximal.
+  If $p$ is prime and $p bb(Z) subset m bb(Z) subset bb(Z)$, then $m$ divides $p$ and $m != 1, p$, which is impossible; so $p bb(Z)$ is maximal.
+
+  Hence $n bb(Z)$ is maximal exactly when $n$ is prime.
+  Combined with #link(<thm:maximal-iff-field>)[the field criterion], this gives a second proof that $bb(Z)_n$ is a field exactly when $n$ is prime (#link(<thm:zn-field-iff-prime>)[§8.3]).
+] <ex:maximal-in-z>
+
+#example(name: "Prime but not maximal.")[
+  The ideal $(0)$ of $bb(Z)$ is prime, because $a b = 0$ in a domain forces $a = 0$ or $b = 0$.
+  It is not maximal, since $(0) subset 2 bb(Z) subset bb(Z)$.
+  The phenomenon is general: $(0)$ is prime exactly when $R$ is a domain, so a domain that is not a field always carries a prime non-maximal ideal.
+] <ex:prime-not-maximal>
+
+#example(name: "$(1 + i)$ is maximal in $bb(Z)[i]$.")[
+  By #link(<ex:zi-quotient>)[§9.3] one has $bb(Z)[i] \/ (1 + i) tilde.equiv bb(F)_2$, which is a field.
+  Hence $(1 + i)$ is maximal by #link(<thm:maximal-iff-field>)[the field criterion], and prime by #link(<cor:maximal-implies-prime>)[the corollary above].
+
+  The ideal is not generated by an integer, and this is the point of the example: maximal ideals in arithmetic-looking rings need not come from primes of $bb(Z)$.
+  What makes the computation work is the identity $(1 + i)(1 - i) = 2$, which puts $2$ inside $(1 + i)$ and lets the residue of $a + b i$ depend only on $a + b$.
+] <ex:prime-in-zi>
+
+#note(title: "Do maximal ideals always exist")[
+  Every proper ideal is contained in a maximal ideal, so every unital ring has at least one, and every non-unit lies in one: if $a$ is not a unit then $(a)$ is proper, and a maximal ideal above it contains $a$.
+
+  The proof applies Zorn's lemma to the set of proper ideals containing a given one, ordered by inclusion, and checks that the union of a chain is again a proper ideal.
+  It is a set-theoretic existence statement rather than a ring-theoretic computation, and nothing in this book needs it in the general form.
+  Finite rings avoid it altogether, since their lattices of ideals are finite and a maximal element of a finite poset is found by walking upwards.
+] <note:maximal-existence>
+
+#note(title: "The spectrum")[
+  The set of prime ideals of $R$ is written $"Spec" R$ and is the first ingredient of algebraic geometry: its elements are the "points", the maximal ideals being the closed ones.
+  For $bb(Z)$ it consists of $(0)$ together with all $(p)$, and for a field it is a single point.
+  In that dictionary a quotient $R \/ I$ corresponds to the subset of primes containing $I$, which is the geometric counterpart of #link(<thm:ideal-correspondence>)[the correspondence theorem].
+] <note:spectrum>
+
+== The Chinese Remainder Theorem // 中国剩余定理
+
+=== Comaximal Ideals
+
+Two integers $m$ and $n$ are coprime exactly when $m bb(Z) + n bb(Z) = bb(Z)$, which is Bézout's identity read as an equation between ideals.
+The ring-theoretic generalization keeps the equation and drops the integers.
+
+#definition(name: "Comaximal Ideals")[
+  Let $R$ be a commutative unital ring.
+  Two ideals $I$ and $J$ of $R$ are *comaximal*, or *coprime*, if $I + J = R$.
+] <def:comaximal>
+
+#lemma(name: "Separation by Comaximal Ideals")[
+  Let $I$ and $J$ be comaximal ideals of a commutative unital ring $R$.
+  Then there are $e in I$ and $f in J$ with $e + f = 1_R$, and for any $x, y in R$ the element $a = x f + y e$ satisfies $a equiv x quad ("mod" I)$ and $a equiv y quad ("mod" J)$.
+] <lem:crt-idempotents>
+
+#proof[
+  Since $I + J = R$, write $1_R = e + f$ with $e in I$ and $f in J$.
+  Then $a - x = x f + y e - x = x (f - 1_R) + y e = (y - x) e$, which lies in $I$ because $e in I$; so $a equiv x$ modulo $I$.
+  Likewise $a - y = x f + y e - y = x f + y (e - 1_R) = (x - y) f$, which lies in $J$ because $f in J$.
+]
+
+The element $a$ of the lemma is the explicit solution of a pair of congruences, and the two summands are independent: $x f$ dies modulo $J$ and $y e$ dies modulo $I$.
+
+=== The Theorem
+
+#eq[
+  $Phi: R \/ (I inter J) -> R \/ I times R \/ J, quad a + (I inter J) |-> (a + I, a + J).$
+] <eq:crt-map>
+
+#theorem(name: "Chinese Remainder Theorem for Two Ideals")[
+  Let $I$ and $J$ be comaximal ideals of a commutative unital ring $R$.
+  Then the map $Phi$ of #link(<eq:crt-map>)[above] is a ring isomorphism $R \/ (I inter J) tilde.equiv R \/ I times R \/ J$.
+] <thm:crt-two-ideals>
+
+#proof[
+  *Homomorphism.*
+  $Phi$ is the pair of the two natural homomorphisms, so it preserves addition and multiplication componentwise (#link(<thm:natural-homomorphism>)[§9.2]).
+
+  *Kernel.*
+  $a + (I inter J)$ lies in the kernel exactly when $a in I$ and $a in J$, that is, when $a in I inter J$; the map is therefore injective by #link(<prop:ring-mono-kernel>)[§8.2].
+
+  *Surjectivity.*
+  Given a target $(x + I, y + J)$, #link(<lem:crt-idempotents>)[the lemma] produces $a = x f + y e$ with $a equiv x$ modulo $I$ and $a equiv y$ modulo $J$, so $Phi(a + (I inter J)) = (x + I, y + J)$.
+]
+
+#theorem(name: "Chinese Remainder Theorem")[
+  Let $I_1, dots, I_n$ be pairwise comaximal ideals of a commutative unital ring $R$.
+  Then
+  $R \/ (I_1 inter dots.c inter I_n) tilde.equiv R \/ I_1 times dots.c times R \/ I_n$, and $I_1 inter dots.c inter I_n = I_1 dots.c I_n$.
+] <thm:crt-general>
+
+#proof[
+  *The product identity.*
+  Assume first $n = 2$ and $I + J = R$, with $1_R = e + f$, $e in I$, $f in J$.
+  One inclusion is #link(<prop:ideal-operations>)[§9.1]: $I J subset.eq I inter J$.
+  Conversely, for $x in I inter J$ one has $x = x e + x f$, where $x e in I J$ because $x in J$ and $e in I$, and $x f in I J$ because $x in I$ and $f in J$.
+  Hence $x in I J$.
+
+  *Induction.*
+  For $n >= 2$ put $J = I_1 inter dots.c inter I_(n-1)$, so by induction $J = I_1 dots.c I_(n-1)$ and $R \/ J tilde.equiv R \/ I_1 times dots.c times R \/ I_(n-1)$.
+  The ideal $J$ is comaximal with $I_n$: for each $k < n$ write $1_R = a_k + b_k$ with $a_k in I_k$ and $b_k in I_n$, then the product $product_(k < n)(a_k + b_k) = 1_R$ expands as a sum of terms lying in $I_n$ together with the term $a_1 dots.c a_(n-1) in J$, so $J + I_n = R$.
+  Now apply #link(<thm:crt-two-ideals>)[the two-ideal theorem] to $J$ and $I_n$ and substitute the induction hypothesis.
+]
+
+#corollary(name: "Decomposition of $bb(Z)_n$")[
+  Let $n = p_1^(k_1) dots.c p_r^(k_r)$ be the factorization of $n >= 2$ into prime powers.
+  Then $bb(Z)_n tilde.equiv bb(Z)_(p_1^(k_1)) times dots.c times bb(Z)_(p_r^(k_r))$, and consequently $phi(n) = product_i p_i^(k_i - 1) (p_i - 1)$.
+] <cor:crt-integers>
+
+#proof[
+  Distinct prime powers generate comaximal ideals of $bb(Z)$: $p^a bb(Z) + q^b bb(Z) = gcd(p^a, q^b) bb(Z) = bb(Z)$ when $p != q$.
+  So #link(<thm:crt-general>)[the general theorem] applies, and #link(<ex:zn-quotient>)[the identification $bb(Z) \/ m bb(Z) = bb(Z)_m$] turns the quotients into residue rings.
+
+  For the counting statement, #link(<prop:product-ring-properties>)[§8.5] gives $(A times B)^times = A^times times B^times$, so the unit group of $bb(Z)_n$ is the product of the unit groups of the factors, and the orders multiply.
+  Each factor contributes $phi(p^a) = p^(a - 1)(p - 1)$.
+]
+
+#example(name: "Solving a pair of congruences.")[
+  Solve $x equiv 2 quad ("mod" 3)$ and $x equiv 3 quad ("mod" 5)$.
+  Here $I = 3 bb(Z)$ and $J = 5 bb(Z)$, and $1 = 6 - 5$ with $e = 6 in I$ and $f = -5 in J$.
+  #link(<lem:crt-idempotents>)[The lemma] gives $a = x f + y e = 2 dot (-5) + 3 dot 6 = 8$, and indeed $8 equiv 2$ modulo $3$ and $8 equiv 3$ modulo $5$.
+  The solution is unique modulo $15$, so $x equiv 8 quad ("mod" 15)$.
+] <ex:crt-solving>
+
+#figure(
+  image("img/crt-grid.svg", width: 92%),
+  caption: [The Chinese Remainder Theorem as a grid. Left: the residues modulo $15$ arranged by their classes modulo $3$ (rows) and modulo $5$ (columns); every cell is hit exactly once, which is the bijection $bb(Z)_15 tilde.equiv bb(Z)_3 times bb(Z)_5$. Right: the pair of moduli $4$ and $6$, whose greatest common divisor is $2$; the system $n equiv i$ modulo $4$, $n equiv j$ modulo $6$ is soluble only for $i - j$ even, so half of the $24$ cells stay empty and the map $bb(Z)_12 -> bb(Z)_4 times bb(Z)_6$ is injective but not surjective.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:crt-grid>
+
+#note(title: "What the theorem is for")[
+  Two uses recur.
+
+  *Arithmetic.*
+  Since $bb(Z)_n$ is a product of rings $bb(Z)_(p^a)$, a computation modulo $n$ splits into independent computations modulo the prime powers, each cheaper, and the pieces are recombined through the isomorphism.
+
+  *Structure.*
+  The theorem produces rings that are products of fields without being fields; $bb(Z)_15 tilde.equiv bb(F)_3 times bb(F)_5$ is the smallest example, and it is the standard source of non-trivial idempotents (#link(<ex:function-ring-idempotents>)[§8.5]) and of zero divisors that no prime divides.
+] <note:crt-applications>
+
+#note(title: "Closing remarks: towards divisibility")[
+  The chapter built three things.
+  + *Ideals*: the substructures stable under multiplication by the whole ring (#link(<def:ideal>)[§9.1]), which are exactly the kernels (#link(<thm:kernel-ideal>)[§9.2]).
+  + *Quotients*: the collapse $R \/ I$, the natural homomorphism, and the four theorems it generates (#link(<thm:ring-first-isomorphism>)[§9.3]).
+  + *The reverse reading*: $R \/ I$ is a domain or a field according to whether $I$ is prime or maximal (#link(<thm:prime-iff-domain>)[§9.4]), and it splits into a product when the ideals are comaximal (#link(<thm:crt-two-ideals>)[§9.5]).
+
+  What has not yet been done is to use these tools on arithmetic.
+  Divisibility in a ring is not a property of two elements alone: "$a$ divides $b$" is the statement $(b) subset.eq (a)$, so unique factorization is a statement about principal ideals.
+  The next chapter develops that theory, and the two criteria of #link(<thm:maximal-iff-field>)[§9.4] become the tools that separate primes from irreducibles.
+] <note:towards-divisibility>
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
@@ -6469,24 +7050,34 @@ On the quotient set define the two operations by
 // --- Chapter 9: 理想与商环 (Ideals and Quotient Rings) ---
 
 //   Section 9.1: 理想 (Ideals)
-//     - 理想的定义与判定
-//     - 主理想、生成理想
-//     - 理想的运算（和、交、积）
+//     - 左/右/双边理想的定义与判定；真理想不含单位
+//     - 主理想与生成理想（含生成元的有限和标准形）
+//     - 理想的交、和、积；$\bb(Z)$ 的理想全为主理想
+//     - 高斯整数 $\bb(Z)[i]$ 作为贯穿全章的例子
 
 //   Section 9.2: 商环 (Quotient Rings)
-//     - 商环的构造
-//     - 自然同态
-//     - 典型例子
+//     - 乘法良定义 ⟺ 理想（本节技术核心）
+//     - 商环是环、自然同态
+//     - 核 = 理想（双向），兑现 §8.2 的承诺
+//     - 商环作为「加关系」的读法
 
 //   Section 9.3: 环的同态定理 (Homomorphism Theorems for Rings)
-//     - 第一同构定理
-//     - 第二、第三同构定理
-//     - 对应定理
+//     - 第一、第二、第三同构定理（沿用 Ch5 的证明模板）
+//     - 对应定理（理想与子环同时对应）
+//     - 例：$\bb(Z)[i]/(1+i) \cong \bb(F)_2$、$(\bb(Z) \times \bb(Z))/(\{0\} \times \bb(Z)) \cong \bb(Z)$
 
-//   Section 9.4: 中国剩余定理 (Chinese Remainder Theorem)
-//     - 互素理想
-//     - 中国剩余定理的陈述与证明
-//     - 在 $\bb(Z)_n$ 中的应用
+//   Section 9.4: 素理想与极大理想 (Prime and Maximal Ideals)
+//     - 素理想 / 极大理想的定义
+//     - $R/I$ 是整环 ⟺ $I$ 素；$R/I$ 是域 ⟺ $I$ 极大；极大 ⇒ 素
+//     - 例：$\bb(Z)$ 的极大理想、$(0)$ 素而不极大、$(1+i)$ 极大
+//     - 极大理想的存在性（Zorn）与 $\operatorname{Spec} R$ 一句话
+//     - 对应格图 fig:ideal-correspondence
+
+//   Section 9.5: 中国剩余定理 (Chinese Remainder Theorem)
+//     - 互素理想与分离引理（互补元 $e + f = 1$）
+//     - 两理想与一般形式；互素时 $I \cap J = I J$
+//     - $\bb(Z)_n$ 的素幂分解与 $\varphi$ 的可乘性
+//     - 网格图 fig:crt-grid；章末收束转向整除性
 
 // --- Chapter 10: 整除性理论 (Divisibility Theory) ---
 
@@ -6690,7 +7281,7 @@ On the quotient set define the two operations by
 // | 第三章 §2        | 整环与域                    | Ch 8 §8.2              | 直接对应          |
 // | 第三章 §3        | 环的同态                    | Ch 8 §8.2；Ch 9 §9.3   | 定义在前，定理在后  |
 // | 第三章 §4        | 理想                       | Ch 9 §9.1              | 直接对应          |
-// | 第三章 §5        | 商环与域                    | Ch 9 §9.2              | 直接对应          |
+// | 第三章 §5        | 商环与域                    | Ch 9 §9.2；§9.4        | 商环在前，域判据在后 |
 // | 第四章 §1–3      | 整除性与算术基本定理         | Ch 10 §10.1–10.2       | 直接对应          |
 // | 第四章 §4        | 唯一分解整环                | Ch 10 §10.2            | 直接对应          |
 // | 第四章 §5        | 主理想整环                  | Ch 10 §10.3            | 直接对应          |
@@ -6710,7 +7301,7 @@ On the quotient set define the two operations by
 // | 第一章 §6        | 群的作用                    | Ch 6 §6.1–6.2          | 直接对应          |
 // | 第一章 §7        | Sylow定理                  | Ch 6 §6.3–6.4          | 直接对应          |
 // | 第二章 §1–5      | 环的基本理论                | Ch 8–9                 | 直接对应          |
-// | 第二章 §6        | 中国剩余定理                | Ch 9 §9.4              | 直接对应          |
+// | 第二章 §6        | 中国剩余定理                | Ch 9 §9.5              | 直接对应          |
 // | 第三章            | 唯一分解整环                | Ch 10                  | 直接对应          |
 // | 第四章            | 域扩张                     | Ch 12–14               | 直接对应          |
 // | 第五章            | 伽罗瓦理论                  | Ch 15–16               | 直接对应          |
@@ -6737,6 +7328,13 @@ On the quotient set define the two operations by
 //
 // 5. 有限域放在 Ch 13（分裂域与正规扩张）：有限域的理论
 //    依赖分裂域的存在性，放在此处逻辑更顺畅。
+//
+// 6. 素理想与极大理想独立成 §9.4（蓝图原本并入商环）：
+//    「R/I 是整环/域」的判据是 Ch 10 区分素元与不可约元、
+//    Ch 12 用 k[x]/(f) 造域的唯一工具，必须在此建立。
+//
+// 7. 环同态的定义置于 §8.2、同态定理置于 §9.3：定义随语言走，
+//    定理随理想走，§9.3 的证明因此只需补一步乘法验证。
 //
 // ==========================================================================
 // 结构说明 (Structure Note)
