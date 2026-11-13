@@ -247,14 +247,14 @@ combinatorics.
   its boundary values $C_n^0 = C_n^n = 1$.
 
   #figure(
-    image("img/pascal_triangle.png", width: 80%),
+    image("img/pascal-triangle.svg", width: 65%),
     caption: [Pascal triangle (YangHui triangle).],
     placement: auto,
     supplement: [Fig.],
   ) <fig:pascal_triangle>
 
   #figure(
-    image("img/pascal_and_binomial.png", width: 80%),
+    image("img/pascal-and-binomial.svg", width: 95%),
     caption: [Pascal triangle and Binomial theorem.],
     placement: auto,
     supplement: [Fig.],
@@ -517,7 +517,7 @@ with constants $c_1, dots, c_k$ and $c_k != 0$.
   $n$ disks from one peg to another.
 
   #figure(
-    image("img/Hanoi.png", width: 80%),
+    image("img/hanoi.svg", width: 82%),
     caption: [Tower of Hanoi problem.],
     placement: auto,
     supplement: [Fig.],
