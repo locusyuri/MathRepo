@@ -34,6 +34,10 @@
 *.jpg
 *.svg
 
+# Python
+__pycache__/
+*.py[cod]
+
 # Other
 temp/
 tmp/
