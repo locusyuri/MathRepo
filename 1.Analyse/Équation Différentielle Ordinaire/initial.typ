@@ -18,7 +18,7 @@
   subtitle: "A notebook for ordinary differential equations",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.1.0",
+  version: "v1.0",
   extra-info: "This is a notebook for ordinary differential equations.",
 )
 
@@ -2231,9 +2231,24 @@ The four mechanisms of this chapter cover the local bifurcations of equilibria i
 #tex-table(
   ("Bifurcation", "Normal form", [Condition at $mu_0$], "Qualitative change"),
   ([Saddle-node], [$dot(x) = mu - x^2$], [Simple zero eigenvalue], [Two equilibria created or annihilated]),
-  ([Transcritical], [$dot(x) = mu x - x^2$], [Simple zero eigenvalue, trivial branch preserved], [Stability exchanged between two equilibria]),
-  ([Pitchfork], [$dot(x) = mu x - x^3$], [Simple zero eigenvalue, symmetry $x -> -x$], [Symmetric pair created, symmetry broken]),
-  ([Hopf], [$dot(z) = (mu + i) z - abs(z)^2 z$], [Pair $± i omega$ crossing the imaginary axis], [Limit cycle created around the equilibrium]),
+  (
+    [Transcritical],
+    [$dot(x) = mu x - x^2$],
+    [Simple zero eigenvalue, trivial branch preserved],
+    [Stability exchanged between two equilibria],
+  ),
+  (
+    [Pitchfork],
+    [$dot(x) = mu x - x^3$],
+    [Simple zero eigenvalue, symmetry $x -> -x$],
+    [Symmetric pair created, symmetry broken],
+  ),
+  (
+    [Hopf],
+    [$dot(z) = (mu + i) z - abs(z)^2 z$],
+    [Pair $± i omega$ crossing the imaginary axis],
+    [Limit cycle created around the equilibrium],
+  ),
 )
 
 Each row is obtained from a representative nonlinear system by a smooth change of variables followed by truncation at the lowest non-trivial order.
