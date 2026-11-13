@@ -7249,6 +7249,469 @@ What the identity buys is the ability to replace an element by a strictly smalle
   Over a general UFD the situation is subtler: $R[x]$ is again a UFD, but $bb(Z)[x]$ is not a PID, and the middle rung acquires its standard inhabitant.
 ] <note:closing-divisibility>
 
+= Polynomial Rings // 多项式环
+
+// 同上：公式计数器按章归零
+#counter(math.equation).update(0)
+
+The previous chapter ended with a promise: the polynomial ring $R[x]$ would take its place in the ladder, and $bb(Z)[x]$ would supply the missing witness.
+This chapter keeps that promise, and it does one more thing: it produces the quotient $k[x] \/ (f)$, the single construction on which all of Part III rests.
+
+The arithmetic of polynomials is not new to the reader.
+Division with remainder, gcd and Bézout's identity, irreducible polynomials, the rational root theorem, Eisenstein's criterion and Vièta's formulas are developed in *Divisibility of Polynomials* and *Factorization and Roots* in the Théorie des Nombres note, where the coefficients are numbers.
+Nothing of that is repeated here.
+What is repeated is the one argument needed to keep this chapter readable without a second book open: the long division of polynomials, quoted in §11.2 with its skeleton proof and a pointer.
+
+What this chapter does instead is *structural*, and it divides into four tasks:
+
+- to build $R[x]$ for an arbitrary ring of coefficients, and to record its universal property — the property Part III will use to construct field extensions;
+- to place $k[x]$, for $k$ a field, on the ladder of §10.4, where the degree plays the role of the absolute value;
+- to transfer unique factorization from $R$ to $R[x]$, which is Gauss's lemma in its ring-theoretic form;
+- to read the quotients $k[x] \/ (f)$, where the ladder and the ideal theory of §9 meet.
+
+Multivariate polynomial rings close the chapter, and the Hilbert basis theorem is stated there without proof, since its natural home is commutative algebra.
+
+== The Polynomial Ring $R[x]$ // 多项式环
+
+=== The Construction
+
+The polynomial ring adjoins one new element $x$ to $R$, requires $x$ to commute with every element of $R$, and imposes no further relation.
+The elements are therefore finite formal linear combinations of the powers $1, x, x^2, dots$ with coefficients in $R$, and the only thing to be decided is how they multiply.
+
+#eq[
+  $(sum_k a_k x^k) + (sum_k b_k x^k) = sum_k (a_k + b_k) x^k, quad (sum_k a_k x^k) (sum_k b_k x^k) = sum_k (sum_(i + j = k) a_i b_j) x^k.$
+] <eq:poly-construction>
+
+#definition(name: "Polynomial Ring")[
+  Let $R$ be a ring.
+  The *polynomial ring* $R[x]$ is the set of sequences $(a_0, a_1, dots)$ of elements of $R$ with only finitely many nonzero entries, with the operations of #link(<eq:poly-construction>)[above].
+  The sequence $(a_0, dots, a_n, 0, dots)$ is written $a_0 + a_1 x + dots.c + a_n x^n$, and $x = (0, 1, 0, dots)$ is the *indeterminate*.
+] <def:polynomial-ring>
+
+The verification that $R[x]$ is a ring is the verification carried out for the group ring in #link(<def:group-ring>)[§8.5], with the additive monoid $bb(N)$ in place of a finite group: $R[x]$ is the monoid ring $R[bb(N)]$, its product is the convolution of #link(<eq:poly-construction>)[the display], and associativity is associativity of addition of exponents together with distributivity in $R$.
+So $R[x]$ is a ring, commutative exactly when $R$ is, and unital exactly when $R$ is, with identity the constant polynomial $1_R$.
+The map $iota: R -> R[x]$ sending $a$ to the constant polynomial $a$ is an injective ring homomorphism, and one usually writes $a$ for $iota(a)$.
+
+=== Degree
+
+#definition(name: "Degree and Leading Coefficient")[
+  Let $f = a_0 + a_1 x + dots.c + a_n x^n$ be a nonzero polynomial over $R$.
+  Its *degree* $"deg" f$ is the largest $k$ with $a_k != 0$, and $a_("deg" f)$ is its *leading coefficient*.
+  The polynomial is *monic* if its leading coefficient is $1$, and *constant* if its degree is $0$.
+  The zero polynomial has no degree.
+] <def:degree>
+
+#property(name: "Degree Rules")[
+  Let $R$ be a ring and $f, g in R[x]$ nonzero.
+  - $"deg"(f + g) <= max("deg" f, "deg" g)$, with equality when $"deg" f != "deg" g$;
+  - $"deg"(f g) <= "deg" f + "deg" g$;
+  - if $R$ is an integral domain, then $"deg"(f g) = "deg" f + "deg" g$.
+] <prop:degree-rules>
+
+#proof[
+  The first item is immediate: the coefficients beyond the larger of the two degrees vanish, and at the larger degree only one summand survives.
+
+  For the second, the coefficient of $x^(m + n + 1)$ and above in $f g$ is a sum of products in which one index exceeds $m$ or the other exceeds $n$, hence vanishes.
+
+  For the third, let $a_m$ and $b_n$ be the leading coefficients; the coefficient of $x^(m + n)$ is $a_m b_n$, which is nonzero because a domain has no zero divisors, and no higher power of $x$ occurs.
+]
+
+#caution(title: "Degree needs a domain")[
+  Over $bb(Z)_4$ the polynomial $f = 2 x$ has degree $1$, yet $f^2 = 4 x^2 = 0$.
+  So the inequality of #link(<prop:degree-rules>)[the rules] is genuinely an inequality outside the domain case, and none of the divisibility theory of Chapter 10 applies to $R[x]$ when $R$ has zero divisors.
+] <caution:degree-needs-domain>
+
+#proposition(name: "Units and Integrality")[
+  Let $R$ be a unital ring.
+  Then $R[x]$ is an integral domain if and only if $R$ is, and in that case $R[x]^times = R^times$.
+] <prop:units-polynomial>
+
+#proof[
+  If $R$ has zero divisors $a b = 0$ with $a, b != 0$, then the constant polynomials give a zero divisor in $R[x]$; conversely, if $R$ is a domain and $f, g$ are nonzero, then $"deg"(f g) = "deg" f + "deg" g$ is defined, so $f g != 0$ by #link(<prop:degree-rules>)[the third rule].
+
+  For the units, if $f g = 1$ then $"deg" f + "deg" g = 0$, so both are constant, that is, units of $R$.
+]
+
+#example(name: "Three polynomial rings.")[
+  $bb(Z)[x]$ is a domain that is a UFD but not a PID (#link(<cor:zx-not-pid>)[§11.3]).
+  For a field $k$, the ring $k[x]$ is Euclidean (#link(<thm:k-x-euclidean>)[§11.2]), so all of Chapter 10 applies to it.
+  Over $bb(Z)_4$ the ring $bb(Z)_4[x]$ is not a domain, and its degree function is not multiplicative, as #link(<caution:degree-needs-domain>)[the caution above] shows; nothing in this chapter's divisibility theory applies to it.
+] <ex:zx-ring>
+
+=== The Universal Property
+
+A polynomial ring is determined by the way maps out of it are described, and that description is what Part III uses.
+
+#theorem(name: "Universal Property of $R[x]$")[
+  Let $R$ be a unital ring, $A$ a ring, $phi: R -> A$ a unital ring homomorphism, and $a in A$ an element with $a phi(r) = phi(r) a$ for all $r in R$.
+  Then there is exactly one unital ring homomorphism $Phi: R[x] -> A$ with $Phi compose iota = phi$ and $Phi(x) = a$, namely
+  $Phi(sum_k r_k x^k) = sum_k phi(r_k) a^k$.
+] <thm:poly-universal>
+
+#proof[
+  *Uniqueness.*
+  A homomorphism preserving $1$ and taking $x$ to $a$ must send $sum r_k x^k$ to $sum phi(r_k) a^k$, so the value is forced.
+
+  *Existence.*
+  Define $Phi$ by that formula.
+  It preserves sums because $phi$ does and because addition is coefficientwise, and it preserves $1$ because $phi(1_R) = 1_A$.
+  For products, expand $Phi(f g)$ with #link(<eq:poly-construction>)[the convolution formula] and distribute; the coefficient of $a^k$ is $sum_(i + j = k) phi(r_i) phi(s_j)$, and moving the factors into order uses only the commutation hypothesis $a phi(r) = phi(r) a$.
+]
+
+The commutativity hypothesis is automatic when $A$ is commutative, which is the case in every application below.
+In that situation $R[x]$ is the free commutative $R$-algebra on one generator: a homomorphism out of it is exactly a choice of image for $x$.
+
+#figure(
+  image("img/poly-universal.svg", width: 68%),
+  caption: [The universal property of $R[x]$. The inclusion of constants $iota$ and any homomorphism $phi: R -> A$ are given; an element $a in A$ commuting with the image of $phi$ extends the pair to a homomorphism $Phi$, and it does so in exactly one way. Part III uses the case $R = A = F$ a field, where $a = alpha$ produces the evaluation map $F[x] -> F(alpha)$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:poly-universal>
+
+== Polynomials over a Field // 域上的多项式
+
+Fix a field $k$ and write $K$ for its prime subfield when one is needed.
+Over a field the arithmetic of $k[x]$ is the arithmetic of $bb(Z)$ with the absolute value replaced by the degree, and the reader has met it in the Théorie des Nombres note.
+What follows records the two facts the ladder needs, and the one definition Part III needs.
+
+=== Division with Remainder
+
+#theorem(name: "Division with Remainder")[
+  Let $k$ be a field and $f, g in k[x]$ with $g != 0$.
+  Then there are unique $q, r in k[x]$ with
+  $f = q g + r$ and either $r = 0$ or $"deg" r < "deg" g$.
+] <thm:poly-division>
+
+#proof[
+  *Existence*, by induction on $"deg" f$.
+  If $f = 0$ or $"deg" f < "deg" g$, take $q = 0$ and $r = f$.
+  Otherwise let $a_m$ and $b_n$ be the leading coefficients of $f$ and $g$; since $k$ is a field, $b_n$ is invertible, and $f_1 = f - a_m b_n^(-1) x^(m - n) g$ has degree less than $m$.
+  The induction hypothesis gives $f_1 = q_1 g + r$, and then $f = (a_m b_n^(-1) x^(m - n) + q_1) g + r$.
+
+  *Uniqueness* follows from #link(<prop:degree-rules>)[the degree rules]: from $g (q - q') = r' - r$, a nonzero $q - q'$ would make the left side of degree at least $"deg" g$ while the right side has degree less than $"deg" g$.
+]
+
+#note(title: "Where the long division is carried out")[
+  The induction above is the whole argument, but the Théorie des Nombres note develops the surrounding theory in detail: long division and its examples, the Euclidean algorithm for polynomials, gcd and Bézout's identity, and the least common multiple.
+  None of that is repeated here; what this chapter takes from it is the single identity of #link(<thm:poly-division>)[the theorem] and the fact that it makes the degree a Euclidean function.
+] <note:nt-division-pointer>
+
+=== The Ladder
+
+#theorem(name: "$k[x]$ is Euclidean")[
+  Let $k$ be a field.
+  Then $k[x]$ is a Euclidean domain with Euclidean function $delta(f) = "deg" f$.
+] <thm:k-x-euclidean>
+
+#proof[
+  Given $f$ and $g != 0$, #link(<thm:poly-division>)[the division theorem] produces $f = q g + r$ with $r = 0$ or $"deg" r < "deg" g$, which is exactly the identity of #link(<def:euclidean-domain>)[§10.4] for $delta = "deg"$.
+]
+
+#corollary(name: "$k[x]$ is a PID and a UFD")[
+  Let $k$ be a field.
+  Then $k[x]$ is a principal ideal domain and a unique factorization domain.
+] <cor:k-x-ufd>
+
+#proof[
+  A Euclidean domain is a PID by #link(<thm:ed-pid>)[§10.4], and a PID is a UFD by #link(<thm:pid-ufd>)[§10.3].
+]
+
+Three consequences are worth recording, all of them instances of Chapter 10 applied to #link(<cor:k-x-ufd>)[the corollary].
+
+- Every ideal of $k[x]$ is $(f)$ for some $f$, and $f$ is determined up to a nonzero constant factor.
+- Two polynomials have a gcd, unique up to a nonzero constant; the monic representative is the canonical one, and the Euclidean algorithm computes it (#link(<prop:gcd-in-pid>)[§10.3] for existence, the Théorie des Nombres note for the algorithm).
+- In $k[x]$ irreducible elements and prime elements coincide (#link(<thm:pid-irreducible-prime>)[§10.3]), which is Euclid's lemma for polynomials.
+
+The third item is worth a sentence, because the Théorie des Nombres note proves that lemma directly and calls it Euclid's lemma.
+Here it is a corollary of the ladder: in a PID, "no factorization" and "divides a product, divides a factor" are the same property.
+
+#definition(name: "Irreducible Polynomial")[
+  A polynomial $f in k[x]$ of degree at least $1$ is *irreducible over $k$* if a factorization $f = g h$ with $g, h in k[x]$ forces $g$ or $h$ to be constant.
+] <def:irreducible-poly>
+
+The word "constant" is the same as "unit" here: the units of $k[x]$ are the nonzero constants by #link(<prop:units-polynomial>)[§11.1], so this is irreducibility in the sense of #link(<def:irreducible>)[§10.1].
+Irreducibility depends on the field: $x^2 + 1$ is irreducible over $bb(R)$ and factors over $bb(C)$, and $x^2 + 1$ is irreducible over $bb(F)_3$ but equal to $(x - 2)(x + 2)$ over $bb(F)_5$.
+
+#proposition(name: "Irreducibility in Degree Two and Three")[
+  Let $f in k[x]$ have degree $2$ or $3$.
+  Then $f$ is irreducible over $k$ if and only if $f$ has no root in $k$.
+] <prop:small-degree-irreducible>
+
+#proof[
+  If $f(a) = 0$ then $(x - a)$ divides $f$ by #link(<thm:factor-theorem>)[§11.4], and the quotient is nonconstant because $"deg" f >= 2$.
+
+  Conversely, a factorization $f = g h$ with both factors nonconstant splits the degree $2$ or $3$ into two positive integers, so one factor has degree $1$; that factor is $c (x - a)$ with $c != 0$, and $a$ is a root of $f$.
+]
+
+#note(title: "Where the irreducibility criteria live")[
+  Deciding irreducibility is a separate craft.
+  Eisenstein's criterion, reduction modulo a prime, the rational root theorem, and the passage between $bb(Q)[x]$ and $bb(Z)[x]$ by primitive polynomials are all proved in *Polynomials with Rational Coefficients* in the Théorie des Nombres note.
+  The one case this book needs in full is degree $2$ or $3$ over a finite field, where #link(<prop:small-degree-irreducible>)[the proposition above] reduces the question to checking that no element of the field is a root.
+] <note:irreducibility-criteria-pointer>
+
+#corollary(name: "The field of rational functions")[
+  Let $k$ be a field.
+  The field of fractions of $k[x]$ is written $k(x)$ and called the field of *rational functions* over $k$; more generally $"Frac"(R[x]) = "Frac"(R)(x)$ for an integral domain $R$.
+] <cor:rational-functions>
+
+#proof[
+  $k[x]$ is a domain, so #link(<thm:fraction-field>)[§8.6] applies and produces $"Frac"(k[x])$; its elements are quotients $f\/g$ of polynomials with $g != 0$, which is the description of $k(x)$.
+]
+
+== Content and Gauss's Lemma // 内容与 Gauss 引理
+
+The ladder of §10.4 applies to $k[x]$ because the coefficients form a field.
+For a general unique factorization domain $R$ — the integers, the Gaussian integers, a polynomial ring $k[y]$ — the ring $R[x]$ is not a PID ($bb(Z)[x]$ is the witness), but it is still a UFD.
+The instrument is Gauss's lemma, which compares $R[x]$ with $K[x]$ for $K = "Frac"(R)$, where the ladder does apply.
+
+=== Content
+
+#definition(name: "Content of a Polynomial")[
+  Let $R$ be a UFD and $f = a_0 + dots.c + a_n x^n in R[x]$ nonzero.
+  A greatest common divisor of the coefficients is called the *content* $c(f)$ of $f$, determined up to associates.
+  The polynomial $f$ is *primitive* if $c(f) = 1$, that is, if no prime of $R$ divides all its coefficients.
+] <def:content>
+
+A gcd of finitely many elements exists in a UFD: each coefficient has a factorization into primes by #link(<def:ufd>)[§10.2], and the common part is read off by comparing exponents.
+Dividing by the content gives the decomposition
+#eq[
+  $f = c(f) f_0, quad f_0 "primitive",$
+] <eq:content-factorisation>
+which is unique up to a unit.
+
+=== Gauss's Lemma
+
+#theorem(name: "Gauss's Lemma")[
+  Let $R$ be a UFD and $f, g in R[x]$ nonzero.
+  Then $c(f g) = c(f) c(g)$ up to associates; in particular, the product of two primitive polynomials is primitive.
+] <thm:gauss-lemma>
+
+#proof[
+  Dividing by the contents reduces the general statement to the primitive case, and in that case $c(f) = c(g) = 1$ and one has to prove $c(f g) = 1$.
+
+  Suppose therefore that $f$ and $g$ are primitive and that some prime $p$ of $R$ divides every coefficient of $f g$.
+  Reduce coefficients modulo $p$, getting a homomorphism $pi: R[x] -> (R \/ (p))[x]$.
+  Since $p$ is prime, $(p)$ is a prime ideal and $R \/ (p)$ is an integral domain (#link(<note:element-ideal-dictionary>)[§10.1]); hence $(R \/ (p))[x]$ is an integral domain by #link(<prop:units-polynomial>)[§11.1].
+
+  The reductions $pi(f)$ and $pi(g)$ are nonzero, because $p$ does not divide every coefficient of either polynomial.
+  Their product $pi(f g)$ is therefore nonzero, contradicting the assumption that every coefficient of $f g$ is divisible by $p$.
+]
+
+=== From $R$ to $R[x]$
+
+#lemma(name: "Primitive irreducibles")[
+  Let $R$ be a UFD, $K = "Frac"(R)$, and $f in R[x]$ primitive of degree at least $1$.
+  Then $f$ is irreducible in $R[x]$ if and only if $f$ is irreducible in $K[x]$.
+] <lem:primitive-irreducible>
+
+#proof[
+  Suppose first that $f$ is irreducible in $R[x]$ and $f = G H$ in $K[x]$ with both factors of positive degree.
+  Clear denominators inside each factor and extract contents: $G = alpha G_0$ and $H = beta H_0$ with $G_0, H_0 in R[x]$ primitive and $alpha, beta in K$.
+  Then $f = (alpha beta) G_0 H_0$, and $G_0 H_0$ is primitive by #link(<thm:gauss-lemma>)[Gauss's lemma]; comparing contents in the primitive polynomial $f$ shows that $alpha beta$ is a unit of $R$.
+  So $f = (alpha beta G_0) H_0$ is a factorization in $R[x]$ with both factors of positive degree, contradicting irreducibility.
+
+  Conversely, a factorization $f = g h$ in $R[x]$ with both factors of positive degree is also a factorization in $K[x]$, so irreducibility in $K[x]$ forbids it.
+  Both factors do have positive degree: a factorization with a constant factor $c$ would make $c$ divide all coefficients of $f$, and $c$ is therefore a unit because $f$ is primitive.
+]
+
+#theorem(name: "$R$ a UFD implies $R[x]$ a UFD")[
+  Let $R$ be a unique factorization domain.
+  Then $R[x]$ is a unique factorization domain, and every irreducible element of $R[x]$ is associate either to a prime of $R$ or to a primitive irreducible polynomial.
+] <thm:ufd-polynomial>
+
+#proof[
+  *Step 1: existence.*
+  Let $f in R[x]$ be nonzero and not a unit and write $f = c(f) f_0$ as in #link(<eq:content-factorisation>)[§11.3].
+  The content factors into primes of $R$, because $R$ is a UFD.
+  The primitive part $f_0$ lies in $K[x]$, which is a UFD by #link(<cor:k-x-ufd>)[§11.2], so $f_0 = q_1 dots.c q_m$ with each $q_i$ irreducible in $K[x]$; each $q_i$ is an associate in $K[x]$ of a primitive polynomial $Q_i in R[x]$, and $Q_i$ is irreducible in $R[x]$ by #link(<lem:primitive-irreducible>)[the lemma].
+  Absorbing the constants and using #link(<thm:gauss-lemma>)[Gauss's lemma] on the product of the $Q_i$ turns this into a factorization of $f$ in $R[x]$ into primes of $R$ and primitive irreducibles.
+
+  *Step 2: uniqueness.*
+  Let $f = u p_1 dots.c p_r Q_1 dots.c Q_s = u' q_1 dots.c q_(r') Q'_1 dots.c Q'_(s')$ be two such factorizations, with lower case letters denoting primes of $R$ and upper case letters primitive irreducibles.
+  Both are factorizations in $K[x]$, a UFD, so $s = s'$ and the primitive factors match up to nonzero constants and order; comparing contents in the primitive product then forces those constants to be units of $R$, and the primes of $R$ match up because $R$ is a UFD.
+]
+
+The theorem is the promised transfer of Chapter 10, and its second clause explains the shape of factorization in $R[x]$: the primes of the coefficient ring reappear as constant factors, and everything else is a primitive irreducible, which by #link(<lem:primitive-irreducible>)[the lemma] is exactly an irreducible polynomial over the fraction field.
+
+#corollary(name: "$bb(Z)[x]$ is a UFD but not a PID")[
+  The ring $bb(Z)[x]$ is a unique factorization domain and not a principal ideal domain.
+] <cor:zx-not-pid>
+
+#proof[
+  $bb(Z)$ is a UFD by #link(<cor:fundamental-theorem-arithmetic>)[§10.4], so $bb(Z)[x]$ is a UFD by #link(<thm:ufd-polynomial>)[the theorem above].
+
+  For the second claim, consider $I = (2, x)$.
+  It is proper: the evaluation at $0$ followed by reduction modulo $2$ is a surjective ring homomorphism $phi: bb(Z)[x] -> bb(F)_2$ with $phi(2) = 0$ and $phi(x) = 0$, and conversely a polynomial whose constant coefficient is even and whose other coefficients are divisible by $2$ lies in $(2, x)$ — the kernel is exactly $I$.
+
+  Suppose $I = (h)$.
+  From $h | 2$ and #link(<prop:degree-rules>)[the degree rules] the polynomial $h$ is constant, hence $h = ±1$ or $h = ±2$.
+  The first case gives $I = bb(Z)[x]$, contradicting properness; the second gives $x in.not (2)$.
+  So $I$ is not principal.
+]
+
+This corollary is the witness promised in #link(<note:hierarchy-strictness>)[§10.4]: $bb(Z)[x]$ separates the rung of unique factorization from that of principal ideals.
+
+== Roots and Quotients // 根与商环
+
+=== Roots
+
+#theorem(name: "Factor Theorem")[
+  Let $k$ be a field, $f in k[x]$ and $a in k$.
+  Then $f(a) = 0$ if and only if $(x - a)$ divides $f$.
+] <thm:factor-theorem>
+
+#proof[
+  Divide $f$ by $x - a$: the remainder has degree less than $1$, so it is a constant $r$, and $f = q (x - a) + r$.
+  Evaluating at $a$ gives $f(a) = r$.
+]
+
+#definition(name: "Multiplicity of a Root")[
+  Let $k$ be a field, $f in k[x]$ nonzero, and $a in k$ a root of $f$.
+  The *multiplicity* of $a$ in $f$ is the largest integer $m >= 1$ with $(x - a)^m | f$, and $a$ is a *multiple root* if $m >= 2$.
+] <def:multiplicity>
+
+Counting roots with multiplicity, a nonzero polynomial of degree $n$ has at most $n$ roots: each root contributes a distinct linear factor, and the product of $k$ such factors has degree $k$.
+This is the statement that the Théorie des Nombres note calls Vièta's setting; the formulas relating roots to coefficients are there, and are not repeated here.
+
+=== The Derivative
+
+#property(name: "Formal Derivative")[
+  For $f = sum_k a_k x^k in k[x]$ let $f' = sum_k k a_k x^(k-1)$, where $k a_k$ means the integer multiple of $a_k$ in $k$.
+  Then
+  - $(f + g)' = f' + g'$ and $(c f)' = c f'$ for $c in k$;
+  - $(f g)' = f' g + f g'$ and $(f^n)' = n f^(n-1) f'$;
+  - constants have derivative $0$, and $(x^n)' = n x^(n-1)$.
+] <prop:derivative-rules>
+
+The definition is purely formal: no limit is taken, and the rules are the ones familiar from calculus, proved by expanding coefficients.
+
+#proposition(name: "Multiple roots and the derivative")[
+  Let $k$ be a field, $f in k[x]$ nonzero, $a in k$ a root of $f$ of multiplicity $m >= 1$.
+  Then $f'(a) = 0$ if and only if $m >= 2$.
+] <prop:multiple-root>
+
+#proof[
+  Write $f = (x - a)^m g$ with $g(a) != 0$.
+  By #link(<prop:derivative-rules>)[the product rule],
+  $f' = m (x - a)^(m - 1) g + (x - a)^m g'$.
+  If $m >= 2$ both summands vanish at $a$, so $f'(a) = 0$.
+  If $m = 1$ the identity reads $f' = g + (x - a) g'$ and $f'(a) = g(a) != 0$.
+]
+
+Iterating the criterion, $a$ has multiplicity $m$ exactly when $f(a) = f'(a) = dots.c = f^(m - 1)(a) = 0$ but $f^(m)(a) != 0$.
+Applied to all roots at once, it says that a polynomial has a multiple root in an algebraic closure exactly when $gcd(f, f')$ is nonconstant; the gcd exists by #link(<prop:gcd-in-pid>)[§10.3], and the phenomenon of a derivative vanishing identically, as for $x^p - t$ in characteristic $p$, is the subject of *Separable Extensions*.
+
+=== Quotients
+
+#theorem(name: "Quotients of $k[x]$")[
+  Let $k$ be a field and $f in k[x]$ of degree at least $1$.
+  Then the following are equivalent:
+  - $f$ is irreducible over $k$;
+  - $(f)$ is a maximal ideal of $k[x]$;
+  - $k[x] \/ (f)$ is a field.
+
+  Moreover $k[x] \/ (f)$ is an integral domain exactly when these conditions hold.
+] <thm:quotient-field>
+
+#proof[
+  *Irreducible if and only if maximal.*
+  If $(f) subset (g) subset k[x]$ with both inclusions strict, then $g | f$ and $f = g h$ with both factors nonconstant, so $f$ is reducible.
+  Conversely, a factorization $f = g h$ with both factors nonconstant puts $(f)$ strictly inside $(g)$, which is strict inside $k[x]$ because $h$ is nonconstant.
+  Here $(g)$ denotes the principal ideal, and every ideal of $k[x]$ is principal by #link(<cor:k-x-ufd>)[§11.2].
+
+  *Maximal if and only if field.*
+  This is #link(<thm:maximal-iff-field>)[§9.4].
+
+  *Domain.*
+  In the PID $k[x]$ an ideal is prime exactly when it is maximal (#link(<thm:pid-prime-maximal>)[§10.3]), and a quotient is a domain exactly when the ideal is prime (#link(<thm:prime-iff-domain>)[§9.4]).
+]
+
+#proposition(name: "The quotient as a vector space")[
+  Let $k$ be a field and $f in k[x]$ of degree $n >= 1$.
+  Then $k[x] \/ (f)$ is a $k$-vector space of dimension $n$, with basis the classes of $1, x, dots, x^(n - 1)$.
+] <prop:quotient-degree>
+
+#proof[
+  Every class has a representative of degree less than $n$: divide an arbitrary $g$ by $f$ — #link(<thm:poly-division>)[§11.2] — and replace $g$ by the remainder, which differs from $g$ by a multiple of $f$.
+  That representative is unique, since a nonzero polynomial of degree less than $n$ cannot be divisible by $f$.
+  So the classes of $1, x, dots, x^(n - 1)$ form a basis over $k$.
+]
+
+This proposition is the reason the construction produces field extensions of prescribed degree, and it is used in that form in *Field Extensions*.
+
+#example(name: "Three quotients by a quadratic.")[
+  In $bb(R)[x]$ the polynomial $x^2 + 1$ is irreducible, so $bb(R)[x] \/ (x^2 + 1)$ is a field of dimension $2$ over $bb(R)$; evaluation at $i$ identifies it with $bb(C)$.
+
+  In $bb(F)_3[x]$ the same polynomial is irreducible, because $-1 = 2$ is not a square modulo $3$ (#link(<prop:small-degree-irreducible>)[§11.2]); the quotient is a field with $9$ elements.
+
+  In $bb(F)_5[x]$ it factors as $(x - 2)(x + 2)$, and the two ideals are comaximal since $4 = (x + 2) - (x - 2)$ is a unit; by #link(<thm:crt-two-ideals>)[§9.5] the quotient is $bb(F)_5 times bb(F)_5$, a product of fields rather than a field.
+
+  In $bb(F)_2[x]$ the polynomial $x^2 + x + 1$ has no root, hence is irreducible, and the quotient is the field $bb(F)_4$.
+] <ex:x2-plus-1-quotient>
+
+== Multivariate Polynomials // 多元多项式环
+
+=== Iteration
+
+Several indeterminates cost nothing extra: adjoining them one at a time is the same as adjoining them all at once, and the definition takes the cheap route.
+
+#definition(name: "Multivariate Polynomial Ring")[
+  Let $R$ be a ring and $n >= 1$.
+  The *polynomial ring in $n$ indeterminates* is defined recursively by
+  $R[x_1, dots, x_n] = (R[x_1, dots, x_(n-1)])[x_n]$,
+  with $R[x_1] = R[x]$ as in #link(<def:polynomial-ring>)[§11.1].
+] <def:multivariate-poly>
+
+An element is a finite sum of monomials $a x_1^(k_1) dots.c x_n^(k_n)$, and the *total degree* of such a monomial is $k_1 + dots.c + k_n$.
+The universal property of #link(<thm:poly-universal>)[§11.1] iterates as well: a homomorphism out of $R[x_1, dots, x_n]$ is a choice of $n$ commuting images, subject only to the relations coming from $R$.
+
+#example(name: "Total degree, and an ideal that is not principal")[
+  In $k[x, y]$ the monomials $x^2 y$ and $x y^3$ have total degrees $3$ and $4$, while their degrees in $y$ are $1$ and $3$.
+
+  The ideal $(x, y)$ is not principal.
+  If $(x, y) = (h)$, then $h | x$ and $h | y$; comparing degrees in either variable shows that $h$ is constant, and a constant dividing both $x$ and $y$ is a unit, which would give $(x, y) = k[x, y]$.
+  But $(x, y) != k[x, y]$, since evaluation at $(0, 0)$ is a homomorphism $k[x, y] -> k$ vanishing on $x$ and $y$ and not on $1$.
+
+  So $k[x, y]$ is not a PID, although it is a UFD: $k[x]$ is a UFD by #link(<cor:k-x-ufd>)[§11.2], hence $k[x][y]$ is a UFD by #link(<thm:ufd-polynomial>)[§11.3].
+] <ex:multivariate-not-pid>
+
+The example shows that the ladder of §10.4 does not ascend past one indeterminate: unique factorization survives in any number of variables, principal ideal generation does not.
+
+=== Finite Generation
+
+#theorem(name: "Hilbert Basis Theorem")[
+  Let $R$ be a ring in which every ideal is finitely generated.
+  Then every ideal of $R[x]$ is finitely generated, and consequently so is every ideal of $R[x_1, dots, x_n]$.
+  In particular every ideal of $k[x_1, dots, x_n]$, and every ideal of $bb(Z)[x_1, dots, x_n]$, is finitely generated.
+] <thm:hilbert-basis>
+
+#note(title: "Scope of the statement")[
+  The theorem is quoted without proof.
+  Its proof inspects the leading coefficients of a finite generating set, builds an ideal in $R$ out of them, and runs an ascending chain argument; that machinery belongs to commutative algebra, not to an introductory chapter.
+
+  Its content for this book is twofold.
+  Positively, ideals in multivariate rings are never "infinitely complicated": finitely many generators always suffice.
+  Negatively, finitely generated does not mean principal, as #link(<ex:multivariate-not-pid>)[the example above] shows, so the ladder stops where it stops.
+  Rings in which every ideal is finitely generated are called *Noetherian*, and the theorem says that $R$ Noetherian implies $R[x]$ Noetherian.
+] <note:hilbert-basis-scope>
+
+#note(title: "Closing remarks: the end of ring theory")[
+  Part II built three layers.
+
+  *Ideals and quotients.*
+  The substructures stable under multiplication (#link(<def:ideal>)[§9.1]), which are exactly the kernels (#link(<thm:kernel-ideal>)[§9.2]), and the collapse $R \/ I$ with its four homomorphism theorems (#link(<thm:ring-first-isomorphism>)[§9.3]).
+
+  *Divisibility.*
+  The dictionary between elements and principal ideals (#link(<note:element-ideal-dictionary>)[§10.1]) and the ladder $"ED" subset "PID" subset "UFD" subset "domain"$ (#link(<thm:ed-pid>)[§10.4], #link(<thm:pid-ufd>)[§10.3]).
+
+  *Polynomial rings.*
+  The ring $R[x]$ and its universal property (#link(<thm:poly-universal>)[§11.1]), the place of $k[x]$ on the ladder (#link(<thm:k-x-euclidean>)[§11.2]), the transfer of unique factorization to $R[x]$ (#link(<thm:ufd-polynomial>)[§11.3]), and the quotients $k[x] \/ (f)$ that are fields (#link(<thm:quotient-field>)[§11.4]).
+
+  Everything needed for field theory is now in place.
+  A field extension is a field $E$ containing $F$; its elements are algebraic when they satisfy a polynomial equation over $F$, and the whole machinery of that notion is the quotient $F[x] \/ (m)$ of #link(<thm:quotient-field>)[§11.4], read through #link(<prop:quotient-degree>)[the dimension count].
+  Part III begins there.
+] <note:closing-part-two>
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
@@ -7516,24 +7979,41 @@ What the identity buys is the ability to replace an element by a strictly smalle
 
 // --- Chapter 11: 多项式环 (Polynomial Rings) ---
 
-//   Section 11.1: 一元多项式环 (Polynomial Rings in One Variable)
-//     - 多项式环的构造
-//     - 次数与首项系数
-//     - 带余除法
+//   职责分界：多项式在数域上的算术（带余除法详证、gcd/Bézout、不可约判别、
+//   有理根定理、Eisenstein、Vièta）已由 Théorie des Nombres 的 Part V 承担，
+//   本章不重复；本章只做结构：一般系数环、泛性质、阶梯定位、UFD 提升、商环。
 
-//   Section 11.2: 多项式的整除性 (Divisibility of Polynomials)
-//     - 最大公因式与辗转相除法
-//     - 互素多项式
-//     - 不可约多项式
+//   Section 11.1: 多项式环 $R[x]$ (The Polynomial Ring)
+//     - 有限支撑序列的构造（即幺半群环 $R[\bb(N)]$）
+//     - 次数、首项、次数法则；无零因子假设的必要性（$\bb(Z)_4[x]$ 反例）
+//     - 单位群与整环性
+//     - 泛性质：$\iota$ 与 $\phi$ 由 $x |-> a$ 唯一延拓（图 fig:poly-universal）
 
-//   Section 11.3: 多项式的根 (Roots of Polynomials)
-//     - 余数定理与因式定理
-//     - 根的重数
-//     - 多项式的分裂
+//   Section 11.2: 域上的多项式 (Polynomials over a Field)
+//     - 带余除法（骨架证明；详证指向数论笔记）
+//     - $k[x]$ 是 ED（兑现 Ch 10），从而 PID 与 UFD
+//     - 不可约多项式（任意域，含 $\bb(F)_p$）；二三次的根判别
+//     - 商 $k(x)$ 为有理函数域（兑现 §8.6）
 
-//   Section 11.4: 多元多项式环简介 (Introduction to Multivariate Polynomial Rings)
-//     - $R[x_1, \ldots, x_n]$ 的构造
-//     - Hilbert 基定理（简述）
+//   Section 11.3: 内容与 Gauss 引理 (Content and Gauss's Lemma)
+//     - 内容、本原多项式
+//     - Gauss 引理：本原 × 本原 = 本原（模素元归约）
+//     - 本原不可约在 $R[x]$ 与 $K[x]$ 中等价
+//     - $R$ 是 UFD ⇒ $R[x]$ 是 UFD（兑现 Ch 10 决定 8）
+//     - $\bb(Z)[x]$ 是 UFD 非 PID（兑现 Ch 10 层级严格性）
+
+//   Section 11.4: 根与商环 (Roots and Quotients)
+//     - 因式定理、根的重数
+//     - 形式导数与重根判据（供 Ch 14）
+//     - 商环：$f$ 不可约 ⟺ $(f)$ 极大 ⟺ $k[x]/(f)$ 是域
+//     - 商环作为 $k$-向量空间的维数 = deg f
+//     - 三个二次多项式的商环实例（$\bb(C)$、$\bb(F)_9$、$\bb(F)_5 \times \bb(F)_5$、$\bb(F)_4$）
+
+//   Section 11.5: 多元多项式环 (Multivariate Polynomials)
+//     - 迭代构造与全次数
+//     - $k[x, y]$ 中 $(x, y)$ 非主理想（UFD 但非 PID）
+//     - Hilbert 基定理（陈述，不证）
+//     - 章末收束：Part II 结束，转向域论
 
 // ==========================================================================
 // Part III — 域论与伽罗瓦理论 (Field Theory and Galois Theory)
@@ -7752,6 +8232,12 @@ What the identity buys is the ability to replace an element by a strictly smalle
 // 8. Ch 10 不写「R 是 UFD ⇒ R[x] 是 UFD」：多项式环在 Ch 11 才定义，
 //    此处只能预述；改为在 Ch 11 兑现（Gauss 引理），
 //    Ch 10 只保留「Z[x] 是 UFD 而非 PID」作为层级严格性的见证。
+//
+// 9. Ch 11 与 Théorie des Nombres 分工：多项式在数域上的算术
+//    （带余除法详证、gcd/Bézout、Eisenstein、有理根定理、Vièta）已由
+//    该笔记 Part V 承担，本章不重复；本章只做结构（一般系数环、泛性质、
+//    阶梯定位、UFD 提升、商环 k[x]/(f)）。带余除法保留骨架证明，
+//    详证以文字指引方式指向数论笔记。
 //
 // ==========================================================================
 // 结构说明 (Structure Note)
