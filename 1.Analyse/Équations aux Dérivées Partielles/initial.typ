@@ -2997,34 +2997,107 @@ For the exterior problem the comparison functions come from the radial solutions
 == Green's Identities and the Dirichlet Problem on a Ball // 格林公式与球上的 Dirichlet 问题
 
 #proposition(name: "Green's Identities")[
-  Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary and let $u, v in C^2 (overline(Omega))$. With $nu$ the outward unit normal,
+  Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary and let $u, v in C^2 (overline(Omega))$.
+  With $nu$ the outward unit normal,
   $
     integral_Omega nabla u dot nabla v dif x = integral_(partial Omega) v (partial u)/(partial nu) dif S - integral_Omega v Delta u dif x,
   $
-  and, subtracting the first identity with $u$ and $v$ interchanged,
+  and, exchanging $u$ and $v$ and subtracting,
   $
     integral_Omega (u Delta v - v Delta u) dif x = integral_(partial Omega) (u (partial v)/(partial nu) - v (partial u)/(partial nu)) dif S.
   $
 ] <prop:green-identities>
 
+Both formulae are the multidimensional Green theorem of *Stokes' Formula* in Analyse Mathématique, written in the notation of this chapter; the proof is the divergence theorem applied to a vector field.
+
 #proof[
-  Both identities follow from the divergence theorem $integral_Omega "div" bold(F) dif x = integral_(partial Omega) bold(F) dot nu dif S$. For the first, take $bold(F) = v nabla u$; then $"div"(bold(F)) = nabla v dot nabla u + v Delta u$.
+  For the first identity take $bold(F) = v nabla u$ in the divergence theorem $integral_Omega "div" bold(F) dif x = integral_(partial Omega) bold(F) dot nu dif S$, so that $"div"(bold(F)) = nabla v dot nabla u + v Delta u$.
+  The second identity is the difference of the first with $(u, v)$ and with $(v, u)$.
 ]
 
-#example(name: "Uniqueness for the Neumann Problem")[
-  Let $u_1, u_2 in C^2 (overline(Omega))$ satisfy $Delta u_1 = Delta u_2 = 0$ in $Omega$ and $(u_1)_nu = (u_2)_nu$ on $partial Omega$. Then $w = u_1 - u_2$ is harmonic with zero normal derivative on the boundary. The first Green identity with $v = w$ gives
+The second identity turns the equation into an integral representation, provided a function is available that vanishes on $partial Omega$ and has a prescribed singularity inside.
+On a ball that function can be written down, and its normal derivative — the *Poisson kernel* — solves the Dirichlet problem.
+
+#definition(name: "Poisson Kernel of a Ball")[
+  Let $B = B (0, R) subset bb(R)^n$, $x in B$ and $y in partial B$.
+  The *Poisson kernel* of $B$ is
   $
-    integral_Omega abs(nabla w)^2 dif x = integral_(partial Omega) w (partial w)/(partial nu) dif S - integral_Omega w Delta w dif x = 0,
+    P (x, y) = (R^2 - abs(x)^2) / (omega_n R abs(x - y)^n).
   $
-  so $nabla w = 0$ in $Omega$, and $w$ is constant. Thus solutions of the Neumann problem are unique up to an additive constant (*Neumann Problem*).
+] <def:poisson-kernel>
+
+#lemma(name: "Properties of the Poisson Kernel")[
+  For every $x in B$ the kernel $P (x, dot)$ is positive on $partial B$, and
+  $
+    Delta_x P (x, y) = 0 quad (y in partial B, y != x), quad integral_(partial B) P (x, y) dif S (y) = 1.
+  $
+] <lem:poisson-kernel>
+
+#proof[
+  Positivity is clear from $abs(x) < R$.
+  For harmonicity, put $r = abs(x - y)$ and use $Delta abs(x - y)^(-n) = 2 n abs(x - y)^(-n - 2)$; then
+  $
+    Delta_x P (x, y) = (2 n)/(omega_n R) abs(x - y)^(-n - 2) (-abs(x - y)^2 + R^2 - abs(x)^2 + 2 x dot (x - y)) = 0,
+  $
+  because $abs(x - y)^2 = abs(x)^2 - 2 x dot y + R^2$ makes the bracket vanish.
+
+  For the normalisation, set $phi (x) = integral_(partial B) P (x, y) dif S (y)$.
+  The kernel is invariant under rotations, $P (Q x, Q y) = P (x, y)$ for every orthogonal $Q$, so $phi$ is radial; differentiating under the integral sign and using harmonicity, $phi$ is harmonic on $B$.
+  A radial harmonic function on a ball is constant (*Laplace's and Poisson's Equations*), and at the centre $P (0, y) = 1 / (omega_n R^(n - 1))$, so $phi = 1$.
 ]
 
-#example(name: "The Compatibility Condition")[
-  Taking $u = 1$ in the second Green identity shows that a solution of the Neumann problem $Delta u = f$ in $Omega$, $u_nu = g$ on $partial Omega$ must satisfy
+#theorem(name: "The Dirichlet Problem on a Ball")[
+  Let $B = B (0, R) subset bb(R)^n$ and $g in C (partial B)$.
+  Then
+  #eq[
+    $u (x) = integral_(partial B) P (x, y) g (y) dif S (y), quad x in B,$
+  ] <eq:poisson-formula>
+  defines a harmonic function $u in C^oo (B) inter C (overline(B))$ with $u = g$ on $partial B$.
+] <thm:dirichlet-ball-existence>
+
+#proof[
+  *Step 1: harmonicity.* For fixed $x in B$ the kernel is smooth in $x$, since $abs(x - y) >= R - abs(x) > 0$ on $partial B$, so differentiation under the integral sign is legitimate and $Delta u = integral_(partial B) Delta_x P (x, y) g (y) dif S (y) = 0$ (*Properties of the Poisson Kernel*).
+
+  *Step 2: recovery of the boundary values.* Fix $y_0 in partial B$ and $delta > 0$, and write $M = sup_(partial B) abs(g)$.
+  Using the normalisation and the positivity of $P$,
   $
-    integral_Omega f dif x = integral_(partial Omega) g dif S,
+    abs(u (x) - g (y_0)) <= integral_(partial B) P (x, y) abs(g (y) - g (y_0)) dif S (y) <= sup_(abs(y - y_0) < delta) abs(g (y) - g (y_0)) + 2 M integral_(abs(y - y_0) >= delta) P (x, y) dif S (y).
   $
-  a necessary condition for existence (*Neumann Problem*). The first Green identity with $v = 1$ gives the same conclusion directly.
+  The first term is small by continuity of $g$ at $y_0$.
+  For the second, $abs(x - y) >= delta / 2$ on the set $abs(y - y_0) >= delta$ as soon as $abs(x - y_0) < delta / 2$, hence
+  $
+    integral_(abs(y - y_0) >= delta) P (x, y) dif S (y) <= (R^2 - abs(x)^2) / (omega_n R) dot (omega_n R^(n - 1)) / (delta / 2)^n -> 0
+  $
+  as $x -> y_0$.
+  Therefore $u (x) -> g (y_0)$, and $u$ extends continuously to $overline(B)$ with boundary values $g$.
+]
+
+Together with #link(<thm:dirichlet-uniqueness>)[*Uniqueness for the Dirichlet Problem*] this settles the ball: the Poisson formula exhibits a solution and the maximum principle shows it is the only one.
+
+The ball is the only domain treated here, and only because its kernel is explicit.
+The hypotheses are weaker than they look: $g$ need only be continuous, although the equation is satisfied in the classical sense.
+
+#note(title: "Where existence comes from in general")[
+  Existence on a general bounded domain is proved in *Boundary Value Problems for Elliptic Equations* by a different route: weak solutions are constructed in $H^1 (Omega)$ with the Lax--Milgram theorem, and *Regularity Theory* recovers a classical solution.
+  The maximum principle is not used there, and the Poisson kernel is not available; the two existence theories are genuinely independent.
+]
+
+#note(title: "The interface with the Green function")[
+  The Poisson kernel is the outward normal derivative, in the boundary variable, of the Green function of $B$:
+  $
+    P (x, y) = partial_(nu_y) G (x, y), quad x in B, quad y in partial B.
+  $
+  This is where the chapter meets *Green Functions and Representation*: there the Green function is constructed for a general domain and the representation formula identifies its normal derivative with the kernel used above.
+  The two viewpoints are complementary — the kernel is explicit and yields existence on balls, the Green function is abstract and yields an integral representation of every solution.
+]
+
+#note[
+  #figure(
+    image("./img/poisson-kernel.svg", width: 100%),
+    caption: [The Poisson kernel of the unit disc, plotted over $partial B$ for three positions of $x$ on the radius through $y_0$. Near the centre the kernel is almost constant; as $x -> y_0$ its mass concentrates near $y_0$, and the boundary value is recovered in the limit. In every case the area under the graph is $1$, as required by the normalisation.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:poisson-kernel>
 ]
 
 
