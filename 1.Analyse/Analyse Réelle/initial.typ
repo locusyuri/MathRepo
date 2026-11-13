@@ -1643,7 +1643,7 @@ $
 #note[
   Jump functions are intimately connected to two important classes of functions:
   - *Monotone functions*: Every monotone function on $[a, b]$ has at most countably many jump discontinuities. The sum of its jump sizes is bounded by $abs(f(b) - f(a))$.
-  - *Functions of bounded variation (BV)*: Every BV function can be decomposed uniquely as the sum of an absolutely continuous part, a jump part (a pure jump function), and a singular part — the so-called Lebesgue decomposition. The theory of BV functions and this decomposition are developed in Part IV.
+  - *Functions of bounded variation (BV)*: Every BV function can be decomposed uniquely as the sum of an absolutely continuous part, a jump part (a pure jump function), and a singular part — the so-called Lebesgue decomposition. The theory of BV functions and this decomposition are deferred to the *Differentiation Theory* part, which is planned but not yet written.
 ]
 
 === Dini Derivatives // Dini 导数
@@ -1815,12 +1815,12 @@ $
 // 前瞻：Vitali 覆盖引理的后续用途
 #note[
   The Vitali Covering Lemma is the engine behind three fundamental results:
-  - *Lebesgue Density Theorem*: Almost every point of a measurable set is a density point. (Deferred to *Differentiation Theory*, where it is proved by the same covering argument.)
+  - *Lebesgue Density Theorem*: Almost every point of a measurable set is a density point. (Deferred to the *Differentiation Theory* part, where it is to be proved by the same covering argument; that part is planned but not yet written.)
   - *Differentiability of Monotone Functions*: A monotone function on $[a, b]$ is differentiable a.e. — proved below by applying Vitali to the sets where the Dini derivatives differ.
   - *Lebesgue Differentiation Theorem*: For $f in L^1_("loc")(bb(R))$,
-    $lim_(r -> 0) 1/(2 r) integral_(x-r)^(x+r) f(t) dif t = f(x)$ for a.e. $x$. (Deferred to *Differentiation Theory*.)
+    $lim_(r -> 0) 1/(2 r) integral_(x-r)^(x+r) f(t) dif t = f(x)$ for a.e. $x$. (Deferred to the *Differentiation Theory* part, which is planned but not yet written.)
 
-  In this chapter, we use the lemma to establish the a.e. differentiability of monotone functions (*Monotone Functions on Closed Intervals*) and, from that, the Newton-Leibniz formula via absolute continuity (*Absolute Continuity and the Newton-Leibniz Formula*). The full BV decomposition is likewise developed in *Differentiation Theory*.
+  In this chapter, we use the lemma to establish the a.e. differentiability of monotone functions (*Monotone Functions on Closed Intervals*) and, from that, the Newton-Leibniz formula via absolute continuity (*Absolute Continuity and the Newton-Leibniz Formula*). The full BV decomposition is likewise deferred to the *Differentiation Theory* part (planned, not yet written).
 ]
 
 With the Vitali covering lemma in hand, we can now return to the question left open in the previous section: are monotone functions differentiable almost everywhere? The answer is yes, and the lemma provides the precise covering argument needed.
@@ -2591,108 +2591,81 @@ $
 
 #part("Differentiation Theory") // 微分理论
 
+// 本部分尚未撰写；这里只给出范围说明，避免正文中的三处承诺落空。
+= Scope of This Part // 本部分范围
+#note[
+  This part is *planned but not yet written*. It is meant to collect the three results that the earlier chapters repeatedly defer:
+  - *Lebesgue Density Theorem*: almost every point of a measurable set is a density point; the proof reuses the Vitali covering lemma of *Vitali Coverings and the Vitali Lemma*.
+  - *Lebesgue Differentiation Theorem*: for $f in L^1_("loc")(bb(R))$, the average $1 / (2 r) integral_(x-r)^(x+r) f(t) dif t$ converges to $f(x)$ for almost every $x$.
+  - *Lebesgue Decomposition of Bounded Variation Functions*: every function of bounded variation is the sum of an absolutely continuous part, a jump part and a singular part.
+
+  The chapters planned for this part are listed in the table of contents at the end of this note. Until they are written, the three results above may only be used as stated facts, never as established ones.
+]
+
 // 只有被引用的章节才会被编译和显示在目录中，因此如果你想要显示某个章节，请确保在主文件中正确引用了它。
 // refer to @zhou2016
 
 #bibliography("references.bib", title: "References", full: true)
 
 // 目录
-
+//
+// 说明：本目录先列出已经写成的三部分五章，再单列“规划中的章节”。
+// 规划章节尚未撰写，正文中相关承诺均已注明这一点。
+//
 // --- Part I: Measure Theory (测度论) ---
-
+//
 // Chapter 1: Lebesgue Measure (勒贝格测度)
-//   Section 1.1: σ-Algebra and Measure (σ-代数与测度)
-//   Section 1.2: Lebesgue Measure (勒贝格测度)
-//   Section 1.3: Non-Measurable Sets (非可测集)
-//   Section 1.4: Other Views to introduce the Lebesgue Measure (其他引入 Lebesgue 测度的视角)
-
+//   Section 1.1: $sigma$-Algebra and Measure (σ-代数与测度)
+//   Section 1.2: Measure and Measurable Spaces (测度与可测空间)
+//   Section 1.3: Measurable Sets (可测集)
+//   Section 1.4: Other Views to introduce the Lebesgue Measure (其他引入勒贝格测度的视角)
+//   Section 1.5: Non-Measurable Sets (非可测集)
+//   Section 1.6: Other Measure (其他测度: Hausdorff 测度等)
+//
+// --- Part II: Integration Theory (积分理论) ---
+//
 // Chapter 2: Measurable Function (可测函数)
 //   Section 2.1: Definition and Properties of Measurable Functions (可测函数的定义和性质)
 //   Section 2.2: Convergence of Measurable Functions (可测函数列的收敛性)
 //   Section 2.3: Measurable Functions and Continuous Functions (可测函数与连续函数)
-
-// --- Part II: Integration Theory (积分理论) ---
-
+//
 // Chapter 3: Lebesgue Integration (勒贝格积分)
 //   Section 3.1: Lebesgue Integration (勒贝格积分)
 //   Section 3.2: Limit of Integral Sequences (积分序列的极限)
 //   Section 3.3: Relation to Riemann Integral (与黎曼积分的关系)
-//   Section 3.4: Product Measure and Fubini's Theorem (乘积测度与Fubini定理)
-
+//   Section 3.4: Product Measure and Fubini's Theorem (乘积测度与 Fubini 定理)
+//
 // Chapter 4: Differential and Integral (微分与积分)
 //   Section 4.1: Jump Functions and Dini Derivatives (跳跃函数与 Dini 导数)
 //   Section 4.2: Vitali Coverings and the Vitali Lemma (Vitali 覆盖与 Vitali 引理)
 //   Section 4.3: Monotone Functions on Closed Intervals (闭区间上的单调函数)
 //   Section 4.4: Functions of Bounded Variation and Absolute Continuity (有界变差函数与绝对连续函数)
 //   Section 4.5: Absolute Continuity and the Newton-Leibniz Formula (绝对连续性与 Newton-Leibniz 公式)
-
+//
 // --- Part III: Function Spaces (函数空间) ---
-
-// Chapter 7: L^p Spaces (L^p空间)
-//   Section 7.1: Definition of L^p Spaces (L^p空间的定义)
-//   Section 7.2: Hölder's Inequality (Hölder不等式)
-//   Section 7.3: Minkowski's Inequality (Minkowski不等式)
-//   Section 7.4: Completeness of L^p Spaces (L^p空间的完备性)
-//   Section 7.5: Duality of L^p Spaces (L^p空间的对偶)
-//   Section 7.6: L^2 Space as Hilbert Space (L^2空间作为希尔伯特空间)
-
-// Chapter 8: Convergence in L^p (L^p中的收敛)
-//   Section 8.1: Convergence in Norm (范数收敛)
-//   Section 8.2: Weak Convergence (弱收敛)
-//   Section 8.3: Strong vs Weak Convergence (强收敛与弱收敛)
-//   Section 8.4: Dense Subspaces of L^p (L^p的稠密子空间)
-//   Section 8.5: Approximation by Continuous Functions (连续函数逼近)
-
+//
+// Chapter 5: $L^p$ Spaces (L^p 空间)
+//   Section 5.1: $L^p$ Spaces and Completeness (L^p 空间与完备性)
+//   Section 5.2: Separability of $L^p$ Spaces (L^p 空间的可分性)
+//
 // --- Part IV: Differentiation Theory (微分理论) ---
-
-// Chapter 9: Differentiation of Measures (测度的微分)
-//   Section 9.1: Signed Measures (有号测度)
-//   Section 9.2: Hahn Decomposition (Hahn分解)
-//   Section 9.3: Jordan Decomposition (Jordan分解)
-//   Section 9.4: Radon-Nikodym Theorem (Radon-Nikodym定理)
-//   Section 9.5: Radon-Nikodym Derivative (Radon-Nikodym导数)
-
-// Chapter 10: Differentiation of Functions (函数的微分)
-//   Section 10.1: Functions of Bounded Variation and Their Structure (有界变差函数及其结构)
-//   Section 10.2: Absolutely Continuous Functions (绝对连续函数)
-//   Section 10.3: Lebesgue Differentiation Theorem (勒贝格微分定理)
-//   Section 10.4: Fundamental Theorem of Calculus for Lebesgue Integral (勒贝格积分的基本定理)
-//   Section 10.5: Density Points and Lebesgue Points (密度点与勒贝格点)
-
-// Chapter 11: Covering Lemmas and Maximal Functions (覆盖引理与极大函数)
-//   Section 11.1: Vitali Covering Lemma (Vitali覆盖引理)
-//   Section 11.2: Hardy-Littlewood Maximal Function (Hardy-Littlewood极大函数)
-//   Section 11.3: Weak Type Estimates (弱型估计)
-//   Section 11.4: Lebesgue Differentiation via Maximal Functions (通过极大函数证明勒贝格微分定理)
-
-// --- Part V: Advanced Topics (进阶主题) ---
-
-// Chapter 12: Fourier Analysis on L^p (L^p上的傅里叶分析)
-//   Section 12.1: Fourier Transform on L^1 (L^1上的傅里叶变换)
-//   Section 12.2: Fourier Transform on L^2 (L^2上的傅里叶变换)
-//   Section 12.3: Plancherel Theorem (Plancherel定理)
-//   Section 12.4: Inversion Formula (反演公式)
-//   Section 12.5: Convolution and Approximate Identities (卷积与近似单位元)
-
-// Chapter 13: Hausdorff Measure and Dimension (Hausdorff测度与维数)
-//   Section 13.1: Hausdorff Measure (Hausdorff测度)
-//   Section 13.2: Hausdorff Dimension (Hausdorff维数)
-//   Section 13.3: Fractal Sets (分形集)
-//   Section 13.4: Relationship with Lebesgue Measure (与勒贝格测度的关系)
-
-// Chapter 14: Abstract Measure Theory (抽象测度论)
-//   Section 14.1: Regular Measures (正则测度)
-//   Section 14.2: Borel Measures on Locally Compact Spaces (局部紧空间上的Borel测度)
-//   Section 14.3: Riesz Representation Theorem (Riesz表示定理)
-//   Section 14.4: Weak Convergence of Measures (测度的弱收敛)
-//   Section 14.5: Prokhorov's Theorem (Prokhorov定理)
-
-// Chapter 15: Applications (应用)
-//   Section 15.1: Change of Variables Formula (变量替换公式)
-//   Section 15.2: Surface Measure and Integration on Manifolds (曲面测度与流形上的积分)
-//   Section 15.3: Sobolev Spaces (Sobolev空间)
-//   Section 15.4: Applications to PDEs (在偏微分方程中的应用)
-//   Section 15.5: Applications to Probability Theory (在概率论中的应用)
-
+//
+// 本部分尚未撰写，仅有“Scope of This Part”一节说明其范围。规划中的章节如下：
+//   Chapter 6: Differentiation of Measures (测度的微分)
+//     Signed Measures (有号测度), Hahn Decomposition (Hahn 分解),
+//     Jordan Decomposition (Jordan 分解), Radon-Nikodym Theorem (Radon-Nikodym 定理)
+//   Chapter 7: Differentiation of Functions (函数的微分)
+//     Lebesgue Decomposition of BV Functions (BV 函数的勒贝格分解),
+//     Density Points and Lebesgue Points (密度点与勒贝格点),
+//     Lebesgue Differentiation Theorem (勒贝格微分定理)
+//   Chapter 8: Covering Lemmas and Maximal Functions (覆盖引理与极大函数)
+//     Hardy-Littlewood Maximal Function (Hardy-Littlewood 极大函数),
+//     Weak Type Estimates (弱型估计)
+//
 // 结构说明：
-// 本目录分为五个部分，共15章。Part I 建立测度论基础，从σ-代数到勒贝格测度再到可测函数；Part II 系统阐述积分理论，包括勒贝格积分、收敛定理与Fubini定理；Part III 研究L^p函数空间及其收敛性；Part IV 讨论微分理论，涵盖测度的微分、函数的微分与极大函数理论；Part V 涵盖傅里叶分析、Hausdorff测度、抽象测度论与应用等进阶主题。整体编排遵循从测度到积分、从积分到函数空间、从积分到微分、从基础到应用的逻辑主线。
+// 已写成的部分共三部分五章。Part I 建立测度论基础，从 σ-代数与测度出发，引入勒贝格测度、
+// 非可测集与可测函数；Part II 系统阐述积分理论，包括勒贝格积分、收敛定理、与黎曼积分的关系、
+// 乘积测度与 Fubini 定理，最后是微分与积分（跳跃函数、Dini 导数、Vitali 引理、单调函数、
+// 有界变差与绝对连续）；Part III 研究 L^p 函数空间的完备性与可分性。
+// Part IV 微分理论目前只有规划说明：勒贝格密度定理、勒贝格微分定理与 BV 函数的勒贝格分解
+// 三处正文承诺都指向它，编写前这些结果只能作为已陈述的事实引用。
