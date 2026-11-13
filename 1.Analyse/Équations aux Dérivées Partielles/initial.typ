@@ -2628,7 +2628,23 @@ The next Part supplies the language — distributions, convolution and Sobolev s
 
 = Laplace's Equation and Harmonic Functions // 拉普拉斯方程与调和函数
 
-The Laplace equation is the prototypical elliptic equation. Its solutions — the *harmonic functions* — form the smoothest and most rigid class of objects in PDE theory: they are $C^oo$ wherever defined, enjoy the mean value property and the maximum principle, and their theory provides the blueprint for the general elliptic theory developed in this Part.
+The Laplace equation is the prototypical elliptic equation, and it closes the sequence of the three model equations.
+The wave equation propagates, the heat equation diffuses, and the Laplace equation describes the equilibrium with which the two evolution problems are compatible; its solutions — the *harmonic functions* — form the smoothest and most rigid class of functions in analysis.
+
+Two properties organise the chapter.
+
+- *Rigidity.* A harmonic function is over-determined by classical standards: it is $C^oo$ as soon as it is $C^2$, its derivatives are controlled by its supremum, it cannot have an interior extremum, and a single one-sided bound on $bb(R)^n$ forces it to be constant.
+- *Well-posedness.* The Dirichlet and the Neumann problems admit at most one solution, and that solution depends continuously on the data.
+  Both facts follow from a single maximum principle, with no existence theory.
+
+Three tools carry the proofs, and they are presented in the order of increasing strength.
+
+1. The *mean value property* (*Mean Value Property*) turns harmonicity into an identity for averages, and the identity is strong enough to be inverted: averaging implies harmonicity.
+2. The *maximum principle* (*Maximum and Minimum Principles*) turns the sign of $Delta u$ into a comparison between interior and boundary values, and its boundary form — Hopf's lemma — controls the normal derivative.
+3. *Green's identities* (*Green's Identities and the Dirichlet Problem on a Ball*) turn the equation into an integral representation; the Poisson kernel of a ball then gives the only existence theorem proved here.
+
+Existence in general domains is a weak (Sobolev) statement and belongs to *Boundary Value Problems for Elliptic Equations*; the Green function of a general domain belongs to *Green Functions and Representation*.
+This chapter supplies what both use: uniqueness, stability, and the pointwise estimates.
 
 == Laplace's and Poisson's Equations // 拉普拉斯方程与泊松方程
 
@@ -2667,6 +2683,36 @@ The Laplace equation is the prototypical elliptic equation. Its solutions — th
   $
     Delta v = sum_i sum_(j, k) Q_(j i) Q_(k i) ((partial^2 u)/(partial x_j partial x_k)) compose (Q dot) = sum_j ((partial^2 u)/(partial x_j^2)) compose (Q dot) = (Delta u) compose (Q dot).
   $
+]
+
+The singular solutions used throughout the chapter are the radial ones.
+They are the only radial harmonic functions that blow up at the origin, and every comparison argument below — at an isolated singularity, at infinity, or on the boundary of a ball — is built from them.
+
+#lemma(name: "Radial Harmonic Functions")[
+  Let $Omega = {x in bb(R)^n : a < abs(x) < b}$ be an annulus and let $v in C^2 (a, b)$.
+  The function $u (x) = v (abs(x))$ is harmonic on $Omega$ if and only if
+  $
+    v (r) = cases(
+      c_1 log r + c_2 quad & "if" n = 2,
+      c_1 r^(2 - n) + c_2 quad & "if" n >= 3,
+    )
+  $
+  for constants $c_1, c_2 in bb(R)$.
+] <lem:radial-harmonic>
+
+#proof[
+  For a radial function the Laplacian reduces to
+  $
+    Delta u = v''(r) + (n - 1)/r v'(r) = 1 / r^(n - 1) (r^(n - 1) v'(r))',
+  $
+  so $u$ is harmonic exactly when $(r^(n - 1) v'(r))' = 0$, that is, when $v'(r) = c_1 r^(1 - n)$.
+  One integration gives the two cases above.
+]
+
+#note(title: "Why the singular solutions matter")[
+  For $n >= 3$ the function $abs(x)^(2 - n)$ is harmonic on $bb(R)^n backslash {0}$ and tends to $0$ at infinity; for $n = 2$ the function $log abs(x)$ is harmonic on $bb(R)^2 backslash {0}$ and grows without bound at infinity.
+  Their normalised versions are the *fundamental solution* of the Laplacian, constructed as a distribution in #link(<ex:fund-laplace>)[*Fundamental Solutions*].
+  Here they serve only as comparison functions: they determine the admissible behaviour of a harmonic function at an isolated singularity (*Further Properties of Harmonic Functions*) and at infinity (*The Dirichlet Problem*, *The Neumann Problem*), and they are the reason why the Poisson kernel of *Green's Identities and the Dirichlet Problem on a Ball* can be normalised.
 ]
 
 == Mean Value Property // 平均值性质
