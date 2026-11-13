@@ -10884,9 +10884,10 @@ Denote $integral.cont_(partial limits(M)^harpoon.rt)$ as the line integral along
 #corollary(name: "Divergence Form of Green's Theorem")[
   Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^2$ with positively oriented boundary, and let $bold(f) = P bold(i) + Q bold(j) in C^1 (limits(M)^harpoon.rt)$. Then
   $
-    integral.cont_(partial limits(M)^harpoon.rt) bold(f) dot bold(n) dif s
-    & = integral.double_(limits(M)^harpoon.rt) (frac(partial P, partial x) + frac(partial Q, partial y)) dif x dif y \
-    & = integral.double_(limits(M)^harpoon.rt) nabla dot bold(f) dif x dif y,
+      & integral.cont_(partial limits(M)^harpoon.rt) (-Q dif x + P dif y) =
+        integral.cont_(partial limits(M)^harpoon.rt) bold(f) dot bold(n) dif s \
+    = & integral.double_(limits(M)^harpoon.rt) (frac(partial P, partial x) + frac(partial Q, partial y)) dif x dif y
+        = integral.double_(limits(M)^harpoon.rt) nabla dot bold(f) dif x dif y,
   $
   where $bold(n)$ is the unit outward normal along $partial limits(M)^harpoon.rt$.
 ] <cor:green-divergence-form>
@@ -10906,6 +10907,7 @@ Substituting particular fields in the divergence form yields the two classical i
 #corollary(name: "Green's First Identity")[
   Let $limits(M)^harpoon.rt$ be an oriented closed region in $bb(R)^2$ with positively oriented piecewise smooth boundary, let $u in C^1 (limits(M)^harpoon.rt)$ and $v in C^2 (limits(M)^harpoon.rt)$. Then
   $
+    integral.double_(limits(M)^harpoon.rt) nabla dot (u nabla v) dif x dif y =
     integral.double_(limits(M)^harpoon.rt) (nabla u dot nabla v + u Delta v) dif x dif y = integral.cont_(partial limits(M)^harpoon.rt) u frac(partial v, partial n) dif s,
   $
   where $frac(partial v, partial n) = nabla v dot bold(n)$ is the directional derivative of $v$ along the outward unit normal $bold(n)$.
@@ -10914,6 +10916,7 @@ Substituting particular fields in the divergence form yields the two classical i
 #corollary(name: "Green's Second Identity")[
   Under the hypotheses of #link(<cor:green-first-identity>)[Green's first identity] with $u, v in C^2 (limits(M)^harpoon.rt)$,
   $
+    integral.double_(limits(M)^harpoon.rt) nabla dot (u nabla v - v nabla u) dif x dif y =
     integral.double_(limits(M)^harpoon.rt) (u Delta v - v Delta u) dif x dif y = integral.cont_(partial limits(M)^harpoon.rt) (u frac(partial v, partial n) - v frac(partial u, partial n)) dif s.
   $
 ] <cor:green-second-identity>
