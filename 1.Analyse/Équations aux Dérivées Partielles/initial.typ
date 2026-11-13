@@ -2903,7 +2903,98 @@ A strict maximum at a boundary point forces the normal derivative to point outwa
   The difference $w = v - u$ is subharmonic with $w >= 0$ on $partial Omega$, so the weak maximum principle applied to $-w$ gives $min_(overline(Omega)) w = min_(partial Omega) w >= 0$.
 ]
 
-== Green's Identities // 格林恒等式
+== The Dirichlet Problem // Dirichlet 问题
+
+The first boundary value problem asks for a harmonic function with prescribed boundary values.
+Uniqueness and stability follow from the maximum principle alone, and they hold in the same form for the exterior problem once the behaviour at infinity is prescribed.
+
+#definition(name: "The Dirichlet Problem")[
+  Let $Omega subset bb(R)^n$ be a bounded domain and let $f: Omega -> bb(R)$ and $g: partial Omega -> bb(R)$ be given.
+  The *Dirichlet problem* is to find $u$ with
+  $
+    -Delta u = f quad "in" Omega, quad u = g quad "on" partial Omega.
+  $
+  A *classical solution* is a function $u in C^2 (Omega) inter C (overline(Omega))$ satisfying both conditions pointwise.
+] <def:dirichlet-problem>
+
+The case $f = 0$ is the *Laplace problem*: the solution is the harmonic function with boundary values $g$.
+
+The exterior problem prescribes the same boundary values on the boundary of a bounded obstacle, but the unknown is defined on the unbounded complement.
+There the equation alone cannot single out a solution, because the radial solutions of *Laplace's and Poisson's Equations* can be added to any solution; the behaviour at infinity is part of the data.
+
+#definition(name: "The Exterior Dirichlet Problem")[
+  Let $Omega subset bb(R)^n$ be a bounded domain and $g in C (partial Omega)$.
+  The *exterior Dirichlet problem* is to find a harmonic function $u$ on $bb(R)^n backslash overline(Omega)$, continuous up to $partial Omega$, with
+  $
+    u = g quad "on" partial Omega,
+  $
+  subject to the condition at infinity
+  $
+    lim_(abs(x) -> oo) u (x) = 0 quad (n >= 3), quad "while" quad u "is bounded" quad (n = 2).
+  $
+] <def:exterior-problem>
+
+#theorem(name: "Uniqueness for the Dirichlet Problem")[
+  Let $Omega$ be a bounded domain and $F in C (Omega)$.
+  If $u, v in C^2 (Omega) inter C (overline(Omega))$ satisfy $-Delta u = -Delta v = F$ in $Omega$ and $u = v$ on $partial Omega$, then $u = v$ in $Omega$.
+] <thm:dirichlet-uniqueness>
+
+#proof[
+  The difference $w = u - v$ is harmonic and vanishes on $partial Omega$; the weak maximum principle applied to $w$ and to $-w$ gives $max_(overline(Omega)) w = min_(overline(Omega)) w = 0$.
+]
+
+Uniqueness is the qualitative half of well-posedness; the maximum principle also quantifies the dependence on the data.
+
+#theorem(name: "Stability of the Dirichlet Problem")[
+  Let $Omega$ be a bounded domain and let $u, v in C^2 (Omega) inter C (overline(Omega))$ satisfy $-Delta u = F$ and $-Delta v = G$ in $Omega$, with $u = g_1$ and $v = g_2$ on $partial Omega$.
+  Then
+  $
+    sup_(overline(Omega)) abs(u - v) <= sup_(partial Omega) abs(g_1 - g_2) + ("diam"(Omega)^2)/(2 n) sup_Omega abs(F - G).
+  $
+] <thm:dirichlet-stability>
+
+#proof[
+  Set $w = u - v$, $m = sup_(partial Omega) abs(g_1 - g_2)$ and $M = sup_Omega abs(F - G)$, so that $abs(Delta w) <= M$ in $Omega$ and $abs(w) <= m$ on $partial Omega$.
+  Place the origin at a point of $Omega$ and put $d = "diam"(Omega)$; then $abs(x) <= d$ on $Omega$, and
+  $
+    psi (x) = M/(2 n) (d^2 - abs(x)^2)
+  $
+  is non-negative on $Omega$, with $Delta psi = -M$.
+
+  The functions $w - psi$ and $-w - psi$ are subharmonic, since $Delta(w - psi) = Delta w + M >= 0$ and $Delta(-w - psi) = -Delta w + M >= 0$.
+  On $partial Omega$ they are bounded by $m$, because $psi >= 0$ there and $abs(w) <= m$.
+  The weak maximum principle therefore gives $abs(w) <= m + psi$ on $Omega$, and $psi <= M d^2 / (2 n)$ yields the claim.
+]
+
+The same argument gives the estimate for the solution itself, with $v = 0$: a bound on the data bounds the solution, and the diameter of the domain enters only through the constant $"diam"(Omega)^2 / (2 n)$.
+
+For the exterior problem the comparison functions come from the radial solutions.
+
+#theorem(name: "Uniqueness for the Exterior Dirichlet Problem")[
+  Let $Omega$ be a bounded domain with $C^2$ boundary.
+  Then the exterior Dirichlet problem has at most one solution.
+] <thm:dirichlet-uniqueness-exterior>
+
+#proof[
+  Let $u_1, u_2$ be two solutions and $w = u_1 - u_2$; then $w$ is harmonic outside $overline(Omega)$, vanishes on $partial Omega$, and satisfies the same condition at infinity.
+  For $R > "diam"(Omega)$ put $Omega_R = {x : abs(x) < R} backslash overline(Omega)$, and let $delta_R = sup_(abs(x) = R) abs(w)$, so that $delta_R -> 0$ as $R -> oo$ in both dimensions.
+
+  *Step 1: a comparison function.* Choose $Phi$ harmonic and positive on $Omega_R$ with $Phi -> oo$ as $abs(x) -> 0$: take $Phi (x) = abs(x)^(2 - n)$ when $n >= 3$ and $Phi (x) = log (R / abs(x))$ when $n = 2$ (*Laplace's and Poisson's Equations*).
+  Then $phi = epsilon Phi + delta_R$ is harmonic, and on $partial Omega_R$ one has $abs(w) <= phi$: on $partial Omega$ because $w = 0 <= epsilon Phi$, and on $abs(x) = R$ because $abs(w) <= delta_R$.
+
+  *Step 2: the maximum principle.* The functions $w - phi$ and $-w - phi$ are harmonic on $Omega_R$ and non-positive on $partial Omega_R$, so both are non-positive on $Omega_R$, that is, $abs(w) <= epsilon Phi + delta_R$ there.
+
+  *Step 3: the limits.* Fix $x$ outside $overline(Omega)$. Letting $R -> oo$ in $abs(w (x)) <= epsilon Phi (x) + delta_R$ kills the last term; letting then $epsilon -> 0^+$ kills the first. Hence $w (x) = 0$.
+]
+
+#note(title: "Kelvin transform")[
+  The two dimensions differ because the decay rate of a harmonic function at infinity is dimension-dependent, and this is exactly what the inversion $x |-> x / abs(x)^2$ detects.
+  For $n >= 3$ the function $u^star (x) = abs(x)^(2 - n) u (x / abs(x)^2)$ is harmonic wherever $u$ is, and the condition $u -> 0$ at infinity becomes continuity of $u^star$ at the origin, so the exterior uniqueness theorem is the interior theorem applied to $u^star$.
+  For $n = 2$ the same computation with $u^star (x) = u (x / abs(x)^2)$ turns a bounded harmonic function at infinity into a bounded harmonic function near the origin, whose singularity is removable (*Further Properties of Harmonic Functions*).
+  This is why boundedness, rather than decay, is the correct condition in the plane.
+]
+
+== Green's Identities and the Dirichlet Problem on a Ball // 格林公式与球上的 Dirichlet 问题
 
 #proposition(name: "Green's Identities")[
   Let $Omega subset bb(R)^n$ be a bounded domain with $C^1$ boundary and let $u, v in C^2 (overline(Omega))$. With $nu$ the outward unit normal,
@@ -3536,13 +3627,8 @@ The maximum principle and Green's identities of *Laplace's Equation and Harmonic
 
 == Dirichlet Problem // 狄利克雷问题
 
-#definition(name: "The Dirichlet Problem")[
-  Let $Omega subset bb(R)^n$ be a bounded domain and $f: Omega -> bb(R)$, $g: partial Omega -> bb(R)$ given functions. The *Dirichlet problem* is to find $u$ such that
-  $
-    -Delta u = f quad "in" quad Omega, quad u = g quad "on" quad partial Omega.
-  $
-  A classical solution is a function $u in C^2 (Omega) inter C (overline(Omega))$ satisfying the equation pointwise; a weak solution is defined below.
-] <def:dirichlet-problem>
+The problem itself — equation, boundary data, and the distinction between a classical and a weak solution — is stated in *The Dirichlet Problem*.
+Here the solution is sought in $H^1 (Omega)$ instead, and the boundary condition is read in the trace sense.
 
 #definition(name: "Sobolev Space $H^1 (Omega)$")[
   The space $H^1 (Omega) = W^(1,2) (Omega)$ consists of all $u in L^2 (Omega)$ whose first-order weak derivatives (#link(<def:weak-derivative>)[*Weak Derivatives*]) belong to $L^2 (Omega)$, with the norm
