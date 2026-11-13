@@ -2717,7 +2717,14 @@ They are the only radial harmonic functions that blow up at the origin, and ever
 
 == Mean Value Property // 平均值性质
 
-The mean value property is the fundamental structural feature of harmonic functions: the value at a point is the average over any sphere or ball centered at that point. It encodes the rigidity of harmonic functions (no interior extrema unless constant) and, through its converse, their smoothness.
+The mean value property converts the differential equation into an identity for averages.
+Its interest is that the identity can be inverted, so that harmonicity, smoothness and the size of the derivatives become three equivalent kinds of information:
+
+- a harmonic function satisfies the identity,
+- a function satisfying the identity is automatically harmonic and $C^oo$,
+- and its derivatives are bounded by its supremum with an explicit constant.
+
+The three statements below establish this circle; *Further Properties of Harmonic Functions* exploits it.
 
 #theorem(name: "Mean Value Property")[
   Let $u in C^2 (Omega)$ be harmonic. Then for every $x in Omega$ and every $r > 0$ with $overline(B (x, r)) subset Omega$,
@@ -2784,14 +2791,29 @@ The mean value property is the fundamental structural feature of harmonic functi
   Now $u_epsilon -> u$ locally uniformly on $Omega$ (*Convolution and Approximation*). By the derivative estimates above, $D^alpha u_epsilon$ converges locally uniformly to a continuous function, and $Delta u = lim_(epsilon -> 0) Delta u_epsilon = 0$. Hence $u in C^oo (Omega)$ and $u$ is harmonic.
 ]
 
+Two consequences are recorded now because they are used repeatedly later.
+
+The derivative estimates give the quantitative form of rigidity: all derivatives at a point are controlled by the supremum on one ball, so a family of harmonic functions that is locally bounded is locally equibounded in every derivative.
+The converse is the reason why limits of harmonic functions are harmonic: the averaged identity survives locally uniform convergence, and the converse turns the surviving identity back into harmonicity.
+That observation is the analytic core of Harnack's convergence theorem in *Further Properties of Harmonic Functions*.
+
 == Maximum and Minimum Principles // 最大值与最小值原理
 
+The maximum principle compares a function with its boundary values using only the sign of $Delta u$.
+It needs no representation formula and no regularity beyond $C^2$, which is why it stays the primary tool of the classical theory: the uniqueness and the stability statements of *The Dirichlet Problem* are its corollaries.
+
+#definition(name: "Subharmonic and Superharmonic Functions")[
+  Let $u in C^2 (Omega)$.
+  The function $u$ is *subharmonic* if $Delta u >= 0$ on $Omega$, and *superharmonic* if $Delta u <= 0$.
+] <def:subharmonic-superharmonic>
+
 #theorem(name: "Weak Maximum Principle")[
-  Let $Omega$ be bounded and $u in C^2 (Omega) inter C (overline(Omega))$ with $Delta u >= 0$ in $Omega$ (such $u$ is called *subharmonic*). Then
+  Let $Omega$ be bounded and let $u in C^2 (Omega) inter C (overline(Omega))$ be subharmonic.
+  Then
   $
     max_(overline(Omega)) u = max_(partial Omega) u.
   $
-  In particular, a harmonic function attains its maximum on the boundary. For $Delta u <= 0$ (*superharmonic* $u$), the same holds with minima: $min_(overline(Omega)) u = min_(partial Omega) u$.
+  If $u$ is superharmonic, then $min_(overline(Omega)) u = min_(partial Omega) u$.
 ] <thm:weak-maximum-principle>
 
 #proof[
@@ -2811,23 +2833,74 @@ The mean value property is the fundamental structural feature of harmonic functi
 ]
 
 #theorem(name: "Hopf's Lemma")[
-  Let $Omega$ be a bounded domain with $C^2$ boundary and $u in C^2 (overline(Omega))$ with $Delta u >= 0$ in $Omega$. Suppose $x_0 in partial Omega$ satisfies $u (x_0) > u (x)$ for all $x in Omega$ (a strict boundary maximum, with the maximum over $overline(Omega)$ attained at $x_0$). Then
+  Let $Omega$ be a bounded domain with $C^2$ boundary and let $u in C^2 (overline(Omega))$ be subharmonic with $u (x_0) > u (x)$ for every $x in overline(Omega) backslash {x_0}$, where $x_0 in partial Omega$.
+  Then
   $
     (partial u)/(partial nu) (x_0) > 0,
   $
-  where $nu$ is the outward unit normal. (For $Delta u <= 0$ and an interior minimum the inequality is reversed.)
+  where $nu$ is the outward unit normal.
 ] <thm:hopf-lemma>
 
-#note[
-  Hopf's lemma is proved by constructing a suitable *barrier*: near $x_0$, take a ball internally tangent to $partial Omega$ at $x_0$ and compare $u$ with a carefully chosen function of $r = abs(x - x_c)$, which is subharmonic and vanishes appropriately on the boundary of the ball. The strict inequality $u_nu > 0$ is the quantitative form of the strong maximum principle at the boundary; it is the key input for uniqueness and boundary estimates in *Elliptic Theory*.
-]
-
-#corollary(name: "Uniqueness for the Dirichlet Problem")[
-  If $u, v in C^2 (Omega) inter C (overline(Omega))$ are harmonic in the bounded domain $Omega$ and agree on $partial Omega$, then $u = v$ in $Omega$.
-] <cor:dirichlet-uniqueness>
+A strict maximum at a boundary point forces the normal derivative to point outward strictly; for a superharmonic $u$ with a strict boundary minimum the inequality is reversed.
 
 #proof[
-  The difference $w = u - v$ is harmonic and vanishes on $partial Omega$. By the weak maximum principle applied to $w$ and to $-w$, $max_(overline(Omega)) w = 0$ and $min_(overline(Omega)) w = 0$, so $w = 0$ everywhere.
+  *Step 1: the tangent ball.* Since $partial Omega$ is $C^2$, there is a ball $B (x_c, delta)$ contained in $Omega$ and tangent to $partial Omega$ at $x_0$ from the inside, with centre $x_c = x_0 - delta nu$ on the inward normal.
+  Consequently $abs(x - x_c) >= delta$ for every $x in partial Omega$, with equality only at $x_0$.
+
+  *Step 2: the barrier.* Fix $rho < delta / 2$, put $lambda = 2 n / delta^2$, and define
+  $
+    w (x) = e^(-lambda abs(x - x_c)^2) - e^(-lambda delta^2), quad x in Omega_rho = Omega inter B (x_0, rho).
+  $
+  On $Omega_rho$ one has $abs(x - x_c) >= delta - rho > delta / 2$, and a direct computation gives
+  $
+    Delta w = e^(-lambda abs(x - x_c)^2) (4 lambda^2 abs(x - x_c)^2 - 2 n lambda) >= 0,
+  $
+  because $abs(x - x_c) >= delta / 2$ and $lambda = 2 n / delta^2$ make $4 lambda^2 abs(x - x_c)^2 >= 2 n lambda$.
+  So $w$ is subharmonic on $Omega_rho$; moreover $w >= 0$ on $Omega_rho$, since $w$ increases with $abs(x - x_c)$, and $w (x_0) = 0$.
+
+  *Step 3: the maximum principle.* The set $partial B (x_0, rho) inter overline(Omega)$ is compact and avoids $x_0$, so $u (x_0) - u >= m$ there for some $m > 0$; choose $epsilon > 0$ with $epsilon sup_(Omega_rho) w <= m$.
+  Then $v = u - u (x_0) + epsilon w$ is subharmonic on $Omega_rho$.
+  On $partial Omega inter overline(B (x_0, rho))$ we have $w <= 0$ and $u - u (x_0) < 0$, hence $v < 0$; on the rest of $partial Omega_rho$ the choice of $epsilon$ gives $v <= -m + epsilon sup w <= 0$.
+  By the weak maximum principle, $v <= 0$ on $Omega_rho$, that is,
+  $
+    u (x_0) - u (x) >= epsilon w (x) quad "for" x in Omega_rho.
+  $
+
+  *Step 4: the normal derivative.* On the inward normal ray $x = x_0 - t nu$, $0 < t < rho$, one has $abs(x - x_c) = delta - t$, hence
+  $
+    (u (x_0) - u (x_0 - t nu))/t >= epsilon (e^(-lambda (delta - t)^2) - e^(-lambda delta^2))/t -> epsilon dot 2 lambda delta e^(-lambda delta^2)
+  $
+  as $t -> 0^+$, and the limit is strictly positive.
+]
+
+#note[
+  #figure(
+    image("./img/hopf-barrier.svg", width: 100%),
+    caption: [Hopf's lemma at a boundary point. (a) The ball $B (x_c, delta)$ is internally tangent to $partial Omega$ at $x_0$, so $abs(x - x_c) >= delta$ on $partial Omega$. (b) The barrier $w (x) = e^(-lambda abs(x - x_c)^2) - e^(-lambda delta^2)$ vanishes at $x_0$, is positive on the side of $Omega$, and is subharmonic on the comparison region $Omega inter B (x_0, rho)$ once $lambda$ is chosen large enough. It forces $u$ to leave the boundary at a strictly positive rate, hence $u_nu (x_0) > 0$.],
+    placement: auto,
+    supplement: [Fig.],
+  ) <fig:hopf-barrier>
+]
+
+#corollary(name: "Hopf's Boundary Point Principle")[
+  Let $Omega$ be a bounded domain with $C^2$ boundary and let $u, v in C^2 (overline(Omega))$ satisfy $Delta u >= Delta v$ in $Omega$ and $u <= v$ on $partial Omega$.
+  If $u (x_0) = v (x_0)$ at some $x_0 in partial Omega$ while $u < v$ on $Omega$, then
+  $
+    (partial u)/(partial nu) (x_0) < (partial v)/(partial nu) (x_0).
+  $
+] <cor:hopf-boundary-principle>
+
+#proof[
+  Apply #link(<thm:hopf-lemma>)[*Hopf's Lemma*] to $w = v - u$, which is subharmonic and has a strict boundary maximum at $x_0$.
+]
+
+#corollary(name: "Comparison Principle")[
+  Let $Omega$ be bounded and let $u, v in C^2 (Omega) inter C (overline(Omega))$ satisfy $Delta u >= Delta v$ in $Omega$ and $u <= v$ on $partial Omega$.
+  Then $u <= v$ in $Omega$.
+] <cor:comparison-principle>
+
+#proof[
+  The difference $w = v - u$ is subharmonic with $w >= 0$ on $partial Omega$, so the weak maximum principle applied to $-w$ gives $min_(overline(Omega)) w = min_(partial Omega) w >= 0$.
 ]
 
 == Green's Identities // 格林恒等式
