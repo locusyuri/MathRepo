@@ -4,13 +4,13 @@ Defines :class:`OutputSpec`, a frozen value object bundling the figure size,
 format, DPI, padding and background color, together with :class:`Presets`, a
 flat namespace of named configurations to pick from in each model script.
 
-Usage in a model script::
+Usage in a figure script (same directory)::
 
-    from _viz.output import Presets
+    from _viz import Presets
     spec = Presets.SVG_DOC
     fig = spec.figure()
     # ... draw ...
-    spec.save(fig, out_dir / "magnetic_field_loop")
+    spec.save(fig, OUT_DIR / "figure-name")
 """
 
 from __future__ import annotations
