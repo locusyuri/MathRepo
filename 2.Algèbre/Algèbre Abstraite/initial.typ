@@ -7712,6 +7712,367 @@ The example shows that the ladder of §10.4 does not ascend past one indetermina
   Part III begins there.
 ] <note:closing-part-two>
 
+#part("Field Theory and Galois Theory")
+
+= Field Extensions // 域扩张
+
+// 同上：公式计数器按章归零
+#counter(math.equation).update(0)
+
+Part II ended with a construction and a count.
+For an irreducible polynomial $f$ over a field $k$, the quotient $k[x] \/ (f)$ is a field (#link(<thm:quotient-field>)[§11.4]) whose dimension over $k$ is $"deg" f$ (#link(<prop:quotient-degree>)[§11.4]).
+Part III begins by reading these two facts backwards.
+Instead of starting from a polynomial and manufacturing a field, start from a field $E$ containing a smaller field $F$, and ask what a single element $alpha in E$ knows about $F$.
+
+The answer is one ideal in $F[x]$.
+The evaluation map $f |-> f(alpha)$ is a homomorphism $F[x] -> E$ furnished by #link(<thm:poly-universal>)[§11.1], and its kernel is either $(0)$ or a principal ideal $(m_alpha)$.
+In the second case $alpha$ is *algebraic*, $m_alpha$ is its minimal polynomial, and $F(alpha) tilde.equiv F[x] \/ (m_alpha)$ with $[F(alpha) : F] = "deg" m_alpha$.
+In the first case $alpha$ is *transcendental*, and $F(alpha)$ is a field of rational functions.
+So every question about one element is a question about one polynomial, and the dimension counts of linear algebra turn it into arithmetic.
+
+The chapter has three sections.
+*Field Extensions* introduces the degree of an extension and proves the tower law, the single computational rule that the rest of field theory uses.
+*Algebraic and Transcendental Elements* constructs the minimal polynomial and identifies the simple extension it generates.
+*Algebraic Extensions* shows that algebraic elements form a subfield, that algebraicity passes through towers, and that algebraically closed fields exist, closing with a counting argument that produces transcendental numbers.
+
+Boundaries are drawn as in the preceding parts.
+Splitting fields and normal extensions belong to *Splitting Fields and Normal Extensions*; separability and the derivative criterion to *Separable Extensions*; the Galois correspondence to *Galois Theory*; solvability by radicals to *Solvability by Radicals*.
+
+== Field Extensions // 域扩张
+
+=== The Degree
+
+#definition(name: "Field Extension")[
+  A *subfield* of a field $E$ is a subset $F subset.eq E$ that is a field under the operations inherited from $E$.
+  One then calls $E$ an *extension field* of $F$ and writes $E \/ F$ for the *field extension*.
+] <def:field-extension>
+
+The prime subfield of $E$ (#link(<def:prime-field>)[§8.4]) is the smallest subfield of all, isomorphic to $bb(Q)$ or to $bb(F)_p$ according to the characteristic.
+Every extension therefore sits above one of these two, and the characteristic never changes along an extension: $F$ and $E$ share the same identity $1$, hence the same multiples of it.
+
+#definition(name: "Degree of an Extension")[
+  Let $E \/ F$ be a field extension.
+  The multiplication $(a, x) |-> a x$ of elements of $E$ by scalars from $F$ makes $E$ into a vector space over $F$.
+  Its dimension is the *degree* of the extension, written as in #link(<eq:degree-def>)[the display below].
+  The extension is *finite* if the degree is finite and *infinite* otherwise.
+] <def:degree-extension>
+
+#eq[
+  $[E : F] = "dim"_(F) E.$
+] <eq:degree-def>
+
+The axioms for a vector space are the distributive laws of $E$ and the fact that $F$ is a subfield, so nothing needs to be checked beyond what #link(<def:ring>)[§8.1] already provides.
+Every extension has a degree, possibly an infinite cardinal; only finite ones occur in the rest of this book.
+
+#eq[
+  $[E : F] = [E : K] dot [K : F].$
+] <eq:tower-law>
+
+#theorem(name: "Tower Law")[
+  Let $F subset.eq K subset.eq E$ be fields.
+  Then the degrees satisfy #link(<eq:tower-law>)[the identity above], with the convention that the product is infinite as soon as either factor is.
+] <thm:degree-tower>
+
+#proof[
+  Let ${e_i : i in I}$ be a basis of $E$ over $K$ and ${k_j : j in J}$ a basis of $K$ over $F$.
+  We claim that ${k_j e_i : i in I, j in J}$ is a basis of $E$ over $F$; the formula follows by counting its elements.
+
+  *Spanning.*
+  Every $x in E$ can be written $x = sum_i a_i e_i$ with $a_i in K$, only finitely many nonzero, and each $a_i = sum_j b_(i j) k_j$ with $b_(i j) in F$.
+  Substituting gives $x = sum_(i, j) b_(i j) k_j e_i$.
+
+  *Independence.*
+  Suppose $sum_(i, j) b_(i j) k_j e_i = 0$ with $b_(i j) in F$, and put $a_i = sum_j b_(i j) k_j in K$.
+  The relation reads $sum_i a_i e_i = 0$, so $a_i = 0$ for every $i$ by the $K$-linear independence of the $e_i$.
+  Each of those equations is an $F$-linear relation among the $k_j$, so $b_(i j) = 0$ for all $i, j$.
+
+  If either index set is infinite, the same argument with infinite bases gives an infinite basis of $E$ over $F$, which is the stated convention.
+]
+
+The tower law is pure linear algebra: the field structure enters only to guarantee that $K$ is a vector space over $F$ and $E$ one over $K$.
+That is why it survives unchanged in the Galois theory of Chapter 15, where it becomes the statement that indices of subgroups multiply.
+
+#note(title: "Why the degree is the right measure")[
+  Chapter 11 proved that $k[x] \/ (f)$ has $k$-basis the classes of $1, x, dots, x^(n - 1)$ with $n = "deg" f$ (#link(<prop:quotient-degree>)[§11.4]).
+  The degree of an extension is the same dimension count, taken as the definition rather than as a computation.
+  Section 12.2 will identify the two: adjoining a root of $f$ produces exactly that quotient, and the degree of the polynomial becomes the degree of the extension.
+] <note:dimension-count>
+
+#figure(
+  image("img/degree-tower.svg", width: 74%),
+  caption: [The tower law. The field $E$ is a vector space over $K$ of degree $[E:K]$ and $K$ one over $F$ of degree $[K:F]$; a basis of the first multiplied by a basis of the second is a basis of $E$ over $F$, so the degrees multiply. In particular $[E:F]$ is finite exactly when both factors are, which is the form in which the law is used in §12.3.],
+  placement: none,
+  supplement: [Fig.],
+) <fig:degree-tower>
+
+=== Simple Extensions
+
+#definition(name: "Simple Extension")[
+  Let $E \/ F$ be a field extension and $S subset.eq E$.
+  The *subfield generated by $F$ and $S$*, written $F(S)$, is the intersection of all subfields of $E$ containing $F union S$.
+  For $S = {alpha_1, dots, alpha_n}$ one writes $F(alpha_1, dots, alpha_n)$, and for $S = {alpha}$ the extension $F(alpha)$ is called *simple* with *primitive element* $alpha$.
+] <def:simple-extension>
+
+The intersection is a subfield because the intersection of any family of subfields is again a subfield, exactly as for subgroups (#link(<prop:intersection-subgroups>)[§3.1]).
+So $F(S)$ is the smallest subfield of $E$ containing $F$ and $S$, and $F(alpha_1, dots, alpha_n) = F(alpha_1, dots, alpha_(n-1))(alpha_n)$ by the same minimality.
+
+#proposition(name: "Elements of a Simple Extension")[
+  Let $E \/ F$ be a field extension and $alpha in E$.
+  Then
+  $F(alpha) = {f(alpha) \/ g(alpha) : f, g in F[x], quad g(alpha) != 0}$.
+] <prop:simple-extension-elements>
+
+#proof[
+  Let $S$ be the right-hand set.
+  It contains $F$, taking $f$ constant and $g = 1$, and it contains $alpha$, taking $f = x$ and $g = 1$.
+  Sums, products and quotients of its elements are again of the same form, by #link(<eq:fraction-operations>)[the rules for fractions] applied in the field $E$, so $S$ is a subfield of $E$.
+  Conversely any subfield containing $F$ and $alpha$ contains every $f(alpha)$ and every nonzero $g(alpha)$, hence their quotients; so it contains $S$.
+  Therefore $S$ is the smallest such subfield.
+]
+
+Two first examples fix the scale.
+The extension $bb(C) \/ bb(R)$ has degree $2$ with basis ${1, i}$, since every complex number is $a + b i$ and $i$ is a root of the irreducible quadratic $x^2 + 1$ (#link(<ex:x2-plus-1-quotient>)[§11.4]).
+The rational function field $F(t)$ is a simple extension of $F$ of infinite degree: the powers $1, t, t^2, dots$ are linearly independent over $F$, because a vanishing linear combination of them is a polynomial vanishing at $t$.
+The degree of $bb(R) \/ bb(Q)$ is infinite as well, but the proof needs the countability argument of #link(<cor:transcendental-numbers>)[§12.3].
+
+== Algebraic and Transcendental Elements // 代数元与超越元
+
+=== The Evaluation Map
+
+#definition(name: "Algebraic and Transcendental Elements")[
+  Let $E \/ F$ be a field extension and $alpha in E$.
+  Then $alpha$ is *algebraic over $F$* if some nonzero $f in F[x]$ satisfies $f(alpha) = 0$, and *transcendental over $F$* otherwise.
+] <def:algebraic-element>
+
+Fix $alpha in E$ and consider the map
+$"ev"_(alpha): F[x] -> E, quad f |-> f(alpha)$.
+It is a ring homomorphism, being the instance of #link(<thm:poly-universal>)[the universal property of $R[x]$] with $R = F$, $A = E$ and $x |-> alpha$; the commutativity hypothesis is automatic because $E$ is a field.
+Its image is the subring $F[alpha]$ of all polynomial expressions in $alpha$ with coefficients in $F$, and its kernel is the set of all polynomials over $F$ that vanish at $alpha$.
+
+Everything that follows is a reading of that kernel.
+
+#theorem(name: "The Ideal Vanishing at $alpha$")[
+  Let $E \/ F$ be a field extension and $alpha in E$.
+  If $alpha$ is algebraic, then $"Ker" "ev"_(alpha) = (m)$ for a unique monic polynomial $m in F[x]$ of degree at least $1$.
+  If $alpha$ is transcendental, then $"Ker" "ev"_(alpha) = (0)$.
+] <thm:minimal-polynomial>
+
+#proof[
+  The kernel of a ring homomorphism is an ideal (#link(<thm:kernel-ideal>)[§9.2]), and $F[x]$ is a principal ideal domain by #link(<cor:k-x-ufd>)[§11.2]; hence the kernel is $(g)$ for some $g in F[x]$.
+
+  If $alpha$ is algebraic then $g != 0$, and since $F$ is a field the leading coefficient of $g$ is invertible; replacing $g$ by that scalar multiple produces a monic generator $m$, unique because two monic generators of the same principal ideal differ by a unit and are therefore equal.
+  Its degree is at least $1$, since a nonzero constant cannot vanish at $alpha$.
+
+  If $alpha$ is transcendental, no nonzero polynomial lies in the kernel, which is therefore $(0)$.
+]
+
+#definition(name: "Minimal Polynomial")[
+  Let $alpha$ be algebraic over $F$.
+  The unique monic generator $m_alpha$ of $"Ker" "ev"_(alpha)$ is the *minimal polynomial* of $alpha$ over $F$, and $"deg"_(F) alpha = "deg" m_alpha$ is the *degree of $alpha$ over $F$*.
+] <def:minimal-polynomial>
+
+The name is justified by the next theorem: among the polynomials vanishing at $alpha$, the minimal polynomial is one of least degree, and it is the only monic one of that degree.
+
+#theorem(name: "The Minimal Polynomial Is Irreducible")[
+  Let $alpha$ be algebraic over $F$.
+  Then $m_alpha$ is irreducible over $F$, and it divides every $f in F[x]$ with $f(alpha) = 0$.
+  Conversely, every monic irreducible polynomial over $F$ having $alpha$ as a root equals $m_alpha$.
+] <thm:minimal-irreducible>
+
+#proof[
+  *Divisibility.*
+  Since $"Ker" "ev"_(alpha) = (m_alpha)$, a polynomial vanishes at $alpha$ exactly when it is a multiple of $m_alpha$.
+
+  *Irreducibility.*
+  Suppose $m_alpha = g h$ with $g, h in F[x]$ of positive degree.
+  Then $0 = m_alpha(alpha) = g(alpha) h(alpha)$, and $E$ is a field, so $g(alpha) = 0$ or $h(alpha) = 0$.
+  In either case $m_alpha$ divides one of $g, h$, which is impossible because both have smaller degree.
+
+  *Conversely*, if $p$ is monic irreducible with $p(alpha) = 0$, then $m_alpha$ divides $p$; irreducibility of $p$ forces the quotient to be a unit, and since both are monic, $p = m_alpha$.
+]
+
+#theorem(name: "Structure of a Simple Algebraic Extension")[
+  Let $E \/ F$ be a field extension and $alpha in E$ algebraic over $F$, with $n = "deg" m_alpha$.
+  Then
+  - $F[alpha] = F(alpha)$, and evaluation induces an isomorphism $F[x] \/ (m_alpha) tilde.equiv F(alpha)$ fixing $F$;
+  - $[F(alpha) : F] = n$, with basis $1, alpha, dots, alpha^(n - 1)$;
+  - $F(alpha)$ consists of the polynomial expressions $a_0 + a_1 alpha + dots.c + a_(n-1) alpha^(n - 1)$ with $a_i in F$.
+] <thm:simple-extension-structure>
+
+#proof[
+  *The quotient is a field.*
+  By #link(<thm:ring-first-isomorphism>)[§9.3] applied to $"ev"_(alpha)$, the quotient $F[x] \/ (m_alpha)$ is isomorphic to its image $F[alpha]$.
+  The polynomial $m_alpha$ is irreducible by #link(<thm:minimal-irreducible>)[the theorem above], so $(m_alpha)$ is maximal and the quotient is a field (#link(<thm:quotient-field>)[§11.4]).
+  Hence $F[alpha]$ is a field containing $F$ and $alpha$, so $F(alpha) subset.eq F[alpha]$ by minimality; the reverse inclusion is automatic.
+
+  *The dimension.*
+  #link(<prop:quotient-degree>)[§11.4] gives $"dim"_(F) (F[x] \/ (m_alpha)) = n$, with basis the classes of $1, x, dots, x^(n - 1)$.
+  Their images under the isomorphism are $1, alpha, dots, alpha^(n - 1)$, which is the stated basis; expressing an arbitrary element in that basis gives the third clause.
+]
+
+#eq[
+  $"deg"_(F) alpha = "deg" m_alpha = [F(alpha) : F].$
+] <eq:minimal-degree>
+
+This is the promised identification: the degree of a polynomial becomes the degree of an extension, and the arithmetic of $F[x]$ becomes the linear algebra of $F(alpha)$.
+
+#corollary(name: "Algebraic Means Finite Degree")[
+  Let $E \/ F$ be a field extension and $alpha in E$.
+  Then $alpha$ is algebraic over $F$ if and only if $[F(alpha) : F]$ is finite.
+] <cor:degree-of-element>
+
+#proof[
+  If $alpha$ is algebraic, #link(<eq:minimal-degree>)[the identity above] gives $[F(alpha) : F] = "deg" m_alpha < oo$.
+  Conversely, if $F(alpha) \/ F$ is finite, then $alpha$ is algebraic by #link(<thm:finite-implies-algebraic>)[§12.3].
+]
+
+#corollary(name: "The Transcendental Case")[
+  Let $alpha$ be transcendental over $F$.
+  Then $F[alpha] tilde.equiv F[x]$ and $F(alpha) tilde.equiv F(x)$, the field of rational functions of #link(<cor:rational-functions>)[§11.2].
+] <cor:transcendental-extension>
+
+#proof[
+  Here $"Ker" "ev"_(alpha) = (0)$, so $F[x] tilde.equiv F[alpha] subset.eq E$.
+  The embedding of the domain $F[x]$ into the field $E$ sends every nonzero polynomial to a unit of $E$, so #link(<thm:fraction-universal>)[the universal property of the field of fractions] extends it to an injective homomorphism $F(x) -> E$.
+  Its image is the smallest subfield containing $F[alpha]$, which is $F(alpha)$.
+]
+
+#example(name: "Adjoining $sqrt(2)$.")[
+  The polynomial $x^2 - 2$ is monic, irreducible over $bb(Q)$ by #link(<prop:small-degree-irreducible>)[§11.2] since it has no rational root, and it vanishes at $sqrt(2)$; so it is the minimal polynomial.
+  Hence $[bb(Q)(sqrt(2)) : bb(Q)] = 2$ and every element of $bb(Q)(sqrt(2))$ has the form $a + b sqrt(2)$ with $a, b in bb(Q)$, with multiplication governed by $(sqrt(2))^2 = 2$.
+  This is the concrete form of the quotient $bb(Q)[x] \/ (x^2 - 2)$ of #link(<thm:simple-extension-structure>)[the structure theorem].
+] <ex:sqrt2-extension>
+
+#example(name: "Adjoining $root(3, 2)$.")[
+  The polynomial $x^3 - 2$ has no rational root, hence is irreducible over $bb(Q)$ by #link(<prop:small-degree-irreducible>)[the degree-three criterion], and is the minimal polynomial of $root(3, 2)$.
+  So $[bb(Q)(root(3, 2)) : bb(Q)] = 3$ with basis $1, root(3, 2), root(3, 4)$.
+  By contrast $bb(Q)(root(3, 2))$ contains no root of $x^3 - 2$ other than $root(3, 2)$ itself: the other two are not real.
+  Adjoining all of them at once is the problem of *Splitting Fields and Normal Extensions*.
+] <ex:cube-root2-extension>
+
+#example(name: "Transcendental elements.")[
+  The real numbers $pi$ and $e$ are transcendental over $bb(Q)$; both statements are theorems of analysis rather than of algebra, and are quoted without proof.
+  Inside the rational function field $F(t)$, the element $t$ is transcendental over $F$ by definition, and #link(<cor:transcendental-extension>)[the corollary above] identifies $F(t)$ with $F(x)$.
+] <ex:transcendental-elements>
+
+The minimal polynomial also records whether its roots are repeated: #link(<prop:multiple-root>)[§11.4] detects a multiple root through the derivative, and the question of whether $m_alpha$ has one is the subject of *Separable Extensions*.
+
+== Algebraic Extensions // 代数扩张
+
+=== Finite Extensions
+
+#definition(name: "Algebraic Extension")[
+  A field extension $E \/ F$ is *algebraic* if every element of $E$ is algebraic over $F$.
+] <def:algebraic-extension>
+
+#theorem(name: "Finite Extensions Are Algebraic")[
+  Every finite field extension is algebraic.
+] <thm:finite-implies-algebraic>
+
+#proof[
+  Let $[E : F] = n$ and $alpha in E$.
+  The $n + 1$ elements $1, alpha, dots, alpha^n$ of the $n$-dimensional $F$-vector space $E$ are linearly dependent, so there are $a_0, dots, a_n in F$, not all zero, with $sum_k a_k alpha^k = 0$.
+  The polynomial $f = sum_k a_k x^k$ is nonzero and satisfies $f(alpha) = 0$, so $alpha$ is algebraic.
+]
+
+The converse is false: the field of algebraic numbers is an infinite algebraic extension of $bb(Q)$, as #link(<cor:transcendental-numbers>)[the counting argument below] shows.
+What is true is the local converse, already recorded as #link(<cor:degree-of-element>)[§12.2]: a single element generates a finite extension exactly when it is algebraic.
+
+#theorem(name: "Algebraic Elements Form a Subfield")[
+  Let $E \/ F$ be a field extension.
+  Then the set of elements of $E$ algebraic over $F$ is a subfield of $E$ containing $F$.
+] <thm:algebraic-field>
+
+#proof[
+  Every $a in F$ is a root of $x - a$, so $F$ is contained in the set; call it $A$.
+  Let $alpha, beta in A$.
+  By #link(<eq:minimal-degree>)[§12.2], $F(alpha) \/ F$ is finite of degree $"deg" m_alpha$.
+  Over $F(alpha)$ the element $beta$ is algebraic, since its minimal polynomial over $F$ has coefficients in $F(alpha)$, so $F(alpha, beta) \/ F(alpha)$ is finite of degree at most $"deg" m_beta$.
+  The tower law gives
+  $[F(alpha, beta) : F] = [F(alpha, beta) : F(alpha)] dot [F(alpha) : F] <= "deg" m_beta dot "deg" m_alpha < oo$.
+
+  Thus $F(alpha, beta) \/ F$ is a finite extension, hence algebraic by #link(<thm:finite-implies-algebraic>)[the theorem above].
+  All of $alpha + beta$, $alpha - beta$, $alpha beta$ and, for $beta != 0$, $alpha \/ beta$ lie in $F(alpha, beta)$, so they are algebraic over $F$; hence $A$ is a subfield.
+]
+
+The proof is a template: any property of an element that is witnessed by a finite extension is stable under field operations, because the tower law turns two finite extensions into one.
+
+=== Towers and Algebraic Closure
+
+#theorem(name: "Algebraicity Is Transitive")[
+  Let $F subset.eq K subset.eq E$ be fields.
+  If $K \/ F$ is algebraic and $E \/ K$ is algebraic, then $E \/ F$ is algebraic.
+] <thm:algebraic-transitivity>
+
+#proof[
+  Let $gamma in E$ and let $p = x^n + a_(n-1) x^(n-1) + dots.c + a_0 in K[x]$ be its minimal polynomial over $K$.
+  Each coefficient $a_i$ lies in $K$ and is therefore algebraic over $F$.
+  Put $L = F(a_0, dots, a_(n-1))$; by #link(<thm:algebraic-field>)[the theorem above] and induction on the number of generators, $L \/ F$ is a finite extension.
+
+  Now $p in L[x]$, so $gamma$ is algebraic over $L$, and $L(gamma) \/ L$ is finite by #link(<eq:minimal-degree>)[§12.2].
+  The tower law gives $[L(gamma) : F] = [L(gamma) : L] dot [L : F] < oo$, so $L(gamma) \/ F$ is a finite extension and therefore algebraic.
+  In particular $gamma$, an element of that extension, is algebraic over $F$.
+]
+
+#definition(name: "Algebraically Closed Field")[
+  A field $F$ is *algebraically closed* if every nonconstant polynomial in $F[x]$ has a root in $F$, equivalently if every polynomial in $F[x]$ splits into linear factors over $F$.
+] <def:algebraically-closed>
+
+The equivalence is #link(<thm:factor-theorem>)[§11.4] followed by induction on the degree.
+An algebraically closed field has no proper algebraic extension: any algebraic element of an extension has its minimal polynomial splitting in $F$, so that polynomial is linear and the element already lies in $F$.
+
+#proposition(name: "Existence of Algebraic Closures")[
+  Every field $F$ has an algebraic extension $overline(F)$ that is algebraically closed; such a field is called an *algebraic closure* of $F$.
+] <prop:algebraic-closure-existence>
+
+#note(title: "Scope of the existence statement")[
+  No proof is given.
+  The standard one applies Zorn's lemma to the set of algebraic extensions of $F$ inside a sufficiently large ambient field and shows that a maximal such extension is algebraically closed; an alternative builds a splitting field for every polynomial at once.
+  Both are set-theoretic existence arguments rather than computations, and they are the field-theoretic counterpart of #link(<note:maximal-existence>)[§9.4].
+
+  What this book actually uses is weaker and constructive: given finitely many polynomials, adjoining their roots one at a time through #link(<thm:simple-extension-structure>)[§12.2] produces a finite extension in which they all split.
+  That construction is carried out in *Splitting Fields and Normal Extensions*, and it needs no choice principle.
+  Uniqueness of the algebraic closure up to $F$-isomorphism is likewise deferred to that chapter.
+] <note:closure-scope>
+
+#corollary(name: "Transcendental Numbers Exist")[
+  The set $overline(bb(Q))$ of complex numbers algebraic over $bb(Q)$ is countable, and $bb(R)$ is uncountable; hence transcendental real numbers exist and $[bb(R) : bb(Q)]$ is infinite.
+] <cor:transcendental-numbers>
+
+#proof[
+  The ring $bb(Q)[x]$ is countable, being a countable union of the countable sets of polynomials of degree at most $n$.
+  Each nonzero polynomial has finitely many roots, so the set of algebraic numbers is a countable union of finite sets and is therefore countable.
+  Since $bb(R)$ is uncountable, some real number is not algebraic.
+
+  For the final claim, if $[bb(R) : bb(Q)]$ were finite then $bb(R) \/ bb(Q)$ would be algebraic by #link(<thm:finite-implies-algebraic>)[the theorem above], forcing every real number to be algebraic, which was just excluded.
+]
+
+The corollary closes the circle opened in §12.1: the degree of $bb(R) \/ bb(Q)$ is infinite, and the reason is not a failure of computation but a difference of cardinality.
+
+#example(name: "Finite fields and their degrees.")[
+  Let $f in bb(F)_p[x]$ be irreducible of degree $n$.
+  By #link(<thm:quotient-field>)[§11.4] the quotient $bb(F)_p[x] \/ (f)$ is a field with $p^n$ elements, and by #link(<prop:quotient-degree>)[§11.4] its degree over $bb(F)_p$ is $n$.
+  Root-finding in $bb(F)_p$ is a finite search, so #link(<prop:small-degree-irreducible>)[§11.2] decides irreducibility in degrees $2$ and $3$; for example $x^2 + 1$ gives a field of $9$ elements over $bb(F)_3$ (#link(<ex:x2-plus-1-quotient>)[§11.4]).
+
+  The existence of such an irreducible polynomial for every $n$, and the uniqueness of the resulting field, belong to *Finite Fields*; the tower law then shows that $bb(F)_(p^n)$ contains $bb(F)_(p^d)$ exactly when $d$ divides $n$.
+] <ex:finite-field-extension>
+
+#note(title: "Closing remarks: towards splitting fields")[
+  Three ideas carry forward.
+
+  *The dictionary.*
+  An element $alpha$ is described by the ideal $"Ker" "ev"_(alpha) subset.eq F[x]$, and the degree of its minimal polynomial is the degree of the extension it generates (#link(<eq:minimal-degree>)[§12.2]).
+
+  *The tower law.*
+  Degrees multiply, so finiteness and algebraicity pass from the pieces to the whole (#link(<thm:degree-tower>)[§12.1], #link(<thm:algebraic-transitivity>)[§12.3]).
+
+  *The two cases.*
+  Algebraic elements produce finite-dimensional extensions; transcendental ones produce rational function fields (#link(<cor:transcendental-extension>)[§12.2]).
+
+  The next chapter asks the question this one deliberately avoided: instead of adjoining one root, adjoin all roots of a polynomial at once, and ask whether the resulting extension is large enough to contain every conjugate of every element.
+  That is the notion of a splitting field, and with it the symmetry group of an extension becomes visible.
+] <note:closing-forward>
+
 // ==========================================================================
 // 目录蓝图 (Planned Outline)
 // ==========================================================================
@@ -8025,20 +8386,25 @@ The example shows that the ladder of §10.4 does not ascend past one indetermina
 //
 // --- Chapter 12: 域扩张 (Field Extensions) ---
 
-//   Section 12.1: 域扩张的概念 (Concept of Field Extensions)
-//     - 子域与域扩张 $E/F$
-//     - 扩张的次数 $[E:F]$
-//     - 有限扩张与代数扩张的关系
+//   Section 12.1: 域扩张 (Field Extensions)
+//     - 子域与扩张 $E/F$；次数 $[E:F] = \dim_F E$
+//     - 塔定理 $[E:F] = [E:K][K:F]$（原蓝图列在 §12.3，前移）
+//     - 单扩张 $F(\alpha)$ 与 $\{f(\alpha)/g(\alpha)\}$ 描述
+//     - 塔图 fig:degree-tower
 
 //   Section 12.2: 代数元与超越元 (Algebraic and Transcendental Elements)
-//     - 代数元的定义
-//     - 极小多项式
-//     - 单扩张 $F(\alpha)$ 的结构
+//     - 代入映射 $\mathrm{ev}_\alpha: F[x] -> E$ 的核
+//     - 极小多项式的存在、唯一、不可约与整除性
+//     - $F[\alpha] = F(\alpha) \cong F[x]/(m_\alpha)$，$[F(\alpha):F] = \deg m_\alpha$
+//     - $\deg_F \alpha = \deg m_\alpha = [F(\alpha):F]$（eq:minimal-degree）
+//     - 超越情形：$F(\alpha) \cong F(x)$；三个算例
 
-//   Section 12.3: 代数扩张的性质 (Properties of Algebraic Extensions)
-//     - 代数扩张的塔定理
-//     - 代数元的运算封闭性
-//     - 代数闭包的存在性（简述）
+//   Section 12.3: 代数扩张 (Algebraic Extensions)
+//     - 有限扩张 ⇒ 代数扩张；代数元构成子域
+//     - 代数性沿塔传递
+//     - 代数闭域与代数闭包存在性（只陈述，Zorn 见 note:closure-scope）
+//     - 超越数存在（可数性）与 $[bb(R):bb(Q)] = \infty$
+//     - 有限域例子（正式构造留 Ch 13）；章末转向分裂域
 
 // --- Chapter 13: 分裂域与正规扩张 (Splitting Fields and Normal Extensions) ---
 
@@ -8238,6 +8604,12 @@ The example shows that the ladder of §10.4 does not ascend past one indetermina
 //    该笔记 Part V 承担，本章不重复；本章只做结构（一般系数环、泛性质、
 //    阶梯定位、UFD 提升、商环 k[x]/(f)）。带余除法保留骨架证明，
 //    详证以文字指引方式指向数论笔记。
+//
+// 10. Ch 12 两处位置调整：塔定理从蓝图 §12.3 前移到 §12.1
+//     （纯维数命题，§12.2 与 §12.3 都要用，放最后会迫使前向引用）；
+//     「有限扩张 ⇒ 代数扩张」从 §12.1 后移到 §12.3（需要代数元定义）。
+//     代数闭包的存在性只陈述、不证明，Zorn 的说明放 note:closure-scope；
+//     唯一性与分裂域构造留 Ch 13。
 //
 // ==========================================================================
 // 结构说明 (Structure Note)
