@@ -44,10 +44,10 @@ def main():
     ax.axis("off")
 
     # Coordinate axes.
-    ax.annotate("", xy=(7.55, 0), xytext=(0, 0),
+    ax.annotate("", xy=(7.35, 0), xytext=(0, 0), annotation_clip=False,
                 arrowprops=dict(arrowstyle="-|>", color=INK, lw=1.1,
                                 shrinkA=0, shrinkB=0, mutation_scale=12))
-    ax.annotate("", xy=(0, 4.25), xytext=(0, 0),
+    ax.annotate("", xy=(0, 4.20), xytext=(0, 0), annotation_clip=False,
                 arrowprops=dict(arrowstyle="-|>", color=INK, lw=1.1,
                                 shrinkA=0, shrinkB=0, mutation_scale=12))
 
