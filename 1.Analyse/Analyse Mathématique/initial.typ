@@ -3717,7 +3717,7 @@ A related concept is that of *inflection points*: a point on the graph of a
 function at which the concavity changes.
 
 #figure(
-  image("img/convex-function.svg", width: 85%),
+  image("img/convex-function.svg", width: 95%),
   caption: [A convex function: the chord between any two points of the graph lies above the graph.],
 ) <fig:convex-function>
 

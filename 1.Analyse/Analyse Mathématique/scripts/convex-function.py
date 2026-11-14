@@ -39,8 +39,8 @@ def main():
 
     fig = plt.figure(figsize=(9.4, 4.8))
     ax = fig.add_axes([0, 0, 1, 1])
-    ax.set_xlim(-3.45, 7.65)
-    ax.set_ylim(-0.55, 4.35)
+    ax.set_xlim(-2.25, 7.45)
+    ax.set_ylim(-0.45, 4.28)
     ax.axis("off")
 
     # Coordinate axes.
@@ -81,13 +81,13 @@ def main():
     ax.text(-0.22, y_curve, r"$f(t x_1 + (1 - t) x_2)$", ha="right",
             va="center", fontsize=13, color=INK)
 
-    fig.savefig(OUT, transparent=True, bbox_inches="tight", pad_inches=0.05)
+    fig.savefig(OUT, transparent=True, bbox_inches="tight", pad_inches=0.0)
     print(f"Saved: {OUT}")
 
     if os.environ.get("PREVIEW"):
         preview = OUT.with_name("convex-function-preview.png")
         fig.savefig(preview, dpi=160, facecolor="white", bbox_inches="tight",
-                    pad_inches=0.05)
+                    pad_inches=0.0)
         print(f"Preview: {preview}")
 
     plt.close(fig)
