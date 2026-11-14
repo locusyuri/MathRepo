@@ -76,11 +76,16 @@ def omega_path():
     verts = [
         (1.20, 2.00),
         (1.35, 2.55), (1.85, 2.90), (2.30, 2.85),
-        (2.75, 2.80), (3.05, 2.62), (3.15, 2.45),
-        (3.95, 2.55),                                   # upper tail tip
-        (3.75, 2.35), (3.50, 2.15), (3.30, 2.00),       # inward notch
-        (3.50, 1.85), (3.75, 1.65), (3.95, 1.45),       # lower tail tip
-        (3.45, 1.55), (3.20, 1.50), (3.00, 1.35),
+        (2.75, 2.80), (3.00, 2.68), (3.10, 2.55),
+        (4.00, 2.62),                                    # upper prong, top edge
+        (4.00, 2.34),                                    # upper prong, right edge
+        (3.78, 2.30), (3.52, 2.28), (3.44, 2.22),        # upper rounded groove
+        (3.52, 2.16), (3.78, 2.14), (4.00, 2.12),
+        (4.00, 1.86),                                    # middle prong
+        (3.78, 1.82), (3.52, 1.80), (3.44, 1.74),        # lower rounded groove
+        (3.52, 1.68), (3.78, 1.66), (4.00, 1.64),
+        (4.00, 1.38),                                    # lower prong
+        (3.05, 1.25),
         (2.70, 1.05), (2.30, 1.02), (1.95, 1.25),
         (1.55, 1.55), (1.25, 1.80), (1.20, 2.00),
         (1.20, 2.00),
@@ -90,9 +95,14 @@ def omega_path():
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.LINETO,
+        MPath.LINETO,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
+        MPath.LINETO,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
+        MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
+        MPath.LINETO,
+        MPath.LINETO,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.CLOSEPOLY,
@@ -117,9 +127,9 @@ def left_panel(fig):
                            lw=0.0, hatch="....", zorder=3))
 
     # Heavy cuts: Omega must be split before every slice is an interval.
-    dashed(ax, [1.42, 3.10], [2.52, 2.52], colour=CUT, lw=1.6,
+    dashed(ax, [1.42, 3.05], [2.52, 2.52], colour=CUT, lw=1.6,
            ls=(0, (6, 3)), zorder=6)
-    dashed(ax, [3.30, 3.30], [1.02, 2.85], colour=CUT, lw=1.6,
+    dashed(ax, [3.40, 3.40], [1.02, 2.85], colour=CUT, lw=1.6,
            ls=(0, (6, 3)), zorder=6)
 
     # A horizontal line and a vertical line used for the slices.
@@ -127,9 +137,9 @@ def left_panel(fig):
     dashed(ax, [2.30, 2.30], [0, D], colour="#8b949e", lw=0.9, zorder=5)
 
     # Braces: projection I of Omega onto x, projection J onto y.
-    underbrace(ax, 1.20, 3.95, -0.48)
+    underbrace(ax, 1.20, 4.00, -0.48)
     left_brace(ax, 1.00, 1.02, 2.85)
-    ax.text(2.58, -0.80, r"$I$", fontsize=12, color=INK, ha="center",
+    ax.text(2.62, -0.80, r"$I$", fontsize=12, color=INK, ha="center",
             va="top")
     ax.text(0.72, 1.94, r"$J$", fontsize=12, color=INK, ha="center",
             va="center")
