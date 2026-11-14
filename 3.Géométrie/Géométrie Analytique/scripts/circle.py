@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _surf import axes, ellipse3d, save, setup, show, torus
+from _surf import GHOST, axes, ellipse3d, save, setup, show, torus
 
 OUT = Path(__file__).resolve().parent.parent / "img" / "circle.svg"
 
@@ -50,11 +50,14 @@ def left_panel(fig):
     ax.text(B + 0.22 * cos(ang), 0.22 * sin(ang) + 0.06, r"$a$", fontsize=11,
             color=INK)
 
-    # Bracket marking b, the distance from O to the closest point of Gamma.
-    x0 = B - A
-    ax.plot([0, x0, x0], [-0.58, -0.58, -0.46], color=INK, lw=0.9)
-    ax.plot([0, 0], [-0.66, -0.50], color=INK, lw=0.9)
-    ax.text(x0 / 2, -0.74, r"$b$", ha="center", va="top", fontsize=11,
+    # Underbrace from O to the centre of Gamma: the distance b.
+    y = -0.60
+    mid = B / 2
+    ax.plot([0, 0, 0.05, mid - 0.10, mid, mid + 0.10, B - 0.05, B, B],
+            [y + 0.10, y, y, y, y - 0.14, y, y, y, y + 0.10],
+            color=INK, lw=0.9, solid_capstyle="round")
+    ax.plot([B, B], [0, y + 0.10], color=GHOST, lw=0.7, ls=(0, (2, 2)))
+    ax.text(mid, y - 0.26, r"$b$", ha="center", va="top", fontsize=11,
             color=INK)
 
 

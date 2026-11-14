@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _surf import GHOST, INK, curve, saddle, save, setup, show
+from _surf import INK, curve, saddle, save, setup, show
 
 OUT = (Path(__file__).resolve().parent.parent / "img"
        / "ruled-surface2.svg")
@@ -42,15 +42,27 @@ def ruling_v(ax, v, colour, lw):
     curve(ax, x[keep], y[keep], z[keep], color=colour, lw=lw)
 
 
+def outline(ax):
+    """The four boundary parabolas of the saddle patch."""
+    t = np.linspace(-SPAN, SPAN, 120)
+    for sign in (-1, 1):
+        curve(ax, np.full_like(t, sign * SPAN), t,
+              C * (SPAN ** 2 / A ** 2 - t ** 2 / B ** 2), lw=1.0)
+        curve(ax, t, np.full_like(t, sign * SPAN),
+              C * (t ** 2 / A ** 2 - SPAN ** 2 / B ** 2), lw=1.0)
+
+
 def panel(fig, index, main_is_s):
     ax = fig.add_subplot(1, 2, index, projection="3d")
     setup(ax, lim=1.35, elev=20, azim=-60, zoom=1.30)
-    show(ax, *saddle(a=A, b=B, c=C, span=SPAN), n_lat=6, n_lon=10)
-    values = np.linspace(-1.1, 1.1, 11)
+    show(ax, *saddle(a=A, b=B, c=C, span=SPAN), n_lat=3, n_lon=6,
+         color="#dde4ea", lw=0.30)
+    outline(ax)
+    values = np.linspace(-1.1, 1.1, 9)
     for val in values:
-        (ruling_s if not main_is_s else ruling_v)(ax, val, GHOST, 0.45)
+        (ruling_s if not main_is_s else ruling_v)(ax, val, "#cbd3db", 0.35)
     for val in values:
-        (ruling_s if main_is_s else ruling_v)(ax, val, INK, 1.0)
+        (ruling_s if main_is_s else ruling_v)(ax, val, INK, 0.9)
 
 
 def main():

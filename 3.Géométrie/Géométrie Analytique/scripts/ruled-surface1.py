@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _surf import GHOST, INK, curve, one_sheet, save, setup, show
+from _surf import INK, curve, ellipse3d, one_sheet, save, setup, show
 
 OUT = (Path(__file__).resolve().parent.parent / "img"
        / "ruled-surface1.svg")
@@ -34,12 +34,16 @@ def family(ax, t, sign, colour, lw):
 def panel(fig, index, main_sign):
     ax = fig.add_subplot(1, 2, index, projection="3d")
     setup(ax, lim=1.30, elev=15, azim=-60, zoom=1.35)
-    show(ax, *one_sheet(b=B, c=C, zmax=1.15), n_lat=6, n_lon=10)
-    ts = np.linspace(0, 2 * np.pi, 13)[:-1]
+    show(ax, *one_sheet(b=B, c=C, zmax=1.15), n_lat=3, n_lon=6,
+         color="#dde4ea", lw=0.30)
+    for z in (-1.15, 1.15):
+        r = B * np.sqrt(1 + z ** 2 / C ** 2)
+        ellipse3d(ax, r, r, z, lw=1.0)
+    ts = np.linspace(0, 2 * np.pi, 11)[:-1]
     for t in ts:
-        family(ax, t, -main_sign, GHOST, 0.45)
+        family(ax, t, -main_sign, "#cbd3db", 0.35)
     for t in ts:
-        family(ax, t, main_sign, INK, 1.0)
+        family(ax, t, main_sign, INK, 0.9)
 
 
 def main():

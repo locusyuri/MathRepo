@@ -83,11 +83,12 @@ def main():
     ax.text(2.62, 1.62, r"$l_1$", fontsize=11, color=INK)
     ax.text(2.62, -1.51, r"$l_2$", fontsize=11, color=INK)
 
-    # Auxiliary line l_0 with N_1, N_2 on the two lines.
-    n = np.array([0.06, 1.0])
+    # Auxiliary line l_0, drawn through both N_1 and N_2.
     N1 = M1 - 0.95 * d1
     N2 = M2 - 0.45 * d2
-    line(ax, N1, n, 1.35, colour=GHOST, lw=1.0)
+    n = (N1 - N2) / np.linalg.norm(N1 - N2)
+    start, end = N2 - 0.45 * n, N1 + 0.45 * n
+    ax.plot([start[0], end[0]], [start[1], end[1]], color=GHOST, lw=1.0)
     dot(ax, N1, r"$N_1$", (-0.55, 0.16))
     dot(ax, N2, r"$N_2$", (-0.55, 0.16))
     ax.text(N1[0] - 0.18, N1[1] + 1.42, r"$l_0$", fontsize=11, color=INK)
