@@ -10845,7 +10845,7 @@ Consider two kinds of special oriented closed regions in the $x y$-plane, as sho
 The second region is similar.
 
 #figure(
-  image("img/SpecialRegion1.png", width: 80%),
+  image("img/green-special-regions.svg", width: 95%),
   caption: [Two special oriented closed regions.],
 ) <fig:special-region-1>
 
@@ -10964,7 +10964,7 @@ Consider three kinds of special oriented closed surfaces in $bb(R)^3$, as shown 
 The second and third surfaces are similar.
 
 #figure(
-  image("img/SpecialRegion2.png", width: 80%),
+  image("img/gauss-special-surfaces.svg", width: 95%),
   caption: [Three special oriented closed surfaces (only the first two are shown).],
 ) <fig:special-region-2>
 
