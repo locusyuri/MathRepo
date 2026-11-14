@@ -10,6 +10,7 @@
 
 // Custom multi-letter operators (not built into Typst math)
 #let Ln = math.op("Ln")
+#let Log = math.op("Log")
 #let Arg = math.op("Arg")
 #let arg = math.op("arg")
 #let atan = math.op("atan")
@@ -910,7 +911,7 @@ Two examples make the machinery concrete.
 ] <ex:sqrt-branches>
 
 #note[
-  Two deeper results await later chapters. The *monodromy theorem* (Chapter 13, analytic continuation) explains exactly when a local analytic branch extends to the whole cut plane, and the technique of *integration along branch cuts* (Section 10.4) turns branch points from an obstacle into a computational tool for real integrals.
+  Two deeper results await later chapters. The *monodromy theorem* (Chapter 13, analytic continuation) explains exactly when a local analytic branch extends to the whole cut plane, and the technique of *integration along branch cuts* (the section on *Integrals with Branch Cuts*) turns branch points from an obstacle into a computational tool for real integrals.
 ]
 
 With this vocabulary in place, we can finally give the logarithm the precise treatment it demands.
@@ -2779,6 +2780,14 @@ Every computation in this chapter follows the same four steps.
 
 What varies from section to section is only the shape of the contour, and the shape is dictated by the analytic obstacle: a large semicircle for decay at infinity, an indentation for a pole lying on the path, and a keyhole for a branch cut.
 
+The families of integral that the chapter treats are the following, and each of them is closed by one contour and read off by one residue computation:
+- *a rational function over the whole real line*, closed by a large semicircle (see #link(<thm:rational-semicircle>)[the semicircle theorem]);
+- *a rational function of $sin$ and $cos$ over a full period*, closed by the unit circle (see #link(<thm:periodic-sin-cos>)[the periodic theorem]);
+- *a function of the real variable times an exponential*, closed by a large semicircle and estimated by #link(<lem:jordan>)[Jordan's lemma] (see #link(<thm:fourier-integral-analytic>)[the general theorem]);
+- *an integral with a singularity on the path*, closed by an indentation (see #link(<lem:small-arc>)[the small arc lemma]);
+- *a power of the variable over the positive axis*, closed by a keyhole about that axis (see #link(<thm:power-weighted-integral>)[the power-weighted theorem]);
+- *a logarithm in the integrand*, obtained by differentiating a parameter (see #link(<thm:log-parameter>)[the parameter theorem]).
+
 == Integrals of Rational Functions // 有理函数的积分
 
 A rational function decays at infinity as soon as the degree of its denominator exceeds the degree of its numerator, and then the real axis may simply be closed by a large semicircle.
@@ -2853,6 +2862,27 @@ This is close to $1$ near the endpoints $theta = 0$ and $theta = pi$, and small 
   The bound is therefore at most $pi M_R/lambda$, which tends to $0$.
 ]
 
+#theorem(name: "Fourier Integrals of Analytic Functions")[
+  Let $f$ be holomorphic on an open set containing the closed upper half-plane, let $z_1, dots, z_N$ be the singularities of $f$ in the open upper half-plane, and suppose that there are only finitely many of them and that none lies on the real axis.
+  Assume also that $abs(f(z)) -> 0$ as $abs(z) -> infinity$ within the closed upper half-plane, and that the integral below converges (as it does when $f$ is of bounded variation on the positive half-axis, or when $f(z) = O(1 / z)$).
+  Then, for every $lambda > 0$,
+  $
+    integral_(-infinity)^infinity f(x) e^("i" lambda x) dif x = 2 pi"i" sum_(k = 1)^N "Res"(f(z) e^("i" lambda z), z_k).
+  $
+] <thm:fourier-integral-analytic>
+
+#proof[
+  Let $Gamma_R$ be the arc $z = R e^("i" theta)$, $0 <= theta <= pi$, and integrate $g(z) = f(z) e^("i" lambda z)$ over the half-disc bounded by the segment $[-R, R]$ and the arc $Gamma_R$.
+  For $R$ so large that every $z_k$ lies inside, the residue theorem gives
+  $
+    integral_(-R)^R g(x) dif x + integral_(Gamma_R) g(z) dif z = 2 pi"i" sum_(k = 1)^N "Res"(g, z_k).
+  $
+  On $Gamma_R$ the modulus of $g$ is bounded by $M_R e^(-lambda R sin theta)$, where $M_R = sup_(abs(z) = R) abs(f(z)) -> 0$, so #link(<lem:jordan>)[Jordan's lemma] makes the arc contribution vanish.
+  Letting $R -> infinity$ yields the asserted identity.
+]
+
+The rational case below is the most common instance of this theorem: there $f = P/Q$ with $"deg"(Q) >= "deg"(P) + 1$, so $abs(f(z)) = O(abs(z)^(-1))$ on the arc.
+
 #theorem(name: "Fourier Integrals of Rational Functions")[
   Let $P, Q$ be polynomials with real coefficients, $Q$ without real zeros, $"deg"(Q) >= "deg"(P) + 1$, and let $lambda > 0$.
   Then
@@ -2900,19 +2930,61 @@ This is close to $1$ near the endpoints $theta = 0$ and $theta = pi$, and small 
   The factor $e^(-a b)$ is invisible from the real variable: it is the value of $e^("i"b z)$ at the pole $a"i"$, so the imaginary part of the pole has been converted into an exponential decay.
 ]
 
-#example(name: "An Integral over the Unit Circle")[
-  Let $a > abs(b) > 0$.
-  Show that
-  $ integral_0^(2 pi) (dif theta)/(a + b cos theta) = (2 pi)/(sqrt(a^2 - b^2)). $
+== Periodic Integrals of Rational Functions of sin and cos // 三角有理函数的周期积分
 
-  Put $z = e^("i" theta)$; then $cos theta = (z + z^(-1))/2$ and $dif theta = (dif z)/("i"z)$, so the integral becomes the contour integral over $abs(z) = 1$
-  $ (2)/"i" integral_(abs(z) = 1) (dif z)/(b z^2 + 2 a z + b). $
+The second classical family is the integral of a rational function of $sin$ and $cos$ over a full period.
+Both $sin$ and $cos$ are rational functions of $z = e^("i" t)$, so the substitution $z = e^("i" t)$ turns such an integral into a contour integral over the unit circle, and the residue theorem applies to it exactly as it applies to an integral over the real line.
+
+#theorem(name: "Periodic Rational Integrals in sin and cos")[
+  Let $R$ be a rational function of two variables, write $R(u, v) = P(u, v) / Q(u, v)$ with $P$ and $Q$ coprime polynomials, and suppose that $Q$ does not vanish on the unit circle $abs(z) = 1$.
+  If $"deg"(Q) >= "deg"(P) + 1$, the degrees being taken in the variables $u, v$, then
+  $
+    integral_0^(2 pi) R(sin t, cos t) dif t = integral_(abs(z) = 1) R((z - z^(-1))/(2"i"), (z + z^(-1))/2) (dif z)/("i" z),
+  $
+  and the right-hand side is $2 pi"i"$ times the sum of the residues of
+  $
+    R((z - z^(-1))/(2"i"), (z + z^(-1))/2)/("i" z)
+  $
+  at the zeros of $Q$ that lie inside the unit circle.
+] <thm:periodic-sin-cos>
+
+#proof[
+  Put $z = e^("i" t)$. Then $dif z = "i" z dif t$, $sin t = (z - z^(-1))/(2"i")$ and $cos t = (z + z^(-1))/2$, so the substitution gives the first identity, the contour being the unit circle traversed counterclockwise.
+  Both $u = (z - z^(-1))/(2"i")$ and $v = (z + z^(-1))/2$ are of order $z^(-1)$ at the origin, so $R(u, v)$ is of order $z^("deg"(Q) - "deg"(P))$ there; the hypothesis $"deg"(Q) >= "deg"(P) + 1$ shows that $R(u, v)/("i" z)$ has no pole at $z = 0$.
+  All its poles are therefore the zeros of $Q$, of which there are finitely many and none on the unit circle, and the residue theorem gives the second identity.
+]
+
+#note(title: "Symmetry Reductions")[
+  Before any contour is drawn, the symmetries of the integrand often shorten the integral.
+  If $R(-u, v) = R(u, v)$, then $t |-> R(sin t, cos t)$ is even, and $integral_0^(2 pi) R(sin t, cos t) dif t = 2 integral_0^pi R(sin t, cos t) dif t$.
+  If $R(u, -v) = R(u, v)$, the integrand is symmetric about $pi/2$, and $integral_0^pi R(sin t, cos t) dif t = 2 integral_0^(pi/2) R(sin t, cos t) dif t$.
+  Both at once give $integral_0^(2 pi) = 4 integral_0^(pi/2)$, which is the usual shape of the half-period formulas.
+]
+
+#corollary(name: "The Integral of $1/(a + b cos t)$")[
+  Let $a > abs(b) > 0$.
+  Then
+  $
+    integral_0^(2 pi) (dif t)/(a + b cos t) = (2 pi)/(sqrt(a^2 - b^2)).
+  $
+] <cor:trig-rational-circle>
+
+#proof[
+  Here $R(u, v) = 1/(a + b v)$, so $Q(u, v) = a + b v$ does not vanish on the unit circle as soon as $a > abs(b)$, and the hypotheses of #link(<thm:periodic-sin-cos>)[the theorem] hold.
+  The integrand of the theorem is
+  $
+    (1)/("i" z (a + b (z + z^(-1))/2)) = (2)/("i" (b z^2 + 2 a z + b)),
+  $
+  so the integral becomes the contour integral over $abs(z) = 1$
+  $
+    (2)/"i" integral_(abs(z) = 1) (dif z)/(b z^2 + 2 a z + b).
+  $
   The denominator has the zeros $z_plus.minus = (-a plus.minus sqrt(a^2 - b^2))/b$, whose product is $1$; since $a > abs(b)$, exactly one of them, namely $z_plus$ with $abs(z_plus) < 1$, lies inside the circle.
   There the residue is $1/(2 b z_plus + 2 a) = 1/(2 sqrt(a^2 - b^2))$, so
   $
-    integral_0^(2 pi) (dif theta)/(a + b cos theta) = 2/"i" dot 2 pi"i" dot 1/(2 sqrt(a^2 - b^2)) = (2 pi)/(sqrt(a^2 - b^2)).
+    integral_0^(2 pi) (dif t)/(a + b cos t) = 2/"i" dot 2 pi"i" dot 1/(2 sqrt(a^2 - b^2)) = (2 pi)/(sqrt(a^2 - b^2)).
   $
-] <ex:trig-rational-circle>
+]
 
 == Improper Integrals // 反常积分
 
@@ -2966,46 +3038,111 @@ When a singularity of the integrand lies on the real axis, the contour may not p
 A multivalued integrand cannot be integrated around a closed contour until a single-valued branch is fixed, and the cut of that branch dictates the contour: a *keyhole* that hugs the cut on both banks, closes at infinity by a large circle, and avoids the branch point by a small circle.
 The two banks then contribute two copies of the wanted integral, related by the change of argument accumulated along the circuit.
 
-#example(name: "A Keyhole Contour: $x^(a-1)/(1+x)$")[
-  Let $0 < a < 1$. Show that
-  $ integral_0^infinity (x^(a-1))/(1 + x) dif x = (pi)/(sin(a pi)). $
+#theorem(name: "Power-Weighted Integrals over the Positive Axis")[
+  Let $0 < alpha < 1$ and let $R = P/Q$ be a rational function with real coefficients such that $Q$ has no zero on $[0, +oo)$, such that $Q(0) != 0$, and such that $"deg"(Q) >= "deg"(P) + 1$.
+  Take the branch $z^(alpha-1) = e^((alpha-1) Log z)$ in which $Log z = ln(abs(z)) + "i" arg z$ with $0 < arg z < 2 pi$, so that the cut of the branch is the positive axis.
+  Then
+  $
+    integral_0^infinity x^(alpha-1) R(x) dif x = -((pi e^(-"i" pi alpha))/(sin(alpha pi))) sum_k "Res"(z^(alpha-1) R(z), z_k),
+  $
+  where the sum runs over the zeros of $Q$ that do not lie on $[0, +oo)$.
+] <thm:power-weighted-integral>
 
-  Use the branch $z^(a-1) = e^((a-1) log z)$ of the logarithm with argument in $(0, 2 pi)$, whose cut is the positive real axis, and put $f(z) = z^(a-1)/(1 + z)$.
-  On the upper bank $f$ equals $x^(a-1)/(1 + x)$, while on the lower bank the argument has increased by $2 pi$, so there $f$ equals $e^(2 pi"i" (a-1)) x^(a-1)/(1 + x)$; the lower bank is traversed in the opposite direction, so the two banks contribute
-  $ (1 - e^(2 pi"i" (a-1))) I, $
-  where $I$ is the wanted integral.
+#proof[
+  Let $f(z) = z^(alpha-1) R(z)$, and integrate it over the keyhole contour about the positive axis: the upper bank from $epsilon$ to $R$, the large circle, the lower bank from $R$ back to $epsilon$, and the small circle.
+  On the upper bank the argument is $0$, so $f$ equals $x^(alpha-1) R(x)$; on the lower bank the argument is $2 pi$, so $f$ equals $e^(2 pi"i" (alpha-1)) x^(alpha-1) R(x)$, and that bank is traversed backwards.
+  The two banks therefore contribute $(1 - e^(2 pi"i" (alpha-1))) I$, where $I$ is the wanted integral.
+  On the large circle $abs(f(z)) = O(abs(z)^(alpha-2))$, so the contribution is $O(R^(alpha-1)) -> 0$ because $alpha < 1$; on the small circle it is $O(epsilon^(alpha)) -> 0$ because $alpha > 0$.
+  The contour encloses every pole of $f$ that does not lie on the cut, and the residue theorem gives
+  $
+    (1 - e^(2 pi"i" (alpha-1))) I = 2 pi"i" sum_k "Res"(f, z_k).
+  $
+  Since $1 - e^(2 pi"i" (alpha-1)) = 1 - e^(2 pi"i" alpha) = -2"i" e^("i" pi alpha) sin(alpha pi)$, division yields the asserted formula.
+]
 
-  The only singularity enclosed is the simple pole at $z = -1$, whose argument is $pi$, so its residue is $e^("i" pi (a-1))$.
-  The large circle contributes $O(R^(a-1)) dot 2 pi R = O(R^a) -> 0$ because $a < 1$, and the small circle contributes $O(epsilon^(a-1)) dot 2 pi epsilon = O(epsilon^a) -> 0$; hence
+#corollary(name: "The Basic Power Integral")[
+  For $0 < a < 1$,
   $
-    (1 - e^(2 pi"i" (a-1))) I = 2 pi"i"e^("i" pi (a-1)).
+    integral_0^infinity (x^(a-1))/(1 + x) dif x = (pi)/(sin(a pi)).
   $
-  Since $e^(2 pi"i" (a-1)) = e^(2 pi"i"a)$ and $1 - e^(2 pi"i"a) = -2"i"e^("i" pi a) sin(a pi)$, while $e^("i" pi (a-1)) = -e^("i" pi a)$, the quotient simplifies to
-  $
-    I = (2 pi"i"e^("i" pi (a-1)))/(1 - e^(2 pi"i" (a-1))) = (pi)/(sin(a pi)).
-  $
-] <ex:keyhole-basic>
+] <cor:keyhole-basic>
 
-#example(name: "A Square-Root Branch on a Keyhole")[
+#proof[
+  Here $R = 1/(1 + x)$ satisfies the hypotheses of #link(<thm:power-weighted-integral>)[the theorem], and the only zero of $Q$ is $-1$, whose argument on the chosen branch is $pi$; its residue is $e^("i" pi (a-1))$.
+  The theorem therefore gives
+  $
+    integral_0^infinity (x^(a-1))/(1 + x) dif x = -((pi e^(-"i" pi a))/(sin(a pi))) e^("i" pi (a-1)) = (pi)/(sin(a pi)),
+  $
+  the last step using $e^(-"i" pi a) e^("i" pi (a-1)) = e^(-"i" pi) = -1$.
+]
+
+#corollary(name: "A Square-Root Branch")[
+  $
+    integral_0^infinity (sqrt(x))/(1 + x^2) dif x = (pi)/(sqrt(2)).
+  $
+] <cor:keyhole-sqrt>
+
+#proof[
+  Here $alpha = 3/2$ and $R = 1/(1 + x^2)$, so the hypotheses of #link(<thm:power-weighted-integral>)[the theorem] hold, and the two zeros of $Q$ are $z = "i"$ and $z = -"i"$, of arguments $pi/2$ and $3 pi/2$ on the chosen branch.
+  Their residues are
+  $
+    (e^("i" pi/4))/(2"i") quad "and" quad (e^(3"i" pi/4))/(-2"i"),
+  $
+  whose sum is $(1)/(2"i")(e^("i" pi/4) - e^(3"i" pi/4)) = (sqrt(2))/(2"i")$.
+  The theorem now gives
+  $
+    integral_0^infinity (sqrt(x))/(1 + x^2) dif x = -((pi e^(-3 pi"i"/2))/(sin(3 pi/2))) (sqrt(2))/(2"i") = (pi sqrt(2))/2 = (pi)/(sqrt(2)),
+  $
+  since $e^(-3 pi"i"/2) = "i"$ and $sin(3 pi/2) = -1$.
+]
+
+== Logarithmic Integrals // 含对数的积分
+
+A logarithm in the integrand is not an obstacle: it is what a parameter produces when it is differentiated.
+
+#theorem(name: "Logarithmic Integrals by Differentiation of a Parameter")[
+  Let $R$ be a rational function such that the integral
+  $
+    I(alpha) = integral_0^infinity x^(alpha-1) R(x) dif x
+  $
+  is known in closed form for $alpha$ in a neighbourhood of $alpha_0$, and suppose that $x^(alpha-1) ln(x) R(x)$ is integrable over $(0, +oo)$ for $alpha$ near $alpha_0$.
+  Then
+  $
+    integral_0^infinity x^(alpha_0 - 1) ln(x) R(x) dif x = I'(alpha_0),
+  $
+  the derivative being that of the closed form.
+] <thm:log-parameter>
+
+#proof[
+  On every compact subinterval of the parameter range the integrand and its derivative are dominated by an integrable function of $x$, so differentiation under the integral sign is legitimate: the derivative of the integral is the integral of the derivative.
+]
+
+#example(name: "A Logarithmic Integral")[
+  Let $a > 0$.
   Show that
-  $ integral_0^infinity (sqrt(x))/(1 + x^2) dif x = (pi)/sqrt(2). $
+  $
+    integral_0^infinity (ln x)/(x^2 + a^2) dif x = (pi ln(a))/(2 a).
+  $
+  With $x = a t$, the integral of #link(<thm:power-weighted-integral>)[the power-weighted theorem] becomes
+  $
+    I(alpha) = integral_0^infinity (x^(alpha-1))/(x^2 + a^2) dif x = a^(alpha-2) integral_0^infinity (t^(alpha-1))/(1 + t^2) dif t = a^(alpha-2) (pi)/(2 sin((alpha pi)/2)),
+  $
+  the last step being the case $R = 1/(1 + t^2)$ of the same theorem, read with the exponent $alpha/2$ in place of $alpha$.
+  Differentiating at $alpha = 1$, where $cos(pi/2) = 0$ kills the second term, gives
+  $
+    integral_0^infinity (ln x)/(x^2 + a^2) dif x = (pi)/(2) a^(-1) ln(a) = (pi ln(a))/(2 a).
+  $
+  In particular $a = 1$ gives $integral_0^infinity (ln x)/(1 + x^2) dif x = 0$, the same value that the substitution $x |-> 1/x$ produces directly.
+] <ex:log-integral>
 
-  Take the branch $z^(1/2) = e^((1/2) log z)$ with argument in $(0, 2 pi)$ and $f(z) = z^(1/2)/(1 + z^2)$.
-  Both poles $z = "i"$ (argument $pi/2$) and $z = -"i"$ (argument $3 pi/2$) lie inside a keyhole contour $C$ for the cut, with residues
+#note(title: "A Logarithm Produced by the Contour")[
+  The logarithm can also come from the contour instead of from a parameter.
+  On a keyhole about the positive axis with the branch $Log z = ln(abs(z)) + "i" arg z$, $0 < arg z < 2 pi$, the upper bank carries $ln(x)$ and the lower bank carries $ln(x) + 2 pi"i"$, and the residue theorem applied to $(Log z)^2 R(z) dif z / z$ gives
   $
-    (e^("i" pi/4))/(2"i") quad "and" quad (e^(3"i" pi/4))/(-2"i").
+    -4 pi"i" integral_0^infinity (ln(x) R(x))/(x) dif x + 4 pi^2 integral_0^infinity R(x)/(x) dif x = 2 pi"i" sum_k "Res"((Log z)^2 R(z) / z, z_k),
   $
-  Their sum is $(1)/(2"i")(e^("i" pi/4) - e^(3"i" pi/4)) = (sqrt(2))/(2"i")$, so
-  $
-    integral_C f(z) dif z = 2 pi"i" dot (sqrt(2))/(2"i") = pi sqrt(2).
-  $
-
-  On the two banks the branch takes the values $sqrt(x)$ and $-sqrt(x)$, and the integral over the large circle is $O(R^(1/2)) dot 2 pi R = O(R^(3/2))$ against a denominator of size $R^2$, hence tends to $0$; the small circle contributes $O(epsilon^(3/2)) -> 0$.
-  Therefore the keyhole integral equals twice the wanted integral, and
-  $
-    integral_0^infinity (sqrt(x))/(1 + x^2) dif x = (pi sqrt(2))/2 = (pi)/sqrt(2).
-  $
-] <ex:keyhole-sqrt>
+  from which the logarithmic integral is read off.
+]
 
 == Summation of Series // 级数求和
 
@@ -3164,9 +3301,11 @@ The residue theorem also sums series: a kernel whose residues at the integers ar
 // Chapter 10: Evaluation of Real Integrals (实积分的计算)
 //   Section 10.1: Integrals of Rational Functions (有理函数的积分)
 //   Section 10.2: Integrals Involving Trigonometric Functions (含三角函数的积分)
-//   Section 10.3: Improper Integrals (反常积分)
-//   Section 10.4: Integrals with Branch Cuts (含割线的积分)
-//   Section 10.5: Summation of Series (级数求和)
+//   Section 10.3: Periodic Integrals of Rational Functions of sin and cos (三角有理函数的周期积分)
+//   Section 10.4: Improper Integrals (反常积分)
+//   Section 10.5: Integrals with Branch Cuts (含割线的积分)
+//   Section 10.6: Logarithmic Integrals (含对数的积分)
+//   Section 10.7: Summation of Series (级数求和)
 
 // --- Part IV: Conformal Mapping and Analytic Continuation (共形映射与解析延拓) ---
 
