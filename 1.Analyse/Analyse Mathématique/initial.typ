@@ -6774,7 +6774,7 @@ $f(x)$, $abs(f(x))$ and $f^2 (x)$ are depicted in
 by the following proposition.
 
 #figure(
-  image("img/rela.png", width: 90%),
+  image("img/integrability-relations.svg", width: 95%),
   caption: [Relationships among integrability, absolute integrability, and square integrability.],
 ) <fig:integrability-relationships>
 
