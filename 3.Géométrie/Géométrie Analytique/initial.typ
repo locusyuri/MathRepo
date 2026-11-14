@@ -722,7 +722,7 @@ Some special cases of cylinders (see @fig:CylinderSurface):
 Their equations are all quadratic, so they are collectively called *quadratic cylinders*.
 
 #figure(
-  image("img/Cylinder.png", width: 80%),
+  image("img/cylinder.svg", width: 100%),
   caption: [Cylinder Surface.],
   placement: auto,
   supplement: [Fig.],
@@ -827,7 +827,7 @@ Taking the plane of the directrix as the coordinate plane and the axis of rotati
 the equation of the surface of revolution assumes a special form (see @fig:SurfaceOfRevolution).
 
 #figure(
-  image("img/Revolution.png", width: 40%),
+  image("img/revolution.svg", width: 72%),
   caption: [Surface of Revolution.],
   placement: auto,
   supplement: [Fig.],
@@ -1147,14 +1147,14 @@ is called a hyperbolic paraboloid, or a saddle surface.
 ]
 
 #figure(
-  image("img/ruled-surface1.png", width: 50%),
+  image("img/ruled-surface1.svg", width: 92%),
   caption: [One-sheet hyperboloid.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:RuledSurface1>
 
 #figure(
-  image("img/ruled-surface2.png", width: 50%),
+  image("img/ruled-surface2.svg", width: 92%),
   caption: [Hyperbolic paraboloid.],
   placement: auto,
   supplement: [Fig.],
