@@ -689,7 +689,7 @@ and $L_1[u] = sum_i b_(i)(x) u_(x_i)$ is the first-order part.
   #eq[$
     a(x, xi) = sum_(i, j = 1)^n a_(i j)(x) xi_i xi_j = xi^"T" A(x) xi,
   $] <eq:principal-symbol>
-  where $xi = (xi_1, dots, xi_n) in bb(R)^n$. The _full symbol_ of $L$ is $sigma(x, xi) = a(x, xi) + i sum_i b_(i)(x) xi_i - c(x)$, which incorporates lower-order contributions.
+  where $xi = (xi_1, dots, xi_n) in bb(R)^n$. The _full symbol_ of $L$ is $sigma(x, xi) = a(x, xi) + "i" sum_i b_(i)(x) xi_i - c(x)$, which incorporates lower-order contributions.
 ]
 
 The principal symbol captures the highest-order behavior of the operator. Since classification depends only on the leading derivatives, the principal symbol — not the full symbol — determines the equation type.
@@ -886,7 +886,7 @@ The proof follows the same chain-rule computation: since $Delta = 0$, the two ch
 
 When $Delta < 0$, the characteristic ODE has no real solutions. However, it has two _complex conjugate_ families:
 $
-  phi(x, y) = alpha(x, y) + i beta(x, y) = c_1, quad overline(phi)(x, y) = alpha(x, y) - i beta(x, y) = c_2.
+  phi(x, y) = alpha(x, y) + "i" beta(x, y) = c_1, quad overline(phi)(x, y) = alpha(x, y) - "i" beta(x, y) = c_2.
 $
 
 #theorem(name: "Elliptic Canonical Form")[
@@ -897,15 +897,15 @@ $
 ]
 
 #proof[
-  If we formally apply the hyperbolic reduction with complex coordinates $z = alpha + i beta$ and $bar(z) = alpha - i beta$, the canonical form would be $u_(z bar(z)) = 0$. Converting back to real variables via $alpha = (z + bar(z)) / 2$, $beta = (z - bar(z)) / (2 i)$ transforms $4 u_(z bar(z))$ into $u_(alpha alpha) + u_(beta beta)$, yielding @eq:canonical-elliptic.
+  If we formally apply the hyperbolic reduction with complex coordinates $z = alpha + "i" beta$ and $bar(z) = alpha - "i" beta$, the canonical form would be $u_(z bar(z)) = 0$. Converting back to real variables via $alpha = (z + bar(z)) / 2$, $beta = (z - bar(z)) / (2"i")$ transforms $4 u_(z bar(z))$ into $u_(alpha alpha) + u_(beta beta)$, yielding @eq:canonical-elliptic.
 ]
 
 #example(name: "Laplace Equation in Canonical Form")[
   The Laplace equation $u_(x x) + u_(y y) = 0$ has $a = 1$, $b = 0$, $c = 1$, so $Delta = -1 < 0$. The characteristic ODE gives:
   $
-    (d y)^2 + (d x)^2 = 0 quad => quad y +- i x = text("const").
+    (d y)^2 + (d x)^2 = 0 quad => quad y +-"i"x = text("const").
   $
-  The complex characteristic families are $z = y + i x$ and $bar(z) = y - i x$, giving $alpha = y$, $beta = x$. The equation is already in canonical form: $u_(alpha alpha) + u_(beta beta) = 0$. Solutions are precisely the _harmonic functions_, and the canonical form reveals why elliptic equations have no preferred direction — the operator is isotropic.
+  The complex characteristic families are $z = y + "i"x$ and $bar(z) = y - "i"x$, giving $alpha = y$, $beta = x$. The equation is already in canonical form: $u_(alpha alpha) + u_(beta beta) = 0$. Solutions are precisely the _harmonic functions_, and the canonical form reveals why elliptic equations have no preferred direction — the operator is isotropic.
 ]
 
 === Summary and the Transport Equation Revisited // 总结：传输方程再探
@@ -914,7 +914,7 @@ The following table summarizes the canonical forms and their characteristic geom
 
 #tex-table(
   ("Type", "Canonical form", "Coordinates", "Characteristics"),
-  ("Elliptic", [$u_(alpha alpha) + u_(beta beta) = Phi$], [$alpha + i beta = phi (x, y)$], "Complex; no real curves"),
+  ("Elliptic", [$u_(alpha alpha) + u_(beta beta) = Phi$], [$alpha + "i" beta = phi (x, y)$], "Complex; no real curves"),
   ("Parabolic", [$u_(eta eta) = Phi$], [$xi = phi (x, y)$, $eta$ free], "One real family"),
   ("Hyperbolic", [$u_(xi eta) = Phi$], [$xi = phi$, $eta = psi$], "Two real families"),
 )
@@ -1327,7 +1327,7 @@ Both forms make the domain of dependence visible: the solution at $(bold(x), t)$
 
   This is the solution: the average runs over the *unit sphere*, not over the disk, and the potential enters through the weight $e^(c t omega_3)$, which is what the third dimension contributes.
 
-  For imaginary $c = i m$ the same transformation gives the Klein--Gordon equation $u_(t t) - a^2 Delta u + m^2 u = 0$, the exponential becoming the oscillating weight $e^(i m t omega_3)$.
+  For imaginary $c = "i"m$ the same transformation gives the Klein--Gordon equation $u_(t t) - a^2 Delta u + m^2 u = 0$, the exponential becoming the oscillating weight $e^("i"m t omega_3)$.
 ] <ex:wave-telegraph-2d>
 
 The homogeneous Cauchy problem is now solved in every dimension. The *inhomogeneous* problem with zero data is reduced to the homogeneous one in *Duhamel's Principle* by the superposition principle and #link(<thm:duhamel-wave>)[Duhamel's principle], and for general data the two contributions are simply added. Initial-boundary value problems on bounded domains — membranes, acoustic resonators — call instead for separation of variables, along the lines of *Separation of Variables for the Wave Equation*; the general spectral framework is developed in *Solution Methods and Numerical Methods*.
@@ -2139,8 +2139,8 @@ This is the exact opposite of what happens for the wave equation, where a jump t
 
 The kernel was produced by inspection; the systematic route to the same formula, and the one usually taken in a first course, is to transform the equation in the space variable — this is the treatment of @gu2012pde.
 
-Throughout this subsection $hat(u) (xi, t) = integral_(bb(R)^n) u (bold(x), t) e^(-2 pi i xi dot bold(x)) dif bold(x)$ denotes the Fourier transform in $bold(x)$, with the frequency convention of the Fourier analysis notes.
-The properties used below — differentiation becomes multiplication by $2 pi i xi$, convolution becomes a product, and the inversion formula — are proved there (*The Fourier Transform on $bb(R)^d$* in Analyse Harmonique).
+Throughout this subsection $hat(u) (xi, t) = integral_(bb(R)^n) u (bold(x), t) e^(-2 pi"i" xi dot bold(x)) dif bold(x)$ denotes the Fourier transform in $bold(x)$, with the frequency convention of the Fourier analysis notes.
+The properties used below — differentiation becomes multiplication by $2 pi"i" xi$, convolution becomes a product, and the inversion formula — are proved there (*The Fourier Transform on $bb(R)^d$* in Analyse Harmonique).
 
 Let $u$ be a smooth decaying solution of the Cauchy problem with datum $phi$.
 Transforming $u_t - alpha Delta u = 0$ in $bold(x)$ turns the equation into a family of scalar ODEs, one for each frequency:
@@ -2155,7 +2155,7 @@ Two consequences follow.
 
 - *The multiplier is the transform of the kernel.* In one dimension the standard Gaussian integral gives
   $
-    integral_(-oo)^oo e^(-2 pi i xi x) e^(-x^2/(4 alpha t)) dif x = sqrt(4 pi alpha t) e^(-4 pi^2 alpha t xi^2),
+    integral_(-oo)^oo e^(-2 pi"i" xi x) e^(-x^2/(4 alpha t)) dif x = sqrt(4 pi alpha t) e^(-4 pi^2 alpha t xi^2),
   $
   and dividing by the normalization $(4 pi alpha t)^(n/2)$, the product over the $n$ coordinates gives $hat(E)_alpha (xi, t) = e^(-4 pi^2 alpha abs(xi)^2 t)$ for the kernel of #link(<eq:heat-kernel>)[the definition].
   Hence #link(<eq:heat-fourier>)[the transformed solution] is the product $hat(E)_alpha hat(phi)$, and the convolution theorem together with the inversion formula returns $u = E_alpha * phi$, which is #link(<eq:heat-cauchy>)[the convolution formula].
@@ -2251,11 +2251,11 @@ $] <eq:heat-duhamel>
 
   *Step 1: The Gaussian integral.* For every $t > 0$ and every real $xi$,
   $
-    integral_(-oo)^oo E_alpha (z, t) e^(i xi z) dif z = e^(-alpha xi^2 t).
+    integral_(-oo)^oo E_alpha (z, t) e^("i" xi z) dif z = e^(-alpha xi^2 t).
   $
   For $xi = 1$ this is the standard Fourier integral: with $a = 1/(4 alpha t)$,
   $
-    integral_(-oo)^oo e^(-a z^2 + i z) dif z = sqrt(pi/a) e^(-1/(4 a)) = sqrt(4 pi alpha t) e^(-alpha t),
+    integral_(-oo)^oo e^(-a z^2 + "i"z) dif z = sqrt(pi/a) e^(-1/(4 a)) = sqrt(4 pi alpha t) e^(-alpha t),
   $
   and multiplying by the normalizing factor $(4 pi alpha t)^(-1/2)$ gives the claim.
   Taking real and imaginary parts at $xi = 1$,
@@ -2620,7 +2620,7 @@ The three model equations of this Part are distinguished by a single structural 
   ([Regularity], [no gain], [instant smoothing], [analytic]),
   ([Reversibility], [reversible (group)], [irreversible (semigroup)], [static]),
   ([Energy], [conserved], [dissipated], [stationary]),
-  ([Spectrum], [$plus.minus i a abs(xi)$], [$-abs(xi)^2$], [no time evolution]),
+  ([Spectrum], [$plus.minus "i"a abs(xi)$], [$-abs(xi)^2$], [no time evolution]),
 ) <tab:three-models>
 
 The table is not a mnemonic but a summary of the three chapters.
@@ -5117,7 +5117,7 @@ This closing part of the notes collects the classical method of separation of va
 ] <ex:laplace-disk>
 
 #note[
-  The model equations are solved by the same machinery: the spatial part always reduces to a Sturm--Liouville problem whose eigenfunctions diagonalize the PDE, and the temporal (or remaining) factor is an ODE in the eigenbasis. This is the *spectral viewpoint*: the heat equation contracts modes ($e^(-lambda_k t)$), the wave equation rotates them ($e^(+- i sqrt(lambda_k) t)$ — developed in detail in *Wave Equation*), and the Laplace equation extends them harmonically ($r^n$). The spectral method of *Separation of Variables and Spectral Methods* discretizes precisely these expansions.
+  The model equations are solved by the same machinery: the spatial part always reduces to a Sturm--Liouville problem whose eigenfunctions diagonalize the PDE, and the temporal (or remaining) factor is an ODE in the eigenbasis. This is the *spectral viewpoint*: the heat equation contracts modes ($e^(-lambda_k t)$), the wave equation rotates them ($e^(+-"i" sqrt(lambda_k) t)$ — developed in detail in *Wave Equation*), and the Laplace equation extends them harmonically ($r^n$). The spectral method of *Separation of Variables and Spectral Methods* discretizes precisely these expansions.
 ]
 
 = Numerical Methods for PDEs // PDE 数值方法
@@ -5159,7 +5159,7 @@ This chapter gives a concise overview of the four standard families of numerical
 ]
 
 #theorem(name: "von Neumann Stability Condition")[
-  For a constant-coefficient scheme on a periodic grid, inserting the Fourier mode $U_j^n = g^n e^(i j theta)$, $theta in [-pi, pi]$, yields the *amplification factor* $g (theta)$. The scheme is stable iff
+  For a constant-coefficient scheme on a periodic grid, inserting the Fourier mode $U_j^n = g^n e^("i"j theta)$, $theta in [-pi, pi]$, yields the *amplification factor* $g (theta)$. The scheme is stable iff
   $
     abs(g (theta)) <= 1 + C Delta t quad "for all" quad theta
   $
@@ -5251,15 +5251,15 @@ This chapter gives a concise overview of the four standard families of numerical
 == Spectral Methods // 谱方法
 
 #definition(name: "Spectral Galerkin Method")[
-  On the periodic domain, the *spectral method* seeks an approximation in the trigonometric subspace $S_N = "span"{e^(i k x) : abs(k) <= N}$:
+  On the periodic domain, the *spectral method* seeks an approximation in the trigonometric subspace $S_N = "span"{e^("i"k x) : abs(k) <= N}$:
   $
-    u_N (x, t) = sum_(k = -N)^N hat(u)_k (t) e^(i k x),
+    u_N (x, t) = sum_(k = -N)^N hat(u)_k (t) e^("i"k x),
   $
-  determined by the Galerkin projection of the equation onto $S_N$. The *pseudospectral* (collocation) variant imposes the equation at $2 N + 1$ grid points and evaluates nonlinear terms with the fast Fourier transform. Since $e^(i k x)$ are the eigenfunctions of $-(partial^2)/(partial x^2)$ (eigenvalues $k^2$), the spectral method is the discretized eigenfunction expansion of *Separation of Variables and Spectral Methods*.
+  determined by the Galerkin projection of the equation onto $S_N$. The *pseudospectral* (collocation) variant imposes the equation at $2 N + 1$ grid points and evaluates nonlinear terms with the fast Fourier transform. Since $e^("i"k x)$ are the eigenfunctions of $-(partial^2)/(partial x^2)$ (eigenvalues $k^2$), the spectral method is the discretized eigenfunction expansion of *Separation of Variables and Spectral Methods*.
 ] <def:spectral-galerkin>
 
 #theorem(name: "Spectral Accuracy")[
-  Let $P_N u = sum_(abs(k) <= N) hat(u)_k e^(i k x)$ be the truncation of the Fourier series of $u$. If $u in H^s$ for $s >= 0$, then
+  Let $P_N u = sum_(abs(k) <= N) hat(u)_k e^("i"k x)$ be the truncation of the Fourier series of $u$. If $u in H^s$ for $s >= 0$, then
   $
     ||u - P_N u||_(L^2) <= C_s N^(-s) ||u||_(H^s);
   $

@@ -371,7 +371,7 @@ the one-dimensional torus, also known as the unit circle in the complex plane.
 
 For any $theta in bb(R)$ we may set
 $
-  f(theta) = F(e^(i theta)),
+  f(theta) = F(e^("i" theta)),
 $
 where $F: bb(T) -> bb(C)$ is the corresponding *function defined on the unit circle*.
 The periodic function $f(x)$ may thus be studied through $F(z)$ on $bb(T)$: the set of all such $F$ is a function space over the circle, _isomorphic_ to the space of $2pi$-periodic functions $f(x)$.
@@ -384,9 +384,9 @@ Moreover, since $bb(T)$ is a multiplicative group of complex numbers, it makes t
 #theorem(name: "Orthonormal System")[
   The family
   $
-    cal(E) = { e^(i n x) : n in bb(Z) }
+    cal(E) = { e^("i"n x) : n in bb(Z) }
   $
-  is orthonormal in $cal(R)^2[-pi, pi]$, i.e., $⟨ e^(i m x), e^(i n x) ⟩ = delta_(m n)$ for all $m, n in bb(Z)$.
+  is orthonormal in $cal(R)^2[-pi, pi]$, i.e., $⟨ e^("i"m x), e^("i"n x) ⟩ = delta_(m n)$ for all $m, n in bb(Z)$.
 
   In real form,
   $
@@ -405,11 +405,11 @@ For a merely integrable $f in cal(R)[-pi, pi]$ the expansion need not converge i
 #definition(name: "Fourier Coefficients")[
   The *Fourier coefficients* of a function $f(x) in cal(R)[-pi, pi]$ are given by the Euler-Fourier formula
   $
-    hat(f)(n) = ⟨ f, e^(i n x) ⟩ = (1) / (2pi) integral_(-pi)^(pi) f(x) e^(-i n x) dif x, quad n in bb(Z),
+    hat(f)(n) = ⟨ f, e^("i"n x) ⟩ = (1) / (2pi) integral_(-pi)^(pi) f(x) e^(-"i"n x) dif x, quad n in bb(Z),
   $
   and the *Fourier series* of $f(x)$ is
   $
-    f(x) ~ sum_(n=-oo)^(+oo) hat(f)(n) e^(i n x).
+    f(x) ~ sum_(n=-oo)^(+oo) hat(f)(n) e^("i"n x).
   $
   In real form it reads
   $
@@ -431,8 +431,8 @@ The following algebraic rules are immediate from the linearity of the integral a
   Let $f, g in cal(R)[-pi, pi]$, $alpha, beta in bb(C)$ and $n in bb(Z)$. Then
   1. *Linearity.* $hat(alpha f + beta g)(n) = alpha hat(f)(n) + beta hat(g)(n)$.
   2. *Conjugation.* $hat(overline(f))(n) = overline(hat(f)(-n))$; in particular, if $f$ is real valued, then $hat(f)(-n) = overline(hat(f)(n))$.
-  3. *Translation.* If $g(x) = f(x - a)$ with $a in bb(R)$, then $hat(g)(n) = e^(-i n a) hat(f)(n)$.
-  4. *Modulation.* If $g(x) = e^(i k x) f(x)$ with $k in bb(Z)$, then $hat(g)(n) = hat(f)(n - k)$.
+  3. *Translation.* If $g(x) = f(x - a)$ with $a in bb(R)$, then $hat(g)(n) = e^(-"i"n a) hat(f)(n)$.
+  4. *Modulation.* If $g(x) = e^("i"k x) f(x)$ with $k in bb(Z)$, then $hat(g)(n) = hat(f)(n - k)$.
   5. *Boundedness.* $abs(hat(f)(n)) <= || f ||_1$, where $|| f ||_1 = (1) / (2pi) integral_(-pi)^(pi) abs(f(x)) dif x$.
 ] <prop:fourier-coefficient-rules>
 
@@ -441,17 +441,17 @@ In particular, a real and even $f$ has real coefficients, a real and odd $f$ has
 #note[
   Using Euler's formula,
   $
-    cos n x = (e^(i n x) + e^(-i n x)) / (2), quad sin n x = (e^(i n x) - e^(-i n x)) / (2i),
+    cos n x = (e^("i"n x) + e^(-"i"n x)) / (2), quad sin n x = (e^("i"n x) - e^(-"i"n x)) / (2i),
   $
   the coefficients in the two forms are related by
   $
-    hat(f)(0) = (a_0) / (2), quad hat(f)(n) = (a_n - i b_n) / (2), \
-    hat(f)(-n) = (a_n + i b_n) / (2), quad n = 1, 2, dots,
+    hat(f)(0) = (a_0) / (2), quad hat(f)(n) = (a_n - "i"b_n) / (2), \
+    hat(f)(-n) = (a_n + "i"b_n) / (2), quad n = 1, 2, dots,
   $
   and conversely
   $
     a_0 = 2hat(f)(0), quad a_n = hat(f)(n) + hat(f)(-n) = 2Re hat(f)(n), \
-    b_n = i [ hat(f)(n) - hat(f)(-n) ] = -2Im hat(f)(n), quad n = 1, 2, dots.
+    b_n = "i" [ hat(f)(n) - hat(f)(-n) ] = -2Im hat(f)(n), quad n = 1, 2, dots.
   $
 ]
 
@@ -463,9 +463,9 @@ $
 $
 the family
 $
-  cal(E)_T = { e^(i n (pi) / (T) x) : n in bb(Z) }
+  cal(E)_T = { e^("i"n (pi) / (T) x) : n in bb(Z) }
 $
-is orthonormal, i.e., $⟨ e^(i m (pi) / (T) x), e^(i n (pi) / (T) x) ⟩ = delta_(m n)$ for all $m, n in bb(Z)$.
+is orthonormal, i.e., $⟨ e^("i"m (pi) / (T) x), e^("i"n (pi) / (T) x) ⟩ = delta_(m n)$ for all $m, n in bb(Z)$.
 In real form,
 $
   { 1, cos((pi) / (T) x), sin((pi) / (T) x), cos(2 (pi) / (T) x), sin(2 (pi) / (T) x), dots }
@@ -478,11 +478,11 @@ The frequency is now $n (pi) / (T)$ rather than $n$; the value $T = pi$ recovers
 
 The coefficients are again denoted $hat(f)(n)$, and the Euler-Fourier formula reads
 $
-  hat(f)(n) = (1) / (2T) integral_(-T)^(T) f(x) e^(-i n (pi) / (T) x) dif x, quad n in bb(Z),
+  hat(f)(n) = (1) / (2T) integral_(-T)^(T) f(x) e^(-"i"n (pi) / (T) x) dif x, quad n in bb(Z),
 $
 so that
 $
-  f(x) ~ sum_(n=-oo)^(+oo) hat(f)(n) e^(i n (pi) / (T) x),
+  f(x) ~ sum_(n=-oo)^(+oo) hat(f)(n) e^("i"n (pi) / (T) x),
 $
 or in real form
 $
@@ -505,19 +505,19 @@ $
 
 The partial sum of the first $N$ terms of the Fourier series of $f(x)$ is
 $
-  S_(N)(f; x) = sum_(n=-N)^(N) hat(f)(n) e^(i n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ].
+  S_(N)(f; x) = sum_(n=-N)^(N) hat(f)(n) e^("i"n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ].
 $
 To study its convergence we transform it into integral form.
 By the Euler-Fourier formula,
 $
-  S_(N)(f; x) & = sum_(n=-N)^(N) hat(f)(n) e^(i n x) \
-              & = sum_(n=-N)^(N) ( (1) / (2pi) integral_(-pi)^(pi) f(t) e^(-i n t) dif t ) e^(i n x) \
-              & = (1) / (2pi) integral_(-pi)^(pi) f(t) ( sum_(n=-N)^(N) e^(i n (x - t)) ) dif t \
+  S_(N)(f; x) & = sum_(n=-N)^(N) hat(f)(n) e^("i"n x) \
+              & = sum_(n=-N)^(N) ( (1) / (2pi) integral_(-pi)^(pi) f(t) e^(-"i"n t) dif t ) e^("i"n x) \
+              & = (1) / (2pi) integral_(-pi)^(pi) f(t) ( sum_(n=-N)^(N) e^("i"n (x - t)) ) dif t \
               & = (1) / (2pi) integral_(-pi)^(pi) f(t) D_(N)(x - t) dif t,
 $
 where
 $
-  D_(N)(x) = sum_(n=-N)^(N) e^(i n x) = 1 + sum_(n=1)^(N) 2 cos(n x) = ( sin((2N + 1) x / 2) ) / ( sin(x / 2) )
+  D_(N)(x) = sum_(n=-N)^(N) e^("i"n x) = 1 + sum_(n=1)^(N) 2 cos(n x) = ( sin((2N + 1) x / 2) ) / ( sin(x / 2) )
 $
 is called the *Dirichlet kernel*.
 At $x = 2 k pi$ the quotient is understood by continuity, and $D_(N)(2 k pi) = 2N + 1$.
@@ -598,7 +598,7 @@ $
   and $ell^1(bb(Z))$ is a Banach algebra for this product, with unit the sequence $delta_0$ (where $delta_0(0) = 1$ and $delta_0(n) = 0$ for $n != 0$).
   Writing
   $
-    hat(a)(theta) = sum_(n in bb(Z)) a(n) e^(-i n theta), quad theta in bb(R),
+    hat(a)(theta) = sum_(n in bb(Z)) a(n) e^(-"i"n theta), quad theta in bb(R),
   $
   the convolution theorem takes the same form as on the circle:
   $
@@ -609,7 +609,7 @@ $
   $
     (a *_N b)(n) = sum_(k=0)^(N-1) a(k) b((n - k) mod N), quad n = 0, 1, dots, N - 1.
   $
-  With the discrete Fourier transform $hat(a)(j) = sum_(n=0)^(N-1) a(n) e^(-2pi i j n \/ N)$, the same statement holds up to the conventional factor $N$, namely
+  With the discrete Fourier transform $hat(a)(j) = sum_(n=0)^(N-1) a(n) e^(-2pi"i"j n \/ N)$, the same statement holds up to the conventional factor $N$, namely
   $
     hat(a *_N b)(j) = hat(a)(j) dot hat(b)(j).
   $
@@ -645,11 +645,11 @@ In other words, convolution in the time domain corresponds to multiplication in 
 #proof(name: "of the Convolution Theorem")[
   By the definition of convolution and the Euler-Fourier formula,
   $
-    hat(f * g)(n) = (1) / (2pi) integral_(-pi)^(pi) ( (1) / (2pi) integral_(-pi)^(pi) f(t) g(x - t) dif t ) e^(-i n x) dif x.
+    hat(f * g)(n) = (1) / (2pi) integral_(-pi)^(pi) ( (1) / (2pi) integral_(-pi)^(pi) f(t) g(x - t) dif t ) e^(-"i"n x) dif x.
   $
   Both $f$ and $g$ are bounded, so Fubini's theorem applies to the double integral; the substitution $x = t + u$ together with the $2pi$-periodicity of $g$ gives
   $
-    hat(f * g)(n) = (1) / (2pi) integral_(-pi)^(pi) f(t) e^(-i n t) ( (1) / (2pi) integral_(-pi)^(pi) g(u) e^(-i n u) dif u ) dif t = hat(f)(n) dot hat(g)(n).
+    hat(f * g)(n) = (1) / (2pi) integral_(-pi)^(pi) f(t) e^(-"i"n t) ( (1) / (2pi) integral_(-pi)^(pi) g(u) e^(-"i"n u) dif u ) dif t = hat(f)(n) dot hat(g)(n).
   $
 ]
 
@@ -975,7 +975,7 @@ We record one more structural property, useful whenever convergence of the serie
   $H$ is a continuous function on the circle, and by the Dirichlet-Jordan test its Fourier series converges uniformly to $H$.
   Integration by parts on $[-pi, pi]$ then gives, for $n != 0$,
   $
-    hat(H)(n) = (1) / (i n) hat(H')(n) = (1) / (i n) hat(f)(n),
+    hat(H)(n) = (1) / ("i"n) hat(H')(n) = (1) / ("i"n) hat(f)(n),
   $
   since the constant $a_0 / 2$ has vanishing Fourier coefficients for $n != 0$.
   In real form this reads
@@ -1006,7 +1006,7 @@ We record one more structural property, useful whenever convergence of the serie
 ] <thm:termwise-differentiation>
 
 #note(title: "Why continuity of $f$ is needed")[
-  Continuity of $f$ is what makes the boundary terms of the integration by parts disappear, giving $hat(f')(n) = i n hat(f)(n)$.
+  Continuity of $f$ is what makes the boundary terms of the integration by parts disappear, giving $hat(f')(n) = "i"n hat(f)(n)$.
   For a function with a jump these boundary terms survive, and the differentiated series no longer represents $f'$.
 ]
 
@@ -1158,10 +1158,10 @@ follows easily.
 === Best Approximation in the Square Mean // 平方平均意义下的最佳逼近
 
 #theorem(name: "Square Approximation Property of Fourier Series")[
-  Let $f(x) in cal(R)^2[-pi, pi]$ and let $W_(N) = op("span"){ e^(i n x) : abs(n) <= N }$.
+  Let $f(x) in cal(R)^2[-pi, pi]$ and let $W_(N) = op("span"){ e^("i"n x) : abs(n) <= N }$.
   Then the best approximation of $f$ in $W_(N)$ with respect to the norm $|| dot ||$ is the Fourier partial sum
   $
-    S_(N)(f; x) = sum_(n=-N)^(N) hat(f)(n) e^(i n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ],
+    S_(N)(f; x) = sum_(n=-N)^(N) hat(f)(n) e^("i"n x) = (a_0) / (2) + sum_(n=1)^(N) [ a_n cos(n x) + b_n sin(n x) ],
   $
   and the remainder $E_(N)(f) = f - S_(N)(f)$ satisfies#footnote[
     See *Orthogonal Completion and Orthogonal Projection* in the Algèbre Linéaire note.
@@ -1220,7 +1220,7 @@ the factor $1 / 2$ being the one relating the normalized inner product to $integ
   $
 
   It remains to prove equality.
-  Let $epsilon > 0$. Since continuous functions are dense in $L^2[-pi, pi]$ and trigonometric polynomials are dense in $C(bb(T))$ by #link(<thm:fejer>)[*Fejér Theorem*], there is a trigonometric polynomial $P = sum_(abs(n) <= M) c_(n) e^(i n x)$ with $|| f - P || < epsilon$.
+  Let $epsilon > 0$. Since continuous functions are dense in $L^2[-pi, pi]$ and trigonometric polynomials are dense in $C(bb(T))$ by #link(<thm:fejer>)[*Fejér Theorem*], there is a trigonometric polynomial $P = sum_(abs(n) <= M) c_(n) e^("i"n x)$ with $|| f - P || < epsilon$.
   As $P in W_(M)$ and $S_(M)(f)$ is the best approximation in $W_(M)$,
   $
     || E_(M)(f) || <= || f - P || < epsilon.
@@ -1249,7 +1249,7 @@ the factor $1 / 2$ being the one relating the normalized inner product to $integ
 
 #proof(name: "of Wirtinger Inequality")[
   Since $f in C^1$ is continuous and of bounded variation, #link(<thm:parseval-identity>)[*Parseval's Identity*] applies to both $f$ and $f'$.
-  As $f$ is continuous and periodic, integration by parts gives $hat(f')(n) = i n hat(f)(n)$ for every $n$, and $hat(f)(0) = (1) / (2pi) integral_(-pi)^(pi) f = 0$.
+  As $f$ is continuous and periodic, integration by parts gives $hat(f')(n) = "i"n hat(f)(n)$ for every $n$, and $hat(f)(0) = (1) / (2pi) integral_(-pi)^(pi) f = 0$.
   Hence
   $
     integral_(-pi)^(pi) (f'(x))^2 dif x = 2pi sum_(n in bb(Z)) abs(hat(f')(n))^2 = 2pi sum_(n != 0) n^2 abs(hat(f)(n))^2 >= 2pi sum_(n != 0) abs(hat(f)(n))^2 = integral_(-pi)^(pi) f^2(x) dif x.
@@ -1373,7 +1373,7 @@ The averaging device that produced the Fejér kernel also works when the truncat
 #definition(name: "Poisson Kernel")[
   For $0 <= r < 1$ and $t in bb(R)$, the *Poisson kernel* is
   $
-    P_(r)(t) = sum_(n=-oo)^(+oo) r^(abs(n)) e^(i n t) = (1 - r^2) / (1 - 2 r cos t + r^2).
+    P_(r)(t) = sum_(n=-oo)^(+oo) r^(abs(n)) e^("i"n t) = (1 - r^2) / (1 - 2 r cos t + r^2).
   $
 ] <def:poisson-kernel>
 
@@ -1389,7 +1389,7 @@ The averaging device that produced the Fejér kernel also works when the truncat
 #theorem(name: "Abel's Theorem")[
   Let $f in cal(R)[-pi, pi]$ and $0 <= r < 1$. The *Abel means*
   $
-    A_(r)(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(t) P_(r)(x - t) dif t = sum_(n=-oo)^(+oo) r^(abs(n)) hat(f)(n) e^(i n x)
+    A_(r)(f; x) = (1) / (2pi) integral_(-pi)^(pi) f(t) P_(r)(x - t) dif t = sum_(n=-oo)^(+oo) r^(abs(n)) hat(f)(n) e^("i"n x)
   $
   satisfy:
   1. if $f$ is continuous, then $A_(r)(f; x) -> f(x)$ uniformly on $bb(T)$ as $r -> 1^-$;
@@ -1401,7 +1401,7 @@ The averaging device that produced the Fejér kernel also works when the truncat
 ]
 
 #note(title: "Harmonic functions")[
-  For $f in cal(R)[-pi, pi]$ the function $u(r e^(i theta)) = A_(r)(f; theta)$ is harmonic in the open unit disc, and by the theorem above it tends to $f$ at every point where $f$ has one-sided limits.
+  For $f in cal(R)[-pi, pi]$ the function $u(r e^("i" theta)) = A_(r)(f; theta)$ is harmonic in the open unit disc, and by the theorem above it tends to $f$ at every point where $f$ has one-sided limits.
   This is the Poisson integral formula for the Dirichlet problem on the disc; its use in PDEs belongs to the Équations aux Dérivées Partielles note.
 ]
 
@@ -1420,7 +1420,7 @@ Fourier analysis also decides when a sequence fills an interval evenly.
 #theorem(name: "Weyl's Criterion")[
   A sequence $(x_(n))_(n >= 1)$ in $[0, 1)$ is equidistributed if and only if, for every integer $k != 0$,
   $
-    lim_(N -> oo) (1) / (N) sum_(n=1)^(N) e^(2 pi i k x_(n)) = 0.
+    lim_(N -> oo) (1) / (N) sum_(n=1)^(N) e^(2 pi"i"k x_(n)) = 0.
   $
 ] <thm:weyl>
 
@@ -1430,11 +1430,11 @@ Fourier analysis also decides when a sequence fills an interval evenly.
     lim_(N -> oo) (1) / (N) sum_(n=1)^(N) g(x_(n)) = integral_(0)^(1) g(t) dif t
   $
   for every Riemann integrable $g$ on $[0, 1]$: the identity holds for indicator functions of intervals by hypothesis, hence for step functions, and every Riemann integrable $g$ is a uniform limit of step functions.
-  Taking $g(t) = e^(2 pi i k t)$ with $k != 0$ gives necessity, since $integral_(0)^(1) e^(2 pi i k t) dif t = 0$.
+  Taking $g(t) = e^(2 pi"i"k t)$ with $k != 0$ gives necessity, since $integral_(0)^(1) e^(2 pi"i"k t) dif t = 0$.
 
   *(2) Sufficiency.* Assume that the exponential averages vanish for all $k != 0$.
   Let $g$ be continuous on $[0, 1]$; replacing $g$ by a function continuous on the circle (the value at $1$ is never taken by $x_(n)$), #link(<thm:fejer>)[*Fejér Theorem*] provides trigonometric polynomials uniformly close to $g$.
-  For $P(t) = sum_(abs(k) <= K) c_(k) e^(2 pi i k t)$ the hypothesis gives
+  For $P(t) = sum_(abs(k) <= K) c_(k) e^(2 pi"i"k t)$ the hypothesis gives
   $
     (1) / (N) sum_(n=1)^(N) P(x_(n)) -> c_(0) = integral_(0)^(1) P(t) dif t,
   $
@@ -1450,9 +1450,9 @@ Fourier analysis also decides when a sequence fills an interval evenly.
 #solution(name: "rotation by an angle")[
   If $alpha = p / q$ is rational, then $x_(q) = 0$, so taking $k = q$ in Weyl's criterion gives an average equal to $1$ and the sequence is not equidistributed.
 
-  Let $alpha$ be irrational. For $k != 0$ the number $e^(2 pi i k alpha)$ is different from $1$, and the geometric sum formula gives
+  Let $alpha$ be irrational. For $k != 0$ the number $e^(2 pi"i"k alpha)$ is different from $1$, and the geometric sum formula gives
   $
-    abs(sum_(n=1)^(N) e^(2 pi i k n alpha)) = abs((e^(2 pi i k alpha) (1 - e^(2 pi i k N alpha))) / (1 - e^(2 pi i k alpha))) <= (2) / (abs(1 - e^(2 pi i k alpha))),
+    abs(sum_(n=1)^(N) e^(2 pi"i"k n alpha)) = abs((e^(2 pi"i"k alpha) (1 - e^(2 pi"i"k N alpha))) / (1 - e^(2 pi"i"k alpha))) <= (2) / (abs(1 - e^(2 pi"i"k alpha))),
   $
   whence the averages tend to zero for every $k != 0$, and Weyl's criterion applies.
 ]
@@ -1477,7 +1477,7 @@ Every function considered in Part I was periodic, so its spectrum was a discrete
 
 Let $f$ have period $2T$. By #link(<def:fourier-coefficients>)[the Euler–Fourier formula] in the form given in §1.2,
 $
-  f(x) ~ sum_(n in bb(Z)) hat(f)_(T)(n) e^(i omega_n x), quad omega_n = n pi / T, quad hat(f)_(T)(n) = (1) / (2T) integral_(-T)^(T) f(t) e^(-i omega_n t) dif t.
+  f(x) ~ sum_(n in bb(Z)) hat(f)_(T)(n) e^("i" omega_n x), quad omega_n = n pi / T, quad hat(f)_(T)(n) = (1) / (2T) integral_(-T)^(T) f(t) e^(-"i" omega_n t) dif t.
 $
 The frequencies form an arithmetic grid, of spacing
 $
@@ -1485,15 +1485,15 @@ $
 $
 and since $1 \/ (2T) = Delta omega \/ (2 pi)$, the series reads
 $
-  f(x) ~ (1) / (2 pi) sum_(n in bb(Z)) ( integral_(-T)^(T) f(t) e^(-i omega_n t) dif t ) e^(i omega_n x) Delta omega,
+  f(x) ~ (1) / (2 pi) sum_(n in bb(Z)) ( integral_(-T)^(T) f(t) e^(-"i" omega_n t) dif t ) e^("i" omega_n x) Delta omega,
 $
 which is a Riemann sum, over the grid $(omega_n)$, for the function
 $
-  omega |-> ( integral_(-oo)^(oo) f(t) e^(-i omega t) dif t ) e^(i omega x).
+  omega |-> ( integral_(-oo)^(oo) f(t) e^(-"i" omega t) dif t ) e^("i" omega x).
 $
 Letting $T -> +oo$ sends $Delta omega -> 0$ and the sum to the integral of that function:
 $
-  f(x) = (1) / (2 pi) integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) e^(-i omega t) dif t ) e^(i omega x) dif omega.
+  f(x) = (1) / (2 pi) integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) e^(-"i" omega t) dif t ) e^("i" omega x) dif omega.
 $
 
 #caution[
@@ -1503,21 +1503,21 @@ $
 #definition(name: "Fourier Transform")[
   Let $f$ be absolutely integrable on $bb(R)$. Its *Fourier transform* is the function
   $
-    hat(f)(omega) = cal(F)[f](omega) = integral_(-oo)^(oo) f(x) e^(-i omega x) dif x, quad omega in bb(R).
+    hat(f)(omega) = cal(F)[f](omega) = integral_(-oo)^(oo) f(x) e^(-"i" omega x) dif x, quad omega in bb(R).
   $ <eq:fourier-transform>
   Whenever the integral below converges, the *inverse Fourier transform* of $g$ is
   $
-    cal(F)^(-1)[g](x) = (1) / (2 pi) integral_(-oo)^(oo) g(omega) e^(i omega x) dif omega, quad x in bb(R).
+    cal(F)^(-1)[g](x) = (1) / (2 pi) integral_(-oo)^(oo) g(omega) e^("i" omega x) dif omega, quad x in bb(R).
   $ <eq:inverse-fourier-transform>
 ] <def:fourier-transform>
 
-The variable $omega$ is the *angular frequency*: it counts the number of radians of oscillation per unit length, and $e^(i omega x)$ has period $2 pi \/ abs(omega)$. Thus $hat(f)(omega)$ measures how much of $f$ oscillates at that rate. The number of cycles per unit length is $\xi = omega \/ (2 pi)$, the variable of the ordinary convention recorded below.
-Under this convention the forward integral carries no constant and the inverse carries $1 \/ (2 pi)$. The asymmetry is the price of keeping the exponent free of $2 pi$, and it is the same price paid by the Laplace transform of §5.3, where $s = sigma + i omega$ and the exponent is $e^(i omega t)$.
+The variable $omega$ is the *angular frequency*: it counts the number of radians of oscillation per unit length, and $e^("i" omega x)$ has period $2 pi \/ abs(omega)$. Thus $hat(f)(omega)$ measures how much of $f$ oscillates at that rate. The number of cycles per unit length is $\xi = omega \/ (2 pi)$, the variable of the ordinary convention recorded below.
+Under this convention the forward integral carries no constant and the inverse carries $1 \/ (2 pi)$. The asymmetry is the price of keeping the exponent free of $2 pi$, and it is the same price paid by the Laplace transform of §5.3, where $s = sigma + "i" omega$ and the exponent is $e^("i" omega t)$.
 
 #caution[
-  Several normalizations circulate in the literature, and a formula copied from a source that uses another one is false as it stands. Three are common: the present one, with $e^(-i omega x)$ and the factor $1 \/ (2 pi)$ on the inverse; the unitary one, with the factor $1 \/ sqrt(2 pi)$ in both directions; and the *ordinary frequency* convention, with $e^(-2 pi i xi x)$ and no constant in either direction. The last one is the same transform read on $xi = omega \/ (2 pi)$:
+  Several normalizations circulate in the literature, and a formula copied from a source that uses another one is false as it stands. Three are common: the present one, with $e^(-"i" omega x)$ and the factor $1 \/ (2 pi)$ on the inverse; the unitary one, with the factor $1 \/ sqrt(2 pi)$ in both directions; and the *ordinary frequency* convention, with $e^(-2 pi"i" xi x)$ and no constant in either direction. The last one is the same transform read on $xi = omega \/ (2 pi)$:
   $
-    hat(f)(xi) = integral_(-oo)^(oo) f(x) e^(-2 pi i xi x) dif x, quad f(x) = integral_(-oo)^(oo) hat(f)(xi) e^(2 pi i xi x) dif xi.
+    hat(f)(xi) = integral_(-oo)^(oo) f(x) e^(-2 pi"i" xi x) dif x, quad f(x) = integral_(-oo)^(oo) hat(f)(xi) e^(2 pi"i" xi x) dif xi.
   $ <eq:freq-dictionary>
   Conversion is mechanical once the variable is matched: replace $omega$ by $2 pi xi$, or equivalently substitute $xi = omega \/ (2 pi)$ and carry the resulting $2 pi$ into the measure $dif xi = dif omega \/ (2 pi)$. The ordinary frequency counts cycles and is the variable of signal processing; the angular one is the variable of the Laplace transform.
 ]
@@ -1525,7 +1525,7 @@ Under this convention the forward integral carries no constant and the inverse c
 #example(name: "Fourier transform of the box function")[
   Let $f = bold(1)_([-a, a])$ with $a > 0$. For $omega != 0$,
   $
-    hat(f)(omega) = integral_(-a)^(a) e^(-i omega x) dif x = (e^(i omega a) - e^(-i omega a)) / (i omega) = (2 sin(a omega)) / (omega),
+    hat(f)(omega) = integral_(-a)^(a) e^(-"i" omega x) dif x = (e^("i" omega a) - e^(-"i" omega a)) / ("i" omega) = (2 sin(a omega)) / (omega),
   $
   while $hat(f)(0) = 2a$. The transform is continuous and decays like $1 \/ abs(omega)$, so it is _not_ absolutely integrable on $bb(R)$: already for this harmless $f$ the inversion formula cannot be justified by an absolutely convergent integral. This is the obstruction taken up in §4.1.
 ] <ex:box-fourier>
@@ -1602,7 +1602,7 @@ Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced 
 
   2. *Translation and modulation.*
     $
-      cal(F)[f(x - x_0)](omega) = e^(-i omega x_0) cal(F)[f](omega), quad cal(F)[e^(i omega_0 x) f(x)](omega) = cal(F)[f](omega - omega_0).
+      cal(F)[f(x - x_0)](omega) = e^(-"i" omega x_0) cal(F)[f](omega), quad cal(F)[e^("i" omega_0 x) f(x)](omega) = cal(F)[f](omega - omega_0).
     $
 
   3. *Scaling.*
@@ -1613,7 +1613,7 @@ Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced 
 
   5. *Differentiation and multiplication.* For every $n >= 0$,
     $
-      cal(F)[f^((n))](omega) = (i omega)^n cal(F)[f](omega), quad cal(F)[x^n f(x)](omega) = i^n (cal(F)[f])^((n))(omega).
+      cal(F)[f^((n))](omega) = ("i" omega)^n cal(F)[f](omega), quad cal(F)[x^n f(x)](omega) = "i"^n (cal(F)[f])^((n))(omega).
     $
 
   6. *Multiplication formula.*
@@ -1621,19 +1621,19 @@ Every statement below is made for $f, g in cal(S)(bb(R))$, the space introduced 
 ] <prop:fourier-transform-rules>
 
 #proof[
-  (1) is the linearity of the integral, on $cal(S)(bb(R))$ as on $L^1(bb(R))$. In (2) the substitution $u = x - x_0$ produces the factor $e^(-i omega x_0)$, and the modulation statement is the same computation written with the frequencies shifted.
+  (1) is the linearity of the integral, on $cal(S)(bb(R))$ as on $L^1(bb(R))$. In (2) the substitution $u = x - x_0$ produces the factor $e^(-"i" omega x_0)$, and the modulation statement is the same computation written with the frequencies shifted.
   In (3) the substitution $u = c x$ produces the factor $1 \/ abs(c)$ and rescales the frequency into $omega \/ c$.
   In (4) take conjugates and substitute $u = -x$.
-  In (5) integrate by parts $n$ times: the boundary terms vanish because every derivative of a Schwartz function decays faster than any polynomial, and each integration by parts brings down a factor $i omega$; differentiating under the integral sign gives the second identity, since $(dif) / (dif omega) cal(F)[f](omega) = -i cal(F)[x f](omega)$.
+  In (5) integrate by parts $n$ times: the boundary terms vanish because every derivative of a Schwartz function decays faster than any polynomial, and each integration by parts brings down a factor $"i" omega$; differentiating under the integral sign gives the second identity, since $(dif) / (dif omega) cal(F)[f](omega) = -"i" cal(F)[x f](omega)$.
   For (6), apply Fubini to the absolutely convergent double integral
   $
-    integral_(-oo)^(oo) integral_(-oo)^(oo) abs(f(x) g(y) e^(-i x y)) dif x dif y = || f ||_1 || g ||_1 < +oo.
+    integral_(-oo)^(oo) integral_(-oo)^(oo) abs(f(x) g(y) e^(-"i"x y)) dif x dif y = || f ||_1 || g ||_1 < +oo.
   $
 ]
 
 #figure(
   image("img/fourier-duality.svg", width: 72%),
-  caption: [Fourier duality in the $omega$ convention. Left column: $f(x)$; right column: $hat(f)(omega)$. Top: a box of half-width $a$ gives a sinc decaying like $1 \/ abs(omega)$, so a narrow support forces a wide spectrum. Middle: a Gaussian gives a Gaussian, with variances in inverse proportion; the shape is preserved only at the self-dual scale. Bottom: translating $f$ leaves $abs(hat(f))$ unchanged and multiplies the transform by the linear phase $e^(-i x_0 omega)$ — the content of rule 2 below.],
+  caption: [Fourier duality in the $omega$ convention. Left column: $f(x)$; right column: $hat(f)(omega)$. Top: a box of half-width $a$ gives a sinc decaying like $1 \/ abs(omega)$, so a narrow support forces a wide spectrum. Middle: a Gaussian gives a Gaussian, with variances in inverse proportion; the shape is preserved only at the self-dual scale. Bottom: translating $f$ leaves $abs(hat(f))$ unchanged and multiplies the transform by the linear phase $e^(-"i"x_0 omega)$ — the content of rule 2 below.],
   supplement: [Fig.],
 ) <fig:fourier-duality>
 
@@ -1653,12 +1653,12 @@ The product rule, which is the frequency-side shadow of the convolution theorem 
 #proof[
   By #link(<def:convolution>)[the definition of convolution], $(f * g)(x) = integral_(-oo)^(oo) f(t) g(x - t) dif t$, so
   $
-    hat(f * g)(omega) & = integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) g(x - t) dif t ) e^(-i omega x) dif x \
-                      & = integral_(-oo)^(oo) f(t) ( integral_(-oo)^(oo) g(x - t) e^(-i omega x) dif x ) dif t \
-                      & = integral_(-oo)^(oo) f(t) e^(-i omega t) hat(g)(omega) dif t = hat(f)(omega) dot hat(g)(omega).
+    hat(f * g)(omega) & = integral_(-oo)^(oo) ( integral_(-oo)^(oo) f(t) g(x - t) dif t ) e^(-"i" omega x) dif x \
+                      & = integral_(-oo)^(oo) f(t) ( integral_(-oo)^(oo) g(x - t) e^(-"i" omega x) dif x ) dif t \
+                      & = integral_(-oo)^(oo) f(t) e^(-"i" omega t) hat(g)(omega) dif t = hat(f)(omega) dot hat(g)(omega).
   $
   The interchange of integrals is legitimate: the integrand is dominated by $abs(f(t) g(x - t))$, whose double integral is $|| f ||_1 || g ||_1$ by Fubini and translation invariance of the integral.
-  The converse is the same computation read backwards: in the double integral defining $hat(f) * hat(g)$ one integrates first in $theta$, and the formal identity $integral e^(-i theta (x - y)) dif theta = 2 pi delta(x - y)$ leaves $2 pi$ times the transform of $f g$.
+  The converse is the same computation read backwards: in the double integral defining $hat(f) * hat(g)$ one integrates first in $theta$, and the formal identity $integral e^(-"i" theta (x - y)) dif theta = 2 pi delta(x - y)$ leaves $2 pi$ times the transform of $f g$.
 ]
 
 === The Transform as an Operator on $cal(S)$ // 作为速降空间上的算子
@@ -1670,11 +1670,11 @@ Rule 5 has a consequence that was promised in §3.2: the transform never leaves 
 ] <prop:fourier-schwartz>
 
 #proof[
-  Fix $m, n >= 0$ and write $psi = (-i x)^m phi(x)$, which is again a Schwartz function by #link(<prop:schwartz-stability>)[the closure properties]. By rule 5 applied twice, $hat(phi)^((m)) = cal(F)[psi]$, so
+  Fix $m, n >= 0$ and write $psi = (-"i"x)^m phi(x)$, which is again a Schwartz function by #link(<prop:schwartz-stability>)[the closure properties]. By rule 5 applied twice, $hat(phi)^((m)) = cal(F)[psi]$, so
   $
-    omega^n hat(phi)^((m))(omega) = (-i)^n cal(F)[psi^((n))](omega) = (-i)^n integral_(-oo)^(oo) psi^((n))(x) e^(-i omega x) dif x.
+    omega^n hat(phi)^((m))(omega) = (-"i")^n cal(F)[psi^((n))](omega) = (-"i")^n integral_(-oo)^(oo) psi^((n))(x) e^(-"i" omega x) dif x.
   $
-  Taking absolute values and then suprema over $omega$, and expanding the $n$-th derivative of $(-i x)^m phi(x)$ by Leibniz,
+  Taking absolute values and then suprema over $omega$, and expanding the $n$-th derivative of $(-"i"x)^m phi(x)$ by Leibniz,
   $
     || hat(phi) ||_((m, n)) <= || psi^((n)) ||_1 <= sum_(k=0)^(min(m, n)) binom(n, k) (m!)/((m - k)!) || phi ||_((m - k, n - k)),
   $
@@ -1687,12 +1687,12 @@ Rule 5 has a consequence that was promised in §3.2: the transform never leaves 
 
 == Fourier Inversion Theorem // Fourier 反演定理
 
-The heuristic of §3.1 ended with the formula $f(x) = (1) / (2 pi) integral hat(f)(omega) e^(i omega x) dif omega$. #link(<ex:box-fourier>)[The box function] shows why this cannot be taken at face value: $hat(f)$ need not be integrable, so the integral may not converge. A factor forcing convergence has to be inserted, and the natural choice is the Gaussian, whose transform is again a Gaussian of the same shape.
+The heuristic of §3.1 ended with the formula $f(x) = (1) / (2 pi) integral hat(f)(omega) e^("i" omega x) dif omega$. #link(<ex:box-fourier>)[The box function] shows why this cannot be taken at face value: $hat(f)$ need not be integrable, so the integral may not converge. A factor forcing convergence has to be inserted, and the natural choice is the Gaussian, whose transform is again a Gaussian of the same shape.
 
 #lemma(name: "Gaussian Integral in Angular Form")[
   Let $a in bb(C)$ with $Re a > 0$ and let $omega in bb(C)$. Then
   $
-    integral_(-oo)^(oo) e^(-a x^2 \/ 2) e^(-i omega x) dif x = sqrt(2 pi \/ a) e^(-omega^2 \/ (2 a)),
+    integral_(-oo)^(oo) e^(-a x^2 \/ 2) e^(-"i" omega x) dif x = sqrt(2 pi \/ a) e^(-omega^2 \/ (2 a)),
   $ <eq:gaussian-angular>
   where $sqrt(a)$ is the branch with $Re sqrt(a) > 0$. For $a > 0$ this reads
   $
@@ -1706,7 +1706,7 @@ The heuristic of §3.1 ended with the formula $f(x) = (1) / (2 pi) integral hat(
   $
     integral_(-oo)^(oo) e^(-A x^2 + B x + C) dif x = sqrt(pi \/ A) e^(C + B^2 \/ (4 A)), quad Re A > 0,
   $
-  of the Analyse Mathématique note, read with $A = a \/ 2$, $B = -i omega$ and $C = 0$. The hypotheses are met: $Re(a \/ 2) > 0$, and a complex $B$ costs nothing, since $abs(e^(-i omega x)) = e^((Im omega) x)$ is dominated at infinity by $e^(-(Re a) x^2 \/ 2)$. Complex $a$ follows by analytic continuation in the half-plane $Re a > 0$, where both sides are analytic and agree on the positive real axis.
+  of the Analyse Mathématique note, read with $A = a \/ 2$, $B = -"i" omega$ and $C = 0$. The hypotheses are met: $Re(a \/ 2) > 0$, and a complex $B$ costs nothing, since $abs(e^(-"i" omega x)) = e^((Im omega) x)$ is dominated at infinity by $e^(-(Re a) x^2 \/ 2)$. Complex $a$ follows by analytic continuation in the half-plane $Re a > 0$, where both sides are analytic and agree on the positive real axis.
 ]
 
 Two features of #link(<eq:gaussian-angular>)[this form] are used below. It already contains the oscillation, so the transform of a Gaussian costs one substitution instead of an integration by parts; and the frequency enters quadratically, which is what the inversion proof needs, because the damping factor $e^(-delta^2 omega^2 \/ 2)$ is itself a Gaussian in $omega$. The $d$-dimensional version, with a quadratic form $x dot A x$ in the exponent, is used in §5.1.
@@ -1721,7 +1721,7 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
 #proposition(name: "The Transform of a Gaussian")[
   For every $omega in bb(R)$,
   $
-    integral_(-oo)^(oo) e^(-x^2 \/ 2) e^(-i omega x) dif x = sqrt(2 pi) e^(-omega^2 \/ 2),
+    integral_(-oo)^(oo) e^(-x^2 \/ 2) e^(-"i" omega x) dif x = sqrt(2 pi) e^(-omega^2 \/ 2),
   $ <eq:gauss-fourier>
   so the Gaussian $G(x) = e^(-x^2 \/ 2)$ is carried by $cal(F)$ to $sqrt(2 pi) G$: the shape is preserved and the width is reciprocal. Consequently $hat(K_delta)(omega) = e^(-delta^2 omega^2 \/ 2)$.
 ] <prop:gauss-fourier-transform>
@@ -1729,7 +1729,7 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
 #proof[
   The first identity is #link(<lem:gaussian-integral>)[the Gaussian integral] with $a = 1$. For the second, the definition of $K_delta$ and the same lemma with $a = 1 \/ delta^2$ give
   $
-    hat(K_delta)(omega) = (1) / (sqrt(2 pi) delta) integral_(-oo)^(oo) e^(-x^2 \/ (2 delta^2)) e^(-i omega x) dif x = (1) / (sqrt(2 pi) delta) sqrt(2 pi delta^2) e^(-delta^2 omega^2 \/ 2) = e^(-delta^2 omega^2 \/ 2).
+    hat(K_delta)(omega) = (1) / (sqrt(2 pi) delta) integral_(-oo)^(oo) e^(-x^2 \/ (2 delta^2)) e^(-"i" omega x) dif x = (1) / (sqrt(2 pi) delta) sqrt(2 pi delta^2) e^(-delta^2 omega^2 \/ 2) = e^(-delta^2 omega^2 \/ 2).
   $
   The scaling and the oscillation are absorbed in one step, which is the reason for stating the general form once.
 ]
@@ -1762,7 +1762,7 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
 #theorem(name: "Fourier Inversion Theorem")[
   Let $f in cal(S)(bb(R))$. Then for every $x in bb(R)$
   $
-    f(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega,
+    f(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^("i" omega x) dif omega,
   $ <eq:inversion-formula>
   the integral converging absolutely, and the convergence being uniform in $x$.
 ] <thm:fourier-inversion>
@@ -1770,17 +1770,17 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
 #proof[
   Let $delta > 0$ and put
   $
-    f_(delta)(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) e^(-delta^2 omega^2 \/ 2) dif omega.
+    f_(delta)(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^("i" omega x) e^(-delta^2 omega^2 \/ 2) dif omega.
   $
   Since $hat(f) in cal(S)$ by #link(<prop:fourier-schwartz>)[the preceding proposition], the integrand is integrable and Fubini applies:
   $
-    f_(delta)(x) = integral_(-oo)^(oo) f(t) ( (1) / (2 pi) integral_(-oo)^(oo) e^(i omega (x - t)) e^(-delta^2 omega^2 \/ 2) dif omega ) dif t = integral_(-oo)^(oo) f(t) K_(delta)(x - t) dif t,
+    f_(delta)(x) = integral_(-oo)^(oo) f(t) ( (1) / (2 pi) integral_(-oo)^(oo) e^("i" omega (x - t)) e^(-delta^2 omega^2 \/ 2) dif omega ) dif t = integral_(-oo)^(oo) f(t) K_(delta)(x - t) dif t,
   $
   where the inner integral equals $K_(delta)(x - t)$ by #link(<lem:gaussian-integral>)[the Gaussian integral] with $a = delta^2$, applied in the variable $omega$: it gives $(1) / (2 pi) sqrt(2 pi \/ delta^2) e^(-(x - t)^2 \/ (2 delta^2))$, which is $K_(delta)(x - t)$. Hence $f_delta = f * K_delta$, and #link(<lem:gauss-approximation>)[the approximate identity lemma] gives $f_delta -> f$ uniformly.
 
-  On the other hand $abs(hat(f)(omega) e^(i omega x) e^(-delta^2 omega^2 \/ 2)) <= abs(hat(f)(omega))$, which is integrable, so dominated convergence gives
+  On the other hand $abs(hat(f)(omega) e^("i" omega x) e^(-delta^2 omega^2 \/ 2)) <= abs(hat(f)(omega))$, which is integrable, so dominated convergence gives
   $
-    f_(delta)(x) -> (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega quad "for every" x.
+    f_(delta)(x) -> (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^("i" omega x) dif omega quad "for every" x.
   $
   The two limits coincide, which is the claimed identity. Absolute convergence follows from $hat(f) in L^1(bb(R))$, and uniformity from the uniform convergence of $f * K_delta$ and the domination just used.
 ]
@@ -1799,7 +1799,7 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
 #proof[
   By the definition applied to $hat(f)$ and then the inversion formula with $x$ replaced by $-x$,
   $
-    cal(F)^2[f](x) = integral_(-oo)^(oo) hat(f)(omega) e^(-i x omega) dif omega = 2 pi f(-x).
+    cal(F)^2[f](x) = integral_(-oo)^(oo) hat(f)(omega) e^(-"i"x omega) dif omega = 2 pi f(-x).
   $
   Applying this twice more multiplies by another factor $2 pi$.
 ]
@@ -1831,7 +1831,7 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
 #corollary(name: "Inversion on $L^1$")[
   Let $f in L^1(bb(R))$ and assume that $hat(f) in L^1(bb(R))$. Then $f$ agrees almost everywhere with the continuous function
   $
-    x |-> (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega.
+    x |-> (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^("i" omega x) dif omega.
   $
 ] <cor:fourier-inversion-l1>
 
@@ -1857,9 +1857,9 @@ Two features of #link(<eq:gaussian-angular>)[this form] are used below. It alrea
   The bound is immediate: $abs(hat(f)(omega)) <= integral abs(f(x)) dif x = || f ||_1$.
   For uniform continuity, write
   $
-    abs(hat(f)(omega + h) - hat(f)(omega)) <= integral_(-oo)^(oo) abs(f(x)) abs(e^(-i h x) - 1) dif x
+    abs(hat(f)(omega + h) - hat(f)(omega)) <= integral_(-oo)^(oo) abs(f(x)) abs(e^(-"i"h x) - 1) dif x
   $
-  and split the integral at $abs(x) <= R$. On that piece $abs(e^(-i h x) - 1) <= abs(h) R$ by the mean value inequality, while the tail is at most $2 integral_(abs(x) > R) abs(f(x)) dif x$, which is small for $R$ large. Letting $h -> 0$ afterwards gives the claim.
+  and split the integral at $abs(x) <= R$. On that piece $abs(e^(-"i"h x) - 1) <= abs(h) R$ by the mean value inequality, while the tail is at most $2 integral_(abs(x) > R) abs(f(x)) dif x$, which is small for $R$ large. Letting $h -> 0$ afterwards gives the claim.
 ]
 
 The bound above is crude: in fact the transform of an integrable function vanishes at infinity, which is the continuous version of #link(<lem:riemann-lebesgue>)[the Riemann–Lebesgue lemma for Fourier coefficients].
@@ -1875,7 +1875,7 @@ The bound above is crude: in fact the transform of an integrable function vanish
 #proof[
   Suppose first that $f$ is $C^1$ with compact support. Integrating by parts,
   $
-    hat(f)(omega) = (1) / (i omega) integral_(-oo)^(oo) f'(x) e^(-i omega x) dif x, quad omega != 0,
+    hat(f)(omega) = (1) / ("i" omega) integral_(-oo)^(oo) f'(x) e^(-"i" omega x) dif x, quad omega != 0,
   $
   whence $abs(hat(f)(omega)) <= || f' ||_1 \/ abs(omega) -> 0$ as $abs(omega) -> +oo$.
 
@@ -1891,7 +1891,7 @@ The inversion formula stated in #link(<cor:fourier-inversion-l1>)[§3.4] can now
 #proof(name: "of the $L^1$ inversion formula")[
   Assume $f in L^1(bb(R))$ and $hat(f) in L^1(bb(R))$, and put
   $
-    g(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^(i omega x) dif omega,
+    g(x) = (1) / (2 pi) integral_(-oo)^(oo) hat(f)(omega) e^("i" omega x) dif omega,
   $
   which is bounded and continuous by #link(<prop:fourier-transform-l1>)[the proposition] applied to $hat(f)$.
 
@@ -1939,7 +1939,7 @@ The transform is not bounded for the $L^1$ norm, and the estimate $|| hat(f) ||_
 ]
 
 #note[
-  This is exactly #link(<thm:parseval-identity>)[Parseval's identity] with the sum replaced by an integral. On the circle the family $(e^(i n x))_(n in bb(Z))$ is an orthonormal basis of $L^2(bb(T))$; on the line the role of the basis is played by the continuum $(e^(i omega x))_(omega in bb(R))$, orthonormal for the measure $dif omega \/ (2 pi)$. That factor is the one carried by the inversion formula and by #link(<eq:plancherel-inner>)[Plancherel], and it is the reason for the convention fixed in §3.1.
+  This is exactly #link(<thm:parseval-identity>)[Parseval's identity] with the sum replaced by an integral. On the circle the family $(e^("i"n x))_(n in bb(Z))$ is an orthonormal basis of $L^2(bb(T))$; on the line the role of the basis is played by the continuum $(e^("i" omega x))_(omega in bb(R))$, orthonormal for the measure $dif omega \/ (2 pi)$. That factor is the one carried by the inversion formula and by #link(<eq:plancherel-inner>)[Plancherel], and it is the reason for the convention fixed in §3.1.
 ]
 
 #example(name: "Norm relation for the Gaussian")[
@@ -1962,7 +1962,7 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
 #theorem(name: "Poisson Summation Formula")[
   Let $f in cal(S)(bb(R))$. Then for every $x in bb(R)$
   $
-    sum_(n in bb(Z)) f(x + n) = sum_(n in bb(Z)) hat(f)(2 pi n) e^(2 pi i n x),
+    sum_(n in bb(Z)) f(x + n) = sum_(n in bb(Z)) hat(f)(2 pi n) e^(2 pi"i"n x),
   $ <eq:poisson-summation>
   both series converging absolutely and uniformly on $bb(R)$. In particular, at $x = 0$,
   $
@@ -1979,11 +1979,11 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
 
   Its Fourier coefficients are computed by cutting the integral into unit intervals and shifting each piece:
   $
-    hat(F)(k) = integral_(0)^(1) ( sum_(n in bb(Z)) f(x + n) ) e^(-2 pi i k x) dif x = sum_(n in bb(Z)) integral_(n)^(n+1) f(t) e^(-2 pi i k t) dif t = hat(f)(2 pi k).
+    hat(F)(k) = integral_(0)^(1) ( sum_(n in bb(Z)) f(x + n) ) e^(-2 pi"i"k x) dif x = sum_(n in bb(Z)) integral_(n)^(n+1) f(t) e^(-2 pi"i"k t) dif t = hat(f)(2 pi k).
   $
   The interchange of sum and integral is legitimate by uniform convergence.
 
-  Two integrations by parts on $hat(F)(k) = hat(f)(2 pi k)$ show that $abs(hat(F)(k)) <= C \/ (1 + k^2)$, so the Fourier series of $F$ converges absolutely and uniformly, and by #link(<thm:fejer>)[Fejér's theorem] its Cesàro means converge uniformly to $F$; the two limits coincide, hence $F(x) = sum_k hat(f)(2 pi k) e^(2 pi i k x)$.
+  Two integrations by parts on $hat(F)(k) = hat(f)(2 pi k)$ show that $abs(hat(F)(k)) <= C \/ (1 + k^2)$, so the Fourier series of $F$ converges absolutely and uniformly, and by #link(<thm:fejer>)[Fejér's theorem] its Cesàro means converge uniformly to $F$; the two limits coincide, hence $F(x) = sum_k hat(f)(2 pi k) e^(2 pi"i"k x)$.
 ]
 
 #corollary(name: "Sampling Theorem")[
@@ -1996,11 +1996,11 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
 #note[
   The spectrum occupying a single period $[-pi, pi]$, #link(<thm:poisson-summation>)[the Poisson formula] degenerates into a Fourier expansion. The coefficients of the $2 pi$-periodic extension of $hat(f)$ are
   $
-    (1) / (2 pi) integral_(-pi)^(pi) hat(f)(omega) e^(-i n omega) dif omega = f(-n),
+    (1) / (2 pi) integral_(-pi)^(pi) hat(f)(omega) e^(-"i"n omega) dif omega = f(-n),
   $
   by #link(<eq:inversion-formula>)[inversion], so on that interval
   $
-    hat(f)(omega) = sum_(n in bb(Z)) f(-n) e^(i n omega), quad abs(omega) <= pi.
+    hat(f)(omega) = sum_(n in bb(Z)) f(-n) e^("i"n omega), quad abs(omega) <= pi.
   $
   Feeding this series into the inversion integral and exchanging sum and integral gives the displayed formula. In signal processing terms: a function whose spectrum vanishes above the angular frequency $pi$, that is above the ordinary frequency $1\/2$, is completely determined by its samples taken at the integers, and the cardinal sine is the interpolation kernel.
 ]
@@ -2019,7 +2019,7 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
 ] <thm:heisenberg>
 
 #proof[
-  By rule 5 of #link(<prop:fourier-transform-rules>)[the basic properties], $hat(f')(omega) = i omega hat(f)(omega)$, so
+  By rule 5 of #link(<prop:fourier-transform-rules>)[the basic properties], $hat(f')(omega) = "i" omega hat(f)(omega)$, so
   $
     integral_(-oo)^(oo) omega^2 abs(hat(f)(omega))^2 dif omega = integral_(-oo)^(oo) abs(hat(f')(omega))^2 dif omega = 2 pi integral_(-oo)^(oo) abs(f'(x))^2 dif x,
   $
@@ -2047,18 +2047,18 @@ Inversion relates $f$ to $hat(f)$ through an integral. The identity below relate
 
 Nothing in the definition of §3.1 is one-dimensional. Writing $omega dot x = sum_(j=1)^d omega_j x_j$ for the euclidean inner product, the transform of $f in cal(S)(bb(R)^d)$ is
 $
-  hat(f)(omega) = integral_(bb(R)^d) f(x) e^(-i omega dot x) dif x, quad omega in bb(R)^d,
+  hat(f)(omega) = integral_(bb(R)^d) f(x) e^(-"i" omega dot x) dif x, quad omega in bb(R)^d,
 $
 and the inversion formula carries the factor $(2 pi)^(-d)$. The Schwartz space in $d$ variables is the space defined in §3.2 with $x^m$ replaced by $x^alpha$ and $dif^n \/ dif x^n$ by $D^alpha$; the properties of §3.3 transfer verbatim. What is genuinely new in several variables is geometry.
 
 #definition(name: "Fourier Transform in $bb(R)^d$")[
   For $f in cal(S)(bb(R)^d)$ the *Fourier transform* is the function
   $
-    hat(f)(omega) = cal(F)[f](omega) = integral_(bb(R)^d) f(x) e^(-i omega dot x) dif x, quad omega in bb(R)^d,
+    hat(f)(omega) = cal(F)[f](omega) = integral_(bb(R)^d) f(x) e^(-"i" omega dot x) dif x, quad omega in bb(R)^d,
   $ <eq:fourier-transform-rd>
   and the *inverse transform* is
   $
-    cal(F)^(-1)[g](x) = (1) / (2 pi)^d integral_(bb(R)^d) g(omega) e^(i omega dot x) dif omega, quad x in bb(R)^d.
+    cal(F)^(-1)[g](x) = (1) / (2 pi)^d integral_(bb(R)^d) g(omega) e^("i" omega dot x) dif omega, quad x in bb(R)^d.
   $
 ] <def:fourier-transform-rd>
 
@@ -2102,14 +2102,14 @@ The behaviour of the transform under rotations suggests looking at the values of
 #theorem(name: "Projection-Slice Theorem")[
   Fix $theta in bb(S)^(d-1)$ and $omega in bb(R)$. Then
   $
-    integral_(-oo)^(oo) R f(theta, s) e^(-i omega s) dif s = hat(f)(omega theta).
+    integral_(-oo)^(oo) R f(theta, s) e^(-"i" omega s) dif s = hat(f)(omega theta).
   $ <eq:projection-slice>
 ] <thm:projection-slice>
 
 #proof[
   Both integrals are absolutely convergent for Schwartz $f$, so Fubini applies to the slice decomposition $dif x = dif s dif sigma(x)$:
   $
-    integral_(-oo)^(oo) R f(theta, s) e^(-i omega s) dif s = integral_(bb(R)^d) f(x) e^(-i omega (x dot theta)) dif x = hat(f)(omega theta),
+    integral_(-oo)^(oo) R f(theta, s) e^(-"i" omega s) dif s = integral_(bb(R)^d) f(x) e^(-"i" omega (x dot theta)) dif x = hat(f)(omega theta),
   $
   since $omega (x dot theta) = (omega theta) dot x$.
 ]
@@ -2144,7 +2144,7 @@ The note in §4.1 claimed that $cal(F)(L^1(bb(R)))$ is strictly smaller than $C_
 #proof[
   Assume first that $f$ is supported in $[-A, A]$. Then
   $
-    F(z) = integral_(-A)^(A) f(x) e^(-i z x) dif x, quad z in bb(C),
+    F(z) = integral_(-A)^(A) f(x) e^(-"i"z x) dif x, quad z in bb(C),
   $
   is well defined, entire (differentiate under the integral sign), and satisfies
   $
@@ -2164,7 +2164,7 @@ Fourier transform requires the function to be integrable over the entire real li
 which may not hold for functions that grow exponentially.
 To handle such functions, we introduce the Laplace transform, defined as follows.
 
-The two transforms are in fact one: writing $s = sigma + i omega$ and assuming $f$ is supported on $[0, +oo)$, the Laplace transform below is the Fourier transform of $t |-> f(t) e^(-sigma t)$ evaluated at the angular frequency $omega$. This is the precise sense in which the present section continues §3.1, and no change of variable is needed now that §3.1 is written in the angular variable.
+The two transforms are in fact one: writing $s = sigma + "i" omega$ and assuming $f$ is supported on $[0, +oo)$, the Laplace transform below is the Fourier transform of $t |-> f(t) e^(-sigma t)$ evaluated at the angular frequency $omega$. This is the precise sense in which the present section continues §3.1, and no change of variable is needed now that §3.1 is written in the angular variable.
 
 #definition(name: "Laplace Transform")[
   The *Laplace transform* of a function $f(t)$ defined for $t >= 0$ is given by
@@ -2242,9 +2242,9 @@ The inversion formula is the point at which the Laplace transform pays back what
 #theorem(name: "Laplace Inversion Formula")[
   Let $f: [0, +oo) -> bb(C)$ be piecewise $C^1$ and satisfy a growth condition with abscissa $s_0$, and let $F = cal(L)[f]$. Then for every $sigma > s_0$ and every $t > 0$ at which $f$ is continuous,
   $
-    f(t) = (1) / (2 pi i) integral_(sigma - i oo)^(sigma + i oo) F(s) e^(s t) dif s,
+    f(t) = (1) / (2 pi"i") integral_(sigma - "i" oo)^(sigma + "i" oo) F(s) e^(s t) dif s,
   $ <eq:bromwich>
-  where the integral is taken along the vertical line $Re(s) = sigma$ and means $lim_(T -> +oo) integral_(sigma - i T)^(sigma + i T)$. At a jump of $f$ the integral equals the mean of the two one-sided limits.
+  where the integral is taken along the vertical line $Re(s) = sigma$ and means $lim_(T -> +oo) integral_(sigma - "i" T)^(sigma + "i" T)$. At a jump of $f$ the integral equals the mean of the two one-sided limits.
 ] <thm:laplace-inversion>
 
 #proof[
@@ -2254,22 +2254,22 @@ The inversion formula is the point at which the Laplace transform pays back what
   $
   Then $g in L^1(bb(R))$ by #link(<thm:laplace-existence>)[the existence theorem], and its Fourier transform in the sense of #link(<def:fourier-transform>)[§3.1] is
   $
-    hat(g)(omega) = integral_(0)^(oo) f(t) e^(-sigma t) e^(-i omega t) dif t = F(sigma + i omega).
+    hat(g)(omega) = integral_(0)^(oo) f(t) e^(-sigma t) e^(-"i" omega t) dif t = F(sigma + "i" omega).
   $
   Since $g$ is piecewise $C^1$, #link(<thm:fourier-inversion>)[the inversion theorem] applies at every point of continuity:
   $
-    g(t) = (1) / (2 pi) integral_(-oo)^(oo) F(sigma + i omega) e^(i omega t) dif omega.
+    g(t) = (1) / (2 pi) integral_(-oo)^(oo) F(sigma + "i" omega) e^("i" omega t) dif omega.
   $
-  Multiplying by $e^(sigma t)$ and substituting $s = sigma + i omega$, so that $dif s = i dif omega$ and $omega: -oo -> +oo$ corresponds to $s: sigma - i oo -> sigma + i oo$, gives
+  Multiplying by $e^(sigma t)$ and substituting $s = sigma + "i" omega$, so that $dif s = "i" dif omega$ and $omega: -oo -> +oo$ corresponds to $s: sigma - "i" oo -> sigma + "i" oo$, gives
   $
-    f(t) = (1) / (2 pi i) integral_(sigma - i oo)^(sigma + i oo) F(s) e^(s t) dif s.
+    f(t) = (1) / (2 pi"i") integral_(sigma - "i" oo)^(sigma + "i" oo) F(s) e^(s t) dif s.
   $
 ]
 
 #example(name: "Inverting $1 \/ s$")[
   For $f(t) = 1$ on $t > 0$ one has $F(s) = 1 \/ s$ with abscissa $s_0 = 0$. Choose $sigma > 0$; the Bromwich integral is
   $
-    (1) / (2 pi i) integral_(sigma - i oo)^(sigma + i oo) (e^(s t)) / (s) dif s.
+    (1) / (2 pi"i") integral_(sigma - "i" oo)^(sigma + "i" oo) (e^(s t)) / (s) dif s.
   $
   For $t > 0$ close the contour to the left of the line, where $e^(s t)$ decays; the only singularity inside is the simple pole at $s = 0$, and the residue theorem gives $e^(0 dot t) = 1$. For $t < 0$ close instead to the right, where there is no singularity, and the integral is $0$.
   The result is the Heaviside step function, not the constant $1$: the inversion reproduces the function together with its causal support, which is the information encoded in the half-plane of convergence.
@@ -2301,7 +2301,7 @@ The spaces treated in this part measure smoothness in $L^2$ through the decay of
 Nothing in this appendix is used in the main text. It records the discrete counterpart of the transform, because the same algebraic pattern recurs in computation, and because the complexity of the algorithm is the reason why the continuous theory is usable in practice.
 
 #definition(name: "Discrete Fourier Transform")[
-  Let $N >= 1$ and $a = (a(0), dots, a(N - 1)) in bb(C)^N$. With $omega_N = e^(2 pi i \/ N)$ — a root of unity, unrelated to the angular frequency $omega$ of the main text — the *discrete Fourier transform* of $a$ is
+  Let $N >= 1$ and $a = (a(0), dots, a(N - 1)) in bb(C)^N$. With $omega_N = e^(2 pi"i" \/ N)$ — a root of unity, unrelated to the angular frequency $omega$ of the main text — the *discrete Fourier transform* of $a$ is
   $
     hat(a)(k) = sum_(n=0)^(N-1) a(n) omega_N^(-n k), quad k = 0, 1, dots, N - 1,
   $ <eq:dft>
@@ -2359,22 +2359,22 @@ which for $N = 2^20$ is a factor of about $5 dot 10^4$ better than the direct ev
 ]
 
 #note[
-  The practical importance for this note is the acceleration of convolution. By the discrete convolution theorem recorded in §1.3, the cyclic convolution of two vectors of length $N$ has a transform equal to the pointwise product of the transforms, so it can be computed in $O(N log_2 N)$ instead of $O(N^2)$: transform, multiply, invert. The same device underlies spectral methods for partial differential equations, where differentiation becomes multiplication by $i omega$ and the FFT moves between the two representations; those methods are developed in the PDE note.
+  The practical importance for this note is the acceleration of convolution. By the discrete convolution theorem recorded in §1.3, the cyclic convolution of two vectors of length $N$ has a transform equal to the pointwise product of the transforms, so it can be computed in $O(N log_2 N)$ instead of $O(N^2)$: transform, multiply, invert. The same device underlies spectral methods for partial differential equations, where differentiation becomes multiplication by $"i" omega$ and the FFT moves between the two representations; those methods are developed in the PDE note.
 ]
 
 = Tables of Fourier and Laplace Transforms // Fourier 与 Laplace 变换表
 
-The pairs below are the ones used in the text. They are stated in the conventions fixed in §3.1: $hat(f)(omega) = integral f(x) e^(-i omega x) dif x$ on the line, with the factor $1 \/ (2 pi)$ on the inverse transform, and $F(s) = integral_0^(oo) f(t) e^(-s t) dif t$ on the half-line. Every formula involving a parameter assumes that parameter positive. The ordinary-frequency column is recovered by the substitution $omega = 2 pi xi$ of #link(<eq:freq-dictionary>)[the dictionary].
+The pairs below are the ones used in the text. They are stated in the conventions fixed in §3.1: $hat(f)(omega) = integral f(x) e^(-"i" omega x) dif x$ on the line, with the factor $1 \/ (2 pi)$ on the inverse transform, and $F(s) = integral_0^(oo) f(t) e^(-s t) dif t$ on the half-line. Every formula involving a parameter assumes that parameter positive. The ordinary-frequency column is recovered by the substitution $omega = 2 pi xi$ of #link(<eq:freq-dictionary>)[the dictionary].
 
 #figure(
   tex-table(
     ([$f(x)$], [$hat(f)(omega)$]),
     ([$bold(1)_([-a, a])$], [$(2 sin(a omega)) / (omega)$]),
     ([$e^(-pi x^2)$], [$e^(-omega^2 \/ (4 pi))$]),
-    ([$x e^(-pi x^2)$], [$-i omega \/ (2 pi) e^(-omega^2 \/ (4 pi))$]),
+    ([$x e^(-pi x^2)$], [$-"i" omega \/ (2 pi) e^(-omega^2 \/ (4 pi))$]),
     ([$e^(-a abs(x))$], [$(2 a) / (a^2 + omega^2)$]),
     ([$(1) / (x^2 + a^2)$], [$(pi) / (a) e^(-a abs(omega))$]),
-    ([$e^(-a x) bold(1)_([0, oo))$], [$(1) / (a + i omega)$]),
+    ([$e^(-a x) bold(1)_([0, oo))$], [$(1) / (a + "i" omega)$]),
     ([$delta_0$], [$1$]),
     ([$1$], [$2 pi delta_0$]),
   ),

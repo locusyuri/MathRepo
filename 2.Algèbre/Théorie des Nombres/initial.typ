@@ -4424,7 +4424,7 @@ periodicity in its cleanest form.
   *theorema aureum*, published six more proofs of it over his lifetime,
   and many others have been found since. One family of proofs, due to
   Gauss and Dirichlet, derives the law by evaluating quadratic Gauss
-  sums $sum_(x mod p) exp(2 pi i x^2 \/p)$ — a bridge to algebraic
+  sums $sum_(x mod p) exp(2 pi"i"x^2 \/p)$ — a bridge to algebraic
   number theory that lies beyond the scope of this notebook. The
   section's own supplements do cover the even numerator: $(2\/p)$ was
   settled in *Gauss's Lemma*, and for a numerator $a = 2^k b$ with $b$ odd the
@@ -5115,8 +5115,8 @@ Inequalities*.
 Unless stated otherwise the roots are taken in $bb(C)$, where the
 picture is complete: the $n$-th roots of unity are
 $
-  omega_k = exp((2 k pi i)\/n)
-  = cos((2 k pi)\/n) + i sin((2 k pi)\/n),
+  omega_k = exp((2 k pi"i")\/n)
+  = cos((2 k pi)\/n) + "i" sin((2 k pi)\/n),
   quad k = 0, 1, dots, n - 1,
 $
 all of modulus $abs(omega_k) = 1$, evenly spaced around the unit
@@ -5127,7 +5127,7 @@ neighbours.
   image("img/roots-visualisation.svg", width: 70%),
   caption: [
     The $n$ solutions of $X^n = Z$ for $n = 1, dots, 6$. Writing
-    $Z = r e^(i phi)$, they are $root(n, r) e^(i(phi + 2 k pi)\/n)$ for
+    $Z = r e^("i" phi)$, they are $root(n, r) e^("i"(phi + 2 k pi)\/n)$ for
     $k = 0, dots, n-1$: all of them lie on the circle of radius
     $root(n, r)$ (solid), equally spaced by the angle $2 pi\/n$, while the
     dashed circle of radius $r$ carries $Z$ itself. For $Z = 1$ this is
@@ -5139,7 +5139,7 @@ neighbours.
 
 #property(name: "Cyclicity of the Roots of Unity")[
   The $n$-th roots of unity form a group under multiplication — and
-  it is *cyclic*: taking $omega = exp(2 pi i\/n)$, every root is a
+  it is *cyclic*: taking $omega = exp(2 pi"i"\/n)$, every root is a
   power $omega^k$ with $0 <= k <= n - 1$.
 ] <prop:roots-cyclic>
 
@@ -5159,7 +5159,7 @@ congruences] applies verbatim over any field), so these are *all* the
 #note[
   Compare #link(<def:primitive-root>)[primitive roots modulo $m$]:
   there, the powers of a single element exhaust the reduced residue
-  classes; here, the powers of $omega = e^(2 pi i \/ n)$
+  classes; here, the powers of $omega = e^(2 pi"i" \/ n)$
   exhaust the solutions of $x^n = 1$. The two cyclic phenomena are
   the finite and the complex face of the same structure — and
   $omega$ is a *root of the cyclotomic polynomial* $Phi_n$, whose

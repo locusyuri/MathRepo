@@ -3145,12 +3145,12 @@ generating function in disguise.
 #definition(name: "Characteristic Function")[
   The *characteristic function* (CF) of $X$ is
   $
-    phi_(X)(t) = bb(E)[exp(i t X)],
+    phi_(X)(t) = bb(E)[exp("i"t X)],
   $
   defined for *all* $t in RR$.
 ] <def:cf>
 
-The CF always exists because $abs(exp(i t X)) = 1$, so $bb(E)[abs(
+The CF always exists because $abs(exp("i"t X)) = 1$, so $bb(E)[abs(
     exp(
       i t
       X
@@ -3162,7 +3162,7 @@ The CF always exists because $abs(exp(i t X)) = 1$, so $bb(E)[abs(
   - $abs(phi_(X)(t)) <= 1$ for all $t$;
   - (conjugate symmetry) $phi_(X)(-t) = overline(phi_(X)(t))$;
   - (uniform continuity) $phi_X$ is uniformly continuous on $RR$;
-  - (linearity) $phi_(a X + b)(t) = exp(i b t) phi_(X)(a t)$;
+  - (linearity) $phi_(a X + b)(t) = exp("i"b t) phi_(X)(a t)$;
   - (independent sum) if $X$ and $Y$ are independent, $phi_(X+Y)(t) = phi_(X)(t)
     phi_(Y)(t)$.
 ] <prop:cf-properties>
@@ -3170,12 +3170,12 @@ The CF always exists because $abs(exp(i t X)) = 1$, so $bb(E)[abs(
 #property(name: "Moments and the CF")[
   If $bb(E)[abs(X)^k] < infinity$, then
   $
-    bb(E)[X^k] = i^(-k) phi_X^(k)(0) = i^(-k) (dif^k phi_X) / (dif t^k) upright("at") t = 0.
+    bb(E)[X^k] = "i"^(-k) phi_X^(k)(0) = "i"^(-k) (dif^k phi_X) / (dif t^k) upright("at") t = 0.
   $
 ] <prop:cf-moments>
 
 This mirrors #link(<prop:mgf-moments>)[the MGF moment formula], but with
-$i^k$ in the denominator. The CF plays the same role as the MGF for
+$"i"^k$ in the denominator. The CF plays the same role as the MGF for
 moment extraction, with the crucial advantage of universal existence.
 
 #example[
@@ -3184,12 +3184,12 @@ moment extraction, with the crucial advantage of universal existence.
 
   #tex-table(
     ("Distribution", $phi_(X)(t)$),
-    ($"Ber"(p)$, $1 - p + p exp(i t)$),
-    ($B(n, p)$, $(1 - p + p exp(i t))^n$),
-    ($"Pois"(lambda)$, $exp(lambda (exp(i t) - 1))$),
-    ($"Exp"(lambda)$, $lambda / (lambda - i t)$),
-    ($"Ga"(alpha, lambda)$, $(lambda / (lambda - i t))^alpha$),
-    ($N(mu, sigma^2)$, $exp(i mu t - sigma^2 t^2 / 2)$),
+    ($"Ber"(p)$, $1 - p + p exp("i"t)$),
+    ($B(n, p)$, $(1 - p + p exp("i"t))^n$),
+    ($"Pois"(lambda)$, $exp(lambda (exp("i"t) - 1))$),
+    ($"Exp"(lambda)$, $lambda / (lambda - "i"t)$),
+    ($"Ga"(alpha, lambda)$, $(lambda / (lambda - "i"t))^alpha$),
+    ($N(mu, sigma^2)$, $exp("i" mu t - sigma^2 t^2 / 2)$),
     ($"Cauchy"(0, 1)$, $exp(-abs(t))$),
   )
 
@@ -3204,9 +3204,9 @@ moment extraction, with the crucial advantage of universal existence.
   If $phi_X$ is integrable ($integral_(-infinity)^infinity abs(phi_(X)(t))
   dif t < infinity$), then $X$ has a continuous density $f$ given by
   $
-    f(x) = 1 / (2 pi) integral_(-infinity)^infinity exp(-i t x) phi_(X)(t) dif t.
+    f(x) = 1 / (2 pi) integral_(-infinity)^infinity exp(-"i"t x) phi_(X)(t) dif t.
   $
-  In general, $F(b) - F(a) = lim_(T -> infinity) 1/(2 pi) integral_(-T)^T (exp(-i t a) - exp(-i t b)) / (i t) phi_(X)(t) dif t$.
+  In general, $F(b) - F(a) = lim_(T -> infinity) 1/(2 pi) integral_(-T)^T (exp(-"i"t a) - exp(-"i"t b)) / ("i"t) phi_(X)(t) dif t$.
 ] <thm:inversion-formula>
 
 The proof is a Fourier inversion argument; the analytic machinery behind it
@@ -3456,7 +3456,7 @@ function of #link(<def:cf>)[the preceding chapter].
 The two directions are of very unequal difficulty.
 
 - ($arrow.r.double$) Convergence in distribution tests the law against every
-  bounded continuous function; taking $g(x) = exp(i t x)$ gives pointwise
+  bounded continuous function; taking $g(x) = exp("i"t x)$ gives pointwise
   convergence of CFs.
 
 - ($arrow.l.double$) This is the hard direction, and it is where the
@@ -3527,9 +3527,9 @@ generality.
 #proof[
   (via characteristic functions.) Let $phi$ be the CF of $X_1$. The CF of
   $overline(X)_n$ is $phi_(overline(X)_n)(t) = [phi(t/n)]^n$. Since $bb(E)[abs(X_1)] < infinity$,
-  $phi$ is differentiable at $0$ with $phi'(0) = i mu$, so
+  $phi$ is differentiable at $0$ with $phi'(0) = "i" mu$, so
   $
-    phi(t/n) = 1 + i mu t / n + o(1/n), quad [phi(t/n)]^n -> exp(i mu t).
+    phi(t/n) = 1 + "i" mu t / n + o(1/n), quad [phi(t/n)]^n -> exp("i" mu t).
   $
   The right side is the CF of the constant $mu$. By #link(<thm:continuity-theorem>)[Lévy's continuity theorem],
   $overline(X)_n arrow.r^d mu$, which implies $overline(X)_n arrow.r^P mu$.

@@ -380,13 +380,13 @@ The solution $x(t) = A cos(omega_0 t + phi)$ can be visualised as the projection
 #definition(name: "Rotating Vector / Phasor")[
   The SHM displacement is the real part of a complex exponential:
   $
-    x(t) = Re(bold(A) e^(i omega_0 t)), quad bold(A) = A e^(i phi).
+    x(t) = Re(bold(A) e^("i" omega_0 t)), quad bold(A) = A e^("i" phi).
   $
   Here $bold(A)$ is the *complex amplitude* (phasor) encoding both amplitude $A$ and initial phase $phi$.
   The velocity and acceleration are:
   $
-    dot(x) = Re(i omega_0 bold(A) e^(i omega_0 t)), quad
-    dot.double(x) = Re(- omega_0^2 bold(A) e^(i omega_0 t)).
+    dot(x) = Re("i" omega_0 bold(A) e^("i" omega_0 t)), quad
+    dot.double(x) = Re(- omega_0^2 bold(A) e^("i" omega_0 t)).
   $
 ] <def:phasor>
 
@@ -402,7 +402,7 @@ Both constructions are drawn in @fig:phasor-rotation.
 
 
 #note[
-  The complex representation turns differentiation into multiplication by $i omega$, and superposition into complex addition.
+  The complex representation turns differentiation into multiplication by $"i" omega$, and superposition into complex addition.
   This is the foundation of phasor analysis in AC circuits and of Fourier methods in normal mode analysis (Mécanique analytique, Part II).
 ]
 
@@ -1027,12 +1027,12 @@ When a wave encounters a boundary between two media, part of the energy is refle
 
 #proof(name: "Reflection and Transmission at a Boundary")[
   *Step 1 — Continuity of displacement.*
-  Write the incident, reflected and transmitted waves at the boundary $x = 0$ as $e^(i(k_1 x - omega t))$, $R e^(i(-k_1 x - omega t))$ and $T e^(i(k_2 x - omega t))$.
+  Write the incident, reflected and transmitted waves at the boundary $x = 0$ as $e^("i"(k_1 x - omega t))$, $R e^("i"(-k_1 x - omega t))$ and $T e^("i"(k_2 x - omega t))$.
   Continuity of the displacement requires $1 + R = T$.
 
   *Step 2 — Continuity of the transverse force.*
   On each side the transverse force is the tension multiplied by the slope, $tau_k partial u / partial x$, where $tau_k$ is the string tension of #link(<sec:elastic-wave-speed>)[Section 2.3] (not the transmission coefficient $T$ of this theorem).
-  Demanding equality at $x = 0$ gives $i k_1 tau_1 (1 - R) = i k_2 tau_2 T$.
+  Demanding equality at $x = 0$ gives $"i"k_1 tau_1 (1 - R) = "i"k_2 tau_2 T$.
   Because $Z_k = mu_k v_k$, $tau_k = mu_k v_k^2$ and $v_k = omega / k_k$, we have $tau_k k_k = Z_k omega$, so the condition collapses to $Z_1 (1 - R) = Z_2 T$ — which is to say that each travelling component transmits a force $Z partial u / partial t$, up to a sign set by its direction of travel.
 
   *Step 3 — Solve.*
@@ -1298,22 +1298,22 @@ Separation of variables turns the problem into an equation for the spatial part 
 #definition(name: "Time-Harmonic Field")[
   A field $u(bold(r), t)$ is *time-harmonic* at (angular) frequency $omega > 0$ if it can be written as
   $
-    u(bold(r), t) = Re(bold(U)(bold(r)) e^(-i omega t)),
+    u(bold(r), t) = Re(bold(U)(bold(r)) e^(-"i" omega t)),
   $
   where $bold(U)(bold(r))$ is a complex-valued *spatial amplitude* (phasor).
 ] <def:time-harmonic>
 
-The sign in $e^(-i omega t)$ is a convention.
-We adopt the physics convention $e^(-i omega t)$; the engineering convention uses $e^(+i omega t)$ and reverses the sign of every phase term.
-All phases in this notebook are measured consistently with the $e^(-i omega t)$ convention.
+The sign in $e^(-"i" omega t)$ is a convention.
+We adopt the physics convention $e^(-"i" omega t)$; the engineering convention uses $e^(+"i" omega t)$ and reverses the sign of every phase term.
+All phases in this notebook are measured consistently with the $e^(-"i" omega t)$ convention.
 
 #note[
-  The complex amplitude $bold(U)$ encodes both the real amplitude and the phase: the real oscillation is $abs(bold(U)) cos(omega t - phi)$ when $bold(U) = abs(bold(U)) e^(i phi)$.
+  The complex amplitude $bold(U)$ encodes both the real amplitude and the phase: the real oscillation is $abs(bold(U)) cos(omega t - phi)$ when $bold(U) = abs(bold(U)) e^("i" phi)$.
 ]
 
 == The Helmholtz Equation // 亥姆霍兹方程
 
-Substituting the time-harmonic ansatz into the three-dimensional wave equation replaces time derivatives by multiplication with $(-i omega)^2 = - omega^2$:
+Substituting the time-harmonic ansatz into the three-dimensional wave equation replaces time derivatives by multiplication with $(-"i" omega)^2 = - omega^2$:
 
 $
   - omega^2 bold(U) = v^2 nabla^2 bold(U).
@@ -1345,7 +1345,7 @@ Its solutions are the building blocks of the entire optical theory that follows.
 
 == Plane-Wave Expansions <sec:plane-wave-expansions> // 平面波展开
 
-The simplest solutions of the Helmholtz equation are the plane waves $e^(i bold(k) dot bold(r))$, with wavevector $bold(k)$ constrained to the sphere $abs(bold(k)) = k$.
+The simplest solutions of the Helmholtz equation are the plane waves $e^("i" bold(k) dot bold(r))$, with wavevector $bold(k)$ constrained to the sphere $abs(bold(k)) = k$.
 Because the equation is linear, general solutions are superpositions of plane waves.
 
 For a field prescribed on the plane $z = 0$, the solution for $z > 0$ admits the *angular-spectrum representation*.
@@ -1354,7 +1354,7 @@ For a field prescribed on the plane $z = 0$, the solution for $z > 0$ admits the
   Let $bold(U)(bold(r)_(⊥), 0)$ be the field on the plane $z = 0$.
   The general solution of the Helmholtz equation for $z > 0$ is
   $
-    bold(U)(bold(r)) = integral.double_(bb(R)^2) hat(bold(U))(bold(k)_(⊥)) e^(i bold(k) dot bold(r)) dif k_x dif k_y,
+    bold(U)(bold(r)) = integral.double_(bb(R)^2) hat(bold(U))(bold(k)_(⊥)) e^("i" bold(k) dot bold(r)) dif k_x dif k_y,
   $
   where $hat(bold(U))(bold(k)_(⊥))$ is the two-dimensional Fourier transform of the boundary field and the wavevector components satisfy $k_z = sqrt(k^2 - k_(⊥)^2)$ with $k_(⊥)^2 = k_x^2 + k_y^2$.
 ] <def:angular-spectrum>
@@ -1412,7 +1412,7 @@ where $k_0 = omega / c$ is the vacuum wavenumber.
 #definition(name: "WKB Ansatz")[
   A *WKB ansatz* for the spatial amplitude has the form
   $
-    bold(U)(bold(r)) = A(bold(r)) e^(i k_0 S(bold(r))),
+    bold(U)(bold(r)) = A(bold(r)) e^("i"k_0 S(bold(r))),
   $
   where the amplitude $A$ and the *eikonal* $S$ are real, slowly varying functions of position.
 ] <def:wkb-ansatz>
@@ -1421,7 +1421,7 @@ Substituting the ansatz into the Helmholtz equation and collecting powers of $k_
 
 $
   0 = (nabla^2 + k_0^2 n^2) bold(U)
-  = e^(i k_0 S) [k_0^2 A (n^2 - abs(gradient S)^2) + i k_0 (2 gradient A dot gradient S + A nabla^2 S) + nabla^2 A].
+  = e^("i"k_0 S) [k_0^2 A (n^2 - abs(gradient S)^2) + "i"k_0 (2 gradient A dot gradient S + A nabla^2 S) + nabla^2 A].
 $
 
 Since the identity holds for every point and the amplitude $A$ is not identically zero, the coefficients of the leading powers of $k_0$ must vanish separately.
@@ -1443,16 +1443,16 @@ Since the identity holds for every point and the amplitude $A$ is not identicall
   *Step 1 — Substitute the ansatz.*
   The gradient and Laplacian of the ansatz are:
   $
-    gradient bold(U) = e^(i k_0 S) (i k_0 A gradient S + gradient A),
+    gradient bold(U) = e^("i"k_0 S) ("i"k_0 A gradient S + gradient A),
   $
   $
-    nabla^2 bold(U) = e^(i k_0 S) (- k_0^2 A abs(gradient S)^2 + 2 i k_0 gradient A dot gradient S + i k_0 A nabla^2 S + nabla^2 A).
+    nabla^2 bold(U) = e^("i"k_0 S) (- k_0^2 A abs(gradient S)^2 + 2"i"k_0 gradient A dot gradient S + "i"k_0 A nabla^2 S + nabla^2 A).
   $
 
   *Step 2 — Collect powers of $k_0$.*
-  Substituting into the Helmholtz equation and cancelling the common factor $e^(i k_0 S)$:
+  Substituting into the Helmholtz equation and cancelling the common factor $e^("i"k_0 S)$:
   $
-    k_0^2 A (n^2 - abs(gradient S)^2) + i k_0 (2 gradient A dot gradient S + A nabla^2 S) + nabla^2 A = 0.
+    k_0^2 A (n^2 - abs(gradient S)^2) + "i"k_0 (2 gradient A dot gradient S + A nabla^2 S) + nabla^2 A = 0.
   $
 
   *Step 3 — Separate the orders.*
@@ -1823,7 +1823,7 @@ The equivalent ABCD system is drawn in @fig:abcd-system.
   Since $"det"(M) = A D - B C = 1$, the eigenvalues of $M$ satisfy $lambda_1 lambda_2 = 1$ and $lambda_1 + lambda_2 = A + D$.
 
   *Step 2 — Boundedness.*
-  If $abs(A + D) < 2$, the eigenvalues are complex conjugates on the unit circle, $lambda = e^(± i phi)$, and the powers $M^n$ oscillate — the ray stays bounded.
+  If $abs(A + D) < 2$, the eigenvalues are complex conjugates on the unit circle, $lambda = e^(± "i" phi)$, and the powers $M^n$ oscillate — the ray stays bounded.
   If $abs(A + D) >= 2$, at least one eigenvalue has modulus $>= 1$, and $M^n$ grows — exponentially in general, linearly in the defective cases such as a pure translation — so the ray escapes; the one exception is again the degenerate round trip $M = plus.minus I$.
 ]
 
@@ -1967,7 +1967,7 @@ We therefore work with a single complex scalar amplitude $U(bold(r))$.
     (nabla^2 + k^2) U = 0,
   $
   where $k = 2 pi n / lambda_0$ is the wavenumber in the medium.
-  The physical field is recovered as $u(bold(r), t) = "Re"(U(bold(r)) e^(-i omega t))$, with the time-harmonic convention of #link(<ch:helmholtz>)[Chapter 4].
+  The physical field is recovered as $u(bold(r), t) = "Re"(U(bold(r)) e^(-"i" omega t))$, with the time-harmonic convention of #link(<ch:helmholtz>)[Chapter 4].
 ] <def:scalar-field>
 
 A unique solution requires boundary conditions.
@@ -1980,17 +1980,17 @@ On an aperture or screen we prescribe the field or its normal derivative; for ra
 == The Huygens-Fresnel Principle // 惠更斯-菲涅耳原理
 
 #definition(name: "Huygens-Fresnel Principle")[
-  Every point $P_0$ of a wavefront acts as a source of secondary spherical wavelets with amplitude proportional to $e^(i k r) / r$, weighted by an obliquity factor $K(theta)$ depending on the angle $theta$ between the direction of propagation and the normal to the wavefront.
+  Every point $P_0$ of a wavefront acts as a source of secondary spherical wavelets with amplitude proportional to $e^("i"k r) / r$, weighted by an obliquity factor $K(theta)$ depending on the angle $theta$ between the direction of propagation and the normal to the wavefront.
   The field at a later point $P$ is the superposition of all secondary wavelets.
 ] <def:huygens-fresnel>
 
 The principle converts propagation into an integral over the wavefront:
 
 $
-  U(P) = 1 / (i lambda) integral_Sigma U(P_0) e^(i k r) / r K(theta) dif S.
+  U(P) = 1 / ("i" lambda) integral_Sigma U(P_0) e^("i"k r) / r K(theta) dif S.
 $
 
-The factor $1 / (i lambda)$ and the obliquity factor $K(theta)$ cannot be obtained from the intuitive argument alone; they emerge from the rigorous diffraction theory of #link(<sec:kirchhoff-rayleigh-sommerfeld>)[Section 8.4].
+The factor $1 / ("i" lambda)$ and the obliquity factor $K(theta)$ cannot be obtained from the intuitive argument alone; they emerge from the rigorous diffraction theory of #link(<sec:kirchhoff-rayleigh-sommerfeld>)[Section 8.4].
 
 The construction is summarised in @fig:huygens-fresnel.
 
@@ -2012,7 +2012,7 @@ The diffraction integral is the Green-function solution of the Helmholtz equatio
   $
   and is given by
   $
-    G(bold(r), bold(r)') = e^(i k abs(bold(r) - bold(r)')) / abs(bold(r) - bold(r)').
+    G(bold(r), bold(r)') = e^("i"k abs(bold(r) - bold(r)')) / abs(bold(r) - bold(r)').
   $
 ] <def:green-diffraction>
 
@@ -2037,7 +2037,7 @@ The diffraction integrals follow from Green's theorem applied to the Helmholtz e
 
 #theorem(name: "Kirchhoff Diffraction Integral")[
   Let $Sigma$ be an aperture in an opaque screen, and let $U$ be a field that satisfies the Helmholtz equation behind the screen.
-  With the free-space Green's function $G = e^(i k r) / r$, the field at a point $P$ is
+  With the free-space Green's function $G = e^("i"k r) / r$, the field at a point $P$ is
   $
     U(P) = 1 / (4 pi) integral_Sigma [U (partial G)/(partial n) - G (partial U)/(partial n)] dif S,
   $
@@ -2056,7 +2056,7 @@ The diffraction integrals follow from Green's theorem applied to the Helmholtz e
   A large closing hemisphere is made to vanish by the Sommerfeld radiation condition, so what remains of the surface integral is the aperture $Sigma$ (the screen contributes nothing under the Kirchhoff boundary conditions below) together with the small sphere around $P$.
 
   *Step 3 — Pick up the singularity.*
-  Surrounding $P$ by a small sphere of radius $epsilon$ and using $G = e^(i k r) / r$ on it, the integral over the small sphere gives $4 pi U(P)$ as $epsilon -> 0$.
+  Surrounding $P$ by a small sphere of radius $epsilon$ and using $G = e^("i"k r) / r$ on it, the integral over the small sphere gives $4 pi U(P)$ as $epsilon -> 0$.
   Rearranging yields the Kirchhoff integral.
 ]
 
@@ -2071,10 +2071,10 @@ The theorem as stated uses the *Kirchhoff boundary conditions*: on the aperture 
 === The Rayleigh-Sommerfeld Integral // 瑞利-索末菲积分
 
 #theorem(name: "Rayleigh-Sommerfeld Diffraction Integral")[
-  Choose the Green's function with vanishing value on the screen, $G_D = e^(i k r) / r - e^(i k r') / r'$, where $r'$ is the distance to the mirror image of $P$ in the plane of the screen.
+  Choose the Green's function with vanishing value on the screen, $G_D = e^("i"k r) / r - e^("i"k r') / r'$, where $r'$ is the distance to the mirror image of $P$ in the plane of the screen.
   Then the Dirichlet problem has the solution
   $
-    U(P) = 1 / (i lambda) integral_Sigma U(P_0) e^(i k r) / r cos theta dif S,
+    U(P) = 1 / ("i" lambda) integral_Sigma U(P_0) e^("i"k r) / r cos theta dif S,
   $
   where $theta$ is the angle between the segment $P_0 P$ and the normal to the screen.
 ] <thm:rayleigh-sommerfeld>
@@ -2086,14 +2086,14 @@ The theorem as stated uses the *Kirchhoff boundary conditions*: on the aperture 
   *Step 2 — Normal derivative on the screen.*
   For a point $P_0$ in the aperture and observation point $P$, a direct differentiation gives
   $
-    (partial G_D)/(partial n) = - 2 i k cos theta e^(i k r) / r,
+    (partial G_D)/(partial n) = - 2"i"k cos theta e^("i"k r) / r,
   $
   up to terms of higher order in $1 / r$.
 
   *Step 3 — Conclude.*
   Substitution into Green's identity yields
   $
-    U(P) = 1 / (i lambda) integral_Sigma U(P_0) e^(i k r) / r cos theta dif S.
+    U(P) = 1 / ("i" lambda) integral_Sigma U(P_0) e^("i"k r) / r cos theta dif S.
   $
 ]
 
@@ -2328,13 +2328,13 @@ Light bounces many times between them; the transmitted field is the coherent sum
   *Step 1 — Sum the partial waves.*
   The transmitted field is the geometric series
   $
-    E_t = E_0 t^2 (1 + r^2 e^(i delta) + r^4 e^(i 2 delta) + dots.c) = (E_0 t^2) / (1 - r^2 e^(i delta)).
+    E_t = E_0 t^2 (1 + r^2 e^("i" delta) + r^4 e^("i" 2 delta) + dots.c) = (E_0 t^2) / (1 - r^2 e^("i" delta)).
   $
 
   *Step 2 — Take the modulus squared.*
   With $R = r^2$ and $T = t^2$,
   $
-    I = I_"in" T^2 / abs(1 - R e^(i delta))^2 = (I_"in" T^2) / (1 - 2 R cos delta + R^2).
+    I = I_"in" T^2 / abs(1 - R e^("i" delta))^2 = (I_"in" T^2) / (1 - 2 R cos delta + R^2).
   $
 
   *Step 3 — Express in the finesse form.*
@@ -2459,7 +2459,7 @@ The Fraunhofer patterns are nothing but Fourier transforms of the aperture, whic
 #definition(name: "Fresnel Approximation")[
   For an aperture at $z = 0$ and observation at distance $z$, the *Fresnel approximation* keeps quadratic phase terms in the diffraction integral:
   $
-    U(x, y) = e^(i k z) / (i lambda z) integral.double U_0(x_0, y_0) e^(i k / (2 z) [(x - x_0)^2 + (y - y_0)^2]) dif x_0 dif y_0.
+    U(x, y) = e^("i"k z) / ("i" lambda z) integral.double U_0(x_0, y_0) e^("i"k / (2 z) [(x - x_0)^2 + (y - y_0)^2]) dif x_0 dif y_0.
   $
   It is valid when the Fresnel number $F_N = a^2 / (lambda z)$ is of order unity or larger, i.e., in the near field.
 ] <def:fresnel-approximation>
@@ -2485,7 +2485,7 @@ The Fresnel integral has no elementary closed form, but it is well tabulated; it
   The *Fraunhofer (far-field) approximation* holds when $z >> a^2 / lambda$, where $a$ is the largest aperture dimension.
   Then the quadratic phase terms in the Fresnel integral reduce to
   $
-    U(u, v) = e^(i k z) / (i lambda z) e^(i k (u^2 + v^2) / (2 z)) integral.double U_0(x_0, y_0) e^(- i k (x_0 u + y_0 v) / z) dif x_0 dif y_0.
+    U(u, v) = e^("i"k z) / ("i" lambda z) e^("i"k (u^2 + v^2) / (2 z)) integral.double U_0(x_0, y_0) e^(-"i"k (x_0 u + y_0 v) / z) dif x_0 dif y_0.
   $
   Apart from a phase factor, the far field is the *two-dimensional Fourier transform* of the aperture field.
 ] <def:fraunhofer-approximation>
@@ -2504,7 +2504,7 @@ The Fourier structure explains everything that follows: the far-field pattern is
 #proof(name: "Fraunhofer Diffraction by a Single Slit")[
   *Step 1 — Fourier transform of a rectangle.*
   The aperture field is $U_0(x_0) = U_0$ on $abs(x_0) <= a / 2$ and zero elsewhere.
-  Its Fourier transform is proportional to the integral $integral_(-a/2)^(a/2) e^(- i k x_0 sin theta) dif x_0 = a "sinc"(k a sin theta / 2)$.
+  Its Fourier transform is proportional to the integral $integral_(-a/2)^(a/2) e^(-"i"k x_0 sin theta) dif x_0 = a "sinc"(k a sin theta / 2)$.
 
   *Step 2 — Intensity.*
   Squaring the modulus gives $I(theta) prop "sinc"^2(k a sin theta / 2)$, hence the stated form with $beta = k a sin theta / 2$.
@@ -2646,14 +2646,14 @@ A thin lens of focal length $f$ delays the wave by a thickness proportional to $
 Its transmission function is the quadratic phase factor
 
 $
-  t(x, y) = e^(- i k (x^2 + y^2) / (2 f)).
+  t(x, y) = e^(-"i"k (x^2 + y^2) / (2 f)).
 $
 
 #theorem(name: "Lens Fourier Transform")[
   Place an input field $U_(i n)(x, y)$ in the front focal plane of a lens ($z = - f$) and observe the field in the back focal plane ($z = f$).
   Then
   $
-    U_(f)(u, v) = 1 / (i lambda f) integral.double U_(i n)(x, y) e^(- i k (x u + y v) / f) dif x dif y,
+    U_(f)(u, v) = 1 / ("i" lambda f) integral.double U_(i n)(x, y) e^(-"i"k (x u + y v) / f) dif x dif y,
   $
   the two-dimensional Fourier transform of the input evaluated at spatial frequencies $f_x = u / (lambda f)$, $f_y = v / (lambda f)$.
 ] <thm:lens-fourier-transform>
@@ -2700,7 +2700,7 @@ An imaging system with pupil $P$ acts as a linear filter on the field, and its i
 The choice of pupil is therefore the design variable of an imaging system, and two consequences are worth stating.
 
 - *Apodization.* Softening the edge of the pupil — a gradual rather than abrupt taper to zero — suppresses the secondary rings of its Fraunhofer pattern at the price of a slightly wider central lobe.
-- *Aberrations as phase.* A departure from a spherical wavefront enters the pupil as a phase factor $e^(i k W(x, y))$, which is exactly the geometric aberration of #link(<ch:matrix-optics>)[Chapter 7] rewritten in wave language.
+- *Aberrations as phase.* A departure from a spherical wavefront enters the pupil as a phase factor $e^("i"k W(x, y))$, which is exactly the geometric aberration of #link(<ch:matrix-optics>)[Chapter 7] rewritten in wave language.
 
 The pupil thus carries the whole optical specification of the system: its modulus and its autocorrelation become the transfer functions of #link(<sec:psf-otf>)[Section 11.4].
 
@@ -2778,12 +2778,12 @@ With the material response in place, the closing chapter of Part III restores wh
 #definition(name: "Lorentz Oscillator Model")[
   In the *Lorentz oscillator model*, each electron is a damped harmonic oscillator driven by the electric field:
   $
-    dot.double(x) + gamma dot(x) + omega_0^2 x = q/m E_0 e^(- i omega t),
+    dot.double(x) + gamma dot(x) + omega_0^2 x = q/m E_0 e^(-"i" omega t),
   $
   with damping rate $gamma$ (a decay rate here, not the Lorentz factor of #link(<ch:wave-motion>)[Chapter 2]) and resonance frequency $omega_0$.
   The induced polarization gives the dielectric function
   $
-    epsilon(omega) = 1 + (N q^2) / (epsilon_0 m) dot 1 / (omega_0^2 - omega^2 - i gamma omega),
+    epsilon(omega) = 1 + (N q^2) / (epsilon_0 m) dot 1 / (omega_0^2 - omega^2 - "i" gamma omega),
   $
   where $N$ is the number density of oscillators.
 ] <def:lorentz-oscillator>
@@ -2791,7 +2791,7 @@ With the material response in place, the closing chapter of Part III restores wh
 #definition(name: "Complex Refractive Index")[
   The *complex refractive index* is
   $
-    tilde(n)(omega) = n + i kappa = sqrt(epsilon(omega)),
+    tilde(n)(omega) = n + "i" kappa = sqrt(epsilon(omega)),
   $
   with real part $n$ governing phase velocity and imaginary part $kappa$ (the extinction coefficient) governing absorption.
   A wave attenuates as $e^(- kappa k_0 z)$.
@@ -2834,7 +2834,7 @@ The resulting $n(omega)$ is plotted in @fig:dispersion-curves.
   The analyticity plus the decay of $chi$ at infinity leaves only the principal-value integral and the residue.
 
   *Step 3 — Fold the integral and separate real and imaginary parts.*
-  Crossing symmetry, $chi(- omega') = chi(omega')^*$, folds the integral over the whole real axis onto $omega' > 0$; separating $chi = chi_1 + i chi_2$ in the resulting identity then yields the two dispersion relations above.
+  Crossing symmetry, $chi(- omega') = chi(omega')^*$, folds the integral over the whole real axis onto $omega' > 0$; separating $chi = chi_1 + "i" chi_2$ in the resulting identity then yields the two dispersion relations above.
 ]
 
 #note[
@@ -2887,13 +2887,13 @@ This chapter returns to the vector character promised in #link(<ch:helmholtz>)[C
 #definition(name: "Polarization State")[
   A plane wave along $z$ has an electric field confined to the transverse plane:
   $
-    bold(E)(z, t) = "Re" [mat(E_x; E_y) e^(i (k z - omega t))],
+    bold(E)(z, t) = "Re" [mat(E_x; E_y) e^("i" (k z - omega t))],
   $
   with complex amplitudes $E_x, E_y$.
   The *polarization state* is the relative amplitude and phase of the two components.
 ] <def:polarization-state>
 
-Writing $E_y / E_x = tan chi e^(i delta)$, the tip of the field vector traces an ellipse:
+Writing $E_y / E_x = tan chi e^("i" delta)$, the tip of the field vector traces an ellipse:
 
 - $delta = 0$ or $pi$: *linear polarization*;
 - $delta = ± pi / 2$ with $chi = pi / 4$: *circular polarization* (right or left);
@@ -2930,7 +2930,7 @@ The three cases are drawn in @fig:polarization-ellipse.
   - *Linear polarizer* at angle $theta$: $M = mat(cos^2 theta, cos theta sin theta; cos theta sin theta, sin^2 theta)$.
   - *Retarder* (wave plate) with fast-axis angle $phi$ and retardance $delta$: a phase-only unitary matrix; for fast axis along $x$:
     $
-      M = mat(e^(- i delta / 2), 0; 0, e^(i delta / 2)).
+      M = mat(e^(-"i" delta / 2), 0; 0, e^("i" delta / 2)).
     $
   - *Rotator* by angle $alpha$: $M = mat(cos alpha, - sin alpha; sin alpha, cos alpha)$.
 ] <def:jones-matrix>
@@ -3199,13 +3199,13 @@ where $q(t)$ is the generalized coordinate of the mode.
 Quantization promotes the coordinate and momentum to operators satisfying the canonical commutation relation:
 
 $
-  [hat(Q), hat(P)] = i.
+  [hat(Q), hat(P)] = "i".
 $
 
 #definition(name: "Ladder Operators")[
   The *annihilation* and *creation* operators are
   $
-    hat(a) = (hat(Q) + i hat(P)) / sqrt(2), quad hat(a)^dagger = (hat(Q) - i hat(P)) / sqrt(2),
+    hat(a) = (hat(Q) + "i" hat(P)) / sqrt(2), quad hat(a)^dagger = (hat(Q) - "i" hat(P)) / sqrt(2),
   $
   and satisfy
   $
@@ -3228,7 +3228,7 @@ The number operator is Hermitian and counts the quanta of the mode: its eigensta
 
 #proof(name: "Quantization of the Field Hamiltonian")[
   *Step 1 — Substitute the ladder operators.*
-  With $hat(Q) = (hat(a) + hat(a)^dagger) / sqrt(2)$ and $hat(P) = (hat(a) - hat(a)^dagger) / (i sqrt(2))$, the dimensionless sum $hat(P)^2 + hat(Q)^2$ becomes $hat(a)^dagger hat(a) + hat(a) hat(a)^dagger$.
+  With $hat(Q) = (hat(a) + hat(a)^dagger) / sqrt(2)$ and $hat(P) = (hat(a) - hat(a)^dagger) / ("i" sqrt(2))$, the dimensionless sum $hat(P)^2 + hat(Q)^2$ becomes $hat(a)^dagger hat(a) + hat(a) hat(a)^dagger$.
   *Step 2 — Use the commutator.*
   The relation $[hat(a), hat(a)^dagger] = 1$ gives $hat(a) hat(a)^dagger = hat(a)^dagger hat(a) + 1$, hence $hat(H) = planck omega (hat(N) + 1/2)$.
 ]
@@ -3328,7 +3328,7 @@ The Glauber coherent states — eigenstates of the annihilation operator — are
 #definition(name: "Squeezed State")[
   Acting with the *squeeze operator*
   $
-    hat(S)(zeta) = exp(1/2 (zeta^"*" hat(a)^2 - zeta (hat(a)^dagger)^2)), quad zeta = r e^(i phi),
+    hat(S)(zeta) = exp(1/2 (zeta^"*" hat(a)^2 - zeta (hat(a)^dagger)^2)), quad zeta = r e^("i" phi),
   $
   on a coherent state gives the squeezed state $| zeta, alpha ⟩ = hat(S)(zeta) hat(D)(alpha)| 0 ⟩$.
 ] <def:squeezed-state>
@@ -3342,9 +3342,9 @@ The Glauber coherent states — eigenstates of the annihilation operator — are
 #definition(name: "Quadrature Operators")[
   The *quadrature operators*
   $
-    hat(X) = (hat(a) + hat(a)^dagger) / 2, quad hat(P) = (hat(a) - hat(a)^dagger) / (2 i),
+    hat(X) = (hat(a) + hat(a)^dagger) / 2, quad hat(P) = (hat(a) - hat(a)^dagger) / (2"i"),
   $
-  satisfy $[hat(X), hat(P)] = i / 2$, hence the uncertainty relation
+  satisfy $[hat(X), hat(P)] = "i" / 2$, hence the uncertainty relation
   $
     Delta X Delta P >= 1/4.
   $
@@ -3364,7 +3364,7 @@ The Glauber coherent states — eigenstates of the annihilation operator — are
 #definition(name: "Wigner Function")[
   The *Wigner function* of a state $rho$ is the phase-space quasiprobability
   $
-    W(x, p) = 1 / (pi planck) integral_(-oo)^oo ⟨ x + y/2 | rho | x - y/2 ⟩ e^(- i p y / planck) dif y,
+    W(x, p) = 1 / (pi planck) integral_(-oo)^oo ⟨ x + y/2 | rho | x - y/2 ⟩ e^(-"i"p y / planck) dif y,
   $
   normalized so that $integral.double W(x, p) dif x dif p = 1$.
 ] <def:wigner-function>
@@ -3522,7 +3522,7 @@ The Jaynes–Cummings model is the simplest exactly solvable atom-field system, 
 
 #proof(name: "Rabi Oscillations")[
   *Step 1 — Schrödinger equation in the interaction picture.*
-  Writing the state as $c_g (t)| g ⟩ + c_e (t) e^(- i omega_0 t)| e ⟩$ and applying the rotating-wave approximation (dropping the $2 omega$ terms), the amplitudes satisfy $dot(c)_e = - i Omega_0 / 2 e^(i Delta t) c_g$.
+  Writing the state as $c_g (t)| g ⟩ + c_e (t) e^(-"i" omega_0 t)| e ⟩$ and applying the rotating-wave approximation (dropping the $2 omega$ terms), the amplitudes satisfy $dot(c)_e = -"i" Omega_0 / 2 e^("i" Delta t) c_g$.
   *Step 2 — Solve the two-level system.*
   Eliminating $c_g$ gives a second-order equation for $c_e$; with $c_e (0) = 0$ the solution is the stated Rabi formula.
   *Step 3 — Interpret.*

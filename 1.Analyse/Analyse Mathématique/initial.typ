@@ -2534,7 +2534,7 @@ in the notation introduced in the Notations section.
 ] <ex:dalembert-equation>
 
 #note[
-  Indeed, $cos x = (e^(i x) + e^(-i x)) / 2$ and
+  Indeed, $cos x = (e^("i"x) + e^(-"i"x)) / 2$ and
   $cosh x = (e^x + e^(-x)) / 2$: the trigonometric and hyperbolic families are
   the two faces of one and the same functional equation.
 ]
@@ -6429,9 +6429,9 @@ They are grouped by the device that evaluates them rather than by the interval o
 
 #solution[
   Away from $x = 0$, the integrand is the squared modulus of a geometric sum,
-  $ (sin(n x/2)/sin(x/2))^2 = abs(sum_(k=0)^(n-1) e^(i k x))^2. $
+  $ (sin(n x/2)/sin(x/2))^2 = abs(sum_(k=0)^(n-1) e^("i"k x))^2. $
   Expanding the square and collecting the terms with $j - k = m$ gives
-  $ abs(sum_(k=0)^(n-1) e^(i k x))^2 = n + 2 sum_(m=1)^(n-1) (n - m) cos(m x). $
+  $ abs(sum_(k=0)^(n-1) e^("i"k x))^2 = n + 2 sum_(m=1)^(n-1) (n - m) cos(m x). $
   Every cosine integrates to $sin(m pi)/m = 0$ over $[0, pi]$, so only the constant term survives and the integral equals $n pi$.
   The integrand has a removable singularity at $x = 0$ — its limit there is $n^2$ — hence it is Riemann integrable on $[0, pi]$ and the term-by-term integration above is legitimate.
 ]
@@ -6663,7 +6663,7 @@ The case $a = 1$, $b = c = 0$ is the classical Euler-Poisson integral.
     The same formula holds, with $sqrt(a)$ denoting the branch characterized by $Re sqrt(a) > 0$.
     The complex $a$ is reached by analytic continuation in the half-plane $Re a > 0$, where both sides are analytic and agree on the positive real axis.
     A complex $b$ costs nothing: $abs(e^(b x)) = e^((Re b) x)$ is dominated by $e^(-(Re a) x^2/2)$ at infinity, so no integrability is lost.
-    Taking $b = i beta$ and $c = i gamma$ gives the *oscillatory Gaussian integral*, whose real part is computed next.
+    Taking $b = "i" beta$ and $c = "i" gamma$ gives the *oscillatory Gaussian integral*, whose real part is computed next.
     The boundary case $Re a = 0$ is outside this continuation — it produces the Fresnel integrals below, which need a separate limiting argument.
 ]
 
@@ -6675,10 +6675,10 @@ The case $a = 1$, $b = c = 0$ is the classical Euler-Poisson integral.
 ] <ex:cosine-gaussian-integral>
 
 #solution[
-  Take $b = i beta$ and $c = 0$ in the complex form of #link(<prop:gaussian-integral>)[the general formula].
+  Take $b = "i" beta$ and $c = 0$ in the complex form of #link(<prop:gaussian-integral>)[the general formula].
   The modulus of the integrand is $e^(-a x^2)$, which is integrable, so real and imaginary parts may be separated:
   $
-    integral_(-oo)^(+oo) e^(-a x^2) e^(i beta x) dif x = integral_(-oo)^(+oo) e^(-a x^2) cos(beta x) dif x + i integral_(-oo)^(+oo) e^(-a x^2) sin(beta x) dif x.
+    integral_(-oo)^(+oo) e^(-a x^2) e^("i" beta x) dif x = integral_(-oo)^(+oo) e^(-a x^2) cos(beta x) dif x + "i" integral_(-oo)^(+oo) e^(-a x^2) sin(beta x) dif x.
   $
   The left side equals $sqrt(pi/a) e^(-beta^2/(4 a))$, a real number, so the imaginary part vanishes and the real part is the asserted value.
   The vanishing of the sine integral also follows from the oddness of $x -> e^(-a x^2) sin(beta x)$.
@@ -6693,21 +6693,21 @@ These two integrals are the real and imaginary parts of the Fourier transform of
 
 #solution[
   *Step 1 (convergence).* The substitution $u = x^2$ turns the complex integral into
-  $ integral_0^(+oo) e^(i x^2) dif x = 1/2 integral_0^(+oo) u^(-1/2) e^(i u) dif u, $
+  $ integral_0^(+oo) e^("i"x^2) dif x = 1/2 integral_0^(+oo) u^(-1/2) e^("i"u) dif u, $
   which converges by #link(<thm:abel-dirichlet-infinite-integral>)[Dirichlet's test], since $u^(-1/2)$ decreases to $0$.
   Its real and imaginary parts are the two Fresnel integrals, so both converge.
 
-  *Step 2 (value for $Re a > 0$).* For $epsilon > 0$ put $a = epsilon - i$, so that $Re a > 0$, and apply the complex form with $b = c = 0$:
-  $ I(epsilon) = integral_0^(+oo) e^(-(epsilon - i) x^2) dif x = 1/2 sqrt(pi/(epsilon - i)). $
+  *Step 2 (value for $Re a > 0$).* For $epsilon > 0$ put $a = epsilon - "i"$, so that $Re a > 0$, and apply the complex form with $b = c = 0$:
+  $ I(epsilon) = integral_0^(+oo) e^(-(epsilon - "i") x^2) dif x = 1/2 sqrt(pi/(epsilon - "i")). $
 
-  *Step 3 (limit $epsilon -> 0^+$).* The integrand $e^(i x^2)$ is not absolutely integrable, so dominated convergence is not available.
+  *Step 3 (limit $epsilon -> 0^+$).* The integrand $e^("i"x^2)$ is not absolutely integrable, so dominated convergence is not available.
   Split at a fixed $R$: on $[0, R]$ the integrands converge boundedly, while after $u = x^2$, #link(<thm:integral-mean-value>)[the second integral mean value theorem] applied to the decreasing factor $u^(-1/2) e^(-epsilon u)$ gives
-  $ abs(integral_R^(+oo) e^(-(epsilon - i) x^2) dif x) <= C R^(-1/2) quad (0 <= epsilon <= 1), $
+  $ abs(integral_R^(+oo) e^(-(epsilon - "i") x^2) dif x) <= C R^(-1/2) quad (0 <= epsilon <= 1), $
   uniformly in $epsilon$.
-  Hence $I(epsilon) -> integral_0^(+oo) e^(i x^2) dif x$ as $epsilon -> 0^+$.
+  Hence $I(epsilon) -> integral_0^(+oo) e^("i"x^2) dif x$ as $epsilon -> 0^+$.
 
-  *Step 4 (evaluation).* Since $-i = e^(-i pi/2)$, the branch of the square root gives $sqrt(-i) = e^(-i pi/4)$, hence
-  $ integral_0^(+oo) e^(i x^2) dif x = sqrt(pi)/2 e^(i pi/4) = sqrt(2 pi)/4 (1 + i). $
+  *Step 4 (evaluation).* Since $-i = e^(-"i" pi/2)$, the branch of the square root gives $sqrt(-"i") = e^(-"i" pi/4)$, hence
+  $ integral_0^(+oo) e^("i"x^2) dif x = sqrt(pi)/2 e^("i" pi/4) = sqrt(2 pi)/4 (1 + "i"). $
   Taking real and imaginary parts gives the two asserted values.
 ]
 
@@ -6721,9 +6721,9 @@ Its total mass is the last integral of this section that comes out without any i
   $ K_r (x) = (1 - r^2) / (1 - 2 r cos x + r^2), quad quad x in bb(R). $
 ] <def:poisson-kernel-circle>
 
-The kernel is positive, because $1 - 2 r cos x + r^2 = abs(1 - r e^(i x))^2 > 0$ and $1 - r^2 > 0$.
+The kernel is positive, because $1 - 2 r cos x + r^2 = abs(1 - r e^("i"x))^2 > 0$ and $1 - r^2 > 0$.
 Taking real parts in the geometric expansion
-$ (1 + r e^(i x))/(1 - r e^(i x)) = 1 + 2 sum_(n=1)^oo (r e^(i x))^n $
+$ (1 + r e^("i"x))/(1 - r e^("i"x)) = 1 + 2 sum_(n=1)^oo (r e^("i"x))^n $
 gives the Fourier expansion
 $ K_r (x) = 1 + 2 sum_(n=1)^oo r^n cos(n x). $
 

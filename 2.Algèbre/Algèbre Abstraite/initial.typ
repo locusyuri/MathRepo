@@ -415,12 +415,12 @@ regardless — this will be systematised in Chapter 5 (see
     $f(m + n) = 2(m + n) = 2m + 2n = f(m) + f(n)$. The even integers,
     with addition, are an algebraic copy of the integers — they are
     "the same" additive system.
-  - Let $U_4 = {1, i, -1, -i}$ under multiplication, and let
+  - Let $U_4 = {1, "i", -1, -"i"}$ under multiplication, and let
     $bb(Z)_4 = {[0], [1], [2], [3]}$ be the four residue classes
     modulo $4$ under addition. The map $f: bb(Z)_4 -> U_4$,
-    $f([k]) = i^k$ is well defined (if $k equiv k' mod 4$ then
-    $i^k = i^(k')$) and
-    satisfies $f([k] + [l]) = i^(k+l) = i^k i^l = f([k]) f([l])$; it
+    $f([k]) = "i"^k$ is well defined (if $k equiv k' mod 4$ then
+    $"i"^k = "i"^(k')$) and
+    satisfies $f([k] + [l]) = "i"^(k+l) = "i"^k"i"^l = f([k]) f([l])$; it
     is bijective. So addition modulo $4$ is, structurally, rotation
     of the square.
 ] <ex:isomorphic-examples>
@@ -675,15 +675,15 @@ symmetries, the quaternions.
   unity* — the complex solutions of $z^n = 1$, geometrically the
   vertices of the regular $n$-gon inscribed in the unit circle:
   $
-    mu_n = {e^((2 pi i k) / n) | 0 <= k <= n - 1}.
+    mu_n = {e^((2 pi"i"k) / n) | 0 <= k <= n - 1}.
   $
   Under multiplication $mu_n$ is an abelian group of order $n$: if
   $z^n = 1$ and $w^n = 1$ then $(z w)^n = z^n w^n = 1$, the number
   $1$ is the identity, and the inverse $z^(-1) = overline(z)$ again
-  satisfies $z^n = 1$. The root $e^((2 pi i) / n)$ generates the
+  satisfies $z^n = 1$. The root $e^((2 pi"i") / n)$ generates the
   whole set — every root is one of its powers — so, in the
   terminology of §3.2, $mu_n$ is cyclic, and
-  $[k] arrow.r.double e^((2 pi i k) / n)$ identifies $mu_n$ with
+  $[k] arrow.r.double e^((2 pi"i"k) / n)$ identifies $mu_n$ with
   $(bb(Z)_n, +)$: the general form of the isomorphism
   $bb(Z)_4 tilde.equiv U_4 = mu_4$ computed in
   #link(<ex:isomorphic-examples>)[Chapter 1].
@@ -5756,7 +5756,7 @@ The kernel is a subring by the properties above, but it carries strictly more st
 
 #example(name: "Complex conjugation.")[
   Conjugation $sigma: bb(C) -> bb(C)$, $z |-> overline(z)$, preserves sums and products, is its own inverse, and hence is a ring automorphism.
-  It fixes every real number and exchanges $i$ with $-i$.
+  It fixes every real number and exchanges $"i"$ with $-"i"$.
   Together with the identity it exhausts the automorphisms of $bb(C)$ over $bb(R)$ — a fact re-read in *Galois Theory* as the statement that $"Aut"(bb(C) \/ bb(R))$ has two elements.
 ] <ex:complex-conjugation>
 
@@ -6249,8 +6249,8 @@ On the quotient set define the two operations by
   The construction applies to every domain, and two cases outside $bb(Z)$ are used later in this book.
   + For a field $k$, the domain $k[x]$ has as its field of fractions the
     field $k(x)$ of rational functions, treated in *Polynomial Rings*.
-  + For $bb(Z)[i]$ the field of fractions is
-    $bb(Q)(i) = {a + b i : a, b in bb(Q)}$, the field in which $x^2 + 1$ splits and the stage of the first examples of *Field Extensions*.
+  + For $bb(Z)["i"]$ the field of fractions is
+    $bb(Q)("i") = {a + b"i" : a, b in bb(Q)}$, the field in which $x^2 + 1$ splits and the stage of the first examples of *Field Extensions*.
 ] <note:fraction-examples>
 
 #note(title: "Closing remarks on ring theory")[
@@ -6416,16 +6416,16 @@ The integers supply examples of every phenomenon in this chapter; they do not su
 The Gaussian integers will, and they are worth introducing once.
 
 #definition(name: "Gaussian Integers")[
-  The *Gaussian integers* are $bb(Z)[i] = {a + b i : a, b in bb(Z)} subset.eq bb(C)$.
+  The *Gaussian integers* are $bb(Z)["i"] = {a + b"i" : a, b in bb(Z)} subset.eq bb(C)$.
 ] <def:gaussian-integers>
 
-That $bb(Z)[i]$ is a subring of $bb(C)$ follows from the subring criterion: it is closed under subtraction, and $(a + b i)(c + d i) = (a c - b d) + (a d + b c) i$ because $i^2 = -1$.
-It is a domain but not a field: $2$ is not a unit, since $1/2 in.not bb(Z)[i]$.
-The *norm* $N(z) = z overline(z) = a^2 + b^2$ is multiplicative, $N(z w) = N(z) N(w)$, and an element is a unit exactly when its norm is $1$; this leaves $±1$ and $±i$.
-Chapter 10 will show that $bb(Z)[i]$ is Euclidean for this norm, hence a principal ideal domain.
+That $bb(Z)["i"]$ is a subring of $bb(C)$ follows from the subring criterion: it is closed under subtraction, and $(a + b"i")(c + d"i") = (a c - b d) + (a d + b c)"i"$ because $"i"^2 = -1$.
+It is a domain but not a field: $2$ is not a unit, since $1/2 in.not bb(Z)["i"]$.
+The *norm* $N(z) = z overline(z) = a^2 + b^2$ is multiplicative, $N(z w) = N(z) N(w)$, and an element is a unit exactly when its norm is $1$; this leaves $±1$ and $±"i"$.
+Chapter 10 will show that $bb(Z)["i"]$ is Euclidean for this norm, hence a principal ideal domain.
 
-Two quotients of $bb(Z)[i]$ carry the chapter: $bb(Z)[i] \/ (1 + i)$ turns out to be $bb(F)_2$ (#link(<ex:zi-quotient>)[§9.3]), and that fact makes $(1 + i)$ a maximal ideal (#link(<ex:prime-in-zi>)[§9.4]).
-Both computations rest on one identity, $(1 + i)(1 - i) = 2$, which will be quoted twice.
+Two quotients of $bb(Z)["i"]$ carry the chapter: $bb(Z)["i"] \/ (1 + "i")$ turns out to be $bb(F)_2$ (#link(<ex:zi-quotient>)[§9.3]), and that fact makes $(1 + "i")$ a maximal ideal (#link(<ex:prime-in-zi>)[§9.4]).
+Both computations rest on one identity, $(1 + "i")(1 - "i") = 2$, which will be quoted twice.
 
 == Quotient Rings // 商环
 
@@ -6512,7 +6512,7 @@ Together with #link(<prop:ring-mono-kernel>)[the injectivity criterion] it also 
 #note(title: "Quotients as relations")[
   A quotient imposes relations.
   In $bb(Z) \/ n bb(Z)$ the relation is $n = 0$, and the quotient is the ring in which that relation holds and nothing else does.
-  The same reading makes sense of every later construction: $k[x] \/ (f)$ is the ring in which $f = 0$; $bb(Z)[i] \/ (1 + i)$ is the ring in which $i = -1$, hence $i = 1$, hence $2 = 0$.
+  The same reading makes sense of every later construction: $k[x] \/ (f)$ is the ring in which $f = 0$; $bb(Z)["i"] \/ (1 + "i")$ is the ring in which $"i" = -1$, hence $"i" = 1$, hence $2 = 0$.
   Chapter 11 will make this precise for polynomial rings, where the quotient by $(f)$ is computed by division with remainder.
 ] <note:quotient-relations>
 
@@ -6554,16 +6554,16 @@ The templates are #link(<thm:first-isomorphism>)[the first isomorphism theorem],
   The other factor gives nothing new: the kernel of $(m, n) |-> n$ is $bb(Z) times {0}$, and the two quotients are isomorphic by symmetry.
 ] <ex:quotient-product>
 
-#example(name: "The ring in which $i = 1$.")[
-  Let $phi: bb(Z)[i] -> bb(F)_2$ be defined by $phi(a + b i) = overline(a) + overline(b)$.
-  It preserves addition, and it preserves products because $(a + b i)(c + d i) = (a c - b d) + (a d + b c) i$ maps to $a c + b d + a d + b c$, which equals $(a + b)(c + d)$ in $bb(F)_2$ since $-1 = 1$ there.
+#example(name: [The ring in which $"i" = 1$.])[
+  Let $phi: bb(Z)["i"] -> bb(F)_2$ be defined by $phi(a + b"i") = overline(a) + overline(b)$.
+  It preserves addition, and it preserves products because $(a + b"i")(c + d"i") = (a c - b d) + (a d + b c)"i"$ maps to $a c + b d + a d + b c$, which equals $(a + b)(c + d)$ in $bb(F)_2$ since $-1 = 1$ there.
   The map is surjective, as $phi(a) = overline(a)$.
 
-  Its kernel is $(1 + i)$: on one hand $phi(1 + i) = overline(2) = 0$; on the other hand, if $a + b$ is even then $a - b$ is even, say $a - b = 2 k$, and $a + b i = 2 k + b (1 + i)$ lies in $(1 + i)$ because $2 = (1 + i)(1 - i)$.
-  The first isomorphism theorem gives $bb(Z)[i] \/ (1 + i) tilde.equiv bb(F)_2$.
+  Its kernel is $(1 + "i")$: on one hand $phi(1 + "i") = overline(2) = 0$; on the other hand, if $a + b$ is even then $a - b$ is even, say $a - b = 2 k$, and $a + b"i" = 2 k + b (1 + "i")$ lies in $(1 + "i")$ because $2 = (1 + "i")(1 - "i")$.
+  The first isomorphism theorem gives $bb(Z)["i"] \/ (1 + "i") tilde.equiv bb(F)_2$.
 ] <ex:zi-quotient>
 
-The last example is the chapter's one non-trivial computation, and it will be read twice: once here as a quotient, and once in #link(<ex:prime-in-zi>)[*Prime and Maximal Ideals*] as the statement that $(1 + i)$ is maximal.
+The last example is the chapter's one non-trivial computation, and it will be read twice: once here as a quotient, and once in #link(<ex:prime-in-zi>)[*Prime and Maximal Ideals*] as the statement that $(1 + "i")$ is maximal.
 
 === The Second and Third Isomorphism Theorems
 
@@ -6708,12 +6708,12 @@ The two notions coincide in the rings of Chapter 10, where every ideal is princi
   The phenomenon is general: $(0)$ is prime exactly when $R$ is a domain, so a domain that is not a field always carries a prime non-maximal ideal.
 ] <ex:prime-not-maximal>
 
-#example(name: "$(1 + i)$ is maximal in $bb(Z)[i]$.")[
-  By #link(<ex:zi-quotient>)[§9.3] one has $bb(Z)[i] \/ (1 + i) tilde.equiv bb(F)_2$, which is a field.
-  Hence $(1 + i)$ is maximal by #link(<thm:maximal-iff-field>)[the field criterion], and prime by #link(<cor:maximal-implies-prime>)[the corollary above].
+#example(name: [$(1 + "i")$ is maximal in $bb(Z)["i"]$.])[
+  By #link(<ex:zi-quotient>)[§9.3] one has $bb(Z)["i"] \/ (1 + "i") tilde.equiv bb(F)_2$, which is a field.
+  Hence $(1 + "i")$ is maximal by #link(<thm:maximal-iff-field>)[the field criterion], and prime by #link(<cor:maximal-implies-prime>)[the corollary above].
 
   The ideal is not generated by an integer, and this is the point of the example: maximal ideals in arithmetic-looking rings need not come from primes of $bb(Z)$.
-  What makes the computation work is the identity $(1 + i)(1 - i) = 2$, which puts $2$ inside $(1 + i)$ and lets the residue of $a + b i$ depend only on $a + b$.
+  What makes the computation work is the identity $(1 + "i")(1 - "i") = 2$, which puts $2$ inside $(1 + "i")$ and lets the residue of $a + b"i"$ depend only on $a + b$.
 ] <ex:prime-in-zi>
 
 #note(title: "Do maximal ideals always exist")[
@@ -6867,7 +6867,7 @@ The middle rung is where the previous chapter's ideals do their work: a PID is a
 
 Two rings carry the examples.
 The integers carry the familiar case, and the fundamental theorem of arithmetic reappears at the end as a corollary rather than an axiom.
-The Gaussian integers carry the interesting one: the previous chapter promised that $bb(Z)[i]$ is Euclidean (#link(<ex:gaussian-euclidean>)[§10.4]), and that single fact delivers a PID, a UFD, and the classical Euclidean algorithm at once.
+The Gaussian integers carry the interesting one: the previous chapter promised that $bb(Z)["i"]$ is Euclidean (#link(<ex:gaussian-euclidean>)[§10.4]), and that single fact delivers a PID, a UFD, and the classical Euclidean algorithm at once.
 
 Boundaries: polynomial rings, their division algorithm and Gauss's lemma belong to *Polynomial Rings*; the construction of fields as $k[x] \/ (f)$ belongs to *Field Extensions*; the structure theorem for finitely generated modules over a PID belongs to *Finitely Generated Modules over PIDs*.
 
@@ -6907,7 +6907,7 @@ What fails is exactly the distinction between an element and its unit multiples,
 ] <def:associate>
 
 Associativity of this relation is the multiplication of units, and #link(<prop:divisibility-properties>)[the proposition] says that the class of $a$ is exactly the set of elements generating the same principal ideal.
-In $bb(Z)$ the associates of $n$ are $±n$, and in $bb(Z)[i]$ they are $±n, ±i n$; choosing one representative per class is the content of "unique up to associates".
+In $bb(Z)$ the associates of $n$ are $±n$, and in $bb(Z)["i"]$ they are $±n, ±"i"n$; choosing one representative per class is the content of "unique up to associates".
 
 === The Dictionary
 
@@ -7001,7 +7001,7 @@ Collecting repeated factors gives the standard form
 and uniqueness says that the unit $u$, the irreducibles $p_i$ and the exponents $e_i$ are determined by $a$ up to reordering of the $p_i$.
 
 $bb(Z)$ is the prototype, and #link(<cor:fundamental-theorem-arithmetic>)[the fundamental theorem of arithmetic] is proved in §10.4 rather than assumed.
-$bb(Z)[i]$ is a UFD for the same reason, once the Euclidean property is available.
+$bb(Z)["i"]$ is a UFD for the same reason, once the Euclidean property is available.
 
 === Irreducible Means Prime
 
@@ -7039,7 +7039,7 @@ The examples in the rest of the chapter are all of the second kind, and the ladd
 
 #figure(
   image("img/domain-hierarchy.svg", width: 84%),
-  caption: [The ladder of divisibility rings. Going inwards, each class adds one hypothesis: $R$ is a UFD when factorizations into irreducibles exist and are unique, a PID when every ideal is principal, Euclidean when a division with remainder exists. Every inclusion is strict, and the band between two boxes names the ring that separates them: $bb(Z)[sqrt(-5)]$ is a domain that is not a UFD, $bb(Z)[x]$ is a UFD that is not a PID, and a PID that is not Euclidean exists but is not exhibited in this book. Both $bb(Z)$ and $bb(Z)[i]$ sit on the innermost rung, which is the content of §10.4.],
+  caption: [The ladder of divisibility rings. Going inwards, each class adds one hypothesis: $R$ is a UFD when factorizations into irreducibles exist and are unique, a PID when every ideal is principal, Euclidean when a division with remainder exists. Every inclusion is strict, and the band between two boxes names the ring that separates them: $bb(Z)[sqrt(-5)]$ is a domain that is not a UFD, $bb(Z)[x]$ is a UFD that is not a PID, and a PID that is not Euclidean exists but is not exhibited in this book. Both $bb(Z)$ and $bb(Z)["i"]$ sit on the innermost rung, which is the content of §10.4.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:domain-hierarchy>
@@ -7175,10 +7175,10 @@ What the identity buys is the ability to replace an element by a strictly smalle
   So $bb(Z)$ is Euclidean, hence a PID (#link(<thm:ed-pid>)[the theorem above]) and a UFD (#link(<thm:pid-ufd>)[§10.3]).
 ] <ex:z-euclidean>
 
-#example(name: "$bb(Z)[i]$ is Euclidean.")[
-  Take $delta = N$ with $N(a + b i) = a^2 + b^2$, and let $z, w in bb(Z)[i]$ with $w != 0$.
-  The quotient $z \/ w$ lies in $bb(Q)(i)$, the field of fractions of $bb(Z)[i]$ (#link(<note:fraction-examples>)[§8.6]).
-  Round its two coordinates to the nearest integers: this produces $q in bb(Z)[i]$ with
+#example(name: [$bb(Z)["i"]$ is Euclidean.])[
+  Take $delta = N$ with $N(a + b"i") = a^2 + b^2$, and let $z, w in bb(Z)["i"]$ with $w != 0$.
+  The quotient $z \/ w$ lies in $bb(Q)("i")$, the field of fractions of $bb(Z)["i"]$ (#link(<note:fraction-examples>)[§8.6]).
+  Round its two coordinates to the nearest integers: this produces $q in bb(Z)["i"]$ with
   $abs("Re"(z/w - q)) <= 1/2$ and $abs("Im"(z/w - q)) <= 1/2$.
   Then $r = z - q w$ satisfies
   $
@@ -7186,13 +7186,13 @@ What the identity buys is the ability to replace an element by a strictly smalle
   $
   and when $r = 0$ the identity holds trivially.
 
-  So $bb(Z)[i]$ is Euclidean, hence a PID and a UFD by #link(<cor:ed-ufd>)[the corollary below].
+  So $bb(Z)["i"]$ is Euclidean, hence a PID and a UFD by #link(<cor:ed-ufd>)[the corollary below].
   This is the promise made when the Gaussian integers were introduced in #link(<def:gaussian-integers>)[§9.1].
 ] <ex:gaussian-euclidean>
 
 #figure(
   image("img/gaussian-division.svg", width: 78%),
-  caption: [Division with remainder in $bb(Z)[i]$. The quotient $z \/ w$ sits somewhere in the complex plane, and the lattice $bb(Z)[i]$ is the grid of integer points. Rounding both coordinates lands on the nearest grid point $q$, whose distance to $z \/ w$ is at most $sqrt(2) \/ 2$; multiplying by $w$ turns that bound into $N(r) <= N(w) \/ 2$, the strict inequality the Euclidean property needs.],
+  caption: [Division with remainder in $bb(Z)["i"]$. The quotient $z \/ w$ sits somewhere in the complex plane, and the lattice $bb(Z)["i"]$ is the grid of integer points. Rounding both coordinates lands on the nearest grid point $q$, whose distance to $z \/ w$ is at most $sqrt(2) \/ 2$; multiplying by $w$ turns that bound into $N(r) <= N(w) \/ 2$, the strict inequality the Euclidean property needs.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:gaussian-division>
@@ -7201,7 +7201,7 @@ What the identity buys is the ability to replace an element by a strictly smalle
 
 #corollary(name: "The chain of divisibility rings")[
   Every Euclidean domain is a PID, and every PID is a UFD.
-  In particular $bb(Z)$ and $bb(Z)[i]$ are unique factorization domains.
+  In particular $bb(Z)$ and $bb(Z)["i"]$ are unique factorization domains.
 ] <cor:ed-ufd>
 
 #proof[
@@ -7242,7 +7242,7 @@ What the identity buys is the ability to replace an element by a strictly smalle
   $"ED" subset "PID" subset "UFD" subset "domain"$, with each implication produced by a construction: division with remainder generates ideals (#link(<thm:ed-pid>)[§10.4]), principal ideals produce unique factorization (#link(<thm:pid-ufd>)[§10.3]).
 
   *The examples.*
-  $bb(Z)$ and $bb(Z)[i]$ are Euclidean, hence PIDs and UFDs, and both factorizations are computable by the Euclidean algorithm of #link(<prop:gcd-in-pid>)[§10.3].
+  $bb(Z)$ and $bb(Z)["i"]$ are Euclidean, hence PIDs and UFDs, and both factorizations are computable by the Euclidean algorithm of #link(<prop:gcd-in-pid>)[§10.3].
 
   The next chapter installs the polynomial ring $R[x]$ into the ladder.
   Over a field the degree is a Euclidean function, so $k[x]$ is Euclidean and every result here applies word for word.

@@ -1583,7 +1583,7 @@ $
 
 
 #note[
-  For complex roots $lambda = alpha + beta i$, the corresponding complex solutions $e^((alpha + beta i) x)$ can be combined to give real solutions $e^(alpha x) cos(beta x)$ and $e^(alpha x) sin(beta x)$.
+  For complex roots $lambda = alpha + beta "i"$, the corresponding complex solutions $e^((alpha + beta "i") x)$ can be combined to give real solutions $e^(alpha x) cos(beta x)$ and $e^(alpha x) sin(beta x)$.
 ]
 
 #example(name: "Distinct and Repeated Real Roots")[
@@ -1634,10 +1634,10 @@ For non-homogeneous constant-coefficient equations, the variation-of-constants f
   $
     y_(p)(x) = x^k e^(alpha x) [R_(m)(x) cos(beta x) + S_(m)(x) sin(beta x)],
   $
-  where $R_m$ and $S_m$ are polynomials of degree at most $m$, and $k$ is the multiplicity of $alpha + beta i$ as a root of the characteristic polynomial ($k = 0$ if $alpha + beta i$ is not a root).
+  where $R_m$ and $S_m$ are polynomials of degree at most $m$, and $k$ is the multiplicity of $alpha + beta "i"$ as a root of the characteristic polynomial ($k = 0$ if $alpha + beta "i"$ is not a root).
 ] <thm:undetermined-coefficients>
 #proof[
-  *Step 1: Complexification.* Write $f(x) = "Re"(P(x) e^(gamma x))$ with $gamma = alpha + beta i$ and the complex polynomial $P = P_m - i Q_m$ of degree at most $m$; by linearity it suffices to solve $L_n y = P(x) e^(gamma x)$ and take real parts.
+  *Step 1: Complexification.* Write $f(x) = "Re"(P(x) e^(gamma x))$ with $gamma = alpha + beta "i"$ and the complex polynomial $P = P_m - "i" Q_m$ of degree at most $m$; by linearity it suffices to solve $L_n y = P(x) e^(gamma x)$ and take real parts.
 
   Substituting $y = e^(gamma x) u$ and using the operator identity of #link(<thm:characteristic-roots>)[the characteristic root theorem] turns the equation into $chi(D + gamma) u = P(x)$.
 
@@ -1938,7 +1938,7 @@ Four of the main critical point types (stable node, saddle, stable focus, and ce
 
   The origin is a critical point, and the Jacobian matrix there is $bold(A) = mat(0, 1; -1, -1)$, with characteristic polynomial $lambda^2 + lambda + 1 = 0$.
 
-  The eigenvalues are $lambda = (-1 +- i sqrt(3)) / 2$, which have negative real part $-1/2$.
+  The eigenvalues are $lambda = (-1 +-"i" sqrt(3)) / 2$, which have negative real part $-1/2$.
 
   By #link(<thm:linearization>)[the linearization theorem], the origin is an asymptotically stable focus, and the nonlinear term $x^2$ does not change the local classification.
 ] <ex:linearization-classification>
@@ -2173,7 +2173,7 @@ In the three mechanisms above the number or the location of equilibria changes, 
 The Hopf bifurcation is different in kind: the equilibrium survives, but at the critical parameter its linearization becomes a center, and on one side a closed orbit grows out of it.
 
 #theorem(name: "Hopf Bifurcation")[
-  Let $bold(f)$ in @eq:parameter-family be of class $C^4$ in $(bold(x), mu)$, and let $bold(x)^*(mu)$ be an equilibrium of class $C^1$ in $mu$, with Jacobian $bold(A)(mu)$ and eigenvalues $alpha(mu) ± i beta(mu)$.
+  Let $bold(f)$ in @eq:parameter-family be of class $C^4$ in $(bold(x), mu)$, and let $bold(x)^*(mu)$ be an equilibrium of class $C^1$ in $mu$, with Jacobian $bold(A)(mu)$ and eigenvalues $alpha(mu) ± "i" beta(mu)$.
   Suppose that at $mu_0$
   $
     alpha(mu_0) = 0, quad quad beta(mu_0) = omega > 0, quad quad alpha'(mu_0) != 0,
@@ -2188,7 +2188,7 @@ The Hopf bifurcation is different in kind: the equilibrium survives, but at the 
 
 #note(title: "Where the difficulty lies")[
   Unlike #link(<thm:saddle-node>)[*Saddle-Node Bifurcation*], the Hopf theorem does not follow from the implicit function theorem: at $mu_0$ there is no equilibrium to continue, only a center direction, and the closed orbit is not a perturbation of an equilibrium of the linear part.
-  The proof reduces the system to a two-dimensional center manifold, then to the normal form $dot(z) = (alpha + i beta) z + c abs(z)^2 z$, whose cubic coefficient determines $ell_1$; see Perko, *Differential Equations and Dynamical Systems*, and Wiggins, *Introduction to Applied Nonlinear Dynamical Systems and Chaos*.
+  The proof reduces the system to a two-dimensional center manifold, then to the normal form $dot(z) = (alpha + "i" beta) z + c abs(z)^2 z$, whose cubic coefficient determines $ell_1$; see Perko, *Differential Equations and Dynamical Systems*, and Wiggins, *Introduction to Applied Nonlinear Dynamical Systems and Chaos*.
 ]
 
 The square-root law explains the parabolic shape of the upper branch in @fig:hopf-bifurcation: the amplitude leaves the equilibrium with a vertical tangent, exactly as the pair of equilibria does at a saddle-node bifurcation.
@@ -2202,7 +2202,7 @@ The square-root law explains the parabolic shape of the upper branch in @fig:hop
     )
   $
   In polar coordinates $x = r cos theta$, $y = r sin theta$ the system reads $dot(r) = mu r - r^3$ and $dot(theta) = 1$.
-  The origin is an equilibrium for all $mu$, with Jacobian $mat(mu, -1; 1, mu)$ and eigenvalues $mu ± i$, so $alpha(mu) = mu$, $omega = 1$ and $alpha'(0) = 1 != 0$.
+  The origin is an equilibrium for all $mu$, with Jacobian $mat(mu, -1; 1, mu)$ and eigenvalues $mu ± "i"$, so $alpha(mu) = mu$, $omega = 1$ and $alpha'(0) = 1 != 0$.
 
   The radial equation is a pitchfork bifurcation in disguise: for $mu > 0$ the circle $r = sqrt(mu)$ is invariant, and $dot(r) = r (mu - r^2)$ shows that it attracts every trajectory with $r > 0$.
   Since the radial equation is explicit, the first Lyapunov coefficient is negative here, and #link(<thm:hopf>)[*Hopf Bifurcation*] shows that the transition at $mu = 0$ is supercritical, with amplitude $sqrt(mu)$.
@@ -2217,7 +2217,7 @@ The square-root law explains the parabolic shape of the upper branch in @fig:hop
 
 #note(title: "Van der Pol revisited")[
   The Van der Pol oscillator of *Critical Points and Limit Cycles* shows the same transition at $mu = 0$: for $mu < 0$ the origin is an asymptotically stable focus, and for $mu > 0$ it is an unstable focus surrounded by the limit cycle of @fig:limit-cycle.
-  Its eigenvalues are $mu / 2 ± i sqrt(1 - mu^2 / 4)$, so $alpha'(0) = 1/2 != 0$ and the transversality condition holds.
+  Its eigenvalues are $mu / 2 ± "i" sqrt(1 - mu^2 / 4)$, so $alpha'(0) = 1/2 != 0$ and the transversality condition holds.
 
   The first Lyapunov coefficient, however, vanishes with $mu$: at $mu = 0$ the equation is linear and every circle centered at the origin is a periodic orbit.
   The bifurcation is therefore *degenerate*, the non-degenerate statement of #link(<thm:hopf>)[*Hopf Bifurcation*] does not apply, and the limit cycle keeps a radius tending to $2$ as $mu -> 0$ instead of shrinking to the origin.
@@ -2245,8 +2245,8 @@ The four mechanisms of this chapter cover the local bifurcations of equilibria i
   ),
   (
     [Hopf],
-    [$dot(z) = (mu + i) z - abs(z)^2 z$],
-    [Pair $± i omega$ crossing the imaginary axis],
+    [$dot(z) = (mu + "i") z - abs(z)^2 z$],
+    [Pair $± "i" omega$ crossing the imaginary axis],
     [Limit cycle created around the equilibrium],
   ),
 )

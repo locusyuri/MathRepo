@@ -3134,7 +3134,7 @@ In geometry, an involution corresponds to a reflection or symmetry, since $A^2 =
 
 #proposition(name: "Cyclic Shift Matrix")[
   Let $F = bb(C)$ and $A$ be the cyclic shift matrix (ones on the superdiagonal and in position $(n, 1)$, zeros elsewhere).
-  - The eigenvalues are the $n$-th roots of unity $omega^(k) = exp(2 pi i k / n)$ for $k = 0, 1, ..., n - 1$.
+  - The eigenvalues are the $n$-th roots of unity $omega^(k) = exp(2 pi"i"k / n)$ for $k = 0, 1, ..., n - 1$.
   - The eigenvector for $omega^(k)$ is $xi^(k) = (1, omega^(k), (omega^(k))^2, ..., (omega^(k))^(n-1))^"T"$.
   - $A$ is diagonalizable, and can be #link(<thm:normal-diagonalization>)[unitarily diagonalized].
 ] <prop:cyclic-shift-matrix>
@@ -4116,7 +4116,7 @@ unitary spaces, normal transformations and symplectic spaces.
 ] <thm:orthogonal-diagonalization>
 
 #note[
-  The eigenvalues of a real orthogonal matrix are $±1$ or $cos(theta) ± i sin(theta)$
+  The eigenvalues of a real orthogonal matrix are $±1$ or $cos(theta) ± "i" sin(theta)$
   with $0 < theta < pi$. When $A$ happens to be symmetric, all rotation blocks disappear
   and the statement reduces to the spectral theorem for symmetric transformations.
 ]

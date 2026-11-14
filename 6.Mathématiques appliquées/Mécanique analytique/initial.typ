@@ -2208,7 +2208,7 @@ where $k = V''(q_0)$. Lagrange's equation gives $m dot.double(q) + k (q - q_0) =
 The coupled equations from the previous section can be decoupled by solving an eigenvalue problem.
 
 #theorem(name: "Normal Mode Analysis")[
-  Assume a solution $q_(j)(t) = A_j e^(i omega t)$. Substituting into the equations of motion gives the generalised eigenvalue problem:
+  Assume a solution $q_(j)(t) = A_j e^("i" omega t)$. Substituting into the equations of motion gives the generalised eigenvalue problem:
   $
     sum_j (K_(i j) - omega^2 M_(i j)) A_j = 0.
   $
