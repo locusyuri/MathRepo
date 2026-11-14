@@ -10045,7 +10045,7 @@ Consider a cylinder with height $1$ and base radius $1/2$ (the left in @fig:schw
 Divide the cylinder into four cylinders of equal height, and place seven equally spaced red dots on each circle (the middle in @fig:schwarzs-lantern). Then connect these red dots to form a polygonal surface (the right in @fig:schwarzs-lantern).
 
 #figure(
-  image("img/Schwartz1.png", width: 60%),
+  image("img/schwarz-lantern.svg", width: 92%),
   caption: [Schwarz's lantern construction on a cylinder.],
 ) <fig:schwarzs-lantern>
 
@@ -10054,7 +10054,7 @@ This particular lantern has $4$ horizontal triangular bands, and on each level t
 To obtain increasingly precise approximations of the cylindrical lanterns, simply increase the number of bands and points (@fig:schwarzs-lantern-refined).
 
 #figure(
-  image("img/Schwartz2.png", width: 80%),
+  image("img/schwarz-lantern-refinement.svg", width: 95%),
   caption: [More precise approximations of Schwarz's lantern.],
 ) <fig:schwarzs-lantern-refined>
 
