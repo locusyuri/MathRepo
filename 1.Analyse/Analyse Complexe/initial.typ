@@ -4086,6 +4086,258 @@ A holomorphic function that takes real values on a piece of the real axis can be
 
 = Gamma and Beta Functions // 伽马函数与贝塔函数
 
+The gamma function is the continuous extension of the factorial, and the beta function is the bridge between it and the elementary integrals of the previous chapter.
+
+== The Gamma Function // 伽马函数
+
+#definition(name: "Gamma Function")[
+  For a complex number $z$ with $Re(z) > 0$, the *gamma function* is
+  $
+    Gamma(z) = integral_0^infinity t^(z-1) e^(-t) dif t.
+  $
+] <def:gamma-function>
+
+#note(title: "One Symbol, Two Objects")[
+  The letter $Gamma$ carries two meanings in this book: in the earlier chapters $Gamma_R$ denotes the semicircular arc $z = R e^("i" theta)$, $0 <= theta <= pi$, while from now on $Gamma(z)$ denotes the function defined here.
+  The two never occur in the same formula.
+]
+
+#theorem(name: "Convergence of the Gamma Integral")[
+  The integral defining $Gamma(z)$ converges if and only if $Re(z) > 0$, and for every such $z$ it converges absolutely.
+] <thm:gamma-convergence>
+
+#proof[
+  Near $t = 0$ the integrand has modulus $t^(Re(z)-1) e^(-t)$, which is integrable at $0$ exactly when $Re(z) - 1 > -1$, that is, when $Re(z) > 0$.
+  At infinity the exponential wins: for $Re(z) > 0$ and $t >= 1$ one has $t^(Re(z)-1) e^(-t) <= t^(Re(z)) e^(-t)$, and $t^(Re(z)) e^(-t) <= e^(-t/2)$ for all sufficiently large $t$, so the tail is integrable.
+]
+
+#property(name: "Holomorphy of the Gamma Function")[
+  $Gamma$ is holomorphic in the half-plane $Re(z) > 0$, and there
+  $
+    Gamma'(z) = integral_0^infinity t^(z-1) e^(-t) ln(t) dif t.
+  $
+] <prop:gamma-holomorphic>
+
+#proof[
+  On a compact subset of the half-plane the integrand and its $z$-derivative are dominated by an integrable function of $t$: near $0$ by $t^(a-1) abs(ln t)$ and at infinity by $t^b e^(-t/2)$, so differentiation under the integral sign is legitimate.
+]
+
+#example(name: "The Value at One")[
+  $Gamma(1) = integral_0^infinity e^(-t) dif t = 1$.
+] <ex:gamma-one>
+
+== Properties of the Gamma Function // 伽马函数的性质
+
+#theorem(name: "Recurrence of the Gamma Function")[
+  For $Re(z) > 0$,
+  $
+    Gamma(z + 1) = z Gamma(z).
+  $
+] <thm:gamma-recurrence>
+
+#proof[
+  Integrating by parts, with $u = t^z$ and $dif v = e^(-t) dif t$, gives
+  $
+    Gamma(z + 1) = integral_0^infinity t^z e^(-t) dif t = [- t^z e^(-t)]_0^infinity + z integral_0^infinity t^(z-1) e^(-t) dif t = z Gamma(z),
+  $
+  the boundary term vanishing at $0$ because $Re(z) > 0$ and at infinity because of the exponential.
+]
+
+#example(name: "The Factorials")[
+  Iterating the recurrence gives $Gamma(n) = (n - 1)!$ for every positive integer $n$, so the gamma function is the continuous extension of the factorial.
+  In particular $integral_0^infinity t^n e^(-t) dif t = n !$ for every non-negative integer $n$.
+] <ex:gamma-factorial>
+
+#theorem(name: "Continuation of the Gamma Function")[
+  The gamma function has a meromorphic continuation to the whole plane, given by
+  $
+    Gamma(z) = (Gamma(z + n))/(product_(k = 0)^(n - 1) (z + k)),
+  $
+  for any integer $n >= 1$ with $Re(z + n) > 0$.
+  It has simple poles at $z = 0, -1, -2, dots$, and the residue at $z = -n$ is $(-1)^n / n !$.
+] <thm:gamma-continuation>
+
+#proof[
+  By the recurrence the right-hand side agrees with $Gamma$ wherever both sides are defined, so it defines a meromorphic function on the plane, and the meromorphic functions of the next chapters apply to it.
+  The poles are the zeros of the denominator that are not cancelled by the numerator: at $z = -n$ the numerator is $Gamma(1) = 1$, holomorphic and non-zero, while the denominator $product_(k = 0)^(n) (z + k)$ has a simple zero there, so the residue is $1/(product_(j = 0)^(n - 1) (-n + j)) = (-1)^n / n !$.
+]
+
+#example(name: "The Value at One Half")[
+  The Gaussian integral is
+  $
+    integral_(-infinity)^infinity e^(-x^2) dif x = sqrt(pi).
+  $
+  Indeed, squaring the integral and using polar coordinates in the plane gives
+  $
+    (integral_(-infinity)^infinity e^(-x^2) dif x)^2 = integral_0^(2 pi) integral_0^infinity e^(-r^2) r dif r dif theta = pi,
+  $
+  the inner integral being $1/2$.
+  With $t = u^2$ it follows that
+  $
+    Gamma(1/2) = integral_0^infinity t^(-1/2) e^(-t) dif t = 2 integral_0^infinity e^(-u^2) dif u = sqrt(pi).
+  $
+] <ex:gamma-half>
+
+== The Beta Function // 贝塔函数
+
+#definition(name: "Beta Function")[
+  For complex numbers $x, y$ with $Re(x) > 0$ and $Re(y) > 0$, the *beta function* is
+  $
+    B(x, y) = integral_0^1 t^(x-1) (1 - t)^(y-1) dif t.
+  $
+] <def:beta-function>
+
+#theorem(name: "Convergence and Holomorphy of the Beta Integral")[
+  The integral defining $B(x, y)$ converges if and only if $Re(x) > 0$ and $Re(y) > 0$, and for such $x, y$ it is holomorphic in both variables.
+] <thm:beta-convergence>
+
+#proof[
+  Near $t = 0$ the factor $t^(x-1)$ is integrable exactly when $Re(x) > 0$, and near $t = 1$ the factor $(1 - t)^(y-1)$ is integrable exactly when $Re(y) > 0$; away from the endpoints the integrand is continuous.
+  Holomorphy follows from dominated convergence: on a compact subset of the parameter range the integrand and its derivatives are dominated by $t^(a-1)(1-t)^(b-1)$ together with the factors $abs(ln t)$ and $abs(ln(1-t))$ that the derivatives bring along.
+]
+
+#example(name: "A Beta Value")[
+  With $t = sin^2(theta)$,
+  $
+    B(1/2, 1/2) = integral_0^1 (dif t)/(sqrt(t) sqrt(1 - t)) = 2 integral_0^(pi/2) dif theta = pi.
+  $
+] <ex:beta-half>
+
+== Relation between Gamma and Beta Functions // 伽马函数与贝塔函数的关系
+
+#theorem(name: "The Beta-Gamma Relation")[
+  For $Re(x) > 0$ and $Re(y) > 0$,
+  $
+    B(x, y) = (Gamma(x) Gamma(y))/(Gamma(x + y)).
+  $
+] <thm:beta-gamma>
+
+#proof[
+  Consider the double integral of $u^(x-1) v^(y-1) e^(-(u+v))$ over the first quadrant; it factors into $Gamma(x) Gamma(y)$.
+  On the other hand put $u = r t$ and $v = r (1 - t)$, which is the polar-like substitution in the first quadrant with $r = u + v$ and $t = u/(u+v)$; its Jacobian is $r$, so the same integral becomes
+  $
+    integral_0^infinity r^(x+y-1) e^(-r) dif r integral_0^1 t^(x-1) (1 - t)^(y-1) dif t = Gamma(x + y) B(x, y).
+  $
+  Comparing the two evaluations gives the identity.
+]
+
+#corollary(name: "The Beta Integral over the Positive Axis")[
+  For $Re(x) > 0$ and $Re(y) > 0$,
+  $
+    integral_0^infinity (t^(x-1))/((1 + t)^(x+y)) dif t = B(x, y) = (Gamma(x) Gamma(y))/(Gamma(x + y)).
+  $
+] <cor:beta-substitution>
+
+#proof[
+  The substitution $t = s/(1 - s)$ carries $(0, +oo)$ onto $(0, 1)$ and transforms the integrand into $s^(x-1)(1-s)^(y-1)$ times the Jacobian $(1 - s)^(-2)$, which together with $(1 + t)^(-(x+y)) = (1-s)^(x+y)$ leaves the beta integrand.
+]
+
+#corollary(name: "The Trigonometric Beta Integral")[
+  For $Re(x) > 0$ and $Re(y) > 0$,
+  $
+    integral_0^(pi/2) sin^(2x-1)(theta) cos^(2y-1)(theta) dif theta = (1)/(2) B(x, y).
+  $
+] <cor:trig-beta>
+
+#proof[
+  The substitution $t = sin^2(theta)$ carries $(0, pi/2)$ onto $(0, 1)$ and gives $dif theta = (dif t)/(2 sqrt(t) sqrt(1 - t))$, so the integral is one half of the beta integral with the parameters $x, y$.
+]
+
+#corollary(name: "The Reflection Formula for the Gamma Function")[
+  For $z$ not an integer,
+  $
+    Gamma(z) Gamma(1 - z) = (pi)/(sin(pi z)).
+  $
+] <cor:gamma-reflection>
+
+#proof[
+  The beta relation gives $Gamma(z) Gamma(1 - z) = B(z, 1 - z)$, and the previous corollary turns the beta function into
+  $
+    integral_0^infinity (t^(z-1))/((1 + t)) dif t.
+  $
+  This is the integral evaluated in the chapter on real integrals, where the keyhole computation gave $(pi)/(sin(pi z))$ for $0 < Re(z) < 1$; by the identity theorem the formula holds for every $z$ that is not an integer.
+]
+
+#example(name: "An Integral by the Beta Function")[
+  Show that
+  $
+    integral_0^infinity (dif x)/(1 + x^3) = (2 pi)/(3 sqrt(3)).
+  $
+  With $u = x^3$ the integral becomes $(1)/(3) integral_0^infinity u^(-2/3)/(1 + u) dif u$, which is $(1)/(3) B(1/3, 2/3)$ by the previous corollary with $x = 1/3$ and $y = 2/3$, and the beta-gamma relation turns it into $(1)/(3) Gamma(1/3) Gamma(2/3)$.
+  The reflection formula then closes the computation: $Gamma(1/3) Gamma(2/3) = (pi)/(sin(pi/3)) = (2 pi)/(sqrt(3))$, so the integral is $(1)/(3) dot (2 pi)/(sqrt(3)) = (2 pi)/(3 sqrt(3))$.
+] <ex:beta-cubic>
+
+== Stirling's Formula // 斯特林公式
+
+The asymptotic behaviour of the gamma function is the practical reason it is worth having: it turns the factorial into a closed expression.
+
+#lemma(name: "Wallis' Product")[
+  Let $I_n = integral_0^(pi/2) sin^(n)(theta) dif theta$.
+  Then $I_n = ((n - 1)/n) I_(n-2)$ for $n >= 2$, and
+  $
+    lim_(n -> infinity) product_(k = 1)^n ((2 k)^2)/((2 k - 1)(2 k + 1)) = (pi)/(2).
+  $
+] <lem:wallis>
+
+#proof[
+  Integration by parts gives the recurrence, whence
+  $
+    I_(2n) = ((product_(k = 1)^n (2 k - 1))/(product_(k = 1)^n 2 k))(pi)/(2) quad "and" quad I_(2n+1) = (product_(k = 1)^n 2 k)/(product_(k = 1)^n (2 k + 1)).
+  $
+  The product in the statement is therefore $(pi)/(2) dot (I_(2n+1)/I_(2n))$.
+  Since $sin^n$ decreases on the interval, $I_(2n+1) <= I_(2n) <= I_(2n-1)$; the recurrence gives $I_(2n+1) = (2 n/(2 n + 1)) I_(2n-1) >= (2 n/(2 n + 1)) I_(2n)$, so
+  $
+    (2 n)/(2 n + 1) <= (I_(2n+1))/I_(2n) <= 1,
+  $
+  and the ratio tends to $1$, which proves the formula.
+]
+
+#theorem(name: "Stirling's Formula")[
+  As $x -> +oo$,
+  $
+    Gamma(x + 1) = sqrt(2 pi x) (x/e)^x (1 + O(1/x)),
+  $
+  and in particular, for the positive integers $n$,
+  $
+    n ! = sqrt(2 pi n) (n/e)^n (1 + O(1/n)).
+  $
+] <thm:stirling>
+
+#proof[
+  The proof is the standard application of Laplace's method to the integral defining the gamma function; we carry it out here, and the general theory of such estimates is the subject of the chapter on asymptotic methods.
+  With $t = x u$ the integral becomes
+  $
+    Gamma(x + 1) = x^(x+1) integral_0^infinity e^(x (ln u - u)) dif u.
+  $
+  The function $h(u) = ln u - u$ has a unique maximum at $u = 1$, where $h(1) = -1$ and $h''(1) = -1$.
+  Put $u = 1 + v/sqrt(x)$; the expansion of the logarithm gives
+  $
+    h(1 + v/sqrt(x)) = -1 - v^2/2 + O(abs(v)^3/sqrt(x)),
+  $
+  so on the neighbourhood $|v| <= x^(1/8)$ of the maximum the integrand is $e^(-x) e^(-v^2/2)$ times a factor that is $1 + O(abs(v)^3/sqrt(x))$.
+  The tails are negligible: $h$ decreases quadratically away from its maximum, so $|v| > x^(1/8)$ contributes exponentially less than the neighbourhood, which is of size $e^(-x)$.
+  The neighbourhood therefore contributes
+  $
+    x^(x+1) e^(-x) integral_(-oo)^(oo) e^(-v^2/2) dif v (1 + O(1/x)),
+  $
+  the relative error $O(1/x)$ coming from the standard expansion of the integrand at its maximum, and the Gaussian integral being the one computed above, namely $sqrt(2 pi)$.
+  Comparing with the expression for $Gamma(x+1)$ gives the asserted formula, and the recurrence turns it into the statement about the factorial.
+]
+
+#note(title: "The Historical Route")[
+  Before Laplace's method, the constant in Stirling's formula was fixed by Wallis' product: the half-integer case is read off from the beta relation, and the general case is squeezed between the half-integers.
+  The computation above reaches the same constant through the Gaussian integral, which is why the gamma function and the beta function appear so often together.
+]
+
+#example(name: "The Number of Permutations")[
+  The number of permutations of $n$ objects is $n !$, so Stirling's formula gives
+  $
+    n ! ~ sqrt(2 pi n) (n/e)^n,
+  $
+  and the familiar estimate $n ! < n^n$ follows from it after taking $n$-th roots.
+] <ex:stirling-permutations>
+
+
 = Zeta Function and Prime Numbers // ζ函数与素数
 
 = Elliptic Functions // 椭圆函数
@@ -4198,9 +4450,9 @@ A holomorphic function that takes real values on a piece of the real axis can be
 // --- Part V: Special Functions (特殊函数) ---
 
 // Chapter 14: Gamma and Beta Functions (伽马函数与贝塔函数)
-//   Section 14.1: Gamma Function (伽马函数)
+//   Section 14.1: The Gamma Function (伽马函数)
 //   Section 14.2: Properties of Gamma Function (伽马函数的性质)
-//   Section 14.3: Beta Function (贝塔函数)
+//   Section 14.3: The Beta Function (贝塔函数)
 //   Section 14.4: Relation between Gamma and Beta Functions (伽马函数与贝塔函数的关系)
 //   Section 14.5: Stirling's Formula (斯特林公式)
 
