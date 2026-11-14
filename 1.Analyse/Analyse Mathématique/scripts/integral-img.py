@@ -75,34 +75,26 @@ def omega_path():
     """The irregular region: a bulge on top and a forked tail on the right."""
     verts = [
         (1.20, 2.00),
-        (1.35, 2.55), (1.85, 2.90), (2.30, 2.85),
-        (2.75, 2.80), (3.00, 2.68), (3.10, 2.55),
-        (4.00, 2.62),                                    # upper prong, top edge
-        (4.00, 2.34),                                    # upper prong, right edge
-        (3.78, 2.30), (3.52, 2.28), (3.44, 2.22),        # upper rounded groove
-        (3.52, 2.16), (3.78, 2.14), (4.00, 2.12),
-        (4.00, 1.86),                                    # middle prong
-        (3.78, 1.82), (3.52, 1.80), (3.44, 1.74),        # lower rounded groove
-        (3.52, 1.68), (3.78, 1.66), (4.00, 1.64),
-        (4.00, 1.38),                                    # lower prong
-        (3.05, 1.25),
-        (2.70, 1.05), (2.30, 1.02), (1.95, 1.25),
-        (1.55, 1.55), (1.25, 1.80), (1.20, 2.00),
+        (1.35, 2.62), (1.85, 2.95), (2.35, 2.85),
+        (2.80, 2.77), (3.00, 2.62), (3.15, 2.50),
+        (3.40, 2.38), (3.62, 2.38), (3.78, 2.47),
+        (3.88, 2.51), (3.93, 2.54), (3.95, 2.58),
+        (3.95, 1.42),
+        (3.92, 1.45), (3.85, 1.50), (3.74, 1.56),
+        (3.55, 1.63), (3.35, 1.60), (3.18, 1.47),
+        (2.95, 1.30), (2.75, 1.12), (2.45, 1.06),
+        (2.10, 1.02), (1.70, 1.30), (1.20, 2.00),
         (1.20, 2.00),
     ]
     codes = [
         MPath.MOVETO,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
-        MPath.LINETO,
-        MPath.LINETO,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.LINETO,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
-        MPath.LINETO,
-        MPath.LINETO,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
         MPath.CLOSEPOLY,
@@ -137,9 +129,9 @@ def left_panel(fig):
     dashed(ax, [2.30, 2.30], [0, D], colour="#8b949e", lw=0.9, zorder=5)
 
     # Braces: projection I of Omega onto x, projection J onto y.
-    underbrace(ax, 1.20, 4.00, -0.48)
+    underbrace(ax, 1.20, 3.95, -0.48)
     left_brace(ax, 1.00, 1.02, 2.85)
-    ax.text(2.62, -0.80, r"$I$", fontsize=12, color=INK, ha="center",
+    ax.text(2.57, -0.80, r"$I$", fontsize=12, color=INK, ha="center",
             va="top")
     ax.text(0.72, 1.94, r"$J$", fontsize=12, color=INK, ha="center",
             va="center")
