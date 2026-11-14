@@ -54,10 +54,10 @@ def underbrace(ax, x0, x1, y, tooth=0.16):
 
 
 def left_brace(ax, x, y0, y1, tooth=0.18):
-    """Vertical brace with a left-facing tooth in the middle."""
+    """Vertical brace: both ends hook right, the middle tooth points left."""
     mid = 0.5 * (y0 + y1)
     d = 0.10
-    ax.plot([x - 0.10, x, x, x - tooth, x, x, x - 0.10],
+    ax.plot([x + 0.10, x, x, x - tooth, x, x, x + 0.10],
             [y1, y1, mid + d, mid, mid - d, y0, y0],
             color=INK, lw=1.0, solid_capstyle="round", zorder=5)
 
@@ -119,11 +119,13 @@ def main():
             solid_capstyle="round", zorder=6)
 
     # The known solution and the labels on the curve.
-    ax.plot([X0], [Y0], "o", color=INK, ms=5, zorder=7)
-    ax.text(X0 + 0.14, Y0 + 0.20, r"$(x^0, y^0)$", fontsize=12, color=INK,
-            ha="left", va="bottom", zorder=7)
-    ax.text(X_LEFT + 0.06, Y0 + 0.10, r"$y^0$", fontsize=12, color=INK,
-            ha="left", va="bottom", zorder=7)
+    ax.plot([X0], [Y0], "o", color=INK, ms=6, zorder=7)
+    ax.text(X0 + 0.14, Y0 + 0.20, r"$(\mathbf{x}^0, \mathbf{y}^0)$",
+            fontsize=12, color=INK, ha="left", va="bottom", zorder=7)
+    ax.text(0.14, Y0 + 0.10, r"$\mathbf{y}^0$", fontsize=12, color=INK,
+            ha="left", va="bottom", zorder=7,
+            bbox=dict(boxstyle="round,pad=0.10", fc="white", ec="none",
+                      alpha=0.90))
     ax.text(5.70, 1.78, r"$F(x,y)=0$", fontsize=13, color=INK,
             ha="left", va="center", zorder=7)
 
@@ -134,10 +136,10 @@ def main():
     left_brace(ax, 1.46, Y_LOW, Y_HIGH)
     ax.text(1.10, 0.5 * (Y_LOW + Y_HIGH), r"$J$", fontsize=13, color=INK,
             ha="center", va="center")
-    ax.text(X_GENERIC, -0.22, r"$x$", fontsize=12, color=INK, ha="center",
-            va="top")
-    ax.text(X0, -0.22, r"$x^0$", fontsize=12, color=INK, ha="center",
-            va="top")
+    ax.text(X_GENERIC, -0.22, r"$\mathbf{x}$", fontsize=12, color=INK,
+            ha="center", va="top")
+    ax.text(X0, -0.22, r"$\mathbf{x}^0$", fontsize=12, color=INK,
+            ha="center", va="top")
 
     fig.savefig(OUT, transparent=True, bbox_inches="tight", pad_inches=0.02)
     print(f"Saved: {OUT}")
