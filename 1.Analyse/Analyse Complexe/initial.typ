@@ -2780,13 +2780,19 @@ Every computation in this chapter follows the same four steps.
 
 What varies from section to section is only the shape of the contour, and the shape is dictated by the analytic obstacle: a large semicircle for decay at infinity, an indentation for a pole lying on the path, and a keyhole for a branch cut.
 
-The families of integral that the chapter treats are the following, and each of them is closed by one contour and read off by one residue computation:
-- *a rational function over the whole real line*, closed by a large semicircle (see #link(<thm:rational-semicircle>)[the semicircle theorem]);
-- *a rational function of $sin$ and $cos$ over a full period*, closed by the unit circle (see #link(<thm:periodic-sin-cos>)[the periodic theorem]);
-- *a function of the real variable times an exponential*, closed by a large semicircle and estimated by #link(<lem:jordan>)[Jordan's lemma] (see #link(<thm:fourier-integral-analytic>)[the general theorem]);
-- *an integral with a singularity on the path*, closed by an indentation (see #link(<lem:small-arc>)[the small arc lemma]);
-- *a power of the variable over the positive axis*, closed by a keyhole about that axis (see #link(<thm:power-weighted-integral>)[the power-weighted theorem]);
-- *a logarithm in the integrand*, obtained by differentiating a parameter (see #link(<thm:log-parameter>)[the parameter theorem]).
+The families of integral that the chapter treats are the following, and each of them is closed by one contour and read off by one residue computation; the formula that a family yields is stated in the theorem of the section that carries it.
+
+#tex-table(
+  ("Family", "Integrand", "Contour", "Key hypothesis"),
+  ([rational on the whole line (*Integrals of Rational Functions*)], [$R(x)$], [large semicircle], [$"deg"(Q) >= "deg"(P) + 2$]),
+  ([a function times an exponential (*Integrals Involving Trigonometric Functions*)], [$f(x)e^("i"lambda x)$], [large semicircle, upper], [f analytic in the closed upper half-plane]),
+  ([a periodic integrand (*Integrals Closed by a Vertical Translation*)], [$f(z + "i"T) = - f(z)$], [rectangle of height $"i"T$], [the vertical edges carry nothing]),
+  ([a rational function of sin and cos over a period (*Periodic Integrals of Rational Functions of sin and cos*)], [$R(sin t, cos t)$], [unit circle], [$"deg"(Q) >= "deg"(P) + 1$]),
+  ([a pole on the path (*Improper Integrals*)], [$f$ with a pole on the real axis], [indentation], [the pole has a residue]),
+  ([a power of the variable on the positive axis (*Integrals with Branch Cuts*)], [$x^(alpha-1)R(x)$], [keyhole about the positive axis], [$0 < alpha < 1$]),
+  ([a logarithm in the integrand (*Logarithmic Integrals*)], [$x^(alpha-1)ln(x)R(x)$], [parameter differentiation], [dominated convergence]),
+  ([a sum over the integers (*Summation of Series*)], [$f(n)$], [square contour, cotangent kernel], [$abs(f(z)) = O(abs(z)^(-2))$]),
+)
 
 == Integrals of Rational Functions // 有理函数的积分
 
@@ -2902,6 +2908,25 @@ The rational case below is the most common instance of this theorem: there $f = 
   Letting $R -> infinity$ gives the formula.
 ]
 
+#corollary(name: "The Lower Half-Plane Variant")[
+  Let $f$ be holomorphic on an open set containing the closed lower half-plane, let $w_1, dots, w_N$ be the singularities of $f$ in the open lower half-plane, and suppose that there are only finitely many of them and that none lies on the real axis.
+  If $abs(f(z)) -> 0$ as $abs(z) -> infinity$ within the closed lower half-plane, and the integral below converges, then for every $lambda > 0$
+  $
+    integral_(-infinity)^infinity f(x) e^(-"i" lambda x) dif x = -2 pi"i" sum_(k = 1)^N "Res"(f(z) e^(-"i" lambda z), w_k).
+  $
+] <cor:fourier-lower>
+
+#proof[
+  The change of variable $x |-> -x$ turns the left-hand side into $integral_(-infinity)^infinity f(-x) e^("i" lambda x) dif x$, and $g(z) = f(-z)$ is holomorphic in the closed upper half-plane with $|g(z)| -> 0$ there.
+  Applying #link(<thm:fourier-integral-analytic>)[the general theorem] to $g$ gives $2 pi"i"$ times the sum of the residues of $g(z) e^("i" lambda z)$ in the upper half-plane, and the substitution $z = -w$ turns each of them into $-"Res"(f(w) e^(-"i" lambda w), w)$, which is the asserted identity.
+]
+
+#note(title: "The Damped Variant")[
+  Replacing the oscillation by a genuine decay, $e^(-a x)$ with $a > 0$, changes the problem rather than the contour: the factor no longer decays towards the left of the origin, so the integral over the whole real axis does not exist at all.
+  The damped integral belongs to the half-line $[0, +oo)$, where it is the Laplace transform, and the real theory of that transform belongs to a course in real analysis rather than to this chapter.
+  The contour method still has a use: the quarter-disc in the first quadrant relates $integral_0^infinity e^(-a x) R(x) dif x$ to $integral_0^infinity e^(-"i" a t) R("i" t) dif t$ and to the residues of $e^(-a z) R(z)$ in that quadrant, and this is the standard route to the Laplace inversion formula.
+]
+
 #example(name: "Laplace-Type Integrals")[
   Let $a > 0$ and $b >= 0$.
   The only pole in the upper half-plane of $e^("i"b z)/(z^2 + a^2)$ is $z = a"i"$, whose residue is $e^(-a b)/(2 a"i")$.
@@ -2928,6 +2953,52 @@ The rational case below is the most common instance of this theorem: there $f = 
   $
   which is the form in which Laplace integrals usually appear.
   The factor $e^(-a b)$ is invisible from the real variable: it is the value of $e^("i"b z)$ at the pole $a"i"$, so the imaginary part of the pole has been converted into an exponential decay.
+]
+
+== Integrals Closed by a Vertical Translation // 竖移闭围道的积分
+
+A third contour family is neither a semicircle nor a keyhole: when the integrand is periodic in the imaginary direction, the closing piece is a *vertical translation* of the real segment, and the two copies of the integral either cancel each other or reinforce each other.
+
+#lemma(name: "The Vertical Translation Lemma")[
+  Let $T > 0$ and let $f$ be holomorphic in the strip $0 <= Im z <= T$, except for finitely many poles, none of which lies on the lines $Im z = 0$ or $Im z = T$, and suppose that $f(z + "i" T) = - f(z)$ for all $z$.
+  If the integrals over the vertical sides of the rectangle of height $"i" T$ tend to $0$ as the rectangle widens, then
+  $
+    2 integral_(-infinity)^infinity f(x) dif x = 2 pi"i" sum_k "Res"(f, z_k),
+  $
+  where the sum runs over the poles of $f$ in the open strip.
+] <lem:vertical-translation>
+
+#proof[
+  Let the rectangle have vertices $-R$, $R$, $R + "i" T$, $-R + "i" T$, traversed counterclockwise, and integrate $f$ over it.
+  The bottom edge contributes $integral_(-R)^R f(x) dif x$.
+  The top edge, traversed from $R + "i" T$ back to $-R + "i" T$, contributes $- integral_(-R)^R f(x + "i" T) dif x = integral_(-R)^R f(x) dif x$ by the hypothesis $f(z + "i" T) = - f(z)$.
+  The two vertical edges contribute nothing in the limit, so the residue theorem turns the limit of the contour integral into $2 pi"i"$ times the sum of the residues in the strip, which is the asserted identity.
+]
+
+#example(name: "The Integral of $1/cosh x$")[
+  Show that
+  $
+    integral_(-infinity)^infinity (dif x)/(cosh x) = pi.
+  $
+  Take $f(z) = 1/cosh z$ and $T = pi$: since $cosh(z + "i" pi) = - cosh z$, the hypothesis $f(z + "i" T) = - f(z)$ holds, and $|f(z)| -> 0$ as $|Re z| -> infinity$ in the strip $0 <= Im z <= pi$, so the vertical edges contribute nothing.
+  The only pole in the strip is $z = "i" pi/2$, and
+  $
+    "Res"(1/cosh z, "i" pi/2) = 1/sinh("i" pi/2) = 1/"i" = -"i".
+  $
+  The lemma therefore gives
+  $
+    2 integral_(-infinity)^infinity (dif x)/(cosh x) = 2 pi"i" dot (-"i") = 2 pi,
+  $
+  and the integral is $pi$; by evenness the integral over $(0, infinity)$ is $pi/2$.
+] <ex:cosh-integral>
+
+#note(title: "Hyperbolic Integrals that Resist the Rectangle")[
+  The rectangle answers $integral_(-infinity)^infinity (dif x)/(cosh x + cos a)$ only indirectly: there $f(z + 2 pi"i") = f(z)$, so the top and bottom edges cancel and the residue theorem returns no information.
+  The substitution $x = ln t$ is the way in, since $cosh x = (t + 1/t)/2$ and $dif x = dif t / t$, and it turns the integral into a rational one:
+  $
+    integral_(-infinity)^infinity (dif x)/(cosh x + cos a) = 2 integral_0^infinity (dif t)/(t^2 + 2 t cos a + 1) = (2 a)/(sin a) quad (0 < a < pi),
+  $
+  the last step being a rational integral of the kind treated in the first section of this chapter.
 ]
 
 == Periodic Integrals of Rational Functions of sin and cos // 三角有理函数的周期积分
@@ -2986,6 +3057,11 @@ Both $sin$ and $cos$ are rational functions of $z = e^("i" t)$, so the substitut
   $
 ]
 
+#note(title: "The Real-Analysis Route")[
+  The same integrals are reachable without complex analysis: the *Universal Substitution* $t = tan(x / 2)$ recorded in *Analyse Mathématique* rationalizes the integrand and reduces the integral to a rational one.
+  The price of that route is that the substitution has a pole inside the period, so the interval has to be split at the corresponding point; the contour route pays no such price, since $z = e^("i" t)$ never leaves the unit circle.
+]
+
 == Improper Integrals // 反常积分
 
 When a singularity of the integrand lies on the real axis, the contour may not pass through it; it is deformed into a small semicircle around the singularity, and the contribution of that semicircle is then computed separately.
@@ -3004,6 +3080,26 @@ When a singularity of the integrand lies on the real axis, the contour may not p
   $
   since $(dif z)/(z - z_0) = "i" dif theta$.
   The remainder satisfies $abs(integral_(gamma_epsilon) g(z) dif z) <= (beta - alpha) epsilon dot sup_(gamma_epsilon) abs(g) -> 0$, so the limit is $"i" (beta - alpha) c$.
+]
+
+#lemma(name: "The Small Arc Lemma at a Pole of Any Order")[
+  Let $f$ have a pole of order $m >= 1$ at $z_0$, with residue $c$, and let $gamma_epsilon$ be the arc $z = z_0 + epsilon e^("i" theta)$, $alpha <= theta <= beta$.
+  Then
+  $
+    lim_(epsilon -> 0^+) integral_(gamma_epsilon) f(z) dif z = "i" (beta - alpha) c.
+  $
+] <lem:small-arc-any-order>
+
+#proof[
+  Write the principal part of $f$ at $z_0$ as $f(z) = sum_(k = 1)^m c_k (z - z_0)^(-k) + g(z)$, with $g$ holomorphic near $z_0$.
+  The term $c_1 (z - z_0)^(-1)$ integrates to $c_1 "i" (beta - alpha)$ over the arc, because $(dif z)/(z - z_0) = "i" dif theta$.
+  For $k >= 2$ the integral of $(z - z_0)^(-k)$ over the arc is $O(epsilon^(1 - k)) -> 0$, and the integral of $g$ is $O(epsilon) -> 0$.
+  Only the residue survives, and $c_1 = c$.
+]
+
+#note(title: "When the Pole Has Order Two or More")[
+  The formula of the lemma is the same for a pole of any order, but the real integral to which it applies is no longer a Cauchy principal value in the ordinary sense: at a pole of even order $m >= 2$ the symmetric limit $lim_(epsilon -> 0^+) (integral_(-infinity)^(z_0 - epsilon) + integral_(z_0 + epsilon)^(infinity)) f(x) dif x$ diverges, and at odd order it exists only because the two sides cancel.
+  What the contour identity computes in either case is the *Hadamard finite part* of the integral, in which the divergent pieces are removed by exactly the subtraction that the indentation performs.
 ]
 
 #example(name: "The Dirichlet Integral by an Indented Contour")[
@@ -3301,11 +3397,12 @@ The residue theorem also sums series: a kernel whose residues at the integers ar
 // Chapter 10: Evaluation of Real Integrals (实积分的计算)
 //   Section 10.1: Integrals of Rational Functions (有理函数的积分)
 //   Section 10.2: Integrals Involving Trigonometric Functions (含三角函数的积分)
-//   Section 10.3: Periodic Integrals of Rational Functions of sin and cos (三角有理函数的周期积分)
-//   Section 10.4: Improper Integrals (反常积分)
-//   Section 10.5: Integrals with Branch Cuts (含割线的积分)
-//   Section 10.6: Logarithmic Integrals (含对数的积分)
-//   Section 10.7: Summation of Series (级数求和)
+//   Section 10.3: Integrals Closed by a Vertical Translation (竖移闭围道的积分)
+//   Section 10.4: Periodic Integrals of Rational Functions of sin and cos (三角有理函数的周期积分)
+//   Section 10.5: Improper Integrals (反常积分)
+//   Section 10.6: Integrals with Branch Cuts (含割线的积分)
+//   Section 10.7: Logarithmic Integrals (含对数的积分)
+//   Section 10.8: Summation of Series (级数求和)
 
 // --- Part IV: Conformal Mapping and Analytic Continuation (共形映射与解析延拓) ---
 
